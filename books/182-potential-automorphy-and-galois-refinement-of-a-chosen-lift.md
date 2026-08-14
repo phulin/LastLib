@@ -2,26 +2,26 @@
 
 ## Contents
 
-1. [The two inherited constructions](#1-the-two-inherited-constructions)
+1. [A chosen lift and the fields prepared for it](#1-a-chosen-lift-and-the-fields-prepared-for-it)
    - [The chosen primitive lift](#11-the-chosen-primitive-lift)
    - [The split Galois field and the prepared target field](#12-the-split-galois-field-and-the-prepared-target-field)
-   - [The one-way order of the argument](#13-the-one-way-order-of-the-argument)
-2. [The signed-special integral record](#2-the-signed-special-integral-record)
+   - [How the two constructions fit together](#13-how-the-two-constructions-fit-together)
+2. [The signed-special local representation](#2-the-signed-special-local-representation)
    - [Primitive monodromy, line, and sign](#21-primitive-monodromy-line-and-sign)
    - [The resulting local invariants](#22-the-resulting-local-invariants)
    - [Literal preservation at split places](#23-literal-preservation-at-split-places)
-3. [The retained broad support theorem](#3-the-retained-broad-support-theorem)
+3. [The broad deformation ring and its Hecke action](#3-the-broad-deformation-ring-and-its-hecke-action)
    - [The broad ring and its minimal quotient](#31-the-broad-ring-and-its-minimal-quotient)
    - [Restriction of the chosen point](#32-restriction-of-the-chosen-point)
-   - [From support to an automorphic packet](#33-from-support-to-an-automorphic-packet)
+   - [The automorphic packet over the target field](#33-the-automorphic-packet-over-the-target-field)
 4. [The cyclic return to the Galois field](#4-the-cyclic-return-to-the-galois-field)
    - [The temporary target-preparation tower](#41-the-temporary-target-preparation-tower)
    - [Selectedness of every descent fibre](#42-selectedness-of-every-descent-fibre)
    - [Residual images and cuspidality](#43-residual-images-and-cuspidality)
 5. [Potential automorphy of the chosen lift](#5-potential-automorphy-of-the-chosen-lift)
-   - [Automorphy over the prepared target field](#51-automorphy-over-the-prepared-target-field)
+   - [Automorphy from the target Hecke action](#51-automorphy-from-the-target-hecke-action)
    - [Descent to the split Galois field](#52-descent-to-the-split-galois-field)
-   - [What the descent preserves](#53-what-the-descent-preserves)
+   - [Local properties after descent](#53-local-properties-after-descent)
 6. [Elementary fixed fields and basic carriers](#6-elementary-fixed-fields-and-basic-carriers)
    - [Construction of the elementary packets](#61-construction-of-the-elementary-packets)
    - [Parity-complete compact carriers](#62-parity-complete-compact-carriers)
@@ -29,24 +29,30 @@
 7. [The selected coefficient place above three](#7-the-selected-coefficient-place-above-three)
    - [Targetwise dyadic parity carriers](#71-targetwise-dyadic-parity-carriers)
    - [The finite-flat irreducibility bridge](#72-the-finite-flat-irreducibility-bridge)
-   - [The precise range of the conclusion](#73-the-precise-range-of-the-conclusion)
+   - [The scope of the selected-three result](#73-the-scope-of-the-selected-three-result)
 8. [Auxiliary Galois comparisons](#8-auxiliary-galois-comparisons)
    - [Common unramified algebraic pairs](#81-common-unramified-algebraic-pairs)
    - [Twisting and induction](#82-twisting-and-induction)
    - [Stronger local types lie beyond the comparison](#83-stronger-local-types-lie-beyond-the-comparison)
-9. [The exported packet-array datum](#9-the-exported-packet-array-datum)
-   - [The complete selected-three theorem](#91-the-complete-selected-three-theorem)
+9. [The selected-three packet theorem](#9-the-selected-three-packet-theorem)
+   - [Automorphic packets and their selected-three realizations](#91-automorphic-packets-and-their-selected-three-realizations)
    - [Conclusion](#92-conclusion)
 
-## 1. The two inherited constructions
+## 1. A chosen lift and the fields prepared for it
 
-The preceding two constructions meet at a particularly useful point. Book 178 first builds a
-totally real split Galois field and, above it, a temporary solvable field on which a broad
-automorphic support theorem is proved. Book 181 then uses the finite minimal quotient retained
-by that theorem to choose a characteristic-zero lift over the ground field. The present book
-does not reconstruct either object. Its task is to put the newly chosen point back into the
-already constructed automorphic support, descend the resulting packet to the original Galois
-field, and organize its elementary fixed-field realizations.
+Two earlier constructions now meet. Book 178 builds a totally real split Galois field and,
+above it, a temporary solvable extension where a broad deformation ring acts on a finite
+automorphic module. Book 181 uses the resulting finite signed-special quotient to construct a
+characteristic-zero lift over $\mathbf Q$. The present book starts after that point has been
+chosen. It proves that the lift is automorphic over the prepared solvable field, brings the
+automorphic representation back through the prepared cyclic tower to the split Galois field,
+and constructs the elementary fixed-field packets needed for Brauer induction.
+
+Throughout, $\rho$ denotes the Frey lift proved to exist in Book 181, Theorem 1.2, and all
+fields and Hecke actions attributed to Book 178 are the objects constructed in its Theorems
+12.1--12.2. They are not additional hypotheses. The main result of this book is therefore a
+theorem about the already chosen Frey lift, not a conditional criterion with a new automorphic
+input.
 
 ### 1.1 The chosen primitive lift
 
@@ -108,8 +114,8 @@ $$
 $$
 
 so $\Gamma$ is nonsolvable. The field $M$ is totally real, has positive even degree, and is
-disjoint from the full avoidance field chosen before specialization. Every controlled
-rational prime splits completely in $M$; in particular, we retain complete splitting at
+disjoint from the full avoidance field chosen before specialization. Every rational prime
+specified in that specialization splits completely in $M$; in particular, this holds at
 
 $$
 2,\qquad 3,\qquad\ell.
@@ -143,9 +149,9 @@ the upper packet and retains its cyclic base-change and attachment compatibiliti
 use the tower for a different, simpler purpose: to descend the minimal packet attached to the
 chosen point back to $M$.
 
-### 1.3 The one-way order of the argument
+### 1.3 How the two constructions fit together
 
-The logical order is now fixed:
+The mathematical relation between the constructions is summarized by
 
 $$
 \begin{array}{c}
@@ -153,22 +159,27 @@ $$
 \Downarrow\\
 \text{Book 181: the chosen primitive lift }\rho\text{ over }\mathbf Q\\
 \Downarrow\\
-\rho|_{G_L}\text{ is evaluated in the already retained support}\\
+\rho|_{G_L}\text{ factors through the previously constructed Hecke action}\\
 \Downarrow\\
 \text{the resulting packet descends through (1.8) to }M.
 \end{array}
 \tag{1.9}
 $$
 
-Only the third line uses the chosen point. The support theorem and the finiteness which made
-the point possible were proved before the point existed. Nothing in this book is used to
-justify an earlier step.
+The upper packet used in Book 178 is special at the auxiliary active places; the chosen lift
+$\rho$ is unramified there. They are therefore different points of the broad deformation
+space. The upper point proves that the broad Hecke module is nonzero and ultimately that the
+broad ring has nilpotent kernel in a finite Hecke algebra. The minimal quotient of that ring
+then helps construct $\rho$. Once $\rho$ exists, its unramified local behavior places it back
+on the minimal quotient, so the same nilpotent-kernel theorem attaches an automorphic packet
+to it. This distinction between the two points is the mathematical reason the argument is not
+circular.
 
-## 2. The signed-special integral record
+## 2. The signed-special local representation
 
 The later packet construction needs more than conductor one at the dyadic place. We therefore
-record once, on the chosen lattice, the exact local object that must survive every completely
-split restriction.
+describe on the chosen lattice the local object that must survive every completely split
+restriction.
 
 ### 2.1 Primitive monodromy, line, and sign
 
@@ -225,7 +236,7 @@ F_2^{\mathrm{ss}}=
 $$
 
 Thus arithmetic Frobenius acts on $\mathscr L$ by $2\varepsilon_2$ and on the quotient by
-$\varepsilon_2$. The complete integral record is
+$\varepsilon_2$. The resulting integral tuple is
 
 $$
 (N,\mathscr L,\varepsilon_2,F_2NF_2^{-1}=2N,
@@ -256,7 +267,7 @@ $$
 Equation (2.3) makes the line Frobenius-stable, and (2.5) gives its sign. $\square$
 
 Conductor one alone would forget both the primitive thickness of the integral extension and
-the choice of Frobenius eigenline. Later references to the dyadic record always mean (2.6).
+the choice of Frobenius eigenline. Later references to the dyadic tuple mean (2.6).
 
 ### 2.3 Literal preservation at split places
 
@@ -276,12 +287,14 @@ multiplied by the ramification index; if that index is divisible by $\ell$, a pr
 monodromy matrix can become zero after reduction even though its rational monodromy remains
 nonzero.
 
-## 3. The retained broad support theorem
+## 3. The broad deformation ring and its Hecke action
 
-Book 178 constructs a broad deformation problem because the exact special component of its
-upper packet does not contain every unramified lift on its zero-monodromy boundary. The broad
-problem contains both the upper special packet and the minimal problem of Book 181, and this
-is precisely what lets the chosen point be evaluated without a second patch.
+The upper packet of Book 178 and the chosen lift have different local behavior at the active
+auxiliary primes, so they do not lie on one narrow special deformation component. Both do lie
+on a broader tame-unipotent space. The upper packet is used there to prove a finite Hecke
+action with nilpotent kernel; the chosen lift reaches the same space through its unramified
+quotient. This common ambient ring is what turns the already proved support theorem into
+automorphy of the newly chosen point.
 
 ### 3.1 The broad ring and its minimal quotient
 
@@ -344,7 +357,7 @@ The decisive point is the direction of (3.1). A point of the minimal quotient au
 gives a point of the broad ring. No claim is made that the upper packet's exact enhanced
 special ring surjects onto the minimal ring.
 
-### 3.3 From support to an automorphic packet
+### 3.3 The automorphic packet over the target field
 
 The target ring $\mathcal O'$ is a characteristic-zero domain, so the composite
 
@@ -360,7 +373,7 @@ The represented Galois action agrees with $\rho|_{G_L}$ at all unramified Froben
 absolute residual irreducibility and Brauer--Nesbitt identify the rational representations.
 After one coefficient extension, the stable lattices are homothetic, so the lattice can be
 chosen to be the restriction of the lattice in (1.2). Thus the automorphic realization keeps
-the complete integral records at $2$ and $\ell$.
+the integral local structures at $2$ and $\ell$.
 
 ## 4. The cyclic return to the Galois field
 
@@ -372,8 +385,8 @@ new minimal packet.
 ### 4.1 The temporary target-preparation tower
 
 At each step $K_i/K_{i-1}$ of (1.8), every place above $2$ and $\ell$ splits. All other
-ramification of $\rho|_{G_{K_{i-1}}}$ is absent. The construction in Book 109, Chapter 14,
-retained by Book 178, also keeps the residual image unchanged along the tower. In particular,
+ramification of $\rho|_{G_{K_{i-1}}}$ is absent. Book 178 proves, using Book 109, Chapter 14,
+that the residual image stays unchanged along the tower. In particular,
 
 $$
 \bar\rho|_{G_{K_i}}\text{ is absolutely irreducible}
@@ -383,7 +396,7 @@ $$
 for every $i$.
 
 The original upper packet used to build (3.2) was base-changed upward through this tower with
-all selected components and attachment maps recorded. For the minimal packet arising from
+the selected components and attachment maps preserved. For the minimal packet arising from
 (3.4), we must verify descent rather than borrow a property of that different packet.
 
 ### 4.2 Selectedness of every descent fibre
@@ -429,11 +442,12 @@ two-character endpoint occurs during descent.
 We now collect the two decisive consequences. Unlike a general potential-automorphy
 criterion, their inputs are actual objects already produced in Books 178 and 181.
 
-### 5.1 Automorphy over the prepared target field
+### 5.1 Automorphy from the target Hecke action
 
-**Theorem 5.1 (evaluation of the retained target support).** Retain the field $L$, the maps
-(3.1)--(3.2), and the chosen primitive lift $\rho$ of Book 181 obtained from the finite
-minimal quotient in Book 178. Then, after one finite coefficient extension, there is a
+**Theorem 5.1 (automorphy over the prepared target field).** Let $\rho$ be the primitive Frey
+lift constructed in Book 181, Theorem 1.2, and let $L$, (3.1), and (3.2) be the field and maps
+constructed in Book 178, Theorems 12.1--12.2. Then, after one finite coefficient extension,
+there is a
 parallel-weight-two cuspidal representation $\pi_L$ such that
 
 $$
@@ -450,7 +464,7 @@ ring. The composite (3.4) kills the nilpotent kernel of the finite automorphic a
 so it gives an automorphic eigencharacter. The resulting packet has the same represented
 Galois point as $\rho|_{G_L}$. Residual absolute irreducibility makes it cuspidal and identifies
 the stable lattice up to homothety. Because the point factors through the exact minimal local
-conditions, Lemma 2.2 preserves the dyadic and coefficient-prime records and unramifiedness
+conditions, Lemma 2.2 preserves the dyadic and coefficient-prime structures and unramifiedness
 elsewhere. $\square$
 
 ### 5.2 Descent to the split Galois field
@@ -471,15 +485,15 @@ $2$, $3$, and $\ell$. The restricted representation remains absolutely irreducib
 descent condition at every step of (1.8). Book 109, Theorem 13.3 uses the extension
 $\rho|_{G_{K_{i-1}}}$ to choose the correct quotient twist and descends one step. Induction
 gives $\pi_M$ and (5.2). Residual irreducibility throughout the tower proves cuspidality. The
-remaining assertions about $M$ are retained from Book 178's split Galois specialization and
-its closure-level avoidance. $\square$
+remaining assertions about $M$ were proved in Book 178's split Galois specialization and its
+closure-level avoidance argument. $\square$
 
 The direction of this proof matters. We do not try to ascend from an arbitrary field of
 potential automorphy to a normal closure. The automorphic support is evaluated at the prepared
 top $L$, and the explicitly prepared solvable tower returns the packet to the Galois field
 which Book 178 had already constructed.
 
-### 5.3 What the descent preserves
+### 5.3 Local properties after descent
 
 At a place above $2$ or $\ell$, every layer of (1.8) is split. The local packet and attached
 representation are therefore repeated, not transformed. Consequently $\pi_M$ retains the
@@ -668,18 +682,18 @@ The finite-flat construction in this proof is a bridge to irreducibility. Propos
 does not choose the final ground-field integral lattice at $\nu$; that is a separate later
 integral construction.
 
-### 7.3 The precise range of the conclusion
+### 7.3 The scope of the selected-three result
 
-Proposition 7.1 is exactly coefficientwise: it concerns embeddings inducing the one selected
-place $\nu$. The same raw-to-global signed-special statement at every coefficient place would
-follow from a general smooth-proper Hodge--Tate comparison for all the carrier curves, or from
-a sufficiently strong semisimplicity theorem for their cohomology. Neither stronger result is
-needed here, and neither is asserted.
+Proposition 7.1 concerns the single chosen place $\nu\mid3$. Its proof uses finite-flat
+geometry at three and does not require a smooth-proper Hodge--Tate comparison for every
+carrier and every coefficient place. It also does not prove absolute irreducibility at the
+coefficient places above two. Those two uniform statements are stronger than the
+selected-three result and play no role in Theorem 9.1.
 
-Likewise, the theorem retains the original finite-flat lattice at the coefficient prime
-$\ell$ and uses finite-flat geometry to prove the selected-three irreducibility bridge. It
-does not construct compatible integral models at all odd coefficient places. The rational
-packet array and an arbitrary stable lattice do not by themselves supply those models.
+The original lift still has its compatible finite-flat lattice at the coefficient prime
+$\ell$, but Proposition 7.1 does not construct such lattices at every odd coefficient prime.
+An arbitrary stable lattice in a rational packet realization need not have finite-flat
+quotients. Thus no all-odd integral-model theorem is asserted or needed here.
 
 ## 8. Auxiliary Galois comparisons
 
@@ -721,9 +735,11 @@ $$
 
 **Proof strategy.** At the distinguished coefficient embedding the raw representation is
 already the irreducible restriction of $\rho$. Its conductor is therefore zero away from
-$2\ell$. Coefficient independence carries that zero conductor and its invariant Frobenius
-polynomial to every other coefficient. At the rational prime $\ell$, a good unitary cover
-supplies the same conclusion for coefficients of different residue characteristic.
+$2\ell$, and coefficient independence carries that zero conductor and its invariant
+Frobenius polynomial to every other coefficient. At the rational prime $\ell$, Book 118,
+Corollary 10.3A supplies a finite unitary cover protected at $\ell$, while the good-model
+argument of Book 121, Section 11.4 makes the unitary cohomology unramified. Pullback and trace
+then transfer unramifiedness to the basic carrier.
 
 **Proof.** First assume $p\ne\ell$. At the distinguished embedding $\lambda_0$, equation
 (6.3) identifies the semisimplification of $W^{\mathrm{raw}}_{H,\lambda_0}$ with the absolutely
@@ -741,12 +757,36 @@ multiplicity factor. The conductor is zero at $\lambda_0$, hence zero at every $
 stated range. Its common Frobenius polynomial defines $D_{H,w}$. Because monodromy is zero,
 Book 128's zero-monodromy comparison passes the same pair to the global semisimplification.
 
-Now let $p=\ell$. The carrier is split and hyperspecial above $\ell$. The good unitary cover
-used in Book 168 is proper and smooth there after an unramified extension, so its cohomology is
-unramified for every coefficient of residue characteristic different from $\ell$. Pullback
-and trace make the basic carrier cohomology a rational direct summand. The raw packet factor
-and its semisimplification are therefore unramified, and the same coefficient-independent
-Frobenius polynomial again defines $D_{H,w}$. $\square$
+Now let $p=\ell$, and write $B_H/F_H$ for the quaternion algebra defining the basic carrier.
+Choose an imaginary quadratic field $K_0/\mathbf Q$ which is split at $\ell$ and nonsplit at
+every rational prime below the finite ramification of $B_H$. Such a choice exists by weak
+approximation because that ramification is empty or consists of the single dyadic spectator.
+Put $L_H=F_HK_0$. Then $L_H$ embeds in $B_H$, and $\ell$ splits completely in $L_H$.
+
+After centrally saturating the derived level, which does not change vectors of the
+trivial-central-character packet, apply Book 118, Corollary 10.3A with protected set
+$S=\{\ell\}$. It gives a finite extension $E_H/L_H$, unramified at every place above $\ell$,
+and a finite surjective morphism
+
+$$
+f:Y_{E_H}\longrightarrow X_{E_H}                              \tag{8.3a}
+$$
+
+from a union of unitary PEL components to the selected basic quaternionic component union.
+All level shrinking occurs away from $\ell$, and both sides remain hyperspecial there. At a
+place $x\mid\ell$ of $E_H$, the hypotheses of Book 121, Section 11.4 hold: $\ell$ is odd,
+$F_H$ and $K_0$ are split at $\ell$, $B_H$ is split above $\ell$, and the level and lattice
+are hyperspecial and self-dual. Book 121, Theorem 11.2 therefore gives $Y_{E_H}$ a smooth
+projective model at $x$ and makes the identity component of its relative Picard scheme an
+abelian scheme. Smooth proper base change shows that its prime-to-$\ell$ cohomology is
+unramified.
+
+On rational cohomology, trace after pullback by $f$ is multiplication by the nonzero degree of
+$f$. Hence the basic-curve cohomology, and in particular its raw packet factor, is a direct
+summand after restriction to $G_{E_H}$. Since $(E_H)_x/(F_H)_w$ is unramified, their inertia
+groups agree; the raw factor is therefore unramified already over $(F_H)_w$. Its semisimplification
+is unramified as well, and the coefficient-independent Frobenius polynomial defines the same
+pair $D_{H,w}$ as before. $\square$
 
 The proposition includes the rational prime $3$ whenever the coefficient embedding does not
 induce $\nu$, and it includes the original prime $\ell$ at all coefficient places away from
@@ -780,24 +820,27 @@ quotient is tame. It would then need a fine semistable model carrying the type p
 component routing, character or exchange lines, and normalized Frobenius return maps. The
 unramified algebraic Galois pair (8.3) does not manufacture those automorphic objects.
 
-Such a type theorem is not needed for the selected-three packet array. The later Galois
-comparison uses the actual pairs (8.3), finite-character twisting, and Weil induction. The
-stronger automorphic geometry remains a separate question outside the scope of this book.
+Such a type theorem is unnecessary for Theorem 9.1. The Galois comparison uses the pairs
+(8.3), finite-character twisting, and Weil induction, none of which requires a principal or
+dihedral automorphic type at every auxiliary place. The stronger automorphic geometry is
+outside the scope of this book.
 
-## 9. The exported packet-array datum
+## 9. The selected-three packet theorem
 
-The constructions above can now be stated as one theorem. Its conclusion is deliberately
-coefficientwise at $\nu$ for the signed-special comparison, while retaining coefficient-free
-unramified pairs away from two. This is the exact balance needed for the ensuing Brauer and
-effectivity arguments.
+We can now assemble the preceding constructions. The dyadic signed-special comparison is made
+at one coefficient place $\nu\mid3$, while the unramified pairs away from two are algebraic
+and can be specialized at every coefficient place of different residue characteristic. This
+asymmetry is sufficient for the Brauer-induction argument: it provides one irreducible
+three-adic member with the full dyadic pair and supplies the coefficient-independent good
+local data used in restriction, twisting, and induction.
 
-### 9.1 The complete selected-three theorem
+### 9.1 Automorphic packets and their selected-three realizations
 
-**Theorem 9.1 (selected-three controlled packet array).** Let $\bar\rho$ be the primitive
-signed-special residual representation used in Book 178. Retain Book 178's split Galois
-specialization, target-preparation tower, broad-to-minimal quotient, and finite automorphic
-action. Let $\rho$ be the chosen primitive lift produced by Book 181 from the finite minimal
-quotient. Then the following data exist.
+**Theorem 9.1 (selected-three automorphic packet family).** Suppose a normalized primitive
+Fermat solution of prime exponent $\ell\geq7$ is given, and let $\rho$ be the primitive lift
+whose existence is proved in Book 181, Theorem 1.2. Then the fields and Hecke action constructed
+in Book 178, together with the descent and comparison arguments of this book, give the
+following objects and properties.
 
 1. There is a totally real Galois extension $M/\mathbf Q$ with
    $\Gamma\simeq S_d$ for some $d\geq5$, disjoint from the full avoidance field and completely
@@ -846,9 +889,9 @@ quotient. Then the following data exist.
    that of $w$. These pairs are compatible with finite twisting, Weil induction, and the
    cyclic attachment identities.
 
-**Proof.** The field and the retained support maps are the outputs summarized in Sections
-1.2 and 3.1. Proposition 3.1 places the chosen restricted point on the minimal quotient and
-therefore on the broad ring. Theorem 5.1 evaluates the already proved support, and Theorem 5.2
+**Proof.** Book 178 constructs the fields of Section 1.2 and the Hecke maps of Section 3.1.
+Proposition 3.1 places the chosen restricted point on the minimal quotient and therefore on
+the broad ring. Theorem 5.1 factors this point through the Hecke action, and Theorem 5.2
 uses the target-preparation tower and Book 109's cyclic descent theorem to produce $\pi_M$.
 This proves items 1--2 and carries the integral local data of item 4.
 
@@ -859,23 +902,28 @@ targetwise parity carriers, and Proposition 7.1 applies the fixed-three finite-f
 prove item 6. Finally Proposition 8.1 constructs the common unramified pairs, and Section 8.2
 proves their twisting and induction compatibility. $\square$
 
-No further arithmetic assumption is hidden in this theorem. In particular, it does not ask
-for a new residual automorphic seed, a second finite-set support theorem, a separate selected
-cyclic descent package, a uniform raw-to-global comparison at every coefficient place, strong
-principal or dihedral automorphic types, or integral models at all odd coefficient primes.
+The only arithmetic starting point of the theorem is the Frey solution from which Book 181
+constructs $\rho$; the fields, broad Hecke action, and cyclic tower are theorems of Book 178.
+The conclusion is intentionally narrower than a uniform all-coefficient theory. It gives the
+raw-to-global dyadic comparison at $\nu\mid3$, not at every coefficient place; it does not
+prove coefficient-two absolute irreducibility, finite-flat models at all odd primes, or
+principal and dihedral automorphic types at every auxiliary place. None of those stronger
+statements is needed for the automorphy and elementary packet family proved here.
 
 ### 9.2 Conclusion
 
-The chosen point now has a controlled automorphic life over the original Galois field of the
-two-prime construction. The key step is elementary but decisive: its restriction to the
-prepared target field satisfies the minimal local conditions, so the quotient map places it
-inside the broad deformation problem whose support was proved before the point existed. The
-temporary target tower then returns the resulting packet to the split symmetric field.
+The chosen lift is now automorphic over the original split Galois field of the two-prime
+construction. Its restriction to the prepared target field satisfies the minimal local
+conditions, so the quotient map places it inside the broad deformation problem. The finite
+Hecke action attaches a packet there, and cyclic descent through the prepared tower brings
+that packet back to the split symmetric field.
 
 From that field, complete splitting and the unramified extending representation make every
 elementary descent fibre selected. Parity-correct compact carriers give actual packet
 attachments, the good-reduction finite-flat bridge preserves the full dyadic special pair at
 the chosen place above three, and coefficient-independent conductor theory supplies the
-unramified algebraic pairs away from two. These are precisely the finite packet data required
-for Brauer induction and subsequent coefficientwise effectivity, with the original integral
-records preserved and the stronger uniform statements left outside the claim.
+unramified algebraic pairs away from two. The result preserves the primitive dyadic line and
+sign at the selected three-adic realization while giving the algebraic local pairs needed for
+restriction, twisting, and induction. This is exactly the mathematical input supplied by the
+book; uniform Hodge--Tate comparison, coefficient-two irreducibility, all-odd integral models,
+and stronger automorphic local types are neither used nor concluded.
