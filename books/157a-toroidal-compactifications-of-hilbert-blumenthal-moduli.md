@@ -2965,8 +2965,9 @@ smooth morphism the sheaf of geometric connected components is finite etale: loc
 constant idempotents of a fiber lift uniquely through smooth infinitesimal
 neighborhoods and properness extends them. Since $R$ is henselian, the chosen generic
 component therefore extends to an open-and-closed component. Denote it by
-$\overline{\mathcal Y}$. It is smooth and projective over $R$, contains the
-good-reduction locus $\mathcal Y^{\mathrm{good}}$, and carries the restriction of
+$\overline{\mathcal Y}$. It is smooth and projective over $R$, its projective
+generic fiber contains $Y$ as a dense open, it contains the good-reduction locus
+$\mathcal Y^{\mathrm{good}}$, and it carries the restriction of
 the ample structured Plucker line of Section 15.3. A power is relatively very ample. The section (17.1) extends
 by properness, and its completed branch is (17.2) by (16.2).
 
@@ -2985,9 +2986,11 @@ state the extra input actually required.
 passage to the selected fine component, a smooth projective finite-type model
 $\overline{\mathcal Y}/R$ with geometrically connected fibers is supplied such that:
 
-1. its generic fiber is $Y$ and it contains the good-reduction locus
+1. its projective generic fiber $\overline{\mathcal Y}_K$ contains $Y$ as a dense
+   open, and $\overline{\mathcal Y}$ contains the good-reduction locus
    $\mathcal Y^{\mathrm{good}}$;
-2. $y_{\mathrm{sp}}$ extends to an $R$-section whose completed boundary branch is
+2. the selected point $y_{\mathrm{sp}}\in Y(K)\subset\overline{\mathcal Y}_K(K)$
+   extends to an $R$-section whose completed boundary branch is
    the prescribed framed Tate--Mumford branch, without enlarging the completion
    field or changing its valuation, Kummer, theta, polarization, or frame data; and
 3. a relatively very ample line and every coefficient and PEL-frame descent
@@ -3042,11 +3045,16 @@ Section 17.1, assume one of the following separate alternatives:
 Then there is one smooth projective finite-type $R$-model
 $\overline{\mathcal Y}$ satisfying all of the following.
 
-1. It contains the good interior $\mathcal Y^{\mathrm{good}}$. In the higher-rank
-   alternative a relatively very ample line is a power of the descended structured
-   Plucker line; in the rank-one alternative the relatively very ample line is part
-   of R1-FTJ.
-2. The selected semistable point extends to an $R$-section. The completion at its boundary branch is the normalized paired-frame Mumford chart, and the section retains its completion field, valuation and Kummer shells, theta rigidification, polarization sign, and exact frames.
+1. Its projective generic fiber $\overline{\mathcal Y}_K$ contains $Y$ as a dense
+   open, and $\overline{\mathcal Y}$ contains the good-reduction locus
+   $\mathcal Y^{\mathrm{good}}$. In the higher-rank alternative a relatively very
+   ample line is a power of the descended structured Plucker line; in the rank-one
+   alternative the relatively very ample line is part of R1-FTJ.
+2. The selected semistable point
+   $y_{\mathrm{sp}}\in Y(K)\subset\overline{\mathcal Y}_K(K)$ extends to an
+   $R$-section. The completion at its boundary branch is the normalized paired-frame
+   Mumford chart, and the section retains its completion field, valuation and Kummer
+   shells, theta rigidification, polarization sign, and exact frames.
 3. The open (17.4) is nonempty and dense for every proper closed $Z\subset Y$.
 4. Every coefficient and descent isomorphism of the PEL frame cover extends to the model and the ample line.
 
