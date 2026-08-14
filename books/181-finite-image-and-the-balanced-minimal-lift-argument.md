@@ -906,6 +906,17 @@ will enter the descent argument. We use the stronger established theorem because
 available source of (4.2). No reduced-finiteness or reduced-support assertion is manufactured
 inside this book.
 
+In particular, Proposition 4.1 proves
+
+$$
+(\mathrm{Seed}_{\mathrm{SP}})\Longrightarrow
+(\mathrm{SF}_{\mathrm{SP}}).
+\tag{4.2a}
+$$
+
+This implication is one-way. The special-fibre certificate does not reconstruct the Hecke
+module, clean Taylor--Wiles datum, or characteristic-zero automorphy used downstream.
+
 There is no second restricted-finiteness hypothesis in the present formulation: the sole new
 arithmetic hypothesis is $(\mathrm{Seed}_{\mathrm{SP}})$, and Proposition 4.1 derives the
 stronger whole-ring statement (4.2) from it. Finiteness only of
@@ -1029,6 +1040,44 @@ post-specialization cleanability conditional. Therefore
 no prior theorem constructs item 3 together with item 4 of
 $(\mathrm{Seed}_{\mathrm{SP}})$. This absence of an exact clean Frey-SP carrier is the first
 irreducible arithmetic gap.
+
+On the preferred split-top route this broad verdict can be sharpened. Conditional on
+Book 176's direct $({\rm IAV}_{P_{\rm aux}})$ certificate, Book 178 constructs an upper
+parallel-weight-two packet whose residual representation is $\bar\rho|_{G_F}$ and a nonzero
+upper localization. Since $[F:\mathbf Q]$ is even, the quaternion algebra ramified at every
+real place and at no finite place exists. Ordinary global Jacquet--Langlands transfers the
+upper packet directly to this totally definite algebra. Scaling one eigenvector primitively
+in its finite free class-set lattice gives a nonzero residual upper localization. This argument
+compares no curve lattice with a definite lattice and uses neither (4.3) nor node
+uniformization.
+
+The upper localization is not yet the minimal seed. Let $P_{\rm tar}$ be the actual finite set
+of non-dyadic places where that packet has more level than the signed-special minimal problem.
+The missing reusable theorem on this route is:
+
+$$
+\boxed{({\rm DMS}_{P_{\rm tar}})\quad
+\text{definite finite-set minimal-support transfer from the upper localization to the exact
+clean minimal localization}.}
+\tag{4.4}
+$$
+
+Here “exact clean” means the output, not a hidden premise: the theorem must produce a nonzero
+minimal definite localization and verify the saturation, primary--companion pairing,
+stabilizer, generic-reducedness, branchwise attachment, diamond-torsor, and exact module
+augmentation hypotheses used by Book 173. A direct proof may use paired upper/minimal local
+rings, synchronized definite Taylor--Wiles systems, special-fibre support transfer, and
+finite-level recovery. It need not construct an indefinite curve switch.
+
+Book 176's $({\rm IAV}_{P_{\rm aux}})$ does not itself prove (4.4). It starts with a named
+characteristic-zero desired point and proves that point automorphic. Before Book 181 there is
+no characteristic-zero point of the minimal signed-special deformation problem to feed into a
+second application. Conversely, a proof of $({\rm DMS}_{P_{\rm tar}})$ would turn Book 178's
+upper occurrence into items 3--4 of $(\mathrm{Seed}_{\mathrm{SP}})$; Proposition 4.1 would then
+give $(\mathrm{SF}_{\mathrm{SP}})$. Thus the split route avoids both singleton geometry and
+curve-switch abelian Ihara, but remains conditional on two distinct finite-set theorems:
+$({\rm IAV}_{P_{\rm aux}})$ for the auxiliary characteristic-zero point and
+$({\rm DMS}_{P_{\rm tar}})$ for target-coefficient minimal support.
 
 ## 5. Finite image of the universal scalar fibre
 
@@ -1809,6 +1858,20 @@ SP component.
 That statement would imply $(\mathrm{Seed}_{\mathrm{SP}})$ and hence Theorem 1.1. It is not a
 theorem of the current dependency closure.
 
+For the preferred split-top construction, the preceding broad theorem factors more sharply.
+Book 178's conditional $({\rm IAV}_{P_{\rm aux}})$ handoff supplies the upper target packet,
+and direct transfer to the all-real-place definite algebra supplies upper residual occurrence
+without an integral curve switch. The remaining theorem is precisely
+$({\rm DMS}_{P_{\rm tar}})$ of (4.4). Its clean minimal output implies
+$(\mathrm{Seed}_{\mathrm{SP}})$ and hence $(\mathrm{SF}_{\mathrm{SP}})$. Neither the optional
+singleton moving geometry nor the constant-row abelian-Ihara family belongs to that direct
+definite route.
+
+If one seeks only the lift-existence theorem of this volume, an alternative proof of
+$(\mathrm{SF}_{\mathrm{SP}})$ would also suffice and would be strictly weaker than
+$({\rm DMS}_{P_{\rm tar}})$. It would not supply the restricted automorphy of the chosen point
+used at the start of Book 182, so it does not close the ultimate compatible-family chain.
+
 On the declared indefinite routes of Books 177--178, the first unresolved constant-row input is
 the finite family (4.3), not a hypothesis silently built into Book 174's core support theorem.
 If a route does not invoke those constant rows--in particular, if it constructs the exact
@@ -1831,7 +1894,7 @@ The exact source-closed statement is the implication
 
 $$
 \boxed{
-(\mathrm{Seed}_{\mathrm{SP}})
+(\mathrm{SF}_{\mathrm{SP}})
 \Longrightarrow
 \begin{gathered}
 R^{\mathrm{hr,SP}}\text{ finite free, one-dimensional, and complete intersection over }
@@ -1847,8 +1910,13 @@ Chapters 5--10 prove this implication: finite restricted image, finite trace des
 fibre finiteness, topological Nakayama, balanced complete-intersection forcing, a horizontal
 minimal prime, finite normalization, and preservation of the integral local conditions.
 
-The FLT-range unconditional theorem is not dependency-closed because
-$(\mathrm{Seed}_{\mathrm{SP}})$ is unproved. The precise verdict is therefore
+Proposition 4.1 supplies this certificate from $(\mathrm{Seed}_{\mathrm{SP}})$. The full
+automorphic seed, rather than only its special-fibre consequence, is retained by Book 182.
+
+The FLT-range unconditional theorem is not dependency-closed because neither
+$(\mathrm{SF}_{\mathrm{SP}})$ nor the stronger $(\mathrm{Seed}_{\mathrm{SP}})$ is proved; on
+the preferred split route the missing source is $({\rm DMS}_{P_{\rm tar}})$ after the separate
+$({\rm IAV}_{P_{\rm aux}})$ certificate. The precise verdict is therefore
 
 $$
 \boxed{\text{NOT READY}.}
