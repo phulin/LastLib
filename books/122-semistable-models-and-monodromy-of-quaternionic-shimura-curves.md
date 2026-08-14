@@ -4026,6 +4026,23 @@ $({\rm BTK}^{\rm gen})$ assertion. The direct results of Propositions 9.2--9.10 
 Corollary 9.11 remain proved, without an added hypothesis, for the permutation, quotient, and
 augmentation rows and their actual spectator and ray factors.
 
+There is an important downstream distinction.  The comparison (10.5) is exact and necessary
+if one wants to transport the **raw** packet plane, graph line, and node correspondence from
+the unitary model back to the basic model.  It is not necessary merely to identify the
+resulting globally semisimple packet system.  When $B$ is split at every dyadic factor, the
+generic common-adjoint cover of Book 118 already proves characteristic-zero occurrence of the
+same packet on the unitary curve.  The intrinsic unitary model of Proposition 10.2 computes
+its raw SP pair.  Book 168, Proposition 7.6A then uses $(\mathrm{HT}_1)$ to make that raw
+factor semisimple and compares it with the restriction of the basic system by good Frobenius
+polynomials.  At a dyadic prime split in the CM field the two local fields are equal, so the
+full SP pair transfers without extending (10.5) integrally.
+
+This later bypass does not weaken the hypotheses of Proposition 10.2.  In particular it still
+requires $B$ to be split at every dyadic factor.  It therefore removes (10.5) from the
+semisimple FLT interface when an all-dyadic-split automorphic carrier exists, but it does not
+construct such a carrier in even degree when quaternionic parity can be corrected only by a
+dyadic special place.
+
 ### 10.6 Conclusion
 
 The direct quaternionic bad-prime problem reduces integrally to one incidence of two
@@ -4048,5 +4065,8 @@ same incidence geometry; Proposition 10.2 constructs it without reviving the imp
 common-norm Hodge lift. What is not yet supplied is the integral finite comparison (10.5),
 including its unramified component field and expansion-one branch routing. Proposition 10.3
 shows that this single boundary is exactly what remains before the mixed one-split packet can
-use the unitary source as its raw signed-special carrier, once an eligible pair $(B,K)$ has
-been supplied.
+use the unitary source as its **raw basic-model** signed-special carrier, once an eligible pair
+$(B,K)$ has been supplied.  For the downstream semisimple packet system, Book 168's bypass
+removes this comparison whenever $B$ is already split at every dyadic factor.  The unresolved
+even-degree case is instead the construction of a mixed-dyadic carrier, or a direct special
+local--global theorem with the same output.
