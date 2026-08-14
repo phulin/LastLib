@@ -202,9 +202,9 @@ flowchart LR
 | 171 | The Minimal Totally-Real Deformation--Hecke Problem | 69, 71, 85, 124, 127, 65, 138, 170, 141 |
 | 172 | Minimal Patching and $R=T$ over Totally Real Fields | 141, 143, 144, 145, 146, 152, 171 |
 | 173 | Minimal Modularity Lifting | 171, 172 |
-| 174 | One-Prime Type Complexes and Component Support | 6, 17, 21, 22, 65, 67, 70, 122, 125, 138, 139, 140, 141, 143, 152, 170, 171, 172 |
+| 174 | One-Prime Type Complexes and Component Support | 6, 17, 21, 22, 65, 67, 69, 70, 118, 119, 121, 122, 125, 138, 139, 140, 141, 143, 145, 152, 170, 171, 172 |
 | 175 | One-Prime Nonminimal Patching and R=T | 67, 69, 109, 138, 139, 140, 143, 170, 171, 172, 173, 174 |
-| 176 | Nonminimal Modularity Lifting | 6, 22, 109, 122, 123, 124, 125, 138, 139, 140, 143, 170, 173, 174, 175 |
+| 176 | Nonminimal Modularity Lifting | 6, 14, 22, 84, 109, 122, 123, 124, 125, 138, 139, 140, 143, 145, 152, 170, 173, 174, 175 |
 | 177 | Potential Modularity of Two-Dimensional Representations | 104, 98, 127, 176, 154, 158, 142 |
 | 178 | Auxiliary Dihedral Data and Residual Potential Modularity | 6, 104, 98, 127, 141, 175, 154, 142, 155, 156, 157 |
 | 179 | Compatible Systems of Galois Representations | 41, 168, 141, 142 |
@@ -229,10 +229,16 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   continuous odd-primary characters of the full profinite congruence kernels. Book 139 proves
   that this is exactly the noncongruence-character quotient required for saturated two-map
   Ihara, proves spectator-level invariance of the underlying kernel for fixed $(F,B,v)$, and
-  gives the exact compact finite-coefficient transgression quotient. It proves neither the
-  vanishing nor any of the rank-two centrality, perfect adelic pairing, split/division local
-  multiplier classification, and adelic-to-scalar Hilbert-symbol reduction that could imply
-  it. Books 4--6 supply only the scalar reciprocity and orthogonality input after that reduction.
+  gives the exact compact finite-coefficient transgression quotient. Kernel invariance does not
+  transport centrality from a smaller completion to a larger one. The exact unresolved
+  application gate is $({\rm AC}^{\rm loc}_\ell)_{\mathscr R}$. Book 139 proves neither that
+  vanishing nor the stronger $({\rm R2CM})_{F,B,v}$ package: its first missing assertion is the
+  reference-level rank-two centrality theorem, followed by the perfect adelic
+  pairing, split/division local multiplier classification, and restricted-product/no-cross-factor
+  reduction that could imply it. Routed centrality is not formal from the reference level, but
+  would follow after the full package from the resulting order-at-most-two bound. Book 6 does
+  prove the terminal scalar cokernel is the dual of the global roots of unity; the missing
+  multiplier theorem must construct the injection into that cokernel.
 - **Type and node comparison:** objectwise normalization of the actual principal/ray tower,
   the ray factor, and the finite-wild/procyclic ramified strict-node complex are proved in Books 122,
   22, and 174; the common-normalization lemma makes the lifted principal legs isomorphisms.
@@ -266,16 +272,37 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   summands of the Shapiro constant rows; even in the nonbanal range the
   augmentation-companion pull is automatic.  At $q_v\equiv-1\pmod\ell$ the exact remaining
   type inputs are the quotient-new injection (Book 174, (5.0d)) and the primitive
-  filtered-cofiber comparison (6.0d).  Superspecial node uniformization remains a geometric
-  classification theorem, but once stated as an equivalence of flagged PEL node groupoids its
-  transport of the quotient/augmentation representations is formal.  The nonminimal
-  boundary-chart and local-dimension theorem remains needed for one-prime component support.
+  filtered-cofiber comparison (6.0d).  Proposition 5.0A identifies the first with primitivity
+  of the integral constant-vector map on the actual arithmetic new cokernels, equivalently
+  injectivity of the residual new Bockstein into the augmentation companion; the relation
+  $VU=q_v+1$ kills the possible index only after inverting $q_v+1$.  Proposition 6.0A proves
+  that, once the actual type-incidence row and type-Ihara are supplied, the generic old cokernel already commutes with the
+  coefficient row, so (6.0d) is precisely a global filtered-normalization/graph-cycle
+  strictness theorem rather than another old-image saturation problem.  Superspecial node
+  uniformization remains the enhanced flagged PEL node-groupoid classification, isolated as
+  Book 140, (5.9a); once that equivalence and all of its enhancements are supplied, its
+  transport of the quotient/augmentation representations is formal; changing prime-to-$v$
+  level leaves the local node chart fixed while changing the groupoid, so the classification
+  cannot be derived from the local models.  The local special closure and its full
+  scalar/vexing boundary coordinates are proved.  The minimal, boundary, and special problems
+  can also be placed on one marked Taylor--Wiles diagonal, and their common boundary quotient
+  survives patching.  The remaining $({\rm BCD}_v)$ input for one-prime component support is
+  the relative Cartier-switch transversality theorem (Book 174, (8.2f)): nonvanishing or
+  regular-sequence transversality of the lower boundary block and relative formal smoothness
+  of the special monodromy relaxation.  Dimension balance and unique-component routing are
+  formal once that theorem is supplied, not another calculation of the local equation.
   Relative to the separately
   named localized abelian Ihara input, constant-coefficient generic support in the clean special
   block is proved in Book 140 from Book 125 and is not another unresolved hypothesis. After the
   typed filtration exists, Book 174 likewise proves the typed generic-residue kernel equality
   from Book 125 and contracts it to equality of the integral faithful image orders; no separate
   generic-support or faithful-order hypothesis remains at that interface.
+- **Raw signed-special carrier:** Book 122 constructs the non-common-norm unitary dyadic
+  parahoric source, but does not identify it integrally with the basic quaternionic packet
+  carrier. Its finite integral comparison (10.5), including the unramified component field and
+  expansion-one branch routing, remains required before that source can serve as the FLT raw
+  signed-special carrier. This is separate from Ihara saturation and from the raw-to-global
+  semisimplification interface.
 - **One-prime generic rigidity:** for Book 175's scalar-residual line-special problem, after
   the reduced comparison it uses the balanced enhanced obstruction presentation and finiteness
   to prove vertical torsion-freeness of the
@@ -283,11 +310,14 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   at a monodromy-zero characteristic-zero point its tangent is uniquely determined by the
   distinct Frobenius characters. Book 175 identifies vanishing of every characteristic-zero
   enhanced tangent--Selmer group with global reducedness and full $R=T$. Under the coherent
-  unpadded $({\rm AUX}_Q)$ system, it then proves that vanishing: the enhanced balanced count
+  unpadded $({\rm AUX}_Q)$ system, it then proves that vanishing: at every depth the arithmetic
+  input must first supply a clean shadow with exactly $q$ ordered primes killing the recomputed
+  enhanced dual group, together with the effective torsor and marked augmentation data.
+  Coherence is obtained only after those exact-$q$ shadows exist. The enhanced balanced count
   gives an absolute regular source with the same $q$ variables as the diamond source, and Book
   174's nonzero module free over the diamond source makes the equal-variable action faithful.
   Thus the patched ring is regular and the finite conductor-one ring satisfies full $R=T$.
-  Without a coherent
+  Without a coherent exact-$q$
   auxiliary system, the branchwise torsion-cotangent theorem isolated in Corollary 4.4a is the
   exact alternative input; finite flatness and topological support alone do not imply it.
   Book 172 derives minimal acting-order augmentation only after minimal $R=T$; Book 174 proves
@@ -299,14 +329,28 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   acting-order theorem remains in that faithful range.
 - **Several active places:** once one actual product coefficient system and all component
   routes are supplied, Books 123--124 and 174 formally construct the coherent generic global
-  level cube and its adjoint companion.  Book 125's packetwise restricted tensor factorization puts its
+  level cube and its adjoint companion. Book 84, Section 11.9 already constructs the integral
+  $2^{|P|}$-fold degeneracy source on one definite global module and its product Gram formula;
+  Book 152, Proposition 11.1 constructs the commuting regular-refinement idempotents on that
+  same kind of source. These are the owners of common-carrier commutation and source splitting,
+  not of mixed quotient exactness. Book 125's packetwise restricted tensor factorization puts its
   generic fiber in top degree, with the global multiplicity module occurring only once; it does
-  not kill lower $\varpi$-power torsion or residual hyper-Tor over a larger face base.  The
-  unresolved inputs are therefore vanishing of the mixed obstruction groups, a derived
-  product-residue/iterated-switching Beck--Chevalley
-  theorem (Books 22 and 122 provide only separate one-trait models), and simultaneous component
-  support.  Book 176, Proposition 8.3 and (8.26) construct the joint scalar ray quotient and
-  strict product twist when scalar active places occur.  Book 143 gives represented-ring augmentation for the product
+  not kill lower $\varpi$-power torsion or residual hyper-Tor over a larger face base. Book 176
+  identifies the two-place residual obstruction over the final coefficient DVR with the
+  torsion in the top joint-new quotient, equivalently failure of primitivity for the sum of
+  the two top old images; its split-edge countermodel shows that generic concentration and
+  separate primitivity do not force this sum to be primitive. Distinct arithmetic fibers have
+  empty intersection, so a literal multi-trait component fiber is unavailable. Book 176
+  constructs the parity-correct cube of quaternionic inner forms and proves generic
+  packet-label commutation with the common multiplicity inserted once; the unresolved
+  geometric input is the routed integral derived iterated-switch Beck--Chevalley homotopy with
+  component/branch terms and higher coherence. Full simultaneous component support also
+  remains unresolved. Book 14 already supplies formal derived base-change pasting once the
+  higher maps exist, and Book 145 supplies the support--annihilator implications; neither
+  constructs the missing arithmetic maps or product-component occurrence. Book 176,
+  Proposition 8.3 constructs the joint scalar ray quotient; (8.26) gives the strict product
+  twist only on an already constructed routed joint cube equivariant for that quotient. Book
+  143 gives represented-ring augmentation for the product
   problem under its ordered-distinct-root hypotheses.  One common equivariant auxiliary
   package, including the full vertexwise ordered-root and old/new hypotheses of Book 174,
   Proposition 9.1, gives coherent complex--module--action--pairing augmentation objectwise;
@@ -317,7 +361,11 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   actual joint carrier, simultaneous generic local labels, integral coefficient-prime
   realization, and exact trace/structural generation have been verified; its reduced-order
   argument then supplies the all-Artinian factorizations.  Those joint inputs do not follow
-  from separate one-prime carriers.
+  from separate one-prime carriers. For one named characteristic-zero point, Book 176 also
+  constructs the canonical torsion-free top/adjoint carrier directly from the actual cube.
+  Its smaller pointwise interface needs simultaneous branch verification and reciprocity on
+  that carrier, followed by occurrence of the single global product component through the
+  point; mixed exactness and product residue are needed only if used to prove that occurrence.
 - **Controlled residual automorphic seed:** Book 157 proves the paired-frame Kummer
   normalization, a simultaneous regular projective equivariant fan, finite-field Bertini,
   stable DVR slicing conditional on a supplied joining model, the complete-trait inverse, the Mumford-side completed ring, and the
@@ -334,6 +382,10 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   requires the separately stated repeatability, flexibility, and realized-normal-closure
   hypotheses.  The literal marked-good-section form additionally retains Book 157's necessary
   finite-residue rational-point condition, but that stronger form is not used.
+  Book 158 imports this as a conditional implication for its singleton moving presentation;
+  its unconditional fine interior and point-centered local opens do not prove
+  $(\mathrm{IIT})$, $(\mathrm{MPE})$, $(\mathrm{ACE})$, $(\mathrm{TCG})_\Sigma$,
+  $(\mathrm{FTJ})_{v_0,Z}$, or $(\mathrm{ICS})_{v_0,Z}$.
   In the multiplicative-$\ell$
   Frey branch, Book 157 constructs the one-prime good ordinary $\mathbf Q_\ell$ seed
   $({\rm Ord}^{\rm base}_\ell)$ carrying the exact selected $\ell$-model.  Its
