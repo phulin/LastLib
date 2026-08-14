@@ -1964,7 +1964,9 @@ This chapter proves the definite-module statement that makes such a paired const
 possible.  The proof has two independent ingredients.  Prime-to-$\ell$ stabilizers make taking
 sections commute with coefficient reduction.  The free diamond action then makes each integral
 system a regular group-ring module.  Their common residual packet synchronizes the two ranks and,
-when nonzero, proves that the common rank is positive.
+when nonzero, proves that the common rank is positive for the fixed auxiliary set.  Uniformity as
+the auxiliary set varies is a separate conclusion proved only under the hypotheses of
+Proposition 20.6.
 
 ### 20.1 Two coefficient systems on one class groupoid
 
@@ -1978,7 +1980,29 @@ $$
 $$
 
 are common.  The brackets emphasize that isotropy and the central coefficient line are retained.
-Index the two systems by $\varepsilon\in\{\mathrm d,\mathrm a\}$, for desired and avoidance.
+
+Before choosing either coefficient system, attach to an object $x$ represented by $g$ the
+projective arithmetic stabilizer
+
+$$
+\Gamma_{x,n}^{\mathrm{proj}}
+=\bigl(D^\times\cap gU_n(Q)Z_fg^{-1}\bigr)/F^\times.
+$$
+
+This is a finite group depending only on the quaternion algebra, the level, and the object.  It
+does not depend on a central character or on an active coefficient lattice.  We assume
+
+$$
+\ell\nmid |\Gamma_{x,n}^{\mathrm{proj}}|
+\quad\text{for every object and every depth under consideration.}
+\tag{20.2}
+$$
+
+Effective neatness implies (20.2), but the prime-to-$\ell$ order is the exact hypothesis needed
+for reduction of invariants.
+
+Now index the two coefficient systems by $\varepsilon\in\{\mathrm d,\mathrm a\}$, for desired
+and avoidance.
 
 At every $v\in P$, let $L_v^\varepsilon$ be a finite free $\mathcal O$-lattice with a right action
 of the active compact group.  Put
@@ -1987,7 +2011,7 @@ $$
 L^\varepsilon=\bigotimes_{v\in P}L_v^\varepsilon,
 \qquad
 V^\varepsilon=W\otimes_{\mathcal O}L^\varepsilon.
-\tag{20.2}
+\tag{20.3}
 $$
 
 The active compact acts on the second factor and commutes with the algebraic action on $W$.  It
@@ -2001,7 +2025,7 @@ $$
 f(\gamma g u z)
 =\chi_f^\varepsilon(z)\rho(\gamma)
 \bigl(f(g)\cdot u_P\bigr).
-\tag{20.3}
+\tag{20.4}
 $$
 
 For $z_0\in U\cap Z_f$, consistency of the two presentations obtained from
@@ -2009,7 +2033,7 @@ $u=z_0,z=z_0^{-1}$ is exactly
 
 $$
 w\cdot z_{0,P}=\chi_f^\varepsilon(z_0)w.
-\tag{20.4}
+\tag{20.5}
 $$
 
 Thus the central character is part of the coefficient system, not an operator added after
@@ -2024,7 +2048,7 @@ L_v^{\mathrm d}/\varpi L_v^{\mathrm d}
 \xrightarrow{\sim}
 L_v^{\mathrm a}/\varpi L_v^{\mathrm a}
 \qquad(v\in P).
-\tag{20.5}
+\tag{20.6}
 $$
 
 They are required to intertwine the active compact actions, the reduced central characters, and
@@ -2034,11 +2058,26 @@ isomorphism after reduction.  This formulation is intrinsic: replacing local ten
 factorizations by any two finite free coefficient systems with the same marked residual system
 changes none of the arguments below.
 
-For a tame principal-series lattice compared with its trivial-character companion, (20.5) is the
+For a tame principal-series lattice compared with its trivial-character companion, (20.6) is the
 familiar phenomenon that the tame character becomes trivial modulo $\varpi$.  What matters here
 is not the name of the local representations, but the equivariance of the marked reduction.  An
 isomorphism of the underlying $k$-modules which forgets the active compact or the center is
 insufficient.
+
+The coefficient actions are applied only after the common group
+$\Gamma_{x,n}^{\mathrm{proj}}$ has been fixed.  If
+$\gamma gu z=g$, formula (20.4) defines
+
+$$
+\sigma_{x,n}^\varepsilon([\gamma])w
+=\chi_f^\varepsilon(z)\rho(\gamma)(w\cdot u_P)
+$$
+
+on $V^\varepsilon$.  Changing $\gamma$ by a rational scalar does not change this operator by the
+rational central compatibility, and changing the decomposition of the same stabilizer element
+does not change it by (20.5).  Thus $\sigma_{x,n}^\varepsilon$ is a representation of the one
+coefficient-independent projective group.  The two representations can differ integrally, while
+(20.6) identifies their reductions.
 
 ### 20.2 The intrinsic common residual module
 
@@ -2049,26 +2088,14 @@ $$
 M_n^\varepsilon=H^0(\mathscr X_n,\mathscr V_n^\varepsilon),
 \qquad
 \bar M_n=H^0(\mathscr X_n,\bar{\mathscr V}_n).
-\tag{20.6}
+\tag{20.7}
 $$
 
 The second module is the **common residual module**.  It is not defined by choosing one of the
 two integral modules and declaring the other to be congruent to it.  It is the module of sections
 of the common residual coefficient system on the common residual class groupoid.
 
-For an object $x$ of $\mathscr X_n$, write $\Gamma_x$ for its finite effective stabilizer after
-the central redundancies acting trivially on the coefficient line have been removed.  We impose
-the residual stabilizer condition
-
-$$
-\ell\nmid |\Gamma_x|
-\quad\text{for every object at every depth under consideration.}
-\tag{20.7}
-$$
-
-Neatness implies (20.7), but (20.7) is the exact condition used in the reduction argument.
-
-**Proposition 20.1 (common residual sections).** Under (20.7), the marked local reductions induce
+**Proposition 20.1 (common residual sections).** Under (20.2), the marked local reductions induce
 canonical isomorphisms
 
 $$
@@ -2087,22 +2114,27 @@ formula of Proposition 2.1, with the active coefficient action included, gives
 
 $$
 M_n^\varepsilon
-\cong\bigoplus_x(V^\varepsilon)^{\Gamma_x}.
+\cong\bigoplus_x(V^\varepsilon)^{\Gamma_{x,n}^{\mathrm{proj}}},
 $$
 
-Condition (20.7) makes the Reynolds operator
+where the action on the $\varepsilon$-summand is $\sigma_{x,n}^\varepsilon$.  Condition (20.2)
+makes the Reynolds operator
 
 $$
-e_x=\frac{1}{|\Gamma_x|}\sum_{\gamma\in\Gamma_x}\gamma
+e_{x,n}^\varepsilon
+=\frac{1}{|\Gamma_{x,n}^{\mathrm{proj}}|}
+\sum_{\gamma\in\Gamma_{x,n}^{\mathrm{proj}}}
+\sigma_{x,n}^\varepsilon(\gamma)
 $$
 
-an integral idempotent.  Hence $(V^\varepsilon)^{\Gamma_x}=e_xV^\varepsilon$ is a direct
+an integral idempotent.  Hence
+$(V^\varepsilon)^{\Gamma_{x,n}^{\mathrm{proj}}}=e_{x,n}^\varepsilon V^\varepsilon$ is a direct
 summand, and idempotent base change gives
 
 $$
-(V^\varepsilon)^{\Gamma_x}\otimes_{\mathcal O}k
+(V^\varepsilon)^{\Gamma_{x,n}^{\mathrm{proj}}}\otimes_{\mathcal O}k
 \xrightarrow{\sim}
-(V^\varepsilon\otimes_{\mathcal O}k)^{\Gamma_x}.
+(V^\varepsilon\otimes_{\mathcal O}k)^{\Gamma_{x,n}^{\mathrm{proj}}}.
 $$
 
 The map $\bar\iota=1_{\bar W}\otimes\bigotimes_v\bar\iota_v$ intertwines the stabilizer actions,
@@ -2158,7 +2190,7 @@ The common reduction synchronizes ranks only after each integral module has been
 the diamond algebra.  That freeness still comes from the class-set torsor.
 
 **Proposition 20.2 (synchronized diamond freeness and positive rank).** Assume that the underlying
-level datum is clean through depth $N$, that (20.7) holds, and that the active coefficient systems
+level datum is clean through depth $N$, that (20.2) holds, and that the active coefficient systems
 are constant along the $Q$-diamond fibers.  Write
 
 $$
@@ -2166,20 +2198,20 @@ $$
 $$
 
 Then, for $\varepsilon\in\{\mathrm d,\mathrm a\}$, the localized module $P_n^\varepsilon$ is
-finite free over $\Lambda_n$.  Both sides have the same rank
+finite free over $\Lambda_n$.  Both sides have the same fixed-$Q$ rank
 
 $$
-r=\dim_k\bar P_0.
+r_Q=\dim_k\bar P_0.
 \tag{20.12}
 $$
 
 In particular, if one localized residual eigenpacket occurs, meaning $\bar P_0\ne0$, then
-$r>0$ and both integral systems have positive diamond rank.
+$r_Q>0$ and both integral systems have positive diamond rank.
 
 **Proof.** For a lower-level class $x$, put
 
 $$
-L_x^\varepsilon=(V^\varepsilon)^{\Gamma_x}.
+L_x^\varepsilon=(V^\varepsilon)^{\Gamma_{x,0}^{\mathrm{proj}}}.
 $$
 
 Theorem 5.1 makes the fine fiber above $x$ a free $\Delta_{Q,n}$-orbit.  The coefficient system
@@ -2193,7 +2225,7 @@ M_n^\varepsilon
 \cong\Lambda_n\otimes_{\mathcal O}M_0^\varepsilon.
 $$
 
-Condition (20.7) makes each $L_x^\varepsilon$ an $\mathcal O$-direct summand of
+Condition (20.2) makes each $L_x^\varepsilon$ an $\mathcal O$-direct summand of
 $V^\varepsilon$, hence finite free.  The displayed decomposition therefore makes
 $M_n^\varepsilon$ finite free over $\Lambda_n$.  Since the primary idempotent commutes with
 diamonds, $P_n^\varepsilon=e^\varepsilon M_n^\varepsilon$ is a projective
@@ -2311,7 +2343,7 @@ The residual identification must carry all marked structure, not merely the unde
 The following proposition records why the local hypotheses above are sufficient.
 
 **Proposition 20.4 (compatibility of the marked structures).** Assume the hypotheses of
-Proposition 20.2.  Suppose also that every active local comparison (20.5) intertwines the
+Proposition 20.2.  Suppose also that every active local comparison (20.6) intertwines the
 reduction of the selected local intertwiners.  Then the isomorphisms (20.11) commute with:
 
 1. every away Hecke operator in the common named family;
@@ -2365,7 +2397,7 @@ C_{n,T}^\varepsilon
 \tag{20.19}
 $$
 
-Then $P_{n,T}^\varepsilon$ and $C_{n,T}^\varepsilon$ are free of rank $r$ over
+Then $P_{n,T}^\varepsilon$ and $C_{n,T}^\varepsilon$ are free of rank $r_Q$ over
 $\mathcal O_T[\Delta_{Q,n}]$, all augmentation and pairing statements base change exactly, and
 modulo $\varpi$ the two framed systems have the common module
 $k[[w_1,\ldots,w_c]]\widehat\otimes_k\bar P_n$.  The variables $w_i$ occur once; they are
@@ -2377,9 +2409,9 @@ scalar-extension identity (20.19) would not imply any of these module statements
 We can now package the result in the form needed whenever two local deformation sources have one
 residual special fiber.
 
-**Theorem 20.5 (paired definite Taylor--Wiles module theorem).** Let two exact active coefficient
-systems on the common definite class groupoids (20.1) satisfy the marked residual comparison
-(20.5), the central compatibility (20.4), and the prime-to-$\ell$ stabilizer condition (20.7).
+**Theorem 20.5 (paired definite Taylor--Wiles module theorem).** Fix one Taylor--Wiles set $Q$.
+Let two exact active coefficient systems on the common definite class groupoids (20.1) satisfy the marked residual comparison
+(20.6), the central compatibility (20.5), and the prime-to-$\ell$ stabilizer condition (20.2).
 Let a clean Taylor--Wiles level of depth $N$ be disjoint from the active set.  Choose one common
 residual Hecke packet $\bar{\mathfrak m}$ with
 
@@ -2399,7 +2431,7 @@ Then the desired and avoidance systems supply the following paired finite-level 
 1. Their reductions are the same intrinsic localized module $\bar P_n$, with the same reduced
    Hecke, active-intertwiner, diamond, and central-character actions.
 2. Both $P_n^{\mathrm d}$ and $P_n^{\mathrm a}$ are free of the same positive rank
-   $r=\dim_k\bar P_0$ over $\Lambda_n$.
+   $r_Q=\dim_k\bar P_0$ over $\Lambda_n$.
 3. Orbit sum gives compatible exact and saturated module augmentations
 
    $$
@@ -2410,7 +2442,7 @@ Then the desired and avoidance systems supply the following paired finite-level 
    If the separately stated minimal-level control hypotheses hold, $P_0^\varepsilon$ may be
    replaced by $P_{\min}^\varepsilon$ on both sides.
 4. Each primary module is perfectly paired with its declared companion over $\Lambda_n$.  Thus
-   the companion is also free of rank $r$, its orbit-sum augmentation is exact and saturated, the
+   the companion is also free of rank $r_Q$, its orbit-sum augmentation is exact and saturated, the
    two pairings reduce to (20.17), and all named Hecke operators have the declared adjoints.
 5. The action on the recovered module $P_0^\varepsilon$ has finite image
    $\mathbb T_0^\varepsilon\subseteq\operatorname{End}_{\mathcal O}(P_0^\varepsilon)$.
@@ -2440,13 +2472,103 @@ torsion-free.  The high-level generators act on coinvariants through their named
 operators, so their image is $\mathbb T_0^\varepsilon$; this proves the surjection (20.21).
 $\square$
 
-If the exact auxiliary data of Book 143 select the same Taylor--Wiles sets for a common residual
-deformation problem at every depth, the theorem applies simultaneously to both coefficient
-systems at every selected level.  The rank
-$r$ is fixed by the one base residual packet, and the paired reductions, bases, actions,
-augmentations, and pairings can be retained in the common finite shadows of Book 144.  This is a
-presentation-compatible family, not an arithmetic transition system between unrelated auxiliary
-sets.
+The theorem is deliberately a fixed-$Q$ statement.  Its formula
+$r_Q=\dim_k\bar P_0(Q)$ does not compare $\bar P_0(Q)$ with
+$\bar P_0(Q')$ for a different auxiliary set.  Uniformity across varying Taylor--Wiles sets
+requires a separate argument.
+
+**Proposition 20.6 (uniform ranks and retention for varying auxiliary sets).** Let
+$Q_N$ be a sequence of ordered paired Taylor--Wiles sets of one fixed cardinality, with the common
+exact diamond quotients and power-series source of Book 144, and apply Theorem 20.5 to $Q_N$
+through depth $N$.  Suppose $\bar P_{Q_N,0}\ne0$ for every $N$, and put
+
+$$
+r_N
+=\operatorname{rank}_{\Lambda_{Q_N,N}}P_{Q_N,N}^{\mathrm d}
+=\operatorname{rank}_{\Lambda_{Q_N,N}}P_{Q_N,N}^{\mathrm a}
+=\dim_k\bar P_{Q_N,0}.
+\tag{20.22}
+$$
+
+The following are honest routes to the uniform-rank input of Book 144.
+
+1. Let $U^{\mathrm{base}}$ be a fixed compact open containing every oriented level
+   $U_0(Q_N)$.  Put
+
+   $$
+   b=\#\bigl(D^\times\backslash D_f^\times/(U^{\mathrm{base}}Z_f)\bigr),
+   \qquad
+   I_N=[U^{\mathrm{base}}:U_0(Q_N)],
+   $$
+
+   and let $d_V$ be the common $\mathcal O$-rank of $V^{\mathrm d}$ and
+   $V^{\mathrm a}$.  Then
+
+   $$
+   1\le r_N\le d_VbI_N.
+   \tag{20.23}
+   $$
+
+   In particular, a uniform bound on the level indices gives a uniform bound on the ranks.
+2. Alternatively, suppose the conditional control isomorphisms (20.16) hold for every $Q_N$
+   and identify the oriented modules with fixed minimal modules
+   $P_{\min}^{\varepsilon}$ independent of $N$.  Then
+
+   $$
+   r_N=\operatorname{rank}_{\mathcal O}P_{\min}^{\varepsilon}
+   $$
+
+   for every $N$ and either value of $\varepsilon$; hence the ranks are already one fixed positive
+   integer.
+3. More generally, assume only that the positive integers $r_N$ are bounded.  Then there is a
+   cofinal subsequence $N_1<N_2<\cdots$ on which $r_N$ is one fixed value $r\ge1$.  Suppose in
+   addition that the uniform source-presentation hypotheses of Book 144, Proposition 10.1 hold,
+   and that every pairing and exact sequence intended as a mark descends to the chosen finite
+   truncations.  The subsequence can then be refined so that all paired residual identifications,
+   diamond labels, partial frames, named Hecke operators, pairings, adjoints, and module
+   augmentations occur in compatible finite marked shadows.  This refined sequence supplies the
+   fixed-rank input of Book 144, Theorem 18.2.
+
+**Proof.** The common residual identification at each $N$ proves all equalities in (20.22), and
+nonvanishing proves the lower bound.  Projection from the oriented class set to the class set at
+$U^{\mathrm{base}}$ has fibers of cardinality at most $I_N$.  Hence the oriented class groupoid
+has at most $bI_N$ isomorphism classes of objects.  Evaluation embeds its full section module in
+a direct sum of at most $bI_N$ copies of $V^\varepsilon$.  Localization is a direct summand, so
+
+$$
+r_N
+=\operatorname{rank}_{\mathcal O}P_{Q_N,0}^\varepsilon
+\le \operatorname{rank}_{\mathcal O}M_{Q_N,0}^\varepsilon
+\le d_VbI_N,
+$$
+
+which proves (20.23).  This estimate also shows its own limitation: for standard Iwahori levels
+the indices $I_N$ can grow with the norms of the primes in $Q_N$, so boundedness is not a formal
+consequence of fixed cardinality of $Q_N$.
+
+Under the hypotheses in part 2, fixed-$Q$ augmentation followed by (20.16) identifies
+$P_{Q_N,N}^\varepsilon/\mathfrak a_NP_{Q_N,N}^\varepsilon$ with the fixed minimal module.
+Taking ranks proves the displayed constant formula.  This use of minimal control is conditional
+on the unit Gram determinant, regular-root, and selected-support hypotheses already stated in
+Section 20.4.
+
+For part 3, a bounded sequence of positive integers takes some value $r$ infinitely often; its
+infinite level set is cofinal.  Restrict to that set.  At any fixed precision, rank-$r$ freeness
+gives a uniform number of module generators, while the assumed source-presentation bounds give
+fixed finite source quotients.  Over the finite residue field there are therefore only finitely
+many paired diagrams with the prescribed marks.  Choose an infinite subset on which the
+precision-one diagram is constant, then an infinite subset on which the precision-two diagram
+and its reduction are constant, and continue.  The diagonal subsequence has compatible reduction
+maps between its stabilized shadows.  By placing the first $d$ members of every countable named
+family in the precision-$d$ diagram, every fixed mark is retained from some stage onward.
+Pairings and exact sequences are included only under the descent hypothesis in the statement, so
+the diagonal argument does not silently assert preservation under a nonflat truncation.  This is
+the required synchronized fixed-rank family. $\square$
+
+Thus exact auxiliary data from Book 143 may be combined with Theorem 20.5 at every level, but
+Book 144 receives a Taylor--Wiles system only after Proposition 20.6 has supplied uniform rank
+and the stated finite-shadow bounds.  The resulting maps between shadows are presentation maps;
+they are not arithmetic transitions between unrelated sets $Q_N$.
 
 ### 20.7 Recovered actions and the saturation boundary
 
@@ -2454,14 +2576,14 @@ The module theorem gives enough information to identify the action seen at finit
 not turn topological support into scheme-theoretic faithfulness and does not make formation of an
 acting image commute with augmentation.
 
-**Proposition 20.6 (source support gives a nilpotent kernel).** Let $B^\varepsilon$ be a Noetherian
+**Proposition 20.7 (source support gives a nilpotent kernel).** Let $B^\varepsilon$ be a Noetherian
 source ring acting on the recovered finite module $P_0^\varepsilon$, and let
 
 $$
 B^\varepsilon\longrightarrow\mathbb T_0^\varepsilon
 \lhook\joinrel\longrightarrow
 \operatorname{End}_{\mathcal O}(P_0^\varepsilon)
-\tag{20.22}
+\tag{20.24}
 $$
 
 be the factorized action.  If a source-support theorem supplies
@@ -2469,13 +2591,13 @@ be the factorized action.  If a source-support theorem supplies
 $$
 \operatorname{Supp}_{B^\varepsilon}P_0^\varepsilon
 =\operatorname{Spec}B^\varepsilon,
-\tag{20.23}
+\tag{20.25}
 $$
 
 then the kernel of $B^\varepsilon\to\mathbb T_0^\varepsilon$ is nilpotent.
 
 **Proof.** Faithfulness of the image algebra makes the kernel equal to
-$\operatorname{Ann}_{B^\varepsilon}(P_0^\varepsilon)$.  Equation (20.23) says that the vanishing
+$\operatorname{Ann}_{B^\varepsilon}(P_0^\varepsilon)$.  Equation (20.25) says that the vanishing
 set of this annihilator is the whole spectrum, so the annihilator lies in the nilradical.  A
 nilradical in a Noetherian ring is nilpotent. $\square$
 
@@ -2496,19 +2618,19 @@ $$
 \mathbb T_n^\varepsilon\cap
 \mathfrak a_n\mathcal E_n^\varepsilon
 =\mathfrak a_n\mathbb T_n^\varepsilon.
-\tag{20.24}
+\tag{20.26}
 $$
 
 This is the finite-level form of the criterion proved in Book 145, Section 7.3.
 
-**Corollary 20.7 (exact acting-image augmentation under saturation).** Under the hypotheses of
-Theorem 20.5, if (20.24) holds, then the surjection (20.21) is an isomorphism:
+**Corollary 20.8 (exact acting-image augmentation under saturation).** Under the hypotheses of
+Theorem 20.5, if (20.26) holds, then the surjection (20.21) is an isomorphism:
 
 $$
 \mathbb T_n^\varepsilon/
 \mathfrak a_n\mathbb T_n^\varepsilon
 \xrightarrow{\sim}\mathbb T_0^\varepsilon.
-\tag{20.25}
+\tag{20.27}
 $$
 
 The same conclusion holds after partial-frame scalar extension when the corresponding framed
@@ -2531,9 +2653,9 @@ $$
 {\mathfrak a_n\mathbb T_n^\varepsilon},
 $$
 
-which vanishes by (20.24).  Scalar extension proves the framed statement. $\square$
+which vanishes by (20.26).  Scalar extension proves the framed statement. $\square$
 
-Without (20.24), Theorem 20.5 gives the module isomorphism (20.15), the finite recovered action,
+Without (20.26), Theorem 20.5 gives the module isomorphism (20.15), the finite recovered action,
 and only the canonical surjection (20.21).  This is the exact boundary needed for paired source
 patching: module control is unconditional under the definite hypotheses, while acting-image
 control retains its separate saturation hypothesis.
@@ -2571,7 +2693,7 @@ $u=s(a+bu)$ would imply $s(1-sb)=0$; since the annihilator of $s$ is generated o
 $\mathcal O$ by the norm element, augmentation would give $1\in\ell\mathcal O$, an
 impossibility.  Hence the algebraic coinvariant $\mathbb T/s\mathbb T$ contains a nonzero
 nilpotent class invisible in the actual action on module coinvariants.  This is exactly the
-defect measured by (20.24).
+defect measured by (20.26).
 
 These examples separate the three necessary arguments.  Stabilizer cleanliness proves diamond
 freeness, the common localized residual packet proves positive rank on both sides, and
@@ -2599,10 +2721,11 @@ The vertical maps in the first square are exact base change along $\Lambda_m\two
 If minimal-level control holds, $P_0$ and $C_0$ may be replaced by fixed minimal-level localized modules. Without that additional theorem, the diagram remains complete and correct with oriented-level bottom row.
 
 For a paired desired--avoidance construction, Theorem 20.5 gives two such diagrams with one marked
-residual bottom row.  The same nonzero residual packet fixes their common positive rank, and all
-Hecke, diamond, pairing, and augmentation maps reduce to the corresponding maps on that common
-row.  This is stronger than an equality of ranks and is exactly what permits the two systems to be
-carried simultaneously.
+residual bottom row at a fixed $Q$.  The same nonzero residual packet fixes their common positive
+rank there, and all Hecke, diamond, pairing, and augmentation maps reduce to the corresponding
+maps on that common row.  This is stronger than an equality of ranks and is exactly what permits
+the two systems to be carried simultaneously.  Proposition 20.6 is the separate passage from
+these fixed-$Q$ statements to a uniform varying-$Q_N$ family.
 
 ### 21.2 A dependency-closed proof chain
 
@@ -2622,9 +2745,10 @@ The proof chain has no hidden step.
 12. A unit Gram determinant supplies degeneracy injectivity and saturation; new-support vanishing and regular refinement are the remaining extra inputs for minimal-level control.
 13. Independently chosen auxiliary sets share a power-series presentation but no arithmetic transition unless separate geometry provides one.
 14. A marked residual coefficient lattice and prime-to-$\ell$ stabilizers identify reduction with sections for both coefficient systems.
-15. One nonzero common localized residual packet fixes the same positive diamond rank on the two integral sides.
-16. Orbit sum gives saturated module augmentation, while acting-image augmentation retains the separate intersection criterion of (20.24).
-17. Full source support annihilates the recovered module only through the nilradical, and therefore gives a nilpotent action kernel.
+15. At a fixed auxiliary set, one nonzero common localized residual packet fixes the same positive diamond rank on the two integral sides.
+16. Across varying auxiliary sets, bounded ranks admit a cofinal constant-rank extraction retaining every prescribed finite mark; uniform minimal control gives constancy without this extraction.
+17. Orbit sum gives saturated module augmentation, while acting-image augmentation retains the separate intersection criterion of (20.26).
+18. Full source support annihilates the recovered module only through the nilradical, and therefore gives a nilpotent action kernel.
 
 The prior-book boundary is exact:
 
@@ -2632,7 +2756,7 @@ The prior-book boundary is exact:
 |---|---|---|
 | Book 143, Taylor--Wiles primes | exact auxiliary sets for a common residual deformation problem | it supplies no definite automorphic module and no diamond freeness statement |
 | Book 144, Taylor--Wiles systems | exact-level diamond algebras, augmentation covariance, pairing conventions, and the distinction between presentations and transitions | it leaves diamond freeness, module control, and automorphic duality to the realization |
-| Book 145, patching modules and rings | common finite shadows and the augmentation-saturation criterion used in (20.24) | it does not make acting-image augmentation automatic and supplies source support only after its own patching hypotheses are verified |
+| Book 145, patching modules and rings | common finite shadows and the augmentation-saturation criterion used in (20.26) | it does not make acting-image augmentation automatic and supplies source support only after its own patching hypotheses are verified |
 | Book 82, orders in quaternion algebras | finite definite class sets, projective stabilizers, and change-of-level fibers | it supplies no weighted automorphic module or Hecke action |
 | Book 83, definite quaternionic forms | exact stabilizer-lattice description, central-character compatibility, pullback, trace, and integral pairings | bad stabilizer primes and perfectness remain explicit hypotheses |
 | Book 84, quaternionic Hecke operators | right-coset normalization, $T_v,S_v,U_v$, degeneracy matrices, Gram determinant, and inverse-diamond adjunction | its lower-right diamond becomes scalar after fixing the center, so this book replaces it by the projective ratio rather than misusing it |
@@ -2657,6 +2781,6 @@ The conventions used throughout are the following.
 - Perfectness is integral and is asserted only after stabilizer denominators and dual lattices have been checked.
 - Genuine transition maps occur only inside an actual nested tower.
 - Paired coefficient systems are identified through an intrinsic common residual section module, not by comparing ranks.
-- Module augmentation is exact under the torsor hypotheses; acting-image augmentation additionally requires (20.24).
+- Module augmentation is exact under the torsor hypotheses; acting-image augmentation additionally requires (20.26).
 
-With these normalizations, the finite-level Taylor--Wiles modules have fixed positive group-ring rank, exact augmentation, faithful diamond symmetry, primary--companion duality, and compatible transitions wherever arithmetic levels genuinely map to one another.  Theorem 20.5 supplies the same structures simultaneously for two coefficient systems with one marked residual packet, while Corollary 20.7 keeps exact acting-image augmentation at its proper saturation boundary.
+With these normalizations, the finite-level Taylor--Wiles modules have fixed positive group-ring rank inside each fixed auxiliary tower, exact augmentation, faithful diamond symmetry, primary--companion duality, and compatible transitions wherever arithmetic levels genuinely map to one another.  Theorem 20.5 supplies the same structures simultaneously for two coefficient systems with one marked residual packet, Proposition 20.6 isolates the additional uniformity needed when auxiliary sets vary, and Corollary 20.8 keeps exact acting-image augmentation at its proper saturation boundary.
