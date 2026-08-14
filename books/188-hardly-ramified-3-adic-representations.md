@@ -51,7 +51,7 @@
    - [The Frey endpoint](#94-the-frey-endpoint)
 10. [Dependencies, hostile audit, and readiness](#10-dependencies-hostile-audit-and-readiness)
     - [Direct dependencies](#101-direct-dependencies)
-    - [Exact upstream blockers](#102-exact-upstream-blockers)
+    - [Exact upstream status](#102-exact-upstream-status)
     - [Hostile audit](#103-hostile-audit)
     - [Conclusion](#104-conclusion)
 
@@ -253,8 +253,11 @@ coefficient-place form of Book 185.
 
 Book 187, Theorem 10.2, conditionally supplies (1.6)--(1.7). Its hypotheses include both the
 coefficient-prime certificate $(\mathrm C_3)$ and the clean-support certificate $(\mathrm U)$.
-This book consumes that theorem exactly as stated. It does not assert that either certificate
-has already been proved.
+This book consumes that theorem exactly as stated.  In its reusable abstract form those two
+certificates are hypotheses; in the controlled-top application Book 187, Theorem 2.3 and
+Proposition 2.1 prove $(\mathrm C_3)$, while Book 185, Proposition 8.3 proves
+$(\mathrm U)$.  They are therefore not additional blockers on the preferred selected-three
+chain.
 
 Thus Theorem 1.1 is a complete conditional implication. The unconditional FLT chain remains
 blocked upstream of its antecedent. The distinction will be recorded again in Section 10.2.
@@ -905,12 +908,15 @@ Book 187 produces its remaining integral antecedent; the positive-carrier and cl
 interfaces are closed. The unconditional spine still has the upstream controlled-family gaps
 recorded below.
 
-1. **Controlled SP seed.** Book 185, Theorem 9.1, assumes the controlled SP packet-array datum
-   used by Books 183--184. Book 185's own audit records that the current Book 182 does not
-   unconditionally supply the controlled residual automorphic seed. Book 183's preferred
-   raw-to-global route also retains the smooth-proper Hodge--Tate comparison source
-   $(\mathrm{HT}_{\mathrm{curve}})$ isolated in Book 47; ambient Tate semisimplicity is no
-   longer the missing interface.
+1. **Controlled SP top.** Book 185, Theorem 9.1, assumes the controlled SP packet-array datum
+   used by Books 183--184.  For the preferred final route, Book 182's split specialization,
+   selected ascent and descent, ordinary attachment, and targetwise SP carriers are proved;
+   its remaining conditional input is exactly the auxiliary and target instantiations of
+   Book 176's one componentwise theorem $({\rm CIAV}_P)$.  The uniform all-coefficient
+   raw-to-global route still retains the smooth-proper Hodge--Tate comparison
+   $(\mathrm{HT}_{\mathrm{curve}})$ isolated in Book 47, but the selected member at
+   $\nu\mid3$ instead uses Book 183, Proposition 6.1A and therefore does not consume that
+   theorem.
 2. **Closed positive good carriers $(\mathrm{AVCar}_{3,\ell}^+)$.** Book 187 constructs these
    for every positive corrected packet.  Its sufficient $(\mathrm{Car}_3^+)$ uses the exact
    CM-unitary common-multiplier PEL datum, not the obstructed direct trace group.  The basic

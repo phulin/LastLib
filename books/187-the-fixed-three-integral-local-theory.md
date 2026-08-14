@@ -366,15 +366,16 @@ that source theorem once the actual positive packet carriers have been construct
 ### 2.5 The fixed-three positive-carrier theorem
 
 There is a direct geometric route to $(\mathrm{IC}_3)$ which is substantially weaker than
-the source-facing compatible-family arithmetic core.  Book 182, Theorem 6.2 and Proposition
-6.2A now construct the exact split evaluated packet over $\mathbf Q_3$ together with the packets
-over $\mathbf Q_2$ and $\mathbf Q_\ell$.  Its normal-top construction therefore makes $3$
+the source-facing compatible-family arithmetic core.  Book 158, Theorem 5.1 and Book 182,
+Section 4.2 construct the exact split evaluated packet over $\mathbf Q_3$ together with the packets
+over $\mathbf Q_2$ and $\mathbf Q_\ell$.  The normal-top construction therefore makes $3$
 split completely in $M$ and hence in every elementary fixed field.  After the top and one
 integral Brauer datum
 $\mathfrak B=\{(H_i,\theta_i,n_i)\}$ have been chosen, write
-$n_i=n_i^+-n_i^-$.  Book 182, Proposition 7.2A already supplies every corrected packet with an
+$n_i=n_i^+-n_i^-$.  Book 182, Proposition 6.1 already supplies every corrected packet with an
 actual compact division-quaternion one-split basic carrier $X_i$ and its all-coefficient
-attachment.  If $d_i=[M^{H_i}:\mathbf Q]$ is even, its finite ramification set can be one
+attachment, while Proposition 8.1 supplies its common unramified algebraic pair away from two.
+If $d_i=[M^{H_i}:\mathbf Q]$ is even, its finite ramification set can be one
 dyadic special place; if $d_i$ is odd, it can be empty.  In both cases the carrier is split and
 the packet is spherical at every place above $3\ell$.  Thus basic carrier existence is no
 longer part of the positive hypothesis below.
@@ -2008,7 +2009,11 @@ $$
 $$
 
 The verdict remains not ready only because the rational input is conditional on Book 182's
-unproved controlled top, in particular its moving specialization and clean residual SP seed.
+controlled top.  The split moving specialization, selected ascent and descent, packet
+attachment, fixed-three raw-to-global comparison, and clean auxiliary support are now proved.
+On the preferred route the remaining condition is exactly the auxiliary and target
+instantiations of Book 176's one reusable componentwise theorem $({\rm CIAV}_P)$; no separate
+clean minimal-SP seed is required.
 The raw dyadic carriers are supplied targetwise by Books 118, 122, and 168, and the selected
 coefficient-three raw-to-global step is supplied by the finite-flat bridge of Books 54 and
 168; full smooth-proper $(\mathrm{HT}_{\mathrm{curve}})$ remains necessary only for the

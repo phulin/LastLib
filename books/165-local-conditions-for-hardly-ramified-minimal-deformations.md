@@ -1148,19 +1148,21 @@ Book 181 receives:
   field split completely at $2$ and $\ell$;
 - the tangent and obstruction inputs already passed through Books 166--167.
 
-Book 181 treats its additional exact automorphic seed separately.  From that
-seed, Book 173 supplies finiteness of the **whole** represented restricted
-ring, and Book 181 derives scalar-fibre finiteness from it.  This book exports
-only the Galois local conditions and the represented global deformation
-functor; it neither proves nor assumes that seed or the resulting finiteness.
+Book 181 treats the global finite-special-fibre input separately.  An exact
+automorphic seed and Book 173 supply one sufficient source.  On the preferred
+route, Book 176's broad target-IAV comparison supplies the same input without
+minimal $R=\mathbb T$; its sole unresolved arithmetic clause is the reusable
+componentwise theorem $({\rm CIAV}_{P_{\rm tar}})$.  This book exports only the
+Galois local conditions and the represented global deformation functor; it
+neither proves nor assumes either source of global finiteness.
 
 ### 5.4 Non-exports
 
 This book does not prove any of the following:
 
 - residual potential modularity or automorphy;
-- Book 181's exact automorphic seed or the resulting whole-ring restricted
-  finiteness;
+- Book 181's exact automorphic seed, target-IAV component theorem, or the
+  resulting whole-ring restricted finiteness;
 - an $R=T$ theorem, finite scalar fibre, or characteristic-zero point;
 - global smoothness or vanishing of the global obstruction group;
 - ambient $H^2$-vanishing at $\ell$;
@@ -1284,11 +1286,12 @@ theorems rather than silently strengthening them.  No result from Books 166--167
 listed in Chapter 5.
 
 There is therefore no hidden conditional theorem in the local package.
-The later global conclusion remains external: Book 181 assumes an exact
-automorphic seed, invokes Book 173 to make the whole restricted ring finite
-free, and then uses its balanced-ring argument to produce a
-characteristic-zero point.  No separate reduced-finiteness hypothesis is
-part of that downstream statement.
+The later global conclusion remains external: Book 181 takes either the
+finite-special-fibre consequence of an exact Book 173 seed or, on the preferred
+route, the consequence of Book 176's target-IAV comparison after
+$({\rm CIAV}_{P_{\rm tar}})$ is supplied.  It then uses its balanced-ring
+argument to produce a characteristic-zero point.  No separate
+reduced-finiteness hypothesis is part of that downstream statement.
 
 ### 6.4 Conclusion
 
@@ -1312,6 +1315,7 @@ is (4.9).  They supply exact local nullhomotopies and dimension corrections,
 but no global lift by themselves.  That boundary is the correct interface:
 Book 166 performs the supported cohomology calculation, Book 167 converts
 relations into supported obstructions, and Book 181 adds its separately
-stated exact automorphic seed, from which Book 173 supplies whole-ring
-restricted finiteness.  The local deformation node is complete without
-importing any conclusion from those later stages.
+stated finite-special-fibre certificate.  That certificate may come from the
+stronger Book 173 seed or from the preferred target-IAV route, whose exact
+remaining input is $({\rm CIAV}_{P_{\rm tar}})$.  The local deformation node
+is complete without importing any conclusion from those later stages.
