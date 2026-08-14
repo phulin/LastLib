@@ -100,7 +100,11 @@ uv sync --project "${REPO_ROOT}" --all-groups --locked
 log "Installing the pinned Lean toolchain"
 LEAN_TOOLCHAIN="$(tr -d '[:space:]' < "${REPO_ROOT}/lean/lean-toolchain")"
 readonly LEAN_TOOLCHAIN
-elan toolchain install "${LEAN_TOOLCHAIN}"
+if elan toolchain list | sed 's/ (default)$//' | grep -Fxq -- "${LEAN_TOOLCHAIN}"; then
+  log "Lean toolchain ${LEAN_TOOLCHAIN} is already installed"
+else
+  elan toolchain install "${LEAN_TOOLCHAIN}"
+fi
 
 log "Fetching pinned Lake dependencies"
 if [[ ! -d "${REPO_ROOT}/lean/.lake/packages/mathlib" ]]; then
