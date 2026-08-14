@@ -18,7 +18,7 @@ if [[ -z "${github_pat}" ]]; then
 fi
 
 printf '%s\n' "${github_pat}" > "${pat_file}"
-chmod 0600 -- "${pat_file}"
+chmod 0600 "${pat_file}"
 unset github_pat
 
 printf 'Stored the PAT in %s (mode 0600).\n' "${pat_file}"

@@ -11,7 +11,7 @@
     lastlib_dotfiles_repo: https://github.com/phulin/dotfiles.git
     lastlib_dotfiles_version: master
     lastlib_repo: https://github.com/phulin/LastLib.git
-    lastlib_repo_version: book1-lean
+    lastlib_repo_version: main
 
     # This lookup runs on the Ansible controller (your laptop), not the target.
     # Override the path by exporting LASTLIB_GITHUB_PAT_FILE.
