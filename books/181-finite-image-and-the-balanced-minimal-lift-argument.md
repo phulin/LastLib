@@ -129,6 +129,11 @@ asserts the existence of a totally real field and an exact clean automorphic rea
 the restricted deformation problem, with every integral hypothesis of the prior minimal
 $R=\mathbb T$ theorem written into the package. It does not assume finiteness of a deformation
 ring as an unexplained black box: Book 173 supplies that finiteness from the stated seed.
+Section 4.1 also isolates the strictly weaker restricted-special-fibre certificate
+$(\mathrm{SF}_{\mathrm{SP}})$. That certificate is all the finite-image and commutative-algebra
+argument of this volume consumes. The full seed remains the natural hypothesis of Theorem 1.1
+because Book 182 additionally uses its $R=\mathbb T$ identification to make the chosen point
+automorphic over the same field.
 
 **Theorem 1.1 (balanced signed-special minimal-lift criterion).** Assume the residual
 hypotheses of Section 2.1, the SP and coefficient-prime conditions of Sections 2.2--2.3, and
@@ -777,6 +782,27 @@ modularity-lifting theorem proves that finiteness, but only after one supplies i
 automorphic datum. We therefore state the arithmetic input at the level at which that theorem
 can actually be invoked.
 
+First isolate what the argument itself uses.
+
+**Hypothesis $(\mathrm{SF}_{\mathrm{SP}})$ (restricted special-fibre certificate).** There is
+a finite totally real field $F/\mathbf Q$ such that:
+
+1. $2$ and $\ell$ split completely in $F$, while $\bar\rho|_{G_F}$ and
+   $\bar\rho|_{G_{F(\zeta_\ell)}}$ remain absolutely irreducible;
+2. restriction of the named dyadic signed-special, coefficient-prime finite-flat, determinant,
+   and unramified conditions defines the represented ring $R_F^{\mathrm{SP}}$; and
+3. the whole represented special fibre, including its nilpotents, is finite:
+
+   $$
+   \dim_k(R_F^{\mathrm{SP}}/\varpi R_F^{\mathrm{SP}})<\infty.
+   \tag{4.0}
+   $$
+
+No automorphic module or characteristic-zero point is part of this certificate. It is weaker
+than the seed below: it asks only for the exact module-finiteness statement used after
+restriction. Finiteness of the reduced quotient, or finiteness of a collection of automorphic
+points, is not enough.
+
 **Hypothesis $(\mathrm{Seed}_{\mathrm{SP}})$.** There exist a finite totally real field
 $F/\mathbf Q$ of even degree and an exact clean minimal automorphic datum with the following
 properties.
@@ -806,6 +832,23 @@ properties.
 This is one existential hypothesis, not a construction. No field $F$, restricted ring, or
 automorphic module satisfying these clauses is asserted to exist until a witness for the whole
 package has been supplied.
+
+**Theorem 4.A (minimal consumer form).** Every conclusion of Theorem 1.1 remains valid if
+$(\mathrm{Seed}_{\mathrm{SP}})$ is replaced by $(\mathrm{SF}_{\mathrm{SP}})$.
+
+**Proof.** Chapters 5--6 use only (4.0) to make the image coefficient algebra of the restricted
+universal representation finite. Finite-index passage then gives finite global scalar image.
+Chapters 6--10 use absolute residual irreducibility, trace descent, the balanced presentation,
+topological Nakayama, and normalization; none uses an automorphic module. The local
+factorization in item 2 is exactly what preserves the named conditions at the normalized
+horizontal point. Thus the proof of Theorem 1.1 applies verbatim after omitting the additional
+Hecke-source record in Section 5.1. $\square$
+
+This weakening is internal to the lift-existence argument. Book 182, Proposition 1.1 evaluates
+the same restricted $R=\mathbb T$ equality to prove automorphy of the chosen point. The bare
+certificate $(\mathrm{SF}_{\mathrm{SP}})$ supplies no such equality and therefore cannot replace
+the full seed in the later compatible-family chain without a different potential-automorphy
+theorem.
 
 Complete splitting is used for more than notation. It identifies every completion at a place
 above $2$ or $\ell$ with the local field for which Books 165--167 computed the condition. Thus
@@ -936,11 +979,15 @@ the seed.
 The preferred finite-set Ihara-avoidance interface of Book 176, Section 1.5 makes the bypass
 more concrete.  Its $({\rm IAV}_S)$ package patches the desired and avoidance local problems
 simultaneously and transfers full support through their common special fiber and component
-bijection.  It does not form an old--new cube and consumes neither (4.3) nor mixed Ihara.
-What remains to be proved on that route is the paired local-ring geometry, synchronized
-automorphic Taylor--Wiles systems, support transfer, finite-level recovery, and solvable
-descent constituting $({\rm IAV}_S)$.  General patching mechanics in Books 143--146 and the
-minimal theorem in Book 172 do not construct this nonminimal paired system automatically.
+bijection by Proposition 1.1 of that book.  It does not form an old--new cube and consumes
+neither (4.3), type-Ihara, nor mixed Ihara. What remains to be proved on that route is the
+arithmetic paired local-ring geometry, its component-bijective passage to the patched global
+rings, synchronized automorphic Taylor--Wiles systems, avoidance full support, and exact
+acting-image recovery.
+Support transfer and reduced finite-level recovery are then formal, while solvable descent is
+Book 109's existing conditional theorem once its selected cyclic-tower antecedents have been
+verified. General patching mechanics in Books 143--146 and the minimal theorem in Book 172 do
+not construct this nonminimal paired system automatically.
 
 Nor does the available large-image patching proof of Ihara settle the rows in (4.3).  The
 relevant maximal ideals on the Book 178 route are attached to its auxiliary
@@ -1766,10 +1813,14 @@ On the declared indefinite routes of Books 177--178, the first unresolved consta
 the finite family (4.3), not a hypothesis silently built into Book 174's core support theorem.
 If a route does not invoke those constant rows--in particular, if it constructs the exact
 definite carrier directly or supplies $({\rm IAV}_S)$--then (4.3) is absent.  Its replacement
-definite-side or paired-patching localization, support, reciprocity, pairing, augmentation,
-and descent hypotheses are still unproved for the target. Even after (4.3), the actual
-multi-place cleanability, mixed comparison, and product support obligations remain. The compact
-curve carrier is available after a successful lifting step and is not listed as a blocker.
+definite-side localization/support/reciprocity/pairing/augmentation datum, or the arithmetic
+paired-ring and synchronized-system construction with avoidance full support and exact
+recovery, is still unproved for the target. Proposition 1.1 of Book 176 supplies paired
+support transfer once the latter data exist, and Book 109 separately supplies descent under
+its explicit hypotheses. Even after
+(4.3), the actual multi-place cleanability, mixed comparison, and product support obligations
+remain. The compact curve carrier is available after a successful lifting step and is not
+listed as a blocker.
 Independently, Book 175 treats a different scalar local problem and cannot be applied to the
 nonzero-monodromy dyadic SP ring. Thus the exact clean automorphic datum required by Book 173
 has no proved prior construction.

@@ -239,22 +239,155 @@ parts.
    avoidance ring is flat and irreducible; the reduced desired ring is flat and
    equidimensional, and reduction induces a bijection on irreducible components.
 3. Patch synchronized Taylor--Wiles systems and automorphic modules for the two problems so
-   that the patched objects agree modulo the uniformizer.  Depth gives full support for the
-   avoidance module because its local source is irreducible.  The common special fiber and
-   the component bijection then force the support of the desired patched module, already a
-   union of components, to contain every component.
+   that the patched objects agree modulo the uniformizer.  Depth and the sharp dimension
+   calculation make their supports unions of components.  Prove full support for the
+   avoidance module by an actual irreducibility or component calculation; irreducibility of
+   the local source alone does not make an arbitrary patched quotient irreducible.  The
+   common special fiber and the component bijection then force the support of the desired
+   patched module to contain every component by Proposition 1.1 below.
 4. Descend that support statement to the original finite-level deformation problem, recover
    automorphy of $\rho$ over the solvable extension, and apply the separately verified
    solvable automorphic descent.
 
-This is a simultaneous finite-set proof, but it is not the all-component boundary-occurrence
-theorem of Chapter 8: its component coverage comes from the paired deformation-ring special
-fibers and patched depth.  It requires neither the mixed Ihara modules (8.5), product residue,
-nor an iterated-switch Beck--Chevalley cube.  Conversely, the minimal patching theorem of
-Book 172 does not supply $({\rm IAV}_S)$ merely by replacing its minimal local rings with
-nonminimal ones.  The local-ring comparison, synchronized pair of automorphic patching
-systems, support transfer, and final descent are the exact additional source that must be
-constructed if this scope-minimal route is chosen.
+Here is the support-transfer step in a form that does not hide any arithmetic input.  If
+$A$ is a noetherian local ring with an element $\varpi$ and $B=A/\varpi A$, say that
+specialization is **component-bijective** if every $\mathfrak p\in\operatorname{Min}(A)$
+has a unique prime $\overline{\mathfrak p}$ minimal over
+$\mathfrak p+(\varpi)$, this prime is minimal over $(\varpi)$, and
+
+$$
+\mathfrak p\longmapsto\overline{\mathfrak p}/(\varpi)
+\tag{1.3}
+$$
+
+is a bijection from $\operatorname{Min}(A)$ to $\operatorname{Min}(B)$.  This is the exact
+meaning of the component-bijection phrase in item 2; equality of the numbers of components
+without the specialization map is not enough.
+
+**Proposition 1.1 (paired special-fiber support transfer).**  Let $\mathcal O$ be a complete
+DVR with uniformizer $\varpi$.  Let $R_\infty^{\rm des}$ and
+$R_\infty^{\rm av}$ be complete noetherian local $\mathcal O$-algebras, equipped with a
+fixed identification
+
+$$
+B\simeq R_\infty^{\rm des}/\varpi
+ \simeq R_\infty^{\rm av}/\varpi .
+\tag{1.4}
+$$
+
+Let $M_\infty^{\rm des}$ and $M_\infty^{\rm av}$ be finite modules over the respective
+rings and suppose that their actions reduce to one $B$-action under an isomorphism
+
+$$
+M_\infty^{\rm des}/\varpi M_\infty^{\rm des}
+\simeq
+M_\infty^{\rm av}/\varpi M_\infty^{\rm av}.
+\tag{1.5}
+$$
+
+Assume:
+
+1. $\operatorname{Supp}_{R_\infty^{\rm av}}M_\infty^{\rm av}
+   =\operatorname{Spec}R_\infty^{\rm av}$;
+2. the support of $M_\infty^{\rm des}$ is a union of irreducible components of
+   $\operatorname{Spec}R_\infty^{\rm des}$; and
+3. specialization on $R_\infty^{\rm des}$ is component-bijective in the sense of (1.3).
+
+Then
+
+$$
+\operatorname{Supp}_{R_\infty^{\rm des}}M_\infty^{\rm des}
+=\operatorname{Spec}R_\infty^{\rm des}.
+\tag{1.6}
+$$
+
+**Proof.**  Let $\mathfrak q$ be any prime of $B$ and let
+$\widetilde{\mathfrak q}^{\rm av}$ be its inverse image in $R_\infty^{\rm av}$.  Full
+support makes $(M_\infty^{\rm av})_{\widetilde{\mathfrak q}^{\rm av}}$ nonzero.  If its
+quotient by $\varpi$ were zero, Nakayama's lemma over the local ring
+$(R_\infty^{\rm av})_{\widetilde{\mathfrak q}^{\rm av}}$ would make the module zero.
+Thus (1.5) has full support over $B$.
+
+Suppose that the desired support omits the component defined by
+$\mathfrak p\in\operatorname{Min}(R_\infty^{\rm des})$, and let
+$\overline{\mathfrak p}$ be its prime in (1.3).  Full support of (1.5) places
+$\overline{\mathfrak p}$ in the support of $M_\infty^{\rm des}$.  Since that support is a
+union of components, some included minimal prime $\mathfrak p'$ is contained in
+$\overline{\mathfrak p}$.  The latter is minimal over $(\varpi)$, hence also minimal over
+$\mathfrak p'+(\varpi)$.  Component-bijectivity sends both $\mathfrak p$ and
+$\mathfrak p'$ to $\overline{\mathfrak p}/(\varpi)$, so $\mathfrak p'=\mathfrak p$,
+contrary to omission.  Every component occurs, proving (1.6). $\square$
+
+This proposition is purely topological: (1.6) says that the desired action is nearly
+faithful, not faithful through nilpotent thickenings.  That is exactly what a
+characteristic-zero automorphy statement needs once exact control has recovered the
+canonical finite action.  Indeed, if the two synchronized patches also retain
+
+$$
+R_\infty^{\rm des}/\mathfrak a_\infty R_\infty^{\rm des}\simeq R^{\rm des},
+\qquad
+A_\infty^{\rm des}/\mathfrak a_\infty A_\infty^{\rm des}\simeq\mathbb T^{\rm des},
+\tag{1.7}
+$$
+
+compatibly with the canonical map, where $A_\infty^{\rm des}$ is the faithful action image,
+then its kernel is nilpotent by (1.6).  Its image after (1.7) is still nilpotent, so
+
+$$
+(R^{\rm des})^{\rm red}\simeq(\mathbb T^{\rm des})^{\rm red}.
+\tag{1.8}
+$$
+
+Every map from $R^{\rm des}$ to a characteristic-zero domain kills that kernel and factors
+through the finite automorphic action.  This is the exact-support and exact-augmentation
+argument of Book 145, Chapters 7, 11, and 16, written here for the paired situation.  Full
+scheme-theoretic $R=\mathbb T$ would require reducedness or another nilpotent-sensitive
+faithfulness criterion and is not needed for this route.
+
+Consequently the first irreducible gap in $({\rm IAV}_S)$ is earlier than support transfer.
+For the actual finite set $S$ one must still construct:
+
+1. the desired and avoidance local deformation rings, prove (not merely predict) their
+   flatness, dimensions, avoidance irreducibility, common residual fiber, and the
+   component-bijective specialization (1.3) after passage to the patched global rings;
+2. two automorphic Taylor--Wiles systems using the same auxiliary levels and marked finite
+   shadows, with the ring and module identifications (1.4)--(1.5), finite-level diamond
+   freeness, Hecke-valued local compatibility, uniform presentations, and the sharp dimension
+   bounds required by Book 145, together with the avoidance full-support theorem (for example
+   by proving the actual avoidance patched source irreducible, or by a separate component
+   calculation); and
+3. the exact ring, module, and acting-image control in (1.7), together with the selected
+   local antecedents for any subsequent solvable descent.
+
+Once these data exist, Book 145's sharp depth theorem makes the two patched modules maximal
+Cohen--Macaulay and their supports unions of components.  The supplied avoidance theorem and
+Proposition 1.1 then prove desired component coverage; (1.7)--(1.8) gives finite-level
+recovery, and Book 109 supplies solvable automorphic descent when its cyclic-tower,
+invariance, irreducibility, attachment, and local-antecedent hypotheses have been separately
+verified.  Potential modularity may instead stop over the constructed field and then
+consumes no descent theorem.  Thus union-of-components, support transfer, and reduced
+recovery are consequences; avoidance full support remains part of the missing arithmetic
+construction.  Irreducibility of $R^{{\rm loc},\prime}$ alone does not formally make an
+arbitrary quotient $R_\infty^{\rm av}$ irreducible, so that step may not be skipped.
+
+No equivalent construction is hidden in the declared sources.  Books 63--76 give
+representability, tangent complexes, and generic prime-to-$\ell$ local calculations; Book
+67 explicitly leaves the scalar $q_v\equiv1\pmod\ell$ geometry exceptional.  Books
+143--146 patch one supplied arithmetic system and prove its formal support and recovery
+consequences, but do not produce a synchronized pair.  Book 172 constructs only its clean
+minimal system.  The FLT blueprint names the Skinner--Wiles reduction in a proof sketch and
+states no paired local-ring or automorphic patching theorem.  Thus this is a simultaneous
+finite-set proof, but its missing arithmetic theorem is precisely items 1--3 above, not an
+old--new or mixed-Ihara theorem.
+
+In particular, the preferred route is not the all-component boundary-occurrence theorem of
+Chapter 8.  It requires neither the mixed Ihara modules (8.5), product residue, an
+iterated-switch Beck--Chevalley cube, type-Ihara, nor constant-row abelian Ihara.  Those are
+prerequisites only for the geometric alternatives.  For the potential-modularity consumer
+$S=P_{\rm act}$ means the whole actual active set, including every dyadic place above the
+distinguished base place; the paired construction must be simultaneous on that entire set.
+It may be invoked only after the further base change has made the residual local
+representations trivial and $q_w\equiv1\pmod\ell$ at every $w\in P_{\rm act}$.
 
 ## 2. Local conventions and the three congruence regimes
 
@@ -2281,9 +2414,10 @@ a consumer may not cite Theorem 9.1 as though (8.10), product residue, and joint
 followed from the one-prime sources. Theorem 9.2 does not require mixed saturation or product
 residue unless those are used to construct or support its carrier, but separate one-place
 occurrence still does not prove its pointed joint-support clause.
-The direct route avoids both assertions, but only after its paired local-ring and patched
-support comparison has actually been constructed; the minimal theorem is not that
-construction.
+The direct route avoids both assertions, but only after its paired local-ring and
+synchronized automorphic systems with exact control have actually been constructed;
+Proposition 1.1 then supplies the patched support comparison, while the minimal theorem is
+not that arithmetic construction.
 
 ### 9.4 The FLT boundary
 
@@ -2318,10 +2452,10 @@ twisting, retains the determinant square, and identifies every hypothesis that m
 in a chain. What remains for a simultaneous application of the blueprint depends on the
 proof route. The geometric-cube route needs mixed integral control at finitely many
 semistable places, joint support, and finite-set reciprocity. The direct Ihara-avoidance route
-instead needs the paired finite-set local-ring comparison and synchronized patched support
-transfer of Section 1.5. Finite-level reduced $R=T$ suffices for characteristic-zero
-modularity; finite-level source reducedness is needed only if a full scheme-theoretic
-equality is also demanded.
+instead needs the paired finite-set local-ring comparison and synchronized automorphic
+patching datum of Section 1.5; Proposition 1.1 supplies support transfer. Finite-level reduced
+$R=T$ suffices for characteristic-zero modularity; finite-level source reducedness is needed
+only if a full scheme-theoretic equality is also demanded.
 
 For a theorem making **every** lift in the product problem automorphic, the full-support route
 of Theorem 9.1 still requires the mixed and product-residue package used to construct its
@@ -2369,7 +2503,7 @@ The direct mathematical sources used here have the following roles and retained 
 | Book 139 | exact tree kernel of Theorem 6.1, and conditional saturation, duality, Gram, component, and branch sequences | after non-Eisenstein localization the exact kernel is the noncongruence quotient; its vanishing depends on $({\rm AIH}_{\mathscr F})$ at every actual constant flag level and is not a type-Ihara theorem |
 | Book 140 | conditional one-prime integral level change, node/definite comparison, equality of faithful orders, signed Gram calculation, and the constant generic-support/common-kernel deduction from Book 125 plus the corrected filtration | gives the coordinate switches and generic packet-label compatibility used in (8.16c), but no integral Beck--Chevalley 2-isomorphism; retains datum-specific node uniformization, routing, abelian Ihara, and the branch Smith correction |
 | Book 143 | functorial Taylor--Wiles represented-ring augmentation for an arbitrary original finite global problem | does not construct the automorphic product cube, its mixed exactness, or augmentation of a faithful acting image |
-| Book 145 | exact support as the vanishing locus of the annihilator, component coverage, and associated-prime faithfulness criteria | formal support theory does not prove that the actual automorphic carrier occurs on the product component through the named point |
+| Book 145 | exact support as the vanishing locus of the annihilator, union-of-components and near-faithfulness criteria, and exact marked augmentation used in (1.7)--(1.8) | formal patching does not construct the paired local rings, synchronized automorphic systems, or an actual product-component occurrence datum |
 | Book 152 | several-prime regular-refinement idempotents on one global degeneracy source and exact multi-prime diamond augmentation under its hypotheses | splits and augments a supplied source; it expressly does not prove degeneracy injectivity, full oldness, or mixed sum-primitivity |
 | Book 170 | order-valued Galois representation, factorization through represented local conditions, and the surjection (3.5) | requires every generic branch, integral coefficient-prime realization, reduced generic order, exact trace generation, and the conditional Book 140 comparison whenever used |
 | Book 174 | enhanced one-prime type complex, typed generic-residue kernel equality from Book 125 after the typed filtration, scalar $q\equiv1$ family, primitive residue, one-prime support, exact fixed-prime augmentation, and auxiliary represented-ring/complex/module/pairing augmentation | $({\rm TIC}_v)$, $({\rm TIH}_{\mathscr F})$, $({\rm PRI}_{\rm type})$, $({\rm NU}_{\rm type})$, Book 125 applicability on the routed common cover, and $({\rm SUP}_v)$ retain their stated roles; support is topological and only one-place; auxiliary acting-order augmentation is only a surjection |
@@ -2502,12 +2636,16 @@ topological support alone would not suffice.
 For the finite-set theorem actually cited by the FLT blueprint, there is a narrower direct
 alternative to all of the level-change inputs just listed. It is $({\rm IAV}_S)$: the paired
 desired/avoidance local deformation rings, their common special fiber and component
-bijection, synchronized Taylor--Wiles systems, and the patched support transfer of Section
-1.5. Books 143--146 provide general patching mechanics and Book 172 proves the clean minimal
-instance, but no declared source constructs this paired nonminimal system or its support
-comparison. This is the first missing input on the standard Ihara-avoidance route. It is not
-an alias for mixed Ihara: it proves the needed finite-set component coverage without forming
-an old--new cube.
+bijection, and synchronized Taylor--Wiles systems of Section 1.5. Proposition 1.1 now proves
+the support transfer formally once those objects and their mod-$\varpi$ identifications have
+been supplied; exact marked augmentation then gives (1.8), and Book 109 gives descent under
+its separately verified antecedents. Books 143--146 provide general one-system patching
+mechanics and Book 172 proves the clean minimal instance, but no declared source constructs
+the paired local rings or synchronized automorphic nonminimal systems. That arithmetic
+construction, including exact acting-image control, is the first missing input on the
+standard Ihara-avoidance route. It is not an alias for mixed Ihara: after it is supplied,
+Proposition 1.1 proves the needed finite-set component coverage without forming an old--new
+cube.
 
 If the geometric level-change route is used instead, then for two or more places the division
 of mathematical roles among the earlier sources separates
@@ -2654,10 +2792,13 @@ one-prime data do not supply those hypotheses.
 The standard direct finite-set proof has a different architecture. Its desired and
 Ihara-avoidance deformation problems agree on the special fiber; irreducibility gives full
 patched support for the avoidance problem, and the component-bijection comparison transfers
-that support to the desired problem. Once $({\rm IAV}_S)$ is proved, none of the mixed cube,
-product-residue, or separate joint-occurrence inputs is consumed. The present source chain
-records this as an unresolved alternative rather than treating the geometric cube as
-logically compulsory.
+that support to the desired problem by Proposition 1.1.  The transfer, reduced finite-level
+recovery, and conditional invocation of Book 109 are no longer separate missing theorems;
+the unresolved input is the arithmetic paired-ring and synchronized-system construction with
+the exact control listed after (1.8). Once that construction is supplied, none of the mixed
+cube, product-residue, constant/type-Ihara, or separate joint-occurrence inputs is consumed.
+The present source chain records this as an unresolved alternative rather than treating the
+geometric cube as logically compulsory.
 
 For the actual named point downstream, the canonical torsion-free top quotient and its
 adjoint give a smaller honest carrier with the global module $W_\Pi$ occurring once. Theorem

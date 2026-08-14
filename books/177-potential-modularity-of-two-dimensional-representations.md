@@ -795,9 +795,14 @@ Here an **applicable Book 176 one-prime conclusion** means literal Theorem 7.1 o
 8. One exact Book 176 route is exhibited.  The scope-minimal finite-set option is the direct
    Ihara-avoidance package $({\rm IAV}_{P_{\mathrm{act}}})$ of Book 176, Section 1.5, for
    $r_{A,q}$ and the automorphic lift attached to $\Pi_0'$, after any further solvable totally
-   real base change used by that package.  This includes the paired desired/avoidance local
-   rings, their common special fiber and component bijection, synchronized Taylor--Wiles
-   systems, patched support transfer, and the permitted stopping field of Section 8.6.
+   real base change used by that package.  The set is the whole $P_{\mathrm{act}}$, including
+   every place above the distinguished dyadic place; no one-place subset may be substituted.
+   This includes the paired desired/avoidance local rings, the proof that their patched
+   specializations are component-bijective, synchronized automorphic Taylor--Wiles systems
+   with their common mod-$\varpi$ module and proved avoidance full support, exact acting-image
+   recovery, and the permitted stopping field of Section 8.6.  Book 176, Proposition 1.1
+   then supplies support transfer; it is a formal consequence of those data rather than one
+   more arithmetic hypothesis.
    Alternatively, $P_{\mathrm{act}}$ is a singleton and the applicable one-prime conclusion
    above holds; or an ordered finite chain is given and every applicable one-prime hypothesis
    is verified anew on each intermediate carrier, with all previously changed places retained
@@ -849,10 +854,11 @@ inside the mixed-level module. Equivalently, filtering the two-place total degen
 The direct $({\rm IAV}_{P_{\mathrm{act}}})$ route does not use this incidence module. It
 patches the complete desired local problem and the auxiliary Ihara-avoidance problem in
 parallel. Full support on the irreducible avoidance side passes through their identified
-special fibers and the desired-side component bijection. This proves that the point (8.5)
-lies on automorphic support without a separate product-component occurrence theorem. The
-whole paired local-ring and patched-module comparison is required; residual automorphy of
-$\Pi_0'$ and minimal $R=T$ alone do not supply it.
+special fibers and the desired-side component bijection by Book 176, Proposition 1.1. This
+proves that the point (8.5) lies on automorphic support without a separate product-component
+occurrence theorem. The arithmetic input is the whole paired local-ring and synchronized
+patched-module construction, including exact recovery; residual automorphy of $\Pi_0'$ and
+minimal $R=T$ alone do not supply it.
 
 An ordered one-prime chain uses successive one-place deformation rings and faithful orders instead. At each stage its characteristic-zero point must factor through that stage's reduced faithful Hecke image. Such a chain neither proves nor needs joint support for the simultaneous product ring; conversely, separate one-place factorizations on the original carrier do not constitute a validated chain.
 
@@ -1114,11 +1120,13 @@ The definition in Section 10.1 is not presently known to be inhabited for the FL
 applications. On the scope-minimal direct route, the first missing theorem is
 $({\rm IAV}_{P_{\mathrm{act}}})$ itself: no declared source constructs the paired
 desired/avoidance local deformation rings for the actual target and automorphic reference,
-patches their automorphic modules compatibly modulo the uniformizer, transfers full support
-through the special-fiber component bijection, and descends the resulting automorphy over the
-permitted stopping field. This direct theorem handles every place above $v_0$ at once and
-does not consume the abelian-Ihara, mixed-cube, product-residue, or pointed-occurrence gates
-below.
+proves their component-bijective patched specializations, or patches their automorphic
+modules compatibly modulo the uniformizer with an avoidance full-support theorem and exact
+acting-image recovery. Book 176, Proposition 1.1 proves desired full-support transfer from
+those data, and Book 109 supplies any later solvable descent once its explicit antecedents
+hold; neither formal consequence is an additional missing theorem. This direct construction
+handles every place above $v_0$ at once and does not consume the abelian-Ihara, type-Ihara,
+mixed-cube, product-residue, or pointed-occurrence gates below.
 
 On the geometric level-change routes, the first failure in the declared proof dependencies
 occurs inside the cleanability clause. Wherever the actual comparison invokes Book 139's
@@ -1248,7 +1256,7 @@ The proof uses the following earlier books, with no enlargement of their conclus
 | Book 104 | transfer from the totally definite carrier to the split packet, followed by compact one-split inverse transfer for $\{w_0\}$ | requires even field degree and an eligible selected local factor; it supplies no Galois representation by itself |
 | Book 98 | automorphic induction of an algebraic Hecke character, the determinant formula (3.3), the explicit residual induced lattice, and cuspidality | the quadratic extension must remain a field; the character quotient must remain nontrivial |
 | Book 127 | compact-curve packet decomposition, rank-two extraction, determinant and Frobenius normalization, the weak family, and stable lattices | no surface realization or density theorem; integral finite-flat comparison is obtained from $A$, not from an arbitrary curve lattice |
-| Book 176 | the direct finite-set Ihara-avoidance interface $({\rm IAV}_S)$, literal conditional Theorem 7.1 for the scalar-twist family, the separately conditional generic and $q_v\equiv-1$ reduced-image argument, all-point finite-set Theorem 9.1, and pointed torsion-free-top Theorem 9.2 | the direct route retains its paired local rings, common special fiber, synchronized patching, and support transfer; the all-point route retains every applicable Ihara, type, support, reciprocity, ray, augmentation, mixed-exactness, product-residue, and joint-support hypothesis; the pointed route instead retains one actual final cube, simultaneous branch verification, carrier-specific reciprocity, and occurrence of the component through $x_A$ |
+| Book 176 | the direct finite-set Ihara-avoidance interface $({\rm IAV}_S)$ and Proposition 1.1's formal paired support transfer, literal conditional Theorem 7.1 for the scalar-twist family, the separately conditional generic and $q_v\equiv-1$ reduced-image argument, all-point finite-set Theorem 9.1, and pointed torsion-free-top Theorem 9.2 | the direct route retains the arithmetic construction of its paired local rings, component-bijective patched specializations, synchronized automorphic systems, avoidance full support, and exact recovery; the all-point route retains every applicable Ihara, type, support, reciprocity, ray, augmentation, mixed-exactness, product-residue, and joint-support hypothesis; the pointed route instead retains one actual final cube, simultaneous branch verification, carrier-specific reciprocity, and occurrence of the component through $x_A$ |
 | Book 154 | Moret--Bailly specialization with local opens, total reality, splitting, and linear disjointness | no Galois or solvable conclusion |
 | Book 158 | the fine smooth geometrically connected paired-frame moduli space, its admissible point-centered local opens, and the regular symmetric Galois-top refinement of the split specialization | both frames and both pairings must occur on the same object and component; nonsplit exact completion algebras still require Book 154's separate common-presentation hypothesis |
 | Book 142, the globally upstream companion Chebotarev development | finite-quotient prime selection in Section 3.4 and Corollary 11.2 in Sections 8.5 and 9.3 | density recognizes existing data and supplies no carrier, lattice, or local compatibility |
@@ -1300,9 +1308,12 @@ That record supplies residual potential modularity only. A later argument for a 
 The conditional bridge is mathematically explicit, but the advertised FLT-range existence
 theorem is **NOT READY**. On the scope-minimal route, its missing theorem is the direct
 finite-set package $({\rm IAV}_{P_{\mathrm{act}}})$: no accepted source supplies its paired
-local-ring geometry, synchronized automorphic patching, special-fiber support transfer, and
-descent. That theorem would treat all places above $v_0$ simultaneously without the
-geometric cube.
+local-ring geometry, component-bijective patched specialization, synchronized automorphic
+patching, avoidance full support, and exact recovery. Desired special-fiber support transfer
+is now Proposition 1.1 of Book 176 once those inputs exist, and descent is the existing
+conditional theorem of Book 109 once its selected cyclic-tower antecedents exist. The
+missing arithmetic construction would treat all places above $v_0$ simultaneously without
+the geometric cube.
 
 On the geometric alternatives, the first unresolved constant-row dependency is the localized
 abelian Ihara family (10.4), retained but not proved by Books 139 and 176. Book 122 and Book
