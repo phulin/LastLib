@@ -187,8 +187,9 @@ criterion over a regular local ring and the warning that it fails over a singula
 76 supplies the selected special Weil--Deligne normalization used to compare the Iwahori
 scalar with geometric Frobenius. Book 118 supplies the exact common-norm Hodge-lift obstruction,
 the unitary common-multiplier PEL datum, and its odd-prime finite component cover. Book 119
-supplies representability for the exact direct and unitary PEL functors and their generic
-parahoric data. Book 120 supplies canonical
+supplies the exact direct and unitary rational PEL functors, their good-base fine
+representability, and their generic parahoric data; it does not supply the dyadic integral
+unitary model constructed in Section 10.3. Book 120 supplies canonical
 reciprocity on the abelianized component label; applied to reduced norm/determinant, it
 identifies the global ray character's automorphic determinant line with the corresponding
 trait-pulled Galois line. Book 121 supplies the
@@ -3827,8 +3828,9 @@ The equality $\operatorname{rank}N=b_1(\Gamma)$ is rational. Integral cokernels 
 
 ### 10.3 The non-common-norm dyadic source
 
-There is nevertheless an exact dyadic parahoric curve on the unitary side. Let $B/F$ be
-division and split at exactly one real place, assume that $2$ splits completely in $F$ and
+There is nevertheless an exact dyadic parahoric curve on the unitary side. Let $F$ be totally
+real with $[F:\mathbf Q]>1$, let $B/F$ be division and split at exactly one real place, assume
+that $2$ splits completely in $F$ and
 that $B$ is split at every dyadic place, and choose an imaginary quadratic field $K$ split at
 $2$ such that $L=FK$ embeds in $B$. Retain the unitary common-multiplier datum of Book 118,
 Proposition 8.3,
@@ -3858,9 +3860,10 @@ union, and neat prime-to-two fine level so that:
 3. its framed local model is exactly the incidence scheme (3.1), its completed singular
    chart is $xy=2$, and its two special-fiber branches are the relative-Frobenius and
    inverse-twist Verschiebung branches with reduced Hasse conductor; and
-4. the graph, nearby-cycle, monodromy-pairing, component-group, degeneracy-route, and raw
-   residue-prime correspondence calculations of Chapters 3--9 hold for this unitary source,
-   with component and ray characters formed through the actual unitary abelianized quotient.
+4. subject to their stated coefficient and packet hypotheses, the graph, nearby-cycle,
+   monodromy-pairing, component-group, degeneracy-route, and raw residue-prime correspondence
+   calculations of Chapters 3--9 hold for this unitary source, with component and ray
+   characters formed through the actual unitary abelianized quotient.
 
 **Proof.** Complete splitting gives
 
@@ -3906,10 +3909,16 @@ word for word: the only moving equations are
 $\alpha L_0\subset L_1$ and $\beta L_1\subset L_0$. The exact PEL centralizer remains
 $G^{\mathrm u}$ by Book 118, Proposition 8.3; no common-norm group has entered.
 
-Book 119 represents this exact fine PEL functor. The filtration-lifting argument used in
-Proposition 2.3 is characteristic-independent once (10.3) and the arbitrary-test-ring
-incidence calculation are known. It proves the local-model diagram and hence smoothness of
-$\mathscr Y_0$ and flatness, regularity, and the node chart for $\mathscr Y_I$. Properness
+Book 119 represents the exact characteristic-zero unitary PEL functor and identifies its
+generic curve, but its integral representability base has $2$ inverted.  Over the present
+dyadic base one instead repeats the projective-frame construction at the start of Section 2.1,
+now with the split order $\mathcal O_L\otimes\mathbf Z_2$ and the integral tensors just
+constructed.  It gives the quasi-projective ambient fine scheme, and one takes the schematic
+flat closure of the selected generic component union.  The filtration-lifting argument used
+in Proposition 2.3 is characteristic-independent once (10.3) and the arbitrary-test-ring
+incidence calculation are known.  For the good vertex it makes that flat closure open and
+closed and smooth; for the chain functor it proves the local-model diagram and hence flatness,
+regularity, and the node chart for $\mathscr Y_I$. Properness
 uses the unitary boundary argument of Book 121: a toric subspace would be a nonzero
 $L$-subspace isotropic for $H$, whereas $H(x,x)=\operatorname{Nrd}_B(x)$ is anisotropic
 because $B$ is division. Odd auxiliary full level removes the finite descent action, and
