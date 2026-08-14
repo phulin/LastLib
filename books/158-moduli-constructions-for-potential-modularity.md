@@ -312,6 +312,22 @@ argument.
 
 This is an existence theorem for the geometric handoff.  It is not an automorphy theorem.
 
+There is a load-bearing consequence in the Frey signed-special specialization. Choose at
+\(2\) the split Tate neighborhood which realizes the Frey residual frame and the unramified
+auxiliary residual \(q\)-frame. Clause 3 of Theorem 5.1 makes \(2\) split completely in
+\(M\), and clause 5 puts every sheet in that same neighborhood. Hence
+\(V_{\mathfrak q}(A_M)\) has nonzero rank-one monodromy at every \(w\mid2\), while its
+dihedral residual automorphic reference is unramified there. Thus
+
+$$
+\{w:w\mid2\}\subseteq P_{\mathrm{aux}}(A_M).                \tag{6.3}
+$$
+
+When \(K=\mathbf Q\), complete splitting gives
+\(\#\{w:w\mid2\}=[M:\mathbf Q]\ge2\). The split construction therefore cannot satisfy a
+singleton active-place hypothesis. This is not a defect in Theorem 5.1: it is the finite-set
+arithmetic problem which the split geometry deliberately leaves to modularity lifting.
+
 ## 7. Handoff to potential modularity
 
 For the route described in `../FLT/blueprint/src/chapter/ch04overview.tex`, the remaining steps
@@ -321,7 +337,12 @@ after Corollary 6.1 are arithmetic.
    \(G_M\) is modular, normally by automorphic induction from a character.  Disjointness from
    its quadratic and character cutout fields must be included in \(D\).
 2. Apply the selected modularity-lifting theorem over \(M\) to the \(q\)-adic Tate factor of
-   \(A_M\), with every actual local condition and every new bad place checked.
+   \(A_M\), with every actual local condition and every new bad place checked. In the Frey
+   signed-special case (6.3) rules out the one-place theorem. One must supply one of Book 176's
+   exact finite-set interfaces for the actual set \(P_{\mathrm{aux}}(A_M)\): a constructed
+   direct \((\mathrm{IAV}_S)\) comparison, a fully reverified ordered chain, the all-point
+   hypotheses of Theorem 9.1, or the actual-cube, simultaneous-branch, reciprocity, and pointed
+   occurrence hypotheses of Theorem 9.2.
 3. Read the same automorphic packet at \(\mathfrak p\) and identify its residual member with
    the target representation by (6.2).
 4. For the compatible-family source, carry the resulting potential automorphy through Brauer
@@ -332,6 +353,11 @@ Corollary 6.1 supplies none of steps 1--4 merely by producing \(A_M\).  In parti
 moduli space does not imply that an automorphic Hecke module meets the local deformation
 component of the specialized Tate-module point.  That carrier-support problem belongs to the
 modularity-lifting books, not to the compactification of the moduli space.
+
+Nor does complete splitting reduce the finite-set problem to one place. It does the opposite
+for the Frey Tate condition: it reproduces the same nonminimal special lift at every dyadic
+place. Separate one-place occurrence proves none of the Book 176 interfaces just listed.
+Their actual joint or ordered occurrence assertion remains an arithmetic blocker.
 
 For the exact Lean endpoint
 `exists_hardlyRamifiedCompatibleFamilyArithmeticCore`, the contribution of this book lies only
@@ -383,6 +409,7 @@ Hilbert--Blumenthal object carrying both residual systems over the totally real 
 
 This closes the geometric Moret--Bailly input needed by the blueprint without importing a
 general toroidal compactification.  The remaining obstacles are the explicitly arithmetic
-ones: construction of the auxiliary automorphic seed, the applicable modularity-lifting and
-carrier-support theorem, and the Brauer/local--global/stable-lattice assembly of the compatible
-family.
+ones: construction of the auxiliary automorphic seed, the Book 176 finite-set
+modularity-lifting and carrier-support input for the actual active set (necessarily including
+every dyadic place in the Frey split route), and the Brauer/local--global/stable-lattice
+assembly of the compatible family.

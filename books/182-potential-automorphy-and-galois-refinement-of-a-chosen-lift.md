@@ -415,7 +415,16 @@ cover whose local fibers simultaneously realize the distinguished special packet
 good factors, the paired residual frames at $2$, $3$, and $\ell$, the split certificate
 packets used for constant-field avoidance, and the prescribed closed-set avoidance.
 
-The unique special factor cannot simply be repeated. If $S$ is its degree-one divisor, $P$ is
+The split FLT route of Book 158 does not impose a unique exceptional sheet. It puts every
+sheet above a controlled place into the same point-centered open and then specializes the
+regular symmetric normal top with that place split completely. For the Frey Tate open at $2$,
+this makes every dyadic place special for $V_{\mathfrak q}(A)$, so every such place belongs to
+$P_{\mathrm{aux}}(A)$. That route proves the interior geometric handoff, but it necessarily
+uses the finite-set arithmetic branch of Section 4.3.
+
+The rest of this subsection concerns the stronger alternative which tries to create exactly
+one exceptional factor and good complementary factors. In that construction the unique
+special factor cannot simply be repeated. If $S$ is its degree-one divisor, $P$ is
 a good point, and $\mathcal A$ is the pencil line bundle of degree $e$, the local moving
 condition is the degree-indexed Abel relation
 
@@ -493,10 +502,12 @@ above $\ell$ is not a target edge at all: it violates the coefficient-prime fini
 condition and stops the target path before lowering begins.
 
 Book 178's literal one-active-place hypothesis is therefore unavailable for the Frey-adapted
-dyadic seed. The auxiliary step needs either a fully verified ordered one-prime chain or the
-genuine several-place datum of Book 176 for the actual set $P_{\mathrm{aux}}(A)$. Only after
-that step has produced an automorphic target packet does one form $P_{\mathrm{tar}}$ and begin
-the second path.
+dyadic seed. In the split Book 158 construction it is impossible already before accidental
+bad places are counted, because every dyadic place lies in $P_{\mathrm{aux}}(A)$. The
+auxiliary step needs either a fully verified ordered one-prime chain or one of the genuine
+finite-set interfaces of Book 176 for the actual set $P_{\mathrm{aux}}(A)$. Only after that
+step has produced an automorphic target packet does one form $P_{\mathrm{tar}}$ and begin the
+second path.
 
 ### 4.4 Branch corrections and bottom occurrence
 

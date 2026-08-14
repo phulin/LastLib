@@ -253,14 +253,19 @@ depends first on the abelian-Ihara family isolated in Book 139; that family is n
 prior source. Its vanishing would still leave the independent typed-Ihara, support,
 reciprocity, ray, augmentation, and faithful-carrier hypotheses of Book 175 to verify at the
 actual localization. Separately, an approximation point may acquire several additional bad
-places, whereas the prior lifting theorem changes only one place and does not provide a
-finite-set iteration theorem retaining earlier nonminimal conditions. We therefore isolate a
-**cleanable** two-prime datum and prove the final implication only for that exact datum. These
-gaps prevent the catalog-wide potential-modularity assertion. They do not create a separate
-curve-carrier gap. We choose the point field of even absolute degree, and the clean lifting
-datum retains the selected conductor-one Steinberg place. Book 104 then constructs a compact
-one-split packet and Book 127 attaches its rank-two family. Outside the clean lifting range the
-conclusion stops at the geometric realization (1.1).
+places. The singleton branch below therefore isolates a **one-prime cleanable** two-prime
+datum. Book 176 now gives exact conditional finite-set alternatives, but does not prove their
+actual cube, ordered intermediate occurrence, simultaneous branches, reciprocity, or joint
+support for a specialization produced here.
+
+The split FLT branch is necessarily one of those finite-set alternatives. Book 158 splits the
+dyadic Tate neighborhood completely in its Galois top, so every dyadic place is active for the
+auxiliary $q$-adic lift. Its output cannot satisfy the singleton ledger of Section 2.5. The
+split implication is stated separately in Theorem 11.2A and retains one of Book 176's exact
+finite-set certificates as an input. These gaps prevent the unrestricted potential-modularity
+assertion. They do not create a separate curve-carrier gap: after automorphy, even absolute
+degree and one eligible special dyadic place let Book 104 construct a compact one-split packet,
+and Book 127 attaches its rank-two family.
 
 ## 2. Residual data and admissibility
 
@@ -512,21 +517,23 @@ monodromy. Such an output is not one-prime clean. A numerical conductor congruen
 neither the required spectator comparison nor a theorem handling that extra active place.
 
 A list of individually clean places is not a clean global datum. After the first nonminimal
-change, the next application would have to retain an already changed local condition, which the
-one-prime theorem does not assert. Thus this book uses only one genuinely clean selected prime.
-A future finite-chain or simultaneous route would require a prior theorem proving the mixed
-intermediate deformation problems, their cross-Tor terms, and the relevant order-independence
-or joint-support statements. No such route is part of the present definition or available from
-the declared prior source.
+change, the next application has to retain an already changed local condition. The one-prime
+theorem does not assert this. Book 176 gives four finite-set alternatives relevant here: a
+direct $({\rm IAV}_S)$ comparison, a fully reverified ordered chain, its conditional all-point
+Theorem 9.1, and its pointed Theorem 9.2 for one named lift. None follows from individual
+cleanliness. The all-point route retains mixed and product-residue hypotheses; the pointed
+route instead retains one actual final cube, simultaneous branch verification, reciprocity on
+its torsion-free top carrier, and occurrence of the one global component through the point.
 
 ### 2.5 The complete input ledger
 
 A weight-two residual datum together with its auxiliary choices is a
-**pre-specialization two-prime package** if it satisfies items 1--6 below. It is
-**two-prime admissible** only when at least one output $(K',A)$ of Theorem 8.2 for that
-package has also been fixed and satisfies the post-specialization item 7. Thus admissibility
-has an existentially witnessed clean output; it is not a promise that every point furnished by
-approximation is clean.
+**pre-specialization singleton package** if it satisfies items 1--6 below. It is
+**singleton-admissible** only when at least one output $(K',A)$ of Theorem 8.2 for that
+package has also been fixed and satisfies the post-specialization item 7. Thus this
+admissibility has an existentially witnessed one-prime-clean output; it is not a promise that
+every point furnished by approximation is clean. The split-top finite-set package is different
+and is stated after Theorem 11.2; it does not assume items 6--7 below.
 
 1. a distinct $q\geq7$ has been selected with all exclusions of Chapter 3, including
    unramifiedness of $\bar\rho$ at every place above $q$; in the multiplicative-Frey
@@ -2303,7 +2310,7 @@ $$
 \bar\rho:G_K\longrightarrow\operatorname{GL}_2(k)
 $$
 
-be a two-prime admissible weight-two residual datum of Chapter 2. Then there exist a finite
+be a singleton-admissible weight-two residual datum of Chapter 2. Then there exist a finite
 totally real extension $K'/K$ of even absolute degree and a cuspidal parallel-weight-two
 automorphic representation $\Pi$ of $\operatorname{GL}_2(\mathbf A_{K'})$ such that, after
 enlarging the coefficient field of $\Pi$ to contain $E$, for a place
@@ -2359,7 +2366,7 @@ $({\rm RAY}_{w_0})$, and any required $({\rm AUX}_Q)$ and switched-carrier hypot
 have to be verified for the actual localization. The second stage concerns uncontrolled extra
 bad primes of $A$, which are known only after specialization. The prior one-prime theorem
 neither constructs their exact lower-face classes, flags, and branch corrections nor retains
-several fixed nonminimal conditions. Treating both stages as part of “two-prime admissible”
+several fixed nonminimal conditions. Treating both stages as part of “singleton-admissible”
 proves the implication in Theorem 11.2 but does not prove that every target is admissible. Once
 lifting succeeds, even absolute degree and the retained special place prove final carrier
 eligibility in Section 11.1. The catalog objective therefore remains open first in the exact
@@ -2369,6 +2376,53 @@ No uniqueness of $K'$ or $A$ is asserted. Different ray characters, determinant 
 local cycles, or Hilbert specializations generally give different fields and abelian varieties.
 What is canonical is the logical transfer: once a specialized point and clean lifting datum are
 fixed, the two frames determine which residual members occur at $q$ and $\ell$.
+
+**Theorem 11.2A (conditional split-top finite-set variant).** Let $K=\mathbf Q$, retain the
+Frey signed-special residual datum at $\ell\geq7$, and construct the auxiliary dihedral
+representation at $q$ from the compatible ray datum of Chapter 4. Prescribe its protected
+local branch pairs so that it and the target occur on the simultaneous split local points of
+Book 158. Let $M/\mathbf Q$ and $A_M/M$ be the Galois-top output of Book 158, Theorem 5.1 and
+Corollary 6.1, and let $P_{\mathrm{aux}}(A_M)$ be the actual finite set at which
+$V_{\mathfrak q}(A_M)$ has more level than the dihedral residual automorphic reference.
+
+Assume that this actual pair satisfies one of Book 176's finite-set interfaces: the direct
+$({\rm IAV}_S)$ comparison; a fully reverified ordered chain; every hypothesis of its
+all-point Theorem 9.1; or every actual-cube, simultaneous-branch, reciprocity, and pointed
+occurrence hypothesis of its Theorem 9.2. Then $V_{\mathfrak q}(A_M)$ is attached to a
+cuspidal parallel-weight-two packet $\Pi_A/M$, and for a place $\lambda\mid\mathfrak l$,
+
+$$
+\bar\rho|_{G_M}\otimes_k k_\lambda
+\simeq \bar\rho^T_{\Pi_A,\lambda}.                           \tag{11.7a}
+$$
+
+The compatible packet family has a distinguished stable lattice whose reduction is the exact
+target frame after the coefficient extension appearing in Proposition 11.1.
+
+**Proof.** The protected conjugate-ratio witness and Book 158's closure-level disjointness keep
+the norm-pulled dihedral induction over $M$ cuspidal and identify its residual representation
+with $A_M[\mathfrak q]$. The selected Book 176 interface applies to the actual set
+$P_{\mathrm{aux}}(A_M)$ and makes the named point $V_{\mathfrak q}(A_M)$ automorphic. No
+place is discarded or collapsed to a single auxiliary prime.
+
+In the Frey split Tate datum, every $w\mid2$ is special for this point. Since $M/\mathbf Q$
+has positive even degree, choose one such $w$ in the parity-correct finite ramification set of
+Book 104's compact one-split carrier. Book 127 attaches the rational rank-two family. The
+common Frobenius polynomials of the Tate factors and Proposition 11.1 then identify its
+$\ell$-adic residual member with the paired frame
+$A_M[\mathfrak l]\simeq\bar\rho|_{G_M}$, proving (11.7a). $\square$
+
+Complete splitting is precisely why the singleton theorem is unavailable here:
+
+$$
+\{w:w\mid2\}\subseteq P_{\mathrm{aux}}(A_M),
+\qquad
+\#\{w:w\mid2\}=[M:\mathbf Q]\ge2.                          \tag{11.7b}
+$$
+
+Thus Theorem 11.2A is a conditional implication, not a proof of the required finite-set
+certificate. Separate one-place level raising or support at the dyadic places does not supply
+any of the four alternatives in its hypothesis.
 
 ### 11.4 A stronger controlled form
 
@@ -2493,10 +2547,12 @@ ledger. The present one-prime theorem does not contain such a route.
 
 ### 13.1 The prerequisite interfaces
 
-The declared direct prerequisites are Books 6, 98, 104, 127, 141, 142, 154--157, and 175. Book
-175 in turn exposes the load-bearing interfaces from Books 139--140 and 174; they are not
-treated as stronger than their stated hypotheses, and its descent clause exposes Book 109's
-admissible cyclic interface. Book 6 supplies the exact Grunwald--Wang alternative used in
+The declared direct prerequisites are Books 6, 98, 104, 127, 141, 142, 154--158, and
+175--176. Book 175 exposes the load-bearing one-place interfaces from Books 139--140 and 174;
+they are not treated as stronger than their stated hypotheses, and its descent clause exposes
+Book 109's admissible cyclic interface. Book 176 supplies the exact conditional finite-set
+interfaces used only in Theorem 11.2A; it does not prove that the split specialization
+satisfies any of them. Book 6 supplies the exact Grunwald--Wang alternative used in
 Lemma 4.3, while Book 98 supplies the Hecke-character interface and Book 156
 imports Book 35's reduced characteristic polynomial for endomorphisms of abelian schemes. The
 proof uses these prerequisites in distinct roles.
@@ -2520,9 +2576,10 @@ actual source, Book 142; Book
 theorem or later congruence-subgroup result is an undeclared input.
 
 **Compact carrier and weight-two Galois realization.** Book 104 first transfers a totally
-definite output to the split packet when necessary. Even absolute degree and the eligible
-special factor at $w_0$ then satisfy its compact one-split inverse theorem with
-$W=\{w_0\}$. The semistable geometry, packet decomposition, and rational extraction of Books 122 and 125--126 feed Book 127, which supplies component descent, the full Hecke block, rank-two
+definite output to the split packet when necessary. In the singleton route, even absolute
+degree and the eligible special factor at $w_0$ satisfy its compact one-split inverse theorem
+with $W=\{w_0\}$. In the split route, any one of the special dyadic places supplies the same
+parity correction. The semistable geometry, packet decomposition, and rational extraction of Books 122 and 125--126 feed Book 127, which supplies component descent, the full Hecke block, rank-two
 extraction, determinant, oddness, common good Frobenius polynomials, and stable lattices. The
 stronger local, compatibility, and integral statements of Books 128--129 and 168 are not silently used:
 the comparison here needs only the good rational family, and Proposition 11.1 derives its
@@ -2540,6 +2597,13 @@ prime satisfies $q_{v_0}\equiv1\pmod q$, and the point has nonzero rank-one mono
 characteristic-zero point kills the possible nilradical, so no full scheme-theoretic ring
 equality is asserted. Book 175 still assumes the applicable Book 139 abelian-Ihara family and
 does not derive its typed-Ihara or support hypotheses from that family.
+
+**Finite-set nonminimal lifting.** Book 158 constructs the split Galois top and places every
+dyadic sheet in the Frey Tate neighborhood. Book 176 shows exactly what can make the resulting
+several-place point automorphic: direct paired patching, a fully checked ordered chain, its
+conditional all-point carrier, or its smaller pointed carrier for this one lift. Theorem 11.2A
+retains the chosen interface verbatim. Complete splitting, individual Ihara statements, and
+separate component support do not prove it.
 
 **Moret--Bailly approximation.** Smooth geometrically connected point spaces, nonempty local
 opens, exact local algebras, total reality, finite disjointness, and closed-locus avoidance give
@@ -2581,9 +2645,11 @@ completion algebra.
 | ordinary approximation | smooth geometric connectedness; common-degree moving-family presentations of all exact local algebras; even absolute output degree; real opens; finite disjointness | finite totally real point field of even absolute degree with the asserted completions |
 | Galois refinement | geometrically connected Galois cover; core-free stabilizer; even fixed-field index; realized top torsors; base-changed connectedness; solvability of $J$ only when a bridge is requested | controlled normal closure and exact fixed-field completions with an even-degree point field; a prime-cyclic upper bridge only in the solvable-$J$ case |
 | image preservation | disjointness from full cutout and cyclotomic compositum | unchanged full and cyclotomic images |
-| post-specialization level control | actual bad set; lower residual carrier after proved saturated level lowering; $P_{\mathrm{nm}}=\{w_0\}$; every other place on the same named minimal spectator component | one fixed nonminimal problem rather than an unproved finite-set problem |
+| singleton post-specialization level control | actual bad set; lower residual carrier after proved saturated level lowering; $P_{\mathrm{nm}}=\{w_0\}$; every other place on the same named minimal spectator component | the legacy one-fixed-nonminimal-place branch of Theorem 11.2 |
 | one-prime lifting | scalar branch $q_{v_0}\equiv1$; global tame ray character; $({\rm AUT})$, $({\rm TYPE})$, $({\rm SUP})$, $({\rm REC})$, $({\rm RAY})$, and any required $({\rm AUX}_Q)$; reduced conductor-one comparison; finite-flat quotients; named components; nonzero rank-one monodromy of the point | automorphy of the characteristic-zero point $V_{\mathfrak q}(A)$ with conductor-one special monodromy and trivial central character |
-| compact curve carrier | even $[K':\mathbf Q]$; eligible selected Steinberg factor at $w_0$; $W=\{w_0\}$; full component-routing and Schur-splitting data | Book 104 one-split packet and Book 127 rational rank-two family over $K'$ |
+| split-top specialization | Book 158's simultaneous split local points, regular symmetric top, closure-level avoidance, and exact frames | a totally real even-degree Galois top on which every dyadic Frey Tate sheet is special |
+| finite-set lifting | the actual set $P_{\mathrm{aux}}(A_M)$ and one complete Book 176 direct, ordered, all-point, or pointed certificate | conditional automorphy of the named $V_{\mathfrak q}(A_M)$ without a singleton reduction |
+| compact curve carrier | even absolute degree; in the singleton route the selected Steinberg factor $w_0$, and in the split route any one special dyadic factor; full component-routing and Schur-splitting data | Book 104 one-split packet and Book 127 rational rank-two family over the potential-modularity field |
 | cross-prime comparison | noncharacter cuspidal packet; rational rank-two realization; $q$-adic equality after scalar extension; common abelian Frobenius polynomials; absolutely irreducible target torsion | equality after the necessary coefficient extension, an $E_{\mathfrak l}$-form, and exact residual equality over $k_{\mathfrak l}$ for its distinguished lattice |
 
 Every row is used in the indicated direction. In particular, local openness does not prove
@@ -2594,8 +2660,8 @@ global connectedness, and residual image preservation does not prove automorphy.
 The dihedral packet is constructed before the Hilbert--Blumenthal point and independently of
 the desired target. Its residual automorphy is therefore a genuine starting point. The
 specialized abelian variety is not assumed automorphic. Its $q$-adic automorphy follows from the
-one-prime theorem using the dihedral residual packet. Only afterward is the weight-two system at
-$\ell$ attached.
+one-prime theorem in Theorem 11.2 and from the explicitly selected Book 176 finite-set
+interface in Theorem 11.2A. Only afterward is the weight-two system at $\ell$ attached.
 
 The target conclusion (11.7) is never used to choose $K'$, prove connectedness, or select an
 auxiliary prime. Adequacy is proved from cyclotomic irreducibility and not from the existence of
@@ -2609,16 +2675,14 @@ compatible-system, Brauer-descent, or changing-prime theorem. The weakly compati
 in Chapter 11 is the weight-two family attached directly to the already automorphic packet
 $\Pi_A$.
 
-No later-numbered congruence-subgroup, simultaneous semistable-carrier, or finite-set lifting
-manuscript is used. Such a source either depends on this book or lies after it and therefore
-cannot close Proposition 5.1 or the post-specialization cleanability clause without a dependency
-cycle. Outside the rational-base case of Lemma 4.1A, a future repair must construct the
-compatible relative ray datum of Theorem 4.2; in every case it must place
-the abelian-Ihara family and the remaining exact one-prime type, support, reciprocity, ray, and
-augmentation certificates in an acyclic prior source, and then either produce a specialization
-with singleton active set or prove an actual finite-set theorem and enlarge the admissibility
-route accordingly. Only then can the lifting inputs be inserted at the boundaries in Sections
-5.3, 9.3, and 10.3.
+No later-numbered source is used. The split variant deliberately uses the earlier Book 158
+geometry and Book 176 finite-set interfaces, so there is no dependency cycle. Outside the
+rational-base case of Lemma 4.1A, a future repair must still construct the compatible relative
+ray datum of Theorem 4.2. In the singleton branch it must place the abelian-Ihara family and
+the remaining exact one-prime type, support, reciprocity, ray, and augmentation certificates
+in an acyclic prior source. In the split branch it must instead establish one actual Book 176
+certificate for the full specialization-dependent active set. The existence of that
+certificate, not the formal implication of Theorem 11.2A, is the unresolved step.
 
 ### 13.4 Normalization audit
 
@@ -2682,26 +2746,35 @@ Arithmetic approximation then chooses the field rather than demanding a rational
 the original base. In its Galois-refined form it controls the normal closure, every completion in
 the fixed-field diagram, and disjointness from full residual cutout fields. These controls keep
 oddness, absolute irreducibility, cyclotomic adequacy, determinants, and local witnesses intact.
-The point field is chosen of even absolute degree, and its exact algebra at $v_0$ creates one
-distinguished special place while keeping every other place above $v_0$ minimal.
+The legacy singleton branch asks for an exact algebra at $v_0$ with one distinguished special
+factor and minimal complementary factors. The split Book 158 branch makes every controlled
+dyadic sheet special instead; complete splitting gives at least two such places and therefore
+cannot realize the singleton ledger.
 
-The specialized abelian variety carries the bridge. Once its post-specialization clean datum is
-verified, its residual $q$-member is dihedrally automorphic; the scalar augmentation theorem
-transfers that automorphy to its $q$-adic Tate module. Weight-two Galois realization and the
-derived cross-prime Tate comparison then reads the same packet at $\ell$, and the paired
-$\ell$-frame identifies that residual member with the prescribed target.
+The specialized abelian variety carries the bridge in either branch, but only after the
+appropriate post-specialization lifting certificate is supplied. Theorem 11.2 uses the exact
+one-prime clean datum. Theorem 11.2A instead uses one of Book 176's direct, fully reverified
+ordered, all-point, or pointed finite-set interfaces for the actual set
+$P_{\mathrm{aux}}(A_M)$. Only then does the residual $q$-member's dihedral automorphy transfer
+to its $q$-adic Tate module. Weight-two Galois realization and the derived cross-prime Tate
+comparison read the same packet at $\ell$, and the paired $\ell$-frame identifies that residual
+member with the prescribed target.
 
-The selected special factor also supplies the compact carrier: together with even absolute
-degree it gives the one-split inverse Jacquet--Langlands datum for $W=\{w_0\}$, after which
-Book 127 constructs the rational rank-two family. The $\mathbf Q$-defined Hilbert component
-does not descend this packet or family to $\mathbf Q$; the conclusion stays over $K'$.
+An eligible special factor also supplies the compact carrier. In the singleton branch it is
+$w_0$; in the split branch any one dyadic special place may be used for the parity-correct
+one-split inverse Jacquet--Langlands datum. Together with even absolute degree, Book 127 then
+constructs the rational rank-two family. The $\mathbf Q$-defined Hilbert component does not
+descend this packet or family to $\mathbf Q$; the conclusion stays over the
+potential-modularity field.
 
-The proved conclusion is therefore a conditional transfer theorem with an exact boundary. For
-$\ell\geq7$, every two-prime admissible weight-two residual datum becomes automorphic over a
-controlled finite totally real field. Simultaneous coefficient realization, the correction of
-the ray-unit part of a supplied compatible relative datum, determinant lines, components,
-normal closures, protected exact split Frobenius branches, the unramified auxiliary frame, and
-cross-prime integrality are proved on that domain.
+The proved conclusions are therefore conditional transfer theorems with exact and distinct
+boundaries. For $\ell\geq7$, Theorem 11.2 treats singleton-admissible data. Theorem 11.2A treats
+the split Frey datum only after an exact Book 176 certificate for every actual active place is
+given. Simultaneous coefficient realization, the correction of the ray-unit part of a supplied
+compatible relative datum, determinant lines, components, normal closures, protected exact
+split Frobenius branches, the unramified auxiliary frame, and cross-prime integrality are proved
+on those respective domains. No reduction from the split active set to one place is proved or
+claimed.
 
 These are the seed outputs which this book itself owns. The field lists in the two FLT source
 records are lower-bound interfaces, not exhaustive proof instructions. For the finite-image
@@ -2739,17 +2812,19 @@ family arithmetic core.
 The catalog objective is stronger: every weight-two residual datum in the stated range must be
 shown to admit the complete package. Before lifting over a general totally real base, one must
 construct the compatible corrected relative ray datum retained by Theorem 4.2; Lemma 4.1 proves
-only its unit relation, while Lemma 4.1A closes the rational-base case. At the
-lifting boundary, the first missing prior result is the abelian Ihara family used by Proposition
-5.1. Granting it does not discharge the independent
-$({\rm TYPE})$, $({\rm SUP})$, $({\rm REC})$, $({\rm RAY})$, augmentation, and
-switched-carrier clauses at the selected prime. After the complete one-prime package is proved,
-one must either prove that a specialization exists with no extra nonminimal Tate-module places,
-so that $P_{\mathrm{nm}}=\{w_0\}$, or enlarge the argument using a genuine prior finite-set
-theorem which constructs the exact automorphic and vanishing-cycle seeds at every extra active
-place without circular use of this potential-modularity conclusion. Every superfluous
-dihedral level at a claimed minimal spectator still requires a proved saturated integral
-lowering comparison. Until these inputs are available as genuine prior results, Book 178
-has not completed the full catalog objective. The source-closed conditional transfer of Theorem
-11.2 is **READY** on its exact two-prime-admissible domain; the unrestricted assertion that
-every target in the catalog range admits such a package is **NOT READY**.
+only its unit relation, while Lemma 4.1A closes the rational-base case. At the lifting boundary,
+the singleton route first needs the abelian Ihara family used by Proposition 5.1. Granting it
+does not discharge the independent $({\rm TYPE})$, $({\rm SUP})$, $({\rm REC})$,
+$({\rm RAY})$, augmentation, and switched-carrier clauses at the selected prime, nor prove that
+all other post-specialization places are minimal spectators. The split Book 158 route has a
+different boundary: every dyadic place is already active, so it must establish one actual
+Book 176 finite-set certificate, including the simultaneous branch, component-occurrence,
+reciprocity, and augmentation data required by the selected interface. Separate one-place
+occurrence theorems cannot be assembled into that certificate without rechecking their joint
+hypotheses. Every superfluous dihedral level at a claimed minimal spectator still requires a
+proved saturated integral lowering comparison. Until these inputs are available as genuine
+prior results, Book 178 has not completed the full catalog objective. The source-closed
+conditional transfer of Theorem 11.2 is **READY** on its exact singleton-admissible domain, and
+Theorem 11.2A is **READY AS AN IMPLICATION** from its exact Book 176 finite-set hypothesis. The
+unrestricted assertion that every target in the catalog range admits either package is
+**NOT READY**.
