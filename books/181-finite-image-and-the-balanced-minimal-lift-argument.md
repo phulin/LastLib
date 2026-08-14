@@ -899,7 +899,8 @@ they assume neither reducedness of $R_F^{\mathrm{SP}}$ nor a prior point of its 
 Hypothesis $(\mathrm{Seed}_{\mathrm{SP}})$ is not known for the Frey datum from the preceding
 books. The obstruction appears before any commutative algebra in Chapters 5--9.
 
-The attempted level-change construction uses Book 139 only through the finite family of
+One attempted level-change construction passes through indefinite curve-new lattices and a
+graph-to-definite switch.  That route uses Book 139 through the finite family of
 constant-coefficient abelian Ihara vanishings
 
 $$
@@ -913,13 +914,42 @@ where $D$ ranges over every actual constant-coefficient vertex, edge, permutatio
 adjoint-companion curve in the flag diagram, with its spectator and auxiliary levels. Book
 139's tree calculation and strong approximation do not prove (4.3), and Book 140 retains the
 family wherever it uses the constant rows. This is the first unresolved constant-row input on
-the declared seed-construction routes; it is not the hypothesis of Book 174's core support
+that indefinite route; it is not the hypothesis of Book 174's core support
 theorem. Within its standing clean datum, that theorem instead assumes $({\rm TIC}_v)$,
 $({\rm TIH}_{\mathscr F})$, and the five-clause $({\rm SUP}_v)$ datum. Its
 $({\rm AIH}_{\mathscr F})$ and
 $({\rm PRI}_{\rm type})$ hypotheses enter only when the corrected constant-row residue and
 normalization filtration of Chapter 6 are invoked. None of these distinct conditions implies
 the others.
+
+Condition (4.3) is not intrinsic to $(\mathrm{Seed}_{\mathrm{SP}})$.  The seed requested in
+Section 4.1 is already a definite-quaternion module.  A construction which produces that
+module directly, and proves on it the required primary--companion pairing, type occurrence,
+faithful Hecke order, support, reciprocity, and augmentation statements, need not pass through
+Book 139.  Book 175 makes the same distinction: its formal reduced fixed-prime comparison uses
+its $({\rm AUT}_v)$, $({\rm TYPE}_v)$, $({\rm SUP}_v)$, and $({\rm REC}_v)$ data; it adds the
+constant $({\rm AIH}_{\mathscr F})$ family only for the richer curve-new/component or
+graph-switched realization.  Such a direct definite construction has not been carried out in
+the current catalog, so this observation removes an overstrong dependency but does not create
+the seed.
+
+The preferred finite-set Ihara-avoidance interface of Book 176, Section 1.5 makes the bypass
+more concrete.  Its $({\rm IAV}_S)$ package patches the desired and avoidance local problems
+simultaneously and transfers full support through their common special fiber and component
+bijection.  It does not form an old--new cube and consumes neither (4.3) nor mixed Ihara.
+What remains to be proved on that route is the paired local-ring geometry, synchronized
+automorphic Taylor--Wiles systems, support transfer, finite-level recovery, and solvable
+descent constituting $({\rm IAV}_S)$.  General patching mechanics in Books 143--146 and the
+minimal theorem in Book 172 do not construct this nonminimal paired system automatically.
+
+Nor does the available large-image patching proof of Ihara settle the rows in (4.3).  The
+relevant maximal ideals on the Book 178 route are attached to its auxiliary
+characteristic-$q$ dihedral representation.  Its image lies in a torus normalizer and has
+order prime to $q$, whereas that patching proof requires a nonexceptional residual image.
+Primitive dyadic inertia makes the original Frey representation large in characteristic
+$\ell\ge7$, but it does not change the image of the separate auxiliary dihedral
+representation.  Thus large-image Ihara is a valid bypass for Frey-large rows, not for the
+actual small-image rows displayed in (4.3).
 
 The intervening algebraic and automorphic tools do not close this existence gap. Book 152
 proves finite-level diamond-module statements once a clean torsor and saturated integral maps
@@ -1732,10 +1762,12 @@ SP component.
 That statement would imply $(\mathrm{Seed}_{\mathrm{SP}})$ and hence Theorem 1.1. It is not a
 theorem of the current dependency closure.
 
-On the declared routes of Books 177--178, the first unresolved constant-row input is the finite
-family (4.3), not a hypothesis silently built into Book 174's core support theorem. If a route
-does not invoke those constant rows, its independent type, localization, support, reciprocity,
-and augmentation hypotheses are still unproved for the target. Even after (4.3), the actual
+On the declared indefinite routes of Books 177--178, the first unresolved constant-row input is
+the finite family (4.3), not a hypothesis silently built into Book 174's core support theorem.
+If a route does not invoke those constant rows--in particular, if it constructs the exact
+definite carrier directly or supplies $({\rm IAV}_S)$--then (4.3) is absent.  Its replacement
+definite-side or paired-patching localization, support, reciprocity, pairing, augmentation,
+and descent hypotheses are still unproved for the target. Even after (4.3), the actual
 multi-place cleanability, mixed comparison, and product support obligations remain. The compact
 curve carrier is available after a successful lifting step and is not listed as a blocker.
 Independently, Book 175 treats a different scalar local problem and cannot be applied to the
