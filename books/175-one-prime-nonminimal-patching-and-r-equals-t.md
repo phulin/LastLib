@@ -37,7 +37,7 @@
    - [Factoring a point through the reduced order](#71-factoring-a-point-through-the-reduced-order)
    - [Exact local type and the integral lattice](#72-exact-local-type-and-the-integral-lattice)
    - [Solvable descent](#73-solvable-descent)
-8. [Dependency, circularity, and normalization audit](#8-dependency-circularity-and-normalization-audit)
+8. [Dependency, circularity, and normalization checks](#8-dependency-circularity-and-normalization-checks)
    - [Direct prerequisite ledger](#81-direct-prerequisite-ledger)
    - [The original circular step and its repair](#82-the-original-circular-step-and-its-repair)
    - [No finite-set or hidden-support argument](#83-no-finite-set-or-hidden-support-argument)
@@ -123,7 +123,9 @@ topological support of the primary and companion type complexes on the named con
 and conductor-two deformation rings. Book 170, under its separate clean trace-order
 hypotheses, supplies the compatible Hecke-valued representation and hence the canonical
 surjections to faithful Hecke images. These two conditional facts determine the finite-level
-kernels up to nilpotents.
+kernels up to nilpotents. The support hypothesis still contains $({\rm BCD}_v)$: the compatible
+completed boundary diagram, regular-sequence assertion, and relative formal smoothness stated
+in Section 2.4. They are not consequences of the other inputs in this book.
 
 Without using an auxiliary patch, the first result proved below is
 
@@ -323,22 +325,22 @@ combined fixed-prime and auxiliary coefficient algebra. The constant-coefficient
 
 **$({\rm SUP}_v)$ (the one-boundary support datum).** Every one of the five clauses called
 $({\rm SUP}_v)$ in Book 174, Section 8.2, holds. Clauses 1--3 are its boundary-carrier datum,
-while clauses 4--5 are the separate boundary chart-and-dimension theorem $({\rm BCD}_v)$:
+while clauses 4--5 are the separate relative Cartier-switch theorem $({\rm BCD}_v)$:
 (1) the Taylor--Wiles sets are disjoint from
 $v$, kill the dual Selmer group, satisfy Book 141's split-regular detector input, and retain
 both maps, both type rows, the flag, sign, determinant, and companion pairing in every finite
 shadow; (2) the lower clean minimal problem has a nonzero patched module free over its regular
 scalar source; (3) the full same-coefficient Gram block is singular at each declared boundary
-prime; (4), after removing
-the same frame variables on both sides, the completed selected boundary chart is precisely the
-lower chart with the monodromy, flag, and Kummer coordinates retained, and the chosen boundary
-prime on each global component lies over the generic point of its lower component and on no
-other component; and (5) the scalar source and selected patched ring have the same local
-dimension there. This is the precise hypothesis of Book 174's support theorem. It is not
-inferred from the existence of a reciprocity surjection or from a characteristic-zero packet
-count. The dual group in clause (1) is the one recomputed from the enhanced local condition
-complex (4.7f''), with its exact homotopy orthogonal; it is not the ordinary dual Selmer group
-obtained by forgetting the flag.
+prime; (4) the lower boundary block is transverse and the special relaxation is relatively
+formally smooth at every selected completion, with both quotient maps retained in the same
+completed diagram; and (5) the resulting local dimension equality and one-component routing
+hold there. Section 2.4 gives the exact completed-ring formulation and proves that clause (5)
+follows from clause (4). Thus the unresolved mathematical input is the compatible completed
+quotient diagram together with the regular-sequence and formal-smoothness assertions in clause
+(4), including their full scalar-block form. It is not inferred from a reciprocity surjection
+or a characteristic-zero packet count. The dual group in clause (1) is the one recomputed from
+the enhanced local condition complex (4.7f''), with its exact homotopy orthogonal; it is not
+the ordinary dual Selmer group obtained by forgetting the flag.
 
 **$({\rm REC}_v)$ (reciprocity and the correct order).** On the direct sum of the actual
 primary and companion new modules, let $\mathbb T$ be the image of the declared good trace
@@ -408,6 +410,152 @@ root when the roots collide modulo $\ell$ and does not kill a nilpotent global k
 Only the place $v$ varies. Taylor--Wiles primes are auxiliary and are removed by their own
 augmentation; they are not additional fixed nonminimal primes. No tensor product of
 fixed-prime type complexes is used.
+
+We now isolate the exact geometric content of $({\rm BCD}_v)$. Fix one of the boundary points
+selected by the boundary-carrier datum. Separate the same formally smooth frame factors in all
+three problems, localize at the compatible primes, and complete; the notation below suppresses
+only these identical factors. Write
+
+$$
+A=\widehat{(R_\infty^{\mathrm{low}})_{\mathfrak r}},
+\qquad
+D=\widehat{(R_\infty^{\partial})_{\mathfrak p}},
+\qquad
+B=\widehat{(R_\infty^{\mathrm{sp},1})_{\mathfrak q}}.
+\tag{2.9}
+$$
+
+At finite level, the represented inclusions of conditions give quotient maps. The first part
+of $({\rm BCD}_v)$ requires them to survive in one compatible completed diagram
+
+$$
+A\twoheadrightarrow D\twoheadleftarrow B.
+\tag{2.10}
+$$
+
+There is no asserted map from $A$ to $B$. Let $S$ be the corresponding completed regular
+scalar source for the lower problem. The lower theorem makes $A$ a regular local domain finite
+flat over $S$. The relative Cartier-switch assertion at this completion is the conjunction of
+the following two statements.
+
+1. There is an integer $s\geq1$ and an $A$-regular sequence
+   $\mathbf u=(u_1,\ldots,u_s)$ such that
+
+   $$
+   D\simeq A/(u_1,\ldots,u_s).
+   \tag{2.11}
+   $$
+
+   In the distinct-line chart $s=1$, so this says in particular that the image of the lower
+   boundary equation is a nonzero element $u\in A$. Nonvanishing in the isolated local model
+   is not enough: its image must remain nonzero in this completed global lower ring. In a
+   scalar chart, every successive $u_i$ must remain a non-zero-divisor after quotienting by
+   its predecessors.
+2. The quotient $B\twoheadrightarrow D$ admits a continuous section $D\to B$ for which $B$ is
+   relatively formally smooth over $D$ of relative dimension $s$. Equivalently, after choosing
+   parameters $\mathbf m=(m_1,\ldots,m_s)$ in the kernel of the quotient, the formal inverse
+   theorem gives a noncanonical isomorphism
+
+   $$
+   B\simeq D[[m_1,\ldots,m_s]]
+   \tag{2.12}
+   $$
+
+   carrying the boundary quotient to $m_1=\cdots=m_s=0$. This assertion includes vanishing of
+   the relative obstruction map. Equality of tangent dimensions without that vanishing does
+   not imply (2.12), and the quotient $B\twoheadrightarrow D$ by itself does not supply the
+   required section.
+
+For a distinct residual line, equations (2.11)--(2.12) read
+
+$$
+D\simeq A/(u),
+\qquad
+u\ne0,
+\qquad
+B\simeq D[[m]].
+\tag{2.13}
+$$
+
+At a scalar residual point, $\mathbf u$ and $\mathbf m$ are equal-length blocks. The
+isomorphisms are taken over the whole retained scalar base: the invariant line, unramified and
+tame Kummer directions, determinant, sign, and the common frame variables all remain present.
+The frame factors suppressed in (2.9) are carried identically and may be restored on both
+sides. The blocks are not replaced by one signed Gram factor. The strict scalar ray family is then obtained
+by the finite flat base change along $\mathcal O\to\Lambda_v$; regular sequences and formal
+smoothness persist under that base change.
+
+**Proposition 2.1 (formal consequences of relative Cartier-switch transversality).** Assume
+(2.11)--(2.12) at a selected boundary completion. Let
+$\mathfrak d_1,\ldots,\mathfrak d_t$ be the minimal primes of $D$, let
+$\widetilde{\mathfrak d}_i\subset A$ be their inverse images, and put
+
+$$
+\mathfrak q_i
+=\mathfrak d_iB+(m_1,\ldots,m_s),
+\qquad
+\mathfrak s_i=\widetilde{\mathfrak d}_i\cap S.
+\tag{2.14}
+$$
+
+Then the irreducible components of $B$ are precisely
+$V(\mathfrak d_iB)$. The prime $\mathfrak q_i$ lies on only
+$V(\mathfrak d_iB)$, and
+
+$$
+\dim B=\dim A,
+\qquad
+\dim B_{\mathfrak q_i}=s
+=\dim S_{\mathfrak s_i}.
+\tag{2.15}
+$$
+
+Thus every special component has a boundary point with unique component routing, and the
+localized special ring and lower scalar source have the dimension equality required by the
+one-boundary support argument. The same conclusion holds for the scalar block of any length
+$s$.
+
+**Proof.** Since $A$ is regular, it is Cohen--Macaulay. The regular sequence $\mathbf u$ has
+height $s$, so every prime $\widetilde{\mathfrak d}_i$ minimal over
+$(\mathbf u)$ has height $s$. The finite flat map $S\to A$ has zero-dimensional fibers and
+satisfies the dimension formula. Hence $\mathfrak s_i$ also has height $s$, and the regularity
+of $S$ gives
+
+$$
+\dim S_{\mathfrak s_i}=s.
+\tag{2.16}
+$$
+
+Equation (2.12) shows that the minimal primes of $B$ are exactly the extensions
+$\mathfrak d_iB$. If $\mathfrak d_jB\subseteq\mathfrak q_i$, contraction to $D$ gives
+$\mathfrak d_j\subseteq\mathfrak d_i$; minimality forces $j=i$. Thus
+$\mathfrak q_i$ lies on exactly one irreducible component. Moreover
+
+$$
+B/\mathfrak d_iB\simeq
+(D/\mathfrak d_i)[[m_1,\ldots,m_s]],
+$$
+
+and the image of $\mathfrak q_i$ is the prime generated by the $s$ power-series variables.
+Those variables form a regular sequence, so $\dim B_{\mathfrak q_i}=s$. Finally, quotienting
+$A$ by $s$ regular elements lowers dimension by $s$, and adjoining $s$ formal variables
+restores it:
+
+$$
+\dim B=\dim D+s=\dim A.
+$$
+
+This proves (2.15) and the routing assertion. The argument uses only the length of the two
+blocks, so it also proves the scalar-block statement. $\square$
+
+The proposition proves the local dimension equality and component routing once the two
+transversality statements are known. It does not prove those statements from the other named
+hypotheses. The available change-of-condition results give the finite-level quotient maps, and
+the general deformation theory gives a criterion for relative formal smoothness, but no cited
+result supplies the compatible completed diagram (2.10), proves that $\mathbf u$ remains
+regular in $A$, or proves that the actual relative obstruction map vanishes. Accordingly
+$({\rm BCD}_v)$, and hence every support or comparison theorem that assumes $({\rm SUP}_v)$,
+remains conditional on (2.10)--(2.12).
 
 The theorem excludes the following cases:
 
@@ -556,7 +704,8 @@ $$
 The patched complexes have the analogous full support. This is support on every named
 component, deduced in Book 174 from the five explicit boundary and depth clauses recalled
 above. It is not a generic packet count. In the present theorem it is a conditional imported
-conclusion, because $({\rm SUP}_v)$ is not established by the residual datum alone.
+conclusion, because $({\rm SUP}_v)$ is not established by the residual datum alone and its
+$({\rm BCD}_v)$ clause remains exactly (2.10)--(2.12).
 
 Equation (3.10) is topological. If $I$ is the annihilator of the total cohomology, it says
 
@@ -1457,8 +1606,8 @@ $$
 \tag{5.6h}
 $$
 
-The ring $P$ is a noetherian local domain.  Any nonzero kernel of $P\twoheadrightarrow
-A_\infty$ would have positive height and make the quotient have dimension at most $q$,
+The ring $P$ is a noetherian local domain. Any nonzero kernel of
+$P\twoheadrightarrow A_\infty$ would have positive height and make the quotient have dimension at most $q$,
 contradicting (5.6h).  Therefore
 
 $$
@@ -1493,8 +1642,8 @@ Quotienting the free $R_\infty^{\mathrm{sp},1}$-module therefore makes
 $M^{\mathrm{sp},1}$ a nonzero free $R^{\mathrm{sp},1}$-module. Its deformation action is
 faithful. The order in $({\rm REC}_v)$ is defined on the primary--companion sum, but its
 kernel is the intersection of the two summand kernels and is therefore already zero on the
-primary summand. Hence the canonical surjection $R^{\mathrm{sp},1}\twoheadrightarrow
-\mathbb T^{\mathrm{sp},1}$ is injective and hence an isomorphism.  Notice that no acting-image
+primary summand. Hence the canonical surjection
+$R^{\mathrm{sp},1}\twoheadrightarrow\mathbb T^{\mathrm{sp},1}$ is injective and hence an isomorphism. Notice that no acting-image
 augmentation was used in this descent; its injectivity follows afterward from Corollary 4.5.
 
 The action image in (5.6g) is therefore the declared
@@ -1865,18 +2014,17 @@ Repeating gives a compatible chain down to $F$. Local monodromy is transported b
 and extension of the full Weil--Deligne parameter; it is not recovered by extending or
 contracting a conductor ideal.
 
-## 8. Dependency, circularity, and normalization audit
+## 8. Dependency, circularity, and normalization checks
 
 ### 8.1 Direct prerequisite ledger
 
 The declared dependency row is
-$67,69,109,138,139,140,143,170,171,172,173,174$. Their exact roles after the audit are as
-follows.
+$67,69,109,138,139,140,143,170,171,172,173,174$. Their exact roles are as follows.
 
 | Book | Result used | Boundary retained |
 |---|---|---|
 | 67, *Local Deformation Conditions Away from $\ell$* | the enhanced-line tangent term and the linearized special equations used in (4.7d)--(4.7f) and (4.8b) | the flag cannot be replaced residually by an ordinary local $H^1$ subspace; it becomes determined by Frobenius only after inverting $\varpi$ |
-| 69, *Global Deformation Problems* | the global mapping-fiber obstruction presentation and the cocycle--coboundary tangent assembly | the enhanced local complex must be inserted with both its degree-zero automorphisms and degree-one tangent; it supplies no characteristic-zero tangent vanishing |
+| 69, *Global Deformation Problems* | the global mapping-fiber obstruction presentation, cocycle--coboundary tangent assembly, and general relative formal-smoothness criterion | the enhanced local complex must be inserted with both its degree-zero automorphisms and degree-one tangent; the criterion does not prove vanishing of the relative obstruction map in (2.12) or any characteristic-zero tangent group |
 | 109, *Solvable Base Change and Descent* | recursive cyclic descent selected by an extending irreducible arithmetic representation | used only after top-field automorphy; invariance under a noncyclic solvable group is not enough |
 | 173, *Minimal Modularity Lifting* | comparison point for the neutral minimal theorem and its finite-flat range | its equality is not applied to $R^{\mathrm{sp},1}$; the scalar Kummer and line-special directions do not satisfy that identification |
 | 138, *Integral Local Types and Type Lattices* | enhanced special line, primary and companion lattices, primitive type occurrence, Frobenius conventions | at $q_v\equiv1$ a line enhancement replaces old-root separation; local lattices alone do not prove global support |
@@ -1885,7 +2033,7 @@ follows.
 | 143, *Taylor--Wiles Primes* | the split-detector and prime-selection mechanism, the sharp auxiliary tangent count, and represented-ring augmentation | applicability to the recomputed enhanced dual group and the resulting exactly $q$ ordered killing primes are retained explicitly in the unpadded $({\rm AUX}_Q)$ hypothesis; prime selection alone supplies no automorphic module |
 | 170, *Hecke-Valued Galois Representations and Nonminimal Reciprocity* | the order-valued representation, named local factorization, trace generation, and the surjections (3.13) | every generic branch and every structural generator must be accounted for; a pseudorepresentation alone is insufficient |
 | 171--172, *Minimal Deformation--Hecke Problem* and *Minimal Patching* | the unchanged clean local balance ledger, marked finite-shadow quotient patching, and equal-variable rigidity over the regular absolute and diamond sources | the minimal $R=T$ equality is not applied to the conductor-one ring; the enhanced local defect and the nonminimal module are recomputed here and in Book 174 |
-| 174, *One-Prime Type Complexes and Component Support* | proved actual-row typed parahoric extension, scalar chart, twist identities, projective primary--companion complexes, conditional full named-component support, Proposition 6.3 typed generic-kernel and integral faithful-order equality, exact fixed-prime augmentation, and Proposition 9.1 auxiliary augmentation on both adjoint sides | $({\rm TIC}_v)$, type-Ihara, primitive-residue, switched node uniformization, Book 125 routing, and boundary chart inputs retain their stated roles; auxiliary acting-image augmentation is only a surjection there; no global reducedness or nonminimal $R=T$ is asserted |
+| 174, *One-Prime Type Complexes and Component Support* | proved actual-row typed parahoric extension, scalar chart, twist identities, projective primary--companion complexes, conditional full named-component support, Proposition 6.3 typed generic-kernel and integral faithful-order equality, exact fixed-prime augmentation, and Proposition 9.1 auxiliary augmentation on both adjoint sides | $({\rm TIC}_v)$, type-Ihara, primitive-residue, switched node uniformization, Book 125 routing, and $({\rm BCD}_v)$ retain their stated roles; auxiliary acting-image augmentation is only a surjection there and becomes injective here only after base faithfulness; no global reducedness or nonminimal $R=T$ is asserted |
 
 The proof of Theorem 4.2 uses Books 170 and 174 directly, with Books 138--140 supplying the
 hypotheses built into Book 174. Books 67 and 69 enter both the balanced enhanced presentation
@@ -1951,7 +2099,8 @@ support without the coherent scalar action cannot replace it.
 There are earlier blockers to an unconditional arithmetic application. For the finite reduced
 comparison itself, they are the actual localization $({\rm AUT}_v)$; the independent type
 hypotheses $({\rm TIC}_v)$ and $({\rm TIH}_{\mathscr F})$; the five boundary-and-depth clauses
-$({\rm SUP}_v)$; branchwise reciprocity and exact generation in $({\rm REC}_v)$; and the
+$({\rm SUP}_v)$, including the unresolved regular-sequence and formal-smoothness statements
+(2.10)--(2.12); branchwise reciprocity and exact generation in $({\rm REC}_v)$; and the
 effective ray quotient $({\rm RAY}_v)$ when the scalar family is used. The finite family
 $({\rm AIH}_{\mathscr F})$ is additionally required whenever the constant-coefficient
 level-change or normalized-residue package is invoked; it does not replace the typed
@@ -2026,6 +2175,13 @@ from each deformation ring to its faithful finite reduced Hecke order. These inp
 the finite-level kernel is exactly the nilradical, yielding the reduced comparisons (4.3),
 (4.4), and (5.9).
 
+Here $({\rm SUP}_v)$ still includes the conditional relative Cartier-switch input
+$({\rm BCD}_v)$. Its unproved content is exactly the compatible completed diagram, the
+regularity of the lower boundary block, and the formally smooth section of the special
+relaxation in (2.10)--(2.12). Proposition 2.1 proves the local dimension equality, component
+routing, and the full scalar-block analogue from those assertions; it does not remove them as
+hypotheses.
+
 Every characteristic-zero deformation point kills that nilradical, so the reduced theorem
 proves the one-prime finite-flat modularity statement needed by the arithmetic application.
 Proposition 4.3b proves the vertical torsion-freeness clause of $({\rm GR}_v)$. The enhanced
@@ -2052,12 +2208,13 @@ branchwise Galois cotangent must be shown torsion, for example by an independent
 cross-cotangent theorem. The flat dual-number countermodel proves that finite flatness and
 topological support alone cannot give this conclusion.
 
-Accordingly, this book's bounded conditional theorem is **READY**: under the exact named
+Accordingly, this book's bounded theorem is **CONDITIONAL**: under the exact named
 arithmetic hypotheses it proves the reduced one-prime comparisons, vertical finite flatness,
 strict character specialization, and pointwise conductor-one and conductor-two modularity.
 When the coherent unpadded $({\rm AUX}_Q)$ system is retained, it also proves full patched and
 finite
 one-prime $R=T$, every characteristic-zero enhanced tangent--Selmer vanishing, and exact
 auxiliary acting-order augmentation. The unconditional arithmetic application remains blocked
-at the separately named localization, type-incidence, type-Ihara, boundary-chart/support,
+at the separately named localization, type-incidence, type-Ihara, relative Cartier-switch
+transversality and support,
 reciprocity, and effective ray/auxiliary inputs; no finite-set theorem is asserted here.
