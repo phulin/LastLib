@@ -209,7 +209,7 @@ flowchart LR
 | 178 | Auxiliary Dihedral Data and Residual Potential Modularity | 6, 98, 104, 127, 141, 142, 156, 157, 158, 176 |
 | 179 | Compatible Systems of Galois Representations | 168, 141, 142 |
 | 180 | Brauer Induction and Descent of Automorphy | 24, 75, 98, 109, 168 |
-| 181 | Finite Image and the Balanced Minimal-Lift Argument | 57, 62, 64, 141, 164, 165, 166, 167, 173 |
+| 181 | Finite Image and the Balanced Minimal-Lift Argument | 57, 62, 64, 141, 164, 165, 166, 167, 173, 176 |
 | 182 | Potential Automorphy and Galois Refinement of a Chosen Lift | 6, 37, 44, 61, 104, 109, 118, 121, 122, 124, 125, 127, 128, 140, 142, 157, 158, 164, 165, 168, 173, 176, 178, 181 |
 | 183 | Brauer Induction for Automorphy Families | 6, 98, 108, 109, 127, 128, 142, 168, 180, 182 |
 | 184 | Brauer Characters and Effectivity of Compatible Families | 24, 57, 180, 183 |
@@ -329,7 +329,9 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   Taylor--Wiles systems. Book 145 gives the desired union-of-components statement once its
   sharp hypotheses hold; Book 176, Proposition 1.1 then proves component-support transfer
   formally; exact acting-image control and marked augmentation give reduced finite recovery;
-  and Book 109 supplies descent under its explicit antecedent hypotheses. The first missing
+  Book 176, Lemma 1.1A upgrades a finite recovered action with nilpotent kernel to finiteness
+  of the whole noetherian desired ring; and Book 109 supplies descent under its explicit
+  antecedent hypotheses. The first missing
   input is therefore construction of the paired rings and synchronized arithmetic system,
   including avoidance full support (or an equivalent patched-source irreducibility/component-
   coverage theorem), not the formal transfer, recovery, or descent steps. Irreducibility of
@@ -406,7 +408,20 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   primitive class-set lattice give a nonzero upper localization directly on the totally
   definite algebra. Book 176, Theorem 1.2 proves the scalar definite two-map Ihara theorem
   and its integral saturation consequence by strong approximation away from each changed
-  finite place. It does not create lower-level support. The first remaining arithmetic source
+  finite place. It does not create lower-level support.
+
+  The preferred route instead forms the target broad-unipotent ring.  The exact upper special
+  ring is not nested with the minimal ring: its enhanced line, sign, and Frobenius-incidence
+  equation survive on its zero-monodromy boundary.  The broad ring imposes only unipotent
+  inertia at $P_{\mathrm{tar}}$ and canonically surjects onto the exact unramified minimal
+  ring.  One target-characteristic certificate $({\rm TIAV}_{P_{\mathrm{tar}}})$ supplies the
+  paired desired/avoidance geometry, synchronized systems, avoidance full support, and exact
+  finite recovery.  Lemma 1.1A then makes the whole broad ring finite, so its minimal quotient
+  has finite special fibre; after Book 181 constructs the point, the same support theorem
+  makes it automorphic.  This is a second coefficient-specific instance of the same reusable
+  IAV theorem schema, not a reuse of the auxiliary patch.
+
+  On the stronger optional exact-minimal route, the first arithmetic source
   is $({\rm DLO}_{P_{\mathrm{tar}}})$, the simultaneous or fully reverified ordered
   upper-to-minimal occurrence theorem for the actual finite set. Together with
   $({\rm CLN}_{\min})$, verification of the exact minimal localization's pairing, stabilizer,
@@ -415,9 +430,10 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   remains a stronger secondary alternative and
   retains all of its edgewise Ihara, component, and branch hypotheses. Dyadic places are absent
   from $P_{\mathrm{tar}}$ because the target keeps its signed-special condition. Thus the live
-  seed boundary is $({\rm IAV}_{P_{\mathrm{aux}}})$, then
-  $({\rm DLO}_{P_{\mathrm{tar}}})$ and the bottom structural ledger—not a singleton moving
-  presentation. Finite class sets, residual monodromy zero, and upper-side Taylor--Wiles
+  preferred boundary is $({\rm IAV}_{P_{\mathrm{aux}}})$, then
+  $({\rm TIAV}_{P_{\mathrm{tar}}})$—not a singleton moving presentation.  DLO plus the bottom
+  structural ledger is retained only as the stronger minimal-$R=\mathbb T$ alternative.
+  Finite class sets, residual monodromy zero, and upper-side Taylor--Wiles
   patching do not formally imply DLO; Book 176 gives an explicit paired countermodel.
   Book 176, Proposition 1.3 reduces DLO to the one-place fixed-away-level
   outside-$\ell$ theorem $({\rm FLO}_v)$ by ordinary induction.  Its regular half is Mazur
@@ -428,18 +444,20 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   first gap rather than a proof of DLO.
 
   For the post-point construction, Book 182 starts from Book 181's chosen lift and a controlled
-  exact datum on the split top. It gives parity-complete compact carriers and the common
-  auxiliary unramified Galois pairs needed by the elementary fixed-field array. Raw
-  signed-special geometry and its later raw-to-global comparison remain the separately named
-  downstream issue; none reinstates the retired singleton/toroidal route.
+  chosen-point datum on the split top. It gives parity-complete compact carriers and the common
+  auxiliary unramified Galois pairs needed by the elementary fixed-field array. Its unitary
+  bypasses close the raw dyadic carrier issue; the smooth-proper source of
+  $({\rm HT}_1)$ remains the separately named downstream comparison. None reinstates the
+  retired singleton/toroidal route.
 
 - **Balanced-lift finiteness:** Book 181's finite-image and commutative-algebra argument needs
   only the restricted-special-fibre certificate $({\rm SF}_{\rm SP})$, not automorphy of every
-  restricted characteristic-zero point. The full exact seed remains the natural stated input
-  because Book 182 uses the resulting restricted $R=\mathbb T$ theorem to make the chosen point
-  automorphic over the same field. A proof of $({\rm DMS}_{P_{\mathrm{tar}}})$ would supply the
-  clean minimal localization and hence $({\rm SF}_{\rm SP})$; with the full Book 173 ledger it
-  supplies the seed.
+  restricted characteristic-zero point.  The target broad-IAV certificate supplies the whole
+  finite special fibre without a prior minimal point and retains a support theorem which Book
+  182 evaluates after that point exists.  Thus $({\rm TIAV}_{P_{\mathrm{tar}}})$ closes both
+  forward steps without a minimal $R=\mathbb T$ theorem. A proof of
+  $({\rm DMS}_{P_{\mathrm{tar}}})$ would still supply the stronger clean minimal localization
+  and full Book 173 seed, but is optional on the preferred pointwise chain.
 - **Raw dyadic carrier and raw-to-global comparison:** Book 182, Proposition 6.1 and Book 183
   now prove ordinary elementary packet attachment packet by packet; no all-elementary
   occurrence hypothesis and no principal/dihedral type parameters are required. The sole raw

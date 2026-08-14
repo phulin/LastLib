@@ -18,9 +18,12 @@ Taylor--Wiles--Kisin proof has a third finite-set route: after solvable base cha
 the desired local problem and an Ihara-avoidance problem simultaneously, then transfers full
 support from the irreducible avoidance ring through their common special fiber.  That route
 does not form the several-place old--new cube.  Section 1.5 records its exact input and keeps
-separate the fact that the present source chain has not yet constructed it.
+separate the fact that the present source chain has not yet constructed it.  Section 1.5A
+proves its whole-ring finite-recovery consequence and applies it to a broad target-unipotent
+ring surjecting onto the minimal ring.  One target instance then supplies both the finite
+special fibre needed to construct the lift and automorphy of the resulting point.
 
-There is also a smaller definite-side fact relevant to the later minimal-seed consumer.
+There is also a smaller definite-side fact relevant to the optional exact-minimal consumer.
 For scalar parallel weight two, the two-map Ihara lemma on a totally definite quaternionic
 class set follows directly from strong approximation away from the changed finite place.
 Section 1.6 proves that result and its integral saturation consequence.  It then isolates why
@@ -44,6 +47,7 @@ multiplied.
   - [1.3 The finite-set demand from the FLT argument](#13-the-finite-set-demand-from-the-flt-argument)
   - [1.4 The application routes and their boundary](#14-the-application-routes-and-their-boundary)
   - [1.5 The direct finite-set Ihara-avoidance route](#15-the-direct-finite-set-ihara-avoidance-route)
+  - [1.5A The finite-fibre consequence and the target-minimal quotient](#15a-the-finite-fibre-consequence-and-the-target-minimal-quotient)
   - [1.6 Definite Ihara and the minimal-support boundary](#16-definite-ihara-and-the-minimal-support-boundary)
   - [1.7 Outside-ell level optimization and the actual Frey set](#17-outside-ell-level-optimization-and-the-actual-frey-set)
 - [2. Local conventions and the three congruence regimes](#2-local-conventions-and-the-three-congruence-regimes)
@@ -191,7 +195,10 @@ Beck--Chevalley datum $({\rm IBC}_P)$. Finally, Theorem 9.2 treats one named poi
 the torsion-free top of the actual final cube and the pointed occurrence of the one global
 component through that point.  The fifth route is the direct paired patching comparison
 $({\rm IAV}_S)$ of Section 1.5; it proves the finite-set theorem without first proving any of
-the cubical hypotheses.
+the cubical hypotheses.  Section 1.5A records a second consequence: when its desired ring is
+the broad unipotent ring containing an unramified minimal quotient, exact recovery makes the
+whole desired ring finite and transfers that finiteness and pointwise automorphy to the
+minimal quotient.
 
 The unconditional algebra used by these routes has two parts. First, once the exact one-prime
 geometric, reciprocity, and support hypotheses are stated separately, a short annihilator
@@ -357,6 +364,34 @@ argument of Book 145, Chapters 7, 11, and 16, written here for the paired situat
 scheme-theoretic $R=\mathbb T$ would require reducedness or another nilpotent-sensitive
 faithfulness criterion and is not needed for this route.
 
+There is one stronger finiteness consequence which is needed by Book 181 and which does not
+require scheme-theoretic $R=\mathbb T$.
+
+**Lemma 1.1A (nilpotent recovery preserves finiteness).**  Let $A$ be a noetherian
+$\mathcal O$-algebra and let $A\twoheadrightarrow C$ be a quotient whose kernel $J$ is
+nilpotent.  If $C$ is finite as an $\mathcal O$-module, then $A$ is finite as an
+$\mathcal O$-module.  In particular, $A/\varpi A$ is a finite-dimensional $k$-algebra.
+
+**Proof.**  Choose $n$ with $J^n=0$.  Each quotient
+$J^i/J^{i+1}$ is a finite $A/J=C$-module: it is finitely generated because $A$ is
+noetherian, and $J$ acts trivially on it.  The filtration
+
+$$
+0=J^n\subset J^{n-1}\subset\cdots\subset J\subset A
+\tag{1.8a}
+$$
+
+therefore has $\mathcal O$-finite successive quotients.  Hence $A$ is
+$\mathcal O$-finite. $\square$
+
+Thus the reduced equality (1.8), together with the actual nilpotent kernel furnished by
+(1.6)--(1.7), proves finiteness of the **whole** desired ring, including its nilpotent
+thickening, whenever the finite Hecke action is $\mathcal O$-finite.  This does not make the
+canonical map injective.  It says only that topological full support plus exact recovery is
+strong enough for a finite-special-fibre argument.  A finite collection of generic points,
+or generic finiteness after inverting $\varpi$, is not enough; for example
+$\mathcal O[[x]]/(\varpi x)$ has one finite generic branch but infinite special fibre.
+
 Consequently the first irreducible gap in $({\rm IAV}_S)$ is earlier than support transfer.
 For the actual finite set $S$ one must still construct:
 
@@ -401,6 +436,85 @@ $S=P_{\rm act}$ means the whole actual active set, including every dyadic place 
 distinguished base place; the paired construction must be simultaneous on that entire set.
 It may be invoked only after the further base change has made the residual local
 representations trivial and $q_w\equiv1\pmod\ell$ at every $w\in P_{\rm act}$.
+
+### 1.5A The finite-fibre consequence and the target-minimal quotient
+
+There is a second application of the same interface which is logically different from level
+lowering.  Let $F$ be a totally real field on the split Book 178 route and let $P$ be the
+finite set of non-dyadic, non-$\ell$ places at which the upper target packet is special while
+the signed-special minimal problem is unramified.  Require that $2$ and $\ell$ split
+completely in $F$ and that both $\bar\rho|_{G_F}$ and
+$\bar\rho|_{G_{F(\zeta_\ell)}}$ remain absolutely irreducible, exactly as in Book 181's
+restricted-special-fibre certificate.  If the IAV preparation uses a further solvable base
+change, $F$ denotes its output: the places above $2\ell$ must still split completely, the two
+global irreducibility clauses must still hold, the upper packet must have been base changed
+under the explicit Book 109 antecedents, and at every $v\in P$ one has
+$\bar\rho|_{G_{F_v}}$ trivial and $q_v\equiv1\pmod\ell$.  Define the **broad unipotent problem**
+$\mathcal D_F^{\rm uni}(P)$ as follows:
+
+1. at places above $2$ it imposes the same named dyadic signed-special quotient as the
+   minimal problem;
+2. at places above $\ell$ it imposes the same selected weight-$\{0,1\}$ finite-flat quotient;
+3. away from $P\cup\{w:w\mid2\ell\}$ it is unramified; and
+4. at every $v\in P$ it imposes only the tame-unipotent closure, with inertial characteristic
+   polynomial $(X-1)^2$, and imposes no chosen nonzero-monodromy line, special sign, or
+   Steinberg-branch equation.
+
+Write its represented ring as $R_F^{\rm uni}(P)$.  Setting every inertia generator equal to
+the identity is a closed condition at each $v\in P$.  Consequently the exact signed-special
+minimal functor is a closed subfunctor and there is a canonical surjection
+
+$$
+R_F^{\rm uni}(P)\twoheadrightarrow R_F^{\rm SP}.
+\tag{1.8b}
+$$
+
+Both the upper special packet and every future minimal point lie in the broad problem.  This
+ring must not be confused with the enhanced sign-selected special ring attached to the upper
+packet.  In the latter ring the line, sign, and Frobenius-incidence equation remain part of
+the closed special branch even on its $N=0$ boundary.  An arbitrary unramified lift need not
+satisfy that incidence equation, so in general there is no map from the exact upper special
+ring onto $R_F^{\rm SP}$; this is the local functoriality obstruction recorded in Book 170,
+Section 14.2.
+
+Let $({\rm TIAV}_P)$ denote one instance of $({\rm IAV}_P)$ in coefficient characteristic
+$\ell$ whose desired finite-level ring is exactly $R_F^{\rm uni}(P)$, whose common dyadic and
+coefficient-prime conditions are the ones above, and whose synchronized patches satisfy all
+of (1.3)--(1.7), including avoidance full support and an $\mathcal O$-finite desired Hecke
+action.  The construction is indexed by the residual representation and these represented
+local problems.  A named desired characteristic-zero point is used only when the resulting
+support theorem is evaluated; it is not an input to Proposition 1.1 or Lemma 1.1A.
+
+**Proposition 1.1B (target IAV gives the restricted special fibre).**  Under
+$({\rm TIAV}_P)$, the ring $R_F^{\rm uni}(P)$ is finite over $\mathcal O$, the quotient
+$R_F^{\rm SP}/\varpi$ is finite-dimensional over $k$, and every characteristic-zero point of
+$R_F^{\rm SP}$ is automorphic after the coefficient extension and solvable descent allowed
+by the $({\rm IAV}_P)$ ledger.
+
+**Proof.**  Proposition 1.1 and exact recovery give the canonical desired action a nilpotent
+kernel.  Its image is the finite-level Hecke action, hence is $\mathcal O$-finite.  Lemma
+1.1A makes $R_F^{\rm uni}(P)$ $\mathcal O$-finite.  The quotient (1.8b) gives the whole-ring
+special-fibre assertion.  Finally a characteristic-zero point of $R_F^{\rm SP}$ is, by
+(1.8b), a point of the broad desired ring.  It kills the nilpotent kernel and factors through
+the automorphic action, which is exactly the pointwise recovery in item 4 of
+$({\rm IAV}_P)$. $\square$
+
+This proposition is point-free at the finiteness stage.  Once Book 181 uses that finiteness
+to construct a minimal point, the **same** target-coefficient support theorem makes the new
+point automorphic; no second patch and no backward use of the point is required.  The
+auxiliary-characteristic certificate $({\rm IAV}_{P_{\rm aux}})$ used to produce the upper
+packet and the target-characteristic certificate $({\rm TIAV}_{P_{\rm tar}})$ are two
+instances of one reusable theorem schema, not one arithmetic patch: their coefficient
+characteristics, residual representations, and active local rings differ.
+
+Neither the upper automorphic packet nor Taylor--Wiles patching of its exact sign-selected
+special component proves $({\rm TIAV}_P)$.  What is still missing is precisely the arithmetic
+construction already listed after (1.8): the broad desired/avoidance local geometry,
+component-bijective synchronized patches, avoidance full support, and exact recovery.  If
+that one target instance is supplied, however, it bypasses
+$({\rm DLO}_P)+({\rm CLN}_{\min})$ for the lift-existence and pointwise-automorphy chain.
+Those level-lowering inputs remain a valid optional route to the stronger clean minimal
+$R=\mathbb T$ datum.
 
 ### 1.6 Definite Ihara and the minimal-support boundary
 
@@ -556,6 +670,12 @@ mod-$\varpi$ module identification on the minimal side, or an equivalent theorem
 upper residual block lies in the old support, is precisely the arithmetic content of
 $({\rm DLO}_P)$; it is not supplied by common local-ring equations.
 
+This statement concerns a comparison whose output is an actual nonzero **minimal
+automorphic module**.  Proposition 1.1B follows a different route: it patches the larger
+unipotent problem, proves that whole ring finite, and passes finiteness through its minimal
+quotient.  It produces a point by Book 181 and automorphizes that point through broad support;
+it does not assert $({\rm DLO}_P)$ or construct the clean minimal module.
+
 The later seed notation $({\rm DMS}_P)$ should therefore be read as
 
 $$
@@ -577,8 +697,9 @@ between parity-compatible inner forms; Books 125--129 attach Galois representati
 already isolated packet; and Book 140 proves a conditional curve-geometric lowering theorem
 with component and branch-Smith hypotheses.  Consequently total definiteness makes the Ihara
 and carrier parts substantially simpler, but the first exact unresolved arithmetic statement
-on the preferred route is $({\rm DLO}_{P_{\rm tar}})$, not saturation and not any optional
-node or toroidal comparison.
+on this optional exact-minimal route is $({\rm DLO}_{P_{\rm tar}})$, not saturation and not
+any optional node or toroidal comparison.  The preferred target-IAV route has the separate
+arithmetic boundary stated in Section 1.5A.
 
 ### 1.7 Outside-$\ell$ level optimization and the actual Frey set
 
@@ -2984,21 +3105,23 @@ standard Ihara-avoidance route. It is not an alias for mixed Ihara: after it is 
 Proposition 1.1 proves the needed finite-set component coverage without forming an old--new
 cube.
 
-The later definite-seed consumer has a different finite-set boundary. Theorem 1.2 proves
-the scalar definite Ihara and saturation statement without any curve abelian-Ihara input.
-It does not prove that the upper residual block occurs at minimal level. In the notation of
-Section 1.6, the first unresolved arithmetic theorem is
-$({\rm DLO}_{P_{\rm tar}})$. Section 1.7 reduces it rigorously to the one-place
-outside-$\ell$ level-optimization theorem $({\rm FLO}_v)$ with spectators.  The regular
-$q_v\not\equiv1\pmod\ell$ case is Mazur principle; accidental semistable places can also have
-$q_v\equiv1\pmod\ell$, where ordinary level optimization gives only a spherical-or-special
-alternative and the stronger scalar-support assertion $({\rm SLO}_v)$ is needed.  The present
-corpus proves neither the arithmetic invariant-cycle comparison for $({\rm MP}_v)$ nor
-$({\rm SLO}_v)$. After DLO, $({\rm CLN}_{\min})$ verifies the exact structural
-ledger, and their conjunction is $({\rm DMS}_{P_{\rm tar}})$. Independent upper-side
-Taylor--Wiles patching and common residual local-ring equations do not prove DLO; a paired
-upper/minimal patch must construct the synchronized mod-$\varpi$ automorphic module comparison
-whose existence is exactly at issue.
+For the later definite-seed consumer, Section 1.5A supplies the preferred boundary.  One
+target-characteristic instance $({\rm TIAV}_{P_{\rm tar}})$ for the broad unipotent ring makes
+that whole ring finite, hence makes its exact unramified minimal quotient finite, before a
+minimal characteristic-zero point exists.  The same support theorem makes the point
+constructed by Book 181 automorphic afterward.  This does not follow from independent
+upper-side Taylor--Wiles patching: the missing source is still the paired local-ring geometry,
+synchronized desired/avoidance systems, avoidance full support, and exact recovery, now for
+the target residual block.
+
+Theorem 1.2 and Sections 1.6--1.7 retain a stronger optional route.  Definite Ihara does not
+prove that the upper residual block occurs at minimal level.  That route first needs
+$({\rm DLO}_{P_{\rm tar}})$, reduced to the one-place outside-$\ell$ theorem
+$({\rm FLO}_v)$ with spectators.  Its regular case is integral Mazur principle; at a
+repeated-root accidental place the stronger scalar-support assertion $({\rm SLO}_v)$ is
+needed.  After DLO, $({\rm CLN}_{\min})$ supplies the Book 173 ledger, and their conjunction
+is $({\rm DMS}_{P_{\rm tar}})$.  This optional route constructs exact minimal $R=\mathbb T$;
+it is not required for the preferred special-fibre and pointwise-automorphy chain.
 
 If the geometric level-change route is used instead, then for two or more places the division
 of mathematical roles among the earlier sources separates
@@ -3150,20 +3273,25 @@ recovery, and conditional invocation of Book 109 are no longer separate missing 
 the unresolved input is the arithmetic paired-ring and synchronized-system construction with
 the exact control listed after (1.8). Once that construction is supplied, none of the mixed
 cube, product-residue, constant/type-Ihara, or separate joint-occurrence inputs is consumed.
+Lemma 1.1A further shows that nilpotent-kernel recovery to a finite Hecke action makes the
+whole noetherian desired ring finite.  Proposition 1.1B applies this to the target broad
+unipotent ring and its exact minimal quotient.
 The present source chain records this as an unresolved alternative rather than treating the
 geometric cube as logically compulsory.
 
-For the later minimal-seed application, total definiteness proves a smaller theorem rather
-than the whole direct comparison. Theorem 1.2 removes the curve-Ihara and saturation inputs
-from scalar weight-two degeneracy maps. The countermodel (1.15)--(1.16) shows why upper
-occurrence and residual monodromy zero still do not produce minimal occurrence. Thus the
-direct definite route stops exactly at $({\rm DLO}_{P_{\rm tar}})$ and the subsequent clean
-minimal ledger. Proposition 1.3 reduces DLO to the reusable one-place theorem
-$({\rm FLO}_v)$ with spectators: Mazur principle in the regular residue regime and full
-scalar-support lowering, beyond the ordinary spherical-or-special conclusion, at scalar
-accidental places.  These arithmetic theorems are narrower than the several-place cube, but
-they are not proved by definite Ihara or by the current conditional Book 140 comparison.  No
-toroidal joining is involved.
+For the later minimal-lift application, the preferred input is now one target instance
+$({\rm TIAV}_{P_{\rm tar}})$ of that direct architecture.  It supplies finite special fibre
+before the minimal point and pointwise automorphy afterward; it does not require target
+minimal occurrence or exact minimal $R=\mathbb T$.  Total definiteness proves the smaller
+Theorem 1.2 but is not needed to turn this broad-ring support theorem into Proposition 1.1B.
+
+The definite lowering analysis remains a stronger optional route. The countermodel
+(1.15)--(1.16) shows why upper occurrence and residual monodromy zero do not produce minimal
+occurrence.  That route stops at $({\rm DLO}_{P_{\rm tar}})$ and the subsequent clean ledger,
+with Proposition 1.3 reducing DLO to $({\rm FLO}_v)$: Mazur principle in the regular regime
+and full scalar-support lowering at repeated-root accidental places.  These arithmetic
+theorems are not proved by definite Ihara or by the current conditional Book 140 comparison.
+No toroidal joining is involved in either route.
 
 For the actual named point downstream, the canonical torsion-free top quotient and its
 adjoint give a smaller honest carrier with the global module $W_\Pi$ occurring once. Theorem

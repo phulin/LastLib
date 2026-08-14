@@ -4,7 +4,7 @@
 
 1. [The problem after the chosen lift exists](#1-the-problem-after-the-chosen-lift-exists)
    - [The output inherited from Book 181](#11-the-output-inherited-from-book-181)
-   - [Automorphy over the original seed field](#12-automorphy-over-the-original-seed-field)
+   - [Automorphy over the original point field](#12-automorphy-over-the-original-point-field)
    - [The new question](#13-the-new-question)
 2. [The signed-special local record](#2-the-signed-special-local-record)
    - [Primitive monodromy, line, and sign](#21-primitive-monodromy-line-and-sign)
@@ -12,14 +12,14 @@
    - [Restriction through completely split places](#23-restriction-through-completely-split-places)
 3. [Controlled Galois refinement data](#3-controlled-galois-refinement-data)
    - [The field diagram](#31-the-field-diagram)
-   - [The exact automorphic datum at the point field](#32-the-exact-automorphic-datum-at-the-point-field)
+   - [The controlled automorphy datum at the point field](#32-the-controlled-automorphy-datum-at-the-point-field)
    - [Ascent admissibility](#33-ascent-admissibility)
    - [Residual image on the fixed-field diagram](#34-residual-image-on-the-fixed-field-diagram)
 4. [The earlier seed boundary](#4-the-earlier-seed-boundary)
    - [What is assumed and what is not reconstructed here](#41-what-is-assumed-and-what-is-not-reconstructed-here)
    - [Split local data and the coefficient-prime correction](#42-split-local-data-and-the-coefficient-prime-correction)
    - [Auxiliary active sets and target paths](#43-auxiliary-active-sets-and-target-paths)
-   - [Branch corrections and bottom occurrence](#44-branch-corrections-and-bottom-occurrence)
+   - [Optional branch corrections and bottom occurrence](#44-optional-branch-corrections-and-bottom-occurrence)
    - [The direct definite split-top boundary](#45-the-direct-definite-split-top-boundary)
 5. [Potential automorphy of the chosen lift](#5-potential-automorphy-of-the-chosen-lift)
    - [Automorphy at the point field](#51-automorphy-at-the-point-field)
@@ -57,10 +57,12 @@ $$
 having the primitive signed-special, or **SP**, local condition at $2$, the selected coefficient-linear
 finite-flat condition at $\ell$, cyclotomic determinant, and the required irreducibility. Its
 balanced presentation does not by itself produce a characteristic-zero point. Under the
-explicit hypothesis $(\mathrm{Seed}_{\mathrm{SP}}^{181})$, Book 181 first applies the minimal
-comparison theorem over a totally real seed field, then proves finite scalar image, descends
-the traces, proves that the whole global ring is finite flat, and finally chooses a horizontal
-point.
+restricted-special-fibre certificate $(\mathrm{SF}_{\mathrm{SP}}^{181})$, Book 181 proves
+finite scalar image, descends the traces, proves that the whole global ring is finite flat,
+and finally chooses a horizontal point.  The stronger
+$(\mathrm{Seed}_{\mathrm{SP}}^{181})$ supplies that certificate by minimal $R=\mathbb T$.
+On the preferred route, the target-characteristic broad-unipotent IAV certificate
+$({\rm TIAV}_{P_{\rm tar}})$ supplies it instead.
 
 Fix one such point. After the finite coefficient extension made in Book 181, it is a continuous
 representation
@@ -95,11 +97,13 @@ residual automorphic localization from which Book 181 began. This volume starts 
 point has been obtained and asks what controlled potential automorphy can be deduced for this
 particular point.
 
-### 1.2 Automorphy over the original seed field
+### 1.2 Automorphy over the original point field
 
-The seed hypothesis in Book 181 contains an even-degree totally real field $F_0$ over which
-the restricted signed-special deformation problem satisfies the exact hypotheses of Book 173.
-The chosen point is already automorphic after restriction to that field.
+The certificate used in Book 181 contains a totally real field $F_0$.  To continue the
+ultimate chain one retains either the exact Book 173 seed over $F_0$, or the
+$({\rm TIAV}_{P_{\rm tar}})$ support theorem whose broad unipotent ring surjects onto the
+minimal signed-special ring.  In either case the chosen point is automorphic after restriction
+to $F_0$.
 
 **Proposition 1.1 (the original potential-automorphy field).** After one finite coefficient
 extension, there is a parallel-weight-two cuspidal representation $\pi_{F_0}$ such that
@@ -113,12 +117,12 @@ as integral representations. The isomorphism retains the selected finite-flat la
 places above $\ell$ and the complete signed-special record at places above $2$.
 
 **Proof.** Book 181 constructs $\rho$ as a point of its represented global signed-special
-problem. Its restriction to $G_{F_0}$ is therefore a point of the exact restricted problem
-appearing in $(\mathrm{Seed}_{\mathrm{SP}}^{181})$. Book 173 identifies that restricted
-deformation ring with its faithful minimal Hecke algebra and makes every characteristic-zero
-point automorphic with a matching stable lattice. Evaluating at the restricted point gives
-(1.5). Complete splitting at $2$ and $\ell$, which is part of the seed, preserves the local
-lattices literally. $\square$
+problem. Its restriction to $G_{F_0}$ is therefore a point of the exact restricted problem.
+Under $(\mathrm{Seed}_{\mathrm{SP}}^{181})$, Book 173 identifies that ring with its faithful
+minimal Hecke algebra.  Under $({\rm TIAV}_{P_{\rm tar}})$, the minimal ring is a quotient of
+the broad desired ring and the point kills the nilpotent kernel of the finite automorphic
+action.  Either factorization makes the point automorphic with a matching stable lattice.
+Complete splitting at $2$ and $\ell$ preserves the local lattices literally. $\square$
 
 This proposition is stronger than residual potential automorphy: it identifies the chosen
 characteristic-zero point. It is weaker than the controlled theorem needed later. The seed
@@ -138,12 +142,13 @@ The single question of this volume is therefore:
 Three assertions must be kept separate:
 
 1. $\bar\rho|_{G_F}$ occurs in some automorphic representation;
-2. the exact represented signed-special problem over $F$ has a clean minimal automorphic
-   realization;
+2. either the exact represented signed-special problem over $F$ has a clean minimal
+   automorphic realization, or a broad target-IAV support theorem covers it as a quotient;
 3. the particular point $\rho|_{G_F}$ is automorphic.
 
-Book 173 proves the passage from the second assertion to the third. It does not prove the
-passage from the first to the second. Likewise, solvability of a field extension provides a
+Book 173 proves the clean-minimal passage from the second assertion to the third, while Book
+176, Proposition 1.1B proves the broad-IAV passage. Neither proves the passage from the first
+assertion to its respective arithmetic package. Likewise, solvability of a field extension provides a
 group-theoretic cyclic series but not the packet selectors and local comparisons required to
 move automorphy along that series.
 
@@ -307,7 +312,7 @@ The direct-top case $J=1$ is especially clean: then $F=M$, and no upward transfe
 Nothing in the definition asserts that such a diagram exists with the automorphic data of the
 next section.
 
-### 3.2 The exact automorphic datum at the point field
+### 3.2 The controlled automorphy datum at the point field
 
 Let $\mathcal D_F^{\mathrm{SP}}$ be the fixed-cyclotomic-determinant deformation problem whose
 local conditions are:
@@ -330,9 +335,16 @@ representation at a larger level, with an auxiliary special prime or an unverifi
 lattice, does not define the minimal comparison map required by Book 173. Nor does the phrase
 “clean datum” prove any item in the preceding list.
 
-The controlled field diagram together with this exact datum will be called a **controlled
-residual seed**. In the present volume it is an input to the chosen-lift argument, not an
-output.
+There is one weaker alternative sufficient for this volume.  A **target-IAV point datum** over
+$F$ consists of Book 176's certificate $({\rm TIAV}_{P_{\rm tar}})$ for the broad unipotent
+ring, its canonical quotient onto $\mathcal D_F^{\mathrm{SP}}$, and the exact finite
+automorphic action and local--global compatibility retained by its recovery theorem.  It does
+not assert minimal $R=\mathbb T$; it asserts that every characteristic-zero point of the
+minimal quotient factors through that finite automorphic action.
+
+The controlled field diagram together with either an exact signed-special automorphic datum
+or a target-IAV point datum will be called a **controlled chosen-point datum**. In the present
+volume it is an input to the chosen-lift argument, not an output.
 
 ### 3.3 Ascent admissibility
 
@@ -358,7 +370,7 @@ These conditions are exactly what allows Book 109 to move a particular packet al
 They are not consequences of the group $J$ being solvable. In the direct-top case the list is
 empty.
 
-A controlled residual seed plus a selected ascent ledger is the **controlled chosen-lift
+A controlled chosen-point datum plus a selected ascent ledger is the **controlled chosen-lift
 refinement datum** used in Chapter 5.
 
 ### 3.4 Residual image on the fixed-field diagram
@@ -385,27 +397,31 @@ $$
 which proves the first equality. Apply the same argument to the joint
 residual--cyclotomic cutout contained in $D$ to obtain the second. $\square$
 
-Thus the absolute and cyclotomic absolute irreducibility hypotheses required by Book 173
-survive throughout the diagram. Disjointness from a projective cutout alone would not prove
-(3.3).
+Thus the absolute and cyclotomic absolute irreducibility hypotheses required by Book 173 or
+the target IAV system survive throughout the diagram. Disjointness from a projective cutout
+alone would not prove (3.3).
 
 ## 4. The earlier seed boundary
 
 ### 4.1 What is assumed and what is not reconstructed here
 
-The controlled residual seed precedes the finite-image argument logically: it is the
-arithmetic input from which Book 181 can construct a chosen lift. No preceding volume
-presently proves its existence for the Frey signed-special datum with all of the required
-localizations and integral comparisons. Accordingly, this volume never treats that seed as an
-unconditional conclusion.
+The controlled finite-fibre input precedes the finite-image argument logically: it is the
+arithmetic input from which Book 181 constructs a chosen lift.  The retained exact seed or
+target-IAV support theorem then makes that chosen point automorphic. No preceding volume
+presently constructs either arithmetic package for the Frey signed-special datum. Accordingly,
+this volume never treats the controlled chosen-point datum as an unconditional conclusion.
 
-The seed is recorded here only to delimit the hypothesis of the post-181 theorem. On the
-preferred split route its proposed construction has four distinct layers:
+The boundary is recorded here only to delimit the hypothesis of the post-181 theorem. On the
+preferred split route its proposed construction has three distinct layers:
 
 1. Book 158's simultaneous point-centered opens and split Galois-top specialization;
 2. an auxiliary-$q$ finite-set lifting problem on the actual post-specialization active set;
-3. a target-coefficient lowering path to the signed-special minimal problem;
-4. the structural minimal ledger required by Book 173.
+3. a target-coefficient broad-unipotent IAV system whose finite recovered action both makes
+   the minimal quotient finite before the point and makes the chosen point automorphic
+   afterward.
+
+Target level lowering plus the structural Book 173 ledger is a stronger optional replacement
+for layer 3, not part of the preferred route.
 
 Collapsing these layers into “residual potential modularity” loses essential information. The
 rest of this chapter states the boundary precisely, without making it part of the chosen-lift
@@ -472,7 +488,7 @@ and they have different meanings.
 | Ledger | Definition | Forced examples | Purpose |
 |---|---|---|---|
 | $P_{\mathrm{aux}}(A)$ | places where the auxiliary-$q$ characteristic-zero representation has more level than its residual lifting problem | every dyadic place in the Frey-adapted Tate construction, any controlled semistable place above $3$, and all accidental semistable places | make $V_{\mathfrak q}(A)$ automorphic |
-| $P_{\mathrm{tar}}$ | places $v\nmid2\ell$ where the resulting target packet is special but $\mathcal D_M^{\mathrm{SP}}$ is unramified | any retained multiplicative place above $3$ and all accidental semistable target places | lower the target packet to the exact signed-special minimal problem |
+| $P_{\mathrm{tar}}$ | places $v\nmid2\ell$ where the resulting target packet is special but $\mathcal D_M^{\mathrm{SP}}$ is unramified | any retained multiplicative place above $3$ and all accidental semistable target places | form the broad target-unipotent problem containing both the upper packet and the minimal quotient |
 
 The dyadic places lie in $P_{\mathrm{aux}}(A)$ because the auxiliary residual branch is
 unramified there while the Tate seed has nonzero characteristic-zero monodromy. They do not lie
@@ -492,9 +508,10 @@ counted, because every dyadic place lies in $P_{\mathrm{aux}}(A)$. The preferred
 step is Book 176's direct $({\rm IAV}_{P_{\mathrm{aux}}(A)})$ comparison; its stronger ordered,
 all-point, or pointed alternatives may be used only with their full stated hypotheses. Only
 after that step has produced an automorphic target packet does one form $P_{\mathrm{tar}}$ and
-begin the second path.
+construct the target-characteristic $({\rm TIAV}_{P_{\rm tar}})$ system.  This is a second
+arithmetic instance of one reusable IAV theorem schema, not a reuse of the auxiliary patch.
 
-### 4.4 Branch corrections and bottom occurrence
+### 4.4 Optional branch corrections and bottom occurrence
 
 On the ordered Book 140 geometric route, each target edge
 $x\in P_{\mathrm{tar}}$ requires more than a numerical conductor congruence or a saturated old
@@ -524,8 +541,9 @@ The bottom **structural** ledger is nevertheless still an input. Finite freeness
 saturation, pairings, augmentation, faithful Hecke orders, and integral Galois attachment do
 not follow merely from nonzero occurrence. No preceding theorem constructs the entire
 auxiliary-active finite-set certificate, target path, branch corrections, and bottom-structural
-package for the Frey datum. This is the exact conditional boundary inherited by the present
-volume; it contains no singleton moving presentation.
+package for the Frey datum. This is the exact boundary of the optional level-lowering route;
+the preferred broad-IAV route of Section 4.5 does not consume it.  Neither route contains a
+singleton moving presentation.
 
 ### 4.5 The direct definite split-top boundary
 
@@ -557,93 +575,65 @@ The good Hecke character reduces to that of $\bar\rho|_{G_F}$ by Book 178's cros
 lattice comparison; absolute irreducibility and Brauer--Nesbitt identify the residual global
 representation. $\square$
 
-This proposition removes the curve-switch step, but not target minimalization. Let
-$P_{\rm tar}$ be the actual finite set where $\Pi^{\rm up}$ has more level than the exact
-signed-special minimal problem. The required direct theorem is the following finite-set
-interface.
+The exact upper special ring does **not** surject onto the minimal ring.  Its schematic closure
+retains a line, sign, and Frobenius-incidence equation even when $N=0$, while an arbitrary
+unramified lift need not satisfy that incidence equation.  Thus finiteness or full support on
+the upper special component alone cannot produce the minimal special fibre.
 
-**Missing theorem $({\rm DMS}_{P_{\rm tar}})$ (definite minimal-support transfer).** Starting
-from the upper definite localization of Proposition 4.1 and the represented signed-special
-minimal local problem, construct paired upper and minimal local rings and synchronized definite
-Taylor--Wiles systems whose common residual support transfers to the minimal side. Recover at
-finite level a nonzero minimal localization and verify the precise saturation,
-primary--companion pairing, stabilizer, generic-reducedness, branchwise integral attachment,
-diamond-torsor, and module-augmentation hypotheses of Book 173.
+The preferred repair is to enlarge at the actual set $P_{\rm tar}$ to the broad unipotent
+problem $\mathcal D_F^{\rm uni}(P_{\rm tar})$ of Book 176, Section 1.5A.  It imposes inertial
+characteristic polynomial $(X-1)^2$ but no special line or sign.  The upper packet is a point
+of this problem, and setting inertia equal to the identity gives a canonical quotient
 
-The statement is finite-set and uses the actual $P_{\rm tar}$; no singleton reduction is
-allowed. It is also not a second invocation of Book 176's $({\rm IAV}_S)$. That theorem proves
-automorphy of an already existing named characteristic-zero desired point. Before Book 181,
-the minimal signed-special problem has no known characteristic-zero point. Here the conclusion
-is instead residual occurrence and the exact clean minimal datum from which Book 173 can prove
-the restricted $R=\mathbb T$ theorem.
+$$
+R_F^{\rm uni}(P_{\rm tar})\twoheadrightarrow R_F^{\rm SP}.
+\tag{4.3}
+$$
 
-Book 176, Theorem 1.2 proves the definite two-map Ihara and saturation statement needed at
-each scalar weight-two changed place.  Its Section 1.6 also isolates the remaining content:
-$({\rm DMS}_{P_{\rm tar}})=({\rm DLO}_{P_{\rm tar}})+({\rm CLN}_{\min})$.  The first term is
-the simultaneous or fully reverified ordered implication from upper residual occurrence to
-nonzero exact minimal occurrence; the second is the Book 173 structural ledger on that
-minimal carrier.  Finite class sets remove the curve-switch Ihara hypothesis, but neither
-their finiteness nor upper-side Taylor--Wiles patching proves $({\rm DLO}_{P_{\rm tar}})$.
+**Missing certificate $({\rm TIAV}_{P_{\rm tar}})$ (target broad-unipotent IAV).** Construct
+the desired/avoidance local rings for the broad target problem, their common special fibre and
+component-bijective specialization, synchronized automorphic Taylor--Wiles systems, avoidance
+full support, and exact finite-level acting-image recovery, while retaining the common named
+dyadic SP and coefficient-prime finite-flat conditions.
 
-There is nevertheless no irreducible **finite-set** obstruction.  At every
-$v\in P_{\rm tar}$ the upper factor is an unramified twist of Steinberg and
-$\bar\rho|_{G_{F_v}}$ is unramified.  Its residual Frobenius roots have ratio $q_v$, so the
-semisimplification has a repeated root exactly when $q_v\equiv1\pmod\ell$; the residual
-matrix may then be scalar or nonsemisimple.  A retained controlled place above $3$ has
-$q_v=3$ and lies in the regular Mazur-principle range for $\ell\ge7$.  The congruence
-$q_v\equiv-1\pmod\ell$ also remains regular for unrefined lowering, although it defeats a
-single-sign Gram formula.  Only an accidental semistable place can present an uncontrolled
-scalar edge on the preferred route.
-
-Book 176, Proposition 1.3 proves that the application-shaped one-place theorem
-$({\rm FLO}_v)$, with preservation of the declared away compact level, may be applied
-successively to obtain $({\rm DLO}_{P_{\rm tar}})$.  Previously lowered places remain
-hyperspecial; a later place which becomes spherical early is simply omitted.  Primitive
-residual monodromy forces the dyadic signed-special spectator to remain conductor one, while
-the coefficient-prime automorphic level remains hyperspecial.  This proves occurrence only:
-the selected finite-flat Galois lattice is part of the subsequent
-$({\rm CLN}_{\min})$ branchwise-attachment ledger and is not inferred from hyperspecial level.
-At an unlowered target spectator, fixed Iwahori level is enough for the next
-$({\rm FLO}_v)$ application; induction does not assume that an intermediate packet retains
-the original Steinberg branch there.
-
-The absent source is the one-place arithmetic theorem.  Standard Mazur principle supplies its
-$q_v\not\equiv1\pmod\ell$ half by an invariant-cycle Frobenius contradiction.  The scalar
-$q_v\equiv1\pmod\ell$ half is stronger than the general totally-real level-optimization
-theorem: in that regime the published conclusion is only spherical-or-special.  The
-auxiliary $q_z\equiv-1\pmod\ell$ construction used to remove an even-degree parity hypothesis
-does not force the scalar output to be spherical; in this application the existing dyadic
-special spectator already supplies the parity place anyway.  Book 140 is not an alias: its
-lowering theorem retains component and branch-cleanliness hypotheses and excludes
-scalar/vexing blocks.  Consequently $({\rm DLO}_{P_{\rm tar}})$ has been reduced to the
-ordinary Mazur-principle theorem at regular places and a genuinely application-specific
-scalar-support theorem at any repeated-root accidental place.  Neither has been proved
-source-closed here.
+This certificate is point-free.  Proposition 1.1 of Book 176 gives full desired support and
+exact recovery gives a nilpotent kernel.  Since the recovered Hecke action is finite,
+Book 176, Lemma 1.1A makes the whole broad ring finite over $\mathcal O$.  The quotient (4.3)
+therefore gives $(\mathrm{SF}_{\mathrm{SP}})$ before a minimal characteristic-zero point is
+known.  Book 181 then constructs that point, and the same target support theorem makes it
+automorphic because it is a point of the minimal quotient.  No second target patch is needed.
 
 Consequently the preferred construction has the exact form
 
 $$
 ({\rm IAV}_{P_{\rm aux}})
 \Longrightarrow \Pi^{\rm up}
-\Longrightarrow \text{upper definite occurrence}
-\xRightarrow{({\rm DMS}_{P_{\rm tar}})}
-(\mathrm{Seed}_{\mathrm{SP}}^{181}).
-\tag{4.3}
+\xRightarrow{({\rm TIAV}_{P_{\rm tar}})}
+({\rm SF}_{\rm SP})
+\Longrightarrow \rho
+\xRightarrow{\text{the same target support}}\rho|_{G_F}\text{ automorphic}.
+\tag{4.4}
 $$
 
-The first implication is Book 178's conditional finite-set theorem and the middle implication
-is Proposition 4.1. Only the last arrow is missing after those hypotheses. This route uses
-neither the retired one-exceptional-sheet geometry nor the indefinite curve-switch
-$({\rm AIH}_{\mathscr F})$ family. Book 181 further shows that its lift-existence argument
-would need only the weaker restricted-special-fibre certificate
-$(\mathrm{SF}_{\mathrm{SP}})$, but the present volume uses the full seed to make the chosen
-point automorphic over $F$.
+The two IAV certificates are instances of one reusable theorem schema, but not one patch:
+their coefficient characteristics, residual representations, and active local rings differ.
+Neither instance is presently constructed in the corpus.  Upper definite occurrence from
+Proposition 4.1 is useful evidence that the target desired block is nonzero, but it does not
+replace avoidance full support or synchronized broad-ring patching.
+
+The former
+$({\rm DMS}_{P_{\rm tar}})=({\rm DLO}_{P_{\rm tar}})+({\rm CLN}_{\min})$ route remains a
+stronger optional construction of exact minimal $R=\mathbb T$.  Book 176 reduces DLO to the
+one-place fixed-away-level theorem $({\rm FLO}_v)$; its regular Mazur-principle and
+repeated-root scalar-support cases are not proved in the corpus.  They are not required for
+the preferred pointwise chain (4.4).  Neither route uses the retired singleton/toroidal
+geometry or the indefinite constant-row $({\rm AIH}_{\mathscr F})$ family.
 
 ## 5. Potential automorphy of the chosen lift
 
 ### 5.1 Automorphy at the point field
 
-**Theorem 5.1 (exact seed to the chosen point).** Let $\rho$ be the chosen lift of (1.2), and
+**Theorem 5.1 (controlled datum to the chosen point).** Let $\rho$ be the chosen lift of (1.2), and
 assume a controlled chosen-lift refinement datum as in Chapter 3. Then, after one finite
 coefficient extension, there is a parallel-weight-two cuspidal representation $\pi_F$ with
 
@@ -662,21 +652,25 @@ splitting at $\ell$ identifies the selected coefficient-prime lattice condition.
 $\rho|_{G_F}$ is a characteristic-zero point of the represented problem
 $\mathcal D_F^{\mathrm{SP}}$.
 
-The exact automorphic datum supplies every hypothesis of Book 173. Therefore
+If the controlled datum is exact minimal, Book 173 gives
 
 $$
 R_F^{\mathrm{SP}}\xrightarrow{\sim}\mathbb T_F^{\mathrm{SP}},
 \tag{5.2}
 $$
 
-and every characteristic-zero point of the represented problem is automorphic with a matching
-stable lattice. Evaluation at $\rho|_{G_F}$ gives (5.1). Because the local conditions on both
-sides factor through the same represented quotients, the primitive monodromy, line, sign,
-finite-flat lattice, and unramified conditions are retained. $\square$
+and evaluation gives (5.1).  If the controlled datum is target-IAV, the quotient
+$R_F^{\rm uni}(P_{\rm tar})\twoheadrightarrow R_F^{\rm SP}$ makes the restricted point a
+point of the broad desired ring.  It kills the nilpotent kernel of the recovered finite Hecke
+action, so Book 176's pointwise IAV conclusion gives the automorphic packet.  Residual absolute
+irreducibility upgrades trace equality to equality of stable lattices after one coefficient
+extension.  In both cases the exact local--global compatibility retained by the datum and the
+factorization through $\mathcal D_F^{\rm SP}$ preserve the primitive monodromy, line, sign,
+finite-flat lattice, and unramified conditions. $\square$
 
-The proof uses the chosen point only after the exact residual localization and the minimal
-comparison have been supplied. It does not use automorphy of the point to prove the comparison
-which makes the point automorphic.
+The proof uses the chosen point only after the minimal comparison or broad target support
+theorem has been supplied. In the IAV case that theorem already produced the finite special
+fibre used by Book 181, so evaluation at the new point is forward and noncircular.
 
 ### 5.2 Passage to the Galois top
 
@@ -1131,15 +1125,17 @@ Proposition 7.6B uses the proved ramified-spectator source (7.7) and its two-ker
 descent. A direct certificate or (7.4) gives the stated alternatives. This proves the fifth
 assertion. $\square$
 
-The theorem has two exact conditional boundaries. The earlier one is the controlled residual
-seed summarized in Chapter 4. On the preferred split route, after the separate
-$({\rm IAV}_{P_{\rm aux}})$ certificate, Proposition 4.1 supplies upper definite occurrence
-and the smallest remaining package is $({\rm DMS}_{P_{\rm tar}})$, beginning with the
-unproved occurrence theorem $({\rm DLO}_{P_{\rm tar}})$; no preceding volume proves that
-target-minimal support theorem and its clean bottom ledger. Book 176, Proposition 1.3 reduces
-DLO to the one-place outside-$\ell$ theorem $({\rm FLO}_v)$ with fixed away level; the present
-corpus contains neither the integral Mazur-principle proof nor the stronger scalar-support
-case. The later one is now only the already isolated smooth-proper source of
+The theorem has two exact conditional boundaries. The earlier one is the controlled
+chosen-point datum summarized in Chapter 4. On the preferred split route, after the auxiliary
+$({\rm IAV}_{P_{\rm aux}})$ certificate has produced the upper packet, the smallest remaining
+package is the target-characteristic broad-unipotent
+$({\rm TIAV}_{P_{\rm tar}})$ certificate.  Its whole-ring finite recovery gives the special
+fibre used by Book 181 and its same support theorem makes the resulting point automorphic.
+No preceding volume constructs its paired local rings, synchronized patches, avoidance full
+support, and exact recovery.  The older
+$({\rm DMS}_{P_{\rm tar}})$ route through $({\rm FLO}_v)$ remains a stronger optional route to
+minimal $R=\mathbb T$, not a prerequisite of this pointwise chain. The later boundary is now
+only the already isolated smooth-proper source of
 $(\mathrm{HT}_1)$. Book 168's two unitary bypasses close both the all-dyadic-split and
 targetwise parity cases without (10.5). Proposition 8.1 shows that even this input is not
 needed for the auxiliary unramified pairs.
