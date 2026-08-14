@@ -1,4 +1,4 @@
-# Local Deformation Geometry of Hilbert--Blumenthal Moduli
+# Local Geometry of Hilbert--Blumenthal Moduli
 
 ## Contents
 

@@ -1,4 +1,4 @@
-# Weil and Néron--Tate Heights, Descent, and the Mordell--Weil Theorem
+# Heights, Mordell--Weil, and the Faltings--Tate Reduction
 
 ## Contents
 
