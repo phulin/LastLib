@@ -443,6 +443,20 @@ be ordinary, not local--local. Book 157 constructs the required one-prime ordina
 $\mathbf Q_\ell$; only after that seed is fixed may the auxiliary prime $q$ and its unramified
 branch at $\ell$ be reselected. This produces the corrected two-frame finite-flat point.
 
+Write the arithmetic-Frobenius polynomial of this fixed good ordinary seed as
+
+$$
+P_\ell(X)=X^2-a_\ell(\mathcal B_\ell)X+\ell,
+\qquad
+\Delta_\ell=a_\ell(\mathcal B_\ell)^2-4\ell.                 \tag{4.1a}
+$$
+
+The selection of $q$ includes $q\nmid\Delta_\ell$. Hence the two roots of $P_\ell$ are
+distinct modulo $q$ and may be ordered before the protected dihedral branch correction is
+made. If a fixed good seed at another place, such as $3$, participates in the same paired
+frame, the corresponding discriminant is excluded at the same stage. This is a finite
+Chebotarev exclusion because the good seeds are fixed first.
+
 The order is load-bearing:
 
 $$
@@ -971,3 +985,39 @@ claim an unconditional controlled top. It proves the chosen-point potential-auto
 Galois-refinement implications from their exact hypotheses, proves the parity-complete basic
 carrier and auxiliary Galois comparisons, and isolates precisely the additional raw-carrier
 and semisimplicity input needed to retain the signed-special local record in the later family.
+
+There is a final source-record distinction. The pre-point finite-image record in the FLT
+formalization asks for a module-finite Hecke coefficient model of the scalar-reduced universal
+representation over one finite totally real field, including its local conditions,
+cyclotomic-degree inequality, rigidified totally definite quaternion algebra,
+Frobenius-compatible surjective eigenform, coefficient map, and factorization through the
+restricted representation up to a recorded conjugating matrix. That record is consumed in
+Book 181 and cannot be obtained backward from the chosen point fixed in (1.2).
+
+The post-point compatible-family arithmetic core exposes four arithmetic fields:
+
+1. independent automorphic Brauer summands, their genuine rank-two realization, common traces,
+   and common unramifiedness;
+2. the original-prime realization of the common Frobenius trace coefficient;
+3. support of the common bad-place set at $2$; and
+4. finite-flat and tame integral models at every other odd coefficient prime and every other
+   embedding above the original prime.
+
+This book supplies only the controlled potential-automorphy and packet-refinement input from
+which the first two fields are later constructed. Brauer assembly and effectivity belong to
+Books 183--185; the fourth field remains a separate integral-model theorem and is not implied
+by compactness of an arbitrary stable lattice. In particular, none of the moving, finite-set
+level-change, or bottom-carrier ledgers of Chapter 4 is silently promoted to a fifth field of
+the compatible-family core.
+
+These four fields are again only the formal handoff. Their construction still requires the
+mathematics suppressed by the record: a controlled potential-automorphy field for the chosen
+lift; selected solvable packet descent on every elementary fixed field; local--global
+compatibility on every summand and overlap; an integral Brauer relation with termwise
+original-prime comparison; genuineness and coefficient descent of the signed virtual class to
+one rank-two family; proof that the common bad set is supported at $2$, rather than merely
+finite; and stable lattices carrying the exact tame quotient at $2$ and finite-flat model at
+each coefficient prime. Arbitrary compact stable lattices, rational Frobenius compatibility,
+or equality of conductors do not supply the last assertion. Books 183--187 separate these
+steps, and their remaining hypotheses—not the four-field packaging—are the true blockers for
+inhabiting the arithmetic core.

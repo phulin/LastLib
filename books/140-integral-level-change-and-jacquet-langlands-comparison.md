@@ -2593,7 +2593,7 @@ $$
 \tag{15.1a}
 $$
 
-and the theorem is additionally conditional on the datum-specific node-uniformization hypothesis and on Book 139's abelian Ihara condition. Book 139 in turn records its own direct prerequisites $4,5,6,16,24,38,39,85,118,122,124$; they are transitive rather than silently reproved here. The repository dependency table records both corrected rows.
+and the theorem is additionally conditional on the datum-specific node-uniformization hypothesis and on Book 139's abelian Ihara condition. Book 139 in turn records its own direct prerequisites $16,24,38,39,85,118,122,124$; they are transitive rather than silently reproved here. The repository dependency table records both corrected rows.
 
 The downstream interface is equally exact.
 

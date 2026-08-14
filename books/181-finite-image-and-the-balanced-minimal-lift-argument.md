@@ -991,8 +991,36 @@ $B$ a finite-dimensional $k$-algebra, hence a finite ring.
 
 After a strict conjugacy, $\rho_A|_{G_F}$ is obtained by scalar extension from the universal
 restricted representation over $B$. Equivalently, after choosing a representative of the
-universal strict-equivalence class, all its matrices lie in $\operatorname{GL}_2(B)$. Since
-$B$ is a finite ring, $\operatorname{GL}_2(B)$ is a finite set. Consequently
+universal strict-equivalence class, all its matrices lie in $\operatorname{GL}_2(B)$.
+
+This construction also gives the exact structured witness requested by the finite-image
+arithmetic source in the FLT formalization. Take its totally real extension to be $F$ and its
+coefficient algebra to be the local image $B$ in (5.3). Through (4.1), the faithful Hecke
+action gives the surjective eigenvalue map to $B$ on the totally definite quaternion algebra,
+with the standard rigidification used to define that module. The represented universal
+restriction gives the continuous representation over $B$, while the Hecke-valued attachment
+and (4.1) give its Frobenius comparison. Its level is supported at the places above $2$, where it has the
+named tame rank-one quotient, and it is finite flat at every place above $\ell$. Its good
+arithmetic-Frobenius determinant is the residue norm and its trace is the corresponding Hecke
+operator. The strict conjugacy just chosen is the recorded conjugating matrix, and
+universality gives the required factorization after applying $B\to A$.
+
+The remaining degree field in that source is automatic here but should not be omitted. Since
+$\ell$ splits completely in $F$, the intersection
+$F\cap\mathbf Q(\zeta_\ell)$ is unramified at $\ell$; every nontrivial subextension of
+$\mathbf Q(\zeta_\ell)/\mathbf Q$ is ramified there. Hence the intersection is $\mathbf Q$,
+so
+
+$$
+[F(\zeta_\ell):F]=\ell-1>2.                                  \tag{5.3a}
+$$
+
+Thus $(\mathrm{Seed}_{\mathrm{SP}})$ supplies every field of the formal finite-image source,
+not merely finite image after restriction. Conversely, a residual automorphic eigensystem or
+a single characteristic-zero point would not supply the coefficient algebra, the universal
+factorization, or the branchwise local conditions used in this paragraph.
+
+Since $B$ is a finite ring, $\operatorname{GL}_2(B)$ is a finite set. Consequently
 
 $$
 \rho_A(G_F)

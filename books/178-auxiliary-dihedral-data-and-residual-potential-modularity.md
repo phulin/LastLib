@@ -218,6 +218,21 @@ The order matters. A global point chosen before its component may have incompati
 specializations. A field chosen before the cutout fields are listed may shrink a residual image.
 Local characters chosen without the diagonal-unit condition may not globalize.
 
+There is one application-specific precedence rule. If the target finite-flat module at
+$\ell$ comes from a multiplicative Frey curve, first construct and fix the good ordinary
+replacement $\mathcal B_\ell$ of Book 157, Proposition 8.4B, together with
+
+$$
+P_\ell(X)=X^2-a_\ell(\mathcal B_\ell)X+\ell,
+\qquad
+\Delta_\ell=a_\ell(\mathcal B_\ell)^2-4\ell.                 \tag{1.5}
+$$
+
+Only then choose $q$, imposing $q\nmid\Delta_\ell$, and only afterward prescribe the ordered
+$q$-branches at $\ell$ by protected anti-cyclotomic correction. The multiplicative Tate
+curve itself is not the characteristic-zero finite-flat seed, and a branch selected from its
+semisimplification need not occur on any good replacement.
+
 ### 1.4 The logical boundary
 
 This book does not assume a potential-modularity theorem. It also does not promote ordinary
@@ -514,7 +529,9 @@ has an existentially witnessed clean output; it is not a promise that every poin
 approximation is clean.
 
 1. a distinct $q\geq7$ has been selected with all exclusions of Chapter 3, including
-   unramifiedness of $\bar\rho$ at every place above $q$;
+   unramifiedness of $\bar\rho$ at every place above $q$; in the multiplicative-Frey
+   coefficient-prime case, the ordinary replacement and polynomial (1.5) were fixed first and
+   $q\nmid\Delta_\ell$;
 2. a corrected relative ray datum satisfying the compatibility hypothesis of Theorem 4.2 has
    been supplied, and the resulting dihedral seed has cyclotomic determinant, cyclotomic
    absolute irreducibility, and clean finite-flat local behavior at $q$ over its actual residue
@@ -635,6 +652,13 @@ counterexample.
 The auxiliary prime does three jobs. It supplies a residual representation whose automorphy is
 constructed from a character, the coefficient characteristic for modularity lifting, and the
 second factor in a connected two-prime frame cover. These jobs impose distinct exclusions.
+
+In the multiplicative-Frey coefficient-prime case, this chapter is entered only after the
+ordinary replacement $\mathcal B_\ell$ and $P_\ell$ of (1.5) have been fixed. Add the finite
+exclusion $q\nmid\Delta_\ell$; then $P_\ell$ has two distinct roots modulo $q$, and their
+chosen order is the good local $q$-branch which Lemma 4.3 must impose. If another fixed good
+seed, for example at $3$, also participates in the paired frame, add the analogous nonzero
+discriminant to the exclusion list before invoking Chebotarev.
 
 Let $S(\bar\rho)$ be the finite set of rational residue characteristics below places where
 $\bar\rho$ is ramified. We exclude $S(\bar\rho)$, the rational primes ramified in $K$, and
@@ -1503,8 +1527,9 @@ A branch pair fixed earlier from the multiplicative Tate semisimplification need
 good seed's Frobenius polynomial.  Thus the order
 
 $$
-\text{one-prime good seed}\quad\longrightarrow\quad
-\text{auxiliary branch correction}\quad\longrightarrow\quad
+\text{one-prime good seed and }P_\ell\quad\longrightarrow\quad
+q\nmid\Delta_\ell\quad\longrightarrow\quad
+\text{protected auxiliary branch correction}\quad\longrightarrow\quad
 \text{two-frame point}                                      \tag{7.1a}
 $$
 
@@ -2677,6 +2702,39 @@ controlled finite totally real field. Simultaneous coefficient realization, the 
 the ray-unit part of a supplied compatible relative datum, determinant lines, components,
 normal closures, protected exact split Frobenius branches, the unramified auxiliary frame, and
 cross-prime integrality are proved on that domain.
+
+These are the seed outputs which this book itself owns. The field lists in the two FLT source
+records are lower-bound interfaces, not exhaustive proof instructions. For the finite-image
+source, residual occurrence from this book can contribute
+to constructing the exact clean automorphic datum, but it is not itself the required
+module-finite coefficient factorization of the scalar-reduced universal representation. That
+source still needs one finite totally real restriction, a local Hecke coefficient algebra and
+its map to the scalar coefficient ring, a continuous representation over that algebra, a
+level supported above $2$ with the tame rank-one quotient, finite flatness above the
+coefficient prime, the cyclotomic-degree inequality, a rigidified totally definite quaternion
+algebra, a surjective Hecke eigenvalue map, the exact Frobenius determinant-and-trace
+comparison, and the universal factorization up to a recorded conjugating matrix. Those are
+the pre-point arithmetic fields isolated in Book 181; no aggregate “controlled seed” may
+replace them.
+
+Constructing those fields by the two-prime route retains hidden arithmetic obligations which
+are not displayed as structure fields: the good ordinary coefficient-prime replacement must
+precede $q$; the two torsion frames must lie on one connected arithmetic component; arithmetic
+approximation must preserve the full residual images and the exact local models; the dihedral
+class must survive every actual auxiliary active place; target lowering must be certified on
+the current component at every edge; and the final definite localization must carry the full
+finite-free, paired, saturated, branchwise-attached, and augmentation-compatible Book 173
+ledger. Books 157, 154--155, 139--140, 174--176, and 171--173 are the natural owners of these
+successive obligations. This book leaves their stated conditional gates in force.
+
+For the compatible-family source after a chosen lift exists, none of its four fields—independent
+Brauer summands with a genuine rank-two realization, original-prime Frobenius-coefficient
+comparison, conductor support at $2$, and integral models away from the original member—is a
+conclusion of residual potential modularity. They belong to the chosen-lift and Brauer-family
+chain of Books 182--185 and its later integral-model handoff. Consequently the local moving,
+level-change, and bottom-structure ledgers above are invoked only when they are actually used
+to manufacture the clean Book 181 datum; they are not additional fields of the compatible-
+family arithmetic core.
 
 The catalog objective is stronger: every weight-two residual datum in the stated range must be
 shown to admit the complete package. Before lifting over a general totally real base, one must
