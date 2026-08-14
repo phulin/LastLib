@@ -7,6 +7,7 @@
    - [The exact input](#12-the-exact-input)
    - [The reusable theorem](#13-the-reusable-theorem)
    - [What is conditional upstream](#14-what-is-conditional-upstream)
+   - [The minimal final chain and the blueprint](#15-the-minimal-final-chain-and-the-blueprint)
 2. [The local signed-special calculation](#2-the-local-signed-special-calculation)
    - [Nonzero monodromy and the intrinsic line](#21-nonzero-monodromy-and-the-intrinsic-line)
    - [The saturated integral filtration](#22-the-saturated-integral-filtration)
@@ -43,7 +44,7 @@
    - [Rank and saturation](#82-rank-and-saturation)
    - [The signed-special reducibility theorem](#83-the-signed-special-reducibility-theorem)
    - [Comparison with the local SP line](#84-comparison-with-the-local-sp-line)
-9. [The certified Frobenius contradiction](#9-the-certified-frobenius-contradiction)
+9. [The optional certified Frobenius contradiction](#9-the-optional-certified-frobenius-contradiction)
    - [One certified good prime](#91-one-certified-good-prime)
    - [Transport to the algebraic coefficient field](#92-transport-to-the-algebraic-coefficient-field)
    - [Purity](#93-purity)
@@ -90,9 +91,10 @@ $$
 \tag{1.1}
 $$
 
-The last sequence gives a trace identity at every good Frobenius. A prime is used only when the
-restricted away-from-two conclusion of Book 185 certifies both its common algebraic polynomial
-and weight-one purity. There is no need to name the prime $5$.
+The last sequence already contradicts the absolute irreducibility of the selected member.
+It also gives a trace identity at every good Frobenius. That second endpoint is optional: a
+prime is used only when the restricted away-from-two conclusion of Book 185 certifies both its
+common algebraic polynomial and weight-one purity. There is no need to name the prime $5$.
 
 ### 1.2 The exact input
 
@@ -168,7 +170,11 @@ Indeed a finite locally free $3$-primary group over $\mathbf Z_q$, for $q\ne3$, 
 etale, so its generic module is unramified. No stronger support assertion will be inferred from
 weak compatibility.
 
-For the final numerical contradiction, add a separate **certified good-prime record**. It
+The tower (1.6) belongs to one chosen coefficient-three representation. No model for a member
+at any other coefficient place is part of this package. Its fibers at every odd *base prime*
+are localizations of this one tower, not instances of a family-wide integral-model record.
+
+For the optional numerical contradiction, add a separate **certified good-prime record**. It
 consists of a number field $E$, an embedding $\iota_\nu:E\hookrightarrow K$, and a prime
 $q\ne2,3$ for which
 
@@ -252,6 +258,37 @@ has already been proved.
 
 Thus Theorem 1.1 is a complete conditional implication. The unconditional FLT chain remains
 blocked upstream of its antecedent. The distinction will be recorded again in Section 10.2.
+
+### 1.5 The minimal final chain and the blueprint
+
+The final dependency chain is shorter than the strong spreading theorem stated in the FLT
+blueprint and represented in its formal arithmetic core by `integralModelsAway`:
+
+$$
+\begin{array}{c}
+\text{one absolutely irreducible rational member }V=r_\nu,\ \nu\mid3
+\\ \Downarrow\quad\text{Book 187: one stable lattice and its all-level tower}
+\\ \Downarrow\quad\text{Book 161: the finite-level Schoof identities}
+\\ \Downarrow\quad\text{this book: }0\to K(1)\to V\to K\to0
+\\ \Downarrow
+\text{contradiction to absolute irreducibility.}
+\end{array}
+\tag{1.16}
+$$
+
+The blueprint packages integral models for every odd-coefficient member because its public
+spreading theorem is family-wide, then uses the three-adic trace identity and compatibility
+to return to the original residual representation. For (1.16), only the selected $\nu$-adic
+tower is consumed. Clean support at all $q\ne2,3$ is still indispensable, since it is what
+globalizes each level over $\mathbf Z[1/2]$.
+
+Relative to the controlled rational family, the only genuinely new arithmetic datum is the
+selected coefficient-three all-level finite-flat carrier used by Book 187. A compact stable
+lattice without finite-flat models is insufficient, and a single mod-$3$ model is
+insufficient. No condition $K=\mathbf Q_3$ or $k=\mathbf F_3$, no residual irreducibility,
+no primitive residual monodromy, and no separately assumed conductor integer is used. The
+full SP pair proves the required odd-tame dyadic behavior; its conductor exponent one is a
+consequence, not a classification premise.
 
 ## 2. The local signed-special calculation
 
@@ -586,9 +623,22 @@ The theorem requires no freeness of $N_n$ or of its quotient.
 
 ### 7.4 The residual orientation
 
-At level one, Book 161, Section 10.5 identifies $N_1$ as the cyclotomic line and the quotient as
-the trivial line; the extension class may be the nonsplit Kummer class of $2$. This orientation,
-not residual splitting, is what the $\mathcal O$-adic passage uses.
+Book 161 states its residual orientation paragraph over $\mathbf F_3$, but no residue-degree-one
+hypothesis is needed here. Indeed $A_1=k$ is an arbitrary finite extension of $\mathbf F_3$,
+and $N_1$ is a $k$-subspace of the two-dimensional $k$-space $T_1$. If $N_1=0$, the action on
+$T_1$ is trivial, contradicting the cyclotomic determinant at complex conjugation. If
+$N_1=T_1$, (7.5) makes the action cyclotomic scalar, whose determinant is
+$\overline\chi_3^2=1$, giving the same contradiction. Hence $N_1$ is a $k$-line. Equations
+(7.1)--(7.5) then give
+
+$$
+0\longrightarrow k(1)\longrightarrow T_1\longrightarrow k\longrightarrow0.
+\tag{7.7}
+$$
+
+After restriction of scalars this need not be a two-dimensional $\mathbf F_3$-representation,
+and no such descent is used. The extension may be nonsplit; its orientation, not residual
+splitting or a primitive inertia class, is what the $\mathcal O$-adic passage needs.
 
 ## 8. The integral cyclotomic line
 
@@ -711,7 +761,7 @@ Thus a negative-sign input $\varepsilon_2=-1$ is already incompatible with the g
 finite-flat conclusion. The main theorem does not rely on this shortcut: the good-prime trace
 contradiction treats either input sign uniformly.
 
-## 9. The certified Frobenius contradiction
+## 9. The optional certified Frobenius contradiction
 
 ### 9.1 One certified good prime
 
@@ -808,14 +858,15 @@ Book 164 supplies the residual signed-SP Frey datum and states the downstream co
 restricted Book 185 conclusion conditionally supplies an absolutely irreducible member at
 $\nu\mid3$ with the rational SP record and pure good polynomials. Book 187 conditionally
 supplies the all-level tower. Once those antecedents exist, Theorem 1.1 gives two
-contradictions:
+available endpoints:
 
 1. the line in (8.8) contradicts absolute irreducibility; and
 2. any certified prime (9.2) contradicts weight-one purity.
 
-The second endpoint is independent of a claim that the prime $5$ is good. The first endpoint does
-not need semisimplicity or purity. Both use the actual characteristic-zero line, not merely a
-reducible residual representation.
+Only the first is used in the preferred chain. The second is an independent fallback and is
+independent of a claim that the prime $5$ is good. The first endpoint does not need
+semisimplicity or purity. Both use the actual characteristic-zero line, not merely a reducible
+residual representation.
 
 ## 10. Dependencies, hostile audit, and readiness
 
@@ -826,7 +877,7 @@ The proof uses the following mathematical sources directly.
 | Source | Exact input | Use here |
 |---|---|---|
 | Book 161, Theorems 6.2, 9.1--9.2, and 10.1 | the Schoof category, simple objects, Ext asymmetry, canonical multiplicative--constant filtration, and finite-level cross and trace identities | Chapters 3--7 and the input to the $\mathcal O$-adic passage |
-| restricted conclusion of Book 185, Theorem 9.1 | determinant, rational SP pair, cofinite common good polynomials, and purity at the selected place above three | the rational local record and Section 9; no coefficient-two member is used |
+| restricted conclusion of Book 185, Theorem 9.1 | absolute irreducibility, determinant, the rational SP pair, and, for the optional fallback, cofinite common good polynomials and purity at the selected place above three | the preferred contradiction and rational local record; Section 9 is optional, and no coefficient-two member is used |
 | Book 187, Theorem 10.2 | the conditional clean-support, coefficient-linear all-level tower over $\mathbf Z[1/2]$ | the sole integral input at and away from $3$ |
 
 Books 2--6, 17, 28--29, 34, 42, 51, and 159--160 enter transitively through Book 161's proved
@@ -849,14 +900,18 @@ $$
 
 ### 10.2 Exact upstream status
 
-The bounded implication of Theorem 1.1 is complete. Two parts of its antecedent are not
-currently produced unconditionally by the spine; the positive-carrier interface between them
-is now closed.
+The bounded implication of Theorem 1.1 is complete. Relative to the controlled rational family,
+Book 187 produces its remaining integral antecedent; the positive-carrier and clean-support
+interfaces are closed. The unconditional spine still has the upstream controlled-family gaps
+recorded below.
 
 1. **Controlled SP seed.** Book 185, Theorem 9.1, assumes the controlled SP packet-array datum
    used by Books 183--184. Book 185's own audit records that the current Book 182 does not
-   unconditionally supply the controlled residual automorphic seed.
-2. **Positive good carriers $(\mathrm{AVCar}_{3,\ell}^+)$.** Book 187 now constructs these
+   unconditionally supply the controlled residual automorphic seed. Book 183's preferred
+   raw-to-global route also retains the smooth-proper Hodge--Tate comparison source
+   $(\mathrm{HT}_{\mathrm{curve}})$ isolated in Book 47; ambient Tate semisimplicity is no
+   longer the missing interface.
+2. **Closed positive good carriers $(\mathrm{AVCar}_{3,\ell}^+)$.** Book 187 constructs these
    for every positive corrected packet.  Its sufficient $(\mathrm{Car}_3^+)$ uses the exact
    CM-unitary common-multiplier PEL datum, not the obstructed direct trace group.  The basic
    packet has trivial central character, so its level is first saturated by the central signs;
@@ -868,7 +923,7 @@ is now closed.
    arithmetic theorem.  Thus neither the positive carrier nor $(\mathrm{IC}_3)$ remains an
    independent blocker.  Ambient Tate-module semisimplicity is not needed for this fixed-three
    step, because Book 129 transfers the raw finite-flat tower to the semisimplification.
-3. **Finite auxiliary comparison $(\mathrm{AUX}_\nu)$.** Book 185, Proposition 8.2 reduces
+3. **Closed finite auxiliary comparison $(\mathrm{AUX}_\nu)$.** Book 185, Proposition 8.2 reduces
    clean support $(\mathrm U)$ to comparisons at the finite auxiliary set, using the
    distinguished unramified member away from $\ell$ and the spherical prime-to-$\ell$
    calculation at $q=\ell$.  The minimal certificate
@@ -885,8 +940,9 @@ is now closed.
 The omitted all-place hypothesis $(\mathrm{AI}_2)$ is deliberately not on this list: every
 object used in Books 186--188 has coefficient characteristic three.
 
-No additional blocker occurs inside Book 188 once Book 187, Theorem 10.2, and one prime from Book
-185's already certified cofinite good set are supplied.
+No additional blocker occurs inside Book 188 once Book 187, Theorem 10.2, and the selected
+member's absolute irreducibility are supplied. One prime from Book 185's certified cofinite
+good set is needed only for the optional Section 9 fallback.
 
 ### 10.3 Hostile audit
 
@@ -905,12 +961,25 @@ bound is used only after passing to a subquotient killed by $3$.
 The only coefficient-prime input is the actual tower exported conditionally by Book 187,
 Theorem 10.2. Every level is $\varpi^n$, not merely $3^n$.
 
+**Coefficient field.** The finite-level theorem applies to $A_n=\mathcal O/\varpi^n$ even
+when $K/\mathbf Q_3$ is ramified. Section 7.4 proves the residual orientation over the actual
+residue field $k$. Neither $K=\mathbf Q_3$ nor $k=\mathbf F_3$ is assumed.
+
+**Stable lattice.** Compactness gives a stable lattice but not the required finite-flat tower.
+Book 187 constructs one lattice with compatible models at every level. No residual
+irreducibility or uniqueness-up-to-homothety statement is used.
+
 **Coefficient two.** No member at a coefficient place above two occurs. The rational base place
 $2$ is compared with the selected three-adic member, so it lies in the prime-to-coefficient
 range. The all-place hypothesis $(\mathrm{AI}_2)$ cannot affect this argument.
 
 **Support.** A global model over $\mathbf Z[1/2]$ is used only under Book 187's clean-support
 certificate. No auxiliary prime is removed from equality of almost all Frobenius traces.
+
+**Conductor.** Book 161 consumes the global finite-flat model, cyclotomic determinant, and
+odd-tame dyadic inertia. The integer $a_2(V)=1$ is derived from the SP pair and records its
+Frey provenance; it is not an extra input to the classification. Residual conductor one and
+primitive residual monodromy are not assumed.
 
 **Discriminant normalization.** At $3$, $1/2$ is an upper-break cutoff and $3/2$ is a normalized
 different bound. At $2$, the exact tame exponent is $2/3$. The global ceiling pays each factor
@@ -936,7 +1005,7 @@ fields as well.
 all separated coefficient levels, forms the algebraic augmentation submodule, and saturates its
 rank-one $K$-span.
 
-**Good prime.** The final prime lies in the restricted Book 185 conclusion's certified cofinite
+**Optional good prime.** The Section 9 prime lies in the restricted Book 185 conclusion's certified cofinite
 good set. The argument does not assume that $5$ is outside the exceptional set. The inequality
 is valid for every certified prime $q>1$. In particular, Book 164's illustrative downstream
 choice of $5$ is not imported as an unproved local certificate.
@@ -950,15 +1019,17 @@ the ordered filtration, and the finite-level cross relation. The new argument he
 finite coefficient identities through the $\mathcal O$-adic tower, proves saturation, and matches
 the resulting global cyclotomic line with the signed local SP line.
 
-At any prime in the certified pure good set, the trace is simultaneously $1+q$ and bounded in
-absolute value by $2\sqrt q$, an impossibility. Thus the bounded conditional theorem of this book
-is
+The resulting characteristic-zero cyclotomic line contradicts the absolute irreducibility of
+the selected coefficient-three member. Optionally, at any prime in the certified pure good set,
+the trace is simultaneously $1+q$ and bounded in absolute value by $2\sqrt q$, a second
+impossibility. Thus the bounded conditional theorem of this book is
 
 $$
 \boxed{\textbf{READY}.}
 \tag{10.2}
 $$
 
-The unconditional FLT dependency spine is not ready for the three upstream reasons listed in
-Section 10.2. That upstream status does not weaken the proved implication from the exact tower to
-the contradiction.
+The unconditional FLT dependency spine is not ready because the controlled rational family is
+still upstream-conditional as recorded in Section 10.2; the positive-carrier and AUX items there
+are closed interfaces, not additional blockers. That upstream status does not weaken the proved
+implication from the exact selected tower to the contradiction.

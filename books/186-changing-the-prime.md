@@ -28,6 +28,7 @@
    - [Book 187: coefficient-prime integrality](#81-book-187-coefficient-prime-integrality)
    - [Book 188: the residual input](#82-book-188-the-residual-input)
    - [Book 161: the actual classification source](#83-book-161-the-actual-classification-source)
+   - [The minimal integral scope](#84-the-minimal-integral-scope)
 9. [Hostile proof and dependency audit](#9-hostile-proof-and-dependency-audit)
    - [Local mathematics](#91-local-mathematics)
    - [Coefficients and compatibility](#92-coefficients-and-compatibility)
@@ -59,10 +60,19 @@ $3$-adic Hodge theory, or a classification of finite-flat group schemes. Those a
 dependency boundaries. The final sections state exactly what is handed to Books 187--188
 and distinguish Book 161's actual category/classification role in the endgame.
 
+The all-odd spreading theorem in the FLT blueprint is stronger than this chapter's final
+use of it: that theorem equips every odd-coefficient member with an integral model, whereas
+the contradiction selects one place $\nu\mid3$. The selected route needs an all-level
+integral tower only for this one member. It still needs that member to be unramified at
+every base prime outside $\{2,3\}$, because those local conditions glue the tower over
+$\mathbf Z[1/2]$. Thus ``one coefficient place'' must not be confused with ``one rational
+base place.''
+
 The existence of the collection used below is conditional on the controlled SP top datum
 of Books 182--185. In particular, the current dependency spine does not construct the
-required controlled residual automorphic seed, every raw dyadic carrier, or the ambient
-semisimplicity certificate needed for uniform raw-to-global preservation. The result of this chapter is therefore a
+required controlled residual automorphic seed or every raw dyadic carrier; the remaining
+raw-to-global Hodge--Tate source is the smooth-proper comparison interface isolated in
+Books 47 and 183, not ambient Tate semisimplicity. The result of this chapter is therefore a
 bounded implication from the assembled rational data, not an unconditional construction of
 that data.
 
@@ -676,7 +686,7 @@ residual absolute irreducibility: it permits the residual inertia extension to s
 the saturated all-level filtration. If a variant requires residual conductor one, it must see
 $\mathfrak c_2(T)=\mathcal O$. If it requires a representation over
 $\mathbf F_3$, it must see an $\mathbf F_3$-descent or $k=\mathbf F_3$. If it
-requires absolute irreducibility, the certificate of Section 6.2 or an exact
+requires residual absolute irreducibility, the certificate of Section 6.2 or an exact
 replacement must be present. The rational equality $a_2(V)=1$ supplies none of
 these three residual assertions by itself.
 
@@ -715,6 +725,34 @@ $$
 $$
 
 No result of those later books is used to prove Theorem 7.1.
+
+### 8.4 The minimal integral scope
+
+The source-facing arithmetic core in the FLT formalization contains a field named
+`integralModelsAway`: it produces integral models at every odd coefficient place. That is
+the natural strong form of the blueprint's spreading theorem, but it is not consumed
+term-by-term by the final three-adic argument. After Theorem 7.1 has selected $\nu\mid3$,
+the remaining chain uses exactly:
+
+1. one globally stable $\mathcal O_{E_\nu}$-lattice in $V$;
+2. compatible finite-flat models for one cofinal coefficient tower (Book 187 constructs all
+   $T/\varpi^nT$) at the base prime $3$;
+3. $(\mathrm U)$ for this same $V$, so those quotients are finite etale at every odd base
+   prime $q\ne3$ and glue over $\mathbf Z[1/2]$; and
+4. the determinant and dyadic odd-tame behavior needed by Book 161.
+
+There is no second lattice at another coefficient place in this list. Compactness alone
+provides item 1 but not item 2. A single finite-flat residual layer does not provide item 2,
+because the integral line in Book 188 is obtained by passing finite-level identities through
+a separated cofinal tower. Conversely, no residual irreducibility, residue-degree-one
+condition, primitive residual monodromy, or coefficient-place-above-two model is required.
+The conductor-one integer is a consequence of the full SP pair; it is not an additional
+classification hypothesis.
+
+This also locates the preferred contradiction. Theorem 7.1 already retains absolute
+irreducibility of $V$. Once Books 187, 161, and 188 construct a characteristic-zero
+cyclotomic line in $V$, the contradiction is immediate. A certified pure good prime gives
+an independent trace contradiction, but is not needed on this preferred route.
 
 ## 9. Hostile proof and dependency audit
 
@@ -815,6 +853,9 @@ states whether it is rational or residual. The clean-support assertion is visibl
 derived from Book 185's equivariant Galois-comparison theorem, the prime-three route is independent of $(\mathrm{AI}_2)$, and
 the missing controlled seed remains an upstream hypothesis. Pure weight one is recorded
 separately from the Frobenius constant term and determinant.
+The comparison with the blueprint's stronger all-odd spreading statement is explicit: the
+final consumer takes only the selected coefficient-three tower, while clean support is still
+required at all odd base primes for that tower.
 
 The chapter's final certified object is
 

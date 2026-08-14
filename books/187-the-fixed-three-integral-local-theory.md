@@ -165,6 +165,12 @@ The local integral theorem of Chapters 3--6 uses $(\mathrm C_3)$ but not $(\math
 global gluing theorem of Chapter 8 uses both. This separation identifies exactly which part of
 the construction remains available if the global clean-support comparison is still missing.
 
+Both certificates concern the single selected member $V=r_\nu$. They are not a request for
+integral models at every odd coefficient place of the compatible family. The final argument
+needs all coefficient levels at this one place and all odd *base-prime* local models for those
+levels. This is strictly weaker than the blueprint's family-wide all-odd integral-model
+record.
+
 ### 1.4 The target
 
 Starting from (1.1)--(1.8) and $(\mathrm C_3)$, we shall construct rather than assume:
@@ -1467,6 +1473,10 @@ $$
 
 The first is stronger and is exactly what gluing requires.
 
+Neither line in (7.7) asks for integral models at a second coefficient place. The first ranges
+over base primes for the quotients of the one $\nu$-adic lattice; the second is only an optional
+characteristic-zero fallback once Book 188 has already proved reducibility.
+
 ## 8. Gluing over the integers with two inverted
 
 ### 8.1 The local ledger
@@ -1626,20 +1636,24 @@ V^{\mathrm{ss}}\simeq K(1)\oplus K.
 \tag{9.2}
 $$
 
+The controlled rational input already says that $V$ is absolutely irreducible. Therefore
+(9.1), or even the $K$-line obtained from it, is the preferred final contradiction. It uses
+neither a residual irreducibility assertion nor a pure good-prime record.
+
 The global cyclotomic line in (9.1) is an output of the classification. It must not be
 identified in advance with the local $D_2$-stable line $T_2^+$. After (9.1) exists, uniqueness
 of the inertia-fixed line for nonzero SP monodromy identifies the two rational lines. This can
 force the dyadic sign to be split, but the usual good-Frobenius trace contradiction works
 without using that shortcut.
 
-At any certified pure good prime $q\ne2,3$, (9.2) gives
+Independently, at any certified pure good prime $q\ne2,3$, (9.2) gives
 
 $$
 \operatorname{tr}V(\operatorname{Frob}_q)=1+q.
 \tag{9.3}
 $$
 
-Weight-one purity gives
+Weight-one purity gives the fallback contradiction
 
 $$
 |a_q|\le2\sqrt q,
@@ -1727,9 +1741,10 @@ in the Schoof category, its determinant is cyclotomic, and its exponent-three su
 inertia image trivial or cyclic of order three.
 
 Consequently the tower supplies the integral and local hypotheses actually used in the proof
-of the conditional Frey--SP three-adic reducibility theorem in Book 188. A prime in the
-cofinite certified good set transported by Book 186 supplies the separate pure Frobenius
-polynomial used after reducibility.
+of the conditional Frey--SP three-adic reducibility theorem in Book 188. Since Book 186's
+selected member is absolutely irreducible, that reducibility theorem already ends the
+preferred FLT chain. A prime in the cofinite certified good set transported by Book 186
+supplies the separate pure Frobenius polynomial only for the optional trace fallback.
 
 **Proof.** Under $(\mathrm U)$, Section 7.3 supplies the unique finite-etale model at every
 odd prime other than three. Lemma 8.1 intersects these orders with the model constructed at
@@ -1899,6 +1914,12 @@ place $\nu\mid3$ belongs to the away-from-two collection constructed without
 $(\mathrm{AI}_2)$, and Book 186 transports every rational datum used here. A hypothetical
 member at a coefficient place above two never enters the lattice, local, or gluing arguments.
 
+**Attack: the blueprint's `integralModelsAway` record is a hidden input.** It is not. That
+record proves one integral statement for every odd coefficient place. This book constructs
+the only instance consumed downstream, at the chosen $\nu\mid3$. Its use of every odd
+rational prime in Chapter 8 is clean-support gluing for this one tower, not a return to the
+family-wide record.
+
 **Attack: weak compatibility removes all auxiliary ramification.** It does not. The finite
 checks in $(\mathrm U)$ require actual local comparison or actual direct-summand
 unramifiedness.  Frobenius density in one completion does not identify the values of two
@@ -1987,7 +2008,8 @@ $$
 $$
 
 The verdict remains not ready only because the rational family is conditional on Book 182's
-unproved controlled top: its moving specialization, clean residual SP seed, raw dyadic SP
-carrier, and ambient semisimplicity inputs remain upstream.  The AUX Galois comparisons are
+unproved controlled top: its moving specialization, clean residual SP seed, and raw dyadic SP
+carrier remain upstream; the residual raw-to-global Hodge--Tate source is the smooth-proper
+comparison interface isolated in Books 47 and 183, not ambient Tate semisimplicity. The AUX Galois comparisons are
 proved once that controlled top is supplied.  Book 182's stronger automorphic-type theorem
 remains open, but it no longer lies on the clean-support path.
