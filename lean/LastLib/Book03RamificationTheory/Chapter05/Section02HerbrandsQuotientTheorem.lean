@@ -94,6 +94,17 @@ structure Chapter05OrbitPolynomialCoefficientWitness
     Polynomial.map (algebraMap M L) F = chapter05OrbitPolynomial H α
   coefficients_in_valuation_ring : ∀ n : ℕ, F.coeff n ∈ A_M
 
+/- The descent witness is not just coefficient bookkeeping: because the orbit
+   polynomial is monic, its descended polynomial is monic as well.  This is
+   the generator-level fact used before comparing coefficient valuations. -/
+theorem chapter05_orbit_polynomial_coefficient_witness_monic
+    {M L : Type*} [Field M] [Field L] [Algebra M L]
+    (A_M : ValuationSubring M)
+    (H : Subgroup (L ≃ₐ[M] L)) [Fintype H] (α : L)
+    (W : Chapter05OrbitPolynomialCoefficientWitness A_M H α) :
+    W.F.Monic := by
+  sorry
+
 /-
  The next theorem is the displacement identity quoted in the source.  We
  state it both in the exact reciprocal form and as the integral form stored

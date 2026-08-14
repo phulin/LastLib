@@ -98,8 +98,8 @@ theorem chapter03_cartier_to_weil_surjective_iff_locallyFactorial
 /-- Local principality of the height-one ideal of a prime divisor. -/
 def chapter03PrimeDivisorLocallyPrincipal
     {X : Scheme.{u}} (P : Chapter03PrimeDivisor X) : Prop :=
-  ∀ U : X.affineOpens, P.genericPoint ∈ U →
-    ∃ V : X.affineOpens, P.genericPoint ∈ V ∧ V ≤ U ∧
+  ∀ U : X.affineOpens, P.genericPoint ∈ U.1 →
+    ∃ V : X.affineOpens, P.genericPoint ∈ V.1 ∧ V ≤ U ∧
       ∃ a : Γ(X, V), P.closedSubscheme.ideal V = Ideal.span ({a} : Set Γ(X, V))
 
 /-- A prime divisor is Cartier exactly when its height-one ideal is locally principal. -/
@@ -134,7 +134,7 @@ theorem chapter03_regular_noetherian_integral_cartier_to_weil_surjective
   exact chapter03_regular_noetherian_is_locallyFactorial X
 
 theorem chapter03_regular_noetherian_integral_cartier_to_weil_bijective
-    {X : Scheme.{u}} [IsIntegral X] [IsNoetherian X] [IsLocallyNoetherian X]
+    {X : Scheme.{u}} [IsIntegral X] [IsNoetherian X]
     [Chapter03Normal X] [Chapter03Regular X] [Chapter03CartierDivisorTheory X] :
     Function.Bijective (chapter03CartierDivisorToWeil X) := by
   exact ⟨chapter03_cartier_to_weil_injective (X := X),
@@ -142,7 +142,7 @@ theorem chapter03_regular_noetherian_integral_cartier_to_weil_bijective
 
 /-- The divisor dictionary as a (noncomputable) equivalence of underlying types. -/
 noncomputable def chapter03CartierWeilEquiv
-    {X : Scheme.{u}} [IsIntegral X] [IsNoetherian X] [IsLocallyNoetherian X]
+    {X : Scheme.{u}} [IsIntegral X] [IsNoetherian X]
     [Chapter03Normal X] [Chapter03Regular X] [Chapter03CartierDivisorTheory X] :
     Chapter03CartierDivisor X ≃ Chapter03WeilDivisor X :=
   Equiv.ofBijective (chapter03CartierDivisorToWeil X)
@@ -150,14 +150,14 @@ noncomputable def chapter03CartierWeilEquiv
 
 /-- A chosen Cartier representative, corresponding to local generators of height-one primes. -/
 noncomputable def chapter03CartierRepresentative
-    {X : Scheme.{u}} [IsIntegral X] [IsNoetherian X] [IsLocallyNoetherian X]
+    {X : Scheme.{u}} [IsIntegral X] [IsNoetherian X]
     [Chapter03Normal X] [Chapter03Regular X] [Chapter03CartierDivisorTheory X]
     (D : Chapter03WeilDivisor X) : Chapter03CartierDivisor X :=
   Classical.choose
     (chapter03_regular_noetherian_integral_cartier_to_weil_surjective (X := X) D)
 
 theorem chapter03CartierRepresentative_toWeil
-    {X : Scheme.{u}} [IsIntegral X] [IsNoetherian X] [IsLocallyNoetherian X]
+    {X : Scheme.{u}} [IsIntegral X] [IsNoetherian X]
     [Chapter03Normal X] [Chapter03Regular X] [Chapter03CartierDivisorTheory X]
     (D : Chapter03WeilDivisor X) :
     chapter03CartierDivisorToWeil X (chapter03CartierRepresentative D) = D := by

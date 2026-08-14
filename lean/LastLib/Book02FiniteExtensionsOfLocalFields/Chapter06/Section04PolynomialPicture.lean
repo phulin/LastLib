@@ -27,7 +27,7 @@ def chapter06PadicPolynomialLift
 theorem chapter06_padic_residue_polynomial_is_separable
     (p : ℕ) [Fact p.Prime] (gbar : (ZMod p)[X])
     (hirr : Irreducible gbar) : gbar.Separable := by
-  sorry
+  exact PerfectField.separable_of_irreducible hirr
 
 /- A residue element is a root of the displayed residue polynomial. -/
 def chapter06ResidueRootOfPolynomial
@@ -75,7 +75,21 @@ theorem chapter06_padic_irreducible_lift_is_unramified
           profile.ramificationIndex = 1 ∧ profile.residueDegree = f ∧
           Chapter10Unramified profile ∧
           (g.map (PadicInt.toZMod : PadicInt p →+* ZMod p)).Separable := by
-  sorry
+  rcases hlift with ⟨hgmonic, hmap, hirr, hdegree'⟩
+  have hred : Chapter10IrreducibleSeparableReduction
+      (PadicInt.toZMod : PadicInt p →+* ZMod p) g f := by
+    dsimp [Chapter10IrreducibleSeparableReduction]
+    refine ⟨hgmonic, ?_, ?_, ?_, ?_⟩
+    · simpa [hmap] using hgmonic.map (PadicInt.toZMod : PadicInt p →+* ZMod p)
+    · simpa [hmap] using hdegree'
+    · simpa [hmap] using hirr
+    · simpa [hmap] using chapter06_padic_residue_polynomial_is_separable p gbar hirr
+  obtain ⟨d, profile, hreal, hirr', hdegree'', he, hf, hunram, _hbranch, hsep⟩ :=
+    chapter10_unramified_lift_profile
+      (A := PadicInt p) (K := Padic p) (L := L) (k := ZMod p)
+      (res := PadicInt.toZMod) (P := g) f hred hres θ hroot hgenerates
+      hdegree v w hA hext
+  exact ⟨d, profile, hreal, hirr', hdegree'', he, hf, hunram, hsep⟩
 
 /- The valuation-level form with the suppressed local hypotheses restored. -/
 theorem chapter06_padic_unramified_lift_profile
@@ -102,7 +116,12 @@ theorem chapter06_padic_unramified_lift_profile
           Irreducible P ∧ profile.degree = f ∧
           profile.ramificationIndex = 1 ∧ profile.residueDegree = f ∧
           Chapter10Unramified profile ∧ (P.map res).Separable := by
-  sorry
+  obtain ⟨d, profile, hreal, hirr, hdegree', he, hf, hunram, _hbranch, hsep⟩ :=
+    chapter10_unramified_lift_profile
+      (A := PadicInt p) (K := Padic p) (L := L) (k := ZMod p)
+      (res := res) (P := P) f hred hres α hroot hgen
+      hdegree v w hA hext
+  exact ⟨d, profile, hreal, hirr, hdegree', he, hf, hunram, hsep⟩
 
 /- The residue of the chosen root is acted on by `p`-power Frobenius. -/
 theorem chapter06_padic_residue_frobenius_on_root
@@ -110,7 +129,7 @@ theorem chapter06_padic_residue_frobenius_on_root
     [Algebra (ZMod p) l] [Algebra.IsAlgebraic (ZMod p) l]
     (θbar : l) :
     chapter06ArithmeticFrobenius (ZMod p) l θbar = θbar ^ p := by
-  sorry
+  simp [chapter06ArithmeticFrobenius, ZMod.card] 
 
 /- A lifted polynomial root reduces to a root of the reduced polynomial. -/
 theorem chapter06_residue_of_padic_lifted_root
@@ -124,7 +143,8 @@ theorem chapter06_residue_of_padic_lifted_root
     (hmap : g.map (PadicInt.toZMod : PadicInt p →+* ZMod p) = gbar)
     (hroot : eval₂ coeffLift θ g = 0) :
     chapter06ResidueRootOfPolynomial p res gbar θ := by
-  sorry
+  change eval₂ (algebraMap (ZMod p) l) (res θ) gbar = 0
+  rw [← hmap, eval₂_map, ← hres, ← hom_eval₂, hroot, map_zero]
 
 /-
 The canonical statement about a lifted root is a residue congruence.  The
@@ -158,7 +178,8 @@ theorem chapter06_padic_residue_frobenius_congruence_iff
     chapter06ResidueFrobeniusCongruence res σB
         (chapter06ArithmeticFrobeniusRingEquiv (ZMod p) l) θ ↔
       res (σB θ) = (res θ) ^ p := by
-  sorry
+  simp [chapter06ResidueFrobeniusCongruence,
+    chapter06ArithmeticFrobeniusRingEquiv, chapter06ArithmeticFrobenius, ZMod.card]
 
 end
 

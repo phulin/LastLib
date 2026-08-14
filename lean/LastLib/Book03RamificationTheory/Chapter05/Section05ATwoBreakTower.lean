@@ -80,11 +80,11 @@ theorem chapter05_two_break_upper_breaks
           v = chapter05TwoBreakSecondUpper D.p D.a D.b := by
   sorry
 
-/- SOURCE_ISSUE: The source says that the second label may be fractional for
-   an arbitrary nonabelian filtration immediately after assuming `|G|=p^2`.
-   Every group of order `p^2` is abelian, so that wording cannot describe an
-   actual group in this displayed example.  The declarations below separate
-   the arithmetic nonintegrality possibility from the abelian local case. -/
+/- The displayed arithmetic expression can be fractional for an abstract
+   piecewise profile.  In an actual Galois extension with `|G| = p^2`, the
+   group is abelian and, with perfect residue field, Hasse--Arf forces the
+   second upper label to be integral.  The declarations below keep those two
+   assertions separate. -/
 theorem chapter05_two_break_second_label_nonintegral_of_not_dvd
     (p a b : ℕ) (hp : 0 < p) (hab : a < b)
     (hndvd : ¬p ∣ b - a) :

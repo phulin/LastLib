@@ -6,6 +6,7 @@ noncomputable section
 
 open CategoryTheory Limits
 open AlgebraicGeometry
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
 
 universe u
 
@@ -69,7 +70,7 @@ structure Chapter09NodalRelativeCurveFamily (F : Chapter09ProperFlatReducedCurve
 
 theorem chapter09_nodal_curve_family_is_fpqc_locally_projective
     (F : Chapter09ProperFlatReducedCurveFamily)
-    (N : Chapter09NodalRelativeCurveFamily F) :
+    (_N : Chapter09NodalRelativeCurveFamily F) :
     chapter09FpqcLocallyProjective F := by
   exact chapter09_proper_flat_curve_is_fpqc_locally_projective F
 
@@ -225,7 +226,7 @@ theorem chapter09_relative_dualizing_sheaf_exists
   sorry
 
 /-- The relative trace in (9.3) is the degree-one derived pushforward map. -/
-theorem chapter09_relative_trace
+def chapter09_relative_trace
     {X S : Scheme.{u}} (f : X ⟶ S)
     [Chapter09RelativeDerivedHomTheory f]
     (D : Chapter09RelativeDualizingData f) :
@@ -233,7 +234,7 @@ theorem chapter09_relative_trace
   D.trace
 
 /-- Relative duality for every vector bundle, formula (9.4). -/
-theorem chapter09_relative_duality
+def chapter09_relative_duality
     {X S : Scheme.{u}} (f : X ⟶ S)
     [Chapter09RelativeDerivedHomTheory f]
     (D : Chapter09RelativeDualizingData f)
@@ -270,10 +271,10 @@ theorem chapter09_relative_dualizing_specializes_to_fiber
   exact chapter09_relative_dualizing_base_change F (F.S.fromSpecResidueField s) D Dₛ
 
 /-- Formula (9.4) specializes to the absolute curve duality comparison on a fiber. -/
-theorem chapter09_relative_duality_specializes_to_fiber
+def chapter09_relative_duality_specializes_to_fiber
     (F : Chapter09RelativeCurveFamily)
     [Chapter09RelativeDerivedHomTheory F.f]
-    (D : Chapter09RelativeDualizingData F.f) (s : F.S)
+    (_D : Chapter09RelativeDualizingData F.f) (s : F.S)
     [Chapter09RelativeDerivedHomTheory
       (chapter09BaseChangedFamilyMap F.f (F.S.fromSpecResidueField s))]
     (Dₛ : Chapter09RelativeDualizingData

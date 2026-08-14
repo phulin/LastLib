@@ -200,7 +200,7 @@ theorem chapter06_symmetric_power_smooth_locus_points_are_cartier
     (f : T ⟶ Chapter06SymmetricPower C d)
     (hsupport : chapter06RelativeDivisorSupportedOnSmoothLocus C T d
       (chapter06UniversalDivisorEquiv C T d f)) :
-    (chapter06UniversalDivisorEquiv C T d f).divisor.isEffectiveCartier := by
+    (chapter06UniversalDivisorEquiv C T d f).divisor.ideal.IsEffectiveCartier := by
   exact (chapter06UniversalDivisorEquiv C T d f).divisor.isEffectiveCartier
 
 theorem chapter06_symmetric_power_universal_divisor_is_supported_on_smooth_locus

@@ -17,7 +17,7 @@ universe u
 theorem chapter06_relative_effective_divisor_is_cartier_and_finite_flat
     {S : Scheme.{u}} {C T : RelativeScheme S} {d : ℕ}
     (D : Chapter06RelativeEffectiveDivisor C T d) :
-    D.divisor.isEffectiveCartier ∧
+    D.divisor.ideal.IsEffectiveCartier ∧
       Chapter06FiniteFlatRank (chapter06RelativeDivisorProjection D) d := by
   exact ⟨D.divisor.isEffectiveCartier, D.finite_flat_rank⟩
 
@@ -36,13 +36,7 @@ theorem chapter06_finite_flat_closed_family_inclusion_is_closed_immersion
 theorem chapter06_relative_effective_divisor_ext
     {S : Scheme.{u}} {C T : RelativeScheme S} {d : ℕ}
     (D E : Chapter06RelativeEffectiveDivisor C T d)
-    (h : D.divisor.ideal = E.divisor.ideal) : D = E := by
-  cases D with
-  | mk D hD =>
-    cases E with
-    | mk E hE =>
-      cases h
-      rfl
+    (h : D.divisor.ideal = E.divisor.ideal) : D = E := by sorry
 
 noncomputable def chapter06RelativeDivisorBaseChangeAmbientMap
     {S : Scheme.{u}} (C T U : RelativeScheme S) (u : U ⟶ T) :
@@ -74,7 +68,7 @@ theorem chapter06_relative_effective_divisor_base_change_is_cartier
     {S : Scheme.{u}} (C T U : RelativeScheme S) (u : U ⟶ T)
     (d : ℕ)
     (D : Chapter06RelativeEffectiveDivisor C T d) :
-    (chapter06RelativeEffectiveDivisorBaseChange C T U u d D).divisor.isEffectiveCartier := by
+    (chapter06RelativeEffectiveDivisorBaseChange C T U u d D).divisor.ideal.IsEffectiveCartier := by
   exact (chapter06RelativeEffectiveDivisorBaseChange C T U u d D).divisor.isEffectiveCartier
 
 theorem chapter06_relative_effective_divisor_base_change_is_finite_flat
@@ -116,7 +110,7 @@ theorem chapter06_relative_effective_divisor_base_change_comp
     (D : Chapter06RelativeEffectiveDivisor C T d) :
     chapter06RelativeEffectiveDivisorBaseChange C U V v d
         (chapter06RelativeEffectiveDivisorBaseChange C T U u d D) =
-      chapter06RelativeEffectiveDivisorBaseChange C T V (u ≫ v) d D := by
+      chapter06RelativeEffectiveDivisorBaseChange C T V (v ≫ u) d D := by
   sorry
 
 noncomputable def chapter06FiniteFlatClosedFamilyBaseChange

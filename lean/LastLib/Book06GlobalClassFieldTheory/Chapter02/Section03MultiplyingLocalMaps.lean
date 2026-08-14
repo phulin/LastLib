@@ -76,6 +76,7 @@ theorem chapter02_global_artin_map_continuous
     {D : Chapter02RestrictedProductData V H}
     (A : Chapter02GlobalArtinData D G)
     [TopologicalSpace (chapter02Ideles D)] [TopologicalSpace G]
+    [IsTopologicalGroup (chapter02Ideles D)] [IsTopologicalGroup G]
     [∀ x, TopologicalSpace (H x)]
     (T : Chapter02GlobalArtinTopologyData A) :
     Continuous (chapter02GlobalArtinMap A) :=

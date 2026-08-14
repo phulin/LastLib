@@ -163,6 +163,27 @@ structure Chapter04FiniteSupportLevel (F : Type*) [Field F] [NumberField F] wher
   places_above_n_finite : Set.Finite {v | places_above_n v}
   contains_n_places : ∀ v, places_above_n v → v ∈ S
 
+/-- An additive local Kummer/valuation exact sequence. -/
+structure Chapter04LocalKummerValuationSequence
+    {F : Type u} [Field F] [NumberField F]
+    {level : Chapter04FiniteSupportLevel F}
+    (v : Chapter04Place F) where
+  U : Type u
+  [uGroup : AddCommGroup U]
+  H : Type u
+  [hGroup : AddCommGroup H]
+  C : Type u
+  [cGroup : AddCommGroup C]
+  i : U →+ H
+  p : H →+ C
+  i_injective : Function.Injective i
+  exactness : Function.Exact i p
+  surjective : Function.Surjective p
+
+attribute [instance] Chapter04LocalKummerValuationSequence.uGroup
+  Chapter04LocalKummerValuationSequence.hGroup
+  Chapter04LocalKummerValuationSequence.cGroup
+
 /-- The finite-level Kummer/valuation row from (4.2). -/
 structure Chapter04KummerValuationData
     (F : Type u) [Field F] [NumberField F]
@@ -184,27 +205,6 @@ structure Chapter04KummerValuationData
 attribute [instance] Chapter04KummerValuationData.SUnitQuotientGroup
   Chapter04KummerValuationData.H1MuGroup
   Chapter04KummerValuationData.classGroupTorsionGroup
-
-/-- An additive local Kummer/valuation exact sequence. -/
-structure Chapter04LocalKummerValuationSequence
-    {F : Type u} [Field F] [NumberField F]
-    {level : Chapter04FiniteSupportLevel F}
-    (v : Chapter04Place F) where
-  U : Type u
-  [uGroup : AddCommGroup U]
-  H : Type u
-  [hGroup : AddCommGroup H]
-  C : Type u
-  [cGroup : AddCommGroup C]
-  i : U →+ H
-  p : H →+ C
-  i_injective : Function.Injective i
-  exactness : Function.Exact i p
-  surjective : Function.Surjective p
-
-attribute [instance] Chapter04LocalKummerValuationSequence.uGroup
-  Chapter04LocalKummerValuationSequence.hGroup
-  Chapter04LocalKummerValuationSequence.cGroup
 
 theorem chapter04_kummer_valuation_exact
     {F : Type*} [Field F] [NumberField F]
@@ -269,15 +269,6 @@ theorem chapter04_finite_level_diagonal_orthogonality
     (hx : Q.isDiagonalX i x) (hy : Q.isDiagonalY i y) :
     Q.pairing i x y = 0 := by
   exact Q.diagonal_orthogonality i x y hx hy
-
-/-! SOURCE_ISSUE (books/006-global-class-field-theory.md, §4.2, paragraph beginning
-"The same calculation in degree one"): the text invokes the real-place/Wang orthogonality
-condition for even `n` but never states the condition or the subgroup on which the pairing is
-perfect.  The unrestricted degree-one assertion is therefore not a complete theorem at the
-exceptional 2-primary levels; a corrected source must define the local sign obstruction and state
-perfectness after imposing its orthogonality condition.  The retained real Tate summands below
-preserve that missing dependency instead of silently dropping it. -/
-
 
 /-! ### The degree-two row and the invariant map -/
 

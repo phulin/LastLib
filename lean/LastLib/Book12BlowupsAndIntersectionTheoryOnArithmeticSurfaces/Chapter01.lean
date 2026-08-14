@@ -1,0 +1,11 @@
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter01.Dependencies
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter01.Section01FromModelsToComparisons
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter01.Section02TheTwoDimensionsInAnArithmeticSurface
+import LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter01.Section03StandingConventionsAndHypothesisLedger
+
+namespace LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter01
+
+/-! Aggregator for Book 12, Chapter 1: the numerical birational language of
+regular arithmetic surfaces. -/
+
+end LastLib.Book12BlowupsAndIntersectionTheoryOnArithmeticSurfaces.Chapter01

@@ -22,7 +22,7 @@ namespace LastLib.Book06GlobalClassFieldTheory.Chapter04
 
 noncomputable section
 
-open CategoryTheory
+open CategoryTheory CategoryTheory.Limits
 open scoped BigOperators
 
 universe u v w
@@ -300,7 +300,7 @@ def Chapter04IdeleClassPresentation.quotientMap
     {L : Type*} [Field L] (P : Chapter04IdeleClassPresentation L) (a : Lˣ) :
     P.quotientMap (P.diagonal a) = 1 := by
   change QuotientGroup.mk' P.diagonal.range (P.diagonal a) = 1
-  exact QuotientGroup.eq_one_iff.mpr ⟨a, rfl⟩
+  exact (QuotientGroup.eq_one_iff (N := P.diagonal.range) (P.diagonal a)).2 ⟨a, rfl⟩
 
 /-! ### Compact-support cohomology and local dependency interfaces -/
 
@@ -383,7 +383,7 @@ Tate--Nakayama interface.  This keeps the cap product tied to its chosen
 degree-two class instead of leaving an unrelated arbitrary family of maps. -/
 abbrev Chapter04ClassFormationHypotheses
     {G : Type} [Group G] [Fintype G]
-    (U : Chapter04FundamentalClass (G := G)) : Type _ :=
+    (U : Chapter04FundamentalClass (G := G)) : Prop :=
   LastLib.Book05LocalClassFieldTheory.Chapter05.Chapter05TateNakayamaHypotheses
     G (chapter04GModuleRep U.C) U.u
 

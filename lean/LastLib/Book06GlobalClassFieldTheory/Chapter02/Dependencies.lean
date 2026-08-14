@@ -5,6 +5,7 @@ import Mathlib.GroupTheory.Abelianization.Defs
 import Mathlib.GroupTheory.GroupAction.Basic
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.Topology.Basic
+import Mathlib.Topology.Algebra.Group.Basic
 
 namespace LastLib.Book06GlobalClassFieldTheory.Chapter02
 
@@ -17,8 +18,9 @@ universe u v w z
 /-!
 Shared interfaces for Chapter 2.
 
-Book 4 and Book 5 are not yet present in this checkout.  The definitions below
-keep their required interfaces explicit: a place is represented by its action
+Book 4 and Book 5 are available elsewhere in the project but are not yet
+reconciled with this chapter.  The definitions below keep their required interfaces explicit:
+a place is represented by its action
 on a set of places, local class field theory is represented by its local norm
 and reciprocity data, and the restricted product is represented by the usual
 finite-integrality condition.  None of these interfaces contains a global
@@ -49,9 +51,7 @@ theorem Chapter02ChosenPlace.ext
     {P Q : Chapter02ChosenPlace G V W}
     (hbase : P.basePlace = Q.basePlace)
     (hextension : P.extensionPlace = Q.extensionPlace)
-    (hrestriction : P.restriction = Q.restriction)
-    (hliesOver : HEq P.liesOver Q.liesOver)
-    (haction : HEq P.action_over_base Q.action_over_base) :
+    (hrestriction : P.restriction = Q.restriction) :
     P = Q := by
   cases P
   cases Q
@@ -175,8 +175,6 @@ instance chapter02ResidueActionData.inertiaNormal
 theorem Chapter02ResidueActionData.ext
     {D k l : Type*} [Group D] [Field k] [Field l] [Algebra k l]
     {R S : Chapter02ResidueActionData D k l}
-    (hfinite : R.finite_dimensional = S.finite_dimensional)
-    (hgalois : R.galois = S.galois)
     (hinertia : R.inertia = S.inertia)
     (hred : R.reduction = S.reduction) : R = S := by
   cases R
@@ -187,13 +185,14 @@ theorem Chapter02ResidueActionData.ext
 def chapter02ResidueExactSequence
     {D k l : Type*} [Group D] [Field k] [Field l] [Algebra k l]
     (R : Chapter02ResidueActionData D k l) : Prop :=
-  Function.MulExact R.inertia.subtype R.reduction
+  Function.MulExact R.inertia.subtype R.reduction ∧
+    Function.Surjective R.reduction
 
 theorem chapter02_residue_exact_sequence
     {D k l : Type*} [Group D] [Field k] [Field l] [Algebra k l]
     (R : Chapter02ResidueActionData D k l) :
     chapter02ResidueExactSequence R := by
-  change Function.MulExact R.inertia.subtype R.reduction
+  refine ⟨?_, R.reduction_surjective⟩
   apply MonoidHom.mulExact_iff.mpr
   rw [R.kernel_eq_inertia]
   exact (Subgroup.range_subtype _).symm
@@ -301,7 +300,7 @@ def chapter02AbelianizedLocalArtinMap
 theorem chapter02_abelianized_local_artin_choice_conjugation_invariant
     {B E G D : Type*} [CommGroup B] [CommGroup E] [Group G] [Group D]
     (inclusion : D →* G) (R : Chapter02LocalReciprocityData B E D)
-    (c : G →* G) (hc : ∀ g, c g = g) :
+    (c : G →* G) (τ : G) (hc : ∀ g, c g = τ * g * τ⁻¹) :
     (Abelianization.map c).comp
         (chapter02AbelianizedLocalArtinMap inclusion R) =
       chapter02AbelianizedLocalArtinMap inclusion R := by
@@ -561,6 +560,7 @@ structure Chapter02GlobalArtinTopologyData
     {D : Chapter02RestrictedProductData V H}
     (A : Chapter02GlobalArtinData D G)
     [TopologicalSpace (chapter02Ideles D)] [TopologicalSpace G]
+    [IsTopologicalGroup (chapter02Ideles D)] [IsTopologicalGroup G]
     [∀ x, TopologicalSpace (H x)] where
   standard_open :
     IsOpen (chapter02StandardArtinKernelSubgroup A : Set (chapter02Ideles D))
@@ -572,6 +572,7 @@ theorem chapter02_global_artin_continuous
     {D : Chapter02RestrictedProductData V H}
     (A : Chapter02GlobalArtinData D G)
     [TopologicalSpace (chapter02Ideles D)] [TopologicalSpace G]
+    [IsTopologicalGroup (chapter02Ideles D)] [IsTopologicalGroup G]
     [∀ x, TopologicalSpace (H x)]
     (T : Chapter02GlobalArtinTopologyData A) :
     Continuous (chapter02GlobalArtinHom A) :=

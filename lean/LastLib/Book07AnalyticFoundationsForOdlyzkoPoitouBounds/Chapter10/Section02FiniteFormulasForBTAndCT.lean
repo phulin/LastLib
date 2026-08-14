@@ -32,6 +32,11 @@ def chapter10BSeriesTail (T : ℝ) (m : ℕ) : ℝ :=
 theorem chapter10_AT_eq_half (T : ℝ) : chapter10AT T = T / 2 :=
   rfl
 
+theorem chapter10_AT_eq_chapter09_unconditional_pole_integral
+    {T : ℝ} (hT : 0 < T) :
+    chapter10AT T = chapter09UnconditionalPoleIntegral T := by
+  sorry
+
 theorem chapter10_coth_eq_chapter08_coth (x : ℝ) :
     chapter10Coth x = chapter08Coth x :=
   rfl
@@ -223,14 +228,14 @@ theorem chapter10_omitted_B_series_contribution_bound
 
 theorem chapter10_omitted_B_series_first_row_lt :
     (2 / (17 / 5 : ℝ)) * chapter10BSeriesTail (17 / 5 : ℝ) 1 <
-      (1.1 : ℝ) * 10 ^ (-7 : ℤ) := by
+      (1.072709 : ℝ) * 10 ^ (-7 : ℤ) := by
   sorry
 
 theorem chapter10_omitted_B_series_rows_lt :
     ((2 / (9 / 2 : ℝ)) * chapter10BSeriesTail (9 / 2 : ℝ) 1 <
-        (1.1 : ℝ) * 10 ^ (-7 : ℤ)) ∧
+        (4.136261 : ℝ) * 10 ^ (-10 : ℤ)) ∧
       ((2 / (6 : ℝ)) * chapter10BSeriesTail 6 1 <
-        (1.1 : ℝ) * 10 ^ (-7 : ℤ)) := by
+        (2.183459 : ℝ) * 10 ^ (-13 : ℤ)) := by
   sorry
 
 end

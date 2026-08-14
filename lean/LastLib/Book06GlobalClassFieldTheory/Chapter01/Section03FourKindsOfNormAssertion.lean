@@ -1,4 +1,5 @@
 import LastLib.Book06GlobalClassFieldTheory.Chapter01.Dependencies
+import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
 
 namespace LastLib.Book06GlobalClassFieldTheory.Chapter01
 
@@ -73,6 +74,31 @@ def LocalNormOutputIntegralAt
     (v : FinitePlaceIndex K) (y : LocalScalarExtension K L v) : Prop :=
   localElementNorm K L v y ∈ v.adicCompletionIntegers K
 
+/- The integral elements in the full local tensor algebra form the canonical
+ integral model used when local norm preimages are assembled into an idele. -/
+noncomputable def localIntegralTensorSubalgebra
+    (K L : Type*) [Field K] [NumberField K] [Field L] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L]
+    (v : FinitePlaceIndex K) :
+    Subalgebra (v.adicCompletionIntegers K) (LocalScalarExtension K L v) := by
+  letI : Algebra (v.adicCompletionIntegers K)
+      (BookPlace.completion (Sum.inl v)) :=
+    (algebraMap (v.adicCompletionIntegers K)
+      (BookPlace.completion (Sum.inl v))).toAlgebra
+  letI : Algebra (v.adicCompletionIntegers K)
+      (LocalScalarExtension K L v) :=
+    ((Algebra.TensorProduct.includeRight
+      (R := K) (A := L) (B := BookPlace.completion (Sum.inl v))).toRingHom.comp
+      (algebraMap (v.adicCompletionIntegers K)
+        (BookPlace.completion (Sum.inl v)))).toAlgebra
+  exact integralClosure (v.adicCompletionIntegers K) (LocalScalarExtension K L v)
+
+def LocalNormPreimageIntegralAt
+    (K L : Type*) [Field K] [NumberField K] [Field L] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L]
+    (v : FinitePlaceIndex K) (y : LocalScalarExtension K L v) : Prop :=
+  y ∈ localIntegralTensorSubalgebra K L v
+
 def AlmostAllLocalNormPreimagesIntegral
     (K L : Type*) [Field K] [NumberField K] [Field L] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] (a : K) (_ha : a ≠ 0) : Prop :=
@@ -82,7 +108,7 @@ def AlmostAllLocalNormPreimagesIntegral
         y ≠ 0 ∧
           localElementNorm K L v y =
             algebraMap K (BookPlace.completion (Sum.inl v)) a ∧
-          LocalNormOutputIntegralAt K L v y
+          LocalNormPreimageIntegralAt K L v y
 
 def IsElementNorm
     (K L : Type*) [Field K] [NumberField K] [Field L] [NumberField L]
@@ -215,7 +241,7 @@ factors; the local norm subgroup does not depend on the chosen factor. -/
 def GaloisLocalFactorNormSubgroupEquality
     (K L F : Type*) [Field K] [NumberField K] [Field L] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L] [Field F]
-    (factorNorm : Gal(L / K) → F → F) : Prop :=
+    (factorNorm : Gal(L / K) → Fˣ →* Fˣ) : Prop :=
   ∀ σ, Set.range (factorNorm σ) = Set.range (factorNorm 1)
 
 /- A conjugacy witness is the usable local hypothesis behind equality of the
@@ -226,15 +252,15 @@ maps. -/
 def GaloisLocalFactorNormConjugacy
     (K L F : Type*) [Field K] [NumberField K] [Field L] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L] [Field F]
-    (factorNorm : Gal(L / K) → F → F) : Prop :=
-  ∀ σ, ∃ e : F → F, Function.Bijective e ∧
-    (∀ x : F, factorNorm σ x = e (factorNorm 1 x)) ∧
+  (factorNorm : Gal(L / K) → Fˣ →* Fˣ) : Prop :=
+  ∀ σ, ∃ e : Fˣ ≃* Fˣ,
+    (∀ x : Fˣ, factorNorm σ x = e (factorNorm 1 x)) ∧
     Set.range (e ∘ factorNorm 1) = Set.range (factorNorm 1)
 
 theorem galois_local_factors_have_same_norm_subgroup
     {K L F : Type*} [Field K] [NumberField K] [Field L] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L] [Field F]
-    (factorNorm : Gal(L / K) → F → F)
+    (factorNorm : Gal(L / K) → Fˣ →* Fˣ)
     (h : GaloisLocalFactorNormConjugacy K L F factorNorm) :
     ∀ σ, Set.range (factorNorm σ) = Set.range (factorNorm 1) := by
   sorry

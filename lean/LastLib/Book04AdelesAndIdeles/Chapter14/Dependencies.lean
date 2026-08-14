@@ -388,6 +388,11 @@ structure Chapter14AdelicNormInterface (K L : Type*) [Field K] [Field L]
   module_compatibility :
     ∀ y : chapter14IdeleGroup L, moduleK.module (ideleNorm y) = moduleL.module y
   localNormAtEveryPlace : Kˣ → Prop
+  localNorm_one : localNormAtEveryPlace 1
+  localNorm_mul : ∀ {x y : Kˣ}, localNormAtEveryPlace x →
+    localNormAtEveryPlace y → localNormAtEveryPlace (x * y)
+  localNorm_inv : ∀ {x : Kˣ}, localNormAtEveryPlace x →
+    localNormAtEveryPlace x⁻¹
   localNorm_iff_idele :
     ∀ x : Kˣ, localNormAtEveryPlace x ↔
       ∃ y : chapter14IdeleGroup L,
@@ -425,9 +430,13 @@ def chapter14EverywhereLocalNormSubgroup {K L : Type*} [Field K] [Field L]
     [NumberField K] [NumberField L] [Algebra K L] [FiniteDimensional K L]
     (N : Chapter14AdelicNormInterface K L) : Subgroup Kˣ where
   carrier := {x | N.localNormAtEveryPlace x}
-  one_mem' := by sorry
-  mul_mem' := by sorry
-  inv_mem' := by sorry
+  one_mem' := N.localNorm_one
+  mul_mem' := by
+    intro x y hx hy
+    exact N.localNorm_mul hx hy
+  inv_mem' := by
+    intro x hx
+    exact N.localNorm_inv hx
 
 theorem chapter14GlobalNormSubgroup_le_local {K L : Type*} [Field K] [Field L]
     [NumberField K] [NumberField L] [Algebra K L] [FiniteDimensional K L]

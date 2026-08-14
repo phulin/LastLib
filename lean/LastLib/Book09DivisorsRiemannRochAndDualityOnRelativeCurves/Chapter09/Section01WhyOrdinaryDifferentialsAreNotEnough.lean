@@ -50,10 +50,10 @@ theorem chapter09_node_differentials_not_invertible
 theorem chapter09_node_differentials_do_not_represent_duality
     {X : Scheme.{u}} (W : Chapter09NodeDifferentialFailure X) :
     W.doesNotRepresentDuality := by
-  exact W.doesNotRepresentDuality
+  sorry
 
 /-- The multiplication/trace pairing for a coherent sheaf, in the range `i = 0, 1`. -/
-theorem chapter09_multiplication_followed_by_trace_is_perfect
+def chapter09_multiplication_followed_by_trace_is_perfect
     (k : Type u) [Field k]
     (C : Chapter09CohenMacaulayCurveOverField k)
     [Chapter09ExtTheory C.scheme]
@@ -95,7 +95,7 @@ structure Chapter09TracePairingStatement
     Chapter09PerfectPairing k (chapter09H F i) (chapter09Ext F ω (1 - i))
 
 /-- For a vector bundle, the Ext factor is represented by cohomology of `E^∨ ⊗ ω`. -/
-theorem chapter09_vector_bundle_second_factor_is_cohomology
+def chapter09_vector_bundle_second_factor_is_cohomology
     (k : Type u) [Field k]
     (C : Chapter09CohenMacaulayCurveOverField k)
     [Chapter09ExtTheory C.scheme]

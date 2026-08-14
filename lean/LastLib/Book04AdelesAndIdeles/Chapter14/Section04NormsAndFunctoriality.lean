@@ -65,15 +65,6 @@ theorem chapter14_norm_maps_norm_one_classes {K L : Type*} [Field K] [Field L]
   change chapter14ClassModule N.moduleK (chapter14NormOnClassGroups N x) = 1
   rw [chapter14_class_norm_module_identity N x, hx]
 
-theorem chapter14_norm_one_map_on_compact_class_groups {K L : Type*} [Field K] [Field L]
-    [NumberField K] [NumberField L] [Algebra K L] [FiniteDimensional K L]
-    (N : Chapter14AdelicNormInterface K L)
-    [CompactSpace (chapter14NormOneClassSubgroup N.moduleL)]
-    [CompactSpace (chapter14NormOneClassSubgroup N.moduleK)] :
-    Nonempty (chapter14NormOneClassSubgroup N.moduleL →*
-      chapter14NormOneClassSubgroup N.moduleK) := by
-  exact ⟨chapter14NormOneMap N⟩
-
 /-! Ray maps carry a source depth into a target depth; the target depth need not be equal. -/
 
 structure Chapter14RayNormDepthCompatibility {K L : Type*} [Field K] [Field L]
@@ -87,9 +78,6 @@ structure Chapter14RayNormDepthCompatibility {K L : Type*} [Field K] [Field L]
     map.comp (chapter14RayClassQuotientMap D_L R_L mL) =
       (chapter14RayClassQuotientMap D_K R_K mK).comp
         (chapter14NormOnClassGroups N)
-  sourceDepth : ℕ
-  targetDepth : ℕ
-  targetDepth_le_sourceDepth : targetDepth ≤ sourceDepth
 
 def chapter14EqualExponentNormClaim (sourceDepth targetDepth : ℕ) : Prop :=
   sourceDepth = targetDepth
@@ -103,15 +91,5 @@ The structure above intentionally has no field asserting either equal exponents 
 Those are additional claims, not formal consequences of the norm construction.
 -/
 
-theorem chapter14_ray_norm_depth_is_not_an_equal_exponent_rule
-    {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
-    [Algebra K L] [FiniteDimensional K L]
-    (N : Chapter14AdelicNormInterface K L)
-    (D_L : Chapter14IdeleLevelData L) (R_L : Chapter14RaySubgroupFamily D_L)
-    (D_K : Chapter14IdeleLevelData K) (R_K : Chapter14RaySubgroupFamily D_K)
-    (mL : Chapter14Modulus L) (mK : Chapter14Modulus K)
-    (C : Chapter14RayNormDepthCompatibility N D_L R_L D_K R_K mL mK) :
-    C.targetDepth ≤ C.sourceDepth :=
-  C.targetDepth_le_sourceDepth
 
 end LastLib.Book04AdelesAndIdeles.Chapter14

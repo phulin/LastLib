@@ -26,6 +26,7 @@ structure Chapter05SingleWildBreakData
   p_prime : Nat.Prime p
   m_pos : 0 < m
   cyclic : IsCyclic G
+  group_card : Nat.card G = p
   zeroth_card : Nat.card (profile.lowerGroup 0) = p
   lower_through_break :
     ∀ u : ℝ, 0 ≤ u → u ≤ (m : ℝ) →

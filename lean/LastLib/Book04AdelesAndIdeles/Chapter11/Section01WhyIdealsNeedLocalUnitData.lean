@@ -1,4 +1,5 @@
 import LastLib.Book04AdelesAndIdeles.Chapter11.Dependencies
+import LastLib.Book04AdelesAndIdeles.Chapter08.Section86
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter11
 
@@ -31,7 +32,7 @@ theorem chapter11_modulus_is_finite_part_times_real_part (m : RayModulus K) :
   rfl
 
 abbrev Chapter11NarrowClassGroup (K : Type*) [Field K] [NumberField K] :=
-  chapter11IdealRayClassGroup (RayModulus.narrow (K := K))
+  LastLib.Book04AdelesAndIdeles.Chapter08.Chapter08NarrowClassGroup K
 
 theorem chapter11_trivial_modulus_ray_class_group_equiv_ordinary_class_group
     (K : Type*) [Field K] [NumberField K] :

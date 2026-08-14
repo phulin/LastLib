@@ -31,13 +31,13 @@ theorem coherent_fraction_field_degree_formula
       Module.finrank (FractionRing R) (FractionRing S) := by
   exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.final_fraction_field_degree_formula p hfrac
 
-/-- Book 2, §12.5: completeness or henselian uniqueness leaves one branch upstairs. -/
+/-- Book 2, §12.5: factorization-henselian uniqueness leaves one branch upstairs. -/
 theorem coherent_complete_or_henselian_base_has_one_branch
     {K Γ E : Type u} [Field K] [Field E]
     [LinearOrderedCommGroupWithZero Γ] [Algebra K E]
     (v : Valuation K Γ)
-    (hbase : HenselianLocalRing v.valuationSubring ∨
-      IsAdicComplete (IsLocalRing.maximalIdeal v.valuationSubring)
+    (hbase :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.HenselianFactorizationProperty
         v.valuationSubring)
     [Algebra.IsAlgebraic K E] :
     ∃ W : LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.HeterogeneousValuationExtension v E,
@@ -63,7 +63,6 @@ theorem coherent_eisenstein_coordinates_control_total_ramification
     (hf : LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.IsEisensteinAt π f)
     (hroot : aeval Pi f = 0) (hdegree : f.natDegree = n)
     (hgenerates : Algebra.adjoin K ({Pi} : Set L) = ⊤)
-    (hvaluation : v Pi = Valuation.IsRankOneDiscrete.generator v)
     (hbaseIntegers : vK.Integers A)
     (hbaseValuationRing :
       (vK.valuationSubring : Set K) = Set.range (algebraMap A K))
@@ -78,7 +77,7 @@ theorem coherent_eisenstein_coordinates_control_total_ramification
           (IsLocalRing.maximalIdeal v.valuationSubring) = 1 := by
   have h :=
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.eisenstein_root_is_uniformizer_and_totally_ramified
-      vK v π f Pi hf hroot hdegree hgenerates hvaluation hbaseIntegers
+      vK v π f Pi hf hroot hdegree hgenerates hbaseIntegers
       hbaseValuationRing hupperIntegralClosure
   exact ⟨h.1, h.2.1, h.2.2.1⟩
 
@@ -115,17 +114,20 @@ theorem coherent_eisenstein_coordinates_generate_integral_closure
 /-- Book 2, §12.5: the assembled valuation/ring/residue/branch dictionary. -/
 theorem coherent_local_arithmetic_dictionary
     {A K B L : Type*} [CommRing A] [Field K] [CommRing B] [Field L]
-    [IsLocalRing A] [Algebra A K] [Algebra A B] [Algebra K L] [Algebra B L]
+    [IsLocalRing A] [Algebra A K] [Algebra A B] [Algebra A L]
+    [Algebra K L] [Algebra B L]
+    [IsScalarTower A K L] [IsScalarTower A B L]
     (P : Ideal B) [P.IsPrime]
     (v : Valuation K ℤᵐ⁰) (w : Valuation L ℤᵐ⁰)
     (hext : v.IsEquiv (w.comap (algebraMap K L)))
     (hP : P.IsMaximal)
+    (hP_liesOver : P.LiesOver (IsLocalRing.maximalIdeal A))
     (hcenter : ∀ x : B, x ∈ P ↔ w (algebraMap B L x) < 1) :
     Nonempty
       (LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Chapter12LocalArithmeticDictionary
         (A := A) (K := K) (B := B) (L := L) P v w) := by
   exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.local_arithmetic_dictionary
-    P v w hext hP hcenter
+    P v w hext hP hP_liesOver hcenter
 
 end
 

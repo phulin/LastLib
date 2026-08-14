@@ -229,7 +229,7 @@ def chapter03HorizontalFiberIntersectionNumber
     [Chapter03DedekindBase S] [Chapter03RelativeCurveModel f]
     [Chapter03HorizontalFiberIntersectionTheory f]
     (P : Chapter03PrimeDivisor X) : ℕ :=
-  Chapter03HorizontalFiberIntersectionTheory.fiberIntersection P
+  Chapter03HorizontalFiberIntersectionTheory.fiberIntersection (f := f) P
 
 theorem chapter03_horizontal_degree_eq_fiberIntersection
     {X S : Scheme.{u}} {f : X ⟶ S}
@@ -237,9 +237,9 @@ theorem chapter03_horizontal_degree_eq_fiberIntersection
     [Chapter03DedekindBase S] [Chapter03RelativeCurveModel f]
     [Chapter03HorizontalFiberIntersectionTheory f]
     (P : Chapter03PrimeDivisor X) (hP : chapter03HorizontalPrime f P) :
-    chapter03HorizontalFiberIntersectionNumber P =
+    chapter03HorizontalFiberIntersectionNumber (f := f) P =
       chapter03HorizontalPrimeDegree P hP := by
-  exact Chapter03HorizontalFiberIntersectionTheory.horizontal_eq_degree P hP
+  exact Chapter03HorizontalFiberIntersectionTheory.horizontal_eq_degree (f := f) P hP
 
 /--
 The component-intersection pairing for vertical primes is deliberately a
@@ -257,7 +257,7 @@ def chapter03VerticalComponentIntersectionNumber
     {X S : Scheme.{u}} {f : X ⟶ S}
     [Chapter03VerticalComponentPairing f]
     (P Q : Chapter03PrimeDivisor X) : ℤ :=
-  Chapter03VerticalComponentPairing.pairing P Q
+  Chapter03VerticalComponentPairing.pairing (f := f) P Q
 
 /-- A vertical component is a divisor on the total space, not on its own fiber. -/
 def chapter03VerticalComponentOnTotalSpace
@@ -268,8 +268,8 @@ def chapter03VerticalComponentOnTotalSpace
 theorem chapter03_vertical_intersection_requires_pairing
     {X S : Scheme.{u}} (f : X ⟶ S) (P Q : Chapter03PrimeDivisor X)
     [Chapter03VerticalComponentPairing f] :
-    chapter03VerticalComponentIntersectionNumber P Q =
-      Chapter03VerticalComponentPairing.pairing P Q := by
+    chapter03VerticalComponentIntersectionNumber (f := f) P Q =
+      Chapter03VerticalComponentPairing.pairing (f := f) P Q := by
   rfl
 
 /-- The base-change map attached to a field extension. -/
@@ -294,12 +294,12 @@ def Chapter03RegularCurvePurelyInseparableSmoothnessFailure
     {k K : Type u} [Field k] [Field K] [Algebra k K]
     {X : Scheme.{u}} (f : X ⟶ Spec (CommRingCat.of k)) : Prop :=
   Chapter03Regular X ∧ IsPurelyInseparable k K ∧
-    ¬ Smooth (chapter03PurelyInseparableBaseChangedCurveMap f)
+    ¬ Smooth (chapter03PurelyInseparableBaseChangedCurveMap (k := k) (K := K) f)
 
 theorem chapter03_regular_divisor_theory_uses_regular_not_smooth
     {k K : Type u} [Field k] [Field K] [Algebra k K]
     {X : Scheme.{u}} (f : X ⟶ Spec (CommRingCat.of k))
-    (h : Chapter03RegularCurvePurelyInseparableSmoothnessFailure f) :
+    (h : Chapter03RegularCurvePurelyInseparableSmoothnessFailure (k := k) (K := K) f) :
     Chapter03Regular X :=
   h.1
 

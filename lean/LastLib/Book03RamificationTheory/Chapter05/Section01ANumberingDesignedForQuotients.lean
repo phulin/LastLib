@@ -101,6 +101,47 @@ theorem chapter05_herbrand_function_zero
     chapter05HerbrandFunction D 0 = 0 := by
   sorry
 
+theorem chapter05_herbrand_function_of_nonpositive
+    {G : Type*} [Group G] [Finite G]
+    (D : Chapter05RamificationFiltration G) {u : ℝ} (hu : u ≤ 0) :
+    chapter05HerbrandFunction D u = u := by
+  sorry
+
+/-!
+  The source's ``homeomorphism'' assertion is recorded in two useful forms:
+  the interval-wise slope formula and the resulting domain statement.  The
+  latter is stated on `[-1, ∞)` because that is the ramification domain; the
+  global inverse used below is an `invFun` only for API convenience.
+-/
+theorem chapter05_herbrand_function_is_continuous_increasing_piecewise_linear
+    {G : Type*} [Group G] [Finite G]
+    (D : Chapter05RamificationFiltration G) :
+    ContinuousOn (chapter05HerbrandFunction D) (Set.Ici (-1 : ℝ)) ∧
+      StrictMonoOn (chapter05HerbrandFunction D) (Set.Ici (-1 : ℝ)) ∧
+      (∀ m : ℕ, ∀ {u v : ℝ},
+        (m : ℝ) ≤ u → u ≤ (m + 1 : ℕ) →
+        (m : ℝ) ≤ v → v ≤ (m + 1 : ℕ) →
+        chapter05HerbrandFunction D u - chapter05HerbrandFunction D v =
+          (u - v) *
+            ((Nat.card (D.lowerGroup (m + 1 : ℕ)) : ℝ) /
+              Nat.card (D.lowerGroup 0))) := by
+  sorry
+
+theorem chapter05_herbrand_is_homeomorphism_on_domain
+    {G : Type*} [Group G] [Finite G]
+    (D : Chapter05RamificationFiltration G) :
+    ContinuousOn (chapter05HerbrandFunction D) (Set.Ici (-1 : ℝ)) ∧
+      StrictMonoOn (chapter05HerbrandFunction D) (Set.Ici (-1 : ℝ)) ∧
+      Set.range (fun u : Set.Ici (-1 : ℝ) => chapter05HerbrandFunction D u) =
+        Set.Ici (-1 : ℝ) := by
+  sorry
+
+theorem chapter05_herbrand_bijective_of_filtration
+    {G : Type*} [Group G] [Finite G]
+    (D : Chapter05RamificationFiltration G) :
+    Function.Bijective (chapter05HerbrandFunction D) := by
+  sorry
+
 /-- The inverse of the Herbrand function, using `invFun` before bijectivity is proved. -/
 noncomputable def chapter05HerbrandInverse
     {G : Type*} [Group G] [Finite G]
@@ -167,7 +208,8 @@ noncomputable def chapter05DisplacementIndicatorIntegral
     (D : Chapter05RamificationFiltration G) (σ : G) : ℝ :=
   by
     classical
-    exact ∫ t in Set.Ioi (0 : ℝ), (if σ ∈ D.lowerGroup t then (1 : ℝ) else 0)
+    exact if σ = 1 then 0 else
+      ∫ t in Set.Ioi (0 : ℝ), (if σ ∈ D.lowerGroup t then (1 : ℝ) else 0)
 
 theorem chapter05_displacement_integral_identity
     {G : Type*} [Group G] [Finite G]
@@ -208,7 +250,7 @@ theorem chapter05_herbrand_slope_eq_reciprocal_index
     chapter05HerbrandSlope D u = (n : ℝ)⁻¹ := by
   sorry
 
-/-- The Herbrand function is a strictly increasing homeomorphism of the index line. -/
+/-- Bijectivity of the Herbrand function under an explicit integrability input. -/
 theorem chapter05_herbrand_bijective
     {G : Type*} [Group G] [Finite G]
     (D : Chapter05RamificationFiltration G)
@@ -223,6 +265,13 @@ theorem chapter05_herbrand_inverse_spec
     (D : Chapter05RamificationFiltration G)
     (hbij : Function.Bijective (chapter05HerbrandFunction D)) (v : ℝ) :
     chapter05HerbrandFunction D (chapter05HerbrandInverse D v) = v := by
+  sorry
+
+theorem chapter05_herbrand_inverse_left_inverse
+    {G : Type*} [Group G] [Finite G]
+    (D : Chapter05RamificationFiltration G)
+    (hbij : Function.Bijective (chapter05HerbrandFunction D)) (u : ℝ) :
+    chapter05HerbrandInverse D (chapter05HerbrandFunction D u) = u := by
   sorry
 
 /-!
@@ -287,6 +336,23 @@ theorem chapter05_lower_break_maps_to_upper_break
     (hbij : Function.Bijective (chapter05HerbrandFunction D))
     (m : ℕ) (hm : chapter05LowerBreak D m) :
     chapter05UpperBreak D (chapter05HerbrandFunction D (m : ℝ)) := by
+  sorry
+
+/-!
+  The preceding implication is the forward half of the break correspondence.
+  Since the real lower profile is constant on each `(m,m+1]`, an upper jump
+  can occur only when the inverse Herbrand parameter is an integer.  This is
+  the reusable converse needed when upper breaks are converted back to the
+  rational lower-data calculation.
+-/
+theorem chapter05_upper_break_iff_herbrand_image_of_lower_break
+    {G : Type*} [Group G] [Finite G]
+    (D : Chapter05RamificationFiltration G)
+    (hbij : Function.Bijective (chapter05HerbrandFunction D))
+    {v : ℝ} :
+    chapter05UpperBreak D v ↔
+      ∃ m : ℕ, chapter05LowerBreak D m ∧
+        chapter05HerbrandFunction D (m : ℝ) = v := by
   sorry
 
 theorem chapter05_upper_breaks_finite

@@ -449,8 +449,9 @@ theorem eisenstein_root_is_uniformizer_and_totally_ramified
           (IsLocalRing.maximalIdeal v.valuationSubring) = n ∧
       chapterResidueDegree vK.valuationSubring v.valuationSubring
           (IsLocalRing.maximalIdeal v.valuationSubring) = 1 ∧
-      ∀ a : K,
-        v (algebraMap K L a) = (vK a) ^ n := by
+      (∀ a : K,
+        v (algebraMap K L a) = (vK a) ^ n) ∧
+      Module.finrank K L = n := by
   sorry
 
 /-- The residue field does not change in an Eisenstein extension. -/

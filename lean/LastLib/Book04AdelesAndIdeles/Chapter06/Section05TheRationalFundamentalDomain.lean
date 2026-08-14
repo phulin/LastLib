@@ -111,7 +111,50 @@ theorem chapter06_rational_adelic_quotient_not_finite_or_discrete
     (hone : P.globalToInfinite (1 : ℚ) = (1 : ℝ)) :
     ¬ Finite (Chapter06AdeleQuotient P) ∧
       ¬ DiscreteTopology (Chapter06AdeleQuotient P) := by
-  sorry
+  let f : ℝ → Chapter06AdeleQuotient P :=
+    fun x => chapter06AdeleQuotientMap P (x, (0 : Af))
+  have hf : Function.Injective f := by
+    intro x y hxy
+    have hmem :
+        (x, (0 : Af)) - (y, (0 : Af)) ∈ chapter06GlobalSubgroup P :=
+      (chapter06AdeleQuotientMap_eq_iff P _ _).1 hxy
+    rcases (mem_chapter06ImageSubgroup (chapter06Diagonal P) _).1 hmem with
+      ⟨a, ha⟩
+    have hfin : P.globalToFinite a = 0 := by
+      simpa using congrArg Prod.snd ha
+    have ha0 : a = 0 := by
+      apply P.finite_diagonal_injective
+      simpa using hfin
+    have hreal : x - y = 0 := by
+      calc
+        x - y = P.globalToInfinite a := by
+          simpa using (congrArg Prod.fst ha).symm
+        _ = (a : ℝ) := chapter06_rational_global_infinite_coordinate P hone a
+        _ = 0 := by rw [ha0]; norm_num
+    exact sub_eq_zero.mp hreal
+  constructor
+  · intro hfinite
+    let _ : Finite (Chapter06AdeleQuotient P) := hfinite
+    let _ : Finite ℝ := Finite.of_injective f hf
+    exact not_finite ℝ
+  · intro hdiscrete
+    let _ : DiscreteTopology (Chapter06AdeleQuotient P) := hdiscrete
+    have hcont : Continuous f := by
+      dsimp [f]
+      exact QuotientAddGroup.continuous_mk.comp
+        (continuous_id.prodMk continuous_const)
+    let _ : DiscreteTopology ℝ :=
+      DiscreteTopology.of_continuous_injective hcont hf
+    have hopen : IsOpen ({(0 : ℝ)} : Set ℝ) := isOpen_discrete _
+    rcases (Metric.isOpen_singleton_iff.mp hopen) with ⟨ε, hε, hball⟩
+    have hhalfpos : 0 < ε / 2 := by linarith
+    have hhalf : dist (ε / 2) (0 : ℝ) < ε := by
+      rw [Real.dist_eq]
+      simp only [sub_zero]
+      rw [abs_of_pos hhalfpos]
+      linarith
+    have heq : ε / 2 = (0 : ℝ) := hball _ hhalf
+    linarith
 
 end
 

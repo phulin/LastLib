@@ -5,6 +5,7 @@ namespace LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter11
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
 
 universe u
 
@@ -133,7 +134,7 @@ theorem chapter11_projective_line_h0_formula
     {k : Type u} [Field k] (C : Chapter11CurveOverField k)
     [Chapter11CohomologyTheory C.carrier C.structureMap]
     [Chapter11PicardTheory C.carrier] [Chapter11DegreeTheory C.carrier]
-    (P : Chapter11ProjectiveLineData C) (n : ℤ) :
+    (P : Chapter11ProjectiveLineData k C) (n : ℤ) :
     chapter11H0Finrank C (P.twist n) =
       if 0 ≤ n then Int.toNat n + 1 else 0 := by
   exact P.h0_twist n
@@ -142,7 +143,7 @@ theorem chapter11_projective_line_h1_formula
     {k : Type u} [Field k] (C : Chapter11CurveOverField k)
     [Chapter11CohomologyTheory C.carrier C.structureMap]
     [Chapter11PicardTheory C.carrier] [Chapter11DegreeTheory C.carrier]
-    (P : Chapter11ProjectiveLineData C) (n : ℤ) :
+    (P : Chapter11ProjectiveLineData k C) (n : ℤ) :
     chapter11H1Finrank C (P.twist n) = Int.toNat (max (-n - 1) 0) := by
   exact P.h1_twist n
 
@@ -152,7 +153,7 @@ theorem chapter11_projective_line_realizes_riemann_roch_terms
     {k : Type u} [Field k] (C : Chapter11CurveOverField k)
     [Chapter11CohomologyTheory C.carrier C.structureMap]
     [Chapter11PicardTheory C.carrier] [Chapter11DegreeTheory C.carrier]
-    (P : Chapter11ProjectiveLineData C) (n : ℤ) :
+    (P : Chapter11ProjectiveLineData k C) (n : ℤ) :
     chapter11EulerCharacteristicOfLineBundle C (P.twist n) = n + 1 := by
   sorry
 

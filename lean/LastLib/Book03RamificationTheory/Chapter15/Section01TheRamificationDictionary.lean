@@ -8,6 +8,7 @@ import Mathlib.RepresentationTheory.Basic
 import Mathlib.RingTheory.DedekindDomain.Different
 import Mathlib.RingTheory.Discriminant
 import Mathlib.RingTheory.Ideal.Norm.RelNorm
+import Mathlib.Topology.Basic
 
 namespace LastLib.Book03RamificationTheory.Chapter15
 
@@ -18,7 +19,48 @@ universe uG
 open scoped BigOperators
 open Ideal
 
-/-! ## 15.1. The ramification dictionary -/
+/-! ## 15.1. Fields cut out by finite actions -/
+
+/- The action-to-field interface is deliberately stated before the older
+   finite-filtration compatibility layer below.  Continuity is represented by
+   openness of the kernel, while the fixed-field construction itself only
+   needs the finite Galois ambient extension. -/
+structure Chapter15FiniteAction
+    (Γ X : Type*) [Group Γ] [Finite X] [TopologicalSpace Γ] where
+  action : Γ →* Equiv.Perm X
+  kernel_open : IsOpen (action.ker : Set Γ)
+
+def chapter15FiniteActionCutoutField
+    {K L X : Type*} [Field K] [Field L] [Algebra K L]
+    (ρ : Gal(L / K) →* Equiv.Perm X) : IntermediateField K L :=
+  IntermediateField.fixedField ρ.ker
+
+theorem chapter15_finite_action_cutout_field_is_fixed_field
+    {K L X : Type*} [Field K] [Field L] [Algebra K L]
+    (ρ : Gal(L / K) →* Equiv.Perm X) :
+    chapter15FiniteActionCutoutField ρ = IntermediateField.fixedField ρ.ker := by
+  sorry
+
+structure Chapter15FiniteActionFieldData
+    (K L X : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite X] where
+  action : Gal(L / K) →* Equiv.Perm X
+  cutout : IntermediateField K L
+  cutout_eq_fixed_field :
+    cutout = chapter15FiniteActionCutoutField action
+
+theorem chapter15_finite_action_galois_group_equiv_image
+    {K L X : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite X]
+    (ρ : Gal(L / K) →* Equiv.Perm X) :
+    Nonempty
+      (Gal(chapter15FiniteActionCutoutField ρ / K) ≃* MonoidHom.range ρ) := by
+  sorry
+
+/-! The declarations below preserve the finite lower-filtration API used by
+    later synthesis chapters.  They are not the organizing interface of
+    Chapter 15; the source-facing cutout and arithmetic interfaces live in
+    this chapter's four section files. -/
 
 /--
 A finite lower-numbered filtration of a finite group.  The cutoff is part of the
@@ -326,14 +368,14 @@ noncomputable def chapter15RelativeDiscriminantIdeal
 noncomputable def chapter15DifferentExponent
     (A B : Type*) [CommRing A] [IsDomain A] [CommRing B]
     [Algebra A B] [IsIntegrallyClosed A] [IsDedekindDomain B]
-    [Module.IsTorsionFree A B] (P : Ideal B) : ℕ :=
+    [Module.IsTorsionFree A B] (P : Ideal B) [P.IsPrime] : ℕ :=
   multiplicity P (chapter15DifferentIdeal A B)
 
 /-- The discriminant exponent at a selected prime downstairs. -/
 noncomputable def chapter15DiscriminantExponent
     (A B : Type*) [CommRing A] [CommRing B]
     [Algebra A B] [IsDedekindDomain A] [IsDedekindDomain B]
-    [Module.Finite A B] [Module.IsTorsionFree A B] (p : Ideal A) : ℕ :=
+    [Module.Finite A B] [Module.IsTorsionFree A B] (p : Ideal A) [p.IsPrime] : ℕ :=
   multiplicity p (chapter15RelativeDiscriminantIdeal A B)
 
 /-- The quotient of the residue action identifies `G/G₀` with residue-field symmetry. -/

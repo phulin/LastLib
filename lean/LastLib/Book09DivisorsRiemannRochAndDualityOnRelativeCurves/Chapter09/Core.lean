@@ -116,7 +116,7 @@ structure Chapter09PerfectPairing (k A B : Type*) where
 
 /-- The scalar-linear form of a perfect pairing over the field of definition. -/
 structure Chapter09LinearPerfectPairing
-    (k A B : Type*) [Semiring k]
+    (k A B : Type*) [CommSemiring k]
     [AddCommGroup A] [Module k A]
     [AddCommGroup B] [Module k B] where
   leftPairing : A →ₗ[k] (B →ₗ[k] k)
@@ -137,6 +137,7 @@ class Chapter09ExtTheory (X : Scheme.{u}) where
   sheafExt : X.Modules → X.Modules → ℕ → X.Modules
   groupExtAddCommGroup : ∀ F G n, AddCommGroup (groupExt F G n)
 
+attribute [instance_reducible] Chapter09ExtTheory.groupExtAddCommGroup
 attribute [instance] Chapter09ExtTheory.groupExtAddCommGroup
 
 /-- The global Ext type used in the proper-curve duality statements. -/
@@ -178,7 +179,7 @@ structure Chapter09CohenMacaulayCurveOverField
 /- LOCAL_DEPENDENCY_GUESS: local Cohen--Macaulayness is a property of all
 stalks; it is not identified with a tautological proposition. -/
 structure Chapter09CohenMacaulayProfile (X : Scheme.{u}) : Type (u + 1) where
-  stalkwise : ∀ x : X, Prop
+  stalkwise : ∀ _ : X, Prop
 
 /- LOCAL_DEPENDENCY_GUESS: the pinned Mathlib API has no local
 Cohen--Macaulay predicate for scheme stalks.  This named proposition is kept
@@ -205,9 +206,9 @@ structure Chapter09AbsoluteDerivedDualityComparison
     [Chapter09AbsoluteDerivedHomTheory k X]
   (F ω : X.Modules) where
   comparison :
-    Chapter09AbsoluteDerivedHomTheory.baseRHom
-        (Chapter09AbsoluteDerivedHomTheory.globalSections F) 0 ≃
-      Chapter09AbsoluteDerivedHomTheory.schemeRHom F ω 1
+    Chapter09AbsoluteDerivedHomTheory.baseRHom (k := k) (X := X)
+        (Chapter09AbsoluteDerivedHomTheory.globalSections (k := k) (X := X) F) 0 ≃
+      Chapter09AbsoluteDerivedHomTheory.schemeRHom (k := k) (X := X) F ω 1
   quasi_isomorphism : Prop
 
 /-- A trace-compatible isomorphism between two proposed absolute dualizing sheaves. -/
@@ -471,12 +472,14 @@ abbrev Chapter09RelativeEffectiveCartierDivisor.constantRank
 abbrev Chapter09RelativeEffectiveCartierDivisor.cartier
     {X S : Scheme.{u}} {f : X ⟶ S}
     (D : Chapter09RelativeEffectiveCartierDivisor f) : Prop :=
-  D.canonical.locallyRegularPrincipal
+  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09.Chapter09LocallyRegularPrincipal
+    D.canonical.ideal
 
 abbrev Chapter09RelativeEffectiveCartierDivisor.effective
     {X S : Scheme.{u}} {f : X ⟶ S}
     (D : Chapter09RelativeEffectiveCartierDivisor f) : Prop :=
-  D.canonical.locallyRegularPrincipal
+  LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09.Chapter09LocallyRegularPrincipal
+    D.canonical.ideal
 
 /-- Local projectivity data obtained from sections through smooth points. -/
 structure Chapter09FpqcLocalProjectivityWitness
@@ -511,7 +514,7 @@ class Chapter09RelativeDerivedHomTheory {X S : Scheme.{u}} (f : X ⟶ S) where
 
 abbrev chapter09RPushforward {X S : Scheme.{u}} (f : X ⟶ S)
     [Chapter09RelativeDerivedHomTheory f] (F : X.Modules) (i : ℕ) : S.Modules :=
-  Chapter09RelativeDerivedHomTheory.directImage F i
+  Chapter09RelativeDerivedHomTheory.directImage f F i
 
 /-- The shifted comparison in relative duality (9.4). -/
 structure Chapter09RelativeDualityComparison
@@ -519,9 +522,9 @@ structure Chapter09RelativeDualityComparison
     [Chapter09RelativeDerivedHomTheory f]
   (E EdualOmega ω : X.Modules) where
   comparison :
-    Chapter09RelativeDerivedHomTheory.relativePushforward EdualOmega 1 ≃
+    Chapter09RelativeDerivedHomTheory.relativePushforward f EdualOmega 1 ≃
       Chapter09RelativeDerivedHomTheory.baseRHom
-        (Chapter09RelativeDerivedHomTheory.derivedPushforward E 0)
+        f (Chapter09RelativeDerivedHomTheory.derivedPushforward f E 0)
         (chapter09StructureSheaf S) 0
   quasi_isomorphism : Prop
 
@@ -566,7 +569,7 @@ class Chapter09DifferentialSheafTheory {X S : Scheme.{u}} (f : X ⟶ S) where
 
 abbrev chapter09RelativeDifferentials {X S : Scheme.{u}} (f : X ⟶ S)
     [Chapter09DifferentialSheafTheory f] : X.Modules :=
-  Chapter09DifferentialSheafTheory.omegaOne
+  Chapter09DifferentialSheafTheory.omegaOne f
 
 /-- Gorensteinness of a relative dualizing package in the curve case. -/
 def chapter09RelativeGorenstein

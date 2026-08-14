@@ -107,12 +107,14 @@ def chapter03EffectiveWeilDivisor.toWeil {X : Scheme.{u}}
 
 theorem chapter03_effectiveWeilDivisor_coeff_nonnegative {X : Scheme.{u}}
     (D : Chapter03EffectiveWeilDivisor X) (P : Chapter03PrimeDivisor X) :
-    0 ≤ D.toWeil P :=
+    0 ≤ chapter03EffectiveWeilDivisor.toWeil D P :=
   D.2 P
 
 theorem chapter03_effectiveWeilDivisor_iff {X : Scheme.{u}}
     (D : Chapter03WeilDivisor X) :
-    (∀ P, 0 ≤ D P) ↔ ∃ E : Chapter03EffectiveWeilDivisor X, E.toWeil = D := by
+    (∀ P, 0 ≤ D P) ↔
+      ∃ E : Chapter03EffectiveWeilDivisor X,
+        chapter03EffectiveWeilDivisor.toWeil E = D := by
   constructor
   · intro h
     exact ⟨⟨D, h⟩, rfl⟩
@@ -122,7 +124,8 @@ theorem chapter03_effectiveWeilDivisor_iff {X : Scheme.{u}}
 @[ext]
 theorem chapter03_effectiveWeilDivisor_ext {X : Scheme.{u}}
     {D E : Chapter03EffectiveWeilDivisor X}
-    (h : D.toWeil = E.toWeil) : D = E := by
+    (h : chapter03EffectiveWeilDivisor.toWeil D =
+      chapter03EffectiveWeilDivisor.toWeil E) : D = E := by
   exact Subtype.ext h
 
 @[ext]
@@ -215,7 +218,7 @@ abbrev Chapter03EffectiveCartierDivisor (X : Scheme.{u}) :=
 abbrev Chapter03RelativeCurve {X S : Scheme.{u}} (f : X ⟶ S) : Prop :=
   Chapter09RelativeCurve f
 
-theorem chapter03_relativeCurve_fibers_are_curves {X S : Scheme.{u}} {f : X ⟶ S}
+def chapter03_relativeCurve_fibers_are_curves {X S : Scheme.{u}} {f : X ⟶ S}
     (h : Chapter03RelativeCurve f) : Prop :=
   Chapter09RelativeCurve.fibers_are_curves h
 

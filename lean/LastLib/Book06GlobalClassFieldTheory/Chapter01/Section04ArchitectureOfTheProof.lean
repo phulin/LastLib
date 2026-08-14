@@ -120,24 +120,43 @@ def SumZeroDoesNotMeanPointwiseZero
     (component : ∀ _i : ι, DirectSum ι A →+ R) : Prop :=
   ∃ x : DirectSum ι A, sum x = 0 ∧ ∃ i, component i x ≠ 0
 
+/- The global fundamental class has idele classes as its coefficient object.
+The preceding local class-formation interface uses the units representation;
+that representation is not a substitute for the Galois action on `C_L`.  The
+action itself is kept as a boundary interface until the adelic Galois-action
+API is available. -/
+structure GlobalIdeleClassGaloisActionData
+    (K L : Type) [Field K] [NumberField K] [Field L] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L] [IsGalois K L] where
+  action : MulAction (Gal(L / K)) (C_K L)
+
+noncomputable def globalIdeleClassCoefficientRep
+    {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
+    (A : GlobalIdeleClassGaloisActionData K L) :
+    Rep ℤ (Gal(L / K)) := by
+  letI : MulAction (Gal(L / K)) (C_K L) := A.action
+  exact Rep.ofMulAction ℤ (Gal(L / K)) (C_K L)
+
 /- The same global-to-local exact sequence is the input for the finite
 Galois fundamental class. -/
 structure FiniteGaloisFundamentalClassData
     (K : Type) (L : Type) [Field K] [NumberField K] [Field L] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
-    [Fintype (Gal(L / K))]
-  (N : GlobalNormInterface K L) where
+    [Fintype (Gal(L / K))] where
+  normData : GlobalNormInterface K L
+  ideleClassAction : GlobalIdeleClassGaloisActionData K L
   brauerSequence : BookBrauerInvariantSequence K
   fundamentalClass : Chapter05FundamentalTwoClass
-    (Gal(L / K)) (chapter05CoefficientRep K L)
+    (Gal(L / K)) (globalIdeleClassCoefficientRep ideleClassAction)
   capProduct : Chapter05CapProduct (Gal(L / K))
-    (chapter05CoefficientRep K L)
+    (globalIdeleClassCoefficientRep ideleClassAction)
     fundamentalClass.value
   twoExtensionRepresentative :
     Chapter05TwoExtensionRepresentative (Gal(L / K))
-      (chapter05CoefficientRep K L) fundamentalClass.value capProduct
+      (globalIdeleClassCoefficientRep ideleClassAction) fundamentalClass.value capProduct
   classFormation : Chapter05TateNakayamaHypotheses
-    (Gal(L / K)) (chapter05CoefficientRep K L) fundamentalClass.value
+    (Gal(L / K)) (globalIdeleClassCoefficientRep ideleClassAction) fundamentalClass.value
 
 /- LOCAL_DEPENDENCY_GUESS: the finite Galois class formation and its
 restriction-compatible H² fundamental class are supplied at this boundary. -/
@@ -145,18 +164,16 @@ theorem finite_galois_fundamental_class_exists
     {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
     [Fintype (Gal(L / K))]
-    (N : GlobalNormInterface K L) :
-    Nonempty (FiniteGaloisFundamentalClassData K L N) := by
+    : Nonempty (FiniteGaloisFundamentalClassData K L) := by
   sorry
 
 theorem cap_fundamental_class_identifies_abelianization
     {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
     [Fintype (Gal(L / K))]
-    (N : GlobalNormInterface K L)
-    (D : FiniteGaloisFundamentalClassData K L N) :
+    (D : FiniteGaloisFundamentalClassData K L) :
     Nonempty (GroupAbelianization (Gal(L / K)) ≃*
-      finiteClassArtinQuotient N) := by
+      finiteClassArtinQuotient D.normData) := by
   sorry
 
 theorem abelian_group_abelianization_equiv

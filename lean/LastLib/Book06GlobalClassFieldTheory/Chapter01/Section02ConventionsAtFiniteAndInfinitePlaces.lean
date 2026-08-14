@@ -76,6 +76,8 @@ structure FiniteReciprocityNormalization
   uniformizer_spec : valuation (uniformizer : F) = (1 : WithTop ℤ)
   residueAction : Field.absoluteGaloisGroupAbelianization F →* (k ≃+* k)
   unitSubgroup : Subgroup Fˣ
+  unitSubgroup_spec : ∀ u : Fˣ,
+    u ∈ unitSubgroup ↔ valuation (u : F) = 0
   inertia : Subgroup (Field.absoluteGaloisGroupAbelianization F)
   unit_image_eq_inertia :
     (reciprocity.comp unitSubgroup.subtype).range = inertia

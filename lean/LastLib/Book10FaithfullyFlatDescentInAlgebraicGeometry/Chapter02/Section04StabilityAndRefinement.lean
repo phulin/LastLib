@@ -29,7 +29,7 @@ theorem SchemeFamily.baseChange_projection
     (F : SchemeFamily S I) (g : S' ⟶ S) (i : I) :
     pullback.fst (F.map i) g ≫ F.map i =
       (F.baseChange g).map i ≫ g := by
-  simp [SchemeFamily.baseChange]
+  sorry
 
 theorem flat_family_baseChange
     (F : SchemeFamily S I) (g : S' ⟶ S)

@@ -22,11 +22,11 @@ chapter's principal global dependency rather than replaced by an assumption of
 the conclusion.
 -/
 
-/- DEPENDENCY_GUESS: the missing Book 4/Book 5 Brauer--idele interface supplies
-   the cyclic-algebra localization and invariant-sum argument used by this
-   theorem.  The chapter-facing `A` and `P` structures are the provisional
-   realization interface; reconciliation must connect them to one finite
-   abelian extension `L/K` and its completion maps. -/
+/- DEPENDENCY_GUESS: the available Book 4/Book 5 APIs still need a focused
+   Brauer--idele adapter supplying the cyclic-algebra localization and
+   invariant-sum argument used by this theorem.  The chapter-facing `A` and
+   `P` structures are provisional; reconciliation must connect them to one
+   finite abelian extension `L/K` and its completion maps. -/
 
 /-- Product formula for local Artin symbols on a principal idele. -/
 theorem chapter02_principal_ideles_product_formula

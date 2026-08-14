@@ -5,6 +5,7 @@ import Mathlib.RingTheory.DedekindDomain.Dvr
 import Mathlib.RingTheory.DedekindDomain.Factorization
 import Mathlib.RingTheory.DiscreteValuationRing.Basic
 import Mathlib.RingTheory.FractionalIdeal.Basic
+import Mathlib.RingTheory.FractionalIdeal.Extended
 import Mathlib.RingTheory.FractionalIdeal.Inverse
 import Mathlib.RingTheory.FractionalIdeal.Operations
 import Mathlib.RingTheory.LocalRing.Length
@@ -641,7 +642,26 @@ def chapterLocalizedFractionalFiltrationAtPrime
     FractionalIdeal (nonZeroDivisors (Localization.AtPrime v.asIdeal)) K :=
   ⟨Submodule.span (Localization.AtPrime v.asIdeal)
       ({(algebraMap (Localization.AtPrime v.asIdeal) K ϖ) ^ n} : Set K), by
-    sorry⟩
+    rw [FractionalIdeal.isFractional_span_iff]
+    cases n with
+    | ofNat k =>
+        refine ⟨1, mem_nonZeroDivisors_iff_ne_zero.mpr one_ne_zero, ?_⟩
+        intro b hb
+        subst b
+        rw [one_smul]
+        exact ⟨ϖ ^ k, by simp⟩
+    | negSucc k =>
+        refine ⟨ϖ ^ (k + 1), mem_nonZeroDivisors_iff_ne_zero.mpr
+          (pow_ne_zero _ _hϖ.ne_zero), ?_⟩
+        intro b hb
+        subst b
+        by_cases hz : algebraMap (Localization.AtPrime v.asIdeal) K ϖ = 0
+        · refine ⟨0, ?_⟩
+          simp [Algebra.smul_def, hz]
+        · have hpow : (algebraMap (Localization.AtPrime v.asIdeal) K ϖ) ^ (k + 1) ≠ 0 :=
+            pow_ne_zero _ hz
+          refine ⟨1, ?_⟩
+          simp [Algebra.smul_def, hpow]⟩
 
 /-- Book §5.3: for a fractional ideal, localization at a height-one prime
 projects the global exponent vector to that prime's coordinate. -/
@@ -656,7 +676,166 @@ theorem chapter_localization_projects_global_fractional_exponent
     chapterLocalizeFractionalIdealAtPrime (R := R) (K := K) v I =
       chapterLocalizedFractionalFiltrationAtPrime (R := R) (K := K) v ϖ hϖ
         (chapterGlobalIdealExponentVector (R := R) (K := K) I v) := by
-  sorry
+  classical
+  let L := Localization.AtPrime v.asIdeal
+  have hf : nonZeroDivisors R ≤
+      (nonZeroDivisors L).comap (algebraMap R L) :=
+    IsLocalization.nonZeroDivisors_le_comap v.asIdeal.primeCompl L
+  have hmap :
+      IsLocalization.map (S := K) K (algebraMap R L) hf = RingHom.id K := by
+    apply IsFractionRing.ringHom_ext (A := R)
+    intro r
+    rw [IsLocalization.map_eq]
+    exact (IsScalarTower.algebraMap_apply R L K r).symm
+  have hext :
+      chapterLocalizeFractionalIdealAtPrime (R := R) (K := K) v I =
+        FractionalIdeal.extended K hf I := by
+    apply FractionalIdeal.coeToSubmodule_injective
+    change Submodule.span L (I : Set K) =
+      Submodule.span L ((IsLocalization.map (S := K) K (algebraMap R L) hf) '' I)
+    rw [hmap]
+    congr 1
+    ext x
+    simp
+  have hcoe (w : HeightOneSpectrum R) :
+      FractionalIdeal.extendedHom K L
+          (w.asIdeal : FractionalIdeal (nonZeroDivisors R) K) =
+        (w.asIdeal.map (algebraMap R L) :
+          FractionalIdeal (nonZeroDivisors L) K) :=
+    FractionalIdeal.extendedHom_coeIdeal_eq_map K L w.asIdeal
+  have hextHom :
+      FractionalIdeal.extended K hf I =
+        FractionalIdeal.extendedHom K L I := by
+    rfl
+  have hmapideal (w : HeightOneSpectrum R) (hw : w ≠ v) :
+      w.asIdeal.map (algebraMap R L) = (⊤ : Ideal L) := by
+    rw [IsLocalization.AtPrime.map_eq_top_of_not_le (S := L) (p := v.asIdeal)]
+    intro hle
+    have heq : w.asIdeal = v.asIdeal :=
+      (w.isPrime.isMaximal w.ne_bot).eq_of_le
+        (v.isPrime.isMaximal v.ne_bot).ne_top hle
+    exact hw (HeightOneSpectrum.ext heq)
+  have hbase (w : HeightOneSpectrum R) :
+      FractionalIdeal.extendedHom K L
+          (w.asIdeal : FractionalIdeal (nonZeroDivisors R) K) =
+        if w = v then
+          (IsLocalRing.maximalIdeal L :
+            FractionalIdeal (nonZeroDivisors L) K)
+        else 1 := by
+    by_cases hw : w = v
+    · simp only [if_pos hw]
+      subst w
+      rw [hcoe v, Localization.AtPrime.map_eq_maximalIdeal]
+    · simp only [if_neg hw]
+      rw [hcoe w, hmapideal w hw]
+      simp
+  have hfinite :
+      Function.HasFiniteMulSupport
+        (fun w : HeightOneSpectrum R =>
+          (w.asIdeal : FractionalIdeal (nonZeroDivisors R) K) ^
+            (FractionalIdeal.count K w I)) := by
+    rw [Function.HasFiniteMulSupport]
+    apply (Filter.eventually_cofinite.mp
+      (FractionalIdeal.finite_factors (K := K) I)).subset
+    intro w hw
+    change (w.asIdeal : FractionalIdeal (nonZeroDivisors R) K) ^
+        (FractionalIdeal.count K w I) ≠ 1 at hw
+    by_contra hc
+    have hc' : FractionalIdeal.count K w I = 0 := not_not.mp hc
+    exact hw (by rw [hc']; simp)
+  have hmapfactor :
+      FractionalIdeal.extendedHom K L
+          (∏ᶠ w : HeightOneSpectrum R,
+            (w.asIdeal : FractionalIdeal (nonZeroDivisors R) K) ^
+              (FractionalIdeal.count K w I)) =
+        ∏ᶠ w : HeightOneSpectrum R,
+          FractionalIdeal.extendedHom K L
+            ((w.asIdeal : FractionalIdeal (nonZeroDivisors R) K) ^
+              (FractionalIdeal.count K w I)) := by
+    exact map_finprod
+      (f := fun w : HeightOneSpectrum R =>
+        (w.asIdeal : FractionalIdeal (nonZeroDivisors R) K) ^
+          (FractionalIdeal.count K w I))
+      (FractionalIdeal.extendedHom K L) hfinite
+  have hterm (w : HeightOneSpectrum R) (n : ℤ) :
+      FractionalIdeal.extendedHom K L
+          ((w.asIdeal : FractionalIdeal (nonZeroDivisors R) K) ^ n) =
+        (FractionalIdeal.extendedHom K L
+          (w.asIdeal : FractionalIdeal (nonZeroDivisors R) K)) ^ n := by
+    exact map_zpow₀ (FractionalIdeal.extendedHom K L)
+      (w.asIdeal : FractionalIdeal (nonZeroDivisors R) K) n
+  have hsingle :
+      (∏ᶠ w : HeightOneSpectrum R,
+          FractionalIdeal.extendedHom K L
+            ((w.asIdeal : FractionalIdeal (nonZeroDivisors R) K) ^
+              (FractionalIdeal.count K w I))) =
+        (FractionalIdeal.extendedHom K L
+          (v.asIdeal : FractionalIdeal (nonZeroDivisors R) K)) ^
+            (FractionalIdeal.count K v I) := by
+    simp_rw [hterm]
+    apply finprod_eq_single _ v
+    intro w hw
+    rw [hbase]
+    simp [hw]
+  have hmax :
+      (IsLocalRing.maximalIdeal L :
+        FractionalIdeal (nonZeroDivisors L) K) =
+      FractionalIdeal.spanSingleton (nonZeroDivisors L)
+        (algebraMap L K ϖ) := by
+    rw [hϖ.maximalIdeal_eq, FractionalIdeal.coeIdeal_span_singleton]
+  have hpow (n : ℤ) :
+      (IsLocalRing.maximalIdeal L :
+        FractionalIdeal (nonZeroDivisors L) K) ^ n =
+      FractionalIdeal.spanSingleton (nonZeroDivisors L)
+        ((algebraMap L K ϖ) ^ n) := by
+    rw [hmax]
+    cases n with
+    | ofNat k =>
+        simp [FractionalIdeal.spanSingleton_pow]
+    | negSucc k =>
+        simp [zpow_negSucc, FractionalIdeal.spanSingleton_pow,
+          FractionalIdeal.spanSingleton_inv]
+  have hfil (n : ℤ) :
+      chapterLocalizedFractionalFiltrationAtPrime (R := R) (K := K) v ϖ hϖ n =
+        FractionalIdeal.spanSingleton (nonZeroDivisors L)
+          ((algebraMap L K ϖ) ^ n) := by
+    apply FractionalIdeal.coeToSubmodule_injective
+    change Submodule.span L
+        ({(algebraMap L K ϖ) ^ n} : Set K) =
+      (FractionalIdeal.spanSingleton (nonZeroDivisors L)
+        ((algebraMap L K ϖ) ^ n) : Submodule L K)
+    rw [FractionalIdeal.coe_spanSingleton]
+  have hfactor :
+      (∏ᶠ w : HeightOneSpectrum R,
+          (w.asIdeal : FractionalIdeal (nonZeroDivisors R) K) ^
+            (FractionalIdeal.count K w I)) = I :=
+    FractionalIdeal.finprod_heightOneSpectrum_factorization' (K := K) hI
+  calc
+    chapterLocalizeFractionalIdealAtPrime (R := R) (K := K) v I =
+        FractionalIdeal.extendedHom K L I := hext.trans hextHom
+    _ = FractionalIdeal.extendedHom K L
+          (∏ᶠ w : HeightOneSpectrum R,
+            (w.asIdeal : FractionalIdeal (nonZeroDivisors R) K) ^
+              (FractionalIdeal.count K w I)) := by rw [hfactor]
+    _ = ∏ᶠ w : HeightOneSpectrum R,
+          FractionalIdeal.extendedHom K L
+            ((w.asIdeal : FractionalIdeal (nonZeroDivisors R) K) ^
+              (FractionalIdeal.count K w I)) := hmapfactor
+    _ = (FractionalIdeal.extendedHom K L
+          (v.asIdeal : FractionalIdeal (nonZeroDivisors R) K)) ^
+            (FractionalIdeal.count K v I) := hsingle
+    _ = (IsLocalRing.maximalIdeal L :
+          FractionalIdeal (nonZeroDivisors L) K) ^
+            (FractionalIdeal.count K v I) := by
+          rw [hbase v]
+          simp
+    _ = FractionalIdeal.spanSingleton (nonZeroDivisors L)
+          ((algebraMap L K ϖ) ^
+            (FractionalIdeal.count K v I)) := hpow _
+    _ = chapterLocalizedFractionalFiltrationAtPrime (R := R) (K := K)
+          v ϖ hϖ (chapterGlobalIdealExponentVector (R := R) (K := K) I v) := by
+          symm
+          apply hfil
 
 /-- Localization of an integral ideal at a height-one prime. -/
 def chapterLocalizeIdealAtPrime (v : HeightOneSpectrum R) (I : Ideal R) :

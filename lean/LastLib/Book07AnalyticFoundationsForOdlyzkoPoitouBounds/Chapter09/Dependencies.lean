@@ -12,6 +12,7 @@ import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
 import Mathlib.Order.LiminfLimsup
 
 import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.Dependencies
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter08.Section02TheTriangularAutocorrelation
 
 namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter09
 
@@ -60,27 +61,39 @@ theorem chapter09_signature_formula
 theorem chapter09_degree_pos
     (K : Type*) [Field K] [NumberField K] :
     0 < chapter09Degree K := by
-  sorry
+  exact Module.finrank_pos
 
 theorem chapter09_absolute_discriminant_pos
     (K : Type*) [Field K] [NumberField K] :
     0 < chapter09AbsoluteDiscriminant K := by
-  sorry
+  rw [chapter09AbsoluteDiscriminant, abs_pos]
+  exact_mod_cast NumberField.discr_ne_zero K
 
 theorem chapter09_root_discriminant_pos
     (K : Type*) [Field K] [NumberField K] :
     0 < chapter09RootDiscriminant K := by
-  sorry
+  rw [chapter09RootDiscriminant]
+  exact Real.rpow_pos_of_pos (chapter09_absolute_discriminant_pos K) _
 
 theorem chapter09_root_discriminant_eq_canonical
     (K : Type*) [Field K] [NumberField K] :
     chapter09RootDiscriminant K = NumberField.rootDiscr K := by
-  sorry
+  rw [chapter09RootDiscriminant, NumberField.rootDiscr_def]
+  simp [chapter09AbsoluteDiscriminant, chapter09Degree, Int.cast_abs]
 
 theorem chapter09_real_proportion_mem_Icc
     (K : Type*) [Field K] [NumberField K] :
     chapter09RealProportion K ∈ Set.Icc (0 : ℝ) 1 := by
-  sorry
+  have hdeg : 0 < chapter09Degree K := Module.finrank_pos
+  have hreal : chapter09RealPlaceCount K ≤ chapter09Degree K := by
+    have hsig := chapter09_signature_formula K
+    omega
+  constructor
+  · unfold chapter09RealProportion
+    positivity
+  · unfold chapter09RealProportion
+    have hdegR : 0 < (chapter09Degree K : ℝ) := by exact_mod_cast hdeg
+    exact (div_le_one hdegR).2 (by exact_mod_cast hreal)
 
 /- The nontrivial-zero support is tied to the completed-zeta function used by
    the preceding analytic package.  This keeps possible boundary zeros in the
@@ -160,12 +173,20 @@ theorem chapter09_grh_test_function_at_zero (T : ℝ) :
 theorem chapter09_unconditional_pole_integral
     {T : ℝ} (hT : 0 < T) :
     chapter09UnconditionalPoleIntegral T = T / 2 := by
-  sorry
+  simpa [chapter09UnconditionalPoleIntegral, chapter09A,
+    chapter09UnconditionalTestFunction, chapter09TriangularAutocorrelation,
+    Chapter08.chapter08A, Chapter08.chapter08FUnconditionalTriangle,
+    Chapter08.chapter08TriangularAutocorrelation] using
+    (Chapter08.chapter08_unconditional_triangle_A hT)
 
 theorem chapter09_grh_pole_integral
     {T : ℝ} (hT : 0 < T) :
     chapter09GRHPoleIntegral T = 4 / T * (Real.cosh (T / 2) - 1) := by
-  sorry
+  simpa [chapter09GRHPoleIntegral, chapter09A,
+    chapter09GRHTestFunction, chapter09TriangularAutocorrelation,
+    Chapter08.chapter08A, Chapter08.chapter08FGRHTriangle,
+    Chapter08.chapter08TriangularAutocorrelation] using
+    (Chapter08.chapter08_grh_triangle_A hT)
 
 def chapter09UnconditionalExponent
     (K : Type*) [Field K] [NumberField K] (T : ℝ) : ℝ :=
@@ -225,15 +246,15 @@ def zetaZeroInterface (M : Chapter09NumberFieldModel) :
       nontrivialZeros_spec := M.nontrivialZeros_spec }
 
 theorem degree_pos (M : Chapter09NumberFieldModel) : 0 < M.degree := by
-  sorry
+  exact @chapter09_degree_pos M.K M.field M.numberField
 
 theorem real_proportion_mem_Icc (M : Chapter09NumberFieldModel) :
     M.realProportion ∈ Set.Icc (0 : ℝ) 1 := by
-  sorry
+  exact @chapter09_real_proportion_mem_Icc M.K M.field M.numberField
 
 theorem root_discriminant_pos (M : Chapter09NumberFieldModel) :
     0 < M.rootDiscriminant := by
-  sorry
+  exact @chapter09_root_discriminant_pos M.K M.field M.numberField
 
 end Chapter09NumberFieldModel
 

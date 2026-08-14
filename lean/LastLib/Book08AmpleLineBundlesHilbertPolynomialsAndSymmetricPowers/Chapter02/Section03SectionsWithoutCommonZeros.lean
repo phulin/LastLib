@@ -181,7 +181,15 @@ theorem chapter02_ratios_generate_relevant_coordinate_algebra
     [Algebra B A] [Algebra B R]
     (d : Chapter02AffineChartRatioGenerationData B I A R) :
     Chapter02RatiosGenerateRelevantCoordinateAlgebra d := by
-  sorry
+  change Algebra.adjoin B (Set.range d.targetRatio) = ⊤
+  apply le_antisymm
+  · exact le_top
+  · rw [← d.sourceCoordinate_generate]
+    apply Algebra.adjoin_le
+    rintro _ ⟨i, rfl⟩
+    obtain ⟨j, hj⟩ := d.sourceCoordinate_in_ratio_range i
+    rw [hj]
+    exact Algebra.subset_adjoin ⟨j, rfl⟩
 
 end
 

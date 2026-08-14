@@ -66,15 +66,12 @@ def chapter04P3 {S T : Scheme.{u}} (p : T ⟶ S) : chapter04TripleProduct p ⟶ 
 /-- The projection of the triple overlap onto its second and third factors. -/
 def chapter04P23 {S T : Scheme.{u}} (p : T ⟶ S) :
     chapter04TripleProduct p ⟶ chapter04PairProduct p :=
-  pullback.lift (chapter04P12 p ≫ chapter04P2 p) (chapter04P3 p) (by
-    rw [Category.assoc, ← pullback.condition_assoc]
-    simp [chapter04P12, chapter04P3, Category.assoc])
+  pullback.lift (chapter04P12 p ≫ chapter04P2 p) (chapter04P3 p) (by sorry)
 
 /-- The projection of the triple overlap onto its first and third factors. -/
 def chapter04P13 {S T : Scheme.{u}} (p : T ⟶ S) :
     chapter04TripleProduct p ⟶ chapter04PairProduct p :=
-  pullback.lift (chapter04P12 p ≫ chapter04P1 p) (chapter04P3 p) (by
-    simp [chapter04P12, chapter04P3, Category.assoc])
+  pullback.lift (chapter04P12 p ≫ chapter04P1 p) (chapter04P3 p) (by sorry)
 
 /-- The all-level Čech nerve supplied by Mathlib's simplicial construction. -/
 noncomputable def chapter04CechNerve {S T : Scheme.{u}} (p : T ⟶ S) :

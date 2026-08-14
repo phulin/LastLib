@@ -67,6 +67,21 @@ structure Chapter05TwoExtensionRepresentative
     connecting H r = chapter05TwoExtensionConnecting extension H r
   connecting_eq_cap : ∀ (H : Subgroup G) (r : ℤ),
     connecting H r = P.cap H r
+  /- The extension must represent the chosen class `u`, not merely have a
+     connecting family which has been declared equal to the cap product.  The
+     two additive equivalences below are the degree-zero Tate/ordinary
+     cohomology bridges; the last field is the normalization on the
+     distinguished class. -/
+  degree_zero_source : ∀ (H : Subgroup G),
+    chapter05TateCohomology H (Rep.trivial ℤ H ℤ) 0 ≃+
+      ZMod (Nat.card H)
+  degree_zero_target : ∀ (H : Subgroup G),
+    chapter05TateCohomology H (Rep.res H.subtype C) 2 ≃+
+      chapter05GroupCohomology H (Rep.res H.subtype C) 2
+  degree_zero_connecting : ∀ (H : Subgroup G),
+    degree_zero_target H
+        ((connecting H 0) ((degree_zero_source H).symm 1)) =
+      chapter05RestrictTwoClass H u
 
 /- LOCAL_DEPENDENCY_GUESS: this is the minimal book-facing package assembled
 from the preceding local Brauer, Hilbert--90, and degree-zero norm results.

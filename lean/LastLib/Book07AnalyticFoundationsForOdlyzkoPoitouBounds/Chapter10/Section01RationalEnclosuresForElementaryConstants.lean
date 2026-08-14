@@ -199,7 +199,7 @@ theorem chapter10_inverse_ninth_power_tail_integral
       1 / (8 * (N : ℝ) ^ 8) := by
   sorry
 
-theorem chapter10_euler_mascheroni_expansion (N : ℕ) :
+theorem chapter10_euler_mascheroni_expansion {N : ℕ} (hN : 0 < N) :
     Real.eulerMascheroniConstant =
       chapter10EulerMaclaurinMainTerm N + chapter10EulerMascheroniRemainder N := by
   sorry
@@ -227,10 +227,6 @@ def chapter10PiLower : ℚ := 3141592653589793 / 10 ^ 15
 
 def chapter10PiUpper : ℚ := 3141592653589794 / 10 ^ 15
 
-/- SOURCE_ISSUE (books/007-analytic-foundations-for-odlyzko-poitou-bounds.md:§10.1, (10.4)):
-  the sentence preceding the displayed enclosure cites only (10.1)--(10.2), although the
-  enclosure for `γ` also depends on the Euler--Maclaurin formula and remainder in (10.3).  The
-  smallest correction is to cite (10.3) for the `γ` bound as well. -/
 theorem chapter10_gamma_directed_bounds :
     (chapter10GammaLower : ℝ) < Real.eulerMascheroniConstant ∧
       Real.eulerMascheroniConstant < (chapter10GammaUpper : ℝ) := by

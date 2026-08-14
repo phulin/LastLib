@@ -38,9 +38,8 @@ def chapter14RayQuotientCorrespondsToFiniteAbelianExtension
   chapter14FiniteAbelianExtension K L ∧
     Nonempty (chapter14RayClassGroup D R m ≃* Gal(L/K))
 
-def chapter14RayQuotientRamificationControl {K L : Type*} [Field K] [Field L]
-    [NumberField K] [NumberField L] [Algebra K L] [FiniteDimensional K L]
-    [IsGalois K L] (m : Chapter14Modulus K)
+def chapter14RayQuotientRamificationControl {K : Type*} [Field K] [NumberField K]
+    (m : Chapter14Modulus K)
     (ramifiedAt : NumberField.FinitePlace K → Prop) : Prop :=
   ∀ v, ¬ v.maximalIdeal.asIdeal ∣ m.finitePart → ¬ ramifiedAt v
 
@@ -66,10 +65,11 @@ def chapter14FrobeniusCompatibility
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
     (localMap : ∀ v : NumberField.FinitePlace K,
       (v.maximalIdeal.adicCompletion K)ˣ →* Gal(L/K))
+    (unramifiedAt : NumberField.FinitePlace K → Prop)
     (frobenius : ∀ _v : NumberField.FinitePlace K, Gal(L/K))
     (uniformizer : ∀ v : NumberField.FinitePlace K,
       (v.maximalIdeal.adicCompletion K)ˣ) : Prop :=
-  ∀ v, localMap v (uniformizer v) = frobenius v
+  ∀ v, unramifiedAt v → localMap v (uniformizer v) = frobenius v
 
 /-!
 The law contains the canonical map, its local compatibility, the open-subgroup/extension

@@ -355,9 +355,9 @@ theorem chapter12_same_finite_idele_valuation_iff
   Iff.rfl
 
 /- LOCAL_DEPENDENCY_GUESS: ray quotients require a congruence-level map in
-   addition to the ordinary ideal map.  The interface records exactly that a
-   ray invariant refines the ideal class and can detect a prescribed local
-   unit change. -/
+   addition to the ordinary ideal map.  The interface records the refinement
+   from a ray invariant to the ordinary ideal data; detection of a particular
+   local-unit change is a separate property and is not assumed here. -/
 structure Chapter12RayDetectionData
     (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
     [Algebra R K] [IsFractionRing R K] where

@@ -12,6 +12,7 @@ universe u
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory
+open scoped DirectSum
 
 /-!
 ## 2.4 Closed subschemes from homogeneous ideals
@@ -58,7 +59,177 @@ theorem chapter02_homogeneous_ideal_data_exists
     {G : Chapter02GradedAlgebra R A} (I : Ideal A)
     (hI : Chapter02IsHomogeneousIdeal G I) :
     Nonempty {J : Chapter02HomogeneousIdealData G // J.ideal = I} := by
-  sorry
+  classical
+  letI : GradedAlgebra G.component := G.graded
+  let q : A →ₐ[R] A ⧸ I := Ideal.Quotient.mkₐ R I
+  let C : ℕ → Submodule R (A ⧸ I) :=
+    fun d => (G.component d).map q.toLinearMap
+  letI : SetLike.GradedMonoid C :=
+    { one_mem := by
+        refine ⟨1, SetLike.one_mem_graded G.component, ?_⟩
+        simp [q]
+      mul_mem := by
+        intro i j x y hx hy
+        obtain ⟨x', hx', rfl⟩ := hx
+        obtain ⟨y', hy', rfl⟩ := hy
+        refine ⟨x' * y', SetLike.mul_mem_graded hx' hy', ?_⟩
+        simp [q] }
+  let qd : ∀ d, G.component d →ₗ[R] C d := fun d =>
+    { toFun := fun x => ⟨q x, Submodule.mem_map_of_mem x.2⟩
+      map_add' := by
+        intro x y
+        apply Subtype.ext
+        simp
+      map_smul' := by
+        intro c x
+        apply Subtype.ext
+        simp }
+  let Fsum : (⨁ d, G.component d) →ₐ[R] (⨁ d, C d) :=
+    DirectSum.toAlgebra R _
+      (fun d => (DirectSum.lof R ℕ (fun d => C d) d).comp (qd d))
+      (by
+        change DirectSum.lof R ℕ (fun d => C d) 0
+            (qd 0 ⟨1, SetLike.one_mem_graded G.component⟩) = 1
+        rw [DirectSum.lof_eq_of, ← DirectSum.of_zero_one]
+        congr 1
+        )
+      (by
+        intro i j x y
+        change DirectSum.lof R ℕ (fun d => C d) (i + j)
+              (qd (i + j)
+                ⟨(x : A) * (y : A), SetLike.mul_mem_graded x.2 y.2⟩) =
+            DirectSum.lof R ℕ (fun d => C d) i (qd i x) *
+              DirectSum.lof R ℕ (fun d => C d) j (qd j y)
+        rw [DirectSum.lof_eq_of, DirectSum.lof_eq_of, DirectSum.lof_eq_of,
+          DirectSum.of_mul_of]
+        congr 1
+        )
+  let FAlg : A →ₐ[R] (⨁ d, C d) :=
+    Fsum.comp (DirectSum.decomposeAlgEquiv G.component)
+  have hFsum_lof (d : ℕ) (x : G.component d) :
+      Fsum (DirectSum.lof R ℕ (fun d => G.component d) d x) =
+        DirectSum.lof R ℕ (fun d => C d) d (qd d x) := by
+    calc
+      Fsum (DirectSum.lof R ℕ (fun d => G.component d) d x) =
+          Fsum (DirectSum.of (fun d => G.component d) d x) := by
+            exact congrArg (fun z => Fsum z)
+              (DirectSum.lof_eq_of R ℕ (fun d => G.component d) d x)
+      _ = DirectSum.lof R ℕ (fun d => C d) d (qd d x) := by
+        dsimp [Fsum, DirectSum.toAlgebra]
+        simpa using
+          (DirectSum.toSemiring_of
+            (fun i =>
+              ((DirectSum.lof R ℕ (fun d => C d) i).comp (qd i)).toAddMonoidHom)
+            _ _ d x)
+  have hcoeC (d : ℕ) (x : C d) :
+      DirectSum.coeAlgHom C (DirectSum.lof R ℕ (fun d => C d) d x) = x := by
+    calc
+      DirectSum.coeAlgHom C (DirectSum.lof R ℕ (fun d => C d) d x) =
+          DirectSum.coeAlgHom C (DirectSum.of (fun d => C d) d x) := by
+            exact congrArg (fun z => DirectSum.coeAlgHom C z)
+              (DirectSum.lof_eq_of R ℕ (fun d => C d) d x)
+      _ = x := DirectSum.coeAlgHom_of C d x
+  have hcoeG (d : ℕ) (x : G.component d) :
+      DirectSum.coeAlgHom G.component
+          (DirectSum.lof R ℕ (fun d => G.component d) d x) = x := by
+    calc
+      DirectSum.coeAlgHom G.component
+          (DirectSum.lof R ℕ (fun d => G.component d) d x) =
+          DirectSum.coeAlgHom G.component
+            (DirectSum.of (fun d => G.component d) d x) := by
+            exact congrArg (fun z => DirectSum.coeAlgHom G.component z)
+              (DirectSum.lof_eq_of R ℕ (fun d => G.component d) d x)
+      _ = x := DirectSum.coeAlgHom_of G.component d x
+  have hFsumMap :
+      Fsum.toLinearMap = DirectSum.lmap (fun d => qd d) := by
+    apply DirectSum.linearMap_ext
+    intro d
+    apply LinearMap.ext
+    intro x
+    change Fsum (DirectSum.lof R ℕ (fun d => G.component d) d x) =
+      DirectSum.lmap (fun d => qd d)
+        (DirectSum.lof R ℕ (fun d => G.component d) d x)
+    simpa only [DirectSum.lmap_lof] using hFsum_lof d x
+  have hI' : I.IsHomogeneous G.component := hI
+  have hF : ∀ a : A, a ∈ I → FAlg a = 0 := by
+    intro a ha
+    change Fsum.toLinearMap (DirectSum.decomposeAlgEquiv G.component a) = 0
+    rw [hFsumMap]
+    ext d
+    dsimp [DirectSum.lmap, qd]
+    change (Ideal.Quotient.mk I) (DirectSum.decompose G.component a d) = 0
+    exact Ideal.Quotient.eq_zero_iff_mem.mpr
+      ((Ideal.IsHomogeneous.mem_iff G.component hI').1 ha d)
+  let decomposeQ : (A ⧸ I) →ₐ[R] (⨁ d, C d) :=
+    Ideal.Quotient.liftₐ I FAlg hF
+  let gradedQ : Chapter02GradedAlgebra R (A ⧸ I) :=
+    { component := C
+      graded := by
+        letI : SetLike.GradedMonoid C := inferInstance
+        exact GradedAlgebra.ofAlgHom C decomposeQ
+          (by
+            apply AlgHom.ext
+            intro x
+            obtain ⟨a, rfl⟩ := Ideal.Quotient.mkₐ_surjective R I x
+            change (DirectSum.coeAlgHom C) (FAlg a) = q a
+            have hcomp :
+                (DirectSum.coeAlgHom C).comp Fsum =
+                  q.comp (DirectSum.coeAlgHom G.component) := by
+              apply DirectSum.algHom_ext
+              intro d x
+              rw [AlgHom.comp_apply, AlgHom.comp_apply]
+              change (DirectSum.coeAlgHom C)
+                  (Fsum (DirectSum.lof R ℕ (fun d => G.component d) d x)) =
+                q ((DirectSum.coeAlgHom G.component)
+                  (DirectSum.lof R ℕ (fun d => G.component d) d x))
+              rw [hFsum_lof, hcoeC, hcoeG]
+              rfl
+            dsimp [FAlg]
+            change ((DirectSum.coeAlgHom C).comp Fsum)
+              (DirectSum.decompose G.component a) = q a
+            rw [hcomp]
+            apply congrArg q
+            change (DirectSum.decomposeAlgEquiv G.component).symm
+                (DirectSum.decomposeAlgEquiv G.component a) = a
+            exact (DirectSum.decomposeAlgEquiv G.component).symm_apply_apply a)
+          (by
+            intro d x
+            obtain ⟨a, ha, hax⟩ := x.2
+            have hqd : qd d ⟨a, ha⟩ = x := by
+              apply Subtype.ext
+              exact hax
+            rw [← hqd]
+            change decomposeQ (q a) =
+              DirectSum.of (fun d => C d) d (qd d ⟨a, ha⟩)
+            rw [show decomposeQ (q a) = FAlg a by
+              change (decomposeQ.comp q) a = FAlg a
+              rw [Ideal.Quotient.liftₐ_comp]]
+            dsimp [FAlg]
+            rw [DirectSum.decompose_of_mem G.component ha]
+            calc
+              Fsum (DirectSum.of (fun d => G.component d) d ⟨a, ha⟩) =
+                  Fsum (DirectSum.lof R ℕ (fun d => G.component d) d ⟨a, ha⟩) := by
+                    exact congrArg (fun z => Fsum z)
+                      (DirectSum.lof_eq_of R ℕ (fun d => G.component d) d
+                        ⟨a, ha⟩).symm
+              _ = DirectSum.lof R ℕ (fun d => C d) d (qd d ⟨a, ha⟩) :=
+                hFsum_lof d ⟨a, ha⟩
+              _ = DirectSum.of (fun d => C d) d (qd d ⟨a, ha⟩) :=
+                DirectSum.lof_eq_of R ℕ (fun d => C d) d (qd d ⟨a, ha⟩)) }
+  let J : Chapter02HomogeneousIdealData G :=
+    { ideal := I
+      is_homogeneous := hI
+      quotientGrading := gradedQ
+      quotientGrading_component_iff := by
+        intro d x
+        change x ∈ C d ↔ _
+        constructor
+        · intro hx
+          obtain ⟨a, ha, hax⟩ := hx
+          exact ⟨a, ha, hax⟩
+        · rintro ⟨a, ha, rfl⟩
+          exact Submodule.mem_map_of_mem ha }
+  exact ⟨⟨J, rfl⟩⟩
 
 noncomputable def chapter02HomogeneousIdealDataOf
     {R A : Type u} [CommSemiring R] [CommRing A] [Algebra R A]
@@ -555,7 +726,14 @@ theorem chapter02_veronese_chart_ratios_generate_source_algebra
     {R : Type u} [CommRing R] {r d : ℕ}
     (c : Chapter02VeroneseAffineChartData R r d) :
     Algebra.adjoin R (Set.range c.targetRatio) = ⊤ := by
-  sorry
+  apply le_antisymm
+  · exact le_top
+  · rw [← c.sourceCoordinate_generate]
+    apply Algebra.adjoin_le
+    rintro _ ⟨i, rfl⟩
+    obtain ⟨a, ha⟩ := c.sourceCoordinate_in_target_ratios i
+    rw [ha]
+    exact Algebra.subset_adjoin ⟨a, rfl⟩
 
 /-!
 The target-coordinate quadratic relations are the toric relations

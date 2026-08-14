@@ -101,7 +101,7 @@ theorem chapter02_decomposition_inertia_exact
     (R : Chapter02ResidueActionData D k l) :
     Function.MulExact R.inertia.subtype (chapter02ResidueReduction R) ∧
       Function.Surjective (chapter02ResidueReduction R) := by
-  exact ⟨chapter02_residue_exact_sequence R, R.reduction_surjective⟩
+  exact chapter02_residue_exact_sequence R
 
 /-!
 The local reciprocity map first lands in `Dᵃᵇ`.  In the abelian case the

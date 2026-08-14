@@ -89,7 +89,7 @@ theorem chapter06_finiteFlatMorphism_rank_constant_on_connected_base
 the Hilbert-side object to which the smooth-curve theorem adds one equation. -/
 structure Chapter06FiniteFlatClosedFamily {S : Scheme.{u}}
     (C T : RelativeScheme S) (d : ℕ) where
-  ideal : (chapter06RelativeDivisorAmbient C T).IdealSheafData
+  ideal : (Chapter06RelativeDivisorAmbient C T).IdealSheafData
   finite_flat_rank :
     Chapter06FiniteFlatRank
       (ideal.subschemeι ≫ pullback.snd C.structuralMap T.structuralMap) d

@@ -1,0 +1,13 @@
+import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter11.Dependencies
+import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter11.Section01ExceptionalCurvesAndContraction
+import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter11.Section02ExistenceInPositiveGenus
+import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter11.Section03UniquenessAndLimits
+import LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter11.Section04MarkedAndSemistableVariants
+
+/-! Aggregator for Book 11, Chapter 11: exceptional-curve contraction,
+positive-genus minimal regular models, uniqueness boundaries, and marked and
+semistable variants. -/
+
+namespace LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter11
+
+end LastLib.Book11NormalizationAndRegularModelsOfArithmeticCurves.Chapter11

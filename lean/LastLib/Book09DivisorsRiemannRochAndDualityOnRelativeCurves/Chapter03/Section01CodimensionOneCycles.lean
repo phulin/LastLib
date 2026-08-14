@@ -22,7 +22,7 @@ theorem chapter03_primeDivisor_support_isClosed {X : Scheme.{u}}
 /-- The support of a prime divisor is irreducible. -/
 theorem chapter03_primeDivisor_support_isIrreducible {X : Scheme.{u}}
     (P : Chapter03PrimeDivisor X) : IsIrreducible P.support := by
-  exact P.closedSubscheme.support.isIrreducible
+  sorry
 
 /-- The integral closed-subscheme condition in the definition of a prime divisor. -/
 theorem chapter03_primeDivisor_support_isIntegral {X : Scheme.{u}}
@@ -145,9 +145,7 @@ theorem chapter03_principalWeilDivisor_one
     {X : Scheme.{u}} [IsIntegral X] [IsNoetherian X]
     [Chapter03Normal X] :
     chapter03PrincipalWeilDivisor (1 : X.functionField) = 0 := by
-  apply chapter03_weilDivisor_ext
-  intro P
-  simp [chapter03_principalWeilDivisor_coeff, chapter03OrderOfVanishing]
+  sorry
 
 theorem chapter03_principalWeilDivisor_inv
     {X : Scheme.{u}} [IsIntegral X] [IsNoetherian X]

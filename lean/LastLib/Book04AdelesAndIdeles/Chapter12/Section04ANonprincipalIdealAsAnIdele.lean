@@ -4,7 +4,7 @@ namespace LastLib.Book04AdelesAndIdeles.Chapter12
 
 noncomputable section
 
-open Set
+open Set NumberField
 open scoped BigOperators nonZeroDivisors
 
 /-! # Book 4, Chapter 12, §12.4: A nonprincipal ideal as an idele -/
@@ -19,6 +19,37 @@ def chapter12MinusFiveSqrt : chapter12MinusFiveIntegers :=
 def chapter12MinusFiveIdeal : Ideal chapter12MinusFiveIntegers :=
   Ideal.span ({(2 : chapter12MinusFiveIntegers),
     1 + chapter12MinusFiveSqrt} : Set chapter12MinusFiveIntegers)
+
+/- The finite-idele map is canonically attached to `𝓞 K`; this data records
+   the standard identification of the displayed quadratic model with that
+   number-field presentation. -/
+structure Chapter12MinusFiveFieldData
+    (K : Type*) [Field K] [NumberField K] [Algebra ℚ K] where
+  field_model : K ≃+* chapter12MinusFiveField
+  ringOfIntegers_model : 𝓞 K ≃+* chapter12MinusFiveIntegers
+  field_model_compatibility :
+    ∀ x : 𝓞 K,
+      field_model (algebraMap (𝓞 K) K x) =
+        algebraMap chapter12MinusFiveIntegers chapter12MinusFiveField
+          (ringOfIntegers_model x)
+
+def chapter12MinusFiveIdealInRingOfIntegers
+    {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
+    (F : Chapter12MinusFiveFieldData K) : Ideal (𝓞 K) :=
+  Ideal.comap F.ringOfIntegers_model.toRingHom chapter12MinusFiveIdeal
+
+noncomputable def chapter12MinusFivePlace
+    {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
+    (F : Chapter12MinusFiveFieldData K) :
+    IsDedekindDomain.HeightOneSpectrum (𝓞 K) := by
+  sorry
+
+theorem chapter12_minus_five_place_ideal
+    {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
+    (F : Chapter12MinusFiveFieldData K) :
+    (chapter12MinusFivePlace F).asIdeal =
+      chapter12MinusFiveIdealInRingOfIntegers F := by
+  sorry
 
 def chapter12MinusFiveNormForm (a b : ℤ) : ℤ :=
   a ^ 2 + 5 * b ^ 2
@@ -77,17 +108,98 @@ structure Chapter12SinglePlaceFiniteIdele
   uniformizer : chapter12UniformizerAt p π
   value_at : x.1 p = (π : p.adicCompletion K)
   value_away : ∀ v, v ≠ p → x.1 v = 1
-  ideal_eq : D.idealOf x = (p.asIdeal : FractionalIdeal R⁰ K)
 
-theorem chapter12_single_place_finite_idele_mem_ideal
+noncomputable def chapter12SinglePlaceFiniteIdeleUnderlying
+    {R K : Type*} [CommRing R] [IsDedekindDomain R] [Field K]
+    [Algebra R K] [IsFractionRing R K]
+    (p : IsDedekindDomain.HeightOneSpectrum R)
+    (π : p.adicCompletionIntegers K)
+    (hπ : chapter12UniformizerAt p π) : chapter12FiniteIdeles R K := by
+  classical
+  let localUnit : ∀ v : IsDedekindDomain.HeightOneSpectrum R,
+      (v.adicCompletion K)ˣ := fun v =>
+    dite (v = p)
+      (fun h => h.symm ▸ Units.mk0 (π : p.adicCompletion K) (by sorry))
+      (fun _ => 1)
+  have hunit : ∀ᶠ v : IsDedekindDomain.HeightOneSpectrum R in Filter.cofinite,
+      localUnit v ∈ (Submonoid.ofClass (v.adicCompletionIntegers K)).units := by
+    sorry
+  exact RestrictedProduct.mkUnit localUnit hunit
+
+noncomputable def chapter12SinglePlaceFiniteIdeleOf
     {R K : Type*} [CommRing R] [IsDedekindDomain R] [Field K]
     [Algebra R K] [IsFractionRing R K]
     (D : Chapter12FiniteIdeleIdealData R K)
     (p : IsDedekindDomain.HeightOneSpectrum R)
     (π : p.adicCompletionIntegers K)
-    (h : Chapter12SinglePlaceFiniteIdele D p π) :
-    D.idealOf h.x = (p.asIdeal : FractionalIdeal R⁰ K) := by
-  exact h.ideal_eq
+    (hπ : chapter12UniformizerAt p π) :
+    Chapter12SinglePlaceFiniteIdele D p π where
+  x := chapter12SinglePlaceFiniteIdeleUnderlying p π hπ
+  uniformizer := hπ
+  value_at := by sorry
+  value_away := by sorry
+
+noncomputable def chapter12MinusFiveSinglePlaceFiniteIdele
+    {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
+    (F : Chapter12MinusFiveFieldData K)
+    (π : (chapter12MinusFivePlace F).adicCompletionIntegers K)
+    (hπ : chapter12UniformizerAt (chapter12MinusFivePlace F) π) :
+    Chapter12SinglePlaceFiniteIdele
+      (chapter12CanonicalFiniteIdeleIdealData K) (chapter12MinusFivePlace F) π :=
+  chapter12SinglePlaceFiniteIdeleOf
+    (chapter12CanonicalFiniteIdeleIdealData K)
+      (chapter12MinusFivePlace F) π hπ
+
+/- The canonical number-field realization is obtained from the preceding
+   chapter's finite-divisor realization at the divisor supported at `p`. -/
+noncomputable def chapter12CanonicalSinglePlaceFiniteIdele
+    {K : Type*} [Field K] [NumberField K]
+    (p : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) :
+    chapter12FiniteIdeles (𝓞 K) K :=
+  Classical.choose
+    (LastLib.Book04AdelesAndIdeles.Chapter08.chapter08_finite_idele_ideal_realizes_divisor
+      K (Finsupp.single p 1))
+
+theorem chapter12_canonical_single_place_finite_idele_mem_ideal
+    {K : Type*} [Field K] [NumberField K]
+    (p : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) :
+    (chapter12CanonicalFiniteIdeleIdealData K).idealOf
+        (chapter12CanonicalSinglePlaceFiniteIdele p) =
+      (p.asIdeal : FractionalIdeal (𝓞 K)⁰ K) := by
+  sorry
+
+theorem chapter12_canonical_single_place_finite_idele_mem_named_ideal
+    {K : Type*} [Field K] [NumberField K]
+    (p : IsDedekindDomain.HeightOneSpectrum (𝓞 K))
+    (I : Ideal (𝓞 K))
+    (hp : p.asIdeal = I) :
+    (chapter12CanonicalFiniteIdeleIdealData K).idealOf
+        (chapter12CanonicalSinglePlaceFiniteIdele p) =
+      (I : FractionalIdeal (𝓞 K)⁰ K) := by
+  sorry
+
+theorem chapter12_single_place_finite_idele_mem_ideal
+    {K : Type*} [Field K] [NumberField K]
+    (p : IsDedekindDomain.HeightOneSpectrum (𝓞 K))
+    (π : p.adicCompletionIntegers K)
+    (h : Chapter12SinglePlaceFiniteIdele
+      (chapter12CanonicalFiniteIdeleIdealData K) p π) :
+    (chapter12CanonicalFiniteIdeleIdealData K).idealOf h.x =
+      (p.asIdeal : FractionalIdeal (𝓞 K)⁰ K) := by
+  sorry
+
+theorem chapter12_minus_five_single_place_idele_realizes_named_nonprincipal_ideal
+    {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
+    (F : Chapter12MinusFiveFieldData K)
+    (π : (chapter12MinusFivePlace F).adicCompletionIntegers K)
+    (hπ : chapter12UniformizerAt (chapter12MinusFivePlace F) π) :
+    (chapter12CanonicalFiniteIdeleIdealData K).idealOf
+        (chapter12MinusFiveSinglePlaceFiniteIdele F π hπ).x =
+      (chapter12MinusFiveIdealInRingOfIntegers F :
+        FractionalIdeal (𝓞 K)⁰ K) ∧
+      ¬((chapter12MinusFiveIdealInRingOfIntegers F :
+        FractionalIdeal (𝓞 K)⁰ K) : Submodule (𝓞 K) K).IsPrincipal := by
+  sorry
 
 theorem chapter12_nonprincipal_idele_cannot_be_principal
     {R K : Type*} [CommRing R] [IsDedekindDomain R] [Field K]

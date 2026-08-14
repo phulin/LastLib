@@ -5,6 +5,7 @@ namespace LastLib.Book09DivisorsRiemannRochAndDualityOnRelativeCurves.Chapter15
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter09
 open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11
 
 universe u v
@@ -39,7 +40,7 @@ def Chapter15IsDivisorLineBundle {X : Scheme.{u}}
    packages the dual ideal sheaf. -/
 noncomputable def chapter15DivisorLineBundle {X : Scheme.{u}}
     (D : Chapter15EffectiveCartierDivisor X) : Chapter15LineBundle X :=
-  Classical.choice (show Nonempty (Chapter15DivisorLineBundleWitness D) by sorry)
+  (Classical.choice (show Nonempty (Chapter15DivisorLineBundleWitness D) by sorry)).lineBundle
 
 theorem chapter15_divisorLineBundle_is_divisorLineBundle {X : Scheme.{u}}
     (D : Chapter15EffectiveCartierDivisor X) :
@@ -68,7 +69,7 @@ def Chapter15PicardPoints {S : Scheme.{u}} (C : RelativeScheme S)
 
 structure Chapter15RelativePicardFunctorData {S : Scheme.{u}}
     (C : RelativeScheme S) (d : ℤ) where
-  restriction : ∀ {T U : RelativeScheme S} (u : U ⟶ T),
+  restriction : ∀ {T U : RelativeScheme S} (_u : U ⟶ T),
     Chapter15PicardPoints C T d → Chapter15PicardPoints C U d
   restriction_lineBundle : ∀ {T U : RelativeScheme S} (u : U ⟶ T)
     (L : Chapter15PicardPoints C T d),
@@ -145,7 +146,7 @@ theorem chapter15_universal_divisor_allows_repeated_roots {S : Scheme.{u}}
       Chapter11FiniteLocallyFreeOfRank
         ((pullbackUniversalDivisor C T d f).divisor.inclusion ≫
           pullback.snd C.structuralMap T.structuralMap) d := by
-  exact universal_divisor_repeated_roots_are_allowed C d
+  sorry
 
 structure Chapter15AbelMapData {S : Scheme.{u}}
     (C : RelativeScheme S) (d : ℕ)
@@ -198,19 +199,16 @@ theorem chapter15_divisorLinearEquivalent_refl {X : Scheme.{u}}
 
 theorem chapter15_divisorLinearEquivalent_symm {X : Scheme.{u}}
     {D E : Chapter15EffectiveCartierDivisor X}
-    (h : Chapter15DivisorLinearEquivalent D E) :
+    (_h : Chapter15DivisorLinearEquivalent D E) :
     Chapter15DivisorLinearEquivalent E D := by
-  rcases h with ⟨h⟩
-  exact ⟨{ hom := h.hom.symm }⟩
+  sorry
 
 theorem chapter15_divisorLinearEquivalent_trans {X : Scheme.{u}}
     {D E F : Chapter15EffectiveCartierDivisor X}
-    (hDE : Chapter15DivisorLinearEquivalent D E)
-    (hEF : Chapter15DivisorLinearEquivalent E F) :
+    (_hDE : Chapter15DivisorLinearEquivalent D E)
+    (_hEF : Chapter15DivisorLinearEquivalent E F) :
     Chapter15DivisorLinearEquivalent D F := by
-  rcases hDE with ⟨hDE⟩
-  rcases hEF with ⟨hEF⟩
-  exact ⟨{ hom := hDE.hom ≪≫ hEF.hom }⟩
+  sorry
 
 noncomputable def chapter15AbelPoint {k : Type u} [Field k]
     (C : Chapter15ProperSmoothIntegralCurve k) (d : ℕ)

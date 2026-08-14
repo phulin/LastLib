@@ -97,7 +97,7 @@ def addRedundantMembers {S : Scheme.{u}} {I J : Type v}
 theorem addRedundantMembers_is_fpqc
     {S : Scheme.{u}} {I J : Type v} {F : SchemeFamily S I}
     (hF : FpqcCoveringFamily F) :
-    FpqcCoveringFamily (addRedundantMembers F J) := by
+    FpqcCoveringFamily (addRedundantMembers (J := J) F) := by
   sorry
 
 /-- A bundled sequence of flat modules whose infinite product is not flat. -/
@@ -105,7 +105,10 @@ structure FlatModuleSequence (R : Type u) [CommRing R] where
   moduleType : ℕ → Type u
   addCommMonoid : ∀ n, AddCommMonoid (moduleType n)
   module : ∀ n, Module R (moduleType n)
-  flat : ∀ n, @Module.Flat R (moduleType n) (addCommMonoid n) (module n)
+  flat : ∀ n,
+    letI : AddCommMonoid (moduleType n) := addCommMonoid n
+    letI : Module R (moduleType n) := module n
+    Module.Flat R (moduleType n)
   product_not_flat :
     letI : ∀ n, AddCommMonoid (moduleType n) := addCommMonoid
     letI : ∀ n, Module R (moduleType n) := module
@@ -115,7 +118,7 @@ def InfiniteProductFlatnessFailure : Prop :=
   ∃ (R : Type u) (hR : CommRing R), Nonempty (@FlatModuleSequence R hR)
 
 theorem exists_infinite_product_of_flat_modules_not_flat :
-    InfiniteProductFlatnessFailure (u := u) := by
+    InfiniteProductFlatnessFailure.{u} := by
   sorry
 
 end

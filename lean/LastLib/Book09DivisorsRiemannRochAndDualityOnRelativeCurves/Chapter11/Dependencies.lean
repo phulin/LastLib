@@ -198,7 +198,7 @@ instance chapter11CohomologyTheory.module
 abbrev Chapter11CohomologySpace {k : Type u} [Field k]
     (X : Scheme.{u}) (f : X ⟶ AlgebraicGeometry.Spec (.of k))
     [Chapter11CohomologyTheory X f] (F : X.Modules) (i : ℕ) :=
-  Chapter11CohomologyTheory.H F i
+  Chapter11CohomologyTheory.H f F i
 
 abbrev Chapter11H0 {k : Type u} [Field k]
     (C : Chapter11CurveOverField k)
@@ -551,9 +551,9 @@ structure Chapter11ReducibleNegativeDegreeSection {k : Type u} [Field k]
   reducible : Prop
   reduced : Prop
   lineBundle : Chapter11LineBundle C.carrier
-  section : Chapter11CohomologySpace C.carrier C.structureMap lineBundle.module 0
+  globalSection : Chapter11CohomologySpace C.carrier C.structureMap lineBundle.module 0
   totalDegree_negative : chapter11Degree lineBundle < 0
-  section_nonzero : section ≠ 0
+  section_nonzero : globalSection ≠ 0
   components : Type u
   positiveComponent : components
   componentDegree : components → ℤ

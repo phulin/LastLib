@@ -13,6 +13,8 @@ open scoped BigOperators NNReal RestrictedProduct
 /-- The single real-place portrait of the rational infinite adele ring. -/
 structure Chapter12RationalInfinitePortrait where
   equiv : chapter12InfiniteAdeleRing ℚ ≃+* ℝ
+  one_real_place : NumberField.InfinitePlace.nrRealPlaces ℚ = 1
+  no_complex_places : NumberField.InfinitePlace.nrComplexPlaces ℚ = 0
 
 theorem chapter12_rational_has_one_real_place :
     Nonempty Chapter12RationalInfinitePortrait := by

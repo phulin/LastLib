@@ -1,16 +1,76 @@
 import LastLib.Book03RamificationTheory.Chapter15.Section01TheRamificationDictionary
 import Mathlib.NumberTheory.RamificationInertia.Ramification
 import Mathlib.RingTheory.DedekindDomain.Factorization
+import Mathlib.MeasureTheory.Integral.Bochner
 
 namespace LastLib.Book03RamificationTheory.Chapter15
 
 noncomputable section
 
 open Ideal Polynomial
+open MeasureTheory
 open scoped BigOperators
 attribute [local instance] FractionRing.liftAlgebra FractionRing.isScalarTower_liftAlgebra
 
-/-! ## 15.2. A calculation protocol -/
+/-! ## 15.2. Faithfulness, Swan conductor, and the last break -/
+
+/- The upper-depth area is kept as a separate definition.  This prevents a
+   lower-numbered finite sum from being mistaken for the source's upper
+   cutoff interface. -/
+noncomputable def chapter15UpperSwanArea
+    {k G V : Type*} [Field k] [Group G] [Finite G]
+    [AddCommGroup V] [Module k V] [FiniteDimensional k V]
+    (U : ℝ → Subgroup G) (ρ : Representation k G V) : ℝ :=
+  ∫ u in Set.Ioi (0 : ℝ), (chapter15Codimension ρ (U u) : ℝ)
+
+structure Chapter15FaithfulSwanUpperData
+    {k G V : Type*} [Field k] [Group G] [Finite G]
+    [AddCommGroup V] [Module k V] [FiniteDimensional k V]
+    (ρ : Representation k G V) where
+  upper : ℝ → Subgroup G
+  lastBreak : ℝ
+  lastBreak_nonneg : 0 ≤ lastBreak
+  upper_nontrivial_before :
+    ∀ {u : ℝ}, 0 < u → u < lastBreak → upper u ≠ ⊥
+  upper_trivial_after : ∀ {u : ℝ}, lastBreak < u → upper u = ⊥
+  swan : ℝ
+  swan_eq_upper_area : swan = chapter15UpperSwanArea upper ρ
+  upper_area_integrable :
+    Integrable (fun u : ℝ => (chapter15Codimension ρ (upper u) : ℝ))
+
+theorem chapter15_faithful_swan_bounds
+    {k G V : Type*} [Field k] [Group G] [Finite G]
+    [AddCommGroup V] [Module k V] [FiniteDimensional k V]
+    (ρ : Representation k G V)
+    (D : Chapter15FaithfulSwanUpperData ρ)
+    (hfaithful : Function.Injective ρ) :
+    D.lastBreak ≤ D.swan ∧
+      D.swan ≤ D.lastBreak * (Module.finrank k V : ℝ) := by
+  sorry
+
+structure Chapter15LocalUpperDifferentData where
+  ramificationIndex : ℕ
+  differentExponent : ℕ
+  upperBreak : ℝ
+  ramificationIndex_pos : 0 < ramificationIndex
+  upperBreak_nonneg : 0 ≤ upperBreak
+  normalized_different_eq :
+    (differentExponent : ℝ) / (ramificationIndex : ℝ) =
+      1 - (ramificationIndex : ℝ)⁻¹ + upperBreak
+
+theorem chapter15_faithful_swan_discriminant_ratio_bound
+    {k G V : Type*} [Field k] [Group G] [Finite G]
+    [AddCommGroup V] [Module k V] [FiniteDimensional k V]
+    (ρ : Representation k G V)
+    (D : Chapter15FaithfulSwanUpperData ρ)
+    (hfaithful : Function.Injective ρ)
+    (e d : ℕ) (he : 0 < e)
+    (hidentity : (d : ℝ) / (e : ℝ) = 1 - (e : ℝ)⁻¹ + D.lastBreak) :
+    (d : ℝ) / (e : ℝ) < 1 + D.swan := by
+  sorry
+
+/-! The rest of this file is the generator/Hilbert calculation protocol used
+    by Chapter 16 and by the earlier different API. -/
 
 /--
 The certificate required before using a generator in the derivative formula:
@@ -126,7 +186,8 @@ theorem chapter15_derivative_and_hilbert_calculations_agree
     [Algebra A B] [IsIntegrallyClosed A] [IsDedekindDomain B]
     [Module.IsTorsionFree A B]
     {G : Type*} [Group G] [Finite G]
-    (P : Ideal B) (F : Chapter15LowerRamificationFiltration G) (d : ℕ)
+    (P : Ideal B) [P.IsPrime]
+    (F : Chapter15LowerRamificationFiltration G) (d : ℕ)
     (hderivative : d = chapter15DifferentExponent A B P)
     (hhilbert : d = chapter15DifferentDisplacementSum F) :
     chapter15DifferentExponent A B P =
@@ -182,14 +243,6 @@ theorem chapter15_different_exponent_tower
   sorry
 
 /-- In the one-branch local situation, the norm of the different gives `δ = f d`. -/
-/- SOURCE_ISSUE: In §13.5, the displayed identity
-   `f * ∑ᵢ (|Gᵢ| - 1) = δ(L/K)` follows the wording
-   "Let ρ have finite image G, let L/K be its fixed field, and assume that
-   this extension has separable residue extension."  In a general
-   Dedekind/global setting this does not select a single branch or remove
-   branch-count contributions (a complete or henselian local base does).
-   The minimal principled correction is the explicit one-branch hypothesis
-   below. -/
 theorem chapter15_discriminant_exponent_eq_residue_degree_mul_different
     {A B : Type*} [CommRing A] [CommRing B]
     [Algebra A B] [IsDedekindDomain A] [IsDedekindDomain B]

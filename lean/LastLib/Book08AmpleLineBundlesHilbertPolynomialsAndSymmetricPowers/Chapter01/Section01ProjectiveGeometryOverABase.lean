@@ -378,6 +378,17 @@ structure Chapter01RelativeGradedAlgebra (S : Scheme.{u}) where
             affineModel.restriction_preserves i n x x.property⟩ =
         (Scheme.Modules.presheaf (component n)).map i.op
           ((component_sections n V).hom x)
+  /-- The affine component identifications respect the degree-zero
+  structure-sheaf action.  Additive naturality alone would not identify
+  the graded pieces as quasi-coherent modules. -/
+  component_sections_degree_zero_smul :
+    ∀ (n : ℕ) (U : S.Opens)
+      (r : (S.presheaf.obj (Opposite.op U)).carrier)
+      (x : affineModel.grading U n),
+      ∃ y : affineModel.grading U n,
+        y.1 = affineModel.degree_zero_map U r * x.1 ∧
+          (component_sections n U).hom y =
+            r • (component_sections n U).hom x
   /-- The degree-zero structure map transported to the degree-zero component. -/
   component_unit : ∀ U : S.Opens,
     (S.presheaf.obj (Opposite.op U)).carrier →
@@ -954,17 +965,80 @@ structure Chapter01RelativeGradedIdeal {S : Scheme.{u}}
       (iVU : ∀ i, V i ⟶ U) (_hcover : (⨆ i, V i) = U) (x : 𝒜.sections U),
       (∀ i, 𝒜.restriction (iVU i) x ∈ carrier (V i)) ↔ x ∈ carrier U
 
+def chapter01RelativeGradedIdealComponent
+    {S : Scheme.{u}} {𝒜 : Chapter01RelativeGradedAlgebra S}
+    (I : Chapter01RelativeGradedIdeal 𝒜) (U : S.Opens) (n : ℕ) :
+    AddSubgroup (𝒜.sections U).carrier where
+  carrier := {x | x ∈ I.carrier U ∧ x ∈ 𝒜.grading U n}
+  zero_mem' := ⟨(I.carrier U).zero_mem, (𝒜.grading U n).zero_mem⟩
+  add_mem' := by
+    intro x y hx hy
+    exact ⟨(I.carrier U).add_mem hx.1 hy.1,
+      (𝒜.grading U n).add_mem hx.2 hy.2⟩
+  neg_mem' := by
+    intro x hx
+    exact ⟨(I.carrier U).neg_mem hx.1, (𝒜.grading U n).neg_mem hx.2⟩
+
+def chapter01RelativeGradedIdealComponentRestriction
+    {S : Scheme.{u}} {𝒜 : Chapter01RelativeGradedAlgebra S}
+    (I : Chapter01RelativeGradedIdeal 𝒜) {U V : S.Opens} (i : U ⟶ V) (n : ℕ) :
+    chapter01RelativeGradedIdealComponent I V n →+
+      chapter01RelativeGradedIdealComponent I U n where
+  toFun := fun x =>
+    ⟨𝒜.restriction i x,
+      ⟨I.restriction_mem i x x.property.1,
+        𝒜.restriction_preserves i n x x.property.2⟩⟩
+  map_zero' := by
+    apply Subtype.ext
+    exact (𝒜.restriction i).map_zero
+  map_add' := by
+    intro x y
+    apply Subtype.ext
+    exact (𝒜.restriction i).map_add x y
+
+structure Chapter01RelativeGradedIdealQuasicoherentData {S : Scheme.{u}}
+    {𝒜 : Chapter01RelativeGradedAlgebra S}
+    (I : Chapter01RelativeGradedIdeal 𝒜) where
+  component : ℕ → S.Modules
+  component_isQuasicoherent : ∀ n, (component n).IsQuasicoherent
+  component_sections : ∀ (n : ℕ) (U : S.Opens),
+    AddCommGrpCat.of (chapter01RelativeGradedIdealComponent I U n) ≅
+      (Scheme.Modules.presheaf (component n)).obj (Opposite.op U)
+  component_sections_restriction :
+    ∀ {U V : S.Opens} (i : U ⟶ V) (n : ℕ)
+      (x : chapter01RelativeGradedIdealComponent I V n),
+      (component_sections n U).hom
+          (chapter01RelativeGradedIdealComponentRestriction I i n x) =
+        (Scheme.Modules.presheaf (component n)).map i.op
+          ((component_sections n V).hom x)
+  /-- The component identifications preserve the natural degree-zero
+  structure-sheaf action. -/
+  component_sections_degree_zero_smul :
+    ∀ (n : ℕ) (U : S.Opens)
+      (r : (S.presheaf.obj (Opposite.op U)).carrier)
+      (x : chapter01RelativeGradedIdealComponent I U n),
+      ∃ y : chapter01RelativeGradedIdealComponent I U n,
+        y.1 = 𝒜.degree_zero_map U r * x.1 ∧
+          (component_sections n U).hom y =
+            r • (component_sections n U).hom x
+
+def Chapter01RelativeGradedIdealIsQuasicoherent {S : Scheme.{u}}
+    {𝒜 : Chapter01RelativeGradedAlgebra S}
+    (I : Chapter01RelativeGradedIdeal 𝒜) : Prop :=
+  Nonempty (Chapter01RelativeGradedIdealQuasicoherentData I)
+
 /-! The quotient construction is packaged together with the local quotient
 maps.  The closed-immersion assertion is kept in its own theorem, so the
 quotient record does not assume the geometric conclusion it is meant to prove. -/
 structure Chapter01RelativeQuotientData {S : Scheme.{u}}
     {𝒜 : Chapter01RelativeGradedAlgebra S}
-    (I : Chapter01RelativeGradedIdeal 𝒜) where
+    (I : Chapter01RelativeGradedIdeal 𝒜)
+    (_hI : Chapter01RelativeGradedIdealIsQuasicoherent I) where
   algebra : Chapter01RelativeGradedAlgebra S
   quotientMap : ∀ U : S.Opens, 𝒜.sections U →+* algebra.sections U
-  /-- The target is the quotient algebra, not merely an algebra receiving a
-  map with the prescribed kernel. -/
-  quotientMap_surjective : ∀ U, Function.Surjective (quotientMap U)
+  /-- On affine opens the sectionwise map is the usual quotient map.  A
+  sheaf quotient need not be sectionwise surjective on arbitrary opens. -/
+  quotientMap_surjective : ∀ U, IsAffineOpen U → Function.Surjective (quotientMap U)
   quotientMap_kernel : ∀ U,
     RingHom.ker (quotientMap U) = I.carrier U
   quotientMap_restriction :
@@ -980,29 +1054,34 @@ structure Chapter01RelativeQuotientData {S : Scheme.{u}}
 
 noncomputable def chapter01RelativeQuotientData {S : Scheme.{u}}
     {𝒜 : Chapter01RelativeGradedAlgebra S}
-    (I : Chapter01RelativeGradedIdeal 𝒜) : Chapter01RelativeQuotientData I :=
+    (I : Chapter01RelativeGradedIdeal 𝒜)
+    (hI : Chapter01RelativeGradedIdealIsQuasicoherent I) :
+    Chapter01RelativeQuotientData I hI :=
   by
     sorry
 
 theorem chapter01_relative_quotient_exists {S : Scheme.{u}}
     {𝒜 : Chapter01RelativeGradedAlgebra S}
-    (I : Chapter01RelativeGradedIdeal 𝒜) :
-    Nonempty (Chapter01RelativeQuotientData I) := by
+    (I : Chapter01RelativeGradedIdeal 𝒜)
+    (hI : Chapter01RelativeGradedIdealIsQuasicoherent I) :
+    Nonempty (Chapter01RelativeQuotientData I hI) := by
   sorry
 
 noncomputable def chapter01RelativeQuotient {S : Scheme.{u}}
     {𝒜 : Chapter01RelativeGradedAlgebra S}
-    (I : Chapter01RelativeGradedIdeal 𝒜) : Chapter01RelativeGradedAlgebra S :=
-  (chapter01RelativeQuotientData I).algebra
+    (I : Chapter01RelativeGradedIdeal 𝒜)
+    (hI : Chapter01RelativeGradedIdealIsQuasicoherent I) : Chapter01RelativeGradedAlgebra S :=
+  (chapter01RelativeQuotientData I hI).algebra
 
 theorem chapter01_relative_ideal_closed_immersion {S : Scheme.{u}}
     {𝒜 : Chapter01RelativeGradedAlgebra S}
-    (I : Chapter01RelativeGradedIdeal 𝒜) :
-    ∃ (ι : (chapter01RelativeProj (chapter01RelativeQuotient I)).scheme ⟶
+    (I : Chapter01RelativeGradedIdeal 𝒜)
+    (hI : Chapter01RelativeGradedIdealIsQuasicoherent I) :
+    ∃ (ι : (chapter01RelativeProj (chapter01RelativeQuotient I hI)).scheme ⟶
       (chapter01RelativeProj 𝒜).scheme),
       IsClosedImmersion ι ∧
         ι ≫ (chapter01RelativeProj 𝒜).projection =
-          (chapter01RelativeProj (chapter01RelativeQuotient I)).projection := by
+          (chapter01RelativeProj (chapter01RelativeQuotient I hI)).projection := by
   sorry
 
 def chapter01Saturation {A : Type*} [CommRing A]
@@ -1960,11 +2039,13 @@ noncomputable def chapter01GradedModuleTwistedGlobalSectionsMap
 noetherian/standard-graded and finite-generation hypotheses.  These predicates
 keep that eventual property separate from the generic componentwise map. -/
 def Chapter01EventuallyAnIsomorphism
-    {M Γ : ℤ → Type*} (φ : ∀ n, M n → Γ n) : Prop :=
+    {M Γ : ℤ → Type*} [∀ n, AddCommGroup (M n)] [∀ n, AddCommGroup (Γ n)]
+    (φ : ∀ n, M n →+ Γ n) : Prop :=
   ∃ n₀ : ℤ, ∀ n, n₀ ≤ n → Function.Bijective (φ n)
 
 def Chapter01SmallDegreeSaturationFailure
-    {M Γ : ℤ → Type*} (φ : ∀ n, M n → Γ n) : Prop :=
+    {M Γ : ℤ → Type*} [∀ n, AddCommGroup (M n)] [∀ n, AddCommGroup (Γ n)]
+    (φ : ∀ n, M n →+ Γ n) : Prop :=
   ∃ n₀ : ℤ,
     (∀ n, n₀ ≤ n → Function.Bijective (φ n)) ∧
       ∃ n, n < n₀ ∧ ¬ Function.Bijective (φ n)
@@ -1977,7 +2058,7 @@ theorem chapter01_graded_module_global_sections_eventually_isomorphism
     [IsNoetherianRing A] [Module.Finite A M]
     (h : chapter01GeneratedInDegreeOne 𝒜) :
     Chapter01EventuallyAnIsomorphism
-      (fun n x => chapter01GradedModuleProjGlobalSectionsMap 𝒜 𝓜 G n x) := by
+      (fun n => chapter01GradedModuleProjGlobalSectionsMap 𝒜 𝓜 G n) := by
   sorry
 
 /-! ### 1.6 Veronese algebras and presentations -/

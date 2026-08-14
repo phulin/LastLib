@@ -1,4 +1,5 @@
 import LastLib.Book04AdelesAndIdeles.Chapter11.Dependencies
+import LastLib.Book04AdelesAndIdeles.Chapter11.Section04FinitenessOfRayClassGroups
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter11
 
@@ -115,8 +116,11 @@ theorem chapter11_complex_places_do_not_contribute_to_the_conductor
 
 theorem chapter11_character_has_almost_everywhere_level_zero
     (χ : Chapter11FiniteOrderIdeleClassCharacter K) :
-    ((chapter11Conductor χ).finiteExponent.support : Set
-      (IsDedekindDomain.HeightOneSpectrum (𝓞 K))).Finite := by
+    ∃ m : RayModulus K,
+      chapter11CharacterFactorsThrough χ m ∧
+        ((m.finiteExponent.support : Set
+          (IsDedekindDomain.HeightOneSpectrum (𝓞 K))).Finite) := by
+  refine ⟨chapter11Conductor χ, chapter11_conductor_factors_character χ, ?_⟩
   exact RayModulus.finiteExponent_support_finite (chapter11Conductor χ)
 
 def chapter11CharacterOfRayClassHom (m : RayModulus K)

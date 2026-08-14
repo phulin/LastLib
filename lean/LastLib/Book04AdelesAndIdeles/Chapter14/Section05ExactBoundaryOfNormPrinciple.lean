@@ -64,15 +64,16 @@ def chapter14BiquadraticExtension (K L : Type*) [Field K] [Field L]
 
 def chapter14BiquadraticNormFailure
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
-    [Algebra K L] [FiniteDimensional K L]
+    [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
     (N : Chapter14AdelicNormInterface K L) : Prop :=
-  ∃ b : Kˣ,
-    b ∈ chapter14EverywhereLocalNormSubgroup N ∧
-      b ∉ chapter14GlobalNormSubgroup N
+  chapter14BiquadraticExtension K L ∧
+    ∃ b : Kˣ,
+      b ∈ chapter14EverywhereLocalNormSubgroup N ∧
+        b ∉ chapter14GlobalNormSubgroup N
 
 theorem chapter14_biquadratic_failure_makes_the_knot_nontrivial
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
-    [Algebra K L] [FiniteDimensional K L]
+    [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
     (N : Chapter14AdelicNormInterface K L)
     (hfailure : chapter14BiquadraticNormFailure N) :
     Nontrivial (chapter14KnotGroup N) := by
@@ -105,15 +106,15 @@ theorem chapter14_complex_norm_to_real_is_positive {z : ℂ} (hz : z ≠ 0) :
     chapter14ComplexRealNormCondition z := by
   sorry
 
-def chapter14UnramifiedNormValuationCondition (f n : ℕ) : Prop :=
-  f ∣ n
+def chapter14UnramifiedNormValuationCondition (f : ℕ) (n : ℤ) : Prop :=
+  (f : ℤ) ∣ n
 
-def chapter14UnramifiedNormValuationObstruction (f n : ℕ) : Prop :=
+def chapter14UnramifiedNormValuationObstruction (f : ℕ) (n : ℤ) : Prop :=
   ¬ chapter14UnramifiedNormValuationCondition f n
 
 theorem chapter14_unramified_norms_have_divisible_valuation
-    {f n : ℕ} (h : chapter14UnramifiedNormValuationCondition f n) :
-    f ∣ n :=
+    {f : ℕ} {n : ℤ} (h : chapter14UnramifiedNormValuationCondition f n) :
+    (f : ℤ) ∣ n :=
   h
 
 end LastLib.Book04AdelesAndIdeles.Chapter14

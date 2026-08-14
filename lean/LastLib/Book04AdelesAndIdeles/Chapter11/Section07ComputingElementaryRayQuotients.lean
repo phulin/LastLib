@@ -83,10 +83,10 @@ def chapter11SignToComplexHom : SignTypeˣ →* ℂˣ :=
   Units.map (SignType.castHom : SignType →*₀ ℂ).toMonoidHom
 
 theorem chapter11_mod_five_quadratic_character_has_finite_conductor :
-    ∃ e : chapter11RationalRayClassGroup 5 (Nat.zero_lt_succ 4) .omitted ≃* (ZMod 5)ˣ,
+    ∃ e : chapter11RationalRayClassGroup 5 (Nat.zero_lt_succ 4) .included ≃* (ZMod 5)ˣ,
       chapter11Conductor
           (chapter11CharacterOfRayClassHom
-            (chapter11RationalModulus 5 (Nat.zero_lt_succ 4) .omitted)
+            (chapter11RationalModulus 5 (Nat.zero_lt_succ 4) .included)
             (chapter11SignToComplexHom.comp
               (chapter11QuadraticCharacterModFive.comp e))) =
         chapter11RationalModulus 5 (Nat.zero_lt_succ 4) .omitted := by

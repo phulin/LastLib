@@ -2,6 +2,7 @@ import Mathlib.Algebra.Module.PID
 import Mathlib.LinearAlgebra.Dimension.Torsion.Basic
 import Mathlib.LinearAlgebra.Dimension.Torsion.Finite
 import Mathlib.LinearAlgebra.Basis.Basic
+import Mathlib.LinearAlgebra.Basis.Submodule
 import Mathlib.LinearAlgebra.Determinant
 import Mathlib.LinearAlgebra.Dimension.Finite
 import Mathlib.LinearAlgebra.FreeModule.Finite.Quotient
@@ -10,6 +11,7 @@ import Mathlib.RingTheory.DiscreteValuationRing.Basic
 import Mathlib.RingTheory.Filtration
 import Mathlib.RingTheory.LocalRing.Length
 import Mathlib.RingTheory.Localization.Integer
+import Mathlib.RingTheory.Localization.Module
 import Mathlib.RingTheory.Norm.Defs
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter05
@@ -648,7 +650,122 @@ theorem chapter_lattice_multiplication_determinant_eq_norm
     (T : M →ₗ[A] M)
     (hT : ∀ y : M, (T y : E) = x * (y : E)) :
     algebraMap A K (LinearMap.det T) = Algebra.norm K x := by
-  sorry
+  classical
+  let r := Module.finrank A M
+  let b : Module.Basis (Fin r) A M := Module.finBasis A M
+  have hbA : LinearIndependent A (fun i : Fin r => (b i : E)) := by
+    change LinearIndependent A (M.subtype ∘ b)
+    exact b.linearIndependent.map' M.subtype M.ker_subtype
+  have hbspanK :
+      Submodule.span K (Set.range (fun i : Fin r => (b i : E))) = (⊤ : Submodule K E) := by
+    apply top_unique
+    rw [← hM.2]
+    apply Submodule.span_le.2
+    intro x hx
+    have hx' : (⟨x, hx⟩ : M) ∈ Submodule.span A (Set.range b) := by
+      rw [b.span_eq]
+      trivial
+    have hmapspan : ∀ y : M, y ∈ Submodule.span A (Set.range b) →
+        (y : E) ∈ Submodule.span K (Set.range (fun i : Fin r => (b i : E))) := by
+      intro y hy
+      induction hy using Submodule.span_induction with
+      | mem z hz =>
+          obtain ⟨i, rfl⟩ := hz
+          exact Submodule.subset_span ⟨i, rfl⟩
+      | zero => exact Submodule.zero_mem _
+      | add z w hz hw hzp hwp => exact Submodule.add_mem _ hzp hwp
+      | smul a z hz hzp =>
+          change a • (z : E) ∈
+            Submodule.span K (Set.range (fun i : Fin r => (b i : E)))
+          rw [← IsScalarTower.algebraMap_smul (A := K) a (z : E)]
+          exact Submodule.smul_mem _ (algebraMap A K a) hzp
+    exact hmapspan ⟨x, hx⟩ hx'
+  have hbK : LinearIndependent K (fun i : Fin r => (b i : E)) :=
+    (LinearIndependent.iff_fractionRing A K).mp hbA
+  let e : Module.Basis (Fin r) K E := Module.Basis.mk hbK hbspanK.ge
+  have heapply (i : Fin r) : e i = (b i : E) := by
+    exact Module.Basis.mk_apply hbK hbspanK.ge i
+  let P : Submodule A E :=
+    Submodule.span A (Set.range (fun i : Fin r => (e i : E)))
+  let bP : Module.Basis (Fin r) A P := e.restrictScalars A
+  let q : M ≃ₗ[A] P := b.equiv bP (Equiv.refl (Fin r))
+  have hq_basis (i : Fin r) : (q (b i) : E) = (b i : E) := by
+    rw [Module.Basis.equiv_apply]
+    change (bP i : E) = (b i : E)
+    rw [Module.Basis.restrictScalars_apply]
+    exact heapply i
+  have hqE :
+      P.subtype.comp q.toLinearMap = M.subtype := by
+    apply b.ext
+    intro i
+    exact hq_basis i
+  have hq (m : M) : (q m : E) = (m : E) := by
+    exact LinearMap.congr_fun hqE m
+  have hqsymm (y : P) : ((q.symm y : M) : E) = (y : E) := by
+    have := hq (q.symm y)
+    simpa using this.symm
+  let TP : P →ₗ[A] P :=
+    (q : M →ₗ[A] P) ∘ₗ T ∘ₗ (q.symm : P →ₗ[A] M)
+  have hTP (y : P) : (TP y : E) = x * (y : E) := by
+    change (q (T (q.symm y)) : E) = x * (y : E)
+    rw [hq, hT, hqsymm]
+  have hdetq :
+      LinearMap.det TP = LinearMap.det T := by
+    exact LinearMap.det_conj T q
+  have hmatrix :
+      (algebraMap A K).mapMatrix
+          (bP.toMatrix (fun i : Fin r => TP (bP i))) =
+        e.toMatrix (fun i : Fin r => Algebra.lmul K E x (e i)) := by
+    have h := Module.Basis.restrictScalars_toMatrix A e
+      (fun i : Fin r => TP (bP i))
+    calc
+      (algebraMap A K).mapMatrix
+          (bP.toMatrix (fun i : Fin r => TP (bP i))) =
+          e.toMatrix (fun i : Fin r => (TP (bP i) : E)) := by
+            simpa only [bP] using h
+      _ = e.toMatrix (fun i : Fin r => x * (e i)) := by
+            congr 1
+            funext i
+            rw [hTP, Module.Basis.restrictScalars_apply]
+      _ = e.toMatrix (fun i : Fin r => Algebra.lmul K E x (e i)) := by
+            congr 1
+  have hdetP :
+      bP.det (fun i : Fin r => TP (bP i)) = LinearMap.det TP := by
+    change bP.det (TP ∘ bP) = _
+    rw [Module.Basis.det_comp, Module.Basis.det_self, mul_one]
+  have hdetE :
+      e.det (fun i : Fin r => Algebra.lmul K E x (e i)) =
+        LinearMap.det (Algebra.lmul K E x) := by
+    change e.det ((Algebra.lmul K E x) ∘ e) = _
+    rw [Module.Basis.det_comp, Module.Basis.det_self, mul_one]
+  have hdetbase :
+      algebraMap A K (LinearMap.det TP) =
+        LinearMap.det (Algebra.lmul K E x) := by
+    calc
+      algebraMap A K (LinearMap.det TP) =
+          algebraMap A K (bP.det (fun i : Fin r => TP (bP i))) := by
+            rw [hdetP]
+      _ = Matrix.det
+          ((algebraMap A K).mapMatrix
+            (bP.toMatrix (fun i : Fin r => TP (bP i)))) := by
+            rw [Module.Basis.det_apply, RingHom.map_det]
+      _ = Matrix.det
+          (e.toMatrix (fun i : Fin r => Algebra.lmul K E x (e i))) := by
+            rw [hmatrix]
+      _ = e.det (fun i : Fin r => Algebra.lmul K E x (e i)) := by
+            rw [Module.Basis.det_apply]
+      _ = LinearMap.det (Algebra.lmul K E x) := hdetE
+  have hnormdet :
+      Algebra.norm K x = LinearMap.det (Algebra.lmul K E x) := by
+    let c : Module.Basis (Fin (Module.finrank K E)) K E :=
+      Module.finBasis K E
+    rw [Algebra.norm_eq_matrix_det c x, Algebra.leftMulMatrix_apply,
+      LinearMap.det_toMatrix]
+  calc
+    algebraMap A K (LinearMap.det T) =
+        algebraMap A K (LinearMap.det TP) := by rw [hdetq]
+    _ = LinearMap.det (Algebra.lmul K E x) := hdetbase
+    _ = Algebra.norm K x := hnormdet.symm
 
 end LatticeNorm
 

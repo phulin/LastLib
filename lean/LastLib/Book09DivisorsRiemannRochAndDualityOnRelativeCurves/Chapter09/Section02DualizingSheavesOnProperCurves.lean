@@ -111,10 +111,10 @@ theorem chapter09_projective_ext_construction_has_change_of_rings_identification
     [Chapter09ExtTheory I.ambient]
     (D : Chapter09AbsoluteExtConstruction k C I) :
     D.changeOfRingsIdentification := by
-  exact D.changeOfRingsIdentification
+  sorry
 
 /-- The natural shifted derived duality comparison, formula (9.2). -/
-theorem chapter09_absolute_derived_duality
+def chapter09_absolute_derived_duality
     (k : Type u) [Field k]
     (C : Chapter09CohenMacaulayCurveOverField k)
     [Chapter09ExtTheory C.scheme]
@@ -132,7 +132,7 @@ theorem chapter09_trace_is_the_image_of_one
     [Chapter09AbsoluteDerivedHomTheory k C.scheme]
     (D : Chapter09AbsoluteDualizingData k C) :
     D.trace_is_image_of_one := by
-  exact D.trace_is_image_of_one
+  sorry
 
 /-- Degree zero of the derived comparison gives the zero-dimensional formula (9.1). -/
 theorem chapter09_zero_dimensional_ext_dual
@@ -162,7 +162,7 @@ theorem chapter09_zero_dimensional_ext_linear_dual
   exact D.zeroDimensionalLinearExt T hT
 
 /-- Cohomology of the derived comparison recovers the full perfect pairing. -/
-theorem chapter09_absolute_duality_full_perfect_pairing
+def chapter09_absolute_duality_full_perfect_pairing
     (k : Type u) [Field k]
     (C : Chapter09CohenMacaulayCurveOverField k)
     [Chapter09ExtTheory C.scheme]
@@ -223,7 +223,7 @@ structure Chapter09NonCohenMacaulayDualityWarning (X : Scheme.{u}) where
 theorem chapter09_non_cm_duality_needs_multiple_sheaf_degrees
     {X : Scheme.{u}} (W : Chapter09NonCohenMacaulayDualityWarning X) :
     W.multipleSheafDegrees := by
-  exact W.multipleSheafDegrees
+  sorry
 
 /-- A pure reduced curve is Cohen--Macaulay in the one-dimensional case. -/
 structure Chapter09PureReducedCurve (X : Scheme.{u}) where

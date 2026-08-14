@@ -216,10 +216,16 @@ theorem completed_branch_factors_are_complete_DVR_and_finite_free
       ∀ (q : Ideal B), q.IsPrime → q.LiesOver m → ∃ i, P i = q)
     (hP_distinct : Function.Injective P)
     [Algebra (AdicCompletion m A) (B ⊗[A] AdicCompletion m A)]
-    [∀ i, Algebra (AdicCompletion m A) (branchCompletion B (P i))] :
+    [∀ i, Algebra (AdicCompletion m A) (branchCompletion B (P i))]
+    [hbranchLocal : ∀ i, IsLocalRing (branchCompletion B (P i))] :
     ∀ i, isCompleteDVR (branchCompletion B (P i)) ∧
     Module.Finite (AdicCompletion m A) (branchCompletion B (P i)) ∧
-    Module.Free (AdicCompletion m A) (branchCompletion B (P i)) := by
+    Module.Free (AdicCompletion m A) (branchCompletion B (P i)) ∧
+    chapterRamificationIndex (AdicCompletion m A) (branchCompletion B (P i))
+        (IsLocalRing.maximalIdeal (branchCompletion B (P i))) = e i ∧
+    chapterResidueDegree (AdicCompletion m A) (branchCompletion B (P i))
+        (IsLocalRing.maximalIdeal (branchCompletion B (P i))) =
+      chapterResidueDegree A B (P i) := by
   sorry
 
 /-- The fraction-field decomposition after inverting the base uniformizer.

@@ -89,6 +89,7 @@ structure Chapter10Certificate where
   n_pos : 0 < n
   alpha : ℚ
   alpha_nonnegative : 0 ≤ (alpha : ℝ)
+  alpha_le_one : (alpha : ℝ) ≤ 1
   constants : Chapter10ConstantLedger (T : ℝ)
   logarithmicLowerEndpoint : ℚ
   logarithmicLowerEndpoint_le_bound :
@@ -110,7 +111,7 @@ theorem chapter10_certificate_has_positive_margin
     0 < C.positiveDifference := by
   exact C.positiveDifference_pos
 
-theorem chapter10_certificate_lower_endpoint_lt_ceiling_log_upper_endpoint
+theorem chapter10_certificate_ceiling_log_upper_endpoint_lt_lower_endpoint
     (C : Chapter10Certificate) :
     (C.ceilingLogUpperEndpoint : ℝ) < (C.logarithmicLowerEndpoint : ℝ) := by
   sorry
@@ -125,11 +126,12 @@ theorem chapter10_certificate_extends_logarithmic_lower_endpoint
 theorem chapter10_certificate_records_key_rounding_inputs
     (C : Chapter10Certificate) :
     0 < (C.T : ℝ) ∧ 0 < C.n ∧ 0 ≤ (C.alpha : ℝ) ∧
+      (C.alpha : ℝ) ≤ 1 ∧
       C.constants.B.interval.Contains (chapter10BT (C.T : ℝ)) ∧
       C.constants.C.interval.Contains (chapter10CT (C.T : ℝ)) ∧
       0 < C.positiveDifference := by
-  exact ⟨C.T_pos, C.n_pos, C.alpha_nonnegative, C.constants.B.contains,
-    C.constants.C.contains, C.positiveDifference_pos⟩
+  exact ⟨C.T_pos, C.n_pos, C.alpha_nonnegative, C.alpha_le_one,
+    C.constants.B.contains, C.constants.C.contains, C.positiveDifference_pos⟩
 
 end
 

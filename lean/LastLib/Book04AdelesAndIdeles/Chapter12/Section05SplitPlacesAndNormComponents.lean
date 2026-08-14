@@ -1,4 +1,5 @@
 import LastLib.Book04AdelesAndIdeles.Chapter12.Core
+import LastLib.Book04AdelesAndIdeles.Chapter10.Section01TheLocalNormAsAMultiplicativeDeterminant
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter12
 
@@ -63,23 +64,47 @@ theorem chapter12_split_place_norm_surjective_by_first_coordinate
 
 /-! ## The inert unramified comparison -/
 
+structure Chapter12UnramifiedLocalNormBridge
+    (K E : Type*) [Field K] [Field E] [Algebra K E]
+    [FiniteDimensional K E] [Algebra.IsSeparable K E]
+    (degree : ℕ) (base_valuation : AddValuation K (WithTop ℤ))
+    (extension_valuation : AddValuation E (WithTop ℤ)) where
+  unramified_extension :
+    LastLib.Book04AdelesAndIdeles.Chapter10.chapter10UnramifiedLocalExtension
+      base_valuation extension_valuation
+  unique_extension :
+    ∀ w : AddValuation E (WithTop ℤ),
+      base_valuation.IsEquiv (AddValuation.comap (algebraMap K E) w) →
+        extension_valuation.IsEquiv w
+  residue_degree_eq :
+    degree =
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
+        base_valuation extension_valuation unramified_extension.1
+
 structure Chapter12UnramifiedLocalNormData
     (K E : Type*) [Field K] [Field E] [Algebra K E]
-    [FiniteDimensional K E] [Algebra.Unramified K E] where
+    [FiniteDimensional K E] [Algebra.Unramified K E]
+    [Algebra.IsSeparable K E] where
   degree : ℕ
   degree_eq_finrank : degree = Module.finrank K E
   base_valuation : AddValuation K (WithTop ℤ)
   extension_valuation : AddValuation E (WithTop ℤ)
-  norm_valuation_formula :
-    ∀ x : E, x ≠ 0 →
-      base_valuation (Algebra.norm K x) =
-        (degree : WithTop ℤ) * extension_valuation x
+  norm_bridge : Chapter12UnramifiedLocalNormBridge K E degree
+    base_valuation extension_valuation
   extension_values_are_integer :
     ∀ x : E, x ≠ 0 → ∃ z : ℤ, extension_valuation x = z
 
+theorem chapter12_unramified_local_norm_bridge_formula
+    {K E : Type*} [Field K] [Field E] [Algebra K E]
+    [FiniteDimensional K E] [Algebra.Unramified K E] [Algebra.IsSeparable K E]
+    (P : Chapter12UnramifiedLocalNormData K E) :
+    LastLib.Book04AdelesAndIdeles.Chapter10.chapter10NormValuationFormula
+      K E P.base_valuation P.extension_valuation P.degree := by
+  sorry
+
 def chapter12UnramifiedNormValuationMultiple
     {K E : Type*} [Field K] [Field E] [Algebra K E]
-    [FiniteDimensional K E] [Algebra.Unramified K E]
+    [FiniteDimensional K E] [Algebra.Unramified K E] [Algebra.IsSeparable K E]
     (P : Chapter12UnramifiedLocalNormData K E) (x : E) : Prop :=
   ∃ z : ℤ,
     P.base_valuation (Algebra.norm K x) =
@@ -87,18 +112,18 @@ def chapter12UnramifiedNormValuationMultiple
 
 theorem chapter12_inert_unramified_norm_valuations_are_multiples
     {K E : Type*} [Field K] [Field E] [Algebra K E]
-    [FiniteDimensional K E] [Algebra.Unramified K E]
+    [FiniteDimensional K E] [Algebra.Unramified K E] [Algebra.IsSeparable K E]
     (P : Chapter12UnramifiedLocalNormData K E) {x : E} (hx : x ≠ 0) :
     chapter12UnramifiedNormValuationMultiple P x := by
   sorry
 
 theorem chapter12_inert_unramified_norm_valuation_formula
     {K E : Type*} [Field K] [Field E] [Algebra K E]
-    [FiniteDimensional K E] [Algebra.Unramified K E]
+    [FiniteDimensional K E] [Algebra.Unramified K E] [Algebra.IsSeparable K E]
     (P : Chapter12UnramifiedLocalNormData K E) (x : E) (hx : x ≠ 0) :
     P.base_valuation (Algebra.norm K x) =
       (P.degree : WithTop ℤ) * P.extension_valuation x :=
-  P.norm_valuation_formula x hx
+  by sorry
 
 /- The two local images are deliberately exposed as separate sets. -/
 def chapter12SplitNormImage {Kv : Type*} [CommMonoid Kv] (d : ℕ) : Set Kv :=
@@ -106,7 +131,7 @@ def chapter12SplitNormImage {Kv : Type*} [CommMonoid Kv] (d : ℕ) : Set Kv :=
 
 def chapter12UnramifiedNormImage
     {K E : Type*} [Field K] [Field E] [Algebra K E]
-    [FiniteDimensional K E] [Algebra.Unramified K E]
+    [FiniteDimensional K E] [Algebra.Unramified K E] [Algebra.IsSeparable K E]
     (_P : Chapter12UnramifiedLocalNormData K E) : Set K :=
   {x | ∃ y : E, y ≠ 0 ∧ Algebra.norm K y = x}
 

@@ -56,7 +56,7 @@ attribute [instance] Chapter04BrauerLocalizationCompatibilityData.globalEGroup
   Chapter04BrauerLocalizationCompatibilityData.localFGroup
 
 theorem chapter04_brauer_corestriction_localization_commutes
-    {I J : Type*} (D : Chapter04BrauerLocalizationCompatibilityData I J)
+    {I J : Type u} (D : Chapter04BrauerLocalizationCompatibilityData I J)
     (x : D.globalE) :
     D.localizationF (D.globalCorestriction x) =
       D.localCorestriction (D.localizationE x) := by

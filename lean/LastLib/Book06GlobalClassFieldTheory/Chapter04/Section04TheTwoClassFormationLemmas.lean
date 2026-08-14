@@ -6,6 +6,8 @@ noncomputable section
 
 universe u v
 
+open CategoryTheory CategoryTheory.Limits
+
 /-! ## 4.4. The two class-formation lemmas -/
 
 /-- Degree-one Tate cohomology of the idele-class module vanishes on every subgroup. -/
@@ -43,7 +45,13 @@ abbrev chapter04SubgroupCapMap
   (U : Chapter04FundamentalClass (G := G)) (H : Subgroup G) (r : ℤ) :
     chapter04TateH (chapter04TrivialGModule H) (r - 2) ⟶
       chapter04TateH (chapter04RestrictGModule U.C H) r :=
-  (U.capAPI).cap H (r - 2)
+  by
+    change
+      (tateCohomologyFunctor (R := ℤ) (G := H) (r - 2)).obj
+          (Rep.trivial ℤ H ℤ) ⟶
+        (tateCohomologyFunctor (R := ℤ) (G := H) r).obj
+          (Rep.res H.subtype (chapter04GModuleRep U.C))
+    simpa [sub_add_cancel] using (U.capAPI).cap H (r - 2)
 
 /-- The class-formation isomorphism in every Tate degree. -/
 theorem chapter04_class_formation_isomorphism

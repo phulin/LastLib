@@ -6,6 +6,7 @@ noncomputable section
 
 open CategoryTheory
 open AlgebraicGeometry
+open LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
 
 universe u
 
@@ -41,7 +42,7 @@ theorem chapter09_smooth_trace_is_residue_trace
 Gorenstein local rings for scheme fibers. -/
 structure Chapter09LocalGorensteinProfile
     {X S : Scheme.{u}} (f : X ⟶ S) (s : S) where
-  localRingsGorenstein : ∀ y : f.fiber s, Prop
+  localRingsGorenstein : ∀ _y : f.fiber s, Prop
 
 def chapter09FiberIsGorenstein
     {X S : Scheme.{u}} (f : X ⟶ S) (s : S) : Prop :=

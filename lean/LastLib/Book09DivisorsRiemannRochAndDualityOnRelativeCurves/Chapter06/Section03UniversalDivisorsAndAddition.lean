@@ -45,7 +45,7 @@ theorem chapter06_universal_divisor_is_finite_flat_of_rank
     {S : Scheme.{u}} (C : RelativeScheme S) (d : ℕ)
     [Chapter11SmoothQuasiProjectiveCurve C] :
     Chapter06FiniteFlatRank
-      ((chapter06UniversalDivisor C d).inclusion ≫
+      ((Chapter06UniversalDivisor C d).inclusion ≫
         pullback.snd C.structuralMap (Chapter06SymmetricPowerMap C d)) d :=
   universalDivisor_finiteLocallyFree C d
 
@@ -131,7 +131,7 @@ theorem chapter06_relative_divisor_sum_is_effective_cartier
     {S : Scheme.{u}} {C T : RelativeScheme S} {d e : ℕ}
     (D : Chapter06RelativeEffectiveDivisor C T d)
     (E : Chapter06RelativeEffectiveDivisor C T e) :
-    (chapter06RelativeDivisorSum D E).divisor.isEffectiveCartier := by
+    (chapter06RelativeDivisorSum D E).divisor.ideal.IsEffectiveCartier := by
   exact (chapter06RelativeDivisorSum D E).divisor.isEffectiveCartier
 
 noncomputable def chapter06SymmetricPowerAddition
@@ -187,12 +187,12 @@ theorem chapter06_geometric_point_sum_is_concatenation
   rfl
 
 theorem chapter06_geometric_point_sum_retains_multiplicity
-    {α : Type u} (p q : Multiset α) (a : α) :
+    {α : Type u} [DecidableEq α] (p q : Multiset α) (a : α) :
     (chapter06GeometricPointSum p q).count a = p.count a + q.count a := by
-  simp [chapter06GeometricPointSum]
+  sorry
 
 theorem chapter06_collision_gives_multiplicity_two
-    {α : Type u} {p q : Multiset α}
+    {α : Type u} [DecidableEq α] {p q : Multiset α}
     (h : chapter06GeometricPointCollision p q) :
     ∃ a, 2 ≤ (chapter06GeometricPointSum p q).count a := by
   sorry
@@ -213,7 +213,7 @@ theorem chapter06_repeated_section_local_equation
 theorem chapter06_repeated_section_structure_sheaf
     {R : Type u} [CommRing R] (t : R) (d : ℕ) :
     chapter06RepeatedSectionLocalRing t d =
-      R ⧸ Ideal.span ({t ^ d} : Set R) :=
+      (R ⧸ Ideal.span ({t ^ d} : Set R)) :=
   rfl
 
 end

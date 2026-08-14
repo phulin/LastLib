@@ -1,5 +1,6 @@
 import Mathlib.FieldTheory.Galois.Abelian
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.Section02FrobeniusInAnUnramifiedExtension
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Section01IsolatingResidueGrowth
 import Mathlib.RingTheory.Valuation.Discrete.Basic
 import Mathlib.RingTheory.Valuation.Extension
 import LastLib.Book05LocalClassFieldTheory.Chapter05.Core
@@ -74,9 +75,18 @@ structure Chapter05UnramifiedExtensionData
   [residueAlgebraic : Algebra.IsAlgebraic residueBase residueExtension]
   [residueFiniteDimensional : FiniteDimensional residueBase residueExtension]
   [residueGalois : IsGalois residueBase residueExtension]
+  localExtension :
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Chapter07FiniteLocalExtensionData
+      K L residueBase residueExtension
+  unramified :
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Chapter07UnramifiedExtension
+      localExtension
   reduction :
     LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.Chapter06UnramifiedGaloisReduction
       K L residueBase residueExtension
+  residueAction :
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.Chapter06UnramifiedResidueAction
+      K L residueBase residueExtension valuationL.valuationSubring reduction
 
 noncomputable def Chapter05UnramifiedExtensionData.arithmeticFrobenius
     {K L : Type} [Field K] [Field L] [Algebra K L]

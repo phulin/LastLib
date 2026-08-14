@@ -6,6 +6,8 @@ namespace LastLib.Book03RamificationTheory.Chapter05
 
 noncomputable section
 
+open scoped BigOperators
+
 /-! ## 5.6. Hasse--Arf and the limits of integrality -/
 
 /-- Perfectness of the residue field attached to a normalized additive valuation. -/
@@ -19,11 +21,10 @@ def chapter05AllUpperBreaksIntegral
     (D : Chapter05RamificationFiltration G) : Prop :=
   ∀ v : ℝ, chapter05UpperBreak D v → chapter05UpperBreakIsInteger v
 
-/- LOCAL_DEPENDENCY_GUESS: The current checkout has no Book 3 Chapter 4
-   module exposing the canonical lower profile.  This structure is the local
-   bridge expected to be replaced by that earlier declaration in the global
-   fixup pass.  Its `lower_canonical` field identifies the integer profile
-   with the Book 2 congruence groups and does not assume any upper conclusion. -/
+/- Chapter 4 uses a separate integer-profile interface, while this chapter
+   needs its real, left-continuous extension together with the local valuation
+   hypotheses used by Hasse--Arf.  This structure is therefore a local bridge,
+   and its canonical field points directly to the Book 2 congruence groups. -/
 structure Chapter05LocalGaloisUpperData
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))] where
@@ -36,8 +37,15 @@ structure Chapter05LocalGaloisUpperData
   base_complete :
     IsAdicComplete (IsLocalRing.maximalIdeal vK.toValuation.valuationSubring)
       vK.toValuation.valuationSubring
-  unique_normalized_extension :
-    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05UniqueNormalizedValuationExtension
+  extension_complete :
+    IsAdicComplete (IsLocalRing.maximalIdeal vL.toValuation.valuationSubring)
+      vL.toValuation.valuationSubring
+  /- Valuation extensions are unique up to valuation equivalence.  Requiring
+     literal equality of every equivalent `WithTop ℤ`-valued valuation would
+     impose an extra normalization not supplied by the local-field
+     hypotheses. -/
+  unique_valuation_extension :
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05UniqueValuationExtension
       vK.toValuation vL.toValuation
   decomposition_top :
     LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup
@@ -62,6 +70,39 @@ theorem lower_canonical_at
   exact D.lower_canonical n
 
 end Chapter05LocalGaloisUpperData
+
+/-- The normalized lower-group sum in the cyclic Hasse--Arf lemma. -/
+def chapter05CyclicHasseArfSum
+    {G : Type*} [Group G] [Finite G]
+    (D : Chapter05RamificationFiltration G) (b : ℕ) : ℚ :=
+  (Finset.sum (Finset.Icc 1 b)
+      (fun i => (Nat.card (D.lowerGroup (i : ℝ)) : ℚ))) /
+    (Nat.card (D.lowerGroup 0) : ℚ)
+
+/- The source's cyclic lemma is exposed separately so the abelian theorem can
+   reduce to cyclic quotients without hiding the integrality input in its
+   conclusion. -/
+theorem chapter05_cyclic_hasse_arf_lemma
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    (D : Chapter05LocalGaloisUpperData K L)
+    (hcyclic : IsCyclic (Gal(L / K)))
+    [Algebra (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)
+      (IsLocalRing.ResidueField D.vL.toValuation.valuationSubring)]
+    [PerfectField (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)]
+    (hresidue_separable :
+      Algebra.IsSeparable
+        (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)
+        (IsLocalRing.ResidueField D.vL.toValuation.valuationSubring))
+    {b : ℕ}
+    (hlast : ∀ n : ℕ, b < n →
+      D.profile.lowerGroup (n : ℝ) = ⊥)
+    (hbreak : b = 0 ∨
+      D.profile.lowerGroup (b : ℝ) ≠
+        D.profile.lowerGroup (b + 1 : ℕ))
+    (htotally_ramified : D.profile.lowerGroup 0 = ⊤) :
+    ∃ z : ℤ, (z : ℚ) = chapter05CyclicHasseArfSum D.profile b := by
+  sorry
 
 /-- The Hasse--Arf theorem in the local field interface of this chapter. -/
 theorem chapter05_hasse_arf
@@ -113,6 +154,24 @@ theorem chapter05_hasse_arf_does_not_assert_nonabelian_integrality
     (D : Chapter05RamificationFiltration G)
     (hfrac : chapter05HasFractionalUpperBreak D) :
     ¬chapter05AllUpperBreaksIntegral D := by
+  sorry
+
+/- In the actual local-Galois interface, Hasse--Arf gives the sharper
+   contrapositive: a fractional upper break rules out an abelian Galois group
+   under the same perfect-residue hypotheses. -/
+theorem chapter05_fractional_upper_break_forces_nonabelian
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    (D : Chapter05LocalGaloisUpperData K L)
+    [Algebra (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)
+      (IsLocalRing.ResidueField D.vL.toValuation.valuationSubring)]
+    [PerfectField (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)]
+    (hresidue_separable :
+      Algebra.IsSeparable
+        (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)
+        (IsLocalRing.ResidueField D.vL.toValuation.valuationSubring))
+    (hfrac : chapter05HasFractionalUpperBreak D.profile) :
+    ¬ (∀ σ τ : Gal(L / K), σ * τ = τ * σ) := by
   sorry
 
 end

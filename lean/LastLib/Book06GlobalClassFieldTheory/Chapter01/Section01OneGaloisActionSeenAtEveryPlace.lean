@@ -103,6 +103,17 @@ def ArtinKernelIsClassNorm {K L : Type*} [Field K] [NumberField K]
     (A : FiniteLevelArtinData K L) (N : GlobalNormInterface K L) : Prop :=
   (classArtin A).ker = classNormGroup N
 
+/- The quotient equivalence is required to be induced by the Artin map, not
+ merely an unrelated abstract equivalence of the two groups. -/
+structure FiniteLevelClassArtinQuotientEquivalence
+    {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L] [IsAbelianGalois K L]
+    (A : FiniteLevelArtinData K L) (N : GlobalNormInterface K L) where
+  equiv : (C_K K ⧸ classNormGroup N) ≃*
+    GroupAbelianization (Gal(L / K))
+  compatible : ∀ c : C_K K,
+    equiv (QuotientGroup.mk' (classNormGroup N) c) = classArtin A c
+
 def EveryOpenFiniteIndexSubgroupIsAClassNorm
     (K : Type*) [Field K] [NumberField K] : Prop :=
   ∀ H : Subgroup (C_K K),
@@ -117,8 +128,7 @@ theorem finiteLevel_classArtin_quotient_equiv
     (A : FiniteLevelArtinData K L) (N : GlobalNormInterface K L)
     (hkernel : ArtinKernelIsClassNorm A N)
     (hsurjective : Function.Surjective (classArtin A)) :
-    Nonempty ((C_K K ⧸ classNormGroup N) ≃*
-      GroupAbelianization (Gal(L / K))) := by
+    Nonempty (FiniteLevelClassArtinQuotientEquivalence A N) := by
   sorry
 
 /- The class norm is the image of principal ideles times idelic norms. -/
