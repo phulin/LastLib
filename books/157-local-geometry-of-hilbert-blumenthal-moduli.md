@@ -92,7 +92,7 @@ The preceding construction of Hilbert--Blumenthal moduli solves a global geometr
 
 This changes the nature of the question. It is not enough to know that some Hilbert--Blumenthal abelian variety exists over an algebraic closure. One needs an object over a specified local field, on the specified twist and component, and one must know that nearby objects retain the desired condition. At a real place, “nearby” refers to the ordinary real topology. At a finite place, it refers to the topology defined by the valuation. At a residue-characteristic level prime, generic torsion is etale but its integral model is not, so a basis of geometric points does not see the finite-flat condition. At a semistable place, the abelian variety need not extend as an abelian scheme at all.
 
-The purpose of this book is to turn those distinctions into a reusable local package. We construct seed points of five kinds: real, good, ordinary, nonordinary finite-flat, and semistable, put them on one corrected auxiliary-level component, and place each in a full-dimensional local neighborhood. The correction has three parts. The auxiliary principal level is given a cyclotomic-split source, so it has real points. A rank-$d$ Mumford period torus is algebraized at the tensor cusp, so the one-parameter Tate ray sits inside an ambient semistable chart. Finally, the polarization and component used in the potential-automorphy catalog are proved to be auxiliary choices and are reduced to the single tensor component. The local-open package is unconditional in its stated range.  For an exact singleton mixed packet, arithmetic approximation additionally needs the common moving presentation whose remaining joining input is isolated in Sections 13.2A--13.2B.
+The purpose of this book is to turn those distinctions into a reusable local package. We construct seed points of five kinds: real, good, ordinary, nonordinary finite-flat, and semistable, put them on one corrected auxiliary-level component, and place each in a full-dimensional local neighborhood. The correction has three parts. The auxiliary principal level is given a cyclotomic-split source, so it has real points. A rank-$d$ Mumford period torus is algebraized at the tensor cusp, so the one-parameter Tate ray sits inside an ambient semistable chart. Finally, the polarization and component used in the potential-automorphy catalog are proved to be auxiliary choices and are reduced to the single tensor component. The local-open package is unconditional in its stated range.  For an exact singleton mixed packet, arithmetic approximation additionally needs the common moving presentation whose remaining toroidal and algebraic-effectivity inputs are isolated in Sections 13.2A--13.2B.
 
 ### 1.2 Standing data and conventions
 
@@ -1925,7 +1925,9 @@ neighborhoods.
 ### 13.2A The stable integral connecting-slice boundary
 
 We first isolate the exact geometric output missing from the integral-slice route; Section
-13.2B below separates its proved slicing and fan parts from the first absent toroidal premise.
+13.2B below separates the proved slicing, fan, normalization, traitwise inverse, and
+Mumford-side deformation calculations from the still-required toroidal recognition and
+algebraic-effectivity inputs.
 This output is more than the existence of one curve over the local field.  Book 154 first approximates the local cutting
 sections by one global tuple.  The integral property must therefore hold on a congruence
 neighborhood of the local tuple, so that it survives that approximation.
@@ -1953,8 +1955,8 @@ $V_{\mathrm{sp}}\subset (Y\setminus Z)(k)$.  Also fix a good integral point
 $y_{\mathrm{good}}\in(Y\setminus Z)(k)$
 on the same framed component.
 
-Call the following assertion $(\mathrm{ICS})_{v,Z}$, the **stable integral connecting-slice
-assertion**.
+Call the following **Required stable integral connecting-slice assertion**
+$(\mathrm{ICS})_{v,Z}$.
 
 1. The projective closure and very ample bundle chosen in Book 154, Step 1 have a
    finite-presentation $R$-model $\overline{\mathcal Y}$ and a relatively very ample extension,
@@ -2248,11 +2250,14 @@ This is a finite-type compactification-and-comparison theorem, not merely the ex
 regular fan after geometric base change.  In particular it must identify the completed local
 ring and the universal one-motive on the normalized framed compactification before descent.
 
-Section 13.2B proves the Kummer-normalization and equivariant-fan inputs.  It also proves that,
-once the full unframed $(\mathrm{MPE})+(\mathrm{ACE})$ cusp package is supplied, finite
-normalization and effective descent produce the paired-frame twist without a second
-compactification theorem.  The first missing input and the resulting conditional fan-dependent
-theorem are isolated there.  The required compactification is not proved.
+Section 13.2B proves the Kummer normalization, equivariant fan, traitwise inverse, and
+Mumford-side completed deformation ring.  It then isolates the square-zero toroidal
+recognition theorem $(\mathrm{IIT})$, the bounded conductor presentation needed for
+single-chart algebraic effectivity $(\mathrm{AEC}_0)$, ramified conductor descent
+$(\mathrm{RCD})$, and theta--determinant cusp compatibility $(\mathrm{TDC})$.  Conditional on
+these unframed inputs, finite normalization and finite-etale twist descent produce the
+paired-frame theorem without a second compactification theorem.  The required compactification
+is not proved.
 
 **Proposition 13.2A.3 (the joining datum implies the stable slice).**  The datum
 $(\mathrm{FTJ})_{v,Z}$ implies $(\mathrm{ICS})_{v,Z}$.  If the final rational-point clause in
@@ -2379,11 +2384,13 @@ proposition.  Lemmas 13.2A.1--13.2A.2 prove the stable relative-slicing part.  T
 geometric input still to construct at this point is the exact finite-type joining theorem of
 items 1--2 above.  Section 13.2B proves its Kummer-normalization and fan-construction
 sublemmas, reduces the frame and twist operations to normalization and polarized descent, and
-isolates the first absent relative Mumford--PEL equivalence as Required Theorem 13.2B.3a,
-followed by the separate algebraic cusp-effectivity ledger $(\mathrm{ACE})$.  Required Theorem
-13.2B.3, and hence even the weaker form of $(\mathrm{ICS})$ needed by Book 154, remains
-conditional on those inputs.  For the literal form of $(\mathrm{ICS})$, (13.21) is an
-additional necessary arithmetic input.
+proves the inverse and full faithfulness over complete traits, the exact Mumford-side completed
+ring, and the toric support-function calculation.  It does not prove the square-zero
+recognition needed to identify the full PEL deformation functor with the monomial one-motive
+functor, nor the subsequent algebraic cusp, ramified descent, and theta--determinant inputs.
+Required Theorem 13.2B.3, Required $(\mathrm{FTJ})$, and both forms of Required
+$(\mathrm{ICS})$ therefore remain conditional.  The literal form of $(\mathrm{ICS})$ also
+requires the necessary arithmetic condition (13.21).
 
 Here is the source audit.
 
@@ -2394,12 +2401,19 @@ Here is the source audit.
   $\mathcal Y^{\mathrm{good}}$.  For the paired-frame twist one must moreover normalize in the
   division monomials, choose a regular projective fan for the refined cusp lattice, extend the
   unramified twisting cocycle over all cusp labels, and descend the ample bundle.  Lemmas
-  13.2B.1--13.2B.2 carry out normalization and fan construction, while Proposition 13.2B.3b
-  proves the extension and descent steps conditional on the full unframed
-  $(\mathrm{MPE})+(\mathrm{ACE})$ cusp package.  The first
-  unproved assertion is Required Theorem 13.2B.3a: the inverse-to-Mumford equivalence in
-  families.  Algebraic effectivity of the unframed cusp embeddings is the subsequent
-  $(\mathrm{ACE})$ ledger.  A point-centered shell still reduces to one fixed boundary orbit,
+  13.2B.1--13.2B.2 carry out normalization and fan construction.  Proposition 13.2B.2a proves
+  the inverse and full faithfulness over complete traits; Proposition 13.2B.2b computes the
+  one-motive and already-Mumford-presented completed ring; Proposition 13.2B.2c proves only the
+  formal family-theta and base support-function calculations.  The first missing infinitesimal
+  input is $(\mathrm{IIT})$: a PEL theorem forcing every square-zero smoothing coefficient to be
+  the prescribed logarithmic monomial times a unit.  The local algebra $XY=\epsilon$ over
+  $k[\epsilon]/(\epsilon^2)$ with external $Q=0$ shows that labelled reduction and flatness do
+  not force this.  After $(\mathrm{MPE})$, single-chart effectivity still needs bounded
+  normalization--conductor Hilbert and graph data, ramified trait descent needs compatible
+  conductor maps, and theta gluing needs a determinant/cohomology comparison with the
+  Poincare pullback; these are $(\mathrm{AEC}_0)$, $(\mathrm{RCD})$, and $(\mathrm{TDC})$ below.
+  Proposition 13.2B.3b remains a valid conditional reduction from that complete unframed
+  package.  A point-centered shell still reduces to one fixed boundary orbit,
   so shrinking that shell alone cannot produce the inverse image of a good special-fiber open.
 - Book 58 algebraizes a proper formal scheme only after the whole compatible formal system and
   an ample formal line bundle have been supplied.  Here Theorem 8.1 supplies a proper formal
@@ -2416,7 +2430,10 @@ Here is the source audit.
   cusp chart nor smoothness of the framed normalization.  Adding theta embeddings and structure
   graphs does not repair this: the schematic Hilbert closure need not realize a chosen fan, and
   equality with the desired completed deformation rings is precisely what would have to be
-  proved.  Required Theorem 13.2B.3 asks for that fan-dependent toroidal construction directly.
+  proved.  Required $(\mathrm{IIT})$ and $(\mathrm{MPE})$, followed by $(\mathrm{BCP})$,
+  $(\mathrm{AEC}_0)$, $(\mathrm{RCD})$, and $(\mathrm{TDC})$, are precisely the additional
+  recognition, bounded-conductor, descent, and theta inputs that would turn such a finite
+  parameter construction into the required cusp model.
   Once its smooth projective joining model is supplied, Lemmas 13.2A.1--13.2A.2 construct the
   required relative slice.
 - Book 153's Bertini argument is over an infinite characteristic-zero field and controls the
@@ -2443,16 +2460,16 @@ space merely repeats the same problem and is circular.
 
 ### 13.2B Normalized fans and the toroidal joining boundary
 
-We now separate the part of the compactification problem proved here from its first missing
-moduli step.  A bare appeal to a toroidal compactification is insufficient: the fan must be regular
+We now separate the part of the compactification problem proved here from its missing
+moduli-theoretic inputs.  A bare appeal to a toroidal compactification is insufficient: the fan must be regular
 for the **refined** lattice seen by the two frames, normalization must be computed before
 completion, the chosen fan charts must actually be embedded and glued to the moduli interior,
 and the ample bundle must carry the same descent datum as the twisted scheme.  The fan and
-normalization are proved below; Proposition 13.2B.3b proves the frame and twist descent once
-the full unframed $(\mathrm{MPE})+(\mathrm{ACE})$ cusp package exists.  Required Theorem
-13.2B.3a is the first missing theorem;
-the downstream effectivity ledger is kept separate, and the resulting framed output is stated
-as Required Theorem 13.2B.3.
+normalization are proved below, as are the traitwise inverse and the deformation ring on the
+already-Mumford-presented side.  The full relative Mumford--PEL equivalence and the algebraic
+cusp package remain Required inputs.  Proposition 13.2B.3b proves only the conditional
+frame-normalization and finite-etale twist-descent reduction.  Their desired framed output is
+Required Theorem 13.2B.3.
 
 Fix a field over which the corrected auxiliary source and the two paired source systems are
 split.  A cusp branch $b$ of the selected component then consists of an isotropic direct
@@ -2721,84 +2738,508 @@ U^0_{b^\circ,\sigma}=\operatorname{Spec}S'[P^0_{b^\circ,\sigma}],
 \tag{13.28a}
 $$
 
-where $S'$ is either the split global coefficient base or its unramified complete-DVR base
+Here $S'$ is either the split global coefficient base or its unramified complete-DVR base
 change.  Its open torus is denoted $T_{b^\circ}^0$ and its toric boundary by
-$\partial U^0_{b^\circ,\sigma}$.  A **$b^\circ$-labelled PEL degeneration over a normal excellent pair**
-$(S,D)$ means a proper flat Mumford model with an open semiabelian group locus, whose
-restriction to $S\setminus D$ is an abelian scheme in the corrected Hilbert--Blumenthal
-functor, and whose totally toric part is identified with
+$\partial U^0_{b^\circ,\sigma}$.
+
+Here and throughout the cusp-equivalence statements, $\sigma$ is nonzero.  Its nonzero faces
+are boundary strata.  The zero face is the abelian interior and is attached later through the
+punctured classifying map; no Mumford convergence assertion is made on the standalone open
+torus with every period monomial invertible.
+
+A **$b^\circ$-labelled PEL degeneration over an excellent
+log-toroidal pair** $(S,D)$ means a proper flat semiabelic model $\mathcal P/S$, with an action of an open
+smooth commutative group locus, whose restriction to $S\setminus D$ is an abelian scheme in the
+corrected Hilbert--Blumenthal functor.  Its boundary identity fibers are totally toric.  The
+cusp label identifies their identity torus with the fixed split torus $T_b$, and hence their
+cocharacter and character lattices with $I_b$ and $X^*(T_b)$,
+identifies the graded pieces of the ordered polarization and corrected auxiliary level, and
+specifies the periodic cell stratification and its invariant affine star at every cell.  The
+normalizations of those affine stars are required to be the normal saturated toric stars
+specified by the label; their periodic face quotient may have the usual seminormal reducible
+semiabelic fiber.  Thus normality is imposed on the toroidal base and normalized stars, not on
+every geometric semiabelic fiber.  Here “specified” fixes only the incidence complex, character
+grading, and saturated support monoids; it does not fix the weight multiplication constants or
+the translations on face overlaps.  Recovering those constants is part of the inverse theorem.
+The model carries a rigidified symmetric relatively ample
+line whose generic polarization is the
+fixed common positive multiple of the ordered polarization; retaining the line removes the
+Picard-torsor ambiguity without changing the PEL homomorphism.  The induced monodromy form is
+required to lie in $\sigma$.  Over a nilpotent thickening the model is a flat equivariant lift
+with the same labelled strata and normalized affine stars.
+Arrows preserve all these data.
+
+This definition deliberately does **not** include a period morphism
 
 $$
-[I_b\xrightarrow{u_Q}T_b].
+[I_b\xrightarrow{u}T_b].
 \tag{13.28b}
 $$
 
-The identification includes the ordered polarization, the corrected auxiliary level in the
-one-motive sense, the periodic polyhedral model, and the cusp label.  Its monodromy is required
-to lie in $\sigma$.  Arrows preserve every one of these data; in particular this is a groupoid
-of degenerating objects, not the set of maps to the standalone toric scheme (13.28a).
+Recovering $u$, its unit terms, and its automorphy cocycle from $\mathcal P$ is the inverse
+direction of $(\mathrm{MPE})$.  Calling $\mathcal P$ a “Mumford model” in the definition would
+make essential surjectivity tautological; identifying only its boundary one-motive in the
+definition would smuggle in the same inverse under a different name.  The periodic
+stratification is retained because different subdivisions are different proper models of one
+generic quotient.  Thus this is a groupoid of degenerating PEL objects with fixed model type,
+not the set of maps to the standalone toric scheme (13.28a).
 
-> **Required Theorem 13.2B.3a (relative Mumford--PEL cusp equivalence;
-> $(\mathrm{MPE})_{b^\circ}$).**  For every $b^\circ$ and $\sigma$, on normal excellent schemes complete
-> along $D$, the Mumford construction applied to the one-motive (13.28b) is an equivalence
-> between positive $b^\circ$-labelled one-motives with monodromy in $\sigma$ and
-> $b^\circ$-labelled PEL degenerations.  It is fully faithful, commutes with base change within
-> this category and with passage to normalization, and identifies the deformation functor at
-> every boundary orbit with the completion of
-> $U^0_{b^\circ,\sigma}$ there.
+There is a small but essential correction to the test category in the theorem below.  Normal
+schemes alone cannot detect a completed deformation functor: a nontrivial Artin thickening of
+a boundary point is never reduced and hence is not normal.  Write
+$\operatorname{TorPair}_{b^\circ,\sigma}$ for the following larger category.  Its objects are
+excellent noetherian fine saturated log pairs $(\operatorname{Spf}A,M_A)$, with $A$ separated
+and complete for an ideal of definition whose radical contains the image of a nonzero boundary
+face, such that $A_{\mathrm{red}}$ is normal and, etale locally on
+$\operatorname{Spec}A_{\mathrm{red}}$, $M_A$ has a chart by a face localization of
 
-This is the exact first absent theorem.  Theorem 8.1 proves the forward construction for one
-completed tensor-ray chart and proves its period-direction Kodaira--Spencer calculation.  It
-does not recover an arbitrary degeneration from its one-motive, prove full faithfulness in
-families, or prove the asserted equivalence uniformly over every cusp and cone.
+$$
+P^0_{b^\circ,\sigma}=\sigma^\vee\cap\mathfrak M_b^0.
+\tag{13.28c}
+$$
 
-Even after $(\mathrm{MPE})_{b^\circ}$, the following algebraic-effectivity ledger must be
-discharged; call its conjunction $(\mathrm{ACE})_{b^\circ}$.
+When the pair is the completion of an honest toroidal scheme, the locus in
+$\operatorname{Spec}A$ where every nonunit boundary generator is invertible is required to be
+schematically dense.  Complete traits are included.  Logarithmic pullbacks to a closed
+boundary orbit and its nilpotent Artin thickenings are also allowed even though that locus is
+then empty and the image of the boundary ideal may be zero; the log chart,
+not a nonexistent puncture, retains the boundary directions.  Morphisms preserve the label
+and characteristic-monoid map; after a base change whose reduction is not normal, normalize
+the reduction and retain the pulled-back log chart.  This is exactly the collection of test
+pairs containing the completed toric charts, their logarithmic Artin quotients, face
+restrictions, completed normal base changes, and complete traits.  Algebraic neighborhoods
+before completion are deliberately not objects of this category; producing those is
+$(\mathrm{AEC}_0)$.  A positive one-motive on such a pair means a logarithmic period map:
+the evaluations $x(u(a))$ are sections of the groupification of the boundary monoid, their
+orders define the prescribed symmetric positive form, and their unit parts are ordinary units.
+On the open complement this is the usual one-motive.  This formulation remembers both the
+monomial and its leading unit; a list of divisorial valuations alone would not determine the
+period map.
 
-1. The formal equivalence is effective algebraically: there is a finite-presentation algebraic
-   cusp embedding $\mathcal C^0_{b^\circ,\sigma}$ carrying the universal degeneration, and its
-   completion along the indicated orbit is the corresponding completion of
-   $U^0_{b^\circ,\sigma}$.  On the puncture the universal object is abelian and its classifying map
-   lands in the corrected fine interior.
-2. Two punctured cusp objects are isomorphic precisely through a face localization, an
-   arithmetic change of cusp label, and the action of the corresponding cusp stabilizer
-   $\Gamma_b^\circ$; there are no additional arrows.  Every generic PEL object over a trait
-   acquires semiabelian reduction after a finite Galois extension.  On such an extension it has
-   a unique such cusp label and positive monodromy vector.  The conjugate extensions agree on
-   the common faces of their cones and carry effective descent to the original trait.  These
-   assertions commute with the coefficient-field descent action.
-3. The automorphy factors from the periodic theta construction are algebraic on
-   $\mathcal C^0_{b^\circ,\sigma}$, agree under the identifications in item 2, and turn an integral
-   strictly convex support function into a relatively ample boundary line.  They agree on the
-   puncture with a fixed positive power of a chosen descent-stable global ample moduli line on
-   the fine interior.  On the proper gluing supplied by items 1--2, a common positive tensor
-   combination of these two lines is ample.
+The following two propositions give the portions of the inverse theorem that do follow from
+the uniformization and toric arguments already available.
 
-None of these three statements follows formally from $(\mathrm{MPE})_{b^\circ}$: in particular,
-Book 58 cannot algebraize one nonproper formal cusp chart before the proper formal moduli base
-and its ample line have been constructed.  They are placed after $(\mathrm{MPE})_{b^\circ}$ because
-the source audit stops at the first missing theorem rather than pretending that its later
-consequences have been proved.
+**Proposition 13.2B.2a (traitwise inverse and full faithfulness).**  Let $V$ be a complete
+excellent DVR and let a corrected Hilbert--Blumenthal PEL object over its fraction field have
+semistable reduction.  After a finite Galois extension splitting the torus and the cusp label,
+exactly one of the following occurs.
 
-Assuming $(\mathrm{MPE})_{b^\circ}+(\mathrm{ACE})_{b^\circ}$, the unframed quotient is no
-longer mysterious.  Glue the $\mathcal C^0_{b^\circ,\sigma}$ by face localizations and then by
-the exact change-of-cusp arrows of item 2 of $(\mathrm{ACE})_{b^\circ}$.  Local finiteness and
-the finite number of $\Gamma_b^\circ$-orbits give a finite atlas by choosing finite affine
-covers on orbit representatives; the no-inversions and
-nonzero-cone stabilizer conclusion of Lemma 13.2B.2 makes the boundary quotient a scheme rather
-than a residual stack, while the corrected fine neat level gives the same conclusion on the
-interior.  The same exact-overlap assertion identifies its
-puncture with an open of the corrected fine interior, so ordinary scheme gluing attaches that
-interior.  A common-face calculation proves separatedness.  For a DVR, item 2
-of $(\mathrm{ACE})_{b^\circ}$
-produces its monodromy vector after a finite Galois semistable extension, and completeness of
-$\Sigma_b$ puts that vector in a cone.  The toric valuative criterion gives an extension
-there; the common-face compatibility and effective descent in that item return it to the original
-DVR, while the same common-face calculation gives uniqueness.  Thus the glued
-unframed scheme is proper.  The last sentence of item 3 of $(\mathrm{ACE})_{b^\circ}$ and the
-support functions of Lemma 13.2B.2 give an ample line on the whole glued scheme; Book 8 then
-identifies the resulting proper morphism as projective.  This paragraph is a deduction from
-$(\mathrm{MPE})_{b^\circ}+(\mathrm{ACE})_{b^\circ}$; it is not a proof of either input.
+1. The object has good reduction and gives an interior point.
+2. Its toric rank is $d$, its abelian Raynaud quotient is zero, and its Raynaud datum is a
+   positive one-motive
+   $$
+   [I_b\xrightarrow{u}T_b]
+   \tag{13.28d}
+   $$
+   with the ordered polarization, corrected auxiliary level, and a uniquely determined cusp
+   label up to the arithmetic change-of-label action.  For every cone containing its monodromy
+   vector, the periodic construction recovers the labelled formal degeneration.  With a fixed
+   periodic decomposition this recovery is inverse to Raynaud extraction.
+
+This correspondence is fully faithful, commutes with further finite extension, and respects
+the Galois descent cocycle.  If the two paired frames are included, their toric lines and
+division lifts give exactly the Kummer normalization (13.25)--(13.26); no additional Raynaud
+datum occurs.
+
+**Proof.**  Apply the formal-identity construction to the smooth semiabelian locus.  Modulo the
+uniformizer its maximal affine subgroup is a torus $T$; characterwise pushout identifies its
+formal extension by the Poincare biextension.  Unfold the bounded toric chart by all integral
+cocharacters.  Translation to the proper generic abelian variety has a discrete kernel $Y$.
+The valuative properness argument says that its tropical image is full: otherwise a linear
+functional annihilating that image gives a toric valuation ray which cannot be moved into a
+bounded chart, hence a punctured valuation-disc point with no extension.  Thus
+
+$$
+0\longrightarrow Y\longrightarrow T^{\rm an}
+\longrightarrow A^{\rm an}\longrightarrow0
+\tag{13.28e}
+$$
+
+in the totally toric case.  Conversely, a full lattice and a positive period form give the
+locally finite annular quotient; a periodic rational decomposition has finitely many cell
+orbits, so its formal quotient is proper.  The automorphy cocycle of a positive symmetric form
+gives an ample formal theta line.  Book 58 algebraizes that *proper formal family over the
+complete trait*.  The monomial formulas algebraize the open semiabelian group law; graph
+effectivity algebraizes the proper-source endomorphisms.  The retained symmetric line
+algebraizes with the proper family and induces the polarization on the abelian locus by the
+theorem of the square.  This is the
+construction proved directly for split Raynaud data in Book 60; the preceding description
+records the operations used, so no compactification theorem is being imported.
+
+The $\mathcal O_F$-action is functorial on (13.28e).  Hence
+$X_*(T)_{\mathbf Q}$ is a unital $F$-module.  If its dimension is nonzero, it is at least
+$[F:\mathbf Q]=d$, while toric rank is at most $\dim A=d$.  It follows that the toric rank is
+$d$ and the abelian quotient has dimension zero.  The ordered polarization identifies the
+period and character lattices in the tensor-perfect way and makes
+
+$$
+(a,a')\longmapsto
+v\bigl(\lambda(a')(u(a))\bigr)
+\tag{13.28f}
+$$
+
+symmetric positive definite.  The auxiliary level identifies the two lattices modulo $N$ and
+therefore selects the isotropic line and ideal-class label.  The weight filtration on every
+prime-to-residue-characteristic Tate module is intrinsic, so a second label for the same
+object differs by the arithmetic stabilizer; the neat level eliminates any further
+automorphism.
+
+A homomorphism of generic abelian varieties preserves the bounded identity subgroup, its
+maximal torus, and the kernel in (13.28e).  It therefore induces, uniquely, a morphism of
+one-motives.  In the other direction such a morphism acts monomially on every periodic toric
+chart and is compatible with period translation, so it descends to the quotient.  The two
+operations are inverse on the dense generic group.  Separatedness and flatness make them
+inverse on the whole formal model.  A fixed periodic decomposition removes the only possible
+model ambiguity; a change of decomposition is handled by a common refinement and is not an
+extra arrow in the labelled category.
+
+All constructions used the formal identity, maximal affine subgroup, translation kernel,
+Poincare biextension, and normalized theta cocycle.  They therefore commute with extension of
+complete DVRs.  Over a Galois extension their uniqueness gives the cocycle on the extracted
+datum and on the reconstructed model.  Finally the $\mathfrak r$-torsion of (13.28d) is
+(13.23).  A paired frame selects its toric line and a division lift, so its equations are
+(13.24); Lemma 13.2B.1 proves that their integral model is exactly the stated Kummer
+normalization. $\square$
+
+**Proposition 13.2B.2b (the completed ring on the Mumford side).**  Fix a geometric point $x$
+of the orbit of a nonzero face $0\ne\tau\preceq\sigma$.  The functor of deformations of the *labelled
+logarithmic one-motive*, with its split lattices, ordered polarization, corrected auxiliary
+level, and fixed periodic decomposition, is prorepresented by
+
+$$
+\widehat{
+ \bigl(S'[\sigma^\vee\cap\mathfrak M_b^0]\bigr)_{\mathfrak p_x}}.
+\tag{13.28g}
+$$
+
+It has no infinitesimal automorphisms.  After adjoining the two paired frames, its ring is the
+corresponding completion with $\mathfrak M_b^0$ replaced by
+$\mathfrak M_b^{\mathrm{fr}}$.
+
+**Proof.**  Let $C$ be an Artin local test algebra with residue point $x$.  The split torus,
+the two constant projective lattices, the $\mathcal O_F$-action, and the prime-to-the-base
+corrected level have unique lifts.  The remaining datum is the multiplicative period pairing.
+Its monomial parts form a homomorphism
+
+$$
+P^0_{b^\circ,\sigma}\longrightarrow C
+\tag{13.28h}
+$$
+
+which sends precisely the characters invertible on the $\tau$-orbit to units; its unit parts
+lift the unit coordinates at $x$.  Symmetry and $\mathcal O_F$-balance have already been built
+into the Fourier lattice, and the cone condition has already been built into the monoid.
+Consequently there are no further equations.  Giving (13.28h) is exactly giving a local map
+from the local monoid algebra at $x$ to $C$, and passage over all Artin quotients gives
+(13.28g).
+
+On each cell the Mumford model is the toric scheme of the corresponding saturated monoid.
+A morphism preserving its dense torus is determined by the character map; compatibility with
+period translations then determines it on every translated cell.  Hence the Mumford
+construction is fully faithful on this explicitly presented deformation groupoid.  Principal
+level $N\ge3$ kills an automorphism that is the identity on the level, so the groupoid has no
+infinitesimal inertia.  For a paired frame, (13.24) says exactly that the character lattice is
+enlarged to (13.25); Lemma 13.2B.1 then gives the last assertion before, and hence after,
+completion. $\square$
+
+The qualification in Proposition 13.2B.2b is load-bearing.  It computes the deformation ring
+of the one-motive and of the Mumford model constructed from it.  To call (13.28g) the completed
+ring of the *entire degenerating PEL functor*, one must still prove that every infinitesimal PEL
+degeneration is uniquely Mumford-presented.  Neither normality nor the traitwise proposition
+proves that statement: nilpotent Artin rings have no height-one valuation theory, and agreement
+after reduction does not make a deformation effective.
+
+The theta part also admits a formal conclusion before this missing step.
+
+**Proposition 13.2B.2c (formal theta compatibility and positivity).**  On the Mumford
+groupoids of Proposition 13.2B.2b, the periodic automorphy factors glue the cellwise theta
+lines.  They commute with face restriction and arithmetic change of cusp, and after the common
+multiple in Lemma 13.2B.2 they are $\Delta$-linearized.  The restriction to every nonzero
+boundary cone is relatively ample, and the associated base toric line is ample precisely when
+$h_b$ is strictly convex.
+
+**Proof.**  Translation by $a\in I_b$ multiplies a character $x$ by the period monomial
+$Q^{ax}$.  The equality
+
+$$
+Q^{(a+a')x}=Q^{ax}Q^{a'x}
+\tag{13.28i}
+$$
+
+is the cocycle on triple cell overlaps.  Symmetry of the polarization makes the two orders of
+translation agree; hence the cellwise lines glue.  Restriction to a face merely localizes the
+same monomials, so it preserves the cocycle.  Changes of cusp transport $I_b$, its character
+lattice, the pairing, and the periodic decomposition, and therefore transport the same line.
+The common multiple in Lemma 13.2B.2 makes all slopes integral; tensoring over the finite
+$\Delta$-orbit gives the literal linearization.
+
+For a cell wall, the degree on its invariant curve is the jump of the two adjacent integral
+slopes.  Strict convexity makes every such jump positive.  Conversely, a wall with zero or
+negative jump gives an invariant curve of zero or negative degree.  The invariant affine
+charts and Book 8's relative-Proj criterion therefore identify strict convexity with
+ampleness of the toric line.  On the periodic family, the same calculation is the degree of
+the theta line on the vertical toric curves; positivity of the period form handles the closed
+cycles produced by period translation.  There are finitely many cells modulo $I_b$, so one
+power works on the whole proper formal quotient. $\square$
+
+**Required Theorem 13.2B.3a.0 (infinitesimal toroidal recognition;
+$(\mathrm{IIT})_{b^\circ,\sigma}$).**  Let $C'\twoheadrightarrow C$ be a square-zero extension
+of noetherian local algebras equipped with the indicated fine saturated logarithmic chart at a
+nonzero boundary orbit.  Let $\mathcal P'$ be a $b^\circ$-labelled PEL degeneration over $C'$
+whose reduction is identified with the Mumford model of a positive logarithmic one-motive
+$M_C$.  Then the PEL structure and the logarithmic chart must force, rather than merely permit,
+the following conclusions.
+
+1. On every normalized invariant affine star, after choosing weight generators, every
+   multiplication map has the form
+   $$
+   e_xe_y=\alpha\!\left(p_\alpha(x,y)\right)c_\alpha(x,y)e_{x+y},
+   \qquad c_\alpha(x,y)\in(C')^\times,
+   \tag{13.28j}
+   $$
+   where $\alpha$ is the *given* characteristic-monoid map and
+   $p_\alpha(x,y)$ is the exponent prescribed by the labelled saturated star.  The analogous
+   divisibility statement holds for every face-overlap translation.
+2. Those unit factors split compatibly around the periodic cell complex and determine a unique
+   lift $M_{C'}$ of $M_C$, with its balanced $\mathcal O_F$-action, ordered polarization,
+   corrected auxiliary level, and logarithmic period map.
+3. There is a unique labelled PEL isomorphism
+   $$
+   \mathcal P'\simeq\operatorname{Mum}(M_{C'})
+   \tag{13.28j.1}
+   $$
+   reducing to the given one.  The construction is compatible with faces, arithmetic cusp
+   changes, composition of square-zero extensions, and the base changes used below.
+
+This is the first missing theorem in the relative inverse direction.  The character grading,
+flatness, and the labelled *reduction* do not prove item 1.  Indeed, let
+$C'=k[\epsilon]/(\epsilon^2)$, let $C=k$, and let the external logarithmic parameter satisfy
+$\alpha(Q)=0$.  Then
+
+$$
+B'=C'[X,Y]/(XY-\epsilon)
+\tag{13.28j.2}
+$$
+
+is flat over $C'$ (indeed $\ker(\epsilon:B'\to B')=\epsilon B'$) and reduces to the labelled
+node $k[X,Y]/(XY)$.  Nevertheless its smoothing
+coefficient is $\epsilon$, which is not $\alpha(Q)$ times a unit.  The diagonalizable grading
+still splits $B'$ into weight pieces, and Nakayama still makes the relevant pieces rank one;
+neither fact supplies the missing divisibility.  Equation (13.28j.2) is a local algebra
+counterexample to the proposed proof, not an assertion that a global PEL degeneration with all
+the required structures has been constructed.  Showing that the PEL, polarization, and
+logarithmic conditions exclude this extra smoothing is exactly $(\mathrm{IIT})$.
+
+Once item 1 of $(\mathrm{IIT})$ is supplied, the remainder of the former character-graded
+argument is valid.  Associativity and commutativity make the unit factors a normalized
+symmetric two-cocycle on the free character lattice.  Lifting a basis splits that extension;
+the residual ambiguity is a torus character.  Normalizing along a spanning tree of the
+unfolded periodic complex leaves precisely the deck loops in $I_b$, hence gives the lifted
+period homomorphism.  Symmetry, balance, level, and uniqueness then follow from the retained
+PEL structures and neat rigidification.  Thus the book proves the deduction from item 1 to
+items 2--3, but it does not prove item 1.
+
+**Required Theorem 13.2B.3a (relative Mumford--PEL cusp equivalence;
+$(\mathrm{MPE})_{b^\circ}$).**  For every $b^\circ$, every nonzero $\sigma$, and its nonzero
+faces, the Mumford construction on $\operatorname{TorPair}_{b^\circ,\sigma}$ is an equivalence
+between positive labelled logarithmic one-motives and labelled PEL degenerations.  It is fully
+faithful, commutes with the admitted base changes and normalization, and identifies the PEL
+deformation functor at every boundary orbit with
+
+$$
+\widehat{
+ \bigl(S'[\,\sigma^\vee\cap\mathfrak M_b^0\,]\bigr)_{\mathfrak p_x}}.
+\tag{13.28j.3}
+$$
+
+The preceding results give a precise conditional reduction of this theorem.  Proposition
+13.2B.2a proves the inverse and full faithfulness over complete traits.  Proposition
+13.2B.2b proves (13.28j.3) for the logarithmic one-motive and for a degeneration already known
+to be Mumford-presented.  On a reduced normal base with schematically dense puncture, the
+height-one trait calculation recovers the multiplication and overlap units by intersection in
+the common character field.  Assuming $(\mathrm{IIT})$, successive square-zero thickenings
+then recover every nilpotent member and every arrow, so the completed-ring comparison transfers
+to the full PEL functor.  Boundary-supported reduced tests are handled by the zero-order
+character-graded calculation: their saturated support monoid is part of the label and no
+square-zero smoothing coefficient occurs.  Hence these arguments prove
+
+$$
+(\mathrm{IIT})_{b^\circ,\sigma}
+\quad\Longrightarrow\quad
+(\mathrm{MPE})_{b^\circ}
+\tag{13.28j.4}
+$$
+
+on the stated test category.  They do not remove the antecedent.
+
+**Conditional Corollary 13.2B.3a$^{\mathrm{fr}}$ (paired-frame Mumford--PEL
+equivalence).**  Assuming $(\mathrm{MPE})_{b^\circ}$, adjoining the two selected paired frames
+replaces $\mathfrak M_b^0$ by $\mathfrak M_b^{\mathrm{fr}}$, and the completed deformation ring
+at a boundary orbit is
+
+$$
+\widehat{
+ \bigl(S'[\,\sigma^\vee\cap\mathfrak M_b^{\mathrm{fr}}\,]\bigr)_{\mathfrak p_x}}.
+\tag{13.28j.5}
+$$
+
+**Proof.**  Once the unframed one-motive is recovered, each frame selects its toric line and
+division lift.  Lemma 13.2B.1 identifies their character algebra with the finite normalization
+for $\mathfrak M_b^{\mathrm{fr}}$.  Conversely the division monomials recover the paired
+frames.  Full faithfulness and all stated compatibilities descend from $(\mathrm{MPE})$ and the
+universal property of normalization. $\square$
+
+**Conditional Proposition 13.2B.3a.1 (exact formal overlaps).**  Assuming
+$(\mathrm{MPE})$, two labelled formal cusp objects have isomorphic punctured abelian objects
+exactly through a common-face localization, an arithmetic change of cusp, and the relevant
+element of $\Gamma_b^\circ$.  For the zero face this describes only the punctured arrow; its
+algebraization is part of $(\mathrm{AEC}_0)$.
+
+**Proof.**  The toric part of the prime-to-residue-characteristic weight filtration is
+intrinsic, so an isomorphism identifies the isotropic line, period and character lattices,
+ordered pairing, and corrected level.  Evaluation of the period pairing identifies the common
+face.  Conversely the monomial common-face map preserves the period cocycle, and conditional
+full faithfulness in $(\mathrm{MPE})$ makes it the unique PEL arrow. $\square$
+
+The traitwise part has a further descent boundary.  Potential semistable reduction and
+Proposition 13.2B.2a show that, after a finite Galois extension of a complete excellent trait,
+a generic object is either good or has a unique totally toric datum whose monodromy vector lies
+in a cone of the complete fan.  Common-face agreement and the theta calculation of Proposition
+13.2B.2c hold over that extension.  If the extension is finite etale, the resulting Galois
+maps are an fpqc descent datum and Book 10 gives effective descent.  A ramified extension is
+different: for $W=V'\otimes_VV'$, the scheme $\operatorname{Spec}W$ is not the disjoint union
+of its Galois graphs.
+
+> **Required ramified conductor-descent theorem
+> $(\mathrm{RCD})_{V'/V}$.**  Let $V'/V$ be a finite ramified Galois extension of excellent
+> traits, put $W=V'\otimes_VV'$, and let
+> $\nu:W^\nu\to W_{\mathrm{red}}$ be the normalization.  For two pullbacks of a labelled
+> Mumford--PEL model, the componentwise generic Galois isomorphisms extend over $W^\nu$ and
+> preserve the conductor ideal and carry a specified compatible isomorphism on the conductor
+> square
+> $$
+> \begin{matrix}
+> C^\nu&\longrightarrow&W^\nu\\
+> \downarrow&&\downarrow\nu\\
+> C&\longrightarrow&W_{\mathrm{red}},
+> \end{matrix}
+> \tag{13.28j.6}
+> $$
+> where $C$ and $C^\nu$ are cut out by the common conductor ideal.  The restriction of the
+> componentwise isomorphism to $C^\nu$ must be the pullback of an isomorphism between the two
+> models over $C$, with the displayed square commutative.  The pair then descends through the
+> conductor pushout to $W_{\mathrm{red}}$, lifts compatibly through the nilradical of $W$, and satisfies the cocycle
+> over $V'\otimes_VV'\otimes_VV'$.  The same assertion holds for the polarization line and
+> all PEL structure maps.
+
+The normalization equalizer for rings does not construct the compatible map in (13.28j.6).
+Full faithfulness on each normalized component proves uniqueness *after* such a conductor map
+exists; it does not prove existence or agreement on the generally nonnormal conductor.
+Accordingly the former ramified descent argument was incomplete.
+
+**Conditional Proposition 13.2B.3a.2 (trait coverage and objectwise descent).**  Assuming
+$(\mathrm{MPE})$ and $(\mathrm{RCD})$ for the ramified semistable extensions that occur, every
+generic corrected PEL object over a complete excellent trait is covered by the good chart or a
+fan cusp chart, and the conjugate models, PEL maps, and a common positive power of their family
+theta lines descend effectively.  The assertion for finite-etale extensions is unconditional
+relative to the traitwise inverse. $\square$
+
+Even after $(\mathrm{MPE})$, three algebraic-effectivity inputs remain.  Their conjunction is
+the **Required algebraic cusp-effectivity package**
+$(\mathrm{ACE})_{b^\circ}$.
+
+1. **Single-chart effectivity.**  There is a finite-presentation algebraic cusp space
+   $\mathcal C^0_{b^\circ,\sigma}$ carrying the universal (generally nonnormal) semiabelic
+   degeneration, with completed base and universal family equal to the prescribed Mumford
+   objects.  Its punctured classifying map is representable and etale into the corrected fine
+   interior, and formation commutes with the admitted coefficient and normalization changes.
+2. **Algebraic overlaps and valuative descent.**  Face, cusp, and stabilizer arrows algebraize
+   and exhaust the Isom relation, with no remote components.  Trait coverage is effective,
+   including $(\mathrm{RCD})$ whenever the semistable splitting extension is ramified.
+3. **Theta--determinant transition and positivity.**  The universal semiabelic polarization
+   line, obtained from the Poincare biextension, has algebraic face and cusp transition maps.
+   Its relevant determinant-of-cohomology or determinant-of-sections line is identified on the
+   puncture with a fixed positive power of the chosen ample interior moduli line.  The
+   transition divisor is the asserted piecewise-linear cusp function, and a common positive
+   combination with the strictly convex base fan line is ample on the proper gluing.
+
+These clauses are separate.  A support function $h_b$ defines a toric line on the *base* cusp
+chart; it is not the pullback of the Poincare biextension on the universal semiabelic family,
+nor does it by itself identify a determinant line on the moduli base.
+
+The first clause has the following precise boundedness prerequisite.
+
+> **Required bounded conductor presentation theorem
+> $(\mathrm{BCP})_{b^\circ,\sigma}$.**  After one fixed theta power, the normalizations of the
+> periodic semiabelic models, their conductor subschemes and double loci, the two conductor
+> maps, and the closures of every identity, multiplication, action, $\mathcal O_F$, level, and
+> polarization graph occur with finitely many Hilbert polynomials and uniformly bounded
+> generators and relations modulo $I_b$.  The corresponding finite Hilbert--graph stack
+> represents the conductor *pushouts*, not just their normalizations; its flatness and incidence
+> conditions are of finite presentation.  Near the labelled orbit it carries the prescribed
+> fine saturated toroidal log chart, and this chart is proved from the conductor-pushout
+> equations rather than inferred from Fitting ideals of multiplication maps.
+
+> **Required single-chart algebraic cusp effectivity
+> $(\mathrm{AEC}_0)_{b^\circ,\sigma}$.**  Under $(\mathrm{MPE})$ and
+> $(\mathrm{BCP})$, the proper formal Mumford family, its conductor pushout, PEL maps, and family
+> theta line over the completed monoid chart are the completion of a finite-presentation
+> algebraic family
+> $$
+> \overline{\mathcal A}_{b^\circ,\sigma}
+> \longrightarrow\mathcal C^0_{b^\circ,\sigma}.
+> \tag{13.28k}
+> $$
+> Its base completion is the prescribed monoid completion, and its punctured abelian locus has
+> the classifying map required in item 1 of $(\mathrm{ACE})$.
+
+Book 8 supplies Hilbert schemes once these polynomials and bounded graph data are known.  It
+does not supply $(\mathrm{BCP})$.  Cutting boundary loci out by Fitting ideals and then
+declaring their neighborhoods to have the desired saturated monoid charts is circular:
+prescribed monomial divisibility is already part of $(\mathrm{IIT})$, and Fitting ideals do not
+prove the required fine saturated log structure.  The former construction also recorded
+Hilbert polynomials only on the normalization and did not bound the nonnormal conductor,
+double-locus, pushout, and graph polynomials.  Thus neither $(\mathrm{BCP})$ nor
+$(\mathrm{AEC}_0)$ is proved here.
+
+The third clause is most cleanly isolated as follows.
+
+> **Required theta--determinant cusp theorem
+> $(\mathrm{TDC})_{b^\circ,\Sigma}$.**  On the algebraic cusp groupoid furnished by
+> $(\mathrm{AEC}_0)$, the Poincare biextension and normalized semiabelic theta cocycle extend
+> algebraically across every conductor pushout and under every face, arithmetic-cusp, and
+> coefficient-descent arrow.  Derived cohomology of a fixed sufficiently high theta power is
+> perfect and commutes with the relevant base changes; its determinant transition is the
+> claimed cusp character.  On the puncture this determinant is a fixed positive power of the
+> chosen ample Hilbert--Blumenthal moduli line.  After adding the base toric line defined by an
+> integral strictly convex $h_b$, one common positive tensor combination is relatively ample
+> on the glued moduli base and carries the required descent linearization.
+
+Proposition 13.2B.2c proves the cellwise theta cocycle on the already-Mumford-presented
+*family* and the wall-degree criterion for the base toric line.  It proves neither the
+determinant/cohomology transition in $(\mathrm{TDC})$ nor horizontal and mixed positivity on the
+global moduli gluing.
+
+**Required Theorem 13.2B.3a.3 (algebraic cusp effectivity;
+$(\mathrm{ACE})_{b^\circ}$).**  Required $(\mathrm{AEC}_0)$, algebraization and exhaustiveness
+of the overlap relation, Required $(\mathrm{RCD})$ for ramified trait coverage, and Required
+$(\mathrm{TDC})$ hold compatibly for all cusp and cone orbits.  Consequently the unframed cusp
+spaces glue to the corrected fine interior as a proper projective finite-presentation scheme.
+
+No proof of this theorem is claimed.  What is proved is the following implication.
+
+**Proposition 13.2B.3a.4 (conditional unframed gluing).**  If
+$(\mathrm{MPE})_{b^\circ}+(\mathrm{ACE})_{b^\circ}$ hold for the equivariant complete fan, the
+unframed cusp spaces glue to a separated proper projective finite-presentation scheme with the
+prescribed completed local rings and universal Mumford objects.
+
+**Proof.**  Item 2 of $(\mathrm{ACE})$ gives an algebraic equivalence relation exhausted by
+face and cusp arrows, so ordinary gluing attaches the cusp spaces to the fine interior and
+gives separatedness.  Completeness of the fan gives an extension after semistable base change;
+the effective trait descent required in item 2 returns it to the original trait, proving the
+valuative criterion.  Item 3 supplies the compatible ample line, and Book 8 turns the proper
+algebraic space into the asserted projective scheme.  Every completed-local and
+universal-object assertion is item 1 together with $(\mathrm{MPE})$. $\square$
 
 We now state the framed output with the fan included in its hypotheses.
 
@@ -2806,10 +3247,10 @@ We now state the framed output with the fan included in its hypotheses.
 $(\mathrm{TCG})_\Sigma$).**  Let the corrected fine component and its two paired-frame cover be
 split over a finite coefficient extension, and let
 $\Sigma=(\Sigma_b)_b$ be the $\Delta$-equivariant collection furnished by Lemma 13.2B.2 for the
-normalized lattices $\mathfrak M_b^{\mathrm{fr}}$.  The following objects and comparisons must
-be constructed.
+normalized lattices $\mathfrak M_b^{\mathrm{fr}}$.  The following objects and comparisons
+must be constructed.
 
-1. For every $(b,\sigma)$, construct the algebraic cusp embedding or toroidal modification of
+1. For every $(b,\sigma)$ with $\sigma\ne0$, construct an algebraic cusp embedding or toroidal modification of
    the **degenerating PEL moduli problem** associated with $\sigma$, not merely the standalone
    toric scheme
    $$
@@ -2822,10 +3263,9 @@ be constructed.
    the one-motive (13.22) with its ordered polarization, corrected auxiliary level, and both
    paired frames; its projective Mumford model must be compatible on every overlap.
 
-2. Glue those algebraic cusp embeddings to the good interior to obtain a separated
-   finite-presentation model $\overline{\mathcal Y}'_\Sigma$.  Prove, rather than infer from a
-   chosen projective closure, that for every point $x$ on the orbit belonging to
-   $(b,\sigma)$ there is a canonical completed-local comparison
+2. Glue those algebraic cusp embeddings to the good interior in a separated
+   finite-presentation model $\overline{\mathcal Y}'_\Sigma$.  For every point $x$ on the orbit belonging to
+   $(b,\sigma)$ prove that there is a canonical completed-local comparison
    $$
    \widehat{\mathcal O}_{\overline{\mathcal Y}'_\Sigma,x}
    \simeq
@@ -2834,15 +3274,15 @@ be constructed.
    },
    \tag{13.30}
    $$
-   with the evident face and cusp identifications, and that the completed universal object is
+   with the evident face and cusp identifications, and prove that the completed universal object is
    the normalized Mumford object of Lemma 13.2B.1.  In particular, normalization in the
-   division monomials must occur before completion.  The boundary must be exhausted by these
-   charts.  Completeness of $\Sigma$ must imply properness, and regularity for
-   $N_b^{\mathrm{fr}}$ must imply smoothness.
+   division monomials occurs before completion.  The boundary must be exhausted by these
+   charts.  Prove that completeness of $\Sigma$ implies properness and regularity for
+   $N_b^{\mathrm{fr}}$ implies smoothness.
 
 3. Construct from the support functions $h_b$ and the compatible periodic theta data a line
    bundle $\mathcal L_\Sigma$ on the glued model.  Prove that its formal restrictions are the
-   Mumford theta bundles, that a positive power is relatively ample, and that its generic
+   Mumford theta bundles, a positive power is relatively ample, and its generic
    restriction is a global ample bundle available to Book 154.  This is an algebraization and
    positivity assertion on the **moduli base**; algebraization of the projective Mumford family
    over one already complete ring does not imply it.
@@ -2856,25 +3296,17 @@ be constructed.
    meeting its prescribed normalized branch without enlarging the completion field or changing
    its valuation, Kummer, enhanced-line, sign, or frame data.
 
-This is the exact fan-dependent theorem needed for $(\mathrm{FTJ})$.  The word “construct” in
-item 1 is load-bearing.  The monoid schemes (13.29) and the formal Mumford families do not come
-with algebraic maps to a common compactified moduli base.  Nor does a schematic closure in a
-Hilbert scheme choose the fan $\Sigma$ or force (13.30): matching tangent dimensions, recording
-structure graphs, and normalizing the closure do not prove that its completed local rings are
-the prescribed monoid completions or that its boundary equivalence relation is exhausted by
-face and cusp identifications.  Book 58 algebraizes a proper formal scheme over a fixed
-complete base only after that formal scheme and an ample formal bundle are supplied; it does
-not create the missing compactified base.  Thus Lemmas 13.2B.1--13.2B.2 do not prove Required
-Theorem 13.2B.3, and no permitted earlier source has been shown here to prove it.
+This is the exact fan-dependent theorem needed for $(\mathrm{FTJ})$.  The existence assertion
+in item 1 is load-bearing.  It would be supplied by Required $(\mathrm{AEC}_0)$ and Required
+Theorem 13.2B.3a.3, not by the bare monoid schemes (13.29), a schematic Hilbert closure, or an
+application of Book 58 to one complete base.  Proposition 13.2B.3b below proves only the
+conditional passage from a supplied unframed package to the paired-frame twist.
 
-The framing and twisting steps themselves can nevertheless be removed from the missing-input
-list.
-
-**Proposition 13.2B.3b (normalization and twisting reduce the framed theorem to the unframed
-cusp package).**  Suppose Required Theorem 13.2B.3a and the ledger $(\mathrm{ACE})$ are
-supplied for the corrected unframed component, compatibly for the global split coefficient
-base and the unramified local base $R'/R$.  Then Required Theorem 13.2B.3 holds for the
-two-prime twist and the fans of Lemma 13.2B.2.  In particular, adjoining the paired frames,
+**Proposition 13.2B.3b (conditional normalization and twisting reduce the framed theorem to the unframed
+cusp package).**  Suppose Required Theorem 13.2B.3a and Required
+$(\mathrm{ACE})$ are supplied compatibly over the global split base and the finite-etale local
+splitting base.  Then Required Theorem 13.2B.3 holds for the two-prime twist and the fans of
+Lemma 13.2B.2.  In particular, adjoining the paired frames,
 regularizing for their refined lattices, and descending the arithmetic twist require no
 further compactification theorem.
 
@@ -3003,15 +3435,17 @@ an $R$-section.  Because its generic point was not changed, neither its valuatio
 shells nor its enhanced line, sign, or two exact frames change.  This proves item 4 and the
 proposition. $\square$
 
-Thus the paired-frame cover is not the first unresolved step.  The first unresolved step is
-Required Theorem 13.2B.3a: the relative inverse-to-Mumford equivalence.  Books 119 and 120
-explicitly leave compactification in the split case outside their scope; Book 58 algebraizes
-only an already proper formal scheme equipped with an ample formal line; Books 8 and 10
-respectively test positivity and descend objects already constructed.  None supplies
-$(\mathrm{MPE})_{b^\circ}$.  The later $(\mathrm{ACE})_{b^\circ}$ clauses therefore have not
-even been reached.  Accordingly
-Proposition 13.2B.3b is a genuine reduction, but Required Theorem 13.2B.3 and
-$(\mathrm{FTJ})$ remain conditional.
+The proof order shows that paired-frame normalization is not an independent unresolved step.
+Proposition 13.2B.2a proves the inverse-to-Mumford equivalence over complete traits, and
+Proposition 13.2B.2b computes the completed deformation ring on the Mumford side.  The first
+missing relative input is Required $(\mathrm{IIT})$, whose monomial-divisibility clause is not
+forced by the labelled reduction.  Required $(\mathrm{MPE})$ follows conditionally from that
+input by (13.28j.4).  The subsequent algebraic inputs are Required $(\mathrm{BCP})$ and
+$(\mathrm{AEC}_0)$, compatible ramified conductor descent $(\mathrm{RCD})$, and the
+theta--determinant theorem $(\mathrm{TDC})$; together they form Required $(\mathrm{ACE})$.
+Books 8, 10, 58, 119, and 120 do not supply these assertions.  Proposition 13.2B.3b proves the
+valid conditional normalization and finite-etale twist-descent deduction, but Required
+Theorem 13.2B.3 remains open.
 
 **Proposition 13.2B.4 (conditional handoff to the framed joining datum).**  If Required
 Theorem 13.2B.3 holds for the collection $\Sigma$ of Lemma 13.2B.2, then items 1--2 of
@@ -3048,19 +3482,18 @@ is nonempty and contains a closed point.  This is the weaker item 3.  A marked $
 reducing in (13.32) exists only under the additional condition already isolated in
 (13.21). $\square$
 
-**Corollary 13.2B.5 (conditional stable slice and packet reduction).**  Assume Required
-Theorem 13.2B.3.  Then the weaker stable integral connecting-slice assertion used by Book 154
-follows from Proposition 13.2A.3 and Lemmas 13.2A.1--13.2A.2.  If (13.21) is also satisfied,
+**Corollary 13.2B.5 (conditional stable slice and packet reduction).**  Assuming Required
+Theorem 13.2B.3, the weaker Required stable integral connecting-slice assertion used by Book
+154 follows from Proposition 13.2A.3 and Lemmas 13.2A.1--13.2A.2.  If (13.21) is also satisfied,
 the literal form of $(\mathrm{ICS})_{v,Z}$ follows.  Under the further repeatability,
 flexibility, and realized normal-closure hypotheses of Proposition 13.2A, these assertions
 reduce the one-special/all-other-good packet to Book 154, Corollary 5.2E.
 
-This is a conditional reduction, not a proof of $(\mathrm{FTJ})$, $(\mathrm{ICS})$, or the
-singleton moving theorem.  The finite-field Bertini argument, DVR slicing, Kummer
-normalization, fan construction, repeatable-packet reduction, and normal-sheet preservation
-remain available.  Proposition 13.2B.3b also leaves no separate frame-normalization or twist
-descent gap.  The missing implication is Required Theorem 13.2B.3, whose first absent premise
-is the unframed Mumford--PEL cusp theorem of Required Theorem 13.2B.3a.
+Thus Required $(\mathrm{FTJ})$ and the weaker Required $(\mathrm{ICS})$ used by Book 154 are
+conditional on Required Theorem 13.2B.3.  The literal marked-good-section form also requires
+(13.21).  Under those geometric inputs and the repeatability, flexibility, and realized
+normal-closure hypotheses stated in Proposition 13.2A, the singleton moving conclusion follows.
+Those arithmetic packet hypotheses are not consequences of the toroidal theorem.
 
 ### 13.3 Passing from neighborhoods to every conjugate
 
@@ -3159,7 +3592,7 @@ package.  Thus the good ordinary base-field seed is unconditional for $p\geq7$.
 
 Ordinary reduction is open by partial Hasse invariants. Nonordinary reduction is retained on an open residue tube despite being closed in the special fiber. Semistability is retained in the full-dimensional chart by fixed positive valuation shells. Exact torsion representations and both frames are locally constant through finite etale isomorphism schemes, after only the completion extensions explicitly allowed in the datum. Proposition 3.2 and Theorem 12.1 ensure that every intersection is witnessed on the same geometrically connected twist.
 
-Finally, good reduction, ordinary or local--local type, semistability, toric rank, and finite flatness survive finite extension. Splitness can improve, frames need not descend, and valuations rescale. Theorem 13.1 and Corollary 13.2 therefore provide all five nonempty local-open inputs required by simultaneous Moret--Bailly specialization in the unramified odd-prime, monodromy-admissible catalog range.  For an exact singleton mixed packet, Section 13.2A proves the finite-residue relative Bertini and stable complete-intersection steps.  Section 13.2B proves normalization of the paired-frame cusp lattices and constructs a simultaneous regular projective equivariant fan.  Proposition 13.2B.3b further proves that finite normalization, regularity of the refined chart, the corrected-source and paired-frame cocycle, and an ample linearized tensor product descend once the unframed toroidal model exists.  What it does **not** prove is the first unframed step: Required Theorem 13.2B.3a must identify degenerating PEL families with the Mumford one-motive, fully faithfully and uniformly over every cusp and cone.  Only after that theorem comes the separate $(\mathrm{ACE})$ ledger: algebraic effectivity, exact cusp overlaps and trait coverage, and compatible theta positivity.  Required Theorem 13.2B.3, $(\mathrm{FTJ})_{v_0,Z}$, even the weaker stable integral slice used by Book 154, and the singleton moving input therefore remain conditional.  The literal stronger form with a marked $P$ specializing in $W$ additionally requires its separate residue-point condition (13.21). The other qualifications—an externally fixed nonsquare polarization class, a dyadic coefficient prime, an unramified-only frame not realized over an unramified field, or two incompatible prescribed Tate Kummer classes—remain explicit changes of scope.
+Finally, good reduction, ordinary or local--local type, semistability, toric rank, and finite flatness survive finite extension. Splitness can improve, frames need not descend, and valuations rescale. Theorem 13.1 and Corollary 13.2 therefore provide all five nonempty local-open inputs required by simultaneous Moret--Bailly specialization in the unramified odd-prime, monodromy-admissible catalog range.  For an exact singleton mixed packet, Section 13.2A proves the finite-residue relative Bertini and stable complete-intersection steps.  Section 13.2B proves normalization of the paired-frame cusp lattices, constructs a simultaneous regular projective equivariant fan, proves inverse-to-Mumford and full faithfulness over complete traits, and computes the completed deformation ring on the already-Mumford-presented side.  It isolates the first missing infinitesimal recognition theorem $(\mathrm{IIT})$ by the square-zero smoothing $XY=\epsilon$ with external $Q=0$.  Even after the resulting conditional $(\mathrm{MPE})$, algebraic cusp effectivity requires the bounded normalization--conductor presentation $(\mathrm{BCP})$ and $(\mathrm{AEC}_0)$; ramified trait coverage requires $(\mathrm{RCD})$; and comparison of the base fan line with the universal Poincare/theta determinant and global positivity requires $(\mathrm{TDC})$.  These inputs form Required $(\mathrm{ACE})$.  Proposition 13.2B.3b proves that finite normalization and finite-etale twist descent then supply the paired frames and refined charts.  Consequently Required Theorem 13.2B.3, Required $(\mathrm{FTJ})$, and Required $(\mathrm{ICS})$ remain conditional.  Under those geometric inputs and the separate repeatability, flexibility, and realized-normal-closure hypotheses of Proposition 13.2A, the singleton moving conclusion follows.  The literal stronger form with a marked $P$ specializing in $W$ additionally requires (13.21). The other qualifications—an externally fixed nonsquare polarization class, a dyadic coefficient prime, an unramified-only frame not realized over an unramified field, or two incompatible prescribed Tate Kummer classes—remain explicit changes of scope.
 
 For a fixed smooth geometrically connected twist, Proposition 9.3 additionally gives
 base-field points at all sufficiently large good places.  This uniform statement is designed

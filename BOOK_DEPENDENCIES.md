@@ -150,7 +150,7 @@ flowchart LR
 | 119 | Quaternionic PEL Functors and Representability | 10, 13, 65, 35, 115, 118 |
 | 120 | Uniformization, Components, and Hecke Descent for Shimura Curves | 58, 39, 118, 119 |
 | 121 | Good Integral Models of Quaternionic Shimura Curves | 15, 58, 19, 35, 36, 61, 55, 118, 119 |
-| 122 | Semistable Models and Monodromy of Quaternionic Shimura Curves | 10, 11, 12, 13, 16, 17, 20, 22, 35, 37, 58, 70, 76, 118, 119, 121 |
+| 122 | Semistable Models and Monodromy of Quaternionic Shimura Curves | 6, 10, 11, 12, 13, 16, 17, 20, 22, 35, 37, 58, 70, 76, 118, 119, 120, 121 |
 | 123 | Modular and Shimura Curves | 110, 111, 112, 114, 115, 116, 118, 119, 121, 122, 120 |
 | 124 | Hecke Correspondences on Curves and Jacobians | 39, 83, 84, 114, 120, 123 |
 | 125 | Automorphic Decomposition of Shimura-Curve $H^1$ | 21, 47, 36, 96, 104, 87, 124, 118, 119, 120 |
@@ -167,7 +167,7 @@ flowchart LR
 | 136 | Mumford Representations and Exact Genus-Two Jacobian Arithmetic | 37, 135 |
 | 137 | Explicit Two-Descent on Genus-Two Jacobians | 40, 136 |
 | 138 | Integral Local Types and Type Lattices | 17, 21, 22, 51, 53, 54, 73, 74, 75, 76, 122 |
-| 139 | Ihara Theory and Saturated Degeneracy Maps on Shimura Curves | 16, 24, 38, 39, 124, 118, 122 |
+| 139 | Ihara Theory and Saturated Degeneracy Maps on Shimura Curves | 4, 5, 6, 16, 24, 38, 39, 85, 118, 122, 124 |
 | 140 | Integral Level Change and Jacquet--Langlands Comparison | 22, 80, 85, 104, 122, 125, 138, 139 |
 | 141 | Dickson Classification and Adequate Residual Image | 3, 6, 45, 42, 24 |
 | 142 | The Chebotarev Density Theorem | 2, 3, 4, 5, 6, 7, 17, 21, 23, 24 |
@@ -185,7 +185,7 @@ flowchart LR
 | 154 | Moret–Bailly’s Theorem | 8, 9, 10, 40, 41, 58, 153 |
 | 155 | Galois and Solvable Refinements of Arithmetic Approximation | 2, 6, 153, 154, 142 |
 | 156 | Hilbert--Blumenthal Moduli and Two-Prime Level Covers | 17, 10, 13, 35, 55, 115, 116 |
-| 157 | Local Geometry of Hilbert--Blumenthal Moduli | 2, 8, 37, 43, 44, 45, 51, 52, 54, 55, 58, 60, 117, 154, 155, 156 |
+| 157 | Local Geometry of Hilbert--Blumenthal Moduli | 2, 8, 10, 37, 43, 44, 45, 51, 52, 54, 55, 58, 60, 117, 154, 155, 156 |
 | 158 | Moduli Constructions for Potential Modularity | 156, 157 |
 | 159 | Discriminants of Galois Representations | 3, 56 |
 | 160 | Odlyzko Bounds and Fontaine's Argument | 7, 56, 159 |
@@ -204,7 +204,7 @@ flowchart LR
 | 173 | Minimal Modularity Lifting | 171, 172 |
 | 174 | One-Prime Type Complexes and Component Support | 6, 17, 21, 22, 65, 67, 70, 122, 125, 138, 139, 140, 141, 143, 152, 170, 171, 172 |
 | 175 | One-Prime Nonminimal Patching and R=T | 67, 69, 109, 138, 139, 140, 143, 170, 171, 172, 173, 174 |
-| 176 | Nonminimal Modularity Lifting | 22, 109, 122, 123, 124, 125, 138, 139, 140, 143, 170, 173, 174, 175 |
+| 176 | Nonminimal Modularity Lifting | 6, 22, 109, 122, 123, 124, 125, 138, 139, 140, 143, 170, 173, 174, 175 |
 | 177 | Potential Modularity of Two-Dimensional Representations | 104, 98, 127, 176, 154, 158, 142 |
 | 178 | Auxiliary Dihedral Data and Residual Potential Modularity | 6, 104, 98, 127, 141, 175, 154, 142, 155, 156, 157 |
 | 179 | Compatible Systems of Galois Representations | 41, 168, 141, 142 |
@@ -228,8 +228,11 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   the localized $\Delta$-invariant sum of transgression kernels on the $K_c^v$-invariant
   continuous odd-primary characters of the full profinite congruence kernels. Book 139 proves
   that this is exactly the noncongruence-character quotient required for saturated two-map
-  Ihara, but proves neither that vanishing nor the separate centrality, comparison, and
-  metaplectic-computation inputs that could imply it.
+  Ihara, proves spectator-level invariance of the underlying kernel for fixed $(F,B,v)$, and
+  gives the exact compact finite-coefficient transgression quotient. It proves neither the
+  vanishing nor any of the rank-two centrality, perfect adelic pairing, split/division local
+  multiplier classification, and adelic-to-scalar Hilbert-symbol reduction that could imply
+  it. Books 4--6 supply only the scalar reciprocity and orthogonality input after that reduction.
 - **Type and node comparison:** objectwise normalization of the actual principal/ray tower,
   the ray factor, and the finite-wild/procyclic ramified strict-node complex are proved in Books 122,
   22, and 174; the common-normalization lemma makes the lifted principal legs isomorphisms.
@@ -245,13 +248,17 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   and reduces the normalized spectator/ray compositum to the residue-field factorization of
   $T^c-\bar u^{-1}$ and the actual local intersection field. Proposition 9.6 factors every
   completed endpoint and blowup chart once the actual endpoint valuation, leading coefficient,
-  and tame subgroups are supplied. Proposition 9.7 gives the exact Milnor-tube construction and
-  isolates the completed two-dimensional Kummer--tube theorem $({\rm BTK})$; Proposition 9.8
-  proves $({\rm RGC}_v)$ on noncontracted and contracted component terms, with refined excess,
-  Frobenius--Hecke compatibility, and transpose. The remaining $({\rm HDB}_v)$ input is the
-  actual spectator/ray Kummer datum together with $({\rm BTK})$.
-  Consequently $({\rm PNS}_v)$, and hence Book 174's $({\rm TPE}_v)$ reduction, remain
-  conditional; unit-order coarse descent remains the separate
+  and tame subgroups are supplied. Proposition 9.7 gives the exact Milnor-tube construction;
+  Proposition 9.8 proves $({\rm RGC}_v)$ on noncontracted and contracted component terms, with
+  refined excess, Frobenius--Hecke compatibility, and transpose.  For the permutation and
+  quotient/augmentation rows, Proposition 9.9 constructs the strict ray quotient and computes
+  its local field, vertical unit, endpoint factors, Frobenius orbits, and active/ray
+  intersection. Proposition 9.10 computes the completed tubes, actions, and generization maps,
+  and Corollary 9.11 proves $({\rm KBL}_v)_{\rm act}$, $({\rm BTK}_v)_{\rm act}$,
+  $({\rm HDB}_v)_{\rm act}$, and $({\rm PNS}_v)_{\rm act}$.  Thus Book 174's
+  $({\rm TPE}_v)$ reduction is closed for its actual rows; arbitrary intermediate
+  representations and arbitrary cyclic ray data still require the corresponding general
+  Kummer--tube and branch-descent targets. Unit-order coarse descent remains the separate
   $({\rm TIC}_v)$ input. The later
   type algebra has now been reduced further.  Under those geometric hypotheses and the named
   abelian-Ihara family, for the actual quotient/augmentation flag pair, when $q_v+1$ is a
@@ -298,8 +305,8 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   unresolved inputs are therefore vanishing of the mixed obstruction groups, a derived
   product-residue/iterated-switching Beck--Chevalley
   theorem (Books 22 and 122 provide only separate one-trait models), and simultaneous component
-  support.  A joint scalar ray quotient and strict product twist remain arithmetic inputs when
-  scalar active places occur.  Book 143 gives represented-ring augmentation for the product
+  support.  Book 176, Proposition 8.3 and (8.26) construct the joint scalar ray quotient and
+  strict product twist when scalar active places occur.  Book 143 gives represented-ring augmentation for the product
   problem under its ordered-distinct-root hypotheses.  One common equivariant auxiliary
   package, including the full vertexwise ordered-root and old/new hypotheses of Book 174,
   Proposition 9.1, gives coherent complex--module--action--pairing augmentation objectwise;
@@ -312,25 +319,24 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   argument then supplies the all-Artinian factorizations.  Those joint inputs do not follow
   from separate one-prime carriers.
 - **Controlled residual automorphic seed:** Book 157 proves the paired-frame Kummer
-  normalization, a simultaneous regular projective equivariant fan, finite-field Bertini with
-  imposed jets, and stable DVR slicing.  It does not prove the finite-type framed joining
-  theorem $(\mathrm{FTJ})_{v_0,Z}$.  Its first absent toroidal input is Required Theorem
-  13.2B.3a, $(\mathrm{MPE})$: the relative inverse-to-Mumford PEL equivalence, full
-  faithfulness, and completed deformation comparison.  The subsequent $(\mathrm{ACE})$ ledger
-  separately retains finite-type cusp effectivity, exact overlaps and trait coverage, and
-  compatible theta positivity.  Proposition 13.2B.3b proves normalization, the framed
-  completed charts, smoothness, properness, ample pullback, and effective twist descent
-  conditional on those unframed inputs.  Their combined output is the still-unproved Required
-  Theorem 13.2B.3, $(\mathrm{TCG})_\Sigma$.  Conditional on that theorem, the weaker
-  $(\mathrm{ICS})_{v_0,Z}$ needed by Book 154 gives the degree-indexed allowed-good Abel
-  condition.  Book 182, Required Moving Theorem 6.3 would then combine it with the repeatable
-  and flexible packets to give the common moving presentation; its normal-sheet clause has been
-  reduced to persistence after scalar extension and introduces no independent presentation.
-  The literal marked-good-section form additionally retains Book 157's explicit finite-residue
-  rational-point condition, but that stronger form is not used.
+  normalization, a simultaneous regular projective equivariant fan, finite-field Bertini,
+  stable DVR slicing conditional on a supplied joining model, the complete-trait inverse, the Mumford-side completed ring, and the
+  formal family-theta/base-fan calculation.  Its first missing relative input is Required
+  $(\mathrm{IIT})$: labelled reduced data do not force a square-zero smoothing coefficient to
+  be the fixed logarithmic monomial times a unit.  Required $(\mathrm{MPE})$ follows only
+  conditionally.  Required $(\mathrm{ACE})$ then retains the bounded conductor presentation
+  $(\mathrm{BCP})$ and single-chart effectivity $(\mathrm{AEC}_0)$, ramified conductor descent
+  $(\mathrm{RCD})$, and theta--determinant cusp theorem $(\mathrm{TDC})$.  Proposition
+  13.2B.3b conditionally proves paired-frame normalization and finite-etale twist descent from
+  that complete unframed package.  Thus Required Theorem 13.2B.3,
+  $(\mathrm{TCG})_\Sigma$, Required $(\mathrm{FTJ})_{v_0,Z}$, and Required
+  $(\mathrm{ICS})_{v_0,Z}$ remain conditional.  A singleton common moving presentation also
+  requires the separately stated repeatability, flexibility, and realized-normal-closure
+  hypotheses.  The literal marked-good-section form additionally retains Book 157's necessary
+  finite-residue rational-point condition, but that stronger form is not used.
   In the multiplicative-$\ell$
-  Frey branch, the one-prime good ordinary $\mathbf Q_\ell$ seed
-  $({\rm Ord}^{\rm base}_\ell)$ carrying the exact selected $\ell$-model.  Book 157,
+  Frey branch, Book 157 constructs the one-prime good ordinary $\mathbf Q_\ell$ seed
+  $({\rm Ord}^{\rm base}_\ell)$ carrying the exact selected $\ell$-model.  Its
   Proposition 8.4B constructs it by Serre--Tate theory, and Lemma 8.4B.1 constructs the
   trace-one finite-field seed from Book 117's ring-class reciprocity and
   potential-good-reduction package.
@@ -380,8 +386,8 @@ acyclic manuscript graph so that the closed record cannot be mistaken for a rema
   In the multiplicative-$\ell$ branch, Book 157 supplies $({\rm Ord}^{\rm base}_\ell)$ and
   Book 182, Proposition 6.2C then supplies corrected $({\rm FF}^{\rm base}_\ell)$.  In the
   good-reduction branch Proposition 6.2A supplies the coefficient-prime point directly.  In
-  both branches Book 182, Required Moving Theorem 6.3 remains conditional on Book 157's
-  $(\mathrm{TCG})_\Sigma$ or another genuine moving repair.  Once that presentation is
+  both branches Book 182's Required Moving Theorem 6.3 remains conditional on Book 157's
+  Required $(\mathrm{TCG})_\Sigma$ or another genuine moving repair.  Once that presentation is
   supplied, Book 182 forces constant-field avoidance with split Chebotarev certificate primes
   and proves the remaining
   normal-closure control, applies Book 178's corrected relative-ray compatibility in the

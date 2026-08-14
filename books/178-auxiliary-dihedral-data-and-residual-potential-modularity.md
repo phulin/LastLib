@@ -610,18 +610,18 @@ smooth proper integral model whose allowed good factors contained every tube abo
 special-fiber Zariski open; Book 154, Corollary 5.2E turns either verified repair into the common
 presentation.  Book 157, Lemmas 13.2A.1--13.2A.2 prove the finite-residue relative Bertini,
 complete-intersection, and coefficient-stability steps.  Its Lemmas 13.2B.1--13.2B.2 normalize
-the paired-frame division monomials and construct a regular projective equivariant fan.  They do
-not supply the first unframed input, Required Theorem 13.2B.3a: the relative inverse-to-Mumford
-equivalence with full faithfulness and completed deformation comparison.  The subsequent
-$(\mathrm{ACE})$ ledger separately retains finite-type cusp effectivity, exact overlaps and
-trait coverage, and compatible theta positivity.  Proposition 13.2B.3b proves that, once those
-unframed inputs are supplied, finite normalization gives the framed completed charts and
-smooth proper model, while a symmetrized ample pullback gives effective twist descent.  Their
-combined framed output is still the conditional Required Theorem 13.2B.3.  Conditional on that
-theorem, Proposition 13.2B.4 gives
-$(\mathrm{FTJ})_{v_0,Z}$, Corollary 13.2B.5 gives the weaker form of
-$(\mathrm{ICS})_{v_0,Z}$ used by Book 154, and Book 154, Corollary 5.2E proves (2.12a) in every
-sufficiently large compatible degree.  Without it, item 6 remains an input.
+the paired-frame division monomials and construct a regular projective equivariant fan, while
+Propositions 13.2B.2a--13.2B.2c prove the complete-trait inverse, the Mumford-side completed
+ring, and the formal family-theta/base-fan calculation.  They do not prove Book 157's Required
+$(\mathrm{IIT})$, $(\mathrm{MPE})$, bounded conductor presentation $(\mathrm{BCP})$ and
+single-chart effectivity $(\mathrm{AEC}_0)$, ramified conductor descent $(\mathrm{RCD})$, or
+theta--determinant cusp theorem $(\mathrm{TDC})$.  Those inputs form its still-Required
+$(\mathrm{ACE})$ package and Required Theorem 13.2B.3.  Conditional on that theorem,
+Proposition 13.2B.4 gives $(\mathrm{FTJ})_{v_0,Z}$ and Corollary 13.2B.5 gives the weaker
+$(\mathrm{ICS})_{v_0,Z}$ used by Book 154.  Only then, and under the separately stated
+repeatability, flexibility, and realized normal-closure hypotheses, does Book 154, Corollary
+5.2E prove (2.12a) in sufficiently large compatible degrees.  Without those geometric and
+packet hypotheses, item 6 remains an input.
 The literal stronger clause requiring a good $k$-point to reduce inside the allowed
 special-fiber open still needs Book 157, (13.21), but it is not used here.  Equal ranks, Hensel
 lifting, local realizability, and arbitrary norm

@@ -212,8 +212,8 @@ and the same framing convention; changing that convention on only one side is no
 Write $q_v$ for the residue cardinality at $v$. The augmentation face is an unramified
 Steinberg twist: no additional ramified prime-to-$\ell$ scalar character is hidden in its
 inertial label. The selected residual datum consists of an invariant line $L_v$, a sign
-$\varepsilon_v\in\{1,-1\}$, and a nontrivial finite cyclic tame $\ell$-power quotient
-$\Delta_v$. Put
+$\varepsilon_v\in\{1,-1\}$, and the strict tame quotient
+$\Delta_v=C_{\ell^{\operatorname{ord}_\ell(q_v-1)}}$ of Book 174, (2.2a)--(2.2d). Put
 
 $$
 \Lambda_v=\mathcal O[\Delta_v],
@@ -299,9 +299,11 @@ vanishes. Book 139 proves saturation and its corrected component filtration only
 vanishings are supplied. Non-Eisenstein localization and strong approximation do not prove
 them.
 
-**$({\rm TYPE}_v)$ (the typed complex).** The required typed parahoric theorem
-$({\rm TPE}_v)$ formulated in Book 174, the accompanying $({\rm TIC}_v)$ hypothesis, and the independent hypothesis
-$({\rm TIH}_{\mathscr F})$ hold on every retained finite shadow. The first two supply the
+**$({\rm TYPE}_v)$ (the typed complex).** Use the typed parahoric theorem
+$({\rm TPE}_v)$ proved in Book 174 from Book 122's actual-row calculation and strict ray
+choice.  The accompanying $({\rm TIC}_v)$ hypothesis and the independent hypothesis
+$({\rm TIH}_{\mathscr F})$ hold on every retained finite shadow. The theorem and the first
+hypothesis supply the
 actual typed incidence diagram, exact flag resolutions and component routing, and the declared
 pull--norm inverse-character adjunction. The last says that, for every actual
 crossed-coefficient object $\overline W$ in the flag diagram,
@@ -354,10 +356,14 @@ line, sign, or orientation operators outside this trace/structural order are adj
 surjectivity onto the larger image is an additional generation hypothesis and is not assumed
 silently.
 
-**$({\rm RAY}_v)$ (strict scalar twisting).** The effective global ray quotient of
-Section 2.2 exists, and Book 174's twisting identities hold for represented deformation rings,
-strict complexes, new modules, pairings, and faithful acting images. This is what proves
-fixed-prime augmentation. A merely local tame character does not suffice.
+**$({\rm RAY}_v)$ (strict scalar twisting).** Use the quotient
+$\Delta_v=C_{\ell^{\operatorname{ord}_\ell(q_v-1)}}$ constructed in Book 174,
+(2.2a)--(2.2d), by its odd-exponent local--global construction.  Its conductor places are
+included in the fixed spectator datum and the local field is
+$F_v(\pi_v^{1/|\Delta_v|})$ with vertical unit $1$.  Book 174's twisting identities then hold
+for represented deformation rings, strict complexes, new modules, pairings, and faithful
+acting images. This is what proves fixed-prime augmentation. A merely local tame character or
+an unspecified cyclic quotient does not suffice.
 
 **$({\rm AUX}_Q)$ (clean auxiliary control).** The Taylor--Wiles set is disjoint from $v$,
 its residual Frobenius roots are distinct and ordered, its effective diamond cover is a genuine
@@ -1875,11 +1881,11 @@ follows.
 | 173, *Minimal Modularity Lifting* | comparison point for the neutral minimal theorem and its finite-flat range | its equality is not applied to $R^{\mathrm{sp},1}$; the scalar Kummer and line-special directions do not satisfy that identification |
 | 138, *Integral Local Types and Type Lattices* | enhanced special line, primary and companion lattices, primitive type occurrence, Frobenius conventions | at $q_v\equiv1$ a line enhancement replaces old-root separation; local lattices alone do not prove global support |
 | 139, *Ihara Theory and Saturated Degeneracy Maps on Shimura Curves* | residual two-map Ihara injectivity and primitive saturation | conditional on the abelian Ihara hypothesis; full-map saturation does not create a scalar selected summand |
-| 140, *Integral Level Change and Jacquet--Langlands Comparison* | node, graph, component-group, normalized Smith comparisons, and constant-coefficient generic support in the clean special block | datum-specific node uniformization and the typed extension remain separate; branch correction and the Néron component group are distinct; typed generic support is instead derived in Book 174 after its typed filtration |
+| 140, *Integral Level Change and Jacquet--Langlands Comparison* | node, graph, component-group, normalized Smith comparisons, and constant-coefficient generic support in the clean special block | datum-specific node uniformization remains separate; the actual-row typed extension is supplied by Books 122 and 174 rather than Book 140; branch correction and the Néron component group are distinct; typed generic support is derived in Book 174 after its typed filtration |
 | 143, *Taylor--Wiles Primes* | the split-detector and prime-selection mechanism, the sharp auxiliary tangent count, and represented-ring augmentation | applicability to the recomputed enhanced dual group and the resulting exactly $q$ ordered killing primes are retained explicitly in the unpadded $({\rm AUX}_Q)$ hypothesis; prime selection alone supplies no automorphic module |
 | 170, *Hecke-Valued Galois Representations and Nonminimal Reciprocity* | the order-valued representation, named local factorization, trace generation, and the surjections (3.13) | every generic branch and every structural generator must be accounted for; a pseudorepresentation alone is insufficient |
 | 171--172, *Minimal Deformation--Hecke Problem* and *Minimal Patching* | the unchanged clean local balance ledger, marked finite-shadow quotient patching, and equal-variable rigidity over the regular absolute and diamond sources | the minimal $R=T$ equality is not applied to the conductor-one ring; the enhanced local defect and the nonminimal module are recomputed here and in Book 174 |
-| 174, *One-Prime Type Complexes and Component Support* | scalar chart, twist identities, projective primary--companion complexes, conditional full named-component support, Proposition 6.3 typed generic-kernel and integral faithful-order equality, exact fixed-prime augmentation, and Proposition 9.1 auxiliary augmentation on both adjoint sides | the typed parahoric extension, type-Ihara, primitive-residue, node, Book 125 routing, and boundary chart inputs retain their stated roles; auxiliary acting-image augmentation is only a surjection there; no global reducedness or nonminimal $R=T$ is asserted |
+| 174, *One-Prime Type Complexes and Component Support* | proved actual-row typed parahoric extension, scalar chart, twist identities, projective primary--companion complexes, conditional full named-component support, Proposition 6.3 typed generic-kernel and integral faithful-order equality, exact fixed-prime augmentation, and Proposition 9.1 auxiliary augmentation on both adjoint sides | $({\rm TIC}_v)$, type-Ihara, primitive-residue, switched node uniformization, Book 125 routing, and boundary chart inputs retain their stated roles; auxiliary acting-image augmentation is only a surjection there; no global reducedness or nonminimal $R=T$ is asserted |
 
 The proof of Theorem 4.2 uses Books 170 and 174 directly, with Books 138--140 supplying the
 hypotheses built into Book 174. Books 67 and 69 enter both the balanced enhanced presentation

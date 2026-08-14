@@ -1949,14 +1949,17 @@ multiplicity and expansion one, and Hecke/transpose compatibility to the actual 
 Proposition 9.5 computes the invariant branch fields, Cartier multiplicities and active group
 filtrations, and reduces the normalized spectator/ray compositum to its actual Kummer
 factorization and intersection field. Propositions 9.6--9.7 factor the completed endpoints
-from actual valuations and leading coefficients, give the exact Milnor-tube formalism, and
-isolate the completed Kummer--tube theorem $({\rm BTK})$; Proposition 9.8 proves
-$({\rm RGC}_v)$ on component-routed and contracted terms. The remaining $({\rm HDB}_v)$ is
-the actual spectator/ray Kummer datum together with $({\rm BTK})$. Thus
-“the type sheaf extends” remains conditional on $({\rm PNS}_v)$, not a consequence merely of
-the generic stable lattice or objectwise finite flatness of the normalization.
+from actual valuations and leading coefficients and give the exact Milnor-tube formalism;
+Proposition 9.8 proves $({\rm RGC}_v)$ on component-routed and contracted terms.  For the
+permutation and quotient/augmentation rows used by Book 174, Proposition 9.9 supplies the
+strict ray field, vertical unit, endpoint factors, Frobenius orbits, and active/ray
+intersection; Proposition 9.10 computes the completed tubes, actions, and generization maps;
+and Corollary 9.11 proves $({\rm PNS}_v)_{\rm act}$.  Thus the extension is proved for those
+actual rows.  An arbitrary intermediate representation or arbitrary cyclic ray datum still
+requires $({\rm HDB}_v)_{\rm gen}$ and $({\rm BTK})_{\rm gen}$; a generic stable lattice or
+objectwise finite flatness alone does not prove that general extension.
 
-Book 174, Proposition 6.3 later proves, from the assumed $({\rm PNS}_v)$ and its other typed inputs and
+Book 174, Proposition 6.3 later proves, from the proved $({\rm PNS}_v)_{\rm act}$ and its other typed inputs and
 Book 125's component-routed semisimple decomposition on the common principal cover, that the
 curve-new and graph generic Hecke kernels agree. Thus typed generic support is not a further
 independent hypothesis. Apart from the quotient/augmentation projector deductions in the
@@ -2008,7 +2011,7 @@ At the semistable Iwahori prime used for the basic level-raising theorem, the ne
 The basic one-prime semistable theorem includes the unramified special family at Iwahori level.
 Ramified special twists, unramified quadratic depth-zero packets, and tame positive-depth
 dihedral packets are included only in the conditional type-enhanced variant of Section 13.1,
-imposing Book 122's $({\rm PNS}_v)$, pull--norm, unit-order coarse descent, and
+imposing Book 122's general $({\rm PNS}_v)_{\rm gen}$, pull--norm, unit-order coarse descent, and
 the applicable type-Ihara and primitive-residue inputs.  For Book 174's
 quotient/augmentation pair the latter two are automatic in the $q_v+1$-unit range and reduce
 to its explicit nonbanal maps otherwise; no such deduction is asserted here for arbitrary
@@ -2229,7 +2232,7 @@ $$
 \tag{15.1a}
 $$
 
-and the theorem is additionally conditional on the datum-specific node-uniformization hypothesis and on Book 139's abelian Ihara condition. Book 139 in turn records its own direct prerequisites $16,38,39,124,118,122$; they are transitive rather than silently reproved here. The repository dependency table records both corrected rows.
+and the theorem is additionally conditional on the datum-specific node-uniformization hypothesis and on Book 139's abelian Ihara condition. Book 139 in turn records its own direct prerequisites $4,5,6,16,24,38,39,85,118,122,124$; they are transitive rather than silently reproved here. The repository dependency table records both corrected rows.
 
 The downstream interface is equally exact.
 
@@ -2237,7 +2240,7 @@ The downstream interface is equally exact.
 |---|---|---|
 | Book 176 | one-prime special raising/lowering and common away-from-$v$ acting order | (1.5d), node uniformization, Book 125's component-routing source condition, both finite modules in (8.3a), and Section 11.4 before using a scalar as an augmented congruence ideal |
 | Book 170 | free $Q$, equality of faithful inner-form trace orders, and geometric lowering criterion | freeness and order equality are conditional on abelian Ihara; lowering requires both $\Phi[\varpi]=0$ and $\mathcal C_{\mathrm{br},v}[\varpi]=0$ |
-| Book 174 | coefficient-one constant graph--definite map $X_v\simeq S^\dagger$ | Book 140 does not give $\operatorname{gr}_0Q=X_v^\vee$; the typed variant retains Book 122's conditional $({\rm PNS}_v)$, $({\rm AIH}_{\mathscr F})$, unit-order coarse descent, and the flagged node-groupoid form of node uniformization, together, only in the nonbanal quotient/augmentation range, with the quotient-new and filtered-cofiber assertions (5.0d), (6.0d) |
+| Book 174 | coefficient-one constant graph--definite map $X_v\simeq S^\dagger$ | Book 140 does not give $\operatorname{gr}_0Q=X_v^\vee$; for the actual quotient/augmentation rows Book 122 proves $({\rm PNS}_v)_{\rm act}$, while Book 174 still retains $({\rm AIH}_{\mathscr F})$, unit-order coarse descent, and the flagged node-groupoid form of node uniformization, together, only in the nonbanal range, with the quotient-new and filtered-cofiber assertions (5.0d), (6.0d); arbitrary compact-type rows remain subject to $({\rm PNS}_v)_{\rm gen}$ |
 | Book 175 | no inner-form order index and the signed Gram Smith factor | the factor is an augmented congruence ideal only under Section 11.4; scalar/vexing refinements and all fixed-prime Tor/augmentation statements require the separate Book 174 hypotheses |
 
 In particular, no downstream patching or reciprocity argument can retroactively prove (1.5d), delete $\mathcal C_{\mathrm{br},v}$, or turn the conditional several-prime discussion into a theorem.

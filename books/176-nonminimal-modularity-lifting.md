@@ -154,8 +154,11 @@ kernel; for three or more places the later kernels live on iterated-new quotient
 The arithmetic inputs are not all presently theorems in the declared source chain. The core
 finite-level comparison depends on the actual automorphic localization, the separate
 type-incidence and type-Ihara hypotheses, the one-boundary support datum, and the exact
-reciprocity order. The scalar family also needs an effective global ray quotient and strict
-twist identities. The richer level-changing and component package additionally depends on a
+reciprocity order. The scalar family also uses an effective global ray quotient and strict
+twist identities; Book 174 constructs the strict one-place quotient and Proposition 8.3 below
+constructs the joint quotient, so their existence is no longer an external arithmetic input.
+Using them still enlarges the fixed spectator datum by their actual conductor places. The
+richer level-changing and component package additionally depends on a
 finite family of abelian Ihara vanishings, primitive type residue, and typed node
 uniformization when a switched carrier is used. The finite-set package further requires
 vanishing of all mixed homology, a coefficient-one product-residue comparison, joint
@@ -294,7 +297,7 @@ Three local regimes must not be combined.
 | regime | arithmetic congruence | integral object | conclusion available before patching |
 |---|---|---|---|
 | generic unramified-to-special change | $q_v\not\equiv\pm1\pmod\ell$ | separated old roots and a signed one-prime Gram block | conditional level raising and integral curve--definite comparison from Book 140 |
-| scalar tame twist | $q_v\equiv1\pmod\ell$ | enhanced line, sign, global ray quotient $\Delta_v$, and $\Lambda_v=\mathcal O[\Delta_v]$ | Book 174's strict type complex under $({\rm TIC}_v)$ and $({\rm TIH}_{\mathscr F})$, support under $({\rm SUP}_v)$, and exact twist augmentation under the effective ray hypothesis; constant Ihara and primitive residue are separately required only for the corrected component filtration and extreme residue |
+| scalar tame twist | $q_v\equiv1\pmod\ell$ | enhanced line, sign, Book 174's strict global ray quotient $\Delta_v$, and $\Lambda_v=\mathcal O[\Delta_v]$ | Book 174's strict type complex under $({\rm TIC}_v)$ and $({\rm TIH}_{\mathscr F})$, support under $({\rm SUP}_v)$, and exact twist augmentation; constant Ihara and primitive residue are separately required only for the corrected component filtration and extreme residue |
 | vexing sign collision | $q_v\equiv-1\pmod\ell$ | full primary--companion block and full Gram matrix | one-prime block statements; no scalar $\ell$-power twist face |
 
 The first row changes an unramified packet to a conductor-one special packet. The second row
@@ -351,10 +354,17 @@ Fix $v\nmid\ell$. A **geometric one-prime datum at $v$** records:
 4. primary and companion integral type lattices with their perfect pairing; and
 5. the chosen local regime from Section 2.4.
 
-In the scalar-twist regime it also records an actual finite cyclic $\ell$-power quotient
-$\Delta_v$ of a global ray group, not merely a local abstract character. Local inertia at
-$v$ must factor through $k_v^\times$ and map onto $\Delta_v$, and the unit, central, and
-archimedean compatibilities must hold. Put
+For the scalar line-special package used in Chapters 6--7, the fixed prime-to-$\ell$ scalar
+character in item 3 is trivial, exactly as in Book 175, Section 2.2.  A broader datum may retain
+a nontrivial one only when it is supplied as a named global rigid twist whose determinant line
+is trait-pulled; the strict $\ell$-power quotient below does not globalize or compute an
+otherwise arbitrary prime-to-$\ell$ local character.
+
+In the scalar-twist regime it uses the strict quotient
+$\Delta_v=C_{\ell^{\operatorname{ord}_\ell(q_v-1)}}$ and global character constructed in
+Book 174, (2.2a)--(2.2d), not a local abstract character or an arbitrary cyclic quotient.
+Its local field is $F_v(\pi_v^{1/|\Delta_v|})$, its vertical unit is $1$, and any additional
+conductor places are fixed spectators. Put
 
 $$
 \Lambda_v=\mathcal O[\Delta_v],
@@ -428,8 +438,8 @@ package can be realized directly on the curve-new carrier. Switching to a defini
 a further comparison. In the clean constant-coefficient block it requires Book 140's
 datum-specific node uniformization and Book 125 component-routing source condition, together
 with $({\rm AIH}_{\mathscr F})$; Book 140 then proves generic support and common-kernel
-equality, rather than assuming them. A typed switch additionally requires $({\rm TPE}_v)$
-through the accompanying $({\rm TIC}_v)$ incidence hypothesis,
+equality, rather than assuming them. A typed switch uses the proved $({\rm TPE}_v)$ and
+additionally requires the accompanying $({\rm TIC}_v)$ incidence hypothesis,
 $({\rm TIH}_{\mathscr F})$, $({\rm PRI}_{\rm type})$,
 $({\rm NU}_{\rm type})$, and Book 125's decomposition on the actual common principal cover
 with full routing or a separating component projector. Under $({\rm AIH}_{\mathscr F})$,
@@ -457,8 +467,8 @@ The following statements are hypotheses or conclusions, never clauses in the geo
 
 - the finite family of constant-coefficient abelian Ihara vanishings
   $({\rm AIH}_{\mathscr F})$;
-- the typed parahoric extension and ramified nearby-cycle comparison $({\rm TPE}_v)$ and the
-  accompanying actual-incidence and coarse-descent hypothesis $({\rm TIC}_v)$;
+- the proved typed parahoric extension and ramified nearby-cycle comparison $({\rm TPE}_v)$,
+  and the separate actual-incidence and coarse-descent hypothesis $({\rm TIC}_v)$;
 - the crossed-coefficient residual type-Ihara theorem
   $({\rm TIH}_{\mathscr F})$;
 - saturation of the old image and freeness of its quotient;
@@ -529,9 +539,9 @@ Tor vanishes. This does not imply the mixed two-place vanishing defined in Chapt
 
 ### 5.3 The scalar-twist face
 
-Book 174, Chapter 9 constructs the strict scalar-twist identity only after an effective global
-ray quotient and the exact determinant-square identity have been supplied. A character fiber of
-a group algebra is not assumed flat.
+Book 174, Section 2.2 constructs the strict global ray quotient, and Chapter 9 proves the
+scalar-twist identity with the exact determinant square. A character fiber of a group algebra
+is not assumed flat.
 
 ### 5.4 Support is not faithfulness
 
@@ -558,15 +568,17 @@ For compatibility with earlier citations, the one-prime package consists of the 
 separate inputs, in exactly the sense of Books 174--175:
 
 1. $({\rm AUT}_v)$: the actual non-Eisenstein primary--companion automorphic localization;
-2. $({\rm TYPE}_v)$: $({\rm TPE}_v)$ through $({\rm TIC}_v)$ and
+2. $({\rm TYPE}_v)$: the proved $({\rm TPE}_v)$, together with $({\rm TIC}_v)$ and
    $({\rm TIH}_{\mathscr F})$ at every retained shadow;
 3. $({\rm SUP}_v)$: the marked boundary, unique-component, nonzero-carrier, and depth datum of
    Book 174;
 4. $({\rm REC}_v)$: one order-valued representation on every generic branch, all-Artinian
    factorization through the represented local conditions, and generation of the faithful order
    by the verified operators;
-5. $({\rm RAY}_v)$ for a scalar family: an effective global ray quotient, strict twist
-   identities, and the determinant square; and
+5. $({\rm RAY}_v)$ for a scalar family: the strict quotient
+   $\Delta_v=C_{\ell^{\operatorname{ord}_\ell(q_v-1)}}$ of Book 174,
+   (2.2a)--(2.2d), with its conductor spectators, strict twist identities, and determinant
+   square; and
 6. $({\rm AUX}_Q)$ when auxiliary patching is used: clean auxiliary torsors and exact
    augmentation of represented rings, primary and companion complexes, modules, actions, and
    pairings, with zero positive diamond-algebra Tor. The faithful acting-order quotient is a
@@ -859,9 +871,10 @@ also constructs only $({\rm CUBE}_P)$: commutation of two geometric level modifi
 not say that the resulting total cohomology complex is exact. The same cellular proof as Book
 174, Proposition 4.1 makes every vertex perfect over one common coefficient algebra; after the
 no-character localization, the fiber-concentration argument gives finite projective vertex
-modules. Extension through the bad integral model at a face still uses
-$({\rm PNS}_v)$, $({\rm TIC}_v)$, and $({\rm TIH}_{\mathscr F})$ for that exact spectator
-tuple; the generic cube does not prove them. None of these statements identifies the total
+modules. Extension through the bad integral model at a face uses the proved actual-row theorem
+$({\rm PNS}_v)_{\rm act}$ of Book 122, Corollary 9.11, together with
+$({\rm TIC}_v)$ and $({\rm TIH}_{\mathscr F})$ for that exact spectator tuple; the generic
+cube does not prove the latter two. None of these statements identifies the total
 cube with a tensor product of its full global one-prime cohomology complexes.
 
 **Proposition 8.2 (ordered quotient-cube reduction).** There is a natural quasi-isomorphism
@@ -1228,8 +1241,68 @@ $$
 
 where the tensor product is over $\mathcal O$.
 
-Suppose one effective global ray quotient onto $\Delta_P$ has been constructed and its
-tautological product character gives strict product-twist identities
+**Proposition 8.3 (strict joint ray quotient).**  Let $P_{\rm sc}$ be finite.  Fix a
+protected set $S_0$ containing $P_{\rm sc}$, the places above $\ell$, and every place already
+ramified in the global datum.  For each $v\in P_{\rm sc}$ there is a global character
+
+$$
+c_v:G_F\longrightarrow
+\Delta_v=C_{e_v},\qquad e_v=\ell^{\operatorname{ord}_\ell(q_v-1)},
+                                                               \tag{8.25a}
+$$
+
+whose localization at $v$ is the residue-unit quotient
+
+$$
+F_v^\times\longrightarrow k_v^\times
+ \longrightarrow k_v^\times/(k_v^\times)^{e_v}\simeq C_{e_v},
+                                                               \tag{8.25b}
+$$
+
+with a chosen uniformizer sent to $1$, and whose localization at every
+$w\in S_0\setminus\{v\}$ is trivial.  The product character
+
+$$
+c_P=(c_v)_{v\in P_{\rm sc}}:G_F\longrightarrow\Delta_P       \tag{8.25c}
+$$
+
+is surjective.  For the least common multiple $\mathfrak f_P$ of its coordinate conductors,
+it is therefore an effective quotient
+
+$$
+\operatorname{Cl}_{\mathfrak f_P}(F)\twoheadrightarrow\Delta_P.
+                                                               \tag{8.25d}
+$$
+
+At $v$, all coordinates except $c_v$ are trivial and the completed field is
+$F_v(\pi_v^{1/e_v})$ with vertical Kummer unit $1$.  Every additional place in
+$\mathfrak f_P$ is inserted in the fixed spectator datum, its local condition is transported
+by the product twist, and all auxiliary sets are chosen disjoint from these places.
+
+**Proof.**  For a fixed $v$, prescribe (8.25b) at $v$ and the zero class at
+$S_0\setminus\{v\}$.  The exponent $e_v$ is odd, so Book 6, Theorem 6.1 and the non-Wang
+alternative immediately following it globalize this tuple.  Its order is exactly $e_v$
+because its localization at $v$
+has that order.  At inertia over $v$, the combined character has image precisely the
+$v$th coordinate subgroup of $\Delta_P$.  Those coordinate subgroups generate $\Delta_P$,
+proving surjectivity.  Global reciprocity then factors (8.25c) through the ray class group of
+its conductor, retaining all unit, sign, and central relations.  Local Kummer theory gives
+the asserted completed fields. $\square$
+
+Coordinatewise, Book 122, Proposition 9.9 identifies the pullback of $c_v$ with the
+automorphic determinant line by canonical component reciprocity.  Tensoring those
+identifications shows that the product line attached to (8.25c) is the actual trait-pulled
+global coefficient system, not merely a product of local formulas.
+
+Consequently, at the $v$-face every other scalar-ray coordinate is locally trivial and is a
+genuine spectator.  Book 122, Proposition 9.10 therefore applies to that face with precisely
+the single strict local Kummer field in (8.25b), rather than an unspecified compositum of
+several ramified ray characters.
+
+Use the tautological product character attached to (8.25c), and define the twisted global
+datum by transporting the conditions at its additional conductor places as in the
+proposition.  The coordinate scalar twists commute and are trivial at the other active
+places.  Iterating Book 174, Chapter 9 therefore gives the strict product-twist identities
 
 $$
 R_P^{\rm tw}\simeq R_P^0\widehat\otimes_{\mathcal O}\Lambda_P,
@@ -1255,10 +1328,12 @@ Quotienting any subset of the tensor factors by augmentation therefore gives the
 face, and the result is independent of the order. This is exactly the several-place analogue
 of Book 174's one-place proof.
 
-The premise of (8.26) is not a consequence of separate one-place ray quotients. A group can
-map onto each of two cyclic groups while its map to their product has only diagonal image. In
-that case the correct coefficient algebra is the group algebra of that diagonal image, not the
-tensor product in (8.25). The missing joint surjection is arithmetic, not notation.
+An arbitrary collection of separately chosen one-place ray quotients would not prove this: a
+group can map onto each of two cyclic groups while its map to their product has only diagonal
+image.  Proposition 8.3 prevents that defect by imposing cross-local triviality before applying
+the local--global theorem; inertia at the selected places then supplies every coordinate
+subgroup.  Without that simultaneous construction, the correct coefficient algebra would be
+the group algebra of the actual image, not the tensor product in (8.25).
 
 If $P_{\rm sc}$ is empty, the fixed-prime product-twist issue is vacuous. In particular, the
 controlled places produced by splitting a generic base place remain in the distinct-root
@@ -1337,9 +1412,9 @@ The formal reductions above settle what follows once one-prime hypotheses are gr
   (8.21).
 - Joint boundary nonvanishing and depth imply support formally by (8.22), but separate
   one-place support gives neither joint boundary witness.
-- A single strict product twist proves joint module and faithful-order augmentation by
-  (8.26)--(8.27), but separate ray quotients and separate module augmentations do not construct
-  that twist or its acting-order identity. A common auxiliary package satisfying the full
+- Proposition 8.3 and the iterated strict twist construct the scalar product twist in
+  (8.26)--(8.27); arbitrary separately chosen ray quotients would not. A common auxiliary
+  package satisfying the full
   vertexwise hypotheses of Book 174, Proposition 9.1 gives coherent complex and module
   augmentation by (8.27a), with only the stated acting-image quotient.
 
@@ -1347,7 +1422,7 @@ No declared prior source proves these missing assertions for the specialization-
 active set of Book 177. In the intended geometric route, only after the common coefficient
 cube, its recursive mixed vanishings, the product-residue comparison, and joint support have
 been constructed can one apply the finite-set criterion of Section 9.2. A joint scalar twist
-is a further arithmetic input when scalar fibers occur. Auxiliary augmentation is formal from
+is supplied by Proposition 8.3 when scalar fibers occur. Auxiliary augmentation is formal from
 one common package as above. Book 170 supplies finite-set reciprocity formally once one actual
 joint carrier, every generic product branch has all simultaneous local labels and the integral
 coefficient-prime realization, and exact trace/structural generation has been verified; its
@@ -1411,8 +1486,9 @@ quotient-new operation is not reused afterward.
 cube, with strict commuting face maps, finite projective terms over the declared common base,
 the primary--companion adjunction, and coherent comparison maps for every coefficient change
 and subset of $P$. The level-tower argument preceding Proposition 8.2 constructs this cube once
-one actual product coefficient descent and all component routes have been supplied; those joint
-data are not consequences of separate one-place ray covers. This clause does not call the total
+one actual product coefficient descent and all component routes have been supplied. Proposition
+8.3 supplies the scalar ray part of that descent, but not the simultaneous component routes.
+This clause does not call the total
 complex exact.
 If mixed exactness is to be proved through (8.15), the external-product comparison must
 separately be a quasi-isomorphism for one explicitly retained common global carrier and
@@ -1455,13 +1531,13 @@ onto the local product base, is weaker: a module supported only on diagonal prod
 can have surjective support under every projection, and distinct global components can lie
 over the same local product component.
 
-**Simultaneous augmentation $({\rm AUG}_P)$.** At scalar active places an effective joint
-global ray quotient onto $\prod_{v\in P_{\rm sc}}\Delta_v$ is supplied with every local, unit,
-central, and archimedean compatibility. Its strict product twist gives (8.26)--(8.27) for the
+**Simultaneous augmentation $({\rm AUG}_P)$.** At scalar active places use the effective joint
+global ray quotient of Proposition 8.3, with every local, unit, central, and archimedean
+compatibility built in. Its strict product twist gives (8.26)--(8.27) for the
 represented rings, total primary and companion complexes, top modules, pairings, actions, and
 faithful orders; augmenting any subset of scalar factors gives the corresponding face and all
-orders of specialization commute. Separate one-place quotients do not imply the required
-joint surjection.
+orders of specialization commute. Thus the scalar arithmetic part is constructed; the
+auxiliary and cubical coherence clauses below remain separate.
 
 At Taylor--Wiles primes, the represented rings, total primary and companion cubes, top modules,
 actions, and pairings augment exactly, with zero positive diamond-algebra Tor and coherently
@@ -1615,9 +1691,10 @@ The direct mathematical sources used here have the following roles and retained 
 
 | source | result used | limitation retained here |
 |---|---|---|
+| Book 6 | odd-exponent local--global character theorem and ray-class factorization used in Proposition 8.3 | supplies the joint scalar ray quotient, not mixed geometric exactness or product support |
 | Book 22 | nearby cycles, normalization and graph/component complexes for a semistable curve over one trait | gives no simultaneous comparison between the distinct residue traits indexed by $P$ |
 | Book 109 | recursive cyclic solvable descent selected by a representation already defined over the lower field | Galois invariance alone is not descent; irreducibility, image criteria, and full local antecedents are rechecked |
-| Book 122 | the one-place Iwahori semistable PEL model, its two branches, nodes, and integral component complex | treats one bad-residue trait with every other active level as spectator; supplies no multi-trait fiber or iterated-switching Beck--Chevalley theorem |
+| Book 122 | the one-place Iwahori semistable PEL model, strict ray Kummer factors, completed actual-row tubes and $({\rm PNS}_v)_{\rm act}$, two branches, nodes, and integral component complex | treats one bad-residue trait with every other active level as spectator; supplies no multi-trait fiber or iterated-switching Beck--Chevalley theorem |
 | Book 123 | the global level tower, transitive forgetting maps, and right adelic level translations | constructs commuting generic level maps but no mixed integral exactness or simultaneous residue fiber |
 | Book 124 | commutation of correspondences supported at distinct places, pull--trace adjunction, and common Hecke routing | commuting correspondences do not make their total cohomology cube exact or construct an inner-form-switching Beck--Chevalley comparison |
 | Book 125 | restricted tensor factorization of a packet block with one global two-dimensional multiplicity module | proves the generic concentration (8.14e), not integral mixed saturation or product-component support |
@@ -1633,7 +1710,7 @@ The direct mathematical sources used here have the following roles and retained 
 The exact direct-dependency row is
 
 $$
-176\mid 22,109,122,123,124,125,138,139,140,143,170,173,174,175.
+176\mid 6,22,109,122,123,124,125,138,139,140,143,170,173,174,175.
 \tag{10.0}
 $$
 
@@ -1652,7 +1729,7 @@ imported from a later consumer.
 The proof order is rigid:
 
 1. the represented local data are fixed without assuming Ihara or support;
-2. $({\rm TPE}_v)$ through $({\rm TIC}_v)$, together with
+2. the proved $({\rm TPE}_v)$, together with $({\rm TIC}_v)$ and
    $({\rm TIH}_{\mathscr F})$, gives the actual typed split
    one-prime quotient and coefficient-base Tor-vanishing;
 3. independently, $({\rm AIH}_{\mathscr F})$ turns each constant tree kernel into residual
@@ -1697,9 +1774,9 @@ $$
 
 Until (10.1) is proved in the declared odd-primary Shimura-curve range, the constant
 saturation, corrected component filtration, and raising/lowering conclusions that use them
-remain conditional. The type rows have a separate first obstruction:
-$({\rm TPE}_v)$, followed by $({\rm TIC}_v)$ and $({\rm TIH}_{\mathscr F})$. Their split
-complex does not follow from
+remain conditional. For the type rows, $({\rm TPE}_v)$ is proved by Book 174 from Book 122's
+actual-row theorem; the first remaining separate inputs are $({\rm TIC}_v)$ and
+$({\rm TIH}_{\mathscr F})$. Their split complex does not follow from
 (10.1). Coefficient-one extreme residues additionally require
 $({\rm PRI}_{\rm type})$, and a switched graph--definite comparison additionally requires
 $({\rm AIH}_{\mathscr F})$, $({\rm PRI}_{\rm type})$,
@@ -1711,16 +1788,16 @@ generic-residue kernel equality is likewise the conclusion of Book 174, Proposit
 Neither generic comparison is a further hypothesis once its displayed inputs are granted.
 
 For the core finite-level scalar theorem, the exact independent conditional inputs are
-$({\rm AUT}_v)$, $({\rm TPE}_v)$ through $({\rm TIC}_v)$,
-$({\rm TIH}_{\mathscr F})$,
-$({\rm SUP}_v)$, $({\rm REC}_v)$, and $({\rm RAY}_v)$, with
+$({\rm AUT}_v)$, $({\rm TIC}_v)$, $({\rm TIH}_{\mathscr F})$,
+$({\rm SUP}_v)$, and $({\rm REC}_v)$, with
 $({\rm AUX}_Q)$ whenever an auxiliary patch is used. Under $({\rm AUX}_Q)$ the represented
 rings, both adjoint complexes, modules, actions, and pairings augment exactly. At an isolated
 auxiliary level the acting-order map is initially only a surjection. If these data form the
 coherent unpadded tower at every depth, Book 175, Proposition 5.2 proves $({\rm GR}_v)$ and
 full base $R=T$ by equal-variable rigidity, after which the acting-order map is injective. The
-finite-level reduced comparison may instead be applied directly after augmentation and does
-not require that injectivity. Thus Theorem 7.1 remains conditional on the core geometric and
+finite-level reduced comparison uses the proved $({\rm TPE}_v)$ and the constructed strict
+$({\rm RAY}_v)$ datum, and may instead be applied directly after augmentation without
+requiring that injectivity. Thus Theorem 7.1 remains conditional on the core geometric and
 reciprocity inputs even if (10.1) is proved. Conversely, once this core list is supplied, its
 formal reduced comparison does not require one to smuggle $({\rm AIH}_{\mathscr F})$ or
 $({\rm PRI}_{\rm type})$ into the word “support.” An argument formulated only for separated
@@ -1760,8 +1837,9 @@ in Section 8.8, an independently constructed and jointly supported carrier could
 product-residue route at the final annihilator step. At three or more places, pairwise
 versions of (10.2) do not replace the higher mixed homology and Tor-independence in
 $({\rm MIX}_P)$. Simultaneous character and auxiliary specialization
-$({\rm AUG}_P)$ is needed where those specializations are used. Its scalar part requires an
-effective joint ray quotient and strict product twisting when $P_{\rm sc}\ne\varnothing$; its
+$({\rm AUG}_P)$ is needed where those specializations are used. Its scalar ray quotient and
+strict product twisting are supplied by Proposition 8.3 and (8.26) when
+$P_{\rm sc}\ne\varnothing$; its
 auxiliary part requires coherent exact augmentation of the total primary--companion cubes,
 which follows from one common equivariant auxiliary package satisfying the full vertexwise
 hypotheses of Book 174, Proposition 9.1 by (8.27a), but not acting-image injectivity for a
