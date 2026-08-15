@@ -33,8 +33,8 @@
   - [5.4 Non-exports](#54-non-exports)
 - [6. The theorem package and its prerequisites](#6-the-theorem-package-and-its-prerequisites)
   - [6.1 Main theorem](#61-main-theorem)
-  - [6.2 Hypothesis and boundary ledger](#62-hypothesis-and-boundary-ledger)
-  - [6.3 Direct prerequisites](#63-direct-prerequisites)
+  - [6.2 The exact range of the theorem](#62-the-exact-range-of-the-theorem)
+  - [6.3 Mathematical prerequisites](#63-mathematical-prerequisites)
   - [6.4 Conclusion](#64-conclusion)
 
 ## 1. The Frey minimal problem
@@ -1072,13 +1072,13 @@ M=\operatorname{ad}^0\bar\rho,
 \mathcal L=(L_2,L_\ell,L_\infty).
 $$
 
-The exported local ledger is
-
-| Place | Tangent condition | Invariants and correction |
-|---|---|---|
-| $2$ | $L_2=0$ | $H^i(\mathbf Q_2,M)=H^i(\mathbf Q_2,M')=0$ for $i=0,1,2$ |
-| $\ell$ | $L_\ell=H^1_{\mathrm{fl}}(\mathbf Q_\ell,M)$ | $\dim L_\ell=h_\ell$ and $h^0(\mathbf Q_\ell,M)=h_\ell-1$ |
-| $\infty$ | $L_\infty=0$ | oddness gives $h^0(\mathbf R,M)=1$ and $H^1(\mathbf R,M)=0$ |
+At $2$ the tangent condition is $L_2=0$, and
+$H^i(\mathbf Q_2,M)=H^i(\mathbf Q_2,M')=0$ for $i=0,1,2$. At the coefficient prime the
+tangent condition is $L_\ell=H^1_{\mathrm{fl}}(\mathbf Q_\ell,M)$, with
+$\dim L_\ell=h_\ell$ and $h^0(\mathbf Q_\ell,M)=h_\ell-1$. At the real place one has
+$L_\infty=0$; oddness gives $h^0(\mathbf R,M)=1$ and
+$H^1(\mathbf R,M)=0$. Thus the three local terms enter the global formula by different
+mechanisms even though their numerical corrections fit together.
 
 Therefore
 
@@ -1228,7 +1228,7 @@ problem).** Let $\ell\geq7$, let $\mathcal O$ and $k$ be as in Section
 7. The global functor (4.3)--(4.6) is represented by
    $R^{\mathrm{hr,SP}}$, and its tangent is the localization kernel (4.9).
 
-8. The exact downstream interface is the ledger of Sections 5.1--5.3.  In
+8. The exact downstream interface is the collection of results in Sections 5.1--5.3.  In
    particular, the local theorem supplies neither Book 181's exact
    automorphic seed (nor its whole-ring finiteness consequence) nor a
    characteristic-zero global point.
@@ -1242,18 +1242,30 @@ to $\mathbf Q_\ell$.  Part 7 is Theorem 4.1 and the dual-number calculation
 (4.8)--(4.9).  Part 8 merely records those proved outputs without adding a
 new theorem. $\square$
 
-### 6.2 Hypothesis and boundary ledger
+### 6.2 The exact range of the theorem
 
-| Hypothesis | Exact use | Failure if removed |
-|---|---|---|
-| $\ell\geq7$ | odd trace splitting, dyadic twisted eigenvalue $4\ne1$, and the Frey exponent range | characteristics $2$ and $3$ change the determinant or cohomology; the global range at $5$ is not asserted |
-| $\bar N\ne0$ at $2$ | intrinsic direct-summand line and closed nonzero-monodromy locus | with $\bar N=0$, nonzero monodromy is open and the closed special chart contains an unramified divisor |
-| named sign $s$ | fixes the unramified Steinberg twist | determinant and conductor alone do not distinguish split from nonsplit multiplicative reduction |
-| determinant $\chi_\ell$ | fixes $a=s$ at $2$ and forces one Hodge line at $\ell$ | an unramified scalar parameter remains at $2$, and the coefficient-prime Hodge ranks and tangent count change |
-| actual finite-flat model | supplies integral middle extensions and coefficient quotients | rational Hodge labels or finite-flat endpoints do not control the middle representation |
-| base $\mathbf Z_\ell$ | Raynaud uniqueness and the unramified weight-$[0,1]$ coordinates | over a ramified base the power-series and tangent formulas are not proved |
-| global absolute irreducibility | global Schur condition and unframed universal ring | only a framed global ring or a hull is automatic |
-| arithmetic Frobenius | dyadic eigenvalues $2$ and $4$ | geometric Frobenius inverts the displayed eigenvalues and must be used consistently |
+The lower bound $\ell\geq7$ is used simultaneously for odd trace splitting, for the dyadic
+twisted eigenvalue $4\ne1$, and for the Frey exponent range. In characteristics $2$ and $3$
+the determinant or cohomology calculation changes, while the later global range at $5$ is not
+asserted. The condition $\bar N\ne0$ at $2$ is what recovers an intrinsic direct-summand line
+and makes nonzero monodromy a closed locus. If $\bar N=0$, nonzero monodromy is open and the
+closed special chart also contains an unramified divisor. The named sign $s$ is separately
+necessary because it fixes the unramified Steinberg twist: determinant and conductor do not
+distinguish split from nonsplit multiplicative reduction.
+
+The cyclotomic determinant has two different local effects. At $2$ it fixes $a=s$ and removes
+an unramified scalar parameter; at $\ell$ it forces the single Hodge line on which the tangent
+count rests. Replacing it changes both conclusions. Likewise, finite flatness is imposed by an
+actual integral model, not merely by rational Hodge labels or by finite-flat endpoints, since
+neither weaker datum controls middle extensions or coefficient quotients. The base is
+$\mathbf Z_\ell$: Raynaud uniqueness and the unramified weight-$[0,1]$ coordinates used in the
+power-series and tangent calculations have not been proved here over a ramified base.
+
+Global absolute irreducibility supplies the global Schur condition and hence the unframed
+universal ring; without it one obtains automatically only a framed ring or a hull. Finally,
+all dyadic eigenvalues in this book use arithmetic Frobenius. Geometric Frobenius would invert
+the displayed eigenvalues $2$ and $4$, so the two conventions cannot be interchanged inside
+the calculation.
 
 Two local facts hold in a wider range than the theorem: the nonzero-monodromy
 normal form works whenever the determinant square root is transverse, and
@@ -1263,19 +1275,25 @@ $\ell=5$ the displayed local computations are favorable, but the later
 global image and modularity machinery is stated uniformly for
 $\ell\geq7$.
 
-### 6.3 Direct prerequisites
+### 6.3 Mathematical prerequisites
 
-The proof uses only foundational mathematics and books preceding this one.
+The cohomology calculation in Section 2.5 uses the local Euler characteristic and Tate
+duality of Books 30--31, including
+$H^2\simeq H^0(M^*(1))^*$. The global representability argument in Section 4.2 uses Book 32,
+Section 3.2 for finiteness of $H^1(G_{\mathbf Q,S},M)$ with finite coefficients and a
+controlling set containing the coefficient prime. The initial Frey datum comes from Book 164,
+Sections 3.1, 4.3, and 5.2: the normalized Frey equation, its dyadic discriminant and sign, and
+the nonzero residual monodromy. Book 44 then supplies the Tate-curve inertia calculation, the
+Frobenius sign, and the conductor of the resulting rank-one monodromy block used in Sections
+1.3 and 2.5.
 
-| Source | Imported result | Use here |
-|---|---|---|
-| Books 30--31 | local Euler characteristic and Tate duality, including $H^2\simeq H^0(M^*(1))^*$ | Section 2.5 |
-| Book 32, Section 3.2 | finiteness of $H^1(G_{\mathbf Q,S},M)$ for finite coefficients and a controlling set containing the coefficient prime | Section 4.2 |
-| Book 44 | Tate-curve inertia, Frobenius sign, and conductor of a rank-one monodromy block | Sections 1.3 and 2.5 |
-| Books 63 and 66 | strict equivalence, tangent and obstruction theory, scalar-centralizer representability, and closed global quotients | Sections 1.4, 2.4, 3.4, and 4.2 |
-| Book 67, Theorem 7.1 | closed and liftable nonzero-monodromy minimal condition | Section 2.4 |
-| Book 68, Theorems 2.3, 9.1--9.2, 14.3, 16.1, and 17.1 | coefficient change, finite-flat classification, representability, liftability, tangent dimensions, and smooth rings | Chapter 3 |
-| Book 164, Sections 3.1, 4.3, and 5.2 | normalized Frey equation, dyadic discriminant and sign, and nonzero residual monodromy | Section 1.3 |
+The deformation-theoretic framework comes from Books 63 and 66: strict equivalence, tangent
+and obstruction theory, representability with scalar centralizer, and closed global
+quotients. These results are used in Sections 1.4, 2.4, 3.4, and 4.2. Book 67, Theorem 7.1
+provides the closed and liftable nonzero-monodromy minimal condition used in Section 2.4.
+Chapter 3 specializes Book 68, Theorems 2.3, 9.1--9.2, 14.3, 16.1, and 17.1, which provide
+coefficient change, finite-flat classification, representability, liftability, tangent
+dimensions, and the smooth local rings.
 
 The key normal forms, tangent dimensions, and obstruction distinctions are
 reproved in this book after the deep integral classifications are imported.
@@ -1284,8 +1302,8 @@ rigidity, and Fontaine--Laffaille theory; this book invokes its packaged
 theorems rather than silently strengthening them.  No result from Books 166--167 or 181 is used to prove Theorem 6.1.  Those books consume the outputs
 listed in Chapter 5.
 
-There is therefore no hidden conditional theorem in the local package.
-The later global conclusion remains external: a balanced-ring argument may take either the
+These ingredients complete the local theorem under the hypotheses of Section 4.1. The later
+global conclusion is a separate result: a balanced-ring argument may take either the
 finite-special-fibre consequence of an exact automorphic seed or the consequence of a
 separately proved target-IAV comparison and then produce a characteristic-zero point.  No separate
 reduced-finiteness hypothesis is part of that downstream statement.
@@ -1309,9 +1327,11 @@ case.
 
 These local conditions cut out the universal global quotient whose tangent
 is (4.9).  They supply exact local nullhomotopies and dimension corrections,
-but no global lift by themselves.  That boundary is the correct interface:
+but no global lift by themselves.  That separation is mathematically essential:
 Book 166 performs the supported cohomology calculation, Book 167 converts
 relations into supported obstructions, and Book 181 adds its separately
 stated finite-special-fibre certificate.  That certificate may come from a
-stronger exact seed or from a separately proved target-IAV route. The local deformation node
-is complete without importing any conclusion from those later stages.
+stronger exact seed or from a separately proved target-IAV route. Producing that certificate,
+proving a characteristic-zero global point, or establishing an $R=T$ theorem are stronger
+results outside the scope of Theorem 6.1. The local deformation problem is complete without
+importing any conclusion from those later stages.

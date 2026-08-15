@@ -6,7 +6,7 @@
   - [1.1 The problem left by the good model](#11-the-problem-left-by-the-good-model)
   - [1.2 Arithmetic and cohomological conventions](#12-arithmetic-and-cohomological-conventions)
   - [1.3 Exact scope and selected split place](#13-exact-scope-and-selected-split-place)
-  - [1.4 Dependency ledger](#14-dependency-ledger)
+  - [1.4 Sources and logical scope](#14-sources-and-logical-scope)
 - [2. Iwahori PEL data and the integral curve](#2-iwahori-pel-data-and-the-integral-curve)
   - [2.1 The periodic self-dual lattice chain](#21-the-periodic-self-dual-lattice-chain)
   - [2.2 The parahoric moduli problem](#22-the-parahoric-moduli-problem)
@@ -50,7 +50,7 @@
   - [9.6 The degeneracy complex and its boundary](#96-the-degeneracy-complex-and-its-boundary)
   - [9.7 Functorial monodromy and projectors](#97-functorial-monodromy-and-projectors)
   - [9.8 Principal and ray towers over the parahoric diagram](#98-principal-and-ray-towers-over-the-parahoric-diagram)
-    - [The Drinfeld tower and the unavoidable wild ledger](#the-drinfeld-tower-and-the-unavoidable-wild-ledger)
+    - [Wild inertia in the Drinfeld tower](#wild-inertia-in-the-drinfeld-tower)
 - [10. The semistable curve theorem](#10-the-semistable-curve-theorem)
   - [10.1 Statement](#101-statement)
   - [10.2 Scope and failure modes](#102-scope-and-failure-modes)
@@ -158,7 +158,7 @@ In the second, $p=2$, the chosen place $v$ has $E_v=\mathbf Q_2$, and the comple
    its $*$-paired packet is its annihilator, and every inactive packet is fixed by the determinant law;
 4. the multiplier and orientation labels extend as finite etale data, the polarization degree is odd, the selected canonical component union is decomposition-stable, and the auxiliary fine level has odd order and is neat.
 
-The last ledger is stronger than saying only that $B$ is split over $\mathbf Q_2$. It is exactly what prevents a ramified dyadic involution or a merely skew form from being mistaken for a smooth integral tensor. In (1.5a), alternation is the identity $\langle x,x\rangle=0$ over $\mathbf Z_2$, not a consequence of reducing a skew matrix modulo two. Section 2.1 constructs the dyadic vertex from these tensors, so the dyadic case does not appeal to an unproved extension of Book 121's odd theorem.
+These conditions are stronger than saying only that $B$ is split over $\mathbf Q_2$. They are exactly what prevent a ramified dyadic involution or a merely skew form from being mistaken for a smooth integral tensor. In (1.5a), alternation is the identity $\langle x,x\rangle=0$ over $\mathbf Z_2$, not a consequence of reducing a skew matrix modulo two. Section 2.1 constructs the dyadic vertex from these tensors, so the dyadic case does not appeal to an unproved extension of Book 121's odd theorem.
 
 In either situation a bad fiber below means bad **Iwahori level** at an otherwise smooth split vertex. The principal new result is the second situation, where
 
@@ -169,35 +169,41 @@ $$
 
 All generic curves and all coefficient fields in the packet theorem have characteristic zero. Residue characteristic two enters only through the integral model and its special fiber. The book does not treat a deeper chain, a ramified algebra or involution, a non-minuscule cocharacter, or a nonflat naive determinant locus. A finite extension followed by normalization and explicit resolution of thick nodes is allowed; if the generic field changes, the result is a semistable alteration over the new field, not a model of the original generic curve.
 
-### 1.4 Dependency ledger
+### 1.4 Sources and logical scope
 
-Book 6 supplies the finite local--global character theorem and the ray-class/unit
-compatibility used for the strict scalar quotient below. Books 10--12 supply effective finite
-descent, normalization, blowups, and regular models; Book 13 supplies the divisor definition of
-a bad-characteristic Drinfeld basis; Book 16 supplies graph/component-group algebra. Book 17
-supplies the finite-etale common refinement and effective Galois closure on the generic
-diagram. Book 20 supplies proper lci orientations, duality counits,
-deformation-to-the-normal-cone excess classes, and transpose adjunction. Book 22 supplies the
-strict-semistable nearby-cycle and weight complexes, including the tame strict-node complex and
-exact reduction by a finite wild image. Book 37 supplies the Frobenius--Verschiebung formalism,
-purity, and duality used to identify global strata. Book 35 supplies quotients by finite
-locally free subgroups and descended polarizations. Book 58 supplies faithful flatness and
-exactness of completion and the distinction between completing a known proper model and
-algebraizing an abstract formal space. Book 70 supplies the maximal-Cohen--Macaulay freeness
-criterion over a regular local ring and the warning that it fails over a singular target. Book
-76 supplies the selected special Weil--Deligne normalization used to compare the Iwahori
-scalar with geometric Frobenius. Book 118 supplies the exact common-norm Hodge-lift obstruction,
-the unitary common-multiplier PEL datum, and its odd-prime finite component cover. Book 119
-supplies the exact direct and unitary rational PEL functors, their good-base fine
-representability, and their generic parahoric data; it does not supply the dyadic integral
-unitary model constructed in Section 10.3. Book 120 supplies canonical
-reciprocity on the abelianized component label; applied to reduced norm/determinant, it
-identifies the global ray character's automorphic determinant line with the corresponding
-trait-pulled Galois line. Book 121 supplies the
-projective good vertex at odd places, its integral filtration-lifting theorem, universal
-family, the split odd unitary good model, and, at two, the characteristic-independent toric
-obstruction and flat-closure properness argument once an exact integral functor has been
-constructed.
+The construction rests first on the geometry needed to pass from a generic parahoric diagram
+to a regular arithmetic surface. Books 10--12 provide effective finite descent,
+normalization, blowups, and regular models, Book 13 gives the divisor definition of a
+bad-characteristic Drinfeld basis, and Book 17 gives a finite-etale common refinement and an
+effective Galois closure of the generic diagram. Once the surface has been constructed, Book
+16 turns its dual graph into component-group algebra. The cohomological passage uses Book
+20 for proper lci orientations, duality counits, deformation-to-the-normal-cone excess
+classes, and transpose adjunction, and Book 22 for the strict-semistable nearby-cycle and
+weight complexes, including the tame strict-node complex and exact reduction by a finite
+wild image. The global identification of the two branches then uses the
+Frobenius--Verschiebung formalism, purity, and duality of Book 37, while Book 35 supplies the
+quotients by finite locally free subgroups and the descended polarizations.
+
+Two commutative-algebra inputs control the passage between formal and algebraic geometry.
+Book 58 gives faithful flatness and exactness of completion and distinguishes completion of a
+known proper model from algebraization of an abstract formal space. Book 70 gives the
+maximal-Cohen--Macaulay freeness criterion over a regular local ring, together with the
+essential warning that it need not hold over a singular target. The arithmetic normalization
+at the residue prime comes from Book 76's selected special Weil--Deligne convention. Book 6
+provides the finite local--global character theorem and the ray-class/unit compatibility used
+for the strict scalar quotient.
+
+Finally, Books 118--121 supply the Shimura-theoretic framework. Book 118 identifies the exact
+common-norm Hodge-lift obstruction and constructs the unitary common-multiplier PEL datum and
+its odd-prime finite component cover. Book 119 gives the exact direct and unitary rational PEL
+functors, their fine representability over good bases, and their generic parahoric data, but
+not the dyadic integral unitary model constructed in Section 10.3. Book 120 supplies canonical
+reciprocity on the abelianized component label; for reduced norm or determinant it identifies
+the automorphic determinant line of the global ray character with the corresponding
+trait-pulled Galois line. Book 121 gives the projective good vertex at odd places, its integral
+filtration-lifting theorem, the universal family, and the split odd unitary good model. At two
+we use only its characteristic-independent toric obstruction and flat-closure properness
+argument, and only after constructing the exact integral functor here.
 
 The exact dependency row is
 
@@ -207,7 +213,7 @@ $$
 
 There are eighteen direct dependencies. The right-double-coset, transpose, central, and degree conventions are chosen to agree with Book 124 and are rederived in Section 9.3 for the residue-prime span. The packet theorem is a characteristic-zero statement conditional only on the already isolated curve packet described in its hypotheses; it imports no Ihara saturation, level-raising theorem, deformation theorem, or modularity-lifting theorem.
 
-The downstream comparison ledger is as follows. Book 124 deliberately leaves a
+This scope determines exactly what may be passed downstream. Book 124 deliberately leaves a
 level-prime polynomial open; (9.8) uses its incoming right-action convention and proves
 only the new graph identity, not a spherical polynomial. Book 121's odd theorem is used
 only at odd places, while its characteristic-independent rational toric argument is used
@@ -218,7 +224,7 @@ $\det\Phi=qs_v$, agreeing with (9.19), and its warning against replacing the raw
 by its semisimplification is retained. Book 127 constructs the global representation from
 the curve packet but supplies no bad local scalar used in this proof. Theorem 9.1 supplies
 exactly the graph-multiplicity-one and scalar input denoted $(\mathrm B_v)$ in Book 128,
-under the stricter local ledger stated here; Book 128's separate raw-to-global condition
+under the stricter local hypotheses stated here; Book 128's separate raw-to-global condition
 is untouched. For later semisimple packet applications, the phrase “normalized bad
 operator” should mean the geometric-normalized scalar $\beta_v$ on the new line: in the
 present conventions it is the eigenvalue of the raw unnormalized $U_v$, not of
@@ -1646,7 +1652,7 @@ part of the general global ray hypothesis; Proposition 9.9 verifies it for the s
 choice by Book 120's canonical reciprocity.  A nominal local determinant character does not
 prove it.
 
-#### The Drinfeld tower and the unavoidable wild ledger
+#### Wild inertia in the Drinfeld tower
 
 The principal factor can be sharpened before stating the full theorem.  This also gives a
 test which any proposed proof must pass.  Complete at a local-local point of the good vertex and
@@ -4149,7 +4155,7 @@ place over all targets; no such descent is used here.
 ### 10.6 Conclusion
 
 The direct quaternionic bad-prime problem reduces integrally to one incidence of two
-lines. Under the exact dyadic tensor ledger that incidence is still valid over every
+lines. Under the exact dyadic tensor hypotheses that incidence is still valid over every
 nilpotent test ring and produces the regular node $xy=2$. Relative Frobenius and
 inverse-twist Verschiebung identify the two descended global branches, while the Hasse
 section identifies every conductor point and its multiplicity. The resulting signed graph
@@ -4161,7 +4167,7 @@ together with finite descent determines the full local type. The residue-prime
 correspondence has degree two but one node-to-node sheet; on the Steinberg packet this is
 the exact identity between geometric Frobenius and the automorphic $U_v$ new-line
 scalar. These are the semistable model, component, monodromy, conductor, type, and
-bad-prime Eichler--Shimura data for every direct datum satisfying the stated ledger.
+bad-prime Eichler--Shimura data for every direct datum satisfying the stated hypotheses.
 
 The unitary common-multiplier datum also has an exact split dyadic parahoric source with the
 same incidence geometry; Proposition 10.2 constructs it without reviving the impossible

@@ -77,7 +77,7 @@
 - [15. The automorphic realization theorem](#15-the-automorphic-realization-theorem)
   - [15.1 Complete statement](#151-complete-statement)
   - [15.2 Proof](#152-proof)
-  - [15.3 Hypothesis and dependency ledger](#153-hypothesis-and-dependency-ledger)
+  - [15.3 Why the hypotheses are necessary](#153-why-the-hypotheses-are-necessary)
   - [15.4 Conclusion](#154-conclusion)
 
 ## 1. The realization problem
@@ -1560,29 +1560,73 @@ For assertion 5, canonical quaternion conjugation gives (10.8) for the basic gro
 
 At a good prime, smooth proper base change gives unramifiedness and transfers the special-fiber correspondence relation to generic cohomology. Restriction gives the quadratic annihilator. Under assertion 5 and (10.15), its constant term agrees with the independent determinant (11.10), and Proposition 12.1 then proves the characteristic polynomial even for scalar Frobenius. Without that polarized input, only the annihilator, and the nonscalar characteristic-polynomial inference, is asserted. Finally, integral curve cohomology is finite free and stable under integral correspondences. Intersecting the coefficient-extended lattice with the rational packet subspace gives (13.2), while Sections 13.2--13.3 retain every denominator obstructing a direct splitting or perfect integral pairing. This proves assertions 6--7 and the coarse-level clause. $\square$
 
-### 15.3 Hypothesis and dependency ledger
+### 15.3 Why the hypotheses are necessary
 
-| conclusion | input and retained hypothesis | failure if omitted |
-|---|---|---|
-| smooth projective Shimura curve | quaternionic canonical model and genuine PEL realization; $B$ division and split at exactly one real place | the moduli space can have the wrong dimension, or cusps can appear |
-| componentwise Galois and Hecke action | selected union stable under reciprocity and Hecke routing | a correspondence maps between different curves or Galois permutes the component |
-| algebraic Hecke span | exact intersection level and translated-then-forgotten second leg | right translation has the wrong target and the double coset is mislabeled |
-| pull--push on $H^1$ and Jacobians | smooth proper curves; finite legs; constant coefficients | traces or norms can be undefined or need boundary data |
-| perfect alternating geometric pairing | componentwise curve trace and the product principal polarization on component Jacobians | degrees or volume factors can corrupt adjunction and the Tate twist |
-| integral etale lattice | $\ell$ invertible and smooth proper curve | torsion and derived-limit corrections can occur in other settings |
-| complex automorphic decomposition | compact quotient, fixed level, harmonic theory | continuous and boundary spectra must be added in the split case |
-| multiplicity one | quaternion division algebra and the character-clean two-place trace and Bessel argument | compactness alone gives only finite multiplicity; the additive transposition kernel cannot see the occurrence space |
-| parallel-weight-two classification | exactly one active rank-one real factor; constant coefficients; connected split center removed | other degrees or coefficient weights require a different real calculation, and retaining the split-center line shifts degrees |
-| rational packet projector | full finite adjoint-stable Hecke image | the away-from-bad commutative algebra can group near-equivalent packets |
-| a vector-space rank-two factor | finite coefficient extension splitting the simple Hecke algebra | a Schur division algebra can remain over the rationality field |
-| Galois stability | Hecke correspondences descended to $E$ | invariant eigenvalues do not descend an operator |
-| descended adjoint twist | canonical quaternion-conjugation identity for the basic group, or hypothesis (10.8) for a central modification; normal fine refinement inside the character kernel; component reciprocity | common adjoint data do not produce the twist, multiplication by it need not preserve the original level, and equality of central eigenvalues gives no covariance |
-| symmetric finite-module form at old level | weighted compact mass pairing at the refinement; full split Hecke image and pull--trace return | an arbitrary Morita pairing can have the wrong sign or be degenerate on the returned oldspace |
-| determinant and essential self-duality | component covariance, symmetric finite-module form, and alternating Jacobian polarization | adjoint duality alone does not identify the determinant line |
-| good Frobenius relation | every residue-field, unramified PEL, self-dual polarization, hyperspecial, determinant-model, incidence-model, $\mu$-ordinary-density, component, fineness, and $v\nmid\ell$ hypothesis of Section 12.1 | a level-prime $U_v$, bad local model, contracted branch, or residue-field mismatch has no displayed quadratic relation |
-| good characteristic polynomial, including scalar Frobenius | quadratic relation plus the independently proved determinant | a degree-two annihilator alone need not be the characteristic polynomial of a scalar operator |
-| rational comparison with a split packet | Book 104, Theorem 9.2; $d=[F:\mathbf Q]\ge2$; one active real place; compatible unitary central character; $(d-1)+|W|$ even for $W=\operatorname{Ram}_f(B)$; selected special or selected tame-dihedral split factor at every $w\in W$; its additional algebraicity hypothesis for coefficient-field assertions | in even degree no eligible place gives no admissible $W$; local matching outside the selected range does not globalize an automorphic representation |
-| integral direct summand and perfect pairing | deck-group order and every projector, order, Morita, return, and discriminant denominator prime to $\ell$ | congruent packets or inertia can meet, and a rational perfect form can reduce degenerately |
+The geometric argument begins with a genuine quaternionic PEL realization of the canonical
+model, with $B$ a division algebra split at exactly one real place. These assumptions make the
+space a smooth projective curve; without them its dimension can change or cusps can appear.
+The selected union must also be stable under reciprocity and under Hecke routing. Otherwise
+Galois can permute it or a correspondence can have its source and target on different curves.
+For the correspondence itself, the exact intersection level and the
+translated-then-forgotten second leg are essential: changing that order gives right
+translation the wrong target and mislabels the double coset. Pull--push on $H^1$ and on
+Jacobians then uses smooth proper curves, finite legs, and constant coefficients; outside
+that setting traces and norms may be undefined or require boundary terms. The perfect
+alternating geometric pairing further uses the componentwise curve trace and the product
+principal polarization of the component Jacobians. Omitting either allows degree or volume
+factors to spoil adjunction and the Tate twist. Finally, the integral etale lattice uses
+$\ell$ invertible on a smooth proper curve; torsion and derived-limit corrections may occur in
+other settings.
+
+The automorphic decomposition is equally sensitive to its hypotheses. Compactness, fixed
+level, and harmonic theory produce a discrete decomposition; for a split quotient one must
+add continuous and boundary spectrum. Compactness alone gives only finite multiplicity.
+Multiplicity one here uses the quaternion division algebra and the character-clean two-place
+trace and Bessel argument, since the additive transposition kernel cannot detect the
+occurrence space. The parallel-weight-two classification uses exactly one active rank-one
+real factor, constant coefficients, and removal of the connected split center. Other
+coefficient weights or degrees require a different real calculation, and retaining the
+split-center line shifts cohomological degree.
+
+To isolate a rational packet one must use the full finite adjoint-stable Hecke image. The
+commutative algebra away from the bad places can merge near-equivalent packets. Even after the
+rational block is separated, its simple Hecke algebra need not be a matrix algebra over its
+field of rationality; a finite coefficient extension splitting that algebra is what turns the
+Morita factor into an ordinary rank-two vector space. Galois stability is not a consequence of
+invariant eigenvalues alone: it comes from descending the Hecke correspondences themselves to
+$E$.
+
+The polarization requires still more structure. For the basic group it uses the canonical
+quaternion-conjugation identity; for a connected central modification it uses the explicit
+hypothesis (10.8). In both cases one passes to a normal fine refinement inside the character
+kernel and uses component reciprocity. Common adjoint data alone do not produce the twist,
+multiplication by a character need not preserve the original level, and equality of central
+eigenvalues gives no covariance. At old level the required symmetric form is the weighted
+compact mass pairing on the refinement, returned by pull--trace through the full split Hecke
+image. An arbitrary Morita pairing can have the wrong sign or become degenerate on the
+returned oldspace. Component covariance, this symmetric finite-module form, and the
+alternating Jacobian polarization together give essential self-duality and the determinant;
+adjoint-block duality by itself does not identify the determinant line.
+
+The good-prime polynomial has the full force claimed in Theorem 15.1 only under every
+residue-field, unramified PEL, self-dual polarization, hyperspecial, determinant-model,
+incidence-model, $\mu$-ordinary-density, component, fineness, and $v\nmid\ell$ assumption of
+Section 12.1. A level-prime operator $U_v$, a bad local model, a contracted branch, or a
+residue-field mismatch does not satisfy the displayed quadratic relation. Moreover, that
+relation is only an annihilator until its constant term is compared with the independently
+proved determinant: a quadratic annihilator need not be the characteristic polynomial of a
+scalar operator.
+
+Comparison with a split packet uses Book 104, Theorem 9.2 in its precise range:
+$d=[F:\mathbf Q]\ge2$, one active real place, a compatible unitary central character,
+$(d-1)+|W|$ even for $W=\operatorname{Ram}_f(B)$, and a selected special or selected tame
+dihedral split factor at every $w\in W$. Coefficient-field assertions also retain Book 104's
+additional algebraicity hypothesis. Thus in even degree the absence of an eligible finite
+place leaves no admissible $W$, and local matching outside this selected range does not
+globalize an automorphic representation. Finally, an integral direct summand and perfect
+integral pairing require the deck-group order and every projector, order, Morita, return, and
+discriminant denominator to be prime to $\ell$. If one of these numbers is not a unit,
+congruent packets or inertia can meet and a rationally perfect form can reduce degenerately.
 
 The exact direct dependency row is
 
