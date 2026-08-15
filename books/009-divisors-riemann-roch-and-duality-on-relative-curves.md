@@ -1511,6 +1511,12 @@ j^*\omega_{X/S}\otimes
 \det(\mathcal I/\mathcal I^2)^\vee. \tag{9.12b}
 $$
 
+The ordinary pullback in (9.12b) is justified rather than assumed. Flatness of $X/S$ and $Z/S$
+makes the Koszul resolution of $\mathcal O_Z$ universally exact. On each geometric fiber its
+regular sequence is also regular on the maximal Cohen--Macaulay module $\omega_{X_s}$ by the
+depth criterion. Since $\omega_{X/S}$ is $S$-flat, the fiberwise acyclicity lemma lifts this
+exactness and gives $Lj^*\omega_{X/S}=j^*\omega_{X/S}$, compatibly with every base change.
+
 For two regular immersions, the conormal exact sequence identifies the determinant on the
 composite with the tensor product of the two determinants. The local tensor product of Koszul
 complexes shows that evaluation in succession equals evaluation of the composite; hence
