@@ -465,8 +465,9 @@ domain have a nonempty open regular locus. Here is the reduction. For a finite-t
 $S/R$, enlarge the residue field of the kernel of $R\to S$ by a finite purely inseparable
 extension so that the corresponding compositum with $K(S)$ is separable. Clearing integral
 equations realizes that residue extension as the fraction field of a finite $R$-algebra domain.
-The assumed regular open there pulls to a regular open after the separable extension; regularity
-then descends through the purely inseparable radicial map. Applying this to every prime quotient
+The assumed regular open there pulls to a regular open after the separable extension. After
+generic flatness, the resulting finite-type injection from $S$ is faithfully flat over a
+nonempty open, so regularity descends to that open of $S$. Applying this to every prime quotient
 of a finite-type algebra and using noetherian induction says precisely that its regular locus is
 open. A finite algebra over a complete local ring is a finite
 product of complete local rings, so it remains to show that a complete local domain $A$ has a

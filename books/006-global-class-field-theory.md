@@ -181,17 +181,16 @@ $$
 
 forces the product of the local actions of a principal element to be one. The sum, rather than any individual invariant, is the global mechanism.
 
-For a finite Galois extension, Section 4.3 first passes from the Brauer
-invariant sequence and the vanishing of the absolute degree-three obstruction
-to the fundamental class in $H^2(G,C_L)$. It then constructs Tate's canonical
-$S$-unit sequence as a representative of that already normalized class.
-Capping with the resulting class identifies $G^{\mathrm{ab}}$ with
-$C_K/N C_L$. Finally, the
-existence argument proves that the norm subgroups obtained this way exhaust all
-open finite-index subgroups of $C_K$. This last step also uses the finite
-local--global duality sequence for the Cartier-dual pair $\mathbf Z/n\mathbf Z$
-and $\mu_n$; it cannot be replaced by merely counting extensions already known
-to exist.
+For a finite abelian extension, the second inequality and principal reciprocity
+first identify the norm quotient, without a global fundamental class. Finite
+duality then proves character existence, and character compatibility proves
+norm limitation for an arbitrary finite Galois extension. Section 4.3 realizes
+the resulting compatible subgroup reciprocity maps by a relation-module
+two-extension; this is the fundamental class in $H^2(G,C_L)$. Tate's canonical
+$S$-unit sequence is subsequently constructed as a representative of that
+already normalized class. Section 6 packages character existence into the
+inclusion-reversing classification of all open finite-index subgroups of
+$C_K$.
 
 The second global ingredient is finite Artin--Verdier duality. Section 4.2 proves
 the bounded duality theorem directly from local duality, the divisor and unit
@@ -387,8 +386,9 @@ $$
 A class $u_{L/K}\in H^2(G,C_L)$ connects them by cap product. Section 4.2
 first proves the cyclic calculation, the general second inequality, the Brauer
 invariant sequence, and finite duality without such a class. Section 4.3 then
-constructs and normalizes the class as the relative kernel of the absolute
-idèle-class invariant before representing it by Tate's canonical sequence.
+constructs and normalizes the class from the compatible reciprocity maps on all
+subgroups, using the explicit relation-module two-extension, before representing
+it by Tate's canonical sequence.
 
 ### 4.2 The Brauer--idele exact sequence
 
@@ -1077,9 +1077,9 @@ $\mathbf Q/\mathbf Z$. $\square$
 The preceding argument deliberately stops at the general second inequality and
 the Brauer invariant sequence. The all-degree idèle-class formation is not
 obtained by contracting the induced local summands: for a noncyclic group the
-Mackey cross-orbits retain the degree-three obstruction. We construct the
-absolute idèle-class invariant from the Brauer sequence and finite duality below,
-and only then take its relative kernel to obtain the global fundamental class.
+Mackey cross-orbits retain a genuine obstruction. We first prove abelian
+reciprocity, character existence, and norm limitation, and only then realize
+their compatible subgroup maps by the global relation-module extension.
 
 **Theorem 4.1 (Brauer invariant sequence).** For a number field $F$, localization and local invariant maps form an exact sequence
 
@@ -3109,8 +3109,8 @@ $$
 
 This is the trace-and-pairing layer used in Poitou--Tate arguments. Perfectness for every
 finite module is a stronger theorem not needed here. For the pair $A_n,\mu_n$ used in
-Theorems 4.1 and 6.1, Theorem 4.2 proves the required perfectness before reciprocity is
-constructed.
+Theorems 4.1 and 6.1, Theorem 4.2 proves the required perfectness before
+character existence and global class formation are constructed.
 
 Restriction and corestriction preserve the global trace with no hidden degree. If $E/F$ is finite and $(z_w)_w$ is a family of local degree-two classes over $E$, then (4.6) gives
 
