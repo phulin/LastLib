@@ -522,10 +522,15 @@ the norm onto on $U_w^1$. Hilbert 90 gives $H^1(D_w,M_w^\times)=0$, and the
 valuation sequence then gives $H^1(D_w,\mathcal O_w^\times)=0$. Cyclic
 periodicity proves
 $\widehat H^q(D_w,\mathcal O_w^\times)=0$ for every $q$.
-Thus enlarging $T$ adds only induced acyclic unit complexes. Since a map from
-the finite complete resolution in any fixed degree has finite image, it lands
-in one $I_M(T)$; kernels and boundaries do as well. This proves both the
-colimit assertion and (4.I2).
+For a fixed $T$, Shapiro therefore leaves precisely the local
+$M_w^\times$-summands indexed by $v\in T/G$; the infinite unit tail contributes
+zero. Enlarging $T$ replaces one induced acyclic unit factor by its full local
+multiplicative factor, so the transition map adds exactly that local
+cohomology summand. Since a map from the finite complete resolution in any
+fixed degree has finite image, it lands in one $I_M(T)$; a cochain which is a
+cycle or boundary in the union already has the same property at some finite
+stage. Hence cohomology commutes with this filtered union, and its colimit is
+the finite-support direct sum in (4.I2).
 
 We shall use the following calculation twice.
 
