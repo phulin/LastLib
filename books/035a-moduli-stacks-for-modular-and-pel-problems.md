@@ -46,8 +46,9 @@
 9. [Modular level structures](#9-modular-level-structures)
    - [Drinfeld structures and ampleness](#91-drinfeld-structures-and-ampleness)
    - [Full, point, and cyclic level](#92-full-point-and-cyclic-level)
-   - [When level produces a fine scheme](#93-when-level-produces-a-fine-scheme)
-   - [Compactified modular stacks and coarse curves](#94-compactified-modular-stacks-and-coarse-curves)
+   - [Theta groups and pairings across the boundary](#93-theta-groups-and-pairings-across-the-boundary)
+   - [When level produces a fine scheme](#94-when-level-produces-a-fine-scheme)
+   - [Compactified modular stacks and coarse curves](#95-compactified-modular-stacks-and-coarse-curves)
 10. [The common PEL framework](#10-the-common-pel-framework)
     - [The fixed PEL datum](#101-the-fixed-pel-datum)
     - [Abelian schemes with endomorphisms and polarization](#102-abelian-schemes-with-endomorphisms-and-polarization)
@@ -125,6 +126,11 @@ quoted from earlier books, with the sections named, and are used below without r
   Section 6.2 requires, is Book 10 §10.5.
 - Relatively ample bundles, Hilbert polynomials, Hilbert and graph parameter schemes, and fpqc
   descent of ampleness: Book 8.
+- Divisors, degrees, Riemann--Roch, and very ampleness on relative curves, including the nodal
+  ones: Book 9.
+- Cohomology of a proper flat family and its base change: when the fiber dimensions of $H^0$ and
+  $H^1$ are constant, the pushforward is locally free of that rank and its formation commutes with
+  arbitrary base change: Book 15.
 - Finite locally free algebras and morphisms, their ranks, and their norms and traces: Book 26
   §§6, 10.
 - Affine group schemes, closed subgroup schemes, actions and invariants, and the theorem that the
@@ -146,45 +152,48 @@ quoted from earlier books, with the sections named, and are used below without r
   $e_n^\lambda$ with its perfectness criterion, Book 35 §§8.1–8.5; the theta group
   $\mathcal G(L)$ of a rigidified ample bundle as a central extension of $K(L)=\ker\lambda_L$ by
   $\mathbf G_m$, and its commutator pairing, Book 35 §9.2.
+- The Serre tensor construction: for a finitely generated projective module $M$ over a commutative
+  ring $\mathcal O$ acting on an abelian scheme $A$, the fppf sheaf
+  $T\mapsto A(T)\otimes_{\mathcal O}M$ is an abelian scheme $A\otimes_{\mathcal O}M$, of relative
+  dimension $rg$ when $M$ has rank $r$, formed compatibly with arbitrary base change (Book 35
+  §5.6, Theorem 5.3), functorial in $M$ and in $A$ (Proposition 5.4), and compatible with duality
+  through $(A\otimes_{\mathcal O}M)^\vee\simeq A^\vee\otimes_{\mathcal O}M^\vee$, whose
+  fractional-ideal case reads $(A\otimes\mathfrak c)^\vee\simeq A^\vee\otimes\mathfrak c^{-1}$
+  (Theorem 5.6).
+- Prime-adic Tate modules over a separably closed field $k$ with $\ell$ invertible in $k$:
+  $T_\ell A=\varprojlim_mA[\ell^m](k)$ is free of rank $2g$ over $\mathbf Z_\ell$ with
+  $T_\ell A/\ell^mT_\ell A\simeq A[\ell^m](k)$, functorially, so that an automorphism of $A$ acts
+  through $\operatorname{GL}_{2g}(\mathbf Z_\ell)$: Book 35 §7.6, Theorem 7.3. The perfect limit
+  Weil pairing is Proposition 7.4 there. For $g=1$ this is exactly the rank-two statement used in
+  Section 9.4.
+- Theta groups in standard form, for a relatively ample rigidified bundle $L$ on an abelian scheme
+  whose polarization degree $d^2$ has $d$ invertible on the base: perfectness of the commutator
+  pairing $c_L$ (Book 35 Proposition 9A.2); the symplectic normal form for a perfect alternating
+  pairing on a finite abelian group (Lemma 9A.3) and the resulting etale-local identification of
+  $K(L)$ with $K(\delta)\times K(\delta)^D$ for a locally constant type $\delta$ (Theorem 9A.4);
+  rigidity of central extensions of a finite etale group of invertible order by $\mathbf G_m$
+  (Theorem 9A.5); existence of theta structures etale-locally (Theorem 9A.6); the description of
+  $\operatorname{Aut}_{\mathbf G_m}(\mathcal G(\delta))$ as a finite etale group scheme of order
+  $d^2|\!\operatorname{Sp}(\delta)|$ and of the theta structures as a torsor under it, represented
+  by a finite etale scheme (Theorem 9A.7); the Stone--von Neumann theorem, that a module of
+  central character one is $V(\delta)$ tensored with its weight-zero part and that a module of
+  rank $d$ has endomorphism ring $\mathcal O_S$ (Theorem 9A.8, Corollary 9A.9); and theta
+  coordinates, that $\pi_*L$ is such a module of rank $d$ and that a theta structure produces a
+  basis $\{\theta_x\}$ unique up to one common unit and compatible with base change (Theorem
+  9A.10, resting on the vanishing theorem and rank computation of Book 35 §8.6).
 
-Four further inputs are used below and are **not** available in any earlier book of this
-collection. We state them here as standing hypotheses rather than attaching a citation to them.
-Each is standard; none is proved here, and every conclusion whose proof invokes one of them is
-conditional on it.
-
-**(H1) Heisenberg normal form and its representation.** Let $\mathcal L^n$ be a symmetric ample
-rigidified bundle on an abelian scheme with fixed integral polarization type. We assume that after
-an fppf cover of the base the theta group of Book 35 §9.2 is isomorphic to a standard Heisenberg
-extension attached to that type, respecting the central $\mathbf G_m$; that the sheaf of such
-isomorphisms, the theta frames, is a torsor under the finite locally free automorphism group of
-the standard extension; and that the standard extension has, after a choice of Lagrangian
-splitting, an irreducible representation on the functions on that finite Lagrangian, unique up to
-the central scalar, which supplies a basis of the pushforward of $\mathcal L^n$ compatibly with
-base change. Book 35 §9.2 supplies the extension and its commutator pairing, but no normal form
-and no representation theory.
-
-**(H2) Theta groups and pairings on the boundary.** We assume the same package for the
-symmetrization of an ample level divisor on a generalized elliptic curve whose geometric fibers
-may be Neron polygons, and likewise that the Weil pairing on $E^{\mathrm{sm}}[N]$ extends the
-elliptic pairing of Book 34 §14.5 across such fibers, alternating and compatible with base change.
-Book 34 and Book 35 treat abelian schemes and elliptic schemes, so neither covers the polygonal
-fibers appearing in Sections 9.2 and 9.3.
-
-**(H3) The Serre tensor construction.** For a finite projective module $M$ over a ring $\mathcal O$
-acting on an abelian scheme $A$, we assume that the fppf sheaf $T\mapsto A(T)\otimes_{\mathcal O}M$
-is represented by an abelian scheme $A\otimes_{\mathcal O}M$, that its formation commutes with
-base change, and that the construction is functorial in $M$ and compatible with duality. Section
-11.1 uses this to give meaning to $A\otimes_{\mathcal O_F}\mathfrak c\to A^\vee$.
-
-**(H4) Prime-adic Tate modules of elliptic curves.** For an elliptic curve over an algebraically
-closed field of characteristic prime to $\ell$, we assume that
-$T_\ell E=\varprojlim_mE[\ell^m]$ is free of rank two over $\mathbf Z_\ell$, so that an
-automorphism acts through $\operatorname{GL}_2(\mathbf Z_\ell)$. Book 35 §4.3 supplies the finite
-levels $E[\ell^m]$, their orders, and their etaleness; the prime-adic limit belongs to a later
-book. Section 9.3 uses only the limit formalism, and its argument may equally be read at one
-sufficiently large finite level.
-
-Each use site below names the hypothesis it invokes.
+Two remarks fix the range of the last item, since it is used below at its boundary.
+Chapter 9A of Book 35 assumes throughout that the order $d$ of the type is invertible on the base;
+every use site below states the invertibility it needs rather than inheriting it silently. And
+Chapter 9A is a chapter about abelian schemes, whereas the generalized elliptic curves of Chapter
+9 acquire Neron polygons as fibers, which are singular, have disconnected smooth locus, and are
+not abelian schemes at all. Nothing in Book 34 or Book 35 applies to them directly. The
+theta group of an ample level bundle on a generalized elliptic curve, the perfectness of its
+commutator, the resulting extension of the Weil pairing across the boundary, and the theta
+coordinates it produces are therefore constructed and proved from scratch in Section 9.3, which
+imports from Book 35 only those parts of Chapter 9A that are statements about central extensions
+of finite etale group schemes and about their representations, and are not statements about
+abelian schemes.
 
 ## 2. Categories fibered in groupoids
 
@@ -786,48 +795,391 @@ $E^{\mathrm{sm}}[N]$ to have rank $N^2$ on this locus. If a primitive $N$th root
 symplectic convention are fixed, one may additionally require the Weil pairing of $P,Q$ to equal
 that root. Over the elliptic locus this is the perfect alternating pairing
 $e_N:E[N]\times E[N]\to\mu_N$ of Book 34 §14.5, equivalently the Weil pairing of Book 35 §§7.1–7.3
-composed with the canonical principal polarization; across a polygonal fiber the pairing is the
-corresponding pairing on the smooth group, which is part of the theta-group package assumed in
-(H2).
+composed with the canonical principal polarization. Across a polygonal fiber neither book applies,
+because a Neron polygon is not an abelian scheme; the pairing meant there is the one constructed
+on all of $E^{\mathrm{sm}}[N]$ in Section 9.3, which is perfect and alternating over the whole
+compactified problem and restricts to $e_N$ on the elliptic locus. Nothing in the present section
+uses more about it than that it exists and is preserved by isomorphisms.
 
 A $\Gamma_1(N)$-structure is a Drinfeld homomorphism $\mathbf Z/N\mathbf Z\to E^{\mathrm{sm}}[N]$, written $1\mapsto P$, with ample divisor $\sum_a[aP]$. A $\Gamma_0(N)$-structure is a finite locally free cyclic subgroup $C\subset E^{\mathrm{sm}}$ of rank $N$, locally generated by a Drinfeld point, whose Cartier subgroup divisor $C\subset E$ is ample.
 
 The local-generation phrase for $\Gamma_0(N)$ is necessary. A finite flat group scheme may have no global generator. Requiring one would define a framed $\Gamma_1$-type cover rather than the cyclic subgroup problem.
 
-These definitions are stable under pullback and have effective descent. The divisor equality, cyclicity after an fppf cover, and ampleness are all fppf local. To see representability of the forgetful map, work on the divisor-framed atlas of Chapter 8. Each possible section is a point of a finite torsion scheme; homomorphism, divisor-equality, and subgroup conditions are closed, while ampleness is open. Hence the level functor is represented by a locally closed subscheme of a finite scheme over that atlas. Descent gives a representable, separated, quasi-finite morphism of finite presentation. It need not be finite: a generic torsion divisor can specialize into too few components of a fixed polygon, so ampleness can fail in the special fiber. Proper compactified level maps require the decontractions used in Section 9.4. Over $\mathbf Z[1/N]$ the torsion is etale, so the forgetful map is etale over the smooth elliptic locus.
+These definitions are stable under pullback and have effective descent. The divisor equality, cyclicity after an fppf cover, and ampleness are all fppf local. To see representability of the forgetful map, work on the divisor-framed atlas of Chapter 8. Each possible section is a point of a finite torsion scheme; homomorphism, divisor-equality, and subgroup conditions are closed, while ampleness is open. Hence the level functor is represented by a locally closed subscheme of a finite scheme over that atlas. Descent gives a representable, separated, quasi-finite morphism of finite presentation. It need not be finite: a generic torsion divisor can specialize into too few components of a fixed polygon, so ampleness can fail in the special fiber. Proper compactified level maps require the decontractions used in Section 9.5. Over $\mathbf Z[1/N]$ the torsion is etale, so the forgetful map is etale over the smooth elliptic locus.
 
-### 9.3 When level produces a fine scheme
+### 9.3 Theta groups and pairings across the boundary
 
-An automorphism of a generalized elliptic curve preserving a full level basis acts trivially on the level divisor and on the component group it meets. For $N\geq3$, with $N$ invertible, it is the identity. On a smooth fiber its action on every prime-adic Tate module is faithful: the torsion subgroups $E[\ell^m]$ are finite locally free of order $\ell^{2m}$ and etale for $\ell$ invertible by Book 35 §4.3, their union is schematically dense, and a homomorphism of abelian schemes is determined by a schematically dense restriction by Book 35 §4.1. The rank-two freeness of $T_\ell E$ over $\mathbf Z_\ell$, which turns that action into a matrix, is the standing hypothesis (H4). If an odd prime $\ell$ divides $N$, the action lies in $1+\ell M_2(\mathbf Z_\ell)$; if $N$ has no odd divisor, then $4\mid N$ and it lies in $1+4M_2(\mathbf Z_2)$. These two congruence groups are torsion-free. Indeed, for an element $1+\ell^aB$ of prime order, the first nonzero term in its binomial expansion has valuation $a+1$ for odd $\ell$, and at least $a+1$ for $\ell=2$ with $a\geq2$, whereas all later terms have larger valuation. Reduction to a prime divisor of the order proves the claim. On a polygon, the ample basis meets and labels every component and determines the automorphism on the dense smooth locus; equality there extends to the proper curve.
+Two things have been used above and will be used again in the next section, and neither is
+supplied by any earlier book. The first is a Weil pairing on $E^{\mathrm{sm}}[N]$ that is defined,
+alternating, and perfect also when the geometric fiber is a polygon. The second is a supply of
+coordinates on a levelled generalized elliptic curve, canonical enough to embed the whole level
+problem in one projective space, and again valid across the boundary. Book 34 builds the Weil
+pairing out of the Poincare bundle of an abelian scheme, and Book 35 Chapter 9A puts the theta
+group of an ample bundle on an abelian scheme into standard form. A Neron polygon is not an
+abelian scheme: it is singular, its smooth locus is not proper, and the identity component of that
+smooth locus is a torus and not an abelian variety. Neither theory applies to it. This section
+builds both objects directly.
 
-Thus full level $N\geq3$ kills inertia over $\mathbf Z[1/N]$. The stack is then a sheaf. For
-completeness, scheme representability does not follow from trivial inertia alone. Symmetrize the
-ample level divisor to obtain
+The first task is to choose the right line bundle, because the naive choice fails for a reason
+worth seeing. Take the level divisor $D=E^{\mathrm{sm}}[N]$ itself, of degree $N^2$. On a smooth
+fiber the associated kernel $K(\mathcal O_E(D))$ is $E[N^2]$, of order $N^4$. On an $N$-gon it is,
+by the same method as the computation carried out below, the group
+$\mu_{N^2}\times\mathbf Z/N\mathbf Z$, of order $N^3$. The kernel is not finite of constant order across the boundary, so the theta group of
+$\mathcal O_E(D)$ is not a central extension of a finite etale group scheme, and no normal form for
+it can exist. The missing points are visible in the degeneration: of the $N^4$ points of $E[N^2]$
+only $N^3$ remain in the smooth locus of the limit, the rest escaping into the components that the
+degeneration inserts. Restricting the theta group of $\mathcal O_E(D)$ to the subgroup
+$E^{\mathrm{sm}}[N]$ does not repair this, because $E[N]=N\cdot E[N^2]$ is isotropic for the
+commutator of a bundle of degree $N^2$ and the restricted extension is commutative.
+
+What does work is a bundle of degree exactly $N$. On a smooth fiber the kernel is then $E[N]$
+itself, of order $N^2$; and on an $N$-gon a bundle of degree one on every component has, again by
+the computation below, kernel exactly $E^{\mathrm{sm}}[N]$, of the same order $N^2$. So the two
+kernels agree, the extension is a central extension of a finite etale group scheme of order $N^2$
+over the whole problem, and the machinery of Book 35 Chapter 9A that concerns such extensions
+rather than abelian schemes becomes available. Producing such a bundle canonically is the role of
+the following covering of the moduli problem by open pieces.
+
+Throughout this section $N\geq1$ is invertible on the base, $E\to S$ is a generalized elliptic
+curve, and $\alpha:(\mathbf Z/N\mathbf Z)^2\to E^{\mathrm{sm}}[N]$ is a $\Gamma(N)$-structure whose
+divisor is ample.
+
+**Boundary lemma.** Every singular geometric fiber of $E$ is a Neron $N$-gon; $\alpha$ is an
+isomorphism onto $E^{\mathrm{sm}}[N]$, which is therefore finite etale of order $N^2$ over $S$ and
+constant; and on a polygonal geometric fiber the canonical sequence of the smooth group restricts
+to an exact sequence
 
 $$
-\mathcal L=\mathcal O_E(D+[-1]^*D).
+1\longrightarrow\mu_N\longrightarrow E^{\mathrm{sm}}[N]
+\longrightarrow\mathbf Z/N\mathbf Z\longrightarrow0
 $$
 
-A high power has a theta group whose quotient by its central $\mathbf G_m$ is finite. For an
-abelian scheme this extension and its commutator pairing are constructed in Book 35 §9.2; here the
-curve may degenerate to a polygon, so the construction is the one assumed in (H2). After a finite
-etale cover, a theta frame identifies that
-central extension with the standard Heisenberg extension and gives its standard projective frame on
-$H^0(E,\mathcal L^n)$; this normal form, and the representation theory used in the next sentence,
-are the standing hypotheses (H1) and (H2). Theta-framed level curves are therefore a locally closed Hilbert parameter
-scheme. The choices of theta frame form a torsor under the finite automorphism group of the
-standard Heisenberg group: after choosing a Lagrangian splitting, the representation is explicitly
-the space of functions on that finite Lagrangian, with translations and characters giving the
-Heisenberg action. Forgetting the theta frame is consequently a finite-group quotient. Chapter 7
-constructs that quotient as a scheme, and the ample Hilbert bundle makes it quasi-projective.
-Because inertia has already vanished, the quotient represents the level sheaf rather than only
-its coarse orbit functor. It is a fine moduli scheme and carries the universal generalized
-elliptic curve. The vanishing of inertia is unconditional; the theta-framed construction of the
-representing scheme is conditional on (H1) and (H2).
+whose first term is the $N$-torsion of the identity component and whose last term is the group of
+components.
+
+**Proof.** Let the fiber be an $n$-gon, so that its smooth group is
+$\mathbf G_m\times\mathbf Z/n\mathbf Z$. Since $N$ is invertible, the $N$-torsion of this group is
+$\mu_N\times(\mathbf Z/n\mathbf Z)[N]$, etale of order $N\gcd(N,n)$, and its length as a Cartier
+divisor equals that order. The Drinfeld equality says that this divisor is the sum of the $N^2$
+sections $\alpha(h)$, of degree $N^2$; hence $\gcd(N,n)=N$, that is $N\mid n$. Ampleness says that
+the divisor meets every component, so the composite
+$E^{\mathrm{sm}}[N]\to\mathbf Z/n\mathbf Z$ is surjective; its image is
+$(\mathbf Z/n\mathbf Z)[N]=\mathbf Z/\gcd(N,n)\mathbf Z$, so $n\mid N$. Thus $n=N$. Multiplication
+by $N$ on the smooth commutative group scheme $E^{\mathrm{sm}}$ is etale, its differential at the
+identity being multiplication by $N$ on the Lie algebra and translations acting transitively on
+each geometric fiber; so $E^{\mathrm{sm}}[N]$ is etale over $S$, of order $N^2$ in every fiber by
+the two cases just treated. A reduced divisor cannot be a sum of $N^2$ sections with a repetition,
+so the sections $\alpha(h)$ are pairwise disjoint and exhaust $E^{\mathrm{sm}}[N]$; hence $\alpha$
+is an isomorphism of $S$-group schemes and $E^{\mathrm{sm}}[N]$ is finite etale and constant of
+order $N^2$. The
+displayed sequence is the $N$-torsion of $1\to\mathbf G_m\to E^{\mathrm{sm}}\to\pi_0\to0$, exact
+on the right because $\mathbf G_m$ is $N$-divisible over an algebraically closed field of
+residue characteristic prime to $N$. $\square$
+
+Next we record the elementary geometry of line bundles on a polygon, computed through the
+normalization. Let $C$ be a Neron $n$-gon over an algebraically closed field $k$, with components
+$C_j\simeq\mathbf P^1$ indexed by $j\in\mathbf Z/n\mathbf Z$, coordinate $u_j$, and $u_j=\infty$
+glued to $u_{j+1}=0$. A point of $C^{\mathrm{sm}}$ is a pair $(t,j)$ with $t\in k^\times$ the
+coordinate on $C_j$, and the group law is $(t,j)(t',j')=(tt',j+j')$.
+
+**Polygon Picard lemma.** A line bundle on $C$ is determined by its multidegree $(d_j)$ together
+with one further invariant in $k^\times$, and a divisor $\sum_kn_k[(t_k,j_k)]$ supported on
+$C^{\mathrm{sm}}$ and of multidegree zero is principal if and only if $\prod_kt_k^{n_k}=1$.
+
+**Proof.** Give a line bundle by its restrictions $\mathcal O(d_j)$ to the components together with
+identifications of the fibers at the $n$ nodes; rescaling the $j$-th restriction by $c_j$ multiplies
+one identification by $c_j$ and the adjacent one by $c_j^{-1}$, so the product of the $n$ gluing
+scalars is the only invariant that survives, and it can be arbitrary. For the criterion, a rational
+function on $C$ is a family $f_j$ of rational functions on the components, with no zero or pole at a
+node and with $f_j(\infty)=f_{j+1}(0)$. If $\operatorname{div}(f_j)=\sum_kn_{jk}[t_k]$ with
+$\sum_kn_{jk}=0$, then $f_j=c_j\prod_k(u_j-t_k)^{n_{jk}}$, so $f_j(\infty)=c_j$ and
+$f_j(0)=c_j\prod_kt_k^{n_{jk}}$, the signs cancelling because the exponents sum to zero. The
+matching conditions read $c_j=c_{j+1}\prod_kt_k^{n_{j+1,k}}$; multiplying them over $j$ gives
+$\prod_{j,k}t_k^{n_{jk}}=1$, and conversely that identity allows the $c_j$ to be solved for
+recursively around the cycle. $\square$
+
+Now fix a cyclic subgroup $\Lambda\subset(\mathbf Z/N\mathbf Z)^2$ of order $N$; there are finitely many
+such, and the list does not vary over $S$. Let $\mathcal M_\Lambda$ be the locus of the level problem on
+which the divisor $\alpha(\Lambda)$, a finite locally free subgroup of $E^{\mathrm{sm}}$ of rank $N$, is
+ample on $E$. Ampleness is an open condition, so $\mathcal M_\Lambda$ is an open substack.
+
+**Ample generator cover.** The $\mathcal M_\Lambda$ cover the level problem. On $\mathcal M_\Lambda$ the line
+bundle $\mathcal L_\Lambda=\mathcal O_E(\alpha(\Lambda))$ has degree $N$ on every geometric fiber, degree one on
+every component of every polygonal fiber; $\pi_*\mathcal L_\Lambda$ is locally free of rank $N$ and its
+formation commutes with arbitrary base change; and for $N\geq3$ the bundle $\mathcal L_\Lambda$ is
+relatively very ample.
+
+**Proof.** For the covering statement, argue on a geometric fiber. If the fiber is smooth, every
+$\alpha(\Lambda)$ is an effective divisor of degree $N>0$ on an irreducible curve, hence ample. If it is
+an $N$-gon, choose an element $g\in E^{\mathrm{sm}}[N]$ whose component index generates
+$\mathbf Z/N\mathbf Z$; then $g$ has order $N$, the subgroup it generates has order $N$ and
+surjects onto the component group, hence meets every component, and $\Lambda=\alpha^{-1}\langle g\rangle$
+does the job. Ampleness holds on a neighbourhood of the chosen point of $S$, so the open substacks
+$\mathcal M_\Lambda$ cover.
+
+On a polygonal fiber, $\alpha(\Lambda)$ has $N$ points, surjects onto the group of $N$ components, and
+has trivial kernel there by comparison of orders; so it meets each component exactly once and
+$\mathcal L_\Lambda$ has multidegree $(1,\ldots,1)$. The Euler characteristic of a degree-$N$ bundle on a
+curve of arithmetic genus one is $N$, and $h^1$ vanishes: on a smooth fiber because the degree is
+positive, and on a polygon because $h^0$ is already $N$, as the following description shows. A
+section of $\mathcal O_C(D)$ with $D=\sum_j[(a_j,j)]$ is a family
+$f_j=\gamma_j+\beta_j/(u_j-a_j)$ subject to the matching conditions, which determine
+$\beta_{j+1}=a_{j+1}(\gamma_{j+1}-\gamma_j)$ and leave the $\gamma_j$ free; so $h^0=N$. Constancy
+of $h^0$ and of $h^1$ in the fibers makes $\pi_*\mathcal L_\Lambda$ locally free of rank $N$ with base
+change, by the coherent base-change theorem of Book 15.
+
+For very ampleness with $N\geq3$: on a smooth fiber a degree-$N$ bundle with $N\geq3$ is very
+ample by Riemann--Roch on a relative curve, Book 9. On an $N$-gon, the displayed description shows
+that the restriction of the linear system to $C_j$ consists of all functions
+$A+B/(u_j-a_j)$, since $\beta_j=a_j(\gamma_j-\gamma_{j-1})$ and $\gamma_{j-1},\gamma_j$ are
+independent coordinates when $N\geq2$; so each component is mapped isomorphically onto a line. In
+the basis dual to the coordinates $\gamma_j$, the point $u_j=\infty$ goes to the $j$-th coordinate
+point and the point $u_j=0$ to the $(j-1)$-st, so the image of $C_j$ is the line joining those two
+coordinate points, and the two nodes of $C_j$ go to its two ends. For $N\geq3$ the $N$ lines so
+obtained are distinct, two of them meet exactly in the coordinate point they share when their
+index sets overlap and are disjoint otherwise, and a shared point is precisely the image of the
+node joining the corresponding components. Hence the map is injective, is an immersion on each
+component, and separates the two branches at each node: it is a closed immersion, realizing $C$ as
+an $N$-gon of lines in $\mathbf P^{N-1}$. $\square$
+
+We can now build the theta group. Since $E^{\mathrm{sm}}$ acts on $E$, translation $t_x$ by a
+section $x$ of $E^{\mathrm{sm}}$ is an automorphism of $E$ over $S$, and the definition of Book 35
+§9.2 can be copied verbatim: let $\mathcal G(\mathcal L_\Lambda)$ be the fppf sheaf whose $T$-points are
+the pairs $(x,\varphi)$ with $x\in E^{\mathrm{sm}}[N](T)$ and
+$\varphi:t_x^*\mathcal L_{\Lambda,T}\xrightarrow{\sim}\mathcal L_{\Lambda,T}$, multiplied by
+$(x,\varphi)(y,\psi)=(x+y,\varphi\circ t_x^*\psi)$.
+
+**Boundary theta theorem.** On $\mathcal M_\Lambda$ the sheaf $\mathcal G(\mathcal L_\Lambda)$ is a central
+extension
+
+$$
+1\longrightarrow\mathbf G_m\longrightarrow\mathcal G(\mathcal L_\Lambda)
+\longrightarrow E^{\mathrm{sm}}[N]\longrightarrow1,
+$$
+
+formed compatibly with base change. Its commutator
+$c_{\mathcal L_\Lambda}:E^{\mathrm{sm}}[N]\times E^{\mathrm{sm}}[N]\to\mathbf G_m$ takes values in
+$\mu_N$, is alternating and perfect, and does not depend on $\Lambda$. On a polygonal geometric fiber it
+is given, in the notation of the boundary lemma, by
+
+$$
+c\bigl((\zeta,i),(\xi,l)\bigr)=\xi^{\,i}\zeta^{-l},
+$$
+
+and on a smooth geometric fiber it is the elliptic Weil pairing $e_N$ of Book 34 §14.5, up to the
+inversion of one argument. Consequently the pairings on the various $\mathcal M_\Lambda$ glue to one
+perfect alternating pairing on $E^{\mathrm{sm}}[N]$ over the whole compactified level problem,
+restricting to $e_N$ over the elliptic locus.
+
+**Proof strategy.** Everything except the two fiber formulas is formal: an extension by
+$\mathbf G_m$ because the automorphisms of a line bundle on a proper family with geometrically
+connected reduced fibers are the units of the base, and translation-invariance of
+$\mathcal L_\Lambda$ because a line bundle trivial on all fibers and of rank-one pushforward is pulled
+back from the base. The commutator can then be computed inside the action on sections, where the
+polygon becomes an explicit calculation with rational functions and the smooth fiber is handled by
+the identification already available in Book 35.
+
+**Proof.** Since $E\to S$ is proper and flat with geometrically connected and reduced fibers,
+$\pi_*\mathcal O_E=\mathcal O_S$ universally, so the automorphisms of $\mathcal L_{\Lambda,T}$ are exactly
+$\mathbf G_m(T)$; this is the kernel of the projection, and it is central because an automorphism
+of the bundle commutes with every $\varphi$. For surjectivity, let $x$ be a section of
+$E^{\mathrm{sm}}[N]$ and put $M_x=t_x^*\mathcal L_\Lambda\otimes\mathcal L_\Lambda^{-1}$. On each geometric
+fiber $M_x$ is trivial: on a smooth fiber because $\lambda_{\mathcal L_\Lambda}=\lambda_0\circ[N]$, the
+homomorphism attached to a line bundle depending only on the fiberwise degree and vanishing on
+algebraically trivial bundles (Book 35 §§2.5, 8.1), so that its kernel is $E[N]$; and on an
+$N$-gon by the Picard lemma, since with $D=\sum_j[(a_j,j)]$ of multidegree one and
+$x=(\zeta,i)$ the divisor $t_{-x}D-D$ has multidegree zero and invariant
+
+$$
+\prod_j\frac{a_{j+i}\zeta^{-1}}{a_j}=\zeta^{-N}=1 .
+$$
+
+A line bundle on $E$ trivial on every geometric fiber has invertible pushforward whose formation
+commutes with base change, again by Book 15, and the evaluation
+$\pi^*\pi_*M_x\to M_x$ is an isomorphism because it is one on fibers; so $M_x$ is pulled back from
+$S$ and, Zariski-locally on $S$, is trivial. Hence the projection is surjective as a sheaf map and
+the displayed sequence is a central extension. Base-change compatibility is clear from the
+description of the points.
+
+The extension acts on $\pi_*\mathcal L_\Lambda$ by $(x,\varphi)\cdot s=\varphi(t_x^*s)$; this is a group
+action and the centre acts by scalars, by exactly the computation of Book 35 Theorem 9A.10(2),
+which uses only that translation is an automorphism of the family and that the pushforward commutes
+with base change, both verified above. Since $\mathbf G_m$ embeds in the automorphisms of
+$\pi_*\mathcal L_\Lambda$, the commutator of two lifts may be computed in this action.
+
+Do so on a polygonal fiber. Write $\mathcal L_\Lambda=\mathcal O_C(D)$ with
+$D=\sum_j[(a_j,j)]$ of multidegree one, identify sections with rational functions $f$ satisfying
+$\operatorname{div}(f)+D\geq0$, and choose for each $x\in C^{\mathrm{sm}}[N]$ a rational function
+$h_x$ with $\operatorname{div}(h_x)=t_{-x}D-D$, which exists by the computation just made.
+Multiplication by $h_x$ is an isomorphism $t_x^*\mathcal O(D)\to\mathcal O(D)$, so the corresponding
+element of the theta group acts on sections by $U_xf=h_x\cdot(f\circ t_x)$. Since
+$U_xU_y=\bigl(h_x\,(h_y\circ t_x)/h_{x+y}\bigr)U_{x+y}$ and the same with $x,y$ interchanged, the
+commutator is the constant function
+
+$$
+c_{\mathcal L_\Lambda}(x,y)=\frac{h_x\,(h_y\circ t_x)}{h_y\,(h_x\circ t_y)} .
+$$
+
+For $x=(\zeta,i)$ the divisor condition gives
+$h_{x,j}(u)=\kappa_j\,(u-a_{j+i}\zeta^{-1})/(u-a_j)$ on the component $C_j$, and the condition that
+$h_x$ take equal values on the two branches at each node reads
+$\kappa_j=\kappa_{j+1}a_{j+1+i}/(a_{j+1}\zeta)$. Extend $a$ periodically to all integers, lift the
+indices to non-negative integers, and write $F(j)=\prod_{m=1}^ja_m$; the recursion then solves as
+$\kappa_j=\kappa_0\,\zeta^{\,j}F(j)F(i)/F(i+j)$, and this is periodic in $j$, as it must be, because
+$\zeta^N=1$ while $F(j+N)/F(j)$ and $F(i+j+N)/F(i+j)$ both equal $\prod_ma_m$. Now evaluate the
+displayed commutator at the node $u_j=\infty$: there $h_{x,j}$ takes the value $\kappa_j$, while
+$h_y\circ t_x$ takes the value of $h_{y,j+i}$ at its own node, because
+$t_x$ carries the node between $C_j$ and $C_{j+1}$ to the node between $C_{j+i}$ and
+$C_{j+i+1}$. With $y=(\xi,l)$ and the corresponding constants
+$\nu_j=\nu_0\,\xi^{\,j}F(j)F(l)/F(l+j)$, the commutator is
+
+$$
+\frac{\kappa_j\,\nu_{j+i}}{\nu_j\,\kappa_{j+l}}
+=\xi^{\,i}\zeta^{-l}\cdot
+\frac{F(j)F(i)}{F(i+j)}\cdot\frac{F(j+i)F(l)}{F(l+j+i)}\cdot
+\frac{F(l+j)}{F(j)F(l)}\cdot\frac{F(i+j+l)}{F(j+l)F(i)}
+=\xi^{\,i}\zeta^{-l},
+$$
+
+every $F$-factor cancelling against one other. The answer is independent of the $a_j$, hence of
+$\Lambda$; it is alternating; and it is perfect, since a pair $(\zeta,i)$ pairing trivially with
+all of $\mu_N\times\mathbf Z/N\mathbf Z$ has $\xi^i=1$ for every $\xi\in\mu_N$ and $\zeta^l=1$ for
+every $l$, forcing $i=0$ and $\zeta=1$, and an injective homomorphism between finite etale groups
+of the same order $N^2$ is an isomorphism. It is also independent of the splitting used to write
+the points: replacing $(\zeta,i)$ by $(\zeta\eta^{\,i},i)$ for a fixed $\eta\in\mu_N$ leaves
+$\xi^{\,i}\zeta^{-l}$ unchanged.
+
+On a smooth fiber, $\lambda_{\mathcal L_\Lambda}=\lambda_0\circ[N]$ as noted, so
+$K(\mathcal L_\Lambda)=E[N]$ and Book 35 Proposition 9A.2 applies: the commutator is perfect, and
+its proof identifies it, up to the inversion of one argument, with the canonical kernel pairing
+$\langle\,,\rangle_f$ of Book 35 (6.2) for the isogeny $f=\lambda_{\mathcal L_\Lambda}$, the second
+argument $y$ entering as its biduality image $\delta_E(y)\in\ker f^\vee$, which lies there because
+$f$ is symmetric. That pairing is built in Book 35 §6.1 out of the character attached to a
+trivialized pullback, and a pullback along $u\circ f$ is a pullback along $f$ of a pullback along
+$u$; so for an isomorphism $u$ one has
+$\langle x,z\rangle_{u\circ f}=\langle x,u^\vee z\rangle_f$. Taking $f=[N]$ and $u=\lambda_0$, and
+using that the kernel pairing of $[N]$ is the Weil pairing (Book 34 §14.3) together with the
+symmetry $\lambda_0^\vee\circ\delta_E=\lambda_0$, the value is $e_N(x,\lambda_0y)$: the elliptic
+Weil pairing of Book 34 §14.5.
+
+Finally, two morphisms of finite etale $S$-schemes agreeing on every geometric fiber are equal,
+their equalizer being open and closed and containing every point. The pairings attached to two
+choices $\Lambda,\Lambda'$ therefore agree on $\mathcal M_\Lambda\cap\mathcal M_{\Lambda'}$, and the
+local pairings glue.
+$\square$
+
+The formula on the boundary is worth reading. The $\mu_N$ appearing there is intrinsic, being the
+$N$-torsion of the identity component of the smooth group, and it is its own exact annihilator, so
+it is a Lagrangian and the pairing descends to a perfect duality between it and the group of
+components. On the boundary the two Lagrangian directions, toric and component, are therefore
+canonically distinguished, whereas on a smooth fiber no Lagrangian is canonical. This is the
+geometric reason why the boundary of a modular curve with full level looks
+like a finite set of cusps labelled by the possible identifications of the toric and component
+directions.
+
+The extension is now in the range of the parts of Book 35 Chapter 9A that concern central
+extensions rather than abelian schemes. Write $\delta=(N)$, so that $d=N$,
+$K(\delta)=\mathbf Z/N\mathbf Z$, $K(\delta)^D=\mu_N$, and $\mathcal G(\delta)$ is the standard
+Heisenberg group scheme of that type.
+
+**Boundary theta coordinates.** Let $N\geq3$ be invertible on $S$ and let $(E,\alpha)$ be a
+generalized elliptic curve with ample $\Gamma(N)$-structure over $S$, lying in $\mathcal M_\Lambda$.
+Then:
+
+1. theta structures, that is isomorphisms
+   $\Theta:\mathcal G(\delta)\to\mathcal G(\mathcal L_\Lambda)$ restricting to the identity on the
+   central $\mathbf G_m$, exist etale-locally on $S$;
+2. they form a torsor under the finite etale group scheme
+   $\operatorname{Aut}_{\mathbf G_m}(\mathcal G(\delta))$, of order $N^2|\!\operatorname{Sp}(\delta)|$,
+   and are represented by a finite etale $S$-scheme of that rank;
+3. a theta structure makes $\pi_*\mathcal L_\Lambda$ a $\mathcal G(\delta)$-module of central character
+   one and of rank $N$, hence produces a basis $\{\theta_y\}_{y\in\mathbf Z/N\mathbf Z}$, unique up
+   to one common unit and compatible with base change;
+4. the resulting closed immersion $E\hookrightarrow\mathbf P^{N-1}_S$ is canonical: it depends on
+   the theta structure but not on the remaining scalar.
+
+**Proof.** By the boundary theorem the group $E^{\mathrm{sm}}[N]$ is finite etale of order $N^2$,
+killed by $N$, with $N$ invertible, and carries a perfect alternating pairing. Etale-locally on $S$
+it is constant, and $\mu_N$ is constant as well; the pairing becomes a perfect alternating pairing
+of finite abelian groups, so Book 35 Lemma 9A.3 puts it in the standard symplectic form, which for
+a group of order $N^2$ killed by $N$ is the type $\delta=(N)$. Thus $\mathcal G(\mathcal L_\Lambda)$ and
+$\mathcal G(\delta)$ become, etale-locally, two central extensions of the same finite etale group
+of invertible order by $\mathbf G_m$ with the same commutator; Book 35 Theorem 9A.5 is a statement
+about exactly this situation and makes no reference to abelian schemes, so it produces an
+isomorphism of extensions identical on the centre. That is assertion 1.
+
+Assertion 2 is Book 35 Theorem 9A.7, parts 1 and 2, which describe
+$\operatorname{Aut}_{\mathbf G_m}(\mathcal G(\delta))$ purely in terms of the standard model; the
+torsor statement follows because precomposition acts simply transitively on theta structures and
+assertion 1 makes the sheaf of theta structures locally nonempty, whence it is represented by a
+scheme finite etale of the same rank.
+
+For assertion 3, transport the action of $\mathcal G(\mathcal L_\Lambda)$ on $\pi_*\mathcal L_\Lambda$ along
+$\Theta$. The centre acts by scalars and the rank is $N=d$ by the ample generator cover, so Book 35
+Theorem 9A.8 and Corollary 9A.9, which are statements about modules over $\mathcal G(\delta)$ and
+involve no geometry, identify $\pi_*\mathcal L_\Lambda$ with $V(\delta)$ tensored by an invertible module
+and supply the basis, unique up to a common unit, compatibly with base change since every
+ingredient is.
+
+Assertion 4 follows because a common unit scaling all the $\theta_y$ does not change the induced
+map to $\mathbf P^{N-1}$, and because $\mathcal L_\Lambda$ is relatively very ample for $N\geq3$ by the
+ample generator cover, so the map is a closed immersion. $\square$
+
+The point of assertion 4 is that adding a theta structure to a levelled generalized elliptic curve
+adds no moduli, being a finite etale operation, and yet removes the entire general linear ambiguity
+of a projective embedding. That combination is what the next section needs.
+
+### 9.4 When level produces a fine scheme
+
+An automorphism of a generalized elliptic curve preserving a full level basis acts trivially on the level divisor and on the component group it meets. For $N\geq3$, with $N$ invertible, it is the identity. On a smooth fiber its action on every prime-adic Tate module is faithful: the torsion subgroups $E[\ell^m]$ are finite locally free of order $\ell^{2m}$ and etale for $\ell$ invertible by Book 35 §4.3, their union is schematically dense, and a homomorphism of abelian schemes is determined by a schematically dense restriction by Book 35 §4.1. That action is a matrix action, because Book 35 §7.6, Theorem 7.3 with $g=1$ makes $T_\ell E$ free of rank two over $\mathbf Z_\ell$ with $T_\ell E/\ell^mT_\ell E\simeq E[\ell^m](k)$, so that an automorphism acts through $\operatorname{GL}_2(\mathbf Z_\ell)$ and its reduction modulo $\ell^m$ is its action on $E[\ell^m]$. If an odd prime $\ell$ divides $N$, the action lies in $1+\ell M_2(\mathbf Z_\ell)$; if $N$ has no odd divisor, then $4\mid N$ and it lies in $1+4M_2(\mathbf Z_2)$. These two congruence groups are torsion-free. Indeed, for an element $1+\ell^aB$ of prime order, the first nonzero term in its binomial expansion has valuation $a+1$ for odd $\ell$, and at least $a+1$ for $\ell=2$ with $a\geq2$, whereas all later terms have larger valuation. Reduction to a prime divisor of the order proves the claim. On a polygon, the ample basis meets and labels every component and determines the automorphism on the dense smooth locus; equality there extends to the proper curve.
+
+Thus full level $N\geq3$ kills inertia over $\mathbf Z[1/N]$. The stack is then a sheaf, and an
+algebraic stack whose inertia is trivial is an algebraic space. Scheme representability does not
+follow from trivial inertia alone, and the remaining step is what Section 9.3 was built for.
+
+Being a scheme is a Zariski-local property, and the open substacks $\mathcal M_\Lambda$ of the ample
+generator cover exhaust $\overline{\mathcal M}(\Gamma(N))$; so it is enough to represent each of
+them. Work on $\mathcal M_\Lambda$ and let $\mathcal L_\Lambda=\mathcal O_E(\alpha(\Lambda))$ be the canonical
+degree-$N$ bundle of that chart, with its theta group. A theta structure $\Theta$ gives, by the
+boundary theta coordinates, a basis $\{\theta_y\}$ of the rank-$N$ bundle $\pi_*\mathcal L_\Lambda$,
+unique up to one common unit, hence a canonical closed immersion into $\mathbf P^{N-1}$ over the
+base, and the Heisenberg relations say that the standard $\mathbf Z/N\mathbf Z$ permutes the
+homogeneous coordinates cyclically while the standard $\mu_N$ scales them by roots of unity.
+
+Theta-framed level curves are therefore classified by a locally closed subscheme $\mathcal H$ of a
+Hilbert parameter scheme of $\mathbf P^{N-1}$. The Hilbert polynomial is fixed: the embedded curve
+has degree $N$ and arithmetic genus one. The group law, its action on the whole curve, the $N^2$
+level sections, the Drinfeld divisor equality, and the Heisenberg relations between the coordinates
+and the translations by $\alpha$ are closed conditions; ampleness of $\alpha(\Lambda)$, smoothness of the
+prescribed open locus, and invertibility conditions are open. Nothing is lost in passing to
+$\mathcal H$: the embedded curve recovers $E$ and $\mathcal L_\Lambda$, the marked sections recover
+$\alpha$, and the theta structure is recovered from the basis because the theta group acts
+faithfully on $\pi_*\mathcal L_\Lambda$, an element acting trivially on the standard module being trivial.
+
+Forgetting the theta frame is now a quotient by a finite etale group scheme. Indeed, by the
+boundary theta coordinates the theta structures form a torsor under
+$G=\operatorname{Aut}_{\mathbf G_m}(\mathcal G(\delta))$ with $\delta=(N)$, finite etale of order
+$N^2|\!\operatorname{Sp}(\delta)|$ over $\mathbf Z[1/N]$, so $\mathcal H\to\mathcal M_\Lambda$ is a $G$-torsor
+and $\mathcal M_\Lambda$ is the fppf quotient sheaf of $\mathcal H$ by $G$. Since $\mathcal H$ is
+quasi-projective and of finite presentation over the locally noetherian base, Chapter 7 constructs
+the invariant quotient $\mathcal H/G$ as a quasi-projective scheme, and it is a categorical quotient
+for $G$-invariant maps to schemes and to algebraic spaces. The two quotients agree: the projection
+$\mathcal H\to\mathcal H/G$ is $G$-invariant, hence factors through the quotient sheaf, while
+$\mathcal H\to\mathcal M_\Lambda$ is $G$-invariant, hence factors through $\mathcal H/G$; the two
+factorizations are mutually inverse by the uniqueness in either universal property. Because inertia
+has already vanished, this quotient represents the level sheaf itself rather than only its orbit
+functor.
+
+Each $\mathcal M_\Lambda$ is therefore a quasi-projective scheme, and the finitely many of them glue to
+exhibit $\overline{\mathcal M}(\Gamma(N))$ as a scheme. It is a fine moduli scheme and carries the
+universal generalized elliptic curve with its level structure. Two side conditions were consumed
+and should be named: $N\geq3$, without which the frame is not rigid and the degree-$N$ bundle is
+not very ample, and $N$ invertible on the base, without which $E^{\mathrm{sm}}[N]$ is not etale
+and no normal form for the theta group exists.
 
 Smaller or weaker levels require a stabilizer check. Full level $2$ is preserved by $[-1]$ because $-P=P$ on $2$-torsion. A $\Gamma_1(N)$ point may leave special automorphisms at small $N$, and a cyclic subgroup is preserved by $[-1]$ for every $N$. Hence a $\Gamma_0(N)$ problem is normally a stack even for large $N$ unless an auxiliary rigid level is added.
 
-### 9.4 Compactified modular stacks and coarse curves
+### 9.5 Compactified modular stacks and coarse curves
 
 Write $\overline{\mathcal M}(\Gamma)$ for the stack of generalized elliptic curves with an ample level structure of type $\Gamma$. The level divisor bounds the number of polygon components by its degree, so Chapter 8 makes this an algebraic stack of finite presentation. Its diagonal is now finite. Indeed, over a valuation ring an isomorphism of generic fibers preserving the level divisor extends to the common stable marked model: normalize the closures of the components and contract every rational component having only its two nodal branches as special points. A component disjoint from the level divisor is exactly such a contractible component. Ampleness says that no component in either model is contracted, so both models equal the common stable marked model. The extension is unique by density of the smooth locus. Thus the diagonal is proper; it was already quasi-finite and finitely presented, hence is finite. The open substack $\mathcal M(\Gamma)$ classifies smooth elliptic curves.
 
@@ -1022,37 +1374,42 @@ A level is **neat** if no nontrivial finite-order automorphism compatible with t
 
 We first isolate the final representability step.
 
-**Rigid-level scheme lemma** (conditional on the standing hypothesis (H1)). On a locally
-noetherian base, polarized abelian schemes of fixed
-dimension and integral polarization type with neat prime-to-base level form a quasi-projective
-scheme.
+**Rigid-level scheme lemma.** Let the base be locally noetherian and let the fixed integral
+polarization type $\delta$ have order $d=d_1\cdots d_g$ invertible on it. Then polarized abelian
+schemes of fixed dimension and that polarization type, with neat prime-to-base level, form a
+quasi-projective scheme.
 
-**Proof.** Choose a symmetric high power $\mathcal L^n$ of the inducing rigidified ample bundle.
-Its theta group is the central extension of the finite locally free
-kernel of the associated polarization by $\mathbf G_m$, obtained from pairs
-$(x,\phi)$ with $\phi:t_x^*\mathcal L^n\simeq\mathcal L^n$. This extension, its multiplication,
-and its commutator pairing on $K(\mathcal L^n)=\ker\lambda_{\mathcal L^n}$ are constructed in
-Book 35 §9.2; the polarization-line lemma above identifies the kernel with the one attached to the
-polarization. After an fppf cover the fixed integral polarization type
-identifies this finite kernel and pairing with the standard ones. A theta frame is an isomorphism with the standard
-Heisenberg extension, respecting the central $\mathbf G_m$.
+**Proof.** Zariski-locally on the base choose $n\geq3$ invertible there; such $n$ exist near every
+point, as in Section 9.5. Replace the inducing rigidified symmetric ample bundle $\mathcal L$ by
+$\mathcal L^n$, which is very ample, of type $n\delta$ and of order $n^gd$, again invertible on the
+base. Its theta group is the central extension of $K(\mathcal L^n)=\ker\lambda_{\mathcal L^n}$ by
+$\mathbf G_m$ obtained from pairs $(x,\phi)$ with $\phi:t_x^*\mathcal L^n\simeq\mathcal L^n$,
+constructed with its commutator pairing in Book 35 §9.2; the polarization-line lemma above
+identifies the kernel with the one attached to the polarization.
 
-Theta frames form a torsor under the finite locally free automorphism group of that standard extension. The
-standard irreducible representation of the Heisenberg group supplies, up to the central scalar,
-a basis of $a_*\mathcal L^n$ compatible with base change. The normal form, the frame torsor, and
-this representation are the standing hypothesis (H1); Book 35 §9.2 supplies the extension and its
-commutator pairing but neither the normal form nor the representation. Hence a theta-framed object is a
+All of Book 35 Chapter 9A now applies, since it asks exactly that the order of the type be
+invertible on the base, which the choice of $n$ has arranged. The commutator pairing is perfect (Proposition 9A.2); $K(\mathcal
+L^n)$ is finite etale and, etale-locally, symplectically isomorphic to
+$K(n\delta)\times K(n\delta)^D$ (Theorem 9A.4); theta structures, that is isomorphisms with the
+standard Heisenberg extension of type $n\delta$ respecting the central $\mathbf G_m$, exist
+etale-locally (Theorem 9A.6) and form a torsor under the finite etale group scheme
+$\operatorname{Aut}_{\mathbf G_m}(\mathcal G(n\delta))$, represented by a finite etale scheme
+(Theorem 9A.7); and the pushforward of $\mathcal L^n$ is locally free of rank $n^gd$ with base
+change (Book 35 §8.6), hence is a module of central character one and of the standard rank, so a
+theta structure produces a basis of it, unique up to one common unit and compatible with base
+change (Theorems 9A.8 and 9A.10 with Corollary 9A.9). Since a common unit does not move the
+induced projective embedding, a theta-framed object is a
 locally closed point of the Hilbert parameter scheme: the group law, level sections,
 endomorphisms, and polarization pairing are imposed by the graph and tensor equations already
 constructed. It is therefore represented by a quasi-projective scheme. Forgetting the theta
-frame is the quotient by its finite locally free change-of-frame group. Chapter 7 constructs the
+frame is the quotient by the finite etale change-of-frame group. Chapter 7 constructs the
 quasi-projective scheme quotient.
 Neatness says that no residual automorphism of the abelian scheme
 fixes the level, so this quotient represents the original sheaf and carries its universal
 abelian scheme. Different auxiliary $n$ and local choices give canonically isomorphic schemes by
 the representing property, and these glue over the base. $\square$
 
-**PEL stack theorem.** For fixed integral PEL data, fixed polarization type, determinant condition, and finite-presentation integral level or local-model condition, PEL objects form an fpqc stack. Its diagonal is representable, separated, and finite, and it is an algebraic stack of finite presentation. After adding neat prime-to-base level, its inertia is trivial and it is represented by a quasi-projective scheme; this last clause is conditional on (H1), through the rigid-level scheme lemma.
+**PEL stack theorem.** For fixed integral PEL data, fixed polarization type, determinant condition, and finite-presentation integral level or local-model condition, PEL objects form an fpqc stack. Its diagonal is representable, separated, and finite, and it is an algebraic stack of finite presentation. After adding neat prime-to-base level, its inertia is trivial; and if in addition the order of the polarization type is invertible on the base, it is represented by a quasi-projective scheme, by the rigid-level scheme lemma.
 
 **Proof.** Book 10 descends the abelian scheme, group law, endomorphisms, rigidified polarization, and finite level data. The determinant and Rosati conditions descend as equations; ampleness descends by Book 8. This proves the stack assertion.
 
@@ -1060,8 +1417,9 @@ For the diagonal, a polarization-preserving isomorphism belongs to the finite au
 
 Choose a sufficiently high power of the inducing line bundle. Book 8 gives projective embeddings and the required Hilbert parameter scheme locally on the noetherian base. Endomorphism graphs, the group law, Rosati compatibility, determinant equations, and the stated integral local-model conditions define locally closed loci. Their Hilbert polynomials and graph degrees are fixed by the dimension and polarization type. Frames form a general-linear torsor, so the framed-parameter theorem gives algebraicity and finite presentation.
 
-Finally, a neat level forces every stabilizer to be trivial, and the rigid-level scheme lemma
-represents the resulting sheaf. $\square$
+Finally, a neat level forces every stabilizer to be trivial, and where the order of the
+polarization type is invertible the rigid-level scheme lemma represents the resulting sheaf.
+$\square$
 
 The theorem separates three issues that are often conflated: descent proves stackhood and a parameter presentation proves algebraicity. Smoothness of an atlas comes from the frame torsor; smoothness of the stack over its arithmetic base is a different deformation statement and is not asserted here.
 
@@ -1099,11 +1457,18 @@ A\otimes_{\mathcal O_F}\mathfrak c\longrightarrow A^\vee
 $$
 
 has the prescribed isomorphism or finite-kernel type. The tensor product is the abelian scheme
-obtained by the finite-projective Serre tensor construction. That construction is not available in
-any earlier book of this collection: it is the standing hypothesis (H3), which also supplies its
-compatibility with base change and with duality. Everything else in this chapter is independent of
-it, and a reader who prefers to fix one $c\in\mathfrak c^+$ may read the polarization condition at
-that single $c$ using only Book 35 §§8.1–8.3.
+obtained by the Serre tensor construction of Book 35 §5.6: since $\mathfrak c$ is a finitely
+generated projective $\mathcal O_F$-module of rank one, Theorem 5.3 there represents the fppf sheaf
+$T\mapsto A(T)\otimes_{\mathcal O_F}\mathfrak c$ by an abelian scheme of the same relative dimension
+$d$, formed compatibly with arbitrary base change; Proposition 5.4 makes the construction functorial
+in the module and in the abelian scheme, so that $A\otimes\mathcal O_F\simeq A$ and
+$(A\otimes\mathfrak a)\otimes\mathfrak b\simeq A\otimes\mathfrak a\mathfrak b$; and Theorem 5.6
+gives the duality needed to say what self-duality of $\lambda$ means here, in the form
+$(A\otimes_{\mathcal O_F}\mathfrak c)^\vee\simeq A^\vee\otimes_{\mathcal O_F}\mathfrak c^{-1}$.
+A reader who prefers to fix one $c\in\mathfrak c^+$ may read the polarization condition at
+that single $c$ using only Book 35 §§8.1–8.3, but then the ideal class is no longer visible, which
+is precisely what the tensor construction is for: a nonprincipal class cannot be absorbed into an
+isomorphism $A\otimes\mathfrak c\simeq A$.
 
 This formulation records all compatible polarizations at once and makes ideal-class changes functorial. Choosing one $c\in\mathfrak c^+$ recovers a polarization $\lambda(c)$, but the choice of $c$ is auxiliary and should not enter the moduli problem.
 
@@ -1246,14 +1611,23 @@ The constructions of this book yield the following precise results for later mod
 - Over a locally noetherian base, a finite locally free group acting on a finitely presented quasi-projective scheme has a finite scheme quotient. The quotient-stack map to that scheme is coarse. Flat base change is safe; arbitrary base change and descent of finite locally free sheaves with trivial stabilizer action require linear reductivity.
 - Generalized elliptic curves with bounded polygonal boundary form algebraic stacks with separated quasi-finite diagonal; the unlevelled diagonal need not be proper. Ample Drinfeld level bounds the boundary and makes the modular-stack diagonal finite. Full invertible level $N\geq3$ kills inertia and yields a fine scheme.
 - Hilbert and quaternionic PEL objects are defined by an exact order action, Rosati-compatible polarization, determinant or stated integral local-model condition, and level orbit. Their stacks have finite diagonal and explicit framed atlases. Neat level produces fine quasi-projective schemes; removing it gives finite quotient stacks and coarse spaces.
+- On a generalized elliptic curve with ample full level $N$, $N$ invertible, the singular
+  geometric fibers are Neron $N$-gons, the group $E^{\mathrm{sm}}[N]$ is constant of order $N^2$,
+  and the theta group of a degree-$N$ bundle of degree one on each component is a central extension
+  of it by $\mathbf G_m$ whose commutator is perfect and alternating, is the elliptic Weil pairing
+  on the smooth locus, and is $\xi^i\zeta^{-l}$ on the boundary in the intrinsic coordinates given
+  by the toric and component directions. A theta structure then supplies theta coordinates across
+  the boundary. This is Section 9.3, and it is the ingredient that the earlier books, which treat
+  only abelian schemes, do not contain.
 
-Two of these conclusions are conditional, and the conditions are named rather than hidden. The
-theta-framed fine schemes of Sections 9.3 and 10.5 rest on the Heisenberg normal form and
-representation of (H1), and on its polygonal counterpart (H2); the polarization-module formulation
-of Section 11.1 rests on the Serre tensor construction of (H3); the matrix form of the prime-adic
-argument of Section 9.3 rests on (H4). Everything else — the stack assertions, the diagonals, the
-algebraicity statements, the quotient and coarse-space theorems — uses only Books 8, 10, 26, 27,
-28, 34, and 35 as cited at the use sites.
+Every conclusion above is proved here or cited from an earlier book at its use site: Books 8, 9,
+10, 15, 26, 27, 28, 34, and 35. Three of the inputs are worth naming because they are recent
+additions and carry side conditions. The theta-framed fine schemes of Sections 9.4 and 10.5 use
+the standard-form theory of Book 35 Chapter 9A, which requires the order of the polarization type
+to be invertible on the base, and in the modular case they use the boundary theory of Section 9.3
+in its place, since Chapter 9A says nothing about polygonal fibers. The polarization-module
+formulation of Section 11.1 uses the Serre tensor construction of Book 35 §5.6. The matrix form of
+the prime-adic argument of Section 9.4 uses the Tate module theorem of Book 35 §7.6.
 
 Every conclusion retains its hypothesis. Smoothness of a frame atlas is not confused with
 smoothness of the structural morphism at a ramified local model. A determinant condition is not
