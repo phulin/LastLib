@@ -1280,17 +1280,24 @@ C_{S,c}^\bullet(A_n)\longrightarrow
 \tfrac1n\mathbf Z/\mathbf Z\right).                        \tag{4.F5}
 $$
 
-The endpoints admit an independent check. Degree two is (4.I12) on
-$n$-torsion. In degree one the finite reciprocity quotient following (4.I12)
-identifies $H^1(F,A_n)$ with the exponent-$n$ characters of $C_F$, and local
-cup product with evaluation under local reciprocity. A local tuple annihilates
-the diagonal Kummer subgroup exactly when its product character is trivial on
-$F^\times$; it then factors through $C_F$ and is global. Conversely every
-global character kills the diagonal. Character extension introduces no
-divisibility assumption: on a finite quotient, extend from a subgroup one
-cyclic generator at a time, choosing a root in
-$\frac1n\mathbf Z/\mathbf Z$. Thus neither weak Grunwald nor the duality
-theorem being proved is hidden in the endpoint chase.
+The endpoints admit independent checks which do not identify idelic characters
+with Galois characters. Degree two is (4.I12) on $n$-torsion. In degree one,
+by the definition of continuous cohomology for the trivial module,
+
+$$
+H^1(G_{F,S},A_n)=\operatorname {Hom}_{\mathrm {cont}}(G_{F,S},A_n).
+\tag{4.F5a}
+$$
+
+These are characters of already existing finite Galois quotients. Their
+localizations are restrictions to decomposition groups. On the dual side,
+(4.2) and (4.F4a) compute the global Kummer classes, and the local comparison
+is the cup-product pairing constructed above. Thus the degree-one kernel and
+cokernel are the degree-one cohomology of the comparison cone whose
+acyclicity was just proved; no character of $C_F$ is declared Galois here.
+The converse statement that every finite-order character of $C_F$ arises in
+(4.F5a) is precisely the existence theorem of Section 6 and will only be
+deduced there.
 
 If $T\subset T'$ differs by one prime, the quotient of (4.F4) is the
 two-term valuation complex at that prime and the quotient on the dual side is
