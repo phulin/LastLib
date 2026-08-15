@@ -2083,9 +2083,10 @@ where $\psi=\varphi^{-1}$. These conventions put inertia at index $0$ and make a
 Let $E=M^{G_0}$. The norm on the finite residue extension $l/k$ is surjective on nonzero
 elements, and its trace is surjective because finite fields are separable. Under
 $U_E^r/U_E^{r+1}\cong l^+$, the norm from $E$ to $K$ induces the trace for $r>0$ and the
-residue-field norm for $r=0$. It therefore creates no unit cokernel. It is enough to treat the
-totally ramified extension $M/E$; we relabel $E$ as $K$ for the filtered calculation, so both
-residue fields are $l$ and $G=G_0$.
+residue-field norm for $r=0$. It therefore creates no defect on its own unit filtration. We do
+not simply discard this stage: surjectivity of the outer norm alone would not control how its
+kernel meets the image of the inner norm. The finite-filtration composition argument below
+retains precisely that kernel. We first calculate every possible prime-degree step.
 
 We replace an informal orbit expansion by a prime-degree calculation and a finite-filtration
 induction. Both ingredients will also be useful for checking the endpoint convention.
@@ -2142,6 +2143,35 @@ induction. Both ingredients will also be useful for checking the endpoint conven
   N(1+x)=1+\operatorname{Tr}(x)+N(x)+\operatorname{Tr}(y),\qquad
   v_L(y)\geq2v_L(x). \tag{6.5}
   $$
+
+  Here are the depth inequalities which control the omitted term. Set
+
+  $$
+  T(r)=b+1+\left\lfloor\frac{r-1-b}{p}\right\rfloor,
+  $$
+
+  so that (6.4) says $\operatorname{Tr}(\mathfrak m_L^r)=\mathfrak
+  m_F^{T(r)}$. If $1\leq r<b$, then
+
+  $$
+  T(r)\geq r+1,
+  \qquad T(2r)\geq r+1;
+  $$
+
+  the two inequalities follow respectively by comparing the expressions inside the floors
+  with $p(r-b)$, and the second difference is
+  $(p-1)(b-r)+r-1\geq0$. At $r=b$ one has $T(b)=b$ and
+  $T(2b)\geq b+1$. Finally, if $r=b+pi$ with $i>0$, then
+
+  $$
+  T(r)=b+i,\qquad T(2r)\geq b+i+1,\qquad r\geq b+i+1. \tag{6.5a}
+  $$
+
+  Thus below the break only $N(x)$ occurs at target depth $r$; at the break only
+  $\operatorname{Tr}(x)$ and $N(x)$ occur at depth $b$; and above the break only the trace
+  occurs at depth $b+i$. Since every intermediate symmetric term is a trace of an element
+  of valuation at least $2r$, (6.5a) proves, rather than assumes, that all such terms lie one
+  target layer deeper.
 
   Put $\varpi=(-1)^{p-1}N(z)$, a uniformizer of $F$, and use residue coordinates
   $1+\theta z^r\mapsto\bar\theta$ and
@@ -2202,14 +2232,35 @@ in the wild case using the last two lines. Equations (6.6) say more precisely th
 the graded source layer at $h(x)$ to the target layer at $x$, bijectively off a break, and
 with cokernel equal to the prime ramification quotient at a break.
 
-For a tower $F\subseteq E\subseteq L$, form the finite quotients
+For a prime step $Y/X$ and an integer $m\geq0$, the calculation defines a finite map
+
+$$
+\nu_{Y/X,m}:U_Y^0/U_Y^{h_{Y/X}(m)}
+\longrightarrow U_X^0/U_X^m. \tag{6.8a}
+$$
+
+Its cokernel is exactly
+
+$$
+U_X^0/\bigl(N_{Y/X}(U_Y^0)U_X^m\bigr). \tag{6.8b}
+$$
+
+This formulation retains the kernels at break layers instead of silently discarding them.
+For a tower $F\subseteq E\subseteq L$, norm transitivity factors the corresponding map as
+
+$$
+\nu_{L/F,m}
+=\nu_{E/F,m}\circ\nu_{L/E,h_{E/F}(m)}, \tag{6.8c}
+$$
+
+with source cutoff $h_{L/E}(h_{E/F}(m))$. To compare adjacent values of $m$, form the finite
+quotients
 
 $$
 \mathcal U_X[a,c)=U_X^a/U_X^c.
 $$
 
-Norm transitivity gives a commutative diagram of the corresponding finite filtered groups for
-$L/E$, $E/F$, and $L/F$. Refine both source filtrations at all integers occurring in
+Then use the commutative diagram of the maps (6.8a) for $L/E$, $E/F$, and $L/F$. Refine both source filtrations at all integers occurring in
 $h_{L/E}(h_{E/F}(0)),\ldots,h_{L/E}(h_{E/F}(m))$. On every successive quotient the vertical
 maps are exactly the maps in (6.6), or their unramified and tame analogues. The exact rows
 
@@ -2228,11 +2279,22 @@ $$
 $$
 
 that a bijective intermediate layer contributes $1$, while an endpoint contributes its prime
-quotient exactly once. In the adjacent row of (6.9), the quotient
-$|\ker v|/|\ker v\cap\operatorname{im}u|$ is precisely the image index carried forward from
-the preceding source layer, so the two factors cancel. Multiplying the finite row counts
-therefore
-gives
+quotient exactly once. More explicitly, apply the snake lemma to the diagram with rows (6.9)
+at two adjacent target depths. Its kernel term is
+
+$$
+\ker v/(\ker v\cap\operatorname{im}u),
+$$
+
+which is also the kernel of the map from $\operatorname{coker}u$ to
+$\operatorname{coker}(vu)$. It therefore occurs once in the denominator of the displayed
+count and once as the image index entering the next row. The two occurrences cancel. At a
+wild break, the additive polynomial in the middle line of (6.6) has kernel and cokernel both
+of order $p$; the snake-lemma row retains both, and the cokernel is the new defect while the
+kernel is exactly the term carried to the next row. At the tame break the residue-power map
+has cokernel of order $\ell$; the source layers skipped by $h(x)=\ell x$, including its
+kernel, remain in the same snake-lemma row and cancel by the identical mechanism. Induction
+over the finitely many refined rows now gives
 
 $$
 h_{L/F}=h_{L/E}\circ h_{E/F}, \qquad
@@ -2257,9 +2319,10 @@ $$
 =[G^0:G^m]. \tag{6.11}
 $$
 
-The unramified first stage causes no defect on any unit layer, as proved at the start, so the
-same formula holds before the reduction to total ramification. Dividing (6.11) at $m+1$ by
-the formula at $m$ gives the second identity of (6.1).
+Unramified prime steps contribute no cokernel on any unit layer, and their kernels have already
+been included in the finite rows above. Thus (6.11) applies to the original extension, without
+a separate reduction to total ramification. Dividing (6.11) at $m+1$ by the formula at $m$
+gives the second identity of (6.1).
 
 It remains to prove the final assertion. Finite reciprocity gives
 $[K^\times:N(M^\times)]=|G|$. The norm-valuation formula says that the valuation coordinate
