@@ -2463,18 +2463,51 @@ $$
 g[h|k]-[gh|k]+[g|hk]-[g|h]=d[g|h|k].                   \tag{4.G3a}
 $$
 
+More precisely, exactness of the normalized bar resolution gives
+
+$$
+P_3^{\rm bar}\xrightarrow dP_2^{\rm bar}
+ \xrightarrow{[g|h]\mapsto\overline{r(g,h)}}R_{\rm ab}
+ \longrightarrow0.                                     \tag{4.G3b}
+$$
+
+Thus a $G$-map $\varphi:R_{\rm ab}\to C$ is exactly a $G$-map
+$c:P_2^{\rm bar}\to C$ satisfying
+
+$$
+g c(h,k)-c(gh,k)+c(g,hk)-c(g,h)=0                      \tag{4.G3c}
+$$
+
+for every $g,h,k$. Its value on a cyclic power word is the telescoping bar
+sum
+
+$$
+\varphi(\overline{x_h^m})=
+ \sum_{i=0}^{m-1}c(h^i,h),                              \tag{4.G3d}
+$$
+
+in additive notation for $C$. Equations (4.G3c)--(4.G3d) are the finite
+system which we now solve.
+
 Choose right transversals for the subgroups, compatibly down chains, and
 rewrite words by the Reidemeister--Schreier algorithm. On a cyclic orbit
 start with a representative of (4.G2b). When a new Schreier generator is
 adjoined, the two possible rewrites differ by a one-cocycle of its
-stabilizer with values in $C$; it is a coboundary because $H^1(H,C)=0$.
-Changing by that coboundary makes the two values equal. For a power word,
-the remaining ambiguity is an $H$-norm, exactly the quotient in (4.G2b).
-For (4.G3a), the four faces are restriction, conjugation, transfer, and
-their composite, so their images cancel by the assumed Mackey identities.
-Induction over the finite list of Schreier orbits therefore defines a
-homomorphism on $R/[R,R]$, not merely values on selected relation words;
-the conjugation rewrite makes it $G$-equivariant.
+stabilizer $J$ with values in $C$. Write that cocycle as
+$j\mapsto jb-b$ using $H^1(J,C)=0$, and change the new values by the bar
+coboundary $db$. This makes the two rewrites literally equal. For a power
+word, (4.G3d) shows that the remaining change is $N_Hb$, exactly the
+ambiguity allowed in (4.G2b). For (4.G3a), the four faces are restriction,
+conjugation, transfer, and their composite, so the adjusted values cancel
+by the assumed Mackey identities. Induction over the finite list of
+Schreier orbits therefore produces a $G$-map $c$ with $c d=0$ on every
+generator $[g|h|k]$ of $P_3^{\rm bar}$. Exactness of (4.G3b), not merely a
+list of selected word values, now produces the required $\varphi$.
+Running the same induction on the difference of two solutions starts with
+zero in every quotient $C^H/N_HC$. The chosen elements $b$ then assemble,
+orbit by orbit, to a $G$-map $P_1\to C$ whose restriction to $R_{\rm ab}$
+is that difference. This proves the stated uniqueness before passing to
+extension classes.
 
 Applying $\operatorname {Hom}_G(-,C)$ to (4.G3) gives the exact row
 
@@ -2484,8 +2517,11 @@ $$
 \operatorname {Ext}^1_G(I_G,C)\longrightarrow0.          \tag{4.G4}
 $$
 
-Thus (4.G3a) says precisely that every syzygy has been killed, and
-exactness says precisely that two choices differ by a map from $P_1$.
+The zero on the right follows because $P_1$ is a finite sum of induced
+$\mathbf Z[G]$-modules, so $\operatorname {Ext}^1_G(P_1,C)=0$. Thus
+(4.G3b)--(4.G3c) say precisely that every syzygy has been killed, and
+exactness says precisely that two choices with the same extension class
+differ by a map from $P_1$.
 Splicing with $0\to I_G\to\mathbf Z[G]\to\mathbf Z\to0$ identifies the
 last group with $H^2(G,C)$ and proves the uniqueness assertion. $\square$
 
@@ -2543,11 +2579,46 @@ $$
                                                                \tag{4.G10}
 $$
 
-We fix the chain maps as well. Schreier rewriting gives a restriction map
-$r_H:P_\bullet(H)\to\operatorname {Res}^G_HP_\bullet(G)$ on normalized
-bars, and corestriction is the finite right-coset sum. For
-$K,H\subseteq G$, sorting by $K\backslash G/H$ and inserting one adjacent
-face whenever a representative changes gives
+We fix the chain maps as well. Restriction is induced by the literal bar
+inclusion
+
+$$
+r_H[h_1|\cdots|h_q]=[h_1|\cdots|h_q].                  \tag{4.G11a}
+$$
+
+For corestriction choose a right transversal $T$ for $H\backslash G$. Put
+$t_0=t$ and recursively write
+$t_{i-1}g_i=a_i(t)t_i$ with $a_i(t)\in H$ and $t_i\in T$. The Schreier
+chain map is
+
+$$
+T_H^G[g_1|\cdots|g_q]=
+ \sum_{t\in T}t^{-1}\otimes
+ [a_1(t)|\cdots|a_q(t)]
+ \in\mathbf Z[G]\otimes_{\mathbf Z[H]}P_q(H).           \tag{4.G11b}
+$$
+
+Expanding the bar boundary and cancelling the terms for which only $t_i$
+changes proves $dT_H^G=T_H^Gd$; dualizing (4.G11b) is the usual finite
+right-coset corestriction. If a transversal is changed, insert the comparison
+element between the old and new Schreier words in every possible position:
+
+$$
+K_q[w_1|\cdots|w_q]=
+ \sum_{i=0}^{q}(-1)^i
+ [w_1'|\cdots|w_i'|b_i|w_{i+1}|\cdots|w_q].             \tag{4.G11c}
+$$
+
+Here $b_i$ is determined by $t_i'=b_it_i$ and the primes denote the new
+Schreier letters. Direct cancellation of adjacent faces gives
+$dK+Kd=T_T-T_{T'}$. This is the representative-change prism, not merely an
+equality after taking cohomology.
+
+For $K,H\subseteq G$, sort (4.G11b) by $K\backslash G/H$. On the branch
+represented by $x$, the conjugation comparison uses the same prism with
+$b_i=x$; explicitly its $i$th summand inserts $x$ between
+$[xh_1x^{-1}|\cdots|xh_ix^{-1}]$ and
+$[h_{i+1}|\cdots|h_q]$. The adjacent-face cancellation gives
 
 $$
 \operatorname {res}^G_K\operatorname {cor}^G_H\simeq
@@ -2556,9 +2627,9 @@ $$
 \operatorname {res}^{H}_{H\cap x^{-1}Kx}.               \tag{4.G11d}
 $$
 
-This is the finite bar prism. Its integral dual defines the negative half,
-and both halves agree at the norm splice. Grouping cosets inside cosets
-proves transitivity. The uniqueness clause of the lifting lemma gives
+Its integral dual defines the negative half, and both halves agree at the
+norm splice. Grouping the recursion in (4.G11b) for cosets inside cosets
+proves transitivity on chains. The uniqueness clause of the lifting lemma gives
 
 $$
 \operatorname {res}^G_Hu_{L/F}=u_{L/L^H},\qquad
@@ -4627,7 +4698,7 @@ $\mathbf Z_\ell$-basis vector, the $r$th power step is represented by
 $\ell^ra_i$ and therefore lies in the Lubin--Tate unit level
 
 $$
-m_i+r,e(L/\mathbf Q_\ell),qquad m_i=v_L(a_i).          \tag{11.HT3c'}
+m_i+r e(L/\mathbf Q_\ell),\qquad m_i=v_L(a_i).          \tag{11.HT3c'}
 $$
 
 Thus its order is $\ell^r$ and its conductor levels are the explicit
@@ -4813,12 +4884,10 @@ v_\ell(x-y)\ge\min_{\sigma\in J}v_\ell(\sigma x-x)-c_{\rm Ax}.          \tag{11.
 $$
 
 The affine version is uniform as well. If $f:J\to M$ is an additive
-one-cocycle, then, after changing $f$ by an error of valuation at least
-$N$, there is $a\in M$ such that
+one-cocycle, there is $a\in M$ such that
 
 $$
-\inf_{\sigma\in J}v_\ell
- \bigl(f(\sigma)-(\sigma a-a)\bigr)\ge N,\qquad
+f(\sigma)=\sigma a-a\quad(\sigma\in J),\qquad
 v_\ell(a)\ge\inf_\sigma v_\ell(f(\sigma))-c_{\rm Ax}.                   \tag{11.HT3j'}
 $$
 
@@ -4833,7 +4902,8 @@ B_\sigma(c)=\ell^{-1}\sum_{a=0}^{\ell-1}a\sigma^ac,
 $$
 
 The identities $(\sigma-1)B_\sigma(c)=c$ and
-$\sum_a\sigma^ac=0$ are exact. The inverse-different formula (11.HT3),
+$\sum_a\sigma^ac=0$ are exact. Put
+$P_\sigma=\ell^{-1}\sum_a\sigma^a$. The inverse-different formula (11.HT3),
 applied to the ideal generated by the conjugate differences, shows that the
 loss for the $r$th nested cluster is at most
 
@@ -4854,10 +4924,22 @@ $$
 
 prove (11.HT3j). This grouping by ramification breaks, rather than an
 arbitrary composition series, is what makes the bound uniform. Apply the
-same weighted averages to the affine action
-$\sigma*z=\sigma z-f(\sigma)$. The cocycle identity says this is an action,
-so the identical cluster calculation produces an approximate fixed point
-and proves (11.HT3j').
+additive normal-basis argument to write $f(\sigma)=\sigma x-x$. Formula
+(11.HT3j), applied to $x$, supplies $y\in M^J$ with
+$v_\ell(x-y)\ge\inf_\sigma v_\ell(f(\sigma))-c_{\rm Ax}$; taking
+$a=x-y$ proves (11.HT3j').
+
+We shall also use compatibility with approximation. On normalized additive
+bar cochains, the same operator $B_\sigma$ in the first cluster coordinate
+and the ordinary coset prism satisfy $dh+hd=1-P_\sigma$ in degrees $1$ and
+$2$; this is the expansion of the two identities following (11.HT3j0).
+Concatenating in ramification-cluster order gives homotopies $h^1_J,h^2_J$
+with valuation loss at most the same geometric sum $c_{\rm Ax}$. Therefore
+an algebraic $1$-cochain whose cocycle defect has valuation at least $N$
+can be changed by an error of valuation at least $N-c_{\rm Ax}$ to an exact
+finite cocycle. Coset refinement changes these homotopies by the displayed
+prism, so the corrections can be chosen compatibly as the finite Galois
+field and quotient grow.
 
 Now let $x\in\mathbf C_\ell^H$ and choose algebraic $x_N\in M_N$ with
 $v_\ell(x-x_N)\ge N$. If $J_N$ is the image of $H$ in
@@ -4871,9 +4953,12 @@ $$
 
 For a continuous cocycle $f:H\to\mathbf C_\ell$, compactness makes
 $\inf_hv_\ell(f(h))$ finite. Approximate its values on finitely many cosets
-in one finite Galois extension and apply the affine estimate with precision
-$N$. Apply it successively to the residual cocycle with precisions
-$N,N+1,\ldots$. The corrections $b_N$ satisfy
+in one finite Galois extension. The cocycle identity makes the defect of
+this algebraic $1$-cochain arbitrarily small. Correct that defect with
+$h^2_J$ and then apply (11.HT3j') to the resulting exact finite cocycle.
+This produces an algebraic coboundary agreeing with $f$ to precision $N$.
+Apply the construction successively to the residual cocycle with precisions
+$N,N+1,\ldots$. The compatible corrections $b_N$ satisfy
 $v_\ell(b_N)\ge N-c_{\rm Ax}$, so their sum converges and kills the
 cocycle uniformly. Therefore
 
@@ -4881,36 +4966,62 @@ $$
  H^1(H,\mathbf C_\ell)=0.                                 \tag{11.HT3l}
 $$
 
-We apply this with attention to the exponential radius. Let $v$ be a basis
-of the line $V$. Shrink to an open normal subgroup $H_0\subset H$ so that
+The coefficient extension must be retained here. Put
+
 $$
- v_\ell(\log\xi(h))>c_{\rm Ax}+\frac1{\ell-1}\quad(h\in H_0). \tag{11.HT3m}
+B_E=\mathbf C_\ell\widehat\otimes_{\mathbf Q_\ell}E,
+\qquad A_E=A\otimes_{\mathbf Q_\ell}E.
 $$
 
-The construction proving (11.HT3l), begun with this cocycle, gives
-$a$ with $v_\ell(a)>1/(\ell-1)$ and
-$h(a)-a=\log\xi(h)$. Therefore $b_0=\exp(-a)$ converges and
+Choose a $\mathbf Z_\ell$-basis $e_1,\ldots,e_t$ of $\mathcal O_E$ and put
+$v_B(\sum_jz_j\otimes e_j)=\min_jv_\ell(z_j)$. The multiplication structure
+constants of this basis are integral, so this norm is submultiplicative and
+the exponential converges when $v_B(z)>1/(\ell-1)$. Since $H$ acts only on
+the first tensor factor, the finite Ax--Sen projections, the weighted
+cluster homotopies, and the successive $H^1$ corrections all extend
+coefficient by coefficient with exactly the same loss $c_{\rm Ax}$. Thus
+
 $$
- h(b_0)/b_0=\xi(h)^{-1}\quad(h\in H_0).                   \tag{11.HT3n}
+B_E^H=A_E,
+\qquad H^1(H,B_E)=0.                                    \tag{11.HT3l'}
 $$
 
-The vector $b_0\otimes v$ is $H_0$-fixed. The finite group $H/H_0$ acts
-semilinearly on its one-dimensional line over $\mathbf C_\ell^{H_0}$.
-Multiplicative Hilbert 90 for the finite extension of fixed fields, proved by
-the normal-basis resolvent, supplies $d\in(\mathbf C_\ell^{H_0})^\times$
-such that $db_0\otimes v$ is $H$-fixed. With $b=db_0$ this gives
-$b\in\mathbf C_\ell^\times$ satisfying (11.HT3n) for all $h\in H$.
+This coefficientwise statement is compatible with the residual-cocycle
+iteration: at precision $N$ all coordinates use the same finite quotient and
+the same ramification-cluster ordering, so their corrections assemble in
+$B_E$ and have valuation at least $N-c_{\rm Ax}$.
+
+We apply (11.HT3l') with attention to the exponential radius. Let $v$ be a
+basis of the line $V$. Shrink to an open normal subgroup $H_0\subset H$ so that
+$$
+ v_B(1\otimes\log\xi(h))>c_{\rm Ax}+\frac1{\ell-1}
+ \quad(h\in H_0).                                       \tag{11.HT3m}
+$$
+
+The construction proving (11.HT3l'), begun with this cocycle, gives
+$a\in B_E$ with $v_B(a)>1/(\ell-1)$ and
+$h(a)-a=1\otimes\log\xi(h)$. Therefore $b_0=\exp(-a)$ converges and
+$$
+ h(b_0)/b_0=1\otimes\xi(h)^{-1}\quad(h\in H_0).          \tag{11.HT3n}
+$$
+
+The vector $b_0v$ is $H_0$-fixed. The finite group $H/H_0$ acts
+semilinearly on its one-dimensional line over $B_E^{H_0}$.
+Multiplicative Hilbert 90 for this finite étale fixed algebra, proved by
+the normal-basis resolvent on each factor, supplies $d\in(B_E^{H_0})^\times$
+such that $db_0v$ is $H$-fixed. With $b=db_0$ this gives
+$b\in B_E^\times$ satisfying (11.HT3n) for all $h\in H$.
 Consequently
 $$
  (\mathbf C_\ell\otimes_{\mathbf Q_\ell}V)^H
-   =A\,(b\otimes v).                                     \tag{11.HT3o}
+   =A_E\,(bv).                                           \tag{11.HT3o}
 $$
 
 This proves semilinear rank-one descent and records why exponentiation is
 legitimate.
 
 It remains to decomplete the $\Gamma$-action. Use the generators in
-(11.HT3f) and put $d_0=b\otimes v$. Shrink the group until
+(11.HT3f) and put $d_0=bv$. Shrink the group until
 $$
  u_i=\log(\gamma_i(d_0)/d_0)
 $$
@@ -4922,8 +5033,10 @@ $$
 $$
 
 Thus $(u_i)_i$ is a closed degree-one element of the Koszul complex in
-(11.HT3i'''). Apply its bounded homotopy to the sum of the nonempty-$J$
-components. It gives $a\in A\otimes_{\mathbf Q_\ell}E$ and
+(11.HT3i'''). Tensoring that finite free Koszul complex and its bounded
+homotopy with $E$ gives the same decomposition on $A_E$. Apply this
+coefficient-extended homotopy to the sum of the nonempty-$J$ components. It
+gives $a\in A_E$ and
 $u_i^{(0)}\in L_s\otimes_{\mathbf Q_\ell}E$ with
 $$
 u_i=u_i^{(0)}+(\gamma_i-1)a.                              \tag{11.HT3q}
