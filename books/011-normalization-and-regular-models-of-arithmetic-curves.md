@@ -798,36 +798,54 @@ Existence leaves many choices: blowing up any closed point of a regular model gi
 
 Let $R$ be a discrete valuation ring and $X/R$ a regular proper model. A vertical integral curve $E$ is an **exceptional curve of the first kind** if, after accounting for its residue field, it is a projective line with normal bundle of degree $-1$. Equivalently over an algebraically closed residue field, $E\simeq\mathbf P^1$ and $E^2=-1$. The intersection notation is used here only for this contraction criterion; systematic component pairings are developed in Book 12.
 
-**Theorem 11.1 (relative contraction).** An exceptional curve of the first kind on a regular arithmetic surface can be contracted to a regular point. The contraction is proper and birational, is an isomorphism away from $E$, and is inverse to blowing up that point.
+**Prerequisite 11.1 (relative Castelnuovo contraction, RC).** Let $S$ be an excellent Dedekind scheme, let $X/S$ be a regular proper arithmetic surface, and let $E$ be a vertical exceptional curve of the first kind. There is a regular proper $S$-scheme $Y$ and a proper birational morphism
 
-**Proof strategy.** The normal bundle condition reproduces the exceptional divisor of a point blowup. Choose a parameter transverse to $E$. Successive exact sequences
+$$
+c:X\longrightarrow Y
+$$
+
+which is an isomorphism on $X\setminus E$, maps $E$ to a closed regular point $y\in Y$, and identifies $X$ with $\operatorname{Bl}_y(Y)$. The same assertion holds over the localization of $S$ at the image of $E$, and the local contraction glues with the identity away from that fiber.
+
+RC is a genuine algebraic contraction theorem. It is not a consequence of excellence alone and is not proved in Books 1--10 or earlier in this volume. The normal-bundle calculation does explain why RC has the stated form: after choosing a parameter transverse to $E$, the successive exact sequences
 
 $$
 0\to\mathcal O_E(n)\to
 \mathcal O_{(n+1)E}\to\mathcal O_{nE}\to0
 $$
 
-and the vanishing $H^1(\mathbf P^1,\mathcal O(n))=0$ for $n\geq-1$ show that functions on infinitesimal neighborhoods descend with no obstruction. Their inverse limit is a two-dimensional regular complete local ring. Excellence algebraizes the formal contraction. The resulting point has maximal ideal whose blowup pulls back to $\mathcal O_X(-E)$, so blowing it up recovers $X$. $\square$
+and the vanishing $H^1(\mathbf P^1,\mathcal O(n))=0$ for $n\geq-1$ identify the expected complete local target and the expected inverse blowup. These formal calculations do not by themselves produce an algebraic scheme $Y$. Passing from the formal target to $Y$, proving properness, and verifying that the blowup recovers $X$ are precisely the content of RC; excellence supplies favorable approximation and finiteness properties, not an automatic formal algebraization theorem.
+
+**Theorem 11.1 (relative contraction, conditional on RC).** Assume RC. An exceptional curve of the first kind on a regular arithmetic surface can be contracted to a regular point. The contraction is proper and birational, is an isomorphism away from $E$, and is inverse to blowing up that point.
+
+**Proof.** This is the assertion of RC applied to $E$. $\square$
 
 A regular proper model is **relatively minimal** if none of its fibers contains an exceptional curve of the first kind. Every contraction lowers the number of irreducible components of the affected fiber, so repeatedly contracting must stop. This proves existence of a relatively minimal model once contractions remain in the chosen category.
 
 ### 11.2 Existence in positive genus
 
-**Theorem 11.2 (minimal regular model, conditional on SR2).** Assume SR2. Let $R$ be an excellent discrete valuation ring with fraction field $K$, and let $C/K$ be a smooth projective geometrically connected curve of positive genus. Then $C$ has a relatively minimal regular proper model $X_{\min}/R$. Every regular proper model of $C$ admits a unique morphism to $X_{\min}$ inducing the identity on $C$.
+Contraction gives existence, but the universal property of the endpoint requires another surface theorem. Resolving a graph gives a regular common domination only after SR2; it does not show that a rational map to a minimal model is already a morphism. Nor does Theorem 11.1 prove that every proper birational morphism of regular surfaces factors into point blowups.
 
-**Proof.** Begin with Theorem 9.1 and contract vertical exceptional curves until none remains. Termination follows from the strictly decreasing number of fiber components. To compare a second regular model $Y$, resolve the indeterminacy of the birational map $Y\dashrightarrow X_{\min}$ by point blowups, obtaining $Z$ with morphisms to both.
+**Prerequisite 11.2 (birational comparison for regular arithmetic surfaces, BC2).** Let $R$ be an excellent discrete valuation ring.
 
-Factor a birational morphism between regular surfaces into point blowups by choosing the first exceptional component and applying Theorem 11.1 inductively. In the two factorizations from $Z$, take the last exceptional curve created. If it were contracted on only one side, its image on the other would be a vertical rational curve with normal degree $-1$, unless it survived to the generic fiber. The latter is impossible because every modification is the identity generically; the former contradicts relative minimality of $X_{\min}$. Cancelling common last blowups inductively shows that the birational map from $Y$ has no indeterminacy and gives a morphism $Y\to X_{\min}$. This argument works in genus one as well as in larger genus; positive genus rules out the ruled-surface elementary transformations responsible for genus-zero nonuniqueness. Separatedness gives uniqueness. $\square$
+1. A birational map between regular proper arithmetic surfaces which is the identity on the generic fiber admits a common regular resolution obtained by finitely many blowups at closed points.
+2. A proper birational morphism between regular arithmetic surfaces which is the identity on the generic fiber factors into finitely many blowups at closed points.
+3. If the common generic fiber is a smooth projective geometrically connected curve of positive genus and $Y/R$ is relatively minimal, then the rational map $X\dashrightarrow Y$ induced by the generic-fiber identification extends uniquely to a morphism $X\to Y$. In particular two relatively minimal regular proper models with fixed generic-fiber identification are uniquely isomorphic.
 
-Over a global excellent Dedekind scheme, perform these contractions fiber by fiber. Only finitely many fibers of a fixed proper model are non-smooth, and each contraction is supported over one closed point. The local contractions glue with the identity elsewhere, producing a global minimal regular model for a positive-genus curve.
+The third clause is the minimal-target consequence of the first two clauses together with the exceptional-curve and intersection arguments needed to compare the two blowup factorizations. Those cancellation arguments are substantial: merely choosing a "last exceptional curve" does not prove that its image on the other side is again an exceptional curve of the first kind. BC2 records the exact comparison input used below and is not proved in this volume.
 
-For genus one with a rational point, this is the regular geometric model associated with a minimal Weierstrass equation after resolving its surface singularities. The Weierstrass model itself is often normal but singular; the minimal regular model is its resolution, while its relatively minimality prohibits superfluous point blowups.
+**Theorem 11.2 (minimal regular model, conditional on SR2, RC, and BC2).** Assume SR2, RC, and BC2. Let $R$ be an excellent discrete valuation ring with fraction field $K$, and let $C/K$ be a smooth projective geometrically connected curve of positive genus. Then $C$ has a relatively minimal regular proper model $X_{\min}/R$. Every regular proper model of $C$ admits a unique morphism to $X_{\min}$ inducing the identity on $C$.
+
+**Proof.** Theorem 9.1, using SR2, supplies a regular proper model. Apply RC repeatedly to its vertical exceptional curves. Each contraction remains a regular proper model and strictly lowers the number of irreducible components of the affected fiber, so the process terminates at a relatively minimal model $X_{\min}$. For any other regular proper model $Y$, BC2(3) extends the generic-fiber identification to a unique morphism $Y\to X_{\min}$. $\square$
+
+Assuming RC and BC2 over the corresponding localizations, the same construction works over a global excellent Dedekind scheme. Only finitely many fibers of a fixed proper model are non-smooth. RC includes the algebraic gluing of each local contraction with the identity elsewhere, and the local BC2 mapping properties glue uniquely because they agree on the generic fiber. Thus the global conclusion is conditional on the same contraction and comparison inputs; it does not follow from excellence alone.
+
+Under the same three prerequisites, a genus-one curve with a rational point has the regular geometric model associated with a minimal Weierstrass equation after resolving its surface singularities. The Weierstrass model itself is often normal but singular; the minimal regular model is its resolution, while relative minimality prohibits superfluous point blowups.
 
 ### 11.3 Uniqueness and its limits
 
 Positive genus is essential. For $\mathbf P^1_K$, both $\mathbf P^1_R$ and models obtained through elementary transformations of ruled surfaces can be relatively minimal in natural senses without a canonical map between them fixing the generic fiber. Marking three disjoint sections restores rigidity, but the unmarked genus-zero curve has too many automorphisms and too little canonical positivity.
 
-Minimal regular does not mean smooth, semistable, or stable. Its special fiber may have multiplicities, cusps as curves inside a regular total space, or configurations that require a field extension before becoming nodal. Nor does minimality commute with arbitrary base change. A ramified extension can create exceptional curves after resolution; they must then be contracted again.
+Minimal regular does not mean smooth, semistable, or stable. Its special fiber may have multiplicities, cusps as curves inside a regular total space, or configurations that require a field extension before becoming nodal. Nor does minimality commute with arbitrary base change. A ramified extension can create exceptional curves after resolution; recovering relative minimality then requires new applications of RC.
 
 Uniqueness is relative to the fixed identification of the generic fiber. If generic automorphisms are allowed, they act on the minimal model by the mapping property: an automorphism of $C$ gives a second identification and extends uniquely.
 
@@ -841,7 +859,7 @@ $$
 xy=\pi.
 $$
 
-Resolution alone does not guarantee semistability. Semistable reduction is the additional theorem that after a suitable finite separable extension of $K$, a smooth proper curve has a semistable model. Once that extension and a normal proper candidate are supplied, this book normalizes it and, assuming SR2, resolves away from the nodal open before removing exceptional components. The stable model may have nodal total fibers and contracts unstable rational components; its total space need not be regular after ramified base change, so stable and minimal regular models serve different purposes.
+Resolution alone does not guarantee semistability. Semistable reduction is the additional theorem that after a suitable finite separable extension of $K$, a smooth proper curve has a semistable model. Once that extension and a normal proper candidate are supplied, this book normalizes it and, assuming SR2, resolves away from the nodal open. Removing exceptional curves of the first kind requires RC, while contracting the unstable rational components of a stable model requires the corresponding stable-contraction input. The stable model may have nodal total fibers; its total space need not be regular after ramified base change, so stable and minimal regular models serve different purposes.
 
 ## 12. Models for modular, Shimura, and semistable problems
 
@@ -850,16 +868,16 @@ Resolution alone does not guarantee semistability. Semistable reduction is the a
 The preceding results can be collected in the form actually needed later, with the unresolved
 surface input displayed rather than hidden.
 
-**Theorem 12.1 (arithmetic curve model package, conditional on SR2).** Assume SR2. Let $S$ be an excellent Dedekind scheme, $U\subset S$ a nonempty open, and $C/K(S)$ a smooth projective geometrically connected curve. Suppose a smooth projective model $\mathcal C_U/U$ is given. Then:
+**Theorem 12.1 (arithmetic curve model package).** Assume SR2. Let $S$ be an excellent Dedekind scheme, $U\subset S$ a nonempty open, and $C/K(S)$ a smooth projective geometrically connected curve. Suppose a smooth projective model $\mathcal C_U/U$ is given. Then:
 
 1. there is a normal flat projective model $X/S$ extending $\mathcal C_U$;
 2. there is a regular flat projective model $\mathcal X/S$ and a projective birational map $\mathcal X\to X$, identical over $U$;
 3. any finite collection of projective models, rational maps, and finite generic correspondences is dominated by such a regular model on which their graph closures are defined as proper correspondences;
 4. after a finite extension $K'/K(S)$, with $S'$ the normalized base, normalization of the reduced base change followed by resolution gives a regular projective $S'$-model;
 5. if the supplied model over an open of $S'$ is semistable, the resolution is an isomorphism over that open;
-6. if $g(C)>0$, contracting vertical exceptional curves produces the unique minimal regular proper model.
+6. if $g(C)>0$ and RC and BC2 are also assumed, contracting vertical exceptional curves produces the unique minimal regular proper model.
 
-Every adjective has a source. Excellence of $S$ gives finite normalization and supplies the ring-theoretic hypothesis in SR2; termination and regularity come from SR2 itself. Smoothness of $C$ makes the generic fiber normal and regular. Projectivity of $C$ starts the closure and ensures the final model is projective. Flatness follows from integrality over a Dedekind base. Properness alone is preserved throughout but does not by itself choose an embedding. Geometric connectedness prevents an unintended product of generic components.
+Every adjective has a source. Excellence of $S$ gives finite normalization and supplies the ring-theoretic hypothesis in SR2; termination and regularity of the resolution come from SR2 itself. Smoothness of $C$ makes the generic fiber normal and regular. Projectivity of $C$ starts the closure and ensures the final model is projective. Flatness follows from integrality over a Dedekind base. Properness alone is preserved throughout but does not by itself choose an embedding. Geometric connectedness prevents an unintended product of generic components. The last assertion has two additional sources: RC supplies algebraic contractions which stay in the regular proper category, and BC2 supplies the positive-genus mapping property and uniqueness.
 
 ### 12.2 Modular curves
 
@@ -896,7 +914,7 @@ $$
 \simeq \widehat R'[[x,y]]/(xy-\pi'),
 $$
 
-possibly after an étale extension. This ring is regular, so SR2 leaves it unchanged. Separating marked sections from the nodes and making the boundary transverse requires the embedded-resolution input isolated in Section 11.4. Contract rational components that meet the remainder and markings in too few points if a stable rather than a regular semistable model is desired.
+possibly after an étale extension. This ring is regular, so SR2 leaves it unchanged. Separating marked sections from the nodes and making the boundary transverse requires the embedded-resolution input isolated in Section 11.4. Producing a stable rather than a regular semistable model requires a further stable-contraction theorem for rational components meeting the remainder and markings in too few points. RC concerns exceptional curves of the first kind and does not by itself supply these contractions.
 
 This statement deliberately starts from an algebraic model over an open subscheme. A model known only over completed local rings does not automatically algebraize or glue: compatible algebraic descent data, or a separate approximation and algebraization theorem, must first supply the model over an open of $S'$. Common domination compares algebraic models once they exist; it is not a substitute for that algebraization step.
 
@@ -928,10 +946,12 @@ The main properties and their exact uses can now be read without ambiguity.
 | smooth over $S$ | flatness and geometrically regular fibers | properness |
 | Japanese domain | finite integral closure in finite field extensions | stability for all prime quotients |
 | Nagata scheme | finite normalization for finite-type schemes | surface resolution by itself |
-| excellent scheme | Nagata finiteness, good formal fibers, open regular locus, the hypotheses required by SR2 | a proof of SR2 or smooth reduction |
+| excellent scheme | Nagata finiteness, good formal fibers, open regular locus, the hypotheses required by SR2 | a proof of SR2, algebraization of a formal contraction, or smooth reduction |
 | proper morphism | valuative extension and universal closedness | a chosen projective embedding |
 | projective morphism | properness plus an ample polarization | regularity or normality |
 | flat over a Dedekind base | no vertical torsion and well-behaved fibers | reduced special fibers |
+
+The surface inputs are independent entries in this ledger. SR2 passes from a normal model to a regular one while preserving a chosen regular open. RC contracts one specified exceptional curve inside the algebraic category. BC2 resolves and factors birational comparisons and supplies the positive-genus minimal-target criterion. In particular, excellence is a hypothesis in all three settings but proves none of these theorems by itself.
 
 Three counterexamples should remain in view:
 
@@ -963,7 +983,7 @@ C&\subset&\mathbf P^N_K&&\\
 \end{array}
 $$
 
-The arrows point from the improved model to the previous one. If a finite extension $K'/K$ is made, repeat normalization and, assuming SR2, resolution after base change. If positive genus calls for a canonical endpoint, the conditional regular model is the starting point for contracting vertical exceptional curves to obtain $\mathcal X_{\min}$. If semistability is desired, a separate semistable-reduction input supplies the field extension and nodal model; SR2 then supplies its regular incarnation.
+The arrows point from the improved model to the previous one. If a finite extension $K'/K$ is made, repeat normalization and, assuming SR2, resolution after base change. If positive genus calls for a canonical endpoint, the conditional regular model is the starting point for contracting vertical exceptional curves; RC and BC2 are then additionally required to obtain $\mathcal X_{\min}$ with its universal property. If semistability is desired, a separate semistable-reduction input supplies the field extension and nodal model; SR2 then supplies its regular incarnation.
 
 At every stage there is a simple diagnostic question.
 
@@ -971,7 +991,7 @@ At every stage there is a simple diagnostic question.
 2. Are integral functions missing or branches glued? Normalize.
 3. Are closed surface points still singular? Invoke SR2; normalized blowups alone do not prove termination.
 4. Has ramified base change spoiled normality or regularity? Normalize and, conditional on SR2, resolve again.
-5. Are there superfluous exceptional curves? Contract them when positive-genus minimality warrants it.
+5. Are there superfluous exceptional curves? Assuming RC, contract them; assuming BC2 as well, identify the positive-genus endpoint by its mapping property.
 
 Confusing these repairs is the source of many false shortcuts. Each answers a different defect.
 
@@ -979,6 +999,6 @@ Confusing these repairs is the source of many false shortcuts. Each answers a di
 
 An arithmetic curve has two lives. Generically it is a smooth projective one-dimensional variety; integrally it is a two-dimensional space whose vertical geometry records reduction. Projective closure connects the two lives but introduces defects. Normalization repairs the integral structure finitely because the bases in arithmetic geometry are excellent. Passing from the resulting normal surface to a regular one requires SR2; the multiplicity, tangent-cone, and conductor ideas mentioned in Chapter 8 motivate proofs of that theorem but do not establish it here.
 
-Unconditionally, this volume supplies finite normalization and normal projective models with controlled behavior under finite extension. Conditional on SR2, it also supplies regular proper models preserving prescribed good loci and compatible regular dominations for maps and correspondences; the later minimal-model conclusions begin from those conditional regular models. Horizontal divisors retain generic points and markings; vertical components encode extensions of valuations and bad reduction. Regularity of the total surface and singularity of the fiber coexist without contradiction, while smoothness and semistability remain appropriately stronger relative conditions.
+Unconditionally, this volume supplies finite normalization and normal projective models with controlled behavior under finite extension. Conditional on SR2, it also supplies regular proper models preserving prescribed good loci and compatible regular dominations for maps and correspondences. Conditional further on RC and BC2, the positive-genus model has a relatively minimal endpoint with the stated universal property. Horizontal divisors retain generic points and markings; vertical components encode extensions of valuations and bad reduction. Regularity of the total surface and singularity of the fiber coexist without contradiction, while smoothness and semistability remain appropriately stronger relative conditions.
 
 This separation of roles is the durable lesson. Normal, regular, smooth, excellent, Nagata, proper, and projective are not competing descriptions of one good object. They are distinct tools, and arithmetic curves become manageable only when each is invoked for exactly the work it performs.
