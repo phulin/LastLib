@@ -1312,52 +1312,51 @@ by powers of the corresponding prime gives identical inverse systems. Regularity
 to regularity of the completion, and proper schemes have all closed points over the closed point.
 $\square$
 
-**Lemma 8.20 (normalization and lifting normalized blowups).** Let $(A,\mathfrak m)$ be noetherian
-and let $X$ be locally of finite type over $A$. Put
-$Y=X\times_A\widehat A$. If $Y\setminus Y_s$ is normal, then the normalization of $X$ is finite
-and its base change is the normalization of $Y$. Consequently, if $A$ is a domain with normal
-completion, every finite sequence of normalized blowups over $\widehat A$ lifts to a sequence of
-normalized blowups over $A$.
-
-**Proof.** Work first with $X=\operatorname{Spec}B$ and
-$C=B\otimes_A\widehat A$. Faithful flatness reflects normality, so $B$ is normal away from
-$V(\mathfrak mB)$. The complete noetherian ring $\widehat A$ is Nagata: for a finite-type
-domain over it, Noether normalization followed by the determinant trick makes the integral
-closure finite. Hence the normalization $C\subset C'$ is finite and is an isomorphism off
-$V(\mathfrak mC)$. A power of $\mathfrak m$ kills $C'/C$.
-
-We use the following elementary finite-algebra descent in this special situation. If
-$B\to C$ is flat, $B/\mathfrak mB=C/\mathfrak mC$, and a finite $C$-algebra $C'$ differs from
-$C$ by a module killed by $\mathfrak m^r$, then $C'$ is the base change of a finite $B$-algebra
-$B'$. Here is the formal-gluing proof. Choose generators $f_1,\ldots,f_t$ of $\mathfrak mB$.
-For a $C$-module $M_C$, modules $M_i$ over $B_{f_i}$, and compatible identifications after
-base change to $C_{f_i}$, form
+**Lemma 8.20 (normalization and lifting normalized blowups).** Let $(A,\mathfrak m)$ be an
+excellent local ring and let $X$ be locally of finite type over $A$. Put
+$Y=X\times_A\widehat A$. Then finite normalization commutes with this base change:
 
 $$
-M=\ker\left(M_C\oplus\prod_iM_i\longrightarrow
- \prod_i(M_C)_{f_i}\oplus\prod_{i,j}(M_i)_{f_j}\right).
+(X^\nu)\times_A\widehat A\simeq Y^\nu.                     \tag{8.13}
 $$
 
-The two-term Cech complexes for the $f_i$ are exact after tensoring with $C$, because $B\to C$
-is flat, and their degree-zero reductions agree because $B/\mathfrak mB=C/\mathfrak mC$.
-Induction on the power of $\mathfrak m$ killing the kernels and cokernels then proves
-$M\otimes_BC\simeq M_C$ and $M_{f_i}\simeq M_i$. Apply this with $M_C=C'$ and
-$M_i=B_{f_i}$; the isomorphism off $V(\mathfrak m)$ supplies the gluing maps. The same equalizer
-for Hom modules shows full faithfulness. Therefore the unit and multiplication of $C'$ descend
-uniquely to $M$, making it a $B$-algebra $B'$. A finite set of generators descends through the
-same construction, so $B'$ is finite and $B'\otimes_BC=C'$.
+Consequently, if $A$ is a domain with normal completion, every finite sequence of normalized
+blowups in ideals supported at closed-fiber points over $\widehat A$ is the base change of such a
+sequence over $A$.
 
-Apply this to $C'$. At a prime off the special fiber, $B'$ is normal because it equals $B$.
-At a prime on it, choose a prime of $C'$ above it; the local map is faithfully flat, and normality
-of $C'$ descends by clearing a monic equation and using faithful flatness. Thus $B'$ is normal and
-is the normalization of $B$. This proves both finiteness and commutation with completion.
+**Proof.** Excellence makes the normalization $X^\nu\to X$ finite. It also says that
+$A\to\widehat A$ is regular: it is flat and its geometric fibers are regular. Regularity is
+preserved by base change, so
 
-Now a closed-point-supported ideal $J\subset\widehat A$ contains
-$\mathfrak m^r\widehat A$ and is the extension of its inverse image in
-$A/\mathfrak m^r$. Flat base change identifies the two Rees algebras. Inductively, the closed
-fibers at each stage over $A$ and $\widehat A$ are identical, so the next closed center descends;
-the ordinary blowups agree by flat base change, and the first part applies because they are
-already normal away from the closed fiber. Normalizing completes the induction. $\square$
+$$
+(X^\nu)\times_A\widehat A\longrightarrow X^\nu
+$$
+
+is regular. The source of a regular morphism with normal target is normal. This follows directly
+from Serre's criterion: flatness and the depth inequality preserve $(S_2)$, while a
+codimension-one local ring of the source is regular from the dimension formula and regularity of
+the corresponding base local ring and geometric fiber. Thus the left side of (8.13) is normal.
+It is finite and birational over $Y$, because these properties survive flat base change.
+The universal property of normalization gives (8.13), component by component.
+
+We now descend a whole sequence, not merely its first center. Suppose a stage
+$Y_i=X_i\times_A\widehat A$ has already been obtained by base change and let
+$J_i\subset\mathcal O_{Y_i}$ be the next coherent center, supported at finitely many points of
+the closed fiber. Affine-locally its quotient is killed by a power $\mathfrak m^r$, so
+$J_i$ contains $\mathfrak m^r\mathcal O_{Y_i}$. Since
+
+$$
+\mathcal O_{X_i}/\mathfrak m^r\mathcal O_{X_i}
+\simeq
+\mathcal O_{Y_i}/\mathfrak m^r\mathcal O_{Y_i},
+$$
+
+$J_i/\mathfrak m^r\mathcal O_{Y_i}$ has a unique inverse-image ideal
+$I_i\subset\mathcal O_{X_i}$. These affine inverse images agree on overlaps, so $I_i$ is coherent
+and $J_i=I_i\mathcal O_{Y_i}$. Flat base change identifies the Rees algebras and hence the
+ordinary blowups. Formula (8.13) identifies their normalizations. This constructs $X_{i+1}$ and
+proves the induction. Every descended center is supported on the corresponding finite set of
+closed-fiber points because that can be checked after faithful flat base change. $\square$
 
 **Lemma 8.20A (realizing a resolution by normalized blowups).** Let $A$ be a complete
 two-dimensional normal noetherian local domain and let
