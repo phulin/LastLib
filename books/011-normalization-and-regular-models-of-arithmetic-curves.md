@@ -1721,6 +1721,28 @@ $$
 \mathfrak m_y^q/\mathfrak m_y^{q+1}\simeq H^0(E,\mathcal O_E(q)).
 $$
 
+We also need the corresponding equality before passing to associated graded rings. Pullback gives
+a natural map
+
+$$
+c^{-1}\mathfrak m_y\,\mathcal O_X\longrightarrow I=\mathcal O_X(-E).
+$$
+
+It is an isomorphism off $E$. On $E$, row (11.0) for $q=0,1$ identifies its reduction with the
+evaluation map
+
+$$
+H^0(E,\mathcal O_E(1))\otimes_{k(y)}\mathcal O_E
+ \longrightarrow\mathcal O_E(1),
+$$
+
+which is surjective. The cokernel of the pullback map is coherent, supported on $E$, and is zero
+modulo the ideal $I$; Nakayama at every point of $E$ makes it zero. Hence
+
+$$
+I=\mathfrak m_y\mathcal O_X.                               \tag{11.0a}
+$$
+
 For completeness, formal functions here is obtained from a finite affine cover of
 $c^{-1}(\operatorname{Spec}\mathcal O_{Y,y})$: its Cech complexes consist of finite modules,
 completion is exact on them, and the transition maps in (11.0) are surjective, so no derived
@@ -1729,7 +1751,7 @@ $H^0(I^q/I^{q+n})$ and therefore identifies
 $\operatorname{gr}_{\mathfrak m_y}\widehat{\mathcal O}_{Y,y}$ with
 $\bigoplus_qH^0(E,\mathcal O_E(q))\simeq k(y)[u,v]$. Hence the completed local ring has dimension
 and embedding dimension two and is regular; regularity descends from completion. The equality
-$I=\mathfrak m_y\mathcal O_X$ and the universal property give
+(11.0a) and the universal property give
 $\phi:X\to\operatorname{Bl}_yY$. Choose lifts $u,v$ of a basis of
 $\mathfrak m_y/\mathfrak m_y^2$. The equality of associated graded rings says that the map on
 exceptional curves induced by $[u:v]$ is
@@ -1737,7 +1759,15 @@ $E\simeq\mathbf P^1_{k(y)}\to\mathbf P(\mathfrak m_y/\mathfrak m_y^2)$ and is an
 Thus $\phi$ is quasi-finite along $E$ and is already an isomorphism away from $E$. Proper and
 quasi-finite makes it finite; the blowup of the regular local ring is normal, so finite
 birationality makes $\phi$ an isomorphism.
-The construction glues with the identity away from the affected fiber. $\square$
+
+The contraction has the factorization property used below. Let $h:X\to T$ be a morphism to a
+separated scheme and suppose $h(E)$ is one point $t$. Choose an affine neighborhood $V$ of $t$.
+The closed set $h^{-1}(T\setminus V)$ misses $E$; its proper image under $c$ therefore misses $y$.
+After replacing $Y$ by the complementary neighborhood of $y$, the map $h$ lands in $V$. Since
+$c_*\mathcal O_X=\mathcal O_Y$, its affine coordinate functions descend uniquely and define
+$Y\to V$. This agrees with $h$ after pullback; away from $y$ it glues with the map transported
+through $X\setminus E\simeq Y\setminus\{y\}$. Separatedness gives uniqueness. The construction
+glues with the identity away from the affected fiber. $\square$
 
 A regular proper model is **relatively minimal** if none of its fibers contains an exceptional curve of the first kind. Every contraction lowers the number of irreducible components of the affected fiber, so repeatedly contracting must stop. This proves existence of a relatively minimal model once contractions remain in the chosen category.
 
