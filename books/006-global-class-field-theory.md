@@ -815,8 +815,62 @@ same Kummer matrix is the local norm-residue matrix of Book 5, so this
 normalization restricts to the normalized local invariant. Hence the
 normalizations agree in every tower; no global product formula has been used.
 
-We pass to an arbitrary $G$ without assuming that $G$ is solvable. We use the
-following tower calculation, whose normalization is important.
+Before trying to normalize degree two for an arbitrary group, we record the
+part of the noncyclic argument which follows from the inequalities alone.
+
+**General second-inequality lemma.** For every finite Galois extension $M/F$
+with group $G$,
+
+$$
+H^1(G,C_M)=0,qquad |H^2(G,C_M)|\mid |G|,qquad
+[C_F:N_{M/F}C_M]\mid |G|.                                \tag{4.I9s}
+$$
+
+**Proof.** First let $P$ be a $p$-group and induct on $|P|$. Choose a normal
+subgroup $N$ of index $p$, put $Q=P/N$ and $E=M^N$. Taking $N$-invariants in
+$1\to M^\times\to I_M\to C_M\to1$, Hilbert 90 and $I_M^N=I_E$ give
+$C_M^N=C_E$. The inflation--restriction sequence and induction give
+
+$$
+0\longrightarrow H^1(Q,C_E)\longrightarrow H^1(P,C_M)
+\longrightarrow H^1(N,C_M)^Q,
+$$
+
+so $H^1(P,C_M)=0$. In total degree two, the Hochschild--Serre spectral
+sequence has only the terms
+$H^2(Q,C_E)$ and $H^2(N,C_M)^Q$: the intervening terms involving
+$H^1(N,C_M)$ vanish. Its filtration therefore gives
+
+$$
+|H^2(P,C_M)|\mid |H^2(Q,C_E)|\,|H^2(N,C_M)|\mid |Q|\,|N|=|P|.             \tag{4.I9s'}
+$$
+
+The base $|P|=p$ is (4.I9), and the assertion for the trivial group is
+immediate. Notice that (4.I9s') neither asserts that the restriction map is
+onto nor discards its possible transgression.
+
+For general $G$, restriction to a Sylow $p$-subgroup $P$ is injective on the
+$p$-primary part of $H^i(G,C_M)$: corestriction after restriction is
+multiplication by $[G:P]$, a $p$-adic unit. Thus the preceding $p$-group
+calculation kills every primary part of $H^1(G,C_M)$ and bounds the
+$p$-primary order of $H^2(G,C_M)$ by $|P|$.
+
+Finally
+
+$$
+\widehat H^0(G,C_M)=C_F/N_{M/F}C_M.
+$$
+
+Restriction to $P$ sends a $G$-invariant class to the same class modulo the
+$P$-norm; corestriction of that restriction is multiplication by
+$[G:P]$. It is consequently injective on the $p$-primary part. The cyclic
+prime case and the same normal-subgroup induction as above (using norm
+transitivity) show
+$|\widehat H^0(P,C_M)|\mid |P|$. Applying this for every $p$ proves the last
+divisibility in (4.I9s). $\square$
+
+We now pass to the stronger normalization assertion for arbitrary $G$. We use
+the following tower calculation, whose normalization is important.
 
 **Index-normalization lemma.** For a $p$-subgroup $P\subseteq G$, the finite
 idele diagram (4.I5a) defines a functorial homomorphism
