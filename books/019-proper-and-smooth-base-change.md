@@ -47,31 +47,42 @@
    - [The smooth proper theorem](#92-the-smooth-proper-theorem)
    - [Monodromy and arithmetic actions](#93-monodromy-and-arithmetic-actions)
 10. [Passage to adic coefficients](#10-passage-to-adic-coefficients)
-   - [Finite-level control of the tower](#101-finite-level-control-of-the-tower)
-   - [Integral and rational base change](#102-integral-and-rational-base-change)
-   - [Specialization at the adic level](#103-specialization-at-the-adic-level)
-   - [The derived-limit warning](#104-the-derived-limit-warning)
+
+- [Finite-level control of the tower](#101-finite-level-control-of-the-tower)
+- [Integral and rational base change](#102-integral-and-rational-base-change)
+- [Specialization at the adic level](#103-specialization-at-the-adic-level)
+- [The derived-limit warning](#104-the-derived-limit-warning)
+
 11. [Products and derived operations](#11-products-and-derived-operations)
-   - [Cup products and external products](#111-cup-products-and-external-products)
-   - [Projection formula and Leray](#112-projection-formula-and-leray)
-   - [Correspondences and change of base](#113-correspondences-and-change-of-base)
+
+- [Cup products and external products](#111-cup-products-and-external-products)
+- [Projection formula and Leray](#112-projection-formula-and-leray)
+- [Correspondences and change of base](#113-correspondences-and-change-of-base)
+
 12. [Relative curves](#12-relative-curves)
-   - [Smooth proper curves](#121-smooth-proper-curves)
-   - [Marked and open curves](#122-marked-and-open-curves)
-   - [A nodal degeneration](#123-a-nodal-degeneration)
+
+- [Smooth proper curves](#121-smooth-proper-curves)
+- [Marked and open curves](#122-marked-and-open-curves)
+- [A nodal degeneration](#123-a-nodal-degeneration)
+
 13. [Abelian schemes](#13-abelian-schemes)
-   - [Exterior powers and arbitrary base change](#131-exterior-powers-and-arbitrary-base-change)
-   - [Isogenies, polarizations, and endomorphisms](#132-isogenies-polarizations-and-endomorphisms)
+
+- [Exterior powers and arbitrary base change](#131-exterior-powers-and-arbitrary-base-change)
+- [Isogenies, polarizations, and endomorphisms](#132-isogenies-polarizations-and-endomorphisms)
+
 14. [PEL abelian families and parameter spaces](#14-pel-abelian-families-and-parameter-spaces)
-   - [The geometric hypotheses](#141-the-geometric-hypotheses)
-   - [Universal abelian families and coefficient systems](#142-universal-abelian-families-and-coefficient-systems)
-   - [Proper and nonproper parameter spaces](#143-proper-and-nonproper-parameter-spaces)
-   - [Good reduction and specialization](#144-good-reduction-and-specialization)
-   - [A product-type PEL calculation](#145-a-product-type-pel-calculation)
+
+- [The geometric hypotheses](#141-the-geometric-hypotheses)
+- [Universal abelian families and coefficient systems](#142-universal-abelian-families-and-coefficient-systems)
+- [Proper and nonproper parameter spaces](#143-proper-and-nonproper-parameter-spaces)
+- [Good reduction and specialization](#144-good-reduction-and-specialization)
+- [A product-type PEL calculation](#145-a-product-type-pel-calculation)
+
 15. [A reusable comparison package](#15-a-reusable-comparison-package)
-   - [The theorem checklist](#151-the-theorem-checklist)
-   - [The chain of reductions](#152-the-chain-of-reductions)
-   - [Conclusion](#153-conclusion)
+
+- [The theorem checklist](#151-the-theorem-checklist)
+- [The chain of reductions](#152-the-chain-of-reductions)
+- [Conclusion](#153-conclusion)
 
 ## 1. Cohomology moving in a family
 
@@ -335,13 +346,13 @@ Noetherian induction is used on closed subsets, not on individual points. At eac
 
 Every boundary argument below begins by embedding a nonproper morphism into a proper one. We give that property a name instead of assuming it for all morphisms.
 
-**Definition.** A separated morphism of finite type $f:X\to S$ is *compactifiable* if it admits a factorization
+**Definition.** A separated morphism of finite type $f:X\to S$ is _compactifiable_ if it admits a factorization
 
 $$
 X\xrightarrow{j}\overline X\xrightarrow{\bar f}S
 $$
 
-with $j$ an open immersion and $\bar f$ proper. The pair $(\overline X,j)$ is a *compactification* of $f$, and $D=\overline X\setminus X$, with its reduced structure, is the *boundary*. Nothing is asserted about $\overline X$ beyond properness. It need not be smooth, normal, or reduced, and $D$ need not be a divisor, still less a normal-crossings one. Where smoothness or normal crossings are wanted — for marked curves in Section 12.2, for the parameter spaces of Section 14.1 — they are imposed as explicit hypotheses.
+with $j$ an open immersion and $\bar f$ proper. The pair $(\overline X,j)$ is a _compactification_ of $f$, and $D=\overline X\setminus X$, with its reduced structure, is the _boundary_. Nothing is asserted about $\overline X$ beyond properness. It need not be smooth, normal, or reduced, and $D$ need not be a divisor, still less a normal-crossings one. Where smoothness or normal crossings are wanted — for marked curves in Section 12.2, for the parameter spaces of Section 14.1 — they are imposed as explicit hypotheses.
 
 One may always arrange that $X$ is schematically dense in $\overline X$, by replacing $\overline X$ with the scheme-theoretic closure of $X$ in it. The replacement is a closed subscheme of $\overline X$ and hence still proper over $S$, and $X$ is still open in it by the argument used in the next proof.
 
@@ -359,8 +370,8 @@ is a closed subscheme, the smallest one through which $i$ factors. Formation of 
 
 **Stability lemma.** Let $S$ be noetherian and let $f:X\to S$ be compactifiable, with compactification $(\overline X,j)$.
 
-1. *Base change.* For any $g:S'\to S$, the base change $f':X\times_SS'\to S'$ is compactifiable, and $\overline X\times_SS'$ is a compactification of it.
-2. *Locally closed subschemes.* For any immersion $h:Z\hookrightarrow X$, the composite $f\circ h$ is compactifiable.
+1. _Base change._ For any $g:S'\to S$, the base change $f':X\times_SS'\to S'$ is compactifiable, and $\overline X\times_SS'$ is a compactification of it.
+2. _Locally closed subschemes._ For any immersion $h:Z\hookrightarrow X$, the composite $f\circ h$ is compactifiable.
 
 **Proof.** For (1), properness and open immersions are both stable under base change, so $\overline X\times_SS'\to S'$ is proper and $X\times_SS'$ is open in it. For (2), write $Z$ as a closed subscheme of an open $U\subseteq X$; then $U$ is open in $\overline X$, and $Z\to\overline X$ is quasi-compact because $\overline X$ is noetherian. Let $\overline Z$ be the scheme-theoretic closure of $Z$ in $\overline X$. Exactly as in the proof above, $\overline Z\cap U$ is the scheme-theoretic image of the closed immersion $Z\hookrightarrow U$, namely $Z$; so $Z$ is open in $\overline Z$, while $\overline Z$ is a closed subscheme of $\overline X$ and hence proper over $S$. $\square$
 
@@ -382,7 +393,7 @@ R\bar f_{3*}j_{3!}K
 \simeq R\bar f_{1*}j_{1!}K,
 $$
 
-with the same computation for the index $2$. This is the sense in which the compactly supported direct image $Rf_!$ below is attached to $f$ and not to a chosen boundary. The argument uses Chapter 6 and nothing later; conversely, Chapters 3 through 7 use only the *existence* of a compactification, never its uniqueness, so the order of proof is not circular.
+with the same computation for the index $2$. This is the sense in which the compactly supported direct image $Rf_!$ below is attached to $f$ and not to a chosen boundary. The argument uses Chapter 6 and nothing later; conversely, Chapters 3 through 7 use only the _existence_ of a compactification, never its uniqueness, so the order of proof is not circular.
 
 **Remark on the general statement.** Every separated morphism of finite type between noetherian schemes is compactifiable. This is Nagata's compactification theorem, and it is not proved here. The tempting short argument — compactify finitely many affine charts of $X$ inside projective spaces and glue the closures along the graphs of the identifications — does not close: the closures need not agree along the overlaps, and repairing them requires a controlled system of blowups, or an argument through the Zariski–Riemann space of the ambient function field. Modern write-ups run to tens of pages. The general statement is also stronger than anything used in this corpus. Every morphism compactified below is quasi-projective and is therefore covered by the theorem just proved: the affine and quasi-projective curves of Chapter 12 and their products, the affine-space projections of Sections 7.1 and 7.2, the locally closed strata of such schemes supplied by the stability lemma, and the smooth quasi-projective PEL parameter spaces of Section 14.1 — whose compactifications, when their global cohomology is considered at all, are part of the standing hypotheses there rather than a consequence of any theorem.
 
@@ -737,9 +748,8 @@ $$
 
 These maps are functorial in $K$, compatible with long exact sequences, and transitive:
 
-$$
-\operatorname{sp}_{\bar u/\bar s}
-=
+# $$\operatorname{sp}_{\bar u/\bar s}
+
 \operatorname{sp}_{\bar u/\bar t}\circ
 \operatorname{sp}_{\bar t/\bar s}.
 $$
@@ -1252,9 +1262,8 @@ has stalks given by tame inertia cohomology. At a smooth boundary point there is
 
 Interior cohomology
 
-$$
-H^q_!(M_{\bar b},\mathcal L_n)
-=
+# $$H^q_!(M_{\bar b},\mathcal L_n)
+
 \operatorname{im}\bigl(
 H^q_c(M_{\bar b},\mathcal L_n)
 \to H^q(M_{\bar b},\mathcal L_n)

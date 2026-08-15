@@ -119,7 +119,7 @@ $$
 G\longrightarrow\operatorname{Aut}_k(l),
 $$
 
-whose kernel $I$ is inertia. This says which automorphisms are invisible modulo $\mathfrak m_L$, but it does not say *how invisible* they are. Two elements of inertia may both fix the residue field while one moves a uniformizer in its first digit and the other only in its hundredth. Ramification theory measures that depth.
+whose kernel $I$ is inertia. This says which automorphisms are invisible modulo $\mathfrak m_L$, but it does not say _how invisible_ they are. Two elements of inertia may both fix the residue field while one moves a uniformizer in its first digit and the other only in its hundredth. Ramification theory measures that depth.
 
 The subject has three mutually reinforcing languages. Ramification groups measure automorphisms by displacement. The different and discriminant measure the failure of integral trace duality. Conductors measure the same failure after a Galois group acts on a vector space. Much of the power of the theory comes from proving that these languages assign the same weighted counts.
 
@@ -207,7 +207,7 @@ $$
 k(a^{1/p})((t))/k((t))
 $$
 
-has $e=1$ but purely inseparable residue extension; it is not even a separable field extension. More subtly, Section 14.3 constructs a *separable* extension with $e=1$ and purely inseparable residue extension. Calling either phenomenon tame merely because $\gcd(e,p)=1$ would erase exactly the residue-theoretic defect that the separability clause records.
+has $e=1$ but purely inseparable residue extension; it is not even a separable field extension. More subtly, Section 14.3 constructs a _separable_ extension with $e=1$ and purely inseparable residue extension. Calling either phenomenon tame merely because $\gcd(e,p)=1$ would erase exactly the residue-theoretic defect that the separability clause records.
 
 ### 1.5 The maximal tame stage
 
@@ -270,7 +270,7 @@ In a tower $L/M/K$ of finite separable extensions with separable residue extensi
 
 ### 2.1 Why displacement is the right measurement
 
-To refine inertia without choosing coordinates, one should ask how much an automorphism moves *every* integral element. For $\sigma\in G$, define
+To refine inertia without choosing coordinates, one should ask how much an automorphism moves _every_ integral element. For $\sigma\in G$, define
 
 $$
 i_G(\sigma)=\min_{x\in B}v_L(\sigma(x)-x),
@@ -2238,7 +2238,7 @@ The theorem remains valid for any finite-image representation of the absolute Ga
 **Proof strategy.** There are two separate issues. Lemma 5.2A supplies the cyclic
 Hasse--Arf calculation, and Proposition 11.1B reduces arbitrary irreducible characters
 integrally to induced one-dimensional characters. Together they prove that $A_G$ is an integral
-*virtual* character. The nonnegative fixed-space formula then proves that every irreducible occurs
+_virtual_ character. The nonnegative fixed-space formula then proves that every irreducible occurs
 with nonnegative multiplicity. Thus integrality is never inferred from the visibly rational
 conductor sum.
 

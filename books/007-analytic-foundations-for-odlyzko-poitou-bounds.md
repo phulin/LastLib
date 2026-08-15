@@ -1746,8 +1746,9 @@ At very small thresholds, Minkowski is sharper and simpler. At degree $12$ and w
 $$
 \frac\pi4M_{12}
 =\frac\pi4\left(\frac{12^{12}}{12!}\right)^{1/6}
->4.0432402329>4.
-$$
+
+> 4.0432402329>4.
+> $$
 
 This is certified without its displayed approximation by the exact integer inequality
 
@@ -1779,8 +1780,9 @@ At degree $53$,
 $$
 \frac\pi4M_{53}
 =\frac\pi4\left(\frac{53^{53}}{53!}\right)^{2/53}
->5.2006733020,
-$$
+
+> 5.2006733020,
+> $$
 
 whereas
 
@@ -1931,9 +1933,10 @@ The base-field factor must be retained. As an illustration, take the ceiling $4\
 
 $$
 \log\operatorname{rd}(K)
->\gamma+\log(8\pi)-\frac{12}{24}-1.10356
->2.19782.
-$$
+
+> \gamma+\log(8\pi)-\frac{12}{24}-1.10356
+> 2.19782.
+> $$
 
 Also, (10.4a) gives
 

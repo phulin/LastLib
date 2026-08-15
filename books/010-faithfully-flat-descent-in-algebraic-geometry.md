@@ -763,24 +763,24 @@ The diagonal method also reduces quasi-separatedness to quasi-compactness of a d
 
 For a morphism $f:X\to S$, the following properties are fpqc local on the base, with the qualifications displayed.
 
-| Property of $f$ | Required qualification | Main reason |
-|---|---|---|
-| affine | none | effective descent of affine schemes |
-| quasi-compact | cover is fpqc as a family | finite affine reduction |
-| quasi-separated | none beyond fpqc | diagonal and quasi-compactness |
-| separated | none beyond fpqc | diagonal is a closed immersion |
-| locally of finite type | none beyond fpqc | finite algebra generators descend locally |
-| finite type | quasi-compactness included | local finite type plus quasi-compactness |
-| locally of finite presentation | none beyond fpqc | finite generators and relations descend |
-| finite presentation | quasi-compactness included | local finite presentation plus quasi-compactness |
-| flat | none beyond fpqc | faithful exactness |
-| finite locally free of rank $r$ | none beyond fpqc | affine descent and module descent |
-| finite | none beyond fpqc | affine plus finite module |
-| monomorphism | none beyond fpqc | diagonal is an isomorphism |
-| open, closed, or locally closed immersion | none beyond fpqc | affine equations and open-image descent |
-| proper | finite type and separated are part of the definition | universal closedness descends |
-| smooth and étale | locally of finite presentation | infinitesimal or differential criterion |
-| unramified | locally of finite type | diagonal is an open immersion |
+| Property of $f$                           | Required qualification                               | Main reason                                      |
+| ----------------------------------------- | ---------------------------------------------------- | ------------------------------------------------ |
+| affine                                    | none                                                 | effective descent of affine schemes              |
+| quasi-compact                             | cover is fpqc as a family                            | finite affine reduction                          |
+| quasi-separated                           | none beyond fpqc                                     | diagonal and quasi-compactness                   |
+| separated                                 | none beyond fpqc                                     | diagonal is a closed immersion                   |
+| locally of finite type                    | none beyond fpqc                                     | finite algebra generators descend locally        |
+| finite type                               | quasi-compactness included                           | local finite type plus quasi-compactness         |
+| locally of finite presentation            | none beyond fpqc                                     | finite generators and relations descend          |
+| finite presentation                       | quasi-compactness included                           | local finite presentation plus quasi-compactness |
+| flat                                      | none beyond fpqc                                     | faithful exactness                               |
+| finite locally free of rank $r$           | none beyond fpqc                                     | affine descent and module descent                |
+| finite                                    | none beyond fpqc                                     | affine plus finite module                        |
+| monomorphism                              | none beyond fpqc                                     | diagonal is an isomorphism                       |
+| open, closed, or locally closed immersion | none beyond fpqc                                     | affine equations and open-image descent          |
+| proper                                    | finite type and separated are part of the definition | universal closedness descends                    |
+| smooth and étale                          | locally of finite presentation                       | infinitesimal or differential criterion          |
+| unramified                                | locally of finite type                               | diagonal is an open immersion                    |
 
 Quasi-affine and quasi-projective morphisms are postponed because their proofs use global functions or ample bundles. Projective morphisms are treated there as well. Noetherianity is not needed for the entries above unless it is built into a chosen alternative definition.
 
@@ -816,12 +816,12 @@ $Y$ is given.
 
 Three statements are involved, and it is worth separating them before proving anything.
 
-| Property of $f:Y\to S$ | Hypothesis on $g:X\to Y$ | Main reason |
-|---|---|---|
-| flat | faithfully flat | faithfully flat local rings reflect injectivity |
-| locally of finite presentation | finite locally free surjective, $S$ locally noetherian | Artin--Tate for the invariant subalgebra |
-| reduced geometric fibers | faithfully flat | $\mathcal O_{Y_{\bar s}}$ injects into $g_{\bar s*}\mathcal O_{X_{\bar s}}$ |
-| smooth | the three rows above, plus geometric fibers homogeneous under a group action | generic smoothness together with homogeneity |
+| Property of $f:Y\to S$         | Hypothesis on $g:X\to Y$                                                     | Main reason                                                                 |
+| ------------------------------ | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| flat                           | faithfully flat                                                              | faithfully flat local rings reflect injectivity                             |
+| locally of finite presentation | finite locally free surjective, $S$ locally noetherian                       | Artin--Tate for the invariant subalgebra                                    |
+| reduced geometric fibers       | faithfully flat                                                              | $\mathcal O_{Y_{\bar s}}$ injects into $g_{\bar s*}\mathcal O_{X_{\bar s}}$ |
+| smooth                         | the three rows above, plus geometric fibers homogeneous under a group action | generic smoothness together with homogeneity                                |
 
 Throughout, $f:Y\to S$, $g:X\to Y$, and $h=f\circ g:X\to S$.
 

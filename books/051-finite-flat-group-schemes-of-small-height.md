@@ -217,7 +217,7 @@ is $I\otimes A+A\otimes I$. For $x\in I$, the image of $\Delta(x)$ in the target
 
 If $H'\subset G$ is another finite-flat subgroup with the same generic fiber, its defining ideal is saturated and has generic extension $I_K$. Hence it is $A\cap I_K=I$. This proves uniqueness. Flat scalar extension preserves the saturated exact sequence and its generic fiber, so uniqueness identifies the base change with the new closure. $\square$
 
-The theorem depends on the ambient group. It says that a generic subgroup has one closure *inside $G$*. It does not say that an abstract generic group has one finite-flat model.
+The theorem depends on the ambient group. It says that a generic subgroup has one closure _inside $G$_. It does not say that an abstract generic group has one finite-flat model.
 
 ### 2.3 Intersections, sums, and flat images
 
@@ -1802,25 +1802,25 @@ $$
 
 6. Under an extension of DVRs of ramification index $d$, $(e,r)$ becomes $(de,dr)$. Closure, exactness, duality, and type commute with the flat base change. Descent in the reverse direction requires integral descent data.
 
-These statements cover the prime-order local group schemes that occur when torsion on an arithmetic family is examined at the coefficient prime. They also state exactly what is *not* supplied: a general classification of height-two extensions, a rank-$p$ filtration of every higher-height group, or a full equal-characteristic family classification.
+These statements cover the prime-order local group schemes that occur when torsion on an arithmetic family is examined at the coefficient prime. They also state exactly what is _not_ supplied: a general classification of height-two extensions, a rank-$p$ filtration of every higher-height group, or a full equal-characteristic family classification.
 
 ### 12.2 A failure atlas
 
 The theory is easiest to reuse when each tempting shortcut is paired with its repair.
 
-| Invalid shortcut | What fails | Correct replacement |
-|---|---|---|
-| A closed subgroup of a finite-flat group is flat | the coordinate quotient can have base torsion | contract the generic Hopf ideal and prove saturation |
-| A generic group has a unique integral model | distinct Hopf lattices can share a generic fiber | fix an ambient model or classify models by Oort--Tate data |
-| The connected--étale sequence is a product | the extension need not split | retain it as a faithfully flat exact sequence |
-| Connected dualizes to étale | $\alpha_p$ is connected and self-dual | use maximal multiplicative type as the dual of maximal étale quotient |
-| The valuation $r$ alone classifies a group | unit classes can give unramified twists | retain $(a,b)$ modulo the rescaling (7.4) |
-| The generic character determines $r$ | exponents congruent modulo $p-1$ give the same tame character | retain the integral range $0\le r\le e$ |
-| Every height-$h$ group has order-$p$ factors over $R$ | the generic representation may have no stable line | require a Galois-stable flag and close it term by term |
-| Endpoint models determine their extensions | torsor and Hopf-lattice equations carry extra data | construct or assume an integral middle model |
-| A special-fiber subgroup lifts | it may have no generic antecedent | begin with a generic subgroup and use schematic closure |
-| An upstairs model descends with its character | the integral line and sections may lack descent data | descend the full Oort--Tate datum or Hopf algebra |
-| The mixed-characteristic formula applies when $p=0$ | the generic fiber can be inseparable | treat equal-characteristic additive geometry separately |
+| Invalid shortcut                                      | What fails                                                    | Correct replacement                                                   |
+| ----------------------------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------------------- |
+| A closed subgroup of a finite-flat group is flat      | the coordinate quotient can have base torsion                 | contract the generic Hopf ideal and prove saturation                  |
+| A generic group has a unique integral model           | distinct Hopf lattices can share a generic fiber              | fix an ambient model or classify models by Oort--Tate data            |
+| The connected--étale sequence is a product            | the extension need not split                                  | retain it as a faithfully flat exact sequence                         |
+| Connected dualizes to étale                           | $\alpha_p$ is connected and self-dual                         | use maximal multiplicative type as the dual of maximal étale quotient |
+| The valuation $r$ alone classifies a group            | unit classes can give unramified twists                       | retain $(a,b)$ modulo the rescaling (7.4)                             |
+| The generic character determines $r$                  | exponents congruent modulo $p-1$ give the same tame character | retain the integral range $0\le r\le e$                               |
+| Every height-$h$ group has order-$p$ factors over $R$ | the generic representation may have no stable line            | require a Galois-stable flag and close it term by term                |
+| Endpoint models determine their extensions            | torsor and Hopf-lattice equations carry extra data            | construct or assume an integral middle model                          |
+| A special-fiber subgroup lifts                        | it may have no generic antecedent                             | begin with a generic subgroup and use schematic closure               |
+| An upstairs model descends with its character         | the integral line and sections may lack descent data          | descend the full Oort--Tate datum or Hopf algebra                     |
+| The mixed-characteristic formula applies when $p=0$   | the generic fiber can be inseparable                          | treat equal-characteristic additive geometry separately               |
 
 Every repair has a precise algebraic source. Saturation uses that a finite torsion-free module over a DVR is free. Henselianity lifts idempotents. Perfection converts reduced finite fibers into étale fibers. Cartier duality exchanges finite étale and multiplicative type. The Oort--Tate coefficient calculation converts the scalar-weight line into a Hopf algebra. None of these hypotheses can be silently transferred to a different setting.
 

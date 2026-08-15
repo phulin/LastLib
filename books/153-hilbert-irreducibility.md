@@ -155,7 +155,7 @@ $$
 \text{connected specialized fiber}.
 $$
 
-The adjective *connected* is important. A rational point of $Y_x$ is a degree-one component, but its absence does not imply connectedness when $n>2$. For example, a fiber could be the product of fields of degrees $2$ and $3$, with no rational factor and still not be a field.
+The adjective _connected_ is important. A rational point of $Y_x$ is a degree-one component, but its absence does not imply connectedness when $n>2$. For example, a fiber could be the product of fields of degrees $2$ and $3$, with no rational factor and still not be a field.
 
 Normality will later let us speak cleanly about decomposition groups of valuations in function fields. Geometric irreducibility serves a different purpose: it says that a variety stays irreducible after extending the constant field to an algebraic closure. An integral cover can fail to be geometrically integral because it secretly contains a constant extension. These hypotheses must not be exchanged.
 

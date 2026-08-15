@@ -452,12 +452,12 @@ $$
 
 The complete ledger is
 
-| quantity | minimal problem | auxiliary problem |
-|---|---:|---:|
-| primal Selmer dimension | $q$ | $q$ |
-| dual Selmer dimension | $q$ | $0$ |
-| local tame directions | $0$ | $q$ |
-| primal minus dual | $0$ | $q$ |
+| quantity                | minimal problem | auxiliary problem |
+| ----------------------- | --------------: | ----------------: |
+| primal Selmer dimension |             $q$ |               $q$ |
+| dual Selmer dimension   |             $q$ |               $0$ |
+| local tame directions   |             $0$ |               $q$ |
+| primal minus dual       |             $0$ |               $q$ |
 
 The unchanged primal dimension is not paradoxical. Enlarging local conditions creates $q$ possible local directions, but removing $q$ reciprocity constraints changes which collections of local classes globalize. The Poitou--Tate comparison sequence records both effects and gives (3.11).
 
@@ -904,12 +904,12 @@ Auxiliary framed local rings have two additional eigenline-position variables be
 
 The framed audit can be organized in four columns:
 
-| datum | source of the number | behavior with $N$ | role in the absolute patch |
-|---|---|---|---|
-| $q$ | minimal absolute dual Selmer | constant | number of auxiliary primes and variables of each source |
-| $q_{T,N}$ | dual Selmer relaxed at the chosen local base | bounded, not necessarily constant | bounds relative obstruction rows |
-| $g_{T,N}$ | strict primal tangent plus gauge correction | bounded, not necessarily constant | counts relative presentation variables |
-| $c_T$ | frame torsor | constant | removed by a genuine smooth quotient |
+| datum     | source of the number                         | behavior with $N$                 | role in the absolute patch                              |
+| --------- | -------------------------------------------- | --------------------------------- | ------------------------------------------------------- |
+| $q$       | minimal absolute dual Selmer                 | constant                          | number of auxiliary primes and variables of each source |
+| $q_{T,N}$ | dual Selmer relaxed at the chosen local base | bounded, not necessarily constant | bounds relative obstruction rows                        |
+| $g_{T,N}$ | strict primal tangent plus gauge correction  | bounded, not necessarily constant | counts relative presentation variables                  |
+| $c_T$     | frame torsor                                 | constant                          | removed by a genuine smooth quotient                    |
 
 Global duality fixes the difference $g_{T,N}-q_{T,N}$ once the local-base and frame convention are fixed. It need not fix the two terms separately. To obtain common relative presentations, choose the maximum obstruction rank and add a variable together with the linear relation setting it to zero whenever a level needs padding. This operation raises variable and relation counts together.
 
@@ -1410,11 +1410,11 @@ The patched ring $R_\infty$ is regular and therefore Gorenstein as well. The fin
 
 Three ranks occur and should not be confused:
 
-| object | base ring | rank statement |
-|---|---|---|
-| $M_N$ | $\Lambda_N$ | fixed positive rank $r$ |
-| $M_\infty$ | $R_\infty$ | fixed positive rank $m$ |
-| dualizing module of $R^{\min}$ | $R^{\min}$ | rank one |
+| object                         | base ring   | rank statement          |
+| ------------------------------ | ----------- | ----------------------- |
+| $M_N$                          | $\Lambda_N$ | fixed positive rank $r$ |
+| $M_\infty$                     | $R_\infty$  | fixed positive rank $m$ |
+| dualizing module of $R^{\min}$ | $R^{\min}$  | rank one                |
 
 The last row is the Gorenstein statement. It does not force $M^{\min}$ to have rank one. If a separate multiplicity-one theorem gives $m=1$, then the automorphic module itself is free of rank one, but Theorem 1.1 does not need that extra assertion.
 
@@ -1594,13 +1594,13 @@ The minimal theorem may be used as an input to such a later comparison, but it c
 
 The proof uses its direct prerequisites in the following exact forms.
 
-| Prior theory | Result used here | Hypotheses matched here |
-|---|---|---|
-| Book 143, Taylor--Wiles primes | sets of exactly $q$ split regular primes at every depth, killing dual Selmer; local auxiliary rings and augmentation | fixed determinant, odd $\ell$, represented local conditions, adequate cyclotomic restricted image, eigenvalues in the residue field |
-| Book 146, abstract $R=T$ | depth transfer, support versus faithfulness, regular-sequence descent, determinant criterion | complete local rings, finite faithful action image, exact ring and module augmentation, finite free diamond module, independent regularity or support input |
-| Book 152, deep-level quaternionic modules | projective diamond torsors, full-effective-rank group-ring freeness, exact module augmentation, primary--companion duality, minimal-level control criterion | trivial scalar ratio, clean arithmetic stabilizers, saturated degeneracy maps, unit Gram determinant, no localized new support, distinct roots |
-| Book 171, minimal totally real deformation--Hecke problem | $R^{\min}\twoheadrightarrow\mathbb T^{\min}$, balanced number $q$, local smoothness, trace-coordinate descent, pairings and determinant data | its standing minimal hypotheses, with the auxiliary analogues separately assumed in Section 2.3 |
-| Book 141, residual image classification and adequacy | adequacy and regular semisimple detection for $\ell\geq7$, coefficient-five boundary | absolute irreducibility after cyclotomic restriction and coefficient characteristic at least seven |
+| Prior theory                                              | Result used here                                                                                                                                            | Hypotheses matched here                                                                                                                                     |
+| --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Book 143, Taylor--Wiles primes                            | sets of exactly $q$ split regular primes at every depth, killing dual Selmer; local auxiliary rings and augmentation                                        | fixed determinant, odd $\ell$, represented local conditions, adequate cyclotomic restricted image, eigenvalues in the residue field                         |
+| Book 146, abstract $R=T$                                  | depth transfer, support versus faithfulness, regular-sequence descent, determinant criterion                                                                | complete local rings, finite faithful action image, exact ring and module augmentation, finite free diamond module, independent regularity or support input |
+| Book 152, deep-level quaternionic modules                 | projective diamond torsors, full-effective-rank group-ring freeness, exact module augmentation, primary--companion duality, minimal-level control criterion | trivial scalar ratio, clean arithmetic stabilizers, saturated degeneracy maps, unit Gram determinant, no localized new support, distinct roots              |
+| Book 171, minimal totally real deformation--Hecke problem | $R^{\min}\twoheadrightarrow\mathbb T^{\min}$, balanced number $q$, local smoothness, trace-coordinate descent, pairings and determinant data                | its standing minimal hypotheses, with the auxiliary analogues separately assumed in Section 2.3                                                             |
+| Book 141, residual image classification and adequacy      | adequacy and regular semisimple detection for $\ell\geq7$, coefficient-five boundary                                                                        | absolute irreducibility after cyclotomic restriction and coefficient characteristic at least seven                                                          |
 
 The determinant convention is unchanged throughout. Book 143 states prime selection with arithmetic Frobenius; here we invert the selected conjugacy class and its ordered eigenvalues to use geometric Frobenius. This preserves the residue-cardinality congruence, regularity, and localization rank. The quaternionic Hecke polynomial and the projective diamond labels are then transported into the geometric convention fixed in Book 171. No later nonminimal, minimal-lifting, potential-modularity, or solvable-descent result enters the proof.
 
@@ -1680,12 +1680,12 @@ Failure of any entry changes the local functor or leaves a dual class alive.
 
 The patching audit separates four numerical layers:
 
-| layer | count | reason |
-|---|---:|---|
-| minimal primal tangent | $q$ | totally real balance |
-| auxiliary dual tangent | $0$ | detecting localization matrix |
-| diamond variables | $q$ | one fixed-determinant tame character per prime |
-| kernel of the patched $q$-variable source action | $0$ | equal-variable rigidity and faithful scalar action |
+| layer                                            | count | reason                                             |
+| ------------------------------------------------ | ----: | -------------------------------------------------- |
+| minimal primal tangent                           |   $q$ | totally real balance                               |
+| auxiliary dual tangent                           |   $0$ | detecting localization matrix                      |
+| diamond variables                                |   $q$ | one fixed-determinant tame character per prime     |
+| kernel of the patched $q$-variable source action |   $0$ | equal-variable rigidity and faithful scalar action |
 
 Finite-level diamond relations number $q$, but they vanish in every fixed shadow; other finite-level relations are retained in the marked quotient ideals. Frame variables are removed by a genuine smooth descent. Padding variables occur with linear relations and contribute neither dimension nor regular parameters to the quotient. The two sources $P$ and $S_\infty$ both have dimension $q+1$, and equal-variable rigidity proves $R_\infty=P$ without double counting or a relation-generation claim.
 

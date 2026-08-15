@@ -116,17 +116,17 @@ We use results about smooth representations, $\mathrm{GL}_2(F)$, Weil--Deligne p
 
 The following choices remain fixed.
 
-| Object | Normalization |
-|---|---|
-| additive measure $dx$ on $F$ | $\operatorname{vol}(\mathcal O)=1$ |
-| multiplicative measure $d^\times x$ | $\operatorname{vol}(\mathcal O^\times)=1$ |
-| measure $dg$ on $G$ | $\operatorname{vol}(K)=1$ |
-| measure $dd$ on $D^\times$ | $\operatorname{vol}(\mathcal O_D^\times)=1$ |
-| split torus $A\simeq F^\times\times F^\times$ | product of $d^\times x$ |
-| quadratic torus $E^\times$ | $\operatorname{vol}(\mathcal O_E^\times)=1$ |
-| quotient $T\backslash H$ | $dh=dt\,d\dot h$ |
-| Weyl discriminant | $D_H(\gamma)=\det(1-\operatorname{Ad}(\gamma)\mid\mathfrak h/\mathfrak h_\gamma)$ |
-| normalized orbital integral | $I_\gamma(f)=|D_H(\gamma)|^{1/2}O_\gamma(f)$ |
+| Object                                        | Normalization                                                                     |
+| --------------------------------------------- | --------------------------------------------------------------------------------- |
+| additive measure $dx$ on $F$                  | $\operatorname{vol}(\mathcal O)=1$                                                |
+| multiplicative measure $d^\times x$           | $\operatorname{vol}(\mathcal O^\times)=1$                                         |
+| measure $dg$ on $G$                           | $\operatorname{vol}(K)=1$                                                         |
+| measure $dd$ on $D^\times$                    | $\operatorname{vol}(\mathcal O_D^\times)=1$                                       |
+| split torus $A\simeq F^\times\times F^\times$ | product of $d^\times x$                                                           |
+| quadratic torus $E^\times$                    | $\operatorname{vol}(\mathcal O_E^\times)=1$                                       |
+| quotient $T\backslash H$                      | $dh=dt\,d\dot h$                                                                  |
+| Weyl discriminant                             | $D_H(\gamma)=\det(1-\operatorname{Ad}(\gamma)\mid\mathfrak h/\mathfrak h_\gamma)$ |
+| normalized orbital integral                   | $I_\gamma(f)=                                                                     |
 
 The multiplicative measure is related to additive measure by
 
@@ -1463,14 +1463,14 @@ The Weyl formula does not contain a separate integral over central elements, bec
 
 The calculations of Chapters 5--7 may be summarized as finite recipes.
 
-| function | split-side orbital integral | quaternionic orbital integral |
-|---|---|---|
-| $\mathbf1_K$ | weighted stable-lattice count (5.2), equal to $1$ for maximal regular order | not applicable |
-| $\mathbf1_I$ | weighted stable-chain count (6.6); $2/(q+1)$ for split regular reduction, $0$ for irreducible reduction | not applicable |
-| spherical shell $h_m$ | cyclic-colength weighted count (6.3) | not applicable |
-| $\mathbf1_{K_0(\mathfrak p^n)}$ | stable-segment count (6.7) | not applicable |
-| invariant quaternionic shell | not applicable | $f(E/F)$ times its value at the class (7.4) |
-| type matrix coefficient | finite lattice/chain Fourier sum | finite congruence-layer Fourier sum |
+| function                        | split-side orbital integral                                                                             | quaternionic orbital integral               |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| $\mathbf1_K$                    | weighted stable-lattice count (5.2), equal to $1$ for maximal regular order                             | not applicable                              |
+| $\mathbf1_I$                    | weighted stable-chain count (6.6); $2/(q+1)$ for split regular reduction, $0$ for irreducible reduction | not applicable                              |
+| spherical shell $h_m$           | cyclic-colength weighted count (6.3)                                                                    | not applicable                              |
+| $\mathbf1_{K_0(\mathfrak p^n)}$ | stable-segment count (6.7)                                                                              | not applicable                              |
+| invariant quaternionic shell    | not applicable                                                                                          | $f(E/F)$ times its value at the class (7.4) |
+| type matrix coefficient         | finite lattice/chain Fourier sum                                                                        | finite congruence-layer Fourier sum         |
 
 These are computations for individual functions. They do not assert that a displayed split function already transfers to the function in the same row on the division side. Indeed, Section 7.4 proves that raw unit functions cannot be matched by one scalar across both ramification types with our measures. A genuine unit or level fundamental lemma must form the correct linear combination and prove equality of the resulting finite counts.
 

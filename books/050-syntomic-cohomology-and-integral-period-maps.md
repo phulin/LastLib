@@ -1910,21 +1910,21 @@ For short exact sequences of finite-flat coefficient groups other than the two T
 
 The following table records the precise scope of the constructions.
 
-| Assertion | Hypotheses used | What fails without them |
-|---|---|---|
-| canonical base Frobenius | $V=W(k)$ with $k$ perfect | a ramified base has no such unqualified lift |
-| $\varphi_1=\varphi/p$ at finite level | modified filtration $\mathscr J^{\langle1\rangle}$ | division by $p$ can depend on a lift |
-| local fundamental sequences | weights $0,1$, smooth unramified setting, syntomic topology | derivative-one lifting or Frobenius divisibility may fail |
-| $\mathscr S_n(1)\simeq\mu_{p^n}$ | finite-flat, not merely etale, coefficient theory | geometric points lose infinitesimal roots |
-| degree-one syntomic/fppf comparison | the lci coefficients $\mathbf Z/p^n$ and $\mu_{p^n}$ | an arbitrary finite-flat torsor need not be a syntomic cover |
-| injectivity of generic restriction | normality on every component | a generic section need not extend over a nonnormal base |
-| image equals extendable classes | a fixed integral coefficient model | a generic group alone does not select a model |
-| ordinary reduction of completed cohomology | vanishing of the neighboring $p^n$-torsion group | derived reduction may have a correction term |
-| ordinary inverse limit computes completion | Mittag--Leffler condition | an $R^1\varprojlim$ term survives |
-| curve and abelian finite crystalline modules | smoothness and properness | nonproper or singular cohomology has different finiteness behavior |
-| perfect polarization pairing | principal polarization, or inversion of its degree | the integral pairing can have cokernel |
-| character tests determine a $G$-torsor | enough characters after a stated cover | Cartier characters need not separate a general $G$ over the base |
-| full integral classification of finite-flat groups | additional low-height classification theory | the two syntomic Tate coefficients do not classify arbitrary $G$ |
+| Assertion                                          | Hypotheses used                                             | What fails without them                                            |
+| -------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------ |
+| canonical base Frobenius                           | $V=W(k)$ with $k$ perfect                                   | a ramified base has no such unqualified lift                       |
+| $\varphi_1=\varphi/p$ at finite level              | modified filtration $\mathscr J^{\langle1\rangle}$          | division by $p$ can depend on a lift                               |
+| local fundamental sequences                        | weights $0,1$, smooth unramified setting, syntomic topology | derivative-one lifting or Frobenius divisibility may fail          |
+| $\mathscr S_n(1)\simeq\mu_{p^n}$                   | finite-flat, not merely etale, coefficient theory           | geometric points lose infinitesimal roots                          |
+| degree-one syntomic/fppf comparison                | the lci coefficients $\mathbf Z/p^n$ and $\mu_{p^n}$        | an arbitrary finite-flat torsor need not be a syntomic cover       |
+| injectivity of generic restriction                 | normality on every component                                | a generic section need not extend over a nonnormal base            |
+| image equals extendable classes                    | a fixed integral coefficient model                          | a generic group alone does not select a model                      |
+| ordinary reduction of completed cohomology         | vanishing of the neighboring $p^n$-torsion group            | derived reduction may have a correction term                       |
+| ordinary inverse limit computes completion         | Mittag--Leffler condition                                   | an $R^1\varprojlim$ term survives                                  |
+| curve and abelian finite crystalline modules       | smoothness and properness                                   | nonproper or singular cohomology has different finiteness behavior |
+| perfect polarization pairing                       | principal polarization, or inversion of its degree          | the integral pairing can have cokernel                             |
+| character tests determine a $G$-torsor             | enough characters after a stated cover                      | Cartier characters need not separate a general $G$ over the base   |
+| full integral classification of finite-flat groups | additional low-height classification theory                 | the two syntomic Tate coefficients do not classify arbitrary $G$   |
 
 Each restriction is attached to a step in a proof. None is inferred merely from the existence of a rational Frobenius module.
 

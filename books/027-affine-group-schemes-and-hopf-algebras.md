@@ -330,7 +330,7 @@ $$
 =\sum a_{(1)}S(a_{(2)}).
 $$
 
-An $R$-bialgebra possessing an antipode is an **$R$-Hopf algebra**. In this book its underlying algebra is always commutative, because it is the coordinate algebra of an affine scheme. Commutativity of the *group* is a different condition and will correspond to cocommutativity of $\Delta$.
+An $R$-bialgebra possessing an antipode is an **$R$-Hopf algebra**. In this book its underlying algebra is always commutative, because it is the coordinate algebra of an affine scheme. Commutativity of the _group_ is a different condition and will correspond to cocommutativity of $\Delta$.
 
 The convolution formulation gives uniqueness immediately: if $S$ and $T$ are both convolution inverses of the identity, then
 

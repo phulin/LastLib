@@ -58,21 +58,26 @@
    - [Selecting a monodromy class](#93-selecting-a-monodromy-class)
    - [Limits of the cover variant](#94-limits-of-the-cover-variant)
 10. [Avoidance and density](#10-avoidance-and-density)
-   - [Removing a closed subset](#101-removing-a-closed-subset)
-   - [Zariski density over varying fields](#102-zariski-density-over-varying-fields)
-   - [Avoidance together with local constraints](#103-avoidance-together-with-local-constraints)
-   - [Why one fixed extension is different](#104-why-one-fixed-extension-is-different)
+
+- [Removing a closed subset](#101-removing-a-closed-subset)
+- [Zariski density over varying fields](#102-zariski-density-over-varying-fields)
+- [Avoidance together with local constraints](#103-avoidance-together-with-local-constraints)
+- [Why one fixed extension is different](#104-why-one-fixed-extension-is-different)
+
 11. [Examples and failures](#11-examples-and-failures)
-   - [Affine space with coefficient conditions](#111-affine-space-with-coefficient-conditions)
-   - [Curves](#112-curves)
-   - [A frame variety](#113-a-frame-variety)
-   - [Counterexamples and boundary phenomena](#114-counterexamples-and-boundary-phenomena)
+
+- [Affine space with coefficient conditions](#111-affine-space-with-coefficient-conditions)
+- [Curves](#112-curves)
+- [A frame variety](#113-a-frame-variety)
+- [Counterexamples and boundary phenomena](#114-counterexamples-and-boundary-phenomena)
+
 12. [A practical package for arithmetic geometry](#12-a-practical-package-for-arithmetic-geometry)
-   - [Local inputs from a moduli problem](#121-local-inputs-from-a-moduli-problem)
-   - [Auxiliary primes and residue-characteristic primes](#122-auxiliary-primes-and-residue-characteristic-primes)
-   - [The reusable theorem](#123-the-reusable-theorem)
-   - [A verification checklist](#124-a-verification-checklist)
-   - [Conclusion](#125-conclusion)
+
+- [Local inputs from a moduli problem](#121-local-inputs-from-a-moduli-problem)
+- [Auxiliary primes and residue-characteristic primes](#122-auxiliary-primes-and-residue-characteristic-primes)
+- [The reusable theorem](#123-the-reusable-theorem)
+- [A verification checklist](#124-a-verification-checklist)
+- [Conclusion](#125-conclusion)
 
 ## 1. The local-to-global point problem
 
@@ -84,7 +89,7 @@ $$
 x_v\in X(K_v),\qquad v\in S,
 $$
 
-and, more precisely, nonempty open neighborhoods $\Omega_v\subset X(K_v)$. The arithmetic problem is to turn these separate local choices into one algebraic point. The word *open* is essential. A point in a completion usually carries more information than the application truly needs: integrality, a nonsingular reduction, a prescribed isomorphism class, or inequalities at a real place are stable under a small perturbation. Encoding the requirement by $\Omega_v$ records exactly that stability.
+and, more precisely, nonempty open neighborhoods $\Omega_v\subset X(K_v)$. The arithmetic problem is to turn these separate local choices into one algebraic point. The word _open_ is essential. A point in a completion usually carries more information than the application truly needs: integrality, a nonsingular reduction, a prescribed isomorphism class, or inequalities at a real place are stable under a small perturbation. Encoding the requirement by $\Omega_v$ records exactly that stability.
 
 It is generally unreasonable to ask for a point of $X(K)$. Rational points can be empty for global reasons even when every completion has a point. Smooth conics over number fields obey the local-to-global principle, but already genus-one torsors, higher-genus curves, and higher-dimensional varieties exhibit failures of existence; failures of weak approximation are more common still. Even when $X(K)$ is nonempty, it need not be dense in a product of the $X(K_v)$. Thus weak approximation on affine space cannot simply be transferred to an arbitrary $X$.
 
@@ -138,7 +143,7 @@ First, local points are expanded into reduced effective zero-cycles of one commo
 
 The last step is decisive. Approximation alone naturally produces zero-cycles. Hilbert irreducibility is what turns an unordered collection into the conjugates of a single field-valued point. Book 153 established the simultaneous local and Hilbert machinery; here it is applied to a geometric parameter space whose universal fiber is the desired point.
 
-The geometric inputs have equally precise roles. Book 8 supplies ample embeddings, symmetric powers, configuration spaces, and their universal finite étale families. Book 9 supplies the relative divisor, degree, and cohomology-and-base-change facts used in the integral-open repair. Book 10 supplies the effective descent used for finite free families and quotients by the free permutation action. For comparison only, Book 58 explains why a compatible *infinite* formal construction would require proper algebraization and an ample line bundle; that stronger passage is not used here. All interpolation below is of finite order and takes place in finite-dimensional spaces of sections. The decisive moving argument first slices out one global curve meeting every local open and then moves a divisor in a sufficiently divisible power of one line bundle on that fixed curve. This separation is important; trying to concentrate a complete intersection by prescribing a jet of order equal to its whole intersection number would exceed the available section space in dimension greater than one.
+The geometric inputs have equally precise roles. Book 8 supplies ample embeddings, symmetric powers, configuration spaces, and their universal finite étale families. Book 9 supplies the relative divisor, degree, and cohomology-and-base-change facts used in the integral-open repair. Book 10 supplies the effective descent used for finite free families and quotients by the free permutation action. For comparison only, Book 58 explains why a compatible _infinite_ formal construction would require proper algebraization and an ample line bundle; that stronger passage is not used here. All interpolation below is of finite order and takes place in finite-dimensional spaces of sections. The decisive moving argument first slices out one global curve meeting every local open and then moves a divisor in a sufficiently divisible power of one line bundle on that fixed curve. This separation is important; trying to concentrate a complete intersection by prescribing a jet of order equal to its whole intersection number would exceed the available section space in dimension greater than one.
 
 For comparison only, Books 40--41 are cited in the later audit of a proposed global Picard
 correction: no result from them is used in the proof here, and in any event they prove weak
@@ -690,11 +695,11 @@ $$
 
 Shrinking the $V_v$ once more produces the required $q_v$, $\mathcal U_v$, and stability. This proves the flexible split assertion of the lemma.
 
-The preceding argument has the following exact extension.  It is enough for all nonsplit
-packets which may be repeated *as whole packets*, but it also exhibits a genuine obstruction
+The preceding argument has the following exact extension. It is enough for all nonsplit
+packets which may be repeated _as whole packets_, but it also exhibits a genuine obstruction
 when one exceptional factor is required to occur only once.
 
-**Lemma 5.2A (repeatable packets and the norm--Abel obstruction).**  For each $v$ in a finite
+**Lemma 5.2A (repeatable packets and the norm--Abel obstruction).** For each $v$ in a finite
 set let
 
 $$
@@ -703,16 +708,16 @@ $$
 
 be a finite etale $K_v$-algebra of rank $a_v$, and let
 $\Omega_v\subset X(A_v)$ be a nonempty open containing a geometrically injective reduced
-packet.  Suppose the local condition permits any number of pairwise disjoint packets chosen in
-$\Omega_v$.  Then, after repeating the packets sufficiently many times, their total degrees
+packet. Suppose the local condition permits any number of pairwise disjoint packets chosen in
+$\Omega_v$. Then, after repeating the packets sufficiently many times, their total degrees
 may be made equal and they admit one simultaneous moving presentation of the kind asserted in
 Lemma 5.2.
 
 More generally, suppose that at $v$ one fixed reduced divisor $F_v$ is to occur once and that
-only a packet $P_v$ of degree $a_v$ may be repeated.  Carry both to a smooth projective local
+only a packet $P_v$ of degree $a_v$ may be repeated. Carry both to a smooth projective local
 slice $C_v$, let $\mathcal A$ be the restriction of the global ample line bundle used for the
 pencil, and let $G_v\subset J_v(K_v)$ be the open subgroup generated by the differences of
-nearby allowed copies of $P_v$.  A divisor of the form
+nearby allowed copies of $P_v$. A divisor of the form
 
 $$
 F_v+P_{v,1}+\cdots+P_{v,m}
@@ -730,23 +735,23 @@ $$
 
 Conversely, for all sufficiently large solutions $(n,m)$ of (5.4b), the points in (5.4a) may
 be chosen distinct in their assigned opens and the curve-and-pencil construction gives the
-required local fiber.  Thus the fixed-offset case requires the finite Picard-quotient
-congruence in (5.4b); equality of total degrees does not imply it.  If fixed-offset conditions
+required local fiber. Thus the fixed-offset case requires the finite Picard-quotient
+congruence in (5.4b); equality of total degrees does not imply it. If fixed-offset conditions
 occur at several places, the simultaneous conclusion additionally requires one common
 sufficiently large exponent $n$ satisfying all their degree and Picard-quotient congruences.
 Placewise solvability does not by itself make the resulting arithmetic progressions
 compatible.
 
-**Proof.**  We first explain the only changes to Steps 1 and 2.  An $A_v$-point is a finite
-Galois-stable set of $\overline K_v$-points.  A sufficiently high power of the very ample
-bundle separates that finite subscheme and its first normal jets.  Choose the local cutting
-sections to contain the packet and to have full transverse Jacobian there.  After weak
+**Proof.** We first explain the only changes to Steps 1 and 2. An $A_v$-point is a finite
+Galois-stable set of $\overline K_v$-points. A sufficiently high power of the very ample
+bundle separates that finite subscheme and its first normal jets. Choose the local cutting
+sections to contain the packet and to have full transverse Jacobian there. After weak
 approximation of the sections, the etale implicit-function theorem moves the packet, over the
-same factors $E_{v,i}$, onto the resulting global curve.  Shrinking $\Omega_v$ preserves
-geometric injectivity and makes different repetitions disjoint.  This is the extension-valued
+same factors $E_{v,i}$, onto the resulting global curve. Shrinking $\Omega_v$ preserves
+geometric injectivity and makes different repetitions disjoint. This is the extension-valued
 version of Step 1; it uses no descent of an $E_{v,i}$-point to $K_v$.
 
-Let $C/K_v$ now be that smooth projective curve.  A packet $D=(x_i)_i$ on it has norm divisor
+Let $C/K_v$ now be that smooth projective curve. A packet $D=(x_i)_i$ on it has norm divisor
 
 $$
 N(D)=\sum_i N_{E_{v,i}/K_v}(x_i).
@@ -763,34 +768,34 @@ $$
 Its cotangent map sends a regular differential to its values at all conjugates of the $x_i$.
 The tangent pairing on an $E_{v,i}$-coordinate is the trace pairing
 $\operatorname{Tr}_{E_{v,i}/K_v}$, which is nondegenerate because $E_{v,i}/K_v$ is etale.
-A nonzero regular differential has only finitely many zeros.  Hence, by choosing finitely many
-packet copies inside the prescribed opens, the differential of (5.4c) has full rank.  The
+A nonzero regular differential has only finitely many zeros. Hence, by choosing finitely many
+packet copies inside the prescribed opens, the differential of (5.4c) has full rank. The
 inverse-function theorem shows that the semigroup of packet differences has interior in
-$J_v(K_v)$.  The compact-group lemma proved in Step 2 therefore makes it an open subgroup
+$J_v(K_v)$. The compact-group lemma proved in Step 2 therefore makes it an open subgroup
 $G_v$, generated by a bounded number of packet differences.
 
-Choose the global ample bundle so that its degree $e$ is divisible by every $a_v$.  In the
+Choose the global ample bundle so that its degree $e$ is divisible by every $a_v$. In the
 wholesale-repeatable case, a fiber of $\mathcal A^n$ contains
-$m_v=ne/a_v$ copies.  Relative to $m_vN(D_0)$, its required degree-zero class is
+$m_v=ne/a_v$ copies. Relative to $m_vN(D_0)$, its required degree-zero class is
 
 $$
 n\left([\mathcal A]-\frac e{a_v}[N(D_0)]\right).
 $$
 
-The quotient $J_v(K_v)/G_v$ is finite.  Taking one sufficiently large $n$ divisible by the
-exponents of all these finite quotients puts every displayed class in $G_v$.  Express it using
-the bounded number of packet differences and pad with unchanged copies of $D_0$.  At a tuple
+The quotient $J_v(K_v)/G_v$ is finite. Taking one sufficiently large $n$ divisible by the
+exponents of all these finite quotients puts every displayed class in $G_v$. Express it using
+the bounded number of packet differences and pad with unchanged copies of $D_0$. At a tuple
 where (5.4c) is submersive, perturb the free coordinates and correct with the submersive
-coordinates exactly as in Step 2.  This removes all collisions while retaining the divisor
-class and the local algebras.  The resulting divisor is the zero divisor of a local section of
+coordinates exactly as in Step 2. This removes all collisions while retaining the divisor
+class and the local algebras. The resulting divisor is the zero divisor of a local section of
 $\mathcal A^n$.
 
-With a fixed divisor $F_v$, the same calculation gives precisely (5.4b).  Necessity follows
-from linear equivalence of a fiber with $\mathcal A^n$.  If (5.4b) holds, express its second
+With a fixed divisor $F_v$, the same calculation gives precisely (5.4b). Necessity follows
+from linear equivalence of a fiber with $\mathcal A^n$. If (5.4b) holds, express its second
 member by packet differences, pad to $m$ copies, and use the same submersive perturbation; this
-proves sufficiency for large $(n,m)$.  In the simultaneous fixed-offset case, assume the local
+proves sufficiency for large $(n,m)$. In the simultaneous fixed-offset case, assume the local
 congruences have a common allowed exponent and choose a sufficiently large one in their common
-progression.  Then repeat Step 3 verbatim.  Weak approximation of the two section vectors
+progression. Then repeat Step 3 verbatim. Weak approximation of the two section vectors
 produces one global pencil, and removing its branch and boundary values gives the geometrically
 integral finite etale presentation. $\square$
 
@@ -803,19 +808,19 @@ n([\mathcal A]-e[P])-[S-P]\in G_v.
 $$
 
 Making $n$ divisible kills the first term in the finite quotient but does not kill the fixed
-class $[S-P]$.  This is why the smooth-point theorem, Hensel lifting, restriction of scalars,
+class $[S-P]$. This is why the smooth-point theorem, Hensel lifting, restriction of scalars,
 and the ordinary high-degree argument do not by themselves prove a one-special-factor moving
-presentation.  They supply local points, preserve their residue algebras, and make the Abel
+presentation. They supply local points, preserve their residue algebras, and make the Abel
 image open; none proves the missing Picard-quotient congruence.
 
 There is a useful refinement when the auxiliary factors are allowed to be good but are not
-required to remain in one fixed packet neighborhood.  It separates a possible repair from the
+required to remain in one fixed packet neighborhood. It separates a possible repair from the
 stronger, and sometimes false, assertion that one good tube already suffices.
 
-**Lemma 5.2B (the full allowed-divisor criterion and coset-complete repair).**  Let $k$ be a
+**Lemma 5.2B (the full allowed-divisor criterion and coset-complete repair).** Let $k$ be a
 nonarchimedean local field, let $C/k$ be a smooth projective geometrically connected curve, let
 $P,S\in C(k)$ be distinct, let $V\subset C(k)$ be an allowed degree-one special neighborhood
-of $S$, and let $\mathcal A$ have degree $e>0$.  Shrink $V$ away from the allowed good locus.
+of $S$, and let $\mathcal A$ have degree $e>0$. Shrink $V$ away from the allowed good locus.
 For every $d\geq0$, let
 
 $$
@@ -855,12 +860,12 @@ nb-c\in\mathscr R_{ne-1}^{\mathrm{good}}.
 \tag{5.4g}
 $$
 
-This criterion allows arbitrary finite etale residue algebras for the good factors.  It is
+This criterion allows arbitrary finite etale residue algebras for the good factors. It is
 therefore the exact fixed-slice criterion before one freezes the special representative or
 chooses to generate the good part by repetitions of a particular packet.
 
 Now let $U\subset C(k)$ be an allowed degree-one good neighborhood containing $P$, and let
-$G_U\subset J(k)$ be the open subgroup generated by $[Q-P]$ for $Q\in U$.  Suppose there are
+$G_U\subset J(k)$ be the open subgroup generated by $[Q-P]$ for $Q\in U$. Suppose there are
 finitely many reduced allowed good divisors $B_j$, of degrees $r_j$, disjoint from $S$, such
 that the classes
 
@@ -869,25 +874,25 @@ $$
 \tag{5.4h}
 $$
 
-cover $J(k)/G_U$.  Then (5.4g), and hence (5.4g'), holds for every sufficiently large $n$.
+cover $J(k)/G_U$. Then (5.4g), and hence (5.4g'), holds for every sufficiently large $n$.
 Consequently a coset-complete finite list of compensating good packets removes the singleton congruence and
-leaves $n$ free to satisfy the degree and finite-quotient congruences at the other places.  If
+leaves $n$ free to satisfy the degree and finite-quotient congruences at the other places. If
 the repeatable good packet has degree $a>1$ instead, fix a reference norm divisor $D_0$,
-put $p_0=[D_0-aP]$, and define $G_U$ using its norm--Abel differences.  For each relevant
+put $p_0=[D_0-aP]$, and define $G_U$ using its norm--Abel differences. For each relevant
 residue class $\rho$ modulo $a$, put $s_j=(r_j-\rho)/a$ for the indices with
-$r_j\equiv\rho\pmod a$.  One then needs the adjusted classes
+$r_j\equiv\rho\pmod a$. One then needs the adjusted classes
 
 $$
 [B_j-r_jP]-s_jp_0+G_U
 $$
 
 in that subcollection to cover $J(k)/G_U$; the conclusion holds for all sufficiently large
-$n$ satisfying $ne-1\equiv\rho\pmod a$.  (When the compensators in a subcollection all have
+$n$ satisfying $ne-1\equiv\rho\pmod a$. (When the compensators in a subcollection all have
 the same degree, the adjustment is a common translate and may be omitted.)
 
 For a fixed global curve, line bundle, and allowed local conditions at finitely many places,
 define $\Lambda_v$ to be the set of positive integers $n$ for which the analogue of (5.4g'),
-with the prescribed special packet and fixed multiplicities, holds at $v$.  Once $n$ is large
+with the prescribed special packet and fixed multiplicities, holds at $v$. Once $n$ is large
 enough for the linear systems and local submersions used above, the curve--pencil construction
 has a simultaneous local fiber exactly when
 
@@ -897,25 +902,25 @@ $$
 $$
 
 Lemma 5.2A proves that $\Lambda_v$ contains a sufficiently large arithmetic progression for a
-wholesale-repeatable packet.  In a singleton problem, (5.4g'), the sufficient fixed-point
+wholesale-repeatable packet. In a singleton problem, (5.4g'), the sufficient fixed-point
 condition (5.4g), a coset-complete repair as in (5.4h), or some different evaluation
 presentation must still be proved.
 
-**Proof.**  A divisor $T+D$, with $T\in V$, is linearly equivalent to $\mathcal A^n$ precisely
+**Proof.** A divisor $T+D$, with $T\in V$, is linearly equivalent to $\mathcal A^n$ precisely
 when
 
 $$
 [T-P]+[D-(ne-1)P]=n([\mathcal A]-e[P])=nb.
 $$
 
-This proves (5.4g').  On setting $T=S$, the equality is precisely
+This proves (5.4g'). On setting $T=S$, the equality is precisely
 
 $$
 [D-(ne-1)P]
 =n([\mathcal A]-e[P])-[S-P]=nb-c,
 $$
 
-which proves (5.4g), including necessity for the fixed representative.  These equalities also
+which proves (5.4g), including necessity for the fixed representative. These equalities also
 show that norms from arbitrary good field factors are already included: a closed point
 contributes its norm divisor to $D$.
 
@@ -927,26 +932,26 @@ $$
 \qquad Q_i\in U,
 $$
 
-with the $Q_i$ distinct and disjoint from any fixed finite support.  Given $n$, choose $j$ so
-that $nb-c-[B_j-r_jP]\in G_U$.  For $n$ sufficiently large,
+with the $Q_i$ distinct and disjoint from any fixed finite support. Given $n$, choose $j$ so
+that $nb-c-[B_j-r_jP]\in G_U$. For $n$ sufficiently large,
 $m=ne-1-r_j\geq m_0$; represent this difference by $m$ points of $U$, chosen disjoint from
-$B_j$ and $S$.  Their union with $B_j$ proves (5.4g).  In the degree-$a$ variant the equation
-$ma=ne-1-r_j$ forces the stated residue-class condition.  If
+$B_j$ and $S$. Their union with $B_j$ proves (5.4g). In the degree-$a$ variant the equation
+$ma=ne-1-r_j$ forces the stated residue-class condition. If
 $t=(ne-1-\rho)/a$, then $m=t-s_j$, and the class contributed by the $m$ packets, before their
-norm--Abel differences, is $(t-s_j)p_0$.  The common translate $tp_0$ cancels from the
-covering problem, leaving precisely the adjusted classes displayed above.  Finally, local sections with the required
-reduced divisors exist exactly for $n\in\Lambda_v$.  Weak approximation of the two global
+norm--Abel differences, is $(t-s_j)p_0$. The common translate $tp_0$ cancels from the
+covering problem, leaving precisely the adjusted classes displayed above. Finally, local sections with the required
+reduced divisors exist exactly for $n\in\Lambda_v$. Weak approximation of the two global
 section vectors in Step 3 works for one exponent exactly when the same exponent lies in all the
-$\Lambda_v$.  This proves (5.4i). $\square$
+$\Lambda_v$. This proves (5.4i). $\square$
 
 The covering hypothesis (5.4h) is genuine geometry; it is not a consequence of nonemptiness of
 the good locus.
 
-**Counterexample 5.2C (one good residue disk need not absorb the singleton).**  Let $E/k$ be an
+**Counterexample 5.2C (one good residue disk need not absorb the singleton).** Let $E/k$ be an
 elliptic curve with good reduction and residue field $\kappa$, assume $E(\kappa)\ne0$, let
-$P=0$, and let $U$ be the residue disk reducing to $0$.  Choose $S\in E(k)$ whose reduction is
+$P=0$, and let $U$ be the residue disk reducing to $0$. Choose $S\in E(k)$ whose reduction is
 nonzero; such a lift exists by smoothness and Hensel's lemma, and let $V$ be its residue disk.
-Put $\mathcal A=\mathcal O_E(e[0])$.  Every norm of
+Put $\mathcal A=\mathcal O_E(e[0])$. Every norm of
 a point in the base change of $U$ reduces to zero in $E(\kappa)$, so every allowed divisor
 $D$ supported in that disk satisfies
 
@@ -955,8 +960,8 @@ $$
 \tag{5.4j}
 $$
 
-But $b=0$, while $[T-0]$ has the same nonzero reduction for every $T\in V$.  Thus both
-(5.4g') and (5.4g) fail for every $n$.  The example remains valid after allowing arbitrary
+But $b=0$, while $[T-0]$ has the same nonzero reduction for every $T\in V$. Thus both
+(5.4g') and (5.4g) fail for every $n$. The example remains valid after allowing arbitrary
 finite residue extensions of points in $U$ and disproves any blanket claim that large degree,
 arbitrary-degree good factors in one tube, or the norm map makes the singleton condition
 automatic.
@@ -964,11 +969,11 @@ automatic.
 There is nevertheless a geometric situation in which allowing all good factors, rather than
 one residue disk, does remove the obstruction completely.
 
-**Lemma 5.2D (integral-open saturation).**  Let $R$ be the valuation ring of $k$, with residue
-field $\kappa$, and suppose $C$ has a smooth proper $R$-model $\mathcal C$.  Let
-$W\subset\mathcal C_\kappa$ be a nonempty Zariski-open subset.  Suppose the allowed good
+**Lemma 5.2D (integral-open saturation).** Let $R$ be the valuation ring of $k$, with residue
+field $\kappa$, and suppose $C$ has a smooth proper $R$-model $\mathcal C$. Let
+$W\subset\mathcal C_\kappa$ be a nonempty Zariski-open subset. Suppose the allowed good
 condition contains every closed point of $C$ whose closure in $\mathcal C$ has special fiber
-contained in $W$.  Then, for every sufficiently large $d$,
+contained in $W$. Then, for every sufficiently large $d$,
 
 $$
 \mathscr R_d^{\mathrm{good}}=J(k).
@@ -976,36 +981,36 @@ $$
 $$
 
 In particular (5.4g), and hence the mixed condition (5.4g'), holds for every $n$ with
-$ne-1$ sufficiently large.  Thus a slice with good reduction and a dense special-fiber open of
+$ne-1$ sufficiently large. Thus a slice with good reduction and a dense special-fiber open of
 allowed good points is a second complete repair, requiring no Picard congruence.
 
-**Proof.**  Put $B=\mathcal C_\kappa\setminus W$ with its reduced finite subscheme structure.
-Let $M$ be any degree-$d$ line bundle on $C$.  By Book 9's divisor and degree results, a
+**Proof.** Put $B=\mathcal C_\kappa\setminus W$ with its reduced finite subscheme structure.
+Let $M$ be any degree-$d$ line bundle on $C$. By Book 9's divisor and degree results, a
 rational divisor representing $M$ has Cartier closure on the regular surface $\mathcal C$, so
 $M$ extends to a line bundle $\mathcal M$ on $\mathcal C$, still of degree $d$ on the special
-fiber.  If
+fiber. If
 
 $$
 d-\deg B>2g-2,
 $$
 
-then $H^1(\mathcal C_\kappa,\mathcal M_\kappa(-B))=0$.  Hence evaluation onto
-$H^0(B,\mathcal M_\kappa|_B)$ is surjective.  Prescribe a nonzero value in every residue-field
+then $H^1(\mathcal C_\kappa,\mathcal M_\kappa(-B))=0$. Hence evaluation onto
+$H^0(B,\mathcal M_\kappa|_B)$ is surjective. Prescribe a nonzero value in every residue-field
 factor of this invertible $\mathcal O_B$-module and choose a special-fiber section
-$\bar s$ with those values.  For $d>2g-2$, $H^1$ vanishes on both fibers; cohomology and base
+$\bar s$ with those values. For $d>2g-2$, $H^1$ vanishes on both fibers; cohomology and base
 change as proved in Book 9 therefore makes reduction on global sections surjective and lifts
 $\bar s$ to a section of $\mathcal M$.
 
-All lifts of $\bar s$ form a nonempty local open in $H^0(C,M)(k)$.  Once $d\geq2g+1$, the
+All lifts of $\bar s$ form a nonempty local open in $H^0(C,M)(k)$. Once $d\geq2g+1$, the
 nonreduced-divisor locus, and the locus of sections vanishing at any one point of a prescribed
 finite support such as $S$, are proper algebraic subsets of that vector space, so their union
-cannot contain this local open.  Choose a lift $s$ outside it.  Its zero divisor $D$ is reduced,
-avoids that support, and its closure does not meet $B$, because $\bar s$ is nonzero there.  Thus
+cannot contain this local open. Choose a lift $s$ outside it. Its zero divisor $D$ is reduced,
+avoids that support, and its closure does not meet $B$, because $\bar s$ is nonzero there. Thus
 every factor of $D$ is allowed good.
 Finally, for any $x\in J(k)$ apply the construction to the degree-$d$ line bundle with class
-$x+d[P]$; then $[D-dP]=x$.  This proves (5.4k). $\square$
+$x+d[P]$; then $[D-dP]=x$. This proves (5.4k). $\square$
 
-The model hypothesis in Lemma 5.2D is substantive.  A point-centered analytic good tube need
+The model hypothesis in Lemma 5.2D is substantive. A point-centered analytic good tube need
 not contain the inverse image of any special-fiber Zariski open, as Counterexample 5.2C shows.
 An application using this repair must construct the same local slice through the special packet
 with a smooth proper model and verify that its permitted good locus contains such a $W$; separate
@@ -1015,32 +1020,32 @@ application must also prove that they persist on a congruence neighborhood of th
 Otherwise weak approximation may replace the local curve by a global cut for which Lemma 5.2D's
 hypotheses have not been verified.
 
-**Corollary 5.2E (singleton mixed-packet moving under a saturation hypothesis).**  In the
+**Corollary 5.2E (singleton mixed-packet moving under a saturation hypothesis).** In the
 simultaneous setup of Lemma 5.2A, suppose every packet without a fixed exceptional factor may be
-repeated wholesale.  At each place having exactly one allowed degree-one special factor and all
+repeated wholesale. At each place having exactly one allowed degree-one special factor and all
 remaining factors good, suppose either the coset-complete hypothesis (5.4h), with the required
 degree-residue coverage compatible with the other local progressions, or the integral-open
-hypothesis of Lemma 5.2D holds on the local slice.  Then, after choosing the global ample degree
+hypothesis of Lemma 5.2D holds on the local slice. Then, after choosing the global ample degree
 divisible by the wholesale packet degrees, there is one simultaneous moving presentation which
 retains exactly one special factor at each singleton place.
 
-**Proof.**  Lemma 5.2A puts every wholesale-repeatable place in one sufficiently large
-arithmetic progression of exponents.  Lemma 5.2B makes every sufficiently large exponent in the
+**Proof.** Lemma 5.2A puts every wholesale-repeatable place in one sufficiently large
+arithmetic progression of exponents. Lemma 5.2B makes every sufficiently large exponent in the
 relevant degree residue classes available at a coset-complete singleton place, while Lemma 5.2D
-makes every sufficiently large exponent available at an integral-open singleton place.  Choose
-one sufficiently large exponent in the common progression.  The preceding local constructions
-give reduced local sections of that same power of $\mathcal A$.  Step 3 approximates the two
+makes every sufficiently large exponent available at an integral-open singleton place. Choose
+one sufficiently large exponent in the common progression. The preceding local constructions
+give reduced local sections of that same power of $\mathcal A$. Step 3 approximates the two
 section vectors globally, and simple-root stability keeps the unique root in the special
 neighborhood and every other root in its good condition. $\square$
 
-Replacing the Jacobian by a generalized Jacobian does not erase this example.  Its divisor
+Replacing the Jacobian by a generalized Jacobian does not erase this example. Its divisor
 class maps to the ordinary Jacobian class, so any generalized-Jacobian relation still implies
-the corresponding ordinary condition (5.4g') after projection.  Nor do Books 40--41 supply
+the corresponding ordinary condition (5.4g') after projection. Nor do Books 40--41 supply
 the alternative of choosing a global line-bundle correction by weak approximation on the
-Jacobian.  Such a correction would require
+Jacobian. Such a correction would require
 the diagonal group $J(K)$ to hit specified classes in the finite quotients
-$J(K_v)/G_v$.  Weak Mordell--Weil and Mordell--Weil prove finiteness statements; they do not
-prove that the finite adelic evaluation map is surjective.  Choosing a local base divisor already of
+$J(K_v)/G_v$. Weak Mordell--Weil and Mordell--Weil prove finiteness statements; they do not
+prove that the finite adelic evaluation map is surjective. Choosing a local base divisor already of
 the form $S+D_{\mathrm{good}}$ is likewise the $n=1$ instance of (5.4g), not an independent
 construction.
 
@@ -1048,8 +1053,8 @@ There are three distinct finite approximation steps in the full argument. The fi
 
 High degree has now been accounted for: it supplies first-jet separation for the global slice,
 makes the local Abel images open and boundedly generated inside their actual finite-index
-subgroups, and makes the pencil basepoint-free with a reduced fiber.  It does not move a fixed
-offset into a missing coset.  It is geometric room, not a hidden assertion that every integer is
+subgroups, and makes the pencil basepoint-free with a reduced fiber. It does not move a fixed
+offset into a missing coset. It is geometric room, not a hidden assertion that every integer is
 an allowed degree. This proof also explains why the exact-rank form must assume the presentation
 rather than infer it from local realizability alone.
 
@@ -1630,7 +1635,7 @@ Before invoking Theorem 12.1, verify each item below.
 4. **Openness.** Are integral, reduction, sign, and level conditions stable under a small local perturbation?
 5. **Every embedding.** Does the desired conclusion require complete splitting, or is a general local algebra the correct input?
 6. **Local algebra.** Do all factors have points, are conjugates separable and distinct, and do exact ranks agree?
-7. **Degree and presentation.** Is degree flexible, may local packets be repeated, or is there an index obstruction to an exact degree? Do all fixed-rank configurations occur in one moving presentation?  For a singleton mixed packet, has the exact allowed-divisor condition or one of Corollary 5.2E's saturation hypotheses actually been verified?
+7. **Degree and presentation.** Is degree flexible, may local packets be repeated, or is there an index obstruction to an exact degree? Do all fixed-rank configurations occur in one moving presentation? For a singleton mixed packet, has the exact allowed-divisor condition or one of Corollary 5.2E's saturation hypotheses actually been verified?
 8. **Archimedean control.** Are all real sheets required to stay real, rather than merely one?
 9. **Disjointness.** Has one finite field $E$ been chosen large enough, usually using normal closures, and is linear disjointness of $L$ sufficient? If the Galois closure must be disjoint, have the stronger resolvent conditions been imposed?
 10. **Covers and twists.** Is the desired component defined over the base, and is the monodromy pattern actually realizable?
@@ -1643,6 +1648,6 @@ If these checks pass, the theorem turns the local construction into one global p
 
 Moret–Bailly’s theorem is a local-to-global theorem whose freedom lies in the field of definition. Smoothness makes local points movable; geometric connectedness removes constant-field obstructions; symmetric powers organize conjugates as reduced cycles; and the universal incidence cover remembers whether that cycle is one point or many. Weak approximation places a parameter in all prescribed local neighborhoods, while Hilbert irreducibility makes the incidence fiber connected and preserves disjointness and monodromy conditions.
 
-The resulting field is controlled through its tensor products with the chosen completions. Complete splitting means every designated embedding sees the required local point. Real split fibers at every archimedean place mean every embedding is real. General finite étale local algebras record richer splitting and ramification patterns.  Wholesale-repeatable packets are carried by the norm--Abel construction of Lemma 5.2A.  A packet with one exceptional factor additionally has to satisfy Lemma 5.2B's degree-indexed allowed-divisor condition.  Coset-complete good compensators or Lemma 5.2D's integral-open saturation are sufficient; one repeated good tube leaves the finite Picard-quotient congruence. Local realizability and equality of degrees imply none of these coverage statements. Removing closed subsets gives density, and finite étale covers or twists translate additional structure into local and Hilbert conditions.
+The resulting field is controlled through its tensor products with the chosen completions. Complete splitting means every designated embedding sees the required local point. Real split fibers at every archimedean place mean every embedding is real. General finite étale local algebras record richer splitting and ramification patterns. Wholesale-repeatable packets are carried by the norm--Abel construction of Lemma 5.2A. A packet with one exceptional factor additionally has to satisfy Lemma 5.2B's degree-indexed allowed-divisor condition. Coset-complete good compensators or Lemma 5.2D's integral-open saturation are sufficient; one repeated good tube leaves the finite Picard-quotient congruence. Local realizability and equality of degrees imply none of these coverage statements. Removing closed subsets gives density, and finite étale covers or twists translate additional structure into local and Hilbert conditions.
 
 The final lesson is precise: local points do not by themselves yield a rational point, and a zero-cycle does not by itself yield a field. The theorem succeeds because it moves the local data in a sufficiently large family and then uses arithmetic irreducibility to bind all conjugates into one closed point. That point, and its non-Galois residue field with every completion explicitly accounted for, is the robust global object needed in the arithmetic constructions that follow.

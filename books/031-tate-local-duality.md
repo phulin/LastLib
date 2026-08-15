@@ -146,9 +146,9 @@ The exclusion in equal characteristic is structural. There $\mu_{p^a}(K^s)=1$, A
 
 Each degree has a distinct meaning.
 
-* $H^0(K,M)=M^{G_K}$ records genuine symmetries. Its dual partner in degree two turns obstructions into invariant functionals.
-* $H^1(K,M)$ records torsors and extension classes. Its pairing with another $H^1$ identifies the exact orthogonal of any local tangent condition.
-* $H^2(K,M)$ records the last local obstruction. Its dual partner is the fixed submodule of the Tate dual.
+- $H^0(K,M)=M^{G_K}$ records genuine symmetries. Its dual partner in degree two turns obstructions into invariant functionals.
+- $H^1(K,M)$ records torsors and extension classes. Its pairing with another $H^1$ identifies the exact orthogonal of any local tangent condition.
+- $H^2(K,M)$ records the last local obstruction. Its dual partner is the fixed submodule of the Tate dual.
 
 There are no further degrees in the range (1.1). Consequently local duality is not an infinite ladder: it is a reflection about degree one.
 
@@ -1692,11 +1692,11 @@ Tensoring lattice duality with $E$ proves that (12.13) is a perfect pairing of f
 
 Thus three assertions must be kept distinct:
 
-| coefficient object | topology | dual partner | meaning of perfect |
-|---|---|---|---|
-| finite $M$ | finite discrete | finite $M^*(1)$ | finite Pontryagin dual |
-| compact lattice $T$ | profinite | discrete $D(T)$ | continuous Pontryagin dual |
-| vector space $V$ | $\ell$-adic | vector space $V^*(1)$ | perfect $E$-bilinear form |
+| coefficient object  | topology        | dual partner          | meaning of perfect         |
+| ------------------- | --------------- | --------------------- | -------------------------- |
+| finite $M$          | finite discrete | finite $M^*(1)$       | finite Pontryagin dual     |
+| compact lattice $T$ | profinite       | discrete $D(T)$       | continuous Pontryagin dual |
+| vector space $V$    | $\ell$-adic     | vector space $V^*(1)$ | perfect $E$-bilinear form  |
 
 ### 12.6 What breaks in equal characteristic $p$
 
@@ -2277,20 +2277,20 @@ This order prevents the common circular argument in which a guessed annihilator 
 
 The principal identifications are
 
-| input | exact dual statement |
-|---|---|
-| $H^0(K,M)$ | $H^2(K,M^*(1))^D$ |
-| $H^1(K,M)$ | $H^1(K,M^*(1))^D$ |
-| $H^2(K,M)$ | $H^0(K,M^*(1))^D$ |
-| coefficient map $f$ | adjoint map $f^*(1)$ |
-| restriction to $L$ | corestriction from $L$ |
-| image of a coefficient submodule | kernel for the dual quotient |
+| input                             | exact dual statement                  |
+| --------------------------------- | ------------------------------------- |
+| $H^0(K,M)$                        | $H^2(K,M^*(1))^D$                     |
+| $H^1(K,M)$                        | $H^1(K,M^*(1))^D$                     |
+| $H^2(K,M)$                        | $H^0(K,M^*(1))^D$                     |
+| coefficient map $f$               | adjoint map $f^*(1)$                  |
+| restriction to $L$                | corestriction from $L$                |
+| image of a coefficient submodule  | kernel for the dual quotient          |
 | unramified condition, $\ell\ne p$ | unramified condition on the Tate dual |
-| norms from $L$ | dual classes trivialized by $L$ |
-| Kummer units | unramified characters |
-| $U_K^a$ | characters of conductor at most $a$ |
-| compact lattice $T$ | discrete $D(T)$ |
-| vector space $V$ | $E$-linear $V^*(1)$ |
+| norms from $L$                    | dual classes trivialized by $L$       |
+| Kummer units                      | unramified characters                 |
+| $U_K^a$                           | characters of conductor at most $a$   |
+| compact lattice $T$               | discrete $D(T)$                       |
+| vector space $V$                  | $E$-linear $V^*(1)$                   |
 
 The normalization formulas are
 
@@ -2347,13 +2347,13 @@ At finite-field level a trace character is needed to display an $F$-valued pairi
 
 The hypotheses are best remembered through their failures.
 
-* In characteristic $p$, the geometric points of $\mu_p$ are trivial, although $\mu_p$ is the Cartier dual of $\mathbf Z/p\mathbf Z$. The discrete-module Tate dual therefore cannot express the correct $p$-primary theorem.
-* For $K=\mathbf F_q((t))$, $H^1(K,\mathbf F_p)$ is infinite. A finite-cardinality Euler product is meaningless even though higher cohomology vanishes.
-* At a $p$-adic place containing $\mu_p$, the unramified line in $H^1(K,\mathbf F_p)$ has an annihilator of dimension $[K:\mathbf Q_p]+1$. It is not self-complementary.
-* For the quadratic Hilbert symbol with $q\equiv3\pmod4$, the valuation line is not isotropic because $(\pi_K,\pi_K)_2=-1$. Skew-symmetry language at exponent two cannot be replaced by alternation.
-* If the coefficient characteristic divides $d$, the trace pairing on $\operatorname{ad}^0$ is degenerate because the identity matrix has trace zero. The usual trace-zero self-duality fails.
-* An unramified lattice with Frobenius eigenvalue $\alpha\neq1$ can have the finite group $\mathcal O/(\alpha-1)$ in integral unramified cohomology while its vector-space unramified cohomology is zero. Rational and integral local conditions are not interchangeable.
-* If $\ell\mid[L:K]$, restriction can have a kernel and corestriction can fail to be onto. The adjunction formulas remain valid, but injectivity cannot be inferred from them.
+- In characteristic $p$, the geometric points of $\mu_p$ are trivial, although $\mu_p$ is the Cartier dual of $\mathbf Z/p\mathbf Z$. The discrete-module Tate dual therefore cannot express the correct $p$-primary theorem.
+- For $K=\mathbf F_q((t))$, $H^1(K,\mathbf F_p)$ is infinite. A finite-cardinality Euler product is meaningless even though higher cohomology vanishes.
+- At a $p$-adic place containing $\mu_p$, the unramified line in $H^1(K,\mathbf F_p)$ has an annihilator of dimension $[K:\mathbf Q_p]+1$. It is not self-complementary.
+- For the quadratic Hilbert symbol with $q\equiv3\pmod4$, the valuation line is not isotropic because $(\pi_K,\pi_K)_2=-1$. Skew-symmetry language at exponent two cannot be replaced by alternation.
+- If the coefficient characteristic divides $d$, the trace pairing on $\operatorname{ad}^0$ is degenerate because the identity matrix has trace zero. The usual trace-zero self-duality fails.
+- An unramified lattice with Frobenius eigenvalue $\alpha\neq1$ can have the finite group $\mathcal O/(\alpha-1)$ in integral unramified cohomology while its vector-space unramified cohomology is zero. Rational and integral local conditions are not interchangeable.
+- If $\ell\mid[L:K]$, restriction can have a kernel and corestriction can fail to be onto. The adjunction formulas remain valid, but injectivity cannot be inferred from them.
 
 Each counterexample singles out a precise repair: retain the full Cartier dual, impose the characteristic range, include the principal-unit term, distinguish alternating from skew-symmetric, use the correct dual quotient, saturate integral conditions, or retain kernel--image formulas.
 

@@ -2338,14 +2338,14 @@ For the indefinite algebra $(2,3)_{\mathbf Q}$, any quadratic field in which nei
 
 The theory is most useful when one can move without hesitation among its different descriptions. Let $B=(a,b)_F$ be a quaternion algebra over a number field. The central correspondences are:
 
-| Question | Algebraic answer | Quadratic-form answer | Local answer |
-|---|---|---|---|
-| Is $B$ split over $F$? | $B\cong M_2(F)$ | $n_B$ is isotropic | $B_v$ splits for every $v$ |
-| Is a nonzero $x$ invertible? | $x\in B^\times$ | $\operatorname{Nrd}(x)\ne0$ | the same after every scalar extension |
-| Does $(a,b)_F$ split? | its Brauer class is zero | $\langle1,-a,-b,ab\rangle$ is isotropic | $(a,b)_{F_v}=+1$ for every $v$ |
-| Is $b$ the relevant norm? | $(E/F,\sigma,b)$ is split | $b=r^2-as^2$ when $E=F(\sqrt a)$ | $b\in N(E_v^\times)$ for every $v$ |
-| Does $E/F$ embed in $B$? | $E$ is a maximal subfield | $E$ splits $B$ | no ramified place of $B$ splits in $E$ |
-| What determines $B$? | its Brauer class of order at most two | the isometry class of its reduced norm form | the finite even set $\operatorname{Ram}(B)$ |
+| Question                     | Algebraic answer                      | Quadratic-form answer                       | Local answer                                |
+| ---------------------------- | ------------------------------------- | ------------------------------------------- | ------------------------------------------- |
+| Is $B$ split over $F$?       | $B\cong M_2(F)$                       | $n_B$ is isotropic                          | $B_v$ splits for every $v$                  |
+| Is a nonzero $x$ invertible? | $x\in B^\times$                       | $\operatorname{Nrd}(x)\ne0$                 | the same after every scalar extension       |
+| Does $(a,b)_F$ split?        | its Brauer class is zero              | $\langle1,-a,-b,ab\rangle$ is isotropic     | $(a,b)_{F_v}=+1$ for every $v$              |
+| Is $b$ the relevant norm?    | $(E/F,\sigma,b)$ is split             | $b=r^2-as^2$ when $E=F(\sqrt a)$            | $b\in N(E_v^\times)$ for every $v$          |
+| Does $E/F$ embed in $B$?     | $E$ is a maximal subfield             | $E$ splits $B$                              | no ramified place of $B$ splits in $E$      |
+| What determines $B$?         | its Brauer class of order at most two | the isometry class of its reduced norm form | the finite even set $\operatorname{Ram}(B)$ |
 
 At a local place the sign and invariant carry the same bit of information:
 

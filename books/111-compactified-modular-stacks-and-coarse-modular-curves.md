@@ -67,9 +67,10 @@
     - [Worked comparisons](#133-worked-comparisons)
     - [Dependency closure](#134-dependency-closure)
 14. [Conclusion](#14-conclusion)
-   - [The completed passage from objects to curves](#141-the-completed-passage-from-objects-to-curves)
-   - [What the coarse curve remembers](#142-what-the-coarse-curve-remembers)
-   - [Final synthesis](#143-final-synthesis)
+
+- [The completed passage from objects to curves](#141-the-completed-passage-from-objects-to-curves)
+- [What the coarse curve remembers](#142-what-the-coarse-curve-remembers)
+- [Final synthesis](#143-final-synthesis)
 
 ## 1. The three spaces in modular geometry
 
@@ -1096,16 +1097,16 @@ This boundary is logically important. Properness is a valuative statement, coars
 
 The following distinctions summarize where the arguments change.
 
-| Hypothesis | Consequence | Not implied |
-|---|---|---|
-| ample level divisor | bounded polygon size and projective parameter control | trivial stabilizers |
-| full auxiliary level $M\geq3$, $M$ invertible | fine scheme and universal family | a universal family on the coarse quotient |
-| proper stack with finite diagonal | valuative compactification and separated isomorphisms | regular coarse local rings |
-| finite group quotient of a projective scheme | projective coarse scheme | compatibility with every base change |
-| linearly reductive stabilizers | exact invariants and arbitrary coarse base change | absence of exceptional stack structure |
-| trivial stabilizer character on a line | tame descent of that line | descent of the universal curve |
-| normal fine cover | normal constant-group quotient | stability under ramified base change |
-| generic degree $N$ boundary quotient | degree of the isogeny on the dense smooth locus | finite flatness at nodes |
+| Hypothesis                                    | Consequence                                           | Not implied                               |
+| --------------------------------------------- | ----------------------------------------------------- | ----------------------------------------- |
+| ample level divisor                           | bounded polygon size and projective parameter control | trivial stabilizers                       |
+| full auxiliary level $M\geq3$, $M$ invertible | fine scheme and universal family                      | a universal family on the coarse quotient |
+| proper stack with finite diagonal             | valuative compactification and separated isomorphisms | regular coarse local rings                |
+| finite group quotient of a projective scheme  | projective coarse scheme                              | compatibility with every base change      |
+| linearly reductive stabilizers                | exact invariants and arbitrary coarse base change     | absence of exceptional stack structure    |
+| trivial stabilizer character on a line        | tame descent of that line                             | descent of the universal curve            |
+| normal fine cover                             | normal constant-group quotient                        | stability under ramified base change      |
+| generic degree $N$ boundary quotient          | degree of the isogeny on the dense smooth locus       | finite flatness at nodes                  |
 
 This ledger is part of the theorem package: removing one hypothesis changes the conclusion, rather than merely weakening a proof technique.
 

@@ -118,7 +118,7 @@ Three conclusions that are often conflated must remain separate.
 
 **Homothety** means that two stable lattices become equal after multiplication by an element of $L^\times$. Absolute irreducibility of a residual representation can force homothety. Homothety still leaves the power of $\varpi$ undetermined.
 
-**Canonicality** would mean that the rational representation alone selects a distinguished lattice, or that arbitrary geometric presentations give the same embedded lattice. Neither follows. The intersection $M\cap W$ is distinguished only relative to the fixed embedding (1.4) and the fixed ambient lattice $M$. The schematic closure at level $n$ is unique only inside its fixed ambient torsion group. Raynaud full faithfulness gives unique isomorphisms of *marked finite-flat models* in the range (1.1), but the marking includes the already chosen finite Galois module $T/\varpi^nT$.
+**Canonicality** would mean that the rational representation alone selects a distinguished lattice, or that arbitrary geometric presentations give the same embedded lattice. Neither follows. The intersection $M\cap W$ is distinguished only relative to the fixed embedding (1.4) and the fixed ambient lattice $M$. The schematic closure at level $n$ is unique only inside its fixed ambient torsion group. Raynaud full faithfulness gives unique isomorphisms of _marked finite-flat models_ in the range (1.1), but the marking includes the already chosen finite Galois module $T/\varpi^nT$.
 
 This hierarchy is the organizing discipline of the book. The construction proves existence unconditionally at each level and proves one exact compatible tower under (1.1). It proves homothety when residual absolute irreducibility is supplied. It never promotes those statements to independence of an arbitrary curve vector, an arbitrary isogeny, or an arbitrary PEL realization.
 
@@ -557,7 +557,7 @@ $$
 b:T\times T\longrightarrow\mathcal L(\psi) \tag{6.7}
 $$
 
-are supplied, then $t_1\wedge t_2\mapsto b(t_1,t_2)$ identifies $\det T$ with $\mathcal L(\psi)$ and forces $\delta=\psi$. In rank two this implication has no square-root ambiguity. The word *perfect* in (6.7) is an integral unit condition, not merely rational nondegeneracy.
+are supplied, then $t_1\wedge t_2\mapsto b(t_1,t_2)$ identifies $\det T$ with $\mathcal L(\psi)$ and forces $\delta=\psi$. In rank two this implication has no square-root ambiguity. The word _perfect_ in (6.7) is an integral unit condition, not merely rational nondegeneracy.
 
 ### 6.3 Polarizations and the two separate unit tests
 
@@ -786,7 +786,7 @@ The construction of the lattice does not require a formula for $\det W_\Pi$. Whe
 
 The construction deliberately avoids the false stronger argument. A rational central idempotent cutting out the packet can have a nonunit denominator. The full packet block can have dimension $2\dim P_\Pi$, and rational Morita evaluation need not be an integral isomorphism for a nonmaximal order. None of those facts prevents choosing $s\ne0$ and intersecting the rational plane (8.2) with the ambient Tate lattice. Conversely, saturation does not repair the projector denominator or prove that an integral Hom module is a canonical direct factor.
 
-There is one further handoff to check. Book 126 distinguishes the raw multiplicity representation from its abstract semisimplification. The warning after (8.1) is correct: semisimplification does not put a new plane inside the same Jacobian Tate module. It nevertheless preserves the *existence* of an all-level finite-flat lattice below the Raynaud boundary, by a subquotient construction rather than by a new geometric embedding.
+There is one further handoff to check. Book 126 distinguishes the raw multiplicity representation from its abstract semisimplification. The warning after (8.1) is correct: semisimplification does not put a new plane inside the same Jacobian Tate module. It nevertheless preserves the _existence_ of an all-level finite-flat lattice below the Raynaud boundary, by a subquotient construction rather than by a new geometric embedding.
 
 **Proposition 8.1 (finite-flat tower after semisimplification).** Assume the hypotheses of Theorem 5.1, and let $T\subset V$ be its chosen rank-two lattice with tower $\{\mathcal G_n\}$. Then the semisimplification $V^{\mathrm{ss}}$ contains a stable lattice $T^{\mathrm{ss}}$ whose quotients admit one coefficient-linear compatible exact finite-flat tower. This construction asserts neither an embedding of $V^{\mathrm{ss}}$ into the original abelian Tate module nor a canonical lattice in $V^{\mathrm{ss}}$.
 
@@ -840,7 +840,7 @@ The logical direction matters. Geometry and closure first construct the finite-f
 
 ### 9.2 Changing a stable lattice by commensurability
 
-In the unramified odd-prime range, one all-level finite-flat lattice implies the same *existence property* for every commensurable stable lattice, though the models and residual extensions can change.
+In the unramified odd-prime range, one all-level finite-flat lattice implies the same _existence property_ for every commensurable stable lattice, though the models and residual extensions can change.
 
 **Proposition 9.1 (commensurability transfer).** Let $T$ have an all-level finite-flat tower over $W(k)$, with $p>2$, and let $T'$ be another $G_K$-stable $\mathcal O$-lattice in the same rational representation. Then every $T'/\varpi^nT'$ is finite flat with its coefficient action, and the quotients admit one compatible exact tower.
 
@@ -878,7 +878,7 @@ At $p=2$, neither the inequality $e<p-1$ nor the Fontaine--Laffaille interval $[
 
 For a ramified base with $e\geq p-1$, the same distinction applies. Schematic closure remains finite flat and unique inside the fixed ambient torsion group, but generic models need not be abstractly unique and generic morphisms need not extend. A Breuil--Kisin or another ramified integral theory could supply a different exact theorem, but it is not among the inputs used in this book and is not invoked.
 
-Finally, twisting a representation changes its Galois action without supplying a geometric model. Cartier duality proves stability under the *Tate-twisted dual* $N\mapsto N^*(1)$ because it is an operation on finite-flat group schemes. It does not prove stability under $N\mapsto N(-1)$ or any other arbitrary negative twist. This boundary is part of the theorem, not a missing convenience.
+Finally, twisting a representation changes its Galois action without supplying a geometric model. Cartier duality proves stability under the _Tate-twisted dual_ $N\mapsto N^*(1)$ because it is an operation on finite-flat group schemes. It does not prove stability under $N\mapsto N(-1)$ or any other arbitrary negative twist. This boundary is part of the theorem, not a missing convenience.
 
 ## 10. Exact handoffs to the later arithmetic books
 
@@ -917,16 +917,16 @@ For a later application using a finite coefficient extension, the scalar-extensi
 
 The proof uses earlier books only in their established ranges.
 
-| Source | Imported result | Use here | Strengthening not made |
-|---|---|---|---|
-| Book 35 | torsion of an abelian scheme, isogenies, quotients, polarizations, and base change | ambient groups and degree conditions | good reduction does not make $p$-torsion unramified |
-| Books 26--28 | finite locally free algebra, Hopf ideals, closure over a DVR, and represented quotients | levelwise closure and exact quotient sequences | raw kernels and images are not declared flat |
-| Book 34 | Cartier exactness, annihilators, Weil pairing, and Tate-twisted duality | dual tower and polarization maps | ordinary duals and negative twists are not substituted |
-| Book 42 | marked finite-flat representations, subquotients, and coefficient extension | coefficient actions and finite coefficient change | existence is not uniqueness of a chosen model |
-| Book 45 | covariant Tate modules, torsion limits, and the cyclotomic pairing | normalization and determinant checks | elliptic rank-two conclusions are not imposed on arbitrary abelian factors |
-| Book 52 | Raynaud full faithfulness for $e<p-1$ | identification of quotient levels and transition maps | no rigidity is claimed at or above the boundary |
-| Books 53--54 | unramified weights $[0,1]$, stable-lattice equivalence, duality, and compatible quotients | filtered description and the fixed-three route | rational crystallinity does not select a lattice |
-| Books 125--126 | rational packet factorization and the rank-two Galois multiplicity space | the embedding (8.2) and determinant input | no integral Morita factor or canonical oldvector is imported |
+| Source         | Imported result                                                                           | Use here                                              | Strengthening not made                                                     |
+| -------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------- | -------------------------------------------------------------------------- |
+| Book 35        | torsion of an abelian scheme, isogenies, quotients, polarizations, and base change        | ambient groups and degree conditions                  | good reduction does not make $p$-torsion unramified                        |
+| Books 26--28   | finite locally free algebra, Hopf ideals, closure over a DVR, and represented quotients   | levelwise closure and exact quotient sequences        | raw kernels and images are not declared flat                               |
+| Book 34        | Cartier exactness, annihilators, Weil pairing, and Tate-twisted duality                   | dual tower and polarization maps                      | ordinary duals and negative twists are not substituted                     |
+| Book 42        | marked finite-flat representations, subquotients, and coefficient extension               | coefficient actions and finite coefficient change     | existence is not uniqueness of a chosen model                              |
+| Book 45        | covariant Tate modules, torsion limits, and the cyclotomic pairing                        | normalization and determinant checks                  | elliptic rank-two conclusions are not imposed on arbitrary abelian factors |
+| Book 52        | Raynaud full faithfulness for $e<p-1$                                                     | identification of quotient levels and transition maps | no rigidity is claimed at or above the boundary                            |
+| Books 53--54   | unramified weights $[0,1]$, stable-lattice equivalence, duality, and compatible quotients | filtered description and the fixed-three route        | rational crystallinity does not select a lattice                           |
+| Books 125--126 | rational packet factorization and the rank-two Galois multiplicity space                  | the embedding (8.2) and determinant input             | no integral Morita factor or canonical oldvector is imported               |
 
 Books 168, 177, 179, and 186--187 appear only in Chapter 10 to state what they may receive. They are not proof dependencies.
 

@@ -1181,25 +1181,25 @@ The constructions above establish the following reusable statement.
 
 The theory is compact only when its conventions are kept visible.
 
-| Assertion | Exact convention or hypothesis | Error prevented |
-|---|---|---|
-| Dieudonne realization | contravariant; $FV=VF=p$ | reversing arrows or slopes |
-| slope normalization | etale is $0$, multiplicative is $1$ | exchanging Newton endpoints |
-| dimension formula | $\dim G=\sum\lambda_i$ | using the covariant complement |
-| connected--etale sequence in families | perfect field, complete local base, or constant-rank stratum | claiming a global quotient across jumps |
-| ordinary | maximal etale height, not split generic representation | confusing filtration with splitting |
-| Hodge sequence | $0\to\omega_G\to\mathbb D(G)\to\operatorname{Lie}(G^D)\to0$ | putting the dual on the wrong term |
-| infinitesimal lifting | nilpotent PD steps; arbitrary nilpotent steps by PD descent | applying a crystal without a valid thickening |
-| complete Serre--Tate theory | formal systems; algebraization requires a compatible ample line bundle | unpolarized effectivity overclaim |
-| Serre--Tate equivalence | deformations of an existing $A_0$, not arbitrary groups | global realization overclaim |
-| ordinary coordinate | $X\times Y$ with $Y=T_p(A_0^\vee)^{\mathrm{et}}$ | pairing two unjustified copies |
-| coordinate group law | multiplication of $q$, not addition of $q-1$ | incorrect nonlinear basis change |
-| dual coordinate | $q_{A^\vee}(y,x)=q_A(x,y)$ in our normalization | hidden inverse convention |
-| principal polarization | perfect at $p$ and symmetric $q$ | treating nonprincipal forms as unimodular |
-| PEL relation | $q(ax,y)=q(x,a^\dagger y)$ | omitting the Rosati adjoint |
-| smooth PEL torus | etale order at $p$, saturated character quotient, integral determinant factors | rational dimension mistaken for smoothness |
-| openness | Hasse determinant on a constant-rank family | unsupported Newton-stratum assertion |
-| local potential-modularity input | an ordinary point already exists | inferring global nonemptiness from local theory |
+| Assertion                             | Exact convention or hypothesis                                                 | Error prevented                                 |
+| ------------------------------------- | ------------------------------------------------------------------------------ | ----------------------------------------------- |
+| Dieudonne realization                 | contravariant; $FV=VF=p$                                                       | reversing arrows or slopes                      |
+| slope normalization                   | etale is $0$, multiplicative is $1$                                            | exchanging Newton endpoints                     |
+| dimension formula                     | $\dim G=\sum\lambda_i$                                                         | using the covariant complement                  |
+| connected--etale sequence in families | perfect field, complete local base, or constant-rank stratum                   | claiming a global quotient across jumps         |
+| ordinary                              | maximal etale height, not split generic representation                         | confusing filtration with splitting             |
+| Hodge sequence                        | $0\to\omega_G\to\mathbb D(G)\to\operatorname{Lie}(G^D)\to0$                    | putting the dual on the wrong term              |
+| infinitesimal lifting                 | nilpotent PD steps; arbitrary nilpotent steps by PD descent                    | applying a crystal without a valid thickening   |
+| complete Serre--Tate theory           | formal systems; algebraization requires a compatible ample line bundle         | unpolarized effectivity overclaim               |
+| Serre--Tate equivalence               | deformations of an existing $A_0$, not arbitrary groups                        | global realization overclaim                    |
+| ordinary coordinate                   | $X\times Y$ with $Y=T_p(A_0^\vee)^{\mathrm{et}}$                               | pairing two unjustified copies                  |
+| coordinate group law                  | multiplication of $q$, not addition of $q-1$                                   | incorrect nonlinear basis change                |
+| dual coordinate                       | $q_{A^\vee}(y,x)=q_A(x,y)$ in our normalization                                | hidden inverse convention                       |
+| principal polarization                | perfect at $p$ and symmetric $q$                                               | treating nonprincipal forms as unimodular       |
+| PEL relation                          | $q(ax,y)=q(x,a^\dagger y)$                                                     | omitting the Rosati adjoint                     |
+| smooth PEL torus                      | etale order at $p$, saturated character quotient, integral determinant factors | rational dimension mistaken for smoothness      |
+| openness                              | Hasse determinant on a constant-rank family                                    | unsupported Newton-stratum assertion            |
+| local potential-modularity input      | an ordinary point already exists                                               | inferring global nonemptiness from local theory |
 
 The dependency chain is now closed in the precise forms used. Book 35 supplies finite locally free multiplication kernels, dual abelian schemes, the Poincare biextension, Weil pairings, and polarizations. Book 49 supplies finite locally free $H^1_{\mathrm{cris}}$, its Hodge sequence, Frobenius, duality, and the integral polarization form. Book 52 supplies the contravariant finite Dieudonne anti-equivalence, the connected--etale operator criteria, and the comparison
 

@@ -77,16 +77,17 @@
     - [The character subspace and its complement](#133-the-character-subspace-and-its-complement)
     - [What definiteness does and does not say](#134-what-definiteness-does-and-does-not-say)
 14. [The exact finite module](#14-the-exact-finite-module)
-   - [A construction checklist](#141-a-construction-checklist)
-   - [A specified arithmetic datum](#142-a-specified-arithmetic-datum)
-   - [The base-level module used later](#143-the-base-level-module-used-later)
-   - [One-prime level modules](#144-one-prime-level-modules)
-   - [Paired and dual modules](#145-paired-and-dual-modules)
-   - [The coefficient-change ledger](#146-the-coefficient-change-ledger)
-   - [A finite-matrix realization](#147-a-finite-matrix-realization)
-   - [Scope boundaries for the next stages](#148-scope-boundaries-for-the-next-stages)
-   - [The final dictionary](#149-the-final-dictionary)
-   - [Conclusion](#1410-conclusion)
+
+- [A construction checklist](#141-a-construction-checklist)
+- [A specified arithmetic datum](#142-a-specified-arithmetic-datum)
+- [The base-level module used later](#143-the-base-level-module-used-later)
+- [One-prime level modules](#144-one-prime-level-modules)
+- [Paired and dual modules](#145-paired-and-dual-modules)
+- [The coefficient-change ledger](#146-the-coefficient-change-ledger)
+- [A finite-matrix realization](#147-a-finite-matrix-realization)
+- [Scope boundaries for the next stages](#148-scope-boundaries-for-the-next-stages)
+- [The final dictionary](#149-the-final-dictionary)
+- [Conclusion](#1410-conclusion)
 
 ## 1. From compactness to finite algebra
 
@@ -1221,9 +1222,8 @@ and pullbacks compose in the evident direction.
 
 Adjointness requires the stabilizer weights, not merely counting each class once. Normalize the quotient-groupoid measure separately at each level so that the image of the relevant projective compact open has volume one. For forms with inverse central characters, the orbit--stabilizer formula then gives
 
-$$
-\left\langle \operatorname{res}_{U}^{U'}f,h\right\rangle_{U'}
-=
+# $$\left\langle \operatorname{res}_{U}^{U'}f,h\right\rangle_{U'}
+
 \left\langle f,\operatorname{Tr}_{U'}^Uh\right\rangle_U.
 $$
 
@@ -1358,11 +1358,8 @@ $$
 
 Indeed,
 
-$$
-\beta_{\mathfrak q}^{-1}
-\begin{pmatrix}a&b\\c&d\end{pmatrix}
-\beta_{\mathfrak q}
-=
+# $$\beta_{\mathfrak q}^{-1}\begin{pmatrix}a&b\\c&d\end{pmatrix}\beta_{\mathfrak q}
+
 \begin{pmatrix}
 a&\varpi_{\mathfrak q}b\\
 \varpi_{\mathfrak q}^{-1}c&d
@@ -2499,27 +2496,27 @@ together with its class-set decomposition, central constraints, integral pairing
 
 ### 14.9 The final dictionary
 
-| Input | Automorphic meaning | Finite model |
-|---|---|---|
-| totally definite $D/F$ | compact archimedean quotient modulo center | no continuous archimedean variable |
-| order $\mathcal O$ | integral structure at finite places | $U=\widehat{\mathcal O}^{\times}$ |
-| Eichler level $\mathfrak N$ | prescribed local congruence depth | smaller factors $U_v$ at $v\mid\mathfrak N$ |
-| locally principal right ideal $I_i$ | one finite adelic class | representative $g_i$ with $I_i=D\cap g_i\widehat{\mathcal O}$ |
-| left order $\mathcal O_L(I_i)$ | automorphisms of that class | $\Gamma_i=\mathcal O_L(I_i)^\times$ |
-| archimedean integers $(n_\tau,m_\tau)$ | algebraic weight | $W=\bigotimes_\tau\operatorname{Sym}^{n_\tau}V_\tau\otimes\det^{m_\tau}$ |
-| central exponents $c_\tau$ | scalar action and parity | $c_\tau=n_\tau+2m_\tau$ |
-| central character $\chi$ | identifies finite and infinite scalar actions | $\chi_\infty=\rho^{-1}$ and $\chi_f|_{U\cap Z_f}=1$ |
-| stable lattice $W_A$ | integral coefficient system | invariant summands $W_A^{\Gamma_i}$ |
-| class representatives | coordinates for forms | $S(U,W_A)\cong\bigoplus_iW_A^{\Gamma_i}$ |
-| deeper level $U'\subset U$ | more finite level structure | pullback and trace along $X_{U'}\to X_U$ |
-| admissible $a$ with $U'\subset aUa^{-1}$ | translated lower-level contribution | degeneracy map $\delta_a$ |
-| family of degeneracy maps | old contribution from specified lower levels | image of $\Delta$ |
-| adjoint traces | vanishing back at lower level | preliminary new kernel $\ker(\Delta^\dagger)$ |
-| degeneracy Gram operator | obstruction to integral splitting | $\mathcal G=\Delta^\dagger\Delta$ |
-| $U_1(\mathfrak q)\triangleleft U_0(\mathfrak q)$ | one-prime character level | action of $k_{\mathfrak q}^\times$ by diamond translations |
-| invariant weight pairing | duality of coefficient systems | finite sum, optionally weighted by stabilizer masses |
-| admissible bases | integral coordinates | block bases of the invariant summands |
-| reduced norm | abelian automorphic characters | norm-character subspace |
+| Input                                            | Automorphic meaning                           | Finite model                                                             |
+| ------------------------------------------------ | --------------------------------------------- | ------------------------------------------------------------------------ |
+| totally definite $D/F$                           | compact archimedean quotient modulo center    | no continuous archimedean variable                                       |
+| order $\mathcal O$                               | integral structure at finite places           | $U=\widehat{\mathcal O}^{\times}$                                        |
+| Eichler level $\mathfrak N$                      | prescribed local congruence depth             | smaller factors $U_v$ at $v\mid\mathfrak N$                              |
+| locally principal right ideal $I_i$              | one finite adelic class                       | representative $g_i$ with $I_i=D\cap g_i\widehat{\mathcal O}$            |
+| left order $\mathcal O_L(I_i)$                   | automorphisms of that class                   | $\Gamma_i=\mathcal O_L(I_i)^\times$                                      |
+| archimedean integers $(n_\tau,m_\tau)$           | algebraic weight                              | $W=\bigotimes_\tau\operatorname{Sym}^{n_\tau}V_\tau\otimes\det^{m_\tau}$ |
+| central exponents $c_\tau$                       | scalar action and parity                      | $c_\tau=n_\tau+2m_\tau$                                                  |
+| central character $\chi$                         | identifies finite and infinite scalar actions | $\chi_\infty=\rho^{-1}$ and $\chi_f                                      |
+| stable lattice $W_A$                             | integral coefficient system                   | invariant summands $W_A^{\Gamma_i}$                                      |
+| class representatives                            | coordinates for forms                         | $S(U,W_A)\cong\bigoplus_iW_A^{\Gamma_i}$                                 |
+| deeper level $U'\subset U$                       | more finite level structure                   | pullback and trace along $X_{U'}\to X_U$                                 |
+| admissible $a$ with $U'\subset aUa^{-1}$         | translated lower-level contribution           | degeneracy map $\delta_a$                                                |
+| family of degeneracy maps                        | old contribution from specified lower levels  | image of $\Delta$                                                        |
+| adjoint traces                                   | vanishing back at lower level                 | preliminary new kernel $\ker(\Delta^\dagger)$                            |
+| degeneracy Gram operator                         | obstruction to integral splitting             | $\mathcal G=\Delta^\dagger\Delta$                                        |
+| $U_1(\mathfrak q)\triangleleft U_0(\mathfrak q)$ | one-prime character level                     | action of $k_{\mathfrak q}^\times$ by diamond translations               |
+| invariant weight pairing                         | duality of coefficient systems                | finite sum, optionally weighted by stabilizer masses                     |
+| admissible bases                                 | integral coordinates                          | block bases of the invariant summands                                    |
+| reduced norm                                     | abelian automorphic characters                | norm-character subspace                                                  |
 
 Every arrow in this table has variance. Right ideals correspond to a left rational quotient and a right level quotient. Their left orders give stabilizers. The weight acts on the left of values, while the archimedean transformation law uses its inverse on the right. Central character factors multiply on the right. These directions are not notational choices that can be changed independently.
 

@@ -703,7 +703,7 @@ that the tower is ascent-admissible in the exact sense of the solvable theorem: 
 intermediate input remains in the selected local and trace-comparable range, while an allowed
 two-character isobaric output is transported through later steps by character pullback. The
 solvable base-change theorem then applies. Its endpoint is independent of the chosen
-*admissible* subnormal series and has, at every place, the restricted local parameter of
+_admissible_ subnormal series and has, at every place, the restricted local parameter of
 $\pi_H$.
 
 This is the exact group-theoretic repair required by Mackey theory. The false obstruction was
@@ -1234,9 +1234,8 @@ The $S_3$ relation (2.6) is a compact diagnostic. Let $K_2$ and $K_3$ be the fix
 a transposition subgroup and the alternating subgroup. For rank-$d$ source representations
 $V_2$ and $V_3$, the formal expression is
 
-$$
-\operatorname{Ind}_{G_{K_2}}^{G_F}V_2
--
+## $$\operatorname{Ind}_{G_{K_2}}^{G_F}V_2
+
 \operatorname{Ind}_{G_{K_3}}^{G_F}(V_3\otimes\omega).
 \tag{6.8a}
 $$
@@ -1339,9 +1338,8 @@ eigenvalues of $V_{H_i,\tau}\otimes\theta_{i,\tau}$ at $w$.
 On the coset block belonging to $w$, $\operatorname{Frob}_v$ acts in a cycle of length
 $f_w$, and its $f_w$-th power acts internally as $\operatorname{Frob}_w$. Hence
 
-$$
-\det(1-\operatorname{Frob}_vT\mid A_{i,\tau})
-=
+# $$\det(1-\operatorname{Frob}_vT\mid A_{i,\tau})
+
 \prod_{w\mid v}\prod_{j=1}^d
 (1-\alpha_{i,w,j}T^{f_w}).
 \tag{6.14}
@@ -1444,10 +1442,8 @@ $$
 
 Then
 
-$$
-\langle\mathcal R_{\mathfrak B,\tau},
-\mathcal R_{\mathfrak B,\tau}\rangle
-=
+# $$\langle\mathcal R_{\mathfrak B,\tau},\mathcal R_{\mathfrak B,\tau}\rangle
+
 \sum_{i,j}n_in_jG_\tau(i,j).
 \tag{7.5}
 $$
@@ -1478,9 +1474,8 @@ $$
 Suppose the overlap hypothesis identifies both untwisted restrictions with one irreducible
 $V_{D_x,\tau}$. Put
 
-$$
-\delta_{ij,x}
-=
+# $$\delta_{ij,x}
+
 ({}^x\theta_j)|_{D_x}\,
 (\theta_i|_{D_x})^{-1}.
 \tag{7.8}
@@ -1744,9 +1739,8 @@ $$
 
 Artin formalism gives the partial standard $L$-function identity
 
-$$
-L_F^S(A_{i,\tau},s)
-=
+# $$L_F^S(A_{i,\tau},s)
+
 L_{F_i}^{S_{F_i}}(\pi_{H_i}\otimes\psi_i,s).
 \tag{8.2}
 $$
@@ -1774,9 +1768,8 @@ local data in a range not supplied by the character identity.
 
 Local Mackey theory is exact:
 
-$$
-\mathcal R_{\mathfrak B,\tau}|_{G_{F_v}}
-=
+# $$\mathcal R_{\mathfrak B,\tau}|_{G_{F_v}}
+
 \sum_i n_i\sum_{w\mid v}
 \left[
 \operatorname{Ind}_{G_{(F_i)_w}}^{G_{F_v}}
@@ -1892,7 +1885,7 @@ The direct mathematical prerequisites of this general volume are narrow.
   monodromy operator in the local discussion.
 - Finite-order Hecke characters and global reciprocity supply the avatars of the Brauer
   characters.
-- Solvable base change and descent supply the automorphic operation along an *admissible*
+- Solvable base change and descent supply the automorphic operation along an _admissible_
   prime-cyclic tower, including its twisting ambiguity and local-parameter compatibility.
 - The weight-two packet-system theorem supplies, when an application lies in its proved range,
   coefficient-indexed Galois realizations with algebraic good data. It does not supply an

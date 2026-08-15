@@ -1615,19 +1615,19 @@ The bottom arrow is an anti-equivalence. The top arrow is fully faithful under $
 
 The final statements are sharp only when their settings remain visible. The following ledger separates hypotheses belonging to the characteristic-$p$ classification, the abelian comparison, and the mixed-characteristic rigidity theorem.
 
-| Assertion | Necessary setting in this book | What fails without it |
-|---|---|---|
-| $V$ is $\sigma^{-1}$-semilinear | perfect residue field | Witt Frobenius need not be invertible |
-| finite Dieudonné anti-equivalence | finite commutative $p$-groups over a perfect field | inseparable twists require a refined theory |
-| $F$-nilpotent means connected | perfect base field | reduced need not mean geometrically reduced |
-| module quotient $M/p^n$ is a finite level | a supplied compatible divisible system, or a finite free Dieudonné lift | an arbitrary finite group need not embed in such a system canonically |
-| BT$_1$ criterion (6.3) | level one of a compatible divisible system | $\alpha_p$ is killed by $p$ but fails the criterion |
-| abelian torsion comparison | abelian scheme or abelian variety, crystalline PD base, perfect field for one Witt module | a general finite group has no ambient $H^1$ |
-| perfect polarization form | principal polarization | a nonprincipal form can have finite cokernel |
-| Hodge subspace equals $\operatorname{im}V$ | contravariant convention used here | covariance exchanges the displayed roles |
-| first-denominator estimate | mixed characteristic, commutativity, $p$-power order | equal-characteristic additive lattices move freely |
-| Raynaud full faithfulness | $e<p-1$ and perfect residue field | boundary Oort--Tate models give counterexamples |
-| descent from generic comparisons | models already exist and low-ramification fullness applies after the chosen base change | existence of a generic group does not create an integral model |
+| Assertion                                  | Necessary setting in this book                                                            | What fails without it                                                 |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| $V$ is $\sigma^{-1}$-semilinear            | perfect residue field                                                                     | Witt Frobenius need not be invertible                                 |
+| finite Dieudonné anti-equivalence          | finite commutative $p$-groups over a perfect field                                        | inseparable twists require a refined theory                           |
+| $F$-nilpotent means connected              | perfect base field                                                                        | reduced need not mean geometrically reduced                           |
+| module quotient $M/p^n$ is a finite level  | a supplied compatible divisible system, or a finite free Dieudonné lift                   | an arbitrary finite group need not embed in such a system canonically |
+| BT$_1$ criterion (6.3)                     | level one of a compatible divisible system                                                | $\alpha_p$ is killed by $p$ but fails the criterion                   |
+| abelian torsion comparison                 | abelian scheme or abelian variety, crystalline PD base, perfect field for one Witt module | a general finite group has no ambient $H^1$                           |
+| perfect polarization form                  | principal polarization                                                                    | a nonprincipal form can have finite cokernel                          |
+| Hodge subspace equals $\operatorname{im}V$ | contravariant convention used here                                                        | covariance exchanges the displayed roles                              |
+| first-denominator estimate                 | mixed characteristic, commutativity, $p$-power order                                      | equal-characteristic additive lattices move freely                    |
+| Raynaud full faithfulness                  | $e<p-1$ and perfect residue field                                                         | boundary Oort--Tate models give counterexamples                       |
+| descent from generic comparisons           | models already exist and low-ramification fullness applies after the chosen base change   | existence of a generic group does not create an integral model        |
 
 Two logical boundaries deserve emphasis. Full faithfulness is not essential surjectivity: it gives uniqueness of a model and of maps once models exist, not existence for every Galois representation. Dieudonné classification is a special-fiber classification: it does not recover an arbitrary mixed-characteristic Hopf lattice from its reduction.
 

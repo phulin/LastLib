@@ -481,11 +481,11 @@ If $R_{\mathrm{loc}}$ is regular, so is $P_\infty$. If $R_{\mathrm{loc}}$ is Coh
 
 The rank-two auxiliary local contribution used in this Taylor--Wiles system is as follows.
 
-| coordinate type | unframed auxiliary place | framed auxiliary place |
-|---|---:|---:|
-| finite diamond direction | $1$ | $1$ |
-| smooth eigenvalue coordinate | $1$ | $1$ |
-| smooth eigenline-position coordinates | $0$ | $2$ |
+| coordinate type                       | unframed auxiliary place | framed auxiliary place |
+| ------------------------------------- | -----------------------: | ---------------------: |
+| finite diamond direction              |                      $1$ |                    $1$ |
+| smooth eigenvalue coordinate          |                      $1$ |                    $1$ |
+| smooth eigenline-position coordinates |                      $0$ |                    $2$ |
 
 Thus $q$ auxiliary places contribute $q$ variables to $S_\infty$, together with $q$ or $3q$ smooth coordinates outside the diamond algebra according to the local convention. A partial framing at a fixed old-place set $T$ contributes
 
@@ -2301,9 +2301,10 @@ $$
 The first $d$ named operators and their adjoints were retained at precision $d$. Passing to the limit gives an isomorphism between acting algebras
 
 $$
-* : A_\infty\xrightarrow{\sim}A_\infty'
-\tag{12.10}
-$$
+
+- : A_\infty\xrightarrow{\sim}A_\infty'
+  \tag{12.10}
+  $$
 
 and
 
@@ -2548,15 +2549,15 @@ Relative to the specified transitions, the resulting inverse limit is canonical.
 
 Both constructions yield the same kind of algebraic interface:
 
-| property | diagonal construction | genuine-transition construction |
-|---|---|---|
-| source $S_\infty$ | fixed completed group algebra | inverse limit of nested group algebras |
-| patched ring | limit of stabilized presentation shadows | limit of actual ring maps |
-| patched module | limit of stabilized free shadows | limit of actual module maps |
-| arithmetic maps between original levels | absent | supplied as data |
-| freeness mechanism | Lemma 6.1 | Lemma 6.1 |
-| augmentation mechanism | finite exact shadows and Mittag--Leffler | finite exact levels and Mittag--Leffler |
-| canonicity | relative to a coherent diagonal path | relative to the stated transitions |
+| property                                | diagonal construction                    | genuine-transition construction         |
+| --------------------------------------- | ---------------------------------------- | --------------------------------------- |
+| source $S_\infty$                       | fixed completed group algebra            | inverse limit of nested group algebras  |
+| patched ring                            | limit of stabilized presentation shadows | limit of actual ring maps               |
+| patched module                          | limit of stabilized free shadows         | limit of actual module maps             |
+| arithmetic maps between original levels | absent                                   | supplied as data                        |
+| freeness mechanism                      | Lemma 6.1                                | Lemma 6.1                               |
+| augmentation mechanism                  | finite exact shadows and Mittag--Leffler | finite exact levels and Mittag--Leffler |
+| canonicity                              | relative to a coherent diagonal path     | relative to the stated transitions      |
 
 After construction, the later commutative algebra uses only the maps
 
@@ -2682,33 +2683,33 @@ not equality. Complete-intersection conclusions require the further height equal
 
 Before using a patched pair, every row of the following ledger should have a definite answer.
 
-| item | required verification | error prevented |
-|---|---|---|
-| coefficient ring | complete DVR, finite residue field, fixed uniformizer | nonfinite shadow sets and ambiguous torsion |
-| diamond groups | exact-level order and chosen generators | wrong ranks and coordinate maps |
-| level ideals | $\mathfrak c_N$ tends to zero in the chosen topology | finite equations surviving incorrectly |
-| common source | one fixed $P_\infty$ and one local-base convention | double-counted variables |
-| relations | effective uniform bound and marked tuples | fictitious limiting equations |
-| module size | fixed free rank or bounded balanced presentation | loss of compactness |
-| arithmetic levels | no transition claimed without a construction | false ramification transfer |
-| finite shadows | all objects and targets genuinely finite | invalid pigeonhole argument |
-| reduction maps | marked and compatible | nonexistence of an inverse system |
-| inverse limits | surjectivity or Mittag--Leffler where exactness is used | lost quotient elements |
-| topology | cofinal ideals and closed finite submodules | nonseparated limits |
-| actions | $S_\infty$, $R_\infty$, and Hecke actions commute | ill-defined scalar limit |
-| action algebra | defined as a faithful image | confused annihilator |
-| augmentation | exact kernels retained at finite precision | only a surjection instead of recovery |
-| Hecke base change | saturation checked | invisible algebra classes after quotient |
-| $S_\infty$-freeness | compatible free bases or an equivalent projectivity proof | rank-counting fallacy |
-| balanced upgrade | derived Tor vanishing and torsion-free quotient, or complex concentration | unjustified freeness |
-| dimensions | all frame and coefficient directions counted once | false numerical equality |
-| depth | the acting ring named and finite-map hypotheses checked | transferring depth without cause |
-| projective dimension | finite when target-ring freeness is claimed | false freeness over a singular ring |
-| support | component coverage proved | dimension mistaken for full support |
-| annihilator | reducedness, associated-prime faithfulness, saturation, or direct vanishing proved | near faithfulness mistaken for faithfulness |
-| pairings | correct quotient, involution, companion, and torsion hypotheses | false self-duality |
-| frame descent | module is a genuine scalar extension | zero variables called regular |
-| uniqueness | pro-isomorphism or genuine transitions supplied | a chosen limit called canonical |
+| item                 | required verification                                                              | error prevented                             |
+| -------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------- |
+| coefficient ring     | complete DVR, finite residue field, fixed uniformizer                              | nonfinite shadow sets and ambiguous torsion |
+| diamond groups       | exact-level order and chosen generators                                            | wrong ranks and coordinate maps             |
+| level ideals         | $\mathfrak c_N$ tends to zero in the chosen topology                               | finite equations surviving incorrectly      |
+| common source        | one fixed $P_\infty$ and one local-base convention                                 | double-counted variables                    |
+| relations            | effective uniform bound and marked tuples                                          | fictitious limiting equations               |
+| module size          | fixed free rank or bounded balanced presentation                                   | loss of compactness                         |
+| arithmetic levels    | no transition claimed without a construction                                       | false ramification transfer                 |
+| finite shadows       | all objects and targets genuinely finite                                           | invalid pigeonhole argument                 |
+| reduction maps       | marked and compatible                                                              | nonexistence of an inverse system           |
+| inverse limits       | surjectivity or Mittag--Leffler where exactness is used                            | lost quotient elements                      |
+| topology             | cofinal ideals and closed finite submodules                                        | nonseparated limits                         |
+| actions              | $S_\infty$, $R_\infty$, and Hecke actions commute                                  | ill-defined scalar limit                    |
+| action algebra       | defined as a faithful image                                                        | confused annihilator                        |
+| augmentation         | exact kernels retained at finite precision                                         | only a surjection instead of recovery       |
+| Hecke base change    | saturation checked                                                                 | invisible algebra classes after quotient    |
+| $S_\infty$-freeness  | compatible free bases or an equivalent projectivity proof                          | rank-counting fallacy                       |
+| balanced upgrade     | derived Tor vanishing and torsion-free quotient, or complex concentration          | unjustified freeness                        |
+| dimensions           | all frame and coefficient directions counted once                                  | false numerical equality                    |
+| depth                | the acting ring named and finite-map hypotheses checked                            | transferring depth without cause            |
+| projective dimension | finite when target-ring freeness is claimed                                        | false freeness over a singular ring         |
+| support              | component coverage proved                                                          | dimension mistaken for full support         |
+| annihilator          | reducedness, associated-prime faithfulness, saturation, or direct vanishing proved | near faithfulness mistaken for faithfulness |
+| pairings             | correct quotient, involution, companion, and torsion hypotheses                    | false self-duality                          |
+| frame descent        | module is a genuine scalar extension                                               | zero variables called regular               |
+| uniqueness           | pro-isomorphism or genuine transitions supplied                                    | a chosen limit called canonical             |
 
 Passing this ledger is not an embellishment of the construction. Each row is used in a displayed theorem above, and failure of any one row changes the conclusion that can be exported.
 

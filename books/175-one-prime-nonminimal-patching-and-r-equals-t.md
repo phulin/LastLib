@@ -267,7 +267,7 @@ It is not an exceptional case that can be removed while retaining the same famil
 
 ### 2.3 Automorphic and patching hypotheses
 
-The words *clean*, *supported*, and *faithful* are conclusions or separately checkable
+The words _clean_, _supported_, and _faithful_ are conclusions or separately checkable
 hypotheses in the preceding books; they are not abbreviations for residual automorphy. We use
 the following named ledger.
 
@@ -305,7 +305,7 @@ them.
 
 **$({\rm TYPE}_v)$ (the typed complex).** Use the typed parahoric theorem
 $({\rm TPE}_v)$ proved in Book 174 from Book 122's actual-row calculation and strict ray
-choice.  The accompanying $({\rm TIC}_v)$ hypothesis and the independent hypothesis
+choice. The accompanying $({\rm TIC}_v)$ hypothesis and the independent hypothesis
 $({\rm TIH}_{\mathscr F})$ hold on every retained finite shadow. The theorem and the first
 hypothesis supply the
 actual typed incidence diagram, exact flag resolutions and component routing, and the declared
@@ -363,9 +363,9 @@ silently.
 
 **$({\rm RAY}_v)$ (strict scalar twisting).** Use the quotient
 $\Delta_v=C_{\ell^{\operatorname{ord}_\ell(q_v-1)}}$ constructed in Book 174,
-(2.2a)--(2.2d), by its odd-exponent local--global construction.  Its conductor places are
+(2.2a)--(2.2d), by its odd-exponent local--global construction. Its conductor places are
 included in the fixed spectator datum and the local field is
-$F_v(\pi_v^{1/|\Delta_v|})$ with vertical unit $1$.  Book 174's twisting identities then hold
+$F_v(\pi_v^{1/|\Delta_v|})$ with vertical unit $1$. Book 174's twisting identities then hold
 for represented deformation rings, strict complexes, new modules, pairings, and faithful
 acting images. This is what proves fixed-prime augmentation. A merely local tame character or
 an unspecified cyclic quotient does not suffice.
@@ -809,7 +809,7 @@ $A[1/\varpi]$ is reduced, then $A$ is reduced.
 **Proof.** If $a^n=0$, then $a/1$ is nilpotent and hence zero in $A[1/\varpi]$. Thus
 $\varpi^m a=0$ for some $m$. Torsion-freeness gives $a=0$. $\square$
 
-The target's reducedness is not a consequence of the word *faithful*. In this application it
+The target's reducedness is not a consequence of the word _faithful_. In this application it
 follows from the separate semisimplicity clause in $({\rm REC}_v)$. Indeed, the acting order
 is an actual submodule of the endomorphisms of a finite free $\mathcal O$-module, so it is
 $\mathcal O$-torsion-free. After inverting $\varpi$, simultaneous packet decomposition embeds
@@ -946,7 +946,7 @@ ring used as a boundary anchor in Book 174.
 
 ### 4.5 Generic rigidity: flatness and the exact remaining theorem
 
-The phrase *global reducedness* can be replaced by a precise arithmetic statement. Put
+The phrase _global reducedness_ can be replaced by a precise arithmetic statement. Put
 
 $$
 R=R^{\mathrm{sp},1},
@@ -970,12 +970,12 @@ $$
 proves the assertion. Thus $R_E=R[1/\varpi]$ is an Artinian $E$-algebra.
 
 The coefficient-torsion part of generic rigidity is already forced by this finiteness and the
-balanced enhanced obstruction calculation.  We first isolate the commutative algebra.  This is
+balanced enhanced obstruction calculation. We first isolate the commutative algebra. This is
 the finite-flat endpoint of the balanced Böckle-presentation argument; it is included here
 because it is sensitive to the coefficient parameter and does not use $R=T$.
 
 **Lemma 4.3a (a finite balanced presentation is coefficient-flat).** Let $A$ be a nonzero
-complete noetherian local $\mathcal O$-algebra with residue field finite over $k$.  Suppose
+complete noetherian local $\mathcal O$-algebra with residue field finite over $k$. Suppose
 $A$ is finite over $\mathcal O$ and has a presentation
 
 $$
@@ -995,19 +995,19 @@ $$
 is regular in $\mathcal O[[X_1,\ldots,X_h]]$, and $A$ is finite free over $\mathcal O$.
 
 **Proof.** Put $P=\mathcal O[[X_1,\ldots,X_h]]$ and
-$J=(f_1,\ldots,f_r,\varpi)$.  Since $A/\varpi A$ is a nonzero finite local algebra over the
-residue field, $J$ is $\mathfrak m_P$-primary.  Hence
+$J=(f_1,\ldots,f_r,\varpi)$. Since $A/\varpi A$ is a nonzero finite local algebra over the
+residue field, $J$ is $\mathfrak m_P$-primary. Hence
 
 $$
 h+1=\operatorname{ht}(\mathfrak m_P)
 \leq r+1
 $$
 
-by the generalized principal ideal theorem.  Thus $h\leq r$, and the assumed opposite
-inequality gives $r=h$.  The regular local ring $P$ is Cohen--Macaulay, so the
+by the generalized principal ideal theorem. Thus $h\leq r$, and the assumed opposite
+inequality gives $r=h$. The regular local ring $P$ is Cohen--Macaulay, so the
 $\mathfrak m_P$-primary list (4.7b), whose length is $\dim P=h+1$, is a system of parameters
-and hence a regular sequence.  In particular $\varpi$ is a nonzerodivisor on
-$P/(f_1,\ldots,f_h)=A$.  A finite torsion-free module over a DVR is free. $\square$
+and hence a regular sequence. In particular $\varpi$ is a nonzerodivisor on
+$P/(f_1,\ldots,f_h)=A$. A finite torsion-free module over a DVR is free. $\square$
 
 We now verify that the presentation hypothesis is the one belonging to the represented
 line-special problem, rather than to a coarse condition that forgets the flag.
@@ -1020,17 +1020,17 @@ R^{\mathrm{sp},1}\longrightarrow R^{\mathrm{sp},1}[1/\varpi]
 \tag{4.7c}
 $$
 
-is injective.  More precisely, $R^{\mathrm{sp},1}$ is a finite free relative complete
+is injective. More precisely, $R^{\mathrm{sp},1}$ is a finite free relative complete
 intersection over $\mathcal O$.
 
 **Proof.** The clean lower problem used in $({\rm SUP}_v)$ has the effective local condition
-complexes and balanced global obstruction calculation of Books 69 and 171--172.  Replacing its
+complexes and balanced global obstruction calculation of Books 69 and 171--172. Replacing its
 condition at $v$ by the represented scalar line-special condition does not change the virtual
 local defect, but this must be checked on the enhanced complex.
 
 Use the scalar chart of Book 174, equations (7.6)--(7.8), and fix the two line characters and
-the determinant branch.  The latter determines the common unramified scalar $a$, because
-$2a$ is a unit.  In the fixed ambient frame every enhanced special lift is then described by
+the determinant branch. The latter determines the common unramified scalar $a$, because
+$2a$ is a unit. In the fixed ambient frame every enhanced special lift is then described by
 three freely liftable parameters
 
 $$
@@ -1058,10 +1058,10 @@ Here $F=\rho(\phi_v)$ is arithmetic Frobenius, as in Book 174's local chart; the
 geometric-Frobenius convention (2.5) is obtained by inversion.
 
 These formulas satisfy the tame relation identically, and conversely an adapted generator of
-the retained line puts every lift uniquely in this form.  Thus this framed enhanced local
-condition is formally smooth of relative dimension three.  It also supplies the complete
+the retained line puts every lift uniquely in this form. Thus this framed enhanced local
+condition is formally smooth of relative dimension three. It also supplies the complete
 small-extension lifting and difference-torsor data required in Book 69: lift $b,m,z$
-arbitrarily, and compare two lifts coordinatewise.  No tangent-subspace shortcut is being used.
+arbitrarily, and compare two lifts coordinatewise. No tangent-subspace shortcut is being used.
 The reductions of $b$ and $m$ are exactly the exceptional unramified and tame Kummer
 directions mentioned in Book 174, (7.10); neither has been deleted. In that residual tangent
 calculation the displayed relation $(1-q_v)x=0$ is zero in $k$ because
@@ -1071,12 +1071,12 @@ every $m$. Integrally, an upper strict change of adapted vector changes $b$ by a
 $q_v-1$, but this is a gauge action on the smooth framed chart, not an additional local
 equation.
 
-At the scalar residual point, trace-zero infinitesimal conjugation has dimension three.  Its
+At the scalar residual point, trace-zero infinitesimal conjugation has dimension three. Its
 map to the three coordinates in (4.7d) has rank one: the lower-left entry moves $z$, while a
 commutator with the scalar residual representation is zero. In particular, the integral
 $(q_v-1)$-multiple just noted has zero residual derivative and is correctly retained in this
 complex. Its kernel is the two-dimensional
-trace-zero parabolic preserving the residual line.  Consequently the enhanced local condition
+trace-zero parabolic preserving the residual line. Consequently the enhanced local condition
 complex has
 
 $$
@@ -1089,7 +1089,7 @@ $$
 $$
 
 The pure residual flag direction is present before quotienting, but it is accompanied by the
-corresponding change in the infinitesimal automorphism term.  Deleting the flag would therefore
+corresponding change in the infinitesimal automorphism term. Deleting the flag would therefore
 give the wrong complex even though the virtual number in (4.7f) happens to be zero. Equivalently,
 in Book 69's partially framed convention the contribution is computed before local quotienting:
 
@@ -1151,8 +1151,8 @@ $$
 This is the enhanced problem: the local term used to obtain (4.7g) is (4.7f), not an ordinary
 subspace of $H^1(F_v,\operatorname{ad}^0\bar\rho)$.
 
-The paragraph preceding Lemma 4.3a proved that $R$ is finite over $\mathcal O$.  Apply that
-lemma to (4.7g).  It makes $\varpi$ a nonzerodivisor and proves the asserted finite freeness and
+The paragraph preceding Lemma 4.3a proved that $R$ is finite over $\mathcal O$. Apply that
+lemma to (4.7g). It makes $\varpi$ a nonzerodivisor and proves the asserted finite freeness and
 complete-intersection statement. $\square$
 
 Let $x$ be any maximal point of $R_E$, with residue field $E_x$, and let $\rho_x$ and
@@ -1296,7 +1296,7 @@ point. Equation (4.8) gives $({\rm ASV}_v)$, completing the cycle of implication
 scalar-family assertion is Corollary 4.3. $\square$
 
 There is an equivalent integral formulation that identifies the precise output required from
-any automorphic adjoint-Selmer or cross-determinant theorem.  For a maximal point $x$, enlarge
+any automorphic adjoint-Selmer or cross-determinant theorem. For a maximal point $x$, enlarge
 coefficients so that its field $E_x$ has valuation ring $\mathcal O_x$ and let
 
 $$
@@ -1304,7 +1304,7 @@ $$
 \longrightarrow\mathcal O_x
 $$
 
-be the integral branch map.  Put $\mathfrak p_x=\ker\lambda_x$ and
+be the integral branch map. Put $\mathfrak p_x=\ker\lambda_x$ and
 
 $$
 \Phi_x^{\rm Gal}=\mathfrak p_x/\mathfrak p_x^2.
@@ -1334,7 +1334,7 @@ $$
 $$
 
 Equations (4.8) and (4.9b) identify the dual of this generic fiber with the enhanced
-tangent--Selmer group.  Thus it vanishes exactly when $\Phi_x^{\rm Gal}$ is torsion.  For a
+tangent--Selmer group. Thus it vanishes exactly when $\Phi_x^{\rm Gal}$ is torsion. For a
 finite module over a DVR, torsion is equivalent to a nonzero zeroth Fitting ideal. $\square$
 
 Theorem 4.4 and Proposition 4.3b identify the exact additional theorem required before the
@@ -1413,7 +1413,7 @@ scalar family, $({\rm RAY}_v)$ hypotheses. Fixed-prime acting-order augmentation
 by the global twist, and minimal acting-order augmentation is derived after patched
 faithfulness in Book 172.
 
-There is one different use of the phrase *faithful-order equality*. Equality between the
+There is one different use of the phrase _faithful-order equality_. Equality between the
 curve-new and switched definite image orders is already the conditional conclusion of Book
 140, Theorem 8.1, after its localized abelian Ihara, node-uniformization, and Book 125 routing
 inputs are supplied in the constant block. For the typed block, Book 174, Proposition 6.3
@@ -1545,7 +1545,7 @@ $$
 The patched ring is regular and finite free over its diamond source, the patched primary
 module is nonzero finite free over it, and
 the finite conductor-one ring is a finite free complete intersection over $\mathcal O$.
-Consequently $({\rm ASV}_v)$ and $({\rm GR}_v)$ hold.  If $({\rm RAY}_v)$ also holds, the
+Consequently $({\rm ASV}_v)$ and $({\rm GR}_v)$ hold. If $({\rm RAY}_v)$ also holds, the
 same full equalities hold for the patched and finite scalar family and every retained
 fixed-character fiber, and every characteristic-zero enhanced fixed-condition tangent space
 on those fibers vanishes.
@@ -1579,8 +1579,8 @@ P=\mathcal O[[X_1,\ldots,X_q]]
 \tag{5.6c}
 $$
 
-at every retained depth.  As in Book 172, patch the complete quotient ideals rather than an
-unjustified fixed list of equations.  This gives
+at every retained depth. As in Book 172, patch the complete quotient ideals rather than an
+unjustified fixed list of equations. This gives
 
 $$
 R_\infty^{\mathrm{sp},1}=P/I_\infty.
@@ -1620,8 +1620,8 @@ P\longrightarrow R_\infty^{\mathrm{sp},1}
 \tag{5.6g}
 $$
 
-It is finite over $S_\infty$.  Auxiliary local--global compatibility identifies the composite
-$S_\infty\to P\to A_\infty$ with scalar multiplication on (5.6f), so it is injective.  Hence
+It is finite over $S_\infty$. Auxiliary local--global compatibility identifies the composite
+$S_\infty\to P\to A_\infty$ with scalar multiplication on (5.6f), so it is injective. Hence
 
 $$
 \dim A_\infty=\dim S_\infty=q+1=\dim P.
@@ -1630,7 +1630,7 @@ $$
 
 The ring $P$ is a noetherian local domain. Any nonzero kernel of
 $P\twoheadrightarrow A_\infty$ would have positive height and make the quotient have dimension at most $q$,
-contradicting (5.6h).  Therefore
+contradicting (5.6h). Therefore
 
 $$
 P\xrightarrow{\sim}A_\infty,
@@ -2043,19 +2043,19 @@ contracting a conductor ideal.
 The declared dependency row is
 $67,69,109,138,139,140,143,170,171,172,173,174$. Their exact roles are as follows.
 
-| Book | Result used | Boundary retained |
-|---|---|---|
-| 67, *Local Deformation Conditions Away from $\ell$* | the enhanced-line tangent term and the linearized special equations used in (4.7d)--(4.7f) and (4.8b) | the flag cannot be replaced residually by an ordinary local $H^1$ subspace; it becomes determined by Frobenius only after inverting $\varpi$ |
-| 69, *Global Deformation Problems* | the global mapping-fiber obstruction presentation, cocycle--coboundary tangent assembly, and general relative formal-smoothness criterion | the enhanced local complex must be inserted with both its degree-zero automorphisms and degree-one tangent; the criterion does not prove vanishing of the relative obstruction map in (2.12) or any characteristic-zero tangent group |
-| 109, *Solvable Base Change and Descent* | recursive cyclic descent selected by an extending irreducible arithmetic representation | used only after top-field automorphy; invariance under a noncyclic solvable group is not enough |
-| 173, *Minimal Modularity Lifting* | comparison point for the neutral minimal theorem and its finite-flat range | its equality is not applied to $R^{\mathrm{sp},1}$; the scalar Kummer and line-special directions do not satisfy that identification |
-| 138, *Integral Local Types and Type Lattices* | enhanced special line, primary and companion lattices, primitive type occurrence, Frobenius conventions | at $q_v\equiv1$ a line enhancement replaces old-root separation; local lattices alone do not prove global support |
-| 139, *Ihara Theory and Saturated Degeneracy Maps on Shimura Curves* | residual two-map Ihara injectivity and primitive saturation | conditional on the abelian Ihara hypothesis; full-map saturation does not create a scalar selected summand |
-| 140, *Integral Level Change and Jacquet--Langlands Comparison* | node, graph, component-group, normalized Smith comparisons, and constant-coefficient generic support in the clean special block | datum-specific node uniformization remains separate; the actual-row typed extension is supplied by Books 122 and 174 rather than Book 140; branch correction and the Néron component group are distinct; typed generic support is derived in Book 174 after its typed filtration |
-| 143, *Taylor--Wiles Primes* | the split-detector and prime-selection mechanism, the sharp auxiliary tangent count, and represented-ring augmentation | applicability to the recomputed enhanced dual group and the resulting exactly $q$ ordered killing primes are retained explicitly in the unpadded $({\rm AUX}_Q)$ hypothesis; prime selection alone supplies no automorphic module |
-| 170, *Hecke-Valued Galois Representations and Nonminimal Reciprocity* | the order-valued representation, named local factorization, trace generation, and the surjections (3.13) | every generic branch and every structural generator must be accounted for; a pseudorepresentation alone is insufficient |
-| 171--172, *Minimal Deformation--Hecke Problem* and *Minimal Patching* | the unchanged clean local balance ledger, marked finite-shadow quotient patching, and equal-variable rigidity over the regular absolute and diamond sources | the minimal $R=T$ equality is not applied to the conductor-one ring; the enhanced local defect and the nonminimal module are recomputed here and in Book 174 |
-| 174, *One-Prime Type Complexes and Component Support* | proved actual-row typed parahoric extension, scalar chart, twist identities, projective primary--companion complexes, conditional full named-component support, Proposition 6.3 typed generic-kernel and integral faithful-order equality, exact fixed-prime augmentation, and Proposition 9.1 auxiliary augmentation on both adjoint sides | $({\rm TIC}_v)$, type-Ihara, primitive-residue, switched node uniformization, Book 125 routing, and $({\rm BCD}_v)$ retain their stated roles; auxiliary acting-image augmentation is only a surjection there and becomes injective here only after base faithfulness; no global reducedness or nonminimal $R=T$ is asserted |
+| Book                                                                  | Result used                                                                                                                                                                                                                                                                                                                                 | Boundary retained                                                                                                                                                                                                                                                                                                            |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 67, _Local Deformation Conditions Away from $\ell$_                   | the enhanced-line tangent term and the linearized special equations used in (4.7d)--(4.7f) and (4.8b)                                                                                                                                                                                                                                       | the flag cannot be replaced residually by an ordinary local $H^1$ subspace; it becomes determined by Frobenius only after inverting $\varpi$                                                                                                                                                                                 |
+| 69, _Global Deformation Problems_                                     | the global mapping-fiber obstruction presentation, cocycle--coboundary tangent assembly, and general relative formal-smoothness criterion                                                                                                                                                                                                   | the enhanced local complex must be inserted with both its degree-zero automorphisms and degree-one tangent; the criterion does not prove vanishing of the relative obstruction map in (2.12) or any characteristic-zero tangent group                                                                                        |
+| 109, _Solvable Base Change and Descent_                               | recursive cyclic descent selected by an extending irreducible arithmetic representation                                                                                                                                                                                                                                                     | used only after top-field automorphy; invariance under a noncyclic solvable group is not enough                                                                                                                                                                                                                              |
+| 173, _Minimal Modularity Lifting_                                     | comparison point for the neutral minimal theorem and its finite-flat range                                                                                                                                                                                                                                                                  | its equality is not applied to $R^{\mathrm{sp},1}$; the scalar Kummer and line-special directions do not satisfy that identification                                                                                                                                                                                         |
+| 138, _Integral Local Types and Type Lattices_                         | enhanced special line, primary and companion lattices, primitive type occurrence, Frobenius conventions                                                                                                                                                                                                                                     | at $q_v\equiv1$ a line enhancement replaces old-root separation; local lattices alone do not prove global support                                                                                                                                                                                                            |
+| 139, _Ihara Theory and Saturated Degeneracy Maps on Shimura Curves_   | residual two-map Ihara injectivity and primitive saturation                                                                                                                                                                                                                                                                                 | conditional on the abelian Ihara hypothesis; full-map saturation does not create a scalar selected summand                                                                                                                                                                                                                   |
+| 140, _Integral Level Change and Jacquet--Langlands Comparison_        | node, graph, component-group, normalized Smith comparisons, and constant-coefficient generic support in the clean special block                                                                                                                                                                                                             | datum-specific node uniformization remains separate; the actual-row typed extension is supplied by Books 122 and 174 rather than Book 140; branch correction and the Néron component group are distinct; typed generic support is derived in Book 174 after its typed filtration                                             |
+| 143, _Taylor--Wiles Primes_                                           | the split-detector and prime-selection mechanism, the sharp auxiliary tangent count, and represented-ring augmentation                                                                                                                                                                                                                      | applicability to the recomputed enhanced dual group and the resulting exactly $q$ ordered killing primes are retained explicitly in the unpadded $({\rm AUX}_Q)$ hypothesis; prime selection alone supplies no automorphic module                                                                                            |
+| 170, _Hecke-Valued Galois Representations and Nonminimal Reciprocity_ | the order-valued representation, named local factorization, trace generation, and the surjections (3.13)                                                                                                                                                                                                                                    | every generic branch and every structural generator must be accounted for; a pseudorepresentation alone is insufficient                                                                                                                                                                                                      |
+| 171--172, _Minimal Deformation--Hecke Problem_ and _Minimal Patching_ | the unchanged clean local balance ledger, marked finite-shadow quotient patching, and equal-variable rigidity over the regular absolute and diamond sources                                                                                                                                                                                 | the minimal $R=T$ equality is not applied to the conductor-one ring; the enhanced local defect and the nonminimal module are recomputed here and in Book 174                                                                                                                                                                 |
+| 174, _One-Prime Type Complexes and Component Support_                 | proved actual-row typed parahoric extension, scalar chart, twist identities, projective primary--companion complexes, conditional full named-component support, Proposition 6.3 typed generic-kernel and integral faithful-order equality, exact fixed-prime augmentation, and Proposition 9.1 auxiliary augmentation on both adjoint sides | $({\rm TIC}_v)$, type-Ihara, primitive-residue, switched node uniformization, Book 125 routing, and $({\rm BCD}_v)$ retain their stated roles; auxiliary acting-image augmentation is only a surjection there and becomes injective here only after base faithfulness; no global reducedness or nonminimal $R=T$ is asserted |
 
 The proof of Theorem 4.2 uses Books 170 and 174 directly, with Books 138--140 supplying the
 hypotheses built into Book 174. Books 67 and 69 enter both the balanced enhanced presentation

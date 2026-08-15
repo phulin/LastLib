@@ -134,9 +134,9 @@ All group schemes are commutative. A finite-flat group means finite locally free
 
 We use the following notation.
 
-* $\mathrm{FF}_W$ is the exact category of finite locally free commutative $p$-power-order group schemes over $W$. An exact sequence is exact as fppf sheaves, with a finite locally free kernel and faithfully flat quotient.
-* $\mathrm{MF}^{[0,1]}_{\mathrm{tor}}(W)$ is the exact category of admissible torsion divided filtered modules defined in Book 53.
-* $\mathrm{Rep}^{\mathrm{ff}}_{\mathbf Z_p}(G_{K_0})$ is the full subcategory of finite continuous $p$-primary representations admitting a finite-flat model over $W$.
+- $\mathrm{FF}_W$ is the exact category of finite locally free commutative $p$-power-order group schemes over $W$. An exact sequence is exact as fppf sheaves, with a finite locally free kernel and faithfully flat quotient.
+- $\mathrm{MF}^{[0,1]}_{\mathrm{tor}}(W)$ is the exact category of admissible torsion divided filtered modules defined in Book 53.
+- $\mathrm{Rep}^{\mathrm{ff}}_{\mathbf Z_p}(G_{K_0})$ is the full subcategory of finite continuous $p$-primary representations admitting a finite-flat model over $W$.
 
 The superscript “ff” is an existence condition, not a chosen model. Book 42 emphasized that distinction over a general DVR. Under (1.3), however, Raynaud rigidity makes a marked model unique up to unique isomorphism. Existence and choice still remain logically different, but the choice becomes contractible once it exists.
 
@@ -894,9 +894,8 @@ multiplicative, mixed, and local--local groups uniformly.
 $y\in\mathcal G^D(\overline K_0)$, compatibility of (6.2) with the
 crystalline Cartier pairing gives
 
-$$
-\log_{\mathrm{PD}}\langle x,y\rangle_{\mathrm{Cart}}
-=
+# $$\log_{\mathrm{PD}}\langle x,y\rangle_{\mathrm{Cart}}
+
 \bigl\langle\operatorname{per}_{\mathcal G}(x),
 \operatorname{per}_{\mathcal G^D}(y)\bigr\rangle_{\mathrm{FL}}
 =0.
@@ -1020,9 +1019,9 @@ $$
 
 The theorem yields three distinct uniqueness statements.
 
-* A divided filtered module determines a finite-flat group uniquely up to unique isomorphism.
-* A finite-flat group determines its divided filtered module uniquely and functorially.
-* A finite-flat generic representation over $K_0$ has a unique marked finite-flat model because $e<p-1$.
+- A divided filtered module determines a finite-flat group uniquely up to unique isomorphism.
+- A finite-flat group determines its divided filtered module uniquely and functorially.
+- A finite-flat generic representation over $K_0$ has a unique marked finite-flat model because $e<p-1$.
 
 The third statement uses Raynaud rigidity and is stronger than the first two categorical assertions. Over a ramified base at the boundary, an equivalence with a richer linear category might still classify models while a generic representation admits several of them.
 
@@ -1819,8 +1818,8 @@ idempotents decompose the special-fiber Dieudonné module into
 two-dimensional BT$_1$ factors of dimension one. Each factor has two
 geometric possibilities.
 
-* In the ordinary case it has an étale line and a multiplicative line. The filtered module may still be a nonsplit extension; ordinary does not mean that the mixed-characteristic group or its generic representation splits.
-* In the local--local case both Frobenius and Verschiebung are nilpotent on that plane. There is no étale or multiplicative direct factor, but the normal matrix (15.2) remains invertible and the generic representation still has two independent torsion directions.
+- In the ordinary case it has an étale line and a multiplicative line. The filtered module may still be a nonsplit extension; ordinary does not mean that the mixed-characteristic group or its generic representation splits.
+- In the local--local case both Frobenius and Verschiebung are nilpotent on that plane. There is no étale or multiplicative direct factor, but the normal matrix (15.2) remains invertible and the generic representation still has two independent torsion directions.
 
 These cases are stable under algebraic extension of the residue field.
 Different coefficient factors can have different types; the unqualified
@@ -1902,20 +1901,20 @@ Theorem 14.1 begins with a chosen stable lattice whose all reductions are finite
 
 ### 16.4 A hypothesis ledger
 
-| Assertion | Hypotheses used | Failure prevented |
-|---|---|---|
-| divided filtered category | $W=W(k)$, $k$ perfect | missing canonical semilinear Frobenius |
-| mixed weight $[0,1]$ | $p>2$ | loss of strict small-weight contraction |
-| group-crystal strong divisibility | actual finite-flat lift and Hodge step | arbitrary special-fiber filtration |
-| free solution representability | free reduction and invertible normal matrix | lost solutions in a coordinate chart |
-| general integral solution model | strict presentation, saturated closure, and $e<p-1$ rigidity | nonflat raw kernel or presentation dependence |
-| integral period comparison | all étale, multiplicative, and local--local factors | proof by endpoint factors only |
-| reconstruction from generic fiber | $e=1<p-1$ | multiple integral models |
-| unramified base change | Witt extension of perfect fields | changed ramification and divisibility |
-| naïve coefficient tensor formula | specified self-duality $B\simeq B^\vee$ | confusing extension with coextension |
-| nonflat coefficient quotient | admissible annihilator construction | Tor and failure of strictness |
-| lattice from finite levels | compatible exact transition maps | unrelated choices at each level |
-| height-two determinant | actual perfect pairing | unjustified exterior-power model |
+| Assertion                         | Hypotheses used                                              | Failure prevented                             |
+| --------------------------------- | ------------------------------------------------------------ | --------------------------------------------- |
+| divided filtered category         | $W=W(k)$, $k$ perfect                                        | missing canonical semilinear Frobenius        |
+| mixed weight $[0,1]$              | $p>2$                                                        | loss of strict small-weight contraction       |
+| group-crystal strong divisibility | actual finite-flat lift and Hodge step                       | arbitrary special-fiber filtration            |
+| free solution representability    | free reduction and invertible normal matrix                  | lost solutions in a coordinate chart          |
+| general integral solution model   | strict presentation, saturated closure, and $e<p-1$ rigidity | nonflat raw kernel or presentation dependence |
+| integral period comparison        | all étale, multiplicative, and local--local factors          | proof by endpoint factors only                |
+| reconstruction from generic fiber | $e=1<p-1$                                                    | multiple integral models                      |
+| unramified base change            | Witt extension of perfect fields                             | changed ramification and divisibility         |
+| naïve coefficient tensor formula  | specified self-duality $B\simeq B^\vee$                      | confusing extension with coextension          |
+| nonflat coefficient quotient      | admissible annihilator construction                          | Tor and failure of strictness                 |
+| lattice from finite levels        | compatible exact transition maps                             | unrelated choices at each level               |
+| height-two determinant            | actual perfect pairing                                       | unjustified exterior-power model              |
 
 ## 17. The integral classification package
 
@@ -1984,14 +1983,14 @@ All three integral languages are now interchangeable in the safe range. This fin
 
 The proof uses the direct prerequisites in the following exact forms.
 
-* Book 6 supplies the principal-unit reciprocity calculation used to
+- Book 6 supplies the principal-unit reciprocity calculation used to
   identify the rank-one Lubin--Tate factors in the height-two local test.
-* Book 34 supplies schematic Cartier duality, its exactness, the
+- Book 34 supplies schematic Cartier duality, its exactness, the
   perfect evaluation pairing, and the Tate-twisted formula on an étale
   generic fiber.
-* Book 42 supplies the finite étale--Galois correspondence, the definition of a marked finite-flat model, exactness of generic points, schematic closure of stable subgroups, represented finite-flat quotients, coefficient actions on models, and the warning that existence and uniqueness differ.
-* Book 50 supplies the modified first filtration, integral divided Frobenius, the weight-zero and weight-one fundamental exact sequences, divided-power logarithm and exponential, syntomic descent, coefficient-level exact sequences, and unramified pullback of period constructions.
-* Book 53 supplies the category of admissible torsion divided filtered modules, normal decompositions, the small-weight lifting lemma, exactness and full faithfulness of $T_{\mathrm{FL}}$, its length formula, duality, coefficients, and the comparison map under unramified ground-field extension.
+- Book 42 supplies the finite étale--Galois correspondence, the definition of a marked finite-flat model, exactness of generic points, schematic closure of stable subgroups, represented finite-flat quotients, coefficient actions on models, and the warning that existence and uniqueness differ.
+- Book 50 supplies the modified first filtration, integral divided Frobenius, the weight-zero and weight-one fundamental exact sequences, divided-power logarithm and exponential, syntomic descent, coefficient-level exact sequences, and unramified pullback of period constructions.
+- Book 53 supplies the category of admissible torsion divided filtered modules, normal decompositions, the small-weight lifting lemma, exactness and full faithfulness of $T_{\mathrm{FL}}$, its length formula, duality, coefficients, and the comparison map under unramified ground-field extension.
 
 A transitive source is also explicitly reused in Proposition 3.2 and therefore remains a
 direct graph edge. Book 52

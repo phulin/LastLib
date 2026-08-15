@@ -130,21 +130,21 @@ approximation alone do not imply (1.5).
 
 ### 1.3 What is and is not proved here
 
-This book proves the following one-place implications.  The labels
+This book proves the following one-place implications. The labels
 $({\rm TIC}_v)$, $({\rm TIH}_{\mathscr F})$, and $({\rm PRI}_{\rm type})$ name three
 different assertions: incidence descent, residual old-map injectivity, and filtered primitive
-residue.  Proposition 3.0B proves the first from the clean datum.  In the projector range,
-$({\rm AIH}_{\mathscr F})$ proves the other two.  In the nonbanal range it proves the
+residue. Proposition 3.0B proves the first from the clean datum. In the projector range,
+$({\rm AIH}_{\mathscr F})$ proves the other two. In the nonbanal range it proves the
 augmentation-companion part of type-Ihara and reduces the quotient-primary part and primitive
-residue to the exact maps (5.0d) and (6.0d); those two assertions remain inputs.  The
+residue to the exact maps (5.0d) and (6.0d); those two assertions remain inputs. The
 hypotheses $({\rm NU}_{\rm type})$ and $({\rm SUP}_v)$ remain separate: the first governs
 only the graph--definite comparison and the second governs component support.
 
 1. Book 122, Corollary 9.11 supplies the principal complete-local stabilizer calculation and
-   the theorem $({\rm TPE}_v)$ below.  Proposition 3.0B proves the required coarse descent
+   the theorem $({\rm TPE}_v)$ below. Proposition 3.0B proves the required coarse descent
    from the actual geometric stabilizers; the possibly nonunit order of the flag group is
-   irrelevant.  Proposition 5.0A identifies the remaining nonbanal quotient-new injection
-   (5.0d) with an arithmetic Bockstein and integral primitivity assertion.  The fixed/moving
+   irrelevant. Proposition 5.0A identifies the remaining nonbanal quotient-new injection
+   (5.0d) with an arithmetic Bockstein and integral primitivity assertion. The fixed/moving
    Bruhat calculation supplies the relevant local functionals but does not prove their
    required statement on the global localized new cokernels.
 2. The primary map is a split injection over the complete local coefficient algebra, so its
@@ -152,8 +152,8 @@ only the graph--definite comparison and the second governs component support.
    Tor.
 3. The primary and companion complexes are perfect adjoint duals.
 4. Proposition 6.0 proves the primitive extreme-residue statement in the projector range.
-   In the nonbanal range, (6.0d) is the separate strict filtered-cofiber input.  Nodewise
-   coefficient one does not prove its global or integral strictness.  Whenever that input is
+   In the nonbanal range, (6.0d) is the separate strict filtered-cofiber input. Nodewise
+   coefficient one does not prove its global or integral strictness. Whenever that input is
    imposed, the normalized-branch correction $\mathcal C_{\mathrm{br},v}$ remains in the
    middle filtration.
 5. On the actual component-routed principal cover, Book 125's characteristic-zero packet
@@ -166,51 +166,51 @@ only the graph--definite comparison and the second governs component support.
 7. A genuine global scalar twist makes fixed-prime augmentation strict for deformation rings,
    complexes, new modules, pairings, and faithful acting orders.
 
-These implications are not collapsed into one hypothesis.  Proposition 3.0B proves
+These implications are not collapsed into one hypothesis. Proposition 3.0B proves
 $({\rm TIC}_v)$ from neatness and actual stabilizer descent, independently of (1.5).
 Book 139 still treats only constant coefficients, for which cocycles are homomorphisms.
 Proposition 5.0 first reduces the type assertion to the exact map (5.0d), and Proposition
-5.0A identifies its nonbanal form with integral new-cokernel primitivity.  The residual
+5.0A identifies its nonbanal form with integral new-cokernel primitivity. The residual
 identity between fixed evaluation and normalized moving-orbit sum does not by itself prove
-that arithmetic primitivity.  Proposition 6.0 proves primitive type residue in the projector
+that arithmetic primitivity. Proposition 6.0 proves primitive type residue in the projector
 range, and Proposition 6.0A removes the generic old quotient from the nonbanal problem once
-(5.0d) is imposed.  The remaining assertion is the filtered-cofiber comparison (6.0d).
+(5.0d) is imposed. The remaining assertion is the filtered-cofiber comparison (6.0d).
 No rational flag projector is available for either nonbanal step.
 Section 3.4 reduces the typed parahoric extension to the principal-node and stabilizer theorem
-$({\rm PNS}_v)$.  For the coefficient rows of this book that theorem is now proved by Book
-122, Corollary 9.11.  Normalization of the actual tower, its ray factor, and the
-finite-wild/procyclic ramified nearby-cycle complex are proved.  Book 122, Proposition 9.3
+$({\rm PNS}_v)$. For the coefficient rows of this book that theorem is now proved by Book
+122, Corollary 9.11. Normalization of the actual tower, its ray factor, and the
+finite-wild/procyclic ramified nearby-cycle complex are proved. Book 122, Proposition 9.3
 proves $({\rm DLB}_1)$, and (9.29k)--(9.29l) prove the active full-Drinfeld normalization at
-every finite depth and its intermediate invariant rings.  Equations (9.29r)--(9.29x) further
+every finite depth and its intermediate invariant rings. Equations (9.29r)--(9.29x) further
 compute the raw higher branch set, inertia, inseparable residue degree, node-annular complexes,
-and boundary stabilizers.  Equations (9.29b)--(9.29i),
+and boundary stabilizers. Equations (9.29b)--(9.29i),
 (9.29n)--(9.29q), and Lemma 3.0A force the level-one stabilizers, exact wild-invariant
 extreme lines, node routing, constant-extreme-line generization, multiplicity one,
-and retained level-one Hecke route.  Book 122, Proposition 9.5 now computes the invariant
+and retained level-one Hecke route. Book 122, Proposition 9.5 now computes the invariant
 residue fields, Cartier multiplicities and active groups and reduces the normalized compositum
 to the actual factorization of $T^c-\bar u^{-1}$ over each residue-compositum factor.
 Proposition 9.6 factors every completed endpoint and blowup chart from its actual valuation,
 leading coefficient, and tame subgroups; Proposition 9.7 gives the exact Milnor-tube formalism;
-and Proposition 9.8 proves $({\rm RGC}_v)$.  Proposition 9.9 supplies the strict ray field
+and Proposition 9.8 proves $({\rm RGC}_v)$. Proposition 9.9 supplies the strict ray field
 $F_v(\pi_v^{1/e_v})$, vertical unit $1$, endpoint triples
 $(q_v-1,q_v(q_v-1),\gamma_L)$ and
-$(q_v-1,q_v^2-1,\gamma_L),(q_v^2-1,q_v-1,\gamma_L)$.  If $h$ is the
+$(q_v-1,q_v^2-1,\gamma_L),(q_v^2-1,q_v-1,\gamma_L)$. If $h$ is the
 order of $[\gamma_L]$, it gives the $e_v/h$ degree-$h$ factors of
-$Z^{e_v}-\gamma_L^{-1}$ and the degree-$e_v/h$ active/ray intersection.  Proposition 9.10 computes the actual branch and conductor tubes and their
+$Z^{e_v}-\gamma_L^{-1}$ and the degree-$e_v/h$ active/ray intersection. Proposition 9.10 computes the actual branch and conductor tubes and their
 generization maps; Corollary 9.11 proves $({\rm KBL}_v)_{\rm act}$,
 $({\rm BTK}_v)_{\rm act}$, $({\rm HDB}_v)_{\rm act}$, and
-$({\rm PNS}_v)_{\rm act}$.  Proposition 9.4 supplies the actual-common-factor node routing,
+$({\rm PNS}_v)_{\rm act}$. Proposition 9.4 supplies the actual-common-factor node routing,
 multiplicity and expansion one, and Hecke/transpose compatibility.
 The raw principal cover is explicitly wild.
 Book 140 lists the same extension, pull--norm, and type-specific residual inputs. Its
 constant-coefficient generic-support equality is proved in Book 140, Section 8.3, from Book
 125. Proposition 6.3 below proves the typed generic-residue comparison from Book 125 after the
 typed filtration has been established; it is not another hypothesis. Node uniformization
-remains datum-specific.  Lemma 6.1A shows that the type transport is formal from a
+remains datum-specific. Lemma 6.1A shows that the type transport is formal from a
 superspecial classification formulated as an equivalence of flagged node groupoids; the
-classification itself remains missing.  Chapter 7 proves the named local special closure, and
+classification itself remains missing. Chapter 7 proves the named local special closure, and
 Section 8.2 proves that the minimal, boundary, and special problems may be patched on one
-marked diagonal with their common boundary quotient retained.  The remaining relative
+marked diagonal with their common boundary quotient retained. The remaining relative
 Cartier-switch transversality--nonvanishing of the lower boundary equation and formal
 smoothness of the special relaxation, with its scalar-block analogue--is the separate
 one-prime hypothesis $({\rm BCD}_v)$ isolated in Chapter 8. The book does not construct a
@@ -252,7 +252,7 @@ copy of the primary factor.
 
 ### 2.2 Coefficient algebras
 
-At a scalar-twist place the ray quotient is chosen strictly, as follows.  Put
+At a scalar-twist place the ray quotient is chosen strictly, as follows. Put
 
 $$
 e_v=\ell^{\operatorname{ord}_\ell(q_v-1)},\qquad
@@ -260,7 +260,7 @@ e_v=\ell^{\operatorname{ord}_\ell(q_v-1)},\qquad
 $$
 
 Fix a protected finite set $S_0$ containing $v$, the places above $\ell$, and every place
-already ramified in the clean datum.  Under local reciprocity prescribe at $v$ the quotient
+already ramified in the clean datum. Under local reciprocity prescribe at $v$ the quotient
 
 $$
 F_v^\times\longrightarrow k_v^\times
@@ -269,22 +269,22 @@ F_v^\times\longrightarrow k_v^\times
 $$
 
 where a uniformizer maps to $1$, and prescribe the trivial character at
-$S_0\setminus\{v\}$.  Since $\ell\ge7$, the exponent $e_v$ is odd, so Book 6,
+$S_0\setminus\{v\}$. Since $\ell\ge7$, the exponent $e_v$ is odd, so Book 6,
 Theorem 6.1 and the non-Wang alternative immediately following it supply a global character
 
 $$
 c_v^{\rm ray}:G_F\longrightarrow\Delta_v                 \tag{2.2c}
 $$
 
-with these localizations.  Its order is exactly $e_v$.  Let $\mathfrak f_v$ be its conductor.
+with these localizations. Its order is exactly $e_v$. Let $\mathfrak f_v$ be its conductor.
 Then (2.2c) factors through the effective quotient
 $\operatorname{Cl}_{\mathfrak f_v}(F)\twoheadrightarrow\Delta_v$; consequently all global-unit,
-central, and archimedean compatibilities are satisfied rather than assumed.  Any additional
+central, and archimedean compatibilities are satisfied rather than assumed. Any additional
 finite places in $\mathfrak f_v$ are inserted in the fixed spectator level, with the local
 deformation condition transported by the same twist, and every Taylor--Wiles set is chosen
-disjoint from them.  This finite enlargement is part of the clean datum.
+disjoint from them. This finite enlargement is part of the clean datum.
 
-Because $e_v\mid q_v-1$, Teichmuller lifting gives $\mu_{e_v}\subset F_v$.  The local field
+Because $e_v\mid q_v-1$, Teichmuller lifting gives $\mu_{e_v}\subset F_v$. The local field
 cut out by (2.2b) is
 
 $$
@@ -292,8 +292,8 @@ F_v'=F_v(\varpi_v),\qquad \varpi_v^{e_v}=\pi_v,            \tag{2.2d}
 $$
 
 so local inertia maps isomorphically onto $\Delta_v$ and the vertical Kummer unit is $1$.
-This is the strict ray datum of Book 122, Proposition 9.9.  It is a construction of the
-quotient used below, not the globalization of an arbitrary nominal local character.  Put
+This is the strict ray datum of Book 122, Proposition 9.9. It is a construction of the
+quotient used below, not the globalization of an arbitrary nominal local character. Put
 
 $$
 \Lambda_v=\mathcal O[\Delta_v],
@@ -304,9 +304,9 @@ G_F\xrightarrow{c_v^{\rm ray}}\Delta_v
 \tag{2.3}
 $$
 
-The coefficient line is, by definition, the pullback of this global Galois system.  Book 122,
+The coefficient line is, by definition, the pullback of this global Galois system. Book 122,
 Proposition 9.9 uses canonical component reciprocity to identify its generic pullback with the
-automorphic line $\boldsymbol\chi_v^{\rm aut}\circ\det$.  Hence the determinant system is
+automorphic line $\boldsymbol\chi_v^{\rm aut}\circ\det$. Hence the determinant system is
 trait-pulled at $v$ and the ray projection formula is available; no further geometric ray
 identification is being assumed.
 
@@ -375,11 +375,11 @@ The square in (2.9) is compulsory.
 
 The theorem keeps three cases separate.
 
-| residue relation | retained local datum | forbidden shortcut |
-|---|---|---|
-| $q\not\equiv\pm1\pmod\ell$ | an enhanced special line and an integral sign block | none beyond the declared normalization |
-| $q\equiv1\pmod\ell$ in the scalar-residual branch | the scalar flag, both line characters, Kummer directions, and an integral $W_v$-sign | a Frobenius-root projector |
-| $q\equiv-1\pmod\ell$ | distinct special lines, the full Gram block, and both primary--companion extension orientations | division by either signed Gram factor |
+| residue relation                                  | retained local datum                                                                            | forbidden shortcut                     |
+| ------------------------------------------------- | ----------------------------------------------------------------------------------------------- | -------------------------------------- |
+| $q\not\equiv\pm1\pmod\ell$                        | an enhanced special line and an integral sign block                                             | none beyond the declared normalization |
+| $q\equiv1\pmod\ell$ in the scalar-residual branch | the scalar flag, both line characters, Kummer directions, and an integral $W_v$-sign            | a Frobenius-root projector             |
+| $q\equiv-1\pmod\ell$                              | distinct special lines, the full Gram block, and both primary--companion extension orientations | division by either signed Gram factor  |
 
 Primitive wild types, noncompact boundary cohomology, $v\mid\ell$, and descent through an
 $\ell$-divisible stabilizer are outside the theorem.
@@ -441,9 +441,9 @@ coalesce. Treating it as a constant étale cover would make the nearby-cycle arg
 ### 3.2 Associated sheaves on the actual Shimura tower
 
 Choose a normal principal subgroup separately inside each adjacent vertex group and the edge
-group, then a finite common refinement for the two legs.  Take the effective finite Galois
-closure of this finite generic diagram.  The objectwise principal covers have finite deck
-groups $H_0,H_1,H_e$, and the common closure trivializes all of them.  No single open compact
+group, then a finite common refinement for the two legs. Take the effective finite Galois
+closure of this finite generic diagram. The objectwise principal covers have finite deck
+groups $H_0,H_1,H_e$, and the common closure trivializes all of them. No single open compact
 subgroup is assumed normal in both adjacent maximal parahorics. If $W$ is a finite free
 representation of one of these deck quotients, let
 
@@ -549,8 +549,8 @@ $$
 
 with diagonal full inertia action, and (3.10a) commutes with pull, trace, Hecke routing, and
 duality. Ramification of $\boldsymbol\chi_v$ has not been discarded; it occurs in the external
-inertia action on the right.  For the automorphic determinant system this is the identification
-proved from the strict global character in Book 122, Proposition 9.9.  A locally written
+inertia action on the right. For the automorphic determinant system this is the identification
+proved from the strict global character in Book 122, Proposition 9.9. A locally written
 character $\boldsymbol\chi_v^{\rm aut}\circ\det$ would not by itself supply it.
 
 For any supplied tame coefficient on a strict annulus at $x$, let $H_x$ be the
@@ -570,7 +570,7 @@ A_x,\qquad A_x[q^{-1}]_{T_x}.                              \tag{3.10c}
 $$
 
 The normalization filtration is Book 22's normalization--conductor homotopy fiber (3.10),
-formed from (3.10b), the full branch complexes, and the node-to-branch generization maps.  Its
+formed from (3.10b), the full branch complexes, and the node-to-branch generization maps. Its
 restriction component contains the oriented endpoint difference $r_1-r_0$ and the actual
 vertex, edge, and flag decomposition modules. For a branch map of expansion index $e$ on which
 the prime-to-$\ell$ invariant summand is unchanged, pull and trace have chain entries
@@ -578,17 +578,17 @@ $(1,[e]_{T_x})$ and $([e]_{T_x},1)$, respectively. These formulas are adjoint on
 contragredient lattice and are equivariant for (3.10c).
 
 This paragraph is a functorial calculation, not by itself an identification of the actual wild
-subgroup, $W,H_x,T_x$, or their principal stabilizers.  Book 122, (9.29b)--(9.29e), shows that
+subgroup, $W,H_x,T_x$, or their principal stabilizers. Book 122, (9.29b)--(9.29e), shows that
 the level-one principal fiber is generally wild, and (9.29n)--(9.29q) identify its exact
-wild-invariant ledger.  Equations (9.29r)--(9.29x) identify the corresponding raw full-level
-higher groups, node complexes, and boundary modules.  Proposition 9.5 additionally computes
+wild-invariant ledger. Equations (9.29r)--(9.29x) identify the corresponding raw full-level
+higher groups, node complexes, and boundary modules. Proposition 9.5 additionally computes
 the invariant-field, Cartier and active-group rows and gives the normalized-compositum
-factorization rule.  The strict datum (2.2a)--(2.2d) is exactly the actual datum of Book 122,
-Propositions 9.9--9.10.  Those propositions compute its Kummer factors, descend the branch
+factorization rule. The strict datum (2.2a)--(2.2d) is exactly the actual datum of Book 122,
+Propositions 9.9--9.10. Those propositions compute its Kummer factors, descend the branch
 complexes and their generization maps, and retain rather than tame away the wild principal
 action.
 
-Book 122, Corollary 9.11 proves the resulting $({\rm PNS}_v)_{\rm act}$.  In completed local
+Book 122, Corollary 9.11 proves the resulting $({\rm PNS}_v)_{\rm act}$. In completed local
 rings it
 identifies the common normalization's decomposition and inertia groups, oriented annular
 homomorphisms, and branch modules with
@@ -597,31 +597,31 @@ identifies the wild annular subgroup and proves that its exact invariants on eve
 node-to-node coefficient module are the lines in Lemma 3.0A, identifies those
 node-to-node points with a unique multiplicity-one sheet for each extreme flag incidence, and
 routes every other sheet, with its full decomposition action and
-multiplicity, through the normalization-component term.  The common-normalization
-isomorphism then proves expansion index one on the identified node sheets.  It also identifies the branch
+multiplicity, through the normalization-component term. The common-normalization
+isomorphism then proves expansion index one on the identified node sheets. It also identifies the branch
 generization chain maps and proves that every non-wild-invariant routed summand is supplied,
-with no smoothness or tameness assertion, by its actual completed branch source.  Its properly
+with no smoothness or tameness assertion, by its actual completed branch source. Its properly
 typed component contribution is $Rf_{v*}\mathcal C_v$, or
-$i_{x*}R\Gamma(C_v,\mathcal C_v)$ only when $C_v$ is contracted to $x$.  Finally it constructs
+$i_{x*}R\Gamma(C_v,\mathcal C_v)$ only when $C_v$ is contracted to $x$. Finally it constructs
 the oriented restriction--Gysin cohomological correspondence; proper direct image alone is not
 a trace. Book 122, Proposition 9.8 supplies that oriented correspondence, and Propositions
-9.9--9.10 supply the arithmetic and completed-tube parts.  Thus no separately assumed
+9.9--9.10 supply the arithmetic and completed-tube parts. Thus no separately assumed
 $({\rm HDB}_v)_{\rm act}$ or $({\rm BTK})_{\rm act}$ hypothesis remains for the coefficient
 rows (3.6)--(3.9).
 
 Book 122, Proposition 9.3 proves $({\rm DLB}_1)$, and (9.29k)--(9.29l) prove all active finite
-Drinfeld normalization rings.  The level-one divisor equation forces a $q+1$-branch crossing with wild
-unipotent inertia; the raw principal cover is not a tame node.  The following calculation shows
+Drinfeld normalization rings. The level-one divisor equation forces a $q+1$-branch crossing with wild
+unipotent inertia; the raw principal cover is not a tame node. The following calculation shows
 that the selected two coefficient rows nevertheless have tame node modules after exact wild
 invariants.
 
-**Lemma 3.0A (forced wild invariants and flag routing).**  Choose a
+**Lemma 3.0A (forced wild invariants and flag routing).** Choose a
 factor of the actual common principal completion above Book 122's level-one Drinfeld
-completion.  Such a map is forced by normalization because the common generic algebra
+completion. Such a map is forced by normalization because the common generic algebra
 dominates the level-one principal subfield used by the two coefficient representations.
 Book 122, (9.29f)--(9.29i), then identifies its level-one vertex, edge, and flag Stein factors.
 For a branch $L\in\mathbf P^1(k_v)$ let $U_L$ be the unipotent radical of its Borel stabilizer
-and put $s_L=\sum_{M\ne L}e_M$.  Then
+and put $s_L=\sum_{M\ne L}e_M$. Then
 
 $$
 P_v^{U_L}=\mathcal Oe_L\oplus\mathcal Os_L,               \tag{3.10d}
@@ -640,49 +640,49 @@ The intrinsic geometric annular monodromy of these coefficient modules has wild 
 the deeper generic kernel acts trivially because the modules are inflated from level one.
 Consequently its exact wild invariants are (3.10e), and the node-annular complexes are the strict procyclic
 complexes of Book 22, (3.12)--(3.14), with any global ray action added diagonally; this
-conclusion does not assert that the principal cover is tame.  Book 122, (9.29s)--(9.29x),
+conclusion does not assert that the principal cover is tame. Book 122, (9.29s)--(9.29x),
 identifies the wild subgroup, node-annular complex, and boundary stabilizer modules for a
-selected branch of the raw full Drinfeld ring $D_n$.  Proposition 9.5 computes its invariant
-branch field, Cartier multiplicity and group filtration.  Book 122, Proposition 9.9 supplies
+selected branch of the raw full Drinfeld ring $D_n$. Proposition 9.5 computes its invariant
+branch field, Cartier multiplicity and group filtration. Book 122, Proposition 9.9 supplies
 the actual endpoint class $[\gamma_L]$ and factors the polynomials as
 $Z^{e_v}-\gamma_L^{-1}$ with the resulting constant-field orbits; Proposition 9.10
 constructs the conductor complexes and generization maps.
 
 The fixed Bruhat orbit is the identity Iwahori sheet and is node-to-node with multiplicity and
-expansion indices one.  On the moving Bruhat orbit, the sheet $a=0$ in Book 122,
+expansion indices one. On the moving Bruhat orbit, the sheet $a=0$ in Book 122,
 (9.11)--(9.12), is the unique
-node-to-node sheet.  Its saturated completed ring is $xy=\pi$, both ordered branch maps are
-the identity, and its multiplicity and expansion indices are one.  On either constant extreme
+node-to-node sheet. Its saturated completed ring is $xy=\pi$, both ordered branch maps are
+the identity, and its multiplicity and expansion indices are one. On either constant extreme
 line in (3.10e), its two generization maps are identity in degree zero and zero on the
-independent vanishing term.  Every $a\ne0$ sheet
+independent vanishing term. Every $a\ne0$ sheet
 has a unit incidence coordinate and a smooth completed source, so its full complex is in the
-normalization-component term.  These assertions commute with $U_v$, $U_v^t$, and residue
+normalization-component term. These assertions commute with $U_v$, $U_v^t$, and residue
 Frobenius on the level-one Stein factor by Book 122, (9.13)--(9.15), and with every
-prime-to-$v$ retained Hecke route.  Book 122, Proposition 9.4 promotes this routing,
+prime-to-$v$ retained Hecke route. Book 122, Proposition 9.4 promotes this routing,
 multiplicity and expansion one, and Hecke/transpose compatibility to the actual deeper common
-factor.  Book 122, Proposition 9.10 identifies the equivariant component-pushforward branch
+factor. Book 122, Proposition 9.10 identifies the equivariant component-pushforward branch
 contribution after associated descent, and Proposition 9.8 supplies the oriented
 restriction--Gysin map on its proper direct image.
 For the full level-one coefficient module, Book 122, (9.29n)--(9.29p), identifies only the
 node complex, the two boundary stabilizers, and the coefficient inclusion
-$W^{U_L}\hookrightarrow W$.  It expressly does not identify the full conductor complexes or
+$W^{U_L}\hookrightarrow W$. It expressly does not identify the full conductor complexes or
 turn that inclusion into a generization chain map: doing so by a second copy of procyclic
-group cohomology already fails for the trivial coefficient.  Thus no averaging by $q-1$ or
+group cohomology already fails for the trivial coefficient. Thus no averaging by $q-1$ or
 underived replacement of the moving branch is implicit here.
 In fact (9.29q) splits either Steinberg row as its extreme line plus the integral augmentation
-module $Q_L$ of the affine $U_L$-orbit.  The latter has no $U_L$-invariants, vanishes from the
+module $Q_L$ of the affine $U_L$-orbit. The latter has no $U_L$-invariants, vanishes from the
 node complex, and survives as the degree-zero moving conductor term computed in Book 122,
 (9.58).
 
-**Proof.**  The group $U_L\simeq(k_v,+)$ fixes $L$ and acts simply transitively on its affine
-complement.  Hence (3.10d).  Its order $q$ is a unit in $\mathcal O$ because $v\nmid\ell$, so
-wild invariants are exact.  Taking invariants in the quotient and augmentation rows gives
+**Proof.** The group $U_L\simeq(k_v,+)$ fixes $L$ and acts simply transitively on its affine
+complement. Hence (3.10d). Its order $q$ is a unit in $\mathcal O$ because $v\nmid\ell$, so
+wild invariants are exact. Taking invariants in the quotient and augmentation rows gives
 (3.10e); the augmentation of $e_L-q^{-1}s_L$ is zero, and the flag-basis dot product with
-$e_L$ is one.  The Borel preserves $L$ and permutes its complement, so its diagonal quotient
-fixes both generators.  The monodromy representation itself factors through the level-one
+$e_L$ is one. The Borel preserves $L$ and permutes its complement, so its diagonal quotient
+fixes both generators. The monodromy representation itself factors through the level-one
 annular quotient, whose wild image is $U_L$; the deeper generic kernel therefore acts
-trivially.  Book 22, Section 3.6, now gives the full node-annular complex after wild
-invariants.  The remaining statements are the saturated incidence calculation, the explicit
+trivially. Book 22, Section 3.6, now gives the full node-annular complex after wild
+invariants. The remaining statements are the saturated incidence calculation, the explicit
 stabilizer restriction (9.29n)--(9.29p), and the variance check of Book 122, Sections 9.3--9.4.
 Book 122, Proposition 9.4 supplies the actual-common-factor promotion by restricting the proper
 flag legs to their finite loci around the nodes and applying common normalization there.
@@ -691,16 +691,16 @@ $\square$
 Thus wild triviality on the two extreme lines, coefficient one, the constant-extreme-line
 conductor/generization map,
 multiplicity one, and the level-one residue-prime route are no longer independent parts of the
-black box.  Book 122, (9.29j), makes the first depth jump explicit, while (9.29k)--(9.29l)
-identify the resulting active normalization and its intermediate rings.  Equations
+black box. Book 122, (9.29j), makes the first depth jump explicit, while (9.29k)--(9.29l)
+identify the resulting active normalization and its intermediate rings. Equations
 (9.29r)--(9.29x) give the raw higher branch/inertia/residue, node-annular, and boundary-module
 ledger and exhibit the purely inseparable obstruction to commuting branch normalization with
-wild invariants.  Proposition 9.5 computes the Frobenius-subfield discrepancy, Cartier
+wild invariants. Proposition 9.5 computes the Frobenius-subfield discrepancy, Cartier
 multiplicity and active group filtration and reduces the compositum to its Kummer
 factorization. Propositions 9.6--9.7 give the endpoint and Milnor-tube formalism.
 Propositions 9.9--9.10 insert the actual strict ray datum, factor its endpoint polynomials,
 normalize the completed tubes, and compute the branch/conductor complexes and generization
-maps.  Corollary 9.11 proves $({\rm PNS}_v)_{\rm act}$.  Proposition 9.8 proves
+maps. Corollary 9.11 proves $({\rm PNS}_v)_{\rm act}$. Proposition 9.8 proves
 $({\rm RGC}_v)$ on the properly typed component direct images. Proposition 9.4 has already identified the
 strict-transform routing and node coefficients.
 
@@ -720,23 +720,23 @@ following conclusions hold for the selected quotient/augmentation Steinberg syst
    trace along each finite flat degeneracy map.
 
 **Theorem $({\rm TPE}_v)$.** Under the standing fine-model hypotheses and the strict ray
-choice (2.2a)--(2.2d), all three clauses of $({\rm TPE}_v)$ hold.  Thus normalization, the ray
-twist, and the ramified strict-node complex are not hypotheses.  This is the actual-row
+choice (2.2a)--(2.2d), all three clauses of $({\rm TPE}_v)$ hold. Thus normalization, the ray
+twist, and the ramified strict-node complex are not hypotheses. This is the actual-row
 theorem $({\rm PNS}_v)_{\rm act}$ of Book 122, Corollary 9.11; no converse or arbitrary
 principal-representation statement is claimed from the two Steinberg rows.
 
 **Proof.** Proposition 9.2 of Book 122 supplies the actual normalized diagram and objectwise
 finite local freeness; its common-normalization lemma makes the lifted interlevel maps
 isomorphisms, hence finite flat. Book 122, Corollary 9.11 identifies its local decomposition
-modules with the asserted stabilizer modules.  Its wild/tame calculation first identifies
-the actual wild group $P_x$.  Take $P_x$-invariants by Book 22, (3.12)--(3.13); its finite
-$p$-power image has unit order because $v\nmid\ell$.  Lemma 3.0A identifies the resulting
+modules with the asserted stabilizer modules. Its wild/tame calculation first identifies
+the actual wild group $P_x$. Take $P_x$-invariants by Book 22, (3.12)--(3.13); its finite
+$p$-power image has unit order because $v\nmid\ell$. Lemma 3.0A identifies the resulting
 extreme lines for the two Steinberg rows, while every noninvariant routed summand remains in
-its full branch complex.  Next take exact invariants under
+its full branch complex. Next take exact invariants under
 $H_x$, whose finite image has order prime to $\ell$. The averaging idempotents are $A_Q$-linear,
 so each invariant module is a finite projective $A_Q$-summand of the original free module and
 is finite free because $A_Q$ is complete local. Apply (3.10b) termwise to
-(3.6)--(3.7).  Apply the same rows to the branch complexes and to the generization maps
+(3.6)--(3.7). Apply the same rows to the branch complexes and to the generization maps
 identified in Book 122, (9.55)--(9.58), then form Book 22's
 normalization--conductor homotopy fiber.
 Those rows split as underlying $\mathcal O$-modules, so the resulting strict total complexes
@@ -749,44 +749,44 @@ graph/regular-domination construction of Book 122, Section 9.3 gives proper func
 Propositions 9.4 and 9.8 there give compatibility with the principal decomposition data and
 the oriented component correspondence. $\square$
 
-**Proposition 3.0B $({\rm TIC}_v)$ (actual unit-order coarse descent).**  For the clean
+**Proposition 3.0B $({\rm TIC}_v)$ (actual unit-order coarse descent).** For the clean
 one-prime datum of Chapter 2, every geometric stabilizer which occurs in passage from the fine
-PEL diagram to a retained coarse curve has order invertible in $\mathcal O$.  Consequently
+PEL diagram to a retained coarse curve has order invertible in $\mathcal O$. Consequently
 the exact rows and the normalization--conductor totalizations of $({\rm TPE}_v)$ descend
-exactly.  This conclusion imposes no order condition on the principal flag group, on a line
+exactly. This conclusion imposes no order condition on the principal flag group, on a line
 stabilizer, or on the full deck group used to trivialize a coefficient system.
 
-**Proof.**  The actual vertex, edge, principal, ray, and normalized flag objects used in
-$({\rm PNS}_v)_{\rm act}$ carry the neat prime-to-$v$ PEL level fixed in Chapter 2.  A neat
+**Proof.** The actual vertex, edge, principal, ray, and normalized flag objects used in
+$({\rm PNS}_v)_{\rm act}$ carry the neat prime-to-$v$ PEL level fixed in Chapter 2. A neat
 center-detecting level has no automorphisms of a geometric PEL object: an effective
 stabilizer has finite adjoint image, Book 118, Corollary 5.2 makes that image trivial, and
 Book 119, Corollary 8.3 uses the rigid center-detecting level to kill the remaining central
-scalar.  Adding a Drinfeld basis, an oriented subgroup, or a ray trivialization can only
-decrease this automorphism group.  Thus every object of the fine actual diagram has trivial
+scalar. Adding a Drinfeld basis, an oriented subgroup, or a ray trivialization can only
+decrease this automorphism group. Thus every object of the fine actual diagram has trivial
 geometric inertia.
 
 For a retained coarse component, choose the normal fine cover already used in the definition
-of $\mathscr F_v(Q)$.  A point stabilizer in its effective descent group is exactly the
-automorphism group of the descended PEL tuple.  By the clean-level convention its effective
-order divides the prime-to-$\ell$ group $\Delta_D$, so stalkwise invariants are exact.  On the
+of $\mathscr F_v(Q)$. A point stabilizer in its effective descent group is exactly the
+automorphism group of the descended PEL tuple. By the clean-level convention its effective
+order divides the prime-to-$\ell$ group $\Delta_D$, so stalkwise invariants are exact. On the
 free locus no invariants calculation is needed: descent of the associated sheaf is fpqc-local
-and hence exact.  At a point with isotropy, Book 121, Section 7.2 identifies that isotropy with
-a subgroup of the effective deck group, so its order is again a unit.  Exactness may therefore
-be checked on every geometric stalk.  The same argument applies to a normalization stratum or
+and hence exact. At a point with isotropy, Book 121, Section 7.2 identifies that isotropy with
+a subgroup of the effective deck group, so its order is again a unit. Exactness may therefore
+be checked on every geometric stalk. The same argument applies to a normalization stratum or
 conductor locus because its isotropy injects into the stabilizer of the underlying PEL tuple.
 A decomposition group which merely permutes such points can be larger; its action is retained
 as transport among summands and is not averaged.
 
-The finite group which labels all flags plays a different role.  Its action constructs the
+The finite group which labels all flags plays a different role. Its action constructs the
 associated permutation sheaf on the fine torsor; exactness there is checked after pulling back
-to the torsor.  Likewise the possibly nonunit part of $A_L$ remains in the procyclic node
-complex, rather than being averaged away.  The only finite invariants used in the local tube
+to the torsor. Likewise the possibly nonunit part of $A_L$ remains in the procyclic node
+complex, rather than being averaged away. The only finite invariants used in the local tube
 calculation are those of the wild group $U_L$, of order $q$, and $q$ is a unit because
-$v\nmid\ell$.  Therefore neither the full flag group nor a possibly nonunit line stabilizer
-enters coarse descent.  This proves the asserted unit-order descent and hence
+$v\nmid\ell$. Therefore neither the full flag group nor a possibly nonunit line stabilizer
+enters coarse descent. This proves the asserted unit-order descent and hence
 $({\rm TIC}_v)$. $\square$
 
-The separation from $({\rm PNS}_v)_{\rm act}$ remains useful.  The principal complete-local
+The separation from $({\rm PNS}_v)_{\rm act}$ remains useful. The principal complete-local
 calculation determines the actual tubes and stabilizer representations; Proposition 3.0B
 proves that their exact integral incidence rows survive passage to the retained curves.
 
@@ -808,7 +808,7 @@ $$
 \tag{3.11}
 $$
 
-These sequences split as underlying $\mathcal O$-modules.  Applying them to the node and
+These sequences split as underlying $\mathcal O$-modules. Applying them to the node and
 branch complexes and taking the normalization--conductor homotopy fiber therefore preserves
 the resulting exact triangles, although the rows need not split equivariantly after reduction. Expansion
 index one makes the two extreme entries $1$ by Book 22, (3.8); all other sheets remain in the
@@ -1001,9 +1001,9 @@ K_D(\overline W)=0.
 $$
 
 The permutation terms are already constant-coefficient cohomology on actual flag subgroups by
-Shapiro and belong to $\mathscr F_v(Q)$; no extra hypothesis is imposed on them.  Proposition
+Shapiro and belong to $\mathscr F_v(Q)$; no extra hypothesis is imposed on them. Proposition
 5.0 proves (5.0a) for both endpoints when $q+1$ is a coefficient unit and proves the
-augmentation companion in every range.  In the nonbanal range it first leaves one exact
+augmentation companion in every range. In the nonbanal range it first leaves one exact
 quotient-primary map, namely (5.0d); its injectivity is an additional input at every actual
 spectator level.
 
@@ -1020,7 +1020,7 @@ d_D(W):H^1(\Gamma_{D,0}^v,W)\oplus H^1(\Gamma_{D,1}^v,W)
 $$
 
 **Proposition 5.0 (exact permutation-resolution calculation).** Assume
-$({\rm AIH}_{\mathscr F})$ and the no-character localizations of Chapter 2.  Then, at every
+$({\rm AIH}_{\mathscr F})$ and the no-character localizations of Chapter 2. Then, at every
 object of the residual flag diagram,
 
 $$
@@ -1041,16 +1041,16 @@ K_D(\overline{\rm St}^{+})
 \tag{5.0d}
 $$
 
-where $u_D$ is induced by the constant-vector map.  In particular, if
+where $u_D$ is induced by the constant-vector map. In particular, if
 $q+1\in\mathcal O^\times$, then $({\rm TIH}_{\mathscr F})$ follows from
-$({\rm AIH}_{\mathscr F})$.  If $q\equiv-1\pmod\ell$, the quotient-primary endpoint is reduced
+$({\rm AIH}_{\mathscr F})$. If $q\equiv-1\pmod\ell$, the quotient-primary endpoint is reduced
 to injectivity of the displayed map $u_D$ on the actual localized new cokernels.
 
-**Proof.**  Shapiro identifies the $\overline P$ row with the direct sum of the actual
+**Proof.** Shapiro identifies the $\overline P$ row with the direct sum of the actual
 constant-coefficient flag-subgroup rows included in $\mathscr F_v(Q)$, so (1.5) kills its
-kernel; it also kills the constant row.  At each vertex and edge localization, degree zero is
-a character packet and vanishes.  Degree two vanishes by Poincare duality and the corresponding
-adjoint degree-zero vanishing.  The two coefficient sequences therefore give short exact
+kernel; it also kills the constant row. At each vertex and edge localization, degree zero is
+a character packet and vanishes. Degree two vanishes by Poincare duality and the corresponding
+adjoint degree-zero vanishing. The two coefficient sequences therefore give short exact
 sequences on degree-one curve cohomology.
 
 For
@@ -1061,8 +1061,8 @@ $$
 $$
 
 degree-one cohomology with $\overline{\rm St}^{-}$ injects into degree-one cohomology with
-$\overline P$ at both the source and target of $d_D$.  Hence its degeneracy kernel injects
-into $K_D(\overline P)$ and is zero.  For
+$\overline P$ at both the source and target of $d_D$. Hence its degeneracy kernel injects
+into $K_D(\overline P)$ and is zero. For
 
 $$
 0\longrightarrow k\xrightarrow{u}\overline P
@@ -1077,7 +1077,7 @@ K_D(\overline{\rm St}^{+})\to
 \mathcal Q_D(k)\xrightarrow{u_D}\mathcal Q_D(\overline P),
 $$
 
-which proves (5.0d).  Exact prime-to-$\ell$ descent and localization commute with this
+which proves (5.0d). Exact prime-to-$\ell$ descent and localization commute with this
 calculation.
 
 If $q+1$ is a unit, then
@@ -1089,14 +1089,14 @@ $$
 
 is an integral equivariant idempotent on $P_v$ and hence on
 $P_v\otimes_{\mathcal O}A_Q$; its reduction is the corresponding idempotent on
-$\overline P$.  Thus
+$\overline P$. Thus
 $\overline P=k\mathbf1\oplus\ker(\operatorname{aug})$ and both
 $\overline{\rm St}^{+}$ and $\overline{\rm St}^{-}$ identify with the second direct summand.
 The type degeneracy maps are consequently direct summands of the Shapiro permutation maps,
-so their kernels vanish.  Scalar and auxiliary $\ell$-power twists reduce to the same rows;
+so their kernels vanish. Scalar and auxiliary $\ell$-power twists reduce to the same rows;
 equivalently one may twist every arrow in the argument. $\square$
 
-The qualification in the last sentence is real.  If $q\equiv-1\pmod\ell$, transitivity of
+The qualification in the last sentence is real. If $q\equiv-1\pmod\ell$, transitivity of
 the flag action gives
 
 $$
@@ -1105,19 +1105,19 @@ $$
 \operatorname{Hom}_{\overline K_v}(k,\overline P)=k\,u,
 $$
 
-but $\operatorname{aug}\circ u=q+1=0$ in $k$.  Hence the constant line is not a direct
-summand of $\overline P$.  Two injective vertical maps in the constant and permutation rows
+but $\operatorname{aug}\circ u=q+1=0$ in $k$. Hence the constant line is not a direct
+summand of $\overline P$. Two injective vertical maps in the constant and permutation rows
 do not force the induced map on their quotients to be injective; (5.0d) is the additional
-snake-lemma term isolated by Proposition 5.0A.  Finite-group cohomology can describe the
+snake-lemma term isolated by Proposition 5.0A. Finite-group cohomology can describe the
 nonsplit flag extension, but by itself it does not determine the map $u_D$ on the actual
-arithmetic new cokernels.  Perfect duality
+arithmetic new cokernels. Perfect duality
 identifies (5.0d) with failure of the companion **norm** to be onto, whereas (5.0c) proves
-injectivity of the companion **pull**.  These are different maps, so duality does not remove
+injectivity of the companion **pull**. These are different maps, so duality does not remove
 the term.
 
-The formal failure already occurs for vector spaces.  In the source exact row
+The formal failure already occurs for vector spaces. In the source exact row
 $0\to k\to k^2\to k\to0$, use $a\mapsto(a,0)$ and $(a,b)\mapsto b$; in the target exact row
-$0\to k^2\to k^3\to k\to0$, use $(a,b)\mapsto(a,b,0)$ and $(a,b,c)\mapsto c$.  The left,
+$0\to k^2\to k^3\to k\to0$, use $(a,b)\mapsto(a,b,0)$ and $(a,b,c)\mapsto c$. The left,
 middle, and right vertical maps
 
 $$
@@ -1128,13 +1128,13 @@ k^2\longrightarrow k^3,\quad(a,b)\longmapsto(a,b,0),
 k\longrightarrow k,\quad b\longmapsto0
 $$
 
-form a commutative diagram.  The first two are injective, but the induced map between the two
-quotient copies of $k$ is zero.  Therefore
+form a commutative diagram. The first two are injective, but the induced map between the two
+quotient copies of $k$ is zero. Therefore
 Shapiro injectivity on the constant and permutation rows, even together with exact coefficient
 rows, cannot prove the quotient-primary assertion without proving injectivity of $u_D$ in
 (5.0d).
 
-The Cartan--Leray form of the same warning is also useful.  On a common principal cover with
+The Cartan--Leray form of the same warning is also useful. On a common principal cover with
 deck group $H$, the terms are
 
 $$
@@ -1142,24 +1142,24 @@ E_2^{a,b}=H^a\!\left(H,H^b(Y,k)\otimes_k W\right)
 \Longrightarrow H^{a+b}(X,\mathscr V(W)).
 $$
 
-When $\ell\mid |H|$, derived invariants are not exact.  The problematic terms contain the
+When $\ell\mid |H|$, derived invariants are not exact. The problematic terms contain the
 actual arithmetic cohomology $H^b(Y,k)$ and its localized new quotient; they are not determined
-by the abstract groups $H^a(H,W)$.  Thus a finite-group cohomology calculation is a proof of
+by the abstract groups $H^a(H,W)$. Thus a finite-group cohomology calculation is a proof of
 type-Ihara only if it also kills the derived-invariant term on the actual new quotient, which
 is another formulation of the injectivity in (5.0d).
 
 There is a still sharper formulation which uses both integral flag rows and makes clear that
-no pull--trace identity has been overlooked.  Write
+no pull--trace identity has been overlooked. Write
 
 $$
 \mathcal Q_D^\circ(W)=\operatorname{coker}d_D^\circ(W)
 $$
 
 for the corresponding integral new cokernel, before reduction modulo $\varpi$, for
-$W=\mathcal O$ or $P_{\mathcal O}$.  Under $({\rm AIH}_{\mathscr F})$ the constant and
-permutation old maps have a unit maximal minor.  Hence these two cokernels are projective over
+$W=\mathcal O$ or $P_{\mathcal O}$. Under $({\rm AIH}_{\mathscr F})$ the constant and
+permutation old maps have a unit maximal minor. Hence these two cokernels are projective over
 the retained complete local coefficient algebra, their underlying $\mathcal O$-modules are
-torsion free, and their reductions are the two cokernels in (5.0d).  Let
+torsion free, and their reductions are the two cokernels in (5.0d). Let
 
 $$
 U_D:\mathcal Q_D^\circ(\mathcal O)\longrightarrow
@@ -1170,17 +1170,17 @@ V_D:\mathcal Q_D^\circ(P_{\mathcal O})\longrightarrow
 \tag{5.0f}
 $$
 
-be induced by the constant-vector and augmentation maps.  They satisfy
+be induced by the constant-vector and augmentation maps. They satisfy
 
 $$
 V_DU_D=(q+1)\operatorname{id}.                            \tag{5.0g}
 $$
 
-The coefficient algebra is $\mathcal O$-free, so (5.0g) makes $U_D$ injective.  It does not
+The coefficient algebra is $\mathcal O$-free, so (5.0g) makes $U_D$ injective. It does not
 make its image primitive when $q+1$ is a nonunit.
 
-**Proposition 5.0A (the nonbanal new Bockstein).**  Suppose
-$q\equiv-1\pmod\ell$ and retain the hypotheses of Proposition 5.0.  The augmentation row and
+**Proposition 5.0A (the nonbanal new Bockstein).** Suppose
+$q\equiv-1\pmod\ell$ and retain the hypotheses of Proposition 5.0. The augmentation row and
 (5.0c) give an exact sequence
 
 $$
@@ -1197,8 +1197,8 @@ $$
 \mathcal Q_D(\overline{\rm St}^{-})                    \tag{5.0i}
 $$
 
-whose composite with the first arrow of (5.0h) is $u_D$.  It is induced by the actual trivial
-submodule $k\mathbf1\subset\overline{\rm St}^{-}$ of Book 138, (8.5).  The following are
+whose composite with the first arrow of (5.0h) is $u_D$. It is induced by the actual trivial
+submodule $k\mathbf1\subset\overline{\rm St}^{-}$ of Book 138, (8.5). The following are
 equivalent:
 
 1. the quotient-primary type-Ihara assertion at $D$;
@@ -1207,11 +1207,11 @@ equivalent:
 4. $\mathcal Q_D^\circ(P_{\mathcal O})/U_D\mathcal Q_D^\circ(\mathcal O)$ has no
    $\varpi$-torsion.
 
-**Proof.**  Apply the snake lemma to the augmentation coefficient row.  All three vertical
-kernels vanish by (5.0c), giving (5.0h).  The factorization (5.0i) follows from
+**Proof.** Apply the snake lemma to the augmentation coefficient row. All three vertical
+kernels vanish by (5.0c), giving (5.0h). The factorization (5.0i) follows from
 $\operatorname{aug}u=0$, and the first arrow in (5.0h) is injective, so $u_D$ and $\beta_D$
-have the same kernel.  Proposition 5.0 identifies that kernel with
-$K_D(\overline{\rm St}^{+})$.  Finally, reduction of (5.0f) is $u_D$.  Since $U_D$ is an
+have the same kernel. Proposition 5.0 identifies that kernel with
+$K_D(\overline{\rm St}^{+})$. Finally, reduction of (5.0f) is $u_D$. Since $U_D$ is an
 injection between $\mathcal O$-torsion-free finite modules, the kernel after reduction is
 
 $$
@@ -1222,11 +1222,11 @@ $$
 It vanishes exactly when the image of $U_D$ is primitive, proving the last equivalence.
 $\square$
 
-The identity (5.0g) alone does not prove primitivity.  The rank-one model $U=q+1$, $V=1$
-already satisfies it while $U$ has noninjective reduction.  The local two-orbit calculation
-explains the shape of the missing theorem but does not prove it.  Fix an oriented edge and let
+The identity (5.0g) alone does not prove primitivity. The rank-one model $U=q+1$, $V=1$
+already satisfies it while $U$ has noninjective reduction. The local two-orbit calculation
+explains the shape of the missing theorem but does not prove it. Fix an oriented edge and let
 $L$ be its fixed endpoint in
-$\mathbf P^1(k_v)$.  For $a=\sum_Ma_Me_M$ put
+$\mathbf P^1(k_v)$. For $a=\sum_Ma_Me_M$ put
 
 $$
 \epsilon_L(a)=a_L,
@@ -1235,15 +1235,15 @@ $$
 $$
 
 Both maps are $B_L$-equivariant and compatible with transport, since
-$\epsilon_{gL}(ga)=\epsilon_L(a)$ and $\mu_{gL}(ga)=\mu_L(a)$.  On the augmentation lattice,
+$\epsilon_{gL}(ga)=\epsilon_L(a)$ and $\mu_{gL}(ga)=\mu_L(a)$. On the augmentation lattice,
 
 $$
 \mu_L(a)=-q^{-1}\epsilon_L(a)
 \quad\text{for }a\in\overline{\rm St}^{-}.
 $$
 
-Because $q=-1$ in $k$, the two residual functionals agree there.  Denote their common
-restriction by $\rho_L$.  The constant vector belongs to $\overline{\rm St}^{-}$ and
+Because $q=-1$ in $k$, the two residual functionals agree there. Denote their common
+restriction by $\rho_L$. The constant vector belongs to $\overline{\rm St}^{-}$ and
 
 $$
 \rho_L(\mathbf1)=1.                                    \tag{5.0k}
@@ -1256,9 +1256,9 @@ $$
 \qquad \overline Q_L^{U_L}=0,
 $$
 
-and $\rho_L$ is projection to the first summand.  This splitting is $B_L$-equivariant and
+and $\rho_L$ is projection to the first summand. This splitting is $B_L$-equivariant and
 transport-equivariant in the flagged object, though it is not a splitting as an
-$\overline K_v$-module.  Book 138, (9.9), gives the actual Mackey decomposition
+$\overline K_v$-module. Book 138, (9.9), gives the actual Mackey decomposition
 
 $$
 \operatorname{Res}^{\overline K_v}_{B_L}\overline P
@@ -1266,19 +1266,19 @@ $$
 $$
 
 the first functional is fixed-orbit evaluation and the second is $q^{-1}$ times the moving
-orbit sum.  Book 122 identifies the corresponding fixed and moving geometric pieces and their
-actual conductor maps.  These facts justify division by $q$, never by $q+1$.
+orbit sum. Book 122 identifies the corresponding fixed and moving geometric pieces and their
+actual conductor maps. These facts justify division by $q$, never by $q+1$.
 
 They do not construct an injection from $\ker\beta_D$ into a constant-coefficient Ihara
-kernel.  Such a construction would have to specify the routed length-two arithmetic object,
+kernel. Such a construction would have to specify the routed length-two arithmetic object,
 prove that it is among the instances to which Book 139 applies, define the map on the
 localized **new cokernels**, and prove independence of the choices of permutation lifts and
-old representatives.  Equality of the two functionals on the residual local submodule
-$\overline{\rm St}^{-}$ proves none of those global assertions.  In particular, it cannot
+old representatives. Equality of the two functionals on the residual local submodule
+$\overline{\rm St}^{-}$ proves none of those global assertions. In particular, it cannot
 replace the arithmetic cokernels $\mathcal Q_D(-)$ by the local permutation modules in the
 Mackey decomposition.
 
-There is also no integral equality of the two contractions.  On
+There is also no integral equality of the two contractions. On
 $\operatorname{St}_{\mathcal O}^{-}$ one has
 
 $$
@@ -1287,8 +1287,8 @@ $$
 \epsilon_L-\mu_L=(q+1)q^{-1}\epsilon_L.                 \tag{5.0l}
 $$
 
-Thus their agreement is only residual when $q\equiv-1\pmod\ell$.  The identity is useful for
-formulating the Bockstein, but it does not show that $U_D$ has primitive image.  Proposition
+Thus their agreement is only residual when $q\equiv-1\pmod\ell$. The identity is useful for
+formulating the Bockstein, but it does not show that $U_D$ has primitive image. Proposition
 5.0A is therefore the maximal formal conclusion: in the nonbanal range, injectivity of
 (5.0d), equivalently injectivity of $\beta_D$ or primitivity of $U_D$, remains the exact
 additional quotient-new input.
@@ -1308,17 +1308,17 @@ adjoint norms $r_v^-\otimes k$ and $r_v^+\otimes k$ are surjective. The actual t
 auxiliary spectator levels are the ones occurring in $\mathscr F_v(Q)$.
 
 **Proof.** Proposition 3.0B identifies the geometric degeneracy maps with the oriented
-restriction maps in (5.0) and makes the two flag rows an exact adjoint diagram.  Proposition
+restriction maps in (5.0) and makes the two flag rows an exact adjoint diagram. Proposition
 5.0 supplies both entries in the projector range and the augmentation entry in every range;
-the stated extra input supplies the remaining nonbanal quotient entry.  Thus
-$({\rm TIH}_{\mathscr F})$ is now established before it is used.  The resulting maps are the
+the stated extra input supplies the remaining nonbanal quotient entry. Thus
+$({\rm TIH}_{\mathscr F})$ is now established before it is used. The resulting maps are the
 asserted primary and companion maps.
 Perfect transposition gives surjectivity of both norms. No rational projector or averaging is
 used. $\square$
 
 The named assertions should still not be conflated. The finite list (1.5) is indispensable
-for Book 139's constant normalization filtration.  Proposition 5.0 is the formal coefficient
-reduction, while Proposition 5.0A isolates the additional arithmetic Bockstein.  The local
+for Book 139's constant normalization filtration. Proposition 5.0 is the formal coefficient
+reduction, while Proposition 5.0A isolates the additional arithmetic Bockstein. The local
 fixed/moving Mackey identity does not kill that Bockstein on global new cokernels.
 Non-Eisenstein localization alone proves neither (1.5) nor the nonbanal quotient-new input.
 
@@ -1375,7 +1375,7 @@ The splitting is not Hecke canonical and is not an integral orthogonal old--new 
 The latter would require the Gram operator to be a unit. The theorem also says nothing about
 $\operatorname{Tor}$ over the deformation ring acting through Book 170's reciprocity map.
 For the actual rows, Proposition 5.0 replaces its type-Ihara input by
-$({\rm AIH}_{\mathscr F})$ in the projector range.  When
+$({\rm AIH}_{\mathscr F})$ in the projector range. When
 $q\equiv-1\pmod\ell$, (5.0d) remains an additional input.
 
 ## 6. Nearby cycles, graph terms, and the branch correction
@@ -1440,20 +1440,20 @@ integral assertion without an independent coefficient-flatness theorem.
 
 This is stronger than the nodewise coefficient-one calculation of Proposition 3.1. Books
 125, 138--141, 152, and 170--172 do not by themselves prove the vanishing (6.0c) for these
-type coefficients.  Proposition 6.0 proves it in the integral-projector range.  Equation
+type coefficients. Proposition 6.0 proves it in the integral-projector range. Equation
 (6.0b) records the obstruction in the remaining nonbanal range; the exact filtered comparison
 (6.0d) remains an input there.
 
-There is again a sharp projector/nonprojector distinction which the condition hides.  For
+There is again a sharp projector/nonprojector distinction which the condition hides. For
 the following comparison assume $({\rm AIH}_{\mathscr F})$ and
 $({\rm TIH}_{\mathscr F})$; in the nonbanal quotient row the latter includes (5.0d).
-Proposition 3.0B supplies $({\rm TIC}_v)$.  Let
+Proposition 3.0B supplies $({\rm TIC}_v)$. Let
 $\mathcal R_{v,A_Q}(\mathbf1)$ and $\mathcal R_{v,A_Q}(P)$ denote the old-quotient
 normalization complexes obtained from the constant and permutation rows at the corresponding
-actual levels.  Under $({\rm AIH}_{\mathscr F})$ Book 139 makes the first complex exact in its
+actual levels. Under $({\rm AIH}_{\mathscr F})$ Book 139 makes the first complex exact in its
 two obstruction degrees, and Shapiro makes the second a finite direct sum of such exact
-complexes.  Their degree-zero maps are injective by the same constant/permutation old-map
-theorem, so both complexes are in fact acyclic.  Functoriality of the
+complexes. Their degree-zero maps are injective by the same constant/permutation old-map
+theorem, so both complexes are in fact acyclic. Functoriality of the
 normalization--conductor totalization gives a natural comparison
 
 $$
@@ -1466,42 +1466,42 @@ $$
 \tag{6.0d}
 $$
 
-The source is therefore acyclic.  Thus, in the nonbanal case, the primitive-residue target is
-equivalently the assertion that (6.0d) is a quasi-isomorphism in degrees $1,2$.  This is the
+The source is therefore acyclic. Thus, in the nonbanal case, the primitive-residue target is
+equivalently the assertion that (6.0d) is a quasi-isomorphism in degrees $1,2$. This is the
 precise filtered-cofiber comparison which is lost if one first
-takes underived coefficient quotients, old cokernels, and normalization layers.  It is not a
+takes underived coefficient quotients, old cokernels, and normalization layers. It is not a
 calculation of the abstract finite flag group alone: its terms contain the actual routed
 arithmetic old quotient and branch generization maps.
 
 **Proposition 6.0 (projector-range primitive residue).** Use the proved $({\rm TPE}_v)$ and
-$({\rm TIC}_v)$, and assume $({\rm AIH}_{\mathscr F})$.  If
+$({\rm TIC}_v)$, and assume $({\rm AIH}_{\mathscr F})$. If
 $q+1\in\mathcal O^\times$, then $({\rm TIH}_{\mathscr F})$ and
 $({\rm PRI}_{\rm type})$ both hold for the quotient-primary and augmentation-companion
 systems, at every retained coefficient face.
 
-**Proof.**  The idempotent (5.0e) is defined over $A_Q$ and commutes with the scalar twist,
-the auxiliary diamonds, pull, trace, and the two maps in the flag resolution.  It therefore
+**Proof.** The idempotent (5.0e) is defined over $A_Q$ and commutes with the scalar twist,
+the auxiliary diamonds, pull, trace, and the two maps in the flag resolution. It therefore
 splits the constant line and the common Steinberg summand not only on generic cohomology but
 termwise in the strict normalized branch, node, and conductor complexes supplied by
-$({\rm TPE}_v)$.  The entire normalization--conductor totalization, its filtration, and the
-old-map cone are additive in this coefficient summand.  Shapiro identifies the permutation
+$({\rm TPE}_v)$. The entire normalization--conductor totalization, its filtration, and the
+old-map cone are additive in this coefficient summand. Shapiro identifies the permutation
 totalization with the direct sum of the constant totalizations at the actual flag levels.
 Book 139, applied under $({\rm AIH}_{\mathscr F})$, gives exact old maps and primitive extreme
-residues on every one of those constant summands.  Passing to the complementary idempotent
+residues on every one of those constant summands. Passing to the complementary idempotent
 summand proves residual type-Ihara and makes (6.0a) exact in degrees $1,2$.
 
 This is a termwise $A_Q$-linear idempotent splitting of finite-projective strict
-totalizations.  The Steinberg totalization is consequently an acyclic perfect direct summand,
-so it remains acyclic after arbitrary derived coefficient change.  Thus no new obstruction
-appears at a nonflat retained face.  Perfect transposition
+totalizations. The Steinberg totalization is consequently an acyclic perfect direct summand,
+so it remains acyclic after arbitrary derived coefficient change. Thus no new obstruction
+appears at a nonflat retained face. Perfect transposition
 gives the augmentation-companion statement. $\square$
 
-When $q\equiv-1\pmod\ell$, no such conclusion follows from the projector argument.  The two flag
+When $q\equiv-1\pmod\ell$, no such conclusion follows from the projector argument. The two flag
 rows remain exact as rows of modules, but they are nonsplit equivariantly modulo $\varpi$.
 The cone on the left of (6.0d) is a derived coefficient quotient; the three-term complex on
 the right is formed after taking the actual old cokernel and its underived normalization
-layers.  Proving that these operations agree is exactly the missing filtered-strictness
-theorem.  Nodewise entries $\pm1$, finite freeness of the raw strict terms, and perfect
+layers. Proving that these operations agree is exactly the missing filtered-strictness
+theorem. Nodewise entries $\pm1$, finite freeness of the raw strict terms, and perfect
 primary--companion duality construct $\vartheta_v$ and transpose its cone; by themselves they
 do not force its cone to be acyclic.
 
@@ -1509,7 +1509,7 @@ One operation in this comparison can nevertheless be removed from the list of su
 Write $N_v(\mathbf1)$ and $N_v(P)$ for the middle, generic-new terms of the constant and
 permutation normalization complexes.
 
-**Proposition 6.0A (the generic old quotient already commutes).**  Under
+**Proposition 6.0A (the generic old quotient already commutes).** Under
 $({\rm AIH}_{\mathscr F})$ and $({\rm TIH}_{\mathscr F})$, the coefficient
 row induces a split exact sequence of finite projective modules
 
@@ -1520,47 +1520,47 @@ $$
 \longrightarrow0.                                      \tag{6.0e}
 $$
 
-The same statement holds on every retained coefficient face, with derived base change.  Thus
+The same statement holds on every retained coefficient face, with derived base change. Thus
 the nonbanal defect in (6.0d) is not a further failure of the generic old cokernel to commute
-with the quotient coefficient row.  It is exactly the failure, if any, of that coefficient
+with the quotient coefficient row. It is exactly the failure, if any, of that coefficient
 cofiber to be strict for the **global normalization filtration** and its graph-cycle residue.
 
-**Proof.**  Proposition 3.0B identifies the sheaf maps with the actual routed
-coefficient row.  Apply the quotient coefficient sequence to the two lower terms and the
-Iwahori term of the old map.  Degree zero and degree two vanish at the chosen no-character
-localizations, so these are short exact coefficient rows on degree-one cohomology.  The
+**Proof.** Proposition 3.0B identifies the sheaf maps with the actual routed
+coefficient row. Apply the quotient coefficient sequence to the two lower terms and the
+Iwahori term of the old map. Degree zero and degree two vanish at the chosen no-character
+localizations, so these are short exact coefficient rows on degree-one cohomology. The
 constant and permutation vertical old maps are injective by
 $({\rm AIH}_{\mathscr F})$ and Shapiro, and the quotient-primary vertical map is injective by
-$({\rm TIH}_{\mathscr F})$ (or by Proposition 5.0 in the projector range).  The snake lemma
-therefore gives (6.0e).  The unit-minor argument
+$({\rm TIH}_{\mathscr F})$ (or by Proposition 5.0 in the projector range). The snake lemma
+therefore gives (6.0e). The unit-minor argument
 makes all three cokernels projective; hence (6.0e) splits as a module sequence and survives
 arbitrary derived coefficient change. $\square$
 
 Equivalently, after (6.0e) the map $\vartheta_v$ is already a quasi-isomorphism on its middle
-new term.  Its cone is the total defect of the two extreme filtered comparisons: the derived
+new term. Its cone is the total defect of the two extreme filtered comparisons: the derived
 quotient of the constant-to-permutation normalization layer versus $L_v^+$, and the derived
 quotient of the constant-to-permutation graph complex versus $X_v^+(-1)$, with their actual
-residue differential.  Book 122's completed tubes and Proposition 3.1 identify these maps on
-each routed node and give their entries $\pm1$.  They do not say that taking global graph
-cycles, global normalized-component cohomology, and the coefficient cofiber commute.  Those
+residue differential. Book 122's completed tubes and Proposition 3.1 identify these maps on
+each routed node and give their entries $\pm1$. They do not say that taking global graph
+cycles, global normalized-component cohomology, and the coefficient cofiber commute. Those
 are kernel and cohomology operations, so termwise split exactness over $\mathcal O$ is
-insufficient when the flag row is nonsplit equivariantly.  A reusable proof of (6.0d) must
+insufficient when the flag row is nonsplit equivariantly. A reusable proof of (6.0d) must
 therefore be a filtered strictness theorem for the actual routed arithmetic totalization; a
 second saturation proof for (6.0e), a local Smith calculation, or perfect transposition would
 not address the remaining operation.
 
-The formal obstruction exists even with unit matrices.  Over $k$, take
+The formal obstruction exists even with unit matrices. Over $k$, take
 $0\to A\to B\to C\to0$ with $A=k$, $B=k^2$, $C=k$, maps
-$a\mapsto(a,0)$ and $(x,y)\mapsto y$.  Put
-$F^1A=0$, $F^1B=k(1,0)$, and $F^1C=C$.  Both maps are filtered and every nonzero matrix entry
+$a\mapsto(a,0)$ and $(x,y)\mapsto y$. Put
+$F^1A=0$, $F^1B=k(1,0)$, and $F^1C=C$. Both maps are filtered and every nonzero matrix entry
 is $1$, but the quotient filtration induced from $B$ has $F^1(B/A)=0$, not $F^1C=C$.
 Equipping the dual row with the orthogonal filtrations adds perfect transposition without
-repairing strictness.  Proposition 3.1 rules out nonunit **local incidence coefficients**; it
+repairing strictness. Proposition 3.1 rules out nonunit **local incidence coefficients**; it
 does not rule out this global filtered-cohomology phenomenon.
 
-The fixed and moving functionals do not close this gap.  Book 122, (9.55)--(9.58), gives at an
+The fixed and moving functionals do not close this gap. Book 122, (9.55)--(9.58), gives at an
 oriented node the extreme module $E_L(W)$, the fixed conductor module $E_L(W)$, the moving
-conductor module $W$, and the moving generization $E_L(W)\hookrightarrow W$.  On
+conductor module $W$, and the moving generization $E_L(W)\hookrightarrow W$. On
 $E_L(P)=P^{U_L}=\mathcal Oe_L\oplus\mathcal Os_L$, the proposed retractions satisfy
 
 $$
@@ -1572,23 +1572,23 @@ $$
 $$
 
 They therefore do not define one contraction compatible with both actual conductor
-generizations.  Their restrictions agree only on the residual augmentation extreme line,
-as in (5.0k); integrally their difference is the nonzero multiple in (5.0l).  This local
+generizations. Their restrictions agree only on the residual augmentation extreme line,
+as in (5.0k); integrally their difference is the nonzero multiple in (5.0l). This local
 residual equality neither commutes automatically with global normalized-component cohomology
 and graph-cycle kernels nor proves that the coefficient cofiber is strict for those
 operations.
 
-Derived Nakayama cannot supply the missing step.  To use it one must first identify the
+Derived Nakayama cannot supply the missing step. To use it one must first identify the
 **derived** residual fiber of the defect cone and place that cone in a bounded finite-projective
-or otherwise derived-complete finite category.  The available calculation is an ordinary
-residual calculation on raw local strict terms.  The filtered old cokernels and type graph
+or otherwise derived-complete finite category. The available calculation is an ordinary
+residual calculation on raw local strict terms. The filtered old cokernels and type graph
 cycle modules whose projectivity would make ordinary and derived reduction agree are precisely
-among the objects whose strictness is at issue.  Inferring their projectivity from the same
+among the objects whose strictness is at issue. Inferring their projectivity from the same
 residual contraction and then using that projectivity to justify derived Nakayama is circular.
 
 Accordingly, when $q\equiv-1\pmod\ell$, the assertion that $\vartheta_v$ in (6.0d) is a
 filtered quasi-isomorphism at every retained coefficient face remains the exact
-**nonbanal primitive filtered-cofiber input**.  Together with
+**nonbanal primitive filtered-cofiber input**. Together with
 $({\rm AIH}_{\mathscr F})$ and $({\rm TIH}_{\mathscr F})$ it implies
 $({\rm PRI}_{\rm type})$, but it is not proved by the cited local tube formulas.
 
@@ -1605,9 +1605,9 @@ $$
 $$
 
 The maps commute with Hecke correspondences, branch reversal, and primary--companion
-adjunction. The exact sequences commute with flat $A_Q$-base change.  In the nonbanal range,
+adjunction. The exact sequences commute with flat $A_Q$-base change. In the nonbanal range,
 at a nonflat retained face, $({\rm PRI}_{\rm type})$ is imposed for that face itself; no
-unsourced propagation through an arbitrary coefficient quotient is asserted.  In the
+unsourced propagation through an arbitrary coefficient quotient is asserted. In the
 projector range Proposition 6.0 supplies that propagation.
 
 **Proof.** Proposition 3.1 computes the combined coefficient and geometric nearby cycles on
@@ -1617,7 +1617,7 @@ $A_{\rm old}\subset W_1\subset P_1^+$ gives an injection
 $L_v^+\hookrightarrow N_v^+$, and functoriality of nearby cycles makes its composite with
 $\operatorname{res}_v$ zero. Consequently
 $H^1(\mathcal R_{v,A_Q}^+)=0$ says exactly that the image of $L_v^+$ is the kernel of the top
-residue, while $H^2(\mathcal R_{v,A_Q}^+)=0$ says exactly that the top residue is onto.  Thus
+residue, while $H^2(\mathcal R_{v,A_Q}^+)=0$ says exactly that the top residue is onto. Thus
 (6.0c) is equivalent to the integral exact sequence
 
 $$
@@ -1636,9 +1636,9 @@ the second identification in (6.1).
 
 Conversely, either pair of exact primitive extreme sequences with the displayed graded
 identifications makes the complex (6.0a) exact in degrees $1,2$, so it kills
-$\operatorname{Ob}_{\rm PRI}(v)$.  Flat coefficient change preserves (6.1a); for nonflat
+$\operatorname{Ob}_{\rm PRI}(v)$. Flat coefficient change preserves (6.1a); for nonflat
 coefficient change its Tor sequence is a genuine possible obstruction in the nonbanal range,
-which is why (6.0d) is required separately at every retained face there.  Hecke,
+which is why (6.0d) is required separately at every retained face there. Hecke,
 branch-reversal, and adjunction compatibility comes from the maps supplied under
 $({\rm TPE}_v)$ and Proposition 3.0B. No type-created finite index appears in
 either extreme residue. The argument deliberately does not claim that a boundary matrix with
@@ -1652,14 +1652,14 @@ the chosen datum; its stabilizer weights are units; and the induced flag lineari
 oriented node generator with coefficient vector to the characteristic function of the
 corresponding switched definite class with that same vector.
 
-There are two logical layers in this formulation.  Even with constant coefficients, Book
-140's Hypothesis 5.1 requires the superspecial PEL quasi-isogeny classification.  Its precise
+There are two logical layers in this formulation. Even with constant coefficients, Book
+140's Hypothesis 5.1 requires the superspecial PEL quasi-isogeny classification. Its precise
 flagged form is (5.9a): an equivalence from the node groupoid, with polarization, level,
 automorphisms, active flag, branch routing, Frobenius, and Hecke correspondences retained, to
-the switched definite double-coset groupoid.  Section 5.3 proves the formal double-coset
-reduction only after that classification is granted.  The geometric equivalence is the
-unproved layer.  Lemma 6.1A proves that transport of the primary and companion stabilizer
-representations and their perfect pairing is then formal.  Neither the geometric
+the switched definite double-coset groupoid. Section 5.3 proves the formal double-coset
+reduction only after that classification is granted. The geometric equivalence is the
+unproved layer. Lemma 6.1A proves that transport of the primary and companion stabilizer
+representations and their perfect pairing is then formal. Neither the geometric
 classification nor its flagged functor follows from rational Jacquet--Langlands or from the
 local chart $xy=\pi_v$.
 
@@ -1680,26 +1680,26 @@ geometric classification is stated at the correct level.
 
 **Lemma 6.1A (flagged groupoid transport).** Use $({\rm TIC}_v)$ and suppose that Book
 140's missing superspecial theorem (5.9a), an equivalence of the **flagged node groupoid** with
-the switched definite double-coset groupoid, holds.  Here flagged means that the equivalence
+the switched definite double-coset groupoid, holds. Here flagged means that the equivalence
 retains the active rank-one incidence object, its two oriented deformation branches, its
 automorphism action on the finite flag set, the polarization multiplier, and the prime-to-$v$
-level.  With the Frobenius, Hecke, and component routing included in (5.9a), it implies
+level. With the Frobenius, Hecke, and component routing included in (5.9a), it implies
 $({\rm NU}_{\rm type})$; no further theorem about
 the quotient or augmentation representations is needed.
 
-**Proof.**  On either groupoid the permutation coefficient is the free module on the active
-finite flag functor.  A natural isomorphism of that functor transports its basis vectors with
-coefficient one and intertwines every isotropy action.  The constant-vector and augmentation
-maps are natural transformations of its free-module linearization.  Their cokernel and kernel
-are therefore transported as the primary and companion modules.  The dot product on flag basis vectors is
-also natural, so the perfect primary--companion pairing is preserved.  Full faithfulness
+**Proof.** On either groupoid the permutation coefficient is the free module on the active
+finite flag functor. A natural isomorphism of that functor transports its basis vectors with
+coefficient one and intertwines every isotropy action. The constant-vector and augmentation
+maps are natural transformations of its free-module linearization. Their cokernel and kernel
+are therefore transported as the primary and companion modules. The dot product on flag basis vectors is
+also natural, so the perfect primary--companion pairing is preserved. Full faithfulness
 identifies automorphism groups, hence the stabilizer factors; their orders are units by
-Proposition 3.0B.  The retained branch orientation, Frobenius, routing, and
+Proposition 3.0B. The retained branch orientation, Frobenius, routing, and
 Hecke correspondences give all remaining clauses of $({\rm NU}_{\rm type})$. $\square$
 
-An equivalence or bijection which forgets the flag functor is insufficient.  Already for a
+An equivalence or bijection which forgets the flag functor is insufficient. Already for a
 one-object groupoid $BH$, the underlying object, automorphism group, and mass do not distinguish
-an $H$-module $W$ from $W\otimes\chi$.  Thus Book 140's unproved classification remains the
+an $H$-module $W$ from $W\otimes\chi$. Thus Book 140's unproved classification remains the
 first node-uniformization theorem, but the type refinement is not a second independent
 representation-classification problem: it is the functorial consequence of proving that
 classification for flagged PEL nodes.
@@ -1815,10 +1815,8 @@ separating component projector. Let $\mathbb T_{\mathrm{abs}}$ be the integral a
 away-from-level Hecke algebra preserving the displayed lattices and put
 $\mathbb T_{\mathrm{abs},E}=\mathbb T_{\mathrm{abs}}\otimes_{\mathcal O}E$. Then
 
-$$
-\ker\!\left(\mathbb T_{\mathrm{abs},E}
-\longrightarrow\operatorname{End}(N_{v,E}^+)\right)
-=
+# $$\ker\!\left(\mathbb T_{\mathrm{abs},E}\longrightarrow\operatorname{End}(N_{v,E}^+)\right)
+
 \ker\!\left(\mathbb T_{\mathrm{abs},E}
 \longrightarrow\operatorname{End}(X_{v,E}^+)\right).
 \tag{6.12}
@@ -2065,7 +2063,7 @@ Let $R_\infty^{\rm sp}$ be the patched global deformation ring with the named lo
 (7.5), and let $C_{\infty,v}^+$ be the patched one-prime complex. Write $({\rm SUP}_v)$ for
 the following one-prime support datum. In this patched section, the proved
 $({\rm TIC}_v)$ is used on every retained finite shadow, and
-$({\rm TIH}_{\mathscr F})$ is imposed there.  In the projector range it is supplied by
+$({\rm TIH}_{\mathscr F})$ is imposed there. In the projector range it is supplied by
 $({\rm AIH}_{\mathscr F})$ through Proposition 5.0; in the nonbanal range (5.0d) is also
 required.
 
@@ -2137,16 +2135,16 @@ false if the extraneous component of (7.4) is retained or if a scalar flag/Kumme
 deleted.
 
 The word ``chart'' in $({\rm BCD}_v)$ should not be read as asking again for the elementary
-local calculation of Chapter 7.  That calculation is complete from the stated inputs.  On the named special
+local calculation of Chapter 7. That calculation is complete from the stated inputs. On the named special
 closure the completed local ring is $R_0[[m]]$ and its monodromy-zero boundary is $R_0$; in
 the distinct-line case this is Book 138's clean special chart, and at a scalar point $R_0$
 means the whole represented flag, unramified, tame-Kummer, determinant, and frame block of
-(7.6)--(7.10).  The scalar ray factor is then ordinary completed tensor product with
-$\Lambda_v$ by (7.12).  None of these local statements retains the extraneous $(u,c)$
+(7.6)--(7.10). The scalar ray factor is then ordinary completed tensor product with
+$\Lambda_v$ by (7.12). None of these local statements retains the extraneous $(u,c)$
 component of (7.4).
 
 One further part is already formal from the patching sources, provided all three problems are
-patched in one marked diagram.  At a distinct-line point let $R_v^{\rm ur}$ be the enhanced
+patched in one marked diagram. At a distinct-line point let $R_v^{\rm ur}$ be the enhanced
 unramified ambient factor, let $u$ cut out the special-ratio boundary
 
 $$
@@ -2168,17 +2166,17 @@ R_Q^{\partial}
 $$
 
 There is no ring map from the unramified global problem to the special global problem which
-creates tame monodromy: both map only to their common boundary quotient.  Thus (8.2d) must not
+creates tame monodromy: both map only to their common boundary quotient. Thus (8.2d) must not
 be reversed by associativity of completed tensor products.
 
-The Taylor--Wiles sets in (8.2d) may be chosen in common.  Choose a killing set for the first
+The Taylor--Wiles sets in (8.2d) may be chosen in common. Choose a killing set for the first
 of the finitely many residual condition problems, then choose additional primes for the next
-problem while avoiding those already chosen.  Adding a Taylor--Wiles condition can only shrink
-the preceding dual Selmer group, so its vanishing persists.  Iterate and pad to one fixed
-cardinality as in Book 143, Section 12.4.  Include the three rings, both quotient maps, their
-kernels, the modules, and all retained operators in one finite marked shadow.  Book 145,
+problem while avoiding those already chosen. Adding a Taylor--Wiles condition can only shrink
+the preceding dual Selmer group, so its vanishing persists. Iterate and pad to one fixed
+cardinality as in Book 143, Section 12.4. Include the three rings, both quotient maps, their
+kernels, the modules, and all retained operators in one finite marked shadow. Book 145,
 Proposition 3.1 and Lemmas 4.1 and 5.1 then give a single coherent diagonal and preserve both
-finite quotient identities.  Consequently one can, and below does, choose patched rings with
+finite quotient identities. Consequently one can, and below does, choose patched rings with
 
 $$
 R_\infty^{\partial}
@@ -2187,11 +2185,11 @@ R_\infty^{\partial}
 $$
 
 after the same frames are removed and with the corresponding full ideals in the scalar case.
-This closes the simultaneous-marking and common-boundary **quotient** comparison.  It
+This closes the simultaneous-marking and common-boundary **quotient** comparison. It
 does not give a section of either quotient and hence does not prove (8.2a).
 
 The exact first missing reusable theorem is now narrower: it is a **relative
-Cartier-switch transversality theorem** for the two arrows in (8.2e).  At the selected patched
+Cartier-switch transversality theorem** for the two arrows in (8.2e). At the selected patched
 primes, put
 
 $$
@@ -2212,21 +2210,21 @@ $$
 
 The last isomorphism is noncanonical and means that the relaxation from the boundary condition
 to the named special condition is formally smooth of relative dimension one, with $m$ its
-relative parameter.  Equivalently, the relative cotangent mapping fiber is the actual
-line-incidence condition complex and its relative obstruction map vanishes.  At a scalar point,
+relative parameter. Equivalently, the relative cotangent mapping fiber is the actual
+line-incidence condition complex and its relative obstruction map vanishes. At a scalar point,
 the coordinate $u$ and parameter $m$ in (8.2f) are replaced by equal-length boundary and
 monodromy blocks: the first must be a regular sequence on $A$, and the second must give the
-corresponding formally smooth power-series directions.  The blocks include the full flag,
-unramified, tame-Kummer, determinant, and frame data.  One signed Gram factor is not a
+corresponding formally smooth power-series directions. The blocks include the full flag,
+unramified, tame-Kummer, determinant, and frame data. One signed Gram factor is not a
 substitute.
 
-**Proposition 8.1A (formal completion of the boundary comparison).**  If (8.2f), or its scalar
+**Proposition 8.1A (formal completion of the boundary comparison).** If (8.2f), or its scalar
 block version, holds, then the completed chart (8.2a), the local-dimension equality (8.2b), and
 the unique-component routing in clause 4 follow formally.
 
-**Proof.**  Book 172 makes $A$ a regular domain finite free over its regular scalar source.
+**Proof.** Book 172 makes $A$ a regular domain finite free over its regular scalar source.
 In the distinct-line case, $u\ne0$ is therefore a non-zero-divisor and every prime minimal
-over $(u)$ has height one.  If $\mathfrak r_i$ is such a prime, then
+over $(u)$ has height one. If $\mathfrak r_i$ is such a prime, then
 
 $$
 \mathfrak q_i=(\mathfrak r_i/(u),m)
@@ -2234,23 +2232,23 @@ $$
 $$
 
 lies on exactly the component indexed by $\mathfrak r_i$: no distinct minimal prime over
-$(u)$ is contained in $\mathfrak r_i$.  Its contraction to the finite regular scalar source
-has height one, while $\mathfrak q_i$ also has height one.  This proves (8.2b) and the required
-routing.  Formula (8.2f) is (8.2a) after identifying the common boundary by (8.2e).  For equal
+$(u)$ is contained in $\mathfrak r_i$. Its contraction to the finite regular scalar source
+has height one, while $\mathfrak q_i$ also has height one. This proves (8.2b) and the required
+routing. Formula (8.2f) is (8.2a) after identifying the common boundary by (8.2e). For equal
 blocks of length $s$, quotienting by the regular boundary sequence lowers dimension by $s$ and
 adjoining the $s$ monodromy variables restores it; the same minimal-prime argument gives unique
 component routing. $\square$
 
-Neither the available local-model sources nor the patching sources prove (8.2f).  Book 69,
+Neither the available local-model sources nor the patching sources prove (8.2f). Book 69,
 (13.7), gives
 the tangent comparison and Section 10.6 gives a formal-smoothness criterion, but no source
 proves the required relative obstruction-map vanishing for this special-to-boundary map.
 Book 143 explicitly warns that absolute dual-Selmer vanishing does not kill a relative
 obstruction theory, and Book 145 preserves a marked comparison but does not manufacture a
-section or formal smoothness.  Book 172 proves regularity only for the lower clean patched
+section or formal smoothness. Book 172 proves regularity only for the lower clean patched
 problem; it does not prove that the image of $u$ is nonzero or that the monodromy relaxation is
-unobstructed.  Thus (8.2f), with its scalar-block analogue, is precisely the remaining global
-content of $({\rm BCD}_v)$.  No nonminimal or downstream $R=T$ statement is used to
+unobstructed. Thus (8.2f), with its scalar-block analogue, is precisely the remaining global
+content of $({\rm BCD}_v)$. No nonminimal or downstream $R=T$ statement is used to
 manufacture it.
 
 **Lemma 8.2 (nonzero boundary class).** Assume $({\rm TIH}_{\mathscr F})$ and the first three
@@ -2332,7 +2330,7 @@ $$
 
 It does not make the annihilator zero. Killing it is part of the later nonminimal comparison.
 Once $({\rm TIH}_{\mathscr F})$ is available, $({\rm PRI}_{\rm type})$ does not enter this
-support proof.  The condition $({\rm AIH}_{\mathscr F})$ enters if it is used to supply
+support proof. The condition $({\rm AIH}_{\mathscr F})$ enters if it is used to supply
 the constant and projector type-Ihara inputs, and it is also required for the corrected
 residue and normalization filtration of Chapter 6.
 
@@ -2663,9 +2661,9 @@ an independent cross-determinant theorem is supplied. No such theorem is asserte
 **Theorem 11.1 (conditional one-prime type complex and component support).** Assume the clean
 datum of Chapter 2, use the proved $({\rm TPE}_v)$, and assume
 $({\rm AIH}_{\mathscr F})$, $({\rm TIH}_{\mathscr F})$, and
-$({\rm PRI}_{\rm type})$.  Proposition 3.0B proves $({\rm TIC}_v)$.  When
+$({\rm PRI}_{\rm type})$. Proposition 3.0B proves $({\rm TIC}_v)$. When
 $q+1\in\mathcal O^\times$, Proposition 5.0 and Proposition 6.0 supply the last two
-hypotheses from $({\rm AIH}_{\mathscr F})$.  When $q\equiv-1\pmod\ell$, they additionally
+hypotheses from $({\rm AIH}_{\mathscr F})$. When $q\equiv-1\pmod\ell$, they additionally
 require the quotient-new injection (5.0d) and the filtered-cofiber comparison (6.0d) at every
 retained face. The generic-kernel and
 faithful-order assertion in clause 6 additionally assumes Book 125's component-routing source
@@ -2708,10 +2706,10 @@ auxiliary level $Q$:
 
 The theorem remains conditional on the finite family $({\rm AIH}_{\mathscr F})$.
 The principal-node stabilizer theorem for these actual rows is unconditional by Book 122,
-Corollary 9.11.  The quotient-new injection (5.0d) and filtered-cofiber comparison (6.0d)
+Corollary 9.11. The quotient-new injection (5.0d) and filtered-cofiber comparison (6.0d)
 remain additional inputs in the nonbanal range. The
 graph--definite comparison, scalar augmentation, and support clauses state their separate exact
-hypotheses.  In particular $({\rm NU}_{\rm type})$ and $({\rm SUP}_v)$ do not follow from
+hypotheses. In particular $({\rm NU}_{\rm type})$ and $({\rm SUP}_v)$ do not follow from
 $({\rm AIH}_{\mathscr F})$.
 In particular, clause 9 does not infer support from the surjection
 $R^{\rm sp}\twoheadrightarrow\mathbb T^{\rm sp}$ of Book 170.

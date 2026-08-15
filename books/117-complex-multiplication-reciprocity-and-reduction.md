@@ -551,7 +551,7 @@ The PEL scheme is of finite type over $E$. Zero tangent space implies that every
 
 There are two useful consequences.
 
-First, the residue field $E(x)$ of a point $x$ is already a field of definition for the *fine moduli object*: the universal abelian scheme, $\mathcal O$-action, polarization homomorphism, and finite level restrict to $E(x)$. This is a canonical model in the exact moduli sense required here. It has not yet been proved that $E(x)/E$ is abelian; that will be a conclusion of the arithmetic comparison.
+First, the residue field $E(x)$ of a point $x$ is already a field of definition for the _fine moduli object_: the universal abelian scheme, $\mathcal O$-action, polarization homomorphism, and finite level restrict to $E(x)$. This is a canonical model in the exact moduli sense required here. It has not yet been proved that $E(x)/E$ is abelian; that will be a conclusion of the arithmetic comparison.
 
 Second, finite étale schemes and abelian schemes spread out. After enlarging a finite set $S_0$ of finite places of $E$, there are
 
@@ -980,7 +980,7 @@ $$
 
 With the base-change convention (1.7), both composites from $x^{\tau\sigma}$ to the transform indexed by $st$ preserve the full level. They are therefore equal, because the target has no automorphisms preserving level $N\geq3$. Thus the comparison isomorphisms satisfy the descent cocycle as actual morphisms, not merely in a set of isomorphism classes.
 
-This also explains the logical order of canonical descent. The finite étale scheme $\mathscr C/E$ is the canonical algebraic model of the *set of rigidified CM points*. Equation (4.36) identifies its arithmetic Galois action. For the field fixed by the stabilizer of one point, the unique fine-level comparison isomorphisms give a cocycle. Effective fpqc descent then descends the universal fiber, its group law, the $\mathcal O$-action, polarization homomorphism, and finite level. Before rigidification the comparisons can differ by an automorphism of the CM object; that is the field-of-moduli obstruction, not a failure of reciprocity.
+This also explains the logical order of canonical descent. The finite étale scheme $\mathscr C/E$ is the canonical algebraic model of the _set of rigidified CM points_. Equation (4.36) identifies its arithmetic Galois action. For the field fixed by the stabilizer of one point, the unique fine-level comparison isomorphisms give a cocycle. Effective fpqc descent then descends the universal fiber, its group law, the $\mathcal O$-action, polarization homomorphism, and finite level. Before rigidification the comparisons can differ by an automorphism of the CM object; that is the field-of-moduli obstruction, not a failure of reciprocity.
 
 ### 4.9 Polarized and order-valued forms
 

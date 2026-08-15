@@ -1761,21 +1761,21 @@ The same ceiling holds for every subfield of $L$. At a fixed exponent it also ho
 
 The chain of reasoning is reliable only when each hypothesis is kept with the step where it is used.
 
-| Assertion | Hypothesis used | What fails without it |
-|---|---|---|
-| geometric points recover the generic group | characteristic-zero local field | a nonétale generic group can have too few points |
-| integral exponent equals generic exponent | finite local freeness over a domain | a morphism can vanish generically but survive as vertical torsion |
-| torsion-free congruence ball | commutative group law and $\ell$-power torsion | an arbitrary finite cover has no multiplication estimate |
-| radius $e_K/(\ell-1)$ | mixed characteristic and (4.4) | in equal characteristic the linear $\ell$-term vanishes |
-| quotient-compatible cutoff | upper numbering | lower numbering changes under every quotient |
-| different formula (3.4) | finite Galois local extension with separable residue field | the classical group formula does not cover fierce residue growth |
-| discriminant of the represented field | faithful cutout action | ramification hidden in a kernel is uncontrolled |
-| coefficient stability | an actual model of the full object or supplied exact sequence | finite-flat endpoints do not control arbitrary extension classes |
-| downstairs finite flatness | effective integral descent | potential finite flatness after ramified base change is weaker |
-| low-weight linear classification | $\ell>2$ and absolutely unramified base | model uniqueness and the stated filtered category can fail |
-| global finite-flat bound | local models at every $v\mid\ell$ and depth data elsewhere | a listed ramified prime can have arbitrarily large exponent |
-| fixed-level compositum bound | a finite product model at the same exponent | separate coarse discriminant estimates add unnecessary costs |
-| uniform tower bound | additional relative finite-flat models | bounded rank and bounded step degree do not bound depth |
+| Assertion                                  | Hypothesis used                                               | What fails without it                                             |
+| ------------------------------------------ | ------------------------------------------------------------- | ----------------------------------------------------------------- |
+| geometric points recover the generic group | characteristic-zero local field                               | a nonétale generic group can have too few points                  |
+| integral exponent equals generic exponent  | finite local freeness over a domain                           | a morphism can vanish generically but survive as vertical torsion |
+| torsion-free congruence ball               | commutative group law and $\ell$-power torsion                | an arbitrary finite cover has no multiplication estimate          |
+| radius $e_K/(\ell-1)$                      | mixed characteristic and (4.4)                                | in equal characteristic the linear $\ell$-term vanishes           |
+| quotient-compatible cutoff                 | upper numbering                                               | lower numbering changes under every quotient                      |
+| different formula (3.4)                    | finite Galois local extension with separable residue field    | the classical group formula does not cover fierce residue growth  |
+| discriminant of the represented field      | faithful cutout action                                        | ramification hidden in a kernel is uncontrolled                   |
+| coefficient stability                      | an actual model of the full object or supplied exact sequence | finite-flat endpoints do not control arbitrary extension classes  |
+| downstairs finite flatness                 | effective integral descent                                    | potential finite flatness after ramified base change is weaker    |
+| low-weight linear classification           | $\ell>2$ and absolutely unramified base                       | model uniqueness and the stated filtered category can fail        |
+| global finite-flat bound                   | local models at every $v\mid\ell$ and depth data elsewhere    | a listed ramified prime can have arbitrarily large exponent       |
+| fixed-level compositum bound               | a finite product model at the same exponent                   | separate coarse discriminant estimates add unnecessary costs      |
+| uniform tower bound                        | additional relative finite-flat models                        | bounded rank and bounded step degree do not bound depth           |
 
 The substantial imported results have now appeared with their hypotheses. Ramification theory supplies Herbrand quotient compatibility, Hilbert's different formula, conductor--discriminant identities, and transitivity. The finite-flat representation theory supplies marked models, schematic closure, represented quotients, coefficient actions, products, and Cartier duality. The small-height theory supplies the Oort--Tate interpretation and explains the ramification boundary. The integral Fontaine--Laffaille theory supplies essential surjectivity, unramified base change, and compatible coefficient quotients in weights zero and one. The new work of this book is the complete passage from integral distance through upper depth to local different and global root discriminant.
 

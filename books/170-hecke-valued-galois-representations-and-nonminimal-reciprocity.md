@@ -1751,37 +1751,37 @@ For the one-prime integral level-raising, level-lowering, and inner-form asserti
 
 The proof uses only the permitted packages, with the following exact roles.
 
-| Source | Result used here | Hypotheses retained |
-|---|---|---|
-| Book 62, *Pseudocompact Trace Algebras and Carayol Descent* | Burnside trace coordinates, Azumaya splitting over a complete local ring, local Skolem--Noether, strict uniqueness | common residue field, completeness, residual absolute irreducibility; no division by $2$ |
-| Book 68, *Finite-Flat Deformation Conditions at $\ell$* | represented framed finite-flat quotient, arbitrary coefficient base change, fixed-determinant clean power-series theorem | general representedness for finite $F_w/\mathbf Q_\ell$; smooth rank-two formula only for $\ell>2$ and unramified base |
-| Book 69, *Global Deformation Problems* | represented global conditioned ring, framed local fiber products, variance of the universal map | finite controlling set, compatible determinant, represented base-change-stable local conditions, global Schur hypothesis |
-| Book 85, *Hecke Algebras and Congruences* | finite-flat faithful image orders, localization and completeness, occurrence of generic characters, trace-order generation boundary | actual image on a finite-free module; no automatic special-fiber faithfulness, Hecke freeness, or Gorensteinness |
-| Book 127, *Galois Representations Attached to Weight-Two Automorphic Forms* | branchwise rank-two attachment, determinant, good polynomials, integral lattices and finite-flat quotients | noncharacter parallel weight two in the stated Shimura-curve range; integral conclusions only with the integral realization datum |
-| Book 128, *Local--Global Compatibility for Weight-Two Galois Representations* | full good, special, finite-descent, and tame-dihedral Weil--Deligne comparison | $w\nmid\ell$, verified curve models and correspondences, type projectors, monodromy and Frobenius return maps |
-| Book 138, *Integral Local Types and Type Lattices* | primary and companion lattices, saturation, ordered principal, enhanced special, fixed finite-type deformation rings | $w\nmid\ell$, unit-valued labels, tame quadratic range, stated banality and sign hypotheses; no primitive wild types |
-| Book 140, *Integral Level Change and Jacquet--Langlands Comparison* | saturated old map, free new quotient, equality of faithful inner-form orders, level raising and lowering | clean proper Shimura-curve datum, $\ell\ge7$, non-Eisenstein localization, component and nonexceptional hypotheses |
-| Book 142, *The Chebotarev Density Theorem* | finite Galois Frobenius selection with positive Dirichlet density and closed-condition transport | finite Galois extension, removal of a finite set, continuity, and a closed target condition; geometric form obtained by inversion |
+| Source                                                                        | Result used here                                                                                                                    | Hypotheses retained                                                                                                               |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Book 62, _Pseudocompact Trace Algebras and Carayol Descent_                   | Burnside trace coordinates, Azumaya splitting over a complete local ring, local Skolem--Noether, strict uniqueness                  | common residue field, completeness, residual absolute irreducibility; no division by $2$                                          |
+| Book 68, _Finite-Flat Deformation Conditions at $\ell$_                       | represented framed finite-flat quotient, arbitrary coefficient base change, fixed-determinant clean power-series theorem            | general representedness for finite $F_w/\mathbf Q_\ell$; smooth rank-two formula only for $\ell>2$ and unramified base            |
+| Book 69, _Global Deformation Problems_                                        | represented global conditioned ring, framed local fiber products, variance of the universal map                                     | finite controlling set, compatible determinant, represented base-change-stable local conditions, global Schur hypothesis          |
+| Book 85, _Hecke Algebras and Congruences_                                     | finite-flat faithful image orders, localization and completeness, occurrence of generic characters, trace-order generation boundary | actual image on a finite-free module; no automatic special-fiber faithfulness, Hecke freeness, or Gorensteinness                  |
+| Book 127, _Galois Representations Attached to Weight-Two Automorphic Forms_   | branchwise rank-two attachment, determinant, good polynomials, integral lattices and finite-flat quotients                          | noncharacter parallel weight two in the stated Shimura-curve range; integral conclusions only with the integral realization datum |
+| Book 128, _Local--Global Compatibility for Weight-Two Galois Representations_ | full good, special, finite-descent, and tame-dihedral Weil--Deligne comparison                                                      | $w\nmid\ell$, verified curve models and correspondences, type projectors, monodromy and Frobenius return maps                     |
+| Book 138, _Integral Local Types and Type Lattices_                            | primary and companion lattices, saturation, ordered principal, enhanced special, fixed finite-type deformation rings                | $w\nmid\ell$, unit-valued labels, tame quadratic range, stated banality and sign hypotheses; no primitive wild types              |
+| Book 140, _Integral Level Change and Jacquet--Langlands Comparison_           | saturated old map, free new quotient, equality of faithful inner-form orders, level raising and lowering                            | clean proper Shimura-curve datum, $\ell\ge7$, non-Eisenstein localization, component and nonexceptional hypotheses                |
+| Book 142, _The Chebotarev Density Theorem_                                    | finite Galois Frobenius selection with positive Dirichlet density and closed-condition transport                                    | finite Galois extension, removal of a finite set, continuity, and a closed target condition; geometric form obtained by inversion |
 
 Book 142 is used only for the density and transport theorem whose consequence was proved explicitly in Lemma 5.2. No later-numbered deformation--Hecke, support, or patching theorem is used.
 
 ### 16.3 Hypothesis ledger
 
-| Conclusion | Necessary input | Boundary without it |
-|---|---|---|
-| traces lie in $\mathbb T$ | all good Frobenius traces in $\mathbb T$, continuity, finite-quotient density, closedness | branchwise integral tuples may miss the order |
-| matrices lie in $M_2(\mathbb T)$ | residual absolute irreducibility, complete local order, reduced generic product | a character may have no unique free realization |
-| determinant is $\delta$ | common cohomological pairing and central-component character | trace does not fix the chosen determinant in exceptional settings |
-| all components satisfy a local condition | every generic factor verified, $\mathcal O$-flatness, reduced generic fiber | one checked branch or field-valued points do not detect the full order |
-| finite flatness of every quotient | represented finite-flat condition and integral branch lattices | rational crystallinity or a stable lattice is insufficient |
-| fixed finite inertia | prime-to-$\ell$ finite quotient and fixed integral model | inertia can deform when its order is divisible by $\ell$ |
-| ordered principal factorization | automorphic line enhancement, or distinct residual characters | Weyl-conjugate components merge |
-| special factorization | enhanced special closure and sign | $N\ne0$ is open and not quotient-stable |
-| tame-dihedral factorization | quadratic descent character and Frobenius return map | inertial type leaves an unramified ambiguity |
-| equality across inner forms | equality of faithful integral orders from saturated comparison | rational transfer permits a congruence index |
-| surjectivity $R\to\mathbb T$ | trace generation by the $T_v$ and fixed determinant | added local operators may lie outside the trace order |
-| level lowering | residual $N=0$, normalization control, component-group cleanliness, adjoint stability | conductor drop alone does not produce lower level |
-| full clean nonminimal package | $\ell\ge7$ in the available integral level-change theorem | small-prime type and sign arguments require reproof |
+| Conclusion                               | Necessary input                                                                           | Boundary without it                                                    |
+| ---------------------------------------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| traces lie in $\mathbb T$                | all good Frobenius traces in $\mathbb T$, continuity, finite-quotient density, closedness | branchwise integral tuples may miss the order                          |
+| matrices lie in $M_2(\mathbb T)$         | residual absolute irreducibility, complete local order, reduced generic product           | a character may have no unique free realization                        |
+| determinant is $\delta$                  | common cohomological pairing and central-component character                              | trace does not fix the chosen determinant in exceptional settings      |
+| all components satisfy a local condition | every generic factor verified, $\mathcal O$-flatness, reduced generic fiber               | one checked branch or field-valued points do not detect the full order |
+| finite flatness of every quotient        | represented finite-flat condition and integral branch lattices                            | rational crystallinity or a stable lattice is insufficient             |
+| fixed finite inertia                     | prime-to-$\ell$ finite quotient and fixed integral model                                  | inertia can deform when its order is divisible by $\ell$               |
+| ordered principal factorization          | automorphic line enhancement, or distinct residual characters                             | Weyl-conjugate components merge                                        |
+| special factorization                    | enhanced special closure and sign                                                         | $N\ne0$ is open and not quotient-stable                                |
+| tame-dihedral factorization              | quadratic descent character and Frobenius return map                                      | inertial type leaves an unramified ambiguity                           |
+| equality across inner forms              | equality of faithful integral orders from saturated comparison                            | rational transfer permits a congruence index                           |
+| surjectivity $R\to\mathbb T$             | trace generation by the $T_v$ and fixed determinant                                       | added local operators may lie outside the trace order                  |
+| level lowering                           | residual $N=0$, normalization control, component-group cleanliness, adjoint stability     | conductor drop alone does not produce lower level                      |
+| full clean nonminimal package            | $\ell\ge7$ in the available integral level-change theorem                                 | small-prime type and sign arguments require reproof                    |
 
 ### 16.4 Conclusion
 

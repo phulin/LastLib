@@ -49,33 +49,44 @@
    - [Base change and the Hodge bundle](#93-base-change-and-the-hodge-bundle)
    - [Nodal and Gorenstein curves](#94-nodal-and-gorenstein-curves)
 10. [Proper curves and Picard representability](#10-proper-curves-and-picard-representability)
-   - [The relative Picard functor](#101-the-relative-picard-functor)
-   - [Divisors provide finite-dimensional charts](#102-divisors-provide-finite-dimensional-charts)
-   - [The Picard scheme of a smooth proper curve](#103-the-picard-scheme-of-a-smooth-proper-curve)
-   - [Tangent spaces, smoothness, and the Jacobian](#104-tangent-spaces-smoothness-and-the-jacobian)
+
+- [The relative Picard functor](#101-the-relative-picard-functor)
+- [Divisors provide finite-dimensional charts](#102-divisors-provide-finite-dimensional-charts)
+- [The Picard scheme of a smooth proper curve](#103-the-picard-scheme-of-a-smooth-proper-curve)
+- [Tangent spaces, smoothness, and the Jacobian](#104-tangent-spaces-smoothness-and-the-jacobian)
+
 11. [Abelian schemes and their coherent cohomology](#11-abelian-schemes-and-their-coherent-cohomology)
-   - [Invariant differentials](#111-invariant-differentials)
-   - [The dual abelian scheme](#112-the-dual-abelian-scheme)
-   - [The exterior algebra theorem](#113-the-exterior-algebra-theorem)
-   - [Polarizations and base change](#114-polarizations-and-base-change)
+
+- [Invariant differentials](#111-invariant-differentials)
+- [The dual abelian scheme](#112-the-dual-abelian-scheme)
+- [The exterior algebra theorem](#113-the-exterior-algebra-theorem)
+- [Polarizations and base change](#114-polarizations-and-base-change)
+
 12. [Hodge bundles in low-dimensional PEL families](#12-hodge-bundles-in-low-dimensional-pel-families)
-   - [What is assumed and what is proved](#121-what-is-assumed-and-what-is-proved)
-   - [Endomorphisms and decompositions](#122-endomorphisms-and-decompositions)
-   - [Determinants, ranks, and bad primes](#123-determinants-ranks-and-bad-primes)
-   - [Compactifications and boundary behavior](#124-compactifications-and-boundary-behavior)
+
+- [What is assumed and what is proved](#121-what-is-assumed-and-what-is-proved)
+- [Endomorphisms and decompositions](#122-endomorphisms-and-decompositions)
+- [Determinants, ranks, and bad primes](#123-determinants-ranks-and-bad-primes)
+- [Compactifications and boundary behavior](#124-compactifications-and-boundary-behavior)
+
 13. [Integral modular forms as coherent sections](#13-integral-modular-forms-as-coherent-sections)
-   - [The geometric definition](#131-the-geometric-definition)
-   - [Finiteness and change of coefficients](#132-finiteness-and-change-of-coefficients)
-   - [Cusp forms and the boundary](#133-cusp-forms-and-the-boundary)
-   - [The exact base-change test](#134-the-exact-base-change-test)
+
+- [The geometric definition](#131-the-geometric-definition)
+- [Finiteness and change of coefficients](#132-finiteness-and-change-of-coefficients)
+- [Cusp forms and the boundary](#133-cusp-forms-and-the-boundary)
+- [The exact base-change test](#134-the-exact-base-change-test)
+
 14. [Representability consequences and their boundary](#14-representability-consequences-and-their-boundary)
-   - [A coherent representability package](#141-a-coherent-representability-package)
-   - [Curves, abelian schemes, and PEL data](#142-curves-abelian-schemes-and-pel-data)
-   - [Failures when hypotheses are weakened](#143-failures-when-hypotheses-are-weakened)
+
+- [A coherent representability package](#141-a-coherent-representability-package)
+- [Curves, abelian schemes, and PEL data](#142-curves-abelian-schemes-and-pel-data)
+- [Failures when hypotheses are weakened](#143-failures-when-hypotheses-are-weakened)
+
 15. [Synthesis](#15-synthesis)
-   - [The chain of implications](#151-the-chain-of-implications)
-   - [A theorem checklist for later use](#152-a-theorem-checklist-for-later-use)
-   - [Conclusion](#153-conclusion)
+
+- [The chain of implications](#151-the-chain-of-implications)
+- [A theorem checklist for later use](#152-a-theorem-checklist-for-later-use)
+- [Conclusion](#153-conclusion)
 
 ## 1. The questions asked by a family
 

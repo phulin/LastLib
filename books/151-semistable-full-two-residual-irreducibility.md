@@ -1005,31 +1005,31 @@ A standalone theorem is only as sound as its imports. This final chapter records
 
 ### 12.1 Direct dependencies
 
-| Book | Imported result | Use here |
-|---|---|---|
-| 6 | global reciprocity and the conductor--discriminant formula over $\mathbf Q$ | Lemma 7.1 |
-| 35 | quotients and dual isogenies; odd-isogeny invariance of two-torsion | Sections 2.3 and 9 |
-| 42 | finite-flat torsion at good reduction and schematic closure of a generic line | Chapter 4 |
-| 44 | Tate uniformization and its torsion exact sequence, including the unramified nonsplit twist | Chapters 3 and 5 |
-| 45 | stable-line/isogeny equivalence, Weil-pairing determinant, and good-reduction unramifiedness | Chapters 1--3 |
-| 51 | order-$p$ finite-flat classification over the unramified base $\mathbf Z_p$ | Chapter 4 |
-| 149 | formal-immersion exclusion for $p\ge17$, the level-$11$ calculation, and the one-way mixed-seven parameter reduction | Sections 8.1--8.2 and 10.1 |
-| 150 | complete rational-point sets for $X_1(13)$ and the mixed-seven curve | Sections 8.2 and 10.2 |
+| Book | Imported result                                                                                                      | Use here                   |
+| ---- | -------------------------------------------------------------------------------------------------------------------- | -------------------------- |
+| 6    | global reciprocity and the conductor--discriminant formula over $\mathbf Q$                                          | Lemma 7.1                  |
+| 35   | quotients and dual isogenies; odd-isogeny invariance of two-torsion                                                  | Sections 2.3 and 9         |
+| 42   | finite-flat torsion at good reduction and schematic closure of a generic line                                        | Chapter 4                  |
+| 44   | Tate uniformization and its torsion exact sequence, including the unramified nonsplit twist                          | Chapters 3 and 5           |
+| 45   | stable-line/isogeny equivalence, Weil-pairing determinant, and good-reduction unramifiedness                         | Chapters 1--3              |
+| 51   | order-$p$ finite-flat classification over the unramified base $\mathbf Z_p$                                          | Chapter 4                  |
+| 149  | formal-immersion exclusion for $p\ge17$, the level-$11$ calculation, and the one-way mixed-seven parameter reduction | Sections 8.1--8.2 and 10.1 |
+| 150  | complete rational-point sets for $X_1(13)$ and the mixed-seven curve                                                 | Sections 8.2 and 10.2      |
 
 Book 150 itself imports the exact Jacobian arithmetic needed for its exhaustive sieves; those books are transitive, not direct, dependencies here. No later manuscript supplies any step in Theorem 11.1.
 
 ### 12.2 Exceptional-prime ledger
 
-| Prime or place | Input | Exact conclusion |
-|---|---|---|
-| $q\ne p$, good | prime-to-$q$ specialization | both diagonal characters are unramified |
-| $q\ne p$, multiplicative | Tate unipotence and an unramified possible twist | both diagonal characters are unramified |
-| $q=p$, good | finite-flat closure and absolute ramification index one | diagonal inertia is $1$ or $\overline\chi_p$ |
-| $q=p$, multiplicative | stable-line analysis in the Tate exact sequence | diagonal inertia is $1$ or $\overline\chi_p$ |
-| $p=7$ | Book 149 reduction plus Book 150 exhaustive sieve | full rational two-torsion forbids rational $7$-torsion |
-| $p=11$ | Book 149 genus-one calculation | rational $11$-torsion is impossible |
-| $p=13$ | Book 150 genus-two sieve | rational $13$-torsion is impossible |
-| $p\ge17$ | Book 149 oriented formal immersion | rational $p$-torsion is impossible |
+| Prime or place           | Input                                                   | Exact conclusion                                       |
+| ------------------------ | ------------------------------------------------------- | ------------------------------------------------------ |
+| $q\ne p$, good           | prime-to-$q$ specialization                             | both diagonal characters are unramified                |
+| $q\ne p$, multiplicative | Tate unipotence and an unramified possible twist        | both diagonal characters are unramified                |
+| $q=p$, good              | finite-flat closure and absolute ramification index one | diagonal inertia is $1$ or $\overline\chi_p$           |
+| $q=p$, multiplicative    | stable-line analysis in the Tate exact sequence         | diagonal inertia is $1$ or $\overline\chi_p$           |
+| $p=7$                    | Book 149 reduction plus Book 150 exhaustive sieve       | full rational two-torsion forbids rational $7$-torsion |
+| $p=11$                   | Book 149 genus-one calculation                          | rational $11$-torsion is impossible                    |
+| $p=13$                   | Book 150 genus-two sieve                                | rational $13$-torsion is impossible                    |
+| $p\ge17$                 | Book 149 oriented formal immersion                      | rational $p$-torsion is impossible                     |
 
 Arithmetic Frobenius is used throughout. The nonsplit multiplicative twist is unramified, so it does not alter inertia. The square-discriminant condition in the mixed-seven reduction is used only in the necessary direction.
 

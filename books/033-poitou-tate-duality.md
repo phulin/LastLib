@@ -159,9 +159,9 @@ Third, substituting (1.2) into the cone long exact sequence gives the Poitou--Ta
 
 Throughout the finite-coefficient theory, $K$ is a number field and $S$ is a finite set of places containing:
 
-* every archimedean place;
-* every finite place whose residue characteristic divides the exponent of $M$;
-* every finite place where the action on $M$ is ramified.
+- every archimedean place;
+- every finite place whose residue characteristic divides the exponent of $M$;
+- every finite place where the action on $M$ is ramified.
 
 The coefficient module $M$ is a finite discrete continuous $G_{K,S}$-module. If $nM=0$, set
 
@@ -289,12 +289,12 @@ The theorem concerns finite discrete modules over a number field. It is not the 
 
 We will use four related but distinct degree conventions:
 
-| object | complementary degree | reason |
-|---|---:|---|
-| local cohomology | $2-i$ | local invariant lives in degree $2$ |
-| compact support versus global cohomology | $3-i$ | the localization cone contributes one shift |
-| the local term inside the global sequence | $2-i$ | it is paired place by place |
-| a Selmer condition in degree $1$ | $1$ | degree one is its own local complement |
+| object                                    | complementary degree | reason                                      |
+| ----------------------------------------- | -------------------: | ------------------------------------------- |
+| local cohomology                          |                $2-i$ | local invariant lives in degree $2$         |
+| compact support versus global cohomology  |                $3-i$ | the localization cone contributes one shift |
+| the local term inside the global sequence |                $2-i$ | it is paired place by place                 |
+| a Selmer condition in degree $1$          |                  $1$ | degree one is its own local complement      |
 
 This table is a useful diagnostic. A shift of three belongs to a compact-support/global pairing, never to a local pairing. A shift of two belongs to local duality and to the obstruction map out of a local package.
 
@@ -696,10 +696,10 @@ This proves (5.1). In particular the pairing is nondegenerate on both sides; fin
 
 The proof has four arithmetic inputs, each with a distinct job.
 
-* Local Tate duality makes every local pairing perfect.
-* The Brauer exact sequence makes the sum of invariants the only degree-two global relation.
-* The global norm-index theorem makes cup product with the fundamental class an isomorphism, not just a map.
-* Restricted-ramification finiteness keeps every comparison group finite, so Pontryagin duality is exact and nondegeneracy becomes perfectness.
+- Local Tate duality makes every local pairing perfect.
+- The Brauer exact sequence makes the sum of invariants the only degree-two global relation.
+- The global norm-index theorem makes cup product with the fundamental class an isomorphism, not just a map.
+- Restricted-ramification finiteness keeps every comparison group finite, so Pontryagin duality is exact and nondegeneracy becomes perfectness.
 
 Removing any one changes the conclusion. Local perfectness alone gives only orthogonality. Reciprocity alone gives only one containment. A pairing of infinite groups can be nondegenerate without identifying the full continuous dual. And without the real Tate modification, the 2-primary complex has an unaccounted periodic tail.
 
@@ -890,11 +890,11 @@ $$
 
 with the compact-open topology. Then:
 
-* the dual of a discrete torsion group is compact;
-* the dual of a compact group is discrete;
-* finite groups lie in both categories;
-* a closed subgroup $B\subseteq A$ has annihilator $(A/B)^D\subseteq A^D$;
-* a quotient by a nonclosed subgroup is not the object duality expects.
+- the dual of a discrete torsion group is compact;
+- the dual of a compact group is discrete;
+- finite groups lie in both categories;
+- a closed subgroup $B\subseteq A$ has annihilator $(A/B)^D\subseteq A^D$;
+- a quotient by a nonclosed subgroup is not the object duality expects.
 
 If $u:A\to B$ is continuous, $u^D:B^D\to A^D$ reverses direction. Moreover,
 
@@ -1362,11 +1362,8 @@ The common abbreviation $-r_2m$ is valid only when every real complex conjugatio
 
 The numerical consequence used most often is
 
-$$
-\boxed{
-\frac{|H^1_{\mathcal L}(K,M)|}
-{|H^1_{\mathcal L^\perp}(K,M')|}
-=
+# $$\boxed{\frac{|H^1_{\mathcal L}(K,M)|}{|H^1_{\mathcal L^\perp}(K,M')|}
+
 \frac{|H^0(G_{K,S},M)|}
 {|H^0(G_{K,S},M')|}
 \prod_{v\in S}
@@ -1811,11 +1808,11 @@ $$
 
 Typical examples include:
 
-* unramified deformations, with tangent $H^1_{\mathrm{ur}}$;
-* a strict condition, with tangent zero;
-* an unrestricted local problem, with full tangent space;
-* fixed inertial or minimally ramified conditions, whose tangent spaces are intermediate subspaces;
-* integral conditions at $v\mid\ell$, whose tangent spaces must be computed from the integral problem rather than guessed from generic-fiber ramification.
+- unramified deformations, with tangent $H^1_{\mathrm{ur}}$;
+- a strict condition, with tangent zero;
+- an unrestricted local problem, with full tangent space;
+- fixed inertial or minimally ramified conditions, whose tangent spaces are intermediate subspaces;
+- integral conditions at $v\mid\ell$, whose tangent spaces must be computed from the integral problem rather than guessed from generic-fiber ramification.
 
 At an unramified place $v\nmid\ell$, Frobenius makes the numerical behavior especially transparent:
 
@@ -1902,23 +1899,23 @@ A reliable use of global duality proceeds in this order.
 
 ### 14.2 Formula and variance table
 
-| object or map | exact role | qualification that cannot be dropped |
-|---|---|---|
-| $M'=M^\vee(1)$ | local and global dual coefficient | dual reverses coefficient arrows; twist comes from the Brauer target |
-| $P_S^i(M)$ | sum of modified local groups | $\widehat H^i$ at real places, zero at complex places |
-| $C_c^\bullet$ | cone of localization shifted by $-1$ | shift produces complementary global degree $3-i$ |
-| $\sum\operatorname{inv}_v$ | global reciprocity functional | real nonzero class has invariant $1/2$ |
-| $H_c^i(M)\simeq H^{3-i}(M')^D$ | perfect global duality | finiteness and restricted ramification are part of the theorem |
-| $\alpha_i$ | local family paired against global dual classes | target is $H^{2-i}(M')^D$ |
-| image of localization | locally realizable families | equals the exact annihilator of the dual localization image |
-| $\mathcal L_v^\perp$ | dual local condition | defined by annihilation, not by complementary order |
-| $Q_{\mathcal L}$ | forbidden local quotient | its cokernel maps into, but need not equal, the whole dual Selmer dual |
-| strict / relaxed | $0$ / all local $H^1$ | exact orthogonals are relaxed / strict |
-| unramified | kernel of restriction to inertia | self-orthogonal only under the usual unramified prime-to-coefficient hypotheses |
-| Greenberg--Wiles formula | difference of primal and dual Selmer sizes | includes all ordinary $H^0(K_v,M)$ denominators, including infinity |
-| restriction | base change of a class | produces components at every $w\mid v$ |
-| corestriction | transfer back | sums over $w\mid v$ and is adjoint to restriction |
-| lattice duality | compact $T$ versus discrete $D(T)$ | inverse/direct limits, closure, and $\varprojlim^1$ must be controlled |
+| object or map                  | exact role                                      | qualification that cannot be dropped                                            |
+| ------------------------------ | ----------------------------------------------- | ------------------------------------------------------------------------------- |
+| $M'=M^\vee(1)$                 | local and global dual coefficient               | dual reverses coefficient arrows; twist comes from the Brauer target            |
+| $P_S^i(M)$                     | sum of modified local groups                    | $\widehat H^i$ at real places, zero at complex places                           |
+| $C_c^\bullet$                  | cone of localization shifted by $-1$            | shift produces complementary global degree $3-i$                                |
+| $\sum\operatorname{inv}_v$     | global reciprocity functional                   | real nonzero class has invariant $1/2$                                          |
+| $H_c^i(M)\simeq H^{3-i}(M')^D$ | perfect global duality                          | finiteness and restricted ramification are part of the theorem                  |
+| $\alpha_i$                     | local family paired against global dual classes | target is $H^{2-i}(M')^D$                                                       |
+| image of localization          | locally realizable families                     | equals the exact annihilator of the dual localization image                     |
+| $\mathcal L_v^\perp$           | dual local condition                            | defined by annihilation, not by complementary order                             |
+| $Q_{\mathcal L}$               | forbidden local quotient                        | its cokernel maps into, but need not equal, the whole dual Selmer dual          |
+| strict / relaxed               | $0$ / all local $H^1$                           | exact orthogonals are relaxed / strict                                          |
+| unramified                     | kernel of restriction to inertia                | self-orthogonal only under the usual unramified prime-to-coefficient hypotheses |
+| Greenberg--Wiles formula       | difference of primal and dual Selmer sizes      | includes all ordinary $H^0(K_v,M)$ denominators, including infinity             |
+| restriction                    | base change of a class                          | produces components at every $w\mid v$                                          |
+| corestriction                  | transfer back                                   | sums over $w\mid v$ and is adjoint to restriction                               |
+| lattice duality                | compact $T$ versus discrete $D(T)$              | inverse/direct limits, closure, and $\varprojlim^1$ must be controlled          |
 
 The three formulas most often reused are
 

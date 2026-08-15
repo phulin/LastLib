@@ -159,7 +159,7 @@ $\mathfrak n=(\varpi,X_1,\ldots,X_t)$. Then:
    r\leq \dim_kH^2_{\mathrm{hr}}(\mathbf Q,M)=t. \tag{1.9}
    $$
 
-The adjective *presentation-relative* in (1.8) is deliberate. The chosen
+The adjective _presentation-relative_ in (1.8) is deliberate. The chosen
 minimal presentation supplies its conormal space. The dimension $r$ is
 intrinsic, but no unique coordinate-free identification between conormal
 spaces of two unrelated presentations is asserted.
@@ -1159,11 +1159,11 @@ characteristic-zero lift. Those are later inputs or conclusions.
 
 Only the following prior results carry mathematical weight here.
 
-| source | exact input used | hypothesis matched here |
-|---|---|---|
+| source                                      | exact input used                                                                                                                                             | hypothesis matched here                                                                                                                   |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
 | Book 165, Theorem 6.1 and Sections 5.1--5.2 | represented global Frey-SP functor; SP and finite-flat local lift groupoids; $L_2=0$; SP eigenvalues $2,4$; finite-flat liftability and $\dim L_\ell=h_\ell$ | $\ell\geq7$; nonzero SP monodromy with intrinsic line and named sign; actual coefficient-linear finite-flat model; cyclotomic determinant |
-| Book 166 | positive local complexes; supported duality; the exact Poitou--Tate sequence; Greenberg--Wiles balance | $S=\{2,\ell,\infty\}$; finite modules; exact local orthogonals; complete real convention; $M'=M^*(1)$ |
-| standard complete-local algebra | Nakayama, Krull intersection, the generalized principal ideal theorem, and representability over inverse limits | complete Noetherian local rings and the minimal presentation (1.7) |
+| Book 166                                    | positive local complexes; supported duality; the exact Poitou--Tate sequence; Greenberg--Wiles balance                                                       | $S=\{2,\ell,\infty\}$; finite modules; exact local orthogonals; complete real convention; $M'=M^*(1)$                                     |
+| standard complete-local algebra             | Nakayama, Krull intersection, the generalized principal ideal theorem, and representability over inverse limits                                              | complete Noetherian local rings and the minimal presentation (1.7)                                                                        |
 
 The factor-set calculation, supported obstruction, completeness proof,
 relation-socle construction, pro-Artinian effectiveness, and relation
@@ -1174,17 +1174,17 @@ deformation problem.
 
 ### 8.2 Sign, degree, and variance ledger
 
-| item | convention | checked consequence |
-|---|---|---|
-| factor set | $\widetilde\rho(g)\widetilde\rho(h)\widetilde\rho(gh)^{-1}=1+c(g,h)$ | left change by $1+b$ gives $c'=c+db$ |
-| determinant | every matrix lift has determinant $\chi_\ell$ | $\operatorname{tr}c=0$, and all correcting cochains lie in $M$ |
-| local comparison | $\rho_v^{\mathrm{adm}}=(1+b_v)\widetilde\rho|_v$ | $\operatorname{loc}_vc+db_v=0$ |
-| mapping-fiber coordinate | $y_v=-b_v$ | $dy_v=\operatorname{loc}_vc$ |
-| supported differential | $d(x,y)=(dx,\lambda x-dy)$ | $(c,y)$ is closed with the preceding sign |
-| Tate dual | $M'=M^*(1)\simeq M(1)$ | local $H^1$ pairs with local $H^1$ |
-| correction cup | mismatch in $M$ first, dual Selmer class in $M'$ second | (5.6) has no unrecorded graded sign |
-| Frobenius | arithmetic | SP eigenvalues are $2$ on $M^{I_2}$ and $4$ after twisting |
-| relation map | $\mathcal R^*\to H^2_{\mathrm{hr}}$ | duality gives dual Selmer $\twoheadrightarrow\mathcal R$, not the reverse injection |
+| item                     | convention                                                           | checked consequence                                                                 |
+| ------------------------ | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| factor set               | $\widetilde\rho(g)\widetilde\rho(h)\widetilde\rho(gh)^{-1}=1+c(g,h)$ | left change by $1+b$ gives $c'=c+db$                                                |
+| determinant              | every matrix lift has determinant $\chi_\ell$                        | $\operatorname{tr}c=0$, and all correcting cochains lie in $M$                      |
+| local comparison         | $\rho_v^{\mathrm{adm}}=(1+b_v)\widetilde\rho                         | _v$                                                                                 |
+| mapping-fiber coordinate | $y_v=-b_v$                                                           | $dy_v=\operatorname{loc}_vc$                                                        |
+| supported differential   | $d(x,y)=(dx,\lambda x-dy)$                                           | $(c,y)$ is closed with the preceding sign                                           |
+| Tate dual                | $M'=M^*(1)\simeq M(1)$                                               | local $H^1$ pairs with local $H^1$                                                  |
+| correction cup           | mismatch in $M$ first, dual Selmer class in $M'$ second              | (5.6) has no unrecorded graded sign                                                 |
+| Frobenius                | arithmetic                                                           | SP eigenvalues are $2$ on $M^{I_2}$ and $4$ after twisting                          |
+| relation map             | $\mathcal R^*\to H^2_{\mathrm{hr}}$                                  | duality gives dual Selmer $\twoheadrightarrow\mathcal R$, not the reverse injection |
 
 The degree shifts are also forced. A supported degree-two cocycle has a
 global degree-two coordinate and local degree-one nullhomotopies. Local Tate

@@ -1990,14 +1990,14 @@ $$
 
 which is independent of $\ell$. The upper-depth integral (12.1) is therefore independent of $\ell$. Formula (12.5) gives the same conclusion for $f_K(A)$. $\square$
 
-The same argument is equivariant.  This refinement is useful when a correspondence algebra
+The same argument is equivariant. This refinement is useful when a correspondence algebra
 cuts a rank-two multiplicity space from a much larger Jacobian Tate module; independence of
 the conductor of the whole Jacobian alone would not justify independence for one split
 coefficient factor.
 
 **Proposition 12.3 (equivariant conductor and invariant-Frobenius independence).** Let $C$ be a finite-dimensional
 semisimple $\mathbf Q$-subalgebra of $\operatorname{End}_K^0(A)$, let $E/\mathbf Q$ split
-$C$, and let $P$ be a simple left $C_E=C\otimes_{\mathbf Q}E$-module.  For a finite place
+$C$, and let $P$ be a simple left $C_E=C\otimes_{\mathbf Q}E$-module. For a finite place
 $\lambda\mid\ell$ of $E$, with $\ell\ne p$, put
 
 $$
@@ -2008,10 +2008,10 @@ V_\ell A\otimes_{\mathbf Q_\ell}E_\lambda\right).
 \tag{12.12a}
 $$
 
-The $G_K$-action on $W_\lambda$ is the one induced from the second factor.  Its Artin
-conductor is independent of $\lambda$.  In particular, if $W_{\lambda_0}$ is unramified for
-one $\lambda_0\nmid p$, then every $W_\lambda$ with $\lambda\nmid p$ is unramified.  The
-same conclusion holds after taking a dual or an unramified Tate twist.  If the residue field
+The $G_K$-action on $W_\lambda$ is the one induced from the second factor. Its Artin
+conductor is independent of $\lambda$. In particular, if $W_{\lambda_0}$ is unramified for
+one $\lambda_0\nmid p$, then every $W_\lambda$ with $\lambda\nmid p$ is unramified. The
+same conclusion holds after taking a dual or an unramified Tate twist. If the residue field
 is finite and $\Phi$ is arithmetic Frobenius, there is also one polynomial
 
 $$
@@ -2020,15 +2020,15 @@ Q_{P,K}(X)\in E[X]
 $$
 
 whose image in $E_\lambda[X]$ is
-$\det(X-\Phi\mid W_\lambda^{I_K})$ for every $\lambda\nmid p$.  If one, and hence every,
+$\det(X-\Phi\mid W_\lambda^{I_K})$ for every $\lambda\nmid p$. If one, and hence every,
 $W_\lambda$ is unramified, the unique Frobenius-semisimple unramified pair over $E$
 determined by $Q_{P,K}$ scalar-extends to
 $\operatorname{WD}_K(W_\lambda)^{\mathrm{F\text{-}ss}}$ for every such $\lambda$.
 
-**Proof.** Every element of $C$ commutes with $G_K$.  After multiplication by an integer it
+**Proof.** Every element of $C$ commutes with $G_K$. After multiplication by an integer it
 extends uniquely to the Neron model, and hence acts on the toric, abelian, and unipotent
-layers of its geometric connected special fiber.  The fixed-part isomorphism (4.3) is
-therefore $C$-equivariant.  The $C$-character of $V_\ell A$ is independent of $\ell$: for an
+layers of its geometric connected special fiber. The fixed-part isomorphism (4.3) is
+therefore $C$-equivariant. The $C$-character of $V_\ell A$ is independent of $\ell$: for an
 integral endomorphism $c$, the values
 
 $$
@@ -2036,13 +2036,13 @@ $$
 $$
 
 at sufficiently many integers $n$ recover its characteristic polynomial, and denominators
-handle a quasi-endomorphism.  The same argument applies to the abelian quotient of the
+handle a quasi-endomorphism. The same argument applies to the abelian quotient of the
 connected special fiber, while the toric character is the integral character on its
-cocharacter lattice and the unipotent layer has no prime-to-$p$ Tate module.  Thus both
+cocharacter lattice and the unipotent layer has no prime-to-$p$ Tate module. Thus both
 $V_\ell A$ and $(V_\ell A)^{I_K}$ have $C_E$-characters independent of $\lambda$.
-Choose a primitive matrix idempotent $e_P$ in the split block of $P$.  It is an
+Choose a primitive matrix idempotent $e_P$ in the split block of $P$. It is an
 $E$-linear combination of a rational basis of $C$, and Morita evaluation identifies
-$e_P(V_\ell A\otimes E_\lambda)$ with $W_\lambda$.  Applying the preceding trace
+$e_P(V_\ell A\otimes E_\lambda)$ with $W_\lambda$. Applying the preceding trace
 independence to $e_P$ therefore shows that
 
 $$
@@ -2052,13 +2052,13 @@ $$
 is independent of $\lambda$.
 
 For the wild term, use the one finite Galois semistable field in the proof of Proposition
-12.2 and put $H=P_K/P_L$.  The Raynaud filtration is stable under both $C$ and $H$.  For
-$c\in C$ and $h\in H$, the lattice traces of $ch$ are geometric integers.  On the abelian
+12.2 and put $H=P_K/P_L$. The Raynaud filtration is stable under both $C$ and $H$. For
+$c\in C$ and $h\in H$, the lattice traces of $ch$ are geometric integers. On the abelian
 Raynaud quotient, $ch$ is a quasi-endomorphism and the values of
-$\deg(n-ch)$ recover its characteristic polynomial, exactly as in (12.12).  Hence the
-character of the commuting $C_E\times H$-action is independent of $\lambda$.  Averaging over
+$\deg(n-ch)$ recover its characteristic polynomial, exactly as in (12.12). Hence the
+character of the commuting $C_E\times H$-action is independent of $\lambda$. Averaging over
 the image $H^u$ of every positive upper ramification group shows that the $C_E$-character of
-$(V_\ell A)^{H^u}$ is independent of $\lambda$.  Since the actions commute and averaging is
+$(V_\ell A)^{H^u}$ is independent of $\lambda$. Since the actions commute and averaging is
 available in characteristic zero,
 
 $$
@@ -2071,18 +2071,18 @@ Taking the $P$-multiplicity and integrating over $u>0$ proves that
 $\operatorname{Sw}_K(W_\lambda)$ is independent of $\lambda$.
 Together with the preceding moderate term, this proves the conductor assertion.
 
-It remains to retain residue Frobenius rather than only dimensions.  The fixed-part
-isomorphism (4.3) is equivariant for $C$ and for residue Galois.  The prime-to-$p$ Tate module
+It remains to retain residue Frobenius rather than only dimensions. The fixed-part
+isomorphism (4.3) is equivariant for $C$ and for residue Galois. The prime-to-$p$ Tate module
 of the connected special fiber has the filtration coming from its torus and abelian quotient;
-the unipotent radical contributes zero.  On the torus, $c\Phi^m$ has a matrix on the integral
-cocharacter lattice, with the fixed cyclotomic factor.  On the abelian quotient it is a
+the unipotent radical contributes zero. On the torus, $c\Phi^m$ has a matrix on the integral
+cocharacter lattice, with the fixed cyclotomic factor. On the abelian quotient it is a
 quasi-endomorphism, and the values
 
 $$
 \deg(n-c\Phi^m)
 $$
 
-at sufficiently many integers recover its characteristic polynomial.  Consequently
+at sufficiently many integers recover its characteristic polynomial. Consequently
 $\operatorname{Tr}(c\Phi^m\mid(V_\ell A)^{I_K})$ is algebraic and independent of $\ell$ for
 every $c\in C$ and $m\ge1$.
 
@@ -2095,13 +2095,13 @@ $$
 
 Writing $e_P$ in an $E$-linear combination of a rational basis of $C$ shows that every power
 trace $\operatorname{Tr}(\Phi^m\mid W_\lambda^{I_K})$ is the image of one element of $E$,
-independent of $\lambda$.  Newton identities give (12.12b).  When $W_\lambda$ is unramified,
+independent of $\lambda$. Newton identities give (12.12b). When $W_\lambda$ is unramified,
 its monodromy is zero and finite inertia is trivial, so its Frobenius-semisimple Weil--Deligne pair is
 the unramified pair determined by that polynomial.
 
 If one $W_{\lambda_0}$ is unramified, its conductor is zero, hence every displayed conductor
-is zero.  Definition (12.2), whose two terms are nonnegative, then gives
-$W_\lambda^{I_K}=W_\lambda$ for every $\lambda$; this is unramifiedness.  Duality and an
+is zero. Definition (12.2), whose two terms are nonnegative, then gives
+$W_\lambda^{I_K}=W_\lambda$ for every $\lambda$; this is unramifiedness. Duality and an
 unramified Tate twist preserve the two conductor terms. $\square$
 
 Products give direct sums of Tate representations and products of connected Neron fibers, so
@@ -2513,7 +2513,7 @@ therefore joins integral geometry and Galois ramification without collapsing the
 When a split semisimple rational endomorphism algebra acts, the same geometry may be projected
 before taking dimensions: Proposition 12.3 makes the conductor of each simple multiplicity
 space coefficient-independent and, over a finite residue field, retains its common
-inertia-invariant Frobenius polynomial.  Thus an unramified multiplicity factor at one
+inertia-invariant Frobenius polynomial. Thus an unramified multiplicity factor at one
 coefficient place determines one algebraic unramified Frobenius-semisimple pair at every
 prime-to-residue coefficient place; this conclusion concerns the Galois factor and does not
 identify an automorphic type.

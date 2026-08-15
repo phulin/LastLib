@@ -146,7 +146,7 @@ Under the finite-flat and generically separated hypotheses made precise later, t
 
 $$
 \boxed{\operatorname{length}_{\mathcal O}\Phi_A
-\ \geq\ 
+\ \geq\
 \operatorname{length}_{\mathcal O}\Psi_A.}
 $$
 
@@ -402,10 +402,8 @@ $$
 
 If the two outer modules have finite length, then
 
-$$
-\operatorname{length}\Phi_R-
-\operatorname{length}\Phi_T
-=
+# $$\operatorname{length}\Phi_R-\operatorname{length}\Phi_T
+
 \operatorname{length}\frac{J}{J\cap I_R^2}.
 $$
 
@@ -1340,11 +1338,8 @@ $$
 
 Combining this with the assumed opposite estimate produces
 
-$$
-\operatorname{length}\Psi_T
-\geq
-\operatorname{length}\Phi_R
-=
+# $$\operatorname{length}\Psi_T\geq\operatorname{length}\Phi_R
+
 \operatorname{length}C_f+\operatorname{length}\Phi_T
 \geq
 \operatorname{length}C_f+\operatorname{length}\Psi_T.
@@ -2208,8 +2203,9 @@ points do not automatically combine: inequalities
 
 $$
 \operatorname{length}\Phi_{R,i}
->\operatorname{length}\Psi_{T,i}
-$$
+
+> \operatorname{length}\Psi_{T,i}
+> $$
 
 may have defects supported by the same extra relation, and adding them can count that relation more
 than once. A multi-point criterion therefore requires a separate determinant statement for the
@@ -3128,8 +3124,9 @@ If
 
 $$
 \operatorname{length}\Phi_R
->\operatorname{length}\Psi_{\mathbf T},
-$$
+
+> \operatorname{length}\Psi_{\mathbf T},
+> $$
 
 the criterion is inconclusive. The map may be a proper quotient, as in Chapter 12. It may also be
 an isomorphism onto a finite flat algebra that is not a complete intersection, in which case the

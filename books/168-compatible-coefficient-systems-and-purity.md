@@ -596,7 +596,7 @@ No semisimplicity theorem for abelian varieties or for raw curve cohomology is b
 ### 7.5 Cuspidal irreducibility and uniform passage
 
 The application needs semisimplicity only for each rank-two multiplicity representation, not
-for the whole Jacobian Tate module.  The following precise local-algebraicity input is enough.
+for the whole Jacobian Tate module. The following precise local-algebraicity input is enough.
 For every selected packet carrier, every coefficient place $\lambda$, every finite extension of
 $E_\lambda$, and every one-dimensional Jordan--Holder constituent $\xi$ of the raw curve
 multiplicity representation after that extension, impose
@@ -618,21 +618,21 @@ explicit arithmetic input behind $(\mathrm{HT}_1)$.
 
 **Theorem 7.6 (cuspidal packet irreducibility from $(\mathrm{HT}_1)$).** Let $\pi$ be one of
 the selected parallel-weight-two packets in the curve-attachment range whose split
-$\mathrm{GL}_2$ transfer is cuspidal.  If
+$\mathrm{GL}_2$ transfer is cuspidal. If
 $(\mathrm{HT}_1)$ holds for its raw multiplicity representations, then, for every coefficient
 place $\lambda$, the semisimple attached representation $\rho_{\pi,\lambda}$ is absolutely
-irreducible.  Consequently the raw representation is already absolutely irreducible and
+irreducible. Consequently the raw representation is already absolutely irreducible and
 
 $$
 \widetilde\rho_{\pi,\lambda}\simeq\rho_{\pi,\lambda}. \tag{7.10}
 $$
 
-Thus (1.6) holds at every $v\nmid\ell(\lambda)$.  In particular, every constructed dyadic
+Thus (1.6) holds at every $v\nmid\ell(\lambda)$. In particular, every constructed dyadic
 special operator, its kernel line, and its Frobenius sign survive global semisimplification at
 every coefficient place of residue characteristic different from two.
 
 **Proof.** Suppose that $\rho_{\pi,\lambda}$ becomes reducible over an algebraic closure of
-$E_\lambda$.  After a finite coefficient extension it is a direct sum
+$E_\lambda$. After a finite coefficient extension it is a direct sum
 
 $$
 \rho_{\pi,\lambda}\otimes_{E_\lambda}E'_{\lambda}
@@ -640,9 +640,9 @@ $$
 $$
 
 The raw representation is a curve-cohomology subquotient and is unramified outside a finite
-set, so the same is true of $\xi_1$ and $\xi_2$.  Hypothesis $(\mathrm{HT}_1)$ makes them
-locally algebraic above $\ell(\lambda)$.  Book 6, Section 11.5 therefore supplies algebraic
-Hecke characters $\psi_1,\psi_2$ whose $\lambda$-adic avatars are $\xi_1,\xi_2$.  Book 6 uses
+set, so the same is true of $\xi_1$ and $\xi_2$. Hypothesis $(\mathrm{HT}_1)$ makes them
+locally algebraic above $\ell(\lambda)$. Book 6, Section 11.5 therefore supplies algebraic
+Hecke characters $\psi_1,\psi_2$ whose $\lambda$-adic avatars are $\xi_1,\xi_2$. Book 6 uses
 arithmetic Artin reciprocity, whereas (1.1) uses geometric Frobenius. Thus at an unramified
 place $v$,
 
@@ -659,22 +659,22 @@ $$
 
 At every common good place it has the same quadratic Hecke polynomial as
 $\rho_{\pi,\lambda}$ and hence, after the chosen
-$\overline{\mathbf Q}_\ell\simeq\mathbf C$ comparison, as $\pi$.  The
+$\overline{\mathbf Q}_\ell\simeq\mathbf C$ comparison, as $\pi$. The
 isobaric multiplicity-one theorem of Book 109, Section 9.5 identifies automorphic objects from
-this full Euler tail.  It cannot identify the cuspidal representation $\pi$ with a
+this full Euler tail. It cannot identify the cuspidal representation $\pi$ with a
 two-character isobaric sum: their isobaric decompositions have respectively one rank-two
-cuspidal constituent and two rank-one constituents.  This contradiction proves absolute
+cuspidal constituent and two rank-one constituents. This contradiction proves absolute
 irreducibility.
 
 If the raw two-dimensional representation had a proper nonzero global subrepresentation, its
 semisimplification would have two nonzero Jordan--Holder factors, contradicting the absolute
-irreducibility just proved.  Hence the raw representation is irreducible and (7.10) follows.
-Book 128, Lemma 9.1 now gives (1.6).  Restriction of the global isomorphism retains the actual
+irreducibility just proved. Hence the raw representation is irreducible and (7.10) follows.
+Book 128, Lemma 9.1 now gives (1.6). Restriction of the global isomorphism retains the actual
 local representation, so its Weil--Deligne operator, kernel line, and Frobenius action are not
-lost.  No bad-place datum was used to prove irreducibility, so the argument is noncircular.
+lost. No bad-place datum was used to prove irreducibility, so the argument is noncircular.
 $\square$
 
-The proof uses neither residual irreducibility nor semisimplicity of the ambient Jacobian.  It
+The proof uses neither residual irreducibility nor semisimplicity of the ambient Jacobian. It
 also explains the exact counterboundary: cuspidality and good Frobenius polynomials alone do
 not turn arbitrary continuous one-dimensional $\ell$-adic constituents into Hecke characters.
 Local algebraicity is the missing bridge; omitting it would silently assume the conclusion of
@@ -756,43 +756,43 @@ automorphic carrier split at every dyadic factor exists. In odd degree, $W=\varn
 provides one. In even degree an odd nonempty eligible $W$ disjoint from two would provide one,
 but the controlled minimal packet supplies no such away-from-two discrete-series factor.
 Choosing another dyadic special place for $W$ gives an ordinary basic carrier but violates the
-hypothesis on $B$.  Proposition 7.6B closes that apparent remaining case by using the parity
+hypothesis on $B$. Proposition 7.6B closes that apparent remaining case by using the parity
 place only as a deformation-rigid spectator and by calculating separately at each other
 dyadic target.
 
-**Proposition 7.6B (targetwise ramified-spectator SP comparison).**  Let $F$ have even degree,
+**Proposition 7.6B (targetwise ramified-spectator SP comparison).** Let $F$ have even degree,
 assume that $2$ splits completely in $F$, and let $\pi$ be a trivial-character cuspidal
-parallel-weight-two packet which is selected special at every $v\mid2$.  Assume
-$(\mathrm{HT}_1)$ for the finitely many basic one-split packet factors below.  Then, at every
+parallel-weight-two packet which is selected special at every $v\mid2$. Assume
+$(\mathrm{HT}_1)$ for the finitely many basic one-split packet factors below. Then, at every
 coefficient place of residue characteristic different from two, the semisimple system
 attached to $\pi$ has the full signed special pair at every dyadic place.
 
-**Proof.**  Fix a target $v\mid2$.  Since $[F:\mathbf Q]\ge2$, choose a second dyadic place
-$w\ne v$.  Let $B_w/F$ be ramified at every real place except the active one and at the single
-finite place $w$.  Its ramification set has even cardinality because $[F:\mathbf Q]$ is even.
+**Proof.** Fix a target $v\mid2$. Since $[F:\mathbf Q]\ge2$, choose a second dyadic place
+$w\ne v$. Let $B_w/F$ be ramified at every real place except the active one and at the single
+finite place $w$. Its ramification set has even cardinality because $[F:\mathbf Q]$ is even.
 The selected special factor $\pi_w$ therefore lets Book 104 transfer $\pi$ to a packet
 $\Pi_{B_w}$ on this compact one-split curve.
 
 Choose two ramified quadratic extensions of $F_w=\mathbf Q_2$ whose quadratic characters have
-distinct restrictions to inertia.  Apply Book 118, Proposition 8.3A to each choice.  This
+distinct restrictions to inertia. Apply Book 118, Proposition 8.3A to each choice. This
 gives CM extensions $L_i/F$, unitary PEL data with reflex fields $E_i$, and places
-$u_i\mid v$ such that $E_{i,u_i}/F_v$ is totally ramified of residue degree one.  Book 122,
+$u_i\mid v$ such that $E_{i,u_i}/F_v$ is totally ramified of residue degree one. Book 122,
 Proposition 10.2A constructs the target-Iwahori unitary curves and proves the raw pair
 $\operatorname{St}(\beta_v)$ on their selected packet factors.
 
 We justify that the selected unitary raw factors are the restrictions of the basic
 semisimple system; this is where neither an integral common-adjoint comparison nor a
-non-solvable automorphic base change may be inserted silently.  Use the generic
+non-solvable automorphic base change may be inserted silently. Use the generic
 common-adjoint construction from the proof of Book 118, Corollary 10.3A, with the oriented
-Iwahori at $v$ protected and all necessary shrinking at auxiliary odd places.  It gives, after
+Iwahori at $v$ protected and all necessary shrinking at auxiliary odd places. It gives, after
 a finite characteristic-zero field extension, a finite cover which pulls the nonzero
-$\Pi_{B_w}$ block into each unitary curve.  The actual target double coset is the same in the
+$\Pi_{B_w}$ block into each unitary curve. The actual target double coset is the same in the
 common adjoint group, so its unnormalized scalar is $\beta_v$.
 
 By $(\mathrm{HT}_1)$ and Theorem 7.6, the basic raw rank-two factor is absolutely irreducible
-and equals its semisimple realization $r_{\pi,\lambda}$.  Its restriction to every finite
-extension is semisimple by the finite-index Clifford argument.  Pullback identifies that
-restriction with the restriction of the selected two-dimensional unitary raw factor.  The
+and equals its semisimple realization $r_{\pi,\lambda}$. Its restriction to every finite
+extension is semisimple by the finite-index Clifford argument. Pullback identifies that
+restriction with the restriction of the selected two-dimensional unitary raw factor. The
 latter is therefore semisimple as well: after passing to a normal finite-index subgroup, an
 equivariant splitting can be averaged over the finite quotient in characteristic zero.
 The common good Hecke polynomials and Chebotarev--Brauer--Nesbitt now give, over each reflex
@@ -805,34 +805,34 @@ $$
 
 It remains to descend the local pair through the ramified quadratic completions; one such
 completion would not suffice because a ramified quadratic scalar twist becomes invisible
-after restriction.  Let $(r_v,N_v)$ be the Frobenius-semisimple Weil--Deligne pair of
-$r_{\pi,\lambda}|_{G_{F_v}}$.  From either restriction in (7.11b), $N_v$ has rank one.  On
-inertia, $r_v(\sigma)$ commutes with $N_v$ and has finite order.  The centralizer of a
+after restriction. Let $(r_v,N_v)$ be the Frobenius-semisimple Weil--Deligne pair of
+$r_{\pi,\lambda}|_{G_{F_v}}$. From either restriction in (7.11b), $N_v$ has rank one. On
+inertia, $r_v(\sigma)$ commutes with $N_v$ and has finite order. The centralizer of a
 rank-one nilpotent in dimension two consists of $aI+bN_v$; a finite-order element there is
-diagonalizable, hence has $b=0$.  Thus inertia acts through one scalar character $\theta$.
+diagonalizable, hence has $b=0$. Thus inertia acts through one scalar character $\theta$.
 
 For $i=1,2$, the unitary special pair says that $\theta$ is trivial on
-$I_{E_{i,u_i}}$.  The quotient $I_{F_v}/I_{E_{i,u_i}}$ is detected by the restriction of the
-corresponding ramified quadratic character.  Those two inertia characters were chosen
+$I_{E_{i,u_i}}$. The quotient $I_{F_v}/I_{E_{i,u_i}}$ is detected by the restriction of the
+corresponding ramified quadratic character. Those two inertia characters were chosen
 distinct, so the only scalar character trivial on both kernels is the trivial character.
-Hence $\theta=1$.  Finally the two extensions have residue degree one.  A geometric
+Hence $\theta=1$. Finally the two extensions have residue degree one. A geometric
 Frobenius in either local Weil subgroup differs from one in $W_{F_v}$ only by inertia, now
-known to act trivially on $\ker N_v$.  Equation (7.11b) therefore gives the original
-eigenvalue $\beta_v$, while ramification merely multiplies $N_v$ by a nonzero scalar.  This
+known to act trivially on $\ker N_v$. Equation (7.11b) therefore gives the original
+eigenvalue $\beta_v$, while ramification merely multiplies $N_v$ by a nonzero scalar. This
 proves the full pair $\operatorname{St}(\beta_v)$ over $F_v$.
 
-Repeat the construction for every target $v$.  The parity place may be reused whenever it is
-different from the target; when there are exactly two dyadic places, interchange them.  Thus
+Repeat the construction for every target $v$. The parity place may be reused whenever it is
+different from the target; when there are exactly two dyadic places, interchange them. Thus
 the targetwise carriers cover the complete dyadic SP record. $\square$
 
-The final fixed-three argument needs only one coefficient place.  At that place the
+The final fixed-three argument needs only one coefficient place. At that place the
 smooth-proper Hodge--Tate comparison can be replaced by integral good-reduction geometry.
 
-**Theorem 7.6C (fixed-three finite-flat irreducibility bridge).**  Let $F$ be one of the
+**Theorem 7.6C (fixed-three finite-flat irreducibility bridge).** Let $F$ be one of the
 totally real elementary fixed fields in the controlled top, so that $3$ splits completely in
-$F$.  Let $\Pi_B$ be a selected one-split compact curve packet with trivial central character,
-spherical at every place above three, and split transfer $\pi$.  Let $\nu\mid3$ be a
-coefficient place.  Then the semisimple realization $r_{\pi,\nu}$ is absolutely irreducible,
+$F$. Let $\Pi_B$ be a selected one-split compact curve packet with trivial central character,
+spherical at every place above three, and split transfer $\pi$. Let $\nu\mid3$ be a
+coefficient place. Then the semisimple realization $r_{\pi,\nu}$ is absolutely irreducible,
 the raw multiplicity representation $W^{\mathrm{raw}}_{\Pi_B,\nu}$ is irreducible, and
 
 $$
@@ -841,19 +841,19 @@ $$
 
 This conclusion uses no instance of $(\mathrm{HT}_{\mathrm{curve}})$.
 
-**Proof.**  Choose an imaginary quadratic field $K/\mathbf Q$ split at three and nonsplit at
-every rational prime below the finite ramification of $B$.  In the controlled carriers that
+**Proof.** Choose an imaginary quadratic field $K/\mathbf Q$ split at three and nonsplit at
+every rational prime below the finite ramification of $B$. In the controlled carriers that
 finite ramification is empty or one dyadic place, so weak approximation supplies such a
-quadratic field.  Put $L=FK$.  The criterion of Book 118, Section 8.5 gives $L\hookrightarrow
-B$, and Proposition 8.3 gives the PEL-exact unitary common-multiplier curve.  Apply Book 118,
-Corollary 10.3A with protected set $S=\{3\}$.  After a finite extension $E/L$ unramified above
+quadratic field. Put $L=FK$. The criterion of Book 118, Section 8.5 gives $L\hookrightarrow
+B$, and Proposition 8.3 gives the PEL-exact unitary common-multiplier curve. Apply Book 118,
+Corollary 10.3A with protected set $S=\{3\}$. After a finite extension $E/L$ unramified above
 three there is a finite generic cover from a unitary PEL component union $Y/E$ to the basic
-component union, at levels hyperspecial above three.  Book 121 gives a smooth projective model
+component union, at levels hyperspecial above three. Book 121 gives a smooth projective model
 of $Y$ and an abelian scheme $J=\operatorname{Pic}^0_Y$ at every place above three.
 
 Pullback on rational $H^1$ is injective because trace after pullback is the nonzero component
-degree.  Choosing a nonzero oldvector therefore embeds, after restriction to $G_E$, the
-covariant twist of the raw packet plane into a finite power of $V_3J$.  Book 129, Theorem 5.1
+degree. Choosing a nonzero oldvector therefore embeds, after restriction to $G_E$, the
+covariant twist of the raw packet plane into a finite power of $V_3J$. Book 129, Theorem 5.1
 intersects that plane with the ambient Tate lattice and constructs an all-level
 coefficient-linear finite-flat tower over every unramified completion $E_x/\mathbf Q_3$.
 Proposition 8.1 of that book supplies such a tower also for the semisimplification
@@ -872,28 +872,28 @@ $E_x/F_v$ is unramified, local reciprocity identifies restriction with pullback 
 the norm is open on principal units, so local algebraicity descends to
 $\xi_i|_{G_{F_v}}$.
 
-Thus every one-dimensional constituent is locally algebraic at every $v\mid3$.  The Hecke
+Thus every one-dimensional constituent is locally algebraic at every $v\mid3$. The Hecke
 avatar theorem of Book 6 and the isobaric multiplicity-one argument of Book 109 now apply
 exactly as in Theorem 7.6: they would identify the cuspidal $\pi$ from its good Euler tail with
-a sum of two algebraic Hecke characters, which is impossible.  Hence $r_{\pi,\nu}$ is
-absolutely irreducible.  A raw two-dimensional representation whose semisimplification is
+a sum of two algebraic Hecke characters, which is impossible. Hence $r_{\pi,\nu}$ is
+absolutely irreducible. A raw two-dimensional representation whose semisimplification is
 irreducible has no proper subrepresentation, so it is irreducible and equals that
-semisimplification.  This proves (7.11c). $\square$
+semisimplification. This proves (7.11c). $\square$
 
-**Corollary 7.6D (fixed-three SP bridge).**  At the selected coefficient place $\nu\mid3$,
+**Corollary 7.6D (fixed-three SP bridge).** At the selected coefficient place $\nu\mid3$,
 the conclusions of Propositions 7.6A and 7.6B hold with their $(\mathrm{HT}_1)$ assumptions
 deleted, provided the controlled top is split at three and the packet levels there are
 hyperspecial.
 
-**Proof.**  Apply Theorem 7.6C to each basic parity carrier.  In the generic common-adjoint
+**Proof.** Apply Theorem 7.6C to each basic parity carrier. In the generic common-adjoint
 cover used in Propositions 7.6A--7.6B, pullback identifies the unitary raw factor with the
-restriction of that irreducible basic factor after a finite extension.  Finite-index Clifford
+restriction of that irreducible basic factor after a finite extension. Finite-index Clifford
 semisimplicity and averaging make the unitary raw factor semisimple; good-polynomial
 Chebotarev comparison then identifies it with the restriction over the unitary reflex field.
 The split or two-ramified-spectator local arguments of those propositions transfer the full
 SP pair. $\square$
 
-There is a stronger optional ambient route.  For the finite collection of actual smooth
+There is a stronger optional ambient route. For the finite collection of actual smooth
 projective curve carriers $C_i/E_i$ used to construct the packet family, impose
 
 $$
@@ -1367,7 +1367,7 @@ Then the prior books construct the following data.
 
 1. Choosing any dyadic singleton as the ramification set gives a compact curve carrier and hence a pure weight-one weakly compatible system with determinant $\chi_\lambda^{-1}$ in the untwisted geometric-Frobenius normalization.
 2. A single such carrier is ramified at one dyadic factor and therefore does **not** satisfy
-   Book 122's completely split dyadic ledger.  For each target $v$, however, one may choose
+   Book 122's completely split dyadic ledger. For each target $v$, however, one may choose
    its parity place $w$ distinct from $v$.
 
 Assume $(\mathrm{HT}_1)$ for the finitely many basic packet factors used below. Away from the
@@ -1459,24 +1459,24 @@ all-level finite-flat tower on the raw factor and its semisimplification, and Bo
 the rank-one local-algebraicity theorem. These three inputs are used only for the selected
 coefficient place; the uniform theorem retains its separate hypothesis $(\mathrm{HT}_1)$.
 
-| Conclusion in this book | Established source | Hypotheses retained here | Boundary |
-|---|---|---|---|
-| weak family, determinant, good-place purity, and lattice boundary | Book 127, Theorem 8.1 | one-split compact curve carrier, full component-routing block, selected center embedding and splitting field; for split packets, a parity-compatible selected set $W$ | in even degree no eligible place gives no carrier; strict bad-place compatibility, a canonical rank-two lattice, and a finite-flat quotient are not supplied |
-| curve-cohomology realization of the ambient Tate module | Book 36, (10.12) | a smooth proper curve carrier and its Jacobian in the covariant convention | this identification alone does not prove Tate-module semisimplicity |
-| Weil-number calculus and good-place purity of curve $H^1$ | Book 37, *Weights and Weil Bounds for Curves and Abelian Varieties* | smooth proper curve over a finite field; geometric Frobenius; correspondence summand | it supplies no bad-place return-map weights |
-| good-polynomial field, conjugate packets, and saturated eigenlattices | Book 97, *Algebraicity and Integral Structures of Weight-Two Packets* | one absolute $\mathbf Q$-algebraic conjugation-stable finite Hecke module; raw $T_v,S_v$ normalization; isolating data; intersection with a fixed integral module | a relative model gives only embeddings over its base field; the full packet center can exceed the field of good values; good eigenvalues can name only a near-equivalence block |
-| eligible one-split packet | Book 104, *Global Jacquet--Langlands* | $F$ totally real of degree $d\ge2$; $(d-1)+|W|$ even; selected special or selected tame-dihedral factor at every $w\in W$ | in even degree no eligible place gives no carrier; Proposition 7.6B chooses a dyadic singleton $w\ne v$ separately for each target $v$; in odd degree $W=\varnothing$ clears the constraint |
-| curve realization and multiplicity | Book 125, *Automorphic Decomposition of Shimura-Curve $H^1$* | actual one-split compact curve; full component-routing orbit; full finite Hecke image; separating component idempotent; multiplicity two | no surface or modular-curve substitute is supplied; the raw representation need not be semisimple |
-| raw rank-two representations | Book 126, *Galois Representations from Weight-Two Shimura-Curve Cohomology* | full finite Hecke block, splitting field, common curve carrier, multiplicity two | oldspace dimension is not Galois rank; absolute irreducibility is not supplied |
-| determinant and good polynomial | Book 126 | component-twist covariance, polarization-compatible symmetric finite-module pairing, full good-model ledger, and the actual residue-field comparison | a quadratic relation alone may only annihilate Frobenius; residue degree changes the middle coefficient |
-| constructed raw split-Iwahori special pair | Book 122, *Semistable Models and Monodromy of Quaternionic Shimura Curves*, assembled in Book 128 | split quaternion algebra at $v$; either the completely split unitary ledger of Proposition 10.2 or the single ramified extreme-CM spectator of Proposition 10.2A; component support; multiplicity one; raw unnormalized $U_v$ | the theorem proves $(\mathrm B_v)$ and rank-one $N$ on a supplied raw multiplicity space; Propositions 7.6A--7.6B use semisimple comparison and avoid the raw-to-raw integral map (10.5) |
-| tame principal, scalar-special, or dihedral parameter | Book 128, *Local--Global Compatibility for Weight-Two Galois Representations* | $v\nmid\ell$; the actual descent complex, type lines, monodromy branch, exchange maps, and every Frobenius return map | these are recognition criteria; they construct none of the missing tame return data for an arbitrary packet and cover no primitive wild row; raw-to-global passage is automatic only in the zero-monodromy principal and dihedral rows |
-| strict bad parameter at one residual-irreducible coefficient place | Book 128, Lemmas 9.1--9.2 and Corollary 9.3 | a stable lattice with absolutely irreducible residual reduction at that $\lambda$ | the argument is coefficient-place by coefficient-place and gives no uniform all-$\lambda$ SP record |
-| uniform nonzero-monodromy raw-to-global passage for selected cuspidal packets | Theorem 7.6, using Book 6, Section 11.5, Book 47, Proposition 9.1, Book 109, Section 9.5, and Book 128, Lemma 9.1 | $(\mathrm{HT}_1)$ for one-dimensional geometric constituents at each coefficient place | the rank-one local-algebraicity theorem and the geometric-subquotient passage are proved; the sole remaining source of $(\mathrm{HT}_1)$ is smooth-proper $(\mathrm{HT}_{\mathrm{curve}})$ of Book 47, (9.7); no Faltings semisimplicity is needed |
-| fixed-three raw-to-global and SP passage | Theorem 7.6C and Corollary 7.6D, using Books 54, 118, 121, and 129 | $3$ split completely, hyperspecial packet levels above $3$, and the protected good unitary covers | proves only the selected $\nu\mid3$ member; it neither supplies the other coefficient members nor proves uniform $(\mathrm{HT}_1)$ |
-| optional ambient uniform passage | Book 128, Proposition 9.4; Book 41, Theorem 15.3 and Corollary 16.1; and Proposition 7.7 | $(\mathrm{SS}_{\mathrm{array}})$, or finite isogeny classes of all carrier Jacobians through Book 41 | this is stronger than the packet application and is not the recommended FLT dependency |
-| bad-place purity | Section 8 from the identified algebraic pair | special shape plus determinant closes the special row; finite-monodromy rows require the return-map absolute values such as (8.7) | determinant, finite inertia, and algebraicity do not prove finite-type weight one |
-| semisimple carrier independence | Chebotarev density and Brauer--Nesbitt, applied in Proposition 10.3 | two already constructed semisimple representations with the same split-packet good polynomials | no raw extension, canonical intertwiner, or integral lattice is compared |
+| Conclusion in this book                                                       | Established source                                                                                                | Hypotheses retained here                                                                                                                                                                                                      | Boundary                                                                                                                                                                                                                                           |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| weak family, determinant, good-place purity, and lattice boundary             | Book 127, Theorem 8.1                                                                                             | one-split compact curve carrier, full component-routing block, selected center embedding and splitting field; for split packets, a parity-compatible selected set $W$                                                         | in even degree no eligible place gives no carrier; strict bad-place compatibility, a canonical rank-two lattice, and a finite-flat quotient are not supplied                                                                                       |
+| curve-cohomology realization of the ambient Tate module                       | Book 36, (10.12)                                                                                                  | a smooth proper curve carrier and its Jacobian in the covariant convention                                                                                                                                                    | this identification alone does not prove Tate-module semisimplicity                                                                                                                                                                                |
+| Weil-number calculus and good-place purity of curve $H^1$                     | Book 37, _Weights and Weil Bounds for Curves and Abelian Varieties_                                               | smooth proper curve over a finite field; geometric Frobenius; correspondence summand                                                                                                                                          | it supplies no bad-place return-map weights                                                                                                                                                                                                        |
+| good-polynomial field, conjugate packets, and saturated eigenlattices         | Book 97, _Algebraicity and Integral Structures of Weight-Two Packets_                                             | one absolute $\mathbf Q$-algebraic conjugation-stable finite Hecke module; raw $T_v,S_v$ normalization; isolating data; intersection with a fixed integral module                                                             | a relative model gives only embeddings over its base field; the full packet center can exceed the field of good values; good eigenvalues can name only a near-equivalence block                                                                    |
+| eligible one-split packet                                                     | Book 104, _Global Jacquet--Langlands_                                                                             | $F$ totally real of degree $d\ge2$; $(d-1)+                                                                                                                                                                                   | W                                                                                                                                                                                                                                                  |
+| curve realization and multiplicity                                            | Book 125, _Automorphic Decomposition of Shimura-Curve $H^1$_                                                      | actual one-split compact curve; full component-routing orbit; full finite Hecke image; separating component idempotent; multiplicity two                                                                                      | no surface or modular-curve substitute is supplied; the raw representation need not be semisimple                                                                                                                                                  |
+| raw rank-two representations                                                  | Book 126, _Galois Representations from Weight-Two Shimura-Curve Cohomology_                                       | full finite Hecke block, splitting field, common curve carrier, multiplicity two                                                                                                                                              | oldspace dimension is not Galois rank; absolute irreducibility is not supplied                                                                                                                                                                     |
+| determinant and good polynomial                                               | Book 126                                                                                                          | component-twist covariance, polarization-compatible symmetric finite-module pairing, full good-model ledger, and the actual residue-field comparison                                                                          | a quadratic relation alone may only annihilate Frobenius; residue degree changes the middle coefficient                                                                                                                                            |
+| constructed raw split-Iwahori special pair                                    | Book 122, _Semistable Models and Monodromy of Quaternionic Shimura Curves_, assembled in Book 128                 | split quaternion algebra at $v$; either the completely split unitary ledger of Proposition 10.2 or the single ramified extreme-CM spectator of Proposition 10.2A; component support; multiplicity one; raw unnormalized $U_v$ | the theorem proves $(\mathrm B_v)$ and rank-one $N$ on a supplied raw multiplicity space; Propositions 7.6A--7.6B use semisimple comparison and avoid the raw-to-raw integral map (10.5)                                                           |
+| tame principal, scalar-special, or dihedral parameter                         | Book 128, _Local--Global Compatibility for Weight-Two Galois Representations_                                     | $v\nmid\ell$; the actual descent complex, type lines, monodromy branch, exchange maps, and every Frobenius return map                                                                                                         | these are recognition criteria; they construct none of the missing tame return data for an arbitrary packet and cover no primitive wild row; raw-to-global passage is automatic only in the zero-monodromy principal and dihedral rows             |
+| strict bad parameter at one residual-irreducible coefficient place            | Book 128, Lemmas 9.1--9.2 and Corollary 9.3                                                                       | a stable lattice with absolutely irreducible residual reduction at that $\lambda$                                                                                                                                             | the argument is coefficient-place by coefficient-place and gives no uniform all-$\lambda$ SP record                                                                                                                                                |
+| uniform nonzero-monodromy raw-to-global passage for selected cuspidal packets | Theorem 7.6, using Book 6, Section 11.5, Book 47, Proposition 9.1, Book 109, Section 9.5, and Book 128, Lemma 9.1 | $(\mathrm{HT}_1)$ for one-dimensional geometric constituents at each coefficient place                                                                                                                                        | the rank-one local-algebraicity theorem and the geometric-subquotient passage are proved; the sole remaining source of $(\mathrm{HT}_1)$ is smooth-proper $(\mathrm{HT}_{\mathrm{curve}})$ of Book 47, (9.7); no Faltings semisimplicity is needed |
+| fixed-three raw-to-global and SP passage                                      | Theorem 7.6C and Corollary 7.6D, using Books 54, 118, 121, and 129                                                | $3$ split completely, hyperspecial packet levels above $3$, and the protected good unitary covers                                                                                                                             | proves only the selected $\nu\mid3$ member; it neither supplies the other coefficient members nor proves uniform $(\mathrm{HT}_1)$                                                                                                                 |
+| optional ambient uniform passage                                              | Book 128, Proposition 9.4; Book 41, Theorem 15.3 and Corollary 16.1; and Proposition 7.7                          | $(\mathrm{SS}_{\mathrm{array}})$, or finite isogeny classes of all carrier Jacobians through Book 41                                                                                                                          | this is stronger than the packet application and is not the recommended FLT dependency                                                                                                                                                             |
+| bad-place purity                                                              | Section 8 from the identified algebraic pair                                                                      | special shape plus determinant closes the special row; finite-monodromy rows require the return-map absolute values such as (8.7)                                                                                             | determinant, finite inertia, and algebraicity do not prove finite-type weight one                                                                                                                                                                  |
+| semisimple carrier independence                                               | Chebotarev density and Brauer--Nesbitt, applied in Proposition 10.3                                               | two already constructed semisimple representations with the same split-packet good polynomials                                                                                                                                | no raw extension, canonical intertwiner, or integral lattice is compared                                                                                                                                                                           |
 
 The fixed-three theorem uses Book 129 only after constructing its own protected
 good-reduction abelian bridge and verifying the unramified Raynaud range. Book 129 neither
@@ -1496,12 +1496,12 @@ bridge remains a separate boundary.
 
 The consequences available to later books are therefore:
 
-| Application | May use from this book | Must not infer |
-|---|---|---|
-| Book 129 | a rational raw packet plane, its semisimplification, determinant, and existence of placewise stable lattices | a canonical rank-two cohomological summand, coefficient-prime finite flatness, or one lattice across coefficient places |
-| Book 183 | the constructed weak packet systems, coefficient conjugation, determinant, good purity, the conditional algebraic SP pair, the uniform cuspidal raw-to-global reduction, and the unconditional selected-three reduction under Theorem 7.6C's hypotheses | the SP pair at every prime-to-two coefficient embedding unless its controlled top datum supplies preservation directly, supplies $(\mathrm{HT}_1)$, or uses the stronger optional ambient certificate |
-| Books 184--185 | the packet systems and local objects already present in Book 183's controlled array | effectivity, base-field descent, or a new local comparison merely from good polynomials; those books prove their own characteristic-zero conclusions |
-| Book 187 | a rational SP member only after Books 183--185 have actually produced it; the selected-three packet certificate used upstream | a stable lattice or the assembled member's global all-level finite-flat tower, which Book 187 constructs separately |
+| Application    | May use from this book                                                                                                                                                                                                                                  | Must not infer                                                                                                                                                                                        |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Book 129       | a rational raw packet plane, its semisimplification, determinant, and existence of placewise stable lattices                                                                                                                                            | a canonical rank-two cohomological summand, coefficient-prime finite flatness, or one lattice across coefficient places                                                                               |
+| Book 183       | the constructed weak packet systems, coefficient conjugation, determinant, good purity, the conditional algebraic SP pair, the uniform cuspidal raw-to-global reduction, and the unconditional selected-three reduction under Theorem 7.6C's hypotheses | the SP pair at every prime-to-two coefficient embedding unless its controlled top datum supplies preservation directly, supplies $(\mathrm{HT}_1)$, or uses the stronger optional ambient certificate |
+| Books 184--185 | the packet systems and local objects already present in Book 183's controlled array                                                                                                                                                                     | effectivity, base-field descent, or a new local comparison merely from good polynomials; those books prove their own characteristic-zero conclusions                                                  |
+| Book 187       | a rational SP member only after Books 183--185 have actually produced it; the selected-three packet certificate used upstream                                                                                                                           | a stable lattice or the assembled member's global all-level finite-flat tower, which Book 187 constructs separately                                                                                   |
 
 ## 13. The arithmetic package
 

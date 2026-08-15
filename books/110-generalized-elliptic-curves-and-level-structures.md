@@ -239,6 +239,7 @@ m:E^{\mathrm{sm}}\times_SE\longrightarrow E
 $$
 
 restricting to the group law on $E^{\mathrm{sm}}$;
+
 - the requirement that every geometric fiber is either a smooth elliptic curve or a Néron polygon, and that $E^{\mathrm{sm}}$ acts transitively on the irreducible components of every geometric fiber.
 
 An isomorphism preserves all these data. A morphism called an isogeny later will be allowed to be finite and noninvertible, but an arrow in the moduli groupoid is always an isomorphism.

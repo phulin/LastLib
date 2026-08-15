@@ -1657,22 +1657,22 @@ Fix $\ell\mid n_N$, put $d=v_\ell(n_N)$, and let $\mathfrak m=(\ell,I)$. Then th
 
 11. A separated atomic subquotient of $G_r$ with multiplicative kernel and constant quotient is classified, for odd $\ell$, by
 
-   $$
+$$
    \operatorname{Ext}^1_S(
    \underline{\mathbf Z/\ell},\mu_\ell)
    \simeq\langle[N]\rangle.
    $$
 
-   The dyadic extension has the additional carry and sign data described in Section 9.3.
+The dyadic extension has the additional carry and sign data described in Section 9.3.
 
 12. The completed Eisenstein quotient is
 
-   $$
+$$
    \mathbb T_{\mathfrak m}/I\mathbb T_{\mathfrak m}
    \simeq\mathbf Z_\ell/\ell^{v_\ell(n_N)}\mathbf Z_\ell.
    $$
 
-   This controls the scalar Eisenstein depth but asserts neither complete multiplicity one nor freeness of the Tate module over the local Hecke algebra.
+This controls the scalar Eisenstein depth but asserts neither complete multiplicity one nor freeness of the Tate module over the local Hecke algebra.
 
 **Proof.** Items 1 and 12 follow from the finite-algebra decomposition of Chapter 2 and the exact global Eisenstein index. Chapter 3 constructs the rational quotient and its good model. Generic torsion exactness for the connected optimal kernel proves Theorem 3.1. The extended maps $\pi$ and $s$ and the identities $s\pi=ME$, $\pi s=[M]$ prove the preliminary levelwise comparison in item 4. The constant-to-multiplicative example of Section 4.5 explains why generic saturation alone cannot strengthen it.
 
@@ -1684,9 +1684,9 @@ Chapter 7 closes the resulting actual flag inside the quotient tower. Odd-prime 
 
 The declared direct dependency row is exactly:
 
-| Book | Direct prerequisites |
-|---:|---|
-| 147 | 28, 34--35, 38, 51, 55, 57, 85, 114, 132--134, and 142 |
+| Book | Direct prerequisites                                   |
+| ---: | ------------------------------------------------------ |
+|  147 | 28, 34--35, 38, 51, 55, 57, 85, 114, 132--134, and 142 |
 
 The row includes every earlier source explicitly reused below, even when another listed source
 also imports it transitively. Book 62 is mentioned only as a boundary comparison; no result

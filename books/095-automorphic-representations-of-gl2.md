@@ -398,15 +398,15 @@ An algebraic normalization is different again. It twists the group action by a r
 
 Before using the definition, it is helpful to record what depends on which hypothesis.
 
-| assertion | required input |
-|---|---|
-| right translation preserves the space of forms | uniform moderate growth and finite generation under the indicated operators |
-| the $L^2$ norm descends through the center | unitary central character |
-| finite-level vectors have a common compact-open stabilizer | the finite-level clause, not local constancy alone |
-| archimedean type spaces are finite dimensional | $K_\infty$-finiteness and admissibility |
-| cusp forms are rapidly decreasing | automorphy, uniform moderate growth, finiteness, and vanishing constant terms |
-| the cuspidal spectrum is discrete | unitary realization, reduction theory, and cuspidal compactness |
-| algebraic Hecke eigenvalues | an independently defined arithmetic rational structure, not spectral finite dimensionality over $\mathbf C$ |
+| assertion                                                  | required input                                                                                              |
+| ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| right translation preserves the space of forms             | uniform moderate growth and finite generation under the indicated operators                                 |
+| the $L^2$ norm descends through the center                 | unitary central character                                                                                   |
+| finite-level vectors have a common compact-open stabilizer | the finite-level clause, not local constancy alone                                                          |
+| archimedean type spaces are finite dimensional             | $K_\infty$-finiteness and admissibility                                                                     |
+| cusp forms are rapidly decreasing                          | automorphy, uniform moderate growth, finiteness, and vanishing constant terms                               |
+| the cuspidal spectrum is discrete                          | unitary realization, reduction theory, and cuspidal compactness                                             |
+| algebraic Hecke eigenvalues                                | an independently defined arithmetic rational structure, not spectral finite dimensionality over $\mathbf C$ |
 
 The coefficient field in the analytic theory is $\mathbf C$. Local smooth representations at
 finite places are algebraic complex vector spaces; at infinity one works with admissible
@@ -1096,11 +1096,11 @@ character, Whittaker model, and Hecke system, not by a uniform family label.
 
 At a finite place the generic possibilities and their elementary invariants are as follows.
 
-| local component | genericity condition | conductor exponent | standard factor |
-|---|---|---|---|
-| $I(\chi_1,\chi_2)$ | $\chi_1\chi_2^{-1}\ne|\cdot|^{\pm1}$ | $a(\chi_1)+a(\chi_2)$ | $L(s,\chi_1)L(s,\chi_2)$ |
-| $\operatorname{St}\otimes\mu$ | always generic | $1$ if $a(\mu)=0$, otherwise $2a(\mu)$ | $L(s+1/2,\mu)$ |
-| supercuspidal $\sigma$ | intrinsic | $a(\sigma)\ge2$ | $1$ |
+| local component               | genericity condition  | conductor exponent                     | standard factor |
+| ----------------------------- | --------------------- | -------------------------------------- | --------------- |
+| $I(\chi_1,\chi_2)$            | $\chi_1\chi_2^{-1}\ne | \cdot                                  | ^{\pm1}$        |
+| $\operatorname{St}\otimes\mu$ | always generic        | $1$ if $a(\mu)=0$, otherwise $2a(\mu)$ | $L(s+1/2,\mu)$  |
+| supercuspidal $\sigma$        | intrinsic             | $a(\sigma)\ge2$                        | $1$             |
 
 The table uses the unitary representation normalization. In the principal-series row, a ramified
 character contributes the factor $1$ to its degree-one local $L$-function, so the displayed
@@ -1321,9 +1321,8 @@ Suppress $v$ and write $K=\mathrm{GL}_2(\mathcal O)$, $q=q_v$, and $\varpi=\varp
 $f^\circ$ be the spherical vector in $I(\chi_1,\chi_2)$ normalized by $f^\circ(1)=1$. The double
 coset has the disjoint right-coset decomposition
 
-$$
-K\begin{pmatrix}\varpi&0\\0&1\end{pmatrix}K
-=
+# $$K\begin{pmatrix}\varpi&0\\0&1\end{pmatrix}K
+
 \coprod_{u\in\mathcal O/\mathfrak p}
 \begin{pmatrix}\varpi&u\\0&1\end{pmatrix}K
 \;\sqcup\;
@@ -3176,17 +3175,17 @@ character must retain the $S_v$ data as well.
 
 For a normalized classical or Hilbert eigenform $f$, the passage to $\pi_f$ can be read one place at a time:
 
-| form-theoretic datum | automorphic datum | local meaning |
-|---|---|---|
-| weight $k_\tau$ | $\pi_\tau$ at a real place | full discrete series whose positive component contains the holomorphic lowest-weight $k_\tau$ member |
-| nebentype $\varepsilon$ | central character $\omega_{\pi_f}$ | scalar action; parity at infinity |
-| exact level $\mathfrak n$ | conductor $\mathfrak f(\pi_f)$ | $a(\pi_v)=v(\mathfrak n)$ |
-| normalized newform | pure tensor newvector | local newvectors and lowest-weight vectors |
-| $a_\mathfrak p$ for $\mathfrak p\nmid\mathfrak n$ | arithmetic Satake trace | sum of algebraically normalized parameters |
-| determinant term of the Hecke polynomial | central Satake eigenvalue | product of the two parameters |
-| Fourier coefficient | global Whittaker value | product of local Whittaker values |
-| degeneracy images | oldvectors | diagonal translates of the local newvector |
-| twist by a character | $\pi_f\otimes\chi$ | determinant twist at every place |
+| form-theoretic datum                              | automorphic datum                  | local meaning                                                                                        |
+| ------------------------------------------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| weight $k_\tau$                                   | $\pi_\tau$ at a real place         | full discrete series whose positive component contains the holomorphic lowest-weight $k_\tau$ member |
+| nebentype $\varepsilon$                           | central character $\omega_{\pi_f}$ | scalar action; parity at infinity                                                                    |
+| exact level $\mathfrak n$                         | conductor $\mathfrak f(\pi_f)$     | $a(\pi_v)=v(\mathfrak n)$                                                                            |
+| normalized newform                                | pure tensor newvector              | local newvectors and lowest-weight vectors                                                           |
+| $a_\mathfrak p$ for $\mathfrak p\nmid\mathfrak n$ | arithmetic Satake trace            | sum of algebraically normalized parameters                                                           |
+| determinant term of the Hecke polynomial          | central Satake eigenvalue          | product of the two parameters                                                                        |
+| Fourier coefficient                               | global Whittaker value             | product of local Whittaker values                                                                    |
+| degeneracy images                                 | oldvectors                         | diagonal translates of the local newvector                                                           |
+| twist by a character                              | $\pi_f\otimes\chi$                 | determinant twist at every place                                                                     |
 
 At a good finite place, the polynomial determines an unramified principal-series constituent. At a bad place, conductor plus the $U_v$ eigenvalue may distinguish special from some principal-series cases, but conductor alone never determines the local representation. A local type, its Hecke action, or further local factors can be needed.
 

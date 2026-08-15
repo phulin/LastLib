@@ -325,13 +325,13 @@ Surjectivity of (2.5) usually comes from the fact that $\mathbb T$ is generated 
 
 The following table fixes the direction and role of every base-level map.
 
-| Map | Meaning | Consequence |
-|---|---|---|
-| $\mathcal O\to R_{\mathrm{loc}}$ | coefficient structure | local rings use the fixed residual field |
-| $R_{\mathrm{loc}}\to R^{\square_T}$, or to the fixed version denoted $R$ when that structural map is defined | restriction of a global deformation to local places | the selected global ring is an $R_{\mathrm{loc}}$-algebra |
-| $R\to\mathbb T$ | the Hecke-valued family satisfies the deformation problem | $M$ acquires an $R$-action through $\mathbb T$ |
-| $\mathbb T\hookrightarrow\operatorname{End}_{\mathcal O}(M)$ | definition of the acting image algebra | $M$ is faithful over $\mathbb T$ |
-| $R\to\operatorname{End}_{\mathcal O}(M)$ | composite of the preceding two maps | its kernel equals $\ker(R\to\mathbb T)$ when $M$ is $\mathbb T$-faithful |
+| Map                                                                                                          | Meaning                                                   | Consequence                                                              |
+| ------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------- | ------------------------------------------------------------------------ |
+| $\mathcal O\to R_{\mathrm{loc}}$                                                                             | coefficient structure                                     | local rings use the fixed residual field                                 |
+| $R_{\mathrm{loc}}\to R^{\square_T}$, or to the fixed version denoted $R$ when that structural map is defined | restriction of a global deformation to local places       | the selected global ring is an $R_{\mathrm{loc}}$-algebra                |
+| $R\to\mathbb T$                                                                                              | the Hecke-valued family satisfies the deformation problem | $M$ acquires an $R$-action through $\mathbb T$                           |
+| $\mathbb T\hookrightarrow\operatorname{End}_{\mathcal O}(M)$                                                 | definition of the acting image algebra                    | $M$ is faithful over $\mathbb T$                                         |
+| $R\to\operatorname{End}_{\mathcal O}(M)$                                                                     | composite of the preceding two maps                       | its kernel equals $\ker(R\to\mathbb T)$ when $M$ is $\mathbb T$-faithful |
 
 There is no arrow $\mathbb T\to R$ in the input. Producing an inverse to $R\twoheadrightarrow\mathbb T$ is the conclusion of a later comparison argument, not part of the system.
 
@@ -2004,14 +2004,14 @@ The same formula holds at the base level with $R$ in place of $R_N$, and augment
 
 Several types of variables can occur simultaneously, and none should be counted twice.
 
-| Source | Number in the rank-two regular branch | Meaning |
-|---|---:|---|
-| diamond factor at each $v\in Q_N$ | $1$ finite direction | tame character, represented by $\Lambda_N$ |
-| unframed auxiliary local ring | $1$ smooth variable | selected Frobenius eigenvalue $X_v$ |
-| framed auxiliary local ring beyond unframed | $2$ smooth variables | positions $U_v,V_v$ of the lifted eigenlines |
-| one global full frame | $3$ smooth variables | strict global basis directions |
-| $T$ local frames modulo global conjugacy | $4|T|-1$ smooth variables | formula (11.2) |
-| global variables over the chosen local base | $g_{\mathrm{rel},N}$ | strict Selmer tangent plus centralizer correction |
+| Source                                      | Number in the rank-two regular branch | Meaning                                           |
+| ------------------------------------------- | ------------------------------------: | ------------------------------------------------- |
+| diamond factor at each $v\in Q_N$           |                  $1$ finite direction | tame character, represented by $\Lambda_N$        |
+| unframed auxiliary local ring               |                   $1$ smooth variable | selected Frobenius eigenvalue $X_v$               |
+| framed auxiliary local ring beyond unframed |                  $2$ smooth variables | positions $U_v,V_v$ of the lifted eigenlines      |
+| one global full frame                       |                  $3$ smooth variables | strict global basis directions                    |
+| $T$ local frames modulo global conjugacy    |                                    $4 | T                                                 |
+| global variables over the chosen local base |                  $g_{\mathrm{rel},N}$ | strict Selmer tangent plus centralizer correction |
 
 The one-global-frame row is the case $|T|=1$ of the partial-framing row, not an additional summand. Likewise, the framed auxiliary local coordinates belong inside the local base when those places are included there; the global relative count then measures only what remains over that base.
 
@@ -2411,11 +2411,11 @@ Augmentation control is likewise geometric. It may follow from a comparison betw
 
 The definite and cohomological sources emphasize different strengths.
 
-| Source | Typical strength | Main obstruction |
-|---|---|---|
-| finite definite module | direct diamond freeness can be visible | stabilizers, central quotients, integral pairing denominators |
-| curve cohomology | duality and Galois action are geometric | torsion, adjacent cohomology, derived diamond descent |
-| abstract datum | exact covariance and numerical bookkeeping | supplies no geometric theorem by itself |
+| Source                 | Typical strength                           | Main obstruction                                              |
+| ---------------------- | ------------------------------------------ | ------------------------------------------------------------- |
+| finite definite module | direct diamond freeness can be visible     | stabilizers, central quotients, integral pairing denominators |
+| curve cohomology       | duality and Galois action are geometric    | torsion, adjacent cohomology, derived diamond descent         |
+| abstract datum         | exact covariance and numerical bookkeeping | supplies no geometric theorem by itself                       |
 
 The abstract axioms are therefore not a disguised proof that every automorphic construction works. Each axiom isolates one theorem an application must supply:
 
@@ -2831,20 +2831,20 @@ Definition 16.3 is stronger, not more correct. It should be used only when the m
 
 The origin of every axiom can now be displayed in one ledger.
 
-| Axiom | Content | Deformation-side input | Module-side input |
-|---|---|---|---|
-| TW1 | $Q_N$, regular eigenlines, $\Delta_N$ | prime selection and local calculation | none |
-| TW2 | $\Lambda_N\to R_N\to\mathbb T_N$ | $\Lambda_N\to R_N$ | family representation, Hecke generators |
-| TW3 | factorized action on $M_N$ | names the desired universal action | commuting diamonds and Hecke action |
-| TW4a | $R_N/\mathfrak a_NR_N\simeq R$ | uniqueness of the augmented local branch | none |
-| TW4b | $M_N/\mathfrak a_NM_N\simeq M$ | none | level-lowering control |
-| TW4c | $\mathbb T_N/\mathfrak a_N\mathbb T_N\simeq\mathbb T$ | none | compatible generators and saturation |
-| TW5 | free or balanced diamond module | none | torsor, projectivity, or cohomological amplitude theorem |
-| TW6 | defect and ring presentation bounds | Poitou–Tate and obstruction theory | none |
-| TW7 | common $S_\infty$ and $R_\infty$ | generator choices and uniform bounds | compatible action on finite shadows |
-| TW8 | conditional perfect pairing and adjoints | none | integral duality and correspondence reversal |
-| SYS1 | ranks and cardinalities uniform in $N$ | fixed $q$ | multiplicity and rank theorem |
-| SYS2 | pseudo-transitions among finite shadows | finite presentation bounds | finite generation and compatible named data |
+| Axiom | Content                                               | Deformation-side input                   | Module-side input                                        |
+| ----- | ----------------------------------------------------- | ---------------------------------------- | -------------------------------------------------------- |
+| TW1   | $Q_N$, regular eigenlines, $\Delta_N$                 | prime selection and local calculation    | none                                                     |
+| TW2   | $\Lambda_N\to R_N\to\mathbb T_N$                      | $\Lambda_N\to R_N$                       | family representation, Hecke generators                  |
+| TW3   | factorized action on $M_N$                            | names the desired universal action       | commuting diamonds and Hecke action                      |
+| TW4a  | $R_N/\mathfrak a_NR_N\simeq R$                        | uniqueness of the augmented local branch | none                                                     |
+| TW4b  | $M_N/\mathfrak a_NM_N\simeq M$                        | none                                     | level-lowering control                                   |
+| TW4c  | $\mathbb T_N/\mathfrak a_N\mathbb T_N\simeq\mathbb T$ | none                                     | compatible generators and saturation                     |
+| TW5   | free or balanced diamond module                       | none                                     | torsor, projectivity, or cohomological amplitude theorem |
+| TW6   | defect and ring presentation bounds                   | Poitou–Tate and obstruction theory       | none                                                     |
+| TW7   | common $S_\infty$ and $R_\infty$                      | generator choices and uniform bounds     | compatible action on finite shadows                      |
+| TW8   | conditional perfect pairing and adjoints              | none                                     | integral duality and correspondence reversal             |
+| SYS1  | ranks and cardinalities uniform in $N$                | fixed $q$                                | multiplicity and rank theorem                            |
+| SYS2  | pseudo-transitions among finite shadows               | finite presentation bounds               | finite generation and compatible named data              |
 
 This table is also a diagnostic. If an application cites only the auxiliary-prime theorem, it has established TW1, TW4a, the deformation part of TW6, and the ring portion of TW7. It has not established the module rows.
 
@@ -3073,9 +3073,8 @@ $$
 
 Third, at finite level let $M_N^{\mathrm{des}}$ and $M_N^{\mathrm{av}}$ be modules for their respective source actions and for the common diamond algebra. Define their base changes to the common quotient by
 
-$$
-\overline M_N^{\bullet}
-=
+# $$\overline M_N^{\bullet}
+
 (M_N^{\bullet}/\varpi)
 \otimes_{P^{\bullet}/\varpi}\overline P.
 \tag{18.5a}

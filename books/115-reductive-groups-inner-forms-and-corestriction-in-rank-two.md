@@ -1773,11 +1773,11 @@ The kernel of the tensor action must still be audited. Over $k^s$, scalar tuples
 
 These alternatives should not be conflated:
 
-| Construction | Dimension | Hypothesis | Natural issue |
-|---|---:|---|---|
-| underlying quaternion space | $4d$ | pure invertible $\delta$ | norm must be a common $k$-scalar |
-| tensor corestriction | $2^d$ | split corestriction | parity and central kernel |
-| hyperbolic tensor | $2^{d+1}$ | split corestriction | doubled commutant |
+| Construction                | Dimension | Hypothesis               | Natural issue                    |
+| --------------------------- | --------: | ------------------------ | -------------------------------- |
+| underlying quaternion space |      $4d$ | pure invertible $\delta$ | norm must be a common $k$-scalar |
+| tensor corestriction        |     $2^d$ | split corestriction      | parity and central kernel        |
+| hyperbolic tensor           | $2^{d+1}$ | split corestriction      | doubled commutant                |
 
 There is a fourth practical route when the corestriction has quaternionic division representative $D$. A minimal right module for
 
@@ -1848,15 +1848,15 @@ Each step solves one obstruction and exposes the next. Reversing the order tends
 
 The principal results use the following hypotheses.
 
-| Result | Exact hypotheses | Conclusion |
-|---|---|---|
-| preservation under scalar restriction | finite separable $F/k$ | smoothness, connectedness, reductivity preserved |
-| degree-two inner classification | field $k$, characteristic not $2$ | inner $A_1$ forms correspond to quaternion algebras |
-| trace-pairing nondegeneracy | finite separable $F/k$, quaternion $B/F$, invertible pure $\delta$ | nondegenerate alternating $k$-form |
-| local invariant transfer | finite extension of local fields | transfer preserves invariant |
-| global corestriction splitting test | number fields $F/k$ | sums over every branch vanish |
-| tensor symplectic parity | alternating factor forms, characteristic not $2$ | alternating exactly for odd $[F:k]$ |
-| tensor-corestriction representation | split $\operatorname{Cor}_{F/k}(B)$ | $k$-space of dimension $2^{[F:k]}$, with its finite central kernel recorded |
+| Result                                | Exact hypotheses                                                   | Conclusion                                                                  |
+| ------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------------------------- |
+| preservation under scalar restriction | finite separable $F/k$                                             | smoothness, connectedness, reductivity preserved                            |
+| degree-two inner classification       | field $k$, characteristic not $2$                                  | inner $A_1$ forms correspond to quaternion algebras                         |
+| trace-pairing nondegeneracy           | finite separable $F/k$, quaternion $B/F$, invertible pure $\delta$ | nondegenerate alternating $k$-form                                          |
+| local invariant transfer              | finite extension of local fields                                   | transfer preserves invariant                                                |
+| global corestriction splitting test   | number fields $F/k$                                                | sums over every branch vanish                                               |
+| tensor symplectic parity              | alternating factor forms, characteristic not $2$                   | alternating exactly for odd $[F:k]$                                         |
+| tensor-corestriction representation   | split $\operatorname{Cor}_{F/k}(B)$                                | $k$-space of dimension $2^{[F:k]}$, with its finite central kernel recorded |
 
 Characteristic different from $2$ is needed for the classical quaternion presentations, pure/skew decomposition, and the equivalence of alternating with skew-symmetric. Corestriction itself exists more generally. Number-field hypotheses enter the local-global splitting test and the assertion that exponent equals index; they are not needed for the tensor-of-conjugates definition.
 

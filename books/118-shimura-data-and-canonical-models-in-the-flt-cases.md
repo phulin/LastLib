@@ -45,10 +45,10 @@
    - [Components and the curve case](#84-components-and-the-curve-case)
    - [CM tori in a quaternion algebra](#85-cm-tori-in-a-quaternion-algebra)
 9. [Reciprocity morphisms](#9-reciprocity-morphisms)
-    - [The toric construction](#91-the-toric-construction)
-    - [Special-point reciprocity](#92-special-point-reciprocity)
-    - [Variance and normalization](#93-variance-and-normalization)
-    - [Passage to components](#94-passage-to-components)
+   - [The toric construction](#91-the-toric-construction)
+   - [Special-point reciprocity](#92-special-point-reciprocity)
+   - [Variance and normalization](#93-variance-and-normalization)
+   - [Passage to components](#94-passage-to-components)
 10. [Canonical models](#10-canonical-models)
     - [Definition by arithmetic special points](#101-definition-by-arithmetic-special-points)
     - [Uniqueness](#102-uniqueness)
@@ -291,7 +291,7 @@ A **Shimura datum** is a pair $(G,X)$ consisting of a connected reductive group 
 2. conjugation by $h(i)$ is a Cartan involution of $G_{\mathbf R}^{\mathrm{ad}}$;
 3. no nontrivial $\mathbf Q$-simple factor of $G^{\mathrm{ad}}$ receives the trivial projection of $h$.
 
-Some formulations also require the central weight $w_h$ to be defined over $\mathbf Q$. We do not build that extra condition into the term *Shimura datum*: the basic mixed quaternionic datum has a perfectly valid adjoint Shimura datum even when its central weight is not rational. Whenever a polarized weight-one realization is asserted below, rationality of its scalar weight is imposed separately and explicitly. This distinction is the reason central modifications occur in the FLT constructions.
+Some formulations also require the central weight $w_h$ to be defined over $\mathbf Q$. We do not build that extra condition into the term _Shimura datum_: the basic mixed quaternionic datum has a perfectly valid adjoint Shimura datum even when its central weight is not rational. Whenever a polarized weight-one realization is asserted below, rationality of its scalar weight is imposed separately and explicitly. This distinction is the reason central modifications occur in the FLT constructions.
 
 An involution $\theta$ of a real reductive group is Cartan when its fixed subgroup is maximal compact, equivalently when the Killing form modified by $\theta$ is positive definite on the semisimple Lie algebra. Axiom 2 permits compact adjoint factors: on a compact factor the identity is a Cartan involution. Axiom 3 does not say that every real factor must be noncompact. It says that a whole rational simple factor may not be invisible; restriction of scalars can have compact real factors as long as at least one conjugate real factor is active.
 
@@ -876,14 +876,14 @@ Membership in $G^\star(\mathbf R)$ requires these reduced norms to be the same r
 
 ### 8.2A The unitary common-multiplier cover
 
-The obstruction in Proposition 8.2 is specific to real scalar centers.  A CM scalar has norm
+The obstruction in Proposition 8.2 is specific to real scalar centers. A CM scalar has norm
 $z\bar z$ with odd exponent and therefore supplies the missing parity without changing the
-adjoint quaternionic group.  We now construct that replacement exactly.
+adjoint quaternionic group. We now construct that replacement exactly.
 
 Assume that $B/F$ is division and split at exactly one real place $\tau _0$, and put
-$d=[F:\mathbf Q]>1$.  Let $K/\mathbf Q$ be imaginary quadratic, put $L=FK$, and suppose that
-$L$ embeds in $B$.  Write $c$ for the nontrivial element of $\operatorname{Gal}(L/F)$ and
-regard $B$ as a two-dimensional right $L$-space.  Polarization of the reduced norm gives the
+$d=[F:\mathbf Q]>1$. Let $K/\mathbf Q$ be imaginary quadratic, put $L=FK$, and suppose that
+$L$ embeds in $B$. Write $c$ for the nontrivial element of $\operatorname{Gal}(L/F)$ and
+regard $B$ as a two-dimensional right $L$-space. Polarization of the reduced norm gives the
 unique $c$-Hermitian form $H$ satisfying
 
 $$
@@ -911,14 +911,14 @@ $$
 Thus $G^{\mathrm u}$ is the common-**multiplier** fiber of the unitary similitude group;
 it is not the obstructed subgroup $G^\star\subset\operatorname{Res}_{F/\mathbf Q}B^\times$.
 
-**Proposition 8.3 (unitary PEL central modification).**  The following statements hold.
+**Proposition 8.3 (unitary PEL central modification).** The following statements hold.
 
 1. $G^{\mathrm u}$ is connected reductive and
    $$(G^{\mathrm u})^{\mathrm{der}}\simeq
    \operatorname{Res}_{F/\mathbf Q}B^1.$$
    Hence its adjoint group is the adjoint group of the basic quaternionic datum.
 2. At $\tau _0$, the Hermitian form $H$ has signature $(1,1)$; at every other real place it
-   is definite.  In an orthogonal basis define
+   is definite. In an orthogonal basis define
    $$
    h^{\mathrm u}_\tau(z)=
    \begin{cases}
@@ -927,17 +927,17 @@ it is not the obstructed subgroup $G^\star\subset\operatorname{Res}_{F/\mathbf Q
    \end{cases}
    \tag{8.3d}
    $$
-   Every factor has multiplier $z\bar z$.  The map $h^{\mathrm u}$ therefore lands in
+   Every factor has multiplier $z\bar z$. The map $h^{\mathrm u}$ therefore lands in
    $G^{\mathrm u}_{\mathbf R}$, has weight-one types $(-1,0)$ and $(0,-1)$ on $B$, is
    polarized by $\psi$, and induces the basic one-split adjoint Hodge map.
 3. With $L$ acting on $B$ by right multiplication and involution $c$, the identity component
-   of the $L$-linear similitude group of $(B,\psi)$ is exactly $G^{\mathrm u}$.  Thus
+   of the $L$-linear similitude group of $(B,\psi)$ is exactly $G^{\mathrm u}$. Thus
    $(L,c,B,\psi,h^{\mathrm u})$ is PEL-exact.
 4. For the uniform compact choice in (8.3d), the reflex field is the embedded CM field $L$.
 
-**Proof.**  Left multiplication by $b\in B^1$ is right $L$-linear and preserves (8.3a).
-It gives a closed injection $B^1\to\operatorname{SU}(H)$.  After an algebraic closure both
-groups are $\operatorname{SL}_2$, so the injection is an isomorphism.  The center is the torus
+**Proof.** Left multiplication by $b\in B^1$ is right $L$-linear and preserves (8.3a).
+It gives a closed injection $B^1\to\operatorname{SU}(H)$. After an algebraic closure both
+groups are $\operatorname{SL}_2$, so the injection is an isomorphism. The center is the torus
 
 $$
 Z^{\mathrm u}=\{a\in\operatorname{Res}_{L/\mathbf Q}\mathbf G_m:
@@ -945,36 +945,36 @@ a\,c(a)\in\mathbf G_m\},
 $$
 
 which is connected: its multiplier map to $\mathbf G_m$ has connected kernel
-$\operatorname{Res}_{F/\mathbf Q}U(1)$.  Multiplication gives a central isogeny from
-$\operatorname{Res}_{F/\mathbf Q}B^1\times Z^{\mathrm u}$ onto $G^{\mathrm u}$.  Thus
+$\operatorname{Res}_{F/\mathbf Q}U(1)$. Multiplication gives a central isogeny from
+$\operatorname{Res}_{F/\mathbf Q}B^1\times Z^{\mathrm u}$ onto $G^{\mathrm u}$. Thus
 $G^{\mathrm u}$ is connected reductive with the asserted derived group, proving item 1.
 
-At a real place, (8.3a) is the reduced-norm form.  It is indefinite of signature $(1,1)$
+At a real place, (8.3a) is the reduced-norm form. It is indefinite of signature $(1,1)$
 when $B_\tau\simeq M_2(\mathbf R)$ and positive definite when $B_\tau\simeq\mathbf H$.
-Formula (8.3d) consequently scales $H$ by $z\bar z$ in every factor.  The trace identity
-and $c(\xi)=-\xi$ make (8.3b) alternating.  With the prescribed sign of $\xi$, direct
+Formula (8.3d) consequently scales $H$ by $z\bar z$ in every factor. The trace identity
+and $c(\xi)=-\xi$ make (8.3b) alternating. With the prescribed sign of $\xi$, direct
 calculation gives $\psi(x,h^{\mathrm u}(i)x)>0$; the two real characters on the complexified
-space are $z$ and $\bar z$.  At every definite factor a unitary similitude has positive
-multiplier.  The common rational multiplier is therefore positive, so the image at the active
-adjoint factor lies in $\operatorname{PGL}_2(\mathbf R)^+$.  Consequently $X^{\mathrm u}$ is
+space are $z$ and $\bar z$. At every definite factor a unitary similitude has positive
+multiplier. The common rational multiplier is therefore positive, so the image at the active
+adjoint factor lies in $\operatorname{PGL}_2(\mathbf R)^+$. Consequently $X^{\mathrm u}$ is
 one connected copy of $\mathfrak H$; the rational transitivity condition of Section 6.1 is
-vacuous for this datum and for its connected fiber-product modifications.  This proves item 2.
+vacuous for this datum and for its connected fiber-product modifications. This proves item 2.
 
-Right multiplication by $a\in L$ has adjoint right multiplication by $c(a)$.  Conversely,
+Right multiplication by $a\in L$ has adjoint right multiplication by $c(a)$. Conversely,
 if an $L$-linear $g$ scales $\psi$ by a rational scalar $\nu$, nondegeneracy of the trace
 pairing applied to $\psi(gx,gy)-\nu\psi(x,y)$ gives
-$H(gx,gy)=\nu H(x,y)$.  Hence the PEL similitude group is exactly (8.3c), proving item 3.
+$H(gx,gy)=\nu H(x,y)$. Hence the PEL similitude group is exactly (8.3c), proving item 3.
 
-Finally, embeddings of $L$ are pairs $(\tau,\kappa)$ and $(\tau,\bar\kappa)$.  The Hodge
+Finally, embeddings of $L$ are pairs $(\tau,\kappa)$ and $(\tau,\bar\kappa)$. The Hodge
 multiplicities are $(1,1)$ over the unique active embedding $\tau _0$ and, with the uniform
-choice in (8.3d), $(2,0)$ over every inactive $\tau$.  An automorphism preserving this tuple
+choice in (8.3d), $(2,0)$ over every inactive $\tau$. An automorphism preserving this tuple
 must first fix the unique $(1,1)$ pair, hence fix the embedded field $F$, and must then fix
 the chosen embedding of $K$, since $d>1$ supplies an inactive pair distinguishing $(2,0)$
-from $(0,2)$.  Its fixed field is therefore $FK=L$.  This proves item 4. $\square$
+from $(0,2)$. Its fixed field is therefore $FK=L$. This proves item 4. $\square$
 
-**Proposition 8.3A (one ramified dyadic spectator).**  Assume that $2$ splits completely in
+**Proposition 8.3A (one ramified dyadic spectator).** Assume that $2$ splits completely in
 $F$, that $d=[F:\mathbf Q]>1$, and that $B/F$ is split at exactly one real place and has
-finite ramification set $\{w\}$ for one $w\mid2$.  For every second dyadic place $v\ne w$
+finite ramification set $\{w\}$ for one $w\mid2$. For every second dyadic place $v\ne w$
 there is a CM quadratic extension $L/F$ with the following properties:
 
 1. $L/F$ is ramified at $w$ and split at every dyadic place different from $w$, in
@@ -987,40 +987,40 @@ there is a CM quadratic extension $L/F$ with the following properties:
    $E$ contains the embedded copy of $F$ and $E_u/F_v$ is totally ramified with residue
    degree one.
 
-Moreover the ramified quadratic class at $w$ may be prescribed.  In particular one may make
+Moreover the ramified quadratic class at $w$ may be prescribed. In particular one may make
 two choices for which the corresponding local quadratic characters have distinct restrictions
 to inertia.
 
-**Proof.**  At $w$, choose a ramified quadratic field extension of $F_w=\mathbf Q_2$.
+**Proof.** At $w$, choose a ramified quadratic field extension of $F_w=\mathbf Q_2$.
 Prescribe that local square class, the split square class at every other place above two,
-and the negative square class at every real place.  Each square class is open in the
+and the negative square class at every real place. Each square class is open in the
 corresponding local multiplicative group, so ordinary weak approximation realizes all these
-conditions by one $a\in F^\times$; put $L=F(\sqrt a)$.  The negative real signs make $L$ CM.  Every
+conditions by one $a\in F^\times$; put $L=F(\sqrt a)$. The negative real signs make $L$ CM. Every
 ramified real place of $B$ remains a field in $L$, and the sole finite ramified place $w$ is
-ramified rather than split.  The embedding criterion of Section 8.5 therefore gives
+ramified rather than split. The embedding criterion of Section 8.5 therefore gives
 $L\hookrightarrow B$.
 
 The proofs of items 1--3 of Proposition 8.3 use only that $L/F$ is CM quadratic and embedded
-in $B$.  They apply verbatim after choosing, independently at each inactive real place, one
-of the two embeddings of $L$ above it.  The Hodge multiplicities are $(1,1)$ above the unique
+in $B$. They apply verbatim after choosing, independently at each inactive real place, one
+of the two embeddings of $L$ above it. The Hodge multiplicities are $(1,1)$ above the unique
 active real embedding and $(2,0)$, with its conjugate $(0,2)$, above every inactive one.
 Consequently an automorphism preserving the Hodge tuple fixes the unique active embedding of
-$F$.  Thus the reflex field $E$ contains that embedded copy of $F$.
+$F$. Thus the reflex field $E$ contains that embedded copy of $F$.
 
-It remains to compute its completion at two.  Fix an isomorphism
+It remains to compute its completion at two. Fix an isomorphism
 $\overline{\mathbf Q}_2\simeq\mathbf C$ carrying the active real label to the target $v$.
 Because two splits completely in $F$, the local Galois group fixes every $F$-embedding label.
 At all dyadic labels other than $w$, the two $L$-embeddings are already split over
-$\mathbf Q_2$.  At the label $w$, the extreme multiplicities $(2,0)$ distinguish the two
-embeddings of the prescribed ramified quadratic field $L_w/F_w$.  Hence the stabilizer of the
-local Hodge tuple is exactly the subgroup fixing that ramified quadratic field.  The local
+$\mathbf Q_2$. At the label $w$, the extreme multiplicities $(2,0)$ distinguish the two
+embeddings of the prescribed ramified quadratic field $L_w/F_w$. Hence the stabilizer of the
+local Hodge tuple is exactly the subgroup fixing that ramified quadratic field. The local
 reflex field $E_u$ is therefore a ramified quadratic extension of
-$F_v=\mathbf Q_2$.  In particular its residue degree is one. $\square$
+$F_v=\mathbf Q_2$. In particular its residue degree is one. $\square$
 
-The embedding hypothesis is explicit and easy to arrange in the applications.  By Section
-8.5 it is equivalent to requiring that no ramified place of $B$ split in $L$.  In particular,
+The embedding hypothesis is explicit and easy to arrange in the applications. By Section
+8.5 it is equivalent to requiring that no ramified place of $B$ split in $L$. In particular,
 if the only finite ramification is a place above $2$, if $2$ splits completely in $F$, and if
-$K/\mathbf Q$ is nonsplit at $2$, then the condition holds.  Requiring $K$ to split at a
+$K/\mathbf Q$ is nonsplit at $2$, then the condition holds. Requiring $K$ to split at a
 finite set of odd rational primes simultaneously makes the unitary datum split at all places
 above those primes.
 
@@ -1306,10 +1306,10 @@ There are two equivalent level conventions. A chosen primitive $N$th root of uni
 
 In the central-modification case, the two groups have the same connected domain and commensurable arithmetic images in the common adjoint group. Indeed, the isogeny on derived groups has finite kernel and cokernel on each arithmetic lattice after shrinking level. Thus every connected component for $G$ is finitely dominated by a PEL component for $G^\natural$; the component sets themselves are finite by Chapter 6. Take the normal finite quotient of each dominating PEL component by its effective deck group and then take the finite disjoint union indexed by the components of $G$. Its analytification is the required quotient and it is quasi-projective. Two choices of central modification have a common refinement given by the connected fiber product over the adjoint group. The resulting finite birational comparisons between normal algebraizations are isomorphisms. $\square$
 
-**Corollary 10.3A (finite unitary cover of the basic curve).**  In the one-split division
+**Corollary 10.3A (finite unitary cover of the basic curve).** In the one-split division
 case of Proposition 8.3, let $X_K$ be a finite union of components of the basic quaternionic
 curve at a prescribed compact open level $K$, and let $S$ be a finite set of odd rational primes
-which split completely in $L$, above which $B$ is split and $K$ is hyperspecial.  Put
+which split completely in $L$, above which $B$ is split and $K$ is hyperspecial. Put
 
 $$
 D=\operatorname{Res}_{F/\mathbf Q}B^1,\qquad H=G^{\mathrm{ad}},
@@ -1324,7 +1324,7 @@ $$
 $$
 
 For a packet with trivial central character this costs nothing: enlarge each local level by
-the central signs before choosing the packet vector.  There are a finite extension $E/L$
+the central signs before choosing the packet vector. There are a finite extension $E/L$
 unramified at every place above $S$, a sufficiently small fine unitary PEL level
 $K^{\mathrm u}$ which is hyperspecial at $S$, a finite union of unitary PEL components
 $Y_{K^{\mathrm u},E}$ over $E$, and a finite surjective morphism
@@ -1336,13 +1336,13 @@ $$
 
 Here $X_{K,E}$ denotes the selected geometric component union after descent to the compositum
 of its component fields with $E$; if the union is already defined over $F$, it is simply
-$X_K\times_FE$.  The source may include finitely many labelled copies of a component, and it
-may be taken over every target component needed by a Hecke-stable packet block.  All shrinking
+$X_K\times_FE$. The source may include finitely many labelled copies of a component, and it
+may be taken over every target component needed by a Hecke-stable packet block. All shrinking
 used to construct the cover occurs away from $S$.
 
-**Proof.**  Write also $H=(G^{\mathrm u})^{\mathrm{ad}}$.  Fix a target component represented
-by $g\in G(\mathbf A_f)$.  Formula (8.7), together with prime avoidance for fractional ideals,
-allows $g$ to be chosen with $g_p=1$ for $p\in S$.  Right translation by $g^{-1}$ identifies
+**Proof.** Write also $H=(G^{\mathrm u})^{\mathrm{ad}}$. Fix a target component represented
+by $g\in G(\mathbf A_f)$. Formula (8.7), together with prime avoidance for fractional ideals,
+allows $g$ to be chosen with $g_p=1$ for $p\in S$. Right translation by $g^{-1}$ identifies
 this component with the identity component at level $gKg^{-1}$; this translation is defined
 over $F$ by Section 11.3, and the new level is still hyperspecial at $S$ and centrally
 saturated.
@@ -1356,14 +1356,14 @@ $$
 \tag{10.7c}
 $$
 
-where $\Gamma_g$ is the effective arithmetic group of the translated target component.  Such
+where $\Gamma_g$ is the effective arithmetic group of the translated target component. Such
 a $K_D$ may be chosen inside the translated target level because that level is centrally
-saturated.  Start with a unitary compact open $K^{\mathrm u}_0$ which contains $K_D$ and is
-hyperspecial at $S$, taking a normal core away from $S$.  This preliminary level need not be
-neat.  Its effective arithmetic group has only finitely many cosets modulo $\Gamma_D$, since
+saturated. Start with a unitary compact open $K^{\mathrm u}_0$ which contains $K_D$ and is
+hyperspecial at $S$, taking a normal core away from $S$. This preliminary level need not be
+neat. Its effective arithmetic group has only finitely many cosets modulo $\Gamma_D$, since
 the two groups are commensurable and the center acts trivially on $\mathfrak H$.
 
-Every nonidentity effective coset can be removed away from $S$.  If its class in $H(\mathbf Q)$
+Every nonidentity effective coset can be removed away from $S$. If its class in $H(\mathbf Q)$
 does not lift to $D(\mathbf Q)$, the obstruction lies in
 
 $$
@@ -1372,25 +1372,25 @@ H^1(\mathbf Q,\operatorname{Res}_{F/\mathbf Q}\mu _2)
 $$
 
 A nonzero such class is nonsquare at some finite place away from $S$: apply Book 117,
-Lemma 4.4 to the associated quadratic extension after adjoining the finite set $S$.  If $w$
+Lemma 4.4 to the associated quadratic extension after adjoining the finite set $S$. If $w$
 is the resulting finite place of $F$, over a rational prime $q\notin S$, the inverse image of
 the open subgroup
 $\operatorname{im}(B^1(F_w)\to PB^\times(F_w))$ in the $w$-factor contains the image of
-$K_{D,w}$ and excludes every unitary lift of the chosen effective coset.  Intersect the
+$K_{D,w}$ and excludes every unitary lift of the chosen effective coset. Intersect the
 $q$-factor of $K^{\mathrm u}_0$ with the inverse image of this subgroup.
 
-If the class does lift, choose $d\in D(\mathbf Q)$.  Since $K_D$ contains the full central
-kernel, the effective class belongs to $\Gamma_D$ exactly when $d\in K_D$.  Hence for a
+If the class does lift, choose $d\in D(\mathbf Q)$. Since $K_D$ contains the full central
+kernel, the effective class belongs to $\Gamma_D$ exactly when $d\in K_D$. Hence for a
 nonidentity coset some local component of $d$ is outside $K_D$, and its image in $H$ is outside
-the image of $K_D$ as well.  This cannot first occur at a place of $S$: there the groups are
+the image of $K_D$ as well. This cannot first occur at a place of $S$: there the groups are
 split, the levels are hyperspecial, and a rationally liftable integral adjoint element lifts to
-$D(\mathbf Z_p)$.  At a detecting place $w\mid q$ with $q\notin S$, intersect the $q$-factor
+$D(\mathbf Z_p)$. At a detecting place $w\mid q$ with $q\notin S$, intersect the $q$-factor
 of $K^{\mathrm u}_0$ with the inverse image in $G^{\mathrm u}(\mathbf Q_q)$ of the condition
 $h_w\in\operatorname{im}(K_{D,w}\to PB^\times(F_w))$.
 It contains $K_{D,w}$ and excludes the whole effective coset, independently of which central
-unitary lift represents it.  Performing this operation for the finitely many cosets leaves a
+unitary lift represents it. Performing this operation for the finitely many cosets leaves a
 preliminary unitary identity component with effective group exactly $\Gamma_D$ and changes no
-level at $S$.  The identity on $\mathfrak H$ gives a finite map
+level at $S$. The identity on $\mathfrak H$ gives a finite map
 
 $$
 \Gamma_D\backslash\mathfrak H\longrightarrow
@@ -1398,36 +1398,36 @@ $$
 \tag{10.7d}
 $$
 
-We record why this analytic map is algebraic and defined over the asserted good field.  The
+We record why this analytic map is algebraic and defined over the asserted good field. The
 appeal below to Sections 11.3--11.4 is noncircular: those sections use Theorem 10.4 and the
-component reciprocity already proved in Chapters 6 and 9, not this corollary.  Form
+component reciprocity already proved in Chapters 6 and 9, not this corollary. Form
 
 $$
 P=\bigl(G^{\mathrm u}\times_HG\bigr)^\circ .
 \tag{10.7e}
 $$
 
-The pair of Hodge lifts defines a Shimura datum on $P$.  It is a connected central modification
+The pair of Hodge lifts defines a Shimura datum on $P$. It is a connected central modification
 with derived group isogenous to $D$, and its reflex field is $L$: projection to
 $G^{\mathrm u}$ forces the field to contain $L$, while the pair of cocharacters is defined over
-$L$.  Give $P$ the fiber-product level determined by $K^{\mathrm u}_0$ and $gKg^{-1}$.  The
-component with effective arithmetic group $\Gamma_D$ maps to both factors by Section 11.3.  Its
+$L$. Give $P$ the fiber-product level determined by $K^{\mathrm u}_0$ and $gKg^{-1}$. The
+component with effective arithmetic group $\Gamma_D$ maps to both factors by Section 11.3. Its
 projection to the selected unitary component is the identity on
-$\Gamma_D\backslash\mathfrak H$.  Both curves are proper because their common adjoint group is
+$\Gamma_D\backslash\mathfrak H$. Both curves are proper because their common adjoint group is
 anisotropic, so the projection is finite birational and hence an isomorphism between normal
-curves.  The other projection, followed by translation by $g$, is exactly (10.7d).  Thus
+curves. The other projection, followed by translation by $g$, is exactly (10.7d). Thus
 (10.7d) is an algebraic morphism from the preliminary unitary PEL component, not merely one leg
 of an abstract correspondence.
 
 Now choose a neat fine unitary level $K^{\mathrm u}\subset K^{\mathrm u}_0$, equal to it at
-$S$ and otherwise arbitrarily small.  The full inverse image of the preceding unitary component
+$S$ and otherwise arbitrarily small. The full inverse image of the preceding unitary component
 is a finite union of genuine fine PEL components, and its level-forgetting map is finite.
-Composing that map with (10.7d) gives the required finite cover.  This last rigidification is
+Composing that map with (10.7d) gives the required finite cover. This last rigidification is
 why central saturation of the preliminary level causes no fine-moduli problem.
 
-All three preliminary levels and the fine unitary level are hyperspecial at $S$.  At
-$p\in S$ the groups are split and $p$ is odd.  Their central kernels are split tori and the
-derived central kernel has order two, hence is etale.  The connected fiber product of the split
+All three preliminary levels and the fine unitary level are hyperspecial at $S$. At
+$p\in S$ the groups are split and $p$ is odd. Their central kernels are split tori and the
+derived central kernel has order two, hence is etale. The connected fiber product of the split
 reductive $\mathbf Z_p$-models is therefore again reductive and has
 $P(\mathbf Z_p)=K_{P,p}$; the paired Hodge cocharacter extends to this integral fiber product.
 By (6.5)--(6.6) and Section 11.4, the selected $P$-component is defined over a finite component
@@ -1439,14 +1439,14 @@ $$
 $$
 
 Thus local units lie in the exact image $\nu_P(K_{P,p})$, not merely in the ambient integral
-torus.  The two projections and the target Hecke translation are already defined over $L$;
-hence the normal finite-birational identification and (10.7d) are defined over $E_g$.  The full
-inverse image at the fine unitary level is defined over $E_g$ as a union.  Repeat for the
-finitely many target components, intersecting the fine unitary levels away from $S$.  If
+torus. The two projections and the target Hecke translation are already defined over $L$;
+hence the normal finite-birational identification and (10.7d) are defined over $E_g$. The full
+inverse image at the fine unitary level is defined over $E_g$ as a union. Repeat for the
+finitely many target components, intersecting the fine unitary levels away from $S$. If
 individual connected labels are desired, enlarge by their component fields, which are again
-unramified above $S$ by the same calculation.  Take labelled copies when two targets use the
-same source component.  The compositum $E$ of these finitely many fields is still unramified
-above $S$, and the resulting finite disjoint source maps surjectively to $X_K$.  This is
+unramified above $S$ by the same calculation. Take labelled copies when two targets use the
+same source component. The compositum $E$ of these finitely many fields is still unramified
+above $S$, and the resulting finite disjoint source maps surjectively to $X_K$. This is
 (10.7b). $\square$
 
 The final independence statement is important. A tensor-corestriction representation and a hyperbolically enlarged representation can land in Siegel spaces of different dimensions, and their ambient universal abelian schemes need not agree. The common-refinement argument in the proof, not equality of function fields by itself, gives finite birational maps in both directions; normality then makes them inverse. Canonical descent therefore belongs to $(G,X)$, not to the auxiliary representation.
@@ -1619,19 +1619,19 @@ This theorem deliberately stops at the generic canonical model. Smooth or semist
 
 The central statements depend on different hypotheses, and none should be carried into another column silently.
 
-| Assertion | Necessary input | What fails without it |
-|---|---|---|
-| Shimura axioms | connected reductive $G$, Hodge types (3.1), Cartan involution, active rational factors | the orbit need not be Hermitian or effective |
-| quaternionic positive dimension | at least one split real place | the proposed $h$ is adjoint-trivial |
-| symplectic algebraization | PEL-exact polarized weight-one representation, directly or through a compatible central modification with the same reflex field | faithfulness alone does not identify the Shimura quotient with a PEL locus |
+| Assertion                               | Necessary input                                                                                                                                                                      | What fails without it                                                                             |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
+| Shimura axioms                          | connected reductive $G$, Hodge types (3.1), Cartan involution, active rational factors                                                                                               | the orbit need not be Hermitian or effective                                                      |
+| quaternionic positive dimension         | at least one split real place                                                                                                                                                        | the proposed $h$ is adjoint-trivial                                                               |
+| symplectic algebraization               | PEL-exact polarized weight-one representation, directly or through a compatible central modification with the same reflex field                                                      | faithfulness alone does not identify the Shimura quotient with a PEL locus                        |
 | finite unitary cover in mixed signature | the exact CM-unitary datum, central saturation of the basic derived level, the common adjoint fiber product, finite arithmetic-coset removal, and hyperspecial component reciprocity | equality of adjoint groups alone gives neither a direct map nor an unramified field of definition |
-| component reduction | strong approximation for the simply connected derived group | the torus quotient may miss a derived obstruction |
-| simplified component labels | transitivity of $G(\mathbf Q)$ on $\pi_0(X)$ | one must retain the orbit set (6.2a) |
-| basic quaternionic narrow formula | rational reduced-norm theorem and every split real place active | Hamiltonian sign restrictions are lost, producing a false one-sign quotient |
-| effective manifold at level $K$ | neatness of the adjoint arithmetic action | adjoint torsion produces quotient singularities; ineffective central units are separate |
-| special reciprocity | arithmetic Artin convention and the CM comparison theorem | the Galois action or its inverse is undetermined |
-| canonical descent | algebraization, density, reciprocity, effective finite descent | a rule on CM points alone is not a variety over $E$ |
-| individual component over $E_C$ | openness of the stabilizer in (6.6) | a component need not be defined over the ambient reflex field |
+| component reduction                     | strong approximation for the simply connected derived group                                                                                                                          | the torus quotient may miss a derived obstruction                                                 |
+| simplified component labels             | transitivity of $G(\mathbf Q)$ on $\pi_0(X)$                                                                                                                                         | one must retain the orbit set (6.2a)                                                              |
+| basic quaternionic narrow formula       | rational reduced-norm theorem and every split real place active                                                                                                                      | Hamiltonian sign restrictions are lost, producing a false one-sign quotient                       |
+| effective manifold at level $K$         | neatness of the adjoint arithmetic action                                                                                                                                            | adjoint torsion produces quotient singularities; ineffective central units are separate           |
+| special reciprocity                     | arithmetic Artin convention and the CM comparison theorem                                                                                                                            | the Galois action or its inverse is undetermined                                                  |
+| canonical descent                       | algebraization, density, reciprocity, effective finite descent                                                                                                                       | a rule on CM points alone is not a variety over $E$                                               |
+| individual component over $E_C$         | openness of the stabilizer in (6.6)                                                                                                                                                  | a component need not be defined over the ambient reflex field                                     |
 
 Two boundary cases deserve emphasis. At non-neat level, a coarse canonical variety still exists, but universal objects can be obstructed by automorphisms. At a datum with compact real factors, those factors satisfy the Cartan axiom; they violate the nontriviality axiom only if an entire rational simple factor is invisible.
 
@@ -1643,11 +1643,11 @@ A Shimura datum is the precise interface between Hodge theory and arithmetic gro
 
 For the Hilbert datum every real embedding is active, so the domain is $(\mathfrak H^\pm)^d$, the reflex field is $\mathbf Q$, and components form a narrow class quotient. A quaternion algebra suppresses the ramified real factors in the domain: the active set $\Sigma$ determines the dimension and reflex field, while reduced norm computes the basic group’s components as a narrow quotient. The signs have two sources—orientation at split active places and positivity of rational reduced norms at Hamiltonian places. A quaternionic central modification retains its own abelianized quotient. In both families, strong approximation transfers the component problem from the derived group to an explicit torus quotient.
 
-In the mixed one-split case the direct common-norm Hodge lift is impossible.  The CM-unitary
-common-multiplier datum is the exact replacement.  After central saturation of the basic
+In the mixed one-split case the direct common-norm Hodge lift is impossible. The CM-unitary
+common-multiplier datum is the exact replacement. After central saturation of the basic
 derived level, harmless on the trivial-central-character packet, its connected fiber product
 over the common adjoint group identifies a preliminary unitary component; a fine
-prime-to-$S$ level above it maps finitely onto every prescribed basic component.  Hyperspecial
+prime-to-$S$ level above it maps finitely onto every prescribed basic component. Hyperspecial
 reciprocity places that map over a component field unramified above $S$.
 
 The arithmetic structure is fixed by one normalization. With arithmetic Artin reciprocity and the left adelic convention,

@@ -68,10 +68,10 @@
     - [The required Shafarevich statement](#131-the-required-shafarevich-statement)
     - [Level fields and integral moduli points](#132-level-fields-and-integral-moduli-points)
     - [The missing arithmetic height bound](#133-the-missing-arithmetic-height-bound)
-        - [The cone data](#the-cone-data)
-        - [The local degeneration chart](#the-local-degeneration-chart)
-        - [The metrized theta--Hodge comparison](#the-metrized-theta--hodge-comparison)
-        - [The first remaining numerical theorem](#the-first-remaining-numerical-theorem)
+      - [The cone data](#the-cone-data)
+      - [The local degeneration chart](#the-local-degeneration-chart)
+      - [The metrized theta--Hodge comparison](#the-metrized-theta--hodge-comparison)
+      - [The first remaining numerical theorem](#the-first-remaining-numerical-theorem)
     - [Why integrality is not a substitute](#134-why-integrality-is-not-a-substitute)
     - [The descent half after Northcott](#135-the-descent-half-after-northcott)
     - [Zarhin cancellation and Jordan--Zassenhaus](#136-zarhin-cancellation-and-jordan--zassenhaus)
@@ -1555,7 +1555,7 @@ $$
 The last three arrows are algebraic and are proved completely in Chapters 14--16. In the first
 arrow, Chapters 12--13 prove polarized descent and the integral factor-cancellation passage
 from the stabilized principally polarized objects back to the original abelian varieties. The
-remaining input is the deep numerical height bound.  Its semistable, compactification, and
+remaining input is the deep numerical height bound. Its semistable, compactification, and
 metric interfaces and the exact certificates needed by its determinant-slope component are
 isolated below. This
 distinction prevents a
@@ -1622,18 +1622,18 @@ defined by integration on the complex torus. Both pieces enter the product formu
 
 ### 12.2 Potential semistable reduction from curves
 
-Stable height is useful only if every abelian variety reaches the semistable range.  This is
+Stable height is useful only if every abelian variety reaches the semistable range. This is
 not a formal consequence of the existence of a Néron model: its connected special fiber may
-have a unipotent radical.  We now analyze a proposed internal proof of the required local
-theorem; Section 13.7 records the remaining gap.  The argument has three independent pieces.
+have a unipotent radical. We now analyze a proposed internal proof of the required local
+theorem; Section 13.7 records the remaining gap. The argument has three independent pieces.
 Prime-to-residue-characteristic torsion detects the three
 Chevalley ranks and makes semistability invariant under isogeny; a sufficiently positive curve
 in an abelian variety produces a Jacobian carrier; and normalization after a carefully chosen
 ramified base change makes a prepared curve model reduced and nodal.
 
 Throughout this section, $R$ is a complete discrete valuation ring of characteristic zero,
-with fraction field $F$ and perfect residue field $k$ of characteristic $p>0$.  This is the
-case needed at every finite place of a number field.  Write $I_F$ for inertia and, for an
+with fraction field $F$ and perfect residue field $k$ of characteristic $p>0$. This is the
+case needed at every finite place of a number field. Write $I_F$ for inertia and, for an
 abelian variety $A/F$, write
 
 $$
@@ -1642,7 +1642,7 @@ a(A),\quad t(A),\quad u(A)
 $$
 
 for the dimensions of the abelian, toric, and unipotent parts of the geometric connected
-special fiber of its Néron model.  Thus
+special fiber of its Néron model. Thus
 
 $$
 \dim A=a(A)+t(A)+u(A),
@@ -1651,7 +1651,7 @@ $$
 
 and $A$ is semistable precisely when $u(A)=0$.
 
-**Lemma 12.2 (the fixed part from the Néron fiber).**  If $\ell\ne p$, then
+**Lemma 12.2 (the fixed part from the Néron fiber).** If $\ell\ne p$, then
 
 $$
 \operatorname{rank}_{\mathbf Z_\ell}(T_\ell A)^{I_F}
@@ -1660,52 +1660,52 @@ $$
 
 Consequently semistable reduction is invariant under $F$-isogeny.
 
-**Proof.**  Pass to the strict henselization and then complete; neither inertia invariants nor
-the geometric special fiber changes.  For every $n$, reduction is injective on unramified
-$\ell^n$-torsion.  Indeed, a torsion section reducing to the identity lies in the formal
+**Proof.** Pass to the strict henselization and then complete; neither inertia invariants nor
+the geometric special fiber changes. For every $n$, reduction is injective on unramified
+$\ell^n$-torsion. Indeed, a torsion section reducing to the identity lies in the formal
 group, and $[\ell^n]$ is an automorphism there because its differential is a unit.
 
-Reduction is also surjective onto the $\ell^n$-torsion of the special fiber.  Lift a special
-point $x$ to a section $\widetilde x$ by smoothness.  The section $[\ell^n]\widetilde x$
-lies in the formal group.  Divide it there uniquely by $\ell^n$ and subtract the quotient
-from $\widetilde x$.  The result is an $\ell^n$-torsion lift of $x$.  Passing to compatible
+Reduction is also surjective onto the $\ell^n$-torsion of the special fiber. Lift a special
+point $x$ to a section $\widetilde x$ by smoothness. The section $[\ell^n]\widetilde x$
+lies in the formal group. Divide it there uniquely by $\ell^n$ and subtract the quotient
+from $\widetilde x$. The result is an $\ell^n$-torsion lift of $x$. Passing to compatible
 inverse systems gives the asserted comparison: at each level the set of lifts is a torsor
 under the formal $\ell^n$-torsion, which is zero, and the transition maps are therefore
-compatible.  Hence
+compatible. Hence
 
 $$
 (T_\ell A)^{I_F}\simeq T_\ell(\mathcal A_{\bar k}).
 \tag{12.2.4}
 $$
 
-The finite component group contributes no Tate module.  Its prime-to-$\ell$ part has no
+The finite component group contributes no Tate module. Its prime-to-$\ell$ part has no
 $\ell^n$-torsion, while on its finite $\ell$-primary part repeated multiplication by $\ell$
-is zero, so a compatible inverse-limit sequence is zero.  We may therefore replace
-$\mathcal A_{\bar k}$ by its identity component.  In its
+is zero, so a compatible inverse-limit sequence is zero. We may therefore replace
+$\mathcal A_{\bar k}$ by its identity component. In its
 Chevalley filtration a smooth connected unipotent group has no prime-to-$p$ torsion, a torus
 of rank $t$ has Tate module of rank $t$, and an abelian variety of dimension $a$ has Tate
-module of rank $2a$.  Exactness of prime-to-$p$ torsion in the two smooth extensions proves
+module of rank $2a$. Exactness of prime-to-$p$ torsion in the two smooth extensions proves
 (12.2.3).
 
 Now let $f:A\to A'$ be an isogeny and choose a quasi-inverse $h$ with
-$hf=[m]_A$ and $fh=[m]_{A'}$.  The maps of connected Néron fibers carry affine parts to
-affine parts and induce quasi-inverse isogenies between their abelian quotients.  Hence
-$a(A)=a(A')$.  The rational Tate modules are isomorphic, so (12.2.3) gives
-$t(A)=t(A')$.  Equality of dimensions and (12.2.2) then gives $u(A)=u(A')$, proving the last
+$hf=[m]_A$ and $fh=[m]_{A'}$. The maps of connected Néron fibers carry affine parts to
+affine parts and induce quasi-inverse isogenies between their abelian quotients. Hence
+$a(A)=a(A')$. The rational Tate modules are isomorphic, so (12.2.3) gives
+$t(A)=t(A')$. Equality of dimensions and (12.2.2) then gives $u(A)=u(A')$, proving the last
 assertion even when the isogeny degree is divisible by $p$. $\square$
 
 The use of the rational Tate module in the last paragraph is harmless: an isogeny already
-gives its inverse after dividing by $m$.  No semisimplicity or Tate homomorphism theorem is
+gives its inverse after dividing by $m$. No semisimplicity or Tate homomorphism theorem is
 being used.
 
-**Lemma 12.3 (a Jacobian carrier).**  After a finite separable extension of $F$, every
+**Lemma 12.3 (a Jacobian carrier).** After a finite separable extension of $F$, every
 positive-dimensional abelian variety $A/F$ is isogenous to an abelian subvariety of the
 Jacobian of a smooth proper geometrically connected curve.
 
-**Proof.**  For $\dim A=1$, take the curve $A$ itself.  Suppose $g=\dim A\ge2$.  Choose a
-symmetric very ample line bundle and replace it by a high power.  Choose points
+**Proof.** For $\dim A=1$, take the curve $A$ itself. Suppose $g=\dim A\ge2$. Choose a
+symmetric very ample line bundle and replace it by a high power. Choose points
 $P_1,\ldots,P_g$ and tangent vectors $v_i\in T_{P_i}A$ whose translates to the identity form
-a basis of $\operatorname{Lie}A$.  A high power separates these first-order jets.  Bertini,
+a basis of $\operatorname{Lie}A$. A high power separates these first-order jets. Bertini,
 with those finitely many conditions and after a finite separable extension if rational choices
 are needed, gives a smooth geometrically connected complete-intersection curve
 
@@ -1716,37 +1716,37 @@ $$
 
 through the origin and the $P_i$, tangent to $v_i$ at $P_i$.
 
-For clarity, the Bertini assertion here is the elementary jet-incidence form.  At each $P_i$
-choose $g-1$ independent conormals with common kernel $Fv_i$.  Surjectivity of the evaluation
+For clarity, the Bertini assertion here is the elementary jet-incidence form. At each $P_i$
+choose $g-1$ independent conormals with common kernel $Fv_i$. Surjectivity of the evaluation
 map to the finitely many first-jet spaces makes the tuples of sections with those prescribed
-values and differentials a nonempty affine space.  For a point away from the $P_i$, failure of
+values and differentials a nonempty affine space. For a point away from the $P_i$, failure of
 transversality imposes at least one more independent linear condition; the incidence of bad
-tuples with such a point therefore has smaller dimension than the parameter space.  The same
-calculation on each successive intersection gives a nonempty open of smooth tuples.  The
+tuples with such a point therefore has smaller dimension than the parameter space. The same
+calculation on each successive intersection gives a nonempty open of smooth tuples. The
 generic member of a base-point-free linear system on a geometrically integral variety is
 geometrically integral: on an affine trivializing chart this follows because the universal
 linear polynomial is prime in the function field with independent coefficient variables; the
-property spreads to an open of the parameter space.  The finitely many imposed first jets do
-not change that argument away from their base points.  Applying it successively makes the
-complete intersection geometrically connected.  The ground field is infinite, so the
-nonempty parameter open has a closed point with finite separable residue field.  Passing to
+property spreads to an open of the parameter space. The finitely many imposed first jets do
+not change that argument away from their base points. Applying it successively makes the
+complete intersection geometrically connected. The ground field is infinite, so the
+nonempty parameter open has a closed point with finite separable residue field. Passing to
 that field supplies the asserted tuple.
 
 If an invariant differential restricts to zero on $C$, it vanishes on every $v_i$; translating
-to the identity shows that it is zero.  Thus restriction of invariant differentials
+to the identity shows that it is zero. Thus restriction of invariant differentials
 
 $$
 H^0(A,\Omega^1_A)\longrightarrow H^0(C,\Omega^1_C)
 \tag{12.2.6}
 $$
 
-is injective.  The based inclusion induces $q:J(C)\to A$.  The dual of $dq$ is (12.2.6), so
-$dq$ is surjective.  The image of a homomorphism of abelian varieties is an abelian
+is injective. The based inclusion induces $q:J(C)\to A$. The dual of $dq$ is (12.2.6), so
+$dq$ is surjective. The image of a homomorphism of abelian varieties is an abelian
 subvariety; its tangent space has dimension $g$, hence $q$ is surjective.
 
-Let $D=(\ker q)^0$.  Pull a polarization on $J(C)$ back to $D$ and choose a quasi-inverse to
-the resulting isogeny $D\to D^\vee$.  As in Poincaré reducibility this produces a retraction
-$r:J(C)\to D$ whose restriction to $D$ is $[n]$.  If $D'=(\ker r)^0$, then
+Let $D=(\ker q)^0$. Pull a polarization on $J(C)$ back to $D$ and choose a quasi-inverse to
+the resulting isogeny $D\to D^\vee$. As in Poincaré reducibility this produces a retraction
+$r:J(C)\to D$ whose restriction to $D$ is $[n]$. If $D'=(\ker r)^0$, then
 $D\cap D'$ is finite and addition is an isogeny
 
 $$
@@ -1755,21 +1755,21 @@ D\times D'\longrightarrow J(C).
 $$
 
 The restriction $D'\to A$ has finite kernel and equal-dimensional source and target, hence is
-an isogeny.  Thus $A$ is an isogeny factor of $J(C)$. $\square$
+an isogeny. Thus $A$ is an isogeny factor of $J(C)$. $\square$
 
-We next analyze the curve theorem rather than cite stable reduction.  A **prepared model** is a
+We next analyze the curve theorem rather than cite stable reduction. A **prepared model** is a
 regular proper flat model whose reduced special fiber is a strict normal-crossings divisor.
 Books 11 and 12 construct a regular proper model and resolve a divisor on a regular arithmetic
-surface by point blowups.  Applied to the reduced special fiber, this gives a prepared model.
+surface by point blowups. Applied to the reduced special fiber, this gives a prepared model.
 The field extension in the next lemma is what removes its multiplicities; ordinary resolution
 alone cannot do so.
 
-**Lemma 12.4 (ramified saturation of a curve model; proof incomplete).**  Let $X/F$ be a smooth
-proper geometrically connected curve.  After a finite separable extension $F'/F$, the curve $X_{F'}$
+**Lemma 12.4 (ramified saturation of a curve model; proof incomplete).** Let $X/F$ be a smooth
+proper geometrically connected curve. After a finite separable extension $F'/F$, the curve $X_{F'}$
 has a regular proper model over $R'$ whose geometric special fiber is a reduced strict
-normal-crossings curve.  In particular it is semistable.
+normal-crossings curve. In particular it is semistable.
 
-**Proof attempt.**  Start with a prepared model $\mathcal X/R$ and write
+**Proof attempt.** Start with a prepared model $\mathcal X/R$ and write
 
 $$
 \mathcal X_k=\sum_i m_iE_i.
@@ -1777,16 +1777,16 @@ $$
 $$
 
 Choose a positive integer $e$ divisible by all $m_i$ and a totally ramified separable
-extension of ramification index divisible by $e$.  Such an extension exists in characteristic
-zero by an Eisenstein polynomial; call the first field $F_1$.  Normalize over $F_1$ as in the
-local calculation below.  It has only finitely many component constant fields, intersection
-fields, tangent branches, and coefficient algebras.  Choose one further finite extension
-$F'/F_1$ over which their reduced normalizations are geometrically split.  Its residue part is
+extension of ramification index divisible by $e$. Such an extension exists in characteristic
+zero by an Eisenstein polynomial; call the first field $F_1$. Normalize over $F_1$ as in the
+local calculation below. It has only finitely many component constant fields, intersection
+fields, tangent branches, and coefficient algebras. Choose one further finite extension
+$F'/F_1$ over which their reduced normalizations are geometrically split. Its residue part is
 separable because $k$ is perfect, and every generic coefficient extension is separable because
-$F$ has characteristic zero.  Put $e'=e(F'/F)$; it is still divisible by every $m_i$.  We may
+$F$ has characteristic zero. Put $e'=e(F'/F)$; it is still divisible by every $m_i$. We may
 normalize the direct base change to $F'$: normalization in a tower is transitive.
 
-We check the first normalization locally.  At a geometric point of the prepared divisor the
+We check the first normalization locally. At a geometric point of the prepared divisor the
 completed equation has the form
 
 $$
@@ -1796,19 +1796,19 @@ $$
 $$
 
 After replacing the base uniformizer by $\varpi$, with $\pi=u'\varpi^{e'}$, normalize the
-resulting monomial algebra.  Its exponent monoid is the saturation of
+resulting monomial algebra. Its exponent monoid is the saturation of
 
 $$
 m_1[x_1]+\cdots+m_r[x_r]=e'[\varpi].
 \tag{12.2.10}
 $$
 
-Here is the elementary normalization check.  If a positive multiple of a monomial lies in the
-original monoid algebra, that monomial satisfies a monic equation and is integral.  Conversely,
+Here is the elementary normalization check. If a positive multiple of a monomial lies in the
+original monoid algebra, that monomial satisfies a monic equation and is integral. Conversely,
 the divisorial valuations of the coordinate branches are nonnegative on every integral
-monomial, so its exponent lies in the saturated cone.  Thus the normalized ring is precisely
+monomial, so its exponent lies in the saturated cone. Thus the normalized ring is precisely
 the saturated monoid algebra after taking the reduced normalization of its finite coefficient
-algebra.  The latter is among the finitely many extensions split in the preceding paragraph.
+algebra. The latter is among the finitely many extensions split in the preceding paragraph.
 
 On the ray above $E_i$, the primitive generator has vertical height
 
@@ -1816,9 +1816,9 @@ $$
 \frac{m_i}{\gcd(m_i,e')}=1.                         \tag{12.2.11}
 $$
 
-Every normalized vertical component is therefore reduced.  When $r=1$ the normalized chart is
-regular at the generic point of that component.  When $r=2$, the two primitive height-one rays
-bound a two-dimensional cone.  If their lattice determinant is $d$, the completed chart is
+Every normalized vertical component is therefore reduced. When $r=1$ the normalized chart is
+regular at the generic point of that component. When $r=2$, the two primitive height-one rays
+bound a two-dimensional cone. If their lattice determinant is $d$, the completed chart is
 
 $$
 R'[[x,y]]/(xy-v\varpi^d),\qquad v\in R'^\times.
@@ -1826,28 +1826,28 @@ R'[[x,y]]/(xy-v\varpi^d),\qquad v\in R'^\times.
 $$
 
 Indeed both sides have the same saturated exponent monoid; rescaling $x$ after strict
-henselization removes $v$.  Subdivide the height-one segment between the two boundary rays at
-all of its lattice points.  Adjacent rays then have determinant one, so the associated
-normalized monomial blowups are regular.  All new rays still have vertical height one.  Thus
+henselization removes $v$. Subdivide the height-one segment between the two boundary rays at
+all of its lattice points. Adjacent rays then have determinant one, so the associated
+normalized monomial blowups are regular. All new rays still have vertical height one. Thus
 the special fiber stays reduced and its only intersections are transverse double points.
 
 The normalized blowups are projective and glue because they are defined by the monomial ideals
-of the boundary.  Normalization is finite over the excellent surface, properness is preserved,
-and torsion-freeness over the DVR gives flatness.  The generic fiber is unchanged.  The final
+of the boundary. Normalization is finite over the excellent surface, properness is preserved,
+and torsion-freeness over the DVR gives flatness. The generic fiber is unchanged. The final
 model would be regular with reduced strict normal-crossings special fiber if the unresolved
 normalization and closed-point assertions identified in Section 13.7 were supplied.
 
-It is important that the subdivisions in this proof use height-one rays.  Blowing up an
+It is important that the subdivisions in this proof use height-one rays. Blowing up an
 arbitrary point of a reduced special fiber can introduce an exceptional component of larger
 multiplicity and would undo (12.2.11).
 
-**Lemma 12.5 (semistable curve implies semistable Jacobian).**  If $X/F$ has a regular
+**Lemma 12.5 (semistable curve implies semistable Jacobian).** If $X/F$ has a regular
 semistable model, then $J(X)$ has semistable reduction.
 
-**Proof.**  Over an algebraic closure of the residue field, normalize the special fiber and
-write $\Gamma$ for its dual graph.  A degree-zero line bundle consists of line bundles on the
+**Proof.** Over an algebraic closure of the residue field, normalize the special fiber and
+write $\Gamma$ for its dual graph. A degree-zero line bundle consists of line bundles on the
 normalized components and one gluing scalar at each node, modulo one rescaling on each
-component.  Consequently the connected separated relative Picard group fits into
+component. Consequently the connected separated relative Picard group fits into
 
 $$
 0\longrightarrow T_\Gamma\longrightarrow
@@ -1856,17 +1856,17 @@ $$
 \tag{12.2.13}
 $$
 
-where $X^*(T_\Gamma)=H_1(\Gamma,\mathbf Z)$.  Books 25 and 38 prove that the separated Picard
-group is the identity component of the Néron model of $J(X)$.  Its connected special fiber is
+where $X^*(T_\Gamma)=H_1(\Gamma,\mathbf Z)$. Books 25 and 38 prove that the separated Picard
+group is the identity component of the Néron model of $J(X)$. Its connected special fiber is
 therefore an extension of an abelian variety by a torus and has no unipotent radical. $\square$
 
-**Theorem 12.6 (potential semistable reduction; conditional here).**  Every abelian variety over a completion of
+**Theorem 12.6 (potential semistable reduction; conditional here).** Every abelian variety over a completion of
 a number field acquires semistable reduction after a finite separable extension.
 
-**Proof.**  Conditional on Lemma 12.4, the zero-dimensional case is immediate.  Otherwise, after a finite separable
+**Proof.** Conditional on Lemma 12.4, the zero-dimensional case is immediate. Otherwise, after a finite separable
 extension, Lemma 12.3 supplies a curve $C$ and an isogeny
-factor $D'\to A$ in $J(C)$.  After a further finite separable extension, Lemma 12.4 gives a
-semistable model of $C$.  Lemma 12.5 makes $J(C)$ semistable, products are semistable exactly
+factor $D'\to A$ in $J(C)$. After a further finite separable extension, Lemma 12.4 gives a
+semistable model of $C$. Lemma 12.5 makes $J(C)$ semistable, products are semistable exactly
 when their factors are, and Lemma 12.2 transports semistability first through (12.2.7) and then
 through $D'\to A$. $\square$
 
@@ -1882,19 +1882,19 @@ $$
 $$
 
 Conditional on Lemma 12.4, Theorem 12.6 gives the existence half, with one geometric field
-independent of an auxiliary prime.  The persistence half, needed to compare two choices of
+independent of an auxiliary prime. The persistence half, needed to compare two choices of
 semistable field, remains conditional on the proposed integral formal calculation in the next
 section.
 
 ### 12.3 Ramified semistable Hodge base change
 
-The remaining local issue is not the component group.  It is the lattice of invariant
-differentials.  The useful integral object is the bounded formal identity group inside the
-Raynaud covering group.  The following attempt isolates the part of that theory needed for
+The remaining local issue is not the component group. It is the lattice of invariant
+differentials. The useful integral object is the bounded formal identity group inside the
+Raynaud covering group. The following attempt isolates the part of that theory needed for
 cotangent spaces; its missing formal and rigid steps are listed in Section 13.7.
 
-**Lemma 12.7 (formal semiabelian identity; proof incomplete).**  Let $A/F$ be semistable, with
-connected Néron model $\mathcal A^0/R$.  There are an abelian scheme $\mathcal B/R$, a torus $\mathcal T/R$,
+**Lemma 12.7 (formal semiabelian identity; proof incomplete).** Let $A/F$ be semistable, with
+connected Néron model $\mathcal A^0/R$. There are an abelian scheme $\mathcal B/R$, a torus $\mathcal T/R$,
 and a semiabelian extension
 
 $$
@@ -1903,15 +1903,15 @@ $$
 $$
 
 such that the formal completions of $\mathcal E$ and $\mathcal A^0$ at the identity are
-canonically isomorphic.  Here "at the identity" means the $\pi$-adic formal open generated by
+canonically isomorphic. Here "at the identity" means the $\pi$-adic formal open generated by
 the connected special fiber, with its distinguished identity section; it is not completion
-only at the closed identity point.  The construction commutes with every finite extension of complete
-DVRs.  After such an extension, the identity component of the new Néron model has the
-base-changed formal completion.  In particular semistability persists.
+only at the closed identity point. The construction commutes with every finite extension of complete
+DVRs. After such an extension, the identity component of the new Néron model has the
+base-changed formal completion. In particular semistability persists.
 
-**Proof attempt.**  We give the infinitesimal construction, since merely naming a Raynaud extension
-would move the gap.  Make one finite unramified extension to split the torus in the geometric
-connected special fiber; descent at the end is unique.  Write $X=X^*(T)$ and $R_n=R/\pi^{n+1}$.
+**Proof attempt.** We give the infinitesimal construction, since merely naming a Raynaud extension
+would move the gap. Make one finite unramified extension to split the torus in the geometric
+connected special fiber; descent at the end is unique. Write $X=X^*(T)$ and $R_n=R/\pi^{n+1}$.
 Over $R_0$, the special semiabelian group is classified character by character by a map
 
 $$
@@ -1921,79 +1921,79 @@ $$
 Pushout by a character is the complement of the zero section in a rigidified algebraically
 trivial line bundle on $B_0$.
 
-Assume the torus and quotient have been lifted through $R_n$.  Across the square-zero extension
-$R_{n+1}\to R_n$, lift a basis of characters on affine formal charts.  Their possible failure
+Assume the torus and quotient have been lifted through $R_n$. Across the square-zero extension
+$R_{n+1}\to R_n$, lift a basis of characters on affine formal charts. Their possible failure
 to respect addition is a homomorphism from a diagonalizable group to the additive vector group
-defined by the square-zero ideal.  It is zero: on Hopf algebras a primitive Laurent polynomial
-has every coefficient zero.  The same calculation proves uniqueness, and affineness of the
-torus kills the Čech gluing obstruction.  Quotienting by the lifted torus on these charts
+defined by the square-zero ideal. It is zero: on Hopf algebras a primitive Laurent polynomial
+has every coefficient zero. The same calculation proves uniqueness, and affineness of the
+torus kills the Čech gluing obstruction. Quotienting by the lifted torus on these charts
 gives a smooth proper group $B_{n+1}/R_{n+1}$; properness lifts over a nilpotent thickening and
-connectedness follows from the special fiber.  Thus $B_{n+1}$ is an abelian scheme.
+connectedness follows from the special fiber. Thus $B_{n+1}$ is an abelian scheme.
 
-Characterwise pushout gives rigidified algebraically trivial line bundles on $B_{n+1}$.  The
+Characterwise pushout gives rigidified algebraically trivial line bundles on $B_{n+1}$. The
 Poincaré biextension identifies them with a unique lift
-$c_{n+1}:X\to B_{n+1}^\vee(R_{n+1})$ and reconstructs the extension.  Induction and formal
-existence algebraize the proper system $B_n$ to $\mathcal B$.  Here is the needed
-algebraization argument.  Restrict a high symmetric power of a polarization of $A$ to the
+$c_{n+1}:X\to B_{n+1}^\vee(R_{n+1})$ and reconstructs the extension. Induction and formal
+existence algebraize the proper system $B_n$ to $\mathcal B$. Here is the needed
+algebraization argument. Restrict a high symmetric power of a polarization of $A$ to the
 bounded formal group and take its character-zero descent to $B_n$; the cube rigidification
-makes these ample bundles compatible in $n$.  After one further fixed power, relative Serre
+makes these ample bundles compatible in $n$. After one further fixed power, relative Serre
 vanishing makes their section modules finite free and makes reduction
 
 $$
 H^0(B_{n+1},L_{n+1}^q)\longrightarrow H^0(B_n,L_n^q)
 $$
 
-surjective for the finite set of degrees generating the section algebra.  Choose compatible
-bases and compatible homogeneous relations in those degrees.  Their inverse limits are
+surjective for the finite set of degrees generating the section algebra. Choose compatible
+bases and compatible homogeneous relations in those degrees. Their inverse limits are
 elements and equations over the complete ring $R$; relative Proj of the resulting finite
-graded algebra is a projective $R$-scheme whose reductions are the $B_n$.  Smoothness and the
-group law descend from the compatible reductions, so this scheme is $\mathcal B$.  Twist each
+graded algebra is a projective $R$-scheme whose reductions are the $B_n$. Smoothness and the
+group law descend from the compatible reductions, so this scheme is $\mathcal B$. Twist each
 of the finitely many character line bundles belonging to a basis of $X$ by a sufficiently high
-power of $L_n$.  The same section-and-relation argument algebraizes those bundles and their
-biextension multiplication maps.  Taking the relative spectrum of the resulting $X$-graded
-invertible algebra algebraizes the extension to (12.3.1).  Its formal identity group is
-the one with which we started.  Uniqueness at every infinitesimal level shows that the
+power of $L_n$. The same section-and-relation argument algebraizes those bundles and their
+biextension multiplication maps. Taking the relative spectrum of the resulting $X$-graded
+invertible algebra algebraizes the extension to (12.3.1). Its formal identity group is
+the one with which we started. Uniqueness at every infinitesimal level shows that the
 construction descends from the unramified splitting field.
 
 Every step--characters, Poincaré bundles, square-zero lifting, quotient, and inverse
-limit--commutes with finite flat base change.  Hence $\widehat{\mathcal E}_{R'}$ is the formal
-semiabelian identity constructed after extension.  Translating the common formal identity
+limit--commutes with finite flat base change. Hence $\widehat{\mathcal E}_{R'}$ is the formal
+semiabelian identity constructed after extension. Translating the common formal identity
 chart on the analytic generic fiber gives a local isomorphism onto $A_{F'}^{\mathrm{an}}$; its
 kernel is discrete because distinct translates of a sufficiently small identity chart are
-disjoint.  Properness of $A_{F'}$ makes the image all of $A_{F'}^{\mathrm{an}}$: the image is
+disjoint. Properness of $A_{F'}$ makes the image all of $A_{F'}^{\mathrm{an}}$: the image is
 an open subgroup, and its cosets cannot disconnect a geometrically connected proper analytic
-space.  Its tropical image has full rank.  Otherwise an integral functional annihilating its
+space. Its tropical image has full rank. Otherwise an integral functional annihilating its
 real span supplies a cocharacter ray escaping every translate of the bounded chart; its image
-in the proper analytic quotient would fail the valuative criterion.  Choose a rational
+in the proper analytic quotient would fail the valuative criterion. Choose a rational
 parallelotope for the resulting full discrete kernel in the toric
-valuation space and subdivide all of its translates into rational simplices.  The monoid
+valuation space and subdivide all of its translates into rational simplices. The monoid
 algebras of the dual cones, twisted by the character line bundles on $\mathcal B$, glue along
-faces; only finitely many cells remain modulo the kernel.  The positive quadratic form supplied
+faces; only finitely many cells remain modulo the kernel. The positive quadratic form supplied
 by an ample symmetric bundle on $A$ is a strictly convex periodic support function after one
 subdivision, so relative Proj is intended to algebraize the quotient to a proper polyhedral
 model used in the following valuative argument.
 
 The union $\mathcal G$ of the translated integral identity charts is a smooth separated
-model.  To check the Néron property, let $X/R'$ be smooth and let $X_{F'}\to A_{F'}$ be a
-morphism.  The closure of its graph in that proper polyhedral compactification extends the map at
-every codimension-one point of the regular scheme $X$.  Translate the image of each such point
+model. To check the Néron property, let $X/R'$ be smooth and let $X_{F'}\to A_{F'}$ be a
+morphism. The closure of its graph in that proper polyhedral compactification extends the map at
+every codimension-one point of the regular scheme $X$. Translate the image of each such point
 into the bounded identity chart; the defining toric characters then have nonnegative valuation,
-so they are regular in the corresponding local ring.  The induced generic map to $B_{F'}$
+so they are regular in the corresponding local ring. The induced generic map to $B_{F'}$
 extends over $X$ because the good-reduction abelian scheme $\mathcal B_{R'}$ is its Néron
-model.  On an affine torsor chart the remaining character functions extend across codimension
-at least two by normality of $X$.  They are intended to glue uniquely because $\mathcal G$ is
-separated.  This would give the unique extension $X\to\mathcal G$ and the Néron mapping
-property.  Uniqueness of Néron models would then identify its identity component with
-$\mathcal A'^0$, whose formal identity would be $\widehat{\mathcal E}_{R'}$.  The missing rigid
+model. On an affine torsor chart the remaining character functions extend across codimension
+at least two by normality of $X$. They are intended to glue uniquely because $\mathcal G$ is
+separated. This would give the unique extension $X\to\mathcal G$ and the Néron mapping
+property. Uniqueness of Néron models would then identify its identity component with
+$\mathcal A'^0$, whose formal identity would be $\widehat{\mathcal E}_{R'}$. The missing rigid
 uniformization, full-lattice, algebraization, and Néron-property steps are recorded in
 Section 13.7.
 
-The last paragraph uses translations only to identify the smooth identity model.  It does not
+The last paragraph uses translations only to identify the smooth identity model. It does not
 assert that the entire Néron model, whose component group can grow under ramification, is a
 base change.
 
-**Theorem 12.8 (semistable Hodge base change; conditional here).**  Let $R'/R$ be a finite
-extension of complete DVRs.  If $A/F$ is semistable and $\mathcal A,\mathcal A'$ are the two Néron models, then the
+**Theorem 12.8 (semistable Hodge base change; conditional here).** Let $R'/R$ be a finite
+extension of complete DVRs. If $A/F$ is semistable and $\mathcal A,\mathcal A'$ are the two Néron models, then the
 canonical map
 
 $$
@@ -2004,8 +2004,8 @@ $$
 
 is an isomorphism.
 
-**Proof.**  Conditional on Lemma 12.7, cotangent space at the identity depends only on formal
-completion.  Lemma 12.7 identifies the two sides with
+**Proof.** Conditional on Lemma 12.7, cotangent space at the identity depends only on formal
+completion. Lemma 12.7 identifies the two sides with
 
 $$
 e^*\Omega^1_{\mathcal E/R}\otimes_RR'
@@ -2013,8 +2013,8 @@ e^*\Omega^1_{\mathcal E/R}\otimes_RR'
 e'^*\Omega^1_{\mathcal E_{R'}/R'},
 $$
 
-respectively.  Smooth differentials commute with arbitrary base change, so these modules are
-canonically equal.  The equality agrees on the generic fiber with pullback by the canonical
+respectively. Smooth differentials commute with arbitrary base change, so these modules are
+canonically equal. The equality agrees on the generic fiber with pullback by the canonical
 Néron base-change map; separatedness therefore identifies it with (12.3.3). $\square$
 
 The preceding sketches identify the geometric content of potential semistable reduction and
@@ -2357,14 +2357,14 @@ $$
 R_N=\mathbf Z[1/N,\zeta_N],\qquad N\geq3,                 \tag{13.3a}
 $$
 
-so that a symplectic full level structure has a fixed value of its Weil pairing.  Every level
+so that a symplectic full level structure has a fixed value of its Weil pairing. Every level
 field in Section 13.2 contains the required cyclotomic field after one harmless fixed
 enlargement.
 
 #### The cone data
 
 A rank-$r$ cusp is represented by a primitive isotropic summand $U$ of the standard symplectic
-lattice.  Put
+lattice. Put
 
 $$
 S_U=\operatorname{Sym}^2U,
@@ -2374,34 +2374,34 @@ C_U=\{q\in\operatorname{Sym}^2(U_{\mathbf R}^{\vee}):q>0\},
 $$
 
 and let $C_U^+$ be the cone obtained by adjoining positive-semidefinite forms with rational
-radical.  A rational polyhedral cone $\sigma\subset C_U^+$ gives the affine torus embedding
+radical. A rational polyhedral cone $\sigma\subset C_U^+$ gives the affine torus embedding
 
 $$
 \operatorname{Spec}R_N[\sigma^\vee\cap S_U].              \tag{13.3c}
 $$
 
-Faces give open immersions.  If the primitive ray generators extend to a basis of $S_U^\vee$,
+Faces give open immersions. If the primitive ray generators extend to a basis of $S_U^\vee$,
 the chart is regular and its toric boundary is a strict normal-crossings divisor.
 
-We need these cones compatibly for every cusp.  There is a collection $\Sigma=(\Sigma_U)_U$
+We need these cones compatibly for every cusp. There is a collection $\Sigma=(\Sigma_U)_U$
 with the following properties: it is invariant under the integral symplectic group, compatible
 with inclusions and quotients of isotropic summands, covers every $C_U^+$, has finitely many
-orbits, and every cone is smooth.  Here is the reduction argument establishing existence.
+orbits, and every cone is smooth. Here is the reduction argument establishing existence.
 Take the convex hull in $\operatorname{Sym}^2(U_{\mathbf R}^{\vee})$ of the rank-one forms
-$v v^{\mathsf t}$ for primitive $v\in U^\vee$.  The cones over its faces cover $C_U$.
-Normalize a positive form so that its least nonzero value on $U$ is one.  Successively choose a
-shortest primitive vector and project to its orthogonal complement.  The covolume identity for
+$v v^{\mathsf t}$ for primitive $v\in U^\vee$. The cones over its faces cover $C_U$.
+Normalize a positive form so that its least nonzero value on $U$ is one. Successively choose a
+shortest primitive vector and project to its orthogonal complement. The covolume identity for
 that projection and induction give a basis whose lengths are bounded in terms of $r$; this is
-the elementary compactness argument written out later in Lemma 13.6.  Consequently only
+the elementary compactness argument written out later in Lemma 13.6. Consequently only
 finitely many integral vectors can be minimal and only finitely many face types occur up to
-$\operatorname{GL}(U)$.  Semidefinite faces are obtained from the same construction on the
-quotient by the rational radical.  Intersect the decompositions arising from all cusp maps.
-This preserves rationality, coverage, and finite orbit type.  Finally order the finitely many
-orbits of nonsmooth cones.  For a nonsmooth simplicial cone, its half-open fundamental
+$\operatorname{GL}(U)$. Semidefinite faces are obtained from the same construction on the
+quotient by the rational radical. Intersect the decompositions arising from all cusp maps.
+This preserves rationality, coverage, and finite orbit type. Finally order the finitely many
+orbits of nonsmooth cones. For a nonsmooth simplicial cone, its half-open fundamental
 parallelepiped contains a nonzero lattice point; choose one of least positive coefficient sum
-and perform the equivariant stellar subdivision through its primitive ray.  Every new maximal
-cone has strictly smaller lattice index.  Induction on the index, followed by barycentric
-subdivision to make the face choices compatible, produces a smooth refinement.  A stellar
+and perform the equivariant stellar subdivision through its primitive ray. Every new maximal
+cone has strictly smaller lattice index. Induction on the index, followed by barycentric
+subdivision to make the face choices compatible, produces a smooth refinement. A stellar
 subdivision is the normal fan of the blowup of one monomial ideal and is therefore projective;
 the sum, after scaling, of the finitely many associated support functions is an integral
 strictly convex support function for the final refinement.
@@ -2409,9 +2409,9 @@ strictly convex support function for the final refinement.
 #### The local degeneration chart
 
 The chart attached to $U$ lies over the moduli space of principally polarized abelian schemes
-of dimension $g-r$, together with $r$ points on the dual abelian scheme.  Let $\mathcal B$ be
+of dimension $g-r$, together with $r$ points on the dual abelian scheme. Let $\mathcal B$ be
 the universal lower-dimensional abelian scheme and let $\mathcal B_U$ denote the corresponding
-$r$-fold fiber product over that moduli space.  The Poincaré biextension associates to every
+$r$-fold fiber product over that moduli space. The Poincaré biextension associates to every
 $m\in S_U$ an invertible sheaf $\mathcal P_m$ on $\mathcal B_U$, and its multiplication law gives
 
 $$
@@ -2429,10 +2429,10 @@ $$
 $$
 
 On its open torus, the same biextension data define an extension of $\mathcal B$ by the torus
-with character group $U$.  To extend the universal abelian variety, choose the periodic
-polyhedral decomposition of $U_{\mathbf R}$ dual to $\sigma$.  For each cell, take the graded
-algebra generated by the corresponding Poincaré line bundles.  Face localizations glue these
-relative toric charts.  Translation by $U$ changes the grading by (13.3d), so the biextension
+with character group $U$. To extend the universal abelian variety, choose the periodic
+polyhedral decomposition of $U_{\mathbf R}$ dual to $\sigma$. For each cell, take the graded
+algebra generated by the corresponding Poincaré line bundles. Face localizations glue these
+relative toric charts. Translation by $U$ changes the grading by (13.3d), so the biextension
 cocycle identifies translated charts and satisfies the cocycle condition on triple overlaps.
 The quotient has a smooth open group whose special fibers are extensions
 
@@ -2443,22 +2443,22 @@ $$
 
 A strictly convex integral support function on a sufficiently fine subdivision is intended to
 give a relatively ample bundle on this quotient and allow Relative Proj to algebraize the
-formal quotient.  Equations (13.3e)--(13.3f) are the proposed local inputs to the required
+formal quotient. Equations (13.3e)--(13.3f) are the proposed local inputs to the required
 Mumford construction; they are not by themselves its global construction.
 
 If $\tau$ is a face of $\sigma$, localization of the monoid algebra identifies the $\tau$-chart
-with the required open of the $\sigma$-chart.  A change of cusp acts on $S_U$, the Poincaré
-bundles, and the periodic cells, so these identifications are equivariant.  Fine level makes
-the action free on the generic moduli problem.  Local finiteness of the fan says that a
-quasi-compact open in one chart meets only finitely many translates of another.  Hence the
+with the required open of the $\sigma$-chart. A change of cusp acts on $S_U$, the Poincaré
+bundles, and the periodic cells, so these identifications are equivariant. Fine level makes
+the action free on the generic moduli problem. Local finiteness of the fan says that a
+quasi-compact open in one chart meets only finitely many translates of another. Hence the
 change-of-cusp equivalence relation is represented locally by a finite disjoint union of open
-immersions.  Its quotient is obtained by ordinary Zariski gluing after choosing orbit
+immersions. Its quotient is obtained by ordinary Zariski gluing after choosing orbit
 representatives; on a triple overlap the equality is precisely the Poincaré biextension
-cocycle (13.3d).  Galois acts on the finite level framing and on the chart algebra, and the
-same cocycle is intended to give effective affine descent over $R_N$.  Representability and
+cocycle (13.3d). Galois acts on the finite level framing and on the chart algebra, and the
+same cocycle is intended to give effective affine descent over $R_N$. Representability and
 global compatibility of this quotient are among the steps retained in Section 13.7.
 
-**Theorem 13.2 (arithmetic toroidal Siegel compactification; proof incomplete).**  For the
+**Theorem 13.2 (arithmetic toroidal Siegel compactification; proof incomplete).** For the
 smooth admissible fan $\Sigma$ there is a proper normal scheme
 
 $$
@@ -2479,47 +2479,47 @@ containing $\mathcal M_{g,1,N}$ as a dense open, with the following properties.
 4. A fixed sufficiently divisible power of the symmetric theta bundle, with its cubical and
    level linearizations, extends to the Mumford family and its determinant of sections extends
    to an invertible theta-coordinate line $\Theta_\Sigma$.
-5. Refining $\Sigma$ pulls back these lines and the semiabelian family.  All constructions
+5. Refining $\Sigma$ pulls back these lines and the semiabelian family. All constructions
    commute with scalar extension from $R_N$.
 
-**Proof attempt.**  Construction and regularity are intended to follow from the monoid
+**Proof attempt.** Construction and regularity are intended to follow from the monoid
 calculations (13.3c)--(13.3f).
-The valuative criterion is intended to prove properness.  Indeed, after finite extension a principally
-polarized abelian variety over a fraction field is semistable by $(\mathrm{PSR})$.  Its toric
+The valuative criterion is intended to prove properness. Indeed, after finite extension a principally
+polarized abelian variety over a fraction field is semistable by $(\mathrm{PSR})$. Its toric
 period pairing is positive semidefinite with rational radical: evaluating a character on a
 period gives the entries, symmetry comes from the polarization biextension, and positivity
-from ampleness on the generic fiber.  Hence it belongs to some cone of the covering fan and
+from ampleness on the generic fiber. Hence it belongs to some cone of the covering fan and
 the monoid inequalities extend the moduli map to that chart.
 
-We must descend from the semistable field.  Take it finite Galois.  Each conjugate extension
+We must descend from the semistable field. Take it finite Galois. Each conjugate extension
 has the conjugate period form and therefore lands in the conjugate cone, which belongs to
-$\Sigma$ by equivariance.  On the normalization of the pairwise fiber product of valuation
-rings, two conjugate extensions agree on the generic fiber.  Their period monomials have the
+$\Sigma$ by equivariance. On the normalization of the pairwise fiber product of valuation
+rings, two conjugate extensions agree on the generic fiber. Their period monomials have the
 same valuations, so both maps factor through the chart for the common face of their cones and
-agree there by separatedness of the torus embedding.  These equalities satisfy the cocycle
-condition because they do on the generic fiber.  Finite faithfully flat descent gives an
+agree there by separatedness of the torus embedding. These equalities satisfy the cocycle
+condition because they do on the generic fiber. Finite faithfully flat descent gives an
 extension over the original valuation ring if the asserted global quotient and its descent
-data have first been constructed.  This would prove existence in the valuative criterion; the
+data have first been constructed. This would prove existence in the valuative criterion; the
 same common-face argument would prove uniqueness.
 
-Quasi-compactness needs the finite-orbit assertion, not merely local charts.  Choose one cone
-from each orbit and finitely many affine opens on its lower-dimensional abelian base.  Their
+Quasi-compactness needs the finite-orbit assertion, not merely local charts. Choose one cone
+from each orbit and finitely many affine opens on its lower-dimensional abelian base. Their
 translates cover every cusp chart, while the interior moduli scheme is already of finite type.
-Thus the proposed glued space would be of finite type.  The common-face calculation is intended
+Thus the proposed glued space would be of finite type. The common-face calculation is intended
 to prove separatedness, and the conditional valuative argument above would then make the
 finite-type separated morphism proper.
 
 Invariant differentials of (13.3f) give (13.3h); exactness of differentials for a torus
-extension shows that it is locally free of rank $g$.  The required $(\mathrm{SHB})$ comparison
-would identify it with the Néron Hodge lattice on every trait.  For the theta line, a support function clears the
+extension shows that it is locally free of rank $g$. The required $(\mathrm{SHB})$ comparison
+would identify it with the Néron Hodge lattice on every trait. For the theta line, a support function clears the
 translation denominators, and the cubical identity makes the translated graded algebras
-agree.  Relative Proj and determinant of cohomology commute with base change.  A complete
+agree. Relative Proj and determinant of cohomology commute with base change. A complete
 Mumford construction and arithmetic quotient/descent argument would then prove independence
-under common refinement.  The missing steps are recorded in Section 13.7.
+under common refinement. The missing steps are recorded in Section 13.7.
 
-The compactification is not unique; its pullback class on a common refinement is.  Once a line
+The compactification is not unique; its pullback class on a common refinement is. Once a line
 bundle, metric, and projective presentation have been fixed, the associated height is defined
-up to a bounded function.  Heights attached to different ample combinations are only comparable
+up to a bounded function. Heights attached to different ample combinations are only comparable
 after passage to a common refinement, not equal up to a bounded function in general.
 In Theorem 13.3, $h_{\mathrm{mod}}$ denotes the height of the fixed theta-coordinate
 presentation; comparison with another fixed ample moduli height only changes the displayed
@@ -2527,7 +2527,7 @@ multiplicative and additive constants.
 
 #### The metrized theta--Hodge comparison
 
-At an archimedean point choose a period matrix $\tau=X+iY$ in a Siegel reduction domain.  If
+At an archimedean point choose a period matrix $\tau=X+iY$ in a Siegel reduction domain. If
 $dz=dz_1\wedge\cdots\wedge dz_g$, direct integration over the period parallelepiped gives
 
 $$
@@ -2543,7 +2543,7 @@ $$
 +2\pi i(n+a)^{\mathsf t}(z+b)\right).               \tag{13.3j}
 $$
 
-The translation-invariant norm is not the raw absolute value of this function.  If
+The translation-invariant norm is not the raw absolute value of this function. If
 $z=x+iy$, its exponential factor is
 
 $$
@@ -2554,21 +2554,21 @@ $$
 $$
 
 The automorphy factors under $z\mapsto z+m+\tau n$ cancel in (13.3j'), so it descends to the
-theta bundle.  Reduction theory gives $Y\geq c_g I$ after the standard triangular change of
+theta bundle. Reduction theory gives $Y\geq c_g I$ after the standard triangular change of
 basis. Completing the square in the real exponent of each summand of (13.3j) bounds (13.3j')
 and all derivatives needed for a fixed theta embedding by a convergent Gaussian series whose
-constant depends only on $g$ and the fixed level.  Toward a rank-$r$ cusp, split $n$ into
+constant depends only on $g$ and the fixed level. Toward a rank-$r$ cusp, split $n$ into
 degenerating and bounded coordinates.
 Collecting equal powers of
-$q^m=\exp(2\pi i\operatorname{tr}(m\tau))$ gives the Fourier--Jacobi expansion.  Its least
+$q^m=\exp(2\pi i\operatorname{tr}(m\tau))$ gives the Fourier--Jacobi expansion. Its least
 exponent is exactly the value of the support function used in the Mumford extension; after
 dividing by that monomial, the remaining Gaussian series is bounded above and, on the chart
-where the corresponding theta coordinate is chosen, bounded away from zero.  Therefore the
+where the corresponding theta coordinate is chosen, bounded away from zero. Therefore the
 logarithm of the quotient of the theta norm and a fixed power of the $L^2$ Hodge norm has only
 the prescribed linear logarithms of boundary parameters, plus logarithmic growth in
 $1+\operatorname{tr}Y$.
 
-Algebraically the same calculation compares automorphy factors.  For
+Algebraically the same calculation compares automorphy factors. For
 $\gamma=\left(\begin{smallmatrix}A&B\\C&D\end{smallmatrix}\right)$ the theta transformation
 law contains
 
@@ -2577,13 +2577,13 @@ $$
 \exp\!\bigl(\pi i z^{\mathsf t}(C\tau+D)^{-1}Cz\bigr),
 $$
 
-where $\kappa(\gamma)$ has finite order.  In the determinant of a complete theta frame the
-quadratic exponential cancels by symmetry of the characteristics.  The Hodge frame transforms
-by $\det(C\tau+D)^{-1}$.  Clearing the half-power, the finite character, and one fixed common
-denominator therefore gives an isomorphism of two tensor powers on the open moduli scheme.  Their
+where $\kappa(\gamma)$ has finite order. In the determinant of a complete theta frame the
+quadratic exponential cancels by symmetry of the characteristics. The Hodge frame transforms
+by $\det(C\tau+D)^{-1}$. Clearing the half-power, the finite character, and one fixed common
+denominator therefore gives an isomorphism of two tensor powers on the open moduli scheme. Their
 ratio is a rational section on the normal compactification and is nowhere zero on the open, so
-its divisor is supported on the finitely many boundary components.  Its order along $D_\rho$ is the least
-Fourier--Jacobi exponent paired with the primitive generator of $\rho$.  This gives integers
+its divisor is supported on the finitely many boundary components. Its order along $D_\rho$ is the least
+Fourier--Jacobi exponent paired with the primitive generator of $\rho$. This gives integers
 $a,b>0$ and $c_\rho\in\mathbf Z$, depending only on $g,N$ and the chosen theta presentation,
 such that
 
@@ -2605,10 +2605,10 @@ $$
 
 The integral comparison must prove that away from $N$ there is no unrecorded finite-place
 error and that the least Fourier--Jacobi monomials are precisely the Cartier equations of the
-$D_\rho$ in (13.3e).  At the finitely many places
-over $N$ the chosen integral theta frame need not extend.  For such a place $w$, make the fixed
+$D_\rho$ in (13.3e). At the finitely many places
+over $N$ the chosen integral theta frame need not extend. For such a place $w$, make the fixed
 theta-coordinate tuple primitive and compare its determinant lattice with the Hodge tensor
-lattice in the common generic line.  If these two rank-one lattices are
+lattice in the common generic line. If these two rank-one lattices are
 $\Lambda_{\mathrm{th}}$ and $\Lambda_{\mathrm H}$, define
 
 $$
@@ -2621,7 +2621,7 @@ This definition is independent of common rescaling and, when the two lattices ar
 its length scales by the ramification index.
 
 For a semistable moduli point $x$ over a number field $L$, choose at each complex embedding a
-period matrix in the fixed Siegel reduction domain.  Properness extends $x$ to a section
+period matrix in the fixed Siegel reduction domain. Properness extends $x$ to a section
 $\bar x$ over $\mathcal O_L[1/N]$; let
 
 $$
@@ -2643,10 +2643,10 @@ $$
 
 Two reduced representatives meeting the same compactified chart differ by one of finitely many
 side-pairing transformations; the determinant estimates above show that they change the
-archimedean summand by at most a constant.  Changing a cusp chart likewise changes
+archimedean summand by at most a constant. Changing a cusp chart likewise changes
 $\beta_\Sigma$ by at most a constant because only finitely many chart orbits occur.
 
-**Theorem 13.3 (metrized Hodge--theta comparison; proof incomplete).**  For fixed
+**Theorem 13.3 (metrized Hodge--theta comparison; proof incomplete).** For fixed
 $g,N,\Sigma$ and theta presentation there are positive constants $r_1,r_2$ and $C_1,C_2$ such that every semistable
 principally polarized point with level satisfies
 
@@ -2659,40 +2659,40 @@ $$
 
 The constants are unchanged by finite extension of $L$.
 
-**Proof attempt.**  If the integral identity (13.3k) and its stated norm bounds hold, evaluate
-it on the section $x$.  At finite places its divisor is exactly
+**Proof attempt.** If the integral identity (13.3k) and its stated norm bounds hold, evaluate
+it on the section $x$. At finite places its divisor is exactly
 (13.3m) away from $N$, while $\delta_w(x)$ bounds the lattice discrepancy at $w\mid N$; at
-infinity use (13.3i)--(13.3l).  Sum over all places and divide by
-$[L:\mathbf Q]$.  The product formula cancels changes of trivialization.  The resulting
+infinity use (13.3i)--(13.3l). Sum over all places and divide by
+$[L:\mathbf Q]$. The product formula cancels changes of trivialization. The resulting
 equality, with the logarithmic remainder bounded by (13.3n), gives the first inequality.
 Solve the same equality for $h_F$ and bound the absolute values of its finitely many boundary
-coefficients by a fixed multiple of $\beta_\Sigma$ to obtain the second.  Local degrees
+coefficients by a fixed multiple of $\beta_\Sigma$ to obtain the second. Local degrees
 repeat under field extension, $(\mathrm{SHB})$ preserves the Hodge lattice, and normalized
 valuations multiply by ramification indices; hence the constants and normalized inequalities
-are absolute.  The missing integral identity and uniform Fourier--Jacobi estimates are recorded
+are absolute. The missing integral identity and uniform Fourier--Jacobi estimates are recorded
 in Section 13.7.
 
 Theorems 13.2 and 13.3 state the compactification and metric interfaces denoted
 $(\mathrm{SC})$ and $(\mathrm{MC})$; Section 13.7 records the missing construction and
-integral-comparison steps.  Even after those interfaces are supplied, they do not bound either
+integral-comparison steps. Even after those interfaces are supplied, they do not bound either
 term on the right of the first inequality in (13.3o).
 
 #### The first remaining numerical theorem
 
 Return now to dimension-$g$ varieties $A/K$ and their dimension-$8g$ Zarhin stabilizations.
-Fix the preceding data with $\Sigma=\Sigma_{8g}$ on $\mathcal M_{8g,1,N}$.  Let $\mathscr L$
+Fix the preceding data with $\Sigma=\Sigma_{8g}$ on $\mathcal M_{8g,1,N}$. Let $\mathscr L$
 be the finite list of level fields supplied by Lemma 13.1, and enlarge the bad
-set in each of them by the places over $N$.  To evaluate the quantities below, pass from a
+set in each of them by the places over $N$. To evaluate the quantities below, pass from a
 field of definition $L_0\in\mathscr L$ to any finite field $L/L_0$ over which the variety is
-semistable.  Assuming $(\mathrm{PSR})$, $(\mathrm{SHB})$, $(\mathrm{SC})$, and $(\mathrm{MC})$,
+semistable. Assuming $(\mathrm{PSR})$, $(\mathrm{SHB})$, $(\mathrm{SC})$, and $(\mathrm{MC})$,
 their persistence, construction, and base-change clauses, together with the ramification
 scaling in (13.3m)--(13.3n), make the normalized Hodge and boundary values independent of this
 auxiliary $L$ when the cusp charts and period representatives are pulled back compatibly.
 Other allowed reduced representatives change the boundary value by the uniform bounded term
-already noted after (13.3n).  Northcott will still be applied to the point defined over $L_0$.
+already noted after (13.3n). Northcott will still be applied to the point defined over $L_0$.
 The desired numerical conclusion is
 
-**Statement $(\mathrm{SB})$ (arithmetic determinant slope).**  There is a
+**Statement $(\mathrm{SB})$ (arithmetic determinant slope).** There is a
 constant $C(K,S,g,N)$ such that, for every dimension-$g$ abelian variety $A/K$ with good
 reduction outside $S$, one can choose the Zarhin principal polarization and full level basis of
 Section 13.2 so that
@@ -2708,8 +2708,8 @@ $$
 
 Subject to the persistence and base-change hypotheses just stated, the normalizations in
 (12.4) and (13.3n) make the assertion independent of the auxiliary semistable extension of
-$L_0\in\mathscr L$.  We next prove the arithmetic linear-algebra
-implication which produces this statement from a finite Hilbert determinant certificate.  This
+$L_0\in\mathscr L$. We next prove the arithmetic linear-algebra
+implication which produces this statement from a finite Hilbert determinant certificate. This
 replaces the opaque instruction ``apply a slope lemma'' by the exact finite, level-prime, and
 archimedean assertions which still have to be checked on the Mumford family.
 
@@ -2722,17 +2722,17 @@ E_m=\pi_*\mathcal L^m,
 $$
 
 For a principal theta line $\chi(\mathcal L)=1$; for the fixed sufficiently divisible theta
-power used above, this constant must be retained.  Formula (13.3q) is used only for sufficiently
-large $m$.  Book 35 supplies polarization Riemann--Roch and the rank in (13.3q), Book 8
+power used above, this constant must be retained. Formula (13.3q) is used only for sufficiently
+large $m$. Book 35 supplies polarization Riemann--Roch and the rank in (13.3q), Book 8
 supplies uniform regularity for a fixed Hilbert locus, and Book 15 then makes the pushforward
-locally free and compatible with base change on the abelian locus.  None of these books asserts
-local freeness on the proposed Mumford boundary.  That extension is part of the certificate
+locally free and compatible with base change on the abelian locus. None of these books asserts
+local freeness on the proposed Mumford boundary. That extension is part of the certificate
 below and therefore still depends on $(\mathrm{SC})$.
 
-We first give the arithmetic calculation independently of moduli.  A **Hermitian
+We first give the arithmetic calculation independently of moduli. A **Hermitian
 $\mathcal O_L$-lattice** $\overline E$ is a finite projective $\mathcal O_L$-module $E$ with
 a Hermitian norm on $E\otimes_\sigma\mathbf C$ for every embedding
-$\sigma:L\hookrightarrow\mathbf C$, compatible with conjugation.  If $E$ has rank $r$, choose
+$\sigma:L\hookrightarrow\mathbf C$, compatible with conjugation. If $E$ has rank $r$, choose
 $0\ne s\in\det E$ for which $\mathcal O_Ls\subseteq\det E$ has finite quotient and define
 
 $$
@@ -2741,7 +2741,7 @@ $$
 -\sum_\sigma\log\|s\|_{\det,\sigma}.                 \tag{13.3q1}
 $$
 
-The product formula makes this independent of $s$.  For a nonzero saturated submodule
+The product formula makes this independent of $s$. For a nonzero saturated submodule
 $F\subseteq E$, use the restricted norms and put
 
 $$
@@ -2751,13 +2751,13 @@ $$
 $$
 
 The value is finite by the ordinary Minkowski lattice bound after embedding $E$ in its fixed
-archimedean space.  No Harder--Narasimhan filtration is needed below; only the defining
+archimedean space. No Harder--Narasimhan filtration is needed below; only the defining
 inequality for each saturated $F$ is used.
 
-**Lemma 13.3A (determinant and saturation).**  Let
+**Lemma 13.3A (determinant and saturation).** Let
 $u:\overline F\to\overline E$ be a map of Hermitian $\mathcal O_L$-lattices which has generic
-rank $k=\operatorname{rank}F$.  Let $I=E\cap u(F_L)$ be the saturation of $u(F)$ in $E$ and put
-$Q=I/u(F)$.  Then
+rank $k=\operatorname{rank}F$. Let $I=E\cap u(F_L)$ be the saturation of $u(F)$ in $E$ and put
+$Q=I/u(F)$. Then
 
 $$
 \widehat{\deg}\,\overline F+\log\#Q
@@ -2776,7 +2776,7 @@ $$
                                                                \tag{13.3q4}
 $$
 
-**Proof.**  Over each $\mathcal O_{L,w}$, elementary divisors give
+**Proof.** Over each $\mathcal O_{L,w}$, elementary divisors give
 
 $$
 \operatorname{length}_w(\det I/\det u(F))
@@ -2784,17 +2784,17 @@ $$
 $$
 
 Multiplying the residue-field cardinalities shows that the inclusion $u(F)\subseteq I$
-changes the determinant lattice by the finite index $\#Q$.  At an archimedean embedding,
+changes the determinant lattice by the finite index $\#Q$. At an archimedean embedding,
 transporting the metric from $F$ to $u(F)$ changes the determinant norm by the displayed
-determinant of $u_\sigma$.  Substitution in (13.3q1) proves (13.3q3), including its signs.
+determinant of $u_\sigma$. Substitution in (13.3q1) proves (13.3q3), including its signs.
 Saturation makes $I$ an admissible submodule in (13.3q2), and the determinant norm is at most
-the exterior-power operator norm.  This proves (13.3q4). $\square$
+the exterior-power operator norm. This proves (13.3q4). $\square$
 
-This formula is where finite lattice defects belong.  They occur on the left with a positive
-sign; discarding them weakens an upper bound.  In particular, a denominator at a level prime
+This formula is where finite lattice defects belong. They occur on the left with a positive
+sign; discarding them weakens an upper bound. In particular, a denominator at a level prime
 cannot be hidden in an archimedean $O(1)$.
 
-There is a useful finite criterion for the upper slope in (13.3q4).  A **Pl\"ucker frame** for a
+There is a useful finite criterion for the upper slope in (13.3q4). A **Pl\"ucker frame** for a
 rank-$r$ Hermitian lattice $T$ consists, for each $1\leq k\leq r$, of finitely many integral
 maps
 
@@ -2803,11 +2803,11 @@ q_{k,\nu}:\mathop{\bigwedge}\nolimits^kT\longrightarrow M_{k,\nu} \tag{13.3q5}
 $$
 
 to Hermitian lines such that the corresponding linear Pl\"ucker sections have empty common
-zero scheme on $\operatorname{Gr}(k,T_L)$.  In particular, every $k$-dimensional $L$-subspace
-of $T_L$ has nonzero image under at least one $q_{k,\nu}$.  This is not merely a statement
+zero scheme on $\operatorname{Gr}(k,T_L)$. In particular, every $k$-dimensional $L$-subspace
+of $T_L$ has nonzero image under at least one $q_{k,\nu}$. This is not merely a statement
 about a preferred basis.
 
-**Lemma 13.3B (finite upper-slope criterion).**  Suppose a Pl\"ucker frame satisfies
+**Lemma 13.3B (finite upper-slope criterion).** Suppose a Pl\"ucker frame satisfies
 
 $$
 \widehat{\deg}\,\overline M_{k,\nu}
@@ -2815,23 +2815,23 @@ $$
 \leq kU[L:\mathbf Q]                                      \tag{13.3q6}
 $$
 
-for every $k,\nu$.  Then
+for every $k,\nu$. Then
 
 $$
 \widehat\mu_{\max}(\overline T)\leq U[L:\mathbf Q].       \tag{13.3q7}
 $$
 
-**Proof.**  Let $F\subseteq T$ be saturated of rank $k$.  Choose $q_{k,\nu}$ nonzero on
-$\det F$.  Apply (13.3q3) to the resulting map from the line $\det F$ to $M_{k,\nu}$; because
-the map is generically nonzero, its saturation is the whole target line.  Its finite
+**Proof.** Let $F\subseteq T$ be saturated of rank $k$. Choose $q_{k,\nu}$ nonzero on
+$\det F$. Apply (13.3q3) to the resulting map from the line $\det F$ to $M_{k,\nu}$; because
+the map is generically nonzero, its saturation is the whole target line. Its finite
 saturation index is nonnegative, and its archimedean determinant norm is at most the operator
-norm in (13.3q6).  Hence
-$\widehat{\deg}\,\overline F\leq kU[L:\mathbf Q]$.  Taking the supremum proves (13.3q7).
+norm in (13.3q6). Hence
+$\widehat{\deg}\,\overline F\leq kU[L:\mathbf Q]$. Taking the supremum proves (13.3q7).
 $\square$
 
 Here $\overline\lambda_x$ denotes the metrized Néron Hodge lattice: away from $N$ it is the
 pullback of (13.3h), at the places over $N$ it is the lattice of (12.1), and at infinity it
-carries the metric (12.2).  We now put all three kinds of degeneration into one line.  For a
+carries the metric (12.2). We now put all three kinds of degeneration into one line. For a
 semistable point $x$ over $L$, set
 
 $$
@@ -2852,7 +2852,7 @@ $$
 $$
 
 The definition of $\delta_w$ in (13.3n) is a length, so the exponents in (13.3q8) are
-integers.  Directly from (13.3q1),
+integers. Directly from (13.3q1),
 
 $$
 \widehat{\deg}\,\overline{\mathscr D}_x
@@ -2861,7 +2861,7 @@ $$
 +\sum_\sigma\log(1+\operatorname{tr}Y_\sigma).          \tag{13.3q10}
 $$
 
-This identity fixes every sign.  Under a finite extension $L'/L$, boundary orders and
+This identity fixes every sign. Under a finite extension $L'/L$, boundary orders and
 level-lattice lengths multiply by $e(w'/w)$, while
 
 $$
@@ -2871,18 +2871,18 @@ $$
 $$
 
 With the period representatives pulled back compatibly, archimedean embeddings repeat
-$[L':L]$ times.  Hence both sides of (13.3q10) multiply by the field degree.
+$[L':L]$ times. Hence both sides of (13.3q10) multiply by the field degree.
 
-Here is the exact remaining application-specific input.  It is deliberately split into an
+Here is the exact remaining application-specific input. It is deliberately split into an
 arithmetic Hilbert determinant assertion and an upper-slope assertion.
 
-**Required logarithmic Hilbert certificate $(\mathrm{AHS}_{\log})$.**  There are fixed
-integers $a,b_0,b_1>0$ and a fixed finite list of sufficiently large degrees $m$.  Fixed
+**Required logarithmic Hilbert certificate $(\mathrm{AHS}_{\log})$.** There are fixed
+integers $a,b_0,b_1>0$ and a fixed finite list of sufficiently large degrees $m$. Fixed
 tensor, exterior-power, kernel, saturated-image, and determinant constructions applied to the
 multiplication maps among the $E_m$ on the proposed compactification over $R_N$ produce
-generic tensor maps of fixed ranks.  For every relevant semistable $x/L$, pull them back over
+generic tensor maps of fixed ranks. For every relevant semistable $x/L$, pull them back over
 $\mathcal O_L[1/N]$; at $w\mid N$, equip them with the explicitly cleared lattices required
-below.  The result must be Hermitian lattices $T_{0,x},T_{1,x}$ and nonzero integral maps
+below. The result must be Hermitian lattices $T_{0,x},T_{1,x}$ and nonzero integral maps
 
 $$
 \begin{aligned}
@@ -2895,9 +2895,9 @@ $$
 $$
 
 The word **fixed** permits one list on each of the finitely many cusp-cone orbits of $\Sigma$
-and then takes their finite union.  The constructions, including their subspace and quotient
+and then takes their finite union. The constructions, including their subspace and quotient
 metrics and their rules at the level primes, are fixed before $x$ is chosen and commute with
-finite base change.  After the boundary monomials and level lattices already inserted in
+finite base change. After the boundary monomials and level lattices already inserted in
 $\overline{\mathscr D}_x$ are removed, there are constants $V_j\geq0$, independent of $x$,
 $L$, and the auxiliary semistable extension, such that
 
@@ -2908,15 +2908,15 @@ $$
 
 This is required for $j=0,1$.
 
-The word **integral** in (13.3q11) has exact local content.  At $w\nmid N$, the lowest
+The word **integral** in (13.3q11) has exact local content. At $w\nmid N$, the lowest
 Fourier--Jacobi monomial must be the Cartier boundary monomial with the stated order and no
-additional vertical divisor.  At $w\mid N$, after the fixed clearing used to define the target
+additional vertical divisor. At $w\mid N$, after the fixed clearing used to define the target
 lattice, the resulting determinant vector must be divisible by
-$\mathfrak p_w^{b_j\delta_w(x)}$ relative to that lattice.  Indeed, the local source contributed
+$\mathfrak p_w^{b_j\delta_w(x)}$ relative to that lattice. Indeed, the local source contributed
 by $\overline{\mathscr D}_x^{\,b_j}$ is
 $\mathfrak p_w^{-b_j\delta_w(x)}$; a mere upper bound on a denominator has the opposite sign
-and does not by itself give the integral map in (13.3q11).  At infinity, (13.3q12) must hold
-after the cusp metric in (13.3q9) is inserted.  Finally, the determinant character calculation
+and does not by itself give the integral map in (13.3q11). At infinity, (13.3q12) must hold
+after the cusp metric in (13.3q9) is inserted. Finally, the determinant character calculation
 must give the two positive channels in (13.3q11), including $a>0$; generic nonvanishing alone
 does not determine any of these signs or orders.
 
@@ -2928,7 +2928,7 @@ unlisted vertical or metric correction.
 Formula (13.3q) computes only ranks; it does not establish this intersection identity or the
 metric estimate (13.3q12).
 
-**Required theta upper-slope certificate $(\mathrm{US}_\theta)$.**  Each $T_{j,x}$ has a
+**Required theta upper-slope certificate $(\mathrm{US}_\theta)$.** Each $T_{j,x}$ has a
 Pl\"ucker frame, obtained by pullback from a fixed finite list of the same universal
 multiplication minors and equipped with their induced metrics, for which
 
@@ -2939,23 +2939,23 @@ $$
 $$
 
 for every $j,k,\nu$, with $U_j\geq0$ independent of $x$, $L$, and the auxiliary semistable
-extension.  After specializing the universal expressions to each $x$, the no-common-zero
+extension. After specializing the universal expressions to each $x$, the no-common-zero
 condition is required on $\operatorname{Gr}(k,T_{j,x,L})$; nonvanishing only at the generic
-moduli point does not bound the slope at every $x$.  No separate no-common-zero assertion on
+moduli point does not bound the slope at every $x$. No separate no-common-zero assertion on
 each residue fiber is used in Lemma 13.3B: integrality of the maps and the favorable saturation
 term account for finite-place defects.
 
-These two certificates are finite.  Book 8 explains the boundedness mechanism: on a fixed
+These two certificates are finite. Book 8 explains the boundedness mechanism: on a fixed
 Hilbert locus one regularity bound controls generation and relations in finitely many degrees.
 Exterior powers of the resulting finite multiplication matrices therefore give a finite
-candidate list for (13.3q11)--(13.3q13).  Book 8 proves this algebraic boundedness; it does not
+candidate list for (13.3q11)--(13.3q13). Book 8 proves this algebraic boundedness; it does not
 select universal minors having the required determinant characters and no-common-zero
 property, or prove their primitivity over $\mathcal O_L$, their Fourier--Jacobi boundary
-orders, their required level-prime divisibility, or their Hermitian norm bounds.  In particular,
+orders, their required level-prime divisibility, or their Hermitian norm bounds. In particular,
 the certificates require fixed universal expressions and cannot be manufactured pointwise
 after the degree in (13.3r) is known.
 
-**Proposition 13.3C (logarithmic Hilbert--slope inequality).**  Assuming
+**Proposition 13.3C (logarithmic Hilbert--slope inequality).** Assuming
 $(\mathrm{AHS}_{\log})+(\mathrm{US}_\theta)$, one has
 
 $$
@@ -2966,17 +2966,17 @@ $$
 \leq C(K,S,g,N)[L:\mathbf Q].                           \tag{13.3r}
 $$
 
-**Proof.**  Put $d=\widehat{\deg}\,\overline\lambda_x$ and
-$B=\widehat{\deg}\,\overline{\mathscr D}_x\geq0$.  Lemma 13.3B and (13.3q13) give
+**Proof.** Put $d=\widehat{\deg}\,\overline\lambda_x$ and
+$B=\widehat{\deg}\,\overline{\mathscr D}_x\geq0$. Lemma 13.3B and (13.3q13) give
 
 $$
 \widehat\mu_{\max}(\overline T_{j,x})\leq U_j[L:\mathbf Q].
 $$
 
 Formula (13.3q1) is additive on tensor products of Hermitian lines, so the two source degrees
-in (13.3q11) are $b_0B$ and $ad+b_1B$, respectively.  Apply Lemma 13.3A to the two maps in
+in (13.3q11) are $b_0B$ and $ad+b_1B$, respectively. Apply Lemma 13.3A to the two maps in
 (13.3q11), and discard their nonnegative finite
-saturation lengths.  Using (13.3q12) gives
+saturation lengths. Using (13.3q12) gives
 
 $$
 b_0B\leq(U_0+V_0)[L:\mathbf Q],\qquad
@@ -2988,7 +2988,7 @@ the saturation length in Lemma 13.3A, while all boundary, level-prime, and cusp 
 are the single degree $B$ in (13.3q10).
 
 If $d<0$, the first inequality bounds
-$\max\{d,0\}+B=B$.  If $d\geq0$, the second bounds $d+B$, since
+$\max\{d,0\}+B=B$. If $d\geq0$, the second bounds $d+B$, since
 
 $$
 \min(a,b_1)(d+B)\leq ad+b_1B.
@@ -3008,24 +3008,24 @@ determinant map is not saturated. $\square$
 
 For the semistable model over $L$, (12.4) identifies
 $d/[L:\mathbf Q]$ with $h_F(Z(A)_L/L)$, and (13.3q10) identifies
-$B/[L:\mathbf Q]$ with $\beta_\Sigma(x)$.  Proposition 13.3C itself uses only the two
-certificates once these Hermitian lattices and the defect line have been fixed.  Subject also to
+$B/[L:\mathbf Q]$ with $\beta_\Sigma(x)$. Proposition 13.3C itself uses only the two
+certificates once these Hermitian lattices and the defect line have been fixed. Subject also to
 $(\mathrm{PSR})+(\mathrm{SHB})+(\mathrm{SC})+(\mathrm{MC})$, the first value is the stable
 height, the second is the compactified boundary value, and both are independent of the
-auxiliary semistable field.  Dividing (13.3r) then proves (13.3p), while the comparison
+auxiliary semistable field. Dividing (13.3r) then proves (13.3p), while the comparison
 inequality in $(\mathrm{MC})$ converts the bounded values into a bound for
-$h_{\mathrm{mod}}$.  Thus the arithmetic content of $(\mathrm{SB})$ is no longer used as an
+$h_{\mathrm{mod}}$. Thus the arithmetic content of $(\mathrm{SB})$ is no longer used as an
 unexplained broad premise: once the semistable Hodge lattice and compactified boundary objects
 are available, it follows from the two exact certificates above. Those certificates are not
 proved here. In particular, $(\mathrm{SC})$ only supplies the proposed
 extensions and $(\mathrm{MC})$ only compares their metrized lines; neither proves the positive
 determinant characters, the absence of extra vertical divisors, the required level-prime
-divisibility, or the Pl\"ucker inequalities (13.3q13).  The Gaussian estimate in Theorem 13.3 controls a norm
+divisibility, or the Pl\"ucker inequalities (13.3q13). The Gaussian estimate in Theorem 13.3 controls a norm
 after a lowest boundary monomial has been identified; it does not identify that monomial or
 prove that the determinant minors have no common zero integrally.
 
 Subject to the four geometric/metric interfaces and the two arithmetic certificates, Theorem
-13.3 gives a uniform upper bound for $h_{\mathrm{mod}}$.  Consequently
+13.3 gives a uniform upper bound for $h_{\mathrm{mod}}$. Consequently
 
 $$
 [(\mathrm{PSR})+(\mathrm{SHB})+(\mathrm{SC})+(\mathrm{MC})
@@ -3062,9 +3062,9 @@ theorem over the order $\operatorname{End}_K(Z(A))$.
 
 Once $(\mathrm{PSR})$, $(\mathrm{SHB})$, $(\mathrm{SC})$, and $(\mathrm{MC})$ are supplied,
 Proposition 13.3C makes the deduction of (13.3p) from the application-specific certificates
-$(\mathrm{AHS}_{\log})$ and $(\mathrm{US}_\theta)$ numerical and exact.  Those certificates
+$(\mathrm{AHS}_{\log})$ and $(\mathrm{US}_\theta)$ numerical and exact. Those certificates
 must still provide the integral boundary and level-prime orders, the determinant characters,
-and the cusp-normalized Pl\"ucker estimates.  The comparison inequality in $(\mathrm{MC})$
+and the cusp-normalized Pl\"ucker estimates. The comparison inequality in $(\mathrm{MC})$
 then converts (13.3p) into the moduli-height bound (13.4); no further descent, cancellation,
 or Northcott step would remain.
 
@@ -3462,7 +3462,7 @@ Northcott then give the displayed implication through (13.10)--(13.12). $\square
 Sections 12.2--13.3 identify the desired constructions, but they do not remove the
 conditional boundary. Lemma 12.4 checks saturated monomials and generic
 component points, but it does not control the full normalization with wild coefficient units or
-prove regularity at every resulting closed point.  Lemma 12.7 then invokes analytic generic
+prove regularity at every resulting closed point. Lemma 12.7 then invokes analytic generic
 fibers, a full tropical period lattice, polyhedral algebraization, and the Néron mapping
 property without constructing those rigid-analytic interfaces from the earlier books. Thus
 the combined potential-semistability-and-persistence interface $(\mathrm{PSR})$ and ramified
@@ -3471,34 +3471,34 @@ Invoking unsupplied Raynaud machinery under different terminology would not prov
 from the earlier results.
 
 Likewise, the local monoid chart (13.3e) does not by itself construct the global arithmetic
-toroidal quotient, its Mumford family, or its integral Hodge and theta extensions.  The complex
+toroidal quotient, its Mumford family, or its integral Hodge and theta extensions. The complex
 theta transformation formula does not by itself prove the integral line-bundle identity
 (13.3k), exclude vertical divisors away from $N$, or give the asserted uniform
-Fourier--Jacobi lower bounds.  The compactification interface $(\mathrm{SC})$ and metrized
+Fourier--Jacobi lower bounds. The compactification interface $(\mathrm{SC})$ and metrized
 comparison $(\mathrm{MC})$ therefore remain inputs as well.
 
 Once $(\mathrm{PSR})$, $(\mathrm{SHB})$, $(\mathrm{SC})$, and $(\mathrm{MC})$ are supplied,
 the remaining arithmetic inputs are the two finite certificates
-$(\mathrm{AHS}_{\log})$ and $(\mathrm{US}_\theta)$ in Section 13.3.  Lemma 13.3A proves the
+$(\mathrm{AHS}_{\log})$ and $(\mathrm{US}_\theta)$ in Section 13.3. Lemma 13.3A proves the
 determinant-and-saturation identity, Lemma 13.3B proves the finite Pl\"ucker upper-slope
 criterion, and Proposition 13.3C proves from those certificates the numerical estimate
-$(\mathrm{SB})$ in (13.3p), equivalently (13.3r).  Thus the abstract slope deduction is no
-longer a missing theorem.  The unproved application checks are precisely the positive Hodge
+$(\mathrm{SB})$ in (13.3p), equivalently (13.3r). Thus the abstract slope deduction is no
+longer a missing theorem. The unproved application checks are precisely the positive Hodge
 and boundary determinant characters, primitivity and absence of extra vertical divisors away
 from $N$, the required level-prime divisibility, the cusp-normalized operator norms, and
 integral Pl\"ucker maps with generic-fiber no-common-zero at every $x$.
 
 Ordinary Riemann--Roch on a curve, coherent base change, or algebraic Hilbert polynomials do
 not supply those certificates: none measures both integral covolumes and archimedean operator
-norms.  Nor does $S$-integrality bound the integers $m_{w,\rho}$, as Section 13.4 emphasizes.
+norms. Nor does $S$-integrality bound the integers $m_{w,\rho}$, as Section 13.4 emphasizes.
 Book 8 reduces the relevant section algebra to finitely many degrees, but it does not prove
 the local primitivity, Fourier--Jacobi, determinant-character, or Hermitian estimates in those
 degrees.
 
 Everything after a bound is proved: level-field reduction, moduli Northcott, finite polarized
 $K$-descent, the full Jordan--Zassenhaus theorem (13.15), and integral factor cancellation
-$(\mathrm{ZC})_K$.  Consequently this book does **not** assert $(\mathrm{FH})$, (13.1), or
-unconditional Tate-module semisimplicity.  The remaining chapters prove every implication
+$(\mathrm{ZC})_K$. Consequently this book does **not** assert $(\mathrm{FH})$, (13.1), or
+unconditional Tate-module semisimplicity. The remaining chapters prove every implication
 after $(\mathrm{FS})$, and in fact need only $(\mathrm{IF})$.
 
 For reference, the complete conditional chain proved by the reductions in this chapter is
@@ -3514,9 +3514,9 @@ The first implication is Proposition 13.3C followed by Theorem 13.3; the second,
 moduli Northcott, is Corollary 13.8. The six displayed inputs are separate gates in the
 conditional chain: the two arithmetic certificates are formulated on the objects proposed by
 $(\mathrm{SC})$ and use the same fixed Hodge, theta, and cusp metrics that occur in
-$(\mathrm{MC})$.  Neither geometric/metric interface contains those certificates, and the
+$(\mathrm{MC})$. Neither geometric/metric interface contains those certificates, and the
 certificates do not prove $(\mathrm{PSR})$ or
-$(\mathrm{SHB})$.  Thus no descent or direct-factor theorem remains hidden after a valid
+$(\mathrm{SHB})$. Thus no descent or direct-factor theorem remains hidden after a valid
 height theorem.
 
 ## 14. Finite isogeny classes as the exact conditional input
@@ -3935,9 +3935,9 @@ $$
 \tag{17.2}
 $$
 
-Every arrow in the last two lines of (17.2) is proved in Chapters 14--16.  In the first line,
+Every arrow in the last two lines of (17.2) is proved in Chapters 14--16. In the first line,
 potential semistability, Hodge base change, compactification, and metric comparison remain
-unproved, as do the concrete logarithmic Hilbert and theta upper-slope certificates.  The
+unproved, as do the concrete logarithmic Hilbert and theta upper-slope certificates. The
 Hermitian determinant/saturation and Pl\"ucker-slope deduction from those certificates to
 (13.3r) is Proposition 13.3C.
 
@@ -3945,21 +3945,21 @@ Hermitian determinant/saturation and Pl\"ucker-slope deduction from those certif
 
 The conventions used throughout are:
 
-| Object | Normalization or status |
-|---|---|
-| finite absolute value over $p$ | $|p|_v=p^{-1}$ |
-| complex absolute value | usual modulus, with local degree $n_v=2$ |
-| absolute projective height | $[K:\mathbf Q]^{-1}\sum_v n_v\log\max_i|x_i|_v$ |
-| canonical height | $\widehat h_L=\lim q^{-2r}h_L\circ[q^r]$ |
-| Faltings metric | (12.2), fixed up to one dimension-dependent additive constant |
-| stable Faltings height | normalized Arakelov degree, conditional here on $(\mathrm{PSR})+(\mathrm{SHB})$ |
-| finite isogeny input | $(\mathrm{IF})_{A/K}$ in (14.3) |
-| proved Tate output | $(\mathrm{IF})_{A/K}\Rightarrow(\mathrm{TS})_{A,K,\ell}$ |
-| proved factor theorem | Jordan--Zassenhaus in Theorem 13.7 and $(\mathrm{ZC})_K$ in Corollary 13.8 |
-| unresolved uniform source | $(\mathrm{PSR})+(\mathrm{SHB})+(\mathrm{SC})+(\mathrm{MC})+(\mathrm{AHS}_{\log})+(\mathrm{US}_\theta)$ |
+| Object                         | Normalization or status                                                                                |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| finite absolute value over $p$ | $                                                                                                      |
+| complex absolute value         | usual modulus, with local degree $n_v=2$                                                               |
+| absolute projective height     | $[K:\mathbf Q]^{-1}\sum_v n_v\log\max_i                                                                |
+| canonical height               | $\widehat h_L=\lim q^{-2r}h_L\circ[q^r]$                                                               |
+| Faltings metric                | (12.2), fixed up to one dimension-dependent additive constant                                          |
+| stable Faltings height         | normalized Arakelov degree, conditional here on $(\mathrm{PSR})+(\mathrm{SHB})$                        |
+| finite isogeny input           | $(\mathrm{IF})_{A/K}$ in (14.3)                                                                        |
+| proved Tate output             | $(\mathrm{IF})_{A/K}\Rightarrow(\mathrm{TS})_{A,K,\ell}$                                               |
+| proved factor theorem          | Jordan--Zassenhaus in Theorem 13.7 and $(\mathrm{ZC})_K$ in Corollary 13.8                             |
+| unresolved uniform source      | $(\mathrm{PSR})+(\mathrm{SHB})+(\mathrm{SC})+(\mathrm{MC})+(\mathrm{AHS}_{\log})+(\mathrm{US}_\theta)$ |
 
 Changing $L$ to $L^r$ multiplies the canonical point height by $r$. Extending a field does
-not change an absolute projective height.  Subject to $(\mathrm{SHB})$, it does not change the
+not change an absolute projective height. Subject to $(\mathrm{SHB})$, it does not change the
 stable Faltings height once semistability has been reached. The projective statement is proved
 in Section 2.2.
 
@@ -3982,9 +3982,9 @@ spaces then inherit semisimplicity exactly as required by the packet-carrier arr
 
 The remaining gap is not Hom--Tate linear algebra. The first exact arithmetic input is finite
 isogeny classes. The standard uniform source is the Faltings--Shafarevich package: the arithmetic
-height bound on Siegel moduli.  The semistable Hodge theory, compactification, and metrized
+height bound on Siegel moduli. The semistable Hodge theory, compactification, and metrized
 Hodge/theta comparison remain unresolved, as do the two concrete arithmetic certificates in
-Section 13.3.  Proposition 13.3C proves the determinant/saturation and upper-slope implication
+Section 13.3. Proposition 13.3C proves the determinant/saturation and upper-slope implication
 from those certificates to the required slope-and-boundary estimate.
 Proposition 13.5 proves descent of
 the finitely many stabilized polarized objects from the level fields to $K$, while Theorem

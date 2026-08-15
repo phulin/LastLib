@@ -2135,14 +2135,14 @@ lattice, and vector space—fit together only because their topologies were kept
 
 ### 12.6A The strict procyclic lattice complex
 
-The preceding calculations determine groups.  Nearby-cycle calculations also need a functorial
-complex, including the action of an element which conjugates a procyclic generator.  The finite
+The preceding calculations determine groups. Nearby-cycle calculations also need a functorial
+complex, including the action of an element which conjugates a procyclic generator. The finite
 cyclic periodic resolution is the wrong complex when the cyclic quotient has $\ell$-power
 order: its higher terms disappear only after passage to the torsion-free procyclic group.
 
 Let $\Lambda$ be the integers in a finite extension of $\mathbf Q_\ell$, let
 $\Gamma\simeq\mathbf Z_\ell$ have topological generator $\gamma$, and let $M$ be a finite free
-$\Lambda$-module with continuous $\Gamma$-action.  Write $T$ for the action of $\gamma$.
+$\Lambda$-module with continuous $\Gamma$-action. Write $T$ for the action of $\gamma$.
 
 **Proposition 12.1 (strict procyclic complex).** In the continuous derived category of compact
 $\Lambda$-modules there is a functorial model
@@ -2153,14 +2153,14 @@ R\Gamma_{\rm cts}(\Gamma,M)
 K_\Gamma(M):=[M\xrightarrow{\ T-1\ }M],                 \tag{12.18}
 $$
 
-with the terms in degrees zero and one.  In particular,
+with the terms in degrees zero and one. In particular,
 
 $$
 H^0=\ker(T-1),\qquad H^1=\operatorname{coker}(T-1),
 \qquad H^i=0\quad(i\ge2).                                \tag{12.19}
 $$
 
-The terms of (12.18), rather than its cohomology, are finite free.  Thus (12.18) remains a
+The terms of (12.18), rather than its cohomology, are finite free. Thus (12.18) remains a
 perfect complex when $T-1$ has nonprimitive image and $H^1$ has $\ell$-torsion.
 
 **Proof.** The completed group algebra is
@@ -2178,22 +2178,22 @@ $$
 $$
 
 Indeed, under the displayed power-series identification the first map is multiplication by
-$X$, which is injective, and its cokernel is evaluation at $X=0$.  A rank-one topologically
+$X$, which is injective, and its cokernel is evaluation at $X=0$. A rank-one topologically
 free compact $\Lambda[[\Gamma]]$-module is projective for continuous equivariant Hom: a module
 map out of it is determined by the image of $1$, and that image lifts across a continuous
-surjection.  The resulting module map is continuous by the universal property of the
-completed group algebra.  Applying
-$\operatorname{Hom}^{\rm cts}_{\Lambda[[\Gamma]]}(-,M)$ to (12.20) gives (12.18).  This also
+surjection. The resulting module map is continuous by the universal property of the
+completed group algebra. Applying
+$\operatorname{Hom}^{\rm cts}_{\Lambda[[\Gamma]]}(-,M)$ to (12.20) gives (12.18). This also
 shows functoriality and proves (12.19). $\square$
 
-There is an equally important semidirect-product formula.  For $a\in\mathbf Z_\ell^\times$ put
+There is an equally important semidirect-product formula. For $a\in\mathbf Z_\ell^\times$ put
 
 $$
 [a]_T=\frac{T^a-1}{T-1}
 =\sum_{n\ge1}\binom an(T-1)^{n-1},                        \tag{12.21}
 $$
 
-where the right side is evaluated continuously in the completed group algebra.  Let $A$ be a
+where the right side is evaluated continuously in the completed group algebra. Let $A$ be a
 $\Lambda$-linear automorphism of $M$ satisfying
 
 $$
@@ -2210,14 +2210,14 @@ $$
 A[a^{-1}]_T                                                \tag{12.23}
 $$
 
-in degree one is a chain automorphism of (12.18).  The check is the exact identity
+in degree one is a chain automorphism of (12.18). The check is the exact identity
 
 $$
 A[a^{-1}]_T(T-1)=A(T^{a^{-1}}-1)=(T-1)A.                  \tag{12.24}
 $$
 
-This is the continuous-cochain conjugation action, not an optional normalization.  If $T=1$,
-the degree-one factor is $a^{-1}A$.  Thus an arithmetic Frobenius satisfying
+This is the continuous-cochain conjugation action, not an optional normalization. If $T=1$,
+the degree-one factor is $a^{-1}A$. Thus an arithmetic Frobenius satisfying
 $\phi\gamma\phi^{-1}=\gamma^q$ acts on the degree-one constant-coefficient term by $q^{-1}$,
 as required for a $(-1)$ Tate twist; geometric Frobenius acts by $q$.
 
@@ -2243,16 +2243,16 @@ and corestriction maps. For a general integer $e$, (12.26) is still the displaye
 but it is not corestriction for the pro-$\ell$ group alone: multiplication by the
 prime-to-$\ell$ part of $e$ is an automorphism of $\mathbf Z_\ell$. The two maps are adjoint under the evaluation pairing
 with the contragredient module after the canonical orientation identification of the dual
-strict complex; this is not termwise matrix transposition.  For expansion index one every entry in (12.25)--(12.26) is
-literally $1$.  Reversing the chosen generator replaces $T$ by $T^{-1}$; the resulting chain
+strict complex; this is not termwise matrix transposition. For expansion index one every entry in (12.25)--(12.26) is
+literally $1$. Reversing the chosen generator replaces $T$ by $T^{-1}$; the resulting chain
 isomorphism is the identity in degree zero and $-T^{-1}$ in degree one, which is the origin of
 the orientation sign.
 
 Finally, if a tame procyclic group has a closed prime-to-$\ell$ kernel $H$ and maximal
-pro-$\ell$ quotient $\Gamma$, take $H$-invariants first.  Every finite quotient of $H$ has unit
+pro-$\ell$ quotient $\Gamma$, take $H$-invariants first. Every finite quotient of $H$ has unit
 order in $\Lambda$, so averaging is compatible through the inverse system and invariants are
-exact.  Consequently the full tame complex is (12.18) with $M$ replaced by the finite-free
-direct summand $M^H$.  This reduction does not average over an additional flag or stabilizer
+exact. Consequently the full tame complex is (12.18) with $M$ replaced by the finite-free
+direct summand $M^H$. This reduction does not average over an additional flag or stabilizer
 group whose order may be divisible by $\ell$.
 
 Under a finite map of full tame groups, however, the source invariant summand can be larger:
@@ -2289,10 +2289,10 @@ compact spaces $G^n$.
 
 Two common cases deserve to be separated.
 
-* For discrete modules, cochain-exactness is automatic because every cochain has finite image and
+- For discrete modules, cochain-exactness is automatic because every cochain has finite image and
   a lift may be chosen value by value.
 
-* For $0\to T\to V\to V/T\to0$ as above, it is automatic because the quotient is discrete and
+- For $0\to T\to V\to V/T\to0$ as above, it is automatic because the quotient is discrete and
   maps from $G^n$ again have finite image.
 
 By contrast, a continuous surjection of compact modules need not be assumed to possess a

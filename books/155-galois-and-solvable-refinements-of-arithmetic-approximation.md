@@ -84,9 +84,10 @@
     - [Proof and dependency audit](#163-proof-and-dependency-audit)
     - [How to read the output](#164-how-to-read-the-output)
 17. [Synthesis](#17-synthesis)
-   - [The field diagram](#171-the-field-diagram)
-   - [The order of construction](#172-the-order-of-construction)
-   - [Conclusion](#173-conclusion)
+
+- [The field diagram](#171-the-field-diagram)
+- [The order of construction](#172-the-order-of-construction)
+- [Conclusion](#173-conclusion)
 
 ## 1. Why ordinary approximation is not enough
 
@@ -198,15 +199,15 @@ When a solvable bridge is required, there is a fifth item:
 
 The resulting diagram is then determined before specialization:
 
-~~~text
-                         M
-                    /    |    \
-             solvable    |     solvable
-                /        |        \
-             L=M^J     M^{H_1}   M^{H_2}
-                    \    |    /
-                         K
-~~~
+```text
+            M
+       /    |    \
+solvable    |     solvable
+   /        |        \
+L=M^J     M^{H_1}   M^{H_2}
+       \    |    /
+            K
+```
 
 The groups $H_i$ used later may be elementary subgroups of $G$. Their upper extensions
 $M/M^{H_i}$ are solvable because the $H_i$ are solvable. Nothing here says that the lower
@@ -1352,7 +1353,7 @@ The corollary is not a consequence of Chebotarev: Chebotarev finds primes with a
 Frobenius class after a field is fixed. Here the primes are fixed first and the field is varied.
 Local realizability plus Hilbert approximation is the relevant mechanism.
 
-Conversely, once the specialized $M$ is fixed, an *additional* prime may be required both to
+Conversely, once the specialized $M$ is fixed, an _additional_ prime may be required both to
 have a chosen class in $M/K$ and to split completely in a Galois field $B/K$ with $M\cap B=K$;
 that is precisely Corollary 4.5. The two assertions have opposite orders of quantifiers.
 
@@ -2544,21 +2545,21 @@ arguments.
 
 The complete output has the following shape:
 
-~~~text
-                                      M
-                       _______________|_______________
-                      /               |               \
-             solvable upper     solvable upper    solvable upper
-                  tower               tower             tower
-                   /                   |                 \
-               L=M^J              M^{H_1}            M^{H_2}
-                  |                    |                  |
-                  |         no solvability asserted      |
-                   \___________________|_________________/
-                                      K
-                                      |
-                            disjoint from D_av
-~~~
+```text
+                         M
+          _______________|_______________
+         /               |               \
+solvable upper     solvable upper    solvable upper
+     tower               tower             tower
+      /                   |                 \
+  L=M^J              M^{H_1}            M^{H_2}
+     |                    |                  |
+     |         no solvability asserted      |
+      \___________________|_________________/
+                         K
+                         |
+               disjoint from D_av
+```
 
 Here $J$ is the point stabilizer and is required to be solvable. Each $H_i$ is elementary and is
 therefore solvable. The total group $G$ may be nonsolvable. All fields are subfields of the same

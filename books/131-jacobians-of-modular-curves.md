@@ -114,10 +114,10 @@ This is the precise Hecke compatibility of the pointed Albanese map. It should n
 
 The same symbol on different realizations is justified by functoriality, but its variance must remain visible. For a finite map $f:Y\to X$:
 
-* pullback of divisor classes gives $f^*:J_X\to J_Y$;
-* norm gives $f_*:J_Y\to J_X$;
-* the covariant Tate module follows homomorphisms in the same direction;
-* pullback on differentials and ordinary cohomology is contravariant.
+- pullback of divisor classes gives $f^*:J_X\to J_Y$;
+- norm gives $f_*:J_Y\to J_X$;
+- the covariant Tate module follows homomorphisms in the same direction;
+- pullback on differentials and ordinary cohomology is contravariant.
 
 Accordingly (2.2) acts covariantly on $T_\ell J_0(N)$. Under the standard comparison with curve cohomology, a dual or Tate twist appears according to the chosen cohomological convention. Writing the maps before simplifying prevents an accidental reversal of $T_q$.
 
@@ -340,14 +340,14 @@ This is the sharp modular-unit upper bound, but it is still only an upper bound.
 
 The first levels make the distinction concrete:
 
-| $p$ | $n_p$ | conclusion proved here |
-|---:|---:|---|
-| $5$ | $1$ | $c=0$ |
-| $7$ | $1$ | $c=0$ |
-| $11$ | $5$ | $\operatorname{ord}(c)$ divides $5$ |
-| $13$ | $1$ | $c=0$ |
-| $17$ | $4$ | $\operatorname{ord}(c)$ divides $4$ |
-| $19$ | $3$ | $\operatorname{ord}(c)$ divides $3$ |
+|  $p$ | $n_p$ | conclusion proved here              |
+| ---: | ----: | ----------------------------------- |
+|  $5$ |   $1$ | $c=0$                               |
+|  $7$ |   $1$ | $c=0$                               |
+| $11$ |   $5$ | $\operatorname{ord}(c)$ divides $5$ |
+| $13$ |   $1$ | $c=0$                               |
+| $17$ |   $4$ | $\operatorname{ord}(c)$ divides $4$ |
+| $19$ |   $3$ | $\operatorname{ord}(c)$ divides $3$ |
 
 For the rows with $n_p>1$, the table intentionally does not replace “divides” by “equals.” That replacement is exactly the lower-bound theorem deferred above.
 
@@ -1213,16 +1213,16 @@ The dependency closure is exact. Betti--de Rham comparison supplies the integral
 
 The forward boundary is equally exact:
 
-| Later book | New result not used here |
-|---|---|
-| 169 | Synthesis of the selected prime-level Eisenstein package |
-| 132 | Exact congruence modulus and $\mathbb T/I_{\mathrm{Eis}}\simeq\mathbf Z/n_p\mathbf Z$ |
-| 133 | Exact order of $c$, cyclic component group, generator specialization, and the limited exact Shimura calculation |
-| 134 | Admissible constant--multiplicative finite-flat filtrations and their extension theory |
-| 147 | Selection at every Eisenstein prime, scheme-level comparison at each torsion power, and the exact finite-flat tower |
-| 148 | Eisenstein descent and finiteness of the selected quotient's rational points |
-| 149 | Primitive cotangent lattices, oriented formal immersion, and cusp-disk rigidity |
-| 151 | Prime-isogeny and prime-torsion classification, exceptional genus-two calculations, and semistable full-two residual irreducibility |
+| Later book | New result not used here                                                                                                            |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| 169        | Synthesis of the selected prime-level Eisenstein package                                                                            |
+| 132        | Exact congruence modulus and $\mathbb T/I_{\mathrm{Eis}}\simeq\mathbf Z/n_p\mathbf Z$                                               |
+| 133        | Exact order of $c$, cyclic component group, generator specialization, and the limited exact Shimura calculation                     |
+| 134        | Admissible constant--multiplicative finite-flat filtrations and their extension theory                                              |
+| 147        | Selection at every Eisenstein prime, scheme-level comparison at each torsion power, and the exact finite-flat tower                 |
+| 148        | Eisenstein descent and finiteness of the selected quotient's rational points                                                        |
+| 149        | Primitive cotangent lattices, oriented formal immersion, and cusp-disk rigidity                                                     |
+| 151        | Prime-isogeny and prime-torsion classification, exceptional genus-two calculations, and semistable full-two residual irreducibility |
 
 Thus the lattice presentation (7.6) has not been replaced by a closed order formula; the annihilator (4.11) has not been promoted to the exact order of $c$; $I_{\mathrm{Eis}}$ has not been assigned an index; a completed idempotent has not been promoted to a finite-flat tower; the winding quotient has not been identified with either Eisenstein projector; and its rational points have not been claimed finite. Those are not missing proofs inside Theorem 14.1. They are the stated inputs and conclusions of the later books.
 

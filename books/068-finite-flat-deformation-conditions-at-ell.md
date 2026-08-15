@@ -789,25 +789,25 @@ The two spaces are not identified by notation. The equality between them is a th
 ### 6.3 What Cartier duality does not prove
 
 Cartier duality reverses an admissible short exact sequence of finite flat
-groups.  This supplies a duality on *objects and arrows* in the exact model
-category.  It does not turn an extension of $\mathcal G_2$ by $\mathcal G_1$
+groups. This supplies a duality on _objects and arrows_ in the exact model
+category. It does not turn an extension of $\mathcal G_2$ by $\mathcal G_1$
 into a torsor under one fixed group on $\operatorname{Spec}R$, and it does not
 identify the Baer pairing on such extensions with the local Tate cup product.
 Consequently no exact-annihilator assertion follows from Cartier duality
 alone.
 
-There is one unconditional compatibility.  If two generic classes actually
+There is one unconditional compatibility. If two generic classes actually
 come from integral torsors under Cartier-dual groups and their cup product is
 formed by the Cartier evaluation pairing, the resulting Brauer class extends
-over $R$ and therefore has zero local invariant.  This proves an orthogonality
-containment for that particular torsor problem.  Equality would additionally
+over $R$ and therefore has zero local invariant. This proves an orthogonality
+containment for that particular torsor problem. Equality would additionally
 require a duality theorem with supports and an order calculation for the
-same cohomology theory.  Neither is a consequence of the exact-category
+same cohomology theory. Neither is a consequence of the exact-category
 arguments in Chapters 4 and 5.
 
 For the remainder of this book, the dual local condition therefore means the
-orthogonal space defined in §6.2.  We do not identify an arbitrary geometric
-self-extension space with a Tate annihilator.  The explicit Kummer calculation
+orthogonal space defined in §6.2. We do not identify an arbitrary geometric
+self-extension space with a Tate annihilator. The explicit Kummer calculation
 later is obtained directly from flat cohomology and does not need such an
 identification.
 
@@ -822,7 +822,7 @@ $$
 $$
 
 and that integral self-extensions are stable under the induced adjoint duality.
-This gives a duality between two integral extension categories.  Only after a
+This gives a duality between two integral extension categories. Only after a
 separate comparison with the local cup product may one call either tangent
 space the exact annihilator of the other.
 
@@ -912,30 +912,30 @@ If a lift exists, framed matrix lifts form a torsor under $Z^1(K,\operatorname{a
 ### 7.3 The extra integral obstruction
 
 The integral problem is not literally a deformation of the coordinate algebra of
-$\mathcal G_A$ along $A'\to A$.  The group schemes live over $R$, not over
+$\mathcal G_A$ along $A'\to A$. The group schemes live over $R$, not over
 $\operatorname{Spec}A$, and a free rank-$d$ lift over $A'$ has order
-$|A'|^d$, whereas $\mathcal G_A$ has order $|A|^d$.  Thus the sought model is
+$|A'|^d$, whereas $\mathcal G_A$ has order $|A|^d$. Thus the sought model is
 a larger finite-flat group equipped with an $A'$-action whose coefficient
-quotient is the given model.  Treating $A'\to A$ as a base change of Hopf
+quotient is the given model. Treating $A'\to A$ as a base change of Hopf
 algebras would keep the rank fixed and is incorrect.
 
 For a rigidified model $\mathcal G_A$, define the **integral lifting
 obstruction** simply as the failure of the following groupoid to be nonempty:
 its objects are $A'$-linear finite-flat models $\mathcal G_{A'}$ of generic
 lifts together with an identification of the coefficient quotient by
-$\ker(A'\to A)$ with $\mathcal G_A$.  This is an honest obstruction problem,
+$\ker(A'\to A)$ with $\mathcal G_A$. This is an honest obstruction problem,
 but in this generality it need not be represented by one canonical vector
-space.  A classification theorem may replace it by an explicit complex or by
+space. A classification theorem may replace it by an explicit complex or by
 linear algebra; absent such a theorem, no group denoted
 $\operatorname{Ob}^2_{\mathrm{int}}$ has been constructed.
 
 The ambient class $\operatorname{ob}_{\mathrm{rep}}$ must vanish whenever this
-groupoid is nonempty, but its vanishing is not sufficient in general.  It only
-produces a generic $A'$-representation.  One must still construct a
+groupoid is nonempty, but its vanishing is not sufficient in general. It only
+produces a generic $A'$-representation. One must still construct a
 finite-flat group of the larger order, extend the coefficient action, and
-identify its coefficient reduction with the selected model.  For the
+identify its coefficient reduction with the selected model. For the
 existential functor the question is weaker: it asks for some model downstairs
-and some compatible model upstairs.  Different downstairs models can lead to
+and some compatible model upstairs. Different downstairs models can lead to
 different answers, so a chosen-model obstruction cannot be promoted to an
 intrinsic obstruction class without a comparison theorem.
 
@@ -1775,18 +1775,16 @@ $$
 
 The exact sequence of §5.5 gives
 
-$$
-\dim_k t_{\bar\rho}^{\square,\mathrm{fl}}
-=
+# $$\dim_k t_{\bar\rho}^{\square,\mathrm{fl}}
+
 \dim_kH^1_{\mathrm{fl}}(K,\operatorname{ad}\bar\rho)
 +d^2-h^0. \tag{13.4}
 $$
 
 For fixed determinant with $\ell\nmid d$, the same formula becomes
 
-$$
-\dim_k t_{\bar\rho}^{\square,\mathrm{fl},\delta}
-=
+# $$\dim_k t_{\bar\rho}^{\square,\mathrm{fl},\delta}
+
 \dim_kH^1_{\mathrm{fl}}(K,\operatorname{ad}^0\bar\rho)
 +d^2-h^0. \tag{13.5}
 $$
@@ -1858,9 +1856,8 @@ The number three is a framing count. It is not a contribution from $[K:\mathbf Q
 
 Local Euler characteristic and Tate duality give
 
-$$
-h^1(K,\operatorname{ad}^0\bar\rho)
-=
+# $$h^1(K,\operatorname{ad}^0\bar\rho)
+
 3[K:\mathbf Q_\ell]
 +h^0(K,\operatorname{ad}^0\bar\rho)
 +h^0(K,\operatorname{ad}^0\bar\rho(1)).
@@ -1868,9 +1865,8 @@ $$
 
 Under the scalar-centralizer and oddness hypotheses this becomes
 
-$$
-h^1(K,\operatorname{ad}^0\bar\rho)
-=
+# $$h^1(K,\operatorname{ad}^0\bar\rho)
+
 3[K:\mathbf Q_\ell]
 +h^0(K,\operatorname{ad}^0\bar\rho(1)). \tag{13.9}
 $$
@@ -2688,9 +2684,8 @@ are removed by the units $b_i$ in (15.7).
 The equation has surjective derivative at every residual point. If
 $\dot\Phi_i$ is a first-order variation, its logarithmic derivative is
 
-$$
-\lambda((\dot\Phi_i)_i)
-=
+# $$\lambda((\dot\Phi_i)_i)
+
 \sum_i\operatorname{tr}
 (\bar\Phi_i^{-1}\dot\Phi_i). \tag{15.12}
 $$
@@ -2982,10 +2977,8 @@ $$
 
 reduces to $1$. Replace one matrix, say the zeroth, by
 
-$$
-\widetilde\Phi_0
-\operatorname{diag}(u,1)
-=
+# $$\widetilde\Phi_0\operatorname{diag}(u,1)
+
 \widetilde\Phi_0
 \begin{pmatrix}u&0\\0&1\end{pmatrix}. \tag{16.3}
 $$
@@ -3087,12 +3080,12 @@ necessary so that irreducible constituents are absolutely defined. The
 invariant formulas (15.26)--(15.28) descend to the original coefficient
 field.
 
-| Residual shape | $h$ | Fixed-determinant coarse tangent | Framed tangent |
-|---|---:|---:|---:|
-| Absolutely irreducible, including supersingular | $1$ | $f$ | $f+3$ |
-| Nonsplit extension of distinct characters | $1$ | $f$ | $f+3$ |
-| Split sum of distinct characters | $2$ | $f+1$ | $f+3$ |
-| Equal-character semisimplification | -- | impossible | impossible |
+| Residual shape                                  | $h$ | Fixed-determinant coarse tangent | Framed tangent |
+| ----------------------------------------------- | --: | -------------------------------: | -------------: |
+| Absolutely irreducible, including supersingular | $1$ |                              $f$ |          $f+3$ |
+| Nonsplit extension of distinct characters       | $1$ |                              $f$ |          $f+3$ |
+| Split sum of distinct characters                | $2$ |                            $f+1$ |          $f+3$ |
+| Equal-character semisimplification              |  -- |                       impossible |     impossible |
 
 For an absolutely irreducible representation, Schur's lemma gives $h=1$.
 The word supersingular describes the finite-flat special-fiber shape; it
@@ -3241,10 +3234,8 @@ $k(1)$ and $k$. Their coefficient-linear models are unique, so they must be
 these scalar-extended standard models. The middle object would then be one
 of the scalar-extended standard extensions classified in Chapter 12. Hence
 
-$$
-\boxed{
-H^1_{\mathrm{fl}}(K,k(1))
-=
+# $$\boxed{H^1_{\mathrm{fl}}(K,k(1))
+
 \bigl(R^\times/(R^\times)^\ell\bigr)\otimes k,} \tag{16.17}
 $$
 

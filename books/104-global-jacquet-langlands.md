@@ -307,10 +307,8 @@ $$
 
 The connected subgroup is $\overline G_\gamma(F)=G_\gamma(F)/Z(F)$. If $\operatorname{Trd}(\gamma)\ne0$, taking traces in $x^{-1}\gamma x=z\gamma$ forces $z=1$. If $\operatorname{Trd}(\gamma)=0$, determinants force $z=\pm1$, and Skolem--Noether supplies an element which realizes the nontrivial automorphism of $F[\gamma]$ and sends $\gamma$ to $-\gamma$. Therefore
 
-$$
-\kappa(\gamma):=
-[C_\gamma(F):\overline G_\gamma(F)]^{-1}
-=
+# $$\kappa(\gamma):=[C_\gamma(F):\overline G_\gamma(F)]^{-1}
+
 \begin{cases}
 \frac12,&\operatorname{Trd}(\gamma)=0,\\
 1,&\operatorname{Trd}(\gamma)\ne0.
@@ -844,11 +842,8 @@ $$
 
 Combining the compact trace formula, the cuspidal split trace formula, and Theorem 7.1 gives directly
 
-$$
-\boxed{
-\sum_{\pi\ \mathrm{cuspidal}}
-m_{G^*}(\pi)\operatorname{tr}\pi(f)
-=
+# $$\boxed{\sum_{\pi\ \mathrm{cuspidal}}m_{G^*}(\pi)\operatorname{tr}\pi(f)
+
 \sum_{\Pi\ \mathrm{noncharacter}}
 m_D(\Pi)\operatorname{tr}\Pi(f').}
 $$
@@ -1836,16 +1831,16 @@ No representation of a Galois group is needed for this bridge. The characteristi
 
 For a selected noncharacter automorphic $\Pi$ and $\pi=\operatorname{JL}_D(\Pi)$, the usable local dictionary is:
 
-| place and quaternionic component | split component | level or weight effect |
-|---|---|---|
-| $v\notin R$, spherical | the same spherical representation | identical $T_v,S_v$ and Satake polynomial |
-| $v\notin R$, ramified | the same local representation | identical conductor and local type |
-| $v\in R_f$, unramified norm character $\mu_v\circ\operatorname{Nrd}$ | $\operatorname{St}_v\otimes\mu_v$ | exponent $0\mapsto1$ |
-| $v\in R_f$, ramified norm character | ramified Steinberg twist | exponent $2a(\mu_v)$ on both prepared scales |
-| $v\in R_f$, selected dihedral $\pi'(E,\theta)$ | selected dihedral supercuspidal | exponent $v(\mathfrak d_{E/F_v})+f(E/F_v)a_E(\theta)$ |
-| real $v\in R$, compact highest degree $n_v$ | real discrete series | minimal weight $n_v+2$, same center |
-| the unique real $\tau _0\notin R$ in Theorem 9.2 | the same full-group $D_{2,\omega_{\tau _0}}$ | active weight two is unchanged |
-| real or complex $v\notin R$ | the same representation | no change |
+| place and quaternionic component                                     | split component                              | level or weight effect                                |
+| -------------------------------------------------------------------- | -------------------------------------------- | ----------------------------------------------------- |
+| $v\notin R$, spherical                                               | the same spherical representation            | identical $T_v,S_v$ and Satake polynomial             |
+| $v\notin R$, ramified                                                | the same local representation                | identical conductor and local type                    |
+| $v\in R_f$, unramified norm character $\mu_v\circ\operatorname{Nrd}$ | $\operatorname{St}_v\otimes\mu_v$            | exponent $0\mapsto1$                                  |
+| $v\in R_f$, ramified norm character                                  | ramified Steinberg twist                     | exponent $2a(\mu_v)$ on both prepared scales          |
+| $v\in R_f$, selected dihedral $\pi'(E,\theta)$                       | selected dihedral supercuspidal              | exponent $v(\mathfrak d_{E/F_v})+f(E/F_v)a_E(\theta)$ |
+| real $v\in R$, compact highest degree $n_v$                          | real discrete series                         | minimal weight $n_v+2$, same center                   |
+| the unique real $\tau _0\notin R$ in Theorem 9.2                     | the same full-group $D_{2,\omega_{\tau _0}}$ | active weight two is unchanged                        |
+| real or complex $v\notin R$                                          | the same representation                      | no change                                             |
 
 In every row, central characters, contragredients, determinant/norm twists, and local $L$- and epsilon factors are compatible. At ramified places the character identity has sign $-1$; over all ramified places the product sign is $+1$.
 

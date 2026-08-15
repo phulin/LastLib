@@ -2576,18 +2576,18 @@ group, which is a separate sieve problem.
 
 The hypotheses and their consequences can be summarized as follows.
 
-| Assertion | Required hypotheses |
-|---|---|
-| $L$ is etale | $f$ squarefree |
-| odd-degree norm-kernel identification | $\deg f=5$, $2\ne0$, rational branch point at infinity |
-| Mumford formula $(-1)^{\deg u}u(\theta)$ | pointed monic quintic; use moving at branch support |
-| fake quotient in sextic degree | squarefree sextic; a reference divisor fixes normalization |
-| true-to-fake sequence (5.13) | monic sextic with a rational odd-degree divisor; otherwise restrict to the obstruction-zero part |
-| finite global squareclass space | number field and finite $S$, including class-group terms |
-| unramified local equality | good reduction and residue characteristic not two |
-| formula (7.4) | finite extension of $\mathbf Q_2$ and an abelian variety of dimension $g$ |
-| torsion injection at $p$ | good reduction and torsion prime to $p$ |
-| reduction saturation criterion | good primes away from $\ell$ and known rational $\ell$-torsion |
+| Assertion                                | Required hypotheses                                                                              |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| $L$ is etale                             | $f$ squarefree                                                                                   |
+| odd-degree norm-kernel identification    | $\deg f=5$, $2\ne0$, rational branch point at infinity                                           |
+| Mumford formula $(-1)^{\deg u}u(\theta)$ | pointed monic quintic; use moving at branch support                                              |
+| fake quotient in sextic degree           | squarefree sextic; a reference divisor fixes normalization                                       |
+| true-to-fake sequence (5.13)             | monic sextic with a rational odd-degree divisor; otherwise restrict to the obstruction-zero part |
+| finite global squareclass space          | number field and finite $S$, including class-group terms                                         |
+| unramified local equality                | good reduction and residue characteristic not two                                                |
+| formula (7.4)                            | finite extension of $\mathbf Q_2$ and an abelian variety of dimension $g$                        |
+| torsion injection at $p$                 | good reduction and torsion prime to $p$                                                          |
+| reduction saturation criterion           | good primes away from $\ell$ and known rational $\ell$-torsion                                   |
 
 Neither characteristic two nor a curve without the stated rational divisor
 is silently forced into the pointed odd-degree formulas. A birational change

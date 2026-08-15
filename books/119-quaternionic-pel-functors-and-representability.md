@@ -190,14 +190,14 @@ $$
 
 Right multiplication by $c$ scales the form by $\operatorname{Nrd}(c)$. Requiring this reduced norm to be a rational scalar gives the common-norm group. This calculation explains both the side convention and the rational multiplier condition.
 
-It does not prove that the desired Hodge map lands in that group.  Book 118, Proposition 8.2
+It does not prove that the desired Hodge map lands in that group. Book 118, Proposition 8.2
 shows that when the quaternionic adjoint datum has both an active split real factor and an
 inactive compact real factor, the lift is impossible: the reduced-norm exponent is odd at the
-active factor and even at the compact factor.  Thus this direct common-norm example is not a
-PEL realization of a mixed one-split datum.  Such a datum must begin with a genuinely different
+active factor and even at the compact factor. Thus this direct common-norm example is not a
+PEL realization of a mixed one-split datum. Such a datum must begin with a genuinely different
 central modification satisfying Definition 1.1.
 
-Book 118, Proposition 8.3 provides such a modification in the form needed below.  If
+Book 118, Proposition 8.3 provides such a modification in the form needed below. If
 $L=FK$ is a CM quadratic extension embedded in $B$, regard $B$ as a rank-two right $L$-space
 with Hermitian norm $H(x,x)=\operatorname{Nrd}_B(x)$ and put
 
@@ -207,11 +207,11 @@ $$
 \tag{2.1a}
 $$
 
-**Proposition 2.1A (the unitary datum is PEL-exact).**  Let $L$ act on $B$ by right
-multiplication and give it the positive involution $c$.  The identity component of the
+**Proposition 2.1A (the unitary datum is PEL-exact).** Let $L$ act on $B$ by right
+multiplication and give it the positive involution $c$. The identity component of the
 $L$-linear similitude group of (2.1a) is exactly the unitary common-multiplier group
-$G^{\mathrm u}$ of Book 118, (8.3c).  Its determinant law has multiplicities $(1,1)$ at the
-active real place and $(2,0)$ at every inactive real place.  Consequently
+$G^{\mathrm u}$ of Book 118, (8.3c). Its determinant law has multiplicities $(1,1)$ at the
+active real place and $(2,0)$ at every inactive real place. Consequently
 
 $$
 (L,c,B,\psi,h^{\mathrm u})
@@ -221,17 +221,16 @@ $$
 is a quaternionic PEL realization in the sense of Definition 1.1, with reflex field $L$ and
 the same adjoint curve datum as $B^\times$.
 
-**Proof.**  Complex conjugation is the positive involution on the CM field $L$.  The adjoint
-of right multiplication by $a$ in (2.1a) is right multiplication by $c(a)$.  If an
+**Proof.** Complex conjugation is the positive involution on the CM field $L$. The adjoint
+of right multiplication by $a$ in (2.1a) is right multiplication by $c(a)$. If an
 $L$-linear automorphism scales $\psi$ by a rational scalar, nondegeneracy of the trace pairing
-forces it to scale $H$ by the same scalar; this is precisely (8.3c).  Book 118, Proposition
+forces it to scale $H$ by the same scalar; this is precisely (8.3c). Book 118, Proposition
 8.3 verifies the real signatures, positivity, weight-one types, derived group, determinant
 multiplicities, and reflex field. $\square$
 
 ### 2.2 Positivity and the quaternionic model
 
 An alternating form alone produces a symplectic group, but an abelian variety requires a positive weight-one Hodge structure. The involution is called positive when, after extending to $\mathbf R$, the trace form associated with $xx^*$ is positive in the PEL sense. Equivalently in the chosen representation, for every $h\in X$ the form
-
 
 $$
 (x,y)_h=\psi(x,h(i)y)
@@ -1404,19 +1403,19 @@ statements. $\square$
 
 The theorem is safe to reuse only if its hypotheses travel with it.
 
-| Assertion | Required hypothesis | Failure without it |
-|---|---|---|
-| PEL moduli describes the chosen quaternionic datum | the centralizer of $(D,*,\psi)$ is the chosen central modification | endomorphism and polarization equations define a larger variety |
-| polarization condition | actual positive polarization of fixed kernel type | a symmetric isogeny can lie outside the ample cone |
-| perfect level pairing | $N$ invertible and prime to $\deg\lambda$ | $e_N^\lambda$ can be degenerate |
-| correct Hodge type | equality of the universal determinant polynomial law, plus orientation if needed | generatorwise equations or dimension alone allow wrong multiplicities |
-| finite diagonal | fixed polarization | unpolarized automorphism groups need not be finite |
-| trivial inertia | full $N\geq3$, or neat level detecting the center | $-1$ survives at level two; central torsion can survive adjoint neatness |
-| scheme rather than stack | trivial inertia and the finite map to fine Siegel moduli | a finite-diagonal stack can still have stabilizers |
-| generic smoothness | characteristic zero, semisimple $D$, and the selected $G/P_\mu$ component | the determinant local model can be nonflat or nonreduced |
-| curve dimension | exactly one noncentral rank-one Hodge factor | abelian dimension does not determine moduli dimension |
-| universal family on a level or central quotient | free effective action on the full PEL object | stabilizers obstruct descent to the coarse space |
-| projectivity | quaternion division datum, hence no rational parabolic | split data have cusps |
+| Assertion                                          | Required hypothesis                                                              | Failure without it                                                       |
+| -------------------------------------------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| PEL moduli describes the chosen quaternionic datum | the centralizer of $(D,*,\psi)$ is the chosen central modification               | endomorphism and polarization equations define a larger variety          |
+| polarization condition                             | actual positive polarization of fixed kernel type                                | a symmetric isogeny can lie outside the ample cone                       |
+| perfect level pairing                              | $N$ invertible and prime to $\deg\lambda$                                        | $e_N^\lambda$ can be degenerate                                          |
+| correct Hodge type                                 | equality of the universal determinant polynomial law, plus orientation if needed | generatorwise equations or dimension alone allow wrong multiplicities    |
+| finite diagonal                                    | fixed polarization                                                               | unpolarized automorphism groups need not be finite                       |
+| trivial inertia                                    | full $N\geq3$, or neat level detecting the center                                | $-1$ survives at level two; central torsion can survive adjoint neatness |
+| scheme rather than stack                           | trivial inertia and the finite map to fine Siegel moduli                         | a finite-diagonal stack can still have stabilizers                       |
+| generic smoothness                                 | characteristic zero, semisimple $D$, and the selected $G/P_\mu$ component        | the determinant local model can be nonflat or nonreduced                 |
+| curve dimension                                    | exactly one noncentral rank-one Hodge factor                                     | abelian dimension does not determine moduli dimension                    |
+| universal family on a level or central quotient    | free effective action on the full PEL object                                     | stabilizers obstruct descent to the coarse space                         |
+| projectivity                                       | quaternion division datum, hence no rational parabolic                           | split data have cusps                                                    |
 
 Three normalization checks are especially important. The action $\iota$ and the group controlling level lie on commuting sides. The Rosati equation reverses multiplication through $*$. The determinant polynomial is evaluated on the Lie quotient dictated by the fixed homology convention. Changing any one of these conventions requires changing all associated formulas, not merely renaming a symbol.
 

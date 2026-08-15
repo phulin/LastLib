@@ -891,7 +891,7 @@ proved below.
 
 **Proposition 6.1 (optional uniform raw-to-global certificate for the finite packet array).**
 Suppose the controlled datum lists the actual smooth projective curve carrier used for every
-packet $\pi_H$.  Assume either:
+packet $\pi_H$. Assume either:
 
 1. $(\mathrm{HT}_1)$ of Book 168, (7.9), holds for every selected raw packet factor; or
 2. the stronger $(\mathrm{SS}_{\mathrm{array}})$ of Book 168, (7.12), holds for the carriers.
@@ -952,7 +952,7 @@ $$
 after one finite scalar extension. We suppress that harmless common extension in the notation.
 
 Book 182, Proposition 8.1 applies to the same actual carrier and rational Hecke block used in
-this construction.  It therefore gives
+this construction. It therefore gives
 
 $$
 r_{H,\tau}|_{G_{(F_H)_w}}\text{ unramified}
@@ -969,7 +969,7 @@ $$
 $$
 
 The assertion uses coefficient-independent Artin conductors and invariant-Frobenius
-polynomials of the raw Jacobian multiplicity spaces, followed by Book 128, Lemma 3.2.  It
+polynomials of the raw Jacobian multiplicity spaces, followed by Book 128, Lemma 3.2. It
 supplies the Galois Frobenius return polynomial but no identification of a ramified
 automorphic type.
 
@@ -1786,15 +1786,15 @@ characteristic-zero effectivity and cancellation may later be applied.
 
 For every finite $v\ne2$, (6.4j) gives a common unramified algebraic pair for each untwisted
 elementary packet factor, and it compares with every coefficient realization away from residue
-characteristic $v$.  This is a Galois comparison, not an automorphic local-type comparison.
+characteristic $v$. This is a Galois comparison, not an automorphic local-type comparison.
 Restriction through a field extension keeps the monodromy operator and restricts the Weil
 action. Finite twisting multiplies the Weil action and leaves the nilpotent operator unchanged.
 Finite induction is governed by (10.1).
 
 At a place outside $S_0$ every summand is unramified. At a prime in $S_0$, the finite Brauer
-character or the field induction can still ramify the positive and negative terms.  Twisting
+character or the field induction can still ramify the positive and negative terms. Twisting
 the pairs in (6.4j) and applying algebraic Weil induction gives their common algebraic local
-Galois Mackey objects at every such prime.  Auxiliary ramification in positive and negative
+Galois Mackey objects at every such prime. Auxiliary ramification in positive and negative
 terms is not declared canceled here:
 cancellation is an effectivity question in Books 184--185.
 
@@ -1889,7 +1889,7 @@ multiplicity one proves chain independence and conjugation compatibility.
 
 Chapter 6 applies the earlier packet theorem separately to the finitely many $\pi_H$ and forms
 one common coefficient field. The distinguished determinant forces every algebraic central
-multiplier to be trivial, giving (6.6).  Book 182's equivariant conductor and
+multiplier to be trivial, giving (6.6). Book 182's equivariant conductor and
 invariant-Frobenius theorem gives the common unramified pair (6.4j) at every place away from
 two. Chapter 7 proves the overlap by two routes. Actual
 base change gives (7.1) on every tower. Independently, equality at $\iota_0$, the

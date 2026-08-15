@@ -1158,13 +1158,13 @@ The remedy is not to pretend that the denominator is harmless. One retains the e
 
 ### 9.5 From a type lattice to a parahoric coefficient complex
 
-A stable lattice is not yet a sheaf on a bad integral model.  This distinction is harmless on
-the characteristic-zero tower and decisive at residue-prime parahoric level.  We record the
+A stable lattice is not yet a sheaf on a bad integral model. This distinction is harmless on
+the characteristic-zero tower and decisive at residue-prime parahoric level. We record the
 exact interface for the quotient and augmentation Steinberg pair, since it is the pair used by
 the one-prime complex.
 
-Put $G=\operatorname{GL}_2(k_F)$ and let $B\subset G$ be the upper triangular Borel.  On the
-generic fine hyperspecial curve, the actual Iwahori degeneracy cover has fiber $G/B$.  Hence its
+Put $G=\operatorname{GL}_2(k_F)$ and let $B\subset G$ be the upper triangular Borel. On the
+generic fine hyperspecial curve, the actual Iwahori degeneracy cover has fiber $G/B$. Hence its
 direct image of the constant sheaf is the permutation system
 
 $$
@@ -1173,7 +1173,7 @@ $$
 
 The unit and trace on the finite-etale generic cover are respectively the constant-vector and
 augmentation maps, so their quotient and kernel are exactly
-$\operatorname{St}^+_R$ and $\operatorname{St}^-_R$.  On the edge level, Mackey restriction is
+$\operatorname{St}^+_R$ and $\operatorname{St}^-_R$. On the edge level, Mackey restriction is
 the actual two-orbit decomposition
 
 $$
@@ -1182,7 +1182,7 @@ $$
 $$
 
 where the first summand is the fixed endpoint and the second, of rank $Q$, is the moving
-length-two flag orbit.  Thus (9.8)--(9.9) are realized by the length-one and length-two PEL flag
+length-two flag orbit. Thus (9.8)--(9.9) are realized by the length-one and length-two PEL flag
 schemes, not by $Q+1$ formal copies of the base curve.
 
 On generic fibers, applying associated-sheaf descent to
@@ -1194,46 +1194,46 @@ $$
                                                                     \tag{9.10}
 $$
 
-is exact because the torsor is etale-locally trivial.  The two rows split as sequences of
-underlying $R$-modules and are perfectly transposed by the dot product.  No assertion about
+is exact because the torsor is etale-locally trivial. The two rows split as sequences of
+underlying $R$-modules and are perfectly transposed by the dot product. No assertion about
 invariants of $G$, $B$, or a flag stabilizer is used.
 
-There is no analogous stalkwise argument on the bad special fiber.  For example, if a
+There is no analogous stalkwise argument on the bad special fiber. For example, if a
 degree-$Q+1$ finite-flat flag cover has one geometric point of length $Q+1$ over a local-local
 point, the etale pushforward of the constant sheaf has one rank-one stalk and the pull--trace
-composite on that stalk is multiplication by $Q+1$.  When $\ell\mid Q+1$, its trace is not a
-surjection over $R$.  Consequently neither an underived special-fiber pushforward nor the
-phrase “finite flat” proves that the second row of (9.10) remains exact.  This is the geometric
+composite on that stalk is multiplication by $Q+1$. When $\ell\mid Q+1$, its trace is not a
+surjection over $R$. Consequently neither an underived special-fiber pushforward nor the
+phrase “finite flat” proves that the second row of (9.10) remains exact. This is the geometric
 form of the nonbanal extension in Section 5.4.
 
-The correct integral object is a constructible **complex**.  Normalize the fine vertex--edge
+The correct integral object is a constructible **complex**. Normalize the fine vertex--edge
 diagram in the effective finite Galois closure of its objectwise generic principal covers and
 retain the actual branch and flag decomposition
-groups.  For a supplied tame annular module, Book 22, Theorem 3.2 gives
+groups. For a supplied tame annular module, Book 22, Theorem 3.2 gives
 
 $$
 K_x(W)=[W^{H_x}\xrightarrow{\ T_x-1\ }W^{H_x}],            \tag{9.11}
 $$
 
 where $H_x$ is the prime-to-$\ell$ kernel of geometric annular monodromy and $T_x$ is its
-pro-$\ell$ generator.  Insert (9.11), the full branch complexes, and their generization maps
+pro-$\ell$ generator. Insert (9.11), the full branch complexes, and their generization maps
 in Book 22's normalization--conductor homotopy fiber (3.10), and totalize with the two exact
-rows (9.10).  The terms are finite free even when the cohomology of $T_x-1$ has torsion.  Pull
+rows (9.10). The terms are finite free even when the cohomology of $T_x-1$ has torsion. Pull
 and trace on the expansion-one node sheets are the explicit norm maps of Book 22, (3.8), and the companion uses the
-contragredient action.  This produces the normalization filtration, residue-Galois action, and
+contragredient action. This produces the normalization filtration, residue-Galois action, and
 adjunction without a rational type projector once the actual principal data have been
 identified.
 
 Book 122, Proposition 9.2 constructs this normalized principal/ray tower objectwise and proves
-its object maps finite locally free and its lifted top legs isomorphisms.  Its ray factor is geometrically constant and therefore
-twists (9.11) diagonally by Book 22, (3.11).  Proposition 9.3 proves $({\rm DLB}_1)$, and
+its object maps finite locally free and its lifted top legs isomorphisms. Its ray factor is geometrically constant and therefore
+twists (9.11) diagonally by Book 22, (3.11). Proposition 9.3 proves $({\rm DLB}_1)$, and
 (9.29k)--(9.29l) prove every active finite-depth normalization and intermediate invariant
 ring, and (9.29r)--(9.29x) compute the raw higher branch, inertia, inseparable-residue,
-node-annular, and boundary-stabilizer ledger.  Equations (9.29b)--(9.29i) and (9.29n)--(9.29q) of Book 122 identify
+node-annular, and boundary-stabilizer ledger. Equations (9.29b)--(9.29i) and (9.29n)--(9.29q) of Book 122 identify
 the wild unipotent branch group, take its exact invariants by Book 22, (3.12)--(3.14), and
-prove the unique multiplicity-one node sheet and the constant-extreme-line generization.  Book 122,
+prove the unique multiplicity-one node sheet and the constant-extreme-line generization. Book 122,
 Proposition 9.4 promotes the routing, multiplicity and expansion one, and Hecke/transpose route
-to the actual common factor.  Proposition 9.5 proves the reduced invariant branch fields,
+to the actual common factor. Proposition 9.5 proves the reduced invariant branch fields,
 Cartier multiplicities and active group filtrations, and reduces the normalized compositum to
 the actual Kummer polynomial and intersection field. Proposition 9.6 factors the completed
 endpoints from their actual valuations, leading coefficients, and tame subgroups; Proposition
@@ -1243,9 +1243,9 @@ and computes its local field, unit, endpoint triples, Kummer factors and interse
 Proposition 9.10 computes the equivariantly descended branch-tube cohomology, actions and
 generization maps from the normalized level-one factors; Corollary 9.11 proves
 $({\rm KBL}_v)_{\rm act}$, $({\rm BTK}_v)_{\rm act}$,
-$({\rm HDB}_v)_{\rm act}$ and $({\rm PNS}_v)_{\rm act}$.  This conclusion is restricted to
+$({\rm HDB}_v)_{\rm act}$ and $({\rm PNS}_v)_{\rm act}$. This conclusion is restricted to
 the displayed rows, whose active action factors through $G_1$, whose spectators are etale at
-$v$, and whose ray line is trait-pulled.  A characteristic-zero occurrence theorem for a
+$v$, and whose ray line is trait-pulled. A characteristic-zero occurrence theorem for a
 different type still determines neither its annular group nor its completed branch tube.
 
 ## 10. Ordered principal deformation conditions
@@ -1711,47 +1711,47 @@ The constructions can now be assembled into the precise package promised by the 
 7. A controlled fixed nonminimal datum consists of the inertial and monodromy label, primary lattice, adjoint companion, named deformation condition and component or stratified chart, and every required ordering, newness condition, or sign. Its associated characteristic-zero locus matches the representations selected by the enhanced type datum; a monodromy-zero boundary divisor is retained but is not relabelled Steinberg. Conductor is a consequence of this datum, not a substitute for it.
 
 8. On the characteristic-zero parahoric tower, the quotient and augmentation Steinberg rows
-   are the actual unit/trace rows of the projective-line flag cover.  Their bad-fiber extension
-   is the normalization--conductor complex of Section 9.5.  Book 122 proves
+   are the actual unit/trace rows of the projective-line flag cover. Their bad-fiber extension
+   is the normalization--conductor complex of Section 9.5. Book 122 proves
    $({\rm DLB}_1)$ and every
    active finite-depth normalization ring and the raw higher
    branch/inertia/residue/node-annular and boundary-stabilizer ledger; its explicit Drinfeld
    divisor and Bruhat equations force the wild-invariant extreme lines,
    constant-extreme-line generization, unique node routing,
-   multiplicity one, and level-one residue-prime Hecke compatibility.  Proposition 9.4 of
+   multiplicity one, and level-one residue-prime Hecke compatibility. Proposition 9.4 of
    Book 122 promotes the routing, multiplicity and expansion one, and Hecke/transpose route to
-   the actual common factor.  Its Proposition 9.5 supplies the invariant-field, Cartier and
+   the actual common factor. Its Proposition 9.5 supplies the invariant-field, Cartier and
    group calculation and the normalized-compositum reduction. Propositions 9.6--9.8 add the
    endpoint and Milnor-tube formalisms and the proved oriented restriction--Gysin
    correspondence. Proposition 9.9 supplies the strict ray arithmetic and factors, Proposition
    9.10 computes the actual descended tube complexes, and Corollary 9.11 proves
-   $({\rm PNS}_v)_{\rm act}$.  The strict terms are finite free and preserve residue Galois,
-   pull, trace, and adjunction.  No assertion is made here for a different principal
+   $({\rm PNS}_v)_{\rm act}$. The strict terms are finite free and preserve residue Galois,
+   pull, trace, and adjunction. No assertion is made here for a different principal
    representation or an arbitrary local cyclic ray datum.
 
 9. Primitive wild supercuspidal types, ramified quadratic types in residue characteristic two, and general congruent dihedral component calculations are excluded. No assertion about their lattices, reduction multiplicities, or deformation smoothness follows from this theorem.
 
-**Proof.** Parts 1--3 are Theorems 4.2, 5.2, 6.1--6.2, and 7.3 together with the perfect pairings (4.6), (5.6), and (7.5). Part 4 is Chapter 8 and the finite free base-change results of Chapter 3. Part 5 is Proposition 9.1 and Lemma 3.3. Part 6 is Theorems 10.1--10.2 and 11.1, Proposition 11.2, and Theorem 12.3. Part 7 is Definition (13.1) and Theorem 13.1, including the rectifier reconciliation of Proposition 12.2.  Part 8 is Section 9.5 and Book 122, Propositions 9.8--9.10 and Corollary 9.11. Part 9 is the boundary proved in Sections 7.5 and 12.4. $\square$
+**Proof.** Parts 1--3 are Theorems 4.2, 5.2, 6.1--6.2, and 7.3 together with the perfect pairings (4.6), (5.6), and (7.5). Part 4 is Chapter 8 and the finite free base-change results of Chapter 3. Part 5 is Proposition 9.1 and Lemma 3.3. Part 6 is Theorems 10.1--10.2 and 11.1, Proposition 11.2, and Theorem 12.3. Part 7 is Definition (13.1) and Theorem 13.1, including the rectifier reconciliation of Proposition 12.2. Part 8 is Section 9.5 and Book 122, Propositions 9.8--9.10 and Corollary 9.11. Part 9 is the boundary proved in Sections 7.5 and 12.4. $\square$
 
 ### 14.2 Hypothesis and failure ledger
 
 Every hypothesis in the main theorem has a visible job.
 
-| Hypothesis or datum | What it supplies | What fails without it |
-|---|---|---|
-| $p\ne\ell$ | $p$-group Fourier scalars are units | Heisenberg and additive Fourier models need not stay semisimple or primitive |
-| unit-valued characters | stable action in both directions | a nonunit scalar and its inverse cannot preserve a finite lattice |
-| non-scalar ratio character of conductor $n$ | minimal $J_n$ principal detection | the scalar case has only a rank-one minimal type, while its Iwahori incidence module also meets the Steinberg boundary |
-| normalized tame rectifier | agreement of compact central character with the Weil determinant | the parameter character and direct compact character are misidentified |
-| tame admissible quadratic pair | quadratic centralizer and exact intertwining | primitive wild strata require additional data |
-| prime-to-$\ell$ finite inertia | averaging rigidity | inertia deformations and component crossings can appear |
-| distinct residual lines or roots | unique integral ordering | the coarse flag-forgetting space can be singular |
-| $Q\not\equiv1\pmod\ell$ in the clean special chart | one free Kummer parameter and distinct ratio | unit classes and line descent can add tangents |
-| $Q\not\equiv-1\pmod\ell$ for sign separation | distinct integral old branches | two signs can meet modulo $\lambda$ |
-| banality for the controlling quotient | exact invariants and irreducible reduction | multiplicities can jump and extensions appear |
-| saturation | torsion-free quotient and primitive image | a rational projector can leave a congruence index |
-| explicit companion | integral adjunction | generic self-duality forgets extension orientation |
-| named component and ordering | exact deformation problem | inertial semisimplification can merge different loci |
+| Hypothesis or datum                                | What it supplies                                                 | What fails without it                                                                                                  |
+| -------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| $p\ne\ell$                                         | $p$-group Fourier scalars are units                              | Heisenberg and additive Fourier models need not stay semisimple or primitive                                           |
+| unit-valued characters                             | stable action in both directions                                 | a nonunit scalar and its inverse cannot preserve a finite lattice                                                      |
+| non-scalar ratio character of conductor $n$        | minimal $J_n$ principal detection                                | the scalar case has only a rank-one minimal type, while its Iwahori incidence module also meets the Steinberg boundary |
+| normalized tame rectifier                          | agreement of compact central character with the Weil determinant | the parameter character and direct compact character are misidentified                                                 |
+| tame admissible quadratic pair                     | quadratic centralizer and exact intertwining                     | primitive wild strata require additional data                                                                          |
+| prime-to-$\ell$ finite inertia                     | averaging rigidity                                               | inertia deformations and component crossings can appear                                                                |
+| distinct residual lines or roots                   | unique integral ordering                                         | the coarse flag-forgetting space can be singular                                                                       |
+| $Q\not\equiv1\pmod\ell$ in the clean special chart | one free Kummer parameter and distinct ratio                     | unit classes and line descent can add tangents                                                                         |
+| $Q\not\equiv-1\pmod\ell$ for sign separation       | distinct integral old branches                                   | two signs can meet modulo $\lambda$                                                                                    |
+| banality for the controlling quotient              | exact invariants and irreducible reduction                       | multiplicities can jump and extensions appear                                                                          |
+| saturation                                         | torsion-free quotient and primitive image                        | a rational projector can leave a congruence index                                                                      |
+| explicit companion                                 | integral adjunction                                              | generic self-duality forgets extension orientation                                                                     |
+| named component and ordering                       | exact deformation problem                                        | inertial semisimplification can merge different loci                                                                   |
 
 The direct prerequisites enter with matching hypotheses. The local representation theory of $\mathrm{GL}_2(F)$ supplies the characteristic-zero principal, special, and tame dihedral classification, newvectors, conductors, exact intertwining, and the selected local correspondence; it explicitly excludes primitive wild construction. The small-height finite-flat theory supplies schematic closure, duality, and the warning that a generic representation does not determine an integral model. The torsion Fontaine--Laffaille theory supplies exactness and full faithfulness only for weights $[0,1]$, $\ell>2$, perfect residue field, and an unramified base. Its integral equivalence and base-change theorem supplies compatible finite-flat quotients under those same hypotheses. Books 17 and 21 supply finite-etale associated covers and exact lisse-sheaf descent. Book 22 supplies the strict procyclic node complex and exact finite-wild reduction. Book 122 supplies the objectwise finite-flat common normalization, its isomorphic lifted top legs, the ray factor, proved $({\rm DLB}_1)$, all active finite-depth normalization rings, the raw higher branch/inertia/residue/node-annular and boundary-stabilizer ledger, Propositions 9.5--9.8's invariant-field, endpoint, tube, and correspondence formalisms, Proposition 9.9's strict actual ray arithmetic, Proposition 9.10's completed-tube calculation, and Corollary 9.11's actual-row principal node theorem. No result from a later book is used as a proof input.
 

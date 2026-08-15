@@ -63,21 +63,25 @@ All valuations $v_q$ are normalized by $v_q(q)=1$. Frobenius at an unramified pr
 $$
   \bar\chi_p:G_{\mathbf Q}\longrightarrow \mathbf F_p^\times.
 $$
+
 For an elliptic curve $E/\mathbf Q$, write
 $$
   \bar\rho_{E,p}:G_{\mathbf Q}\longrightarrow
   \operatorname{GL}(E[p])
 $$
+
 for the action on its geometric $p$-torsion.
 
 For each prime $q\ne p$, choose the $p$-primary tame character
 $$
   t_{p,q}:I_q\longrightarrow \mathbf Z_p,
 $$
+
 normalized so that arithmetic Frobenius $F_q$ satisfies
 $$
   t_{p,q}(F_q\sigma F_q^{-1})=q\,t_{p,q}(\sigma).
 $$
+
 Write $\bar t_{p,q}$ for its reduction modulo $p$. At $q=2$ we abbreviate
 $t_{p,2}$ and $\bar t_{p,2}$ to $t_p$ and $\bar t_p$.
 
@@ -90,6 +94,7 @@ Suppose that
 $$
   x^n+y^n=z^n,\qquad xyz\ne 0,\qquad n>2.
 $$
+
 Then one of the following reductions applies.
 
 - If $5\mid n$, the solution contradicts the exponent-$5$ theorem of Book 163.
@@ -146,14 +151,17 @@ Starting with a nonzero integral solution of
 $$
   x^n+y^n=z^n,
 $$
+
 divide by the common greatest divisor. We may assume
 $$
   \gcd(x,y,z)=1.
 $$
+
 If $n$ is odd, put $c=-z$; then
 $$
   x^n+y^n+c^n=0.
 $$
+
 This symmetric form is convenient for the cubic and quintic descents. For
 the Frey construction we retain the equivalent form with one power on the
 right.
@@ -162,6 +170,7 @@ If a prime $p\mid n$, write $n=pm$. Then
 $$
   (x^m)^p+(y^m)^p=(z^m)^p.
 $$
+
 Thus a solution at exponent $n$ produces one at exponent $p$. If $4\mid n$, the same observation produces a solution at exponent $4$.
 
 It remains to remove exponents $3,4,5$. The exponent-$5$ case is imported from Book 163; the other two are included so that the elementary reduction is complete.
@@ -182,35 +191,43 @@ Suppose otherwise and choose a primitive solution with $|Z|$ minimal after permu
 $$
   3\nmid XY,\qquad X+Y\equiv0\pmod3.
 $$
+
 Write
 $$
   X+Y=3M.
 $$
+
 The factorization
 $$
   X^3+Y^3=(X+Y)(X^2-XY+Y^2)
 $$
+
 and the substitution $Y=3M-X$ give
 $$
   X^2-XY+Y^2
   =3\bigl(X^2-3MX+3M^2\bigr).
 $$
+
 Put
 $$
   N=X^2-3MX+3M^2.
 $$
+
 Since $3\nmid X$, one has $3\nmid N$. Any common divisor of $M$ and $N$ divides $X^2$, and then also $Y$; primitivity gives
 $$
   \gcd(M,N)=1.
 $$
+
 Therefore
 $$
   Z^3=-9MN.
 $$
+
 The coprimality and the $3$-adic valuations show that, after absorbing signs,
 $$
   M=3r^3
 $$
+
 for some nonzero integer $r$. In particular
 $$
   X+Y=9r^3. \tag{2.1}
@@ -222,24 +239,29 @@ $$
   \qquad
   \omega^2+\omega+1=0.
 $$
+
 This ring is Euclidean for the norm
 $$
   \operatorname N(u+v\omega)=u^2-uv+v^2,
 $$
+
 because choosing a nearest point in the triangular lattice gives a remainder
 of strictly smaller norm. It is therefore a unique factorization domain.
 Let $\lambda=1-\omega$; then
 $$
   3=-\omega^2\lambda^2.
 $$
+
 The three factors
 $$
   X+Y,\qquad X+\omega Y,\qquad X+\omega^2Y
 $$
+
 are pairwise coprime away from $\lambda$. Because $3\nmid XY$ and $3\mid X+Y$, direct reduction modulo $\lambda^2$ gives
 $$
   v_\lambda(X+\omega Y)=1.
 $$
+
 Unique factorization therefore yields
 $$
   X+\omega Y=\varepsilon\lambda(\alpha+\beta\omega)^3,
@@ -254,10 +276,12 @@ $$
   \qquad
   V=3\alpha\beta(\alpha-\beta),
 $$
+
 so that
 $$
   (\alpha+\beta\omega)^3=U+V\omega.
 $$
+
 The element $\alpha+\beta\omega$ is not divisible by $\lambda$, for otherwise
 the right side of (2.2) would have $\lambda$-valuation at least four.
 Consequently
@@ -266,26 +290,32 @@ $$
   \qquad
   3\mid V.
 $$
+
 Multiplication by $\lambda$, $-\omega\lambda$, or $\omega^2\lambda$, up to an overall sign, makes the sum of the two rational coefficients respectively
 $$
   3V,\qquad 3(U-V),\qquad -3U.
 $$
+
 In the last two cases that sum has exactly one factor of $3$, whereas (2.1) has at least two. Thus the unit in (2.2) may be absorbed so that the first case holds. Comparing coefficient sums with (2.1) gives
 $$
   r^3=\pm\alpha\beta(\alpha-\beta).
 $$
+
 The three integers
 $$
   \alpha,\qquad \beta,\qquad \alpha-\beta
 $$
+
 are pairwise coprime: a common prime would divide both coefficients in (2.2), contrary to the primitive construction. Hence each is a signed cube:
 $$
   \alpha=u^3,\qquad \beta=v^3,\qquad \alpha-\beta=w^3.
 $$
+
 After changing signs,
 $$
   v^3+w^3=u^3.
 $$
+
 This is a new nonzero solution.
 
 Finally, taking norms in (2.2) and using $X^3+Y^3=-Z^3$ shows
@@ -293,10 +323,12 @@ $$
   \operatorname N(\alpha+\beta\omega)^3
   =\frac{|Z|^3}{27|r|^3}.
 $$
+
 Since $r\ne0$,
 $$
   \operatorname N(\alpha+\beta\omega)<|Z|.
 $$
+
 The positive definite norm dominates the absolute values of $\alpha$, $\beta$, and $\alpha-\beta$. Hence all three entries of the new solution have absolute value strictly below $|Z|$. The same modulo-$9$ argument says that exactly one of them is divisible by $3$; after writing the equation again in symmetric form, its distinguished entry contradicts minimality. $\square$
 
 ### 2.3. Exponent four
@@ -306,6 +338,7 @@ There are no nonzero integers $X,Y,Z$ satisfying
 $$
   X^4+Y^4=Z^2.
 $$
+
 In particular there are no nonzero solutions of $X^4+Y^4=Z^4$.
 
 **Proof.**
@@ -319,43 +352,52 @@ Exactly one of $X,Y$ is even: they cannot both be even by primitivity, and if bo
 $$
   (X^2,Y^2,Z)
 $$
+
 has a parametrization
 $$
   X^2=m^2-n^2,\qquad
   Y^2=2mn,\qquad
   Z=m^2+n^2,
 $$
+
 where
 $$
   m>n>0,\qquad \gcd(m,n)=1,
 $$
+
 and $m,n$ have opposite parity. Take $n$ even. Since $2mn$ is a square and $m,n$ are coprime, there are coprime $R,S>0$ such that
 $$
   m=R^2,\qquad n=2S^2.
 $$
+
 Indeed every odd prime occurs to an even exponent in each of $m,n$, while
 $1+v_2(n)$ is even, so the remaining power of $2$ in $n/2$ is a square.
 Now
 $$
   X^2+(2S^2)^2=R^4
 $$
+
 is another primitive Pythagorean triple: any common divisor of $X$ and
 $2S^2$ would also divide $m$ and $n$. Its parametrization gives coprime $H>K>0$ of opposite parity with
 $$
   X=H^2-K^2,\qquad 2S^2=2HK,\qquad R^2=H^2+K^2.
 $$
+
 Because $HK=S^2$ and $\gcd(H,K)=1$, both $H$ and $K$ are squares:
 $$
   H=U^2,\qquad K=V^2.
 $$
+
 Consequently
 $$
   U^4+V^4=R^2.
 $$
+
 This is another nonzero solution of the same type, but
 $$
   0<R<Z=m^2+n^2,
 $$
+
 contradicting the minimality of $Z$. $\square$
 
 ### 2.4. Exponent five
@@ -390,6 +432,7 @@ For the rest of the book, fix a prime
 $$
   p\ge7
 $$
+
 and a primitive nonzero solution
 $$
   a^p+b^p=c^p.
@@ -411,22 +454,26 @@ Modulo $2$, precisely one of $a,b,c$ is even. They cannot all be odd because
 $$
   1+1\not\equiv1\pmod2,
 $$
+
 and they cannot contain two even entries because pairwise coprimality would then force the third to be even as well.
 
 We may put the even entry in the first position while preserving the shape of the equation. If $a$ or $b$ is even, merely interchange them. If $c$ is even, replace
 $$
   (a,b,c)\quad\text{by}\quad(-c,a,-b);
 $$
+
 because $p$ is odd,
 $$
   (-c)^p+a^p=(-b)^p.
 $$
+
 Thus from now on $a$ is even and $b,c$ are odd.
 
 Reducing (2.3) modulo $4$ gives
 $$
   b\equiv c\pmod4,
 $$
+
 since $a^p\equiv0\pmod4$ and $u^p\equiv u\pmod4$ for odd $u$ and odd $p$. If necessary replace all three entries by their negatives. We have therefore proved the normalization
 $$
   a\equiv0\pmod2,
@@ -441,11 +488,13 @@ Put
 $$
   A=a^p,\qquad B=b^p,\qquad C=c^p.
 $$
+
 Then
 $$
   A+B=C,
   \tag{3.2}
 $$
+
 the three integers $A,B,C$ are pairwise coprime, and
 $$
   v_2(A)=p\,v_2(a)\ge7,
@@ -453,6 +502,7 @@ $$
   B\equiv C\equiv1\pmod4.
   \tag{3.3}
 $$
+
 These congruences are exactly what the dyadic minimal model will use.
 
 ## 4. The Frey curve and its minimal models
@@ -472,6 +522,7 @@ $$
   y^2=x(x-A)(x+B).
   \tag{4.1}
 $$
+
 The roots $0,A,-B$ are distinct because $ABC\ne0$ and $A+B=C\ne0$. Hence (4.1) is a nonsingular elliptic curve.
 
 Its nonzero points of order $2$ are exactly
@@ -479,11 +530,13 @@ $$
   (0,0),\qquad(A,0),\qquad(-B,0).
   \tag{4.2}
 $$
+
 Thus
 $$
   E[2](\mathbf Q)\simeq(\mathbf Z/2\mathbf Z)^2.
   \tag{4.3}
 $$
+
 As a finite étale group scheme over $\mathbf Q$, the full two-torsion is
 constant. It therefore has the constant extension
 $$
@@ -492,6 +545,7 @@ $$
   \mathcal T_{2,\mathbf Q}\simeq E[2].
   \tag{4.4}
 $$
+
 The rational full-two structure, not merely the
 numerical divisibility of $\#E[2](\mathbf Q)$, is the input to Book 151.
 
@@ -499,6 +553,7 @@ Expanding (4.1) gives
 $$
   y^2=x^3+(B-A)x^2-ABx.
 $$
+
 The integral invariant formulas yield
 $$
 \begin{aligned}
@@ -510,6 +565,7 @@ $$
 \end{aligned}
 \tag{4.5}
 $$
+
 The discriminant is $16$ times the square of the product of the three root differences:
 $$
   A,\qquad B,\qquad A+B=C.
@@ -523,10 +579,12 @@ Suppose $q\mid a$. Then $B$ and $C$ are units, while
 $$
   A^2+AB+B^2\equiv B^2\not\equiv0\pmod q.
 $$
+
 Thus $c_4$ is a $q$-adic unit. The displayed integral model is minimal and has multiplicative reduction, with
 $$
   v_q(\Delta_{\min})=2p\,v_q(a).
 $$
+
 The same argument applies when $q\mid b$ or $q\mid c$. Pairwise coprimality ensures that only one case occurs, and we obtain
 $$
   v_q(\Delta_{\min})=2p\,v_q(abc)
@@ -541,29 +599,20 @@ $q\mid c$, translate the repeated root $A=-B$ to the origin; the
 tangent equation is then $y^2=A u^2$. Thus the tangent cone has the
 following square class:
 
-| bad odd prime | repeated root | tangent coefficient | split precisely when |
-|---|---:|---:|---|
-| $q\mid a$ | $0$ | $B$ | $b$ is a square modulo $q$ |
-| $q\mid b$ | $0$ | $-A$ | $-a$ is a square modulo $q$ |
-| $q\mid c$ | $A=-B$ | $A$ | $a$ is a square modulo $q$ |
+| bad odd prime | repeated root | tangent coefficient | split precisely when        |
+| ------------- | ------------: | ------------------: | --------------------------- |
+| $q\mid a$     |           $0$ |                 $B$ | $b$ is a square modulo $q$  |
+| $q\mid b$     |           $0$ |                $-A$ | $-a$ is a square modulo $q$ |
+| $q\mid c$     |        $A=-B$ |                 $A$ | $a$ is a square modulo $q$  |
 
 Here raising to the odd power $p$ does not change a square class. This table fixes every odd local splitting character, although only the dyadic sign will be built into the later special deformation condition.
 
 ### 4.3. The normalized minimal model at two
 
-The raw equation is not minimal at $2$. Make the change
-$$
-  x=4x',
-  \qquad
-  y=8y'+4x'.
-  \tag{4.7}
-$$
-After dividing by $64$ and suppressing primes on the new coordinates, one gets
-$$
-  y^2+xy
-  =
-  x^3+\frac{B-A-1}{4}x^2-\frac{AB}{16}x.
-  \tag{4.8}
+# The raw equation is not minimal at $2$. Make the change$$  x=4x',  \qquad  y=8y'+4x'.  \tag{4.7}$$After dividing by $64$ and suppressing primes on the new coordinates, one gets$$y^2+xy
+
+x^3+\frac{B-A-1}{4}x^2-\frac{AB}{16}x.
+\tag{4.8}
 $$
 Both coefficients are integral: (3.3) gives $4\mid B-A-1$, while
 $$
@@ -579,12 +628,14 @@ $$
 \end{aligned}
 \tag{4.9}
 $$
+
 The first is odd, so (4.8) is minimal and has multiplicative reduction at $2$. Its discriminant exponent is
 $$
   m_2:=v_2(\Delta_{\min})
   =2p\,v_2(a)-8.
   \tag{4.10}
 $$
+
 In particular
 $$
   m_2>0,
@@ -597,23 +648,28 @@ Put
 $$
   d=\frac{B-A-1}{4}.
 $$
+
 Since $AB/16$ is even, reduction of (4.8) modulo $2$ is
 $$
   y^2+xy=x^3+\bar d x^2.
 $$
+
 Its unique singular point is the origin, and its tangent cone is
 $$
   y^2+xy+\bar d x^2.
 $$
+
 Writing $y=tx$, the two tangent directions are rational over
 $\mathbf F_2$ precisely when
 $$
   t^2+t+\bar d
 $$
+
 splits, which is equivalent to $\bar d=0$. Now
 $$
   d\equiv\frac{B-1}{4}\pmod2,
 $$
+
 and $B=b^p\equiv b\pmod8$ because $p$ is odd. The split-node criterion
 therefore gives
 $$
@@ -626,6 +682,7 @@ $$
   \end{cases}
   \tag{4.12}
 $$
+
 The normalization $b\equiv1\pmod4$ leaves exactly these two cases.
 
 ### 4.4. Global minimal discriminant and conductor
@@ -635,6 +692,7 @@ $$
   \boxed{\Delta_{\min}=2^{-8}(abc)^{2p}.}
   \tag{4.13}
 $$
+
 The exponent is positive at $2$, so the right side is an integer.
 
 A multiplicative prime contributes conductor exponent $1$, while a good prime contributes $0$. Therefore
@@ -643,6 +701,7 @@ $$
   =\prod_{q\mid abc}q.}
   \tag{4.14}
 $$
+
 Since $2\mid a$, the prime $2$ occurs exactly once in this product.
 
 ## 5. The residual representation away from the coefficient prime
@@ -662,15 +721,18 @@ $$
   \longrightarrow\operatorname{GL}_2(\mathbf F_p).
   \tag{5.1}
 $$
+
 The Weil pairing gives
 $$
   \det\bar\rho=\bar\chi_p.
   \tag{5.2}
 $$
+
 For complex conjugation $c_\infty$,
 $$
   \det\bar\rho(c_\infty)=\bar\chi_p(c_\infty)=-1,
 $$
+
 so $\bar\rho$ is odd.
 
 At a good prime $q\ne p$, the representation is unramified and
@@ -679,6 +741,7 @@ $$
   \equiv X^2-a_q(E)X+q\pmod p,
   \tag{5.3}
 $$
+
 where
 $$
   a_q(E)=q+1-\#E(\mathbf F_q).
@@ -690,6 +753,7 @@ Let $q\ne p$ be a multiplicative prime and set
 $$
   m_q=v_q(\Delta_{\min}).
 $$
+
 After at most the unramified quadratic extension that makes the reduction split, Tate uniformization supplies a basis in which
 $$
   \bar\rho(\sigma)=
@@ -700,6 +764,7 @@ $$
   \qquad(\sigma\in I_q).
   \tag{5.4}
 $$
+
 An unramified quadratic twist changes the diagonal Frobenius sign but not this inertia calculation. It follows that
 $$
   \bar\rho|_{I_q}\text{ is trivial}
@@ -718,12 +783,14 @@ $$
   \longrightarrow\mathbf F_p\otimes\eta_q
   \longrightarrow0.
 $$
+
 At an odd bad prime $q\ne p$, the representation is unramified and
 $$
   \det\!\left(X-\bar\rho(F_q)\right)
   =(X-\bar s_q)(X-q\bar s_q).
   \tag{5.6}
 $$
+
 The value of $s_q$ is exactly the splitness computed in the table of
 Section 4.2.
 
@@ -731,6 +798,7 @@ At $2$, however, (4.11) gives
 $$
   m_2\not\equiv0\pmod p.
 $$
+
 Thus $\bar\rho(I_2)$ is a nontrivial cyclic group of order $p$, generated by a transvection. Its invariant subspace has codimension $1$, so the Artin conductor exponent at $2$ is exactly $1$.
 Wild inertia is pro-$2$ and acts trivially on this odd-order tame image, so
 there is no Swan contribution.
@@ -742,6 +810,7 @@ $$
   N(\bar\rho)_{\text{prime-to-}p}=2.
   \tag{5.7}
 $$
+
 The latter is the residual conductor, not the conductor (4.14) of the elliptic curve.
 
 ### 5.3. The residual level calculation
@@ -755,6 +824,7 @@ $$
   \end{cases}
   \tag{5.8}
 $$
+
 Thus all the variable odd primes in the curve conductor disappear from the prime-to-$p$ conductor of $E[p]$, while $2$ remains with conductor exponent one.
 
 ## 6. Finite flatness and irreducibility at $p$
@@ -770,10 +840,12 @@ There are two possibilities at the coefficient prime. First suppose
 $$
   p\nmid abc.
 $$
+
 Then (4.5) has $p$-adic unit discriminant, so $E$ has good reduction over $\mathbf Z_p$. Let $\mathcal E/\mathbf Z_p$ be its smooth proper elliptic model. Multiplication by $p$ on $\mathcal E$ is finite locally free of degree $p^2$; hence
 $$
   \mathcal E[p]
 $$
+
 is a finite flat commutative group scheme over $\mathbf Z_p$ with generic fiber $E[p]$. Thus $\bar\rho|_{G_{\mathbf Q_p}}$ is finite flat.
 
 ### 6.2. Multiplicative reduction at $p$
@@ -783,6 +855,7 @@ $$
   v_p(\Delta_{\min})=2p\,v_p(abc),
   \tag{6.1}
 $$
+
 which is divisible by $p$.
 
 After at most an unramified quadratic extension $K/\mathbf Q_p$, the curve is a Tate curve $E_q$. Let $R$ be the valuation ring of $K$, let $\pi$ be a uniformizer, and write
@@ -794,6 +867,7 @@ $$
   u\in R^\times.
   \tag{6.2}
 $$
+
 The Tate $p$-torsion has its canonical exact sequence
 $$
   0\longrightarrow\mu_p\longrightarrow E_q[p]
@@ -810,6 +884,7 @@ $$
   \mathcal G=\coprod_{i=0}^{p-1}\mathcal G_i.
   \tag{6.4}
 $$
+
 Each component is finite free of rank $p$. Multiplication uses
 $T_iT_j$ if $i+j<p$, and $T_iT_j/u$ after reducing $i+j$ modulo $p$. It makes $\mathcal G$ a finite flat commutative group scheme of rank $p^2$, fitting into
 $$
@@ -817,10 +892,12 @@ $$
   \longrightarrow(\mathbf Z/p\mathbf Z)_R\longrightarrow0.
   \tag{6.5}
 $$
+
 On the generic fiber, a point $T_i=z$ maps to the Tate parameter
 $$
   (\pi^s)^i z;
 $$
+
 its $p$-th power is $q^i$, so (6.5) identifies with (6.3).
 
 If the reduction was nonsplit, the unramified quadratic splitting character acts as finite étale descent data on this construction. Descent preserves finite flatness. Hence $E[p]$ has a finite flat model over $\mathbf Z_p$ in the multiplicative case as well.
@@ -833,6 +910,7 @@ $$
   \boxed{\bar\rho|_{G_{\mathbf Q_p}}\text{ is finite flat}.}
   \tag{6.6}
 $$
+
 This is a coefficient-prime integral assertion. It does not say that $\bar\rho$ is unramified at $p$, and it does not say that the elliptic curve has good reduction there.
 
 ### 6.3. Irreducibility from full two-torsion
@@ -844,6 +922,7 @@ semistable, if
 $$
   E[2](\mathbf Q)\simeq(\mathbf Z/2\mathbf Z)^2,
 $$
+
 and if $p\ge7$ is prime, then $E[p]$ has no
 $G_{\mathbf Q}$-stable $\mathbf F_p$-line.
 
@@ -852,6 +931,7 @@ $$
   \bar\rho\text{ is irreducible over }\mathbf F_p.
   \tag{6.7}
 $$
+
 The lower bound $p\ge7$ is essential to this invocation. Exponent $5$ has already been discharged by Book 163 and never enters this argument.
 
 ### 6.4. From irreducible to absolutely irreducible
@@ -870,10 +950,12 @@ $$
   \quad\text{with}\quad
   \alpha^2=1.
 $$
+
 Since $p$ is odd, $\alpha=\pm1$. As an $\mathbf F_p$-linear map on a two-dimensional space, either scalar has determinant $1$. This contradicts
 $$
   \det\bar\rho(c_\infty)=-1
 $$
+
 from (5.2). $\square$
 
 In particular
@@ -882,6 +964,7 @@ $$
   =\mathbf F_p,
   \tag{6.8}
 $$
+
 the global Schur condition used in the deformation theory.
 
 ## 7. The exact special datum at two
@@ -898,11 +981,13 @@ Let
 $$
   \eta_2:G_{\mathbf Q_2}\longrightarrow\{1,-1\}
 $$
+
 be the unramified splitting character, normalized by
 $$
   \eta_2(F_2)=s_2.
   \tag{7.1}
 $$
+
 For split multiplicative reduction $\eta_2=1$; for nonsplit multiplicative reduction it is the unramified quadratic character. Tate uniformization gives the exact residual sequence
 $$
   0\longrightarrow
@@ -914,31 +999,25 @@ $$
   \tag{7.2}
 $$
 
-In a basis respecting this filtration, inertia acts by
-$$
-  \bar\rho(\sigma)
-  =
-  I+m_2\bar t_p(\sigma)e_{12}
-  \qquad(\sigma\in I_2).
-  \tag{7.3}
-$$
-Since $m_2\not\equiv0\pmod p$, rescale the quotient basis vector and put
-$$
-  \bar N=e_{12}
-  =
-  \begin{pmatrix}0&1\\0&0\end{pmatrix}.
-  \tag{7.4}
+# In a basis respecting this filtration, inertia acts by$$\bar\rho(\sigma)
+
+# I+m_2\bar t_p(\sigma)e_{12}\qquad(\sigma\in I_2).\tag{7.3}$$Since $m_2\not\equiv0\pmod p$, rescale the quotient basis vector and put$$\bar N=e_{12}
+
+\begin{pmatrix}0&1\\0&0\end{pmatrix}.
+\tag{7.4}
 $$
 Then
 $$
-  \bar\rho(\sigma)=I+\bar t_p(\sigma)\bar N.
-  \tag{7.5}
+
+\bar\rho(\sigma)=I+\bar t_p(\sigma)\bar N.
+\tag{7.5}
 $$
 In particular $\bar N^2=0$, $\bar N\ne0$, and
 $$
   L_2:=\ker\bar N=\operatorname{im}\bar N
   \tag{7.6}
 $$
+
 is a uniquely determined $G_{\mathbf Q_2}$-stable line.
 
 Arithmetic Frobenius acts on the subline in (7.2) by $2s_2$ and on the quotient by $s_2$. Any off-diagonal Frobenius entry can be removed by changing the lift of the quotient basis vector, because the two eigenvalues differ by the nonzero scalar $s_2$. Hence
@@ -952,12 +1031,14 @@ $$
   \bar s_2\in\{1,-1\}\subset\mathbf F_p^\times.
   \tag{7.7}
 $$
+
 The tame relation becomes
 $$
   \bar\rho(F_2)\bar N\bar\rho(F_2)^{-1}
   =2\bar N.
   \tag{7.8}
 $$
+
 Equations (7.5)--(7.8), including the sign from (4.12), are stronger than the bare statement that inertia has a rank-one quotient. They specify the oriented special residual point used downstream.
 
 ### 7.2. The residual hardly-ramified SP datum
@@ -987,6 +1068,7 @@ $$
   \longrightarrow\operatorname{GL}_2(A)
   \tag{7.9}
 $$
+
 subject to all of the following conditions:
 
 - fixed determinant
@@ -1026,6 +1108,7 @@ $$
   A\longrightarrow
   \operatorname{End}_{\mathbf Z_p}(\mathcal G_A)
 $$
+
 that induces the given free rank-two $A$-module structure.
 
 Because $\bar N\ne0$ has rank one, one entry of every $N_A$ is a unit. Thus $L_A$ is a direct-summand line, and (7.11) determines $N_A$ from the representation after choosing an inertia element on which $t_p$ is $1$. The condition is therefore intrinsic and remains on the closed nonzero-monodromy branch; it is not an auxiliary choice of a line and it does not admit an unintended unramified component.
@@ -1086,21 +1169,25 @@ $$
   \longrightarrow\mathcal O\longrightarrow0
   \tag{8.1}
 $$
+
 and hence
 $$
   \operatorname{tr}\rho_3(g)=1+\chi_3(g).
   \tag{8.2}
 $$
+
 At arithmetic Frobenius $5$, compatibility gives
 $$
   a_5=6,
   \tag{8.3}
 $$
+
 whereas weight-one purity gives
 $$
   |a_5|\le2\sqrt5.
   \tag{8.4}
 $$
+
 Since $6>2\sqrt5$, the antecedent leads to a contradiction.
 
 This is an implication from the later endgame, not an existence theorem asserted in the present book. In particular, (8.1) is not deduced merely from the residual representation and is not used in proving any result above.
@@ -1120,6 +1207,7 @@ $$
 \end{aligned}
 \tag{8.5}
 $$
+
 Only the first implication is the theorem of this book. The middle implication is the construction required from the later deformation and compatible-family books. The last implication is the separately proved endgame just stated.
 
 Together with the independent exponent-$5$ theorem and the elementary exponent reductions, this contract preserves every input the Fermat blueprint needs from the Frey-curve stage without absorbing the later modularity machinery into this book.
@@ -1136,13 +1224,13 @@ Frey-stage output required by the blueprint.
 
 The proof uses the following earlier books directly.
 
-| Book | Imported result | Use here |
-|---|---|---|
-| 43 | integral Weierstrass invariants, minimality, reduction type, and the split-node criterion | Sections 4.1--4.4 |
-| 44 | Tate uniformization, the residual inertia formula, the conductor criterion, and the canonical coefficient-prime finite-flat Kummer model | Sections 5.2 and 6.2 |
-| 45 | rank-two torsion, the Weil pairing, good-reduction Frobenius, and finite flatness of torsion for good reduction | Sections 5.1 and 6.1 |
-| 151 | semistable full-two residual irreducibility for every prime $p\ge7$ | Section 6.3 |
-| 163 | the complete exponent-$5$ descent | Sections 2.4--2.5 |
+| Book | Imported result                                                                                                                          | Use here             |
+| ---- | ---------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| 43   | integral Weierstrass invariants, minimality, reduction type, and the split-node criterion                                                | Sections 4.1--4.4    |
+| 44   | Tate uniformization, the residual inertia formula, the conductor criterion, and the canonical coefficient-prime finite-flat Kummer model | Sections 5.2 and 6.2 |
+| 45   | rank-two torsion, the Weil pairing, good-reduction Frobenius, and finite flatness of torsion for good reduction                          | Sections 5.1 and 6.1 |
+| 151  | semistable full-two residual irreducibility for every prime $p\ge7$                                                                      | Section 6.3          |
+| 163  | the complete exponent-$5$ descent                                                                                                        | Sections 2.4--2.5    |
 
 Book 162 supplies cyclotomic foundations to Book 163, but no theorem from it is invoked directly here. Likewise the prerequisites internal to Books 43--45 and 151 remain transitive dependencies, not extra direct imports.
 
@@ -1151,12 +1239,12 @@ The later deformation books consume the datum of Section 7. The later three-adic
 For clarity, the forward interface was checked against the following
 consumers.
 
-| Downstream book | Interface checked |
-|---|---|
-| 173 and 176 | coefficient primes are in the range at least $7$, with finite-flat coefficient-prime and special dyadic conditions |
-| 165 | the residual matrices, intrinsic monodromy line, fixed sign, and global hardly-ramified deformation datum are exactly those of Section 7 |
-| 181 | the balanced minimal-lift input begins with the same absolutely irreducible signed SP residual datum |
-| 188 | only the conditional three-adic package-to-trace contradiction recorded in Section 8.2 is used for orientation |
+| Downstream book | Interface checked                                                                                                                        |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| 173 and 176     | coefficient primes are in the range at least $7$, with finite-flat coefficient-prime and special dyadic conditions                       |
+| 165             | the residual matrices, intrinsic monodromy line, fixed sign, and global hardly-ramified deformation datum are exactly those of Section 7 |
+| 181             | the balanced minimal-lift input begins with the same absolutely irreducible signed SP residual datum                                     |
+| 188             | only the conditional three-adic package-to-trace contradiction recorded in Section 8.2 is used for orientation                           |
 
 None of these rows is a backward citation in the proof.
 
@@ -1164,22 +1252,22 @@ None of these rows is a backward citation in the proof.
 
 The narrowed topic retains every output required at the Frey stage:
 
-| Required output | Location |
-|---|---|
-| reduction from arbitrary $n>2$ | Section 2 |
-| independent removal of $p=5$ | Sections 2.4--2.5 |
-| exact range $p\ge7$ for the Frey spine | Sections 2.5 and 6.3 |
-| primitive normalized triple | Section 3 |
-| full rational and integral-away-from-two $2$-torsion structure | Section 4.1 |
-| raw and dyadically minimal equations and invariants | Sections 4.1 and 4.3 |
-| all discriminant exponents and the curve conductor | Sections 4.2--4.4 |
-| splitness at every bad prime, including the dyadic sign | Sections 4.2--4.3 |
-| residual determinant, oddness, Frobenius polynomials, ramification, and conductor | Section 5 |
-| coefficient-prime finite flatness in both reduction cases | Sections 6.1--6.2 |
-| irreducibility and absolute irreducibility | Sections 6.3--6.4 |
-| exact signed nonzero-monodromy SP matrices and intrinsic line | Section 7.1 |
-| global hardly-ramified SP deformation datum | Sections 7.2--7.3 |
-| exact boundary with the later modular contradiction | Section 8 |
+| Required output                                                                   | Location             |
+| --------------------------------------------------------------------------------- | -------------------- |
+| reduction from arbitrary $n>2$                                                    | Section 2            |
+| independent removal of $p=5$                                                      | Sections 2.4--2.5    |
+| exact range $p\ge7$ for the Frey spine                                            | Sections 2.5 and 6.3 |
+| primitive normalized triple                                                       | Section 3            |
+| full rational and integral-away-from-two $2$-torsion structure                    | Section 4.1          |
+| raw and dyadically minimal equations and invariants                               | Sections 4.1 and 4.3 |
+| all discriminant exponents and the curve conductor                                | Sections 4.2--4.4    |
+| splitness at every bad prime, including the dyadic sign                           | Sections 4.2--4.3    |
+| residual determinant, oddness, Frobenius polynomials, ramification, and conductor | Section 5            |
+| coefficient-prime finite flatness in both reduction cases                         | Sections 6.1--6.2    |
+| irreducibility and absolute irreducibility                                        | Sections 6.3--6.4    |
+| exact signed nonzero-monodromy SP matrices and intrinsic line                     | Section 7.1          |
+| global hardly-ramified SP deformation datum                                       | Sections 7.2--7.3    |
+| exact boundary with the later modular contradiction                               | Section 8            |
 
 The former omnibus themes—general modularity, deformation-ring construction, compatible-family construction, changing coefficient prime, finite-flat classification, and the proof of the final trace contradiction—are deliberately absent. Their only appearance is as the typed interface in Section 8.
 

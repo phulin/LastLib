@@ -346,12 +346,12 @@ When $\ell\mid d$, we will return to the exact trace-kernel complex rather than 
 
 The coefficient bookkeeping can be summarized as follows.
 
-| determinant problem | positive-degree tangent coefficient | degree-zero gauge | Tate-dual coefficient |
-|---|---|---|---|
-| fully variable | $\operatorname{ad}\bar\rho$ | $\operatorname{ad}\bar\rho$ | $(\operatorname{ad}\bar\rho)^*(1)$ |
-| fixed, $\ell\nmid d$ | $\operatorname{ad}^0\bar\rho$ | $\operatorname{ad}\bar\rho$ | $(\operatorname{ad}^0\bar\rho)^*(1)$ |
-| fixed, $\ell\mid d$ | trace-kernel complex | $\operatorname{ad}\bar\rho$ | dual trace-kernel complex using $(\operatorname{ad}^0)^*\simeq\operatorname{ad}/kI_d$ |
-| constrained variable | determinant mapping fiber | $\operatorname{ad}\bar\rho$ | Tate dual of that mapping fiber |
+| determinant problem  | positive-degree tangent coefficient | degree-zero gauge           | Tate-dual coefficient                                                                 |
+| -------------------- | ----------------------------------- | --------------------------- | ------------------------------------------------------------------------------------- |
+| fully variable       | $\operatorname{ad}\bar\rho$         | $\operatorname{ad}\bar\rho$ | $(\operatorname{ad}\bar\rho)^*(1)$                                                    |
+| fixed, $\ell\nmid d$ | $\operatorname{ad}^0\bar\rho$       | $\operatorname{ad}\bar\rho$ | $(\operatorname{ad}^0\bar\rho)^*(1)$                                                  |
+| fixed, $\ell\mid d$  | trace-kernel complex                | $\operatorname{ad}\bar\rho$ | dual trace-kernel complex using $(\operatorname{ad}^0)^*\simeq\operatorname{ad}/kI_d$ |
+| constrained variable | determinant mapping fiber           | $\operatorname{ad}\bar\rho$ | Tate dual of that mapping fiber                                                       |
 
 The second and third columns need not agree. This is exactly why determinant fixing changes cocycles without shrinking the space of changes of basis.
 
@@ -827,7 +827,7 @@ Locality requires the residue maps to agree. If $R_1$ and $R_2$ have residue fie
 
 Noetherianity is also a hypothesis, not a consequence of the completion symbol. It follows here because every factor is a complete Noetherian local algebra topologically of finite type over the common base. Since $T$ is finite, iterated completed tensor products remain in the same category.
 
-The completed tensor product in (5.9) is relative over the *unrestricted local* ring, not merely over $\mathcal O$. It is the completion of the algebraic pushout at the maximal ideal determined by the common residual representation. If several maximal ideals lie above the algebraic pushout, choosing the residual point and completing there is part of the construction. This is the ring-theoretic counterpart of requiring equality of the two locally framed residual lifts in the functor fiber product.
+The completed tensor product in (5.9) is relative over the _unrestricted local_ ring, not merely over $\mathcal O$. It is the completion of the algebraic pushout at the maximal ideal determined by the common residual representation. If several maximal ideals lie above the algebraic pushout, choosing the residual point and completing there is part of the construction. This is the ring-theoretic counterpart of requiring equality of the two locally framed residual lifts in the functor fiber product.
 
 ### 5.6 The universal property in deformation language
 
@@ -2150,7 +2150,7 @@ $$
 
 The displayed direction is the one obtained directly from (13.2); of course an isomorphism also has an inverse. The same assertion holds with compatible partial frames.
 
-The word *exact* matters. Requiring merely that the tangent class be unramified does not force every Artinian lift to kill inertia. Nor is every condition customarily called minimal literally the unramified condition. If a condition permits nontrivial ramification invisible at first order, then (13.2) fails even though the two tangent spaces may agree.
+The word _exact_ matters. Requiring merely that the tangent class be unramified does not force every Artinian lift to kill inertia. Nor is every condition customarily called minimal literally the unramified condition. If a condition permits nontrivial ramification invisible at first order, then (13.2) fails even though the two tangent spaces may agree.
 
 The Selmer groups associated with the two descriptions agree. One way to see this is to compare first-order lifts through the functorial isomorphism (13.2). Cohomologically, inflation--restriction and the unramified local condition cancel the additional inertia term. The same cancellation holds in the dual Selmer structure because the unramified subspaces are exact orthogonals at $w$. Consequently the Wiles defect is independent of this harmless enlargement of $S$.
 
@@ -2266,7 +2266,7 @@ h^1(K_w,M)-l_w,
 \tag{13.11}
 $$
 
-while replacing it by the strict condition decreases the defect by $l_w$. These are statements about the *difference* of Selmer dimensions. The primal dimension alone changes by the rank of an actual localization map, as (13.7) shows.
+while replacing it by the strict condition decreases the defect by $l_w$. These are statements about the _difference_ of Selmer dimensions. The primal dimension alone changes by the rank of an actual localization map, as (13.7) shows.
 
 The unramified condition also illustrates why one should distinguish a condition from its tangent space. At a prime away from $\ell$, the functor of representations with trivial inertia is a nonlinear condition defined at every Artinian level. Its tangent is the kernel of restriction to inertia. The latter linear subspace is enough for the Wiles formula, but only the former defines the quotient ring.
 
@@ -2303,7 +2303,7 @@ R_w^{\square,1},
 \tag{13.13}
 $$
 
-and the induced global map is formally smooth of relative dimension $s$. This conclusion uses the formal smoothness of the *map* of local conditions. It is stronger than saying that both local rings happen to be formally smooth over $\mathcal O$.
+and the induced global map is formally smooth of relative dimension $s$. This conclusion uses the formal smoothness of the _map_ of local conditions. It is stronger than saying that both local rings happen to be formally smooth over $\mathcal O$.
 
 If instead a local ring $R_w^{\square,\mathcal D_w}$ is formally smooth over $\mathcal O$ and is simply included as a factor of $R_{\mathrm{loc}}$, then it contributes its full dimension to the base. It contributes no local equations, but it still changes the absolute defect through $l_w-h_w^0(M)$. The finite-flat factor of Section 12.3 is the model example.
 
@@ -2461,7 +2461,7 @@ $$
 \tag{14.5}
 $$
 
-because the scalar factors cancel under conjugation. Under this identification the local tangent spaces, their Tate orthogonals, the Selmer groups, and the numerical defect agree. Twisting by a *variable* character is not the same operation; it introduces an additional character-deformation factor and belongs to variable-determinant theory.
+because the scalar factors cancel under conjugation. Under this identification the local tangent spaces, their Tate orthogonals, the Selmer groups, and the numerical defect agree. Twisting by a _variable_ character is not the same operation; it introduces an additional character-deformation factor and belongs to variable-determinant theory.
 
 ### 14.3 Contragredients and Tate duality
 

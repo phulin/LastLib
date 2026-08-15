@@ -48,35 +48,46 @@
    - [Finite fields and extension fields](#93-finite-fields-and-extension-fields)
    - [Batch verification identities](#94-batch-verification-identities)
 10. [Finite-field Jacobians](#10-finite-field-jacobians)
-   - [Enumerating reduced pairs](#101-enumerating-reduced-pairs)
-   - [Counting curves and Jacobians](#102-counting-curves-and-jacobians)
-   - [Determining the group structure](#103-determining-the-group-structure)
-   - [Frobenius consistency checks](#104-frobenius-consistency-checks)
+
+- [Enumerating reduced pairs](#101-enumerating-reduced-pairs)
+- [Counting curves and Jacobians](#102-counting-curves-and-jacobians)
+- [Determining the group structure](#103-determining-the-group-structure)
+- [Frobenius consistency checks](#104-frobenius-consistency-checks)
+
 11. [Torsion tests and certificates](#11-torsion-tests-and-certificates)
-   - [Exact order of a represented class](#111-exact-order-of-a-represented-class)
-   - [Visible and full rational two-torsion](#112-visible-and-full-rational-two-torsion)
-   - [Bounding rational torsion by good reduction](#113-bounding-rational-torsion-by-good-reduction)
-   - [Proving a complete torsion statement](#114-proving-a-complete-torsion-statement)
+
+- [Exact order of a represented class](#111-exact-order-of-a-represented-class)
+- [Visible and full rational two-torsion](#112-visible-and-full-rational-two-torsion)
+- [Bounding rational torsion by good reduction](#113-bounding-rational-torsion-by-good-reduction)
+- [Proving a complete torsion statement](#114-proving-a-complete-torsion-statement)
+
 12. [Specialization and reduction homomorphisms](#12-specialization-and-reduction-homomorphisms)
-   - [Good integral models](#121-good-integral-models)
-   - [When coefficients reduce directly](#122-when-coefficients-reduce-directly)
-   - [Collisions and degree loss](#123-collisions-and-degree-loss)
-   - [Compatibility with addition](#124-compatibility-with-addition)
+
+- [Good integral models](#121-good-integral-models)
+- [When coefficients reduce directly](#122-when-coefficients-reduce-directly)
+- [Collisions and degree loss](#123-collisions-and-degree-loss)
+- [Compatibility with addition](#124-compatibility-with-addition)
+
 13. [Arithmetic certificate design](#13-arithmetic-certificate-design)
-   - [Certificates for curves and pairs](#131-certificates-for-curves-and-pairs)
-   - [Certificates for additions and scalar multiples](#132-certificates-for-additions-and-scalar-multiples)
-   - [Certificates for finite groups and point counts](#133-certificates-for-finite-groups-and-point-counts)
-   - [A complete verification protocol](#134-a-complete-verification-protocol)
+
+- [Certificates for curves and pairs](#131-certificates-for-curves-and-pairs)
+- [Certificates for additions and scalar multiples](#132-certificates-for-additions-and-scalar-multiples)
+- [Certificates for finite groups and point counts](#133-certificates-for-finite-groups-and-point-counts)
+- [A complete verification protocol](#134-a-complete-verification-protocol)
+
 14. [Other hyperelliptic presentations](#14-other-hyperelliptic-presentations)
-   - [Even-degree equations](#141-even-degree-equations)
-   - [Characteristic two](#142-characteristic-two)
-   - [Coordinate changes](#143-coordinate-changes)
-   - [Safe transfer to the odd-degree model](#144-safe-transfer-to-the-odd-degree-model)
+
+- [Even-degree equations](#141-even-degree-equations)
+- [Characteristic two](#142-characteristic-two)
+- [Coordinate changes](#143-coordinate-changes)
+- [Safe transfer to the odd-degree model](#144-safe-transfer-to-the-odd-degree-model)
+
 15. [The exact genus-two arithmetic package](#15-the-exact-genus-two-arithmetic-package)
-   - [Hypothesis and dependency ledger](#151-hypothesis-and-dependency-ledger)
-   - [The representation theorem](#152-the-representation-theorem)
-   - [The arithmetic theorem](#153-the-arithmetic-theorem)
-   - [Conclusion](#154-conclusion)
+
+- [Hypothesis and dependency ledger](#151-hypothesis-and-dependency-ledger)
+- [The representation theorem](#152-the-representation-theorem)
+- [The arithmetic theorem](#153-the-arithmetic-theorem)
+- [Conclusion](#154-conclusion)
 
 ## 1. From divisor geometry to exact arithmetic
 

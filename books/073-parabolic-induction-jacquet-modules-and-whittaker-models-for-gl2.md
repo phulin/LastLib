@@ -90,10 +90,11 @@
     - [A ramified character in one slot](#154-a-ramified-character-in-one-slot)
     - [An unramified special representation](#155-an-unramified-special-representation)
 16. [A reusable rank-one dictionary](#16-a-reusable-rank-one-dictionary)
-   - [Geometry, quotients, and Fourier coefficients](#161-geometry-quotients-and-fourier-coefficients)
-   - [Normalization conversion table](#162-normalization-conversion-table)
-   - [Hypotheses that cannot be dropped](#163-hypotheses-that-cannot-be-dropped)
-   - [Conclusion](#164-conclusion)
+
+- [Geometry, quotients, and Fourier coefficients](#161-geometry-quotients-and-fourier-coefficients)
+- [Normalization conversion table](#162-normalization-conversion-table)
+- [Hypotheses that cannot be dropped](#163-hypotheses-that-cannot-be-dropped)
+- [Conclusion](#164-conclusion)
 
 ## 1. The rank-one local machine
 
@@ -772,7 +773,7 @@ $$
 
 This is the stated isomorphism. $\square$
 
-There is also a second-adjointness theorem relating maps *out of* normalized
+There is also a second-adjointness theorem relating maps _out of_ normalized
 induction to the opposite Jacquet module. It requires the canonical pairing
 between opposite Jacquet modules; it does not follow merely by writing down a
 smooth contragredient. We neither assume nor use that theorem here. In the
@@ -2427,15 +2428,15 @@ The standard intertwiner and the local functional equation are two manifestation
 
 The following table gathers the conversions proved above.
 
-| Object | Normalized convention | Unnormalized convention |
-|---|---|---|
-| Inducing law | $\delta_B^{1/2}(\chi_1\boxtimes\chi_2)$ | $\rho_1\boxtimes\rho_2$ |
-| Parameter conversion | $\rho_1=\chi_1\nu^{1/2}$, $\rho_2=\chi_2\nu^{-1/2}$ | $\chi_1=\rho_1\nu^{-1/2}$, $\chi_2=\rho_2\nu^{1/2}$ |
-| Reducibility ratios | $\chi_1\chi_2^{-1}=\nu^{\pm1}$ | $\rho_1\rho_2^{-1}=1,\nu^2$ |
-| Jacquet functor | $r_N(V)=\delta_B^{-1/2}V_N$ | $V_N$ |
-| Principal Jacquet exponents | $\chi_1\boxtimes\chi_2$, $\chi_2\boxtimes\chi_1$ | $\rho_1\boxtimes\rho_2$, $(\rho_2\nu)\boxtimes(\rho_1\nu^{-1})$ |
-| Spherical Hecke eigenvalue | $q^{1/2}(\alpha+\beta)$ for raw $T$ | obtained after the displayed parameter conversion |
-| Whittaker zeta power | $|y|^{s-1/2}$ | shifts if unnormalized parameters are retained |
+| Object                      | Normalized convention                               | Unnormalized convention                                         |
+| --------------------------- | --------------------------------------------------- | --------------------------------------------------------------- |
+| Inducing law                | $\delta_B^{1/2}(\chi_1\boxtimes\chi_2)$             | $\rho_1\boxtimes\rho_2$                                         |
+| Parameter conversion        | $\rho_1=\chi_1\nu^{1/2}$, $\rho_2=\chi_2\nu^{-1/2}$ | $\chi_1=\rho_1\nu^{-1/2}$, $\chi_2=\rho_2\nu^{1/2}$             |
+| Reducibility ratios         | $\chi_1\chi_2^{-1}=\nu^{\pm1}$                      | $\rho_1\rho_2^{-1}=1,\nu^2$                                     |
+| Jacquet functor             | $r_N(V)=\delta_B^{-1/2}V_N$                         | $V_N$                                                           |
+| Principal Jacquet exponents | $\chi_1\boxtimes\chi_2$, $\chi_2\boxtimes\chi_1$    | $\rho_1\boxtimes\rho_2$, $(\rho_2\nu)\boxtimes(\rho_1\nu^{-1})$ |
+| Spherical Hecke eigenvalue  | $q^{1/2}(\alpha+\beta)$ for raw $T$                 | obtained after the displayed parameter conversion               |
+| Whittaker zeta power        | $                                                   | y                                                               |
 
 The measure ledger is equally short:
 

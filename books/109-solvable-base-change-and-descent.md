@@ -544,7 +544,7 @@ characters are distinct. A repeated restriction $\xi\oplus\xi$ would leave a
 two-dimensional projective representation of the cyclic quotient on the multiplicity
 space; after rescaling a generator that projective action becomes an ordinary action
 of a cyclic group and splits into lines, contradicting irreducibility downstairs.
-Repeated constituents can occur only after a later *noncyclic* total restriction (or
+Repeated constituents can occur only after a later _noncyclic_ total restriction (or
 from an already isobaric source), where a genuine projective multiplicity phenomenon
 is possible. Strong multiplicity one for isobaric representations remembers the
 multiplicity when it does occur.
@@ -1882,7 +1882,7 @@ coboundary is trivial, namely the $Q$-fixed part. $\square$
 
 This class is the precise form of the warning that an invariant top representation
 need not have an invariant first descent. The hypothesis that $M/K$ is Galois is
-essential: it makes $Q$ act on the *same* field $M$ and hence on the one torsor $D$.
+essential: it makes $Q$ act on the _same_ field $M$ and hence on the one torsor $D$.
 In a longer subnormal tower, two adjacent cyclic layers need not have Galois
 composite. Then an automorphism of the lower layer can carry the upper field to a
 conjugate field, so it transports one descent fiber to another rather than acting on
@@ -2749,7 +2749,7 @@ the stabilizer. The correct count is always $|X|/|S_E(\pi)|$.
 A tower $F\subset M_1\subset E$ and a tower $F\subset M_2\subset E$ yield the same
 endpoint. In the first, the inducing field is exposed immediately. In the second,
 the first base change may remain cuspidal and the failure appears only at the upper
-quadratic step. This is a concrete demonstration that the first bad *stage* depends
+quadratic step. This is a concrete demonstration that the first bad _stage_ depends
 on a tower even though the quadratic mechanism and final isobaric representation are
 intrinsic.
 
@@ -2961,7 +2961,7 @@ $$
 $$
 
 with unramified character lines. Its restriction to $W_{L_w}$ is again split. We
-must check the *entire* extension fiber, rather than only the extension supplied by
+must check the _entire_ extension fiber, rather than only the extension supplied by
 $r$.
 
 Book 81, Section 12.4 describes that fiber by the action of the prime cyclic group

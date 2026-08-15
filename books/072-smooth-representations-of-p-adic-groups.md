@@ -1615,9 +1615,8 @@ The character of an induced representation can be seen directly from fixed coset
 
 **Proposition 18.1.** For $g\in G$,
 
-$$
-\theta_{\operatorname{Ind}_H^G\sigma}(g)
-=
+# $$\theta_{\operatorname{Ind}_H^G\sigma}(g)
+
 \sum_{\substack{x\in H\backslash G\\xgx^{-1}\in H}}
 \theta_\sigma(xgx^{-1}).
 $$
@@ -1638,9 +1637,8 @@ First, test against $f\in\mathcal H(G)$. If the compact induction is admissible,
 
 Second, assume $\sigma$ is finite-dimensional, the compact induction is admissible, and its distribution character is represented by a locally constant function near an element $g$. If only finitely many cosets $Hx$ satisfy $xgx^{-1}\in H$, and this finite set of possible cosets remains fixed after shrinking the neighborhood of $g$, then the same block argument applied to test functions supported in that neighborhood gives the local formula
 
-$$
-\theta_{\mathrm{c\text{-}Ind}_H^G\sigma}(g)
-=
+# $$\theta_{\mathrm{c\text{-}Ind}_H^G\sigma}(g)
+
 \sum_{\substack{x\in H\backslash G\\xgx^{-1}\in H}}
 \theta_\sigma(xgx^{-1}).
 $$
@@ -1741,9 +1739,8 @@ This is the rank-two spherical algebra in concrete form. Its commutativity is a 
 
 The double coset supporting $T$ has $q+1$ right $K$-cosets:
 
-$$
-K\begin{pmatrix}\varpi&0\\0&1\end{pmatrix}K
-=
+# $$K\begin{pmatrix}\varpi&0\\0&1\end{pmatrix}K
+
 \coprod_{u\in\mathcal O_F/\mathfrak p_F}
 \begin{pmatrix}\varpi&u\\0&1\end{pmatrix}K
 \;\coprod\;

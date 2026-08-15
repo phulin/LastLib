@@ -1376,13 +1376,13 @@ Then $a_E(\theta)=4$ and $a_D(\Pi_D(E,\theta))=8$. Twisting by $\chi\circ\operat
 
 ### 15.2 A diagnostic table
 
-| datum | representation dimension pattern | conductor | central character |
-|---|---:|---:|---|
-| $\operatorname{Sp}_D(\chi)$, $a_F(\chi)=0$ | $1$ | $1$ | $\chi^2$ |
-| $\operatorname{Sp}_D(\chi)$, $a_F(\chi)=m>0$ | $1$ | $2m$ | $\chi^2$ |
-| unramified depth-zero pair | $2$ | $2$ | $\theta|_{F^\times}\omega_{E/F}$ |
-| unramified positive-depth pair | finite, type-dependent | $2a_E(\theta)$ | $\theta|_{F^\times}\omega_{E/F}$ |
-| tame ramified pair | finite, type-dependent | $a_E(\theta)+1$ | $\theta|_{F^\times}\omega_{E/F}$ |
+| datum                                        | representation dimension pattern |       conductor | central character |
+| -------------------------------------------- | -------------------------------: | --------------: | ----------------- |
+| $\operatorname{Sp}_D(\chi)$, $a_F(\chi)=0$   |                              $1$ |             $1$ | $\chi^2$          |
+| $\operatorname{Sp}_D(\chi)$, $a_F(\chi)=m>0$ |                              $1$ |            $2m$ | $\chi^2$          |
+| unramified depth-zero pair                   |                              $2$ |             $2$ | $\theta           |
+| unramified positive-depth pair               |           finite, type-dependent |  $2a_E(\theta)$ | $\theta           |
+| tame ramified pair                           |           finite, type-dependent | $a_E(\theta)+1$ | $\theta           |
 
 Three checks catch most normalization errors. The special unramified conductor must be $1$, not $0$. The depth-zero dihedral conductor must be $2$, although the type is trivial on $U_D^1$. A norm twist must multiply the central character by $\chi^2$ and must compute its conductor from the twisted torus character, allowing cancellation.
 

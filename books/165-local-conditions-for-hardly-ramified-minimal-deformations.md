@@ -42,24 +42,24 @@
 ### 1.1 Scope
 
 This book constructs the local deformation conditions used by the
-hardly-ramified **Frey minimal-special** problem.  There are two distinguished
+hardly-ramified **Frey minimal-special** problem. There are two distinguished
 finite places:
 
 $$
 2\qquad\text{and}\qquad \ell,
 $$
 
-where $\ell\geq7$ is the coefficient prime.  At $2$ the residual Frey
-representation already has a nonzero tame unipotent block.  Minimality means
+where $\ell\geq7$ is the coefficient prime. At $2$ the residual Frey
+representation already has a nonzero tame unipotent block. Minimality means
 retaining that block, its intrinsic line, its split or nonsplit unramified
-sign, and its conductor-one special shape.  At $\ell$ the representation is
+sign, and its conductor-one special shape. At $\ell$ the representation is
 required to have an actual coefficient-linear finite-flat model over
-$\mathbf Z_\ell$.  Away from $\{2,\ell\}$ no ramification is allowed.
+$\mathbf Z_\ell$. Away from $\{2,\ell\}$ no ramification is allowed.
 
-The purpose is not merely to name characteristic-zero local types.  For each
+The purpose is not merely to name characteristic-zero local types. For each
 Artinian coefficient ring we must have a functorial and closed condition, an
 honest representing ring in the framed convention, a calculated tangent
-subspace, and an effective lifting theorem.  Those are the inputs consumed by
+subspace, and an effective lifting theorem. Those are the inputs consumed by
 supported cohomology, relation-obstruction theory, and the balanced minimal-lift
 argument in Books 166--167 and 181.
 
@@ -73,7 +73,7 @@ k=\mathcal O/\varpi.
 $$
 
 Write $\operatorname{Art}_{\mathcal O}$ for the category of Artinian local
-$\mathcal O$-algebras with residue field $k$.  A lift of a residual
+$\mathcal O$-algebras with residue field $k$. A lift of a residual
 representation
 
 $$
@@ -82,7 +82,7 @@ $$
 
 to $A\in\operatorname{Art}_{\mathcal O}$ is a continuous homomorphism
 $\rho_A:G\to\operatorname{GL}_2(A)$ reducing to the fixed residual matrix
-representation.  Two lifts are **strictly equivalent** if they are conjugate
+representation. Two lifts are **strictly equivalent** if they are conjugate
 by an element of
 
 $$
@@ -98,7 +98,7 @@ $$
 
 where $\chi_\ell$ is the $\ell$-adic cyclotomic character.
 
-We use arithmetic Frobenius.  Hence at $p\ne\ell$,
+We use arithmetic Frobenius. Hence at $p\ne\ell$,
 
 $$
 \chi_\ell(\phi_p)=p. \tag{1.2}
@@ -163,12 +163,12 @@ $$
 \qquad \bar s\in\{1,-1\}. \tag{1.7}
 $$
 
-Equation (1.6) says that residual monodromy is nonzero.  Equation (1.7)
-records the unramified split or nonsplit sign.  The determinant equation gives
+Equation (1.6) says that residual monodromy is nonzero. Equation (1.7)
+records the unramified split or nonsplit sign. The determinant equation gives
 $2\bar s^2=2$, and odd coefficient characteristic separates the two signs.
 The Tate-curve calculation for a Frey curve supplies exactly (1.6): the
 coefficient of $e_{12}$ is the dyadic minimal-discriminant valuation modulo
-$\ell$.  In the standard normalized equation
+$\ell$. In the standard normalized equation
 
 $$
 a^\ell+b^\ell=c^\ell,
@@ -182,8 +182,8 @@ $$
 
 Thus $m_2\equiv-8\not\equiv0\pmod\ell$ for $\ell\geq7$, and the
 Tate-curve inertia formula gives the nonzero matrix $m_2e_{12}$ in a Tate
-basis, as recorded in Book 164, Section 5.2.  A residual diagonal change of
-basis then normalizes it to the $\bar N=e_{12}$ of (1.6).  The local theorem
+basis, as recorded in Book 164, Section 5.2. A residual diagonal change of
+basis then normalizes it to the $\bar N=e_{12}$ of (1.6). The local theorem
 below needs only this nonvanishing; it does not reuse any later lifting
 conclusion.
 
@@ -196,9 +196,9 @@ $$
 
 is coefficient-linearly finite flat: it is the generic fiber of a finite
 flat group scheme over $\mathbf Z_\ell$ with its $k$-action, and it has
-determinant $\bar\chi_\ell$.  This is an integral existence assertion, not an
+determinant $\bar\chi_\ell$. This is an integral existence assertion, not an
 inertia condition; Section 3.1 gives the definition over every Artinian
-coefficient ring.  The local theory starts from this explicit residual
+coefficient ring. The local theory starts from this explicit residual
 hypothesis and does not import a global lift or Selmer conclusion.
 
 ### 1.4 Tangents and constrained obstructions
@@ -212,7 +212,7 @@ $$
 
 Multiplicativity makes $c$ a $1$-cocycle in
 $\operatorname{ad}\bar\rho$, and strict conjugacy changes it by a
-coboundary.  Differentiating determinant gives trace.  Consequently the
+coboundary. Differentiating determinant gives trace. Consequently the
 ambient fixed-determinant unframed tangent is
 
 $$
@@ -225,7 +225,7 @@ $$
 L_v\subseteq H^1(G_v,M). \tag{1.10}
 $$
 
-The tangent subspace is not the full deformation condition.  For a small
+The tangent subspace is not the full deformation condition. For a small
 extension
 
 $$
@@ -241,17 +241,17 @@ H^2(G_v,M)\otimes_kJ.
 $$
 
 A constrained problem can nevertheless be liftable when this ambient group
-is nonzero: its particular obstruction map can be zero.  At $2$ we shall
-prove the stronger ambient vanishing.  At $\ell$ we shall lift the integral
+is nonzero: its particular obstruction map can be zero. At $2$ we shall
+prove the stronger ambient vanishing. At $\ell$ we shall lift the integral
 filtered data directly and will make no ambient $H^2$-vanishing claim.
 
 ## 2. The dyadic minimal-special condition
 
 ### 2.1 Tame monodromy and the intrinsic line
 
-Wild inertia at $2$ is pro-$2$.  The Frey residual representation in odd
+Wild inertia at $2$ is pro-$2$. The Frey residual representation in odd
 coefficient characteristic has trivial wild action, while the pro-$\ell$
-tame quotient acts through (1.6).  Since
+tame quotient acts through (1.6). Since
 
 $$
 \bar N^2=0,
@@ -265,15 +265,15 @@ $$
 \bar L=\ker\bar N=\operatorname{im}\bar N. \tag{2.1}
 $$
 
-This line is intrinsic.  It is not an enhancement chosen over a scalar
-residual point.  Frobenius preserves it because
+This line is intrinsic. It is not an enhancement chosen over a scalar
+residual point. Frobenius preserves it because
 
 $$
 \bar F\bar N\bar F^{-1}=2\bar N. \tag{2.2}
 $$
 
 On $\bar L$ Frobenius has eigenvalue $2\bar s$, while on the quotient it
-has eigenvalue $\bar s$.  Thus the residual representation has the special
+has eigenvalue $\bar s$. Thus the residual representation has the special
 orientation
 
 $$
@@ -288,7 +288,7 @@ $\bar\psi(\phi)=\bar s$.
 ### 2.2 Definition over Artinian rings
 
 Let $s\in\{1,-1\}\subset\mathcal O^\times$ be the unique lift of
-$\bar s$.  For $A\in\operatorname{Art}_{\mathcal O}$, define
+$\bar s$. For $A\in\operatorname{Art}_{\mathcal O}$, define
 $\mathcal D_2^{\mathrm{sp,min},\chi}(A)$ to be the strict-equivalence classes
 of lifts $\rho_A:G_{\mathbf Q_2}\to\operatorname{GL}_2(A)$ satisfying
 (1.1) and the following conditions:
@@ -308,31 +308,31 @@ of lifts $\rho_A:G_{\mathbf Q_2}\to\operatorname{GL}_2(A)$ satisfying
    $L_A=\ker N_A$ has Frobenius value $s$.
 
 If $\tau\in I_2$ is chosen with $t_\ell(\tau)=1$, then (2.4) forces
-$N_A=\rho_A(\tau)-I$.  Thus $N_A$ is determined by the representation;
+$N_A=\rho_A(\tau)-I$. Thus $N_A$ is determined by the representation;
 the word “there is” does not hide a projection of an auxiliary moduli
 space.
 
 Because $N_A$ reduces to the nonzero rank-one operator $\bar N$, one entry
-of $N_A$ is a unit.  Hence
+of $N_A$ is a unit. Hence
 
 $$
 L_A=\ker N_A=\operatorname{im}N_A \tag{2.6}
 $$
 
-is a direct-summand line.  It is the unique lift of the inertial fixed line.
+is a direct-summand line. It is the unique lift of the inertial fixed line.
 The line-enhanced and intrinsic matrix conditions therefore define the same
 functor.
 
-The definition is independent of the normalization of $t_\ell$.  Replacing
+The definition is independent of the normalization of $t_\ell$. Replacing
 $t_\ell$ by $u t_\ell$ for $u\in\mathbf Z_\ell^\times$ replaces $N_A$ by
-$u^{-1}N_A$.  It is also stable under every coefficient map: the residual
+$u^{-1}N_A$. It is also stable under every coefficient map: the residual
 unit entry keeps monodromy nonzero after every map in
-$\operatorname{Art}_{\mathcal O}$.  This last assertion would be false if
+$\operatorname{Art}_{\mathcal O}$. This last assertion would be false if
 the residual operator were zero.
 
 The equations include the diagonal characters, not merely the two incidence
-relations $N_A^2=0$ and (2.5).  At $N_A=0$ those two relations alone contain
-an extraneous unramified locus.  Nonzero residual monodromy is what keeps the
+relations $N_A^2=0$ and (2.5). At $N_A=0$ those two relations alone contain
+an extraneous unramified locus. Nonzero residual monodromy is what keeps the
 present minimal problem away from that boundary.
 
 ### 2.3 The strict normal form
@@ -345,8 +345,8 @@ $N_A^2=0$ is strictly conjugate to $e_{12}$.
 
 **Proof.** Choose $v\in A^2$ reducing to the second standard basis vector.
 Then $N_Av$ reduces to the first standard basis vector and is unimodular.
-Moreover $N_A(N_Av)=0$.  Thus $(N_Av,v)$ is a basis reducing to the
-standard basis, and the matrix of $N_A$ in this basis is $e_{12}$.  The
+Moreover $N_A(N_Av)=0$. Thus $(N_Av,v)$ is a basis reducing to the
+standard basis, and the matrix of $N_A$ in this basis is $e_{12}$. The
 change-of-basis matrix is congruent to the identity. $\square$
 
 After this strict conjugacy, write
@@ -368,7 +368,7 @@ $$
 F_A=\begin{pmatrix}2a&b\\0&a\end{pmatrix}. \tag{2.7}
 $$
 
-The residual basis was chosen so that $b\in\mathfrak m_A$.  Fixed
+The residual basis was chosen so that $b\in\mathfrak m_A$. Fixed
 cyclotomic determinant gives
 
 $$
@@ -383,7 +383,7 @@ a=s. \tag{2.9}
 $$
 
 Finally, strict conjugation by $I+ue_{12}$ replaces $b$ by $b-su$.
-Taking $u=b/s$ removes $b$.  We have proved the unique normal form
+Taking $u=b/s$ removes $b$. We have proved the unique normal form
 
 $$
 \boxed{
@@ -395,17 +395,17 @@ $$
 
 Conversely, (2.10) together with (2.4) defines a continuous representation
 of the tame quotient, has determinant $\chi_\ell$, and reduces to the fixed
-residual representation.  Thus the normal form proves existence as well as
+residual representation. Thus the normal form proves existence as well as
 uniqueness over every Artinian coefficient ring.
 
 ### 2.4 Representability, rings, and liftability
 
 The equations (2.4)--(2.5), the determinant, and the named diagonal
-characters are closed matrix-and-line equations.  Book 67, Theorem 7.1,
+characters are closed matrix-and-line equations. Book 67, Theorem 7.1,
 proves closed representability and smoothness for precisely this nonzero
 rank-one monodromy case when the residue cardinality is not $1$ modulo
-$\ell$ and $2$ is invertible.  Here the residue cardinality is $2$ and
-$\ell\geq7$, so its hypotheses hold.  Lemma 2.1 and (2.7)--(2.10) reproduce
+$\ell$ and $2$ is invertible. Here the residue cardinality is $2$ and
+$\ell\geq7$, so its hypotheses hold. Lemma 2.1 and (2.7)--(2.10) reproduce
 the complete calculation in the present normalization.
 
 **Theorem 2.2 (dyadic Frey-special rings).** The unframed fixed-determinant
@@ -416,7 +416,7 @@ $$
 R_2^{\mathrm{sp,min},\chi}\simeq\mathcal O. \tag{2.11}
 $$
 
-The residual centralizer of the pair $(\bar F,\bar N)$ is scalar.  Hence the
+The residual centralizer of the pair $(\bar F,\bar N)$ is scalar. Hence the
 framed functor is the formal change-of-frame orbit and is represented
 noncanonically by
 
@@ -433,48 +433,48 @@ L_2=0. \tag{2.13}
 $$
 
 **Proof.** Normal form (2.10) proves that the unframed functor is the
-one-point functor and proves liftability directly.  A matrix commuting with
+one-point functor and proves liftability directly. A matrix commuting with
 $e_{12}$ has equal diagonal entries; commuting also with
-$\operatorname{diag}(2\bar s,\bar s)$ kills its upper-right entry.  The
-centralizer is therefore $kI$.  The formal quotient of
+$\operatorname{diag}(2\bar s,\bar s)$ kills its upper-right entry. The
+centralizer is therefore $kI$. The formal quotient of
 $\widehat{\operatorname{GL}}_2$ by its scalar stabilizer is smooth of
-dimension $4-1=3$, giving (2.12).  A one-point functor has tangent zero.
+dimension $4-1=3$, giving (2.12). A one-point functor has tangent zero.
 $\square$
 
 The nonzero-monodromy condition is closed here because nonvanishing is
-already visible modulo $\varpi$.  This must not be generalized to a
+already visible modulo $\varpi$. This must not be generalized to a
 residually unramified special chart, where nonzero generic monodromy is an
 open condition and the closed chart contains the monodromy-zero divisor.
 
 ### 2.5 Conductor and adjoint cohomology
 
 Every characteristic-zero point of the dyadic condition is trivial on wild
-inertia.  Its tame inertia-fixed vectors are exactly $\ker N$, a line.
+inertia. Its tame inertia-fixed vectors are exactly $\ker N$, a line.
 Therefore its Swan conductor is zero and its Artin conductor exponent is
 
 $$
 a_2(\rho)=\dim V-\dim V^{I_2}=2-1=1. \tag{2.14}
 $$
 
-This is the conductor-one Steinberg shape of the Frey curve.  Conductor is a
+This is the conductor-one Steinberg shape of the Frey curve. Conductor is a
 consequence of the constant-rank monodromy equation; conductor one by itself
 would not define the integral component.
 
 The same normal form computes the entire residual adjoint cohomology needed
-later.  Let
+later. Let
 
 $$
 M=\operatorname{ad}^0\bar\rho_2.
 $$
 
 A trace-zero matrix commuting with $\bar N=e_{12}$ is a multiple of
-$\bar N$, because $2$ is invertible.  Thus
+$\bar N$, because $2$ is invertible. Thus
 
 $$
 M^{I_2}=k\bar N. \tag{2.15}
 $$
 
-Conjugation by arithmetic Frobenius acts on this line by $2$.  Hence
+Conjugation by arithmetic Frobenius acts on this line by $2$. Hence
 
 $$
 H^0(\mathbf Q_2,M)=0. \tag{2.16}
@@ -493,7 +493,7 @@ $$
 H^0(\mathbf Q_2,M(1))=0. \tag{2.18}
 $$
 
-The trace pairing identifies $M^*$ with $M$.  Local Tate duality now gives
+The trace pairing identifies $M^*$ with $M$. Local Tate duality now gives
 
 $$
 H^2(\mathbf Q_2,M)=0. \tag{2.19}
@@ -512,7 +512,7 @@ H^1(\mathbf Q_2,M)=0. \tag{2.20}
 $$
 
 For $M'=M(1)$, local duality identifies $H^2(\mathbf Q_2,M')$ with the
-dual of $H^0(\mathbf Q_2,M)$.  Combining this with (2.16), (2.18), and the
+dual of $H^0(\mathbf Q_2,M)$. Combining this with (2.16), (2.18), and the
 Euler characteristic gives the full dual vanishing
 
 $$
@@ -521,32 +521,32 @@ H^i(\mathbf Q_2,M')=0
 $$
 
 Thus the selected tangent $L_2=0$ agrees with the zero ambient group, and
-the ambient fixed-determinant obstruction group vanishes as well.  This is
+the ambient fixed-determinant obstruction group vanishes as well. This is
 stronger than the formal smoothness already proved by normal forms.
 
 ### 2.6 Scalar, monodromy-zero, and exceptional boundaries
 
 The hypotheses exclude three nearby but different problems.
 
-First, the dyadic residual representation is not scalar.  Nonzero $\bar N$
+First, the dyadic residual representation is not scalar. Nonzero $\bar N$
 already rules that out, and the two Frobenius eigenvalues in (1.7) have
-ratio $2\ne1$.  Its full local centralizer is scalar even though the
-representation is reducible.  This is exactly why the unframed local
+ratio $2\ne1$. Its full local centralizer is scalar even though the
+representation is reducible. This is exactly why the unframed local
 functor is representable.
 
-Second, $\bar N\ne0$ is essential.  If $\bar N=0$, the equations
+Second, $\bar N\ne0$ is essential. If $\bar N=0$, the equations
 $N^2=0$ and $FNF^{-1}=2N$ contain $N=0$ and cannot represent the open
-condition “$N\ne0$.”  One must then retain a line-enhanced closed special
-chart and distinguish its unramified divisor.  None of the rigidity
+condition “$N\ne0$.” One must then retain a line-enhanced closed special
+chart and distinguish its unramified divisor. None of the rigidity
 statements of Theorem 2.2 may be specialized to that boundary.
 
 Third, the Galois sign is intrinsic once the residual quotient character is
 named: the two possibilities $s=1$ and $s=-1$ are distinct because $2$ is
-invertible.  No automorphic occurrence or integral type-lattice assertion is
-part of this local theorem.  In characteristic $3$, the twisted eigenvalue in
-(2.17) becomes $1$, so the adjoint obstruction calculation changes.  In
+invertible. No automorphic occurrence or integral type-lattice assertion is
+part of this local theorem. In characteristic $3$, the twisted eigenvalue in
+(2.17) becomes $1$, so the adjoint obstruction calculation changes. In
 characteristic $2$, trace zero does not split from scalars and the determinant
-square-root argument is inseparable.  The unified theorem therefore remains
+square-root argument is inseparable. The unified theorem therefore remains
 in the range $\ell\geq7$.
 
 ## 3. Finite flatness at the coefficient prime
@@ -554,7 +554,7 @@ in the range $\ell\geq7$.
 ### 3.1 The integral condition
 
 Let $A\in\operatorname{Art}_{\mathcal O}$ and let $V_A=A^2$ carry a
-continuous $A$-linear action of $G_{\mathbf Q_\ell}$.  An
+continuous $A$-linear action of $G_{\mathbf Q_\ell}$. An
 **$A$-linear finite-flat model** is a finite locally free commutative group
 scheme $\mathcal G_A/\mathbf Z_\ell$, an action
 
@@ -570,7 +570,7 @@ $$
 
 Define $\mathcal D_\ell^{\mathrm{fl},\chi}(A)$ to be the
 strict-equivalence classes of lifts of $\bar\rho_\ell$ which admit such a
-model and have determinant $\chi_\ell$.  The framed version retains the
+model and have determinant $\chi_\ell$. The framed version retains the
 basis.
 
 This definition is deliberately integral.
@@ -586,24 +586,24 @@ This definition is deliberately integral.
 
 The condition is stable under every map of Artinian coefficient rings.
 For a quotient $A\to A/I$, close the generic subgroup $IV_A$ inside a
-chosen model and take the represented finite-flat quotient.  For a general
+chosen model and take the represented finite-flat quotient. For a general
 map $A\to B$, use a finite presentation of $B$ over $A$, model a finite
 direct sum of copies of $V_A$, close the generic relation subgroup, and
-take the represented quotient.  The scalar relations descend and give the
-quotient its $B$-action.  This is Book 68, Theorem 2.3.  It avoids raw
+take the represented quotient. The scalar relations descend and give the
+quotient its $B$-action. This is Book 68, Theorem 2.3. It avoids raw
 scheme-theoretic kernels, which need not be flat.
 
 Because the absolute ramification index of $\mathbf Q_\ell$ is
 $1<\ell-1$, Raynaud full faithfulness gives more: a marked finite-flat
 model, when it exists, is unique up to unique marked isomorphism, and every
-generic coefficient endomorphism extends uniquely.  This uniqueness is
+generic coefficient endomorphism extends uniquely. This uniqueness is
 what makes compatible quotient models canonical in the present range.
 
 ### 3.2 The low-weight coordinates
 
 Book 68, Theorem 14.3, gives the covariant torsion
 Fontaine--Laffaille equivalence in weights $[0,1]$ and turns the finite-flat
-condition into explicit linear algebra.  We state only its specialization to
+condition into explicit linear algebra. We state only its specialization to
 the field actually used in the global problem, namely $\mathbf Q_\ell$.
 
 For every $A\in\operatorname{Art}_{\mathcal O}$, a rank-two finite-flat
@@ -629,12 +629,12 @@ where
   $$
 
 The construction is exact, fully faithful, and compatible with every
-Artinian coefficient quotient.  Conversely every triple (3.2)--(3.4)
+Artinian coefficient quotient. Conversely every triple (3.2)--(3.4)
 has a unique marked finite-flat realization with free generic module of
 rank two.
 
 The line is forced, rather than separately assumed, by cyclotomic
-determinant.  Exterior multiplication gives a perfect alternating pairing
+determinant. Exterior multiplication gives a perfect alternating pairing
 
 $$
 V_A\times V_A\longrightarrow A(1). \tag{3.5}
@@ -642,10 +642,10 @@ $$
 
 Raynaud full faithfulness extends its adjoint to the integral model, and
 Fontaine--Laffaille duality changes filtration rank $r$ to $2-r$.
-Self-duality therefore gives $r=2-r$, so $r=1$.  This is Book 68,
-Lemma 14.5.  It works for ordinary and local-local residual groups alike.
+Self-duality therefore gives $r=2-r$, so $r=1$. This is Book 68,
+Lemma 14.5. It works for ordinary and local-local residual groups alike.
 
-Choose a residual basis with $\bar L=k\bar e$.  A based lift has
+Choose a residual basis with $\bar L=k\bar e$. A based lift has
 
 $$
 L_A=A(e+x f),
@@ -653,8 +653,8 @@ L_A=A(e+x f),
 $$
 
 and, in the corresponding divided basis, $\Phi_A$ is an arbitrary
-invertible lift of the residual $2\times2$ matrix.  Thus based objects have
-one line coordinate and four matrix coordinates.  Fixed cyclotomic
+invertible lift of the residual $2\times2$ matrix. Thus based objects have
+one line coordinate and four matrix coordinates. Fixed cyclotomic
 determinant is the single smooth equation
 
 $$
@@ -662,7 +662,7 @@ $$
 $$
 
 where $c_\chi\in\mathcal O^\times$ is the divided-Frobenius scalar of the
-fixed cyclotomic rank-one object.  Its derivative is
+fixed cyclotomic rank-one object. Its derivative is
 
 $$
 \dot\Phi\longmapsto
@@ -674,7 +674,7 @@ which is surjective.
 ### 3.3 The tangent complex
 
 The based parameter count must be divided by changes of the internal
-Fontaine--Laffaille basis.  At the residual object put
+Fontaine--Laffaille basis. At the residual object put
 
 $$
 C^0=\operatorname{End}_k(\bar M),
@@ -701,7 +701,7 @@ $$
 d:C^0\longrightarrow C^1. \tag{3.11}
 $$
 
-Its line component sends $v\in\bar L$ to $Xv$ modulo $\bar L$.  Its
+Its line component sends $v\in\bar L$ to $Xv$ modulo $\bar L$. Its
 matrix component is the derivative of
 
 $$
@@ -710,7 +710,7 @@ $$
 
 not ordinary conjugation: the divided source changes with the Hodge line.
 Full faithfulness identifies the kernel with residual Galois
-endomorphisms.  Put
+endomorphisms. Put
 
 $$
 h_\ell
@@ -725,8 +725,8 @@ $$
 \dim_k\operatorname{im}d=4-h_\ell. \tag{3.14}
 $$
 
-Let $\lambda:C^1\to k$ be the determinant derivative (3.8).  It is
-surjective and vanishes on $\operatorname{im}d$.  Therefore the unframed
+Let $\lambda:C^1\to k$ be the determinant derivative (3.8). It is
+surjective and vanishes on $\operatorname{im}d$. Therefore the unframed
 fixed-determinant finite-flat tangent is
 
 $$
@@ -743,15 +743,15 @@ $$
 
 For a framed deformation, add the four-dimensional variation of the
 generic Galois basis before quotienting by the four internal gauge
-directions.  The gauge action on an object with a fixed generic frame is
-free by full faithfulness.  Hence the framed fixed-determinant tangent has
+directions. The gauge action on an object with a fixed generic frame is
+free by full faithfulness. Hence the framed fixed-determinant tangent has
 dimension
 
 $$
 4+4-4=4. \tag{3.17}
 $$
 
-This calculation explains the scalar correction used later.  From (1.3),
+This calculation explains the scalar correction used later. From (1.3),
 
 $$
 h^0(\mathbf Q_\ell,M)=h_\ell-1, \tag{3.18}
@@ -768,17 +768,17 @@ terms larger.
 
 ### 3.4 Liftability and local rings
 
-Let $A'\twoheadrightarrow A$ be a small extension.  Lift the line in (3.6)
-by lifting its graph coordinate.  Lift every entry of $\Phi_A$ arbitrarily;
+Let $A'\twoheadrightarrow A$ be a small extension. Lift the line in (3.6)
+by lifting its graph coordinate. Lift every entry of $\Phi_A$ arbitrarily;
 the lifted determinant is still a unit, so the new matrix is invertible.
 If its determinant differs from $c_\chi$ by $u\in1+\ker(A'\to A)$,
-multiply one column by $u^{-1}$.  This corrects (3.7) without changing the
-reduction.  Finally lift the generic frame through
+multiply one column by $u^{-1}$. This corrects (3.7) without changing the
+reduction. Finally lift the generic frame through
 $\operatorname{GL}_2(A')\twoheadrightarrow\operatorname{GL}_2(A)$.
 
 The low-weight classification realizes the lifted triple as a unique
-finite-flat model.  Thus every framed or unframed finite-flat lifting
-problem is soluble.  The restricted obstruction map is zero.
+finite-flat model. Thus every framed or unframed finite-flat lifting
+problem is soluble. The restricted obstruction map is zero.
 
 Combining Book 68, Theorems 9.1--9.2, 16.1, and 17.1, with
 (3.16)--(3.17) and this explicit liftability gives the exact ring statement.
@@ -807,7 +807,7 @@ R_\ell^{\square,\mathrm{fl},\chi}
 \simeq R_\ell^{\mathrm{fl},\chi}[[Y_1,Y_2,Y_3]]. \tag{3.22}
 $$
 
-If $h_\ell>1$, (3.20) still holds.  No coarse unframed universal ring is
+If $h_\ell>1$, (3.20) still holds. No coarse unframed universal ring is
 asserted without a separate rigidification.
 
 The theorem does **not** say
@@ -818,7 +818,7 @@ $$
 
 For example, at the split ordinary point $k(1)\oplus k$, there is a
 nonzero trace-zero map $V\to V(1)$ from the $k(1)$ source line to the
-$k(1)$ target line.  Local duality then makes the ambient $H^2$ nonzero.
+$k(1)$ target line. Local duality then makes the ambient $H^2$ nonzero.
 The filtered lifting construction still kills every obstruction arising
 inside the finite-flat condition.
 
@@ -826,22 +826,22 @@ inside the finite-flat condition.
 
 After a finite residue-field extension, the permitted residual shapes are:
 
-| Residual shape | $h_\ell$ | $\dim L_\ell$ | Framed tangent |
-|---|---:|---:|---:|
-| absolutely irreducible, including local-local | $1$ | $1$ | $4$ |
-| nonsplit extension of distinct characters | $1$ | $1$ | $4$ |
-| split sum of distinct characters | $2$ | $2$ | $4$ |
+| Residual shape                                | $h_\ell$ | $\dim L_\ell$ | Framed tangent |
+| --------------------------------------------- | -------: | ------------: | -------------: |
+| absolutely irreducible, including local-local |      $1$ |           $1$ |            $4$ |
+| nonsplit extension of distinct characters     |      $1$ |           $1$ |            $4$ |
+| split sum of distinct characters              |      $2$ |           $2$ |            $4$ |
 
 A split scalar representation and a nonsplit self-extension of one
 character are impossible in this finite-flat cyclotomic-determinant range.
 Indeed the two equal rank-one endpoint models would have the same Hodge
 rank $r\in\{0,1\}$; exactness would give middle Hodge rank $2r$, whereas
-cyclotomic self-duality forces middle rank one.  This is the scalar boundary
-of the finite-flat theorem.  One must not insert a scalar local point into
+cyclotomic self-duality forces middle rank one. This is the scalar boundary
+of the finite-flat theorem. One must not insert a scalar local point into
 (3.16) without redoing the integral classification; under the present
 hypotheses there is no such point.
 
-The word *hardly ramified* can be seen in the ordinary extension
+The word _hardly ramified_ can be seen in the ordinary extension
 
 $$
 0\longrightarrow k(1)\longrightarrow V_c
@@ -857,7 +857,7 @@ H^1(\mathbf Q_\ell,k(1))
 (\mathbf Q_\ell^\times)^\ell\bigr)\otimes_{\mathbf F_\ell}k. \tag{3.23}
 $$
 
-This space has a unit direction and a valuation direction.  Exact finite-flat
+This space has a unit direction and a valuation direction. Exact finite-flat
 Kummer theory gives
 
 $$
@@ -867,9 +867,9 @@ H^1_{\mathrm{fl}}(\mathbf Q_\ell,k(1))
 \otimes_{\mathbf F_\ell}k, \tag{3.24}
 $$
 
-which is the one-dimensional unit line.  Principal units can still define
-ramified extensions.  “Hardly ramified” means that the valuation coordinate
-is absent, not that inertia is trivial.  Equation (3.24) illustrates one
+which is the one-dimensional unit line. Principal units can still define
+ramified extensions. “Hardly ramified” means that the valuation coordinate
+is absent, not that inertia is trivial. Equation (3.24) illustrates one
 ordinary extension direction; it is not a substitute for the full tangent
 calculation (3.15)--(3.16), especially at a split point.
 
@@ -900,7 +900,7 @@ S=\{2,\ell,\infty\},
 $$
 
 and let $G_{\mathbf Q,S}$ be the Galois group of the maximal extension
-unramified outside $S$.  Absolute irreducibility gives the global Schur
+unramified outside $S$. Absolute irreducibility gives the global Schur
 condition
 
 $$
@@ -958,19 +958,19 @@ $\bar\rho$ unramified outside $S$.
 finiteness theorem of Book 32, Section 3.2, applied to
 $H^1(G_{\mathbf Q,S},M)$, give the universal unframed fixed-determinant ring.
 Choose a representative of its universal class and restrict it to the two
-decomposition groups.  Theorems 2.2 and 3.1 represent the framed local
-conditions by closed quotients of the ambient framed local rings.  Pull
+decomposition groups. Theorems 2.2 and 3.1 represent the framed local
+conditions by closed quotients of the ambient framed local rings. Pull
 their defining ideals back along the two restrictions and quotient the
 global ring by the closed sum of those ideals.
 
 Membership in both local conditions is invariant under strict conjugacy,
 so changing the chosen representative of the universal global class does
-not change the quotient functor.  The universal property of the quotient
-now says that its maps to $A$ are exactly (4.3)--(4.6).  This is the standard
+not change the quotient functor. The universal property of the quotient
+now says that its maps to $A$ are exactly (4.3)--(4.6). This is the standard
 framed-local/unframed-global assembly argument from general deformation
 theory; local coarse representability at $\ell$ is not required. $\square$
 
-No global $H^2$-vanishing is used in representability.  Global degree two
+No global $H^2$-vanishing is used in representability. Global degree two
 controls relations after the ring exists.
 
 ### 4.3 The global tangent space
@@ -982,7 +982,7 @@ M=\operatorname{ad}^0\bar\rho.
 $$
 
 The ambient fixed-determinant tangent is
-$H^1(G_{\mathbf Q,S},M)$.  Evaluating (4.5)--(4.6) on dual numbers gives
+$H^1(G_{\mathbf Q,S},M)$. Evaluating (4.5)--(4.6) on dual numbers gives
 
 $$
 t^{\mathrm{hr,SP}}
@@ -1008,52 +1008,52 @@ H^1(\mathbf Q_2,M)
 $$
 
 The first target is zero by (2.20), but retaining it records the nonlinear
-dyadic condition.  Formula (4.9) is the exact localization-kernel interface,
+dyadic condition. Formula (4.9) is the exact localization-kernel interface,
 not merely a dimension equality.
 
 ### 4.4 What local smoothness does and does not prove
 
-Both local conditions lift through small extensions.  This has three exact
+Both local conditions lift through small extensions. This has three exact
 consequences.
 
 At $2$, an admissible lift is unique up to strict equivalence, and the
-ambient groups $H^1(\mathbf Q_2,M)$ and $H^2(\mathbf Q_2,M)$ vanish.  At
+ambient groups $H^1(\mathbf Q_2,M)$ and $H^2(\mathbf Q_2,M)$ vanish. At
 $\ell$, admissible lifts exist and their first-order differences lie in
-$L_\ell$, but ambient $H^2(\mathbf Q_\ell,M)$ may be nonzero.  In both
+$L_\ell$, but ambient $H^2(\mathbf Q_\ell,M)$ may be nonzero. In both
 cases the lift torsors and their difference classes commute with pushout of
 the kernel in a small extension: this is immediate from the dyadic normal
 form and from the linear line/matrix coordinates at $\ell$.
 
-These statements do not imply that a global lift exists.  Given an ambient
+These statements do not imply that a global lift exists. Given an ambient
 global lift, moving both local restrictions into their admissible torsors is
-a global localization problem.  A global factor-set obstruction can remain,
+a global localization problem. A global factor-set obstruction can remain,
 and compatible local corrections need not come from one global correction.
 Books 166--167 introduce supported cohomology precisely to retain those
 two defects.
 
 ### 4.5 Coefficient extension and compatible finite levels
 
-Let $\mathcal O'/\mathcal O$ be a finite extension.  The dyadic equations,
-the line, and the sign commute with scalar extension.  At $\ell$, Book 68,
+Let $\mathcal O'/\mathcal O$ be a finite extension. The dyadic equations,
+the line, and the sign commute with scalar extension. At $\ell$, Book 68,
 Theorem 2.3, constructs a coefficient-linear finite-flat model after every
-finite coefficient map.  Thus the scalar-extended residual representation
+finite coefficient map. Thus the scalar-extended residual representation
 has the scalar-extended local problem, after selecting the corresponding
 closed residual point if the residue field grows.
 
 For a complete coefficient algebra, finite flatness means that every
-Artinian quotient belongs to the finite-flat functor.  Raynaud uniqueness
-makes the resulting marked models compatible along nested quotients.  This
+Artinian quotient belongs to the finite-flat functor. Raynaud uniqueness
+makes the resulting marked models compatible along nested quotients. This
 is a pro-system of finite group schemes, not one finite group scheme of
 infinite order.
 
 Consequently a map from $R^{\mathrm{hr,SP}}$ to a coefficient DVR
 $\mathcal O'$ produces a lattice whose every quotient by an open ideal has
-a compatible coefficient-linear finite-flat model at $\ell$.  This
+a compatible coefficient-linear finite-flat model at $\ell$. This
 conclusion comes from the represented local condition, not from any flatness
 property of the global ring over $\mathcal O$.
 
 No general ground-field base-change theorem is needed in the Frey minimal
-argument.  The later totally real field is required to split completely at
+argument. The later totally real field is required to split completely at
 $2$ and $\ell$, so its completions at the selected places are literally
 $\mathbf Q_2$ and $\mathbf Q_\ell$ and the local problems above are
 unchanged.
@@ -1063,7 +1063,7 @@ unchanged.
 ### 5.1 Input to supported cohomology
 
 For the Frey-SP specialization, Book 166 uses the following data and no
-stronger local assertion.  Let
+stronger local assertion. Let
 
 $$
 M=\operatorname{ad}^0\bar\rho,
@@ -1096,7 +1096,7 @@ $$
 \dim L_\infty-h^0(\mathbf R,M)=-1. \tag{5.3}
 $$
 
-The last two corrections cancel.  Global absolute irreducibility gives
+The last two corrections cancel. Global absolute irreducibility gives
 $H^0(G_{\mathbf Q,S},M)=0$, while restriction to $G_{\mathbf Q_2}$ and
 (2.18) give
 
@@ -1105,14 +1105,14 @@ H^0(G_{\mathbf Q,S},M(1))=0. \tag{5.4}
 $$
 
 These are exactly the local and endpoint inputs for the Greenberg--Wiles
-and supported-duality calculation.  Book 166 defines the dual local
+and supported-duality calculation. Book 166 defines the dual local
 condition at $\ell$ as the exact Tate orthogonal $L_\ell^\perp$; this book
 does not relabel that orthogonal as another finite-flat deformation functor.
 
 ### 5.2 Input to relation obstructions
 
 For its Frey-SP specialization, Book 167 needs nonlinear local conditions,
-not only the subspaces in Section 5.1.  The precise exports are:
+not only the subspaces in Section 5.1. The precise exports are:
 
 1. the framed dyadic and coefficient-prime conditions are represented by
    closed quotients;
@@ -1124,13 +1124,13 @@ not only the subspaces in Section 5.1.  The precise exports are:
    zero.
 
 Thus local factor sets admit the nullhomotopies required for the supported
-mapping fiber.  Nothing here identifies supported degree two with ordinary
+mapping fiber. Nothing here identifies supported degree two with ordinary
 global $H^2$, and nothing here proves that every tuple of local corrections
 comes from a global correction.
 
-The possible nonscalar local centralizer at $\ell$ causes no gap.  Book 167
+The possible nonscalar local centralizer at $\ell$ causes no gap. Book 167
 uses the represented framed ring (3.20), while the global unframed ring is
-justified by global absolute irreducibility.  A nonexistent local coarse
+justified by global absolute irreducibility. A nonexistent local coarse
 ring is never inserted into a fiber product.
 
 ### 5.3 Input to the balanced lift argument
@@ -1148,8 +1148,8 @@ Book 181 receives:
   field split completely at $2$ and $\ell$;
 - the tangent and obstruction inputs already passed through Books 166--167.
 
-Book 181 treats the global finite-special-fibre input separately.  An exact
-automorphic seed and Book 173 supply one sufficient source.  A later target-IAV
+Book 181 treats the global finite-special-fibre input separately. An exact
+automorphic seed and Book 173 supply one sufficient source. A later target-IAV
 comparison could supply the same input without minimal $R=\mathbb T$ by proving
 $({\rm CIAV}_{P_{\rm tar}})$. This book exports only the
 Galois local conditions and the represented global deformation functor; it
@@ -1168,7 +1168,7 @@ This book does not prove any of the following:
 - a local deformation theorem for a different dyadic inertial profile.
 
 In particular, a downstream statement that allows an additional dyadic
-branch must source that branch from its own local theorem.  The interface of
+branch must source that branch from its own local theorem. The interface of
 this book to Books 166--167 and 181 is exactly the Frey-special specialization
 recorded in Sections 5.1--5.3; no different local profile may be substituted
 for the conductor-one Frey transvection.
@@ -1179,7 +1179,7 @@ for the conductor-one Frey transvection.
 
 **Theorem 6.1 (local conditions for the hardly-ramified Frey minimal
 problem).** Let $\ell\geq7$, let $\mathcal O$ and $k$ be as in Section
-1.2, and let $\bar\rho$ satisfy the six hypotheses of Section 4.1.  Then:
+1.2, and let $\bar\rho$ satisfy the six hypotheses of Section 4.1. Then:
 
 1. The equations (2.4)--(2.5), fixed cyclotomic determinant, intrinsic
    monodromy line, and sign $s$ define a closed, coefficient-stable,
@@ -1187,7 +1187,7 @@ problem).** Let $\ell\geq7$, let $\mathcal O$ and $k$ be as in Section
 
 2. Its unframed functor is represented by $\mathcal O$, its framed functor
    is represented by $\mathcal O[[Y_1,Y_2,Y_3]]$, and both are formally
-   smooth.  Its tangent is $L_2=0$.
+   smooth. Its tangent is $L_2=0$.
 
 3. For $M=\operatorname{ad}^0\bar\rho$,
    $$
@@ -1202,7 +1202,7 @@ problem).** Let $\ell\geq7$, let $\mathcal O$ and $k$ be as in Section
 
 4. Coefficient-linear finite flatness over $\mathbf Z_\ell$ with
    determinant $\chi_\ell$ is a closed condition stable under every
-   Artinian coefficient map.  Its framed ring is
+   Artinian coefficient map. Its framed ring is
    $$
    R_\ell^{\square,\mathrm{fl},\chi}
    \simeq\mathcal O[[Z_1,Z_2,Z_3,Z_4]].
@@ -1217,29 +1217,29 @@ problem).** Let $\ell\geq7$, let $\mathcal O$ and $k$ be as in Section
    $$
    \dim_kH^1_{\mathrm{fl}}(\mathbf Q_\ell,M)=h_\ell.
    $$
-   If $h_\ell=1$, the unframed ring is $\mathcal O[[X]]$.  If
+   If $h_\ell=1$, the unframed ring is $\mathcal O[[X]]$. If
    $h_\ell>1$, the framed theorem remains valid but no coarse unframed
    universal ring is asserted.
 
-6. The finite-flat condition lifts through every small extension.  Its
+6. The finite-flat condition lifts through every small extension. Its
    restricted obstruction map is zero even when
    $H^2(\mathbf Q_\ell,M)$ is nonzero.
 
 7. The global functor (4.3)--(4.6) is represented by
    $R^{\mathrm{hr,SP}}$, and its tangent is the localization kernel (4.9).
 
-8. The exact downstream interface is the collection of results in Sections 5.1--5.3.  In
+8. The exact downstream interface is the collection of results in Sections 5.1--5.3. In
    particular, the local theorem supplies neither Book 181's exact
    automorphic seed (nor its whole-ring finiteness consequence) nor a
    characteristic-zero global point.
 
 **Proof.** Parts 1--3 are Lemma 2.1, Theorem 2.2, the conductor calculation
-(2.14), and the cohomology calculation (2.15)--(2.21).  Parts 4--6 are the
+(2.14), and the cohomology calculation (2.15)--(2.21). Parts 4--6 are the
 coefficient-stability construction, the low-weight classification, the
 tangent complex (3.9)--(3.17), and the explicit small-extension lift of
 Section 3.4; these specialize Book 68, Theorems 2.3, 14.3, 16.1, and 17.1,
-to $\mathbf Q_\ell$.  Part 7 is Theorem 4.1 and the dual-number calculation
-(4.8)--(4.9).  Part 8 merely records those proved outputs without adding a
+to $\mathbf Q_\ell$. Part 7 is Theorem 4.1 and the dual-number calculation
+(4.8)--(4.9). Part 8 merely records those proved outputs without adding a
 new theorem. $\square$
 
 ### 6.2 The exact range of the theorem
@@ -1270,7 +1270,7 @@ the calculation.
 Two local facts hold in a wider range than the theorem: the nonzero-monodromy
 normal form works whenever the determinant square root is transverse, and
 the finite-flat theorem works for every odd $\ell$ over an unramified base.
-The book does not splice those wider local ranges into the FLT package.  At
+The book does not splice those wider local ranges into the FLT package. At
 $\ell=5$ the displayed local computations are favorable, but the later
 global image and modularity machinery is stated uniformly for
 $\ell\geq7$.
@@ -1299,38 +1299,38 @@ The key normal forms, tangent dimensions, and obstruction distinctions are
 reproved in this book after the deep integral classifications are imported.
 Book 68 discharges the lower-level integral inputs on closure, Raynaud
 rigidity, and Fontaine--Laffaille theory; this book invokes its packaged
-theorems rather than silently strengthening them.  No result from Books 166--167 or 181 is used to prove Theorem 6.1.  Those books consume the outputs
+theorems rather than silently strengthening them. No result from Books 166--167 or 181 is used to prove Theorem 6.1. Those books consume the outputs
 listed in Chapter 5.
 
 These ingredients complete the local theorem under the hypotheses of Section 4.1. The later
 global conclusion is a separate result: a balanced-ring argument may take either the
 finite-special-fibre consequence of an exact automorphic seed or the consequence of a
-separately proved target-IAV comparison and then produce a characteristic-zero point.  No separate
+separately proved target-IAV comparison and then produce a characteristic-zero point. No separate
 reduced-finiteness hypothesis is part of that downstream statement.
 
 ### 6.4 Conclusion
 
-The hardly-ramified Frey problem has one dyadic branch.  Nonzero residual
+The hardly-ramified Frey problem has one dyadic branch. Nonzero residual
 monodromy recovers its line, Frobenius scales the monodromy by $2$, and the
 cyclotomic determinant plus the residual sign removes the final unramified
-parameter.  The dyadic unframed ring is therefore $\mathcal O$, its framed
+parameter. The dyadic unframed ring is therefore $\mathcal O$, its framed
 ring has only three change-of-frame variables, and its adjoint tangent and
-obstruction groups vanish.  The conductor is exactly one.
+obstruction groups vanish. The conductor is exactly one.
 
-At the coefficient prime, finite flatness is genuinely integral.  Raynaud
+At the coefficient prime, finite flatness is genuinely integral. Raynaud
 rigidity and the weight-$[0,1]$ classification turn it into one Hodge line
-and one invertible divided-Frobenius matrix.  Their tangent complex gives
+and one invertible divided-Frobenius matrix. Their tangent complex gives
 $\dim L_\ell=h_\ell$, while an explicit determinant correction lifts every
-small-extension problem.  The framed ring is always a four-variable power
+small-extension problem. The framed ring is always a four-variable power
 series ring; a coarse unframed ring is asserted only in the Schur local
 case.
 
 These local conditions cut out the universal global quotient whose tangent
-is (4.9).  They supply exact local nullhomotopies and dimension corrections,
-but no global lift by themselves.  That separation is mathematically essential:
+is (4.9). They supply exact local nullhomotopies and dimension corrections,
+but no global lift by themselves. That separation is mathematically essential:
 Book 166 performs the supported cohomology calculation, Book 167 converts
 relations into supported obstructions, and Book 181 adds its separately
-stated finite-special-fibre certificate.  That certificate may come from a
+stated finite-special-fibre certificate. That certificate may come from a
 stronger exact seed or from a separately proved target-IAV route. Producing that certificate,
 proving a characteristic-zero global point, or establishing an $R=T$ theorem are stronger
 results outside the scope of Theorem 6.1. The local deformation problem is complete without

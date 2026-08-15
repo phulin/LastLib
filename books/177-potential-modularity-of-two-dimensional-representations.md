@@ -792,10 +792,10 @@ Here an **applicable Book 176 one-prime conclusion** means literal Theorem 7.1 o
 5. Whenever the comparison uses constant-coefficient saturation or Book 139's corrected filtration, the full family $({\rm AIH}_{\mathscr F})$ holds for every vertex, edge, permutation, and adjoint-companion curve in the actual flag diagram, with every spectator tuple and auxiliary shadow. The required neat or prime-to-$q$ stabilizer descent, saturation, component-group control, and independent normalized-branch Smith correction are also supplied. Every lowering step additionally satisfies all six conditions of Book 176, Section 4.4: an adjoint-stable non-Eisenstein block with perfect adjoint pairing, zero residual monodromy on that full block, no residual component or branch torsion, the exact two-branch normalization middle term, and a nonzero block with no scalar, self-twist, or vexing identification merging it with an Eisenstein or different adjoint block.
 6. On every actual primary and companion shadow, use the proved actual-row theorem $({\rm TPE}_w)$; the separate $({\rm TIC}_w)$ and $({\rm TIH}_{\mathscr F})$ hypotheses hold. In the nonbanal $q_w\equiv-1\pmod q$ range, Book 174's quotient-new injection (5.0d) and primitive filtered-cofiber comparison (6.0d) are retained as separate inputs. The type lattices are finite free and perfectly paired at base, mixed, and Taylor--Wiles levels; every one-prime degeneracy and type map and its two-term complex has the asserted saturation, exactness, and coefficient-algebra Tor control. No several-place mixed exactness is included in this clause; that is part of the route in item 8. The package also includes $({\rm PRI}_{\rm type})$ whenever an extreme coefficient-one residue is used, and $({\rm NU}_{\rm type})$ together with Book 140's enhanced flagged PEL node-groupoid classification (5.9a) whenever a carrier is switched to the definite side. Constant generic support and common-kernel equality are then conclusions of Book 140 from the corrected filtration and Book 125; under the preceding $({\rm AIH}_{\mathscr F})$, the displayed type and primitive-residue inputs, and Book 125 routing, the typed analogues are conclusions of Book 174.
 7. Every one-prime face has the five-clause boundary-and-depth datum $({\rm SUP}_w)$, including the unresolved relative Cartier-switch transversality $({\rm BCD}_w)$ of Book 174, (8.2f), and Book 141's split-regular detector input in the marked finite shadows, together with the finite-carrier reciprocity package $({\rm REC}_w)$. Thus the faithful Hecke order is generated only by verified trace and structural operators, is torsion-free with reduced generic fiber, and carries a genuine two-dimensional Galois representation of determinant $\chi_q$ whose Artinian specializations satisfy the same finite-flat and prime-to-$q$ local component quotients as $r_{A,q}$.
-8. One exact Book 176 route is exhibited.  The scope-minimal finite-set option is the direct
+8. One exact Book 176 route is exhibited. The scope-minimal finite-set option is the direct
    Ihara-avoidance package $({\rm IAV}_{P_{\mathrm{act}}})$ of Book 176, Section 1.5, for
    $r_{A,q}$ and the automorphic lift attached to $\Pi_0'$, after any further solvable totally
-   real base change used by that package.  The set is the whole $P_{\mathrm{act}}$, including
+   real base change used by that package. The set is the whole $P_{\mathrm{act}}$, including
    every place above the distinguished dyadic place; no one-place subset may be substituted.
    This includes the paired desired/avoidance local rings, the proof that their patched
    specializations are component-bijective, synchronized automorphic Taylor--Wiles systems
@@ -816,7 +816,7 @@ Here an **applicable Book 176 one-prime conclusion** means literal Theorem 7.1 o
    $K_{P_{\mathrm{act}}}^-$, verify on the primary carrier every simultaneous generic local
    and structural branch label, invoke Book 170 only
    afterward to obtain $({\rm REC}_{P_{\mathrm{act}},x_A})$, and prove that the one global
-   component $\Xi_{x_A}$ through the Tate point lies in its support.  This pointed route does
+   component $\Xi_{x_A}$ through the Tate point lies in its support. This pointed route does
    not assume $({\rm MIX})$ or $({\rm PROD})$ unless they are used to construct the final cube
    or to prove that component occurrence.
 9. Every scalar step uses the effective strict global ray quotient and determinant-square twist identities $({\rm RAY}_w)$ constructed in Book 174, with every added conductor place retained in the spectator datum. Whenever an auxiliary patch is descended, the coherent auxiliary datum $({\rm AUX}_Q)$ supplies exact augmentation for represented rings, modules, pairings, complexes, and deformation actions. Book 175's full patched and finite $R=T$ theorem, and hence its proof of auxiliary acting-image injectivity, may be cited only when clean unpadded shadows with exactly the balanced number of ordered killing primes (the $q$ in Book 175, (5.6b), not the auxiliary rational prime of this book) exist at every depth; diagonal coherence does not construct those shadows. Exact auxiliary acting images otherwise require an independently proved full base $R=T$ theorem and are not an input to the direct reduced finite-level comparison. In the simultaneous route the stronger datum $({\rm AUG}_{P_{\mathrm{act}}})$ uses Book 176, Proposition 8.3's joint ray quotient and includes order-independent fixed-prime and Taylor--Wiles augmentation; the ray clause is vacuous when no scalar place occurs.
@@ -883,11 +883,11 @@ $$
 $$
 
 where $\Xi_{x_A}$ is one global irreducible component through (8.5), carrying the complete
-tuple (7.9).  This is weaker than support on every component but stronger than all separate
-one-place projections.  Once (8.6a), all simultaneous generic branch labels, carrier-specific
+tuple (7.9). This is weaker than support on every component but stronger than all separate
+one-place projections. Once (8.6a), all simultaneous generic branch labels, carrier-specific
 finite-set reciprocity, and (8.6b) have been proved, the carrier annihilator lies in
 $\mathfrak p_{\Xi_{x_A}}\subseteq\ker x_A$, so (8.5) factors through the faithful Hecke
-image.  Mixed exactness and iterated product residue are needed only if they are the chosen
+image. Mixed exactness and iterated product residue are needed only if they are the chosen
 route to constructing the actual final cube or proving (8.6b); they are not used again by this
 pointed annihilator argument.
 
@@ -1018,9 +1018,9 @@ $$
 $$
 
 and hence the ambient integral curve-cohomology localization at
-$\mathfrak m_{\ell,A}$ is nonzero modulo $\varpi$.  Moreover, the associated rational
+$\mathfrak m_{\ell,A}$ is nonzero modulo $\varpi$. Moreover, the associated rational
 rank-two Galois factor admits a stable lattice whose residual
-representation is (9.5).  No integral Morita extraction of that rank-two lattice from
+representation is (9.5). No integral Morita extraction of that rank-two lattice from
 $L_{\Pi_A}$ is asserted.
 
 **Proof.** The intersection of a rational subspace with a finite free DVR lattice is
@@ -1030,8 +1030,8 @@ intersection. Saturation makes its reduction inject into the ambient cohomology 
 It is nonzero and is killed by the reduction of every Hecke operator
 minus its packet eigenvalue, so it survives in the localization at
 $\mathfrak m_{\ell,A}$. Choose any stable lattice in the associated rational rank-two curve
-factor.  It and the lattice transported from $T_\lambda(A)$ have the same irreducible
-characteristic-zero representation by (9.4).  Lemma 9.1 and absolute irreducibility of (7.2)
+factor. It and the lattice transported from $T_\lambda(A)$ have the same irreducible
+characteristic-zero representation by (9.4). Lemma 9.1 and absolute irreducibility of (7.2)
 identify their reductions, giving (9.5) for the associated factor. $\square$
 
 This is an **upper-level** occurrence theorem. It is formal from the already automorphic
@@ -1040,9 +1040,9 @@ that $\mathfrak m_{\ell,A}$ occurs after removing any extra special places of $A
 not verify the saturation, component, branch, or auxiliary-level hypotheses of the minimal
 Book 173 localization. Those require an actual lowering path; equality of good Frobenius
 polynomials alone would not even give (9.6) without the integral packet lattice.
-Moreover, the particular compact carrier of Section 9.2 is ramified at $w_0$.  Book 140 cannot
+Moreover, the particular compact carrier of Section 9.2 is ramified at $w_0$. Book 140 cannot
 be applied at $w_0$ on that carrier, because its changing place must be split in the
-quaternion algebra.  Any later argument which must remove $w_0$ therefore needs a separate
+quaternion algebra. Any later argument which must remove $w_0$ therefore needs a separate
 path-compatible carrier, together with its own primitive packet lattice; Corollary 9.2 does
 not supply that carrier switch.
 
@@ -1155,22 +1155,22 @@ nor does separate support on the $v$- and $w$-components imply support on their 
 
 Book 176 now identifies the integral content of (10.5) exactly at the final coefficient-DVR
 level: it is equivalent to torsion-freeness of the top joint-new quotient, or saturation of
-the sum of the two top old images.  Its split-edge DVR countermodel shows that all one-place
+the sum of the two top old images. Its split-edge DVR countermodel shows that all one-place
 images can be primitive and the generic cube can be exact while this sum is not primitive.
 For the product-residue route, distinct arithmetic fibers have empty intersection; the exact
 missing geometry is therefore the parity-indexed iterated-switch Beck--Chevalley theorem,
-including integral homotopies, Néron and branch-Smith terms, and three-face coherence.  Generic
+including integral homotopies, Néron and branch-Smith terms, and three-face coherence. Generic
 packet-label commutation does not prove it.
 
 Later diagnostic manuscripts and retired unitary-surface proposals are not dependencies and cannot be used to discharge these obligations. On the geometric routes, the exact first constant-row gap is (10.4). After it, the all-point route remains obstructed by construction of one global cube, (10.5) and all higher mixed exactness, the iterated-switch product-residue comparison, joint support, coherent joint ring--complex--module--action--pairing augmentation, and finite-set reciprocity for the actual multi-place set $P_{\mathrm{act}}$, unless a validated one-prime chain is exhibited. Fixed-prime faithful-order augmentation is formal once a strict product twist exists, while auxiliary acting-image injectivity follows only after full base $R=T$.
 
 For the one Tate-module point used here, Book 176, Theorem 9.2 gives a shorter but still
-unproved route.  After constructing the actual final cube, one forms the canonical carrier
+unproved route. After constructing the actual final cube, one forms the canonical carrier
 (8.6a), verifies every simultaneous generic branch and structural label on that carrier,
-applies Book 170 only then, and proves the pointed occurrence (8.6b).  Neither (10.5) nor
-product residue is a formal premise of its annihilator step.  No accepted prior dependency,
+applies Book 170 only then, and proves the pointed occurrence (8.6b). Neither (10.5) nor
+product residue is a formal premise of its annihilator step. No accepted prior dependency,
 however, proves (8.6b) for the specialization-dependent tuple $P_{\mathrm{act}}$, and separate
-one-place support cannot do so.  This pointed joint-component occurrence, together with the
+one-place support cannot do so. This pointed joint-component occurrence, together with the
 carrier-specific branch verification preceding reciprocity, is the first exact several-place
 theorem on the shorter route.
 
@@ -1243,15 +1243,15 @@ The conclusion lives over $F^{\mathrm{pm}}$. Descent would need the exact Book 1
 
 The proof uses the following earlier books, with no enlargement of their conclusions.
 
-| Prior source | Result used | Boundary retained |
-|---|---|---|
-| Book 104 | transfer from the totally definite carrier to the split packet, followed by compact one-split inverse transfer for $\{w_0\}$ | requires even field degree and an eligible selected local factor; it supplies no Galois representation by itself |
-| Book 98 | automorphic induction of an algebraic Hecke character, the determinant formula (3.3), the explicit residual induced lattice, and cuspidality | the quadratic extension must remain a field; the character quotient must remain nontrivial |
-| Book 127 | compact-curve packet decomposition, rank-two extraction, determinant and Frobenius normalization, the weak family, and stable lattices | no surface realization or density theorem; integral finite-flat comparison is obtained from $A$, not from an arbitrary curve lattice |
-| Book 176 | the direct finite-set Ihara-avoidance interface, Theorem 1.1H and Corollary 1.1I proving $({\rm CIAV}_S)$, plus the optional one-prime, all-point, and pointed geometric comparisons | the direct source-patching route is closed; the geometric routes retain their stated Ihara, cube, reciprocity, and occurrence hypotheses |
-| Book 154 | Moret--Bailly specialization with local opens, total reality, splitting, and linear disjointness | no Galois or solvable conclusion |
-| Book 158 | the fine smooth geometrically connected paired-frame moduli space, its admissible point-centered local opens, and the regular symmetric Galois-top refinement of the split specialization | both frames and both pairings must occur on the same object and component; nonsplit exact completion algebras still require Book 154's separate common-presentation hypothesis |
-| Book 142, the globally upstream companion Chebotarev development | finite-quotient prime selection in Section 3.4 and Corollary 11.2 in Sections 8.5 and 9.3 | density recognizes existing data and supplies no carrier, lattice, or local compatibility |
+| Prior source                                                     | Result used                                                                                                                                                                               | Boundary retained                                                                                                                                                              |
+| ---------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Book 104                                                         | transfer from the totally definite carrier to the split packet, followed by compact one-split inverse transfer for $\{w_0\}$                                                              | requires even field degree and an eligible selected local factor; it supplies no Galois representation by itself                                                               |
+| Book 98                                                          | automorphic induction of an algebraic Hecke character, the determinant formula (3.3), the explicit residual induced lattice, and cuspidality                                              | the quadratic extension must remain a field; the character quotient must remain nontrivial                                                                                     |
+| Book 127                                                         | compact-curve packet decomposition, rank-two extraction, determinant and Frobenius normalization, the weak family, and stable lattices                                                    | no surface realization or density theorem; integral finite-flat comparison is obtained from $A$, not from an arbitrary curve lattice                                           |
+| Book 176                                                         | the direct finite-set Ihara-avoidance interface, Theorem 1.1H and Corollary 1.1I proving $({\rm CIAV}_S)$, plus the optional one-prime, all-point, and pointed geometric comparisons      | the direct source-patching route is closed; the geometric routes retain their stated Ihara, cube, reciprocity, and occurrence hypotheses                                       |
+| Book 154                                                         | Moret--Bailly specialization with local opens, total reality, splitting, and linear disjointness                                                                                          | no Galois or solvable conclusion                                                                                                                                               |
+| Book 158                                                         | the fine smooth geometrically connected paired-frame moduli space, its admissible point-centered local opens, and the regular symmetric Galois-top refinement of the split specialization | both frames and both pairings must occur on the same object and component; nonsplit exact completion algebras still require Book 154's separate common-presentation hypothesis |
+| Book 142, the globally upstream companion Chebotarev development | finite-quotient prime selection in Section 3.4 and Corollary 11.2 in Sections 8.5 and 9.3                                                                                                 | density recognizes existing data and supplies no carrier, lattice, or local compatibility                                                                                      |
 
 Ordinary foundational inputs are finite-flat group schemes, polarization pairings, Schur's lemma, stable lattices, Nakayama's lemma, and elementary field-disjointness calculations. Book 109 is consulted only to state why descent is unavailable; no theorem from it enters Theorem 10.1. The source-closed direct row for the argument is therefore
 

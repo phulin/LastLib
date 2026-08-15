@@ -146,9 +146,8 @@ is a projection, but its kernel is not orthogonal to its range.
 
 For a family $(H_j)_{j\in J}$, the Hilbert direct sum is
 
-$$
-\bigoplus_{j\in J}^{2} H_j
-=
+# $$\bigoplus_{j\in J}^{2} H_j
+
 \left\{(x_j):\sum_j\|x_j\|^2<\infty\right\}.
 $$
 

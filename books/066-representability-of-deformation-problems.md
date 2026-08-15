@@ -150,7 +150,7 @@
 
 Book 63 associated to a residual representation several covariant functors on local Artinian coefficient rings. Their values remember lifts, equivalence classes, frames, and determinants; their tangent spaces and small-extension obstructions are controlled by continuous cohomology. Those calculations do not yet say that all answers arise from one complete local ring. That is the new question.
 
-A representing ring is valuable because it turns a family of classification problems into one object. If $R$ represents a functor $F$, then every $x\in F(A)$ is obtained from a unique continuous local map $R\to A$. Parameters become generators of $R$, compatibility conditions become relations, and compatible finite-order deformations assemble into a continuous deformation over $R$. But the word *unique* is severe. Automorphisms of objects can destroy uniqueness even when lifts always exist and tangent spaces are finite.
+A representing ring is valuable because it turns a family of classification problems into one object. If $R$ represents a functor $F$, then every $x\in F(A)$ is obtained from a unique continuous local map $R\to A$. Parameters become generators of $R$, compatibility conditions become relations, and compatible finite-order deformations assemble into a continuous deformation over $R$. But the word _unique_ is severe. Automorphisms of objects can destroy uniqueness even when lifts always exist and tangent spaces are finite.
 
 This book develops the bridge from infinitesimal information to formal geometry. The bridge has three pillars: gluing over fiber products, induction across small extensions, and finite-dimensionality of the tangent space. The first controls compatibility, the second controls nilpotent thickness, and the third ensures that the limiting ring is Noetherian rather than an infinite-variable object.
 
@@ -180,7 +180,7 @@ A local deformation problem is centered at one residual object. Its set of defor
 
 We denote its unique element by $*$. This condition is not cosmetic. It makes every first-order object a tangent vector based at the same point and ensures that products such as $F(A')\times_{F(A)}F(A'')$ express gluing near one closed fiber. A functor parametrizing several residual isomorphism classes should first be decomposed or studied as a formal stack; it is not a one-point deformation functor in this sense.
 
-**Counterexample.** The functor $A\mapsto\{0,1\}$ with identity transition maps has finite values and no lifting difficulty, but it has two closed points. No complete *local* ring with residue field $k$ represents it: every local residue-compatible map to $k$ is the unique residue map. Locality and the one-point condition are inseparable.
+**Counterexample.** The functor $A\mapsto\{0,1\}$ with identity transition maps has finite values and no lifting difficulty, but it has two closed points. No complete _local_ ring with residue field $k$ represents it: every local residue-compatible map to $k$ is the unique residue map. Locality and the one-point condition are inseparable.
 
 ### 1.4 Fiber-product comparison maps
 
@@ -220,7 +220,7 @@ h_R(A)=\varinjlim_n
 \operatorname{Hom}_{\mathcal C}(R/\mathfrak m_R^n,A).
 $$
 
-The expression explains the prefix *pro*: $R$ participates through the inverse system of its finite quotients. A coefficient map $A\to B$ acts by postcomposition, so $h_R$ is covariant in the test ring.
+The expression explains the prefix _pro_: $R$ participates through the inverse system of its finite quotients. A coefficient map $A\to B$ acts by postcomposition, so $h_R$ is covariant in the test ring.
 
 **Definition.** The functor $F$ is **pro-representable** if there are $R\in\widehat{\mathcal C}$ and a natural isomorphism $h_R\simeq F$. The ring $R$ is then a **universal deformation ring** for $F$.
 
@@ -740,7 +740,7 @@ Combining the hull construction with the rigidity lemma proves the sufficiency o
 
 ### 7.2 Why (H4) is stronger than tangent uniqueness
 
-The tangent map of a hull is already bijective, so there is no ambiguity over $k[\epsilon]$. Condition (H4) monitors ambiguity *relative to every nontrivial lower-order object*. Automorphisms can be invisible over $k$ yet become visible over $A$ and alter how two higher-order branches are glued. This is why no calculation confined to the tangent space can replace (H4).
+The tangent map of a hull is already bijective, so there is no ambiguity over $k[\epsilon]$. Condition (H4) monitors ambiguity _relative to every nontrivial lower-order object_. Automorphisms can be invisible over $k$ yet become visible over $A$ and alter how two higher-order branches are glued. This is why no calculation confined to the tangent space can replace (H4).
 
 The simplest square-zero fiber product
 
@@ -1362,7 +1362,7 @@ $$
 
 At each step, the difference between the lifted composite and the identity is a relative derivation into the new socle layers. Changing the lifts of the $Y_i$ by that derivation corrects the composite without disturbing lower orders. Induction therefore gives compatible isomorphisms between the corresponding Artinian quotients of $P$ and $S$. Passing to inverse limits and using completeness and separatedness makes $\pi$ an isomorphism. $\square$
 
-The isomorphism depends on parameter choices. Formal smoothness determines the power-series *type*, not canonical coordinates.
+The isomorphism depends on parameter choices. Formal smoothness determines the power-series _type_, not canonical coordinates.
 
 ### 13.6 A singular fiber-product calculation
 
@@ -1607,7 +1607,7 @@ $$
 
 Accordingly the framed tangent space contains all pairs $(X,Y)$, while the universal ring has quadratic relations expressing commutation. The tangent dimension alone sees $2d^2$ parameters and no equations; the obstruction theory detects the first nonzero initial forms of the relation ideal.
 
-This example mirrors $k[[X,Y]]/(XY)$ in a noncommutative matrix setting. It also shows why a power-series *source* always exists from finite tangent data while the universal ring need not itself be a power-series ring.
+This example mirrors $k[[X,Y]]/(XY)$ in a noncommutative matrix setting. It also shows why a power-series _source_ always exists from finite tangent data while the universal ring need not itself be a power-series ring.
 
 ### 16.5 Framing a scalar residual representation
 

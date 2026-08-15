@@ -436,13 +436,13 @@ There are $[F:\mathbf Q]$ real places. This negative total is the counterpart of
 
 The minimal datum can be summarized without using conductor as shorthand.
 
-| Place | Condition | Necessary clean hypothesis | Tangent contribution |
-|---|---|---|---|
-| $v\mid\ell$ | finite flat of weights $\{0,1\}$, fixed determinant | $F_v/\mathbf Q_\ell$ unramified, $\ell>2$, low-weight residual range | $f_v$ |
-| $v\nmid\ell$, residual inertia trivial | unramified | represented unramified quotient | $0$ |
-| $v\nmid\ell$, finite inertia | fixed integral prime-to-$\ell$ type with enhancements | unit-valued label and rigidity | $0$ |
-| $v\nmid\ell$, special | enhanced special closure with sign and line | clean chart and separately proved neutrality | $0$ |
-| $v\mid\infty$ | odd conjugacy class | $\ell$ odd and determinant $-1$ | $-1$ |
+| Place                                  | Condition                                             | Necessary clean hypothesis                                           | Tangent contribution |
+| -------------------------------------- | ----------------------------------------------------- | -------------------------------------------------------------------- | -------------------- |
+| $v\mid\ell$                            | finite flat of weights $\{0,1\}$, fixed determinant   | $F_v/\mathbf Q_\ell$ unramified, $\ell>2$, low-weight residual range | $f_v$                |
+| $v\nmid\ell$, residual inertia trivial | unramified                                            | represented unramified quotient                                      | $0$                  |
+| $v\nmid\ell$, finite inertia           | fixed integral prime-to-$\ell$ type with enhancements | unit-valued label and rigidity                                       | $0$                  |
+| $v\nmid\ell$, special                  | enhanced special closure with sign and line           | clean chart and separately proved neutrality                         | $0$                  |
+| $v\mid\infty$                          | odd conjugacy class                                   | $\ell$ odd and determinant $-1$                                      | $-1$                 |
 
 Every row includes determinant compatibility. If one local determinant differs from $\delta|_{G_v}$, there is no global deformation problem obtained by pretending the discrepancy is an extra component.
 
@@ -1509,12 +1509,12 @@ $$
 
 These $q$ primal directions match the $q$ generators of the augmentation ideal of $S_\infty$. Thus the exact unframed ledger is
 
-| datum | minimal problem | auxiliary problem |
-|---|---:|---:|
-| primal Selmer dimension | $q$ | $q$ |
-| dual Selmer dimension | $q$ | $0$ |
-| local diamond directions | $0$ | $q$ |
-| defect primal minus dual | $0$ | $q$ |
+| datum                    | minimal problem | auxiliary problem |
+| ------------------------ | --------------: | ----------------: |
+| primal Selmer dimension  |             $q$ |               $q$ |
+| dual Selmer dimension    |             $q$ |               $0$ |
+| local diamond directions |             $0$ |               $q$ |
+| defect primal minus dual |             $0$ |               $q$ |
 
 The apparent constancy of the primal dimension is important. Auxiliary primes do not merely add $q$ new arbitrary tangent directions; the new local directions and the $q$ killed global reciprocity constraints compensate. At finite level, killing $\mathfrak a_N$ recovers the minimal local conditions. In the inverse limit, the $q$ surviving tangent directions are precisely the regular parameters of $S_\infty$.
 
@@ -1602,14 +1602,14 @@ Equations (1.1) and (12.5) are compatible; mixing their conventions would put $q
 
 The following table keeps the two deformation presentations separate.
 
-| Feature | Unframed problem | Problem framed at $T$ |
-|---|---|---|
-| representing ring | $R^{\min}$ | $R^{\square_T,\min}$ |
-| tangent | $H^1_{\mathcal L}(F,M)$ | global cocycles plus local frame choices |
-| base ring | $\mathcal O$ | $R_{\mathrm{loc}}^{\min}$ |
-| generator count | intrinsic tangent count | $g_T$ of (5.6) |
-| obstruction target | absolute dual Selmer, with endpoint terms | relaxed-at-$T$ dual group of dimension $q_T$ |
-| framing correction | none | $\sum h^0(F_v,\operatorname{ad}\bar\rho)-h^0(F,\operatorname{ad}\bar\rho)$ |
+| Feature            | Unframed problem                          | Problem framed at $T$                                                      |
+| ------------------ | ----------------------------------------- | -------------------------------------------------------------------------- |
+| representing ring  | $R^{\min}$                                | $R^{\square_T,\min}$                                                       |
+| tangent            | $H^1_{\mathcal L}(F,M)$                   | global cocycles plus local frame choices                                   |
+| base ring          | $\mathcal O$                              | $R_{\mathrm{loc}}^{\min}$                                                  |
+| generator count    | intrinsic tangent count                   | $g_T$ of (5.6)                                                             |
+| obstruction target | absolute dual Selmer, with endpoint terms | relaxed-at-$T$ dual group of dimension $q_T$                               |
+| framing correction | none                                      | $\sum h^0(F_v,\operatorname{ad}\bar\rho)-h^0(F,\operatorname{ad}\bar\rho)$ |
 
 Frames do not change the automorphic Hecke algebra. A framed comparison map can be obtained only after choosing bases for the local Hecke-valued representations; changing those bases changes the map by the expected formally smooth gauge action. The canonical comparison statement is therefore the unframed map (8.7).
 
@@ -1678,17 +1678,17 @@ and its limiting diamond algebra is a power-series ring in exactly $q$ variables
 
 The construction uses the direct prerequisites in the following exact forms.
 
-| Established infrastructure | Use in this volume | Hypotheses retained here |
-|---|---|---|
-| global deformation problems | represented conditioned rings, framed fiber products, Selmer tangents, Poitou--Tate formula, relation bounds | finite controlling set, fixed determinant with $\ell\ne2$, Schur residual representation, represented base-change-stable local conditions, effective obstruction theory |
-| numerical criteria for $R=T$ | augmentation cotangents, congruence ideals, determinant inequality, surjective comparison protocol | finite-flat target, generically isolated augmentation, separable generic fiber, saturation and multiplicity when a module is used |
-| Hecke algebras and congruences | faithful image, localization, finite flatness, generalized residual summand, pairings and branches | finite-free integral module; no automatic Hecke freeness, Gorensteinness, or reduced special fiber |
-| Hecke correspondences on curves and Jacobians | common operator normalization, adjoints, geometric Frobenius polynomial | good split hyperspecial places, stable component union, exact right-double-coset orientation, required integral models |
-| weight-two Galois attachment | branchwise rank-two representations, determinant, oddness, good polynomials, integral finite-flat lattices | noncharacter parallel weight two in a verified Shimura-curve carrier; integral conclusions only with integral realization data |
-| cotangent complexes and determinant lines | determinant of perfect complexes and triangles, two-term determinant length, base change | perfectness, correct grading and factor order; generic acyclicity for divisor calculations |
-| integral local types and type lattices | primary and companion lattices, saturation, controlled represented components | places away from $\ell$, unit-valued labels, tame controlled types, clean residual regularity; no primitive wild cases |
-| Hecke-valued reciprocity | descent from generic branches, integral local factorization, finite-flat Artinian quotients, trace-generated surjection | residual absolute irreducibility, reduced generic Hecke algebra, all branches verified, exact integral types and local compatibility |
-| residual image classification and adequacy | adequacy of the cyclotomic restricted image and the small-prime boundary | $\ell\ge7$ and absolute irreducibility after cyclotomic restriction |
+| Established infrastructure                    | Use in this volume                                                                                                      | Hypotheses retained here                                                                                                                                                |
+| --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| global deformation problems                   | represented conditioned rings, framed fiber products, Selmer tangents, Poitou--Tate formula, relation bounds            | finite controlling set, fixed determinant with $\ell\ne2$, Schur residual representation, represented base-change-stable local conditions, effective obstruction theory |
+| numerical criteria for $R=T$                  | augmentation cotangents, congruence ideals, determinant inequality, surjective comparison protocol                      | finite-flat target, generically isolated augmentation, separable generic fiber, saturation and multiplicity when a module is used                                       |
+| Hecke algebras and congruences                | faithful image, localization, finite flatness, generalized residual summand, pairings and branches                      | finite-free integral module; no automatic Hecke freeness, Gorensteinness, or reduced special fiber                                                                      |
+| Hecke correspondences on curves and Jacobians | common operator normalization, adjoints, geometric Frobenius polynomial                                                 | good split hyperspecial places, stable component union, exact right-double-coset orientation, required integral models                                                  |
+| weight-two Galois attachment                  | branchwise rank-two representations, determinant, oddness, good polynomials, integral finite-flat lattices              | noncharacter parallel weight two in a verified Shimura-curve carrier; integral conclusions only with integral realization data                                          |
+| cotangent complexes and determinant lines     | determinant of perfect complexes and triangles, two-term determinant length, base change                                | perfectness, correct grading and factor order; generic acyclicity for divisor calculations                                                                              |
+| integral local types and type lattices        | primary and companion lattices, saturation, controlled represented components                                           | places away from $\ell$, unit-valued labels, tame controlled types, clean residual regularity; no primitive wild cases                                                  |
+| Hecke-valued reciprocity                      | descent from generic branches, integral local factorization, finite-flat Artinian quotients, trace-generated surjection | residual absolute irreducibility, reduced generic Hecke algebra, all branches verified, exact integral types and local compatibility                                    |
+| residual image classification and adequacy    | adequacy of the cyclotomic restricted image and the small-prime boundary                                                | $\ell\ge7$ and absolute irreducibility after cyclotomic restriction                                                                                                     |
 
 No auxiliary-prime existence theorem, patched-module theorem, support theorem, or later deformation--Hecke equality is used in Theorems 13.1 and 13.2. Chapter 11 computes the required shape and consequences of a detecting auxiliary set conditionally; construction of compatible sets and modules belongs to the next stage.
 

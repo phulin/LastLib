@@ -171,7 +171,7 @@ etale, so its generic module is unramified. No stronger support assertion will b
 weak compatibility.
 
 The tower (1.6) belongs to one chosen coefficient-three representation. No model for a member
-at any other coefficient place is part of this package. Its fibers at every odd *base prime*
+at any other coefficient place is part of this package. Its fibers at every odd _base prime_
 are localizations of this one tower, not instances of a family-wide integral-model record.
 
 For the optional numerical contradiction, add a separate **certified good-prime record**. It
@@ -876,11 +876,11 @@ residual representation.
 
 The proof uses the following mathematical sources directly.
 
-| Source | Exact input | Use here |
-|---|---|---|
-| Book 161, Theorems 6.2, 9.1--9.2, and 10.1 | the Schoof category, simple objects, Ext asymmetry, canonical multiplicative--constant filtration, and finite-level cross and trace identities | Chapters 3--7 and the input to the $\mathcal O$-adic passage |
+| Source                                         | Exact input                                                                                                                                                               | Use here                                                                                                            |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Book 161, Theorems 6.2, 9.1--9.2, and 10.1     | the Schoof category, simple objects, Ext asymmetry, canonical multiplicative--constant filtration, and finite-level cross and trace identities                            | Chapters 3--7 and the input to the $\mathcal O$-adic passage                                                        |
 | restricted conclusion of Book 185, Theorem 9.1 | absolute irreducibility, determinant, the rational SP pair, and, for the optional fallback, cofinite common good polynomials and purity at the selected place above three | the preferred contradiction and rational local record; Section 9 is optional, and no coefficient-two member is used |
-| Book 187, Theorem 10.2 | the clean-support, coefficient-linear all-level tower over $\mathbf Z[1/2]$ | the sole integral input at and away from $3$ |
+| Book 187, Theorem 10.2                         | the clean-support, coefficient-linear all-level tower over $\mathbf Z[1/2]$                                                                                               | the sole integral input at and away from $3$                                                                        |
 
 Books 2--6, 17, 28--29, 34, 42, 51, and 159--160 enter transitively through Book 161's proved
 classification package. Book 188 does not reopen their local discriminant, ray-class, Hopf-order,

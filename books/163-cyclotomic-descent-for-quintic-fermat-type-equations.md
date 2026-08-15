@@ -80,7 +80,7 @@ Equivalently, the only integer solutions of $X^5+Y^5=Z^5$ have a zero
 coordinate. The equivalence uses only the oddness of the exponent: in (1.1), move
 $z^5$ to the other side and put $Z=-z$.
 
-Book 162, *Quintic Cyclotomic Units and Kummer Arithmetic*, established the arithmetic
+Book 162, _Quintic Cyclotomic Units and Kummer Arithmetic_, established the arithmetic
 of
 
 $$
@@ -726,13 +726,13 @@ ordered pair.
 It is useful to see the complete residue ledger. The primary congruence and the
 consequence of $\lambda^5$-divisibility are
 
-| $k$ | equation from primarity | consequence of conjugate subtraction |
-|---|---|---|
-| $0$ | $b\equiv0$ | excluded by the first case |
-| $1$ | $a+2b\equiv0$ | the rational coordinate forces $a\equiv0$ |
-| $2$ | $2a+3b\equiv0$ | $a\equiv b$ |
-| $3$ | $3a+4b\equiv0$ | the rational coordinate forces $b\equiv0$ |
-| $4$ | $4a\equiv0$ | excluded by the first case |
+| $k$ | equation from primarity | consequence of conjugate subtraction      |
+| --- | ----------------------- | ----------------------------------------- |
+| $0$ | $b\equiv0$              | excluded by the first case                |
+| $1$ | $a+2b\equiv0$           | the rational coordinate forces $a\equiv0$ |
+| $2$ | $2a+3b\equiv0$          | $a\equiv b$                               |
+| $3$ | $3a+4b\equiv0$          | the rational coordinate forces $b\equiv0$ |
+| $4$ | $4a\equiv0$             | excluded by the first case                |
 
 The rational-coordinate test in the two asymmetric rows uses the valuation formula
 from Book 162. If

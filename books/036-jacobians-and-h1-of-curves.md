@@ -880,7 +880,7 @@ All are isomorphisms of continuous arithmetic $G_k$-representations. If one inst
 
 ### 10.5 The whole cohomology of an abelian variety
 
-The preceding sections computed $H^1$ of the *curve*. The Jacobian is itself a proper variety and has cohomology in every degree up to $2g$, and later chapters — the comparison of the Weil pairing with the cup product, and the weight arguments that use these groups — need all of it. We record the computation here, in the generality of an arbitrary abelian variety, because it is used later for abelian varieties that are not Jacobians. It is placed at this point in the sequence because its proof needs the cohomology of profinite groups, which is the subject of Book 24, together with the Galois descent of Book 18; both are available now.
+The preceding sections computed $H^1$ of the _curve_. The Jacobian is itself a proper variety and has cohomology in every degree up to $2g$, and later chapters — the comparison of the Weil pairing with the cup product, and the weight arguments that use these groups — need all of it. We record the computation here, in the generality of an arbitrary abelian variety, because it is used later for abelian varieties that are not Jacobians. It is placed at this point in the sequence because its proof needs the cohomology of profinite groups, which is the subject of Book 24, together with the Galois descent of Book 18; both are available now.
 
 Throughout this section $A$ is an abelian variety of dimension $g$ over a separably closed field $\bar k$ with $\ell\ne\operatorname{char}\bar k$, and we abbreviate
 
@@ -909,7 +909,7 @@ both functorial in $A$; the groups vanish for $i>2g$.
 
 The proof occupies the rest of the section and has four steps.
 
-*The multiplication tower is cofinal.* Every connected pointed finite étale cover $Y\to A$ admits a unique abelian-variety structure making the map an isogeny. Translations lift once a point above the identity is chosen; the two possible lifts of the addition law agree along the identity and therefore everywhere, because a map from a proper connected variety to a finite étale scheme is locally constant. The same argument supplies the inverse and the associativity. Hence every connected pointed étale cover of $\ell$-power degree is dominated by $[\ell^r]:A\to A$ for $r$ large, so the tower of multiplication maps is cofinal among such covers. Each $[\ell^r]$ is finite étale and Galois with group $A[\ell^r](\bar k)$, and the inverse limit of those groups is $T_\ell A$.
+_The multiplication tower is cofinal._ Every connected pointed finite étale cover $Y\to A$ admits a unique abelian-variety structure making the map an isogeny. Translations lift once a point above the identity is chosen; the two possible lifts of the addition law agree along the identity and therefore everywhere, because a map from a proper connected variety to a finite étale scheme is locally constant. The same argument supplies the inverse and the associativity. Hence every connected pointed étale cover of $\ell$-power degree is dominated by $[\ell^r]:A\to A$ for $r$ large, so the tower of multiplication maps is cofinal among such covers. Each $[\ell^r]$ is finite étale and Galois with group $A[\ell^r](\bar k)$, and the inverse limit of those groups is $T_\ell A$.
 
 The degree is $\deg[\ell^r]=\ell^{2gr}$. This is proved in Book 18, Section 15.2, without any cohomology, for an abelian scheme carrying a relatively ample line bundle; that hypothesis is available here, since an abelian variety over a field is projective by Book 35, and it is automatic for the Jacobians of Chapter 9, which carry their canonical polarization. The argument is: a symmetric ample $L$ satisfies $[n]^*L\simeq L^{\otimes n^2}$ by the theorem of the square, the pushforward $[n]_*\mathcal O$ is locally free of rank $\deg[n]$ so that pullback multiplies the leading coefficient of the Hilbert polynomial by that degree, while replacing $L$ by $L^{\otimes n^2}$ multiplies it by $n^{2g}$. Since $[\ell^r]$ is étale here,
 
@@ -919,7 +919,7 @@ $$
 
 after a choice of basis, compatibly in $r$; so $T_\ell A\cong\mathbf Z_\ell^{2g}$.
 
-*The tower is acyclic in positive degrees.* For $q>0$, pullback along $[\ell^r]$ annihilates $H^q(A,\Lambda_m)$ as soon as $rq\geq m$. Translation by a geometric point acts trivially on cohomology: the map from the connected variety $A$ to the finite set of automorphisms of $H^q(A,\Lambda_m)$ is locally constant and is the identity at the origin. Represent a class on an étale Čech hypercover and apply the alternating difference operator in the $q+1$ variables of $A^{q+1}$. The cosimplicial identities make that difference a coboundary; this is the cohomological form of the theorem of the cube. Expanding $[n]$ as the sum of $n$ copies of the identity in each of the remaining $q$ difference variables gives
+_The tower is acyclic in positive degrees._ For $q>0$, pullback along $[\ell^r]$ annihilates $H^q(A,\Lambda_m)$ as soon as $rq\geq m$. Translation by a geometric point acts trivially on cohomology: the map from the connected variety $A$ to the finite set of automorphisms of $H^q(A,\Lambda_m)$ is locally constant and is the identity at the origin. Represent a class on an étale Čech hypercover and apply the alternating difference operator in the $q+1$ variables of $A^{q+1}$. The cosimplicial identities make that difference a coboundary; this is the cohomological form of the theorem of the cube. Expanding $[n]$ as the sum of $n$ copies of the identity in each of the remaining $q$ difference variables gives
 
 $$
 [n]^*\alpha=n^q\alpha \tag{10.16}
@@ -927,7 +927,7 @@ $$
 
 modulo coboundaries. For $n=\ell^r$ the right side is zero in $\Lambda_m$ once $rq\geq m$.
 
-*Descent along the tower.* For the finite Galois étale cover $[\ell^r]$ with group $G_r=A[\ell^r](\bar k)$, the Cartan--Leray spectral sequence of Book 18 reads
+_Descent along the tower._ For the finite Galois étale cover $[\ell^r]$ with group $G_r=A[\ell^r](\bar k)$, the Cartan--Leray spectral sequence of Book 18 reads
 
 $$
 H^a\bigl(G_r,H^b(A,\Lambda_m)\bigr)
@@ -949,7 +949,7 @@ $$
 
 with $T_\ell A$ acting trivially, compatibly with cup products.
 
-*The profinite computation.* It remains to compute the continuous cohomology of $T_\ell A\cong\mathbf Z_\ell^{2g}$ with trivial finite coefficients, and this is Book 24. For a single factor, Section 11.7 of that book gives $H^0=H^1=\Lambda_m$ and $H^n=0$ for $n\geq2$, the degree-one group being the continuous homomorphisms to $\Lambda_m$. Feeding the factors in one at a time through the Hochschild--Serre sequence of Book 24, Section 13.4, and multiplying by the cup products of its Chapter 7, one obtains for a free $\mathbf Z_\ell$-module $T$ of rank $d$ acting trivially
+_The profinite computation._ It remains to compute the continuous cohomology of $T_\ell A\cong\mathbf Z_\ell^{2g}$ with trivial finite coefficients, and this is Book 24. For a single factor, Section 11.7 of that book gives $H^0=H^1=\Lambda_m$ and $H^n=0$ for $n\geq2$, the degree-one group being the continuous homomorphisms to $\Lambda_m$. Feeding the factors in one at a time through the Hochschild--Serre sequence of Book 24, Section 13.4, and multiplying by the cup products of its Chapter 7, one obtains for a free $\mathbf Z_\ell$-module $T$ of rank $d$ acting trivially
 
 $$
 H^i_{\mathrm{cont}}(T,\Lambda_m)

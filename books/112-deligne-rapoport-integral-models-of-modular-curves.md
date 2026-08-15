@@ -164,13 +164,13 @@ Here $F_{X_k}$ is the absolute Frobenius after the usual identification of the F
 The local and global pictures agree as follows:
 
 ```text
-             C_F
-              \
-               \  supersingular node
-                +
-               /
-              /
-             C_V
+C_F
+ \
+  \  supersingular node
+   +
+  /
+ /
+C_V
 ```
 
 At the node, $C_F$ is $x=0$, $C_V$ is $y=0$, and the arithmetic surface is $xy=p$. Away from the nodes, precisely one of $x,y$ is invertible and the corresponding subgroup has ordinary connected or etale type. The rest of the book turns this picture into a theorem.
@@ -1015,10 +1015,10 @@ The denominator records genuine component data. On a quotient model the correct 
 Over $\bar k$, the dual graph has two vertices joined by one edge for each supersingular point:
 
 ```text
-             e1
-       C_F ===== C_V
-             e2
-             ...
+      e1
+C_F ===== C_V
+      e2
+      ...
 ```
 
 Its first Betti number is $s_{\mathrm{geom}}-1$. The critical group of the unit-edge graph is
@@ -1171,18 +1171,18 @@ A missing component multiplicity breaks the first two. A reversed branch label b
 
 The main false shortcuts can now be stated precisely.
 
-| Shortcut | Failure | Correct statement |
-|---|---|---|
-| A rank-$p$ subgroup is determined by its geometric points | connected groups can have one visible point | use finite flat subgroup divisors and Drinfeld generation |
-| Generic cyclic level has a unique integral model | order-$p$ groups can have several Hopf lattices | close inside the fixed $E[p]$ and impose the moduli condition |
-| The ordinary fiber has $p+1$ components because $E[p]$ has $p+1$ generic lines | generic lines collide into two integral types | use the connected--etale rank dichotomy |
-| The two ordinary branches remain disjoint | their subgroup schemes coalesce at supersingular curves | the completed ring is $xy=p$ |
-| Normality proves regularity | a normal surface can have a thick node | use the completed local equation |
-| A coarse quotient of a node is again a unit node | inverse tangent characters create thickness | compute invariants and resolve $XY=p^e$ |
-| The number of rational supersingular points is the intersection number | residue extensions and Galois orbits contribute degrees | sum $[\kappa(z):k]$ or work geometrically |
-| Igusa curves are extra components of $X_0(p)$ | they are generator normalizations of the two directions | quotient by $\mathbf F_p^\times$ recovers the cyclic components |
-| Frobenius is degree one because it is bijective on geometric points | it is purely inseparable of degree $p$ | keep scheme-theoretic degree |
-| A regular fine cover makes the coarse surface regular | fixed points can create quotient singularities | distinguish fine, stack, stable coarse, and resolved coarse models |
+| Shortcut                                                                       | Failure                                                 | Correct statement                                                  |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------- | ------------------------------------------------------------------ |
+| A rank-$p$ subgroup is determined by its geometric points                      | connected groups can have one visible point             | use finite flat subgroup divisors and Drinfeld generation          |
+| Generic cyclic level has a unique integral model                               | order-$p$ groups can have several Hopf lattices         | close inside the fixed $E[p]$ and impose the moduli condition      |
+| The ordinary fiber has $p+1$ components because $E[p]$ has $p+1$ generic lines | generic lines collide into two integral types           | use the connected--etale rank dichotomy                            |
+| The two ordinary branches remain disjoint                                      | their subgroup schemes coalesce at supersingular curves | the completed ring is $xy=p$                                       |
+| Normality proves regularity                                                    | a normal surface can have a thick node                  | use the completed local equation                                   |
+| A coarse quotient of a node is again a unit node                               | inverse tangent characters create thickness             | compute invariants and resolve $XY=p^e$                            |
+| The number of rational supersingular points is the intersection number         | residue extensions and Galois orbits contribute degrees | sum $[\kappa(z):k]$ or work geometrically                          |
+| Igusa curves are extra components of $X_0(p)$                                  | they are generator normalizations of the two directions | quotient by $\mathbf F_p^\times$ recovers the cyclic components    |
+| Frobenius is degree one because it is bijective on geometric points            | it is purely inseparable of degree $p$                  | keep scheme-theoretic degree                                       |
+| A regular fine cover makes the coarse surface regular                          | fixed points can create quotient singularities          | distinguish fine, stack, stable coarse, and resolved coarse models |
 
 The dependency chain is equally exact. Normalization, regular surface criteria, and preservation of a good open come from Book 11. Blowup and component intersections come from Book 12. Nodes, weighted edges, and component groups come from Book 16. Finite-flat closure, connected--etale structure, Oort--Tate parameters, and Cartier duality come from Book 51. Generalized elliptic curves, ample Drinfeld level, compactified stacks, coarse curves, Tate charts, and boundary isogenies are established by Books 110--111. The new work here is the residue-characteristic deformation calculation and its global synthesis into the two-component model.
 

@@ -98,7 +98,7 @@ finite quotient of $J(\mathbf Q)$ gives a congruence condition. Different
 primes impose different conditions, and their intersection can be much
 smaller than any individual one. This is the Mordell--Weil sieve.
 
-The word *exhaustive* carries real content. A short search for points, a list
+The word _exhaustive_ carries real content. A short search for points, a list
 of reductions, or an intersection which happens to contain only the known
 residue classes is not automatically a proof. One must know the full
 Mordell--Weil group or control its index, enumerate every relevant special
@@ -1496,16 +1496,16 @@ conclusion of the next arrow.
 
 The main constructions and their exact hypotheses are summarized below.
 
-| Assertion | Hypotheses |
-|---|---|
-| Abel map is a closed immersion | smooth projective curve of genus at least one and a rational degree-one base class |
-| specialization square (2.2) | smooth proper model at the chosen prime and compatible base section |
-| finite reduction constraint | good reduction; no restriction on the modulus for necessity |
-| local quotient isomorphism (5.2) | good reduction and $p\nmid N$ |
-| pointed Mumford Abel-image test | monic squarefree quintic, characteristic different from two, rational branch point at infinity |
-| torsion reduction injectivity | good reduction and torsion order prime to the residue characteristic |
-| reduction saturation criterion | good primes away from $\ell$, full rational $\ell$-torsion contained in the subgroup |
-| singleton terminal sieve | complete finite Mordell--Weil group and a modulus annihilating it |
+| Assertion                        | Hypotheses                                                                                     |
+| -------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Abel map is a closed immersion   | smooth projective curve of genus at least one and a rational degree-one base class             |
+| specialization square (2.2)      | smooth proper model at the chosen prime and compatible base section                            |
+| finite reduction constraint      | good reduction; no restriction on the modulus for necessity                                    |
+| local quotient isomorphism (5.2) | good reduction and $p\nmid N$                                                                  |
+| pointed Mumford Abel-image test  | monic squarefree quintic, characteristic different from two, rational branch point at infinity |
+| torsion reduction injectivity    | good reduction and torsion order prime to the residue characteristic                           |
+| reduction saturation criterion   | good primes away from $\ell$, full rational $\ell$-torsion contained in the subgroup           |
+| singleton terminal sieve         | complete finite Mordell--Weil group and a modulus annihilating it                              |
 
 Book 41 supplies finite generation and the height-lattice language. Book 149
 derives the two marked curve models from their modular parameter problems,

@@ -76,8 +76,9 @@
     - [Tamely ramified quadratic induction](#153-tamely-ramified-quadratic-induction)
     - [The primitive wild boundary](#154-the-primitive-wild-boundary)
 16. [The reusable local package](#16-the-reusable-local-package)
-   - [Construction and invariants](#161-construction-and-invariants)
-   - [Final synthesis](#162-final-synthesis)
+
+- [Construction and invariants](#161-construction-and-invariants)
+- [Final synthesis](#162-final-synthesis)
 
 ## 1. The quadratic route to cuspidality
 

@@ -58,29 +58,36 @@
    - [Density of smooth cuspidal vectors](#94-density-of-smooth-cuspidal-vectors)
    - [The exact role of all translates](#95-the-exact-role-of-all-translates)
 10. [Cuspidal decay and compactness](#10-cuspidal-decay-and-compactness)
-   - [The transverse Poincare inequality](#101-the-transverse-poincare-inequality)
-   - [The cusp tail estimate](#102-the-cusp-tail-estimate)
-   - [Higher decay and smooth vectors](#103-higher-decay-and-smooth-vectors)
-   - [Rellich compactness on truncations](#104-rellich-compactness-on-truncations)
-   - [The global compact embedding](#105-the-global-compact-embedding)
-   - [Escape of mass without cuspidality](#106-escape-of-mass-without-cuspidality)
+
+- [The transverse Poincare inequality](#101-the-transverse-poincare-inequality)
+- [The cusp tail estimate](#102-the-cusp-tail-estimate)
+- [Higher decay and smooth vectors](#103-higher-decay-and-smooth-vectors)
+- [Rellich compactness on truncations](#104-rellich-compactness-on-truncations)
+- [The global compact embedding](#105-the-global-compact-embedding)
+- [Escape of mass without cuspidality](#106-escape-of-mass-without-cuspidality)
+
 11. [Typewise elliptic spectrum](#11-typewise-elliptic-spectrum)
-   - [The positive measuring operator](#111-the-positive-measuring-operator)
-   - [Self-adjoint realization and compact resolvent](#112-self-adjoint-realization-and-compact-resolvent)
-   - [Smoothness and rapid decrease of eigenvectors](#113-smoothness-and-rapid-decrease-of-eigenvectors)
-   - [Finite spectral windows](#114-finite-spectral-windows)
-   - [Why compactness is typewise](#115-why-compactness-is-typewise)
+
+- [The positive measuring operator](#111-the-positive-measuring-operator)
+- [Self-adjoint realization and compact resolvent](#112-self-adjoint-realization-and-compact-resolvent)
+- [Smoothness and rapid decrease of eigenvectors](#113-smoothness-and-rapid-decrease-of-eigenvectors)
+- [Finite spectral windows](#114-finite-spectral-windows)
+- [Why compactness is typewise](#115-why-compactness-is-typewise)
+
 12. [The discrete cuspidal decomposition](#12-the-discrete-cuspidal-decomposition)
-   - [Compact cuspidal convolution](#121-compact-cuspidal-convolution)
-   - [The compact-operator decomposition](#122-the-compact-operator-decomposition)
-   - [Finite multiplicity](#123-finite-multiplicity)
-   - [The decomposition theorem](#124-the-decomposition-theorem)
-   - [Consequences and boundaries](#125-consequences-and-boundaries)
+
+- [Compact cuspidal convolution](#121-compact-cuspidal-convolution)
+- [The compact-operator decomposition](#122-the-compact-operator-decomposition)
+- [Finite multiplicity](#123-finite-multiplicity)
+- [The decomposition theorem](#124-the-decomposition-theorem)
+- [Consequences and boundaries](#125-consequences-and-boundaries)
+
 13. [Synthesis of the reduction and spectral arguments](#13-synthesis-of-the-reduction-and-spectral-arguments)
-   - [The complete implication chain](#131-the-complete-implication-chain)
-   - [A normalization ledger](#132-a-normalization-ledger)
-   - [Failure modes and their repairs](#133-failure-modes-and-their-repairs)
-   - [Conclusion](#134-conclusion)
+
+- [The complete implication chain](#131-the-complete-implication-chain)
+- [A normalization ledger](#132-a-normalization-ledger)
+- [Failure modes and their repairs](#133-failure-modes-and-their-repairs)
+- [Conclusion](#134-conclusion)
 
 ## 1. The global quotient and its escaping direction
 
@@ -2246,22 +2253,22 @@ No arrow can be replaced by the conclusion of the preceding line alone. Finite v
 
 ### 13.2 A normalization ledger
 
-| Feature | Convention |
-|---|---|
-| Finite absolute value | $|\varpi_v|_v=q_v^{-1}$ |
-| Complex absolute value | Square of the usual modulus |
-| Additive finite measure | $\operatorname{vol}(\mathcal O_v)=1$ |
-| Additive adelic covolume | $\operatorname{vol}(F\backslash\mathbf A)=2^{-r_2}|d_F|^{1/2}$ |
-| Unipotent quotient measure | Probability measure $d\bar x=c_F^{-1}dx$ |
-| Finite multiplicative measure | $\operatorname{vol}(\mathcal O_v^\times)=1$ |
-| Maximal compact measure | Probability Haar measure |
-| Borel modular character | $\delta_B(\operatorname{diag}(a,d))=|a/d|_{\mathbf A}$ |
-| Height | $H_B=|a/d|_{\mathbf A}$ |
-| Cusp measure | Bounded compact factor times $dH/H^2$ |
-| Central transformation | $\phi(zg)=\omega(z)\phi(g)$ |
-| Constant term | Probability average over $F\backslash\mathbf A$ |
-| Cuspidality | Constant term zero at every right translate |
-| Compactness claim | Fixed finite level and fixed $K_\infty$-type |
+| Feature                       | Convention                                         |
+| ----------------------------- | -------------------------------------------------- |
+| Finite absolute value         | $                                                  |
+| Complex absolute value        | Square of the usual modulus                        |
+| Additive finite measure       | $\operatorname{vol}(\mathcal O_v)=1$               |
+| Additive adelic covolume      | $\operatorname{vol}(F\backslash\mathbf A)=2^{-r_2} |
+| Unipotent quotient measure    | Probability measure $d\bar x=c_F^{-1}dx$           |
+| Finite multiplicative measure | $\operatorname{vol}(\mathcal O_v^\times)=1$        |
+| Maximal compact measure       | Probability Haar measure                           |
+| Borel modular character       | $\delta_B(\operatorname{diag}(a,d))=               |
+| Height                        | $H_B=                                              |
+| Cusp measure                  | Bounded compact factor times $dH/H^2$              |
+| Central transformation        | $\phi(zg)=\omega(z)\phi(g)$                        |
+| Constant term                 | Probability average over $F\backslash\mathbf A$    |
+| Cuspidality                   | Constant term zero at every right translate        |
+| Compactness claim             | Fixed finite level and fixed $K_\infty$-type       |
 
 Changing one Haar normalization rescales quotient volumes and constant-term norms but does not change zero constant terms or the abstract representation. Every numerical volume statement in this book refers to the ledger above.
 

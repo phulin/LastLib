@@ -2517,6 +2517,7 @@ This boundary is harmless for finite extensions of characteristic-zero local fie
 of them are separable. It becomes decisive over $\mathbf F_q((t))$, where inseparable extensions
 exist and, more importantly for finiteness, wildly ramified separable extensions can accumulate
 near inseparable equations.
+
 ## 13. How many extensions are there?
 
 ### 13.1 The finiteness question and its exact scope

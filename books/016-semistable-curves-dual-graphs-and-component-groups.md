@@ -113,13 +113,13 @@ For a model whose completed local equation at a node is $xy=u\pi^{n_e}$, in the 
 Consider two smooth proper curves $Y_1$ and $Y_2$ over $k$, glued transversely at $r$ pairs of rational points. The dual graph has two vertices and $r$ parallel edges:
 
 ```text
-          e1
-       +------+
-       |      |
-   v1  +------+
-       |  e2  |  v2
-       +------+
-          ...
+       e1
+    +------+
+    |      |
+v1  +------+
+    |  e2  |  v2
+    +------+
+       ...
 ```
 
 Its first Betti number is $r-1$. The connected degree-zero Picard group of the nodal curve is an extension of $J(Y_1)\times J(Y_2)$ by a torus of dimension $r-1$. If every edge has thickness one, the component group of a regular smoothing has order $r$. Thus the same $r$ appears in two different ways: $r-1$ counts independent gluing parameters, while a determinant of their integral pairing equals $r$.
@@ -278,11 +278,11 @@ is the largest ideal of $\mathcal O_X$ that is also an ideal of $\nu_*\mathcal O
 Let $D\subset X$ be the conductor subscheme and $\widetilde D\subset\widetilde X$ its inverse image. There is a cartesian and cocartesian square
 
 ```text
-  D~  ------>  X~
-  |             |
-  |             | normalization
-  v             v
-  D   ------>   X
+D~  ------>  X~
+|             |
+|             | normalization
+v             v
+D   ------>   X
 ```
 
 The square says that $X$ is recovered by gluing the pairs of conductor points in $\widetilde X$. Affinely, if $A\subset\widetilde A$ is the normalization and $I$ the conductor, then

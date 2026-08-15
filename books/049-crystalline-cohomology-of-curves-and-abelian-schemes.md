@@ -1508,21 +1508,21 @@ with ranks $\binom{2g}{n}$. The Poincaré bundle identifies the degree-one cryst
 
 ### 16.2 Hypothesis ledger
 
-| Assertion | Hypotheses used | Failure prevented |
-|---|---|---|
-| local de Rham comparison | smooth lift and quasi-nilpotent crystal | Taylor transport may not converge or integrate |
-| global comparison | embedding system and cohomological descent | a global lift may not exist |
-| finite perfect direct image | finite-level PD base, smoothness, properness, finite presentation, noetherian base | nonproper cohomology need not be finite, and the nilpotent comparison need not apply outside its regime |
-| arbitrary base change | a morphism of finite-level PD bases and derived tensor product | nonflat change creates Tor, while an unproved change of crystalline regime has no comparison theorem |
-| ordinary base change on $H^i$ | finite local freeness, or the precise neighboring Tor vanishing | cohomology need not commute with reduction |
-| degreewise perfect duality | locally free cohomology | derived duality may contain Ext between degrees |
-| cohomological Künneth direct sum | flat cohomology modules | Tor terms can survive |
-| Frobenius as one endomorphism | perfect base field, or a retained Frobenius twist | absolute Frobenius is semilinear |
-| Frobenius isomorphism | coefficients rationalized | integral Frobenius can have $p$-power cokernel |
-| completed cohomology as an ordinary limit | compatible bounded finite free models and surjective transitions | $R^1\varprojlim$ classes can appear |
-| perfect polarization form | principal polarization, or inversion of its degree | a nonprincipal integral form can be nonunimodular |
-| isogeny invariance | inversion of the isogeny degree | a residue-characteristic isogeny can kill differentials |
-| integral idempotent factor | an idempotent preserving the integral lattice | a rational summand need not be saturated |
+| Assertion                                 | Hypotheses used                                                                    | Failure prevented                                                                                       |
+| ----------------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| local de Rham comparison                  | smooth lift and quasi-nilpotent crystal                                            | Taylor transport may not converge or integrate                                                          |
+| global comparison                         | embedding system and cohomological descent                                         | a global lift may not exist                                                                             |
+| finite perfect direct image               | finite-level PD base, smoothness, properness, finite presentation, noetherian base | nonproper cohomology need not be finite, and the nilpotent comparison need not apply outside its regime |
+| arbitrary base change                     | a morphism of finite-level PD bases and derived tensor product                     | nonflat change creates Tor, while an unproved change of crystalline regime has no comparison theorem    |
+| ordinary base change on $H^i$             | finite local freeness, or the precise neighboring Tor vanishing                    | cohomology need not commute with reduction                                                              |
+| degreewise perfect duality                | locally free cohomology                                                            | derived duality may contain Ext between degrees                                                         |
+| cohomological Künneth direct sum          | flat cohomology modules                                                            | Tor terms can survive                                                                                   |
+| Frobenius as one endomorphism             | perfect base field, or a retained Frobenius twist                                  | absolute Frobenius is semilinear                                                                        |
+| Frobenius isomorphism                     | coefficients rationalized                                                          | integral Frobenius can have $p$-power cokernel                                                          |
+| completed cohomology as an ordinary limit | compatible bounded finite free models and surjective transitions                   | $R^1\varprojlim$ classes can appear                                                                     |
+| perfect polarization form                 | principal polarization, or inversion of its degree                                 | a nonprincipal integral form can be nonunimodular                                                       |
+| isogeny invariance                        | inversion of the isogeny degree                                                    | a residue-characteristic isogeny can kill differentials                                                 |
+| integral idempotent factor                | an idempotent preserving the integral lattice                                      | a rational summand need not be saturated                                                                |
 
 Every entry corresponds to an actual obstruction. The derived statements are the unconditional backbone; the curve and abelian-scheme geometry supplies the flatness which turns them into the clean integral formulas used later.
 

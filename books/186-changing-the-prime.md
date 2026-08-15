@@ -65,7 +65,7 @@ integral model, is stronger and lies outside the scope needed here. The contradi
 one place $\nu\mid3$, and the selected route needs an all-level
 integral tower only for this one member. It still needs that member to be unramified at
 every base prime outside $\{2,3\}$, because those local conditions glue the tower over
-$\mathbf Z[1/2]$. Thus ``one coefficient place'' must not be confused with ``one rational
+$\mathbf Z[1/2]$. Thus `one coefficient place'' must not be confused with`one rational
 base place.''
 
 Book 178, Theorem 12.2 supplies the restricted signed-special finite fibre and retained
@@ -186,7 +186,7 @@ $$
 Here the pair $D_2$ determines which sign occurs; the determinant and the
 Weil--Deligne relation force its square to be one.
 
-The word *sign* in this chapter means exactly (2.8). It is the Frobenius
+The word _sign_ in this chapter means exactly (2.8). It is the Frobenius
 eigenvalue on the one-dimensional quotient by the monodromy line. No root-number
 convention is being smuggled into the notation.
 
@@ -205,13 +205,13 @@ r_\nu\text{ is unramified at every rational prime }v\ne2,3
 \tag{2.9}
 $$
 
-This is not a consequence of equality at the cofinite set of good Frobenius classes.  Book
+This is not a consequence of equality at the cofinite set of good Frobenius classes. Book
 185, Proposition 8.3 proves it by a different argument: equivariant conductor and
 invariant-Frobenius independence anchor every elementary raw packet at the distinguished
 irreducible member; Book 128, Lemma 3.2 passes its unramified pair to the elementary
 semisimplification; and actual Brauer direct-sum cancellation constructs the common rank-two
-local complement.  The distinguished member makes that complement unramified away from $2$
-and the old coefficient prime, and the split unitary good cover treats that old prime.  Thus
+local complement. The distinguished member makes that complement unramified away from $2$
+and the old coefficient prime, and the split unitary good cover treats that old prime. Thus
 Book 185 proves $(\mathrm{AUX}_\nu)$ and then $(\mathrm U)$ for the selected $\nu\mid3$.
 Under the optional uniform hypotheses it also proves $(\mathrm{AUX}_{\mathrm{all}})$ and
 $(\mathrm{Cond}_2)$. The selected argument also supplies an exceptional-prime Galois Frobenius

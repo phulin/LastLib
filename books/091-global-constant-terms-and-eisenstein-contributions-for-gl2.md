@@ -48,30 +48,39 @@
    - [Square integrability of the residue](#93-square-integrability-of-the-residue)
    - [What does not produce a residual term](#94-what-does-not-produce-a-residual-term)
 10. [Pseudo-Eisenstein series and wave packets](#10-pseudo-eisenstein-series-and-wave-packets)
-   - [Incomplete data on the Borel quotient](#101-incomplete-data-on-the-borel-quotient)
-   - [Mellin inversion along height](#102-mellin-inversion-along-height)
-   - [Moving the contour](#103-moving-the-contour)
-   - [The elementary Maass--Selberg identity](#104-the-elementary-maass--selberg-identity)
+
+- [Incomplete data on the Borel quotient](#101-incomplete-data-on-the-borel-quotient)
+- [Mellin inversion along height](#102-mellin-inversion-along-height)
+- [Moving the contour](#103-moving-the-contour)
+- [The elementary Maass--Selberg identity](#104-the-elementary-maass--selberg-identity)
+
 11. [Classification of the noncuspidal contributions](#11-classification-of-the-noncuspidal-contributions)
-   - [The constant-term channel](#111-the-constant-term-channel)
-   - [Continuous and residual terms](#112-continuous-and-residual-terms)
-   - [The classification theorem in the required range](#113-the-classification-theorem-in-the-required-range)
-   - [Why no general spectral measure is needed](#114-why-no-general-spectral-measure-is-needed)
+
+- [The constant-term channel](#111-the-constant-term-channel)
+- [Continuous and residual terms](#112-continuous-and-residual-terms)
+- [The classification theorem in the required range](#113-the-classification-theorem-in-the-required-range)
+- [Why no general spectral measure is needed](#114-why-no-general-spectral-measure-is-needed)
+
 12. [Cuspidal local test functions](#12-cuspidal-local-test-functions)
-   - [The operator-level vanishing condition](#121-the-operator-level-vanishing-condition)
-   - [Nonarchimedean supercuspidal coefficients](#122-nonarchimedean-supercuspidal-coefficients)
-   - [Archimedean discrete-series coefficients](#123-archimedean-discrete-series-coefficients)
-   - [The weaker trace-level condition](#124-the-weaker-trace-level-condition)
+
+- [The operator-level vanishing condition](#121-the-operator-level-vanishing-condition)
+- [Nonarchimedean supercuspidal coefficients](#122-nonarchimedean-supercuspidal-coefficients)
+- [Archimedean discrete-series coefficients](#123-archimedean-discrete-series-coefficients)
+- [The weaker trace-level condition](#124-the-weaker-trace-level-condition)
+
 13. [Annihilation of every noncuspidal contribution](#13-annihilation-of-every-noncuspidal-contribution)
-   - [Factorizable global tests](#131-factorizable-global-tests)
-   - [Vanishing on Eisenstein series and wave packets](#132-vanishing-on-eisenstein-series-and-wave-packets)
-   - [Vanishing on residues](#133-vanishing-on-residues)
-   - [The cuspidal-test theorem](#134-the-cuspidal-test-theorem)
+
+- [Factorizable global tests](#131-factorizable-global-tests)
+- [Vanishing on Eisenstein series and wave packets](#132-vanishing-on-eisenstein-series-and-wave-packets)
+- [Vanishing on residues](#133-vanishing-on-residues)
+- [The cuspidal-test theorem](#134-the-cuspidal-test-theorem)
+
 14. [Consequences, failure modes, and final synthesis](#14-consequences-failure-modes-and-final-synthesis)
-   - [Consequences for later trace arguments](#141-consequences-for-later-trace-arguments)
-   - [Failure modes and their corrections](#142-failure-modes-and-their-corrections)
-   - [The complete implication chain](#143-the-complete-implication-chain)
-   - [Conclusion](#144-conclusion)
+
+- [Consequences for later trace arguments](#141-consequences-for-later-trace-arguments)
+- [Failure modes and their corrections](#142-failure-modes-and-their-corrections)
+- [The complete implication chain](#143-the-complete-implication-chain)
+- [Conclusion](#144-conclusion)
 
 ## 1. The missing half of the automorphic quotient
 
@@ -870,7 +879,7 @@ $$
 
 This identity uses the same local normalization at every place.
 
-The word *global* is essential. A raw local intertwining integral generally composes to a
+The word _global_ is essential. A raw local intertwining integral generally composes to a
 nontrivial scalar. In the global product, the different, conductor, and ramified local
 corrections combine with the functional equation of $\Lambda$; under the self-dual measure
 ledger their product is exactly the scalar needed for (7.6). A clean proof in the present

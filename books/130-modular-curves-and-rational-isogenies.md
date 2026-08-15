@@ -237,12 +237,12 @@ as effective Cartier divisors. It need not be an isomorphism of group schemes. O
 
 The elementary descriptions may be summarized as follows.
 
-| Level datum | If $\operatorname{char}K\nmid N$ | If $\operatorname{char}K\mid N$ |
-|---|---|---|
-| $\Gamma_0(N)$ | stable cyclic subgroup of $E[N](K^s)$ | cyclic finite locally free subgroup scheme; point set is insufficient |
-| $\Gamma_1(N)$ | $K$-rational point of exact order $N$ | Drinfeld point/divisor of exact order |
-| full level | ordered basis of $E[N](K^s)$ with descent | Drinfeld basis; not generally a group-scheme isomorphism |
-| degree-$p$ isogeny versus line | equivalent for $p\ne\operatorname{char}K$ | false as a point-set statement |
+| Level datum                    | If $\operatorname{char}K\nmid N$          | If $\operatorname{char}K\mid N$                                       |
+| ------------------------------ | ----------------------------------------- | --------------------------------------------------------------------- |
+| $\Gamma_0(N)$                  | stable cyclic subgroup of $E[N](K^s)$     | cyclic finite locally free subgroup scheme; point set is insufficient |
+| $\Gamma_1(N)$                  | $K$-rational point of exact order $N$     | Drinfeld point/divisor of exact order                                 |
+| full level                     | ordered basis of $E[N](K^s)$ with descent | Drinfeld basis; not generally a group-scheme isomorphism              |
+| degree-$p$ isogeny versus line | equivalent for $p\ne\operatorname{char}K$ | false as a point-set statement                                        |
 
 In particular, the representation $G_K\to\operatorname{GL}_2(\mathbf F_p)$ on $E[p](K^s)$ is two-dimensional only for $p\ne\operatorname{char}K$. The rational-isogeny/reducibility equivalence in Chapter 6 always carries that hypothesis.
 
@@ -1614,13 +1614,13 @@ The theorem is not asserted unchanged for the unrigidified coarse curves at $p=2
 
 These qualifications are not technical debris. Reduction arguments use different properties for different steps:
 
-| Needed conclusion | Sufficient geometric input |
-|---|---|
-| a $K$-point extends uniquely over a DVR | properness and separatedness |
-| a reduction point lies on a well-defined special fiber | a chosen proper integral model |
-| branches meet transversely | semistable local equation such as $xy-p$ |
-| intersection theory on the surface | regularity, or an explicit resolution |
-| smooth specialization and uncomplicated point counts | smooth proper reduction |
+| Needed conclusion                                      | Sufficient geometric input               |
+| ------------------------------------------------------ | ---------------------------------------- |
+| a $K$-point extends uniquely over a DVR                | properness and separatedness             |
+| a reduction point lies on a well-defined special fiber | a chosen proper integral model           |
+| branches meet transversely                             | semistable local equation such as $xy-p$ |
+| intersection theory on the surface                     | regularity, or an explicit resolution    |
+| smooth specialization and uncomplicated point counts   | smooth proper reduction                  |
 
 Using the weakest sufficient hypothesis keeps the later arguments correct at both good and level primes.
 
@@ -2436,21 +2436,21 @@ At $v\mid p$, a proper finite-flat level model replaces point-set torsion. Under
 
 The logical dependencies of the dictionary are compact enough to audit.
 
-| Statement | Exact hypothesis or qualification |
-|---|---|
-| $E[N](K^s)\simeq(\mathbf Z/N\mathbf Z)^2$ | $\operatorname{char}K\nmid N$ |
-| stable geometric subgroup $\Leftrightarrow$ subgroup scheme | finite étale torsion, hence $\operatorname{char}K\nmid N$ |
-| stable line $\Leftrightarrow$ rational $p$-isogeny | $p\ne\operatorname{char}K$ and reducibility over $\mathbf F_p$ |
-| $X_0$ versus $X_1$ | stable subgroup versus fixed generator |
-| coarse $K$-point gives a $K$-object | only when its descent gerbe is neutral |
-| all $X_0(N)$ cusps rational | true for squarefree $N$, false in general |
-| good reduction implies interior specialization | prime-to-level stable subgroup on a good elliptic model |
-| multiplicative reduction implies a cusp | on the stable generalized-elliptic compactification |
-| two-component fiber at $p$ | depth-one $\Gamma_0(p)$ after a prime-to-$p$ branch cover killing automorphisms; valid at small $p$ on that fine cover |
-| same fine statement on the unrigidified coarse surface at $p=2,3$ | not automatic; wild invariant rings require a direct calculation |
-| same claim for $X_1(p)$ | not asserted; the integral geometry is more ramified |
-| reduction map is injective | not from properness alone |
-| high genus classifies rational points | false; it explains scarcity but does not prove the prime-degree list |
+| Statement                                                         | Exact hypothesis or qualification                                                                                      |
+| ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| $E[N](K^s)\simeq(\mathbf Z/N\mathbf Z)^2$                         | $\operatorname{char}K\nmid N$                                                                                          |
+| stable geometric subgroup $\Leftrightarrow$ subgroup scheme       | finite étale torsion, hence $\operatorname{char}K\nmid N$                                                              |
+| stable line $\Leftrightarrow$ rational $p$-isogeny                | $p\ne\operatorname{char}K$ and reducibility over $\mathbf F_p$                                                         |
+| $X_0$ versus $X_1$                                                | stable subgroup versus fixed generator                                                                                 |
+| coarse $K$-point gives a $K$-object                               | only when its descent gerbe is neutral                                                                                 |
+| all $X_0(N)$ cusps rational                                       | true for squarefree $N$, false in general                                                                              |
+| good reduction implies interior specialization                    | prime-to-level stable subgroup on a good elliptic model                                                                |
+| multiplicative reduction implies a cusp                           | on the stable generalized-elliptic compactification                                                                    |
+| two-component fiber at $p$                                        | depth-one $\Gamma_0(p)$ after a prime-to-$p$ branch cover killing automorphisms; valid at small $p$ on that fine cover |
+| same fine statement on the unrigidified coarse surface at $p=2,3$ | not automatic; wild invariant rings require a direct calculation                                                       |
+| same claim for $X_1(p)$                                           | not asserted; the integral geometry is more ramified                                                                   |
+| reduction map is injective                                        | not from properness alone                                                                                              |
+| high genus classifies rational points                             | false; it explains scarcity but does not prove the prime-degree list                                                   |
 
 This ledger is as important as the equivalences. Every attractive but false shortcut in the subject results from deleting one of its right-hand entries.
 

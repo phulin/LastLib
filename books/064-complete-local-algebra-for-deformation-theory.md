@@ -78,29 +78,33 @@
    - [Finite does not mean quotient](#97-finite-does-not-mean-quotient)
 10. [Finite modules as geometric detectors](#10-finite-modules-as-geometric-detectors)
     - [Support and annihilators](#101-support-and-annihilators)
-   - [Faithful modules](#102-faithful-modules)
-   - [What reduction modulo the maximal ideal detects](#103-what-reduction-modulo-the-maximal-ideal-detects)
-   - [Closed submodules and exact limits](#104-closed-submodules-and-exact-limits)
-   - [Examples of support and failure of detection](#105-examples-of-support-and-failure-of-detection)
-   - [Why coefficient flatness is torsion control](#106-why-coefficient-flatness-is-torsion-control)
-   - [Finite flat modules are free](#107-finite-flat-modules-are-free)
-   - [The torsion exact sequence and specialization](#108-the-torsion-exact-sequence-and-specialization)
-   - [Flatness of a presented algebra](#109-flatness-of-a-presented-algebra)
-   - [Dimension of special and generic fibers](#1010-dimension-of-special-and-generic-fibers)
-   - [Exactness under completed scalar extension](#1011-exactness-under-completed-scalar-extension)
+
+- [Faithful modules](#102-faithful-modules)
+- [What reduction modulo the maximal ideal detects](#103-what-reduction-modulo-the-maximal-ideal-detects)
+- [Closed submodules and exact limits](#104-closed-submodules-and-exact-limits)
+- [Examples of support and failure of detection](#105-examples-of-support-and-failure-of-detection)
+- [Why coefficient flatness is torsion control](#106-why-coefficient-flatness-is-torsion-control)
+- [Finite flat modules are free](#107-finite-flat-modules-are-free)
+- [The torsion exact sequence and specialization](#108-the-torsion-exact-sequence-and-specialization)
+- [Flatness of a presented algebra](#109-flatness-of-a-presented-algebra)
+- [Dimension of special and generic fibers](#1010-dimension-of-special-and-generic-fibers)
+- [Exactness under completed scalar extension](#1011-exactness-under-completed-scalar-extension)
+
 11. [Completed tensor products](#11-completed-tensor-products)
-   - [Combining two formal local problems](#111-combining-two-formal-local-problems)
-   - [Construction and universal property](#112-construction-and-universal-property)
-   - [Noetherianity and locality](#113-noetherianity-and-locality)
-    - [Relative tangent spaces add](#114-relative-tangent-spaces-add)
-   - [Dimension over a field](#115-dimension-over-a-field)
-   - [Dimension over a discrete valuation ring](#116-dimension-over-a-discrete-valuation-ring)
-   - [Examples and topology warnings](#117-examples-and-topology-warnings)
-   - [Fiber products solve a different problem](#118-fiber-products-solve-a-different-problem)
-   - [Locality, completeness, and the exact sequence](#119-locality-completeness-and-the-exact-sequence)
-   - [Prime spectra and dimension of a fiber product](#1110-prime-spectra-and-dimension-of-a-fiber-product)
-   - [Cotangent spaces of fiber products](#1111-cotangent-spaces-of-fiber-products)
-   - [Fiber products in lifting arguments](#1112-fiber-products-in-lifting-arguments)
+
+- [Combining two formal local problems](#111-combining-two-formal-local-problems)
+- [Construction and universal property](#112-construction-and-universal-property)
+- [Noetherianity and locality](#113-noetherianity-and-locality)
+  - [Relative tangent spaces add](#114-relative-tangent-spaces-add)
+- [Dimension over a field](#115-dimension-over-a-field)
+- [Dimension over a discrete valuation ring](#116-dimension-over-a-discrete-valuation-ring)
+- [Examples and topology warnings](#117-examples-and-topology-warnings)
+- [Fiber products solve a different problem](#118-fiber-products-solve-a-different-problem)
+- [Locality, completeness, and the exact sequence](#119-locality-completeness-and-the-exact-sequence)
+- [Prime spectra and dimension of a fiber product](#1110-prime-spectra-and-dimension-of-a-fiber-product)
+- [Cotangent spaces of fiber products](#1111-cotangent-spaces-of-fiber-products)
+- [Fiber products in lifting arguments](#1112-fiber-products-in-lifting-arguments)
+
 12. [Base change and formal smoothness](#12-base-change-and-formal-smoothness)
     - [Base-changing a presentation](#121-base-changing-a-presentation)
     - [Cotangent spaces after coefficient extension](#122-cotangent-spaces-after-coefficient-extension)
@@ -112,12 +116,14 @@
     - [Tangent dimension counts variables](#131-tangent-dimension-counts-variables)
     - [When obstruction dimension bounds relations](#132-when-obstruction-dimension-bounds-relations)
     - [The basic dimension bound](#133-the-basic-dimension-bound)
-   - [What cohomology does not determine](#134-what-cohomology-does-not-determine)
-   - [Unobstructed problems](#135-unobstructed-problems)
-   - [Framed and fixed-determinant bookkeeping](#136-framed-and-fixed-determinant-bookkeeping)
-   - [Relative tangent and obstruction theory](#137-relative-tangent-and-obstruction-theory)
-   - [Local products and the global presentation](#138-local-products-and-the-global-presentation)
-   - [Balanced presentations](#139-balanced-presentations)
+
+- [What cohomology does not determine](#134-what-cohomology-does-not-determine)
+- [Unobstructed problems](#135-unobstructed-problems)
+- [Framed and fixed-determinant bookkeeping](#136-framed-and-fixed-determinant-bookkeeping)
+- [Relative tangent and obstruction theory](#137-relative-tangent-and-obstruction-theory)
+- [Local products and the global presentation](#138-local-products-and-the-global-presentation)
+- [Balanced presentations](#139-balanced-presentations)
+
 14. [A gallery of deformation-shaped local rings](#14-a-gallery-of-deformation-shaped-local-rings)
     - [A smooth universal ring](#141-a-smooth-universal-ring)
     - [A fat infinitesimal direction](#142-a-fat-infinitesimal-direction)
@@ -127,14 +133,15 @@
     - [A completed product of constrained problems](#146-a-completed-product-of-constrained-problems)
 15. [The patching dictionary](#15-the-patching-dictionary)
     - [Reading cohomology as a presentation](#151-reading-cohomology-as-a-presentation)
-   - [Reading a ring map](#152-reading-a-ring-map)
-   - [Reading completed products](#153-reading-completed-products)
-   - [A disciplined numerical workflow](#154-a-disciplined-numerical-workflow)
-   - [Balance plus finiteness over a regular base](#155-balance-plus-finiteness-over-a-regular-base)
-   - [The local-to-global numerical package](#156-the-local-to-global-numerical-package)
-   - [A faithful patched module controls its ring](#157-a-faithful-patched-module-controls-its-ring)
-   - [Augmentation and descent to finite level](#158-augmentation-and-descent-to-finite-level)
-   - [Conclusion](#159-conclusion)
+
+- [Reading a ring map](#152-reading-a-ring-map)
+- [Reading completed products](#153-reading-completed-products)
+- [A disciplined numerical workflow](#154-a-disciplined-numerical-workflow)
+- [Balance plus finiteness over a regular base](#155-balance-plus-finiteness-over-a-regular-base)
+- [The local-to-global numerical package](#156-the-local-to-global-numerical-package)
+- [A faithful patched module controls its ring](#157-a-faithful-patched-module-controls-its-ring)
+- [Augmentation and descent to finite level](#158-augmentation-and-descent-to-finite-level)
+- [Conclusion](#159-conclusion)
 
 ## 1. The local algebra behind a universal object
 
@@ -178,7 +185,7 @@ $$
 f(\mathfrak m_R^n)\subseteq\mathfrak m_S^n.
 $$
 
-It is nevertheless useful to retain the word *continuous*: formal power series are evaluated by convergence, completed tensor products satisfy a topological universal property, and inverse limits classify compatible finite-order maps.
+It is nevertheless useful to retain the word _continuous_: formal power series are evaluated by convergence, completed tensor products satisfy a topological universal property, and inverse limits classify compatible finite-order maps.
 
 Every admissible $R$ is recovered from its Artinian shadows. Every finite $R$-module $M$ is recovered in the same way:
 
@@ -516,7 +523,7 @@ Finally, merely being complete as an abstract metric object is insufficient if t
 
 ### 4.1 Why formal power series are the correct source
 
-A polynomial ring is free on finitely many algebraic generators. A formal power-series ring is free on finitely many *topologically nilpotent* generators in a complete local category. If $S$ is complete separated and $s_i\in\mathfrak m_S$, substitution defines a unique continuous local map
+A polynomial ring is free on finitely many algebraic generators. A formal power-series ring is free on finitely many _topologically nilpotent_ generators in a complete local category. If $S$ is complete separated and $s_i\in\mathfrak m_S$, substitution defines a unique continuous local map
 
 $$
 \mathcal O[[X_1,\ldots,X_r]]\longrightarrow S,
@@ -1558,7 +1565,7 @@ $$
 \dim B=\dim A.
 $$
 
-The word *faithful* is essential. The quotient $A\to A/I$ is finite, but it is faithful only when $I=0$. Thus one must not infer dimension preservation merely from module-finiteness.
+The word _faithful_ is essential. The quotient $A\to A/I$ is finite, but it is faithful only when $I=0$. Thus one must not infer dimension preservation merely from module-finiteness.
 
 For any local homomorphism $A\to B$, if $B$ is a nonzero finite $A$-module then it is faithfully flat only under the much stronger assumption of flatness; finite and faithful does not mean flat. In this book, “faithfully finite” records injective control and dimension preservation, not flat descent.
 
@@ -2136,7 +2143,7 @@ A\times_CB=
 \{(a,b)\in A\times B:\alpha(a)=\beta(b)\}.
 $$
 
-A map $T\to A\times_CB$ is the same as a pair of maps $T\to A$ and $T\to B$ whose composites to $C$ agree. This is a pullback universal property. By contrast, a map *out of* $A\widehat\otimes_CB$ is a pair of maps out of $A$ and $B$. Interchanging the two constructions reverses the deformation problem being represented.
+A map $T\to A\times_CB$ is the same as a pair of maps $T\to A$ and $T\to B$ whose composites to $C$ agree. This is a pullback universal property. By contrast, a map _out of_ $A\widehat\otimes_CB$ is a pair of maps out of $A$ and $B$. Interchanging the two constructions reverses the deformation problem being represented.
 
 ### 11.9 Locality, completeness, and the exact sequence
 
@@ -2416,7 +2423,7 @@ This is an exact conclusion: tangent dimension is the minimal number of relative
 
 In representation deformation problems, $t_F$ may be a space of continuous cocycles, a first cohomology group, a trace-kernel, or a Selmer group. The algebra does not depend on which cohomological description produced it. Once the functor is represented, its dimension is converted into $r$ minimal variables by duality and tangent lifts.
 
-The word *minimal* must be retained. A direct construction from topological generators of a Galois group or from matrix entries often yields many more variables. Linear relations among those coordinates can be eliminated until the number is exactly $\dim_kt_F$.
+The word _minimal_ must be retained. A direct construction from topological generators of a Galois group or from matrix entries often yields many more variables. Linear relations among those coordinates can be eliminated until the number is exactly $\dim_kt_F$.
 
 ### 13.2 When obstruction dimension bounds relations
 

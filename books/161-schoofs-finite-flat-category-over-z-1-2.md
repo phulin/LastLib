@@ -59,23 +59,28 @@
    - [Pure constant and pure multiplicative blocks](#94-pure-constant-and-pure-multiplicative-blocks)
    - [Existence and uniqueness of the two-step filtration](#95-existence-and-uniqueness-of-the-two-step-filtration)
 10. [Finite coefficient levels](#10-finite-coefficient-levels)
-   - [Coefficient actions and stable cuts](#101-coefficient-actions-and-stable-cuts)
-   - [The canonical image submodule](#102-the-canonical-image-submodule)
-   - [The cross relation](#103-the-cross-relation)
-   - [The trace identity](#104-the-trace-identity)
-   - [The residual orientation and its Kummer class](#105-the-residual-orientation-and-its-kummer-class)
+
+- [Coefficient actions and stable cuts](#101-coefficient-actions-and-stable-cuts)
+- [The canonical image submodule](#102-the-canonical-image-submodule)
+- [The cross relation](#103-the-cross-relation)
+- [The trace identity](#104-the-trace-identity)
+- [The residual orientation and its Kummer class](#105-the-residual-orientation-and-its-kummer-class)
+
 11. [All-level devissage](#11-all-level-devissage)
-   - [Compatible finite-flat levels](#111-compatible-finite-flat-levels)
-   - [Passage to a stable lattice](#112-passage-to-a-stable-lattice)
-   - [The integral cyclotomic line](#113-the-integral-cyclotomic-line)
-   - [The three-adic conclusion](#114-the-three-adic-conclusion)
-   - [$3$-divisible groups in the category](#115-3-divisible-groups-in-the-category)
+
+- [Compatible finite-flat levels](#111-compatible-finite-flat-levels)
+- [Passage to a stable lattice](#112-passage-to-a-stable-lattice)
+- [The integral cyclotomic line](#113-the-integral-cyclotomic-line)
+- [The three-adic conclusion](#114-the-three-adic-conclusion)
+- [$3$-divisible groups in the category](#115-3-divisible-groups-in-the-category)
+
 12. [Examples and boundary cases](#12-examples-and-boundary-cases)
-   - [The split object](#121-the-split-object)
-   - [The Kummer object attached to two](#122-the-kummer-object-attached-to-two)
-   - [Why the residual field need not split](#123-why-the-residual-field-need-not-split)
-   - [What fails without the local hypotheses](#124-what-fails-without-the-local-hypotheses)
-   - [Conclusion](#125-conclusion)
+
+- [The split object](#121-the-split-object)
+- [The Kummer object attached to two](#122-the-kummer-object-attached-to-two)
+- [Why the residual field need not split](#123-why-the-residual-field-need-not-split)
+- [What fails without the local hypotheses](#124-what-fails-without-the-local-hypotheses)
+- [Conclusion](#125-conclusion)
 
 ## 1. The global integral problem
 
@@ -215,9 +220,8 @@ $$
 
 is a finite projective $R$-module, $L\otimes_RK=W$, and $L_{\mathfrak p}$ is its localization at every $\mathfrak p$. Moreover
 
-$$
-L\otimes_RL
-=
+# $$L\otimes_RL
+
 \{z\in W\otimes_KW:z\in
 L_{\mathfrak p}\otimes_{R_{\mathfrak p}}L_{\mathfrak p}
 \text{ for every }\mathfrak p\}.
@@ -619,8 +623,9 @@ $$
 \left(
 \left(\frac\pi4\right)^2\frac{4^4}{4!}
 \right)^{1/2}
->2.56,
-$$
+
+> 2.56,
+> $$
 
 whereas $27^{1/4}<2.28$. This contradiction finishes the proof. $\square$
 
@@ -869,10 +874,8 @@ $$
 
 and the carry identity
 
-$$
-\left\lfloor\frac{i+j}{3}\right\rfloor
-+\left\lfloor\frac{(i+j)\bmod3+k}{3}\right\rfloor
-=
+# $$\left\lfloor\frac{i+j}{3}\right\rfloor+\left\lfloor\frac{(i+j)\bmod3+k}{3}\right\rfloor
+
 \left\lfloor\frac{j+k}{3}\right\rfloor
 +\left\lfloor\frac{i+(j+k)\bmod3}{3}\right\rfloor
 $$

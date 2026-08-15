@@ -812,8 +812,8 @@ Serre--Tate reduce its completed rings to Proposition 11.1, proving smoothness a
 selected flat closure is open and closed. The preceding anisotropic-Hermitian argument and
 the auxiliary-level descent prove properness; quasi-projectivity then gives projectivity.
 For the Picard assertion, the Stein factor of the smooth proper curve union is finite etale
-over the base.  After a finite etale base change the union is a disjoint union of smooth proper
-curves with geometrically connected fibers.  Book 36 applies componentwise, and finite-etale
+over the base. After a finite etale base change the union is a disjoint union of smooth proper
+curves with geometrically connected fibers. Book 36 applies componentwise, and finite-etale
 descent gives the asserted abelian scheme and product description before that base change.
 The extension, correspondence, and comparison assertions
 follow verbatim from Chapters 5, 7--9 because their proofs use only the exact PEL functor,

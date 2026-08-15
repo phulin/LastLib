@@ -500,7 +500,6 @@ $$
 
 Let
 
-
 $$
 U=G^{\mathrm{der}}(\mathbf A_f)\cap g_1Kg_1^{-1},
 $$
@@ -1350,25 +1349,25 @@ Then the following statements hold.
 
 ### 13.2 Hypothesis ledger
 
-| Assertion | Required hypothesis | What fails without it |
-|---|---|---|
-| PEL uniformization of the chosen $G$ | genuine PEL realization, including positivity and determinant law | endomorphisms and a pairing may cut out a larger Shimura variety |
-| actual polarized abelian variety from $[h,g]$ | selected integral lattice and polarization type | the rational point gives only a polarization class up to isogeny |
-| injectivity of the period map | the full finite adelic level coordinate | rational Hodge structures classify only up to quasi-isogeny |
-| trivial stabilizers | neatness plus detection of the rational center, or full level at least three | central automorphisms can survive adjoint neatness |
-| single-base-component formula (5.2) | rational transitivity on $\pi_0(X)$ | one must retain the orbit formula (5.2a) |
-| abelianized component formula | simply connected derived group and strong approximation | a residual derived class set can remain |
-| basic narrow norm formula | $G=\operatorname{Res}_{F/\mathbf Q}B^\times$ and the rational reduced-norm theorem | a central modification can have a different torus and finite correction |
-| component over the ambient reflex field | stability under (6.3) | Galois can permute geometric components |
-| ambient component reciprocity | a positive-at-infinity idele representative and the connected archimedean factor in (6.4) | a negative principal idele can falsely move a narrow component |
-| universal family on a scheme | fine level | inertia obstructs coarse descent |
-| quotient-stack presentation | nominal level group, including any ineffective kernel | replacing it by the effective image erases central inertia |
-| honest universal isogeny | an integral representative of the adelic lattice modification | only a quasi-isogeny is canonical; scalar normalization changes degree |
-| descent from a PEL central cover | trivial inertia on the complete universal diagram | equality of adjoint data descends the coarse curve, not the universal object |
-| formula $K_a=K\cap aKa^{-1}$ | right translation $g\mapsto ga$ | the other intersection does not make $p_2$ well defined with this convention |
-| projectivity | quaternionic adjoint group anisotropic over $\mathbf Q$ | rational parabolics produce cusps |
-| action on Jacobians | smooth proper component curves | an open curve requires generalized Jacobians or compactification data |
-| coarse universal isogeny | trivial inertia on source, target, and morphism | the coarse space forgets nontrivial fiber automorphisms |
+| Assertion                                     | Required hypothesis                                                                       | What fails without it                                                        |
+| --------------------------------------------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| PEL uniformization of the chosen $G$          | genuine PEL realization, including positivity and determinant law                         | endomorphisms and a pairing may cut out a larger Shimura variety             |
+| actual polarized abelian variety from $[h,g]$ | selected integral lattice and polarization type                                           | the rational point gives only a polarization class up to isogeny             |
+| injectivity of the period map                 | the full finite adelic level coordinate                                                   | rational Hodge structures classify only up to quasi-isogeny                  |
+| trivial stabilizers                           | neatness plus detection of the rational center, or full level at least three              | central automorphisms can survive adjoint neatness                           |
+| single-base-component formula (5.2)           | rational transitivity on $\pi_0(X)$                                                       | one must retain the orbit formula (5.2a)                                     |
+| abelianized component formula                 | simply connected derived group and strong approximation                                   | a residual derived class set can remain                                      |
+| basic narrow norm formula                     | $G=\operatorname{Res}_{F/\mathbf Q}B^\times$ and the rational reduced-norm theorem        | a central modification can have a different torus and finite correction      |
+| component over the ambient reflex field       | stability under (6.3)                                                                     | Galois can permute geometric components                                      |
+| ambient component reciprocity                 | a positive-at-infinity idele representative and the connected archimedean factor in (6.4) | a negative principal idele can falsely move a narrow component               |
+| universal family on a scheme                  | fine level                                                                                | inertia obstructs coarse descent                                             |
+| quotient-stack presentation                   | nominal level group, including any ineffective kernel                                     | replacing it by the effective image erases central inertia                   |
+| honest universal isogeny                      | an integral representative of the adelic lattice modification                             | only a quasi-isogeny is canonical; scalar normalization changes degree       |
+| descent from a PEL central cover              | trivial inertia on the complete universal diagram                                         | equality of adjoint data descends the coarse curve, not the universal object |
+| formula $K_a=K\cap aKa^{-1}$                  | right translation $g\mapsto ga$                                                           | the other intersection does not make $p_2$ well defined with this convention |
+| projectivity                                  | quaternionic adjoint group anisotropic over $\mathbf Q$                                   | rational parabolics produce cusps                                            |
+| action on Jacobians                           | smooth proper component curves                                                            | an open curve requires generalized Jacobians or compactification data        |
+| coarse universal isogeny                      | trivial inertia on source, target, and morphism                                           | the coarse space forgets nontrivial fiber automorphisms                      |
 
 ### 13.3 Normalization checks and failure tests
 

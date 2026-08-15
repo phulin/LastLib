@@ -89,7 +89,7 @@ Algebraic geometry permits every polynomial and excludes every genuinely infinit
 
 There is an immediate obstacle. If one puts the usual topology on the set of points of a closed unit disc, many natural finite decompositions are not open covers. For example, the conditions $|T|\leq |a|$ and $|T|\geq |a|$ define closed pieces whose union is the disc. Analytic functions nevertheless glue across such decompositions. The correct notion of cover must therefore remember which systems of inequalities permit finite algebraic descent, not merely which subsets are open in a point-set topology.
 
-The word *rigid* reflects the outcome. A function on a connected disc cannot be prescribed independently on arbitrarily many residue classes; convergent coefficients tie those values together. A compact analytic curve is even more constrained: it comes from a projective algebraic curve, and its coherent sheaves and cohomology are algebraic. Formal models reveal where this rigidity comes from. They record integral functions before a uniformizer is inverted, so reduction of those functions organizes the analytic space into discs and annuli.
+The word _rigid_ reflects the outcome. A function on a connected disc cannot be prescribed independently on arbitrarily many residue classes; convergent coefficients tie those values together. A compact analytic curve is even more constrained: it comes from a projective algebraic curve, and its coherent sheaves and cohomology are algebraic. Formal models reveal where this rigidity comes from. They record integral functions before a uniformizer is inverted, so reduction of those functions organizes the analytic space into discs and annuli.
 
 ### 1.2 Standing conventions
 
@@ -103,7 +103,7 @@ $$
 
 A finite extension of $K$ carries the unique extended absolute value. Whenever formal models enter, beginning in Chapter 7, $K$ is assumed discretely valued, $R=K^\circ$, and $\pi\in R$ is a uniformizer. Then $R$ is complete and $K=R[1/\pi]$. The residue field need not be finite or perfect unless a statement explicitly says so.
 
-We use the classical strict theory: coordinate radii belong to $|K^\times|$. Closed polydiscs of arbitrary positive radii can be handled by weighted norms, and after adjoining elements having the required absolute values they reduce to the strict case. Nothing below silently assumes that $K$ is algebraically closed. A *point* of an affinoid space means a maximal ideal, whose residue field is a finite extension of $K$; geometric points over larger complete fields may be used when base change is relevant.
+We use the classical strict theory: coordinate radii belong to $|K^\times|$. Closed polydiscs of arbitrary positive radii can be handled by weighted norms, and after adjoining elements having the required absolute values they reduce to the strict case. Nothing below silently assumes that $K$ is algebraically closed. A _point_ of an affinoid space means a maximal ideal, whose residue field is a finite extension of $K$; geometric points over larger complete fields may be used when base change is relevant.
 
 All rings are commutative. Analytic spaces are assumed quasi-separated when intersections or coherent descent are discussed, and formal schemes are locally noetherian and topologically of finite type over $R$ unless stated otherwise.
 
@@ -140,9 +140,8 @@ This distinction is the organizing theme of the book. Algebraic generic fibers c
 
 The closed unit polydisc should admit exactly those power series that converge whenever every coordinate has absolute value at most one. For a multi-index $\nu=(\nu_1,\ldots,\nu_n)\in\mathbf N^n$, write $T^\nu=T_1^{\nu_1}\cdots T_n^{\nu_n}$. The **Tate algebra** is
 
-$$
-K\langle T_1,\ldots,T_n\rangle
-=
+# $$K\langle T_1,\ldots,T_n\rangle
+
 \left\{\sum_{\nu\in\mathbf N^n}a_\nu T^\nu:
 |a_\nu|\longrightarrow0\text{ as }|\nu|\longrightarrow\infty\right\}.
 $$
@@ -383,9 +382,8 @@ $$
 
 The unit-ideal condition prevents $f_0$ and all numerators from vanishing simultaneously. Its coordinate algebra is
 
-$$
-A\left\langle\frac{f_1}{f_0},\ldots,\frac{f_m}{f_0}\right\rangle
-=
+# $$A\left\langle\frac{f_1}{f_0},\ldots,\frac{f_m}{f_0}\right\rangle
+
 A\langle S_1,\ldots,S_m\rangle/
 (f_0S_1-f_1,\ldots,f_0S_m-f_m).
 $$
@@ -900,9 +898,8 @@ $$
 
 The isomorphism is canonical. The specialization maps are not preserved as maps to a fixed special fiber; instead they fit into
 
-$$
-\operatorname{sp}_{\mathfrak X}
-=
+# $$\operatorname{sp}_{\mathfrak X}
+
 (\mathfrak X'_s\to\mathfrak X_s)\circ\operatorname{sp}_{\mathfrak X'}.
 $$
 
@@ -1033,7 +1030,7 @@ A warning is useful. Removing a tube is not the same as deleting the correspondi
 
 ### 11.1 Dimension one and local parameters
 
-A **rigid analytic curve** over $K$ is a separated rigid space, locally of finite type, all of whose irreducible components have dimension one. Reducedness, smoothness, and geometric connectedness are additional hypotheses, not part of the word *curve*. This convention permits singular and nonreduced fibers to appear without changing language.
+A **rigid analytic curve** over $K$ is a separated rigid space, locally of finite type, all of whose irreducible components have dimension one. Reducedness, smoothness, and geometric connectedness are additional hypotheses, not part of the word _curve_. This convention permits singular and nonreduced fibers to appear without changing language.
 
 On an affinoid curve $X=\operatorname{Sp}A$, a nonconstant analytic function $t$ often gives a finite map to a disc. Algebraically this means that $A$ is finite over $K\langle t\rangle$. Near a point $x$ where $dt$ does not vanish, $t-t(x)$ is a local parameter after a finite residue-field extension. The completed local ring is then
 
@@ -1362,9 +1359,8 @@ by this statement: their total transform can acquire a multiple exceptional comp
 
 Let $\mathfrak C$ be semistable. The smooth locus of each irreducible component of $\mathfrak C_s$ has a tube built from residue discs. Every node contributes an open annulus. These pieces form an admissible covering after finitely many affinoid neighborhoods are grouped appropriately:
 
-$$
-C^{\mathrm{an}}
-=
+# $$C^{\mathrm{an}}
+
 \bigcup_v ]C_v^\circ[\;\cup\;
 \bigcup_e ]z_e[.
 $$

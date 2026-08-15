@@ -126,7 +126,7 @@ $$
 
 denotes a Galois automorphism. The normalized $\mathfrak p$-valuation is $v_{\mathfrak p}$, so $v_{\mathfrak p}(\lambda)=1$. For a rational prime $q$ and a nonzero integer $n$, $v_q(n)$ has its usual normalization $v_q(q)=1$.
 
-Book 1, *Valuations, DVRs, and Completions*, supplies the valuation language used throughout: unequal values do not cancel, a localization of a Dedekind domain at a nonzero prime is a discrete valuation ring, and normalized values measure prime-ideal exponents. We recall each normalization when it first becomes decisive.
+Book 1, _Valuations, DVRs, and Completions_, supplies the valuation language used throughout: unequal values do not cancel, a localization of a Dedekind domain at a nonzero prime is a discrete valuation ring, and normalized values measure prime-ideal exponents. We recall each normalization when it first becomes decisive.
 
 ### 1.3 The architecture of the argument
 
@@ -2089,13 +2089,13 @@ because $\bar\lambda=-\zeta^{-1}\lambda$. Again the exact root-of-unity factor m
 
 For coprime integers $x,y$, the following table collects the conclusions in the order in which they should be used.
 
-| Input | Local conclusion at $\mathfrak p$ | Coprimality | Fifth-power conclusion |
-|---|---|---|---|
-| $5\nmid x+y$ | $v_{\mathfrak p}(x+\zeta^iy)=0$ for all $i$ | all five factors pairwise coprime | if their product is a fifth power, $x+\zeta y=u\alpha^5$; after primary normalization, $\zeta^k(x+\zeta y)=\eta^b\beta^5$ |
-| $5\mid x+y$ | $v_{\mathfrak p}(x+\zeta^iy)=1$ for $i\ne0$ | common divisors occur only at $\mathfrak p$; division by one uniformizer removes them | if their product is a fifth power, $x+\zeta y=\lambda\beta^5$ |
-| all ideal exponents of $\alpha$ are multiples of $5$ | no exceptional exponent | not applicable | $\alpha=u\beta^5$ |
-| previous row and $\alpha$ is primary | $\alpha\equiv r\pmod{\lambda^2}$ | not applicable | $\alpha=\eta^b\beta^5$ |
-| previous row and $\alpha\equiv r\pmod{\lambda^3}$ | deepest required congruence | not applicable | $\alpha=\beta^5$ |
+| Input                                                | Local conclusion at $\mathfrak p$           | Coprimality                                                                           | Fifth-power conclusion                                                                                                    |
+| ---------------------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| $5\nmid x+y$                                         | $v_{\mathfrak p}(x+\zeta^iy)=0$ for all $i$ | all five factors pairwise coprime                                                     | if their product is a fifth power, $x+\zeta y=u\alpha^5$; after primary normalization, $\zeta^k(x+\zeta y)=\eta^b\beta^5$ |
+| $5\mid x+y$                                          | $v_{\mathfrak p}(x+\zeta^iy)=1$ for $i\ne0$ | common divisors occur only at $\mathfrak p$; division by one uniformizer removes them | if their product is a fifth power, $x+\zeta y=\lambda\beta^5$                                                             |
+| all ideal exponents of $\alpha$ are multiples of $5$ | no exceptional exponent                     | not applicable                                                                        | $\alpha=u\beta^5$                                                                                                         |
+| previous row and $\alpha$ is primary                 | $\alpha\equiv r\pmod{\lambda^2}$            | not applicable                                                                        | $\alpha=\eta^b\beta^5$                                                                                                    |
+| previous row and $\alpha\equiv r\pmod{\lambda^3}$    | deepest required congruence                 | not applicable                                                                        | $\alpha=\beta^5$                                                                                                          |
 
 The table is not a substitute for the hypotheses. In the first two rows, primitivity of $x,y$ is what excludes common primes away from $\mathfrak p$. In the last three rows, divisibility of every ideal exponent is what permits the unit analysis to begin. Dropping either condition produces immediate counterexamples.
 

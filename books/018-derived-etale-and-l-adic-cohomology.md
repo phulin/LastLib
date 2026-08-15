@@ -704,11 +704,11 @@ The next statement is the a priori bound that makes every later dévissage termi
 
 **Proof.** We first prove vanishing for $q\ge2$ on affine $U$, in three steps.
 
-*Constant coefficients.* This is the Kummer theorem, part 3 with $r>0$ and part 4.
+_Constant coefficients._ This is the Kummer theorem, part 3 with $r>0$ and part 4.
 
-*Extension by zero of constant coefficients.* Let $j_V:V\hookrightarrow U$ be open with finite complement $Z$ and let $M$ be constant finite of order prime to $p$. The sequence $0\to j_{V!}M\to M_U\to i_{Z*}M\to0$ and the vanishing of $H^q(Z,M)$ for $q\ge1$ give $H^q(U,j_{V!}M)=0$ for $q\ge2$.
+_Extension by zero of constant coefficients._ Let $j_V:V\hookrightarrow U$ be open with finite complement $Z$ and let $M$ be constant finite of order prime to $p$. The sequence $0\to j_{V!}M\to M_U\to i_{Z*}M\to0$ and the vanishing of $H^q(Z,M)$ for $q\ge1$ give $H^q(U,j_{V!}M)=0$ for $q\ge2$.
 
-*Lisse coefficients and the trace.* Let $\mathcal L$ be lisse on $V$; treating the connected components separately we may assume $V$ connected. Let $\pi:V'\to V$ be a connected finite étale cover trivializing $\mathcal L$, so that $\pi^*\mathcal L=M$ is constant (Book 17). Let $U'$ be the normalization of $U$ in the function field of $V'$; it is finite over $U$ by the finite-normalization lemma for curves, hence affine, and it is normal, hence a smooth curve, and $\pi'^{-1}(V)=V'$ for the induced finite map $\pi':U'\to U$. Writing $j':V'\hookrightarrow U'$, comparison of stalks gives $\pi'_*j'_!=j_{V!}\pi_*$. The trace map $\pi_*\pi^*\mathcal L\to\mathcal L$, which étale-locally on $V$ is the sum over the finitely many sheets and descends by permutation invariance — the same construction as in Section 13.4 — is surjective on every geometric stalk; applying the exact functor $j_{V!}$ produces a surjection
+_Lisse coefficients and the trace._ Let $\mathcal L$ be lisse on $V$; treating the connected components separately we may assume $V$ connected. Let $\pi:V'\to V$ be a connected finite étale cover trivializing $\mathcal L$, so that $\pi^*\mathcal L=M$ is constant (Book 17). Let $U'$ be the normalization of $U$ in the function field of $V'$; it is finite over $U$ by the finite-normalization lemma for curves, hence affine, and it is normal, hence a smooth curve, and $\pi'^{-1}(V)=V'$ for the induced finite map $\pi':U'\to U$. Writing $j':V'\hookrightarrow U'$, comparison of stalks gives $\pi'_*j'_!=j_{V!}\pi_*$. The trace map $\pi_*\pi^*\mathcal L\to\mathcal L$, which étale-locally on $V$ is the sum over the finitely many sheets and descends by permutation invariance — the same construction as in Section 13.4 — is surjective on every geometric stalk; applying the exact functor $j_{V!}$ produces a surjection
 
 $$
 \mathcal A:=\pi'_*j'_!M=j_{V!}\pi_*\pi^*\mathcal L

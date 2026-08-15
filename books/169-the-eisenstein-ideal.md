@@ -1402,19 +1402,19 @@ The formal-immersion prime $p$ is allowed to equal $\ell$. At that prime the tow
 
 The principal conventions and their consequences are:
 
-| Object | Convention | Consequence |
-|---|---|---|
-| Exact integer | $n_N=(N-1)/\gcd(N-1,12)$ | correct $2$- and $3$-primary depth |
-| Hecke ideal | $T_q-(1+q)$ and incoming $U_N-1$ | boundary and cusp have the same character |
-| Correspondence | $(\pi_2)_*\pi_1^*$ | covariance agrees on divisors and Jacobians |
-| Frobenius | arithmetic on covariant Tate modules | $F_q^2-T_qF_q+q=0$ |
-| Local selection | $e_{\mathfrak m}$ | integral direct factor of torsion |
-| Rational selection | $E_{\mathfrak m}$ | optimal quotient over $\mathbf Q$ |
-| Support ideal | $E_{\mathfrak m}\mathbb T_{\mathbf Q}\cap\mathbb T$ | integral operators factor through the quotient |
-| Coefficient-prime condition | finite flat | connected classes are retained |
-| Level-prime condition | identity-component strict | component error is isolated |
-| Point-level cusp | outward orientation and $\sigma=w_N\rho$ | standard cusp parameter pulls back by a unit |
-| Cotangent test | one support-operator direction | unit first coefficient without a smooth kernel |
+| Object                      | Convention                                          | Consequence                                    |
+| --------------------------- | --------------------------------------------------- | ---------------------------------------------- |
+| Exact integer               | $n_N=(N-1)/\gcd(N-1,12)$                            | correct $2$- and $3$-primary depth             |
+| Hecke ideal                 | $T_q-(1+q)$ and incoming $U_N-1$                    | boundary and cusp have the same character      |
+| Correspondence              | $(\pi_2)_*\pi_1^*$                                  | covariance agrees on divisors and Jacobians    |
+| Frobenius                   | arithmetic on covariant Tate modules                | $F_q^2-T_qF_q+q=0$                             |
+| Local selection             | $e_{\mathfrak m}$                                   | integral direct factor of torsion              |
+| Rational selection          | $E_{\mathfrak m}$                                   | optimal quotient over $\mathbf Q$              |
+| Support ideal               | $E_{\mathfrak m}\mathbb T_{\mathbf Q}\cap\mathbb T$ | integral operators factor through the quotient |
+| Coefficient-prime condition | finite flat                                         | connected classes are retained                 |
+| Level-prime condition       | identity-component strict                           | component error is isolated                    |
+| Point-level cusp            | outward orientation and $\sigma=w_N\rho$            | standard cusp parameter pulls back by a unit   |
+| Cotangent test              | one support-operator direction                      | unit first coefficient without a smooth kernel |
 
 A change in any row changes a theorem rather than its notation. For example, replacing $U_N-1$ by the opposite sign selects a different local factor, while replacing finite-flat cohomology by unramified cohomology discards the multiplicative atom at $\ell$.
 

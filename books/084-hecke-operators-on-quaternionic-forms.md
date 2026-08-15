@@ -784,9 +784,8 @@ Uniqueness of $(a,b)$ is visible from two invariants. The determinant valuation 
 
 Put $T=A_1$. A direct row-reduction calculation gives the disjoint right-coset decomposition
 
-$$
-K\begin{pmatrix}\pi&0\\0&1\end{pmatrix}K
-=
+# $$K\begin{pmatrix}\pi&0\\0&1\end{pmatrix}K
+
 \coprod_{u\in\mathcal O/\pi\mathcal O}
 \begin{pmatrix}\pi&u\\0&1\end{pmatrix}K
 \;\coprod\;
@@ -1711,10 +1710,8 @@ $$
 
 one has
 
-$$
-\boxed{
-\Delta^*\Delta
-=
+# $$\boxed{\Delta^*\Delta
+
 \begin{pmatrix}
 q+1&T\\
 S^{-1}T&q+1
@@ -2231,14 +2228,14 @@ Changing any answer changes at least one displayed coefficient. The ledger below
 
 ### 13.2 Local relations in one table
 
-| Local setting | Generators retained | Exact unnormalized relations | Source of the relation |
-|---|---|---|---|
-| split, hyperspecial $K$ | $T,S,S^{-1}$ | $SS^{-1}=1$, $T^2=A_2+(q+1)S$, $TA_n=A_{n+1}+qSA_{n-1}$ for $n\ge2$ | lattice distance and path counting |
-| split, hyperspecial $K$ | $T,S,S^{-1}$ | $H(G,K;A)=A[T,S,S^{-1}]$ | triangular Cartan support |
-| split, Iwahori $I$ | a simple reflection $Q$ | $(Q+1)(Q-q)=0$ | two-cell reflection count |
-| split, $K_0(\mathfrak p^r)$ | forward $U$ | $\deg(U)=q$, $U^*=V$ | oriented-chain cosets and inversion |
-| split, $K_1(\mathfrak p)$ | $U,\langle a\rangle$ | $\langle a\rangle\langle b\rangle=\langle ab\rangle$, $U\langle a\rangle=\langle a\rangle U$ | normal quotient and diagonal commutation |
-| division, maximal $K_D$ | $R_\Pi,R_\Pi^{-1}$ | $R_\Pi R_\Pi^{-1}=1$, $R_\Pi^2=S$ | normality of $K_D$ and valuation |
+| Local setting               | Generators retained     | Exact unnormalized relations                                                                 | Source of the relation                   |
+| --------------------------- | ----------------------- | -------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| split, hyperspecial $K$     | $T,S,S^{-1}$            | $SS^{-1}=1$, $T^2=A_2+(q+1)S$, $TA_n=A_{n+1}+qSA_{n-1}$ for $n\ge2$                          | lattice distance and path counting       |
+| split, hyperspecial $K$     | $T,S,S^{-1}$            | $H(G,K;A)=A[T,S,S^{-1}]$                                                                     | triangular Cartan support                |
+| split, Iwahori $I$          | a simple reflection $Q$ | $(Q+1)(Q-q)=0$                                                                               | two-cell reflection count                |
+| split, $K_0(\mathfrak p^r)$ | forward $U$             | $\deg(U)=q$, $U^*=V$                                                                         | oriented-chain cosets and inversion      |
+| split, $K_1(\mathfrak p)$   | $U,\langle a\rangle$    | $\langle a\rangle\langle b\rangle=\langle ab\rangle$, $U\langle a\rangle=\langle a\rangle U$ | normal quotient and diagonal commutation |
+| division, maximal $K_D$     | $R_\Pi,R_\Pi^{-1}$      | $R_\Pi R_\Pi^{-1}=1$, $R_\Pi^2=S$                                                            | normality of $K_D$ and valuation         |
 
 Every row has a boundary. The spherical polynomial algebra does not describe an Iwahori algebra. The reflection quadratic does not assert commutativity between the two affine reflections. The formula $R_\Pi^2=S$ uses maximal division level; a smaller nonnormal level can split the one-coset translation into a genuine correspondence.
 
@@ -2521,26 +2518,26 @@ This formula is the promised endpoint. It defines the global Hecke action before
 
 ### 15.2 An operator dictionary
 
-| Symbol or construction | Exact correspondence | Essential convention | Later comparison datum |
-|---|---|---|---|
-| $R_a$ | $f(g)\mapsto f(ga)$ | level becomes $aUa^{-1}$ | translation or degeneracy map |
-| $[UaU]$ | sum over $UaU/U$ | right cosets, no averaging | integral Hecke operator |
-| $\phi*\psi$ | $\int\phi(y)\psi(y^{-1}x)dy$ | $\operatorname{vol}(U)=1$ | composition law |
-| class matrix | $g_i a_r=\gamma_{i,r}g_j u$ | row $i$ is output | Brandt or weighted Brandt matrix |
-| adjoint | $[UaU]^*=[Ua^{-1}U]$ | mass pairing, dual character | duality relation |
-| $T_v$ | $K\operatorname{diag}(\pi,1)K$ | unnormalized, degree $q_v+1$ | trace-like coefficient |
-| $S_v$ | central $K\pi I K$ | one coset | central-character or determinant coefficient |
-| $P_v(X)$ | $1-T_vX+q_vS_vX^2$ | integral spherical normalization | unramified comparison polynomial |
-| $U_v$ | $K_0(\mathfrak p^r)\operatorname{diag}(\pi,1)K_0(\mathfrak p^r)$ | oriented, degree $q_v$ | level-prime operator |
-| $V_v$ | inverse double coset of $U_v$ | generally distinct from $U_v$ | mass adjoint |
-| $\langle a\rangle$ | right translation by $\operatorname{diag}(1,\widetilde a)$ at $K_1$-level | genuine $k_v^\times$-action | diamond character |
-| $R_\Pi$ | division-uniformizer coset | maximal compact, one coset | ramified-place valuation step |
-| $\operatorname{res}$ | forget some invariance | deeper group is smaller | level pullback |
-| $\operatorname{Tr}$ | sum over $U/U'$ | unnormalized right-coset trace | level corestriction |
-| $\delta_a$ | $R_a$ then pullback | require $U'\subset aUa^{-1}$ | degeneracy map and old image |
-| $\Delta^*\Delta$ | matrix of adjoint degeneracy compositions | mass pairing and self-duality fixed | old/new splitting obstruction |
-| old $U_v$ matrix | $\left(\begin{smallmatrix}T_v&q_vS_v\\-1&0\end{smallmatrix}\right)$ | $\alpha=\operatorname{diag}(\pi,1)$ and $\beta=\operatorname{diag}(1,\pi)$ | old refinement polynomial |
-| twist by $\psi$ | multiply by $\psi_f\circ\operatorname{Nrd}$ | adjust the infinite weight; trivial on level norm | $t_v\mapsto\psi_v(\pi_v)t_v$ |
+| Symbol or construction | Exact correspondence                                                      | Essential convention                                                       | Later comparison datum                       |
+| ---------------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------- |
+| $R_a$                  | $f(g)\mapsto f(ga)$                                                       | level becomes $aUa^{-1}$                                                   | translation or degeneracy map                |
+| $[UaU]$                | sum over $UaU/U$                                                          | right cosets, no averaging                                                 | integral Hecke operator                      |
+| $\phi*\psi$            | $\int\phi(y)\psi(y^{-1}x)dy$                                              | $\operatorname{vol}(U)=1$                                                  | composition law                              |
+| class matrix           | $g_i a_r=\gamma_{i,r}g_j u$                                               | row $i$ is output                                                          | Brandt or weighted Brandt matrix             |
+| adjoint                | $[UaU]^*=[Ua^{-1}U]$                                                      | mass pairing, dual character                                               | duality relation                             |
+| $T_v$                  | $K\operatorname{diag}(\pi,1)K$                                            | unnormalized, degree $q_v+1$                                               | trace-like coefficient                       |
+| $S_v$                  | central $K\pi I K$                                                        | one coset                                                                  | central-character or determinant coefficient |
+| $P_v(X)$               | $1-T_vX+q_vS_vX^2$                                                        | integral spherical normalization                                           | unramified comparison polynomial             |
+| $U_v$                  | $K_0(\mathfrak p^r)\operatorname{diag}(\pi,1)K_0(\mathfrak p^r)$          | oriented, degree $q_v$                                                     | level-prime operator                         |
+| $V_v$                  | inverse double coset of $U_v$                                             | generally distinct from $U_v$                                              | mass adjoint                                 |
+| $\langle a\rangle$     | right translation by $\operatorname{diag}(1,\widetilde a)$ at $K_1$-level | genuine $k_v^\times$-action                                                | diamond character                            |
+| $R_\Pi$                | division-uniformizer coset                                                | maximal compact, one coset                                                 | ramified-place valuation step                |
+| $\operatorname{res}$   | forget some invariance                                                    | deeper group is smaller                                                    | level pullback                               |
+| $\operatorname{Tr}$    | sum over $U/U'$                                                           | unnormalized right-coset trace                                             | level corestriction                          |
+| $\delta_a$             | $R_a$ then pullback                                                       | require $U'\subset aUa^{-1}$                                               | degeneracy map and old image                 |
+| $\Delta^*\Delta$       | matrix of adjoint degeneracy compositions                                 | mass pairing and self-duality fixed                                        | old/new splitting obstruction                |
+| old $U_v$ matrix       | $\left(\begin{smallmatrix}T_v&q_vS_v\\-1&0\end{smallmatrix}\right)$       | $\alpha=\operatorname{diag}(\pi,1)$ and $\beta=\operatorname{diag}(1,\pi)$ | old refinement polynomial                    |
+| twist by $\psi$        | multiply by $\psi_f\circ\operatorname{Nrd}$                               | adjust the infinite weight; trivial on level norm                          | $t_v\mapsto\psi_v(\pi_v)t_v$                 |
 
 Several entries deliberately retain both an operator and its normalization. In deformation comparisons, $T_v$ and $S_v$ will be matched with two coefficients of a degree-two characteristic polynomial. The factor $q_v$ in $P_v$ is part of that dictionary. Changing $T_v$ by $q_v^{-1/2}$ without changing the polynomial would change the comparison problem.
 

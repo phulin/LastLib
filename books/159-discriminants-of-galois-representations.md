@@ -49,31 +49,41 @@
    - [Change of coefficients](#94-change-of-coefficients)
    - [Existence warnings](#95-existence-warnings)
 10. [Examples at the residue characteristic](#10-examples-at-the-residue-characteristic)
-   - [Constant and multiplicative models](#101-constant-and-multiplicative-models)
-   - [Cyclotomic modules](#102-cyclotomic-modules)
-   - [Good-reduction elliptic curves](#103-good-reduction-elliptic-curves)
-   - [A tame auxiliary character](#104-a-tame-auxiliary-character)
+
+- [Constant and multiplicative models](#101-constant-and-multiplicative-models)
+- [Cyclotomic modules](#102-cyclotomic-modules)
+- [Good-reduction elliptic curves](#103-good-reduction-elliptic-curves)
+- [A tame auxiliary character](#104-a-tame-auxiliary-character)
+
 11. [Globalization](#11-globalization)
-   - [Local contributions to an absolute root discriminant](#111-local-contributions-to-an-absolute-root-discriminant)
-   - [The finite-flat global bound](#112-the-finite-flat-global-bound)
-   - [Auxiliary ramification away from $\ell$](#113-auxiliary-ramification-away-from-ell)
-   - [A worked global estimate](#114-a-worked-global-estimate)
+
+- [Local contributions to an absolute root discriminant](#111-local-contributions-to-an-absolute-root-discriminant)
+- [The finite-flat global bound](#112-the-finite-flat-global-bound)
+- [Auxiliary ramification away from $\ell$](#113-auxiliary-ramification-away-from-ell)
+- [A worked global estimate](#114-a-worked-global-estimate)
+
 12. [Towers of torsion fields](#12-towers-of-torsion-fields)
-   - [Full level and successive kernels](#121-full-level-and-successive-kernels)
-   - [What is uniform and what must grow](#122-what-is-uniform-and-what-must-grow)
-   - [Composita of several torsion modules](#123-composita-of-several-torsion-modules)
+
+- [Full level and successive kernels](#121-full-level-and-successive-kernels)
+- [What is uniform and what must grow](#122-what-is-uniform-and-what-must-grow)
+- [Composita of several torsion modules](#123-composita-of-several-torsion-modules)
+
 13. [The three-adic torsion-field ledger](#13-the-three-adic-torsion-field-ledger)
-   - [The coefficient and exponent ledger](#131-the-coefficient-and-exponent-ledger)
-   - [The strict residual field](#132-the-strict-residual-field)
-   - [Tame ramification at two](#133-tame-ramification-at-two)
-   - [Higher coefficient levels](#134-higher-coefficient-levels)
-   - [Residual composita and obstruction fields](#135-residual-composita-and-obstruction-fields)
-   - [What the three-adic argument receives](#136-what-the-three-adic-argument-receives)
+
+- [The coefficient and exponent ledger](#131-the-coefficient-and-exponent-ledger)
+- [The strict residual field](#132-the-strict-residual-field)
+- [Tame ramification at two](#133-tame-ramification-at-two)
+- [Higher coefficient levels](#134-higher-coefficient-levels)
+- [Residual composita and obstruction fields](#135-residual-composita-and-obstruction-fields)
+- [What the three-adic argument receives](#136-what-the-three-adic-argument-receives)
+
 14. [A theorem package for small ramification](#14-a-theorem-package-for-small-ramification)
-   - [Local package](#141-local-package)
-   - [Global package](#142-global-package)
-   - [Tower package](#143-tower-package)
-   - [Boundary with discriminant lower bounds](#144-boundary-with-discriminant-lower-bounds)
+
+- [Local package](#141-local-package)
+- [Global package](#142-global-package)
+- [Tower package](#143-tower-package)
+- [Boundary with discriminant lower bounds](#144-boundary-with-discriminant-lower-bounds)
+
 15. [Conclusion](#15-conclusion)
 
 ## 1. From a finite action to a field
@@ -931,7 +941,7 @@ The step-degree bound is uniform in $n$. The absolute root discriminants need no
 
 Book 56 proves the finite-flat integral geometry used from this point onward. This chapter
 records the precise specializations needed by the cutout-field calculus and cites
-their proofs in Book 56.  The
+their proofs in Book 56. The
 augmentation calculation is Book 56, Proposition 4.1; separation is Book 56, Theorem 4.2 and
 Corollary 4.3; and the quotient-compatible conversion to upper numbering is Book 56, Lemma 5.1.
 
@@ -939,7 +949,7 @@ Corollary 4.3; and the quotient-compatible conversion to upper numbering is Book
 
 Let $K/\mathbf Q_\ell$ be finite, normalize $v_K(K^\times)=\mathbf Z$, put
 $e_K=v_K(\ell)$, and let $\mathcal G=\operatorname{Spec}A$ be a finite locally free commutative
-$\mathcal O_K$-group with augmentation ideal $I$.  For a geometric point $P$, Book 56 defines
+$\mathcal O_K$-group with augmentation ideal $I$. For a geometric point $P$, Book 56 defines
 
 $$
 \nu(P)=\inf_{a\in I}v_K(P(a)),
@@ -982,14 +992,14 @@ $$
 v_K(P(a)-Q(a))\leq\frac{e_K}{\ell-1}.
 $$
 
-Translation identifies this with Theorem 7.2.  It is a property of a supplied finite-flat model;
+Translation identifies this with Theorem 7.2. It is a property of a supplied finite-flat model;
 the resulting statement about the cutout field needs only the existence of one such model.
 
 ### 7.4 From congruence to upper ramification
 
 **Lemma 7.4 (imported ramification--congruence lemma; Book 56, Lemma 5.1).** Let $\mathcal G$ be
 finite locally free and commutative over $\mathcal O_K$, with etale generic fiber, and suppose
-$[\ell^n]_{\mathcal G}=0$.  If every nonzero geometric point has depth at most $c$, then
+$[\ell^n]_{\mathcal G}=0$. If every nonzero geometric point has depth at most $c$, then
 
 $$
 G_K^u\text{ fixes }\mathcal G(\overline K)
@@ -997,9 +1007,9 @@ G_K^u\text{ fixes }\mathcal G(\overline K)
 \tag{7.1}
 $$
 
-Pairwise separation gives the same hypothesis after translation.  Book 56 proves (7.1) by the
+Pairwise separation gives the same hypothesis after translation. Book 56 proves (7.1) by the
 equal-translation-block count and Herbrand weighting; that proof is the canonical source of the
-cancellation of the splitting-field ramification index.  The group structure is indispensable:
+cancellation of the splitting-field ramification index. The group structure is indispensable:
 an arbitrary finite flat algebra has neither equal translation blocks nor an exponent filtration.
 
 ## 8. The imported finite-flat ramification theorem
@@ -1008,7 +1018,7 @@ an arbitrary finite flat algebra has neither equal translation blocks nor an exp
 
 **Theorem 8.1 (imported finite-flat upper-break bound; Book 56, Theorem 6.1).** Let
 $K/\mathbf Q_\ell$ be finite, let $e_K=v_K(\ell)$, and let $M$ be a finite continuous
-$G_K$-module killed by $\ell^n$.  If $M$ admits a finite-flat model over $\mathcal O_K$, then
+$G_K$-module killed by $\ell^n$. If $M$ admits a finite-flat model over $\mathcal O_K$, then
 
 $$
 G_K^u\text{ acts trivially on }M
@@ -1017,12 +1027,12 @@ u>e_K\left(n+\frac1{\ell-1}\right)-1.
 $$
 
 For the faithful local cutout field $L=K(M)$ the same formula says
-$\operatorname{Gal}(L/K)^u=1$ above that endpoint.  This is exactly Book 56, Theorem 6.1; the
+$\operatorname{Gal}(L/K)^u=1$ above that endpoint. This is exactly Book 56, Theorem 6.1; the
 numbering here is used for the subsequent deductions in this book.
 
 ### 8.2 The local different bound
 
-Book 56, Theorem 7.1 applies Hilbert's upper-numbered formula to this upper cutoff.  With
+Book 56, Theorem 7.1 applies Hilbert's upper-numbered formula to this upper cutoff. With
 
 $$
 e=e(L/K),\qquad f=f(L/K),\qquad d=d(L/K),
@@ -1037,56 +1047,56 @@ d\leq e\,e_K\left(n+\frac1{\ell-1}\right)-1,
 <e_K\left(n+\frac1{\ell-1}\right),
 $$
 
-and the downstairs discriminant exponent is $\delta=fd$.  At level one over $\mathbf Q_\ell$,
+and the downstairs discriminant exponent is $\delta=fd$. At level one over $\mathbf Q_\ell$,
 $d/e<\ell/(\ell-1)$.
 
 ### 8.3 Strictness, endpoints, and sharpness
 
 The upper group is asserted trivial for $u$ strictly greater than the displayed cutoff; it may be
-nontrivial at the endpoint.  Integration is insensitive to one endpoint, and the strict coarse
-normalized bound comes from the term $-1/e$.  The sharp congruence radius
+nontrivial at the endpoint. Integration is insensitive to one endpoint, and the strict coarse
+normalized bound comes from the term $-1/e$. The sharp congruence radius
 $e_K/(\ell-1)$ is not itself the upper-break cutoff over a ramified base: the latter also contains
 $e_K-1$.
 
 ### 8.4 Why integrality is stronger than a conductor estimate
 
-The bound is independent of rank and image order.  Matrix size bounds the degree of a finite
-image but does not bound the depth of even a fixed cyclic subgroup.  The decisive input is the
-finite-flat identity $[\ell]^*I\subseteq\ell I+I^\ell$, imported in Proposition 7.1.  General
+The bound is independent of rank and image order. Matrix size bounds the degree of a finite
+image but does not bound the depth of even a fixed cyclic subgroup. The decisive input is the
+finite-flat identity $[\ell]^*I\subseteq\ell I+I^\ell$, imported in Proposition 7.1. General
 conductor and faithful-family calculus remains in Chapters 4--6 of this book.
 
 ## 9. Imported model stability and its field-theoretic use
 
 Book 56, Chapters 8--9, proves stability of the finite-flat estimates under model and coefficient
-operations.  This chapter keeps the former headings so applications can distinguish
+operations. This chapter keeps the former headings so applications can distinguish
 an operation justified by an actual model from a merely generic construction.
 
 ### 9.1 Chosen models and inherited models
 
 Book 56, Theorem 8.1 constructs finite-flat models for Galois subquotients by saturated schematic
-closure and represented quotient.  Consequently their cutout fields are subfields of $K(M)$ and
-inherit the imported upper-break and different inequalities.  The construction is relative to a chosen ambient model; it is not a
+closure and represented quotient. Consequently their cutout fields are subfields of $K(M)$ and
+inherit the imported upper-break and different inequalities. The construction is relative to a chosen ambient model; it is not a
 uniqueness statement for abstract models.
 
 ### 9.2 Cartier duals
 
 Cartier duality supplies a finite-flat model of
-$M^*(1)=\operatorname{Hom}(M,\mu_{\ell^n})$ and preserves the same exponent bound.  It need not
+$M^*(1)=\operatorname{Hom}(M,\mu_{\ell^n})$ and preserves the same exponent bound. It need not
 preserve the cutout field: the cyclotomic twist can change the kernel unless a supplied perfect
 pairing identifies the two actions.
 
 ### 9.3 Direct sums and exact extensions
 
-Products model finite direct sums.  Their cutout field is the compositum and the common bound uses
-the maximum exponent, not a sum of local costs.  A supplied faithfully flat exact sequence also
-keeps every generic term in the finite-flat category.  Separate finite-flat endpoint models do
+Products model finite direct sums. Their cutout field is the compositum and the common bound uses
+the maximum exponent, not a sum of local costs. A supplied faithfully flat exact sequence also
+keeps every generic term in the finite-flat category. Separate finite-flat endpoint models do
 not, by themselves, manufacture a finite-flat middle extension.
 
 ### 9.4 Change of coefficients
 
 Restriction of coefficient scalars leaves the underlying action and cutout field unchanged.
 Extension along a finite coefficient-ring map, and coefficient reduction, are constructed in
-Book 56 by finite presentations, products, saturated closure, and represented quotient.  Thus
+Book 56 by finite presentations, products, saturated closure, and represented quotient. Thus
 
 $$
 K(B\otimes_A M)\subseteq K(M).
@@ -1101,7 +1111,7 @@ K(M/JM)\subseteq K(M).
 $$
 
 For an open ideal $J$ in a coefficient order, let $a(J)$ be the least integer with
-$\ell^{a(J)}\in J$.  The quotient is killed by $\ell^{a(J)}$ and its cutoff is
+$\ell^{a(J)}\in J$. The quotient is killed by $\ell^{a(J)}$ and its cutoff is
 
 $$
 e_K\left(a(J)+\frac1{\ell-1}\right)-1.
@@ -1111,7 +1121,7 @@ $$
 Using a larger annihilating power gives a valid but weaker discriminant estimate.
 
 **Theorem 9.1 (imported coefficient stability; Book 56, Theorem 8.1).** Let $M$ be a finite-flat
-$G_K$-module killed by $\ell^n$.  The Fontaine--Raynaud upper-break and different bounds, with
+$G_K$-module killed by $\ell^n$. The Fontaine--Raynaud upper-break and different bounds, with
 the actual exponent, are preserved under restriction and extension of coefficient scalars,
 coefficient quotients and Galois subquotients, finite direct sums, Cartier duality, and every
 generic term of a supplied faithfully flat exact sequence of finite-flat models.
@@ -1122,11 +1132,12 @@ give the inclusions and compositum assertions just recorded.
 
 ### 9.5 Existence warnings
 
-The imported theorem starts with actual local models.  Potential finite flatness after a ramified
-extension does not descend without integral descent data.  Generic endpoints do not imply a
+The imported theorem starts with actual local models. Potential finite flatness after a ramified
+extension does not descend without integral descent data. Generic endpoints do not imply a
 modeled middle term, and unrelated coefficient specializations are not automatically compatible.
 Every later use names the supplied ambient model, product, closure, quotient, or exact integral
 sequence that licenses the operation.
+
 ## 10. Examples at the residue characteristic
 
 ### 10.1 Constant and multiplicative models
@@ -1436,7 +1447,7 @@ $$
 
 grows linearly.
 
-What *is* uniform is the finite-flat cost of one module killed by $\ell$ over a fixed local base: its positive upper depth is at most $e_K(1+1/(\ell-1))-1$, regardless of rank. If every relative step in a tower is independently shown to arise from such a module over its current base, one may apply the local theorem step by step. The ramification index of the current base then appears explicitly and must be normalized through the tower formula; it cannot be silently replaced by the original $e_v^0$.
+What _is_ uniform is the finite-flat cost of one module killed by $\ell$ over a fixed local base: its positive upper depth is at most $e_K(1+1/(\ell-1))-1$, regardless of rank. If every relative step in a tower is independently shown to arise from such a module over its current base, one may apply the local theorem step by step. The ramification index of the current base then appears explicitly and must be normalized through the tower formula; it cannot be silently replaced by the original $e_v^0$.
 
 The safe full-level estimate grows with $n$. Any stronger uniform conclusion must name the extra structural reason that stops the cyclotomic phenomenon.
 
@@ -1924,18 +1935,18 @@ $d=d(L/K)$. Then:
    new absolute ramification index. Descent in the reverse direction requires effective integral
    descent data.
 
-This is the exact six-part package of Book 56, Theorem 14.1.  Its proof and all model-stability
-assertions are proved there.  In particular,
+This is the exact six-part package of Book 56, Theorem 14.1. Its proof and all model-stability
+assertions are proved there. In particular,
 clause 5 does not assert that arbitrary generic extensions of finite-flat endpoints are finite
 flat.
 
 ### 14.2 Global package
 
 **Theorem 14.2 (imported global root-discriminant package; Book 56, Theorem 14.2).** Let $F$ be
-a number field, let $M$ be a finite $G_F$-module killed by $\ell^n$, and put $L=F(M)$.  Assume
+a number field, let $M$ be a finite $G_F$-module killed by $\ell^n$, and put $L=F(M)$. Assume
 that $M$ is finite flat at every $v\mid\ell$, unramified outside the places above $\ell$ and a
 finite set $S$, and that for each $v\in S$ there is $R_v\geq0$ such that the local cutout field
-has upper groups trivial above $R_v$.  Then
+has upper groups trivial above $R_v$. Then
 
 $$
 \boxed{
@@ -1951,11 +1962,11 @@ $$
 (Nv)^{(1-1/e_v)/[F:\mathbf Q]}.
 $$
 
-The same ceiling holds for every subfield of $L$.  At a fixed exponent it also holds for every
+The same ceiling holds for every subfield of $L$. At a fixed exponent it also holds for every
 finite compositum of fields cut out by modules whose direct sum retains the stated local models
 and auxiliary cutoffs.
 
-This is the exact statement of Book 56, Theorem 14.2, where its proof is given.  When the actual
+This is the exact statement of Book 56, Theorem 14.2, where its proof is given. When the actual
 upper filtration is known, the sharper integral
 cost retained in §§4.3 and 11.1 of this book may replace the coarse term $1+R_v$.
 

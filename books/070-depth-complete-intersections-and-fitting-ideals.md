@@ -655,9 +655,8 @@ The right side is the least codimension, inside the support of $M$, at which $V(
 
 Third, if $M$ is Cohen--Macaulay, every localization $M_{\mathfrak p}$ is Cohen--Macaulay, so the inequality becomes an equality:
 
-$$
-\operatorname{depth}_I(M)
-=
+# $$\operatorname{depth}_I(M)
+
 \inf_{\substack{\mathfrak p\in\operatorname{Supp}M\\I\subseteq\mathfrak p}}
 \dim_{R_{\mathfrak p}}M_{\mathfrak p}.
 $$
@@ -2308,7 +2307,6 @@ $$
 For the first map, send the class of $x$ to the class of $e_1x$. If $e_1x\in L_1$, then $e_2x=x-e_1x$ lies in $L\cap V_2=L_2$, so the kernel is exactly $L_1\oplus L_2$. Surjectivity is immediate. Thus the congruence module can equally be read as the denominator of either generic projector.
 
 Choose bases of $L_1\oplus L_2$ and $L$. If the inclusion is represented by a square matrix $A$, then
-
 
 $$
 \operatorname{Fitt}_0^{\mathcal O}(C(L))=(\det A),

@@ -568,9 +568,9 @@ $$
 
 Choose a finite set $S$ containing
 
-* every archimedean place;
-* every place dividing $d$;
-* every place at which $A$ or $B$ has bad reduction.
+- every archimedean place;
+- every place dividing $d$;
+- every place at which $A$ or $B$ has bad reduction.
 
 The action on $G$ is unramified outside this set. By Theorem 4.2, the local condition outside $S$ is precisely unramified. Hence
 
@@ -1347,17 +1347,17 @@ It vanishes exactly when $X_c(K)\ne\varnothing$, equivalently when $c$ comes fro
 
 The main conclusions and their precise inputs are summarized below.
 
-| Statement | Hypotheses | Decisive reason |
-|---|---|---|
-| $G=A[\phi]$ is a finite Galois module | $\phi$ an isogeny over a characteristic-zero field | the kernel is finite etale |
-| $B(F)/\phi A(F)\hookrightarrow H^1(F,G)$ | any field extension $F/K$ | fppf exactness of the isogeny sequence |
-| $B(K_v)/\phi A(K_v)$ is finite | $v$ any place | compact Lie group and open isogeny image |
-| local Kummer image equals unramified cohomology | good reduction and $v\nmid\deg\phi$ | integral Kummer theory and Lang's theorem |
-| $\operatorname{Sel}^{\phi}(A/K)$ is finite | $K$ a number field | restricted global cohomology of a finite module |
-| $B(K)/\phi A(K)$ is finite | same | injection into the Selmer group |
-| $A(K)/nA(K)$ is finite | $n\geq1$ | multiplication isogeny |
-| $H^1(K,G)$ is a product of power-class groups | $G$ split diagonalizable | fppf Kummer theory coordinatewise |
-| finite bad-place computation | fixed isogeny and finite controlling set | openness gives finite local precision |
+| Statement                                       | Hypotheses                                         | Decisive reason                                 |
+| ----------------------------------------------- | -------------------------------------------------- | ----------------------------------------------- |
+| $G=A[\phi]$ is a finite Galois module           | $\phi$ an isogeny over a characteristic-zero field | the kernel is finite etale                      |
+| $B(F)/\phi A(F)\hookrightarrow H^1(F,G)$        | any field extension $F/K$                          | fppf exactness of the isogeny sequence          |
+| $B(K_v)/\phi A(K_v)$ is finite                  | $v$ any place                                      | compact Lie group and open isogeny image        |
+| local Kummer image equals unramified cohomology | good reduction and $v\nmid\deg\phi$                | integral Kummer theory and Lang's theorem       |
+| $\operatorname{Sel}^{\phi}(A/K)$ is finite      | $K$ a number field                                 | restricted global cohomology of a finite module |
+| $B(K)/\phi A(K)$ is finite                      | same                                               | injection into the Selmer group                 |
+| $A(K)/nA(K)$ is finite                          | $n\geq1$                                           | multiplication isogeny                          |
+| $H^1(K,G)$ is a product of power-class groups   | $G$ split diagonalizable                           | fppf Kummer theory coordinatewise               |
+| finite bad-place computation                    | fixed isogeny and finite controlling set           | openness gives finite local precision           |
 
 The good-place statement does not extend automatically to $v\mid d$ or bad reduction. The power-class description does not extend automatically to constant or nonsplit kernels. Weak Mordell--Weil does not, by itself, imply finite generation. Each boundary corresponds to a real mathematical obstruction.
 

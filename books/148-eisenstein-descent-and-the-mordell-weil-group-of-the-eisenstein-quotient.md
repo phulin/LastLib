@@ -615,10 +615,10 @@ For a constant atom, a torsor over $\mathbf Z_\ell$ is finite etale. Its
 generic character is unramified, and every unramified character extends
 uniquely over the henselian base. Cartier duality exchanges the two
 coefficient group schemes, but the descent below does not infer an
-orthogonality theorem from that fact.  What it uses is only functoriality:
+orthogonality theorem from that fact. What it uses is only functoriality:
 maps in an admissible finite-flat sequence carry integral torsors to
-integral torsors.  Thus induced quotient conditions are contained in the
-standard conditions (3.4) and (3.5).  No local-flat duality theorem, and no
+integral torsors. Thus induced quotient conditions are contained in the
+standard conditions (3.4) and (3.5). No local-flat duality theorem, and no
 surjectivity on $H^1$, is needed.
 
 ### 3.3 Primes away from the coefficient
@@ -916,9 +916,9 @@ Kummer condition without changing the asymptotic rank argument.
 ## 5. The two atomic Selmer calculations
 
 An admissible finite flat group need not split into its constant and
-multiplicative constituents.  Nevertheless, its strict Selmer group can be
-studied one constituent at a time.  The base of that induction is an explicit
-calculation over $U=\operatorname{Spec}\mathbf Z[1/N]$.  The calculation is
+multiplicative constituents. Nevertheless, its strict Selmer group can be
+studied one constituent at a time. The base of that induction is an explicit
+calculation over $U=\operatorname{Spec}\mathbf Z[1/N]$. The calculation is
 short, but every local condition matters: the strict condition removes the
 power of $N$, and at $2$ the real condition removes the sign.
 
@@ -937,7 +937,7 @@ $$
 \mathbf Z[1/N]^\times=\{\pm N^a:a\in\mathbf Z\}. \tag{5.2}
 $$
 
-There is a useful global reformulation.  A class
+There is a useful global reformulation. A class
 $x\in\mathbf Q^\times/\mathbf Q^{\times\ell}$ is integral at every finite
 prime $v\ne N$ precisely when
 
@@ -946,22 +946,22 @@ v(x)\equiv0\pmod\ell\qquad(v\ne N). \tag{5.3}
 $$
 
 After multiplying by an $\ell$-th power, such a class is represented by
-$\pm N^a$.  The strict condition at $N$ is
+$\pm N^a$. The strict condition at $N$ is
 
 $$
 v_N(x)\equiv0\pmod\ell. \tag{5.4}
 $$
 
-It removes $N^a$.  If $\ell$ is odd, the remaining sign is already an
-$\ell$-th power because $-1=(-1)^\ell$.  If $\ell=2$, the positive condition
-at the real place removes the class of $-1$.  Thus
+It removes $N^a$. If $\ell$ is odd, the remaining sign is already an
+$\ell$-th power because $-1=(-1)^\ell$. If $\ell=2$, the positive condition
+at the real place removes the class of $-1$. Thus
 
 $$
 \operatorname{Sel}^{\mathrm{str}}(\mu_\ell)=0. \tag{5.5}
 $$
 
-This argument also explains why the condition at $N$ cannot be omitted.  With
-the relaxed condition, the class of $N$ survives.  It is the cohomological
+This argument also explains why the condition at $N$ cannot be omitted. With
+the relaxed condition, the class of $N$ survives. It is the cohomological
 shadow of the component class that descent is designed to isolate.
 
 For example, if $x=N^bu^\ell$ in $\mathbf Q^\times$, all valuations away
@@ -982,12 +982,12 @@ H^1(\mathbf Q,\underline{\mathbf Z/\ell\mathbf Z})
 $$
 
 The flat condition at a finite prime says that the character is unramified
-there.  The strict condition says the same at $N$.  Hence a strict class is
+there. The strict condition says the same at $N$. Hence a strict class is
 unramified at every finite prime.
 
-We recall why such a character is zero.  A nonzero character has a cyclic
-degree-$\ell$ quotient.  The corresponding number field $K$ is unramified at
-every finite prime, so its absolute discriminant is $1$.  Minkowski's theorem
+We recall why such a character is zero. A nonzero character has a cyclic
+degree-$\ell$ quotient. The corresponding number field $K$ is unramified at
+every finite prime, so its absolute discriminant is $1$. Minkowski's theorem
 says that a number field of degree $d>1$, with $r_2$ pairs of complex
 embeddings, satisfies
 
@@ -997,9 +997,9 @@ $$
 $$
 
 The right side is greater than $1$ for $d>1$ after the standard sharpened
-form of the convex-body estimate is applied to a nonzero ideal class.  In
+form of the convex-body estimate is applied to a nonzero ideal class. In
 particular every nontrivial extension of $\mathbf Q$ has a ramified finite
-prime.  Thus $K=\mathbf Q$, a contradiction.  Equivalently, $\mathbf Q$ has
+prime. Thus $K=\mathbf Q$, a contradiction. Equivalently, $\mathbf Q$ has
 no nontrivial extension unramified at all finite primes.
 
 The torsor in (5.6) need not be connected. If its character is nonzero, its
@@ -1022,7 +1022,7 @@ quantitative reason an everywhere-unramified nontrivial field cannot occur.
 
 When $\ell=2$, a quadratic character ramified only at the real place would
 correspond to a quadratic field of discriminant of absolute value $1$; no
-such field exists.  The imposed real condition is nevertheless retained,
+such field exists. The imposed real condition is nevertheless retained,
 because it is the condition propagated by the geometric Kummer problem and
 because it treats constant and multiplicative dyadic atoms uniformly.
 Consequently
@@ -1037,39 +1037,39 @@ $$
 For later use it is helpful to record the calculation as a proposition in
 which the local hypotheses are visible.
 
-**Proposition 5.1 (odd atomic vanishing).**  Let $\ell$ be odd and
-$\ell\ne N$.  Let $H$ be either $\mu_\ell$ or
-$\underline{\mathbf Z/\ell\mathbf Z}$.  Impose the flat condition at every
-finite $v\ne N$ and the unramified strict condition at $N$.  Then
+**Proposition 5.1 (odd atomic vanishing).** Let $\ell$ be odd and
+$\ell\ne N$. Let $H$ be either $\mu_\ell$ or
+$\underline{\mathbf Z/\ell\mathbf Z}$. Impose the flat condition at every
+finite $v\ne N$ and the unramified strict condition at $N$. Then
 
 $$
 \operatorname{Sel}^{\mathrm{str}}(H)=0. \tag{5.9}
 $$
 
-**Proof.**  For $H=\mu_\ell$, (5.3) makes a global class a level unit and
-(5.4) removes its $N$-power; the sign is an $\ell$-th power.  For constant
+**Proof.** For $H=\mu_\ell$, (5.3) makes a global class a level unit and
+(5.4) removes its $N$-power; the sign is an $\ell$-th power. For constant
 $H$, every permitted character is everywhere unramified and hence zero by
-the discriminant argument above.  These are all cases. $\square$
+the discriminant argument above. These are all cases. $\square$
 
 Notice that the proof does not assume that $N$ is an $\ell$-th power in
-$\mathbf Q_N$.  It asserts the opposite sort of fact: the valuation of an
-$\ell$-th power is divisible by $\ell$.  The strict valuation condition is
+$\mathbf Q_N$. It asserts the opposite sort of fact: the valuation of an
+$\ell$-th power is divisible by $\ell$. The strict valuation condition is
 therefore exactly what kills the global generator $[N]$ occurring in the
 extension group of admissible finite flat groups.
 
 ### 5.4 The dyadic sign
 
 At $\ell=2$, the generic fibers of $\mu_2$ and
-$\underline{\mathbf Z/2\mathbf Z}$ are both trivial Galois modules.  Their
+$\underline{\mathbf Z/2\mathbf Z}$ are both trivial Galois modules. Their
 closures over $\mathbf Z_2$ are different, so their flat local conditions are
-different.  The calculation must be made on those closures.
+different. The calculation must be made on those closures.
 
-For $\mu_2$, an integral global class has the form $\pm N^a$.  Strictness at
-$N$ makes $a$ even, leaving $\pm1$.  Positivity at infinity leaves $+1$.
+For $\mu_2$, an integral global class has the form $\pm N^a$. Strictness at
+$N$ makes $a$ even, leaving $\pm1$. Positivity at infinity leaves $+1$.
 For the constant closure, the class is a quadratic character unramified at
-every finite prime and hence is zero.  We have proved
+every finite prime and hence is zero. We have proved
 
-**Proposition 5.2 (dyadic atomic vanishing).**  For either integral dyadic
+**Proposition 5.2 (dyadic atomic vanishing).** For either integral dyadic
 atom, with its flat condition at $2$, its unramified strict condition at $N$,
 and the positive condition at infinity,
 
@@ -1077,19 +1077,19 @@ $$
 \operatorname{Sel}^{\mathrm{str}}(H)=0. \tag{5.10}
 $$
 
-The sign in the dyadic extension classification does not alter (5.10).  It
+The sign in the dyadic extension classification does not alter (5.10). It
 describes how two atoms may be glued; it is not an additional class in the
-Selmer group of an atom.  The carry occurring in a tower has the same status.
+Selmer group of an atom. The carry occurring in a tower has the same status.
 Both phenomena will be retained by devissage rather than discarded by an
 imaginary splitting.
 
 ### 5.5 Exact hypotheses of the atomic vanishing
 
 The preceding proof establishes a slightly stronger statement than we shall
-need.  Suppose a local condition on an atom is contained in the flat
+need. Suppose a local condition on an atom is contained in the flat
 condition away from $N$, contained in the unramified condition at $N$, and,
-at $2$, contained in the positive real condition.  Its Selmer group is a
-subgroup of the group just computed, and is therefore zero.  Thus quotient
+at $2$, contained in the positive real condition. Its Selmer group is a
+subgroup of the group just computed, and is therefore zero. Thus quotient
 conditions obtained from a nonsplit extension need not fill the standard
 atomic local condition.
 
@@ -1100,9 +1100,9 @@ The calculation uses exactly four inputs:
 3. the strict condition is unramified at $N$; and
 4. at $\ell=2$ the real sign is positive.
 
-No class-group term is hidden here.  The ring $\mathbf Z[1/N]$ has trivial
+No class-group term is hidden here. The ring $\mathbf Z[1/N]$ has trivial
 class group, and the constant calculation uses the fact that the ground
-field is $\mathbf Q$.  These hypotheses will be checked again when the
+field is $\mathbf Q$. These hypotheses will be checked again when the
 atomic result is applied to $G_r$.
 
 We finish the atomic chapter by making the passage from local integrality to
@@ -1141,7 +1141,7 @@ it also handles nonsplit mixed extensions.
 
 ## 6. Cartesian devissage of strict Selmer groups
 
-The finite flat group $G_r$ generally contains nonsplit extensions.  We now
+The finite flat group $G_r$ generally contains nonsplit extensions. We now
 show that atomic vanishing still forces its strict Selmer group to vanish.
 The method is a left-exact induction: map a Selmer class to the final atom,
 use atomic vanishing, lift it to the preceding subgroup, and repeat.
@@ -1156,7 +1156,7 @@ $$
 $$
 
 be an exact sequence of finite Galois modules arising as generic fibers of
-finite flat groups wherever an integral condition is imposed.  Given a local
+finite flat groups wherever an integral condition is imposed. Given a local
 subgroup $L_v(H)\subseteq H^1(\mathbf Q_v,H)$, define the propagated
 subobject condition by
 
@@ -1167,39 +1167,39 @@ x\mapsto L_v(H)\}. \tag{6.2}
 $$
 
 Define the quotient condition to be the image of $L_v(H)$ in
-$H^1(\mathbf Q_v,H'')$.  With these definitions,
+$H^1(\mathbf Q_v,H'')$. With these definitions,
 
 $$
 L_v(H')\longrightarrow L_v(H)\longrightarrow L_v(H'') \tag{6.3}
 $$
 
-is exact at the middle term.  This elementary condition is the portion of
+is exact at the middle term. This elementary condition is the portion of
 cartesianness needed below.
 
 If $L_v(H)$ is the image of integral flat cohomology, the quotient condition
-is contained in the integral flat condition for $H''$.  Indeed, the map in
+is contained in the integral flat condition for $H''$. Indeed, the map in
 cohomology is induced by a map of finite flat groups over $\mathbf Z_v$.
-Surjectivity is neither asserted nor needed.  The same observation applies
+Surjectivity is neither asserted nor needed. The same observation applies
 to the identity-component Kummer condition at $N$.
 
 ### 6.2 The left-exact Selmer lemma
 
-**Lemma 6.1 (left-exact devissage).**  In (6.1), use propagated subobject and
-quotient conditions at every place.  If
+**Lemma 6.1 (left-exact devissage).** In (6.1), use propagated subobject and
+quotient conditions at every place. If
 $\operatorname{Sel}(H'')=0$, then every class in
 $\operatorname{Sel}(H)$ is the image of a class in
 $\operatorname{Sel}(H')$.
 
-**Proof.**  Let $c\in\operatorname{Sel}(H)$.  Its image $c''$ in
+**Proof.** Let $c\in\operatorname{Sel}(H)$. Its image $c''$ in
 $H^1(\mathbf Q,H'')$ satisfies every quotient local condition, so
-$c''\in\operatorname{Sel}(H'')$.  It is zero.  The global cohomology sequence
-therefore supplies $c'\in H^1(\mathbf Q,H')$ mapping to $c$.  At each place,
+$c''\in\operatorname{Sel}(H'')$. It is zero. The global cohomology sequence
+therefore supplies $c'\in H^1(\mathbf Q,H')$ mapping to $c$. At each place,
 the localization of $c'$ maps to the localization of $c$, which lies in
-$L_v(H)$.  Formula (6.2) says precisely that $c'_v\in L_v(H')$.  Hence
+$L_v(H)$. Formula (6.2) says precisely that $c'_v\in L_v(H')$. Hence
 $c'\in\operatorname{Sel}(H')$. $\square$
 
-The lift $c'$ need not be unique.  Nonuniqueness comes from the boundary of
-$H^0(\mathbf Q,H'')$, but every lift that maps to $c$ satisfies (6.2).  Thus
+The lift $c'$ need not be unique. Nonuniqueness comes from the boundary of
+$H^0(\mathbf Q,H'')$, but every lift that maps to $c$ satisfies (6.2). Thus
 no $H^0$-vanishing or multiplicity-one hypothesis has entered the argument.
 
 The same lemma applies when the quotient local condition is merely contained
@@ -1224,15 +1224,15 @@ $$
 $$
 
 where every $Q_i$ is $\mu_\ell$ or
-$\underline{\mathbf Z/\ell\mathbf Z}$.  Begin with the actual strict local
-conditions of $G_r$ and propagate them downward by (6.2).  The induced
+$\underline{\mathbf Z/\ell\mathbf Z}$. Begin with the actual strict local
+conditions of $G_r$ and propagate them downward by (6.2). The induced
 quotient conditions on $Q_i$ satisfy the hypotheses of Section 5.5.
 
 At a finite $v\ne N$, this follows from functoriality of
 $H^1(\mathbf Z_v,-)$ for the finite-flat exact sequence obtained from (6.4).
 At $v=N$, multiplication by $\ell$ is etale on the semiabelian identity
-component because $\ell\ne N$.  A constituent of an identity-component
-Kummer class is consequently unramified.  At the real place, the dyadic
+component because $\ell\ne N$. A constituent of an identity-component
+Kummer class is consequently unramified. At the real place, the dyadic
 condition was defined by propagation from the positive identity direction.
 These verifications prove
 
@@ -1245,7 +1245,7 @@ H^1_{\mathrm{ur}}(\mathbf Q_N,Q_i),&v=N,\\
 \end{cases} \tag{6.5}
 $$
 
-This is where finite-flat admissibility at every level is essential.  A
+This is where finite-flat admissibility at every level is essential. A
 generic Jordan--Holder series would not determine the condition at the
 coefficient prime, and at $2$ it would not distinguish the two integral
 closures.
@@ -1279,26 +1279,26 @@ atomic vanishing.
 
 ### 6.4 Strict Eisenstein Selmer vanishing
 
-**Theorem 6.2 (strict vanishing).**  For every $r\geq1$,
+**Theorem 6.2 (strict vanishing).** For every $r\geq1$,
 
 $$
 \boxed{\operatorname{Sel}^{\mathrm{str}}(G_r)=0.} \tag{6.6}
 $$
 
-**Proof.**  Start with a class $c_s$ in the left side.  Map it through
-$F_s\twoheadrightarrow Q_s$.  By (6.5), its image belongs to a Selmer group
+**Proof.** Start with a class $c_s$ in the left side. Map it through
+$F_s\twoheadrightarrow Q_s$. By (6.5), its image belongs to a Selmer group
 whose local conditions are contained in the standard atomic strict
-conditions.  Section 5.5 makes that group zero.  Lemma 6.1 lifts $c_s$ to a
+conditions. Section 5.5 makes that group zero. Lemma 6.1 lifts $c_s$ to a
 strict class $c_{s-1}$ with coefficients in $F_{s-1}$.
 
-Repeat.  At stage $i$, atomic vanishing for $Q_i$ and Lemma 6.1 lift the
-class to $F_{i-1}$.  After $s$ steps it is a class with coefficients in
-$F_0=0$, hence is zero.  Its image in $H^1(\mathbf Q,G_r)$ was the original
+Repeat. At stage $i$, atomic vanishing for $Q_i$ and Lemma 6.1 lift the
+class to $F_{i-1}$. After $s$ steps it is a class with coefficients in
+$F_0=0$, hence is zero. Its image in $H^1(\mathbf Q,G_r)$ was the original
 class, so that class is zero. $\square$
 
-The proof preserves every extension class in the flag.  For odd $\ell$ the
+The proof preserves every extension class in the flag. For odd $\ell$ the
 possible $[N]$-extension is neutralized because the strict local condition
-kills the level unit on the quotient atom.  At $2$ the sign and carry remain
+kills the level unit on the quotient atom. At $2$ the sign and carry remain
 inside the propagated subobject conditions; atomic positivity and repeated
 left-exact lifting handle them without a splitting assertion.
 
@@ -1315,20 +1315,20 @@ $r$. Exact vanishing is what later makes the component bound uniform.
 ### 6.5 Independence of the filtration
 
 Different admissible flags can have different intermediate extension
-classes.  The group in (6.6), however, was defined before a flag was chosen,
-using integral Kummer conditions and the Néron identity component.  A flag
+classes. The group in (6.6), however, was defined before a flag was chosen,
+using integral Kummer conditions and the Néron identity component. A flag
 is only a device for proving that this intrinsic group is zero.
 
-More formally, choose either of two admissible flags.  Functoriality gives
+More formally, choose either of two admissible flags. Functoriality gives
 (6.5) for each, and the same induction proves that every element of the one
-intrinsic group is zero.  There is no comparison isomorphism between the two
-lists of intermediate Selmer groups to construct.  This observation also
+intrinsic group is zero. There is no comparison isomorphism between the two
+lists of intermediate Selmer groups to construct. This observation also
 shows why the result is stable under refinement of a flag.
 
 ## 7. The component bound and zero selected rank
 
 Strict vanishing turns the relaxed local conditions into a finite global
-bound.  We now apply that bound to Kummer classes of rational points and let
+bound. We now apply that bound to Kummer classes of rational points and let
 $r$ grow.
 
 ### 7.1 The Kummer-to-component injection
@@ -1356,7 +1356,7 @@ M_{\mathfrak m}/\ell^rM_{\mathfrak m}
 $$
 
 The injection is canonical up to the harmless choice of representing a
-local component class.  Its kernel is canonical: a global point maps to zero
+local component class. Its kernel is canonical: a global point maps to zero
 exactly when its relaxed Kummer class becomes strict, and Theorem 6.2 then
 makes that class zero.
 
@@ -1388,8 +1388,8 @@ would be surjectivity of (7.2), a much stronger local-to-global assertion.
 Injectivity and boundedness are sufficient for rank zero.
 
 It is tempting to replace $D_{\mathfrak m,N}$ by the full component group of
-$J$.  That replacement may give a convenient upper bound, but it is not
-needed and may obscure the behavior of optimal quotients.  The actual image
+$J$. That replacement may give a convenient upper bound, but it is not
+needed and may obscure the behavior of optimal quotients. The actual image
 defined in (4.4) is the precise target supported by the Néron sequence.
 
 ### 7.3 The rank calculation
@@ -1407,8 +1407,8 @@ $$
 \#(M/\ell^rM)=\ell^{rd}\#(T/\ell^rT). \tag{7.5}
 $$
 
-The second factor is at least $1$ and eventually equals $\#T$.  Thus a
-uniform bound in $r$ forces $d=0$.  Applying this to (7.3) yields
+The second factor is at least $1$ and eventually equals $\#T$. Thus a
+uniform bound in $r$ forces $d=0$. Applying this to (7.3) yields
 
 $$
 \operatorname{rank}_{\mathbf Z_\ell}M_{\mathfrak m}=0. \tag{7.6}
@@ -1428,18 +1428,18 @@ element and excludes pathologies coming from infinitely divisible torsion.
 ### 7.4 From one completion to the rational quotient
 
 We must still show that (7.6) kills the entire rational rank of $A$, not only
-one completed summand.  Let
+one completed summand. Let
 
 $$
 R=\operatorname{im}(\mathbb T_{\mathbf Q}\to
 \operatorname{End}^0(A)). \tag{7.7}
 $$
 
-It is a finite product of number fields.  The rational projector defining
+It is a finite product of number fields. The rational projector defining
 $A$ retains precisely the factors $K$ for which at least one place
-$\lambda\mid\ell$ lies under the selected maximal ideal.  If
+$\lambda\mid\ell$ lies under the selected maximal ideal. If
 $W=A(\mathbf Q)\otimes\mathbf Q$ were nonzero, then some retained factor
-$K$ would act nontrivially on a nonzero summand $W_K$.  Since a nonzero
+$K$ would act nontrivially on a nonzero summand $W_K$. Since a nonzero
 finite-dimensional $K$-vector space stays nonzero after completion,
 
 $$
@@ -1448,14 +1448,14 @@ $$
 
 But this completed space is a summand of
 $M_{\mathfrak m}\otimes_{\mathbf Z_\ell}\mathbf Q_\ell$, contradicting
-(7.6).  Therefore
+(7.6). Therefore
 
 $$
 A(\mathbf Q)\otimes\mathbf Q=0. \tag{7.9}
 $$
 
 This argument is exactly why the rational projector $E$ and the local
-idempotent $\varepsilon$ were both retained.  One completion detects every
+idempotent $\varepsilon$ were both retained. One completion detects every
 rational simple factor included in $A$, although it does not equal the
 rational projector integrally.
 
@@ -1480,9 +1480,9 @@ actual finiteness.
 
 ### 8.1 Why rank zero is not yet the final sentence
 
-An arbitrary torsion abelian group can be infinite.  Consequently
+An arbitrary torsion abelian group can be infinite. Consequently
 $A(\mathbf Q)\otimes\mathbf Q=0$ does not by itself imply that
-$A(\mathbf Q)$ is finite.  The missing input is the Mordell--Weil theorem,
+$A(\mathbf Q)$ is finite. The missing input is the Mordell--Weil theorem,
 whose hypotheses are satisfied because $A$ is an abelian variety over the
 number field $\mathbf Q$.
 
@@ -1493,7 +1493,7 @@ then turns the resulting torsion group into a finite group.
 
 ### 8.2 Mordell--Weil finite generation
 
-Choose a symmetric ample line bundle $L$ on $A$.  Its canonical height
+Choose a symmetric ample line bundle $L$ on $A$. Its canonical height
 $\widehat h_L$ satisfies
 
 $$
@@ -1502,7 +1502,7 @@ $$
 
 and differs by a bounded function from a Weil height associated with $L$.
 Northcott finiteness says that points of bounded degree and bounded Weil
-height form a finite set.  The weak Mordell--Weil theorem says that
+height form a finite set. The weak Mordell--Weil theorem says that
 $A(\mathbf Q)/mA(\mathbf Q)$ is finite for one, hence every, $m\geq2$.
 
 The weak theorem applies with exactly the local hypotheses already available:
@@ -1521,8 +1521,8 @@ $$
 It follows that the associated bilinear pairing obeys Cauchy--Schwarz after
 quotienting by torsion. In particular, for each fixed representative $R_i$,
 the cross term in $\widehat h_L(P-R_i)$ is bounded by a constant times
-$\sqrt{\widehat h_L(P)}$.  That square-root term cannot be absorbed into an
-additive constant while retaining the coefficient $m^{-2}$.  Instead, fix
+$\sqrt{\widehat h_L(P)}$. That square-root term cannot be absorbed into an
+additive constant while retaining the coefficient $m^{-2}$. Instead, fix
 once and for all a real number
 
 $$
@@ -1532,8 +1532,8 @@ $$
 The inequality $2ab\leq\eta a^2+\eta^{-1}b^2$, with
 $\eta=m^2\rho-1>0$, absorbs the cross term and gives a genuine contraction.
 
-For completeness, these facts imply finite generation as follows.  Choose
-representatives $R_1,\ldots,R_t$ of $A(\mathbf Q)/mA(\mathbf Q)$.  Since
+For completeness, these facts imply finite generation as follows. Choose
+representatives $R_1,\ldots,R_t$ of $A(\mathbf Q)/mA(\mathbf Q)$. Since
 there are only finitely many $R_i$, Cauchy--Schwarz and the preceding
 inequality give one constant $C_\rho$ such that whenever $P=mQ+R_i$,
 
@@ -1547,9 +1547,9 @@ pairing followed by $2ab\leq\eta a^2+\eta^{-1}b^2$ gives (8.2), with the
 bounded $\widehat h_L(R_i)$ terms included in $C_\rho$.
 
 Repeated division modulo the finite representative set now reaches a point
-of uniformly bounded height.  Northcott makes the terminal set finite.
+of uniformly bounded height. Northcott makes the terminal set finite.
 Induction back through the decompositions shows that the terminal points
-together with the $R_i$ generate $A(\mathbf Q)$.  Thus
+together with the $R_i$ generate $A(\mathbf Q)$. Thus
 
 $$
 A(\mathbf Q)\simeq\mathbf Z^d\oplus A(\mathbf Q)_{\mathrm{tors}}. \tag{8.3}
@@ -1558,7 +1558,7 @@ $$
 All hypotheses are intrinsic to an abelian variety over $\mathbf Q$; no
 property of a modular parametrization is needed in this step.
 
-To make the termination precise, iterate (8.2).  After $j$ steps,
+To make the termination precise, iterate (8.2). After $j$ steps,
 
 $$
 \widehat h_L(Q_j)
@@ -1576,17 +1576,17 @@ height-decrease slogan.
 ### 8.3 Finiteness of the Eisenstein quotient
 
 Finite generation makes $M_{\mathfrak m}$ a finitely generated
-$\mathbf Z_\ell$-module, so Section 7.3 applies.  Section 7.4 then gives
-$d=0$ in (8.3).  A finitely generated torsion abelian group is finite.
+$\mathbf Z_\ell$-module, so Section 7.3 applies. Section 7.4 then gives
+$d=0$ in (8.3). A finitely generated torsion abelian group is finite.
 Therefore
 
 $$
 \boxed{A_{\mathfrak m}(\mathbf Q)\text{ is finite}.} \tag{8.4}
 $$
 
-This conclusion is algebraic.  Its inputs are the Eisenstein index, the
+This conclusion is algebraic. Its inputs are the Eisenstein index, the
 cuspidal and component normalization, finite-flat torsion, Kummer theory,
-and heights.  No statement about the analytic rank of an arbitrary modular
+and heights. No statement about the analytic rank of an arbitrary modular
 factor has been inserted.
 
 There is a useful numerical version. If
@@ -1603,11 +1603,11 @@ surjective, but it records the effective finite error produced by descent.
 
 ### 8.4 Isogenies, companions, and quotients
 
-Finiteness is invariant under isogeny over $\mathbf Q$.  Indeed, if
+Finiteness is invariant under isogeny over $\mathbf Q$. Indeed, if
 $f:A\to B$ has finite kernel and a dual isogeny $g:B\to A$ satisfies
-$g\circ f=[m]$, then $f\circ g=[m]$ on $B$.  Hence
+$g\circ f=[m]$, then $f\circ g=[m]$ on $B$. Hence
 $B(\mathbf Q)/fA(\mathbf Q)$ is killed by $m$ and is a quotient of
-$B(\mathbf Q)/mB(\mathbf Q)$, which is finite by finite generation.  Thus
+$B(\mathbf Q)/mB(\mathbf Q)$, which is finite by finite generation. Thus
 finiteness of either rational group implies finiteness of the other.
 
 For a positive-dimensional quotient, it is not enough to say that rational
@@ -1636,8 +1636,8 @@ to a smooth abelian scheme over an integral base.
 
 ## 9. Hecke support of rational torsion
 
-Finiteness leaves a finite Hecke module $A(\mathbf Q)$.  We next determine
-the maximal ideals that can occur in its support.  The argument is residual:
+Finiteness leaves a finite Hecke module $A(\mathbf Q)$. We next determine
+the maximal ideals that can occur in its support. The argument is residual:
 a maximal ideal in the support supplies a rational line in characteristic
 $p$, and the Hecke relations on that line are the Eisenstein relations.
 
@@ -1651,7 +1651,7 @@ use Frobenius directly away from $p$ and finite-flat closure at $p$.
 
 Let $C$ be a nonzero finite $\mathbb T$-stable subgroup of rational points on
 a prime-level modular quotient, and let $\mathfrak n$ be a maximal ideal in
-its support.  Its residue characteristic will be denoted $p$.  The socle of
+its support. Its residue characteristic will be denoted $p$. The socle of
 the nonzero localized module $C_{\mathfrak n}$ contains an element
 
 $$
@@ -1676,14 +1676,14 @@ Hecke-stable generic quotient and hence on its good-reduction torsion. Its
 use here does not require an exact integral sequence relating the quotient
 to $J$, nor an integral action of the rational projector $E$.
 
-Let $q\nmid Np$.  Good reduction and the Eichler--Shimura relation give, on
+Let $q\nmid Np$. Good reduction and the Eichler--Shimura relation give, on
 prime-to-$q$ torsion,
 
 $$
 F_q^2-T_qF_q+q=0, \tag{9.2}
 $$
 
-where $F_q$ is arithmetic Frobenius.  Since $F_q$ is the identity on $V$,
+where $F_q$ is arithmetic Frobenius. Since $F_q$ is the identity on $V$,
 applying (9.2) to $V$
 gives
 
@@ -1699,7 +1699,7 @@ T_q\equiv1+q\pmod{\mathfrak n}
 $$
 
 The exclusion of $q=p$ is genuine: (9.2) on geometric $p$-torsion cannot be
-used as though the group were etale at $p$.  The missing operator is recovered
+used as though the group were etale at $p$. The missing operator is recovered
 from the integral closure of the rational line.
 
 Hecke multiplicativity now determines more than prime coefficients. If
@@ -1760,7 +1760,7 @@ $$
 T_pP=P=(1+p)P. \tag{9.7}
 $$
 
-This proves (9.3) for the missing coefficient prime.  The argument uses the
+This proves (9.3) for the missing coefficient prime. The argument uses the
 integral atom only to interpret $F$ and $V$; it does not identify
 $\mu_2$ with the constant group over $\mathbf Z_2$.
 
@@ -1798,10 +1798,10 @@ $$
 $$
 
 **Proof.** Hecke--Fourier duality realizes the functional $\lambda$ in a
-unique $f$ in the mod-$p$ cusp lattice.  Since $\lambda(1)=1$, one has
+unique $f$ in the mod-$p$ cusp lattice. Since $\lambda(1)=1$, one has
 $a_1(f)=1$; commutativity and perfectness give
-$Tf=\lambda(T)f$ for every $T\in\mathbb T$.  Thus $f$ is a normalized
-mod-$p$ cuspidal eigenform.  The relations (9.8), multiplicativity, and the
+$Tf=\lambda(T)f$ for every $T\in\mathbb T$. Thus $f$ is a normalized
+mod-$p$ cuspidal eigenform. The relations (9.8), multiplicativity, and the
 prime-power recurrence give
 
 $$
@@ -1809,38 +1809,38 @@ a_m(f)=\sigma_1(m)\qquad(N\nmid m). \tag{9.9a}
 $$
 
 We use one precise consequence of the all-cusp integral calculation in Book
-132.  Suppose a normalized weight-two cuspidal form of prime level $N$ has
-the coefficients (9.9a), and write $u$ for its $U_N$-eigenvalue.  Then
+132. Suppose a normalized weight-two cuspidal form of prime level $N$ has
+the coefficients (9.9a), and write $u$ for its $U_N$-eigenvalue. Then
 
 $$
 a_N(f)=1. \tag{9.9b}
 $$
 
-Here is the support-descent proof, including the small characteristics.  On
-the punctured Tate chart subtract the prescribed Eisenstein *coefficient
-functional*, rather than pretending that its rational constant term is an
-integral modular form.  The resulting positive expansion is supported on
-$q^{Nm}$, and its first such coefficient is $u-1$.  The all-cusp
+Here is the support-descent proof, including the small characteristics. On
+the punctured Tate chart subtract the prescribed Eisenstein _coefficient
+functional_, rather than pretending that its rational constant term is an
+integral modular form. The resulting positive expansion is supported on
+$q^{Nm}$, and its first such coefficient is $u-1$. The all-cusp
 q-expansion calculation descends such a supported weight-two differential
-to level one.  On the chart at the other cusp, the two-cusp residue lattice
-is exactly the condition that removes a possible pole.  Thus the descended
+to level one. On the chart at the other cusp, the two-cusp residue lattice
+is exactly the condition that removes a possible pole. Thus the descended
 positive part is a level-one cuspidal differential and is zero because
 $X(1)$ has genus zero.
 
 At characteristics $2$ and $3$, the integral calculation is made before
-reduction on the stack, not by dividing the rational constant term.  Its
+reduction on the stack, not by dividing the rational constant term. Its
 only additional q-invisible directions are the level-one Hasse directions;
 their q-expansions have no positive coefficient, so they cannot alter the
-coefficient of $q^N$.  If $p=N$, the same conclusion is the bad-level part
+coefficient of $q^N$. If $p=N$, the same conclusion is the bad-level part
 of the calculation: one works on the two normalized components and the
 weighted node lattice, rather than descending through an inseparable Tate
-isogeny.  These are precisely the good-level Hasse and bad-level
+isogeny. These are precisely the good-level Hasse and bad-level
 normalization checks used in Book 132 to obtain the factors removed from
-$N-1$ at $2$ and $3$.  They prove (9.9b) in every characteristic without
+$N-1$ at $2$ and $3$. They prove (9.9b) in every characteristic without
 turning a Fourier functional into a form.
 
 On the other hand, $U_Nf=uf$ and normalization give
-$a_N(f)=u a_1(f)=u$.  Hence (9.9b) gives $u=1$.  Now the recurrences determine
+$a_N(f)=u a_1(f)=u$. Hence (9.9b) gives $u=1$. Now the recurrences determine
 the complete expansion
 
 $$
@@ -1857,17 +1857,17 @@ n_N=\frac{N-1}{\gcd(N-1,12)}. \tag{9.10}
 $$
 
 Equivalently, $\lambda$ now kills $I$ and factors through
-$\mathbb T/I\simeq\mathbf Z/n_N\mathbf Z$.  This proves both assertions.
+$\mathbb T/I\simeq\mathbf Z/n_N\mathbf Z$. This proves both assertions.
 $\square$
 
 If the residue characteristic is $2$, the same proof includes the equality
 $+1=-1$ in $k$ and the exact two-primary correction in $n_N$. Thus no
 separate sign convention is hidden in the lemma.
 
-The distinction in the proof is essential.  For $p\geq5$ with $p\ne N$ one
+The distinction in the proof is essential. For $p\geq5$ with $p\ne N$ one
 may make the comparison with the usual integral Eisenstein form directly.
 At $2$, $3$, or the bad characteristic $N$, the saturated all-cusp lattice
-must be used.  A rational Fourier series with a forbidden constant
+must be used. A rational Fourier series with a forbidden constant
 denominator is not a modular form that can be subtracted from $f$.
 Here “saturated” refers to the integral all-cusp q-expansion lattice. It is
 unrelated to the Tate-lattice saturation in (2.2) and supplies no
@@ -1890,25 +1890,25 @@ $$
 
 ### 9.4 The Eisenstein support theorem
 
-**Theorem 9.3 (rational torsion support).**  Let $C$ be a finite
+**Theorem 9.3 (rational torsion support).** Let $C$ be a finite
 $\mathbb T$-stable group of rational points on a prime-level modular abelian
-quotient.  Every maximal ideal in $\operatorname{Supp}_{\mathbb T}(C)$ is
+quotient. Every maximal ideal in $\operatorname{Supp}_{\mathbb T}(C)$ is
 
 $$
 \mathfrak m_p=(p,I) \tag{9.14}
 $$
 
-for a prime $p\mid n_N$.  In particular, no prime dividing $C$ equals $N$.
+for a prime $p\mid n_N$. In particular, no prime dividing $C$ equals $N$.
 
-**Proof.**  Choose $P$ as in (9.1).  Sections 9.1--9.3 show that $I$ and $p$
-annihilate $P$, so $(p,I)\subseteq\mathfrak n$.  The quotient
+**Proof.** Choose $P$ as in (9.1). Sections 9.1--9.3 show that $I$ and $p$
+annihilate $P$, so $(p,I)\subseteq\mathfrak n$. The quotient
 $\mathbb T/I\simeq\mathbf Z/n_N\mathbf Z$ has a maximal ideal of residue
 characteristic $p$ exactly when $p\mid n_N$, and its inverse image is the
-unique ideal $(p,I)$.  Thus $p\mid n_N$ and
+unique ideal $(p,I)$. Thus $p\mid n_N$ and
 $\mathfrak n=(p,I)$. $\square$
 
-Apply the theorem to $C=A(\mathbf Q)$, finite by (8.4).  It says exactly that
-the residual support of the remaining rational points is Eisenstein.  It
+Apply the theorem to $C=A(\mathbf Q)$, finite by (8.4). It says exactly that
+the residual support of the remaining rational points is Eisenstein. It
 does not say that every point is cuspidal, nor that the rational torsion group
 has order $n_N$.
 
@@ -1923,7 +1923,7 @@ allowed a larger field until Lemma 9.2 was applied.
 ## 10. Hecke annihilators without multiplicity one
 
 Support determines the radical of an annihilator, but not generally the
-annihilator itself.  Since the dependency package deliberately avoids a
+annihilator itself. Since the dependency package deliberately avoids a
 complete multiplicity-one theorem, the correct statement uses powers of the
 Eisenstein maximal ideals.
 
@@ -1935,8 +1935,8 @@ $$
 C=\bigoplus_{p\mid\#C}C_p \tag{10.1}
 $$
 
-for its primary decomposition.  By Theorem 9.3, $C_p$ is supported at the
-single maximal ideal $\mathfrak m_p=(p,I)$.  As a finite module over the
+for its primary decomposition. By Theorem 9.3, $C_p$ is supported at the
+single maximal ideal $\mathfrak m_p=(p,I)$. As a finite module over the
 Artinian image of $\mathbb T_{\mathfrak m_p}$, it has a finite Loewy
 filtration
 
@@ -1952,7 +1952,7 @@ $$
 $$
 
 Every nonzero quotient in (10.2) is a nonzero vector space over a field of
-characteristic $p$.  Hence the elementary bound
+characteristic $p$. Hence the elementary bound
 
 $$
 1\leq s_p\leq\log_p\#C_p \tag{10.4}
@@ -1971,7 +1971,7 @@ elements. Multiplying their orders proves (10.4).
 ### 10.2 The exact annihilator statement
 
 For a finite module over a commutative ring, the radical of its annihilator
-is the intersection of the maximal ideals in its support.  Theorem 9.3
+is the intersection of the maximal ideals in its support. Theorem 9.3
 therefore gives the exact formula
 
 $$
@@ -1982,7 +1982,7 @@ $$
 $$
 
 If $A(\mathbf Q)=0$, the intersection is empty by convention and both sides
-are the unit ideal.  In addition, (10.3) gives the explicit annihilator
+are the unit ideal. In addition, (10.3) gives the explicit annihilator
 
 $$
 \boxed{
@@ -1992,7 +1992,7 @@ $$
 $$
 
 Indeed, on $C_p$ the $p$-factor in the product acts as zero, and primary
-decomposition proves the assertion on all of $C$.  Equations (10.5) and
+decomposition proves the assertion on all of $C$. Equations (10.5) and
 (10.6) are the promised computation of the Hecke annihilator at the level of
 generality justified here.
 
@@ -2015,9 +2015,9 @@ Thus the complete product kills every primary summand.
 ### 10.3 Why one must not replace a power by the ideal
 
 Knowing that every composition factor is killed by $\mathfrak m_p$ proves
-only that some power of $\mathfrak m_p$ kills the module.  For example, on
+only that some power of $\mathfrak m_p$ kills the module. For example, on
 $R/\mathfrak m^2$ the ideal $\mathfrak m$ kills both successive composition
-factors but does not kill the whole module.  An extension between two
+factors but does not kill the whole module. An extension between two
 Eisenstein constituents can behave in exactly this way.
 
 Consequently neither
@@ -2032,8 +2032,8 @@ $$
 \mathfrak m_pC_p=0 \tag{10.8}
 $$
 
-is asserted.  Either conclusion would require control of extension classes
-or a suitable multiplicity-one statement.  The radical formula loses no
+is asserted. Either conclusion would require control of extension classes
+or a suitable multiplicity-one statement. The radical formula loses no
 information that support alone can provide, while the Loewy exponent records
 the remaining nilpotence exactly.
 
@@ -2054,8 +2054,8 @@ I^{s_p}C_p=0,
 $$
 
 The first equation is the Eisenstein Hecke annihilator on the $p$-primary
-part; the second is a deliberately coarse exponent bound.  The actual group
-exponent may be smaller.  Combining all primes yields
+part; the second is a deliberately coarse exponent bound. The actual group
+exponent may be smaller. Combining all primes yields
 
 $$
 I^sA(\mathbf Q)=0,
@@ -2090,8 +2090,8 @@ during descent.
 ### 11.1 Trivial Eisenstein index
 
 If $n_N=1$, then $\mathbb T/I=0$ and there is no Eisenstein maximal ideal
-$\mathfrak m=(\ell,I)$.  The selected quotient associated with such an ideal
-is absent, so the theorem is vacuous rather than false.  This includes the
+$\mathfrak m=(\ell,I)$. The selected quotient associated with such an ideal
+is absent, so the theorem is vacuous rather than false. This includes the
 small prime levels for which the numerator in (1.4) is $1$.
 
 For prime $N$, the equality $n_N=1$ means $N-1$ divides $12$. Thus the full
@@ -2138,8 +2138,8 @@ bound itself uses the actual component image of $A$. The support theorem
 returns to $\mathbb T/I$, whose order is exactly $n_N$.
 
 The coefficient prime is odd, so the two generic atomic characters are
-distinct.  Endpoint recognition and the unit calculation of Proposition 5.1
-apply without a real condition.  Nothing special happens to the
+distinct. Endpoint recognition and the unit calculation of Proposition 5.1
+apply without a real condition. Nothing special happens to the
 $[N]$-extension except that strictness removes its valuation class.
 
 ### 11.3 The full two-primary boundary
@@ -2150,7 +2150,7 @@ $$
 v_2(n_N)=v_2(N-1)-2. \tag{11.2}
 $$
 
-Thus the denominator correction removes two powers of $2$.  It must not be
+Thus the denominator correction removes two powers of $2$. It must not be
 confused with the single power removed at $3$.
 
 There are four dyadic issues, all already present in the proof:
@@ -2164,9 +2164,9 @@ There are four dyadic issues, all already present in the proof:
    finite image is admitted in the relaxed group and included in (7.2).
 
 At the missing Hecke operator $T_2$, both endpoint rows in (9.5) have
-$F+V=1$, so no choice between the closures is required.  At the level
+$F+V=1$, so no choice between the closures is required. At the level
 operator, $+1=-1$ in characteristic $2$, so the Steinberg sign ambiguity
-still yields $U_N=1$ in the residue field.  These observations cover the
+still yields $U_N=1$ in the residue field. These observations cover the
 entire two-primary boundary, not only the first layer.
 
 The strict and relaxed real conditions must not be interchanged. Using the
@@ -2184,16 +2184,16 @@ not assertions about the exact order of any rational point group.
 
 ### 11.4 The level prime
 
-The level prime is never a coefficient prime in this descent.  At $N$ the
+The level prime is never a coefficient prime in this descent. At $N$ the
 model is semistable, the strict condition uses the identity component, and
-the relaxed error uses the actual finite component image.  At every other
+the relaxed error uses the actual finite component image. At every other
 finite prime the selected quotient has good reduction and the Kummer
 condition is integral flat.
 
-This division of roles is essential.  Treating $N$ as a good prime would
+This division of roles is essential. Treating $N$ as a good prime would
 erase the component target and falsely force every local point into the
-strict group.  Treating the coefficient prime by ordinary unramified
-cohomology would erase connected flat classes.  The proof makes neither
+strict group. Treating the coefficient prime by ordinary unramified
+cohomology would erase connected flat classes. The proof makes neither
 replacement.
 
 The same separation appears in the Hecke calculation. If the residue
@@ -2206,14 +2206,14 @@ away from the level is evaluated at the level.
 ### 11.5 What the theorem does not identify
 
 The result proves finiteness, Eisenstein support of the finite rational group,
-the radical formula (10.5), and a power annihilator.  It does not identify
+the radical formula (10.5), and a power annihilator. It does not identify
 $A(\mathbf Q)$ with the rational cuspidal subgroup, compute its exact order,
 prove that $I$ itself annihilates it, or establish a complete intersection or
 multiplicity-one theorem for the local Hecke algebra.
 
-It also does not assert finiteness of a Tate--Shafarevich group.  The strict
+It also does not assert finiteness of a Tate--Shafarevich group. The strict
 Selmer groups here have the selected finite coefficients $G_r$ and specially
-chosen local conditions.  Their vanishing controls the Kummer images needed
+chosen local conditions. Their vanishing controls the Kummer images needed
 for Mordell--Weil rank; it is not a statement about every torsor under $A$.
 
 No winding quotient is used, and no analytic rank-zero theorem for arbitrary
@@ -2227,7 +2227,7 @@ visible in one place.
 
 ### 12.1 Main theorem
 
-**Theorem 12.1 (Eisenstein descent and finiteness).**  Let $N$ be prime, let
+**Theorem 12.1 (Eisenstein descent and finiteness).** Let $N$ be prime, let
 
 $$
 n_N=\frac{N-1}{\gcd(N-1,12)},
@@ -2235,7 +2235,7 @@ n_N=\frac{N-1}{\gcd(N-1,12)},
 I=(T_q-(1+q):q\ne N)+(U_N-1), \tag{12.1}
 $$
 
-and fix $\ell\mid n_N$ and $\mathfrak m=(\ell,I)$.  Let
+and fix $\ell\mid n_N$ and $\mathfrak m=(\ell,I)$. Let
 $A=A_{\mathfrak m}$ be the selected optimal Eisenstein quotient, let
 $\varepsilon$ be the completed local idempotent, and put
 $P_r=\varepsilon\mathcal J[\ell^r]$ and
@@ -2279,7 +2279,7 @@ transported. Then:
    \subseteq\operatorname{Ann}_{\mathbb T}A(\mathbf Q). \tag{12.5}
    $$
 
-**Proof.**  Atomic strict vanishing is Propositions 5.1 and 5.2.  The
+**Proof.** Atomic strict vanishing is Propositions 5.1 and 5.2. The
 admissible filtration and left-exact devissage give (12.2) by Theorem 6.2.
 All coefficient groups, Kummer maps, and local conditions in that argument
 are defined on $G_r$ itself; no ambient tower or integral
@@ -2289,7 +2289,7 @@ The strict--relaxed comparison at the level prime and, dyadically, at the
 real place gives (12.3). Its finite right side bounds all Kummer quotients,
 so finite generation and the growth formula force zero selected rank.
 Rational support gives zero total rank,
-and the Mordell--Weil theorem gives (12.4).  Theorem 9.3 proves the support
+and the Mordell--Weil theorem gives (12.4). Theorem 9.3 proves the support
 claim, and finite-module commutative algebra proves (12.5). $\square$
 
 Let us isolate the quantifiers in the proof. The selected prime $\ell$ is
@@ -2346,7 +2346,7 @@ Every substantial input occurs earlier with the same hypotheses:
 
 - Book 31 supplies finite-module local Tate duality and, crucially, the
   warning that its coefficient-prime unramified subgroup is not the flat
-  condition needed here.  This book does not attribute a local-flat duality
+  condition needed here. This book does not attribute a local-flat duality
   theorem to Book 31.
 - Book 32 supplies Selmer structures, propagation of local conditions,
   strict and relaxed modifications, and the exact sequence obtained by
@@ -2384,10 +2384,10 @@ Every substantial input occurs earlier with the same hypotheses:
   Eichler--Shimura input also gives the good-prime identities used in
   Sections 9.1 and 9.2.
 
-The hypothesis matching is exact.  Book 32 provides the language of
+The hypothesis matching is exact. Book 32 provides the language of
 finite-flat-shaped local images, while the actual coefficient-prime models
 and their functorial fppf conditions come from Books 40, 134, and 147 and
-the direct flat Kummer calculations (3.4)--(3.5).  Book 31's generic-fiber
+the direct flat Kummer calculations (3.4)--(3.5). Book 31's generic-fiber
 duality is not used to manufacture an integral orthogonality statement.
 Book 40 applies to the multiplication isogenies of an abelian variety over
 $\mathbf Q$ and identifies their good-reduction Kummer images. Book 41
@@ -2415,7 +2415,7 @@ generation is not promoted to rank zero without descent. Finally,
 constituent-wise Eisenstein action is promoted only to a power annihilator,
 not to annihilation by $I$ itself.
 
-The present argument uses no global duality theorem beyond this list.  Its
+The present argument uses no global duality theorem beyond this list. Its
 Selmer induction is left exact and is proved directly in Lemma 6.1.
 
 ### 12.3 Normalization and failure ledger
@@ -2439,9 +2439,9 @@ $$
 
 The proof also fails if an admissible filtration is replaced by a
 semisimplification: the $[N]$-extension, dyadic sign, and carry would
-disappear.  It fails if the component map is assumed surjective without
+disappear. It fails if the component map is assumed surjective without
 proof, or if support is promoted from radical annihilation to annihilation by
-$I$ itself.  Each of these failure modes has been excluded explicitly.
+$I$ itself. Each of these failure modes has been excluded explicitly.
 
 ### 12.4 Conclusion
 

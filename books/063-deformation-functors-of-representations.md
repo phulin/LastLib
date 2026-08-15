@@ -228,9 +228,9 @@ $$
 for every $k[G]$-module $M$. Applied to $M=\operatorname{ad}\bar\rho$, this has three different
 consequences.
 
-* The unframed tangent space is zero.
-* Every unrestricted small-extension obstruction vanishes.
-* Once a lift over a small extension exists, its rigidified unframed class is unique.
+- The unframed tangent space is zero.
+- Every unrestricted small-extension obstruction vanishes.
+- Once a lift over a small extension exists, its rigidified unframed class is unique.
 
 The framed tangent space need not vanish. It equals
 
@@ -2433,10 +2433,8 @@ Thus the local class is literally the restriction of the global class.
 
 **Proposition (localization of obstructions).** For every $v\in S$,
 
-$$
-\operatorname{res}_v
-\operatorname{ob}_G(\rho_A,A'/A)
-=
+# $$\operatorname{res}_v\operatorname{ob}_G(\rho_A,A'/A)
+
 \operatorname{ob}_{G_v}(\rho_A|_{G_v},A'/A).
 $$
 

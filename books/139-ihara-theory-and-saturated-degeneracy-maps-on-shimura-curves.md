@@ -1,10 +1,10 @@
 # Ihara Theory and Saturated Degeneracy Maps on Shimura Curves
 
 This volume develops Ihara theory through the geometry and cohomology of compact Shimura
-curves.  Its main line runs from the local tree and the cohomology of its stabilizers to
+curves. Its main line runs from the local tree and the cohomology of its stabilizers to
 integral saturation, semistable monodromy, component groups, and the branch Smith correction.
 The only arithmetic input left outside the geometric argument is the exact finite-family
-localized abelian Ihara vanishing stated in Chapters 6 and 14.  No general structure theorem
+localized abelian Ihara vanishing stated in Chapters 6 and 14. No general structure theorem
 for the full congruence kernel is required or developed.
 
 ## Contents
@@ -82,8 +82,9 @@ for the full congruence kernel is required or developed.
     - [Hypotheses and dependencies](#143-hypotheses-and-dependencies)
     - [Exact boundary of the theorem](#144-exact-boundary-of-the-theorem)
 15. [Conclusion](#15-conclusion)
-   - [The mathematical package](#151-the-mathematical-package)
-   - [The role in integral level change](#152-the-role-in-integral-level-change)
+
+- [The mathematical package](#151-the-mathematical-package)
+- [The role in integral level change](#152-the-role-in-integral-level-change)
 
 ## 1. Why integral level change is difficult
 
@@ -120,9 +121,9 @@ $$
 is injective and whether the integral image in (1.1) is saturated. Here $k=\mathcal O/\varpi$. These are the two assertions usually grouped under the name **Ihara lemma** in the present setting.
 
 The purpose of this book is to locate those assertions inside one geometric and cohomological
-mechanism.  The local tree identifies the residual kernel, elementary divisor theory converts
+mechanism. The local tree identifies the residual kernel, elementary divisor theory converts
 its vanishing into integral saturation, and the semistable special fiber records the two
-remaining finite defects.  Arithmetic beyond that mechanism enters only through the explicitly
+remaining finite defects. Arithmetic beyond that mechanism enters only through the explicitly
 named vanishing condition which removes the noncongruence part of the tree kernel.
 
 ### 1.2 The three meanings of injectivity
@@ -183,7 +184,7 @@ No listed prerequisite computes the prime-to-small-prime abelianization of the n
 The new work here is the specialization of strong approximation to the tree quotient, the exact Bass--Serre and Mayer--Vietoris calculation, the good-place calculation on congruence-continuous norm-one characters with the separate norm and component routing, the full-profinite inflation--restriction identification of the noncongruence obstruction, invariance of the full congruence kernel under every open spectator level for fixed $(F,B,v)$, the conditional primitive-image and torsion-free-quotient theorems, and their synthesis with the monodromy, component, and branch-correction sequences. The localized abelian vanishing is retained as an explicit hypothesis rather than inferred from a rational old--new decomposition, a later level-change theorem, or a later automorphic comparison.
 
 Accordingly, the principal theorem of the volume is the conditional geometric theorem of
-Chapter 14.  Sections 5.5--5.6 identify the exact profinite obstruction, and Section 14.4
+Chapter 14. Sections 5.5--5.6 identify the exact profinite obstruction, and Section 14.4
 states only the finite routed family of vanishings required by downstream applications.
 
 ## 2. The clean Shimura-curve datum
@@ -830,12 +831,12 @@ $$
 Condition (5.18) is equivalent to $T_w=(q_w+1)P_w$ by (5.13). Condition (5.19) says that the two abelianized leg maps agree after component routing and implies (5.18). Lemma 5.2 proves the dual equality after restriction to the congruence-continuous character submodule, so every possible failure is carried by $\mathcal H^1_{\mathrm{nc}}(A)$.
 
 Neither the one-edge quotient nor strong approximation proves (5.18) or (5.19) on the
-noncongruence quotient.  To identify that quotient exactly, one must compare the full
+noncongruence quotient. To identify that quotient exactly, one must compare the full
 profinite and congruence completions.
 
 ### 5.5 The full profinite congruence kernel
 
-Fix a routed component $c$.  The **full profinite completion** of its abstract
+Fix a routed component $c$. The **full profinite completion** of its abstract
 $S$-arithmetic group is
 
 $$
@@ -845,7 +846,7 @@ $$
 $$
 
 This is not the pro-$\ell$ completion and not the closure obtained by remembering only
-adelic congruence quotients.  The compact totally disconnected group $K_c^v$ is profinite.
+adelic congruence quotients. The compact totally disconnected group $K_c^v$ is profinite.
 The dense embedding $\Gamma_c\hookrightarrow K_c^v$ from
 (5.7) extends uniquely to a continuous surjection
 
@@ -854,7 +855,7 @@ $$
 $$
 
 Surjectivity follows because the image is compact, hence closed, and contains the dense
-image of $\Gamma_c$.  Define the congruence kernel for this exact component and away-from-$v$
+image of $\Gamma_c$. Define the congruence kernel for this exact component and away-from-$v$
 level by
 
 $$
@@ -868,7 +869,7 @@ $$
 \xrightarrow{\rho_c}K_c^v\longrightarrow1. \tag{5.21}
 $$
 
-Both the full completion and the level $K_c^v$ matter in this definition.  A congruence
+Both the full completion and the level $K_c^v$ matter in this definition. A congruence
 kernel formed with a different omitted set of places, a different tame spectator level, or
 the group $B^\times$ in place of $H=\operatorname{SL}_1(B)$ is not automatically the kernel
 in (5.21).
@@ -886,7 +887,7 @@ $$
 \tag{5.22}
 $$
 
-where $\operatorname{tg}_{c,A}$ is transgression.  Consequently restriction to $C_c$
+where $\operatorname{tg}_{c,A}$ is transgression. Consequently restriction to $C_c$
 induces a canonical isomorphism
 
 $$
@@ -907,12 +908,12 @@ $$
 $$
 
 Under this equality, inflation from $K_c^v$ is restriction of continuous congruence
-characters along the dense map $\Gamma_c\to K_c^v$.  The continuous Hochschild--Serre
-five-term sequence of Book 24, Chapter 6, applied to (5.21), is therefore (5.22).  The action
+characters along the dense map $\Gamma_c\to K_c^v$. The continuous Hochschild--Serre
+five-term sequence of Book 24, Chapter 6, applied to (5.21), is therefore (5.22). The action
 of $K_c^v$ on $\operatorname{Hom}_{\rm cont}(C_c,A)$ is well defined: two lifts differ by an
 element of $C_c$, and inner conjugation by $C_c$ acts trivially on homomorphisms to the
-abelian group $A$.  Exactness identifies the cokernel of inflation with the image of restriction, and
-that image with the kernel of transgression.  The cokernel of inflation is exactly the
+abelian group $A$. Exactness identifies the cokernel of inflation with the image of restriction, and
+that image with the kernel of transgression. The cokernel of inflation is exactly the
 definition (5.9) of $H^1_{\rm nc}(\Gamma_c,A)$. $\square$
 
 Summing over the stable routed component orbit gives
@@ -928,18 +929,18 @@ $$
 $$
 
 The component transitions and the fine-cover descent group permute the extensions (5.21).
-Thus (5.24) is $\Delta$-equivariant.  The Hecke action on its right side is the one transported
+Thus (5.24) is $\Delta$-equivariant. The Hecke action on its right side is the one transported
 through (5.23); concretely it is induced by the same restriction, conjugation, and
-corestriction maps used in (5.12)--(5.15).  No centrality assumption on $C_c$ is used.
+corestriction maps used in (5.12)--(5.15). No centrality assumption on $C_c$ is used.
 
 Formula (5.23) separates three assertions which are often conflated.
 
 First, density proves the surjection $\widehat\Gamma_c\twoheadrightarrow K_c^v$, but says
-nothing about its kernel.  The following elementary model gives the exact failure, including
+nothing about its kernel. The following elementary model gives the exact failure, including
 the transgression term rather than only an informal topology warning.
 
 **Lemma 5.4A (density does not imply abelian congruence).** Let $p\ne\ell$ be primes, put
-$\Gamma=\mathbf Z$, and embed $\Gamma$ densely in $K=\mathbf Z_p$.  For the trivial module
+$\Gamma=\mathbf Z$, and embed $\Gamma$ densely in $K=\mathbf Z_p$. For the trivial module
 $A=\mathbf F_\ell$ one has
 
 $$
@@ -956,31 +957,31 @@ $$
 \widehat{\mathbf Z}=\prod_r\mathbf Z_r\longrightarrow\mathbf Z_p,
 $$
 
-the congruence kernel is $C=\prod_{r\ne p}\mathbf Z_r$.  The extension is split, its
+the congruence kernel is $C=\prod_{r\ne p}\mathbf Z_r$. The extension is split, its
 transgression on $\operatorname{Hom}_{\rm cont}(C,A)$ is zero, and restriction to the
 $\mathbf Z_\ell$ factor identifies the right side of (5.23) with $A$.
 
 **Proof.** A continuous homomorphism from the pro-$p$ group $\mathbf Z_p$ to the
-$\ell$-group $A$ is zero.  Reduction modulo $\ell$ is nevertheless a nonzero abstract
-homomorphism $\mathbf Z\to A$, so the first three assertions follow.  Profinite completion
-gives the displayed product and projection.  Its product section makes the extension split,
+$\ell$-group $A$ is zero. Reduction modulo $\ell$ is nevertheless a nonzero abstract
+homomorphism $\mathbf Z\to A$, so the first three assertions follow. Profinite completion
+gives the displayed product and projection. Its product section makes the extension split,
 so transgression is zero; continuous homomorphisms from the kernel to $A$ factor through its
 $\mathbf Z_\ell$ factor and form a one-dimensional $A$-space. $\square$
 
 Thus even a dense arithmetic image, a surjection of full completion onto congruence
-completion, and a central abelian congruence kernel do not imply (5.23) is zero.  Strong
+completion, and a central abelian congruence kernel do not imply (5.23) is zero. Strong
 approximation provides exactly the first two pieces of this list and no Hecke relation on the
-remaining quotient.  A non-Eisenstein localization can kill that quotient only after its
+remaining quotient. A non-Eisenstein localization can kill that quotient only after its
 commensurator action has been calculated; density itself gives no such calculation.
 
-Second, finiteness and centrality do not by themselves settle (5.23).  If $C_c$ is finite of
+Second, finiteness and centrality do not by themselves settle (5.23). If $C_c$ is finite of
 order prime to $\ell$, then $\operatorname{Hom}(C_c,A)=0$, which is sufficient and does not
-require centrality.  But a finite central kernel may have $\ell$-torsion, and then the
-transgression depends on the extension class.  Centrality merely makes the $K_c^v$-action in
+require centrality. But a finite central kernel may have $\ell$-torsion, and then the
+transgression depends on the extension class. Centrality merely makes the $K_c^v$-action in
 (5.23) trivial; the obstruction is still
-$\ker[\operatorname{Hom}_{\rm cont}(C_c,A)\to H^2_{\rm cont}(K_c^v,A)]$.  As abstract
+$\ker[\operatorname{Hom}_{\rm cont}(C_c,A)\to H^2_{\rm cont}(K_c^v,A)]$. As abstract
 profinite extensions, for example,
-take $C=K=A=\mathbf Z/\ell\mathbf Z$.  The split extension
+take $C=K=A=\mathbf Z/\ell\mathbf Z$. The split extension
 $C\times K\twoheadrightarrow K$ has zero transgression and nonzero noncongruence characters.
 For the nonsplit central extension
 
@@ -991,27 +992,27 @@ $$
 $$
 
 every homomorphism from the middle group to $A$ kills the kernel, so transgression is
-injective and the noncongruence quotient is zero.  The abstract kernel and quotient are the
-same in the two examples; finite centrality alone cannot distinguish the answers.  Showing
+injective and the noncongruence quotient is zero. The abstract kernel and quotient are the
+same in the two examples; finite centrality alone cannot distinguish the answers. Showing
 that the arithmetic extension (5.21) belongs to a more restrictive class would itself require
 an additional arithmetic theorem.
 
 Third, no structure theorem for the whole congruence kernel is needed by the application.
 It is enough to kill the localized transgression kernel for the actual residue field and the
-actual routed row.  Finiteness, centrality, or a bound on the order of $C_c$ would be stronger
+actual routed row. Finiteness, centrality, or a bound on the order of $C_c$ would be stronger
 statements and would still be insufficient unless they ruled out the relevant odd-primary
 characters or made their transgression injective.
 
 The exact abelian input at one level is therefore the vanishing of the transgression kernel in
 (5.23), or only of its $\Delta$-invariant non-Eisenstein localization when that is all the
-application uses.  This is weaker than asserting that the entire congruence kernel is finite,
+application uses. This is weaker than asserting that the entire congruence kernel is finite,
 central, and $2$-primary.
 
 ### 5.6 Spectator-level invariance
 
-There is one uniformity statement which does not require a congruence-subgroup theorem.  It is
+There is one uniformity statement which does not require a congruence-subgroup theorem. It is
 important because the downstream flag diagrams use many tame, ray, and auxiliary spectator
-levels.  Put
+levels. Put
 
 $$
 \Gamma(K)=H(F)\cap K
@@ -1024,10 +1025,10 @@ $$
 C(K)=\ker\!\left(\widehat{\Gamma(K)}\longrightarrow K\right). \tag{5.25}
 $$
 
-Write $\rho_K$ for the displayed surjection.  The hat in (5.25) always denotes the full
+Write $\rho_K$ for the displayed surjection. The hat in (5.25) always denotes the full
 profinite completion.
 
-**Lemma 5.5 (open-level invariance of the full congruence kernel).**  If $K'\subset K$ is an
+**Lemma 5.5 (open-level invariance of the full congruence kernel).** If $K'\subset K$ is an
 open compact subgroup, inclusion induces a closed embedding
 
 $$
@@ -1035,34 +1036,34 @@ $$
 $$
 
 whose image is the inverse image of $K'$ under
-$\widehat{\Gamma(K)}\twoheadrightarrow K$.  Under this embedding
+$\widehat{\Gamma(K)}\twoheadrightarrow K$. Under this embedding
 
 $$
 C(K')=C(K). \tag{5.26}
 $$
 
 Consequently, for a finite family $K_1,\ldots,K_r$, passage through
-$K_\dagger=\bigcap_iK_i$ gives compatible isomorphisms among all the $C(K_i)$.  This assertion
+$K_\dagger=\bigcap_iK_i$ gives compatible isomorphisms among all the $C(K_i)$. This assertion
 does not say that their quotient actions, transgression maps, or Hecke localizations are the
 same.
 
-**Proof.**  Density gives a surjection of finite coset sets
+**Proof.** Density gives a surjection of finite coset sets
 
 $$
 \Gamma(K)/\Gamma(K')\longrightarrow K/K',
 $$
 
-and injectivity is immediate from the definition of $\Gamma(K')$.  Thus $\Gamma(K')$ has
-finite index in $\Gamma(K)$.  The full profinite topology on a finite-index subgroup is the
-topology induced from the ambient group.  Indeed, if $N'$ is finite index and normal in
+and injectivity is immediate from the definition of $\Gamma(K')$. Thus $\Gamma(K')$ has
+finite index in $\Gamma(K)$. The full profinite topology on a finite-index subgroup is the
+topology induced from the ambient group. Indeed, if $N'$ is finite index and normal in
 $\Gamma(K')$, the intersection of its finitely many $\Gamma(K)$-conjugates contains a subgroup
 normal and finite index in $\Gamma(K)$; conversely the intersection with any finite-index
-subgroup of $\Gamma(K)$ has finite index in $\Gamma(K')$.  Completion therefore embeds
+subgroup of $\Gamma(K)$ has finite index in $\Gamma(K')$. Completion therefore embeds
 $\widehat{\Gamma(K')}$ as the closure of $\Gamma(K')$ in
 $\widehat{\Gamma(K)}$.
 
-The inverse image of $K'$ in $\widehat{\Gamma(K)}$ is open.  Since $\Gamma(K)$ is dense in its
-full completion, its intersection with this open subgroup is dense there.  That intersection
+The inverse image of $K'$ in $\widehat{\Gamma(K)}$ is open. Since $\Gamma(K)$ is dense in its
+full completion, its intersection with this open subgroup is dense there. That intersection
 is exactly $\Gamma(K')$, so
 
 $$
@@ -1071,35 +1072,35 @@ $$
 $$
 
 The kernel of the restricted map to $K'$ is consequently the entire kernel of $\rho_K$, which
-proves (5.26).  Intersecting a finite family and applying the same equality gives the last
+proves (5.26). Intersecting a finite family and applying the same equality gives the last
 statement. $\square$
 
 Lemma 5.5 transports the **kernel**, but it does not transport centrality from a smaller
-level to a larger one.  This distinction already occurs for finite profinite groups.  Let
+level to a larger one. This distinction already occurs for finite profinite groups. Let
 $C=\mathbf Z/3\mathbf Z$ and let
 
 $$
 E=C\rtimes\mathbf Z/2\mathbf Z
 $$
 
-with the second factor acting on $C$ by inversion.  For the quotient
+with the second factor acting on $C$ by inversion. For the quotient
 $E\twoheadrightarrow\mathbf Z/2\mathbf Z$, the inverse image of the open subgroup $1$ is
-$C$.  Thus the two restricted extensions have the same kernel, and that kernel is central in
-the smaller total group $C$, but it is not central in $E$.  Replacing $C$ by
+$C$. Thus the two restricted extensions have the same kernel, and that kernel is central in
+the smaller total group $C$, but it is not central in $E$. Replacing $C$ by
 $(\mathbf Z/2\mathbf Z)^2$ and using an automorphism of order three gives the same warning
-with a $2$-primary kernel.  Consequently an intersection argument proves neither centrality
+with a $2$-primary kernel. Consequently an intersection argument proves neither centrality
 at every routed level nor triviality of the rational-transition action on the common kernel.
 Those assertions require a centrality theorem at every required overgroup, or a later size
 bound making every automorphism of the kernel trivial.
 
-For the component groups in (5.7), take $K=K_c^v$.  Hence all actual compact-open spectator
+For the component groups in (5.7), take $K=K_c^v$. Hence all actual compact-open spectator
 levels for one fixed triple $(F,B,v)$ have one congruence kernel up to the canonical
-finite-index identifications of Lemma 5.5.  A rational component transition acts on this common
-kernel by conjugation.  Without centrality that action must still be retained, and a localized
+finite-index identifications of Lemma 5.5. A rational component transition acts on this common
+kernel by conjugation. Without centrality that action must still be retained, and a localized
 transgression kernel at one level need not identify with the localized transgression kernel at
-another.  If the common kernel has no odd-primary character at all, however, no quotient
-action or localization remains to compare.  Thus a pre-localization theorem about $C(K)$ at
-one level automatically covers every compact-open spectator level.  This is stronger
+another. If the common kernel has no odd-primary character at all, however, no quotient
+action or localization remains to compare. Thus a pre-localization theorem about $C(K)$ at
+one level automatically covers every compact-open spectator level. This is stronger
 uniformity than (14.2), and it is proved without turning density into continuity of an
 abstract character.
 
@@ -1481,19 +1482,19 @@ $$
 The first forgets the subgroup in (8.1). The second takes the quotient and transports the PEL datum. Finite local freeness follows from the Cohen--Macaulay criterion: $\mathscr C$ is regular, hence Cohen--Macaulay; $\mathscr X$ is regular; the maps are finite with equidimensional fibers; and the generic degree is $q_v+1$. Thus the source local ring is maximal Cohen--Macaulay over the target regular local ring and therefore free.
 
 This argument proves finite local freeness of the two maps between the **fine parahoric base
-models**.  It remains valid after a finite-flat ray base change.  It does not prove flatness of
+models**. It remains valid after a finite-flat ray base change. It does not prove flatness of
 an arbitrary comparison between separately chosen normalizations: normal singular targets do
-not make maximal Cohen--Macaulay modules free.  Book 122, Proposition 9.2 instead normalizes
+not make maximal Cohen--Macaulay modules free. Book 122, Proposition 9.2 instead normalizes
 the entire finite diagram in one common generic algebra; integrality then identifies the
-normalizations along each finite base leg, so the lifted top maps are isomorphisms.  For the
+normalizations along each finite base leg, so the lifted top maps are isomorphisms. For the
 permutation and quotient/augmentation systems used by Books 138 and 174, Book 122,
 Propositions 9.9--9.10 compute the strict ray factors and completed tubes, and Corollary 9.11
 proves $({\rm PNS}_v)_{\rm act}$; no separately assumed $({\rm HDB}_v)_{\rm act}$ or
-$({\rm BTK})_{\rm act}$ hypothesis remains for those actual rows.  An arbitrary ramified type
+$({\rm BTK})_{\rm act}$ hypothesis remains for those actual rows. An arbitrary ramified type
 coefficient still requires the general theorem
 $({\rm PNS}_v)_{\rm gen}$: Propositions 9.5--9.7 reduce its arithmetic and completed-tube
 inputs to $({\rm HDB}_v)_{\rm gen}$ and $({\rm BTK})_{\rm gen}$, while Proposition 9.8 proves
-$({\rm RGC}_v)$.  The constant-coefficient Ihara theorem in this book uses none of these
+$({\rm RGC}_v)$. The constant-coefficient Ihara theorem in this book uses none of these
 principal-normalization results.
 
 The special restrictions can be read on the ordinary locus. The active height-two group has a connected rank-$q_v$ direction and an étale rank-$q_v$ direction. Quotient by the connected direction is relative Frobenius; polarization identifies the other direction with its dual. Taking closures gives the two branches of (8.5).
@@ -1937,11 +1938,8 @@ $$
 
 It is an explicit module, not an unspecified index; Theorem 10.2 proves that it is finite under the abelian Ihara condition. Block row and column operations with unit determinant give
 
-$$
-\begin{pmatrix}1&0\\-F_v^*&1\end{pmatrix}
-B_v
-\begin{pmatrix}1&-F_v^*\\0&1\end{pmatrix}
-=
+# $$\begin{pmatrix}1&0\\-F_v^_&1\end{pmatrix}B_v\begin{pmatrix}1&-F_v^_\\0&1\end{pmatrix}
+
 \begin{pmatrix}1&0\\0&1-(F_v^*)^2\end{pmatrix}. \tag{10.12}
 $$
 
@@ -2466,16 +2464,16 @@ Even when the abelian Ihara condition holds, the branch correction need not vani
 
 It is useful to summarize the exceptional cases as failures of exact statements rather than as labels.
 
-| Situation | Statement that can fail | Statement that remains valid under the other hypotheses |
-|---|---|---|
-| Eisenstein localization | residual injectivity and saturation | tree identification of the kernel and cokernel |
-| noncongruence character at $\mathfrak m$ | residual injectivity even when $\mathfrak m$ is non-Eisenstein | Eisenstein calculation on the congruence-character submodule |
-| $\ell$-divisible stabilizer | exact descent from a fine cover | fine-level tree criterion and, if (6.11) holds there, fine-level saturation |
-| $q_v\equiv1\pmod\ell$ | integral separation of the two old $U_v$ roots | conditional full two-map saturation |
-| $q_v\equiv-1\pmod\ell$ | one-factor valuation formula | full Gram matrix and conditional saturation |
-| nonunimodular branch map | primitive bottom graph copy and correction-free lowering | under (6.11), free new quotient and exact sequence (10.17) |
-| ramified base change | unit edge lengths and unchanged component group | subdivision-invariant cycle lattice |
-| nonstable component | endomorphism of one factor | correspondence between the routed factors |
+| Situation                                | Statement that can fail                                        | Statement that remains valid under the other hypotheses                     |
+| ---------------------------------------- | -------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Eisenstein localization                  | residual injectivity and saturation                            | tree identification of the kernel and cokernel                              |
+| noncongruence character at $\mathfrak m$ | residual injectivity even when $\mathfrak m$ is non-Eisenstein | Eisenstein calculation on the congruence-character submodule                |
+| $\ell$-divisible stabilizer              | exact descent from a fine cover                                | fine-level tree criterion and, if (6.11) holds there, fine-level saturation |
+| $q_v\equiv1\pmod\ell$                    | integral separation of the two old $U_v$ roots                 | conditional full two-map saturation                                         |
+| $q_v\equiv-1\pmod\ell$                   | one-factor valuation formula                                   | full Gram matrix and conditional saturation                                 |
+| nonunimodular branch map                 | primitive bottom graph copy and correction-free lowering       | under (6.11), free new quotient and exact sequence (10.17)                  |
+| ramified base change                     | unit edge lengths and unchanged component group                | subdivision-invariant cycle lattice                                         |
+| nonstable component                      | endomorphism of one factor                                     | correspondence between the routed factors                                   |
 
 This table separates three independent questions: the noncongruence character obstruction to full Ihara, the signed projector obstruction, and the branch-correction obstruction. None can be used to erase another.
 
@@ -2596,28 +2594,28 @@ Correspondence extension, graph adjunction, and descent preserve each constructi
 
 The logical use of the eight direct prerequisites is exact.
 
-| Source | Imported result | Hypotheses retained | Work done here |
-|---|---|---|---|
-| Book 85 | finite acting Hecke algebras, localization, support, and old/new congruence conventions | the algebra is the faithful image on the stated finite module; localization is taken only at an occurring maximal ideal | operator-theoretic Eisenstein localization and the integral old/new module conventions |
-| Book 16 | nodal normalization, graph cycles, weighted pairing, discriminant component group, subdivision, finite-map adjunction | semistable curve; geometric graph; thickness and signed descent retained | application to the Iwahori quotient and separation of the graph discriminant from the branch correction |
-| Book 24 | continuous profinite cohomology, inflation, restriction, transgression, and the five-term exact sequence | profinite extension; finite discrete continuous coefficients | application to the full profinite-to-congruence extension and identification (5.23) |
-| Book 38 | Néron mapping property, identity component, component group, semistable Jacobian, unramified base change | excellent DVR; henselianity where reduction is used; perfect residue field for fixed-point notation | identification of the ambient component term in the localized monodromy-cokernel sequence |
-| Book 39 | extension of pull--norm correspondences, transpose, specialization, graph and intersection maps | smooth proper generic curves; regular models; controlled resolved correspondence | simultaneous Hecke action and adjunction on the new and component lattices |
-| Book 124 | Shimura degeneracy maps, right-coset orientation, component routing, old map, adjoints, Gram matrix framework | stable component union; fine or tame descent; unnormalized operators | exact tree criterion and, under (6.11), geometric injectivity and saturation, which Book 124 explicitly leaves open |
-| Book 118 | rank-one strong approximation for simply connected quaternion norm-one groups | a noncompact archimedean factor; arbitrary finite compact-open conditions | exact specialization to the one-edge quotient in Theorem 4.2 |
-| Book 122 | rank-two parahoric PEL model, $xy=\pi_v$, strict semistability, graph monodromy, Hecke functoriality | verified flat incidence local model; neat level; prime-to-$v$ coefficients | integral quotient filtration, normalized branch map, and its Smith correction |
-| Abelian Ihara condition | explicit additional hypothesis, not an imported theorem | vanishing of $\bigl(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}$, equivalently of the localized $\Delta$-invariant transgression kernel in (6.10) | exact point at which the conditional residual theorem becomes injective |
+| Source                  | Imported result                                                                                                       | Hypotheses retained                                                                                                                                            | Work done here                                                                                                      |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Book 85                 | finite acting Hecke algebras, localization, support, and old/new congruence conventions                               | the algebra is the faithful image on the stated finite module; localization is taken only at an occurring maximal ideal                                        | operator-theoretic Eisenstein localization and the integral old/new module conventions                              |
+| Book 16                 | nodal normalization, graph cycles, weighted pairing, discriminant component group, subdivision, finite-map adjunction | semistable curve; geometric graph; thickness and signed descent retained                                                                                       | application to the Iwahori quotient and separation of the graph discriminant from the branch correction             |
+| Book 24                 | continuous profinite cohomology, inflation, restriction, transgression, and the five-term exact sequence              | profinite extension; finite discrete continuous coefficients                                                                                                   | application to the full profinite-to-congruence extension and identification (5.23)                                 |
+| Book 38                 | Néron mapping property, identity component, component group, semistable Jacobian, unramified base change              | excellent DVR; henselianity where reduction is used; perfect residue field for fixed-point notation                                                            | identification of the ambient component term in the localized monodromy-cokernel sequence                           |
+| Book 39                 | extension of pull--norm correspondences, transpose, specialization, graph and intersection maps                       | smooth proper generic curves; regular models; controlled resolved correspondence                                                                               | simultaneous Hecke action and adjunction on the new and component lattices                                          |
+| Book 124                | Shimura degeneracy maps, right-coset orientation, component routing, old map, adjoints, Gram matrix framework         | stable component union; fine or tame descent; unnormalized operators                                                                                           | exact tree criterion and, under (6.11), geometric injectivity and saturation, which Book 124 explicitly leaves open |
+| Book 118                | rank-one strong approximation for simply connected quaternion norm-one groups                                         | a noncompact archimedean factor; arbitrary finite compact-open conditions                                                                                      | exact specialization to the one-edge quotient in Theorem 4.2                                                        |
+| Book 122                | rank-two parahoric PEL model, $xy=\pi_v$, strict semistability, graph monodromy, Hecke functoriality                  | verified flat incidence local model; neat level; prime-to-$v$ coefficients                                                                                     | integral quotient filtration, normalized branch map, and its Smith correction                                       |
+| Abelian Ihara condition | explicit additional hypothesis, not an imported theorem                                                               | vanishing of $\bigl(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}$, equivalently of the localized $\Delta$-invariant transgression kernel in (6.10) | exact point at which the conditional residual theorem becomes injective                                             |
 
 The tree Mayer--Vietoris sequence, the local-factor calculation on congruence-continuous arithmetic characters, the full-profinite inflation--restriction identification of the exact noncongruence obstruction, spectator-level invariance, the conditional saturation criterion, and the branch Smith calculation are proved here. Strong approximation is imported only from Book 118. No structure theorem for the full congruence kernel, automorphic decomposition, multiplicity-one theorem, local newvector theorem, or modularity argument is invoked as if already proved.
 
-The localized injection is not among the conclusions of the earlier constructions.  Book 84
+The localized injection is not among the conclusions of the earlier constructions. Book 84
 defines the quaternionic degeneracy operators and their adjoints without a direct-sum or
-saturation conclusion.  Book 122 constructs the integral degeneracy complex with localized
-injectivity as an Ihara hypothesis.  Book 126 attaches a rank-two Galois representation to a
+saturation conclusion. Book 122 constructs the integral degeneracy complex with localized
+injectivity as an Ihara hypothesis. Book 126 attaches a rank-two Galois representation to a
 characteristic-zero packet, but good-prime Frobenius polynomials do not determine the
-rational-quaternion commensurator action in (5.12).  Book 131 treats modular Jacobians and
+rational-quaternion commensurator action in (5.12). Book 131 treats modular Jacobians and
 their integral quotients without transferring the classical modular-curve Ihara kernel to a
-compact quaternionic Shimura curve over a general totally real field.  Accordingly, whenever
+compact quaternionic Shimura curve over a general totally real field. Accordingly, whenever
 the constant-row package is applied, the relevant instance of (6.11) must be assumed or proved
 separately.
 
@@ -2634,10 +2632,10 @@ The first seven hypotheses of Theorem 14.1 do not imply hypothesis 8 within the 
 The theorem proves the clean full-Iwahori two-map statement conditional on the exact abelian Ihara condition. It does not assert that condition from the geometric and strong-approximation hypotheses alone.
 
 The additional arithmetic condition must be stated on the levels which the argument actually routes
-through.  Let $\mathscr R$ be a finite family of constant-coefficient degeneracy rows.  An
+through. Let $\mathscr R$ be a finite family of constant-coefficient degeneracy rows. An
 element $R\in\mathscr R$ records the changing place $v_R$, the actual tame, ray, and auxiliary
 spectator level away from $v_R$, the full Hecke-stable component orbit, its prime-to-$\ell$
-descent group $\Delta_R$, and its localized maximal ideal $\mathfrak m_R$.  For every component
+descent group $\Delta_R$, and its localized maximal ideal $\mathfrak m_R$. For every component
 $c$ in that orbit put
 
 $$
@@ -2651,11 +2649,11 @@ $H^1_{\rm nc}(\Gamma_R^{v_R},-)$ means the direct sum of the componentwise group
 routing and $\Delta_R$-action retained; it is not the cohomology of an unmentioned product.
 
 Changing a spectator tuple changes $K_{R,c}^{v_R}$ and hence the quotient action,
-transgression map, and Hecke localization.  Thus a localized assertion such as (14.2) must
-still be checked on every routed row.  The underlying kernel is more uniform: Lemma 5.5 proves
+transgression map, and Hecke localization. Thus a localized assertion such as (14.2) must
+still be checked on every routed row. The underlying kernel is more uniform: Lemma 5.5 proves
 that all open compact spectator levels for a fixed $(F_R,B_R,v_R)$ have the same full
-congruence kernel through their common finite-index intersection.  Consequently a theorem
-that this common kernel has no odd-primary character covers all those levels at once.  This
+congruence kernel through their common finite-index intersection. Consequently a theorem
+that this common kernel has no odd-primary character covers all those levels at once. This
 does not identify weaker localized transgression kernels, because their quotient actions and
 localizations remain level-dependent.
 
@@ -2676,7 +2674,7 @@ H^2_{\rm cont}(K_{R,c}^{v_R},k_R)
 \right)_{\mathfrak m_R}=0. \tag{14.2}
 $$
 
-This is the exact localized condition needed for the saturated Ihara conclusion.  Proposition 5.4 identifies
+This is the exact localized condition needed for the saturated Ihara conclusion. Proposition 5.4 identifies
 (14.2) with
 
 $$
@@ -2699,12 +2697,12 @@ H^2_{\rm cont}(K_{R,c}^{v_R},A)
 $$
 
 for every $R\in\mathscr R$, every routed component $c$, and every finite $\ell$-primary
-trivial module $A$.  Equivalently, every finite $\ell$-primary additive character of every
-$\Gamma_{R,c}$ is congruence-continuous for the displayed completion.  Requiring the analogous
+trivial module $A$. Equivalently, every finite $\ell$-primary additive character of every
+$\Gamma_{R,c}$ is congruence-continuous for the displayed completion. Requiring the analogous
 statement for every permissible odd $\ell$ and its routed family gives the uniform
-odd-primary theorem.  It is much weaker than a full
+odd-primary theorem. It is much weaker than a full
 congruence-subgroup property: it concerns only abelian finite quotients and only the specified
-finite routed family.  It is stronger than the localized residue-field statement (14.2).
+finite routed family. It is stronger than the localized residue-field statement (14.2).
 
 There is also a transparent, centrality-free congruence-kernel theorem which is sufficient for
 (14.2a):
@@ -2714,67 +2712,67 @@ $$
 \operatorname{Hom}_{\rm cont}(C_{R,c},A)=0 \tag{14.2b}
 $$
 
-for every $R,c$, and $A$ as above.  Equivalently, the topological abelianization
-$C_{R,c}/\overline{[C_{R,c},C_{R,c}]}$ has trivial maximal pro-$\ell$ quotient.  Requiring
+for every $R,c$, and $A$ as above. Equivalently, the topological abelianization
+$C_{R,c}/\overline{[C_{R,c},C_{R,c}]}$ has trivial maximal pro-$\ell$ quotient. Requiring
 this for every permissible odd $\ell$ and its routed family says exactly that the corresponding
 congruence kernels have no nontrivial finite odd-primary abelian quotient; it says nothing
 about their nonabelian finite quotients and does not assume centrality.
 
 **Proposition 14.2 (congruence input implies the routed saturated Ihara package).** Assume
-hypotheses 1--7 of Theorem 14.1 at every $R\in\mathscr R$.  Then
+hypotheses 1--7 of Theorem 14.1 at every $R\in\mathscr R$. Then
 $({\rm CK}^{\rm ab}_\ell)_{\mathscr R}$ implies
 $({\rm AC}^{\rm ab}_\ell)_{\mathscr R}$, which in turn implies
-$({\rm AC}^{\rm loc}_\ell)_{\mathscr R}$.  Either the latter condition, or the same finite list
+$({\rm AC}^{\rm loc}_\ell)_{\mathscr R}$. Either the latter condition, or the same finite list
 of $({\rm AIH})_{v_R,\mathfrak m_R}$ vanishings stated directly, implies residual injectivity,
 integral saturation of the old image, and freeness of the new quotient at every routed row.
 
-**Proof.** Apply Proposition 5.4 componentwise.  Condition (14.2b) kills the entire character
-group containing the transgression kernel, so it implies (14.2a).  Condition (14.2a) makes
+**Proof.** Apply Proposition 5.4 componentwise. Condition (14.2b) kills the entire character
+group containing the transgression kernel, so it implies (14.2a). Condition (14.2a) makes
 every summand in (14.2) zero before taking $\Delta_R$-invariants or localizing, so it implies
-(14.2).  Formula (6.10) then makes the residual two-degeneracy kernel zero at each $R$.
+(14.2). Formula (6.10) then makes the residual two-degeneracy kernel zero at each $R$.
 Section 7.1 gives finite
 free source and target lattices, and Lemma 3.1 turns residual injectivity into injectivity with
-saturated image.  The quotient is finite torsion-free over the coefficient DVR and hence free,
-as in Theorem 7.1.  Applying the remaining parts of Theorem 14.1 row by row gives the component,
+saturated image. The quotient is finite torsion-free over the coefficient DVR and hence free,
+as in Theorem 7.1. Applying the remaining parts of Theorem 14.1 row by row gives the component,
 monodromy, and branch statements with their stated independent hypotheses. $\square$
 
 Theorem 14.1 requires (14.2), either directly or through the stronger sufficient conditions
-(14.2a) and (14.2b), rather than deriving it from hypotheses 1--7.  For an
+(14.2a) and (14.2b), rather than deriving it from hypotheses 1--7. For an
 **indefinite curve-switch construction** of the signed-special seed, the additional condition
-is (14.2), specialized to the finite family of constant rows actually used.  In the notation
+is (14.2), specialized to the finite family of constant rows actually used. In the notation
 of Book 181 this route-specific input is
-$({\rm AIH}_{\mathscr F})$.  Neither a theorem about the full congruence kernel nor an
+$({\rm AIH}_{\mathscr F})$. Neither a theorem about the full congruence kernel nor an
 all-level or all-prime uniform statement is part of that route.
 
-This qualification is essential.  Book 181's hypothesis $(\mathrm{Seed}_{\mathrm{SP}})$ asks
+This qualification is essential. Book 181's hypothesis $(\mathrm{Seed}_{\mathrm{SP}})$ asks
 for an exact definite-quaternion automorphic datum; it does not require that datum to be
 obtained by first constructing an indefinite curve-new lattice and then switching its graph
-lattice to the definite side.  If a construction supplies the definite primary and companion
+lattice to the definite side. If a construction supplies the definite primary and companion
 modules directly, with their type occurrence, perfect pairing, faithful Hecke order,
 local--global compatibility, support, and augmentation properties proved on that carrier,
-then it does not consume Book 139 and (14.2) is absent from that proof path.  The price is not
-formal: all those definite-side assertions must then be proved directly.  Calling (14.2) an
+then it does not consume Book 139 and (14.2) is absent from that proof path. The price is not
+formal: all those definite-side assertions must then be proved directly. Calling (14.2) an
 unconditional prerequisite of Book 181 would therefore overstate the dependency.
 
 A possible later application may instead use a direct finite-set Ihara-avoidance package
-$({\rm IAV}_S)$.  Such a package patches the desired and avoidance deformation problems
+$({\rm IAV}_S)$. Such a package patches the desired and avoidance deformation problems
 simultaneously, transfers support through their common special fiber and component bijection,
-and never forms the old--new degeneracy cube.  Consequently this route consumes neither
+and never forms the old--new degeneracy cube. Consequently this route consumes neither
 (14.2) nor a mixed Ihara theorem; it requires instead a paired local-ring comparison,
 synchronized automorphic Taylor--Wiles systems, patched support transfer, and solvable descent.
 Replacing (14.2) by $({\rm IAV}_S)$ therefore changes proof routes; it does not prove Ihara
 under another name.
 
-There is also a sharp image-theoretic boundary to a patching substitute.  A patched Ihara
+There is also a sharp image-theoretic boundary to a patching substitute. A patched Ihara
 theorem for an indefinite Shimura curve can prove the localized two-map injection when the
 attached residual image is nonexceptional--in the clean two-dimensional range, when it
 contains a nontrivial element of coefficient-characteristic order and the Taylor--Wiles
-conditions hold.  For a Frey residual representation at $p\ge7$, primitive dyadic
+conditions hold. For a Frey residual representation at $p\ge7$, primitive dyadic
 transvection together with absolute irreducibility puts the representation in this range by
-Book 141.  But the constant rows used in Book 178's auxiliary potential-modularity transfer
-are localized at its auxiliary **dihedral** representation in characteristic $q$.  That image
+Book 141. But the constant rows used in Book 178's auxiliary potential-modularity transfer
+are localized at its auxiliary **dihedral** representation in characteristic $q$. That image
 lies in a torus normalizer and has order prime to $q$, so the nonexceptional-image hypothesis
-fails.  Large-image patching therefore cannot be cited to prove the particular
+fails. Large-image patching therefore cannot be cited to prove the particular
 $({\rm AIH}_{\mathscr F})$ occurring on that route.
 
 Consequently the exact alternatives are:
@@ -2785,7 +2783,7 @@ Consequently the exact alternatives are:
 3. construct the exact definite seed without passing through the indefinite constant rows,
    for example through a direct finite-set Ihara-avoidance package.
 
-Only the first two alternatives are Ihara inputs.  The third is an Ihara-avoidance route and
+Only the first two alternatives are Ihara inputs. The third is an Ihara-avoidance route and
 must not be advertised as a proof of (14.2).
 
 At an Eisenstein maximal ideal, the congruence arithmetic character module can survive. At a non-Eisenstein ideal, the noncongruence quotient in (6.10) is the separate possible kernel. At a nonneat quotient with $\ell$-divisible stabilizers, group cohomology of the stabilizer can add another kernel. Once (6.11) and tame descent hold, $q_v\equiv1\pmod\ell$ affects only the integral choice of an ordered $U_v$ branch, while $q_v\equiv-1\pmod\ell$ can make both signed Gram factors nonunits.
@@ -2800,13 +2798,13 @@ There is also a precise definite-routing boundary. Book 139 constructs the geome
 
 The downstream interface is therefore the following. Every freeness, type-transfer, or seed entry in the right column is conditional on the stated instances of $({\rm AIH})$.
 
-| Consumer | Valid input from this book and retained boundary |
-|---|---|
-| Book 140 | It may use the exact tree kernel unconditionally. Under $({\rm AIH})_{v,\mathfrak m}$ it may additionally use residual injectivity, the saturated old image, free $Q$, quotient--orthogonal duality, the Gram matrix, and (10.14)--(10.17). Its formula (8.2) is precisely the corrected filtration here. Identifying $X$ with a switched definite quaternionic lattice still requires node uniformization; relative to the same abelian Ihara input, Book 140 proves generic support from Book 125 and the corrected filtration rather than assuming it separately. |
-| Book 176 | Its one-prime nonminimal comparison may import the same conditional free-quotient package and the three distinct finite modules: Gram, component, and branch. It may not promote the one-prime theorem to the finite set required by its final modularity-lifting target; mixed Ihara, product residue, and joint support remain additional inputs. |
-| Book 174 | Constant-coefficient residual injectivity may be used in the integral flag-excision argument only after $({\rm AIH})$ has been imposed for **every** constant-level curve in the finite flag diagram, with the actual tame spectator levels. Book 139 neither proves the type-coefficient transfer nor makes its quotient projective over a tame deformation algebra; those are the conditional achievements of Book 174 after flag excision. |
-| Book 181 | Book 139 does not construct an automorphic seed. An indefinite curve-switch route must assume (14.2) for every constant row actually used; it must also verify node uniformization, the relevant one- or several-prime carrier, component support, and the other seed hypotheses. A direct exact definite-carrier construction, including a direct finite-set Ihara-avoidance route, bypasses (14.2) but must prove its definite-side or paired-patching properties without importing them from the curve switch. No balanced-lift or finite-image conclusion flows directly from this book. |
-| level lowering | Even under $({\rm AIH})$, require $\Phi[\varpi]_{\mathfrak n}=0$ and $\mathcal C_{\mathrm{br},v}[\varpi]_{\mathfrak n}=0$, or work inside the full extension (10.17). Component cleanliness does not erase the branch correction. |
+| Consumer       | Valid input from this book and retained boundary                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Book 140       | It may use the exact tree kernel unconditionally. Under $({\rm AIH})_{v,\mathfrak m}$ it may additionally use residual injectivity, the saturated old image, free $Q$, quotient--orthogonal duality, the Gram matrix, and (10.14)--(10.17). Its formula (8.2) is precisely the corrected filtration here. Identifying $X$ with a switched definite quaternionic lattice still requires node uniformization; relative to the same abelian Ihara input, Book 140 proves generic support from Book 125 and the corrected filtration rather than assuming it separately.                         |
+| Book 176       | Its one-prime nonminimal comparison may import the same conditional free-quotient package and the three distinct finite modules: Gram, component, and branch. It may not promote the one-prime theorem to the finite set required by its final modularity-lifting target; mixed Ihara, product residue, and joint support remain additional inputs.                                                                                                                                                                                                                                          |
+| Book 174       | Constant-coefficient residual injectivity may be used in the integral flag-excision argument only after $({\rm AIH})$ has been imposed for **every** constant-level curve in the finite flag diagram, with the actual tame spectator levels. Book 139 neither proves the type-coefficient transfer nor makes its quotient projective over a tame deformation algebra; those are the conditional achievements of Book 174 after flag excision.                                                                                                                                                |
+| Book 181       | Book 139 does not construct an automorphic seed. An indefinite curve-switch route must assume (14.2) for every constant row actually used; it must also verify node uniformization, the relevant one- or several-prime carrier, component support, and the other seed hypotheses. A direct exact definite-carrier construction, including a direct finite-set Ihara-avoidance route, bypasses (14.2) but must prove its definite-side or paired-patching properties without importing them from the curve switch. No balanced-lift or finite-image conclusion flows directly from this book. |
+| level lowering | Even under $({\rm AIH})$, require $\Phi[\varpi]_{\mathfrak n}=0$ and $\mathcal C_{\mathrm{br},v}[\varpi]_{\mathfrak n}=0$, or work inside the full extension (10.17). Component cleanliness does not erase the branch correction.                                                                                                                                                                                                                                                                                                                                                            |
 
 In particular, the identity $T_w\chi=(q_w+1)P_w\chi$ cannot be used for every abstract character without first supplying (5.18) or (14.2). Even under that arithmetic hypothesis, a statement that the component group is the only finite module in the semistable quotient, or that component cleanliness alone makes residual monodromy an isomorphism between the two graph copies, still requires the independent hypothesis $\mathcal C_{\mathrm{br},v}=0$.
 
@@ -2818,16 +2816,16 @@ The two degeneracy maps are deceptively simple. They come from the two endpoints
 
 The Bruhat--Tits tree turns the two pullbacks into a Mayer--Vietoris map. On the norm-one cover its kernel is not guessed from dimensions: it is exactly the first cohomology of the group with the $v$-level removed, and its cokernel is the next explicit $H^2$ kernel. Exact prime-to-$\ell$ descent takes the corresponding $\Delta$-invariants on the original curve. In degree one the obstruction consists of additive arithmetic characters. Strong approximation makes the arithmetic group dense in the compact product; the congruence-continuous characters are, separately, the restrictions of continuous characters of that product. Division-place tori, coefficient-place factors, and bad-level factors are retained inside that module, while norms, centers, and components are retained through routing and descent; the transfer formula makes the resulting congruence submodule Eisenstein.
 
-An abstract finite character need not be congruence-continuous.  The full profinite completion
+An abstract finite character need not be congruence-continuous. The full profinite completion
 maps onto the congruence completion with kernel $C_c$, and inflation--restriction identifies
 the remaining quotient with the kernel of transgression on
-$\operatorname{Hom}_{\rm cont}(C_c,k)^{K_c^v}$.  After component descent and localization this
+$\operatorname{Hom}_{\rm cont}(C_c,k)^{K_c^v}$. After component descent and localization this
 is exactly $\bigl(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}$, so residual Ihara is
-equivalent to its vanishing.  This is the exact point at which an indefinite curve-switch
+equivalent to its vanishing. This is the exact point at which an indefinite curve-switch
 construction needs the routed theorem $({\rm AC}^{\rm loc}_\ell)_{\mathscr R}$, or a stronger
-abelian congruence theorem implying it.  A full congruence-subgroup property is neither
+abelian congruence theorem implying it. A full congruence-subgroup property is neither
 assumed nor substituted for it, and finite centrality without odd-primary or transgression
-control is not enough.  A proof path which constructs the required definite carrier directly
+control is not enough. A proof path which constructs the required definite carrier directly
 does not pass through this implication.
 
 Once the abelian Ihara condition supplies residual injectivity, elementary divisor theory does the integral work. The old image is saturated, its quotient is free, and perfect duality identifies the orthogonal new lattice with the dual of that quotient. This remains true when the Gram determinant is a nonunit. The nonunit then records a genuine old--new congruence rather than torsion caused by a defective lattice.
@@ -2878,4 +2876,4 @@ $$
 
 Each finite module now has one source and one meaning. Under (6.11), the old quotient has no torsion. The failure of orthogonal splitting is measured by the Gram congruence. The Néron component group is the graph discriminant. The possible failure of the bottom graph copy to be primitive is $\mathcal C_{\mathrm{br},v}$. Before (6.11), the additional module is the localized noncongruence character group in (6.10); non-Eisenstein localization alone has not removed it.
 
-Thus the geometric, linear-algebraic, and component parts of saturated Ihara theory are complete, and their downstream interfaces are exact. An FLT seed construction which actually passes through the indefinite curve-switch route needs only the routed localized odd-primary vanishing $({\rm AC}^{\rm loc}_\ell)_{\mathscr R}$ in (14.2), for its finite family of constant rows; a direct definite-seed construction does not.  Lemma 5.5 shows that a no-odd-primary-character theorem for one common congruence kernel would cover every spectator level for the same $(F,B,v)$, but that stronger sufficient statement is not required.  The componentwise abelian theorem (14.2a), the no-odd-primary-abelian-quotient theorem (14.2b), or the routed abelian commensurator identities (5.18) would each suffice; none is proved by the currently declared arithmetic sources for the auxiliary-dihedral rows.
+Thus the geometric, linear-algebraic, and component parts of saturated Ihara theory are complete, and their downstream interfaces are exact. An FLT seed construction which actually passes through the indefinite curve-switch route needs only the routed localized odd-primary vanishing $({\rm AC}^{\rm loc}_\ell)_{\mathscr R}$ in (14.2), for its finite family of constant rows; a direct definite-seed construction does not. Lemma 5.5 shows that a no-odd-primary-character theorem for one common congruence kernel would cover every spectator level for the same $(F,B,v)$, but that stronger sufficient statement is not required. The componentwise abelian theorem (14.2a), the no-odd-primary-abelian-quotient theorem (14.2b), or the routed abelian commensurator identities (5.18) would each suffice; none is proved by the currently declared arithmetic sources for the auxiliary-dihedral rows.

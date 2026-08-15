@@ -1529,20 +1529,20 @@ The theorem is a generic criterion for admissibility only because the base at $2
 
 The following implications are unsafe without the added hypothesis in the right column.
 
-| Tempting implication | Obstruction | Required repair |
-|---|---|---|
-| generic subgroup $\Rightarrow$ abstract canonical model | different Hopf lattices | close inside a fixed finite-flat ambient group |
-| generic map $\Rightarrow$ integral map | lattice incompatibility | use low-height rigidity or prove extension |
-| scheme-theoretic kernel $\Rightarrow$ finite flat | vertical torsion | prove flatness or use an admissible kernel |
-| equal generic image $\Rightarrow$ faithfully flat image | coimage–image failure | verify the torsor factorization |
-| semisimplification $1\oplus\overline\chi_\ell$ $\Rightarrow$ stable line | semisimplification forgets reducibility data | supply reducibility or a geometric subgroup |
-| all constituents Eisenstein $\Rightarrow$ global separation | local connected part need not globalize | construct a multiplicative subgroup and constant-type quotient |
-| factors killed by $x$ $\Rightarrow$ middle killed by $x$ | $x$ can map quotient to subgroup | prove the cross Hom group vanishes |
-| extension list can be reordered | the category is not abelian | construct the new subgroup or prove a vanishing theorem |
-| $\ell=2$ generic line labels its endpoint | $1=\overline\chi_2$ | inspect connectedness or duality |
-| odd Kummer calculation applies at $2$ | sign and carry survive | use the exact sequence (7.11) |
-| constant type $\Rightarrow$ constant | monodromy around $N$ | distinguish filtered étale objects from constant groups |
-| multiplicative semisimplification $\Rightarrow$ multiplicative model | integral type is extra | prove Cartier-dual étaleness |
+| Tempting implication                                                     | Obstruction                                  | Required repair                                                |
+| ------------------------------------------------------------------------ | -------------------------------------------- | -------------------------------------------------------------- |
+| generic subgroup $\Rightarrow$ abstract canonical model                  | different Hopf lattices                      | close inside a fixed finite-flat ambient group                 |
+| generic map $\Rightarrow$ integral map                                   | lattice incompatibility                      | use low-height rigidity or prove extension                     |
+| scheme-theoretic kernel $\Rightarrow$ finite flat                        | vertical torsion                             | prove flatness or use an admissible kernel                     |
+| equal generic image $\Rightarrow$ faithfully flat image                  | coimage–image failure                        | verify the torsor factorization                                |
+| semisimplification $1\oplus\overline\chi_\ell$ $\Rightarrow$ stable line | semisimplification forgets reducibility data | supply reducibility or a geometric subgroup                    |
+| all constituents Eisenstein $\Rightarrow$ global separation              | local connected part need not globalize      | construct a multiplicative subgroup and constant-type quotient |
+| factors killed by $x$ $\Rightarrow$ middle killed by $x$                 | $x$ can map quotient to subgroup             | prove the cross Hom group vanishes                             |
+| extension list can be reordered                                          | the category is not abelian                  | construct the new subgroup or prove a vanishing theorem        |
+| $\ell=2$ generic line labels its endpoint                                | $1=\overline\chi_2$                          | inspect connectedness or duality                               |
+| odd Kummer calculation applies at $2$                                    | sign and carry survive                       | use the exact sequence (7.11)                                  |
+| constant type $\Rightarrow$ constant                                     | monodromy around $N$                         | distinguish filtered étale objects from constant groups        |
+| multiplicative semisimplification $\Rightarrow$ multiplicative model     | integral type is extra                       | prove Cartier-dual étaleness                                   |
 
 This ledger is not merely defensive. Each repair identifies the positive theorem needed to continue an Eisenstein argument without loss of integral information.
 

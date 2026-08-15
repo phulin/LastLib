@@ -1652,20 +1652,20 @@ The algebra of finite free modules over a complete DVR, Nakayama's lemma, exactn
 
 ### 13.3 Failure modes
 
-| Assertion | Hypotheses actually used | Failure prevented |
-|---|---|---|
-| divided $\varphi_1$ on torsion | integral lift or modified finite-level filtration | cancellation of $p$ in a torsion module |
-| normal decomposition | $M$ finite free, $F$ a direct summand, strong divisibility | a surjective output matrix with hidden torsion kernel |
-| torsion admissibility | strict two-term free presentation | artificial filtered torsion objects |
-| exact realization | exactness on $M$ and on $F_M$ | failure to extend a filtered solution |
-| small-weight lifting | weights $[0,1]$ and $p>2$ | loss of $p$-adic contraction at the boundary |
-| full faithfulness | unramified base $W(k)$, $k$ perfect | absence of canonical Witt Frobenius or invalid divisibility |
-| finite continuous realization | finite-length input and geometric period stalk | infinite or discontinuous solution group |
-| duality | finite length or finite freeness and Cartier-normalized twist | wrong weight interval or nonperfect evaluation |
-| perfect polarization pairing | principal polarization | $p$-power cokernel for a nonprincipal polarization |
-| coefficient exactness after tensoring | flat coefficient change and preserved admissibility | Tor in modules or filtered steps |
-| base-change isomorphism | additional integral comparison theorem | fixed points need not commute with tensor product |
-| geometric comparison | an actual good-reduction abelian scheme | unproved essential surjectivity for abstract modules |
+| Assertion                             | Hypotheses actually used                                      | Failure prevented                                           |
+| ------------------------------------- | ------------------------------------------------------------- | ----------------------------------------------------------- |
+| divided $\varphi_1$ on torsion        | integral lift or modified finite-level filtration             | cancellation of $p$ in a torsion module                     |
+| normal decomposition                  | $M$ finite free, $F$ a direct summand, strong divisibility    | a surjective output matrix with hidden torsion kernel       |
+| torsion admissibility                 | strict two-term free presentation                             | artificial filtered torsion objects                         |
+| exact realization                     | exactness on $M$ and on $F_M$                                 | failure to extend a filtered solution                       |
+| small-weight lifting                  | weights $[0,1]$ and $p>2$                                     | loss of $p$-adic contraction at the boundary                |
+| full faithfulness                     | unramified base $W(k)$, $k$ perfect                           | absence of canonical Witt Frobenius or invalid divisibility |
+| finite continuous realization         | finite-length input and geometric period stalk                | infinite or discontinuous solution group                    |
+| duality                               | finite length or finite freeness and Cartier-normalized twist | wrong weight interval or nonperfect evaluation              |
+| perfect polarization pairing          | principal polarization                                        | $p$-power cokernel for a nonprincipal polarization          |
+| coefficient exactness after tensoring | flat coefficient change and preserved admissibility           | Tor in modules or filtered steps                            |
+| base-change isomorphism               | additional integral comparison theorem                        | fixed points need not commute with tensor product           |
+| geometric comparison                  | an actual good-reduction abelian scheme                       | unproved essential surjectivity for abstract modules        |
 
 The table is also a diagnostic protocol. When a proposed application fails, one should first ask whether the filtration sequence is strict, whether the weight interval lies inside $[0,p-2]$, and whether an asserted tensor comparison is being mistaken for a formal property of fixed points.
 

@@ -2078,26 +2078,26 @@ Lisse adic sheaves constructed here are monodromy objects. Their cohomology, der
 
 The theory can now be summarized without collapsing its qualifications:
 
-| Geometric or sheaf-theoretic object | Monodromy object |
-|---|---|
-| finite étale cover $Y\to X$ | finite continuous left $\pi_1(X,\bar x)$-set $Y_{\bar x}$ |
-| degree of $Y/X$ | cardinality of the geometric fiber |
-| connected cover | transitive action |
-| pointed connected cover | open subgroup $H\subseteq\pi_1(X,\bar x)$ |
-| unpointed connected cover | conjugacy class of open subgroups |
-| connected Galois cover | open normal subgroup |
-| deck group | $N(H)/H$, with the stated action-side convention |
-| section of a cover | fixed point of its monodromy set |
-| fiber product or disjoint union | product or disjoint union of sets |
-| finite locally constant sheaf | finite continuous monodromy set |
-| lisse finite $\Lambda$-sheaf | finite $\Lambda$-module with continuous action |
-| lisse $\mathbf Z_\ell$-sheaf | finite free $\mathbf Z_\ell$-module with continuous action |
-| object over $\operatorname{Spec}k$ | finite continuous $G_k$-set or module |
-| geometric base change $X_{k^s}$ | restriction to geometric monodromy |
-| arithmetic descent from $k^s$ | compatible $G_k$-descent data |
-| normal arithmetic scheme with function field $K$ | quotient of $G_K$ by extensions ramified on the scheme |
-| deletion of boundary points on a curve | permission for inertia at those points |
-| tame quotient of an open curve | wild boundary inertia killed |
+| Geometric or sheaf-theoretic object              | Monodromy object                                           |
+| ------------------------------------------------ | ---------------------------------------------------------- |
+| finite étale cover $Y\to X$                      | finite continuous left $\pi_1(X,\bar x)$-set $Y_{\bar x}$  |
+| degree of $Y/X$                                  | cardinality of the geometric fiber                         |
+| connected cover                                  | transitive action                                          |
+| pointed connected cover                          | open subgroup $H\subseteq\pi_1(X,\bar x)$                  |
+| unpointed connected cover                        | conjugacy class of open subgroups                          |
+| connected Galois cover                           | open normal subgroup                                       |
+| deck group                                       | $N(H)/H$, with the stated action-side convention           |
+| section of a cover                               | fixed point of its monodromy set                           |
+| fiber product or disjoint union                  | product or disjoint union of sets                          |
+| finite locally constant sheaf                    | finite continuous monodromy set                            |
+| lisse finite $\Lambda$-sheaf                     | finite $\Lambda$-module with continuous action             |
+| lisse $\mathbf Z_\ell$-sheaf                     | finite free $\mathbf Z_\ell$-module with continuous action |
+| object over $\operatorname{Spec}k$               | finite continuous $G_k$-set or module                      |
+| geometric base change $X_{k^s}$                  | restriction to geometric monodromy                         |
+| arithmetic descent from $k^s$                    | compatible $G_k$-descent data                              |
+| normal arithmetic scheme with function field $K$ | quotient of $G_K$ by extensions ramified on the scheme     |
+| deletion of boundary points on a curve           | permission for inertia at those points                     |
+| tame quotient of an open curve                   | wild boundary inertia killed                               |
 
 The entries involving subgroups require $X$ connected and a geometric basepoint. Removing the point replaces subgroups by conjugacy classes. The field and family exact sequences require the hypotheses stated in Chapters 12–14, not merely connectedness of the underlying topological space.
 

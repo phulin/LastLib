@@ -94,46 +94,60 @@
     - [A closed subscheme that ceases to be flat](#154-a-closed-subscheme-that-ceases-to-be-flat)
     - [Recognizing a family after a faithfully flat cover](#155-recognizing-a-family-after-a-faithfully-flat-cover)
 16. [Constant rank repairs finite flatness](#16-constant-rank-repairs-finite-flatness)
-   - [Why rank is the missing hypothesis](#161-why-rank-is-the-missing-hypothesis)
-   - [The constant-rank theorem](#162-the-constant-rank-theorem)
-   - [Locally constant rank and nonconnected bases](#163-locally-constant-rank-and-nonconnected-bases)
-   - [Criteria over local rings and valuation bases](#164-criteria-over-local-rings-and-valuation-bases)
+
+- [Why rank is the missing hypothesis](#161-why-rank-is-the-missing-hypothesis)
+- [The constant-rank theorem](#162-the-constant-rank-theorem)
+- [Locally constant rank and nonconnected bases](#163-locally-constant-rank-and-nonconnected-bases)
+- [Criteria over local rings and valuation bases](#164-criteria-over-local-rings-and-valuation-bases)
+
 17. [The unramified and étale boundary](#17-the-unramified-and-étale-boundary)
-   - [Differentials measure infinitesimal motion](#171-differentials-measure-infinitesimal-motion)
-   - [Finite unramified and finite étale algebras](#172-finite-unramified-and-finite-étale-algebras)
-   - [Geometric fibers and separability](#173-geometric-fibers-and-separability)
-   - [The trace-pairing criterion](#174-the-trace-pairing-criterion)
-   - [Ramified boundary examples](#175-ramified-boundary-examples)
+
+- [Differentials measure infinitesimal motion](#171-differentials-measure-infinitesimal-motion)
+- [Finite unramified and finite étale algebras](#172-finite-unramified-and-finite-étale-algebras)
+- [Geometric fibers and separability](#173-geometric-fibers-and-separability)
+- [The trace-pairing criterion](#174-the-trace-pairing-criterion)
+- [Ramified boundary examples](#175-ramified-boundary-examples)
+
 18. [Quotients, kernels, and exactness](#18-quotients-kernels-and-exactness)
-   - [Why finite locally free objects do not form an abelian category](#181-why-finite-locally-free-objects-do-not-form-an-abelian-category)
-   - [Split exact sequences and rank bookkeeping](#182-split-exact-sequences-and-rank-bookkeeping)
-   - [Quotients of finite locally free algebras](#183-quotients-of-finite-locally-free-algebras)
-   - [Images, equalizers, and base change](#184-images-equalizers-and-base-change)
-   - [Fiberwise criteria for maps](#185-fiberwise-criteria-for-maps)
+
+- [Why finite locally free objects do not form an abelian category](#181-why-finite-locally-free-objects-do-not-form-an-abelian-category)
+- [Split exact sequences and rank bookkeeping](#182-split-exact-sequences-and-rank-bookkeeping)
+- [Quotients of finite locally free algebras](#183-quotients-of-finite-locally-free-algebras)
+- [Images, equalizers, and base change](#184-images-equalizers-and-base-change)
+- [Fiberwise criteria for maps](#185-fiberwise-criteria-for-maps)
+
 19. [Schematic closure and saturation](#19-schematic-closure-and-saturation)
-   - [Closing a generic subscheme](#191-closing-a-generic-subscheme)
-   - [Saturation in modules and ideals](#192-saturation-in-modules-and-ideals)
-   - [The DVR closure theorem](#193-the-dvr-closure-theorem)
-   - [Dedekind bases and the limits of the theorem](#194-dedekind-bases-and-the-limits-of-the-theorem)
-   - [Closure of algebraic structure](#195-closure-of-algebraic-structure)
+
+- [Closing a generic subscheme](#191-closing-a-generic-subscheme)
+- [Saturation in modules and ideals](#192-saturation-in-modules-and-ideals)
+- [The DVR closure theorem](#193-the-dvr-closure-theorem)
+- [Dedekind bases and the limits of the theorem](#194-dedekind-bases-and-the-limits-of-the-theorem)
+- [Closure of algebraic structure](#195-closure-of-algebraic-structure)
+
 20. [Weil restriction along a finite locally free map](#20-weil-restriction-along-a-finite-locally-free-map)
-   - [The functor and its variance](#201-the-functor-and-its-variance)
-   - [Restriction of affine space](#202-restriction-of-affine-space)
-   - [Equations and affine representability](#203-equations-and-affine-representability)
-   - [Base change, products, and open subfunctors](#204-base-change-products-and-open-subfunctors)
-   - [Quasi-projective gluing and its boundary](#205-quasi-projective-gluing-and-its-boundary)
-   - [Units, sections, and a norm example](#206-units-sections-and-a-norm-example)
+
+- [The functor and its variance](#201-the-functor-and-its-variance)
+- [Restriction of affine space](#202-restriction-of-affine-space)
+- [Equations and affine representability](#203-equations-and-affine-representability)
+- [Base change, products, and open subfunctors](#204-base-change-products-and-open-subfunctors)
+- [Quasi-projective gluing and its boundary](#205-quasi-projective-gluing-and-its-boundary)
+- [Units, sections, and a norm example](#206-units-sections-and-a-norm-example)
+
 21. [Descent interfaces for group schemes and moduli](#21-descent-interfaces-for-group-schemes-and-moduli)
-   - [Finite locally free algebras form a descent category](#211-finite-locally-free-algebras-form-a-descent-category)
-   - [Descending morphisms, subobjects, and identities](#212-descending-morphisms-subobjects-and-identities)
-   - [Exactness after a faithfully flat cover](#213-exactness-after-a-faithfully-flat-cover)
-   - [Norms, determinants, and duals under descent](#214-norms-determinants-and-duals-under-descent)
-   - [A moduli-oriented descent protocol](#215-a-moduli-oriented-descent-protocol)
+
+- [Finite locally free algebras form a descent category](#211-finite-locally-free-algebras-form-a-descent-category)
+- [Descending morphisms, subobjects, and identities](#212-descending-morphisms-subobjects-and-identities)
+- [Exactness after a faithfully flat cover](#213-exactness-after-a-faithfully-flat-cover)
+- [Norms, determinants, and duals under descent](#214-norms-determinants-and-duals-under-descent)
+- [A moduli-oriented descent protocol](#215-a-moduli-oriented-descent-protocol)
+
 22. [The stability theorem](#22-the-stability-theorem)
-   - [Statement with exact hypotheses](#221-statement-with-exact-hypotheses)
-   - [Proof by reduction to finite projective algebra](#222-proof-by-reduction-to-finite-projective-algebra)
-   - [Operations that require an extra hypothesis](#223-operations-that-require-an-extra-hypothesis)
-   - [Consequences for finite-flat families](#224-consequences-for-finite-flat-families)
+
+- [Statement with exact hypotheses](#221-statement-with-exact-hypotheses)
+- [Proof by reduction to finite projective algebra](#222-proof-by-reduction-to-finite-projective-algebra)
+- [Operations that require an extra hypothesis](#223-operations-that-require-an-extra-hypothesis)
+- [Consequences for finite-flat families](#224-consequences-for-finite-flat-families)
+
 23. [The finite locally free dictionary](#23-the-finite-locally-free-dictionary)
     - [The four affine translations](#231-the-four-affine-translations)
     - [What rank $n$ guarantees](#232-what-rank-n-guarantees)
@@ -203,9 +217,9 @@ These formulas are not merely notation. They explain why base change preserves f
 
 Let $A\to B$ be a ring map.
 
-* It is **finite** if $B$ is a finitely generated $A$-module.
-* It is **of finite type** if $B$ is generated by finitely many elements as an $A$-algebra.
-* It is **of finite presentation** if $B\cong A[x_1,\ldots,x_r]/(g_1,\ldots,g_m)$ for finite $r,m$.
+- It is **finite** if $B$ is a finitely generated $A$-module.
+- It is **of finite type** if $B$ is generated by finitely many elements as an $A$-algebra.
+- It is **of finite presentation** if $B\cong A[x_1,\ldots,x_r]/(g_1,\ldots,g_m)$ for finite $r,m$.
 
 A finite map is of finite type: module generators together with $1$ certainly generate the algebra. More strongly, every finite ring map is integral, because multiplication by any $b\in B$ acts on a finite module and the determinant trick supplies a monic equation for $b$. But a finite module need not be finitely presented, and therefore a finite ring map need not be an algebra of finite presentation over an arbitrary nonnoetherian base.
 
@@ -1233,8 +1247,8 @@ The split algebra $A^n$ has perfect trace pairing, represented in its idempotent
 
 Conversely, for a finite locally free commutative algebra, perfectness of the trace pairing is equivalent to being étale. Chapter 17 proves this after developing the needed differential and fiber criteria; the broader theory of coverings lies beyond the present book. Here the examples serve first to contrast two phenomena:
 
-* $A^n$ is finite flat and has reduced, separated geometric points;
-* $A[\epsilon]/(\epsilon^2)$ is finite flat but its trace pairing is degenerate and every fiber has a nilpotent.
+- $A^n$ is finite flat and has reduced, separated geometric points;
+- $A[\epsilon]/(\epsilon^2)$ is finite flat but its trace pairing is degenerate and every fiber has a nilpotent.
 
 Finite flatness controls length and base change. It does not control infinitesimal structure.
 
@@ -1800,9 +1814,9 @@ $$
 
 This dimension is finite because $M$ is finite. For a finite projective module it is locally constant. For a merely finite flat module it need not be locally constant, and its discontinuity records exactly where finite presentation fails. Thus there are three statements, not two:
 
-* finite locally free implies finite flat and has locally constant finite rank;
-* finite flat need not be finite locally free;
-* finite flat with locally constant rank is finite locally free.
+- finite locally free implies finite flat and has locally constant finite rank;
+- finite flat need not be finite locally free;
+- finite flat with locally constant rank is finite locally free.
 
 On a connected base, “locally constant finite rank” is the same as “constant rank $n$” for one integer $n$. On a nonconnected base, a single integer is an additional condition and cannot be silently built into the phrase finite locally free.
 
@@ -1960,10 +1974,10 @@ For $B=A[T]/(f)$ with $f$ monic, the algebra is finite free. It is finite étale
 
 Let $k$ be a field and $C$ a finite-dimensional commutative $k$-algebra. The following are equivalent:
 
-* $C$ is étale over $k$;
-* $C$ is a finite product of finite separable field extensions of $k$;
-* $C\otimes_k\bar k$ is a product of copies of $\bar k$;
-* $C\otimes_k\bar k$ is reduced.
+- $C$ is étale over $k$;
+- $C$ is a finite product of finite separable field extensions of $k$;
+- $C\otimes_k\bar k$ is a product of copies of $\bar k$;
+- $C\otimes_k\bar k$ is reduced.
 
 The last condition must use a geometric fiber. If $k$ is imperfect, a finite purely inseparable field extension is reduced as a $k$-algebra but becomes nonreduced after extending scalars to an algebraic closure. Over a perfect field, ordinary reducedness is enough because every finite field extension is separable.
 
@@ -2052,10 +2066,10 @@ A useful quotient criterion follows. If $P$ is finite projective and $Q$ is a fi
 
 Let $B$ be a finite locally free $A$-algebra and $I\subseteq B$ an ideal. The quotient $C=B/I$ is always finite over $A$, but it is finite locally free precisely when its underlying $A$-module satisfies one of the equivalent projectivity criteria. Sufficient conditions include:
 
-* $C$ is finitely presented and flat over $A$;
-* $C$ is finite flat with locally constant fiber rank;
-* $A$ is a DVR and $C$ is torsion-free;
-* the $A$-module surjection $B\to C$ admits a splitting.
+- $C$ is finitely presented and flat over $A$;
+- $C$ is finite flat with locally constant fiber rank;
+- $A$ is a DVR and $C$ is torsion-free;
+- the $A$-module surjection $B\to C$ admits a splitting.
 
 If $C$ is finite projective, then
 
@@ -2456,13 +2470,13 @@ Tensor constructions use dual bases. Descent uses faithful exactness together wi
 
 Several tempting extensions are false.
 
-* An arbitrary closed subscheme of a finite locally free scheme is finite but may not be flat.
-* The image of a morphism between finite locally free schemes is finite but may not be locally free.
-* The kernel or cokernel of a map of finite projective modules need not be projective.
-* A finite flat morphism over an arbitrary ring need not be finitely presented unless its rank is locally constant or another finiteness hypothesis is supplied.
-* Schematic closure in a finite locally free ambient scheme need not be flat over an arbitrary integral base.
-* Weil restriction of an arbitrary nonaffine scheme need not be representable by a scheme without a hypothesis such as quasi-projectivity.
-* Constancy of the number of geometric points does not imply flatness or constant length.
+- An arbitrary closed subscheme of a finite locally free scheme is finite but may not be flat.
+- The image of a morphism between finite locally free schemes is finite but may not be locally free.
+- The kernel or cokernel of a map of finite projective modules need not be projective.
+- A finite flat morphism over an arbitrary ring need not be finitely presented unless its rank is locally constant or another finiteness hypothesis is supplied.
+- Schematic closure in a finite locally free ambient scheme need not be flat over an arbitrary integral base.
+- Weil restriction of an arbitrary nonaffine scheme need not be representable by a scheme without a hypothesis such as quasi-projectivity.
+- Constancy of the number of geometric points does not imply flatness or constant length.
 
 These are not peripheral exceptions. Each marks a place where an exactness, finite-presentation, or affine-neighborhood argument is needed. The stability theorem is powerful because its hypotheses are stable and checkable, not because every finite construction automatically stays flat.
 
@@ -2495,12 +2509,12 @@ If $A$ is noetherian, level 3 equals level 4 because every finite module is fini
 
 Suppose $B$ is finite projective of constant rank $n$. Then all of the following hold.
 
-* Every localization $B_{\mathfrak p}$ is free of rank $n$ over $A_{\mathfrak p}$.
-* Every fiber $B\otimes_A\kappa(\mathfrak p)$ and every geometric fiber has vector-space dimension, hence scheme length, $n$.
-* Every base change $B\otimes_AA'$ is finite projective of rank $n$ over $A'$.
-* The dual $B^\vee$, tensor powers, symmetric powers, exterior powers, and endomorphism module have the expected finite projective ranks.
-* Multiplication by $b$ has a monic characteristic polynomial of degree $n$, with trace and norm as its first and last coefficients.
-* Trace, norm, characteristic polynomial, trace pairing, and discriminant commute with arbitrary base change.
+- Every localization $B_{\mathfrak p}$ is free of rank $n$ over $A_{\mathfrak p}$.
+- Every fiber $B\otimes_A\kappa(\mathfrak p)$ and every geometric fiber has vector-space dimension, hence scheme length, $n$.
+- Every base change $B\otimes_AA'$ is finite projective of rank $n$ over $A'$.
+- The dual $B^\vee$, tensor powers, symmetric powers, exterior powers, and endomorphism module have the expected finite projective ranks.
+- Multiplication by $b$ has a monic characteristic polynomial of degree $n$, with trace and norm as its first and last coefficients.
+- Trace, norm, characteristic polynomial, trace pairing, and discriminant commute with arbitrary base change.
 
 What rank $n$ does **not** guarantee is equally important. It does not say that fibers are reduced, that they contain $n$ points, that residue extensions are separable, that the trace pairing is perfect, or that a section is an open-and-closed component. Dual numbers supply a counterexample to all of these unwarranted conclusions.
 
@@ -2547,11 +2561,11 @@ For a general finitely presented module $M$, Hom commutes with **flat** base cha
 
 Finite projectivity may be verified in any of the following ways.
 
-* Exhibit $B$ as a direct summand of a finite free $A$-module.
-* Produce a finite dual basis.
-* Prove $B$ finitely presented and flat.
-* Find a finite principal-open cover on which $B$ is finite free.
-* Make a faithfully flat base change $A\to A'$ and prove $B\otimes_AA'$ finite projective.
+- Exhibit $B$ as a direct summand of a finite free $A$-module.
+- Produce a finite dual basis.
+- Prove $B$ finitely presented and flat.
+- Find a finite principal-open cover on which $B$ is finite free.
+- Make a faithfully flat base change $A\to A'$ and prove $B\otimes_AA'$ finite projective.
 
 The last method is recognition, not construction. If only an algebra $B'$ over $A'$ is given, descending it requires an isomorphism between its two pullbacks to $A'\otimes_AA'$ satisfying the cocycle identity over $A'\otimes_AA'\otimes_AA'$. If $B$ is already given downstairs, no such extra datum is needed to descend the property.
 

@@ -622,7 +622,7 @@ For general smooth presentations, the diagonal-envelope descent of Chapters
 12 and 13 supplies canonical comparison data rather than a bare global
 identification.
 
-This distinction prevents a common mistake. A universal property is independent of how one presents the *same input pair*; it does not identify different input pairs merely because they have the same quotient.
+This distinction prevents a common mistake. A universal property is independent of how one presents the _same input pair_; it does not identify different input pairs merely because they have the same quotient.
 
 ### 6.4 Principal and diagonal calculations
 
@@ -827,7 +827,7 @@ Flatness removes Tor at each finite level, but it does not by itself make
 tensor product commute with an inverse limit. The comparison is an isomorphism
 when tensoring with $A'$ commutes with the displayed inverse limit and the
 induced completion; a safe sufficient case is that $A'$ is finite projective
-over $A$ and the quotient tower is surjective. Alternatively one may *define*
+over $A$ and the quotient tower is surjective. Alternatively one may _define_
 the completed tensor product to be the right side, in which case (8.3) is a
 definition rather than a theorem about commuting operations. For derived
 completion one replaces each tensor by $\otimes^L$ and the limit by
@@ -1889,25 +1889,25 @@ Every downward step has a distinct hypothesis. Divided powers remove factorial d
 
 ### 18.2 Hypothesis ledger
 
-| Assertion | Required hypotheses | What can fail without them |
-|---|---|---|
-| $\gamma_n(x)=x^n/n!$ | every $n!$ invertible | divided powers are not determined by ordinary powers |
-| truncated structure in characteristic $p$ | $I^p=0$ | Proposition 3.1 obstructs existence |
-| canonical structure on $(p)$ | integrality of $p^n/n!$; torsion-free embedding for the proof used | the proposed fractions need not lie in the ring |
-| quotient PD structure | kernel intersection is PD-stable | the operation depends on the chosen lift |
-| envelope commutes with ordinary tensor | flat compatible base change | the ordinary tensor need not be the PD pushout |
-| ordinary completion computes derived completion | derived completeness and vanishing first derived limit | hidden inverse-limit classes remain |
-| completed tensor commutes with the quotient limit | tensor commutes with that limit, for example finite-projective coefficient change with a surjective tower | flatness alone does not commute with inverse limits |
-| crystals equal modules with stratification | a local smooth lift | values on arbitrary thickenings cannot be reconstructed from one evaluation |
-| stratifications equal connections | smoothness, integrability, quasi-nilpotence, and $p$ locally nilpotent in the nilpotent version | curvature or divergent Taylor series obstructs descent |
-| dual of a crystal is a crystal | finite local freeness, or another dualizable hypothesis | Hom need not commute with pullback |
-| kernels stay crystals | flat pullback or flat quotient | Tor changes the pulled-back kernel |
-| Frobenius isogeny | a $p$-adic integral system; rationalization meaningful | at one nilpotent level, inverting $p$ annihilates coefficients |
-| dual Frobenius has the direction (16.6) | rational invertibility, and integrally a normalized lattice-preserving inverse transpose | ordinary duality reverses the Frobenius arrow |
-| $d\varphi/p$ is defined | $p$-torsion-freeness of $\Omega^1$, or a chosen factorization | divisibility does not choose a quotient |
-| derived reduction has the two-row sequence (17.8) | reduction over $\mathbf Z$, or a coefficient ring on which $p^n$ is a non-zero-divisor | extra Tor rows may occur |
-| reduction commutes with $H^1$ | the preceding two-row hypothesis and $H^2[p^n]=0$ | the right term of (17.8) survives |
-| completed $H^1$ is the inverse limit | $R^1\varprojlim H^0=0$, plus effectivity and comparison with the completed site | a derived-limit class or noneffective tower survives |
+| Assertion                                         | Required hypotheses                                                                                       | What can fail without them                                                  |
+| ------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| $\gamma_n(x)=x^n/n!$                              | every $n!$ invertible                                                                                     | divided powers are not determined by ordinary powers                        |
+| truncated structure in characteristic $p$         | $I^p=0$                                                                                                   | Proposition 3.1 obstructs existence                                         |
+| canonical structure on $(p)$                      | integrality of $p^n/n!$; torsion-free embedding for the proof used                                        | the proposed fractions need not lie in the ring                             |
+| quotient PD structure                             | kernel intersection is PD-stable                                                                          | the operation depends on the chosen lift                                    |
+| envelope commutes with ordinary tensor            | flat compatible base change                                                                               | the ordinary tensor need not be the PD pushout                              |
+| ordinary completion computes derived completion   | derived completeness and vanishing first derived limit                                                    | hidden inverse-limit classes remain                                         |
+| completed tensor commutes with the quotient limit | tensor commutes with that limit, for example finite-projective coefficient change with a surjective tower | flatness alone does not commute with inverse limits                         |
+| crystals equal modules with stratification        | a local smooth lift                                                                                       | values on arbitrary thickenings cannot be reconstructed from one evaluation |
+| stratifications equal connections                 | smoothness, integrability, quasi-nilpotence, and $p$ locally nilpotent in the nilpotent version           | curvature or divergent Taylor series obstructs descent                      |
+| dual of a crystal is a crystal                    | finite local freeness, or another dualizable hypothesis                                                   | Hom need not commute with pullback                                          |
+| kernels stay crystals                             | flat pullback or flat quotient                                                                            | Tor changes the pulled-back kernel                                          |
+| Frobenius isogeny                                 | a $p$-adic integral system; rationalization meaningful                                                    | at one nilpotent level, inverting $p$ annihilates coefficients              |
+| dual Frobenius has the direction (16.6)           | rational invertibility, and integrally a normalized lattice-preserving inverse transpose                  | ordinary duality reverses the Frobenius arrow                               |
+| $d\varphi/p$ is defined                           | $p$-torsion-freeness of $\Omega^1$, or a chosen factorization                                             | divisibility does not choose a quotient                                     |
+| derived reduction has the two-row sequence (17.8) | reduction over $\mathbf Z$, or a coefficient ring on which $p^n$ is a non-zero-divisor                    | extra Tor rows may occur                                                    |
+| reduction commutes with $H^1$                     | the preceding two-row hypothesis and $H^2[p^n]=0$                                                         | the right term of (17.8) survives                                           |
+| completed $H^1$ is the inverse limit              | $R^1\varprojlim H^0=0$, plus effectivity and comparison with the completed site                           | a derived-limit class or noneffective tower survives                        |
 
 Finiteness of crystalline cohomology, proper and smooth base change, global Poincaré duality, Künneth isomorphisms, comparison with the degree-one cohomology of curves and abelian schemes, and the classification consequences for finite-flat groups require additional geometry. They are not consequences of the site axioms and have not been smuggled into the constructions above.
 

@@ -1399,18 +1399,18 @@ Changing one row is allowed only if every dependent formula changes with it. Ari
 
 ### 14.2 A reusable comparison table
 
-| invariant | special label $\mu$ | dihedral label $(E,\theta)$ |
-|---|---|---|
-| split member | $\operatorname{St}\otimes(\mu\circ\det)$ | $\pi(E,\theta)$ |
-| division member | $\mu\circ\operatorname{Nrd}$ | $\pi'(E,\theta)$ |
-| central character | $\mu^2$ | $\theta|_{F^\times}\omega_{E/F}$ |
-| parameter | $\operatorname{Sp}_2(\mu)$ | $\operatorname{Ind}_{W_E}^{W_F}\theta$ |
-| conductor | $1$ if $a(\mu)=0$, else $2a(\mu)$ | $v_F(\mathfrak d_{E/F})+f(E/F)a_E(\theta)$ |
-| Euler factor | $L(s+1/2,\mu)$ | $1$ |
-| epsilon factor | that of $\operatorname{Sp}_2(\mu)$ | $\lambda(E/F,\psi)\epsilon_E(s,\theta,\psi_E)$ |
-| gamma factor | derived from the displayed $L$- and epsilon factors | derived from the displayed $L$- and epsilon factors |
-| elliptic character | negative of division value | negative of division value |
-| integral object | saturated split new/type and division special lines | saturated split new/type line and division type-multiplicity line |
+| invariant          | special label $\mu$                                 | dihedral label $(E,\theta)$                                       |
+| ------------------ | --------------------------------------------------- | ----------------------------------------------------------------- |
+| split member       | $\operatorname{St}\otimes(\mu\circ\det)$            | $\pi(E,\theta)$                                                   |
+| division member    | $\mu\circ\operatorname{Nrd}$                        | $\pi'(E,\theta)$                                                  |
+| central character  | $\mu^2$                                             | $\theta                                                           |
+| parameter          | $\operatorname{Sp}_2(\mu)$                          | $\operatorname{Ind}_{W_E}^{W_F}\theta$                            |
+| conductor          | $1$ if $a(\mu)=0$, else $2a(\mu)$                   | $v_F(\mathfrak d_{E/F})+f(E/F)a_E(\theta)$                        |
+| Euler factor       | $L(s+1/2,\mu)$                                      | $1$                                                               |
+| epsilon factor     | that of $\operatorname{Sp}_2(\mu)$                  | $\lambda(E/F,\psi)\epsilon_E(s,\theta,\psi_E)$                    |
+| gamma factor       | derived from the displayed $L$- and epsilon factors | derived from the displayed $L$- and epsilon factors               |
+| elliptic character | negative of division value                          | negative of division value                                        |
+| integral object    | saturated split new/type and division special lines | saturated split new/type line and division type-multiplicity line |
 
 Every row is compatible with twisting. In the dihedral column, replace $\theta$ by $\theta(\chi\circ N_{E/F})$; in the special column, replace $\mu$ by $\mu\chi$.
 

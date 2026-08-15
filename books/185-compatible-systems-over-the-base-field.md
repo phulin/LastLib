@@ -174,7 +174,7 @@ $$
 
 These are the coefficient-independent conductor and invariant-Frobenius conclusions for the
 raw Jacobian multiplicity factor, passed to the global semisimplification by Book 128, Lemma
-3.2.  They are Galois comparisons.  They do not identify a ramified local-Langlands type of
+3.2. They are Galois comparisons. They do not identify a ramified local-Langlands type of
 the automorphic factor at $w$.
 
 The packet array is compatible with field conjugation and coefficient conjugation. Most
@@ -442,9 +442,8 @@ construction in this book uses only its Galois avatar.
 
 For the relation (1.9), put
 
-$$
-A_{i,\lambda}
-=
+# $$A_{i,\lambda}
+
 \operatorname{Ind}_{G_{F_{H_i}}}^{G_{\mathbf Q}}
 (r_{H_i,\lambda}\otimes\theta_{i,\lambda}).
 \tag{2.5}
@@ -775,11 +774,10 @@ is required.
 
 At a place $\lambda$, form the virtual difference
 
-$$
-\mathcal D_\lambda
-=
-\bigl([R_{\mathfrak B,\lambda}^+]-[R_{\mathfrak B,\lambda}^-]\bigr)
--
+# $$\mathcal D_\lambda
+
+## \bigl([R_{\mathfrak B,\lambda}^+]-[R_{\mathfrak B,\lambda}^-]\bigr)
+
 \bigl([R_{\mathfrak B',\lambda}^+]-[R_{\mathfrak B',\lambda}^-]\bigr).
 \tag{5.3}
 $$
@@ -1075,9 +1073,8 @@ $$
 is the packet polynomial, then the reciprocal characteristic series for the $i$th induced
 term is
 
-$$
-D_{i,p}(T)
-=
+# $$D_{i,p}(T)
+
 \prod_{w\mid p}
 \left(
 1-a_{i,w}\theta_i(\operatorname{Frob}_w)T^{f_w}
@@ -1285,15 +1282,14 @@ $F_{H_i}$, let $D_{i,w}$ be its algebraic Frobenius-semisimple Weil--Deligne pai
 this is the common SP pair supplied at the selected place $\nu$ by the controlled packet datum;
 the optional uniform packet certificate supplies it at the other coefficient places. For
 $v\ne2$ it is the
-unramified Galois pair (1.6b).  After the one common finite coefficient enlargement already
+unramified Galois pair (1.6b). After the one common finite coefficient enlargement already
 allowed in Chapter 2, the finitely many exceptional local objects have models over $E$; at
 the other places their unramified Frobenius polynomials already lie in $E[X]$.
 
 Finite twisting and Weil-group induction are algebraic operations on Weil--Deligne pairs. Put
 
-$$
-\mathscr D_{v,E}^\pm
-=
+# $$\mathscr D_{v,E}^\pm
+
 \bigoplus_i\bigoplus_{w\mid v}
 \left(
 \operatorname{Ind}_{W_{(F_{H_i})_w}}^{W_{\mathbf Q_v}}
@@ -1330,7 +1326,7 @@ Equation (8.2) is an upstream input, not a consequence of the assembled family. 
 packet terms at the selected place it is supplied by Book 182, Proposition 7.1 through Book
 183, Theorem 11.1. An optional uniform packet certificate supplies the corresponding
 all-coefficient statement. Away from two it is (1.6b), whose raw-to-global step is
-Book 128, Lemma 3.2.  The cancellation in (8.3) and the Krull--Schmidt argument below can
+Book 128, Lemma 3.2. The cancellation in (8.3) and the Krull--Schmidt argument below can
 transport and cancel already identified Galois pairs; they cannot be used backward to prove
 that a raw packet pair survived global semisimplification or to identify an automorphic type.
 
@@ -1381,19 +1377,19 @@ faithful scalar extension.
 
 ### 8.3 The Galois comparison range and the automorphic-type boundary
 
-Equation (8.6) is asserted at every finite place.  At $2$ it comes from the designated SP
-attachment.  Away from $2$ it comes from the unramified Galois pairs (1.6b), finite twisting,
-Weil induction, and actual direct-sum cancellation.  This all-place Galois statement is
+Equation (8.6) is asserted at every finite place. At $2$ it comes from the designated SP
+attachment. Away from $2$ it comes from the unramified Galois pairs (1.6b), finite twisting,
+Weil induction, and actual direct-sum cancellation. This all-place Galois statement is
 strictly weaker than an identification of the automorphic local type of each elementary
-packet factor.  No omitted automorphic-type theorem is manufactured from good Frobenius
+packet factor. No omitted automorphic-type theorem is manufactured from good Frobenius
 traces.
 
 At a good $v\notin S_0$, the pair $D_v$ is unramified, has $N=0$, and its Frobenius
-polynomial is $P_v$.  At an auxiliary $v\ne2,\ell$, (8.6) compares $D_v$ with the actual local
+polynomial is $P_v$. At an auxiliary $v\ne2,\ell$, (8.6) compares $D_v$ with the actual local
 pair of the distinguished member $r_{\lambda_0}\simeq\rho$; Proposition 8.3 below uses this
-tester to prove that $D_v$ is unramified.  At $v=\ell$, complete splitting and (1.6b) give the
-unramified tester directly in the algebraic Mackey expression.  Thus there is a common
-unramified Frobenius polynomial in $E[X]$ at every $v\ne2$.  Removing an auxiliary $v$ also
+tester to prove that $D_v$ is unramified. At $v=\ell$, complete splitting and (1.6b) give the
+unramified tester directly in the algebraic Mackey expression. Thus there is a common
+unramified Frobenius polynomial in $E[X]$ at every $v\ne2$. Removing an auxiliary $v$ also
 from the exceptional set used for the pure compatible-polynomial family still requires
 weight-one purity of that polynomial; unramifiedness alone does not prove purity.
 
@@ -1439,7 +1435,7 @@ $q$ acts trivially on $r_\lambda$. Taking $\lambda=\nu$ gives $(\mathrm U)$. No 
 Chebotarev, or Brauer--Nesbitt argument occurs. $\square$
 
 The exact finite comparison condition is useful enough to name. Keep
-the distinguished place $\lambda_0\mid\ell$ and fix $\nu\mid3$.  Let
+the distinguished place $\lambda_0\mid\ell$ and fix $\nu\mid3$. Let
 $S_{\mathrm{aux}}(\nu)$ be the subset of $S_0\setminus\{2,3\}$ not already removed by the
 good-prime construction of Chapter 7 before applying the auxiliary theorem below, and let
 $S_{\mathrm{rem}}\subseteq S_0$ be the analogous residual common bad set at that stage.
@@ -1458,32 +1454,32 @@ following finite data.
 
 The **family auxiliary comparison certificate** $(\mathrm{AUX}_{\mathrm{all}})$ requires,
 for every $q\in S_{\mathrm{rem}}\setminus\{2\}$, an algebraic $D_q$ for which (8.6) holds at every
-already constructed coefficient place $\lambda$ with $q_\lambda\ne q$.  It also requires an
+already constructed coefficient place $\lambda$ with $q_\lambda\ne q$. It also requires an
 unramified tester: at $q\ne\ell$ this is the distinguished member at $\lambda_0$, and at
 $q=\ell$ it is the spherical algebraic packet calculation just described.
 
 **Proposition 8.2 (finite auxiliary reduction).** The certificate
-$(\mathrm{AUX}_\nu)$ proves $(\mathrm U)$ for $r_\nu$.  The certificate
+$(\mathrm{AUX}_\nu)$ proves $(\mathrm U)$ for $r_\nu$. The certificate
 $(\mathrm{AUX}_{\mathrm{all}})$ proves $(\mathrm{Cond}_2)$.
 
-**Proof.** Let $q\in S_{\mathrm{aux}}(\nu)\setminus\{\ell\}$.  By (1.3), the distinguished realization
-$r_{\lambda_0}\simeq\rho$ is unramified at $q$.  Its comparison with $D_q$ forces the finite
-inertia matrices of $D_q$ to be the identity and its monodromy matrix to be zero.  The
-comparison at $\nu$ then makes $r_\nu$ unramified at $q$.  If $\ell$ belongs to
+**Proof.** Let $q\in S_{\mathrm{aux}}(\nu)\setminus\{\ell\}$. By (1.3), the distinguished realization
+$r_{\lambda_0}\simeq\rho$ is unramified at $q$. Its comparison with $D_q$ forces the finite
+inertia matrices of $D_q$ to be the identity and its monodromy matrix to be zero. The
+comparison at $\nu$ then makes $r_\nu$ unramified at $q$. If $\ell$ belongs to
 $S_{\mathrm{aux}}(\nu)$, the second clause of
 $(\mathrm{AUX}_\nu)$ says directly that $D_\ell$ is unramified, and its comparison at $\nu$
-gives the same conclusion.  Every other prime was excluded from
-$S_{\mathrm{aux}}(\nu)$ precisely because its unramifiedness was already proved.  The prime
+gives the same conclusion. Every other prime was excluded from
+$S_{\mathrm{aux}}(\nu)$ precisely because its unramifiedness was already proved. The prime
 $3$ is the selected coefficient characteristic and is excluded from $(\mathrm U)$.
 This proves the first assertion.
 
 For $(\mathrm{AUX}_{\mathrm{all}})$, use the same test at every
-$q\in S_{\mathrm{rem}}\setminus\{2,\ell\}$.  Notice that it also handles $q=3$ when that
+$q\in S_{\mathrm{rem}}\setminus\{2,\ell\}$. Notice that it also handles $q=3$ when that
 prime remains, since
-$\lambda_0\mid\ell$ and $\ell\ne3$.  At $q=\ell$ use the supplied spherical calculation.
-Thus every remaining $D_q$ with $q\ne2$ is unramified.  Equation (8.6) then makes every member away
+$\lambda_0\mid\ell$ and $\ell\ne3$. At $q=\ell$ use the supplied spherical calculation.
+Thus every remaining $D_q$ with $q\ne2$ is unramified. Equation (8.6) then makes every member away
 from its own coefficient characteristic unramified at $q$; primes outside
-$S_{\mathrm{rem}}$ were already certified.  Shrinking the defining common bad set to
+$S_{\mathrm{rem}}$ were already certified. Shrinking the defining common bad set to
 $\{2\}$ gives $(\mathrm{Cond}_2)$. $\square$
 
 **Proposition 8.3 (selected auxiliary Galois comparison and support theorem).** The controlled
@@ -1494,16 +1490,16 @@ $q\ne2$. If the optional uniform effectivity hypotheses are added, the same cons
 every coefficient place proves $(\mathrm{AUX}_{\mathrm{all}})$ and $(\mathrm{Cond}_2)$.
 
 **Proof.** The elementary pairs (1.6b), algebraic finite twisting, and Weil induction define
-the positive and negative local Mackey objects (8.1) at every $q\ne2$.  Equations
+the positive and negative local Mackey objects (8.1) at every $q\ne2$. Equations
 (8.2)--(8.5), using the actual global direct-sum identity rather than a virtual conductor
-equality, construct $D_q$ and prove (8.6).  At $q=2$ the same construction starts from the
+equality, construct $D_q$ and prove (8.6). At $q=2$ the same construction starts from the
 common algebraic SP pair in the controlled packet datum; Sections 8.1--8.2 therefore already
-construct $D_2$ and prove (8.6), with its nonzero monodromy retained.  No unramified assertion
+construct $D_2$ and prove (8.6), with its nonzero monodromy retained. No unramified assertion
 is made there.
 
-Suppose first that $q\ne2,\ell$.  Since $q$ differs from the residue characteristic of
+Suppose first that $q\ne2,\ell$. Since $q$ differs from the residue characteristic of
 $\lambda_0$, equation (8.6) identifies $D_q\otimes_EE_{\lambda_0}$ with the local pair of
-$r_{\lambda_0}\simeq\rho$.  The latter is unramified by (1.3).  Faithful scalar extension
+$r_{\lambda_0}\simeq\rho$. The latter is unramified by (1.3). Faithful scalar extension
 then shows that inertia is trivial and $N=0$ on $D_q$.
 
 Now let $q=\ell$. Complete splitting of $\ell$ in $M$ makes every completion
@@ -1512,7 +1508,7 @@ $\theta_i$ locally trivial. Book 182, Theorem 9.1 retains hyperspecial packet le
 Book 182, Proposition 8.1, specifically its common unramified algebraic-pair comparison
 (8.3), is the source of (1.6b) at the places above $\ell$; its proof uses the split unitary
 good cover. Hence every $D_{i,w}$ is unramified, and both local Mackey objects in
-(8.1) are unramified.  Equation (8.5) makes $D_\ell$ a direct summand of the positive object,
+(8.1) are unramified. Equation (8.5) makes $D_\ell$ a direct summand of the positive object,
 so it too has trivial inertia and zero monodromy. This proves the testers and comparisons
 required by $(\mathrm{AUX}_\nu)$, so Proposition 8.2 gives $(\mathrm U)$. Under the optional
 uniform hypotheses, the same comparison is available at every constructed coefficient place
@@ -1528,11 +1524,11 @@ a_{(F_{H_i})_w}
 $$
 
 The right side, the local extensions, residue degrees, and discriminant exponents in Book
-184, (9.13) are coefficient-independent.  Hence Book 184, (9.12) makes
-$a_q(r_\lambda)$ independent of $\lambda$ away from $q$.  Its value at $\lambda_0$ is zero
-because $r_{\lambda_0}\simeq\rho$ is unramified at $q\ne2,\ell$.  At $q=\ell$, the preceding
+184, (9.13) are coefficient-independent. Hence Book 184, (9.12) makes
+$a_q(r_\lambda)$ independent of $\lambda$ away from $q$. Its value at $\lambda_0$ is zero
+because $r_{\lambda_0}\simeq\rho$ is unramified at $q\ne2,\ell$. At $q=\ell$, the preceding
 split calculation makes the positive ambient representation unramified, and (4.3) makes
-$r_\lambda$ its direct summand.  This again proves zero conductor and clean support. $\square$
+$r_\lambda$ its direct summand. This again proves zero conductor and clean support. $\square$
 
 The proved auxiliary certificates identify algebraic **Galois** Frobenius-semisimple pairs.
 A stronger theorem prescribing automorphic local types would require additional integral
@@ -1542,11 +1538,11 @@ Book 128, Lemma 3.2 supplies the raw-to-global passage once $N=0$; in (1.6b) tha
 already been made for the unramified Galois pair.
 
 It is not possible to replace the strong-local checks by the claim that every auxiliary place
-is spherical.  A rational prime ramified in the nontrivial controlled top cannot split
-completely there.  At a nonsplit cyclic descent, an extension of a spherical top parameter can
-be principal-series or dihedral, and a quotient-character correction can be ramified.  A
+is spherical. A rational prime ramified in the nontrivial controlled top cannot split
+completely there. At a nonsplit cyclic descent, an extension of a spherical top parameter can
+be principal-series or dihedral, and a quotient-character correction can be ramified. A
 principal quotient character can even be wild when the local cyclic step has
-residue-characteristic ramification; local Clifford theory does not rule this out.  The
+residue-characteristic ramification; local Clifford theory does not rule this out. The
 positive and negative local Mackey terms may remain ramified even though Proposition 8.3
 proves that their actual rank-two complement is unramified.
 
@@ -1554,7 +1550,7 @@ Nor would equality of the ordinary good Frobenius polynomials alone prove either
 certificates or the missing automorphic-type comparisons. An exceptional prime is absent from
 the good-prime polynomial data, so those data contain no matrix for its inertia or monodromy. The proof of
 Proposition 8.3 instead uses the already existing local algebraic pairs (1.6b), obtained from
-equivariant geometry, and actual Krull--Schmidt cancellation.  Even then an unramified Galois
+equivariant geometry, and actual Krull--Schmidt cancellation. Even then an unramified Galois
 pair does not manufacture a principal or dihedral type line. Thus
 $(\mathrm{AUX}_\nu)$ and $(\mathrm{AUX}_{\mathrm{all}})$ are proved Galois comparison
 statements. No stronger automorphic-type statement is needed.
@@ -1624,12 +1620,8 @@ is an $E$-line. Equation (8.9) makes it stable under the Weil group. The control
 includes one sign $\varepsilon_2\in\{1,-1\}$ such that arithmetic Frobenius acts on the
 quotient by $\varepsilon_2$ and on $\mathscr L_2$ by $2\varepsilon_2$:
 
-$$
-\left(
-F_2\mid D_2/\mathscr L_2,
-F_2\mid\mathscr L_2
-\right)
-=
+# $$\left(F_2\mid D_2/\mathscr L_2,F_2\mid\mathscr L_2\right)
+
 (\varepsilon_2,2\varepsilon_2).
 \tag{8.13}
 $$
@@ -1712,9 +1704,9 @@ $$
 
 can use denominators. Even after stable lattices are chosen in all three rational summands, the
 chosen lattices need not form an integral direct sum, and reduction need not preserve the
-decomposition.  The contraction of an ambient lattice with the rational summand is saturated,
+decomposition. The contraction of an ambient lattice with the rational summand is saturated,
 but this book has supplied no finite-flat tower on the ambient positive lattice from which its
-closures could be taken.  Modular representations of the finite quotient can have nonsplit
+closures could be taken. Modular representations of the finite quotient can have nonsplit
 extensions.
 
 Accordingly, no finite-flat quotient, compatible transition map, integral special line, or
@@ -1871,9 +1863,9 @@ with the following properties.
    \tag{9.6}
    $$
 
-   If $v\ne2$, then $D_v$ is unramified.  Thus every auxiliary prime is absent from the common
+   If $v\ne2$, then $D_v$ is unramified. Thus every auxiliary prime is absent from the common
    support. It is removed from $S$ only when weight-one purity of its common unramified
-   Frobenius polynomial is also certified.  This is a Galois local record, not an
+   Frobenius polynomial is also certified. This is a Galois local record, not an
    identification of an automorphic principal or dihedral type.
 9. **The SP place.** The place $2$ lies in the range of clause 8. The pair $D_2=(r_2,N_2)$
    has trivial finite inertia,
@@ -1952,7 +1944,7 @@ complement supplies the common unramified polynomial, and removal from $S$ inclu
 separate purity certificate required in Section 8.3. The determinant-transfer calculation
 becomes the actual identity (9.4). Restriction to the pure top packet and the residue-degree
 power calculation give purity on the original good set. These arguments and the declared
-certificates prove the polynomial and purity parts of clauses 4--5.  Proposition 8.3 supplies
+certificates prove the polynomial and purity parts of clauses 4--5. Proposition 8.3 supplies
 an unramified polynomial at every additionally removed place and proves the sharper support
 assertion (9.3a), but it does not claim weight-one purity for those additional polynomials.
 
@@ -1965,7 +1957,7 @@ conjugation and scalar transport, proving clauses 6--7.
 For the Galois local records, form the algebraic local Mackey objects (8.1). Global cancellation
 restricts to decomposition groups. Weil--Deligne functoriality gives (8.3), and
 Krull--Schmidt cancellation extracts the algebraic rank-two complement after one harmless
-finite enlargement.  Proposition 8.3 proves that this construction works at every finite
+finite enlargement. Proposition 8.3 proves that this construction works at every finite
 place and that the complement is unramified away from two. Complete splitting at $2$ makes
 every local term one copy of the selected SP pair; the rank identity leaves exactly one copy.
 Equations (8.12)--(8.14) prove clause 9.
@@ -2009,7 +2001,7 @@ $$
 V\text{ is unramified outside }\{2,3\}.
 $$
 
-This is the clean-support condition $(\mathrm U)$ of Book 187.  Clause 8 also contains the
+This is the clean-support condition $(\mathrm U)$ of Book 187. Clause 8 also contains the
 algebraic unramified Galois pair at every removed prime; it does not identify an automorphic
 local type or add the separate purity needed to remove that prime from $S$.
 
@@ -2227,7 +2219,7 @@ Conditional on the controlled SP top datum, Book 183's optional uniform packet c
 and $(\mathrm{AI}_2)$, the all-place assembly is complete at the rational level. Its final
 boundary is exact: the SP line exists over the coefficient field, but no integral lattice,
 finite-flat quotient, or transition tower has been
-chosen or inferred.  Proposition 8.3 proves the conductor-support premise
+chosen or inferred. Proposition 8.3 proves the conductor-support premise
 $(\mathrm{Cond}_2)$ and hence
 
 $$

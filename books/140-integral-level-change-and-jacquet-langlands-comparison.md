@@ -78,8 +78,9 @@
     - [Prerequisites and normalization](#153-prerequisites-and-normalization)
     - [Exact scope](#154-exact-scope)
 16. [Conclusion](#16-conclusion)
-   - [The established package](#161-the-established-package)
-   - [The conceptual picture](#162-the-conceptual-picture)
+
+- [The established package](#161-the-established-package)
+- [The conceptual picture](#162-the-conceptual-picture)
 
 ## 1. The integral comparison problem
 
@@ -158,7 +159,7 @@ $$
 
 The finite cokernel of (1.5) is a component group, not a defect of saturation in (1.2).
 
-There is nevertheless a second finite module in the quotient filtration.  If
+There is nevertheless a second finite module in the quotient filtration. If
 $W_0\subset W_1\subset N_{\mathfrak m}$ is the bottom and middle part of the
 semistable filtration and $A=d(M_{\mathfrak m}^{\oplus2})$, put
 
@@ -186,9 +187,9 @@ $$
 $$
 
 Thus the component group $\operatorname{coker}(q_\Gamma)$ and the normalized-branch
-Smith module $\mathcal C_{\mathrm{br},v}$ are independent corrections.  The first is a
+Smith module $\mathcal C_{\mathrm{br},v}$ are independent corrections. The first is a
 defect of the graph pairing; the second is the failure of $A+W_0$ to be primitive in
-$W_1$.  Neither is coefficient torsion in $Q$.
+$W_1$. Neither is coefficient torsion in $Q$.
 
 The integral Jacquet--Langlands lattice is (1.4), after the non-Eisenstein localization and the identification of graph edges with a definite quaternionic class set. It is not the entire cohomology group $N$, and it is not an arbitrarily chosen stable lattice in a generic representation. This choice respects the warning already visible locally: transfer compares a distinguished multiplicity line or type lattice, not full fixed spaces whose dimensions can be different on the two inner forms.
 
@@ -215,13 +216,13 @@ We work in the following clean datum throughout, unless a section explicitly var
     prime-to-$\ell$ component/fine-cover descent group, and
     $H^1_{\mathrm{nc}}$ is the quotient by congruence-continuous characters.
 12. The superspecial node classification for the chosen PEL datum supplies the
-    enhanced groupoid equivalence (5.9a).  It retains the actual polarization data
+    enhanced groupoid equivalence (5.9a). It retains the actual polarization data
     and quasi-isogeny multiplier, the order action and determinant condition,
     prime-to-$v$ level, effective automorphisms, the actual incidence subgroup, the
     separate coefficient-flag representation, both oriented branches, geometric
     residue Frobenius, every two-legged away-from-$v$ Hecke span with multiplicity
-    and transpose, and component routing.  It also matches the graph pull--trace
-    pairing with the declared definite mass pairing.  The effective projective
+    and transpose, and component routing. It also matches the graph pull--trace
+    pairing with the declared definite mass pairing. The effective projective
     stabilizer orders and all descent degrees are units in $\mathcal O$. Theorem
     5.2 then supplies the formal coefficient-one linearization of the retained
     coefficient-flag representation. This is the
@@ -289,7 +290,7 @@ $$
 
 This is the elimination of the possible Jacquet--Langlands congruence index.
 
-The quotient filtration is not obtained by simply copying the two graph extremes.  It is
+The quotient filtration is not obtained by simply copying the two graph extremes. It is
 
 $$
 0\to X_{v,\mathfrak m}^\vee\to L_0\to
@@ -308,7 +309,7 @@ X_{v,\mathfrak m}\xrightarrow{q_\Gamma}X_{v,\mathfrak m}^\vee
 $$
 
 Its cokernel is an extension of $\mathcal C_{\mathrm{br},v}$ by the localized
-component group.  This correction does not change the generic support or the acting-order
+component group. This correction does not change the generic support or the acting-order
 equality, but it must be retained in reduction and level lowering.
 
 Finally, the Gram matrix
@@ -443,15 +444,15 @@ When the residue characteristic is two, unramified quadratic depth-zero data rem
 
 We use five established packages, each with its hypotheses retained.
 
-Book 80, *Local Jacquet--Langlands for Special and Dihedral Packets*, gives (2.5)--(2.7), the regular character sign, twist and contragredient compatibility, and saturated integral type lines. We use it only for selected packets and only with unit-valued coefficient data.
+Book 80, _Local Jacquet--Langlands for Special and Dihedral Packets_, gives (2.5)--(2.7), the regular character sign, twist and contragredient compatibility, and saturated integral type lines. We use it only for selected packets and only with unit-valued coefficient data.
 
-Book 85, *Hecke Algebras and Congruences*, says that the faithful image of a commuting Hecke family on a finite free $\mathcal O$-module is finite free over $\mathcal O$. Localization at a maximal ideal preserves faithfulness; perfect adjoint pairings localize; congruence modules are measured by Fitting ideals; and equality of generic branches alone does not imply equality of orders.
+Book 85, _Hecke Algebras and Congruences_, says that the faithful image of a commuting Hecke family on a finite free $\mathcal O$-module is finite free over $\mathcal O$. Localization at a maximal ideal preserves faithfulness; perfect adjoint pairings localize; congruence modules are measured by Fitting ideals; and equality of generic branches alone does not imply equality of orders.
 
-Book 104, *Global Jacquet--Langlands*, gives a rational bijection from selected noncharacter packets on the totally definite algebra to their split cuspidal packets, with identical good-place Hecke polynomials, multiplicities, rationality fields, central characters, and exact local components. Norm characters form an exceptional global block and are removed before claiming a cuspidal bijection. The global theorem does not itself identify integral lattices, nor do we use it as an unproved transfer theorem for the indefinite algebra $B$.
+Book 104, _Global Jacquet--Langlands_, gives a rational bijection from selected noncharacter packets on the totally definite algebra to their split cuspidal packets, with identical good-place Hecke polynomials, multiplicities, rationality fields, central characters, and exact local components. Norm characters form an exceptional global block and are removed before claiming a cuspidal bijection. The global theorem does not itself identify integral lattices, nor do we use it as an unproved transfer theorem for the indefinite algebra $B$.
 
-Book 125, *Automorphic Decomposition of Shimura-Curve $H^1$*, gives the characteristic-zero packet decomposition and rational semisimplicity for the actual one-split-place quaternionic curve, with component routing and level multiplicities retained. Applied at hyperspecial and Iwahori level, it identifies the generic old quotient packet by packet. It does not prove integral splitting or saturation.
+Book 125, _Automorphic Decomposition of Shimura-Curve $H^1$_, gives the characteristic-zero packet decomposition and rational semisimplicity for the actual one-split-place quaternionic curve, with component routing and level multiplicities retained. Applied at hyperspecial and Iwahori level, it identifies the generic old quotient packet by packet. It does not prove integral splitting or saturation.
 
-Book 139, *Ihara Theory and Saturated Degeneracy Maps on Shimura Curves*, computes the exact tree kernel.  Its congruence-continuous character part is Eisenstein, but residual injectivity is conditional on (1.5d).  Under that condition it gives saturation of the localized old image, the free quotient (1.2), perfect quotient--orthogonal duality, and the exact Gram matrix.  It also gives the corrected quotient filtration (1.9a), the Smith presentation
+Book 139, _Ihara Theory and Saturated Degeneracy Maps on Shimura Curves_, computes the exact tree kernel. Its congruence-continuous character part is Eisenstein, but residual injectivity is conditional on (1.5d). Under that condition it gives saturation of the localized old image, the free quotient (1.2), perfect quotient--orthogonal duality, and the exact Gram matrix. It also gives the corrected quotient filtration (1.9a), the Smith presentation
 
 $$
 \mathcal C_{\mathrm{br},v}
@@ -562,18 +563,16 @@ The next lemma will eliminate the apparent inner-form index.
 
 **Lemma 3.2 (common generic support gives a common image order).** Let $A$ be an $\mathcal O$-algebra acting on two finite free modules $L_1,L_2$. Assume
 
-$$
-\ker\bigl(A_E\to\operatorname{End}_E(L_{1,E})\bigr)
-=
+# $$\ker\bigl(A_E\to\operatorname{End}_E(L_{1,E})\bigr)
+
 \ker\bigl(A_E\to\operatorname{End}_E(L_{2,E})\bigr).
 \tag{3.7}
 $$
 
 Then
 
-$$
-\ker\bigl(A\to\operatorname{End}_{\mathcal O}(L_1)\bigr)
-=
+# $$\ker\bigl(A\to\operatorname{End}_{\mathcal O}(L_1)\bigr)
+
 \ker\bigl(A\to\operatorname{End}_{\mathcal O}(L_2)\bigr).
 \tag{3.8}
 $$
@@ -782,8 +781,8 @@ $$
 
 where $n_z$ is the thickness of the node on the neat model. In the original regular model $n_z=1$. Retaining $n_z$ makes the construction stable under ramified base change, when an edge is subdivided and the pairing is multiplied by the ramification index. After tame descent, restriction to $\Delta$-invariants produces the orbit and stabilizer factors of Section 6.4; formula (5.7) is not recomputed on a coarse graph with forgotten stabilizers.
 Here and below, however, a coefficient in an orbit basis is determined by the actual
-pull--trace normalization.  It is not obtained by inserting a reciprocal stabilizer into
-(5.7) by inspection.  Hypothesis 5.1(5) is exactly the assertion that this descended graph
+pull--trace normalization. It is not obtained by inserting a reciprocal stabilizer into
+(5.7) by inspection. Hypothesis 5.1(5) is exactly the assertion that this descended graph
 normalization matches the definite mass normalization.
 
 ### 5.3 The switched-algebra description of nodes
@@ -811,7 +810,7 @@ If a fixed central character is imposed, (5.8) is understood with its usual cent
 
 The correct source is a groupoid, not the orbit set (5.8). Let
 $\mathscr Z_{\mathscr D,v}^{\mathrm{enh}}$ be the groupoid of geometric nodes with all of
-their PEL structure.  Schematically an object is written
+their PEL structure. Schematically an object is written
 
 $$
 z=(A_0,A_1,\phi,\iota_\bullet,\lambda_\bullet,\eta^v,H_v;
@@ -822,39 +821,39 @@ This notation abbreviates the complete parahoric tuple of Book 122: the adjacent
 schemes and isogeny, both order actions and determinant labels, the actual polarizations with
 the scalar relation prescribed by the self-dual lattice chain (written
 $\phi^\vee\lambda_1\phi=p\lambda_0$ in Book 122), the full prime-to-$v$ level and
-central label, and the actual finite locally free incidence subgroup $H_v=\ker\phi$.  A
+central label, and the actual finite locally free incidence subgroup $H_v=\ker\phi$. A
 quasi-isogeny carries its similitude multiplier as part of the polarization datum; it is not
-silently replaced by an isogeny of unpolarized objects.  The symbols
+silently replaced by an isogeny of unpolarized objects. The symbols
 $(\beta_F,\beta_V)$ denote the two labeled formal branches. Morphisms are PEL isomorphisms
 carrying every displayed datum to the corresponding datum. Thus the automorphism group of a
 node is part of the classification.
 
 For comparison with the definite quotient, $\mathscr Z_{\mathscr D,v}^{\mathrm{enh}}$ is
 rigidified by precisely the ineffective rational-center subgroup of the chosen PEL
-presentation.  The unrigidified relation group and the removed central subgroup are retained
-as part of the enhancement.  At a center-detecting fine level this distinction is invisible;
+presentation. The unrigidified relation group and the removed central subgroup are retained
+as part of the enhancement. At a center-detecting fine level this distinction is invisible;
 at a central-character or coarse level it is essential.
 
 Write $\overline I_z=\operatorname{Aut}_{\mathrm{eff}}(z)$ and
 $e_z=|\overline I_z|$ for its finite effective automorphism group and order.
 
-There is a second finite object which must not be confused with $H_v$.  Let
+There is a second finite object which must not be confused with $H_v$. Let
 
 $$
 \operatorname{Fl}_v:\mathscr Z_{\mathscr D,v}^{\mathrm{enh}}
 \longrightarrow \mathsf{FinSet}
 $$
 
-be the coefficient-flag functor supplied by the chosen principal-tower presentation.  Its
+be the coefficient-flag functor supplied by the chosen principal-tower presentation. Its
 geometric fiber is the standard finite flag set $\mathbf P^1(k_v)$, with the actual
-stabilizer action coming from the rigidifying cover.  It is the finite set whose free module
-gives the permutation coefficient used in later type-enhanced applications.  It is **not** the geometric fiber of a
+stabilizer action coming from the rigidifying cover. It is the finite set whose free module
+gives the permutation coefficient used in later type-enhanced applications. It is **not** the geometric fiber of a
 degree-$q_v+1$ finite etale cover of the bad integral model, and at a superspecial node it is
 not the set of special-fiber subgroup schemes: those subgroups coalesce in the incidence
-model.  Retaining $H_v$ therefore does not by itself retain the representation
+model. Retaining $H_v$ therefore does not by itself retain the representation
 $\operatorname{Fl}_v$.
 
-Let $G^\dagger=(B^\dagger)^\times$ and $Z^\dagger=Z(G^\dagger)$.  A raw left--right relation from $g$ to $g'$ is a pair
+Let $G^\dagger=(B^\dagger)^\times$ and $Z^\dagger=Z(G^\dagger)$. A raw left--right relation from $g$ to $g'$ is a pair
 $(\gamma,u)$ with
 
 $$
@@ -865,12 +864,12 @@ g'=\gamma gu,
 u\in U^\dagger,
 $$
 
-where the right factor is composed oppositely.  This raw relation groupoid has an ineffective
+where the right factor is composed oppositely. This raw relation groupoid has an ineffective
 central kernel: pairs $(a,a^{-1})$ with $a\in Z^\dagger(F)\cap U^\dagger$ act trivially.
 Consequently it is wrong to call its raw automorphism group the finite projective
-stabilizer.  Let $\mathscr X_{\mathscr D,v}^\dagger$ denote the effective rigidification by
+stabilizer. Let $\mathscr X_{\mathscr D,v}^\dagger$ denote the effective rigidification by
 this central kernel, with the exact central-character relation group used instead when a
-nontrivial central transformation law is imposed.  For a representative $g$, put
+nontrivial central transformation law is imposed. For a representative $g$, put
 
 $$
 I_g=G^\dagger(F)\cap gU^\dagger g^{-1},
@@ -883,20 +882,20 @@ e_g=|\overline I_g|.
 \tag{5.8a}
 $$
 
-The finite group $\overline I_g$ is the effective projective automorphism group.  In the
+The finite group $\overline I_g$ is the effective projective automorphism group. In the
 central-character version one uses the corresponding finite effective image of the full
 relation group; replacing it by an unspecified quotient of $I_g$ would lose the central
 action on coefficients.
 
 The target is additionally equipped with the reduced-norm similitude character and the exact
-polarization, center, and component labels dictated by $\mathscr D$.  The chosen integral
+polarization, center, and component labels dictated by $\mathscr D$. The chosen integral
 lattice presentation at $v$ supplies an actual incidence object, a coefficient-flag functor
-with its $\overline I_g$-action, and the ordered branch functor.  These are asserted
+with its $\overline I_g$-action, and the ordered branch functor. These are asserted
 decorations of the target; they cannot be reconstructed from the bare orbit set (5.8) or from
-the abstract algebra $B^\dagger$.  Both enhanced groupoids also carry geometric residue
-Frobenius, branch reversal, and the component-routing functor.  For each away-from-$v$ double
+the abstract algebra $B^\dagger$. Both enhanced groupoids also carry geometric residue
+Frobenius, branch reversal, and the component-routing functor. For each away-from-$v$ double
 coset one must moreover compare the **intermediate groupoid and both legs** of the Hecke span,
-including local degrees and scheme-theoretic multiplicities.  An endpoint bijection which
+including local degrees and scheme-theoretic multiplicities. An endpoint bijection which
 merely commutes with the resulting operator is weaker and does not determine its transpose or
 adjunction.
 
@@ -916,17 +915,17 @@ with the following specified enhancements.
    the quasi-isogeny similitude multiplier, the full prime-to-$v$ level, the actual incidence
    subgroup $H_v$, and the central and component labels.
 2. Before effective rigidification it identifies the relevant PEL relation groups and their
-   ineffective central subgroups.  Hence after rigidification it identifies all effective
+   ineffective central subgroups. Hence after rigidification it identifies all effective
    automorphism groups and $e_z=e_{\Psi(z)}$.
 3. It is accompanied by natural isomorphisms of the separate coefficient-flag functors and
-   of the ordered two-branch functors.  The latter retain node thickness and the sign under
+   of the ordered two-branch functors. The latter retain node thickness and the sign under
    branch reversal.
-4. It intertwines geometric residue Frobenius and component routing.  For every
+4. It intertwines geometric residue Frobenius and component routing. For every
    away-from-$v$ Hecke double coset, it extends to an equivalence of the intermediate
    correspondence groupoids making both legs $2$-commute, with their multiplicities,
    compositions, and transpose spans.
 5. On the fixed regular neat cover it sends an oriented node generator to the characteristic
-   function of the corresponding definite class with coefficient one.  Under descent it
+   function of the corresponding definite class with coefficient one. Under descent it
    matches the actual graph pull--trace pairing with the declared definite mass pairing,
    including the chosen normalization of every stabilizer orbit.
 
@@ -942,7 +941,7 @@ $$
 
 At nonneat level, (5.9a) is required equivariantly on one fixed center-detecting neat normal
 cover and is descended by exact $\Delta$-invariants when the effective deck-group order is a
-unit in $\mathcal O$.  The nominal deck group, its ineffective central kernel, and each point
+unit in $\mathcal O$. The nominal deck group, its ineffective central kernel, and each point
 stabilizer are retained separately. No regularity assertion for a coarse quotient with fixed
 points is inferred.
 
@@ -963,23 +962,23 @@ switched adelic lattice is realized by a node, identifies all arrows and central
 matches all the enhancements in Hypothesis 5.1.
 
 There is a simple invariance test showing that the missing assertion cannot be recovered from
-the existing local models.  Replace the prime-to-$v$ neat level by a smaller normal neat level,
+the existing local models. Replace the prime-to-$v$ neat level by a smaller normal neat level,
 or change the selected central component orbit while leaving the active $v$-adic lattice chain
-fixed.  The semistable local theory gives the same completed incidence chart, the same
+fixed. The semistable local theory gives the same completed incidence chart, the same
 height-two Dieudonne local
-model, and the same two branch germs at every lifted node.  The global node groupoid, its
+model, and the same two branch germs at every lifted node. The global node groupoid, its
 automorphism groups after descent, its component routing, and the double quotient (5.8) all
-change with that prime-to-$v$ datum.  Hence completed local rings, even together with the
+change with that prime-to-$v$ datum. Hence completed local rings, even together with the
 oriented branch calculation and the local coefficient-flag action, cannot determine essential
 surjectivity or full faithfulness of (5.9a).
 
-The pairing clause is also not a consequence of a groupoid equivalence alone.  On a coarse
+The pairing clause is also not a consequence of a groupoid equivalence alone. On a coarse
 semistable quotient an effective stabilizer can appear as node thickness, whereas a definite
-mass convention normally contains a reciprocal projective stabilizer.  Pullback, trace, and
-the choice of orbit basis decide how those factors are transported.  They are units in the
-clean range, but being units does not make two pairings literally equal.  Thus clause 5 is a
+mass convention normally contains a reciprocal projective stabilizer. Pullback, trace, and
+the choice of orbit basis decide how those factors are transported. They are units in the
+clean range, but being units does not make two pairings literally equal. Thus clause 5 is a
 normalization assertion in the missing theorem, not a formal consequence of equality of
-stabilizer orders.  At neat level the ambiguity disappears: $e_z=1$ and the regular node has
+stabilizer orders. At neat level the ambiguity disappears: $e_z=1$ and the regular node has
 thickness one.
 
 The flag-dependent consequences can nevertheless be proved once the global equivalence is
@@ -1027,7 +1026,7 @@ Then $\Psi_{\mathscr D,v}$ has the following consequences.
    $$
    where $x=\Psi(z)$ and Hypothesis 5.1 asserts
    $w_z^{\mathrm{gr}}=w_x^{\mathrm{mass}}$ in the chosen pull--trace normalization. On the
-   clean regular neat model both are the node thickness $n_z=1$.  Thus the theorem transports
+   clean regular neat model both are the node thickness $n_z=1$. Thus the theorem transports
    the already matched unit weights; it does not derive their equality from the orbit set.
 
 These conclusions hold after finite flat coefficient change and, on the fixed neat cover,
@@ -1058,7 +1057,7 @@ are units in $R$, invariants are exact. In a nontrivial central-character block 
 argument is made with the finite effective image of the central relation group, not by
 discarding its transformation law. Naturality for the two branch functors, Frobenius,
 routing, and the full Hecke spans gives the remaining compatibilities; reversing a branch
-reverses the oriented edge on both sides.  Equality of the two weighted forms is exactly the
+reverses the oriented edge on both sides. Equality of the two weighted forms is exactly the
 pull--trace normalization in Hypothesis 5.1(5). Finite flat coefficient change preserves the
 displayed constructions, and exact descent on the fixed neat cover preserves their kernels,
 cokernels, and pairings. $\square$
@@ -1069,7 +1068,7 @@ nonisomorphic $H$-actions can have the same object, automorphism group, and stab
 The coefficient-flag functor and its natural isomorphism must therefore occur in (5.9a).
 
 **Formal reduction from the superspecial classification.** A node is the point where the two
-rank-$q_v$ subgroup directions in the active height-two group coalesce.  The active
+rank-$q_v$ subgroup directions in the active height-two group coalesce. The active
 quaternionic adjoint factor of its PEL quasi-isogeny group is expected to change local
 invariant at $v$ and at the unique split real place, producing the adjoint inner form attached
 to $B^\dagger$. Prime-to-$v$ level structures should then turn
@@ -1144,7 +1143,7 @@ $I_z\simeq G_{\mathscr D}^\dagger$ for each already given node does not prove th
 in one PEL quasi-isogeny class.
 Nor does it prove that every admissible adelic lattice is realized by an abelian variety with
 the required integral order action, polarization type, determinant condition, and incidence
-subgroup.  The first missing theorem must simultaneously give:
+subgroup. The first missing theorem must simultaneously give:
 
 1. essential surjectivity of the basic PEL quasi-isogeny class onto the node groupoid;
 2. full faithfulness of admissible PEL quasi-isogenies and their integral stabilizers after
@@ -1204,8 +1203,8 @@ T_w^*=S_w^{-1}T_w.
 $$
 
 Under Hypothesis 5.1(4)--(5), the node pairing and the definite mass pairing have the same
-adjoint because the two full spans and their normalized weights have been matched.  Equality
-of endpoint orbit sets would not prove this assertion.  The span-level hypothesis prevents a
+adjoint because the two full spans and their normalized weights have been matched. Equality
+of endpoint orbit sets would not prove this assertion. The span-level hypothesis prevents a
 hidden central inverse in the Hecke-order comparison.
 
 ## 6. Graph lattices and definite forms
@@ -1329,9 +1328,9 @@ where $w_z^{\mathrm{gr}}$ is the coefficient produced by the actual graph pull--
 normalization on the fixed cover. At neat level the sum is over nodes and
 $w_z^{\mathrm{gr}}=n_z=1$ in the regular model. Under tame descent this notation means the
 pairing obtained on the fixed neat cover and then transported through exact
-$\Delta$-invariants with the declared trace normalization.  There is no universal license to
+$\Delta$-invariants with the declared trace normalization. There is no universal license to
 replace $w_z^{\mathrm{gr}}$ by $n_z/e_z$: on a coarse model the same stabilizer may instead
-appear in node thickness.  Hypothesis 5.1(5) identifies the actual coefficient with the
+appear in node thickness. Hypothesis 5.1(5) identifies the actual coefficient with the
 definite mass coefficient $w_{\Psi(z)}^{\mathrm{mass}}$. Merely knowing the underlying sets
 or even their stabilizer orders would not determine this normalization.
 
@@ -1618,10 +1617,8 @@ where $V_\Pi$ denotes the cohomological realization of the packet, with its one-
 
 The finite module $\mathcal C_{\mathrm{br},v}$ disappears after tensoring with $E$, so (8.2) has generic graded pieces $X_v^\vee$ and $X_v(-1)$. Book 125 makes the retained characteristic-zero Hecke action semisimple, hence the filtration splits as a Hecke module. The generic graph pairing is perfect and Hecke-adjoint; on the adjoint-stable block the actions on $X_v$ and $X_v^\vee$ therefore have the same kernel. It follows directly that
 
-$$
-\ker\bigl(\mathbb T^{\Sigma,\mathrm{abs}}_E
-\to\operatorname{End}_E(Q_{\mathfrak m,E})\bigr)
-=
+# $$\ker\bigl(\mathbb T^{\Sigma,\mathrm{abs}}_E\to\operatorname{End}_E(Q_{\mathfrak m,E})\bigr)
+
 \ker\bigl(\mathbb T^{\Sigma,\mathrm{abs}}_E
 \to\operatorname{End}_E(X_{v,\mathfrak m,E})\bigr).
 \tag{8.6}
@@ -2263,13 +2260,13 @@ are rank one over the coefficient field. Intersecting with the integral fixed mo
 
 The graph-node construction with coefficients in $\Lambda_v^\dagger$ is valid only when the type sheaf extends over the full incidence model, pull and norm preserve it, every coarse-descent stabilizer order is a unit, and a type-specific residual Ihara theorem makes the selected old image primitive. The edge module is then a vector-valued definite function module. A primitive extreme-residue theorem is also needed to obtain the typed graph filtration.
 
-For the quotient/augmentation flag pair this ledger has a useful sharp boundary.  If
+For the quotient/augmentation flag pair this ledger has a useful sharp boundary. If
 $q_v+1$ is a unit in the coefficient ring, the idempotent
 $(q_v+1)^{-1}u\circ\operatorname{aug}$ makes both type lattices direct summands of the
-permutation row.  After the actual parahoric extension has been supplied, Shapiro and the
+permutation row. After the actual parahoric extension has been supplied, Shapiro and the
 constant Ihara theorem then give type-Ihara and the normalization filtration on that summand.
 Only the nonbanal range $q_v\equiv-1\pmod\ell$ retains the quotient-new snake-lemma
-obstruction and the primitive filtered-cofiber obstruction.  The
+obstruction and the primitive filtered-cofiber obstruction. The
 augmentation companion pull is already a subrow of the permutation pull even in that range;
 duality turns the unresolved primary pull into a companion norm question and does not confuse
 the two.
@@ -2282,19 +2279,19 @@ degeneracy maps were already finite locally free. Book 22,
 Theorem 3.2 computes a supplied tame annular coefficient by
 $[M\xrightarrow{T-1}M]$, with residue Galois, invariant-stable pull--trace (in particular the
 expansion-one case used here), and normalization homotopy-fiber totalization, while a global
-ray character twists this complex diagonally.  Proposition 9.3 of Book 122 proves
+ray character twists this complex diagonally. Proposition 9.3 of Book 122 proves
 $({\rm DLB}_1)$, and (9.29k)--(9.29l) prove
-every active finite-depth normalization and intermediate invariant ring.  Equations
+every active finite-depth normalization and intermediate invariant ring. Equations
 (9.29r)--(9.29x) compute the raw higher branch, inertia, inseparable-residue, node-annular, and
-boundary-stabilizer ledger.  Equations (9.29b)--(9.29i) and (9.29n)--(9.29q) take exact wild unipotent invariants rather than calling the cover tame and
+boundary-stabilizer ledger. Equations (9.29b)--(9.29i) and (9.29n)--(9.29q) take exact wild unipotent invariants rather than calling the cover tame and
 prove the extreme lines, flag routing, constant-extreme-line generization, multiplicity one, and
-the level-one residue-prime Hecke route.  Book 122, Proposition 9.4 promotes routing,
+the level-one residue-prime Hecke route. Book 122, Proposition 9.4 promotes routing,
 multiplicity and expansion one, and Hecke/transpose compatibility to the actual common factor.
 Proposition 9.5 computes the invariant branch fields, Cartier multiplicities and active group
 filtrations, and reduces the normalized spectator/ray compositum to its actual Kummer
 factorization and intersection field. Propositions 9.6--9.7 factor the completed endpoints
 from actual valuations and leading coefficients and give the exact Milnor-tube formalism;
-Proposition 9.8 proves $({\rm RGC}_v)$ on component-routed and contracted terms.  For the
+Proposition 9.8 proves $({\rm RGC}_v)$ on component-routed and contracted terms. For the
 permutation and quotient/augmentation rows used in later applications, Book 122, Proposition 9.9 supplies the
 strict ray field, vertical unit, endpoint factors, Frobenius orbits, and active/ray
 intersection; Proposition 9.10 computes the completed tubes, actions, and generization maps;
@@ -2366,7 +2363,7 @@ The basic one-prime semistable theorem includes the unramified special family at
 Ramified special twists, unramified quadratic depth-zero packets, and tame positive-depth
 dihedral packets are included only in the conditional type-enhanced variant of Section 13.1,
 imposing Book 122's general $({\rm PNS}_v)_{\rm gen}$, pull--norm, unit-order coarse descent, and
-the applicable type-Ihara and primitive-residue inputs.  For the quotient/augmentation pair,
+the applicable type-Ihara and primitive-residue inputs. For the quotient/augmentation pair,
 the latter two are automatic in the $q_v+1$-unit range and reduce to explicit nonbanal maps
 otherwise; no such deduction is asserted here for arbitrary compact types. A later typed
 application may derive the resulting generic-residue kernel equality from that filtration and
@@ -2491,18 +2488,18 @@ If both companion factors are units and all the derived comparison, transversali
 
 For repeated use it is helpful to record the exact failure at each boundary.
 
-| situation | conclusion that can fail | conclusion that remains |
-|---|---|---|
-| Eisenstein localization | congruence-character kernel vanishing | exact tree description of the kernel |
-| failure of abelian Ihara (1.5d) | residual injectivity, saturation, free $Q$, raising, and order comparison through $Q$ | ambient graph, node, and branch-map calculations |
-| $\ell$-divisible stabilizer | exact descent from a neat cover | comparison on the neat cover |
-| $q_v\equiv1\pmod\ell$ | ordered old-root projector | conditional saturation of the full two-map image and $W_v$ signs |
-| $q_v\equiv-1\pmod\ell$ | one-factor determinant formula | full Gram and branch Smith matrices and conditional order comparison |
-| nonzero $\Phi[\varpi]_{\mathfrak n}$ | clean level lowering from zero monodromy | ambient graph discriminant sequence |
-| nonzero $\mathcal C_{\mathrm{br},v}[\varpi]_{\mathfrak n}$ | injection of bottom graph monodromy after reduction and clean lowering | exact quotient filtration and extension (8.3a) |
-| non-adjoint-stable block | bottom-to-top self-dual argument | duality with the adjoint block |
-| nonunit type label | existence of a stable finite lattice | characteristic-zero local transfer |
-| primitive wild type | selected local comparison | no assertion beyond the proved selected range |
+| situation                                                  | conclusion that can fail                                                              | conclusion that remains                                              |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| Eisenstein localization                                    | congruence-character kernel vanishing                                                 | exact tree description of the kernel                                 |
+| failure of abelian Ihara (1.5d)                            | residual injectivity, saturation, free $Q$, raising, and order comparison through $Q$ | ambient graph, node, and branch-map calculations                     |
+| $\ell$-divisible stabilizer                                | exact descent from a neat cover                                                       | comparison on the neat cover                                         |
+| $q_v\equiv1\pmod\ell$                                      | ordered old-root projector                                                            | conditional saturation of the full two-map image and $W_v$ signs     |
+| $q_v\equiv-1\pmod\ell$                                     | one-factor determinant formula                                                        | full Gram and branch Smith matrices and conditional order comparison |
+| nonzero $\Phi[\varpi]_{\mathfrak n}$                       | clean level lowering from zero monodromy                                              | ambient graph discriminant sequence                                  |
+| nonzero $\mathcal C_{\mathrm{br},v}[\varpi]_{\mathfrak n}$ | injection of bottom graph monodromy after reduction and clean lowering                | exact quotient filtration and extension (8.3a)                       |
+| non-adjoint-stable block                                   | bottom-to-top self-dual argument                                                      | duality with the adjoint block                                       |
+| nonunit type label                                         | existence of a stable finite lattice                                                  | characteristic-zero local transfer                                   |
+| primitive wild type                                        | selected local comparison                                                             | no assertion beyond the proved selected range                        |
 
 The table distinguishes failure of a labelled refinement from failure of the full conditional lattice theorem. Once (1.5d), node uniformization, and the Book 125 source condition hold, $q_v\equiv\pm1$ does not invalidate full-map saturation or away-from-$v$ acting-order equality; it invalidates a simpler signed corollary.
 
@@ -2541,13 +2538,13 @@ We now collect the book's results in one reusable form.
    $$
    produces a nonzero residual $v$-new packet of sign $\varepsilon$ and hence, after coefficient extension, a characteristic-zero raised packet on both inner forms;
 10. on a primitive rank-one branch with unit companion factor, the Gram Smith ideal is
-   $$
+    $$
    (q_v+1-\varepsilon a_v);
    $$
-   it is the lattice or augmented Hecke congruence ideal only under the additional unimodularity and congruence-functional hypotheses of Section 11.4;
+    it is the lattice or augmented Hecke congruence ideal only under the additional unimodularity and congruence-functional hypotheses of Section 11.4;
 11. a nonzero adjoint-stable residual new block with zero monodromy lowers to hyperspecial level when both
-   $\Phi[\varpi]_{\mathfrak n}$ and
-   $\mathcal C_{\mathrm{br},v}[\varpi]_{\mathfrak n}$ vanish and the stated normalization and nonexceptional hypotheses hold.
+    $\Phi[\varpi]_{\mathfrak n}$ and
+    $\mathcal C_{\mathrm{br},v}[\varpi]_{\mathfrak n}$ vanish and the stated normalization and nonexceptional hypotheses hold.
 
 Every assertion is compatible with unit-valued twists, contragredients, finite flat coefficient extension, operators in the declared common algebra, and signed residue Galois action. Type-enhanced special or selected dihedral variants are included only under every additional hypothesis listed in Section 13.1. Several-prime variants are only the conditional iterations or derived-Tor-independent totalizations of Chapter 14.
 
@@ -2572,14 +2569,14 @@ For clause 11, assume the lower localization is zero. The normalization contribu
 
 The logical sources and retained hypotheses are as follows.
 
-| source package | result used | retained boundary | new conclusion here |
-|---|---|---|---|
-| Book 80: local Jacquet--Langlands | selected character identity, conductors, factors, integral type lines | special and tame-dihedral only; unit-valued labels; banal hypotheses when residual irreducibility is used | type-compatible switch at $v$ |
-| Book 85: Hecke algebras and congruences | faithful finite image orders, localization, pairings, Fitting ideals, branch language | no automatic reducedness, Hecke freeness, Gorensteinness, or Gram-to-augmentation identification | common-kernel order equality; exact scalar ideals only under Section 11.4's extra hypotheses |
-| Book 104: global Jacquet--Langlands | selected noncharacter packet bijection from the totally definite algebra, multiplicity, and good Hecke data | totally real algebraic weight; norm characters removed; rational comparison only | split interpretation of the graph packets after geometric occurrence is proved |
-| Book 125: automorphic decomposition of Shimura-curve $H^1$ | packet decomposition and rational semisimplicity on the actual one-split-place curve at both levels | full component routing or a separating projector; characteristic zero only | generic old/new support on $Q_E$ |
-| Book 139: conditional saturated Ihara theory | exact tree kernel, conditional primitive old image and free quotient, Gram matrix, graph discriminant, branch Smith correction | proper clean curves; constant coefficients; $v\nmid\ell$; neat or tame descent; non-Eisenstein localization plus the independent abelian Ihara condition (1.5d) | uses its corrected filtration in raising, lowering, and order comparison |
-| node uniformization | superspecial nodes identified with the switched definite class set, including the complete PEL tuple, effective relation groups, the separate coefficient flag, both branches, Frobenius, full Hecke spans, routing, pull--trace/mass weights, and coefficient-one scale | the enhanced PEL groupoid equivalence (5.9a), an explicit external hypothesis for the chosen datum; neither the local node chart nor rational Jacquet--Langlands implies it | integral graph--definite lattice map and formal flag-linearized transport after the normalization has been supplied |
+| source package                                             | result used                                                                                                                                                                                                                                                              | retained boundary                                                                                                                                                           | new conclusion here                                                                                                 |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Book 80: local Jacquet--Langlands                          | selected character identity, conductors, factors, integral type lines                                                                                                                                                                                                    | special and tame-dihedral only; unit-valued labels; banal hypotheses when residual irreducibility is used                                                                   | type-compatible switch at $v$                                                                                       |
+| Book 85: Hecke algebras and congruences                    | faithful finite image orders, localization, pairings, Fitting ideals, branch language                                                                                                                                                                                    | no automatic reducedness, Hecke freeness, Gorensteinness, or Gram-to-augmentation identification                                                                            | common-kernel order equality; exact scalar ideals only under Section 11.4's extra hypotheses                        |
+| Book 104: global Jacquet--Langlands                        | selected noncharacter packet bijection from the totally definite algebra, multiplicity, and good Hecke data                                                                                                                                                              | totally real algebraic weight; norm characters removed; rational comparison only                                                                                            | split interpretation of the graph packets after geometric occurrence is proved                                      |
+| Book 125: automorphic decomposition of Shimura-curve $H^1$ | packet decomposition and rational semisimplicity on the actual one-split-place curve at both levels                                                                                                                                                                      | full component routing or a separating projector; characteristic zero only                                                                                                  | generic old/new support on $Q_E$                                                                                    |
+| Book 139: conditional saturated Ihara theory               | exact tree kernel, conditional primitive old image and free quotient, Gram matrix, graph discriminant, branch Smith correction                                                                                                                                           | proper clean curves; constant coefficients; $v\nmid\ell$; neat or tame descent; non-Eisenstein localization plus the independent abelian Ihara condition (1.5d)             | uses its corrected filtration in raising, lowering, and order comparison                                            |
+| node uniformization                                        | superspecial nodes identified with the switched definite class set, including the complete PEL tuple, effective relation groups, the separate coefficient flag, both branches, Frobenius, full Hecke spans, routing, pull--trace/mass weights, and coefficient-one scale | the enhanced PEL groupoid equivalence (5.9a), an explicit external hypothesis for the chosen datum; neither the local node chart nor rational Jacquet--Langlands implies it | integral graph--definite lattice map and formal flag-linearized transport after the normalization has been supplied |
 
 The generic-support proof additionally uses Book 125, while the conditional typed interface in
 Chapter 13 uses Book 22's ramified node complex, Book 122's normalized tower reduction, and
@@ -2597,20 +2594,20 @@ several-prime discussion into a theorem.
 
 The normalization chain is equally rigid:
 
-| datum | convention |
-|---|---|
-| good Hecke operator | unnormalized right double coset |
-| good polynomial | $1-T_wX+q_wS_wX^2$ |
-| adjoint | $T_w^*=S_w^{-1}T_w$ |
-| class transfer | equal characteristic polynomial |
-| orbital transfer | geometric sign $+1$ |
-| local spectral transfer | one sign $-1$ at each ramified place |
-| global sign | product $+1$ over the even ramification set |
-| special conductor | $1$ if the twist is unramified, $2a(\mu)$ otherwise |
-| old Gram matrix | diagonal $q_v+1$, off-diagonal $T_v$ and its transpose |
-| signed factor | $q_v+1-\varepsilon a_v$ |
-| ambient graph monodromy | weighted edge pairing $q_\Gamma:X_v\to X_v^\vee$ |
-| quotient monodromy | $X_v\xrightarrow{q_\Gamma}X_v^\vee\to L_0$, with cokernel extension (8.3a) |
+| datum                   | convention                                                                 |
+| ----------------------- | -------------------------------------------------------------------------- |
+| good Hecke operator     | unnormalized right double coset                                            |
+| good polynomial         | $1-T_wX+q_wS_wX^2$                                                         |
+| adjoint                 | $T_w^*=S_w^{-1}T_w$                                                        |
+| class transfer          | equal characteristic polynomial                                            |
+| orbital transfer        | geometric sign $+1$                                                        |
+| local spectral transfer | one sign $-1$ at each ramified place                                       |
+| global sign             | product $+1$ over the even ramification set                                |
+| special conductor       | $1$ if the twist is unramified, $2a(\mu)$ otherwise                        |
+| old Gram matrix         | diagonal $q_v+1$, off-diagonal $T_v$ and its transpose                     |
+| signed factor           | $q_v+1-\varepsilon a_v$                                                    |
+| ambient graph monodromy | weighted edge pairing $q_\Gamma:X_v\to X_v^\vee$                           |
+| quotient monodromy      | $X_v\xrightarrow{q_\Gamma}X_v^\vee\to L_0$, with cokernel extension (8.3a) |
 
 Changing a row requires changing every dependent formula. In particular, normalized Satake operators would rescale (10.1), a left-coset convention would transpose the off-diagonal entries, and arithmetic rather than geometric Frobenius would invert unramified labels.
 
@@ -2619,10 +2616,10 @@ Changing a row requires changing every dependent formula. In particular, normali
 The theorem proves a complete **conditional** one-prime integral level-change statement for
 the clean compact weight-two Shimura curves and their switched totally definite inner forms.
 Its unresolved conditions are the abelian Ihara vanishing which Book 139 leaves open and the
-datum-specific enhanced node classification.  The latter includes essential surjectivity and
+datum-specific enhanced node classification. The latter includes essential surjectivity and
 full faithfulness, polarization and multiplier, integral incidence data, effective central
 relation groups, the separate coefficient-flag action, both branches, Frobenius, full Hecke
-spans, routing, and the coefficient-one pull--trace/mass normalization.  The earlier results
+spans, routing, and the coefficient-one pull--trace/mass normalization. The earlier results
 summarized above do not prove that package. Under Book 125's stated
 component-routing source condition, generic support is proved in Section 8.3 from its
 semisimple decomposition and the corrected filtration. It covers the full two-map Iwahori

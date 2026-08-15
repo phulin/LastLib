@@ -1494,25 +1494,25 @@ It contributes in total degree $d$. Relative to connected orthogonal groups the 
 
 The following statements all refer to the same object and remove the remaining ambiguity.
 
-| Feature | Convention and value |
-|---|---|
-| Group | Full $\mathrm{GL}_2(\mathbf R)$ |
-| Maximal compact | $K=\mathrm O(2)$; $K^0=\mathrm{SO}(2)$ |
-| Rotation | $r(\theta)=\left(\begin{smallmatrix}\cos\theta&\sin\theta\\-\sin\theta&\cos\theta\end{smallmatrix}\right)$ |
-| Weight-two module | $D_2=\operatorname{Ind}_{G^+}^G D_2^+$ |
-| Restriction to $G^+$ | $D_2^+\oplus D_2^-$ |
-| Minimal rotation weights | $+2$ and $-2$ |
-| Central character | Trivial |
-| Central derivative | $0$ |
-| Casimir | $\Omega=H^2+2H+4FE$, eigenvalue $0$ |
-| Harish--Chandra parameter | $\{\pm1\}$ |
-| Weil absolute value | $|z|_W=z\bar z$ |
-| Weil parameter | $\operatorname{Ind}_{W_{\mathbf C}}^{W_{\mathbf R}}(z/|z|)$ |
-| Elliptic character | $-1$ on regular elliptic elements |
-| Formal degree | $1/(4\pi)$ when $\mathrm{PSO}(2)$ has volume one |
-| Coefficient system | Trivial in the unitary weight-two normalization |
-| Local cohomological degree | $1$ after quotienting the positive split center |
-| Parallel degree over $[F:\mathbf Q]=d$ | $d$ |
+| Feature                                | Convention and value                                                                                       |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Group                                  | Full $\mathrm{GL}_2(\mathbf R)$                                                                            |
+| Maximal compact                        | $K=\mathrm O(2)$; $K^0=\mathrm{SO}(2)$                                                                     |
+| Rotation                               | $r(\theta)=\left(\begin{smallmatrix}\cos\theta&\sin\theta\\-\sin\theta&\cos\theta\end{smallmatrix}\right)$ |
+| Weight-two module                      | $D_2=\operatorname{Ind}_{G^+}^G D_2^+$                                                                     |
+| Restriction to $G^+$                   | $D_2^+\oplus D_2^-$                                                                                        |
+| Minimal rotation weights               | $+2$ and $-2$                                                                                              |
+| Central character                      | Trivial                                                                                                    |
+| Central derivative                     | $0$                                                                                                        |
+| Casimir                                | $\Omega=H^2+2H+4FE$, eigenvalue $0$                                                                        |
+| Harish--Chandra parameter              | $\{\pm1\}$                                                                                                 |
+| Weil absolute value                    | $                                                                                                          |
+| Weil parameter                         | $\operatorname{Ind}_{W_{\mathbf C}}^{W_{\mathbf R}}(z/                                                     |
+| Elliptic character                     | $-1$ on regular elliptic elements                                                                          |
+| Formal degree                          | $1/(4\pi)$ when $\mathrm{PSO}(2)$ has volume one                                                           |
+| Coefficient system                     | Trivial in the unitary weight-two normalization                                                            |
+| Local cohomological degree             | $1$ after quotienting the positive split center                                                            |
+| Parallel degree over $[F:\mathbf Q]=d$ | $d$                                                                                                        |
 
 If the Haar measure is halved so that all of $\mathrm{PO}(2)$ has volume one, the formal degree doubles. If the coefficient system is placed in dual form, the sign of the central exponent in the cohomology criterion reverses. If $|\det|^s$ is introduced, the scalar center becomes $|\cdot|^{2s}$ and the central derivative becomes $2s$. None of these translations changes the underlying compact-weight statement.
 

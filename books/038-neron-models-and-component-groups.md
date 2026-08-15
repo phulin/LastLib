@@ -67,8 +67,9 @@
     - [Exact global bookkeeping](#133-exact-global-bookkeeping)
     - [The reusable comparison package](#134-the-reusable-comparison-package)
 14. [Conclusion](#14-conclusion)
-   - [The mathematical package](#141-the-mathematical-package)
-   - [The boundary with monodromy theory](#142-the-boundary-with-monodromy-theory)
+
+- [The mathematical package](#141-the-mathematical-package)
+- [The boundary with monodromy theory](#142-the-boundary-with-monodromy-theory)
 
 ## 1. The integral extension problem
 
@@ -719,11 +720,11 @@ Conversely, the generic identity $\mathcal U_K=E\to E$ extends by the Néron pro
 
 The three familiar cases now have a uniform form over an algebraic closure of $k$:
 
-| reduction | $\mathcal E_k^0$ | geometric component group |
-|---|---|---|
-| good | elliptic curve | $0$ |
-| multiplicative | $\mathbf G_m$ | cyclic, determined by the polygon |
-| additive | $\mathbf G_a$ | finite, determined by the fiber configuration |
+| reduction      | $\mathcal E_k^0$ | geometric component group                     |
+| -------------- | ---------------- | --------------------------------------------- |
+| good           | elliptic curve   | $0$                                           |
+| multiplicative | $\mathbf G_m$    | cyclic, determined by the polygon             |
+| additive       | $\mathbf G_a$    | finite, determined by the fiber configuration |
 
 For split multiplicative reduction with an $n$-gon, $\Phi_E(k^s)=\mathbf Z/n\mathbf Z$. For nonsplit multiplicative reduction, the same geometric cyclic group carries the sign action arising from reversal of the polygon; the torus is the corresponding nonsplit one-dimensional torus. The rational component group is the invariant subgroup, not automatically all of $\mathbf Z/n\mathbf Z$.
 

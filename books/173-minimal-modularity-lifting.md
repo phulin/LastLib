@@ -102,7 +102,7 @@ $\ell$, equality of reduced quotients, or equality of dimensions would all
 leave room for congruence information or nilpotents invisible to
 characteristic-zero points.
 
-The word *minimal* is equally important. It does not mean merely that the
+The word _minimal_ is equally important. It does not mean merely that the
 Artin conductor is numerically smallest. It means that a represented local
 condition has been chosen at every place: finite flat of weights $\{0,1\}$
 above $\ell$, and an exact unramified, fixed-type, or named special component
@@ -152,8 +152,8 @@ $R=\mathbb T$ and is not used to establish that equality.
 
 ### 1.3 The exact theorem
 
-We now state the result in the form proved in this volume. The phrase *clean
-minimal datum* is unpacked completely in Chapters 2 and 4.
+We now state the result in the form proved in this volume. The phrase _clean
+minimal datum_ is unpacked completely in Chapters 2 and 4.
 
 **Theorem 1.1 (minimal modularity lifting).** Let $F$ be totally real, let
 $\ell\geq7$, and let $(\mathcal O,\varpi,k)$ be the ring of integers,
@@ -438,9 +438,9 @@ package.
 ### 7.4 Exact module augmentation and the Hecke image
 
 Book 172, Section 6.3 identifies the augmented module and gives the natural
-surjection onto the augmented acting image.  The faithful acting-order
+surjection onto the augmented acting image. The faithful acting-order
 identification is obtained only after patched faithfulness, in Book 172,
-Section 11.2.  Module coinvariants alone would not suffice.
+Section 11.2. Module coinvariants alone would not suffice.
 
 ## 8. The finite system and its patch
 

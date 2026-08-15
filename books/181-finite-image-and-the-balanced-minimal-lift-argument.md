@@ -165,7 +165,7 @@ of the abstract criterion.
 
 **Theorem 1.2 (Frey-range primitive lift and automorphy).** Suppose a normalized
 primitive Fermat solution of prime exponent $p\geq7$ is given, and let $\bar\rho$ be its Frey
-representation.  There are a totally real field $F^{\mathrm{tar}}/\mathbf Q$ supplied by the
+representation. There are a totally real field $F^{\mathrm{tar}}/\mathbf Q$ supplied by the
 target preparation of Book 178, a finite extension $E'/\mathbf Q_p$ with integer ring
 $\mathcal O'$ and residue field $k'$, and a lift
 
@@ -183,8 +183,8 @@ with the following properties.
 3. At $2$ it has the chosen sign and intrinsic line, and its rank-one monodromy $N'$ is
    primitive:
    $N'\bmod\mathfrak m_{\mathcal O'}=\bar N\otimes_{\mathbf F_p}k'\ne0$ and
-   $F'N'(F')^{-1}=2N'$.  Its Artin conductor exponent is one.
-4. The primes $2$ and $p$ split completely in $F^{\mathrm{tar}}$.  Both
+   $F'N'(F')^{-1}=2N'$. Its Artin conductor exponent is one.
+4. The primes $2$ and $p$ split completely in $F^{\mathrm{tar}}$. Both
    $\bar\rho|_{G_{F^{\mathrm{tar}}}}$ and
    $\bar\rho|_{G_{F^{\mathrm{tar}}(\zeta_p)}}$ remain absolutely irreducible, and
    $\rho'|_{G_{F^{\mathrm{tar}}}}$ is automorphic through the finite action constructed in
@@ -421,12 +421,12 @@ $$
 $$
 
 The added $1$ is the coefficient-prime local correction in the global Euler formula. Local
-liftability says that the obstruction map for this *constrained functor* is zero for every
+liftability says that the obstruction map for this _constrained functor_ is zero for every
 small extension. It does not imply $H^2(\mathbf Q_\ell,M)=0$; the ambient group may be
 nonzero. The supported obstruction theory must therefore retain the ambient group while
 remembering that the selected local object can itself be lifted.
 
-Two different uses of the word *flat* must remain separate. Section 2.3 concerns compatible
+Two different uses of the word _flat_ must remain separate. Section 2.3 concerns compatible
 finite-flat models of the Galois representation on all Artinian quotients. Section 8.2 will
 prove that the global universal ring is flat as an $\mathcal O$-module. Neither assertion
 implies the other.
@@ -748,7 +748,7 @@ $$
 $$
 
 A functional $\lambda\in\mathcal R^*$ pushes the relation kernel out to a principal
-small extension and contracts $\Omega_R$. Thus the covariant map goes from the *dual*
+small extension and contracts $\Omega_R$. Thus the covariant map goes from the _dual_
 conormal space to obstructions:
 
 $$
@@ -961,10 +961,10 @@ Within the exact-minimal formulation there is no second restricted-finiteness hy
 Proposition 4.1 derives the stronger whole-ring statement (4.2) from
 $(\mathrm{Seed}_{\mathrm{SP}})$. Finiteness only of
 an unspecified set of points of $(R_F^{\mathrm{SP}})_{\mathrm{red}}[1/\varpi]$ would not
-suffice, because vertical directions can survive in the special fibre.  But if a canonical
+suffice, because vertical directions can survive in the special fibre. But if a canonical
 map from $R_F^{\mathrm{SP}}$ to a finite $\mathcal O$-algebra has nilpotent kernel, then
 noetherianity and the filtration by powers of that kernel make the whole ring
-$\mathcal O$-finite.  Thus a reduced finite-level recovery theorem is sufficient here only
+$\mathcal O$-finite. Thus a reduced finite-level recovery theorem is sufficient here only
 when it retains that actual nilpotent-kernel control.
 
 There is an important distinction in that last sentence. Generic reducedness is one of the
@@ -983,23 +983,23 @@ Frobenius sign, monodromy relation, determinant, and their schematic closure. Th
 what lets the map in Chapter 5 classify the restriction of the universal SP representation,
 rather than a representation on some neighboring local component.
 
-The hypotheses and conclusions in this invocation should not be interchanged.  Generic
+The hypotheses and conclusions in this invocation should not be interchanged. Generic
 reducedness of the relevant **Hecke** algebras and faithfulness of the named automorphic action
 are explicit clauses of $(\mathrm{Seed}_{\mathrm{SP}})$ because Books 171--172 use them to
-construct the comparison and the patched action.  Equality
+construct the comparison and the patched action. Equality
 $R_F^{\mathrm{SP}}=\mathbb T_F^{\mathrm{SP}}$, scheme-theoretic faithfulness of the deformation
 action, and finite freeness of the whole represented deformation ring are conclusions of the
-minimal patching theorem.  Chapters 5--10 use only that last whole-ring finiteness consequence;
+minimal patching theorem. Chapters 5--10 use only that last whole-ring finiteness consequence;
 they assume neither reducedness of $R_F^{\mathrm{SP}}$ nor a prior point of its generic fibre.
 
 ### 4.3 Target preparation proves the Frey case
 
 The upper packet constructed in Book 178 is special at a finite set of non-dyadic places where
-the minimal problem is unramified.  Its exact special local component is too narrow for the
+the minimal problem is unramified. Its exact special local component is too narrow for the
 argument here: an arbitrary unramified point need not retain the upper packet's special line
-or Frobenius-incidence equation.  The correct common ambient problem is instead broad
-tame-unipotent.  At every active place it remembers only that inertia has characteristic
-polynomial $(X-1)^2$.  It contains both the upper special point and the unramified minimal
+or Frobenius-incidence equation. The correct common ambient problem is instead broad
+tame-unipotent. At every active place it remembers only that inertia has characteristic
+polynomial $(X-1)^2$. It contains both the upper special point and the unramified minimal
 quotient, giving a canonical map
 
 $$
@@ -1009,10 +1009,10 @@ R_{F^{\mathrm{tar}}}^{\mathrm{uni}}
 \tag{4.3}
 $$
 
-The important point is the order in which this map is used.  The upper packet creates a
-primitive vector in the common definite localization.  Source patching then proves finiteness
-of the entire broad ring.  Only after that whole-ring statement has been established does one
-pass through (4.3) to the minimal special fibre.  No characteristic-zero point of the minimal
+The important point is the order in which this map is used. The upper packet creates a
+primitive vector in the common definite localization. Source patching then proves finiteness
+of the entire broad ring. Only after that whole-ring statement has been established does one
+pass through (4.3) to the minimal special fibre. No characteristic-zero point of the minimal
 quotient occurs in this construction.
 
 **Theorem 4.2 (restricted finiteness and automorphy for the Frey problem).** Let $\bar\rho$ be the
@@ -1042,8 +1042,8 @@ $R_{F^{\mathrm{tar}}}^{\mathrm{SP}}$ factors through the finite Hecke action on
 the broad ring.
 
 **Proof.** Book 178, Theorem 12.1, proves that the map from the broad ring in (4.3) to its
-actual finite definite Hecke action has nilpotent kernel.  Its proof invokes the prepared
-target application of Book 176, Theorem 1.1K.  Book 176, Corollary 1.1L, then gives both
+actual finite definite Hecke action has nilpotent kernel. Its proof invokes the prepared
+target application of Book 176, Theorem 1.1K. Book 176, Corollary 1.1L, then gives both
 finiteness of the signed-special quotient's whole special fibre and factorization of every
 characteristic-zero point of that quotient through the same Hecke action. Book 178,
 Theorem 12.2, proves these conclusions together with complete splitting and the two
@@ -1055,7 +1055,7 @@ minimal ring enters the argument.
 $\square$
 
 The stronger seed condition remains mathematically useful because Proposition 4.1 gives a
-second sufficient condition for the abstract criterion.  It is unnecessary for Theorem 1.2.
+second sufficient condition for the abstract criterion. It is unnecessary for Theorem 1.2.
 Other level-changing constructions address stronger exact-minimal comparison questions, but
 they play no role in the finite-fibre route or in the pointwise automorphy proved here.
 
@@ -1106,8 +1106,8 @@ After a strict conjugacy, $\rho_A|_{G_F}$ is obtained by scalar extension from t
 restricted representation over $B$. Equivalently, after choosing a representative of the
 universal strict-equivalence class, all its matrices lie in $\operatorname{GL}_2(B)$.
 
-The argument needs no characteristic-zero point over $F$.  It uses only the map of represented
-rings and the finiteness of its source modulo $\varpi$.  On the preferred Frey route, the
+The argument needs no characteristic-zero point over $F$. It uses only the map of represented
+rings and the finiteness of its source modulo $\varpi$. On the preferred Frey route, the
 additional automorphic action supplied by Theorem 4.2 is left unused until the
 normalized horizontal point has been constructed.
 
@@ -1477,12 +1477,12 @@ DVR.
 
 The finite map $\mathcal O\hookrightarrow R$ is integral, but integrality by itself does **not**
 force the contraction of every minimal prime to be minimal: a finite injective algebra can have
-a vertical minimal component.  What rules that out here is the coefficient flatness proved in
-Section 8.2.  If $\mathfrak p$ is a minimal prime of $R$ and
+a vertical minimal component. What rules that out here is the coefficient flatness proved in
+Section 8.2. If $\mathfrak p$ is a minimal prime of $R$ and
 $\mathfrak p\cap\mathcal O\ne(0)$, then, because $\mathcal O$ is a DVR, the contraction contains
-a power of $\varpi$.  Primality then gives $\varpi\in\mathfrak p$.  But every minimal prime of a
+a power of $\varpi$. Primality then gives $\varpi\in\mathfrak p$. But every minimal prime of a
 Noetherian ring is associated, while (8.8) says that multiplication by $\varpi$ on $R$ is
-injective.  Hence $\varpi$ belongs to no minimal prime, a contradiction.  Therefore
+injective. Hence $\varpi$ belongs to no minimal prime, a contradiction. Therefore
 
 $$
 \mathfrak p\cap\mathcal O=(0).
@@ -1703,7 +1703,7 @@ $$
 $$
 
 where $\mathcal O$ is chosen large enough to contain the target coefficient data constructed in
-Book 178.  This finite scalar extension preserves every residual condition. Proposition 2.1
+Book 178. This finite scalar extension preserves every residual condition. Proposition 2.1
 supplies the cyclotomic absolute irreducibility needed for the automorphic theorem directly
 from the dyadic SP datum.
 
@@ -1740,7 +1740,7 @@ conversion.
 
 ### 11.2 The unconditional FLT-range theorem
 
-We now prove Theorem 1.2.  This is the point at which the abstract finite-fibre criterion is
+We now prove Theorem 1.2. This is the point at which the abstract finite-fibre criterion is
 joined to the arithmetic construction of the preceding books.
 
 **Theorem 11.1 (primitive SP lift and automorphy).** Given the normalized primitive
@@ -1748,39 +1748,39 @@ Fermat solution and Frey representation of Section 11.1, there are
 $F^{\mathrm{tar}}$, $\mathcal O'$, and $\rho'$ satisfying all four conclusions of Theorem
 1.2.
 
-**Proof strategy.** The target source patch is completed before the minimal point exists.  Its
+**Proof strategy.** The target source patch is completed before the minimal point exists. Its
 finite signed-special fibre is then fed into the finite-image and balance argument of this
 book. Once normalization has produced the point, the previously constructed target action is
 evaluated at its restriction.
 
 **Proof.** Book 164, Theorem 1.1, gives every residual and local hypothesis of Theorem 1.1,
-as checked in Section 11.1.  Book 178, Sections 12.1--12.3, prepare the actual target active
+as checked in Section 11.1. Book 178, Sections 12.1--12.3, prepare the actual target active
 set, construct the upper primitive definite localization, and apply Book 176, Theorem 1.1K.
 Book 178, Theorem 12.1, proves whole broad-ring finiteness before any minimal point is chosen;
 Book 176, Corollary 1.1L, gives the finite signed-special fibre and pointwise automorphy.
 Book 178, Theorem 12.2, proves those conclusions together with complete splitting at $2p$
-and the two residual irreducibility statements.  Thus Theorem 4.2 supplies
+and the two residual irreducibility statements. Thus Theorem 4.2 supplies
 $(\mathrm{SF}_{\mathrm{SP}})$ unconditionally relative to the Frey contradiction datum.
 
-Apply Theorem 1.1.  Chapters 5--6 make the universal scalar fibre finite, Chapters 7--8 make
+Apply Theorem 1.1. Chapters 5--6 make the universal scalar fibre finite, Chapters 7--8 make
 the universal ring a finite free one-dimensional complete intersection, and Chapters 9--10
-choose and normalize a horizontal component.  The resulting $\rho'$ has cyclotomic
+choose and normalize a horizontal component. The resulting $\rho'$ has cyclotomic
 determinant, is unramified outside $\{2,p\}$, and is absolutely irreducible in characteristic
-zero.  Equations (10.3)--(10.4) give its primitive dyadic SP datum, including the intrinsic
-line, chosen sign, nonzero residual monodromy, and conductor exponent one.  Equation (10.5)
-gives the compatible coefficient-linear finite-flat models at $p$.  Proposition 2.1 gives
+zero. Equations (10.3)--(10.4) give its primitive dyadic SP datum, including the intrinsic
+line, chosen sign, nonzero residual monodromy, and conductor exponent one. Equation (10.5)
+gives the compatible coefficient-linear finite-flat models at $p$. Proposition 2.1 gives
 cyclotomic residual absolute irreducibility.
 
 Because $2$ and $p$ split completely in $F^{\mathrm{tar}}$, restriction of $\rho'$ satisfies
 the signed-special deformation problem represented by
-$R_{F^{\mathrm{tar}}}^{\mathrm{SP}}$.  It is therefore a characteristic-zero point of the
+$R_{F^{\mathrm{tar}}}^{\mathrm{SP}}$. It is therefore a characteristic-zero point of the
 quotient (4.3). The pointwise clause of Book 178, Theorem 12.2, now makes
 $\rho'|_{G_{F^{\mathrm{tar}}}}$ automorphic through the finite action of Book 178, Theorem
-12.1.  This last invocation occurs strictly after the point has been constructed; the same
+12.1. This last invocation occurs strictly after the point has been constructed; the same
 point played no role in proving (4.4). $\square$
 
 The stronger seed of Section 4.1 remains an alternative sufficient condition for the abstract
-Theorem 1.1.  Results about exact minimal $R=\mathbb T$ comparisons or other level-changing
+Theorem 1.1. Results about exact minimal $R=\mathbb T$ comparisons or other level-changing
 routes lie outside the present construction and are unnecessary for Theorem 11.1.
 
 ### 11.3 Exceptional characteristics
@@ -1825,7 +1825,7 @@ Frey-range theorem.
 ### 12.2 The chosen lift for the changing-prime argument
 
 Fix the horizontal component selected in Chapter 9 and the resulting representation $\rho'$.
-Its data are not merely generic.  On the chosen $\mathcal O'$-lattice one has
+Its data are not merely generic. On the chosen $\mathcal O'$-lattice one has
 
 $$
 \det\rho'=\chi_p,
@@ -1834,11 +1834,11 @@ $$
 \tag{12.1}
 $$
 
-and $\rho'$ is absolutely irreducible over $\operatorname {Frac}(\mathcal O')$.  Its residual
+and $\rho'$ is absolutely irreducible over $\operatorname {Frac}(\mathcal O')$. Its residual
 representation is $\bar\rho\otimes_k k'$, whose restriction to the cyclotomic subgroup remains
-absolutely irreducible.  At $p$, every quotient
+absolutely irreducible. At $p$, every quotient
 $\rho'\bmod\mathfrak m_{\mathcal O'}^n$ has the selected coefficient-linear finite-flat model,
-compatibly in $n$.  At $2$, the same lattice carries a primitive rank-one operator $N'$ with
+compatibly in $n$. At $2$, the same lattice carries a primitive rank-one operator $N'$ with
 
 $$
 N'\bmod\mathfrak m_{\mathcal O'}=\bar N\otimes_k k'\ne0,

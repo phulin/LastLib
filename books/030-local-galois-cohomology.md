@@ -2245,11 +2245,11 @@ This protocol separates group-theoretic input from arithmetic input and makes ev
 
 For a nonarchimedean local field $K$ with residue characteristic $p$:
 
-| coefficients | cohomological dimension | low-degree finiteness |
-|---|---:|---|
-| finite $\ell$-primary, $\ell\ne p$ | $2$ | finite in degrees $0,1,2$ |
-| finite $p$-primary, $K/\mathbf Q_p$ | $2$ | finite in degrees $0,1,2$ |
-| finite $p$-primary, $\operatorname{char}K=p$ | $1$ | $H^1$ can be infinite |
+| coefficients                                 | cohomological dimension | low-degree finiteness     |
+| -------------------------------------------- | ----------------------: | ------------------------- |
+| finite $\ell$-primary, $\ell\ne p$           |                     $2$ | finite in degrees $0,1,2$ |
+| finite $p$-primary, $K/\mathbf Q_p$          |                     $2$ | finite in degrees $0,1,2$ |
+| finite $p$-primary, $\operatorname{char}K=p$ |                     $1$ | $H^1$ can be infinite     |
 
 In every row $H^i=0$ for $i>2$; in the last row it already vanishes for $i>1$. For lattices and vector spaces, inverse-limit finiteness follows in the first two rows but not automatically in the last.
 
@@ -2285,12 +2285,12 @@ No duality theorem is needed for these identities.
 
 For $M=F(\chi)$, $\ell\ne p$, with unramified Frobenius eigenvalue $\alpha$:
 
-| condition | $h^0$ | $h^1$ | $h^2$ |
-|---|---:|---:|---:|
-| $\alpha\ne1,q$ | $0$ | $0$ | $0$ |
-| $\alpha=1\ne q$ | $1$ | $1$ | $0$ |
-| $\alpha=q\ne1$ | $0$ | $1$ | $1$ |
-| $\alpha=1=q$ | $1$ | $2$ | $1$ |
+| condition       | $h^0$ | $h^1$ | $h^2$ |
+| --------------- | ----: | ----: | ----: |
+| $\alpha\ne1,q$  |   $0$ |   $0$ |   $0$ |
+| $\alpha=1\ne q$ |   $1$ |   $1$ |   $0$ |
+| $\alpha=q\ne1$  |   $0$ |   $1$ |   $1$ |
+| $\alpha=1=q$    |   $1$ |   $2$ |   $1$ |
 
 A nontrivially ramified one-dimensional $F$-character has zero cohomology in all degrees. The table uses arithmetic Frobenius and therefore the obstruction eigenvalue is $q$.
 

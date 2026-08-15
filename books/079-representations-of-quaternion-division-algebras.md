@@ -703,9 +703,8 @@ $$
 
 Unramified twists preserve $c_D$, $\ell_D$, and $a_D$. Ramified twists need not satisfy a formula involving only $a_D(\pi)$ and $a(\chi)$. Leading characters on a congruence layer can cancel. For a one-dimensional representation the exact formula is
 
-$$
-a_D((\mu\circ\operatorname{Nrd})\otimes\chi)
-=
+# $$a_D((\mu\circ\operatorname{Nrd})\otimes\chi)
+
 \begin{cases}
 1,&a(\mu\chi)=0,\\
 2a(\mu\chi),&a(\mu\chi)>0.
@@ -2209,13 +2208,13 @@ At $p=2$, the statement “ramified quadratic means discriminant exponent one”
 
 The following table collects intrinsic data without asserting a correspondence with another group.
 
-| family | parameter | dimension | $a_D$ | central character | contragredient |
-|---|---|---:|---:|---|---|
-| special norm character | $\mu:K^\times\to C^\times$ | $1$ | $1$ if $a(\mu)=0$, otherwise $2a(\mu)$ | $\mu^2$ | $\mu^{-1}\circ\operatorname{Nrd}$ |
-| level zero | regular $\theta$ on unramified $L^\times$, $a_L(\theta)=1$ | $2$ | $2$ | direct: $\theta|_{K^\times}$; selected: $\theta|_{K^\times}\omega_{L/K}$ | inverse normalized datum |
-| tame unramified positive depth | normalized minimal admissible $(L/K,\theta,[\Lambda_\theta])$, $a_L(\theta)=n\ge2$ | $2q^{n-1}$ | $2n$ | direct: $\theta|_{K^\times}$; selected: $\theta|_{K^\times}\omega_{L/K}$ | dual normalized datum |
-| tame ramified | normalized minimal admissible $(E/K,\theta,[\Lambda_\theta])$, $a_E(\theta)=n\ge2$ even | $(q+1)q^{(n-2)/2}$ | $n+1$ | direct: $\theta|_{K^\times}$; selected: $\theta|_{K^\times}\omega_{E/K}$ | dual normalized datum |
-| wild/general | Clifford datum $(m,\rho,G_\rho,[\alpha],\eta)$ | orbit size $\times\dim\rho\times\dim\eta$ | from minimal killed $U_D^m$; $m+1$ for noncharacters | prescribed $\omega$ | dual Clifford datum |
+| family                         | parameter                                                                               |                                 dimension |                                                $a_D$ | central character   | contragredient                    |
+| ------------------------------ | --------------------------------------------------------------------------------------- | ----------------------------------------: | ---------------------------------------------------: | ------------------- | --------------------------------- |
+| special norm character         | $\mu:K^\times\to C^\times$                                                              |                                       $1$ |               $1$ if $a(\mu)=0$, otherwise $2a(\mu)$ | $\mu^2$             | $\mu^{-1}\circ\operatorname{Nrd}$ |
+| level zero                     | regular $\theta$ on unramified $L^\times$, $a_L(\theta)=1$                              |                                       $2$ |                                                  $2$ | direct: $\theta     | _{K^\times}$; selected: $\theta   |
+| tame unramified positive depth | normalized minimal admissible $(L/K,\theta,[\Lambda_\theta])$, $a_L(\theta)=n\ge2$      |                                $2q^{n-1}$ |                                                 $2n$ | direct: $\theta     | _{K^\times}$; selected: $\theta   |
+| tame ramified                  | normalized minimal admissible $(E/K,\theta,[\Lambda_\theta])$, $a_E(\theta)=n\ge2$ even |                        $(q+1)q^{(n-2)/2}$ |                                                $n+1$ | direct: $\theta     | _{K^\times}$; selected: $\theta   |
+| wild/general                   | Clifford datum $(m,\rho,G_\rho,[\alpha],\eta)$                                          | orbit size $\times\dim\rho\times\dim\eta$ | from minimal killed $U_D^m$; $m+1$ for noncharacters | prescribed $\omega$ | dual Clifford datum               |
 
 For every higher-dimensional row,
 

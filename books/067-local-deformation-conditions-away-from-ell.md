@@ -59,29 +59,38 @@
    - [What fails in characteristic two](#93-what-fails-in-characteristic-two)
    - [Determinant fibers inside constrained problems](#94-determinant-fibers-inside-constrained-problems)
 10. [Obstructions, dimensions, and exceptional loci](#10-obstructions-dimensions-and-exceptional-loci)
-   - [Ambient obstruction spaces](#101-ambient-obstruction-spaces)
-   - [Euler characteristic and the top-degree calculation](#102-euler-characteristic-and-the-top-degree-calculation)
-   - [Unramified classes and relation obstructions](#103-unramified-classes-and-relation-obstructions)
-   - [Why smoothness can jump](#104-why-smoothness-can-jump)
-   - [Trace-zero dual coefficients](#105-trace-zero-dual-coefficients)
-   - [Three obstruction calculations](#106-three-obstruction-calculations)
+
+- [Ambient obstruction spaces](#101-ambient-obstruction-spaces)
+- [Euler characteristic and the top-degree calculation](#102-euler-characteristic-and-the-top-degree-calculation)
+- [Unramified classes and relation obstructions](#103-unramified-classes-and-relation-obstructions)
+- [Why smoothness can jump](#104-why-smoothness-can-jump)
+- [Trace-zero dual coefficients](#105-trace-zero-dual-coefficients)
+- [Three obstruction calculations](#106-three-obstruction-calculations)
+
 11. [Conductors and exact minimality](#11-conductors-and-exact-minimality)
-   - [What conductor constancy really requires](#111-what-conductor-constancy-really-requires)
-   - [Finite type and tame unipotent preservation](#112-finite-type-and-tame-unipotent-preservation)
-   - [Counterexamples to naive semicontinuity claims](#113-counterexamples-to-naive-semicontinuity-claims)
-   - [Twists and higher ramification data](#114-twists-and-higher-ramification-data)
+
+- [What conductor constancy really requires](#111-what-conductor-constancy-really-requires)
+- [Finite type and tame unipotent preservation](#112-finite-type-and-tame-unipotent-preservation)
+- [Counterexamples to naive semicontinuity claims](#113-counterexamples-to-naive-semicontinuity-claims)
+- [Twists and higher ramification data](#114-twists-and-higher-ramification-data)
+
 12. [Functoriality](#12-functoriality)
-   - [Extension of coefficient fields](#121-extension-of-coefficient-fields)
-   - [Changing and forgetting frames](#122-changing-and-forgetting-frames)
-   - [Unramified base change of local fields](#123-unramified-base-change-of-local-fields)
-   - [What changes under ramified base change](#124-what-changes-under-ramified-base-change)
+
+- [Extension of coefficient fields](#121-extension-of-coefficient-fields)
+- [Changing and forgetting frames](#122-changing-and-forgetting-frames)
+- [Unramified base change of local fields](#123-unramified-base-change-of-local-fields)
+- [What changes under ramified base change](#124-what-changes-under-ramified-base-change)
+
 13. [A menu for global deformation problems](#13-a-menu-for-global-deformation-problems)
-   - [Representable conditions and tangent spaces](#131-representable-conditions-and-tangent-spaces)
-   - [Two-dimensional selection table](#132-two-dimensional-selection-table)
-   - [The decision procedure](#133-the-decision-procedure)
-   - [The local package theorem](#134-the-local-package-theorem)
+
+- [Representable conditions and tangent spaces](#131-representable-conditions-and-tangent-spaces)
+- [Two-dimensional selection table](#132-two-dimensional-selection-table)
+- [The decision procedure](#133-the-decision-procedure)
+- [The local package theorem](#134-the-local-package-theorem)
+
 14. [Conclusion](#14-conclusion)
-   - [Local equations with global consequences](#141-local-equations-with-global-consequences)
+
+- [Local equations with global consequences](#141-local-equations-with-global-consequences)
 
 ## 1. The local design problem
 
@@ -1952,16 +1961,16 @@ Corestriction does not define an inverse operation on representations. Even on t
 
 The following table records only conclusions proved under explicit hypotheses. Here $M=\operatorname{ad}\bar\rho$, $c=h^0_K(M)$, and “framed dimension” means relative tangent dimension over the coefficient base.
 
-| Condition | Residual hypothesis | Safe represented object | Unframed tangent | Smoothness statement |
-|---|---|---|---|---|
-| Unramified | $\bar\rho(I_K)=1$ | framed quotient | $H^1_{\mathrm{ur}}(K,M)$, dimension $c$ | framed smooth of dimension $d^2$ |
-| Unramified, fixed $\delta$ | above and $\delta|_I=1$ | framed quotient | kernel of trace on $H^1_{\mathrm{ur}}$ | framed smooth of dimension $d^2-1$ |
-| Unramified, cyclic Frobenius | $\bar F$ cyclic | unframed ring | dimension $d$ | smooth of dimension $d$ |
-| Same, fixed determinant | cyclic $\bar F$ | unframed ring | dimension $d-1$ | smooth of dimension $d-1$ |
-| Fixed finite type $\theta$ | $|H|$ prime to $\ell$ and compatible integral $\theta$ | framed quotient; unframed with descent | $H^1_{\mathrm{ur}}(K,M)$, dimension $c$ | framed smooth of dimension $d^2$; fixed determinant gives $d^2-1$ when the centralizer trace is onto |
-| Full tame | wild action killed | framed matrix quotient | $H^1(C^\bullet_{\mathrm{tame}})$ | smooth if $d^1$ is surjective |
-| Minimal unipotent | nonzero residual rank-one $\bar N$, fixed scalar type | framed quotient; unframed under scalar descent | derivative kernel modulo conjugacy | if $d=2$, $\ell\ne2$, and $q\ne1$: framed dimensions $4$, or $3$ with fixed determinant; unframed dimensions $1$, or $0$ |
-| Closed special | trivial residual inertia, ratio $q\ne1$, fixed diagonal characters | line-enhanced framed quotient | special extension line, dimension $1$ | framed smooth of dimension $3$; variable $\psi$ adds one; includes the $N=0$ locus |
+| Condition                    | Residual hypothesis                                                | Safe represented object                        | Unframed tangent                                   | Smoothness statement                                                                                                     |
+| ---------------------------- | ------------------------------------------------------------------ | ---------------------------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Unramified                   | $\bar\rho(I_K)=1$                                                  | framed quotient                                | $H^1_{\mathrm{ur}}(K,M)$, dimension $c$            | framed smooth of dimension $d^2$                                                                                         |
+| Unramified, fixed $\delta$   | above and $\delta                                                  | _I=1$                                          | framed quotient                                    | kernel of trace on $H^1_{\mathrm{ur}}$                                                                                   |
+| Unramified, cyclic Frobenius | $\bar F$ cyclic                                                    | unframed ring                                  | dimension $d$                                      | smooth of dimension $d$                                                                                                  |
+| Same, fixed determinant      | cyclic $\bar F$                                                    | unframed ring                                  | dimension $d-1$                                    | smooth of dimension $d-1$                                                                                                |
+| Fixed finite type $\theta$   | $                                                                  | H                                              | $ prime to $\ell$ and compatible integral $\theta$ | framed quotient; unframed with descent                                                                                   |
+| Full tame                    | wild action killed                                                 | framed matrix quotient                         | $H^1(C^\bullet_{\mathrm{tame}})$                   | smooth if $d^1$ is surjective                                                                                            |
+| Minimal unipotent            | nonzero residual rank-one $\bar N$, fixed scalar type              | framed quotient; unframed under scalar descent | derivative kernel modulo conjugacy                 | if $d=2$, $\ell\ne2$, and $q\ne1$: framed dimensions $4$, or $3$ with fixed determinant; unframed dimensions $1$, or $0$ |
+| Closed special               | trivial residual inertia, ratio $q\ne1$, fixed diagonal characters | line-enhanced framed quotient                  | special extension line, dimension $1$              | framed smooth of dimension $3$; variable $\psi$ adds one; includes the $N=0$ locus                                       |
 
 For every row, fixed determinant means intersection with the kernel of the determinant derivative. When $\ell\nmid d$, one may replace $M$ by $M^0$ in the standard cohomological formulas. When $\ell\mid d$, use the trace-kernel and dual-quotient formulations instead.
 
@@ -1973,13 +1982,13 @@ The menu deliberately does not list “all lifts of the same conductor.” Witho
 
 For later two-dimensional applications, the residual inertia matrix gives a quick first classification.
 
-| Residual inertial shape after a rigid scalar twist | Intended arithmetic behavior | Condition |
-|---|---|---|
-| $1$ | no new ramification | unramified |
-| $\operatorname{diag}(\bar\eta_1,\bar\eta_2)$, prime-to-$\ell$ finite | preserve finite semisimple ramification | fixed inertial type |
-| $1+\bar N$, $\bar N\ne0$, $\bar N^2=0$ | preserve existing multiplicative ramification | minimal unipotent/special |
-| $1$ but Frobenius eigenvalue ratio $q$ | allow a characteristic-zero multiplicative component | closed line-enhanced special condition, not minimal unramified |
-| scalar with no distinguished line | preserve ramification only | framed intrinsic condition; do not impose a line without adding it as data |
+| Residual inertial shape after a rigid scalar twist                   | Intended arithmetic behavior                         | Condition                                                                  |
+| -------------------------------------------------------------------- | ---------------------------------------------------- | -------------------------------------------------------------------------- |
+| $1$                                                                  | no new ramification                                  | unramified                                                                 |
+| $\operatorname{diag}(\bar\eta_1,\bar\eta_2)$, prime-to-$\ell$ finite | preserve finite semisimple ramification              | fixed inertial type                                                        |
+| $1+\bar N$, $\bar N\ne0$, $\bar N^2=0$                               | preserve existing multiplicative ramification        | minimal unipotent/special                                                  |
+| $1$ but Frobenius eigenvalue ratio $q$                               | allow a characteristic-zero multiplicative component | closed line-enhanced special condition, not minimal unramified             |
+| scalar with no distinguished line                                    | preserve ramification only                           | framed intrinsic condition; do not impose a line without adding it as data |
 
 The full residual representation, not inertia alone, then decides representability and dimension. A nonscalar Frobenius permits cyclic-matrix unframed coordinates. A scalar Frobenius calls for framing. Distinct diagonal characters make an enhanced line unique; coincident characters do not. Eigenvalue ratios $q$ and $q^{-1}$ identify the two possible special extension orientations.
 

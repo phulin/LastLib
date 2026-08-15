@@ -3,65 +3,66 @@
 ## Contents
 
 [1. Degeneration as an action](#1-degeneration-as-an-action)
-   - [1.1 The missing information in the special fiber](#11-the-missing-information-in-the-special-fiber)
-   - [1.2 Conventions and normalizations](#12-conventions-and-normalizations)
-   - [1.3 Strictly semistable curves](#13-strictly-semistable-curves)
-[2. The nearby-cycle construction](#2-the-nearby-cycle-construction)
-   - [2.1 The oriented fiber site](#21-the-oriented-fiber-site)
-   - [2.2 Nearby and vanishing cycles](#22-nearby-and-vanishing-cycles)
-   - [2.3 Stalks, proper comparison, and base change](#23-stalks-proper-comparison-and-base-change)
-   - [2.4 Duality and functoriality](#24-duality-and-functoriality)
-   - [2.5 Convergence of the nearby-cycle spectral sequence](#25-convergence-of-the-nearby-cycle-spectral-sequence)
-   - [2.6 Inertia invariants and iterated spectral sequences](#26-inertia-invariants-and-iterated-spectral-sequences)
-   - [2.7 A specialization checklist](#27-a-specialization-checklist)
-[3. The semistable local calculation](#3-the-semistable-local-calculation)
-   - [3.1 The punctured normal-crossings chart](#31-the-punctured-normal-crossings-chart)
-   - [3.2 The exterior-algebra theorem](#32-the-exterior-algebra-theorem)
-   - [3.3 Curves: smooth points and nodes](#33-curves-smooth-points-and-nodes)
-   - [3.4 What fails outside strict semistability](#34-what-fails-outside-strict-semistability)
-   - [3.5 Tame ramified coefficients at a strict node](#35-tame-ramified-coefficients-at-a-strict-node)
-   - [3.6 Finite wild image before the tame complex](#36-finite-wild-image-before-the-tame-complex)
-[4. Inertia: tame, wild, and finite parts](#4-inertia-tame-wild-and-finite-parts)
-   - [4.1 The tame character](#41-the-tame-character)
-   - [4.2 Unipotence in a strict semistable model](#42-unipotence-in-a-strict-semistable-model)
-   - [4.3 Descent from a semistable extension](#43-descent-from-a-semistable-extension)
-   - [4.4 Invariant cycles](#44-invariant-cycles)
-[5. The monodromy operator and its filtration](#5-the-monodromy-operator-and-its-filtration)
-   - [5.1 Logarithm of tame inertia](#51-logarithm-of-tame-inertia)
-   - [5.2 The canonical filtration of a nilpotent operator](#52-the-canonical-filtration-of-a-nilpotent-operator)
-   - [5.3 Centers, twists, and Frobenius](#53-centers-twists-and-frobenius)
-   - [5.4 Integral qualifications](#54-integral-qualifications)
-[6. The weight spectral sequence](#6-the-weight-spectral-sequence)
-   - [6.1 Strata and the incidence operators](#61-strata-and-the-incidence-operators)
-   - [6.2 The semistable curve formula](#62-the-semistable-curve-formula)
-   - [6.3 Curves on the first page](#63-curves-on-the-first-page)
-   - [6.4 Degeneration and the weight qualification](#64-degeneration-and-the-weight-qualification)
-[7. Semistable curves](#7-semistable-curves)
-   - [7.1 The three graded pieces of first cohomology](#71-the-three-graded-pieces-of-first-cohomology)
-   - [7.2 The specialization exact sequence](#72-the-specialization-exact-sequence)
-   - [7.3 The graph monodromy pairing](#73-the-graph-monodromy-pairing)
-   - [7.4 Model calculations](#74-model-calculations)
-[8. Picard--Lefschetz theory for curves](#8-picard--lefschetz-theory-for-curves)
-   - [8.1 Thimbles and vanishing classes](#81-thimbles-and-vanishing-classes)
-   - [8.2 The transvection formula](#82-the-transvection-formula)
-   - [8.3 Several nodes and relations](#83-several-nodes-and-relations)
-   - [8.4 Separating and nonseparating nodes](#84-separating-and-nonseparating-nodes)
-[9. Component pairings and geometric correspondences](#9-component-pairings-and-geometric-correspondences)
-   - [9.1 Restriction and Gysin as adjoints](#91-restriction-and-gysin-as-adjoints)
-   - [9.2 The curve component group](#92-the-curve-component-group)
-   - [9.3 Pull--push actions](#93-pull--push-actions)
-[10. Conductors and local type](#10-conductors-and-local-type)
-   - [10.1 The conductor formula](#101-the-conductor-formula)
-   - [10.2 Curves](#102-curves)
-   - [10.3 Tame type, wild type, and what the conductor forgets](#103-tame-type-wild-type-and-what-the-conductor-forgets)
-[11. Base change, descent, and diagnostic examples](#11-base-change-descent-and-diagnostic-examples)
-   - [11.1 Ramified base change](#111-ramified-base-change)
-   - [11.2 Residue extension and nonsplit strata](#112-residue-extension-and-nonsplit-strata)
-   - [11.3 Good reduction and false converses](#113-good-reduction-and-false-converses)
-   - [11.4 A calculation protocol](#114-a-calculation-protocol)
-[12. The local memory of a degeneration](#12-the-local-memory-of-a-degeneration)
-   - [12.1 The curve package](#121-the-curve-package)
-   - [12.2 Conclusion](#122-conclusion)
+
+- [1.1 The missing information in the special fiber](#11-the-missing-information-in-the-special-fiber)
+- [1.2 Conventions and normalizations](#12-conventions-and-normalizations)
+- [1.3 Strictly semistable curves](#13-strictly-semistable-curves)
+  [2. The nearby-cycle construction](#2-the-nearby-cycle-construction)
+- [2.1 The oriented fiber site](#21-the-oriented-fiber-site)
+- [2.2 Nearby and vanishing cycles](#22-nearby-and-vanishing-cycles)
+- [2.3 Stalks, proper comparison, and base change](#23-stalks-proper-comparison-and-base-change)
+- [2.4 Duality and functoriality](#24-duality-and-functoriality)
+- [2.5 Convergence of the nearby-cycle spectral sequence](#25-convergence-of-the-nearby-cycle-spectral-sequence)
+- [2.6 Inertia invariants and iterated spectral sequences](#26-inertia-invariants-and-iterated-spectral-sequences)
+- [2.7 A specialization checklist](#27-a-specialization-checklist)
+  [3. The semistable local calculation](#3-the-semistable-local-calculation)
+- [3.1 The punctured normal-crossings chart](#31-the-punctured-normal-crossings-chart)
+- [3.2 The exterior-algebra theorem](#32-the-exterior-algebra-theorem)
+- [3.3 Curves: smooth points and nodes](#33-curves-smooth-points-and-nodes)
+- [3.4 What fails outside strict semistability](#34-what-fails-outside-strict-semistability)
+- [3.5 Tame ramified coefficients at a strict node](#35-tame-ramified-coefficients-at-a-strict-node)
+- [3.6 Finite wild image before the tame complex](#36-finite-wild-image-before-the-tame-complex)
+  [4. Inertia: tame, wild, and finite parts](#4-inertia-tame-wild-and-finite-parts)
+- [4.1 The tame character](#41-the-tame-character)
+- [4.2 Unipotence in a strict semistable model](#42-unipotence-in-a-strict-semistable-model)
+- [4.3 Descent from a semistable extension](#43-descent-from-a-semistable-extension)
+- [4.4 Invariant cycles](#44-invariant-cycles)
+  [5. The monodromy operator and its filtration](#5-the-monodromy-operator-and-its-filtration)
+- [5.1 Logarithm of tame inertia](#51-logarithm-of-tame-inertia)
+- [5.2 The canonical filtration of a nilpotent operator](#52-the-canonical-filtration-of-a-nilpotent-operator)
+- [5.3 Centers, twists, and Frobenius](#53-centers-twists-and-frobenius)
+- [5.4 Integral qualifications](#54-integral-qualifications)
+  [6. The weight spectral sequence](#6-the-weight-spectral-sequence)
+- [6.1 Strata and the incidence operators](#61-strata-and-the-incidence-operators)
+- [6.2 The semistable curve formula](#62-the-semistable-curve-formula)
+- [6.3 Curves on the first page](#63-curves-on-the-first-page)
+- [6.4 Degeneration and the weight qualification](#64-degeneration-and-the-weight-qualification)
+  [7. Semistable curves](#7-semistable-curves)
+- [7.1 The three graded pieces of first cohomology](#71-the-three-graded-pieces-of-first-cohomology)
+- [7.2 The specialization exact sequence](#72-the-specialization-exact-sequence)
+- [7.3 The graph monodromy pairing](#73-the-graph-monodromy-pairing)
+- [7.4 Model calculations](#74-model-calculations)
+  [8. Picard--Lefschetz theory for curves](#8-picard--lefschetz-theory-for-curves)
+- [8.1 Thimbles and vanishing classes](#81-thimbles-and-vanishing-classes)
+- [8.2 The transvection formula](#82-the-transvection-formula)
+- [8.3 Several nodes and relations](#83-several-nodes-and-relations)
+- [8.4 Separating and nonseparating nodes](#84-separating-and-nonseparating-nodes)
+  [9. Component pairings and geometric correspondences](#9-component-pairings-and-geometric-correspondences)
+- [9.1 Restriction and Gysin as adjoints](#91-restriction-and-gysin-as-adjoints)
+- [9.2 The curve component group](#92-the-curve-component-group)
+- [9.3 Pull--push actions](#93-pull--push-actions)
+  [10. Conductors and local type](#10-conductors-and-local-type)
+- [10.1 The conductor formula](#101-the-conductor-formula)
+- [10.2 Curves](#102-curves)
+- [10.3 Tame type, wild type, and what the conductor forgets](#103-tame-type-wild-type-and-what-the-conductor-forgets)
+  [11. Base change, descent, and diagnostic examples](#11-base-change-descent-and-diagnostic-examples)
+- [11.1 Ramified base change](#111-ramified-base-change)
+- [11.2 Residue extension and nonsplit strata](#112-residue-extension-and-nonsplit-strata)
+- [11.3 Good reduction and false converses](#113-good-reduction-and-false-converses)
+- [11.4 A calculation protocol](#114-a-calculation-protocol)
+  [12. The local memory of a degeneration](#12-the-local-memory-of-a-degeneration)
+- [12.1 The curve package](#121-the-curve-package)
+- [12.2 Conclusion](#122-conclusion)
 
 ## 1. Degeneration as an action
 
@@ -552,10 +553,10 @@ degree-two annular map is trivial and has rank-one invariants. The same-module d
 therefore does not apply to that map. It always applies at expansion index one, which is the
 case used for the node-to-node sheets below.
 
-The stalk complex is only one part of the normalization filtration.  Let
+The stalk complex is only one part of the normalization filtration. Let
 $\nu:\widetilde Y\to Y$ be the normalization near $x$, let $i:x\hookrightarrow Y$, and let
-$\mathcal C_{\rm br}$ be the full nearby-cycle complex on the two normalized branches.  Write
-$C_u,C_v$ for its two conductor fibers.  A constructible complex has generization chain maps
+$\mathcal C_{\rm br}$ be the full nearby-cycle complex on the two normalized branches. Write
+$C_u,C_v$ for its two conductor fibers. A constructible complex has generization chain maps
 
 $$
 g_u:K_x(\mathcal L)\longrightarrow C_u,
@@ -575,30 +576,30 @@ $$
 
 Indeed, away from the conductor both $i_*$-terms vanish, so the fiber is
 $R\nu_*\mathcal C_{\rm br}$, which is the original complex because $\nu$ is an isomorphism
-there.  At $x$ the displayed arrow is the split surjection
+there. At $x$ the displayed arrow is the split surjection
 
 $$
 C_u\oplus C_v\oplus K_x(\mathcal L)\longrightarrow C_u\oplus C_v,
 \qquad (c_u,c_v,k)\longmapsto(c_u-g_u(k),c_v-g_v(k)).
 $$
 
-Its kernel is the graph of $(g_u,g_v)$ and is canonically $K_x(\mathcal L)$.  Hence the natural
+Its kernel is the graph of $(g_u,g_v)$ and is canonically $K_x(\mathcal L)$. Hence the natural
 map from the constructible complex to (3.10) is a quasi-isomorphism on every geometric stalk.
 This proves the recollement formula and shows that it is equivariant for every action preserving
 the two generization maps.
 
-This formula fixes both variance and cohomological degree.  For constant coefficients,
-$C_u=C_v=M_x$ and each $g_i$ is the identity in degree zero and zero in degree one.  Formula
+This formula fixes both variance and cohomological degree. For constant coefficients,
+$C_u=C_v=M_x$ and each $g_i$ is the identity in degree zero and zero in degree one. Formula
 (3.10) then gives the usual normalization resolution in degree zero and the independent
-node term $M_x(-1)$ in degree one.  Thus the oriented cellular boundary and the ramified
+node term $M_x(-1)$ in degree one. Thus the oriented cellular boundary and the ramified
 coefficient differential $T_x-1$ are different arrows in one derived totalization; the latter
-is not placed one degree beyond the geometric vanishing term.  If a branch itself retains
+is not placed one degree beyond the geometric vanishing term. If a branch itself retains
 monodromy, its full complex remains inside $\mathcal C_{\rm br}$ rather than being replaced by
 an underived module.
 
 With a finite tower, $C_u,C_v,K_x$ and the maps $g_i$ are formed from the actual branch and
-node decomposition groups.  Formula (3.10) therefore retains stabilizers rather than replacing
-them by the cardinality of a flag orbit.  Pull, trace, and branch reversal act on (3.10)
+node decomposition groups. Formula (3.10) therefore retains stabilizers rather than replacing
+them by the cardinality of a flag orbit. Pull, trace, and branch reversal act on (3.10)
 through (3.8) when the invariant summand is unchanged, and otherwise through the general
 inclusion/transfer maps just described, together with the corresponding branch maps. Thus the
 normalization filtration is functorial before taking invariants or Hecke quotients.
@@ -622,19 +623,19 @@ $T_x$, and (3.5), not (3.11) with $T_x$ suppressed, is the required calculation.
 
 ### 3.6 Finite wild image before the tame complex
 
-There is one extension of Theorem 3.2 which is formal but must be stated separately.  It does
-not make a wild cover tame.  Let $P_x$ be the wild geometric annular group and let $W$ be a
-finite-free $\Lambda$-module with continuous annular action.  Since $P_x$ is pro-$p$ and
+There is one extension of Theorem 3.2 which is formal but must be stated separately. It does
+not make a wild cover tame. Let $P_x$ be the wild geometric annular group and let $W$ be a
+finite-free $\Lambda$-module with continuous annular action. Since $P_x$ is pro-$p$ and
 $p\ne\ell$, its image in $\operatorname{GL}(W)$ is finite: an open subgroup of
 $\operatorname{GL}(W)$ is pro-$\ell$, so its intersection with a pro-$p$ image is trivial.
-Every finite quotient of $P_x$ has unit order in $\Lambda$.  Averaging on the finite quotients,
+Every finite quotient of $P_x$ has unit order in $\Lambda$. Averaging on the finite quotients,
 compatibly through the inverse system, therefore gives
 
 $$
 R\Gamma(P_x,W)=W^{P_x}                                    \tag{3.12}
 $$
 
-in degree zero.  The continuous Hochschild--Serre complex for
+in degree zero. The continuous Hochschild--Serre complex for
 
 $$
 1\longrightarrow P_x\longrightarrow\Pi_x
@@ -662,14 +663,14 @@ R\Gamma(\Pi_x,W)
 $$
 
 All residue-Galois actions in (3.6) preserve $W^{P_x}$ because wild inertia is
-characteristic in inertia.  Pull and trace preserve (3.13) provided the corresponding wild
+characteristic in inertia. Pull and trace preserve (3.13) provided the corresponding wild
 groups and invariant summands are carried to one another; after that reduction their entries
-are exactly those of (3.8), with the same invariant-summand qualification.  In particular, if
-$W^{P_x}=0$, the node-annular complex is zero.  This does not discard $W$: its
+are exactly those of (3.8), with the same invariant-summand qualification. In particular, if
+$W^{P_x}=0$, the node-annular complex is zero. This does not discard $W$: its
 non-wild-invariant part has no ordinary node-annular cohomology, while the full branch
-complexes and their generization maps in (3.10) are still retained.  Formula (3.14) by itself
+complexes and their generization maps in (3.10) are still retained. Formula (3.14) by itself
 does not compute a Swan conductor or identify the geometric stratum carrying a routed
-summand.  Thus
+summand. Thus
 (3.12)--(3.14) are a derived wild-invariant reduction, not permission to call the principal
 cover, its normalization, or its branch geometry tame.
 

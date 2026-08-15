@@ -141,9 +141,8 @@ same positive residue at $s=1$. Character orthogonality then makes every nontriv
 Hecke $L$-function holomorphic there. A cyclic zeta factorization proves that its value at $1$
 is nonzero. Logarithmic Euler products consequently give the prime-sum dichotomy
 
-$$
-\sum_{\mathfrak p}\chi(\mathfrak p)(N\mathfrak p)^{-s}
-=
+# $$\sum_{\mathfrak p}\chi(\mathfrak p)(N\mathfrak p)^{-s}
+
 \begin{cases}
 \log(1/(s-1))+O(1),&\chi=1,\\
 O(1),&\chi\ne1.
@@ -159,7 +158,7 @@ downstairs.
 
 The route may be pictured as
 
-~~~text
+```text
 Poisson summation + unit lattice
                 |
                 v
@@ -176,7 +175,7 @@ Poisson summation + unit lattice
                 |
                 v
        full Chebotarev density.
-~~~
+```
 
 ### 1.4 Standing conventions and prerequisites
 
@@ -1009,9 +1008,8 @@ We record the analytic engine in its reusable form.
 character of a number field $K$, and omit any finite set containing its conductor primes. As
 $s\to1^+$ through real values,
 
-$$
-\sum_{\mathfrak p}\chi(\mathfrak p)(N\mathfrak p)^{-s}
-=
+# $$\sum_{\mathfrak p}\chi(\mathfrak p)(N\mathfrak p)^{-s}
+
 \begin{cases}
 \log(1/(s-1))+O(1),&\chi=1,\\
 O(1),&\chi\ne1.
@@ -1190,10 +1188,8 @@ irreducible characters.
 Let $A$ be a finite abelian group and $\widehat A$ its group of complex characters. For
 $a,b\in A$,
 
-$$
-\frac1{|A|}\sum_{\chi\in\widehat A}
-\overline{\chi(a)}\chi(b)
-=
+# $$\frac1{|A|}\sum_{\chi\in\widehat A}\overline{\chi(a)}\chi(b)
+
 \begin{cases}1,&b=a,\\0,&b\ne a.\end{cases}
 \tag{7.1}
 $$

@@ -949,15 +949,8 @@ so its entries are visibly in the trace algebra: the adjugate entries are polyno
 
 For $y=\rho(g)$, set
 
-$$
-t(y)=
-\begin{pmatrix}
-\operatorname{tr}(yx_1)\\
-\operatorname{tr}(yx_2)\\
-\operatorname{tr}(yx_3)\\
-\operatorname{tr}(yx_4)
-\end{pmatrix}
-=
+# $$t(y)=\begin{pmatrix}\operatorname{tr}(yx_1)\\\operatorname{tr}(yx_2)\\\operatorname{tr}(yx_3)\\\operatorname{tr}(yx_4)\end{pmatrix}
+
 \begin{pmatrix}
 \operatorname{tr}\rho(gg_1)\\
 \operatorname{tr}\rho(gg_2)\\

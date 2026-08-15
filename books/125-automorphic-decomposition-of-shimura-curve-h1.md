@@ -672,9 +672,8 @@ The trivial representation has no such type, so its degree-one cochain space is 
 
 Let $D_2^+$ and $D_2^-$ denote the discrete series with minimal $K^0$-types $2$ and $-2$. In (6.2), each has a one-dimensional degree-one cochain space. The neighboring $K^0$-types occur only on one side of the minimal type, so the relative differential into and out of this cochain is zero. Hence
 
-$$
-H^q(\mathfrak{gl}_2, \mathbf R_{>0}K^0;D_2^\pm)
-=
+# $$H^q(\mathfrak{gl}_2, \mathbf R_{>0}K^0;D_2^\pm)
+
 \begin{cases}
 \mathbf C,&q=1,\\
 0,&q\ne1.

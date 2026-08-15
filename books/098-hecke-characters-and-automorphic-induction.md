@@ -919,13 +919,13 @@ If $E/K$ is ramified quadratic, then $I_E=I_K\cap W_E$ has index two in $I_K$, a
 
 The possibilities may be read from the following table. Here “regular” means $\theta\ne\theta^\tau$ and $d$ is the exponent of the discriminant in $K$.
 
-| Local algebra and character | Parameter | $\mathrm{GL}_2(K)$ component | Conductor | Standard factor |
-|---|---|---|---|---|
-| $K\times K$, $\theta_1\boxtimes\theta_2$ | $\theta_1\oplus\theta_2$ | $I(\theta_1,\theta_2)$ | $a(\theta_1)+a(\theta_2)$ | $L(s,\theta_1)L(s,\theta_2)$ |
-| unramified $E/K$, unramified $\theta$ | two unramified extensions $\mu\oplus\mu\eta$ | spherical principal component | $0$ | $(1-\theta(\varpi_E)q_K^{-2s})^{-1}$ |
-| unramified $E/K$, regular ramified $\theta$ | irreducible, ramified | supercuspidal | $2a_E(\theta)$ | $1$ |
-| ramified $E/K$, regular $\theta$ | irreducible induction | supercuspidal | $d+ a_E(\theta)$ | $1$ |
-| field $E/K$, $\theta=\mu\circ N$ | $\mu\oplus\mu\eta$ | principal datum $I(\mu,\mu\eta)$ | $a(\mu)+a(\mu\eta)$ | $L(s,\mu)L(s,\mu\eta)$ |
+| Local algebra and character                 | Parameter                                    | $\mathrm{GL}_2(K)$ component     | Conductor                 | Standard factor                      |
+| ------------------------------------------- | -------------------------------------------- | -------------------------------- | ------------------------- | ------------------------------------ |
+| $K\times K$, $\theta_1\boxtimes\theta_2$    | $\theta_1\oplus\theta_2$                     | $I(\theta_1,\theta_2)$           | $a(\theta_1)+a(\theta_2)$ | $L(s,\theta_1)L(s,\theta_2)$         |
+| unramified $E/K$, unramified $\theta$       | two unramified extensions $\mu\oplus\mu\eta$ | spherical principal component    | $0$                       | $(1-\theta(\varpi_E)q_K^{-2s})^{-1}$ |
+| unramified $E/K$, regular ramified $\theta$ | irreducible, ramified                        | supercuspidal                    | $2a_E(\theta)$            | $1$                                  |
+| ramified $E/K$, regular $\theta$            | irreducible induction                        | supercuspidal                    | $d+ a_E(\theta)$          | $1$                                  |
+| field $E/K$, $\theta=\mu\circ N$            | $\mu\oplus\mu\eta$                           | principal datum $I(\mu,\mu\eta)$ | $a(\mu)+a(\mu\eta)$       | $L(s,\mu)L(s,\mu\eta)$               |
 
 The second row deserves emphasis. An unramified character of an unramified quadratic field is conjugation invariant, so its Weil induction is the sum of two unramified characters after choosing the two extensions to $W_K$. The off-diagonal Frobenius matrix in a coset basis can be diagonalized and does not imply irreducibility. Accordingly the automorphic component is the spherical principal datum predicted by the invariant case. There is no unramified supercuspidal representation of $\mathrm{GL}_2(K)$.
 
@@ -2029,23 +2029,23 @@ Thus the Hecke trace, Frobenius trace, and ideal-theoretic norm-fiber sum are th
 
 For quick use, the construction may be summarized as follows.
 
-| Character datum over $M$ | Automorphic datum over $F$ | Galois datum over $F$ |
-|---|---|---|
-| Hecke character $\psi$ | $\pi=\operatorname{AI}_{M/F}(\psi)$ | $\rho=\operatorname{Ind}_{G_M}^{G_F}\chi_\psi$ |
-| conjugate $\psi^\sigma$ | same $\pi$ | conjugate induction, isomorphic to $\rho$ |
-| $\psi\ne\psi^\sigma$ | $\pi$ cuspidal | $\rho$ irreducible |
-| $\psi=\mu\circ N$ | $\mu\boxplus\mu\eta$ | $\chi_\mu\oplus\chi_\mu\eta$ |
-| diagonal restriction $\psi|_{C_F}$ | central character $\eta\psi|_{C_F}$ | determinant $\eta(\chi\circ\operatorname{Ver})$ |
-| norm twist $\psi(\mu\circ N)$ | $\pi\otimes(\mu\circ\det)$ | $\rho\otimes\chi_\mu$ |
-| inverse $\psi^{-1}$ | contragredient $\pi^\vee$ | dual $\rho^\vee$ |
-| $v=ww^\sigma$ split | $I(\psi_w,\psi_{w^\sigma})$ | $\chi_w\oplus\chi_{w^\sigma}$ |
-| $M_w/F_v$ field, local ratio regular | supercuspidal | irreducible local induction |
-| $\psi_w=\mu_v\circ N$ | $I(\mu_v,\mu_v\eta_v)$ | $\chi_{\mu_v}\oplus\chi_{\mu_v}\eta_v$ |
-| conductor $\mathfrak f(\psi)$ | $\mathfrak d_{M/F}N\mathfrak f(\psi)$ | Artin conductor with the same local formula |
-| infinity type $(p_v,q_v)$ | weight $|p_v-q_v|+1$ | labeled weights $\{p_v,q_v\}$ |
-| good split prime | $a_v=\psi(\mathfrak P)+\psi(\mathfrak P^\sigma)$ | same Frobenius trace |
-| good inert prime | $a_v=0$ | Frobenius exchanges the two lines |
-| reduction with $\bar\psi\ne\bar\psi^\sigma$ | residual eigensystem is non-Eisenstein | residual induction is absolutely irreducible |
+| Character datum over $M$                    | Automorphic datum over $F$                       | Galois datum over $F$                          |
+| ------------------------------------------- | ------------------------------------------------ | ---------------------------------------------- |
+| Hecke character $\psi$                      | $\pi=\operatorname{AI}_{M/F}(\psi)$              | $\rho=\operatorname{Ind}_{G_M}^{G_F}\chi_\psi$ |
+| conjugate $\psi^\sigma$                     | same $\pi$                                       | conjugate induction, isomorphic to $\rho$      |
+| $\psi\ne\psi^\sigma$                        | $\pi$ cuspidal                                   | $\rho$ irreducible                             |
+| $\psi=\mu\circ N$                           | $\mu\boxplus\mu\eta$                             | $\chi_\mu\oplus\chi_\mu\eta$                   |
+| diagonal restriction $\psi                  | _{C_F}$                                          | central character $\eta\psi                    |
+| norm twist $\psi(\mu\circ N)$               | $\pi\otimes(\mu\circ\det)$                       | $\rho\otimes\chi_\mu$                          |
+| inverse $\psi^{-1}$                         | contragredient $\pi^\vee$                        | dual $\rho^\vee$                               |
+| $v=ww^\sigma$ split                         | $I(\psi_w,\psi_{w^\sigma})$                      | $\chi_w\oplus\chi_{w^\sigma}$                  |
+| $M_w/F_v$ field, local ratio regular        | supercuspidal                                    | irreducible local induction                    |
+| $\psi_w=\mu_v\circ N$                       | $I(\mu_v,\mu_v\eta_v)$                           | $\chi_{\mu_v}\oplus\chi_{\mu_v}\eta_v$         |
+| conductor $\mathfrak f(\psi)$               | $\mathfrak d_{M/F}N\mathfrak f(\psi)$            | Artin conductor with the same local formula    |
+| infinity type $(p_v,q_v)$                   | weight $                                         | p_v-q_v                                        |
+| good split prime                            | $a_v=\psi(\mathfrak P)+\psi(\mathfrak P^\sigma)$ | same Frobenius trace                           |
+| good inert prime                            | $a_v=0$                                          | Frobenius exchanges the two lines              |
+| reduction with $\bar\psi\ne\bar\psi^\sigma$ | residual eigensystem is non-Eisenstein           | residual induction is absolutely irreducible   |
 
 The local conductor entry at a nonsplit finite place is
 

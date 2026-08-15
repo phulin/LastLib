@@ -3,49 +3,50 @@
 ## Contents
 
 [1. The size hidden in a Frobenius eigenvalue](#1-the-size-hidden-in-a-frobenius-eigenvalue)
-   - [1.1 The problem left by the trace formula](#11-the-problem-left-by-the-trace-formula)
-   - [1.2 Standing conventions](#12-standing-conventions)
-   - [1.3 Algebraic numbers and Weil numbers](#13-algebraic-numbers-and-weil-numbers)
-   - [1.4 The route through the proof](#14-the-route-through-the-proof)
-[2. Weights and their elementary calculus](#2-weights-and-their-elementary-calculus)
-   - [2.1 Pure representations](#21-pure-representations)
-   - [2.2 Tate twists, duals, and tensors](#22-tate-twists-duals-and-tensors)
-   - [2.3 Lisse sheaves and closed points](#23-lisse-sheaves-and-closed-points)
-   - [2.4 Mixed objects and strict weight separation](#24-mixed-objects-and-strict-weight-separation)
-[3. Polarizations and the positivity missing from duality](#3-polarizations-and-the-positivity-missing-from-duality)
-   - [3.1 Degree as a positive polynomial](#31-degree-as-a-positive-polynomial)
-   - [3.2 The Rosati trace form](#32-the-rosati-trace-form)
-   - [3.3 Positive involutions on number fields](#33-positive-involutions-on-number-fields)
-   - [3.4 Frobenius and Verschiebung](#34-frobenius-and-verschiebung)
-[4. The Riemann hypothesis for abelian varieties and curves](#4-the-riemann-hypothesis-for-abelian-varieties-and-curves)
-   - [4.1 Abelian varieties over a finite field](#41-abelian-varieties-over-a-finite-field)
-   - [4.2 From a curve to its Jacobian](#42-from-a-curve-to-its-jacobian)
-   - [4.3 The curve zeta function](#43-the-curve-zeta-function)
-   - [4.4 The Hasse--Weil bounds](#44-the-hasse--weil-bounds)
-[5. Pure lisse sheaves on curves](#5-pure-lisse-sheaves-on-curves)
-   - [5.1 Why coefficients on curves require a separate theorem](#51-why-coefficients-on-curves-require-a-separate-theorem)
-   - [5.2 Normalization, determinant, and rationality](#52-normalization-determinant-and-rationality)
-   - [5.3 Tensor invariants and the positive determinant lemma](#53-tensor-invariants-and-the-positive-determinant-lemma)
-   - [5.4 The curve-sheaf Riemann hypothesis](#54-the-curve-sheaf-riemann-hypothesis)
-   - [5.5 The symplectic monodromy criterion](#55-the-symplectic-monodromy-criterion)
-[6. Weights on open curves](#6-weights-on-open-curves)
-   - [6.1 Boundary invariants and coinvariants](#61-boundary-invariants-and-coinvariants)
-   - [6.2 Compact support and ordinary support](#62-compact-support-and-ordinary-support)
-   - [6.3 Mixedness and the interior group](#63-mixedness-and-the-interior-group)
-   - [6.4 Examples that fix the normalizations](#64-examples-that-fix-the-normalizations)
-[7. Correspondences and pure summands](#7-correspondences-and-pure-summands)
-   - [7.1 Frobenius-compatible projectors](#71-frobenius-compatible-projectors)
-   - [7.2 Transpose, adjoints, and reciprocal pairs](#72-transpose-adjoints-and-reciprocal-pairs)
-   - [7.3 Coefficient sheaves and parabolic summands](#73-coefficient-sheaves-and-parabolic-summands)
-[8. Families, good reduction, and coefficient changes](#8-families-good-reduction-and-coefficient-changes)
-   - [8.1 Smooth proper curve and abelian families](#81-smooth-proper-curve-and-abelian-families)
-   - [8.2 Good reduction](#82-good-reduction)
-   - [8.3 Changing the auxiliary prime](#83-changing-the-auxiliary-prime)
-   - [8.4 A normalization and hypothesis audit](#84-a-normalization-and-hypothesis-audit)
-[9. The curve and abelian weight package](#9-the-curve-and-abelian-weight-package)
-   - [9.1 The complete theorem](#91-the-complete-theorem)
-   - [9.2 How the ingredients depend on one another](#92-how-the-ingredients-depend-on-one-another)
-   - [9.3 Final synthesis](#93-final-synthesis)
+
+- [1.1 The problem left by the trace formula](#11-the-problem-left-by-the-trace-formula)
+- [1.2 Standing conventions](#12-standing-conventions)
+- [1.3 Algebraic numbers and Weil numbers](#13-algebraic-numbers-and-weil-numbers)
+- [1.4 The route through the proof](#14-the-route-through-the-proof)
+  [2. Weights and their elementary calculus](#2-weights-and-their-elementary-calculus)
+- [2.1 Pure representations](#21-pure-representations)
+- [2.2 Tate twists, duals, and tensors](#22-tate-twists-duals-and-tensors)
+- [2.3 Lisse sheaves and closed points](#23-lisse-sheaves-and-closed-points)
+- [2.4 Mixed objects and strict weight separation](#24-mixed-objects-and-strict-weight-separation)
+  [3. Polarizations and the positivity missing from duality](#3-polarizations-and-the-positivity-missing-from-duality)
+- [3.1 Degree as a positive polynomial](#31-degree-as-a-positive-polynomial)
+- [3.2 The Rosati trace form](#32-the-rosati-trace-form)
+- [3.3 Positive involutions on number fields](#33-positive-involutions-on-number-fields)
+- [3.4 Frobenius and Verschiebung](#34-frobenius-and-verschiebung)
+  [4. The Riemann hypothesis for abelian varieties and curves](#4-the-riemann-hypothesis-for-abelian-varieties-and-curves)
+- [4.1 Abelian varieties over a finite field](#41-abelian-varieties-over-a-finite-field)
+- [4.2 From a curve to its Jacobian](#42-from-a-curve-to-its-jacobian)
+- [4.3 The curve zeta function](#43-the-curve-zeta-function)
+- [4.4 The Hasse--Weil bounds](#44-the-hasse--weil-bounds)
+  [5. Pure lisse sheaves on curves](#5-pure-lisse-sheaves-on-curves)
+- [5.1 Why coefficients on curves require a separate theorem](#51-why-coefficients-on-curves-require-a-separate-theorem)
+- [5.2 Normalization, determinant, and rationality](#52-normalization-determinant-and-rationality)
+- [5.3 Tensor invariants and the positive determinant lemma](#53-tensor-invariants-and-the-positive-determinant-lemma)
+- [5.4 The curve-sheaf Riemann hypothesis](#54-the-curve-sheaf-riemann-hypothesis)
+- [5.5 The symplectic monodromy criterion](#55-the-symplectic-monodromy-criterion)
+  [6. Weights on open curves](#6-weights-on-open-curves)
+- [6.1 Boundary invariants and coinvariants](#61-boundary-invariants-and-coinvariants)
+- [6.2 Compact support and ordinary support](#62-compact-support-and-ordinary-support)
+- [6.3 Mixedness and the interior group](#63-mixedness-and-the-interior-group)
+- [6.4 Examples that fix the normalizations](#64-examples-that-fix-the-normalizations)
+  [7. Correspondences and pure summands](#7-correspondences-and-pure-summands)
+- [7.1 Frobenius-compatible projectors](#71-frobenius-compatible-projectors)
+- [7.2 Transpose, adjoints, and reciprocal pairs](#72-transpose-adjoints-and-reciprocal-pairs)
+- [7.3 Coefficient sheaves and parabolic summands](#73-coefficient-sheaves-and-parabolic-summands)
+  [8. Families, good reduction, and coefficient changes](#8-families-good-reduction-and-coefficient-changes)
+- [8.1 Smooth proper curve and abelian families](#81-smooth-proper-curve-and-abelian-families)
+- [8.2 Good reduction](#82-good-reduction)
+- [8.3 Changing the auxiliary prime](#83-changing-the-auxiliary-prime)
+- [8.4 A normalization and hypothesis audit](#84-a-normalization-and-hypothesis-audit)
+  [9. The curve and abelian weight package](#9-the-curve-and-abelian-weight-package)
+- [9.1 The complete theorem](#91-the-complete-theorem)
+- [9.2 How the ingredients depend on one another](#92-how-the-ingredients-depend-on-one-another)
+- [9.3 Final synthesis](#93-final-synthesis)
 
 ## 1. The size hidden in a Frobenius eigenvalue
 
@@ -318,6 +319,7 @@ We can now turn the algebraic identity (3.8) into an Archimedean absolute value.
 $$
 P_A(T)=\det(T-\pi\mid V_\ell A)
 $$
+
 is an algebraic integer, $P_A(T)\in\mathbf Z[T]$ is independent of $\ell\ne p$, and
 
 $$
@@ -514,7 +516,7 @@ $$
 \sum_u|a_{u,n}|^{2m}. \tag{5.6b}
 $$
 
-Newton identities do not turn (5.6b) into (5.6a).  The external parabolic
+Newton identities do not turn (5.6b) into (5.6a). The external parabolic
 determinant (5.11) and the correspondence trace formula (5.11b) are instead
 formed before contraction, so they retain every tuple in (5.6a).
 
@@ -544,7 +546,7 @@ therefore kills the wild image, and induction back from that cover is dealt
 with at the end. We may work with the finitely presented tame curve group.
 Enlarge $E$ once by the fixed tensor field allowed in clause 4, and write
 $\mathcal O$ for the valuation ring of $E_\lambda$ and $\lambda$ for its
-maximal ideal.  These do not vary with the congruence level.  Choose a
+maximal ideal. These do not vary with the congruence level. Choose a
 lattice $M$ in a geometric stalk which is stable under the full arithmetic
 monodromy group. Let $\Gamma$ be the geometric monodromy image and
 
@@ -581,17 +583,17 @@ $$
 
 and the odd invariant spaces vanish. To prove (5.9), contract two entries with the alternating form and induct on $m$. If a tensor is killed by every contraction, evaluate it on a symplectic basis and use the diagonal torus to force equal positive and negative weights; a unipotent root subgroup then lowers a surviving pair and contradicts contraction-freeness. Thus complete contractions span. When $m$ exceeds the symplectic rank there are Pfaffian relations among the pairings, but the span and the image of the Reynolds projector are unchanged. In particular the projectors are defined over the coefficient field and commute with scalar extension.
 
-We need the projectors on global cochains, not merely on stalks.  The
-following determinant comparison is the precise bridge.  We give the
+We need the projectors on global cochains, not merely on stalks. The
+following determinant comparison is the precise bridge. We give the
 integral form because two tempting shortcuts are false: a module which is
 constant modulo $\lambda^s$ on a cover need not lift to a
 characteristic-zero representation of its deck group, and a lifted
 differential cannot be replaced by $A^\dagger A$ without changing its
 cohomology.
 
-**Polarized determinant comparison.**  Let $\Pi$ be the tame geometric
+**Polarized determinant comparison.** Let $\Pi$ be the tame geometric
 fundamental group of the pair $(C,C\setminus U)$ and let $M$ be a stable
-lattice in $R$.  There is a finite parabolic Poincaré complex
+lattice in $R$. There is a finite parabolic Poincaré complex
 $K_\Pi$ of completed $\mathcal O[\Pi]$-modules, free in each term, such
 that
 
@@ -601,8 +603,8 @@ K_p(M)=K_\Pi\mathbin{\widehat\otimes}_{\mathcal O[\Pi]}M,
 H^1K_p(M)\otimes E_\lambda=B, \tag{5.10}
 $$
 
-and $K_\Pi^\vee\simeq K_\Pi[2](1)$.  The analogous complex with compact
-support maps to it and its image in degree one is (5.10).  For every
+and $K_\Pi^\vee\simeq K_\Pi[2](1)$. The analogous complex with compact
+support maps to it and its image in degree one is (5.10). For every
 balanced tensor word $T$ in $M\oplus M^\vee$, every polynomial $a(F)$,
 and every $m\ge1$, the determinant functor applied to
 
@@ -615,23 +617,23 @@ $$
 Here $\boxtimes$ means that the coefficient complexes are first placed on
 independent factors of $U^{2m}$ and only then are global parabolic cochains
 taken; Künneth identifies the result with the indicated tensor product of
-$K_p$-complexes.  Apply the determinant functor and then the complete
-contractions of $T$.  After reduction modulo $\lambda^s$ the determinant
+$K_p$-complexes. Apply the determinant functor and then the complete
+contractions of $T$. After reduction modulo $\lambda^s$ the determinant
 is a product and quotient of determinants on $H^1$-Künneth summands of
 products of smooth proper curve covers; in the balanced contraction its
-reduced trace is a finite sum of Rosati Gram terms.  Cancellation is
-performed in the determinant category before reduction.  Consequently its residual determinant degree
+reduced trace is a finite sum of Rosati Gram terms. Cancellation is
+performed in the determinant category before reduction. Consequently its residual determinant degree
 is the dimension of the corresponding cohomology of (5.11), independent
 of the degrees of the covers; its coefficients lie in the fixed field of
 definition of the contraction tensors and have denominators in one fixed
 finite set.
 
-Here is the proof of the comparison.  The finite presentation of the tame
+Here is the proof of the comparison. The finite presentation of the tame
 curve pair gives $K_\Pi$; imposing the local invariant and coinvariant maps
-at the punctures gives its parabolic version.  Poincaré duality for the
-pair identifies its transpose complex with the displayed twist.  For
+at the punctures gives its parabolic version. Poincaré duality for the
+pair identifies its transpose complex with the displayed twist. For
 $N\ge s$, reduction of the coefficient action factors through $G_N$, but
-the cochains of the kernel must still be retained.  They are retained by
+the cochains of the kernel must still be retained. They are retained by
 the Cartan--Leray identity
 
 $$
@@ -643,41 +645,41 @@ K_p(C_N,\mathcal O/\lambda^s)\right). \tag{5.11a}
 $$
 
 Thus (5.11a), not the group cochain complex of $G_N$ alone, is the finite
-level object.  Resolve the first argument and totalize before making any
-truncation.  Book 21's cohomological-dimension and finiteness theorem makes
+level object. Resolve the first argument and totalize before making any
+truncation. Book 21's cohomological-dimension and finiteness theorem makes
 the total object a perfect $(\mathcal O/\lambda^s)$-complex of parabolic
-amplitude $[0,2]$.  Replace it, *after totalization*, by a three-term finite
-free complex.  This is not a claim that $T(M/\lambda^s)$ has a bounded
-projective resolution over the modular group ring.  The cone of the
+amplitude $[0,2]$. Replace it, _after totalization_, by a three-term finite
+free complex. This is not a claim that $T(M/\lambda^s)$ has a bounded
+projective resolution over the modular group ring. The cone of the
 replacement is acyclic, and the determinant functor cancels it canonically:
 for an elementary acyclic pair with differential $d$, the two factors are
 $\det d$ and $(\det d)^{-1}$.
 
 To compare this determinant with characteristic zero, apply determinant
 Brauer induction to the matrix-coefficient laws of the regular terms in
-(5.11a), rather than trying to lift the modular representation.  After
+(5.11a), rather than trying to lift the modular representation. After
 inverting $\lambda$ the group algebra is semisimple, so these laws split
 into induced summands; equality is checked on cyclic subgroups, where it is
-the determinant identity for a companion matrix.  Shapiro identifies an
-induced summand with the corresponding intermediate curve cover.  Transfer
+the determinant identity for a companion matrix. Shapiro identifies an
+induced summand with the corresponding intermediate curve cover. Transfer
 and restriction occur as transpose pairs, so their factors $[G_N:H]$
-cancel before a determinant is taken.  In particular no division by
+cancel before a determinant is taken. In particular no division by
 $|G_N|$ survives and the denominator set is independent of $N$.
 
 Apply this construction simultaneously to the external tensor complex and
-its dual.  Evaluation, coevaluation, permutations, and the Reynolds
-idempotent commute with its differentials.  Complete contractions in
+its dual. Evaluation, coevaluation, permutations, and the Reynolds
+idempotent commute with its differentials. Complete contractions in
 (5.9) turn every surviving pair of transpose induced summands into
-$x^\dagger x$.  Conversely, the first fundamental theorem says that these
+$x^\dagger x$. Conversely, the first fundamental theorem says that these
 contractions exhaust the invariant determinant laws; hence no unrecorded
-summand remains.  On a product $C_{H_1}\times\cdots\times C_{H_r}$ use the
+summand remains. On a product $C_{H_1}\times\cdots\times C_{H_r}$ use the
 curve Chow--Künneth projectors to select
-$H^1(C_{H_1})\otimes\cdots\otimes H^1(C_{H_r})$.  The projectors are made
-from a degree-one zero-cycle, a fiber, and the diagonal.  Such a zero-cycle
+$H^1(C_{H_1})\otimes\cdots\otimes H^1(C_{H_r})$. The projectors are made
+from a degree-one zero-cycle, a fiber, and the diagonal. Such a zero-cycle
 exists here without another theorem: the Hasse--Weil bound gives points
 over $\mathbf F_{q^n}$ for every sufficiently large $n$; norms from two
 consecutive extensions give zero-cycles of coprime degrees, and Bézout
-gives a divisor of degree one.  Books 20 and 36 identify their transpose with the tensor product Rosati adjoint.
+gives a divisor of degree one. Books 20 and 36 identify their transpose with the tensor product Rosati adjoint.
 Thus the finite-level scalar is a sum of genuine Rosati squares, not an
 alternating virtual trace.
 
@@ -689,17 +691,17 @@ H^i(\bar C_{H_1}\times\cdots\times\bar C_{H_t})\right)
 =\sum_{z\in\operatorname{Fix}(F^r\circ u)}LT_z(u). \tag{5.11b}
 $$
 
-The Künneth expansion of (5.11b) is taken *before* contraction.  Its
+The Künneth expansion of (5.11b) is taken _before_ contraction. Its
 fixed points therefore range over independent tuples of points and retain
 all terms in (5.6a); restricting all entries to one diagonal would instead
-give only (5.6b).  Equality of the first $D$ power traces, where $D$ is the
+give only (5.6b). Equality of the first $D$ power traces, where $D$ is the
 fixed residual degree, gives equality of determinant coefficients by
 Newton identities.
 
 There remains a descent issue which is often hidden in the phrase
-``pass to the limit.''  The determinant laws just constructed are defined
+``pass to the limit.'' The determinant laws just constructed are defined
 over the fixed tensor field, not over the varying splitting fields of the
-covers.  Their roots occur in tensor products of $H^1$ of proper curves, so
+covers. Their roots occur in tensor products of $H^1$ of proper curves, so
 Chapter 4 and Künneth bound every coefficient under every embedding; in
 degree $a$ the bound is
 
@@ -707,20 +709,20 @@ $$
 \binom Da q^{ma}. \tag{5.11c}
 $$
 
-They are integral away from the fixed denominator set.  The coefficient
+They are integral away from the fixed denominator set. The coefficient
 congruence modulo $\lambda^s$, common rationality, and the product formula
 in that fixed field now force eventual equality: a nonzero difference
 would have unbounded $\lambda$-adic valuation and uniformly bounded
-valuation at every other place.  This proves the polarized determinant
-comparison over every embedding.  Notice that neither a varying field norm
+valuation at every other place. This proves the polarized determinant
+comparison over every embedding. Notice that neither a varying field norm
 nor continuity from the $\lambda$-adic to the complex topology has been
 used.
 
 **Step 3: positivity and strictness.** Let $a$ be a polynomial in
-Frobenius on $B\oplus B'$.  Apply the comparison to (5.11), insert $a$ in
-one block and $a^\dagger$ in the other, and contract.  The finite-level
+Frobenius on $B\oplus B'$. Apply the comparison to (5.11), insert $a$ in
+one block and $a^\dagger$ in the other, and contract. The finite-level
 answer is a sum of Rosati squares of the form (5.8), hence is nonnegative
-under every complex embedding.  Eventual determinant equality identifies
+under every complex embedding. Eventual determinant equality identifies
 it exactly with
 
 $$
@@ -728,24 +730,24 @@ $$
 \bigl((aa^\dagger)^m\bigr). \tag{5.12}
 $$
 
-Taking $m=1$ gives nonnegativity in (5.7).  If equality held for $a\ne0$,
+Taking $m=1$ gives nonnegativity in (5.7). If equality held for $a\ne0$,
 every complete contraction of a matrix coefficient of $a$ with its dual
-would vanish.  Among these contractions are the ordinary evaluation
+would vanish. Among these contractions are the ordinary evaluation
 pairings between $B$ and $B'$ furnished by (5.2); their nondegeneracy says
-that they separate endomorphisms of $B\oplus B'$.  Formula (5.9), or the
+that they separate endomorphisms of $B\oplus B'$. Formula (5.9), or the
 evaluation tensors for a general reductive $G$, is what ensures that all
 of these separating contractions occur in the determinant comparison.
 Thus $a$ would act as zero, contrary to its being nonzero in the reduced
-Frobenius algebra.  The form is positive definite.
+Frobenius algebra. The form is positive definite.
 
 All four operations are now accounted for: tensor invariant theory
 constructs the projector, the trace formula identifies its finite-cover
 traces, determinant rationality passes from traces to one polynomial over
-$E$, and Jacobian Rosati supplies positivity.  Pullback to either finite
+$E$, and Jacobian Rosati supplies positivity. Pullback to either finite
 cover used in Step 1 and induction back are adjoint under trace; the
 averaging idempotent cuts the original parabolic complex from the induced
-one, including its inertia-invariant boundary terms.  Positivity therefore
-descends through those reductions.  At no point is a local diagonal moment
+one, including its inertia-invariant boundary terms. Positivity therefore
+descends through those reductions. At no point is a local diagonal moment
 identified with a global moment. $\square$
 
 ### 5.4 The curve-sheaf Riemann hypothesis
@@ -771,10 +773,10 @@ A=E[F,F^{-1}]/\sqrt0,
 $$
 
 This quotient does not change the roots of the characteristic polynomial;
-it only forgets possible Jordan nilpotents.  Being finite, commutative, and
+it only forgets possible Jordan nilpotents. Being finite, commutative, and
 reduced over the characteristic-zero field $E$, $A$ is a product of number
-fields.  Apply Lemma 3.2 to every field factor and to the embedding under
-consideration.  The positive involution acts as complex conjugation.  If
+fields. Apply Lemma 3.2 to every field factor and to the embedding under
+consideration. The positive involution acts as complex conjugation. If
 $\beta$ is an eigenvalue of $F$ on $B$, then
 
 $$
@@ -919,9 +921,8 @@ $$
 
 and $\Gamma_*$ commutes with geometric Frobenius. If $e$ is an idempotent in a rational correspondence algebra, then
 
-$$
-H^i(\bar C,\mathbf Q_\ell)
-=
+# $$H^i(\bar C,\mathbf Q_\ell)
+
 eH^i(\bar C,\mathbf Q_\ell)
 \oplus
 (1-e)H^i(\bar C,\mathbf Q_\ell).
@@ -939,9 +940,8 @@ $H^i(\bar A)\simeq\bigwedge^iH^1(\bar A)$ makes $H^i$ pure of weight $i$, and ev
 
 Transpose correspondences are adjoint for Poincaré duality:
 
-$$
-\langle\Gamma_*x,y\rangle
-=
+# $$\langle\Gamma_*x,y\rangle
+
 \langle x,{}^t\Gamma_*y\rangle.
 \tag{7.2}
 $$
@@ -962,9 +962,8 @@ A rational projector need not preserve a chosen $\mathbf Z_\ell$-lattice. Denomi
 
 Let $j:U\hookrightarrow C$ and let $\mathcal F$ be a determinant-normalized punctually pure lisse sheaf of weight $w$ satisfying the hypotheses of Theorem 5.2. A properly supported curve correspondence equipped with an identification between the two pulled-back coefficient sheaves acts on
 
-$$
-H_p^1(U,\mathcal F)
-=
+# $$H_p^1(U,\mathcal F)
+
 H^1(\bar C,j_*\mathcal F).
 $$
 

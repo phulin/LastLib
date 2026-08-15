@@ -1221,14 +1221,14 @@ These distinctions explain a standard phenomenon. Modular forms, viewed as secti
 
 ### 13.2 A comparison table
 
-| Object | Values over $T$ | Automorphisms retained? | Local geometric chart? | Universal family? |
-|---|---|---:|---:|---:|
-| Isomorphism-class presheaf | sets | no | not implied | not implied |
-| Moduli sheaf | sets | no | not implied | only if represented finely |
-| Moduli stack | groupoids | yes | not implied | yes, tautologically on the stack |
-| Algebraic moduli stack | groupoids | yes | smooth scheme atlas | yes |
-| Coarse space | sets of geometric orbits | no | an algebraic space or scheme here | generally no |
-| Fine moduli scheme | discrete groupoids | necessarily trivial | identity atlas | yes |
+| Object                     | Values over $T$          | Automorphisms retained? |            Local geometric chart? |                Universal family? |
+| -------------------------- | ------------------------ | ----------------------: | --------------------------------: | -------------------------------: |
+| Isomorphism-class presheaf | sets                     |                      no |                       not implied |                      not implied |
+| Moduli sheaf               | sets                     |                      no |                       not implied |       only if represented finely |
+| Moduli stack               | groupoids                |                     yes |                       not implied | yes, tautologically on the stack |
+| Algebraic moduli stack     | groupoids                |                     yes |               smooth scheme atlas |                              yes |
+| Coarse space               | sets of geometric orbits |                      no | an algebraic space or scheme here |                     generally no |
+| Fine moduli scheme         | discrete groupoids       |     necessarily trivial |                    identity atlas |                              yes |
 
 The table is not a hierarchy in which every move rightward improves the object. Passing from a stack to a coarse space deliberately forgets information. Passing from a stack to a fine scheme is possible only after level or another rigidification has removed inertia.
 

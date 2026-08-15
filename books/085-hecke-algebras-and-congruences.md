@@ -1516,8 +1516,10 @@ Its role can be isolated axiomatically:
 
 > **Level-injectivity input.** For the chosen $\mathfrak m$, the map
 > $$
-> M_{\mathfrak m}^{\oplus2}\longrightarrow N_{\mathfrak m}
-> $$
+>
+>> M_{\mathfrak m}^{\oplus2}\longrightarrow N_{\mathfrak m}
+>> $$
+>
 > is injective, and possibly its cokernel is $\mathcal O$-torsion-free.
 
 Once supplied, formal algebra gives a faithful embedded old lattice, identifies its quotient presentation, and allows pairings to measure the old/new intersection. But proving the input can use arithmetic of stabilizers, strong approximation, group cohomology, or geometric irreducibility. None belongs to the formal Hecke-algebra construction.
@@ -2768,34 +2770,34 @@ Later theory may construct a map by matching trace-like and determinant-like coe
 
 ### 18.5 The algebra--congruence--localization dictionary
 
-| Concept | Exact algebraic object | What it remembers | What it does not imply |
-|---|---|---|---|
-| abstract Hecke algebra | $\mathbb T^{\Sigma,\mathrm{abs}}_{\mathcal O}$ | formal away-from-$\Sigma$ correspondences | faithful action at fixed weight and level |
-| acting Hecke algebra | $\mathbb T=\operatorname{im}(\rho_M)$ | exact relations on $M$ | reducedness or locality |
-| residual eigensystem | $\mathfrak m\supset(\varpi)$ | one field-valued special-fiber character | an $\mathcal O$-valued lift or a lift of a prescribed residual vector |
-| residue field | $k(\mathfrak m)=\mathbb T/\mathfrak m$ | minimal field of residual eigenvalues | equality with the original $k$ |
-| localization | $\mathbb T_{\mathfrak m},M_{\mathfrak m}$ | every branch and generalized vector supported at $\mathfrak m$ | quotient by $\mathfrak m$ |
-| completion | $\varprojlim\mathbb T_{\mathfrak m}/\mathfrak m^n$ | all infinitesimal orders | a larger ring at finite level |
-| ordinary eigenspace | $M_L[\lambda]$ | vectors killed by $t-\lambda(t)$ | the full local summand |
-| generalized eigenspace | $M_L[\lambda]^{\mathrm{gen}}$ | nilpotent extensions of one character | semisimplicity |
-| congruent characters | common residual $\mathfrak m$ | equality of every Hecke value modulo a prime | congruent chosen eigenvectors |
-| congruence depth | $I(\lambda_1,\lambda_2)$ | valuation of all character differences | coefficient-field-independent raw integer |
-| normalization | $\widetilde{\mathbb T}=\prod\mathcal O_i$ when generic fiber is reduced | separated generic branches | splitting of the original integral algebra |
-| conductor | $(\mathbb T:\widetilde{\mathbb T})$ | where separated branches glue | the entire congruence module in every multiplicity |
-| nilpotent special fiber | nilradical of $\mathbb T/\varpi$ | infinitesimal collision or residual nonsemisimplicity | nonreduced generic fiber |
-| old submodule | $\operatorname{im}\delta\subset N$ | actual degeneracy lattice | saturation or direct summand |
-| old quotient | $(M^{\oplus2})/\ker\delta$ | lower-level presentation of the old image | its embedding index in $N$ |
-| new kernel | $\ker\delta^*$ | vectors with zero adjoint traces | orthogonal complement without perfectness |
-| saturated old lattice | $N\cap N_E^{\mathrm{old}}$ | full integral lattice in generic old space | equality with degeneracy image |
-| congruence module | $N/(L_{\mathrm{old}}+L_{\mathrm{new}})$ | failure of integral splitting | a canonical principal ideal over every ring |
-| faithful module | $\operatorname{Ann}_{\mathbb T}M=0$ | every algebra element is detected | free or rank one |
-| coefficient freeness | finite torsion-free over the DVR | a stable integral lattice | Hecke freeness |
-| Hecke freeness | $M_{\mathfrak m}\cong\mathbb T_{\mathfrak m}^{\oplus r}$ | constant integral multiplicity | automatic Gorenstein property |
-| relative Gorenstein duality | $\mathbb T_{\mathfrak m}^\vee\cong\mathbb T_{\mathfrak m}$ | rank-one dualizing module | automatic from a mass pairing |
-| augmentation ideal | $I_\lambda=\ker\lambda$ | functions vanishing on one chosen branch | a canonical branch over the original coefficient ring |
-| augmentation cotangent module | $I_\lambda/I_\lambda^2$ | infinitesimal thickness at that branch | equality with a congruence module without hypotheses |
-| augmented congruence ideal | $\lambda(\operatorname{Ann}I_\lambda)$ | denominator of the generic branch projector | a complete-intersection criterion by itself |
-| comparison conormal module | $J/(J\cap\mathfrak p_R^2)$ | first-order kernel of an augmented surjection | the entire higher-order kernel |
+| Concept                       | Exact algebraic object                                                  | What it remembers                                              | What it does not imply                                                |
+| ----------------------------- | ----------------------------------------------------------------------- | -------------------------------------------------------------- | --------------------------------------------------------------------- |
+| abstract Hecke algebra        | $\mathbb T^{\Sigma,\mathrm{abs}}_{\mathcal O}$                          | formal away-from-$\Sigma$ correspondences                      | faithful action at fixed weight and level                             |
+| acting Hecke algebra          | $\mathbb T=\operatorname{im}(\rho_M)$                                   | exact relations on $M$                                         | reducedness or locality                                               |
+| residual eigensystem          | $\mathfrak m\supset(\varpi)$                                            | one field-valued special-fiber character                       | an $\mathcal O$-valued lift or a lift of a prescribed residual vector |
+| residue field                 | $k(\mathfrak m)=\mathbb T/\mathfrak m$                                  | minimal field of residual eigenvalues                          | equality with the original $k$                                        |
+| localization                  | $\mathbb T_{\mathfrak m},M_{\mathfrak m}$                               | every branch and generalized vector supported at $\mathfrak m$ | quotient by $\mathfrak m$                                             |
+| completion                    | $\varprojlim\mathbb T_{\mathfrak m}/\mathfrak m^n$                      | all infinitesimal orders                                       | a larger ring at finite level                                         |
+| ordinary eigenspace           | $M_L[\lambda]$                                                          | vectors killed by $t-\lambda(t)$                               | the full local summand                                                |
+| generalized eigenspace        | $M_L[\lambda]^{\mathrm{gen}}$                                           | nilpotent extensions of one character                          | semisimplicity                                                        |
+| congruent characters          | common residual $\mathfrak m$                                           | equality of every Hecke value modulo a prime                   | congruent chosen eigenvectors                                         |
+| congruence depth              | $I(\lambda_1,\lambda_2)$                                                | valuation of all character differences                         | coefficient-field-independent raw integer                             |
+| normalization                 | $\widetilde{\mathbb T}=\prod\mathcal O_i$ when generic fiber is reduced | separated generic branches                                     | splitting of the original integral algebra                            |
+| conductor                     | $(\mathbb T:\widetilde{\mathbb T})$                                     | where separated branches glue                                  | the entire congruence module in every multiplicity                    |
+| nilpotent special fiber       | nilradical of $\mathbb T/\varpi$                                        | infinitesimal collision or residual nonsemisimplicity          | nonreduced generic fiber                                              |
+| old submodule                 | $\operatorname{im}\delta\subset N$                                      | actual degeneracy lattice                                      | saturation or direct summand                                          |
+| old quotient                  | $(M^{\oplus2})/\ker\delta$                                              | lower-level presentation of the old image                      | its embedding index in $N$                                            |
+| new kernel                    | $\ker\delta^*$                                                          | vectors with zero adjoint traces                               | orthogonal complement without perfectness                             |
+| saturated old lattice         | $N\cap N_E^{\mathrm{old}}$                                              | full integral lattice in generic old space                     | equality with degeneracy image                                        |
+| congruence module             | $N/(L_{\mathrm{old}}+L_{\mathrm{new}})$                                 | failure of integral splitting                                  | a canonical principal ideal over every ring                           |
+| faithful module               | $\operatorname{Ann}_{\mathbb T}M=0$                                     | every algebra element is detected                              | free or rank one                                                      |
+| coefficient freeness          | finite torsion-free over the DVR                                        | a stable integral lattice                                      | Hecke freeness                                                        |
+| Hecke freeness                | $M_{\mathfrak m}\cong\mathbb T_{\mathfrak m}^{\oplus r}$                | constant integral multiplicity                                 | automatic Gorenstein property                                         |
+| relative Gorenstein duality   | $\mathbb T_{\mathfrak m}^\vee\cong\mathbb T_{\mathfrak m}$              | rank-one dualizing module                                      | automatic from a mass pairing                                         |
+| augmentation ideal            | $I_\lambda=\ker\lambda$                                                 | functions vanishing on one chosen branch                       | a canonical branch over the original coefficient ring                 |
+| augmentation cotangent module | $I_\lambda/I_\lambda^2$                                                 | infinitesimal thickness at that branch                         | equality with a congruence module without hypotheses                  |
+| augmented congruence ideal    | $\lambda(\operatorname{Ann}I_\lambda)$                                  | denominator of the generic branch projector                    | a complete-intersection criterion by itself                           |
+| comparison conormal module    | $J/(J\cap\mathfrak p_R^2)$                                              | first-order kernel of an augmented surjection                  | the entire higher-order kernel                                        |
 
 The dictionary is a sequence of safeguards. Each row identifies an object by a construction, not by a slogan. In particular, “localized eigenform” can mean an ordinary eigenvector, a generalized eigenspace, or the entire localized module; these are different levels of information.
 

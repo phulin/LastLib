@@ -737,9 +737,8 @@ $$
 
 and
 
-$$
-\operatorname{End}_A(L')
-=
+# $$\operatorname{End}_A(L')
+
 \begin{pmatrix}
 A&\pi^{-n}A\\
 \pi^nA&A
@@ -2789,20 +2788,20 @@ The ideals and groups in braces depend on representatives up to the equivalences
 
 The theory can now be compressed without being obscured. For a quaternion algebra $B/F$ and an order $\mathcal O$, the principal translations are:
 
-| Integral object | Local description | Finite-adelic description |
-|---|---|---|
-| full lattice $L\subset B$ | free $R_v$-lattices $L_v$, standard almost everywhere | compact open $\widehat R$-lattice $\widehat L\subset\widehat B$ |
-| order $\mathcal O$ | orders $\mathcal O_v$ in $B_v$ | compact open ring $\widehat{\mathcal O}$ |
-| units of an order | $\mathcal O_v^\times$ | compact open $\widehat{\mathcal O}^\times\subset\widehat B^\times$ |
-| maximal order | maximal at every finite $v$ | maximal compact factors locally |
-| Eichler order of level $\mathfrak N$ | $\mathcal E_{n_v}$ at split $v$, maximal at division $v$ | $K_0(\mathfrak p_v^{n_v})$ and $\mathcal O_{D_v}^\times$ factors |
-| local units | unit reduced norm; radical filtration near $1$ | compact open factor with norm image in $R_v^\times$ |
-| locally principal right ideal $I$ | $I_v=g_v\mathcal O_v$ | $g\widehat{\mathcal O}$ |
-| ideal equivalence $I\sim bI$ | one rational left multiplier | left quotient by $B^\times$ |
-| change of local generator | $g_v\mapsto g_vu_v$ | right quotient by $\widehat{\mathcal O}^\times$ |
-| right ideal class set | local generators modulo both changes | $B^\times\backslash\widehat B^\times/\widehat{\mathcal O}^\times$ |
-| optimal embedding $S\hookrightarrow\mathcal O$ | $L_v\cap\mathcal O_v=S_v$ | rational orbit inside a packet of local embedding orbits |
-| norm packet | local reduced-norm idele class | fiber of $X_K\to C_K$ |
+| Integral object                                | Local description                                        | Finite-adelic description                                          |
+| ---------------------------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------ |
+| full lattice $L\subset B$                      | free $R_v$-lattices $L_v$, standard almost everywhere    | compact open $\widehat R$-lattice $\widehat L\subset\widehat B$    |
+| order $\mathcal O$                             | orders $\mathcal O_v$ in $B_v$                           | compact open ring $\widehat{\mathcal O}$                           |
+| units of an order                              | $\mathcal O_v^\times$                                    | compact open $\widehat{\mathcal O}^\times\subset\widehat B^\times$ |
+| maximal order                                  | maximal at every finite $v$                              | maximal compact factors locally                                    |
+| Eichler order of level $\mathfrak N$           | $\mathcal E_{n_v}$ at split $v$, maximal at division $v$ | $K_0(\mathfrak p_v^{n_v})$ and $\mathcal O_{D_v}^\times$ factors   |
+| local units                                    | unit reduced norm; radical filtration near $1$           | compact open factor with norm image in $R_v^\times$                |
+| locally principal right ideal $I$              | $I_v=g_v\mathcal O_v$                                    | $g\widehat{\mathcal O}$                                            |
+| ideal equivalence $I\sim bI$                   | one rational left multiplier                             | left quotient by $B^\times$                                        |
+| change of local generator                      | $g_v\mapsto g_vu_v$                                      | right quotient by $\widehat{\mathcal O}^\times$                    |
+| right ideal class set                          | local generators modulo both changes                     | $B^\times\backslash\widehat B^\times/\widehat{\mathcal O}^\times$  |
+| optimal embedding $S\hookrightarrow\mathcal O$ | $L_v\cap\mathcal O_v=S_v$                                | rational orbit inside a packet of local embedding orbits           |
+| norm packet                                    | local reduced-norm idele class                           | fiber of $X_K\to C_K$                                              |
 
 The left/right positions in the ideal-class rows are not typography: they encode the convention that $g\widehat{\mathcal O}$ is a right ideal.
 

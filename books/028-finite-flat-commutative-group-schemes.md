@@ -131,7 +131,7 @@ $$
 \iota:A\longrightarrow A.
 $$
 
-The word *commutative* refers to the represented group and therefore to cocommutativity of $\Delta$; the coordinate algebra is commutative for every affine group scheme. We abbreviate the category to $\mathrm{FFCG}(S)$. Morphisms are homomorphisms of $S$-group schemes.
+The word _commutative_ refers to the represented group and therefore to cocommutativity of $\Delta$; the coordinate algebra is commutative for every affine group scheme. We abbreviate the category to $\mathrm{FFCG}(S)$. Morphisms are homomorphisms of $S$-group schemes.
 
 This convention avoids a genuine pathology. Over an arbitrary nonnoetherian ring, a finite flat module need not be finitely presented and hence need not be locally free. Over a noetherian ring, or over a local ring for a finitely generated flat module, the shorter phrase “finite flat” has the same force. The categorical definition nevertheless keeps the finiteness needed for rank, descent, and quotients visible.
 
@@ -487,13 +487,13 @@ Even when $G'$ and $G''$ are constant or diagonalizable, $G$ need not be their p
 
 The smallest examples already display four independent invariants. Over an algebraically closed field $k$ of characteristic $p$, they compare as follows.
 
-| Group | Order | Geometric points | Identity component | Cotangent dimension |
-|---|---:|---:|---|---:|
-| $\underline{\mathbf Z/p\mathbf Z}$ | $p$ | $p$ | identity point | $0$ |
-| $\mu_p$ | $p$ | $1$ | all of the group | $1$ |
-| $\alpha_p$ | $p$ | $1$ | all of the group | $1$ |
-| $\mu_p\times\underline{\mathbf Z/p\mathbf Z}$ | $p^2$ | $p$ | $\mu_p$ | $1$ |
-| $\alpha_p\times\mu_p$ | $p^2$ | $1$ | all of the group | $2$ |
+| Group                                         | Order | Geometric points | Identity component | Cotangent dimension |
+| --------------------------------------------- | ----: | ---------------: | ------------------ | ------------------: |
+| $\underline{\mathbf Z/p\mathbf Z}$            |   $p$ |              $p$ | identity point     |                 $0$ |
+| $\mu_p$                                       |   $p$ |              $1$ | all of the group   |                 $1$ |
+| $\alpha_p$                                    |   $p$ |              $1$ | all of the group   |                 $1$ |
+| $\mu_p\times\underline{\mathbf Z/p\mathbf Z}$ | $p^2$ |              $p$ | $\mu_p$            |                 $1$ |
+| $\alpha_p\times\mu_p$                         | $p^2$ |              $1$ | all of the group   |                 $2$ |
 
 The table is deliberately redundant. Equal order does not imply equal point count; equal point count does not imply the same group law; equal connectedness and tangent dimension still do not distinguish $\alpha_p$ from $\mu_p$. The coordinate coproduct is the final invariant in these comparisons.
 
@@ -1775,18 +1775,18 @@ In particular, constant and diagonalizable examples stand opposite one another, 
 
 The most useful counterexamples can be organized by the invalid inference they prevent.
 
-| Invalid inference | Counterexample | Correct repair |
-|---|---|---|
-| finite closed subgroup implies finite flat subgroup | $\ker(G_1\to G_t)$ | prove quotient algebra flat; over a DVR, prove torsion-free |
-| generic isomorphism extends integrally | $(G_1)_K\simeq (G_t)_K$ | test whether the graph closure projects isomorphically |
-| generic fiber determines a model | $\mu_p$ and the constant group over a suitable mixed-characteristic DVR | specify an ambient model or an étaleness condition |
-| pointwise surjectivity expresses exactness | $[n]:\mathbf G_m\to\mathbf G_m$ | use faithfully flat local lifting and the torsor identity |
-| geometric points determine a finite group | $\mu_p$ and $\alpha_p$ | retain the full coordinate algebra and coproduct |
-| equal rank implies equal fiber type | constant, multiplicative, and additive groups of order $p$ | distinguish étale, connected, and infinitesimal structure |
-| a local base lifts special components | $R[X]/(X^2-X-t)$ over $\mathbf Q[t]_{(t)}$ | require henselianity |
-| reduced over a field means étale | $k[T]/(T^p-a)$ over an imperfect field | require geometric reducedness or perfection |
-| torsion-free closure is flat in every dimension | finite torsion-free modules on higher-dimensional normal bases | retain the DVR or Dedekind hypothesis, or prove flatness separately |
-| unramified generic module forces an étale model | $\mu_p$ with split generic fiber | distinguish the representation from its chosen integral lattice |
+| Invalid inference                                   | Counterexample                                                          | Correct repair                                                      |
+| --------------------------------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| finite closed subgroup implies finite flat subgroup | $\ker(G_1\to G_t)$                                                      | prove quotient algebra flat; over a DVR, prove torsion-free         |
+| generic isomorphism extends integrally              | $(G_1)_K\simeq (G_t)_K$                                                 | test whether the graph closure projects isomorphically              |
+| generic fiber determines a model                    | $\mu_p$ and the constant group over a suitable mixed-characteristic DVR | specify an ambient model or an étaleness condition                  |
+| pointwise surjectivity expresses exactness          | $[n]:\mathbf G_m\to\mathbf G_m$                                         | use faithfully flat local lifting and the torsor identity           |
+| geometric points determine a finite group           | $\mu_p$ and $\alpha_p$                                                  | retain the full coordinate algebra and coproduct                    |
+| equal rank implies equal fiber type                 | constant, multiplicative, and additive groups of order $p$              | distinguish étale, connected, and infinitesimal structure           |
+| a local base lifts special components               | $R[X]/(X^2-X-t)$ over $\mathbf Q[t]_{(t)}$                              | require henselianity                                                |
+| reduced over a field means étale                    | $k[T]/(T^p-a)$ over an imperfect field                                  | require geometric reducedness or perfection                         |
+| torsion-free closure is flat in every dimension     | finite torsion-free modules on higher-dimensional normal bases          | retain the DVR or Dedekind hypothesis, or prove flatness separately |
+| unramified generic module forces an étale model     | $\mu_p$ with split generic fiber                                        | distinguish the representation from its chosen integral lattice     |
 
 The repairs fall into four patterns. Replace points by functors and Hopf algebras; replace cardinality by rank; replace raw closed subschemes by flat or saturated ones; and replace pointwise quotients by represented faithfully flat sheaf quotients. Henselianity, perfection, and one-dimensionality then appear exactly where the relevant repair needs them.
 

@@ -1479,17 +1479,17 @@ The Picard components track $p^r$-torsion line bundles together with compatible 
 
 The following implications summarize where the main assumptions enter.
 
-| Statement | Required hypothesis | Reason |
-|---|---|---|
-| $1\to\mu_n\to\mathbf G_m\xrightarrow{n}\mathbf G_m\to1$ is fppf-exact | any scheme, $n\ge1$ | adjoining a root is finite free |
-| the same sequence is etale-exact | $n$ invertible on the base | $\mu_n$ and root covers are etale |
-| $H^1(X,\mu_n)=\Gamma(X,\mathcal O_X)^\times/(-)^n$ | $\operatorname{Pic}(X)[n]=0$ | degree-one Kummer sequence |
-| $H^2(X,\mu_n)=\operatorname{Br}'(X)[n]$ | $\operatorname{Pic}(X)/n=0$ | degree-two Kummer sequence |
-| $H^q(X,\widetilde M)=0$ for $q>0$ | $X$ affine, $\widetilde M$ quasi-coherent | Amitsur acyclicity |
-| fppf and etale $H^q(X,G)$ agree for every $q$ | $G$ smooth and commutative | smooth change of topology |
-| $A(S)/nA(S)\hookrightarrow H^1(S,A[n])$ | $A/S$ abelian, any $n$ | $[n]$ is finite locally free surjective |
-| a finite group over a field is recovered from geometric points with descent action | coefficient group finite etale | connected infinitesimal structure must be absent |
-| $\operatorname{Br}(X)=\operatorname{Br}'(X)$ | additional geometric hypotheses, or $X$ a field | not true by definition on arbitrary schemes |
+| Statement                                                                          | Required hypothesis                             | Reason                                           |
+| ---------------------------------------------------------------------------------- | ----------------------------------------------- | ------------------------------------------------ |
+| $1\to\mu_n\to\mathbf G_m\xrightarrow{n}\mathbf G_m\to1$ is fppf-exact              | any scheme, $n\ge1$                             | adjoining a root is finite free                  |
+| the same sequence is etale-exact                                                   | $n$ invertible on the base                      | $\mu_n$ and root covers are etale                |
+| $H^1(X,\mu_n)=\Gamma(X,\mathcal O_X)^\times/(-)^n$                                 | $\operatorname{Pic}(X)[n]=0$                    | degree-one Kummer sequence                       |
+| $H^2(X,\mu_n)=\operatorname{Br}'(X)[n]$                                            | $\operatorname{Pic}(X)/n=0$                     | degree-two Kummer sequence                       |
+| $H^q(X,\widetilde M)=0$ for $q>0$                                                  | $X$ affine, $\widetilde M$ quasi-coherent       | Amitsur acyclicity                               |
+| fppf and etale $H^q(X,G)$ agree for every $q$                                      | $G$ smooth and commutative                      | smooth change of topology                        |
+| $A(S)/nA(S)\hookrightarrow H^1(S,A[n])$                                            | $A/S$ abelian, any $n$                          | $[n]$ is finite locally free surjective          |
+| a finite group over a field is recovered from geometric points with descent action | coefficient group finite etale                  | connected infinitesimal structure must be absent |
+| $\operatorname{Br}(X)=\operatorname{Br}'(X)$                                       | additional geometric hypotheses, or $X$ a field | not true by definition on arbitrary schemes      |
 
 The ledger is not merely a list of technicalities. Each hypothesis corresponds to a geometric mechanism: invertibility gives separability, affineness kills quasi-coherent gluing, smoothness produces etale sections, and finite flatness preserves infinitesimal torsion.
 
@@ -1501,10 +1501,10 @@ The theory can now be read as one continuous passage from local solvability to g
 
 For an abelian fppf sheaf $G$:
 
-| Degree | Cohomological object | Geometric meaning |
-|---|---|---|
-| $H^0(X,G)$ | global sections | solutions already defined on $X$ |
-| $H^1(X,G)$ | $G$-torsor classes | locally chosen solutions differing by $G$ |
+| Degree     | Cohomological object        | Geometric meaning                                    |
+| ---------- | --------------------------- | ---------------------------------------------------- |
+| $H^0(X,G)$ | global sections             | solutions already defined on $X$                     |
+| $H^1(X,G)$ | $G$-torsor classes          | locally chosen solutions differing by $G$            |
 | $H^2(X,G)$ | abelian obstruction classes | failure of lifted transition maps on triple overlaps |
 
 For $G=\mathbf G_m$, degree one is $\operatorname{Pic}(X)$ and torsion in degree two is $\operatorname{Br}'(X)$. For $G=\mu_n$, the two decisive sequences are

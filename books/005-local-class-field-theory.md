@@ -2008,7 +2008,7 @@ induction. Both ingredients will also be useful for checking the endpoint conven
 
 **Prime-degree calculation.** Let $L/F$ be cyclic of prime degree $\ell$.
 
-* If $L/F$ is unramified, reduction gives the surjective norm $l^\times\to k^\times$.
+- If $L/F$ is unramified, reduction gives the surjective norm $l^\times\to k^\times$.
   For $r>0$, the congruence
 
   $$
@@ -2020,14 +2020,14 @@ induction. Both ingredients will also be useful for checking the endpoint conven
   U_F^r/U_F^{r+1}$ surjective. Successive lifting and completeness give
   $N(U_L^0)=U_F^0$.
 
-* If $L/F$ is totally and tamely ramified, its residue fields agree. On residue units the
+- If $L/F$ is totally and tamely ramified, its residue fields agree. On residue units the
   norm is $x\mapsto x^\ell$, whose cokernel has order $\ell$ (a tame Galois extension has
   $\ell\mid |k^\times|$). On principal units the trace is onto: the different exponent is
   $\ell-1$, so the trace-ideal formula of Book 3 gives
   $\operatorname{Tr}(\mathfrak m_L^{\ell r})=\mathfrak m_F^r$; the same congruence and
   successive lifting give $N(U_L^1)=U_F^1$. Thus the only defect is the tame break at $0$.
 
-* Suppose $\ell=p=\operatorname{char}k$ and $L/F$ is totally ramified. Its group has one
+- Suppose $\ell=p=\operatorname{char}k$ and $L/F$ is totally ramified. Its group has one
   lower (and upper) break $b\geq1$. Choose a generator $\sigma$, a uniformizer $z$, and write
 
   $$

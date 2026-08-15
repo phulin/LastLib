@@ -1584,18 +1584,18 @@ At a prime $q\nmid6M$, the maximal local order is split and hyperspecial, so the
 
 The constructions can now be summarized without erasing their hypotheses.
 
-| Input | Modular curve | Quaternionic Shimura curve |
-|---|---|---|
-| Basic object | elliptic curve $E$ | PEL abelian scheme $(A,\iota,\lambda)$, or canonical quaternionic datum |
-| Level | basis, point, or cyclic finite locally free subgroup | compact-open orbit of Tate-module trivializations; equivalently stable PEL isogeny data locally |
-| Rigidity | full $N\geq3$ or $\Gamma_1(N)\geq4$ away from $N$ | neat compact open |
-| Nonfine case | stack plus coarse curve; $\Gamma_0$ retains $[-1]$ | stack plus coarse curve; universal abelian scheme remains on the stack |
-| Complex domain | $\mathfrak H$ modulo a congruence group | $\mathfrak H$ from the unique split real place |
-| Components | determinant and Weil-pairing data | reduced-norm or similitude class group |
-| Boundary | cusps represented by Néron polygons | none when $B$ is division |
-| Local boundary coordinate | Tate parameter $q_c$ determined by cusp width | not applicable |
-| Good integral model | smooth proper over primes away from level | smooth at unramified self-dual hyperspecial places, and proper under Theorem 14.1's additional alternatives |
-| Selected bad model | squarefree $\Gamma_0(p)$ gives two semistable branches under rigid hypotheses | split Iwahori local model under the flat rank-two hypotheses; ramified algebra places are not constructed here |
+| Input                     | Modular curve                                                                 | Quaternionic Shimura curve                                                                                     |
+| ------------------------- | ----------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Basic object              | elliptic curve $E$                                                            | PEL abelian scheme $(A,\iota,\lambda)$, or canonical quaternionic datum                                        |
+| Level                     | basis, point, or cyclic finite locally free subgroup                          | compact-open orbit of Tate-module trivializations; equivalently stable PEL isogeny data locally                |
+| Rigidity                  | full $N\geq3$ or $\Gamma_1(N)\geq4$ away from $N$                             | neat compact open                                                                                              |
+| Nonfine case              | stack plus coarse curve; $\Gamma_0$ retains $[-1]$                            | stack plus coarse curve; universal abelian scheme remains on the stack                                         |
+| Complex domain            | $\mathfrak H$ modulo a congruence group                                       | $\mathfrak H$ from the unique split real place                                                                 |
+| Components                | determinant and Weil-pairing data                                             | reduced-norm or similitude class group                                                                         |
+| Boundary                  | cusps represented by Néron polygons                                           | none when $B$ is division                                                                                      |
+| Local boundary coordinate | Tate parameter $q_c$ determined by cusp width                                 | not applicable                                                                                                 |
+| Good integral model       | smooth proper over primes away from level                                     | smooth at unramified self-dual hyperspecial places, and proper under Theorem 14.1's additional alternatives    |
+| Selected bad model        | squarefree $\Gamma_0(p)$ gives two semistable branches under rigid hypotheses | split Iwahori local model under the flat rank-two hypotheses; ramified algebra places are not constructed here |
 
 This table is a map, not a replacement for the construction. In particular, “level” means finite étale data only where its order is invertible; “good” includes every part of the datum; and a coarse curve never silently acquires a universal object.
 

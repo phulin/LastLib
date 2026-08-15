@@ -1018,12 +1018,11 @@ $$
 \operatorname{Gal}(F_{z,N}/K).
 $$
 
-
 The analytic distribution step is Book 142's Chebotarev theorem, with its complete proof and
-normalizations.  The matching is exact: $F_{z,N}/K$ is finite Galois; the constructed element
+normalizations. The matching is exact: $F_{z,N}/K$ is finite Galois; the constructed element
 specifies one conjugacy class; arithmetic Frobenius is used on both sides; and the finite set to
-be removed contains the ramified, coefficient-prime, and previously selected places.  Density
-only distributes this already compatible class.  It does not create the detector or repair an
+be removed contains the ramified, coefficient-prime, and previously selected places. Density
+only distributes this already compatible class. It does not create the detector or repair an
 empty fiber product.
 
 The following consequences are cited directly from Book 142 and used in the Taylor--Wiles
@@ -1035,13 +1034,11 @@ Its character-weighted consequence is the holomorphy at $s=1$ used in the former
 
 **Lemma 6.2 (nonvanishing and prime sums in an abelian extension).** Book
 142, Theorem 5.1 gives the finite-order character prime sum after Book 142, Sections 5.2--5.3
-prove holomorphy and nonvanishing at one.  Applied through reciprocity to a finite abelian
+prove holomorphy and nonvanishing at one. Applied through reciprocity to a finite abelian
 extension $D/B$, it gives
 
-$$
-\sum_{w\text{ unramified in }D}
-\frac{\chi(\operatorname{Frob}_w)}{(\mathrm Nw)^s}
-=
+# $$\sum_{w\text{ unramified in }D}\frac{\chi(\operatorname{Frob}_w)}{(\mathrm Nw)^s}
+
 \begin{cases}
 \log(1/(s-1))+O(1),&\chi=1,\\
 O(1),&\chi\ne1.
@@ -1055,17 +1052,17 @@ $\operatorname{Frob}_w=a$ have Dirichlet density $1/|A|$.
 **Theorem 6.4 (finite Galois Frobenius selection).** Book 142, Theorem 9.1
 is stronger than the form used here: for a finite Galois extension $F/K$ and a conjugacy class
 $C\subseteq\operatorname{Gal}(F/K)$, the primes with arithmetic Frobenius class $C$ have
-Dirichlet density $|C|/|\operatorname{Gal}(F/K)|$.  Book 142, Corollary 10.1 permits deletion of
+Dirichlet density $|C|/|\operatorname{Gal}(F/K)|$. Book 142, Corollary 10.1 permits deletion of
 any finite set.
 
-For simultaneous conditions, form the compositum of the finitely many Galois extensions.  The
+For simultaneous conditions, form the compositum of the finitely many Galois extensions. The
 successive agreement-on-intersections criterion of Lemma 4.1 proves that the desired subset of
-the compositum Galois group is nonempty.  Choose one conjugacy class in it and apply Book 142,
-Theorem 9.1.  Thus residual conjugacy, cyclotomic identity, cocycle translation, complete
+the compositum Galois group is nonempty. Choose one conjugacy class in it and apply Book 142,
+Theorem 9.1. Thus residual conjugacy, cyclotomic identity, cocycle translation, complete
 splitting in auxiliary fields, and compatible avoidance conditions are realized together.
 
 Apply this imported theorem to $F_{z,N}/K$ and the class constructed in Lemma 5.2. Removing
-finitely many further primes preserves positive density.  This is the only Chebotarev use in the
+finitely many further primes preserves positive density. This is the only Chebotarev use in the
 Taylor--Wiles selection proof.
 
 ### 6.2 The one-class prime-selection theorem
@@ -2091,15 +2088,11 @@ $$
 
 The localization matrix is
 
-$$
-\begin{pmatrix}
-\lambda_1(x_1)&\lambda_1(x_2)\\
-\lambda_2(x_1)&\lambda_2(x_2)
-\end{pmatrix}
-=
+# $$\begin{pmatrix}\lambda_1(x_1)&\lambda_1(x_2)\\\lambda_2(x_1)&\lambda_2(x_2)\end{pmatrix}
+
 \begin{pmatrix}
 *&0\\
-*&*
+_&_
 \end{pmatrix},
 \tag{11.6}
 $$
