@@ -903,6 +903,100 @@ localizations vanish, (4.I9b) makes the original class zero. This proves
 (4.I9b'). Notice that neither assertion yet identifies the image of
 localization or uses a sum of invariants.
 
+**Cyclotomic splitting and principal reciprocity.** Let $F$ be a number field,
+let $S$ be a finite set of its places, and prescribe positive integers $m_v$
+for $v\in S$, with $m_v=1$ at a complex place and $m_v\mid2$ at a real
+place. There is a cyclic extension $E/F$, contained in
+$F(\mu_N)$ for some $N$, such that
+
+$$
+m_v\mid [E_w:F_v]\qquad(v\in S).                         \tag{4.I9c}
+$$
+
+To see this without an existence theorem, first work over $\mathbf Q$. For each
+prime $p$ dividing $\operatorname {lcm}_{v\in S}m_v$, take a cyclic
+$p$-power quotient of $\operatorname {Gal}(\mathbf Q(\mu_{p^a})/\mathbf Q)$.
+For odd $p$ use its $p$-Sylow quotient. For $p=2$, use a cyclic quotient of
+order $2^{a-2}$ on which complex conjugation is nontrivial if a real place
+must acquire even local degree. The elementary decompositions
+
+$$
+(\mathbf Z/p^a\mathbf Z)^\times\simeq
+\mu_{p-1}\times(1+p\mathbf Z_p)/(1+p^a\mathbf Z_p)
+$$
+
+for odd $p$, and
+$(\mathbf Z/2^a\mathbf Z)^\times\simeq C_2\times C_{2^{a-2}}$
+show that the local degree at every fixed finite rational prime tends to
+infinity in its $p$-part as $a\to\infty$. At $p$ this is total ramification; away
+from $p$ it follows because the order of a fixed rational prime in the
+principal-unit quotient tends to infinity (the valuation of
+$q^{p-1}-1$, or of $q^2-1$ for $p=2$, is fixed). The selected fields for
+distinct $p$ have coprime degrees, so their compositum is cyclic.
+
+Now take the compositum with $F$. For $v\mid q$,
+
+$$
+[F_vL_q:F_v]=[L_q:F_v\cap L_q].
+$$
+
+The intersection degree is bounded by $[F_v:\mathbf Q_q]$. Choosing the
+rational local $p$-parts larger by
+$v_p([F_v:\mathbf Q_q])$ therefore gives (4.I9c). This construction used
+only cyclotomic fields and the elementary structure of their Galois groups.
+
+For every cyclotomic extension $L/\mathbf Q$, the product of the local Artin
+maps kills $\mathbf Q^\times$. It is enough, by the Chinese remainder
+decomposition, to check $L=\mathbf Q(\mu_{\ell^a})$ and the generators
+$-1,\ell$, and the rational primes $q\ne\ell$ of
+$\mathbf Q^\times$. The explicit cyclotomic local reciprocity calculation of
+Book 5 gives
+
+$$
+\operatorname {Art}_q(q):\zeta\longmapsto\zeta^q,
+\qquad
+\operatorname {Art}_{\ell}(q):\zeta\longmapsto\zeta^{q^{-1}}.
+                                                               \tag{4.I9d}
+$$
+
+All other finite factors are trivial. A uniformizer $\ell$ acts trivially on
+the totally ramified cyclotomic extension, and the two factors for $-1$ are
+complex conjugation at infinity and its inverse at $\ell$. Thus the factors
+cancel on each generator. Passing to a subfield proves the assertion for
+every cyclic cyclotomic extension of $\mathbf Q$.
+
+If $E=FL$ and $a\in F^\times$, local norm compatibility gives
+
+$$
+\prod_{v\mid q}\operatorname {Art}_{E/F,v}(a)
+=\operatorname {Art}_{L/\mathbf Q,q}
+ \left(\prod_{v\mid q}N_{F_v/\mathbf Q_q}(a)\right)
+                                                               \tag{4.I9e}
+$$
+
+after restriction to $\operatorname {Gal}(E/F)$. Multiplying over $q$
+turns the argument on the right into the principal idele of
+$N_{F/\mathbf Q}(a)$. The rational calculation therefore proves
+
+$$
+\prod_v\operatorname {Art}_{E/F,v}(a)=1.                     \tag{4.I9f}
+$$
+
+The same holds for every subextension of $E/F$.
+
+Finally let $E/F$ be cyclic cyclotomic. Local norms lie in the kernel of the
+product of local Artin maps, and (4.I9f) makes it a homomorphism
+
+$$
+C_F/N_{E/F}C_E\longrightarrow\operatorname {Gal}(E/F).          \tag{4.I9g}
+$$
+
+It is onto because the unramified Frobenius elements generate the Galois
+group by the splitting-separation lemma. Its source has order at most
+$[E:F]$ by (4.I7), so (4.I9g) is an isomorphism. This proves finite
+reciprocity for the cyclotomic extensions used in (4.I9c), without global
+existence, finite duality, or a global fundamental class.
+
 We now pass to the stronger normalization assertion for arbitrary $G$. We use
 the following tower calculation, whose normalization is important.
 
