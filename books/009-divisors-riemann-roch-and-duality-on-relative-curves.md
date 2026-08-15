@@ -104,9 +104,9 @@ Dimension one also forces coherent cohomology into degrees $0$ and $1$. A proper
 
 There is also a useful tension between local and global reasoning. Orders of vanishing, Cartier equations, and residues are checked in one-dimensional local rings. Degree, linear equivalence, and the existence of a differential with prescribed poles are global matters. Completeness is what joins the two scales: on an affine curve a rational function may have one uncompensated pole at the missing boundary, whereas on a proper curve every local contribution participates in a global balance. Throughout the book, exact sequences are the mechanism that makes this passage visible. Their quotient terms are supported at finitely many points, so a global change can be measured by a finite sum of local lengths or residues.
 
-The relative dimension-one condition suggests a two-term character. Under the perfect-pushforward
-prerequisite stated later in Section 13.1, the cohomology of a line bundle in a projective flat
-family is locally represented by a map between two finite free modules. Kernels may jump,
+The relative dimension-one condition suggests a two-term character. Section 13.1 proves that
+the cohomology of a vector bundle in a projective flat family is locally represented by a map
+between two finite free modules. Kernels may jump,
 cokernels may jump, but their rank difference does not. This is the algebra beneath
 semicontinuity, base change, and relative Riemann--Roch.
 
@@ -148,21 +148,21 @@ powers of smooth relative curves.
 Whenever a relative statement needs projectivity rather than properness alone, that hypothesis is
 stated in the theorem.
 
-There is one further foundation boundary, which is especially important in the second half of
-the book. Books 1--8 do not construct derived categories of coherent sheaves, exceptional
-inverse images, or Grothendieck duality. Consequently the **curve-duality package** recorded
-precisely in Sections 9.2--9.3 is an imported prerequisite, not a theorem proved here. Statements
-about dualizing sheaves, traces, perfect Serre pairings, embedding independence, or arbitrary
-base change are conditional on that package. The separate **perfect-pushforward package** in
-Section 13.1 is likewise imported. By contrast, the divisor calculation
+The second half needs more homological algebra than the preceding books. We develop the required
+dimension-one portion rather than assuming a general exceptional-inverse-image formalism.
+The proof has three concrete ingredients: finite locally free resolutions on projective space,
+the Čech coefficient pairing for projective-space duality, and concentration of the dual
+resolution in the codimension prescribed by Cohen--Macaulayness. The same complexes over a
+base prove relative duality, embedding independence, perfect pushforward, and arbitrary base
+change. The divisor calculation
 
 $$
 \chi(\mathcal O_X(D))-\chi(\mathcal O_X)=\deg D
 $$
 
-and the resulting Euler-characteristic form of Riemann--Roch use neither package. This boundary
-will be repeated at the points where a conditional result is first used, so that numerical
-Riemann--Roch is not made to depend circularly on duality.
+and the resulting Euler-characteristic form of Riemann--Roch do not use duality. We preserve
+this separation so that numerical Riemann--Roch is not made to depend circularly on the theorem
+which later supplies its symmetric form.
 
 ## 2. Cartier divisors
 
@@ -631,7 +631,7 @@ K_X=\operatorname{div}(\eta).
 $$
 
 Changing $\eta$ to $f\eta$ adds $\operatorname{div}(f)$, so the canonical divisor class is
-independent of the differential. Assuming the duality package, Riemann--Roch will give
+independent of the differential. Riemann--Roch and duality will give
 
 $$
 \deg\omega_X=2g-2.
@@ -674,7 +674,7 @@ At the cusp $k[[t^2,t^3]]$, the image of ordinary differentials inside $k[[t]]dt
 
 Duality calls for a different object: the Rosenlicht sheaf, which allows controlled poles on the
 normalization whose residues cancel across branches. It is invertible at a node even though
-$\Omega^1$ is not; the imported curve-duality package identifies it with the dualizing sheaf.
+$\Omega^1$ is not; Sections 9--12 identify it with the dualizing sheaf.
 
 ## 8. Residues
 
@@ -814,7 +814,7 @@ coefficients.
 
 For a purely inseparable map, ordinary field trace can be zero and does not define the required
 map on Kähler differentials. The elementary finite-module trace on the local dualizing modules
-remains meaningful. The imported finite-morphism duality clause in Section 9.2 is what globalizes
+remains meaningful. The finite-morphism duality theorem in Section 9.2 globalizes
 these local maps for arbitrary finite maps of proper Cohen--Macaulay curves. This is why later
 functoriality is formulated through dualizing sheaves rather than only through field traces.
 
@@ -842,58 +842,167 @@ a perfect pairing for coherent $\mathcal F$. For a vector bundle $\mathcal E$, t
 
 ### 9.2 Dualizing sheaves on proper curves
 
-We now state the absolute part of the imported curve-duality package. Let $X$ be a proper
-Cohen--Macaulay curve over $k$. The package asserts that the structural morphism has a dualizing
-complex, concentrated in one sheaf degree,
+**Theorem 9.1 (absolute curve duality).** A proper Cohen--Macaulay curve $X/k$ has a maximal
+Cohen--Macaulay dualizing sheaf $\omega_X$ and a trace
+$H^1(X,\omega_X)\to k$ for which (9.6) is functorial and perfect for every bounded coherent
+complex. The trace-compatible pair is independent of every projective embedding. Finite maps
+of such curves have the transitive trace (9.8).
+
+**Proof.** We reduce the theorem to an explicit calculation on projective
+space. We use bounded complexes only in the following elementary sense: replace a coherent
+sheaf by a finite complex of vector bundles, apply $\mathcal Hom$ term by term, and identify
+complexes which differ by an exact complex. The comparison theorem for projective resolutions
+shows that the result is independent of the chosen resolution.
+
+First consider $P=\mathbf P^N_k$. The standard affine cover gives the homogeneous Čech complex.
+For a twist $\mathcal O_P(a)$ its top Čech term consists of Laurent monomials of total degree
+$a$ in which every $X_i$ may be inverted. Multiplication followed by extraction of the
+coefficient of
 
 $$
-p^!k\simeq\omega_X[1],
+(X_0X_1\cdots X_N)^{-1}
 $$
 
-where $\omega_X$ is a coherent maximal Cohen--Macaulay sheaf. It also supplies a counit
-$Rp_*p^!k\to k$ and, for every $\mathcal F\in D^b_{\mathrm{coh}}(X)$, the functorial isomorphism
+gives a pairing of complexes
+
+$$
+C^\bullet(\mathcal O_P(a))\otimes
+C^{N-\bullet}(\mathcal O_P(-a-N-1))\longrightarrow k[-N]. \tag{9.1}
+$$
+
+Indeed the Čech complex splits as a direct sum indexed by exponent vectors. The summand for a
+fixed exponent is the augmented simplex on the variables whose exponents allow inversion, so
+it is contracted by inserting the least available variable unless it lies in degree $0$ or in
+the unique top-degree range. Only finitely many exponent summands survive. A monomial $X^u$ in
+a surviving summand pairs with the unique monomial $X^{-u-(1,\ldots,1)}$ on the other side;
+the contracted summands pair with contracted summands. Thus (9.1) retracts to a perfect pairing
+of finite-dimensional cohomology complexes and proves perfectness, not merely equality of
+dimensions. Direct sums and total complexes extend (9.1) to every bounded complex
+$E^\bullet$ of vector bundles:
+
+$$
+R\operatorname{Hom}_k(R\Gamma(P,E^\bullet),k)
+\simeq
+R\Gamma\!\left(P,
+\mathcal Hom(E^\bullet,\omega_P[N])\right),
+\qquad \omega_P=\mathcal O_P(-N-1). \tag{9.2}
+$$
+
+Here a vector bundle is resolved by sums of twists: twist until it is generated by global
+sections, take the kernel, and repeat. Termination is local algebra. The homogeneous coordinate
+ring is the polynomial ring $R=k[X_0,\ldots,X_N]$. Here is the syzygy argument. A finitely
+generated graded module has a minimal graded free resolution: at each stage choose homogeneous
+lifts of a basis of the kernel modulo the irrelevant ideal. Every matrix in that resolution
+has entries in the irrelevant ideal, so tensoring with $k=R/(X_0,\ldots,X_N)$ kills all
+differentials. The Koszul complex on $X_0,\ldots,X_N$ is a free resolution of $k$ of length
+$N+1$; its exactness follows by successively contracting multiplication by each $X_i$.
+Computing Tor with this Koszul resolution gives
+$\operatorname{Tor}^R_j(k,M)=0$ for $j>N+1$. Computing it with the minimal resolution identifies
+the same group with its $j$th free module tensored with $k$. Graded Nakayama therefore makes
+every term above $N+1$ zero. Sheafifying gives a finite resolution by sums of twists; irrelevant
+torsion sheafifies to zero. The same argument resolves every coherent sheaf on $P$.
+
+Let now $i:X\hookrightarrow P$ be a projective embedding of a proper Cohen--Macaulay curve and
+put $c=N-1$. Choose a finite locally free resolution $E^\bullet\to i_*\mathcal O_X$. At every
+$x\in X$, the local codimension in $P$ is $c$ and Cohen--Macaulayness says
+$\operatorname{depth}\mathcal O_{X,x}=\dim\mathcal O_{X,x}$. The elementary depth lemma
+applied successively to a shortest free resolution gives
+
+$$
+\operatorname{pd}_{\mathcal O_{P,x}}\mathcal O_{X,x}
+=N-1=c. \tag{9.3}
+$$
+
+For completeness, the Ext concentration used next follows by induction on
+$\dim\mathcal O_{X,x}$. In dimension zero, devissage by a composition series reduces to the
+residue field of a regular local ring, whose Koszul resolution has dual cohomology only in top
+degree. In positive dimension choose a regular parameter which is also regular on the
+Cohen--Macaulay module. (After adjoining an indeterminate the residue field is infinite, so
+prime avoidance supplies it; faithful flatness descends the conclusion.) The two short exact
+sequences given by multiplication by this element identify adjacent Ext groups with those for
+the quotient. Induction shifts the unique nonzero degree by the codimension, which is unchanged.
+Thus the dual complex $\mathcal Hom(E^\bullet,\omega_P)$ has cohomology only in degree $c$.
+Define the coherent sheaf $\omega_X$ by
+
+$$
+i_*\omega_X=
+\mathcal Ext^c_P(i_*\mathcal O_X,\omega_P). \tag{9.4}
+$$
+
+The same local computation shows that $\omega_X$ has depth one at every closed point, hence is
+maximal Cohen--Macaulay.
+
+For a coherent $\mathcal F$ on $X$, resolve $i_*\mathcal F$ on $P$ and compare it with the
+tensor product of $E^\bullet$ and a presentation of $\mathcal F$. Evaluation of the two Hom
+complexes gives the change-of-rings quasi-isomorphism
+
+$$
+R\mathcal Hom_P(i_*\mathcal F,\omega_P[N])
+\simeq
+i_*R\mathcal Hom_X(\mathcal F,\omega_X[1]). \tag{9.5}
+$$
+
+To see that no Ext term is hidden, filter the double Hom complex by the $E$-degree. Its first
+cohomology page is
+$\mathcal Ext^q_P(i_*\mathcal O_X,\omega_P)$, which vanishes for $q\ne c$ by (9.3); the sole
+row is $\mathcal Hom_X(-,\omega_X)$ and the filtration therefore collapses. Combining (9.2)
+and (9.5) proves, functorially,
 
 $$
 R\operatorname{Hom}_k(R\Gamma(X,\mathcal F),k)
 \simeq
-R\operatorname{Hom}_X(\mathcal F,\omega_X[1]). \tag{9.2}
+R\operatorname{Hom}_X(\mathcal F,\omega_X[1]). \tag{9.6}
 $$
 
-In particular, for every zero-dimensional coherent sheaf $\mathcal T$ it gives
+For $\mathcal F=\mathcal O_X$, the coefficient functional in (9.1) induces the trace
+$H^1(X,\omega_X)\to k$. For a zero-dimensional coherent sheaf $\mathcal T$, taking
+cohomology gives
 
 $$
 \operatorname{Ext}^1_X(\mathcal T,\omega_X)
-\simeq H^0(X,\mathcal T)^\vee, \tag{9.1}
+\simeq H^0(X,\mathcal T)^\vee. \tag{9.7}
 $$
 
-together with the trace and the full perfect pairing described above.
+Taking cohomology for general $\mathcal F$ gives the perfect pairings of Section 9.1.
 
-For orientation, a projective embedding $i:X\hookrightarrow\mathbf P^N_k$ suggests the familiar
-formula
+The construction is independent of the embedding. The pair $(\omega_X,\operatorname{tr})$
+represents the functor
 
 $$
-i_*\omega_X=
-\mathcal Ext^{N-1}_{\mathbf P^N}
-(i_*\mathcal O_X,\omega_{\mathbf P^N}).
+\mathcal F\longmapsto
+R\operatorname{Hom}_k(R\Gamma(X,\mathcal F),k)[-1].
 $$
 
-That formula alone does not prove (9.2). The imported theorem includes the ingredients needed to
-justify it: bounded finite locally free resolutions in the required range, projective-space
-duality, the pure-codimension change-of-rings isomorphism, identification of derived sheaf Hom
-with the displayed Ext sheaf, and compatibility with the counit. It further proves that the
-resulting pair $(\omega_X,\operatorname{tr})$ is independent of the embedding, uniquely up to
-the unique trace-compatible isomorphism. These are part of the prerequisite; the short Ext
-formula is only a useful model for its output.
+If a second embedding produces $(\omega'_X,\operatorname{tr}')$, applying the two representing
+isomorphisms to the identity of either object gives mutually inverse maps
+$\omega_X\leftrightarrows\omega'_X$. Naturality makes them trace-compatible, and the same
+argument shows uniqueness. For three embeddings these unique maps satisfy the cocycle
+condition automatically.
 
-For $\mathcal F=\mathcal O_X$, the counit induces the trace
-$H^1(X,\omega_X)\to k$. For a zero-dimensional $\mathcal T$, taking cohomology in (9.2) gives
-(9.1), and taking cohomology for general $\mathcal F$ gives the full perfect pairing. Nothing in
-the elementary divisor arguments before this chapter proves those assertions.
+Finally let $\pi:Y\to X$ be finite between proper Cohen--Macaulay curves. Affine-locally, for
+$A\to B$ finite and an $A$-module $W$, the adjunction
 
-The absolute package also includes transitivity for a finite morphism $\pi:Y\to X$ of proper
-Cohen--Macaulay curves: it identifies
-$\pi_*\omega_Y$ with $\mathcal Hom_X(\pi_*\mathcal O_Y,\omega_X)$ and identifies the counit with
-evaluation at $1$. This is the finite-duality input used for the trace in Section 12.4.
+$$
+\operatorname{Hom}_A(M,W)
+\simeq
+\operatorname{Hom}_B(M,\operatorname{Hom}_A(B,W))
+$$
+
+is evaluation/currying. Applying it to finite resolutions and using uniqueness of the
+representing pair gives
+
+$$
+\pi_*\omega_Y\simeq
+\mathcal Hom_X(\pi_*\mathcal O_Y,\omega_X), \tag{9.8}
+$$
+
+and the trace is evaluation at $1$. This proves the finite-morphism compatibility used in
+Sections 8.4 and 12.4. In a tower $A\to B\to C$, currying identifies
+$\operatorname{Hom}_B(C,\operatorname{Hom}_A(B,W))$ with
+$\operatorname{Hom}_A(C,W)$ by $\phi\mapsto(c\mapsto\phi(c)(1_B))$. Evaluation first at
+$1_C$ and then at $1_B$ is therefore direct evaluation at $1_C$. Thus these traces are
+transitive.
+$\square$
 
 The Cohen--Macaulay hypothesis excludes embedded zero-dimensional components. Without it, duality is represented by more than one sheaf degree; a single $\omega_X$ cannot encode the whole theory. Pure reduced curves are Cohen--Macaulay because every local ring has dimension one and a function avoiding the finitely many minimal primes is a non-zero-divisor.
 
@@ -913,78 +1022,123 @@ nonvanishing witnesses persists after shrinking the base, so $\mathcal O(D)$ is 
 there. Book 8 then supplies a projective embedding. This applies in particular to smooth and
 nodal families and does not use Riemann--Roch.
 
-Let $f:X\to S$ be a proper flat finitely presented Cohen--Macaulay morphism of pure relative
-dimension one, with $S$ locally noetherian. The relative part of the imported curve-duality
-package asserts all of the following.
+The same local projectivity conclusion holds for Cohen--Macaulay fibers which are not reduced.
+Choose closed points away from the finite set of associated points on each component and use
+prime avoidance to obtain a finite relative Cartier multisection after a faithfully flat
+finite-presentation extension of the base. Its degree on every reduced component is positive.
+The complement is affine: on the reduction this is the affine-nonvanishing criterion, and a
+nilpotent thickening of an affine scheme is affine because its structure sheaf is obtained by a
+finite filtration of quasi-coherent ideals. Hence the associated Cartier line bundle is ample.
+Taking finitely many powers separates the multisection and its affine complement, giving the
+projective embedding. All choices are needed only on a cover of the base.
 
-**Exceptional inverse image and trace.** The exceptional inverse image of the structure sheaf is
-concentrated in one degree:
+**Theorem 9.2 (relative curve duality).** Let $f:X\to S$ be a proper flat finitely presented
+Cohen--Macaulay morphism of pure relative dimension one, with $S$ locally noetherian. There is
+an $S$-flat coherent sheaf $\omega_{X/S}$ with trace (9.12) and functorial duality (9.11).
+The sheaf, trace, and pairing are independent of projective embeddings and commute with every
+base change $S'\to S$ as in (9.10).
+
+**Proof.** We work locally on $S$, where
+the preceding projectivity argument supplies an embedding
+$i:X\hookrightarrow P=\mathbf P^N_S$. Put $c=N-1$.
+
+We first record the relative form of the two algebraic ingredients used above. Over an affine
+$\operatorname{Spec}A\subseteq S$, the exponentwise contractions used after (9.1) are defined
+with coefficients $0,1,-1$. They therefore retract the Čech complexes to finite free
+$A$-complexes and are unchanged after tensoring with any $A$-algebra. The surviving monomials
+pair perfectly. Consequently projective-space duality holds over $A$ and commutes with arbitrary
+base change.
+
+Next, $i_*\mathcal O_X$ has a finite locally free resolution on $P$ which remains a resolution
+after every base change. Construct it by successive surjections from finite sums of twists. In
+a sequence $0\to K\to F\to M\to0$ with $F$ locally free and $M$ flat over $S$, the kernel is
+$S$-flat. On every geometric fiber, the depth calculation (9.3) says that after $c$ steps the
+kernel is locally free. The fiberwise local-freeness criterion for a finitely presented flat
+module then makes that kernel locally free before base change. Exactness after arbitrary base
+change follows because every successive cokernel is $S$-flat. Denote the resulting resolution
+by $E^\bullet$.
+
+The criterion just used is elementary. Lift a basis of a fiber to obtain a map from a finite
+free module. Nakayama makes it surjective near the point. Its kernel remains flat over the base
+by the Tor sequence, and its fiber is zero; Nakayama again makes the kernel zero after shrinking.
+The same Tor sequence shows that a short exact sequence whose quotient is base-flat remains
+exact after every base change.
+
+Dualize $E^\bullet$ against $\omega_{P/S}$. On every geometric fiber its cohomology is
+concentrated in degree $c$. The kernels and images in the dual complex are $S$-flat, by the
+same local flatness criterion applied successively from its two ends. Hence fiberwise exactness
+lifts to exactness on $P$, and tensoring with an arbitrary $S'$ preserves it. Define
 
 $$
-f^!\mathcal O_S\simeq\omega_{X/S}[1]
+i_*\omega_{X/S}=
+\mathcal Ext^c_P(i_*\mathcal O_X,\omega_{P/S}). \tag{9.9}
 $$
 
-for an $S$-flat coherent sheaf $\omega_{X/S}$, and the counit gives a trace
+This sheaf is $S$-flat. The dual resolution also proves, without a Tor spectral sequence, that
+for every $g:S'\to S$,
 
 $$
-\operatorname{tr}_f:R^1f_*\omega_{X/S}\longrightarrow\mathcal O_S. \tag{9.3}
+Lg'^*\omega_{X/S}=g'^*\omega_{X/S}
+\xrightarrow{\sim}\omega_{X_{S'}/S'}. \tag{9.10}
 $$
 
-**Relative duality.** For every vector bundle $\mathcal E$ on $X$, cup product and the derived
-trace give a functorial quasi-isomorphism
+For a vector bundle $\mathcal E$ on $X$, the same construction resolves $i_*\mathcal E$.
+Relative projective-space duality and the one-row change-of-rings calculation (9.5) give
 
 $$
 R f_*(\mathcal E^\vee\otimes\omega_{X/S})[1]
 \simeq
-R\mathcal Hom_S(Rf_*\mathcal E,\mathcal O_S). \tag{9.4}
+R\mathcal Hom_S(Rf_*\mathcal E,\mathcal O_S). \tag{9.11}
 $$
 
-**Base change.** For every morphism $g:S'\to S$, writing $g':X_{S'}\to X$ and
-$f':X_{S'}\to S'$, the Tor-independent base-change isomorphism (Tor-independence follows here
-from the flatness of $f$) identifies
+All objects here are represented locally by the finite resolutions and finite Čech complexes
+just constructed. Thus (9.11) is an isomorphism of explicit bounded complexes, not an appeal to
+an undeveloped exceptional inverse-image theory.
+
+For $\mathcal E=\mathcal O_X$, evaluation followed by the top Čech coefficient functional gives
+the counit. In degree one it is the trace
 
 $$
-Lg'^*\omega_{X/S}\simeq\omega_{X_{S'}/S'}, \tag{9.5}
+\operatorname{tr}_f:R^1f_*\omega_{X/S}\longrightarrow\mathcal O_S. \tag{9.12}
 $$
 
-It carries the trace and (9.4) to their counterparts for $f'$. Since $\omega_{X/S}$ is
-$S$-flat, the left side is the ordinary pullback.
+The tensor compatibility of the Čech pairing shows directly that (9.10), the trace, and (9.11)
+commute with arbitrary base change. They are transitive because tensor product is associative.
 
-**Independence and descent.** These identifications are transitive in $S'\to S$ and agree with
-the absolute package on fibers. If the construction is made after choosing projective embeddings
-on a cover of $S$, the comparison isomorphisms are trace-compatible and satisfy the cocycle
-condition, so both the sheaf and trace descend and are independent of all embeddings.
-
-For a projective embedding $i:X\hookrightarrow P=\mathbf P^N_S$, the expected concrete output is
+It remains to remove the embedding. Exactly as over a field, $(\omega_{X/S}[1],\operatorname{tr}_f)$
+represents the functor
 
 $$
-i_*\omega_{X/S}=
-\mathcal Ext^{N-1}_{P}
-(i_*\mathcal O_X,\omega_{P/S}).
+\mathcal E\longmapsto
+R\mathcal Hom_S(Rf_*\mathcal E,\mathcal O_S)
 $$
 
-As in the absolute case, writing this Ext sheaf is not a proof of the package. A proof must
-establish relative perfection and pure codimension, derived change of rings, the trace and its
-functoriality, Tor-independent base change, embedding independence, and effective descent with
-the cocycle condition. Those are precisely the imported assertions above. The geometrically
-reduced hypothesis used in the preceding projectivity discussion is useful for constructing
-local polarizations, but is not part of this duality package. Flatness and relative
-Cohen--Macaulayness are what make (9.5) an arbitrary-base-change statement in this bounded
-setting.
+on vector bundles, and finite presentations extend the representation to bounded coherent
+complexes which are perfect over $S$. Two embeddings therefore yield a unique trace-compatible
+isomorphism. Uniqueness gives the cocycle condition on triple overlaps, so the local sheaves and
+traces descend. The descent used here is the elementary module equalizer: for a faithfully flat
+$A\to B$ and a $B$-module with a cocycle, take the equalizer of its two pullbacks to
+$B\otimes_A B$. After tensoring with $B$, the first three terms of the Amitsur complex are
+contracted by multiplication in the extra tensor factor, so faithful flatness proves that the
+equalizer pulls back to the original module. Apply this on affine opens and glue. Finite
+presentation, flatness, and the displayed maps descend because they can be checked after the
+faithfully flat pullback. It also makes the base-change isomorphisms independent of every
+resolution and embedding. This proves relative duality, trace, embedding independence, and
+arbitrary base change in the stated Cohen--Macaulay relative-curve setting.
+$\square$
 
 ### 9.4 Smooth and Gorenstein families
 
-The conclusions in this section are conditional on the imported package of Section 9.3. If $f$
-is smooth of relative dimension one, compatibility of that package with smooth duality identifies
+If $f$ is smooth of relative dimension one, the construction of Section 9.3 identifies
 
 $$
 \omega_{X/S}\simeq\Omega^1_{X/S}.
 $$
 
-The local calculation on an étale coordinate chart, where both candidates are freely generated by
-$dt$, identifies the underlying line bundles and their residue functionals. The imported
-compatibility with the global trace is still needed to identify this local candidate with
-$f^!\mathcal O_S[-1]$.
+Indeed, on an étale coordinate chart both candidates are freely generated by $dt$. Resolve the
+diagonal in the product of the chart with the affine line: its conormal generator $t_1-t_2$
+dualizes to $dt$. The coefficient trace of Section 9.3 is the residue coefficient in this
+coordinate, so these local identifications preserve trace. Uniqueness in Section 9.3 glues them.
 
 The morphism $f$ is **Gorenstein** when it is flat and its fibers have Gorenstein local rings, equivalently in this setting when $\omega_{X/S}$ is invertible. A relative local complete intersection of pure dimension one is Gorenstein. In particular, a family locally given inside a smooth relative surface by one regular equation has an invertible dualizing sheaf.
 
@@ -992,10 +1146,12 @@ For a relative hypersurface $X=(F=0)$ in a smooth $S$-scheme $P$ of relative dim
 
 $$
 \omega_{X/S}\simeq
-\left(\omega_{P/S}\otimes\mathcal O_P(X)\right)|_X. \tag{9.6}
+\left(\omega_{P/S}\otimes\mathcal O_P(X)\right)|_X. \tag{9.13}
 $$
 
-Unlike $\Omega^1_{X/S}$, the right side stays invertible when a smooth fiber acquires a node. Formula (9.6) is the practical construction of invariant differentials on many modular and plane-curve families.
+Unlike $\Omega^1_{X/S}$, the right side stays invertible when a smooth fiber acquires a node.
+Formula (9.13) is the practical construction of invariant differentials on many modular and
+plane-curve families.
 
 ## 10. Nodes, normalization, and opposite residues
 
@@ -1036,7 +1192,7 @@ $$
 $$
 
 The common expression extends as a generator of the relative adjunction line through the node,
-although neither $dx/x$ nor $dy/y$ is an ordinary regular differential there. Conditional on the
+although neither $dx/x$ nor $dy/y$ is an ordinary regular differential there. By the
 compatibility clause of Section 9.3, this adjunction line is the relative dualizing sheaf.
 
 ### 10.2 Functions under normalization
@@ -1087,7 +1243,7 @@ formula shows explicitly that residue-field degrees are not lost before splittin
 
 The right side below can be defined directly, without global duality; call it the **Rosenlicht
 sheaf**. After splitting the branches, write $\operatorname{res}$ for the Laurent coefficient of
-$dt/t$ on a branch. Conditional on the absolute package of Section 9.2, the Rosenlicht sheaf is
+$dt/t$ on a branch. The absolute theorem of Section 9.2 shows that the Rosenlicht sheaf is
 the dualizing sheaf and
 
 $$
@@ -1129,8 +1285,8 @@ $k[[x,y]]/(xy)\subset k[[x]]\oplus k[[y]]$, and the displayed pair is that eleme
 $\theta$ from (10.1). Conversely every multiple of $\theta$ has opposite residues. Hence the
 right side of (10.4) has the expected completed adjunction stalk at every node and the ordinary
 canonical stalk elsewhere. Coherent sheaves on a noetherian curve are detected by these completed
-stalks. The embedding-independence and adjunction clauses of the imported package identify these
-stalks with those of $\omega_C$; with that prerequisite, this proves (10.4), and descent gives the
+stalks. Embedding independence and adjunction from Section 9 identify these stalks with those
+of $\omega_C$; this proves (10.4), and descent gives the
 nonsplit case.
 
 In the split situation there is an exact sequence
@@ -1158,14 +1314,14 @@ $$
 \quad\text{for every }f\in\mathcal O_{C,q}.
 $$
 
-Conditional on the absolute package, this is the Rosenlicht description of the dualizing sheaf;
+By the absolute theorem, this is the Rosenlicht description of the dualizing sheaf;
 it need not be invertible when the curve is not Gorenstein. At a split rational node, testing
 $f=1$ gives the opposite-residue rule
 and the other tests enforce no additional condition.
 
 ### 10.4 Families of nodal curves
 
-Conditional on the relative curve-duality package, if $f:C\to S$ is a proper flat nodal curve
+If $f:C\to S$ is a proper flat nodal curve
 that is a relative local complete intersection, then $\omega_{C/S}$ is a line bundle, commutes
 with arbitrary base change, and restricts on every geometric fiber to the sheaf in (10.4). This
 is the stable replacement for $\Omega^1_{C/S}$.
@@ -1228,7 +1384,15 @@ The proof of the theorem occupies the rest of the section. It has three ingredie
 
 **Lemma (ideal-adic completeness).** Let $C$ be a noetherian local ring, complete for its maximal ideal $\mathfrak n$, and let $J\subseteq\mathfrak n$ be any ideal. Then the natural map $C\to\varprojlim_nC/J^n$ is an isomorphism.
 
-*Proof.* Injectivity holds because $\bigcap_nJ^n\subseteq\bigcap_n\mathfrak n^n=0$ by the Krull intersection theorem, which follows from Artin--Rees and is available in MATHLIB and in the complete local algebra of Book 1. For surjectivity, take a compatible system and lift it to a sequence $(c_N)$ in $C$ with $c_{M}-c_{N}\in J^{N}$ for $M\geq N$. Since $J^N\subseteq\mathfrak n^N$, the sequence is Cauchy for the $\mathfrak n$-adic topology and converges to some $c\in C$. Each ideal $J^N$ is closed in that topology: applying Krull's intersection theorem in the noetherian local ring $C/J^N$ gives $\bigcap_m(J^N+\mathfrak n^m)=J^N$. As $c-c_N\in J^N+\mathfrak n^m$ for every $m$, we get $c-c_N\in J^N$, so $c$ maps to the given system. $\square$
+*Proof.* Injectivity holds because $\bigcap_nJ^n\subseteq\bigcap_n\mathfrak n^n=0$ by the
+Krull intersection theorem, which follows from Artin--Rees and is part of the complete local
+algebra of Book 1. For surjectivity, take a compatible system and lift it to a sequence $(c_N)$
+in $C$ with $c_{M}-c_{N}\in J^{N}$ for $M\geq N$. Since
+$J^N\subseteq\mathfrak n^N$, the sequence is Cauchy for the $\mathfrak n$-adic topology and
+converges to some $c\in C$. Each ideal $J^N$ is closed in that topology: applying Krull's
+intersection theorem in the noetherian local ring $C/J^N$ gives
+$\bigcap_m(J^N+\mathfrak n^m)=J^N$. As $c-c_N\in J^N+\mathfrak n^m$ for every $m$, we get
+$c-c_N\in J^N$, so $c$ maps to the given system. $\square$
 
 Applied to $C=B$ and $J=\mathfrak mB$, the lemma says that $B$ is recovered from its truncations $B_n=B/\mathfrak m^{n+1}B$. Applied to $C=\Lambda[[u,v]]/(uv-a)$, which is a quotient of the complete local noetherian ring $\Lambda[[u,v]]$ and hence again complete local noetherian, it says the same for the model. This is the only role of completeness of the base, and it is the reason the theorem is stated after completion rather than for $\mathcal O_{X,x}$ itself.
 
@@ -1367,7 +1531,17 @@ $$
 U\longrightarrow\operatorname{Spec}\Lambda[u,v]/(uv-a)
 $$
 
-carrying $x$ to the origin, so that the family is étale locally the hypersurface $uv=a$ in a smooth relative surface, is *not* proved here. Deducing it from (10.7) is an approximation problem: one has an isomorphism over the completion and wants to realize it over an étale neighborhood, which is the content of Artin approximation and requires excellence hypotheses on the base. Artin approximation is not developed in this collection and is not present in MATHLIB, whose available material stops at henselian local rings, completions, Artin--Rees, and the theory of étale, unramified, and smooth morphisms. The completed form is used in place of it everywhere, and this suffices: the arguments that invoke the local model, in Section 10.4 above and in the later theory of nodal degenerations, test freeness, length, and valuation, all of which are detected on completed stalks. Where the étale form would genuinely be needed is in producing an actual open or étale neighborhood with the displayed equation, for instance to construct global charts or to descend a formal isomorphism to a morphism of schemes; no argument in this collection does that.
+carrying $x$ to the origin, so that the family is étale locally the hypersurface $uv=a$ in a
+smooth relative surface, is *not* proved here. Deducing it from (10.7) is an approximation
+problem: one has an isomorphism over the completion and wants to realize it over an étale
+neighborhood, which is the content of Artin approximation and requires excellence hypotheses on
+the base. Artin approximation is not developed in this collection. The completed form is used
+in place of it everywhere, and this suffices: the arguments that invoke the local model, in
+Section 10.4 above and in the later theory of nodal degenerations, test freeness, length, and
+valuation, all of which are detected on completed stalks. Where the étale form would genuinely
+be needed is in producing an actual open or étale neighborhood with the displayed equation, for
+instance to construct global charts or to descend a formal isomorphism to a morphism of schemes;
+no argument in this collection does that.
 
 ## 11. Riemann--Roch over a field
 
@@ -1385,15 +1559,15 @@ $$
 \ell(D)-\ell(K-D)=\deg D+1-g, \tag{11.2}
 $$
 
-where $\ell(D)=\dim_k H^0(X,\mathcal O_X(D))$. The second form is conditional on the
-curve-duality package: it uses Serre duality to identify $h^1(\mathcal O(D))$ with
-$\ell(K-D)$. The first form is logically independent of that package and remains valid, with
+where $\ell(D)=\dim_k H^0(X,\mathcal O_X(D))$. The second form uses Serre duality from Chapter
+12 to identify $h^1(\mathcal O(D))$ with $\ell(K-D)$. The first form is logically independent
+of duality and remains valid, with
 degree defined by Euler characteristic, for proper curves; on regular curves the divisor
 calculation below identifies it with the usual divisor degree.
 
 Riemann--Roch says that each unit of degree contributes one unit to the Euler characteristic. It
 does not say that $h^0$ itself always grows by one: a new allowed pole can instead remove an
-obstruction in $H^1$. Conditional on duality, the correction term $\ell(K-D)$ measures this
+obstruction in $H^1$. The correction term $\ell(K-D)$ measures this
 **speciality**. Once $d>2g-2$, its degree is negative, it vanishes, and the naive count becomes
 exact:
 
@@ -1431,7 +1605,7 @@ This proof reveals why regularity was convenient: it represented every line bund
 
 A line bundle of negative degree has no nonzero section. Indeed a nonzero section defines an effective divisor and hence has nonnegative degree. This uses integrality; on a reducible curve a line bundle of negative total degree can have a section supported on components where its degree is positive.
 
-Conditional on the imported duality theorem explained in Chapters 9 and 12, apply (11.2) to
+Apply the duality theorem of Chapters 9 and 12 to
 $D=0$. Since
 $\ell(0)=1$,
 
@@ -1475,14 +1649,14 @@ $$
 \chi(C,\mathcal L)=\deg\mathcal L+1-g, \tag{11.5}
 $$
 
-and, conditional on the absolute curve-duality package, duality gives
+and duality gives
 
 $$
 h^0(C,\mathcal L)-h^0(C,\omega_C\otimes\mathcal L^{-1})
 =\deg\mathcal L+1-g. \tag{11.6}
 $$
 
-Conditional on that same package, $\deg\omega_C=2g-2$. Indeed duality exchanges $H^0(\omega_C)$ with
+Moreover $\deg\omega_C=2g-2$. Indeed duality exchanges $H^0(\omega_C)$ with
 $H^1(\mathcal O_C)^\vee$ and $H^1(\omega_C)$ with $H^0(\mathcal O_C)^\vee$, so
 $\chi(\omega_C)=-\chi(\mathcal O_C)$; the Euler-characteristic definition of degree gives the
 formula. For a connected nodal curve, normalization makes the formula visible. Tensor (10.2) by
@@ -1497,9 +1671,8 @@ On a reducible curve, negative total degree does not force vanishing. A section 
 
 ### 12.1 The residue pairing
 
-Every assertion of perfectness or trace functoriality in this chapter is conditional on the
-absolute curve-duality package of Section 9.2. The residue formulas below identify the imported
-pairing concretely; they do not by themselves prove its nondegeneracy.
+The absolute theorem of Section 9.2 proves perfectness and trace functoriality. The residue
+formulas below identify that pairing concretely.
 
 Riemann--Roch counts the difference between functions and obstructions. Serre duality identifies those obstructions as linear functionals given by differentials. Let $X$ be a smooth proper geometrically connected curve and $D$ a divisor. Choose an affine cover $X=U\cup V$ such that the relevant poles lie in $U\setminus V$. A class in $H^1(X,\mathcal O_X(D))$ is represented by a rational function $g$ on $U\cap V$, modulo functions extending to either side.
 
@@ -1528,16 +1701,14 @@ H^1(X,\mathcal O_X(D))^\vee
 \simeq H^0(X,\omega_X(-D)). \tag{12.3}
 $$
 
-This is the degree-zero consequence of the imported isomorphism (9.2), not a dimension count.
-Under the imported identification $\omega_X\simeq\Omega^1_{X/k}$ for a smooth curve, local
+This is the degree-zero consequence of the proved isomorphism (9.6), not a dimension count.
+Under the identification $\omega_X\simeq\Omega^1_{X/k}$ for a smooth curve, local
 duality for a skyscraper sheaf sends the class of $t^{-1}$ paired with $dt$ to $1$.
-Consequently the trace furnished by (9.2) agrees with the residue trace of (12.2): compatibility
+Consequently the trace furnished by (9.6) agrees with the residue trace of (12.2): compatibility
 with restriction and connecting maps reduces the comparison to these local generators. Formula
-(9.2), applied to $\mathcal F=\mathcal O_X(D)$, is therefore precisely (12.3).
+(9.6), applied to $\mathcal F=\mathcal O_X(D)$, is therefore precisely (12.3).
 
-The usual divisor devissage makes the mechanism explicit but is not an independent proof of
-perfectness. For a closed point
-$p$, compare
+The usual divisor devissage makes the mechanism explicit. For a closed point $p$, compare
 
 $$
 0\to\mathcal O_X(D)\to\mathcal O_X(D+p)\to\mathcal Q_p\to0
@@ -1545,10 +1716,10 @@ $$
 
 with its dual triangle against $\omega_X[1]$. Local duality identifies the dual of the
 zero-dimensional quotient $\mathcal Q_p$ with its principal-part residue functional. The two
-long exact cohomology sequences are therefore transposes. The derived duality package supplies
-the initial global calculation; adding or removing closed points one at a time and using the
+long exact cohomology sequences are therefore transposes. The global calculation (9.6) supplies
+the initial comparison; adding or removing closed points one at a time and using the
 two-out-of-three property recovers the same pairing in divisor language. This comparison does
-not assume Riemann--Roch, but it does assume (9.2).
+not assume Riemann--Roch.
 
 The decisive local calculation, over a rational point, is
 
@@ -1583,7 +1754,7 @@ H^i(X,\mathcal E)^\vee
 \qquad i=0,1. \tag{12.5}
 $$
 
-These formulas are the two cohomology degrees of (9.2). For a vector bundle, internal Hom into
+These formulas are the two cohomology degrees of (9.6). For a vector bundle, internal Hom into
 $\omega_X$ is $\mathcal E^\vee\otimes\omega_X$ and its higher sheaf Ext groups vanish. For an
 arbitrary coherent sheaf $\mathcal F$, the precise form is instead
 
@@ -1596,7 +1767,7 @@ The Ext term cannot generally be replaced by cohomology of a sheaf dual when $\m
 
 ### 12.4 Functoriality
 
-By the finite-morphism clause of the imported package, if $\pi:Y\to X$ is finite between proper
+By the finite-morphism theorem (9.8), if $\pi:Y\to X$ is finite between proper
 Cohen--Macaulay curves, there is a trace
 
 $$
@@ -1623,19 +1794,37 @@ Likewise, maps of vector bundles induce transpose maps on cohomology after duali
 
 ### 13.1 A two-term model
 
-This section uses a second imported result, logically separate from duality: **perfect
-pushforward and derived base change for proper flat curves**. In the required bounded form it
-says that, if $f:X\to S$ is proper, flat, and finitely presented with one-dimensional fibers,
-$S$ is locally noetherian, and $\mathcal E$ is a vector bundle on $X$, then $Rf_*\mathcal E$ is
-perfect of Tor-amplitude $[0,1]$ and the canonical map
+**Theorem 13.1 (perfect pushforward and base change).** Let $f:X\to S$ be proper, flat, and
+finitely presented with one-dimensional fibers, let $S$ be locally noetherian, and let
+$\mathcal E$ be a vector bundle on $X$. Then $Rf_*\mathcal E$ is perfect of Tor-amplitude
+$[0,1]$, and the canonical map
 
 $$
 Lg^*Rf_*\mathcal E\longrightarrow Rf'_*Lg'^*\mathcal E
 $$
 
-is an isomorphism for every base change $g:S'\to S$. This theorem is not established in Books
-1--8. Conditional on it, after restricting to an affine open $U=\operatorname{Spec}A\subset S$,
-there are finite free $A$-modules $K^0,K^1$ and a map
+is an isomorphism for every base change $g:S'\to S$.
+
+**Proof.** The assertion is fpqc-local on $S$. After a faithfully flat finite-presentation extension around
+a chosen fiber, prime avoidance supplies a relative effective Cartier multisection meeting every
+one-dimensional associated component. A sufficiently large positive multiple has positive degree
+on every component and is relatively ample by the curve criterion of Section 9.3. We may
+therefore work over $U=\operatorname{Spec}A$ and embed $X$ in $\mathbf P^N_A$. The relative resolution
+argument of Section 9.3, applied to $i_*\mathcal E$, gives a finite complex of sums of twists
+which stays exact after every $A$-algebra extension. The monomial Čech calculation for
+$\mathbf P^N_A$ replaces the pushforward of each twist by a bounded complex of finite free
+$A$-modules and commutes term by term with tensor product. Totalizing gives a bounded finite
+free complex $K^\bullet$ representing $Rf_*\mathcal E$, and
+$K^\bullet\otimes_A B$ represents the cohomology after every $A\to B$.
+
+Every fiber has coherent cohomology only in degrees $0$ and $1$. We now shorten
+$K^\bullet$ without losing base-change compatibility. Starting at its left end, fiberwise
+vanishing says that the first differential has locally constant maximal rank; a nonvanishing
+minor splits off the corresponding two-term identity complex. Repeat from the right end. After
+shrinking $U$, all terms outside degrees $0,1$ have been eliminated. Equivalently, the last
+remaining kernel is finite projective by the fiberwise projectivity criterion. Shrinking once
+more makes the two remaining modules free. Thus there are finite free $A$-modules $K^0,K^1$
+and a map
 
 $$
 d:K^0\longrightarrow K^1 \tag{13.1}
@@ -1647,19 +1836,16 @@ $$
 K^0\otimes_A B\longrightarrow K^1\otimes_A B. \tag{13.2}
 $$
 
-Here is how the imported theorem yields one matrix. Perfectness gives a bounded complex of finite
-projective $A$-modules; Tor-amplitude $[0,1]$ permits the finite-complex shortening to
-$K^0\to K^1$, and shrinking $U$ makes both terms free. Derived base change then says that
-tensoring this matrix with any $A$-algebra computes the base-changed cohomology. A proof of the
-imported theorem itself would require the finite-resolution, relative vanishing, pseudo-coherence,
-and derived-base-change arguments, not merely the observation that fibers have no cohomology
-above degree one.
+Tensoring this matrix with any $A$-algebra computes the base-changed cohomology. This proves
+perfectness, Tor-amplitude, and arbitrary derived base change simultaneously. On overlaps the
+complexes are uniquely identified with the same Čech cohomology functor, so the local perfect
+complexes descend; the base-change maps descend with them. $\square$
 
 The model is stronger than a fiberwise dimension statement. It records every specialization by one matrix with entries in $A$. It is exactly the cohomological amount demanded by dimension one.
 
 ### 13.2 Semicontinuity and base change
 
-The conclusions of this section are conditional on the perfect-pushforward package. From (13.2),
+From (13.2),
 
 $$
 H^0(X_B,\mathcal E_B)=\ker(d\otimes B),\qquad
@@ -1735,16 +1921,15 @@ $$
 $$
 
 The incidence argument works component by component on any reduced projective curve, so it covers
-every fiber considered here. Conditional on the perfect-pushforward package, the finite free
-model has virtual rank equal to the right side. The numerical identity itself is fiberwise and
-independent of that package. Neither $h^0$ nor $h^1$ need be constant separately; their jumps
+every fiber considered here. The finite free model has virtual rank equal to the right side.
+The numerical identity itself is fiberwise and was proved independently of the model. Neither
+$h^0$ nor $h^1$ need be constant separately; their jumps
 cancel.
 
 ### 13.4 Useful vanishing ranges
 
-The vanishing deductions in this section are conditional on both imported packages: fiberwise
-Serre duality supplies the vanishing, and perfect pushforward turns it into a statement over the
-base.
+Fiberwise Serre duality supplies the vanishing below, and the two-term theorem turns it into a
+statement over the base.
 
 Let $f:X\to S$ be a smooth proper curve with geometrically connected fibers of genus $g$. If
 $\deg(\mathcal L_s)>2g-2$ on every geometric fiber, duality and negative-degree vanishing give
@@ -1782,8 +1967,8 @@ reducible fibers must verify such componentwise control or prove vanishing separ
 
 ### 14.1 Trace and the relative pairing
 
-This entire chapter is conditional on the relative curve-duality and perfect-pushforward packages
-stated in Sections 9.3 and 13.1.
+We now combine the relative duality theorem of Section 9.3 with the perfect-pushforward theorem
+of Section 13.1.
 
 Let $f:X\to S$ be a proper flat finitely presented Gorenstein relative curve with geometrically
 reduced fibers over a locally noetherian scheme. This includes the smooth and nodal families of
@@ -1821,16 +2006,16 @@ Fiberwise these are the pairings of Chapter 12.
 
 ### 14.2 The base-change theorem
 
-The arbitrary-base-change statement here is clause 3 of the imported relative-duality package;
-it is not a consequence of transposing the cohomology matrix. Under these hypotheses, for
+The arbitrary-base-change statement here was proved from the dual resolution in Section 9.3;
+it is not merely a consequence of transposing the cohomology matrix. Under these hypotheses, for
 $T\to S$,
 
 $$
 \omega_{X/S}|_{X_T}\simeq\omega_{X_T/T},
 $$
 
-and the pullback of $\operatorname{tr}_f$ is the trace for $X_T/T$. Once duality and base change
-have been supplied, the finite free model makes their effect on cohomology explicit: its matrix
+and the pullback of $\operatorname{tr}_f$ is the trace for $X_T/T$. The finite free model makes
+their effect on cohomology explicit: its matrix
 pulls back by tensoring, its dual matrix is the transpose, and transposition and evaluation
 commute with tensor product.
 
@@ -1910,7 +2095,7 @@ Even before representability, its fibers are concrete. On a smooth integral fibe
 have the same image exactly when they are linearly equivalent. With the quotient convention for
 projective bundles fixed in Book 8, the fiber over $\mathcal L$ is
 $\mathbf P(H^0(X,\mathcal L)^\vee)$ when sections exist: it parametrizes one-dimensional
-subspaces of sections. Conditional on Serre duality, for $d>2g-2$ this dimension is constantly
+subspaces of sections. By Serre duality, for $d>2g-2$ this dimension is constantly
 $d-g$, preparing the projective-bundle description used in Picard theory.
 
 ### 15.2 The infinitesimal Abel map
@@ -1954,7 +2139,7 @@ Cech cocycle of these differences is exactly the displayed boundary. It is also 
 change of the transition functions of $\mathcal O_X(D)$, so the convention
 $D\mapsto\mathcal O_X(D)$ introduces no minus sign.
 
-Conditional on the absolute curve-duality package, its transpose under Serre duality is
+Its transpose under Serre duality is
 restriction:
 
 $$
@@ -1982,8 +2167,7 @@ $\mathcal O_{Z,z}\to\mathcal O_{Y,x}/\mathfrak m_{Y,x}^n$ is surjective for ever
 $n$ monomials in the chosen lifts generate the next associated-graded piece. Taking inverse
 limits and using noetherian completeness gives the required surjection of completed local rings.
 
-For the Abel map at $D$, conditions 1 and 2 below are unconditionally equivalent. Conditional on
-the absolute curve-duality package, they are also equivalent to condition 3:
+For the Abel map at $D$, the following three conditions are equivalent:
 
 1. its tangent map is injective;
 2. the boundary map $\delta_D$ is injective;
@@ -1997,9 +2181,9 @@ the absolute curve-duality package, they are also equivalent to condition 3:
 
 When the Picard target exists with the stated tangent space, these conditions give a formal immersion. Necessarily $d\leq g$. For distinct rational points, restriction evaluates differentials at them; for $D=dp$, it evaluates their first $d$ power-series coefficients.
 
-Conditional on the same package, the three-way statement holds on a nodal fiber when $D$ lies in
+The three-way statement also holds on a nodal fiber when $D$ lies in
 the smooth locus and $\omega_X$ is the dualizing sheaf. Opposite node residues ensure that the
-residue comparison has no extra boundary term. This is the exact conditional criterion later
+residue comparison has no extra boundary term. This is the exact criterion later
 used to turn equality of Abel images into equality in a formal neighborhood.
 
 ### 15.4 A reusable theorem package
@@ -2015,8 +2199,8 @@ On singular or reducible curves, Cartier divisors remain valid, while conversion
 
 **Families.** For a projective flat relative curve and a line bundle, fiberwise degree and Euler characteristic are locally constant. A relative effective Cartier divisor finite flat of rank $d$ has degree $d$ on every fiber. For a smooth projective relative curve these divisors are represented by $X^{(d)}$, with a universal divisor compatible with base change.
 
-**Differentials and duality (conditional).** Assuming the curve-duality package of Sections
-9.2--9.3, smooth families have $\omega_{X/S}=\Omega^1_{X/S}$. Proper flat Gorenstein nodal
+**Differentials and duality.** By Sections 9.2--9.3, smooth families have
+$\omega_{X/S}=\Omega^1_{X/S}$. Proper flat Gorenstein nodal
 families have invertible, base-change-compatible $\omega_{X/S}$; on a nodal fiber its sections
 are normalization differentials with simple branch poles and opposite residues. For a vector
 bundle,
@@ -2030,16 +2214,16 @@ with perfect fiberwise Serre duality.
 
 **Nodes in families.** Over a noetherian complete local base $\Lambda$ with separably closed residue field, a flat family of finite type with a split ordinary node in its closed fiber has completed local ring $\Lambda[[u,v]]/(uv-a)$ with $a$ in the maximal ideal, and the ideal $a\Lambda$ is intrinsic, being the ideal defining the image of the non-smooth locus. Over a complete discrete valuation ring this makes $v(a)$ an invariant of the family at the node. The étale-local refinement of the normal form is not proved here.
 
-**Cohomology and infinitesimals.** Assuming the perfect-pushforward package of Section 13.1,
+**Cohomology and infinitesimals.** By Section 13.1,
 cohomology is locally a two-term finite free model, fiber dimensions are upper semicontinuous,
 and fiberwise $H^1$-vanishing gives a locally free pushforward with arbitrary base change.
-Unconditionally, at an effective divisor,
+At an effective divisor,
 
 $$
 T_DX^{(d)}=H^0(D,\mathcal O_D(D));
 $$
 
-the Abel differential is a cohomology boundary. Assuming curve duality, its transpose restricts
+the Abel differential is a cohomology boundary. Its transpose restricts
 dualizing differentials to $D$.
 
 ### 15.5 Conclusion
@@ -2048,14 +2232,14 @@ Divisors begin as local equations, but on curves they become a global organizing
 
 Differentials reveal the second half of the story. Residues are invariant local coefficients whose
 global sum vanishes, and at a node the two branches contribute opposite residues. The local
-Rosenlicht module is invertible even when ordinary differentials fail. Assuming the imported
-curve-duality package, it is the dualizing sheaf, turns $H^1$ into the dual of global
-differentials, and gives Riemann--Roch its symmetric form. Assuming also perfect pushforward, the
+Rosenlicht module is invertible even when ordinary differentials fail. It is the dualizing
+sheaf, turns $H^1$ into the dual of global differentials, and gives Riemann--Roch its symmetric
+form. Perfect pushforward shows that the
 relative pairing is encoded by a two-term finite model and respects specialization and base
 change.
 
 Moving a divisor produces a principal part; its Abel class is the resulting cohomology boundary;
-a global differential tests that boundary by a residue. Assuming curve duality, the resulting
+a global differential tests that boundary by a residue. The resulting
 perfect pairing reduces the formal-immersion test to an explicit restriction map on
 differentials. The chain
 
