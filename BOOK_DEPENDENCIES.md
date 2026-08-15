@@ -14,6 +14,15 @@ The graph records proved source manuscripts only. Stronger results not establish
 collection are not represented by invented book nodes; their relationship to the preferred
 theorem is explained after the table.
 
+An edge records where a manuscript result is routed; it does not erase an unresolved hypothesis
+that the source manuscript itself labels. In particular, Book 3 retains its local-Dold and
+integral-Brauer-induction inputs; Books 5--6 retain their marked Tate-cohomology, norm-filtration,
+finite-duality, canonical-$S$-unit, and rank-one Tate--Sen/Lubin--Tate inputs; Book 8 retains its
+projective-flattening and bounded Macaulay--Gotzmann inputs; Book 9 retains its curve-duality and
+perfect-pushforward inputs; and Books 11--12 retain the stated surface-resolution, contraction,
+and inherited duality inputs. These interfaces are not silently assigned to `MATHLIB`, and the
+chronological rows below do not turn their conditional conclusions into unconditional ones.
+
 ## Preferred selected-three proof spine
 
 ```mermaid
