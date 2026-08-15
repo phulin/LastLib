@@ -43,10 +43,10 @@ flowchart LR
 | 11 | Normalization and Regular Models of Arithmetic Curves | 1, 8, 10 |
 | 12 | Blowups and Intersection Theory on Arithmetic Surfaces | 9, 11 |
 | 14 | Arithmetic Spectral Sequences and Derived Cohomology | MATHLIB |
-| 15 | Coherent Cohomology in Proper Families | 8, 14, MATHLIB |
-| 16 | Semistable Curves, Dual Graphs, and Component Groups | 9, 11, 12, 10, 15 |
-| 17 | Finite Étale Covers and Fundamental Groups | 10, MATHLIB |
-| 18 | Derived Étale and $\ell$-adic Cohomology | 14, 17, MATHLIB |
+| 15 | Coherent Cohomology in Proper Families | 8, 10, 14, MATHLIB |
+| 16 | Semistable Curves, Dual Graphs, and Component Groups | 8, 9, 10, 11, 12, 15 |
+| 17 | Finite Étale Covers and Fundamental Groups | 8, 10, 11, 15, MATHLIB |
+| 18 | Derived Étale and $\ell$-adic Cohomology | 9, 10, 14, 15, 16, 17, MATHLIB |
 | 19 | Proper and Smooth Base Change | 15, 18 |
 | 20 | Étale Duality and Trace Maps for Curves | 18, 19 |
 | 21 | Étale Sheaves and Cohomology on Curves | 16, 17, 18, 19, 20 |
