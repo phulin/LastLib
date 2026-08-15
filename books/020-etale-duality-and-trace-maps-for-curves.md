@@ -85,7 +85,7 @@ This book constructs that mechanism for curves. The aim is not merely a list of 
 
 ### 1.2 Conventions, coefficients, and normalizations
 
-Schemes are locally noetherian. Morphisms used for compact support are separated and of finite type and are assumed compactifiable; Book 19 proves compactifiability in the noetherian situations used here. The application range in this volume is absolute curves and relative morphisms with one-dimensional geometric fibers. Bases in the relative statements are excellent noetherian schemes, or limits obtained from them by the continuity arguments of that book. Fix a prime $\ell$ invertible on every scheme in sight, and write
+Schemes are locally noetherian. Morphisms used for compact support are separated and of finite type and are assumed compactifiable in the sense of Book 19: they admit a factorization into an open immersion followed by a proper morphism. Book 19 proves compactifiability for quasi-projective morphisms over a noetherian base, and proves it for no wider class; Nagata's theorem is stated there but not proved and is not used. Every morphism to which compact support is applied in this volume is quasi-projective — curves and relative curves and their products, the affine and projective space projections used in the constructions, and the locally closed subschemes of these supplied by Book 19's stability lemma — so the quasi-projective theorem covers all of them. We therefore add quasi-projectivity to the standing hypotheses whenever a compactification is invoked, rather than assume an unproved general compactification theorem. The application range in this volume is absolute curves and relative morphisms with one-dimensional geometric fibers. Bases in the relative statements are excellent noetherian schemes, or limits obtained from them by the continuity arguments of that book. Fix a prime $\ell$ invertible on every scheme in sight, and write
 
 $$
 \Lambda_n=\mathbf Z/\ell^n\mathbf Z,
@@ -137,7 +137,7 @@ $$
 X\xrightarrow{j}\overline X\xrightarrow{\bar f}S
 $$
 
-with $j$ an open immersion and $\bar f$ proper. Such factorizations exist in the noetherian situations used here. For $K\in D_c^b(X,\Lambda_n)$ define
+with $j$ an open immersion and $\bar f$ proper. Book 19 constructs such a factorization whenever $f$ is quasi-projective over a noetherian base, by taking $\overline X$ to be the scheme-theoretic closure of $X$ in $\mathbf P^N_S$, and shows that the class of quasi-projective morphisms is stable under base change and under passage to locally closed subschemes of the source. That is the only existence statement we use. For $K\in D_c^b(X,\Lambda_n)$ define
 
 $$
 Rf_!K=R\bar f_*j_!K.
@@ -185,7 +185,7 @@ R\Gamma_c(X,K)\longrightarrow
 R\Gamma_c(Z,i^*K)\longrightarrow.
 $$
 
-It is the basic computational tool. Compactifying $\mathbf A^1$ inside $\mathbf P^1$ and removing the point at infinity gives
+It is the basic computational tool. Compactifying $\mathbf A^1$ inside $\mathbf P^1$ and removing the point at infinity gives, by the boundary computation carried out in full in Section 3.2,
 
 $$
 H_c^i(\mathbf A^1,\Lambda_n)=
@@ -259,55 +259,244 @@ The adjunction tells us why the theory is organized at the level of complexes. A
 
 ### 3.2 Construction in the required range
 
-The construction cannot be obtained merely by declaring a map smooth on a stratification: a singular map need not become smooth after stratifying only its source, and such a declaration would already presuppose purity. We instead use a local adjoint construction whose one geometric input is proved without a trace.
+The construction cannot be obtained merely by declaring a map smooth on a stratification: a singular map need not become smooth after stratifying only its source, and such a declaration would already presuppose purity. We instead prove one geometric duality theorem, for the affine line, whose proof uses neither a trace nor a purity statement, and then propagate it by steps that are formal: composition of adjunctions, a global factorization of a quasi-projective morphism through a smooth morphism, and uniqueness of adjoints. Nothing below reconstructs an object of a derived category from local pieces and a cocycle; that operation is not available and is not used.
 
-**Affine-line duality lemma.** Let $p:\mathbf A^1_S\to S$, with finite coefficients of order invertible on $S$. For $M\in D_c^b(\mathbf A^1_S,\Lambda_n)$ and $L\in D_c^b(S,\Lambda_n)$ there is a functorial isomorphism
+**The residue at a relative divisor.** Every normalization in this book descends from a single local computation, which we isolate first. Let $q:P\to Y$ be smooth and separated of relative dimension one, with $\ell$ invertible on $Y$, let $\sigma:Y\to P$ be a section with image the relative divisor $Z$, and let $v:P\setminus Z\hookrightarrow P$ be the open complement. Fix a geometric point $\bar z$ of $Z$. The strict localization $P_{(\bar z)}$ is the spectrum of a strictly henselian ring in which $Z$ is cut out by one element that is a regular parameter transverse to the fibers. This is exactly Book 19's boundary situation with a single branch: its §4.2 identifies the punctured strict localization with a punctured strict henselian trait, and its §7.1 records that adjoining a parameter along $Z$ changes neither the inertia group nor its presentation matrix.
+
+Let $R$ be the resulting strictly henselian discrete valuation ring — the localization of $P_{(\bar z)}$ at the generic point of $Z$ — and let $F$ be its fraction field. The residue field of $R$ is separably closed and $\ell$ is invertible, so Hensel's lemma makes every unit of $R$ an $\ell^n$th power. Therefore
 
 $$
-R\mathcal Hom_S(Rp_!M,L)
+F^\times/(F^\times)^{\ell^n}
+=\mathbf Z/\ell^n\mathbf Z,
+$$
+
+generated by the class of any uniformizer, and this group does not depend on which uniformizer is chosen. Since $F$ is a field its Picard group vanishes, so the Kummer sequence of Book 18 §3.4 collapses to
+
+$$
+H^0(F,\Lambda_n(1))=\Lambda_n(1),
+\qquad
+H^1(F,\Lambda_n(1))
+=F^\times/(F^\times)^{\ell^n}
+=\Lambda_n,
+$$
+
+with $H^q(F,\Lambda_n(1))=0$ for $q\geq2$, the vanishing because the prime-to-residue-characteristic quotient of $G_F$ is procyclic — this is Book 19's two-term tame complex $M\xrightarrow{\tau-1}M$, here with $M=\Lambda_n(1)$ and zero differential.
+
+**Definition.** The *residue* $\operatorname{res}:H^1(F,\Lambda_n(1))\to\Lambda_n$ is the isomorphism just displayed. On the Kummer class $\{f\}$ of $f\in F^\times$ it is the normalized valuation $v(f)$ modulo $\ell^n$.
+
+The residue uses no choice of tame generator and no choice of uniformizer: changing the uniformizer multiplies it by a unit, and the Kummer class of a unit vanishes because units are $\ell^n$th powers. It is therefore compatible with every étale change of the pair $(P,Z)$ and with every base change $Y'\to Y$, since both preserve uniformizers and valuations. Sheafifying over $Z$, we record the statement in the form used below:
+
+$$
+\sigma^*R^0v_*\Lambda_n(1)=\Lambda_n(1),
+\qquad
+\sigma^*R^1v_*\Lambda_n(1)
+\xrightarrow[\ \sim\ ]{\operatorname{res}}\Lambda_n,
+\qquad
+\sigma^*R^qv_*\Lambda_n(1)=0\ (q\geq2). \tag{3.1a}
+$$
+
+**The trace on the affine line.** Let $p:\mathbf A^1_S\to S$ with $S$ excellent noetherian and $\ell$ invertible on $S$. Compactify by $j:\mathbf A^1_S\hookrightarrow\mathbf P^1_S$, with $\bar p$ the projection and $\sigma_\infty:S\to\mathbf P^1_S$ the section at infinity, whose image is a relative divisor of the smooth relative curve $\mathbf P^1_S$ with complement $\mathbf A^1_S$. Applying $R\bar p_*$ to the localization triangle $j_!\Lambda_n(1)\to Rj_*\Lambda_n(1)\to\sigma_{\infty*}\sigma_\infty^*Rj_*\Lambda_n(1)$ on $\mathbf P^1_S$, and using $R\bar p_*\circ\sigma_{\infty*}=\operatorname{id}$, gives
+
+$$
+Rp_!\Lambda_n(1)
+\longrightarrow
+Rp_*\Lambda_n(1)
+\longrightarrow
+\sigma_\infty^*Rj_*\Lambda_n(1)
+\longrightarrow.
+$$
+
+Book 19 §7.2 computes the middle term: over a strictly henselian base the cohomology of the affine line with constant prime-to-characteristic coefficients is the coefficient module in degree zero and nothing above, and Book 18 §12.2 identifies the stalks of $Rp_*$ with these strict-local groups, so $Rp_*\Lambda_n(1)=\Lambda_n(1)$. The right-hand term is (3.1a). The map between them is restriction of the constant section, hence the identity of $\Lambda_n(1)$ in degree zero. The triangle therefore leaves exactly one surviving group, and the residue at infinity gives a canonical isomorphism
+
+$$
+t_p:\ Rp_!\Lambda_n(1)[2]
+\xrightarrow{\ \sim\ }\Lambda_n,
+\qquad
+R^qp_!\Lambda_n(1)=0\ (q\neq2). \tag{3.1b}
+$$
+
+Because every input is stable under base change and under étale localization, so is $t_p$. Combining $t_p$ with the projection formula of Section 6.2 — which is proved for $Rf_!$ from the open-immersion and proper cases and uses no adjoint — gives, for every $L\in D_c^b(S,\Lambda_n)$, an isomorphism
+
+$$
+\operatorname{Tr}_p:\
+Rp_!\bigl(p^*L(1)[2]\bigr)
 \simeq
+\bigl(Rp_!\Lambda_n(1)[2]\bigr)\otimes^LL
+\xrightarrow{\ \sim\ }L. \tag{3.1c}
+$$
+
+**Affine-line duality lemma.** Let $p:\mathbf A^1_S\to S$, with finite coefficients of order invertible on $S$. For $M\in D_c^b(\mathbf A^1_S,\Lambda_n)$ and $L\in D_c^b(S,\Lambda_n)$ the morphism $\theta_{M,L}$ constructed below is an isomorphism
+
+$$
 Rp_*R\mathcal Hom_{\mathbf A^1_S}
-(M,p^*L(1)[2]). \tag{3.1}
+(M,p^*L(1)[2])
+\xrightarrow{\ \sim\ }
+R\mathcal Hom_S(Rp_!M,L). \tag{3.1}
 $$
 
-Here is the proof, including the normalization that will later become the trace. Noetherian induction on the base and the support filtration of Book 18 reduce to a lisse sheaf on the complement of finitely many relative points and a sheaf on those points; vertical exceptional loci lie over a smaller closed subset of the base and enter the induction. After an étale change of base the finite monodromy data are constant. On a geometric fiber, the free prime-to-characteristic cochain presentation for the punctured affine line has one generator for each puncture and one relation supplied by infinity. Dualizing that two-term presentation reverses its incidence map. The Kummer boundary of a uniformizer is $1$, so the reversed map is exactly the residue map with target $\Lambda_n(-1)[-2]$. A sheaf on a point is handled by finite adjunction. Thus (3.1) holds on every piece and the two localization triangles glue it for $M$.
-
-The construction is uniform in an étale neighborhood of every geometric point of $S$: all monodromy matrices, punctures, inertia operators, and residue maps are finite data. Over a strict localization, the proper compactification and boundary-presentation arguments of Book 19 identify both sides of (3.1) with these dual finite matrices. This is a strict-local calculation; it does not replace ordinary cohomology of an open family by geometric-fiber cohomology without boundary control. Since geometric stalks are strict-local complexes, they prove (3.1). For $M=\Lambda_n(1)[2]$, its adjoint sends the compact class whose residue at infinity is $1$ to $1$. No trace or purity theorem has been used in this argument.
-
-Iterating (3.1) and using Künneth gives affine-space duality with $p^*L(d)[2d]$. An étale map has $u^!=u^*$, and the residue normalization is unchanged by an étale coordinate change. Hence, for a smooth morphism of pure relative dimension $d$, the local affine-space right adjoints descend to
+**Construction of $\theta$.** The map is defined once and for all, globally, so that functoriality in $M$ and in $L$ and compatibility with distinguished triangles in either variable are properties of the construction rather than assertions about a collection of local choices. There is a canonical natural transformation
 
 $$
-f^!L=f^*L(d)[2d]. \tag{3.2}
+Rp_*R\mathcal Hom(M,N)
+\longrightarrow
+R\mathcal Hom_S(Rp_!M,Rp_!N),
 $$
 
-We now construct the adjoint for an arbitrary map in the stated curve-level category. For a closed immersion $i:Z\hookrightarrow P$, the exact functor $i_*$ has a right adjoint on sheaves, namely sections supported on $Z$ restricted to $Z$; deriving it gives $i^!$. If $j:P\setminus Z\hookrightarrow P$, the triangle
+obtained as the adjoint of the composite
 
 $$
-i_*i^!L\longrightarrow L\longrightarrow Rj_*j^*L\longrightarrow
+Rp_!M\otimes^LRp_*R\mathcal Hom(M,N)
+\to
+Rp_!\bigl(M\otimes^Lp^*Rp_*R\mathcal Hom(M,N)\bigr)
+\to
+Rp_!\bigl(M\otimes^LR\mathcal Hom(M,N)\bigr)
+\to Rp_!N,
 $$
 
-and the constructibility and boundedness theorem for $Rj_*$ in Book 19 show that $i^!$ carries bounded constructible complexes to bounded constructible complexes in the required range. Locally on $X$, every finite-type map factors as
+whose three arrows are the projection formula, the counit $p^*Rp_*\to\operatorname{id}$, and evaluation. Take $N=p^*L(1)[2]$ and follow with $\operatorname{Tr}_p$ of (3.1c). This is $\theta_{M,L}$. Each ingredient is natural in $M$ and $L$ and exact in each variable, so $\theta$ commutes with the localization triangles in $M$ and with triangles in $L$; that is precisely the compatibility that a piecewise verification cannot supply.
+
+**Proof that $\theta$ is an isomorphism.** The argument is a dévissage in which every step either reduces the base or replaces the coefficients by constants; each geometric input is one of the strict-local presentations of Book 19.
+
+*Reduction along the base.* Let $j_0:S_0\hookrightarrow S$ be a dense open with closed complement $b:S'\hookrightarrow S$. The triangle $b_*b^!L\to L\to Rj_{0*}j_0^*L$ splits the problem. For the closed part, $p^*b_*=b'_*p'^*$ for the base-changed $p'$ over $S'$, and $R\mathcal Hom(M,b'_*N)=b'_*R\mathcal Hom(b'^*M,N)$, while $Rp_!b'_*=b_*Rp'_!$; under these identifications $\theta_{M,b_*b^!L}$ is $b_*$ applied to $\theta$ over $S'$ with coefficients $b^!L$, which lies in $D^b_c(S')$ by Book 19 §3.3. For the open part, $p^*Rj_{0*}=Rj'_{0*}p_0^*$ by smooth base change (Book 19 §7.1), $R\mathcal Hom(M,Rj'_{0*}N)=Rj'_{0*}R\mathcal Hom(j'^*_0M,N)$, and $Rp_!$ commutes with restriction to an open; so $\theta_{M,Rj_{0*}j_0^*L}$ is $Rj_{0*}$ applied to $\theta$ over $S_0$. By the five lemma it therefore suffices to prove, for each fixed $M$ and $L$, that $\theta$ is an isomorphism over some dense open of $S$, together with noetherian induction on closed subschemes of $S$ for the complementary term.
+
+*Reduction of the coefficients $L$ to $\Lambda_n$.* Work over a dense open of $S$ on which all cohomology sheaves of $L$ are lisse; such an open exists by constructibility. Truncation reduces $L$ to a lisse sheaf. A finite étale surjection $c:S''\to S$ makes it constant; $\theta$ commutes with $c^*$, because $Rp_!$, $Rp_*$, $R\mathcal Hom$ and the residue normalization all do, and $c^*$ is conservative. A constant sheaf with value a finite $\Lambda_n$-module has a finite filtration with graded pieces $\Lambda_n/\ell^i$, and each such piece sits in a triangle built from $\Lambda_n$. Hence it suffices to treat $L=\Lambda_n$, over a varying excellent noetherian base.
+
+*Reduction of $M$.* Truncation reduces $M$ to a constructible sheaf. A constructibility stratification of $M$ has finitely many strata; each is either quasi-finite over $S$ after shrinking $S$, or contains a whole fiber of $p$ over a closed subscheme of $S$, in which case it lies over a proper closed subscheme of $S$ and is handled by the reduction along the base. So, after shrinking, $M$ sits in a triangle
 
 $$
-X\xrightarrow{i}\mathbf A^N_Y\xrightarrow{p}Y
+j_!\mathcal L\longrightarrow M\longrightarrow i_{C*}P\longrightarrow,
 $$
 
-with $i$ closed. Define the local candidate as $i^!p^!$. On overlaps the two candidates represent the same functor
+with $i_C:C\hookrightarrow\mathbf A^1_S$ closed and finite over $S$, $j:U=\mathbf A^1_S\setminus C\hookrightarrow\mathbf A^1_S$, and $\mathcal L$ lisse on $U$. Shrinking $S$ once more, $C\to S$ becomes finite étale composed with a purely inseparable finite universal homeomorphism, and the latter induces an equivalence of prime-to-characteristic étale topoi, so it may be discarded. Since $\theta$ commutes with pullback along a finite étale surjection and such a pullback is conservative, a further finite étale base change lets us assume that $C$ is a disjoint union of $r$ pairwise disjoint sections $\sigma_1,\dots,\sigma_r$ of $\mathbf A^1_S$, each of them a relative divisor.
+
+*The supported term.* Let $C=\sigma(S)$ be one such section and $h=p\circ i_C$, so $h$ is an isomorphism onto $S$ and $Rp_!i_{C*}P=h_*P$. Adjunction for the closed immersion turns the left side of (3.1) into $h_*R\mathcal Hom_C(P,i_C^!p^*\Lambda_n(1)[2])$. Now $i_C^!\Lambda_n(1)[2]$ is computed by the triangle $i_{C*}i_C^!\to\operatorname{id}\to Rj_*j^*$ together with (3.1a) applied to the relative divisor $C\subset\mathbf A^1_S$: the degree-zero terms cancel, the residue identifies the surviving term, and
 
 $$
-K\longmapsto
-R\mathcal Hom_Y(Rf_!K,L),
+i_C^!\Lambda_n(1)[2]\simeq\Lambda_n,
 $$
 
-so the unique representing isomorphisms satisfy the cocycle condition. A finite support filtration glues them across the chosen affine cover. Boundedness follows from the closed-support bound and (3.2), and constructibility follows by the same finite localization induction. This produces $f^!$ and the adjunction on $D_c^b$.
+with the isomorphism given by the residue along $C$. Under it, $\theta_{i_{C*}P,\Lambda_n}$ is the identity of $R\mathcal Hom_C(P,\Lambda_n)$ transported by the isomorphism $h$; the normalization matches because the trace $t_p$ was itself defined by a residue and residues at the section and at infinity are computed by the same formula in the same local ring after an automorphism of $\mathbf P^1_S$ moving one to the other. Hence $\theta$ is an isomorphism on this term.
 
-For an open immersion $j:U\hookrightarrow X$, this construction gives $j^!=j^*$. For a compactification $f=\bar f\circ j$, it gives
+*The open term.* Here $M=j_!\mathcal L$ and $Rp_!j_!\mathcal L=Rg_!\mathcal L$ for $g=p\circ j:U\to S$, where $U$ is the complement in $\mathbf P^1_S$ of the $r+1$ pairwise disjoint sections $\sigma_1,\dots,\sigma_r,\sigma_\infty$. Adjunction for an open immersion identifies the left side of (3.1) as
 
 $$
-f^!=j^*\bar f^!.
+Rp_*R\mathcal Hom(j_!\mathcal L,\Lambda_n(1)[2])
+=Rp_*Rj_*R\mathcal Hom(\mathcal L,\Lambda_n(1)[2])
+=Rg_*\bigl(\mathcal L^\vee(1)\bigr)[2],
 $$
 
-Another compactification gives the same object because both candidates are right adjoint to the intrinsic functor $Rf_!$; uniqueness of a right adjoint supplies the canonical comparison and all cocycle compatibilities. This proves existence in the bounded constructible range used by curves and the relative curve families below. No assertion is made here for arbitrary unbounded or nonconstructible coefficients.
+so $\theta$ is a morphism $Rg_*(\mathcal L^\vee(1))[2]\to R\mathcal Hom_S(Rg_!\mathcal L,\Lambda_n)$.
+
+This is exactly Book 19 §12.2's marked relative curve: the boundary is finite étale over $S$ of constant degree, so all the sheaves $R^kg_!\mathcal L$ and $R^kg_*\mathcal L^\vee(1)$ are lisse and commute with arbitrary base change. Since $\Lambda_n$ is self-injective, $\operatorname{Hom}_{\Lambda_n}(-,\Lambda_n)$ is exact on finite modules; hence $R\mathcal Hom_S(Rg_!\mathcal L,\Lambda_n)$ has lisse cohomology sheaves, namely the module duals of the $R^kg_!\mathcal L$, and the same holds for the other side. Both sides of $\theta$ are therefore complexes with lisse cohomology, and for such complexes a morphism is an isomorphism if and only if it is so on geometric stalks. This is the point at which geometric stalks may legitimately be used, and it is available only because the marked boundary is rigid; without that rigidity, ordinary cohomology of the open family is not computed by fiber cohomology, and the reduction would be false.
+
+On a geometric fiber over $\bar s$, write $V$ for the stalk of $\mathcal L$ and $\pi$ for the prime-to-characteristic fundamental group of $U_{\bar s}=\mathbf P^1\setminus\{x_1,\dots,x_r,\infty\}$. Book 18 §7.2 gives the presentation: $\pi$ is free on the inertia generators $\gamma_1,\dots,\gamma_r$ at $x_1,\dots,x_r$, the inertia generator at infinity being $\gamma_\infty=(\gamma_1\cdots\gamma_r)^{-1}$. Cohomology of $\mathcal L$ is the two-term cochain complex
+
+$$
+C^\bullet(\mathcal L):\qquad
+V\xrightarrow{\ d\ }V^{\oplus r},
+\qquad
+d(w)=\bigl((\gamma_k-1)w\bigr)_{k=1}^r,
+$$
+
+in degrees $0$ and $1$, with no higher cohomology; the vanishing above degree one is Book 18 §6.3 for an affine curve. The stalk of $Rj_*\mathcal L$ at $x\in D=\{x_1,\dots,x_r,\infty\}$ is the local tame complex of Book 19 §4.2,
+
+$$
+C_x^\bullet(\mathcal L):\qquad
+V\xrightarrow{\ \gamma_x-1\ }V(-1),
+$$
+
+in degrees $0$ and $1$, the twist on the target being the identification of tame inertia with $\hat{\mathbf Z}(1)$ that also normalizes the residue in (3.1a); its cohomology is $V^{\gamma_x}$ and $V_{\gamma_x}(-1)$.
+
+The restriction morphism $C^\bullet(\mathcal L)\to\bigoplus_{x\in D}C_x^\bullet(\mathcal L)$ is the diagonal in degree zero. In degree one it is the *residue*: a $1$-cocycle is the tuple $(w_1,\dots,w_r)$ recording $\gamma_k\mapsto w_k$, its component at $x_k$ is $w_k$, and its component at infinity is $-\sum_k(\gamma_1\cdots\gamma_{k-1})w_k$, because $\gamma_\infty$ is the inverse of the product and a cocycle on a product is the twisted sum of its values. For $\mathcal L$ constant this is $-\sum_kw_k$, the statement that residues sum to zero; and for $\mathcal L=\Lambda_n(1)$ it says that the Kummer class of $t-x_k$ has residue $1$ at $x_k$, residue $-1$ at infinity, and residue $0$ elsewhere, which is (3.1a) read on an explicit generator.
+
+The localization triangle on $\mathbf P^1$ therefore reads
+
+$$
+R\Gamma_c(U_{\bar s},\mathcal L)
+\longrightarrow
+C^\bullet(\mathcal L)
+\longrightarrow
+\bigoplus_{x\in D}C_x^\bullet(\mathcal L)
+\longrightarrow,
+$$
+
+and $R\Gamma_c$ is the shifted mapping fiber of a map of two-term complexes, hence has amplitude $[0,2]$. Its $H^0$ vanishes, since the degree-zero component of the restriction is injective; its $H^2$ is the cokernel of the residue; and reading the triangle gives the exact sequence
+
+$$
+0\to V^{\pi}\to\bigoplus_{x\in D}V^{\gamma_x}
+\to H_c^1(U_{\bar s},\mathcal L)
+\to H^1(U_{\bar s},\mathcal L)
+\xrightarrow{(\operatorname{res}_x)}
+\bigoplus_{x\in D}V_{\gamma_x}(-1)
+\to H_c^2(U_{\bar s},\mathcal L)\to0
+$$
+
+with no compactly supported cohomology outside degrees $1$ and $2$.
+
+Now dualize the presentation for $\mathcal L^\vee(1)$. Since $\Lambda_n$ is self-injective, $\operatorname{Hom}_{\Lambda_n}(-,\Lambda_n)$ is exact, and the transpose of $\gamma-1$ acting on $V^\vee$ is $\gamma^{-1}-1$ acting on $V$. Hence the dual of $C^\bullet(\mathcal L^\vee(1))[2]$ is the complex
+
+$$
+V(-1)^{\oplus r}
+\xrightarrow{\ \delta\ }V(-1),
+\qquad
+\delta\bigl((w_k)_k\bigr)
+=\sum_{k=1}^r(\gamma_k^{-1}-1)w_k,
+$$
+
+in degrees $1$ and $2$, and the dual of $C_x^\bullet(\mathcal L^\vee(1))[2]$ is $V(-1)\xrightarrow{\gamma_x^{-1}-1}V$ in degrees $1$ and $2$; dualizing also interchanges the two elementary identities $(V^\vee)_\gamma\cong(V^\gamma)^\vee$ and $(V^\vee)^\gamma\cong(V_\gamma)^\vee$, so that the dual of the local invariants for $\mathcal L^\vee(1)$ is exactly the local coinvariants for $\mathcal L$, and conversely. The dual of the restriction map is then the transposed incidence matrix, whose components are the sum over the punctures — that is, the residue read backwards.
+
+Comparing the two, the dual of the ordinary localization sequence for $\mathcal L^\vee(1)$ is term for term the compactly supported sequence for $\mathcal L$ displayed above: the local terms match by the two module identities, the maps match because one incidence matrix is the transpose of the other, and the outer degrees match because both sequences begin at zero and end at zero. The morphism $\theta$ induces a map between these two sequences, because $\theta$ was constructed globally and therefore commutes with the localization triangles, and on the local terms it is the elementary module duality just described, an isomorphism. By the five lemma $\theta$ is an isomorphism on the middle terms as well. Finally the resulting pairing is cup product followed by the sum of residues, since $t_p$ was defined in (3.1b) as the residue at infinity and the sequence identifies $H_c^2$ with the cokernel of the residue map; for $\mathcal L=\Lambda_n$ this reads $H_c^2(U_{\bar s},\Lambda_n(1))=\Lambda_n$ with the sum of residues as the trace.
+
+This proves $\theta$ on the open term, and with the supported term and the reductions above, proves (3.1). No trace theorem and no purity theorem has been used: the only geometric inputs are Book 18's tame presentation and affine-curve vanishing, Book 19's boundary presentation, marked-curve base change, and smooth-local calculation, and the Kummer computation of the residue. $\square$
+
+**From the affine line to smooth morphisms.** Since $\mathbf A^N_S=\mathbf A^1_{\mathbf A^{N-1}_S}$, iterating (3.1) and composing the adjunctions shows that $Rp_!$ for $p:\mathbf A^N_S\to S$ has right adjoint $p^*(N)[2N]$. An étale morphism $w$ has $Rw_!=w_!$ with right adjoint $w^*$, so any $V$ étale over $\mathbf A^N_Y$ inherits the statement by composing adjunctions, and the residue normalization is unchanged because the residue is étale-local. Now let $q:W\to Y$ be smooth separated of pure relative dimension $N$. The trace $t_q:Rq_!\Lambda_n(N)[2N]\to\Lambda_n$ is defined without gluing any object: the sheaves $R^mq_!\Lambda_n(N)$ vanish for $m>2N$ and $R^{2N}q_!\Lambda_n(N)$ is canonically $\Lambda_n$ — both are statements about sheaves, verified on the charts and glued as sheaves, which is legitimate — so $t_q$ is the canonical truncation map onto $\mathcal H^0$. Repeating the construction of $\theta$ verbatim with $t_q$ in place of $t_p$ gives a global morphism
+
+$$
+\theta^q_{M,L}:\
+Rq_*R\mathcal Hom_W(M,q^*L(N)[2N])
+\longrightarrow
+R\mathcal Hom_Y(Rq_!M,L).
+$$
+
+The class of $M\in D^b_c(W,\Lambda_n)$ for which $\theta^q$ is an isomorphism for all $L$ is triangulated and closed under summands. Every constructible sheaf on $W$ is a quotient of a finite direct sum of sheaves $u_!\Lambda_n$ with $u:V\to W$ étale and $V$ affine, and the $V$ may be chosen inside charts étale over $\mathbf A^N_Y$; the resulting resolution has uniformly bounded amplitude on both sides by Book 19 §3.4, so brutal truncation past that bound and the five lemma reduce the general case to $M=u_!\Lambda_n$. For such $M$, adjunction gives $R\mathcal Hom_W(u_!\Lambda_n,q^*L(N)[2N])=Ru_*(qu)^*L(N)[2N]$ and $Rq_!u_!=R(qu)_!$, so $\theta^q$ becomes the statement for $qu:V\to Y$, already proved. Hence for $q$ smooth of pure relative dimension $N$,
+
+$$
+q^!L=q^*L(N)[2N] \tag{3.2}
+$$
+
+is a right adjoint of $Rq_!$.
+
+**The adjoint of a quasi-projective morphism.** For a closed immersion $i:Z\hookrightarrow P$ the exact functor $i_*$ has a right adjoint on sheaves, namely sections supported on $Z$ restricted to $Z$; deriving it gives $i^!$, defined globally with no choices. If $v:P\setminus Z\hookrightarrow P$, the triangle
+
+$$
+i_*i^!L\longrightarrow L\longrightarrow Rv_*v^*L\longrightarrow
+$$
+
+together with the constructibility and boundedness theorem for $Rv_*$ in Book 19 §3.3 shows that $i^!$ carries bounded constructible complexes to bounded constructible complexes in the required range.
+
+Let now $f:X\to Y$ be quasi-projective, which by Section 1.2 is the standing hypothesis wherever compact support is used. Then $f$ factors as an immersion into $\mathbf P^N_Y$ followed by the projection, and Book 19 §4.2 factors that immersion as a closed immersion into an open subscheme. Hence there is a *global* factorization
+
+$$
+X\xrightarrow{\ i\ }W\xrightarrow{\ q\ }Y,
+\qquad
+W\subseteq\mathbf P^N_Y\ \text{open},
+$$
+
+with $i$ a closed immersion and $q$ smooth of pure relative dimension $N$, since an open subscheme of $\mathbf P^N_Y$ is smooth over $Y$ of that dimension. By the composition formula of Section 2.3, $Rf_!=Rq_!\circ i_*$, so composing the two adjunctions gives a right adjoint
+
+$$
+f^!L=i^!q^!L=i^!\bigl(q^*L(N)[2N]\bigr).
+$$
+
+This is a single globally defined functor. No cover is chosen, no local candidate is compared with another on an overlap, and no cocycle is invoked. If a second factorization is chosen, the two resulting functors are canonically isomorphic because both are right adjoint to the same functor $Rf_!$, and the comparison is unique and automatically compatible with all composites; that is the ordinary uniqueness of adjoints, applied to functors that already exist, not a gluing procedure applied to objects that do not.
+
+Boundedness and constructibility of $f^!L$ follow from (3.2) and from the closed-immersion statement above. For an open immersion $j:U\hookrightarrow X$ we may take $W=U$, $N=0$, and $i$ the identity, so $j^!=j^*$. For a compactification $f=\bar f\circ j$, uniqueness of adjoints gives
+
+$$
+f^!=j^*\bar f^!,
+$$
+
+and independence of the compactification for the same reason. This proves existence of the adjunction on $D_c^b$ in the range used by curves and the relative curve families below. No assertion is made here for arbitrary unbounded or nonconstructible coefficients, nor for morphisms outside the quasi-projective class, where even $Rf_!$ has not been constructed.
 
 ### 3.3 Composition, base change, and dualizing complexes
 
@@ -360,7 +549,7 @@ $$
 K\longrightarrow D_XD_XK
 $$
 
-is an isomorphism. Nilpotents do not change the étale site. Excellence and noetherian induction give a finite filtration by regular locally closed strata. Embed such a stratum into a smooth affine scheme. The regular-immersion calculation of Section 4.2, whose proof is independent of biduality, identifies its dualizing complex; the assertion there is ordinary biduality for a finite module. Extension by zero and proper pushforward transport the result across strata, and the five lemma closes the induction through localization triangles.
+is an isomorphism. Nilpotents do not change the étale site. Excellence and noetherian induction give a finite filtration by locally closed strata that are smooth over the base; in the curve range of this book, where the base is a field or a Dedekind scheme and the strata have dimension at most one, such a filtration exists because a reduced scheme of finite type has a dense open smooth locus over a suitable finite radicial extension of the base, and radicial changes do not alter the étale site. Embed such a stratum into a smooth affine scheme over the same base. It is then a smooth pair, so the purity calculation of Section 4.2 — whose proof is independent of biduality — identifies its dualizing complex; the assertion there is ordinary biduality for a finite module. Extension by zero and proper pushforward transport the result across strata, and the five lemma closes the induction through localization triangles.
 
 This proof strategy explains both constructibility and finite dimensionality assumptions. Without finite stalks, biduality of modules can fail; without a finite stratification, the induction need not terminate.
 
@@ -396,19 +585,76 @@ $$
 R^2p_!\Lambda_n(1)\simeq\Lambda_n,
 $$
 
-with all other compactly supported direct images zero. Its chosen generator is the unique class having residue $1$ at infinity. If $t$ and $u$ are two étale coordinates, the ratio of their local Kummer symbols is a unit; a unit has zero residue. The two generators therefore agree. Products orient affine $d$-space, and étale descent glues the local orientations. This proves that the isomorphism is canonical rather than dependent on coordinates.
+with all other compactly supported direct images zero; this is (3.1b). Its chosen generator is the unique class having residue $1$ at infinity. If $t$ and $u$ are two étale coordinates, the ratio of their local Kummer symbols is a unit; a unit has zero residue. The two generators therefore agree. Iterating orients affine $d$-space. What is then glued is not an object of a derived category but the single sheaf $R^{2d}f_!\Lambda_n(d)$, together with the vanishing of $R^mf_!\Lambda_n(d)$ for $m>2d$; the trace is the resulting truncation map, exactly as in Section 3.2. This proves that the orientation is canonical rather than dependent on coordinates.
 
 The twist is indispensable. Over a nonclosed field, a local parameter changes the Kummer generator by the cyclotomic character. The Tate twist cancels precisely that transformation.
 
 ### 4.2 Regular immersions and Gysin maps
 
-Let $i:Z\hookrightarrow X$ be a regular closed immersion of pure codimension one, with both schemes regular in the required neighborhood. This is the codimension needed for closed points on curves and for graphs and finite correspondences on curves. Absolute purity in this range gives
+Absolute purity is not supplied by the preceding books, and it is not proved here in the generality in which it is usually quoted. Unrestricted absolute purity — that $i^!\Lambda_n\simeq\Lambda_n(-c)[-2c]$ for every closed immersion of pure codimension $c$ between regular noetherian schemes with $\ell$ invertible — is a deep theorem whose proof is far outside the reach of the local presentations available to us. What we do prove is the case of a pair that is regular *relative to a smooth or one-dimensional structure*, which is the case that every application in this book uses except one; that exception is isolated below as a named hypothesis rather than concealed.
+
+**Purity at a closed point of a regular one-dimensional scheme.** Let $X$ be regular and of dimension one at a closed point $z$ — a smooth curve over a field, or a Dedekind scheme, or a trait — and let $i:z\hookrightarrow X$ be the reduced closed point. Then
 
 $$
-i^!\Lambda_n\simeq\Lambda_n(-1)[-2].
+i^!\Lambda_n\simeq\Lambda_n(-1)[-2],
 $$
 
-We give the proof because absolute purity is not supplied by the preceding books. In codimension one, a local equation $t$ gives a Kummer class on $X\setminus Z$. On a strict localization at a geometric point of $Z$, the punctured normal trait has the two-term tame-inertia complex; the Kummer boundary of $t$ is its residue generator. It follows there that supported cohomology vanishes outside degree two and equals $\Lambda_n(-1)$ in degree two. Geometric stalks give the asserted complex globally. Multiplying $t$ by a unit does not change the residue, so the class glues.
+canonically, the generator being the residue of the Kummer class of a uniformizer.
+
+*Proof.* Both sides are computed on the strict localization $X_{(\bar z)}$, whose ring is a strictly henselian discrete valuation ring $R$ with fraction field $F$. The morphism $\operatorname{Spec}R\to\operatorname{Spec}R$ is proper, so Book 19 §5.1, applied to the identity, gives $R\Gamma(X_{(\bar z)},K)=K_{\bar z}$ for every bounded constructible $K$; in particular $H^0(X_{(\bar z)},\Lambda_n)=\Lambda_n$ and $H^q(X_{(\bar z)},\Lambda_n)=0$ for $q>0$. The punctured strict localization is $\operatorname{Spec}F$, whose cohomology was computed in Section 3.2: $\Lambda_n$ in degree zero, $\Lambda_n(-1)$ in degree one via the residue, and zero above. Feeding both into the localization sequence for cohomology supported at $z$ kills degrees $0$ and $1$, because $H^0(X_{(\bar z)})\to H^0(F)$ is the identity of $\Lambda_n$, and leaves
+
+$$
+H_z^2(X,\Lambda_n)\cong H^1(F,\Lambda_n)=\Lambda_n(-1),
+\qquad
+H_z^q(X,\Lambda_n)=0\ (q\neq2).
+$$
+
+The identification is the residue, hence independent of the uniformizer: multiplying it by a unit changes the Kummer class by the class of a unit, which vanishes in $F^\times/(F^\times)^{\ell^n}$ because units of $R$ are $\ell^n$th powers. $\square$
+
+**Purity for smooth pairs.** Let $S$ be a scheme with $\ell$ invertible, let $X$ and $Z$ be smooth over $S$, and let $i:Z\hookrightarrow X$ be a closed immersion of pure codimension $c$. Then
+
+$$
+i^!\Lambda_n\simeq\Lambda_n(-c)[-2c],
+$$
+
+canonically and compatibly with étale localization on $X$ and with base change on $S$.
+
+*Proof.* The construction of $i^!$ is local on $X$ for the étale topology, and an isomorphism of complexes on $Z$ may be checked étale-locally, so we may replace $X$ by an étale neighborhood. Near a point $z$ of $Z$, choose $t_1,\dots,t_c$ generating the ideal of $Z$ and $s_1,\dots,s_{d-c}$ restricting to étale coordinates for $Z$ over $S$, where $d$ is the relative dimension of $X$. The Jacobian criterion makes $e=(t,s):X\to\mathbf A^d_S$ étale near $z$, and $Z$ is the preimage of the linear subspace $\{t=0\}=\mathbf A^{d-c}_S$ because the $t_k$ generate the ideal. An étale morphism $e$ has $e^!=e^*$ and commutes with $i^!$, so we are reduced to the zero section of a projection
+
+$$
+\pi:\mathbf A^c_{Z}\longrightarrow Z,
+\qquad
+i_0:Z\longrightarrow\mathbf A^c_Z,
+\qquad
+\pi\circ i_0=\operatorname{id}_Z.
+$$
+
+Composition of adjoints and (3.2) give $i_0^!\pi^!=\operatorname{id}$ and $\pi^!=\pi^*(c)[2c]$, hence $i_0^!\bigl(\Lambda_n(c)[2c]\bigr)=\Lambda_n$. The Tate twist is an invertible sheaf pulled back from the base, and $i^!$ satisfies the projection formula against an invertible object, so this reads $i_0^!\Lambda_n=\Lambda_n(-c)[-2c]$.
+
+For $c=1$ the isomorphism is canonical, independent of the chart: $Z$ is then a relative divisor of $X/S$, so (3.1a) applies and shows that $\mathcal H^2(i^!\Lambda_n)$ is generated by the residue of the Kummer class of a local equation $t$ of $Z$; replacing $t$ by $ut$ for a unit $u$ changes that class by the Kummer class of $u$, which extends across $Z$ and therefore has zero residue. For $c>1$ the canonical generator is the product of the $c$ codimension-one generators attached to a regular sequence cutting out $Z$, which is independent of the sequence by the same unit argument applied one step at a time. $\square$
+
+**Smooth descent of purity.** Let $g:X\to T$ be smooth of pure relative dimension $d$, let $i_T:W\hookrightarrow T$ be a closed immersion of pure codimension one for which purity is known on $T$, and let $Z=g^{-1}(W)$ with $i_X:Z\hookrightarrow X$. Then $i_X^!\Lambda_n\simeq\Lambda_n(-1)[-2]$.
+
+*Proof.* Write $g_W:Z\to W$ for the base change of $g$, which is smooth of the same relative dimension. From $g\circ i_X=i_T\circ g_W$ and the composition law for extraordinary inverse images,
+
+$$
+i_X^!g^!\Lambda_n=g_W^!i_T^!\Lambda_n
+=g_W^!\bigl(\Lambda_n(-1)[-2]\bigr)
+=\Lambda_n(-1)[-2](d)[2d].
+$$
+
+Since $g^!\Lambda_n=\Lambda_n(d)[2d]$ and $i_X^!$ commutes with the invertible twist and shift, this gives the assertion. $\square$
+
+Taking $T$ regular of dimension one and $W$ a closed point, the last two results cover every purity statement used in this book except one. Closed points of smooth curves are the first theorem. Graphs of morphisms between smooth curves, diagonals, and the finite correspondences of Chapter 13 sit as codimension-one smooth pairs inside products of smooth curves. The horizontal divisors of a smooth relative curve over a Dedekind base are smooth pairs over that base, and the fibers of such a curve over closed points of the base are covered by smooth descent. That is the dimension range in which the fundamental classes below are unconditional: ambient schemes smooth over a regular base of dimension at most one, and closed subschemes that are either smooth over the same base or pullbacks of divisors on it.
+
+**Absolute purity hypothesis (AP).** Let $i:Z\hookrightarrow X$ be a closed immersion of pure codimension $c$ between regular excellent noetherian schemes on which $\ell$ is invertible. Then $i^!\Lambda_n\simeq\Lambda_n(-c)[-2c]$, the isomorphism being the one determined on the smooth-pair locus by the residue of a local equation. The only instance used below is the codimension-two case at a closed point $z$ of a regular two-dimensional scheme $\mathcal X$, namely $i_z^!\Lambda_n\simeq\Lambda_n(-2)[-4]$, equivalently
+
+$$
+H_z^q(\mathcal X,\Lambda_n)=
+\begin{cases}\Lambda_n(-2),&q=4,\\0,&q\neq4.\end{cases}
+$$
+
+We state (AP) rather than prove it, and we do not use it except where it is named. What a proof requires is exactly what the tools of Books 18 and 19 do not provide: a computation of the cohomology of the punctured spectrum of a two-dimensional strictly henselian regular local ring that is not smooth over any one-dimensional regular base. The methods available here compute punctured strict localizations only along a relative divisor, where the local ring is a strictly henselian trait with parameters adjoined and Book 19's tame-inertia presentation applies. At a point where the ambient regular scheme has no such relative structure — the node of a regular semistable model is the case that occurs below — that presentation is unavailable, and the computation genuinely needs nearby-cycle or alteration input that belongs to later volumes. The one place in this book that needs (AP) is the extension of the relative orientation across a node in Section 10.3; every statement there is flagged.
 
 Adjunction yields the Gysin map
 
@@ -422,15 +668,15 @@ Composing with the map that forgets support gives the ordinary cycle-class pushf
 
 ### 4.3 Cycle classes and excess warnings
 
-For an integral effective Cartier divisor $Z\subset X$, define
+For an effective Cartier divisor $Z\subset X$ falling in the range of Section 4.2 — a closed point of a regular curve or trait, a smooth pair over the base, or a pullback of such a divisor along a smooth morphism — define
 
 $$
 \operatorname{cl}_X(Z)=i_*(1)\in H_Z^2(X,\Lambda_n(1)).
 $$
 
-Additivity extends the definition to cycles. Proper pushforward and flat pullback commute with cycle classes. For transverse regular immersions, cup product of fundamental classes equals the class of the intersection. The proof reduces étale-locally to concatenating regular sequences, where the product of Kummer boundary symbols is the symbol of the combined sequence.
+Additivity extends the definition to cycles supported on such divisors. Proper pushforward and flat pullback commute with cycle classes. For transverse smooth pairs, cup product of fundamental classes equals the class of the intersection. The proof reduces étale-locally to concatenating regular sequences in the linear model of Section 4.2, where the product of Kummer boundary symbols is the symbol of the combined sequence.
 
-Nontransverse intersections require an excess bundle and cannot be treated by naive multiplication of multiplicities. Likewise, a singular closed subscheme is not automatically covered by the displayed purity isomorphism. The cases used later avoid that leap. On a regular curve every codimension-one cycle is locally Cartier, so its class is defined by the Kummer boundary of a local equation and additivity. The graph of a map between smooth curves is a regular divisor in their product. Thus points and the finite curve correspondences considered here have cycle classes without invoking purity for an arbitrary singular subscheme.
+Nontransverse intersections require an excess bundle and cannot be treated by naive multiplication of multiplicities. Likewise, a singular closed subscheme, and more generally a regular pair outside the proved range, is not covered by the displayed purity isomorphism. The cases used later avoid that leap. On a regular curve every codimension-one cycle is locally Cartier and is a closed point, so its class is defined by the Kummer boundary of a local equation and additivity. The graph of a map between smooth curves is a smooth divisor in their product, hence a smooth pair. Thus points and the finite curve correspondences considered here have cycle classes without invoking purity for an arbitrary regular or singular subscheme.
 
 ## 5. Trace maps
 
@@ -474,7 +720,7 @@ $$
 
 when the degree is constant.
 
-For a finite locally free map that is not étale, the duality counit remains canonical, but a trace on ordinary constant coefficients requires an orientation. In the applications, $X$ and $Y$ are regular and $f$ is finite lci—in particular this holds for a finite map between smooth curves, or for a finite flat correspondence explicitly presented as lci. Factoring the graph as a regular immersion followed by a smooth projection gives
+For a finite locally free map that is not étale, the duality counit remains canonical, but a trace on ordinary constant coefficients requires an orientation. In the applications, $X$ and $Y$ are smooth over a common base and $f$ is finite lci—in particular this holds for a finite map between smooth curves, or for a finite flat correspondence explicitly presented as an lci map of smooth curves. Its graph is then a smooth pair inside $X\times Y$, so the purity of Section 4.2 applies unconditionally. Factoring the graph as that regular immersion followed by a smooth projection gives
 
 $$
 \Lambda_n\longrightarrow f^!\Lambda_n.
@@ -531,7 +777,7 @@ f_*:H^m(X,f^*\mathcal F(r))
 H^{m-2d}(Y,\mathcal F(r-d)).
 $$
 
-For a proper local-complete-intersection map between regular schemes, factor it as a regular immersion followed by a smooth map. Purity for the immersion and smooth orientation produce the same formula with $d$ the virtual relative dimension. Independence of factorization follows by comparing two factorizations after embedding them diagonally into a common smooth ambient space; the excess intersection identity cancels the auxiliary normal bundle.
+For a proper local-complete-intersection map $f:X\to Y$ between schemes smooth over a common base, factor it as a regular immersion followed by a smooth map; the immersion is then a smooth pair, so the purity of Section 4.2 applies unconditionally. Purity for the immersion and smooth orientation produce the same formula with $d$ the virtual relative dimension. Independence of factorization follows by comparing two factorizations after embedding them diagonally into a common smooth ambient space; the excess intersection identity cancels the auxiliary normal bundle. For a proper lci map between regular schemes that are not smooth over a common base, the same factorization exists but its immersion need not be a smooth pair; the formula is then conditional on hypothesis (AP) of Section 4.2 and is not used in that generality below.
 
 For an oriented finite flat lci map, $d=0$, recovering the degree trace. For the projection $X\times Y\to Y$ with $X$ smooth proper of dimension $d$, the map is ordinary integration over $X$. The composition law is Fubini's theorem in this setting.
 
@@ -737,7 +983,7 @@ A useful counterexample is a varying open family whose boundary points collide. 
 
 ### 8.1 Purity at a closed point
 
-Let $C$ be a smooth curve and $i:x\hookrightarrow C$ a closed point, with open complement $j:U\hookrightarrow C$. Purity says
+Let $C$ be a smooth curve and $i:x\hookrightarrow C$ a closed point, with open complement $j:U\hookrightarrow C$. This is the first, unconditional case of Section 4.2: purity says
 
 $$
 i^!\Lambda_n(1)\simeq\Lambda_n[-2].
@@ -933,11 +1179,41 @@ Rf_*R\mathcal Hom(K,f^!\Lambda_n)
 R\mathcal Hom(Rf_*K,\Lambda_n).
 $$
 
-On the smooth locus, $f^!\Lambda_n$ is $\Lambda_n(1)[2]$. In fact the lci orientation of the regular total space extends this identification across the node, but its exchange map to the intrinsic dualizing complex of the singular fiber contains the branch correction of Section 10.2. This is the exact point at which extraordinary pullback cannot be replaced by an unqualified constant twist after singular base change.
+This much is unconditional: it is the formal statement of Section 9.1, which needs only the adjunction and the projection formula, and it holds whatever the object $f^!\Lambda_n$ turns out to be. So is the description of the intrinsic fiber dualizing complex in Section 10.2, which was obtained by dualizing the normalization triangle and uses only smooth purity on the normalized components and the zero-dimensionality of the node set.
 
-The extension across the node uses the regularity of the total space. Embed $\mathcal C$ locally as the hypersurface $xy-\pi=0$ in the smooth relative plane over $T$. The hypersurface immersion is regular of codimension one. Composing its purity isomorphism $(-1)[-2]$ with the plane orientation $(2)[4]$ produces the relative orientation $(1)[2]$. After restriction to the special fiber, however, the square is not cohomologically transverse at the node; the exchange morphism to the intrinsic fiber dualizing complex has the nonzero cone described by the two branches. Thus relative orientation and fiberwise singular duality are compatible without being identical.
+What is not unconditional is the identification of $f^!\Lambda_n$ itself. On the smooth locus $\mathcal C^{\mathrm{sm}}$ the morphism $f$ is smooth of relative dimension one, so $f^!\Lambda_n$ restricts to $\Lambda_n(1)[2]$ there by (3.2). At a node the total space is regular but $f$ is not smooth, and the extension of that orientation across the node is exactly a codimension-two absolute purity statement, which Section 4.2 does not prove. We therefore name it.
 
-One can prove the local assertion directly from $xy=\pi$. Remove the node, apply smooth purity on the punctured neighborhood, and use localization for the closed point. The punctured special fiber has two branches, whereas the punctured generic fiber has one annular cycle. The boundary map is the difference of the two branch residues. Its cone is rank one and is precisely the node correction.
+**Regular semistable orientation hypothesis (RSO).** Let $f:\mathcal C\to T$ be as above, with $\mathcal C$ regular and $\ell$ invertible on $T$. Then the smooth-locus orientation extends to an isomorphism
+
+$$
+f^!\Lambda_n\simeq\Lambda_n(1)[2]
+$$
+
+on all of $\mathcal C$, restricting on $\mathcal C^{\mathrm{sm}}$ to the orientation of Section 4.1.
+
+(RSO) is the codimension-two case of hypothesis (AP) at the nodes, in the following precise sense. Let $z$ be a node, $i_z:z\hookrightarrow\mathcal C$, and $j:\mathcal C\setminus\{z\}\hookrightarrow\mathcal C$. Since $z\to T$ is the closed point of a trait, the first purity theorem of Section 4.2 gives $i_z^!f^!\Lambda_n=(f\circ i_z)^!\Lambda_n=\Lambda_n(-1)[-2]$. Hence (RSO) forces
+
+$$
+i_z^!\Lambda_n\simeq\Lambda_n(-2)[-4],
+\qquad\text{that is}\qquad
+H_z^q(\mathcal C,\Lambda_n)=
+\begin{cases}\Lambda_n(-2),&q=4,\\0,&q\neq4,\end{cases}
+$$
+
+and conversely a proof of that local statement, together with the residue normalization along the two branches, is what would establish (RSO): the localization triangle
+
+$$
+i_{z*}i_z^!f^!\Lambda_n
+\longrightarrow f^!\Lambda_n
+\longrightarrow Rj_*\bigl(\Lambda_n(1)[2]\bigr)
+\longrightarrow
+$$
+
+then has the same outer terms as the corresponding triangle for $\Lambda_n(1)[2]$, and the smooth-locus orientation extends uniquely across $z$ because the obstruction and ambiguity groups $\operatorname{Hom}(\Lambda_n,\Lambda_n(-2)[-3])$ and $\operatorname{Hom}(\Lambda_n,\Lambda_n(-2)[-4])$ vanish. So nothing weaker than the codimension-two computation will do, and nothing more is being assumed.
+
+The tempting short argument does not close. Embed $\mathcal C$ locally as the hypersurface $xy-\pi=0$ in the smooth relative plane over $T$, a regular immersion of codimension one; composing a purity isomorphism $(-1)[-2]$ for it with the plane orientation $(2)[4]$ would give the relative orientation $(1)[2]$. But that immersion is a regular pair whose source is not smooth over $T$ and not a smooth pair in the sense of Section 4.2, so its purity isomorphism is precisely (AP) again, not a consequence of what has been proved. The direct local route has the same shape: removing the node and applying smooth purity on the punctured neighborhood leaves exactly the supported cohomology $H_z^\bullet(\mathcal C,\Lambda_n)$ to be computed, and the punctured strict localization of $\mathcal C$ at a node is not a punctured relative divisor, so Book 19's tame boundary presentation does not compute it. A genuine computation needs the nearby-cycle description of the punctured node — its generic fiber is an annulus and its special fiber is two punctured branches, with boundary map the difference of the two branch residues — which is the subject of the next volume.
+
+Granting (RSO), the exchange map from the relative orientation to the intrinsic dualizing complex of the singular fiber is not an isomorphism: after restriction to the special fiber the square is not cohomologically transverse at the node, and the exchange morphism has the nonzero cone described by the two branches in Section 10.2. This is the exact point at which extraordinary pullback cannot be replaced by an unqualified constant twist after singular base change. The rank-one cone is the node correction, and its description is unconditional even though the orientation it is compared against is not.
 
 ### 10.4 What specialization preserves
 
@@ -1126,18 +1402,18 @@ $$
 q_*p^*:H^*(X,\mathcal F)\longrightarrow H^*(Y,\mathcal F).
 $$
 
-For a regular lci cycle $\Gamma\subset X\times Y$ of the dimension making degree zero, the equivalent formula is
+For a cycle $\Gamma\subset X\times Y$ of the dimension making degree zero, whose components are smooth pairs in $X\times Y$ in the sense of Section 4.2 — which is the case for graphs, diagonals, and the finite correspondences between smooth curves used here — the equivalent formula is
 
 $$
 \Gamma_*(x)=p_{Y*}
 (p_X^*x\smile\operatorname{cl}(\Gamma)).
 $$
 
-The codimension of $\Gamma$, the twist of its class, and the relative dimension of $p_Y$ cancel. If they do not cancel, the correspondence changes degree and twist; suppressing that shift changes the operator. Divisorial cycles are also allowed through their Kummer classes. An arbitrary singular closure is not silently assigned a purity class; the curve correspondences used here have a regular pull-push presentation or a Cartier cycle representative.
+The codimension of $\Gamma$, the twist of its class, and the relative dimension of $p_Y$ cancel. If they do not cancel, the correspondence changes degree and twist; suppressing that shift changes the operator. Divisorial cycles on smooth curves are also allowed through their Kummer classes. Neither an arbitrary singular closure nor an arbitrary regular one is silently assigned a purity class; the curve correspondences used here have a smooth-pair pull-push presentation or a Cartier cycle representative supported at closed points of a smooth curve.
 
 Composition follows by forming the fiber product of correspondences, intersecting the pulled-back cycle classes, and applying the projection formula. Properness of the relevant projection ensures that the composite support remains proper.
 
-If the intersection defining a composite is not transverse, one must use the refined intersection class. Its compatibility follows from deformation to the normal bundle. For a regular immersion $Z\hookrightarrow W$, use
+If the intersection defining a composite is not transverse, one must use the refined intersection class. Its compatibility follows from deformation to the normal bundle. For a smooth pair $Z\hookrightarrow W$ over the base, which is the only case used, take
 
 $$
 \operatorname{Bl}_{Z\times\{0\}}(W\times\mathbf A^1)
@@ -1146,7 +1422,7 @@ $$
 
 The complement of the special fiber is $W\times\mathbf G_m$ and the special fiber is $N_{Z/W}$. Localization, affine-line duality, and the residue-one normalization identify the generic fundamental class with the zero-section class on the special fiber. Apply this simultaneously to the two immersions being intersected. If their normal directions overlap, quotienting by the normal bundle of the actual fiber product leaves the excess bundle $E$, and the zero-section calculation multiplies its class by $c_{\mathrm{top}}(E)$. Here $c_{\mathrm{top}}(E)$ is defined by zero-section pullback followed by its Gysin map, so no separate Chern-class theorem is assumed. This proves the excess formula and hence associativity of the cohomological composite. In the curve case, the formula is the local intersection length. A set-theoretic fiber product can therefore give the wrong multiplicity even when it has the expected points.
 
-The two asserted fibers can be checked without importing an intersection theorem. Locally, if $I$ is the ideal of $Z$, the displayed open blowup is described by the Rees algebra generated by $s$ and $I/s$. Inverting $s$ gives $\mathcal O_W[s,s^{-1}]$. Setting $s=0$ gives $\operatorname{gr}_I\mathcal O_W$, and regularity of the immersion identifies this graded algebra with $\operatorname{Sym}_{\mathcal O_Z}(I/I^2)$. Its spectrum is the normal bundle. The specialization and excess calculation are therefore reductions to the already proved coordinate zero-section calculation.
+The two asserted fibers can be checked without importing an intersection theorem. Locally, if $I$ is the ideal of $Z$, the displayed open blowup is described by the Rees algebra generated by $s$ and $I/s$. Inverting $s$ gives $\mathcal O_W[s,s^{-1}]$. Setting $s=0$ gives $\operatorname{gr}_I\mathcal O_W$, and regularity of the immersion identifies this graded algebra with $\operatorname{Sym}_{\mathcal O_Z}(I/I^2)$. Its spectrum is the normal bundle, which is smooth over $Z$ and hence over the base, so the deformed pair is again a smooth pair and Section 4.2 applies throughout the degeneration. The specialization and excess calculation are therefore reductions to the already proved coordinate zero-section calculation.
 
 Base change commutes with the action when the correspondence and its proper support base-change correctly. For a finite étale correspondence this is immediate from pullback and finite trace. For a compactified open correspondence, it follows from proper base change on the closure and compatibility of the boundary triangle. If a closure acquires an extra vertical component, that component contributes a genuine cycle class; it may not be silently discarded.
 
@@ -1179,15 +1455,24 @@ The diagonal class recovers the identity correspondence. On a smooth proper curv
 
 ### 13.4 Hecke-type correspondences
 
-In the curve moduli spaces used later, the prime-to-level correspondences under consideration are finite étale on the open space and admit, after a compatible compactification or refinement, a regular lci pull-push model proper over both factors. Their actions therefore exist on ordinary and compactly supported cohomology, commute with the boundary map, and preserve interior cohomology
+Nothing in this book constructs the curve moduli spaces of later volumes or verifies the geometric properties of the correspondences on them. We therefore state what is assumed, in the form in which the later volumes must supply it, and derive only what follows from it.
+
+**Hecke correspondence hypothesis (H).** Let $U$ be a smooth separated curve over $k$ with smooth compactification $\overline U$ and reduced boundary $D=\overline U\setminus U$. A *Hecke-type correspondence* on $U$ is a diagram $U\xleftarrow{p}Z\xrightarrow{q}U$ subject to the following, each of which is a hypothesis on the geometric input and not a theorem proved here.
+
+1. *Étaleness in the interior.* $Z$ is a smooth separated curve over $k$ and both $p$ and $q$ are finite étale. This is the prime-to-level condition; it fails at the level primes and is not asserted there.
+2. *A proper model.* There is a proper curve $\overline Z$ over $k$ containing $Z$ as a dense open, together with finite morphisms $\bar p,\bar q:\overline Z\to\overline U$ extending $p$ and $q$, such that $\overline Z$ is smooth and $\bar p^{-1}(D)=\bar q^{-1}(D)=\overline Z\setminus Z$ as sets. In particular the correspondence is proper over both factors and preserves the boundary.
+3. *An oriented pull-push presentation.* The graph $(\bar p,\bar q):\overline Z\to\overline U\times\overline U$ is a closed immersion whose image is a smooth pair in $\overline U\times\overline U$ in the sense of Section 4.2, so that its fundamental class and the associated pull-push operator are defined unconditionally by the purity proved there.
+4. *Descent.* $Z$, $\overline Z$, $p$, $q$, and their extensions are defined over the ground field $k$, and over a finite field they commute with the chosen Frobenius.
+
+**Consequences.** Granting (H), the operator $q_*p^*$ acts on $H^*(U,\mathcal F)$ and on $H_c^*(U,\mathcal F)$ for every lisse $\mathcal F$ pulled back compatibly, the two actions are intertwined by the natural map $H_c^*\to H^*$ because $\bar p$ and $\bar q$ are proper and preserve the boundary, and consequently the operator preserves interior cohomology
 
 $$
 H_!^i=\operatorname{im}(H_c^i\to H^i).
 $$
 
-Transpose correspondences are adjoint for Poincaré duality. If a polarization or an involution changes the geometric transpose into the conventional adjoint operator, that extra involution must be recorded; it is not supplied by duality automatically.
+By Section 13.2, the transposed correspondence obtained by exchanging $p$ and $q$ is the adjoint of $q_*p^*$ for the Poincaré pairing of Section 7.3. If a polarization or an involution changes the geometric transpose into the conventional arithmetic adjoint operator, that extra involution is an additional datum that must be recorded; it is not supplied by duality automatically, and it is not part of (H).
 
-Because all maps descend to the ground field, correspondence actions commute with Galois and Frobenius. Because they are compatible modulo every $\ell^n$, they act on the integral perfect complex. Rational projectors may split eigenspaces after inverting $\ell$, but an integral splitting requires denominators prime to $\ell$.
+Because all maps in (H) descend to the ground field, correspondence actions commute with Galois and Frobenius. Because they are compatible modulo every $\ell^n$, they act on the integral perfect complex. Rational projectors may split eigenspaces after inverting $\ell$, but an integral splitting requires denominators prime to $\ell$. All of this is conditional on (H) and on nothing else in this chapter.
 
 ## 14. The curve duality package
 
@@ -1198,7 +1483,7 @@ We collect the results in a form designed for repeated application.
 **Étale duality theorem for curves.** Let $k$ be a field, let $\ell$ be invertible in $k$, and let $X/k$ be a separated finite-type scheme of dimension at most one. Work with bounded constructible $\ell$-primary coefficients.
 
 1. Compactly supported cohomology is defined intrinsically by compactification, satisfies localization and composition, and commutes with base change at finite and adic levels under the established uniform finiteness hypotheses.
-2. For every compactifiable map in the absolute or relative curve category, the functor $Rf_!$ has the extraordinary right adjoint $f^!$ on bounded constructible complexes. Its counit is functorial, transitive, and compatible with the valid base-change maps.
+2. For every quasi-projective map in the absolute or relative curve category, the functor $Rf_!$ has the extraordinary right adjoint $f^!$ on bounded constructible complexes, constructed globally from a single factorization into a closed immersion followed by a smooth morphism and independent of that factorization by uniqueness of adjoints. Its counit is functorial, transitive, and compatible with the valid base-change maps.
 3. If $X$ is smooth of pure dimension $d$, then $a^!\Lambda_n=\Lambda_n(d)[2d]$. For finite locally free lisse $\mathcal F_n$, cup product and trace give perfect finite-level pairings
 
    $$
@@ -1209,24 +1494,27 @@ We collect the results in a form designed for repeated application.
 
 4. For a normalized lisse finite-free $\mathbf Z_\ell$-system, the inverse limit is a perfect duality of $\mathbf Z_\ell$-complexes. Free quotients pair in degrees summing to $2d$; torsion has a perfect $\mathbf Q_\ell/\mathbf Z_\ell$-valued linking pairing in degrees summing to $2d+1$. Rationalization gives perfect complementary-degree $\mathbf Q_\ell$-pairings. For a general constructible complex, the same statement uses its Verdier dual rather than an elementary sheaf dual.
 5. Smooth proper relative curves satisfy relative duality fiberwise and over the base. Open smooth curve families satisfy the compact-versus-ordinary form when equipped with a controlled marked boundary.
-6. A proper nodal curve is dual with respect to its dualizing complex. Its normalization, graph, and node correction describe the curve form; the constant shifted sheaf is not substituted on the singular fiber.
-7. Traces and pairings commute with base change, Galois action, and the stated Frobenius normalization. Pull-push compatibility holds for finite étale maps, for oriented proper maps in the transverse or Tor-independent squares specified above, and for the resulting cycle classes and properly supported regular lci algebraic correspondences used here. Transpose correspondences are adjoint.
+6. A proper nodal curve is dual with respect to its dualizing complex. Its normalization, graph, and node correction describe the curve form; the constant shifted sheaf is not substituted on the singular fiber. The identification of the *relative* dualizing complex of a regular semistable model with $\Lambda_n(1)[2]$ is hypothesis (RSO) of Section 10.3 and is not proved here.
+7. Purity for a closed immersion of pure codimension $c$ is proved, with the residue normalization, for a closed point of a regular one-dimensional scheme, for a smooth pair over the base, and for the pullback of such a divisor along a smooth morphism. Outside that range it is hypothesis (AP) of Section 4.2.
+8. Traces and pairings commute with base change, Galois action, and the stated Frobenius normalization. Pull-push compatibility holds for finite étale maps, for oriented proper maps in the transverse or Tor-independent squares specified above, and for the resulting cycle classes and properly supported smooth-pair algebraic correspondences used here. Transpose correspondences are adjoint. The Hecke-type correspondences of Section 13.4 satisfy these conditions under hypothesis (H) stated there.
 
-Every clause is derived from the constructions above. The finite-level theorem rests on compactification, purity, and finite biduality. The adic theorem rests on uniform amplitude, finite-level compatibility, and derived completeness. The relative statement rests on adjunction and the projection formula. The semistable statement rests on normalization and the two-branch local calculation.
+Every clause other than the three named hypotheses is derived from the constructions above. The finite-level theorem rests on compactification, the affine-line duality lemma, purity in the proved range, and finite biduality. The adic theorem rests on uniform amplitude, finite-level compatibility, and derived completeness. The relative statement rests on adjunction and the projection formula. The semistable statement rests on normalization and the two-branch local calculation; only its relative orientation is conditional.
 
 ### 14.2 A hypothesis audit
 
 Before applying the package, one should make the following checks.
 
 1. Is $\ell$ invertible everywhere? Smooth purity and the tame local calculations are prime-to-residue-characteristic statements.
-2. Is the morphism separated and of finite type? These hypotheses supply compactification and a bounded constructible $Rf_!$.
+2. Is the morphism separated, of finite type, and quasi-projective? The first two supply finiteness; the third is what Book 19 actually uses to produce a compactification, and it is also what produces the global factorization behind $f^!$.
 3. Is the space smooth where $\Lambda(d)[2d]$ is used? At a node, use the dualizing complex instead.
+3a. Is a purity statement being applied to a closed immersion that is a smooth pair, a closed point of a regular curve or trait, or a pullback of one of these along a smooth morphism? If not, hypothesis (AP) of Section 4.2 is being used and must be recorded.
+3b. Is a relative orientation being extended across a node of a regular model? That is hypothesis (RSO) of Section 10.3.
 4. Is a claimed pushforward the universal map from $f^!$, or has an orientation really supplied a map from ordinary coefficients?
 5. For a nonproper space, does one side of the pairing have compact support?
 6. For an open family, does the boundary remain relative normal crossings with controlled inertia?
 7. At the integral level, are cohomology groups torsion-free? If not, use the derived statement and the linking pairing.
 8. Does a correspondence have proper support over the target, and do its degree and codimension give the asserted shift and twist?
-9. Is the transpose truly the desired arithmetic adjoint, or is a polarization or involution also involved?
+9. Is the transpose truly the desired arithmetic adjoint, or is a polarization or involution also involved? For a Hecke-type correspondence, has hypothesis (H) of Section 13.4 been verified for the moduli space at hand?
 10. Is Frobenius arithmetic or geometric? Top-degree eigenvalues and characteristic polynomials invert when the convention changes.
 11. If an oriented lci map is base-changed, is the square Tor-independent, or has the excess class been included?
 
@@ -1240,4 +1528,4 @@ For curves, this structure explains the symplectic middle cohomology, the residu
 
 The integral theory retains more than its rational shadow. Finite-level pairings see exact torsion; the adic derived dual separates free duality from the one-degree-shifted linking form. Galois actions, Frobenius, cycle classes, and algebraic correspondences respect the same trace because all arise from one adjunction and one projection formula.
 
-The resulting package is deliberately focused and complete for its purpose. Smooth curves carry canonical fundamental classes; proper and open versions are distinguished by support; nodal curve fibers carry their true dualizing complexes; and every trace, twist, shift, and adjoint remains visible under arithmetic descent. This is the duality framework on which nearby cycles, trace formulas, and the cohomological actions of later geometric correspondences can safely build.
+The resulting package is deliberately focused. Smooth curves carry canonical fundamental classes; proper and open versions are distinguished by support; nodal curve fibers carry their true dualizing complexes; and every trace, twist, shift, and adjoint remains visible under arithmetic descent. It is also honest about its edges. Three statements are named rather than proved: absolute purity outside the smooth-pair and one-dimensional range, the extension of the relative orientation across a node of a regular semistable model, and the geometric properties of Hecke-type correspondences on moduli of curves. The first two are the same codimension-two local computation, which requires nearby-cycle input from the next volume; the third is a hypothesis about geometric objects this book does not construct. Everything else, including the affine-line duality lemma on which $f^!$ rests and the global construction of $f^!$ itself, is proved from Books 18 and 19 alone. This is the duality framework on which nearby cycles, trace formulas, and the cohomological actions of later geometric correspondences can build, with those three debts recorded where they fall due.
