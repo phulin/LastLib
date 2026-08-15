@@ -278,10 +278,10 @@ a semisimple representation over a fraction field.
 
 ## 2. The residual and local datum
 
-Chapters 2--10 are an import interface. Book 171 owns the minimal totally real
-deformation--Hecke datum and comparison map; Book 172 owns Taylor--Wiles
-selection, deep-level freeness, patching, descent, and minimal $R=T$. This
-book applies those results and does not redevelop them.
+Chapters 2--10 recall the earlier results used in the proof. Book 171 constructs the minimal
+totally real deformation--Hecke datum and comparison map; Book 172 proves Taylor--Wiles
+selection, deep-level freeness, patching, descent, and minimal $R=T$. This book applies those
+results and does not redevelop them.
 
 ### 2.1 Coefficients, determinant, and Frobenius
 
@@ -479,7 +479,7 @@ The two sources have the same dimension by Book 172, Chapter 9.
 Book 172, Propositions 10.1--10.2 prove equal-variable rigidity and freeness;
 faithfulness is a theorem, not a support assumption.
 
-**Lemma 9.1 (equal-variable rigidity; compatibility alias).** This is Book 172,
+**Lemma 9.1 (equal-variable rigidity).** This is Book 172,
 Proposition 10.1 in the equal-dimensional regular-source situation used here.
 
 ### 9.4 Why weaker support arguments fail
@@ -496,7 +496,7 @@ The augmentation sequence is regular by Book 172, Section 11.1.
 
 ### 10.2 Proof of the minimal comparison
 
-**Theorem 10.1 (minimal comparison; compatibility alias).** Under exactly the
+**Theorem 10.1 (minimal comparison).** Under exactly the
 hypotheses listed in Theorem 1.1, Book 172, Theorem 1.1 gives
 
 $$
@@ -504,8 +504,7 @@ $$
 \tag{10.3}
 $$
 
-The Book 173 locator is retained for downstream citations; proof ownership is
-Book 172.
+This restatement fixes the notation used below; the proof is Book 172, Theorem 1.1.
 
 ### 10.3 Complete intersections and congruences
 

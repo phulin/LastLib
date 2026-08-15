@@ -278,8 +278,8 @@ $$
 \tag{1.16}
 $$
 
-The blueprint packages integral models for every odd-coefficient member because its public
-spreading theorem is family-wide, then uses the three-adic trace identity and compatibility
+The blueprint packages integral models for every odd-coefficient member because its spreading
+theorem is family-wide, then uses the three-adic trace identity and compatibility
 to return to the original residual representation. For (1.16), only the selected $\nu$-adic
 tower is consumed. Clean support at all $q\ne2,3$ is still indispensable, since it is what
 globalizes each level over $\mathbf Z[1/2]$.
@@ -462,8 +462,8 @@ nonzero, but a particular exponent-three subquotient is allowed to have trivial 
 
 ## 3. Finite-flat devissage and torsion fields
 
-Book 161 owns the Schoof category and its classification. Chapters 3--7 verify that the supplied
-SP coefficient tower satisfies that theorem's hypotheses and then import its conclusions. They
+Book 161 develops the Schoof category and proves its classification. Chapters 3--7 verify that
+the supplied SP coefficient tower satisfies that theorem's hypotheses and then use its conclusions. They
 do not repeat the root-discriminant, class-field, Ext, or filtration proofs.
 
 ### 3.1 The modeled levels
@@ -523,7 +523,7 @@ analytic certificate belongs to Books 7 and 159 and is not reproduced here.
 The consequence used by the category proof is exactly Book 161's bounded residual torsion-field
 statement. It applies to killed-by-three factors, not to $\mathbf Q(T_n)$ for arbitrary $n$.
 
-**Proposition 4.1 (two-prime exponent-three cutoff; compatibility alias).** This is Book 161,
+**Proposition 4.1 (two-prime exponent-three cutoff).** This is Book 161,
 Proposition 4.1 specialized to the trivial-or-cubic dyadic row: every modeled exponent-three
 subquotient has cutout-field degree at most twenty.
 

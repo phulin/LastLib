@@ -5,7 +5,7 @@ the preceding books. Its first output is a pointwise theorem: once an actual one
 automorphic carrier has the represented local condition, support, and reciprocity required
 below, every characteristic-zero point satisfying the asserted open branch conditions is
 automorphic; in particular, a special-conductor conclusion retains nonzero monodromy. Its
-second output is the exact several-place interface for a proof by geometric level change when
+second output is the exact several-place hypothesis package for a proof by geometric level change when
 one place splits into many: either one verifies an ordered chain of one-prime applications, or
 one supplies a genuinely joint cube. For the joint route, mixed exactness, product residue
 through the integral iterated-switch
@@ -13,7 +13,7 @@ Beck--Chevalley datum, joint support, augmentation, and reciprocity remain disti
 hypotheses. For one named point, the torsion-free top of the actual final cube gives a smaller
 carrier, but occurrence of the global component through that point is still required.
 
-Neither interface is logically forced by the statement in the FLT blueprint.  The standard
+Neither theorem is logically forced by the statement in the FLT blueprint.  The standard
 Taylor--Wiles--Kisin proof has a third finite-set route: after solvable base change it patches
 the desired local problem and an Ihara-avoidance problem simultaneously, then transfers full
 support from the irreducible avoidance ring through their common special fiber.  That route
@@ -33,7 +33,7 @@ not with a placeholder for a future finite-set argument, and they distinguish th
 conclusion needed for automorphy from the stronger optional equality of augmented acting
 images.
 
-There is also a smaller definite-side fact relevant to the optional exact-minimal consumer.
+There is also a smaller definite-side fact relevant to the optional exact-minimal argument.
 For scalar parallel weight two, the two-map Ihara lemma on a totally definite quaternionic
 class set follows directly from strong approximation away from the changed finite place.
 Section 1.6 proves that result and its integral saturation consequence.  It then isolates why
@@ -106,7 +106,7 @@ multiplied.
 - [9. The finite-set application theorems](#9-the-finite-set-application-theorems)
   - [9.1 What iteration actually proves](#91-what-iteration-actually-proves)
   - [9.2 The hypotheses for a simultaneous theorem](#92-the-hypotheses-for-a-simultaneous-theorem)
-  - [9.3 The potential-modularity consumer](#93-the-potential-modularity-consumer)
+  - [9.3 The potential-modularity application](#93-the-potential-modularity-application)
   - [9.4 The FLT boundary](#94-the-flt-boundary)
 - [10. Scope and conclusion](#10-scope-and-conclusion)
   - [10.1 The direct finite-set theorem](#101-the-direct-finite-set-theorem)
@@ -244,7 +244,7 @@ component support, and simultaneous augmentation. The statements below never ins
 assertions into the word “clean” or into a local definition. The one-prime and finite-set
 theorems are therefore stated with their exact conditional inputs.
 
-For one already named characteristic-zero point there is a smaller finite-level interface.
+For one already named characteristic-zero point there is a smaller finite-level theorem.
 The torsion-free top of the actual global cube is a canonical joint carrier even when mixed
 torsion survives.  Pointwise modularity then needs simultaneous branch verification,
 reciprocity on that carrier, and support on the single global component through the point.
@@ -450,7 +450,7 @@ avoidance source.
 In particular, the preferred route is not the all-component boundary-occurrence theorem of
 Chapter 8.  It requires neither the mixed Ihara modules (8.5), product residue, an
 iterated-switch Beck--Chevalley cube, type-Ihara, nor constant-row abelian Ihara.  Those are
-prerequisites only for the geometric alternatives.  For the potential-modularity consumer
+prerequisites only for the geometric alternatives.  For the potential-modularity application
 $S=P_{\rm act}$ means the whole actual active set, including every dyadic place above the
 distinguished base place; the paired construction must be simultaneous on that entire set.
 It may be invoked only after the further base change has made the residual local
@@ -458,7 +458,7 @@ representations trivial and $q_w\equiv1\pmod\ell$ at every $w\in P_{\rm act}$.
 
 ### 1.5A The finite-fibre consequence and the target-minimal quotient
 
-There is a second application of the same interface which is logically different from level
+There is a second application of the same theorem which is logically different from level
 lowering.  Let $F$ be a totally real field on which the places above $2\ell$ split completely,
 and suppose that both $\bar\rho|_{G_F}$ and
 $\bar\rho|_{G_{F(\zeta_\ell)}}$ are absolutely irreducible.  Let $P$ be a finite set of
@@ -2328,7 +2328,7 @@ the one-prime theorem and stops before a simultaneous finite-set conclusion.
 
 ## 4. The imported one-prime level-change package
 
-Chapters 4--6 record the one-prime import boundary. Book 139 supplies the
+Chapters 4--6 recall the one-prime level-change results. Book 139 supplies the
 constant-coefficient tree kernel and conditional saturated Ihara package; Book 174 supplies
 the actual typed incidence complexes, primitive residues, enhanced component support, and
 strict augmentation; Book 175 supplies the scalar line-special finite-level comparison and
@@ -2423,7 +2423,7 @@ It does not kill nilpotents or prove a full ring equality.
 
 ## 6. The conditional one-prime R=T theorem
 
-The compatibility aliases in this chapter concern the scalar-residual line-special problem of
+The results recalled in this chapter concern the scalar-residual line-special problem of
 Book 175, hence $q_v\equiv1\pmod\ell$. They do not upgrade the generic distinct-root row or the
 $q_v\equiv-1\pmod\ell$ vexing row of Section 2.4; those ranges require their own balanced
 presentation, supported module, and coherent auxiliary theorem. The formal reduced-image
@@ -2461,7 +2461,7 @@ $({\rm NU}_{\rm type})$. Those hypotheses are not folded into $({\rm SUP}_v)$.
 
 ### 6.2 Full support and the reduced image
 
-**Lemma 6.1 (full support and reduced image; compatibility alias).** This is Book 175,
+**Lemma 6.1 (full support and reduced image).** This is Book 175,
 Lemma 4.1. If $R$ is noetherian, $M$ is finite with full support, and the faithful acting image
 $T$ is reduced, then
 
@@ -2472,7 +2472,7 @@ $$
 
 ### 6.3 The reduced comparison and the full-equality criterion
 
-**Theorem 6.2 (scalar line-special finite-level reduced $R=T$; compatibility alias).** Under
+**Theorem 6.2 (scalar line-special finite-level reduced $R=T$).** Under
 the six applicable inputs in Section 6.1, Book 175, Theorem 4.2 gives
 
 $$
@@ -2483,11 +2483,11 @@ $$
 The finite Hecke order is reduced because it is $\mathcal O$-torsion-free with semisimple reduced
 generic fiber. No reducedness of an abstract patched acting image is inferred.
 
-**Corollary 6.3 (full equality criterion; compatibility alias).** Book 175, Corollary 4.3 says
+**Corollary 6.3 (full equality criterion).** Book 175, Corollary 4.3 says
 that the finite-level comparison is a full isomorphism exactly when the selected global source is
 reduced. Local-chart reducedness and minimal $R=T$ do not imply that condition.
 
-**Corollary 6.3a (balanced coherent scalar one-prime $R=T$; compatibility alias).** If the
+**Corollary 6.3a (balanced coherent scalar one-prime $R=T$).** If the
 $({\rm AUX}_Q)$ systems in Section 6.1 form the coherent unpadded tower at every depth, Book
 175, Proposition 5.2 proves
 
@@ -2516,7 +2516,7 @@ and the source-reducedness criterion of Corollary 6.3 are available from Book 17
 
 ### 7.1 The one-prime application theorems
 
-**Theorem 7.1 (conditional scalar line-special modularity lifting; compatibility alias).** This
+**Theorem 7.1 (conditional scalar line-special modularity lifting).** This
 is Book 175, Theorem 7.1. Assume $q_v\equiv1\pmod\ell$ and the applicable hypotheses of
 Section 6.1. Every characteristic-zero point of the represented scalar line-special problem
 whose specialized rank-one monodromy is nonzero is attached to a cuspidal
@@ -3394,8 +3394,8 @@ base by (8.16a).
 ### 8.6 A genuinely joint support criterion
 
 Once a finite projective top carrier $M_P$ has been constructed, the formal support argument is
-short. Book 145, Sections 11.1--11.4 owns the general support--annihilator and
-associated-prime formalism used below; the missing input here is arithmetic occurrence on a
+short. Book 145, Sections 11.1--11.4 proves the general support--annihilator and associated-prime
+formalism used below; the missing input here is arithmetic occurrence on a
 specified product component, not a new commutative-algebra support theorem. Let $R_P$ be the
 represented product deformation ring and regard $M_P$ as its finite
 module through the deformation action. If, for every irreducible
@@ -3417,7 +3417,7 @@ Indeed, failure to contain the generic point of $\Xi$ would make the localized s
 dimension smaller than the displayed depth. This contradicts
 $\operatorname{depth}M\le\dim\operatorname{Supp}M$.
 
-For the actual potential-modularity consumer, which asks about one named
+For the actual potential-modularity application, which asks about one named
 characteristic-zero point rather than every point of $R_P$, full support is stronger than the
 annihilator argument needs.
 
@@ -3745,7 +3745,7 @@ it is the chosen method for identifying that component and proving its boundary 
 
 For logical minimality, the final annihilator argument consumes only an actual finite
 projective carrier over the named coefficient base, the relevant full or pointed support, and
-reciprocity to its faithful order. Product residue is listed in the simultaneous interface because it is the intended
+reciprocity to its faithful order. Product residue is listed among the simultaneous hypotheses because it is the intended
 geometric comparison that identifies the product component and transports the boundary data
 used to prove joint support. If those labels and joint support are established independently,
 the annihilator lemma does not use product residue a second time.
@@ -3784,7 +3784,7 @@ level do not prove it.
 ### 9.2 The hypotheses for a simultaneous theorem
 
 For a finite set $P$, the intended simultaneous geometric construction requires one global
-cubical carrier with all faces. The following hypotheses give its exact interface; the bare
+cubical carrier with all faces. The following hypotheses give its exact input; the bare
 annihilator step has the smaller input just recorded in Section 8.8.
 
 **Face hypotheses $({\rm FACE}_P)$.** Every actual face, with every spectator tuple and
@@ -4001,13 +4001,13 @@ witness, but it is not consumed again by the pointed annihilator argument. Thus 
 unresolved theorem for this pointwise route is the actual joint-component occurrence in
 clause 4, together with the carrier-specific branch verification needed before clause 3.
 
-### 9.3 The potential-modularity consumer
+### 9.3 The potential-modularity application
 
-The immediate potential-modularity consumer produces a geometric specialization whose extra
+The immediate potential-modularity application produces a geometric specialization whose extra
 semistable places are known only after the specialization has been chosen. Its lower residual
 packet must then be moved to the exact local datum of the target Tate module.
 
-The required interface is consequently one of the following forms:
+The required input is consequently one of the following forms:
 
 1. the direct finite-set package $({\rm IAV}_S)$ of Section 1.5 is constructed for the
    specialized target and its automorphic residual reference; or
@@ -4015,15 +4015,15 @@ The required interface is consequently one of the following forms:
    the applicable one-prime conclusion in Chapter 7; or
 3. an ordered finite chain is exhibited, and every one-prime hypothesis is verified anew at
    each intermediate level; or
-4. the all-point simultaneous interface of Theorem 9.1 is used after all of its displayed
+4. the all-point simultaneous theorem, Theorem 9.1, is used after all of its displayed
    hypotheses have been independently proved for the actual specialization; or
-5. for the one already named Tate-module point, the pointed interface of Theorem 9.2 is used
+5. for the one already named Tate-module point, the pointed form of Theorem 9.2 is used
    after constructing one actual final global cube, verifying simultaneous generic branch
    data and finite-set reciprocity on its torsion-free top carrier, and proving support on the
    one global component through that point.
 
-Separate local cleanliness does not establish either simultaneous interface. In particular,
-a consumer may not cite Theorem 9.1 as though (8.10), product residue, and joint support
+Separate local cleanliness does not establish either simultaneous theorem. In particular,
+Theorem 9.1 may not be cited as though (8.10), product residue, and joint support
 followed from the one-prime sources. Theorem 9.2 does not require mixed saturation or product
 residue unless those are used to construct or support its carrier, but separate one-place
 occurrence still does not prove its pointed joint-support clause.
@@ -4080,7 +4080,7 @@ acting image is the stronger optional conclusion of Corollary 1.1I and is not ne
 For a theorem making **every** lift in the product problem automorphic, the full-support route
 of Theorem 9.1 still requires the mixed and product-residue package used to construct its
 projective family. For the one representation already supplied by the FLT or
-potential-modularity consumer, Theorem 9.2 shows that the logically minimal simultaneous
+potential-modularity application, Theorem 9.2 shows that the logically minimal simultaneous
 gate is narrower: an actual final joint cube, its torsion-free top carrier, simultaneous
 generic branch verification, finite-set reciprocity on that carrier, and occurrence of the
 single product component through the point.

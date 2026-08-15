@@ -1019,21 +1019,21 @@ $$
 $$
 
 
-The analytic distribution step is imported from Book 142, which owns the complete proof and all
+The analytic distribution step is Book 142's Chebotarev theorem, with its complete proof and
 normalizations.  The matching is exact: $F_{z,N}/K$ is finite Galois; the constructed element
 specifies one conjugacy class; arithmetic Frobenius is used on both sides; and the finite set to
 be removed contains the ramified, coefficient-prime, and previously selected places.  Density
 only distributes this already compatible class.  It does not create the detector or repair an
 empty fiber product.
 
-The following established locators are retained as compatibility aliases for consumers of this
-Taylor--Wiles package.
+The following consequences are cited directly from Book 142 and used in the Taylor--Wiles
+argument below.
 
-**Lemma 6.1 (the analytic ray-class estimate; compatibility alias).** The power-saving count for
+**Lemma 6.1 (the analytic ray-class estimate).** The power-saving count for
 narrow ray classes, with leading constant independent of the class, is Book 142, Corollary 4.2.
 Its character-weighted consequence is the holomorphy at $s=1$ used in the former proof.
 
-**Lemma 6.2 (nonvanishing and prime sums in an abelian extension; compatibility alias).** Book
+**Lemma 6.2 (nonvanishing and prime sums in an abelian extension).** Book
 142, Theorem 5.1 gives the finite-order character prime sum after Book 142, Sections 5.2--5.3
 prove holomorphy and nonvanishing at one.  Applied through reciprocity to a finite abelian
 extension $D/B$, it gives
@@ -1048,11 +1048,11 @@ O(1),&\chi\ne1.
 \end{cases}
 $$
 
-**Proposition 6.3 (abelian Frobenius distribution; compatibility alias).** Book 142, Theorem 7.1
+**Proposition 6.3 (abelian Frobenius distribution).** Book 142, Theorem 7.1
 states that if $D/B$ is finite abelian with group $A$, then the unramified primes with
 $\operatorname{Frob}_w=a$ have Dirichlet density $1/|A|$.
 
-**Theorem 6.4 (finite Galois Frobenius selection; compatibility alias).** Book 142, Theorem 9.1
+**Theorem 6.4 (finite Galois Frobenius selection).** Book 142, Theorem 9.1
 is stronger than the form used here: for a finite Galois extension $F/K$ and a conjugacy class
 $C\subseteq\operatorname{Gal}(F/K)$, the primes with arithmetic Frobenius class $C$ have
 Dirichlet density $|C|/|\operatorname{Gal}(F/K)|$.  Book 142, Corollary 10.1 permits deletion of

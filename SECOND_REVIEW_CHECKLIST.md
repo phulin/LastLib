@@ -11,9 +11,20 @@ may accept a rigorously bounded conditional theorem without claiming an uncondit
 spine. Conversely, prose describing a missing theorem never counts as a proof source.
 
 `[x]` in the first two columns preserves existing identity-based review evidence. `—` means the
-corresponding closure question was not separately certified by the surviving ledgers. The
-unconditional dependency-spine column must not be promoted while the named hypotheses in
-`BOOK_DEPENDENCIES.md` remain unresolved.
+corresponding closure question was not separately certified by the surviving ledgers. It is not
+a mathematical assertion that every narrower route remains open. The broad
+unconditional/global closure column preserves the older, stronger all-route question and must
+be read together with the current hostile-review conclusion below.
+
+## Current route scope
+
+For the preferred selected-three route ending in Books 187--188, the hostile-review conclusion
+is that the dependency chain needed by the main theorem is closed. The selected
+coefficient-three member, its clean-support certificate, and its compatible integral tower all
+come from proved earlier results on that route. This does not promote the stronger uniform or
+all-coefficient versions, and it does not certify alternative geometric level-change or
+realization routes. Those statements remain outside the scope of the main theorem; their
+separate status is compatible with the historical `—` entries retained below.
 
 ## All-manuscript hostile-review ledger
 

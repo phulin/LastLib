@@ -92,7 +92,7 @@ where $M$ is finite and $\Lambda$ is a finite coefficient ring. Its kernel cuts 
 
 There are three normalization layers that must not be merged. A local different exponent is measured upstairs. A local discriminant exponent is measured downstairs and contains a residue-degree factor. A global root discriminant divides the exponent of every rational prime by the total absolute degree. Every later constant will be checked against these three layers.
 
-The substantial prior inputs are exact. The earlier ramification theory supplies lower and upper numbering, Herbrand's quotient theorem, Hilbert's different formula, conductor--discriminant identities, and transitivity of differents. Book 56 canonically supplies the finite-flat closure and represented-quotient calculus, the augmentation-ideal estimate, the weighted cluster lemma, the Fontaine--Raynaud upper-break and different bounds, and stability under coefficient and model operations. Chapters 7--9 import those exact statements under compatibility locators; they do not duplicate their proofs. The general cutout-field, conductor, tower, compositum, matrix, lattice, and three-adic ledgers remain the work of this book. No classification theorem or discriminant lower bound is being inserted tacitly.
+The substantial prior inputs are exact. The earlier ramification theory supplies lower and upper numbering, Herbrand's quotient theorem, Hilbert's different formula, conductor--discriminant identities, and transitivity of differents. Book 56 canonically supplies the finite-flat closure and represented-quotient calculus, the augmentation-ideal estimate, the weighted cluster lemma, the Fontaine--Raynaud upper-break and different bounds, and stability under coefficient and model operations. Chapters 7--9 restate the exact forms used here and cite their proofs in Book 56. The general cutout-field, conductor, tower, compositum, matrix, lattice, and three-adic ledgers remain the work of this book. No classification theorem or discriminant lower bound is being inserted tacitly.
 
 ### 1.2 Finite continuous modules and representations
 
@@ -929,9 +929,9 @@ The step-degree bound is uniform in $n$. The absolute root discriminants need no
 
 ## 7. Imported finite-flat integral geometry
 
-Book 56 is the canonical owner of the finite-flat integral geometry used from this point onward.
-This chapter retains the old public locators as compatibility aliases and records the precise
-specialization needed by the cutout-field calculus.  Proofs are not repeated here: the
+Book 56 proves the finite-flat integral geometry used from this point onward. This chapter
+records the precise specializations needed by the cutout-field calculus and cites
+their proofs in Book 56.  The
 augmentation calculation is Book 56, Proposition 4.1; separation is Book 56, Theorem 4.2 and
 Corollary 4.3; and the quotient-compatible conversion to upper numbering is Book 56, Lemma 5.1.
 
@@ -961,8 +961,8 @@ $$
 [\ell]^*x-\ell x\in\ell I^2+I^\ell\quad(x\in I).
 $$
 
-This is the exact earlier statement, imported under the established locator.  Book 56 proves
-it by the characteristic-$\ell$ Frobenius factorization in the augmentation filtration.
+This is exactly Book 56, Proposition 4.1, whose proof uses the characteristic-$\ell$ Frobenius
+factorization in the augmentation filtration.
 
 **Theorem 7.2 (imported torsion-free congruence ball; Book 56, Theorem 4.2).** If $\mathcal G$ is
 killed by a power of $\ell$, then
@@ -1018,7 +1018,7 @@ $$
 
 For the faithful local cutout field $L=K(M)$ the same formula says
 $\operatorname{Gal}(L/K)^u=1$ above that endpoint.  This is exactly Book 56, Theorem 6.1; the
-present theorem number is a compatibility locator.
+numbering here is used for the subsequent deductions in this book.
 
 ### 8.2 The local different bound
 
@@ -1057,8 +1057,8 @@ conductor and faithful-family calculus remains in Chapters 4--6 of this book.
 
 ## 9. Imported model stability and its field-theoretic use
 
-Book 56, Chapters 8--9, canonically owns stability of the finite-flat estimates under model and
-coefficient operations.  This chapter keeps the former headings so applications can distinguish
+Book 56, Chapters 8--9, proves stability of the finite-flat estimates under model and coefficient
+operations.  This chapter keeps the former headings so applications can distinguish
 an operation justified by an actual model from a merely generic construction.
 
 ### 9.1 Chosen models and inherited models
@@ -1116,7 +1116,7 @@ the actual exponent, are preserved under restriction and extension of coefficien
 coefficient quotients and Galois subquotients, finite direct sums, Cartier duality, and every
 generic term of a supplied faithfully flat exact sequence of finite-flat models.
 
-This is the exact statement of Book 56, Theorem 8.1, imported under the established locator.
+This is the exact statement of Book 56, Theorem 8.1.
 For field calculations, quotient compatibility of upper numbering and intersections of kernels
 give the inclusions and compositum assertions just recorded.
 
@@ -1924,8 +1924,8 @@ $d=d(L/K)$. Then:
    new absolute ramification index. Descent in the reverse direction requires effective integral
    descent data.
 
-This is the exact six-part package of Book 56, Theorem 14.1, imported under the established
-locator.  Its proof and all model-stability assertions belong to Book 56.  In particular,
+This is the exact six-part package of Book 56, Theorem 14.1.  Its proof and all model-stability
+assertions are proved there.  In particular,
 clause 5 does not assert that arbitrary generic extensions of finite-flat endpoints are finite
 flat.
 
@@ -1955,8 +1955,8 @@ The same ceiling holds for every subfield of $L$.  At a fixed exponent it also h
 finite compositum of fields cut out by modules whose direct sum retains the stated local models
 and auxiliary cutoffs.
 
-This is the exact statement of Book 56, Theorem 14.2, imported under the established
-locator; its proof belongs there.  When the actual upper filtration is known, the sharper integral
+This is the exact statement of Book 56, Theorem 14.2, where its proof is given.  When the actual
+upper filtration is known, the sharper integral
 cost retained in §§4.3 and 11.1 of this book may replace the coarse term $1+R_v$.
 
 ### 14.3 Tower package

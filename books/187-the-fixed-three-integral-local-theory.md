@@ -1384,8 +1384,9 @@ Schoof category needs the odd-tame conclusion, not the stronger primitive assert
 
 ### 6.5 The exact dyadic output
 
-The conclusions at two are now all derived from the rational SP pair selected in Book 186 from
-Book 185's away-from-two collection, together with the chosen global lattice:
+The conclusions at two are now all derived from the rational SP pair of the selected member
+supplied by Book 186 from Book 185's away-from-two construction, together with the chosen global
+lattice:
 
 - the rational monodromy is nonzero of rank one;
 - its line is intrinsic and carries the cyclotomic side of the filtration;
@@ -1403,8 +1404,10 @@ conductor-two assertion in this list.
 ### 7.1 The finite exceptional set left by assembly
 
 Let $S_0$ be the finite exceptional set in the restricted Book 185 assembly theorem. Outside
-$S_0$ and away from the varying coefficient characteristic, the away-from-two members are
-unramified and have the common algebraic polynomial
+$S_0$, the selected member is unramified away from its coefficient characteristic and has the
+common algebraic polynomial below. Under the uniform certificate, the same assertion holds
+member by member for the optional away-from-two collection, away from the varying coefficient
+characteristic:
 
 $$
 P_q(X)=X^2-a_qX+q.
@@ -1868,9 +1871,10 @@ Book 161 supplies the Schoof category, its classification and filtration theorem
 finite-level coefficient trace identity. It is applied only after the present book has
 constructed the tower. Book 182, Proposition 7.1 and Theorem 9.1, supply the selected packet
 array at $\nu\mid3$, the evaluated packets at $2,3,\ell$, the normal-top splitting mechanism,
-and parity-complete basic attachment. Book 185 supplies the away-from-two members without
+and parity-complete basic attachment. Book 185 supplies the selected away-from-two member without
 $(\mathrm{AI}_2)$, actual characteristic-zero Brauer cancellation, all-place algebraic local
-complements, clean support, and the common pure polynomials. Book 186 finally selects the
+complements, clean support, and the common pure polynomials; under the uniform certificate it
+also supplies the optional collection. Book 186 finally selects the
 actual member at $\nu$, with its determinant and full signed SP pair. None of these results
 supplies the coefficient-prime lattice or tower constructed here.
 
@@ -1981,8 +1985,8 @@ equation, and sign.
 
 ### 11.5 Global scope and chronology
 
-The fixed-three theorem uses only the selected place $\nu\mid3$ in the away-from-two
-collection constructed without $(\mathrm{AI}_2)$. Book 186 transports every rational datum
+The fixed-three theorem uses only the selected member at $\nu\mid3$ from the away-from-two
+construction made without $(\mathrm{AI}_2)$. Book 186 transports every rational datum
 used here, and no hypothetical coefficient place above two enters the lattice, local, or
 gluing arguments. A family-wide integral-model theorem would be stronger: it would repeat the
 construction at every odd coefficient place, whereas this book builds the only instance used
@@ -2017,7 +2021,7 @@ afterward does Book 161 supply the classification and finite-level identity used
 ### 12.1 The mathematical conclusion
 
 The fixed-three integral problem has a short rational input and a genuinely integral middle.
-Book 186 selects from Book 185's away-from-two collection the correct signed-special member at
+Book 186 carries Book 185's selected away-from-two member to the correct signed-special datum at
 two: its monodromy is nonzero of rank one, its kernel and image are the same intrinsic line,
 its Frobenius sign is retained, and its conductor exponent is one. Nothing at two needs to be
 replaced by a tame-quadratic or monodromy-zero branch, and no coefficient-two member is used.

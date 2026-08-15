@@ -237,7 +237,7 @@ variety into a finite étale incidence family. Book 6 supplies finite global Art
 finite-character existence, and the dictionary between finite-order Hecke characters and
 finite-image one-dimensional Galois characters. It supplies no prime-distribution theorem used
 here. Book 142 supplies the full Chebotarev density and finite-selection package. Chapter 4
-records its exact interface and retains the established theorem locators as compatibility aliases.
+records the exact hypotheses and conclusions used here, with direct references to their proofs.
 
 ## 2. Normal closures and field intersections
 
@@ -671,10 +671,10 @@ intersection with an avoidance field need not.
 
 ## 4. Chebotarev prime selection
 
-This chapter is an import boundary, not a second proof of Chebotarev. Book 142 owns the analytic
-character argument, the abelian theorem, the reduction from a conjugacy class to a cyclic
+This chapter cites, rather than reproves, Chebotarev. Book 142 proves the analytic character
+argument, the abelian theorem, the reduction from a conjugacy class to a cyclic
 subgroup, and the full density calculation. The present book needs only the resulting finite
-selection interface while it constructs Galois specializations and compatible fixed fields.
+selection statements while it constructs Galois specializations and compatible fixed fields.
 
 ### 4.1 Dirichlet density and Frobenius classes
 
@@ -691,21 +691,21 @@ $C$ by $C^{-1}$ and does not change the density. No effective least-prime bound 
 
 ### 4.2 The analytic character lemma
 
-**Lemma 4.1 (finite-order Hecke-character prime sum; compatibility alias).** The theorem used in the proof of
-(4.1) is Book 142, Theorem 5.1. Its equal-ray-residue input is Book 142, Theorem 4.1. These results
-are cited only to identify proof ownership; no analytic step is repeated here.
+**Lemma 4.1 (finite-order Hecke-character prime sum).** The theorem used in the proof of
+(4.1) is Book 142, Theorem 5.1. Its equal-ray-residue input is Book 142, Theorem 4.1. No analytic
+step is repeated here.
 
-This locator replaces the former local analytic development. A consumer needing residues,
-nonvanishing at $s=1$, or the bounded higher-prime-power tail must cite Book 142 directly.
+For residues, nonvanishing at $s=1$, and the bounded higher-prime-power tail, we use the
+corresponding results of Book 142 directly.
 
 ### 4.3 The abelian density theorem
 
-**Theorem 4.2 (abelian Chebotarev; compatibility alias).** Book 142, Theorem 7.1 applies to every
+**Theorem 4.2 (abelian Chebotarev).** Book 142, Theorem 7.1 applies to every
 finite abelian extension used below. In particular, each element occurs as arithmetic Frobenius
 with density $1/|G|$.
 
-The statement is retained under its Book 155 locator because later field diagrams cite it, but
-its proof and hypotheses belong to Book 142.
+Later field diagrams use this form of the statement; its proof and hypotheses are those of Book
+142, Theorem 7.1.
 
 ### 4.4 Reduction from a conjugacy class to a cyclic subgroup
 
@@ -722,25 +722,25 @@ double-coset completion formula of Theorem 3.1.
 
 ### 4.5 Chebotarev's theorem and its selection forms
 
-**Theorem 4.3 (Chebotarev density theorem; compatibility alias).** This is Book 142,
+**Theorem 4.3 (Chebotarev density theorem).** This is Book 142,
 Theorem 9.1 with $L=M$. Thus every conjugacy class $C\subset\operatorname{Gal}(M/K)$ has density
 $|C|/[M:K]$.
 
-**Corollary 4.4 (finite avoidance; compatibility alias).** This is Book 142, Corollary 10.1:
+**Corollary 4.4 (finite avoidance).** This is Book 142, Corollary 10.1:
 outside any prescribed finite set there are infinitely many unramified primes with Frobenius in
 $C$.
 
-**Corollary 4.5 (splitting plus detection; compatibility alias).** If $A/K$ and $B/K$ are finite
+**Corollary 4.5 (splitting plus detection).** If $A/K$ and $B/K$ are finite
 Galois and linearly disjoint, Book 142, Corollary 10.2 selects infinitely many primes which split
 completely in $B$ and have a prescribed Frobenius class in $A$. If the fields intersect, the
 requested classes must first agree on the intersection and selection takes place in the actual
 fiber-product Galois group.
 
-**Corollary 4.6 (finite witnesses; compatibility alias).** Book 142, Section 10.3 selects
+**Corollary 4.6 (finite witnesses).** Book 142, Section 10.3 selects
 distinct primes in finitely many conjugacy classes outside a prescribed finite set. If no proper
 subgroup meets all the selected classes, their Frobenius elements witness the full group.
 
-**Corollary 4.7 (fixed-field and character selection; compatibility alias).** Book 142,
+**Corollary 4.7 (fixed-field and character selection).** Book 142,
 Section 10.4 supplies the simultaneous orbit, residue-degree, upper-Frobenius, and character-value
 calculation for every named subgroup of one fixed top Galois group. This is the form used in the
 elementary-field family below.
