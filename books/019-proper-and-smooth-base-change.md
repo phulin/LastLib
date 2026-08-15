@@ -933,7 +933,7 @@ $$
 
 and $R^qf_*\Lambda_n=0$ for $q>2$. The first statement follows from geometric connectedness. Fiberwise Kummer theory and the $\ell^n$-torsion of the Jacobian give the middle rank. The last identification uses the class of a geometric point and its transformation under change of field; the twist records that transformation.
 
-Here is a proof of the fiber calculation that does not use the later duality theorem. Over a separably closed field choose a point $x$ and put $U=C\setminus\{x\}$. The Kummer computation of Book 18, Sections 6.7 and 6.8, makes $H^1(U,\Lambda_n)$ free of rank $2g$ and kills the higher degrees; the rank statement carries Book 18's polarizability hypothesis (JP) on the Jacobian, discharged for Jacobians in the later Picard theory, while the vanishing is unconditional. Thus
+Here is a proof of the fiber calculation that does not use the later duality theorem. Over a separably closed field choose a point $x$ and put $U=C\setminus\{x\}$. The Kummer computation of Book 18, Sections 6.7 and 6.8, makes $H^1(U,\Lambda_n)$ free of rank $2g$ and kills the higher degrees; the rank statement rests on the ampleness of the theta divisor, proved in Book 17a, Section 8.4, and imported by Book 18, Section 6.8, while the vanishing needs no Jacobian input. Thus
 
 $$
 H^0(U,\Lambda_n)=\Lambda_n,\qquad
