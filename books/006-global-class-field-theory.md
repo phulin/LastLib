@@ -1863,6 +1863,34 @@ identifies the common kernel with $N_{L/K}C_L$. If two global characters have
 the same localizations, their quotient cuts out an extension split at every
 place, hence is trivial by splitting-separation. $\square$
 
+**Pre-class-formation norm-limitation lemma.** Let $L/E$ be finite Galois
+with group $H$, and put $M=L^{[H,H]}$. Then
+
+$$
+ N_{L/E}C_L=N_{M/E}C_M.                                  \tag{4.F9}
+$$
+
+**Proof.** Norm transitivity gives the inclusion from left to right. To prove
+the reverse inclusion, compare annihilators in the finite character group of
+$C_E/N_{L/E}C_L$. This quotient is finite by (4.I9s). By the
+character-existence theorem, a character $\chi$ of $C_E$ comes from a finite
+abelian character $\chi^{\rm Gal}$ of $G_E$. The local norm/restriction square
+of Book 5, multiplied over all places, gives
+
+$$
+ \chi\circ N_{L/E}quad\longleftrightarrow\quad
+ \chi^{\rm Gal}|_{G_L}.                                  \tag{4.F10}
+$$
+
+This square uses only local reciprocity and the fact that both global
+characters were constructed from their local restrictions. Thus $chi$ is
+trivial on $N_{L/E}C_L$ exactly when its fixed abelian extension is contained
+in $L$, equivalently in $M$. By the pre-class-formation abelian reciprocity
+theorem, the latter characters are exactly the annihilator of
+$N_{M/E}C_M$. The two finite-index closed subgroups have the same full
+character annihilator, so finite Pontryagin duality makes them equal.
+$\square$
+
 **Proof of Theorem 4.1.** This is exactly (4.I9h). Its construction also shows
 that the direct sum is legitimate: a relative class is unramified at almost
 every finite place, and every absolute class is split by one finite extension.
