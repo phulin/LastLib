@@ -2776,14 +2776,25 @@ $$
 G^v=G_{\psi_{L/K}(v)}.
 $$
 
-Then $G^{-1}=G$, $G^0=I$, and $G^{0+}$ is wild inertia. We also need the quotient property, so we include its numerical proof. Let $H\triangleleft G$, put $E=L^H$, and write a bar for passage to $G/H$. For $\bar\sigma\ne1$, conjugate differences satisfy
+Then $G^{-1}=G$, $G^0=I$, and $G^{0+}$ is wild inertia. We also need the quotient property.
+This is Book 3, Theorem 5.1; we recall the numerical identity that fixes its normalization.
+Let $H\triangleleft G$, put $E=L^H$, and write a bar for passage to $G/H$. For
+$\bar\sigma\ne1$, Book 3 proves
 
 $$
 i_{E/K}(\bar\sigma)
 =\frac1{e(L/E)}\sum_{\tau\mapsto\bar\sigma}i_{L/K}(\tau). \tag{8.1}
 $$
 
-To verify (8.1), choose an integral generator for $E/K$, lift it through an integral generator of $L/E$, and factor the norm of its conjugate difference over the $H$-orbit. Taking valuations gives the displayed sum; restriction of normalized valuations supplies the factor $e(L/E)$. The minimum over integral generators is unchanged, so the formula is intrinsic. Sum (8.1) over the cosets surviving at a fixed lower depth. On each interval where the lower groups are constant, the numerator counts the elements of $G_tH/H$ and the denominator is $[G_0:G_t]$. Integrating these constant slopes and then applying the inverse Herbrand functions gives
+The proof there first removes the unramified part of $L/E$. For the remaining totally
+ramified $H$-orbit, the orbit polynomial of a uniformizer is Eisenstein. Evaluating the
+difference between that polynomial and its $\sigma$-conjugate at the uniformizer makes the
+constant coefficient the unique least-valued term, so no cancellation is possible. Taking
+valuations gives (8.1), including the factor $e(L/E)^{-1}$. Summing the identity over the
+cosets surviving at a fixed lower depth shows that, on each interval where the lower groups
+are constant, the numerator counts the elements of $G_tH/H$ and the denominator is
+$[G_0:G_t]$. Integrating these constant slopes and then applying the inverse Herbrand
+functions gives
 
 $$
 (G/H)^v=G^vH/H \tag{8.2}
