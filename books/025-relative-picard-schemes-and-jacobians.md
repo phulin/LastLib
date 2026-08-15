@@ -284,15 +284,27 @@ One should not infer that the whole disjoint union is of finite type over $S$: i
 
 ### 3.4 Removing the section
 
-The morphism $C\to S$ is smooth, proper, surjective, and finitely presented, hence an fpqc cover. After base change from $S$ to $C$, the diagonal
+The tempting shortcut is to use the fpqc cover $C\to S$. After that base change the diagonal is a section, and the two resulting Picard schemes have canonical overlap isomorphisms. Those isomorphisms do give an algebraic-space descent datum, but they do not by themselves prove that its descent is a scheme: Book 10 deliberately does not assert unrestricted effective descent for schemes. We instead choose a cover for which its finite-cover scheme criterion applies.
+
+Work Zariski-locally on $S$. The relative multisection construction of Book 15 gives a relative effective Cartier divisor
 
 $$
-C\longrightarrow C\times_SC
+i:D\longrightarrow C
 $$
 
-is a section of the pulled-back curve. The preceding construction therefore gives a Picard scheme over $C$. On $C\times_SC$, its two pullbacks represent the same intrinsic Picard sheaf and are canonically isomorphic. On the triple product these isomorphisms satisfy the cocycle by uniqueness.
+whose structure map $D\to S$ is finite locally free and surjective. Briefly, one chooses a finite separable divisor on a geometric fiber, lifts its points after an étale neighborhood to disjoint sections, and descends the sum of their conjugates; shrinking the base makes the resulting divisor finite locally free of positive rank. After the finite locally free base change $D\to S$, the map
 
-Effective fpqc descent for schemes produces an $S$-scheme. The group law, degree decomposition, smoothness, properness of each component, and separatedness descend because each is a morphism, an equality of morphisms, or a property local on the base. Its universal property is checked after the cover and descends by full faithfulness. This proves the theorem without a section.
+$$
+D\longrightarrow C_D=C\times_SD,
+\qquad x\longmapsto(i(x),x),
+$$
+
+is a section; denote it by $e_D$. Sections 3.1--3.3 therefore construct every component
+$P_D^d=\operatorname{Pic}^d_{C_D/D}$ as a smooth proper $D$-scheme. The component $P_D^0$ is a smooth proper group scheme with geometrically connected fibers: over an algebraically closed field, every degree-zero divisor class is a difference of two effective divisors of one sufficiently large degree, so it lies in the image of the connected scheme $C^{(n)}\times C^{(n)}$. The complete-group projectivity theorem makes $P_D^0$ projective over $D$. Translation by $\mathcal O(de_D)$, using its dual when $d<0$, identifies $P_D^0$ with $P_D^d$. Hence every $P_D^d$ is projective, in particular finitely presented and quasi-projective, over $D$.
+
+On $D\times_SD$, the two pullbacks of $P_D^d$ represent the same intrinsic degree-$d$ Picard sheaf and are therefore canonically isomorphic. Uniqueness gives the cocycle on $D\times_SD\times_SD$. Book 10 first descends this datum to an algebraic space. Its finite-locally-free-cover criterion then applies: the norm of any relatively ample line bundle upstairs is relatively ample on the algebraic-space descent, so that descent is a scheme. Applying the criterion separately to every $d$ gives schemes $P^d/S$; their disjoint union represents $\operatorname{Pic}_{C/S}$. The constructions on different Zariski neighborhoods agree by the same representing property and therefore glue over the original base.
+
+The group law, degree decomposition, smoothness, properness of each component, and separatedness descend because each is a morphism, an equality of morphisms, or a property fpqc local on the base. The universal property is checked after $D\to S$ and descends by full faithfulness. This proves the theorem without a section using precisely the finite-cover effectivity result, not general scheme descent.
 
 What need not descend is the universal line bundle on $C\times_S\operatorname{Pic}_{C/S}$. Its local versions may differ by pullbacks from the Picard factor, and their triple discrepancy is precisely a Brauer class. Representability of the Picard sheaf and existence of a Poincare bundle are distinct assertions.
 
@@ -1268,13 +1280,13 @@ A correspondence extending to semistable models acts by the same pull--push rule
 Every construction in this book is compatible with faithfully flat descent, but the pieces descend for different reasons:
 
 - line bundles and their rigidifications descend effectively from cocycles;
-- Picard schemes descend because their representing property gives canonical overlap isomorphisms;
+- the representing property gives canonical overlap isomorphisms for local Picard schemes, while Section 3.4 proves scheme effectivity componentwise by a finite locally free multisection and Book 10's norm-ampleness criterion;
 - group laws, Abel maps, norms, and correspondence maps descend as morphisms satisfying equations;
 - smoothness, properness, separatedness, and finite presentation descend as properties of morphisms;
 - polarizations descend through their relatively ample line bundles locally, while the associated homomorphism descends intrinsically even if a theta divisor does not;
 - universal line bundles may be obstructed by a Brauer class and therefore require a section or an explicit rigidification.
 
-This list prevents a common circularity. One does not claim that a locally constructed scheme represents the global functor merely because its fibers look right. The overlap isomorphisms must satisfy the triple cocycle, effective descent constructs the scheme, and full faithfulness verifies the universal property.
+This list prevents a common circularity. One does not claim that a locally constructed scheme represents the global functor merely because its fibers look right. The overlap isomorphisms must satisfy the triple cocycle, a specific criterion from Book 10 must prove that the algebraic-space descent is a scheme, and full faithfulness must then verify the universal property. For the smooth Picard scheme, that specific criterion is the finite-cover argument of Section 3.4.
 
 ### 14.2 Curves without rational points
 
