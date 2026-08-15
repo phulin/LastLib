@@ -1408,7 +1408,7 @@ henselian complete DVR is finite étale. Its special fiber is a singleton, so th
 is the base itself; consequently its geometric generic fiber is connected. The connected-cover
 criterion of §8.3 says exactly that $\operatorname{sp}$ is surjective.
 
-Full injectivity is subtler. If the residue characteristic is $p>0$, new $p$-primary covers may exist generically and disappear upon specialization. What is invariant is the prime-to-$p$ quotient:
+Full injectivity is subtler. If the residue characteristic is $p>0$, new $p$-primary covers may exist generically and disappear upon specialization. What is invariant is the prime-to-$p$ quotient, and for a family of relative dimension at most one the invariance is complete:
 
 $$
 \operatorname{sp}^{(p')}\colon
@@ -1421,16 +1421,18 @@ Here the superscript denotes the maximal profinite quotient detected by finite g
 prime to $p$; when the residue characteristic is $0$ every finite group qualifies and the
 displayed map is the full specialization map.
 
-We prove this for a family of **relative dimension at most one**, and we say at once why the
-restriction is stated rather than suppressed. The proof consumes a purity statement on the total
-space of the family, whose dimension exceeds the relative dimension by one. Over a discrete
-valuation ring a relative curve gives a surface, and purity on a regular surface is a theorem we
-can prove outright from the depth theory of Book 11, Chapter 14. In higher relative dimension the
-argument below goes through word for word, but only granting the Zariski–Nagata purity theorem in
-dimension greater than two, which this book does not prove; that dependence is isolated as a
-named hypothesis at the end of the section instead of being absorbed into a sketch. Nothing is
-lost for the uses made here: §14.5 and §15.6 apply the theorem to smooth proper relative curves,
-and no consumer in this book needs a larger relative dimension.
+The restriction on the relative dimension is worth a word at once, since it is dictated by one
+step of the proof. The argument builds a finite normal model of the generic cover over the
+whole family and must then recognize it as étale from its behavior in codimension one; the model
+lives on the total space, whose dimension exceeds the relative dimension by one. Over a discrete
+valuation ring a relative curve gives a surface, and on a regular surface that recognition step
+is a theorem, proved outright below from the depth theory of Book 11, Chapter 14: two-dimensional
+normal local rings have depth two, and depth two over a regular local ring of the same dimension
+forces freeness, which supplies the flatness, after which a trace determinant supplies the rest.
+This book develops purity in
+that dimension and no further, because that is the dimension its subject calls for: §14.5 and
+§15.6 apply the theorem to smooth proper relative curves, and nothing later in the book asks for
+a larger relative dimension.
 
 So assume from now on that $X\to\operatorname{Spec}R$ is proper and smooth of relative dimension
 at most one with geometrically connected fibers. The local input is the following.
@@ -1582,19 +1584,15 @@ the same argument applies to every finite quotient, giving the full isomorphism.
 explains both qualifications: purity uses smoothness, and algebraization plus the fact that a
 closed subset of a proper family meets the closed fiber uses properness.
 
-**The one hypothesis not proved here.** For relative dimension $d\geq2$ every step above is
-unchanged except the last: $\mathcal X_M$ is then regular of dimension $d+1$, and concluding
-étaleness from étaleness in codimension one requires
-
-> **(ZN)** *Zariski–Nagata purity.* If $V$ is regular and noetherian, $\pi\colon W\to V$ is
-> finite with $W$ normal and every component of $W$ dominating $V$, and $\pi$ is étale over every
-> point of $V$ of codimension at most one, then $\pi$ is étale.
-
-This book proves (ZN) only for $\dim V\leq2$, which is the purity lemma for surfaces above. Any
-assertion of $\operatorname{sp}^{(p')}$ in relative dimension at least two is therefore
-conditional on (ZN) and is flagged as such; no later result in this book rests on it.
-
-The statement can be tested on an abelian scheme $A/R$. For $n$ invertible in $R$, multiplication by $n$ is finite étale on the whole family, and its kernel has rank $n^{2g}$ in relative dimension $g$. The same cover appears on generic and special fibers, so all prime-to-$p$ torsion monodromy is transported unchanged. This is a direct verification on explicit covers, not an application of the theorem just proved: it needs no purity input, and in particular it is unconditional in every relative dimension $g$. Multiplication by $p$ in residue characteristic $p$ is not étale on the special fiber and lies outside this argument.
+It is worth seeing that individual covers can be transported in any relative dimension by direct
+inspection, without the model-building above. Let $A/R$ be an abelian scheme of relative dimension
+$g$. For $n$ invertible in $R$, multiplication by $n$ is finite étale on the whole family, and its
+kernel has rank $n^{2g}$. One and the same cover therefore appears on the generic and on the
+special fiber, so the monodromy of prime-to-$p$ torsion is transported unchanged whatever $g$ may
+be. That is a computation with explicit covers rather than an instance of the theorem just proved;
+it uses no purity at all, and by the same token it sees only the covers that torsion produces,
+not the whole prime-to-$p$ group. Multiplication by $p$ in residue characteristic $p$ is not étale
+on the special fiber and lies outside this argument.
 
 At the arithmetic level, the two fibers map to $G_K$ and $G_k$. Relating those quotients requires decomposition data connecting a geometric generic point to a geometric special point and introduces inertia. This is why the clean specialization theorem is stated for geometric fundamental groups; an arithmetic formulation must record those additional choices.
 
@@ -1622,7 +1620,7 @@ $$
 
 Since every group of order prime to $p$ has only prime-to-$p$ inertia, the superscript may equally be read as the prime-to-$p$ fundamental group of the open curve. The proof uses Kummer charts at the boundary. After a strict henselian localization and a parameter $t$ for a boundary section, a tamely ramified cover is dominated by one obtained from $u^n=t$ with $(n,p)=1$ and an unramified cover. The derivative $nu^{n-1}$ is invertible away from the divisor, and the exponent $n$ is unchanged under specialization. These local extensions glue because their descent data are finite; properness of $\overline X$ controls the complement. Applying the proper smooth prime-to-$p$ theorem to the unramified pieces yields the isomorphism.
 
-Two steps of that sketch are no longer sketches. The passage from a cover of $X_{\bar\eta}$ to a cover defined over a finite extension of the fraction field, carrying its group action with it, is the limit descent lemma of §12.2. The passage from the resulting finite normal model to a finite étale one is the purity lemma for surfaces of §14.3, whose hypotheses are met precisely because $\overline X$ has relative dimension one over $R$: every model occurring here is regular of dimension two, so the unproved higher-dimensional purity statement (ZN) of §14.3 is never invoked. The remaining boundary bookkeeping is the sketch it is announced to be.
+Two steps of that sketch are no longer sketches. The passage from a cover of $X_{\bar\eta}$ to a cover defined over a finite extension of the fraction field, carrying its group action with it, is the limit descent lemma of §12.2. The passage from the resulting finite normal model to a finite étale one is the purity lemma for surfaces of §14.3, whose hypotheses are met precisely because $\overline X$ has relative dimension one over $R$: every model occurring here is regular of dimension two, which is the case the lemma covers. The remaining boundary bookkeeping is the sketch it is announced to be.
 
 No full tame isomorphism is asserted in residue characteristic $p$. A $p$-group cover unramified at the boundary is tame there but can still vary, just as the étale $p$-power torsion of a proper elliptic curve varies between ordinary and supersingular fibers. “Tame at infinity” excludes wild boundary inertia; it does not turn every finite group into one of order prime to $p$.
 
@@ -1641,7 +1639,7 @@ $$
 \end{array}
 $$
 
-The first two rows are proved here for relative dimension at most one, which is what the last three rows and Chapter 15 use; in larger relative dimension they carry the purity hypothesis (ZN) recorded at the end of §14.3.
+Every row of the table concerns a family of relative dimension at most one. That is the generality in which §14.3 proves the first two rows, and it is the generality the remaining rows and Chapter 15 draw on.
 
 The hypotheses record actual geometry: properness controls escape, smoothness prevents nodes and collisions, tame conditions control the boundary, and the prime-to-$p$ restriction removes the covers most sensitive to characteristic $p$.
 
