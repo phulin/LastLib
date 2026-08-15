@@ -2414,9 +2414,12 @@ degree-zero connecting maps are different.
 
 Fix an algebraic closure $\overline F$. For finite Galois $M/F$ in
 $\overline F$, inflation includes each of the following finite-level groups
-in the corresponding directed union. For the idèle-class term this follows
-from inflation--restriction: if $M'/M/F$ is Galois with kernel $N$, then
-$C_{M'}^N=C_M$ and $H^1(N,C_{M'})=0$ by (4.I9s). Put
+in the corresponding directed union. Indeed, if $M'/M/F$ is Galois with
+kernel $N$, then $H^1(N,M'^{\times})=0$ by Hilbert 90 and
+$H^1(N,I_{M'})=0$ by (4.I2), Shapiro, and local Hilbert 90. For the
+idèle-class term, $C_{M'}^N=C_M$ and $H^1(N,C_{M'})=0$ by (4.I9s).
+Inflation--restriction is therefore injective in degree two in all three
+cases. Put
 
 $$
 \begin{aligned}
@@ -2426,8 +2429,9 @@ $$
 \end{aligned}                                             \tag{4.G1}
 $$
 
-The first union is $\operatorname {Br}(F)$. Formula (4.I2) identifies the
-second with the finite-support direct sum
+The first union is $\operatorname {Br}(F)$: every central simple algebra has
+a finite Galois splitting field, and the relative Brauer groups inject under
+inflation. Formula (4.I2) identifies the second with the finite-support direct sum
 
 $$
 \mathcal J(F)=\bigoplus_v\operatorname {Br}(F_v).        \tag{4.G2}
@@ -2624,8 +2628,13 @@ $$
 Its integral dual defines the negative half, and both halves agree at the
 norm splice. Grouping the recursion in (4.G11b) for cosets inside cosets
 proves transitivity on chains. Formula (4.G6), together with the corresponding
-local corestriction formula
-$\beta_F(\operatorname {cor}_{L/F}y)=\beta_L(y)$, gives
+corestriction formula
+
+$$
+\beta_F(\operatorname {cor}_{L/F}y)=\beta_L(y),          \tag{4.G6d}
+$$
+
+gives
 
 $$
 \operatorname {res}^G_Hu_{L/F}=u_{L/L^H},\qquad
@@ -2638,10 +2647,15 @@ $$
 \operatorname {inf}_{L/F}^{M/F}u_{L/F}=[M:L]u_{M/F}.     \tag{4.G13}
 $$
 
-The same normalized absolute diagrams in a Galois tower give (4.G13): both
-sides have invariant $1/[L:F]$. Injectivity of (4.G10) proves the equality,
-and the bar comparison maps above realize these identities up to the specified
-transitive prisms.
+To verify (4.G6d), represent $y$ by a finite local family $(b_w)_w$ over
+$L$. Corestriction sends it to
+$(\sum_{w\mid v}\operatorname {cor}_{L_w/F_v}b_w)_v$, and (4.5) turns the
+sum of its $F_v$-invariants into $\sum_w\operatorname {inv}_w(b_w)$.
+The same normalized absolute diagrams in a Galois tower give (4.G13):
+inflation does not change the absolute regular class, so both sides have
+invariant $1/[L:F]$. Injectivity of (4.G10) proves the equality, and the bar
+comparison maps above realize these identities up to the specified transitive
+prisms.
 
 Finally the construction has the required local normalization. Let $w$ be
 a place of $L$, $v=w|_F$, and $D_w\subseteq G$. The coordinate map
