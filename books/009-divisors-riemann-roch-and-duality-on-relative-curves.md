@@ -888,7 +888,7 @@ of such curves have the transitive trace (9.8).
 regular ambient projective space a coherent sheaf has a finite vector-bundle resolution, so
 there we apply $\mathcal Hom$ term by term and identify homotopy-equivalent resolutions. On
 the possibly singular curve we do not make that assertion: the change-of-rings construction
-below uses $K$-injective coinduction and the finite ambient resolution. Strict dg currying
+below uses injective coinduction and the finite ambient resolution. Strict dg currying
 supplies the comparison, and Ext concentration supplies the required bounded dual.
 
 First consider $P=\mathbf P^N_k$. The standard affine cover gives the homogeneous Čech complex.
@@ -971,8 +971,10 @@ maximal Cohen--Macaulay.
 
 For a coherent $\mathcal F$ on $X$, Ext concentration alone is not enough: one needs a
 functorial change-of-rings map. We construct it by a genuine dg adjunction, avoiding the invalid
-procedure of lifting differentials one at a time. Let $I^\bullet$ be a $K$-injective resolution
-of the ambient dualizing line and put
+procedure of lifting differentials one at a time. Let $I^\bullet$ be a bounded-below injective
+resolution of the ambient dualizing line. Such a complex is $K$-injective: for an acyclic source,
+one solves a null-homotopy degree by degree starting at the lowest nonzero target term, using
+exactness of the source to define the map on cycles and injectivity to extend it. Put
 
 $$
 i^bI^\bullet=
