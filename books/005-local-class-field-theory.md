@@ -1670,7 +1670,8 @@ $$
 [M:K]=|G^{\mathrm{ab}}|.
 $$
 
-An inclusion of finite-index subgroups with equal index is equality. This proves norm limitation without anticipating the quotient-functoriality results of Chapter 9.
+An inclusion of finite-index subgroups with equal index is equality. This proves norm
+limitation without using Proposition 5.2A or any later functoriality theorem.
 
 **Theorem 5.3 (norm limitation).** For a finite Galois extension $L/K$ with maximal abelian
 subextension $M/K$,
@@ -1707,8 +1708,8 @@ $$
 \operatorname{rec}_{L/K}(\pi)=\operatorname{Frob}_{L/K}
 $$
 
-when $L/K$ is unramified. Proposition 5.2A proves compatibility with quotient extensions;
-the base-field norm and transfer compatibilities are proved later in Chapter 9.
+when $L/K$ is unramified. Proposition 5.2A supplies the quotient compatibility needed in the
+existence and inverse-limit constructions below.
 
 The uniqueness clause should be read with all compatibility conditions included. A single cyclic quotient admits automorphisms that could change a chosen generator. The unramified Frobenius normalization and functoriality across all finite Galois extensions remove that ambiguity.
 
