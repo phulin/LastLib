@@ -670,7 +670,7 @@ H^i(\mathbf P^r_A,\mathcal F(m-i))=0
 \quad\text{for every }i>0.
 $$
 
-The hyperplane exact sequence shows that $m$-regular implies $(m+1)$-regular, that $\mathcal F(m)$ is globally generated, and that
+The Castelnuovo--Mumford argument shows that $m$-regular implies $(m+1)$-regular, that $\mathcal F(m)$ is globally generated, and that
 
 $$
 H^0(\mathcal F(n))\otimes_AH^0(\mathcal O(1))
