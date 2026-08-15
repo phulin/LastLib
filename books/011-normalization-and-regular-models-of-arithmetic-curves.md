@@ -2831,11 +2831,12 @@ $$
 
 with positive integers $a,b$. Proposition 11.0(4) gives
 $2p_a(E)-2=-(a+b)$. Since $p_a(E)\ge0$, necessarily
-$p_a(E)=0$ and $a=b=1$. The normalization-conductor sequence says that $E$ is normal and that its
-normalization has arithmetic genus zero. The degree-one line bundle
-$\mathcal O_E(-E)$ has two independent sections by Riemann--Roch; a nonzero section has a
-degree-one zero, hence a rational point. The resulting degree-one map to $\mathbf P^1$ is an
-isomorphism, even over an imperfect constant field. Thus $E$ is exceptional of the first kind.
+$p_a(E)=0$ and $a=b=1$. Riemann--Roch on the integral Gorenstein curve $E$ says that the
+degree-one line bundle $\mathcal O_E(-E)$ has two independent sections. Its complete linear
+system is base-point free: subtracting any closed point leaves degree at most zero and at most one
+section. A nonzero section has a degree-one zero, hence a rational point, and the
+resulting degree-one map to $\mathbf P^1$ is an isomorphism. Thus $E$ is exceptional of the first
+kind, even over an imperfect constant field.
 
 Theorem 11.1 contracts $E$ to a regular point:
 $c:X\to X_1$. Since $f$ is constant on $E$, the factorization property proved in Theorem 11.1
@@ -2866,8 +2867,7 @@ K_{Y/R}\cdot\Gamma=d_\Gamma(2p_a(\Gamma)-2)-\Gamma^2.       \tag{11.2}
 $$
 
 Proposition 11.0(5) gives $\Gamma^2\leq0$. If $p_a(\Gamma)\geq1$, (11.2) is nonnegative. If
-$p_a(\Gamma)=0$, the normalization and the conductor exact sequence show that $\Gamma$ is a
-normal genus-zero curve over its constant field. If $\Gamma^2=-d_\Gamma$, the line bundle
+$p_a(\Gamma)=0$ and $\Gamma^2=-d_\Gamma$, the line bundle
 $\mathcal O_\Gamma(-\Gamma)$ has degree one, so $\Gamma$ is a projective line and is exceptional;
 relative minimality excludes this. The next possible negative normal degree is at most
 $-2d_\Gamma$, which again makes (11.2) nonnegative. It remains only the case
