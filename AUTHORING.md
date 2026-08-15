@@ -12,7 +12,7 @@ Before important definitions, explain the mathematical problem they solve and wh
 - You may inspect the local Mathlib checkout.
 - Do not mention Lean, Mathlib, formalization, APIs, theorem identifiers from code, or proof assistants.
 - Do not assume any result not in Mathlib or a prior book. Outside of Mathlib results and prior books, do not specify anything that sounds like a preqrequisite, conditional result, prior hypothesis, isolated result, etc. (these are all names prior agents have used to sneak in results they needed but were too lazy to prove).
-- If you think you are missing a prerequisite, don't narrow the output to avoid having to use that prerequisite. Prove the prerequisite, or highlight for the coordinator that the prerequisite needs to be proved in a prior book.
+- If you think you are missing a prerequisite, don't blindly narrow the output to avoid having to use that prerequisite. Either validate that the broader result is unneeded in all downstream work (and only then narrow), prove the prerequisite itself, or highlight for the coordinator that the prerequisite needs to be proved in a prior book.
 - Previous books are established background. Refer to their definitions and results where appropriate instead of reconstructing them, while briefly recalling notation when needed.
 - Don't add appendices, supplementary content, bibliography, etc. The textbook should be one self-contained sequence of chapters that elaborate one mathematical area.
 
