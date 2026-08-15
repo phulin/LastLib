@@ -2043,9 +2043,12 @@ $$
 
 The first equality is finite reciprocity for the compositum, which was
 proved in (4.I14), and the second is finite character duality. If two
-abelian extensions have the same norm subgroup, their reciprocity quotients
-give the same finite quotient of $G_K^{\rm ab}$ and hence the same fixed
-field. No global fundamental class is used. $\square$
+abelian extensions have the same norm subgroup, the characters of either
+Galois group pull back to exactly the characters of the same quotient
+$C_K/U$. Uniqueness in (4.F7) identifies their cyclic fixed fields, and
+each finite abelian extension is the compositum of those cyclic fixed
+fields. The two extensions are therefore equal. No infinite reciprocity or
+global fundamental class is used. $\square$
 
 **Pre-class-formation norm-limitation lemma.** Let $L/E$ be finite Galois
 with group $H$, and put $M=L^{[H,H]}$. Then
