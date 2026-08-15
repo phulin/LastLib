@@ -2936,12 +2936,12 @@ Uniqueness is relative to the fixed identification of the generic fiber. If gene
 For a marked curve $(C;P_1,\ldots,P_n)$ one resolves the boundary as well as the surface.
 
 **Embedded-resolution lemma.** On a regular excellent surface, a reduced curve together with
-finitely many regular marked branches becomes a normal-crossings divisor with disjoint marked
-branches after finitely many closed-point blowups.
+finitely many pairwise distinct regular marked branches becomes a normal-crossings divisor with
+disjoint marked branches after finitely many closed-point blowups.
 
 **Proof.** Apply the branch-resolution part of Lemma 8.8 to the union of the reduced curve and
-the labeled marked branches. We recall the two decreasing formulas because their residue weights
-are essential over a nonclosed field. If
+the pairwise distinct labeled marked branches. We recall the two decreasing formulas because
+their residue weights are essential over a nonclosed field. If
 $\delta_x=\ell_{\mathcal O_{D,x}}(\overline{\mathcal O}_{D,x}/\mathcal O_{D,x})$ and $m_x$ is
 the multiplicity, the two affine blowup charts and the normalization exact sequence give
 
