@@ -1241,132 +1241,6 @@ Formula (4.C0b) proves directly that (4.C5) kills boundaries. On cocycles it
 reduces to the sum of the normalized local invariants, modulo the global
 relation, so it has the required normalization.
 
-We also need the high-degree tail. It cannot be obtained by merely increasing
-a good truncation, so we prove the dimension statement before using duality.
-
-**Global Tate-tail lemma.** Let $S$ contain the archimedean places and the
-places dividing $n$. For $M=A_n$ or $\mu_n$, localization induces
-
-$$
- H^q(G_{F,S},M)\xrightarrow{\sim}
- \bigoplus_{v\ {m real}}\widehat H^q(F_v,M),
- \qquad q\ge3.                                           \tag{4.C6}
-$$
-
-It is compatible with restriction, corestriction, enlargement of $S$, and
-finite extension of $F$. At a complex place the modified term is zero.
-
-**Proof.** We give the cochain dimension shift. First suppose
-$\mu_n\subset F$ and identify the two modules. For a finite Galois quotient
-$Q$ through which a cochain factors, write
-$J_Q(N)=\operatorname {Map}(Q,N)$ with right-translation action
-$(g f)(h)=f(hg)$. The map
-
-$$
-N\longrightarrow J_Q(N),\qquad n\longmapsto(h\mapsto hn)                 \tag{4.C6a}
-$$
-
-is $Q$-equivariant and its target is coinduced from the trivial subgroup.
-On positive-degree inhomogeneous
-cochains its augmented complex is contracted by
-
-$$
- (sF)(g_0,\ldots,g_{r-1})
- =F(1,g_0,\ldots,g_{r-1})                                \tag{4.C7}
-$$
-
-in homogeneous coinduced coordinates (and by the conjugate formula in
-inhomogeneous coordinates).
-Do not take an abstract second cokernel. Apply $J_Q$ termwise to the
-finite-support Kummer complex (4.F4), lift its two differentials through
-(4.C6a), and totalize the resulting two-row horseshoe. The cone of its
-augmentation to (4.F4) has coinduced rows and is contracted by (4.C7).
-Consequently its second cokernel is represented by the actual pairs
-$(D,b)$ in (4.F4), with differential
-$nD-\operatorname {div}(b)$. Thus two dimension shifts move a degree-$q$
-cocycle to a degree-$(q-2)$ cocycle in this Kummer--divisor total complex,
-without division by $|Q|$; in particular valuation below is a map on the
-shifted module, not a map invented on an abstract cokernel.
-
-Choose a finite set $T$ containing the supports of all values of the original
-cocycle and its two shifts, and enlarge it until the $(S\cup T)$-class group
-of every intermediate field is zero. This is possible by adjoining the prime
-divisors of finitely many ideal representatives. Temporarily perform the
-calculation for $S\cup T$; the procyclic cone (4.C9) removes the added primes
-one at a time at the end. Apply valuation to the shifted cochains. The
-target is a finite direct sum of permutation modules
-
-$$
- \bigoplus_{w\notin S}\mathbf Z/n[Q/D_w].                \tag{4.C8}
-$$
-
-Shapiro reduces its cochains to the unramified quotient at $w$. That quotient
-is procyclic; the two-term resolution
-
-$$
- \mathbf Z/n[[\widehat{\mathbf Z}]]
- \xrightarrow{\gamma-1}
- \mathbf Z/n[[\widehat{\mathbf Z}]]                     \tag{4.C9}
-$$
-
-is exact after augmentation in degrees at least two. Thus (4.C7), followed
-by the valuation homotopy from (4.C9), kills every nonarchimedean divisor
-coordinate of a cocycle in degree at least three.
-
-The remaining shifted cochain has values in the unit kernel. The exact
-divisor row
-
-$$
-0\to\mathcal O_{E,S\cup T}^{\times}\to E^\times
- \to\bigoplus_{w\notin S\cup T}\mathbf Z[w]\to0          \tag{4.C10}
-$$
-
-for each intermediate field $E$ shows that the chosen divisor primitives
-lift compatibly to element primitives. If two lifts disagree, their quotient
-is an $(S\cup T)$-unit. Choose a basis of the finitely generated unit group;
-the Kummer equation for a basis element is soluble in one finite extension
-unramified outside $S\cup T$ because this set contains the primes dividing
-$n$.
-After adjoining these finitely many roots, the unit discrepancy is an
-$n$-multiple and is removed by the same coinduced homotopy (4.C7). This
-constructs an actual primitive after one finite enlargement. All operations
-use only the finitely many values of the cocycle, so the construction
-commutes with the directed limit over finite quotients and finite $T$.
-
-At a real place the last Kummer equation may require adjoining $i$, which is
-not an object of the real decomposition group. Retaining instead the complete
-resolution
-
-$$
-\cdots\xrightarrow{1-c}M\xrightarrow{1+c}M
-\xrightarrow{1-c}M\xrightarrow{1+c}M\xrightarrow{1-c}\cdots             \tag{4.C11}
-$$
-
-leaves exactly its periodic Tate class. The construction above gives both a
-map and a homotopy inverse between the global tail and the direct sum of
-these real complexes; their composites differ from the identity by the sum
-of (4.C7), (4.C9), and the divisor/unit primitives from (4.C10). This proves
-(4.C6) in the untwisted Kummer coordinate.
-
-For general $F$ one must not infer the assertion from a bar filtration over
-$F(\mu_n)$: positive bar degrees would also contain the low-degree rows. We
-instead repeat the same construction equivariantly. Replace a chosen root
-$\beta$ by the free rank-one $\mathbf Z/n$-torsor of all roots of
-$X^n-b$; its translation module is $\mu_n$ with its actual cyclotomic
-action. Every map in (4.C7)--(4.C10) is defined on that torsor and therefore
-commutes with the action. This gives (4.C6) for $\mu_n$ without choosing a
-primitive root. Apply
-$\operatorname {Hom}(-,\tfrac1n\mathbf Z/\mathbf Z)$ term by term to the
-finite free shifted complex. The transpose of the torsor-translation action
-is the trivial module $A_n$, and the transpose homotopies give (4.C6) for
-$A_n$. No degree or group order is inverted.
-
-Restriction merely restricts the functions in (4.C7), and transfer is their
-finite coset sum; the projection formula follows term by term. Adding a
-prime to $S$ adds the procyclic identity cone (4.C9), and extension of the
-ground field only regroups the permutation summands in (4.C8) by Mackey
-double cosets. This proves all stated compatibilities. $\square$
-
 **Theorem 4.2 (finite Artin--Verdier duality for $A_n$ and $\mu_n$).** For every number
 field $F$, every $n\geq1$, and every such $S$, the following data and assertions are
 available.
@@ -1735,15 +1609,6 @@ occur, so after enlarging $T$ they factor through one finite quotient. This
 does not assert that the cohomology of that quotient is continuous
 cohomology.
 
-For a good truncation ending in degree $d\ge3$, append to
-$\mathcal P_{S,T}$ the finite portion through degree $d$ of the real complete
-resolutions (4.C11), using the cochain maps and homotopies constructed in the
-Global Tate-tail lemma. Resolve their finite terms by one-relation free
-cells. Formula (4.C6) says exactly that this enlarged filtered model remains
-a quasi-isomorphism through degree $d$. Thus the notation
-$\mathcal P_{S,T}$ below includes these real-tail cells whenever the chosen
-truncation meets them; no high-degree cell is added by declaration.
-
 For each $v\in S$, make the local model in the same way, beginning with the
 valuation factor of $P_v$, then the residue units, and then
 $\overline U_v^1\supset\cdots\supset\overline U_v^{c_v}=0$. Make its dual
@@ -1855,7 +1720,7 @@ claim. Apply it to the cone of (4.F4s). The preceding explicit graded checks
 make that cone contractible. Since $\tfrac1n\mathbf Z/\mathbf Z$ is
 injective, dualizing the filtered quasi-isomorphism (4.F4o) preserves
 quasi-isomorphisms. Two-out-of-three therefore proves that the original
-cochain map (4.C4) is a quasi-isomorphism on every good truncation:
+cochain map (4.C4) is a quasi-isomorphism on the good truncations:
 
 $$
 C_{S,c}^\bullet(A_n)\longrightarrow
@@ -2281,23 +2146,26 @@ $$
 
 **Proof.** A continuous cocycle has finite image, and a positive-degree
 finite-group cohomology class is torsion. Thus a class in (4.G0), killed by
-$n$, lifts through the Kummer sequence to a class in $H^3(F,\mu_n)$. Choose
-$S$ containing the archimedean places, the places above $n$, and the finite
-ramification set of a cocycle representing the lift. The Global Tate-tail
-lemma gives
+$n$, lifts through the Kummer sequence to a class in $H^3(F,\mu_n)$. Apply
+Theorem 4.2 to a set $S$ containing the archimedean places and the places
+above $n$. The degree-three part of the localization cone, with the complete
+Tate complexes at the real places, says
 
 $$
 H^3(F,\mu_n)\xrightarrow{\sim}
  \bigoplus_{v\ {\rm real}}\widehat H^3(F_v,\mu_n).        \tag{4.G2}
 $$
 
-The maps and homotopies (4.C7)--(4.C11) are natural for the inclusion of the
-Kummer kernel in the multiplicative group: their identity
-$1-i\lambda=dh+hd$ on $\mu_n$-valued cochains remains the same identity
-after those cochains are read in $E^\times$ at any finite level $E$. Thus a
-primitive for every real image gives, by the displayed homotopy, a global
-primitive after one common finite enlargement. If there are no real places
-there is nothing to choose.
+Here is the cochain check behind this standard high-degree consequence.
+Finite local complexes have no cohomology above degree two. Filter the
+untruncated comparison (4.F5) by the localization cone. In degrees at least
+three its only local associated quotients are the complete two-periodic real
+complexes (4.F4q). Splicing the ordinary real resolution to that complete
+resolution adds an identity cone, contracted by insertion of the norm and
+$1-c$ maps in alternating degrees. Hence the cone of global localization to
+the real terms is acyclic in degrees at least three. This gives (4.G2), and
+the construction is natural in a map of coefficients. If there are no real
+places both sides are zero.
 
 At a real place, periodicity and Hilbert 90 give
 
