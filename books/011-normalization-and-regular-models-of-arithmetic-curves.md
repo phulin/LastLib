@@ -238,13 +238,131 @@ Excellence is a package designed to make local algebra survive completion and fi
 
 The third condition is often called the $J_2$ property. The first controls dimensions in chains of specializations; the second controls completion; the third lets singular points be isolated in a closed set. These are exactly the three roles excellence plays in resolving arithmetic surfaces.
 
+We first prove the normalization theorem hidden inside the usual implication from excellence to
+the Nagata property.
+
+**Lemma 3.2A (complete and analytically unramified normalization).**
+
+1. A complete noetherian local ring is Nagata.
+2. Let $(A,\mathfrak m)$ be a noetherian local ring whose completion $\widehat A$ is reduced.
+   Then the integral closure of $A$ in its total ring of fractions is finite. In particular, if
+   $A$ is a domain, it is $N$-$1$: its normalization in its own fraction field is finite.
+
+**Proof.** We begin with the complete case. Quotienting by a prime preserves completeness, so it
+is enough to treat a complete local domain $B$. The coefficient-ring theorem and a system of
+parameters give a finite injection
+
+$$
+T\lhookjoinrel\longrightarrow B,                            \tag{3.1a}
+$$
+
+where $T=k[[x_1,\ldots,x_d]]$ in equal characteristic and
+$T=C[[x_1,\ldots,x_{d-1}]]$ in mixed characteristic, with $C$ a complete discrete valuation
+coefficient ring. Here is the normalization calculation for $T$. For a finite separable
+extension $L/K(T)$, choose an integral $K(T)$-basis $e_i$. If $e_i^*$ is its trace-dual basis,
+every element integral over $T$ lies in the finite lattice $\sum_iTe_i^*$, because
+$\operatorname{Tr}(ze_i)$ is integral and belongs to the integrally closed ring $T$. Thus the
+integral closure is finite.
+
+For a finite purely inseparable extension, choose one exponent $q=p^r$ killing it and generators
+$z_j$ with $z_j^q\in K(T)$. Clearing denominators makes the $z_j$ integral. Enlarge the
+coefficient field, respectively coefficient DVR, by the finitely many coefficient roots which
+occur in these equations. Expansion in the monomial basis
+
+$$
+x_1^{a_1/q}\cdots x_d^{a_d/q}\quad(0\leq a_i<q)
+$$
+
+(with $d-1$ variables in mixed characteristic and the analogous finite basis for the coefficient
+extension) places every element whose $q$th power is in $T$ in one fixed finite fractional
+$T$-module. Indeed the lowest exponent of each monomial in its $q$th power bounds the
+corresponding coefficient valuation; distinct residue classes of exponent vectors cannot cancel.
+The integral closure, being a submodule of that finite module over the noetherian ring $T$, is
+finite. Factoring an arbitrary finite extension into a separable extension followed by a purely
+inseparable one proves that $T$ is Japanese.
+
+Now let $L/K(B)$ be finite. Since $B$ is finite over $T$, the field $K(B)$ is finite over
+$K(T)$, and the integral closure of $T$ in $L$ is finite by the preceding paragraph. The integral
+closure of $B$ in $L$ is the same ring: integrality is transitive in one direction, while every
+element integral over $T$ is integral over the intermediate finite $T$-algebra $B$. Hence it is
+finite over $T$, and therefore over $B$. This proves (1), including every quotient domain.
+
+For (2), faithful flatness embeds $A$ in its completion, so $A$ is reduced. Let
+$\mathfrak p_1,\ldots,\mathfrak p_s$ be the minimal primes of $\widehat A$. Then
+
+$$
+Q(\widehat A)=\prod_i\operatorname{Frac}(\widehat A/\mathfrak p_i).
+$$
+
+By (1), the integral closure $S$ of $\widehat A$ in this product is a finite
+$\widehat A$-module. Let $A'$ be the integral closure of $A$ in $Q(A)$. Flatness gives injections
+
+$$
+A'\otimes_A\widehat A\subseteq Q(A)\otimes_A\widehat A
+ \subseteq Q(\widehat A).                                   \tag{3.1b}
+$$
+
+The left ring is integral over $\widehat A$, so it is an $\widehat A$-submodule of $S$ and is
+finite. Choose $f_1,\ldots,f_r\in A'$ whose tensors generate it. The cokernel of
+$\sum Af_i\to A'$ becomes zero after tensoring with the faithfully flat algebra $\widehat A$;
+hence it was zero. Thus $A'$ is finite over $A$. $\square$
+
+The local conclusion must still be globalized and applied to finite field extensions, rather
+than only to the original fraction field.
+
+**Lemma 3.2B ($J_2$ globalization).** Let $A$ be a noetherian $J_2$ ring such that localizations
+of every finite-type $A$-domain have reduced completions. Then $A$ is universally Japanese, and
+in particular Nagata.
+
+**Proof.** We first record the precise $J_2$ normalization criterion. Let $D$ be a noetherian
+domain for which some $D_f$, $f\ne0$, is normal and every $D_{\mathfrak m}$ at a maximal ideal is
+$N$-$1$. For each finite birational intermediate algebra $D\subset C\subset K(D)$, let $Z_C$ be
+the image in $\operatorname{Spec}D$ of the nonnormal locus of $C$. This is closed: $C_f$ is
+normal, the nonnormal locus is closed by $J_2$ and Serre's criterion, and the finite map
+$\operatorname{Spec}C\to\operatorname{Spec}D$ is closed.
+
+Fix a maximal ideal $\mathfrak m$. Finite generation of the normalization of $D_{\mathfrak m}$
+provides elements $x_1,\ldots,x_r\in K(D)$, integral over $D$, which generate that normalization
+after localization. For $C_{\mathfrak m}=D[x_1,\ldots,x_r]$, no prime of $C_{\mathfrak m}$ over
+$\mathfrak m$ is nonnormal, so $\mathfrak m\notin Z_{C_{\mathfrak m}}$. The complements of the
+$Z_{C_{\mathfrak m}}$ cover the quasicompact spectrum; choose finitely many and let $C$ be the
+finite $D$-algebra generated by all of them. Every local ring of $C$ contains one of the
+corresponding normal local rings integrally inside the same fraction field and is contained in
+its normalization; hence equality holds and $C$ is normal. Thus $C$ is the normalization of
+$D$, proving that $D$ is $N$-$1$.
+
+For a $J_2$ domain, the regular locus is open and contains the generic point, so it contains some
+$D_f$. The preceding criterion therefore shows that it is enough to prove $N$-$1$ for all local
+rings at maximal ideals.
+
+Now let $D$ be any finite-type $A$-domain. Its localizations have reduced completions by
+hypothesis, so Lemma 3.2A makes them $N$-$1$; $J_2$ passes to finite-type algebras, and the
+criterion makes $D$ itself $N$-$1$. Finally let $L/K(D)$ be finite. Choose a finite
+$D$-subalgebra $D_0\subset L$ with fraction field $L$ by clearing the coefficients of field
+generators. The domain $D_0$ is again finite type over $A$, hence $N$-$1$. Its normalization in
+$L$, which is also the integral closure of $D$ in $L$, is finite over $D_0$ and therefore over
+$D$. Thus every finite-type $A$-domain is Japanese. Taking quotients of $A$ by primes gives the
+Nagata assertion. $\square$
+
 **Theorem 3.2.** Excellent rings are Nagata. Localizations and finite-type algebras over excellent rings are excellent. Complete noetherian local rings, fields, and Dedekind domains arising by localization from rings of integers of number fields are excellent.
 
-**Proof of the finiteness assertion.** We record the criterion that makes the argument effective. Let $A$ be a noetherian domain whose formal fibers are geometrically regular and whose finite-type algebras have open regular locus. For a finite extension $L/K(A)$, choose a finite $A$-subalgebra $C\subset L$ with fraction field $L$. Apply openness of the regular locus to $C$ and to each reduced fiber over $A$. There is a nonzero $a\in A$ such that $C_a$ is regular over the normal locus of $A_a$; hence $C_a$ is integrally closed and equals the integral closure there.
+**Proof.** Let $D$ be a localization of a finite-type algebra over an excellent ring. Excellence
+is stable under these operations: $J_2$ is stable by its universal definition, universal
+catenarity is stable under finite type and localization, and the formal fibers remain
+geometrically regular by base change and the transitivity criterion for regular maps.
 
-It remains to cross $V(a)$. Localize at a generic point $\mathfrak p$ of this closed set and complete. Geometric regularity of the formal fiber implies that normalization after completion is finite and descends from a finite neighborhood: a monic relation in the completion has only finitely many coefficients, and faithful flatness contracts the resulting finite module to $A_{\mathfrak p}$. Thus the normalization is finite on an open neighborhood of every generic point of $V(a)$. Remove those neighborhoods. The remaining closed subset has smaller dimension. Noetherian induction proves finiteness everywhere. Applying this to every quotient $A/\mathfrak p$ gives the Nagata property.
+For every local domain $D_{\mathfrak p}$, the completion map is regular. A regular map is flat
+with geometrically regular fibers, and therefore carries the reduced ring $D_{\mathfrak p}$ to a
+reduced completion: filter by a prime chain and use that a geometrically regular algebra over a
+field is reduced. Thus Lemma 3.2B applies and proves that the original excellent ring is Nagata,
+indeed universally Japanese.
 
-Universal catenarity and stability of geometrically regular formal fibers under localization and finite-type extension prove the two permanence assertions. Fields are immediate. For a complete noetherian local ring, the coefficient-ring structure and the lifting criterion for regularity give geometrically regular formal fibers and openness of the regular locus. Rings of integers are finite over $\mathbf Z$, and their localizations inherit excellence. $\square$
+Fields have trivial formal fibers and regular loci. The complete-local case follows from the
+coefficient-ring construction in Lemma 3.2A together with the formal Jacobian criterion, which
+gives geometrically regular formal fibers and $J_2$; the same construction gives universal
+catenarity. Finally $\mathbf Z$ is excellent by the discrete-valuation calculation at its
+nonzero primes and the characteristic-zero generic point. Rings of integers are finite over
+$\mathbf Z$, and their localizations inherit excellence by the permanence just proved. $\square$
 
 The proof displays the three functions of excellence: regular formal fibers cross from a local ring to its completion, openness spreads a finite calculation to a neighborhood, and noetherian induction crosses the remaining closed set. Thus excellence turns a generic finite field extension into a finite geometric normalization.
 
