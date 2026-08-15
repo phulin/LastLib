@@ -1744,11 +1744,12 @@ $p_0=6283/2000=3.1415$, so (10.4) gives $p_0<\pi$.
 At very small thresholds, Minkowski is sharper and simpler. At degree $12$ and worst signature,
 
 $$
+\begin{aligned}
 \frac\pi4M_{12}
-=\frac\pi4\left(\frac{12^{12}}{12!}\right)^{1/6}
-
-> 4.0432402329>4.
-> $$
+&=\frac\pi4\left(\frac{12^{12}}{12!}\right)^{1/6}\\
+&>4.0432402329>4.
+\end{aligned}
+$$
 
 This is certified without its displayed approximation by the exact integer inequality
 
@@ -1778,11 +1779,12 @@ These two rows illustrate an important optimization rule: a zeta-function bound 
 At degree $53$,
 
 $$
+\begin{aligned}
 \frac\pi4M_{53}
-=\frac\pi4\left(\frac{53^{53}}{53!}\right)^{2/53}
-
-> 5.2006733020,
-> $$
+&=\frac\pi4\left(\frac{53^{53}}{53!}\right)^{2/53}\\
+&>5.2006733020,
+\end{aligned}
+$$
 
 whereas
 
@@ -1932,11 +1934,12 @@ Together, (11.2), (11.4), and (11.9) give the totally real caps $5,12,6$ at the 
 The base-field factor must be retained. As an illustration, take the ceiling $4\sqrt5$. With $T=6$, $n=24$, and $\alpha=0$,
 
 $$
+\begin{aligned}
 \log\operatorname{rd}(K)
-
-> \gamma+\log(8\pi)-\frac{12}{24}-1.10356
-> 2.19782.
-> $$
+&>\gamma+\log(8\pi)-\frac{12}{24}-1.10356\\
+&>2.19782.
+\end{aligned}
+$$
 
 Also, (10.4a) gives
 
