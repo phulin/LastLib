@@ -1310,7 +1310,20 @@ $$
 
 which simplifies to (7.1). Its denominator is $2(\sinh^2(\pi t)+\cos^2(\pi a))$, and its numerator is nonnegative. $\square$
 
-Products of positive-type integrable functions are of positive type because the Fourier transform of a product is $(2\pi)^{-1}$ times the convolution of the nonnegative transforms. At the endpoints $a=\pm1/2$, the product used below is simply $G$, so no product with a nonintegrable function is required.
+The product rule needed below is applied in a range where its Fubini hypotheses are explicit. If
+$F=G/\cosh(x/2)$ is basically admissible, then $G=F\cosh(x/2)$ is compactly supported and has
+the same piecewise $C^2$ and bounded-variation regularity. Hence
+$\widehat G(t)=O((1+|t|)^{-2})$ and $\widehat G\in L^1$. For $|a|<1/2$, both $H_a$ and its
+transform (7.1) are integrable. Fourier inversion and Fubini therefore give
+
+$$
+\widehat{G H_a}(t)
+=\frac1{2\pi}(\widehat G*\widehat H_a)(t)\geq0.
+$$
+
+Thus this product is of positive type without appealing to a product theorem outside its
+integrability range. At the endpoints $a=\pm1/2$, the product used below is simply $G$, so no
+product with a nonintegrable function is required.
 
 ### 7.3 The unconditional argument
 
