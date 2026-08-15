@@ -43,8 +43,8 @@
 8. [Hilbert polynomials in families](#8-hilbert-polynomials-in-families)
    - [Fiberwise Euler characteristics](#81-fiberwise-euler-characteristics)
    - [Flatness forces constancy](#82-flatness-forces-constancy)
-   - [Constancy and the flatness boundary](#83-constancy-and-the-flatness-boundary)
-   - [Flattening strata](#84-flattening-strata)
+   - [Flattening strata](#83-flattening-strata)
+   - [Constancy and the flatness boundary](#84-constancy-and-the-flatness-boundary)
 9. [Projective embeddings of curves and abelian schemes](#9-projective-embeddings-of-curves-and-abelian-schemes)
    - [Embedding projective curves](#91-embedding-projective-curves)
    - [Uniform embeddings in families](#92-uniform-embeddings-in-families)
@@ -454,7 +454,16 @@ H^i(X,\mathcal F\otimes\mathcal L^n)=0
 \quad(i>0, n\gg0).
 $$
 
-Conversely, under the same projective morphism over a noetherian affine base, if this vanishing and eventual generation hold for all coherent ideals, then $\mathcal L$ is ample. Chapter 6 proves the forward implication from the standard affine cover of projective space.
+Conversely, under the same projective morphism over a noetherian affine base, if this vanishing
+and eventual generation hold for all coherent ideals, then $\mathcal L$ is ample. For the forward
+implication, replace $\mathcal L$ by a very ample power and separate the finitely many residue
+classes of twists. After a projective embedding, a coherent sheaf has a finite surjection from a
+sum of $\mathcal O(-a)$; its coherent kernel has another such surjection. Repeat through only
+the $r+1$ possible Čech degrees. The standard affine cover of $\mathbf P^r$ reduces the result
+to the Laurent-monomial calculation
+$H^i(\mathbf P^r_A,\mathcal O(n))=0$ for $i>0,n\geq0$. Descending through this finite list
+of kernels proves vanishing, and the first surjection proves eventual generation. Thus the
+criterion is proved here; Section 6 only records the calculation in greater detail.
 
 ### 4.5 Tensor powers and operations
 
@@ -628,7 +637,7 @@ H^0(\mathcal F(n))\otimes_AH^0(\mathcal O(1))
 \quad(n\geq m).
 $$
 
-One chooses a hyperplane avoiding the relevant associated points and inducts on $r$; over a finite residue field, pass faithfully flatly to an infinite field, make the choice there, and descend the resulting vanishing and generation statements by faithful flatness. Regularity packages all high-degree behavior into one integer. The uniform regularity bound for ideals with a fixed Hilbert polynomial is deeper; it is proved in Section 12.3 as part of the bounded Macaulay--Gotzmann theorem.
+One chooses a hyperplane avoiding the relevant associated points and inducts on $r$; over a finite residue field, pass faithfully flatly to an infinite field, make the choice there, and descend the resulting vanishing and generation statements by faithful flatness. Regularity packages all high-degree behavior into one integer. No uniform bound for varying ideals is used in this section.
 
 ## 7. Hilbert functions and Hilbert polynomials
 
@@ -768,21 +777,7 @@ Choose $d+1$ large consecutive integers, where $d$ bounds fiber dimensions. Each
 
 For a failure, over $S=\operatorname{Spec}k[t]$ let $Z\subset\mathbf A^1_S$ be cut out by $(tx,x^2)$. Away from $t=0$ the fiber is one reduced point; at $0$ it is doubled. Fiber length jumps from $1$ to $2$, reflecting nonflatness.
 
-### 8.3 Constancy and the flatness boundary
-
-**Numerical flatness criterion.** Let $S$ be reduced and locally noetherian, let $f:X\to S$ be
-projective, and let $\mathcal F$ be coherent. Then $\mathcal F$ is $S$-flat if and only if its
-fiber Hilbert polynomial is locally constant.
-
-The forward implication is Section 8.2. The converse follows from the flattening theorem proved
-next. On a connected component with polynomial $P$, every point lies on $S_P$. Thus
-$S_P\hookrightarrow S$ has all of $S$ as underlying image and is cut out by a nilpotent ideal;
-reducedness kills that ideal.
-
-Reducedness matters. On $\operatorname{Spec}k[\epsilon]/(\epsilon^2)$ there is only one
-topological fiber. The module $k$ has constant one-point fiber but is not flat.
-
-### 8.4 Flattening strata
+### 8.3 Flattening strata
 
 We begin with the finite algebra which makes the theorem effective. If $M$ is a finitely
 presented module over a ring $A$, the functor of maps $A\to B$ for which $M\otimes_A B$ is
@@ -824,22 +819,56 @@ $$
 is an isomorphism, higher cohomology vanishes, and these sections commute with every further
 base change.
 
-**Proof.** First choose one bound $N$ valid on every fiber of $\operatorname{Spec}A$. Such a
-bound exists for both higher-cohomology vanishing and the comparison
+**Proof.** First choose one bound $N$ valid on every fiber of $\operatorname{Spec}A$. We give
+the finite argument, since upper semicontinuity in one degree would not by itself give a bound
+for the infinite tail. The following elementary relative-resolution lemma is the input.
+
+**Finite fiber-resolution lemma.** If $A$ is noetherian and $M$ is a finite graded module over
+$W=A[x_0,\ldots,x_r]$, then $\operatorname{Spec}A$ has a finite partition by locally closed
+reduced subschemes $S_\alpha$ and, for each $\alpha$, a bounded complex
+
+$$
+F_{\alpha,r+1}\longrightarrow\cdots\longrightarrow F_{\alpha,0}
+\longrightarrow M_{S_\alpha}\longrightarrow0, \tag{8.1a}
+$$
+
+where every $F_{\alpha,i}$ is a finite sum of graded shifts of $W_{S_\alpha}$ and (8.1a)
+remains exact after passage to every residue field of $S_\alpha$.
+
+To construct it, start at the generic point $\eta$ of an irreducible component of the reduced
+base. Hilbert's syzygy theorem over $\kappa(\eta)$ gives a graded free resolution of
+$M_\eta$ of length at most $r+1$. Choose homogeneous bases and clear the finitely many
+denominators in all its matrices and in the augmentation to $M$. The resulting finite complex
+over some dense open has homology finite over the polynomial ring and zero at $\eta$; one more
+localization kills every homology module. Let $Z_i$ be its finitely many cycles. Generic
+freeness, applied successively to the finite graded modules $M,Z_0,\ldots,Z_r$, permits one
+final shrinking on which they are flat over the base. The short exact sequences
+
+$$
+0\longrightarrow Z_i\longrightarrow F_i\longrightarrow Z_{i-1}\longrightarrow0,
+\qquad Z_{-1}=M,
+$$
+
+then remain exact after every scalar extension, so in particular after every residue-field
+extension. Remove this open and repeat on the reduced closed complement. Noetherian induction
+terminates after finitely many steps, which proves the lemma. Notice that only the finitely many
+matrices of (8.1a) and their finitely many cycle modules are being made flat; no infinite
+collection of cohomology maps is hidden here.
+
+On a residue field, sheafify (8.1a), twist, and use the explicit cohomology of the finitely many
+summands $\mathcal O(n-a)$. Descending through the $r+1$ syzygies supplies, from the largest
+shift occurring in (8.1a), a bound $N_\alpha$ for higher-cohomology vanishing and for the
+comparison
 
 $$
 (M\otimes_A k)_n\longrightarrow
 H^0(\mathbf P^r_k,\widetilde{M\otimes_A k}(n)) \tag{8.1}
 $$
 
-over every residue field $k$. Here is a proof that does not assume the desired flattening
-stratification. On the generic point of each irreducible component, a finite graded
-presentation of $M$ and the standard Čech complex give a bound. Exactness of the finitely
-many maps used in that calculation persists after shrinking the component. Apply the same
-argument to the closed complement. Noetherian induction terminates, and the maximum of the
-finitely many resulting bounds works on all fibers. Enlarge it once more so that $P(n)\geq0$
-for $n\geq N$. Field extension preserves (8.1) and the vanishings, so the same bound works
-over every field receiving a map from $A$.
+over every residue field $k$ on that stratum. Take the maximum of the finitely many
+$N_\alpha$. Enlarge it once more so that $P(n)\geq0$ for $n\geq N$. The complexes remain
+exact after extending a residue field, so the same bound works over every field receiving a map
+from $A$. This establishes the required uniformity without using flattening stratification.
 
 Suppose first that $\mathcal F_B=\widetilde{M\otimes_A B}$ is flat with polynomial $P$.
 The fiberwise bound and the finite-Čech-complex cohomology-and-base-change argument of
@@ -912,6 +941,20 @@ Every point belongs to the stratum indexed by its fiber polynomial. On a quasi-c
 the uniform bound in the proof and the finitely many possible ranks of the modules
 $M_N,\ldots,M_{N+r}$ show that only finitely many polynomials occur. Finally, two candidate
 strata factor through one another when tested on themselves, proving uniqueness. $\square$
+
+### 8.4 Constancy and the flatness boundary
+
+**Numerical flatness criterion.** Let $S$ be reduced and locally noetherian, let $f:X\to S$ be
+projective, and let $\mathcal F$ be coherent. Then $\mathcal F$ is $S$-flat if and only if its
+fiber Hilbert polynomial is locally constant.
+
+The forward implication is Section 8.2. For the converse, work on an open-and-closed locus where
+the polynomial is $P$. Every point lies on the flattening stratum $S_P$ just constructed, so
+$S_P\hookrightarrow S$ has all of $S$ as underlying image and is cut out by a nilpotent ideal.
+Reducedness kills that ideal, hence the identity factors through $S_P$ and $\mathcal F$ is flat.
+
+Reducedness matters. On $\operatorname{Spec}k[\epsilon]/(\epsilon^2)$ there is only one
+topological fiber. The module $k$ has constant one-point fiber but is not flat.
 
 ## 9. Projective embeddings of curves and abelian schemes
 
@@ -1108,15 +1151,19 @@ algebra generators for $B$ over the noetherian base generate it as a $B^G$-algeb
 makes $B$ finite over $B^G$; the Artin--Tate argument makes $B^G$ finitely generated over the
 base. Quasi-projectivity supplies enough $G$-stable affine neighborhoods: choose an affine
 neighborhood of an orbit in a projective embedding and intersect its finitely many translates.
-The affine quotients glue because invariant localization agrees on invariant principal opens. The
-categorical property follows affine-locally. Finally, tensoring the translates of a relatively
-ample bundle gives an ample bundle with a canonical $G$-linearization. On the fiber over a fixed
-point, each stabilizer acts through a character; raising to the $|G|$th power kills every such
-character. On an invariant affine chart, the invariant sections of this power form an invertible
-$B^G$-module, as may be checked after localizing at every prime and lifting it to $B$.
-These modules glue to an ample bundle downstairs: invariant powers of affine nonvanishing charts
-remain affine and cover. A high power is therefore very ample and proves that $Y/G$ is
-quasi-projective.
+The affine quotients glue because invariant localization agrees on invariant principal opens, and
+the categorical property follows affine-locally. Quasi-projectivity follows from the
+affine-orbit criterion, whose proof avoids descent of a linearized line bundle across the
+generally nonflat quotient. A finite orbit in a quasi-projective scheme is contained in an affine
+open: in a projective embedding, after increasing the degree, choose a homogeneous section
+nonzero at every point of the orbit and vanishing on the closed complement, and intersect the
+finitely many translates of its nonvanishing locus. The resulting invariant open $V$ is affine,
+as a finite intersection of affine opens in a separated scheme, and
+$V/G=\operatorname{Spec}\Gamma(V,\mathcal O_V)^G$ is affine. Products of the translates of the
+defining sections are invariant and have exactly these invariant affine nonvanishing loci. They
+form an ample family covering the quotient, so the affine-open criterion of Section 4.3 makes
+$Y/G$ quasi-projective. No assertion that trivial stabilizer characters on geometric fibers
+force scheme-theoretic descent over a nonreduced quotient is being used.
 
 In general, invariants do not commute with a nonflat scalar extension when the group order is not invertible. Permuting factors does not remove this obstruction in arbitrary dimension. Thus the quotient of an arbitrary quasi-projective $X$ is asserted here to commute with flat base change only. For smooth relative curves, the divisor interpretation below proves the stronger compatibility with every base change.
 
@@ -1154,9 +1201,7 @@ X^d\times_{\operatorname{Sym}^d(X)}X^d
 $$
 
 be an epimorphism as fppf sheaves. Then the symmetric power is the fppf sheafification of the
-orbit presheaf. This condition holds on the free locus. For a smooth relative curve, the local
-monic-polynomial calculation proves directly that unordered roots give the divisor functor; that
-stronger and more useful statement is established in Section 11.4. For a general
+orbit presheaf. This condition holds on the free locus. For a general
 higher-dimensional $X$, one should retain only the categorical universal property unless an
 appropriate sheaf statement has been proved.
 
@@ -1203,20 +1248,104 @@ $$
 For $d=0$ this means the empty Cartier divisor on $C\times_SS$; all statements below then reduce
 to the identity $\operatorname{Sym}^0(C)=S$. Assume $d>0$ in the local calculation.
 
-It is invariant under $\mathfrak S_d$. Locally, if $C=\mathbf A^1_S$ with coordinate $z$ and the entries have coordinates $t_1,\ldots,t_d$, its equation is
+It is invariant under $\mathfrak S_d$, but invariance alone is not a descent argument when $d!$
+is not invertible. We construct common étale charts for the quotient and the divisor functor and
+descend there.
+
+Let $\operatorname{Div}^d_{C/S}$ be the fppf sheaf whose value on $T$ is the set of relative
+effective Cartier divisors of degree $d$ on $C_T$. Fix a geometric divisor
+$D_0=\sum_jd_jx_j$. After an étale extension of the base, choose pairwise disjoint neighborhoods
+$U_j$ of the $x_j$ and étale parameters $z_j:U_j\to\mathbf A^1_S$. Put
 
 $$
-\prod_{i=1}^d(z-t_i)
-=z^d-e_1z^{d-1}+\cdots+(-1)^de_d.
+A_j=\mathbf A^{d_j}_S=\operatorname{Spec}
+\mathcal O_S[a_{j,1},\ldots,a_{j,d_j}]
 $$
 
-The coefficients are symmetric, so the divisor descends to
+and let $E_j\subset\mathbf A^1_{A_j}$ be the universal monic divisor
 
 $$
-\Delta_d\subset C\times_S\operatorname{Sym}^d_S(C).
+z^{d_j}-a_{j,1}z^{d_j-1}+\cdots+(-1)^{d_j}a_{j,d_j}=0. \tag{11.1}
 $$
 
-It is finite locally free of degree $d$ over the symmetric power. The local polynomial calculation also covers collisions and every residue characteristic: repeated roots give the correct nonreduced divisor, and no division by $d!$ occurs.
+It is finite free over $A_j$, with basis $1,z,\ldots,z^{d_j-1}$. Define $L_j\to A_j$ to be the
+functor of lifts of the map $E_j\to\mathbf A^1$ through $U_j\to\mathbf A^1$. This functor is
+represented by the finite Weil restriction
+
+$$
+L_j=\operatorname{Res}_{E_j/A_j}
+       (U_j\times_{\mathbf A^1}E_j). \tag{11.2}
+$$
+
+The required piece of Weil restriction is elementary: on affine charts, write the images of
+finitely many algebra generators in the displayed basis of $E_j$ and impose the finitely many
+multiplication relations. These affine schemes glue because maps into $U_j$ form a sheaf.
+Moreover $L_j\to A_j$ is étale. For a square-zero extension $T_0\hookrightarrow T$, the induced
+$E_{j,T_0}\hookrightarrow E_{j,T}$ is square-zero, and formal étaleness of $U_j\to\mathbf A^1$
+gives a unique lift. Finite presentation of (11.2) converts this infinitesimal criterion into
+étaleness.
+
+The product $L=\prod_jL_j$ maps étale-locally onto the divisor functor. Indeed, a divisor near
+$D_0$ has a unique open-and-closed decomposition of ranks $d_j$ in the disjoint $U_j$; after an
+étale localization the idempotents of its special finite algebra lift. Nakayama makes
+$1,z_j,\ldots,z_j^{d_j-1}$ a basis of each part, so its kernel is the unique monic polynomial
+(11.1), and its embedding in $U_j$ is exactly the lift represented by (11.2). Conversely a lift
+in (11.2) is a closed immersion because its composite with the separated étale map to
+$\mathbf A^1$ is the monic closed immersion $E_j\hookrightarrow\mathbf A^1$; étale-locally its
+equation is (11.1), so it is an effective Cartier divisor.
+
+We next compare the same chart with the symmetric quotient without using the divisor functor.
+The fundamental theorem on symmetric polynomials gives
+
+$$
+\operatorname{Sym}^{d_j}(\mathbf A^1_S)
+=\operatorname{Spec}\mathcal O_S[t_1,\ldots,t_{d_j}]^{\mathfrak S_{d_j}}
+\simeq A_j, \tag{11.3}
+$$
+
+with coordinates the elementary symmetric functions, over $\mathbf Z$ and hence in every
+residue characteristic. The following étale symmetric-chart lemma supplies the comparison:
+near the cycle $d_jx_j$, the morphism
+
+$$
+\operatorname{Sym}^{d_j}(U_j)\longrightarrow
+\operatorname{Sym}^{d_j}(\mathbf A^1_S)=A_j \tag{11.4}
+$$
+
+is represented, after an étale localization at that cycle, by $L_j\to A_j$.
+
+Here is a proof that includes collisions. Pass to strict henselizations at $x_j$ and $z_j(x_j)$.
+An étale morphism identifies their completed local rings. On ordered $d_j$-fold powers this gives
+an equivariant identification of completed local rings at the repeated tuple. Taking invariants
+still gives an identification: for every ring $R$,
+
+$$
+R[[u_1,\ldots,u_{d_j}]]^{\mathfrak S_{d_j}}
+=R[[e_1,\ldots,e_{d_j}]], \tag{11.5}
+$$
+
+because degreewise the fundamental theorem on symmetric polynomials is integral and taking the
+inverse limit over total degree preserves the equalizer defining invariants. Formula (11.5), not
+averaging by $d_j!$, identifies the completed strict local quotient with the completed coefficient
+space. The chosen branch is precisely a lift of the universal finite algebra through $U_j$, so
+its completed local functor is (11.2). Since both sides are finitely presented and formally
+étale over $A_j$, equality of their strict local functors yields isomorphic étale neighborhoods.
+This proves the symmetric-chart lemma in arbitrary characteristic.
+
+Taking products over $j$ and restricting to the open where the groups of support points remain
+disjoint gives common representable étale charts $L$ for
+$\operatorname{Sym}^d(C)$ and $\operatorname{Div}^d_{C/S}$. On these charts the ordered divisor
+descends by the monic equations (11.1). On a double overlap the two divisors agree after the
+surjective étale pullback which orders the roots; effective Cartier divisors, being invertible
+ideal sheaves with a regular generator, satisfy effective descent. The local divisors therefore
+glue to
+
+$$
+\Delta_d\subset C\times_S\operatorname{Sym}^d_S(C),
+$$
+
+finite locally free of degree $d$. This construction proves, rather than assumes, descent of the
+ordered divisor.
 
 **Universal-divisor theorem.** For every $T\to S$, pullback of $\Delta_d$ induces a natural bijection
 
@@ -1227,54 +1356,12 @@ $$
 \text{ on }C_T\}.
 $$
 
-The proof must cover divisors with several support points and nilpotent collisions. We use the
-following local chart lemma.
-
-**Divisor-chart lemma.** Let $D_0$ be a length-$d$ divisor on a geometric fiber of a smooth curve.
-After an étale extension of the base, write its support as distinct sections
-$x_1,\ldots,x_r$ with multiplicities $d_1+\cdots+d_r=d$. There are pairwise disjoint
-neighborhoods $U_j$ of the sections, étale parameters $z_j:U_j\to\mathbf A^1$, and étale
-neighborhoods of $D_0$ in both the divisor functor and $\operatorname{Sym}^d(C)$ mapping to
-
-$$
-\prod_{j=1}^r\mathbf A^{d_j},
-$$
-
-with coordinates the coefficients of one monic polynomial of degree $d_j$ for each $j$. On both
-sides the additional étale datum is the lift of that finite divisor from $\mathbf A^1$ to $U_j$.
-
-To prove the lemma, first split the reduced support by an étale extension and choose the disjoint
-smooth parameters. A nearby divisor has a unique open-and-closed decomposition of ranks $d_j$ in
-the $U_j$: the idempotents of the special finite algebra lift uniquely after shrinking the base.
-For the $j$th piece, its special fiber is $k[z_j]/(z_j^{d_j})$. Hence
-$1,z_j,\ldots,z_j^{d_j-1}$ is a basis on the special fiber and remains a basis by Nakayama. The
-kernel of the resulting quotient is generated by a unique monic polynomial
-
-$$
-z_j^{d_j}-a_{j,1}z_j^{d_j-1}+\cdots+(-1)^{d_j}a_{j,d_j}.
-$$
-
-Conversely this polynomial cuts out a finite free Cartier divisor with the displayed basis. An
-étale morphism has the unique infinitesimal lifting property, so a chosen lift of the special
-divisor to $U_j$ extends uniquely over nilpotent thickenings; this makes the corresponding map of
-divisor charts étale. On the ordered power, the same coefficients are the elementary symmetric
-functions of the $d_j$ local roots. The fundamental theorem on symmetric polynomials identifies
-$\operatorname{Sym}^{d_j}(\mathbf A^1)$ with $\mathbf A^{d_j}$ over $\mathbf Z$; no division by
-$d_j!$ is involved. The same unique lifting property shows that
-$\operatorname{Sym}^{d_j}(U_j)\to\operatorname{Sym}^{d_j}(\mathbf A^1)$ is étale at the chosen
-cycle and carries exactly the same lift datum. Taking the product over $j$ proves the lemma.
-
-Now let $D\subset C_T$ be any relative effective divisor. Apply the chart lemma near every point
-of $T$. Its monic coefficients give local morphisms to $\operatorname{Sym}^d(C)$. On overlaps the
-morphisms agree: after refining by the divisor charts, the common divisor has a unique
-open-and-closed decomposition, a unique monic equation on each piece, and the same uniquely
-determined étale lift datum. Thus both morphisms have identical chart coordinates and lifts.
-The local morphisms therefore glue by the sheaf property. This proves surjectivity. Conversely, on
-every divisor chart the coefficients are recovered uniquely from the pulled-back divisor, proving
-injectivity. Every step
-uses formation of a finite locally free algebra, idempotents, and monic equations, all of which
-commute with arbitrary base change. The result is therefore a natural bijection on all test
-schemes, not merely on geometric points.
+Indeed, on the common étale charts just constructed, both sides are represented by the same
+$L=\prod_jL_j$, and the pulled-back divisor is the same monic divisor. Equality of two maps and
+existence of a map are local for the étale topology, so these chartwise bijections descend and
+glue. The construction used finite locally free algebras, their Weil restrictions, idempotents,
+and monic equations; all commute with arbitrary base change. The bijection therefore holds for
+every test scheme, including nonaffine and nonreduced schemes, and is functorial in $T$.
 
 ### 11.5 Symmetric powers and base change
 
@@ -1491,24 +1578,64 @@ $V\subset k[x_0,\ldots,x_r]_n$ has codimension $h$ and
 $k[x]_1V$ has codimension $h^{\langle n\rangle}$, then the ideal generated by $V$ has
 the ranks prescribed by (12.6) in every later degree.
 
-For completeness, the finite combinatorial proof goes as follows. Greedily choose $b_n$
-maximal with $\binom{b_n}{n}\leq h$, subtract, and continue with lower denominators. This
-gives the strict expansion and proves its uniqueness. Slice the monomials by the exponent of
-$x_r$ and compress each slice lexicographically in $x_0,\ldots,x_{r-1}$. A double induction
-on $(r,n)$ shows that replacing the slices by nested lexicographic slices cannot enlarge the
-shadow, and Pascal's identity counts the complement of the resulting shadow as
+Here is the complete induction used below. Greedily choose $b_n$ maximal with
+$\binom{b_n}{n}\leq h$, subtract, and continue with lower denominators. Pascal's inequality
+$\binom c{i}<\binom{c+1}{i+1}$ shows at each step that the next upper entry is smaller than the
+preceding one; reversing the first place where two expansions differ proves uniqueness.
+
+Order degree-$n$ monomials by colexicographic order and replace the complement of $A$ by the
+initial colex segment $C(h,n)$. To see directly that this cannot increase the complement of the
+shadow, slice by the exponent of $x_r$. If the slice complements have sizes
+$h_0,h_1,\ldots$, replace each by $C(h_q,n-q)$ and then replace adjacent slices whenever they
+are not nested. For adjacent sizes $u,v$, Pascal's identity gives
 
 $$
-\sum_{i=j}^n\binom{b_i+1}{i+1}.
+|\partial C(u,n-q)|+|C(v,n-q-1)|
+\geq |\partial C(u',n-q)|+|C(v',n-q-1)|, \tag{12.5a}
 $$
 
-This proves (12.5). Keeping the equality conditions in the same induction shows that an
-extremal family has an extremal shadow; applying the induction again proves (12.6). In the
-equality case, the same nested-slice induction gives distinct owner multiples for the shadow
-monomials and generates every relation among them by the degree-one overlap relations. Gaussian
-elimination lifts those overlap relations from the leading monomials of $V$ to $V$ itself.
-Consequently no cancellation creates an extra leading monomial in the next degree, and induction
-proves the vector-space statement. Notice the
+where $(u',v')$ is obtained by moving the largest available binomial block from the second
+slice to the first. The total size is unchanged and the pair becomes lexicographically larger,
+so the process terminates. Inequality (12.5a) is just
+$\binom c i+\binom c{i-1}=\binom{c+1}i$ for the moved block; induction on the number of blocks
+handles a general pair. Induction on $(r,n)$ now leaves the nested colex slices of $C(h,n)$.
+If $h=\sum\binom{b_i}i$, Pascal's identity counts their shadow complement as
+
+$$
+|\mathcal M_{n+1}\setminus\operatorname{Sh}(C(h,n))|
+=\sum_{i=j}^n\binom{b_i+1}{i+1}.
+$$
+
+This proves (12.5). Equality in (12.5a) says that no block move was strict. The resulting nested
+slices remain nested after taking a shadow, so the identical argument applies in the next degree.
+Induction proves (12.6), including every equality case, not only the colex segment.
+
+We also record the syzygy information carried by equality. Give each monomial in
+$\operatorname{Sh}(A)$ the least pair $(x_i,u)$ with $u\in A$ and $x_iu$ equal to that
+monomial. A non-owner product $x_ju$ has the same monomial as its owner and gives a linear
+overlap $x_je_u-x_ie_v$. In the nested-slice induction above, removing the last binomial block
+removes one generator together with precisely its owner multiples. Induction therefore shows
+that these linear overlaps generate the kernel of
+
+$$
+\bigoplus_{u\in A}k[x](-n)e_u\longrightarrow (A), \qquad e_u\mapsto u. \tag{12.5b}
+$$
+
+and that the same owner construction resolves the next kernel. Thus the monomial ideal $(A)$
+has an $n$-linear resolution whenever equality holds.
+
+For the vector-space assertion, row-reduce a basis $f_u$ of $V$ so that its leading monomials
+are $A$. We always have
+$\operatorname{Sh}(A)\subseteq\operatorname{in}(k[x]_1V)$. Equality of codimensions and
+(12.5) force equality here. Hence every linear overlap from (12.5b) reduces to zero using the
+$f_u$: a nonzero remainder would contribute an additional leading monomial and make the
+codimension smaller. Since those overlaps generate the first syzygy module, the monic
+Buchberger criterion applies. Explicitly, if a relation among the $f_u$ had a largest uncancelled
+term, the corresponding relation among their leading monomials is a combination of the linear
+overlaps; subtracting the same combination of the lifted zero reductions lowers that largest
+term, and well-ordering terminates. Therefore $\{f_u\}$ is a Gröbner basis of the ideal it
+generates and its initial ideal is $(A)$. Formula (12.6) gives every later quotient dimension.
+This proves the vector-space equality and persistence statements. Notice the
 orientation: $A$ consists of **ideal** monomials. If $r=2,n=1,h=1$, the one standard
 monomial may be $x_2$ and the next quotient value is $1$, although the ordinary shadow of
 $\{x_2\}$ has three elements. It is the complement of the shadow of the other two, ideal
@@ -1575,35 +1702,61 @@ $$
 H_R(n)-H_R(n-1)=H_{(W/(\ell))/J}(n)+D_n. \tag{12.8a}
 $$
 
-Start in the degrees where $D_n=0$ and both Hilbert functions equal their polynomials, and
-descend. If $D_n>0$, (12.8a) makes the preceding value strictly smaller than the Macaulay
-predecessor of $P(n)$. Strict monotonicity of the Macaulay transform and (12.1a) then make
-Macaulay's inequality at the preceding degree incompatible with $H_R(n)=P(n)$. Thus $D_n=0$
-and the preceding Hilbert value equals its polynomial. This descends through every $n>s$;
-at $n=s>1$, direct use of the last binomial block gives
+For large $n$, $D_n=0$ and both Hilbert functions equal their polynomials. Descend on $n$.
+Assume $H_R(n)=P(n)$ and $n>s$. Inductive regularity for $J$ gives
+$H_{(W/(\ell))/J}(n)=\Delta P(n)$. Hence (12.8a) is the exact numerical identity
+
+$$
+H_R(n-1)=P(n-1)-D_n. \tag{12.8b}
+$$
+
+If $D_n>0$, Macaulay's inequality and strict monotonicity of the transform give
+
+$$
+P(n)=H_R(n)
+\leq H_R(n-1)^{\langle n-1\rangle}
+\leq(P(n-1)-1)^{\langle n-1\rangle}
+<P(n-1)^{\langle n-1\rangle}=P(n),
+$$
+
+a contradiction. Strict monotonicity follows directly from the greedy expansion: subtracting
+one changes its last nonzero binomial block, and after raising, that block remains strictly
+smaller. Thus $D_n=0$ and (12.8b) gives $H_R(n-1)=P(n-1)$. This descends through every
+$n>s$. At $n=s>1$, writing out the final block of the Gotzmann expansion gives
 
 $$
 (P(s-1)-1)^{\langle s-1\rangle}<P(s),
 $$
 
-so any positive $D_s$ gives the same contradiction. When $s=1$, the single block has
-$P(0)=1$; a proper standard graded quotient has $H_R(0)=1$, so (12.8a) gives the same
-endpoint directly. Thus
+because subtracting one deletes one terminal unit before the Macaulay raise. Hence positive
+$D_s$ gives the same contradiction. When $s=1$, the single block has $P(0)=1$; a proper
+standard graded quotient has $H_R(0)=1$, so (12.8b) gives the endpoint directly. Thus
 $D_n=0$ for $n\geq s$ and the descent also gives $H_R(s-1)=P(s-1)$, proving (12.7).
-The standard hyperplane regularity argument now applies to
+For clarity, we include the hyperplane regularity argument. Since $I\cap(\ell)=\ell I$, there is
+an exact sequence
 
 $$
 0\longrightarrow\mathcal I(n-1)\xrightarrow{\ell}\mathcal I(n)
 \longrightarrow\widetilde{\bar I}(n)\longrightarrow0 \tag{12.9}
 $$
 
-and its long cohomology sequence.
+and its long cohomology sequence; sheafifying $\bar I$ or its saturation $J$ gives the same
+hyperplane ideal sheaf. Starting with Serre vanishing in a large twist and descending the twist
+in this sequence, the $s$-regularity of $\widetilde J$ gives
+$H^i(\mathcal I(s-i))=0$ for $i\geq2$. For $i=1$, the exact sequence
 
-The $s$-regularity of $J=\bar I^{\mathrm{sat}}$ propagates the vanishings in (12.9) for
-cohomological degree at least two. In degree one, the equality
-$H_R(s-1)=P(s-1)$ obtained above is exactly the missing surjectivity of global sections
-(compare the Hilbert function with the Euler characteristic in (12.9)). Thus
-$H^i(\mathcal I(s-i))=0$ for every $i>0$.
+$$
+0\to H^0(\mathcal I(s-1))\to W_{s-1}
+\to H^0(\mathcal O_{\operatorname{Proj}R}(s-1))
+\to H^1(\mathcal I(s-1))\to0
+$$
+
+shows what remains. The already established regularity of the hyperplane section kills its
+higher cohomology in this twist, so repeated use of (12.8) computes the Euler characteristic of
+$\mathcal O_{\operatorname{Proj}R}(s-1)$ as $P(s-1)$. Saturation identifies
+$R_{s-1}$ with the image of $W_{s-1}$ in these global sections. Since
+$H_R(s-1)=P(s-1)$, source image and target have equal dimension; the displayed map is
+surjective and $H^1(\mathcal I(s-1))=0$. Thus $\mathcal I$ is $s$-regular.
 
 Apply the lemma inductively to the finite difference of (12.1). Its Gotzmann length is at
 most $s$, so the saturated hyperplane ideal is $s$-regular, and the lemma makes $I$
@@ -1643,48 +1796,61 @@ between
 The extension is the ideal generated by $L_m$, and the bijection commutes with every map
 $C\to C'$.
 
-Here is the scheme-theoretic proof. The pairs in the second bullet are represented over
-$\mathbf Z$ by the closed incidence subscheme of the two Grassmannians: the composite from
-$L_m\otimes\mathbf Z[x]_1$ to the universal quotient in degree $m+1$ is required to be zero.
-On each residue field, Macaulay equality makes the inclusion an equality and persistence gives
-the ranks in every later degree. This fiber calculation alone would identify only the reduced
-subscheme, so one must still exclude hidden nilpotent equations.
+We use a filtered monic form of Buchberger's criterion. It is stated over a noetherian local ring
+because that is where the universal incidence scheme is checked; the resulting universal
+isomorphism will then be base-changed to arbitrary rings.
 
-Inside the incidence scheme, impose degree by degree the Fitting conditions saying that the
-quotient by the ideal generated by $L_m$ is locally free of rank $h_m(n)$. Every condition has
-the whole underlying space by field persistence. Thus its open Fitting half is the whole
-incidence scheme and only the vanishing of the lower Fitting ideal remains. Noetherian
-stabilization over $\mathbf Z$ makes the sum of those ideals stabilize, so their intersection is
-a closed subscheme defined by finitely many degrees. It represents the full ideals in the first
-bullet. It remains to prove that this closed subscheme is the entire incidence scheme, including
-its nilpotent structure.
+**Filtered marked-basis lemma.** Let $(R,\mathfrak m)$ be noetherian local, let $f_u$ be
+degree-$m$ rows which reduce modulo $\mathfrak m$ to a row-echelon basis with leading monomials
+$A$, and suppose the monomial ideal $M_0=(A)$ has an $m$-linear resolution. If the quotient in
+degrees $m$ and $m+1$ is free on the standard monomials, then it is free on the standard
+monomials in every degree.
 
-Work in a local ring $(R,\mathfrak p)$ of an affine chart of the incidence scheme over
-$\mathbf Z$. It is noetherian, and hence $\bigcap_q\mathfrak p^q=0$. Reduce the universal
-pair modulo $\mathfrak p$, row-reduce its degree-$m$ part, and let $M$ be the monomial ideal
-generated by the resulting leading monomials. Field persistence says that $M$ has Hilbert
-function $h_m$. Its standard monomials generate each graded piece of $R[x]/(L_m)$ by
-Nakayama. Lifting the row-reduced generators gives marked polynomials with unit leading
-coefficients.
+Proof proceeds modulo $\mathfrak m^q$. For $q=1$, the equality-case proof above says that the
+linear overlaps generate all syzygies and reduce to zero. Suppose confluence and independence
+hold modulo $\mathfrak m^q$. An ambiguity modulo $\mathfrak m^{q+1}$ has leading coefficient in
+$\mathfrak m^q/\mathfrak m^{q+1}$, a vector space over the residue field. Express its leading
+relation in the linear overlap generators of the $m$-linear resolution. The corresponding lifted
+overlaps vanish in the free degree-$(m+1)$ quotient; multiplying them resolves the ambiguity and
+lowers the leading monomial. Induction on the monomial order gives confluence modulo
+$\mathfrak m^{q+1}$. Thus a relation among standard monomials has every coefficient in
+$\mathfrak m^q$ for every $q$. Each fixed graded quotient is a finite $R$-module, and Krull
+intersection gives $\bigcap_q\mathfrak m^q=0$, proving independence. Generation follows in each
+degree from generation modulo $\mathfrak m$ and Nakayama. This proves the lemma. This filtered
+argument is precisely what retains infinitesimal coefficients in nonpivot columns; deleting them
+would prove only the reduced statement.
 
-Order a coefficient first by its $\mathfrak p$-adic order and then order its monomial by a
-fixed term order. The Buchberger argument for this coefficient--monomial order works modulo
-every $\mathfrak p^q$. Because $M$ has an $m$-linear resolution, its monomial syzygies are
-generated by the overlap syzygies of degree $m+1$. Over the residue field $k$, Macaulay equality
-gives $k[x]_1(L_m\otimes_Rk)=L_{m+1}\otimes_Rk$; the finite cokernel of
-$R[x]_1L_m\to L_{m+1}$ therefore vanishes by Nakayama. Thus in degree $m+1$ the quotient by
-$(L_m)$ is the Grassmannian quotient and is free on the standard monomials. Every product of
-a marked degree-$m$ generator has a unique standard-monomial remainder, and the two
-expressions in each overlap have the same remainder. Hence every required
-$S$-polynomial reduces to zero modulo $\mathfrak p^q$, for every $q$. The coefficient--monomial
-Buchberger criterion then makes the marked generators a standard basis. Since
-$\bigcap_q\mathfrak p^q=0$, the standard monomials are not merely generators but an
-$R$-basis in every degree.
+Now represent the pairs in the second bullet over $\mathbf Z$ by the closed incidence subscheme
+of the two Grassmannians. Work in a noetherian local ring $(R,\mathfrak m)$ of one of its affine
+charts. Row-reduce the universal $L_m$ modulo $\mathfrak m$ and lift the rows; their leading
+monomials form a set $A$.
+Over the residue field $k$, the actual quotient in degree $m+1$ has dimension $P(m+1)$.
+Since
 
-Consequently every local ring of the incidence scheme already satisfies all the later Fitting
-conditions: the closed subscheme above is the entire incidence scheme, with its nilpotent
-structure. This proves the assertion over $\mathbf Z$. Base-changing that isomorphism proves
-the statement for an arbitrary, even nonnoetherian, ring $C$.
+$$
+\operatorname{Sh}(A)\subseteq
+\operatorname{in}(k[x]_1(L_m\otimes k)),
+$$
+
+the shadow inequality and $P(m+1)=P(m)^{\langle m\rangle}$ squeeze both complements to the
+same size. Thus the monomial ideal $M_0=(A)$ has Hilbert function $h_m$ and, by the equality
+part proved above, an $m$-linear resolution whose first syzygies are the linear overlaps.
+
+The cokernel of the finite map $R[x]_1L_m\to L_{m+1}$ vanishes modulo $\mathfrak m$, hence
+vanishes by Nakayama. Therefore $R[x]_1L_m=L_{m+1}$. The standard degree-$(m+1)$ monomials
+generate its Grassmannian quotient. Their number is $P(m+1)$, so the resulting surjection between
+finite free $R$-modules of the same rank is an isomorphism. Every generating linear overlap of
+the lifted rows consequently vanishes in that quotient. The filtered marked-basis lemma shows
+that every later quotient is free on the standard monomials, with rank $h_m(n)$. Hence every
+local ring of the universal incidence scheme already satisfies every later Fitting condition,
+including its nilpotent structure. The universal ideal is uniquely generated by $L_m$.
+
+We have therefore proved over $\mathbf Z$ that the incidence scheme itself represents the full
+ideals in the first bullet. Base-changing this scheme-theoretic isomorphism proves the statement
+for an arbitrary, even nonnoetherian, ring $C$ and makes compatibility with every $C\to C'$
+automatic. Conversely, an ideal with the stated locally free quotients supplies the two direct
+summands and the incidence relation. This completes the proof of the finite-support lemma without
+passing to radicals and without assuming the test ring is reduced or noetherian.
 
 Apply the finite-support lemma to (12.3). It gives all the asserted locally free quotients and
 their arbitrary base change. On a standard projective chart, the degree-zero localization is a
@@ -1986,7 +2152,7 @@ For later use, the conclusions can be read as one chain. Relative Proj commutes 
 For a projective flat family over a locally noetherian base, a coherent sheaf flat over the base
 and twisted by high powers of a fixed relatively ample line bundle has locally free pushforward
 commuting with base change locally on the base. The fiber Hilbert polynomial is locally
-constant. By the flattening-stratification theorem of Section 8.4, the
+constant. By the flattening-stratification theorem of Section 8.3, the
 fixed-polynomial flatness loci are locally closed with the stated universal property over
 arbitrary test schemes. By the bounded Macaulay--Gotzmann theorem, over a
 noetherian base fixing that polynomial gives a projective finitely presented Hilbert scheme with
