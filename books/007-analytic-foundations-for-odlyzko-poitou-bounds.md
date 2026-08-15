@@ -1107,19 +1107,102 @@ $$
 
 To prove it, expand $(1-e^{-x})^{-1}=\sum_{k\geq0}e^{-kx}$ on $[\varepsilon,\infty)$, integrate termwise, and let $\varepsilon\downarrow0$. The singular terms cancel. The resulting series is $-\gamma+\sum_{k\geq0}(1/(k+1)-1/(k+z))$, the logarithmic derivative of Euler's product for $\Gamma$. Absolute convergence after pairing justifies all passages.
 
-Apply (6.4) to $s/2$ and $s$ on the right line $\Re(s)=c>1$, double the right-line contribution as in §6.2, and use (6.3). Thus the integral representation is invoked only where its hypothesis $\Re(z)>0$ holds. A real place contributes
+We also record why the $x$-integral in (6.4) may be interchanged with the contour. For smooth
+$F$, repeated integration by parts gives
+
+$$
+\int_{-\infty}^{\infty}(1+|t|)|\Phi_F(c+it)|\,dt<\infty.
+$$
+
+For $0<x\leq1$, the mean-value estimate for the exponential gives
+
+$$
+\frac{|e^{-x}-e^{-(c+it)x}|}{1-e^{-x}}
+\leq C_c(1+|t|),
+$$
+
+while for $x\geq1$ the same quotient is bounded by
+$C_c(e^{-x}+e^{-cx})$. These two majorants prove absolute Fubini after the numerator in (6.4)
+has been paired; the same estimates with $x/2$ apply to $\psi(s/2)$. If
+
+$$
+\mathcal I_c(H)=\frac1{2\pi i}\int_{c-i\infty}^{c+i\infty}\Phi_F(s)H(s)\,ds,
+$$
+
+then (6.3) gives
+
+$$
+\mathcal I_c(1)=1,
+\qquad
+\mathcal I_c(e^{-as})=e^{-a/2}F(a)\quad(a>0).
+\tag{6.4a}
+$$
+
+Consequently
+
+$$
+\begin{aligned}
+\mathcal I_c(\psi(s))
+&=-\gamma+R_{\mathbf C}(F),\\
+R_{\mathbf C}(F)
+&=\int_0^\infty\frac{e^{-x}-e^{-x/2}F(x)}{1-e^{-x}}\,dx\\
+&=\int_0^\infty\frac{1-F(x)}{2\sinh(x/2)}\,dx-2\log2,
+\end{aligned}
+\tag{6.4b}
+$$
+
+and, after the substitution $x=2u$,
+
+$$
+\begin{aligned}
+\mathcal I_c(\psi(s/2))
+&=-\gamma+R_{\mathbf R}(F),\\
+R_{\mathbf R}(F)
+&=\int_0^\infty
+\frac{2(e^{-2u}-e^{-u/2}F(u))}{1-e^{-2u}}\,du\\
+&=\int_0^\infty\frac{1-F(u)}{2\sinh(u/2)}\,du
++\int_0^\infty\frac{1-F(u)}{2\cosh(u/2)}\,du
+-3\log2-\frac\pi2.
+\end{aligned}
+\tag{6.4c}
+$$
+
+The last equalities are elementary kernel identities. In (6.4b), subtract the two integrands and
+integrate $1/(e^{x/2}+1)$ to obtain $2\log2$. In (6.4c), subtract the two displayed loss
+kernels and set $y=e^{-u/2}$. The remaining integral becomes
+
+$$
+-4\int_0^1\frac{y^2+y+1}{(1+y)(1+y^2)}\,dy
+=-3\log2-\frac\pi2.
+$$
+
+Here partial fractions give
+$1/(2(1+y))+(y+1)/(2(1+y^2))$. All differences are paired before integration at zero.
+
+Now apply (6.4b)--(6.4c) to the logarithmic derivatives
+
+$$
+\frac{\Gamma_{\mathbf R}'}{\Gamma_{\mathbf R}}(s)
+=-\frac12\log\pi+\frac12\psi(s/2),
+\qquad
+\frac{\Gamma_{\mathbf C}'}{\Gamma_{\mathbf C}}(s)
+=-\log(2\pi)+\psi(s).
+$$
+
+The right-line contribution is doubled as in §6.2 and then negated when the discriminant term is
+isolated. Thus (6.4b) says that one complex place contributes
+
+$$
+2\bigl(\gamma+\log(8\pi)\bigr)
+-2\int_0^\infty\frac{1-F(x)}{2\sinh(x/2)}\,dx,
+$$
+
+while (6.4c) says that one real place contributes
 
 $$
 \gamma+\log(8\pi)+\frac\pi2
 -\int_0^\infty\frac{1-F(x)}{2\sinh(x/2)}\,dx
--\int_0^\infty\frac{1-F(x)}{2\cosh(x/2)}\,dx,
-$$
-
-while one complex place contributes
-
-$$
-2\bigl(\gamma+\log(8\pi)\bigr)
--2\int_0^\infty\frac{1-F(x)}{2\sinh(x/2)}\,dx.
+-\int_0^\infty\frac{1-F(x)}{2\cosh(x/2)}\,dx.
 $$
 
 Since $n=r_1+2r_2$, summing gives exactly the first constant and the two archimedean integrals in (6.1). One check is
