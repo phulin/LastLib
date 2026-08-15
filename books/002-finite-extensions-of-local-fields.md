@@ -882,7 +882,10 @@ The global terminology therefore fits the local situation without modification.
 
 ### 5.3 The residue action and inertia
 
-The decomposition group acts on $B$ and preserves $\mathfrak m_L$, so it acts on $l$. This gives a homomorphism
+Return to the standing local setting: let $L/K$ be a finite Galois extension of complete
+discretely valued fields. The extended valuation is unique, so the decomposition group is the
+whole group $G=\operatorname{Gal}(L/K)$. It acts on $B$ and preserves $\mathfrak m_L$, hence it
+acts on $l$. This gives a homomorphism
 
 $$
 \rho:G\longrightarrow\operatorname{Aut}_k(l).
@@ -902,7 +905,9 @@ $$
 v_L(\sigma(x)-x)>0\text{ for all }x\in B.
 $$
 
-If the residue extension $l/k$ is separable, it is Galois and every $k$-automorphism of $l$ lifts to $L$. Therefore
+If the residue extension $l/k$ is separable, then normality of $L/K$ implies that $l/k$ is
+normal, as the proof below shows. Thus $l/k$ is Galois, and every $k$-automorphism of $l$ lifts
+to $L$. Therefore
 
 $$
 1\longrightarrow I(L/K)\longrightarrow G
@@ -915,7 +920,7 @@ $$
 |G/I|=f,\qquad |I|=e.
 $$
 
-**Proof of surjectivity.** Choose a primitive element $\bar\theta$ for the finite separable extension $l/k$, let $\bar g$ be its minimal polynomial, and choose a monic lift $g\in A[T]$. Hensel's lemma gives a root $\theta\in B$ reducing to $\bar\theta$. The polynomial $g$ is separable and, because $L/K$ is normal, all its roots lie in $L$. They are integral, and their residues are distinct by uniqueness of a Hensel lift of a simple root. Thus $\bar g$ splits in $l$, proving first that $l/k$ is normal and hence Galois.
+**Proof of surjectivity.** Choose a primitive element $\bar\theta$ for the finite separable extension $l/k$, let $\bar g$ be its minimal polynomial, and choose a monic lift $g\in A[T]$. Hensel's lemma gives a root $\theta\in B$ reducing to $\bar\theta$. Since $\bar g$ is irreducible, its monic lift $g$ is irreducible over $K$: a nontrivial factorization over $K$ could be taken monic over the integrally closed valuation ring $A$ and would reduce to a nontrivial factorization of $\bar g$. Moreover, separability of $\bar g$ implies that $g$ is separable. Because $L/K$ is normal and $g$ is the minimal polynomial of $\theta$, all roots of $g$ lie in $L$. They are integral, and their residues are distinct by uniqueness of a Hensel lift of a simple root. Thus $\bar g$ splits in $l$, proving first that $l/k$ is normal and hence Galois.
 
 For $\tau\in\operatorname{Gal}(l/k)$, the element $\tau(\bar\theta)$ is another simple root of $\bar g$, so it has a unique lift $\theta_\tau\in B$ satisfying $g(\theta_\tau)=0$. The assignment $\theta\mapsto\theta_\tau$ defines a $K$-embedding $K(\theta)\hookrightarrow L$. It extends to a $K$-embedding of $L$ into a normal closure, and normality of $L/K$ makes the image equal to $L$. The resulting element of $G$ induces $\tau$ on the residue generator and hence on all of $l$. This proves surjectivity. Exactness at $G$ is the definition of inertia, and $|G|=[L:K]=ef$ gives $|G/I|=f$ and $|I|=e$. $\square$
 
