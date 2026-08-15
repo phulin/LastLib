@@ -3570,7 +3570,11 @@ The dimension hypothesis on $B$ is automatic when $A\to B$ is injective, by the 
 
 The chapter closes by recording where each result is used.
 
-Section 4.1 stated Serre's criterion. Its proof is Theorem 14.26, together with Theorem 14.23 for the forward implication and Theorem 14.24 and Lemma 14.25 for the converse. The definition of $(S_2)$ used there is the definition adopted in Section 14.5, and Theorem 14.6 makes it independent of which maximal regular sequence is chosen to compute depth.
+Section 4.1 proved Serre's criterion in the codimension-two form needed by the intervening
+chapters. Theorem 14.26 rederives the general ring statement from the expanded depth calculus:
+Theorem 14.23 supplies the forward implication, while Theorem 14.24 and Lemma 14.25 supply the
+converse. Thus this final chapter is an independent expansion and not a forward dependency of
+Sections 4--13.
 
 Section 4.2 identified normal, regular, and discrete valuation rings in dimension one. That identification is used inside Theorem 14.26 and is not reproved here; Book 1, Theorem 4.1 is the source for the valuation-theoretic half.
 
