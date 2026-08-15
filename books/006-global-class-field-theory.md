@@ -605,7 +605,7 @@ $$
 
 We prove the calculation. First suppose (4.W6) holds. Since
 $a_W(n)^2=b_K^n$, its class has order at most two. If $v\notin S_0(K)$,
-one of the following three explicit $n$th roots exists:
+at least one of the following three explicit $n$th roots exists:
 
 $$
 \begin{array}{c|c}
