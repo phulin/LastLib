@@ -1531,6 +1531,18 @@ $$
 \simeq\mathcal Hom_X(\pi_*\mathcal O_Y,\omega_{X/S}). \tag{9.12c}
 $$
 
+Here concentration in ordinary $\mathcal Hom$ and its base change are consequences of the
+ambient resolutions, not formal properties of underived Hom. After embedding $X$ in
+$P=\mathbf P^N_S$, both $i_*\mathcal O_X$ and $i_*\pi_*\mathcal O_Y$ are $S$-flat coherent
+$\mathcal O_P$-modules. On a geometric fiber the second is Cohen--Macaulay of codimension
+$N-1$: finiteness identifies its support dimension and its depth with the depth on $Y_s$.
+The relative syzygy lemma therefore gives universally exact finite ambient resolutions of both
+modules, and the fiberwise acyclicity lemma concentrates both dual resolutions in degree $N-1$.
+Applying the strict currying identity (9.5a) to the finite algebra
+$\mathcal O_X\to\pi_*\mathcal O_Y$ identifies the second Ext sheaf with the right side of
+(9.12c). Because every resolution and every concentration statement remains exact after tensoring
+with an arbitrary $\mathcal O_S$-algebra, this identification proves the asserted base change.
+
 Evaluation at $1$ defines $\operatorname{Tr}_\pi$. In the projective-space model,
 $\operatorname{tr}_{f\circ\pi}$ extracts the ambient top coefficient after evaluation at $1$;
 this is exactly $\operatorname{tr}_f\circ R^1f_*(\operatorname{Tr}_\pi)$. For a tower of finite
