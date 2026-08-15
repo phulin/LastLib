@@ -5616,7 +5616,7 @@ cyclic-algebra argument shows that cyclic norm equations satisfy a local--global
 principle, and the failure beyond cyclic extensions identifies precisely where
 global arithmetic contains more than its separate completions.
 
-The invariant formalism retains the same coherence in cohomological degree two. Restriction multiplies local invariants by degree, corestriction preserves them and sums over branches, and the sum of all local invariants of a global class is zero. The filtered unit--divisor calculation and integral bar descent supply the compact-support trace and perfect pairing.
+The invariant formalism retains the same coherence in cohomological degree two. Restriction multiplies local invariants by degree, corestriction preserves them and sums over branches, and the sum of all local invariants of a global class is zero. The filtered unit--divisor calculation and integral bar descent supply the auxiliary truncated trace and the compact-degree-two/global-degree-one perfect pairing actually used for existence.
 
 Passing to all levels removes only the connected
 component of the idele class group and yields $G_K^{\mathrm{ab}}$. Passing to
