@@ -41,9 +41,12 @@
 8. [Resolving surface singularities](#8-resolving-surface-singularities)
    - [The resolution theorem in the required setting](#81-the-resolution-theorem-in-the-required-setting)
    - [Preparing the singular locus](#82-preparing-the-singular-locus)
-   - [A decreasing local invariant](#83-a-decreasing-local-invariant)
-   - [Termination](#84-termination)
-   - [Examples of the local procedure](#85-examples-of-the-local-procedure)
+   - [The differential trace in inseparable degree p](#83-the-differential-trace-in-inseparable-degree-p)
+   - [Quadratic transformations](#84-quadratic-transformations)
+   - [The remaining local resolution chain](#85-the-remaining-local-resolution-chain)
+   - [Why a three-entry local invariant is insufficient](#86-why-a-three-entry-local-invariant-is-insufficient)
+   - [Termination](#87-termination)
+   - [Examples of the local procedure](#88-examples-of-the-local-procedure)
 9. [Regular proper models](#9-regular-proper-models)
    - [Existence over excellent Dedekind bases](#91-existence-over-excellent-dedekind-bases)
    - [Keeping a prescribed good open](#92-keeping-a-prescribed-good-open)
@@ -597,7 +600,192 @@ is. It does not follow merely from excellence that a center constructed in $\wid
 $A$, nor that numerical inequalities proved after completion survive an approximation. Those are
 parts of a proof of SR2, not consequences of the preparation lemma.
 
-### 8.3 A decreasing local invariant
+### 8.3 The differential trace in inseparable degree $p$
+
+The boundedness argument used below must survive a finite purely inseparable extension. Ordinary
+field trace vanishes in that case, so we first construct the replacement on differential forms.
+
+Let $R$ be an $\mathbf F_p$-algebra, let $a\in R$, and put
+$T=R[x]/(x^p-a)$. As an $R$-module, $\Omega_{T/R}$ is free on
+$dx,x,dx,\ldots,x^{p-1}dx$. Define
+
+$$
+\tau_x:\Omega_{T/R}\longrightarrow\Omega_R,
+\qquad
+\tau_x(x^i dx)=
+\begin{cases}
+0,&i<p-1,\\
+da,&i=p-1.
+\end{cases}
+\tag{8.1}
+$$
+
+**Lemma 8.3 (coordinate independence).** If
+$R[x]/(x^p-a)\to R[y]/(y^p-b)$ is an $R$-algebra map, then
+$\tau_x=\tau_y\circ d$.
+
+**Proof.** Write the image of $x$ as
+$u=\lambda_0+\lambda_1y+\cdots+\lambda_{p-1}y^{p-1}$. The relation $u^p=a$ says
+
+$$
+a=\lambda_0^p+\lambda_1^pb+\cdots+\lambda_{p-1}^pb^{p-1}.
+\tag{8.2}
+$$
+
+For $i<p-1$, the coefficient of every $y^{mp-1}$ in $u^i(du/dy)$ is zero, since this
+polynomial is $(i+1)^{-1}d(u^{i+1})/dy$. Reduction by $y^p=b$ therefore gives
+$\tau_y(u^i,du)=0$. For $i=p-1$, perform the calculation over
+$\mathbf Z[b,\lambda_0,\ldots,\lambda_{p-1}]$ before reducing modulo $p$. The coefficients of
+$y^{mp-1}$ in $u^{p-1}du/dy=p^{-1}d(u^p)/dy$ reduce to
+
+$$
+\lambda_1^p+2\lambda_2^pb+\cdots+(p-1)\lambda_{p-1}^pb^{p-2}.
+$$
+
+Multiplying by $db$ gives $da$ by differentiating (8.2). These values agree with (8.1) on its
+$R$-basis. $\square$
+
+**Lemma 8.4 (trace on exterior powers).** If
+$\mathbf F_p\subseteq\Lambda\subseteq R\subseteq T$ and $T=R[x]/(x^p-a)$, there are canonical
+$R$-linear maps, for $q\ge1$,
+
+$$
+\tau:\Omega^q_{T/\Lambda}\longrightarrow\Omega^q_{R/\Lambda}
+$$
+
+which kill the image of $T\otimes_R\Omega^q_{R/\Lambda}$ and satisfy
+
+$$
+\tau(\eta_1\wedge\cdots\wedge\eta_{q-1}\wedge x^i dx)
+=\eta_1\wedge\cdots\wedge\eta_{q-1}\wedge\tau_x(x^i dx).
+$$
+
+**Proof.** The cotangent sequence has the presentation
+
+$$
+T\,d(x^p-a)\longrightarrow T\otimes_R\Omega_{R/\Lambda}
+\longrightarrow\Omega_{T/\Lambda}\longrightarrow T,dx\longrightarrow0.
+$$
+
+Its first arrow sends the displayed generator to $-da$. Quotient
+$\Omega_{R/\Lambda}$ by $R,da$, take the $(q-1)$-st exterior power, and tensor with
+$\Omega_{T/R}$. Wedging the resulting class with $\tau_x$ is independent of the chosen lifts,
+because every ambiguity is a multiple of $da$ and $da\wedge da=0$. Lemma 8.3 proves
+functoriality and hence canonicity. $\square$
+
+**Proposition 8.5 (trace on normal surfaces).** Let $Y\to X$ be finite between noetherian normal
+integral schemes of characteristic $p$, with purely inseparable function-field extension of
+degree $p$. If $X$ is of finite type over a base $S$, the generic trace extends uniquely to
+
+$$
+f_*\Omega^q_{Y/S}\longrightarrow(\Omega^q_{X/S})^{**},\qquad q\ge1.
+\tag{8.3}
+$$
+
+**Proof.** Both sides are coherent, and the target is reflexive. A map into a reflexive module on
+a normal scheme extends uniquely once it extends at every height-one point. At such a point the
+local ring of $X$ is a DVR. Its integral closure in the degree-$p$ extension is again a DVR and
+is either totally ramified or has residue degree $p$; in both cases it has the form
+$A[t]/(t^p-c)$, with $c$ respectively a uniformizer or a unit. Lemma 8.4 supplies the integral
+map there. Intersecting the height-one extensions inside the generic reflexive module gives
+(8.3). $\square$
+
+### 8.4 Quadratic transformations
+
+Let $(A,\mathfrak m,k)$ be a two-dimensional regular local ring and let
+$b:X=\operatorname{Bl}_{\mathfrak m}\operatorname{Spec}A\to\operatorname{Spec}A$.
+
+**Lemma 8.6 (geometry of a quadratic transform).** The scheme $X$ is regular and integral, its
+exceptional divisor is $E\simeq\mathbf P^1_k$, and
+
+$$
+\mathcal O_X(-E)=\mathcal O_X(1),\qquad
+\mathcal O_E(E)=\mathcal O_{\mathbf P^1}(-1).
+\tag{8.4}
+$$
+
+**Proof.** Choose regular parameters $u,v$. The Rees algebra is generated by $u,v$ in degree
+one, so $X$ is the closed subscheme $uV=vU$ of $\mathbf P^1_A$. Its two charts are
+$A[v/u]$ and $A[u/v]$. On the first, $u$ and $v/u$ are regular parameters at every closed point
+above $\mathfrak m$; the second is identical. Tensoring the Rees algebra with $k$ gives
+$\operatorname{gr}_{\mathfrak m}A=k[\bar u,\bar v]$, hence $E=\mathbf P^1_k$. The tautological
+invertible ideal is $\mathfrak m\mathcal O_X=\mathcal O_X(1)=\mathcal O_X(-E)$, whose
+restriction is $\mathcal O_E(1)$. $\square$
+
+**Lemma 8.7 (cohomology of a quadratic transform).** For every quasi-coherent $\mathcal F$ on
+$X$, $H^i(X,\mathcal F)=0$ for $i\ge2$. Moreover
+
+$$
+H^1(X,\mathcal O_X(n))=0\quad(n\ge-1),
+\qquad
+H^0(X,\mathcal O_X(n))=\mathfrak m^{\max(0,n)},
+\tag{8.5}
+$$
+
+and for $n<0$,
+
+$$
+\operatorname{length}_A H^1(X,\mathcal O_X(n))=\frac{(-n)(-n-1)}2.
+\tag{8.6}
+$$
+
+**Proof.** The two affine charts above have affine intersection, so their Cech complex has only
+degrees zero and one. Relative ampleness gives $H^1(X,\mathcal O_X(N))=0$ for $N\gg0$.
+Use successively
+
+$$
+0\to\mathcal O_X(n+1)\to\mathcal O_X(n)\to\mathcal O_E(n)\to0,
+$$
+
+with $H^1(\mathbf P^1,\mathcal O(d))=0$ for $d\ge-1$. Descending induction yields (8.5).
+For negative $n$, the same sequences add the dimensions
+$1+2+\cdots+(-n-1)$, proving (8.6). Global sections of $\mathcal O_X(n)$ for $n\ge0$ are the
+degree-$n$ elements of the Rees algebra, namely $\mathfrak m^n$; for $n<0$, normality and the
+codimension-two complement give $A$. $\square$
+
+**Lemma 8.8 (factorization through point blowups).** Let $T$ be a regular integral surface and
+$Z\to T$ a projective birational morphism. There is a sequence of blowups at closed regular
+points $T_r\to\cdots\to T_0=T$ and a morphism $T_r\to Z$ over $T$.
+
+**Proof.** Write $Z$ as the blowup of a coherent fractional ideal after replacing a relatively
+ample bundle by a generated power. Remove its invertible height-one part. Locally the remaining
+ideal is primary to a closed point. Blow up that point and divide by the largest exceptional
+power. If the transform is not invertible, repeat at its finitely many base points. Termination is
+measured by two general members $a,b$ of a reduction of the ideal: on a point blowup,
+
+$$
+\operatorname{length}A/(a,b)
+=\operatorname{ord}(a)\operatorname{ord}(b)[k(x):k]
++\sum_{x'\mapsto x}\operatorname{length}\mathcal O_{T',x'}/(a',b').
+$$
+
+This follows by filtering the two blowup charts by the exceptional parameter. Every unresolved
+base point leaves a positive first term, so the sum of residual lengths strictly decreases.
+Over a finite residue field, use the product of all closed base points; the residue degrees in the
+formula give the same decrease. Eventually the ideal is invertible, and the universal property of
+the blowup supplies $T_r\to Z$. $\square$
+
+**Lemma 8.9 (normalized-blowup domination).** Let $A$ be a two-dimensional normal noetherian
+local domain with finite normalization after every finite-type modification. Every proper
+birational modification of $\operatorname{Spec}A$ is dominated by a finite composite of
+normalized blowups in ideals supported at the closed point.
+
+**Proof.** Chow's lemma gives a projective modification dominating the given one. A projective
+birational morphism is the blowup of a fractional ideal after taking a generated relatively ample
+power. Replace its Rees algebra by its finite graded normalization. The resulting normalized
+blowup dominates the projective modification. Repeating on the finitely many affine charts where
+the comparison is not yet a morphism decreases the base-ideal colength exactly as in Lemma 8.8;
+no new codimension-one center occurs because both schemes are normal and already agree there.
+$\square$
+
+### 8.5 The remaining local resolution chain
+
+The trace and quadratic-transformation results above are the first inputs to the resolution
+proof. We next construct the duality and vanishing package, prove boundedness under finite
+extensions, pass through rational singularities and rational double points, and lift normalized
+blowups from completions. Only after those steps will Theorem 8.1 be discharged.
+
+### 8.6 Why a three-entry local invariant is insufficient
 
 After Lemma 8.2, the missing local assertion can be stated without global language. For every
 singular excellent normal two-dimensional local domain $(A,\mathfrak m)$, one must construct a
@@ -625,7 +813,7 @@ a descended center, and decreasing the value semigroup on one branch does not co
 a normalized blowup. Accordingly this volume does not assert the former ``surface decrease lemma'':
 that lemma was the unresolved theorem rather than a proof of it. SR2 is the exact replacement.
 
-### 8.4 Termination
+### 8.7 Termination
 
 Assume SR2, and let $X$ be a normal arithmetic surface produced by Chapter 6. Lemma 8.2 shows that
 its singular locus is a finite set of closed points, but does not construct a modification. Apply
@@ -639,7 +827,7 @@ to be supplied by well-ordering a proposed invariant: termination is part of the
 Every later instruction to ``resolve'' a surface means precisely this conditional application of
 SR2.
 
-### 8.5 Examples of the local procedure
+### 8.8 Examples of the local procedure
 
 The following calculations verify particular resolutions directly. They illustrate why blowups are
 the right modifications, but they do not prove SR2 for an arbitrary excellent surface singularity.
