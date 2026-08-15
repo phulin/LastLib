@@ -1111,78 +1111,103 @@ ampleness. The input is the following proper-curve complex lemma.
 > projective $A$-modules which computes $R\Gamma(Z_B,\mathcal F_B)$ after every base change
 > $A\to B$.
 
-We include the proof without assuming $Z$ projective. There are three steps.
+We include the proof without assuming $Z$ projective. Four ingredients are separated so that
+neither formal functions nor nonflat base change is hidden in a kernel--cokernel induction.
 
-First, relative Chow's lemma is available by an explicit graph-and-blowup construction. Choose
-a finite affine cover, clear the finitely many coordinate functions on its overlaps, and blow
-up the product of the resulting boundary ideals. On the strict transform the cleared
-coordinates define an immersion into a product of projective spaces, while the exceptional
-ideal is invertible. Concretely the blowup used here is
-$\operatorname{Proj}_Z\bigoplus_{n\geq0}\mathcal I^n$; for
-$I=(f_0,\ldots,f_r)$ its standard charts are
-$A[I/f_i]\subset A_{f_i}$, so it is projective and is an isomorphism where $I$ is invertible.
-The strict transform is closed in this blowup. Thus one obtains $p:Z'\to Z$ which is
-projective, is an isomorphism over a schematically dense open $U$, and has $Z'$ quasi-projective
-over $A$. Since $Z$ is proper over $A$, so is $Z'$; a proper quasi-projective morphism is
-projective, because the quasi-projective immersion into projective space is proper and hence
-closed. Therefore $Z'$ is genuinely projective over the original base $A$, not merely over
-$Z$. This proof uses neither a Hilbert scheme nor duality.
+**(i) Proper finiteness.** Relative Chow's lemma follows from the graph-and-blowup construction.
+Choose a finite affine cover, clear the finitely many coordinate functions on overlaps, and blow
+up the product of the boundary ideals. The strict transform $p:Z'\to Z$ is projective, is an
+isomorphism over a schematically dense open $U$, and is quasi-projective over $A$. Since it is
+also proper over $A$, it is projective over $A$.
 
-Second, noetherian induction on the complement of $U$ proves the **proper finiteness and
-derived-base-change lemma**: for every bounded-above coherent complex $G$ on a proper
-finitely presented $A$-scheme, $R\Gamma(G)$ is pseudo-coherent over $A$, and
+We prove by noetherian induction on a closed support $T\subseteq Z$ that the cohomology of every
+coherent sheaf supported on $T$ is finite over $A$. Apply the Chow construction to the reduced
+closed scheme $T$ itself, so its projective modification is an isomorphism over an open meeting
+every generic point of $T$. On the projective modification finiteness is the graded-resolution
+theorem of Book 8. For a coherent $G$ supported on $T$, extension of coherent modules across a
+quasi-compact open supplies a coherent $G'$ upstairs together with a map $G\to p_*G'$ which is
+the identity on that open (take the coherent closure of the graph of the identity). The kernel,
+cokernel, and $R^jp_*G'$ for $j>0$ are coherent and supported on a proper closed subset of $T$.
+A coherent sheaf supported there is killed by a power of its ideal and therefore has a finite
+filtration by pushforwards of coherent sheaves on the reduced closed subset. The two long exact
+sequences and the Leray spectral sequence reduce finiteness to strictly smaller supports. This
+is a genuine induction in the noetherian topological space and terminates. Applying the result
+to the cohomology sheaves of a bounded coherent complex gives proper finiteness for such
+complexes. In particular, $R\Gamma(Z,G)$ lies in $D^b_{\mathrm{finite}}(A)$ once the
+cohomological-dimension bound in (iii) is known, and hence is pseudo-coherent: resolve its finite
+cohomology modules successively by finite free modules.
 
-$$
-B\otimes_A^LR\Gamma(Z,G)
-\longrightarrow R\Gamma(Z_B,Lg'^*G) \tag{9.8a}
-$$
-
-is an isomorphism whenever $G$ has finite Tor-amplitude over $A$. Here are the induction
-maps. On $Z'$ the assertion follows from the graded free resolutions and monomial Čech
-complexes of Book 8. Choose a coherent $G'$ on $Z'$ agreeing with $p^*G$ over $U$. The
-kernel and cokernel of $G\to p_*G'$ and every $R^qp_*G'$ for $q>0$ are supported on
-$Z\setminus U$. Filter these coherent sheaves by pushforwards from their irreducible supports.
-The Leray spectral sequence and the two kernel--cokernel exact sequences reduce both finiteness
-and (9.8a) to those smaller supports. Repeating Chow's construction there terminates by
-noetherian induction. All pullbacks in this argument are derived; consequently tensoring the
-graded resolutions term by term proves the base-change maps before any flatness is imposed.
-When the original $G$ has finite Tor-amplitude, its derived pullback is the desired one and the
-inductively assembled map is (9.8a).
-
-The same induction proves the theorem on formal functions: for a noetherian adic quotient
-$A/I^n$, the completion of each coherent $R^qg_*G$ is the inverse limit of
-$H^q(Z_{A/I^n},G_{A/I^n})$. In the projective case this is termwise $I$-adic completion of
-the finite Čech complex; kernels and cokernels supported on $Z\setminus U$ pass through the
-inverse limit because their transition maps are surjective, and induction gives the general
-case.
-
-Third, take $G=\mathcal F$. It has Tor-amplitude zero over $A$. The projection formula,
-proved on the same projective Čech complexes and then by the preceding induction, gives first
-for every finite $A$-module $M$
+**(ii) Formal functions, with the pro-step included.** Let $I\subset A$ and $G$ be coherent.
+Put $G_n=I^nG$. The same Chow induction, applied to the Rees sheaf
+$\bigoplus_{n\geq0}G_n$, proves that
 
 $$
-R\Gamma(Z,\mathcal F)\otimes_A^LM
-\simeq R\Gamma(Z,\mathcal F\otimes_A M). \tag{9.8b}
+\bigoplus_{n\geq0}H^q(Z,G_n)
 $$
 
-A proper morphism with fibers of dimension at most one has quasi-coherent cohomological
-dimension at most one. Here is a proof which does not assume that either $Z$ or the Chow
-modification has one-dimensional fibers. Localize $A$ at a point and complete it. Formal
-functions identifies the completion of $R^qg_*G$ with the inverse limit of the cohomology on
-the infinitesimal fibers. Each infinitesimal fiber has the same one-dimensional underlying
-noetherian topological space as the closed fiber. Cohomology of a quasi-coherent sheaf on such
-a space vanishes above degree one: remove an affine dense open from each one-dimensional
-component, use the affine-cover sequence, and note that the complement is zero-dimensional
-and affine. Thus every term of the inverse limit is zero for $q>1$. Coherence and faithful
-flatness of completion give $R^qg_*G=0$. Hence the right side of (9.8b) has cohomology only in
-degrees $0,1$. Thus the pseudo-coherent complex
-$R\Gamma(Z,\mathcal F)$ has Tor-amplitude $[0,1]$. A pseudo-coherent complex of finite
-Tor-amplitude is perfect: truncate a finite free resolution below the amplitude and use the
-fiberwise projectivity criterion to make the final syzygy finite projective. It is therefore
-represented locally by a two-term finite projective complex, and (9.8a) says that this complex
-computes every base change. Tensor product and quasi-coherent cohomology commute with filtered
-colimits, so (9.8b), and hence the amplitude bound, extends from finite modules to arbitrary
-$A$-modules. This proves the proper-curve complex lemma.
+is a finite graded module over the noetherian Rees algebra
+$\bigoplus_{n\geq0}I^n$. In the projective case this is obtained by a finite graded resolution
+and the homogeneous Čech complex; kernels, cokernels, and higher direct images in the Chow
+induction are finite graded modules, so the assertion passes through the preceding dévissage.
+Finite generation gives the Artin--Rees bounds: for some $c$, multiplication by
+$I^{n-c}$ generates the degree-$n$ terms for every $n\geq c$. Apply this simultaneously to the
+cycles and boundaries in a finite truncation computing degrees $q-1,q,q+1$. The resulting maps
+of inverse systems show that
+
+$$
+\{H^q(Z,G)/I^nH^q(Z,G)\}_n
+\longrightarrow
+\{H^q(Z,G/I^nG)\}_n \tag{9.8a}
+$$
+
+has pro-zero kernel and cokernel: after increasing an index by the fixed Artin--Rees constant,
+both maps become zero. This is the point that cannot be replaced by a claim that the cohomology
+transition maps are surjective; in general they are not. The system on the left is surjective,
+so it is Mittag--Leffler, and the pro-isomorphism gives
+
+$$
+H^q(Z,G)^\wedge_I\simeq
+\varprojlim_n H^q(Z,G/I^nG). \tag{9.8b}
+$$
+
+This is the theorem on formal functions in exactly the form used below.
+
+**(iii) Cohomological dimension one.** Localize $A$ at a point and complete it. Every
+infinitesimal fiber has the same noetherian topological space as the closed fiber, of dimension at
+most one. A coherent sheaf on such a space has no cohomology above degree one: remove one affine
+dense open from each one-dimensional component and use the Čech sequence with the
+zero-dimensional affine complement. Formula (9.8b) therefore makes the completion of
+$R^qg_*G$ zero for $q>1$. Proper finiteness and faithful flatness of completion imply
+$R^qg_*G=0$. Every quasi-coherent sheaf on the noetherian $Z$ is a filtered union of coherent
+subsheaves, and cohomology for a quasi-compact separated scheme commutes with filtered colimits
+by a finite affine Čech complex. Thus $g$ has quasi-coherent cohomological dimension at most
+one, not just coherent cohomological dimension at closed fibers.
+
+**(iv) Derived base change and perfectness.** Choose a finite affine cover of $Z$. Because $Z$
+is separated, all finite intersections are affine. Its alternating Čech complex
+$C^\bullet(\mathcal F)$ computes $R\Gamma(Z,\mathcal F)$. Each term is $A$-flat: on an affine
+intersection it is the module corresponding to the $A$-flat sheaf $\mathcal F$. Hence for every
+$A$-algebra $B$ there is an equality of complexes
+
+$$
+C^\bullet(\mathcal F)\otimes_A B
+=C^\bullet(\mathcal F_B),
+$$
+
+and consequently the canonical map
+
+$$
+B\otimes_A^LR\Gamma(Z,\mathcal F)
+\xrightarrow{\sim}R\Gamma(Z_B,\mathcal F_B) \tag{9.8c}
+$$
+
+is an isomorphism. More generally, tensoring the Čech complex by an arbitrary $A$-module $M$
+computes $R\Gamma(Z,\mathcal F\otimes_A M)$. Part (iii) places its cohomology in degrees
+$0,1$. Thus the pseudo-coherent complex $R\Gamma(Z,\mathcal F)$ has Tor-amplitude $[0,1]$.
+Truncating a finite free resolution below that interval makes the last syzygy finitely presented
+and flat, hence finite projective; the complex is perfect and is locally represented by two
+finite projective modules. Formula (9.8c) says that this same complex computes every base
+change. This proves the proper-curve complex lemma.
 
 Choose $n$ so that $L_{\bar s}=\mathcal O_{X_{\bar s}}(nD)$ is very ample and
 $H^1(X_{\bar s},L_{\bar s})=0$. Apply the proper-curve complex lemma to
