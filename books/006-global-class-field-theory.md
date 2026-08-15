@@ -1621,64 +1621,85 @@ B_{S,n}=\ker\left(
 \right),                                                   \tag{4.F4d}
 $$
 
-by (4.I9h). Here is the Brauer block, including its differential. Write
+by (4.I9h). Equations (4.F4a) and (4.F4d), together with the Kummer
+sequence, give finite presentations of the three groups
 
 $$
-B_{S,n}=\bigoplus_{j=1}^t\mathbf Z/e_j\mathbf Z\,\beta_j,
-\qquad e_j\mid n.                                       \tag{4.F4j}
+H^q_{S,n}=H^q(G_{F,S},\mu_n),\qquad 0\le q\le2.       \tag{4.F4j}
 $$
 
-Choose a finite quotient $Q_T$ of $G_{F,S}$ through which representatives of
-the finitely many $\beta_j$ factor, normalized inhomogeneous cocycles
-$z_j\in Z^2(Q_T,\mu_n)$ representing them, and normalized cochains
-$h_j\in C^1(Q_T,\mu_n)$ satisfying
+For degree one, take $T$ large enough to contain the supports of a finite set
+of generators and relations; this is possible because (4.2) makes the group
+finite. In degree two the Kummer sequence is the exact row
 
 $$
-dh_j=e_jz_j.                                             \tag{4.F4k}
+0\longrightarrow \operatorname {Cl}(\mathcal O_{F,S})/n
+\longrightarrow H^2_{S,n}\longrightarrow B_{S,n}\longrightarrow0.   \tag{4.F4j'}
 $$
 
-Such $h_j$ exist because $e_j\beta_j=0$; after replacing $Q_T$ by the finite
-quotient through which the finitely many values of the chosen cochains
-factor, (4.F4k) already holds on $Q_T$. Put
+Choose lifts in $H^2_{S,n}$ of generators of $B_{S,n}$. Their order
+relations land in the already presented class-group term; adjoining those
+relation vectors gives a finite presentation of the actual extension
+(4.F4j'), without declaring it a direct sum. These presentations will now
+be realized by an actual cochain map. We use the following elementary
+cellular lemma.
+
+**Cellular realization lemma.** Let $C^\bullet$ be a cochain complex of
+abelian groups for which $H^q(C)$ is finitely generated for $0\le q\le d$.
+For each $q$, choose a finite free presentation
 
 $$
-R_B=\bigoplus_j\mathbf Zr_j,qquad
-P_B=\bigoplus_j\mathbf Zp_j,qquad
-d_B(r_j)=e_jp_j.                                        \tag{4.F4l}
+0\longrightarrow R_q\xrightarrow{\rho_q}P_q
+\longrightarrow H^q(C)\longrightarrow0.                    \tag{4.F4k}
 $$
 
-Place $R_B,P_B$ in degrees $1,2$. The map
-$r_j\mapsto h_j$, $p_j\mapsto z_j$ is a cochain map by (4.F4k), and
-$H^1([R_B\to P_B])=0$, $H^2([R_B\to P_B])=B_{S,n}$.
-Define $\mathcal G_{S,T}(\mu_n)$ to be (4.F4) with this two-term block
-adjoined in degrees $1,2$; its terms and differentials are
+There is a bounded finite free complex
 
 $$
-\begin{aligned}
-\mathcal G^0&=F_{S,T}^{\times},\\
-\mathcal G^1&=D_{S,T}\oplus F_{S,T}^{\times}\oplus R_B,\\
-\mathcal G^2&=D_{S,T}\oplus P_B,\\
-d^0(a)&=(\operatorname {div}_{S,T}(a),a^n,0),\\
-d^1(D,b,r)&=(nD-\operatorname {div}_{S,T}(b),d_Br).
-                                                               \tag{4.F4m}
-\end{aligned}
+\mathcal P^m=\bigoplus_{q=0}^d
+\bigl(P_q[m=q]\oplus R_q[m=q-1]\bigr),
+\qquad d_{\mathcal P}|R_q=\rho_q,                       \tag{4.F4l}
 $$
 
-Thus $d^1d^0=0$ visibly. Mapping the first summand by Kummer cochains and
-the Brauer block by (4.F4k) gives
+and a cochain map $\mathcal P^\bullet\to C^\bullet$ inducing the
+chosen presentations on cohomology.
+
+Indeed, because $P_q$ is free, lift its map to cohomology to a homomorphism
+$s_q:P_q\to Z^q(C)$. The composite $s_q\rho_q$ lands in $B^q(C)$.
+Because $R_q$ is free, lift it through
+$d:C^{q-1}\twoheadrightarrow B^q(C)$ to
+$h_q:R_q\to C^{q-1}$. Sending the $P_q$-cell by $s_q$ and the
+$R_q$-cell by $h_q$ is a cochain map because
 
 $$
-\mathcal G_{S,T}(\mu_n)\longrightarrow
-\tau_{\le2}C^\bullet(Q_T,\mu_n).                         \tag{4.F4n}
+d h_q=s_q\rho_q.                                      \tag{4.F4m}
 $$
 
-The kernel and cokernel calculation in (4.F4a), followed by (4.I9h), says
-that (4.F4n) is a quasi-isomorphism in degrees $0,1,2$. If
-$z'_j=z_j+dk_j$ and $h'_j=h_j+e_jk_j+d\ell_j$, the assignments
-$p_j\mapsto k_j$, $r_j\mapsto\ell_j$ give the cochain homotopy between the
-two choices. This proves choice-independence without calling two
-cohomologous cocycles literally equal. It also supplies the full
-$S$-unit, $S$-class, and Brauer terms without first killing the class group.
+The summand $[R_q\to P_q]$ has cohomology $H^q(C)$ in degree $q$
+and zero elsewhere, so the map is a quasi-isomorphism in the displayed
+range. This proves the lemma; it does not infer a cochain map from an
+isomorphism of cohomology groups.
+
+Apply the lemma to the good truncation of
+$C^\bullet(G_{F,S},\mu_n)$ in degrees $0,1,2$, using the arithmetic
+presentations (4.F4a), (4.F4d), (4.F4j'), and Smith presentations of the
+resulting finite groups. Denote the resulting complex by
+$\mathcal P_{S,T}(\mu_n)$.
+The construction gives a specified cochain map
+
+$$
+\mathcal P_{S,T}(\mu_n)\longrightarrow
+\tau_{\le2}C^\bullet(G_{F,S},\mu_n)                  \tag{4.F4n}
+$$
+
+which is a quasi-isomorphism in degrees $0,1,2$. Only finitely many cocycles
+and boundary primitives occur. They are continuous with finite values, so
+they factor through one finite quotient $Q_T$ of $G_{F,S}$; equality
+(4.F4m) continues to hold on that quotient because inflation of cochains is
+injective. Thus (4.F4n) is a genuine finite-level cochain construction.
+The unit, divisor, class-group, and Brauer calculations specify its
+cohomology presentations; no nonhomomorphic choice of an $n$-th root on
+$F_{S,T}^\times$ is called a map of complexes.
 
 The local truncation must be made simultaneously on a module and on its
 dual. An unspecified ``sufficiently deep'' integer does not do this: the
@@ -1770,9 +1791,9 @@ and applying $(Q/R)^\vee=R^\perp/Q^\perp$ gives (4.F4f), including layers
 where an $n$th root lies in a shallower unit group.
 
 We now define the finite localization cone that will be compared with
-(4.F4m). Enlarge $Q_T$ so that the finitely many Kummer cochains used in
-(4.F4n), their local restrictions, and the cochains $h_j,z_j$ all factor
-through it. For $q\geq0$ put
+$\mathcal P_{S,T}(\mu_n)$. Enlarge $Q_T$ so that the finitely many cellular
+cocycles and boundary primitives used in (4.F4n), together with their local
+restrictions, all factor through it. For $q\geq0$ put
 
 $$
 C_T^q(M)=\operatorname {Map}(Q_T^q,M),qquad
@@ -1846,7 +1867,7 @@ roots of unity. The local valuation block pairs with unramified characters,
 the residue block with tame characters, and every wild successive quotient
 is the isomorphism (4.F4f), with its coordinate realization (4.F4i).
 
-Finally the Brauer presentation (4.F4l) is paired with the last invariant
+Finally the degree-two presentation chosen in (4.F4k) is paired with the last invariant
 coordinate. Exactness of (4.I9h) on $n$-torsion says explicitly that
 $\ker(\sum\operatorname {inv}_v)=B_{S,n}$ and that its annihilator is the
 cokernel of the transposed invariant row. Thus this last square has the same
