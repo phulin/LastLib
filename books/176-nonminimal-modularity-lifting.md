@@ -3278,7 +3278,7 @@ higher permutohedral boundaries. Equality of the composites in the derived categ
 choose those fillers.
 
 The complete two-face, braid, and higher-filler system is the iterated-switch
-Beck--Chevalley datum $({\rm IBC}_P)$ used below. Book 14, Sections 11.1 and 13.3 proves
+Beck--Chevalley datum $({\rm IBC}_P)$ used below. Book 14, Sections 11.1 and 12.3 proves
 functoriality under pasting and the formal derived comparison once the cartesian squares and
 their higher base-change maps have been supplied. Books 22 and 122 give the individual
 coordinate objects, and Book 140 gives conditional coordinate switches. The application

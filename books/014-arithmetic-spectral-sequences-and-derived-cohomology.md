@@ -18,8 +18,10 @@
   - [3.2 K-injective complexes](#32-k-injective-complexes)
   - [3.3 K-flat complexes](#33-k-flat-complexes)
   - [3.4 Existence and uniqueness of replacements](#34-existence-and-uniqueness-of-replacements)
-  - [3.5 Derived functors and acyclicity criteria](#35-derived-functors-and-acyclicity-criteria)
-  - [3.6 A replacement checklist](#36-a-replacement-checklist)
+  - [3.5 K-flat replacement of an unbounded complex](#35-k-flat-replacement-of-an-unbounded-complex)
+  - [3.6 K-injective replacement and homotopy limits](#36-k-injective-replacement-and-homotopy-limits)
+  - [3.7 Derived functors and acyclicity criteria](#37-derived-functors-and-acyclicity-criteria)
+  - [3.8 A replacement checklist](#38-a-replacement-checklist)
 - [4. The three derived operations](#4-the-three-derived-operations)
   - [4.1 Derived global sections](#41-derived-global-sections)
   - [4.2 Derived tensor product](#42-derived-tensor-product)
@@ -99,9 +101,9 @@ The one nonformal input we take from this axiomatics is Grothendieck's theorem t
 
 **Enough injectives in a Grothendieck abelian category.** Every Grothendieck abelian category $\mathcal A$ has enough injectives: every object of $\mathcal A$ admits a monomorphism into an injective object.
 
-This is MATHLIB background, not something we reprove. The formalization is `Mathlib/CategoryTheory/Abelian/GrothendieckCategory/EnoughInjectives.lean`, which establishes the `EnoughInjectives` instance for a Grothendieck abelian category. Everything in Chapter 3 that resolves an object or a bounded-below complex injectively rests on that statement, and on nothing further about the site.
+This belongs to the standard theory of Grothendieck categories and is not reproved here. Everything in Chapter 3 that resolves an object or a bounded-below complex injectively rests on that statement, and on nothing further about the site.
 
-_Commentary on the argument._ The Mathlib proof runs through lifting properties rather than through a hand-built transfinite tower, and it is worth recording its shape once, since the same small-object mechanism reappears whenever a replacement has to be produced. Injectivity is first characterized by a lifting property: an object $I$ is injective exactly when $I\to0$ has the right lifting property with respect to all monomorphisms. The technical heart is that this apparently unbounded test class can be replaced by a set. If $G$ is a generator of $\mathcal A$, then a morphism has the right lifting property with respect to the inclusions of subobjects of $G$ if and only if it has it with respect to every monomorphism. One may therefore apply the small object argument to the set of inclusions of subobjects of $G$. Factoring $X\to0$ through it yields $X\to I\to0$ in which $I\to0$ has the required right lifting properties, hence $I$ is injective, and in which $X\to I$ is a transfinite composition of monomorphisms, hence itself a monomorphism because filtered colimits are exact. That last step is where the AB5 axiom is genuinely used, and it is the step a naive stationarity argument tends to leave unexamined.
+_Commentary on the argument._ The proof runs through lifting properties rather than through a hand-built transfinite tower, and it is worth recording its shape once, since the same small-object mechanism reappears whenever a replacement has to be produced. Injectivity is first characterized by a lifting property: an object $I$ is injective exactly when $I\to0$ has the right lifting property with respect to all monomorphisms. The technical heart is that this apparently unbounded test class can be replaced by a set. If $G$ is a generator of $\mathcal A$, then a morphism has the right lifting property with respect to the inclusions of subobjects of $G$ if and only if it has it with respect to every monomorphism. One may therefore apply the small object argument to the set of inclusions of subobjects of $G$. Factoring $X\to0$ through it yields $X\to I\to0$ in which $I\to0$ has the required right lifting properties, hence $I$ is injective, and in which $X\to I$ is a transfinite composition of monomorphisms, hence itself a monomorphism because filtered colimits are exact. That last step is where the AB5 axiom is genuinely used, and it is the step a naive stationarity argument tends to leave unexamined.
 
 We work on a ringed site $(X,\mathcal O_X)$ with category $\operatorname{Mod}(X)$ of sheaves of $\mathcal O_X$-modules. An **arithmetic sheaf category** in this book means one of the following: $\operatorname{Mod}(X)$; modules over a sheaf of algebras on $X$; discrete sheaves with an action of a profinite group; or the ambient abelian category of inverse systems of such sheaves when completeness is imposed explicitly on the objects. We do not silently replace that ambient category by a full subcategory of complete objects, which need not be abelian. Nothing about the topology beyond the stated exactness and acyclicity hypotheses is silently used.
 
@@ -315,13 +317,13 @@ A useful counterexample explains the letter K. A termwise flat unbounded complex
 
 ### 3.4 Existence and uniqueness of replacements
 
-For the unbounded theory we use the following precise hypothesis. It separates the formal arguments in this book from the existence of the particular replacements required by a chosen sheaf category.
+A derived operation is only as strong as the supply of replacements that computes it, so before using one we must produce it. Three existence questions arise, and they are genuinely different from one another. Right-derived operations ask for K-injective replacements $K\to I$. Derived tensor products ask for K-flat replacements $P\to K$. The sheaf-valued internal Hom asks for more than either, because $\mathcal Hom(A,I)$ records morphisms over every object of the site at once, and the acyclicity of a complex of global morphisms says nothing about local ones.
 
-**Replacement hypothesis.** Whenever an unbounded right-derived operation is used, every complex in the Grothendieck abelian category under consideration admits a quasi-isomorphism $K\to I$ with $I$ K-injective. Whenever unbounded derived tensor is used in a module or sheaf-module category, every complex admits a quasi-isomorphism $P\to K$ with $P$ K-flat. For sheaf-valued internal Hom we additionally require an internal K-injective replacement: $L\to I$ such that $\mathcal Hom(A,I)$ is acyclic for every acyclic complex $A$, and the same remains true after restriction to every object of the site.
+This section answers all three questions for bounded-below complexes, which is what the Cartan--Eilenberg construction gives, and it isolates the local refinement that internal Hom requires. Sections 3.5 and 3.6 then pass to unbounded complexes, where the two sides of the theory diverge. On the flat side, sheafification manufactures free objects with a lifting property and K-flatness survives the filtered colimits out of which an unbounded complex is built; unbounded K-flat replacements exist with no restriction whatever. On the injective side there is no dual of sheafification, an unbounded complex is assembled from its truncations by an inverse limit rather than a colimit, and the construction goes through a homotopy limit whose cohomology is controlled exactly when countable products are exact.
 
-It is worth recording how much of this hypothesis is already discharged by MATHLIB, because the bounded-below and the unbounded halves stand on very different ground. The notion of a K-injective cochain complex and its basic theory are formalized in `Mathlib/Algebra/Homology/HomotopyCategory/KInjective.lean`, with exactly the definition used in Section 3.2 — a complex $L$ is K-injective when every morphism $K\to L$ out of an acyclic complex is homotopic to zero — together with the theorem that a bounded-below complex of injective objects is K-injective. The lifting theorem of Section 3.2 is formalized in `Mathlib/Algebra/Homology/DerivedCategory/KInjective.lean`, which shows that for K-injective $L$ the localization functor induces a bijection from homotopy classes of morphisms into $L$ to morphisms in the derived category, and deduces that a morphism between K-injective complexes is a quasi-isomorphism if and only if it is a homotopy equivalence. Finally, `Mathlib/Algebra/Homology/ModelCategory/Injective.lean` constructs, over any abelian category with enough injectives, the injective model structure on the category of bounded-below cochain complexes, in which the cofibrations are the monomorphisms, the weak equivalences are the quasi-isomorphisms, and the fibrations are the degreewise epimorphisms with injective kernel; its factorization axiom supplies bounded-below K-injective replacements directly. Consequently the bounded-below half of the replacement hypothesis is not a hypothesis at all in the situations of this book: it is the Cartan--Eilenberg construction proved below, and it is Mathlib-backed. What remains genuinely hypothetical is the unbounded Spaltenstein statement — K-injective replacement for arbitrary unbounded complexes, and its K-flat counterpart — which is not yet available and which we therefore continue to carry as the named standing hypothesis above.
+Throughout, $\mathcal A$ is a Grothendieck abelian category, so injective objects are plentiful by Section 1.2.
 
-We now prove the construction in the bounded directions actually used most often. The ingredient is the Cartan--Eilenberg construction. For every degree $n$ of a bounded-below complex $K$, consider
+**The Cartan--Eilenberg construction.** For every degree $n$ of a bounded-below complex $K$, consider
 
 $$
 0\to Z^nK\to K^n\to B^{n+1}K\to0,
@@ -331,13 +333,202 @@ $$
 
 Choose injective resolutions of the boundary and cohomology objects. The horseshoe construction applied to the second exact sequence gives a compatible injective resolution of $Z^nK$; applying it to the first gives one of $K^n$. These choices give short exact sequences of resolution complexes lifting both displayed sequences. Define the horizontal differential on the resolution of $K^n$ as the quotient to the chosen resolution of $B^{n+1}K$, followed by its inclusion through the resolutions of $Z^{n+1}K$ and $K^{n+1}$. Two successive horizontal maps compose to zero because the quotient from the resolution of $K^{n+1}$ kills the resolution of $Z^{n+1}K$. The resulting double complex has injective entries, resolves $K$ in one direction, and resolves its cycles, boundaries, and cohomology compatibly in the other. This is a Cartan--Eilenberg injective resolution.
 
-Each total diagonal is finite because $K$ is bounded below and the resolution degree is nonnegative. Hence direct-sum and product totalizations agree. The row-filtration spectral sequence shows that the map from $K$ to the total complex is a quasi-isomorphism. Each term of the total complex is a finite direct sum of injectives, hence injective; it is bounded below and therefore K-injective by Section 3.2. Dually, in a module or sheaf-module category with enough flat objects, a bounded-above complex has a K-flat replacement obtained from flat resolutions and direct-sum totalization. The free sheaves generated by objects of a small ringed site supply enough flat objects in the sheaf-module case.
+Each total diagonal is finite because $K$ is bounded below and the resolution degree is nonnegative. Hence direct-sum and product totalizations agree. The row-filtration spectral sequence shows that the map from $K$ to the total complex is a quasi-isomorphism. In each degree that map is the augmentation of one column followed by the inclusion of a direct summand, hence a monomorphism, so its cokernel is acyclic as well. Each term of the total complex is a finite direct sum of injectives, hence injective; it is bounded below and therefore K-injective by Section 3.2. We record the conclusion.
 
-For an unbounded complex, truncate and splice these replacements only under an additional completeness hypothesis. On the injective side take a compatible inverse tower for $\tau_{\ge -n}K$ and its homotopy limit. If products are exact on the chosen tower and the first derived inverse limits vanish, the map from $K$ is a quasi-isomorphism. If, in addition, null-homotopies against acyclic complexes can be chosen compatibly—equivalently, the homotopy limit remains right orthogonal to acyclic complexes—the limit is K-injective. On the flat side one may use compatible direct systems when filtered colimits are exact and tensor commutes with them. Thus truncation proves unbounded replacement only with these stated hypotheses. All first-quadrant applications below need merely bounded-below injective replacements; genuinely unbounded statements explicitly invoke the replacement hypothesis.
+**Bounded-below replacement theorem.** Every bounded-below complex $K$ in a Grothendieck abelian category admits a degreewise monomorphic quasi-isomorphism $K\to I$ in which $I$ is a bounded-below complex of injective objects; such an $I$ is K-injective, and the cokernel $I/K$ is acyclic. Consequently every complex whose cohomology vanishes in all sufficiently negative degrees admits a K-injective replacement: if $H^n(K)=0$ for $n<n_0$, compose the quasi-isomorphism $K\to\tau_{\ge n_0}K$ with a replacement of the bounded-below complex $\tau_{\ge n_0}K$.
 
-If $K\to I$ and $K\to I'$ are K-injective replacements, the identity roof gives a unique isomorphism $I\simeq I'$ in the homotopy category compatible with $K$. This is the correct uniqueness: no canonical cochain-level choice is asserted.
+The construction dualizes verbatim. In an abelian category with enough projectives, every bounded-above complex $C$ admits a degreewise epimorphic quasi-isomorphism $P\to C$ with $P$ a bounded-above complex of projectives: resolve cycles, boundaries, and cohomology by projectives in the downward direction, splice them by the horseshoe lemma in the same pattern, and totalize by direct sums, which again meet every diagonal in finitely many places. Section 3.5 uses precisely that form of the statement.
 
-### 3.5 Derived functors and acyclicity criteria
+We turn to the local refinement. Fix a ringed site $(X,\mathcal O_X)$ with small underlying category, and for an object $U$ write $X/U$ for the localized site and $F|_U$ for the restriction of a sheaf $F$. Two elementary functors organize everything. First, for a sheaf $F$ of $\mathcal O_X|_U$-modules on $X/U$ let $j_{U!}F$ be the sheafification of the presheaf
+
+$$
+V\longmapsto\bigoplus_{\varphi:V\to U}F(V,\varphi).
+$$
+
+The presheaf formula is exact in $F$ because direct sums and sections of presheaves are exact, and sheafification is exact; hence $j_{U!}$ is exact. Second, the Yoneda lemma identifies a morphism out of the displayed presheaf with a compatible family of sections, which gives the adjunction
+
+$$
+\operatorname{Hom}_{\mathcal O_X}(j_{U!}F,G)
+=\operatorname{Hom}_{\mathcal O_X|_U}(F,G|_U).
+$$
+
+Restriction to $U$ is therefore a right adjoint of an exact functor, so it preserves injective objects. It is itself exact, since kernels and cokernels of sheaves on $X/U$ are computed by the same recipe as on $X$.
+
+Two further properties of $j_{U!}$ will be used. It satisfies the projection formula
+
+$$
+j_{U!}(A\otimes F|_U)\cong j_{U!}A\otimes F,
+$$
+
+both sides being the sheafification of the presheaf $V\mapsto\bigoplus_{\varphi:V\to U}A(V,\varphi)\otimes_{\mathcal O_X(V)}F(V)$; and it detects zero objects, because the summand indexed by the identity of $U$ exhibits $A$ as a direct summand of $(j_{U!}A)|_U$. Consequently flatness and K-flatness restrict: if $P$ is K-flat on $X$ and $A$ is an acyclic complex on $X/U$, then $j_{U!}(A\otimes P|_U)\cong j_{U!}A\otimes P$ is acyclic because $j_{U!}$ is exact, hence $A\otimes P|_U$ is acyclic, so $P|_U$ is K-flat.
+
+Say that a complex $J$ of $\mathcal O_X$-modules is **internally K-injective** if $J|_U$ is K-injective on $X/U$ for every object $U$ of the site. Taking $U=X$ shows that an internally K-injective complex is K-injective; the point of the definition is that the converse is not formal, and that the internal Hom of Section 4.3 needs the local statement. Unwinding the definition, if $J$ is internally K-injective then $\mathcal Hom(A,J)$ has acyclic complexes of sections over every object of the site for every acyclic $A$, and is therefore acyclic as a complex of sheaves.
+
+**Internal K-injectivity criterion.** A bounded-below complex $I$ of injective $\mathcal O_X$-modules is internally K-injective. Consequently, for every acyclic complex $A$ and every complex $K$ of $\mathcal O_X$-modules, $\mathcal Hom(A,I)$ is acyclic, and $\mathcal Hom(K,-)$ carries acyclic internally K-injective complexes to acyclic complexes.
+
+**Proof.** Restriction is exact and preserves injectives, so $I|_U$ is a bounded-below complex of injective $\mathcal O_X|_U$-modules and is K-injective by Section 3.2. That is the assertion. For the consequences, products of sheaves are computed sectionwise, so
+
+$$
+\mathcal Hom^n(A,I)(U)
+=\prod_i\operatorname{Hom}_{\mathcal O_X|_U}(A^i|_U,I^{i+n}|_U)
+=\operatorname{Hom}^n_{\mathcal O_X|_U}(A|_U,I|_U),
+$$
+
+compatibly with differentials. The complex on the right is acyclic because $A|_U$ is acyclic and $I|_U$ is K-injective. A complex of sheaves with acyclic complexes of sections over every object has vanishing cohomology presheaves, hence vanishing cohomology sheaves. Finally, if $J$ is acyclic and internally K-injective, then the identity of $J|_U$ is a map from an acyclic complex to a K-injective one, hence null-homotopic, so $J|_U$ is contractible; then $\operatorname{Hom}^\bullet(K|_U,J|_U)$ is contractible for every $K$, and $\mathcal Hom(K,J)$ is acyclic by the same sectionwise argument. $\square$
+
+The last clause is what makes derived internal Hom well defined: it says that replacing the first variable by a quasi-isomorphic complex, or the second by a quasi-isomorphic internally K-injective one, does not change the answer.
+
+Uniqueness costs nothing. If $K\to I$ and $K\to I'$ are K-injective replacements, the identity roof gives a unique isomorphism $I\simeq I'$ in the homotopy category compatible with $K$; by the lifting theorem of Section 3.2 a quasi-isomorphism between K-injective complexes is even a homotopy equivalence. This is the correct uniqueness: no canonical cochain-level choice is asserted, and none is needed, since every construction below is applied to a chosen replacement and transported by these comparison isomorphisms.
+
+### 3.5 K-flat replacement of an unbounded complex
+
+The bounded-above criterion of Section 3.3 does not reach the complexes that actually occur. A derived direct image, a totalization, or a derived completion is unbounded in both directions, and derived tensor products of such objects are needed already in Chapter 11. Fortunately the flat side of the theory is completely accessible, and this section proves the replacement statement in full.
+
+Two observations drive the construction. First, K-flatness is stable under filtered colimits, because tensor products commute with colimits and filtered colimits are exact. Second, every complex is the increasing union of its truncations $\tau_{\le n}K$, each of which is bounded above, and a bounded-above complex of flat modules is K-flat by Section 3.3. If those resolutions can be chosen so that they map to one another strictly, and compatibly with the inclusions of the truncations, their colimit is the required replacement.
+
+The compatibility is the only real difficulty, and it is instructive. To lift a map $P_n\to\tau_{\le n+1}K$ through a resolution $P_{n+1}\to\tau_{\le n+1}K$ on the nose, one needs the terms of $P_n$ to have a lifting property against degreewise epimorphisms. Flat sheaves have no such property; sheaves of modules generally have no projective objects at all. The remedy is to construct the tower one level below sheaves, in presheaves of modules, where the free objects attached to the site are projective, and to sheafify afterwards. Sheafification is exact and carries those free presheaves to flat sheaves, so nothing is lost in the descent.
+
+**Colimit lemma.** A filtered colimit of K-flat complexes of $\mathcal O_X$-modules is K-flat, and a filtered colimit of flat modules is flat.
+
+**Proof.** Let $P=\varinjlim_mP_m$ with each $P_m$ K-flat, and let $A$ be acyclic. Tensor products commute with colimits, so $P\otimes A=\varinjlim_m(P_m\otimes A)$ is a filtered colimit of acyclic complexes, hence acyclic because filtered colimits are exact. The statement for modules is the same computation applied to a short exact sequence. $\square$
+
+Write $\operatorname{PMod}(X)$ for the category of presheaves of $\mathcal O_X$-modules. It is abelian with kernels, cokernels, and products formed sectionwise. For an object $U$ of the site, let $\mathcal O_U^{\mathrm{pre}}$ be the presheaf
+
+$$
+V\longmapsto\bigoplus_{V\to U}\mathcal O_X(V),
+$$
+
+the sum being over morphisms $V\to U$. The Yoneda lemma gives $\operatorname{Hom}_{\operatorname{PMod}}(\mathcal O_U^{\mathrm{pre}},P)=P(U)$, and evaluation at $U$ is exact on presheaves, so $\mathcal O_U^{\mathrm{pre}}$ is projective. For any presheaf $P$ the canonical map
+
+$$
+\bigoplus_{U,\,s\in P(U)}\mathcal O_U^{\mathrm{pre}}\longrightarrow P
+$$
+
+is surjective sectionwise. Thus $\operatorname{PMod}(X)$ has enough projectives, and every projective occurring below is a direct summand of a direct sum of the $\mathcal O_U^{\mathrm{pre}}$.
+
+Sheafifying these free presheaves gives flat sheaves. Indeed $(\mathcal O_U^{\mathrm{pre}})^{\#}=j_{U!}(\mathcal O_X|_U)$; the tensor product of sheaves is by definition the sheafification of the presheaf tensor product, and sheafifying one factor beforehand does not change the outcome, so $A\otimes(\mathcal O_U^{\mathrm{pre}})^{\#}=(A\otimes^{\mathrm{pre}}\mathcal O_U^{\mathrm{pre}})^{\#}$, while
+
+$$
+(A\otimes^{\mathrm{pre}}\mathcal O_U^{\mathrm{pre}})(V)
+=\bigoplus_{V\to U}A(V).
+$$
+
+A monomorphism of sheaves is injective on sections, because kernels are computed sectionwise; the displayed formula then shows that tensoring it with $\mathcal O_U^{\mathrm{pre}}$ stays injective on sections, and sheafification preserves injectivity. Hence $(\mathcal O_U^{\mathrm{pre}})^{\#}$ is flat, and so is every direct sum and every direct summand of such sheaves.
+
+**Bounded-above criterion, projective form.** A bounded-above complex $P$ of projective objects satisfies $\operatorname{Hom}^\bullet(P,N)\simeq0$ for every acyclic $N$; that is, every map $P\to N$ into an acyclic complex is null-homotopic.
+
+**Proof.** This is the dual of the bounded-below criterion of Section 3.2. Given $f:P\to N$, build a homotopy downward from the highest nonzero degree of $P$. At each stage the equation already solved one degree higher makes the remaining error a map into the cycles of $N$; exactness identifies cycles with boundaries, and projectivity of the term of $P$ lifts the map through the surjection onto those boundaries. $\square$
+
+**Lifting lemma.** Let $P$ be a bounded-above complex of projectives, let $\pi:Y\to Z$ be a degreewise epimorphic quasi-isomorphism, and let $f:P\to Z$ be a chain map. Then there is a chain map $g:P\to Y$ with $\pi g=f$, not merely up to homotopy.
+
+**Proof.** Let $N=\ker\pi$. The short exact sequence $0\to N\to Y\to Z\to0$ and the long exact cohomology sequence show that $N$ is acyclic. Because each term of $P$ is projective, applying $\operatorname{Hom}(P^i,-)$ preserves surjections, so
+
+$$
+0\to\operatorname{Hom}^\bullet(P,N)\to\operatorname{Hom}^\bullet(P,Y)
+\to\operatorname{Hom}^\bullet(P,Z)\to0
+$$
+
+is a degreewise exact sequence of complexes of abelian groups. Choose a degree-zero element $g_0$ of $\operatorname{Hom}^0(P,Y)$ mapping to $f$; it need not be a chain map. Its differential $dg_0$ maps to $df=0$, so $dg_0$ lies in $\operatorname{Hom}^1(P,N)$, where it is a cocycle. By the projective criterion $\operatorname{Hom}^\bullet(P,N)$ is acyclic, so $dg_0=dh$ for some $h$ in $\operatorname{Hom}^0(P,N)$. Then $g=g_0-h$ satisfies $dg=0$, hence is a chain map, and $\pi g=\pi g_0=f$ because $h$ takes values in $N$. $\square$
+
+**K-flat replacement theorem.** Let $(X,\mathcal O_X)$ be a ringed site. Every complex $K$ of $\mathcal O_X$-modules admits a quasi-isomorphism $P\to K$ with $P$ K-flat and termwise flat; moreover $P$ may be taken to be a filtered colimit of bounded-above complexes of flat modules. The same statement, with the same proof and no sheafification, holds for complexes of modules over an ordinary ring.
+
+**Proof.** The truncations $\tau_{\le n}K$ are subcomplexes of $K$, they increase with $n$, and in each degree the chain is eventually equal to $K$; so $K=\varinjlim_n\tau_{\le n}K$, a filtered colimit. Because these truncations are formed using kernels, which are computed sectionwise, they are the same whether formed in sheaves or in presheaves, and the colimit of the presheaves is already a sheaf.
+
+Work first in $\operatorname{PMod}(X)$. Each $\tau_{\le n}K$ is bounded above, so by the projective form of the Cartan--Eilenberg construction in Section 3.4 there is a degreewise epimorphic quasi-isomorphism of presheaves $\pi_n:P_n\to\tau_{\le n}K$ with $P_n$ a bounded-above complex of projective presheaves, whose terms may be taken to be direct sums of the free presheaves $\mathcal O_U^{\mathrm{pre}}$. Choose these resolutions independently, and then connect them: the lifting lemma applied to the composite $P_n\to\tau_{\le n}K\subseteq\tau_{\le n+1}K$ and to the degreewise epimorphic quasi-isomorphism $\pi_{n+1}$ produces $u_n:P_n\to P_{n+1}$ with $\pi_{n+1}u_n$ equal to that composite. Every square commutes exactly, which is what a colimit requires. This is the one step where the passage to presheaves is used, and it is used only for the projectivity of the free objects.
+
+Now sheafify and pass to the colimit. Set $P=\varinjlim_nP_n^{\#}$. Each $P_n^{\#}$ is a bounded-above complex of flat sheaves, hence K-flat by Section 3.3, so $P$ is K-flat and termwise flat by the colimit lemma. Sheafification is exact, so each $\pi_n^{\#}$ is a quasi-isomorphism of complexes of sheaves; filtered colimits in $\operatorname{Mod}(X)$ are exact, hence commute with cohomology, so
+
+$$
+P=\varinjlim_nP_n^{\#}\longrightarrow\varinjlim_n\tau_{\le n}K=K
+$$
+
+is a quasi-isomorphism. $\square$
+
+Three features of the argument deserve emphasis. No boundedness or finiteness is imposed on $K$: an arbitrary unbounded complex of sheaves of modules has a K-flat replacement. The replacement is termwise flat, but that is a byproduct; termwise flatness alone would not suffice, as the counterexample of Section 3.3 shows, and the substantive content is the K-flatness inherited from the bounded-above stages. Finally, the proof is genuinely constructive in its inputs: free presheaves attached to objects of the site, the horseshoe lemma, and exactness of sheafification and of filtered colimits.
+
+The theorem removes every boundedness restriction from the tensor side of the theory. Derived tensor products in Section 4.2 are defined for arbitrary complexes, associativity and symmetry hold for arbitrary complexes, and the derived completions of Section 11.3 may be formed with unbounded coefficients.
+
+### 3.6 K-injective replacement and homotopy limits
+
+The right-derived side does not admit the argument just given. An unbounded complex is the colimit of the truncations $\tau_{\le n}K$, which is why the flat construction succeeded; it is the inverse limit of the tower $\tau_{\ge-n}K$, and inverse limits, unlike filtered colimits, are not exact in a sheaf category, so nothing guarantees that a limit of resolutions still resolves. Furthermore, no analogue of sheafification produces injective objects with a lifting property. What does survive is a homotopy limit: one resolves each truncation, assembles the resolutions into a single complex by the mapping-cone construction, and asks whether the assembly still computes $K$. The assembly is always K-injective; the question is whether the map from $K$ is a quasi-isomorphism, and the answer is affirmative as soon as countable products are exact.
+
+Two closure properties hold with no hypothesis at all, and they are the reason a homotopy limit is a reasonable thing to form.
+
+**Stability lemma.** Products of K-injective complexes are K-injective. Shifts of K-injective complexes, and cones of morphisms between K-injective complexes, are K-injective.
+
+**Proof.** For a family $(I_j)$ and any complex $A$,
+
+$$
+\operatorname{Hom}^n\Bigl(A,\prod_jI_j\Bigr)
+=\prod_i\operatorname{Hom}\Bigl(A^i,\prod_jI_j^{i+n}\Bigr)
+=\prod_j\operatorname{Hom}^n(A,I_j),
+$$
+
+compatibly with differentials, so $\operatorname{Hom}^\bullet(A,\prod_jI_j)=\prod_j\operatorname{Hom}^\bullet(A,I_j)$ as complexes of abelian groups. Products of abelian groups are exact, so a product of acyclic complexes of abelian groups is acyclic; if every $I_j$ is K-injective and $A$ is acyclic, each factor is acyclic and the product is too. Note that no exactness of products in $\mathcal A$ is used: the product being formed is a product of Hom complexes, and those live in abelian groups. For cones, the defining sequence $0\to L\to\operatorname{Cone}(f)\to K[1]\to0$ is degreewise split, so applying $\operatorname{Hom}^\bullet(A,-)$ gives a degreewise split, hence exact, sequence of complexes; if the outer complexes are acyclic, the long exact sequence forces the middle one to be acyclic. Shifts are immediate from the definition. $\square$
+
+**Definition.** Let $\cdots\to I_2\xrightarrow{f_1}I_1\xrightarrow{f_0}I_0$ be a tower of complexes and chain maps. Its **homotopy limit** is
+
+$$
+\operatorname{holim}_nI_n
+=\operatorname{Cone}\Bigl(\prod_nI_n\xrightarrow{\,1-f\,}\prod_nI_n\Bigr)[-1],
+\qquad
+(f(x))_n=f_n(x_{n+1}).
+$$
+
+This is the same construction that represents a derived inverse limit in Section 6.2. By the stability lemma it is K-injective whenever every $I_n$ is, for any choice of the maps $f_n$ whatsoever.
+
+Spelling out the cone convention of Section 2.2 and the shift, a chain map $K\to\operatorname{holim}_nI_n$ is the same thing as a family of chain maps $u_n:K\to I_n$ together with maps $h_n:K^\bullet\to I_n^{\bullet-1}$ satisfying
+
+$$
+dh_n+h_nd=f_nu_{n+1}-u_n.
+$$
+
+In words: a compatible family of maps to the tower, compatible not on the nose but through a chosen homotopy in each stage. That is exactly the flexibility the construction below needs, and it is why no strict tower of resolutions has to be built.
+
+**Unbounded K-injective replacement theorem.** Let $\mathcal A$ be a Grothendieck abelian category in which countable products are exact. Then every complex $K$ of $\mathcal A$ admits a quasi-isomorphism $K\to I$ with $I$ K-injective.
+
+**Proof strategy.** Resolve each truncation $\tau_{\ge-n}K$ by the bounded-below theorem of Section 3.4 and form the homotopy limit of the resulting tower. K-injectivity is automatic by the stability lemma. The cohomological comparison is where the hypothesis enters: exactness of products identifies the cohomology of $\prod_nI_n$ with the product of the $H^p(I_n)$, and in each fixed degree that tower is eventually the constant tower on $H^p(K)$, so the map $1-f$ is injective with kernel $H^p(K)$ and is surjective for the elementary reason that a difference of consecutive terms can be solved by partial sums.
+
+**Proof.** For every $n\ge0$ choose a quasi-isomorphism $\tau_{\ge-n}K\to I_n$ with $I_n$ a bounded-below complex of injective objects, and let
+
+$$
+\iota_n:K\longrightarrow\tau_{\ge-n}K\longrightarrow I_n
+$$
+
+be the composite with the canonical projection onto the truncation. Each $I_n$ is K-injective by Section 3.2.
+
+Next, connect the tower. Because $I_n$ is K-injective, the lifting theorem of Section 3.2 identifies homotopy classes of chain maps into $I_n$ with morphisms into $I_n$ in the derived category. Let $f_n:I_{n+1}\to I_n$ be a chain map representing the derived morphism obtained by inverting the quasi-isomorphism $\tau_{\ge-n-1}K\to I_{n+1}$ and composing with $\tau_{\ge-n-1}K\to\tau_{\ge-n}K\to I_n$. In the derived category $f_n\iota_{n+1}=\iota_n$; since both sides are chain maps from $K$ to the K-injective complex $I_n$, the identification of homotopy classes with derived morphisms makes them homotopic. Choose homotopies $h_n$ with $dh_n+h_nd=f_n\iota_{n+1}-\iota_n$.
+
+Set $I=\operatorname{holim}_nI_n$. It is K-injective by the stability lemma, and the data $(\iota_n)$ and $(h_n)$ define a chain map $\iota:K\to I$ by the description of maps into a homotopy limit given above. It remains to prove that $\iota$ is a quasi-isomorphism.
+
+The defining cone gives a triangle $I\to\prod_nI_n\xrightarrow{1-f}\prod_nI_n$, whose long exact cohomology sequence reads
+
+$$
+H^{p-1}\Bigl(\prod_nI_n\Bigr)\xrightarrow{1-f}
+H^{p-1}\Bigl(\prod_nI_n\Bigr)\to H^p(I)\to
+H^p\Bigl(\prod_nI_n\Bigr)\xrightarrow{1-f}
+H^p\Bigl(\prod_nI_n\Bigr).
+$$
+
+Exactness of countable products identifies $H^p(\prod_nI_n)$ with $\prod_nH^p(I_n)$, and under this identification $1-f$ is the difference of the identity and the maps induced by the $f_n$. Fix $p$ and set $N=\max(0,-p)$. For $n\ge N$ the projection $K\to\tau_{\ge-n}K$ is an isomorphism on $H^p$, so $H^p(\iota_n)$ is an isomorphism $\theta_n:H^p(K)\to H^p(I_n)$; for $n<N$ we have $H^p(I_n)=H^p(\tau_{\ge-n}K)=0$. Applying $H^p$ to $f_n\iota_{n+1}\simeq\iota_n$ gives $H^p(f_n)\theta_{n+1}=\theta_n$, so the $\theta_n$ identify the part of the tower with $n\ge N$ with the constant tower on $H^p(K)$ with identity transition maps.
+
+Under that identification, $1-f$ becomes $(x_n)\mapsto(x_n-x_{n+1})$ on $\prod_{n\ge N}H^p(K)$, together with the zero tower below $N$. Its kernel consists of the constant families, so the kernel is $H^p(K)$, embedded by $(\theta_n)$. It is surjective, because the morphism $s$ defined by $s(y)_n=0$ for $n\le N$ and
+
+$$
+s(y)_n=-(y_N+y_{N+1}+\cdots+y_{n-1})\qquad(n>N)
+$$
+
+has each component a finite sum of projections, hence is a genuine morphism, and satisfies $s(y)_n-s(y)_{n+1}=y_n$ for all $n\ge N$, while below $N$ there is nothing to solve. Thus $1-f$ is surjective on $H^{p}$ and on $H^{p-1}$, with kernel $H^p(K)$ in degree $p$.
+
+The long exact sequence now degenerates: surjectivity in degree $p-1$ kills the left-hand contribution, so $H^p(I)\to\prod_nH^p(I_n)$ is injective with image the kernel of $1-f$, that is, an isomorphism onto $H^p(K)$. The composite of $H^p(\iota)$ with this isomorphism is the family $(H^p(\iota_n))=(\theta_n)$, which is precisely the embedding of $H^p(K)$ as the constant families. Hence $H^p(\iota)$ is an isomorphism for every $p$. $\square$
+
+**Corollary.** In any Grothendieck abelian category, every complex whose cohomology vanishes in all sufficiently negative degrees admits a K-injective replacement, by the bounded-below theorem of Section 3.4. In a Grothendieck abelian category with exact countable products, every complex does.
+
+Which categories satisfy the product hypothesis is a concrete question. Modules over a ring do: products are formed elementwise and a product of surjections of modules is surjective. So do categories of inverse systems of modules, whose products are formed levelwise, and more generally any abelian category whose products are computed by an exact formula. Sheaf categories generally do not. Products of sheaves are computed sectionwise, but epimorphisms of sheaves are only locally surjective, and an infinite family of local surjectivity witnesses need not admit a common refinement; the product of infinitely many epimorphisms of sheaves can therefore fail to be an epimorphism. The tower argument above then breaks at exactly one point, the identification of $H^p(\prod_nI_n)$ with $\prod_nH^p(I_n)$, and nothing in the construction repairs it.
+
+The consequences for the rest of the book are stated once here and respected throughout. Right-derived operations on an arithmetic sheaf category are constructed on complexes with bounded-below cohomology; that is the classical range, it contains every complex to which Chapters 7 through 12 apply a spectral sequence, and within it the replacements are the unconditional ones of Section 3.4. Over a coefficient ring, the setting of Sections 4.5 and 11.3, the theorem above applies and right-derived operations are available on all of the derived category. The derived tensor product carries no restriction at all, by Section 3.5. Whenever a statement below concerns unbounded complexes, it says which of these three situations it is in.
+
+### 3.7 Derived functors and acyclicity criteria
 
 Let $F:\mathcal A\to\mathcal B$ be additive. If applying $F$ to quasi-isomorphisms between K-injective complexes again gives quasi-isomorphisms, define
 
@@ -347,15 +538,17 @@ $$
 
 The lifting theorem gives functoriality and uniqueness. For a left exact functor, it is enough that $F$ send acyclic K-injective complexes to acyclic complexes.
 
+The definition applies exactly where a replacement was produced. By Section 3.6 that means: on complexes with bounded-below cohomology in any Grothendieck abelian category, hence on $D^+(\mathcal A)$ always; and on arbitrary complexes, hence on $D(\mathcal A)$, when countable products in $\mathcal A$ are exact. We therefore construct right-derived operations on sheaf categories over $D^+$ and on module categories over all of $D$, and every statement below records which range it uses. Nothing in this convention affects left-derived operations built from K-flat replacements, which Section 3.5 supplies without restriction.
+
 An object $A$ is **$F$-acyclic** if $R^nF(A)=0$ for $n>0$. A bounded-below resolution $A\to C^\bullet$ by $F$-acyclic objects computes $RF(A)$. To prove this, resolve each $C^q$ injectively. The resulting double complex has one spectral sequence with only its zeroth derived row and another computing the injective resolution of $A$; both identify the same total complex. This acyclic-resolution lemma is the workhorse behind flasque, soft, and Cech resolutions.
 
-### 3.6 A replacement checklist
+### 3.8 A replacement checklist
 
-Three assertions are easily confused. A termwise injective resolution computes a right-derived functor for a bounded-below complex; the lower bound starts the homotopy induction. A K-injective replacement computes it for an unbounded complex; its terms need not themselves be injective if the K-injective property is known otherwise. An $F$-acyclic resolution computes one particular derived functor and need not be K-injective.
+Three assertions are easily confused. A termwise injective resolution computes a right-derived functor for a bounded-below complex; the lower bound starts the homotopy induction. A K-injective replacement computes it for an unbounded complex; its terms need not themselves be injective if the K-injective property is known otherwise, as the homotopy limits of Section 3.6 illustrate. An $F$-acyclic resolution computes one particular derived functor and need not be K-injective.
 
-On the tensor side, a bounded-above complex of flats is K-flat. A general termwise flat unbounded complex is not covered by that argument. If a complex is perfect—locally quasi-isomorphic to a bounded complex of finite projective modules—it is K-flat and dualizable. Perfect complexes are consequently safe coefficients for projection formulas and base change.
+On the tensor side, a bounded-above complex of flats is K-flat, and by Section 3.5 every complex, however unbounded, has a K-flat replacement. A general termwise flat unbounded complex is nevertheless not itself K-flat; termwise flatness is a property of the terms, K-flatness a property of the complex, and only the second computes a derived tensor product. If a complex is perfect—locally quasi-isomorphic to a bounded complex of finite projective modules—it is K-flat and dualizable. Perfect complexes are consequently safe coefficients for projection formulas and base change.
 
-Finally, replacing the wrong variable can invalidate a calculation. For $K\otimes^LL$, replace at least one variable K-flatly. For global $R\operatorname{Hom}(K,L)$, replace $L$ K-injectively or $K$ K-projectively. For sheaf-valued $R\mathcal Hom$, use the internal K-injective replacement in Section 3.4. Its restriction condition avoids pretending that a statement about global morphisms automatically controls every local object.
+Finally, replacing the wrong variable can invalidate a calculation. For $K\otimes^LL$, replace at least one variable K-flatly. For global $R\operatorname{Hom}(K,L)$, replace $L$ K-injectively; in a category with enough projectives one may instead replace $K$ by a bounded-above complex of projectives. For sheaf-valued $R\mathcal Hom$, the replacement of the second variable must be internally K-injective in the sense of Section 3.4; a bounded-below complex of injectives is such a replacement, and so is $\mathcal Hom(P,I)$ for $P$ K-flat, as Section 4.4 uses. The local condition in that definition avoids pretending that a statement about global morphisms automatically controls every local object.
 
 ## 4. The three derived operations
 
@@ -383,11 +576,13 @@ $$
 
 under the acyclicity condition proved in Chapter 8.
 
+A single sheaf sits in degree zero, so the replacement here is the bounded-below one of Section 3.4, and the same definition applies verbatim to any complex $K$ of sheaves whose cohomology vanishes in all sufficiently negative degrees: replace $K$ by $\tau_{\ge n_0}K$ and resolve. This is the range in which $R\Gamma$ and $Rf_*$ are used throughout the book. Over a coefficient ring, where countable products are exact, Section 3.6 extends both operations to arbitrary unbounded complexes; on a general sheaf category the unbounded extension is not claimed, and no statement below uses it.
+
 If $X$ has a final object in its site and coverings split, global sections are exact and higher cohomology vanishes. At the opposite extreme, nontrivial gluings create higher cohomology; it measures failure of compatible local sections to glue globally.
 
 ### 4.2 Derived tensor product
 
-Tensor product is right exact and does not preserve quasi-isomorphisms in either variable. Choose a K-flat replacement $P\to K$ and define
+Tensor product is right exact and does not preserve quasi-isomorphisms in either variable. Choose a K-flat replacement $P\to K$, which exists for every complex by Section 3.5 with no boundedness restriction, and define
 
 $$
 K\otimes_{\mathcal O_X}^{L}L=P\otimes_{\mathcal O_X}L.
@@ -411,13 +606,13 @@ $$
 \mathcal Hom^n(K,L)=\prod_i\mathcal Hom(K^i,L^{i+n}),
 $$
 
-with differential $d(f)=d_Lf-(-1)^nfd_K$. For global derived Hom, a K-injective replacement of the second variable suffices. For the sheaf-valued operation choose an internal K-injective replacement $L\to I$ as in Section 3.4 and put
+with differential $d(f)=d_Lf-(-1)^nfd_K$. For global derived Hom, a K-injective replacement of the second variable suffices. The sheaf-valued operation needs the internal notion of Section 3.4, and the criterion proved there supplies it whenever the second variable has bounded-below cohomology: choose a quasi-isomorphism $L\to I$ with $I$ a bounded-below complex of injective $\mathcal O_X$-modules, and put
 
 $$
 R\mathcal Hom(K,L)=\mathcal Hom(K,I).
 $$
 
-Alternatively a K-projective or suitably K-flat replacement of the first variable may be used when internal Hom against it preserves quasi-isomorphisms. Global derived Hom is
+Both variables behave correctly. If $K\to K'$ is a quasi-isomorphism with cone $C$, then $C$ is acyclic, so $\mathcal Hom(C,I)$ is acyclic by the internal criterion and $\mathcal Hom(K',I)\to\mathcal Hom(K,I)$ is a quasi-isomorphism. If $J$ is any internally K-injective complex quasi-isomorphic to $L$, then a chain map $J\to I$ inducing the comparison exists because $I$ is K-injective, its cone is acyclic and internally K-injective, and the last clause of the criterion makes $\mathcal Hom(K,J)\to\mathcal Hom(K,I)$ a quasi-isomorphism. So $R\mathcal Hom(K,L)$ may be computed from any internally K-injective representative of the second variable, a freedom used in Section 4.4. Global derived Hom is
 
 $$
 R\operatorname{Hom}_X(K,L)=R\Gamma(X,R\mathcal Hom(K,L)).
@@ -440,12 +635,27 @@ $$
 \mathcal Hom(K,\mathcal Hom(L,M))
 $$
 
-passes to derived objects provided a K-flat replacement is used for tensor and a K-injective replacement for the final Hom target. Hence
+passes to derived objects once the two variables that need replacing are replaced correctly. Let $K$ and $L$ be arbitrary complexes and let $M$ have bounded-below cohomology. Choose a K-flat $P\to L$ by Section 3.5 and a bounded-below complex of injectives $M\to I$ by Section 3.4. The displayed adjunction, applied termwise and assembled with the usual signs, is an isomorphism of complexes
+
+$$
+\mathcal Hom(K\otimes P,I)\cong\mathcal Hom(K,\mathcal Hom(P,I)).
+$$
+
+The left side computes $R\mathcal Hom(K\otimes^LL,M)$, since $K\otimes P$ represents $K\otimes^LL$ and $I$ is internally K-injective. The right side computes $R\mathcal Hom(K,R\mathcal Hom(L,M))$: the complex $\mathcal Hom(P,I)$ represents $R\mathcal Hom(L,M)$, and it is itself internally K-injective, because restriction to an object $U$ carries it to $\mathcal Hom(P|_U,I|_U)$ and, for acyclic $A$ on $X/U$,
+
+$$
+\operatorname{Hom}^\bullet(A,\mathcal Hom(P|_U,I|_U))
+\cong\operatorname{Hom}^\bullet(A\otimes P|_U,I|_U)
+$$
+
+is acyclic: $P|_U$ is K-flat because K-flatness restricts, as recorded in Section 3.4, and $I|_U$ is K-injective by the internal criterion. By the computation freedom established in Section 4.3 the right side therefore computes the iterated derived Hom, and
 
 $$
 R\mathcal Hom(K\otimes^L L,M)
-\simeq R\mathcal Hom(K,R\mathcal Hom(L,M)).
+\simeq R\mathcal Hom(K,R\mathcal Hom(L,M))
 $$
+
+for arbitrary $K$ and $L$ and for $M$ with bounded-below cohomology. The restriction on $M$ is the only one, and it is the same restriction under which the right-hand side was defined at all.
 
 For $f:X\to Y$ there is always a derived projection morphism
 
@@ -757,7 +967,7 @@ E_2^{p,q}=H^p(X,\mathcal H^q(K))
 \Longrightarrow\mathbb H^{p+q}(X,K).
 $$
 
-It converges strongly whenever $K$ is bounded below: after translating the lower bound, $p,q\ge0$, so every total diagonal is finite. A bounded-above or unbounded $K$ requires an additional finite-cohomological-dimension bound that makes each relevant diagonal finite, or completeness of the truncation tower together with the derived-limit vanishing of Section 6.2.
+It converges strongly whenever $K$ is bounded below: after translating the lower bound, $p,q\ge0$, so every total diagonal is finite. A $K$ with cohomology unbounded below lies outside the range in which $R\Gamma$ was constructed for a sheaf category, by Section 3.6; where the operation is available, namely over a coefficient ring with exact countable products, convergence additionally requires a finite-cohomological-dimension bound making each relevant diagonal finite, or completeness of the truncation tower together with the derived-limit vanishing of Section 6.2.
 
 There is a second sequence. For $K$ bounded below, resolve every $K^q$ by $\Gamma$-acyclic sheaves and take the resulting first-quadrant double complex. Filtering in the other direction gives
 
@@ -941,7 +1151,7 @@ $$
 f(gg_0,\ldots,gg_p)=g f(g_0,\ldots,g_p),
 $$
 
-and the differential is the alternating sum of the omission maps. Evaluation at $(1,g_1,g_1g_2,\ldots,g_1\cdots g_p)$ identifies this invariant complex with the inhomogeneous one above. The acyclic-resolution lemma of Section 3.5 therefore identifies the cohomology of $C^\bullet_{\mathrm{cts}}(G,M)$ with $R^p(-)^G(M)$.
+and the differential is the alternating sum of the omission maps. Evaluation at $(1,g_1,g_1g_2,\ldots,g_1\cdots g_p)$ identifies this invariant complex with the inhomogeneous one above. The acyclic-resolution lemma of Section 3.7 therefore identifies the cohomology of $C^\bullet_{\mathrm{cts}}(G,M)$ with $R^p(-)^G(M)$.
 
 ### 9.2 Construction and convergence
 
@@ -961,7 +1171,7 @@ $$
 
 For a bounded-below equivariant complex $K$, replace $H^q$ by $\mathbb H^q$.
 
-Strong convergence holds for a sheaf and, after translating the vertical index, for every bounded-below equivariant complex: both indices are then nonnegative and each total diagonal is finite. For an unbounded complex, a finite-cohomological-dimension bound can again make the diagonals finite. For completed coefficients, the continuous cochain totalization and derived inverse limit must be retained; ordinary invariants of the inverse limit can miss a first derived-limit term.
+Strong convergence holds for a sheaf and, after translating the vertical index, for every bounded-below equivariant complex: both indices are then nonnegative and each total diagonal is finite. For a complex whose cohomology is unbounded below, the equivariant right-derived operations are available only in the range fixed in Section 3.6, and even there a finite-cohomological-dimension bound is needed to make the diagonals finite. For completed coefficients, the continuous cochain totalization and derived inverse limit must be retained; ordinary invariants of the inverse limit can miss a first derived-limit term.
 
 ### 9.3 Restriction, inflation, and descent
 
@@ -1063,7 +1273,7 @@ Y'&\xrightarrow{g}&Y.
 \end{array}
 $$
 
-Adjunction produces the underived map $g^*f_*\to f'_*g'^*$. After choosing K-flat replacements for inverse images and K-injective replacements for direct images, it yields
+Adjunction produces the underived map $g^*f_*\to f'_*g'^*$. Choose K-flat replacements for the inverse images, which Section 3.5 supplies for arbitrary complexes, and bounded-below injective replacements for the direct images, so that $K$ is taken with bounded-below cohomology as in the theorem of Section 12.3. This yields
 
 $$
 Lg^*Rf_*K\longrightarrow Rf'_*Lg'^*K.
@@ -1175,7 +1385,7 @@ The completeness clause is essential: an infinitely deep nonzero subobject has z
 
 ### 12.2 The derived-composition package
 
-**Derived-composition theorem.** Let $F$ and $G$ be left exact functors between Grothendieck abelian categories, and work on a subcategory on which $RG$, $RF$, and $R(F\circ G)$ exist. There is a canonical comparison
+**Derived-composition theorem.** Let $F$ and $G$ be left exact functors between Grothendieck abelian categories, and work in a range in which all three of $RG$, $RF$, and $R(F\circ G)$ are defined by Section 3.7: complexes with bounded-below cohomology in general, or arbitrary complexes when the categories involved have exact countable products. There is a canonical comparison
 
 $$
 R(F\circ G)\longrightarrow RF\circ RG.
@@ -1183,8 +1393,8 @@ $$
 
 It is an isomorphism under either of the following precise hypotheses:
 
-- on the bounded-below subcategory, $G$ takes injective objects to $F$-acyclic objects;
-- in the unbounded setting, all three derived functors are computed on the chosen K-injective replacements and $G(I)$ is $F$-acyclic for every K-injective $I$ used there, meaning that $F(G(I))\to RF(G(I))$ is a quasi-isomorphism.
+- on complexes with bounded-below cohomology, where the replacements of Section 3.4 are available without further conditions, it suffices that $G$ take injective objects to $F$-acyclic objects;
+- on arbitrary complexes, provided the source categories have exact countable products, so that Section 3.6 produces K-injective replacements of every complex, it suffices in addition that $G(I)$ be $F$-acyclic for every K-injective $I$ occurring, meaning that $F(G(I))\to RF(G(I))$ is a quasi-isomorphism.
 
 For an object $A$ in degree zero, or more generally in a first-quadrant range, the truncation filtration yields
 
@@ -1200,7 +1410,7 @@ $$
 F(G(I))\longrightarrow F(J),
 $$
 
-which explains the direction of the canonical comparison. Since every $G(I^q)$ is $F$-acyclic, the Cartan--Eilenberg argument of Section 8.1 shows that this map is a quasi-isomorphism. The unbounded proof is identical with the stated K-injective hypotheses: $G(I)$ computes $RG(A)$, its $F$-acyclicity makes $F(G(I))$ compute $RF(RG(A))$, and the chosen replacement also computes the derived composite. Filtering the Cartan--Eilenberg model by one resolution degree gives the displayed pages; comparison uniqueness supplies naturality. The product and convergence statements follow from Chapters 10 and 6. $\square$
+which explains the direction of the canonical comparison. Since every $G(I^q)$ is $F$-acyclic, the Cartan--Eilenberg argument of Section 8.1 shows that this map is a quasi-isomorphism. In the second case the argument is identical, run on the replacements furnished by Section 3.6: $G(I)$ computes $RG(A)$, its $F$-acyclicity makes $F(G(I))$ compute $RF(RG(A))$, and the chosen replacement also computes the derived composite. Filtering the Cartan--Eilenberg model by one resolution degree gives the displayed pages; comparison uniqueness supplies naturality. The product and convergence statements follow from Chapters 10 and 6. $\square$
 
 Leray and Hochschild--Serre are instances of this single result, as is any further composite of left exact functors satisfying the stated acyclicity condition.
 
@@ -1235,6 +1445,6 @@ The theorem deliberately separates formal homological conditions from geometric 
 
 ### 12.4 Final synthesis
 
-The constructions of this book reduce layered arithmetic cohomology to a stable sequence of decisions. Replace complexes by objects on which the desired operation respects quasi-isomorphisms. Express a composite operation or a filtration as a spectral object. Identify its graded layers, verify finite-diagonal convergence or derived completeness, and retain the induced filtration and edge maps. When products, base change, or group actions are present, construct them before passing to pages so their compatibility survives to the target.
+The constructions of this book reduce layered arithmetic cohomology to a stable sequence of decisions. Replace complexes by objects on which the desired operation respects quasi-isomorphisms; Chapter 3 built those replacements rather than postulating them, producing K-flat replacements of arbitrary complexes from free presheaves and filtered colimits, K-injective replacements of bounded-below complexes from the Cartan--Eilenberg construction together with the internal criterion that the sheaf-valued Hom needs, and K-injective replacements of arbitrary complexes by homotopy limits wherever countable products are exact. Express a composite operation or a filtration as a spectral object. Identify its graded layers, verify finite-diagonal convergence or derived completeness, and retain the induced filtration and edge maps. When products, base change, or group actions are present, construct them before passing to pages so their compatibility survives to the target.
 
 Three warnings remain permanent. A degenerate spectral sequence gives graded pieces, not a canonical splitting. A termwise injective or flat unbounded complex need not be an admissible replacement. An inverse limit can contribute a first derived-limit term. With these obstructions made explicit, hypercohomology, Leray, Hochschild--Serre, and base change become manifestations of one rigorous method. The comparison theorems above provide a closed toolkit for carrying that method into coherent, equivariant, torsion, and completed arithmetic sheaf theories.
