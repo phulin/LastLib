@@ -128,10 +128,12 @@ local invariant and cyclic norm-index theorem are proved below.
 Two pieces of infrastructure not developed in the preceding books are developed here before
 they are used. Section 5.2 constructs complete resolutions, Tate cohomology, the cap product,
 and the restriction--corestriction operations needed for Tate--Nakayama. Section 6.5 proves
-the exact Herbrand comparison between unit norms and upper ramification. These are logically
-independent arguments: the first is finite-group homological algebra, while the second is a
-calculation in filtered valuation rings. Keeping them separate also makes clear that the norm
-calculation is not being inferred from the reciprocity theorem it is later used to refine.
+the exact Herbrand comparison between unit norms and upper ramification. Its break positions
+come from an independent calculation in filtered valuation rings. At one point that
+calculation uses the already proved finite Artin isomorphism only for the **total** unit-norm
+index of a prime-degree extension; it uses no identification of units with ramification
+groups. Thus the later reciprocity--ramification theorem is not being smuggled into its own
+proof.
 
 ### 1.2 The classification one hopes for
 
@@ -1259,19 +1261,75 @@ their complexes with $\operatorname{Hom}_{\mathbf Z}(P_\bullet,A)$, whose contra
 one already used above. The same proof works after restriction to a subgroup, since
 $\mathbf Z[G]$ is free over its subgroup ring. Every $A$ admits a surjection from an induced
 module and an injection into a coinduced module. The two associated long exact sequences shift
-Tate cohomology in opposite directions. To justify the criterion used below, fix a subgroup
-$J$ and an integer $r$ and induct on $|J|$. Restriction of either shifting sequence to $J$ is,
-by the coset decomposition, a direct sum of sequences induced from intersections with
-subgroups. The summands from proper intersections are acyclic by induction; the remaining
-summand performs one dimension shift. Repeating finitely many times moves $r$ to $0$ or $1$,
-where the assumed vanishing applies. Starting with the trivial group proves the induction and
-hence
+Tate cohomology in opposite directions.
+
+We shall use the following two-degree criterion. Its proof is included because dimension
+shifting by itself does **not** move an arbitrary degree to a prescribed pair; the subgroup
+hypothesis is essential.
 
 $$
-\widehat H^0(J,A)=\widehat H^1(J,A)=0\text{ for every }J\subseteq G
+\widehat H^q(J,A)=\widehat H^{q+1}(J,A)=0\text{ for every }J\subseteq G
 \quad\Longrightarrow\quad
-\widehat H^r(J,A)=0\text{ for all }J,r. \tag{5.5}
+\widehat H^r(J,A)=0\text{ for all }J,r, \tag{5.5}
 $$
+
+where $q$ is any one fixed integer.
+
+Here is a proof. Restriction and corestriction on the bar complexes satisfy
+
+$$
+\operatorname{cor}^J_P\operatorname{res}^J_P=[J:P]
+\tag{5.5a}
+$$
+
+for every $P\subseteq J$: after choosing right coset representatives, all off-diagonal terms
+pair in the standard bar homotopy and the diagonal terms are the $[J:P]$ copies of the
+original chain. Restriction to the trivial subgroup is zero in Tate cohomology, so (5.5a)
+with $P=1$ also shows that $|J|$ kills every $\widehat H^r(J,A)$. Consequently its
+$p$-primary part injects under restriction to a Sylow $p$-subgroup $P$, because
+$[J:P]$ is prime to $p$.
+
+It remains to treat a $p$-group $P$, and we induct on $|P|$. Choose a central subgroup
+$C\subseteq P$ of order $p$. For the cyclic group $C$, the complete resolution is the
+two-periodic complex with differentials $c-1$ and $N_C$. Thus vanishing in any two
+consecutive degrees makes every Tate group of $C$ vanish.
+
+We need one elementary inflation fact. If $C\triangleleft Q$ and
+$\widehat H^r(C,A)=0$ for every $r$, then
+
+$$
+\widehat H^r(Q,A)\cong
+\widehat H^r(Q/C,A^C). \tag{5.5b}
+$$
+
+To see this without invoking a spectral sequence as a black box, choose a section
+$s:Q/C\to Q$. Write a bar word in $Q$ uniquely as $C$-entries interspersed with lifted
+$Q/C$-entries. The bar differential then makes a double complex: the vertical faces are the
+$C$-bar differential, and the horizontal faces are the $Q/C$-bar differential, with the
+factor $s(\bar q)s(\bar q')s(\bar q\bar q')^{-1}\in C$ inserted in the one face where two
+lifts are multiplied. The bar identities verify directly that the two differentials
+anticommute. The shuffle map and the reverse collection of the $C$-entries are mutually
+inverse up to the usual adjacent-face homotopies, so its total complex is a $Q$-free
+resolution. Use the dual construction in negative degrees and the norm splice in degrees
+$-1,0$; every calculation takes place in a finite rectangle before passing to the complete
+complex.
+
+After applying $\operatorname{Hom}(-,A)$, contract the vertical $C$-complex. Every nonzero
+$C$-cohomology row is exact by the hypothesis. The only surviving row is the invariant row
+$A^C$, with the norm splice identifying coinvariants and invariants because
+$\widehat H^{-1}(C,A)=\widehat H^0(C,A)=0$. The remaining horizontal complex is exactly the
+complete cochain complex of $Q/C$ with coefficients $A^C$, proving (5.5b). Choosing the
+sections compatibly makes these contractions commute with restriction to subgroups
+containing $C$.
+
+Apply this with $Q\subseteq P$ containing $C$. The assumed vanishing for $Q$ in degrees
+$q,q+1$ and (5.5b) gives the same two vanishings for $Q/C$ with coefficients $A^C$.
+Induction on $|P/C|$ makes $A^C$ Tate-acyclic for every subgroup of $P/C$, and (5.5b)
+then makes $A$ Tate-acyclic for every subgroup of $P$ containing $C$. If
+$Q\subseteq P$ does not contain $C$, then $Q$ is a proper subgroup of $P$, so the original
+induction hypothesis applied directly to $Q$ gives the same conclusion. Hence every Tate
+group of every Sylow subgroup vanishes. The Sylow injection above kills every primary
+component of every $\widehat H^r(J,A)$ and proves (5.5).
 
 We also record the products and subgroup maps, including their normalizations. A diagonal
 approximation is a chain map
@@ -1433,18 +1491,20 @@ $$
 and is an isomorphism by assumptions 2 and 3. A diagram chase in the two long exact sequences therefore gives
 
 $$
-\widehat H^0(H,A)=\widehat H^1(H,A)=0
+\widehat H^1(H,A)=\widehat H^2(H,A)=0
 $$
 
-for every subgroup $H$.
+for every subgroup $H$. Here is the indexing explicitly. If $I$ is the augmentation ideal,
+then $\widehat H^n(H,I)\cong\widehat H^{n-1}(H,\mathbf Z)$. In the exact sequence
+$0\to C\to A\to I\to0$, the group $\widehat H^n(H,A)$ lies between the cokernel of the
+two-extension connecting map in degree $n-2$ and its kernel in degree $n-1$. For $n=1$ these
+are the maps in degrees $-1,0$ above; for $n=2$ the first is the degree-$0$ isomorphism and
+the second has zero source
+$\widehat H^1(H,\mathbf Z)=\operatorname{Hom}(H,\mathbf Z)=0$.
 
-The cohomological-triviality criterion (5.5) says that a $G$-module $A$ with
-$\widehat H^0(H,A)=\widehat H^1(H,A)=0$ for every subgroup $H$ has
-$\widehat H^r(H,A)=0$ for all $r$. Its dimension-shifting mechanism maps an induced module of
-the form $\mathbf Z[G]\otimes_{\mathbf Z}A$ onto $A$ and embeds $A$ into the corresponding
-coinduced module. The induced and coinduced modules are Tate-acyclic for every subgroup; their
-kernels and cokernels shift cohomology in the two directions. Thus $A$ is cohomologically
-trivial.
+Taking $q=1$ in the cohomological-triviality criterion (5.5) therefore gives
+$\widehat H^r(H,A)=0$ for every subgroup $H$ and every $r$. Thus $A$ is
+cohomologically trivial.
 
 With the Tate cohomology of both middle modules zero, the long exact sequence of the two-extension makes every connecting map an isomorphism. These connecting maps are cap products with $u$, proving the lemma. $\square$
 
@@ -1934,7 +1994,7 @@ $$
 G^s=G_{\psi(s)},
 $$
 
-where $\psi=\varphi^{-1}$. These conventions put inertia at index $0$ and make a lower break $b$ occur at the upper index $\varphi(b)$.
+where $\psi=\varphi^{-1}$. These conventions put inertia at index $0$ and make a lower break $b$ occur at the upper index $\varphi(b)$. The residue field is finite and hence perfect, so the Hasse--Arf theorem of Book 3 already proves that the upper breaks of the abelian group $G$ are integers. We use that theorem only for this integrality assertion; the norm-index calculation below is independent of reciprocity--ramification compatibility.
 
 Let $E=M^{G_0}$. The norm on the finite residue extension $l/k$ is surjective on nonzero
 elements, and its trace is surjective because finite fields are separable. Under
@@ -1943,113 +2003,179 @@ residue-field norm for $r=0$. It therefore creates no unit cokernel. It is enoug
 totally ramified extension $M/E$; we relabel $E$ as $K$ for the filtered calculation, so both
 residue fields are $l$ and $G=G_0$.
 
-Choose a uniformizer $z$ of $M$. At a positive integral lower break $b$, the map
+We replace an informal orbit expansion by a prime-degree calculation and a finite-filtration
+induction. Both ingredients will also be useful for checking the endpoint convention.
+
+**Prime-degree calculation.** Let $L/F$ be cyclic of prime degree $\ell$.
+
+* If $L/F$ is unramified, reduction gives the surjective norm $l^\times\to k^\times$.
+  For $r>0$, the congruence
+
+  $$
+  N(1+x)\equiv1+\operatorname{Tr}(x)\pmod {\mathfrak m_F^{r+1}}
+  \qquad(x\in\mathfrak m_L^r)
+  $$
+
+  and separability of $l/k$ make every map $U_L^r/U_L^{r+1}\to
+  U_F^r/U_F^{r+1}$ surjective. Successive lifting and completeness give
+  $N(U_L^0)=U_F^0$.
+
+* If $L/F$ is totally and tamely ramified, its residue fields agree. On residue units the
+  norm is $x\mapsto x^\ell$, whose cokernel has order $\ell$ (a tame Galois extension has
+  $\ell\mid |k^\times|$). On principal units the trace is onto: the different exponent is
+  $\ell-1$, so the trace-ideal formula of Book 3 gives
+  $\operatorname{Tr}(\mathfrak m_L^{\ell r})=\mathfrak m_F^r$; the same congruence and
+  successive lifting give $N(U_L^1)=U_F^1$. Thus the only defect is the tame break at $0$.
+
+* Suppose $\ell=p=\operatorname{char}k$ and $L/F$ is totally ramified. Its group has one
+  lower (and upper) break $b\geq1$. Choose a generator $\sigma$, a uniformizer $z$, and write
+
+  $$
+  \frac{\sigma(z)}z=1+\eta z^b,\qquad \eta\in\mathcal O_L^\times. \tag{6.2}
+  $$
+
+  If $f$ is the minimal polynomial of $z$, then
+
+  $$
+  f'(z)=\prod_{j=1}^{p-1}(z-\sigma^jz),qquad
+  v_L(f'(z))=(p-1)(b+1). \tag{6.3}
+  $$
+
+  Thus the different exponent is $(p-1)(b+1)$, and the trace-ideal formula of Book 3 gives
+
+  $$
+  \operatorname{Tr}_{L/F}(\mathfrak m_L^r)
+  =\mathfrak m_F^{\,b+1+\lfloor(r-1-b)/p\rfloor}. \tag{6.4}
+  $$
+
+  We spell out the norm expansion. For $x\in\mathfrak m_L$, expand
+  $\prod_{j=0}^{p-1}(1+\sigma^jx)$. The terms of degrees $1$ and $p$ are
+  $\operatorname{Tr}(x)$ and $N(x)$. For $1<d<p$, cyclically averaging a degree-$d$
+  monomial writes the sum of all degree-$d$ terms as $\operatorname{Tr}(y_d)/d$; $d$ is a
+  unit in $\mathcal O_F$. Hence
+
+  $$
+  N(1+x)=1+\operatorname{Tr}(x)+N(x)+\operatorname{Tr}(y),\qquad
+  v_L(y)\geq2v_L(x). \tag{6.5}
+  $$
+
+  Put $\varpi=(-1)^{p-1}N(z)$, a uniformizer of $F$, and use residue coordinates
+  $1+\theta z^r\mapsto\bar\theta$ and
+  $1+\theta\varpi^s\mapsto\bar\theta$. Equations (6.2)--(6.5) give the following three
+  induced maps; every omitted term is one level deeper by (6.4):
+
+  $$
+  \begin{array}{rcll}
+  U_L^r/U_L^{r+1}&\longrightarrow&U_F^r/U_F^{r+1},
+       &\bar\theta\longmapsto\bar\theta^{\,p},\quad 1\leq r<b,\\[2mm]
+  U_L^b/U_L^{b+1}&\longrightarrow&U_F^b/U_F^{b+1},
+       &\bar\theta\longmapsto
+       \bar\theta^{\,p}-\bar\eta^{\,p-1}\bar\theta,\\[2mm]
+  U_L^{b+pi}/U_L^{b+pi+1}&\longrightarrow&U_F^{b+i}/U_F^{b+i+1},
+       &\bar\theta\longmapsto-\bar\eta^{\,p-1}\bar\theta,\quad i>0.
+  \end{array} \tag{6.6}
+  $$
+
+  For completeness, the middle coefficient follows by taking the norm of (6.2):
+  $1=N(\sigma(z)/z)$, whose terms of target depth $b$ say
+  $\operatorname{Tr}(\eta z^b)\equiv-N(\eta z^b)\pmod{\mathfrak m_F^{b+1}}$.
+  Substitution in (6.5) gives the middle line, and replacing $\theta$ there by
+  $\theta\varpi^i$ gives the last line. Thus no unlisted symmetric term can occur at the
+  displayed depth.
+
+  Frobenius is an automorphism of the finite residue field, so the first line is bijective.
+  The middle additive polynomial has kernel
+  $\bar\eta\mathbf F_p$ and hence image of index $p$. The last line is bijective. Lifting
+  along it for $i=1,2,\ldots$ and taking the convergent product of the corrections gives
+
+  $$
+  U_F^{b+1}\subseteq N(U_L^{b+p}). \tag{6.7}
+  $$
+
+  Reduction of the norm on $U_L^0/U_L^1$ is Frobenius and is bijective. It follows from the
+  first line that $N(U_L^0)U_F^m=U_F^0$ for $m\leq b$. Finite reciprocity, already proved in
+  Chapter 5 without this calculation, gives
+  $[U_F^0:N(U_L^0)]=p$ for this totally ramified degree-$p$ extension. Together with (6.7)
+  this says that the index becomes $p$ precisely on passing from $m=b$ to $m=b+1$.
+
+These three cases prove (6.1) for a cyclic extension of prime degree.
+
+We now give the composition argument, rather than hiding it in the phrase “iterate through
+the breaks.” For a prime step $L/F$, let $h_{L/F}$ be the source-depth function read from the
+three calculations above:
 
 $$
-c_b:G_b/G_{b+1}\hookrightarrow l^+,
-\qquad
-c_b(\sigma)=
-\overline{\frac{\sigma(z)-z}{z^{b+1}}}
+h_{L/F}(x)=
+\begin{cases}
+x,&L/F\text{ unramified},\\
+\ell x,&L/F\text{ tame totally ramified},\\
+x,&x\leq b,\\
+b+p(x-b),&x\geq b
+\end{cases} \tag{6.8}
 $$
 
-is injective. Indeed, vanishing of $c_b(\sigma)$ is exactly the stronger congruence
-$\sigma(z)\equiv z\pmod{\mathfrak m_M^{b+2}}$, which says $\sigma\in G_{b+1}$. The identity
+in the wild case using the last two lines. Equations (6.6) say more precisely that norm takes
+the graded source layer at $h(x)$ to the target layer at $x$, bijectively off a break, and
+with cokernel equal to the prime ramification quotient at a break.
+
+For a tower $F\subseteq E\subseteq L$, form the finite quotients
 
 $$
-\sigma\tau(z)-z
-=\sigma(\tau(z)-z)+(\sigma(z)-z)
+\mathcal U_X[a,c)=U_X^a/U_X^c.
 $$
 
-shows that $c_b$ is additive, because inertia acts trivially on residues. At $b=0$, the same
-argument with $\overline{\sigma(z)/z}$ gives an injection
-$G_0/G_1\hookrightarrow l^\times$.
-
-We need the following filtered product calculation. It is stated with all error terms because
-this is where a mere appeal to the linear term of the norm would be insufficient.
-
-**Filtered product calculation.** Put $V_r=U_M^r/U_M^{r+1}$ and
-$W_s=U_K^s/U_K^{s+1}$. Thus $V_r$ and $W_s$ are copies of $l^+$ for $r,s>0$, while
-$V_0=W_0=l^\times$. Filter the product
+Norm transitivity gives a commutative diagram of the corresponding finite filtered groups for
+$L/E$, $E/F$, and $L/F$. Refine both source filtrations at all integers occurring in
+$h_{L/E}(h_{E/F}(0)),\ldots,h_{L/E}(h_{E/F}(m))$. On every successive quotient the vertical
+maps are exactly the maps in (6.6), or their unramified and tame analogues. The exact rows
 
 $$
-N(1+x)=\prod_{\sigma\in G}(1+\sigma x) \tag{6.2}
+1\longrightarrow \mathcal U_X[b,c)
+\longrightarrow \mathcal U_X[a,c)
+\longrightarrow \mathcal U_X[a,b)\longrightarrow1 \tag{6.9}
 $$
 
-by powers of $z$. Suppose first that the lower group is a fixed subgroup $H$ throughout
-$b<t<b+d$. Group the factors in (6.2) into $H$-orbits and then into $G/H$-orbits. Modulo the
-next power of $z$, multiplication by one complete $G/H$-orbit replaces
-$[G:H]$ consecutive source layers by one target layer. In residue coordinates the map is
-$Y\mapsto\alpha Y$ for a nonzero $\alpha\in l$ and is therefore bijective.
-
-At the right endpoint $b$ group first by $G_{b+1}$ and then by
-$G_b/G_{b+1}$. The congruence
+show, by the elementary kernel--cokernel count
 
 $$
-\sigma(z)=z+c_b(\sigma)z^{b+1}+O(z^{b+2}) \tag{6.3}
+|\operatorname{coker}(vu)|
+=|\operatorname{coker}v|\,|\operatorname{coker}u|\,
+\frac{|\ker v\cap\operatorname{im}u|}{|\ker v|},
 $$
 
-shows that, after multiplying source and target coordinates by nonzero constants, the first
-term not already consumed on the open interval is the following polynomial, where
-$C_b=c_b(G_b/G_{b+1})\subseteq l$:
+that a bijective intermediate layer contributes $1$, while an endpoint contributes its prime
+quotient exactly once. In the adjacent row of (6.9), the quotient
+$|\ker v|/|\ker v\cap\operatorname{im}u|$ is precisely the image index carried forward from
+the preceding source layer, so the two factors cancel. Multiplying the finite row counts
+therefore
+gives
 
 $$
-P_{C_b}(Y)=\prod_{c\in C_b}(Y+c). \tag{6.4}
+h_{L/F}=h_{L/E}\circ h_{E/F}, \qquad
+\text{total defect through depth }m
+=\prod_{0\leq s<m}|\Gamma^s/\Gamma^{s+1}|, \tag{6.10}
 $$
 
-Here is the promised error check. In the product of the expressions (6.3), a monomial which
-uses $j$ correction terms has extra $z$-valuation at least $jb$. If its chosen corrections do
-not form a union of $G_b$-orbits, summing its translates makes its residue coefficient zero;
-if they do form such a union, it has already appeared in the product for the preceding
-constant interval. Thus below the valuation of (6.4) every elementary symmetric term either
-vanishes or belongs to the already-consumed target filtration. At the valuation of (6.4), the
-only new terms choose one leading correction from each coset of $G_{b+1}$ in $G_b$, and their
-sum is exactly the product (6.4). Terms containing an $O(z^{b+2})$ factor lie one level deeper.
-This proves both the asserted first term and, since the argument is unchanged after replacing
-$x$ by $x+x'$ modulo its next layer, compatibility with addition on successive quotients.
+where $\Gamma$ is the Galois group of the composite step. This is a finite calculation:
+choose the final source cutoff occurring above, so no inverse-limit exactness is being used.
+Only after the count is complete do we pass to the complete unit groups.
 
-The polynomial (6.4) is additive on $l$. Indeed, for fixed $y$ the polynomial
+Because $G$ is abelian, choose a composition series of $G$; all its terms are normal and the
+corresponding field tower has cyclic prime-degree steps. Applying (6.9)--(6.10) inductively
+proves that the norm defect at an integer upper depth is the product of precisely the
+ramification quotients already crossed. The tower composition of $h$ is the inverse
+Herbrand function: its slopes in (6.8) are the indices of the lower ramification groups, and
+Book 3 proves both transitivity of Herbrand functions and quotient compatibility. Hence
 
 $$
-P_{C_b}(X+y)-P_{C_b}(X)-P_{C_b}(y)
+\left[U_K^0:N(U_M^0)U_K^m\right]
+=\prod_{0\leq s<m}|G^s/G^{s+1}|
+=[G^0:G^m]. \tag{6.11}
 $$
 
-has degree less than $|C_b|$ in $X$ and vanishes at every $X\in C_b$, because translation by
-an element of $C_b$ permutes the factors. It is therefore zero. Its kernel on $l$ is exactly
-$C_b$, so, because $l$ is finite, its image has index
-$|C_b|=|G_b/G_{b+1}|$. At the tame endpoint the same multiplication, in multiplicative
-coordinates, is the $|G_0/G_1|$th-power map on $l^\times$ up to an automorphism; its cokernel
-has order $|G_0/G_1|$. This completes the filtered product calculation.
-
-We now iterate it. If the lower group is constant and equal to $H$ on an interval of lower
-length $d$, traversing that interval consumes $d$ source layers. One target layer is consumed
-after $[G_0:H]$ source layers, so the number of target layers traversed is
-
-$$
-\frac d{[G_0:H]}.
-$$
-
-Adding over all constant intervals from $0$ to a lower index $u$ gives exactly $\varphi(u)$.
-The filtered product calculation says that ordinary blocks contribute no cokernel, while the
-endpoint $b$ contributes exactly $|G_b/G_{b+1}|$. At depth zero we start with
-$C_0=U_K^0$; crossing the tame endpoint records the cokernel of the residue power map, and
-then the positive breaks record the additive-polynomial cokernels. Induction through the
-finite list of breaks gives, for nonintegral $s$,
-
-$$
-\left[U_K^0:N(U_M^0)U_K^{\lceil s\rceil}\right]
-=\left[G^0:G^s\right]. \tag{6.5}
-$$
-
-The left side is constant when $s$ varies inside $(m,m+1)$, so the right side is constant
-there as well. Therefore every upper break is an integer. Taking the left limit at an integer
-endpoint, in accordance with our convention that a group is retained at the break, gives
-
-$$
-[C_m:C_{m+1}]=[G^m:G^{m+1}]. \tag{6.6}
-$$
-
-Multiplication from $0$ to $m-1$ proves the first identity in (6.1), initially for the totally
-ramified extension and then, by the first paragraph, for $M/K$.
+The unramified first stage causes no defect on any unit layer, as proved at the start, so the
+same formula holds before the reduction to total ramification. Dividing (6.11) at $m+1$ by
+the formula at $m$ gives the second identity of (6.1).
 
 It remains to prove the final assertion. Finite reciprocity gives
 $[K^\times:N(M^\times)]=|G|$. The norm-valuation formula says that the valuation coordinate
