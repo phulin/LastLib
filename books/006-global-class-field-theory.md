@@ -1743,14 +1743,9 @@ $$
 The parenthesized endomorphism is a chain map with image in the preceding
 piece, and direct multiplication gives $ds_r+s_rd=1$. Induction proves the
 claim. Apply it to the cone of (4.F4s). The preceding explicit graded checks
-make that cone contractible. To dualize (4.F4o), use the injective group
-$\mathbf Q/\mathbf Z$. Every term of the two coefficient complexes is killed
-by $n$, so every homomorphism from such a term to $\mathbf Q/\mathbf Z$ lands
-in $(\mathbf Q/\mathbf Z)[n]=\tfrac1n\mathbf Z/\mathbf Z$. Hence their
-$\operatorname {Hom}(-,\tfrac1n\mathbf Z/\mathbf Z)$ dual complexes are
-literally their $\operatorname {Hom}(-,\mathbf Q/\mathbf Z)$ duals.
-Injectivity of $\mathbf Q/\mathbf Z$ makes the latter functor exact, so
-dualizing (4.F4o) preserves the quasi-isomorphism. Two-out-of-three therefore proves that the original
+make that cone contractible. Since $\tfrac1n\mathbf Z/\mathbf Z$ is
+injective, dualizing the filtered quasi-isomorphism (4.F4o) preserves
+quasi-isomorphisms. Two-out-of-three therefore proves that the original
 cochain map (4.C4) induces isomorphisms in the displayed degrees $1,2,3$:
 
 $$
