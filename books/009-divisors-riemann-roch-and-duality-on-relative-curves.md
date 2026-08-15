@@ -432,25 +432,24 @@ $$
 \longrightarrow0. \tag{5.3}
 $$
 
-Since $D$ is zero-dimensional, it has no $H^1$, and its Euler characteristic is the $k$-dimension of its global sections. Locally an effective divisor $n[x]$ has length $n$ over $\mathcal O_{X,x}$, so
+Since $D$ is zero-dimensional, it has no $H^1$, and its Euler characteristic is the $k$-dimension
+of its global sections. On a regular integral curve the local equation has order $n_x$ and the
+quotient has length $n_x$, so
 
 $$
 \chi(\mathcal O_X(D))-\chi(\mathcal O_X)=\deg D.
 $$
 
-Differences of effective divisors give the general case. On a proper Cohen--Macaulay curve, every
-line bundle has a rational section generating it at all associated points, because there are no
-embedded associated points. Its divisor represents the bundle. After adding a sufficiently
-positive effective Cartier divisor, that divisor becomes a difference of effective Cartier
-divisors, so the same length calculation applies. It also proves additivity:
+On an arbitrary proper curve the same equation reads
+$\deg D=\sum_x\operatorname{length}_{\mathcal O_{X,x}}(\mathcal O_{D,x})
+[\kappa(x):k]$ and is the Cartier-divisor degree; no Weil multiplicity at a singular point is
+being assumed.
 
-$$
-\deg(\mathcal L\otimes\mathcal M)
-=\deg\mathcal L+\deg\mathcal M
-$$
-
-for all line bundles on such a curve. Thus the Euler-characteristic definition is a homomorphism
-$\operatorname{Pic}(X)\to\mathbf Z$, not merely a numerical convention.
+Differences of effective point divisors give the general case on a regular integral curve, because
+the positive and negative valuation parts of a divisor are effective Cartier divisors. Thus (5.1)
+and (5.2) agree and additivity follows in that setting. For a singular curve, (5.2) is at this
+stage a numerical definition only; clearing a rational Cartier divisor by a positive divisor
+requires projectivity and is not imported from a later chapter here.
 
 ### 5.3 Degree in a proper flat family
 
@@ -853,29 +852,28 @@ singular.
 **Lemma 9.1A (proper curves are projective).** Every proper $k$-scheme of finite type and pure
 dimension one which has no embedded associated points is projective over $k$.
 
-**Proof.** There are finitely many irreducible components and finitely many intersection and
-associated points. On each component choose a closed point away from all the others. In a small
-affine neighborhood of such a point, prime avoidance gives a function which is a non-zero-divisor
-and whose zero set is finite. Remove the other zeros and glue this equation to the unit equation
-on the complement. Repeating the construction gives an effective Cartier divisor $D$ whose
-support meets every irreducible component.
+**Proof.** Let $\nu:\widetilde X\to X_{\mathrm{red}}$ be the disjoint union of the normalizations
+of the irreducible components. It is finite by Book 8, and the same book's compactification
+argument makes each normal proper component projective without using duality or Riemann--Roch.
+Choose a very ample bundle on every component. A sufficiently high power is generated with
+prescribed values at the finite set over the conductor and the component intersections, so it has
+a section nonvanishing there. Its zero divisor $E_i$ is nonempty and lies where $\nu$ is an
+isomorphism. On a small affine neighborhood of every point of its image, lift its parameter from
+$X_{\mathrm{red}}$ to $X$. Because $X$ has no embedded associated points and the reduction of
+the parameter avoids every minimal prime, the lift is a non-zero-divisor. Remove any other zeros
+and glue to the unit equation on the complement. The resulting effective Cartier divisor $D$ on
+$X$ pulls back on each normalized component to $E_i$ and meets every component.
 
-We use the elementary curve ampleness criterion: on a proper noetherian scheme of dimension one,
-$\mathcal O(D)$ is ample when $D$ is an effective Cartier divisor meeting every irreducible
-component. Here is a proof in the required generality. Pass first to the reduction and then to
-the disjoint union of the normalizations of its components. The latter map is finite. Book 8's
-finite-normalization argument makes every normal proper component projective. On such a component,
-weak approximation in its discrete valuation rings produces, for every point, a rational function
-whose poles are supported on the nonempty inverse image of $D$ and for which that point lies in an
-affine principal open. Clearing the pole orders makes these functions sections of powers of
-$\mathcal O(D)$; finitely many of their affine nonvanishing loci cover the component. Thus the
-pullback of $\mathcal O(D)$ is ample. Affineness descends through a finite surjection: if
-$V\to U$ is finite surjective with $V$ affine and $U$ separated noetherian of dimension one, the
-conductor square reduces $U$ to the affine normalization together with a finite closed subscheme,
-and the resulting fiber product of rings represents $U$. Hence the same nonvanishing opens are
-affine downstairs, proving ampleness on the reduction. Finally a nilpotent thickening of an affine
-scheme is affine, by the finite filtration of its nilpotent ideal; ampleness therefore lifts from
-$X_{\mathrm{red}}$ to $X$.
+For completeness, ampleness descends here without invoking a general finite-descent theorem.
+On the reduced curve, the kernel and cokernel of
+$F\to\nu_*\nu^*F$ are supported on the finite conductor for every coherent $F$. Since
+$\mathcal O(E_i)$ is ample upstairs, Serre vanishing and eventual generation hold for
+$\nu^*F\otimes\mathcal O(nE_i)$. The conductor terms have no higher cohomology, and after one
+more power the restriction maps onto them are surjective. The two kernel--cokernel sequences
+therefore give vanishing and generation for $F\otimes\mathcal O(nD)$ downstairs. Serre's
+criterion makes $\mathcal O(D)|_{X_{\mathrm{red}}}$ ample. Finally filter the nilradical of $X$
+by its powers. Its successive quotients are coherent sheaves on $X_{\mathrm{red}}$, so the same
+vanishing-and-generation argument lifts ampleness across the nilpotent thickening.
 
 A sufficiently high power of an ample line bundle is very ample by the embedding theorem of Book
 8, and properness turns the resulting immersion into a closed immersion. Thus $X$ is projective.
@@ -891,8 +889,8 @@ of such curves have the transitive trace (9.8).
 regular ambient projective space a coherent sheaf has a finite vector-bundle resolution, so
 there we apply $\mathcal Hom$ term by term and identify homotopy-equivalent resolutions. On
 the possibly singular curve we do not make that assertion: the change-of-rings construction
-below uses a bounded-above local free resolution and the finite ambient resolution, and its
-one-row collapse supplies the required bounded dual.
+below uses a functorial semi-free dg resolution and the finite ambient resolution. Strict dg
+currying supplies the comparison, and Ext concentration supplies the required bounded dual.
 
 First consider $P=\mathbf P^N_k$. The standard affine cover gives the homogeneous Čech complex.
 For a twist $\mathcal O_P(a)$ its top Čech term consists of Laurent monomials of total degree
@@ -981,8 +979,9 @@ $\operatorname{Bar}_B(M)\to M$. Its differential, including all bar terms, squar
 associativity; no choices of null-homotopies or unrecorded higher coherences occur. Currying is
 then an equality of dg Hom complexes
 
-# $$\operatorname{Hom}_R(\operatorname{Bar}_B(M),I^\bullet)
-
+$$
+\operatorname{Hom}_R(\operatorname{Bar}_B(M),I^\bullet)
+\simeq
 \operatorname{Hom}_B\!\left(
 \operatorname{Bar}_B(M),\operatorname{Hom}_R(B,I^\bullet)\right). \tag{9.5a}
 $$
@@ -990,9 +989,11 @@ $$
 The left side computes $R\operatorname{Hom}_R(M,\omega_P)$ because $I^\bullet$ is
 $K$-injective, and the right side computes
 $R\operatorname{Hom}_B(M,R\operatorname{Hom}_R(B,\omega_P))$ because the bar resolution is
-$K$-projective over $B$. Formula (9.5a) is natural in $M$ and in restriction of affine opens;
-therefore the affine maps glue uniquely as a map of derived sheaf Hom complexes. The finite
-ambient resolution $E^\bullet$ identifies the second argument with
+$K$-projective over $B$. The chosen $K$-injective models themselves need not restrict, but
+(9.5a) represents the canonical restriction--coinduction adjunction; comparison quasi-isomorphisms
+between two models are unique in the derived category. Hence the maps agree after restricting
+affine opens and glue as a map of derived sheaf Hom complexes. The finite ambient resolution
+$E^\bullet$ identifies the second argument with
 $\omega_X[-c]$ by (9.4). This gives the functorial change-of-rings quasi-isomorphism
 
 $$
@@ -1044,8 +1045,8 @@ $$
 \operatorname{Hom}_B(M,\operatorname{Hom}_A(B,W))
 $$
 
-is evaluation/currying. Applying it to finite resolutions and using uniqueness of the
-representing pair gives
+is evaluation/currying. Applying the $K$-injective dg version used in (9.5a)--so no finite
+$A$-resolution of $B$ is assumed--and using uniqueness of the representing pair gives
 
 $$
 \pi_*\omega_Y\simeq
@@ -1150,9 +1151,15 @@ $\bigoplus_{n\geq0}I^n$. In the projective case this is obtained by a finite gra
 and the homogeneous Čech complex; kernels, cokernels, and higher direct images in the Chow
 induction are finite graded modules, so the assertion passes through the preceding dévissage.
 Finite generation gives the Artin--Rees bounds: for some $c$, multiplication by
-$I^{n-c}$ generates the degree-$n$ terms for every $n\geq c$. Apply this simultaneously to the
-cycles and boundaries in a finite truncation computing degrees $q-1,q,q+1$. The resulting maps
-of inverse systems show that
+$I^{n-c}$ generates the degree-$n$ terms for every $n\geq c$. Let
+$F_n^q$ be the image of $H^q(Z,I^nG)$ in $H^q(Z,G)$. The bounds make the filtration
+$\{F_n^q\}$ cofinal with the $I$-adic filtration. The long exact sequence for
+$0\to I^nG\to G\to G/I^nG\to0$ identifies the cokernel of
+$H^q(Z,G)/F_n^q\to H^q(Z,G/I^nG)$ with the kernel of
+$H^{q+1}(Z,I^nG)\to H^{q+1}(Z,G)$. Applying the same Rees bound in degree $q+1$ shows that
+this kernel system is pro-zero: the transition from index $n+c$ to index $n$ is zero after
+increasing the fixed Artin--Rees constant once more. Replacing the cofinal filtration $F_n^q$
+by $I^nH^q(Z,G)$ therefore shows that
 
 $$
 \{H^q(Z,G)/I^nH^q(Z,G)\}_n
@@ -1247,9 +1254,10 @@ an $S$-flat coherent sheaf $\omega_{X/S}$ with trace (9.12) and functorial duali
 The sheaf, trace, and pairing are independent of projective embeddings and commute with every
 base change $S'\to S$ as in (9.10).
 
-**Proof.** We work locally on $S$, where
-the preceding projectivity argument supplies an embedding
-$i:X\hookrightarrow P=\mathbf P^N_S$. Put $c=N-1$.
+**Proof.** We first work after the faithfully flat finite-presentation neighborhood supplied by
+Lemma 9.2A; there the curve has an embedding
+$i:X\hookrightarrow P=\mathbf P^N_S$. The final paragraph descends the resulting canonical
+objects to the original base. Put $c=N-1$.
 
 We first record the relative form of the two algebraic ingredients used above. Over an affine
 $\operatorname{Spec}A\subseteq S$, the exponentwise contractions used after (9.1) are defined
@@ -1400,21 +1408,28 @@ $i=(i_1,i_2):X\hookrightarrow P_1\times_SP_2$ is a common refinement. To compare
 $i_1$, base-change a resolution of $X\subset P_1$ to resolve
 $X\times_SP_2\subset P_1\times_SP_2$. The graph of $i_2$ is a section
 $X\hookrightarrow X\times_SP_2$ of the smooth projection and is therefore a regular immersion
-of codimension $\dim(P_2/S)$. Apply the fundamental-class lemma locally and replace each term,
-which is finite locally free over $\mathcal O_{X\times P_2}$, by the base-changed ambient
-resolution. The resulting local total complexes glue as perfect complexes by the cocycle just
-proved and resolve the product embedding. On duals, the canonical identification is dg
-currying
+of codimension $\dim(P_2/S)$. The fundamental-class lemma says globally in the derived category
+that this graph is perfect over $X\times_SP_2$; the base-changed resolution says that
+$X\times_SP_2$ is perfect over $P_1\times_SP_2$. Perfectness is local and closed under
+composition, so the product embedding is perfect. The global relative-syzygy construction above
+now supplies a universally exact finite ambient resolution of it. On every
+Koszul chart that resolution is homotopy equivalent to the composite perfect object, and the
+fundamental-class cocycle makes these identifications canonical in the derived category. On
+duals, the canonical identification is the sheafified dg currying isomorphism. Writing
+$Q=P_1\times_SP_2$, $Y=X\times_SP_2$, and $k:Y\hookrightarrow Q$, it is
 
 $$
-\operatorname{Hom}(E_1\otimes^L E_2,\omega_{P_1/S}\otimes\omega_{P_2/S})
+R\mathcal Hom_Q(k_*j_*\mathcal O_X,\omega_{Q/S})
 \simeq
-\operatorname{Hom}\!\left(E_1,
-  \operatorname{Hom}(E_2,\omega_{P_1/S}\otimes\omega_{P_2/S})\right).
+k_*R\mathcal Hom_Y\!\left(j_*\mathcal O_X,
+  k^!\omega_{Q/S}\right),
 $$
 
-The displayed formula should be read locally on the chosen perfect representatives; its maps
-glue by the fundamental-class lemma. The two Čech coefficient functionals are compatible because
+where $k^!\omega_{Q/S}$ is notation here for the explicitly computed dg coinduction
+$R\mathcal Hom_Q(k_*\mathcal O_Y,\omega_{Q/S})$, viewed as a complex on $Y$; no general
+exceptional inverse-image functor is being assumed. Affine-locally this is the equality of dg Hom
+complexes (9.5a), so it is canonical and associative. The two Čech coefficient
+functionals are compatible because
 extracting the top coefficient first in the $P_2$ variables and then in the $P_1$ variables is
 the same as extracting the coefficient of the product monomial. Thus the common refinement gives
 a canonical trace-compatible isomorphism between the two Ext sheaves. A triple product gives the
@@ -1586,7 +1601,10 @@ formula shows explicitly that residue-field degrees are not lost before splittin
 
 The right side below can be defined directly, without global duality; call it the **Rosenlicht
 sheaf**. After splitting the branches, write $\operatorname{res}$ for the Laurent coefficient of
-$dt/t$ on a branch. The absolute theorem of Section 9.2 shows that the Rosenlicht sheaf is
+$dt/t$ on a branch. In the geometrically nodal setting the normalization is smooth over $k$:
+after a separable splitting extension it is regular with smooth completed branches, and smoothness
+descends. Thus ordinary differentials on the normalization are legitimate here. The absolute
+theorem of Section 9.2 shows that the Rosenlicht sheaf is
 the dualizing sheaf and
 
 $$
@@ -1857,9 +1875,21 @@ $$
 
 a construction depending only on the $\Lambda$-algebra $B$.
 
-_Proof._ For a noetherian complete local $\Lambda$-algebra $B$ with $\Lambda\to B$ local, let $\widehat\Omega^1_{B/\Lambda}$ denote the $\mathfrak m_B$-adic completion of $\Omega^1_{B/\Lambda}$. It is a finite $B$-module and depends only on the $\Lambda$-algebra $B$: any $\Lambda$-algebra isomorphism of local rings carries the maximal ideal to the maximal ideal, hence is continuous, hence is compatible with the completion. Fitting ideals of a finite module are independent of the chosen presentation, so $\operatorname{Fitt}_1\widehat\Omega^1_{B/\Lambda}$ is likewise intrinsic.
+_Proof._ For the topologically finitely presented complete local $\Lambda$-algebras occurring
+here, let $\widehat\Omega^1_{B/\Lambda}$ be the module of continuous differentials, equivalently
+the inverse limit of the finite-level differential modules. This avoids treating the usually
+nonfinite ordinary differential module of a power-series ring as finite. The continuous module is
+finite and intrinsic: a $\Lambda$-algebra isomorphism of complete noetherian local rings carries
+the maximal ideal to the maximal ideal, is continuous, and transports continuous derivations.
+Fitting ideals are independent of a finite presentation, so
+$\operatorname{Fitt}_1\widehat\Omega^1_{B/\Lambda}$ is intrinsic.
 
-Now compute it for $B=\Lambda[[u,v]]/(uv-a)$. Continuous differentials of a formal power series ring are free, $\widehat\Omega^1_{\Lambda[[u,v]]/\Lambda}=\Lambda[[u,v]]\,du\oplus\Lambda[[u,v]]\,dv$. Writing $P=\Lambda[[u,v]]$ and $F=uv-a$, the second fundamental exact sequence $(F)/(F^2)\to\Omega^1_{P/\Lambda}\otimes_PB\to\Omega^1_{B/\Lambda}\to0$ stays exact after completion, because completion is exact on finite modules over a noetherian ring and is right exact in general, and it yields the finite presentation
+Now compute it for $B=\Lambda[[u,v]]/(uv-a)$. Continuous differentials of a formal
+power-series ring are free,
+$\widehat\Omega^1_{\Lambda[[u,v]]/\Lambda}=\Lambda[[u,v]]\,du\oplus
+\Lambda[[u,v]]\,dv$. At every Artinian quotient the conormal sequence is right exact; taking
+the inverse limit preserves this presentation because all transition maps are surjective. Thus,
+writing $F=uv-a$, the continuous conormal sequence gives
 
 $$
 B\xrightarrow{\ (v,\;u)\ }B\,du\oplus B\,dv\longrightarrow\widehat\Omega^1_{B/\Lambda}\longrightarrow0,
@@ -1871,7 +1901,10 @@ $$
 B/(u,v)B=\Lambda[[u,v]]/(uv-a,u,v)=\Lambda/a\Lambda .
 $$
 
-Hence the kernel of $\Lambda\to B/\operatorname{Fitt}_1\widehat\Omega^1_{B/\Lambda}$ is $a\Lambda$, which proves both assertions. $\square$
+Hence the kernel of $\Lambda\to B/\operatorname{Fitt}_1\widehat\Omega^1_{B/\Lambda}$ is
+$a\Lambda$. In a local ring two nonzero generators of the same principal ideal differ by a
+unit: if $a=ra'$ and $a'=sa$, then $(1-rs)a=0$, and $rs$ cannot lie in the maximal ideal unless
+$a=0$. The zero case is immediate. This proves both assertions. $\square$
 
 Geometrically, $\operatorname{Fitt}_1\widehat\Omega^1$ cuts out the locus where the relative differentials fail to be generated by a single element; for the model it is the closed subscheme $V(u,v)$, the locus carrying the singularity, and the proposition says that this locus maps isomorphically onto the closed subscheme $\operatorname{Spec}\Lambda/a\Lambda$ of the base. The ideal $a\Lambda$ therefore records exactly the base directions along which the node persists. Two consequences are what later books need. First, when $\Lambda$ is a complete discrete valuation ring with uniformizer $\pi$, the integer
 
@@ -2006,7 +2039,15 @@ because the latter degree is at most $-1$. The evaluation map at $p$ is therefor
 ### 11.4 Gorenstein and nodal curves
 
 Let $C$ be a proper geometrically connected Gorenstein curve over $k$, pure of dimension one,
-and let $g=p_a(C)$. The Euler-characteristic identity, which is independent of duality, is
+and let $g=p_a(C)$. Lemma 9.1A makes $C$ projective. Consequently a rational Cartier divisor
+can be cleared by an effective one: after twisting $\mathcal O(D)$ by a high power of an ample
+bundle, Serre generation and homogeneous prime avoidance (the finite-field-safe argument of Book
+8) supply a section regular at every associated point; do the same for that ample power itself.
+The two zero divisors express $D$ up to a principal divisor as a difference of effective Cartier
+divisors. The length
+calculation of Section 5.2 now proves that the Euler-characteristic degree is additive on
+$\operatorname{Pic}(C)$ and agrees with Cartier-divisor degree. The Euler-characteristic
+identity, which is independent of duality, is
 
 $$
 \chi(C,\mathcal L)=\deg\mathcal L+1-g, \tag{11.5}
@@ -2200,9 +2241,11 @@ K^0\otimes_A B\longrightarrow K^1\otimes_A B. \tag{13.2}
 $$
 
 Tensoring this matrix with any $A$-algebra computes the base-changed cohomology. This proves
-perfectness, Tor-amplitude, and arbitrary derived base change simultaneously. On overlaps the
-complexes are uniquely identified with the same Čech cohomology functor, so the local perfect
-complexes descend; the base-change maps descend with them. $\square$
+perfectness, Tor-amplitude, and arbitrary derived base change simultaneously. No descent of
+chosen matrices is required: $Rf_*\mathcal E$ and its canonical base-change morphism are already
+global derived objects, while being perfect of a fixed Tor-amplitude is local on the base. On an
+overlap the two matrices are merely quasi-isomorphic representatives of that same object; they
+need not be uniquely chain-isomorphic. $\square$
 
 The model is stronger than a fiberwise dimension statement. It records every specialization by one matrix with entries in $A$. It is exactly the cohomological amount demanded by dimension one.
 
