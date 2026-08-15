@@ -295,9 +295,7 @@ for every prime $\mathfrak p$.
 
 **Theorem 4.1 (Serre's criterion).** A noetherian ring is normal if and only if it is reduced and satisfies $(R_1)$ and $(S_2)$.
 
-The complete proof, together with the depth calculus that makes $(S_2)$ well defined, is Chapter 14; Theorem 14.26 is the criterion itself and shows that reducedness is a consequence rather than an extra hypothesis. The following strategy explains the mechanism.
-
-**Proof strategy.** An integrally closed domain is the intersection of its height-one valuation rings inside its fraction field. Condition $(R_1)$ identifies those local rings as discrete valuation rings, while $(S_2)$ ensures that functions regular away from codimension at least two extend.
+**Proof.** Work componentwise after using the minimal primes. An integrally closed domain is the intersection of its height-one valuation rings inside its fraction field. Condition $(R_1)$ identifies those local rings as discrete valuation rings, while $(S_2)$ ensures that functions regular away from codimension at least two extend.
 
 For the forward implication, a noetherian normal local domain has depth at least two when its dimension is at least two: if a nonzero $a\in\mathfrak m$ were such that every element of $\mathfrak m$ were a zero divisor modulo $a$, prime avoidance would force an associated height-one prime incompatible with integral closedness. Height-one localizations are one-dimensional noetherian normal local domains and hence discrete valuation rings. Conversely, assume $(R_1)$ and $(S_2)$. If $x$ in the fraction field is integral over $A$, it belongs to every height-one localization. The intersection theorem supplied by $(S_2)$ gives
 
@@ -306,7 +304,16 @@ A=\bigcap_{\operatorname{ht}\mathfrak p=1}A_{\mathfrak p}
 \quad\text{inside }K(A),
 $$
 
-so $x\in A$. $\square$
+Here is the intersection argument. Put
+$I=\{r\in A:rx\in A\}$. Membership at every height-one localization says that $I$ is contained
+in no height-one prime. Choose a nonzerodivisor $r\in I$. Every associated prime of $A/rA$ has
+depth one; $(S_2)$ makes it height one. Prime avoidance therefore chooses
+$s\in I$ which is a nonzerodivisor on $A/rA$. Write $rx=u$ and $sx=v$. The equality $su=rv$
+and regularity of $s$ modulo $r$ give $u=rw$, hence $x=w\in A$. The identical local argument
+also shows that an $(R_1),(S_2)$ local ring has only one minimal prime: two minimal primes would
+give, at a prime minimal over their sum, depth at most one but dimension at least two, while in
+dimension at most one $(R_1)$ makes the localization a domain. Thus the argument applies at every
+localization and proves the ring statement. $\square$
 
 This criterion explains a major feature of normal surfaces: their nonregular locus has codimension at least two and therefore consists of closed points locally. If the surface is of finite type over a Dedekind scheme, the singular locus is closed by excellence; on a quasi-compact surface it is a finite set whenever it contains no curve.
 
@@ -402,11 +409,11 @@ Horizontal and vertical are relative notions. After a finite extension of the ba
 
 Let $(R,\pi)$ be a discrete valuation ring. Several local equations distinguish the main geometric conditions.
 
-* $R[x]$ is smooth and regular; the special fiber is a smooth affine line.
-* $R[x,y]/(xy-\pi)$ is regular and flat; the special fiber has an ordinary node. It is the basic semistable equation.
-* $R[x,y]/(xy-\pi^n)$ for $n>1$ is normal but singular at the origin. Its resolution produces a chain between the two branches.
-* $R[x,y]/(y^2-x^3-\pi)$ can be regular even though the special fiber is cuspidal; regular total space does not make the fiber nodal.
-* $R[x]/(\pi x)$ has vertical torsion and is not flat.
+- $R[x]$ is smooth and regular; the special fiber is a smooth affine line.
+- $R[x,y]/(xy-\pi)$ is regular and flat; the special fiber has an ordinary node. It is the basic semistable equation.
+- $R[x,y]/(xy-\pi^n)$ for $n>1$ is normal but singular at the origin. Its resolution produces a chain between the two branches.
+- $R[x,y]/(y^2-x^3-\pi)$ can be regular even though the special fiber is cuspidal; regular total space does not make the fiber nodal.
+- $R[x]/(\pi x)$ has vertical torsion and is not flat.
 
 For the third example, normality follows from the hypersurface $(S_2)$ property and regularity in codimension one. At the closed point the embedding dimension is three while the dimension is two. Repeated blowups reduce the exponent $n$, exhibiting both the local procedure and its termination.
 
@@ -578,19 +585,19 @@ prescribed regular open. The proof occupies Sections 8.2--8.7.
 
 ### 8.2 Preparing the singular locus
 
-We first record the elementary reduction that any proof of SR2 must use.
+We first record the elementary reduction that any proof of Theorem 8.1 must use.
 
 **Lemma 8.2 (surface preparation).** Let $X$ be a reduced excellent noetherian scheme of dimension at most two, let $U=X_{\mathrm{reg}}$, and let $\nu:X^{\nu}\to X$ be its componentwise normalization. Then $\nu$ is finite and is an isomorphism over $U$. The singular locus of $X^{\nu}$ is a closed subset of codimension at least two, and hence is finite.
 
 **Proof.** Reduce $X$, separate its irreducible components by normalization, and use finiteness from the Nagata property. A normal noetherian surface satisfies $(R_1)$, so every codimension-zero or codimension-one point is regular. Excellence makes the regular locus open. Hence the singular locus is closed and consists of dimension-zero points. A noetherian zero-dimensional closed space has finitely many points. $\square$
 
-Thus the new input needed for SR2 is local at the finitely many singular points: one must resolve $\operatorname{Spec}A$ for a two-dimensional excellent normal local domain $(A,\mathfrak m)$. A modification supported at $\mathfrak m$ glues to the identity away from that point. If the required local modifications exist and terminate, those over the finitely many prepared points can be composed without disturbing the regular open.
+Thus the new input needed for Theorem 8.1 is local at the finitely many singular points: one must resolve $\operatorname{Spec}A$ for a two-dimensional excellent normal local domain $(A,\mathfrak m)$. A modification supported at $\mathfrak m$ glues to the identity away from that point. If the required local modifications exist and terminate, those over the finitely many prepared points can be composed without disturbing the regular open.
 
 Completion is a powerful diagnostic but must be used with care. Excellence gives that
 $A\to\widehat A$ is a regular faithfully flat map, so $A$ is regular if and only if $\widehat A$
 is. It does not follow merely from excellence that a center constructed in $\widehat A$ descends to
 $A$, nor that numerical inequalities proved after completion survive an approximation. Those are
-parts of a proof of SR2, not consequences of the preparation lemma.
+parts of a proof of Theorem 8.1, not consequences of the preparation lemma.
 
 ### 8.3 The differential trace in inseparable degree $p$
 
@@ -828,38 +835,79 @@ space, and the displayed diagonal calculation is being assumed here.
 $\operatorname{Spec}A$ and let $0\ne Z$ be an effective Cartier divisor supported on the closed
 fiber. Some component $C$ of $Z$ has $\deg(\mathcal I_Z|_C)>0$.
 
-**Proof.** On each component choose a closed point away from the others and a local function
-nonzero generically but vanishing there. Express it in the common function field as $a_i/b_i$
-with $a_i,b_i\in A$, and take $h=\prod a_i$. If $d_C$ and $e_C$ are the orders of $Z$ and $h$ at the generic point of $C$, choose
-$C$ maximizing $d_C/e_C$ and replace $Z,h$ by multiples making the two orders equal. Then $h$
-is a section of $\mathcal I_Z$ which is generically nonzero on $C$ and has a zero at the chosen
-point. Its divisor on the proper curve $C$ has positive degree. $\square$
+**Proof.** Write the closed-fiber components as $C_i$. Choose
+$x_i\in C_i\setminus\bigcup_{j\ne i}C_j$ and
+$g_i\in\mathfrak m_{X,x_i}$ whose restriction to $C_i$ is nonzero. Since $X$ and
+$\operatorname{Spec}A$ have the same function field, write $g_i=a_i/b_i$ with $a_i,b_i\in A$
+and put $h=\prod_i a_i$. At the generic point of $C_i$, let $e_i>0$ be the valuation of $h$ and
+let $d_i\ge0$ be the multiplicity of $Z$. Choose $i$ maximizing $d_i/e_i$; then $d_i>0$.
+Replace $h$ by $h^{d_i}$ and $Z$ by $e_iZ$. For every $j$ the inequality
+$d_ie_j\ge e_id_j$ says that $h$ lies in $\mathcal I_Z$ at the generic point of $C_j$, and at
+$C_i$ its order is exactly that of $Z$. The Cartier divisor $Z$ on a normal surface is
+Cohen--Macaulay, hence has no embedded associated points; generic membership therefore gives a
+global section $h\in H^0(X,\mathcal I_Z)$. Its restriction to $C_i$ is nonzero and vanishes at
+$x_i$ because $a_i=g_ib_i$ occurs as a factor. A nonzero section of a line bundle on a proper
+integral curve has degree equal to the degree of its zero divisor, so
+$\deg(\mathcal I_Z|_{C_i})>0$. Dividing by the positive scaling $e_i$ gives the assertion for the
+original $Z$. $\square$
 
 **Lemma 8.11 (punctured injection).** The restriction
 $H^1(X,\mathcal O_X)\to H^1(X\setminus X_s,\mathcal O_X)$ is injective.
 
-**Proof.** A class in the kernel gives an extension
-$0\to\mathcal O_X\to\mathcal E\to\mathcal O_X\to0$ split off the closed fiber. The two sections
-of $\mathbf P(\mathcal E)$ are disjoint there. Normalize the closure $Y$ of the second section.
-The complement of the first is the affine bundle associated to the homomorphism line bundle; if
-$Y$ missed it, $Y\to X$ would be affine and proper, hence finite, and normality would split the
-extension. Otherwise its pullback is a nonempty vertical Cartier divisor. Its conormal is the
-pullback of that homomorphism line bundle, which is trivial here, contradicting Lemma 8.10. $\square$
+**Proof.** A nonzero class in the kernel gives an extension
+$0\to\mathcal O_X\to\mathcal E\to\mathcal O_X\to0$ split on the punctured surface. The quotient
+defines a section $\sigma:X\to P=\mathbf P(\mathcal E)$ with trivial conormal; the punctured
+splitting defines a second section $\sigma'$ disjoint from $\sigma$. Let $Y$ be the
+scheme-theoretic closure of $\sigma'$ in $P$. If $Y$ missed $\sigma(X)$, then it would lie in
+$P\setminus\sigma(X)$, which is the affine bundle
+$\operatorname{Spec}_X\operatorname{Sym}(\mathcal O_X)$ over $X$. Thus $Y\to X$ would be both
+affine and proper, hence finite; being finite birational onto the normal $X$, it would be an
+isomorphism and would extend the splitting, contrary to the chosen nonzero class.
+
+Therefore $Y$ meets $\sigma(X)$. Normalize $Y$; finiteness follows from the Nagata property of
+the complete ring $A$ and its finite-type algebras. The pullback $Z$ of $\sigma(X)$ is a nonempty
+effective Cartier divisor supported over the closed point. Formation of a conormal under pullback
+gives
+$\mathcal I_Z/\mathcal I_Z^2\simeq\mathcal O_Z$, because the conormal of $\sigma(X)$ in $P$ is
+trivial. This contradicts Lemma 8.10. Hence the restriction map is injective. $\square$
 
 **Proposition 8.12 (surface vanishing).** For a normal modification as above,
 $R^1f_*\omega_X=0$.
 
-**Proof.** Adjunction turns a map $k[-1]\to Rf_*\mathcal O_X$ into an extension of the closed
-fiber by $\mathcal O_X$. Pulling back along $\mathcal O_X\to\mathcal O_{X_s}$ gives a class
-which is split off the fiber and hence zero by Lemma 8.11. A lifted section shows the original
-extension is multiplication by an element of $A$ and is therefore split. Thus
-$\operatorname{Hom}_{D(A)}(k[-1],Rf_*\mathcal O_X)=0$.
+**Proof.** We first show
+$\operatorname{Hom}_{D(A)}(k[-1],Rf_*\mathcal O_X)=0$. Adjunction identifies such a map with
+$Lf^*k[-1]\to\mathcal O_X$. The hyper-Ext spectral sequence has only one possible term: it is
+$\operatorname{Ext}^1_X(\mathcal O_{X_s},\mathcal O_X)$, because
+$H^1(Lf^*k[-1])=\mathcal O_{X_s}$ and every lower cohomology sheaf is torsion whereas
+$\mathcal O_X$ is torsion-free. Thus the map is represented by
 
-If $R^1f_*\omega_X\ne0$, quotient it onto $k$. Applying the duality (8.8) produces a nonzero map
-$k[-1]\to Rf_*\mathcal O_X$, contradiction: explicitly
-$\omega_X[2]$ places $R^1f_*\omega_X$ in cohomological degree $-1$, so its quotient is a map
-$Rf_*\omega_X[2]\to k[1]$; dualizing sends $k[1]$ to $k[-1]$ by (8.7), and biduality sends the
-source to $Rf_*\mathcal O_X$. $\square$
+$$
+0\longrightarrow\mathcal O_X\longrightarrow\mathcal E
+ \longrightarrow\mathcal O_{X_s}\longrightarrow0.             \tag{8.8a}
+$$
+
+Pull (8.8a) back along $\mathcal O_X\to\mathcal O_{X_s}$. Its class is split on the punctured
+surface, hence is zero by Lemma 8.11. Lift $1\in\mathcal O_{X_s}$ to $s\in\mathcal E$. If
+$\mathcal I$ is the fiber ideal, multiplication by $s$ gives
+$c_s:\mathcal I\to\mathcal O_X$. Pushforward gives an $A$-linear map
+$\mathfrak m\to A$. On the punctured spectrum this is multiplication by an element of the
+fraction field; normality, $A=\bigcap_{\operatorname{ht}\mathfrak p=1}A_\mathfrak p$, puts that
+element in $A$. Subtracting it from $s$ makes $s$ annihilated by $\mathcal I$, so (8.8a) splits.
+
+Now suppose $R^1f_*\omega_X\ne0$ and choose a nonzero quotient to $k$. Since
+$\omega_X^\bullet=\omega_X[2]$, this is a nonzero derived map
+$Rf_*\omega_X^\bullet\to k[1]$. Apply
+$R\operatorname{Hom}_A(-,\omega_A[2])$. Formula (8.7) gives
+$R\operatorname{Hom}_A(k[1],\omega_A[2])=k[-1]$, while (8.8) and biduality give
+
+$$
+R\operatorname{Hom}_A(Rf_*\omega_X^\bullet,\omega_A[2])
+ \simeq Rf_*R\mathcal Hom_X(\omega_X^\bullet,\omega_X^\bullet)
+ \simeq Rf_*\mathcal O_X.
+$$
+
+The dual map is nonzero because Matlis duality is faithful on the finite-length image. It
+contradicts the first paragraph. $\square$
 
 #### 8.5.3 Boundedness and reduction to rational singularities
 
@@ -880,13 +928,33 @@ $H^1(X,\mathcal O_X)[a]$ are bounded independently of the normal modification $X
 
 **Proof.** The exact sequence cut out by $a$ identifies this torsion module with the cokernel of
 $A\to H^0(Z,\mathcal O_Z)$. Approximation in the Krull domain gives $c$ with valuation one at
-each height-one prime dividing $a$ and with $a\mid c^N$ for fixed $N$. Exact sequences for
-multiplication by $c$ give a filtration of $H^1(X,\mathcal O_X)[c^N]$ with $N$ subquotients of
-$H^1(X,\mathcal O_X)[c]$, so it suffices to treat the reduced divisor of $c$. The closure of
-its punctured part is finite over $A/(c)$ and embeds in its finite normalization; its global
-sections differ from $A/(c)$ by a subquotient of the fixed finite module
-$(A/(c))^\nu/(A/(c))$. Embedded vertical points contribute no global section on the normal
-surface. Multiplying its length by $N$ is the required bound. $\square$
+each height-one prime dividing $a$ and with $a\mid c^N$ for fixed $N$. Since the principal
+quotient of the Cohen--Macaulay domain $A$ has no embedded primes, these valuation-one conditions
+make $A/(c)$ reduced. Multiplication by $c$ gives exact sequences
+
+$$
+0\longrightarrow H^1(X,\mathcal O_X)[c]\longrightarrow
+H^1(X,\mathcal O_X)[c^{r+1}]\xrightarrow{c}
+H^1(X,\mathcal O_X)[c^r],
+$$
+
+so the $c^N$-torsion has a filtration of length $N$ with subquotients bounded by the
+$c$-torsion. Because $a\mid c^N$, it remains to bound the latter.
+
+Let $Z_c\subset X$ be cut out by $c$ and let $Z'$ be the scheme-theoretic closure of its
+restriction to the punctured surface. It is proper and quasi-finite over
+$\operatorname{Spec}A/(c)$, hence finite, say $Z'=\operatorname{Spec}B'$. Reducedness gives
+
+$$
+A/(c)\subset B'\subset (A/(c))^\nu.
+$$
+
+The map $H^0(Z_c,\mathcal O_{Z_c})\to H^0(Z',\mathcal O_{Z'})$ is injective. Indeed, a section in
+its kernel maps through the boundary homomorphism to a class in $H^1(X,\mathcal O_X)$ which
+vanishes on the punctured surface; Lemma 8.11 makes that class zero, so the section comes from
+$A/(c)$, where injectivity into $B'$ makes it zero. Consequently
+$H^1(X,\mathcal O_X)[c]$ is a subquotient of the fixed finite-length module
+$(A/(c))^\nu/(A/(c))$. Multiplying this bound by $N$ proves the assertion. $\square$
 
 Call $A$ **bounded** if the integers $g(X)$ are bounded. Choosing a modification with maximal
 $g(X)$ and using (8.9) shows that every local ring on it has
@@ -929,21 +997,53 @@ $X'=\operatorname{Proj}\bigoplus_{n\ge0}\mathfrak m^n$ is normal, and every loca
 rational.
 
 **Proof.** Normalize $X'$ to $\nu:X\to X'$ and put
-$\mathcal I=\mathfrak m\mathcal O_X$. Rationality makes $H^1(X,\mathcal F)=0$ for every globally
-generated $\mathcal F$: for $0\to\mathcal K\to\mathcal O_X^{(I)}\to\mathcal F\to0$, the
-long exact sequence ends in $H^2(X,\mathcal K)=0$, so $H^1(\mathcal O_X^{(I)})=0$ surjects onto
-$H^1(\mathcal F)$. From
+$\mathcal I=\mathfrak m\mathcal O_X$. A modification of a two-dimensional local scheme is covered
+by affine opens with affine pairwise intersections, so its quasi-coherent cohomological dimension
+is one. Hence $H^2(X,\mathcal K)=0$ for every quasi-coherent $\mathcal K$. If $\mathcal F$ is
+globally generated, choose an exact sequence
+$0\to\mathcal K\to\mathcal O_X^{(I)}\to\mathcal F\to0$. Cohomology commutes with the displayed
+direct sum, and rationality says $H^1(X,\mathcal O_X)=0$; the long exact sequence therefore gives
+$H^1(X,\mathcal F)=0$.
+
+Choose generators $x_0,\ldots,x_\mu$ of $\mathfrak m$. They generate
+$\mathcal I=\mathfrak m\mathcal O_X$, so
 
 $$
 0\to\mathcal F\to\mathcal O_X^{\mu+1}\to\mathcal I\to0
 $$
 
-and its twists one obtains inductively
-$H^1(X,\mathcal I^n)=0$ and $H^0(X,\mathcal I^n)=\mathfrak m^n$ for all $n$. The projection
-formula therefore identifies every graded piece of
-$\bigoplus H^0(X,\nu^*\mathcal O_{X'}(n))$ with the Rees algebra. A finite morphism over Proj is
-recovered from these twists, so $\nu$ is an isomorphism. Rationality of its local rings follows
-by spreading any local modification to a modification of $X$ and applying (8.9). $\square$
+has locally free kernel of rank $\mu$. Tensoring the presentation by $\mathcal I^{n-1}$ remains
+exact, since $\mathcal I$ is invertible. On the chart where $x_j$ generates $\mathcal I$, the
+kernel has basis $e_i-(x_i/x_j)e_j$; after tensoring by $\mathcal I$, these are generated by the
+global Koszul sections $x_je_i-x_ie_j$. Thus $\mathcal F\otimes\mathcal I$ is globally generated,
+and so are $\mathcal I^n$ and $\mathcal F\otimes\mathcal I^n$ for $n\ge1$. The preceding
+vanishing and the exact
+sequence
+
+$$
+0\to\mathcal F\otimes\mathcal I^{n-1}
+ \to(\mathcal I^{n-1})^{\mu+1}\to\mathcal I^n\to0
+$$
+
+show inductively that $H^1(X,\mathcal I^n)=0$ and that multiplication by the $x_i$ maps
+$H^0(X,\mathcal I^{n-1})$ onto $H^0(X,\mathcal I^n)$. Since
+$H^0(X,\mathcal I)=\mathfrak m$, this gives
+$H^0(X,\mathcal I^n)=\mathfrak m^n$ for every $n$.
+
+Now $\nu$ is finite because $A$ is Nagata. If
+$\mathcal O_{X'}\subsetneq\nu_*\mathcal O_X$, twisting by the very ample
+$\mathcal O_{X'}(1)$ and using the associated-graded filtration produces an $n$ for which their
+global sections differ. But projection formula gives
+
+$$
+H^0(X,\nu^*\mathcal O_{X'}(n))=H^0(X,\mathcal I^n)=\mathfrak m^n
+ =H^0(X',\mathcal O_{X'}(n)),
+$$
+
+a contradiction. Thus $X'=X$ is normal. Finally, a normal modification of the spectrum of a
+local ring of $X$ spreads, after shrinking and taking closure, to a normal modification of $X$;
+(8.9) and rationality make its $H^1$ vanish. Every local ring on $X$ is therefore rational.
+$\square$
 
 Let $E$ be its exceptional curve. The preceding exact sequences give
 
@@ -1007,14 +1107,125 @@ exponent $n_j$ and every valuation of $a_j$ falls by one. If an exponent reaches
 $a_j$ becomes a unit, one generator is eliminated. Double induction on $r$ and the sum of these
 exponents ends with two parameters, hence a regular local ring. $\square$
 
-For a rational double point, Lemma 8.15 says every point blowup remains normal and rational.
-Adjunction and invertibility of the canonical module show that an unresolved local ring has
-multiplicity two: the exceptional curve has arithmetic genus zero and canonical degree zero, so
-(8.10) forces embedding dimension three and quadratic initial equation. If infinitely many
-singular centers remained, after a finite residue extension one branch would retain one
-exceptional parameter and constant residue field. Lemma 8.17 produces an arc. Its kernel is a
-height-one prime, where normality gives a DVR, so Lemma 8.18 says the centers eventually become
-regular, contradiction. Thus point blowups resolve every rational double point.
+**Lemma 8.18A (the quadratic tangent cone).** Let $A$ be a nonregular rational double point and
+let $X$ be its maximal-ideal blowup. Then $X$ is normal, its singular local rings are again
+rational double points with normal completions, and the exceptional curve is a plane conic
+$E=V(q)\subset\mathbf P^2_k$ for a nonzero quadratic form $q$.
+
+**Proof.** Lemma 8.15 gives normality and rationality. Since
+$\omega_A\simeq A$, the trace isomorphism and the surjection in Lemma 8.16 give
+$\omega_X\simeq\mathcal O_X$ at every singular point; regular points are already Gorenstein.
+Completion preserves normality here: the blowup charts are essentially of finite type over the
+complete excellent ring $A$, their normal local rings remain normal after the regular completion
+map. Adjunction gives $\omega_E=\mathcal O_E(-1)$. With
+$k=H^0(E,\mathcal O_E)$ and $g=h^1(E,\mathcal O_E)$, curve duality and Riemann--Roch give
+
+$$
+1-g=-\tfrac12\deg\omega_E=\tfrac12\deg\mathcal O_E(1).
+$$
+
+The last degree is positive, so $g=0$ and it equals two. Equations (8.10) now give
+$h^0(E,\mathcal O_E(n))=2n+1$. In particular
+$\dim_k\mathfrak m/\mathfrak m^2=3$ and
+$\dim_k\mathfrak m^2/\mathfrak m^3=5$. For lifts $x_1,x_2,x_3$ of a cotangent basis, the six
+quadratic monomials consequently satisfy one nonzero relation modulo $\mathfrak m^3$:
+
+$$
+\sum_{i\le j}a_{ij}x_ix_j=\sum_{i\le j\le l}a_{ijl}x_ix_jx_l,
+\qquad (\bar a_{ij})\ne0.                                  \tag{8.11}
+$$
+
+On the $x_1$-chart, with $y_i=x_i/x_1$, division by $x_1^2$ shows that the exceptional divisor is
+cut out by $q(1,y_2,y_3)$, where $q=\sum\bar a_{ij}t_it_j$. The three charts therefore identify
+$E$ with $V(q)\subset\mathbf P^2_k$. $\square$
+
+**Lemma 8.18B (quadratics in squares of point ideals).** Let $I\subset k[x,y]$ have colength
+greater than one. If a nonzero polynomial $Q$ of degree at most two belongs to $I^2$, then
+$Q=c(\alpha+\beta x+\gamma y)^2$.
+
+**Proof.** Both partial derivatives of $Q$ belong to $I$. If one is nonzero, an affine linear
+change makes it $x$. Then $I=(x)$ or $(x,F(y))$ with $F$ monic of degree at least two. Writing
+an element of $I^2$ as $Ax^2+B(y)xF+C(y)F^2$ and comparing degrees forces $B=C=0$ and $A$ to be
+constant, giving the assertion. If both derivatives vanish, the characteristic is two and,
+after interchanging variables and scaling, $Q=a+dx^2+y^2$. If $a,d$ are squares we are done.
+Otherwise choose a derivation $\theta:k\to k$ nonzero on $a$ or $d$ (differentiate with respect
+to a member of a $2$-basis), and extend it by $\theta(x)=\theta(y)=0$. Leibniz gives
+$\theta(a)+\theta(d)x^2\in I$. The case $\theta(d)=0$ would put a unit in $I$; hence
+$\alpha+x^2\in I$, and then $a+\alpha d+y^2\in I$. Put
+$J=(\alpha+x^2,a+\alpha d+y^2)$. These two generators freely generate $J/J^2$, whereas $Q$ is
+their linear combination and lies in $I^2$; consequently $J\subsetneq I$. Thus $I$ contains a
+nonzero $g+hx+iy+jxy$. If $j=0$, it contains a linear form and the first argument applies. If
+$j\ne0$, absence of a linear form forces $I/J$ to be one-dimensional and
+
+$$
+I=(\alpha+x^2,\beta+y^2,g+hx+iy+jxy).
+$$
+
+After faithfully extending to an algebraic closure and translating square roots, colength three
+forces the last generator to be $jxy$, so $I=(x^2,y^2,xy)$. Direct multiplication shows that no
+nonzero polynomial of degree two lies in $I^2$, a contradiction. Hence the nonsquare alternative
+cannot occur. $\square$
+
+**Lemma 8.18C (singular points on the conic).** In the notation of Lemma 8.18A, call the conic
+type I if $q$ is not a scalar square of a linear form and type II otherwise. On every blowup chart:
+
+1. a singular point with residue field strictly larger than $k$ can occur only in type II;
+2. in type I there is at most one singular point, it is $k$-rational, and a parameter cutting out
+   the exceptional divisor remains such a parameter after blowing it up;
+3. in type II, either the next singular point is of type I, or there is at most one type-II
+   singular point, it is $k$-rational, and the same exceptional parameter persists.
+
+**Proof.** On the $x_1$-chart let $p$ correspond to a maximal ideal with residue field $k'$.
+Its kernel in $k[y_2,y_3]$ is generated by two polynomials $f_2,f_3$, and the maximal ideal of
+the surface local ring is generated by $x_1$ and lifts of them. If the point is singular, these
+three classes are independent in the cotangent space; equivalently
+$q(1,y_2,y_3)\in(f_2,f_3)^2$. If $[k':k]>1$, the latter ideal has colength greater than one, so
+Lemma 8.18B makes $q$ a scalar square. This proves (1), including inseparable residue extensions.
+
+In type I, translate a singular $k$-point to $(y_2,y_3)=(0,0)$. Then
+$q(1,y_2,y_3)\in(y_2,y_3)^2$, so $q=q(t_2,t_3)$. A nonsquare binary conic is either two distinct
+lines through the origin or has just the one rational singular point; hence there is at most one
+singular point. In (8.11) the coefficient of $x_1^3$ vanishes modulo $\mathfrak m$. The quadratic
+form in the new parameters $x_1,y_2,y_3$ restricts on $x_1=0$ to the same nonsquare binary form.
+Thus $x_1$ still cuts out the exceptional divisor and remains a good coordinate. This proves (2).
+
+For type II choose coordinates with $q=t_3^2$. The chart equation is
+
+$$
+y_3^2=x_1\sum a_{ijl}y_iy_jy_l.                            \tag{8.12}
+$$
+
+At the generic point of the reduced line $C=(y_3=0)$, normality makes the local ring a DVR;
+$y_3$ is a uniformizer and $x_1$ is a unit times $y_3^2$. Therefore the cubic
+
+$$
+h(y_2)=\bar a_{111}+\bar a_{112}y_2+
+       \bar a_{122}y_2^2+\bar a_{222}y_2^3
+$$
+
+is nonzero. A singular point must be a zero of $h$. A simple zero gives, in local parameters
+$x_1,y_3,g$, a quadratic form
+$y_3^2-x_1(ux_1+vy_3+wg)$ with $w$ a unit, which is not a square and hence is type I. Since a
+cubic has at most one multiple root, at most one point remains in type II, and a multiple root
+which survives the preceding residue-field test is $k$-rational. Translating it to the origin,
+normality rules out vanishing of the coefficient of $x_1y_2^2$: otherwise (8.12) would put
+$y_3/x_1$ integral over the chart but not in it. Blowing up this point reproduces (8.12), with
+$x_1$ again the equation of the exceptional divisor. This proves (3). $\square$
+
+**Lemma 8.18D (termination for rational double points).** Repeatedly blowing up the singular
+closed points of a rational double point terminates in a regular surface.
+
+**Proof.** Lemmas 8.15 and 8.18A show after every blowup that the surface is normal and that its
+finitely many singular local rings, and their completions, are rational double points. Suppose an
+infinite branch of singular centers existed. If it ever enters type I, Lemma 8.18C gives a unique
+rational successor and one fixed good coordinate cutting out every later exceptional divisor. If
+it remains in type II, part (3) gives the same conclusion after discarding finitely many initial
+terms. Thus the residue fields are constant and Lemma 8.17 constructs a nonsingular formal arc
+whose centers are precisely this branch. Its kernel is a height-one prime; normality makes the
+localization there a DVR. Lemma 8.18 therefore says that a later center is regular, a contradiction.
+The singular locus at every stage is finite, so the finitely branching tree of singular centers
+has no infinite branch and is finite. Blowing up its terminal generation resolves the surface.
+$\square$
 
 #### 8.5.6 Completion and lifting
 
@@ -1027,37 +1238,94 @@ by powers of the corresponding prime gives identical inverse systems. Regularity
 to regularity of the completion, and proper schemes have all closed points over the closed point.
 $\square$
 
-**Lemma 8.20 (lifting normalized blowups).** A blowup of $\widehat A$ in an ideal supported at
-the closed point is the flat base change of a blowup over $A$. If the punctured base change is
-normal, normalization is finite and commutes with completion. Hence every finite sequence of
-normalized blowups over $\widehat A$ lifts to one over $A$.
+**Lemma 8.20 (normalization and lifting normalized blowups).** Let $(A,\mathfrak m)$ be noetherian
+and let $X$ be locally of finite type over $A$. Put
+$Y=X\times_A\widehat A$. If $Y\setminus Y_s$ is normal, then the normalization of $X$ is finite
+and its base change is the normalization of $Y$. Consequently, if $A$ is a domain with normal
+completion, every finite sequence of normalized blowups over $\widehat A$ lifts to a sequence of
+normalized blowups over $A$.
 
-**Proof.** A closed-point-supported ideal $J\subset\widehat A$ contains
-$\mathfrak m^n\widehat A$ and is the extension of its inverse image in $A/\mathfrak m^n$.
-Flat base change identifies the Rees algebras. For normalization, work affine. The total quotient
-ring after completion is the faithfully flat extension of the old one off the closed fiber; its
-integral closure is finite because the completed ring is excellent. The old integral closure is
-the intersection with the uncompleted total quotient ring, and faithful-flat descent makes it
-finite. Tensoring the integral equations back proves equality with the completed normalization.
-Induct on the sequence. $\square$
+**Proof.** Work first with $X=\operatorname{Spec}B$ and
+$C=B\otimes_A\widehat A$. Faithful flatness reflects normality, so $B$ is normal away from
+$V(\mathfrak mB)$. The complete noetherian ring $\widehat A$ is Nagata: for a finite-type
+domain over it, Noether normalization followed by the determinant trick makes the integral
+closure finite. Hence the normalization $C\subset C'$ is finite and is an isomorphism off
+$V(\mathfrak mC)$. A power of $\mathfrak m$ kills $C'/C$.
+
+We use the following elementary finite-algebra descent in this special situation. If
+$B\to C$ is flat, $B/\mathfrak mB=C/\mathfrak mC$, and a finite $C$-algebra $C'$ differs from
+$C$ by a module killed by $\mathfrak m^r$, then $C'$ is the base change of a finite $B$-algebra
+$B'$. Here is the formal-gluing proof. Choose generators $f_1,\ldots,f_t$ of $\mathfrak mB$.
+For a $C$-module $M_C$, modules $M_i$ over $B_{f_i}$, and compatible identifications after
+base change to $C_{f_i}$, form
+
+$$
+M=\ker\left(M_C\oplus\prod_iM_i\longrightarrow
+ \prod_i(M_C)_{f_i}\oplus\prod_{i,j}(M_i)_{f_j}\right).
+$$
+
+The two-term Cech complexes for the $f_i$ are exact after tensoring with $C$, because $B\to C$
+is flat, and their degree-zero reductions agree because $B/\mathfrak mB=C/\mathfrak mC$.
+Induction on the power of $\mathfrak m$ killing the kernels and cokernels then proves
+$M\otimes_BC\simeq M_C$ and $M_{f_i}\simeq M_i$. Apply this with $M_C=C'$ and
+$M_i=B_{f_i}$; the isomorphism off $V(\mathfrak m)$ supplies the gluing maps. The same equalizer
+for Hom modules shows full faithfulness. Therefore the unit and multiplication of $C'$ descend
+uniquely to $M$, making it a $B$-algebra $B'$. A finite set of generators descends through the
+same construction, so $B'$ is finite and $B'\otimes_BC=C'$.
+
+Apply this to $C'$. At a prime off the special fiber, $B'$ is normal because it equals $B$.
+At a prime on it, choose a prime of $C'$ above it; the local map is faithfully flat, and normality
+of $C'$ descends by clearing a monic equation and using faithful flatness. Thus $B'$ is normal and
+is the normalization of $B$. This proves both finiteness and commutation with completion.
+
+Now a closed-point-supported ideal $J\subset\widehat A$ contains
+$\mathfrak m^r\widehat A$ and is the extension of its inverse image in
+$A/\mathfrak m^r$. Flat base change identifies the two Rees algebras. Inductively, the closed
+fibers at each stage over $A$ and $\widehat A$ are identical, so the next closed center descends;
+the ordinary blowups agree by flat base change, and the first part applies because they are
+already normal away from the closed fiber. Normalizing completes the induction. $\square$
 
 **Proposition 8.21 (complete local resolution).** A complete two-dimensional normal noetherian
 local domain admits a resolution by normalized blowups.
 
-**Proof.** Choose a finite injective map from a complete regular local ring $A_0$ by parameters.
-Induct on its fraction-field degree. A separable step and a purely inseparable degree-$p$ step are
-bounded by Lemma 8.14; maximality reduces to rational singularities, Lemma 8.16 reduces to rational
-double points, and Lemmas 8.17--8.18 resolve those. For a nonprime inseparable degree, insert the
-intermediate fields of the $p$-power tower and normalize at each step. Lemma 8.9 converts the
-resulting modification into normalized blowups. $\square$
+**Proof.** We first construct the finite regular subring. In equal characteristic, Cohen's
+coefficient-field construction is obtained by successively lifting a $p$-basis (or, in
+characteristic zero, by averaging the correction to multiplication) through
+$A/\mathfrak m^n$. Choose a parameter ideal $(x,y)$. The resulting map
+$A_0=k[[x,y]]\to A$ is injective because $A$ is a domain of dimension two. The finitely many
+monomials lifting a basis of $A/(x,y)$ generate $A$ over $A_0$: successive reduction modulo
+$(x,y)^n$ gives topological generation and completeness plus Nakayama turns it into finite
+generation. In mixed characteristic the same construction gives a Cohen ring $C\to A$; choose
+$x$ so that $(p,x)$ is a parameter ideal and use $A_0=C[[x]]$. The identical reduction proves
+that $A_0\to A$ is finite and injective. Thus in both cases $A_0$ is a complete regular local
+domain and $K/K_0=\operatorname{Frac}(A)/\operatorname{Frac}(A_0)$ is finite.
+
+Induct on $[K:K_0]$. Degree one gives $A=A_0$. If
+$K_0\subsetneq L\subsetneq K$, let $B$ be the integral closure of $A_0$ in $L$; it is finite and
+semilocal, and the factor selected by $A$ is complete. By induction resolve that factor, obtaining
+$Y\to\operatorname{Spec}B$. Normalize $Y\times_BA$ and examine its finitely many singular closed
+points. Their completed local rings are complete normal surface rings, finite over the completed
+regular local rings of $Y$. The remaining field degree is smaller, so induction resolves each;
+Lemma 8.20 and the local-to-global construction lift and glue these resolutions. It therefore
+suffices to treat an extension with no intermediate field.
+
+Such an extension is either separable, or has characteristic $p$ and is purely inseparable of
+degree $p$. In mixed characteristic only the first case occurs. Lemma 8.14 gives boundedness in
+the separable case and, since the base is the regular complete ring $A_0$, in the inseparable
+degree-$p$ case. Choose a normal modification on which $g$ is maximal. Equation (8.9) then makes
+every singular local ring rational. Lemma 8.16 replaces it by a normal modification whose
+singular local rings are rational double points, and the double-point calculation following
+Lemma 8.18 resolves those by finitely many point blowups. Finally Lemma 8.9 dominates the finite
+composite by normalized blowups; deleting redundant terminal stages leaves a resolution by
+normalized blowups itself. $\square$
 
 ### 8.6 Why a three-entry local invariant is insufficient
 
-After Lemma 8.2, the missing local assertion can be stated without global language. For every
+The proof above avoids a tempting but invalid shortcut. For every
 singular excellent normal two-dimensional local domain $(A,\mathfrak m)$, one must construct a
 projective birational modification supported at $\mathfrak m$ whose local rings are all regular.
 Doing this compatibly with the regular punctured spectrum, and then showing that the construction
-terminates after finitely many stages, is the local core of SR2.
+terminates after finitely many stages, is the local core of Theorem 8.1.
 
 Hilbert--Samuel multiplicity, the tangent cone and its directrix, coefficient ideals, and conductor
 lengths of suitable curve sections are useful ingredients in proofs of this local theorem. They do
@@ -1076,8 +1344,8 @@ establish all of the following points:
 None of these assertions is supplied by upper semicontinuity alone. In particular, independently
 choosing a general section after passing to an unramified residue-field extension does not produce
 a descended center, and decreasing the value semigroup on one branch does not control all points of
-a normalized blowup. Accordingly this volume does not assert the former ``surface decrease lemma'':
-that lemma was the unresolved theorem rather than a proof of it. SR2 is the exact replacement.
+a normalized blowup. Accordingly the proof uses boundedness, rational singularities, formal arcs,
+and completion lifting instead of the former unsupported ``surface decrease lemma.''
 
 ### 8.7 Termination
 
@@ -1091,8 +1359,7 @@ birational. The resulting scheme is regular and unchanged over $U$. $\square$
 
 ### 8.8 Examples of the local procedure
 
-The following calculations verify particular resolutions directly. They illustrate why blowups are
-the right modifications, but they do not prove SR2 for an arbitrary excellent surface singularity.
+The following calculations illustrate the general theorem in explicit equations.
 
 Consider
 
@@ -1112,7 +1379,7 @@ $$
 sy=\pi^{n-1}.
 $$
 
-Thus the only unresolved chart has the same form with exponent smaller by one. Induction ends at $xy=\pi$, which is regular. Theorem 14.20 shows that every member of this family is normal and Cohen–Macaulay, so normalization cannot simplify $X_n$ and blowing up is the only available repair. Globally the exceptional locus is a chain of rational curves. The exact number and self-intersections belong to the intersection theory of the next book; here the important point is finite reduction of the exponent.
+Thus the only unresolved chart has the same form with exponent smaller by one. Induction ends at $xy=\pi$, which is regular. Each member is a hypersurface, hence Cohen--Macaulay; its Jacobian singular locus is the closed point and therefore has codimension two, so $(R_1)$ and Theorem 4.1 give normality. Normalization cannot simplify $X_n$, and blowing up is the required repair. Globally the exceptional locus is a chain of rational curves. The exact number and self-intersections belong to the intersection theory of the next book; here the important point is finite reduction of the exponent.
 
 For the cone $xy=z^2$, blowing up $(x,y,z)$ gives on the $x$-chart
 
@@ -1122,18 +1389,18 @@ $$
 
 Removing the exceptional factor leaves $y_1=z_1^2$, a smooth chart. The other charts are similar. One blowup resolves the vertex.
 
-A cusp requires more than branch separation. Normalizing $k[t^2,t^3]$ resolves the one-dimensional cusp immediately, but the arithmetic surface equation $y^2=x^3+\pi^m$ can remain a normal surface singularity. Blowups change both the plane-curve singularity and the vertical exponent. Proving that the alternating phenomena terminate in arbitrary excellent surface singularities is part of SR2; the preceding examples do not supply that proof.
+A cusp requires more than branch separation. Normalizing $k[t^2,t^3]$ resolves the one-dimensional cusp immediately, but the arithmetic surface equation $y^2=x^3+\pi^m$ can remain a normal surface singularity. Blowups change both the plane-curve singularity and the vertical exponent. Proving that the alternating phenomena terminate in arbitrary excellent surface singularities is part of Theorem 8.1; the preceding examples do not supply that proof.
 
 ## 9. Regular proper models
 
 ### 9.1 Existence over excellent Dedekind bases
 
-Combining the proved closure and normalization constructions with SR2 gives the main conditional
+Combining the proved closure and normalization constructions with Theorem 8.1 gives the main
 existence theorem.
 
-**Theorem 9.1 (regular model theorem, conditional on SR2).** Assume SR2. Let $S$ be an excellent Dedekind scheme with function field $K$, and let $C/K$ be a smooth projective geometrically connected curve. Then there exists a regular flat projective $S$-scheme $\mathcal X$ with generic fiber $C$. If a regular projective model is prescribed over a nonempty open $U\subset S$, $\mathcal X$ may be chosen to restrict to it.
+**Theorem 9.1 (regular model theorem).** Let $S$ be an excellent Dedekind scheme with function field $K$, and let $C/K$ be a smooth projective geometrically connected curve. Then there exists a regular flat projective $S$-scheme $\mathcal X$ with generic fiber $C$. If a regular projective model is prescribed over a nonempty open $U\subset S$, $\mathcal X$ may be chosen to restrict to it.
 
-**Proof.** If no model over $U$ is prescribed, embed $C$ in projective space and take its schematic closure. In the relative case, use the compatible embedding and closure constructed in Theorem 6.2. Normalize the closure to obtain a normal flat projective model $X_1$ which is unchanged over $U$. Its generic fiber, and its restriction to $U$ in the relative case, are regular. Apply SR2 to $X_1$ with the regular open consisting of its generic fiber together with $X_{1,U}$. The result is regular and projective and has unchanged generic fiber and unchanged restriction over $U$. It remains flat because it is integral and dominates the Dedekind base. $\square$
+**Proof.** If no model over $U$ is prescribed, embed $C$ in projective space and take its schematic closure. In the relative case, use the compatible embedding and closure constructed in Theorem 6.2. Normalize the closure to obtain a normal flat projective model $X_1$ which is unchanged over $U$. Its generic fiber, and its restriction to $U$ in the relative case, are regular. Apply Theorem 8.1 to $X_1$ with the regular open consisting of its generic fiber together with $X_{1,U}$. The result is regular and projective and has unchanged generic fiber and unchanged restriction over $U$. It remains flat because it is integral and dominates the Dedekind base. $\square$
 
 If $C$ is merely proper, it is projective because every smooth proper curve over a field possesses a divisor of positive degree and a sufficiently large multiple is very ample. Thus no separate proper-only case is needed for smooth curves.
 
@@ -1147,9 +1414,9 @@ The bad set $S\setminus U$ is finite when $S$ is the spectrum of a Dedekind doma
 
 ### 9.3 Dominating finitely many models
 
-**Theorem 9.2 (conditional on SR2).** Assume SR2. Any finite collection of projective $S$-models of the same smooth curve is dominated by a regular projective model, provided $S$ is excellent.
+**Theorem 9.2.** Any finite collection of projective $S$-models of the same smooth curve is dominated by a regular projective model, provided $S$ is excellent.
 
-**Proof.** The fiber product of finitely many projective $S$-schemes is projective. Take in that product the schematic closure $Z$ of the diagonally embedded generic curve. It is integral, flat, and projective by Proposition 6.1, and every projection $Z\to X_i$ is proper and induces the identity on the generic fiber. Normalize $Z$ and apply SR2 to the resulting normal surface. Both operations are projective and preserve the generic fiber. The final regular projective model maps to every $X_i$ and induces the identity on $C$. $\square$
+**Proof.** The fiber product of finitely many projective $S$-schemes is projective. Take in that product the schematic closure $Z$ of the diagonally embedded generic curve. It is integral, flat, and projective by Proposition 6.1, and every projection $Z\to X_i$ is proper and induces the identity on the generic fiber. Normalize $Z$ and apply Theorem 8.1 to the resulting normal surface. Both operations are projective and preserve the generic fiber. The final regular projective model maps to every $X_i$ and induces the identity on $C$. $\square$
 
 This is the correct way to compare equations, moduli compactifications, and models adapted to correspondences. One does not identify them prematurely; one moves to a common regular domination.
 
@@ -1197,7 +1464,7 @@ $$
 X'=\operatorname{Nor}\bigl((X\times_SS')_{\mathrm{red}}\bigr),
 $$
 
-taking the component or components with the desired generic fiber. Since $S'$ is excellent, $X'\to X\times_SS'$ is finite. If $X$ was proper or projective, so is $X'$. Assuming SR2, resolve $X'$ if a regular model is required.
+taking the component or components with the desired generic fiber. Since $S'$ is excellent, $X'\to X\times_SS'$ is finite. If $X$ was proper or projective, so is $X'$. resolve $X'$ if a regular model is required.
 
 There is a canonical comparison from the normalization after base change to the base change of the original normalization whenever the latter is interpreted componentwise and is dominated by the former. It is an isomorphism under smooth base change, and also under separable field extension when geometric normality supplies normality of the base-changed space. Without such a hypothesis, it need not be.
 
@@ -1276,32 +1543,77 @@ cohomology, is generated, and separates points and tangent vectors away from tha
 component. Normalize the curve and prove this one component at a time: after prescribing common
 values at the finitely many preimages of nodes, the assertion is the usual
 $H^1(\mathbf P^1,\mathcal O(d-r))=0$ and Riemann--Roch on each positive-degree component.
-Cohomology and base change lifts these sections from the closed fiber. Compatibility through all
-infinitesimal neighborhoods follows from
+The same argument with the ideal of a length-two subscheme proves tangent-vector separation.
+Choose one exponent for the finite list of generation and separation conditions. The obstruction
+to lifting a section through successive infinitesimal neighborhoods lies in the first cohomology
+of the preceding power; the exact sequences
 
 $$
 0\to\mathcal O_E(n)\to
 \mathcal O_{(n+1)E}\to\mathcal O_{nE}\to0
 $$
 
-and $H^1(E,\mathcal O_E(n))=0$ for $n\ge-1$. Thus some $L^N$ is generated, constant on $E$,
-and separates points and tangent vectors off $E$. Let $V=H^0(X,L^N)$ and let $B$ be the image
+and $H^1(E,\mathcal O_E(n))=0$ for $n\ge-1$ make these obstructions vanish. Cohomology and base
+change plus Nakayama lift the chosen sections over a neighborhood of the closed fiber. To include
+the other components, filter every infinitesimal fiber by its component ideals; on them a high
+power of $L$ has positive degree and the same normalization--Riemann--Roch calculation kills the
+corresponding first cohomology. On the
+generic fiber a further common multiple is very ample. Thus some $L^N$ is generated, constant on
+$E$, and separates points and tangent vectors off $E$. Let $V=H^0(X,L^N)$ and let $B$ be the image
 of $\operatorname{Sym}_R(V)$ in $\bigoplus_qH^0(X,L^{qN})$. Then
 $Y=\operatorname{Proj}_RB$ is algebraic and projective, and the induced $c:X\to Y$ contracts
 exactly $E$ and is an isomorphism elsewhere by the separation criterion.
 
-Put $I=\mathcal O_X(-E)$. Pushing the displayed sequences forward gives
-$c_*I^q=\mathfrak m_y^q$ and
+The common value of the sections on $E$ defines one point $y\in Y$. On $X\setminus E$ the
+sections give a locally closed immersion into a standard projective open. The valuative criterion
+shows that its inverse is defined at every specialization not meeting $E$; it is therefore both
+open and proper over its image, hence an isomorphism. Replace $Y$ by the finite Stein factor
+$\operatorname{Spec}_Y(c_*\mathcal O_X)$. It remains projective, is unchanged away from $y$, and
+now satisfies $c_*\mathcal O_X=\mathcal O_Y$; its unique positive-dimensional fiber is $E$.
+
+Put $I=\mathcal O_X(-E)$ and $J_q=c_*I^q$. The sheaf $I$ has positive degree on the only
+positive-dimensional fiber of $c$, hence the componentwise argument above makes it $c$-ample.
+The exact sequences
+
+$$
+0\to I^{q+1}\to I^q\to\mathcal O_E(q)\to0
+$$
+
+have $R^1c_*I^q=0$: relative Serre vanishing proves this for large $q$, and descending induction
+uses $H^1(E,\mathcal O_E(q))=0$. Pushforward therefore gives, for every $q\ge0$, an exact row
+
+$$
+0\longrightarrow J_{q+1}\longrightarrow J_q
+ \longrightarrow H^0(E,\mathcal O_E(q))\longrightarrow0.       \tag{11.0}
+$$
+
+For $q=0$, this identifies $J_1$ with the kernel of
+$\mathcal O_Y\to k(y)$, hence with $\mathfrak m_y$. Products of the rows (11.0) form a
+commutative diagram. Since
+$H^0(\mathcal O_E(1))^{\otimes q}\to H^0(\mathcal O_E(q))$ is surjective, induction first gives
+$J_1J_q+J_{q+2}=J_{q+1}$ and then, by descending through the separated $J$-adic filtration,
+$J_{q+1}=J_1J_q$. Consequently $J_q=J_1^q=\mathfrak m_y^q$. Thus
 
 $$
 \mathfrak m_y^q/\mathfrak m_y^{q+1}\simeq H^0(E,\mathcal O_E(q)).
 $$
 
-Taking inverse limits identifies
-$\operatorname{gr}_{\mathfrak m_y}\widehat{\mathcal O}_{Y,y}$ with $k(y)[u,v]$. Hence the
-completed local ring has dimension and embedding dimension two and is regular; regularity descends
-from completion. The equality $I=\mathfrak m_y\mathcal O_X$ and the universal property give
-$X\to\operatorname{Bl}_yY$, an isomorphism on completed local rings and off $E$, hence globally.
+For completeness, formal functions here is obtained from a finite affine cover of
+$c^{-1}(\operatorname{Spec}\mathcal O_{Y,y})$: its Cech complexes consist of finite modules,
+completion is exact on them, and the transition maps in (11.0) are surjective, so no derived
+inverse limit occurs. It identifies the completed stalks of $J_q$ with the inverse limits of
+$H^0(I^q/I^{q+n})$ and therefore identifies
+$\operatorname{gr}_{\mathfrak m_y}\widehat{\mathcal O}_{Y,y}$ with
+$\bigoplus_qH^0(E,\mathcal O_E(q))\simeq k(y)[u,v]$. Hence the completed local ring has dimension
+and embedding dimension two and is regular; regularity descends from completion. The equality
+$I=\mathfrak m_y\mathcal O_X$ and the universal property give
+$\phi:X\to\operatorname{Bl}_yY$. Choose lifts $u,v$ of a basis of
+$\mathfrak m_y/\mathfrak m_y^2$. The equality of associated graded rings says that the map on
+exceptional curves induced by $[u:v]$ is
+$E\simeq\mathbf P^1_{k(y)}\to\mathbf P(\mathfrak m_y/\mathfrak m_y^2)$ and is an isomorphism.
+Thus $\phi$ is quasi-finite along $E$ and is already an isomorphism away from $E$. Proper and
+quasi-finite makes it finite; the blowup of the regular local ring is normal, so finite
+birationality makes $\phi$ an isomorphism.
 The construction glues with the identity away from the affected fiber. $\square$
 
 A regular proper model is **relatively minimal** if none of its fibers contains an exceptional curve of the first kind. Every contraction lowers the number of irreducible components of the affected fiber, so repeatedly contracting must stop. This proves existence of a relatively minimal model once contractions remain in the chosen category.
@@ -1311,7 +1623,7 @@ A regular proper model is **relatively minimal** if none of its fibers contains 
 Contraction gives existence. We now prove the comparison needed for its universal property.
 
 For a fiber $F=\sum m_i\Gamma_i$, local-length intersection and
-$(F\cdot\Gamma_i)=0$ give
+$(F\cdot\Gamma_i)=0$ give, for $V=\sum a_i\Gamma_i$,
 
 $$
 (\sum a_i\Gamma_i)^2=-\sum_{i<j}m_im_j(\Gamma_i\cdot\Gamma_j)
@@ -1319,25 +1631,54 @@ $$
 \tag{11.1}
 $$
 
+Indeed the diagonal terms satisfy
+$m_i\Gamma_i^2=-\sum_{j\ne i}m_j(\Gamma_i\cdot\Gamma_j)$; substituting these in $V^2$ and
+pairing the $(i,j)$ and $(j,i)$ terms gives the displayed square exactly.
+
 Thus the fiber matrix is negative semidefinite with kernel spanned by $F$. Blowup charts give
 $E^2=-[\kappa(x):k]$ and $K_{\widetilde X}=b^*K_X+E$; the conormal sequence and curve duality
 give $2p_a(C)-2=C^2+K_X\cdot C$.
 
-**Factorization lemma.** Every proper birational morphism between regular surfaces factors into
-blowups at closed regular points.
+**Factorization lemma.** Every proper birational morphism between regular arithmetic surfaces over
+$R$ which is the identity on the generic fiber factors into blowups at closed regular points.
 
-**Proof.** Express the projective morphism as the blowup of an ideal and remove its invertible
-height-one part. Repeatedly blow up closed base points. For two members $a,b$ of a reduction, the
-two chart filtrations give
+**Proof.** Let $V\subset Y$ be the maximal open over which $f$ is an isomorphism. Proper
+birationality and the valuation criterion put every codimension-one point of $Y$ in $V$. Choose a
+closed point $y\notin V$ and let $b:Y'=\operatorname{Bl}_yY\to Y$. By the point-base-ideal
+calculation of Lemma 8.8, finitely many point blowups
 
 $$
-\ell A/(a,b)=\operatorname{ord}(a)\operatorname{ord}(b)[\kappa(x):k]
-+\sum_{x'\mapsto x}\ell\mathcal O_{X',x'}/(a',b').
+h:X_n\longrightarrow X_{n-1}\longrightarrow\cdots\longrightarrow X_0=X
 $$
 
-The residual sum strictly decreases, so the ideal becomes invertible. In a shortest sequence the
-last exceptional curve maps to a $(-1)$-curve on the source; otherwise Theorem 11.1 shortens the
-sequence. Contract it and induct. $\square$
+over $f^{-1}(y)$ make $\mathfrak m_y\mathcal O_{X_n}$ invertible; the universal property gives
+$f_n:X_n\to Y'$.
+
+We show, backwards through this sequence, that $f_n$ factors through $X$. Consider the last
+blowup $c:X_n\to X_{n-1}$ and its exceptional line $E$. If $f_n(E)$ is a point, then
+$c_*\mathcal O_{X_n}=\mathcal O_{X_{n-1}}$ and the affine-coordinate functions of $f_n$ descend,
+so $f_n$ factors uniquely through $c$. Suppose instead that $f_n(E)$ is a curve. It must be the
+exceptional line $E'$ of $Y'\to Y$. The restriction $E\to E'$ is proper birational between
+regular projective lines and hence is an isomorphism. At their generic points $f_n$ is an
+isomorphism, so the induced map of conormal line bundles
+
+$$
+f_n^*(\mathcal I_{E'}/\mathcal I_{E'}^2)
+ \longrightarrow\mathcal I_E/\mathcal I_E^2
+$$
+
+is nonzero. Both sides have degree one, so it is an isomorphism. The conormal and cotangent exact
+sequences then give $\Omega_{X_n/Y'}|_E=0$: thus $f_n$ is unramified, hence quasi-finite, along
+$E$. A proper birational quasi-finite morphism to the normal surface $Y'$ is an isomorphism near
+$E'$. It follows that $f^{-1}(y)$ is the single center of $c$ and that $f$ is quasi-finite there;
+the same finite-birational argument would put $y$ in $V$, a contradiction. Therefore $f_n(E)$ is
+a point, and induction removes all the auxiliary blowups, giving a morphism $f_1:X\to Y'$ with
+$f=bf_1$.
+
+At least one component of $f^{-1}(y)$ maps onto $E'$, so the number of curves contracted by
+$f_1$ is strictly smaller than the number contracted by $f$. Induction on this finite number
+factors $f_1$, and then $f$. Every factor is a point blowup, so the morphism is projective as a
+conclusion of the proof. $\square$
 
 **Theorem 11.2A (birational comparison for regular arithmetic surfaces).** Let $R$ be an excellent discrete valuation ring.
 
@@ -1345,41 +1686,117 @@ sequence. Contract it and induct. $\square$
 2. A proper birational morphism between regular arithmetic surfaces which is the identity on the generic fiber factors into finitely many blowups at closed points.
 3. If the common generic fiber is a smooth projective geometrically connected curve of positive genus and $Y/R$ is relatively minimal, then the rational map $X\dashrightarrow Y$ induced by the generic-fiber identification extends uniquely to a morphism $X\to Y$. In particular two relatively minimal regular proper models with fixed generic-fiber identification are uniquely isomorphic.
 
-**Proof.** Resolve the normalized graph by Theorem 8.1 and factor both projections by the
-factorization lemma. Cancel common exceptional curves in reverse creation order; after their
-descendants are removed, a maximal common curve is a $(-1)$-curve for both maps and Theorem 11.1
-factors both through its contraction. This proves (1) and (2) with no common exceptional curve.
+**Proof.** Normalize the graph of the birational map and resolve it by Theorem 8.1. Both
+projections are proper birational morphisms and hence, by the factorization lemma, composites of
+point blowups. This proves (1), and the factorization lemma itself proves (2).
 
-For (3), write $X\xleftarrow pZ\xrightarrow qY$ in that form. If $p$ is not an isomorphism, its
-last exceptional curve $E$ is a $(-1)$-line and is not $q$-exceptional. The canonical divisor of
-a positive-genus minimal model is nonnegative on every vertical curve: adjunction proves this
-unless the curve is a square-zero line; (11.1) then makes the fiber $m\mathbf P^1$, whose
-structure-sheaf filtration gives $1-g=m>0$, impossible. Since a point blowup satisfies
-$K_{Z'}=b^*K_Z+E_b$, factorization of $q$ gives
-$K_Z=q^*K_Y+\sum a_iE_i$ with $a_i>0$. Thus $K_Z\cdot E\ge0$, while adjunction gives $-1$.
-Contradiction. Hence $p$ is an isomorphism. Separatedness gives uniqueness; applying the result
-both ways proves the final assertion. $\square$
+For (3), write $X\xleftarrow pZ\xrightarrow qY$ in that form. We first prove the needed nefness
+statement. Let $\Gamma$ be an integral component of the closed fiber of the relatively minimal
+model $Y$, put $d_\Gamma=[H^0(\Gamma,\mathcal O_\Gamma):k]$, and take $p_a$ over that constant
+field. Adjunction gives
+
+$$
+K_{Y/R}\cdot\Gamma=d_\Gamma(2p_a(\Gamma)-2)-\Gamma^2.       \tag{11.2}
+$$
+
+Formula (11.1) gives $\Gamma^2\leq0$. If $p_a(\Gamma)\geq1$, (11.2) is nonnegative. If
+$p_a(\Gamma)=0$, the normalization and the conductor exact sequence show that $\Gamma$ is a
+smooth genus-zero curve over its constant field. If $\Gamma^2=-d_\Gamma$, the line bundle
+$\mathcal O_\Gamma(-\Gamma)$ has degree one, so $\Gamma$ is a projective line and is exceptional;
+relative minimality excludes this. The next possible negative normal degree is at most
+$-2d_\Gamma$, which again makes (11.2) nonnegative. It remains only the case
+$\Gamma^2=0$. Equality in (11.1), applied to a vector supported on $\Gamma$, says that the whole
+connected fiber is $F=m\Gamma$. The filtration by powers of the ideal of $\Gamma$ has quotients
+
+$$
+\mathcal I_\Gamma^j/\mathcal I_\Gamma^{j+1}
+ \simeq\mathcal O_\Gamma(-j\Gamma),\qquad 0\leq j<m.
+$$
+
+Each quotient has degree zero and is trivial because the degree-zero Picard group of a smooth
+genus-zero curve is trivial. Hence
+$\chi(\mathcal O_F)=m[\kappa(\Gamma):k]>0$. Flatness gives
+$\chi(\mathcal O_F)=\chi(\mathcal O_{Y_K})=1-g\leq0$, a contradiction. Thus
+$K_{Y/R}\cdot\Gamma\geq0$ for every vertical integral curve.
+
+Return to a common resolution $X\xleftarrow pZ\xrightarrow qY$. If a terminal
+$p$-exceptional curve $E$ is also $q$-exceptional, then $E$ is a $(-1)$-line on $Z$ and both
+maps are constant on it. Theorem 11.1 contracts it and both maps factor uniquely through the
+contraction. Repeating this finite pruning, either $p$ becomes an isomorphism or there is a
+terminal $p$-exceptional curve $E$ which is not $q$-exceptional. Assume the latter. For one point
+blowup $b:W'\to W$, the determinant of differentials on the two affine charts gives
+$K_{W'/R}=b^*K_{W/R}+E_b$. Induction through a factorization of $q$ therefore gives
+
+$$
+K_{Z/R}=q^*K_{Y/R}+\sum_i a_iE_i,                         \tag{11.3}
+$$
+
+where the $E_i$ are the $q$-exceptional prime curves and every $a_i$ is a positive integer: the
+coefficient of a newly created exceptional curve is one plus the sum of the coefficients of the
+old exceptional curves through its center, counted with their local multiplicities. Since $E$ is
+not among the $E_i$, distinct integral curves on the regular surface have nonnegative local
+intersection multiplicities. The projection formula and vertical nefness give
+
+$$
+q^*K_{Y/R}\cdot E=K_{Y/R}\cdot q_*E\geq0,
+\qquad
+E_i\cdot E\geq0.
+$$
+
+Thus (11.3) gives $K_{Z/R}\cdot E\geq0$. But adjunction for the $(-1)$-line, including its
+residue degree in both terms, gives $K_{Z/R}\cdot E=-[\kappa(E):k]$, a contradiction. Hence
+$p$ is an isomorphism. Separatedness gives uniqueness; applying the result both ways proves the
+final assertion. $\square$
 
 **Theorem 11.2 (minimal regular model).** Let $R$ be an excellent discrete valuation ring with fraction field $K$, and let $C/K$ be a smooth projective geometrically connected curve of positive genus. Then $C$ has a relatively minimal regular proper model $X_{\min}/R$. Every regular proper model of $C$ admits a unique morphism to $X_{\min}$ inducing the identity on $C$.
 
 **Proof.** Theorem 9.1 supplies a regular proper model. Apply Theorem 11.1 repeatedly; each step
 lowers the number of fiber components. Theorem 11.2A(3) gives the mapping property. $\square$
 
-Assuming RC and BC2 over the corresponding localizations, the same construction works over a global excellent Dedekind scheme. Only finitely many fibers of a fixed proper model are non-smooth. RC includes the algebraic gluing of each local contraction with the identity elsewhere, and the local BC2 mapping properties glue uniquely because they agree on the generic fiber. Thus the global conclusion is conditional on the same contraction and comparison inputs; it does not follow from excellence alone.
+The same construction works over a global excellent Dedekind scheme. Only finitely many fibers of a fixed proper model are non-smooth. Theorem 11.1 glues each local contraction with the identity elsewhere, and the local Theorem 11.2A mapping properties glue uniquely because they agree on the generic fiber.
 
-Under the same three prerequisites, a genus-one curve with a rational point has the regular geometric model associated with a minimal Weierstrass equation after resolving its surface singularities. The Weierstrass model itself is often normal but singular; the minimal regular model is its resolution, while relative minimality prohibits superfluous point blowups.
+A genus-one curve with a rational point has the regular geometric model associated with a minimal Weierstrass equation after resolving its surface singularities. The Weierstrass model itself is often normal but singular; the minimal regular model is its resolution, while relative minimality prohibits superfluous point blowups.
 
 ### 11.3 Uniqueness and its limits
 
 Positive genus is essential. For $\mathbf P^1_K$, both $\mathbf P^1_R$ and models obtained through elementary transformations of ruled surfaces can be relatively minimal in natural senses without a canonical map between them fixing the generic fiber. Marking three disjoint sections restores rigidity, but the unmarked genus-zero curve has too many automorphisms and too little canonical positivity.
 
-Minimal regular does not mean smooth, semistable, or stable. Its special fiber may have multiplicities, cusps as curves inside a regular total space, or configurations that require a field extension before becoming nodal. Nor does minimality commute with arbitrary base change. A ramified extension can create exceptional curves after resolution; recovering relative minimality then requires new applications of RC.
+Minimal regular does not mean smooth, semistable, or stable. Its special fiber may have multiplicities, cusps as curves inside a regular total space, or configurations that require a field extension before becoming nodal. Nor does minimality commute with arbitrary base change. A ramified extension can create exceptional curves after resolution; recovering relative minimality then requires new applications of Theorem 11.1.
 
 Uniqueness is relative to the fixed identification of the generic fiber. If generic automorphisms are allowed, they act on the minimal model by the mapping property: an automorphism of $C$ gives a second identification and extends uniquely.
 
 ### 11.4 Marked and semistable variants
 
-For a marked curve $(C;P_1,\ldots,P_n)$, one would like to resolve not only the surface but also the boundary formed by the special fiber and the closures of the marked points. SR2 supplies the regular total space, but its statement alone does not prove embedded resolution of that boundary. Thus the further assertion that finitely many point blowups make the marked sections disjoint and transverse to a normal-crossings boundary is a separate embedded-resolution input; no termination claim for it is made here.
+For a marked curve $(C;P_1,\ldots,P_n)$ one resolves the boundary as well as the surface.
+
+**Embedded-resolution lemma.** On a regular excellent surface, a reduced curve together with
+finitely many regular marked branches becomes a normal-crossings divisor with disjoint marked
+branches after finitely many closed-point blowups.
+
+**Proof.** For the reduced divisor $D$, let
+$\delta_x=\ell(\overline{\mathcal O}_{D,x}/\mathcal O_{D,x})$. If $m_x$ is its multiplicity,
+the two affine blowup charts and the normalization exact sequence give
+
+$$
+\delta_x=\sum_{y\mapsto x}\delta_y+\binom{m_x}{2}.
+$$
+
+Thus blowing up a point with a singular branch strictly lowers the sum of the branch delta
+invariants; finiteness of normalization makes the initial sum finite. After every branch is
+regular, the same chart calculation gives
+
+$$
+I_x(D_1,D_2)=m_1m_2+\sum_{y\mapsto x}I_y(\widetilde D_1,\widetilde D_2).
+$$
+
+Here $m_i$ is the branch multiplicity, hence one. Consequently blowing up a tangency strictly
+lowers the sum of the excesses $I_x(D_i,D_j)-1$ while preserving regularity of the branches.
+When every pair is transverse, blowing up a point through three or more branches lowers the number
+of multiple incidences and creates only distinct transverse points on the exceptional line. Treat
+marked branches as additional labeled branches and blow up any coincidence between two markings
+or between a marking and an impermissible node. Lexicographic induction on total branch delta,
+total excess intersection, and total multiple incidence terminates. All centers are actual closed
+points, so finite residue fields cause no generic-choice problem. $\square$
 
 A regular **semistable model** has reduced special fibers whose only singularities are ordinary double points and whose components meet transversely. Étale-locally at a node it has equation
 
@@ -1387,25 +1804,24 @@ $$
 xy=\pi.
 $$
 
-Resolution alone does not guarantee semistability. Semistable reduction is the additional theorem that after a suitable finite separable extension of $K$, a smooth proper curve has a semistable model. Once that extension and a normal proper candidate are supplied, this book normalizes it and, assuming SR2, resolves away from the nodal open. Removing exceptional curves of the first kind requires RC, while contracting the unstable rational components of a stable model requires the corresponding stable-contraction input. The stable model may have nodal total fibers; its total space need not be regular after ramified base change, so stable and minimal regular models serve different purposes.
+Resolution alone does not guarantee semistability. Semistable reduction is the additional theorem that after a suitable finite separable extension of $K$, a smooth proper curve has a semistable model. Once that extension and a normal proper candidate are supplied, this book normalizes it and resolves away from the nodal open. Removing exceptional curves of the first kind uses Theorem 11.1, while contracting the unstable rational components of a stable model is a different stable-contraction problem. The stable model may have nodal total fibers; its total space need not be regular after ramified base change, so stable and minimal regular models serve different purposes.
 
 ## 12. Models for modular, Shimura, and semistable problems
 
 ### 12.1 The exact reusable model theorem
 
-The preceding results can be collected in the form actually needed later, with the unresolved
-surface input displayed rather than hidden.
+The preceding results can be collected in the form actually needed later.
 
-**Theorem 12.1 (arithmetic curve model package).** Assume SR2. Let $S$ be an excellent Dedekind scheme, $U\subset S$ a nonempty open, and $C/K(S)$ a smooth projective geometrically connected curve. Suppose a smooth projective model $\mathcal C_U/U$ is given. Then:
+**Theorem 12.1 (arithmetic curve model package).** Let $S$ be an excellent Dedekind scheme, $U\subset S$ a nonempty open, and $C/K(S)$ a smooth projective geometrically connected curve. Suppose a smooth projective model $\mathcal C_U/U$ is given. Then:
 
 1. there is a normal flat projective model $X/S$ extending $\mathcal C_U$;
 2. there is a regular flat projective model $\mathcal X/S$ and a projective birational map $\mathcal X\to X$, identical over $U$;
 3. any finite collection of projective models, rational maps, and finite generic correspondences is dominated by such a regular model on which their graph closures are defined as proper correspondences;
 4. after a finite extension $K'/K(S)$, with $S'$ the normalized base, normalization of the reduced base change followed by resolution gives a regular projective $S'$-model;
 5. if the supplied model over an open of $S'$ is semistable, the resolution is an isomorphism over that open;
-6. if $g(C)>0$ and RC and BC2 are also assumed, contracting vertical exceptional curves produces the unique minimal regular proper model.
+6. if $g(C)>0$, contracting vertical exceptional curves produces the unique minimal regular proper model.
 
-Every adjective has a source. Excellence of $S$ gives finite normalization and supplies the ring-theoretic hypothesis in SR2; termination and regularity of the resolution come from SR2 itself. Smoothness of $C$ makes the generic fiber normal and regular. Projectivity of $C$ starts the closure and ensures the final model is projective. Flatness follows from integrality over a Dedekind base. Properness alone is preserved throughout but does not by itself choose an embedding. Geometric connectedness prevents an unintended product of generic components. The last assertion has two additional sources: RC supplies algebraic contractions which stay in the regular proper category, and BC2 supplies the positive-genus mapping property and uniqueness.
+Every adjective has a source. Excellence of $S$ gives finite normalization and supplies the ring-theoretic hypothesis in Theorem 8.1; termination and regularity of the resolution come from Theorem 8.1 itself. Smoothness of $C$ makes the generic fiber normal and regular. Projectivity of $C$ starts the closure and ensures the final model is projective. Flatness follows from integrality over a Dedekind base. Properness alone is preserved throughout but does not by itself choose an embedding. Geometric connectedness prevents an unintended product of generic components. The last assertion has two additional sources: Theorem 11.1 supplies algebraic contractions which stay in the regular proper category, and Theorem 11.2A supplies the positive-genus mapping property and uniqueness.
 
 ### 12.2 Modular curves
 
@@ -1416,33 +1832,31 @@ To obtain the exact surface used in arithmetic arguments, proceed as follows.
 1. Take the smooth projective generic modular curve, including its cusps.
 2. Extend the chosen good integral compactification over $U$, typically the complement of primes dividing the level.
 3. Close it projectively over $S$ and normalize. Normalization retains the moduli model over $U$ and repairs branch identifications at bad primes.
-4. Assuming SR2, resolve only the finitely many closed surface singularities above bad primes.
-5. If the separate embedded-resolution input of Section 11.4 is also assumed, blow up so cusp closures are disjoint regular horizontal divisors meeting the fiber transversely.
+4. Resolve only the finitely many closed surface singularities above bad primes.
+5. Apply the embedded-resolution lemma of Section 11.4 so cusp closures are disjoint regular horizontal divisors meeting the fiber transversely.
 
-Assuming SR2, the resulting object is a regular proper, indeed projective, arithmetic surface carrying the same generic modular curve and the prescribed smooth model over $U$. It is enough for extending rational functions, maps to Jacobians, degeneracy maps after graph resolution, and special-fiber calculations. Without SR2 the construction stops at the normal projective model. One must not claim that normalization alone makes it regular, or that regularity makes every bad fiber smooth.
+The resulting object is a regular proper, indeed projective, arithmetic surface carrying the same generic modular curve and the prescribed smooth model over $U$. It is enough for extending rational functions, maps to Jacobians, degeneracy maps after graph resolution, and special-fiber calculations. Normalization alone need not make it regular, and regularity does not make every bad fiber smooth.
 
-Fine level structures may exist only after a faithfully flat extension of the base. Construct the polarized model there, retain the descent datum through normalization where geometric normality permits, and descend using Book 10. At primes where the group action has fixed points, the coarse quotient can be normal but singular. Assuming SR2, resolve the quotient surface after descent; regularity upstairs does not eliminate quotient singularities downstairs.
+Fine level structures may exist only after a faithfully flat extension of the base. Construct the polarized model there, retain the descent datum through normalization where geometric normality permits, and descend using Book 10. At primes where the group action has fixed points, the coarse quotient can be normal but singular. Resolve the quotient surface after descent; regularity upstairs does not eliminate quotient singularities downstairs.
 
 ### 12.3 Shimura curves
 
-Compact Shimura curves have no cusps, so no boundary divisor must be added. Their integral models nevertheless acquire bad fibers at primes connected with the discriminant or level. Over the good open, the moduli construction is smooth and proper. Conditional Theorem 12.1 extends it to a regular projective arithmetic surface without changing that open.
+The distinction between a fine moduli cover and its coarse quotient is again essential. A finite group acting on a regular surface can have isolated fixed points; the quotient is finite and normal under the standard tame hypotheses but can fail to be regular. Its two-dimensional quotient singularities admit a projective resolution by Theorem 8.1.
 
-The distinction between a fine moduli cover and its coarse quotient is again essential. A finite group acting on a regular surface can have isolated fixed points; the quotient is finite and normal under the standard tame hypotheses but can fail to be regular. Assuming SR2, its two-dimensional quotient singularities admit a projective resolution. The elementary normalized-blowup discussion alone does not prove that the procedure terminates.
-
-For quaternionic or PEL constructions defined after a finite extension of the reflex field, use the normalized Dedekind base. A descent datum plus a polarization descends the projective model. If ramification has introduced singularities, normalize and, assuming SR2, resolve after the descent or on a common equivariant domination. The output required for curve-level arguments is a regular proper curve model, not a smooth integral moduli space at every bad prime.
+For quaternionic or PEL constructions defined after a finite extension of the reflex field, use the normalized Dedekind base. A descent datum plus a polarization descends the projective model. If ramification has introduced singularities, normalize and resolve after the descent or on a common equivariant domination. The output required for curve-level arguments is a regular proper curve model, not a smooth integral moduli space at every bad prime.
 
 ### 12.4 Semistable reduction input
 
-Suppose a finite separable extension $K'/K$ has been chosen and a projective semistable model has been supplied over an open $V\subseteq S'$, where $S'$ is the normalization of $S$ in $K'$. Assuming SR2, the model can be extended without changing its semistable locus as follows.
+Suppose a finite separable extension $K'/K$ has been chosen and a projective semistable model has been supplied over an open $V\subseteq S'$, where $S'$ is the normalization of $S$ in $K'$. The model can be extended without changing its semistable locus as follows.
 
-Apply the conditional Theorem 12.1 with the supplied model over $V$, and use SR2 only outside $V$. At every node the completed local equation is
+Apply Theorem 12.1 with the supplied model over $V$, and use Theorem 8.1 only outside $V$. At every node the completed local equation is
 
 $$
 \widehat{\mathcal O}_{\mathcal X,x}
 \simeq \widehat R'[[x,y]]/(xy-\pi'),
 $$
 
-possibly after an étale extension. This ring is regular, so SR2 leaves it unchanged. Separating marked sections from the nodes and making the boundary transverse requires the embedded-resolution input isolated in Section 11.4. Producing a stable rather than a regular semistable model requires a further stable-contraction theorem for rational components meeting the remainder and markings in too few points. RC concerns exceptional curves of the first kind and does not by itself supply these contractions.
+possibly after an étale extension. This ring is regular, so Theorem 8.1 leaves it unchanged. The embedded-resolution lemma of Section 11.4 separates marked sections from the nodes and makes the boundary transverse. Producing a stable rather than a regular semistable model requires a different contraction theorem for rational components meeting the remainder and markings in too few points; Theorem 11.1 concerns exceptional curves of the first kind.
 
 This statement deliberately starts from an algebraic model over an open subscheme. A model known only over completed local rings does not automatically algebraize or glue: compatible algebraic descent data, or a separate approximation and algebraization theorem, must first supply the model over an open of $S'$. Common domination compares algebraic models once they exist; it is not a substitute for that algebraization step.
 
@@ -1454,11 +1868,11 @@ $$
 \Gamma_f\subset X\times_SY
 $$
 
-is proper over both factors. Normalize the graph and, assuming SR2, resolve it to obtain a regular surface $Z$ with morphisms to both models.
+is proper over both factors. Normalize the graph and resolve it to obtain a regular surface $Z$ with morphisms to both models.
 
-The universal property of normalization factors a morphism from a normal source through a normalization once that morphism already exists. It does not remove codimension-two indeterminacy of a rational map: for example, the rational map $\mathbf A^2\dashrightarrow\mathbf P^1$ given by $[x:y]$ is undefined at the origin although the source is normal. Thus the graph construction is essential. Assuming SR2, resolving the normalized graph makes the two projections honest proper morphisms. Without SR2, normalization alone leaves this regular-domination claim unproved. Finiteness on the generic fiber still does not imply that either projection is finite, because it may contract vertical curves. Passing to the Stein factor—the spectrum of the direct image of the structure sheaf—separates a connected-fiber contraction from a finite map.
+The universal property of normalization factors a morphism from a normal source through a normalization once that morphism already exists. It does not remove codimension-two indeterminacy of a rational map: for example, the rational map $\mathbf A^2\dashrightarrow\mathbf P^1$ given by $[x:y]$ is undefined at the origin although the source is normal. Thus the graph construction is essential. resolving the normalized graph makes the two projections honest proper morphisms. Without Theorem 8.1, normalization alone leaves this regular-domination claim unproved. Finiteness on the generic fiber still does not imply that either projection is finite, because it may contract vertical curves. Passing to the Stein factor—the spectrum of the direct image of the structure sheaf—separates a connected-fiber contraction from a finite map.
 
-For a correspondence, keep both projections from the normalized graph. Conditional on SR2, a common regular domination makes their compositions honest. Later intersection and cohomological theories may act with the correspondence even if neither projection is a morphism between preselected minimal models. This is why domination, rather than forced functoriality of minimal models, is the robust construction.
+For a correspondence, keep both projections from the normalized graph. a common regular domination makes their compositions honest. Later intersection and cohomological theories may act with the correspondence even if neither projection is a morphism between preselected minimal models. This is why domination, rather than forced functoriality of minimal models, is the robust construction.
 
 ## 13. Synthesis
 
@@ -1466,20 +1880,20 @@ For a correspondence, keep both projections from the normalized graph. Condition
 
 The main properties and their exact uses can now be read without ambiguity.
 
-| Property | What it supplies | What it does not supply |
-|---|---|---|
-| reduced | a total ring of fractions componentwise | separated branches or integral closure |
-| normal | integral extension across codimension one and the normalization mapping property | regular closed points on a surface |
-| regular | regular local rings on the total space | smooth or reduced fibers |
-| smooth over $S$ | flatness and geometrically regular fibers | properness |
-| Japanese domain | finite integral closure in finite field extensions | stability for all prime quotients |
-| Nagata scheme | finite normalization for finite-type schemes | surface resolution by itself |
-| excellent scheme | Nagata finiteness, good formal fibers, open regular locus, the hypotheses required by SR2 | a proof of SR2, algebraization of a formal contraction, or smooth reduction |
-| proper morphism | valuative extension and universal closedness | a chosen projective embedding |
-| projective morphism | properness plus an ample polarization | regularity or normality |
-| flat over a Dedekind base | no vertical torsion and well-behaved fibers | reduced special fibers |
+| Property                  | What it supplies                                                                                  | What it does not supply                                                             |
+| ------------------------- | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| reduced                   | a total ring of fractions componentwise                                                           | separated branches or integral closure                                              |
+| normal                    | integral extension across codimension one and the normalization mapping property                  | regular closed points on a surface                                                  |
+| regular                   | regular local rings on the total space                                                            | smooth or reduced fibers                                                            |
+| smooth over $S$           | flatness and geometrically regular fibers                                                         | properness                                                                          |
+| Japanese domain           | finite integral closure in finite field extensions                                                | stability for all prime quotients                                                   |
+| Nagata scheme             | finite normalization for finite-type schemes                                                      | surface resolution by itself                                                        |
+| excellent scheme          | Nagata finiteness, good formal fibers, open regular locus, the hypotheses required by Theorem 8.1 | a proof of Theorem 8.1, algebraization of a formal contraction, or smooth reduction |
+| proper morphism           | valuative extension and universal closedness                                                      | a chosen projective embedding                                                       |
+| projective morphism       | properness plus an ample polarization                                                             | regularity or normality                                                             |
+| flat over a Dedekind base | no vertical torsion and well-behaved fibers                                                       | reduced special fibers                                                              |
 
-The surface inputs are independent entries in this ledger. SR2 passes from a normal model to a regular one while preserving a chosen regular open. RC contracts one specified exceptional curve inside the algebraic category. BC2 resolves and factors birational comparisons and supplies the positive-genus minimal-target criterion. In particular, excellence is a hypothesis in all three settings but proves none of these theorems by itself.
+The surface inputs are independent entries in this ledger. Theorem 8.1 passes from a normal model to a regular one while preserving a chosen regular open. Theorem 11.1 contracts one specified exceptional curve inside the algebraic category. Theorem 11.2A resolves and factors birational comparisons and supplies the positive-genus minimal-target criterion. In particular, excellence is a hypothesis in all three settings but proves none of these theorems by itself.
 
 Three counterexamples should remain in view:
 
@@ -1497,7 +1911,7 @@ is regular but not smooth at the node of its special fiber; and a purely insepar
 
 ### 13.2 The construction pipeline
 
-Starting with $C/K$, the reusable sequence, conditional at its final arrow, is
+Starting with $C/K$, the reusable sequence, is
 
 $$
 \begin{array}{ccccc}
@@ -1506,28 +1920,28 @@ C&\subset&\mathbf P^N_K&&\\
 &&X_0&\text{projective closure}&\\
 &&\uparrow\ \text{finite}&&\\
 &&X_1&\text{normalization}&\\
-&&\uparrow\ \text{projective birational (SR2)}&&\\
-&&\mathcal X&\text{regular model, conditional on SR2}.&
+&&\uparrow\ \text{projective birational (Theorem 8.1)}&&\\
+&&\mathcal X&\text{regular model}.&
 \end{array}
 $$
 
-The arrows point from the improved model to the previous one. If a finite extension $K'/K$ is made, repeat normalization and, assuming SR2, resolution after base change. If positive genus calls for a canonical endpoint, the conditional regular model is the starting point for contracting vertical exceptional curves; RC and BC2 are then additionally required to obtain $\mathcal X_{\min}$ with its universal property. If semistability is desired, a separate semistable-reduction input supplies the field extension and nodal model; SR2 then supplies its regular incarnation.
+The arrows point from the improved model to the previous one. If a finite extension $K'/K$ is made, repeat normalization and resolution after base change. If positive genus calls for a canonical endpoint, Theorems 11.1 and 11.2A produce $\mathcal X_{\min}$ with its universal property. If semistability is desired, a separate semistable-reduction input supplies the field extension and nodal model; Theorem 8.1 then supplies its regular incarnation.
 
 At every stage there is a simple diagnostic question.
 
 1. Are unwanted vertical components present? Take schematic closure or remove base torsion.
 2. Are integral functions missing or branches glued? Normalize.
-3. Are closed surface points still singular? Invoke SR2; normalized blowups alone do not prove termination.
-4. Has ramified base change spoiled normality or regularity? Normalize and, conditional on SR2, resolve again.
-5. Are there superfluous exceptional curves? Assuming RC, contract them; assuming BC2 as well, identify the positive-genus endpoint by its mapping property.
+3. Are closed surface points still singular? Invoke Theorem 8.1; normalized blowups alone do not prove termination.
+4. Has ramified base change spoiled normality or regularity? Normalize and resolve again.
+5. Are there superfluous exceptional curves? Contract them by Theorem 11.1 and identify the positive-genus endpoint by its mapping property.
 
 Confusing these repairs is the source of many false shortcuts. Each answers a different defect.
 
 ### 13.3 Conclusion
 
-An arithmetic curve has two lives. Generically it is a smooth projective one-dimensional variety; integrally it is a two-dimensional space whose vertical geometry records reduction. Projective closure connects the two lives but introduces defects. Normalization repairs the integral structure finitely because the bases in arithmetic geometry are excellent. Passing from the resulting normal surface to a regular one requires SR2; the multiplicity, tangent-cone, and conductor ideas mentioned in Chapter 8 motivate proofs of that theorem but do not establish it here.
+An arithmetic curve has two lives. Generically it is a smooth projective one-dimensional variety; integrally it is a two-dimensional space whose vertical geometry records reduction. Projective closure connects the two lives but introduces defects. Normalization repairs the integral structure finitely because the bases in arithmetic geometry are excellent. Passing from the resulting normal surface to a regular one requires Theorem 8.1; the multiplicity, tangent-cone, and conductor ideas mentioned in Chapter 8 motivate proofs of that theorem but do not establish it here.
 
-Unconditionally, this volume supplies finite normalization and normal projective models with controlled behavior under finite extension. Conditional on SR2, it also supplies regular proper models preserving prescribed good loci and compatible regular dominations for maps and correspondences. Conditional further on RC and BC2, the positive-genus model has a relatively minimal endpoint with the stated universal property. Horizontal divisors retain generic points and markings; vertical components encode extensions of valuations and bad reduction. Regularity of the total surface and singularity of the fiber coexist without contradiction, while smoothness and semistability remain appropriately stronger relative conditions.
+This volume supplies finite normalization and regular proper models preserving prescribed good loci and compatible regular dominations for maps and correspondences. It also gives the positive-genus model a relatively minimal endpoint with the stated universal property. Horizontal divisors retain generic points and markings; vertical components encode extensions of valuations and bad reduction. Regularity of the total surface and singularity of the fiber coexist without contradiction, while smoothness and semistability remain appropriately stronger relative conditions.
 
 This separation of roles is the durable lesson. Normal, regular, smooth, excellent, Nagata, proper, and projective are not competing descriptions of one good object. They are distinct tools, and arithmetic curves become manageable only when each is invoked for exactly the work it performs.
 
@@ -1555,6 +1969,7 @@ Let $M$ be an $A$-module and $x_1,\ldots,x_n$ elements of $A$. The sequence is *
 $$
 M/(x_1,\ldots,x_n)M\neq0.
 $$
+
 When $M$ is finite, nonzero, and all $x_i$ lie in $\mathfrak m$, the second condition is automatic by Nakayama, so over a local ring the two notions agree for sequences in the maximal ideal.
 
 The first observation is that failure to start a regular sequence is an associated-prime statement.
@@ -1571,19 +1986,22 @@ The first observation is that failure to start a regular sequence is an associat
 $$
 \dim M/xM=\dim M-1 .
 $$
+
 Consequently every $M$-regular sequence in $\mathfrak m$ has length at most $\dim M$.
 
 **Proof.** Since $x$ is a nonzerodivisor on $M$, it lies in no associated prime of $M$, hence in no minimal element of $\operatorname{Supp}M$, because those minimal elements are associated primes. Let
 $$
 \mathfrak q_0\subsetneq\mathfrak q_1\subsetneq\cdots\subsetneq\mathfrak q_s
 $$
+
 be a chain of primes in $\operatorname{Supp}M/xM=\operatorname{Supp}M\cap V(x)$. Then $\mathfrak q_0$ lies in the closed set $\operatorname{Supp}M=V(\operatorname{Ann}M)$ and contains $x$, so it is not minimal there; choosing a minimal prime of $\operatorname{Supp}M$ below it lengthens the chain inside $\operatorname{Supp}M$. Hence $s+1\leq\dim M$, that is $\dim M/xM\leq\dim M-1$. The reverse inequality is Krull's height theorem. Iterating the equality along a regular sequence lowers the dimension by one at each step, and dimensions are nonnegative for nonzero modules, so the length is at most $\dim M$. $\square$
 
 Let $I\subseteq A$ be an ideal with $IM\neq M$. The **depth of $M$ along $I$**, written $\operatorname{depth}(I,M)$, is the supremum of the lengths of $M$-regular sequences contained in $I$. For a local ring the **depth of $M$** is
 $$
 \operatorname{depth}M:=\operatorname{depth}(\mathfrak m,M),
 $$
-and $\operatorname{depth}A$ means the depth of $A$ as a module over itself. Nothing so far says that this supremum is attained by every maximal sequence, and that is the content of Theorem 14.6. The bridge is the following criterion, which is the one substantial homological input of the chapter; it is quoted from the ambient library rather than reproved.
+
+and $\operatorname{depth}A$ means the depth of $A$ as a module over itself. Nothing so far says that this supremum is attained by every maximal sequence, and that is the content of Theorem 14.6. The bridge is the following criterion; its proof is the standard induction obtained by applying $\operatorname{Hom}(-,M)$ to the Koszul complex of a maximal regular subsequence and using prime avoidance at the first nonzero Koszul homology.
 
 **Theorem 14.3 (Rees).** Let $A$ be noetherian, $I\subseteq A$ an ideal, $M$ a finite $A$-module with $IM\neq M$, and $n\geq0$ an integer. The following are equivalent.
 
@@ -1597,6 +2015,7 @@ Only the equivalence of the first two conditions is used below, and it is used i
 $$
 \operatorname{depth}(I,M)=\min\{i:\operatorname{Ext}^i_A(A/I,M)\neq0\},
 $$
+
 with the convention that the minimum of the empty set is $+\infty$. If $A$ is local and $I=\mathfrak m$, then
 $$
 \operatorname{depth}M=\min\{i:\operatorname{Ext}^i_A(k,M)\neq0\}\leq\dim M<\infty .
@@ -1617,10 +2036,12 @@ $$
 $$
 0\longrightarrow M\xrightarrow{\ x\ }M\longrightarrow M/xM\longrightarrow0
 $$
+
 gives a long exact sequence of $\operatorname{Ext}^\bullet_A(k,-)$. Multiplication by $x$ on $\operatorname{Ext}^i_A(k,M)$ induced by the first map coincides with the map induced by multiplication by $x$ on $k$, which is zero because $x\in\mathfrak m=\operatorname{Ann}k$. The long exact sequence therefore breaks into short exact sequences
 $$
 0\longrightarrow\operatorname{Ext}^i_A(k,M)\longrightarrow\operatorname{Ext}^i_A(k,M/xM)\longrightarrow\operatorname{Ext}^{i+1}_A(k,M)\longrightarrow0
 $$
+
 for every $i\geq0$. For $i<d-1$ both outer terms vanish, so $\operatorname{Ext}^i(k,M/xM)=0$. For $i=d-1$ the left term vanishes and the right term is $\operatorname{Ext}^d(k,M)\neq0$, so $\operatorname{Ext}^{d-1}(k,M/xM)\neq0$. By Corollary 14.4 the depth of $M/xM$ is $d-1$. $\square$
 
 **Theorem 14.6.** Let $M\neq0$ be finite over $(A,\mathfrak m,k)$ and let $x_1,\ldots,x_n\in\mathfrak m$ be an $M$-regular sequence that cannot be extended to an $M$-regular sequence $x_1,\ldots,x_{n+1}$ in $\mathfrak m$. Then $n=\operatorname{depth}M$. In particular all maximal $M$-regular sequences in $\mathfrak m$ have the same length, namely $\operatorname{depth}M$.
@@ -1633,34 +2054,42 @@ Thus the depth may be computed by any greedy choice of regular elements, and the
 $$
 \operatorname{depth}M\geq\min\{\operatorname{depth}M',\operatorname{depth}M''\},
 $$
+
 $$
 \operatorname{depth}M'\geq\min\{\operatorname{depth}M,\operatorname{depth}M''+1\},
 $$
+
 $$
 \operatorname{depth}M''\geq\min\{\operatorname{depth}M,\operatorname{depth}M'-1\}.
 $$
+
 Moreover, if $\operatorname{depth}M''<\operatorname{depth}M'$, then $\operatorname{depth}M=\operatorname{depth}M''$, and if $\operatorname{depth}M'>\operatorname{depth}M$, then $\operatorname{depth}M''=\operatorname{depth}M$.
 
 **Proof.** All statements read off the long exact sequence
 $$
 \cdots\to\operatorname{Ext}^i(k,M')\to\operatorname{Ext}^i(k,M)\to\operatorname{Ext}^i(k,M'')\to\operatorname{Ext}^{i+1}(k,M')\to\cdots
 $$
+
 together with Corollary 14.4, which identifies the depth of a module with the first index at which $\operatorname{Ext}^\bullet(k,-)$ is nonzero. If $i<\min\{\operatorname{depth}M',\operatorname{depth}M''\}$, the two neighbors of $\operatorname{Ext}^i(k,M)$ vanish, so it vanishes; this is the first inequality. If $i<\min\{\operatorname{depth}M,\operatorname{depth}M''+1\}$, then $\operatorname{Ext}^i(k,M)=0$ and $\operatorname{Ext}^{i-1}(k,M'')=0$, and exactness of
 $$
 \operatorname{Ext}^{i-1}(k,M'')\to\operatorname{Ext}^i(k,M')\to\operatorname{Ext}^i(k,M)
 $$
+
 gives $\operatorname{Ext}^i(k,M')=0$; this is the second inequality. For the third, let $i<\min\{\operatorname{depth}M,\operatorname{depth}M'-1\}$; then $\operatorname{Ext}^i(k,M)=0$ and $\operatorname{Ext}^{i+1}(k,M')=0$, and exactness of
 $$
 \operatorname{Ext}^{i}(k,M)\to\operatorname{Ext}^i(k,M'')\to\operatorname{Ext}^{i+1}(k,M')
 $$
+
 gives $\operatorname{Ext}^i(k,M'')=0$. For the refinements, suppose $\operatorname{depth}M''<\operatorname{depth}M'$ and put $i=\operatorname{depth}M''$. Then $\operatorname{Ext}^j(k,M)=0$ for $j<i$ by the first inequality, while
 $$
 0=\operatorname{Ext}^i(k,M')\to\operatorname{Ext}^i(k,M)\to\operatorname{Ext}^i(k,M'')\to\operatorname{Ext}^{i+1}(k,M')=0
 $$
+
 shows $\operatorname{Ext}^i(k,M)\simeq\operatorname{Ext}^i(k,M'')\neq0$. Similarly, if $\operatorname{depth}M'>\operatorname{depth}M=:i$, then $\operatorname{Ext}^j(k,M'')=0$ for $j<i$ by the third inequality applied index by index, and
 $$
 0=\operatorname{Ext}^i(k,M')\to\operatorname{Ext}^i(k,M)\to\operatorname{Ext}^i(k,M'')
 $$
+
 is injective on a nonzero module, so $\operatorname{Ext}^i(k,M'')\neq0$. $\square$
 
 One consequence will be used repeatedly: a nonzero submodule $M'\subseteq M$ satisfies $\operatorname{Ass}M'\subseteq\operatorname{Ass}M$, so if $\operatorname{depth}M'=0$ then $\mathfrak m\in\operatorname{Ass}M$ and $\operatorname{depth}M=0$. Contrapositively, submodules of modules of positive depth have positive depth.
@@ -1699,10 +2128,12 @@ Recall that $\operatorname{pd}_AM$, the projective dimension, is the least lengt
 $$
 0\to F_p\xrightarrow{\ \varphi\ }F_{p-1}\to\cdots\to F_0\to M\to0 ,
 $$
+
 so that $\varphi$ is injective and $\varphi(F_p)\subseteq\mathfrak mF_{p-1}$, and $F_p\neq0$. Since $\operatorname{depth}A=0$, Lemma 14.1 supplies $a\neq0$ in $A$ with $a\mathfrak m=0$. Choose $0\neq u\in F_p$. Then $au\neq0$ because $F_p$ is free and $a\neq0$, while
 $$
 \varphi(au)=a\varphi(u)\in a\mathfrak mF_{p-1}=0,
 $$
+
 contradicting injectivity of $\varphi$. Hence $p=0$ and $M$ is free. $\square$
 
 **Theorem 14.12 (Auslander–Buchsbaum).** Let $M\neq0$ be a finite module of finite projective dimension over the noetherian local ring $(A,\mathfrak m,k)$. Then
@@ -1718,33 +2149,38 @@ Let $p\geq1$. By Lemma 14.11, $d\geq1$, since otherwise $M$ would be free. Choos
 $$
 0\to N\to F\to M\to0
 $$
+
 be as in Lemma 14.10, so $N\neq0$, $N\subseteq\mathfrak mF$, and $\operatorname{pd}N=p-1$. By induction
 $$
 n:=\operatorname{depth}N=d-p+1 .
 $$
+
 Since $N$ is a nonzero submodule of the free module $F$, and $\operatorname{depth}F=d\geq1$, the remark after Lemma 14.7 gives $n\geq1$.
 
 Suppose first $p\geq2$, so $n=d-p+1<d$. In the long exact sequence
 $$
 \operatorname{Ext}^i(k,F)\to\operatorname{Ext}^i(k,M)\to\operatorname{Ext}^{i+1}(k,N)\to\operatorname{Ext}^{i+1}(k,F)
 $$
+
 take $i<n-1$: both flanking terms vanish, because $i<n\leq d$ and $i+1<n$, so $\operatorname{Ext}^i(k,M)=0$. Taking $i=n-1$: the term $\operatorname{Ext}^{n-1}(k,F)$ vanishes since $n-1<d$, and $\operatorname{Ext}^{n}(k,F)$ vanishes since $n<d$, so
 $$
 \operatorname{Ext}^{n-1}(k,M)\simeq\operatorname{Ext}^{n}(k,N)\neq0 .
 $$
+
 Hence $\operatorname{depth}M=n-1=d-p$, as required.
 
 Now suppose $p=1$. Then $\operatorname{pd}N=0$, so $N$ is free of some rank $r\geq1$ and $\operatorname{depth}N=d$. For $i<d-1$ the same long exact sequence gives $\operatorname{Ext}^i(k,M)=0$, since $\operatorname{Ext}^i(k,F)=0$ and $\operatorname{Ext}^{i+1}(k,N)=0$. At $i=d-1$ the sequence reads
 $$
 0=\operatorname{Ext}^{d-1}(k,F)\to\operatorname{Ext}^{d-1}(k,M)\to\operatorname{Ext}^{d}(k,N)\xrightarrow{\ \alpha\ }\operatorname{Ext}^{d}(k,F),
 $$
+
 where $\alpha$ is induced by the inclusion $N\subseteq\mathfrak mF$. Writing $N\simeq A^r$ and $F\simeq A^s$, the inclusion is given by an $s\times r$ matrix with all entries in $\mathfrak m$, and by additivity of $\operatorname{Ext}$ the map $\alpha$ is given by the same matrix of scalars acting on $\operatorname{Ext}^{d}(k,A)^r\to\operatorname{Ext}^{d}(k,A)^s$. Every $\operatorname{Ext}^i(k,A)$ is killed by $\mathfrak m$, so $\alpha=0$. Since $\operatorname{Ext}^{d}(k,N)=\operatorname{Ext}^{d}(k,A)^r\neq0$, exactness gives $\operatorname{Ext}^{d-1}(k,M)\neq0$ and therefore $\operatorname{depth}M=d-1=d-p$. $\square$
 
 **Corollary 14.13.** Let $M\neq0$ be finite of finite projective dimension over $(A,\mathfrak m,k)$. Then $\operatorname{pd}_AM\leq\operatorname{depth}A$, and $M$ is free if and only if $\operatorname{depth}M=\operatorname{depth}A$.
 
 **Proof.** Both statements are immediate from Theorem 14.12, using that depth is nonnegative and that $\operatorname{pd}=0$ characterizes freeness over a local ring. $\square$
 
-Two independent checks confirm the formula's shape. If $x\in\mathfrak m$ is a nonzerodivisor on $M$, then $\operatorname{depth}M/xM=\operatorname{depth}M-1$ by Theorem 14.5, while the projective dimension satisfies $\operatorname{pd}M/xM=\operatorname{pd}M+1$; the two shifts cancel, so the Auslander–Buchsbaum sum is unchanged by cutting with a regular element, exactly as the formula demands. Likewise, if $x_1,\ldots,x_c$ is an $A$-regular sequence in $\mathfrak m$, then $\operatorname{pd}_AA/(x_1,\ldots,x_c)=c$, and Theorem 14.12 recovers $\operatorname{depth}A/(x_1,\ldots,x_c)=\operatorname{depth}A-c$, which Theorem 14.5 also gives directly. These two projective-dimension identities are available from the ambient library and are recorded here because they shorten the calculations of the next section.
+Two independent checks confirm the formula's shape. If $x\in\mathfrak m$ is a nonzerodivisor on $M$, then $\operatorname{depth}M/xM=\operatorname{depth}M-1$ by Theorem 14.5, while the projective dimension satisfies $\operatorname{pd}M/xM=\operatorname{pd}M+1$; the two shifts cancel, so the Auslander–Buchsbaum sum is unchanged by cutting with a regular element, exactly as the formula demands. Likewise, if $x_1,\ldots,x_c$ is an $A$-regular sequence in $\mathfrak m$, then $\operatorname{pd}_AA/(x_1,\ldots,x_c)=c$, and Theorem 14.12 recovers $\operatorname{depth}A/(x_1,\ldots,x_c)=\operatorname{depth}A-c$, which Theorem 14.5 also gives directly. Both projective-dimension identities follow by tensoring a free resolution with the two-term complex $[A\xrightarrow{x}A]$ and iterating.
 
 ### 14.4 Cohen–Macaulay local rings
 
@@ -1752,6 +2188,7 @@ A noetherian local ring $A$ is **Cohen–Macaulay** if
 $$
 \operatorname{depth}A=\dim A .
 $$
+
 By Corollary 14.4 the inequality $\operatorname{depth}A\leq\dim A$ always holds, so the condition asks that the algebraic count of independent regular parameters achieve the geometric dimension. A noetherian ring is Cohen–Macaulay if $A_{\mathfrak p}$ is Cohen–Macaulay for every prime $\mathfrak p$. No localization theorem is assumed: in every example below the Cohen–Macaulay property is verified at all primes directly.
 
 The basic example is a regular local ring, but for that one first needs two structural facts.
@@ -1766,12 +2203,14 @@ The basic example is a regular local ring, but for that one first needs two stru
 $$
 x\in\mathfrak m\setminus\bigl(\mathfrak m^2\cup\mathfrak p_1\cup\cdots\cup\mathfrak p_r\bigr).
 $$
+
 By Lemma 14.14 the ring $A/(x)$ is regular of dimension $n-1$, hence a domain by induction, so $(x)$ is a prime ideal. Since $x$ lies in no minimal prime, there is a minimal prime $\mathfrak q\subsetneq(x)$. For $a\in\mathfrak q$ write $a=bx$; as $x\notin\mathfrak q$ and $\mathfrak q$ is prime, $b\in\mathfrak q$. Hence $\mathfrak q=x\mathfrak q\subseteq\mathfrak m\mathfrak q$, and Nakayama gives $\mathfrak q=0$. So $A$ has a unique minimal prime, equal to $0$, and $A$ is a domain. $\square$
 
 **Theorem 14.16.** Let $A$ be regular local of dimension $n$. Then every minimal generating sequence $x_1,\ldots,x_n$ of $\mathfrak m$ is $A$-regular, and
 $$
 \operatorname{depth}A=\dim A=n .
 $$
+
 In particular regular local rings are Cohen–Macaulay, and a regular ring is Cohen–Macaulay.
 
 **Proof.** Induct on $n$. For $n=0$ there is nothing to prove. For $n\geq1$, the element $x_1$ lies outside $\mathfrak m^2$, so it is nonzero and hence a nonzerodivisor by Proposition 14.15, and $A/(x_1)$ is regular of dimension $n-1$ by Lemma 14.14 with minimal generating sequence the residues of $x_2,\ldots,x_n$. By induction those form a regular sequence, so $x_1,\ldots,x_n$ is $A$-regular and $\operatorname{depth}A\geq n$. Corollary 14.4 gives the reverse inequality. The last sentence follows because localizations of a regular ring at primes are regular local by definition. $\square$
@@ -1794,6 +2233,7 @@ The examples that matter for this book are hypersurfaces, and for them the passa
 $$
 \operatorname{depth}A_{\mathfrak q}=\dim A_{\mathfrak q}\geq\min\{r,\dim A_{\mathfrak q}\}
 $$
+
 for every $r$, which is $(S_r)$. The regularity hypothesis in the last sentence is $(R_1)$, so Theorem 14.26 below gives normality. $\square$
 
 **Theorem 14.20 (the semistable local models).** Let $R$ be a discrete valuation ring with uniformizer $\pi$ and residue field $k$, let $n\geq1$, and set
@@ -1801,6 +2241,7 @@ $$
 B_n=R[x,y]/(xy-\pi^n),\qquad
 \mathfrak n=(\pi,x,y).
 $$
+
 Then:
 
 1. $(B_n)_{\mathfrak q}$ is Cohen–Macaulay for every prime $\mathfrak q$, and $(B_n)_{\mathfrak n}$ has dimension two;
@@ -1814,12 +2255,14 @@ Statement (1) is now Proposition 14.19, apart from the dimension count at $\math
 $$
 0\subsetneq(\pi)\subsetneq(\pi,x)\subsetneq(\pi,x,y)
 $$
+
 consists of primes, since the successive quotients $k[x,y]$, $k[y]$, $k$ are domains. Hence $\operatorname{ht}\mathfrak N\geq3$, while Krull's height theorem gives $\operatorname{ht}\mathfrak N\leq3$ because $\mathfrak N$ has three generators. So $P_{\mathfrak N}$ is regular local of dimension three, and Corollary 14.18 makes $(B_n)_{\mathfrak n}=P_{\mathfrak N}/(f)$ Cohen–Macaulay of dimension two.
 
 For (2), let $\mathfrak q$ be a prime of $B_n$ other than $\mathfrak n$. If $x,y\in\mathfrak q$ then $\pi^n=xy\in\mathfrak q$, so $\pi\in\mathfrak q$ and $\mathfrak q\supseteq\mathfrak n$, forcing $\mathfrak q=\mathfrak n$ because $\mathfrak n$ is maximal. Hence $x\notin\mathfrak q$ or $y\notin\mathfrak q$, and $(B_n)_{\mathfrak q}$ is a localization of $B_n[1/x]$ or of $B_n[1/y]$. Now
 $$
 B_n[1/x]=R[x,1/x][y]/(xy-\pi^n)\simeq R[x,1/x],
 $$
+
 because $xy-\pi^n=x\,(y-\pi^nx^{-1})$ and $x$ is a unit, so the quotient identifies $y$ with $\pi^nx^{-1}$. The right-hand side is a localization of the regular ring $R[x]$, hence a regular ring, and so are its localizations. The same computation applies with $x$ and $y$ exchanged. Thus $(B_n)_{\mathfrak q}$ is regular.
 
 For (3), $f=xy-\pi^n$ lies in $\mathfrak N^2$ exactly when $n\geq2$, since $xy\in\mathfrak N^2$ always and $\pi^n\in\mathfrak N^2$ if and only if $n\geq2$; apply the criterion of Corollary 14.18.
@@ -1836,6 +2279,7 @@ Let $A$ be a noetherian ring and $r\geq0$ an integer. Condition $(R_r)$ says tha
 $$
 \operatorname{depth}A_{\mathfrak p}\geq\min\{r,\dim A_{\mathfrak p}\}
 $$
+
 for every prime $\mathfrak p$. Both conditions are inherited by localizations: the primes of $A_{\mathfrak p}$ are the $\mathfrak qA_{\mathfrak p}$ with $\mathfrak q\subseteq\mathfrak p$, their heights agree with the heights of $\mathfrak q$ in $A$, and $(A_{\mathfrak p})_{\mathfrak qA_{\mathfrak p}}=A_{\mathfrak q}$. Note also that $(R_1)$ implies $(R_0)$ and that $(S_2)$ implies $(S_1)$.
 
 **Proposition 14.21.** A noetherian ring $A$ satisfies $(S_1)$ if and only if every associated prime of $A$ is a minimal prime.
@@ -1850,6 +2294,7 @@ Conversely assume $(R_0)$ and $(S_1)$. Consider the map
 $$
 A\longrightarrow\prod_{\mathfrak p\in\operatorname{Min}A}A_{\mathfrak p}.
 $$
+
 If $a\neq0$, its annihilator is contained in some associated prime $\mathfrak p$, which is minimal by Proposition 14.21; since no element outside $\mathfrak p$ annihilates $a$, the image of $a$ in $A_{\mathfrak p}$ is nonzero. Hence the map is injective. By $(R_0)$ each factor is a field, so the product is reduced, and therefore so is $A$. $\square$
 
 The next theorem is the $(S_2)$ half of Serre's criterion, and it is the statement that Section 4.1 used without proof.
@@ -1865,6 +2310,7 @@ Assume $\dim A\geq2$ and suppose $\operatorname{depth}A=1$. Choose a nonzero $a\
 $$
 u=\frac ba\in\operatorname{Frac}(A),\qquad u\notin A,\qquad u\mathfrak m\subseteq A .
 $$
+
 The set $u\mathfrak m$ is an ideal of $A$, so either $u\mathfrak m\subseteq\mathfrak m$ or $u\mathfrak m=A$.
 
 In the first case multiplication by $u$ is an endomorphism of the finite faithful $A$-module $\mathfrak m$, and the determinant trick produces a monic equation for $u$ over $A$. Integral closedness forces $u\in A$, a contradiction.
@@ -1888,17 +2334,20 @@ Now suppose the residue $\bar b\in A/aA$ is nonzero. Its annihilator $(aA:b)$ is
 $$
 I=\mathfrak p_1,\qquad J=\mathfrak p_2\cap\cdots\cap\mathfrak p_t .
 $$
+
 Then $I\cap J$ is the nilradical, hence zero, and $I+J\subseteq\mathfrak m$ is a proper ideal. The sequence
 $$
 0\to A\to A/I\oplus A/J\to A/(I+J)\to0,
 \qquad a\mapsto(a,a),\quad(b,c)\mapsto b-c,
 $$
+
 is exact. Let $\mathfrak q$ be a prime minimal over $I+J$ and localize at $\mathfrak q$; localization is exact, and $(A/(I+J))_{\mathfrak q}$ is nonzero with support the single prime $\mathfrak qA_{\mathfrak q}$, because $\mathfrak q$ is minimal over $I+J$. Its associated primes are nonempty and contained in that support, so $\mathfrak qA_{\mathfrak q}$ is one of them and Lemma 14.1 gives depth zero.
 
 Suppose $\operatorname{depth}A_{\mathfrak q}\geq2$. Then $\operatorname{Ext}^1(\kappa,A_{\mathfrak q})=0$ for the residue field $\kappa$ of $A_\mathfrak q$, and the long exact sequence
 $$
 \operatorname{Hom}(\kappa,(A/I\oplus A/J)_{\mathfrak q})\to\operatorname{Hom}(\kappa,(A/(I+J))_{\mathfrak q})\to\operatorname{Ext}^1(\kappa,A_{\mathfrak q})=0
 $$
+
 shows that $(A/I)_{\mathfrak q}$ or $(A/J)_{\mathfrak q}$ has depth zero. Both $A/I$ and $A/J$ are reduced, being intersections of primes, so by Theorem 14.22 and Proposition 14.21 depth zero at $\mathfrak q$ means that $\mathfrak q$ is a minimal prime of $A/I$, that is $\mathfrak q=\mathfrak p_1$, or a minimal prime of $A/J$, that is $\mathfrak q=\mathfrak p_i$ for some $i\geq2$. Either alternative is impossible: $\mathfrak q$ contains $I+J$, so $\mathfrak q=\mathfrak p_1$ would give $\mathfrak p_1\supseteq\mathfrak p_2$ and $\mathfrak q=\mathfrak p_i$ would give $\mathfrak p_i\supseteq\mathfrak p_1$, contradicting the incomparability of distinct minimal primes.
 
 Therefore $\operatorname{depth}A_{\mathfrak q}\leq1$, and $(S_2)$ forces $\dim A_{\mathfrak q}\leq1$. If $\dim A_{\mathfrak q}=1$, then $(R_1)$ makes $A_{\mathfrak q}$ regular, hence a domain by Proposition 14.15, so $\mathfrak q$ contains exactly one minimal prime; but it contains $\mathfrak p_1$ and $\mathfrak p_2$. If $\dim A_{\mathfrak q}=0$, then $\mathfrak q$ is itself minimal and again contains the two distinct minimal primes $\mathfrak p_1,\mathfrak p_2$. Both cases are absurd, so $t=1$ and the reduced ring $A$ is a domain. $\square$
@@ -1923,20 +2372,24 @@ Let $n\geq1$. Since $\operatorname{depth}M=n\geq1$, Lemma 14.1 gives $\mathfrak 
 $$
 z\in\mathfrak m\setminus\Bigl(\mathfrak m^2\cup\bigcup_{\mathfrak p\in\operatorname{Ass}M}\mathfrak p\Bigr),
 $$
+
 so $z$ is a nonzerodivisor on $M$, and $z\neq0$ is a nonzerodivisor on the domain $A$. By Lemma 14.14 the ring $\bar A=A/(z)$ is regular local of dimension $n-1$, and by Theorem 14.5 together with Proposition 14.8 the module $\bar M=M/zM$ has
 $$
 \operatorname{depth}_{\bar A}\bar M=\operatorname{depth}_A\bar M=n-1=\dim\bar A .
 $$
+
 By induction $\bar M$ is free over $\bar A$, say of rank $r$.
 
 Choose $m_1,\ldots,m_r\in M$ whose residues form a basis of $\bar M$. Their residues modulo $\mathfrak m$ form a basis of $M/\mathfrak mM=\bar M/\bar{\mathfrak m}\bar M$, so by Nakayama they generate $M$. Let
 $$
 0\to N\to A^r\xrightarrow{\ \varphi\ }M\to0
 $$
+
 be the resulting presentation. Tensoring the exact sequence $0\to A\xrightarrow{z}A\to\bar A\to0$ with $M$ computes $\operatorname{Tor}^A_1(M,\bar A)=\{m\in M:zm=0\}=0$, because $z$ is a nonzerodivisor on $M$. Hence tensoring the presentation with $\bar A$ leaves
 $$
 0\to N/zN\to\bar A^{\,r}\xrightarrow{\ \bar\varphi\ }\bar M\to0
 $$
+
 exact. Now $\bar\varphi$ is a surjection of free $\bar A$-modules of the same finite rank $r$, hence an isomorphism: a surjective endomorphism of a finite module over a commutative ring is injective. Therefore $N/zN=0$, so $N=zN$ with $z\in\mathfrak m$, and Nakayama gives $N=0$. Thus $\varphi$ is an isomorphism and $M\simeq A^r$. $\square$
 
 Theorem 14.27 is the Auslander–Buchsbaum formula in the case where it is most often applied, but it does not presuppose $\operatorname{pd}M<\infty$; conversely, once $M$ is known to be free, Theorem 14.12 reads $0+n=n$, which is Theorem 14.16.
@@ -1952,11 +2405,13 @@ $$
 $$
 0\to N^{*}\to F_0^{*}\to F_1^{*},
 $$
+
 so $N^{*}$ fits into a short exact sequence $0\to N^{*}\to F_0^{*}\to C\to0$ where $C$ is the image of $F_0^{*}\to F_1^{*}$, a submodule of the free module $F_1^{*}$. If $C=0$ then $N^{*}$ is free and its depth is $\operatorname{depth}A$. Otherwise, $\operatorname{Ass}C\subseteq\operatorname{Ass}F_1^{*}=\operatorname{Ass}A$, so $\operatorname{depth}C=0$ would force $\operatorname{depth}A=0$; hence $\operatorname{depth}C\geq\min\{1,\operatorname{depth}A\}$. Lemma 14.7 gives
 $$
 \operatorname{depth}N^{*}\geq\min\{\operatorname{depth}F_0^{*},\operatorname{depth}C+1\}
 \geq\min\{\operatorname{depth}A,\ \min\{1,\operatorname{depth}A\}+1\},
 $$
+
 which is $\min\{2,\operatorname{depth}A\}$. $\square$
 
 **Corollary 14.29.** Let $A$ be a regular local ring of dimension two and let $M\neq0$ be a finite $A$-module isomorphic to the dual $N^{*}=\operatorname{Hom}_A(N,A)$ of some finite $A$-module $N$. In particular, let $M$ be reflexive, so that the natural map $M\to M^{**}$ is an isomorphism. Then $M$ is free.
