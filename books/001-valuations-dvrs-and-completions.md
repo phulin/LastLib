@@ -1192,7 +1192,69 @@ An immediate consequence is that a monic polynomial whose reduction has a simple
 
 Completeness was used to make successive corrections converge, but the lifting property itself deserves a name. A local ring $(A,\mathfrak m)$ is **henselian** if every factorization of a monic polynomial modulo $\mathfrak m$ into coprime monic factors lifts uniquely to $A$. Taking one factor to be $X-\overline a$ shows immediately that every simple residue root lifts uniquely. We use the factorization formulation because it records all coprime factors at once.
 
-Every local ring that is complete and separated for its maximal-ideal-adic topology is henselian; the preceding proof gives the DVR case directly. There is also a metric version needed for nondiscrete rank-one fields. Start with monic lifts $g,h$ of coprime residue factors of $f$. On pairs $(r,s)$ with $\deg r<\deg g$ and $\deg s<\deg h$, the linear map
+**Theorem 9.4 (complete local rings are henselian).** Let $(A,\mathfrak m)$ be a commutative local ring that is complete and separated for its $\mathfrak m$-adic topology. Then $A$ is henselian.
+
+**Proof roadmap.** Beginning with arbitrary monic lifts of the two residue factors, correct their product coefficient by coefficient. Coprimality makes the linear correction map invertible over $A$. A correction whose coefficients lie in $\mathfrak m^n$ leaves an error in $\mathfrak m^{2n}$, so completeness supplies limiting factors; separatedness proves that their product is exactly the original polynomial. The same quadratic estimate gives uniqueness.
+
+**Proof.** Let $f\in A[X]$ be monic, and suppose
+
+$$
+\overline f=\overline g_0\,\overline h_0
+$$
+
+with $\overline g_0$ and $\overline h_0$ monic and coprime. Put $r=\deg \overline g_0$, $s=\deg \overline h_0$, and $d=r+s=\deg f$. Choose monic lifts $g_1,h_1\in A[X]$ of degrees $r,s$. Then every coefficient of
+
+$$
+E_1=f-g_1h_1
+$$
+
+lies in $\mathfrak m$.
+
+Suppose more generally that $g,h$ are monic lifts of the same degrees and that every coefficient of $E=f-gh$ lies in $\mathfrak m^n$, where $n\geq1$. Consider the map between free $A$-modules
+
+$$
+\Phi_{g,h}:A[X]_{<r}\oplus A[X]_{<s}
+\longrightarrow A[X]_{<d},
+\qquad
+(u,v)\longmapsto uh+vg,
+$$
+
+where $A[X]_{<a}$ denotes the polynomials of degree less than $a$. In the monomial bases its determinant is, up to sign, the resultant of $g$ and $h$. Its residue is the resultant of the coprime polynomials $\overline g_0,\overline h_0$, hence is nonzero. The determinant is therefore a unit of the local ring $A$, so $\Phi_{g,h}$ is an isomorphism.
+
+There are consequently unique $u\in A[X]_{<r}$ and $v\in A[X]_{<s}$ satisfying
+
+$$
+uh+vg=E.
+$$
+
+The inverse matrix of $\Phi_{g,h}$ has entries in $A$. Since the coefficients of $E$ lie in $\mathfrak m^n$, the coefficients of $u$ and $v$ do as well. Set $g'=g+u$ and $h'=h+v$. These are again monic lifts of the prescribed degrees, and
+
+$$
+f-g'h'
+=E-(uh+vg)-uv
+=-uv.
+$$
+
+Every coefficient of the new error therefore lies in $\mathfrak m^{2n}$. Starting with $(g_1,h_1)$ and iterating this construction gives pairs $(g_j,h_j)$ for which
+
+$$
+f-g_jh_j\in\mathfrak m^{2^{j-1}}A[X],
+\qquad
+g_{j+1}-g_j,\ h_{j+1}-h_j
+\in\mathfrak m^{2^{j-1}}A[X]
+$$
+
+coefficientwise. The degrees remain fixed, so only finitely many coefficient sequences occur. They are $\mathfrak m$-adically Cauchy and hence converge, by completeness, to monic polynomials $g,h$ of degrees $r,s$ with the required reductions. Multiplication involves only finite sums of coefficients, so $g_jh_j$ converges coefficientwise to $gh$. The errors lie in every prescribed power of $\mathfrak m$; separatedness therefore gives $f=gh$.
+
+For uniqueness, suppose $(g^*,h^*)$ is another such lift and put $a=g^*-g$, $b=h^*-h$. Their coefficients lie in $\mathfrak m$, their degrees are less than $r,s$, and equality of the two products gives
+
+$$
+ah+bg=-ab.
+$$
+
+If the coefficients of $a,b$ lie in $\mathfrak m^n$, then the right side has coefficients in $\mathfrak m^{2n}$. Applying the integral inverse of $\Phi_{g,h}$ shows that the coefficients of $a,b$ lie in $\mathfrak m^{2n}$. Beginning with $n=1$ and iterating, they lie in every power of $\mathfrak m$; separatedness forces $a=b=0$. Thus the lift is unique. $\square$
+
+Theorem 9.3 is the DVR instance of this argument. There is also a metric version needed for nondiscrete rank-one fields. Start with monic lifts $g,h$ of coprime residue factors of $f$. On pairs $(r,s)$ with $\deg r<\deg g$ and $\deg s<\deg h$, the linear map
 
 $$
 (r,s)\longmapsto rh+sg
