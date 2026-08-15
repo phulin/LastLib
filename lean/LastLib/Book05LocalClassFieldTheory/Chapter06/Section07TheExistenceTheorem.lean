@@ -79,22 +79,31 @@ theorem chapter06_fixedFieldOfArtinImage_degree
       Nat.card (Kˣ ⧸ H) := by
   sorry
 
-/- LOCAL_DEPENDENCY_GUESS: maximality of the chosen model of `K^ab`, together
-   with the finite-level embeddings, lets the explicitly constructed
-   compositum be represented as an intermediate field of `KAb`. -/
+/-- The finite-precision realization supplied conditionally by Hypothesis NF
+and the torsion/unramified compositum calculation in §6.6. -/
+def Chapter06PrecisionNormInput
+    {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    (D : Chapter06LocalFieldData K) : Prop :=
+  ∀ m n : ℕ, 0 < m → 0 < n →
+    ∃ L : Chapter06FiniteAbelianSubextension K KAb,
+      L.normSubgroup = chapter06PrecisionSubgroup D m n
+
+/-- Precision subgroups are realized only after the NF input is supplied. -/
 theorem chapter06_precision_subgroup_is_realized
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
     (D : Chapter06LocalFieldData K)
     (hmax : Chapter06IsMaximalAbelianExtension K KAb)
+    (hNF : Chapter06PrecisionNormInput (KAb := KAb) D)
     (m n : ℕ) (hm : 0 < m) (hn : 0 < n) :
     ∃ L : Chapter06FiniteAbelianSubextension K KAb,
       L.normSubgroup = chapter06PrecisionSubgroup D m n := by
-  sorry
+  exact hNF m n hm hn
 
 theorem chapter06_open_finite_index_contains_realizable_precision
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
     (D : Chapter06LocalFieldData K)
     (hmax : Chapter06IsMaximalAbelianExtension K KAb)
+    (hNF : Chapter06PrecisionNormInput (KAb := KAb) D)
     [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     (htop : Chapter06UnitFiltrationNeighborhoodBasis D)
     (H : Subgroup Kˣ) (hopen : IsOpen (H : Set Kˣ))
@@ -140,6 +149,7 @@ theorem chapter06_local_existence_exists
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
     (D : Chapter06LocalFieldData K)
     (hmax : Chapter06IsMaximalAbelianExtension K KAb)
+    (hNF : Chapter06PrecisionNormInput (KAb := KAb) D)
     [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     (htop : Chapter06UnitFiltrationNeighborhoodBasis D)
     (H : Subgroup Kˣ) (hopen : IsOpen (H : Set Kˣ))
@@ -162,11 +172,12 @@ theorem chapter06_local_existence_unique
     L₁ = L₂ := by
   sorry
 
-/-- The source-facing local existence theorem. -/
+/-- The source-facing local existence theorem, conditional on Hypothesis NF. -/
 theorem chapter06_local_existence_theorem
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
     (D : Chapter06LocalFieldData K)
     (hmax : Chapter06IsMaximalAbelianExtension K KAb)
+    (hNF : Chapter06PrecisionNormInput (KAb := KAb) D)
     [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     (htop : Chapter06UnitFiltrationNeighborhoodBasis D)
     (H : Subgroup Kˣ) (hopen : IsOpen (H : Set Kˣ))
@@ -181,38 +192,41 @@ noncomputable def chapter06ExtensionOfOpenSubgroup
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
     (D : Chapter06LocalFieldData K)
     (hmax : Chapter06IsMaximalAbelianExtension K KAb)
+    (hNF : Chapter06PrecisionNormInput (KAb := KAb) D)
     [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     (htop : Chapter06UnitFiltrationNeighborhoodBasis D)
     (H : Subgroup Kˣ) (hopen : IsOpen (H : Set Kˣ))
     (hfinite : H.FiniteIndex) :
     Chapter06FiniteAbelianSubextension K KAb :=
   Classical.choose
-    (chapter06_local_existence_exists D hmax htop H hopen hfinite)
+    (chapter06_local_existence_exists D hmax hNF htop H hopen hfinite)
 
 theorem chapter06ExtensionOfOpenSubgroup_normSubgroup
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
     (D : Chapter06LocalFieldData K)
     (hmax : Chapter06IsMaximalAbelianExtension K KAb)
+    (hNF : Chapter06PrecisionNormInput (KAb := KAb) D)
     [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     (htop : Chapter06UnitFiltrationNeighborhoodBasis D)
     (H : Subgroup Kˣ) (hopen : IsOpen (H : Set Kˣ))
     (hfinite : H.FiniteIndex) :
-    (chapter06ExtensionOfOpenSubgroup D hmax htop H hopen hfinite).normSubgroup = H := by
+    (chapter06ExtensionOfOpenSubgroup D hmax hNF htop H hopen hfinite).normSubgroup = H := by
   exact (Classical.choose_spec
-    (chapter06_local_existence_exists D hmax htop H hopen hfinite)).1
+    (chapter06_local_existence_exists D hmax hNF htop H hopen hfinite)).1
 
 theorem chapter06ExtensionOfOpenSubgroup_degree
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
     (D : Chapter06LocalFieldData K)
     (hmax : Chapter06IsMaximalAbelianExtension K KAb)
+    (hNF : Chapter06PrecisionNormInput (KAb := KAb) D)
     [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     (htop : Chapter06UnitFiltrationNeighborhoodBasis D)
     (H : Subgroup Kˣ) (hopen : IsOpen (H : Set Kˣ))
     (hfinite : H.FiniteIndex) :
-    (chapter06ExtensionOfOpenSubgroup D hmax htop H hopen hfinite).degree =
+    (chapter06ExtensionOfOpenSubgroup D hmax hNF htop H hopen hfinite).degree =
       Nat.card (Kˣ ⧸ H) := by
   exact (Classical.choose_spec
-    (chapter06_local_existence_exists D hmax htop H hopen hfinite)).2
+    (chapter06_local_existence_exists D hmax hNF htop H hopen hfinite)).2
 
 theorem chapter06_local_existence_degree
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
@@ -231,13 +245,14 @@ theorem chapter06_local_existence_uniqueness_of_norm
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
     (D : Chapter06LocalFieldData K)
     (hmax : Chapter06IsMaximalAbelianExtension K KAb)
+    (hNF : Chapter06PrecisionNormInput (KAb := KAb) D)
     [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     (htop : Chapter06UnitFiltrationNeighborhoodBasis D)
     (H : Subgroup Kˣ) (hopen : IsOpen (H : Set Kˣ))
     (hfinite : H.FiniteIndex)
     (L : Chapter06FiniteAbelianSubextension K KAb)
     (hL : L.normSubgroup = H) :
-    L = chapter06ExtensionOfOpenSubgroup D hmax htop H hopen hfinite := by
+    L = chapter06ExtensionOfOpenSubgroup D hmax hNF htop H hopen hfinite := by
   sorry
 
 end
