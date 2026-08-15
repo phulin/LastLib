@@ -228,6 +228,44 @@ handoff below: potential modularity is established directly after base change to
 top.  Any argument that instead transports automorphy from the root field to the top must add
 the appropriate solvable-base-change hypothesis.
 
+**Worked example (a split cubic moving fiber).**  Take $K=\mathbf Q$, let
+$X=\mathbf A^1$, and over
+
+$$
+H=\mathbf A^1\setminus\{-2,2\}
+$$
+
+consider the degree-three cover cut out by
+
+$$
+z^3-3z=t,
+$$
+
+with evaluation map $e(z)=z$.  Its discriminant is $27(4-t^2)$, and its generic Galois group
+is $S_3$: the cubic is irreducible over $\mathbf Q(t)$ and its discriminant is not a square.
+At
+
+$$
+t_0=\frac{286}{343}
+$$
+
+the three sheets are the distinct rational points
+
+$$
+-\frac27,\qquad -\frac{11}{7},\qquad \frac{13}{7}.
+$$
+
+Indeed their sum is zero, the sum of their pairwise products is $-3$, and their product is
+$286/343$.  Thus the fiber at $t_0$ splits over every completion of $\mathbf Q$.  For any
+fixed finite set of places, the implicit-function theorem over the corresponding local fields
+shows that all three roots remain in prescribed small neighborhoods when $t$ is sufficiently
+close to $t_0$; at the real place they remain real as well.  A Hilbert specialization can then
+be chosen inside these local neighborhoods while retaining the generic $S_3$ normal closure
+and avoiding a prescribed finite field.  The moduli construction uses the same pattern with
+the three displayed points replaced by simultaneous points of the paired-frame space: local
+splitting protects the moduli conditions, while the regular normal closure controls the global
+field.
+
 ## 5. The Galois-refined specialization
 
 Let $D/K$ be a finite Galois field containing all residual cutout, cyclotomic, pairing,

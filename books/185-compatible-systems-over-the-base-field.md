@@ -1976,16 +1976,20 @@ follow. $\square$
 
 ### 9.3 The exact interface to prime switching
 
-The rational operation of changing coefficient prime can now begin without adding a family
-hypothesis. Choose an actual place $\nu\mid3$ of the final coefficient field $E$ and set
+The rational operation of changing coefficient prime begins with the coefficientwise result,
+not with the optional all-place family. Choose an actual place $\nu\mid3$ of the final
+coefficient field $E$, and let
 
 $$
-V=r_\nu:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(E_\nu).
+V=V_\nu:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(E_\nu)
 \tag{9.9}
 $$
 
-This is selection of a member of (9.1), not a tensor product of the distinguished
-$\ell$-adic member with $E_\nu$. The theorem supplies
+be the representation supplied directly by Proposition 9.2. Its existence uses only the
+selected-three hypotheses. Under the optional uniform packet certificate and the separate
+coefficient-two gate, it may also be denoted $r_\nu$ as the member at $\nu$ of the family
+(9.1). In neither scope is it a tensor product of the distinguished $\ell$-adic member with
+$E_\nu$. Proposition 9.2 supplies
 
 $$
 \det V=\chi_3,
@@ -1998,8 +2002,8 @@ $$
 so $V$ has the same rational rank-one monodromy, line, sign, and conductor-one record at $2$.
 It also receives the common unramified local records at every prime certified by clause 8.
 
-Proposition 8.3 supplies the stronger minimal-support hypothesis used in Book 186, Section
-2.3:
+Proposition 8.3 supplies the stronger minimal-support hypothesis needed in the downstream
+prime-switching argument:
 
 $$
 V\text{ is unramified outside }\{2,3\}.

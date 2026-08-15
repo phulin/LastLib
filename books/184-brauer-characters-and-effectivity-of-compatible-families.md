@@ -75,7 +75,7 @@
 13. [Exact endpoint and conclusion](#13-exact-endpoint-and-conclusion)
     - [The effective package](#131-the-effective-package)
     - [Four invalid shortcuts](#132-four-invalid-shortcuts)
-    - [Dependency and interface ledger](#133-dependency-and-interface-ledger)
+    - [How the effectivity argument fits together](#133-how-the-effectivity-argument-fits-together)
     - [The boundary with Book 185](#134-the-boundary-with-book-185)
     - [Conclusion](#135-conclusion)
 
@@ -1038,70 +1038,21 @@ reducible, contradicting (5.3). Thus $r_{D,\tau}$ is absolutely irreducible. $\s
 
 No coefficient-place de Rham or Hodge--Tate assertion is used. In particular, cuspidality and
 good Frobenius polynomials alone have not been treated as a proof of Galois irreducibility.
+A coefficient-prime comparison identifying the two-adic local realization with the signed SP
+object would be stronger: its nonzero monodromy would rule out a decomposition into two
+characters, because every one-dimensional semistable Weil--Deligne object has zero monodromy.
+It would therefore imply $(\mathrm{AI}_2)$ and would also supply a two-adic SP record that
+$(\mathrm{AI}_2)$ by itself does not contain. Such a comparison lies outside the scope of the
+selected-three main theorem, which uses the SP object only at a coefficient place above three.
 
-There is a natural, stronger local theorem which would discharge the remaining hypothesis.
-Call $(\mathrm{CP\!\!-SP}_2)$ the assertion that, for every $\tau$ of residue characteristic
-two and one dyadic place $w$ of $M$, the restriction $r_{1,\tau}|_{G_{M_w}}$ is semistable and
-its coefficient-prime semistable Weil--Deligne object is the rank-one signed SP object
-prescribed by the common algebraic packet. In particular, its monodromy is nonzero. Then
-
-$$
-(\mathrm{CP\!\!-SP}_2)
-\Longrightarrow(\mathrm{AI}_2)
-\Longrightarrow(\mathrm G_2(\mathfrak B))
-\Longrightarrow(\mathrm N_2(\mathfrak B))
-\Longrightarrow\text{coefficient-two effectivity}.
-\tag{5.3a}
-$$
-
-For the first implication only the nonzero-monodromy part is needed. Indeed, if the semisimple
-$r_{1,\tau}$ were reducible, then after a finite coefficient
-extension it would be a direct sum of two characters. Semistable representations are closed
-under direct summands and the semistable comparison functor is additive. The monodromy on a
-one-dimensional Weil--Deligne object is zero, because it is nilpotent; hence the monodromy on
-the direct sum would be zero, contradicting $(\mathrm{CP\!\!-SP}_2)$. This proves
-$(\mathrm{AI}_2)$. Proposition 5.1 propagates it from $M$ to every elementary intersection,
-Chapters 5--6 give the Hom and Gram implications, and Chapters 7--9 give effectivity and the
-actual characteristic-zero restriction complement. At residue characteristic two, the SP
-description of that local complement still comes from $(\mathrm{CP\!\!-SP}_2)$ itself, not
-from the norm calculation.
-
-No present source proves $(\mathrm{CP\!\!-SP}_2)$. Book 128, Section 11.3, explicitly limits
-its Weil--Deligne comparison to places away from the coefficient prime. But this does not make
-coefficient-prime SP comparison the only route to effectivity: Book 183, Proposition 6.1,
-using Book 168, Theorem 7.6, proves $(\mathrm{AI}_2)$ from $(\mathrm{HT}_1)$ by a global
-cuspidality argument, without asserting
-any two-adic SP pair. Thus (5.3a) remains the natural route that would also supply the missing
-coefficient-prime local record, whereas $(\mathrm{HT}_1)$ supplies exactly the simplicity
-needed by the Gram calculation. Conversely, $(\mathrm{AI}_2)$ alone would not prove
-semistability, the SP local pair, or any integral statement at a place above two.
-
-The other earlier conclusions do not close the gap in a disguised form. The curve attachment
-gives a continuous semisimple rank-two member, cyclotomic determinant, total oddness, pure good
-polynomials, and some stable lattice. Semisimple does not mean simple, and existence of a stable
-lattice gives no irreducibility statement about its reduction. The ambient semisimplicity
-certificate used to preserve raw local data likewise says that the curve cohomology is a direct
-sum of simple global modules; it does not say that this particular two-dimensional multiplicity
-space is one of them rather than a sum of two characters.
-
-Nor can the prime-to-coefficient SP pair be moved across the coefficient boundary. At a
-two-adic coefficient place the dyadic decomposition group is exactly a coefficient-prime local
-group. Away-from-two compatibility supplies no monodromy operator there, and passing to a
-global semisimplification does not create one. Good Frobenius polynomials and purity determine
-the semisimple member at a fixed coefficient place once it exists, but they do not transport an
-invariant line, an intertwiner, or an endomorphism dimension between completions of different
-residue characteristic. The coefficient-prime statement in $(\mathrm{CP\!\!-SP}_2)$ is
-therefore a genuinely new local assertion.
-
-Finally, determinant and parity alone cannot prove the claim: the semisimple representation
-$1\oplus\chi_2$ has cyclotomic determinant and the required eigenvalues of complex
-conjugation. The dense-Frobenius criterion of Chapter 12 would identify this particular split
-sum only after the trace identity $1+\chi_2$ had been proved on a dense set; no such identity is
-part of the packet data. These observations leave the exact alternatives: supply
-$(\mathrm{HT}_1)$ and invoke Book 183, Proposition 6.1; prove
-$(\mathrm{CP\!\!-SP}_2)$; prove $(\mathrm{AI}_2)$ by another argument; or verify the finite
-relation-specific gate $(\mathrm G_2(\mathfrak B))$ or
-$(\mathrm N_2(\mathfrak B))$ directly.
+For the optional coefficient-two extension, the argument needs only the irreducibility in
+$(\mathrm{AI}_2)$, or one of the finite Gram conditions stated in Chapter 1. Neither
+cyclotomic determinant nor parity can replace it: the reducible semisimple representation
+$1\oplus\chi_2$ has both the cyclotomic determinant and the required eigenvalues of complex
+conjugation. Likewise, common Frobenius polynomials do not transport monodromy or an invariant
+line between coefficient fields of different residue characteristic. The optional local
+comparison and the norm-one effectivity argument thus have different conclusions, and only the
+latter is needed here.
 
 ### 5.3 Self-twist groups
 
@@ -2347,48 +2298,33 @@ $$
 The remaining coefficient descent, coherent place indexing, model selection, and system-level
 local compatibility are genuine construction steps.
 
-### 13.3 Dependency and interface ledger
+### 13.3 How the effectivity argument fits together
 
-The direct dependency row is
+The construction combines general representation theory with the particular packet geometry
+of Book 183. Continuous induction from open subgroups and the topology of finite-dimensional
+coefficient spaces ensure that every induced term is a continuous representation. The Hom
+pairing, Frobenius reciprocity, Mackey decomposition, Clifford blocks, and the norm-one sign
+lemma then turn effectivity into a finite calculation. The exact intersection theorem of Book
+183 supplies the arithmetic content of that calculation: over each possibly nonnormal
+intersection field, both restrictions become twists of the same selected packet realization.
 
-$$
-\boxed{184\mid24,\ 57,\ 180,\ 183.}
-$$
+Chapters 5--6 identify the resulting Hom space with the correctly oriented finite-order
+self-twist and compare its dimension with the distinguished realization. At the selected place
+$\nu\mid3$ this gives the complete Gram matrix and hence norm one. Under the optional uniform
+packet certificate the same comparison works away from coefficient characteristic two; the
+separate coefficient-two hypotheses serve only the stronger all-place form. Once norm one is
+known, positivity produces the actual constituent, and Chapters 7--9 transfer the determinant,
+Frobenius polynomial, purity, and local SP object from the signed Mackey expression to that
+constituent.
 
-| Source | Input used here | Application-specific work retained |
-|---|---|---|
-| Book 24 | open subgroups, finite coset constructions, and continuity for profinite actions | continuity of the induced terms and effective constituent |
-| Book 57 | complete local coefficient rings and the topology of finite modules | the integral-model boundary in Chapter 8; stable-lattice existence is proved here |
-| Book 180 | Hom norm, Frobenius reciprocity, Mackey Gram formula, Clifford blocks, norm-one effectivity, Brauer--Nesbitt recognition, and the abstract coefficient-descent boundary | none of the SP overlap or self-twist indicators is imported |
-| Book 183 | selected elementary SP packets, exact nonnormal intersection identities, finite-order avatars, signed induced terms, rank and determinant, common polynomials, purity, and the full virtual SP pair at the selected place above three | effectivity cannot prove the packet input backward; uniform coefficient-place extensions are separate |
-
-Books 127, 128, and 168 are transitive through Book 183. For the selected-three conclusion,
-their output is already contained in Book 183, Theorem 11.1. No new direct dependency edge is
-asserted.
-
-The proof does not merely invoke abstract effectivity. Chapters 5--6 identify every overlap Hom
-space with the correctly oriented finite quotient self-twist, compare the indicator at the
-selected place with the distinguished one, and, under the optional uniform packet certificate,
-make that comparison uniformly away from two. They also treat the stated coefficient-two Hom
-gate, evaluate the complete Gram norm at the distinguished embedding, and obtain norm one. The minimal coefficient-two
-gate instead supplies that last norm directly. Only then is Book 180's positivity theorem
-applied. Chapters 7--9 promote the application-specific
-virtual determinant, Frobenius polynomial, purity, and SP local Mackey object to records of the
-actual constituent.
-
-The dense-Frobenius input used inside Book 183's overlap theorem is already discharged by that
-export. Chapter 12 states its own density hypothesis when it uses the rank-two recognition
-criterion. No density statement creates the constituent.
-
-No result from Book 185 is used. Relation independence here remains an isomorphism after scalar
-extension; completion-level coefficient descent and coherent place indexing are downstream.
-No signed lattice is reduced, no automorphic transfer is asserted over a nonnormal compositum,
-and no base-field compatible family is assumed.
-
-The coefficient-two boundary concerns only the optional all-place extension. Without
-$(\mathrm{AI}_2)$ the proof still gives effectivity at the selected $\nu\mid3$. Any assembly
-that also includes places above two must retain an appropriate coefficient-two gate; the
-fixed-three argument does not use one.
+This order explains the role of density. Frobenius density recognizes representations that
+already exist; it does not create the effective constituent. It also explains the remaining
+coefficient boundary. The present argument gives isomorphism classes after scalar extension
+and proves relation independence at that level. Descending those classes to completions of one
+number field, indexing them coherently by its places, and choosing integral lattices are
+different operations. In particular, the selected member at $\nu\mid3$ is effective without
+any coefficient-two hypothesis, whereas an optional all-place assembly must retain its stated
+coefficient-two gate.
 
 ### 13.4 The boundary with Book 185
 
