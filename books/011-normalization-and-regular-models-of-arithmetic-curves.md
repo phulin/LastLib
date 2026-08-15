@@ -1308,19 +1308,62 @@ A regular proper model is **relatively minimal** if none of its fibers contains 
 
 ### 11.2 Existence in positive genus
 
-Contraction gives existence, but the universal property of the endpoint requires another surface theorem. Resolving a graph gives a regular common domination only after SR2; it does not show that a rational map to a minimal model is already a morphism. Nor does Theorem 11.1 prove that every proper birational morphism of regular surfaces factors into point blowups.
+Contraction gives existence. We now prove the comparison needed for its universal property.
 
-**Prerequisite 11.2 (birational comparison for regular arithmetic surfaces, BC2).** Let $R$ be an excellent discrete valuation ring.
+For a fiber $F=\sum m_i\Gamma_i$, local-length intersection and
+$(F\cdot\Gamma_i)=0$ give
+
+$$
+(\sum a_i\Gamma_i)^2=-\sum_{i<j}m_im_j(\Gamma_i\cdot\Gamma_j)
+\left(\frac{a_i}{m_i}-\frac{a_j}{m_j}\right)^2.
+\tag{11.1}
+$$
+
+Thus the fiber matrix is negative semidefinite with kernel spanned by $F$. Blowup charts give
+$E^2=-[\kappa(x):k]$ and $K_{\widetilde X}=b^*K_X+E$; the conormal sequence and curve duality
+give $2p_a(C)-2=C^2+K_X\cdot C$.
+
+**Factorization lemma.** Every proper birational morphism between regular surfaces factors into
+blowups at closed regular points.
+
+**Proof.** Express the projective morphism as the blowup of an ideal and remove its invertible
+height-one part. Repeatedly blow up closed base points. For two members $a,b$ of a reduction, the
+two chart filtrations give
+
+$$
+\ell A/(a,b)=\operatorname{ord}(a)\operatorname{ord}(b)[\kappa(x):k]
++\sum_{x'\mapsto x}\ell\mathcal O_{X',x'}/(a',b').
+$$
+
+The residual sum strictly decreases, so the ideal becomes invertible. In a shortest sequence the
+last exceptional curve maps to a $(-1)$-curve on the source; otherwise Theorem 11.1 shortens the
+sequence. Contract it and induct. $\square$
+
+**Theorem 11.2A (birational comparison for regular arithmetic surfaces).** Let $R$ be an excellent discrete valuation ring.
 
 1. A birational map between regular proper arithmetic surfaces which is the identity on the generic fiber admits a common regular resolution obtained by finitely many blowups at closed points.
 2. A proper birational morphism between regular arithmetic surfaces which is the identity on the generic fiber factors into finitely many blowups at closed points.
 3. If the common generic fiber is a smooth projective geometrically connected curve of positive genus and $Y/R$ is relatively minimal, then the rational map $X\dashrightarrow Y$ induced by the generic-fiber identification extends uniquely to a morphism $X\to Y$. In particular two relatively minimal regular proper models with fixed generic-fiber identification are uniquely isomorphic.
 
-The third clause is the minimal-target consequence of the first two clauses together with the exceptional-curve and intersection arguments needed to compare the two blowup factorizations. Those cancellation arguments are substantial: merely choosing a "last exceptional curve" does not prove that its image on the other side is again an exceptional curve of the first kind. BC2 records the exact comparison input used below and is not proved in this volume.
+**Proof.** Resolve the normalized graph by Theorem 8.1 and factor both projections by the
+factorization lemma. Cancel common exceptional curves in reverse creation order; after their
+descendants are removed, a maximal common curve is a $(-1)$-curve for both maps and Theorem 11.1
+factors both through its contraction. This proves (1) and (2) with no common exceptional curve.
 
-**Theorem 11.2 (minimal regular model, conditional on SR2, RC, and BC2).** Assume SR2, RC, and BC2. Let $R$ be an excellent discrete valuation ring with fraction field $K$, and let $C/K$ be a smooth projective geometrically connected curve of positive genus. Then $C$ has a relatively minimal regular proper model $X_{\min}/R$. Every regular proper model of $C$ admits a unique morphism to $X_{\min}$ inducing the identity on $C$.
+For (3), write $X\xleftarrow pZ\xrightarrow qY$ in that form. If $p$ is not an isomorphism, its
+last exceptional curve $E$ is a $(-1)$-line and is not $q$-exceptional. The canonical divisor of
+a positive-genus minimal model is nonnegative on every vertical curve: adjunction proves this
+unless the curve is a square-zero line; (11.1) then makes the fiber $m\mathbf P^1$, whose
+structure-sheaf filtration gives $1-g=m>0$, impossible. Since a point blowup satisfies
+$K_{Z'}=b^*K_Z+E_b$, factorization of $q$ gives
+$K_Z=q^*K_Y+\sum a_iE_i$ with $a_i>0$. Thus $K_Z\cdot E\ge0$, while adjunction gives $-1$.
+Contradiction. Hence $p$ is an isomorphism. Separatedness gives uniqueness; applying the result
+both ways proves the final assertion. $\square$
 
-**Proof.** Theorem 9.1, using SR2, supplies a regular proper model. Apply RC repeatedly to its vertical exceptional curves. Each contraction remains a regular proper model and strictly lowers the number of irreducible components of the affected fiber, so the process terminates at a relatively minimal model $X_{\min}$. For any other regular proper model $Y$, BC2(3) extends the generic-fiber identification to a unique morphism $Y\to X_{\min}$. $\square$
+**Theorem 11.2 (minimal regular model).** Let $R$ be an excellent discrete valuation ring with fraction field $K$, and let $C/K$ be a smooth projective geometrically connected curve of positive genus. Then $C$ has a relatively minimal regular proper model $X_{\min}/R$. Every regular proper model of $C$ admits a unique morphism to $X_{\min}$ inducing the identity on $C$.
+
+**Proof.** Theorem 9.1 supplies a regular proper model. Apply Theorem 11.1 repeatedly; each step
+lowers the number of fiber components. Theorem 11.2A(3) gives the mapping property. $\square$
 
 Assuming RC and BC2 over the corresponding localizations, the same construction works over a global excellent Dedekind scheme. Only finitely many fibers of a fixed proper model are non-smooth. RC includes the algebraic gluing of each local contraction with the identity elsewhere, and the local BC2 mapping properties glue uniquely because they agree on the generic fiber. Thus the global conclusion is conditional on the same contraction and comparison inputs; it does not follow from excellence alone.
 
