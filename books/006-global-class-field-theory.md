@@ -4270,7 +4270,8 @@ is an isomorphism; the $\tau$-labeled multiplicity in degree $m$ is its labeled 
 
 The analytic input is proved by the following trace calculation.
 
-**Lemma 11.1 (rank-one Tate--Sen lemma).** Let $\xi:G_L\to E^\times$ be continuous.
+**Lemma 11.1 (rank-one Tate--Sen integrality lemma).** Let
+$\xi:G_L\to E^\times$ be continuous.
 On a sufficiently deep principal-unit group there are unique $c_\tau\in E$ with
 
 $$
@@ -4278,9 +4279,9 @@ $$
 =\sum_{\tau:L\hookrightarrow E}c_\tau\tau(x).             \tag{11.HT2}
 $$
 
-The $c_\tau$, with the common sign fixed by arithmetic reciprocity, are the labeled
-eigenvalues of the Sen operator. A rank-one representation is Hodge--Tate exactly when all
-these eigenvalues are integers.
+The $c_\tau$, with the common sign fixed by arithmetic reciprocity, are the
+labeled eigenvalues of the Sen operator. If the rank-one representation is
+Hodge--Tate, then every $c_\tau$ is an integer.
 
 **Proof.** The first assertion is elementary. After shrinking the principal-unit
 group, both logarithms converge and their composite is a continuous additive
@@ -4592,105 +4593,75 @@ not alter the $\Theta_\tau$. For the original basis, (11.HT3r) is
 exactly (11.HT2), so $\Theta_\tau=c_\tau$. These scalars are the labeled
 rank-one Sen operator.
 
-Finally fix a label $\tau$ and twist degree $r\in\mathbf Z$. On the
-$\tau$-factor the Koszul operators are perturbed from $\Delta_i$ by the
-scalars
+It remains to compare these operators with the Hodge--Tate grading. Here the
+full cyclotomic differential must be retained. With arithmetic reciprocity
+and the sign convention of (11.HT1), local compatibility in Book 5 gives
 
 $$
-q_i=\exp\bigl((r-\Theta_\tau)\tau(\log\chi_{\rm LT}(\gamma_i))\bigr)-1.
-                                                               \tag{11.HT3s}
+ \log\chi_{\rm cyc}(\gamma_x)
+ =-\operatorname {Tr}_{L/\mathbf Q_\ell}(x)
+ =-\sum_{\tau:L\hookrightarrow E}\tau(x).                \tag{11.HT3s}
 $$
 
-Shrink $\Gamma_s$ once more. The $q_i$ are then small enough that the
-bounded homotopy on every nonempty-$J$ summand survives by the convergent
-Neumann series in the homological perturbation lemma. Hence the twisted
-Koszul complex is quasi-isomorphic to its joint-invariant finite-dimensional
-complex over $L_s\otimes E$, where its differentials are multiplication by
-the $q_i$. If $r\ne\Theta_\tau$, at least one $q_i$ is nonzero, so this
-scalar Koszul complex has no degree-zero cohomology. If
-$r=\Theta_\tau$, every $q_i$ is zero; the decompleted basis is fixed on an
-open subgroup, and the normal-basis resolvent over the remaining finite
-quotient supplies a nonzero invariant. In the $\tau$-factor the quotient of
-two invariants is in $E$, so the invariant space is one-dimensional over
-$E$.
+In particular a Tate twist changes all labeled operators by the same
+integer; it does not replace the trace in (11.HT3s) by one selected
+$\tau(x)$.
 
-Thus the $\tau$-labeled degree-$r$ piece is one-dimensional exactly when
-$\Theta_\tau=r$, and is zero otherwise. The canonical Hodge--Tate map
-(11.HT1) is therefore an isomorphism exactly when every
-$c_\tau=\Theta_\tau$ is an integer. This proves the lemma. $\square$
-
-We next normalize the integral characters. Let $\mathcal F$ be the Lubin--Tate formal
-$\mathcal O_L$-module for a uniformizer $\pi$. Its Tate module is free of rank one over
-$\mathcal O_L$ and defines
-$\chi_{\mathrm{LT}}:G_L\to\mathcal O_L^\times$. The logarithm of $\mathcal F$ converges on
-its maximal ideal and satisfies
-$\log_{\mathcal F}([a]X)=a\log_{\mathcal F}(X)$.
-
-**Lemma 11.2 (Lubin--Tate Hodge--Tate line).** For every embedding $\tau:L\hookrightarrow E$,
-the conjugate character $\tau\circ\chi_{\mathrm{LT}}$ is Hodge--Tate with labeled weight
-$-1$ at $\tau$ and $0$ at the other embeddings, with all signs reversed for its dual.
-Finite-image and unramified characters have weight zero.
-
-**Proof.** This follows directly from the proved rank-one Sen calculation,
-without importing the Hodge--Tate sequence for general $p$-divisible groups.
-Arithmetic local reciprocity for the Lubin--Tate tower, established in Book 5,
-gives on a sufficiently deep principal-unit group
+The comparison with (11.HT1) is now formal but we give the typed calculation.
+The constructions (11.HT3o)--(11.HT3r) commute with tensor products,
+coefficient extension, and passage to $G_L$-invariants: all three operations
+commute with the bar maps, the projectors $P_i$, and the Koszul homotopy.
+Hence the canonical Hodge--Tate map intertwines the labeled operators.
+On
 
 $$
-\chi_{\mathrm{LT}}(\operatorname {rec}_L(\exp x))=\exp(-x). \tag{11.HT5}
+e_\tau\bigl(\mathbf C_\ell(-m)\otimes_L
+  (\mathbf C_\ell(m)\otimes V)^{G_L}\bigr),              \tag{11.HT3t}
 $$
 
-Therefore
+the invariant factor has zero infinitesimal action. Formula (11.HT3s) says
+that the twist contributes the trace character $m\sum_\sigma\sigma(x)$.
+After applying the idempotent $e_\tau$ of
+$L\otimes_{\mathbf Q_\ell}E=\prod_\sigma E_\sigma$, this is multiplication
+by $m$ in the $\tau$-labeled operator and by zero in the other labeled
+operators. Thus the source of (11.HT1), in degree $m$ and label $\tau$, has
+labeled eigenvalue $m$ at $\tau$.
+
+If $V$ is Hodge--Tate, (11.HT1) is an isomorphism. Since $V$ has rank one,
+for each label $\tau$ exactly one degree $m_\tau$ occurs in that label.
+Intertwining then gives
+$\Theta_\tau=m_\tau\in\mathbf Z$. Since
+$\Theta_\tau=c_\tau$, every coefficient in (11.HT2) is integral. This proves
+the lemma. $\square$
+
+Only this implication is needed below and downstream. The converse assertion
+that every locally algebraic character is Hodge--Tate would require, in
+particular, an independent Hodge--Tate calculation for every conjugate
+Lubin--Tate Tate module. That calculation belongs to the later
+$p$-divisible-group comparison theory and is not used in this book, so it is
+not asserted here.
+
+**Rank-one Hodge--Tate algebraicity theorem.** A continuous one-dimensional
+$E$-linear representation $\xi$ of $G_L$ which is Hodge--Tate is locally
+algebraic.
+
+**Proof.** Apply (11.HT2). Lemma 11.1 makes every $c_\tau$ an integer
+$n_\tau$. For $x$ in a sufficiently small lattice, functoriality of the
+convergent exponential gives
 
 $$
-\log\bigl((\tau\circ\chi_{\mathrm{LT}})
-(\operatorname {rec}_L(\exp x))\bigr)=-\tau(x).
+ \log\!\left(\prod_\tau\tau(\exp x)^{n_\tau}\right)
+ =\sum_\tau n_\tau\tau(x)
+ =\log\bigl(\xi(\operatorname {rec}_L(\exp x))\bigr).
 $$
 
-In (11.HT2) the only nonzero coefficient is $-1$ in the $\tau$-component.
-With the convention in (11.HT1), $\mathbf C_\ell(m)\otimes V$ has invariants
-for $m=-1$ when $V$ is the Lubin--Tate line. Thus Lemma 11.1 gives labeled
-weight $-1$ at $\tau$; dualizing gives weight $1$. This is the same sign as
-the coefficient just computed, because arithmetic reciprocity was already
-used in (11.HT5).
+Shrink once more so that the target logarithm is injective. The two
+characters are then equal on that principal-unit group, which is precisely
+local algebraicity. $\square$
 
-For a finite-image character, pass to a finite extension on which it is
-trivial. For an unramified character, the logarithm on principal units is
-zero. Thus every coefficient in (11.HT2) is zero, and Lemma 11.1 gives weight
-zero. $\square$
-
-Arithmetic local reciprocity for the Lubin--Tate tower says
-
-$$
-\chi_{\mathrm{LT}}(\operatorname {rec}_L(u))=u^{-1}
-\quad(u\in\mathcal O_L^\times),                           \tag{11.HT6}
-$$
-
-with an unramified factor depending only on the chosen uniformizer. Thus the character
-$u\mapsto\tau(u)$ is the dual of the $\tau$-conjugate Lubin--Tate character on principal
-units. Lemmas 11.1 and 11.2 prove the local bridge.
-
-**Rank-one Hodge--Tate criterion.** A continuous one-dimensional $E$-linear representation
-$\xi$ of $G_L$ is Hodge--Tate if and only if it is locally algebraic. More precisely, the
-integers in the displayed local-algebraicity formula, with the sign dictated by reciprocity
-and twist conventions, are its
-labeled Hodge--Tate weights.
-
-**Proof.** Apply (11.HT2). If $\xi$ is
-Hodge--Tate, Lemma 11.1 makes every
-$c_\tau$ an integer $n_\tau$. Dividing by the corresponding product of conjugate
-Lubin--Tate characters makes every logarithmic coefficient zero. On a sufficiently deep
-principal-unit group both source and target logarithms are injective, so the quotient is
-trivial there and therefore has finite inertia. Thus $\xi$
-is locally algebraic. Conversely, a locally algebraic character is, on an open subgroup of
-inertia, a product of integral tensor powers and duals of the conjugate Lubin--Tate
-characters. The quotient has finite inertia and is Hodge--Tate of weight zero by Lemma 11.2;
-stability under tensor products and duals proves the converse. $\square$
-
-Coefficient extension causes no ambiguity. If $E$ initially omits some embeddings, test the
-criterion after one finite extension containing them. Local algebraicity then descends as a
-statement about the original $\overline{\mathbf Q}_\ell$-valued character, and the multiset of
-labeled weights is independent of the chosen enlargement. Once a
+Coefficient extension causes no ambiguity. If $E$ initially omits some embeddings, apply the
+theorem after one finite extension containing them. Local algebraicity then descends as a
+statement about the original $\overline{\mathbf Q}_\ell$-valued character. Once a
 one-dimensional constituent of a geometric representation is known to be Hodge--Tate, no
 second global theorem is needed to make it locally algebraic.
 
