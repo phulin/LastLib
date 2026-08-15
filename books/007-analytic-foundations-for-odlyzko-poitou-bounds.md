@@ -546,17 +546,39 @@ $$
 D_K^{-1/2}N(x_0\mathfrak a^{-1}).
 $$
 
-Here is the measure calculation behind the unfolding. Give a real place weight $d_v=1$ and a complex place weight $d_v=2$. For independent positive radii $r_v$, put
+There is no hidden ideal-dependent stabilizer in this count. If $ux_0=x_0$ for a unit $u$ and
+$x_0\ne0$, then $u=1$. Choose a free subgroup $U_0\subset\mathcal O_K^\times$ mapping
+isomorphically onto the logarithmic unit lattice, and write
+$\mathcal O_K^\times=\mu(K)U_0$. The generators of a fixed principal ideal then split into
+exactly $|\mu(K)|$ distinct $U_0$-orbits. Elements of $\mu(K)$ fix the logarithmic scaling
+variable, not the vector, which is why their number is a common multiplicity rather than a
+stabilizer order to be divided out.
+
+Here is the measure calculation behind the unfolding. Give a real place weight $d_v=1$ and a
+complex place weight $d_v=2$. First decompose independent positive scaling factors $q_v$ by
 
 $$
-t=\prod_v r_v^{d_v},
-\qquad y_v=r_vt^{-1/n}.
+t=\prod_v q_v^{d_v},
+\qquad y_v=q_vt^{-1/n}.
 $$
 
-Then $y\in Y$, and logarithmic coordinates split the measure as a constant multiple of
-$dt/t$ times Haar measure on $Y$. That constant, the volume chosen for the unit parallelepiped,
-the angular integrals, and the roots-of-unity multiplicity are independent of $s$ and of the
-ideal class. The radial integrals are exactly the two Mellin integrals of §4.1.
+Then $y\in Y$, and logarithmic coordinates split $\prod_vdq_v/q_v$ as a constant multiple of
+$dt/t$ times Haar measure on $Y$. For a fixed nonzero $\ell\in L_{\mathfrak a}$, put
+$r_v=q_v|\ell_v|$. Every embedding of the nonzero algebraic number underlying $\ell$ is nonzero,
+so this is a valid change of variables, and
+
+$$
+t^s
+=\left(\prod_v|\ell_v|^{d_v}\right)^{-s}
+\prod_v r_v^{d_vs}.
+$$
+
+The real radial integral is $\frac12\Gamma_{\mathbf R}(s)$ and the complex radial integral is
+$\frac12\Gamma_{\mathbf C}(s)$; the missing sign and angular factors, the logarithmic Jacobian,
+the volume chosen for the unit parallelepiped, and $|\mu(K)|$ are all absorbed into one positive
+constant. They are independent of $s$ and, because every $L_{\mathfrak a}$ was normalized to
+covolume one, independent of the ideal class. This proves rather than assumes the two local gamma
+factors in the unfolding.
 
 For real $s=\sigma>1$ all unfolded summands are nonnegative, so Tonelli applies. For complex
 $s$ with the same real part, the absolute value is bounded by the $\sigma$-integrand. The
