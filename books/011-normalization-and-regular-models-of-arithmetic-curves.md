@@ -918,6 +918,60 @@ $\delta_{ij}\theta$. Hence a fixed nonzero element kills the cokernel of
 $H^0(Y,\omega_Y)\to\omega_B$. By (8.8), (8.7), and Proposition 8.12 this cokernel is the Matlis
 dual of $H^1(Y,\mathcal O_Y)$; Lemma 8.13 supplies the uniform bound. $\square$
 
+#### 8.5.4 Rational singularities and the Gorenstein reduction
+
+**Lemma 8.15 (blowing up a rational singularity).** If $A$ is rational, the ordinary blowup
+$X'=\operatorname{Proj}\bigoplus_{n\ge0}\mathfrak m^n$ is normal, and every local ring on it is
+rational.
+
+**Proof.** Normalize $X'$ to $\nu:X\to X'$ and put
+$\mathcal I=\mathfrak m\mathcal O_X$. Rationality makes $H^1(X,\mathcal F)=0$ for every globally
+generated $\mathcal F$: resolve it by a direct sum of $\mathcal O_X$ and use that coherent
+cohomology above degree one vanishes on a surface modification. From
+
+$$
+0\to\mathcal F\to\mathcal O_X^{\mu+1}\to\mathcal I\to0
+$$
+
+and its twists one obtains inductively
+$H^1(X,\mathcal I^n)=0$ and $H^0(X,\mathcal I^n)=\mathfrak m^n$ for all $n$. The projection
+formula therefore identifies every graded piece of
+$\bigoplus H^0(X,\nu^*\mathcal O_{X'}(n))$ with the Rees algebra. A finite morphism over Proj is
+recovered from these twists, so $\nu$ is an isomorphism. Rationality of its local rings follows
+by spreading any local modification to a modification of $X$ and applying (8.9). $\square$
+
+Let $E$ be its exceptional curve. The preceding exact sequences give
+
+$$
+H^1(E,\mathcal O_E(n))=0,
+\quad H^0(E,\mathcal O_E(n))=\mathfrak m^n/\mathfrak m^{n+1}\quad(n\ge0).
+\tag{8.10}
+$$
+
+Thus $E$ is Cohen--Macaulay, $\mathcal O_E(1)$ is very ample, and
+$\deg\mathcal O_E(1)=\dim_k\mathfrak m/\mathfrak m^2-1$, which is one only in the regular case.
+
+**Lemma 8.16 (canonical module becomes invertible).** A rational normal surface singularity with
+a dualizing module is dominated by a finite sequence of blowups at singular closed points on
+which the final dualizing module is invertible.
+
+**Proof.** Surface vanishing and (8.8) identify
+$H^0(X,\omega_X)\to\omega_A$ with an isomorphism. Adjunction for the exceptional Cartier curve
+gives $\omega_X|_E=\omega_E(1)$. The curve duality calculation and (8.10) show
+$H^1(X,\omega_X(n))=0$ for $n\ge0$ and that $\omega_E(1)$ is generated. Hence
+$f^*\omega_A\to\omega_X$ is surjective at every singular point.
+
+Blow up the Fitting ideal of the rank-one module $\omega_A$; its torsion-free transform is
+invertible. Dominate this blowup by point blowups using Lemma 8.9. Lemma 8.15 says each stage is
+normal and rational. Along a chain ending at a singular point the preceding surjections persist;
+there the invertible torsion-free transform surjects onto the torsion-free rank-one module
+$\omega_X$, hence is an isomorphism. At regular points the dualizing module is already invertible.
+$\square$
+
+A rational singularity with invertible dualizing module is called a **rational double point**.
+The remaining tasks are now sharply delimited: prove that successive blowups resolve rational
+double points, and lift the resulting normalized-blowup sequence from the completion.
+
 ### 8.6 Why a three-entry local invariant is insufficient
 
 After Lemma 8.2, the missing local assertion can be stated without global language. For every
