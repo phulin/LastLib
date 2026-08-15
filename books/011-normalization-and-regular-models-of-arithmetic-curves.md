@@ -1258,7 +1258,7 @@ Existence leaves many choices: blowing up any closed point of a regular model gi
 
 Let $R$ be a discrete valuation ring and $X/R$ a regular proper model. A vertical integral curve $E$ is an **exceptional curve of the first kind** if, after accounting for its residue field, it is a projective line with normal bundle of degree $-1$. Equivalently over an algebraically closed residue field, $E\simeq\mathbf P^1$ and $E^2=-1$. The intersection notation is used here only for this contraction criterion; systematic component pairings are developed in Book 12.
 
-**Prerequisite 11.1 (relative Castelnuovo contraction, RC).** Let $S$ be an excellent Dedekind scheme, let $X/S$ be a regular proper arithmetic surface, and let $E$ be a vertical exceptional curve of the first kind. There is a regular proper $S$-scheme $Y$ and a proper birational morphism
+**Theorem 11.1 (relative Castelnuovo contraction).** Let $S$ be an excellent Dedekind scheme, let $X/S$ be a regular proper arithmetic surface, and let $E$ be a vertical exceptional curve of the first kind. There is a regular proper $S$-scheme $Y$ and a proper birational morphism
 
 $$
 c:X\longrightarrow Y
@@ -1266,18 +1266,43 @@ $$
 
 which is an isomorphism on $X\setminus E$, maps $E$ to a closed regular point $y\in Y$, and identifies $X$ with $\operatorname{Bl}_y(Y)$. The same assertion holds over the localization of $S$ at the image of $E$, and the local contraction glues with the identity away from that fiber.
 
-RC is a genuine algebraic contraction theorem. It is not a consequence of excellence alone and is not proved in Books 1--10 or earlier in this volume. The normal-bundle calculation does explain why RC has the stated form: after choosing a parameter transverse to $E$, the successive exact sequences
+**Proof.** Localize $S$ at the image of $E$ and choose a relatively ample $H$. If
+$h=\deg(H|_E)$, set $L=H\otimes\mathcal O_X(hE)$. Then $L|_E\simeq\mathcal O_E$ and $L$ has
+positive degree on every other component of the closed fiber.
+
+We first prove relative generation. On a proper curve, a line bundle positive on every component
+except one rational component where it is trivial has, in high degree, vanishing first
+cohomology, is generated, and separates points and tangent vectors away from that rational
+component. Normalize the curve and prove this one component at a time: after prescribing common
+values at the finitely many preimages of nodes, the assertion is the usual
+$H^1(\mathbf P^1,\mathcal O(d-r))=0$ and Riemann--Roch on each positive-degree component.
+Cohomology and base change lifts these sections from the closed fiber. Compatibility through all
+infinitesimal neighborhoods follows from
 
 $$
 0\to\mathcal O_E(n)\to
 \mathcal O_{(n+1)E}\to\mathcal O_{nE}\to0
 $$
 
-and the vanishing $H^1(\mathbf P^1,\mathcal O(n))=0$ for $n\geq-1$ identify the expected complete local target and the expected inverse blowup. These formal calculations do not by themselves produce an algebraic scheme $Y$. Passing from the formal target to $Y$, proving properness, and verifying that the blowup recovers $X$ are precisely the content of RC; excellence supplies favorable approximation and finiteness properties, not an automatic formal algebraization theorem.
+and $H^1(E,\mathcal O_E(n))=0$ for $n\ge-1$. Thus some $L^N$ is generated, constant on $E$,
+and separates points and tangent vectors off $E$. Let $V=H^0(X,L^N)$ and let $B$ be the image
+of $\operatorname{Sym}_R(V)$ in $\bigoplus_qH^0(X,L^{qN})$. Then
+$Y=\operatorname{Proj}_RB$ is algebraic and projective, and the induced $c:X\to Y$ contracts
+exactly $E$ and is an isomorphism elsewhere by the separation criterion.
 
-**Theorem 11.1 (relative contraction, conditional on RC).** Assume RC. An exceptional curve of the first kind on a regular arithmetic surface can be contracted to a regular point. The contraction is proper and birational, is an isomorphism away from $E$, and is inverse to blowing up that point.
+Put $I=\mathcal O_X(-E)$. Pushing the displayed sequences forward gives
+$c_*I^q=\mathfrak m_y^q$ and
 
-**Proof.** This is the assertion of RC applied to $E$. $\square$
+$$
+\mathfrak m_y^q/\mathfrak m_y^{q+1}\simeq H^0(E,\mathcal O_E(q)).
+$$
+
+Taking inverse limits identifies
+$\operatorname{gr}_{\mathfrak m_y}\widehat{\mathcal O}_{Y,y}$ with $k(y)[u,v]$. Hence the
+completed local ring has dimension and embedding dimension two and is regular; regularity descends
+from completion. The equality $I=\mathfrak m_y\mathcal O_X$ and the universal property give
+$X\to\operatorname{Bl}_yY$, an isomorphism on completed local rings and off $E$, hence globally.
+The construction glues with the identity away from the affected fiber. $\square$
 
 A regular proper model is **relatively minimal** if none of its fibers contains an exceptional curve of the first kind. Every contraction lowers the number of irreducible components of the affected fiber, so repeatedly contracting must stop. This proves existence of a relatively minimal model once contractions remain in the chosen category.
 
