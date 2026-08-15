@@ -11,7 +11,7 @@
    - [Decomposition groups from a chosen place](#21-decomposition-groups-from-a-chosen-place)
    - [Unramified and ramified Artin symbols](#22-unramified-and-ramified-artin-symbols)
    - [Multiplying the local maps](#23-multiplying-the-local-maps)
-   - [Why principal ideles act trivially](#24-why-principal-ideles-act-trivially)
+   - [The principal-idèle obstruction](#24-the-principal-idèle-obstruction)
 3. [Norms of ideles and classes](#3-norms-of-ideles-and-classes)
    - [Constructing the global norm](#31-constructing-the-global-norm)
    - [Norm groups are open and have finite index](#32-norm-groups-are-open-and-have-finite-index)
@@ -1149,9 +1149,10 @@ Thus the two finite orders are equal and the surjection is an isomorphism.
 Every ingredient precedes finite duality, existence, and the global
 fundamental class. $\square$
 
-The proof is (4.I9h). The degree-one local--global sequence below is the
-finite-complex calculation that follows. We retain the complexes: an order
-count alone would not identify annihilators or handle the real-place correction.
+The Brauer theorem used above is (4.I9h). The degree-one local--global sequence
+below is the finite-complex calculation that follows. We retain the complexes:
+an order count alone would not identify annihilators or handle the real-place
+correction.
 
 Fix $n\geq1$ and a finite set $S$ containing the archimedean places and the places above
 $n$. Let $G_{F,S}$ be the Galois group of the maximal extension of $F$ unramified outside
