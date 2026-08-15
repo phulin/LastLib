@@ -73,9 +73,9 @@
     - [Projective parameter spaces for curve families](#133-projective-parameter-spaces-for-curve-families)
     - [Boundary distinctions](#134-boundary-distinctions)
 14. [Synthesis](#14-synthesis)
-   - [The three dictionaries](#141-the-three-dictionaries)
-   - [The reusable theorem package](#142-the-reusable-theorem-package)
-   - [Conclusion](#143-conclusion)
+    - [The three dictionaries](#141-the-three-dictionaries)
+    - [The reusable theorem package](#142-the-reusable-theorem-package)
+    - [Conclusion](#143-conclusion)
 
 ## 1. Projective geometry over a base
 
@@ -799,56 +799,92 @@ $(b-q)\times(b-q)$ minor is invertible, row and column operations split off an i
 Vanishing of the next minors makes the remaining block zero, leaving a free cokernel of rank
 $q$; the converse is immediate from a presentation of a free module.
 
-The projective step is the following finite-detection lemma.
+The projective step is the following finite-detection lemma. Its proof is deliberately phrased
+in terms of graded pieces: a degree-zero localization is usually an infinite filtered colimit,
+not a localization that becomes stationary after finitely many multiplication maps.
 
-**Graded flatness lemma.** Let $A$ be noetherian, $W=A[x_0,\ldots,x_r]$, and $M$ a finite
-graded $W$-module. For every numerical polynomial $P$ there are an integer $m$ and finitely
-presented $A$-modules $D_m,\ldots,D_{m+r+1}$, obtained from the multiplication maps among
-finitely many graded pieces, such that for every $A$-algebra $B$ the following are equivalent:
+**Graded flatness lemma.** Let $A$ be noetherian, let
+$W=A[x_0,\ldots,x_r]$, and let $M$ be a finite graded $W$-module. Fix a numerical
+polynomial $P$ that is nonnegative in large degree. There are integers $N$ and $b\geq0$ such that, for every $A$-algebra $B$, the
+following are equivalent:
 
-1. $\widetilde{M\otimes_A B}$ is $B$-flat with fiber polynomial $P$;
-2. every $D_i\otimes_A B$ is locally free of its prescribed rank.
+1. $\widetilde{M\otimes_A B}$ is $B$-flat and all its geometric fibers have Hilbert
+   polynomial $P$;
+2. $M_n\otimes_A B$ is finite locally free of rank $P(n)$ for
+   $N\leq n\leq N+b$.
 
-When these hold, higher cohomology vanishes in degrees at least $m$, degree-$n$ sections are
-locally free of rank $P(n)$, and their formation commutes with further base change.
-
-**Proof.** Replace $M$ by its saturation; the kernel and cokernel are killed by a power of
-$W_+$ and affect only finitely many degrees. Choose a finite graded presentation
-
-$$
-\bigoplus W(-b_j)\longrightarrow\bigoplus W(-a_i)\longrightarrow M\longrightarrow0.
-$$
-
-Induct on $r$. For $r=0$, sheafification is the eventual degree module and the assertion is the
-Fitting calculation above. For the induction step introduce the universal hyperplane
-$\ell=u_0x_0+\cdots+u_rx_r$. On every chart $u_i\ne0$, the cokernel $M/\ell M$ is a module
-over a polynomial ring in $r$ variables, while the kernel $K=(0:_M\ell)$ is supported on the
-zero-divisor locus. Use the exact sequence
+The finite range can be chosen so that condition 2 forces the same assertion for every
+$n\geq N$. When the conditions hold, for $n\geq N$ the natural map
 
 $$
-0\to K(n-1)\to M(n-1)\xrightarrow{\ell}M(n)\to(M/\ell M)(n)\to0.
-\tag{8.1}
+M_n\otimes_A B\longrightarrow
+H^0(\mathbf P^r_B,\widetilde{M\otimes_A B}(n))
 $$
 
-The finitely many associated primes split the base into locally closed pieces on which the
-support dimension of $K$ drops by a fixed amount. Applying the induction hypothesis to $K$ and
-$M/\ell M$ on those pieces terminates by noetherian induction. The conditions obtained on
-different hyperplane charts describe ranks of the intrinsic maps (8.1), hence descend to
-Fitting conditions over $A$.
+is an isomorphism, higher cohomology vanishes, and these sections commute with every further
+base change.
 
-Choose $m$ beyond all degrees in the resulting finite presentations. Descending induction on
-cohomological degree in (8.1), starting from the length-$r+1$ standard Cech complex, gives
-vanishing. The same sequence gives generation in the next degree and the rank recursion
+**Proof.** First choose one bound $N$ valid on every fiber of $\operatorname{Spec}A$. Such a
+bound exists for both higher-cohomology vanishing and the comparison
 
 $$
-q(n)-q(n-1)=q_{M/\ell M}(n)-q_K(n-1).
+(M\otimes_A k)_n\longrightarrow
+H^0(\mathbf P^r_k,\widetilde{M\otimes_A k}(n)) \tag{8.1}
 $$
 
-Finite differences of $P$ prescribe every rank in the induction tree. Conversely, the imposed
-direct-summand conditions make tensoring preserve the finite Cech complexes and (8.1); they give
-flatness on every standard affine chart and arbitrary base change. Faithfully flat descent from
-the hyperplane coefficient charts returns the conclusion over $A$. Only finitely many kernels
-and cokernels occurred; call them the $D_i$. $\square$
+over every residue field $k$. Here is a proof that does not assume the desired flattening
+stratification. On the generic point of each irreducible component, a finite graded
+presentation of $M$ and the standard Čech complex give a bound. Exactness of the finitely
+many maps used in that calculation persists after shrinking the component. Apply the same
+argument to the closed complement. Noetherian induction terminates, and the maximum of the
+finitely many resulting bounds works on all fibers. Enlarge it once more so that $P(n)\geq0$
+for $n\geq N$. Field extension preserves (8.1) and the vanishings, so the same bound works
+over every field receiving a map from $A$.
+
+Suppose first that $\mathcal F_B=\widetilde{M\otimes_A B}$ is flat with polynomial $P$.
+The fiberwise bound and the finite-Čech-complex cohomology-and-base-change argument of
+Section 6.3 show that
+$H^0(\mathcal F_B(n))$ is locally free of rank $P(n)$ for $n\geq N$ and commutes with base
+change. That argument uses finite presentation and flatness, and therefore applies to the
+possibly nonnoetherian ring $B$. The comparison map from $M_n\otimes_A B$ is an isomorphism on every residue fiber by
+(8.1). Its cokernel is finite and hence zero by Nakayama. Locally the resulting surjection
+onto a free module splits; its kernel has zero residue fibers and is therefore zero as well.
+Thus $M_n\otimes_A B$ is locally free of rank $P(n)$ for every $n\geq N$.
+
+Conversely, suppose those graded pieces are flat of the prescribed ranks for every $n\geq N$.
+On the standard affine chart one has
+
+$$
+\Gamma(D_+(x_i),\mathcal F_B)
+=(M\otimes_A B)_{x_i,0}
+=\mathop{\operatorname{colim}}_{q}
+   (M\otimes_A B)_q,
+\qquad u\longmapsto x_i u. \tag{8.2}
+$$
+
+The tail with $q\geq N$ is cofinal. A filtered colimit of flat $B$-modules is flat, so
+$\mathcal F_B$ is flat on every standard chart. On a residue fiber, (8.1) identifies the
+eventual section dimensions with $P(n)$, proving that the fiber polynomial is $P$.
+
+It remains to show that the infinitely many rank conditions just used are genuinely finite.
+For a finite $A$-module $E$, the functor on which $E$ becomes locally free of rank $q$ is
+the locally closed Fitting locus displayed above. Impose the conditions for
+$n=N,\ldots,N+d$, where $d=r$ for $P=0$ and $d=\max(r,\deg P)$ otherwise. Since a fiber Hilbert polynomial has degree at
+most $r$, these values select
+the underlying locus on which the polynomial is $P$. On that noetherian locally closed locus,
+for every $n>N+d$ the open half of the rank-$P(n)$ Fitting condition is already the whole
+underlying space; the remaining condition is the vanishing of
+$\operatorname{Fitt}_{P(n)-1}(M_n)$. The increasing sequence of ideals obtained by summing
+these Fitting ideals stabilizes. Hence finitely many degrees, contained in
+$[N,N+b]$ after enlarging $b$, impose all of them. This is equality of ideals, rather than
+equality of their radicals, so it survives arbitrary scalar extension, including extension to
+a ring with nilpotents. This proves finite detection and the asserted universal base-change
+statements. $\square$
+
+For a minimal nilpotent check, take $C=k[\epsilon]/(\epsilon^2)$ and
+$E=C/(\epsilon)$. Its sole geometric fiber has dimension one, but
+$\operatorname{Fitt}_0(E)=(\epsilon)\neq0$, so the identity of $\operatorname{Spec}C$ does not
+factor through the rank-one locus. Passing to the radical would incorrectly accept it.
 
 **Flattening-stratification theorem.** Let $S$ be noetherian, let $f:X\to S$ be projective and
 finitely presented, fix a relatively very ample $\mathcal L$, and let $\mathcal F$ be coherent.
@@ -864,17 +900,18 @@ $$
 The construction commutes with arbitrary base change. The subsets $|S_P|$ are disjoint and
 cover $|S|$, and only finitely many meet a quasi-compact open.
 
-**Proof.** Work over an affine open and push $\mathcal F$ forward along a projective embedding,
-obtaining the sheaf of a finite graded module $M$. Apply the graded flatness lemma and impose on
-each $D_i$ its prescribed rank by the locally closed Fitting locus. Their finite intersection is
-$S_P$. Presentations, minors, and direct-summand kernels commute with scalar extension, so this
-intersection has the asserted universal property for arbitrary test schemes. The loci agree on
-overlaps by uniqueness and hence glue.
+**Proof.** If $P$ is not eventually nonnegative, no fiber can have polynomial $P$ and $S_P$ is
+empty. Otherwise work over an affine open and push $\mathcal F$ forward along a projective embedding,
+obtaining the sheaf of a finite graded module $M$. Apply the graded flatness lemma and intersect
+the finitely many rank loci for $M_N,\ldots,M_{N+b}$. Their equations are Fitting ideals, so the
+intersection is locally closed and has the asserted universal property for every affine test
+scheme, not only for reduced or noetherian ones. Affine tests cover an arbitrary $T$, and the
+loci agree on overlaps by uniqueness; hence they glue to $S_P$.
 
-Every point belongs to the stratum for its fiber polynomial. The noetherian induction in the
-graded lemma produces only finitely many rank vectors on a quasi-compact open. Finally, two
-candidate strata factor through one another when tested on themselves, proving uniqueness.
-$\square$
+Every point belongs to the stratum indexed by its fiber polynomial. On a quasi-compact open,
+the uniform bound in the proof and the finitely many possible ranks of the modules
+$M_N,\ldots,M_{N+r}$ show that only finitely many polynomials occur. Finally, two candidate
+strata factor through one another when tested on themselves, proving uniqueness. $\square$
 
 ## 9. Projective embeddings of curves and abelian schemes
 
@@ -1359,141 +1396,317 @@ calculations alone do not control nilpotent test schemes.
 **Theorem 12.A (bounded Macaulay--Gotzmann package).** Fix $r$ and a numerical
 polynomial $P$ that occurs as the Hilbert polynomial of a closed subscheme of $\mathbf P^r$.
 
-1. **Compression and equality over fields.** Every nonnegative integer $h$ has a unique Macaulay
-   expansion
+1. **Compression and equality over fields.** For $n\geq1$, every nonnegative integer $h$ has a
+   unique Macaulay expansion (the expansion of $0$ is empty)
 
    $$
    h=\binom{b_n}{n}+\binom{b_{n-1}}{n-1}+\cdots+\binom{b_j}{j},
-   \qquad b_n>b_{n-1}>\cdots>b_j\geq j,
+   \qquad b_n>b_{n-1}>\cdots>b_j\geq j.
    $$
 
-   and, on putting
+   Put
 
    $$
    h^{\langle n\rangle}
-   =\binom{b_n+1}{n+1}+\cdots+\binom{b_j+1}{j+1},
+   =\binom{b_n+1}{n+1}+\cdots+\binom{b_j+1}{j+1}.
    $$
 
-   every standard graded quotient $R$ over a field satisfies
-   $h_R(n+1)\leq h_R(n)^{\langle n\rangle}$. The compression theorem includes its equality case:
-   if the degree-$(n+1)$ piece has maximal growth and the ideal is generated in degrees at most $n$,
-   the same equality persists in every later degree.
+   Every standard graded quotient $R$ over a field satisfies
+   $h_R(n+1)\leq h_R(n)^{\langle n\rangle}$. If equality holds and the defining ideal is
+   generated in degrees at most $n$, equality persists in every later degree.
 
-2. **Gotzmann expansion and regularity.** The polynomial has a unique expansion
+2. **Gotzmann expansion and regularity.** There is a unique expansion
 
-$$
-P(n)=
-\binom{n+a_1}{a_1}
-+\binom{n+a_2-1}{a_2}
-+\cdots+
-\binom{n+a_s-(s-1)}{a_s},
-$$
+   $$
+   P(n)=
+   \binom{n+a_1}{a_1}
+   +\binom{n+a_2-1}{a_2}
+   +\cdots+
+   \binom{n+a_s-(s-1)}{a_s}, \tag{12.1}
+   $$
 
-with $r\geq a_1\geq\cdots\geq a_s\geq0$. Every saturated ideal sheaf with polynomial $P$ is
-   $s$-regular, is generated in degrees at most $s$, satisfies $I_{n+1}=W_1I_n$ for $n\geq s$,
-   and for $n\geq s$ one has
+   with $r\geq a_1\geq\cdots\geq a_s\geq0$. The zero polynomial has the empty
+   expansion and $s=0$. If $I\subset k[x_0,\ldots,x_r]$ is saturated and $W/I$ has
+   polynomial $P$, then the associated ideal sheaf is $s$-regular. Moreover
 
-$$
-P(n+1)=P(n)^{\langle n\rangle}.
-$$
+   $$
+   H_{W/I}(n)=P(n),\qquad I_{n+1}=W_1I_n\quad(n\geq s), \tag{12.2}
+   $$
+
+   and $I$ is generated in degrees at most $s$. In particular
+   $P(n+1)=P(n)^{\langle n\rangle}$ for $n\geq\max(s,1)$. (When $P=0$, the
+   assertion at degree $0$ is instead the trivial equality $I_1=W_1I_0$.)
 
 3. **Relative persistence and recovery.** Let $A$ be any ring, let
-   $W=A[x_0,\ldots,x_r]$, and take $m\geq s$. Suppose $K_m\subset W_m$ and
-   $K_{m+1}\subset W_{m+1}$ are locally direct summands of coranks $P(m)$ and $P(m+1)$ and
+   $W=A[x_0,\ldots,x_r]$, and take $m\geq s$. Suppose
+   $K_m\subset W_m$ and $K_{m+1}\subset W_{m+1}$ are locally direct summands of coranks
+   $P(m)$ and $P(m+1)$ and
 
    $$
-   W_1K_m=K_{m+1}.
+   W_1K_m\subseteq K_{m+1}. \tag{12.3}
    $$
 
-   If $J\subset W$ is generated by $K_m$, then $W_n/J_n$ is finite locally free of rank $P(n)$
-   for every $n\geq m$, and formation of these quotients commutes with every ring map $A\to A'$.
-   The sheaf associated to $W/J$ is finitely presented and flat over $A$. Conversely, if
-   $Z\subset\mathbf P^r_A$ is finitely presented and flat over $A$ and all its geometric fibers
-   have polynomial $P$, then for every $n\geq m$ the module
-   $p_*\mathcal O_Z(n)$ is finite locally free of rank $P(n)$, commutes with arbitrary base
-   change, and its kernels satisfy $I_{n+1}=W_1I_n$ for $n\geq m$. These assertions
-   remain valid after localization on an arbitrary, possibly nonnoetherian, base scheme.
+   Then (12.3) is an equality. If $J$ is the ideal generated by $K_m$, then
+   $W_n/J_n$ is finite locally free of rank $P(n)$ for every $n\geq m$, and these quotients
+   commute with every ring map $A\to A'$. The sheaf associated to $W/J$ is finitely
+   presented and flat over $A$.
 
-**Proof of Theorem 12.A.** We divide the proof into the combinatorial, field, and relative steps.
+   Conversely, if $Z\subset\mathbf P^r_A$ is finitely presented and flat over $A$ and all
+   its geometric fibers have polynomial $P$, then for $n\geq m$ the module
+   $p_*\mathcal O_Z(n)$ is finite locally free of rank $P(n)$ and commutes with arbitrary
+   base change. The kernels of $W_n\to p_*\mathcal O_Z(n)$ satisfy (12.3), and the ideal
+   sheaf of $Z$ is recovered from any one of its pieces in degree $m$. These statements are
+   local on an arbitrary base scheme; no noetherian or reduced hypothesis on that base is
+   required.
 
-For the combinatorial step, order degree-$n$ monomials lexicographically. Replacing a set of
-monomials by the first $h$ monomials in this order is called compression. If a set contains
-$x_jm$ but not $x_im/x_j$ for some $i<j$ dividing $m$, exchange the former for the latter.
-Such an exchange does not increase the number of degree-$(n+1)$ multiples: pair every lost
-multiple with the corresponding gained multiple, with the unpaired gained multiples occurring
-earlier in lexicographic order. Repetition terminates because lex order on a finite set does.
-Thus the lex segment has the smallest possible shadow among sets of $h$ degree-$n$ monomials.
-
-Count that shadow by successively separating monomials according to their least variable. The
-first block has $\binom{b_n}{n}$ elements, the next
-$\binom{b_{n-1}}{n-1}$, and so on; Pascal's identity shows both existence and uniqueness of the
-strict Macaulay expansion. Multiplying the blocks by the variables adds one to each upper index,
-so their shadow has
+**Proof of Theorem 12.A.** Let $\mathcal M_n$ denote the degree-$n$ monomials and, for
+$A\subseteq\mathcal M_n$, define the upper shadow
 
 $$
-\binom{b_n+1}{n+1}+\cdots+\binom{b_j+1}{j+1}=h^{\langle n\rangle}
+\operatorname{Sh}(A)=\{x_i u:0\leq i\leq r, u\in A\}. \tag{12.4}
 $$
 
-elements. Gaussian elimination with leading monomials replaces the degree-$n$ part of any
-homogeneous ideal by a monomial space of the same dimension, while its degree-$(n+1)$ leading
-space contains the shadow. This proves Macaulay's inequality.
+The relevant combinatorial statement is the following precise form of compression.
 
-Suppose equality holds and the ideal is generated through degree $n$. Every exchange above must
-then have paired shadows exactly; an unpaired monomial would make the next quotient dimension
-strictly smaller. Hence the degree-$n$ leading space is closed under every required exchange and
-its shadow is the degree-$(n+1)$ leading space. Repeating the identical argument one degree
-higher proves equality forever. This is persistence, including the equality case rather than
-only the numerical inequality.
-
-For a polynomial which occurs as a Hilbert polynomial, repeatedly take finite differences until
-a constant is reached and reverse Pascal's identity. This produces the displayed Gotzmann
-expansion. At each reversal the largest possible upper index is forced by eventual positivity,
-so the sequence $a_1\geq\cdots\geq a_s$ and its length $s$ are unique.
-
-Now let $I$ be saturated over a field. Choose a hyperplane avoiding the associated points of
-$W/I$ away from the irrelevant ideal. The exact sequence for multiplication by its equation
-identifies the finite difference of the Hilbert function with the Hilbert function of the
-hyperplane section. Induction on $r$ and on the length $s$ of the Gotzmann expansion makes the
-hyperplane-section ideal $s$-regular. Saturation removes the possible finite-length kernel at the
-irrelevant ideal. The long cohomology sequence then gives
+**Macaulay--Gotzmann shadow lemma.** If
+$|\mathcal M_n\setminus A|=h$, then
 
 $$
-H^i(\mathcal I(s-i))=0\qquad(i>0).
+|\mathcal M_{n+1}\setminus\operatorname{Sh}(A)|
+\leq h^{\langle n\rangle}. \tag{12.5}
 $$
 
-The regularity consequences of Section 6.4 show that $I$ is generated through degree $s$.
-Macaulay equality at degree $s$ and persistence give
-$I_{n+1}=W_1I_n$ and the stated Hilbert function for every $n\geq s$. This proves clauses 1
-and 2 over an infinite field. A purely transcendental field extension makes a suitable
-hyperplane available over a finite field; dimensions, saturation, and the vanishings descend by
-faithful flatness, so the result holds over every field.
-
-For the relative step, localize $A$ so $K_m$ and $K_{m+1}$ are direct summands. Let $J$ be
-generated by $K_m$. On every residue field, clauses 1 and 2 show inductively that
-$W_n/J_n$ has dimension $P(n)$ and that multiplication supplies its kernel in the next degree.
-Assume $W_n/J_n$ is finite locally free of rank $P(n)$. In the exact sequence
+If equality holds, then every iterated shadow has the corresponding extremal complement:
 
 $$
-W_1\otimes J_n\longrightarrow W_{n+1}\longrightarrow W_{n+1}/J_{n+1}\longrightarrow0,
+|\mathcal M_{n+q}\setminus\operatorname{Sh}^{q}(A)|
+=h^{\langle n,q\rangle}\qquad(q\geq1), \tag{12.6}
 $$
 
-the fiber ranks of the first map are constant by the equality case. Its relevant maximal minor
-is therefore invertible locally and the next minors vanish; the Fitting calculation of Section
-8.4 makes its image a direct summand and its cokernel locally free of rank $P(n+1)$. Induction
-proves this in every degree. Because every kernel and image is a direct summand, tensoring with
-an arbitrary $A$-algebra preserves the sequences. This proves relative persistence and base
-change, including nilpotent algebras.
+where the right side means successive Macaulay transforms in degrees
+$n,n+1,\ldots,n+q-1$.
 
-On each $D_+(x_i)$, degree-zero localization is the filtered colimit of the modules
-$W_n/J_n$ under multiplication by $x_i$. Filtered colimits of flat modules are flat, so the
-associated sheaf is $A$-flat; the finite degree-$m$ generators and their degree-$(m+1)$
-relations give finite presentation. Conversely, for a flat finitely presented family, the
-uniform regularity just proved applies to every fiber. The graded flatness lemma of Section 8.4,
-with the common polynomial $P$, promotes the fiberwise bound to locally free pushforwards and
-arbitrary base change. The multiplication equalities follow on fibers from persistence and then
-over the base by Nakayama applied to their finite cokernels. All constructions use finite
-presentations, so an arbitrary test ring is reached from its finitely generated subrings and the
-identities survive filtered colimits. This proves clause 3 and the theorem. $\square$
+The corresponding vector-space statement includes cancellation: if
+$V\subset k[x_0,\ldots,x_r]_n$ has codimension $h$ and
+$k[x]_1V$ has codimension $h^{\langle n\rangle}$, then the ideal generated by $V$ has
+the ranks prescribed by (12.6) in every later degree.
+
+For completeness, the finite combinatorial proof goes as follows. Greedily choose $b_n$
+maximal with $\binom{b_n}{n}\leq h$, subtract, and continue with lower denominators. This
+gives the strict expansion and proves its uniqueness. Slice the monomials by the exponent of
+$x_r$ and compress each slice lexicographically in $x_0,\ldots,x_{r-1}$. A double induction
+on $(r,n)$ shows that replacing the slices by nested lexicographic slices cannot enlarge the
+shadow, and Pascal's identity counts the complement of the resulting shadow as
+
+$$
+\sum_{i=j}^n\binom{b_i+1}{i+1}.
+$$
+
+This proves (12.5). Keeping the equality conditions in the same induction shows that an
+extremal family has an extremal shadow; applying the induction again proves (12.6). In the
+equality case, the same nested-slice induction gives distinct owner multiples for the shadow
+monomials and generates every relation among them by the degree-one overlap relations. Gaussian
+elimination lifts those overlap relations from the leading monomials of $V$ to $V$ itself.
+Consequently no cancellation creates an extra leading monomial in the next degree, and induction
+proves the vector-space statement. Notice the
+orientation: $A$ consists of **ideal** monomials. If $r=2,n=1,h=1$, the one standard
+monomial may be $x_2$ and the next quotient value is $1$, although the ordinary shadow of
+$\{x_2\}$ has three elements. It is the complement of the shadow of the other two, ideal
+monomials that (12.5) counts.
+
+Now let $I$ be homogeneous over a field and choose a term order. If $A$ is the set of leading
+monomials of $I_n$, then
+
+$$
+\operatorname{Sh}(A)\subseteq\operatorname{in}(W_1I_n).
+$$
+
+Taking complements proves Macaulay's inequality. If growth is maximal and
+$I_{n+1}=W_1I_n$, the vector-space equality statement applied to $I_n$ proves maximal growth
+in every later degree. The generation hypothesis is essential: in
+$k[x_0,x_1]/(x_0^{n+2})$ growth from degrees $n$ to $n+1$ is maximal, but a new relation in
+degree $n+2$ stops persistence.
+
+We next construct (12.1). Induct on the degree of $P$. A general non-zero-divisor hyperplane
+on a saturated quotient has Hilbert polynomial $\Delta P(n)=P(n)-P(n-1)$. By induction write
+$\Delta P$ in Gotzmann form. Replacing every lower entry $b_i$ in that form by $b_i+1$
+integrates it, by Pascal's identity. The difference from $P$ is constant; Macaulay's inequality
+in large degree says that this constant is nonnegative, so append that many terms with lower
+entry $0$. The constant-polynomial case starts the induction. Conversely, taking a finite
+difference deletes the final zero entries and lowers every positive $a_i$ by one. This
+recovers all positive entries inductively, and the remaining constant recovers the number of
+zeros, proving uniqueness. A hyperplane section has dimension at most $r-1$, so $a_1\leq r$.
+For $n\geq\max(s,1)$, symmetry of binomial coefficients rewrites the $i$th summand of (12.1) with
+lower entry $n-i+1$. These lower entries are positive and the upper entries strictly decrease,
+so this is the Macaulay expansion of $P(n)$. Raising both entries gives (12.1) at $n+1$;
+hence
+
+$$
+P(n+1)=P(n)^{\langle n\rangle}\qquad(n\geq\max(s,1)). \tag{12.1a}
+$$
+
+We record the regularity step, where saturation is indispensable.
+
+**Gotzmann saturation lemma.** Let $I$ be saturated over an infinite field, put $R=W/I$, and
+choose a linear form $\ell$ that is a non-zero-divisor on $R$. Such a form exists: saturation
+gives $H^0_{W_+}(R)=0$, so the irrelevant ideal is not associated to $R$, and a finite union of
+the degree-one parts of the associated primes cannot fill $W_1$. Let $\bar I$ be the image of
+$I$ in $W/(\ell)$ and let $J=\bar I^{\mathrm{sat}}$. If the hyperplane polynomial is the
+finite difference of a Gotzmann expansion of length $s$ and $J$ is $s$-regular, then
+
+$$
+J_n=\bar I_n\quad(n\geq s),\qquad
+H_R(n)=P(n)\quad(n\geq s-1), \tag{12.7}
+$$
+
+and the ideal sheaf associated to $I$ is $s$-regular. Here $s\geq1$; the empty
+Gotzmann expansion is the separate trivial case $I=W$.
+
+Indeed, $J/\bar I$ has finite length and
+
+$$
+0\longrightarrow R(-1)\xrightarrow{\ell}R
+\longrightarrow (W/(\ell))/\bar I\longrightarrow0. \tag{12.8}
+$$
+
+Write $D_n=\dim(J/\bar I)_n$. Sequence (12.8) gives
+
+$$
+H_R(n)-H_R(n-1)=H_{(W/(\ell))/J}(n)+D_n. \tag{12.8a}
+$$
+
+Start in the degrees where $D_n=0$ and both Hilbert functions equal their polynomials, and
+descend. If $D_n>0$, (12.8a) makes the preceding value strictly smaller than the Macaulay
+predecessor of $P(n)$. Strict monotonicity of the Macaulay transform and (12.1a) then make
+Macaulay's inequality at the preceding degree incompatible with $H_R(n)=P(n)$. Thus $D_n=0$
+and the preceding Hilbert value equals its polynomial. This descends through every $n>s$;
+at $n=s>1$, direct use of the last binomial block gives
+
+$$
+(P(s-1)-1)^{\langle s-1\rangle}<P(s),
+$$
+
+so any positive $D_s$ gives the same contradiction. When $s=1$, the single block has
+$P(0)=1$; a proper standard graded quotient has $H_R(0)=1$, so (12.8a) gives the same
+endpoint directly. Thus
+$D_n=0$ for $n\geq s$ and the descent also gives $H_R(s-1)=P(s-1)$, proving (12.7).
+The standard hyperplane regularity argument now applies to
+
+$$
+0\longrightarrow\mathcal I(n-1)\xrightarrow{\ell}\mathcal I(n)
+\longrightarrow\widetilde{\bar I}(n)\longrightarrow0 \tag{12.9}
+$$
+
+and its long cohomology sequence.
+
+The $s$-regularity of $J=\bar I^{\mathrm{sat}}$ propagates the vanishings in (12.9) for
+cohomological degree at least two. In degree one, the equality
+$H_R(s-1)=P(s-1)$ obtained above is exactly the missing surjectivity of global sections
+(compare the Hilbert function with the Euler characteristic in (12.9)). Thus
+$H^i(\mathcal I(s-i))=0$ for every $i>0$.
+
+Apply the lemma inductively to the finite difference of (12.1). Its Gotzmann length is at
+most $s$, so the saturated hyperplane ideal is $s$-regular, and the lemma makes $I$
+$s$-regular. Section 6.4 and saturation then give (12.2), while the shadow lemma gives the
+displayed Macaulay equality for $P$. Over a finite field, make a purely transcendental field
+extension to choose $\ell$ and descend dimensions and cohomology by faithful flatness. This
+proves clauses 1 and 2 over every field.
+
+It remains to prove the relative assertion without discarding nilpotents. If $P=0$ and
+$m=0$, then $K_0=W_0$, the generated ideal is $W$, and every assertion is immediate. We
+may therefore assume $m\geq1$. For $m\geq s$ define
+the truncated Hilbert function
+
+$$
+h_m(n)=
+\begin{cases}
+\binom{n+r}{r},&n<m,\\
+P(n),&n\geq m.
+\end{cases} \tag{12.10}
+$$
+
+Field persistence says that an ideal with this function is generated in degree $m$ and is
+determined by degrees $m$ and $m+1$. Its saturation has polynomial $P$ and, by (12.2), the
+same degree-$m$ piece. It is therefore the degree-$m$ truncation of an $m$-regular saturated
+ideal. In particular, every **monomial** ideal generated in degree $m$ with this function has
+an $m$-linear resolution; its monomial syzygies are generated by the overlaps in degree
+$m+1$. These facts give the following integral version.
+
+**Finite-support lemma.** For every ring $C$, restriction to degrees $m,m+1$ is a bijection
+between
+
+- homogeneous ideals $L\subset C[x_0,\ldots,x_r]$ for which every graded quotient is locally
+  free of rank $h_m(n)$; and
+- pairs of direct summands $L_m,L_{m+1}$ of the indicated coranks satisfying
+  $C[x]_1L_m\subseteq L_{m+1}$.
+
+The extension is the ideal generated by $L_m$, and the bijection commutes with every map
+$C\to C'$.
+
+Here is the scheme-theoretic proof. The pairs in the second bullet are represented over
+$\mathbf Z$ by the closed incidence subscheme of the two Grassmannians: the composite from
+$L_m\otimes\mathbf Z[x]_1$ to the universal quotient in degree $m+1$ is required to be zero.
+On each residue field, Macaulay equality makes the inclusion an equality and persistence gives
+the ranks in every later degree. This fiber calculation alone would identify only the reduced
+subscheme, so one must still exclude hidden nilpotent equations.
+
+Inside the incidence scheme, impose degree by degree the Fitting conditions saying that the
+quotient by the ideal generated by $L_m$ is locally free of rank $h_m(n)$. Every condition has
+the whole underlying space by field persistence. Thus its open Fitting half is the whole
+incidence scheme and only the vanishing of the lower Fitting ideal remains. Noetherian
+stabilization over $\mathbf Z$ makes the sum of those ideals stabilize, so their intersection is
+a closed subscheme defined by finitely many degrees. It represents the full ideals in the first
+bullet. It remains to prove that this closed subscheme is the entire incidence scheme, including
+its nilpotent structure.
+
+Work in a local ring $(R,\mathfrak p)$ of an affine chart of the incidence scheme over
+$\mathbf Z$. It is noetherian, and hence $\bigcap_q\mathfrak p^q=0$. Reduce the universal
+pair modulo $\mathfrak p$, row-reduce its degree-$m$ part, and let $M$ be the monomial ideal
+generated by the resulting leading monomials. Field persistence says that $M$ has Hilbert
+function $h_m$. Its standard monomials generate each graded piece of $R[x]/(L_m)$ by
+Nakayama. Lifting the row-reduced generators gives marked polynomials with unit leading
+coefficients.
+
+Order a coefficient first by its $\mathfrak p$-adic order and then order its monomial by a
+fixed term order. The Buchberger argument for this coefficient--monomial order works modulo
+every $\mathfrak p^q$. Because $M$ has an $m$-linear resolution, its monomial syzygies are
+generated by the overlap syzygies of degree $m+1$. Over the residue field $k$, Macaulay equality
+gives $k[x]_1(L_m\otimes_Rk)=L_{m+1}\otimes_Rk$; the finite cokernel of
+$R[x]_1L_m\to L_{m+1}$ therefore vanishes by Nakayama. Thus in degree $m+1$ the quotient by
+$(L_m)$ is the Grassmannian quotient and is free on the standard monomials. Every product of
+a marked degree-$m$ generator has a unique standard-monomial remainder, and the two
+expressions in each overlap have the same remainder. Hence every required
+$S$-polynomial reduces to zero modulo $\mathfrak p^q$, for every $q$. The coefficient--monomial
+Buchberger criterion then makes the marked generators a standard basis. Since
+$\bigcap_q\mathfrak p^q=0$, the standard monomials are not merely generators but an
+$R$-basis in every degree.
+
+Consequently every local ring of the incidence scheme already satisfies all the later Fitting
+conditions: the closed subscheme above is the entire incidence scheme, with its nilpotent
+structure. This proves the assertion over $\mathbf Z$. Base-changing that isomorphism proves
+the statement for an arbitrary, even nonnoetherian, ring $C$.
+
+Apply the finite-support lemma to (12.3). It gives all the asserted locally free quotients and
+their arbitrary base change. On a standard projective chart, the degree-zero localization is a
+filtered colimit of these flat modules, hence is $A$-flat. Finite degree-$m$ generators make
+the associated closed subscheme finitely presented.
+
+Conversely, let $Z$ be a flat family. Its ideal sheaf is also flat, because both
+$\mathcal O_{\mathbf P^r_A}$ and $\mathcal O_Z$ are flat over $A$. Every geometric fiber is
+$s$-regular by clause 2. The relative cohomology-and-base-change argument applied to this
+uniform fiberwise regularity gives, for $n\geq m$, locally free pushforwards of ranks $P(n)$,
+arbitrary base change, and surjective multiplication in the ideal pieces. This argument uses
+only finite Čech complexes and the local flatness criterion, so it remains valid over an
+arbitrary base ring. The finite-support lemma then recovers the whole high-degree ideal from
+degree $m$. Sheafification forgets only bounded irrelevant torsion, so equality in all high
+degrees recovers the original ideal sheaf. This proves clause 3. $\square$
+
+The dual-number test shows why the integral step is necessary. Over
+$C=k[\epsilon]/(\epsilon^2)$, the degree-one relations $x-\epsilon z,y$ define a flat point of
+$\mathbf P^2_C$ and force the degree-two relation $xz-\epsilon z^2$. Replacing it by $xz$
+gives the right dimensions on the sole geometric fiber but leaves the nonzero incidence
+remainder $-\epsilon z^2$. The closed incidence equations reject this pair; a calculation on
+geometric points would not.
 
 We can now apply Theorem 12.A to the finite construction. Put
 $G_i=\operatorname{Gr}(P(i),V_i)$ for $i=m,m+1$. On $G_m\times_SG_{m+1}$ write
@@ -1511,12 +1724,10 @@ $$
 V_{m+1}\otimes\mathcal O\longrightarrow\mathcal Q_{m+1}
 $$
 
-is a closed finitely presented incidence scheme $H_P$. On a geometric fiber, clause 1 and
-$P(m+1)=P(m)^{\langle m\rangle}$ show that the displayed inclusion is equality
-$V_1K_m=K_{m+1}$. The cokernel of
-$V_1\mathcal K_m\to\mathcal K_{m+1}$ is a finite module whose fiber at every point is zero, so
-Nakayama does prove that this particular cokernel is zero on $H_P$. What Nakayama does not prove,
-and what clause 3 supplies, is local freeness of all later graded quotients.
+is a closed finitely presented incidence scheme $H_P$. The finite-support lemma identifies its
+$T$-points, for every test scheme $T$ including nonreduced ones, with compatible homogeneous
+ideals having quotient ranks $h_m(n)$ in all degrees. Thus this is scheme-theoretic persistence,
+not an inference from the geometric points of $H_P$.
 
 Let $J$ be the graded ideal generated by the universal $\mathcal K_m$. Clause 3 gives finite
 locally free quotients $V_n/J_n$ of rank $P(n)$ for all $n\geq m$, compatible with arbitrary base
@@ -1530,8 +1741,7 @@ and degree-$(m+1)$ quotient bundles and hence to a unique map $T\to H_P$. The re
 sheaf equals the original one. Indeed, on $D_+(x_i)$ a degree-zero localized element is represented
 by $f/x_i^d$; multiplying numerator and denominator by a sufficiently high power of $x_i$ moves
 the comparison into a degree at least $m$. Thus agreement of the graded ideals in all high degrees
-implies equality of their associated sheaves. This is the precise saturation/recovery argument,
-and it works after every base change. The two constructions are inverse and functorial, so
+implies equality of their associated sheaves. The two constructions are inverse and functorial, so
 $H_P$ represents the Hilbert functor of $\mathbf P^r_S$.
 
 **Hilbert representability theorem.** Under the
@@ -1547,29 +1757,31 @@ so $\operatorname{Hilb}^0(X/S)=S$. If a nonzero $P$ has no Gotzmann expansion ap
 $\mathbf P^r$, no geometric fiber can occur and the representing scheme is empty. Otherwise use
 the construction below.
 
-For a closed $X\subseteq\mathbf P^r_S$, choose finitely many homogeneous generators $f_j$ of its
-ideal, of degrees $d_j$. On $H_P$, choose $n$ large enough that clause 3 applies to both $n$ and
-$n-d_j$. Multiplication by $f_j$ induces a map of finite locally free modules
+Embed $X$ as a closed subscheme of a finite projective bundle
+$\mathbf P_S(\mathcal E)$. Replace $V_n$ globally by $\operatorname{Sym}^n\mathcal E$ and use
+the relative Grassmannians of its rank-$P(n)$ quotients. Multiplication and the incidence map
+are intrinsic and recover the preceding construction wherever $\mathcal E$ is trivial. On the
+finitely many open-and-closed rank strata of $\mathcal E$, Theorem 12.A supplies the same finite
+construction, so the ambient Hilbert scheme is projective and finitely presented over $S$.
+
+It remains to impose containment in $X$. Let $\mathcal I_X$ be its ideal in the projective
+bundle and let $\mathcal Z$ be the universal family over the ambient incidence scheme $H_P$.
+Containment is equivalent to vanishing of
 
 $$
-p_*\mathcal O_{\mathcal Z}(n-d_j)\longrightarrow p_*\mathcal O_{\mathcal Z}(n).
+\mathcal I_X\longrightarrow\mathcal O_{\mathcal Z}. \tag{12.11}
 $$
 
-Its zero locus is closed and commutes with base change. Since the source twist is generated by
-global sections, the map vanishes exactly when $f_j$ vanishes on $\mathcal Z$. Intersecting these
-finitely many zero loci therefore imposes $\mathcal Z\subseteq X$ scheme-theoretically, including
-on nilpotent test schemes.
-
-For a nonaffine noetherian base, embed $X$ in a finite projective bundle
-$\mathbf P_S(\mathcal E)$. Replace $V_n$ globally by $\operatorname{Sym}^n\mathcal E$ and use the
-relative Grassmannians of its rank-$P(n)$ quotients. The multiplication maps and incidence zero
-locus are intrinsic and recover the preceding construction wherever $\mathcal E$ is trivial. The
-rank strata of $\mathcal E$ are open and closed, the integer $m$ depends only on $P$ and that
-rank, and noetherian quasi-compactness gives one bound on each stratum. The finitely many local
-containment equations for $X$ define compatible ideal sheaves on the intrinsic incidence scheme,
-so they glue to a global closed subscheme. It is projective and finitely presented because it is
-closed in a product of relative Grassmannians. This supplies the relative, nonaffine-base
-construction rather than silently replacing $S$ by one affine chart.
+This is a closed condition with its full scheme structure. Indeed, after a sufficiently high
+twist, the restriction of $\mathcal I_X$ to $\mathcal Z$ has a finite set of relative
+generators, while $p_*\mathcal O_{\mathcal Z}(n)$ is locally free and commutes with arbitrary
+base change. Adjunction turns the composites of those generators with (12.11) into a map from
+a finite module to that locally free pushforward. Setting all its coefficients equal to zero
+defines a closed subscheme of $H_P$. Pullback preserves the generating surjection and the
+pushforward, so a test scheme factors through this closed subscheme exactly when (12.11)
+vanishes after pullback. Thus containment is imposed on nilpotent test schemes, not just on
+geometric fibers. The resulting closed subscheme of the product of relative Grassmannians is
+the required projective finitely presented Hilbert scheme.
 
 The universal property is
 
