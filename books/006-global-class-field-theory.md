@@ -5179,7 +5179,43 @@ $$
 \rho:G_K\longrightarrow\overline{\mathbf Q}_\ell^\times
 $$
 
-be continuous, unramified outside finitely many places, and locally algebraic at every $v\mid\ell$. Compose $\rho$ with global reciprocity. At a place above $\ell$, local algebraicity writes its restriction on an open subgroup of units as a product of integral powers of the embeddings $K_v\hookrightarrow\overline{\mathbf Q}_\ell$. Divide by those algebraic factors. At $v\nmid\ell$, continuity and finite ramification make the residual character trivial on some $U_v^{n_v}$, and it is trivial on $\mathcal O_v^\times$ for almost every $v$. The principal-idèle relation for $\rho\circ\operatorname{Art}_K$ gives exactly the unit relations needed for the chosen integral exponents. The residual character therefore factors through one finite ray class group and has finite image. Transport that finite character through $\iota^{-1}$ and restore the archimedean monomial. This constructs an algebraic Hecke character whose avatar is $\rho$.
+be continuous, unramified outside finitely many places, and locally algebraic at every $v\mid\ell$. Compose $\rho$ with global reciprocity. At a place above $\ell$, local algebraicity writes its restriction on an open subgroup of units as a product of integral powers of the embeddings $K_v\hookrightarrow\overline{\mathbf Q}_\ell$. At $v\nmid\ell$, continuity and finite ramification make the character trivial on some $U_v^{n_v}$, and it is trivial on $\mathcal O_v^\times$ for almost every $v$. It is not enough merely to divide these local algebraic factors and declare the result finite: before the archimedean monomial has been installed, that quotient need not be a character of $C_K$.
+
+We instead perform the global principal-ray-ideal construction. Index the local
+exponents by the complex embeddings through $\iota$, and write $n_\tau$ for
+their negatives, as dictated by the correction in the displayed definition of
+$\chi_\ell$ above. Choose a modulus $\mathfrak m$ deep enough at the places
+above $\ell$ for the local algebraic formulas to hold, deep enough at every
+other ramified place to kill inertia, and with the required real signs. If
+$u\in\mathcal O_K^\times$ is positive at the real places of $\mathfrak m$ and
+$u\equiv1\pmod{\mathfrak m_0}$, the principal-idèle relation and the chosen
+local formulas give
+
+$$
+ \prod_{\tau\in\Sigma_K}\tau(u)^{n_\tau}=1.             \tag{11.HT4}
+$$
+
+Consequently the rule on principal ray ideals
+
+$$
+ (a)\longmapsto\prod_{\tau\in\Sigma_K}\tau(a)^{n_\tau}
+ \qquad(a\equiv1\pmod{\mathfrak m_0},\ a>0
+        \text{ at }\mathfrak m_\infty)                  \tag{11.HT5}
+$$
+
+is independent of the allowed generator. Since $\overline{\mathbf Q}^\times$
+is divisible, it extends from the principal ray subgroup to the group of
+fractional ideals prime to $\mathfrak m_0$. Together with the archimedean
+monomial $\prod_\tau\tau(x)^{-n_\tau}$, this extension defines an algebraic
+Hecke character $\chi^0$ of the prescribed infinity type. Compare $\rho$ with
+the $\ell$-adic avatar of $\chi^0$. Their quotient is now a globally defined
+idele-class character, not just a product of local corrections. It is trivial
+on $U(\mathfrak m)$, because the algebraic factors cancel at $v\mid\ell$ and
+the modulus kills the remaining local inertia. Hence this quotient factors
+through the finite ray class group $\operatorname {Cl}_{\mathfrak m}(K)$ and
+has finite image. Transport that finite quotient through $\iota^{-1}$ and
+twist $\chi^0$ by it. The resulting algebraic Hecke character has avatar
+exactly $\rho$.
 
 Thus a continuous one-dimensional $\ell$-adic Galois character comes from an algebraic Hecke character precisely under these two conditions. Arbitrary continuous $\ell$-adic characters can fail either one. The assertion also depends on the chosen $\iota$, although its compatible algebraic data do not.
 
