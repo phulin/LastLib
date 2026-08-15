@@ -692,22 +692,75 @@ norm theorem of Book 5 gives $E\subseteq N I_M$: at a place in $T$, $p$-th power
 are norms; at $v_i$ there is no condition; and outside these sets the extension is
 unramified and norms are surjective on units.
 
-Write $Q=I_F/F^\times E$. Every idele is represented in $Q$ by its
-$T$-coordinates: use a global element to remove its valuation divisor outside
-$T\cup\{v_j\}$, possible because the $T$-class group is zero, and discard the
-remaining $v_j$-coordinates. Thus $Q$ has generators
-$\prod_{v\in T}F_v^\times/F_v^{\times p}$. Its relations are the images of
-the $T$-units and the $t$ valuation generators at the $v_j$. On
-$V=U_{F,T}/U_{F,T}^p$ the latter relation matrix is (4.I7b), so it has rank
-$t$ and leaves exactly the $r$-dimensional line $\langle a\rangle$. There is
-no further relation: an element of the kernel has divisor supported at the
-$v_j$; remove this divisor with the chosen local uniformizer coordinates.
-What remains is a $T$-unit, and (4.I7b) is exactly the condition that all its
-$v_j$ residue symbols vanish.
+Put $R=\{v_1,\ldots,v_t\}$ and
 
-The order of this finite presentation is therefore the product of its local
-generator orders divided by the $p^t$ independent rows of (4.I7b) and the
-remaining independent $T$-unit rows. Using
+$$
+ J=\prod_{v\in T\cup R}F_v^\times
+       \times\prod_{v\notin T\cup R}\mathcal O_v^\times.
+$$
+
+The choice of the ideal-class representatives in $T$ gives $I_F=F^\times J$.
+We shall use the elementary subgroup identity
+
+$$
+ [AC:BC]\,[A\cap C:B\cap C]=[A:B]                 \tag{4.I7c}
+$$
+
+for $B\subseteq A$ in an abelian group. Indeed, the kernel and image of
+$A/B\to AC/BC$ are $(A\cap BC)/B\simeq(A\cap C)/(B\cap C)$ and $AC/BC$.
+Taking $A=J$, $B=E$, and $C=F^\times$ gives
+
+$$
+ [I_F:F^\times E]
+ =\frac{[J:E]}{[U_{F,T\cup R}:F^\times\cap E]}.       \tag{4.I7d}
+$$
+
+We first identify the denominator, including the point which the mere rank of
+(4.I7b) does not by itself prove. Since $v_j\notin T$ and is unramified in
+$P$, the local group
+$\mathcal O_{v_j}^\times/\mathcal O_{v_j}^{\times p}$ has order $p$, and the
+Kummer--Frobenius pairing identifies the images of
+$\epsilon_2,\ldots,\epsilon_{1+t}$ with the rows of (4.I7b). Consequently
+
+$$
+ U_{F,T}\longrightarrow
+ \prod_{v\in R}\mathcal O_v^\times/\mathcal O_v^{\times p}       \tag{4.I7e}
+$$
+
+is onto.
+
+Here is the required power-detection argument. Suppose that $b\in F^\times$
+is a $p$-th power in every $F_v$, $v\in T$, and is a unit outside
+$T\cup R$. Set $L_b=F(b^{1/p})$ and
+
+$$
+ D_b=\prod_{v\in T}F_v^\times\times
+     \prod_{v\in R}\mathcal O_v^{\times p}\times
+     \prod_{v\notin T\cup R}\mathcal O_v^\times.
+$$
+
+Then $D_b\subseteq N_{L_b/F}I_{L_b}$. At $T$ the local extension is split;
+at $R$, $p$-th powers are local norms; and outside $T\cup R$ the Kummer
+extension is unramified and norms are onto on units. If
+$J_T=\prod_{v\in T}F_v^\times\times\prod_{v\notin T}\mathcal O_v^\times$,
+surjectivity in (4.I7e) says $J_T=U_{F,T}D_b$. Since the $T$-class group is
+zero, $I_F=F^\times J_T=F^\times D_b$. Were $L_b/F$ nontrivial, (4.I6) for
+this cyclic extension of degree $p$ would give
+
+$$
+ [C_F:N C_{L_b}]
+ =p\,|\widehat H^{-1}(\operatorname {Gal}(L_b/F),C_{L_b})|\ge p,
+$$
+
+whereas $D_b\subseteq NI_{L_b}$ and $I_F=F^\times D_b$ make that index one.
+Thus $b\in F^{\times p}$. Applying this to $b\in F^\times\cap E$ proves
+
+$$
+ F^\times\cap E=U_{F,T\cup R}^{p}.                  \tag{4.I7f}
+$$
+
+It remains only to compute the two finite indices in (4.I7d). The local
+formula
 
 $$
  |F_v^\times/F_v^{\times p}|=p\,|\mu_p(F_v)|/|p|_v,\qquad
@@ -715,12 +768,29 @@ $$
        =|\mu_p(F_v)|/|p|_v,                              \tag{4.I8}
 $$
 
-the product formula cancels the finite-place $|p|_v$ factors. Dirichlet's
-formula gives $r_1+r_2+|T_f|-1$ nontorsion unit rows. The torsion row cancels
-the common $\mu_p(F)$ factor; when $p=2$, the $r_1$ real sign rows supply the
-remaining factors of two. After division by the $p^t$ rows of (4.I7b), every
-factor cancels except $p^r=p$. Consequently $|Q|\le p$, and
-$E\subseteq NI_M$ proves (4.I7).
+and the product formula give
+
+$$
+ [J:E]=\prod_{v\in T}[F_v^\times:F_v^{\times p}]=p^{2|T|}.
+$$
+
+Indeed $T$ contains every place where $|p|_v\ne1$, and
+$|\mu_p(F_v)|=p$ for every $v\in T$; the normalized archimedean absolute
+values make the same formula valid at real and complex places. Dirichlet's
+$T\cup R$-unit theorem, including its $\mu_p(F)$ torsion factor, gives
+
+$$
+ [U_{F,T\cup R}:U_{F,T\cup R}^{p}]=p^{|T|+t}.
+$$
+
+The same theorem gives $\dim_{\mathbf F_p}V=|T|$, so $r+t=|T|$. Equations
+(4.I7d) and (4.I7f) therefore yield
+
+$$
+ [I_F:F^\times E]=p^{2|T|-(|T|+t)}=p^r=p.
+$$
+
+As $E\subseteq NI_M$, this proves (4.I7).
 
 Equations (4.I6) and (4.I7) force
 
