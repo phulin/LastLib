@@ -628,7 +628,7 @@ H^0(\mathcal F(n))\otimes_AH^0(\mathcal O(1))
 \quad(n\geq m).
 $$
 
-One chooses a hyperplane avoiding the relevant associated points and inducts on $r$; over a finite residue field, pass faithfully flatly to an infinite field, make the choice there, and descend the resulting vanishing and generation statements by faithful flatness. Regularity packages all high-degree behavior into one integer. For ideals with a fixed Hilbert polynomial, a uniform regularity bound exists. Chapter 12 proves the bounded form needed to construct the Hilbert scheme.
+One chooses a hyperplane avoiding the relevant associated points and inducts on $r$; over a finite residue field, pass faithfully flatly to an infinite field, make the choice there, and descend the resulting vanishing and generation statements by faithful flatness. Regularity packages all high-degree behavior into one integer. The uniform regularity bound for ideals with a fixed Hilbert polynomial is a deeper assertion. Section 12.3 isolates the exact bounded Macaulay--Gotzmann package needed for the Hilbert construction and marks it as an unproved prerequisite.
 
 ## 7. Hilbert functions and Hilbert polynomials
 
@@ -770,11 +770,13 @@ For a failure, over $S=\operatorname{Spec}k[t]$ let $Z\subset\mathbf A^1_S$ be c
 
 ### 8.3 Constancy and the flatness boundary
 
-A safe converse is available over a reduced base.
+A safe converse is available over a reduced base, conditional on the projective flattening input
+isolated in the next section.
 
-**Numerical flatness criterion.** Let $S$ be reduced and locally noetherian, $f:X\to S$ projective,
-and $\mathcal F$ coherent. Then $\mathcal F$ is $S$-flat if and only if its fiber Hilbert polynomial
-is locally constant.
+**Conditional numerical flatness criterion.** Assume the projective flattening-stratification
+theorem stated in Section 8.4. Let $S$ be reduced and locally noetherian, let $f:X\to S$ be
+projective, and let $\mathcal F$ be coherent. Then $\mathcal F$ is $S$-flat if and only if its
+fiber Hilbert polynomial is locally constant.
 
 The forward implication is the constancy theorem. For the converse, use the flattening theorem of
 the next section. Locally on a connected component, let the common polynomial be $P$. Every point
@@ -788,35 +790,57 @@ Reducedness matters. On $\operatorname{Spec}k[\epsilon]/(\epsilon^2)$ there is o
 
 ### 8.4 Flattening strata
 
-**Flattening theorem.** Let $S$ be noetherian, $f:X\to S$ projective, $\mathcal L$ relatively very ample, and $\mathcal F$ coherent. For every numerical polynomial $P$ there is a locally closed subscheme $S_P\subseteq S$ such that $T\to S$ factors through $S_P$ exactly when $\mathcal F_T$ is flat over $T$ with fiber polynomial $P$. These strata cover the underlying set, and finitely many meet a quasi-compact open.
+The existence of flattening strata is a substantial boundedness theorem, not a formal consequence
+of the Fitting-ideal calculation for one module. The earlier chapters prove Serre vanishing for one
+coherent sheaf and explain regularity once a bound is known; they do not prove a bound uniform in
+all fibers of a nonflat family. Nor have they proved that prescribed ranks in finitely many graded
+degrees force the associated sheaf to be flat after every, possibly nonreduced, base change. We
+therefore isolate exactly the result used here.
 
-The construction is local on $S$, so embed $X$ in $\mathbf P^r_S$ over an affine open. A finite
-graded presentation of the sheaf module and the noetherian hypothesis give one regularity bound
-$m$ for all its fibers on this open. For a finitely presented module $M$ on the base, the locus on
-which $M$ is locally free of rank $q$ is represented by
+**Projective flattening-stratification input.** Let $S$ be a noetherian scheme, let
+$f:X\to S$ be projective and finitely presented, fix a relatively very ample invertible sheaf
+$\mathcal L$, and let $\mathcal F$ be coherent. For every numerical polynomial $P$ there is a
+unique locally closed subscheme $S_P\hookrightarrow S$ with the following universal property. For
+every $S$-scheme $g:T\to S$, with no noetherian or reduced hypothesis on $T$, the following are
+equivalent:
+
+1. $g$ factors through $S_P$;
+2. the pullback $\mathcal F_T$ is flat over $T$ and every geometric fiber has Hilbert polynomial
+   $P$ with respect to $\mathcal L_T$.
+
+The construction commutes with arbitrary base change on $S$. The underlying subsets
+$|S_P|$ are disjoint and cover $|S|$; only finitely many are nonempty on a quasi-compact open of
+$S$.
+
+This input includes two indispensable assertions. First, locally after embedding
+$X\hookrightarrow\mathbf P^r_S$, there is a uniform bounded range of graded data sufficient for
+the chosen polynomial $P$; establishing that range requires a uniform regularity or equivalent
+bounded-syzygy theorem. Second, the determinantal conditions in that bounded range represent
+flatness of the sheaf after arbitrary base change, rather than merely prescribing dimensions on
+geometric fibers. This is the effective graded-flatness step. Both assertions must be proved in a
+full construction of flattening stratification; neither is supplied by the preceding Serre
+vanishing argument.
+
+For orientation only, once those two bounded assertions are available, Fitting ideals explain why
+the representing locus is locally closed. If $M$ is a finitely presented module, the functor on
+which $M$ becomes locally free of rank $q$ is represented by
 
 $$
 V(\operatorname{Fitt}_{q-1}M)\setminus
-V(\operatorname{Fitt}_{q}M).
+V(\operatorname{Fitt}_{q}M),
 $$
 
-For $q=0$ use the convention $\operatorname{Fitt}_{-1}M=0$.
-Its universal property is scheme-theoretic: a base change factors through this locally closed
-subscheme exactly when the pulled-back presentation has constant rank $q$, including over
-nilpotent test rings.
+with $\operatorname{Fitt}_{-1}M=0$. Fitting ideals commute with arbitrary scalar extension, so
+this condition detects nilpotent test schemes as well as geometric points. Applying it to the
+finite flattening data produces $S_P$; the effective graded-flatness assertion supplies the
+converse from the determinantal conditions to flatness. Thus the Fitting calculation describes
+the last step of the construction, but it is not a proof of the two bounded assertions isolated
+above.
 
-Apply this construction to finitely many consecutive terms, beginning in degree $m$ and extending
-past the degrees of every generator and relation in a fixed graded presentation of $\mathcal F$,
-with prescribed ranks $P(m+i)$. Also impose, by vanishing of minors, that
-multiplication by the $r+1$ linear coordinates carries kernels in one degree into the next.
-Regularity propagates those kernel and rank conditions to every later degree. The resulting
-high-degree graded module is flat degree by degree and commutes with scalar extension.
-Sheafification kills only bounded-degree torsion, so the associated sheaf is flat with polynomial
-$P$. Conversely, if $\mathcal F_T$ is flat with polynomial $P$, relative vanishing and base
-change give exactly these ranks and multiplication relations, forcing $T\to S$ through the same
-locus. This proves the universal property and makes the local constructions glue. Noetherian
-quasi-compactness also shows that only finitely many different rank profiles, hence polynomials,
-occur on a quasi-compact open.
+All uses of flattening strata in this book, including the numerical converse in Section 8.3, are
+conditional on this projective flattening-stratification input. This keeps the dependency precise:
+the later Hilbert-scheme construction has its own fixed-polynomial boundedness argument and does
+not retroactively prove flattening for an arbitrary coherent sheaf.
 
 The strata need not be open. Once a finitely presented family is flat, flatness persists on an open neighborhood; forcing an arbitrary family to become flat can impose closed equations.
 
@@ -1288,53 +1312,43 @@ $$
 G_n=\operatorname{Gr}\!\left(P(n),V_n\right).
 $$
 
-One degree alone remembers only a vector-space quotient, not an ideal. Multiplication must be compatible:
-
-$$
-I_n\cdot H^0(\mathcal O(m))\subseteq I_{n+m}.
-$$
-
-A regularity bound says that for fixed $P$ there is $m(P,r)$ such that every saturated homogeneous
-ideal with polynomial $P$ is $m$-regular and is generated from degree $m$ onward. Use two
-Grassmannians, $G_m$ and $G_{m+1}$. On their product write
-
-$$
-0\longrightarrow\mathcal K_i
-\longrightarrow V_i\otimes\mathcal O
-\longrightarrow\mathcal Q_i\longrightarrow0
-\qquad(i=m,m+1)
-$$
-
-for the universal sequences, where $\mathcal Q_i$ has rank $P(i)$. Multiplication followed by the
-second universal quotient gives
-
-$$
-\mathcal K_m\otimes V_1
-\longrightarrow V_{m+1}\otimes\mathcal O
-\longrightarrow\mathcal Q_{m+1}.
-$$
-
-The vanishing of this composite is a closed condition, defining an incidence subscheme
-$H_P\subseteq G_m\times_SG_{m+1}$. At a geometric point it says
-
-$$
-V_1K_m\subseteq K_{m+1}.
-$$
-
-Macaulay growth gives the reverse dimension inequality. More precisely, the quotient by the ideal
-generated by $K_m$ has degree-$(m+1)$ dimension at most $P(m+1)$, while the displayed inclusion
-makes that dimension at least $\dim(V_{m+1}/K_{m+1})=P(m+1)$. Equality follows, so
-$V_1K_m=K_{m+1}$. Fiberwise surjectivity and Nakayama make this equality valid over the whole
-incidence scheme, including its nilpotent directions. Gotzmann persistence then recovers all
-degrees above $m$ from this one multiplication step. Thus the second Grassmannian factor is
-uniquely determined by the first, but retaining it makes the closed equations and their ranks
-completely explicit.
+One degree alone remembers only a module quotient, not an ideal. Multiplication must be
+compatible. The passage from finitely many such compatibility equations to a flat graded quotient
+in every degree is the difficult point. In particular, constant dimensions on geometric fibers do
+not imply local freeness over a nonreduced base. We therefore state the exact bounded input before
+constructing the incidence scheme; a fiberwise Macaulay calculation will not be substituted for
+this relative assertion.
 
 ### 12.3 Representability with fixed polynomial
 
-The remaining boundedness input is numerical.
+The following input is not proved in this book or in Books 1--7. Isolating it is necessary because
+its relative part controls nilpotent test schemes and is strictly stronger than the corresponding
+calculation over fields.
 
-**Gotzmann boundedness theorem.** Every numerical polynomial occurring as the Hilbert polynomial of a closed subscheme of $\mathbf P^r$ has a unique expansion
+**Standing prerequisite 12.A (bounded Macaulay--Gotzmann package).** Fix $r$ and a numerical
+polynomial $P$ that occurs as the Hilbert polynomial of a closed subscheme of $\mathbf P^r$.
+
+1. **Compression and equality over fields.** Every nonnegative integer $h$ has a unique Macaulay
+   expansion
+
+   $$
+   h=\binom{b_n}{n}+\binom{b_{n-1}}{n-1}+\cdots+\binom{b_j}{j},
+   \qquad b_n>b_{n-1}>\cdots>b_j\geq j,
+   $$
+
+   and, on putting
+
+   $$
+   h^{\langle n\rangle}
+   =\binom{b_n+1}{n+1}+\cdots+\binom{b_j+1}{j+1},
+   $$
+
+   every standard graded quotient $R$ over a field satisfies
+   $h_R(n+1)\leq h_R(n)^{\langle n\rangle}$. The compression theorem includes its equality case:
+   if the degree-$(n+1)$ piece has maximal growth and the ideal is generated in degrees at most $n$,
+   the same equality persists in every later degree.
+
+2. **Gotzmann expansion and regularity.** The polynomial has a unique expansion
 
 $$
 P(n)=
@@ -1345,46 +1359,79 @@ P(n)=
 $$
 
 with $r\geq a_1\geq\cdots\geq a_s\geq0$. Every saturated ideal sheaf with polynomial $P$ is
-$s$-regular.
-
-We recall the combinatorial proof because this is the boundedness input on which representability
-rests. Every nonnegative integer $h$ has a unique $n$th Macaulay expansion
-
-$$
-h=\binom{b_n}{n}+\binom{b_{n-1}}{n-1}+\cdots+\binom{b_j}{j},
-\qquad b_n>b_{n-1}>\cdots>b_j\geq j.
-$$
-
-Set
-
-$$
-h^{\langle n\rangle}
-=\binom{b_n+1}{n+1}+\cdots+\binom{b_j+1}{j+1}.
-$$
-
-If $R=k[x_0,\ldots,x_r]/I$ and $h_R(n)=h$, then
-$h_R(n+1)\leq h^{\langle n\rangle}$. To see this, replace the degree-$n$ part of $I$ by its
-initial monomial space. Among monomial sets of a fixed size, repeatedly compressing a monomial
-toward lexicographic order cannot enlarge the complement of its degree-$(n+1)$ shadow. The
-lexicographic complement consists of the blocks counted by the displayed binomial expansion, and
-its next shadow has exactly $h^{\langle n\rangle}$ elements. This proves the inequality.
-
-If equality holds and the ideal has no generators after degree $n$, every compression step also
-has equality. Consequently the next shadow has no gap, the same equality holds in degree $n+1$,
-and induction gives it in every later degree. This is Macaulay persistence. Apply finite
-differences to the eventual Hilbert function: removing the first lexicographic block lowers the
-dimension, and induction yields precisely the displayed Gotzmann expansion. For $n\geq s$ it
-satisfies
+   $s$-regular, is generated in degrees at most $s$, satisfies $I_{n+1}=W_1I_n$ for $n\geq s$,
+   and for $n\geq s$ one has
 
 $$
 P(n+1)=P(n)^{\langle n\rangle}.
 $$
 
-Persistence says that the saturated ideal is generated from degree $s$ onward, while the
-hyperplane exact sequence gives the vanishings defining $s$-regularity. This proves the stated
-bound. Every step counts monomials, so the argument is characteristic-free and uses no averaging.
+3. **Relative persistence and recovery.** Let $A$ be any ring, let
+   $W=A[x_0,\ldots,x_r]$, and take $m\geq s$. Suppose $K_m\subset W_m$ and
+   $K_{m+1}\subset W_{m+1}$ are locally direct summands of coranks $P(m)$ and $P(m+1)$ and
 
-**Hilbert representability theorem.** Under the hypotheses of Section 12.1, $\operatorname{Hilb}^P_{X/S}$ is represented by a projective finitely presented $S$-scheme
+   $$
+   W_1K_m=K_{m+1}.
+   $$
+
+   If $J\subset W$ is generated by $K_m$, then $W_n/J_n$ is finite locally free of rank $P(n)$
+   for every $n\geq m$, and formation of these quotients commutes with every ring map $A\to A'$.
+   The sheaf associated to $W/J$ is finitely presented and flat over $A$. Conversely, if
+   $Z\subset\mathbf P^r_A$ is finitely presented and flat over $A$ and all its geometric fibers
+   have polynomial $P$, then for every $n\geq m$ the module
+   $p_*\mathcal O_Z(n)$ is finite locally free of rank $P(n)$, commutes with arbitrary base
+   change, and its kernels satisfy $I_{n+1}=W_1I_n$ for $n\geq m$. These assertions
+   remain valid after localization on an arbitrary, possibly nonnoetherian, base scheme.
+
+The last clause incorporates the uniform cohomology-and-base-change statement and the limit
+argument for finitely presented families. It is essential: the field theorem in clauses 1 and 2
+does not imply it by Nakayama's lemma. A full proof must establish compression and its equality
+case, persistence, regularity, the relative flatness assertion over rings with nilpotents, and
+finite-presentation descent. None of those steps is supplied by the preceding monomial sketch,
+so all Hilbert-representability claims below are conditional on prerequisite 12.A.
+
+We can now give the finite construction and verify that 12.A is exactly sufficient. Put
+$G_i=\operatorname{Gr}(P(i),V_i)$ for $i=m,m+1$. On $G_m\times_SG_{m+1}$ write
+
+$$
+0\longrightarrow\mathcal K_i
+\longrightarrow V_i\otimes\mathcal O
+\longrightarrow\mathcal Q_i\longrightarrow0.
+$$
+
+The zero locus of
+
+$$
+\mathcal K_m\otimes V_1\longrightarrow
+V_{m+1}\otimes\mathcal O\longrightarrow\mathcal Q_{m+1}
+$$
+
+is a closed finitely presented incidence scheme $H_P$. On a geometric fiber, clause 1 and
+$P(m+1)=P(m)^{\langle m\rangle}$ show that the displayed inclusion is equality
+$V_1K_m=K_{m+1}$. The cokernel of
+$V_1\mathcal K_m\to\mathcal K_{m+1}$ is a finite module whose fiber at every point is zero, so
+Nakayama does prove that this particular cokernel is zero on $H_P$. What Nakayama does not prove,
+and what clause 3 supplies, is local freeness of all later graded quotients.
+
+Let $J$ be the graded ideal generated by the universal $\mathcal K_m$. Clause 3 gives finite
+locally free quotients $V_n/J_n$ of rank $P(n)$ for all $n\geq m$, compatible with arbitrary base
+change. Sheafifying gives a finitely presented closed subscheme
+$\mathcal Z\subset\mathbf P^r_{H_P}$ flat over $H_P$, with Hilbert polynomial $P$ on every
+geometric fiber.
+
+Conversely, clause 3 sends every flat finitely presented family
+$Z\subset\mathbf P^r_T$ with polynomial $P$, for an arbitrary $S$-scheme $T$, to its degree-$m$
+and degree-$(m+1)$ quotient bundles and hence to a unique map $T\to H_P$. The recovered ideal
+sheaf equals the original one. Indeed, on $D_+(x_i)$ a degree-zero localized element is represented
+by $f/x_i^d$; multiplying numerator and denominator by a sufficiently high power of $x_i$ moves
+the comparison into a degree at least $m$. Thus agreement of the graded ideals in all high degrees
+implies equality of their associated sheaves. This is the precise saturation/recovery argument,
+and it works after every base change. The two constructions are inverse and functorial, so,
+conditional on 12.A, $H_P$ represents the Hilbert functor of $\mathbf P^r_S$.
+
+**Conditional Hilbert representability theorem.** Assuming prerequisite 12.A, under the
+hypotheses of Section 12.1 the functor $\operatorname{Hilb}^P_{X/S}$ is represented by a
+projective finitely presented $S$-scheme
 
 $$
 \operatorname{Hilb}^P(X/S).
@@ -1395,35 +1442,29 @@ so $\operatorname{Hilb}^0(X/S)=S$. If a nonzero $P$ has no Gotzmann expansion ap
 $\mathbf P^r$, no geometric fiber can occur and the representing scheme is empty. Otherwise use
 the construction below.
 
-For projective space, take $m\geq s$ and the closed incidence scheme $H_P$ just constructed. Let
-$J$ be the graded ideal generated by its universal $K_m$. The equality
-$V_1K_m=K_{m+1}$ and Gotzmann persistence show inductively that every quotient
-$V_n/J_n$ for $n\geq m$ is finite locally free of rank $P(n)$ and that multiplication gives the
-same result after arbitrary scalar extension. Sheafifying $J$ gives a universal closed subscheme
-$\mathcal Z\subseteq\mathbf P^r_{H_P}$. The graded flatness criterion, checked in all degrees
-$n\geq m$, makes $\mathcal O_{\mathcal Z}$ flat over $H_P$; its fibers have polynomial $P$.
-
-Conversely, for a flat family $Z/T$, Gotzmann regularity on geometric fibers, relative vanishing,
-and base change make the degree-$m$ and degree-$(m+1)$ quotients locally free of the required
-ranks. They give a unique map $T\to H_P$. The recovered sheafified ideal is the original ideal
-because both are saturated and agree in every degree at least $m$. Families over nonnoetherian
-test schemes cause no gap: the family and its finitely many equations descend locally to a
-finite-presentation test scheme, where the argument applies, and then base change back. These two
-constructions are inverse and functorial.
-
-For a closed $X\subseteq\mathbf P^r_S$ with homogeneous ideal $\mathcal I_X$, increase $m$
-locally on $S$ so that this ideal is generated in degrees at most $m$. Write
-$I_{X,m}\subseteq V_m$ for its degree-$m$ module of equations. Requiring the composite
+For a closed $X\subseteq\mathbf P^r_S$, choose finitely many homogeneous generators $f_j$ of its
+ideal, of degrees $d_j$. On $H_P$, choose $n$ large enough that clause 3 applies to both $n$ and
+$n-d_j$. Multiplication by $f_j$ induces a map of finite locally free modules
 
 $$
-I_{X,m}\longrightarrow V_m\longrightarrow\mathcal Q_m
+p_*\mathcal O_{\mathcal Z}(n-d_j)\longrightarrow p_*\mathcal O_{\mathcal Z}(n).
 $$
 
-to vanish is then equivalent, by multiplication and regularity, to containment of
-$\mathcal I_X$ in the universal ideal. It is a closed condition.
-The local constructions agree on overlaps by their universal property and therefore glue to
-$\operatorname{Hilb}^P(X/S)$. Projectivity comes from the product of Grassmannians, and finite
-presentation from the finite incidence and containment equations.
+Its zero locus is closed and commutes with base change. Since the source twist is generated by
+global sections, the map vanishes exactly when $f_j$ vanishes on $\mathcal Z$. Intersecting these
+finitely many zero loci therefore imposes $\mathcal Z\subseteq X$ scheme-theoretically, including
+on nilpotent test schemes.
+
+For a nonaffine noetherian base, embed $X$ in a finite projective bundle
+$\mathbf P_S(\mathcal E)$. Replace $V_n$ globally by $\operatorname{Sym}^n\mathcal E$ and use the
+relative Grassmannians of its rank-$P(n)$ quotients. The multiplication maps and incidence zero
+locus are intrinsic and recover the preceding construction wherever $\mathcal E$ is trivial. The
+rank strata of $\mathcal E$ are open and closed, the integer $m$ depends only on $P$ and that
+rank, and noetherian quasi-compactness gives one bound on each stratum. The finitely many local
+containment equations for $X$ define compatible ideal sheaves on the intrinsic incidence scheme,
+so they glue to a global closed subscheme. It is projective and finitely presented because it is
+closed in a product of relative Grassmannians. This supplies the relative, nonaffine-base
+construction rather than silently replacing $S$ by one affine chart.
 
 The universal property is
 
@@ -1443,11 +1484,24 @@ flat and finitely presented over the second factor. The representing scheme is n
 
 ### 12.4 The finite-length Hilbert scheme
 
-For $P=d$, representability gives $\operatorname{Hilb}^d(X/S)$, projective over $S$ when $X$ is. Its universal family is finite locally free of rank $d$. The construction is independent, up to unique isomorphism, of the projective embedding because the functor itself mentions only length-$d$ closed subschemes.
+**Conditional consequence.** Assuming prerequisite 12.A, for $P=d$ representability gives
+$\operatorname{Hilb}^d(X/S)$, projective over $S$ when $X$ is. Its universal family is finite
+locally free of rank $d$. The construction is independent, up to unique isomorphism, of the
+projective embedding because the functor itself mentions only length-$d$ closed subschemes.
 
-If $X\to S$ is merely quasi-projective, choose an open immersion $X\subset\bar X$ with $\bar X$ projective. The locus in $\operatorname{Hilb}^d(\bar X/S)$ where the universal finite family lies inside $X$ is open: its complement is the image of the intersection with $\bar X\setminus X$, and that image is closed because the universal family is finite. This open represents $\operatorname{Hilb}^d(X/S)$. It is quasi-projective and commutes with arbitrary base change.
+If $X\to S$ is merely quasi-projective, choose an open immersion $X\subset\bar X$ with $\bar X$
+projective. Still conditional on 12.A, the locus in $\operatorname{Hilb}^d(\bar X/S)$ where the
+universal finite family lies inside $X$ is open: its complement is the image of the intersection
+with $\bar X\setminus X$, and that image is closed because the universal family is finite. This
+open represents $\operatorname{Hilb}^d(X/S)$. It is quasi-projective and commutes with arbitrary
+base change.
 
-For a smooth morphism $X/S$ of relative dimension $r$, the open locus of reduced geometric fibers is the unordered configuration space. When $r>1$, the boundary contains many infinitesimal directions. Already $\operatorname{Hilb}^2(\mathbf A^2)$ records a collision together with a tangent direction, whereas $\operatorname{Sym}^2(\mathbf A^2)$ records only the doubled cycle. Thus the Hilbert-to-cycle map is not generally an isomorphism in dimension two.
+Within this conditional Hilbert scheme, for a smooth morphism $X/S$ of relative dimension $r$,
+the open locus of reduced geometric fibers is the unordered configuration space. When $r>1$,
+the boundary contains many infinitesimal directions. Already
+$\operatorname{Hilb}^2(\mathbf A^2)$ records a collision together with a tangent direction,
+whereas $\operatorname{Sym}^2(\mathbf A^2)$ records only the doubled cycle. Thus the
+Hilbert-to-cycle map is not generally an isomorphism in dimension two.
 
 ### 12.5 Curves: Hilbert scheme equals symmetric power
 
@@ -1459,6 +1513,10 @@ $$
 =\operatorname{Hom}_S(T,\operatorname{Sym}^d_S(C)).
 $$
 
+This argument does not depend on prerequisite 12.A: the explicitly constructed symmetric power
+already represents the length-$d$ Hilbert functor in this smooth-curve case. Thus it also supplies
+the representing object when the general conditional theorem of Section 12.3 is unavailable.
+
 By uniqueness of representing objects,
 
 $$
@@ -1467,12 +1525,19 @@ $$
 
 Under this isomorphism their universal families agree with $\Delta_d$. In particular the symmetric power is smooth over $S$ of relative dimension $d$. The divisor-chart lemma gives étale coordinates over the affine coefficient space with coordinates $a_1,\ldots,a_d$, even when roots collide; it does not require a global parameter on the curve.
 
-For a singular curve, the Hilbert scheme and symmetric power still agree on the open locus of
-subschemes supported in the smooth locus, by the theorem just proved there. Over a singular point,
-several embedded ideals can have the same multiplicities, so the two functors differ. No global
-Hilbert-to-cycle morphism for singular families is needed or asserted here.
+For a singular curve, the subfunctor of length-$d$ subschemes supported in the smooth locus is
+represented directly by the corresponding open of the symmetric power of the smooth locus. If
+the full Hilbert scheme is supplied using 12.A, it agrees with that symmetric power on this open.
+Over a singular point, several embedded ideals can have the same multiplicities, so the two
+functors differ. No global Hilbert-to-cycle morphism for singular families is needed or asserted
+here.
 
 ## 13. Universal constructions for later geometry
+
+Except where a smooth curve is handled directly by the divisor construction of Section 12.5,
+the Hilbert schemes and universal families used in this chapter are conditional on prerequisite
+12.A. The arguments below prove that the indicated loci have the stated meanings once those
+bounded parameter schemes exist; they do not provide an independent proof of their existence.
 
 ### 13.1 Graphs and spaces of morphisms
 
@@ -1483,9 +1548,9 @@ $$
 $$
 
 Suppose $X\to S$ is projective flat and finitely presented and $Y\to S$ is projective. Fix a
-Hilbert polynomial $P$ for graphs in a chosen projective embedding of $X\times_SY$. The Hilbert
-scheme of that product represents all flat closed families with polynomial $P$. Write $H$ for
-this Hilbert scheme. For its universal family $\Gamma$, consider the proper finitely presented
+Hilbert polynomial $P$ for graphs in a chosen projective embedding of $X\times_SY$. Conditional
+on 12.A, the Hilbert scheme of that product represents all flat closed families with polynomial
+$P$. Write $H$ for this Hilbert scheme. For its universal family $\Gamma$, consider the proper finitely presented
 projection
 $p:\Gamma\to X\times_S H$.
 
@@ -1511,8 +1576,8 @@ This construction is used only with bounded graph polynomials. There is no singl
 
 ### 13.2 Closed loci inside parameter spaces
 
-Many moduli conditions become closed conditions on a Hilbert scheme, provided the displayed
-properness and finite-presentation hypotheses are retained:
+Conditional on 12.A, many moduli conditions become closed conditions on the resulting Hilbert
+schemes, provided the displayed properness and finite-presentation hypotheses are retained:
 
 - containment in a fixed closed subscheme is closed;
 - invariance under a fixed morphism is closed when the two induced finitely presented ideal maps
@@ -1533,7 +1598,12 @@ detects infinitesimal test schemes.
 
 ### 13.3 Projective parameter spaces for curve families
 
-Fix $r$ and a polynomial $P(n)=en+c$. The scheme $\operatorname{Hilb}^P(\mathbf P^r_S/S)$ carries the universal projective flat family. The open locus on which the fibers are smooth of pure dimension one parametrizes smooth embedded curves with that polynomial. If one also requires geometric connectedness, this is open in a proper smooth family. Additional marked effective divisors of degree $d$ are parametrized by the relative symmetric power of the universal curve.
+Assume 12.A. Fix $r$ and a polynomial $P(n)=en+c$. The scheme
+$\operatorname{Hilb}^P(\mathbf P^r_S/S)$ carries the universal projective flat family. The open
+locus on which the fibers are smooth of pure dimension one parametrizes smooth embedded curves
+with that polynomial. If one also requires geometric connectedness, this is open in a proper
+smooth family. Additional marked effective divisors of degree $d$ are parametrized by the
+relative symmetric power of the universal curve.
 
 This is the precise Hilbert apparatus needed for embedded curves: a fixed polynomial, its universal family, open smooth and connected loci, and relative length-$d$ subschemes. Abelian families can likewise be placed in a Hilbert scheme after fixing a polarization type, a relatively very ample power, and the resulting Hilbert polynomial; multiplication, inverse, and identity are morphisms whose graphs live in bounded Hilbert loci, while the two unit laws, inverse laws, associativity, commutativity, and compatibility with the fixed polarization cut out closed loci. Establishing the full moduli problem requires further descent and rigidity, but no broader parameter functor is needed here.
 
@@ -1587,8 +1657,8 @@ $$
 \hline
 \text{ordered }d\text{-tuple} & X^d\\
 \text{permutation quotient; cycles over fields} & \operatorname{Sym}^d(X)\\
-\text{length-}d\text{ closed subscheme} & \operatorname{Hilb}^d(X)\\
-\text{flat projective subscheme with }P & \operatorname{Hilb}^P(X)
+\text{length-}d\text{ closed subscheme} & \operatorname{Hilb}^d(X)\text{, conditional in general}\\
+\text{flat projective subscheme with }P & \operatorname{Hilb}^P(X)\text{, conditional on 12.A}
 \end{array}
 $$
 
@@ -1601,19 +1671,24 @@ For later use, the conclusions can be read as one chain. Relative Proj commutes 
 For a projective flat family over a locally noetherian base, a coherent sheaf flat over the base
 and twisted by high powers of a fixed relatively ample line bundle has locally free pushforward
 commuting with base change locally on the base. The fiber Hilbert polynomial is locally
-constant. Over a noetherian base, fixing that polynomial gives a projective finitely presented
-Hilbert scheme with a universal flat closed family. The constant polynomial $d$ gives the
-intrinsic space of finite locally free length-$d$ subschemes.
+constant. Conditional on the projective flattening-stratification input of Section 8.4, the
+fixed-polynomial flatness loci are locally closed with the stated universal property over
+arbitrary test schemes. Conditional on the bounded Macaulay--Gotzmann package 12.A, over a
+noetherian base fixing that polynomial gives a projective finitely presented Hilbert scheme with
+a universal flat closed family. Under the same condition, the constant polynomial $d$ gives the
+intrinsic space of finite locally free length-$d$ subschemes. For smooth relative curves the
+divisor construction proves this constant-polynomial representability independently of 12.A.
 
 For a smooth quasi-projective relative curve, this length-$d$ Hilbert scheme is the symmetric power, represents relative effective Cartier divisors, is smooth of relative dimension $d$, and carries a universal finite flat divisor. Its geometrically reduced-fiber open is unordered configuration space with a finite étale universal family. These properties persist under arbitrary base change.
 
 An ample bundle embeds a projective curve after a high power. A relatively ample bundle on an
 abelian scheme likewise has uniformly very ample high powers, whose section bundles commute with
-base change. Thus curves and polarized abelian schemes enter fixed projective spaces, where
-Hilbert polynomials and universal parameter schemes can control their variation.
+base change. Thus curves and polarized abelian schemes enter fixed projective spaces, where,
+conditional on 12.A for the general Hilbert construction, Hilbert polynomials and universal
+parameter schemes can control their variation.
 
 ### 14.3 Conclusion
 
-Projective geometry over a base is the art of making choices uniform. A homogeneous coordinate in one fiber becomes a twisting sheaf on the whole family. An embedding chosen point by point becomes one relatively very ample power. A fluctuating dimension becomes the rank of a vector bundle when flatness is present. An unordered collection of points becomes a symmetric power, and an embedded family becomes a point of a Hilbert scheme.
+Projective geometry over a base is the art of making choices uniform. A homogeneous coordinate in one fiber becomes a twisting sheaf on the whole family. An embedding chosen point by point becomes one relatively very ample power. A fluctuating dimension becomes the rank of a vector bundle when flatness is present. An unordered collection of points becomes a symmetric power, and, once prerequisite 12.A is supplied in general, an embedded family becomes a point of a Hilbert scheme.
 
-The hypotheses are part of the geometry. Noetherian finiteness makes equations bounded; properness turns immersions into closed immersions; flatness prevents specialization from changing the polynomial; smoothness of a curve turns finite flat subschemes into Cartier divisors; separatedness makes graphs closed; and quasi-projectivity makes finite quotients exist as schemes. With these boundaries respected, ample bundles, Hilbert polynomials, symmetric powers, and the selected Hilbert schemes form a single coherent language for the projective families used throughout arithmetic geometry.
+The hypotheses are part of the geometry. Noetherian finiteness makes equations bounded; properness turns immersions into closed immersions; flatness prevents specialization from changing the polynomial; smoothness of a curve turns finite flat subschemes into Cartier divisors; separatedness makes graphs closed; and quasi-projectivity makes finite quotients exist as schemes. With these boundaries respected, ample bundles, Hilbert polynomials, symmetric powers, and, conditionally on 12.A outside the directly constructed smooth-curve case, the selected Hilbert schemes form a single coherent language for the projective families used throughout arithmetic geometry.
