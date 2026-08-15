@@ -785,6 +785,139 @@ proof. We next construct the duality and vanishing package, prove boundedness un
 extensions, pass through rational singularities and rational double points, and lift normalized
 blowups from completions. Only after those steps will Theorem 8.1 be discharged.
 
+#### 8.5.1 Local duality in dimension two
+
+Let $(A,\mathfrak m,k)$ be a two-dimensional normal local ring possessing a normalized dualizing
+complex. Normality gives depth two, so the complex is $\omega_A[2]$ for a finite maximal
+Cohen--Macaulay module $\omega_A$. Choose an injective resolution of this complex and apply the
+$\mathfrak m$-torsion functor. The only surviving indecomposable injective at the closed point is
+the injective hull $E_A(k)$ in degree zero. Consequently, for every finite-length module $M$,
+
+$$
+\operatorname{Ext}^i_A(M,\omega_A)=0\ (i\ne2),
+\qquad
+\operatorname{Ext}^2_A(M,\omega_A)=\operatorname{Hom}_A(M,E_A(k)).
+\tag{8.7}
+$$
+
+The last functor is an exact length-preserving duality on finite-length modules: induction on a
+composition series reduces this to $\operatorname{Hom}_A(k,E_A(k))=k$.
+
+For a proper modification $f:X\to\operatorname{Spec}A$, define
+$\omega_X[2]=f^!(\omega_A[2])$. The functor $f^!$ is constructed on a projective factorization
+$X\hookrightarrow\mathbf P^n_A$ by a finite locally free resolution and the formula
+
+$$
+f^!K=R\mathcal Hom_{\mathbf P^n_A}
+(\mathcal O_X,K\otimes\omega_{\mathbf P^n_A/A}[n])[-n].
+$$
+
+Changing the embedding gives the same object: tensor the two resolutions, use the Koszul
+resolution of the diagonal, and cancel the two projective-space canonical bundles. The same
+calculation gives the adjunction identity
+
+$$
+R\operatorname{Hom}_A(Rf_*F,\omega_A[2])
+\simeq Rf_*R\mathcal Hom_X(F,\omega_X[2]).
+\tag{8.8}
+$$
+
+Thus no duality statement beyond finite locally free resolutions, Cech cohomology on projective
+space, and the displayed diagonal calculation is being assumed here.
+
+#### 8.5.2 Vanishing on a normal modification
+
+**Lemma 8.10 (positive conormal).** Let $X$ be a normal modification of
+$\operatorname{Spec}A$ and let $0\ne Z$ be an effective Cartier divisor supported on the closed
+fiber. Some component $C$ of $Z$ has $\deg(\mathcal I_Z|_C)>0$.
+
+**Proof.** Choose a function $h\in\mathfrak m$ whose divisor contains every closed-fiber
+component and, on each component, has a point away from all the others where its residual factor
+vanishes. If $d_C$ and $e_C$ are the orders of $Z$ and $h$ at the generic point of $C$, choose
+$C$ maximizing $d_C/e_C$ and replace $Z,h$ by multiples making the two orders equal. Then $h$
+is a section of $\mathcal I_Z$ which is generically nonzero on $C$ and has a zero at the chosen
+point. Its divisor on the proper curve $C$ has positive degree. $\square$
+
+**Lemma 8.11 (punctured injection).** The restriction
+$H^1(X,\mathcal O_X)\to H^1(X\setminus X_s,\mathcal O_X)$ is injective.
+
+**Proof.** A class in the kernel gives an extension
+$0\to\mathcal O_X\to\mathcal E\to\mathcal O_X\to0$ split off the closed fiber. The two sections
+of $\mathbf P(\mathcal E)$ are disjoint there. Normalize the closure of the second section. If it
+missed the first, its proper affine map to $X$ would be finite and hence an isomorphism, splitting
+the extension. Otherwise their pullback intersection is a nonempty vertical Cartier divisor with
+trivial conormal, contradicting Lemma 8.10. $\square$
+
+**Proposition 8.12 (surface vanishing).** For a normal modification as above,
+$R^1f_*\omega_X=0$.
+
+**Proof.** Adjunction turns a map $k[-1]\to Rf_*\mathcal O_X$ into an extension of the closed
+fiber by $\mathcal O_X$. Pulling back along $\mathcal O_X\to\mathcal O_{X_s}$ gives a class
+which is split off the fiber and hence zero by Lemma 8.11. A lifted section shows the original
+extension is multiplication by an element of $A$ and is therefore split. Thus
+$\operatorname{Hom}_{D(A)}(k[-1],Rf_*\mathcal O_X)=0$.
+
+If $R^1f_*\omega_X\ne0$, quotient it onto $k$. Applying the duality (8.8) produces a nonzero map
+$k[-1]\to Rf_*\mathcal O_X$, contradiction. $\square$
+
+#### 8.5.3 Boundedness and reduction to rational singularities
+
+For a normal modification put $g(X)=\operatorname{length}_A H^1(X,\mathcal O_X)$. If
+$X'\to X$ is another normal modification, Leray gives
+
+$$
+0\to H^1(X,\mathcal O_X)\to H^1(X',\mathcal O_{X'})
+\to H^0(X,R^1g_*\mathcal O_{X'})\to0.
+\tag{8.9}
+$$
+
+The last sheaf has zero-dimensional support because a birational map of surfaces has only
+finitely many positive-dimensional fibers.
+
+**Lemma 8.13 (annihilator bound).** Fix $0\ne a\in A$. The lengths of
+$H^1(X,\mathcal O_X)[a]$ are bounded independently of the normal modification $X$.
+
+**Proof.** The exact sequence cut out by $a$ identifies this torsion module with the cokernel of
+$A\to H^0(Z,\mathcal O_Z)$. After replacing $a$ by a power, $A/(a)$ is reduced. The closure of
+the punctured part of $Z$ is finite over $A/(a)$ and embeds in its finite normalization; its
+global sections therefore differ from $A/(a)$ by a subquotient of the fixed finite module
+$(A/(a))^\nu/(A/(a))$. Embedded vertical points contribute no global section on the normal
+surface. Its length is the required bound. $\square$
+
+Call $A$ **bounded** if the integers $g(X)$ are bounded. Choosing a modification with maximal
+$g(X)$ and using (8.9) shows that every local ring on it has
+$H^1(Y,\mathcal O_Y)=0$ for every further normal modification $Y$; such a local ring is called a
+**rational singularity**. Lemma 8.9 replaces the chosen modification by a finite sequence of
+normalized blowups without losing this property.
+
+**Lemma 8.14 (finite extensions preserve boundedness).** Let $A\subset B$ be finite between
+normal two-dimensional local domains.
+
+1. If the fraction-field extension is separable and $A$ is bounded, then $B$ is bounded.
+2. If $A=k[[u,v]]$ has characteristic $p$ and the fraction-field extension is purely inseparable
+   of degree $p$, then $B$ is bounded.
+
+**Proof.** In the separable case choose a field basis in $B$. The determinant $d\ne0$ of its
+trace pairing makes $\pi_*\mathcal O_Y$ sit between two free modules with cokernel killed by $d$
+on every finite comparison $Y\to X$. Cohomology, (8.9), and Lemma 8.13 give a uniform bound.
+
+For the inseparable case write $L=K(t)$, $t^p=q$. Choose a finite subfield
+$k^p\subset k_0\subset k$ such that $dq\ne0$ over
+$A_0=k_0[[u^p,v^p]]$. Put $r=\operatorname{rank}\Omega_{A/A_0}$ and
+$\omega_A=\Omega^r_{A/A_0}$. Proposition 8.5 and the blowup calculation in Lemma 8.6 give, on
+every finite comparison $Y\to X$,
+
+$$
+\pi_*(\Omega^r_{Y/A_0})^{**}\longrightarrow
+(\Omega^r_{X/A_0})^{**}\longrightarrow\omega_X.
+$$
+
+Choose $\eta$ with $\theta=\eta\wedge dq\ne0$. The forms
+$\eta\wedge t^{p-1-i}dt$ map to the $A$-linear functionals sending $t^j$ to
+$\delta_{ij}\theta$. Hence a fixed nonzero element kills the cokernel of
+$H^0(Y,\omega_Y)\to\omega_B$. By (8.8), (8.7), and Proposition 8.12 this cokernel is the Matlis
+dual of $H^1(Y,\mathcal O_Y)$; Lemma 8.13 supplies the uniform bound. $\square$
+
 ### 8.6 Why a three-entry local invariant is insufficient
 
 After Lemma 8.2, the missing local assertion can be stated without global language. For every
