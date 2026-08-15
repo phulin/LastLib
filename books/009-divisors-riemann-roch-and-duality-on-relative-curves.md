@@ -971,29 +971,38 @@ maximal Cohen--Macaulay.
 
 For a coherent $\mathcal F$ on $X$, Ext concentration alone is not enough: one needs a
 functorial change-of-rings map. We construct it by a genuine dg adjunction, avoiding the invalid
-procedure of lifting differentials one at a time. Affine-locally write $R\twoheadrightarrow B$
-for $X\hookrightarrow P$ and let $I^\bullet$ be a $K$-injective resolution of the ambient
-dualizing module. For a complex $M$ of $B$-modules take the functorial semi-free bar resolution
-$\operatorname{Bar}_B(M)\to M$. Its differential, including all bar terms, squares to zero by
-associativity; no choices of null-homotopies or unrecorded higher coherences occur. Currying is
-then an equality of dg Hom complexes
+procedure of lifting differentials one at a time. Let $I^\bullet$ be a $K$-injective resolution
+of the ambient dualizing line and put
 
 $$
-\operatorname{Hom}_R(\operatorname{Bar}_B(M),I^\bullet)
-\simeq
-\operatorname{Hom}_B\!\left(
-\operatorname{Bar}_B(M),\operatorname{Hom}_R(B,I^\bullet)\right). \tag{9.5a}
+i^bI^\bullet=
+\mathcal Hom_P(i_*\mathcal O_X,I^\bullet),
 $$
 
-The left side computes $R\operatorname{Hom}_R(M,\omega_P)$ because $I^\bullet$ is
-$K$-injective, and the right side computes
-$R\operatorname{Hom}_B(M,R\operatorname{Hom}_R(B,\omega_P))$ because the bar resolution is
-$K$-projective over $B$. The chosen $K$-injective models themselves need not restrict, but
-(9.5a) represents the canonical restriction--coinduction adjunction; comparison quasi-isomorphisms
-between two models are unique in the derived category. Hence the maps agree after restricting
-affine opens and glue as a map of derived sheaf Hom complexes. The finite ambient resolution
-$E^\bullet$ identifies the second argument with
-$\omega_X[-c]$ by (9.4). This gives the functorial change-of-rings quasi-isomorphism
+viewed as a complex of sheaves on $X$. For every acyclic complex $A^\bullet$ on $X$, the exactness
+of $i_*$ and the ordinary coinduction adjunction give an equality of dg complexes
+
+$$
+\operatorname{Hom}_X(A^\bullet,i^bI^\bullet)
+=\operatorname{Hom}_P(i_*A^\bullet,I^\bullet),
+$$
+
+and the right side is acyclic. Thus $i^bI^\bullet$ is $K$-injective on $X$. More generally, for
+every complex $M^\bullet$ on $X$, currying is the strict equality of sheaf dg Hom complexes
+
+$$
+\mathcal Hom_P(i_*M^\bullet,I^\bullet)
+=i_*\mathcal Hom_X(M^\bullet,i^bI^\bullet). \tag{9.5a}
+$$
+
+On an affine $R\twoheadrightarrow B$ this is the termwise identity
+$\operatorname{Hom}_R(M,I)=
+\operatorname{Hom}_B(M,\operatorname{Hom}_R(B,I))$; hence (9.5a) is global from its
+construction, not an affine comparison glued by a uniqueness assertion in the derived category.
+The two sides compute the corresponding derived sheaf Homs because $I^\bullet$ and
+$i^bI^\bullet$ are $K$-injective. The finite ambient resolution $E^\bullet$ identifies
+$i^bI^\bullet$ with $\omega_X[-c]$ by (9.4). This gives the functorial change-of-rings
+quasi-isomorphism
 
 $$
 R\mathcal Hom_P(i_*\mathcal F,\omega_P[N])
@@ -1149,27 +1158,41 @@ is a finite graded module over the noetherian Rees algebra
 $\bigoplus_{n\geq0}I^n$. In the projective case this is obtained by a finite graded resolution
 and the homogeneous Čech complex; kernels, cokernels, and higher direct images in the Chow
 induction are finite graded modules, so the assertion passes through the preceding dévissage.
-Finite generation gives the Artin--Rees bounds: for some $c$, multiplication by
-$I^{n-c}$ generates the degree-$n$ terms for every $n\geq c$. Let
-$F_n^q$ be the image of $H^q(Z,I^nG)$ in $H^q(Z,G)$. The bounds make the filtration
-$\{F_n^q\}$ cofinal with the $I$-adic filtration. The long exact sequence for
-$0\to I^nG\to G\to G/I^nG\to0$ identifies the cokernel of
-$H^q(Z,G)/F_n^q\to H^q(Z,G/I^nG)$ with the kernel of
-$H^{q+1}(Z,I^nG)\to H^{q+1}(Z,G)$. Applying the same Rees bound in degree $q+1$ shows that
-this kernel system is pro-zero: the transition from index $n+c$ to index $n$ is zero after
-increasing the fixed Artin--Rees constant once more. Replacing the cofinal filtration $F_n^q$
-by $I^nH^q(Z,G)$ therefore shows that
+Write $M_n^r=H^r(Z,I^nG)$ and $M_0^r=H^r(Z,G)$. Finite generation gives a constant $c_r$
+with two consequences. First, the image of
+$M_{n+m}^r\to M_n^r$ is contained in $I^{m-e}M_n^r$, where
+$e=\max(0,c_r-n)$. Second, if
+$K_n^r=\ker(M_n^r\to M_0^r)$, then
 
 $$
-\{H^q(Z,G)/I^nH^q(Z,G)\}_n
-\longrightarrow
-\{H^q(Z,G/I^nG)\}_n \tag{9.8a}
+K_n^r=\ker(M_n^r\longrightarrow M_{n-c_r}^r)
+\qquad(n\geq c_r). \tag{9.8a}
 $$
 
-has pro-zero kernel and cokernel: after increasing an index by the fixed Artin--Rees constant,
-both maps become zero. This is the point that cannot be replaced by a claim that the cohomology
-transition maps are surjective; in general they are not. The system on the left is surjective,
-so it is Mittag--Leffler, and the pro-isomorphism gives
+Indeed the first assertion follows after choosing homogeneous generators in degrees at most
+$c_r$. For the second, $\bigoplus_nK_n^r$ is a graded submodule of the finite graded Rees module
+$\bigoplus_nM_n^r$, hence has homogeneous generators in bounded degrees; multiplying those
+generators and using compatibility with the transition maps gives (9.8a).
+
+Now put $N_n^q=H^q(Z,G/I^nG)$ and let $P_n^q$ be the image of
+$M_0^q\to N_n^q$. Apply (9.8a) in degree $q+1$ to the two long exact sequences for
+$I^nG\subset G$ and $I^{n+m}G\subset G$. A diagram chase gives, for one fixed $c$ and every
+$m\geq c$,
+
+$$
+\operatorname{im}(N_{n+m}^q\longrightarrow N_n^q)=P_n^q.
+$$
+
+Thus $(N_n^q)_n$ is Mittag--Leffler and has the same inverse limit as $(P_n^q)_n$; no
+surjectivity of the transition maps of $N_n^q$ is asserted. If
+$L_n^q=\ker(M_0^q\to P_n^q)$, the first Rees bound in degree $q$ gives, after enlarging $c$,
+
+$$
+I^nM_0^q\subseteq L_n^q\subseteq I^{n-c}M_0^q.
+$$
+
+Hence the quotient topology defined by the $P_n^q=M_0^q/L_n^q$ is exactly the $I$-adic
+topology. Taking limits therefore gives
 
 $$
 H^q(Z,G)^\wedge_I\simeq
@@ -1180,9 +1203,22 @@ This is the theorem on formal functions in exactly the form used below.
 
 **(iii) Cohomological dimension one.** Localize $A$ at a point and complete it. Every
 infinitesimal fiber has the same noetherian topological space as the closed fiber, of dimension at
-most one. A coherent sheaf on such a space has no cohomology above degree one: remove one affine
-dense open from each one-dimensional component and use the Čech sequence with the
-zero-dimensional affine complement. Formula (9.8b) therefore makes the completion of
+most one. Grothendieck vanishing on a noetherian topological space says that a sheaf has no
+cohomology above the dimension. In the dimension-one case used here, its topological proof is as
+follows. Dévissage by the finitely many irreducible components reduces to an irreducible space.
+Constant sheaves there are flasque. Every sheaf is the filtered union of subsheaves generated by
+finitely many sections over quasi-compact opens; filtering such a subsheaf by its generators and
+using
+
+$$
+0\longrightarrow j_!\mathbf Z_U\longrightarrow\mathbf Z_X
+\longrightarrow i_*\mathbf Z_{X\setminus U}\longrightarrow0
+$$
+
+reduces degree greater than one to higher cohomology on the zero-dimensional closed complement,
+where the same argument has no positive degree. Cohomology commutes with these filtered unions on
+a noetherian space, which proves the claim for every sheaf, in particular for the coherent sheaves
+on the infinitesimal fibers. Formula (9.8b) therefore makes the completion of
 $R^qg_*G$ zero for $q>1$. Proper finiteness and faithful flatness of completion imply
 $R^qg_*G=0$. Every quasi-coherent sheaf on the noetherian $Z$ is a filtered union of coherent
 subsheaves, and cohomology for a quasi-compact separated scheme commutes with filtered colimits
