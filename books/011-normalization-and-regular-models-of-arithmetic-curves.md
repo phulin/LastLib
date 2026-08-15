@@ -241,7 +241,78 @@ The third condition is often called the $J_2$ property. The first controls dimen
 We first prove the normalization theorem hidden inside the usual implication from excellence to
 the Nagata property.
 
-**Lemma 3.2A (complete and analytically unramified normalization).**
+**Lemma 3.2A (Tate--Akizuki).** Let $R$ be a normal noetherian domain, let $0\ne t\in R$, and
+suppose that $R$ is $t$-adically complete and that $R/tR$ is a domain which is $N$-$2$. Then
+$R$ is $N$-$2$.
+
+**Proof.** We give the inseparable part, which is the point of the lemma. We shall use twice the
+following elementary separable calculation. If $E/K(R)$ is finite separable, choose an integral
+$K(R)$-basis $e_i$ and its trace-dual basis $e_i^*$. For every element $z$ of the normalization,
+$\operatorname{Tr}(ze_i)$ is integral and lies in the normal ring $R$, whence
+$z\in\sum Re_i^*$. Thus the normalization is finite.
+
+It is enough after this calculation to consider a finite purely inseparable extension $L/K(R)$.
+Indeed, for an arbitrary finite extension one may adjoin to $K(R)$ finitely many $p^r$th roots
+of the coefficients of minimal polynomials until the remaining extension is separable. The
+first adjunction is purely inseparable; its normalization is finite once the pure case is known,
+and the trace calculation applies to the second. The normalization in the original subfield is
+a submodule of the resulting finite module.
+
+Choose $q=p^r$ such that $L^q\subset K(R)$. Enlarging $L$ by one more purely inseparable
+extension does not hurt the reduction, so we may also choose $y\in L$ with $y^q=t$. Let $S$ be
+the normalization of $R$ in $L$. Pure inseparability makes
+$\operatorname{Spec}S\to\operatorname{Spec}R$ injective, so there is a unique prime
+$\mathfrak q$ above $tR$. More precisely,
+
+$$
+ \mathfrak q=yS.                                             \tag{3.1a}
+$$
+
+For if $z\in\mathfrak q$, then $z^q\in K(R)$ is integral over $R$, hence lies in $R$; it also
+lies in $\mathfrak q$, so $z^q\in tR$, and
+$(z/y)^q\in R$; hence $z/y$ is integral over $R$ and belongs to $S$. The reverse inclusion is
+clear.
+
+The localization $R_{tR}$ is a discrete valuation ring. Its valuation has a unique extension to
+$L$: explicitly, $w(z)=v(z^q)/q$. Moreover
+$S_{\mathfrak q}=\{z\in L:w(z)\geq0\}$, since $w(z)\geq0$ implies that a power of $z$ belongs
+to $R_{tR}$. Thus $S_{\mathfrak q}$ is a discrete valuation ring. Its residue field is finite
+over $K(R/tR)$: lifts of residue-field-linearly independent elements, normalized to valuation
+zero, are $K(R)$-linearly independent, so their number is at most $[L:K(R)]$.
+
+Consequently $S/yS$ is integral over $R/tR$ and embeds in the normalization of $R/tR$ in a
+finite residue-field extension. The $N$-$2$ hypothesis makes that normalization finite. Each
+layer $y^iS/y^{i+1}S$ of the filtration
+
+$$
+ S/y^qS\supset yS/y^qS\supset\cdots\supset y^{q-1}S/y^qS\supset0
+$$
+
+is a quotient of $S/yS$ after multiplication by a power of $y$; hence $S/tS$ is a finite
+$R/tR$-module. Also $\bigcap_n t^nS=0$: taking $q$th powers reduces this assertion to the Krull
+intersection theorem in $R$.
+
+Choose lifts $s_1,\ldots,s_m\in S$ of generators of $S/tS$ and put $M=\sum Rs_i$. Successive
+approximation gives $S=M+t^nS$ for every $n$. Since a finite module over the $t$-adically
+complete noetherian ring $R$ is complete, the compatible approximations converge in $M$; their
+difference from an element of $S$ lies in $\bigcap t^nS=0$. Hence $S=M$ is finite. This proves
+the pure case and therefore the lemma. $\square$
+
+**Corollary 3.2A'.** If $R$ is a normal noetherian $N$-$2$ domain, then $R[[X]]$ is $N$-$2$.
+In particular, power-series rings over fields and over complete discrete valuation rings are
+$N$-$2$.
+
+**Proof.** The ring $R[[X]]$ is noetherian and normal. Indeed, normal noetherian $R$ satisfies
+Serre's conditions $R_1$ and $S_2$; the flat depth formula gives $S_2$ for $R[[X]]$. At a
+height-one prime, either contraction to $R$ is zero, in which case one passes to the discrete
+valuation ring $K(R)[[X]]$ and localizes, or the contraction has height one, in which case one
+passes to the regular ring $R_{\mathfrak p}[[X]]$. Thus $R[[X]]$ is $R_1$, and Serre's
+criterion makes it normal. It is $X$-adically complete and its quotient by $X$ is $R$, so
+Lemma 3.2A applies. A field is $N$-$2$. A complete discrete valuation ring is
+$N$-$2$ by Lemma 3.2A with a uniformizer, since its residue field is $N$-$2$. Iteration proves
+the last assertion. $\square$
+
+**Lemma 3.2B (complete and analytically unramified normalization).**
 
 1. A complete noetherian local ring is Nagata.
 2. Let $(A,\mathfrak m)$ be a noetherian local ring whose completion $\widehat A$ is reduced.
@@ -253,54 +324,13 @@ is enough to treat a complete local domain $B$. The coefficient-ring theorem and
 parameters give a finite injection
 
 $$
-T\lhookjoinrel\longrightarrow B,                            \tag{3.1a}
+T\lhookjoinrel\longrightarrow B,                            \tag{3.1b}
 $$
 
 where $T=k[[x_1,\ldots,x_d]]$ in equal characteristic and
 $T=C[[x_1,\ldots,x_{d-1}]]$ in mixed characteristic, with $C$ a complete discrete valuation
-coefficient ring. Here is the normalization calculation for $T$. For a finite separable
-extension $L/K(T)$, choose an integral $K(T)$-basis $e_i$. If $e_i^*$ is its trace-dual basis,
-every element integral over $T$ lies in the finite lattice $\sum_iTe_i^*$, because
-$\operatorname{Tr}(ze_i)$ is integral and belongs to the integrally closed ring $T$. Thus the
-integral closure is finite.
-
-It remains to treat a finite purely inseparable extension in equal characteristic $p$. We use the
-following formal-lattice calculation, which is important when $k$ is imperfect. Put
-$K=K(T)$, $K^q=\{x^q:x\in K\}$, and
-$T^q=k^q[[x_1^q,\ldots,x_d^q]]$ for $q=p^r$; thus $K^q=K(T^q)$. If
-$W\subset K$ is finite dimensional over $K^q$, then $T\cap W$ is contained in a finite
-fractional $T^q$-lattice in $W$. Indeed, induct on $d$. For $d=0$ this just says that a
-finite-dimensional $k^q$-subspace of $k$ has a finite basis. For the induction step write
-$T=A[[x_d]]$. After inverting $A\setminus\{0\}$, the $x_d$-adic order makes the intersection
-with $W$ a bounded lattice over the DVR
-$K(A)^q[[x_d^q]]$: successive reduction modulo $x_d^q$ has dimension at most
-$\dim_{K^q}W$, so the usual choice of elements of least order gives finitely many generators.
-Only finitely many coefficients in $K(A)$ occur in those generators and in the row reduction
-expressing a fixed basis of $W$ in terms of them. The induction hypothesis in $A$ supplies one
-common denominator for all of their finite-dimensional $K(A)^q$-coefficient spaces. Clearing it
-puts $T\cap W$ in a finite fractional $T^q$-module. This proves the claim without assuming that
-$k/k^q$ is finite.
-
-Apply the claim to independent $w_1,\ldots,w_s\in K$. The coordinate projections on their
-$K^q$-span carry $T\cap\sum K^qw_i$ into finite fractional $T^q$-modules, so one common
-$0\ne h\in T$ satisfies
-
-$$
- \sum_i b_i^q w_i\in T\quad\Longrightarrow\quad b_i\in h^{-1}T
- \quad(1\leq i\leq s).                                      \tag{3.1a'}
-$$
-
-After replacing $h$ by a $q$th power denominator, this says $h^qb_i^q\in T^q$; taking the unique
-coefficientwise $q$th root gives $hb_i\in T$.
-
-Now choose $q$ with $L^q\subset K$ and a $K$-basis $z_1,\ldots,z_s$ of $L$. Pure
-inseparability makes the $z_i^q$ linearly independent over $K^q$. If
-$z=\sum b_iz_i$ is integral over $T$, then $z^q\in K$ is integral over the normal ring $T$, so
-$z^q\in T$. Formula (3.1a') puts $z$ in the fixed finite fractional module
-$\sum_i h^{-1}Tz_i$. The integral closure is a submodule of this finite module and hence is
-finite. Factoring an arbitrary finite extension into a separable extension followed by a purely
-inseparable one proves that $T$ is Japanese. (In mixed characteristic every finite field
-extension is separable.)
+coefficient ring. Corollary 3.2A' says that $T$ is $N$-$2$, with no perfectness hypothesis on
+$k$ and in both equal and mixed characteristic.
 
 Now let $L/K(B)$ be finite. Since $B$ is finite over $T$, the field $K(B)$ is finite over
 $K(T)$, and the integral closure of $T$ in $L$ is finite by the preceding paragraph. The integral
@@ -320,7 +350,7 @@ $\widehat A$-module. Let $A'$ be the integral closure of $A$ in $Q(A)$. Flatness
 
 $$
 A'\otimes_A\widehat A\subseteq Q(A)\otimes_A\widehat A
- \subseteq Q(\widehat A).                                   \tag{3.1b}
+ \subseteq Q(\widehat A).                                   \tag{3.1c}
 $$
 
 The left ring is integral over $\widehat A$, so it is an $\widehat A$-submodule of $S$ and is
@@ -331,7 +361,7 @@ hence it was zero. Thus $A'$ is finite over $A$. $\square$
 The local conclusion must still be globalized and applied to finite field extensions, rather
 than only to the original fraction field.
 
-**Lemma 3.2B ($J_2$ globalization).** Let $A$ be a noetherian $J_2$ ring such that localizations
+**Lemma 3.2C ($J_2$ globalization).** Let $A$ be a noetherian $J_2$ ring such that localizations
 of every finite-type $A$-domain have reduced completions. Then $A$ is universally Japanese, and
 in particular Nagata.
 
@@ -361,13 +391,108 @@ $D_f$. The preceding criterion therefore shows that it is enough to prove $N$-$1
 rings at maximal ideals.
 
 Now let $D$ be any finite-type $A$-domain. Its localizations have reduced completions by
-hypothesis, so Lemma 3.2A makes them $N$-$1$; $J_2$ passes to finite-type algebras, and the
+hypothesis, so Lemma 3.2B makes them $N$-$1$; $J_2$ passes to finite-type algebras, and the
 criterion makes $D$ itself $N$-$1$. Finally let $L/K(D)$ be finite. Choose a finite
 $D$-subalgebra $D_0\subset L$ with fraction field $L$ by clearing the coefficients of field
 generators. The domain $D_0$ is again finite type over $A$, hence $N$-$1$. Its normalization in
 $L$, which is also the integral closure of $D$ in $L$, is finite over $D_0$ and therefore over
 $D$. Thus every finite-type $A$-domain is Japanese. Taking quotients of $A$ by primes gives the
 Nagata assertion. $\square$
+
+We also record the complete-local excellence input, including the characteristic-$p$ argument
+which is lost if one merely invokes a coefficient ring.
+
+**Lemma 3.2D (the complete-local excellence package).** Every complete noetherian local ring is
+universally catenary, is a $G$-ring, and is $J_2$.
+
+**Proof.** We first isolate the derivation used in both the $G$-ring and $J_2$ arguments. Let $B$
+be a characteristic-$p$ domain of finite type over a complete noetherian local ring, and let
+$f\in B$ not be a $p$th power in $K(B)$. There is a derivation
+
+$$
+ D:B\longrightarrow B,\qquad D(f)\ne0.                     \tag{3.1d}
+$$
+
+To see this, replace the complete base, using a finite coefficient-ring injection, by
+$k[[x_1,\ldots,x_n]]$, and after generic freeness replace $B$ by a finite algebra over
+$k[[x_1,\ldots,x_n]][y_1,\ldots,y_m]$; multiplying by a power of the element inverted in this
+replacement clears the final denominators. Since $f$ is not a $p$th power, $df\ne0$ in
+$\Omega_{K(B)/\mathbf F_p}$. Choose from a $p$-basis of $k$, together with the $x_i,y_j$, a
+finite set on which $df$ has a nonzero coordinate, and let $k'\subset k$ contain the $p$th
+powers and all the other $p$-basis elements. Then
+
+$$
+ k'[[x_1^p,\ldots,x_n^p]][y_1^p,\ldots,y_m^p]\subset B
+$$
+
+is finite, and a linear functional on the resulting finite module of differentials gives a
+derivation of $K(B)$ nonzero on $f$. Multiplying by the denominators of the images of finitely
+many module generators makes it preserve $B$. This proves (3.1d), without requiring
+$[k:k^p]<\infty$. Such a derivation extends successively to localizations and their completions.
+If $R$ is regular and $R[Z]/(Z^p-f)$ is considered at a prime where $D(f)$ is a unit, the
+differential of $Z^p-f$ has the unit component $-D(f)$; the hypersurface Jacobian criterion
+therefore makes that local ring regular.
+
+We next prove the $G$-ring assertion. It is enough to test, for every pair
+$\mathfrak q\subset\mathfrak p$, the generic formal fiber
+
+$$
+ \widehat{(A/\mathfrak q)_{\mathfrak p}}\otimes_{A/\mathfrak q}
+ K(A/\mathfrak q).                                          \tag{3.1e}
+$$
+
+Thus replace $A$ by a complete local domain. Choose a finite injection from a regular complete
+coefficient ring $A_0$ into $A$. Formal-fiber regularity passes through a finite injection:
+completion of the finite algebra, localized at a chosen prime, is a direct factor of the base
+change of the completed base, so its fiber is a direct factor after a finite residue-field
+extension.
+
+It remains to check a regular coefficient ring. Its localizations and their completions are
+regular. In characteristic zero this already implies geometric regularity. In characteristic
+$p$, put $A_0=k[[x_1,\ldots,x_n]]$ and let $L/K(A_0)$ be finite purely inseparable. Induct on
+$[L:K(A_0)]$. For a degree-$p$ step write, after clearing denominators,
+$L=M[z]/(z^p-f)$ with $f$ in a finite $A_0$-algebra $B$ having fraction field $M$. Pure
+inseparability gives a unique prime of $B$ over the chosen prime of $A_0$, and completion
+commutes with this finite algebra. The induction hypothesis says that the completed generic
+fiber for $M$ is regular. By (3.1c) choose $D$ with $D(f)\ne0$; in the generic fiber $D(f)$ is a
+unit, and the preceding Jacobian calculation proves regularity after adjoining $z$. Every
+finite field extension is a separable extension after such a purely inseparable test, and
+separable extensions preserve regularity. Hence (3.1e) is geometrically regular and $A$ is a
+$G$-ring.
+
+For $J_2$, we use the following criterion: it is enough that every finite $R$-algebra which is a
+domain have a nonempty open regular locus. Here is the reduction. For a finite-type domain
+$S/R$, enlarge the residue field of the kernel of $R\to S$ by a finite purely inseparable
+extension so that the corresponding compositum with $K(S)$ is separable. Clearing integral
+equations realizes that residue extension as the fraction field of a finite $R$-algebra domain.
+The assumed regular open there pulls to a regular open after the separable extension; regularity
+then descends through the purely inseparable radicial map. Applying this to every prime quotient
+of a finite-type algebra and using noetherian induction says precisely that its regular locus is
+open. A finite algebra over a complete local ring is a finite
+product of complete local rings, so it remains to show that a complete local domain $A$ has a
+nonempty open regular locus.
+
+Again choose a finite regular complete subring $A_0\subset A$ and induct on
+$[K(A):K(A_0)]$. A separable step is smooth after its nonzero discriminant is inverted, so it
+preserves a nonempty regular open. A minimal inseparable step has characteristic $p$ and, after
+passing to an intermediate finite algebra $B$ and clearing denominators, has the form
+
+$$
+ K(A)=K(B)[z]/(z^p-b),\qquad z\in A,\quad b\in B,\quad
+ b\notin K(B)^p.
+$$
+
+By induction $B$ has a nonempty regular open. Formula (3.1d) supplies a derivation with
+$D(b)\ne0$. At every prime over that open which avoids $D(b)$, the hypersurface Jacobian
+calculation above shows that $A$ is regular (one first inverts the conductor so that
+$B[z]=A$). This is a nonempty open, completing the induction and the $J_2$ proof.
+
+Finally, a regular complete coefficient ring is Cohen--Macaulay, and the dimension formula for
+a Cohen--Macaulay local ring shows that every saturated chain in every finite-type domain over
+it has the expected length; hence it is universally catenary. The coefficient-ring theorem also
+presents an arbitrary complete local ring as a quotient of such a regular complete local ring.
+The dimension formula, and therefore universal catenarity, passes to quotients. This proves all
+three assertions. $\square$
 
 **Theorem 3.2.** Excellent rings are Nagata. Localizations and finite-type algebras over excellent rings are excellent. Complete noetherian local rings, fields, and Dedekind domains arising by localization from rings of integers of number fields are excellent.
 
@@ -379,13 +504,11 @@ geometrically regular by base change and the transitivity criterion for regular 
 For every local domain $D_{\mathfrak p}$, the completion map is regular. A regular map is flat
 with geometrically regular fibers, and therefore carries the reduced ring $D_{\mathfrak p}$ to a
 reduced completion: filter by a prime chain and use that a geometrically regular algebra over a
-field is reduced. Thus Lemma 3.2B applies and proves that the original excellent ring is Nagata,
+field is reduced. Thus Lemma 3.2C applies and proves that the original excellent ring is Nagata,
 indeed universally Japanese.
 
-Fields have trivial formal fibers and regular loci. The complete-local case follows from the
-coefficient-ring construction in Lemma 3.2A together with the formal Jacobian criterion, which
-gives geometrically regular formal fibers and $J_2$; the same construction gives universal
-catenarity. Finally $\mathbf Z$ is excellent by the discrete-valuation calculation at its
+Fields have trivial formal fibers and regular loci. The complete-local case is Lemma 3.2D.
+Finally $\mathbf Z$ is excellent by the discrete-valuation calculation at its
 nonzero primes and the characteristic-zero generic point. Rings of integers are finite over
 $\mathbf Z$, and their localizations inherit excellence by the permanence just proved. $\square$
 
@@ -1517,7 +1640,7 @@ $$
 
 Let $Z'$ be the closure in $Z$ of its restriction over the punctured spectrum. It is proper and
 quasi-finite over $\operatorname{Spec}(A/aA)$, hence finite, say $Z'=\operatorname{Spec}B'$.
-By Lemma 3.2A the complete ring $A$ is Nagata. Thus the reduced ring $A/aA$ embeds in its finite
+By Lemma 3.2B the complete ring $A$ is Nagata. Thus the reduced ring $A/aA$ embeds in its finite
 normalization $B$, and
 $A/aA\subset B'\subset B$. The restriction $H^0(Z,\mathcal O_Z)\to B'$ is injective: a section
 in its kernel has boundary class in $H^1(X,\mathcal O_X)$ restricting to zero off the closed
