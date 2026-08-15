@@ -4124,9 +4124,23 @@ $$
 $$
 
 Here is the correction argument. Intersect the lower ramification filtration
-of $\operatorname {Gal}(M/L)$ with $J$. Remove the unramified quotient by
-the trace splitting furnished by an integral normal basis; this has no
-valuation loss. Remove the prime-to-$\ell$ tame inertia by its integral
+of $\operatorname {Gal}(M/L)$ with $J$. The unramified quotient is removed
+without dividing by its order. Indeed, for an unramified Galois extension
+$M_0/L_0$, the integral normal-basis theorem makes $\mathcal O_{M_0}$ an
+induced $\mathcal O_{L_0}[\operatorname {Gal}(M_0/L_0)]$-module. Hence
+$H^1(\operatorname {Gal}(M_0/L_0),\mathfrak m_{M_0}^r)=0$ for every $r$, and
+taking invariants in
+
+$$
+0\longrightarrow\mathfrak m_{M_0}^r\longrightarrow
+\mathcal O_{M_0}\longrightarrow
+\mathcal O_{M_0}/\mathfrak m_{M_0}^r\longrightarrow0
+$$
+
+shows that every invariant residue class modulo $\mathfrak m_{M_0}^r$ lifts
+from $\mathcal O_{L_0}$. Thus an element fixed modulo
+$\mathfrak m_{M_0}^r$ has an $L_0$-rational approximation with exactly the
+same precision. Remove the prime-to-$\ell$ tame inertia by its integral
 Reynolds operator. The remaining quotients lie in wild inertia. Refine them
 to cyclic quotients of order $\ell$. If $\sigma$ generates one of them and
 $c=\sigma x-x$, put
