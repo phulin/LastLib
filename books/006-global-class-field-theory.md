@@ -186,8 +186,8 @@ first identify the norm quotient, without a global fundamental class. Finite
 duality then proves character existence, and character compatibility proves
 norm limitation for an arbitrary finite Galois extension. Section 4.3 realizes
 the fundamental class by Tate's regular absolute idèle-class invariant, forms
-the normalized relative Weil extension explicitly, and fixes its
-Schreier--Mackey chain maps. Tate's canonical
+the normalized relative Weil extension explicitly, and fixes the canonical
+homotopy classes of its Schreier--Mackey maps. Tate's canonical
 $S$-unit sequence is subsequently constructed as a representative of that
 already normalized class. Section 6 packages character existence into the
 inclusion-reversing classification of all open finite-index subgroups of
@@ -2581,58 +2581,102 @@ for every $H$ and every $r$. Notice that the degree-$-2$ reciprocity
 isomorphism is now a consequence; it was not used to choose or normalize
 $u_{L/F}$.
 
-We fix the chain maps as well. Restriction is induced by the literal bar
-inclusion
+We now fix the scope of the subgroup comparisons. On the nonnegative
+normalized bar resolutions, restriction is induced by the literal
+$H$-linear inclusion
 
 $$
 r_H[h_1|\cdots|h_q]=[h_1|\cdots|h_q].                  \tag{4.G11a}
 $$
 
-For corestriction choose a right transversal $T$ for $H\backslash G$. Put
-$t_0=t$ and recursively write
-$t_{i-1}g_i=a_i(t)t_i$ with $a_i(t)\in H$ and $t_i\in T$. The Schreier
-chain map is
+For corestriction choose a right transversal $T$ for $H\backslash G$. For
+$t\in T$ and a word $\boldsymbol g=(g_1,\ldots,g_q)$, put
+$t_0^T(t,\boldsymbol g)=t$ and recursively define the unique elements
 
 $$
-T_H^G[g_1|\cdots|g_q]=
+t_i^T(t,\boldsymbol g)\in T,\qquad
+a_i^T(t,\boldsymbol g)\in H,qquad
+t_{i-1}^T(t,\boldsymbol g)g_i
+ =a_i^T(t,\boldsymbol g)t_i^T(t,\boldsymbol g).
+$$
+
+With $\operatorname {Ind}_H^GP_\bullet(H)
+=\mathbf Z[G]\otimes_{\mathbf Z[H]}P_\bullet(H)$, the Schreier map on a
+bar basis element is
+
+$$
+T_{H,T}^G[g_1|\cdots|g_q]=
  \sum_{t\in T}t^{-1}\otimes
- [a_1(t)|\cdots|a_q(t)]
+ [a_1^T(t,\boldsymbol g)|\cdots|a_q^T(t,\boldsymbol g)]
  \in\mathbf Z[G]\otimes_{\mathbf Z[H]}P_q(H).           \tag{4.G11b}
 $$
 
-Expanding the bar boundary and cancelling the terms for which only $t_i$
-changes proves $dT_H^G=T_H^Gd$; dualizing (4.G11b) is the usual finite
-right-coset corestriction. If a transversal is changed, insert the comparison
-element between the old and new Schreier words in every possible position:
+Expanding the bar boundary gives
+$dT_{H,T}^G=T_{H,T}^Gd$. If
+$f\in\operatorname {Hom}_{\mathbf Z[H]}(P_q(H),M)$, the adjunction map is
+$\Phi_f(x\otimes p)=x f(p)$, and
+$\Phi_fT_{H,T}^G$ is the usual finite right-coset corestriction cochain.
+This records both the source and the induced-coefficient identification.
+
+We do not choose a supposedly canonical transversal-change prism. The two
+maps belonging to transversals $T$ and $T'$ lift the same augmented map
 
 $$
-K_q[w_1|\cdots|w_q]=
- \sum_{i=0}^{q}(-1)^i
- [w_1'|\cdots|w_i'|b_i|w_{i+1}|\cdots|w_q].             \tag{4.G11c}
+\eta_H^G:\mathbf Z\longrightarrow
+ \mathbf Z[G]\otimes_{\mathbf Z[H]}\mathbf Z,
+\qquad
+1\longmapsto\sum_{t\in T}t^{-1}\otimes1;
 $$
 
-Here $b_i$ is determined by $t_i'=b_it_i$ and the primes denote the new
-Schreier letters. Direct cancellation of adjacent faces gives
-$dK+Kd=T_T-T_{T'}$. This is the representative-change prism, not merely an
-equality after taking cohomology.
-
-For $K,H\subseteq G$, sort (4.G11b) by $K\backslash G/H$. On the branch
-represented by $x$, the conjugation comparison uses the same prism with
-$b_i=x$; explicitly its $i$th summand inserts $x$ between
-$[xh_1x^{-1}|\cdots|xh_ix^{-1}]$ and
-$[h_{i+1}|\cdots|h_q]$. The adjacent-face cancellation gives
+the displayed sum is unchanged when $t$ is replaced by another representative
+of $Ht$. The comparison theorem for projective resolutions therefore gives
+some $G$-linear homotopy, of the precisely typed form
 
 $$
-\operatorname {res}^G_K\operatorname {cor}^G_H\simeq
+K_q:P_q(G)\longrightarrow
+ \mathbf Z[G]\otimes_{\mathbf Z[H]}P_{q+1}(H),
+\qquad dK+Kd=T_{H,T}^G-T_{H,T'}^G.                       \tag{4.G11c}
+$$
+
+Thus the induced morphism in the homotopy category, rather than a particular
+$K$, is canonical. Book 5 constructs the corresponding restriction,
+corestriction, and transfer morphisms on a complete resolution by projective
+comparison. We use those canonical homotopy classes; we do not assert that a
+chosen $K$ extends through the norm splice or is strictly coherent in subgroup
+towers.
+
+Here is the resulting Mackey statement with all groups typed. For
+$K,H\subseteq G$ and $x\in G$, put
+
+$$
+H_x=H\cap x^{-1}Kx,\qquad K_x=K\cap xHx^{-1}=xH_xx^{-1}.
+$$
+
+For a $G$-module $M$, conjugation is the map
+
+$$
+c_x:\widehat H^r(H_x,M)\longrightarrow\widehat H^r(K_x,M)
+$$
+
+induced by $h\mapsto xhx^{-1}$ and $m\mapsto xm$. Sorting the Schreier sum
+by $K\backslash G/H$ gives, for every $r\in\mathbf Z$, the equality of
+homomorphisms
+
+$$
+\operatorname {res}^G_K\operatorname {cor}^G_H=
 \sum_{x\in K\backslash G/H}
-\operatorname {cor}^{K}_{K\cap xHx^{-1}}c_x
-\operatorname {res}^{H}_{H\cap x^{-1}Kx}.               \tag{4.G11d}
+\operatorname {cor}^{K}_{K_x}c_x
+\operatorname {res}^{H}_{H_x}.                          \tag{4.G11d}
 $$
 
-Its integral dual defines the negative half, and both halves agree at the
-norm splice. Grouping the recursion in (4.G11b) for cosets inside cosets
-proves transitivity on chains. Formula (4.G6), together with the corresponding
-corestriction formula
+Corestriction is transitive, and the projection formula holds, as identities
+of the resulting Tate-cohomology maps. In degrees $r<-1$, under
+$\widehat H^r(J,\mathbf Z)=H_{-r-1}(J,\mathbf Z)$,
+corestriction is the homology map induced by subgroup inclusion and
+restriction is the group-homology transfer. These statements include the
+norm-splice degrees because they are statements about the complete-resolution
+morphisms of Book 5, not about an unconstructed extension of (4.G11c).
+Formula (4.G6), together with the corresponding corestriction formula
 
 $$
 \beta_F(\operatorname {cor}_{L/F}y)=\beta_L(y),          \tag{4.G6d}
@@ -2657,9 +2701,9 @@ $(\sum_{w\mid v}\operatorname {cor}_{L_w/F_v}b_w)_v$, and (4.5) turns the
 sum of its $F_v$-invariants into $\sum_w\operatorname {inv}_w(b_w)$.
 The same normalized absolute diagrams in a Galois tower give (4.G13):
 inflation does not change the absolute regular class, so both sides have
-invariant $1/[L:F]$. Injectivity of (4.G10) proves the equality, and the bar
-comparison maps above realize these identities up to the specified transitive
-prisms.
+invariant $1/[L:F]$. Injectivity of (4.G10) proves the equality. The subgroup
+identities above make these equalities functorial in the homotopy category;
+no strict system of bar representatives is being chosen.
 
 Finally the construction has the required local normalization. Let $w$ be
 a place of $L$, $v=w|_F$, and $D_w\subseteq G$. The coordinate map
@@ -2691,13 +2735,26 @@ h_w\in\operatorname {Hom}_{\mathbf Z[D_w]}(P_1(D_w),C_L),
 \qquad dh_w=z_{L/F}r_{D_w}-(j_w)_*z_w.                  \tag{4.G15a}
 $$
 
-Fix one $h_w$ for every place-orbit. If either cocycle representative
-changes, the bar Ext comparison changes $h_w$ by the corresponding prism
-plus a one-cocycle; the latter is a boundary by (4.I9s). Mackey homotopy (4.G11d)
-transports (4.G15a) to every subgroup and every double-coset branch. An
-admissible $S$ uses only their finite direct sum. These are the localization
-homotopies used in the canonical sequence below, and the choice by orbit makes
-the sums compatible when $S$ grows. Notice that (4.G15) is an
+Fix one $h_w$ for every $G$-orbit of places. Also fix the induced comparison
+
+$$
+e_w:\operatorname {Ind}_{D_w}^G P_\bullet(D_w)
+\longrightarrow P_\bullet(G)
+$$
+
+whose adjoint under induction--restriction is the bar inclusion $r_{D_w}$.
+If either cocycle
+representative changes, two resulting choices of $h_w$ differ by a
+one-cocycle after the evident coboundary correction; that one-cocycle is a
+boundary by (4.I9s). After restriction to a subgroup, the canonical Mackey
+decomposition (4.G11d) gives the same equality in the derived category on
+every double-coset branch. For any one finite diagram we may, by projective
+comparison, represent these branchwise equalities by cochain homotopies. We
+do not require these representatives to form a strict system over all
+subgroups and transversals. An admissible $S$ uses only the finite direct sum
+of the choices belonging to its orbits. These are the localization
+homotopies used in the canonical sequence below, and their direct-sum
+inclusions are compatible when $S$ grows. Notice that (4.G15) is an
 equality after passage to $C_L$; it does not assert the false equality of a
 diagonal induced-local extension with a finite-support extension in $I_L$.
 
@@ -2759,8 +2816,9 @@ compatibilities are available.
    \tag{TS3}
    $$
 
-   comes with comparison maps to the valuation sequence outside $S_L$ and to
-   the induced local fundamental two-extensions. For each $w\in S_L$, with
+   comes with comparison morphisms in the derived category of
+   $\mathbf Z[G]$-modules to the valuation sequence outside $S_L$ and to the
+   induced local fundamental two-extensions. For each $w\in S_L$, with
    $v=w|_K$, restriction to $D_w$ followed by the $w$-coordinate comparison is
    the local fundamental class
 
@@ -2771,10 +2829,14 @@ compatibilities are available.
    \tag{TS4}
    $$
 
-   This clause includes the commutativity of the localization, valuation, and
-   augmentation diagrams; equality only of unnamed extension classes is not
-   sufficient. A place outside the chosen $S_L$ is handled by first enlarging
-   $S_L$ to contain its $G$-orbit and then using the transition identity below.
+   The localization, valuation, and augmentation squares commute in that
+   derived category. For each fixed finite square, projective resolutions
+   represent the comparison by cochain maps and a homotopy, so the clause is
+   stronger than a numerical equality of invariants. A strict choice of such
+   representatives simultaneously over every transversal and subgroup tower
+   is not part of the statement. A place outside the chosen $S_L$ is handled
+   by first enlarging $S_L$ to contain its $G$-orbit and then using the
+   transition identity below.
 
 3. If $S_L\subseteq S'_L$ are admissible sets, write $j_U:U_{L,S}\to
    U_{L,S'}$ and $j_X:X_S\to X_{S'}$ for the natural maps. The extension
@@ -2787,17 +2849,18 @@ compatibilities are available.
    \tag{TS4a}
    $$
 
-   After adding split two-extensions with induced middle modules when needed,
-   this equality is represented by a morphism of the exact sequences (TS1).
-   The comparison morphisms can be chosen transitively for
-   $S_L\subseteq S'_L\subseteq S''_L$ and compatibly with every local
-   comparison in (TS4). Consequently all admissible $S_L$ give the same
-   spliced class below.
+   This equality is the morphism induced by the natural map of the two
+   localization--valuation diagrams. For
+   $S_L\subseteq S'_L\subseteq S''_L$ these morphisms compose in the derived
+   category and commute there with every local comparison in (TS4).
+   No strict morphism between the particular envelope representatives in
+   (TS1) is asserted. Consequently all admissible $S_L$ give the same spliced
+   class below.
 
-4. Splicing (TS1), through the comparison maps in clause 2, with the valuation
-   sequence outside $S_L$ and
-   $1\to L^\times\to\mathbf I_L\to C_L\to1$ gives a specified exact
-   two-extension
+4. Splicing the class (TS3), through the derived comparison maps in clause 2,
+   with the valuation sequence outside $S_L$ and
+   $1\to L^\times\to\mathbf I_L\to C_L\to1$, and then taking the envelope
+   representative below, gives a specified exact two-extension
 
    $$
    0\longrightarrow C_L\longrightarrow A_{L/K}
@@ -2815,7 +2878,7 @@ compatibilities are available.
 
    is independent of $S_L$ and of the choices of places above $S_K$. If
    $H\subseteq G$ and $E=L^H$, then restriction of (TS5) represents the
-   canonical sequence for $L/E$ and
+   canonical global fundamental class for $L/E$ and
 
    $$
    \operatorname{inv}_E\bigl(\operatorname{res}^G_Hu_{L/K}\bigr)
@@ -2823,9 +2886,9 @@ compatibilities are available.
    \tag{TS7}
    $$
 
-   These identifications are transitive in chains of subgroups and are
-   compatible with the local restriction and corestriction formulas of Section
-   4.5.
+   These identifications are transitive as morphisms in Ext and as maps on
+   Tate cohomology, and are compatible in that sense with the local restriction
+   and corestriction formulas of Section 4.5.
 
 **Proof.** We first record the envelope lemma that supplies the middle modules.
 
@@ -2963,8 +3026,9 @@ the equality on every one. Thus no nonselected place-orbit is silently
 discarded or required to cancel.
 
 Here is the cochain realization of (4.T2b). Use the just-defined $P_Y$, put
-$P_Z=P_\bullet(G)$, and choose a comparison map $e:P_Y\to P_Z$ lifting
-$\varepsilon$. Use the fixed global cocycle $F_Z=z_{L/K}$ from (4.G6a).
+$P_Z=P_\bullet(G)$, and let $e:P_Y\to P_Z$ be the direct sum of the fixed
+maps $e_w$; it lifts $\varepsilon$. Use the fixed global cocycle
+$F_Z=z_{L/K}$ from (4.G6a).
 The two maps are
 
 $$
@@ -2980,9 +3044,14 @@ $$
 d h_S+h_Sd=qF_Y-F_Ze.                                      \tag{4.T2c0}
 $$
 
-The local homotopies (4.G15a), transported by the Mackey prisms (4.G11d),
-sum to the required $h_S$;
-equation (4.T2c0) holds on every bar generator of every orbit summand.
+Under induction--restriction adjunction, the component of $qF_Y-F_Ze$ on the
+$w$-summand is
+$(j_w)_*z_w-z_{L/K}r_{D_w}=-d h_w$. Thus the required component of $h_S$ is
+$-h_w$, and their finite direct sum satisfies (4.T2c0). After restriction to
+a subgroup, its image in the derived category is the direct sum of the
+corresponding double-coset components by (4.G11d). A cochain representative
+for any fixed restricted diagram exists by projective comparison; no
+simultaneous Mackey prism is needed.
 
 For completeness, use the following double-cone convention. For cochain
 maps $C\xrightarrow{f}D\xrightarrow{g}E$ and a degree $-1$ map $h$
@@ -3043,7 +3112,8 @@ With $i_S(u)=[u,0]$, $d_S[u,p]=d_1p$, and
 $p_S=\epsilon_{X_S}$, the calculation after (4.T1b) proves every
 exactness assertion in (TS1).
 
-Changing $h_S$ by $dk+kd$ changes the double cone by the explicit
+If $h'_S-h_S=d k-kd$ for a degree $-2$ map $k$, the double cone formed with
+$-h'_S$ is carried to the one formed with $-h_S$ by the explicit cochain
 isomorphism
 
 $$
@@ -3058,9 +3128,9 @@ $$
 =\bigoplus_{v\in S_K}H^1(D_w,C_L)=0
 $$
 
-by Shapiro and (4.I9s). Hence it is $dk+kd$, and (4.T3c) proves
+by Shapiro and (4.I9s). Hence it is $d k-kd$, and (4.T3c) proves
 independence of the cochain choices while retaining the specified local
-comparisons.
+comparisons as morphisms in the derived category.
 
 We verify the hypothesis of the envelope lemma. Restrict the morphism of
 triangles (4.T2a) to $H\subseteq G$. On the middle terms, Mackey decomposition
@@ -3074,22 +3144,45 @@ $\operatorname {res}^G_H\tau_{L/K,S}$ is an isomorphism on the left
 endpoints $X_S$ and $U_{L,S}$. The envelope lemma applied to the specified
 representative (4.T3b) proves (TS2).
 
-Projection to a local summand in (4.T2) is a morphism of the bar two-extensions,
-so (TS4) holds as a diagram, not merely as equality of classes. If
-$S_L\subseteq S'_L$, every added place is unramified. The quotient
-$I_{L,S'}/I_{L,S}$ is identified by valuation with the same permutation
-module as $Y_{S'}/Y_S$. On complete bar cochains, the cone of the local
-valuation comparison is the induced unit complex. The successive residue-unit
-norm and $(\sigma-1)$ solutions in (4.I2) contract that complex; inducing the
-contraction and summing over the added orbits leaves the mapping cone of the
-identity on
-$\bigoplus_{w\in S'_L\setminus S_L}\mathbf Z[G/D_w]$.
-This remaining cone is contractible by the explicit homotopy
-$s(y,x)=(0,y)$. Cancelling it gives (TS4a). For three nested sets these
-contractions are direct sums, so the contraction for $S''_L/S_L$ is the sum
-of those for $S'_L/S_L$ and $S''_L/S'_L$. The comparison maps are therefore
-strictly transitive up to the displayed homotopy, and they commute with every
-local projection.
+Projection to a local summand in (4.T2), together with (4.T2c0), represents
+the derived comparison in (TS4). We next prove (TS4a) without turning Tate
+acyclicity into an unproved chain contraction. At the outset choose, once for
+each $G$-orbit of places, its cocycle $z_w$, its comparison map to
+$P_\bullet(G)$, and the homotopy (4.G15a). Then $P_{Y,S}$, $F_{Y,S}$,
+$e_S$, and $h_S$ are the finite direct sums of these fixed orbit data.
+
+For $S_L\subseteq S'_L$, inclusion gives morphisms of the two exact rows
+
+$$
+(j_U,j_I,\operatorname{id}_{C_L}):
+(U_{L,S}\to I_{L,S}\to C_L)\longrightarrow
+(U_{L,S'}\to I_{L,S'}\to C_L)
+$$
+
+and
+
+$$
+(j_X,j_Y,\operatorname{id}_{\mathbf Z}):
+(X_S\to Y_S\to\mathbf Z)\longrightarrow
+(X_{S'}\to Y_{S'}\to\mathbf Z).
+$$
+
+Write $j_Y$ also for the direct-sum inclusion
+$P_{Y,S}\to P_{Y,S'}$. On the common direct summands the fixed choices give
+
+$$
+F_{Y,S'}j_Y=j_I[2]F_{Y,S},\qquad
+e_{S'}j_Y=e_S,\qquad h_{S'}j_Y=h_S.                       \tag{4.T4}
+$$
+
+Functoriality of the double-cone construction therefore gives
+$j_U[2]\tau_{L/K,S}=\tau_{L/K,S'}j_X$, which is exactly (TS4a). For three
+nested sets, the inclusions of the orbit-indexed direct sums compose before
+passage to the derived category, so the resulting comparison morphisms are
+transitive there and commute with the local projections. Every added place
+is finite and unramified because both sets are admissible; the acyclicity of
+its unit module proved in (4.I2) remains available for Tate-cohomology
+computations, but is not being used as a functorial chain contraction.
 
 Choose the bar representative of $u_{L/K}$ used in (4.T2b), equivalently a
 $G$-map $\phi_{L/K}:K_2(\mathbf Z)\to C_L$. Define
@@ -3108,22 +3201,23 @@ lemma therefore proves that $A_{L/K}$ is cohomologically
 trivial on every subgroup; $B_{L/K}$ is contracted after restriction by
 (4.T1c). Thus cohomological triviality of the specified middle terms is
 proved directly. The morphism of triangles constructed in (4.T2a)--(4.T2d)
-is the specified splice from (TS1) to this representative of (TS5).
+identifies, in the derived category, the splice of the Yoneda class of (TS1)
+with the class represented by (TS5).
 
 Restriction to $H$ replaces every induced module, by the Mackey formula, with
 the direct sum over the places of $E=L^H$. Restricting (4.T2b) gives the
-cochain chosen by the identical construction over $E$. The local restriction
-formula multiplies an invariant by the local degree, while the number of
-branches is the complementary index; grouping the double cosets gives
+same morphism in the derived category as the construction over $E$; it need
+not be the identical chosen cochain. The local restriction formula multiplies
+an invariant by the local degree, while the number of branches is the
+complementary index; grouping the double cosets, including the branches at
+real places, gives
 
 $$
 \operatorname {inv}_E(\operatorname {res}^G_Hu_{L/K})=1/|H|.
 $$
 
-At chain level this uses substitution on the complete bar resolution for
-restriction and the finite coset-sum formula for corestriction proved in
-Book 5. If $H\subseteq H'\subseteq G$, grouping the $H$-cosets inside the
-$H'$-cosets gives
+The complete-resolution subgroup morphisms of Book 5 give, for
+$H\subseteq H'\subseteq G$, the identities on Tate cohomology
 
 $$
 \operatorname {cor}_{H'}^G\operatorname {cor}_H^{H'}
@@ -3133,10 +3227,12 @@ $$
 =\operatorname {cor}_H^G(x)\smile y.                    \tag{4.T5b}
 $$
 
-The first equality is literal equality of those finite coset sums; the second
-follows by moving $y$ through each summand using (4.C3). Thus the restricted
-and transferred representatives compare by (4.T3c), transitively in subgroup
-towers.
+The first is transitivity of the canonical corestriction morphism and the
+second is its projection formula, with the cup-product sign convention of
+(4.C3). Thus the restricted and transferred classes, and the derived local
+comparison morphisms, are transitive in subgroup towers. No assertion about
+strict equality of independently chosen complete-resolution representatives
+is required.
 
 This proves (TS7), independence of $S_L$, and compatibility in subgroup towers.
 $\square$
@@ -4336,9 +4432,10 @@ $$
 \simeq\bigoplus_vH_2(D_w,\mathbf Z).                    \tag{9.1b}
 $$
 
-Under the Schreier--Mackey maps of (4.G11b)--(4.G11d), the arrow in (9.1a)
-is the sum of the maps $H_2(D_w,\mathbf Z)\to H_2(G,\mathbf Z)$ induced by
-inclusion. For a finite group $J$, the exact sequence
+Under the canonical negative-degree subgroup maps described after
+(4.G11d), the arrow in (9.1a) is the sum of the maps
+$H_2(D_w,\mathbf Z)\to H_2(G,\mathbf Z)$ induced by inclusion. For a finite
+group $J$, the exact sequence
 $0\to\mathbf Z\to\mathbf Q\to\mathbf Q/\mathbf Z\to0$ and the universal
 coefficient theorem give
 
@@ -4349,8 +4446,9 @@ $$
 
 Pontryagin duality turns the cokernel in (9.1a) into exactly the kernel in
 (9.1). This also proves that every arrow there is independent of the chosen
-places and coset representatives; changes are the explicit prisms already
-fixed in (4.G11c)--(4.G11d).
+places and coset representatives: conjugate decomposition groups induce the
+same map after the canonical conjugation identification, and (4.G11d) gives
+the required Mackey functoriality.
 
 This gives a concrete counterexample. Put
 
