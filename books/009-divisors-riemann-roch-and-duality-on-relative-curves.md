@@ -1161,9 +1161,10 @@ j_i:U_i\longrightarrow P_i=\mathbf P_A^{n_i}.
 $$
 
 Let $Z_i\subseteq P_i$ be its scheme-theoretic closure. Then $U_i\subseteq Z_i$ is a
-schematically dense open and $Z_i$ is projective over $A$. These closures have an explicit finite
-Rees description. Fix an affine $W=\operatorname{Spec}R$ from the finite cover above and one of
-the standard affine charts of some $P_i$. The inverse image of that chart in $U\cap W$ is a
+schematically dense open and $Z_i$ is projective over $A$. The graph closures implicit in this
+construction have an explicit finite Rees description. Fix an affine
+$W=\operatorname{Spec}R$ from the finite cover above and one of the standard affine charts of
+some $P_i$. The inverse image of that chart in $U\cap W$ is a
 quasi-compact open of $W$, hence is covered by finitely many principal opens $D(f)\subseteq W$.
 On $D(f)$ the affine
 coordinates of the map are fractions in $R_f$. Multiplying by a common power of $f$ gives
@@ -1229,8 +1230,9 @@ This modification is literally the graph closure just described. Let
 $P=P_1\times_A\cdots\times_A P_m$ and let $\iota:T'\hookrightarrow P$ be the immersion already
 constructed. The map $(p,\iota):T'\to T\times_A P$ is proper over $T$: its source is proper over
 $T$ and its target is separated over $T$, so the same closed-graph factorization applies. Since it
-is also an immersion, it is a closed immersion. Its image is the scheme-theoretic closure of the
-graph of $j:U\to P$, because $U$ is schematically dense in $T'$. Thus the finitely many Rees
+is also an immersion (factor the graph of $p$ through $T\times_A T'$ and use the immersion
+$T'\hookrightarrow P$), it is a closed immersion. Its image is the scheme-theoretic closure of
+the graph of $j:U\to P$, because $U$ is schematically dense in $T'$. Thus the finitely many Rees
 blowups above are affine-chart models of the actual modification, not merely auxiliary examples.
 
 If $T$ is proper over $A$, then so is $T'$. Choose the immersion
