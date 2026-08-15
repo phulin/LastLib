@@ -1564,6 +1564,89 @@ With these conventions, capping sends $[\sigma]$ to the class of $a$ in $K^\time
 
 The map is continuous because its kernel is an open norm group and its target is finite discrete. It is surjective because the induced map on the quotient is an isomorphism. Thus at every finite level there is genuine surjectivity; only at the infinite level will surjectivity become density.
 
+We need one functoriality statement before using these maps to construct fields. It is proved
+here, rather than deferred to Chapter 9, because both local existence and the inverse-limit
+Artin map depend on it.
+
+**Proposition 5.2A (quotient compatibility).** Let $M/K$ be finite abelian, let
+$L$ be an intermediate field, and put
+
+$$
+G=\operatorname{Gal}(M/K),
+\qquad H=\operatorname{Gal}(M/L),
+\qquad Q=G/H=\operatorname{Gal}(L/K).
+$$
+
+Then the finite Artin maps make the square
+
+$$
+\begin{array}{ccc}
+K^\times/N_{M/K}(M^\times)&\xrightarrow{\ \operatorname{rec}_{M/K}\ }&G\\
+\downarrow&&\downarrow\\
+K^\times/N_{L/K}(L^\times)&\xrightarrow{\ \operatorname{rec}_{L/K}\ }&Q
+\end{array} \tag{5.9}
+$$
+
+commute, where the left arrow is the natural quotient and the right arrow is restriction of
+automorphisms.
+
+**Proof.** We record the complete-resolution maps that are responsible for the square. For a
+finite group $G$, a normal subgroup $H$, and a $G$-module $C$, the normalized bar complexes
+give quotient maps in the two degrees at issue,
+
+$$
+\operatorname{Def}_H^G:\widehat H^{-2}(G,\mathbf Z)
+   \longrightarrow\widehat H^{-2}(Q,\mathbf Z),
+\qquad
+\operatorname{def}_H^G:\widehat H^0(G,C)
+   \longrightarrow\widehat H^0(Q,C^H). \tag{5.10}
+$$
+
+On bar one-cycles the first map is $[g]\mapsto[\bar g]$, so under
+$\widehat H^{-2}(-,\mathbf Z)=(-)^{\mathrm{ab}}$ it is the quotient
+$G^{\mathrm{ab}}\to Q^{\mathrm{ab}}$. At degree zero the second map is
+
+$$
+C^G/N_GC\longrightarrow (C^H)^Q/N_Q(C^H),
+\qquad x\longmapsto x. \tag{5.11}
+$$
+
+It is well defined because $N_G=N_QN_H$ and $N_HC\subseteq C^H$. These maps obey the
+following relative projection formula. If $y\in H^2(Q,C^H)$ and
+
+$$
+\operatorname{inf}_Q^G(y)=|H|u\quad\text{in }H^2(G,C), \tag{5.12a}
+$$
+
+then
+
+$$
+\operatorname{def}_H^G(z\frown u)
+=\operatorname{Def}_H^G(z)\frown y. \tag{5.12}
+$$
+
+Here is the chain check, including the factor in (5.12a). On the nonnegative bar half, inflate
+a quotient word by summing over its $H$-lifts. On the dual negative half, replace every entry
+by its image in $Q$. Expanding the bar boundary pairs all terms whose adjacent lifts differ
+by an $H$-factor. At the norm splice the sum of the $|H|$ lifts is exactly the factor $|H|$
+in (5.12a), while $N_G=N_QN_H$ makes the degree-zero map (5.11). Applying the diagonal
+(5.6), contracting, and making the same cancellation gives (5.12). Thus the formula includes
+the middle degrees and is not an extrapolation from ordinary positive cohomology.
+
+We apply this with $C=M^\times$. Inflation carries the crossed product for $u_{L/K}$ to the
+same central simple $K$-algebra after enlarging its splitting field from $L$ to $M$.
+Equivalently, grouping the $H$-indexed rows and columns in the inflated crossed product removes
+a matrix factor. Its invariant remains $1/[L:K]$, and therefore
+
+$$
+\operatorname{inf}_Q^G(u_{L/K})=|H|u_{M/K}, \tag{5.13}
+$$
+
+because $|H|/[M:K]=1/[L:K]$. Apply (5.12) with $u=u_{M/K}$ and
+$y=u_{L/K}$. The upper cap-product map in (5.9) is sent to the lower one, the left side
+becomes the quotient on abelianizations, and (5.11) becomes the natural quotient of norm
+quotients. Inverting the two cap-product isomorphisms proves (5.9). $\square$
+
 ### 5.5 Norm limitation
 
 Let $M=L^{[G,G]}$ be the maximal abelian subextension of a finite Galois extension $L/K$. Since
@@ -1624,7 +1707,8 @@ $$
 \operatorname{rec}_{L/K}(\pi)=\operatorname{Frob}_{L/K}
 $$
 
-when $L/K$ is unramified. It is compatible with quotients and towers in the precise forms proved in Chapter 9.
+when $L/K$ is unramified. Proposition 5.2A proves compatibility with quotient extensions;
+the base-field norm and transfer compatibilities are proved later in Chapter 9.
 
 The uniqueness clause should be read with all compatibility conditions included. A single cyclic quotient admits automorphisms that could change a chosen generator. The unramified Frobenius normalization and functoriality across all finite Galois extensions remove that ambiguity.
 
@@ -2271,7 +2355,10 @@ $$
 \cong\mathbf Z/m\mathbf Z\times(\mathcal O/\pi^n)^\times.
 $$
 
-The norm group of a compositum of finite abelian extensions is the intersection of their norm groups. This follows from finite reciprocity: the compositum corresponds to the common refinement of the two quotient maps. Therefore
+The norm group of a compositum of finite abelian extensions is the intersection of their norm
+groups. Indeed, apply Proposition 5.2A in the compositum: the two restriction maps identify
+the two norm groups with the inverse images of the two fixing subgroups, and the intersection
+of those fixing subgroups is trivial. Therefore
 
 $$
 N_{E_{m,n}/K}(E_{m,n}^\times)
@@ -2340,7 +2427,8 @@ G_K^{\mathrm{ab}}
 \operatorname{Gal}(L/K),
 $$
 
-where transition maps are restriction. The finite Artin maps are compatible with these restrictions, so for $x\in K^\times$ the tuple
+where transition maps are restriction. Proposition 5.2A makes the finite Artin maps compatible
+with these restrictions, so for $x\in K^\times$ the tuple
 
 $$
 (\operatorname{rec}_{L/K}(x))_L
@@ -2518,25 +2606,17 @@ $$
 
 No unit condition remains.
 
-For the particular Lubin–Tate tower attached to $\pi$, the complementary calculation
-is
+For the particular Lubin--Tate tower attached to $\pi$, the norm calculation of Section 6.5
+already gives
 
 $$
-\operatorname{rec}_K(\pi)|_{K_n}=1,
-\qquad
-\operatorname{rec}_K(u)(\omega_n)=[u^{-1}]_f(\omega_n).
+\operatorname{rec}_K(\pi)|_{K_n}=1.
 $$
 
-The first equality follows because $\pi$ is a norm from every $K_n$; the second is proved in Proposition 10.1 by comparing the fundamental-class and torsion labelings. Thus, after choosing $\pi$ and the compatible division points, the two coordinates of the Artin map are completely explicit:
-
-$$
-\pi^ru
-\longmapsto
-\left(\operatorname{Frob}_{\mathrm{arith}}^r,
-\;\omega_n\mapsto[u^{-1}]_f(\omega_n)\right).
-$$
-
-This product description depends on the chosen uniformizer, but the resulting automorphism of each finite abelian extension does not.
+The torsion construction also labels $\operatorname{Gal}(K_n/K)$ by
+$(\mathcal O/\pi^n)^\times$, but no comparison of that auxiliary label with the
+fundamental-class Artin label is used in this chapter. Chapter 10 performs the comparison on
+actual torsion points and determines the inverse forced by arithmetic Frobenius.
 
 ### 8.2 Units are the abelian inertia group
 
@@ -2799,7 +2879,46 @@ $$
 
 commutes.
 
-At finite level, choose a finite abelian extension $M/K$ large enough to see the image under consideration and compare with the compositum $ML/L$. Corestriction of fundamental classes on the cohomological side is the field norm on $H^0$ and is induced by subgroup inclusion on $H_1$. Naturality of cap product gives the square.
+At finite level, choose a finite Galois extension $E/K$ containing
+$L$ and every finite abelian quotient under consideration, and put
+
+$$
+G=\operatorname{Gal}(E/K),
+\qquad H=\operatorname{Gal}(E/L).
+$$
+
+Restriction of the local fundamental class is
+
+$$
+\operatorname{res}_H^G(u_{E/K})=u_{E/L}.
+$$
+
+In negative degree, corestriction
+
+$$
+\operatorname{cor}_H^G:\widehat H^{-2}(H,\mathbf Z)
+\longrightarrow\widehat H^{-2}(G,\mathbf Z)
+$$
+
+is, under the identifications with first homology, the map on abelianizations induced by
+$H\hookrightarrow G$. In degree zero, corestriction
+
+$$
+\operatorname{cor}_H^G:\widehat H^0(H,E^\times)
+\longrightarrow\widehat H^0(G,E^\times)
+$$
+
+is the field norm $N_{L/K}$: on an $H$-fixed representative $x\in L^\times$ it is the
+product of its $G/H$-conjugates. The projection formula (5.7) therefore reads
+
+$$
+\operatorname{cor}_H^G(z\frown u_{E/L})
+=\operatorname{cor}_H^G(z)\frown u_{E/K}. \tag{9.1}
+$$
+
+After inverting the two fundamental-class cap isomorphisms, (9.1) is exactly the finite
+quotient of the displayed norm--inclusion square. Every element of either profinite target is
+detected in such a finite quotient, so the infinite square commutes.
 
 The unramified case checks the exponent. If $L/K$ has residue degree $f$ and $\pi_L$ is a uniformizer, then
 
@@ -2839,7 +2958,35 @@ $$
 
 commutes.
 
-On cohomology, restriction of scalars on $H^0$ corresponds under cap product to transfer on $H_1$. Compatibility of the fundamental classes supplies the degree normalization. For an unramified extension of degree $d$, transfer sends arithmetic Frobenius $F_K$ to $F_K^d=F_L$, agreeing with the fact that the same element $\pi_K$, viewed in $L$, is a uniformizer when $e=1$.
+Use the same finite Galois extension $E/K$ and the groups $H\subseteq G$ as in the preceding
+proof. In degree zero, restriction is the map
+
+$$
+\widehat H^0(G,E^\times)\longrightarrow\widehat H^0(H,E^\times)
+$$
+
+induced by viewing $K^\times$ inside $L^\times$. It is well defined on norm quotients: if
+$x=N_{E/K}(y)$, then, for right representatives $R$ of $H\backslash G$,
+
+$$
+x=\prod_{r\in R}N_{E/L}(r y)
+=N_{E/L}\!\left(\prod_{r\in R}r y\right).
+$$
+
+In degree $-2$, the same restriction map on complete resolutions is, under
+$\widehat H^{-2}(-,\mathbf Z)=H_1(-,\mathbf Z)$, the homology transfer (5.8). Since
+$\operatorname{res}_H^Gu_{E/K}=u_{E/L}$, cap-product naturality (5.7) gives
+
+$$
+\operatorname{res}_H^G(z\frown u_{E/K})
+=\operatorname{res}_H^G(z)\frown u_{E/L}. \tag{9.2}
+$$
+
+Inverting the cap isomorphisms identifies (9.2) with the finite quotient of the
+inclusion--transfer square. Passage over all $E$ proves the theorem. For an unramified
+extension of degree $d$, transfer sends arithmetic Frobenius $F_K$ to
+$F_K^d=F_L$, agreeing with the fact that the same element $\pi_K$, viewed in $L$, is a
+uniformizer when $e=1$.
 
 ### 9.4 Towers and finite quotient diagrams
 
@@ -2860,7 +3007,7 @@ $$
 
 The two reciprocity squares therefore stack coherently through any tower.
 
-Now assume $M/K$ is finite abelian and let $L$ be intermediate. Restriction of automorphisms gives the quotient diagram
+Now assume $M/K$ is finite abelian and let $L$ be intermediate. Proposition 5.2A gives the quotient diagram
 
 $$
 \begin{array}{ccc}
