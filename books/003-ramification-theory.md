@@ -1029,7 +1029,9 @@ This is a theorem about the fixed-point ideals of the iterates of one automorphi
 it includes the compatibility among all the schemes $\operatorname{Fix}(u^d)$; independently
 splitting those schemes in unrelated deformations does not prove it. Required input 5.2A is an
 explicit prerequisite for the rest of this section. Every later use in this book of Hasse--Arf or
-of integral Artin and Swan conductors is conditional on this input as well.
+of integral conductors of one-dimensional characters is conditional on this input. The passage
+from one-dimensional characters to arbitrary finite-group representations requires the separate
+integral Brauer-induction input isolated as Required input 11.1A.
 
 **Theorem 5.2 (Hasse--Arf, conditional on Required input 5.2A).** Assume that $k$ is perfect. If
 $L/K$ is a finite abelian Galois extension, every upper ramification break is an integer.
@@ -1224,9 +1226,9 @@ nontrivial character of $G^r/G^{r+}$ extends to a character of the finite abelia
 $G/G^{r+}$. The resulting character of $G$ is trivial on $G^{r+}$ and nontrivial on $G^r$, so
 its largest break is exactly $r$. The preceding paragraph proves $r\in\mathbf Z$. The remaining
 possible breaks, $-1$ and $0$, are already integers. This proves the theorem. The same cyclic
-input will be used in Chapter 11, together with induction of characters, to prove integrality of
-the total Swan conductor even when individual breaks of a nonabelian representation are
-fractional.
+input will be used in Chapter 11, together with the independent integral Brauer-induction theorem
+isolated there, to prove integrality of the total Swan conductor even when individual breaks of a
+nonabelian representation are fractional.
 
 ## 6. Ramification in infinite Galois extensions
 
@@ -1302,10 +1304,11 @@ $$
 
 Conditional on Required input 5.2A, an abelian representation over a perfect residue field has
 integral breaks by Hasse--Arf. A general representation can have rational breaks, yet its total
-Swan conductor is still an integer under the same input; that stronger fact follows from Artin's
+Swan conductor is an integer conditional on both Required input 5.2A and the integral
+Brauer-induction theorem stated as Required input 11.1A. That stronger fact follows from Artin's
 character theorem rather than from breakwise integrality. With only separability of one chosen
-residue extension, the decomposition and the rational conductor formula remain valid and do not
-use Required input 5.2A, but this book does not claim the same integrality theorem.
+residue extension, the decomposition and the rational conductor formula remain valid and use
+neither required input, but this book does not claim the same integrality theorem.
 
 ## 7. The complementary module and the different
 
@@ -2056,10 +2059,34 @@ which is precisely the conductor formula.
 
 ### 11.2 Artin's integrality theorem
 
-**Theorem 11.1 (integrality, conditional on Required input 5.2A).** Under the preceding
-hypotheses, assume in addition that the residue field of $K$ is perfect. Then $A_G$ is the
-character of a finite-dimensional characteristic-zero representation of $G$. Consequently, for
-every finite-dimensional characteristic-zero representation $V$,
+The next step needs an integral theorem about finite-group characters. Rational spanning by
+characters induced from cyclic subgroups is not enough: the coefficients in such a spanning
+formula can have denominators, whereas the conductor argument needs an identity in the character
+lattice itself. We therefore isolate exactly the representation-theoretic input used below.
+
+**Required input 11.1A (integral Brauer induction).** Let $G$ be a finite group and let $R(G)$
+be the Grothendieck group of finite-dimensional complex representations of $G$. For every
+$\chi\in R(G)$ there are subgroups $H_j\leq G$, one-dimensional complex characters
+$\lambda_j$ of $H_j$, and integers $n_j$ such that
+
+$$
+\chi=\sum_j n_j\operatorname{Ind}_{H_j}^G\lambda_j
+\quad\text{in }R(G).
+\tag{11.1a}
+$$
+
+This theorem is not proved in Books 1--2 or in the preceding sections of this book. It is the
+integral form of Brauer's induction theorem. Its integral content includes the
+elementary-subgroup character criterion and the simultaneous removal of denominators at every
+prime. Neither the rational cyclic-subgroup spanning argument nor semisimplicity proves that
+content. Required input 11.1A is independent of Required input 5.2A: the former is a theorem
+about finite-group character lattices, while the latter is a theorem about fixed-point ideals of
+iterates of a local automorphism.
+
+**Theorem 11.1 (integrality, conditional on Required inputs 5.2A and 11.1A).** Under the
+preceding hypotheses, assume in addition that the residue field of $K$ is perfect. Then $A_G$ is
+the character of a finite-dimensional complex representation of $G$. Consequently, for every
+finite-dimensional characteristic-zero representation $V$,
 
 $$
 a_K(V),\ \operatorname{Sw}_K(V)\in\mathbf Z_{\geq0}.
@@ -2067,7 +2094,12 @@ $$
 
 The theorem remains valid for any finite-image representation of the absolute Galois group, since it may be computed in a finite quotient.
 
-**Proof strategy.** There are two separate issues. The local ramification calculation proves that $A_G$ is an integral *virtual* character; the nonnegative fixed-space formula then proves that every irreducible occurs with nonnegative multiplicity. We spell out the character criterion used in the first step so that integrality is not inferred from the visibly rational conductor sum.
+**Proof strategy.** There are two separate issues. Required input 5.2A supplies the cyclic
+Hasse--Arf calculation, and Required input 11.1A reduces arbitrary irreducible characters
+integrally to induced one-dimensional characters. Together they prove that $A_G$ is an integral
+*virtual* character. The nonnegative fixed-space formula then proves that every irreducible occurs
+with nonnegative multiplicity. Thus integrality is never inferred from the visibly rational
+conductor sum.
 
 First reduce to inertia. Let $I=G_0$ and let $A_I$ be the class function for the totally ramified extension $L/L^I$, so no residue-degree factor occurs. Displacement is invariant under conjugation by $G$, and it is zero outside $I$. The formula for induced class functions therefore gives
 
@@ -2078,49 +2110,7 @@ $$
 
 Indeed, both sides vanish at nonidentity elements outside $I$; at $\sigma\in I\setminus\{1\}$ the induction sum contains $[G:I]=f$ equal contributions $-i_G(\sigma)$, and the values at $1$ agree by summing.
 
-We also need one finite-group input that is not contained in the elementary orthogonality formulas.
-
-**Monomial induction lemma.** Every characteristic-zero virtual character of a finite group is
-an integral linear combination of characters induced from one-dimensional characters of
-subgroups.
-
-**Proof.** Let $R(G)$ be the character lattice and let $L(G)$ be the subgroup generated by the
-induced one-dimensional characters. First, $L(G)$ has full rank. Indeed, permutation characters
-$\operatorname{Ind}_C^G\mathbf1$ from cyclic subgroups, ordered by subgroup order, have a
-triangular value matrix on generators of cyclic subgroups, with nonzero diagonal. They span the
-rational-valued character space. Multiplying such an expression for $\mathbf1_G$ by an arbitrary
-character and using the projection formula reduces the restriction to each cyclic group to a sum
-of its one-dimensional characters. Thus $L(G)\otimes\mathbf Q=R(G)\otimes\mathbf Q$.
-
-It remains to remove denominators. A group $E=C\times P$, with $C$ cyclic of order prime to a
-prime $p$ and $P$ a $p$-group, is called $p$-elementary. Every irreducible character of $E$ is
-monomial. For a $p$-group this follows by induction on its order: after quotienting by the kernel,
-choose an abelian normal subgroup properly containing the center and a one-dimensional weight on
-it. If the weight were invariant, the subgroup would act by scalars and faithfulness would force
-it into the center. Its stabilizer is therefore proper; grouping the conjugate weight spaces
-shows that the representation is induced from that stabilizer, and induction finishes. Tensoring
-with a character of $C$ proves the assertion for $E$.
-
-We use the corresponding character criterion. A cyclotomic-valued class function satisfying
-$f(g^a)=\sigma_a(f(g))$ for every exponent $a$ prime to $|G|$ is a virtual character if its
-restriction to every elementary subgroup is one. To verify the criterion, fix $p$ and write each
-group element uniquely as a commuting product $su$, with $s$ of order prime to $p$ and $u$ of
-$p$-power order. On the $p$-section of $s$, the average over the $u$ is a
-$\mathbf Z_{(p)}$-linear combination of averages over $p$-subgroups of $C_G(s)$. This last
-assertion follows from the permutation character on the cosets of a Sylow $p$-subgroup: it
-vanishes off the $p$-elements and takes $p$-adic unit values on them, so polynomial interpolation
-produces their characteristic function with coefficients in $\mathbf Z_{(p)}$. Each resulting
-average lies in the elementary subgroup $\langle s\rangle\times P$. Orthogonality there shows
-that every global character coefficient lies in $\mathbf Z_{(p)}$. Doing this for every $p$ and
-using the displayed Galois law makes the coefficient a rational integer.
-
-Finally, if $L(G)$ were a proper full-rank sublattice of the self-dual lattice $R(G)$, duality
-would give $f\in R(G)\otimes\mathbf Q\setminus R(G)$ pairing integrally with $L(G)$. Its
-restriction to an elementary subgroup pairs integrally with every irreducible there, because
-those irreducibles are monomial. The criterion would put $f$ in $R(G)$, a contradiction. Hence
-$L(G)=R(G)$, proving the lemma. $\square$
-
-We now prove that every irreducible coefficient of $A_G$ is integral. The lemma writes the
+We now prove that every irreducible coefficient of $A_G$ is integral. Required input 11.1A writes the
 character of an irreducible $W$ as
 
 $$
@@ -2181,12 +2171,17 @@ $$
 
 is integral as well; its defining sum proves nonnegativity. $\square$
 
-The exact hypotheses matter. The coefficient field must have characteristic zero, or one must
-replace ordinary characters by an appropriate modular theory. Perfectness of the residue field is
-the standing field hypothesis for Hasse--Arf; Required input 5.2A is the separate
-local-intersection prerequisite used to prove its ramification-number congruence. Perfectness
-implies separability of every finite residue extension. Neither the residue field nor the
-coefficient field needs to be finite.
+The exact hypotheses matter. Scalar extension does not change fixed-space dimensions for a
+finite group in characteristic zero. After extension to a splitting field, the relevant
+characters have cyclotomic values and their character identities may be transported to the
+complex setting of Required input 11.1A. This is why that input suffices for arbitrary
+characteristic-zero coefficients. In coefficient characteristic dividing $|G|$, one must instead
+use an appropriate modular theory. Perfectness of the residue field is
+the standing field hypothesis for Hasse--Arf; Required input 5.2A is the local-intersection
+prerequisite used to prove its ramification-number congruence. Required input 11.1A is the
+separate finite-group prerequisite that makes the passage from cyclic characters integral.
+Perfectness implies separability of every finite residue extension. Neither the residue field nor
+the coefficient field needs to be finite.
 
 ### 11.3 Additivity and exact sequences
 
@@ -2552,9 +2547,12 @@ It is useful to collect the logical boundaries.
 - Galois symmetry defines ramification groups on the field itself.
 - Separability of $l/k$ gives $|G_0|=e$, local monogenicity in the form used above, and the clean classical Hilbert formula.
 - The Artin and Swan formulas in Chapters 10--13 require the finite Galois realization to have separable residue extension; perfection of $k$ guarantees this for every realization.
-- Conditional on Required input 5.2A, the integrality theorem and Hasse--Arf hold here under the
-  stronger hypothesis that $k$ is perfect. The rational fixed-space formulas do not use that
-  input and still make sense under the preceding separable-residue hypothesis.
+- Conditional on Required input 5.2A, Hasse--Arf and one-dimensional conductor integrality hold
+  here under the stronger hypothesis that $k$ is perfect. Integrality of Artin and Swan
+  conductors for arbitrary characteristic-zero representations additionally requires the
+  independent integral Brauer-induction theorem, Required input 11.1A. The rational fixed-space
+  formulas use neither input and still make sense under the preceding separable-residue
+  hypothesis.
 - Perfection of $k$ implies separability of every finite residue extension, but is stronger than needed in any one theorem.
 - Finiteness of $k$ adds canonical Frobenius, cyclic residue multiplicative groups, and local compactness; it is irrelevant to the definitions of ramification groups, the different, and conductors.
 - Characteristic zero for representation coefficients gives semisimplicity and ordinary-character formulas; it is unrelated to the characteristic of $K$.
