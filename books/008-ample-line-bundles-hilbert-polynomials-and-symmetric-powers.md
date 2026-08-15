@@ -618,6 +618,40 @@ f_*(\mathcal F(n))\otimes\kappa(s)
 \simeq H^0(X_s,\mathcal F_s(n)).
 $$
 
+We record exactly which finite complex is meant, since it will later be applied after a
+nonnoetherian base change. Over any ring $A$, a finitely presented $A$-flat sheaf $\mathcal G$
+on $\mathbf P^r_A$ admits, Zariski-locally on $\operatorname{Spec}A$, a finite cohomology
+complex $K^\bullet(\mathcal G)$ of finite free $A$-modules such that
+
+$$
+H^i(K^\bullet(\mathcal G)\otimes_A B)
+\simeq H^i(\mathbf P^r_B,\mathcal G_B) \tag{6.1}
+$$
+
+for every $A\to B$. Here is the finite replacement construction. Descend the finitely many
+coefficients of a presentation of $\mathcal G$ to a noetherian subring $A_0$; finite-presentation
+flatness descends after enlarging $A_0$ once. The $r+1$-term standard Čech complex is a bounded
+complex of flat $A_0$-modules and its cohomology modules are finite. Starting at its right end,
+choose a finite free module surjecting onto the last cokernel, lift its generators to Čech
+cocycles, and take the mapping cone. The new last differential is split surjective and may be
+deleted. Repeat to the left. At the $i$th step, the kernel to be presented is finite because it
+fits between a finite cohomology module and the finite free module chosen at the preceding step;
+noetherianity supplies a finite presentation. After the $r+1$ Čech degrees, this yields a bounded
+complex of finite free $A_0$-modules and a quasi-isomorphism which remains one after tensoring:
+the original Čech terms and every deleted kernel are flat, the latter by the local flatness
+criterion applied to the $A_0$-flat sheaf. This is the finite Čech replacement
+$K^\bullet(\mathcal G_0)$. Base-changing it to $A$ gives (6.1). Thus the noetherian subring is
+only a construction device, and every matrix of $K^\bullet$ is fixed before the arbitrary scalar
+extension $A\to B$.
+
+The complex has no negative cohomology after any base change, so its negative part splits
+successively from the left. If all residue-field cohomology above degree zero vanishes and the
+fiber Euler characteristic is locally constant, elementary row and column operations split its
+positive part successively from the right; the constant rank makes the last relevant minor a
+unit. What remains in degree zero is finite projective, and the split complex remains split after
+every tensor product. This proves both local freeness and arbitrary cohomological base change
+without applying Nakayama to an infinite Čech localization.
+
 The bound is globally uniform when $S$ is quasi-compact.
 
 ### 6.4 Regularity and uniform bounds
@@ -1152,18 +1186,32 @@ makes $B$ finite over $B^G$; the Artin--Tate argument makes $B^G$ finitely gener
 base. Quasi-projectivity supplies enough $G$-stable affine neighborhoods: choose an affine
 neighborhood of an orbit in a projective embedding and intersect its finitely many translates.
 The affine quotients glue because invariant localization agrees on invariant principal opens, and
-the categorical property follows affine-locally. Quasi-projectivity follows from the
-affine-orbit criterion, whose proof avoids descent of a linearized line bundle across the
-generally nonflat quotient. A finite orbit in a quasi-projective scheme is contained in an affine
-open: in a projective embedding, after increasing the degree, choose a homogeneous section
-nonzero at every point of the orbit and vanishing on the closed complement, and intersect the
-finitely many translates of its nonvanishing locus. The resulting invariant open $V$ is affine,
-as a finite intersection of affine opens in a separated scheme, and
-$V/G=\operatorname{Spec}\Gamma(V,\mathcal O_V)^G$ is affine. Products of the translates of the
-defining sections are invariant and have exactly these invariant affine nonvanishing loci. They
-form an ample family covering the quotient, so the affine-open criterion of Section 4.3 makes
-$Y/G$ quasi-projective. No assertion that trivial stabilizer characters on geometric fibers
-force scheme-theoretic descent over a nonreduced quotient is being used.
+the categorical property follows affine-locally.
+
+Here is a scheme-theoretic proof of quasi-projectivity which avoids descent of a linearized line
+bundle across the generally nonflat quotient. From a locally closed immersion
+$Y\hookrightarrow\mathbf P_S(\mathcal E)$ form the product of its $G$-translates. This is a
+$G$-equivariant locally closed immersion into a finite product of projective bundles, with $G$
+permuting the factors. Its scheme-theoretic closure $\bar Y$ is projective and $G$-stable, and
+$Y$ is a $G$-stable open in $\bar Y$. After a Segre--Veronese embedding, write
+$\bar Y=\operatorname{Proj}_S R$ for a finite graded algebra with a degree-preserving $G$-action.
+The invariant graded algebra $R^G$ is finite type: $R$ is integral and finite over $R^G$ by the
+orbit polynomials and the Artin--Tate argument. Invariant standard opens cover $\operatorname{Proj}R$.
+Indeed, around any orbit choose a homogeneous section nonzero at all its points; the product of
+its translates is invariant and has invariant affine nonvanishing locus. On such an open,
+degree-zero localization commutes with invariants, so its quotient is the corresponding standard
+open of $\operatorname{Proj}R^G$. Hence
+
+$$
+\bar Y/G=\operatorname{Proj}_S R^G.
+$$
+
+A sufficiently divisible Veronese of $R^G$ is generated in degree one, proving that this quotient
+is projective. The boundary $\bar Y\setminus Y$ is invariant and has closed image under the finite
+quotient; its inverse image is the boundary because geometric fibers of a finite-group quotient
+are orbits. Therefore $Y/G$ is the complementary open in $\bar Y/G$ and is quasi-projective.
+This proof uses invariant graded algebras themselves, so it remains valid over nonreduced bases
+and makes no stabilizer-character descent assertion.
 
 In general, invariants do not commute with a nonflat scalar extension when the group order is not invertible. Permuting factors does not remove this obstruction in arbitrary dimension. Thus the quotient of an arbitrary quasi-projective $X$ is asserted here to commute with flat base change only. For smooth relative curves, the divisor interpretation below proves the stronger compatibility with every base change.
 
