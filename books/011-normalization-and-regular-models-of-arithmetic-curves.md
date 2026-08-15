@@ -1801,7 +1801,17 @@ After replacing $Y$ by the complementary neighborhood of $y$, the map $h$ lands 
 $c_*\mathcal O_X=\mathcal O_Y$, its affine coordinate functions descend uniquely and define
 $Y\to V$. This agrees with $h$ after pullback; away from $y$ it glues with the map transported
 through $X\setminus E\simeq Y\setminus\{y\}$. Separatedness gives uniqueness. The construction
-glues with the identity away from the affected fiber. $\square$
+over $\mathcal O_{S,s}$ is of finite presentation: the graded algebra, its finitely many
+generators and relations, the morphism, and the blowup isomorphism all descend to some affine
+neighborhood $W$ of $s$. Shrink $W$ so that the descended morphism is an isomorphism away from
+the fiber at $s$; this is possible because its non-isomorphism locus has closed image and its
+base change to $\operatorname{Spec}\mathcal O_{S,s}$ is supported at the closed point. Regularity
+of the descended target holds near the contracted point by the completed-local calculation and
+elsewhere follows from its identification with $X$; after another shrinking it is regular.
+Finally glue this target over $W$ to $X|_{S\setminus\{s\}}$ along
+$W\setminus\{s\}$ using the established isomorphism. Finite-presentation descent also preserves
+properness and the blowup identity. This proves the global assertion and the claimed compatibility
+with localization. $\square$
 
 A regular proper model is **relatively minimal** if none of its fibers contains an exceptional curve of the first kind. Every contraction lowers the number of irreducible components of the affected fiber, so repeatedly contracting must stop. This proves existence of a relatively minimal model once contractions remain in the chosen category.
 
