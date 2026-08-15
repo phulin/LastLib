@@ -658,7 +658,15 @@ Every coefficient subfield $k_*\subseteq k$ contains one admissible for $L$. Mor
 $X$ is reduced and finite type over $R$, one may choose $k_0\subseteq k_*$ for which
 $Q(X/k_0)$ is locally free of the expected rank at every regular point of $X$.
 
-**Proof.** Put $G_0=k_0((u_1,\ldots,u_s))$. The $p$-degree formula says
+**Proof.** Work in a fixed algebraic closure of $K$ and put
+
+$$
+k_0^{1/p}=\{c:c^p\in k_0\},\qquad
+G_0=\operatorname{Frac}\bigl(k_0^{1/p}[[u_1,\ldots,u_s]]\bigr).
+$$
+
+The inclusion $k^p\subseteq k_0$ gives $k\subseteq k_0^{1/p}$, and hence
+$K\subseteq G_0$. The $p$-degree formula says
 
 $$
 \dim_LQ(L/k_0)\ge s+t(L)+e,
@@ -666,16 +674,19 @@ $$
 
 with equality exactly when $G_0$ and $L$ are linearly disjoint over $K$. To see both assertions,
 choose $F=K(v_1,\ldots,v_t)\subset L$ with $L/F$ finite. For successively smaller coefficient
-fields $k_0$, the integer $[G_0L:G_0F]$ is nondecreasing and bounded by $[L:F]$, hence
+fields $k_0$, their fields $k_0^{1/p}$, and therefore the $G_0$, shrink. The integer
+$[G_0L:G_0F]$ is nondecreasing and bounded by $[L:F]$, hence
 stabilizes. Moreover
 
 $$
 \bigcap_{k_0\subseteq k_*}G_0F=F.                              \tag{8.3}
 $$
 
-Indeed, after taking a $p$-power, an element of the intersection is a polynomial in the $v_i$
-with coefficients in $k[[u_1,\ldots,u_s]]$. A coefficient outside $K$ is excluded by removing
-one member of a $p$-basis of the current coefficient field. At a stabilized field, a
+Indeed, after taking a $p$-power, an element of the intersection is a rational function in the
+$v_i$ with coefficients in $k[[u_1,\ldots,u_s]]$; clearing one common denominator reduces to
+polynomials. A coefficient in $k_0^{1/p}[[u_1,\ldots,u_s]]$ but outside $K$ is excluded by
+removing from $k_0$ the $p$-th power of one member of a $p$-basis occurring in that coefficient.
+Thus every surviving coefficient lies in $K$, proving (8.3). At a stabilized field, a
 $G_0F$-basis of $G_0L$ consequently spans $L$ over $F$ by (8.3), so equality holds and $k_0$ is
 admissible for $L$.
 
