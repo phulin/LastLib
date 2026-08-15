@@ -997,6 +997,78 @@ $[E:F]$ by (4.I7), so (4.I9g) is an isomorphism. This proves finite
 reciprocity for the cyclotomic extensions used in (4.I9c), without global
 existence, finite duality, or a global fundamental class.
 
+**Global Brauer invariant theorem.** Localization and the normalized local
+invariants form an exact sequence
+
+$$
+0\longrightarrow\operatorname {Br}(F)\longrightarrow
+\bigoplus_v\operatorname {Br}(F_v)
+\xrightarrow{\sum_v\operatorname {inv}_v}\mathbf Q/\mathbf Z
+\longrightarrow0.                                             \tag{4.I9h}
+$$
+
+**Proof.** We first prove that the displayed sum kills every global class.
+Let $\alpha\in\operatorname {Br}(F)$. It is nonzero locally at only
+finitely many places. Apply (4.I9c), taking $m_v$ to be the order of
+$\alpha_v$. Restriction multiplies a local invariant by $[E_w:F_v]$, so
+$\alpha$ becomes locally zero over the resulting cyclic cyclotomic extension
+$E/F$. The absolute injection (4.I9b') over $E$ shows that $E$ splits
+$\alpha$.
+
+Put $G=\operatorname {Gal}(E/F)$ and choose a faithful character
+$\chi:G\to\frac1{|G|}\mathbf Z/\mathbf Z$. Cyclic periodicity and
+Hilbert 90 identify the relative Brauer group with cyclic algebras:
+
+$$
+F^\times/N_{E/F}E^\times\xrightarrow{\sim}
+\operatorname {Br}(E/F),\qquad
+a\longmapsto(E/F,\chi,a).                              \tag{4.I9i}
+$$
+
+For every place $v$, the local norm-residue normalization of Book 5 gives
+
+$$
+\operatorname {inv}_v(\alpha_v)
+=\chi\bigl(\operatorname {Art}_{E/F,v}(a)\bigr).       \tag{4.I9j}
+$$
+
+At a split place both sides are zero; for several factors above $v$, this is
+the corestriction sum. Equation (4.I9f) now gives
+$\sum_v\operatorname {inv}_v(\alpha_v)=0$. This proves the middle
+composite in (4.I9h) is zero without finite global duality.
+
+It remains to identify the entire kernel. Let $(b_v)$ be a finitely supported
+local Brauer family with $\sum_v\operatorname {inv}_v(b_v)=0$. Choose
+by (4.I9c) a cyclic cyclotomic $E/F$ whose local degrees are divisible by
+the orders of all $b_v$. Then each $b_v$ belongs to the relative group
+$\operatorname {Br}(E_w/F_v)$. Apply cohomology to
+$1\to E^\times\to I_E\to C_E\to1$. Its relevant part is
+
+$$
+\operatorname {Br}(E/F)\longrightarrow
+\bigoplus_v\operatorname {Br}(E_w/F_v)
+\longrightarrow H^2(G,C_E).                                \tag{4.I9k}
+$$
+
+Cyclic periodicity identifies the last group with $C_F/N C_E$. Compose this
+identification with the isomorphism (4.I9g) and with $\chi$. On a single
+induced local summand, Shapiro and the local identity (4.I9j) show that the
+second arrow in (4.I9k) becomes the local invariant. Corestriction over the
+places above $v$ makes the full arrow
+
+$$
+(b_v)\longmapsto\sum_v\operatorname {inv}_v(b_v).         \tag{4.I9l}
+$$
+
+Since (4.I9g) is an isomorphism, this scalar identification of
+$H^2(G,C_E)$ is injective. The family $(b_v)$ is therefore in the kernel of
+the second arrow of (4.I9k), and exactness supplies
+$b\in\operatorname {Br}(E/F)$ with these localizations. This proves
+exactness in the middle. Injectivity on the left is (4.I9b'). Finally, a
+single finite local field has Brauer classes of every prescribed finite
+order, so a family supported at one finite place proves surjectivity onto
+$\mathbf Q/\mathbf Z$. $\square$
+
 We now pass to the stronger normalization assertion for arbitrary $G$. We use
 the following tower calculation, whose normalization is important.
 
