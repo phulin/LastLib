@@ -556,6 +556,45 @@ $$
 
 It depends only on the integral-closure class of the ideal. Divisorial valuations appearing on the exceptional locus measure the asymptotic orders of the powers $I^n$.
 
+We will need the corresponding statement about contraction, not just the description of the
+graded normalization.
+
+**Proposition 7.2A (contraction from a normalized blowup).** Let $A$ be a normal noetherian
+domain, let $I\ne0$ be an ideal, and let
+$f:X\to\operatorname{Spec}A$ be a proper normal modification which dominates
+$\operatorname{Bl}_I A$. Then, for every $n\geq0$,
+
+$$
+H^0(X,I^n\mathcal O_X)=\overline{I^n}.                       \tag{7.1a}
+$$
+
+The same assertion holds after localization and for a coherent ideal on a normal scheme.
+
+**Proof.** We use the valuation criterion for integral dependence of ideals: for
+$z\in\operatorname{Frac}(A)$,
+
+$$
+z\in\overline{I^n}
+\quad\Longleftrightarrow\quad
+z\in I^nV
+\quad\text{for every valuation ring }A\subseteq V\subseteq\operatorname{Frac}(A).
+\tag{7.1b}
+$$
+
+This is the elementwise valuation criterion applied to the Rees algebra: $z$ is integral over
+$I^n$ exactly when $zt^n$ is integral over $A[It]$, and an element of a fraction field is
+integral over a domain exactly when it belongs to every valuation overring. Thus (7.1b) is the
+valuation theorem of Book 1 applied to one graded domain, not a surface-intersection statement.
+
+If $z$ is a section of $I^n\mathcal O_X$, properness gives a center on $X$ for every such
+valuation $V$, and the local inclusion at that center gives $z\in I^nV$. Hence
+$z\in\overline{I^n}$. Conversely, if $z\in\overline{I^n}$, then in every normal local domain
+$\mathcal O_{X,x}$ it is integral over the invertible ideal
+$I^n\mathcal O_{X,x}$. After choosing a generator, this reduces to integrality over a principal
+ideal. Principal ideals in a normal domain are integrally closed, so
+$z\in I^n\mathcal O_{X,x}$ for every $x$. These local memberships glue to a global section and
+prove (7.1a). $\square$
+
 ### 7.4 Locality and projectivity
 
 Blowing up is local on the target and projective over it. If an ideal is supported in a closed subset $Z$, the blowup is an isomorphism over $X\setminus Z$. Thus resolutions may be performed one singular point at a time and glued with the unchanged regular open.
@@ -950,27 +989,151 @@ $1+2+\cdots+(-n-1)$, proving (8.6). Global sections of $\mathcal O_X(n)$ for $n\
 degree-$n$ elements of the Rees algebra, namely $\mathfrak m^n$; for $n<0$, normality and the
 codimension-two complement give $A$. $\square$
 
-**Lemma 8.8 (factorization through point blowups).** Let $T$ be a regular integral surface and
-$Z\to T$ a projective birational morphism. There is a sequence of blowups at closed regular
-points $T_r\to\cdots\to T_0=T$ and a morphism $T_r\to Z$ over $T$.
+The next local theorem replaces every appeal to ``general members.'' It is valid over finite and
+imperfect residue fields because all sums are weighted by the actual residue degrees.
 
-**Proof.** Write $Z$ as the blowup of a coherent fractional ideal after replacing a relatively
-ample bundle by a generated power. Remove its invertible height-one part. Locally the remaining
-ideal is primary to a closed point. Blow up that point and divide by the largest exceptional
-power. If the transform is not invertible, repeat at its finitely many base points. Termination is
-measured by two general members $a,b$ of a reduction of the ideal: on a point blowup,
+**Lemma 8.8 (embedded principalization on a regular surface).** Let $T$ be an excellent regular
+integral surface and let $I\subset\mathcal O_T$ be a nonzero coherent ideal. There is a finite
+sequence of blowups at closed regular points
 
 $$
-\operatorname{length}A/(a,b)
-=\operatorname{ord}(a)\operatorname{ord}(b)[k(x):k]
-+\sum_{x'\mapsto x}\operatorname{length}\mathcal O_{T',x'}/(a',b').
+T_r\longrightarrow\cdots\longrightarrow T_0=T
 $$
 
-This follows by filtering the two blowup charts by the exceptional parameter. Every unresolved
-base point leaves a positive first term, so the sum of residual lengths strictly decreases.
-Over a finite residue field, use the product of all closed base points; the residue degrees in the
-formula give the same decrease. Eventually the ideal is invertible, and the universal property of
-the blowup supplies $T_r\to Z$. $\square$
+such that the torsion-free pullback of $I$ to $T_r$ is invertible. The centers may be confined to
+the locus where $I$ is not already invertible.
+
+**Proof.** Remove the invertible height-one part of $I$. Its remaining cosupport is a finite set
+of closed points, so it is enough to work over one regular local ring $(A,\mathfrak m,k)$ of
+dimension two. Choose generators $f_0,\ldots,f_s$ and let $D$ be the reduced divisor cut out by
+$f_0\cdots f_s$. Excellence makes the normalization of $D$ finite.
+
+We first make the reduced total transform of $D$ a strict normal-crossings divisor. For a point
+$x$ of the current strict transform of $D$ put
+
+$$
+\delta_x=\operatorname{length}_{\mathcal O_{D,x}}
+ (\overline{\mathcal O}_{D,x}/\mathcal O_{D,x}).
+$$
+
+If $b:T'\to T$ is the blowup of $x$, $D'$ is the reduced strict transform, and $m_x(D)$ is the
+order of a local equation, comparison of the two normalization exact sequences on the affine
+charts $A[v/u]$ and $A[u/v]$ gives
+
+$$
+\delta_x=\binom{m_x(D)}2+
+ \sum_{x'\mapsto x}[\kappa(x'):k]\cdot\delta_{x'}.            \tag{8.6a}
+$$
+
+Here is the local calculation behind the correction term. Filter the chart rings and their
+normalizations by the exceptional parameter. In degrees $0,\ldots,m_x(D)-1$, the missing initial
+monomials are respectively $0,1,\ldots,m_x(D)-1$ copies of the residue field; all later graded
+pieces identify with those of the strict-transform normalization. Taking lengths gives
+$1+\cdots+(m_x(D)-1)$, while restriction of scalars from a point $x'$ multiplies length by
+$[\kappa(x'):k]$. This proves (8.6a) without an intersection pairing.
+
+A reduced curve on a regular surface is regular at a point of multiplicity one. Thus at every
+singular point the first term of (8.6a) is positive. Along every branch of successive singular
+centers the nonnegative integer obtained by residue-weighting the remaining delta invariants
+strictly decreases. Each stage has finitely many singular points, so the finitely branching tree
+has no infinite branch and is finite.
+
+After the branches are regular, two distinct branches with equations $g,h$ have contact
+
+$$
+i_x(g,h)=\operatorname{length}_A A/(g,h).
+$$
+
+The identical exceptional-parameter filtration gives
+
+$$
+i_x(g,h)=m_x(g)m_x(h)+
+ \sum_{x'\mapsto x}[\kappa(x'):k]\cdot i_{x'}(g',h').        \tag{8.6b}
+$$
+
+For regular tangent branches the first term is one and the residual weighted contact is strictly
+smaller. Repeatedly blow up tangencies. Once every pair is transverse, blowing up a point through
+three or more branches places their distinct tangent directions at distinct closed points of the
+exceptional line. Include every exceptional curve among the branches at the next stage; point
+blowups preserve normal crossings away from the center. Hence finitely many further blowups make
+the reduced total transform of $D$ strict normal crossings. Notice
+that (8.6a) and (8.6b), including their residue factors, require no rational point or generic
+linear combination.
+
+On the resulting surface, at a point with parameters $u,v$ cutting out the at most two branches
+of that total transform, every generator has the form
+$\varepsilon_i u^{a_i}v^{b_i}$ with $\varepsilon_i$ a unit.
+Thus the transformed ideal is monomial. A monomial ideal in a two-dimensional regular local ring
+is principalized by finitely many blowups of the crossings of the coordinate divisors. For
+completeness, attach to its exponent set the lower Newton polygon. A blowup replaces the cone
+spanned by $(1,0),(0,1)$ by the two cones spanned by
+
+$$
+(1,0),(1,1)\quad\text{and}\quad(1,1),(0,1).
+$$
+
+After removing the common monomial on each chart, this is exactly the weak transform of the
+ideal. Insert successively the primitive inward normals to the finitely many compact edges of the
+polygon. If adjacent primitive rays have determinant $d>1$, the Euclidean algorithm inserts
+their primitive sum and strictly lowers the determinant. A finite regular subdivision results.
+On each regular cone one exponent is minimal for both coordinates, so its monomial divides all
+the others and the ideal is principal. These toric subdivisions are precisely blowups of the
+actual closed crossings and remain valid over $k$ without splitting any residue field.
+
+All centers used above lie over the original noninvertible locus. Performing the constructions at
+the finitely many points proves the global assertion. $\square$
+
+**Corollary 8.8A (factorization through point blowups).** Let $T$ be an excellent regular
+integral surface and let $Z\to T$ be a projective birational morphism. There is a sequence of
+blowups at closed regular points $T_r\to\cdots\to T_0=T$ and a morphism $T_r\to Z$ over $T$.
+
+**Proof.** Choose a relatively ample line bundle on $Z$ and replace it by a power which is
+generated over $T$ and whose section algebra is generated in degree one. Trivialize it at the
+generic point. Its direct image is then a coherent fractional ideal $I\subset K(T)$, and the
+relative-Proj presentation identifies $Z$ with the blowup of $I$, after multiplying $I$ by one
+denominator. Lemma 8.8 makes $I\mathcal O_{T_r}$ invertible. The universal property of the blowup
+then gives $T_r\to Z$. $\square$
+
+**Lemma 8.8B (finite graph domination).** Let $R$ be an excellent regular local domain of
+dimension two with fraction field $K$, let $L/K$ be finite, and let $B$ be the integral closure of
+$R$ in $L$. Every proper normal modification $W\to\operatorname{Spec}B$ is dominated by the
+normalization in $L$ of an iterated closed-point blowup of $\operatorname{Spec}R$.
+
+**Proof.** Chow's lemma followed by normalization supplies a projective normal modification
+dominating $W$, so assume $W$ projective. We record the specialized flattening argument needed
+here. If $P\to\operatorname{Spec}R$ is projective and its generic fiber is the finite scheme
+$\operatorname{Spec}L$, choose a relatively very ample $\mathcal O_P(1)$. For $q$ beyond one
+common regularity bound, the finite modules
+
+$$
+M_q=H^0(P,\mathcal O_P(q))
+$$
+
+and the multiplication and relation maps among the $M_q$ present $P$ as relative Proj; Book 8's
+graded-presentation theorem shows that only finitely many consecutive $q$ are required. Over $K$
+these modules all have rank $[L:K]$. For a finite module $M$ of generic rank $r$, blowing up the
+ideal of its $r\times r$ minors makes the torsion-free pullback of $M$ locally free of rank $r$:
+on the chart of one nonzero minor, divide every other maximal minor by it, and Cramer's rule gives
+a free basis; the lower Fitting ideals exclude a rank drop. Apply this successively to the
+finitely many modules, kernels, and cokernels in the chosen graded presentation. The product of
+the resulting Fitting ideals is supported at the closed point, and on its blowup the strict
+transform $P'$ has constant Hilbert polynomial $[L:K]$. It is therefore flat with
+zero-dimensional fibers, hence finite flat, over that blowup. This is the projective
+graph-flattening theorem in the only case used here, proved by the displayed minors rather than
+invoked as an unspecified flattening step.
+
+Apply this construction to $P=W$ viewed over $R$. By Lemma 8.8, an iterated point blowup
+$X\to\operatorname{Spec}R$ principalizes the product of the Fitting ideals and hence dominates
+the flattening blowup. The strict transform $W_X\to X$ is finite, has function field $L$, and maps
+to $W$. Its normalization is the integral closure of $X$ in $L$. Finiteness follows from
+excellence, and the universal property of normalization gives
+
+$$
+\operatorname{Nor}_L(X)\longrightarrow W_X\longrightarrow W.
+$$
+
+Thus the normalization of the point-blowup sequence dominates the original modification.
+$\square$
 
 **Lemma 8.9 (normalized point-blowup domination).** Let $A$ be a two-dimensional normal Nagata
 local domain. Every proper birational modification of $\operatorname{Spec}A$ is dominated by a
@@ -1232,10 +1395,7 @@ $$
 H^1(\bar X,\mathcal O_{\bar X})^\vee\longrightarrow0.          \tag{8.9a}
 $$
 
-For domination, compose a normal modification of $B$ with the finite map to $R$. Flattening its
-graph is a blowup of an ideal supported at the closed point of $R$. Lemma 8.8 principalizes that
-ideal by point blowups of the regular surface. Normalizing in $L$ then dominates the original
-modification. $\square$
+The domination assertion is exactly Lemma 8.8B. $\square$
 
 **Lemma 8.14 (uniform canonical-lattice bound).** In the preceding situation the lengths
 $\operatorname{length}_B(C/C_{\bar X})$, as $X$ ranges over iterated point blowups of $R$, are
@@ -1352,8 +1512,9 @@ $H^0(X,\mathcal I^{n-1})$ onto $H^0(X,\mathcal I^n)$. Since
 $H^0(X,\mathcal I)=\mathfrak m$, this gives
 $H^0(X,\mathcal I^n)=\mathfrak m^n$ for every $n$.
 
-Here the asserted initial equality is not an assumption about normalized blowups. Section 7.3
-identifies $H^0(X,\mathcal I)$ with the integral closure $\overline{\mathfrak m}$. A maximal ideal
+Here the asserted initial equality is not an assumption about normalized blowups.
+Proposition 7.2A identifies $H^0(X,\mathcal I)$ with the integral closure
+$\overline{\mathfrak m}$. A maximal ideal
 is integrally closed: if a unit $z$ satisfied
 $z^r+c_1z^{r-1}+\cdots+c_r=0$ with $c_i\in\mathfrak m^i$, reduction modulo
 $\mathfrak m$ would say that the nonzero residue of $z^r$ is zero. Hence
@@ -1429,8 +1590,8 @@ Now let $I,J$ be complete and put $H=\overline{IJ}$. Take the join of the blowup
 $I,J,H$, normalize it, and use Lemma 8.9 to dominate it by normalized point blowups. Starting
 from the rational ring $A$, Lemma 8.15 says inductively that these are ordinary point blowups,
 that every stage is normal and rational, and that the final surface $X$ has zero $H^1$. On $X$
-the three extended ideals are invertible and globally generated. Completeness and the valuative
-criterion give
+the three extended ideals are invertible and globally generated. Proposition 7.2A, applied
+because $X$ dominates all three blowups, gives
 
 $$
 I=H^0(X,I\mathcal O_X),\qquad J=H^0(X,J\mathcal O_X),\qquad
@@ -1466,9 +1627,29 @@ which the final dualizing module is invertible.
 
 **Proof.** Surface vanishing and (8.8) identify
 $H^0(X,\omega_X)\to\omega_A$ with an isomorphism. Adjunction for the exceptional Cartier curve
-gives $\omega_X|_E=\omega_E(1)$. The curve duality calculation and (8.10) show
-$H^1(X,\omega_X(n))=0$ for $n\ge0$ and that $\omega_E(1)$ is generated. Hence
-$f^*\omega_A\to\omega_X$ is surjective at every singular point.
+gives $\omega_X|_E=\omega_E(1)$. We spell out the generation step. With
+$\mathcal O_X(1)=\mathfrak m\mathcal O_X=\mathcal O_X(-E)$, adjunction gives exact sequences
+
+$$
+0\longrightarrow\omega_X(n+1)\longrightarrow\omega_X(n)
+ \longrightarrow\omega_E(n+1)\longrightarrow0.              \tag{8.10a}
+$$
+
+Curve duality identifies
+$H^1(E,\omega_E(n+1))$ with the dual of $H^0(E,\mathcal O_E(-n-1))$, which is zero for
+$n\ge0$ because $\mathcal O_E(1)$ is ample. Relative Serre vanishing starts at $n\gg0$; descending
+through (8.10a) gives
+
+$$
+H^1(X,\omega_X(n))=0\qquad(n\ge0).
+$$
+
+The base-point form of the same curve-duality calculation says that $\omega_E(1)$ is generated:
+for a closed point $z$ and its length-one quotient, the obstruction to surjectivity at $z$ is
+dual to a section of $\mathcal O_E(-1)$ supported at no component, hence is zero. The case $n=0$
+of (8.10a), together with $H^1(X,\omega_X(1))=0$, lifts these generating sections to
+$H^0(X,\omega_X)=\omega_A$. Therefore the evaluation map
+$f^*\omega_A\to\omega_X$ is surjective along $E$, in particular at every singular point.
 
 Choose a generator of the one-dimensional $K$-space $\omega_A\otimes_AK$. Torsion-freeness
 embeds $\omega_A$ as a fractional ideal of $A$; after clearing one denominator it is an ordinary
@@ -1506,10 +1687,30 @@ the sequence of centers of a nonsingular formal arc.
 
 **Proof.** Put
 $J_n=\ker(\mathcal O_{X_0,x_0}\to\mathcal O_{X_n,x_n}/\mathfrak m_{x_n}^{n+1})$.
-Writing every other generator after one blowup as $t$ times a new generator shows
-$J_n/J_{n+1}$ has length one and that $t^n\notin J_{n+1}$. Hence
-$R=\varprojlim\mathcal O_{X_0,x_0}/J_n$ is complete, has maximal ideal $(t)$, and is not
-artinian; it is a DVR. The affine chart formulas give compatible local maps
+Writing every other generator after one blowup as $t$ times a new generator gives, by induction,
+
+$$
+\mathfrak m_{x_0}^{,2n+1}\subseteq J_n\subseteq
+ (t^n)+\mathfrak m_{x_0}^{,n+1},
+\qquad
+J_n/J_{n+1}\simeq k,\qquad t^n\notin J_{n+1}.                \tag{8.10b}
+$$
+
+The left inclusion follows because a monomial of total degree $2n+1$ acquires either
+$t^{n+1}$ or at least $n+1$ factors from the new maximal ideal after $n$ chart substitutions;
+the right inclusion and the one-dimensional quotient follow by reversing the same substitutions.
+Thus the $J_n$-topology is linearly equivalent to the maximal-adic topology on the quotient by
+$\mathfrak p=\bigcap_nJ_n$. Consequently
+
+$$
+R=\varprojlim\mathcal O_{X_0,x_0}/J_n
+ \simeq\widehat{\mathcal O_{X_0,x_0}/\mathfrak p}
+$$
+
+is a complete noetherian local ring. Formula (8.10b) says that its maximal ideal is generated by
+$t$ and that no power of $t$ vanishes. Hence $R$ is one-dimensional and regular, so it is a DVR;
+in particular $\mathfrak p$ is prime. Since $t$ maps to a uniformizer, the cotangent map is
+surjective. The affine chart formulas give compatible local maps
 $\mathcal O_{X_i,x_i}\to R$. $\square$
 
 **Lemma 8.18 (an arc eventually meets the regular locus).** If the kernel prime of a nonsingular
@@ -1714,7 +1915,8 @@ points.
 **Proof.** We first record two rationality facts used in the conversion. A complete regular
 two-dimensional local ring $R$ is rational. Indeed, given a normal modification $W\to
 \operatorname{Spec}R$, Chow's lemma supplies a projective modification dominating it, and
-Lemma 8.8 dominates that projective modification by a sequence $T_r\to\cdots\to T_0$ of point
+Corollary 8.8A dominates that projective modification by a sequence
+$T_r\to\cdots\to T_0$ of point
 blowups of the regular surface. Lemma 8.7 and Leray give
 $H^1(T_r,\mathcal O_{T_r})=0$, while (8.9) injects
 $H^1(W,\mathcal O_W)$ into this group.
@@ -1756,7 +1958,7 @@ Y_n\longrightarrow\cdots\longrightarrow Y_0=\operatorname{Spec}A
 $$
 
 and a morphism $Y_n\to X$. Chow's lemma gives a projective modification of $X$ dominating
-$Y_n$, and Lemma 8.8, applied over the regular $X$, gives a sequence of point blowups of $X$
+$Y_n$, and Corollary 8.8A, applied over the regular $X$, gives a sequence of point blowups of $X$
 dominating $Y_n$. (Equivalently, $Y_n\to X$ itself is projective: $Y_n$ is projective over
 $A$, and its graph is closed because $X$ is separated over $A$.) Hence $Y_n$ has a resolution
 and only finitely many singular closed points. If $y\in Y_n$ is one of them and
@@ -2082,11 +2284,15 @@ $E$ with one such subscheme.
 The evaluation exact sequences and (11.b) show that $L^n|_F$ is generated, that its sections
 separate every length-two subscheme away from $E$, and that they separate every point away from
 $E$ from the constant value on $E$. Every section restricts constantly to $E$ because
-$L|_E\simeq\mathcal O_E$. Proper cohomology and base change, proved by the finite Cech complexes
-of Book 9, carries the same surjections through all infinitesimal fibers; Nakayama makes the
-evaluation map surjective over the DVR. On the generic fiber $L=H$, so a further common multiple
-is very ample. Thus some $L^N$ is generated, constant on $E$, and separates points and tangent
-vectors off $E$. Let $V=H^0(X,L^N)$ and let $B$ be the image
+$L|_E\simeq\mathcal O_E$. The same filtration proves (11.b) on every thickening $rF$: since
+$F$ is the divisor of a uniformizer, the successive quotients of $\mathcal O_{rF}$ are copies
+of $\mathcal O_F$, and the same remains true after imposing any one of the listed evaluation
+ideals. Apply the proper finiteness, theorem on formal functions, and evaluation criterion of
+Book 9. The completed $R^1$ of each evaluation kernel is the inverse limit of these vanishing
+$H^1$'s and is zero; faithful flatness of completion and Nakayama then make the evaluation map
+surjective over the DVR. On the generic fiber $L=H$, so a further common multiple is very ample.
+Thus some $L^N$ is generated, constant on $E$, and separates points and tangent vectors off $E$.
+Let $V=H^0(X,L^N)$ and let $B$ be the image
 of $\operatorname{Sym}_R(V)$ in $\bigoplus_qH^0(X,L^{qN})$. Then
 $Y=\operatorname{Proj}_RB$ is algebraic and projective, and the induced $c:X\to Y$ contracts
 exactly $E$ and is an isomorphism elsewhere by the separation criterion.
@@ -2118,8 +2324,18 @@ For $q=0$, this identifies $J_1$ with the kernel of
 $\mathcal O_Y\to k(y)$, hence with $\mathfrak m_y$. Products of the rows (11.0) form a
 commutative diagram. Since
 $H^0(\mathcal O_E(1))^{\otimes q}\to H^0(\mathcal O_E(q))$ is surjective, induction first gives
-$J_1J_q+J_{q+2}=J_{q+1}$ and then, by descending through the separated $J$-adic filtration,
-$J_{q+1}=J_1J_q$. Consequently $J_q=J_1^q=\mathfrak m_y^q$. Thus
+$J_1J_q+J_{q+2}=J_{q+1}$. Repeating the same equality inside its final summand gives
+
+$$
+J_{q+1}=J_1J_q+J_{q+n}\qquad(n\geq2).
+$$
+
+The theorem on formal functions from Book 9 identifies the completion of the coherent ideal
+$J_{q+1}$ at $y$ with the inverse limit of its restrictions to the infinitesimal fibers. In
+particular the induced filtration is separated, so the intersection over $n$ of the completed
+$J_{q+n}$ is zero. Hence $J_{q+1}=J_1J_q$ after completion, and faithful flatness of completion
+gives the equality in $\mathcal O_{Y,y}$; it already holds away from $y$. Consequently
+$J_q=J_1^q=\mathfrak m_y^q$. Thus
 
 $$
 \mathfrak m_y^q/\mathfrak m_y^{q+1}\simeq H^0(E,\mathcal O_E(q)).
@@ -2147,11 +2363,10 @@ $$
 I=\mathfrak m_y\mathcal O_X.                               \tag{11.0a}
 $$
 
-For completeness, formal functions here is obtained from a finite affine cover of
-$c^{-1}(\operatorname{Spec}\mathcal O_{Y,y})$: its Cech complexes consist of finite modules,
-completion is exact on them, and the transition maps in (11.0) are surjective, so no derived
-inverse limit occurs. It identifies the completed stalks of $J_q$ with the inverse limits of
-$H^0(I^q/I^{q+n})$ and therefore identifies
+Apply the theorem on formal functions of Book 9 to the proper morphism $c$ and the coherent
+sheaves $I^q$. It identifies the completed stalks of $J_q=c_*I^q$ with the inverse limits of
+$H^0(I^q/I^{q+n})$; the exact rows (11.0) make these systems Mittag--Leffler. Consequently it
+identifies
 $\operatorname{gr}_{\mathfrak m_y}\widehat{\mathcal O}_{Y,y}$ with
 $\bigoplus_qH^0(E,\mathcal O_E(q))\simeq k(y)[u,v]$. Hence the completed local ring has dimension
 and embedding dimension two and is regular; regularity descends from completion. The equality
