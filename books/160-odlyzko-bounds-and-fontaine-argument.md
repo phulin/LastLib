@@ -3,20 +3,67 @@
 ## Contents
 
 1. [Discriminant as analytic complexity](#1-discriminant-as-analytic-complexity)
+   - [The collision this book owns](#11-the-collision-this-book-owns)
+   - [Normalizations](#12-normalizations)
+   - [Three logically different conclusions](#13-three-logically-different-conclusions)
+   - [Ownership map](#14-ownership-map)
 2. [Imported geometric baseline](#2-imported-geometric-baseline)
+   - [Exact compatibility theorem](#21-exact-compatibility-theorem)
+   - [Root form and monotonicity](#22-root-form-and-monotonicity)
+   - [What is and is not imported](#23-what-is-and-is-not-imported)
 3. [Imported Dedekind-zeta package](#3-imported-dedekind-zeta-package)
+   - [Euler product and completion](#31-euler-product-and-completion)
+   - [Zeros and contour control](#32-zeros-and-contour-control)
 4. [Imported Weil--Poitou explicit formula](#4-imported-weil--poitou-explicit-formula)
+   - [Exact identity and compatibility locator](#41-exact-identity-and-compatibility-locator)
+   - [Normalization diagnostics](#42-normalization-diagnostics)
 5. [Imported positivity and test functions](#5-imported-positivity-and-test-functions)
+   - [Unconditional zero positivity](#51-unconditional-zero-positivity)
+   - [The triangular package](#52-the-triangular-package)
+   - [Conditional comparison](#53-conditional-comparison)
 6. [Imported Odlyzko--Poitou inequalities](#6-imported-odlyzko--poitou-inequalities)
+   - [One test function](#61-one-test-function)
+   - [Asymptotic constants](#62-asymptotic-constants)
 7. [Imported certified finite-degree ledger](#7-imported-certified-finite-degree-ledger)
+   - [Certificate source and method](#71-certificate-source-and-method)
+   - [Imported cutoff table](#72-imported-cutoff-table)
+   - [The decisive two-prime crossing](#73-the-decisive-two-prime-crossing)
+   - [The broad dyadic ceiling](#74-the-broad-dyadic-ceiling)
 8. [Imported threshold principle](#8-imported-threshold-principle)
 9. [Towers and the meaning of a threshold](#9-towers-and-the-meaning-of-a-threshold)
+   - [Nested fields](#91-nested-fields)
+   - [Finite composita](#92-finite-composita)
+   - [Growing-tower warning](#93-growing-tower-warning)
 10. [Finite-flat torsion fields](#10-finite-flat-torsion-fields)
+    - [Imported local input](#101-imported-local-input)
+    - [Global ceiling](#102-global-ceiling)
+    - [Three-adic exponent ledger](#103-three-adic-exponent-ledger)
+    - [Rank-two residual degree ledger](#104-rank-two-residual-degree-ledger)
 11. [Fontaine's fixed-exponent mechanism](#11-fontaines-fixed-exponent-mechanism)
+    - [The combined two-prime theorem](#111-the-combined-two-prime-theorem)
+    - [Quotients and finite composita](#112-quotients-and-finite-composita)
+    - [Fixed-exponent Fontaine criterion](#113-fixed-exponent-fontaine-criterion)
+    - [Why the full tower is not the criterion](#114-why-the-full-tower-is-not-the-criterion)
+    - [The remaining group theory](#115-the-remaining-group-theory)
 12. [Small-prime and image-order tables](#12-small-prime-and-image-order-tables)
+    - [One-prime application table](#121-one-prime-application-table)
+    - [Rank-two large-image table](#122-rank-two-large-image-table)
+    - [Surviving three-adic orders](#123-surviving-three-adic-orders)
+    - [Broad odd-tame row](#124-broad-odd-tame-row)
 13. [Signature and base-field refinements](#13-signature-and-base-field-refinements)
+    - [Signature must belong to the cutout field](#131-signature-must-belong-to-the-cutout-field)
+    - [Base-field factor](#132-base-field-factor)
+    - [Quadratic-base check](#133-quadratic-base-check)
 14. [Comparative examples and failure diagnostics](#14-comparative-examples-and-failure-diagnostics)
+    - [Tame fields](#141-tame-fields)
+    - [Cyclotomic warning](#142-cyclotomic-warning)
+    - [Compositum warning](#143-compositum-warning)
+    - [Endpoint and classification warnings](#144-endpoint-and-classification-warnings)
 15. [The combined theorem package](#15-the-combined-theorem-package)
+    - [Analytic compatibility theorem](#151-analytic-compatibility-theorem)
+    - [Combined finite-flat cutoff](#152-combined-finite-flat-cutoff)
+    - [Uniform-compositum stabilization](#153-uniform-compositum-stabilization)
+    - [Handoff](#154-handoff)
 16. [Conclusion](#16-conclusion)
 
 ## 1. Discriminant as analytic complexity
@@ -107,7 +154,7 @@ N\mathfrak a\leq
 \tag{2.1}
 $$
 
-This is the exact established statement, now an imported compatibility alias.  Its convex-body
+This is the exact established statement imported here.  Its convex-body
 proof, including the complex-place covolume factor, belongs to Book 7, §2.2.
 
 ### 2.2 Root form and monotonicity
@@ -682,7 +729,7 @@ $$
 $$
 
 If $K$ contains a quadratic base, its degree is even, hence at most $22$ and its relative degree is
-at most $11$.  This example is a useful audit of both the base-field factor and degree divisibility.
+at most $11$.  This example is a useful check on both the base-field factor and degree divisibility.
 
 ## 14. Comparative examples and failure diagnostics
 

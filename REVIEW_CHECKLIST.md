@@ -21,8 +21,20 @@ Renumbering preserves recorded review evidence; it does not create new evidence.
 
 `[x]` in the first two status columns preserves the corresponding recorded review acceptance
 for this manuscript identity. `—` in either closure column means **not separately certified in
-the surviving ledgers**. It is not a positive mark. In particular, the unconditional global
-dependency spine is not closed.
+the surviving ledgers**. It is neither a positive mark nor a mathematical assertion that a
+particular route is open. The broad unconditional/global closure column records the older,
+stronger all-route question and must be read together with the current route statement below.
+
+## Current route scope
+
+The preferred selected-three route ending in Books 187--188 is dependency-closed for the main
+theorem: every hypothesis used for the selected coefficient-three member and its integral tower
+has a proved source earlier in that route. This conclusion is deliberately narrower than a
+uniform theorem for every coefficient place or every member of the compatible family. It also
+does not certify alternative geometric level-change or realization routes. Those stronger
+uniform, all-coefficient, and alternative geometric statements remain outside the main
+theorem's scope, and the preserved `—` entries for the older broad closure question do not
+reopen the selected-three route.
 
 ## All-manuscript ledger
 

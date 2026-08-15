@@ -26,6 +26,8 @@
    - [The clean-prime Frobenius calculation](#45-the-clean-prime-frobenius-calculation)
    - [From prime Frobenius to arbitrary Artin action](#46-from-prime-frobenius-to-arbitrary-artin-action)
    - [Theta values, torsion, and lattices](#47-theta-values-torsion-and-lattices)
+     - [Analytic theta compatibility](#analytic-theta-compatibility)
+     - [Passage from torsion to lattices](#passage-from-torsion-to-lattices)
    - [Idele independence and the descent cocycle](#48-idele-independence-and-the-descent-cocycle)
    - [Polarized and order-valued forms](#49-polarized-and-order-valued-forms)
 5. [Galois orbits and class fields](#5-galois-orbits-and-class-fields)

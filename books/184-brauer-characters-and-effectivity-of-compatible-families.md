@@ -75,7 +75,7 @@
 13. [Exact endpoint and conclusion](#13-exact-endpoint-and-conclusion)
     - [The effective package](#131-the-effective-package)
     - [Four invalid shortcuts](#132-four-invalid-shortcuts)
-    - [Dependency and interface ledger](#133-dependency-and-interface-ledger)
+    - [How the effectivity argument fits together](#133-how-the-effectivity-argument-fits-together)
     - [The boundary with Book 185](#134-the-boundary-with-book-185)
     - [Conclusion](#135-conclusion)
 
@@ -91,19 +91,23 @@ is a quadratic polynomial independent of the coefficient embedding. None of thos
 says that the negative constituents of $R_\tau^-$ occur in $R_\tau^+$. Effectivity is exactly
 the missing assertion.
 
-The argument proves it away from coefficient characteristic two from Book 183's exported SP
-pair, and at coefficient characteristic two under the explicit top-packet irreducibility
-hypothesis $(\mathrm{AI}_2)$ stated in Section 1.1. The central idea is not to inspect one
+The argument needed downstream is coefficientwise at the selected place $\nu\mid3$ from Book
+183, Theorem 11.1. The same character-norm calculation has an optional all-coefficient form;
+at coefficient characteristic two that stronger form uses the explicit top-packet
+irreducibility hypothesis $(\mathrm{AI}_2)$ stated in Section 1.1. The central idea is not to inspect one
 Frobenius polynomial at a time. We
 instead measure the signed character globally by its character norm. Mackey theory and
 Frobenius reciprocity turn that norm into a finite Gram-matrix calculation among the induced
 summands. Book 183 identifies the two restrictions on every elementary intersection field with
 one selected cuspidal packet, so every entry is a self-twist calculation. The possible
 intertwining is therefore a finite-order self-twist question. Its answer is algebraic and is
-unchanged by a coefficient embedding. At the distinguished embedding the virtual class is the
-given absolutely irreducible representation, so its norm is one. The same is consequently true
-at every embedding under $(\mathrm{AI}_2)$, and at every embedding of residue characteristic
-different from two without it.
+unchanged by a coefficient embedding once the relevant packet realization is known to be
+absolutely irreducible. At the distinguished embedding the virtual class is the given
+absolutely irreducible representation, so its norm is one. Book 183 supplies the needed
+irreducibility unconditionally for the selected embedding inducing $\nu\mid3$. Its optional
+uniform packet certificate supplies it at every coefficient embedding away from two, and the
+coefficient-two extension additionally uses $(\mathrm{AI}_2)$ or one of the exact finite gates
+stated below.
 
 An integral generalized character of norm one has one irreducible coefficient equal to $1$ or
 $-1$ and all others zero. Its virtual dimension is two, so the sign must be positive and the
@@ -117,23 +121,19 @@ that representation. It does not canonically subtract lattices, choose coefficie
 models simultaneously at every place, or construct the base-field compatible system. Those
 coherent global tasks belong to Book 185.
 
-There are two different coefficient scopes. The all-coefficient statement includes embeddings
-of residue characteristic two and therefore retains the coefficient-two gate. The
-away-from-two statement does not. In particular, it includes every embedding above three and
-is the only effectivity input used by the fixed-three Fermat route. Thus the fixed-three route
-is conditional on the controlled top datum and its stated upstream hypotheses, but not on
-$(\mathrm{AI}_2)$. Nothing in that route can be used backward to prove the omitted
-coefficient-two member.
+There are three coefficient scopes. The main theorem is coefficientwise at the selected
+$\nu\mid3$. Under Book 183's optional uniform packet certificate, the same argument applies at
+every coefficient embedding away from two. An all-coefficient statement additionally retains
+the coefficient-two gate. The fixed-three Fermat route uses only the first scope, so it is
+conditional on the controlled top datum and its stated upstream hypotheses, but not on either
+the uniform certificate or $(\mathrm{AI}_2)$. Nothing in that route can be used backward to
+produce the optional family or its coefficient-two member.
 
-On Book 183's recommended $(\mathrm{HT}_1)$ branch, however, $(\mathrm{AI}_2)$ is not an
-additional arithmetic gap. Book 183, Proposition 6.1, using Book 168, Theorem 7.6, proves
-absolute irreducibility of every coefficient realization of the selected cuspidal top packet, including those of residue
-characteristic two. The gate must still be displayed here because Book 183 also permits a
-direct prime-to-two preservation certificate or the stronger ambient-semisimplicity
-certificate, neither of which by itself proves simplicity of the particular two-dimensional
-coefficient-two member.
+Possible sources for $(\mathrm{AI}_2)$ belong to the optional uniform theory. They are outside
+the selected-three theorem and unnecessary for the fixed-three contradiction.
 
-**Interface received.** Book 183, Proposition 6.2 and equations (6.4e)--(6.4h), now export the
+**Interface received.** Book 183, Theorem 11.1, Proposition 6.2, and equations
+(6.4e)--(6.4h) export the
 exact comparison required here. For every pair of elementary subgroups $H,J$, every
 $x\in\Gamma$, and
 
@@ -158,6 +158,11 @@ We begin by naming exactly what is available. Fix the controlled totally real Ga
 $$
 M/\mathbf Q,\qquad \Gamma=\operatorname{Gal}(M/\mathbf Q),
 $$
+
+Its arithmetic provenance is fixed upstream: Book 178, Theorem 12.2 supplies the restricted
+signed-special finite fibre and retained support, while Book 182, Proposition 7.1 and Theorem
+9.1 supply the selected-three packets and their signed-special realizations. This book uses
+that selected output through Book 183, Theorem 11.1.
 
 and the absolutely irreducible distinguished representation
 
@@ -209,7 +214,8 @@ $$
 F_H=M^H.
 $$
 
-Book 183 supplies a selected parallel-weight-two cuspidal packet $\pi_H$ over $F_H$. The packets
+Book 183, using the selected packets exported by Book 182, Theorem 9.1, supplies a selected
+parallel-weight-two cuspidal packet $\pi_H$ over $F_H$. The packets
 are conjugation compatible, their base changes to $M$ are the one selected packet $\pi_M$, and
 at the distinguished coefficient embedding their Galois realizations satisfy
 
@@ -271,11 +277,11 @@ common coefficient field. The rank-two comparisons in (1.3)--(1.3a) remain
 characteristic-zero comparisons at every $\tau$ and produce no integral intertwiner or
 coherent system of intertwiners.
 
-One named coefficient-two gate is required. Book 183's full SP pair proves the
-absolute irreducibility needed below when the residue characteristic of $\tau$ is not two, but
-it deliberately exports no coefficient-prime SP, de Rham, or Hodge--Tate statement when that
-residue characteristic is two. Write $q(\tau)$ for the residue characteristic of the
-nonarchimedean target of $\tau$. We assume explicitly that
+For the selected embedding inducing $\nu\mid3$, Book 183's full SP pair proves the absolute
+irreducibility needed below. The same assertion at other coefficient places away from two
+requires Book 183's optional uniform packet certificate. An all-place extension additionally
+needs one named coefficient-two gate. Write $q(\tau)$ for the residue characteristic of the
+nonarchimedean target of $\tau$. For that optional extension, assume explicitly that
 
 $$
 \boxed{
@@ -445,8 +451,11 @@ multiplicity. The appropriate invariant is the norm of the entire generalized ch
 **Theorem 1.1 (effectivity of the signed Brauer array).** Fix an integral Brauer datum
 $\mathfrak B$.
 
-- If $q(\tau)\ne2$, the virtual class $\mathcal R_{\mathfrak B,\tau}$ is represented by a
-  continuous absolutely irreducible two-dimensional semisimple representation.
+- If $\tau$ induces the selected place $\nu\mid3$, the virtual class
+  $\mathcal R_{\mathfrak B,\tau}$ is represented by a continuous absolutely irreducible
+  two-dimensional semisimple representation.
+- Under Book 183's optional uniform packet certificate, the same conclusion holds for every
+  $\tau$ with $q(\tau)\ne2$.
 - If $q(\tau)=2$, the same absolutely irreducible effectivity conclusion holds if and only if
   $(\mathrm N_2(\mathfrak B))$ holds at $\tau$. The finite condition
   $(\mathrm G_2(\mathfrak B))$ implies this norm condition. The uniform hypothesis
@@ -460,7 +469,7 @@ r_{\mathfrak B,\tau}:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(\Omega).
 \tag{1.13}
 $$
 
-It satisfies
+Whenever one of these hypotheses applies, it satisfies
 
 $$
 \det r_{\mathfrak B,\tau}=\chi_\tau,
@@ -478,8 +487,9 @@ coefficient residue characteristic, its Weil--Deligne class is the effective mem
 nonzero rank-one monodromy, the invariant line and sign in (1.1b)--(1.1c), and Artin conductor
 exponent one. The representation is independent, after scalar extension, of the
 positive-minus-negative presentation. It is independent, after scalar extension, of the
-integral Brauer datum throughout the away-from-two range and, in the all-coefficient range,
-under $(\mathrm{AI}_2)$. More generally, at one coefficient-two embedding, two Brauer data
+integral Brauer datum at the selected place and, under the optional uniform packet certificate,
+throughout the away-from-two range; the all-coefficient version also uses
+$(\mathrm{AI}_2)$. More generally, at one coefficient-two embedding, two Brauer data
 which each satisfy their norm-one condition give isomorphic effective representations by their
 common dense Frobenius polynomials and Brauer--Nesbitt.
 
@@ -488,10 +498,11 @@ assemble the representations (1.13), their coefficient fields, and their place l
 base-field compatible system. That assembly is the task of Book 185.
 
 Thus $(\mathrm{AI}_2)$ is not logically necessary for one fixed relation: the exact gate there
-is norm one. It is the clean uniform condition used for the all-coefficient theorem. Without
-it, the full theorem remains valid away from two, and a coefficient-two conclusion is made
-only when $(\mathrm N_2(\mathfrak B))$, or a stated sufficient condition for it, has actually
-been supplied.
+is norm one. It is the clean coefficient-two condition used for the optional all-coefficient
+theorem. Without the optional uniform packet certificate, the unconditional conclusion remains
+the selected member at $\nu\mid3$. With that certificate, the theorem holds away from two; a
+coefficient-two conclusion is made only when $(\mathrm N_2(\mathfrak B))$, or a stated
+sufficient condition for it, has actually been supplied.
 
 ### 1.4 Proof architecture
 
@@ -504,8 +515,9 @@ The proof has five steps.
 3. Insert Book 183's overlap identities (1.3)--(1.3b), separately for every double coset, to
    turn every summand into the self-twist space of one cuspidal rank-two realization over its
    elementary intersection field.
-4. Away from residue characteristic two, prove that these self-twist dimensions do not depend
-   on $\tau$. At residue characteristic two, the identical conclusion follows from
+4. Prove the self-twist formula at the selected $\nu\mid3$ and, under the optional uniform
+   packet certificate, at every coefficient embedding away from two. At residue characteristic
+   two, the identical conclusion follows from
    $(\mathrm G_2(\mathfrak B))$, while $(\mathrm N_2(\mathfrak B))$ bypasses entrywise Gram
    invariance and states the needed quadratic value directly.
 5. At $\tau_0$ the class is the absolutely irreducible $\rho$, so the common norm is one. Rank
@@ -977,9 +989,10 @@ argument uses only their semisimple characteristic-zero Hom spaces.
 
 ### 5.2 Absolute irreducibility of an elementary packet realization
 
-We need Schur's lemma for $r_{D,\tau}$. The imported SP record at every embedding away from
-residue characteristic two proves what is needed there; hypothesis $(\mathrm{AI}_2)$ supplies
-exactly the omitted coefficient-two case.
+We need Schur's lemma for $r_{D,\tau}$. The imported SP record proves what is needed at the
+selected $\nu\mid3$. Book 183's optional uniform packet certificate extends that argument to
+every embedding away from residue characteristic two; hypothesis $(\mathrm{AI}_2)$ supplies
+the separate coefficient-two case.
 
 The order is load-bearing. Book 183 must establish its raw-to-global preservation certificate
 before this proposition is invoked. It would be circular to use Proposition 5.1's absolute
@@ -990,15 +1003,18 @@ $(\mathrm{HT}_1)$ route proves packet irreducibility directly by the algebraic-H
 contradiction, while the stronger ambient route proves semisimplicity of the raw carrier
 factor. The first route also supplies $(\mathrm{AI}_2)$ for the top packet.
 
-**Proposition 5.1.** Let $D\leq\Gamma$ be elementary. If $q(\tau)\ne2$, the semisimple
-representation $r_{D,\tau}$ is absolutely irreducible. If $q(\tau)=2$, the same conclusion
-holds under $(\mathrm{AI}_2)$.
+**Proposition 5.1.** Let $D\leq\Gamma$ be elementary. If $\tau$ induces the selected place
+$\nu\mid3$, the semisimple representation $r_{D,\tau}$ is absolutely irreducible. Under Book
+183's optional uniform packet certificate, the same holds for every $q(\tau)\ne2$. If
+$q(\tau)=2$, it holds under $(\mathrm{AI}_2)$.
 
-**Proof.** Suppose first that the residue characteristic of $\tau$ is not two. Since $2$ splits
-completely in $M$, choose a dyadic place of $F_D$. Book 183's algebraic SP record identifies the
-Frobenius-semisimple Weil--Deligne pair of $r_{D,\tau}$ there and gives it nonzero rank-one
-monodromy. If the semisimple global representation were reducible, then over the algebraically
-closed coefficient field it would be a sum of two continuous characters,
+**Proof.** Suppose first that $\tau$ induces the selected $\nu\mid3$, or that the optional
+uniform packet certificate applies and the residue characteristic of $\tau$ is not two. Since
+$2$ splits completely in $M$, choose a dyadic place of $F_D$. In precisely these cases Book
+183's algebraic SP record identifies the Frobenius-semisimple Weil--Deligne pair of
+$r_{D,\tau}$ there and gives it nonzero rank-one monodromy. If the semisimple global
+representation were reducible, then over the algebraically closed coefficient field it would
+be a sum of two continuous characters,
 
 $$
 r_{D,\tau}=\eta_1\oplus\eta_2
@@ -1022,70 +1038,21 @@ reducible, contradicting (5.3). Thus $r_{D,\tau}$ is absolutely irreducible. $\s
 
 No coefficient-place de Rham or Hodge--Tate assertion is used. In particular, cuspidality and
 good Frobenius polynomials alone have not been treated as a proof of Galois irreducibility.
+A coefficient-prime comparison identifying the two-adic local realization with the signed SP
+object would be stronger: its nonzero monodromy would rule out a decomposition into two
+characters, because every one-dimensional semistable Weil--Deligne object has zero monodromy.
+It would therefore imply $(\mathrm{AI}_2)$ and would also supply a two-adic SP record that
+$(\mathrm{AI}_2)$ by itself does not contain. Such a comparison lies outside the scope of the
+selected-three main theorem, which uses the SP object only at a coefficient place above three.
 
-There is a natural, stronger local theorem which would discharge the remaining hypothesis.
-Call $(\mathrm{CP\!\!-SP}_2)$ the assertion that, for every $\tau$ of residue characteristic
-two and one dyadic place $w$ of $M$, the restriction $r_{1,\tau}|_{G_{M_w}}$ is semistable and
-its coefficient-prime semistable Weil--Deligne object is the rank-one signed SP object
-prescribed by the common algebraic packet. In particular, its monodromy is nonzero. Then
-
-$$
-(\mathrm{CP\!\!-SP}_2)
-\Longrightarrow(\mathrm{AI}_2)
-\Longrightarrow(\mathrm G_2(\mathfrak B))
-\Longrightarrow(\mathrm N_2(\mathfrak B))
-\Longrightarrow\text{coefficient-two effectivity}.
-\tag{5.3a}
-$$
-
-For the first implication only the nonzero-monodromy part is needed. Indeed, if the semisimple
-$r_{1,\tau}$ were reducible, then after a finite coefficient
-extension it would be a direct sum of two characters. Semistable representations are closed
-under direct summands and the semistable comparison functor is additive. The monodromy on a
-one-dimensional Weil--Deligne object is zero, because it is nilpotent; hence the monodromy on
-the direct sum would be zero, contradicting $(\mathrm{CP\!\!-SP}_2)$. This proves
-$(\mathrm{AI}_2)$. Proposition 5.1 propagates it from $M$ to every elementary intersection,
-Chapters 5--6 give the Hom and Gram implications, and Chapters 7--9 give effectivity and the
-actual characteristic-zero restriction complement. At residue characteristic two, the SP
-description of that local complement still comes from $(\mathrm{CP\!\!-SP}_2)$ itself, not
-from the norm calculation.
-
-No present source proves $(\mathrm{CP\!\!-SP}_2)$. Book 128, Section 11.3, explicitly limits
-its Weil--Deligne comparison to places away from the coefficient prime. But this does not make
-coefficient-prime SP comparison the only route to effectivity: Book 183, Proposition 6.1,
-using Book 168, Theorem 7.6, proves $(\mathrm{AI}_2)$ from $(\mathrm{HT}_1)$ by a global
-cuspidality argument, without asserting
-any two-adic SP pair. Thus (5.3a) remains the natural route that would also supply the missing
-coefficient-prime local record, whereas $(\mathrm{HT}_1)$ supplies exactly the simplicity
-needed by the Gram calculation. Conversely, $(\mathrm{AI}_2)$ alone would not prove
-semistability, the SP local pair, or any integral statement at a place above two.
-
-The other earlier conclusions do not close the gap in a disguised form. The curve attachment
-gives a continuous semisimple rank-two member, cyclotomic determinant, total oddness, pure good
-polynomials, and some stable lattice. Semisimple does not mean simple, and existence of a stable
-lattice gives no irreducibility statement about its reduction. The ambient semisimplicity
-certificate used to preserve raw local data likewise says that the curve cohomology is a direct
-sum of simple global modules; it does not say that this particular two-dimensional multiplicity
-space is one of them rather than a sum of two characters.
-
-Nor can the prime-to-coefficient SP pair be moved across the coefficient boundary. At a
-two-adic coefficient place the dyadic decomposition group is exactly a coefficient-prime local
-group. Away-from-two compatibility supplies no monodromy operator there, and passing to a
-global semisimplification does not create one. Good Frobenius polynomials and purity determine
-the semisimple member at a fixed coefficient place once it exists, but they do not transport an
-invariant line, an intertwiner, or an endomorphism dimension between completions of different
-residue characteristic. The coefficient-prime statement in $(\mathrm{CP\!\!-SP}_2)$ is
-therefore a genuinely new local assertion.
-
-Finally, determinant and parity alone cannot prove the claim: the semisimple representation
-$1\oplus\chi_2$ has cyclotomic determinant and the required eigenvalues of complex
-conjugation. The dense-Frobenius criterion of Chapter 12 would identify this particular split
-sum only after the trace identity $1+\chi_2$ had been proved on a dense set; no such identity is
-part of the packet data. These observations leave the exact alternatives: supply
-$(\mathrm{HT}_1)$ and invoke Book 183, Proposition 6.1; prove
-$(\mathrm{CP\!\!-SP}_2)$; prove $(\mathrm{AI}_2)$ by another argument; or verify the finite
-relation-specific gate $(\mathrm G_2(\mathfrak B))$ or
-$(\mathrm N_2(\mathfrak B))$ directly.
+For the optional coefficient-two extension, the argument needs only the irreducibility in
+$(\mathrm{AI}_2)$, or one of the finite Gram conditions stated in Chapter 1. Neither
+cyclotomic determinant nor parity can replace it: the reducible semisimple representation
+$1\oplus\chi_2$ has both the cyclotomic determinant and the required eigenvalues of complex
+conjugation. Likewise, common Frobenius polynomials do not transport monodromy or an invariant
+line between coefficient fields of different residue characteristic. The optional local
+comparison and the norm-one effectivity argument thus have different conclusions, and only the
+latter is needed here.
 
 ### 5.3 Self-twist groups
 
@@ -1119,8 +1086,9 @@ $$
 \tag{5.5}
 $$
 
-In particular the dimension has the displayed coefficient-independent value throughout the
-away-from-two range, and throughout the all-coefficient range under $(\mathrm{AI}_2)$.
+In particular the dimension has the displayed value at the selected $\nu\mid3$. Under Book
+183's optional uniform packet certificate it has that coefficient-independent value throughout
+the away-from-two range; together with $(\mathrm{AI}_2)$ this gives the all-coefficient range.
 
 **Proof.** Absolute irreducibility and Schur's lemma show that the Hom space has dimension one
 if the two representations are isomorphic and zero otherwise. Proposition 5.1 supplies this
@@ -1203,7 +1171,8 @@ $$
 \tag{6.1}
 $$
 
-For $q(\tau)\ne2$, Proposition 5.2 turns (3.17) into the entirely coefficient-free formula
+At the selected $\nu\mid3$, and under Book 183's optional uniform packet certificate for every
+$q(\tau)\ne2$, Proposition 5.2 turns (3.17) into the entirely coefficient-free formula
 
 $$
 \boxed{
@@ -1227,13 +1196,16 @@ $x$ to the one represented by $x^{-1}$, transports the intersection packet, and 
 character ratio by its inverse. A self-twist group is closed under inversion, so the indicator
 is unchanged, as required by the symmetry of the Hom pairing.
 
-**Theorem 6.1 (Gram invariance in its exact range).** The Mackey Gram matrix $G_\tau$ of (3.2)
-is the same integral matrix for every coefficient embedding of residue characteristic different
-from two. At a coefficient-two embedding it is that same matrix under
-$(\mathrm G_2(\mathfrak B))$. Consequently $(\mathrm{AI}_2)$ makes the matrix independent of
-$\tau$ over all coefficient embeddings.
+**Theorem 6.1 (Gram invariance in its exact range).** At the selected embedding inducing
+$\nu\mid3$, the Mackey Gram matrix $G_\tau$ of (3.2) is the same integral matrix as at the
+distinguished embedding. Under Book 183's optional uniform packet certificate, that matrix is
+the same for every coefficient embedding of residue characteristic different from two. At a
+coefficient-two embedding it is that same matrix under $(\mathrm G_2(\mathfrak B))$.
+Consequently the optional uniform certificate together with $(\mathrm{AI}_2)$ makes the matrix
+independent of $\tau$ over all coefficient embeddings.
 
-**Proof.** Formula (6.2) proves entrywise equality in the away-from-two range. Book 183's
+**Proof.** Formula (6.2) proves entrywise equality at the selected embedding and, under the
+optional uniform packet certificate, in the away-from-two range. Book 183's
 overlap theorem applies to every one of the finitely many double cosets and places both Hom
 arguments over the same $r_{D_{ij}(x),\tau}$. Every double-coset set and every algebraic
 character $\delta_{ij,x}=\beta_{ij,x}\alpha_{ij,x}^{-1}$ is fixed before a coefficient
@@ -1265,8 +1237,9 @@ $$
 Theorem 6.1 therefore proves:
 
 **Corollary 6.2.** The nonnegative integer
-$\|\mathcal R_{\mathfrak B,\tau}\|^2$ is independent of $\tau$ away from residue
-characteristic two. It has the same value at a coefficient-two embedding under
+$\|\mathcal R_{\mathfrak B,\tau}\|^2$ has the distinguished value at the selected
+$\nu\mid3$. Under the optional uniform packet certificate it is independent of $\tau$ away
+from residue characteristic two. It has the same value at a coefficient-two embedding under
 $(\mathrm G_2(\mathfrak B))$.
 
 The signs $n_i$ cause no difficulty. They enter only after the positive semidefinite Gram matrix
@@ -1294,7 +1267,8 @@ Combining (6.5) with Corollary 6.2 gives the decisive equality
 
 $$
 \boxed{\|\mathcal R_{\mathfrak B,\tau}\|^2=1
-\quad\text{if }q(\tau)\ne2,
+\quad\text{if }\tau\text{ induces }\nu\mid3,
+\text{ if the optional uniform certificate applies and }q(\tau)\ne2,
 \text{ or if }q(\tau)=2\text{ and }(\mathrm G_2(\mathfrak B))\text{ holds}.}
 \tag{6.6}
 $$
@@ -1344,8 +1318,9 @@ semisimplification.
 
 ### 7.1 The integral multiplicity argument
 
-Fix $\tau$ for which (6.6) is known. This includes every away-from-two embedding; at a
-coefficient-two embedding it is exactly the hypothesis $(\mathrm N_2(\mathfrak B))$. Decompose
+Fix $\tau$ for which (6.6) is known. This includes the selected $\nu\mid3$ and, under the
+optional uniform packet certificate, every away-from-two embedding; at a coefficient-two
+embedding it is exactly the hypothesis $(\mathrm N_2(\mathfrak B))$. Decompose
 the virtual semisimple class into irreducibles:
 
 $$
@@ -1374,8 +1349,9 @@ $$
 The negative sign would make the right side negative. Hence the unique coefficient is $+1$ and
 the corresponding irreducible has dimension two.
 
-**Theorem 7.1 (positivity and the exact norm gate).** If $q(\tau)\ne2$, or if
-$q(\tau)=2$ and $(\mathrm N_2(\mathfrak B))$ holds, there is a unique isomorphism class of
+**Theorem 7.1 (positivity and the exact norm gate).** Suppose that $\tau$ induces the selected
+$\nu\mid3$, or that the optional uniform packet certificate applies and $q(\tau)\ne2$, or that
+$q(\tau)=2$ and $(\mathrm N_2(\mathfrak B))$ holds. Then there is a unique isomorphism class of
 absolutely irreducible two-dimensional semisimple representation $r_{\mathfrak B,\tau}$ such
 that
 
@@ -1387,9 +1363,10 @@ $$
 Conversely, if $q(\tau)=2$ and the class is represented by an absolutely irreducible
 rank-two representation, then $(\mathrm N_2(\mathfrak B))$ holds.
 
-**Proof.** In the away-from-two range, the application-specific work is (6.2)--(6.6): every
-Gram entry is reduced to a packet self-twist and shown coefficient independent, and the
-distinguished norm is one. Under $(\mathrm G_2(\mathfrak B))$ the same proof works at residue
+**Proof.** At the selected $\nu\mid3$, and throughout the away-from-two range under the
+optional uniform packet certificate, the application-specific work is (6.2)--(6.6): every Gram
+entry is reduced to a packet self-twist and compared with the distinguished one, whose norm is
+one. Under $(\mathrm G_2(\mathfrak B))$ the same proof works at residue
 characteristic two. Under the weaker $(\mathrm N_2(\mathfrak B))$, equation (7.2) is the
 hypothesis itself. In every case Book 180, Theorem 7.2 applies to (7.2)--(7.3), giving the
 positive irreducible rank-two constituent and the cancellation (7.5). Uniqueness follows from
@@ -1608,9 +1585,9 @@ packet eigenvalues gives the conjugate datum $\mathfrak B^\sigma$. If $\tau$ is 
 embedding, then the induced summands for $(\mathfrak B^\sigma,\tau)$ have the same algebraic
 local polynomials as those for $(\mathfrak B,\tau\circ\sigma)$.
 
-The self-twist indicators in (6.1) are also transported by $\sigma$. Whenever the relevant
-away-from-two or coefficient-two gate holds, both virtual classes are therefore effective. At
-every good $p$ their traces are
+The self-twist indicators in (6.1) are also transported by $\sigma$. Whenever $\tau$ is the
+selected embedding, or the optional uniform packet certificate or the relevant coefficient-two
+gate applies, both virtual classes are therefore effective. At every good $p$ their traces are
 
 $$
 \tau(\sigma(a_p)).
@@ -2007,7 +1984,8 @@ Apply the Gram calculation to the union of the two finite lists of induced summa
 coefficient vector $(n_i,-n'_j)$. All cross inner products are again computed on elementary
 intersections. Book 183's Proposition 6.2 applies to every cross pair, including non-Galois
 intersection fields, and retains the corresponding quotient-character ratio. Thus Theorem 6.1
-applies to the enlarged Gram matrix away from residue characteristic two. It also applies at a
+applies to the enlarged Gram matrix at the selected $\nu\mid3$, and under the optional uniform
+packet certificate away from residue characteristic two. It also applies at a
 coefficient-two embedding if $(\mathrm G_2)$ is supplied for the union of the two lists; in
 particular, $(\mathrm{AI}_2)$ supplies this. It then shows that
 $\|\mathcal D_\tau\|^2$ is independent of $\tau$ in that range. At the one common
@@ -2064,8 +2042,9 @@ smaller than a field of definition, and the obstruction is not visible in (11.6)
 
 ### 11.5 Coefficient-conjugation covariance
 
-Return to $\sigma\in\operatorname{Gal}(K/\mathbf Q)$. Suppose the away-from-two conclusion or
-the relevant coefficient-two gate applies. The two effective representations constructed from
+Return to $\sigma\in\operatorname{Gal}(K/\mathbf Q)$. Suppose the selected-three conclusion,
+the optional uniform away-from-two conclusion, or the relevant coefficient-two gate applies.
+The two effective representations constructed from
 $(\mathfrak B^\sigma,\tau)$ and $(\mathfrak B,\tau\circ\sigma)$ are represented term by term by
 the same scalar images: applying $\sigma$ first and then $\tau$ is applying
 $\tau\circ\sigma$. Their virtual classes therefore agree, so effectivity gives
@@ -2191,8 +2170,9 @@ Suppose a rank-two semisimple representation is known to be absolutely irreducib
 cannot satisfy (12.2) on a dense Frobenius set, since Theorem 12.1 would make it reducible. In
 particular, for the effective members of Theorem 7.1, the common trace system cannot equal
 $1+\chi_\tau$ on a dense good set. At the distinguished member this is already visible from
-the absolute irreducibility of $\rho$; under $(\mathrm{AI}_2)$, coefficient compatibility and
-the theorem make the same obstruction available at every embedding.
+the absolute irreducibility of $\rho$; the optional uniform packet certificate, together with
+$(\mathrm{AI}_2)$ at coefficient characteristic two, makes the same obstruction available at
+every embedding.
 
 ## 13. Exact endpoint and conclusion
 
@@ -2204,7 +2184,9 @@ We can now state the complete output in the notation of Chapter 1.
 elementary-intersection interface exported by Book 183, fix an integral Brauer datum
 $\mathfrak B$, and use a common Galois coefficient field $K$ containing the elementary packets
 and character values. Let $\tau:K\hookrightarrow\Omega$ be a coefficient embedding. Assume
-either $q(\tau)\ne2$, or $q(\tau)=2$ and $(\mathrm N_2(\mathfrak B))$ holds. Then:
+either that $\tau$ induces the selected $\nu\mid3$, or that Book 183's optional uniform packet
+certificate applies at $\tau$. If $q(\tau)=2$, also assume
+$(\mathrm N_2(\mathfrak B))$. Then:
 
 1. the signed class $\mathcal R_{\mathfrak B,\tau}$ has character norm one;
 2. its virtual dimension two forces positive sign, so it is represented by one absolutely
@@ -2227,42 +2209,46 @@ either $q(\tau)\ne2$, or $q(\tau)=2$ and $(\mathrm N_2(\mathfrak B))$ holds. The
    representation;
 7. the isomorphism class is independent of the positive-minus-negative presentation, of
    conjugating a Brauer term, and of harmless coefficient enlargement; after scalar extension
-   it is independent of the integral Brauer relation in the away-from-two range, under the
-   union Gram condition at coefficient characteristic two, or when each of the two relations
-   separately satisfies its norm-one gate; and
+   it is independent of the integral Brauer relation at the selected place, throughout the
+   away-from-two range under the optional uniform packet certificate, under the union Gram
+   condition at coefficient characteristic two, or when each of the two relations separately
+   satisfies its norm-one gate; and
 8. coefficient conjugation transports the effective isomorphism class in the same way that it
    transports the common polynomials.
 
 **Proof.** Frobenius reciprocity and Mackey give the double-coset Hom sum. Every intersection
 subgroup is elementary, and Book 183, Proposition 6.2 and (6.4e)--(6.4h), identifies the two
 packet restrictions with the one intersection packet, retains the two restricted characters,
-and fixes their ratio as $\beta\alpha^{-1}$. Away from two, Proposition 5.2 makes each
-resulting self-twist indicator embedding independent. The Gram matrix is consequently
-embedding independent there, and its quadratic value at the distinguished embedding is the
-endomorphism dimension of $\rho$, hence one. At a coefficient-two embedding the stated norm
+and fixes their ratio as $\beta\alpha^{-1}$. Proposition 5.2 identifies each resulting
+self-twist indicator at the selected place; under the optional uniform packet certificate it
+does so throughout the away-from-two range. The Gram matrix is consequently equal to the
+distinguished one in exactly that range. Its quadratic value at the distinguished embedding is
+the endomorphism dimension of $\rho$, hence one. At a coefficient-two embedding the stated norm
 condition supplies exactly this last quadratic equality; $(\mathrm G_2(\mathfrak B))$ and
 $(\mathrm{AI}_2)$ are sufficient sources by (6.6a) and Proposition 5.1. The integral norm-one
 sign lemma and virtual dimension two prove positive effectivity and absolute irreducibility.
 Continuity, determinant, Frobenius, local, and independence statements are Chapters 7--11.
 $\square$
 
-**Corollary 13.1A (fixed-three effectivity).** Fix $\nu\mid3$ and assume the fixed-three
-packet certificate of Book 183, Proposition 6.1A. Then every integral Brauer datum has one
+**Corollary 13.1A (fixed-three effectivity).** Fix the place $\nu\mid3$ in Book 183, Theorem
+11.1. Then every integral Brauer datum has one
 actual absolutely irreducible effective member $r_{\mathfrak B,\nu}$ at $\nu$, with all the
 conclusions of Theorem 13.1 that are indexed by this coefficient place. In particular its
-dyadic SP pair is the common algebraic pair. Neither the uniform hypothesis
-$(\mathrm{HT}_1)$ nor smooth-proper $(\mathrm{HT}_{\mathrm{curve}})$ is required.
+dyadic SP pair is the common algebraic pair. No uniform raw-to-global packet hypothesis is
+required.
 
-**Proof.** Proposition 6.1A makes every elementary-intersection realization absolutely
-irreducible at $\nu$ and supplies its already-preserved SP pair. Proposition 5.2 therefore
+**Proof.** Book 183, Proposition 6.1A, importing Book 182, Proposition 7.1, makes every
+elementary-intersection realization absolutely irreducible at $\nu$ and supplies its
+already-preserved SP pair. Proposition 5.2 therefore
 identifies every Mackey Gram entry at this embedding with the same automorphic self-twist
 indicator used at the distinguished embedding. The fixed quadratic Gram value is one, so the
 norm-one sign argument and local Krull--Schmidt cancellation in the
 proof of Theorem 13.1 apply coefficientwise at $\nu$. $\square$
 
-Under $(\mathrm{AI}_2)$ the theorem applies simultaneously to every coefficient embedding and
-every integral Brauer datum. Without $(\mathrm{AI}_2)$ it still applies simultaneously to all
-embeddings away from two. This latter collection includes every place above three.
+Under the optional uniform packet certificate and $(\mathrm{AI}_2)$, the theorem applies
+simultaneously to every coefficient embedding and every integral Brauer datum. With the
+uniform certificate but without $(\mathrm{AI}_2)$, it applies away from two. Without either
+uniform hypothesis, Corollary 13.1A supplies the selected place $\nu\mid3$ used downstream.
 
 ### 13.2 Four invalid shortcuts
 
@@ -2312,53 +2298,33 @@ $$
 The remaining coefficient descent, coherent place indexing, model selection, and system-level
 local compatibility are genuine construction steps.
 
-### 13.3 Dependency and interface ledger
+### 13.3 How the effectivity argument fits together
 
-The direct dependency row is
+The construction combines general representation theory with the particular packet geometry
+of Book 183. Continuous induction from open subgroups and the topology of finite-dimensional
+coefficient spaces ensure that every induced term is a continuous representation. The Hom
+pairing, Frobenius reciprocity, Mackey decomposition, Clifford blocks, and the norm-one sign
+lemma then turn effectivity into a finite calculation. The exact intersection theorem of Book
+183 supplies the arithmetic content of that calculation: over each possibly nonnormal
+intersection field, both restrictions become twists of the same selected packet realization.
 
-$$
-\boxed{184\mid24,\ 57,\ 180,\ 183.}
-$$
+Chapters 5--6 identify the resulting Hom space with the correctly oriented finite-order
+self-twist and compare its dimension with the distinguished realization. At the selected place
+$\nu\mid3$ this gives the complete Gram matrix and hence norm one. Under the optional uniform
+packet certificate the same comparison works away from coefficient characteristic two; the
+separate coefficient-two hypotheses serve only the stronger all-place form. Once norm one is
+known, positivity produces the actual constituent, and Chapters 7--9 transfer the determinant,
+Frobenius polynomial, purity, and local SP object from the signed Mackey expression to that
+constituent.
 
-| Source | Input used here | Application-specific work retained |
-|---|---|---|
-| Book 24 | open subgroups, finite coset constructions, and continuity for profinite actions | continuity of the induced terms and effective constituent |
-| Book 57 | complete local coefficient rings and the topology of finite modules | the integral-model boundary in Chapter 8; stable-lattice existence is proved here |
-| Book 180 | Hom norm, Frobenius reciprocity, Mackey Gram formula, Clifford blocks, norm-one effectivity, Brauer--Nesbitt recognition, and the abstract coefficient-descent boundary | none of the SP overlap or self-twist indicators is imported |
-| Book 183 | selected elementary SP packets, exact nonnormal intersection identities, finite-order avatars, signed induced terms, rank and determinant, common polynomials, purity, and the full virtual SP pair away from coefficient characteristic two | the pair must already have a direct certificate, the preferred $(\mathrm{HT}_1)$ certificate, or the stronger ambient certificate; effectivity cannot prove it backward, and $(\mathrm{AI}_2)$ remains additional only outside the $(\mathrm{HT}_1)$ branch |
-
-Books 127, 128, and 168 are transitive through Book 183. Book 168's
-$(\mathrm{HT}_1)$ theorem enters here only through Book 183, Proposition 6.1, which exports
-$(\mathrm{AI}_2)$ for the selected packet array. It does not supply a coefficient-prime SP
-pair. No new direct dependency edge is asserted.
-
-The proof does not merely invoke abstract effectivity. Chapters 5--6 identify every overlap Hom
-space with the correctly oriented finite quotient self-twist, prove the indicator is coefficient
-independent away from two and under the stated coefficient-two Hom gate, evaluate the complete
-Gram norm at the distinguished embedding, and obtain norm one. The minimal coefficient-two
-gate instead supplies that last norm directly. Only then is Book 180's positivity theorem
-applied. Chapters 7--9 promote the application-specific
-virtual determinant, Frobenius polynomial, purity, and SP local Mackey object to records of the
-actual constituent.
-
-The dense-Frobenius input used inside Book 183's overlap theorem is already discharged by that
-export. Chapter 12 states its own density hypothesis when it uses the rank-two recognition
-criterion. No density statement creates the constituent.
-
-No result from Book 185 is used. Relation independence here remains an isomorphism after scalar
-extension; completion-level coefficient descent and coherent place indexing are downstream.
-No signed lattice is reduced, no automorphic transfer is asserted over a nonnormal compositum,
-and no base-field compatible family is assumed.
-
-The coefficient-two boundary is equally explicit. Without $(\mathrm{AI}_2)$ the same proof gives
-effectivity for every embedding of residue characteristic different from two. On the
-recommended $(\mathrm{HT}_1)$ branch, Book 183, Proposition 6.1 supplies $(\mathrm{AI}_2)$ and
-hence closes the coefficient-two Gram norm. Outside that branch, the exact numerical gate is
-$(\mathrm N_2(\mathfrak B))$; the finite entrywise replacement used by the present proof is
-$(\mathrm G_2(\mathfrak B))$; and the natural stronger arithmetic source theorem is
-$(\mathrm{CP\!\!-SP}_2)$, which implies $(\mathrm{AI}_2)$ by (5.3a). Any downstream assembly
-that includes places above two must retain one of these gates. It cannot obtain a new member by
-completing the away-from-two collection.
+This order explains the role of density. Frobenius density recognizes representations that
+already exist; it does not create the effective constituent. It also explains the remaining
+coefficient boundary. The present argument gives isomorphism classes after scalar extension
+and proves relation independence at that level. Descending those classes to completions of one
+number field, indexing them coherently by its places, and choosing integral lattices are
+different operations. In particular, the selected member at $\nu\mid3$ is effective without
+any coefficient-two hypothesis, whereas an optional all-place assembly must retain its stated
+coefficient-two gate.
 
 ### 13.4 The boundary with Book 185
 
@@ -2372,9 +2338,10 @@ $$
 their determinant, common good polynomials, actual local Mackey records, and the
 representation-theoretic independence statements of Chapter 11. The local export includes the
 full SP pair and its conductor-one consequence when the coefficient residue characteristic is
-different from two, but no coefficient-prime SP assertion and no integral model. Under
-$(\mathrm{AI}_2)$, or under a replacement proving the necessary coefficient-two norm gates,
-Book 185 can turn the all-coefficient classes into a single compatible-system object.
+different from two, but no coefficient-prime SP assertion and no integral model. Under the
+optional uniform packet certificate together with $(\mathrm{AI}_2)$, or with a replacement
+proving the necessary coefficient-two norm gates, Book 185 can turn the all-coefficient classes
+into a single compatible-system object.
 Concretely, an all-coefficient assembly must retain that gate or discharge it, choose and
 descend finite coefficient fields, index members coherently by places of one number field,
 verify that the chosen models realize the common polynomials without dependence on auxiliary
@@ -2383,23 +2350,23 @@ assemble continuity and local compatibility in that common language, and identif
 member inside the completed family. Any integral refinement must then choose lattices and prove
 its own local properties.
 
-There is a strictly smaller assembly which omits coefficient places above two. For it, every
-effectivity input of this book is already unconditional relative to the controlled packet
-datum. In particular, the member at a place above three exists and is effective without
+There is a strictly smaller selected assembly requiring only the place $\nu\mid3$. Every
+effectivity input for that member is unconditional relative to the controlled packet datum. In
+particular, it exists and is effective without the optional uniform packet certificate or
 $(\mathrm{AI}_2)$. The fixed-three Fermat route selects precisely that member, carries the
 rational dyadic SP pair at a prime different from its coefficient characteristic, and never
 uses a coefficient-two representation. Accordingly, $(\mathrm{AI}_2)$ is required only by
 the advertised all-coefficient effectivity and assembly as currently stated; a proved weaker
-coefficient-two norm gate can replace it. It is not an antecedent of the away-from-two or
-fixed-three conclusion.
+coefficient-two norm gate can replace it. It is not an antecedent of the fixed-three
+conclusion. Effectivity at other places away from two still requires Book 183's optional
+uniform packet certificate.
 
-Thus effectivity and assembly are adjacent but different. Equation (1.3) is now an exported
-theorem of Book 183, so, relative to that exported controlled packet datum and
-$(\mathrm{AI}_2)$, this book proves that each signed Brauer character is one honest irreducible
-representation. Without $(\mathrm{AI}_2)$ the assertion is restricted to coefficient residue
-characteristic different from two, together with any coefficient-two relation for which the
-minimal norm gate is separately proved. The next book must still prove that all those honest
-representations are the members of one honest compatible family.
+Thus effectivity and assembly are adjacent but different. Equation (1.3) is an exported theorem
+of Book 183, so the selected controlled packet datum already gives one honest irreducible
+representation at $\nu\mid3$. The optional uniform certificate gives the corresponding
+away-from-two family, and the additional coefficient-two gates give the advertised
+all-coefficient extension. The next book must still prove that whichever collection has been
+constructed consists of members of one honest compatible family.
 
 ### 13.5 Conclusion
 
@@ -2411,10 +2378,11 @@ ring had to be shown to cancel the same constituents everywhere at once.
 Mackey theory found the correct places to test that cancellation. Frobenius reciprocity changed
 an inner product of large induced representations into Hom spaces over elementary intersection
 fields. The selected packet on each intersection made the two sides twists of one irreducible
-rank-two realization away from coefficient residue characteristic two, and under
-$(\mathrm{AI}_2)$ also at coefficient characteristic two. Strong multiplicity one made the
-resulting self-twist indicator independent of the coefficient embedding in that range. For a
-fixed coefficient-two relation, $(\mathrm G_2(\mathfrak B))$ is the finite termwise Hom
+rank-two realization at the selected place; the optional uniform packet certificate gives the
+same input away from coefficient residue characteristic two, and $(\mathrm{AI}_2)$ supplies
+the coefficient-two simplicity needed for the optional all-place form. Strong multiplicity one
+made the resulting self-twist indicator algebraic and hence stable throughout the asserted
+range. For a fixed coefficient-two relation, $(\mathrm G_2(\mathfrak B))$ is the finite termwise Hom
 assertion that forces the same Gram entries, while $(\mathrm N_2(\mathfrak B))$ asks only for
 the signed quadratic value needed by positivity.
 
@@ -2431,17 +2399,12 @@ description was inferred at the coefficient prime.
 Book 180's Brauer--Nesbitt theorem then supplied recognition, not existence. It proved the
 semisimple independence statements that properly belong at this stage and gave the sharp
 rank-two diagnostic: a dense trace identity $1+\chi$ forces semisimplification
-$1\oplus\chi$. Book 183's completed
-intersection-field theorem closes the overlap prerequisite. The uniform coefficient-two
-irreducibility input is $(\mathrm{AI}_2)$; relation by relation its exact use is to establish
-$(\mathrm N_2(\mathfrak B))$, via the stronger entrywise condition
-$(\mathrm G_2(\mathfrak B))$. Book 183, Proposition 6.1 proves $(\mathrm{AI}_2)$ from
-$(\mathrm{HT}_1)$, using Book 168, Theorem 7.6, so the recommended route has no further
-effectivity gap. The stronger
-coefficient-prime SP theorem in (5.3a) is still missing and would add a local record not needed
-by the Gram argument. Subject to $(\mathrm{AI}_2)$, characteristic-zero effectivity is
-dependency-closed. Without it, the same conclusion is complete at every coefficient place away from two; this
-includes the place above three used by the fixed-three Fermat argument. The coefficient-two
-gate therefore limits the all-coefficient family, not that fixed-three route. Coherent
-coefficient descent, compatible-system assembly, and integral local refinement remain separate
-tasks rather than hidden consequences of a signed formula.
+$1\oplus\chi$. Book 183's completed intersection-field theorem closes the overlap
+prerequisite. At the selected place $\nu\mid3$, its packet certificate supplies every
+irreducibility and signed-special input needed for the norm-one argument, so Corollary 13.1A is
+complete without a coefficient-two member or a uniform packet theorem.
+
+The coefficient-two gates in Chapter 5 concern only an optional all-coefficient extension.
+They do not limit the fixed-three effectivity result. Coherent coefficient descent and the
+selected base-field assembly remain the work of the next book; integral refinement remains a
+separate later construction.

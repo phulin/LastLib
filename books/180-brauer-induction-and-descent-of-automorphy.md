@@ -49,7 +49,7 @@
    - [Recognition is not existence](#84-recognition-is-not-existence)
 9. [The reusable descent package](#9-the-reusable-descent-package)
    - [The abstract theorem](#91-the-abstract-theorem)
-   - [Exact prerequisites and later handoffs](#92-exact-prerequisites-and-later-handoffs)
+   - [Prerequisites and application boundary](#92-prerequisites-and-application-boundary)
    - [Failure tests](#93-failure-tests)
    - [Conclusion](#94-conclusion)
 
@@ -1882,7 +1882,7 @@ determinant transfer, Frobenius reciprocity, Mackey theory, and the field dictio
 3. Lemma 4.1 supplies the subgroup chains. Chapters 6--8 prove the remaining assertions in the
 order stated. $\square$
 
-### 9.2 Exact prerequisites and later handoffs
+### 9.2 Prerequisites and application boundary
 
 The direct mathematical prerequisites of this general volume are narrow.
 
@@ -1898,49 +1898,27 @@ The direct mathematical prerequisites of this general volume are narrow.
   coefficient-indexed Galois realizations with algebraic good data. It does not supply an
   arbitrary elementary packet diagram or all of its overlaps.
 
-In the repository dependency notation, the recommended direct row is therefore
+Local coefficient fields, lattices, and finite-dimensional semisimple algebra provide
+background, but the conditional arithmetic template uses only the compatible packet-system
+output described above. Bad-place and integral local properties remain separate inputs when an
+application asserts them. Likewise, geometric approximation, moduli constructions, and
+residual potential automorphy are not premises of the abstract Brauer argument; in particular,
+ordinary or Galois-refined approximation does not prove the automorphic selector hypotheses of
+Section 8.1.
 
-$$
-\boxed{180\mid 24,\ 75,\ 98,\ 109,\ 168.}
-\tag{9.1}
-$$
-
-Book 57 is useful background for local coefficient fields and lattices but no theorem from its
-complete-local deformation setup is load-bearing here; finite-dimensional semisimple algebra is
-proved as needed. Books 127--129 and 168 describe the attachment, local, compatible-system, and integral
-interfaces, but only the compatible packet-system output of Book 168 is a direct input to the
-conditional arithmetic template. Books 128--129 become relevant only when a later application
-asserts bad-place or integral local properties.
-
-Books 155--157 and 178--179 are not prerequisites. They construct field packages, moduli data, residual
-potential automorphy, and compatible-system organization used elsewhere in the FLT chain. In
-particular, ordinary or Galois-refined approximation does not prove the automorphic selector
-hypotheses of Section 8.1.
-
-The FLT application is not presently unconditional. Book 183's controlled SP top datum still
-requires the controlled residual automorphic seed isolated as missing in Book 182. For
-raw-to-global preservation, Book 168 now proves the complete formal reduction: semisimplicity
-of the ambient $H^1$ for every actual curve carrier, denoted
+An FLT application still requires a controlled residual automorphic seed. For raw-to-global
+preservation, semisimplicity of the ambient $H^1$ for every actual curve carrier, denoted
 $(\mathrm{SS}_{\mathrm{array}})$, transfers the full signed SP pair, including $N$, at every
 allowed coefficient embedding. Rational Tate-module semisimplicity $(\mathrm{TS})$ for the
-carrier Jacobians is sufficient, but is not proved in the current book dependency chain. The
-abstract Brauer formalism here cannot supply that missing arithmetic theorem, and it gives no
-Weil--Deligne comparison at a base place equal to the coefficient residue characteristic.
-These are blockers to supplying the diagram of Section 6.1, not conclusions of the abstract
-theory and not additional direct dependencies of this book.
+carrier Jacobians is sufficient, but it is not established by the prerequisites here. The
+abstract Brauer formalism cannot supply that arithmetic theorem, and it gives no Weil--Deligne
+comparison at a base place equal to the coefficient residue characteristic. These are missing
+inputs to the diagram of Section 6.1, not conclusions of the abstract theory.
 
-The correct topological placement is after Books 109 and 168 and before Books 183--185.
-The downstream division of labor is exact:
-
-- Book 183 constructs the controlled elementary-subfield packet array, proves the nonnormal
-  intersection identities, and forms the application-specific signed class.
-- Book 184 verifies the self-twist Gram matrix, proves norm-one effectivity, and applies
-  Brauer--Nesbitt and the rank-two trace criterion.
-- Book 185 proves coefficient descent over the actual completions and assembles the
-  base-field compatible system.
-
-Those books may cite the abstract mechanisms here, but none of their conclusions is a premise
-of Theorem 9.1.
+A later application must therefore construct the controlled elementary-subfield packet array
+and its nonnormal intersection identities, verify the self-twist Gram matrix and norm-one
+effectivity, apply the Brauer--Nesbitt and rank-two trace criteria, and prove coefficient descent
+over the actual completions. None of those conclusions is a premise of Theorem 9.1.
 
 ### 9.3 Failure tests
 

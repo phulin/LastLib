@@ -116,7 +116,7 @@ $$
 
 It is a smooth projective curve, possibly disconnected geometrically. Writing a union rather than an arbitrarily chosen component is necessary: a geometric component need not be defined over $E$, and a Hecke operator can route one component to another.
 
-There is a small but essential scope convention behind the phrase “every Hecke correspondence used below.” The packet-by-packet formulas use the full finite Hecke algebra, including the central and component translations needed to distinguish full automorphic representations. Accordingly, $\mathcal C$ is taken to be a full orbit for that routing algebra; for the basic group this is the full canonical curve at level $K$. A proper union may instead be studied with only the subalgebra preserving it, but then restriction can mix automorphic representations differing by component characters. In that setting the canonical statements are the rational finite-Hecke blocks of Chapters 9--11, not the individual-$\Pi$ dimension formula (8.2), unless a component-character idempotent has first separated the packet. This qualification prevents the cohomology of one component from being counted once for every character of the component permutation group.
+There is a small but essential scope convention behind the phrase “every Hecke correspondence used below.” The packet-by-packet formulas use the full finite Hecke algebra, including the central and component translations needed to distinguish full automorphic representations. Accordingly, $\mathcal C$ is taken to be a full orbit for that routing algebra; for the basic group this is the full canonical curve at level $K$. A proper union may instead be studied with only the subalgebra preserving it, but then restriction can mix automorphic representations differing by component characters. In that setting the canonical statements are rational finite-Hecke blocks, not individual-$\Pi$ dimension formulas, unless a component-character idempotent has first separated the packet. This qualification prevents the cohomology of one component from being counted once for every character of the component permutation group.
 
 The preceding construction of quaternionic PEL curves supplies the exact hypotheses behind this notation: a positive weight-one PEL realization, the determinant law, compatible lattice and polarization type, a selected integral component union, and fine level when a universal abelian family is invoked. The cohomology of $C_K$ depends only on the curve; it is not the cohomology of that universal abelian family.
 
@@ -228,7 +228,7 @@ $$
 
 for the characteristic-zero coefficient fields used here. No boundary long exact sequence contributes to $H^1$, and there is no Eisenstein cohomology coming from cusps.
 
-Compactness does not eliminate one-dimensional automorphic characters from the discrete spectrum. It merely ensures that they are honest discrete summands rather than boundary terms. Their absence from $H^1$ will be proved by the real cohomology calculation in Chapter 7.
+Compactness does not eliminate one-dimensional automorphic characters from the discrete spectrum. It merely ensures that they are honest discrete summands rather than boundary terms. Their absence from $H^1$ comes from the real cohomology calculation: their degree-one relative cohomology vanishes.
 
 ### 2.3 Component-stable curves
 
@@ -518,7 +518,7 @@ The factors at the unique split real place are representations of $\operatorname
 
 ### 5.2 Fixed level and multiplicity spaces
 
-Let $K_\infty$ be a product of maximal compact subgroups, used here only to name compact types. It is distinct from the symmetric-space stabilizer $K_\infty^\dagger$ of Chapter 6, which also contains the connected split center and uses the connected rotation group at the active place. Taking $K$-fixed vectors in (5.1) and selecting an irreducible $K_\infty$-type $\tau$ yields
+Let $K_\infty$ be a product of maximal compact subgroups, used here only to name compact types. It is distinct from the symmetric-space stabilizer $K_\infty^\dagger$, which also contains the connected split center and uses the connected rotation group at the active place. Taking $K$-fixed vectors in (5.1) and selecting an irreducible $K_\infty$-type $\tau$ yields
 
 $$
 \mathcal A(K,\tau)[\Pi]
@@ -649,7 +649,7 @@ $$
 \int_{C_K(\mathbf C)}\alpha\wedge\beta.
 $$
 
-For a packet $\Pi$, this first pairs its automorphic realization with the contragredient realization. If a finite-order character twist through the actual abelian quotient identifies those two packets and is trivial on $\nu(K)$, multiplication by that character turns the mass pairing into a bilinear form on one finite-level module. Its finite/component factor is symmetric: it is an integral, or a finite component-weighted sum, of a pointwise product. The exterior factor in degree one is alternating. Pullback and trace commute with the calculation. Section 10.5 will first make the twisting operator at a sufficiently fine level and then return it to an arbitrary level; no same-level preservation is being assumed here.
+For a packet $\Pi$, this first pairs its automorphic realization with the contragredient realization. If a finite-order character twist through the actual abelian quotient identifies those two packets and is trivial on $\nu(K)$, multiplication by that character turns the mass pairing into a bilinear form on one finite-level module. Its finite/component factor is symmetric: it is an integral, or a finite component-weighted sum, of a pointwise product. The exterior factor in degree one is alternating. Pullback and trace commute with the calculation. The required twisting operator is made at a sufficiently fine level and then returned to an arbitrary level; no same-level preservation is being assumed here.
 
 ## 7. The archimedean weight-two calculation
 
@@ -704,7 +704,7 @@ Under local real Jacquet--Langlands, the trivial compact algebraic type correspo
 
 This definition is intrinsic to the quaternionic representation and makes no unsupported global transfer assertion.
 
-The last clause also fixes the archimedean part of any contragredient character used below. The connected positive center is already killed in the relative complex. At the active place the negative scalar $-1$ is rotation through $\pi$, so the weight-two types $2$ and $-2$ both give the value $1$; at a compact real place the adjoint type is trivial. For the basic group, the central character $\omega_\Pi$ is consequently trivial at infinity and the reduced-norm twist in (10.8) is finite order. For a central modification, the same conclusion is included in the explicit hypothesis on $\kappa_\Pi$; it is not inferred from equality of adjoint groups. In either case the descended component character is even at every real place of $E$.
+The last clause also fixes the archimedean part of any contragredient character used below. The connected positive center is already killed in the relative complex. At the active place the negative scalar $-1$ is rotation through $\pi$, so the weight-two types $2$ and $-2$ both give the value $1$; at a compact real place the adjoint type is trivial. For the basic group, the central character $\omega_\Pi$ is consequently trivial at infinity and its reduced-norm twist is finite order. For a central modification, the same conclusion must instead be included in an explicit hypothesis on $\kappa_\Pi$; it is not inferred from equality of adjoint groups. In either case the descended component character is even at every real place of $E$.
 
 ### 7.4 Exclusion of all other constituents
 
@@ -1180,7 +1180,7 @@ At this stage (11.3) is a cohomological constituent. Its dimension, coefficient 
 
 ### 11.4 Duality on an isolated constituent
 
-For the self-pairing statements in Sections 11.4--11.5, assume either that $G$ is the basic group or that the packet of the central modification satisfies the explicit essential-self-duality hypothesis (10.8). Without it, equations (11.4)--(11.5) below are the complete duality conclusion.
+For the self-pairing statements that follow, assume either that $G$ is the basic group or that the packet of the central modification satisfies the explicit essential-self-duality hypothesis (10.8). Without it, adjoint-block duality is the complete conclusion.
 
 Let $\Pi^\dagger$ denote the packet on which inverse double cosets act as adjoints. Restricting (3.7) and using (10.5) produces a perfect pairing
 
@@ -1238,7 +1238,7 @@ $$
 =q_us_v(\Pi). \tag{11.10}
 $$
 
-In the equal-residue-field range of Chapter 12, $q_u=q_v$. At a real place, Section 7.3 gives $\eta_\Pi(c)=1$, so (11.9) has determinant $-1$ on complex conjugation, as the two Hodge lines require.
+When the corresponding places have equal residue fields, $q_u=q_v$. At a real place, Section 7.3 gives $\eta_\Pi(c)=1$, so (11.9) has determinant $-1$ on complex conjugation, as the two Hodge lines require.
 
 ## 12. Good primes and Frobenius
 
@@ -1544,7 +1544,7 @@ We finish by collecting the geometric, automorphic, rational, and arithmetic str
 
 At arbitrary level the rational conclusions, including assertion 5 when its packet hypothesis holds, follow from a normal fine cover and the pull--trace return construction. Integral conclusions retain every denominator qualification above. For a proper component union preserved only by a smaller Hecke algebra, the rational block and comparison conclusions remain valid after applying its component projector, but assertions 1--2 are grouped by the component-character families which that projector mixes; the individual-$\Pi$ formula, determinant, and scalar-Frobenius conclusion require a separating component-character idempotent.
 
-Assertion 5 is exactly the **curve determinant datum** used in Book 126, Section 6.3, and retained in Book 127, Sections 3.3 and 7.1: it supplies the actual component twist with (10.14), the symmetric perfect finite-module form at the stated level, and their compatibility with Poincare polarization. Together with the central-generator normalization required in assertion 6, it supplies the scalar-Frobenius clause; no additional determinant datum is required for the compact quaternionic curve packets satisfying this theorem. This interface does not manufacture such a datum for a different curve carrier lacking the component and return construction above.
+Assertion 5 is the **curve determinant datum** available to later Galois-construction applications: it supplies the actual component twist with (10.14), the symmetric perfect finite-module form at the stated level, and their compatibility with Poincare polarization. Together with the central-generator normalization required in assertion 6, it supplies the scalar-Frobenius clause; no additional determinant datum is required for the compact quaternionic curve packets satisfying this theorem. This interface does not manufacture such a datum for a different curve carrier lacking the component and return construction above.
 
 ### 15.2 Proof
 
@@ -1592,7 +1592,7 @@ $$
 
 The direct prerequisites close the argument as follows. Book 21 supplies continuous etale $H^1$, componentwise Poincare duality, the Tate-twist and Frobenius conventions, and Galois-equivariant pull--trace for smooth proper curves with $\ell$ invertible. Book 47 supplies Betti--de Rham--etale comparison and compatibility with rational correspondences for curves over a field embedded in $\mathbf C$. Book 36 supplies the Jacobian, its canonical principal polarization, the covariant Tate module, Kummer comparison, Weil--cup compatibility, and transpose--Rosati compatibility. Book 96 applies because $B$ is a division quaternion algebra; it supplies the discrete restricted tensor decomposition, quaternionic multiplicity one, finite norm twists, the precise warning that a twist preserves level only after refinement, contragredient finite modules, and the compact mass pairing. Book 104, Theorem 9.2 supplies the inverse global transfer in the compact one-split range: $d=[F:\mathbf Q]\ge2$, $(d-1)+|W|$ is even, and the split packet is selected special or selected tame dihedral at every member of $W$. Thus $W$ is odd and nonempty in even degree and may be empty in odd degree. Its trace-formula proof uses no Shimura-curve cohomology, so using its packet as an input to the decomposition here is not circular. Book 87 supplies the full $\operatorname{GL}_2(\mathbf R)$ discrete-series classification in the required infinitesimal-character range, the split-center convention, and the two-line constant-coefficient relative-cohomology calculation. These are substantial proof inputs, not consequences of tangent-weight counting alone.
 
-Book 124 supplies the common geometric--adelic Hecke action, exact inverse-double-coset adjoints and central factors, and the good-prime operator relation under the complete list reproduced in Section 12.1. Book 118 supplies the one-split-place Shimura datum, reflex field, canonical model, actual abelian quotient, positive-at-infinity reflex reciprocity, and its action on components. Book 119 supplies the genuine PEL functor, fine representability, dimension-one local model, and projectivity in the division case. Book 120 supplies complex uniformization, exact component labels, normal fine/coarse level maps, the two underlying finite maps, component routing, span-level convolution and transpose, and canonical descent. Its displayed $p_{2*}p_1^*$ convention is not used to name the right double coset: Book 124's later orientation audit shows that the right-convolution action for those same maps is $(p_1)_*p_2^*$. The component multiplier, return operator, polarized Morita factorization, determinant, and scalar-Frobenius upgrade are proved here. No later cohomological extraction theorem is used.
+Book 124 supplies the common geometric--adelic Hecke action, exact inverse-double-coset adjoints and central factors, and the good-prime operator relation under the complete list reproduced in Section 12.1. Book 118 supplies the one-split-place Shimura datum, reflex field, canonical model, actual abelian quotient, positive-at-infinity reflex reciprocity, and its action on components. Book 119 supplies the genuine PEL functor, fine representability, dimension-one local model, and projectivity in the division case. Book 120 supplies complex uniformization, exact component labels, normal fine/coarse level maps, the two underlying finite maps, component routing, span-level convolution and transpose, and canonical descent. Its displayed $p_{2*}p_1^*$ convention is not used to name the right double coset: Book 124's orientation check shows that the right-convolution action for those same maps is $(p_1)_*p_2^*$. The component multiplier, return operator, polarized Morita factorization, determinant, and scalar-Frobenius upgrade are proved here. No later cohomological extraction theorem is used.
 
 ### 15.4 Conclusion
 

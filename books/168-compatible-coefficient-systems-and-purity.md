@@ -339,8 +339,8 @@ There is also an integral distinction. Two rationally isomorphic local represent
 
 ## 4. Constructing the family from a weight-two packet
 
-This chapter is an import boundary. Book 127, Theorem 8.1 owns the construction of the
-curve-carried rank-two family, its common good polynomial, determinant, duality, total oddness,
+Book 127, Theorem 8.1 constructs the curve-carried rank-two family, its common good polynomial,
+determinant, duality, total oddness,
 good-place purity, existence of placewise stable lattices, and the exact integral and bad-place
 limitations. Book 168 begins with that family and adds coefficient and local comparison results.
 
@@ -367,7 +367,7 @@ from the raw object to (4.1).
 
 **Lemma 4.1 (semisimplification and scalar extension).** Jordan--Holder makes the
 semisimplification independent of a composition series and compatible with finite scalar
-extension. This formal locator is retained from the earlier presentation.
+extension.
 
 ### 4.3 The good-place polynomial
 
@@ -385,11 +385,11 @@ raised to the $f$th power; the middle coefficient is not left unchanged.
 
 ### 4.4 Weak compatibility theorem
 
-**Theorem 4.2 (packet family at good places; compatibility alias).** This is the weak-family
+**Theorem 4.2 (packet family at good places).** This is the weak-family
 portion of Book 127, Theorem 8.1. It supplies (4.1)--(4.2), total oddness, the determinant and
 good-place purity recorded below, and no strict bad-place assertion.
 
-**Corollary 4.3 (eligible split packet; compatibility alias).** This is the “moreover” clause of
+**Corollary 4.3 (eligible split packet).** This is the “moreover” clause of
 Book 127, Theorem 8.1: in its selected local range a parity-compatible eligible set constructs the
 one-split compact curve carrier and hence the weak family. In even degree this means an odd
 nonempty set; in odd degree the empty set is allowed.
@@ -417,12 +417,12 @@ The perfect rational alternating similitude pairing that yields (5.1) is importe
 127's component-twist covariance and symmetric finite-module pairing hypotheses. It does not
 select a perfect integral rank-two lattice.
 
-**Proposition 5.1 (determinant compatibility; compatibility alias).** The characters in (5.1)
+**Proposition 5.1 (determinant compatibility).** The characters in (5.1)
 are coefficient realizations of the single algebraic character $\chi^{-1}\eta$; away from the
 coefficient residue characteristic their inertia, conductor, and Frobenius values are independent
 of $\lambda$.
 
-**Corollary 5.2 (duality; compatibility alias).** The second identity in (5.1) is the imported
+**Corollary 5.2 (duality).** The second identity in (5.1) is the imported
 Book 127 duality statement.
 
 ### 5.3 Independence of the polarization
@@ -447,7 +447,7 @@ value $q_v^{1/2}$.
 
 ### 6.2 Purity inherited from curves
 
-**Theorem 6.2 (good-place purity; compatibility alias).** This is Book 127, Theorem 8.1(5).
+**Theorem 6.2 (good-place purity).** This is Book 127, Theorem 8.1(5).
 The compact smooth curve carrier and Book 37's curve Weil theorem prove that the system of
 Theorem 4.2 is pure of weight one at every good place.
 
@@ -457,7 +457,7 @@ Thus every conjugate of $t_v$ satisfies the usual weight-one bound and the roots
 the common absolute value. These good-place consequences will later be distinguished from
 purity of a bad-place monodromy filtration, which is new work in Chapter 8.
 
-**Corollary 6.3 (good Weil bounds; compatibility alias).** At every good place, the roots are
+**Corollary 6.3 (good Weil bounds).** At every good place, the roots are
 algebraic integers of weight one, $t_v$ satisfies the corresponding Weil bound, and $s_v$ has
 finite order.
 
@@ -928,7 +928,7 @@ $(\mathrm{TS})$ for these Jacobians from finiteness of their $K$-isogeny classes
 16.2 proves the coefficient, idempotent, and multiplicity-space passage used here. Book 41 does
 not prove those finite isogeny classes. Its standard uniform route still retains the
 semistable-reduction, ramified Hodge-base-change, arithmetic toroidal compactification, and
-integral metrized Hodge--theta interfaces, as well as the logarithmic-Hilbert and theta
+integral metrized Hodge--theta comparisons, as well as the logarithmic-Hilbert and theta
 upper-slope certificates; conditional on them, it proves the formal implication to (13.3r).
 Book 41 does prove the subsequent finite polarized $K$-descent and Zarhin factor-cancellation
 steps. Semisimplicity of the Hecke algebra and semisimplicity of the isogeny category do not
@@ -1454,7 +1454,7 @@ common-adjoint unitary cover used in Propositions 7.6A--7.6C. In the fixed-three
 Book 121 supplies good reduction of that protected unitary cover, Book 129 supplies the
 all-level finite-flat tower on the raw factor and its semisimplification, and Book 54 supplies
 the rank-one local-algebraicity theorem. These three inputs are used only for the selected
-coefficient place; the uniform theorem retains its separate $(\mathrm{HT}_1)$ interface.
+coefficient place; the uniform theorem retains its separate hypothesis $(\mathrm{HT}_1)$.
 
 | Conclusion in this book | Established source | Hypotheses retained here | Boundary |
 |---|---|---|---|
@@ -1490,9 +1490,9 @@ the untwisted inertial record. Theorem 7.6 therefore reduces uniform prime-to-tw
 raw-to-global preservation exactly to $(\mathrm{HT}_1)$. The coefficient-prime integral
 bridge remains a separate boundary.
 
-The downstream contract is therefore:
+The consequences available to later books are therefore:
 
-| Consumer | May use from this book | Must not infer |
+| Application | May use from this book | Must not infer |
 |---|---|---|
 | Book 129 | a rational raw packet plane, its semisimplification, determinant, and existence of placewise stable lattices | a canonical rank-two cohomological summand, coefficient-prime finite flatness, or one lattice across coefficient places |
 | Book 183 | the constructed weak packet systems, coefficient conjugation, determinant, good purity, the conditional algebraic SP pair, the uniform cuspidal raw-to-global reduction, and the unconditional selected-three reduction under Theorem 7.6C's hypotheses | the SP pair at every prime-to-two coefficient embedding unless its controlled top datum supplies preservation directly, supplies $(\mathrm{HT}_1)$, or uses the stronger optional ambient certificate |

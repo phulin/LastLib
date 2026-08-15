@@ -42,8 +42,8 @@
 10. [Exact handoffs to the later arithmetic books](#10-exact-handoffs-to-the-later-arithmetic-books)
     - [Compatible systems and potential modularity](#101-compatible-systems-and-potential-modularity)
     - [Changing the coefficient prime and the fixed-three argument](#102-changing-the-coefficient-prime-and-the-fixed-three-argument)
-11. [Hostile audit and conclusion](#11-hostile-audit-and-conclusion)
-    - [Dependency and hypothesis audit](#111-dependency-and-hypothesis-audit)
+11. [Boundary checks and conclusion](#11-boundary-checks-and-conclusion)
+    - [Dependencies and hypotheses](#111-dependencies-and-hypotheses)
     - [Failure tests](#112-failure-tests)
     - [Conclusion](#113-conclusion)
 
@@ -73,7 +73,7 @@ The result is deliberately an existence theorem relative to a fixed geometric ca
 
 ### 1.2 The local setting and the finite-flat normalization
 
-Fix a prime $p$. Let $R$ be a mixed-characteristic DVR with fraction field $K$, perfect residue field $k$ of characteristic $p$, and absolute ramification index $e=v_R(p)$. We first suppose that $R$ is henselian. Section 5.3 explains how to work over a nonhenselian localization by passing faithfully flatly to its henselization.
+Fix a prime $p$. Let $R$ be a mixed-characteristic DVR with fraction field $K$, perfect residue field $k$ of characteristic $p$, and absolute ramification index $e=v_R(p)$. We first suppose that $R$ is henselian. For a nonhenselian localization, one passes faithfully flatly to its henselization, constructs the marked maps there, and descends them by generic-fiber faithfulness.
 
 Let $\mathcal O$ be the ring of integers of a finite extension $L/\mathbf Q_p$, let $\varpi$ be a uniformizer, and let $\kappa=\mathcal O/\varpi$ have cardinality $q$. Let $\mathcal A/R$ be an abelian scheme and put $A=\mathcal A_K$. An action by a coefficient order on $\mathcal A$, after completion at a chosen coefficient place, is assumed to give a continuous $\mathcal O$-action on the Tate module used below. We impose the concrete freeness hypothesis
 
@@ -460,7 +460,7 @@ is finite free over a coefficient DVR $\mathcal O$ with fraction field $L$ and u
 
    These maps are transitive. Consequently the $\mathcal G_n$ form one compatible all-level tower and their generic inverse limit is $T$.
 5. For a flat extension of DVRs $R\to R'$, base change of this tower is the closure tower of the restricted generic modules in $\mathcal B_{R'}$. Exactness, ranks, coefficient actions, and transition maps are preserved. This remains true even if the ramification index of $R'$ no longer satisfies (1.1), because the already constructed exact sequence is merely being base-changed.
-6. Cartier duality gives an exact compatible dual tower whose generic modules are the Tate-twisted contragredients. Determinants reduce from $T$ to every level. A polarization supplies a perfect self-duality on this tower only under the coefficient-adjoint compatibility of Section 6.3 and its two separate unit conditions: the $p$-primary degree defect must vanish on the ambient Tate module, and the restricted lattice pairing must be unimodular. Calling this self-duality an alternating polarization also requires the self-adjoint finite-level normalization stated there.
+6. Cartier duality gives an exact compatible dual tower whose generic modules are the Tate-twisted contragredients. Determinants reduce from $T$ to every level. A polarization supplies a perfect self-duality on this tower only when the Rosati adjoint is compatible with the coefficient action and two separate unit conditions hold: the $p$-primary degree defect must vanish on the ambient Tate module, and the restricted lattice pairing must be unimodular. Calling this self-duality an alternating polarization also requires a compatible self-adjoint finite-level normalization.
 
 If (1.1) is omitted, assertions 1--3 remain true except that the coefficient action on the particular closure must come from the ambient order action or another integral extension argument. Levelwise finite flatness and ambient uniqueness remain valid, but assertion 4 is not asserted from closure alone.
 
@@ -470,7 +470,9 @@ Proposition 2.1 proves assertion 1, including freeness, rank, saturation, and Ga
 
 Under $e<p-1$, Raynaud full faithfulness extends the generic coefficient endomorphisms and their ring identities, giving (4.8). Proposition 4.1 proves (5.1) by first closing the generic kernel in the already constructed middle group, then taking the represented quotient, and only then identifying the marked quotient with $\mathcal G_n$. Section 4.4 proves transitivity and (4.9). These arguments prove assertions 2--4 without treating a raw scheme-theoretic image or kernel as automatically flat.
 
-Flat base change for saturated closure identifies $\mathcal G_n\times_RR'$ with the closure constructed after restriction to $K'$. A represented finite-flat quotient and its torsor identity commute with arbitrary base change, so (5.1) remains exact. This proves assertion 5. Cartier duality, determinants, and polarizations are proved in Chapter 6, completing assertion 6. $\square$
+Flat base change for saturated closure identifies $\mathcal G_n\times_RR'$ with the closure constructed after restriction to $K'$. A represented finite-flat quotient and its torsor identity commute with arbitrary base change, so (5.1) remains exact. This proves assertion 5.
+
+Cartier duality is exact on the finite-flat sequences just constructed, and its generic fiber is the Tate-twisted contragredient, giving the dual tower in assertion 6. Stable integral matrices reduce their determinant characters at every level. Under the stated polarization hypotheses, the coefficient-normalized generic pairing is perfect; Raynaud full faithfulness extends its adjoint and its inverse to mutually inverse maps $\mathcal G_n\simeq\mathcal G_n^D$. Generic-fiber faithfulness makes these maps compatible through the tower and preserves alternation when the self-adjoint normalization is alternating. This completes assertion 6. $\square$
 
 The proof is all-level: (5.1) holds for every pair $(m,n)$, not merely for adjacent levels, and its construction is compatible under every further reduction.
 
@@ -622,7 +624,7 @@ An involution of the local coefficient DVR preserves its maximal ideal, so $(\va
 
 Perfect self-duality and alternation are not identical normalization statements. If $\varpi^\dagger=\varpi$, then (6.13), after (3.5), is alternating in the present odd-prime range: skew-symmetry and self-adjointness first give twice the diagonal value equal to zero, and multiplication by $2$ is invertible on the group. More generally one must choose a compatible self-adjoint trivialization of the Rosati-stable fractional ideals, or directly verify that the resulting generic pairing is alternating; multiplying a perfect adjoint by an arbitrary coefficient unit can destroy that identity. Raynaud faithfulness preserves alternation once it holds generically. Thus a Rosati-stable ideal alone gives the perfect contragredient self-duality, not an unqualified alternating polarization under every choice of uniformizer.
 
-When $\varpi=p$ and $r(n)=n$, this normalized pairing is the usual restriction of $e_{p^n}^\lambda$. For ramified coefficient extensions it generally is not; the inverse-different issue in Section 7.3 is the same discrepancy viewed under coefficient duality. Thus the phrase “Gram determinant is a unit” is valid only after the coefficient-valued target and its trace-dual normalization have been fixed.
+When $\varpi=p$ and $r(n)=n$, this normalized pairing is the usual restriction of $e_{p^n}^\lambda$. For ramified coefficient extensions it generally is not: the trace-dual coefficient lattice differs by the inverse different. Thus the phrase “Gram determinant is a unit” is valid only after the coefficient-valued target and its trace-dual normalization have been fixed.
 
 A useful sufficient condition is an orthogonal integral decomposition
 
@@ -907,11 +909,11 @@ the full tower theorem applies. Any special line at the dyadic place must then b
 
 Book 187 has two valid routes at three. A geometric bridge as above gives $T$ and every $\mathcal G_n$ directly. A strongly divisible Fontaine--Laffaille lattice gives one local all-level lattice, after which Proposition 9.1 transfers finite-flat existence to any chosen commensurable global stable lattice and Raynaud rigidity supplies one compatible tower. Neither route says that rational crystallinity canonically selected the global lattice.
 
-For a finite coefficient extension used in Book 187, Section 7.2 supplies the extended tower and Section 7.3 records the possible different in duality. For residual image language, absolute irreducibility must be checked after residue-field extension. These are exactly the hypotheses needed to pass from existence of a rational three-adic member to a named coefficient-linear all-level finite-flat system.
+For a later application using a finite coefficient extension, the scalar-extension construction supplies the extended tower, while trace duality introduces the possible different. For residual image language, absolute irreducibility must be checked after residue-field extension. These are exactly the hypotheses needed to pass from existence of a rational three-adic member to a named coefficient-linear all-level finite-flat system.
 
-## 11. Hostile audit and conclusion
+## 11. Boundary checks and conclusion
 
-### 11.1 Dependency and hypothesis audit
+### 11.1 Dependencies and hypotheses
 
 The proof uses earlier books only in their established ranges.
 
