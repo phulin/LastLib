@@ -1122,82 +1122,154 @@ sheaf. Moreover $X\times_ST\simeq X_T$ already at the sheaf level: the pulled-ba
 $T\times_ST\to T$ has the diagonal section, and restriction to that section and extension by the
 given cocycle are mutually inverse on the equalizer. The same split-cover argument gives full
 faithfulness for compatible maps. Thus only the representable diagonal and the étale scheme atlas
-remain to be constructed. Two effectivity lemmas do that without attempting to descend arbitrary
-affine charts of $X_T$.
+remain to be constructed. Constructible étale descent and the finite-choice construction do that
+without attempting to descend arbitrary affine charts of $X_T$.
 
-**Separated-étale fpqc effectivity lemma.** Let $q:T\to S$ be fpqc and let $E_T\to T$ be separated
-and étale with descent datum. Then the datum is effective as a separated étale $S$-scheme.
+We need one topological fact about fpqc morphisms. For a quasi-compact and quasi-separated scheme
+$Y$, write $Y^{\mathrm{cons}}$ for its **constructible topology**: a constructible subset is open
+and closed, and these subsets form a basis. This topology is compact and Hausdorff. A
+quasi-compact morphism is closed for constructible topologies, while a morphism locally of finite
+presentation is open for them. These assertions reduce to affines: Boolean combinations of
+principal opens pull back to Boolean combinations of principal opens, and compactness says that a
+cover by such combinations has a finite subcover.
 
-**Proof.** This is local on $S$, so take $S=\operatorname{Spec}A$ affine and replace $T$ by a finite disjoint union of
-affine opens covering the inverse image. We first construct the fibers of the descent. Fix a
-geometric point $\bar a\to S$ and a geometric point $\bar t$ above it. The fiber of $E_T$ over
-$\bar t$ is a discrete set. The overlap isomorphism identifies this set with the corresponding
-set for every other lift of $\bar a$; the triple cocycle makes the identification independent of
-a chain of lifts. Call the resulting set $D_{\bar a}$.
+There is a second topology, recording specialization. Write $y_0\leadsto y_1$ when $y_1$ is a
+specialization of $y_0$. If $A\to B$ is faithfully flat and
+$\mathfrak p_0\subseteq\mathfrak p_1$ in $A$, choose
+$\mathfrak q_1$ over $\mathfrak p_1$ and apply going-down to obtain
+$\mathfrak q_0\subseteq\mathfrak q_1$ over $\mathfrak p_0$. The same argument after every base
+change proves:
 
-Pass to the strict henselization $A^{\mathrm{sh}}$ at $\bar a$. A separated étale scheme over a
-strictly henselian local scheme is, near each point of its closed fiber, a disjoint union of open
-subschemes isomorphic to the base: étaleness gives such a neighborhood, and separatedness makes
-two sections which meet in the closed fiber agree on an open-and-closed neighborhood. Hence the
-part of the pullback datum meeting the closed fiber over
-$T\times_S\operatorname{Spec}A^{\mathrm{sh}}$ is the disjoint union of copies of
-$\operatorname{Spec}A^{\mathrm{sh}}$ indexed by $D_{\bar a}$. This description is independent of
-$\bar t$ by the cocycle. Repeating at all geometric points also covers components which miss a
-particular closed fiber.
+**Specialization-lifting lemma.** An fpqc morphism is universally surjective both for the
+constructible topology and for ordered specialization pairs. Consequently, if a saturated subset
+has pro-constructible inverse image upstairs, then it is pro-constructible downstairs; if in
+addition it is stable under specialization, it is closed in the Zariski topology. The analogous
+statement with generization gives open subsets.
 
-Every one of these sections and every disjointness relation is given by finitely many equations
-because an étale morphism is locally of finite presentation. They therefore spread from the
-strict henselization to an étale neighborhood $S'\to S$ of $\bar a$. On two such neighborhoods,
-the candidate schemes become equal after the fpqc pullback to $T$; full faithfulness for maps of
-schemes makes the comparison and its inverse unique, and the comparisons satisfy the triple
-cocycle. They glue over the étale cover of $A$ to a separated étale scheme $E\to A$. Its pullback
-to $T$ agrees with $E_T$ on strict henselizations at every geometric point. The agreement locus
-is open for an étale morphism and contains every geometric point, so it is all of $E_T$. This
-proves effectivity; the same uniqueness proves full faithfulness. $\square$
+For the constructible assertion, reduce to a faithfully flat map of affines. Its map on spectra is
+a quotient map because it is a continuous closed surjection in the compact Hausdorff
+constructible topologies. Saturation is exactly equality of the two inverse images on the double
+overlap. A pro-constructible saturated subset therefore descends. In a spectral space, the
+Zariski closure of a pro-constructible subset consists precisely of its specializations: if a
+point is not such a specialization, a quasi-compact open separates it from the subset, by
+compactness in the constructible topology. Thus specialization stability makes the subset
+Zariski closed. This also proves the assertions after arbitrary base change.
 
-The next lemma is the geometric heart of the flat-presentation argument. Its conclusion is weaker
-than invariant affine neighborhoods of $X_T$ itself and is precisely why it does not imply scheme
-effectivity.
+We can now prove the exact étale effectivity result needed below.
 
-**Equivariant étale-slicing lemma.** Let $p:T\to S$ be fpqc and let a $T$-scheme $Z$ have descent
-datum. There is a set-indexed family of separated étale maps $V_{a,T}\to Z$ such that:
+**Constructible-étale fpqc effectivity theorem.** Let $q:T\to S$ be fpqc. Pullback is an
+equivalence between quasi-compact separated étale $S$-schemes and quasi-compact separated étale
+$T$-schemes with descent datum.
 
-1. their images cover $Z$;
-2. every $V_{a,T}\to T$ is quasi-affine and quasi-compact;
-3. after allowing a refinement of the index family, each $V_{a,T}$ carries an actual descent
-   datum and $V_{a,T}\to Z$ is equivariant for it.
+**Proof.** Full faithfulness is first. The graph of a map between separated étale schemes is both
+open (it is a section of an étale map) and closed (the target is separated). A compatible graph
+upstairs is saturated, so the specialization-lifting lemma descends its open-and-closed
+underlying subset. Flat descent of its ideal and of the complementary localization makes it an
+open-and-closed subscheme of the product downstairs. Its first projection becomes an isomorphism after the fpqc
+cover and hence is an isomorphism; the descended graph is the unique required map.
 
-**Proof.** Work over an affine open of $S$, replace $T$ by a finite affine refinement, and fix a
-point $z\in Z$ in an affine open $W\subset Z$. Over $T\times_ST$, compare the two translates of
-$W$. Their fiber product over the translated copies of $Z$ is a scheme and is étale over each
-translate. Shrink around a chosen lift of $z$ so that this common refinement is separated and
-quasi-compact. Because the two projections $T\times_ST\to T$ are quasi-compact, finitely many
-such shrinks control the chosen quasi-compact neighborhood. Over the triple overlap, replace them
-by the finite intersections of their three pullbacks. The cocycle says that the three resulting
-refinements agree, not merely up to a new choice.
+For effectivity, all ingredients are quasi-compact, so reduce to $S$ and $T$ affine. Zariski's
+Main Theorem factors $E_T\to T$ as a quasi-compact open immersion
 
-We now remove the choices. Over a strict henselization of the base at the image of $z$, each of
-the separated étale common refinements is a disjoint union of sections. Retain the section through
-$z$ and impose every translate required on the finite double- and triple-overlap diagrams just
-chosen. The triple identity makes these sections stable and supplies an honest descent datum;
-there is no further coherence condition in degrees four and above, because every composite is
-reduced by the triple identity. Each retained section and each equality between two translates is
-finitely presented. The finite-control condition on the cover therefore spreads the whole finite
-diagram to an étale neighborhood of the base exactly as in the preceding lemma. Intersecting the
-finitely many affine neighborhoods used above makes the resulting total space a quasi-compact
-open in an affine $T$-scheme, hence quasi-affine over $T$. Separatedness ensures that different
-spreadings have a common refinement: their equalizer is open, contains the selected
-strict-henselian section, and after shrinking is all of the chosen neighborhood.
+$$
+E_T\hookrightarrow \overline E_T
+$$
 
-Repeat this construction for every point of $Z$ and take the disjoint union of the resulting
-neighborhoods. On pairwise overlaps take their fiber products, and on triple overlaps use the
-already imposed equality. This is a genuine refinement of descent data, not an affine
-coskeleton: the objects and every arrow are schemes, and the unit, inverse, and composition are
-the maps forced by the chosen sections and the original cocycle. The neighborhoods cover by
-construction and have the three stated properties. $\square$
+with $\overline E_T\to T$ finite. In particular $E_T$ is quasi-affine. We spell out the descent
+rather than appeal to étale-local gluing. For $g:E_T\to T$, the intrinsic algebra
+$g_*\mathcal O_{E_T}$ is quasi-coherent: use a finite affine cover and the finite equalizer of
+functions on its pairwise intersections. Flat base change identifies its two pullbacks, so affine
+descent gives an affine $S$-scheme
+
+$$
+\overline E=\operatorname{Spec}_S(g_*\mathcal O_{E_T})^{\mathrm{desc}}.
+$$
+
+The canonical map $E_T\to\operatorname{Spec}_T(g_*\mathcal O_{E_T})$ is a quasi-compact open
+immersion. Its image is saturated because the construction is intrinsic. The
+specialization-lifting lemma descends that image to an open of $\overline E$: on affine charts it
+is the unique subset whose inverse image is the given saturated open, and flat descent of the
+corresponding localized algebras supplies its scheme structure. Call the resulting open scheme
+$E$. Then $E\times_ST\simeq E_T$ compatibly with the datum. Quasi-compactness, separatedness, and
+étaleness are reflected by the fpqc cover. This explicit affine-envelope and open-gluing
+construction proves effectivity as a **scheme** and never chooses a section of $T\to S$.
+$\square$
+
+We next construct enough equivariant étale charts. The finite-choice step below is what replaces
+the invalid instruction to take finitely many translates of one affine neighborhood.
+
+**Finite-choice atlas lemma.** Let $p:T\to S$ be fpqc and let a $T$-scheme $Z$ have descent datum.
+There is a set-indexed family $V_{a,T}\to Z$ such that:
+
+1. each map is quasi-compact, separated, and étale, and their images cover $Z$;
+2. every $V_{a,T}\to T$ is quasi-affine;
+3. each $V_{a,T}$ has a genuine descent datum over $T/S$, and its map to $Z$ is equivariant.
+
+**Proof.** Work over affine $S$ and a finite affine refinement of $T$. Let
+$R=T\times_ST$ act on $Z$ through the given cocycle, and fix $z\in Z$. The orbit over the image
+of $z$ is compact in the constructible topology: it is the image of the quasi-compact fiber of
+$R\to T$. Choose affine neighborhoods of its points. Constructible compactness gives finitely
+many, say $W_1,\ldots,W_n$, and quasi-compact opens $P_i\subseteq W_i$ whose union still contains
+the orbit. Let $F=Z\setminus\bigcup P_i$. Its saturation
+$t(s^{-1}F)$ is pro-constructible because $t$ is quasi-compact, and it is stable under
+specialization by ordered-pair lifting. It is therefore Zariski closed. Its complement $N$ is an
+invariant open containing the orbit and contained in $\bigcup P_i$. Notice that we obtained a
+finite **cover** of the orbit, not a single affine containing it; the latter need not exist.
+
+Choose finitely many principal opens $P'_j\subseteq N\cap W_i$ which still cover the orbit and put
+$A=\coprod_jP'_j\to N$. This is quasi-compact, separated, and étale. Since $T$ is affine and each
+$P'_j$ is affine, $A$ is affine over $T$; no surjectivity away from the orbit is needed. We now
+describe the finite-choice scheme. For an $N$-scheme
+$Y$, a finite choice is a nonempty open-and-closed $Y$-subscheme
+
+$$
+C\subseteq A\times_NY
+$$
+
+which is finite étale over $Y$, together with one distinguished section of $C/Y$. Since $A/N$ is
+quasi-compact separated étale, its fibers are finite discrete sets. The functor of open-and-closed
+subsets of rank $d$ is represented by a separated étale scheme: étale-locally on $N$, $A$ is a
+finite disjoint union of copies of the base and the functor is the finite set of $d$-element
+subsets. The descriptions agree uniquely on overlaps. Taking all $1\leq d\leq n$ and then the
+finite étale pointed cover gives a quasi-compact separated étale scheme $C(A/N)\to N$.
+
+Transport $A$ over the two projections $R_N\rightrightarrows N$. The two transported covers need
+not be equal. Their common refinement
+
+$$
+s^*A\times_{R_N}t^*A\longrightarrow R_N
+$$
+
+records a source chart, a target chart, and the point on which they overlap. A choice is called
+**admissible** when it is equipped with a bijection between its source and target pullbacks which
+lifts to this common refinement, is the identity on the unit, and whose two composites agree over
+$R_N\times_N R_N$. For finite étale schemes, the functor of bijections is finite étale; the
+condition that a bijection lift through an open subobject and the equality of two bijections are
+open-and-closed conditions. Thus the functor of admissible pointed choices is represented by an
+open-and-closed subscheme $V_T$ of a finite étale scheme over $C(A/N)$. Forgetting and then
+transporting the distinguished chart defines an actual descent isomorphism on $V_T$. The unit and
+cocycle are part of the representing equalizer, rather than conclusions drawn from pairwise
+refinements. There is no hidden infinite intersection here. The failure locus on the double or
+triple overlap is pro-constructible; the relevant projections are quasi-compact, so its image
+is pro-constructible. Failure of a lift through an open-and-closed finite étale subobject is
+stable under specialization, so specialization lifting makes its complement open. Compactness of the
+finite-choice scheme then reduces the condition to finitely many open-and-closed equations.
+
+The admissible-choice scheme covers the orbit of $z$. Indeed, over the actual fiber of
+$T\to S$, choose chart incidences simultaneously over the whole orbit. The source-target
+incidence space in $s^*A\times t^*A$ and its composition space over the triple overlap are
+quasi-compact over that compact orbit. A finite subcover therefore gives a finite system of
+incidences closed under inverse and composition. The unit and triple cocycle turn this finite
+system into an admissible pointed choice at every orbit point. The specialization-lifting lemma
+then makes the image contain an invariant open neighborhood of the orbit. The distinguished
+member gives an equivariant map $V_T\to A\to N$.
+It is quasi-compact separated étale, and $V_T\to T$ is quasi-affine because its map to the finite
+disjoint union of affines $A$ is quasi-compact separated étale, hence quasi-affine by Zariski's
+Main Theorem. Repeat for one point in each remaining orbit. The resulting set-indexed family
+covers $Z$ and has all three asserted properties. $\square$
 
 We can now prove the promised flat-presentation theorem. Let $X$ be the equalizer sheaf (11.3)
-for an arbitrary fpqc $p:T\to S$ and a scheme datum $X_T$. Apply the slicing lemma and then the
+for an arbitrary fpqc $p:T\to S$ and a scheme datum $X_T$. Apply the finite-choice atlas lemma and then the
 intrinsic affine-envelope construction to descend every quasi-affine $V_{a,T}$ to an $S$-scheme
 $V_a$. The compatible maps define
 
@@ -1206,22 +1278,24 @@ V=\coprod_aV_a\longrightarrow X.                         \tag{11.4}
 $$
 
 This map is representable, separated, étale, and surjective. Indeed, for a scheme $A\to X$, its
-pullback becomes the separated étale scheme
-$A_T\times_{X_T}\coprod_aV_{a,T}$ after the fpqc cover $A_T\to A$. The preceding effectivity
-lemma descends that pullback to a scheme over $A$; étaleness and surjectivity are reflected by the
-cover. Thus (11.4) is an étale scheme atlas.
+pullback after the fpqc cover $A_T\to A$ is the disjoint union of the quasi-compact separated
+étale schemes $A_T\times_{X_T}V_{a,T}$. The constructible-étale theorem descends each summand to
+a scheme over $A$; their disjoint union represents $A\times_XV$. Étaleness and surjectivity are
+reflected by the cover. Thus (11.4) is an étale scheme atlas.
 
-It remains to prove the diagonal. Put $Q_T=V_T\times_{X_T}V_T$. This is a scheme, and either
-projection $Q_T\to V_T$ is separated and étale because the slices were chosen separated étale.
-It has its canonical datum relative to $V_T\to V$, so separated-étale fpqc effectivity descends
-it to a scheme $Q$. Full faithfulness descends the two projections, unit, inverse, and composition,
+It remains to prove the diagonal. For each pair $(a,b)$ put
+$Q_{ab,T}=V_{a,T}\times_{X_T}V_{b,T}$. This is quasi-compact, separated, and étale over either
+factor and has its canonical datum relative to $T/S$. It is quasi-affine over $T$: its projection
+to $V_{a,T}$ is quasi-compact separated étale and hence quasi-affine, and $V_{a,T}\to T$ is
+quasi-affine. The affine-envelope construction therefore descends it to a scheme $Q_{ab}$; put
+$Q=\coprod_{a,b}Q_{ab}$. Full faithfulness descends the two projections, unit, inverse, and composition,
 making $Q\rightrightarrows V$ an étale equivalence relation. The quotient theorem already proved
 shows that $V/Q$ has representable diagonal and atlas $V$. Both $V/Q$ and $X$ are fpqc sheaf
 coequalizers of the same relation: after pullback to $T$ this is clear, and equality of the two
 maps is detected by the fpqc cover. Hence $X\simeq V/Q$.
 
 Changing slices only replaces $V$ by the common refinement $V\times_XV'$. The same
-separated-étale effectivity proves that this refinement and its relation are schemes, so the two
+componentwise quasi-affine argument proves that this refinement and its relation are schemes, so the two
 quotients are uniquely isomorphic. Refinements of the original fpqc cover give the same result by
 the identical comparison. We have proved:
 
@@ -1266,7 +1340,7 @@ is precisely the invalid step in the unrestricted stable-affine-neighborhood arg
 The cocycle remains necessary. Without it, the two arrows do not define an equivalence relation
 at all. But the cocycle is not sufficient for a quotient sheaf to be a scheme. Along an étale
 cover the elementary quotient proof supplies the algebraic space; for a general fpqc cover the
-étale-slicing argument of Section 11.1 supplies it. Neither argument supplies invariant affine
+finite-choice atlas argument of Section 11.1 supplies it. Neither argument supplies invariant affine
 opens, which is exactly the additional requirement for a scheme.
 
 ### 11.3 The invariant-affine criterion
@@ -1854,8 +1928,8 @@ the flat-presentation construction of Section 11.1 forms the algebraic-space quo
 arbitrary scheme datum and verifies both its representable diagonal and étale atlas. At the fpqc scheme-theoretic
 level, affine charts, intrinsic quasi-affine envelopes, or compatible positive line bundles
 construct a representing scheme directly. There is no automatic stable-affine-neighborhood step
-between these levels. The slicing and separated-étale effectivity lemmas are the precise step
-which replace the original flat presentation by an étale scheme atlas.
+between these levels. Constructible-étale effectivity and the finite-choice atlas lemma are the
+precise steps which replace the original flat presentation by an étale scheme atlas.
 
 The logic can be summarized by the diagram
 
