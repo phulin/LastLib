@@ -3771,406 +3771,290 @@ The $c_\tau$, with the common sign fixed by arithmetic reciprocity, are the labe
 eigenvalues of the Sen operator. A rank-one representation is Hodge--Tate exactly when all
 these eigenvalues are integers.
 
-**Proof.** The logarithms converge after shrinking the principal-unit groups. Their composite
-is a continuous additive map from an open lattice in $L$ to $E$, hence extends uniquely to
-a $\mathbf Q_\ell$-linear map $L\to E$. Dedekind independence says that the embeddings
-$\tau:L\hookrightarrow E$ form an $E$-basis of
-$\operatorname {Hom}_{\mathbf Q_\ell}(L,E)$, proving (11.HT2).
+**Proof.** The first assertion is elementary. After shrinking the principal-unit
+group, both logarithms converge and their composite is a continuous additive
+map from an open lattice in $L$ to $E$. It extends uniquely to a
+$\mathbf Q_\ell$-linear map $L\to E$, and Dedekind independence gives the
+unique expansion (11.HT2). What remains is to identify this differential with
+the Hodge--Tate grading. We prove the required rank-one Tate--Sen theorem.
 
-We include the analytic descent calculation, with
-$v_\ell(\ell)=1$. For a finite extension $E/D$, normalized trace means
-
+Fix a uniformizer $\pi$, a Lubin--Tate formal module, and its tower
+$L_\infty=\bigcup_mL_m$. Put
 $$
-R_{E/D}=[E:D]^{-1}\operatorname {Tr}_{E/D},\qquad
-v_\ell(R_{E/D}z)\ge v_\ell(z)-v_\ell([E:D]).              \tag{11.HT3}
-$$
-
-The loss in this elementary estimate does not tend to zero in a cyclotomic or
-Lubin--Tate tower; using the raw different to claim otherwise would be false.
-What is needed is the following uniform correction lemma.
-
-**Ax--Tate correction lemma.** For a finite extension $D/\mathbf Q_\ell$
-there is a constant $c_D$ with these properties.
-
-1. If $D'/D$ is algebraic, $x$ lies in a finite Galois extension $R/D$,
-   and $J=\operatorname {Gal}(R/R\cap D')$, there is
-   $y\in R\cap D'$ such that
-
-   $$
-   v_\ell(x-y)\ge
-   \min_{\sigma\in J}
-       v_\ell(\sigma x-x)-c_D.                           \tag{11.HT3a}
-   $$
-
-2. If $J$ is a closed subgroup of $G_D$ and
-   $c:J\to\mathbf C_\ell$ is a continuous one-cocycle, then for every
-   $N$ there is $b_N\in\mathbf C_\ell$ such that
-
-   $$
-   v_\ell(c(g)-(g-1)b_N)\ge N\quad(g\in J),               \tag{11.HT3a'}
-   $$
-
-   and the $b_N$ may be chosen successively with
-   $v_\ell(b_{N+1}-b_N)\ge N-c_D$.
-
-Here is the proof. Replace $R$ by its Galois closure and let $G_i$ be its
-lower ramification groups. If $J$ is not normal, use
-$J_i=J\cap G_i$. Since $G_i/G_{i+1}$ is elementary abelian for $i>0$,
-$J_i/(J_i\cap G_{i+1})$ is a normal elementary quotient of $J_i$; thus the
-successive fixed fields form a tower even though $J$ need not be normal in
-the full Galois group. On a tame quotient the integral Reynolds sum has no
-denominator. On an elementary wild quotient
-$J_i/(J_i\cap G_{i+1})$, choose $\sigma_1,\ldots,\sigma_s$ mapping to an
-$\mathbf F_\ell$-basis and eliminate the differences
-$\sigma_jx-x$ successively. The correction for $\sigma_j$ is the finite sum
-
-$$
-\ell^{-1}\sum_{a=0}^{\ell-1}a\,\sigma_j^a(\sigma_jx-x);
+ H=\operatorname {Gal}(\overline L/L_\infty),\qquad
+ \Gamma=\operatorname {Gal}(L_\infty/L).
 $$
 
-applying $\sigma_j-1$ leaves $\sigma_jx-x$ minus its normalized norm. For
-the first equation that norm is zero; after earlier generators have been
-corrected it is the compatibility residual, and lies one ramification step
-deeper. Division by $\ell$ itself loses
-exactly $v_\ell(\ell)=1$; the recovery comes from the deeper norm term, not
-from changing valuation conventions.
+After discarding a finite initial layer, Lubin--Tate reciprocity identifies
+$\Gamma$ with $1+\pi^m\mathcal O_L$. In the special case
+$L=\mathbf Q_\ell$ this is the cyclotomic tower. The trace calculation is
+first made in a procyclic direction (hence is the usual cyclotomic
+calculation) and is then applied in each Lubin--Tate direction to retain all
+labels.
 
-Here is the required jump calculation, with the fields and valuation scales
-made explicit. Pass first to the maximal unramified--tame subextension
-$D_0/D$; its Reynolds operator is integral. Refine the remaining lower
-ramification filtration to a tower
-
+We first establish precisely the bounded projections used in descent. If
+$E/F$ is a finite extension of local fields, $e=e(E/F)$, and
+$d_{E/F}=v_E(\mathfrak D_{E/F})$, the inverse-different definition and
+duality of fractional ideals give
 $$
-D_0\subset D_1\subset\cdots\subset D_s\subset R,
-\qquad [D_{j+1}:D_j]=\ell,\qquad e(D_j/D_0)=\ell^j.       \tag{11.HT3r0}
-$$
-
-It is harmless that $J$ is not normal: take successively the fixed fields of
-the normal subgroups $J_i\cap G_{i+1}\triangleleft J_i$ and refine each
-elementary abelian quotient by subspaces. At the $j$th step let $c_j$ denote
-the still uncorrected difference, measured in $D_{j+1}$, and put
-
-$$
-b_j=\ell^{-1}\sum_{a=0}^{\ell-1}a\sigma_j^ac_j,
-\qquad c_{j+1}=c_j-(\sigma_j-1)b_j .                     \tag{11.HT3r1}
+ \operatorname {Tr}_{E/F}(\mathfrak m_E^r)
+ =\mathfrak m_F^{\lfloor(r+d_{E/F})/e\rfloor}.             \tag{11.HT3}
 $$
 
-The group-ring identity
-
+Indeed $y$ annihilates the ideal on the left exactly when
+$y\mathfrak m_E^r\subseteq\mathfrak D_{E/F}^{-1}$; taking the annihilator
+again proves equality. Consequently
 $$
-(\sigma_j-1)\sum_{a=0}^{\ell-1}a\sigma_j^a
-=\ell-\sum_{a=0}^{\ell-1}\sigma_j^a                    \tag{11.HT3r2}
-$$
-
-shows that $c_{j+1}=\ell^{-1}\operatorname {Tr}_{D_{j+1}/D_j}(c_j)$.
-The cocycle compatibility is essential here. Around the order-$\ell$
-quotient it reads
-
-$$
-c_j+\sigma_jc_j+\cdots+\sigma_j^{\ell-1}c_j=0
+ v_\ell\!\left([E:F]^{-1}\operatorname {Tr}_{E/F}x\right)
+ \ge v_\ell(x)-v_\ell([E:F])
+       +\frac{d_{E/F}}{e(E/\mathbf Q_\ell)}
+       -\frac1{e(F/\mathbf Q_\ell)}.                       \tag{11.HT3a}
 $$
 
-modulo the layers already corrected. Consequently the leading residue
-class of $c_j$ has additive trace zero. Write
-$c_j=\varpi_{j+1}^ru$ with $u$ a unit. On the first nonzero graded piece
-the field trace is precisely this residue trace, so it vanishes; the trace
-therefore belongs to the next $D_j$-valuation layer. This is why the
-following gain is available for these residuals, although it is false for
-an arbitrary trace input. In absolute valuations the
-lower-ramification congruence gives
+This is the correct different estimate; omitting the positive different term
+would give an accumulating and useless loss.
 
+For completeness, the boundedness in the chosen tower follows without an
+asymptotic assertion about raw differents. The conductor--different formula
+for the abelian extension $L_r/L_s$ is
 $$
-v_\ell\!\left(\operatorname {Tr}_{D_{j+1}/D_j}c_j\right)
- \ge v_\ell(c_j)+1-\frac1{e(D_j/\mathbf Q_\ell)},
-\qquad
-v_\ell(c_{j+1})\ge v_\ell(c_j)
- -\frac1{e(D_0/\mathbf Q_\ell)\ell^j}.                  \tag{11.HT3r}
+ d_{r/s}=\sum_{\substack{\chi\in
+ \widehat{\operatorname {Gal}(L_r/L_s)}\\\chi\ne1}}
+ f_s(\chi),                                                \tag{11.HT3b}
 $$
 
-Indeed the trace sum supplies the factor $\ell$ (absolute valuation $1$);
-the ceiling in passing from the $D_{j+1}$-scale to the $D_j$-scale can
-discard at most one $D_j$-layer, of absolute width $1/e(D_j)$. Division by
-$\ell$ in (11.HT3r1) then leaves precisely the second inequality. This also
-proves the assertion when the residue extension is imperfect, since only its
-additive trace was used. Induction through the
-lower ramification filtration gives total loss at most
-
+where $f_s(\chi)$ is the least Lubin--Tate unit level on which $\chi$ is
+trivial. There are $q^j-q^{j-1}$ characters of exact level $s+j$, with
+$q=|\mathcal O_L/\pi|$. Summing this geometric list, and using
+$e(L_{s+j}/L_s)=q^j$, gives
 $$
-c_D=v_\ell(\mathfrak D_{D/\mathbf Q_\ell})
-       +\sum_{j\ge0}\frac1{e_D\ell^j}
-=v_\ell(\mathfrak D_{D/\mathbf Q_\ell})
-       +\frac{\ell}{e_D(\ell-1)}.                        \tag{11.HT3a''}
+ \sup_{r\ge s\ge m}\left\{
+ v_\ell([L_r:L_s])-
+ \frac{d_{r/s}}{e(L_r/\mathbf Q_\ell)}
+ +\frac1{e(L_s/\mathbf Q_\ell)}\right\}\le c_{L,m}<\infty. \tag{11.HT3c}
 $$
 
-Descending only through the ramification groups which meet $J$ gives an
-element fixed by $J$, hence in $R\cap D'$, and proves (11.HT3a); the
-geometric bound depends on $D$, not on the finite subextension of $D'$.
-The same elimination applied to the bar equation
-$c(gh)=c(g)+g c(h)$ gives a finite-quotient element $b$ whose coboundary
-agrees with $c$ modulo any prescribed valuation. At the next precision apply
-the construction to the residual cocycle. Formula (11.HT3a'') bounds the new
-correction and gives (11.HT3a'). Completeness then permits successive
-corrections. This proves the lemma. Notice that the proof uses the
-ramification filtration, not a false bound on a tower's raw different.
+The tame first layer merely changes $c_{L,m}$. The same computation in a
+closed $\mathbf Z_\ell$-direction replaces $q^j$ by $\ell^j$ and has
+the identical conclusion.
 
-Let $L_\infty=\bigcup_mL_m$ be the Lubin--Tate extension,
-$H=\operatorname {Gal}(\overline L/L_\infty)$, and
-$\Gamma=\operatorname {Gal}(L_\infty/L)$, identified by Lubin--Tate
-reciprocity with an open subgroup of $\mathcal O_L^\times$. If
-$z\in\mathbf C_\ell^H$, choose algebraic $z_j\to z$. Continuity and $H$-invariance
-make $\min_{h\in H}v_\ell(z_j-hz_j)\to\infty$. Apply (11.HT3a) to the finite
-Galois closure containing $z_j$, over its intersection with $L_\infty$.
-The resulting $y_j\in L_\infty$ tends to $z$. Therefore
-
+For $r\ge s$ set
 $$
-\mathbf C_\ell^H=\widehat{L_\infty}.                     \tag{11.HT3b}
+ R_{r/s}=[L_r:L_s]^{-1}\operatorname {Tr}_{L_r/L_s}.
 $$
 
-For a continuous cocycle $c:H\to\mathbf C_\ell$, apply clause 2 with
-$N, N+1,\ldots$. The successive differences form a Cauchy sequence; its
-limit $b$ satisfies $c(h)=(h-1)b$. Thus
-
+Transitivity of trace gives $R_{t/s}R_{r/t}=R_{r/s}$, and (11.HT3a)--(11.HT3c)
+give
 $$
-H^1(H,\mathbf C_\ell)=0.                                 \tag{11.HT3c}
+ v_\ell(R_{r/s}x)\ge v_\ell(x)-c_{L,m}.                   \tag{11.HT3d}
 $$
 
-Equations (11.HT3b)--(11.HT3c) are the analytic descent facts needed below;
-their convergence and constants have now been proved.
-
-We need one further, genuinely several-variable, calculation. It is
-important not to use normalized field traces here. If $L\ne\mathbf Q_\ell$,
-the losses of the normalized traces in the full Lubin--Tate tower accumulate;
-in particular the completion need not descend to a finite Lubin--Tate layer.
-The correct replacement is analytic decompletion.
-
-Choose $m$ so that $\Gamma_m=1+\pi^m\mathcal O_L$ is uniform, choose a
-$\mathbf Z_\ell$-basis $e_1,\ldots,e_d$ of $\mathcal O_L$, and put
-$\gamma_i=\operatorname {rec}_L(\exp(\pi^me_i))$ and
-$\Delta_i=\gamma_i-1$. For a finite quotient on which $\gamma_i$ has order
-$N=\ell^s$, set
-
+Thus, on $A=\widehat{L_\infty}$, the rule
+$R_s(x)=R_{r/s}(x)$ for $x\in L_r$ extends uniquely to a bounded
+$L_s$-linear projection
 $$
-A_i=N^{-1}\sum_{a=0}^{N-1}\gamma_i^a,\qquad
-T_i=N^{-1}\sum_{a=0}^{N-1}a\gamma_i^a.                  \tag{11.HT3e}
+ R_s:A\longrightarrow L_s,\qquad R_sR_t=R_{\min(s,t)}.    \tag{11.HT3e}
 $$
 
-The two group-ring identities
+It commutes with every element of $\Gamma$. In particular
+$A=L_s\oplus X_s$, where $X_s=\ker R_s$, as a topological
+$L_s$-space.
 
+We next invert $\gamma-1$ on $X_s$. Choose a procyclic
+$\mathbf Z_\ell$-direction of $\Gamma$, a generator $\gamma$ at level
+$s$, and, on a quotient of order $N=\ell^a$, put
 $$
-\Delta_iT_i=1-A_i,\qquad A_i\Delta_i=0                  \tag{11.HT3f}
-$$
-
-are obtained by moving the last summand to the front. Thus $T_i$ is an
-actual inverse to $\Delta_i$ on the trace-zero part; it is not a symbolic
-``geometric-series inverse.'' Put
-
-$$
-A_i^{(k)}=N^{-1}\sum_{a=0}^{N-1}{a\choose k}\gamma_i^a .
+ T_{s,a}=N^{-1}\sum_{j=0}^{N-1}j\gamma^j.                 \tag{11.HT3f}
 $$
 
-Write $F_i^r=\bigcap_{k<r}\ker A_i^{(k)}$. For a multi-index
-$\alpha$ let $F^r$ be the closed subspace on which all moments
-
+Moving the last summand to the front gives the exact identities
 $$
-N^{-1}\sum_{a\bmod \ell^s}
- {a_1\choose\alpha_1}\cdots {a_d\choose\alpha_d}
- \gamma_1^{a_1}\cdots\gamma_d^{a_d}z
+ (\gamma-1)T_{s,a}=1-R_{s,a},\qquad
+ R_{s,a}(\gamma-1)=0,                                    \tag{11.HT3g}
 $$
 
-vanish for $|\alpha|<r$; it is the corresponding simultaneous refinement of
-the $F_i^r$. Summation by parts, using
-${a+1\choose k}-{a\choose k}={a\choose k-1}$, gives
-
+where $R_{s,a}=N^{-1}\sum_{j=0}^{N-1}\gamma^j$.
+To bound $T_{s,a}$, split the weighted sum into successive blocks of sizes
+$1,\ell,\ldots,\ell^a$. On the $j$-th block summation by parts replaces
+the division by $\ell^j$ by the normalized trace from that block. Applying
+(11.HT3a) to each block, the conductor sum (11.HT3b) telescopes; only the
+first-layer endpoint remains. Hence there is $b_{L,m}$, independent of
+$a$, such that
 $$
-T_i(F_i^{r+1})\subset F_i^r,\qquad
-v_\ell(T_i z)\ge v_\ell(z)+r-c_L\quad(z\in F_i^{r+1}). \tag{11.HT3g}
-$$
-
-Here is the valuation check behind the second assertion. On the field
-layer fixed by $\gamma_i^{\ell^s}$, Book 3's lower-group formula gives
-
-$$
-v_\ell((\gamma_i^{\ell^{a+1}}-1)u)
- \ge v_\ell((\gamma_i^{\ell^a}-1)u)+1-
-       \frac1{e_L\ell^a}.
+ v_\ell(T_{s,a}x)\ge v_\ell(x)-b_{L,m}
+ \quad\text{if }R_{s,a}x=0.                              \tag{11.HT3h}
 $$
 
-We justify its use for an arbitrary $u$, not merely a uniformizer. In a
-finite layer $E$, write $i_E(\sigma)=v_E(\sigma(\varpi_E)-\varpi_E)$.
-Every $u\in E$ has a convergent expansion
-$\sum_n[c_n]\varpi_E^n$ with Teichmüller coefficients. Wild inertia fixes
-the coefficients, and
-
+Compatibility with normalized traces lets $T_{s,a}$ pass to the limit.
+We obtain a continuous operator $T_s:X_s\to X_s$ satisfying
 $$
-\sigma(\varpi_E^n)-\varpi_E^n
-=(\sigma\varpi_E-\varpi_E)
- \sum_{k=0}^{n-1}(\sigma\varpi_E)^k\varpi_E^{n-1-k}
+ (\gamma-1)T_s=T_s(\gamma-1)=1,\qquad
+ v_\ell(T_sx)\ge v_\ell(x)-b_{L,m}.                       \tag{11.HT3i}
 $$
 
-(with the analogous identity after multiplying through by
-$\varpi_E^{-n}$ for $n<0$). Hence
+For $\gamma^{\ell^k}$ the same proof gives loss at most $b_{L,m}+k$.
+This is the Tate--Sen inverse. The finite averages are used only on the
+trace-zero summand on which (11.HT3g) proves that an inverse can exist.
 
+We also need descent through $H$. We use the following consequence of the
+same ramification calculation. There is $c_L$ such that, for every finite
+Galois $M/L$, every subgroup $J$, and every $x\in M$, one can find
+$y\in M^J$ with
 $$
-v_E((\sigma-1)u)\ge v_E(u)+i_E(\sigma)-1.                \tag{11.HT3g'}
-$$
-
-For $\sigma_a=\gamma_i^{\ell^a}$, factor
-$\sigma_{a+1}-1=(\sigma_a-1)
-(1+\sigma_a+\cdots+\sigma_a^{\ell-1})$. On each associated valuation
-layer, the parenthesized operator is the residue trace. It contributes the
-factor $\ell$, except when that residue trace vanishes, in which case the
-valuation is larger. The explicit Lubin--Tate lower breaks from Book 5 give
-$e_L\ell^a-1$ as the largest possible discarded endpoint. Dividing by the
-absolute ramification index of the layer proves the displayed inequality.
-Taking limits proves it for every $u\in\widehat{L_\infty}$, since both
-operators are continuous and the finite layers are dense.
-
-Apply this successively to the $r+1$ vanished moments and then use
-(11.HT3f). Division by $\ell^s$ is cancelled by the $s$ ramification
-jumps, and the discarded end layers have total width at most
-$\sum_{a\ge0}(e_L\ell^a)^{-1}$; together with the tame initial layers this
-is the constant $c_L$ in (11.HT3g). This proves the estimate uniformly in
-the finite quotient. Passing to a cofinal sequence of quotients is allowed
-because the moment operators commute with transition averages. Thus
-(11.HT3e)--(11.HT3g) define continuous operators on
-$\widehat{L_\infty}$.
-
-We record the resulting analytic decompletion in the exact rank-one form
-used here.
-
-**Analytic decompletion proposition.** Let $A=\widehat{L_\infty}$ and let
-$W=A d$ have a continuous semilinear action of $\Gamma_m$. There are
-$f\in A^\times$ and unique scalars $\Theta_\tau\in E$, one for each
-$\tau:L\hookrightarrow E$, such that, after replacing $d$ by $fd$, its orbit
-map is locally analytic and
-
-$$
-\log(\gamma_x\mid Afd)
-=\sum_\tau\tau(x)\Theta_\tau
-\quad(x\in\pi^n\mathcal O_L)                             \tag{11.HT3h}
+ v_\ell(x-y)\ge\min_{\sigma\in J}v_\ell(\sigma x-x)-c_L.  \tag{11.HT3j}
 $$
 
-for some $n$. Moreover the $\tau$-labeled Hodge--Tate invariant after twist
-by $r$ is one-dimensional exactly when $\Theta_\tau=r$, and is zero
-otherwise.
-
-To prove the proposition, write $u_i=\log(\gamma_i(d)/d)$. Commutativity
-gives the Koszul equations $\Delta_i u_j=\Delta_j u_i$. Remove successively
-the nonanalytic moments. At the first coordinate put
-$a_1=T_1(u_1-A_1u_1)$. Then $\Delta_1a_1=u_1-A_1u_1$ by (11.HT3f), and
-
+Here is the correction argument. Intersect the lower ramification filtration
+of $\operatorname {Gal}(M/L)$ with $J$. The tame quotient is removed by
+its integral Reynolds operator. Refine each wild quotient to cyclic quotients
+of order $\ell$. If $\sigma$ generates one of them and
+$c=\sigma x-x$, put
 $$
-\Delta_1(u_j-\Delta_ja_1)
-=\Delta_j(u_1-\Delta_1a_1)=\Delta_jA_1u_1=0.
+ b=\ell^{-1}\sum_{a=0}^{\ell-1}a\sigma^ac.              \tag{11.HT3j'}
 $$
 
-Thus the corrected equations for $j>1$ descend to the $\gamma_1$-fixed
-part. Repeat for $i=2,\ldots,d$. This is the promised explicit induction:
-each new correction preserves all previous equations, rather than changing
-them by an error to be ``absorbed.'' At moment order $r$, (11.HT3g) says
-that the correction has valuation at least the old error plus $r-c_L$.
-Starting the $r$th cycle after multiplying the open lattice by
-$\ell^{2c_L+r}$ makes the corrections a Cauchy series. Its sum $a$ satisfies
-that every $u_i-\Delta_i a$ is represented by its convergent Mahler series.
-Taking $f=\exp(-a)$ (after a harmless scalar rescaling before the first
-cycle) proves local analyticity. The constant moment is a continuous
-additive map $L\to E$ and therefore has the unique expansion
-$\sum_\tau\Theta_\tau\tau(x)$ by Dedekind independence. This proves
-(11.HT3h), including existence, compatibility, and uniqueness.
-
-For the last assertion apply the same moment complex to an element $zfd$.
-After twisting the $\tau$-component by $r$, its degree-zero Koszul equation
-is
-
+The group-ring identity (11.HT3g), together with
+$\sum_a\sigma^ac=\sigma^\ell x-x=0$, gives
+$(\sigma-1)b=c$ exactly. Thus $x-b$ descends through this quotient. To
+bound the correction, apply (11.HT3) to the valuation ideal generated by the
+conjugates of $c$. If the fixed field at this step has absolute
+ramification index $e_i$, the loss after division by $\ell$ is at most
 $$
-\Delta_i z=
-\bigl(\exp((r-\Theta_\tau)\tau(\pi^ne_i))-1\bigr)z.      \tag{11.HT3i}
+ \frac{\ell}{e_i(\ell-1)}.                               \tag{11.HT3j''}
 $$
 
-If $r\ne\Theta_\tau$, choose $i$ for which the displayed scalar
-$c=\exp((r-\Theta_\tau)\tau(\pi^ne_i))-1$ is nonzero. Apply $A_i$ to
-(11.HT3i): the left side is zero, while the right side is $cA_i z$.
-Hence $A_i z=0$ and (11.HT3f) writes $z=\Delta_iT_i z$.
-
-We spell out the filtration induction which rules out a hidden eigenvector.
-Summation by parts gives, on the quotient of order $N$,
-
+This is the different cancellation: the $1$ lost by division by
+$\ell$ is cancelled by the $d/e$ term in (11.HT3a), leaving only the
+rounding of one valuation layer. Along successive wild quotients
+$e_{i+1}\ge\ell e_i$, so the sum of (11.HT3j'') is at most
+$\ell^2/(e_L(\ell-1)^2)$. Adding the finitely many tame and initial layers
+gives $c_L$. Successively applying (11.HT3j') therefore produces a
+$J$-fixed $y$ and proves (11.HT3j). Notice that the estimate was applied
+to the difference $c=(\sigma-1)x$, whose trace is zero; it makes no claim
+that normalized trace improves an arbitrary input.
+Approximation by algebraic elements now gives
 $$
-A_i^{(k)}\Delta_i=-A_i^{(k-1)}+B_{i,N}^{(k)},             \tag{11.HT3j}
-$$
-
-where $A_i^{(-1)}=0$ and the boundary operator is
-
-$$
-B_{i,N}^{(k)}z
-=N^{-1}{N\choose k}\,(\gamma_i^N-1)z .
+ \mathbf C_\ell^H=A.                                     \tag{11.HT3k}
 $$
 
-On a cofinal sequence of quotients, (11.HT3g') gives
-$B_{i,N}^{(k)}z\to0$: the binomial coefficient loses at most
-$v_\ell(k!)$, whereas $\gamma_i^N-1$ gains the last ramification jump,
-which tends to infinity. Apply $A_i^{(k)}$ to
-$\Delta_i z=cz$. Starting with $A_i^{(0)}z=0$, equation (11.HT3j) proves
-inductively that $A_i^{(k)}z=0$ for every $k$, that is,
-$z\in F_i^q$ for every $q$. Moreover $T_i$ lowers the
-$i$-moment index by one, so $T_i^az\in F_i^{q-a}$ for $q>a$; thus the
-successive $T_i/\Delta_i$ operations really remain in the required
-filtration. Now $T_i z=c^{-1}z$, while (11.HT3g), applied with arbitrarily
-large $q$, gives
-
+Applying the same averaging to a continuous additive cocycle, then correcting
+the residual cocycle at precisions $N,N+1,\ldots$, produces corrections
+whose successive differences have valuation at least $N-c_L$. Completeness
+therefore gives
 $$
-v_\ell(c^{-1}z)=v_\ell(T_i z)\ge v_\ell(z)+q-c_L.
+ H^1(H,\mathbf C_\ell)=0.                                 \tag{11.HT3l}
 $$
 
-This is impossible for nonzero $z$.
-
-If $r=\Theta_\tau$, the constant term in (11.HT3i) vanishes and the explicit
-seed $z=1$ solves every equation on the open group: the basis $fd$ was
-constructed so that its orbit is exactly the exponential in (11.HT3h), not
-merely congruent to it. For the remaining finite quotient choose a normal
-basis element $a$ and use the resolvent
-$\sum_g\eta(g)^{-1}g(a)$; some choice of $a$ makes it nonzero, and it
-produces a global invariant. The solution space is one-dimensional, since
-the quotient of two solutions is fixed by $G_L$ and (11.HT3b), followed by
-the constant-moment calculation, gives $L$. This proves the labeled
-invariant assertion and the proposition. Notice that every operator above is extended $E$-linearly
-after applying an embedding idempotent; no trace or averaging operator is
-silently being asked to be $E$-linear.
-
-We now specialize to the rank-one representation actually needed. Choose a
-basis $v$ of $V$. Shrink to an open subgroup $H_0\subseteq H$ on which
-$\log\xi$ has valuation larger than the exponential convergence bound plus
-$c_L$. The additive cocycle
-$h\mapsto\log\xi(h)$ is a coboundary by (11.HT3c), say
-$h(a)-a=\log\xi(h)$; clause 2 of the correction lemma lets us choose $a$ in
-the exponential convergence disc. Then
-$b_0=\exp(-a)$ satisfies
-$h(b_0)/b_0=\xi(h)^{-1}$ on $H_0$. The remaining quotient $H/H_0$ is finite;
-ordinary multiplicative Hilbert 90, proved by the normal-basis resolvent,
-changes $b_0$ by one algebraic factor and gives $b\in\mathbf C_\ell^\times$
-with
-
+We apply this with attention to the exponential radius. Let $v$ be a basis
+of the line $V$. Shrink to an open normal subgroup $H_0\subset H$ so that
 $$
-\frac{h(b)}b=\xi(h)^{-1}\quad(h\in H).
+ v_\ell(\log\xi(h))>c_L+\frac1{\ell-1}\quad(h\in H_0).     \tag{11.HT3m}
 $$
 
+The construction proving (11.HT3l), begun with this cocycle, gives
+$a$ with $v_\ell(a)>1/(\ell-1)$ and
+$h(a)-a=\log\xi(h)$. Therefore $b_0=\exp(-a)$ converges and
+$$
+ h(b_0)/b_0=\xi(h)^{-1}\quad(h\in H_0).                   \tag{11.HT3n}
+$$
+
+Multiplicative Hilbert 90 on the finite quotient $H/H_0$, proved by the
+normal-basis resolvent, changes $b_0$ by one algebraic factor and gives
+$b\in\mathbf C_\ell^\times$ satisfying (11.HT3n) for all $h\in H$.
 Consequently
-
 $$
-W=(\mathbf C_\ell\otimes V)^H
-=\widehat{L_\infty}\,(b\otimes v)                        \tag{11.HT3d}
+ (\mathbf C_\ell\otimes_{\mathbf Q_\ell}V)^H
+   =A\,(b\otimes v).                                     \tag{11.HT3o}
 $$
 
-is a line, not the output of an unproved matrix-cocycle descent.
+This proves semilinear rank-one descent and records why exponentiation is
+legitimate.
 
-Apply the analytic decompletion proposition to $d=b\otimes v$. Its constant
-moment is the logarithm of $\xi$ on the reciprocity image of principal units,
-because changing $d$ by $f$ adds the coboundary
-$x\mapsto\gamma_x(f)/f$, whose constant Mahler moment is zero. Hence its
-$\Theta_\tau$ are precisely the $c_\tau$ of (11.HT2), up to the single sign
-coming from arithmetic versus geometric reciprocity. The last assertion of
-the proposition says that (11.HT1) is an isomorphism exactly when every
-$c_\tau$ is an integer. This proves Lemma 11.1. $\square$
+It remains to decomplete the $\Gamma$-action. Choose a
+$\mathbf Z_\ell$-basis $e_1,\ldots,e_d$ of $\mathcal O_L$, and let
+$\gamma_i$ correspond to $\exp(\pi^me_i)$. For
+$d_0=b\otimes v$, shrink $m$ until
+$$
+ u_i=\log(\gamma_i(d_0)/d_0)
+$$
+
+converges and has valuation greater than
+$2\max(c_{L,m},b_{L,m})+1/(\ell-1)$. Commutativity gives
+$$
+ (\gamma_i-1)u_j=(\gamma_j-1)u_i.                         \tag{11.HT3p}
+$$
+
+Write $u_i=R_su_i+(1-R_s)u_i$. Use $T_s$ in the $i$-th procyclic
+direction to remove $(1-R_s)u_i$. Equation (11.HT3p) says that the
+corrections already made in the earlier directions remain fixed in those
+directions. Repeat for $i=1,\ldots,d$, and then at levels
+$s+1,s+2,\ldots$. At the $r$-th circuit the new residual has valuation at
+least the preceding residual plus $r$, while (11.HT3h) loses at most
+$b_{L,m}$. Hence the corrections $a_r$ satisfy
+$$
+ v_\ell(a_r)\longrightarrow\infty,\qquad
+ v_\ell(a_0)>1/(\ell-1).                                  \tag{11.HT3q}
+$$
+
+The product $f=\prod_r\exp(-a_r)$ therefore converges in $A^\times$.
+For $d=fd_0$, the cocycle $\gamma(d)/d$ is defined over a finite layer and
+is locally analytic. This is the rank-one Tate--Sen decompletion; every
+correction was obtained from the actual inverse (11.HT3i), and (11.HT3q)
+is its convergence estimate.
+
+Take $s$ so that this finite layer is $L_s$, and restrict to
+$\Gamma_s$, which fixes $L_s$. Differentiating its scalar action on
+$(L_s\otimes_{\mathbf Q_\ell}E)d$, and using
+$$
+ L\otimes_{\mathbf Q_\ell}E
+   =\prod_{\tau:L\hookrightarrow E}E_\tau,
+$$
+
+gives scalars $\Theta_\tau\in E$ characterized by
+$$
+ \log(\gamma_x(d)/d)=
+ \sum_{\tau:L\hookrightarrow E}\Theta_\tau\,\tau(x)
+ \quad(x\in\pi^s\mathcal O_L).                            \tag{11.HT3r}
+$$
+
+Changing the decompleted basis adds a locally analytic coboundary. Its
+differential is $(\gamma-1)a$, whose $R_s$-projection is zero; hence it
+does not alter the $\Theta_\tau$. For the original basis, (11.HT3r) is
+exactly (11.HT2), so $\Theta_\tau=c_\tau$. These scalars are the labeled
+rank-one Sen operator.
+
+Finally fix a label $\tau$ and twist degree $r\in\mathbf Z$. An invariant
+in that labeled component satisfies, on a sufficiently small direction,
+$$
+ (\gamma_x-1)z=
+ \left(\exp((r-\Theta_\tau)\tau(x))-1\right)z.             \tag{11.HT3s}
+$$
+
+If $r\ne\Theta_\tau$, take $x=\ell^kx_0$ with $x_0$ initially so deep
+that
+$$
+ v_\ell(\exp((r-\Theta_\tau)\tau(x))-1)>b_{L,m}+k.
+$$
+
+Applying $R_s$ to (11.HT3s) gives $R_sz=0$. Applying the inverse for
+$\gamma^{\ell^k}-1$ gives
+$$
+ z=T_{s,k}\left(\exp((r-\Theta_\tau)\tau(x))-1\right)z,
+$$
+
+whose right side has valuation strictly larger than $v_\ell(z)$, a
+contradiction unless $z=0$. If $r=\Theta_\tau$, the right side of
+(11.HT3s) is zero (equivalently, the multiplicative scalar is one); the
+decompleted basis is fixed on an open subgroup, and
+the normal-basis resolvent over the remaining finite quotient supplies a
+nonzero invariant. In the $\tau$-factor the quotient of two invariants lies
+in the corresponding factor of $L\otimes_{\mathbf Q_\ell}E$, namely $E$;
+therefore this invariant space is one-dimensional over $E$.
+
+Thus the $\tau$-labeled degree-$r$ piece is one-dimensional exactly when
+$\Theta_\tau=r$, and is zero otherwise. The canonical Hodge--Tate map
+(11.HT1) is therefore an isomorphism exactly when every
+$c_\tau=\Theta_\tau$ is an integer. This proves the lemma. $\square$
 
 We next normalize the integral characters. Let $\mathcal F$ be the Lubin--Tate formal
 $\mathcal O_L$-module for a uniformizer $\pi$. Its Tate module is free of rank one over
