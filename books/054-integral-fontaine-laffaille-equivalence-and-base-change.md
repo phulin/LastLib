@@ -1984,6 +1984,8 @@ All three integral languages are now interchangeable in the safe range. This fin
 
 The proof uses the direct prerequisites in the following exact forms.
 
+* Book 6 supplies the principal-unit reciprocity calculation used to
+  identify the rank-one Lubin--Tate factors in the height-two local test.
 * Book 34 supplies schematic Cartier duality, its exactness, the
   perfect evaluation pairing, and the Tate-twisted formula on an étale
   generic fiber.

@@ -2046,7 +2046,7 @@ second coefficient completion occurs. $\square$
 The argument rests directly on the chronological chain
 
 $$
-\boxed{185\mid168,\ 180,\ 182,\ 183,\ 184.}
+\boxed{185\mid128,\ 168,\ 180,\ 182,\ 183,\ 184.}
 $$
 
 Book 168 provides the coefficient systems and algebraic local objects attached to the

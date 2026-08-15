@@ -76,14 +76,14 @@ flowchart LR
 | 44 | Tate Curves and Multiplicative Reduction | 2, 43 |
 | 45 | Torsion and Tate Modules of Elliptic Curves | 43, 44, 28, 34 |
 | 46 | Algebraic de Rham Cohomology and Gauss--Manin Connections | 9, 15, 14, 35 |
-| 47 | Betti, de Rham, and Étale Comparison for Curves | 9, 46, 21 |
+| 47 | Betti, de Rham, and Étale Comparison for Curves | 6, 9, 21, 46 |
 | 48 | Divided Powers and Crystalline Sites | 14, MATHLIB |
 | 49 | Crystalline Cohomology of Curves and Abelian Schemes | 25, 35, 46, 48 |
 | 50 | Syntomic Cohomology and Integral Period Maps | 29, 34, 35, 48, 49 |
 | 51 | Finite-Flat Group Schemes of Small Height | 2, 26, 27, 28, 34 |
 | 52 | Dieudonné Theory and Raynaud Full Faithfulness | 42, 48, 49, 51 |
 | 53 | Fontaine--Laffaille Modules and Torsion Representations | 46, 48, 49, 50, 52 |
-| 54 | Integral Fontaine--Laffaille Equivalence and Base Change | 34, 42, 50, 52, 53 |
+| 54 | Integral Fontaine--Laffaille Equivalence and Base Change | 6, 34, 42, 50, 52, 53 |
 | 55 | $p$-divisible Groups and Serre--Tate Theory | 35, 49, 52, 54 |
 | 56 | Ramification and Discriminants of Finite-Flat Representations | 3, 42, 51, 54 |
 | 57 | Artinian and Complete Local Coefficient Rings | MATHLIB |
@@ -187,7 +187,7 @@ flowchart LR
 | 155 | Galois and Solvable Refinements of Arithmetic Approximation | 2, 6, 153, 154, 142 |
 | 156 | Hilbert--Blumenthal Moduli and Two-Prime Level Covers | 17, 10, 13, 35, 55, 115, 116 |
 | 157 | Local Geometry of Hilbert--Blumenthal Moduli | 2, 8, 10, 37, 43, 44, 45, 51, 52, 54, 55, 58, 60, 117, 154, 155, 156 |
-| 158 | Moduli Constructions for Potential Modularity | 156, 157 |
+| 158 | Moduli Constructions for Potential Modularity | 153, 154, 155, 156, 157 |
 | 159 | Discriminants of Galois Representations | 3, 56 |
 | 160 | Odlyzko Bounds and Fontaine's Argument | 7, 56, 159 |
 | 161 | Schoof's Finite-Flat Category over $\mathbf Z[1/2]$ | 2, 3, 17, 28, 29, 34, 42, 51, 55, 56, 160 |
@@ -214,7 +214,7 @@ flowchart LR
 | 182 | Potential Automorphy and Galois Refinement of a Chosen Lift | 6, 37, 44, 54, 61, 104, 109, 118, 121, 122, 124, 125, 126, 127, 128, 129, 140, 142, 157, 158, 164, 165, 168, 173, 176, 178, 181 |
 | 183 | Brauer Induction for Automorphy Families | 6, 98, 108, 109, 127, 128, 142, 168, 180, 182 |
 | 184 | Brauer Characters and Effectivity of Compatible Families | 24, 57, 180, 183 |
-| 185 | Compatible Systems over the Base Field | 168, 180, 182, 183, 184 |
+| 185 | Compatible Systems over the Base Field | 128, 168, 180, 182, 183, 184 |
 | 186 | Changing the Coefficient Prime while Keeping the Frey Special Place | 185 |
 | 187 | The Fixed-Three Integral Local Theory | 3, 6, 10, 26, 42, 54, 82, 118, 119, 121, 125, 127, 128, 129, 161, 182, 185, 186 |
 | 188 | Hardly Ramified $3$-adic Representations | 161, 185, 187 |
