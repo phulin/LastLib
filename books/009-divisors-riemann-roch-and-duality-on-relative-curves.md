@@ -1286,7 +1286,12 @@ lemma.
 Apply it on affine charts of $P$. On a geometric fiber $P_{\bar s}$ is regular and
 $X_{\bar s}$ is Cohen--Macaulay of codimension $c$; the depth calculation (9.3) gives projective
 dimension exactly $c$. Globalizing the successive surjections by sufficiently positive sums
-of twists yields a universally exact resolution $E^\bullet\to i_*\mathcal O_X$.
+of twists yields a universally exact resolution $E^\bullet\to i_*\mathcal O_X$: after each
+surjection the kernel is coherent and $S$-flat, so it may be twisted until globally generated;
+at the $c$th step the relative syzygy lemma makes the kernel flat and finitely presented over
+$P$, hence finite locally free. Exactness after every scalar extension follows at each step from
+flatness of the quotient, so this is a global finite locally free resolution, not merely a
+collection of affine resolutions.
 
 We also need the dual form of the lemma.
 
@@ -1337,11 +1342,13 @@ $$
 
 For a vector bundle $\mathcal E$ on $X$, the same relative syzygy construction resolves
 $i_*\mathcal E$: it is base-flat and its geometric fibers remain Cohen--Macaulay modules of
-codimension $c$.
-The Cartan--Eilenberg construction used for (9.5), now made with the universally exact relative
-resolutions, gives a base-change-compatible change-of-rings map. The fiberwise acyclicity
-lemma makes every row but $c$ vanish before and after arbitrary tensor product, so its edge map
-is a quasi-isomorphism over the base. Relative projective-space duality then gives
+codimension $c$. Apply the strict dg currying map (9.5a). Locally it may be computed with the
+universally exact finite resolutions of $i_*\mathcal E$ and $i_*\mathcal O_X$: evaluation
+$\mathcal E\otimes\mathcal E^\vee\to\mathcal O_X$ gives the comparison, and the fiberwise
+acyclicity lemma identifies its target with
+$i_*(\mathcal E^\vee\otimes\omega_{X/S})[-c]$ before and after arbitrary tensor product. Thus
+the dg map is a base-change-compatible quasi-isomorphism. Relative projective-space duality then
+gives
 
 $$
 R f_*(\mathcal E^\vee\otimes\omega_{X/S})[1]
@@ -1364,33 +1371,62 @@ The tensor compatibility of the Čech pairing shows directly that (9.10), the tr
 commute with arbitrary base change.
 
 It remains to prove, rather than infer from an undersized test category, independence of the
-embedding. Suppose $i_a:X\hookrightarrow P_a$ are two projective embeddings. The product
-embedding $i=(i_1,i_2):X\hookrightarrow P_1\times_SP_2$ is a common refinement. To compare
-it with $i_1$, first base-change a resolution of $X\subset P_1$ to obtain a resolution of
+embedding. We first record the local-to-global replacement for a nonexistent global Koszul
+complex.
+
+**Regular-immersion fundamental-class lemma.** If $j:W\hookrightarrow Y$ is a regular immersion
+of codimension $d$, then $\mathcal O_W$ is a perfect $\mathcal O_Y$-complex and, for every line
+bundle $L$ on $Y$, local Koszul duality gives a canonical isomorphism
+
+$$
+R\mathcal Hom_Y(\mathcal O_W,L)
+\simeq
+j_*\bigl(j^*L\otimes\det(\mathcal I/\mathcal I^2)^\vee\bigr)[-d]. \tag{9.12a}
+$$
+
+To construct it, cover $Y$ by affines on which $\mathcal I=(f_1,\ldots,f_d)$ is a regular
+sequence and use the Koszul complex $K(f)$. If $g=Af$ is a second sequence, the induced Koszul
+comparison acts in top degree by $\det(A)$, exactly the transition function of
+$\det(\mathcal I/\mathcal I^2)^\vee$. Two lifts of the same conormal change differ by a Koszul
+homotopy. Consequently the local maps agree in the derived category on double overlaps; on
+triple overlaps matrix multiplication gives the cocycle. They therefore glue to (9.12a).
+For composable regular immersions, the conormal exact sequence and the tensor product of the two
+local Koszul complexes identify this fundamental class with that of the composite. These
+identities survive every base change for which the immersions remain regular; in particular they
+do so for a section of a smooth morphism.
+
+Now suppose $i_a:X\hookrightarrow P_a$ are two projective embeddings. The product embedding
+$i=(i_1,i_2):X\hookrightarrow P_1\times_SP_2$ is a common refinement. To compare it with
+$i_1$, base-change a resolution of $X\subset P_1$ to resolve
 $X\times_SP_2\subset P_1\times_SP_2$. The graph of $i_2$ is a section
 $X\hookrightarrow X\times_SP_2$ of the smooth projection and is therefore a regular immersion
-of codimension $\dim(P_2/S)$. Its Koszul complex resolves the graph. Totalizing the
-base-changed resolution with this Koszul complex resolves the product embedding. On duals,
-the canonical identification is the currying map
+of codimension $\dim(P_2/S)$. Apply the fundamental-class lemma locally and replace each term,
+which is finite locally free over $\mathcal O_{X\times P_2}$, by the base-changed ambient
+resolution. The resulting local total complexes glue as perfect complexes by the cocycle just
+proved and resolve the product embedding. On duals, the canonical identification is dg
+currying
 
 $$
-\operatorname{Hom}(E_1\otimes E_2,\omega_{P_1/S}\otimes\omega_{P_2/S})
+\operatorname{Hom}(E_1\otimes^L E_2,\omega_{P_1/S}\otimes\omega_{P_2/S})
 \simeq
 \operatorname{Hom}\!\left(E_1,
-  \operatorname{Hom}(E_2,\omega_{P_1/S}\otimes\omega_{P_2/S})\right). \tag{9.12a}
+  \operatorname{Hom}(E_2,\omega_{P_1/S}\otimes\omega_{P_2/S})\right).
 $$
 
-The two Čech coefficient functionals are compatible with this map because extracting the top
-coefficient first in the $P_2$ variables and then in the $P_1$ variables is the same as
-extracting the coefficient of the product monomial. Thus the common refinement gives a
-canonical trace-compatible isomorphism between the two Ext sheaves. A triple product shows
-the cocycle identity: both composites are the associativity isomorphism for a threefold tensor
-product. This proves embedding independence without claiming that vector bundles alone detect
-all coherent objects on a singular $X$.
+The displayed formula should be read locally on the chosen perfect representatives; its maps
+glue by the fundamental-class lemma. The two Čech coefficient functionals are compatible because
+extracting the top coefficient first in the $P_2$ variables and then in the $P_1$ variables is
+the same as extracting the coefficient of the product monomial. Thus the common refinement gives
+a canonical trace-compatible isomorphism between the two Ext sheaves. A triple product gives the
+cocycle identity: the Koszul fundamental classes compose, and both coefficient maps are the
+associativity isomorphism for a threefold tensor product. This proves embedding independence
+without postulating a global Koszul resolution and without claiming that vector bundles alone
+detect all coherent objects on a singular $X$.
 
-The same calculation proves the transitivity needed later. If $j:Z\hookrightarrow X$ is a
+The same calculation proves the transitivity in the range constructed here. If
+$j:Z\hookrightarrow X$ is a
 regular immersion of codimension $d$ and $Z/S$ is Cohen--Macaulay of pure relative dimension
-$1-d$, its Koszul complex gives
+$1-d$, the fundamental-class lemma gives
 
 $$
 \omega_{Z/S}\simeq
@@ -1399,15 +1435,27 @@ j^*\omega_{X/S}\otimes
 $$
 
 For two regular immersions, the conormal exact sequence identifies the determinant on the
-composite with the tensor product of the two determinants. Under (9.12a), evaluation of the
-two Koszul complexes in succession equals evaluation of their total complex. Hence adjunction
-and trace are associative for a composite. If $Z$ is not flat over $S$, the identical
-statement holds for dualizing complexes, with the Koszul shift $[-d]$ retained. In particular,
-when $Z$ factors through a regular closed subscheme $T\hookrightarrow S$, composing the two
-Koszul complexes gives the absolute dualizing sheaf over $T$ together with the determinant of
-the conormal bundle of $T/S$. For projective morphisms the same statement is the Fubini
-identity for the two coefficient traces. This supplies the vertical and relative
-Cartier-immersion transitivity and the proper trace transitivity used in subsequent chapters.
+composite with the tensor product of the two determinants. The local tensor product of Koszul
+complexes shows that evaluation in succession equals evaluation of the composite; hence
+adjunction and trace are associative.
+
+There is also the proper--finite transitivity used for maps of curves. If
+$\pi:Y\to X$ is finite and both $Y/S$ and $X/S$ satisfy the hypotheses of the theorem, dg
+currying gives, compatibly with arbitrary base change,
+
+$$
+\pi_*\omega_{Y/S}
+\simeq\mathcal Hom_X(\pi_*\mathcal O_Y,\omega_{X/S}). \tag{9.12c}
+$$
+
+Evaluation at $1$ defines $\operatorname{Tr}_\pi$. In the projective-space model,
+$\operatorname{tr}_{f\circ\pi}$ extracts the ambient top coefficient after evaluation at $1$;
+this is exactly $\operatorname{tr}_f\circ R^1f_*(\operatorname{Tr}_\pi)$. For a tower of finite
+maps, currying identifies iterated evaluation at $1$ with direct evaluation at $1$, proving
+associativity. For products of projective spaces, the same assertion is the Fubini identity for
+coefficient extraction. These arguments establish regular-immersion and proper--finite trace
+transitivity. No claim about nonflat dualizing complexes, which have not been constructed in
+this book, is made.
 
 Finally descend from the fpqc projectivity cover of Lemma 9.2A. The canonical common-refinement
 isomorphisms just constructed provide descent data and satisfy the cocycle condition. The
@@ -1601,18 +1649,24 @@ by descending the anti-diagonal branch residues. It is dual, under finite local 
 discrepancy line $Q_q$ above. No orientation of the branches is needed for the descended exact
 sequence; only an identification of its last line with $\kappa(q)$ requires such a choice.
 
-The description also works for a reduced curve with more general singularities if one replaces
-opposite residues by the condition
+For a reduced curve with more general singularities one must make one further correction over an
+imperfect field. Its normalization is regular but need not be smooth, so
+$\Omega^1_{\widetilde C/k}$ need not be the normalization's dualizing line. Replace it by
+$\omega_{\widetilde C/k}$, allow the poles prescribed by the conductor, and define the local
+residue on that line by finite duality for Cartier thickenings. Then replace opposite residues by
+the condition
 
 $$
 \sum_{p\mapsto q}\operatorname{Res}_p(f\eta)=0
 \quad\text{for every }f\in\mathcal O_{C,q}.
 $$
 
-By the absolute theorem, this is the Rosenlicht description of the dualizing sheaf;
-it need not be invertible when the curve is not Gorenstein. At a split rational node, testing
-$f=1$ gives the opposite-residue rule
-and the other tests enforce no additional condition.
+With this corrected normalization dualizing sheaf, finite duality for
+$\nu:\widetilde C\to C$ identifies the displayed module with $\omega_C$; it need not be
+invertible when the curve is not Gorenstein. When the normalization is smooth, in particular for
+the geometrically nodal curves under discussion, $\omega_{\widetilde C/k}$ is
+$\Omega^1_{\widetilde C/k}$ and this recovers (10.4). At a split rational node, testing $f=1$
+gives the opposite-residue rule and the other tests enforce no additional condition.
 
 ### 10.4 Families of nodal curves
 
@@ -1825,7 +1879,13 @@ $$
 n=\operatorname{length}_\Lambda\bigl(\Lambda/a\Lambda\bigr)=v(a)
 $$
 
-depends only on the family and the node, not on the coordinates used to write (10.7); writing $a=\pi^n\cdot(\text{unit})$ and rescaling $u$ by that unit puts the model in the form $\Lambda[[u,v]]/(uv-\pi^n)$. Second, $a\ne0$ exactly when the node is smoothed over the generic point, and $a=0$ exactly when the singularity propagates over the whole base. This is precisely the well-definedness that the notion of thickness requires.
+depends only on the family and the node, not on the coordinates used to write (10.7); writing
+$a=\pi^n\cdot(\text{unit})$ and rescaling $u$ by that unit puts the model in the form
+$\Lambda[[u,v]]/(uv-\pi^n)$. In this discrete-valuation, hence domain, situation $a\ne0$
+exactly when the node is smoothed over the generic point, while $a=0$ means that the singularity
+propagates over the whole base. Over a general complete local ring there may be several minimal
+primes, and the correct statement is componentwise: the node smooths over precisely those generic
+points at which the image of $a$ is nonzero. This is the well-definedness that thickness requires.
 
 **Remark (the étale-local refinement).** The normal form proved above is a statement about completed local rings. The stronger statement usually quoted, that there are an étale neighborhood $U\to X$ of $x$ and an étale $S$-morphism
 
