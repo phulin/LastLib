@@ -879,11 +879,12 @@ $H^1(X,\mathcal O_X)[a]$ are bounded independently of the normal modification $X
 **Proof.** The exact sequence cut out by $a$ identifies this torsion module with the cokernel of
 $A\to H^0(Z,\mathcal O_Z)$. Approximation in the Krull domain gives $c$ with valuation one at
 each height-one prime dividing $a$ and with $a\mid c^N$ for fixed $N$. Exact sequences for
-multiplication by $c$ reduce the bound to the reduced divisor of $c$. The closure of
-the punctured part of $Z$ is finite over $A/(a)$ and embeds in its finite normalization; its
-global sections therefore differ from $A/(a)$ by a subquotient of the fixed finite module
-$(A/(a))^\nu/(A/(a))$. Embedded vertical points contribute no global section on the normal
-surface. Its length is the required bound. $\square$
+multiplication by $c$ give a filtration of $H^1(X,\mathcal O_X)[c^N]$ with $N$ subquotients of
+$H^1(X,\mathcal O_X)[c]$, so it suffices to treat the reduced divisor of $c$. The closure of
+its punctured part is finite over $A/(c)$ and embeds in its finite normalization; its global
+sections differ from $A/(c)$ by a subquotient of the fixed finite module
+$(A/(c))^\nu/(A/(c))$. Embedded vertical points contribute no global section on the normal
+surface. Multiplying its length by $N$ is the required bound. $\square$
 
 Call $A$ **bounded** if the integers $g(X)$ are bounded. Choosing a modification with maximal
 $g(X)$ and using (8.9) shows that every local ring on it has
