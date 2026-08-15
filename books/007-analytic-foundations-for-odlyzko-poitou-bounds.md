@@ -761,9 +761,10 @@ $$
 Logarithmic differentiation of the normally convergent product on compacta gives (4.4b), with
 $m/s$ included when $m>0$.
 
-For the sharper fixed-height count, center Jensen's formula at $2+iT$. The gamma comparison on a
-fixed-radius circle needs no asymptotic formula. Euler's product for $\Gamma$ gives, away from its
-poles,
+For the sharper fixed-height count, first take $T\geq6$ and center Jensen's formula at
+$s_T=2+iT$. We record the strip bound that will control a fixed disc about this point. The gamma
+comparison needed for it requires no asymptotic formula. Euler's product for $\Gamma$ gives, away
+from its poles,
 
 $$
 \frac{\Gamma'}{\Gamma}(z)
@@ -772,16 +773,68 @@ $$
 \tag{4.4d}
 $$
 
-After using $\Gamma(z+1)=z\Gamma(z)$ a fixed number of times, all arguments on the circle have
+After using $\Gamma(z+1)=z\Gamma(z)$ a fixed number of times, all arguments to be compared have
 real part at least one. Split the series at $k\leq2(|\Im z|+3)$. The initial part is
 $O(\log(|\Im z|+3))$ by comparison with the harmonic series, and pairing the two fractions makes
-the tail $O(1)$. Integrating (4.4d) along a path of bounded length shows that the logarithm of the
-ratio of any two gamma values occurring on that circle is $O(\log(T+3))$.
+the tail $O(1)$. Integrating (4.4d) along a path of bounded length consequently gives
 
-Therefore the Euler-product bound on the portion $\Re(s)>1$, the functional equation on the
-reflected portion, and Phragmén--Lindelöf on the intervening strips of bounded width give
-$O(\log D_K+n\log(T+3))$ for the logarithmic maximum relative to the center. The Euler product
-also supplies the needed lower bound at the center: at $\sigma=2$,
+$$
+\log\left|\frac{\Gamma(z+u)}{\Gamma(z+v)}\right|
+=O_{u,v}(\log(|\Im z|+3))
+\tag{4.4e}
+$$
+
+when $u,v$ range over a fixed compact set and the quotient is read after the necessary recurrence
+shifts, uniformly for $|\Im z|\geq3$. The upper bounds obtained from this estimate extend over a
+reciprocal gamma zero by continuity.
+
+Put $Z_K(s)=(s-1)\zeta_K(s)$. The continuation already proved shows that $Z_K$ is entire: away
+from $s=1$, divide $\Lambda_K$ by the gamma factors, whose reciprocals are entire; at $s=0$ their
+zero cancels the simple pole of $\Lambda_K$, and the factor $s-1$ removes the remaining pole at
+$s=1$. On $\Re(s)=2$, the Euler product gives
+
+$$
+|Z_K(2+it)|\leq |1+it|\,\zeta(2)^n.
+$$
+
+On $\Re(s)=-1$, the functional equation expresses $\zeta_K(-1+it)$ in terms of
+$\zeta_K(2-it)$, a factor $D_K^{3/2}$, and quotients of gamma factors whose arguments differ by
+fixed real shifts. Formula (4.4e), the recurrence relation, and
+$|\zeta_K(2-it)|\leq\zeta(2)^n$ therefore give absolute constants $C_0,C_1$ such that
+
+$$
+|Z_K(-1+it)|
+\leq D_K^{3/2}C_0^n(|t|+3)^{C_1n+C_1}.
+\tag{4.4f}
+$$
+
+Choose an integer $M\geq C_1n+C_1$. Dividing $Z_K(s)$ by $(s+2)^M$ introduces no pole in the
+strip $-1\leq\Re(s)\leq2$, and makes the two boundary bounds constant after increasing the
+constant by $D_K^{3/2}C_0^n$. The growth estimate (4.4a), Euler's gamma product, and the
+recurrence relation give
+$\log^+|Z_K(\sigma+it)|=O_K(|t|\log(|t|+3))$ in this strip. This is far smaller than the
+double-exponential allowance in the strip Phragmén--Lindelöf principle. Applying that principle
+to $Z_K(s)/(s+2)^M$ yields
+
+$$
+|Z_K(\sigma+it)|
+\leq D_K^{3/2}C_2^n(|t|+3)^{C_3n+C_3}
+\qquad(-1\leq\sigma\leq2).
+\tag{4.4g}
+$$
+
+For $2\leq\sigma\leq5$, the Euler product gives the same shape of bound directly. Formula
+(4.4e) compares the gamma factors at any $s$ with $|s-s_T|\leq3$ to those at $s_T$. The powers
+of $D_K$, the polynomial $s(s-1)$, (4.4g), and the Euler-product lower bound at the center now
+give
+
+$$
+\log\frac{\max_{|s-s_T|\leq3}|\xi_K(s)|}{|\xi_K(s_T)|}
+\ll \log D_K+n\log(T+3).
+\tag{4.4h}
+$$
+
+Here the lower bound just used is, at $\sigma=2$,
 
 $$
 |\zeta_K(2+iT)|^{-1}
@@ -789,9 +842,15 @@ $$
 \leq\zeta(2)^n.
 $$
 
-The inner disc may be chosen to contain the whole rectangle
-$0\leq\Re(s)\leq1$, $T\leq\Im(s)\leq T+1$. Jensen's formula consequently gives (4.4) for
-positive ordinates; conjugation gives the negative ordinates. This proves the lemma. $\square$
+The disc $|s-s_T|<5/2$ contains the whole rectangle
+$0\leq\Re(s)\leq1$, $T\leq\Im(s)\leq T+1$. Jensen's formula with outer radius $3$, (4.4h),
+and the nonvanishing of the center consequently give (4.4) for positive ordinates. Conjugation
+gives the negative ordinates. For the bounded range of initial heights, cover
+$0\leq\Re(s)\leq1$, $|\Im(s)|\leq7$ by finitely many inner discs centered on $\Re(s)=2$, with
+slightly larger boundary circles avoiding the discrete gamma poles. The same Euler-product center
+bound, (4.4g), gamma recurrence, and Jensen argument give $O(\log D_K+n)$ zeros in this compact
+rectangle. Increasing the absolute implied constant therefore covers every $T\geq2$. This proves
+the lemma. $\square$
 
 This lemma is enough to justify every symmetric zero limit below. Its proof used only the analytic
 tools listed in §1.4 and the displayed canonical-product construction; no arithmetic statement
