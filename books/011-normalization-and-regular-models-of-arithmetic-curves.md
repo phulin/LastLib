@@ -1043,12 +1043,12 @@ $X'=\operatorname{Proj}\bigoplus_{n\ge0}\mathfrak m^n$ is normal, and every loca
 rational.
 
 **Proof.** Normalize $X'$ to $\nu:X\to X'$ and put
-$\mathcal I=\mathfrak m\mathcal O_X$. A modification of a two-dimensional local scheme is covered
-by affine opens with affine pairwise intersections, so its quasi-coherent cohomological dimension
-is one. Hence $H^2(X,\mathcal K)=0$ for every quasi-coherent $\mathcal K$. If $\mathcal F$ is
-globally generated, choose an exact sequence
-$0\to\mathcal K\to\mathcal O_X^{(I)}\to\mathcal F\to0$. Cohomology commutes with the displayed
-direct sum, and rationality says $H^1(X,\mathcal O_X)=0$; the long exact sequence therefore gives
+$\mathcal I=\mathfrak m\mathcal O_X$. The fibers of this proper morphism have dimension at most
+one, so the proper-curve cohomological-dimension argument of Book 9 gives
+$H^2(X,\mathcal K)=0$ for every quasi-coherent $\mathcal K$. If $\mathcal F$ is a coherent
+globally generated sheaf, choose an exact sequence
+$0\to\mathcal K\to\mathcal O_X^r\to\mathcal F\to0$. Rationality says
+$H^1(X,\mathcal O_X)=0$; the long exact sequence therefore gives
 $H^1(X,\mathcal F)=0$.
 
 Choose generators $x_0,\ldots,x_\mu$ of $\mathfrak m$. They generate
@@ -1076,6 +1076,13 @@ $H^0(X,\mathcal I^{n-1})$ onto $H^0(X,\mathcal I^n)$. Since
 $H^0(X,\mathcal I)=\mathfrak m$, this gives
 $H^0(X,\mathcal I^n)=\mathfrak m^n$ for every $n$.
 
+Here the asserted initial equality is not an assumption about normalized blowups. Section 7.3
+identifies $H^0(X,\mathcal I)$ with the integral closure $\overline{\mathfrak m}$. A maximal ideal
+is integrally closed: if a unit $z$ satisfied
+$z^r+c_1z^{r-1}+\cdots+c_r=0$ with $c_i\in\mathfrak m^i$, reduction modulo
+$\mathfrak m$ would say that the nonzero residue of $z^r$ is zero. Hence
+$\overline{\mathfrak m}=\mathfrak m$.
+
 Now $\nu$ is finite because $A$ is Nagata. If
 $\mathcal O_{X'}\subsetneq\nu_*\mathcal O_X$, twisting by the very ample
 $\mathcal O_{X'}(1)$ and using the associated-graded filtration produces an $n$ for which their
@@ -1086,10 +1093,31 @@ H^0(X,\nu^*\mathcal O_{X'}(n))=H^0(X,\mathcal I^n)=\mathfrak m^n
  =H^0(X',\mathcal O_{X'}(n)),
 $$
 
-a contradiction. Thus $X'=X$ is normal. Finally, a normal modification of the spectrum of a
-local ring of $X$ spreads, after shrinking and taking closure, to a normal modification of $X$;
-(8.9) and rationality make its $H^1$ vanish. Every local ring on $X$ is therefore rational.
-$\square$
+a contradiction. Thus $X'=X$ is normal.
+
+It remains to check rationality locally rather than assert its locality. Let $x\in X$ and let
+$V\to\operatorname{Spec}\mathcal O_{X,x}$ be a projective normal modification. Its finitely many
+equations and denominators spread over an affine neighborhood $W$ of $x$. Take the closure of its
+graph over $X$ and normalize; this gives a projective normal modification $g:Z\to X$ whose
+localization at $x$ dominates $V$. Both $X$ and $Z$ are normal modifications of
+$\operatorname{Spec}A$, so rationality of $A$ gives
+
+$$
+H^1(X,\mathcal O_X)=H^1(Z,\mathcal O_Z)=0.
+$$
+
+Their second cohomology vanishes by the preceding fiber-dimension argument. Leray therefore gives
+
+$$
+0\longrightarrow H^1(X,\mathcal O_X)\longrightarrow H^1(Z,\mathcal O_Z)
+\longrightarrow H^0(X,R^1g_*\mathcal O_Z)\longrightarrow0.
+$$
+
+Thus $R^1g_*\mathcal O_Z=0$: it is supported at the finitely many closed points where $g$ is not
+an isomorphism, and a nonzero coherent sheaf with zero-dimensional support has a nonzero global
+section. After localization, (8.9) injects $H^1(V,\mathcal O_V)$ into the zero stalk of this
+sheaf. Chow domination and the injection (8.9) reduce an arbitrary proper normal modification to
+the projective case. Hence every local ring on $X$ is rational. $\square$
 
 Let $E$ be its exceptional curve. The preceding exact sequences give
 
