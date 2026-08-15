@@ -104,7 +104,7 @@ Dimension one also forces coherent cohomology into degrees $0$ and $1$. A proper
 
 There is also a useful tension between local and global reasoning. Orders of vanishing, Cartier equations, and residues are checked in one-dimensional local rings. Degree, linear equivalence, and the existence of a differential with prescribed poles are global matters. Completeness is what joins the two scales: on an affine curve a rational function may have one uncompensated pole at the missing boundary, whereas on a proper curve every local contribution participates in a global balance. Throughout the book, exact sequences are the mechanism that makes this passage visible. Their quotient terms are supported at finitely many points, so a global change can be measured by a finite sum of local lengths or residues.
 
-The relative dimension-one condition suggests a two-term character. Section 13.1 proves that
+The relative dimension-one condition suggests a two-term character. We will prove that
 the cohomology of a vector bundle in a projective flat family is locally represented by a map
 between two finite free modules. Kernels may jump,
 cokernels may jump, but their rank difference does not. This is the algebra beneath
@@ -671,7 +671,7 @@ At the cusp $k[[t^2,t^3]]$, the image of ordinary differentials inside $k[[t]]dt
 
 Duality calls for a different object: the Rosenlicht sheaf, which allows controlled poles on the
 normalization whose residues cancel across branches. It is invertible at a node even though
-$\Omega^1$ is not; Sections 9--12 identify it with the dualizing sheaf.
+$\Omega^1$ is not; the later duality construction will identify the two without being used here.
 
 ## 8. Residues
 
@@ -817,9 +817,8 @@ coefficients.
 
 For a purely inseparable map, ordinary field trace can be zero and does not define the required
 map on Kähler differentials. The elementary finite-module trace on the local dualizing modules
-remains meaningful. The finite-morphism duality theorem in Section 9.2 globalizes
-these local maps for arbitrary finite maps of proper Cohen--Macaulay curves. This is why later
-functoriality is formulated through dualizing sheaves rather than only through field traces.
+remains meaningful. This subsection makes no global functoriality claim for singular curves;
+that claim will be constructed from dualizing sheaves only after absolute duality is available.
 
 ## 9. Dualizing sheaves
 
@@ -1053,8 +1052,8 @@ $$
 \mathcal Hom_X(\pi_*\mathcal O_Y,\omega_X), \tag{9.8}
 $$
 
-and the trace is evaluation at $1$. This proves the finite-morphism compatibility used in
-Sections 8.4 and 12.4. In a tower $A\to B\to C$, currying identifies
+and the trace is evaluation at $1$. This recovers the local compatibility already proved for
+smooth curves. In a tower $A\to B\to C$, currying identifies
 $\operatorname{Hom}_B(C,\operatorname{Hom}_A(B,W))$ with
 $\operatorname{Hom}_A(C,W)$ by $\phi\mapsto(c\mapsto\phi(c)(1_B))$. Evaluation first at
 $1_C$ and then at $1_B$ is therefore direct evaluation at $1_C$. Thus these traces are
@@ -1263,8 +1262,15 @@ We first record the relative form of the two algebraic ingredients used above. O
 $\operatorname{Spec}A\subseteq S$, the exponentwise contractions used after (9.1) are defined
 with coefficients $0,1,-1$. They therefore retract the Čech complexes to finite free
 $A$-complexes and are unchanged after tensoring with any $A$-algebra. The surviving monomials
-pair perfectly. Consequently projective-space duality holds over $A$ and commutes with arbitrary
-base change.
+pair perfectly. This proves duality first for sums of twists. For an arbitrary vector bundle
+$V$ on $P$, Book 8 supplies finite projective complexes, compatible with every scalar extension,
+for $R\Gamma(P,V)$ and $R\Gamma(P,V^\vee\otimes\omega_{P/S})$. Cup product followed by the top
+coefficient defines a map between the latter complex (shifted by $N$) and the dual of the former.
+On every geometric fiber this is the absolute projective-space quasi-isomorphism (9.2). Its cone
+is a perfect $A$-complex with zero derived fiber at every prime; successively taking the first
+nonzero cohomology and applying Nakayama makes the cone zero. Consequently projective-space
+duality holds for every vector bundle over $A$. The construction and the fiber test use the
+fixed base-change-compatible complexes, so the isomorphism commutes with arbitrary base change.
 
 Next, $i_*\mathcal O_X$ has a finite locally free resolution on $P$ which remains a resolution
 after every base change. We spell out the relative syzygy lemma which makes this true even
@@ -1932,7 +1938,7 @@ problem: one has an isomorphism over the completion and wants to realize it over
 neighborhood, which is the content of Artin approximation and requires excellence hypotheses on
 the base. Artin approximation is not developed in this collection. The completed form is used
 in place of it everywhere, and this suffices: the arguments that invoke the local model, in
-Section 10.4 above and in the later theory of nodal degenerations, test freeness, length, and
+the completed-frame discussion above and the later theory of nodal degenerations test freeness, length, and
 valuation, all of which are detected on completed stalks. Where the étale form would genuinely
 be needed is in producing an actual open or étale neighborhood with the displayed equation, for
 instance to construct global charts or to descend a formal isomorphism to a morphism of schemes;
@@ -1955,8 +1961,8 @@ $$
 $$
 
 where $\ell(D)=\dim_k H^0(X,\mathcal O_X(D))$. The second form uses the duality theorem already
-proved in Section 9.2 to identify $h^1(\mathcal O(D))$ with $\ell(K-D)$; Chapter 12 will only
-rewrite that pairing in residue language. The first form is logically independent
+proved in Section 9.2 to identify $h^1(\mathcal O(D))$ with $\ell(K-D)$; no later residue
+description enters the proof. The first form is logically independent
 of duality and remains valid, with
 degree defined by Euler characteristic, for proper curves; on regular curves the divisor
 calculation below identifies it with the usual divisor degree.
@@ -2291,7 +2297,9 @@ $$
 \chi(X_s,\mathcal L_s)=d+1-g \tag{13.6}
 $$
 
-for every $s$. Both $d$ and $g$ are locally constant, so the formula is interpreted component by component on $S$.
+for every $s$. Theorem 13.1 expresses $d$ as the difference of two locally constant virtual
+ranks, so both $d$ and $g$ are locally constant and the formula is interpreted component by
+component on $S$.
 
 For a vector bundle $\mathcal E$ of rank $r$, put $\deg\mathcal E=\deg\det\mathcal E$. Then
 
@@ -2299,7 +2307,9 @@ $$
 \chi(X_s,\mathcal E_s)=\deg(\mathcal E_s)+r(1-g). \tag{13.7}
 $$
 
-We include the reduction to line bundles. It is enough to extend the fiber field to an algebraic
+We include the reduction to line bundles. A reduced pure curve is Cohen--Macaulay, and the
+projectivity and clearing argument of Section 11.4 applies without the Gorenstein hypothesis; thus
+Euler-characteristic degree is additive on the Picard group of each fiber. It is enough to extend the fiber field to an algebraic
 closure, since cohomology dimensions, determinant, and degree are unchanged by that extension.
 Choose an effective divisor $D$ so positive on every component that $\mathcal E(D)$ is generated
 by global sections. If $r>1$, a section can be chosen nonzero at every point. Indeed, in the
