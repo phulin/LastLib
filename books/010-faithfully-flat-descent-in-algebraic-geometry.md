@@ -118,14 +118,14 @@ $$
 \Longrightarrow
 \begin{cases}
 \text{an fpqc equalizer sheaf with effective pullback},\\
-\text{an algebraic space for an étale cover},\\
+\text{an algebraic space for an fppf cover},\\
 \text{a scheme under a proved criterion}.
 \end{cases}
 $$
 
 The last distinction is essential. Schemes do not form an effective fpqc descent category in
 complete generality. Chapter 11 constructs the fpqc equalizer sheaf and proves algebraic-space
-effectivity for an étale cover. For a general fpqc cover, producing a representable diagonal and
+effectivity for an fppf cover. For a general fpqc cover, producing a representable diagonal and
 an étale atlas is an additional theorem, not a consequence of the sheaf condition. This book does
 not assert that theorem without hypotheses. It instead proves scheme effectivity in the affine,
 finite, quasi-affine, and compatibly polarized situations used below. Properness or local
@@ -999,7 +999,7 @@ representable by schemes and which admits a surjective étale morphism $U\to X$ 
 The two representability requirements cannot be replaced by the assertion that $X$ is merely a
 quotient sheaf.
 
-We first record the only nonaffine scheme-effectivity input needed in the construction.
+We first record a nonaffine scheme-effectivity input used in the quotient constructions.
 
 **Separated locally-quasi-finite effectivity lemma.** Let $T\to S$ be an fppf cover. A descent
 datum on a $T$-scheme $V\to T$ which is separated and locally quasi-finite over $T$ is effective
@@ -1119,6 +1119,191 @@ surjective étale cover has a unique algebraic-space descent, represented by (11
 morphisms descend uniquely. Here “unrestricted” concerns the geometry of the scheme upstairs;
 it does not change “étale” into “fpqc.”
 
+We now enlarge the cover from étale to fppf. The finite-presentation hypothesis is used in a
+substantial way: it supplies finite-dimensional slices for a flat relation. We develop the
+quotient theorem before applying it to descent.
+
+**Flat slicing lemma.** Let $R\rightrightarrows U$ be an equivalence relation of schemes whose
+source and target are flat and locally of finite presentation. There is a morphism of
+equivalence relations
+
+$$
+(R'\rightrightarrows U')\longrightarrow(R\rightrightarrows U)
+$$
+
+which induces the same fppf quotient sheaf, for which $s',t'$ are flat, locally of finite
+presentation, and locally quasi-finite.
+
+**Proof.** We give the slicing argument, including the two points at which finite presentation is
+essential. Let $V\subseteq R$ be the relative Cohen--Macaulay locus of $s:R\to U$. In a fiber of
+a finitely presented scheme over a field, the Cohen--Macaulay points contain the generic points
+of every irreducible component and hence are nonempty. The locus $V$ is open; since $s$ is flat
+and locally of finite presentation, $s|_V:V\to U$ is open and surjective, hence fppf. Replace the
+presentation by its pullback along this object cover $V\to U$. It has the same quotient sheaf:
+the map on quotients is an epimorphism because $V\to U$ is a cover and a monomorphism because the
+new relation is the full pullback of $R$. The cartesian translation squares of a groupoid and
+inversion identify the relative local rings of the two arrows, so both arrows of this pulled-back
+presentation are Cohen--Macaulay.
+
+Fix a point $u\in U$ of finite type. The stabilizer
+$G=R\times_{U\times U,\Delta}U$ is locally quasi-finite: it is the pullback of the monomorphism
+$(s,t):R\to U\times U$, which is locally of finite type, and a locally finite-type monomorphism
+has zero-dimensional fibers. Work in affine neighborhoods of $u$ and $e(u)$. On the
+Cohen--Macaulay fiber $s^{-1}(u)$, the restriction of $t$ has zero-dimensional fiber at $e(u)$.
+Noether normalization therefore supplies functions $f_1,\ldots,f_d$ on $U$, vanishing at $u$,
+whose pullbacks by $t$ are a system of parameters at $e(u)$. A system of parameters in a
+Cohen--Macaulay local ring is a regular sequence. Openness of the regular-sequence locus makes
+the same true at every relevant point after shrinking. Successive use of the local flatness
+criterion then shows that the slice
+
+$$
+U'_u=V(f_1,\ldots,f_d)\hookrightarrow U
+$$
+
+meets the relation in a morphism
+
+$$
+h_u:U'_u\times_{U,t}R\longrightarrow U,
+\qquad (v,r)\longmapsto s(r),
+$$
+
+which is flat and locally of finite presentation. Its fiber dimension at $(u,e(u))$ is zero; upper
+semicontinuity of fiber dimension makes it locally quasi-finite after another shrink. The same
+calculation after pulling back along $U'_u\to U$ proves that both arrows of the restricted
+relation are flat, locally of finite presentation, and locally quasi-finite.
+
+Take the disjoint union of these slices over the finite-type points of $U$. The images of the
+$h_u$ are open, and finite-type points are dense in every affine open, so their union is all of
+$U$. Thus
+
+$$
+\coprod_u U'_u\times_{U,t}R\longrightarrow U
+$$
+
+is an fppf cover. Two objects of $U'$ become equivalent exactly when their images in $U$ do, so
+the induced map $U'/R'\to U/R$ is both an epimorphism and a monomorphism of fppf sheaves. It is
+therefore an isomorphism. $\square$
+
+The next finite-part argument turns the sliced relation into an étale one.
+
+**Finite-part lemma.** Suppose in addition that $U$ is affine and $s,t$ are locally quasi-finite.
+For every $u\in U$ there is an affine étale map $g:W\to U$, a point $w$ over $u$ with
+$\kappa(w)=\kappa(u)$, and an open subgroupoid $P\subseteq R_W$ such that $P\rightrightarrows W$
+is finite locally free and contains every arrow of $R_W$ over $w$ that belongs to its unit
+component.
+
+**Proof.** For a separated locally quasi-finite morphism $Y\to X$ with a section $a:X\to Y$, the
+finite part around $a$ is represented étale-locally on $X$: over the strict henselization at a
+point, Zariski's Main Theorem writes the finitely many components meeting $a$ as an open-and-closed
+subscheme finite over the base; the defining idempotent and the finite algebra involve finitely
+many coefficients, so they descend to an étale neighborhood. Applied to $s:R\to U$ and the unit,
+this gives an open-and-closed finite part. Flatness makes it finite locally free.
+
+Apply the same construction to its inverse, product, and complement. Failure of closure under
+inverse or composition is a closed subset of a finite scheme: for composition it is the inverse
+image of the complement in
+$P\times_{s,W,t}P$. It misses the unit fiber by the groupoid axioms. Shrinking the étale
+neighborhood removes those finitely many closed images. The resulting $P$ contains the unit and
+is closed under inverse and composition, hence is the required finite locally free subgroupoid.
+Finally, the finite orbit of $w$ lies in a quasi-affine neighborhood by Zariski's Main Theorem
+and therefore in one principal affine open $D(f)$. The norm
+$N_s(t^*f)$ is invariant by the composition square for the groupoid, and its nonvanishing locus
+is exactly the largest $P$-invariant open contained in $D(f)$. Replacing $W$ by that locus makes
+$W$ affine and $P$-invariant. $\square$
+
+**Flat-equivalence-relation quotient theorem.** If $R\rightrightarrows U$ is an equivalence
+relation of schemes and $s,t$ are flat and locally of finite presentation, then the fppf quotient
+$F=U/R$ is an algebraic space. The map $U\to F$ is representable, flat, locally of finite
+presentation, and surjective, and $R\simeq U\times_FU$.
+
+**Proof.** Apply the flat slicing lemma. Algebraicity is local on the quotient for open
+subsheaves, so cover $U'$ by affines and then use the finite-part lemma étale-locally. It remains
+to treat an affine $U$ with a finite locally free open subgroupoid $P\subseteq R$ as above.
+
+The affine finite-flat quotient $\bar U=U/P$ is constructed from invariants. Write
+$U=\operatorname{Spec}A$ and $P=\operatorname{Spec}B$, and put
+$A_0=\ker(A\rightrightarrows B)$. On each invariant open on which $s$ and $t$ have rank $r$, the
+norm
+
+$$
+N_s(t(x-a))\in A_0[x]
+$$
+
+is monic of degree $r$ and annihilates $a$ by Cayley--Hamilton; hence $A$ is integral over $A_0$.
+The relation map is a finite monomorphism and therefore a closed immersion, so
+$A\otimes_{A_0}A\to B$ is surjective. Formation of $A_0$ commutes with flat base change because
+it is the kernel of the $A_0$-linear difference $s^*-t^*:A\to B$.
+
+We check the missing injectivity and flatness faithfully flat locally on $A_0$. Localize at a
+prime and make a flat local extension with infinite residue field. Integrality makes $A$
+semilocal: the finitely many points of one $s$-fiber meet every orbit, and the fibers of
+$\operatorname{Spec}A\to\operatorname{Spec}A_0$ are precisely those orbits (the norm separates a
+point from any finite orbit not containing it). Regard $B$ as a free $A$-module of rank $r$ via
+$t$. The images $s(A)$ span $B$ because $A\otimes_{A_0}A\to B$ is onto. Over each of the finitely
+many residue fields of $A$, the $r$-tuples in $A^r$ whose $s$-images are bases form a nonempty
+open subset. Over an infinite field finitely many nonempty determinant opens have a common
+point; lifting that point gives $x_1,\ldots,x_r\in A$ for which
+$s(x_1),\ldots,s(x_r)$ is an $A$-basis of $B$ by Nakayama.
+
+Write $t(a)=\sum_i b_i s(x_i)$ in the basis just found. Pulling this equality to the scheme of
+composable arrows in the two ways and using the composition law shows
+$s(b_i)=t(b_i)$, so $b_i\in A_0$; the unit then gives $a=\sum_i b_ix_i$. Thus the $x_i$ span
+$A$ over $A_0$. If $\sum_i c_ix_i=0$ with $c_i\in A_0$, applying $s$ and using
+$s(c_i)=t(c_i)$ and the $A$-basis $s(x_i)$ gives $c_i=0$. Hence they form an $A_0$-basis, and comparison on that basis makes
+$A\otimes_{A_0}A\to B$ an isomorphism. Descent from the flat local extensions proves globally
+that $A$ is finite locally free over $A_0$ and $B=A\otimes_{A_0}A$. Hence
+$U\to\bar U=\operatorname{Spec}A_0$ is finite locally free and
+$P=U\times_{\bar U}U$.
+
+Conjugation by $P$ gives descent data on $R\to U\times_SU$ along the finite locally free cover
+$U\times_SU\to\bar U\times_S\bar U$:
+
+$$
+(r,p,q)\longmapsto p^{-1}rq.
+$$
+
+Associativity is exactly the triple cocycle. Since $(s,t)$ is a separated locally-quasi-finite
+monomorphism, the separated locally-quasi-finite effectivity lemma descends it to a scheme
+$\bar R\to\bar U\times_S\bar U$ and descends all groupoid maps. The square comparing units is
+cartesian, and $P\subseteq R$ is open, so the descended unit $\bar U\to\bar R$ is an open
+immersion. For a flat groupoid, translation identifies
+
+$$
+\Omega_{\bar R/\bar U}\simeq
+\bar t^*\mathcal C_{\bar U/\bar R}.
+$$
+
+The conormal sheaf on the right vanishes because the unit is open. Hence the flat locally
+finitely presented arrows $\bar s,\bar t$ are unramified, therefore étale. The étale quotient
+theorem already proved makes $\bar U/\bar R$ an algebraic space. The maps
+$U/R\leftrightarrows\bar U/\bar R$ are inverse after the finite locally free cover $U\to\bar U$,
+so fpqc sheafness makes them inverse globally.
+
+The finite-part neighborhoods cover $U$ because their images are étale-open and contain the
+chosen points. Their quotient spaces map by representable open immersions to $F$: after pullback
+to $U$, these maps are precisely the saturations of the chosen opens. Each local quotient has the
+scheme atlas $\bar U\to\bar U/\bar R$; the disjoint union of these atlases is an étale scheme atlas
+of $F$. Pulling the diagonal back to pairs of these charts gives the descended relations just
+constructed, hence schemes. Thus the diagonal is representable. Finally all
+assertions about $U\to F$ follow after the fppf cover by an atlas, where they are the assertions
+about $s:R\to U$. $\square$
+
+Now let $p:T\to S$ be fppf and let $X_T$ carry descent datum. Its arrow scheme is
+$R_X=p_1^*X_T$, with source projection and target induced by the descent isomorphism. Both arrows
+are base changes of $p$, hence flat and locally of finite presentation, and $(s,t)$ is a
+monomorphism. The flat quotient theorem and the split-cover calculation therefore give:
+
+**Fppf scheme-to-space descent theorem.** Every scheme descent datum along an fppf cover is
+effective as a unique algebraic space, represented by (11.3), and compatible morphisms descend
+uniquely.
+
+For a set-indexed fppf covering family, work over an affine open of $S$ and choose finitely many
+quasi-compact open pieces of the members whose images cover that affine. Their finite disjoint
+union is a single flat, locally finitely presented, surjective scheme cover, so the theorem
+applies. On overlaps two such choices represent the same equalizer sheaf and hence are uniquely
+isomorphic; full faithfulness gives the triple cocycle. The local algebraic spaces therefore glue,
+so the theorem is independent of every finite refinement used in its construction.
+
 For an arbitrary fpqc $p:T\to S$, define $X$ by the same equalizer formula (11.3). It is an fpqc
 sheaf. Moreover $X\times_ST\simeq X_T$ already at the sheaf level: the pulled-back cover
 $T\times_ST\to T$ has the diagonal section, and restriction to that section and extension by the
@@ -1225,15 +1410,14 @@ Accordingly, the proved unrestricted statement for an arbitrary fpqc cover is ex
 
 **Fpqc equalizer theorem.** Formula (11.3) defines an fpqc sheaf $X$ with
 $X\times_ST\simeq X_T$, compatibly with the given datum, and compatible morphisms descend
-uniquely. If the cover is surjective étale, $X$ is the algebraic space constructed above. For a
+uniquely. If the cover is fppf, $X$ is the algebraic space constructed above. For a
 general fpqc cover this chapter makes no unconditional algebraicity assertion.
 
 This boundary is not repaired by quoting that algebraic spaces are fpqc sheaves: that result is
-the full-faithfulness statement for maps into an algebraic space already known to exist. Nor is
-it repaired by the classical effectivity theorem for fppf descent of algebraic spaces, whose
-finite-presentation hypothesis on the cover is absent for a general fpqc morphism. The standard unrestricted
-fpqc algebraicity claim would require a separate theorem beyond the arguments developed in this
-book.
+the full-faithfulness statement for maps into an algebraic space already known to exist. The
+fppf proof above uses local finite presentation at the slicing and finite-part steps; those steps
+do not apply to a merely quasi-compact flat arrow. The standard unrestricted fpqc algebraicity
+claim would require a separate theorem beyond the arguments developed in this book.
 
 The conclusion that the quotient is a scheme still requires a separate criterion. Descent data
 relative even to an étale cover can be ineffective in schemes although the local scheme is
@@ -1261,9 +1445,10 @@ is precisely the invalid step in the unrestricted stable-affine-neighborhood arg
 
 The cocycle remains necessary. Without it, the two arrows do not define an equivalence relation
 at all. But the cocycle is not sufficient for a quotient sheaf to be a scheme. Along an étale
-cover the elementary quotient proof supplies the algebraic space. For a general fpqc cover the
-equalizer exists as a sheaf, but Section 11.1 deliberately does not assert that it is algebraic.
-Invariant affine opens bypass both issues by constructing a scheme directly.
+cover the elementary quotient proof supplies the algebraic space, and along an fppf cover the flat
+slicing proof does so. For a general fpqc cover the equalizer exists as a sheaf, but Section 11.1
+deliberately does not assert that it is algebraic. Invariant affine opens bypass both issues by
+constructing a scheme directly.
 
 ### 11.3 The invariant-affine criterion
 
@@ -1314,7 +1499,7 @@ The following cases are safe and will be the only scheme-effectivity statements 
 A bare assertion that the local object is proper, projective, or a group scheme is not on this
 list. Projectivity is useful only when the polarization or embedding participates in the cocycle.
 Similarly, contracted products and twists exist without qualification as fpqc sheaves. They are
-algebraic spaces for the étale descent case proved above, and they are schemes when their local
+algebraic spaces for the fppf descent case proved above, and they are schemes when their local
 model falls under one of the criteria above.
 
 ## 12. Finite-flat group objects and actions
@@ -1332,8 +1517,8 @@ $$
 satisfying the group diagrams. Suppose $G_T$ carries descent data and these three maps are
 compatible. The equalizer theorem of Section 11.1 descends the underlying fpqc sheaf and the maps
 $m,e,i$. Associativity, the unit identities, and the inverse identities are equalities of maps and
-can be checked after the cover. Commutativity is likewise the equality $m=m\circ\tau$. For a
-surjective étale cover the underlying sheaf is an algebraic space by Section 11.1; for an
+can be checked after the cover. Commutativity is likewise the equality $m=m\circ\tau$. For an
+fppf cover the underlying sheaf is an algebraic space by Section 11.1; for an
 arbitrary fpqc cover one must instead apply one of the scheme criteria below or supply a separate
 algebraicity theorem.
 
@@ -1428,7 +1613,7 @@ algebraic-space ambiguity; no general flat-quotient theorem is needed for them.
 
 Conversely, suppose $P_T\simeq G_T$ over a cover $T\to S$, with transition maps that are
 $G$-equivariant and satisfy the cocycle. Section 11.1 gives an fpqc equalizer sheaf $P$ for every
-fpqc cover; it is an algebraic space when the cover is surjective étale. The action maps and
+fpqc cover; it is an algebraic space when the cover is fppf. The action maps and
 torsor identity descend by full faithfulness, and the covering property is checked after
 $T\to S$. For a general fpqc cover a scheme criterion applies directly to the local model $G_T$
 when $G$ is affine,
@@ -1475,7 +1660,7 @@ $$
 
 After pullback to $P$, it is isomorphic to $X_P$.
 
-When the trivializing cover is surjective étale this sheaf is an algebraic space. For an arbitrary
+When the trivializing cover is fppf this sheaf is an algebraic space. For an arbitrary
 fpqc trivialization, each of the following criteria constructs it directly as a scheme, without
 first assuming algebraicity.
 
@@ -1503,7 +1688,7 @@ sheaf. $\square$
 Once scheme effectivity has been established, every property in Chapter 10 that is fpqc local
 on the base passes to the twist. Smoothness or properness alone does not prove that the twist is
 a scheme; without one of the displayed criteria they describe the local model and the descended
-fpqc sheaf, and in the étale case the descended algebraic-space morphism.
+fpqc sheaf, and in the fppf case the descended algebraic-space morphism.
 
 For a representation of $G$ on a finite locally free sheaf $V$, the same construction yields an associated vector bundle $P\times^GV$. Tensor operations and invariant pairings descend. This mechanism produces the bundles and tensors attached to level structures and PEL data.
 
@@ -1516,7 +1701,7 @@ For $G=\operatorname{GL}_r$, the frame bundle of a rank-$r$ vector bundle is a t
 A transitive action on geometric points is not enough to be a torsor. Infinitesimal stabilizers
 may remain invisible on geometric points. The isomorphism $P\times G\simeq P\times P$ detects
 them. Likewise a quotient on topological spaces does not supply the structure sheaf or its
-effectivity. General torsor and contracted-product descent always gives an fpqc sheaf; the étale
+effectivity. General torsor and contracted-product descent always gives an fpqc sheaf; the fppf
 case is algebraic-space-valued, and scheme representability is the additional conclusion supplied
 by the displayed criteria.
 
@@ -1695,7 +1880,7 @@ The distinction between a closed and an open immersion is stable under descent. 
 ### 15.3 Producing compatible positive data
 
 The norm construction requires a representable target first. Suppose a criterion above has
-constructed the scheme descent $X$ (or the étale case has constructed an algebraic-space descent)
+constructed the scheme descent $X$ (or the fppf case has constructed an algebraic-space descent)
 and let $q:X_T\to X$ be the pullback map. If this particular $q$ is finite locally free, then
 
 $$
@@ -1740,7 +1925,7 @@ A generalized elliptic curve over $S$ consists, in the range relevant here, of a
 Given such an object over $T$ with descent datum, a compatible positive divisor as below (or
 another criterion from Section 11.4) constructs the scheme $E$ directly for an arbitrary fpqc
 cover. Independently of that criterion, Section 11.1 supplies the underlying fpqc equalizer
-sheaf, and supplies an algebraic space when the cover is surjective étale. Once $E$ is a scheme,
+sheaf, and supplies an algebraic space when the cover is fppf. Once $E$ is a scheme,
 properness, flatness, finite presentation,
 smoothness of the indicated locus, and the finite locally free component conditions descend by
 Chapter 10. The group and action identities descend as equalities of morphisms.
@@ -1786,7 +1971,7 @@ A PEL object comprises an abelian scheme $A\to S$, an action $\iota:\mathcal O\t
 For every fpqc cover, Section 11.1 first descends the proper smooth group object as an fpqc
 equalizer sheaf. The compatible positive data below construct the abelian **scheme** required by
 the moduli problem directly; properness, smoothness, and geometric connectedness alone are not
-effectivity inputs. For a surjective étale cover the intermediate equalizer is an algebraic space.
+effectivity inputs. For an fppf cover the intermediate equalizer is an algebraic space.
 Endomorphisms $\iota(a)$ then descend by full faithfulness. Since $\mathcal O$ is finitely generated
 as an abelian group in the applications, finitely many multiplication and involution identities
 suffice, and all are equalities of maps.
@@ -1817,7 +2002,7 @@ The determinant condition compares the characteristic polynomial of the $\mathca
 
 Descent does not by itself prove that a moduli functor is represented. It supplies the sheaf
 condition. The fpqc theorem of Section 11.1 glues a scheme descent datum to an equalizer sheaf,
-and proves that sheaf algebraic for a surjective étale cover. For a general fpqc cover, to obtain
+and proves that sheaf algebraic for an fppf cover. For a general fpqc cover, to obtain
 a representing scheme one must retain affine, quasi-affine, or compatible projective embedding
 data. Under the noetherian, projective, finite-presentation, and fixed-polynomial
 hypotheses of the parameter theorems in Book 8, a typical argument proceeds as follows. After an
@@ -1846,7 +2031,7 @@ For later constructions the following order prevents circular arguments.
 4. Descend quasi-coherent modules and finite locally free tensors first.
 5. Descend algebras, affine pieces, and closed or open loci cut out by those tensors.
 6. Form the fpqc equalizer sheaf of Section 11.1; use its quotient theorem when the cover is
-   surjective étale.
+   fppf.
 7. For a general fpqc cover, prove representability by identifying invariant affine charts,
    quasi-affineness, compatible
    ample or very ample data.
@@ -1865,7 +2050,7 @@ faithfully flat algebra preserves and reflects exactness. The Amitsur equalizer 
 modules, their morphisms, and algebraic structures. At the unrestricted fpqc-sheaf level,
 Section 11.1 forms the equalizer of an arbitrary scheme datum and proves effective pullback and
 full faithfulness. At the algebraic-space level it constructs a representable diagonal and étale
-atlas for a surjective étale cover. At the fpqc scheme-theoretic level, affine charts, intrinsic
+atlas for an fppf cover. At the fpqc scheme-theoretic level, affine charts, intrinsic
 quasi-affine envelopes, or compatible positive line bundles construct a representing scheme
 directly. There is no automatic equivariant-atlas or stable-affine-neighborhood step between
 these levels. Constructible-étale effectivity descends an atlas that already has descent data; it
@@ -1895,7 +2080,7 @@ The results established in this book may be used in the following precise form.
 - Modules, algebras, quasi-coherent sheaves, affine schemes, and their morphisms have effective
   fpqc descent, with pairwise isomorphisms satisfying the triple cocycle.
 - Arbitrary scheme descent data along any fpqc cover define an fpqc equalizer sheaf with effective
-  pullback and full faithfulness. Along a surjective étale cover this sheaf is an algebraic space.
+  pullback and full faithfulness. Along an fppf cover this sheaf is an algebraic space.
   No unrestricted arbitrary-fpqc algebraicity theorem is asserted here.
 - Finite generation, finite presentation, flatness, finite projectivity, finite local freeness, and rank descend faithfully flatly.
 - Affine, finite, finite locally free, quasi-compact, quasi-separated, separated, finite-type, finite-presentation, flat, proper, smooth, étale, and unramified morphisms are fpqc local on the base with the qualifications stated in Chapter 10.
@@ -1903,7 +2088,7 @@ The results established in this book may be used in the following precise form.
   on a descended scheme, and finite locally free group schemes and their affine torsors satisfy
   effective scheme descent.
 - General group objects, torsors, contracted products, and twists descend as fpqc sheaves along
-  arbitrary fpqc covers and as algebraic spaces along the surjective étale covers treated here.
+  arbitrary fpqc covers and as algebraic spaces along fppf covers.
   They are schemes under the affine, finite, quasi-affine, or compatible-polarization criteria
   proved here, not merely from properness or projectivity.
 - Quasi-compact quasi-separated quasi-affine schemes satisfy effective scheme descent through the
@@ -1923,7 +2108,7 @@ still be applied.
 Descent replaces the vague instruction “glue the local pieces” by a rigid and verifiable mechanism. Double overlaps say how to compare, triple overlaps say that comparison is transitive, faithful flatness says that local equality is genuine equality, and flatness says that the algebraic relations survive transport. Quasi-compactness ensures that finite geometry remains finite.
 
 For every fpqc cover this mechanism recovers a global equalizer sheaf with the prescribed
-pullback. For a surjective étale cover Section 11.1 constructs its algebraic-space atlas and
+pullback. For an fppf cover Section 11.1 constructs its algebraic-space atlas and
 representable diagonal. For a general fpqc cover, algebraicity is not a formal consequence of the
 cocycle. Recovering a scheme is still stronger. In the generalized elliptic and PEL applications,
 the compatible positive divisor or rigidified ample bundle supplies that step. Those families can
