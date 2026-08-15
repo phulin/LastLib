@@ -822,7 +822,7 @@ part of the noncyclic argument which follows from the inequalities alone.
 with group $G$,
 
 $$
-H^1(G,C_M)=0,qquad |H^2(G,C_M)|\mid |G|,qquad
+H^1(G,C_M)=0,\qquad |H^2(G,C_M)|\mid |G|,\qquad
 [C_F:N_{M/F}C_M]\mid |G|.                                \tag{4.I9s}
 $$
 
@@ -868,6 +868,40 @@ prime case and the same normal-subgroup induction as above (using norm
 transitivity) show
 $|\widehat H^0(P,C_M)|\mid |P|$. Applying this for every $p$ proves the last
 divisibility in (4.I9s). $\square$
+
+**Brauer localization injection.** For every finite Galois $M/F$, localization
+is injective:
+
+$$
+\operatorname {Br}(M/F)\longrightarrow
+\bigoplus_v\operatorname {Br}(M_w/F_v).                   \tag{4.I9b}
+$$
+
+Consequently
+
+$$
+\operatorname {Br}(F)\longrightarrow\bigoplus_v\operatorname {Br}(F_v)
+                                                               \tag{4.I9b'}
+$$
+
+is injective as well.
+
+Indeed, the cohomology sequence of
+$1\to M^\times\to I_M\to C_M\to1$ contains
+
+$$
+H^1(G,C_M)\longrightarrow H^2(G,M^\times)
+\longrightarrow H^2(G,I_M).
+$$
+
+The first group is zero by (4.I9s). Under (4.I2) and Shapiro, the second
+arrow is precisely localization from the relative Brauer group to the direct
+sum of its relative local Brauer groups, proving (4.I9b). Every class in
+$\operatorname {Br}(F)$ is represented by a finite-dimensional central simple
+algebra and hence is split by one finite Galois extension $M/F$. If all of its
+localizations vanish, (4.I9b) makes the original class zero. This proves
+(4.I9b'). Notice that neither assertion yet identifies the image of
+localization or uses a sum of invariants.
 
 We now pass to the stronger normalization assertion for arbitrary $G$. We use
 the following tower calculation, whose normalization is important.
