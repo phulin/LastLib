@@ -2403,8 +2403,8 @@ Dirichlet's unit theorem translates these equations into linear relations among 
 
 ### 11.5 The ell-adic avatar
 
-Before passing from a global Hecke character to Galois, we isolate the elementary
-local-algebraicity condition used in this book. Let
+Before passing from a global Hecke character to Galois, we must separate an elementary
+local-algebraicity condition from its $\ell$-adic Hodge-theoretic interpretation. Let
 $L/\mathbf Q_\ell$ and $E/\mathbf Q_\ell$ be finite extensions, enlarging $E$ so that it
 contains the images of all embeddings
 $\tau:L\hookrightarrow\overline{\mathbf Q}_\ell$. A continuous character
@@ -2425,47 +2425,70 @@ Changing arithmetic to geometric reciprocity changes every $n_\tau$ by a sign; i
 change the condition. A finite-order or unramified factor is invisible on a sufficiently small
 $U$ and is therefore allowed.
 
-The condition has a completely elementary infinitesimal test.
+Books 1--5 construct local reciprocity and the Lubin--Tate torsion extensions, but they do
+not construct the completed period field $\mathbf C_\ell$, Hodge--Tate decompositions,
+labeled Sen operators, or the Hodge--Tate periods of conjugate Lubin--Tate characters. The
+formal-group construction of a torsion tower does not by itself supply those periods. We
+therefore isolate exactly the local input used to interpret the preceding elementary
+condition. Here “Hodge--Tate” retains its period-theoretic meaning; it is not being defined
+to mean “locally algebraic.” Construction of the comparison functor and its labeled
+decomposition is part of the following input.
 
-**Proposition 11.1 (logarithmic criterion for local algebraicity).** After replacing the
-principal-unit group by a sufficiently deep open subgroup, there are unique scalars
-$c_\tau\in E$ such that
+**Hypothesis RHT (rank-one Tate--Sen and Lubin--Tate comparison).** For every pair $L,E$ as
+above and every continuous character $\xi:G_L\to E^\times$, the following assertions hold.
 
-$$
-\log\bigl(\xi(\operatorname{rec}_L(\exp x))\bigr)
-=\sum_{\tau:L\hookrightarrow E}c_\tau\tau(x).             \tag{11.1a}
-$$
+1. On a sufficiently deep principal-unit group, the convergent logarithm has a unique
+   expansion
 
-The character $\xi$ is locally algebraic if and only if every $c_\tau$ is an integer.
-In that case the integers $c_\tau$ are exactly the exponents in the defining formula,
-with their signs reversed if geometric rather than arithmetic reciprocity is used.
+   $$
+   \log\bigl(\xi(\operatorname{rec}_L(\exp x))\bigr)
+   =\sum_{\tau:L\hookrightarrow E}c_\tau\tau(x).
+   $$
 
-**Proof.** Continuity lets us choose $r,s$ such that
-$\exp:\mathfrak p_L^r\to1+\mathfrak p_L^r$ and
-$\log:1+\mathfrak p_E^s\to\mathfrak p_E^s$ are mutually inverse and $\xi$ carries the
-first group into the second. The left side of (11.1a) is then a continuous homomorphism
-from the additive group $\mathfrak p_L^r$ to $E$. For $a\in\mathbf Z_\ell$ it satisfies
-$f(ax)=af(x)$ first for integers and then, by density and continuity, for every $a$; after
-division by a power of $\ell$ it extends uniquely to a $\mathbf Q_\ell$-linear map
-$f:L\to E$.
+   With the fixed arithmetic reciprocity convention, the scalars $c_\tau$, up to the one
+   common sign determined by the convention for Hodge--Tate twists, are the labeled
+   rank-one Sen eigenvalues.
+2. With the present arithmetic reciprocity convention, the character corresponding on
+   principal units to $u\mapsto\tau(u)$ is, up to an unramified factor, the dual of the
+   $\tau$-conjugate Lubin--Tate character; inversion of reciprocity removes this dual. It is
+   Hodge--Tate with labeled weight $1$ at $\tau$ and weight $0$ at every other embedding,
+   subject to the same convention-dependent sign. Finite-image and unramified rank-one
+   characters are Hodge--Tate of weight zero, and Hodge--Tate representations are stable
+   under tensor products, duals, and finite extension of coefficients.
+3. A rank-one character is Hodge--Tate precisely when the eigenvalues in the displayed
+   logarithmic expansion are integers. In that case division by the corresponding product
+   of conjugate Lubin--Tate characters leaves a character trivial on an open subgroup of
+   inertia.
 
-Because $L/\mathbf Q_\ell$ is separable and $E$ contains the images of all embeddings, the
-Dedekind independence lemma says that the embeddings $\tau:L\hookrightarrow E$ are
-linearly independent. Their number is $[L:\mathbf Q_\ell]$, the dimension of
-$\operatorname {Hom}_{\mathbf Q_\ell}(L,E)$ over $E$, so they form a basis. This proves
-existence and uniqueness of the $c_\tau$.
+This is a bounded local $\ell$-adic Hodge-theoretic prerequisite. It asserts no global
+reciprocity theorem and no correspondence with Hecke characters. It is not proved in this
+book, and it is not imported from a later volume, which would reverse the chronological
+dependency order. Results marked **[RHT]** are conditional on this input.
 
-If $\xi$ is locally algebraic, applying logarithm to its defining formula gives
-$c_\tau=n_\tau\in\mathbf Z$. Conversely suppose the $c_\tau$ are integers and divide
-$\xi\circ\operatorname {rec}_L$ by $u\mapsto\prod_\tau\tau(u)^{c_\tau}$. Its logarithm
-vanishes on a sufficiently deep principal-unit group. The logarithm is injective there,
-so the quotient itself is one. This is precisely local algebraicity. $\square$
+The local bridge is then exact in rank one.
 
-Coefficient extension causes no ambiguity. If $E$ initially omits some embeddings, test
-the criterion after one finite extension containing them. Linear independence shows that
-the resulting exponent tuple is independent of the chosen enlargement. Period-theoretic
-notions are not used in this book; relating this elementary criterion to such notions
-belongs only after their period rings and comparison functors have been constructed.
+**Rank-one Hodge--Tate criterion [RHT].** A continuous one-dimensional $E$-linear representation
+$\xi$ of $G_L$ is Hodge--Tate if and only if it is locally algebraic. More precisely, the
+integers in the displayed local-algebraicity formula, with the sign dictated by reciprocity
+and twist conventions, are its
+labeled Hodge--Tate weights.
+
+**Proof, conditional on RHT.** Apply the displayed logarithmic expansion. If $\xi$ is
+Hodge--Tate, RHT makes every
+$c_\tau$ an integer $n_\tau$. Dividing by the corresponding product of conjugate
+Lubin--Tate characters leaves a character trivial on an open subgroup of inertia, so $\xi$
+is locally algebraic. Conversely, a locally algebraic character is, on an open subgroup of
+inertia, a product of integral tensor powers and duals of the conjugate Lubin--Tate
+characters. The quotient has finite inertia and is Hodge--Tate of weight zero by RHT;
+stability under tensor products and duals proves the converse. $\square$
+
+Coefficient extension causes no ambiguity. If $E$ initially omits some embeddings, test the
+criterion after one finite extension containing them. Local algebraicity then descends as a
+statement about the original $\overline{\mathbf Q}_\ell$-valued character, and the multiset of
+labeled weights is independent of the chosen enlargement. Conditional on RHT, once a
+one-dimensional constituent of a geometric representation is known to be Hodge--Tate, no
+second global theorem is needed to make it locally algebraic. Without RHT, the remainder of
+this chapter uses local algebraicity directly and makes no Hodge--Tate inference.
 
 Choose an isomorphism $\iota:\overline{\mathbf Q}\hookrightarrow\overline{\mathbf Q}_\ell$. An algebraic Hecke character whose finite values are algebraic has an $\ell$-adic avatar. On finite ideles, transport its algebraic values through $\iota$ and correct at the places above $\ell$ by the algebraic infinity type. Explicitly, for $x_f\in\mathbf A_{K,f}^\times$, put
 
