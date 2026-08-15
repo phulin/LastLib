@@ -932,7 +932,8 @@ generated graded module has a minimal graded free resolution: at each stage choo
 lifts of a basis of the kernel modulo the irrelevant ideal. Every matrix in that resolution
 has entries in the irrelevant ideal, so tensoring with $k=R/(X_0,\ldots,X_N)$ kills all
 differentials. The Koszul complex on $X_0,\ldots,X_N$ is a free resolution of $k$ of length
-$N+1$; its exactness follows by successively contracting multiplication by each $X_i$.
+$N+1$; its exactness follows by tensoring the two-term complexes for the regular sequence
+$X_0,\ldots,X_N$, since $X_i$ is a non-zero-divisor modulo its predecessors.
 Computing Tor with this Koszul resolution gives
 $\operatorname{Tor}^R_j(k,M)=0$ for $j>N+1$. Computing it with the minimal resolution identifies
 the same group with its $j$th free module tensored with $k$. Graded Nakayama therefore makes
