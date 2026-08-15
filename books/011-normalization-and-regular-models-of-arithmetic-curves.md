@@ -779,10 +779,12 @@ blowups from completions. Only after those steps will Theorem 8.1 be discharged.
 
 #### 8.5.1 Local duality in dimension two
 
-For a complete $A$, choose a surjection $Q\twoheadrightarrow A$ from a complete regular local
-ring and set $D_A=R\operatorname{Hom}_Q(A,Q)[\dim Q]$. Finite free resolutions and the Koszul
-resolution of the diagonal prove biduality and independence of $Q$. For excellent $A$, this
-finite construction descends from the completion and faithful flatness reflects biduality.
+From this subsection through Proposition 8.21, $A$ is complete. Choose a surjection
+$Q\twoheadrightarrow A$ from a complete regular local ring and set
+$D_A=R\operatorname{Hom}_Q(A,Q)[\dim Q]$. Finite free resolutions and the Koszul resolution of
+the diagonal prove biduality and independence of $Q$. No dualizing complex is asserted for an
+arbitrary excellent local ring: Theorem 8.1 uses this chain only after completion and returns by
+Lemma 8.20.
 Normality gives depth two, so $D_A=\omega_A[2]$ for a finite maximal
 Cohen--Macaulay module $\omega_A$. Choose an injective resolution of this complex and apply the
 $\mathfrak m$-torsion functor. The only surviving indecomposable injective at the closed point is
