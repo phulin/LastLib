@@ -454,7 +454,7 @@ $[L:K(A_0)]$. For a degree-$p$ step write, after clearing denominators,
 $L=M[z]/(z^p-f)$ with $f$ in a finite $A_0$-algebra $B$ having fraction field $M$. Pure
 inseparability gives a unique prime of $B$ over the chosen prime of $A_0$, and completion
 commutes with this finite algebra. The induction hypothesis says that the completed generic
-fiber for $M$ is regular. By (3.1c) choose $D$ with $D(f)\ne0$; in the generic fiber $D(f)$ is a
+fiber for $M$ is regular. By (3.1d) choose $D$ with $D(f)\ne0$; in the generic fiber $D(f)$ is a
 unit, and the preceding Jacobian calculation proves regularity after adjoining $z$. Every
 finite field extension is a separable extension after such a purely inseparable test, and
 separable extensions preserve regularity. Hence (3.1e) is geometrically regular and $A$ is a
