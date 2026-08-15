@@ -1288,7 +1288,7 @@ available.
    \tag{4.1}
    $$
 
-   for $0\leq i\leq3$, together with the pairings obtained by interchanging $A_n$ and
+   for $1\leq i\leq3$, together with the pairings obtained by interchanging $A_n$ and
    $\mu_n$. More precisely, these pairings are induced by cochain maps
 
    $$
@@ -1300,7 +1300,7 @@ available.
    $$
 
    and its swapped analogue, with the standard dual-complex differential; these
-   maps are quasi-isomorphisms in the displayed degree range.
+   maps induce isomorphisms on cohomology in the displayed degree range.
 2. All groups in these pairings are finite, and each pairing identifies either factor with
    the full Pontryagin dual of the other. The identification is compatible with the long
    exact localization sequences, connecting maps, cup products, and the transition maps as
@@ -1746,7 +1746,7 @@ claim. Apply it to the cone of (4.F4s). The preceding explicit graded checks
 make that cone contractible. Since $\tfrac1n\mathbf Z/\mathbf Z$ is
 injective, dualizing the filtered quasi-isomorphism (4.F4o) preserves
 quasi-isomorphisms. Two-out-of-three therefore proves that the original
-cochain map (4.C4) is a quasi-isomorphism on the good truncations:
+cochain map (4.C4) induces isomorphisms in the displayed degrees $1,2,3$:
 
 $$
 C_{S,c}^\bullet(A_n)\longrightarrow
@@ -1807,13 +1807,12 @@ f(\delta_1,\ldots,\delta_r)\smile
 $$
 
 Before filtering, take the good truncations which retain cohomological degrees
-$-1,\ldots,4$; these contain every kernel and cokernel relevant to degrees
-$0,\ldots,3$. In a fixed total degree in this range, the nonnegative bar degree
+$-1,\ldots,3$; these contain every kernel and cokernel relevant to the displayed
+degrees $1,\ldots,3$. In a fixed total degree in this range, the nonnegative bar degree
 has only finitely many values. Thus the bar-degree filtration is finite, not
 merely exhaustive. Every associated-graded comparison is a finite direct sum
 of $\Delta$-translates of (4.F5), so its cone is acyclic. Induction over this
 finite filtration proves that the total comparison is a quasi-isomorphism.
-Increasing the good truncations gives the untruncated assertion.
 
 No averaging idempotent and no division by $|\Delta|$ occurs; this is why the
 proof remains valid when $|\Delta|$ and $n$ have a common factor. The explicit
