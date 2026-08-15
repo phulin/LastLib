@@ -2761,7 +2761,6 @@ The prior-book boundary is exact:
 | Book 83, definite quaternionic forms | exact stabilizer-lattice description, central-character compatibility, pullback, trace, and integral pairings | bad stabilizer primes and perfectness remain explicit hypotheses |
 | Book 84, quaternionic Hecke operators | right-coset normalization, $T_v,S_v,U_v$, degeneracy matrices, Gram determinant, and inverse-diamond adjunction | its lower-right diamond becomes scalar after fixing the center, so this book replaces it by the projective ratio rather than misusing it |
 | Book 85, Hecke algebras and congruences | finite image algebras, residual idempotents, primary localization, adjoint factors, and formal old--new criteria | localization does not prove degeneracy injectivity or absence of new support |
-| Book 139, saturated Ihara theory | the constant-coefficient Shimura-curve saturation theorem quoted in Section 17.1 | it does not apply to the totally definite class-set module and is not used to prove Theorem 16.1 |
 
 Every conclusion in Theorems 15.1 and 20.5 is attached to the step that proves it. In particular, rank counts do not substitute for torsors, generic injectivity does not substitute for saturation, and a common abstract group ring does not substitute for a map of levels. The minimal-level corollary is explicitly conditional on new-support vanishing; no predecessor in the table proves that assertion for the definite module in the generality of this book.
 

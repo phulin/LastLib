@@ -1445,9 +1445,12 @@ then trace and determinant record the unordered pair of characters at good place
 ### 12.4 Dependency and hypothesis ledger
 
 The proof uses the following prior mathematical packages. Book 127 is the direct source for the
-weak curve-carried family, determinant, good-place purity, and integral boundary; its Books 37,
-97, 104, 125, and 126 inputs are transitive here. Book 6 supplies the algebraic-Hecke-character
-avatar theorem and Book 109 supplies isobaric multiplicity one for Theorem 7.6. Book 41 is used
+weak curve-carried family, determinant, good-place purity, and integral boundary; its Books 37
+and 126 inputs are transitive here. Book 36 is reused directly for the Jacobian realization in
+Proposition 7.7, Book 104 for the targetwise one-split transfers and parity check, and Book 125
+for the component-routing occurrence in Proposition 7.6A. Book 97 is also used directly as
+listed below. Book 6 supplies the algebraic-Hecke-character avatar theorem and Book 109 supplies
+isobaric multiplicity one for Theorem 7.6. Book 41 is used
 only for the optional ambient alternative in Proposition 7.7. Book 118 is the direct source
 for the common-norm Hodge-lift obstruction used in Proposition 7.2 and the generic
 common-adjoint unitary cover used in Propositions 7.6A--7.6C. In the fixed-three branch,
@@ -1459,6 +1462,7 @@ coefficient place; the uniform theorem retains its separate hypothesis $(\mathrm
 | Conclusion in this book | Established source | Hypotheses retained here | Boundary |
 |---|---|---|---|
 | weak family, determinant, good-place purity, and lattice boundary | Book 127, Theorem 8.1 | one-split compact curve carrier, full component-routing block, selected center embedding and splitting field; for split packets, a parity-compatible selected set $W$ | in even degree no eligible place gives no carrier; strict bad-place compatibility, a canonical rank-two lattice, and a finite-flat quotient are not supplied |
+| curve-cohomology realization of the ambient Tate module | Book 36, (10.12) | a smooth proper curve carrier and its Jacobian in the covariant convention | this identification alone does not prove Tate-module semisimplicity |
 | Weil-number calculus and good-place purity of curve $H^1$ | Book 37, *Weights and Weil Bounds for Curves and Abelian Varieties* | smooth proper curve over a finite field; geometric Frobenius; correspondence summand | it supplies no bad-place return-map weights |
 | good-polynomial field, conjugate packets, and saturated eigenlattices | Book 97, *Algebraicity and Integral Structures of Weight-Two Packets* | one absolute $\mathbf Q$-algebraic conjugation-stable finite Hecke module; raw $T_v,S_v$ normalization; isolating data; intersection with a fixed integral module | a relative model gives only embeddings over its base field; the full packet center can exceed the field of good values; good eigenvalues can name only a near-equivalence block |
 | eligible one-split packet | Book 104, *Global Jacquet--Langlands* | $F$ totally real of degree $d\ge2$; $(d-1)+|W|$ even; selected special or selected tame-dihedral factor at every $w\in W$ | in even degree no eligible place gives no carrier; Proposition 7.6B chooses a dyadic singleton $w\ne v$ separately for each target $v$; in odd degree $W=\varnothing$ clears the constraint |

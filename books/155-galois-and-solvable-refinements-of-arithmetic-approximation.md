@@ -892,7 +892,7 @@ one factorization partition.
 Let $D/K$ now denote a finite extension to be avoided; to prevent conflict with decomposition
 groups we shall sometimes call it $D_{\mathrm{av}}$. Since
 $\widetilde T\to H$ is geometrically connected, its base change to $D$ remains connected. Book
-152's descent of Hilbert conditions shows that the set of $K$-points $h$ for which
+153's descent of Hilbert conditions shows that the set of $K$-points $h$ for which
 
 $$
 \widetilde T_h\otimes_KD
@@ -2485,7 +2485,7 @@ Let us record exactly where the substantial inputs enter.
   local field results of Book 2.
 - Hilbert density in finite local boxes, full generic monodromy through resolvents, disjoint
   specialization after base change, and equivariant local constancy are established in Book
-  152.
+  153.
 - Book 154 supplies moving incidence presentations for ordinary local-open approximation and
   explains how a point is evaluated from a connected fiber. It does not supply the bridge datum;
   that stronger presentation is hypothesis 1 of the ledger and must be proved in the geometric

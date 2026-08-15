@@ -368,7 +368,7 @@ $$
 
 where $G_v$ is the trace Gram matrix of any $R_v$-basis of $\mathcal O_v$. Only finitely many exponents are nonzero, and change of local basis by $\operatorname{GL}_4(R_v)$ does not change them.
 
-This construction parallels the discriminant of a finite field extension developed in Book 3, but the two invariants must not be identified. A field discriminant uses the ordinary field trace on an integral closure and is the norm of a different. Here the ambient object is already a four-dimensional central simple algebra, the pairing uses reduced trace, and the variable integral object is the order inside that fixed algebra. The common square-index behavior comes from change of lattice; it does not assert the existence of a commutative different for an arbitrary quaternion order.
+For comparison only, this construction parallels the discriminant of a finite field extension developed in Book 3; no result from that book is used here, and the two invariants must not be identified. A field discriminant uses the ordinary field trace on an integral closure and is the norm of a different. Here the ambient object is already a four-dimensional central simple algebra, the pairing uses reduced trace, and the variable integral object is the order inside that fixed algebra. The common square-index behavior comes from change of lattice; it does not assert the existence of a commutative different for an arbitrary quaternion order.
 
 For a quaternion order every local exponent $v(\operatorname{disc}(\mathcal O))$ is even. This can be checked without assuming that $2$ is a unit. Choose a presentation $B=(a,b)_F$ and use the $F$-basis $1,i,j,ij$. Its trace Gram matrix is diagonal with entries
 

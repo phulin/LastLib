@@ -111,7 +111,7 @@ flowchart LR
 | 79 | Representations of Quaternion Division Algebras | 72, 74, 77, 78 |
 | 80 | Local Jacquet--Langlands for Special and Dihedral Packets | 73, 74, 75, 76, 79, 78 |
 | 81 | Cyclic Base Change: Local Theory | 3, 5, 73, 74, 76, 80 |
-| 82 | Orders in Quaternion Algebras | 3, 77 |
+| 82 | Orders in Quaternion Algebras | 77 |
 | 83 | Automorphic Forms on Definite Quaternion Algebras | 4, 82 |
 | 84 | Hecke Operators on Quaternionic Forms | 72, 77, 82, 83 |
 | 85 | Hecke Algebras and Congruences | 57, 64, 84 |
@@ -181,10 +181,10 @@ flowchart LR
 | 149 | Eisenstein Cotangent Lattices and Formal Immersion | 9, 15, 113, 114, 147, 148 |
 | 150 | Mordell--Weil Sieves for Hyperelliptic Curves | 41, 149, 136, 137 |
 | 151 | Semistable Full-Two Residual Irreducibility | 6, 35, 42, 44, 45, 51, 149, 150 |
-| 152 | Deep-Level Quaternionic Modules and Diamond Actions | 82, 83, 84, 85, 139, 143, 144, 145 |
+| 152 | Deep-Level Quaternionic Modules and Diamond Actions | 82, 83, 84, 85, 143, 144, 145 |
 | 153 | Hilbert Irreducibility and Arithmetic Approximation | 2, 17, 37 |
-| 154 | Moret–Bailly’s Theorem | 8, 9, 10, 40, 41, 58, 153 |
-| 155 | Galois and Solvable Refinements of Arithmetic Approximation | 2, 6, 153, 154, 142 |
+| 154 | Moret–Bailly’s Theorem | 8, 9, 10, 153 |
+| 155 | Galois and Solvable Refinements of Arithmetic Approximation | 2, 6, 142, 153, 154 |
 | 156 | Hilbert--Blumenthal Moduli and Two-Prime Level Covers | 17, 10, 13, 35, 55, 115, 116 |
 | 157 | Local Geometry of Hilbert--Blumenthal Moduli | 2, 8, 10, 37, 43, 44, 45, 51, 52, 54, 55, 58, 60, 117, 154, 155, 156 |
 | 158 | Moduli Constructions for Potential Modularity | 153, 154, 155, 156, 157 |
@@ -197,7 +197,7 @@ flowchart LR
 | 165 | Local Conditions for Hardly-Ramified Minimal Deformations | 30, 31, 32, 44, 63, 66, 67, 68, 164 |
 | 166 | Supported Galois Cohomology and Selmer Calculations | 24, 30, 31, 32, 33, 69, 165 |
 | 167 | Relation Obstructions and Poitou--Tate Corrections | 165, 166 |
-| 168 | Compatible Coefficient Systems and Purity | 6, 41, 47, 54, 97, 109, 118, 121, 122, 127, 128, 129, 142 |
+| 168 | Compatible Coefficient Systems and Purity | 6, 36, 41, 47, 54, 97, 104, 109, 118, 121, 122, 125, 127, 128, 129, 142 |
 | 169 | The Eisenstein Ideal | 85, 113, 114, 131, 132, 133, 134, 147, 148, 149, 142 |
 | 170 | Hecke-Valued Galois Representations and Nonminimal Reciprocity | 68, 69, 85, 127, 128, 138, 140, 62, 142 |
 | 171 | The Minimal Totally-Real Deformation--Hecke Problem | 69, 71, 85, 124, 127, 65, 138, 170, 141 |
