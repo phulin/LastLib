@@ -3,7 +3,7 @@
 ## Contents
 
 1. [Scope](#1-scope)
-2. [Input contract](#2-input-contract)
+2. [The starting arithmetic data](#2-the-starting-arithmetic-data)
    - [The family and its coefficient field](#21-the-family-and-its-coefficient-field)
    - [The exact local record at two](#22-the-exact-local-record-at-two)
    - [Ramification away from two](#23-ramification-away-from-two)
@@ -22,18 +22,18 @@
 6. [Residual image at the selected place](#6-residual-image-at-the-selected-place)
    - [What compatibility does not prove](#61-what-compatibility-does-not-prove)
    - [A valid direct certificate](#62-a-valid-direct-certificate)
-   - [The admissible-place ledger](#63-the-admissible-place-ledger)
+   - [Choosing an admissible place](#63-choosing-an-admissible-place)
 7. [Prime-switch theorem](#7-prime-switch-theorem)
-8. [Handoff to Books 187--188 and Book 161](#8-handoff-to-books-187--188-and-book-161)
-   - [Book 187: coefficient-prime integrality](#81-book-187-coefficient-prime-integrality)
-   - [Book 188: the residual input](#82-book-188-the-residual-input)
-   - [Book 161: the actual classification source](#83-book-161-the-actual-classification-source)
-   - [The minimal integral scope](#84-the-minimal-integral-scope)
-9. [Hostile proof and dependency audit](#9-hostile-proof-and-dependency-audit)
-   - [Local mathematics](#91-local-mathematics)
-   - [Coefficients and compatibility](#92-coefficients-and-compatibility)
-   - [Integral and residual boundaries](#93-integral-and-residual-boundaries)
-   - [Dependency boundary](#94-dependency-boundary)
+8. [The role of the switched member in the endgame](#8-the-role-of-the-switched-member-in-the-endgame)
+   - [Coefficient-prime integrality](#81-coefficient-prime-integrality)
+   - [The residual stage](#82-the-residual-stage)
+   - [The classification theorem](#83-the-classification-theorem)
+   - [The exact integral requirements](#84-the-exact-integral-requirements)
+9. [Logical boundaries of the prime switch](#9-logical-boundaries-of-the-prime-switch)
+   - [The decisive local argument](#91-the-decisive-local-argument)
+   - [Coefficient fields and compatibility](#92-coefficient-fields-and-compatibility)
+   - [What integrality and reduction retain](#93-what-integrality-and-reduction-retain)
+   - [Chronology of the proof](#94-chronology-of-the-proof)
 10. [Conclusion](#10-conclusion)
 
 ## 1. Scope
@@ -56,13 +56,13 @@ conductor exponent $1$. The nilpotent operator is part of the datum. Deleting it
 would change a special parameter into an unramified one.
 
 Nothing here reconstructs compatible-family theory, automorphic descent, integral
-$3$-adic Hodge theory, or a classification of finite-flat group schemes. Those are
-dependency boundaries. The final sections state exactly what is handed to Books 187--188
-and distinguish Book 161's actual category/classification role in the endgame.
+$3$-adic Hodge theory, or the classification of finite-flat group schemes. The argument
+isolates the rational prime-switching step, and the final sections explain how its output
+enters the later integral and classification arguments.
 
-The all-odd spreading theorem in the FLT blueprint is stronger than this chapter's final
-use of it: that theorem equips every odd-coefficient member with an integral model, whereas
-the contradiction selects one place $\nu\mid3$. The selected route needs an all-level
+A family-wide all-odd spreading theorem, which equips every odd-coefficient member with an
+integral model, is stronger and lies outside the scope needed here. The contradiction selects
+one place $\nu\mid3$, and the selected route needs an all-level
 integral tower only for this one member. It still needs that member to be unramified at
 every base prime outside $\{2,3\}$, because those local conditions glue the tower over
 $\mathbf Z[1/2]$. Thus ``one coefficient place'' must not be confused with ``one rational
@@ -77,10 +77,10 @@ part of this route.
 Throughout, Frobenius is arithmetic and
 $\chi_q(\operatorname{Frob}_v)=v$ for $v\ne q$.
 
-## 2. Input contract
+## 2. The starting arithmetic data
 
 Let $p\ge5$ be the coefficient characteristic of the distinguished Frey lift. The
-input consists of the following supplied data.
+argument begins with the following arithmetic data.
 
 ### 2.1 The family and its coefficient field
 
@@ -495,6 +495,18 @@ itself imply the first line of (5.7). A claim that the residual conductor remain
 one must therefore include the primitive-monodromy certificate
 $\mathfrak c_2(T)=\mathcal O$.
 
+For a concrete counterexample to the tempting rational-to-residual inference, take
+$\mathcal O=\mathbf Z_3$ and let tame inertia act in an adapted basis by
+
+$$
+\sigma\longmapsto
+\begin{pmatrix}1&3t_3(\sigma)\\0&1\end{pmatrix}.
+\tag{5.7a}
+$$
+
+The resulting rational monodromy is nonzero, but reduction modulo $3$ makes inertia trivial.
+Here $c_T=3$, so (5.7a) realizes exactly the second case of (5.7).
+
 ### 5.3 The residual line and sign
 
 Reduction of (5.2) gives a $G_{\mathbf Q_2}$-stable line
@@ -574,35 +586,32 @@ Then no line over $\overline k$ is stable under the image, so (6.1) is absolutel
 irreducible. A single irreducible characteristic polynomial over $k$ proves only
 irreducibility over $k$; it is not an absolute-irreducibility certificate.
 
-If no such image calculation or imported theorem is available, the honest output
-of this chapter is “residual image unchecked.” That status does not obstruct the
-rational prime switch, but it may obstruct a later residual argument.
+If no such image calculation or earlier theorem is available, this chapter makes no
+residual-image assertion. The rational prime switch still goes through, but a later residual
+argument may require the missing calculation.
 
-### 6.3 The admissible-place ledger
+### 6.3 Choosing an admissible place
 
-For each $\nu\mid3$, record the following without conflation:
+The factorization of $3\mathcal O_E$ first determines the fields $K=E_\nu$ and $k$. The
+actual representation $V=r_\nu$ must then come from the family (2.1) or from Book 185,
+Proposition 9.2. Book 185's certified good set supplies its Frobenius polynomials and purity,
+while Propositions 8.3 and 8.1 supply clean support outside $\{2,3\}$. Strong compatibility
+in (4.6) supplies the special record at two. These are rational properties of the chosen
+member.
 
-| item | required evidence |
-|---|---|
-| $K$ and $k$ | factorization of $3\mathcal O_E$ |
-| existence of $V=r_\nu$ | the actual family (2.1), or Book 185, Proposition 9.2 |
-| good Frobenius polynomials and purity | Book 185's certified set $v\notin S$ |
-| clean support outside $\{2,3\}$ | Book 185, Propositions 8.3 and 8.1 |
-| special record at $2$ | strong compatibility (4.6) |
-| residual representation | a named stable lattice |
-| absolute irreducibility or image | a direct calculation or an exact imported theorem |
-| residual conductor at $2$ | the ideal $\mathfrak c_2(T)$ |
-| crystalline/Hodge behavior at $3$ | coefficient-prime comparison |
-| finite-flat quotients at $3$ | an integral lattice theorem |
-
-Selecting $\nu$ means selecting one row of actual local data satisfying every
-condition required downstream. It does not mean choosing the rational prime $3$
-and assuming that all places above it behave alike.
+Integral and residual properties require further objects. A named stable lattice determines
+the residual representation and the thickness ideal $\mathfrak c_2(T)$; absolute
+irreducibility or a more precise image statement requires a direct calculation such as
+Section 6.2 or an exact earlier theorem. Crystalline Hodge behavior at three requires a
+coefficient-prime comparison, and finite-flat quotients require an integral lattice theorem.
+Thus selecting $\nu$ means finding one actual place for which every property used later has
+its own proof. Merely choosing the rational prime $3$ does not make all places above it behave
+alike.
 
 ## 7. Prime-switch theorem
 
-**Theorem 7.1 (Frey special record at coefficient prime three).** Assume the rational input
-contract of Sections 2.1--2.3, and choose a place $\nu\mid3$ of the final coefficient
+**Theorem 7.1 (Frey special record at coefficient prime three).** Assume the rational starting
+data of Sections 2.1--2.3, and choose a place $\nu\mid3$ of the final coefficient
 field. Let $V=r_\nu$.
 
 Then:
@@ -625,8 +634,8 @@ Then:
    when that ideal is the unit ideal.
 
 No assertion about residual absolute irreducibility, crystallinity at $3$, or
-finite flatness at $3$ is included unless the corresponding entries in the
-ledger of Section 6.3 have separately been certified. The theorem does not require
+finite flatness at $3$ is included unless the corresponding conditions in
+Section 6.3 have separately been certified. The theorem does not require
 $(\mathrm{AI}_2)$; it uses the selected conclusion of Book 185, Theorem 9.1.
 
 **Proof.** Clause 1 and the good-prime part of clause 2 follow from the selected input (or its
@@ -639,11 +648,11 @@ with the rational monodromy line gives the saturated sequence (5.3). Formula
 (5.4) is the integral form of nonzero tame monodromy, and reduction gives the
 criterion (5.7). No other conclusion is used. $\square$
 
-## 8. Handoff to Books 187--188 and Book 161
+## 8. The role of the switched member in the endgame
 
-### 8.1 Book 187: coefficient-prime integrality
+### 8.1 Coefficient-prime integrality
 
-Book 187 receives
+The next integral step fixes the tuple
 
 $$
 (E,\nu,K,V,\det V=\chi_3,\{0,1\}\text{ as the target Hodge type})
@@ -652,20 +661,19 @@ $$
 
 together with the rational ramification statement and the special line at $2$.
 Here the ramification statement is Book 185's Galois auxiliary-comparison theorem, independently
-checked by its conductor calculation, and is not a consequence of weak compatibility. Book
-187's task is separate from Theorem 7.1:
-it must be supplied with its coefficient-prime certificate $(\mathrm C_3)$ and may then
-construct or identify a global stable lattice with the needed finite-flat quotient system and
-return that same named lattice $T$. Neither the target Hodge labels in (8.1) nor the rational
+checked by its conductor calculation, and is not a consequence of weak compatibility. Theorem
+7.1 does not settle the coefficient-prime problem. Once the comparison certificate
+$(\mathrm C_3)$ is proved, Book 187 constructs a global stable lattice with the needed
+finite-flat quotient system and keeps that same lattice $T$ throughout. Neither the target Hodge labels in (8.1) nor the rational
 representation by itself proves crystallinity or finite flatness at $3$.
 
 Once Book 187 fixes $T$, the local intersection $T\cap L_{2,\nu}$ and the ideal
 $\mathfrak c_2(T)$ must be evaluated on that lattice. The rational special record
 survives every lattice change; a primitive residual monodromy class does not.
 
-### 8.2 Book 188: the residual input
+### 8.2 The residual stage
 
-The direct rational input from this chapter to Book 188 is
+The rational data relevant to the residual stage are
 
 $$
 (V,\det V=\chi_3,D_2\otimes_EK,\{P_v\}_{v\notin S\cup\{3\}}),
@@ -673,7 +681,7 @@ $$
 $$
 
 with the transported SP record and the imported weight-one purity. The all-level finite-flat tower is not
-in (8.2); it must come from Book 187 for the same $\nu$ and the same named lattice $T$.
+contained in (8.2); Book 187 constructs it for the same $\nu$ and the same named lattice $T$.
 For any residual argument, Book 188 may use only checked objects such as
 
 $$
@@ -691,11 +699,11 @@ requires residual absolute irreducibility, the certificate of Section 6.2 or an 
 replacement must be present. The rational equality $a_2(V)=1$ supplies none of
 these three residual assertions by itself.
 
-### 8.3 Book 161: the actual classification source
+### 8.3 The classification theorem
 
 Book 161 proves the finite-flat category and classification theorem that Book 188 applies to
 the tower produced by Book 187. It does not select the place $\nu$ or the lattice $T$, so those
-must still be fixed by the present handoff and Book 187. The later route keeps the
+must already have been fixed here and in Book 187. The later route keeps the
 rational facts
 
 $$
@@ -727,12 +735,11 @@ $$
 
 No result of those later books is used to prove Theorem 7.1.
 
-### 8.4 The minimal integral scope
+### 8.4 The exact integral requirements
 
 The family-wide spreading theorem produces integral models at every odd coefficient place.
-That is a natural strong form of the argument, but it is not consumed
-term-by-term by the final three-adic argument. After Theorem 7.1 has selected $\nu\mid3$,
-the remaining chain uses exactly:
+That is a natural strong form of the argument, but the final three-adic proof uses only one
+of them. After Theorem 7.1 has selected $\nu\mid3$, the remaining chain uses exactly:
 
 1. one globally stable $\mathcal O_{E_\nu}$-lattice in $V$;
 2. compatible finite-flat models for one cofinal coefficient tower (Book 187 constructs all
@@ -754,95 +761,69 @@ irreducibility of $V$. Once Books 187, 161, and 188 construct a characteristic-z
 cyclotomic line in $V$, the contradiction is immediate. A certified pure good prime gives
 an independent trace contradiction, but is not needed on this preferred route.
 
-## 9. Hostile proof and dependency audit
+## 9. Logical boundaries of the prime switch
 
-### 9.1 Local mathematics
+### 9.1 The decisive local argument
 
-**Nonzero monodromy.** The proof imports the full pair (2.5). Nonvanishing is
-preserved by field extension in (4.6); it is never inferred from the conductor.
+The proof preserves the full pair (2.5), so nonzero monodromy survives the field extension in
+(4.6) without being reconstructed from a conductor. Rank-one nilpotence in dimension two gives
+$\ker N=\operatorname{im}N$, and relation (2.7) makes this line stable. The line is therefore
+defined before a lattice is chosen and survives the coefficient switch intrinsically.
 
-**Invariant line.** Rank-one nilpotence in dimension two proves
-$\ker N=\operatorname{im}N$. Relation (2.7) proves stability. The line is defined
-before choosing a lattice and therefore survives the coefficient switch.
+The sign is similarly intrinsic: it is the eigenvalue on the quotient by the monodromy line.
+Relation (2.7) and the cyclotomic determinant give the ordered eigenvalues
+$(2\varepsilon,\varepsilon)$ and force $\varepsilon^2=1$. Finally, the finite inertial
+representation is trivial while $N$ is nonzero, so the correction term in (3.5) is one. A
+conductor calculation that discards $N$ would return zero; replacing the special parameter by
+a two-dimensional finite inertial type would instead calculate the wrong local object.
 
-**Sign.** The sign is defined on the quotient. Relation (2.7) and cyclotomic
-determinant give eigenvalues $(2\varepsilon,\varepsilon)$ and force
-$\varepsilon^2=1$. This avoids an unrecorded sign convention.
+### 9.2 Coefficient fields and compatibility
 
-**Conductor.** The finite inertial representation is trivial but $N$ is not.
-The correction term in (3.5) is one. Any calculation returning zero has dropped
-$N$; any calculation returning two has replaced the special parameter by a
-two-dimensional finite inertial type.
+All coefficient enlargements occur before the factorization (4.1), and only then is a place
+above three chosen. Consequently the residue degree attached to $\nu$ cannot change later
+without changing the notation. There is also no tensor product between the original
+$p$-adic completion and $E_\nu$. The bridge is the common algebraic packet datum, and the only
+scalar extension used locally is the well-defined pair $D_2\otimes_EE_\nu$.
 
-### 9.2 Coefficients and compatibility
+This local comparison is available because the new coefficient characteristic is three and
+the preserved base place is two. It says nothing about the behavior of $V$ at the base place
+three. Likewise, unramifiedness of the new member at the old coefficient prime $p$ comes from
+the direct local certificate in $(\mathrm U)$, not from the coefficient-prime behavior of the
+old $p$-adic member. The global good polynomials recognize a semisimple representation, while
+the bad-place pair, including $N$, comes from strong local compatibility. Purity is another
+independent input: neither the product of the roots nor $\det V=\chi_3$ proves that each root
+has complex absolute value $v^{1/2}$.
 
-**Final coefficient field first.** All enlargements occur before (4.1). A place
-above $3$ is selected only in the final $E$, so residue degrees are not changed
-behind the notation.
+### 9.3 What integrality and reduction retain
 
-**No cross-completion tensor product.** The bridge is the common algebraic packet data and
-its actual completion-valued assembly. The
-only scalar extension at $2$ is $D_2\otimes_EE_\nu$, which is defined.
+Compactness guarantees the existence of a stable lattice but does not select the lattice
+needed for the coefficient-prime construction or control $c_T$. The rational condition
+$c_T\ne0$ allows $c_T\in\mathfrak m$, as the example (5.7a) shows, so residual monodromy can
+vanish. The saturated line is more robust: in characteristic three its two Frobenius
+eigenvalues remain distinct and retain the orientation even when the residual inertia
+extension splits.
 
-**Correct compatibility range.** The new coefficient characteristic is $3$ and
-the preserved base place is $2$, so (4.6) lies strictly away from the coefficient
-prime. Nothing in that statement addresses the base place $3$.
+Residual image and coefficient descent are separate questions. Compatibility alone implies
+neither absolute irreducibility nor adequacy at this fixed place. Nor does containment of
+traces in $\mathbf F_3$ automatically give a two-dimensional $\mathbf F_3$-model. Residue
+degree one does imply $k=\mathbf F_3$, but $K=\mathbf Q_3$ additionally requires ramification
+index one.
 
-**Old coefficient prime.** Unramifiedness at $p$ comes from a direct local certificate for the
-new member, as required by $(\mathrm U)$, not from the old $p$-adic member's coefficient-prime
-behavior.
+### 9.4 Chronology of the proof
 
-**Purity is separate from determinant.** The roots of $P_v$ have complex absolute value
-$v^{1/2}$ by the pure compatible-polynomial theorem imported in (2.4a). Neither their product
-$v$ nor $\det V=\chi_3$ proves that bound.
+Theorem 7.1 uses the controlled SP datum through Book 185's away-from-two assembly over its
+final coefficient field, the certified pure good polynomials and cyclotomic determinant,
+strong local compatibility at two, and the identification of the distinguished dyadic pair as
+$\operatorname{Sp}_2(\varepsilon)$. The controlled datum itself includes Book 182,
+Proposition 7.1 and Theorem 9.1 through Book 183's selected packet-array theorem; Book 185,
+Theorem 9.1 then assembles the selected member. Clean support comes from Book 185,
+Proposition 8.3, either through the rational family theorem or through Proposition 9.2.
 
-**Global versus local recognition.** Good Frobenius polynomials recognize the
-global semisimplification. The bad-place pair, including $N$, comes from the
-stated strong local compatibility. The two arguments are not interchanged.
-
-### 9.3 Integral and residual boundaries
-
-**Existence is not selection.** Compactness gives some stable lattice. It does
-not choose the lattice needed by Book 187 and does not control $c_T$.
-
-**Rational nonzero is not residual nonzero.** The element $c_T$ is nonzero in
-$\mathcal O$ but may lie in $\mathfrak m$. Formula (5.7) records both cases.
-
-**The line survives more robustly than the extension.** The saturated reduction
-$\overline L_2$ is oriented by two distinct Frobenius eigenvalues in
-characteristic $3$, while the inertia extension can split.
-
-**Residual image is separate.** No large-image, adequacy, or absolute
-irreducibility claim is extracted from compatibility. A fixed place above $3$
-is checked directly.
-
-**Coefficient descent is separate.** Trace containment alone does not give a
-two-dimensional $\mathbf F_3$-model. Residue degree one does give
-$k=\mathbf F_3$, but it does not give $K=\mathbf Q_3$ unless the ramification
-index is also one.
-
-### 9.4 Dependency boundary
-
-Theorem 7.1 imports only:
-
-- the controlled SP top datum through Book 185's away-from-two assembly over its
-  final coefficient field;
-- common certified good polynomials, their purity, and the cyclotomic determinant;
-- full strong local compatibility at $2$; and
-- identification of the distinguished member's dyadic pair as
-  $\operatorname{Sp}_2(\varepsilon)$.
-
-The first bullet includes Book 182, Proposition 7.1 and Theorem 9.1 through Book 183's
-selected packet-array theorem. Book 185, Theorem 9.1 then assembles the selected member. Thus this
-chapter does not reason backward from the member it is trying to construct.
-
-The support assertion imports Book 185, Proposition 8.3 either through the rational family
-package or through the selected-member Proposition 9.2.
-The theorem does not import a later finite-flat theorem, residual classification, or final
-FLT contradiction. It also does not import $(\mathrm{AI}_2)$, because no coefficient-two
-member is used. Books 187--188 receive the outputs in that order and do not feed
-assumptions backward into the proof. Book 161 is the actual category/classification input used
-after Book 187 has constructed the named tower; it is not an input to Theorem 7.1 itself.
+No later finite-flat theorem, residual classification, or final contradiction enters this
+argument, and $(\mathrm{AI}_2)$ is unnecessary because no coefficient-two member is used.
+After the prime switch, Book 187 constructs the named integral tower; Book 161 supplies the
+category and classification applied by Book 188. This chronological order prevents any later
+conclusion from becoming a premise of Theorem 7.1.
 
 ## 10. Conclusion
 
@@ -852,8 +833,6 @@ absolutely irreducible member $V=r_\nu$. Its common algebraic local object at th
 base prime $2$ transports the nonzero monodromy, intrinsic line, Frobenius sign, and conductor
 one without crossing coefficient topologies. Book 185's proved Galois local complements also
 give clean support for this same member at every rational prime outside $\{2,3\}$.
-
-The resulting rational object is
 
 The chapter's final certified object is
 

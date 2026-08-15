@@ -32,7 +32,7 @@
    - [Cuspidality and independence of the chain](#52-cuspidality-and-independence-of-the-chain)
    - [Conjugation compatibility](#53-conjugation-compatibility)
    - [What complete splitting preserves](#54-what-complete-splitting-preserves)
-6. [The finite coefficient ledger](#6-the-finite-coefficient-ledger)
+6. [A common coefficient framework](#6-a-common-coefficient-framework)
    - [Intrinsic fields and realization fields](#61-intrinsic-fields-and-realization-fields)
    - [Constructing, rather than assuming, the coefficient systems](#62-constructing-rather-than-assuming-the-coefficient-systems)
    - [Determinants and coefficient conjugation](#63-determinants-and-coefficient-conjugation)
@@ -63,11 +63,11 @@
     - [The invariant line, sign, and conductor](#103-the-invariant-line-sign-and-conductor)
     - [Other finite places and the coefficient-prime boundary](#104-other-finite-places-and-the-coefficient-prime-boundary)
     - [Archimedean places](#105-archimedean-places)
-11. [The exported packet-array package](#11-the-exported-packet-array-package)
+11. [The complete packet-array theorem](#11-the-complete-packet-array-theorem)
     - [Complete statement](#111-complete-statement)
     - [Proof](#112-proof)
-    - [Structural audit](#113-structural-audit)
-    - [Dependency audit](#114-dependency-audit)
+    - [Why the construction is well-defined](#113-why-the-construction-is-well-defined)
+    - [Earlier results used](#114-earlier-results-used)
     - [Conclusion](#115-conclusion)
 
 ## 1. One finite packet array
@@ -129,8 +129,8 @@ $$
 \tag{1.2}
 $$
 
-No lattice is part of the datum used in this book. The conditional source in Book 182 retains a
-stronger integral chosen point, but the passage to the present interface deliberately forgets
+No lattice is part of the datum used in this book. The construction in Book 182 retains a
+stronger integral chosen point, but the present formulation deliberately forgets
 that lattice; none of the arguments below may recover it from characteristic-zero cancellation.
 We assume that $\rho|_{G_M}$ remains absolutely irreducible.
 This one rational hypothesis implies the absolute irreducibility of
@@ -185,15 +185,15 @@ r_{\pi_M,\iota_0}\simeq\rho|_{G_M}.
 \tag{1.6}
 $$
 
-The word **selected** has an exact role, but no independent solvable-descent ledger is included
+The word **selected** has an exact role, but no independent list of solvable-descent hypotheses is included
 in the datum. The top packet is selected, including at the completely split sensitive primes.
 For every elementary $H\leq\Gamma$, Book 180 supplies prime-cyclic chains from $M$ to $F_H$.
 Since $\rho$ is unramified away from the completely split set $\{2,\ell\}$, Book 109,
 Proposition 13.4 proves along every such chain that all local extension and norm-antecedent
 fibers are selected, the quotient-character fiber is saturated, and a real discrete-series
 factor supplies the strongly cuspidal selector. Theorem 13.3 then uses the already extending
-$\rho$ to select coherent twists. Thus the full admissibility ledger is a consequence of the
-controlled top, not an extra hypothesis and not an inference from solvability alone.
+$\rho$ to select coherent twists. Thus all the required admissibility conditions follow from
+the controlled top; they are neither extra hypotheses nor consequences of solvability alone.
 
 Once a corrected packet has been obtained, its ordinary curve attachment is no longer an
 extra hypothesis. Complete dyadic splitting preserves a selected special factor, every
@@ -204,7 +204,7 @@ covers coefficient conjugates.
 The local datum used in the main argument is narrower and is already proved upstream. Book
 182, Proposition 7.1 identifies, for one fixed place $\nu\mid3$ of the common packet field,
 every raw elementary packet plane with its absolutely irreducible global realization and
-transfers to it the full dyadic signed-special pair. Book 182, Theorem 9.1 packages those
+transfers to it the full dyadic signed-special pair. Book 182, Theorem 9.1 collects those
 selected packets, their attachments, the fixed place $\nu$, and the unramified algebraic
 Galois pairs away from two. The return scalar and special pair have one algebraic model before
 completion. Thus the signed-special record at $\nu$ is neither inferred from conductor one nor
@@ -216,7 +216,7 @@ characteristic two. Proposition 6.1 records sufficient conditions for that optio
 strengthening. It is outside the scope of the selected-three theorem and is unnecessary for
 the final contradiction.
 
-We call (1.1)--(1.6), complete splitting, and the selected-three output of Book 182, Theorem
+We call (1.1)--(1.6), complete splitting, and the selected-three conclusion of Book 182, Theorem
 9.1 the **controlled SP top datum**. Its construction ultimately rests on Book 178, Theorem
 12.2, which proves the restricted signed-special finite fibre and retains support for every
 later characteristic-zero minimal point. The present theorem begins after that selected datum
@@ -226,7 +226,7 @@ has been constructed.
 
 The endpoint is a finite algebraic array, not a base-field compatible family.
 
-**Theorem 1.1 (finite elementary-packet array).** Given the controlled SP top datum exported
+**Theorem 1.1 (finite elementary-packet array).** Given the controlled SP top datum supplied
 by Book 182, Theorem 9.1, retain its parallel-weight-two cuspidal packet $\pi_H$ over
 $F_H=M^H$ for every elementary subgroup $H\leq\Gamma$. These selected packets organize into
 a finite Brauer--Mackey array with the following properties.
@@ -320,7 +320,7 @@ closed nonarchimedean field of positive residue characteristic $q$, with the ind
 on $K$ a finite place. Thus it displays a usual $q$-adic packet member; no representation over
 a characteristic-zero-residue Laurent-series completion is asserted.
 
-Books 108--109 state their transfer ledger with geometric Frobenius. Whenever that ledger is used
+Books 108--109 state their transfer results with geometric Frobenius. Whenever those results are used
 here, Frobenius is inverted and the attached rank-two representation is put in the arithmetic
 covariant normalization. Restriction of parameters, norm pullback, twisting, cuspidality, and
 the admissibility conditions are unchanged by this translation; the displayed roots and the
@@ -357,7 +357,7 @@ Chapter 5 descends the top packet to every elementary fixed field, with the exte
 representation $\rho$ selecting the correct twist at every layer.
 
 Fourth, Chapter 6 applies the earlier packet attachment theorem separately to the finitely many
-new packets and places them in one coefficient ledger. Fifth, Chapter 7 proves every overlap
+new packets and places them over one common coefficient field. Fifth, Chapter 7 proves every overlap
 identity. When an admissible ascent tower exists, the identity is automorphic. In all cases it
 is proved semisimply by comparing algebraic residue-degree Frobenius polynomials of two already
 existing packet realizations. Finally, Chapters 8--10 insert a Brauer relation and verify the
@@ -431,7 +431,7 @@ $$
 $$
 
 Book 180, Sections 3.1 and 5.1 supply finite-index preservation of semisimplicity for induction
-and restriction, respectively, so the packet ledger stays in the semisimple category used here.
+and restriction, respectively, so every packet realization stays in the semisimple category used here.
 
 ### 2.4 Mackey decomposition
 
@@ -594,6 +594,20 @@ $$
 \operatorname{Ind}_{C_3}^{S_3}\omega. \tag{3.13}
 $$
 
+Indeed, on the identity, transposition, and three-cycle classes, respectively, the two induced
+characters have values
+
+$$
+(3,1,0)
+\qquad\text{and}\qquad
+(2,0,-1),
+\tag{3.14}
+$$
+
+so their difference is the constant character $(1,1,1)$. This class-by-class calculation is
+the smallest model of how negative Brauer coefficients can be essential even when the final
+character is effective.
+
 After tensoring by a rank-two representation, the positive term has dimension six and the
 negative term dimension four. Signed dimension two still does not give a direct summand. This
 is precisely the positivity problem verified for the SP packet array in Book 184.
@@ -647,8 +661,8 @@ top packet.
 ### 4.4 Admissibility is an arithmetic condition
 
 The existence of (4.3) alone does not put it in the range of an automorphic transfer theorem.
-In this controlled diagram, however, the additional arithmetic hypotheses verify the full
-ledger. At a nonsplit finite place the prime is not $2$ or $\ell$, so the appropriate
+In this controlled diagram, however, the additional arithmetic hypotheses verify every
+condition. At a nonsplit finite place the prime is not $2$ or $\ell$, so the appropriate
 restriction of $\rho$ is unramified and its local parameter is a split character pair with
 $N=0$. Book 109, Proposition 13.4 proves that every fixed-determinant extension and every
 norm-antecedent slice of this pair is selected. In odd prime degree every extension remains
@@ -806,11 +820,11 @@ the same sign $\varepsilon_2$. It is not identified merely because its conductor
 complete splitting retains the whole local Weil--Deligne parameter and the named Frobenius
 line.
 
-## 6. The finite coefficient ledger
+## 6. A common coefficient framework
 
 The packet array is finite, but its members initially come with different Hecke fields and
 different choices of embeddings. A character-norm calculation can compare them only after
-those choices have been put into one algebraic ledger.
+all these fields and embeddings have been placed in one algebraic framework.
 
 ### 6.1 Intrinsic fields and realization fields
 
@@ -912,8 +926,8 @@ argument uses the signed Brauer class, effectivity, or the later assembled famil
 These hypotheses are sufficient for an optional uniform strengthening. Neither route is an
 antecedent of the selected-three argument below.
 
-**Proposition 6.1A (selected-three packet certificate).** Retain the controlled SP top datum
-exported by Book 182, Theorem 9.1, and its chosen place $\nu\mid3$. Then, for every elementary
+**Proposition 6.1A (selected-three packet comparison).** Retain the controlled SP top datum
+supplied by Book 182, Theorem 9.1, and its chosen place $\nu\mid3$. Then, for every elementary
 $H$ and every coefficient embedding inducing $\nu$, the raw multiplicity representation of
 $\pi_H$ is absolutely irreducible and equals $r_{H,\nu}$. At every dyadic place its full
 signed-special pair, including nonzero rank-one monodromy, its invariant line, sign, and
@@ -924,7 +938,7 @@ $\nu$ retained in Book 182, Theorem 9.1. Its proof uses the good-reduction finit
 at $3$ and the targetwise dyadic carriers. It is coefficientwise and makes no assertion at a
 second coefficient place. $\square$
 
-Thus Proposition 6.1A is the packet-array interface used below. Proposition 6.1 is only the
+Thus Proposition 6.1A is the packet-array comparison used below. Proposition 6.1 is only the
 optional uniform extension. Every character and Mackey construction needed for the final
 argument is evaluated at the selected $\nu$.
 
@@ -1016,8 +1030,8 @@ calculation need only the isomorphism classes and the dimensions of their Hom sp
 ### 6.5 The rational and integral boundary
 
 The construction through this chapter is entirely characteristic zero. At the distinguished
-embedding we remember the isomorphism (6.4), but no stable lattice is included in the input or
-output. At a general coefficient embedding we do not compare reductions, finite-flat models,
+embedding we remember the isomorphism (6.4), but no stable lattice is among the assumptions or
+conclusions. At a general coefficient embedding we do not compare reductions, finite-flat models,
 or integral monodromy classes.
 
 This boundary is structural. A rational packet projector can have denominators, a rational
@@ -1121,13 +1135,12 @@ semisimple representations at almost every $u$.
 
 ### 7.3 The tower-independent semisimple overlap theorem
 
-The next proposition retains the interface number used by the succeeding character-norm
-theorem. Its proof belongs here, after the coefficient ledger and the Frobenius-power
-calculation; the stable number is not an assertion that the proof occurred earlier. Here
+The next proposition is the form needed by the succeeding character-norm theorem. Its proof
+belongs here, after the common coefficient field and the Frobenius-power calculation. Here
 **tower-independent** means that the proof does not use an automorphic tower. It does not
 remove the controlled-top and all-embedding attachment hypotheses of Theorem 1.1.
 
-**Proposition 6.2 (elementary overlap; stable interface label).** For every inclusion
+**Proposition 6.2 (elementary overlap).** For every inclusion
 $D\leq H$ of elementary subgroups and every coefficient embedding $\tau$,
 
 $$
@@ -1803,14 +1816,14 @@ with the cyclotomic determinant in (8.12). This is an archimedean consistency ch
 packet array, not a proof of an actual base-field representation at a general coefficient
 embedding.
 
-## 11. The exported packet-array package
+## 11. The complete packet-array theorem
 
 ### 11.1 Complete statement
 
-We collect the precise output in a form that can be used by a character-norm theorem.
+We can now state the packet-array theorem in full.
 
-**Theorem 11.1 (selected-three Brauer--Mackey packet-array package).** Let (1.1)--(1.6) be a
-controlled SP top datum, including the place $\nu\mid3$ exported by Book 182, Theorem 9.1.
+**Theorem 11.1 (selected-three Brauer--Mackey packet-array theorem).** Let (1.1)--(1.6) be a
+controlled SP top datum, including the place $\nu\mid3$ supplied by Book 182, Theorem 9.1.
 Then there are:
 
 - a selected cuspidal packet $\pi_H$ over $F_H=M^H$ for every elementary $H\leq\Gamma$;
@@ -1875,7 +1888,7 @@ the unique quotient twist whose distinguished realization is $\rho|_{G_{F_H}}$. 
 multiplicity one proves chain independence and conjugation compatibility.
 
 Chapter 6 applies the earlier packet theorem separately to the finitely many $\pi_H$ and forms
-one coefficient ledger. The distinguished determinant forces every algebraic central
+one common coefficient field. The distinguished determinant forces every algebraic central
 multiplier to be trivial, giving (6.6).  Book 182's equivariant conductor and
 invariant-Frobenius theorem gives the common unramified pair (6.4j) at every place away from
 two. Chapter 7 proves the overlap by two routes. Actual
@@ -1895,44 +1908,34 @@ character locally identical there. The established special comparison therefore 
 common nonzero-monodromy pair and conductor-one calculation of Chapter 10. All clauses follow.
 $\square$
 
-### 11.3 Structural audit
+### 11.3 Why the construction is well-defined
 
-The construction survives the following hostile tests.
+Several distinctions made during the proof are mathematically indispensable. A nonnormal
+overlap is reached group-theoretically by the tower (4.3), not treated as a single cyclic
+extension. Automorphic base change is used only after admissibility has been verified at every
+step, while Proposition 6.2 proves the semisimple identity needed by Mackey independently of
+that choice. Likewise, agreement over $G_M$ cannot replace agreement over
+$G_{M^{H\cap xJx^{-1}}}$: restriction to the top field erases finite quotient characters,
+whereas the overlap calculation retains the oriented ratio $\beta\alpha^{-1}$.
 
-**A nonnormal overlap is not treated as one cyclic extension.** It is reached group-theoretically
-by the tower (4.3). Automorphic base change is used only if every step is admissible. The
-semisimple identity needed by Mackey is separately proved in Proposition 6.2.
+The distinguished realization has a different purpose from a compatible family. It selects
+the correct point in every automorphic descent torsor; the other coefficient realizations are
+then constructed from the packets themselves. At no stage is a representation of
+$G_{\mathbf Q}$ at a second coefficient embedding assumed. The objects available there are
+the actual induced terms $A_{i,\tau}$ and their signed class. Virtual rank two, cyclotomic
+virtual determinant, and the quadratic polynomial (9.10) do not by themselves remove negative
+multiplicities.
 
-**Top-field agreement is not used as overlap agreement.** Equation (8.14) forgets finite
-quotient characters. The proof works on $G_{M^{H\cap xJx^{-1}}}$ and retains the explicit
-ratio $\beta\alpha^{-1}$.
+The local and coefficient arguments obey the same discipline. The dyadic object retains
+$N_2\ne0$, its rank-one kernel and image, the Frobenius-return equation, and the sign; conductor
+one is derived from these data rather than used to reconstruct them. Coefficient embeddings
+transport algebraic polynomials, local pairs, and isomorphism classes, not matrices between
+unrelated completions. Finally, no characteristic-zero cancellation is reduced modulo a
+prime: this book constructs no lattice, integral projector, or residual representation. The
+overlap theorem consequently compares only already existing elementary-field realizations and
+does not use the later base-field effectivity theorem whose hypotheses it is preparing.
 
-**One distinguished realization is not called a compatible family.** It selects every
-automorphic descent. The coefficient realizations are then constructed from the resulting
-packets by the earlier attachment theorem. No member of $G_{\mathbf Q}$ at another coefficient
-embedding is assumed.
-
-**A virtual rank or polynomial is not called effective.** The actual objects are the large
-induced terms $A_{i,\tau}$. Their signed class can have negative multiplicities. Equations
-(8.9), (8.12), and (9.10) do not remove those multiplicities.
-
-**The dyadic record is not inferred from its conductor.** The common algebraic object retains
-$N_2\ne0$, its rank, the line $\ker N_2=\operatorname{im}N_2$, the Frobenius-return equation,
-and the sign. Conductor one is derived afterward.
-
-**Coefficient embeddings do not transport matrices between unrelated completions.** They
-transport algebraic polynomials, local pairs, and isomorphism classes. A common finite field is
-chosen because the array is finite; no minimal field of definition is claimed.
-
-**No rational cancellation is reduced modulo a prime.** The construction contains no lattice,
-integral projector, or residual representation. The coefficient-prime boundary is explicit in
-Section 10.4.
-
-**No later effectivity or assembly theorem is used.** The overlap compares already existing
-elementary-field packet realizations. The desired base-field constituent never appears as a
-premise.
-
-### 11.4 Dependency audit
+### 11.4 Earlier results used
 
 The direct dependency row is
 
@@ -1940,29 +1943,39 @@ $$
 \boxed{183\mid6,\ 98,\ 108,\ 109,\ 127,\ 128,\ 142,\ 168,\ 180,\ 182.} \tag{11.3}
 $$
 
-| Source | Input used here | Strengthening not made |
-|---|---|---|
-| Book 6 | rank-one Hodge--Tate characters are locally algebraic, and locally algebraic one-dimensional $\ell$-adic characters are avatars of algebraic Hecke characters | the geometric Hodge--Tate premise is supplied through $(\mathrm{HT}_1)$, not by class field theory |
-| Book 98 | finite-order Hecke avatars of the Brauer characters, with reciprocity, norm pullback, and conjugation | no higher-rank automorphic induction across $F_H/\mathbf Q$ |
-| Books 108--109 | selected prime-cyclic descent and base change, antecedent-complete saturated fibers, local-parameter restriction, and tower independence in the admissible range | no transfer along an inadmissible tower and no nonsolvable descent |
-| Books 127--129 and 168 | the weight-two packet realizations, covariant arithmetic normalization, coefficient conjugates, algebraic good data, the completely split and ramified-spectator CM-unitary SP comparisons, and the selected-three finite-flat reduction | ordinary attachment and the selected-three prime-to-two SP carrier are complete; no assertion is made at the dyadic coefficient place |
-| Book 142 | the Chebotarev density input used to recognize representations from their good Frobenius traces | no assertion that the field-theoretic towers satisfy automorphic selectors |
-| Book 180 | monomiality, the elementary projector and integral Brauer relation, induction/tensor/Mackey/determinant formulas, prime-cyclic refinement, the cyclic Clifford torsor, and Brauer--Nesbitt recognition | no packet construction, overlap identity, Gram positivity, or coefficient family is imported |
-| Book 182, Proposition 7.1 and Theorem 9.1 | the controlled SP datum: $\rho$, $M$, the selected elementary packets, the place $\nu\mid3$, the coefficientwise SP record, the descent-and-attachment ledger, and the common unramified elementary Galois pairs away from two | no uniform all-coefficient SP comparison or automorphic principal/dihedral type comparison is imported |
+Book 180 supplies the finite-group and representation-theoretic foundation: monomiality, the
+elementary projector and integral Brauer relation, induction, the tensor identity, Mackey and
+determinant formulas, prime-cyclic refinement, the cyclic Clifford torsor, and
+Brauer--Nesbitt recognition. Books 108--109 supply selected prime-cyclic descent and base
+change, the saturated local fibers, local-parameter restriction, and independence of an
+admissible tower. These results do not assert transfer along an inadmissible tower or descent
+through a nonsolvable quotient.
 
-Book 182, Theorem 9.1 supplies the selected descent datum and ordinary attachment packet by
-packet; Proposition 7.1 supplies the raw-to-global signed-special comparison at the one place
-above three. Books 127--129 and 168 provide the attachment and local-comparison results used
-in those proofs. This is all the present theorem consumes. A uniform comparison at every
-coefficient place and a theorem prescribing principal or dihedral automorphic types away from
-two are stronger statements outside its scope and unnecessary for the selected-three
-Brauer--Mackey calculation.
+Book 98 supplies the finite-order Hecke avatars of the Brauer characters together with their
+reciprocity, norm, and conjugation behavior; no higher-rank automorphic induction across
+$F_H/\mathbf Q$ is used. Book 6 supplies the rank-one local-algebraicity input used in the
+optional Hodge--Tate route, whose geometric premise remains $(\mathrm{HT}_1)$. Book 142 gives
+the Chebotarev density theorem used to recognize two already constructed semisimple
+representations, not an automorphic admissibility statement.
 
-The application-specific work retained here is substantial: construction and conjugation of the
-selected elementary packets, the nonnormal overlap theorem, the coefficient ledger, the signed
-induced array, determinant and restriction computations, common Frobenius blocks, purity, and
-the full virtual SP record. General character and induction theory is cited from Book 180 rather
-than reproved. No effectivity or base-field assembly theorem is used.
+Books 127--128 and 168 provide the weight-two packet realizations, covariant arithmetic
+normalization, coefficient conjugates, algebraic good data, and the local comparison results
+invoked directly in Chapter 6. Book 182, especially Proposition 7.1 and Theorem 9.1, provides
+the controlled SP datum, the selected elementary packets and their attachments, the place
+$\nu\mid3$, the coefficientwise signed-special comparison, and the common unramified
+elementary Galois pairs away from two. Book 129 enters those constructions only transitively,
+through Books 168 and 182; it is therefore not a direct dependency of this manuscript and does
+not appear in (11.3).
+
+The stronger results deliberately left unused are a uniform comparison at every coefficient
+place and prescribed principal or dihedral automorphic types away from two. Both lie outside
+the scope needed for the selected-three Brauer--Mackey calculation.
+
+With these prerequisites in place, the preceding chapters construct and conjugate the selected
+elementary packets, prove the nonnormal overlap theorem, form the common coefficient framework
+and signed induced array, and calculate determinants, restrictions, Frobenius blocks, purity,
+and the full virtual SP record. General character and induction theory is cited from Book 180
+rather than reproved. No effectivity or base-field assembly theorem is used.
 
 ### 11.5 Conclusion
 
