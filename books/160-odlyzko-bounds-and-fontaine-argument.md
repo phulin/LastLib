@@ -379,7 +379,7 @@ $3^{3/2}2^{2/3}$.
 At $T=6$, $n=21$, and $\alpha=0$, Book 7, (11.6)--(11.8) gives
 
 $$
-\log\operatorname{rd}(K)>2.126398521002197,
+\log\operatorname{rd}(K)>2.1263985210021965,
 \tag{7.1}
 $$
 
