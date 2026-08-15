@@ -71,6 +71,34 @@ theorem lower_canonical_at
 
 end Chapter05LocalGaloisUpperData
 
+/-
+ The manuscript's proof of Hasse--Arf requires the local Dold congruence for
+ the fixed ideals of all iterates of one automorphism.  That local-intersection
+ theorem is not proved in Books 1--3.  This class records exactly the
+ ramification-number consequence used below, so the cyclic lemma and every
+ downstream integrality statement carry the prerequisite explicitly instead
+ of treating an incompatible finite-jet deformation as a proof.
+
+ If `σ` generates a cyclic wild group of order `p ^ s`, the conclusion is
+ `p ^ r ∣ i(σ^(p^r)) - i(σ^(p^(r-1)))`, equivalently the congruence for the
+ corresponding ramification numbers after subtracting one from both terms.
+-/
+class Chapter05LocalDoldCongruenceInput : Prop where
+  ramification_number_congruence :
+    ∀ {K L : Type*} [Field K] [Field L] [Algebra K L]
+      [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+      (D : Chapter05LocalGaloisUpperData K L)
+      (p r s : ℕ)
+      (_hchar : CharP
+        (IsLocalRing.ResidueField D.vL.toValuation.valuationSubring) p)
+      (_hp : p.Prime) (_hr : 0 < r) (_hrs : r < s)
+      (σ : Gal(L / K))
+      (_hwild : σ ∈ D.profile.lowerGroup 1)
+      (_horder : orderOf σ = p ^ s),
+      ((p : ℤ) ^ r) ∣
+        (D.profile.displacement (σ ^ (p ^ r)) : ℤ) -
+          (D.profile.displacement (σ ^ (p ^ (r - 1))) : ℤ)
+
 /-- The normalized lower-group sum in the cyclic Hasse--Arf lemma. -/
 def chapter05CyclicHasseArfSum
     {G : Type*} [Group G] [Finite G]
@@ -937,7 +965,7 @@ theorem chapter05_character_kernel_inertia_cyclic_hasse_arf
 theorem chapter05_character_kernel_upper_break_integer
     {K L C : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
-    [Group C] [Finite C]
+    [Group C] [Finite C] [Chapter05LocalDoldCongruenceInput]
     (χ : Gal(L / K) →* C)
     (R : Chapter05CharacterKernelHasseArfData χ)
     {v : ℝ}
@@ -1243,6 +1271,7 @@ theorem chapter05_perfect_residue_p_squared_two_break_second_upper_integral
     {K L C : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
     [Fintype (Gal(L / K))] [Group C] [Finite C]
+    [Chapter05LocalDoldCongruenceInput]
     (χ : Gal(L / K) →* C)
     (R : Chapter05CharacterKernelHasseArfData χ)
     {H : Subgroup (Gal(L / K))} [H.Normal]
@@ -1260,10 +1289,53 @@ theorem chapter05_perfect_residue_p_squared_two_break_second_upper_integral
     T.twoBreak.p T.twoBreak.a T.twoBreak.b T.twoBreak.p_prime.pos
     T.twoBreak.a_lt_b hintegral
 
-/-- The Hasse--Arf theorem in the local field interface of this chapter. -/
+/- The source's cyclic lemma is exposed separately so the abelian theorem can
+   reduce to cyclic quotients.  Its local Dold input is an explicit instance
+   parameter: the interface does not hide the imported congruence in the
+   conclusion. -/
+theorem chapter05_cyclic_hasse_arf_lemma
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    (D : Chapter05LocalGaloisUpperData K L)
+    (hcyclic : IsCyclic (Gal(L / K)))
+    [Chapter05LocalDoldCongruenceInput]
+    [PerfectField (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)]
+    {b : ℕ}
+    (hlast : ∀ n : ℕ, b < n →
+      D.profile.lowerGroup (n : ℝ) = ⊥)
+    (hbreak : b = 0 ∨
+      D.profile.lowerGroup (b : ℝ) ≠
+        D.profile.lowerGroup (b + 1 : ℕ))
+    (htotally_ramified : D.profile.lowerGroup 0 = ⊤) :
+    ∃ z : ℤ, (z : ℚ) = chapter05CyclicHasseArfSum D.profile b := by
+  sorry
+
+/-- The fixed-field transfer supplies the local quotient input for the cyclic
+ Hasse--Arf lemma on a character-kernel quotient. -/
+theorem chapter05_character_kernel_cyclic_hasse_arf
+    {K L C : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    [Group C] [Finite C] [Chapter05LocalDoldCongruenceInput]
+    (χ : Gal(L / K) →* C)
+    (R : Chapter05CharacterKernelHasseArfData χ)
+    {b : ℕ}
+    (hlast : ∀ n : ℕ, b < n →
+      R.quotient_local.profile.lowerGroup (n : ℝ) = ⊥)
+    (hbreak : b = 0 ∨
+      R.quotient_local.profile.lowerGroup (b : ℝ) ≠
+        R.quotient_local.profile.lowerGroup (b + 1 : ℕ))
+    (htotally_ramified : R.quotient_local.profile.lowerGroup 0 = ⊤) :
+    ∃ z : ℤ,
+      (z : ℚ) = chapter05CyclicHasseArfSum R.quotient_local.profile b := by
+  exact chapter05_cyclic_hasse_arf_lemma R.quotient_local
+    R.quotient_cyclic (b := b) hlast hbreak htotally_ramified
+
+/-- The Hasse--Arf theorem in the local field interface of this chapter,
+conditional on the explicit local Dold congruence input. -/
 theorem chapter05_hasse_arf
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    [Chapter05LocalDoldCongruenceInput]
     (D : Chapter05LocalGaloisUpperData K L)
     (habelian : ∀ σ τ : Gal(L / K), σ * τ = τ * σ)
     [PerfectField (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)]
@@ -1306,6 +1378,7 @@ theorem chapter05_hasse_arf
 theorem chapter05_hasse_arf_upper_break_integer
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    [Chapter05LocalDoldCongruenceInput]
     (D : Chapter05LocalGaloisUpperData K L)
     (habelian : ∀ σ τ : Gal(L / K), σ * τ = τ * σ)
     [PerfectField (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)]
@@ -1320,7 +1393,7 @@ theorem chapter05_hasse_arf_upper_break_integer
 theorem chapter05_perfect_residue_p_squared_two_break_second_upper_integral_direct
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
-    [Fintype (Gal(L / K))]
+    [Fintype (Gal(L / K))] [Chapter05LocalDoldCongruenceInput]
     (D : Chapter05LocalGaloisUpperData K L)
     (habelian : ∀ σ τ : Gal(L / K), σ * τ = τ * σ)
     [PerfectField (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)]
@@ -1370,6 +1443,7 @@ theorem chapter05_hasse_arf_does_not_assert_nonabelian_integrality
 theorem chapter05_fractional_upper_break_forces_nonabelian
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    [Chapter05LocalDoldCongruenceInput]
     (D : Chapter05LocalGaloisUpperData K L)
     [PerfectField (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)]
     (hfrac : chapter05HasFractionalUpperBreak D.profile) :

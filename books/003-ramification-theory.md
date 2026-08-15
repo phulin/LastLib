@@ -988,7 +988,8 @@ $$
 
 At the level of a merely formal piecewise filtration, the second expression can be fractional.
 For an actual Galois group of order $p^2$, however, $G$ is necessarily abelian; when $k$ is
-perfect, Hasse--Arf therefore forces $p\mid b-a$.
+perfect, Hasse--Arf therefore forces $p\mid b-a$, conditional on Required input 5.2A isolated
+in the next section.
 
 Now take $M=L^H$. The subgroup theorem says that $L/M$ has group $H$ through lower level $b$, so its unique lower break is $b$. Herbrand's quotient theorem says that $M/K$ has quotient group $G/H$ until upper level $a$ and is trivial afterward. Since a cyclic group of order $p$ has equal single lower and upper breaks, its lower break is $a$. Thus the two stages have raw breaks $b$ and $a$, while the combined extension compresses the upper label of the later break by a factor $p$.
 
@@ -1005,15 +1006,42 @@ Up to $b$, the function $\varphi_{L/M}$ is the identity. The function for $M/K$ 
 
 Upper breaks are generally rational numbers. The central integrality theorem is therefore striking.
 
-**Theorem 5.2 (Hasse--Arf).** Assume that $k$ is perfect. If $L/K$ is a finite abelian Galois extension, every upper ramification break is an integer.
+The proof in this section uses one local-intersection result which is not proved in Books 1--2 or
+in the preceding sections of this book. We isolate it rather than disguising it as a deformation
+argument.
+
+**Required input 5.2A (local Dold congruence).** Let $R$ be a complete one-dimensional regular
+local ring and let $u$ be a continuous local automorphism of $R$. For $d\geq1$, put
+
+$$
+J_d=(u^d(x)-x:x\in R).
+$$
+
+Fix $n\geq1$ and suppose that $R/J_d$ has finite length for every divisor $d$ of $n$. Then
+
+$$
+n\ \bigm|\ \sum_{d\mid n}\mu(n/d)
+\operatorname{length}_R(R/J_d).
+\tag{5.3a}
+$$
+
+This is a theorem about the fixed-point ideals of the iterates of one automorphism. In particular,
+it includes the compatibility among all the schemes $\operatorname{Fix}(u^d)$; independently
+splitting those schemes in unrelated deformations does not prove it. Required input 5.2A is an
+explicit prerequisite for the rest of this section. Every later use in this book of Hasse--Arf or
+of integral Artin and Swan conductors is conditional on this input as well.
+
+**Theorem 5.2 (Hasse--Arf, conditional on Required input 5.2A).** Assume that $k$ is perfect. If
+$L/K$ is a finite abelian Galois extension, every upper ramification break is an integer.
 
 No finiteness of the residue field is required, but perfection rules out the imperfect-residue refinements for which the classical statement is not the correct one. For nonabelian extensions, fractional upper breaks can occur. Lower breaks remain integers by definition, but they are not quotient-compatible.
 
 The arithmetic heart is the following lemma. The valuations in its proof are normalized by
 $v_E(E^\times)=v_F(F^\times)=\mathbf Z$, so $v_E|_{F^\times}=|C|v_F$.
 
-**Lemma 5.3 (cyclic Hasse--Arf lemma).** Let $E/F$ be a cyclic totally ramified Galois
-extension of complete discretely valued fields. Assume that the common residue field is perfect.
+**Lemma 5.3 (cyclic Hasse--Arf lemma, conditional on Required input 5.2A).** Let $E/F$ be a
+cyclic totally ramified Galois extension of complete discretely valued fields. Assume that the
+common residue field is perfect.
 If $C=\operatorname{Gal}(E/F)$ and $b$ is the last lower break, then
 
 $$
@@ -1042,60 +1070,11 @@ q_r\equiv q_{r-1}\pmod {p^r}\qquad(r\geq1).
 \tag{5.4}
 $$
 
-We prove the congruence through local fixed-point multiplicities. This formulation is important
-in mixed characteristic: ordinary order in a power-series variable is not the valuation after
+We derive the congruence from Required input 5.2A. This fixed-point formulation is important in
+mixed characteristic: ordinary order in a power-series variable is not the valuation after
 specializing that variable to a ramified uniformizer.
 
-We use the following local form of the periodic-point divisibility lemma. Let $R$ be a complete
-one-dimensional regular local ring and let $u$ be a continuous automorphism. For $n\geq1$ put
-
-$$
-J_n=(u^n(x)-x:x\in R).
-$$
-
-If $J_n$ has finite colength, define the local fixed-point multiplicity
-$\lambda(n)=\operatorname{length}_R(R/J_n)$. If $J_d$ has finite colength for every $d\mid n$,
-then
-
-$$
-n\ \bigm|\ \sum_{d\mid n}\mu(n/d)\lambda(d),
-\tag{*}
-$$
-
-where $\mu$ is the ordinary Moebius function.
-
-Here is the multiplicity argument behind $(*)$. The fixed subscheme of $u^d$ at the closed
-point is cut out by $J_d$, and its intersection multiplicity with the diagonal is
-$\lambda(d)$. Only a finite jet is involved: once $N>\max_{d\mid n}\lambda(d)$, all these
-lengths are already computed modulo the $N$th power of the maximal ideal. Adjoin independent
-parameters to that finite jet and pass to the generic point of the parameter ring. Weierstrass
-division by a local parameter then replaces each fixed scheme by a finite flat scheme of the
-same degree $\lambda(d)$. After inverting the finitely many discriminants and resultants, the
-fixed points are simple, and a point common to the fixed schemes for $u^a$ and $u^b$ is a fixed
-point of $u^{\gcd(a,b)}$. Neither inversion changes a degree: varying the constant coefficient
-separates distinct roots, while varying the linear coefficient makes each intersection
-transverse, so the excluded discriminants and resultants are not identically zero. This is the
-generic-splitting proof of invariance of a local intersection multiplicity. The parameter
-extension is faithfully flat, so the integer lengths in the original ring are unchanged.
-
-In this split situation, inclusion--exclusion shows that
-
-$$
-\sum_{d\mid n}\mu(n/d)\lambda(d)
-$$
-
-is exactly the number of points of least period $n$ specializing to the original closed point.
-The automorphism permutes those points in free orbits of length $n$. Their number is therefore
-divisible by $n$. Constancy of the finite-flat degrees under specialization proves $(*)$ with
-all original intersection multiplicities, including nonreduced ones. For $n=p^r$, the only
-nonzero Moebius terms are the two divisors $p^r$ and $p^{r-1}$, and hence
-
-$$
-p^r\mid\lambda(p^r)-\lambda(p^{r-1}).
-\tag{**}
-$$
-
-We now identify these intrinsic multiplicities in the DVR $A$. Let $B$ be the valuation ring
+Let $B$ be the valuation ring
 in the fixed field of $\langle\theta\rangle$. By the total-ramification hypothesis, a
 uniformizer $\pi$ generates $A$ over $B$: its minimal polynomial has degree
 $[\operatorname{Frac}(A):\operatorname{Frac}(B)]$ and is Eisenstein. Since every element of
@@ -1116,7 +1095,19 @@ $$
 =v_A(\theta^n\pi-\pi).
 $$
 
-Applying $(**)$ gives
+Apply Required input 5.2A to $R=A$, $u=\theta$, and $n=p^r$. The automorphism $\theta$ is
+local and continuous because it preserves the valuation filtration. Every divisor of $p^r$ is
+$p^j$ for some $0\leq j\leq r$, and $\theta^{p^j}\ne1$: otherwise raising that equality to
+$p^{r-j}$ would contradict $\theta^{p^r}\ne1$. Thus each corresponding fixed ideal is the
+nonzero principal ideal $(\theta^{p^j}\pi-\pi)$ and has finite colength, so all hypotheses of
+the required input have now been checked. Since the only nonzero Moebius terms for $p^r$ are
+those indexed by $p^r$ and $p^{r-1}$, (5.3a) gives
+
+$$
+p^r\mid\lambda(p^r)-\lambda(p^{r-1}).
+$$
+
+Consequently
 
 $$
 p^r\mid(q_r+1)-(q_{r-1}+1),
@@ -1309,7 +1300,12 @@ $$
 \operatorname{Sw}(V)=\sum_{r>0}r\dim V(r).
 $$
 
-When the residue field is perfect, an abelian representation has integral breaks by Hasse--Arf. A general representation can have rational breaks, yet its total Swan conductor is still an integer; that stronger fact follows from Artin's character theorem rather than from breakwise integrality. With only separability of one chosen residue extension, the decomposition and the rational conductor formula remain valid, but this book does not claim the same integrality theorem.
+Conditional on Required input 5.2A, an abelian representation over a perfect residue field has
+integral breaks by Hasse--Arf. A general representation can have rational breaks, yet its total
+Swan conductor is still an integer under the same input; that stronger fact follows from Artin's
+character theorem rather than from breakwise integrality. With only separability of one chosen
+residue extension, the decomposition and the rational conductor formula remain valid and do not
+use Required input 5.2A, but this book does not claim the same integrality theorem.
 
 ## 7. The complementary module and the different
 
@@ -2008,7 +2004,8 @@ The formulas pass several useful tests.
   \qquad a(\chi)=r+1.
   $$
 
-The last statement, together with integrality of character conductors, is the character-theoretic shadow of Hasse--Arf.
+The last statement, together with the conditional integrality of character conductors from
+Section 5.6, is the character-theoretic shadow of Hasse--Arf.
 
 ## 11. The Artin character and integrality
 
@@ -2059,7 +2056,10 @@ which is precisely the conductor formula.
 
 ### 11.2 Artin's integrality theorem
 
-**Theorem 11.1 (integrality).** Under the preceding hypotheses, assume in addition that the residue field of $K$ is perfect. Then $A_G$ is the character of a finite-dimensional characteristic-zero representation of $G$. Consequently, for every finite-dimensional characteristic-zero representation $V$,
+**Theorem 11.1 (integrality, conditional on Required input 5.2A).** Under the preceding
+hypotheses, assume in addition that the residue field of $K$ is perfect. Then $A_G$ is the
+character of a finite-dimensional characteristic-zero representation of $G$. Consequently, for
+every finite-dimensional characteristic-zero representation $V$,
 
 $$
 a_K(V),\ \operatorname{Sw}_K(V)\in\mathbf Z_{\geq0}.
@@ -2181,7 +2181,12 @@ $$
 
 is integral as well; its defining sum proves nonnegativity. $\square$
 
-The exact hypotheses matter. The coefficient field must have characteristic zero, or one must replace ordinary characters by an appropriate modular theory. Perfectness of the residue field is the standing hypothesis for the Hasse--Arf input in this proof; it implies separability of every finite residue extension. Neither the residue field nor the coefficient field needs to be finite.
+The exact hypotheses matter. The coefficient field must have characteristic zero, or one must
+replace ordinary characters by an appropriate modular theory. Perfectness of the residue field is
+the standing field hypothesis for Hasse--Arf; Required input 5.2A is the separate
+local-intersection prerequisite used to prove its ramification-number congruence. Perfectness
+implies separability of every finite residue extension. Neither the residue field nor the
+coefficient field needs to be finite.
 
 ### 11.3 Additivity and exact sequences
 
@@ -2547,7 +2552,9 @@ It is useful to collect the logical boundaries.
 - Galois symmetry defines ramification groups on the field itself.
 - Separability of $l/k$ gives $|G_0|=e$, local monogenicity in the form used above, and the clean classical Hilbert formula.
 - The Artin and Swan formulas in Chapters 10--13 require the finite Galois realization to have separable residue extension; perfection of $k$ guarantees this for every realization.
-- The integrality theorem and Hasse--Arf are asserted here under the stronger hypothesis that $k$ is perfect. The rational fixed-space formulas still make sense under the preceding separable-residue hypothesis.
+- Conditional on Required input 5.2A, the integrality theorem and Hasse--Arf hold here under the
+  stronger hypothesis that $k$ is perfect. The rational fixed-space formulas do not use that
+  input and still make sense under the preceding separable-residue hypothesis.
 - Perfection of $k$ implies separability of every finite residue extension, but is stronger than needed in any one theorem.
 - Finiteness of $k$ adds canonical Frobenius, cyclic residue multiplicative groups, and local compactness; it is irrelevant to the definitions of ramification groups, the different, and conductors.
 - Characteristic zero for representation coefficients gives semisimplicity and ordinary-character formulas; it is unrelated to the characteristic of $K$.
