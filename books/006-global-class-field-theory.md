@@ -1835,7 +1835,7 @@ $\chi:C_K\to\mathbf C^\times$ is obtained from a unique finite-image
 character of $G_K$. If $L/K$ is its cyclic fixed field, then
 
 $$
- \ker\chi=N_{L/K}C_L,qquad [L:K]=|\operatorname {im}\chi|.               \tag{4.F7}
+ \ker\chi=N_{L/K}C_L,\qquad [L:K]=|\operatorname {im}\chi|.             \tag{4.F7}
 $$
 
 **Proof.** Choose $n$ annihilating the image and an identification
@@ -1849,9 +1849,21 @@ $$
  =\prod_v\chi_v(a)=1.                                    \tag{4.F8}
 $$
 
-Thus the family annihilates $H^1(K,\mu_n)$. The unrestricted degree-one row
-of Theorem 4.2 supplies a unique
-$c\in H^1(K,A_n)$ with these localizations. Let $L$ be the fixed field of
+Thus the family annihilates $H^1(K,\mu_n)$. Choose a finite set $S_0$
+containing the archimedean places, the places above $n$, and the ramification
+of the family. Choose integral ideal representatives coprime to $S_0$, add
+all their prime divisors, and call the resulting set $S$. Their prime classes
+generate $\operatorname {Cl}(K)$. The finite-$S$ degree-one row of
+Theorem 4.2 supplies $c\in H^1(G_{K,S},A_n)$ with the prescribed components
+at $S$.
+
+For $v\notin S$, the difference between $c_v$ and the localization of $c$
+is unramified. Via local reciprocity these differences define a character of
+the ideal group. It is trivial on principal ideals: the original family is
+trivial there by (4.F8), while the family from $c$ is trivial there by
+principal-idèle reciprocity. It is also zero on every chosen prime-class
+generator, because those primes lie in $S$. Hence the ideal-class character
+is zero, and $c$ has the prescribed localization at every place. Let $L$ be the fixed field of
 $\ker c$. The product of the local maps associated to $c$ equals $\chi$ on
 every local factor and hence on $C_K$. The decomposition groups generate
 $\operatorname {Gal}(L/K)$ by splitting-separation, so their common local
@@ -1877,12 +1889,12 @@ abelian character $\chi^{\rm Gal}$ of $G_E$. The local norm/restriction square
 of Book 5, multiplied over all places, gives
 
 $$
- \chi\circ N_{L/E}quad\longleftrightarrow\quad
+ \chi\circ N_{L/E}\quad\longleftrightarrow\quad
  \chi^{\rm Gal}|_{G_L}.                                  \tag{4.F10}
 $$
 
 This square uses only local reciprocity and the fact that both global
-characters were constructed from their local restrictions. Thus $chi$ is
+characters were constructed from their local restrictions. Thus $\chi$ is
 trivial on $N_{L/E}C_L$ exactly when its fixed abelian extension is contained
 in $L$, equivalently in $M$. By the pre-class-formation abelian reciprocity
 theorem, the latter characters are exactly the annihilator of
