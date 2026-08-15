@@ -787,8 +787,11 @@ blowups from completions. Only after those steps will Theorem 8.1 be discharged.
 
 #### 8.5.1 Local duality in dimension two
 
-Let $(A,\mathfrak m,k)$ be a two-dimensional normal local ring possessing a normalized dualizing
-complex. Normality gives depth two, so the complex is $\omega_A[2]$ for a finite maximal
+For a complete $A$, choose a surjection $Q\twoheadrightarrow A$ from a complete regular local
+ring and set $D_A=R\operatorname{Hom}_Q(A,Q)[\dim Q]$. Finite free resolutions and the Koszul
+resolution of the diagonal prove biduality and independence of $Q$. For excellent $A$, this
+finite construction descends from the completion and faithful flatness reflects biduality.
+Normality gives depth two, so $D_A=\omega_A[2]$ for a finite maximal
 Cohen--Macaulay module $\omega_A$. Choose an injective resolution of this complex and apply the
 $\mathfrak m$-torsion functor. The only surviving indecomposable injective at the closed point is
 the injective hull $E_A(k)$ in degree zero. Consequently, for every finite-length module $M$,
@@ -831,9 +834,9 @@ space, and the displayed diagonal calculation is being assumed here.
 $\operatorname{Spec}A$ and let $0\ne Z$ be an effective Cartier divisor supported on the closed
 fiber. Some component $C$ of $Z$ has $\deg(\mathcal I_Z|_C)>0$.
 
-**Proof.** Choose a function $h\in\mathfrak m$ whose divisor contains every closed-fiber
-component and, on each component, has a point away from all the others where its residual factor
-vanishes. If $d_C$ and $e_C$ are the orders of $Z$ and $h$ at the generic point of $C$, choose
+**Proof.** On each component choose a closed point away from the others and a local function
+nonzero generically but vanishing there. Express it in the common function field as $a_i/b_i$
+with $a_i,b_i\in A$, and take $h=\prod a_i$. If $d_C$ and $e_C$ are the orders of $Z$ and $h$ at the generic point of $C$, choose
 $C$ maximizing $d_C/e_C$ and replace $Z,h$ by multiples making the two orders equal. Then $h$
 is a section of $\mathcal I_Z$ which is generically nonzero on $C$ and has a zero at the chosen
 point. Its divisor on the proper curve $C$ has positive degree. $\square$
@@ -843,10 +846,11 @@ $H^1(X,\mathcal O_X)\to H^1(X\setminus X_s,\mathcal O_X)$ is injective.
 
 **Proof.** A class in the kernel gives an extension
 $0\to\mathcal O_X\to\mathcal E\to\mathcal O_X\to0$ split off the closed fiber. The two sections
-of $\mathbf P(\mathcal E)$ are disjoint there. Normalize the closure of the second section. If it
-missed the first, its proper affine map to $X$ would be finite and hence an isomorphism, splitting
-the extension. Otherwise their pullback intersection is a nonempty vertical Cartier divisor with
-trivial conormal, contradicting Lemma 8.10. $\square$
+of $\mathbf P(\mathcal E)$ are disjoint there. Normalize the closure $Y$ of the second section.
+The complement of the first is the affine bundle associated to the homomorphism line bundle; if
+$Y$ missed it, $Y\to X$ would be affine and proper, hence finite, and normality would split the
+extension. Otherwise its pullback is a nonempty vertical Cartier divisor. Its conormal is the
+pullback of that homomorphism line bundle, which is trivial here, contradicting Lemma 8.10. $\square$
 
 **Proposition 8.12 (surface vanishing).** For a normal modification as above,
 $R^1f_*\omega_X=0$.
@@ -858,7 +862,10 @@ extension is multiplication by an element of $A$ and is therefore split. Thus
 $\operatorname{Hom}_{D(A)}(k[-1],Rf_*\mathcal O_X)=0$.
 
 If $R^1f_*\omega_X\ne0$, quotient it onto $k$. Applying the duality (8.8) produces a nonzero map
-$k[-1]\to Rf_*\mathcal O_X$, contradiction. $\square$
+$k[-1]\to Rf_*\mathcal O_X$, contradiction: explicitly
+$\omega_X[2]$ places $R^1f_*\omega_X$ in cohomological degree $-1$, so its quotient is a map
+$Rf_*\omega_X[2]\to k[1]$; dualizing sends $k[1]$ to $k[-1]$ by (8.7), and biduality sends the
+source to $Rf_*\mathcal O_X$. $\square$
 
 #### 8.5.3 Boundedness and reduction to rational singularities
 
@@ -878,7 +885,9 @@ finitely many positive-dimensional fibers.
 $H^1(X,\mathcal O_X)[a]$ are bounded independently of the normal modification $X$.
 
 **Proof.** The exact sequence cut out by $a$ identifies this torsion module with the cokernel of
-$A\to H^0(Z,\mathcal O_Z)$. After replacing $a$ by a power, $A/(a)$ is reduced. The closure of
+$A\to H^0(Z,\mathcal O_Z)$. Approximation in the Krull domain gives $c$ with valuation one at
+each height-one prime dividing $a$ and with $a\mid c^N$ for fixed $N$. Exact sequences for
+multiplication by $c$ reduce the bound to the reduced divisor of $c$. The closure of
 the punctured part of $Z$ is finite over $A/(a)$ and embeds in its finite normalization; its
 global sections therefore differ from $A/(a)$ by a subquotient of the fixed finite module
 $(A/(a))^\nu/(A/(a))$. Embedded vertical points contribute no global section on the normal
@@ -926,8 +935,9 @@ rational.
 
 **Proof.** Normalize $X'$ to $\nu:X\to X'$ and put
 $\mathcal I=\mathfrak m\mathcal O_X$. Rationality makes $H^1(X,\mathcal F)=0$ for every globally
-generated $\mathcal F$: resolve it by a direct sum of $\mathcal O_X$ and use that coherent
-cohomology above degree one vanishes on a surface modification. From
+generated $\mathcal F$: for $0\to\mathcal K\to\mathcal O_X^{(I)}\to\mathcal F\to0$, the
+long exact sequence ends in $H^2(X,\mathcal K)=0$, so $H^1(\mathcal O_X^{(I)})=0$ surjects onto
+$H^1(\mathcal F)$. From
 
 $$
 0\to\mathcal F\to\mathcal O_X^{\mu+1}\to\mathcal I\to0
@@ -971,6 +981,80 @@ $\square$
 A rational singularity with invertible dualizing module is called a **rational double point**.
 The remaining tasks are now sharply delimited: prove that successive blowups resolve rational
 double points, and lift the resulting normalized-blowup sequence from the completion.
+
+#### 8.5.5 Formal arcs and termination at double points
+
+A **nonsingular formal arc** through $x\in X$ is a local map
+$\mathcal O_{X,x}\to R$ to a complete DVR with the same residue field and surjective cotangent
+map. It lifts uniquely through the blowup of $x$.
+
+**Lemma 8.17 (arc attached to an infinite quadratic sequence).** Suppose
+$(X_i,x_i)_{i\ge0}$ is an infinite sequence of point blowups, residue fields are unchanged, and
+one $t\in\mathfrak m_{x_0}$ cuts out every exceptional divisor at $x_i$. Then the sequence is
+the sequence of centers of a nonsingular formal arc.
+
+**Proof.** Put
+$J_n=\ker(\mathcal O_{X_0,x_0}\to\mathcal O_{X_n,x_n}/\mathfrak m_{x_n}^{n+1})$.
+Writing every other generator after one blowup as $t$ times a new generator shows
+$J_n/J_{n+1}$ has length one and that $t^n\notin J_{n+1}$. Hence
+$R=\varprojlim\mathcal O_{X_0,x_0}/J_n$ is complete, has maximal ideal $(t)$, and is not
+artinian; it is a DVR. The affine chart formulas give compatible local maps
+$\mathcal O_{X_i,x_i}\to R$. $\square$
+
+**Lemma 8.18 (an arc eventually meets the regular locus).** If the kernel prime of a nonsingular
+arc has regular localization, then some lifted center $x_i$ is regular.
+
+**Proof.** Let $t$ map to a uniformizer and minimally generate the kernel by
+$z_2,\ldots,z_r$, choosing $z_2$ uniformizing at the kernel prime. Torsion of
+$\mathfrak p/(z_2,\mathfrak p^2)$ gives relations
+$t^{n_j}z_j-a_jz_2\in\mathfrak p^2$. On the $t$-chart replace $z_j$ by $z_j/t$; every positive
+exponent $n_j$ and every valuation of $a_j$ falls by one. If an exponent reaches zero or an
+$a_j$ becomes a unit, one generator is eliminated. Double induction on $r$ and the sum of these
+exponents ends with two parameters, hence a regular local ring. $\square$
+
+For a rational double point, Lemma 8.15 says every point blowup remains normal and rational.
+Adjunction and invertibility of the canonical module show that an unresolved local ring has
+multiplicity two: the exceptional curve has arithmetic genus zero and canonical degree zero, so
+(8.10) forces embedding dimension three and quadratic initial equation. If infinitely many
+singular centers remained, after a finite residue extension one branch would retain one
+exceptional parameter and constant residue field. Lemma 8.17 produces an arc. Its kernel is a
+height-one prime, where normality gives a DVR, so Lemma 8.18 says the centers eventually become
+regular, contradiction. Thus point blowups resolve every rational double point.
+
+#### 8.5.6 Completion and lifting
+
+**Lemma 8.19 (completion comparison).** If $X$ is finite type over a noetherian local $A$, then
+local rings at corresponding closed-fiber points of $X$ and $X_{\widehat A}$ have isomorphic
+completions. Consequently a proper $X$ is regular exactly when $X_{\widehat A}$ is regular.
+
+**Proof.** Modulo $\mathfrak m^n$, $A$ and $\widehat A$ agree. Localizing and then quotienting
+by powers of the corresponding prime gives identical inverse systems. Regularity is equivalent
+to regularity of the completion, and proper schemes have all closed points over the closed point.
+$\square$
+
+**Lemma 8.20 (lifting normalized blowups).** A blowup of $\widehat A$ in an ideal supported at
+the closed point is the flat base change of a blowup over $A$. If the punctured base change is
+normal, normalization is finite and commutes with completion. Hence every finite sequence of
+normalized blowups over $\widehat A$ lifts to one over $A$.
+
+**Proof.** A closed-point-supported ideal $J\subset\widehat A$ contains
+$\mathfrak m^n\widehat A$ and is the extension of its inverse image in $A/\mathfrak m^n$.
+Flat base change identifies the Rees algebras. For normalization, work affine. The total quotient
+ring after completion is the faithfully flat extension of the old one off the closed fiber; its
+integral closure is finite because the completed ring is excellent. The old integral closure is
+the intersection with the uncompleted total quotient ring, and faithful-flat descent makes it
+finite. Tensoring the integral equations back proves equality with the completed normalization.
+Induct on the sequence. $\square$
+
+**Proposition 8.21 (complete local resolution).** A complete two-dimensional normal noetherian
+local domain admits a resolution by normalized blowups.
+
+**Proof.** Choose a finite injective map from a complete regular local ring $A_0$ by parameters.
+Induct on its fraction-field degree. A separable step and a purely inseparable degree-$p$ step are
+bounded by Lemma 8.14; maximality reduces to rational singularities, Lemma 8.16 reduces to rational
+double points, and Lemmas 8.17--8.18 resolve those. For a nonprime inseparable degree, insert the
+intermediate fields of the $p$-power tower and normalize at each step. Lemma 8.9 converts the
+resulting modification into normalized blowups. $\square$
 
 ### 8.6 Why a three-entry local invariant is insufficient
 
