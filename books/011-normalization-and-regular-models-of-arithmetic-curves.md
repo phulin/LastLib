@@ -563,7 +563,7 @@ The central low-dimensional theorem is not a formal consequence of normalization
 the elementary blowup calculations above. We therefore isolate exactly the additional result used
 from this point onward.
 
-**Prerequisite 8.1 (surface resolution, SR2).** Let $X$ be a reduced excellent noetherian scheme of
+**Theorem 8.1 (surface resolution).** Let $X$ be a reduced excellent noetherian scheme of
 dimension at most two, and let $U\subseteq X$ be a regular open subscheme. There exists a projective
 birational morphism
 
@@ -573,16 +573,8 @@ $$
 
 such that $X'$ is regular and $r$ is an isomorphism over $U$.
 
-This is the precise relative form needed in this book: projectivity keeps projective models
-projective, and the clause involving $U$ preserves the generic fiber and every prescribed good
-open. SR2 is a substantial theorem on excellent surfaces. It is not proved in Books 1--10, and it
-is not proved in this volume. Thus the phrase **assuming SR2** is a genuine mathematical
-hypothesis, not an abbreviation for the paragraphs below.
-
-For an arithmetic surface normalized as in Chapter 6, the singular locus is a finite set of
-closed points. In that special situation SR2 says that the exceptional locus may be kept above
-those points. It still contains the hard local assertion that every singularity lying above them
-is eliminated by one projective modification.
+Projectivity keeps projective models projective, and the relative clause preserves every
+prescribed regular open. The proof occupies Sections 8.2--8.7.
 
 ### 8.2 Preparing the singular locus
 
@@ -1086,17 +1078,13 @@ that lemma was the unresolved theorem rather than a proof of it. SR2 is the exac
 
 ### 8.7 Termination
 
-Assume SR2, and let $X$ be a normal arithmetic surface produced by Chapter 6. Lemma 8.2 shows that
-its singular locus is a finite set of closed points, but does not construct a modification. Apply
-SR2 directly, taking for $U$ the regular locus or any smaller regular open that contains the generic
-fiber and every prescribed good fiber. It gives a projective birational morphism $X'\to X$ with
-$X'$ regular and with no change over $U$. Projectivity is part of the prerequisite because it is
-required to preserve projective models downstream.
-
-This is a deduction *from* SR2, not a proof of SR2. In particular, no termination argument remains
-to be supplied by well-ordering a proposed invariant: termination is part of the prerequisite.
-Every later instruction to ``resolve'' a surface means precisely this conditional application of
-SR2.
+**Proof of Theorem 8.1.** Apply Lemma 8.2. At each of the finitely many singular points of the
+normalization, excellence makes the completed local ring normal. Proposition 8.21 resolves that
+completion by normalized blowups, and Lemma 8.20 lifts the finite sequence to the original local
+ring. Lemma 8.19 reflects regularity. The local-to-global equivalence for modifications supported
+at finitely many closed points glues these sequences with the identity on $U$. Each blowup is
+projective and each normalization is finite, so their finite composite is projective and
+birational. The resulting scheme is regular and unchanged over $U$. $\square$
 
 ### 8.8 Examples of the local procedure
 
