@@ -1426,17 +1426,18 @@ embedding. We first record the local-to-global replacement for a nonexistent glo
 complex.
 
 **Regular-immersion fundamental-class lemma.** If $j:W\hookrightarrow Y$ is a regular immersion
-of codimension $d$, then $\mathcal O_W$ is a perfect $\mathcal O_Y$-complex and, for every line
-bundle $L$ on $Y$, local Koszul duality gives a canonical isomorphism
+of codimension $d$, then $\mathcal O_W$ is a perfect $\mathcal O_Y$-complex and, for every
+complex $K$ on $Y$, local Koszul duality gives a canonical isomorphism
 
 $$
-R\mathcal Hom_Y(\mathcal O_W,L)
+R\mathcal Hom_Y(\mathcal O_W,K)
 \simeq
-j_*\bigl(j^*L\otimes\det(\mathcal I/\mathcal I^2)^\vee\bigr)[-d]. \tag{9.12a}
+j_*\bigl(Lj^*K\otimes\det(\mathcal I/\mathcal I^2)^\vee\bigr)[-d]. \tag{9.12a}
 $$
 
 To construct it, cover $Y$ by affines on which $\mathcal I=(f_1,\ldots,f_d)$ is a regular
-sequence and use the Koszul complex $K(f)$. If $g=Af$ is a second sequence, the induced Koszul
+sequence and use the Koszul complex $K(f)$; tensoring $K(f)$ with $K$ computes $Lj^*K$. If
+$g=Af$ is a second sequence, the induced Koszul
 comparison acts in top degree by $\det(A)$, exactly the transition function of
 $\det(\mathcal I/\mathcal I^2)^\vee$. Two lifts of the same conormal change differ by a Koszul
 homotopy. Consequently the local maps agree in the derived category on double overlaps; on
@@ -1472,7 +1473,22 @@ $$
 where $k^!\omega_{Q/S}$ is notation here for the explicitly computed dg coinduction
 $R\mathcal Hom_Q(k_*\mathcal O_Y,\omega_{Q/S})$, viewed as a complex on $Y$; no general
 exceptional inverse-image functor is being assumed. Affine-locally this is the equality of dg Hom
-complexes (9.5a), so it is canonical and associative. The two Čech coefficient
+complexes (9.5a), so it is canonical and associative. The determinant cancellation in this
+comparison is explicit. If $N_a=\dim(P_a/S)$ and $\omega_X^{(1)}$ is the Ext sheaf constructed
+from $i_1$, base change of the universally exact resolution for $i_1$ gives
+
+$$
+k^!\omega_{Q/S}simeq
+\operatorname{pr}_X^*\omega_X^{(1)}[-(N_1-1)]
+\otimes\operatorname{pr}_{P_2}^*\omega_{P_2/S}.
+$$
+
+The conormal bundle of the graph $j$ is $i_2^*\Omega^1_{P_2/S}$, whose determinant is
+$i_2^*\omega_{P_2/S}$. Formula (9.12a) therefore cancels the last tensor factor and adds the
+shift $-N_2$, leaving
+$\omega_X^{(1)}[-(N_1+N_2-1)]$, exactly the Ext complex defining the dualizing sheaf from the
+product embedding. This calculation uses derived pullback in (9.12a), so it remains valid without
+assuming that $\omega_X^{(1)}$ is a line bundle. The two Čech coefficient
 functionals are compatible because
 extracting the top coefficient first in the $P_2$ variables and then in the $P_1$ variables is
 the same as extracting the coefficient of the product monomial. Thus the common refinement gives
