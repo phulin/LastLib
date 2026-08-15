@@ -55,14 +55,14 @@ flowchart LR
 | 15 | Coherent Cohomology in Proper Families | 8, 10, 14, MATHLIB |
 | 16 | Semistable Curves, Dual Graphs, and Component Groups | 8, 9, 10, 11, 12, 15 |
 | 17 | Finite Étale Covers and Fundamental Groups | 8, 10, 11, 15, MATHLIB |
-| 18 | Derived Étale and $\ell$-adic Cohomology | 5, 8, 9, 10, 11, 14, 15, 16, 17, MATHLIB |
+| 17a | Relative Picard Schemes and Jacobians | 9, 10, 15, 16 |
+| 18 | Derived Étale and $\ell$-adic Cohomology | 5, 8, 9, 10, 11, 14, 15, 16, 17, 17a, MATHLIB |
 | 19 | Proper and Smooth Base Change | 15, 18 |
 | 20 | Étale Duality and Trace Maps for Curves | 18, 19 |
 | 21 | Étale Sheaves and Cohomology on Curves | 16, 17, 18, 19, 20 |
 | 22 | Nearby Cycles and Monodromy for Semistable Curves | 16, 18, 19, 20 |
 | 23 | Lefschetz Trace Formulas for Curves | 18, 19, 20 |
 | 24 | Continuous Cohomology of Profinite Groups | MATHLIB |
-| 25 | Relative Picard Schemes and Jacobians | 9, 16, 10, 15 |
 | 26 | Finite Locally Free Schemes and Algebras | 8, 10 |
 | 27 | Affine Group Schemes and Hopf Algebras | 26 |
 | 28 | Finite Flat Commutative Group Schemes | 26, 27, 10 |
@@ -74,12 +74,12 @@ flowchart LR
 | 34 | Cartier Duality | 27, 28 |
 | 35 | Abelian Schemes, Isogenies, and Polarizations | 26, 28, 34, 8, 10, 15 |
 | 35a | Moduli Stacks for Modular and PEL Problems | 8, 10, 26, 27, 28, 34, 35, MATHLIB |
-| 36 | Jacobians and $H^1$ of Curves | 18, 19, 21, 24, 25, 35 |
+| 36 | Jacobians and $H^1$ of Curves | 17a, 18, 19, 21, 24, 35 |
 | 37 | Weights and Weil Bounds for Curves and Abelian Varieties | 8, 20, 21, 23, 36 |
-| 38 | Néron Models and Component Groups | 11, 16, 25, 35 |
+| 38 | Néron Models and Component Groups | 11, 16, 17a, 35 |
 | 39 | Integral Correspondences on Curves and Jacobians | 12, 16, 38, 36 |
 | 40 | Descent and Weak Mordell--Weil for Abelian Varieties | 29, 35, 30, 32 |
-| 41 | Heights, Mordell--Weil, and the Faltings--Tate Reduction | 2, 4, 8, 10, 11, 12, 35a, 15, 25, 35, 36, 38, 40 |
+| 41 | Heights, Mordell--Weil, and the Faltings--Tate Reduction | 2, 4, 8, 10, 11, 12, 35a, 15, 17a, 35, 36, 38, 40 |
 | 42 | Finite-Flat Galois Representations | 2, 28, 34, 17 |
 | 43 | Elliptic Curves over DVRs | 1, 2, 11 |
 | 44 | Tate Curves and Multiplicative Reduction | 2, 43 |
@@ -87,7 +87,7 @@ flowchart LR
 | 46 | Algebraic de Rham Cohomology and Gauss--Manin Connections | 9, 15, 14, 35 |
 | 47 | Betti, de Rham, and Étale Comparison for Curves | 6, 9, 21, 46 |
 | 48 | Divided Powers and Crystalline Sites | 14, MATHLIB |
-| 49 | Crystalline Cohomology of Curves and Abelian Schemes | 25, 35, 46, 48 |
+| 49 | Crystalline Cohomology of Curves and Abelian Schemes | 17a, 35, 46, 48 |
 | 50 | Syntomic Cohomology and Integral Period Maps | 29, 34, 35, 48, 49 |
 | 51 | Finite-Flat Group Schemes of Small Height | 2, 26, 27, 28, 34 |
 | 52 | Dieudonné Theory and Raynaud Full Faithfulness | 42, 48, 49, 51 |
@@ -152,7 +152,7 @@ flowchart LR
 | 111 | Compactified Modular Stacks and Coarse Modular Curves | 8, 11, 35a, 110 |
 | 112 | Deligne--Rapoport Integral Models of Modular Curves | 11, 12, 16, 51, 110, 111 |
 | 113 | Integral Modular Forms and q-Expansion | 9, 15, 110, 111 |
-| 114 | Modular Jacobians, Néron Models, and Hecke Correspondences | 25, 38, 39, 112, 113 |
+| 114 | Modular Jacobians, Néron Models, and Hecke Correspondences | 17a, 38, 39, 112, 113 |
 | 115 | Reductive Groups, Inner Forms, and Corestriction in Rank Two | 77 |
 | 116 | CM Abelian Varieties, Types, and Reflex Norms | 1, 6, 35 |
 | 117 | Complex Multiplication, Reciprocity, and Reduction | 5, 6, 10, 35a, 61, 52, 116 |
@@ -169,11 +169,11 @@ flowchart LR
 | 128 | Local--Global Compatibility for Weight-Two Galois Representations | 22, 41, 61, 75, 76, 104, 118, 121, 122, 125, 126 |
 | 129 | Galois Lattices and Finite-Flat Closures in Abelian Tate Modules | 35, 26, 27, 28, 34, 42, 45, 52, 53, 54, 125, 126 |
 | 130 | Modular Curves $X_0(N)$ and $X_1(N)$ | 110, 111, 112, 113 |
-| 131 | Jacobians of Modular Curves | 47, 25, 35, 38, 40, 113, 114, 130 |
+| 131 | Jacobians of Modular Curves | 17a, 47, 35, 38, 40, 113, 114, 130 |
 | 132 | Eisenstein Series, Congruences, and the Eisenstein Ideal | 85, 113 |
 | 133 | Cuspidal Divisors and Specialization on Modular Jacobians | 16, 38, 114, 132 |
 | 134 | Mazur–Raynaud Admissible Group Schemes | 28, 34, 29, 51, 133 |
-| 135 | Genus-Two Curves, Jacobians, and Abel--Jacobi Geometry | 9, 37, 25, 41, 130 |
+| 135 | Genus-Two Curves, Jacobians, and Abel--Jacobi Geometry | 9, 17a, 37, 41, 130 |
 | 136 | Mumford Representations and Exact Genus-Two Jacobian Arithmetic | 37, 135 |
 | 137 | Explicit Two-Descent on Genus-Two Jacobians | 40, 136 |
 | 138 | Integral Local Types and Type Lattices | 17, 21, 22, 51, 53, 54, 73, 74, 75, 76, 122 |

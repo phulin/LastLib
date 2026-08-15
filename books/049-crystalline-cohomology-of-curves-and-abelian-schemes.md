@@ -1328,7 +1328,7 @@ Curves and abelian schemes meet through the Jacobian. Their degree-one crystalli
 
 ### 14.1 The Abel--Jacobi map in degree one
 
-Let $C/S_0$ be a smooth proper curve of genus $g$ with a section $c$. Book 25 proves that $J=\operatorname{Pic}^0_{C/S_0}$ is an abelian scheme, constructs its canonical principal theta polarization compatibly with arbitrary base change, and gives the Abel--Jacobi map
+Let $C/S_0$ be a smooth proper curve of genus $g$ with a section $c$. Book 17a proves that $J=\operatorname{Pic}^0_{C/S_0}$ is an abelian scheme, constructs its canonical principal theta polarization compatibly with arbitrary base change, and gives the Abel--Jacobi map
 
 $$
 j_c:C\longrightarrow J,
@@ -1361,7 +1361,7 @@ $$
 
 Invariant one-forms on the Picard scheme are cotangent vectors at the identity. The tangent space of $J$ is $R^1f_*\mathcal O_C$, so relative duality identifies its cotangent space with $f_*\omega_C$. Under this identification (14.3) is the identity. On the quotients of the Hodge sequences, duality makes the induced map the dual identity. Hence the associated graded of (14.2) is an isomorphism, and finite filtered comparison proves (14.2).
 
-Book 46 proves, with the Abel-map and theta sign convention of Book 25, that the resulting de Rham polarization form is exactly cup product followed by the curve trace. Crystalline--de Rham comparison transports that equality without changing either trace normalization. Frobenius and base-change compatibility follow from functoriality. $\square$
+Book 46 proves, with the Abel-map and theta sign convention of Book 17a, that the resulting de Rham polarization form is exactly cup product followed by the curve trace. Crystalline--de Rham comparison transports that equality without changing either trace normalization. Frobenius and base-change compatibility follow from functoriality. $\square$
 
 This proof also explains why degree one is the natural meeting point: higher cohomology of $J$ is the exterior algebra on the curve's $H^1$, not the cohomology of the curve itself.
 
@@ -1389,7 +1389,7 @@ $$
 =\langle x,T_{Z^t}y\rangle_C. \tag{14.5}
 $$
 
-Composing correspondences by the scheme-theoretic fiber product corresponds to composing their cohomological actions. Under the standing hypothesis that both legs are finite locally free, the projections from that fiber product are again finite locally free, even if its middle scheme is singular or nonreduced. In that case one does **not** invoke smooth crystalline cohomology of the middle scheme. Book 25 defines its action by pullback and determinant norm on Jacobians; flat base change retains the intersection lengths and proves the composition formula there. Theorem 14.1 then transports the formula to degree-one crystalline cohomology. Replacing the fiber product by its reduction or normalization would lose multiplicities.
+Composing correspondences by the scheme-theoretic fiber product corresponds to composing their cohomological actions. Under the standing hypothesis that both legs are finite locally free, the projections from that fiber product are again finite locally free, even if its middle scheme is singular or nonreduced. In that case one does **not** invoke smooth crystalline cohomology of the middle scheme. Book 17a defines its action by pullback and determinant norm on Jacobians; flat base change retains the intersection lengths and proves the composition formula there. Theorem 14.1 then transports the formula to degree-one crystalline cohomology. Replacing the fiber product by its reduction or normalization would lose multiplicities.
 
 Via Theorem 14.1, a correspondence action agrees with the pull-push homomorphism it induces on Jacobians. Thus its adjoint under the theta polarizations is represented by the transposed correspondence.
 

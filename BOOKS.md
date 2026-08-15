@@ -117,6 +117,10 @@ manuscript and distinguishes it from optional stronger conclusions.
    groups. Conclude by constructing continuous Galois representations from geometric covers and
    locally constant sheaves.
 
+17a. **Relative Picard Schemes and Jacobians** — Construct Picard sheaves and schemes,
+   rigidification, identity components, Jacobians, Abel–Jacobi and Albanese maps, polarizations, and
+   functoriality under finite maps and correspondences.
+
 18. **Derived Étale and $\ell$-adic Cohomology** — Construct finite-level and continuous $\ell$-adic cohomology, derived completion, cup products, traces, Galois actions, and perfect complexes for the curve and abelian-scheme range. Geometric proper and smooth base-change is prepared as a morphism and is imported only in the next volume, not assumed here.
 
 19. **Proper and Smooth Base Change** — Prove proper and smooth base change for the constructible torsion and $\ell$-adic complexes needed on curves and abelian schemes, with all noetherian, invertibility, and finiteness hypotheses visible. The conclusions are limited to the stated geometric range and do not assert an unrestricted higher-dimensional six-functor formalism.
@@ -138,10 +142,6 @@ manuscript and distinguishes it from optional stronger conclusions.
    restriction and corestriction, inflation–restriction, Shapiro's lemma, and cup products, and
    compare the cochain and derived-functor constructions. Applications identify deformation-theoretic
    tangent and obstruction spaces with low-degree cohomology.
-
-25. **Relative Picard Schemes and Jacobians** — Construct Picard sheaves and schemes,
-   rigidification, identity components, Jacobians, Abel–Jacobi and Albanese maps, polarizations, and
-   functoriality under finite maps and correspondences.
 
 26. **Finite Locally Free Schemes and Algebras** — Study finite locally free morphisms through finite projective algebras. Develop rank, fibers,
    base change, composition, dual modules, finite flatness over local rings and DVRs, and faithfully
