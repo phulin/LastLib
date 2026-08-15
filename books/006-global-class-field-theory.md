@@ -1768,9 +1768,6 @@ localizations are restrictions to decomposition groups. On the dual side,
 is the cup-product pairing constructed above. Thus the degree-one kernel and
 cokernel are the degree-one cohomology of the comparison cone whose
 acyclicity was just proved; no character of $C_F$ is declared Galois here.
-The converse statement that every finite-order character of $C_F$ arises in
-(4.F5a) is precisely the existence theorem of Section 6 and will only be
-deduced there.
 
 If $T\subset T'$ differs by one prime, the quotient of (4.F4) is the
 two-term valuation complex at that prime and the quotient on the dual side is
@@ -1828,8 +1825,43 @@ The complete resolution at real places was retained throughout, so the $2$-prima
 quotient is present rather than silently discarded. This proves all four clauses. $\square$
 
 The proof used only the finite norm quotients established by the independent
-idele inequalities. It has not used the existence theorem or ray class fields,
-which remain deductions below.
+idele inequalities. It has not used existence or ray class fields.
+
+The degree-one row now gives the existence input needed for the construction
+of the global Weil class, still without using class formation.
+
+**Pre-class-formation character-existence theorem.** Every continuous
+finite-order character
+$\chi:C_K\to\mathbf C^\times$ is obtained from a unique finite-image
+character of $G_K$. If $L/K$ is its cyclic fixed field, then
+
+$$
+ \ker\chi=N_{L/K}C_L,qquad [L:K]=|\operatorname {im}\chi|.               \tag{4.F7}
+$$
+
+**Proof.** Choose $n$ annihilating the image and an identification
+$\jmath_n:A_n\simeq\mu_n(\mathbf C)$. Local reciprocity turns the restriction
+of $\chi$ to every $K_v^\times$ into
+$c_v\in H^1(K_v,A_n)$; the family is unramified almost everywhere. For
+$a\in K^\times/K^{\times n}$, local norm-residue compatibility gives
+
+$$
+ \exp\!\left(2\pi i\sum_v\operatorname {inv}_v(c_v\smile a_v)\right)
+ =\prod_v\chi_v(a)=1.                                    \tag{4.F8}
+$$
+
+Thus the family annihilates $H^1(K,\mu_n)$. The unrestricted degree-one row
+of Theorem 4.2 supplies a unique
+$c\in H^1(K,A_n)$ with these localizations. Let $L$ be the fixed field of
+$\ker c$. The product of the local maps associated to $c$ equals $\chi$ on
+every local factor and hence on $C_K$. The decomposition groups generate
+$\operatorname {Gal}(L/K)$ by splitting-separation, so their common local
+images show
+$[L:K]=|\operatorname {im}\chi|$. Finally the pre-class-formation
+reciprocity isomorphism (4.I14), applied to the cyclic extension $L/K$,
+identifies the common kernel with $N_{L/K}C_L$. If two global characters have
+the same localizations, their quotient cuts out an extension split at every
+place, hence is trivial by splitting-separation. $\square$
 
 **Proof of Theorem 4.1.** This is exactly (4.I9h). Its construction also shows
 that the direct sum is legitimate: a relative class is unramified at almost
