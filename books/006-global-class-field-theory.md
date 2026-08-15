@@ -1956,23 +1956,89 @@ z_\sigma=\sigma(\beta)/\beta\in\mu_n
 \tag{4.W10}
 $$
 
-Thus the remaining question is a finite cyclotomic descent calculation. We spell it
-out. Split (4.W10) into its prime-primary parts. For an odd prime $p$, adjoining
-$\zeta_p$ has degree prime to $p$, so taking the norm kills the first descent
-obstruction. Above it the successive $p$-power cyclotomic layers are cyclic. Their
-intermediate root fields are therefore linearly ordered; the local-power hypothesis
-makes the smallest one split at almost every place, and the simple-pole separation
-argument makes it trivial. For $p=2$, all layers above
-$K(\zeta_{2^{s+1}})$ have cyclic kernel. If $\nu\leq s$, the entire relevant
-cyclotomic extension is cyclic and the ordered-root-field argument already finishes
-the descent. We may therefore assume $\nu\geq s+1$; the same argument removes the
-cyclic kernel above $K(\zeta_{2^{s+1}})$. At that bottom layer, the Galois group
-is cyclic if one of $-1,b_K,-b_K$ is a square, and the ordered-root-field argument
-then finishes. Otherwise it is the Klein four group. Let $c$ be cyclotomic
-inversion, $c(\zeta_{2^{s+1}})=\zeta_{2^{s+1}}^{-1}$, and let $t$ send
-$\zeta_{2^{s+1}}$ to
-$-\zeta_{2^{s+1}}$. After a coboundary has normalized the cyclic layers, it is
-enough to calculate on $\mu_{2^{s+1}}$. Put $\zeta=\zeta_{2^{s+1}}$ and write
+Thus the remaining question is a finite cyclotomic descent calculation. We
+spell out every cyclic layer. Chinese remaindering gives
+
+$$
+K^\times/K^{\times n}\xrightarrow{\sim}
+ \prod_{p^a\parallel n}K^\times/K^{\times p^a},
+$$
+
+compatibly with every localization, so it is enough first to take
+$n=p^a$. Put $R=K(\mu_{p^a})$, $\Gamma=\operatorname {Gal}(R/K)$, and
+write $M=\mu_{p^a}$ additively as $\mathbf Z/p^a\mathbf Z$.
+
+Suppose $p$ is odd. The $p$-Sylow subgroup $P$ of $\Gamma$ is cyclic and
+normal, and $[\Gamma:P]$ is prime to $p$. Restriction
+
+$$
+H^1(\Gamma,M)\longrightarrow H^1(P,M)                    \tag{4.W10a}
+$$
+
+is injective, because corestriction after restriction is multiplication by
+$[\Gamma:P]$ on the $p$-group $H^1(\Gamma,M)$. If $\sigma$ generates $P$
+and acts on $M$ as multiplication by $u$, put $|P|=p^e$. Faithfulness gives
+
+$$
+v_p(u-1)=a-e,\qquad
+v_p(1+u+\cdots+u^{p^e-1})=e.
+$$
+
+The second equality is the factorization
+$(u^{p^e}-1)/(u-1)$ together with the elementary lifting-the-exponent
+induction. Hence, in the cyclic cochain complex,
+
+$$
+\ker(1+u+\cdots+u^{p^e-1})=(u-1)M,
+$$
+
+so $H^1(P,M)=0$. Therefore the odd-primary part of (4.W10) is a
+coboundary and contributes no power defect.
+
+Now take $p=2$. We use once the following cyclic-root observation. If
+$R_0/K$ is a cyclic $2$-power extension containing all roots under
+consideration and $\gamma^{2^\nu}=a\in K^\times$, the fields
+$K(\zeta\gamma)$, $\zeta\in\mu_{2^\nu}$, are subfields of $R_0$ and their
+minimal member is contained in all the others. If $a$ is a $2^\nu$th
+power in $K_v$, one of these root fields has a degree-one place over $v$;
+the minimal member, being Galois, therefore splits at $v$. If this happens
+off a finite set, splitting-separation makes the minimal member $K$, so
+some $\zeta\gamma$ lies in $K$ and $a\in K^{\times2^\nu}$.
+
+If $\nu\leq s$, the relevant cyclotomic group is cyclic and this observation
+finishes. Assume $\nu\geq s+1$, set
+$R_0=K(\zeta_{2^{s+1}})$, and put
+$P=\operatorname {Gal}(K(\zeta_{2^\nu})/R_0)$. The group $P$ is cyclic
+and every generator acts on $\mathbf Z/2^\nu\mathbf Z$ by a unit
+$u\equiv1\pmod {2^{s+1}}$. If $|P|=2^e$, the same quotient calculation,
+now using $u\equiv1\pmod8$, gives
+
+$$
+v_2(u-1)=\nu-e,\qquad
+v_2(1+u+\cdots+u^{2^e-1})=e,
+$$
+
+and therefore $H^1(P,\mu_{2^\nu})=0$. Inflation--restriction now says
+that (4.W10), after multiplication by a coboundary on
+this layer, is inflated from
+
+$$
+H^1\!\left(\operatorname {Gal}(R_0/K),\mu_{2^{s+1}}\right). \tag{4.W10b}
+$$
+
+Here the invariant roots are exactly $\mu_{2^{s+1}}$: an additional
+indeed $K(\zeta_{2^\nu})/R_0$ has degree $2^{\nu-s-1}$ and its generator
+acts by $1+2^{s+1}$ times an odd unit, so an element of
+$\mathbf Z/2^\nu\mathbf Z$ is fixed precisely when it is divisible by
+$2^{\nu-s-1}$.
+This is the promised elimination of every upper cyclic layer; no
+intermediate obstruction has been omitted. If one of
+$-1,b_K,-b_K$ is a square, $\operatorname {Gal}(R_0/K)$ is cyclic and
+the cyclic-root observation finishes. Otherwise it is the Klein four
+group. Let $c$ be cyclotomic inversion,
+$c(\zeta_{2^{s+1}})=\zeta_{2^{s+1}}^{-1}$, and let $t$ send
+$\zeta_{2^{s+1}}$ to $-\zeta_{2^{s+1}}$. Put
+$\zeta=\zeta_{2^{s+1}}$ and write
 $z_c=\zeta^r$, $z_t=\zeta^q$. The actions are
 
 $$
@@ -2009,6 +2075,11 @@ $$
 \end{array}
 \tag{4.W11}
 $$
+
+Returning through the Chinese-remainder isomorphism, all odd-primary
+components are trivial and the nonzero $2$-primary component is represented
+for $n=2^\nu m$ by $b_K^{n/2}$; the odd factor $m$ does not change its
+order-two class.
 
 For the last row take $\beta=\sqrt{b_K}=\eta_{s+1}$; it is fixed by $c$,
 negated by $t$, and satisfies $\beta^n=b_K^{n/2}$. The congruence calculation
@@ -3266,6 +3337,10 @@ $\mathfrak q_1,\ldots,\mathfrak q_h$ outside $S_0$ whose ideal classes
 generate $\operatorname {Cl}(K)$, and put
 $S=S_0\cup\{\mathfrak q_1,\ldots,\mathfrak q_h\}$. We first globalize the
 components in this finite set while forbidding ramification outside it.
+Such primes require no density theorem: represent each ideal class by an
+integral ideal coprime to the finite product of the primes in $S_0$ (clear
+those valuations by weak approximation), and take all prime divisors of
+the resulting finitely many ideals.
 
 If $a\in H^1(G_{K,S},\mu_n)$, then both $a_v$ and $c_v$ are unramified at
 $v\notin S$. Since $v\nmid n$, their cup product inflates from the procyclic
