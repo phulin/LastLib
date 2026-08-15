@@ -123,30 +123,15 @@ $$
 and the classification of unramified extensions in Book 2, Theorem 7.2. We also retain Book
 2's arithmetic convention that $x\mapsto x^q$ is arithmetic Frobenius. These references fix
 notation and prevent us from rebuilding finite-extension theory inside class field theory. The
-local invariant and cyclic norm-index theorem are proved below. The finite Artin map and its
-functoriality are proved conditional on the finite-group cohomology toolkit isolated as
-**Hypothesis TC** in Section 5.2. Existence, the higher-unit ramification match, and the
-character classification additionally use the exact norm-filtration input isolated in Section
-6.5.
+local invariant and cyclic norm-index theorem are proved below.
 
-One boundary deserves emphasis. Book 3 develops ramification theory systematically and is
-available in the cumulative reading order, but it does not prove the exact comparison between
-norms of units and upper ramification groups needed in Chapters 6 and 8 below. Section 6.5
-therefore isolates that comparison as **Hypothesis NF**. This is not a cosmetic citation:
-Hypothesis NF is the Herbrand norm-filtration theorem, including its endpoint convention and
-the exact cokernel at every step. The present book proves the stated deductions from NF once
-any other displayed inputs are also assumed, but it does not claim to prove NF itself. Every
-later result that depends on it has a dependency label
-containing **NF** at the statement or enclosing-section level.
-
-There is a separate, logically independent boundary. Books 1--4 do not construct complete
-resolutions, Tate cohomology in all degrees, or cap products. Section 3.3 proves the special
-two-periodic calculation for a cyclic group, and Section 4.5 constructs the low-degree crossed-
-product class, but neither supplies the general homological machinery used by Tate--Nakayama.
-Section 5.2 therefore records that machinery exactly as **Hypothesis TC**. Every later result
-that uses it has a dependency label containing **TC** at the statement or enclosing-section level. A label
-**[TC,NF]** means that both independent inputs are being used; NF never supplies TC, and TC
-never supplies the norm-filtration comparison.
+Two pieces of infrastructure not developed in the preceding books are developed here before
+they are used. Section 5.2 constructs complete resolutions, Tate cohomology, the cap product,
+and the restriction--corestriction operations needed for Tate--Nakayama. Section 6.5 proves
+the exact Herbrand comparison between unit norms and upper ramification. These are logically
+independent arguments: the first is finite-group homological algebra, while the second is a
+calculation in filtered valuation rings. Keeping them separate also makes clear that the norm
+calculation is not being inferred from the reciprocity theorem it is later used to refine.
 
 ### 1.2 The classification one hopes for
 
@@ -219,19 +204,19 @@ The theorem joins topology, field extensions, and group cohomology, so no single
 First, compactness shows that norm images are closed and helps identify their topology. Second,
 cyclic cohomology explains why a norm quotient is the natural degree-zero cohomology group and
 why Hilbert's Theorem 90 removes a neighboring obstruction. Third, the Brauer group of a local
-field supplies a canonical fundamental class of every finite Galois extension. Conditional on
-TC, capping with that class turns the abstract abelianization of the Galois group into a norm
-quotient. Finally, conditional also on NF, explicit unramified and formal-module extensions
+field supplies a canonical fundamental class of every finite Galois extension. Capping with
+that class turns the abstract abelianization of the Galois group into a norm quotient. Finally,
+explicit unramified and formal-module extensions
 show that enough abelian extensions exist to realize every open finite-index subgroup.
 
 The order matters. Norm computations suggest reciprocity but cannot classify wild extensions by themselves. Cohomology produces the finite reciprocity maps but, without an existence construction, would not prove that all open subgroups arise. The explicit construction supplies that missing half rather than hiding it behind the name “existence theorem.”
 
 There is also a logical danger in the opposite direction. It would be circular to define the
 field belonging to an open subgroup by reciprocity and then use that field to prove
-reciprocity. The conditional argument avoids this in two independent moves. The local
-invariant and the fundamental class first construct, under TC, the Artin isomorphism for an
+reciprocity. The argument avoids this in two independent moves. The local invariant and the
+fundamental class first construct the Artin isomorphism for an
 already given finite Galois extension. Lubin–Tate division fields are then constructed directly
-from power series and Eisenstein polynomials. Only after NF supplies their norm groups do we use them to
+from power series and Eisenstein polynomials. Only after computing their norm groups do we use them to
 realize an arbitrary open subgroup. Keeping these two halves separate is the central proof
 discipline of the book.
 
@@ -1171,8 +1156,8 @@ Thus the abstract fraction $1/n$ retains the arithmetic Frobenius orientation ch
 ## 5. From the fundamental class to finite reciprocity
 
 The crossed-product construction of the fundamental class in Chapter 4 is a low-degree
-calculation. Every use in this chapter of complete Tate cohomology, cap product, or the
-Tate--Nakayama induction is **[TC]**.
+calculation. We now supply the finite-group homological algebra which turns that class into
+reciprocity.
 
 ### 5.1 Why abelianization appears
 
@@ -1200,44 +1185,141 @@ The bridge is a cap product with $u_{L/K}$. We pause to explain why this operati
 
 ### 5.2 Tate homology in degree minus two
 
-The argument from a fundamental class to reciprocity uses more than the cyclic periodic
-complex of Section 3.3. Since that general machinery has no source in Books 1--4, we isolate
-the exact interface rather than silently treating it as elementary algebra.
+We give the construction because the negative degrees and their functoriality carry the
+abelianization which occurs in reciprocity. Let $B_\bullet(G)$ be the normalized bar
+resolution. Thus $B_r(G)$ is free over $\mathbf Z[G]$ on symbols
+$[g_1|\cdots|g_r]$ with every $g_i\ne1$, and
 
-**Hypothesis TC (finite-group Tate cohomology toolkit).** For every finite group $G$, every
-subgroup $H\subseteq G$, and all $G$-modules occurring below, the following constructions and
-compatibilities are available.
+$$
+d[g_1|\cdots|g_r]
+=g_1[g_2|\cdots|g_r]
++\sum_{i=1}^{r-1}(-1)^i
+[g_1|\cdots|g_ig_{i+1}|\cdots|g_r]
++(-1)^r[g_1|\cdots|g_{r-1}]. \tag{5.1}
+$$
 
-1. A complete resolution of the trivial module $\mathbf Z$ defines $\widehat H^r(H,-)$ for
-   every $r\in\mathbf Z$, independently of the chosen resolution up to the canonical comparison
-   isomorphism. It agrees with ordinary cohomology for $r>0$, satisfies
-   $\widehat H^0(H,A)=A^H/N_HA$, and agrees with homology by
-   $\widehat H^r(H,A)=H_{-r-1}(H,A)$ for $r<-1$.
-2. A short exact sequence of modules gives a natural long exact Tate sequence. Restriction,
-   corestriction, and the homological transfer are defined on these sequences and satisfy
-   transitivity and the usual subgroup naturality.
-3. Modules induced or coinduced from the trivial subgroup have zero Tate cohomology. The same
-   holds after restriction to every subgroup, and the resulting dimension shifts imply the
-   cohomological-triviality criterion: if
-   $\widehat H^0(J,A)=\widehat H^1(J,A)=0$ for every $J\subseteq G$, then
-   $\widehat H^r(J,A)=0$ for every $J$ and every $r\in\mathbf Z$.
-4. The canonical identification $H^2(G,C)=\operatorname{Ext}^2_{\mathbf Z[G]}(\mathbf Z,C)$
-   identifies every class with a Yoneda two-extension. Cup and cap products are defined on
-   complete resolutions with their standard degree conventions and are natural for
-   restriction, corestriction, and transfer. If $u$ is represented by such a two-extension,
-   its degree-two connecting map after restriction to $H$ is exactly
-   $x\mapsto x\frown\operatorname{res}^G_H(u)$.
-5. Under the bar-resolution identification
-   $\widehat H^{-2}(H,\mathbf Z)=H_1(H,\mathbf Z)=H^{\mathrm{ab}}$, the class of $h\in H$ is
-   represented by $[h]$. Under cap product, corestriction in degree zero corresponds to the
-   map on abelianizations induced by subgroup inclusion, while restriction in degree zero
-   corresponds to group-theoretic transfer, with the normalizations used in Chapter 9.
+The usual cancellation of adjacent faces proves $d^2=0$. On the unnormalized homogeneous bar
+complex, inserting an extra initial vertex is a contracting homotopy after forgetting the
+$G$-action. It preserves the degenerate subcomplex, so the quotient above is exact and consists
+of free $\mathbf Z[G]$-modules.
 
-TC is a finite-group homological-algebra prerequisite. It asserts no norm-filtration theorem
-and no local reciprocity statement. Conversely, Hypothesis NF in Section 6.5 says nothing
-about complete resolutions or products, so the two inputs are independent.
+Because $G$ is finite, $\mathbf Z[G]$ is a symmetric algebra over $\mathbf Z$: if
+$\iota(g)=g^{-1}$, the coefficient of $1$ in $x\iota(y)$ is a perfect $G$-invariant pairing.
+Consequently the integral dual
+$B_r(G)^\vee=\operatorname{Hom}_{\mathbf Z}(B_r(G),\mathbf Z)$ is again a free
+$\mathbf Z[G]$-module. Splice the bar resolution to its dual by replacing the two augmented
+arrows through $\mathbf Z$ by their composite
 
-Assuming TC, take a complete resolution of the trivial $G$-module $\mathbf Z$. Its
+$$
+ B_0(G)=\mathbf Z[G]
+ \xrightarrow{\,x\mapsto\varepsilon(x)N_G\,}
+ B_0(G)^\vee\cong\mathbf Z[G],
+\qquad N_G=\sum_{g\in G}g. \tag{5.2}
+$$
+
+The kernel of this splice map is the augmentation ideal, the image of $B_1\to B_0$; its image
+is the invariant part of the regular module, the kernel of the following dual differential.
+The analogous assertion at every other degree is the dual of exactness of the bar resolution.
+We therefore obtain a doubly infinite exact complex $P_\bullet$ of finitely generated free
+$\mathbf Z[G]$-modules, together with an augmentation in nonnegative degrees. This is a
+**complete resolution** of $\mathbf Z$.
+
+For a $G$-module $A$ define
+
+$$
+\widehat H^r(G,A)=H^r\!\left(\operatorname{Hom}_{\mathbf Z[G]}(P_\bullet,A)\right).
+$$
+
+The comparison theorem is elementary here. Lift the identity of $\mathbf Z$ successively
+through the surjections in two complete resolutions, first to the right and then to the left;
+projectivity supplies every lift. Lifting zero gives a homotopy between any two lifts. Hence
+the groups are independent of the chosen complete resolution and every module map acts
+functorially. Applying $\operatorname{Hom}(P_\bullet,-)$ to a short exact sequence is still
+degreewise exact, because every $P_r$ is free, and the kernel--image chase gives the long exact
+Tate sequence.
+
+In positive degrees the right half is the bar resolution, so Tate and ordinary cohomology
+agree. At the splice one reads directly
+
+$$
+\widehat H^0(G,A)=A^G/N_GA,
+\qquad
+\widehat H^{-1}(G,A)=\ker(N_G:A_G\to A^G). \tag{5.3}
+$$
+
+The dual half, evaluated on $A$, is the bar chain complex with a shift; thus
+
+$$
+\widehat H^r(G,A)=H_{-r-1}(G,A)\qquad(r<-1). \tag{5.4}
+$$
+
+For later dimension shifting, note that an induced module $\mathbf Z[G]\otimes A$ and a
+coinduced module $\operatorname{Map}(G,A)$ are both Tate-acyclic. Evaluation at $1$ identifies
+their complexes with $\operatorname{Hom}_{\mathbf Z}(P_\bullet,A)$, whose contraction is the
+one already used above. The same proof works after restriction to a subgroup, since
+$\mathbf Z[G]$ is free over its subgroup ring. Every $A$ admits a surjection from an induced
+module and an injection into a coinduced module. The two associated long exact sequences shift
+Tate cohomology in opposite directions. To justify the criterion used below, fix a subgroup
+$J$ and an integer $r$ and induct on $|J|$. Restriction of either shifting sequence to $J$ is,
+by the coset decomposition, a direct sum of sequences induced from intersections with
+subgroups. The summands from proper intersections are acyclic by induction; the remaining
+summand performs one dimension shift. Repeating finitely many times moves $r$ to $0$ or $1$,
+where the assumed vanishing applies. Starting with the trivial group proves the induction and
+hence
+
+$$
+\widehat H^0(J,A)=\widehat H^1(J,A)=0\text{ for every }J\subseteq G
+\quad\Longrightarrow\quad
+\widehat H^r(J,A)=0\text{ for all }J,r. \tag{5.5}
+$$
+
+We also record the products and subgroup maps, including their normalizations. A diagonal
+approximation is a chain map
+
+$$
+\Delta:P_\bullet\longrightarrow P_\bullet\otimes P_\bullet
+$$
+
+lifting $1\mapsto1\otimes1$. On the nonnegative bar half it is the Alexander--Whitney map,
+
+$$
+[g_1|\cdots|g_n]\longmapsto
+\sum_{i=0}^n[g_1|\cdots|g_i]\otimes
+g_1\cdots g_i[g_{i+1}|\cdots|g_n]. \tag{5.6}
+$$
+
+The underlying integral complex $P_\bullet$ is split exact, so
+$P_\bullet\otimes P_\bullet$ is exact; projectivity therefore extends the diagonal recursively
+across the negative half. Two extensions are homotopic by the comparison argument. Composing
+cochains with (5.6), or contracting a bar chain against
+one factor, defines cup and cap products. The Leibniz rule follows by applying $d$ to (5.6),
+so products descend to (co)homology and do not depend on the extension chosen.
+
+If $H\subseteq G$, restriction is obtained by regarding a $G$-resolution as an
+$H$-resolution and comparing it with $P_\bullet(H)$. Choose right coset representatives $R$.
+The cochain map
+
+$$
+(\operatorname{cor}f)(p)=\sum_{r\in R}r\,f(r^{-1}p)
+$$
+
+defines corestriction; changing $R$ changes it by a chain homotopy. On chains the same coset
+rewriting gives transfer. Refining representatives in a tower proves transitivity, and
+substitution in (5.6) proves the projection formulas
+
+$$
+\operatorname{cor}(x\smile\operatorname{res}y)=\operatorname{cor}(x)\smile y,
+\qquad
+\operatorname{res}(z\frown y)=\operatorname{res}z\frown\operatorname{res}y. \tag{5.7}
+$$
+
+Finally, the bar description of $H^2(G,C)$ identifies a class with a Yoneda two-extension of
+$\mathbf Z$ by $C$. Chasing a cycle through the two connecting maps is exactly contraction
+against a representing two-cocycle; hence the degree-two connecting map is cap product with
+that class. This also proves its compatibility with (5.7), rather than imposing compatibility
+as an extra convention.
+
+Take now the trivial coefficient module $\mathbf Z$. By (5.4),
 negative-degree cohomology is group homology shifted by one. In particular,
 
 $$
@@ -1257,6 +1339,18 @@ $$
 $$
 
 holds in homology, and commutators vanish; this gives the map $G^{\mathrm{ab}}\to H_1(G,\mathbf Z)$. Reversing the construction proves it is an isomorphism.
+
+The coset formula for the chain transfer makes its normalization transparent. If $H\subseteq
+G$, choose right representatives $r_i$ and write $r_i g=h_i r_{j(i)}$. The transfer sends
+$[g]$ to $\sum_i[h_i]$, hence on abelianizations it is
+
+$$
+g\longmapsto\prod_i h_i\pmod{[H,H]}. \tag{5.8}
+$$
+
+The map in the other direction induced by $H\hookrightarrow G$ sends $[h]$ to $[h]$.
+Together with the projection formulas (5.7), this proves the two precise subgroup
+compatibilities used in Chapter 9.
 
 The fundamental class $u\in H^2(G,L^\times)$ permits cap product
 
@@ -1279,8 +1373,8 @@ Thus the desired two groups occur naturally on opposite sides of the cap product
 
 ### 5.3 The class-formation isomorphism
 
-**Theorem 5.1 [TC] (fundamental-class isomorphism).** Assuming Hypothesis TC, let $L/K$ be
-finite Galois with group $G$. Capping with the local fundamental class gives isomorphisms
+**Theorem 5.1 (fundamental-class isomorphism).** Let $L/K$ be finite Galois with group $G$.
+Capping with the local fundamental class gives isomorphisms
 
 $$
 \widehat H^r(G,\mathbf Z)
@@ -1292,8 +1386,8 @@ for every integer $r$.
 
 The theorem is sometimes summarized by saying that $(G,L^\times)$ is a local class formation. The precise induction device is the following Tate–Nakayama lemma.
 
-**Lemma 5.2 [TC] (Tate–Nakayama induction).** Assuming Hypothesis TC, let $C$ be a
-$G$-module and $u\in H^2(G,C)$. Suppose that for every subgroup $H\subseteq G$:
+**Lemma 5.2 (Tate–Nakayama induction).** Let $C$ be a $G$-module and
+$u\in H^2(G,C)$. Suppose that for every subgroup $H\subseteq G$:
 
 1. $H^1(H,C)=0$;
 2. $H^2(H,C)$ is cyclic of order $|H|$;
@@ -1344,7 +1438,7 @@ $$
 
 for every subgroup $H$.
 
-Hypothesis TC supplies the cohomological-triviality criterion: a $G$-module $A$ with
+The cohomological-triviality criterion (5.5) says that a $G$-module $A$ with
 $\widehat H^0(H,A)=\widehat H^1(H,A)=0$ for every subgroup $H$ has
 $\widehat H^r(H,A)=0$ for all $r$. Its dimension-shifting mechanism maps an induced module of
 the form $\mathbf Z[G]\otimes_{\mathbf Z}A$ onto $A$ and embeds $A$ into the corresponding
@@ -1435,8 +1529,8 @@ $$
 
 An inclusion of finite-index subgroups with equal index is equality. This proves norm limitation without anticipating the quotient-functoriality results of Chapter 9.
 
-**Theorem 5.3 [TC] (norm limitation).** Assuming Hypothesis TC, for a finite Galois
-extension $L/K$ with maximal abelian subextension $M/K$,
+**Theorem 5.3 (norm limitation).** For a finite Galois extension $L/K$ with maximal abelian
+subextension $M/K$,
 
 $$
 N_{L/K}(L^\times)=N_{M/K}(M^\times).
@@ -1456,8 +1550,8 @@ For a finite separable extension $E/K$ that is not Galois, one may take a Galois
 
 We can now state the finite theorem in its cleanest form.
 
-**Theorem 5.4 [TC] (finite local reciprocity).** Assuming Hypothesis TC, if $L/K$ is finite
-abelian, there is a unique isomorphism
+**Theorem 5.4 (finite local reciprocity).** If $L/K$ is finite abelian, there is a unique
+isomorphism
 
 $$
 \operatorname{rec}_{L/K}:K^\times/N_{L/K}(L^\times)
@@ -1480,14 +1574,14 @@ The uniqueness clause should be read with all compatibility conditions included.
 
 Finite reciprocity starts with an extension and computes its norm quotient. The classification
 theorem asks the converse: given $H\subseteq K^\times$, where does the corresponding field come
-from? Cohomology alone does not display enough fields. Conditional on TC and NF, we now construct a
+from? Cohomology alone does not display enough fields. We now construct a
 cofinal family of finite abelian extensions whose norm groups are
 
 $$
 \pi^{m\mathbf Z}U^n.
 $$
 
-The unramified factor realizes $\pi^{m\mathbf Z}$; conditional on TC and NF, a formal
+The unramified factor realizes $\pi^{m\mathbf Z}$; a formal
 $\mathcal O$-module realizes $U^n$. Together they dominate every open finite-index subgroup
 by Proposition 2.1.
 
@@ -1618,8 +1712,8 @@ The displayed identity follows by observing that both sides intertwine $f$ and $
 
 Changing the uniformizer changes the splitting of the unramified direction and hence changes the coordinate description of reciprocity. What will be intrinsic is the compositum of all totally ramified abelian extensions and, after adjoining the unramified tower, the full maximal abelian extension. The construction has coordinates; the resulting classification does not.
 
-This is the Lubin–Tate formal-module construction. Here it is not an excursion: assuming TC
-and NF, its torsion fields provide the cofinal ramified extensions needed in the proof of local
+This is the Lubin–Tate formal-module construction. Here it is not an excursion: its torsion
+fields provide the cofinal ramified extensions needed in the proof of local
 existence.
 
 ### 6.3 Torsion points and Eisenstein polynomials
@@ -1765,7 +1859,7 @@ The direct torsion parametrization above is an algebraic labeling of the Galois 
 
 ### 6.5 The norm group of the torsion extension
 
-Conditional on TC and on the norm-filtration input stated below, the crucial calculation is
+The crucial calculation is
 
 $$
 N_{K_n/K}(K_n^\times)=\pi^{\mathbf Z}U^n.
@@ -1799,40 +1893,28 @@ $$
 
 This includes the case $q=2$, when $K_1=K$ and $\omega_1=-\pi$. Thus in every case $\pi^{\mathbf Z}$ lies in the norm group. This is stronger than mere surjectivity of norm valuations: it identifies the chosen uniformizer itself as a norm.
 
-The needed unit calculation is the hard norm–ramification comparison. The elementary
-expansion of a product of conjugates does not by itself determine its first surviving term on
-every unit layer: one must control all elementary symmetric terms, prove exact surjectivity
-between breaks, and verify compatibility with Herbrand reindexing. We therefore state the
-missing input explicitly.
+The needed unit calculation is the hard norm--ramification comparison. We prove it in the
+form used here.
 
-**Hypothesis NF (Herbrand norm filtration).** Let $M/K$ be a finite abelian extension with
-group $G$. At a ramification break retain the group before the drop, using
-$G_t=G_{\lceil t\rceil}$ at nonintegral lower indices. For every integer $m\geq0$, put
+**Lemma 6.4 (Herbrand norm filtration).** Let $M/K$ be a finite abelian extension with group
+$G$. At a ramification break retain the group before the drop, using
+$G_t=G_{\lceil t\rceil}$ at nonintegral lower indices. For $m\geq0$ put
 
 $$
 C_m=N_{M/K}(U_M^0)U_K^m.
 $$
 
-Then
+Then every upper break is an integer and
 
 $$
-[U_K^0:C_m]=[G^0:G^m].
+[U_K^0:C_m]=[G^0:G^m],
+\qquad
+[C_m:C_{m+1}]=[G^m:G^{m+1}]. \tag{6.1}
 $$
 
-The identities are required simultaneously for all $m$, and the quotient identity
+In particular, if $G^m=1$, then $U_K^m\subseteq N_{M/K}(U_M^0)$.
 
-$$
-[C_m:C_{m+1}]=[G^m:G^{m+1}]
-$$
-
-must be induced by the actual norm maps on the corresponding source unit layers. Every upper
-ramification break of $G$ is also required to be an integer. Thus NF includes the exact
-source-to-target congruences, cancellation bounds for the lower-order symmetric terms,
-surjectivity away from breaks, the exact cokernel at a break, and compatibility of successive
-layers. Books 1--4 supply coarse norm-depth bounds and the residue norm and trace
-calculations, but not this simultaneous exact statement.
-
-**Why the earlier expansion was insufficient.** For $\sigma\ne1$ put
+**Proof.** For $\sigma\ne1$ put
 
 $$
 i(\sigma)=\min_{a\in\mathcal O_M}v_M(\sigma(a)-a).
@@ -1854,56 +1936,78 @@ $$
 
 where $\psi=\varphi^{-1}$. These conventions put inertia at index $0$ and make a lower break $b$ occur at the upper index $\varphi(b)$.
 
-The unramified residue part contributes no unit obstruction: norm on finite residue-field units and trace on finite residue-field additive groups are both surjective. We may therefore perform the calculation on inertia and restore the residue-degree factor at the end. Write $l$ for the residue field of $M$. At a positive integral lower break $b$, the map
+Let $E=M^{G_0}$. The norm on the finite residue extension $l/k$ is surjective on nonzero
+elements, and its trace is surjective because finite fields are separable. Under
+$U_E^r/U_E^{r+1}\cong l^+$, the norm from $E$ to $K$ induces the trace for $r>0$ and the
+residue-field norm for $r=0$. It therefore creates no unit cokernel. It is enough to treat the
+totally ramified extension $M/E$; we relabel $E$ as $K$ for the filtered calculation, so both
+residue fields are $l$ and $G=G_0$.
+
+Choose a uniformizer $z$ of $M$. At a positive integral lower break $b$, the map
 
 $$
 c_b:G_b/G_{b+1}\hookrightarrow l^+,
 \qquad
 c_b(\sigma)=
-\overline{\frac{\sigma(\pi_M)-\pi_M}{\pi_M^{b+1}}}
+\overline{\frac{\sigma(z)-z}{z^{b+1}}}
 $$
 
-is injective. Indeed, vanishing of $c_b(\sigma)$ is exactly the stronger congruence $\sigma(\pi_M)\equiv\pi_M\pmod{\mathfrak m_M^{b+2}}$, which says $\sigma\in G_{b+1}$. The identity
+is injective. Indeed, vanishing of $c_b(\sigma)$ is exactly the stronger congruence
+$\sigma(z)\equiv z\pmod{\mathfrak m_M^{b+2}}$, which says $\sigma\in G_{b+1}$. The identity
 
 $$
-\sigma\tau(\pi_M)-\pi_M
-=\sigma(\tau(\pi_M)-\pi_M)+(\sigma(\pi_M)-\pi_M)
+\sigma\tau(z)-z
+=\sigma(\tau(z)-z)+(\sigma(z)-z)
 $$
 
-shows that $c_b$ is additive, because inertia acts trivially on residues. At $b=0$, the same argument with $\overline{\sigma(\pi_M)/\pi_M}$ gives an injection $G_0/G_1\hookrightarrow l^\times$. Thus the tame quotient is cyclic of order prime to $p$, and every positive quotient is an elementary abelian $p$-group. These elementary ramification facts have now been proved inside the present argument.
+shows that $c_b$ is additive, because inertia acts trivially on residues. At $b=0$, the same
+argument with $\overline{\sigma(z)/z}$ gives an injection
+$G_0/G_1\hookrightarrow l^\times$.
 
-There is no need to choose a Frobenius lift or to force these coordinates to descend from $l$
-to $k$. Let $E=M^{G_0}$ be the maximal unramified subextension. The intended calculation first
-treats the totally ramified extension $M/E$, whose source and target residue fields are both
-$l$. The subsequent norm $N_{E/K}$ is surjective on residue units and has surjective trace on
-each associated positive unit layer. Subject to the compatibility demanded in NF, it
-therefore introduces no new unit index. This two-stage organization also avoids choosing a
-splitting of $G\to G/G_0$.
+We need the following filtered product calculation. It is stated with all error terms because
+this is where a mere appeal to the linear term of the norm would be insufficient.
 
-The tempting one-step argument begins by expanding, for $x$ of positive valuation,
-
-$$
-N(1+x)=\prod_{\sigma\in G}(1+\sigma x),
-$$
-
-and grouping the factors first by $G_{b+1}$ and then by $G_b/G_{b+1}$. If the required
-cancellation and depth estimates have already been proved, then away from a break the first
-nonzero term is linear with nonzero coefficient and the induced residue-layer map is
-bijective. At a positive break the expected leading coefficient is translated through the
-finite additive subgroup
+**Filtered product calculation.** Put $V_r=U_M^r/U_M^{r+1}$ and
+$W_s=U_K^s/U_K^{s+1}$. Thus $V_r$ and $W_s$ are copies of $l^+$ for $r,s>0$, while
+$V_0=W_0=l^\times$. Filter the product
 
 $$
-C_b=c_b(G_b/G_{b+1})\subseteq l.
+N(1+x)=\prod_{\sigma\in G}(1+\sigma x) \tag{6.2}
 $$
 
-After suitable nonzero changes of source and target coordinates, the expected surviving
-polynomial is
+by powers of $z$. Suppose first that the lower group is a fixed subgroup $H$ throughout
+$b<t<b+d$. Group the factors in (6.2) into $H$-orbits and then into $G/H$-orbits. Modulo the
+next power of $z$, multiplication by one complete $G/H$-orbit replaces
+$[G:H]$ consecutive source layers by one target layer. In residue coordinates the map is
+$Y\mapsto\alpha Y$ for a nonzero $\alpha\in l$ and is therefore bijective.
+
+At the right endpoint $b$ group first by $G_{b+1}$ and then by
+$G_b/G_{b+1}$. The congruence
 
 $$
-P_{C_b}(X)=\prod_{c\in C_b}(X+c).
+\sigma(z)=z+c_b(\sigma)z^{b+1}+O(z^{b+2}) \tag{6.3}
 $$
 
-This polynomial is additive on $l$. Indeed, for fixed $y$ the polynomial
+shows that, after multiplying source and target coordinates by nonzero constants, the first
+term not already consumed on the open interval is the following polynomial, where
+$C_b=c_b(G_b/G_{b+1})\subseteq l$:
+
+$$
+P_{C_b}(Y)=\prod_{c\in C_b}(Y+c). \tag{6.4}
+$$
+
+Here is the promised error check. In the product of the expressions (6.3), a monomial which
+uses $j$ correction terms has extra $z$-valuation at least $jb$. If its chosen corrections do
+not form a union of $G_b$-orbits, summing its translates makes its residue coefficient zero;
+if they do form such a union, it has already appeared in the product for the preceding
+constant interval. Thus below the valuation of (6.4) every elementary symmetric term either
+vanishes or belongs to the already-consumed target filtration. At the valuation of (6.4), the
+only new terms choose one leading correction from each coset of $G_{b+1}$ in $G_b$, and their
+sum is exactly the product (6.4). Terms containing an $O(z^{b+2})$ factor lie one level deeper.
+This proves both the asserted first term and, since the argument is unchanged after replacing
+$x$ by $x+x'$ modulo its next layer, compatibility with addition on successive quotients.
+
+The polynomial (6.4) is additive on $l$. Indeed, for fixed $y$ the polynomial
 
 $$
 P_{C_b}(X+y)-P_{C_b}(X)-P_{C_b}(y)
@@ -1912,62 +2016,52 @@ $$
 has degree less than $|C_b|$ in $X$ and vanishes at every $X\in C_b$, because translation by
 an element of $C_b$ permutes the factors. It is therefore zero. Its kernel on $l$ is exactly
 $C_b$, so, because $l$ is finite, its image has index
-$|C_b|=|G_b/G_{b+1}|$. At the tame break the analogous expected map is, up to nonzero
-scalars, the $|G_0/G_1|$th-power map on $l^\times$. These polynomial calculations determine
-the cokernel *once the norm has been shown to induce these maps*. They do not prove the
-missing assertion that all earlier symmetric terms vanish at exactly the necessary depth, nor
-that the resulting maps for successive layers are compatible. Those assertions are precisely
-the content retained in NF.
+$|C_b|=|G_b/G_{b+1}|$. At the tame endpoint the same multiplication, in multiplicative
+coordinates, is the $|G_0/G_1|$th-power map on $l^\times$ up to an automorphism; its cokernel
+has order $|G_0/G_1|$. This completes the filtered product calculation.
 
-Once the exact one-step maps in NF are available, the indexing is as follows. Suppose the
-lower group is constant and equal to $H$ on an interval of lower length $d$. Traversing that
-interval consumes $d$ source layers. The norm reaches one new target layer after
-$[G_0:H]$ source layers, so the number of target layers traversed is
+We now iterate it. If the lower group is constant and equal to $H$ on an interval of lower
+length $d$, traversing that interval consumes $d$ source layers. One target layer is consumed
+after $[G_0:H]$ source layers, so the number of target layers traversed is
 
 $$
 \frac d{[G_0:H]}.
 $$
 
-Adding over all constant intervals from $0$ to a lower index $u$ gives exactly $\varphi(u)$. The residue calculation says that ordinary source layers contribute index $1$, while a break contributes the exact factor $|G_b/G_{b+1}|$. Induction through the finitely many lower layers therefore gives, away from integral endpoints,
+Adding over all constant intervals from $0$ to a lower index $u$ gives exactly $\varphi(u)$.
+The filtered product calculation says that ordinary blocks contribute no cokernel, while the
+endpoint $b$ contributes exactly $|G_b/G_{b+1}|$. At depth zero we start with
+$C_0=U_K^0$; crossing the tame endpoint records the cokernel of the residue power map, and
+then the positive breaks record the additive-polynomial cokernels. Induction through the
+finite list of breaks gives, for nonintegral $s$,
 
 $$
 \left[U_K^0:N(U_M^0)U_K^{\lceil s\rceil}\right]
-=\left[G^0:G^s\right]. \tag{6.1}
+=\left[G^0:G^s\right]. \tag{6.5}
 $$
 
-The passage to this formula is not a proof from the displayed product expansion; it is the
-exact compatibility assertion in NF. Given NF, the left side is constant when $s$ varies
-inside an interval $(m,m+1)$, so the right side is constant there as well. Taking the left
-limit at an integer endpoint, in accordance with our convention that a group is retained at
-the break, gives
+The left side is constant when $s$ varies inside $(m,m+1)$, so the right side is constant
+there as well. Therefore every upper break is an integer. Taking the left limit at an integer
+endpoint, in accordance with our convention that a group is retained at the break, gives
 
 $$
-[C_m:C_{m+1}]=[G^m:G^{m+1}].
+[C_m:C_{m+1}]=[G^m:G^{m+1}]. \tag{6.6}
 $$
 
-Multiplication from $0$ to $m-1$ recovers the index identity in NF. This explains the shape
-of the hypothesis, but it does not replace the omitted congruence and compatibility proof.
+Multiplication from $0$ to $m-1$ proves the first identity in (6.1), initially for the totally
+ramified extension and then, by the first paragraph, for $M/K$.
 
-**Lemma 6.4 [TC,NF] (conditional consequence of TC and NF).** Assuming Hypotheses TC and NF,
-if $G^m=1$, then
-$U_K^m\subseteq N_{M/K}(U_M^0)$.
-
-**Proof.** NF gives
-
-$$
-[U_K^0:C_m]=[G^0:G^m].
-$$
-
-Finite reciprocity gives $[K^\times:N(M^\times)]=|G|$. The valuation of a norm is a multiple
-of the residue degree $f=|G/G^0|$, so the valuation coordinate contributes index $f$ and
-therefore
+It remains to prove the final assertion. Finite reciprocity gives
+$[K^\times:N(M^\times)]=|G|$. The norm-valuation formula says that the valuation coordinate
+contributes the residue degree $f=|G/G^0|$, and hence
 
 $$
 [U_K^0:N(U_M^0)]=|G|/f=|G^0|.
 $$
 
-If $G^m=1$, the two subgroups $C_m$ and $N(U_M^0)$ have the same index and one contains the
-other, so they are equal. $\square$
+If $G^m=1$, (6.1) says that $C_m$ has this same index. Since
+$N(U_M^0)\subseteq C_m$, equality follows, and hence
+$U_K^m\subseteq N(U_M^0)$. $\square$
 
 We apply the lemma by computing the ramification of $K_n/K$. If $a\in U_K^r\setminus U_K^{r+1}$ with $1\leq r<n$, write $a-1=\pi^ru$ with $u$ a unit. Formal subtraction gives
 
@@ -2000,13 +2094,13 @@ G^r=\{\sigma_a:a\in U_K^r/U_K^n\}
 \quad(0\leq r\leq n),
 $$
 
-and in particular $G^n=1$. Assuming TC and NF, Lemma 6.4 now gives
+and in particular $G^n=1$. Lemma 6.4 now gives
 
 $$
 U^n\subseteq N_{K_n/K}(K_n^\times).
 $$
 
-Now apply the general abelian norm-index theorem proved under TC. The subgroup
+Now apply the general abelian norm-index theorem proved in Chapter 5. The subgroup
 $\pi^{\mathbf Z}U^n$ lies in the norm group and has index
 
 $$
@@ -2015,9 +2109,9 @@ $$
 =[K_n:K].
 $$
 
-The norm group has the same index, forcing equality. This deduction from TC and NF is not
-circular: $K_n$ has already been constructed independently, and the norm-index theorem was
-obtained from the Brauer invariant and TC, independently of NF. Notice also what has, and has
+The norm group has the same index, forcing equality. This deduction is not circular: $K_n$
+has already been constructed independently, and the norm-index theorem was obtained from the
+Brauer invariant independently of the filtered norm calculation. Notice also what has, and has
 not, been normalized. The equality of norm groups canonically identifies the kernel of finite
 reciprocity, while the
 arithmetic-Frobenius convention fixes reciprocity on the unramified tower. No formula
@@ -2027,9 +2121,9 @@ coordinates.
 
 ### 6.6 Adding the unramified direction
 
-The assertions in this section that involve the ramified torsion field's norm group are
-**[TC,NF]**. The compositum formula uses finite reciprocity and is **[TC]**; the unramified norm
-calculation itself is unconditional.
+The assertions in this section that involve the ramified torsion field's norm group use Lemma
+6.4. The compositum formula uses finite reciprocity; the unramified norm calculation itself is
+elementary.
 
 Let $K^{\mathrm{ur}}_m/K$ be the unramified extension of degree $m$. Its norm group is
 
@@ -2064,7 +2158,7 @@ These subgroups form a neighborhood basis of $1$ among open finite-index subgrou
 
 We can now reverse norm groups into fields.
 
-**Theorem 6.5 [TC,NF] (local existence theorem).** Assuming Hypotheses TC and NF, for every open
+**Theorem 6.5 (local existence theorem).** For every open
 finite-index subgroup $H\subseteq K^\times$, there is a unique finite abelian extension $L/K$
 inside $K^{\mathrm{ab}}$ such that
 
@@ -2106,8 +2200,8 @@ The proof constructs $L$: first choose a finite precision $n$ and an unramified 
 ## 7. The infinite reciprocity map
 
 The construction from compatible finite Artin maps and all its finite-quotient consequences
-are **[TC]**. Injectivity, cofinality of the explicit towers, and the identification with the
-full profinite completion additionally use NF and are **[TC,NF]**.
+uses Chapter 5. Injectivity, cofinality of the explicit towers, and the identification with the
+full profinite completion additionally use Chapter 6.
 
 ### 7.1 Passage through finite quotients
 
@@ -2128,7 +2222,7 @@ $$
 
 defines an element of the inverse limit.
 
-**Definition 7.1 [TC].** The **local reciprocity map**, in arithmetic normalization, is
+**Definition 7.1.** The **local reciprocity map**, in arithmetic normalization, is
 
 $$
 \operatorname{rec}_K:K^\times\longrightarrow G_K^{\mathrm{ab}},
@@ -2161,7 +2255,7 @@ This also gives a quick compactness obstruction: $G_K^{\mathrm{ab}}$ is compact,
 
 ### 7.4 Injectivity
 
-This subsection is **[TC,NF]**: it uses the finite Artin maps and the cofinal precision family
+This subsection uses the finite Artin maps and the cofinal precision family
 constructed in Chapter 6.
 
 The kernel of the infinite map is the intersection of all finite abelian norm groups. The cofinal family from Chapter 6 gives
@@ -2176,7 +2270,7 @@ An element in this intersection has valuation divisible by every $m$, hence valu
 
 So the exact infinite statement is:
 
-**Theorem 7.2 [TC,NF] (local reciprocity).** Assuming Hypotheses TC and NF, the map
+**Theorem 7.2 (local reciprocity).** The map
 
 $$
 \operatorname{rec}_K:K^\times\hookrightarrow G_K^{\mathrm{ab}}
@@ -2191,8 +2285,8 @@ $$
 
 ### 7.5 Profinite completion
 
-This subsection is **[TC,NF]**, because the finite Artin maps use TC and identifying all open
-finite-index subgroups with norm groups uses Theorem 6.5.
+This subsection uses the finite Artin maps and Theorem 6.5 to identify all open finite-index
+subgroups with norm groups.
 
 The profinite completion of $K^\times$ is the inverse limit over open finite-index subgroups:
 
@@ -2227,9 +2321,8 @@ The decomposition is noncanonical because changing the uniformizer changes the s
 
 ### 7.6 The reciprocity, existence, and norm theorems together
 
-In the following package finite reciprocity and norm limitation are **[TC]** results of
-Chapters 4--5; they are independent of NF, but not unconditional in this manuscript. The
-existence assertion and the resulting bijection are **[TC,NF]**.
+In the following package finite reciprocity and norm limitation are results of Chapters 4--5.
+The existence assertion and the resulting bijection additionally use Chapter 6.
 
 The three named theorems are different faces of one statement.
 
@@ -2258,9 +2351,9 @@ with $L\mapsto N_{L/K}(L^\times)$.
 
 ## 8. Uniformizers, units, and ramification
 
-The finite and infinite reciprocity maps used in this chapter are **[TC]**. Statements that
-identify their images with the full completed inertia group or with higher ramification groups
-also use NF and are **[TC,NF]**.
+The finite and infinite reciprocity maps used in this chapter come from Chapters 5--7.
+Statements that identify their images with the full completed inertia group or with higher
+ramification groups also use Lemma 6.4.
 
 ### 8.1 The unramified coordinate
 
@@ -2299,7 +2392,7 @@ $$
 
 No unit condition remains.
 
-For the particular Lubin–Tate tower attached to $\pi$, the complementary **[TC,NF]** calculation
+For the particular Lubin–Tate tower attached to $\pi$, the complementary calculation
 is
 
 $$
@@ -2330,7 +2423,7 @@ $$
 \subseteq I_K^{\mathrm{ab,im}}.
 $$
 
-Assuming TC and NF, the reverse inclusion follows after profinite completion: the valuation quotient
+The reverse inclusion follows after profinite completion: the valuation quotient
 accounts for all of $\widehat{\mathbf Z}$, so the kernel is the already complete group
 $\mathcal O^\times$. Therefore reciprocity restricts to a topological isomorphism
 
@@ -2431,7 +2524,7 @@ for every real $v\geq-1$. Thus upper numbering, unlike lower numbering, passes u
 
 ### 8.4 The unit and ramification theorem
 
-**Theorem 8.1 [TC,NF].** Assuming Hypotheses TC and NF, let $L/K$ be finite abelian with group $G$.
+**Theorem 8.1.** Let $L/K$ be finite abelian with group $G$.
 Under arithmetic local reciprocity,
 
 $$
@@ -2448,7 +2541,7 @@ $$
 
 For $n=0$ this is the inertia statement just proved. For $n\geq1$ it says that successive principal-unit depth is exactly upper ramification depth after abelianization.
 
-**Proof.** The case $n=0$ is Section 8.2. For $n\geq1$, Hypothesis NF applied directly to
+**Proof.** The case $n=0$ is Section 8.2. For $n\geq1$, Lemma 6.4 applied directly to
 $L/K$ gives
 
 $$
@@ -2487,8 +2580,8 @@ The use of upper numbering is forced by functoriality, not by taste. If lower gr
 
 ### 8.5 Conductors
 
-The multiplicative definition below is unconditional. Its identification with upper
-ramification depth, and all consequences stated through that identification, are **[TC,NF]**.
+The multiplicative definition below is elementary. Its identification with upper ramification
+depth uses Theorem 8.1.
 
 Let $L/K$ be finite abelian. Its conductor exponent is the least $n\geq0$ such that
 
@@ -2532,9 +2625,8 @@ where the symbol $\sim$ suppresses the choice of Teichmüller representatives an
 
 ## 9. Functoriality in finite extensions
 
-This chapter's reciprocity diagrams are **[TC]**. Their proofs use the restriction,
-corestriction, transfer, and cap-product naturality clauses of Hypothesis TC, but they do not
-use Hypothesis NF.
+This chapter's reciprocity diagrams use the restriction, corestriction, transfer, and
+cap-product naturality proved in Section 5.2; they do not use the norm-filtration lemma.
 
 ### 9.1 Why directions are easy to reverse accidentally
 
@@ -2569,7 +2661,7 @@ The norm corresponds to inclusion of Galois groups; inclusion of fields' multipl
 
 ### 9.2 Norm corresponds to Galois inclusion
 
-**Theorem 9.1 [TC] (norm–inclusion compatibility).** Assuming Hypothesis TC, the diagram
+**Theorem 9.1 (norm–inclusion compatibility).** The diagram
 
 $$
 \begin{array}{ccc}
@@ -2609,7 +2701,7 @@ $$
 
 Changing representatives changes the product by a commutator, so the class is well defined and factors through $G_K^{\mathrm{ab}}$.
 
-**Theorem 9.2 [TC] (inclusion–transfer compatibility).** Assuming Hypothesis TC, the diagram
+**Theorem 9.2 (inclusion–transfer compatibility).** The diagram
 
 $$
 \begin{array}{ccc}
@@ -2687,8 +2779,8 @@ For unramified base change the picture is clean. Total ramification is preserved
 ## 10. Explicit norm quotients and extension classes
 
 The direct field and norm calculations in this chapter retain their stated elementary
-hypotheses. Interpretations through finite reciprocity are **[TC]**; the formal-module
-cofinality and higher-unit statements are **[TC,NF]**.
+hypotheses. Interpretations through finite reciprocity use Chapter 5; the formal-module
+cofinality and higher-unit statements use Chapters 6 and 8.
 
 ### 10.1 Unramified extensions
 
@@ -2777,9 +2869,8 @@ In residue characteristic $2$, $U^1/(U^1)^2$ is larger and higher unit layers co
 
 ### 10.4 Formal-module layers
 
-This subsection is **[TC,NF]**, since its first displayed norm quotient uses the conditional
-norm calculation of Section 6.5 together with the general abelian norm-index theorem obtained
-from TC.
+This subsection uses the norm calculation of Section 6.5 together with the general abelian
+norm-index theorem of Chapter 5.
 
 For the torsion extension $K_n/K$ of Chapter 6,
 
@@ -2799,8 +2890,8 @@ Thus the construction is not merely a source of fields of the right degrees. Its
 
 The auxiliary torsion labeling can now be compared with the Artin labeling. This is where the inverse forced by the arithmetic-Frobenius convention appears. Kernels and associated graded groups do not suffice for this comparison: a filtered automorphism can be the identity on every associated graded quotient without being the identity. We instead compare the two maps on actual Galois elements.
 
-**Proposition 10.1 [TC,NF] (finite-level Artin–torsion comparison).** Assuming Hypotheses TC and NF,
-fix arithmetic reciprocity, so that a uniformizer acts on the maximal unramified extension by
+**Proposition 10.1 (finite-level Artin–torsion comparison).** Fix arithmetic reciprocity, so
+that a uniformizer acts on the maximal unramified extension by
 $x\mapsto x^q$ on residues. For $u\in\mathcal O^\times$ and a primitive level-$n$ point
 $\omega_n$,
 
@@ -3176,7 +3267,7 @@ $$
 
 ### 10.6 Building an extension from congruence data
 
-This construction is **[TC,NF]**, because it uses the conditional equality
+This construction uses the equality
 $N(E_{m',n}^\times)=\pi^{m'\mathbf Z}U^n$.
 
 Suppose a subgroup is presented as
@@ -3207,14 +3298,14 @@ This procedure is usable: finite congruence arithmetic determines the subgroup, 
 
 The extension of multiplicative characters across
 $\widehat{K^\times}\cong G_K^{\mathrm{ab}}$, the realization of finite kernels by fields, and
-the comparison with higher ramification are all **[TC,NF]**. Purely topological decompositions
+the comparison with higher ramification use Chapters 6--8. Purely topological decompositions
 of characters already defined on $K^\times$ are unconditional.
 
 ### 11.1 The exact topological statement
 
 A one-dimensional Galois character factors through $G_K^{\mathrm{ab}}$. Since this group is the profinite completion of $K^\times$, the cleanest coefficient hypothesis is that the target be profinite.
 
-**Theorem 11.1 [TC,NF].** Assuming Hypotheses TC and NF, let $A$ be a profinite abelian group.
+**Theorem 11.1.** Let $A$ be a profinite abelian group.
 Composition with reciprocity gives a natural bijection
 
 $$
@@ -3276,7 +3367,7 @@ There is no compatibility condition because $K^\times=\pi^{\mathbf Z}\times\math
 
 ### 11.2 Finite-order characters and cyclic extensions
 
-Assuming TC and NF, let $A$ be a finite cyclic group and let
+Let $A$ be a finite cyclic group and let
 
 $$
 \chi:K^\times\to A
@@ -3315,7 +3406,7 @@ $$
 a(\chi)=\min\{n\geq0:\chi(U^n)=1\}
 $$
 
-when such an $n$ exists. For finite-image characters it always exists. Assuming TC and NF, the
+when such an $n$ exists. For finite-image characters it always exists. The
 reciprocity filtration theorem gives
 
 $$
@@ -3376,7 +3467,7 @@ $$
 \rho(G_K)\subseteq\mathcal O_E^\times.
 $$
 
-Assuming TC and NF, every continuous character $K^\times\to\mathcal O_E^\times$ extends uniquely
+Every continuous character $K^\times\to\mathcal O_E^\times$ extends uniquely
 across the profinite completion. Thus
 
 $$
@@ -3421,11 +3512,9 @@ Finally, a finite-order character $\chi$ cuts out the fixed field of the kernel 
 
 ## 12. The local reciprocity dictionary
 
-This chapter separates the **[TC]** finite reciprocity dictionary from its **[TC,NF]**
-extensions. Statements that every open subgroup is realized, that higher units match upper
-ramification, or that $G_K^{\mathrm{ab}}$ is the profinite completion of $K^\times$ use both
-inputs. The finite norm-kernel and functoriality statements do not depend on NF, but they do
-depend on TC.
+This chapter collects the finite reciprocity dictionary and its existence and ramification
+extensions. The finite norm-kernel and functoriality statements come from Chapters 4--5;
+realization of open subgroups, higher units, and profinite completion use Chapters 6--8.
 
 ### 12.1 Fields and subgroups
 
@@ -3443,8 +3532,8 @@ $$
 [L:K]=[K^\times:H_L].
 $$
 
-Assuming TC and NF, every open finite-index subgroup is exactly one $H_L$. Under TC, the
-order-reversing rules for fields already in a common finite abelian extension do not use NF:
+Every open finite-index subgroup is exactly one $H_L$. The order-reversing rules for fields
+already in a common finite abelian extension follow from finite reciprocity:
 
 $$
 L_1\subseteq L_2\iff H_{L_2}\subseteq H_{L_1},
@@ -3479,13 +3568,13 @@ K^\times/\mathcal O^\times\cong\mathbf Z
 U^1
 &\text{wild abelian inertia}\\
 U^n
-&\text{$n$th upper ramification subgroup [TC,NF]}.
+&\text{$n$th upper ramification subgroup}.
 \end{array}
 $$
 
 At finite level, a uniformizer maps to an element whose image in the unramified quotient is
 arithmetic Frobenius. It need not select a canonical lift through inertia. Units map exactly
-to inertia under TC; assuming TC and NF, $U^n$ maps exactly to $G^n$.
+to inertia; $U^n$ maps exactly to $G^n$.
 
 ### 12.3 Norm tests
 
@@ -3534,7 +3623,7 @@ The first formula pairs norm with Galois inclusion. The second pairs multiplicat
 
 ### 12.5 Characters at a glance
 
-Assuming TC and NF, for a profinite abelian coefficient group $A$,
+For a profinite abelian coefficient group $A$,
 
 $$
 \{\text{continuous characters }G_K\to A\}
@@ -3563,10 +3652,10 @@ alone is necessary but does not replace the finite-index neighborhood condition.
 
 Local class field theory begins with a striking mismatch. On one side lies the concrete topological group $K^\times$, decomposed by valuation, residue units, and infinitesimal units. On the other lies the apparently remote collection of all finite abelian extensions of $K$. Reciprocity proves that the mismatch is an illusion: every finite abelian Galois quotient is already encoded by a norm quotient of $K^\times$.
 
-The part independent of NF reveals why finite reciprocity is rigid. Hilbert 90 removes the
+The finite reciprocity argument reveals why the theorem is rigid. Hilbert 90 removes the
 first cohomological obstruction. The local Brauer invariant turns every remaining norm
-obstruction into a rational number modulo one, and, assuming TC, its fundamental classes
-identify finite Galois abelianizations with norm quotients. Assuming TC and NF, the unramified
+obstruction into a rational number modulo one, and its fundamental classes identify finite
+Galois abelianizations with norm quotients. The unramified
 and formal-module towers are cofinal and realize every open finite-index subgroup. Topology
 then assembles the finite maps into a dense embedding
 
@@ -3577,8 +3666,8 @@ $$
 and an isomorphism after profinite completion.
 
 The final picture is exact at finite level for norms, kernels, Frobenius, inertia, and
-functoriality under TC. Conditional on TC and NF it is exact at every depth: deeper units are
+functoriality. It is exact at every depth: deeper units are
 higher ramification, open subgroups are fields, and one-dimensional Galois characters may be
 read as multiplicative characters of $K^\times$ with conductor visible in local coordinates.
-Thus the manuscript has two precisely separated closure tasks: TC for finite reciprocity and
-its functoriality, and NF for the additional existence and exact ramification package.
+The complete-resolution argument and the filtered norm calculation are the two independent
+engines which close the finite and ramification sides of the proof.
