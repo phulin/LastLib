@@ -27,11 +27,15 @@
   - [5.2 Arithmetic descent and Hochschild--Serre](#52-arithmetic-descent-and-hochschild--serre)
   - [5.3 Coefficient change](#53-coefficient-change)
   - [5.4 Boundedness and convergence](#54-boundedness-and-convergence)
-- [6. Torsion cohomological dimension](#6-torsion-cohomological-dimension)
+- [6. Torsion cohomological dimension and the cohomology of curves](#6-torsion-cohomological-dimension-and-the-cohomology-of-curves)
   - [6.1 What cohomological dimension measures](#61-what-cohomological-dimension-measures)
   - [6.2 Fields and strict local schemes](#62-fields-and-strict-local-schemes)
   - [6.3 Curves](#63-curves)
   - [6.4 Low-dimensional finite-type schemes](#64-low-dimensional-finite-type-schemes)
+  - [6.5 Tsen's theorem](#65-tsens-theorem)
+  - [6.6 The Brauer group of a curve and cohomological dimension one](#66-the-brauer-group-of-a-curve-and-cohomological-dimension-one)
+  - [6.7 Cohomology of curves with torsion coefficients](#67-cohomology-of-curves-with-torsion-coefficients)
+  - [6.8 Rigidity, the see-saw lemma, and the order of $\operatorname{Pic}^0[n]$](#68-rigidity-the-see-saw-lemma-and-the-order-of-operatornamepic0n)
 - [7. Finiteness for constructible torsion coefficients](#7-finiteness-for-constructible-torsion-coefficients)
   - [7.1 The finiteness theorem in the required range](#71-the-finiteness-theorem-in-the-required-range)
   - [7.2 The proof architecture](#72-the-proof-architecture)
@@ -451,7 +455,7 @@ $$
 
 Indeed, the hypercohomology sequence is supported in the rectangle $0\le p\le d$, $a\le q\le b$. It is therefore finite on every diagonal and converges strongly. This simple rectangle argument is the bridge from torsion cohomological dimension to bounded adic complexes.
 
-## 6. Torsion cohomological dimension
+## 6. Torsion cohomological dimension and the cohomology of curves
 
 ### 6.1 What cohomological dimension measures
 
@@ -493,7 +497,7 @@ $$
 
 for every constructible $\ell$-primary sheaf $\mathcal F$. If $C$ is proper, the corresponding bound is $q>2$.
 
-The assertion is the one-dimensional case of the affine theorem proved in Section 7.2. It is worth isolating why finite-cover descent alone is not its proof. If a finite Galois cover with group $G$ trivializes a lisse sheaf and $\ell$ divides $|G|$, the groups $H^a(G,-)$ can be nonzero in arbitrarily large degrees. The differentials in the descent sequence must then cancel those terms. The affine theorem obtains the cancellation from a length-one geometric model for a punctured curve, not from an unjustified vanishing of finite-group cohomology.
+Both assertions are proved in Section 6.7, and the affine one is the one-dimensional case of the affine theorem of Section 7.2. It is worth isolating why finite-cover descent alone is not their proof. If a finite Galois cover with group $G$ trivializes a lisse sheaf and $\ell$ divides $|G|$, the groups $H^a(G,-)$ can be nonzero in arbitrarily large degrees. The differentials in the descent sequence must then cancel those terms, and nothing in the descent formalism explains the cancellation. Sections 6.5 through 6.7 obtain the bounds instead from the field at the generic point: Tsen's theorem makes that field have no Brauer classes and no cohomology above degree one, and the divisor sequence for $\mathbf G_m$ transports the consequence to the curve. No presentation of a fundamental group and no vanishing of finite-group cohomology is used.
 
 Normalization and the finite singular locus then extend the smooth affine result to every affine curve. More explicitly, for the normalization $\nu:\widetilde C\to C$, the kernel and cokernel of
 
@@ -525,6 +529,301 @@ $$
 
 This follows immediately from the rectangle supporting the spectral sequence. No finite value is asserted for fields whose absolute Galois groups have unbounded $\ell$-cohomology.
 
+### 6.5 Tsen's theorem
+
+The cohomological dimension of a curve cannot be read off from its finite covers. What controls it is the field at the generic point. That field is not separably closed, but it is close enough for our purposes: every homogeneous form in more variables than its degree has a nontrivial zero. This is Tsen's theorem, and its proof is a dimension count with Riemann--Roch, not a transcendental argument.
+
+**Definition.** A field $F$ is $C_1$ if every homogeneous polynomial
+$f\in F[T_1,\ldots,T_N]$ of degree $d$ with $0<d<N$ has a zero $t\in F^N$ with $t\ne0$.
+
+We first isolate the algebraic mechanism.
+
+**Common-zero lemma.** Let $\kappa$ be an algebraically closed field and let $g_1,\ldots,g_r\in\kappa[X_1,\ldots,X_n]$ be homogeneous of positive degree with $n>r$. Then the $g_i$ have a common zero in $\kappa^n$ other than the origin.
+
+**Proof.** Let $Z\subseteq\mathbf A^n_\kappa$ be the closed subscheme they define. Since the $g_i$ are homogeneous of positive degree, the origin lies in $Z$. Krull's height theorem, recorded as a standard input in Book 11, Chapter 14, bounds by $r$ the height of every prime minimal over $(g_1,\ldots,g_r)$. In the polynomial ring over a field, height and dimension of the quotient add up to $n$, so every irreducible component of $Z$ has dimension at least $n-r\ge1$. A component through the origin therefore contains points other than the origin, and every such point is a common zero. $\square$
+
+**Tsen's theorem.** Let $k$ be an algebraically closed field and let $K$ be a finitely generated extension of $k$ of transcendence degree one. Then $K$ is $C_1$.
+
+**Proof.** Write $K=k(C)$ for a smooth proper connected curve $C$ over $k$ of genus $g$. Such a model exists: choose a finitely generated $k$-subalgebra of $K$ with fraction field $K$, embed its spectrum in affine space, take the closure in projective space, and normalize; the finite-normalization lemma for curves of Book 8, Section 9.1, makes the normalization finite, so the result is a normal projective curve with function field $K$, and Book 11, Proposition 4.2, makes a normal curve over a perfect field smooth.
+
+Let $f=\sum_\nu a_\nu T^\nu$ be homogeneous of degree $d$ in $T_1,\ldots,T_N$ with $N>d\ge1$ and $a_\nu\in K$. The finitely many $a_\nu$ have finitely many poles, so there is an effective divisor $D$ on $C$, of some degree $\delta\ge1$, with every $a_\nu\in H^0(C,\mathcal O(D))$. For $m\ge0$ put
+
+$$
+V_m=H^0(C,\mathcal O(mD)).
+$$
+
+If $t_1,\ldots,t_N\in V_m$, then $t^\nu\in H^0(\mathcal O(dmD))$ and hence
+
+$$
+f(t_1,\ldots,t_N)\in W_m:=H^0(C,\mathcal O((dm+1)D)).
+$$
+
+Riemann--Roch on $C$, in the unconditional Euler-characteristic form (11.1) of Book 9, gives $\chi(\mathcal O(mD))=m\delta+1-g$, so $\dim_kV_m\ge m\delta+1-g$; and once $m\delta\ge 2g-1$ the computation of Book 15, Section 10.2, gives the exact value $\dim_kW_m=(dm+1)\delta+1-g$ for the larger degree as well.
+
+Choose coordinates for $V_m$ and $W_m$. The assignment $(t_1,\ldots,t_N)\mapsto f(t)$ is then given by $\dim_kW_m$ homogeneous polynomials of degree $d$, with coefficients in $k$, in the $n_m:=N\dim_kV_m$ coordinates of $V_m^N$. Now
+
+$$
+n_m-\dim_kW_m
+\ \ge\ (N-d)\delta m+\bigl(N(1-g)-\delta-1+g\bigr),
+$$
+
+and the coefficient of $m$ is positive because $N>d$ and $\delta\ge1$. Fix $m$ large enough that this is positive and that $m\delta\ge 2g-1$. The common-zero lemma over the algebraically closed field $k$ supplies a nonzero common zero, that is, elements $t_1,\ldots,t_N\in V_m\subseteq K$, not all zero, with $f(t)=0$. $\square$
+
+Two remarks fix the scope. First, every finite extension of $K$ is again a finitely generated extension of $k$ of transcendence degree one, so the theorem applies to all of them simultaneously; this is what makes the cohomological consequence of the next section uniform in the extension. Second, the standing hypothesis of this book is that the ground field is separably closed, not algebraically closed. If $k$ is separably closed of characteristic $p>0$, then $\bar k/k$ is purely inseparable, so $X_{\bar k}\to X$ is a universal homeomorphism for every $k$-scheme $X$. Book 17, Section 13.3, proves that such a morphism identifies pointed étale neighbourhoods at corresponding geometric points; consequently it induces an equivalence of small étale sites, and every étale-cohomological statement below may be proved after base change to $\bar k$. We therefore assume $k=\bar k$ in Sections 6.5 through 6.8 without further comment.
+
+### 6.6 The Brauer group of a curve and cohomological dimension one
+
+Tsen's theorem is a statement about forms. To use it cohomologically we pass through central simple algebras and then through a purely group-theoretic dimension bound. Both steps are needed: the first converts $C_1$ into vanishing of $H^2$ with multiplicative coefficients, and the second converts vanishing of $H^2$ into vanishing in all higher degrees for all torsion coefficients.
+
+We first record the two multiplicative inputs in the form used here. Let $F$ be any field with separable closure $F^s$ and $G_F=\operatorname{Gal}(F^s/F)$.
+
+**Hilbert 90.** $H^1(G_F,(F^s)^\times)=0$.
+
+**Proof.** Continuous cochains have finite image and factor through a finite quotient, so by the inflation--restriction sequence of Book 14, Section 9.3, it suffices to prove $H^1(\operatorname{Gal}(L/F),L^\times)=0$ for every finite Galois $L/F$ with group $\Gamma$. A $1$-cocycle $c$ is exactly a descent datum on the free rank-one $L$-module $L$ relative to the faithfully flat cover $\operatorname{Spec}L\to\operatorname{Spec}F$, written in the transition-matrix form of Book 10, Section 9.2. Effective descent of line bundles along a faithfully flat cover, Book 10, Section 9.1, produces an $F$-line $V$ with $V\otimes_FL\simeq L$ carrying that datum; choosing a basis vector of $V$ gives $y\in L^\times$ with $c_\sigma=\sigma(y)/y$. Hence $c$ is a coboundary. $\square$
+
+**Brauer comparison.** $\operatorname{Br}(F)\simeq H^2(G_F,(F^s)^\times)$.
+
+**Proof.** For finite Galois $L/F$ with group $\Gamma$, Book 5, Section 4.5, proves the crossed-product isomorphism $\operatorname{Br}(L/F)\simeq H^2(\Gamma,L^\times)$. Every central simple algebra is split by a finite separable, hence a finite Galois, extension, because a matrix presentation over an algebraic closure involves finitely many coefficients (Book 5, Section 4.2); so $\operatorname{Br}(F)$ is the union of the groups $\operatorname{Br}(L/F)$. On the other side, a continuous $2$-cocycle with values in $(F^s)^\times$ has finite image and is inflated from some finite quotient. In the Hochschild--Serre spectral sequence of Book 14, Section 9.3, for the normal subgroup $G_L\subseteq G_F$ the term $E_2^{0,1}=H^1(G_L,(F^s)^\times)^\Gamma$ vanishes by Hilbert 90, so no differential reaches $E_2^{2,0}=H^2(\Gamma,L^\times)$ and every inflation map $H^2(\Gamma,L^\times)\to H^2(G_F,(F^s)^\times)$ is injective. The two unions therefore agree. $\square$
+
+**Brauer vanishing.** Let $k$ be algebraically closed and $K$ a finitely generated extension of transcendence degree one. Then $\operatorname{Br}(K)=0$, and therefore $H^2(G_K,(K^s)^\times)=0$.
+
+**Proof.** By Wedderburn (Book 5, Section 4.1) every Brauer class is represented by a central division algebra $D$ with $[D:K]=d^2$. Book 5, Section 4.2, constructs the reduced norm $\operatorname{Nrd}:D\to K$ by taking the determinant of a matrix presentation over a splitting field; in a $K$-basis of $D$ this determinant is a homogeneous polynomial of degree $d$ in $d^2$ coordinates, and Galois invariance places its coefficients in $K$. If $d\ge2$, then $d^2>d$, so Tsen's theorem produces $a\in D$, $a\ne0$, with $\operatorname{Nrd}(a)=0$. Multiplicativity of the reduced norm and $\operatorname{Nrd}(1)=1$ show that an invertible element has nonzero reduced norm; hence $a$ is not invertible, contradicting that $D$ is a division algebra. So $d=1$ and $\operatorname{Br}(K)=0$. $\square$
+
+The passage from degree two to all higher degrees is group theory. We state it once, in the only form used.
+
+**Dimension-one lemma.** Let $G$ be a profinite group and $\ell$ a prime, and suppose that $H^2(H,\mathbf Z/\ell)=0$ for every open subgroup $H\subseteq G$, the action being trivial. Then $H^q(G,M)=0$ for every $q\ge2$ and every discrete $\ell$-primary torsion $G$-module $M$.
+
+**Proof.** Continuous cochain cohomology commutes with filtered colimits of discrete modules, by the cochain description of Book 14, Section 9.1, so we may assume $M$ finite.
+
+Choose a pro-$\ell$ Sylow subgroup $P\subseteq G$: writing $G=\varprojlim_iG_i$ with $G_i$ finite, a surjection of finite groups carries Sylow $\ell$-subgroups onto Sylow $\ell$-subgroups, so the sets of Sylow $\ell$-subgroups of the $G_i$ form an inverse system of nonempty finite sets, whose limit is nonempty; let $P=\varprojlim S_i$ for a compatible family. It is pro-$\ell$. If $H\supseteq P$ is open, choose $i$ with $\ker(G\to G_i)\subseteq H$; then $H$ is the preimage of a subgroup of $G_i$ containing $S_i$, so $[G:H]$ divides $[G_i:S_i]$ and is prime to $\ell$.
+
+Over $P$ the conclusion is elementary. A simple discrete $\ell$-torsion $P$-module is finite with open stabilizers, so a finite $\ell$-group acts on it; a finite $\ell$-group acting on a nonzero finite abelian $\ell$-group has nonzero fixed points, so simplicity forces the module to be $\mathbf Z/\ell$ with trivial action. Since a continuous cochain on $P$ with values in a discrete module is the restriction of one on some open $H\supseteq P$, and two such agree on a smaller one, $H^\bullet(P,M)$ is the filtered colimit of $H^\bullet(H,M)$ over the open $H\supseteq P$; in particular $H^2(P,\mathbf Z/\ell)=0$ by hypothesis. Filtering an arbitrary finite $\ell$-primary $P$-module by simple subquotients and using the long exact sequences gives $H^2(P,M)=0$ for every such module. For $q>2$, embed $M$ into $M^*=\operatorname{Map}_{\mathrm{cts}}(P,M)$ by $m\mapsto(g\mapsto gm)$. Book 14, Section 9.1, shows that such coinduced modules are acyclic, so with $N=M^*/M$ the long exact sequence gives $H^q(P,M)\simeq H^{q-1}(P,N)$ for $q\ge2$; iterating lands in degree two, and $N$ is again $\ell$-primary. Hence $H^q(P,M)=0$ for all $q\ge2$.
+
+Finally transfer this to $G$. Let $c\in H^q(G,M)$ with $q\ge2$; the group is $\ell$-primary because $M$ is. Its restriction to $P$ vanishes, and by the colimit description of $H^q(P,-)$ already used, its restriction to some open $H\supseteq P$ vanishes. For an open subgroup $H$ of index $m=[G:H]$, the module $M^\sharp=\operatorname{Map}_H(G,M)$ satisfies $H^q(G,M^\sharp)\simeq H^q(H,M)$ by Shapiro's lemma (Book 6, Section 4.8), and the two $G$-maps
+
+$$
+M\longrightarrow M^\sharp,\quad m\mapsto(g\mapsto gm),
+\qquad
+M^\sharp\longrightarrow M,\quad \varphi\mapsto\sum_{g\in H\backslash G}g^{-1}\varphi(g),
+$$
+
+compose to multiplication by $m$. Therefore multiplication by $m$ on $H^q(G,M)$ factors through $H^q(H,M)$, so $mc=0$. Since $m$ is prime to $\ell$ and $c$ is $\ell$-primary, $c=0$. $\square$
+
+**Generic dimension theorem.** Let $k$ be algebraically closed of characteristic $p\ge0$ and let $K$ be a finitely generated extension of transcendence degree one. Then
+
+$$
+H^q(G_K,M)=0\qquad(q\ge2)
+$$
+
+for every torsion $G_K$-module $M$ whose order is prime to $p$.
+
+**Proof.** It suffices to treat the $\ell$-primary part for each $\ell\ne p$. An open subgroup of $G_K$ is $G_L$ for a finite separable $L/K$, and $L$ is again a finitely generated extension of $k$ of transcendence degree one. The Kummer sequence for $\ell$, which is exact on $(L^s)^\times$ because $\ell$ is invertible, together with Hilbert 90 and Brauer vanishing over $L$, gives
+
+$$
+0=H^1(G_L,(L^s)^\times)\to H^2(G_L,\mu_\ell)\to H^2(G_L,(L^s)^\times)=0 .
+$$
+
+Since $k\subseteq L$ is algebraically closed, $\mu_\ell\simeq\mathbf Z/\ell$ as $G_L$-modules, so $H^2(G_L,\mathbf Z/\ell)=0$. The dimension-one lemma applies. $\square$
+
+The same statement holds at the local fields that occur along a curve, and there it is even more elementary.
+
+**Local dimension theorem.** Let $R$ be a strictly henselian discrete valuation ring with residue characteristic $p\ge0$ and fraction field $F$. Then $H^q(G_F,M)=0$ for every $q\ge2$ and every torsion $G_F$-module $M$ of order prime to $p$. Moreover $H^0$ is the inertia invariants and $H^1$ the coinvariants of a topological generator of tame inertia, so both are finite when $M$ is.
+
+**Proof.** Book 17, Section 15.5, together with the classification of tamely ramified extensions of a henselian discretely valued field, identifies the tame quotient of $G_F$ with $\varprojlim_n\mu_n(\bar\kappa)$, procyclic of prime-to-$p$ order, the wild subgroup $P_F$ being pro-$p$. Cohomology of a pro-$p$ group with coefficients of order prime to $p$ vanishes in positive degrees, since on every finite $p$-group quotient the averaging idempotent is available (Book 14, Section 9.3). The Hochschild--Serre sequence for $P_F\subseteq G_F$ therefore identifies $H^q(G_F,M)$ with $H^q(\widehat{\mathbf Z}^{(p')},M^{P_F})$. For a procyclic group and a finite module, $H^q$ is the colimit over the finite cyclic quotients. On a finite cyclic group the cohomology is periodic with period two, and inflation multiplies the degree-two periodicity class by the index ratio; hence in every degree at least two the transition maps of the colimit are multiplication by that ratio. Choosing quotients whose ratios are divisible by the exponent of the module makes these maps zero, so the colimit vanishes. Degrees zero and one are the invariants and coinvariants of a generator. $\square$
+
+### 6.7 Cohomology of curves with torsion coefficients
+
+We can now compute. Throughout this section $k$ is algebraically closed of characteristic $p\ge0$, $C$ is a smooth proper connected curve over $k$ of genus $g$, $D\subseteq C$ is a finite set of closed points with $r=\#D$, and $U=C\setminus D$; thus $U$ is proper when $r=0$ and affine when $r>0$. When $r>0$ the affineness is elementary: $U$ is the complement of a nonempty effective divisor on a projective curve, and a suitable power of $\mathcal O(D)$ is very ample by Book 9, Section 11.3, so $U$ is a standard affine open of a projective embedding. No general compactification theorem is used anywhere below: the smooth proper model is obtained by closure and normalization exactly as in Section 6.5.
+
+Write $j:\eta\to U$ for the generic point and $K=k(C)$.
+
+**Divisor sequence.** On $U_{\mathrm{\acute et}}$ there is an exact sequence
+
+$$
+1\longrightarrow\mathbf G_m
+\longrightarrow j_*\mathbf G_{m,\eta}
+\longrightarrow\bigoplus_{x\in U_0}i_{x*}\mathbf Z
+\longrightarrow0,
+$$
+
+where $U_0$ is the set of closed points.
+
+**Proof.** Exactness is checked on geometric stalks. At a geometric point over $x\in U_0$ the strict local ring $\mathcal O^{\mathrm{sh}}_{U,\bar x}$ is a strictly henselian discrete valuation ring, because $U$ is a regular one-dimensional scheme (Book 11, Proposition 4.2). The stalk of $j_*\mathbf G_m$ there is the multiplicative group of its fraction field, the stalk of $\mathbf G_m$ is its unit group, and the valuation identifies the quotient with $\mathbf Z$, which is the stalk of the skyscraper. At the generic geometric point the skyscraper vanishes and the first map is the identity of $(K^s)^\times$. $\square$
+
+**Multiplicative theorem.** For $U$ as above,
+
+$$
+H^0(U,\mathbf G_m)=\mathcal O(U)^\times,\qquad
+H^1(U,\mathbf G_m)=\operatorname{Pic}(U),\qquad
+H^2(U,\mathbf G_m)=0 .
+$$
+
+**Proof.** A skyscraper at a closed point of a scheme over a separably closed field has vanishing higher cohomology, and since $U$ is noetherian, cohomology commutes with the filtered colimit defining the direct sum; so the third term of the divisor sequence has $H^0=\operatorname{Div}(U)$ and no higher cohomology. For the middle term, Leray for $j$ is degenerate in the relevant range: the stalk of $R^qj_*\mathbf G_m$ at a geometric point over $x$ is $H^q$ of the fraction field of $\mathcal O^{\mathrm{sh}}_{U,\bar x}$ with coefficients in $\mathbf G_m$, which vanishes for $q=1$ by Hilbert 90, while the stalk at the generic geometric point vanishes for $q\ge1$ because a separably closed field has trivial Galois group. Hence $R^1j_*\mathbf G_m=0$, and $R^qj_*\mathbf G_m$ is a skyscraper for $q\ge2$. Consequently the edge map gives $H^n(U,j_*\mathbf G_m)\hookrightarrow H^n(\eta,\mathbf G_m)$ for $n\le2$ with no interference from the higher rows, and $H^1(\eta,\mathbf G_m)=0$, $H^2(\eta,\mathbf G_m)=\operatorname{Br}(K)=0$ by Hilbert 90 and Brauer vanishing. The long exact sequence of the divisor sequence now reads
+
+$$
+1\to\mathcal O(U)^\times\to K^\times\to\operatorname{Div}(U)
+\to H^1(U,\mathbf G_m)\to0,
+\qquad
+H^2(U,\mathbf G_m)\hookrightarrow H^2(U,j_*\mathbf G_m)=0 .
+$$
+
+The identification of $\operatorname{Div}(U)/\operatorname{Prin}(U)$ with $\operatorname{Pic}(U)$ on a regular integral curve is Book 9, Section 4.4. $\square$
+
+This reproves, for curves, the identification of $H^1(\mathbf G_m)$ with $\operatorname{Pic}$ used in Section 3.4, and it is the only place where the Brauer group enters.
+
+**Kummer theorem for curves.** Let $n$ be prime to $p$. Then
+
+1. $H^0(U,\mu_n)=\mu_n(k)$ is cyclic of order $n$;
+2. there is an exact sequence $0\to\mathcal O(U)^\times/n\to H^1(U,\mu_n)\to\operatorname{Pic}(U)[n]\to0$;
+3. $H^2(U,\mu_n)\simeq\operatorname{Pic}(U)/n$, which is cyclic of order $n$ if $r=0$ and zero if $r>0$;
+4. $H^q(U,\mu_n)=0$ for $q\ge3$.
+
+All the groups are finite. Since $k$ contains $\mu_n$, the same groups compute $H^q(U,M)$ for every constant sheaf $M$ of finite abelian groups of order prime to $p$, after choosing an isomorphism $\mathbf Z/n\simeq\mu_n$.
+
+**Proof.** Parts 1--3 are the long exact sequence of the Kummer sequence of Section 3.4 combined with the multiplicative theorem; part 4 is the a priori bound proved below, whose proof does not use the present theorem. It remains to identify $\operatorname{Pic}(U)$ modulo $n$ and its $n$-torsion, and to see finiteness.
+
+Since $k$ is algebraically closed, $C$ has a rational point, so Book 15, Section 10.3, applies and represents $\operatorname{Pic}^d_{C/k}$ by a smooth proper $k$-scheme; Section 10.4 identifies the identity component $J=\operatorname{Pic}^0_{C/k}$ as a smooth proper group scheme of dimension $g$, and over the point $\operatorname{Spec}k$ rigidification imposes no condition on isomorphism classes, so $J(k)=\operatorname{Pic}^0(C)$. On $J$ the differential of $[n]$ at the identity is multiplication by $n$ on the tangent space $H^1(C,\mathcal O_C)$, hence an isomorphism because $n$ is invertible; translating by points of $J$, the relation $[n]\circ t_a=t_{[n]a}\circ[n]$ shows that the differential is an isomorphism at every point, so $[n]$ is étale. It is proper and quasi-finite, hence finite; and its image is a closed subgroup of dimension $g$ in the connected group $J$, hence all of $J$. Therefore $J(k)$ is $n$-divisible and $J(k)[n]$ is finite.
+
+Since the degree map is injective on torsion, $\operatorname{Pic}(C)[n]=J(k)[n]$, and $\operatorname{Pic}(C)/n\simeq\mathbf Z/n$ through the degree because $J(k)$ is divisible. Now let $r>0$ and choose $x_0\in D$. Restriction of divisors makes $\operatorname{Pic}(C)\to\operatorname{Pic}(U)$ surjective with kernel generated by the classes of the points of $D$; using $x_0$ to split off the degree, this identifies
+
+$$
+\operatorname{Pic}(U)\simeq J(k)/\Lambda,
+\qquad
+\Lambda=\text{image in }J(k)\text{ of the degree-zero divisors supported on }D,
+$$
+
+so $\Lambda$ is a quotient of $\mathbf Z^{r-1}$. Divisibility of $J(k)$ passes to the quotient, so $\operatorname{Pic}(U)/n=0$; and the snake lemma applied to $0\to\Lambda\to J(k)\to\operatorname{Pic}(U)\to0$ exhibits $\operatorname{Pic}(U)[n]$ as an extension of a subgroup of the finite group $\Lambda/n\Lambda$ by a quotient of $J(k)[n]$, hence finite. Finally $\mathcal O(U)^\times/k^\times$ injects into the free group of divisors supported on $D$, because a rational function with neither zeros nor poles on the proper curve $C$ is constant, and $k^\times$ is $n$-divisible; so $\mathcal O(U)^\times/n$ is finite, and vanishes when $r=0$. $\square$
+
+The next statement is the a priori bound that makes every later dévissage terminate. It holds on proper and affine curves alike.
+
+**A priori bound.** Let $U$ be as above and let $\mathcal F$ be a constructible sheaf of finite abelian groups of order prime to $p$. Then $H^q(U,\mathcal F)=0$ for $q\ge3$.
+
+**Proof.** The canonical map $\mathcal F\to j_*j^*\mathcal F$ is an isomorphism on a dense open subset, so its kernel and cokernel are supported on finitely many closed points and have no positive cohomology; hence $H^q(U,\mathcal F)\simeq H^q(U,j_*G)$ for $q\ge2$, where $G=j^*\mathcal F$ is a finite $G_K$-module of order prime to $p$. In the Leray sequence for $j$ the stalks of $R^qj_*G$ at closed points are the Galois cohomology groups of the fraction fields of the strict local rings, so $R^qj_*G=0$ for $q\ge2$ by the local dimension theorem, and $R^1j_*G$ is a skyscraper, hence acyclic in positive degrees. The abutment is $H^n(\eta,G)=H^n(G_K,G)$, which vanishes for $n\ge2$ by the generic dimension theorem. For $n\ge3$ the only surviving term of total degree $n$ is $E_2^{n,0}=H^n(U,j_*G)$, and no differential can enter or leave it, so it equals the abutment and vanishes. $\square$
+
+**Affine curve theorem.** Let $U$ be a smooth affine curve over $k$ and let $\mathcal F$ be a constructible sheaf of finite abelian groups of order prime to $p$. Then $H^q(U,\mathcal F)$ is finite for every $q$ and vanishes for $q\ge2$. If $C$ is a smooth proper curve, the same coefficients have finite cohomology, vanishing for $q\ge3$.
+
+**Proof.** We first prove vanishing for $q\ge2$ on affine $U$, in three steps.
+
+*Constant coefficients.* This is the Kummer theorem, part 3 with $r>0$ and part 4.
+
+*Extension by zero of constant coefficients.* Let $j_V:V\hookrightarrow U$ be open with finite complement $Z$ and let $M$ be constant finite of order prime to $p$. The sequence $0\to j_{V!}M\to M_U\to i_{Z*}M\to0$ and the vanishing of $H^q(Z,M)$ for $q\ge1$ give $H^q(U,j_{V!}M)=0$ for $q\ge2$.
+
+*Lisse coefficients and the trace.* Let $\mathcal L$ be lisse on $V$; treating the connected components separately we may assume $V$ connected. Let $\pi:V'\to V$ be a connected finite étale cover trivializing $\mathcal L$, so that $\pi^*\mathcal L=M$ is constant (Book 17). Let $U'$ be the normalization of $U$ in the function field of $V'$; it is finite over $U$ by the finite-normalization lemma for curves, hence affine, and it is normal, hence a smooth curve, and $\pi'^{-1}(V)=V'$ for the induced finite map $\pi':U'\to U$. Writing $j':V'\hookrightarrow U'$, comparison of stalks gives $\pi'_*j'_!=j_{V!}\pi_*$. The trace map $\pi_*\pi^*\mathcal L\to\mathcal L$, which étale-locally on $V$ is the sum over the finitely many sheets and descends by permutation invariance — the same construction as in Section 13.4 — is surjective on every geometric stalk; applying the exact functor $j_{V!}$ produces a surjection
+
+$$
+\mathcal A:=\pi'_*j'_!M=j_{V!}\pi_*\pi^*\mathcal L
+\longrightarrow j_{V!}\mathcal L,
+$$
+
+with constructible kernel $\mathcal R$. Since $\pi'$ is finite, $H^q(U,\mathcal A)=H^q(U',j'_!M)$, which vanishes for $q\ge2$ by the previous step. The long exact sequence and the a priori bound give, for $q=2$,
+
+$$
+0=H^2(U,\mathcal A)\to H^2(U,j_{V!}\mathcal L)\to H^3(U,\mathcal R)=0 ,
+$$
+
+and the same argument in higher degrees, so $H^q(U,j_{V!}\mathcal L)=0$ for $q\ge2$.
+
+For a general constructible $\mathcal F$, choose a dense open $V$ on which $\mathcal F$ is lisse; the sequence $0\to j_{V!}\mathcal F|_V\to\mathcal F\to i_{Z*}\mathcal F|_Z\to0$ has skyscraper right-hand term and reduces the assertion to the case just treated.
+
+Finiteness now follows by descending induction on $q$, on affine and proper curves alike. For $q\ge3$ all the groups vanish. Suppose every constructible sheaf has finite cohomology in degree $q+1$. Given $\mathcal F$, the two displayed sequences reduce us to $\mathcal F=j_{V!}\mathcal L$ with $\mathcal L$ lisse, and there $H^q(U,\mathcal A)=H^q(U',j'_!M)$ is finite, because the sequence $0\to j'_!M\to M_{U'}\to i_*M\to0$ expresses it in terms of the finite groups of the Kummer theorem. The long exact sequence places $H^q(U,j_{V!}\mathcal L)$ between the finite group $H^q(U,\mathcal A)$ and the finite group $H^{q+1}(U,\mathcal R)$. $\square$
+
+Two features of this proof deserve emphasis, because they are exactly the places where a shorter-looking argument would fail. Nothing here uses a presentation of the tame fundamental group of a punctured curve, and nothing asserts that a punctured curve is a $K(\pi,1)$; the finite covers enter only through the exact functor $\pi'_*$ and the trace map, both of which are elementary. The single global input is Tsen's theorem, and the single geometric input is that $\operatorname{Pic}^0$ of a proper curve is a proper smooth group scheme, which Book 15 constructs.
+
+### 6.8 Rigidity, the see-saw lemma, and the order of $\operatorname{Pic}^0[n]$
+
+The Kummer theorem computes the groups $H^q(U,\mu_n)$ in terms of $\operatorname{Pic}$, and proves them finite. It does not compute their orders, because the order of $\operatorname{Pic}^0(C)[n]$ is a statement about the Jacobian and not about cohomology. This section supplies the missing count. The see-saw lemma and the degree theorem below are independent of Sections 6.5 through 6.7, and no theorem of Chapter 7 depends on this section; its results are used for the rank statements of Sections 7.2 and 14.2 and for the abelian-scheme calculation of Section 15.2.
+
+We begin with the tool that replaces every informal appeal to a see-saw principle in this book.
+
+**See-saw lemma.** Let $T$ be a reduced noetherian scheme and let $h:X\to T$ be proper, flat and finitely presented with geometrically integral fibers, equipped with a section $e:T\to X$. Assume the fiber dimensions $\dim_{\kappa(t)}H^j(X_t,\mathcal O_{X_t})$ are locally constant in $t$ for every $j$. If $\mathcal L$ is a line bundle on $X$ whose restriction to $X_t$ is trivial for every $t\in T$, then
+
+$$
+\mathcal L\simeq h^*(e^*\mathcal L).
+$$
+
+In particular $\mathcal L$ is trivial when $e^*\mathcal L$ is.
+
+**Proof.** For every $t$ we have $\mathcal L|_{X_t}\simeq\mathcal O_{X_t}$, so $\dim H^j(X_t,\mathcal L_t)=\dim H^j(X_t,\mathcal O_{X_t})$ is locally constant in $t$ for every $j$. The base is reduced, so the constant-rank corollary of Book 15, Section 5.4, applies: $h_*\mathcal L$ is finite locally free, of rank $h^0(X_t,\mathcal O_{X_t})=1$ because the fibers are proper and geometrically integral, and its formation commutes with arbitrary base change. The evaluation map $h^*h_*\mathcal L\to\mathcal L$ is therefore a map of line bundles whose restriction to $X_t$ is the map $H^0(X_t,\mathcal L_t)\otimes\mathcal O_{X_t}\to\mathcal L_t$ given by a trivializing section, which is nowhere zero. A map of line bundles that is surjective on every fiber is an isomorphism. Pulling back along $e$ identifies $h_*\mathcal L$ with $e^*\mathcal L$. $\square$
+
+The hypothesis of constant fiber dimensions is satisfied in the two cases used here: smooth proper curves, by Book 15, Section 5.5, and abelian schemes, by the exterior algebra theorem of Book 15, Section 11.3. Reducedness cannot be dropped. On $X\times_k\operatorname{Spec}k[\varepsilon]$ a line bundle restricting trivially to the unique fiber and to the section is classified by $H^1(X,\mathcal O_X)$, which is nonzero as soon as $X$ has positive irregularity. This is why the lemma is stated for reduced parameter schemes and why the cube identity below is proved by rigidity rather than by iterated see-saw over an arbitrary base.
+
+**Cube and square identities.** Let $A$ be a smooth proper connected group scheme over a field and let $L$ be a line bundle on $A$ rigidified at the identity. Then the alternating tensor product
+
+$$
+m_{123}^*L\otimes m_{12}^*L^{-1}\otimes m_{13}^*L^{-1}
+\otimes m_{23}^*L^{-1}\otimes
+\operatorname{pr}_1^*L\otimes\operatorname{pr}_2^*L\otimes\operatorname{pr}_3^*L
+$$
+
+on $A^3$ is trivial, and consequently $t_{a+b}^*L\otimes L\simeq t_a^*L\otimes t_b^*L$.
+
+This is the cube lemma of Book 15, Section 11.2, together with the theorem of the square derived there. Its proof uses only properness, flatness, connectedness of the fibers, and the rigidity observation that a morphism from a proper connected scheme to the affine scheme of trivializations is constant; the projectivity that Book 15 includes in its definition of an abelian scheme is not used at this point. The see-saw lemma above is the form in which fiberwise triviality together with triviality along the identity section yields triviality, and it is what replaces, in Section 15.2, the appeal to a see-saw principle from a later book. Pulling the cube identity back along a triple of morphisms $(f,g,h):T\to A^3$ gives the identity in the form
+
+$$
+(f+g+h)^*L\otimes(f+g)^*L^{-1}\otimes(f+h)^*L^{-1}
+\otimes(g+h)^*L^{-1}\otimes f^*L\otimes g^*L\otimes h^*L
+\simeq\mathcal O_T .
+$$
+
+**Degree theorem.** Let $\kappa$ be an algebraically closed field, let $A$ be a smooth proper connected group scheme over $\kappa$ of dimension $g$, and assume that $A$ carries an ample line bundle. Let $m\ge1$ be prime to $\operatorname{char}\kappa$. Then $[m]:A\to A$ is finite étale of degree $m^{2g}$, and
+
+$$
+A[m](\kappa)\simeq(\mathbf Z/m\mathbf Z)^{2g}.
+$$
+
+**Proof.** As in the proof of the Kummer theorem, the differential of $[m]$ at the identity is multiplication by $m$ on the tangent space, hence invertible, and translation propagates this to every point; so $[m]$ is étale, and being proper and quasi-finite it is finite étale. Its degree $d$ is constant because $A$ is connected, and $[m]$ is surjective because its image is a closed subgroup of dimension $g$.
+
+Let $L_0$ be ample and put $L=L_0\otimes[-1]^*L_0$, rigidified at the identity. It is ample, since $[-1]$ is an automorphism and a tensor product of ample bundles is ample, and it is symmetric. Applying the pulled-back cube identity to $(f,g,h)=([m],\mathrm{id},[-1])$ and using $[-1]^*L\simeq L$ gives
+
+$$
+[m+1]^*L\otimes[m-1]^*L\simeq([m]^*L)^{\otimes2}\otimes L^{\otimes2},
+$$
+
+and induction from $[0]^*L=\mathcal O$ and $[1]^*L=L$ yields $[m]^*L\simeq L^{\otimes m^2}$.
+
+Now compare Hilbert polynomials with respect to $L$, in the sense of Book 8, Chapter 7. Being proper with an ample bundle, $A$ is projective (Book 8, Section 4.5), and being smooth and connected over an algebraically closed field it is integral. Write $P(t)=\chi(A,L^{\otimes t})$; by Book 8, Section 7.3, it has degree $g$ and leading coefficient $e/g!$ with $e=\deg_L(A)$ a positive integer. Because $[m]$ is finite, $[m]_*$ is exact and the projection formula gives
+
+$$
+\chi\bigl(A,([m]^*L)^{\otimes t}\bigr)
+=\chi\bigl(A,[m]_*\mathcal O_A\otimes L^{\otimes t}\bigr),
+$$
+
+where $[m]_*\mathcal O_A$ is locally free of rank $d$. For a coherent sheaf $\mathcal F$ of generic rank $\rho$ on an integral projective variety of dimension $g$, the leading coefficient of its Hilbert polynomial is $\rho$ times that of the structure sheaf: choose $m_0$ with a map $\mathcal O(-m_0)^{\oplus\rho}\to\mathcal F$ that is an isomorphism at the generic point, note that its kernel and cokernel have support of dimension less than $g$, and use additivity of Hilbert polynomials (Book 8, Section 7.2) together with the degree statement of Section 7.3. Hence the right-hand side has leading coefficient $d\,e/g!$. On the other hand $[m]^*L\simeq L^{\otimes m^2}$, and replacing $L$ by $L^{\otimes m^2}$ replaces $P(t)$ by $P(m^2t)$ (Book 8, Section 7.4), whose leading coefficient is $m^{2g}e/g!$. Since $e>0$ we get $d=m^{2g}$.
+
+Finally $A(\kappa)$ is divisible, being the group of $\kappa$-points of a connected group variety on which every $[m]$ prime to the characteristic is surjective, and $A[\ell^j](\kappa)$ has order $\ell^{2gj}$ for every $j$ and every $\ell\ne\operatorname{char}\kappa$. A divisible abelian $\ell$-primary group with $\ell^j$-torsion of order $\ell^{2gj}$ is isomorphic to $(\mathbf Q_\ell/\mathbf Z_\ell)^{2g}$, so $A[\ell^j](\kappa)\simeq(\mathbf Z/\ell^j)^{2g}$; the Chinese remainder theorem gives the statement for $m$. $\square$
+
+Everything so far is unconditional. The one input we cannot supply inside this book is that the Jacobian of a curve carries an ample line bundle. Book 15, Section 10.3, proves that $\operatorname{Pic}^d_{C/k}$ is smooth and proper, and says explicitly that canonical polarizations belong to the later study of Jacobians; Book 8, Section 3.3, records that "proper implies projective" is false in general and true for abelian schemes only by special geometry, and Book 8, Sections 9.3 and 9.4, take a relatively ample bundle as an input to the embedding theorem for abelian schemes. We therefore isolate the missing statement once, use it in one place, and use nothing else of the kind.
+
+**Standing Hypothesis (JP).** Let $C$ be a smooth proper geometrically connected curve of genus $g\ge1$ over an algebraically closed field $k$. Its Jacobian $J=\operatorname{Pic}^0_{C/k}$ carries an ample line bundle.
+
+Hypothesis (JP) is proved in Book 25, where a smooth proper group scheme with geometrically connected fibers is shown to be projective locally on the base by the cubical-line-bundle construction and faithfully flat descent, and again in Book 35 through the theory of polarizations. Those proofs use divisor theory, cubical line bundles and coherent cohomology, and no étale cohomology whatever, so invoking them later is not circular; but they are later books, and no argument in the present book may cite them. Accordingly the hypothesis appears in the statement of the following corollary and nowhere else, and no theorem of Chapters 7 through 16 depends on it.
+
+**Torsion order corollary (under (JP)).** With $C$, $g$, $D$, $r$, $U$ and $n$ as in Section 6.7 and $n$ prime to $p$,
+
+$$
+\operatorname{Pic}^0(C)[n]\simeq(\mathbf Z/n)^{2g},
+\qquad
+H^1(C,\mu_n)\simeq(\mathbf Z/n)^{2g},
+$$
+
+and for $r>0$ the group $H^1(U,\mu_n)$ is free of rank $2g+r-1$ over $\mathbf Z/n$, while $H^0(U,\mu_n)=\mathbf Z/n$ and $H^q(U,\mu_n)=0$ for $q\ge2$.
+
+**Proof.** The Jacobian is a smooth proper connected group scheme of dimension $g$, so under (JP) the degree theorem applies and gives $J(k)[n]\simeq(\mathbf Z/n)^{2g}$; the Kummer theorem then gives $H^1(C,\mu_n)=\operatorname{Pic}(C)[n]=J(k)[n]$.
+
+Let $r>0$. Keep the notation of the Kummer theorem: $\Lambda\subseteq J(k)$ is the image of the group $\operatorname{Div}^0_D\simeq\mathbf Z^{r-1}$ of degree-zero divisors supported on $D$, and $\operatorname{Pic}(U)=J(k)/\Lambda$. The kernel of $\operatorname{Div}^0_D\to J(k)$ consists of the principal divisors supported on $D$, so it is isomorphic to $\mathcal O(U)^\times/k^\times$; write $s$ for its rank and $\rho=r-1-s$ for the rank of $\Lambda$. Then $\mathcal O(U)^\times/n\simeq(\mathbf Z/n)^{s}$.
+
+For the middle term, $\Lambda$ is finitely generated of rank $\rho$, so $|\Lambda/n\Lambda|=n^{\rho}\,|\Lambda[n]|$. Since $J(k)$ is $n$-divisible, the snake lemma applied to $0\to\Lambda\to J(k)\to\operatorname{Pic}(U)\to0$ gives an exact sequence
+
+$$
+0\to J(k)[n]/\Lambda[n]\to\operatorname{Pic}(U)[n]\to\Lambda/n\Lambda\to0,
+$$
+
+whence $|\operatorname{Pic}(U)[n]|=n^{2g}\,n^{\rho}$. Multiplying by $n^{s}$ through the Kummer sequence gives $|H^1(U,\mu_n)|=n^{2g+r-1}$.
+
+Freeness is automatic. The group $\operatorname{Pic}(U)$ is divisible, being a quotient of the divisible group $J(k)$, and a divisible abelian group is a direct sum of copies of $\mathbf Q$ and of Prüfer groups; hence its $n$-torsion is a free $\mathbf Z/n$-module, necessarily of rank $2g+\rho$ by the order just computed. The Kummer sequence then presents $H^1(U,\mu_n)$ as an extension of the free module $\operatorname{Pic}(U)[n]$ by the free module $\mathcal O(U)^\times/n$. A free module over $\mathbf Z/n$ is projective, so the extension splits and $H^1(U,\mu_n)$ is free of rank $2g+r-1$. $\square$
+
+The rank $2g+r-1$ is the same number that the classical presentation of the tame fundamental group of a punctured curve would predict. That presentation is not proved in this book and is not used anywhere in it; the number is obtained here from divisor theory and the degree of multiplication on the Jacobian.
+
 ## 7. Finiteness for constructible torsion coefficients
 
 ### 7.1 The finiteness theorem in the required range
@@ -553,25 +852,9 @@ and every group in the remaining range is finite.
 
 **Proof.** We argue simultaneously by dimension and noetherian induction on the support. The assertion is immediate in dimension zero: the reduced support is a finite set of spectra of finite purely inseparable extensions of $k$, hence has the same étale topos as a finite set of separably closed points.
 
-We next establish the curve step without using the higher-dimensional induction. Normalize an affine curve, compactify each smooth component, and let $D$ be the nonempty finite boundary. Skyscraper kernels and cokernels at the singular points have no positive cohomology, so it is enough to treat a lisse finite sheaf on a smooth $U=C\setminus D$. The prime-to-characteristic tame fundamental group has the finite presentation
+The curve step is Section 6.7 and needs no separate argument here. In dimension one, let $U$ be an affine curve of finite type over $k$. Its étale site is that of its reduction, and its finitely many irreducible components may be separated by a sheaf sequence supported at the finitely many crossing points, so we may assume $U$ integral. Let $\nu:\widetilde U\to U$ be its normalization, finite by the finite-normalization lemma for curves of Book 8, Section 9.1. The kernel and cokernel of $\mathcal F\to\nu_*\nu^*\mathcal F$ are supported on the finitely many nonnormal points; finite direct image is exact and a sheaf supported at finitely many closed points has no positive cohomology, so the long exact sequence reduces the assertion to $\widetilde U$, which is affine and, being normal of dimension one over a field we may take algebraically closed by the reduction of Section 6.5, smooth. The affine curve theorem of Section 6.7 now gives finiteness in every degree and vanishing above degree one, for every constructible sheaf of finite $\ell$-primary modules. This proves the lemma in dimension one.
 
-$$
-\left\langle
-a_1,b_1,\ldots,a_g,b_g,c_1,\ldots,c_r
-\ \middle|\
-\prod_{i=1}^g[a_i,b_i]\prod_{j=1}^r c_j=1
-\right\rangle,
-$$
-
-in every finite quotient of order prime to the characteristic; $c_j$ is inertia at the $j$th boundary point. Here is the algebraic construction of the presentation. Choose separating functions with prescribed simple zeros and poles by Riemann--Roch, use their Kummer covers to produce the $c_j$, and use $g$ pairs of functions with disjoint polar divisors to produce the handle generators. Normalizing successive fiber products gives every finite tame cover: the valuation criterion says that a function-field extension unramified on $U$ can ramify only at $D$, and the product of the local inertia elements is one because the divisor of a rational function has degree zero. Riemann--Hurwitz shows that a proper quotient of the displayed group would omit a connected cover of the predicted degree and genus, so the map on every finite tame quotient is injective as well as surjective. This proves the presentation through the finite-cover classification of Book 17.
-
-Because $r>0$, eliminate $c_r$; the maximal pro-$\ell$ quotient is a free pro-$\ell$ group on $2g+r-1$ generators. In characteristic $p>0$, wild inertia is pro-$p$, and invariants under it are exact on $\ell$-primary modules; in characteristic zero there is no wild subgroup. Prime-to-$\ell$ parts of the remaining finite monodromy are also exact by averaging. Thus continuous cohomology of the full group with a finite $\ell$-primary module is computed by the two-term free-group cochain complex
-
-$$
-M\longrightarrow M^{,2g+r-1}.
-$$
-
-It is finite and has no cohomology above degree one. Finite torsors give the same complex as étale cohomology on $U$, and a finite constructibility filtration extends the result from lisse sheaves to all constructible sheaves. This proves the lemma in dimension one.
+It is worth being explicit about the route that has been avoided, since it is the one a reader is likely to expect. One would like to say that the prime-to-characteristic tame fundamental group of a punctured curve has a presentation on $2g+r$ generators with a single relation, and that finite torsors compute the étale cohomology of $U$, that is, that a punctured curve is a $K(\pi,1)$. The presentation is a genuine theorem, but its known proofs pass through the Riemann existence theorem and are unavailable in an algebraic development; the $K(\pi,1)$ property is a further theorem and not a formal consequence of covering theory. Neither statement is proved in this book, and neither is used in it. What the calculation of Section 6.7 supplies instead is the same numerical output where it is needed: under the standing hypothesis (JP) of Section 6.8 the group $H^1(U,\mu_n)$ is free of rank $2g+r-1$ over $\mathbf Z/n$ for a smooth affine $U=C\setminus D$ with $r=\#D>0$, and $H^q(U,\mu_n)=0$ for $q\ge2$; the vanishing and finiteness statements used in the present proof are unconditional and do not need (JP).
 
 For the induction step in dimension at least two, first refine the constructibility stratification and replace the support by one irreducible stratum. After removing a smaller closed subset, the stratum is smooth and the sheaf is lisse. A generic linear projection, after shrinking source and target, gives an elementary affine-curve fibration
 
@@ -587,11 +870,13 @@ $$
 M\xrightarrow{\tau-1}M,
 $$
 
-where $\tau$ is a compatible tame generator. Apply the curve presentation just proved to the geometric fibers. The finite list of generators, inertia operators, and the single relation is defined after one pointed étale neighborhood of the base: all covers and branch sections involved are finitely presented. The resulting two-term presentation complexes therefore form constructible finite sheaves on $V$ and commute with further pointed étale restriction. Descent along the finite trivializing cover is retained in these complexes rather than replaced by the generally unbounded groups $H^a(G,-)$. It follows that $R^0f_*\mathcal F$ and $R^1f_*\mathcal F$ are constructible finite sheaves and that $R^qf_*\mathcal F=0$ for $q>1$. The same construction with extension by zero handles a locally closed stratum: the missing sections simply impose zero in the corresponding local term.
+where $\tau$ is a compatible tame generator. Apply the curve computation of Section 6.7 to the geometric fibers of $f$: each is a smooth affine curve over a separably closed field, and with the restricted lisse coefficients its cohomology is finite and concentrated in degrees zero and one. Every object entering that computation is finitely presented over the base — the finite étale cover trivializing the coefficients, its normalization across the boundary, the trace surjection, and the finitely many short exact sequences of the dévissage — so after one further shrinking of $V$ the entire dévissage is defined over $V$, its terms are finite direct images from smooth affine relative curves over $V$, and it restricts on each pointed étale neighborhood to the dévissage used there. It follows that $R^0f_*\mathcal F$ and $R^1f_*\mathcal F$ are constructible finite sheaves and that $R^qf_*\mathcal F=0$ for $q>1$; the boundary contributions are the two-term tame complexes just displayed. Descent along the finite trivializing cover is retained in these complexes rather than replaced by the generally unbounded groups $H^a(G,-)$. The same construction with extension by zero handles a locally closed stratum: the missing sections simply impose zero in the corresponding local term. This is the only step of the proof that is relative rather than fiberwise; the one-dimensional case established above uses nothing of the kind.
 
 The Leray sequence now has only the rows $0$ and $1$. By induction on $\dim V$ its terms vanish when $a>d-1$, so $H^{a+b}(U^\circ,\mathcal F)$ vanishes above $d$ and is finite. The kernel and cokernel of the map from the extension by zero on $U^\circ$ to the original sheaf are supported on the deleted closed subset. The localization long exact sequence and noetherian induction transfer the same assertions to $U$. This closes both inductions. $\square$
 
 The proof also explains the prime-to-characteristic hypothesis. It is exactly what makes wild-inertia invariants exact and leaves a length-one tame local complex. It explains the uniformity in the exponent as well: for a fixed stratification and fixed ranks, the same finite Čech and inertia complexes work for every $\Lambda_n$.
+
+It is worth recording where the weight of the argument now lies. For curves the affine lemma is proved outright in Section 6.7, from Tsen's theorem and the divisor sequence, with no fundamental-group presentation, no $K(\pi,1)$ assertion and no base-change theorem. In dimension at least two the elementary fibration is what carries the induction, and its higher direct images are controlled by transporting the fiberwise curve computation along a finitely presented dévissage; the general base-change theorems that would make the fiberwise computation and the strict-local computation agree by pure thought belong to the next book and are not invoked. A reader tracking hypotheses should therefore treat the curve case and the higher-dimensional case as resting on different amounts of geometry.
 
 We pass from affine to separated schemes without assuming quasi-projectivity. A separated noetherian space of dimension $d$ has a finite affine refinement of order at most $d+1$, meaning that no nonempty intersection uses more than $d+1$ members. Construct such a refinement by induction on dimension: choose disjoint affine neighborhoods of the finitely many generic points, remove their closed complement, and refine that complement, whose dimension is smaller; shrinking the new affine neighborhoods away from the previously chosen closed pieces preserves the asserted order. Separatedness makes every finite intersection affine.
 
@@ -1133,7 +1418,7 @@ $$
 
 and all cohomology groups are finite. If $C$ is affine, the upper endpoint is $1$. For a bounded constructible complex with cohomology in $[a,b]$, the corresponding ranges are $[a,b+2]$ and $[a,b+1]$.
 
-For the constant sheaf on a proper smooth connected curve, $H^0(C,\Lambda_n)=\Lambda_n$ and the remaining possible groups are finite in degrees one and two. Their ranks and the canonical identification of the top twisted group require the divisor-class and trace calculations developed in the curve and duality books. The present result is exactly what the adic construction needs: finite groups in a uniform interval. Kummer theory still supplies useful individual classes on open curves, but it is not being used as a substitute for the full top-degree calculation.
+For the constant sheaf on a proper smooth connected curve, $H^0(C,\Lambda_n)=\Lambda_n$ and the remaining possible groups are finite in degrees one and two. Section 6.7 computes them, after a choice of primitive $\ell^n$th root of unity identifying $\Lambda_n$ with $\mu_{\ell^n}$: the degree-two group is cyclic of order $\ell^n$ through $\operatorname{Pic}(C)/\ell^n$, and the degree-one group is $\operatorname{Pic}^0(C)[\ell^n]$, whose order is $\ell^{2gn}$ under the standing hypothesis (JP) of Section 6.8. What the adic construction needs is only the weaker unconditional statement: finite groups in a uniform interval. The canonical identification of the top group with $\Lambda_n(-1)$ by a trace map, as opposed to the noncanonical identification of its order, belongs to the duality book.
 
 ### 14.2 The first cohomology group
 
@@ -1153,7 +1438,7 @@ H^1(C,\mathbf Z_\ell)
 (\pi_1(C)^{\mathrm{ab}},\mathbf Z_\ell).
 $$
 
-If $C$ descends to $k_0$, this finitely generated $\Lambda$-module carries a continuous $G_{k_0}$-action. Later divisor-class theory proves that it is free of rank $2g$ and compares it with the Tate module of the Jacobian. That later identification is not used for its construction or continuity here. The action should not be confused with the fundamental-group action on the stalk of a lisse coefficient sheaf: constant coefficients have trivial stalk action, while $H^1(\bar C,\mathbf Z_\ell)$ usually has nontrivial arithmetic action.
+If $C$ descends to $k_0$, this finitely generated $\Lambda$-module carries a continuous $G_{k_0}$-action. Section 6.8 identifies each finite level with $\operatorname{Pic}^0(C)[\ell^n]$ through the Kummer sequence and, under the standing hypothesis (JP) recorded there, shows that this group is free of rank $2g$ over $\Lambda_n$; the limit is then free of rank $2g$ over $\Lambda$. The comparison with the Tate module of the Jacobian, and the exterior-algebra description of the cohomology of an abelian variety, are carried out in Book 36, Section 10.5. Neither the rank nor that comparison is used for the construction or the continuity here. The action should not be confused with the fundamental-group action on the stalk of a lisse coefficient sheaf: constant coefficients have trivial stalk action, while $H^1(\bar C,\mathbf Z_\ell)$ usually has nontrivial arithmetic action.
 
 For nonconstant lisse $\mathcal F$, $H^0(C,\mathcal F)$ is the invariant submodule of a geometric stalk. The group $H^1$ measures extensions and torsors twisted by monodromy. Even if $\mathcal F$ has no invariants, $H^1$ need not vanish; topology of the curve and monodromy relations can create classes.
 
@@ -1204,21 +1489,21 @@ H^q(A,\mathcal F)\text{ is finite},
 \qquad H^q(A,\mathcal F)=0\quad(q>2g).
 $$
 
-This is the abelian-variety finiteness input promised here. It does not require a calculation of the full constant-coefficient algebra. The later comparison with the dual Tate module and the exterior-algebra description of constant cohomology use polarizations and duality. Keeping those assertions out of the present proof prevents a rank computation from being smuggled into the finiteness theorem.
+This is the abelian-variety finiteness input promised here. It does not require a calculation of the full constant-coefficient algebra. The comparison with the dual Tate module and the exterior-algebra description of constant cohomology are carried out in Book 36, Section 10.5, where polarizations, duality and the profinite-group cohomology of Book 24 are all available. Keeping those assertions out of the present proof prevents a rank computation from being smuggled into the finiteness theorem.
 
 For a normalized bounded constructible adic complex $\mathcal F$, (7.1) identifies finite-level reduction of $R\Gamma_{\mathrm{cont}}(A,\mathcal F)$. Its mod-$\ell$ reduction is bounded in the interval obtained by adding $[0,2g]$ to the amplitude of $\mathcal F_1$ and has finite-dimensional cohomology. The complete-DVR lemma makes the continuous complex perfect.
 
 ### 15.2 Torsion and lisse Tate systems
 
-Let $f:A\to S$ be an abelian scheme of relative dimension $g$, and assume $\ell$ is invertible on $S$. Multiplication by $\ell^n$ is étale because its differential on the relative tangent bundle is multiplication by the unit $\ell^n$. It is proper and quasi-finite, hence finite. Its kernel $A[\ell^n]$ is therefore finite étale over $S$.
+**Tate system theorem.** Let $f:A\to S$ be an abelian scheme of relative dimension $g$, that is, a smooth proper finitely presented commutative group scheme with geometrically connected fibers, and assume $\ell$ is invertible on $S$. Assume in addition that $A/S$ is **polarizable**: Zariski-locally on $S$ it carries a relatively ample line bundle. Then $A[\ell^n]$ is finite étale over $S$ of rank $\ell^{2gn}$, and the tower $T_\ell A=(A[\ell^n])_n$ is a lisse $\Lambda$-system of rank $2g$.
 
-Its rank is $\ell^{2gn}$. To see the degree without assuming a cohomology calculation, choose a relatively ample line bundle and replace it by its tensor product with its pullback under $[-1]$; this makes it symmetric. For completeness, the cubical identity is obtained by taking the alternating tensor product of the pullbacks of $L$ along the seven nonempty partial-sum maps $A^3\to A$. Its restriction to every coordinate plane is trivial. Applying the seesaw argument twice shows that the bundle itself is pulled back from the zero section, hence is numerically trivial on every fiber. Specializing two variables gives the theorem of the square, and induction on $m$ gives, on every geometric fiber,
+The polarizability hypothesis is not decoration. Projectivity is part of the definition of an abelian scheme adopted in Book 15, Section 11.1, and Book 8, Sections 9.3 and 9.4, likewise take a relatively ample bundle as the input to the embedding theorem; Book 8, Section 3.3, records that properness alone does not give projectivity except by special geometry. The general theorem that an abelian scheme is projective belongs to Book 35 and may not be cited here. In the applications the hypothesis costs nothing: PEL and modular families carry a polarization by the definition of the moduli problem, and every abelian scheme that occurs in this book comes with one. For the Jacobian of a curve, the required bundle is precisely the content of the standing hypothesis (JP) of Section 6.8, discharged in Books 25 and 35 by the projectivity of smooth proper connected group schemes and by the theory of polarizations.
 
-$$
-[m]^*L\equiv L^{\otimes m^2}.
-$$
+**Proof.** Multiplication by $\ell^n$ is étale because its differential on the relative tangent bundle is multiplication by the unit $\ell^n$ and translation propagates this to every point. It is proper and quasi-finite, hence finite; so $A[\ell^n]$, its kernel, is finite étale over $S$. The rank of a finite étale group scheme is locally constant, so it may be computed on a geometric fiber $A_{\bar s}$, which is a smooth proper connected group scheme of dimension $g$ over an algebraically closed field carrying an ample line bundle.
 
-On a geometric fiber, the leading coefficient of the Hilbert polynomial is the top self-intersection of $L$ divided by $g!$. Pullback multiplies that self-intersection by $\deg[m]$, while replacing $L$ by $L^{\otimes m^2}$ multiplies it by $m^{2g}$. Hence $\deg[m]=m^{2g}$; the degree is locally constant on $S$, giving the stated rank for $m=\ell^n$.
+That computation is the degree theorem of Section 6.8, and we recall its two ingredients in the present notation. Choosing a relatively ample $L_0$, rigidifying it along the zero section and replacing it by $L_0\otimes[-1]^*L_0$ produces an ample symmetric rigidified $L$. The cubical identity is the alternating tensor product of the pullbacks of $L$ along the seven nonempty partial-sum maps $A^3\to A$; its restriction to each coordinate plane is trivial by cancellation, and the see-saw lemma of Section 6.8 together with the rigidity of morphisms from a proper connected scheme to an affine one extends those trivializations over the whole triple product. This is the cube lemma of Book 15, Section 11.2, and it is what replaces the appeal to a see-saw principle from a later book that stood here before. Specializing two variables gives the theorem of the square, and pulling the identity back along $([m],\mathrm{id},[-1])$ gives, by induction on $m$, the relation $[m]^*L\simeq L^{\otimes m^2}$ on every geometric fiber.
+
+The degree is then read off from Hilbert polynomials, as in Section 6.8: $[m]_*\mathcal O$ is locally free of rank $\deg[m]$, so $\chi(A_{\bar s},([m]^*L)^{\otimes t})$ has leading coefficient $\deg[m]$ times that of $\chi(A_{\bar s},L^{\otimes t})$, while $[m]^*L\simeq L^{\otimes m^2}$ makes that leading coefficient $m^{2g}$ times as large. The polarized degree of $L$ is a positive integer, so $\deg[m]=m^{2g}$. Taking $m=\ell^n$ gives the stated rank. $\square$
 
 The transition maps $A[\ell^{n+1}]\to A[\ell^n]$ make
 
@@ -1226,7 +1511,7 @@ $$
 T_\ell A=(A[\ell^n])_n
 $$
 
-a lisse $\Lambda$-system of rank $2g$. This construction uses only finite étale covering theory. It should not yet be identified with $R^1f_*\Lambda$; that comparison is a cohomological base-change and duality statement with a contravariance and, after polarization, a Tate twist.
+a lisse $\Lambda$-system of rank $2g$. This construction uses only finite étale covering theory together with the divisor calculus behind the degree of $[\ell^n]$; no cohomology of $A$ enters. It should not yet be identified with $R^1f_*\Lambda$; that comparison is a cohomological base-change and duality statement with a contravariance and, after polarization, a Tate twist.
 
 ### 15.3 Families and base change
 

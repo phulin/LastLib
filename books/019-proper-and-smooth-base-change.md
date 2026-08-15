@@ -476,7 +476,7 @@ This explains why smoothness is not needed for proper base change. A nodal fiber
 
 ### 5.3 Higher relative dimension
 
-The proper-neighborhood lemma avoids resolution in higher dimension. For completeness, its induction can be organized by a relative projection on each irreducible affine stratum. Purely inseparable changes do not alter the étale site. After making that harmless reduction and deleting a smaller closed subset, a separating transcendence basis gives an elementary curve fibration $h$ over a stratum of dimension one less. The finite presentation of Book 18 for such a fibration retains the tame boundary operators and gives
+The proper-neighborhood lemma avoids resolution in higher dimension. For completeness, its induction can be organized by a relative projection on each irreducible affine stratum. Purely inseparable changes do not alter the étale site. After making that harmless reduction and deleting a smaller closed subset, a separating transcendence basis gives an elementary curve fibration $h$ over a stratum of dimension one less. The affine-curve finiteness and vanishing theorem of Book 18, Section 6.7, applied fiberwise to such a fibration, retains the tame boundary operators and gives
 
 $$
 R\Gamma(Y,Rh_*\Lambda)\simeq R\Gamma(X,\Lambda).
@@ -653,7 +653,7 @@ $$
 Rp_*M\simeq M.
 $$
 
-For $r=1$, compactify to $\mathbf P^1_A$. Proper base change computes its cohomology from the closed geometric fiber. On that fiber, the affine-curve presentation of Book 18 has $2g+r-1=0$ generators for $\mathbf A^1$: the prime-to-residue-characteristic cohomology of a constant finite module is $M$ in degree zero and zero above. The boundary presentation at infinity is unchanged over $A$, so the localization triangles on $\mathbf P^1_A$ and its closed fiber identify and give the same answer over $A$. Products and induction give $r>1$.
+For $r=1$, compactify to $\mathbf P^1_A$. Proper base change computes its cohomology from the closed geometric fiber. On that fiber, the affine-curve theorem of Book 18, Section 6.7, computes $\mathbf A^1$ directly: the prime-to-residue-characteristic cohomology of a constant finite module is $M$ in degree zero and zero above (the Kummer computation with $g=0$ and $r=1$; no fundamental-group presentation is involved). The boundary presentation at infinity is unchanged over $A$, so the localization triangles on $\mathbf P^1_A$ and its closed fiber identify and give the same answer over $A$. Products and induction give $r>1$.
 
 A smooth morphism $u:U\to S$ is, around every point, étale over affine space. Étale pullback preserves the calculation, and descent glues it. For a lisse $\mathcal L$, pass to a finite étale neighborhood on which it is constant. Thus sufficiently small strict neighborhoods have no relative cohomology beyond degree zero.
 
@@ -933,7 +933,7 @@ $$
 
 and $R^qf_*\Lambda_n=0$ for $q>2$. The first statement follows from geometric connectedness. Fiberwise Kummer theory and the $\ell^n$-torsion of the Jacobian give the middle rank. The last identification uses the class of a geometric point and its transformation under change of field; the twist records that transformation.
 
-Here is a proof of the fiber calculation that does not use the later duality theorem. Over a separably closed field choose a point $x$ and put $U=C\setminus\{x\}$. The affine-curve presentation in Book 18 gives a free prime-to-characteristic cochain model with $2g$ degree-one generators. Thus
+Here is a proof of the fiber calculation that does not use the later duality theorem. Over a separably closed field choose a point $x$ and put $U=C\setminus\{x\}$. The Kummer computation of Book 18, Sections 6.7 and 6.8, makes $H^1(U,\Lambda_n)$ free of rank $2g$ and kills the higher degrees; the rank statement carries Book 18's polarizability hypothesis (JP) on the Jacobian, discharged for Jacobians in the later Picard theory, while the vanishing is unconditional. Thus
 
 $$
 H^0(U,\Lambda_n)=\Lambda_n,\qquad
@@ -1064,7 +1064,7 @@ $$
 A[\ell^n]\to S
 $$
 
-is a lisse sheaf of free $\Lambda_n$-modules of rank $2g$. Both assertions are Book 18, Section 15.2: étaleness because the differential of $[\ell^n]$ on the relative tangent bundle is the unit $\ell^n$, and the rank $\ell^{2gn}$ because the theorem of the square gives $[m]^*L\equiv L^{\otimes m^2}$ for a symmetric relatively ample $L$, whence $\deg[m]=m^{2g}$ by comparing leading Hilbert coefficients. That derivation uses no cohomology.
+is a lisse sheaf of free $\Lambda_n$-modules of rank $2g$. Both assertions are Book 18, Section 15.2, whose stated hypothesis is that the abelian scheme is polarizable, that is, Zariski-locally carries a relatively ample bundle — automatic in the polarized families considered here: étaleness because the differential of $[\ell^n]$ on the relative tangent bundle is the unit $\ell^n$, and the rank $\ell^{2gn}$ because the theorem of the square gives $[m]^*L\equiv L^{\otimes m^2}$ for a symmetric relatively ample $L$, whence $\deg[m]=m^{2g}$ by comparing leading Hilbert coefficients. That derivation uses no cohomology.
 
 What this chapter adds is relative. It rests on one absolute input that is not proved in this book.
 
