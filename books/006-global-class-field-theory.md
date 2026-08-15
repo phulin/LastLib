@@ -185,9 +185,9 @@ For a finite abelian extension, the second inequality and principal reciprocity
 first identify the norm quotient, without a global fundamental class. Finite
 duality then proves character existence, and character compatibility proves
 norm limitation for an arbitrary finite Galois extension. Section 4.3 realizes
-the fundamental class by a free presentation and its relation module, forms
-the relative Weil extension explicitly, and fixes its Schreier--Mackey chain
-maps. Tate's canonical
+the fundamental class by Tate's regular absolute idèle-class invariant, forms
+the normalized relative Weil extension explicitly, and fixes its
+Schreier--Mackey chain maps. Tate's canonical
 $S$-unit sequence is subsequently constructed as a representative of that
 already normalized class. Section 6 packages character existence into the
 inclusion-reversing classification of all open finite-index subgroups of
@@ -387,8 +387,8 @@ $$
 A class $u_{L/K}\in H^2(G,C_L)$ connects them by cap product. Section 4.2
 first proves the cyclic calculation, the general second inequality, the Brauer
 invariant sequence, and finite duality without such a class. Section 4.3 then
-constructs and normalizes the class from the compatible reciprocity maps by
-the relation-module Hom--Ext sequence, and then represents
+constructs and normalizes the class from the regular part of absolute
+idèle-class cohomology, and then represents
 it by Tate's canonical sequence.
 
 ### 4.2 The Brauer--idele exact sequence
@@ -1085,7 +1085,7 @@ the Brauer invariant sequence. The all-degree idèle-class formation is not
 obtained by contracting the induced local summands: for a noncyclic group the
 Mackey cross-orbits retain a genuine obstruction. We first prove abelian
 reciprocity, character existence, and norm limitation, and only then construct
-the global class from a free presentation and the compatible norm quotients.
+the global class from Tate's normalized regular absolute cohomology.
 
 **Theorem 4.1 (Brauer invariant sequence).** For a number field $F$, localization and local invariant maps form an exact sequence
 
@@ -2405,187 +2405,173 @@ global existence theorem.
 
 For $L/K$ finite Galois, the local fundamental classes do not simply form a direct sum and descend. When $G$ is noncyclic, their denominators can have least common multiple smaller than $|G|$. The missing information lies one degree farther along the cohomology sequence. A correct construction must retain both local invariants and the global divisor relation.
 
-We instead use the reciprocity and norm theorems already proved. This is a
-finite relation-module construction; no absolute degree-three group or
-unbounded cohomological tail occurs.
+We use Tate's regular-class construction. It requires neither an absolute
+degree-three vanishing theorem nor an attempt to recover a degree-two class
+from its degree-$-2$ cap product. The latter would be false: for a Klein four
+group, a generator $u$ of a cyclic group of order four and $3u$ induce the
+same maps on every degree-$-2$ norm quotient, although their normalized
+degree-zero connecting maps are different.
 
-For $H\subseteq G$ put $E=L^H$ and $M=L^{[H,H]}$. Norm limitation and
-pre-class-formation reciprocity give
-
-$$
-\theta_H:H^{\rm ab}=\operatorname {Gal}(M/E)
- \xrightarrow{\ \operatorname {Art}_{M/E}^{-1}\ }
- C_E/N_{M/E}C_M=C_E/N_{L/E}C_L.                         \tag{4.G1}
-$$
-
-For $H\subseteq J$, restriction on negative Tate degree $-2$ is the
-group-theoretic transfer $J^{\rm ab}\to H^{\rm ab}$, while corestriction is
-induced by $H\hookrightarrow J$. On the right of (4.G1) the corresponding
-maps are scalar inclusion and norm. The local norm--restriction square,
-multiplied over all places, proves that the $\theta_H$ commute with these
-maps, with conjugation, and with chains of subgroups.
-
-We record the finite lifting which turns this Mackey family into an actual
-extension.
-
-**Relation-module lifting lemma.** Let $C$ be a $G$-module such that
-$H^1(H,C)=0$ for every $H\subseteq G$. Suppose isomorphisms
+Fix an algebraic closure $\overline F$. For finite Galois $M/F$ in
+$\overline F$, inflation includes each of the following finite-level groups
+in the corresponding directed union. For the idèle-class term this follows
+from inflation--restriction: if $M'/M/F$ is Galois with kernel $N$, then
+$C_{M'}^N=C_M$ and $H^1(N,C_{M'})=0$ by (4.I9s). Put
 
 $$
-\theta_H:H^{\rm ab}\xrightarrow{\sim}C^H/N_HC            \tag{4.G2}
+\begin{aligned}
+\mathcal B(F)&=\varinjlim_{M/F}H^2(\operatorname {Gal}(M/F),M^\times),\\
+\mathcal J(F)&=\varinjlim_{M/F}H^2(\operatorname {Gal}(M/F),I_M),\\
+\mathcal C(F)&=\varinjlim_{M/F}H^2(\operatorname {Gal}(M/F),C_M).
+\end{aligned}                                             \tag{4.G1}
 $$
 
-are compatible with restriction, transfer, and conjugation as above. Let
-$\pi:F\twoheadrightarrow G$ be the free group on letters $x_g$,
-$g\in G\setminus\{1\}$, with $\pi(x_g)=g$, put $R=\ker\pi$, and give
-$R_{\rm ab}=R/[R,R]$ its conjugation $G$-action. There is a genuine
-$G$-homomorphism
+The first union is $\operatorname {Br}(F)$. Formula (4.I2) identifies the
+second with the finite-support direct sum
 
 $$
-\varphi:R_{\rm ab}\longrightarrow C                    \tag{4.G2a}
+\mathcal J(F)=\bigoplus_v\operatorname {Br}(F_v).        \tag{4.G2}
 $$
 
-whose cyclic power-word value, for $H=\langle h\rangle$ and $|H|=m$, is
+Indeed, a relative local summand embeds in $\operatorname {Br}(F_v)$.
+Conversely, for a finitely supported family, the cyclotomic splitting lemma
+(4.I9c) gives one finite cyclic extension whose local degrees are divisible
+by all its denominators, including the real factors. Thus the family occurs
+at one finite level. Under these identifications the map
+$\mathcal B(F)\to\mathcal J(F)$ is localization.
+
+At each finite level the cohomology sequence of
+$1\to M^\times\to I_M\to C_M\to1$ begins in degree two with an injection,
+because $H^1(\operatorname {Gal}(M/F),C_M)=0$. Filtered colimits are exact,
+so we obtain
 
 $$
-\varphi(\overline{x_h^m})\equiv\theta_H([h])\pmod {N_HC}.               \tag{4.G2b}
+0\longrightarrow\operatorname {Br}(F)\longrightarrow
+\bigoplus_v\operatorname {Br}(F_v)
+\xrightarrow{\epsilon_F}\mathcal C(F).                  \tag{4.G3}
 $$
 
-It is unique modulo a homomorphism extending to the free module in the
-relation sequence.
-
-**Proof.** Fox differentiation gives the exact relation sequence
-
-$$
-0\longrightarrow R_{\rm ab}\xrightarrow{d_R}
-P_1=\bigoplus_{g\ne1}\mathbf Z[G]e_g
-\xrightarrow{e_g\mapsto g-1}I_G\longrightarrow0.        \tag{4.G3}
-$$
-
-Under $e_g\leftrightarrow[g]$, the word
-$r(g,h)=x_gx_hx_{gh}^{-1}$ maps to
-$e_g+g e_h-e_{gh}=d[g|h]$. The relations among these generators are the
-bar boundaries
+Define the subgroup of **regular absolute classes** by
+$\mathcal C(F)_{\rm reg}=\operatorname {im}\epsilon_F$. The Brauer invariant
+sequence (4.I9h) gives a genuine normalized isomorphism
 
 $$
-g[h|k]-[gh|k]+[g|hk]-[g|h]=d[g|h|k].                   \tag{4.G3a}
+\beta_F:\mathcal C(F)_{\rm reg}\xrightarrow{\sim}\mathbf Q/\mathbf Z,
+\qquad
+\beta_F\epsilon_F((b_v)_v)=\sum_v\operatorname {inv}_v(b_v).          \tag{4.G4}
 $$
 
-More precisely, exactness of the normalized bar resolution gives
+This definition is independent of the lift $(b_v)$ precisely because the
+kernel is the image of $\operatorname {Br}(F)$. It retains information which
+the degree-$-2$ reciprocity maps cannot see.
+
+Let $L/F$ be finite Galois of degree $n$. Inflation--restriction at every
+finite Galois level containing $L$, followed by the filtered colimit, gives
+an exact row
 
 $$
-P_3^{\rm bar}\xrightarrow dP_2^{\rm bar}
- \xrightarrow{[g|h]\mapsto\overline{r(g,h)}}R_{\rm ab}
- \longrightarrow0.                                     \tag{4.G3b}
+0\longrightarrow H^2(G,C_L)\xrightarrow{\inf}\mathcal C(F)
+\xrightarrow{\operatorname {res}_{L/F}}\mathcal C(L).   \tag{4.G5}
 $$
 
-Thus a $G$-map $\varphi:R_{\rm ab}\to C$ is exactly a $G$-map
-$c:P_2^{\rm bar}\to C$ satisfying
+Here exactness uses $C_M^{\operatorname {Gal}(M/L)}=C_L$ and
+$H^1(\operatorname {Gal}(M/L),C_M)=0$; thus there is no unmentioned
+$H^3$ term. Restriction carries regular classes to regular classes. On a
+local family, the local restriction formula and
+$\sum_{w\mid v}[L_w:F_v]=n$ give
 
 $$
-g c(h,k)-c(gh,k)+c(g,hk)-c(g,h)=0                      \tag{4.G3c}
+\beta_L(\operatorname {res}_{L/F}x)=n\,\beta_F(x)
+\qquad(x\in\mathcal C(F)_{\rm reg}).                    \tag{4.G6}
 $$
 
-for every $g,h,k$. Its value on a cyclic power word is the telescoping bar
-sum
+Define $H^2(G,C_L)_{\rm reg}$ to be the inverse image of
+$\mathcal C(F)_{\rm reg}$ under inflation. Exactness of (4.G5), injectivity
+of both $\beta$ maps, and (4.G6) identify it with the kernel of
+multiplication by $n$ on $\mathbf Q/\mathbf Z$:
 
 $$
-\varphi(\overline{x_h^m})=
- \sum_{i=0}^{m-1}c(h^i,h),                              \tag{4.G3d}
+\operatorname {inv}_{L/F}:H^2(G,C_L)_{\rm reg}
+\xrightarrow{\sim}\tfrac1n\mathbf Z/\mathbf Z.          \tag{4.G10}
 $$
 
-in additive notation for $C$. Equations (4.G3c)--(4.G3d) are the finite
-system which we now solve.
-
-Choose right transversals for the subgroups, compatibly down chains, and
-rewrite words by the Reidemeister--Schreier algorithm. On a cyclic orbit
-start with a representative of (4.G2b). When a new Schreier generator is
-adjoined, the two possible rewrites differ by a one-cocycle of its
-stabilizer $J$ with values in $C$. Write that cocycle as
-$j\mapsto jb-b$ using $H^1(J,C)=0$, and change the new values by the bar
-coboundary $db$. This makes the two rewrites literally equal. For a power
-word, (4.G3d) shows that the remaining change is $N_Hb$, exactly the
-ambiguity allowed in (4.G2b). For (4.G3a), the four faces are restriction,
-conjugation, transfer, and their composite, so the adjusted values cancel
-by the assumed Mackey identities. Induction over the finite list of
-Schreier orbits therefore produces a $G$-map $c$ with $c d=0$ on every
-generator $[g|h|k]$ of $P_3^{\rm bar}$. Exactness of (4.G3b), not merely a
-list of selected word values, now produces the required $\varphi$.
-Running the same induction on the difference of two solutions starts with
-zero in every quotient $C^H/N_HC$. The chosen elements $b$ then assemble,
-orbit by orbit, to a $G$-map $P_1\to C$ whose restriction to $R_{\rm ab}$
-is that difference. This proves the stated uniqueness before passing to
-extension classes.
-
-Applying $\operatorname {Hom}_G(-,C)$ to (4.G3) gives the exact row
+The general second-inequality lemma (4.I9s) says that the order of the whole
+group $H^2(G,C_L)$ divides $n$. Its regular subgroup already has order $n$.
+Consequently the regular subgroup is the whole group, (4.G10) is the desired
+invariant isomorphism, and there is a unique class
 
 $$
-\operatorname {Hom}_G(P_1,C)\longrightarrow
-\operatorname {Hom}_G(R_{\rm ab},C)\xrightarrow{\partial}
-\operatorname {Ext}^1_G(I_G,C)\longrightarrow0.          \tag{4.G4}
+u_{L/F}\in H^2(G,C_L),
+\qquad \operatorname {inv}_{L/F}(u_{L/F})=1/n.           \tag{4.G11}
 $$
 
-The zero on the right follows because $P_1$ is a finite sum of induced
-$\mathbf Z[G]$-modules, so $\operatorname {Ext}^1_G(P_1,C)=0$. Thus
-(4.G3b)--(4.G3c) say precisely that every syzygy has been killed, and
-exactness says precisely that two choices with the same extension class
-differ by a map from $P_1$.
-Splicing with $0\to I_G\to\mathbf Z[G]\to\mathbf Z\to0$ identifies the
-last group with $H^2(G,C)$ and proves the uniqueness assertion. $\square$
+This is the orientation step. In the Klein-four test it sends $u$ to $1/4$
+and $3u$ to $3/4$, so the two classes are no longer conflated.
 
-Apply the lemma to $C=C_L$; the required $H^1$-vanishing is (4.I9s). Use
-multiplicative notation for $C_L$. The graph
+Choose a normalized bar cocycle
 
 $$
-\widetilde R=\{(\varphi(\bar r)^{-1},r):r\in R\}
- \subset C_L\rtimes F
+z_{L/F}\in Z^2\operatorname {Hom}_{\mathbf Z[G]}
+ (P_\bullet(G),C_L),\qquad [z_{L/F}]=u_{L/F}.             \tag{4.G6a}
 $$
 
-is normal: $R$ acts trivially on $C_L$, and conjugation by $f\in F$ is
-exactly the $\pi(f)$-equivariance of $\varphi$. Hence
+It gives a normalized relative Weil extension
 
 $$
-1\longrightarrow C_L\longrightarrow
-W_{L/F}=(C_L\rtimes F)/\widetilde R
-\longrightarrow G\longrightarrow1                     \tag{4.G5}
+1\longrightarrow C_L\longrightarrow W_{L/F}
+\longrightarrow G\longrightarrow1,                     \tag{4.G6b}
 $$
 
-is exact. Its kernel is $C_L$, since the graph $\widetilde R$ meets $C_L$
-trivially. With the section $s(g)$ represented by $(1,x_g)$, the normalized
-factor set is
+with multiplication $(c,g)(d,h)=(c\,g(d)\,z_{L/F}(g,h),gh)$.
+Equivalently, if $\Omega_2=\ker(P_1\to P_0)$ and
+$\phi_z:\Omega_2\to C_L$ is induced by $z_{L/F}$, its Yoneda class is
+represented by
 
 $$
-z_{L/F}(g,h)=\varphi(\overline{x_gx_hx_{gh}^{-1}}).      \tag{4.G6}
+0\to C_L\to
+(C_L\oplus P_1)/\langle(\phi_z(x),-x):x\in\Omega_2\rangle
+\to P_0\to\mathbf Z\to0.                               \tag{4.G6c}
 $$
 
-Equation (4.G3a) is its literal cocycle identity. The image of $\varphi$
-under (4.G4), followed by dimension shifting, is therefore
+Changing $z$ by $da$ changes (4.G6c) by
+$[c,p]\mapsto[c+a(p),p]$; conversely an equivalence gives such a
+one-cochain. Thus the invariant, rather than its degree-$-2$ cap map, fixes
+the extension class.
+
+We now apply the two-degree criterion with its required normalization made
+explicit. For every $H\subseteq G$, $E=L^H$, restriction in the absolute
+diagram gives
 
 $$
-u_{L/F}=[z_{L/F}]\in H^2(G,C_L).                         \tag{4.G11}
+\operatorname {inv}_{L/E}(\operatorname {res}^G_Hu_{L/F})
+=[E:F]/[L:F]=1/|H|.                                     \tag{4.G10a}
 $$
 
-The pushout of (4.G3) along $\varphi$, spliced with the augmentation
-sequence, is a two-extension representing the same class. Its degree-$-2$
-connecting map over $H$ is computed by $x_h^{|H|}$ and is $\theta_H$. Its
-degree-$-1$ connecting map has zero source and target, since
-$\widehat H^{-1}(H,\mathbf Z)=0$ and $H^1(H,C_L)=0$. The two consecutive
-vanishings and Book 5's criterion (5.5) make the pushout middle module
-cohomologically trivial on every subgroup. Consequently
+The two-extension (4.G6c), restricted to $H$, has connecting maps
+
+$$
+\delta_{-1}:\widehat H^{-1}(H,\mathbf Z)=0
+ \longrightarrow H^1(H,C_L)=0,
+\qquad
+\delta_0:\mathbf Z/|H|\mathbf Z\xrightarrow{\sim}H^2(H,C_L),
+\quad1\longmapsto\operatorname {res}^G_Hu_{L/F}.        \tag{4.G10b}
+$$
+
+Thus $\delta_{-1}$ and $\delta_0$ are genuinely two consecutive
+isomorphisms. With the indexing chase in Book 5, they give two consecutive
+vanishings $\widehat H^1(H,A)=\widehat H^2(H,A)=0$ for the nonfree middle
+module $A$ of (4.G6c). Criterion (5.5), applied for every subgroup, makes
+$A$ cohomologically trivial. The other middle module is free. Hence every
+twofold connecting map, equivalently cap product, is an isomorphism:
 
 $$
 \widehat H^{r-2}(H,\mathbf Z)\xrightarrow{\ \frown\operatorname {res}u_{L/F}\ }
 \widehat H^r(H,C_L)                                      \tag{4.G16}
 $$
 
-is an isomorphism for every $r$. In degree zero this defines
-
-$$
-\operatorname {inv}_{L/E}:H^2(H,C_L)
- \xrightarrow{\sim}\tfrac1{|H|}\mathbf Z/\mathbf Z,
-\qquad\operatorname {inv}_{L/E}(\operatorname {res}u_{L/F})=1/|H|.
-                                                               \tag{4.G10}
-$$
+for every $H$ and every $r$. Notice that the degree-$-2$ reciprocity
+isomorphism is now a consequence; it was not used to choose or normalize
+$u_{L/F}$.
 
 We fix the chain maps as well. Restriction is induced by the literal bar
 inclusion
@@ -2637,7 +2623,9 @@ $$
 
 Its integral dual defines the negative half, and both halves agree at the
 norm splice. Grouping the recursion in (4.G11b) for cosets inside cosets
-proves transitivity on chains. The uniqueness clause of the lifting lemma gives
+proves transitivity on chains. Formula (4.G6), together with the corresponding
+local corestriction formula
+$\beta_F(\operatorname {cor}_{L/F}y)=\beta_L(y)$, gives
 
 $$
 \operatorname {res}^G_Hu_{L/F}=u_{L/L^H},\qquad
@@ -2650,6 +2638,11 @@ $$
 \operatorname {inf}_{L/F}^{M/F}u_{L/F}=[M:L]u_{M/F}.     \tag{4.G13}
 $$
 
+The same normalized absolute diagrams in a Galois tower give (4.G13): both
+sides have invariant $1/[L:F]$. Injectivity of (4.G10) proves the equality,
+and the bar comparison maps above realize these identities up to the specified
+transitive prisms.
+
 Finally the construction has the required local normalization. Let $w$ be
 a place of $L$, $v=w|_F$, and $D_w\subseteq G$. The coordinate map
 
@@ -2657,19 +2650,20 @@ $$
 j_w:L_w^\times\longrightarrow I_L\longrightarrow C_L                  \tag{4.G14}
 $$
 
-is $D_w$-equivariant. The degree-$-2$ connecting map of
-$(j_w)_*(u_{L_w/F_v})$ is local reciprocity followed by the $w$-coordinate
-map. The connecting map of $\operatorname {res}^G_{D_w}u_{L/F}$ is
-$\theta_{D_w}$, and these agree because (4.I14) was proved as the product
-of the local Artin maps. The uniqueness clause of the relation-module
-lifting lemma therefore gives
+is $D_w$-equivariant. Put $E=L^{D_w}$; the completion of $E$ below $w$ is
+$F_v$. Under inflation to the absolute regular group over $E$,
+$(j_w)_*(u_{L_w/F_v})$ is represented by the local Brauer family
+supported at $v$ and has invariant $1/|D_w|$. Formula (4.G10a) gives the
+same invariant for $\operatorname {res}^G_{D_w}u_{L/F}$. The relative
+invariant (4.G10), now known to be injective on the whole degree-two group,
+therefore gives
 
 $$
 \operatorname {res}^G_{D_w}u_{L/F}
 =(j_w)_*u_{L_w/F_v}\quad\text{in }H^2(D_w,C_L).          \tag{4.G15}
 $$
 
-Use the already fixed restriction map $r_{D_w}$ from (4.G11d), induce a
+Use the already fixed restriction map $r_{D_w}$ from (4.G11a), induce a
 normalized local bar cocycle $z_w$ to the chosen orbit, and apply $j_w$.
 Equation (4.G15) says that its difference from $z_{L/F}r_{D_w}$ is the
 differential of a typed cochain
@@ -2680,8 +2674,8 @@ h_w\in\operatorname {Hom}_{\mathbf Z[D_w]}(P_1(D_w),C_L),
 $$
 
 Fix one $h_w$ for every place-orbit. If either cocycle representative
-changes, exactness of (4.G4) changes $h_w$ by the corresponding prism plus a
-one-cocycle; the latter is a boundary by (4.I9s). Mackey homotopy (4.G11d)
+changes, the bar Ext comparison changes $h_w$ by the corresponding prism
+plus a one-cocycle; the latter is a boundary by (4.I9s). Mackey homotopy (4.G11d)
 transports (4.G15a) to every subgroup and every double-coset branch. An
 admissible $S$ uses only their finite direct sum. These are the localization
 homotopies used in the canonical sequence below, and the choice by orbit makes
@@ -2951,7 +2945,7 @@ discarded or required to cancel.
 
 Here is the cochain realization of (4.T2b). Use the just-defined $P_Y$, put
 $P_Z=P_\bullet(G)$, and choose a comparison map $e:P_Y\to P_Z$ lifting
-$\varepsilon$. Use the fixed global cocycle $F_Z=z_{L/K}$ from (4.G6).
+$\varepsilon$. Use the fixed global cocycle $F_Z=z_{L/K}$ from (4.G6a).
 The two maps are
 
 $$
@@ -3502,9 +3496,9 @@ The degree factors have now all been located: restriction of a local Brauer clas
 ## 5. Finite global reciprocity
 
 Every assertion in this chapter that identifies an Artin kernel with an
-idele-class norm group, or derives tower compatibility from the global
-fundamental class. The local Artin maps and their product
-from Chapter 2 are defined before the canonical-sequence construction.
+idele-class norm group or derives tower compatibility uses the global
+fundamental class. The local Artin maps and their product from Chapter 2 were
+defined before the canonical-sequence construction.
 
 ### 5.1 The reciprocity isomorphism
 
@@ -4294,14 +4288,50 @@ $$
 \tag{9.1}
 $$
 
-To derive it, apply Tate cohomology to
+Here is the degree check. Apply Tate cohomology to
 
 $$
 1\longrightarrow L^\times\longrightarrow\mathbf I_L
 \longrightarrow C_L\longrightarrow1.
 $$
 
-Hilbert 90 identifies the degree-one local terms, Shapiro changes the cohomology of $\mathbf I_L$ into the product of the cohomology of the decomposition groups, and the global fundamental class shifts the cohomology of $C_L$ by two degrees. The kernel measuring failure of a principal idele norm to be an element norm is then dual to the displayed localization kernel. Every arrow is the localization or norm arrow already used in the class-formation proof, so (9.1) is independent of choices of places.
+The knot group is literally
+
+$$
+\ker\left(
+ \widehat H^0(G,L^\times)\longrightarrow
+ \widehat H^0(G,\mathbf I_L)
+\right)
+=\operatorname {coker}\left(
+ \widehat H^{-1}(G,\mathbf I_L)\longrightarrow
+ \widehat H^{-1}(G,C_L)
+\right).                                                \tag{9.1a}
+$$
+
+Global class formation identifies the last target with
+$\widehat H^{-3}(G,\mathbf Z)=H_2(G,\mathbf Z)$. Formula (4.I2), Shapiro,
+and local class formation identify the source with
+
+$$
+\bigoplus_v\widehat H^{-1}(D_w,L_w^\times)
+\simeq\bigoplus_vH_2(D_w,\mathbf Z).                    \tag{9.1b}
+$$
+
+Under the Schreier--Mackey maps of (4.G11b)--(4.G11d), the arrow in (9.1a)
+is the sum of the maps $H_2(D_w,\mathbf Z)\to H_2(G,\mathbf Z)$ induced by
+inclusion. For a finite group $J$, the exact sequence
+$0\to\mathbf Z\to\mathbf Q\to\mathbf Q/\mathbf Z\to0$ and the universal
+coefficient theorem give
+
+$$
+H^3(J,\mathbf Z)\simeq H^2(J,\mathbf Q/\mathbf Z)
+\simeq\operatorname {Hom}(H_2(J,\mathbf Z),\mathbf Q/\mathbf Z).       \tag{9.1c}
+$$
+
+Pontryagin duality turns the cokernel in (9.1a) into exactly the kernel in
+(9.1). This also proves that every arrow there is independent of the chosen
+places and coset representatives; changes are the explicit prisms already
+fixed in (4.G11c)--(4.G11d).
 
 This gives a concrete counterexample. Put
 
