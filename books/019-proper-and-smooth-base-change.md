@@ -19,7 +19,7 @@
    - [What the finiteness hypotheses exclude](#35-what-the-finiteness-hypotheses-exclude)
 4. [The reduction machinery](#4-the-reduction-machinery)
    - [Noetherian induction and dévissage](#41-noetherian-induction-and-dévissage)
-   - [Compactification and the boundary](#42-compactification-and-the-boundary)
+   - [Compactifiable morphisms and the boundary](#42-compactifiable-morphisms-and-the-boundary)
    - [Reduction to a strict henselian trait](#43-reduction-to-a-strict-henselian-trait)
    - [Why the reductions terminate](#44-why-the-reductions-terminate)
 5. [The strict-local proper theorem](#5-the-strict-local-proper-theorem)
@@ -60,9 +60,8 @@
    - [Marked and open curves](#122-marked-and-open-curves)
    - [A nodal degeneration](#123-a-nodal-degeneration)
 13. [Abelian schemes](#13-abelian-schemes)
-   - [The first direct image](#131-the-first-direct-image)
-   - [Exterior powers and arbitrary base change](#132-exterior-powers-and-arbitrary-base-change)
-   - [Isogenies, polarizations, and endomorphisms](#133-isogenies-polarizations-and-endomorphisms)
+   - [Exterior powers and arbitrary base change](#131-exterior-powers-and-arbitrary-base-change)
+   - [Isogenies, polarizations, and endomorphisms](#132-isogenies-polarizations-and-endomorphisms)
 14. [PEL abelian families and parameter spaces](#14-pel-abelian-families-and-parameter-spaces)
    - [The geometric hypotheses](#141-the-geometric-hypotheses)
    - [Universal abelian families and coefficient systems](#142-universal-abelian-families-and-coefficient-systems)
@@ -127,7 +126,7 @@ The invertibility hypothesis plays different roles in different results. The for
 
 The narrative culminates in four assertions.
 
-**Constructibility.** If $f:X\to S$ is separated and of finite type, $S$ is excellent noetherian, $N$ is invertible on $S$, and $K\in D^b_c(X,\Lambda)$, then $Rf_*K$ has constructible cohomology and is locally bounded. If $f$ is proper of relative dimension at most $d$ and $K$ has amplitude $[a,b]$, the bound is $[a,b+2d]$. For a nonproper map, boundary cohomology contributes to the bound; relative fiber dimension alone does not control the amplitude of $Rf_*$.
+**Constructibility.** If $f:X\to S$ is compactifiable in the sense of Section 4.2 — separated, of finite type, and an open subscheme of a proper $S$-scheme, which every quasi-projective $f$ is — and if $S$ is excellent noetherian, $N$ is invertible on $S$, and $K\in D^b_c(X,\Lambda)$, then $Rf_*K$ has constructible cohomology and is locally bounded. If $f$ is proper of relative dimension at most $d$ and $K$ has amplitude $[a,b]$, the bound is $[a,b+2d]$. For a nonproper map, boundary cohomology contributes to the bound; relative fiber dimension alone does not control the amplitude of $Rf_*$.
 
 **Proper base change.** If $f:X\to S$ is proper, with $S$ noetherian, and $K\in D^b_c(X,\Lambda)$ with $N$ invertible on $S$, then for every $g:S'\to S$ the canonical map
 
@@ -141,7 +140,7 @@ $$
 (R^qf_*K)_{\bar s}\cong H^q(X_{\bar s},K|_{X_{\bar s}}).
 $$
 
-**Smooth base change.** In the displayed square, if $g$ is smooth, $S$ and $S'$ are excellent noetherian, and $f$ is separated of finite type, then the same comparison is an isomorphism for bounded constructible prime-to-residue-characteristic coefficients. Properness of $f$ is not required.
+**Smooth base change.** In the displayed square, if $g$ is smooth, $S$ and $S'$ are excellent noetherian, and $f$ is compactifiable, then the same comparison is an isomorphism for bounded constructible prime-to-residue-characteristic coefficients. Properness of $f$ is not required; a compactification of $f$ is.
 
 **Smooth local acyclicity.** If $f:X\to S$ is smooth and $K$ is lisse with finite stalks killed by an integer invertible on $S$, then $f$ is universally locally acyclic relative to $K$. If $f$ is also proper, each $R^qf_*K$ is lisse, commutes with arbitrary change of base, and its specialization maps are isomorphisms.
 
@@ -266,11 +265,13 @@ No corresponding assertion is made when $N$ is not invertible. In characteristic
 
 ### 3.3 Constructibility of direct images
 
-**Relative constructibility theorem.** Let $S$ be excellent and noetherian, let $f:X\to S$ be separated and of finite type, and let $K\in D^b_c(X,\Lambda)$, where $N\Lambda=0$ and $N$ is invertible on $S$. Then every $R^qf_*K$ is constructible, and the direct image is locally bounded. On each finite-dimensional quasi-compact open of $S$, only finitely many $q$ occur.
+**Relative constructibility theorem.** Let $S$ be excellent and noetherian, let $f:X\to S$ be compactifiable in the sense of Section 4.2, and let $K\in D^b_c(X,\Lambda)$, where $N\Lambda=0$ and $N$ is invertible on $S$. Then every $R^qf_*K$ is constructible, and the direct image is locally bounded. On each finite-dimensional quasi-compact open of $S$, only finitely many $q$ occur.
+
+By the quasi-projective compactification theorem the hypothesis holds whenever $f$ is quasi-projective, which covers every application made in this book and its successors; by Nagata's theorem it holds for every separated finite-type $f$, but that theorem is not proved here and is not used.
 
 **Proof strategy.** Truncation reduces to a constructible sheaf, and the support filtration reduces that sheaf to $j_!\mathcal L$ for a lisse finite sheaf on a locally closed stratum. A finite étale cover trivializes $\mathcal L$, but one must retain its finite descent datum: finite-group cohomology is not truncated merely because the geometric fibers have bounded dimension. The finite presentation complexes in the strict-local lemma of Section 5.1 retain the descent operators and their relations in the relevant bounded range.
 
-Compactify the resulting separated finite-type morphism. The proper term is controlled by the strict-local theorem of Chapter 5. The cone comparing extension by zero and ordinary direct image is supported on the boundary. After a finite stratification, its strict-local terms are the finite tame-inertia complexes described in Section 4.2; intersections of boundary strata lower support dimension. Noetherian induction therefore gives constructibility of the boundary term and of the original direct image. On a dense open in each base component, the finite presentation matrices have constant rank, so their cohomology sheaves are lisse. Removing that open lowers the support on the base.
+The stratum carrying $j_!\mathcal L$ is a locally closed subscheme of $X$, hence compactifiable over $S$ by part (2) of the stability lemma of Section 4.2; compactify it. The proper term is controlled by the strict-local theorem of Chapter 5. The cone comparing extension by zero and ordinary direct image is supported on the boundary. After a finite stratification, its strict-local terms are the finite tame-inertia complexes described in Section 4.2; intersections of boundary strata lower support dimension. Noetherian induction therefore gives constructibility of the boundary term and of the original direct image. On a dense open in each base component, the finite presentation matrices have constant rank, so their cohomology sheaves are lisse. Removing that open lowers the support on the base.
 
 Excellence ensures that normalization in the finite covers is finite and that all schemes introduced by compactification and stratification remain noetherian and finite type. The strict-local theorem identifies stalks of the compactified contribution with finite geometric-fiber cohomology. The boundary triangle
 
@@ -296,7 +297,7 @@ $$
 R^m f_*K=0\qquad(m\notin[a,b+2d]).
 $$
 
-For the cohomology of a geometric smooth affine curve, the upper addition is $1$. This does not give the same bound for $Rf_*$ of an arbitrary nonproper relative curve: for an open immersion, tame boundary inertia can already create $R^1j_*$ although the relative fibers have dimension zero. In the nonproper case, compactification gives a finite local bound depending also on the boundary stratification. Uniformity in the exponent $n$ of $\Lambda_n$ is crucial: it permits finite totalizations and derived inverse limits to be interchanged.
+For the cohomology of a geometric smooth affine curve, the upper addition is $1$. This does not give the same bound for $Rf_*$ of an arbitrary nonproper relative curve: for an open immersion, tame boundary inertia can already create $R^1j_*$ although the relative fibers have dimension zero. In the nonproper case, a chosen compactification gives a finite local bound depending also on the boundary stratification. Uniformity in the exponent $n$ of $\Lambda_n$ is crucial: it permits finite totalizations and derived inverse limits to be interchanged.
 
 Constructibility is stable under cones, truncations, and pullback. Consequently it is enough to prove a comparison on sheaves and check that the class of complexes for which it holds is triangulated. The finite filtration by cohomology sheaves then reconstructs every $K\in D^b_c$.
 
@@ -330,17 +331,60 @@ This is constructible dévissage. It is more precise than working stratum by str
 
 Noetherian induction is used on closed subsets, not on individual points. At each stage a dense open is settled uniformly; its closed complement has strictly smaller support. Hence the procedure ends after finitely many stages.
 
-### 4.2 Compactification and the boundary
+### 4.2 Compactifiable morphisms and the boundary
 
-A separated finite-type morphism $f:X\to S$ admits a factorization
+Every boundary argument below begins by embedding a nonproper morphism into a proper one. We give that property a name instead of assuming it for all morphisms.
+
+**Definition.** A separated morphism of finite type $f:X\to S$ is *compactifiable* if it admits a factorization
 
 $$
 X\xrightarrow{j}\overline X\xrightarrow{\bar f}S
 $$
 
-with $j$ an open immersion and $\bar f$ proper. This does not assert that $\overline X$ is smooth or that its boundary is a divisor. In the low-dimensional applications, smoothness and normal crossings are imposed as explicit hypotheses when they are needed.
+with $j$ an open immersion and $\bar f$ proper. The pair $(\overline X,j)$ is a *compactification* of $f$, and $D=\overline X\setminus X$, with its reduced structure, is the *boundary*. Nothing is asserted about $\overline X$ beyond properness. It need not be smooth, normal, or reduced, and $D$ need not be a divisor, still less a normal-crossings one. Where smoothness or normal crossings are wanted — for marked curves in Section 12.2, for the parameter spaces of Section 14.1 — they are imposed as explicit hypotheses.
 
-We recall the part of compactification used in the proof. Over an affine noetherian base, choose finitely many affine opens of $X$, place each in an affine space, and take its projective closure. Separation makes the graphs of the identifications on overlaps closed. Adjoin those graphs one at a time and replace the accumulated closure by the closure of the common open. Noetherian induction on the complements terminates and produces a proper scheme containing $X$ as a dense open. The construction is compatible with restriction on the base, so the affine compactifications glue. This is the compactification lemma for separated finite-type morphisms; no regularity of the resulting boundary is part of the lemma.
+One may always arrange that $X$ is schematically dense in $\overline X$, by replacing $\overline X$ with the scheme-theoretic closure of $X$ in it. The replacement is a closed subscheme of $\overline X$ and hence still proper over $S$, and $X$ is still open in it by the argument used in the next proof.
+
+**Quasi-projective compactification theorem.** Let $S$ be noetherian and let $f:X\to S$ be quasi-projective, that is, $f=\pi\circ i$ for an immersion $i:X\hookrightarrow\mathbf P^n_S$ and the structure morphism $\pi:\mathbf P^n_S\to S$. Then $f$ is compactifiable, and one may take $\overline X$ to be the scheme-theoretic closure of $X$ in $\mathbf P^n_S$.
+
+**Proof.** An immersion factors as a closed immersion into an open subscheme: there is an open $W\subseteq\mathbf P^n_S$ such that $i$ induces a closed immersion $X\hookrightarrow W$. Since $S$ is noetherian, so is $\mathbf P^n_S$; therefore $i$ is quasi-compact and the scheme-theoretic image
+
+$$
+\overline X\subseteq\mathbf P^n_S,
+\qquad
+\mathcal I=\ker\bigl(\mathcal O_{\mathbf P^n_S}\to i_*\mathcal O_X\bigr),
+$$
+
+is a closed subscheme, the smallest one through which $i$ factors. Formation of $\mathcal I$ is a kernel of a map of sheaves and therefore commutes with restriction to an open subscheme. Hence $\overline X\cap W$ is the scheme-theoretic image of the closed immersion $X\hookrightarrow W$, which is $X$ itself. So $X=\overline X\cap W$ is open in $\overline X$ and $j$ is an open immersion. Finally $\overline X$ is a closed subscheme of $\mathbf P^n_S$, which is proper over $S$; a closed immersion is proper and properness is stable under composition, so $\bar f$ is proper. $\square$
+
+**Stability lemma.** Let $S$ be noetherian and let $f:X\to S$ be compactifiable, with compactification $(\overline X,j)$.
+
+1. *Base change.* For any $g:S'\to S$, the base change $f':X\times_SS'\to S'$ is compactifiable, and $\overline X\times_SS'$ is a compactification of it.
+2. *Locally closed subschemes.* For any immersion $h:Z\hookrightarrow X$, the composite $f\circ h$ is compactifiable.
+
+**Proof.** For (1), properness and open immersions are both stable under base change, so $\overline X\times_SS'\to S'$ is proper and $X\times_SS'$ is open in it. For (2), write $Z$ as a closed subscheme of an open $U\subseteq X$; then $U$ is open in $\overline X$, and $Z\to\overline X$ is quasi-compact because $\overline X$ is noetherian. Let $\overline Z$ be the scheme-theoretic closure of $Z$ in $\overline X$. Exactly as in the proof above, $\overline Z\cap U$ is the scheme-theoretic image of the closed immersion $Z\hookrightarrow U$, namely $Z$; so $Z$ is open in $\overline Z$, while $\overline Z$ is a closed subscheme of $\overline X$ and hence proper over $S$. $\square$
+
+Part (2) is what the dévissage of Section 4.1 actually consumes: a constructible complex is reduced to extensions by zero from locally closed strata of $X$, and each stratum must itself be compactified over $S$. Quasi-projectivity is inherited in the same two ways, since an immersion into a quasi-projective $S$-scheme is again an immersion into $\mathbf P^n_S$, and $\mathbf P^n_{S'}=\mathbf P^n_S\times_SS'$. No closure of the compactifiable class under composition is asserted anywhere below, and none is used; that closure is precisely the difficult part of the general theory.
+
+**Independence of the compactification.** Let $(\overline X_1,j_1)$ and $(\overline X_2,j_2)$ be compactifications of $f$ and let $K\in D^b_c(X,\Lambda)$. Then
+
+$$
+R\bar f_{1*}j_{1!}K\simeq R\bar f_{2*}j_{2!}K
+$$
+
+canonically. Because $f$ is separated, the diagonal $X\to X\times_SX$ is a closed immersion, and $X\times_SX$ is open in $\overline X_1\times_S\overline X_2$; hence $(j_1,j_2)$ is an immersion. Let $\overline X_3$ be its scheme-theoretic closure. As above $X$ is open in $\overline X_3$, and $\overline X_3$ is closed in the proper $S$-scheme $\overline X_1\times_S\overline X_2$, so $\bar f_3$ is proper. Each projection $p_i:\overline X_3\to\overline X_i$ is a morphism from a proper $S$-scheme to a separated $S$-scheme and is therefore proper, and $p_i\circ j_3=j_i$.
+
+Now $p_1^{-1}(X)=X$ inside $\overline X_3$: the graph of $j_2$ realizes $X$ as a closed subscheme of $X\times_S\overline X_2$, because that graph is a base change of the diagonal of the separated $\overline X_2/S$, and $X\times_S\overline X_2$ is open in $\overline X_1\times_S\overline X_2$. Proper base change, proved in Section 6.1, computes the stalk of $Rp_{1*}j_{3!}K$ at a geometric point $\bar y$ of $\overline X_1$ as the cohomology of the geometric fiber $p_1^{-1}(\bar y)$ with coefficients $j_{3!}K$. If $\bar y$ lies in $X$ that fiber is the single point $\bar y$ and the stalk is $K_{\bar y}$; if $\bar y$ lies in the boundary the fiber misses $X$, where alone $j_{3!}K$ is nonzero, and the stalk vanishes. Hence $Rp_{1*}j_{3!}K\simeq j_{1!}K$, and
+
+$$
+R\bar f_{3*}j_{3!}K
+\simeq R\bar f_{1*}Rp_{1*}j_{3!}K
+\simeq R\bar f_{1*}j_{1!}K,
+$$
+
+with the same computation for the index $2$. This is the sense in which the compactly supported direct image $Rf_!$ below is attached to $f$ and not to a chosen boundary. The argument uses Chapter 6 and nothing later; conversely, Chapters 3 through 7 use only the *existence* of a compactification, never its uniqueness, so the order of proof is not circular.
+
+**Remark on the general statement.** Every separated morphism of finite type between noetherian schemes is compactifiable. This is Nagata's compactification theorem, and it is not proved here. The tempting short argument — compactify finitely many affine charts of $X$ inside projective spaces and glue the closures along the graphs of the identifications — does not close: the closures need not agree along the overlaps, and repairing them requires a controlled system of blowups, or an argument through the Zariski–Riemann space of the ambient function field. Modern write-ups run to tens of pages. The general statement is also stronger than anything used in this corpus. Every morphism compactified below is quasi-projective and is therefore covered by the theorem just proved: the affine and quasi-projective curves of Chapter 12 and their products, the affine-space projections of Sections 7.1 and 7.2, the locally closed strata of such schemes supplied by the stability lemma, and the smooth quasi-projective PEL parameter spaces of Section 14.1 — whose compactifications, when their global cohomology is considered at all, are part of the standing hypotheses there rather than a consequence of any theorem.
 
 Let $i:D=\overline X\setminus X\hookrightarrow\overline X$. Then
 
@@ -358,7 +402,7 @@ $$
 
 This display uses a chosen tame generator; intrinsically the degree-one term transforms with the inverse cyclotomic twist. Wild inertia has pro-order prime to the order of $M$, so taking its invariants is exact. Higher intersections, branch loci, and nonnormal loci have smaller support and are handled by noetherian induction. In the normal-crossings cases used for marked curves and compactified Hilbert--Blumenthal parameter spaces this procedure is the familiar tame-inertia complex, with one factor for each local boundary branch.
 
-Compactification is essential in constructibility and smooth base change, where $f$ need not be proper. It also explains counterexamples: a nonproper family can change because its boundary changes.
+Compactifiability is essential in constructibility and smooth base change, where $f$ need not be proper. It also explains counterexamples: a nonproper family can change because its boundary changes.
 
 ### 4.3 Reduction to a strict henselian trait
 
@@ -579,7 +623,7 @@ S'&\xrightarrow{g}&S.
 \end{array}
 $$
 
-Assume $S$ is excellent noetherian, $f$ is separated and of finite type, and $g$ is smooth. Let $K\in D^b_c(X,\Lambda)$, where $\Lambda$ is finite, killed by $N$, and $N$ is invertible on $S$. Then
+Assume $S$ is excellent noetherian, $f$ is compactifiable in the sense of Section 4.2, and $g$ is smooth. Let $K\in D^b_c(X,\Lambda)$, where $\Lambda$ is finite, killed by $N$, and $N$ is invertible on $S$. Then
 
 $$
 g^*Rf_*K\xrightarrow{\sim}Rf'_*g'^*K.
@@ -593,7 +637,7 @@ $$
 
 Factor that projection into affine-line projections. It is enough to handle one new parameter. Compactify $f$ and use proper base change on the compactification. The possible discrepancy is the failure of $Rj_*K$ to commute with the new parameter and is supported at the boundary. Filter that boundary by normal strata. At a generic codimension-one point the strict-local term is the two-term tame-inertia complex; adjoining a polynomial parameter leaves both its inertia group and its finite presentation matrix unchanged. Branch, nonnormal, and higher-codimension loci have smaller support. Noetherian induction and the localization triangle prove the theorem. This is the boundary induction of Section 4.2 with the smooth parameter carried through every matrix.
 
-This proof exhibits every assumption. Separation and finite type give compactification. Excellence makes normalization and constructibility finite. Smoothness gives an étale-local affine-space model. Invertibility of $N$ makes the punctured-trait calculation tame. If $g$ is arbitrary and $f$ nonproper, the theorem is false.
+This proof exhibits every assumption. Compactifiability supplies the factorization through a proper morphism, and the stability lemma supplies compactifications of the boundary strata that the induction produces; quasi-projective $f$, the only case used later, satisfies both. Excellence makes normalization and constructibility finite. Smoothness gives an étale-local affine-space model. Invertibility of $N$ makes the punctured-trait calculation tame. If $g$ is arbitrary and $f$ nonproper, the theorem is false.
 
 ### 7.2 The standard smooth-local calculation
 
@@ -1012,7 +1056,7 @@ If the special fiber were a tree of smooth components, the dual graph would have
 
 ## 13. Abelian schemes
 
-### 13.1 The first direct image
+### 13.1 Exterior powers and arbitrary base change
 
 Let $f:A\to S$ be an abelian scheme of relative dimension $g$, and assume $\ell$ invertible on $S$. Multiplication by $\ell^n$ is finite étale, so
 
@@ -1020,44 +1064,50 @@ $$
 A[\ell^n]\to S
 $$
 
-is a lisse sheaf of free $\Lambda_n$-modules of rank $2g$. Fiberwise, a degree-one cohomology class with constant coefficients is a character of the $\ell^n$-torsion. There is therefore a canonical isomorphism
+is a lisse sheaf of free $\Lambda_n$-modules of rank $2g$. Both assertions are Book 18, Section 15.2: étaleness because the differential of $[\ell^n]$ on the relative tangent bundle is the unit $\ell^n$, and the rank $\ell^{2gn}$ because the theorem of the square gives $[m]^*L\equiv L^{\otimes m^2}$ for a symmetric relatively ample $L$, whence $\deg[m]=m^{2g}$ by comparing leading Hilbert coefficients. That derivation uses no cohomology.
+
+What this chapter adds is relative. It rests on one absolute input that is not proved in this book.
+
+**Imported input (absolute fiber cohomology).** Let $A$ be an abelian variety of dimension $g$ over a separably closed field of characteristic different from $\ell$, and put $\Lambda_n=\mathbf Z/\ell^n\mathbf Z$. Then evaluation of degree-one classes on torsion points is an isomorphism
+
+$$
+H^1(A,\Lambda_n)
+\xrightarrow{\ \sim\ }
+\operatorname{Hom}_{\Lambda_n}(A[\ell^n],\Lambda_n),
+$$
+
+cup product induces isomorphisms
+
+$$
+\bigwedge\nolimits^i H^1(A,\Lambda_n)
+\xrightarrow{\ \sim\ }
+H^i(A,\Lambda_n)
+\qquad(i\geq0),
+$$
+
+and both are functorial in $A$.
+
+We state this rather than prove it, and the reason is chronological. The proof identifies the multiplication tower $[\ell^r]:A\to A$ as cofinal among connected pointed finite étale covers of $\ell$-power degree, shows that the tower is acyclic in positive degrees, and then reads the answer off the continuous cohomology of $T_\ell A\cong\mathbf Z_\ell^{2g}$ acting trivially on $\Lambda_n$. That last step is the cohomology of a profinite group with its Koszul complex, a theory developed only in Book 24, and the descent along an infinite tower is not the finite Galois descent available here. The calculation is therefore carried out in Book 36, where it is needed for the Jacobian of a curve and where Book 24 may be cited. Book 18 supplies, in the right order, the two absolute facts this book uses in its own proofs: finiteness of $H^q(A,\mathcal F)$ for constructible finite $\mathcal F$, and vanishing above degree $2g$. Nothing in Chapters 1 through 12 depends on the imported input; it enters only here and, through this chapter, in Chapter 14.
+
+Granting it, the relative statements are exactly what proper base change contributes, and that contribution is the substance of the present chapter. Fiberwise, a degree-one cohomology class with constant coefficients is a character of the $\ell^n$-torsion. The character construction is functorial in the abelian scheme, so the fiberwise maps glue to a morphism of sheaves on $S$,
+
+$$
+R^1f_*\Lambda_n
+\longrightarrow
+\underline{\operatorname{Hom}}_{\Lambda_n}
+(A[\ell^n],\Lambda_n).
+$$
+
+Proper base change identifies its two sides on every geometric stalk: the left stalk is $H^1(A_{\bar s},\Lambda_n)$ and the right stalk is $\operatorname{Hom}_{\Lambda_n}(A_{\bar s}[\ell^n],\Lambda_n)$. A morphism between constructible sheaves that is an isomorphism at every geometric stalk is an isomorphism. Hence
 
 $$
 R^1f_*\Lambda_n
 \cong
 \underline{\operatorname{Hom}}_{\Lambda_n}
-(A[\ell^n],\Lambda_n).
+(A[\ell^n],\Lambda_n),
 $$
 
-We record the absolute calculation. Let $A$ be an abelian variety over a separably closed field. Every connected pointed finite étale cover $Y\to A$ admits a unique abelian-variety structure making the map an isogeny: translations lift after a choice above the identity, and the two possible lifts of addition agree along the identity and hence everywhere by the rigidity of maps from a proper connected variety to a finite étale scheme. The same argument gives inverses and associativity. Consequently the tower $[\ell^r]:A\to A$ is cofinal among connected étale covers of $\ell$-power degree.
-
-Book 15 proved $\deg[\ell^r]=\ell^{2gr}$ without a cohomology calculation. Since $[\ell^r]$ is étale here,
-
-$$
-A[\ell^r]\cong(\mathbf Z/\ell^r\mathbf Z)^{2g}
-$$
-
-after a choice of basis. We need one further fact about the inverse tower. For $q>0$, pullback by $[\ell^r]$ kills $H^q(A,\Lambda_n)$ once $rq\geq n$. Here is the cubical proof. Translation by a geometric point acts trivially on cohomology: the map from the connected variety $A$ to the finite set of automorphisms of $H^q(A,\Lambda_n)$ is locally constant and is the identity at the origin. Compute a class on an étale Čech hypercover and apply the alternating difference operator in the $q+1$ variables of $A^{q+1}$. The cosimplicial identities make that difference a coboundary; this is the cohomological theorem of the $(q+1)$-cube. Expanding $[m]$ as the sum of $m$ copies in each of the remaining $q$ difference variables gives
-
-$$
-[m]^*\alpha=m^q\alpha
-$$
-
-modulo coboundaries. For $m=\ell^r$ this is zero modulo $\ell^n$ when $rq\geq n$.
-
-It follows that the inverse multiplication tower is acyclic above degree zero with finite $\ell$-primary coefficients: every positive-degree class dies after pullback to a sufficiently high stage. Its Cartan--Leray complex therefore identifies $R\Gamma(A,\Lambda_n)$ with continuous cochains of $T_\ell A\cong\mathbf Z_\ell^{2g}$ acting trivially on $\Lambda_n$. The Koszul resolution for the commuting topological generators gives
-
-$$
-H^i(A,\Lambda_n)\cong
-\bigwedge\nolimits^i
-\operatorname{Hom}_{\Lambda_n}(A[\ell^n],\Lambda_n),
-$$
-
-and identifies wedge product with cup product. The result is independent of the chosen basis because both sides transform functorially under automorphisms of the torsion tower.
-
-Proper base change identifies the two sides of the degree-one formula on every geometric stalk. The character construction is functorial in the abelian scheme, so these fiberwise maps glue. A morphism between constructible sheaves that is an isomorphism at every geometric stalk is an isomorphism.
-
-Passing to the inverse limit gives
+a lisse sheaf of free $\Lambda_n$-modules of rank $2g$. Passing to the inverse limit is legitimate by Section 10.1, the tower being lisse of constant finite rank and hence Mittag--Leffler in every degree, and gives
 
 $$
 R^1f_*\mathbf Z_\ell
@@ -1068,16 +1118,14 @@ $$
 
 Thus the cohomological and torsion constructions of the lisse rank-$2g$ sheaf agree. This identification commutes with arbitrary base change because both constructions do.
 
-### 13.2 Exterior powers and arbitrary base change
-
-The absolute calculation of Section 13.1 says on every geometric fiber that constant-coefficient cohomology is the exterior algebra on degree one. The cup-product maps
+The same mechanism handles the higher degrees. The cup-product maps
 
 $$
 \bigwedge\nolimits^i R^1f_*\Lambda_n
 \longrightarrow R^if_*\Lambda_n
 $$
 
-are maps of lisse sheaves. They are isomorphisms on every geometric stalk, hence globally. Therefore
+are maps of lisse sheaves. By the imported input and proper base change they are isomorphisms on every geometric stalk, hence globally. Therefore
 
 $$
 R^if_*\Lambda_n
@@ -1102,7 +1150,7 @@ For any $S'\to S$, the entire graded algebra pulls back to the corresponding alg
 
 For $g=1$, the ranks are $1,2,1$. For $g=2$, they are $1,4,6,4,1$. The middle rank six includes products of classes from different degree-one directions; it is not obtained by merely listing the cohomology of one-dimensional factors.
 
-### 13.3 Isogenies, polarizations, and endomorphisms
+### 13.2 Isogenies, polarizations, and endomorphisms
 
 An isogeny $u:A\to B$ over $S$ induces
 
@@ -1146,6 +1194,8 @@ Let $M\to B$ be a modular or quaternionic parameter curve, or a Hilbert--Blument
 4. the polarization and action by a finite projective order are defined over $M$;
 5. when cohomology of $M$ itself is considered, either $M$ is proper over $B$, or a proper compactification $\bar M$ with relative normal-crossings boundary $D$ is part of the data;
 6. every prime inverted to make the level, endomorphism order, and boundary tame is also inverted on $B$.
+
+Hypothesis 2 is what puts these families inside the theorems of Chapters 3 and 7: a quasi-projective $M\to B$ is compactifiable by the theorem of Section 4.2, as is every locally closed stratum of it, and the same holds for the smooth projective universal abelian scheme $\mathcal A\to M$ and for the products used below. No appeal to the general compactification theorem is needed anywhere in this chapter. Hypothesis 5 is a stronger and independent requirement: it asks not merely for some proper $\bar M$ but for one whose boundary is a relative normal-crossings divisor, and that is a property of a chosen compactification, not a consequence of compactifiability.
 
 Compact quaternionic parameter curves satisfy the proper alternative. Hilbert--Blumenthal parameter spaces are often nonproper and require the compactified-pair alternative. These are hypotheses, not consequences of the label “PEL.” Construction of the spaces and compactifications belongs to later geometric volumes.
 
@@ -1266,11 +1316,11 @@ Every decomposition commutes with base change because it is built from projectio
 
 The following checklist packages the results without blurring their hypotheses.
 
-**Finite constructibility package.** For a separated finite-type morphism over an excellent noetherian base and finite constructible coefficients of invertible order, higher direct images are constructible and uniformly bounded in the required dimensions. Geometric-fiber groups are finite.
+**Finite constructibility package.** For a compactifiable — in particular, for a quasi-projective — morphism over an excellent noetherian base and finite constructible coefficients of invertible order, higher direct images are constructible and uniformly bounded in the required dimensions. Geometric-fiber groups are finite.
 
 **Proper package.** If the morphism whose direct image is taken is proper, its bounded constructible direct image commutes with every change of base. Stalks are geometric-fiber cohomology. No smoothness is required, and specialization maps exist even in singular degenerations.
 
-**Smooth-horizontal package.** If the change-of-base map is smooth, direct image for a separated finite-type morphism commutes with that change. The original morphism need not be proper.
+**Smooth-horizontal package.** If the change-of-base map is smooth, direct image for a compactifiable morphism commutes with that change. The original morphism need not be proper, but it must admit a compactification.
 
 **Smooth-vertical package.** A smooth morphism is universally locally acyclic relative to lisse finite coefficients of invertible order. If it is also proper, higher direct images are lisse and all specialization maps are isomorphisms.
 
@@ -1308,6 +1358,6 @@ Base change turns fiberwise cohomology into a geometric object on the base. Prop
 
 The theorem remains informative when smoothness fails. A nodal curve still satisfies proper base change, so its special cohomology is the correct stalk; the failure of specialization to be invertible precisely records degeneration. It also remains informative when properness fails, provided a boundary is supplied: compactification and the boundary triangle show exactly which classes may enter from infinity.
 
-For relative curves this yields constant genus cohomology and unramified good-reduction representations. For abelian schemes it globalizes the Tate module and the entire exterior cohomology algebra. For selected PEL families it transports endomorphisms, polarizations, coefficient systems, and finite étale prime-to-level correspondences across good fibers while keeping the open-boundary caveat visible.
+For relative curves this yields constant genus cohomology and unramified good-reduction representations. For abelian schemes it globalizes the Tate module and the entire exterior cohomology algebra — granting, as Section 13.1 says openly, the absolute cohomology of a single geometric fiber, which is computed only in Book 36 because its proof needs the profinite-group cohomology of Book 24. For selected PEL families it transports endomorphisms, polarizations, coefficient systems, and finite étale prime-to-level correspondences across good fibers while keeping the open-boundary caveat visible.
 
 The final lesson is a discipline of hypotheses. Coefficient invertibility controls tame local geometry. Excellence and noetherianity make dévissage finite. Properness controls global fibers. Smoothness controls local tubes. Geometric points detect the comparison. Uniform finite-level bounds justify the adic limit. Once each condition is placed where it is actually used, proper and smooth base change become not isolated miracles but a coherent transport mechanism for arithmetic geometry.

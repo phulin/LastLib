@@ -51,6 +51,7 @@
     - [Compatibility in the tower](#102-compatibility-in-the-tower)
     - [The integral identification](#103-the-integral-identification)
     - [Untwisted and rational formulations](#104-untwisted-and-rational-formulations)
+    - [The whole cohomology of an abelian variety](#105-the-whole-cohomology-of-an-abelian-variety)
 11. [Dual abelian varieties and the Poincaré bundle](#11-dual-abelian-varieties-and-the-poincaré-bundle)
     - [Why a second Picard construction appears](#111-why-a-second-picard-construction-appears)
     - [The normalized Poincaré bundle](#112-the-normalized-poincaré-bundle)
@@ -101,7 +102,7 @@ and let $G_k$ act arithmetically. Thus over a finite field arithmetic Frobenius 
 
 If an argument requires all closed points to be rational, we pass further from $k^s$ to an algebraic closure $\Omega$. The extension $\Omega/k^s$ is purely inseparable. It is a universal homeomorphism on base-changed schemes and therefore changes neither prime-to-characteristic étale cohomology nor the $G_k$-action; geometric properties such as properness, smoothness, dimension, and ampleness may also be checked after this faithfully flat extension. This small distinction matters over an imperfect separably closed field.
 
-Three established bodies of theory are used with their full hypotheses. For smooth proper curves, the relative Picard theorem supplies representability, base change, degree components, the Abel--Jacobi and Albanese constructions, norms, and the canonical theta polarization. The theory of abelian schemes supplies dual abelian varieties, Poincaré bundles, finite flat torsion, isogenies, and Weil pairings. The cohomology of curves supplies Kummer sequences, trace maps, smooth proper base change, Poincaré duality, and the fact that geometric $H^1$ with $\mathbf Z/\ell^m\mathbf Z$-coefficients is free of rank $2g$. We recall the constructions needed to compare these theories, but we do not silently enlarge their hypotheses. In particular, torsion is treated scheme-theoretically until $\ell$ is assumed invertible, and correspondence normalizations are assumed smooth whenever pullback and norm are used through an intermediate curve.
+Four established bodies of theory are used with their full hypotheses. For smooth proper curves, the relative Picard theorem supplies representability, base change, degree components, the Abel--Jacobi and Albanese constructions, norms, and the canonical theta polarization. The theory of abelian schemes supplies dual abelian varieties, Poincaré bundles, finite flat torsion, isogenies, and Weil pairings. The cohomology of curves supplies Kummer sequences, trace maps, smooth proper base change, Poincaré duality, and the fact that geometric $H^1$ with $\mathbf Z/\ell^m\mathbf Z$-coefficients is free of rank $2g$. Book 24 supplies the continuous cohomology of profinite groups, its finite-quotient description, and the calculation for $\mathbf Z_\ell$; Section 10.5 is where that theory is used, and it is the only place in this book where an infinite tower of covers is descended. We recall the constructions needed to compare these theories, but we do not silently enlarge their hypotheses. In particular, torsion is treated scheme-theoretically until $\ell$ is assumed invertible, and correspondence normalizations are assumed smooth whenever pullback and norm are used through an intermediate curve.
 
 We use a covariant Tate-module convention:
 
@@ -876,6 +877,105 @@ H^1(\bar C,\mathbf Q_\ell)\simeq V_\ell J(-1). \tag{10.12}
 $$
 
 All are isomorphisms of continuous arithmetic $G_k$-representations. If one instead defines a “Tate module” as the dual of (9.2), the untwisted $H^1$ appears directly; that is a different convention, not a contradiction.
+
+### 10.5 The whole cohomology of an abelian variety
+
+The preceding sections computed $H^1$ of the *curve*. The Jacobian is itself a proper variety and has cohomology in every degree up to $2g$, and later chapters — the comparison of the Weil pairing with the cup product, and the weight arguments that use these groups — need all of it. We record the computation here, in the generality of an arbitrary abelian variety, because it is used later for abelian varieties that are not Jacobians. It is placed at this point in the sequence because its proof needs the cohomology of profinite groups, which is the subject of Book 24, together with the Galois descent of Book 18; both are available now.
+
+Throughout this section $A$ is an abelian variety of dimension $g$ over a separably closed field $\bar k$ with $\ell\ne\operatorname{char}\bar k$, and we abbreviate
+
+$$
+\Lambda_m=\mathbf Z/\ell^m\mathbf Z.
+$$
+
+**Theorem.** Evaluation of degree-one classes on torsion points is an isomorphism
+
+$$
+H^1(A,\Lambda_m)
+\xrightarrow{\ \sim\ }
+\operatorname{Hom}_{\Lambda_m}\bigl(A[\ell^m](\bar k),\Lambda_m\bigr), \tag{10.13}
+$$
+
+and cup product induces isomorphisms
+
+$$
+\bigwedge\nolimits^i H^1(A,\Lambda_m)
+\xrightarrow{\ \sim\ }
+H^i(A,\Lambda_m)
+\qquad(0\leq i\leq 2g), \tag{10.14}
+$$
+
+both functorial in $A$; the groups vanish for $i>2g$.
+
+The proof occupies the rest of the section and has four steps.
+
+*The multiplication tower is cofinal.* Every connected pointed finite étale cover $Y\to A$ admits a unique abelian-variety structure making the map an isogeny. Translations lift once a point above the identity is chosen; the two possible lifts of the addition law agree along the identity and therefore everywhere, because a map from a proper connected variety to a finite étale scheme is locally constant. The same argument supplies the inverse and the associativity. Hence every connected pointed étale cover of $\ell$-power degree is dominated by $[\ell^r]:A\to A$ for $r$ large, so the tower of multiplication maps is cofinal among such covers. Each $[\ell^r]$ is finite étale and Galois with group $A[\ell^r](\bar k)$, and the inverse limit of those groups is $T_\ell A$.
+
+The degree is $\deg[\ell^r]=\ell^{2gr}$. This is proved in Book 18, Section 15.2, without any cohomology: a symmetric relatively ample $L$ satisfies $[n]^*L\equiv L^{\otimes n^2}$ by the theorem of the square, pullback multiplies the top self-intersection by the degree while the tensor power multiplies it by $n^{2g}$, and the leading Hilbert coefficient compares the two. Since $[\ell^r]$ is étale here,
+
+$$
+A[\ell^r](\bar k)\cong(\mathbf Z/\ell^r\mathbf Z)^{2g} \tag{10.15}
+$$
+
+after a choice of basis, compatibly in $r$; so $T_\ell A\cong\mathbf Z_\ell^{2g}$.
+
+*The tower is acyclic in positive degrees.* For $q>0$, pullback along $[\ell^r]$ annihilates $H^q(A,\Lambda_m)$ as soon as $rq\geq m$. Translation by a geometric point acts trivially on cohomology: the map from the connected variety $A$ to the finite set of automorphisms of $H^q(A,\Lambda_m)$ is locally constant and is the identity at the origin. Represent a class on an étale Čech hypercover and apply the alternating difference operator in the $q+1$ variables of $A^{q+1}$. The cosimplicial identities make that difference a coboundary; this is the cohomological form of the theorem of the cube. Expanding $[n]$ as the sum of $n$ copies of the identity in each of the remaining $q$ difference variables gives
+
+$$
+[n]^*\alpha=n^q\alpha \tag{10.16}
+$$
+
+modulo coboundaries. For $n=\ell^r$ the right side is zero in $\Lambda_m$ once $rq\geq m$.
+
+*Descent along the tower.* For the finite Galois étale cover $[\ell^r]$ with group $G_r=A[\ell^r](\bar k)$, the Cartan--Leray spectral sequence of Book 18 reads
+
+$$
+H^a\bigl(G_r,H^b(A,\Lambda_m)\bigr)
+\Longrightarrow H^{a+b}(A,\Lambda_m),
+$$
+
+where the coefficient $H^b$ is taken upstairs and the abutment downstairs. Pass to the colimit over $r$. By the previous step every transition map on $H^b$ with $b>0$ is eventually zero, so all rows with $b>0$ die in the colimit, and only the row $b=0$ survives. On that row the coefficients are the constant module $\Lambda_m$ with trivial action, and
+
+$$
+\varinjlim_r H^a(G_r,\Lambda_m)
+=H^a_{\mathrm{cont}}(T_\ell A,\Lambda_m)
+$$
+
+by the finite-quotient theorem for continuous cochains, Book 24, Section 8.2: for a profinite group acting trivially on a finite discrete module, continuous cohomology is the filtered colimit of the cohomology of its finite quotients. Hence
+
+$$
+H^i(A,\Lambda_m)\cong H^i_{\mathrm{cont}}(T_\ell A,\Lambda_m), \tag{10.17}
+$$
+
+with $T_\ell A$ acting trivially, compatibly with cup products.
+
+*The profinite computation.* It remains to compute the continuous cohomology of $T_\ell A\cong\mathbf Z_\ell^{2g}$ with trivial finite coefficients, and this is Book 24. For a single factor, Section 11.7 of that book gives $H^0=H^1=\Lambda_m$ and $H^n=0$ for $n\geq2$, the degree-one group being the continuous homomorphisms to $\Lambda_m$. Feeding the factors in one at a time through the Hochschild--Serre sequence of Book 24, Section 13.4, and multiplying by the cup products of its Chapter 7, one obtains for a free $\mathbf Z_\ell$-module $T$ of rank $d$ acting trivially
+
+$$
+H^i_{\mathrm{cont}}(T,\Lambda_m)
+\cong\bigwedge\nolimits^i
+\operatorname{Hom}_{\mathrm{cont}}(T,\Lambda_m),
+$$
+
+with cup product corresponding to wedge product. At each stage the extension
+
+$$
+1\to\mathbf Z_\ell\to\mathbf Z_\ell^{j+1}\to\mathbf Z_\ell^{j}\to1
+$$
+
+is split, so the projection has a section, inflation is split injective, and the spectral sequence — which has only the two rows $b=0,1$ — degenerates. Induction on $j$ therefore gives additively the tensor product of $d$ copies of $\Lambda_m$ in degrees $0$ and $1$, which is the exterior algebra on $H^1$. That the multiplication is the wedge product needs only graded commutativity together with $x\cup x=0$ for a degree-one class $x$ inflated from one factor, and the latter holds because $x\cup x$ is then inflated from $H^2(\mathbf Z_\ell,\Lambda_m)=0$; this covers $\ell=2$, where graded commutativity alone would not. Since $\operatorname{Hom}_{\mathrm{cont}}(T_\ell A,\Lambda_m)=\operatorname{Hom}_{\Lambda_m}(A[\ell^m](\bar k),\Lambda_m)$, this is exactly (10.13) and (10.14). The vanishing for $i>2g$ is the vanishing of exterior powers above the rank, and agrees with the general amplitude bound of Book 18, Section 15.1.
+
+Nothing in the statement refers to the chosen basis (10.15): both sides of (10.14) transform functorially under automorphisms of the torsion tower, so the identification is canonical. In particular, if $A$ is defined over $k$ and $\bar k=k^s$, then (10.13) and (10.14) are isomorphisms of $G_k$-modules.
+
+Two consequences are worth naming. First, apply the theorem to $A=J$. The Kummer identification (10.4) turns the right side of (10.13) into the dual of $H^1(\bar C,\mu_{\ell^m})$, and the finite-level Poincaré duality pairing of the curve, valued in $H^2(\bar C,\mu_{\ell^m})\cong\Lambda_m$, identifies that dual with $H^1(\bar C,\Lambda_m)$. Hence
+
+$$
+H^1(\bar J,\Lambda_m)
+\cong\operatorname{Hom}_{\Lambda_m}\bigl(J[\ell^m](k^s),\Lambda_m\bigr)
+\cong H^1(\bar C,\Lambda_m),
+$$
+
+canonically and $G_k$-equivariantly: the Jacobian carries the same first cohomology as the curve, and its higher cohomology is the exterior algebra on it. Section 13.3 recovers the second of these identifications, as (13.11), from the Weil pairing instead; the two routes agree because both are the duality pairing of the curve. Second, the theorem is absolute — it is a statement about one geometric fiber. Its family form, that for an abelian scheme $f:A\to S$ with $\ell$ invertible on $S$ the sheaf $R^1f_*\Lambda_m$ is lisse of rank $2g$ and equals the dual of $A[\ell^m]$, with $R^if_*\Lambda_m\cong\bigwedge^iR^1f_*\Lambda_m$, is obtained from the theorem by the proper base-change and lissity theorems of Book 19: a morphism of constructible sheaves that is an isomorphism on every geometric stalk is an isomorphism. Those base-change theorems are proved there without any use of the present computation, so the two are not entangled.
 
 ## 11. Dual abelian varieties and the Poincaré bundle
 

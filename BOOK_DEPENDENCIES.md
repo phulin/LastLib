@@ -65,7 +65,7 @@ flowchart LR
 | 34 | Cartier Duality | 27, 28 |
 | 35 | Abelian Schemes, Isogenies, and Polarizations | 26, 28, 34, 8, 10, 15 |
 | 35a | Moduli Stacks for Modular and PEL Problems | 8, 10, MATHLIB |
-| 36 | Jacobians and $H^1$ of Curves | 21, 25, 35 |
+| 36 | Jacobians and $H^1$ of Curves | 18, 19, 21, 24, 25, 35 |
 | 37 | Weights and Weil Bounds for Curves and Abelian Varieties | 8, 20, 21, 23, 36 |
 | 38 | Néron Models and Component Groups | 11, 16, 25, 35 |
 | 39 | Integral Correspondences on Curves and Jacobians | 12, 16, 38, 36 |

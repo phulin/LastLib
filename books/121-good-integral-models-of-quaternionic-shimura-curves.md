@@ -603,7 +603,7 @@ R^1a_*\mathbf Z_\ell
 \mathbf Z_\ell).                                            \tag{9.4}
 $$
 
-For completeness, the absolute calculation follows from the cofinal tower of multiplication-by-$\ell^r$ covers. Translation acts trivially on finite etale cohomology, the Cartan--Leray complex becomes the continuous cohomology of $T_\ell A$, and its Koszul resolution is the exterior algebra on the character module. The construction is functorial and therefore preserves endomorphisms and the polarization pairing. Stalkwise proper base change turns it into (9.4) over the entire curve.
+The absolute calculation is Book 36, Section 10.5: the cofinal tower of multiplication-by-$\ell^r$ covers identifies the Cartan--Leray complex with the continuous cohomology of $T_\ell A$, whose exterior-algebra description Book 24 supplies. The construction is functorial and therefore preserves endomorphisms and the polarization pairing. Stalkwise proper base change turns it into (9.4) over the entire curve.
 
 Write
 
