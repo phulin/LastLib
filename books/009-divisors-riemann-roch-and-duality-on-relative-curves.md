@@ -50,6 +50,7 @@
     - [Functions under normalization](#102-functions-under-normalization)
     - [Rosenlicht differentials](#103-rosenlicht-differentials)
     - [Families of nodal curves](#104-families-of-nodal-curves)
+    - [The completed local model at a node](#105-the-completed-local-model-at-a-node)
 11. [Riemann--Roch over a field](#11-riemann--roch-over-a-field)
     - [The theorem and its meaning](#111-the-theorem-and-its-meaning)
     - [Proof by adding points](#112-proof-by-adding-points)
@@ -1102,13 +1103,13 @@ and the other tests enforce no additional condition.
 
 Let $f:C\to S$ be a proper flat nodal curve that is a relative local complete intersection. Then $\omega_{C/S}$ is a line bundle, commutes with arbitrary base change, and restricts on every geometric fiber to the sheaf in (10.4). This is the stable replacement for $\Omega^1_{C/S}$.
 
-A simultaneous normalization need not exist over an arbitrary base: normalizing the total space can fail to normalize every fiber after base change. Consequently the branch-and-residue description should be used fiberwise unless a simultaneous normalization is part of the hypotheses. Étale locally around a node, however, the family has the form
+A simultaneous normalization need not exist over an arbitrary base: normalizing the total space can fail to normalize every fiber after base change. Consequently the branch-and-residue description should be used fiberwise unless a simultaneous normalization is part of the hypotheses. After completion at a node, however, the family has the form
 
 $$
 xy=a
 $$
 
-in a smooth relative surface, and $dx/x=-dy/y$ gives a local frame for $\omega_{C/S}$. These frames glue because adjunction is canonical.
+with $a$ in the maximal ideal of the completed base, the completion being taken over a strictly henselian base as in Theorem 10.5 below. In that presentation $dx/x=-dy/y$ generates the completed stalk of $\omega_{C/S}$ at the node, exactly as in (10.1); since freeness of a coherent sheaf is detected on completed stalks, $\omega_{C/S}$ is free of rank one in a neighborhood, and a section generating the completed stalk generates the stalk by Nakayama. These frames glue because adjunction is canonical. Only the completed normal form is used here. The stronger étale-local statement, that the family is étale locally cut out by $xy=a$ in a smooth relative surface, is not needed for this argument and is not proved in this collection; see the closing remark of Section 10.5.
 
 If sections mark smooth points $p_1,\ldots,p_n$, then
 
@@ -1117,6 +1118,189 @@ $$
 $$
 
 allows simple poles at the markings as well as the implicit branch poles at nodes. A global section has total residue zero on each geometric fiber, with node residues cancelling internally. This is the differential package used for degenerating pointed curves.
+
+### 10.5 The completed local model at a node
+
+The preceding section used a local normal form for a node in a family. That normal form is neither part of the definition of a nodal family nor a consequence of the fiberwise picture alone: it is an assertion about the total space, and it must be proved. This section proves it in the form the later theory actually consumes, namely after completion over a strictly henselian base, and marks precisely the stronger étale-local assertion that is *not* proved here.
+
+Throughout the section $\Lambda$ is a noetherian complete local ring with maximal ideal $\mathfrak m$ and residue field $k$, and $S=\operatorname{Spec}\Lambda$ with closed point $s$. Let
+
+$$
+f:X\longrightarrow S
+$$
+
+be flat and locally of finite type, and let $x\in X_s$ be a closed point of the closed fiber at which
+
+$$
+\kappa(x)=k,
+\qquad
+\widehat{\mathcal O}_{X_s,x}\simeq k[[u,v]]/(uv). \tag{10.6}
+$$
+
+Condition (10.6) says that the fiber has an ordinary node at $x$ whose two branches are individually defined. No separate hypothesis of relative dimension one is required: (10.6) supplies it near $x$. When $k$ is separably closed, (10.6) is exactly the condition that the geometric fiber have an ordinary double point over $x$. Indeed a geometric node has reduced geometric local ring, so $\kappa(x)\otimes_k\bar k$ is reduced, $\kappa(x)/k$ is separable, and therefore $\kappa(x)=k$; and the algebra of branches of an ordinary double point is finite étale of degree two over the residue field, hence split when that field is separably closed. Separable closedness enters nowhere else: what the proof uses is that the node is split.
+
+Write $B=\widehat{\mathcal O}_{X,x}$. It is a noetherian complete local ring with residue field $k$, and it is flat over $\Lambda$, because $\mathcal O_{X,x}$ is $\Lambda$-flat by flatness of $f$ and the completion of a noetherian local ring is faithfully flat over it. Moreover $B/\mathfrak mB\simeq\widehat{\mathcal O}_{X_s,x}$, since completion commutes with the quotient $\mathcal O_{X,x}\to\mathcal O_{X,x}/\mathfrak m\mathcal O_{X,x}=\mathcal O_{X_s,x}$ and the induced topology on the quotient is its maximal-adic one.
+
+**Theorem 10.5 (completed local model at a node).** With the hypotheses above there exist an element $a\in\mathfrak m$ and an isomorphism of $\Lambda$-algebras
+
+$$
+\widehat{\mathcal O}_{X,x}\;\simeq\;\Lambda[[u,v]]/(uv-a), \tag{10.7}
+$$
+
+which reduces modulo $\mathfrak m$ to the presentation (10.6) of the fiber. Moreover the ideal $a\Lambda$ depends only on the $\Lambda$-algebra $\widehat{\mathcal O}_{X,x}$, so $a$ is unique up to multiplication by a unit of $\Lambda$.
+
+**Why a complete base with separably closed residue field costs nothing.** Let $S$ be an arbitrary locally noetherian scheme, $f:X\to S$ flat and locally of finite type, $s\in S$, and let $\bar x$ be a geometric point of $X_s$ at which the geometric fiber has an ordinary node. Let $\bar s$ be the induced geometric point of $S$ and put
+
+$$
+\Lambda=\widehat{\mathcal O^{\mathrm{sh}}_{S,\bar s}},
+$$
+
+the completion of a strict henselization; it is a noetherian complete local ring whose residue field is the separable closure of $\kappa(s)$, hence separably closed. This is the ring written $\widehat{\mathcal O}^{\,\mathrm{unr}}_{S,s}$ in the applications. Base change along $\operatorname{Spec}\Lambda\to S$ preserves flatness and local finite presentation, and the closed fiber of $X_\Lambda=X\times_S\operatorname{Spec}\Lambda$ is $X_s\otimes_{\kappa(s)}\kappa(s)^{\mathrm{sep}}$, which has an ordinary split node at the point $x$ determined by $\bar x$. So the theorem applies to $X_\Lambda\to\operatorname{Spec}\Lambda$ at $x$, and produces the smoothing parameter $a\in\mathfrak m_\Lambda$ that all later uses refer to. In the only case used in this collection the base is a discrete valuation ring $R$, henselian by convention, and $\Lambda=\widehat{R^{\mathrm{sh}}}$ is a complete discrete valuation ring; since $R\to\Lambda$ is unramified, a uniformizer of $R$ remains one in $\Lambda$ and the normalized valuation of $a$ is unaffected by the passage.
+
+The proof of the theorem occupies the rest of the section. It has three ingredients: a completeness lemma allowing the passage to the limit, the fact that a flat family truncates to flat families over the Artinian quotients of the base, and a single square-zero deformation step in which the whole ambiguity of the node collapses onto one scalar.
+
+**Lemma (ideal-adic completeness).** Let $C$ be a noetherian local ring, complete for its maximal ideal $\mathfrak n$, and let $J\subseteq\mathfrak n$ be any ideal. Then the natural map $C\to\varprojlim_nC/J^n$ is an isomorphism.
+
+*Proof.* Injectivity holds because $\bigcap_nJ^n\subseteq\bigcap_n\mathfrak n^n=0$ by the Krull intersection theorem, which follows from Artin--Rees and is available in MATHLIB and in the complete local algebra of Book 1. For surjectivity, take a compatible system and lift it to a sequence $(c_N)$ in $C$ with $c_{M}-c_{N}\in J^{N}$ for $M\geq N$. Since $J^N\subseteq\mathfrak n^N$, the sequence is Cauchy for the $\mathfrak n$-adic topology and converges to some $c\in C$. Each ideal $J^N$ is closed in that topology: applying Krull's intersection theorem in the noetherian local ring $C/J^N$ gives $\bigcap_m(J^N+\mathfrak n^m)=J^N$. As $c-c_N\in J^N+\mathfrak n^m$ for every $m$, we get $c-c_N\in J^N$, so $c$ maps to the given system. $\square$
+
+Applied to $C=B$ and $J=\mathfrak mB$, the lemma says that $B$ is recovered from its truncations $B_n=B/\mathfrak m^{n+1}B$. Applied to $C=\Lambda[[u,v]]/(uv-a)$, which is a quotient of the complete local noetherian ring $\Lambda[[u,v]]$ and hence again complete local noetherian, it says the same for the model. This is the only role of completeness of the base, and it is the reason the theorem is stated after completion rather than for $\mathcal O_{X,x}$ itself.
+
+**Flatness of the truncations.** Put $\Lambda_n=\Lambda/\mathfrak m^{n+1}$ and $B_n=B/\mathfrak m^{n+1}B=B\otimes_\Lambda\Lambda_n$. Since $B$ is flat over $\Lambda$, each $B_n$ is flat over $\Lambda_n$: flatness is preserved by base change. This elementary step is where the flatness hypothesis on $f$ is consumed, and it is indispensable. Without it the conclusion fails outright: if $\mathfrak m\neq0$ and $X=\operatorname{Spec}k[u,v]/(uv)$ is viewed as an $S$-scheme through $\Lambda\to k$, then $X$ is locally of finite type with nodal closed fiber, yet $\widehat{\mathcal O}_{X,x}=k[[u,v]]/(uv)$ is killed by $\mathfrak m$ and so cannot have the form (10.7). Every model $\Lambda[[u,v]]/(uv-a)$ with $a\in\mathfrak m$ is indeed $\Lambda$-flat: the relation $uv=a$ rewrites each monomial $u^iv^j$ with $i,j\geq1$ as $a^{\min(i,j)}$ times a pure power, the resulting rearrangement converges because $a\in\mathfrak m$ and $\Lambda$ is complete, and the ring is thereby identified as a $\Lambda$-module with $\Lambda[[u]]\oplus v\Lambda[[v]]$, which is flat over the noetherian ring $\Lambda$ because $\Lambda[u]\to\Lambda[[u]]$ is an adic completion of a noetherian ring.
+
+**Lemma (one square-zero step).** Let $A'\to A$ be a surjection of noetherian local rings with kernel $I$ satisfying $\mathfrak m_{A'}I=0$, and write $k=A'/\mathfrak m_{A'}$, so $I$ is a finite-dimensional $k$-vector space and $I^2=0$. Let $B'$ be a noetherian complete local $A'$-algebra, flat over $A'$, with residue field $k$, and suppose given an isomorphism of $A$-algebras
+
+$$
+\psi:A[[u,v]]/(uv-a)\;\xrightarrow{\ \sim\ }\;B:=B'/IB'
+$$
+
+for some $a\in\mathfrak m_A$. Then there exist $a'\in\mathfrak m_{A'}$ lifting $a$ and an isomorphism of $A'$-algebras
+
+$$
+\psi':A'[[u,v]]/(uv-a')\;\xrightarrow{\ \sim\ }\;B'
+$$
+
+whose reduction modulo $I$ is $\psi$.
+
+*Proof.* Write $U_0=\psi(u)$ and $V_0=\psi(v)$; these lie in $\mathfrak m_B$, so they admit lifts $U,V\in\mathfrak m_{B'}$, the maximal ideal of $B'$ being the preimage of $\mathfrak m_B$. Because $B'$ is $\mathfrak m_{B'}$-adically complete, substitution of $U$ and $V$ defines a continuous $A'$-algebra homomorphism $\Phi:A'[[u,v]]\to B'$. Its reduction modulo $I$ is surjective, since $\psi$ is. Hence $B'=C+IB'$ with $C=\operatorname{im}\Phi$, and therefore $IB'=I(C+IB')=IC+I^2B'=IC\subseteq C$, so $B'=C$ and $\Phi$ is surjective. No Nakayama argument is needed; the square-zero hypothesis does the work.
+
+Next, flatness identifies the kernel of $B'\to B$. The multiplication map $I\otimes_{A'}B'\to B'$ is injective with image $IB'$ because $B'$ is $A'$-flat, and $I$ is a $k$-vector space, so
+
+$$
+IB'\;\simeq\;I\otimes_{A'}B'\;\simeq\;I\otimes_k\bigl(B'/\mathfrak m_{A'}B'\bigr)\;\simeq\;I\otimes_kB_0,
+\qquad
+B_0=k[[u,v]]/(uv),
+$$
+
+the last identification because $a\in\mathfrak m_A$, so reducing $\psi$ modulo $\mathfrak m_{A'}$ gives $B'/\mathfrak m_{A'}B'\simeq k[[u,v]]/(uv)$. Two consequences: every element of $IB'$ is uniquely $\sum_i\epsilon_ig_i(u,v)$ for a fixed $k$-basis $\epsilon_1,\ldots,\epsilon_r$ of $I$ and uniquely determined $g_i\in B_0$; and for $\epsilon\in I$ and $\gamma\in B'$ the product $\epsilon\gamma$ depends only on the image of $\gamma$ in $B_0$.
+
+Fix any lift $\tilde a\in\mathfrak m_{A'}$ of $a$. The element $w=UV-\tilde a$ of $B'$ dies in $B$, so $w\in IB'$ and we may write
+
+$$
+UV-\tilde a=\sum_{i=1}^r\epsilon_ig_i(u,v),
+\qquad
+g_i\in k[[u,v]]/(uv).
+$$
+
+Now use the vector-space decomposition $k[[u,v]]/(uv)=k\oplus u\,k[[u]]\oplus v\,k[[v]]$ and write $g_i=c_i+u\,p_i(u)+v\,q_i(v)$ with $c_i\in k$. Correct the coordinates by
+
+$$
+U'=U-\sum_i\epsilon_i\,q_i(v),
+\qquad
+V'=V-\sum_i\epsilon_i\,p_i(u),
+$$
+
+where each coefficient is interpreted in $B_0$, which is legitimate by the previous paragraph. Because $I^2=0$, the cross term vanishes and
+
+$$
+U'V'=UV-U\sum_i\epsilon_ip_i(u)-V\sum_i\epsilon_iq_i(v)
+=UV-\sum_i\epsilon_i\bigl(u\,p_i(u)+v\,q_i(v)\bigr),
+$$
+
+the products again being computed in $B_0$, where the images of $U$ and $V$ are $u$ and $v$. Therefore
+
+$$
+U'V'=\tilde a+\sum_i\epsilon_ic_i=:a',
+$$
+
+and $a'$ lies in $A'$, indeed in $\mathfrak m_{A'}$, because $\sum_i\epsilon_ic_i\in I\subseteq\mathfrak m_{A'}$ and $\tilde a\in\mathfrak m_{A'}$. It reduces to $a$ modulo $I$.
+
+The point of the computation is that a coordinate change $u\mapsto u+\epsilon\alpha$, $v\mapsto v+\epsilon\beta$ alters the product $uv$ by $\epsilon(u\beta+v\alpha)$, and the image of the map $(\alpha,\beta)\mapsto u\beta+v\alpha$ on $B_0$ is exactly the maximal ideal $(u,v)B_0=u\,k[[u]]\oplus v\,k[[v]]$, since $uv=0$ kills all cross terms. Thus a coordinate change can absorb every part of $g_i$ except its constant term, and precisely one scalar per basis vector of $I$ survives, to be added to the smoothing parameter. Equivalently, the ambiguity space of the node is the one-dimensional space $k[[u,v]]/(uv,u,v)=k$; this single dimension is the reason the normal form has exactly one parameter and no moduli.
+
+Since $U'\equiv U$ and $V'\equiv V$ modulo $IB'$, the elements $U',V'$ still lift $\psi(u),\psi(v)$, and the same argument as above shows that the substitution homomorphism $\Phi':A'[[u,v]]\to B'$ sending $u\mapsto U'$, $v\mapsto V'$ is surjective. It kills $uv-a'$, hence induces a surjection
+
+$$
+\psi':R'=A'[[u,v]]/(uv-a')\longrightarrow B'
+$$
+
+whose reduction modulo $I$ is $\psi$. Let $J=\ker\psi'$. Tensoring $0\to J\to R'\to B'\to0$ with $A=A'/I$ and using $\operatorname{Tor}^{A'}_1(B',A)=0$, which holds because $B'$ is $A'$-flat, gives an exact sequence
+
+$$
+0\longrightarrow J/IJ\longrightarrow A[[u,v]]/(uv-a)\xrightarrow{\ \psi\ }B\longrightarrow0 .
+$$
+
+As $\psi$ is an isomorphism, $J=IJ$, and then $J=IJ=I^2J=0$. So $\psi'$ is an isomorphism. $\square$
+
+*Proof of Theorem 10.5, existence.* Apply the lemma inductively along the truncations of the base. Set $\Lambda_n=\Lambda/\mathfrak m^{n+1}$ and $B_n=B/\mathfrak m^{n+1}B$, which is flat over $\Lambda_n$ and, being a quotient of the complete local noetherian ring $B$, is itself complete local noetherian with residue field $k$. For $n=0$ we have $\Lambda_0=k$, $a_0=0$, and $\psi_0$ the isomorphism (10.6). Given $\psi_n:\Lambda_n[[u,v]]/(uv-a_n)\to B_n$ with $a_n\in\mathfrak m\Lambda_n$, apply the lemma to
+
+$$
+A'=\Lambda_{n+1},
+\qquad
+A=\Lambda_n,
+\qquad
+I=\mathfrak m^{n+1}/\mathfrak m^{n+2},
+\qquad
+B'=B_{n+1},
+$$
+
+noting that $\mathfrak m_{A'}I=\mathfrak m^{n+2}/\mathfrak m^{n+2}=0$, that $I$ is a finite-dimensional $k$-vector space because $\Lambda$ is noetherian, and that $B_{n+1}\otimes_{\Lambda_{n+1}}\Lambda_n=B_n$. The lemma produces $a_{n+1}\in\mathfrak m\Lambda_{n+1}$ lifting $a_n$ and an isomorphism $\psi_{n+1}$ reducing to $\psi_n$.
+
+The systems are compatible by construction, so $a=\varprojlim a_n$ exists in $\Lambda=\varprojlim\Lambda_n$ and lies in $\mathfrak m$, and $\varprojlim\psi_n$ is an isomorphism
+
+$$
+\varprojlim_n\Lambda_n[[u,v]]/(uv-a_n)\;\xrightarrow{\ \sim\ }\;\varprojlim_nB_n .
+$$
+
+By the completeness lemma the right-hand side is $B$, and the left-hand side is $\Lambda[[u,v]]/(uv-a)$: this ring is complete local noetherian, and its quotient by $\mathfrak m^{n+1}$ is $\Lambda_n[[u,v]]/(uv-a_n)$. This proves (10.7), and the construction started from (10.6), so the isomorphism reduces to the given presentation of the fiber. $\square$
+
+**Proposition (the smoothing ideal is intrinsic).** Let $\Lambda$ be a noetherian complete local ring and let $a,a'\in\mathfrak m$. If $\Lambda[[u,v]]/(uv-a)$ and $\Lambda[[u,v]]/(uv-a')$ are isomorphic as $\Lambda$-algebras, then $a\Lambda=a'\Lambda$. More precisely, if $B=\Lambda[[u,v]]/(uv-a)$ then
+
+$$
+a\Lambda=\ker\Bigl(\Lambda\longrightarrow B\big/\operatorname{Fitt}_1\widehat\Omega^1_{B/\Lambda}\Bigr),
+$$
+
+a construction depending only on the $\Lambda$-algebra $B$.
+
+*Proof.* For a noetherian complete local $\Lambda$-algebra $B$ with $\Lambda\to B$ local, let $\widehat\Omega^1_{B/\Lambda}$ denote the $\mathfrak m_B$-adic completion of $\Omega^1_{B/\Lambda}$. It is a finite $B$-module and depends only on the $\Lambda$-algebra $B$: any $\Lambda$-algebra isomorphism of local rings carries the maximal ideal to the maximal ideal, hence is continuous, hence is compatible with the completion. Fitting ideals of a finite module are independent of the chosen presentation, so $\operatorname{Fitt}_1\widehat\Omega^1_{B/\Lambda}$ is likewise intrinsic.
+
+Now compute it for $B=\Lambda[[u,v]]/(uv-a)$. Continuous differentials of a formal power series ring are free, $\widehat\Omega^1_{\Lambda[[u,v]]/\Lambda}=\Lambda[[u,v]]\,du\oplus\Lambda[[u,v]]\,dv$. Writing $P=\Lambda[[u,v]]$ and $F=uv-a$, the second fundamental exact sequence $(F)/(F^2)\to\Omega^1_{P/\Lambda}\otimes_PB\to\Omega^1_{B/\Lambda}\to0$ stays exact after completion, because completion is exact on finite modules over a noetherian ring and is right exact in general, and it yields the finite presentation
+
+$$
+B\xrightarrow{\ (v,\;u)\ }B\,du\oplus B\,dv\longrightarrow\widehat\Omega^1_{B/\Lambda}\longrightarrow0,
+$$
+
+because $d(uv-a)=v\,du+u\,dv$; the term $da$ is absent since $a\in\Lambda$ and the differentials are relative. The first Fitting ideal is generated by the $1\times1$ minors of the presentation matrix, so $\operatorname{Fitt}_1\widehat\Omega^1_{B/\Lambda}=(u,v)B$, and
+
+$$
+B/(u,v)B=\Lambda[[u,v]]/(uv-a,u,v)=\Lambda/a\Lambda .
+$$
+
+Hence the kernel of $\Lambda\to B/\operatorname{Fitt}_1\widehat\Omega^1_{B/\Lambda}$ is $a\Lambda$, which proves both assertions. $\square$
+
+Geometrically, $\operatorname{Fitt}_1\widehat\Omega^1$ cuts out the locus where the relative differentials fail to be generated by a single element; for the model it is the closed subscheme $V(u,v)$, the locus carrying the singularity, and the proposition says that this locus maps isomorphically onto the closed subscheme $\operatorname{Spec}\Lambda/a\Lambda$ of the base. The ideal $a\Lambda$ therefore records exactly the base directions along which the node persists. Two consequences are what later books need. First, when $\Lambda$ is a complete discrete valuation ring with uniformizer $\pi$, the integer
+
+$$
+n=\operatorname{length}_\Lambda\bigl(\Lambda/a\Lambda\bigr)=v(a)
+$$
+
+depends only on the family and the node, not on the coordinates used to write (10.7); writing $a=\pi^n\cdot(\text{unit})$ and rescaling $u$ by that unit puts the model in the form $\Lambda[[u,v]]/(uv-\pi^n)$. Second, $a\ne0$ exactly when the node is smoothed over the generic point, and $a=0$ exactly when the singularity propagates over the whole base. This is precisely the well-definedness that the notion of thickness requires.
+
+**Remark (the étale-local refinement).** The normal form proved above is a statement about completed local rings. The stronger statement usually quoted, that there are an étale neighborhood $U\to X$ of $x$ and an étale $S$-morphism
+
+$$
+U\longrightarrow\operatorname{Spec}\Lambda[u,v]/(uv-a)
+$$
+
+carrying $x$ to the origin, so that the family is étale locally the hypersurface $uv=a$ in a smooth relative surface, is *not* proved here. Deducing it from (10.7) is an approximation problem: one has an isomorphism over the completion and wants to realize it over an étale neighborhood, which is the content of Artin approximation and requires excellence hypotheses on the base. Artin approximation is not developed in this collection and is not present in MATHLIB, whose available material stops at henselian local rings, completions, Artin--Rees, and the theory of étale, unramified, and smooth morphisms. The completed form is used in place of it everywhere, and this suffices: the arguments that invoke the local model, in Section 10.4 above and in the later theory of nodal degenerations, test freeness, length, and valuation, all of which are detected on completed stalks. Where the étale form would genuinely be needed is in producing an actual open or étale neighborhood with the displayed equation, for instance to construct global charts or to descend a formal isomorphism to a morphism of schemes; no argument in this collection does that.
 
 ## 11. Riemann--Roch over a field
 
@@ -1724,6 +1908,8 @@ f_*(\mathcal E^\vee\otimes\omega_{X/S})
 $$
 
 with perfect fiberwise Serre duality.
+
+**Nodes in families.** Over a noetherian complete local base $\Lambda$ with separably closed residue field, a flat family of finite type with a split ordinary node in its closed fiber has completed local ring $\Lambda[[u,v]]/(uv-a)$ with $a$ in the maximal ideal, and the ideal $a\Lambda$ is intrinsic, being the ideal defining the image of the non-smooth locus. Over a complete discrete valuation ring this makes $v(a)$ an invariant of the family at the node. The étale-local refinement of the normal form is not proved here.
 
 **Cohomology and infinitesimals.** Cohomology is locally a two-term finite free model. Fiber dimensions are upper semicontinuous, and fiberwise $H^1$-vanishing gives a locally free pushforward with arbitrary base change. At an effective divisor,
 

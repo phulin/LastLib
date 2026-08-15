@@ -38,7 +38,7 @@ flowchart LR
 | 6 | Global Class Field Theory | 4, 5 |
 | 7 | Analytic Foundations for Odlyzko--Poitou Bounds | MATHLIB |
 | 8 | Ample Line Bundles, Hilbert Polynomials, and Symmetric Powers | MATHLIB |
-| 9 | Divisors, Riemann--Roch, and Duality on Relative Curves | 8, MATHLIB |
+| 9 | Divisors, Riemann--Roch, and Duality on Relative Curves | 1, 8, MATHLIB |
 | 10 | Faithfully Flat Descent in Algebraic Geometry | 8, MATHLIB |
 | 11 | Normalization and Regular Models of Arithmetic Curves | 1, 8, 10 |
 | 12 | Blowups and Intersection Theory on Arithmetic Surfaces | 9, 11 |

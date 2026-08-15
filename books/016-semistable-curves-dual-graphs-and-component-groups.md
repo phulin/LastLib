@@ -106,7 +106,7 @@ Statements about the geometric dual graph are made after extension to $\bar k$. 
 
 A graph may have multiple edges and loops. Each unoriented edge $e$ has two orientations $e$ and $\bar e$, with initial and terminal vertices $o(e)$ and $t(e)$. A loop has the same initial and terminal vertex but still has two branches and can contribute a cycle. Graphs are finite and connected unless stated otherwise.
 
-For a model whose completed local equation at a node is $xy=u\pi^{n_e}$, the positive integer $n_e$ is its thickness. Units do not change it. When the total space is regular, every geometric node has thickness one. Weighted formulas are needed precisely because stable or contracted models need not have regular total space.
+For a model whose completed local equation at a node is $xy=u\pi^{n_e}$, in the sense made precise in §2.2, the positive integer $n_e$ is its thickness. Units do not change it. When the total space is regular, every geometric node has thickness one. Weighted formulas are needed precisely because stable or contracted models need not have regular total space.
 
 ### 1.3 A first degeneration
 
@@ -144,27 +144,44 @@ A self-intersection of one irreducible component still gives two branches. Its e
 
 ### 2.2 Smoothing parameters and thickness
 
-Let a node occur in a flat family. Étale locally on the curve and base, and after passing to a strict henselization when necessary, its completed equation has the form
+Let a node occur in a flat family. The shape of the total space at that node is not a convention but a theorem, proved as the completed local model at a node in Book 9, Theorem 10.5, and we record it in the form used throughout this book.
+
+Let $\mathcal X\to\operatorname{Spec}R$ be a curve in the sense of §1.2 and let $q\in\mathcal X$ be a closed point of the special fiber at which the geometric special fiber has an ordinary double point. Put
 
 $$
-xy=a
+\Lambda=\widehat{R^{\mathrm{sh}}},
 $$
 
-with $a$ in the maximal ideal of the base. The element $a$ is the smoothing parameter: when it is invertible the fiber is smooth near the point, and when it vanishes the two branches meet.
-
-Over a discrete valuation ring one can write $a=u\pi^n$ with $u\in R^\times$ and $n\geq1$. A change $x\mapsto ux$ removes the unit, so the essential local model is
+the completion of a strict henselization of $R$: a complete discrete valuation ring with the same uniformizer $\pi$ and with separably closed residue field $\bar k$. If $k$ is already separably closed one may take $\Lambda=\widehat R$. Write $\tilde q$ for a point of $\mathcal X_\Lambda=\mathcal X\times_R\operatorname{Spec}\Lambda$ above $q$; there are $[\kappa(q):k]$ of them, permuted transitively by $G_k$, and they are the geometric edges of the orbit of $q$. The cited theorem gives an isomorphism of $\Lambda$-algebras
 
 $$
-A_n=R[[x,y]]/(xy-\pi^n). \tag{2.1}
+\widehat{\mathcal O}_{\mathcal X_\Lambda,\tilde q}\simeq\Lambda[[x,y]]/(xy-a),
+\qquad a\in\mathfrak m_\Lambda,
 $$
 
-The integer $n$ is the thickness. It is also the intersection multiplicity of the two branches after an appropriate regular resolution has separated their history. Geometrically, an edge of length $n$ is the compressed record of a chain of $n$ unit edges.
+so the completed equation of the family at the node is $xy=a$ with $a$ in the maximal ideal of the base. The element $a$ is the smoothing parameter. Over a general base its vanishing locus is exactly the locus of the base over which the node persists; over our discrete valuation ring $a$ is never invertible, and $a\neq0$ says that the generic fiber is smooth at the node while $a=0$ says that the singularity propagates.
+
+The same theorem shows that the ideal $a\Lambda$ depends only on the $\Lambda$-algebra $\widehat{\mathcal O}_{\mathcal X_\Lambda,\tilde q}$, being the ideal cut out on the base by the non-smooth locus of the family. Hence one may write $a=u\pi^n$ with $u\in\Lambda^\times$ and $n\geq1$, and the integer
+
+$$
+n=v(a)=\operatorname{length}_\Lambda\bigl(\Lambda/a\Lambda\bigr)
+$$
+
+depends only on the family and the node, not on the coordinates chosen. A change $x\mapsto ux$ removes the unit, so the essential local model is
+
+$$
+A_n=\Lambda[[x,y]]/(xy-\pi^n). \tag{2.1}
+$$
+
+The integer $n$ is the thickness. It does not depend on the auxiliary base $\Lambda$: strict henselization and completion of a discrete valuation ring leave a uniformizer a uniformizer, so the normalized valuation of $\Lambda$ restricts to that of $R$, and the same $n$ is obtained from $\widehat R$ whenever the node is already split over $k$. Nor does it depend on which point $\tilde q$ above $q$ is chosen: $G_k$ acts on $\mathcal X_\Lambda$ over $R$, semilinearly over $\Lambda$, and its action preserves the valuation, so it carries the smoothing parameter at one point of the orbit to one of the same valuation at another. This is what licenses the convention of §1.2, which reads the thickness off the completed local equation. Thickness is also the intersection multiplicity of the two branches after an appropriate regular resolution has separated their history. Geometrically, an edge of length $n$ is the compressed record of a chain of $n$ unit edges.
+
+Only the completed equation is used in this book: every later appeal to the local model, whether to test regularity of the total space, to add lengths under contraction, or to compute the monodromy contribution of a node, is a statement about $A_n$ and its completed stalks. The stronger étale-local assertion, that the family is étale locally $xy=a$ inside a smooth relative surface, is an approximation statement that Book 9 explicitly does not prove and that is not needed here.
 
 Thickness is not a multiplicity of the special fiber. The equation $xy=\pi^n$ still has reduced special fiber $xy=0$. It measures singularity of the total space and the rate of smoothing. Confusing these notions leads, for example, to the incorrect claim that every reduced nodal fiber has unit monodromy.
 
 ### 2.3 Regular and nonregular total spaces
 
-The maximal ideal of $A_n$ at the closed point is generated by $x,y,\pi$. Its defining equation has a linear term in the regular local ambient ring exactly when $n=1$. Hence
+Regularity of the total space at a node may be tested on the model (2.1). Indeed $\mathcal O_{\mathcal X,q}\to\mathcal O_{\mathcal X_\Lambda,\tilde q}$ is flat and local, its fiber over the closed point is the separable residue extension $\bar k/\kappa(q)$, and $\mathfrak m_q$ generates the target maximal ideal; passing further to the completion $A_n$ changes nothing either. Neither step alters the dimension or the minimal number of generators of the maximal ideal, so the three rings are regular together. The maximal ideal of $A_n$ at the closed point is generated by $x,y,\pi$. Its defining equation has a linear term in the regular local ambient ring exactly when $n=1$. Hence
 
 $$
 A_n\text{ is regular at the node}\quad\Longleftrightarrow\quad n=1. \tag{2.2}
@@ -198,7 +215,7 @@ Taking a quotient graph first can lose orientation reversal, stabilizers, and re
 
 ### 3.1 Fiberwise definitions and relative hypotheses
 
-A nodal curve over a field is a proper, geometrically connected, reduced curve whose only geometric singularities are nodes. A nodal family is a proper flat finitely presented family all of whose geometric fibers are nodal. These conditions imply that the family is Gorenstein and that its relative dualizing sheaf is invertible and compatible with base change.
+A nodal curve over a field is a proper, geometrically connected, reduced curve whose only geometric singularities are nodes. A nodal family is a proper flat finitely presented family all of whose geometric fibers are nodal. These conditions imply that the family is Gorenstein and that its relative dualizing sheaf is invertible and compatible with base change. That implication is fiberwise and needs no model of the total space: the local ring of a fiber at a node becomes $\bar k[[x,y]]/(xy)$ after completion and geometric base change, a hypersurface and hence Gorenstein, and the Gorenstein property descends along those faithfully flat maps, so the family is Gorenstein in the sense of Book 9, §9.4. Invertibility of the relative dualizing sheaf, its compatibility with base change, and its branch-and-residue description on fibers are then the results of Book 9, §§9.3--10.4; the last of these uses the completed local model of a node recalled in §2.2, and nothing stronger.
 
 Terminology varies, so we fix it. A semistable curve is a nodal curve in which every rational irreducible component meets the rest of the curve and the markings, if any, in at least two branches. A stable curve requires at least three. A semistable model over $R$ has smooth generic fiber and semistable special fiber. A regular semistable model additionally has regular total space; its special fiber is then a reduced normal-crossing divisor and all thicknesses are one.
 
