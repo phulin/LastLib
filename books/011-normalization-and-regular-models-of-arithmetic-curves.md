@@ -70,6 +70,14 @@
     - [A hypothesis ledger](#131-a-hypothesis-ledger)
     - [The construction pipeline](#132-the-construction-pipeline)
     - [Conclusion](#133-conclusion)
+14. [Depth, Cohen–Macaulay rings, and Serre's criteria](#14-depth-cohenmacaulay-rings-and-serres-criteria)
+    - [Regular sequences and the depth invariant](#141-regular-sequences-and-the-depth-invariant)
+    - [The depth calculus](#142-the-depth-calculus)
+    - [The Auslander–Buchsbaum formula](#143-the-auslanderbuchsbaum-formula)
+    - [Cohen–Macaulay local rings](#144-cohenmacaulay-local-rings)
+    - [Serre's conditions and the normality criterion](#145-serres-conditions-and-the-normality-criterion)
+    - [Freeness in dimension two](#146-freeness-in-dimension-two)
+    - [What the criteria return to the models](#147-what-the-criteria-return-to-the-models)
 
 ## 1. The problem of integral models
 
@@ -284,6 +292,8 @@ for every prime $\mathfrak p$.
 
 **Theorem 4.1 (Serre's criterion).** A noetherian ring is normal if and only if it is reduced and satisfies $(R_1)$ and $(S_2)$.
 
+The complete proof, together with the depth calculus that makes $(S_2)$ well defined, is Chapter 14; Theorem 14.26 is the criterion itself and shows that reducedness is a consequence rather than an extra hypothesis. The following strategy explains the mechanism.
+
 **Proof strategy.** An integrally closed domain is the intersection of its height-one valuation rings inside its fraction field. Condition $(R_1)$ identifies those local rings as discrete valuation rings, while $(S_2)$ ensures that functions regular away from codimension at least two extend.
 
 For the forward implication, a noetherian normal local domain has depth at least two when its dimension is at least two: if a nonzero $a\in\mathfrak m$ were such that every element of $\mathfrak m$ were a zero divisor modulo $a$, prime avoidance would force an associated height-one prime incompatible with integral closedness. Height-one localizations are one-dimensional noetherian normal local domains and hence discrete valuation rings. Conversely, assume $(R_1)$ and $(S_2)$. If $x$ in the fraction field is integral over $A$, it belongs to every height-one localization. The intersection theorem supplied by $(S_2)$ gives
@@ -317,7 +327,7 @@ $$
 A=k[x,y,z]/(xy-z^2).
 $$
 
-This two-dimensional domain is singular at the origin because its maximal ideal needs three generators. Yet it is normal. Indeed, it is a hypersurface and hence Cohen–Macaulay, so it satisfies $(S_2)$; its only singular point has codimension two, so $(R_1)$ holds. Serre's criterion applies.
+This two-dimensional domain is singular at the origin because its maximal ideal needs three generators. Yet it is normal. Indeed, it is a hypersurface and hence Cohen–Macaulay, so it satisfies $(S_2)$; its only singular point has codimension two, so $(R_1)$ holds. Serre's criterion applies. Every step of this verification, including the Cohen–Macaulay property of a hypersurface and the location of the singular locus, is carried out in Section 14.4.
 
 This quadratic cone is the model warning. Normalization does nothing to it. Blowing up its singular point replaces the vertex by a projective line and yields a regular surface. On an arithmetic surface the same distinction appears at isolated points of bad fibers.
 
@@ -652,7 +662,7 @@ $$
 sy=\pi^{n-1}.
 $$
 
-Thus the only unresolved chart has the same form with exponent smaller by one. Induction ends at $xy=\pi$, which is regular. Globally the exceptional locus is a chain of rational curves. The exact number and self-intersections belong to the intersection theory of the next book; here the important point is finite reduction of the exponent.
+Thus the only unresolved chart has the same form with exponent smaller by one. Induction ends at $xy=\pi$, which is regular. Theorem 14.20 shows that every member of this family is normal and Cohen–Macaulay, so normalization cannot simplify $X_n$ and blowing up is the only available repair. Globally the exceptional locus is a chain of rational curves. The exact number and self-intersections belong to the intersection theory of the next book; here the important point is finite reduction of the exponent.
 
 For the cone $xy=z^2$, blowing up $(x,y,z)$ gives on the $x$-chart
 
@@ -1002,3 +1012,459 @@ An arithmetic curve has two lives. Generically it is a smooth projective one-dim
 Unconditionally, this volume supplies finite normalization and normal projective models with controlled behavior under finite extension. Conditional on SR2, it also supplies regular proper models preserving prescribed good loci and compatible regular dominations for maps and correspondences. Conditional further on RC and BC2, the positive-genus model has a relatively minimal endpoint with the stated universal property. Horizontal divisors retain generic points and markings; vertical components encode extensions of valuations and bad reduction. Regularity of the total surface and singularity of the fiber coexist without contradiction, while smoothness and semistability remain appropriately stronger relative conditions.
 
 This separation of roles is the durable lesson. Normal, regular, smooth, excellent, Nagata, proper, and projective are not competing descriptions of one good object. They are distinct tools, and arithmetic curves become manageable only when each is invoked for exactly the work it performs.
+
+## 14. Depth, Cohen–Macaulay rings, and Serre's criteria
+
+Three pieces of local algebra were used on credit in the preceding chapters. Section 4.1 stated Serre's criterion and the condition $(S_2)$ with a proof strategy rather than a proof. Section 4.3 called a hypersurface Cohen–Macaulay in order to conclude that the quadratic cone is normal. Sections 8.5 and 10.4 produced the surfaces $xy=\pi^n$ without deciding which of them are normal, and Section 11.4 used the regularity of $xy=\pi$ without locating it in a general framework. This chapter proves all of it.
+
+The material is pure local algebra and depends on none of Chapters 5 to 13; a reader may insert it immediately after Chapter 4. It is placed last because it is also the form in which later books of the collection use these results: a freeness statement over two-dimensional regular local rings, and the two criteria of Serre.
+
+The following standard facts about noetherian rings are used as proof sources and are not reproved here.
+
+1. **Nakayama.** If $M$ is a finite module over a local ring $(A,\mathfrak m,k)$ and $M=\mathfrak mM$, then $M=0$. Consequently a family in $M$ whose residues span $M/\mathfrak mM$ generates $M$, and a finite projective module over a local ring is free.
+2. **Associated primes.** For a finite nonzero module $M$ over a noetherian ring $A$, the set $\operatorname{Ass}M$ of primes of the form $\operatorname{Ann}(x)$, $x\in M$, is finite and nonempty; the zerodivisors on $M$ are exactly $\bigcup_{\mathfrak p\in\operatorname{Ass}M}\mathfrak p$; $\operatorname{Ass}M\subseteq\operatorname{Supp}M$ and every minimal element of $\operatorname{Supp}M$ lies in $\operatorname{Ass}M$; $\operatorname{Ass}$ of a submodule is contained in $\operatorname{Ass}M$; the annihilator of any nonzero $x\in M$ is contained in some member of $\operatorname{Ass}M$; and $\operatorname{Ass}$ commutes with localization, $\operatorname{Ass}_{A_\mathfrak p}M_\mathfrak p=\{\mathfrak qA_\mathfrak p:\mathfrak q\in\operatorname{Ass}M,\ \mathfrak q\subseteq\mathfrak p\}$.
+3. **Prime avoidance**, in the version that permits two of the finitely many ideals to be arbitrary and requires the rest to be prime.
+4. **Krull's height theorem.** A prime minimal over an ideal generated by $r$ elements has height at most $r$. In particular $\dim A\leq\dim_k\mathfrak m/\mathfrak m^2$ for a noetherian local ring, and $\dim M/xM\geq\dim M-1$ for $x\in\mathfrak m$ and $M$ finite, where $\dim M:=\dim A/\operatorname{Ann}M$.
+5. **Ext.** Long exact sequences in both variables, the identification $\operatorname{Ext}^0=\operatorname{Hom}$, compatibility with finite direct sums, and the fact that $\operatorname{Ext}^i_A(N,M)$ is killed by $\operatorname{Ann}N$, so that the map induced by multiplication by $a\in\operatorname{Ann}N$ on $M$ is zero.
+6. **Resolutions.** Schanuel's lemma, and the existence of minimal free resolutions of finite modules over a noetherian local ring.
+7. **Completion.** For a noetherian local ring $A$ the completion $\widehat A$ is flat over $A$, $\widehat M\simeq M\otimes_A\widehat A$ for finite $M$, $\widehat A/\mathfrak m\widehat A=A/\mathfrak m$, $\dim\widehat A=\dim A$, and $\mathfrak m/\mathfrak m^2\simeq\widehat{\mathfrak m}/\widehat{\mathfrak m}^2$.
+
+Throughout, $(A,\mathfrak m,k)$ denotes a noetherian local ring and modules are finite. The zero module is given depth $+\infty$; this convention only serves to make the exact-sequence formulas uniform, and every substantive statement below concerns nonzero modules.
+
+### 14.1 Regular sequences and the depth invariant
+
+Let $M$ be an $A$-module and $x_1,\ldots,x_n$ elements of $A$. The sequence is **weakly $M$-regular** if $x_i$ is a nonzerodivisor on $M/(x_1,\ldots,x_{i-1})M$ for $1\leq i\leq n$, and **$M$-regular** if in addition
+$$
+M/(x_1,\ldots,x_n)M\neq0.
+$$
+When $M$ is finite, nonzero, and all $x_i$ lie in $\mathfrak m$, the second condition is automatic by Nakayama, so over a local ring the two notions agree for sequences in the maximal ideal.
+
+The first observation is that failure to start a regular sequence is an associated-prime statement.
+
+**Lemma 14.1.** Let $M\neq0$ be finite over $(A,\mathfrak m,k)$. The following are equivalent.
+
+1. No element of $\mathfrak m$ is a nonzerodivisor on $M$.
+2. $\mathfrak m\in\operatorname{Ass}M$.
+3. $\operatorname{Hom}_A(k,M)\neq0$.
+
+**Proof.** The zerodivisors on $M$ form the union of the finitely many associated primes. If every element of $\mathfrak m$ is a zerodivisor, then $\mathfrak m\subseteq\bigcup_{\mathfrak p\in\operatorname{Ass}M}\mathfrak p$, so prime avoidance places $\mathfrak m$ inside one associated prime, which must then equal $\mathfrak m$. Conversely $\mathfrak m\in\operatorname{Ass}M$ makes every element of $\mathfrak m$ a zerodivisor. Finally $\mathfrak m=\operatorname{Ann}(x)$ for some $x\neq0$ exactly when the map $k\to M$, $1\mapsto x$, is a nonzero homomorphism. $\square$
+
+**Lemma 14.2.** Let $M\neq0$ be finite over $(A,\mathfrak m,k)$ and let $x\in\mathfrak m$ be a nonzerodivisor on $M$. Then
+$$
+\dim M/xM=\dim M-1 .
+$$
+Consequently every $M$-regular sequence in $\mathfrak m$ has length at most $\dim M$.
+
+**Proof.** Since $x$ is a nonzerodivisor on $M$, it lies in no associated prime of $M$, hence in no minimal element of $\operatorname{Supp}M$, because those minimal elements are associated primes. Let
+$$
+\mathfrak q_0\subsetneq\mathfrak q_1\subsetneq\cdots\subsetneq\mathfrak q_s
+$$
+be a chain of primes in $\operatorname{Supp}M/xM=\operatorname{Supp}M\cap V(x)$. Then $\mathfrak q_0$ lies in the closed set $\operatorname{Supp}M=V(\operatorname{Ann}M)$ and contains $x$, so it is not minimal there; choosing a minimal prime of $\operatorname{Supp}M$ below it lengthens the chain inside $\operatorname{Supp}M$. Hence $s+1\leq\dim M$, that is $\dim M/xM\leq\dim M-1$. The reverse inequality is Krull's height theorem. Iterating the equality along a regular sequence lowers the dimension by one at each step, and dimensions are nonnegative for nonzero modules, so the length is at most $\dim M$. $\square$
+
+Let $I\subseteq A$ be an ideal with $IM\neq M$. The **depth of $M$ along $I$**, written $\operatorname{depth}(I,M)$, is the supremum of the lengths of $M$-regular sequences contained in $I$. For a local ring the **depth of $M$** is
+$$
+\operatorname{depth}M:=\operatorname{depth}(\mathfrak m,M),
+$$
+and $\operatorname{depth}A$ means the depth of $A$ as a module over itself. Nothing so far says that this supremum is attained by every maximal sequence, and that is the content of Theorem 14.6. The bridge is the following criterion, which is the one substantial homological input of the chapter; it is quoted from the ambient library rather than reproved.
+
+**Theorem 14.3 (Rees).** Let $A$ be noetherian, $I\subseteq A$ an ideal, $M$ a finite $A$-module with $IM\neq M$, and $n\geq0$ an integer. The following are equivalent.
+
+1. There is an $M$-regular sequence of length $n$ contained in $I$.
+2. $\operatorname{Ext}^i_A(A/I,M)=0$ for all $i<n$.
+3. $\operatorname{Ext}^i_A(N,M)=0$ for all $i<n$ and every finite nonzero $N$ with $\operatorname{Supp}N\subseteq V(I)$.
+
+Only the equivalence of the first two conditions is used below, and it is used in both directions.
+
+**Corollary 14.4.** With the hypotheses of Theorem 14.3,
+$$
+\operatorname{depth}(I,M)=\min\{i:\operatorname{Ext}^i_A(A/I,M)\neq0\},
+$$
+with the convention that the minimum of the empty set is $+\infty$. If $A$ is local and $I=\mathfrak m$, then
+$$
+\operatorname{depth}M=\min\{i:\operatorname{Ext}^i_A(k,M)\neq0\}\leq\dim M<\infty .
+$$
+
+**Proof.** Write $e$ for the displayed minimum. If $e<\infty$, then condition (2) of Theorem 14.3 holds with $n=e$, so an $M$-regular sequence of length $e$ exists in $I$ and $\operatorname{depth}(I,M)\geq e$. If $\operatorname{depth}(I,M)\geq n$ for some $n$, condition (1) holds for that $n$, so $\operatorname{Ext}^i(A/I,M)=0$ for $i<n$ and hence $e\geq n$. Both inequalities together give $e=\operatorname{depth}(I,M)$, including the case $e=\infty$, in which regular sequences of every length exist. In the local case Lemma 14.2 bounds all lengths by $\dim M$, so the supremum is finite and the minimum is attained. $\square$
+
+The corollary already resolves the well-definedness question in the weak sense: depth is a genuine invariant, computed by an Ext index, and it is finite. The next section upgrades this to the statement that no maximal regular sequence can be short.
+
+### 14.2 The depth calculus
+
+**Theorem 14.5.** Let $M\neq0$ be finite over $(A,\mathfrak m,k)$ and let $x\in\mathfrak m$ be a nonzerodivisor on $M$. Then
+$$
+\operatorname{depth}M/xM=\operatorname{depth}M-1 .
+$$
+
+**Proof.** Write $d=\operatorname{depth}M$, which is at least $1$ because $x$ is a regular element in $\mathfrak m$, and at most $\dim M$ by Corollary 14.4. The short exact sequence
+$$
+0\longrightarrow M\xrightarrow{\ x\ }M\longrightarrow M/xM\longrightarrow0
+$$
+gives a long exact sequence of $\operatorname{Ext}^\bullet_A(k,-)$. Multiplication by $x$ on $\operatorname{Ext}^i_A(k,M)$ induced by the first map coincides with the map induced by multiplication by $x$ on $k$, which is zero because $x\in\mathfrak m=\operatorname{Ann}k$. The long exact sequence therefore breaks into short exact sequences
+$$
+0\longrightarrow\operatorname{Ext}^i_A(k,M)\longrightarrow\operatorname{Ext}^i_A(k,M/xM)\longrightarrow\operatorname{Ext}^{i+1}_A(k,M)\longrightarrow0
+$$
+for every $i\geq0$. For $i<d-1$ both outer terms vanish, so $\operatorname{Ext}^i(k,M/xM)=0$. For $i=d-1$ the left term vanishes and the right term is $\operatorname{Ext}^d(k,M)\neq0$, so $\operatorname{Ext}^{d-1}(k,M/xM)\neq0$. By Corollary 14.4 the depth of $M/xM$ is $d-1$. $\square$
+
+**Theorem 14.6.** Let $M\neq0$ be finite over $(A,\mathfrak m,k)$ and let $x_1,\ldots,x_n\in\mathfrak m$ be an $M$-regular sequence that cannot be extended to an $M$-regular sequence $x_1,\ldots,x_{n+1}$ in $\mathfrak m$. Then $n=\operatorname{depth}M$. In particular all maximal $M$-regular sequences in $\mathfrak m$ have the same length, namely $\operatorname{depth}M$.
+
+**Proof.** Induction on $n$. If $n=0$, maximality says that no element of $\mathfrak m$ is a nonzerodivisor on $M$, so $\operatorname{Hom}(k,M)\neq0$ by Lemma 14.1 and $\operatorname{depth}M=0$ by Corollary 14.4. If $n\geq1$, then $x_1$ is a nonzerodivisor on $M$ and $x_2,\ldots,x_n$ is a maximal $M/x_1M$-regular sequence in $\mathfrak m$: an extension of the latter would extend the former. By induction $n-1=\operatorname{depth}M/x_1M$, and Theorem 14.5 gives $\operatorname{depth}M/x_1M=\operatorname{depth}M-1$. $\square$
+
+Thus the depth may be computed by any greedy choice of regular elements, and the Ext description is only needed to know that greed cannot go wrong. The same description gives the behavior along short exact sequences.
+
+**Lemma 14.7.** Let $0\to M'\to M\to M''\to0$ be exact with all three modules finite over $(A,\mathfrak m,k)$. Then
+$$
+\operatorname{depth}M\geq\min\{\operatorname{depth}M',\operatorname{depth}M''\},
+$$
+$$
+\operatorname{depth}M'\geq\min\{\operatorname{depth}M,\operatorname{depth}M''+1\},
+$$
+$$
+\operatorname{depth}M''\geq\min\{\operatorname{depth}M,\operatorname{depth}M'-1\}.
+$$
+Moreover, if $\operatorname{depth}M''<\operatorname{depth}M'$, then $\operatorname{depth}M=\operatorname{depth}M''$, and if $\operatorname{depth}M'>\operatorname{depth}M$, then $\operatorname{depth}M''=\operatorname{depth}M$.
+
+**Proof.** All statements read off the long exact sequence
+$$
+\cdots\to\operatorname{Ext}^i(k,M')\to\operatorname{Ext}^i(k,M)\to\operatorname{Ext}^i(k,M'')\to\operatorname{Ext}^{i+1}(k,M')\to\cdots
+$$
+together with Corollary 14.4, which identifies the depth of a module with the first index at which $\operatorname{Ext}^\bullet(k,-)$ is nonzero. If $i<\min\{\operatorname{depth}M',\operatorname{depth}M''\}$, the two neighbors of $\operatorname{Ext}^i(k,M)$ vanish, so it vanishes; this is the first inequality. If $i<\min\{\operatorname{depth}M,\operatorname{depth}M''+1\}$, then $\operatorname{Ext}^i(k,M)=0$ and $\operatorname{Ext}^{i-1}(k,M'')=0$, and exactness of
+$$
+\operatorname{Ext}^{i-1}(k,M'')\to\operatorname{Ext}^i(k,M')\to\operatorname{Ext}^i(k,M)
+$$
+gives $\operatorname{Ext}^i(k,M')=0$; this is the second inequality. For the third, let $i<\min\{\operatorname{depth}M,\operatorname{depth}M'-1\}$; then $\operatorname{Ext}^i(k,M)=0$ and $\operatorname{Ext}^{i+1}(k,M')=0$, and exactness of
+$$
+\operatorname{Ext}^{i}(k,M)\to\operatorname{Ext}^i(k,M'')\to\operatorname{Ext}^{i+1}(k,M')
+$$
+gives $\operatorname{Ext}^i(k,M'')=0$. For the refinements, suppose $\operatorname{depth}M''<\operatorname{depth}M'$ and put $i=\operatorname{depth}M''$. Then $\operatorname{Ext}^j(k,M)=0$ for $j<i$ by the first inequality, while
+$$
+0=\operatorname{Ext}^i(k,M')\to\operatorname{Ext}^i(k,M)\to\operatorname{Ext}^i(k,M'')\to\operatorname{Ext}^{i+1}(k,M')=0
+$$
+shows $\operatorname{Ext}^i(k,M)\simeq\operatorname{Ext}^i(k,M'')\neq0$. Similarly, if $\operatorname{depth}M'>\operatorname{depth}M=:i$, then $\operatorname{Ext}^j(k,M'')=0$ for $j<i$ by the third inequality applied index by index, and
+$$
+0=\operatorname{Ext}^i(k,M')\to\operatorname{Ext}^i(k,M)\to\operatorname{Ext}^i(k,M'')
+$$
+is injective on a nonzero module, so $\operatorname{Ext}^i(k,M'')\neq0$. $\square$
+
+One consequence will be used repeatedly: a nonzero submodule $M'\subseteq M$ satisfies $\operatorname{Ass}M'\subseteq\operatorname{Ass}M$, so if $\operatorname{depth}M'=0$ then $\mathfrak m\in\operatorname{Ass}M$ and $\operatorname{depth}M=0$. Contrapositively, submodules of modules of positive depth have positive depth.
+
+Depth is insensitive to two changes of ring that occur constantly in the geometry of models: passing to a finite local algebra, and completing.
+
+**Proposition 14.8.** Let $(A,\mathfrak m)\to(B,\mathfrak n)$ be a local homomorphism of noetherian local rings with $B$ finite as an $A$-module, and let $M\neq0$ be a finite $B$-module. Then
+$$
+\operatorname{depth}_AM=\operatorname{depth}_BM .
+$$
+
+**Proof.** First suppose $\operatorname{depth}_AM=0$, so some $0\neq y\in M$ is killed by $\mathfrak m$. Then $By$ is a nonzero finite module over $B/\mathfrak mB$, which is a local ring whose maximal ideal $\mathfrak n/\mathfrak mB$ is nilpotent, because $B/\mathfrak mB$ is a finite-dimensional algebra over $k=A/\mathfrak m$ and hence artinian local. Choose $r$ maximal with $\mathfrak n^rBy\neq0$; any nonzero element of $\mathfrak n^rBy$ is killed by $\mathfrak n$, so $\operatorname{depth}_BM=0$ by Lemma 14.1. Conversely, if $\operatorname{depth}_BM=0$, some nonzero element is killed by $\mathfrak n\supseteq\mathfrak m$, so $\operatorname{depth}_AM=0$.
+
+Now induct on $\operatorname{depth}_AM$. If it is positive, then by the previous paragraph $\operatorname{depth}_BM$ is positive as well; choose $x\in\mathfrak m$ a nonzerodivisor on $M$, which is also an element of $\mathfrak n$ and a nonzerodivisor on $M$ over $B$. Theorem 14.5, applied over $A$ and over $B$, reduces the claim to $M/xM$, whose $A$-depth is smaller by one. $\square$
+
+**Proposition 14.9.** Let $M\neq0$ be finite over the noetherian local ring $(A,\mathfrak m,k)$ and let $\widehat A$, $\widehat M$ denote the $\mathfrak m$-adic completions. Then
+$$
+\operatorname{depth}_{\widehat A}\widehat M=\operatorname{depth}_AM .
+$$
+
+**Proof.** Induct on $d=\operatorname{depth}_AM$. If $d=0$, Lemma 14.1 gives an injection $k\hookrightarrow M$; tensoring with the flat $A$-algebra $\widehat A$ gives an injection $\widehat A/\mathfrak m\widehat A\hookrightarrow\widehat M$, and $\widehat A/\mathfrak m\widehat A$ is the residue field of $\widehat A$, so $\operatorname{depth}_{\widehat A}\widehat M=0$. If $d\geq1$, choose $x\in\mathfrak m$ a nonzerodivisor on $M$. Flatness of $\widehat A$ preserves the injectivity of multiplication by $x$, so $x$ is a nonzerodivisor on $\widehat M$, and $\widehat A$-flatness identifies $\widehat{M/xM}$ with $\widehat M/x\widehat M$. By induction the latter has depth $d-1$, so Theorem 14.5 gives $\operatorname{depth}_{\widehat A}\widehat M=d$. $\square$
+
+No comparison between $\operatorname{depth}A$ and $\operatorname{depth}A_{\mathfrak p}$ is asserted here, and none is used. The conditions $(S_r)$ below quantify over all primes precisely because depth at the closed point does not control depth after localization.
+
+### 14.3 The Auslander–Buchsbaum formula
+
+Recall that $\operatorname{pd}_AM$, the projective dimension, is the least length of a projective resolution of $M$, or $\infty$. Over a local ring the minimal free resolution computes it: $\operatorname{pd}_AM=0$ means exactly that $M$ is free.
+
+**Lemma 14.10.** Let $M\neq0$ be finite over $(A,\mathfrak m,k)$ with $p=\operatorname{pd}_AM\geq1$ finite, and let $0\to N\to F\to M\to0$ be exact with $F$ finite free and $F\to M$ a minimal cover, that is, an isomorphism modulo $\mathfrak m$. Then $N\subseteq\mathfrak mF$, $N\neq0$, and $\operatorname{pd}_AN=p-1$.
+
+**Proof.** Minimality of the cover means $F\otimes k\to M\otimes k$ is an isomorphism, so $N\subseteq\mathfrak mF$; and $N\neq0$ because $M$ is not free. Take any projective resolution of $M$ of length $p$ and let $N'$ be its first syzygy, so $\operatorname{pd}N'\leq p-1$. Schanuel's lemma gives $N\oplus P'\simeq N'\oplus P$ with $P,P'$ finite free, and adding free summands changes no projective dimension, so $\operatorname{pd}N=\operatorname{pd}N'\leq p-1$. Conversely, splicing a projective resolution of $N$ of length $\operatorname{pd}N$ with $F$ produces one of $M$ of length $\operatorname{pd}N+1$, whence $p\leq\operatorname{pd}N+1$. The two inequalities give $\operatorname{pd}N=p-1$. $\square$
+
+**Lemma 14.11.** If $\operatorname{depth}A=0$ and $M\neq0$ is finite with $\operatorname{pd}_AM<\infty$, then $M$ is free.
+
+**Proof.** Suppose $p=\operatorname{pd}_AM\geq1$ and take a minimal free resolution
+$$
+0\to F_p\xrightarrow{\ \varphi\ }F_{p-1}\to\cdots\to F_0\to M\to0 ,
+$$
+so that $\varphi$ is injective and $\varphi(F_p)\subseteq\mathfrak mF_{p-1}$, and $F_p\neq0$. Since $\operatorname{depth}A=0$, Lemma 14.1 supplies $a\neq0$ in $A$ with $a\mathfrak m=0$. Choose $0\neq u\in F_p$. Then $au\neq0$ because $F_p$ is free and $a\neq0$, while
+$$
+\varphi(au)=a\varphi(u)\in a\mathfrak mF_{p-1}=0,
+$$
+contradicting injectivity of $\varphi$. Hence $p=0$ and $M$ is free. $\square$
+
+**Theorem 14.12 (Auslander–Buchsbaum).** Let $M\neq0$ be a finite module of finite projective dimension over the noetherian local ring $(A,\mathfrak m,k)$. Then
+$$
+\operatorname{pd}_AM+\operatorname{depth}M=\operatorname{depth}A .
+$$
+
+**Proof.** Write $d=\operatorname{depth}A$ and induct on $p=\operatorname{pd}_AM$.
+
+If $p=0$ then $M\simeq A^r$ with $r\geq1$, and $\operatorname{Ext}^i(k,A^r)=\operatorname{Ext}^i(k,A)^r$ shows $\operatorname{depth}M=d$ by Corollary 14.4.
+
+Let $p\geq1$. By Lemma 14.11, $d\geq1$, since otherwise $M$ would be free. Choose a minimal cover and let
+$$
+0\to N\to F\to M\to0
+$$
+be as in Lemma 14.10, so $N\neq0$, $N\subseteq\mathfrak mF$, and $\operatorname{pd}N=p-1$. By induction
+$$
+n:=\operatorname{depth}N=d-p+1 .
+$$
+Since $N$ is a nonzero submodule of the free module $F$, and $\operatorname{depth}F=d\geq1$, the remark after Lemma 14.7 gives $n\geq1$.
+
+Suppose first $p\geq2$, so $n=d-p+1<d$. In the long exact sequence
+$$
+\operatorname{Ext}^i(k,F)\to\operatorname{Ext}^i(k,M)\to\operatorname{Ext}^{i+1}(k,N)\to\operatorname{Ext}^{i+1}(k,F)
+$$
+take $i<n-1$: both flanking terms vanish, because $i<n\leq d$ and $i+1<n$, so $\operatorname{Ext}^i(k,M)=0$. Taking $i=n-1$: the term $\operatorname{Ext}^{n-1}(k,F)$ vanishes since $n-1<d$, and $\operatorname{Ext}^{n}(k,F)$ vanishes since $n<d$, so
+$$
+\operatorname{Ext}^{n-1}(k,M)\simeq\operatorname{Ext}^{n}(k,N)\neq0 .
+$$
+Hence $\operatorname{depth}M=n-1=d-p$, as required.
+
+Now suppose $p=1$. Then $\operatorname{pd}N=0$, so $N$ is free of some rank $r\geq1$ and $\operatorname{depth}N=d$. For $i<d-1$ the same long exact sequence gives $\operatorname{Ext}^i(k,M)=0$, since $\operatorname{Ext}^i(k,F)=0$ and $\operatorname{Ext}^{i+1}(k,N)=0$. At $i=d-1$ the sequence reads
+$$
+0=\operatorname{Ext}^{d-1}(k,F)\to\operatorname{Ext}^{d-1}(k,M)\to\operatorname{Ext}^{d}(k,N)\xrightarrow{\ \alpha\ }\operatorname{Ext}^{d}(k,F),
+$$
+where $\alpha$ is induced by the inclusion $N\subseteq\mathfrak mF$. Writing $N\simeq A^r$ and $F\simeq A^s$, the inclusion is given by an $s\times r$ matrix with all entries in $\mathfrak m$, and by additivity of $\operatorname{Ext}$ the map $\alpha$ is given by the same matrix of scalars acting on $\operatorname{Ext}^{d}(k,A)^r\to\operatorname{Ext}^{d}(k,A)^s$. Every $\operatorname{Ext}^i(k,A)$ is killed by $\mathfrak m$, so $\alpha=0$. Since $\operatorname{Ext}^{d}(k,N)=\operatorname{Ext}^{d}(k,A)^r\neq0$, exactness gives $\operatorname{Ext}^{d-1}(k,M)\neq0$ and therefore $\operatorname{depth}M=d-1=d-p$. $\square$
+
+**Corollary 14.13.** Let $M\neq0$ be finite of finite projective dimension over $(A,\mathfrak m,k)$. Then $\operatorname{pd}_AM\leq\operatorname{depth}A$, and $M$ is free if and only if $\operatorname{depth}M=\operatorname{depth}A$.
+
+**Proof.** Both statements are immediate from Theorem 14.12, using that depth is nonnegative and that $\operatorname{pd}=0$ characterizes freeness over a local ring. $\square$
+
+Two independent checks confirm the formula's shape. If $x\in\mathfrak m$ is a nonzerodivisor on $M$, then $\operatorname{depth}M/xM=\operatorname{depth}M-1$ by Theorem 14.5, while the projective dimension satisfies $\operatorname{pd}M/xM=\operatorname{pd}M+1$; the two shifts cancel, so the Auslander–Buchsbaum sum is unchanged by cutting with a regular element, exactly as the formula demands. Likewise, if $x_1,\ldots,x_c$ is an $A$-regular sequence in $\mathfrak m$, then $\operatorname{pd}_AA/(x_1,\ldots,x_c)=c$, and Theorem 14.12 recovers $\operatorname{depth}A/(x_1,\ldots,x_c)=\operatorname{depth}A-c$, which Theorem 14.5 also gives directly. These two projective-dimension identities are available from the ambient library and are recorded here because they shorten the calculations of the next section.
+
+### 14.4 Cohen–Macaulay local rings
+
+A noetherian local ring $A$ is **Cohen–Macaulay** if
+$$
+\operatorname{depth}A=\dim A .
+$$
+By Corollary 14.4 the inequality $\operatorname{depth}A\leq\dim A$ always holds, so the condition asks that the algebraic count of independent regular parameters achieve the geometric dimension. A noetherian ring is Cohen–Macaulay if $A_{\mathfrak p}$ is Cohen–Macaulay for every prime $\mathfrak p$. No localization theorem is assumed: in every example below the Cohen–Macaulay property is verified at all primes directly.
+
+The basic example is a regular local ring, but for that one first needs two structural facts.
+
+**Lemma 14.14.** Let $A$ be regular local of dimension $n\geq1$ and let $x\in\mathfrak m\setminus\mathfrak m^2$. Then $A/(x)$ is regular local of dimension $n-1$.
+
+**Proof.** Because $x\notin\mathfrak m^2$, its residue is part of a basis of $\mathfrak m/\mathfrak m^2$, so $x$ belongs to a minimal generating set $x,y_2,\ldots,y_n$ of $\mathfrak m$ by Nakayama. Hence the maximal ideal of $A/(x)$ is generated by $n-1$ elements, and Krull's height theorem gives $\dim A/(x)\leq n-1$. The same theorem gives $\dim A/(x)\geq n-1$. Thus $\dim A/(x)=n-1$ equals the number of generators of its maximal ideal, which is regularity. $\square$
+
+**Proposition 14.15.** A regular local ring is a domain.
+
+**Proof.** Induct on $n=\dim A$. If $n=0$, then $\mathfrak m$ is generated by the empty set, so $\mathfrak m=0$ and $A$ is a field. Let $n\geq1$ and let $\mathfrak p_1,\ldots,\mathfrak p_r$ be the minimal primes of $A$. Each is properly contained in $\mathfrak m$ because $\dim A\geq1$, and $\mathfrak m\neq\mathfrak m^2$ by Nakayama. Prime avoidance, in the version allowing one non-prime member, produces
+$$
+x\in\mathfrak m\setminus\bigl(\mathfrak m^2\cup\mathfrak p_1\cup\cdots\cup\mathfrak p_r\bigr).
+$$
+By Lemma 14.14 the ring $A/(x)$ is regular of dimension $n-1$, hence a domain by induction, so $(x)$ is a prime ideal. Since $x$ lies in no minimal prime, there is a minimal prime $\mathfrak q\subsetneq(x)$. For $a\in\mathfrak q$ write $a=bx$; as $x\notin\mathfrak q$ and $\mathfrak q$ is prime, $b\in\mathfrak q$. Hence $\mathfrak q=x\mathfrak q\subseteq\mathfrak m\mathfrak q$, and Nakayama gives $\mathfrak q=0$. So $A$ has a unique minimal prime, equal to $0$, and $A$ is a domain. $\square$
+
+**Theorem 14.16.** Let $A$ be regular local of dimension $n$. Then every minimal generating sequence $x_1,\ldots,x_n$ of $\mathfrak m$ is $A$-regular, and
+$$
+\operatorname{depth}A=\dim A=n .
+$$
+In particular regular local rings are Cohen–Macaulay, and a regular ring is Cohen–Macaulay.
+
+**Proof.** Induct on $n$. For $n=0$ there is nothing to prove. For $n\geq1$, the element $x_1$ lies outside $\mathfrak m^2$, so it is nonzero and hence a nonzerodivisor by Proposition 14.15, and $A/(x_1)$ is regular of dimension $n-1$ by Lemma 14.14 with minimal generating sequence the residues of $x_2,\ldots,x_n$. By induction those form a regular sequence, so $x_1,\ldots,x_n$ is $A$-regular and $\operatorname{depth}A\geq n$. Corollary 14.4 gives the reverse inequality. The last sentence follows because localizations of a regular ring at primes are regular local by definition. $\square$
+
+**Proposition 14.17.** Let $A$ be Cohen–Macaulay local and let $x_1,\ldots,x_c\in\mathfrak m$ be an $A$-regular sequence. Then $A/(x_1,\ldots,x_c)$ is Cohen–Macaulay of dimension $\dim A-c$.
+
+**Proof.** By induction it suffices to treat $c=1$. Theorem 14.5 gives $\operatorname{depth}A/(x)=\operatorname{depth}A-1$, where the depth of $A/(x)$ as an $A$-module equals its depth as a ring by Proposition 14.8 applied to $A\to A/(x)$. Lemma 14.2 gives $\dim A/(x)=\dim A-1$. Subtracting equal quantities from an equality preserves it. $\square$
+
+**Corollary 14.18.** Let $P$ be a regular local ring of dimension $n$ and $0\neq f\in\mathfrak n=\mathfrak m_P$. Then $A=P/(f)$ is Cohen–Macaulay of dimension $n-1$, and $A$ is regular if and only if $f\notin\mathfrak n^2$. More generally, if $f_1,\ldots,f_c\in\mathfrak n$ is a $P$-regular sequence, then $P/(f_1,\ldots,f_c)$ is Cohen–Macaulay of dimension $n-c$.
+
+**Proof.** $P$ is a domain by Proposition 14.15, so $f\neq0$ is a nonzerodivisor and Proposition 14.17 applies with Theorem 14.16. For the regularity criterion, $\dim A=n-1$ while the maximal ideal of $A$ needs $\dim_k\mathfrak n/(\mathfrak n^2+(f))$ generators, which is $n-1$ when $f\notin\mathfrak n^2$ and $n$ otherwise. The last sentence is Proposition 14.17 again. $\square$
+
+Since depth and dimension are unchanged by completion — the first by Proposition 14.9, the second by the standing completion facts — and since $\mathfrak m/\mathfrak m^2$ is unchanged as well, a noetherian local ring is Cohen–Macaulay, respectively regular, if and only if its completion is. This is how the completed local equations of Section 12.4 will be read.
+
+The examples that matter for this book are hypersurfaces, and for them the passage from a local statement to a statement at every prime is easy.
+
+**Proposition 14.19.** Let $P$ be a regular noetherian ring, let $f\in P$ be a nonzerodivisor, and put $A=P/(f)$. Then $A_{\mathfrak q}$ is Cohen–Macaulay for every prime $\mathfrak q$ of $A$; in particular $A$ satisfies $(S_r)$ for every $r$. If moreover $A_{\mathfrak q}$ is regular for every prime $\mathfrak q$ of height at most one, then $A$ is normal.
+
+**Proof.** A prime of $A$ is $\mathfrak q=\mathfrak p/(f)$ for a prime $\mathfrak p\supseteq(f)$ of $P$, and $A_{\mathfrak q}=P_{\mathfrak p}/fP_{\mathfrak p}$. Here $P_{\mathfrak p}$ is regular local because $P$ is a regular ring, and the image of $f$ lies in its maximal ideal and is nonzero, because a nonzerodivisor stays a nonzerodivisor after localization and $P_{\mathfrak p}\neq0$. Corollary 14.18 makes $A_{\mathfrak q}$ Cohen–Macaulay. Consequently
+$$
+\operatorname{depth}A_{\mathfrak q}=\dim A_{\mathfrak q}\geq\min\{r,\dim A_{\mathfrak q}\}
+$$
+for every $r$, which is $(S_r)$. The regularity hypothesis in the last sentence is $(R_1)$, so Theorem 14.26 below gives normality. $\square$
+
+**Theorem 14.20 (the semistable local models).** Let $R$ be a discrete valuation ring with uniformizer $\pi$ and residue field $k$, let $n\geq1$, and set
+$$
+B_n=R[x,y]/(xy-\pi^n),\qquad
+\mathfrak n=(\pi,x,y).
+$$
+Then:
+
+1. $(B_n)_{\mathfrak q}$ is Cohen–Macaulay for every prime $\mathfrak q$, and $(B_n)_{\mathfrak n}$ has dimension two;
+2. $(B_n)_{\mathfrak q}$ is regular for every prime $\mathfrak q\neq\mathfrak n$;
+3. $(B_n)_{\mathfrak n}$ is regular if and only if $n=1$;
+4. $B_n$ is normal for every $n\geq1$.
+
+**Proof.** The ring $P=R[x,y]$ is regular. Indeed $R$ is a regular ring: its localizations are the field $\operatorname{Frac}R$, of dimension zero, and $R$ itself, whose maximal ideal is principal of height one. Polynomial algebras over regular noetherian rings are regular, which gives $P$. The element $f=xy-\pi^n$ is nonzero in the domain $P$, hence a nonzerodivisor, and $P/(f)=B_n$.
+
+Statement (1) is now Proposition 14.19, apart from the dimension count at $\mathfrak n$, which is the following. In $P$ the ideal $\mathfrak N=(\pi,x,y)$ is maximal with $P/\mathfrak N=k$, and the chain
+$$
+0\subsetneq(\pi)\subsetneq(\pi,x)\subsetneq(\pi,x,y)
+$$
+consists of primes, since the successive quotients $k[x,y]$, $k[y]$, $k$ are domains. Hence $\operatorname{ht}\mathfrak N\geq3$, while Krull's height theorem gives $\operatorname{ht}\mathfrak N\leq3$ because $\mathfrak N$ has three generators. So $P_{\mathfrak N}$ is regular local of dimension three, and Corollary 14.18 makes $(B_n)_{\mathfrak n}=P_{\mathfrak N}/(f)$ Cohen–Macaulay of dimension two.
+
+For (2), let $\mathfrak q$ be a prime of $B_n$ other than $\mathfrak n$. If $x,y\in\mathfrak q$ then $\pi^n=xy\in\mathfrak q$, so $\pi\in\mathfrak q$ and $\mathfrak q\supseteq\mathfrak n$, forcing $\mathfrak q=\mathfrak n$ because $\mathfrak n$ is maximal. Hence $x\notin\mathfrak q$ or $y\notin\mathfrak q$, and $(B_n)_{\mathfrak q}$ is a localization of $B_n[1/x]$ or of $B_n[1/y]$. Now
+$$
+B_n[1/x]=R[x,1/x][y]/(xy-\pi^n)\simeq R[x,1/x],
+$$
+because $xy-\pi^n=x\,(y-\pi^nx^{-1})$ and $x$ is a unit, so the quotient identifies $y$ with $\pi^nx^{-1}$. The right-hand side is a localization of the regular ring $R[x]$, hence a regular ring, and so are its localizations. The same computation applies with $x$ and $y$ exchanged. Thus $(B_n)_{\mathfrak q}$ is regular.
+
+For (3), $f=xy-\pi^n$ lies in $\mathfrak N^2$ exactly when $n\geq2$, since $xy\in\mathfrak N^2$ always and $\pi^n\in\mathfrak N^2$ if and only if $n\geq2$; apply the criterion of Corollary 14.18.
+
+For (4), by (2) the only prime at which $B_n$ can fail to be regular is $\mathfrak n$, whose height is two by the computation above. So $(R_1)$ holds, and (1) gives $(S_2)$; Proposition 14.19 concludes. $\square$
+
+Part (3) is the local reason for the running example of Sections 4.3, 4.4, and 11.4: the semistable equation $xy=\pi$ has regular total space, while $xy=\pi^n$ with $n\geq2$ does not. Part (4) says that the singular members of the family are nevertheless normal, so normalization is powerless against them and only the blowups of Section 8.5 remove them. This is exactly the situation created by ramified base change in Section 10.4, where $xy=\pi$ becomes $xy=w(\pi')^e$ for a unit $w$: after absorbing $w$ into one of the coordinates, the base-changed surface is one of the $B_e$ above, normal and Cohen–Macaulay but no longer regular when $e\geq2$, and its repair is a resolution, not a normalization.
+
+**Example.** The quadratic cone of Section 4.3, $A=k[x,y,z]/(xy-z^2)$ over a field of characteristic different from two, is handled by the same three steps. The ring $P=k[x,y,z]$ is regular, since a field is a regular ring and polynomial algebras over regular noetherian rings are regular, and $f=xy-z^2$ is a nonzerodivisor in the domain $P$; so all localizations of $A$ are Cohen–Macaulay by Proposition 14.19 and $(S_2)$ holds. A prime of $A$ containing $x$ and $y$ contains $z^2$, hence $z$, hence the maximal ideal $\mathfrak v=(x,y,z)$. As in Theorem 14.20, $P_{(x,y,z)}$ is regular local of dimension three, so $A_{\mathfrak v}$ has dimension two and $\mathfrak v$ has height two. Every other prime survives in $A[1/x]\simeq k[x,1/x,z]$ or in the symmetric localization $A[1/y]$, both of them localizations of polynomial algebras over $k$ and hence regular. Thus $(R_1)$ holds and $A$ is normal, while $f\in\mathfrak v^2$ shows by Corollary 14.18 that $A$ is not regular at the vertex. This completes the assertion made in Section 4.3.
+
+### 14.5 Serre's conditions and the normality criterion
+
+Let $A$ be a noetherian ring and $r\geq0$ an integer. Condition $(R_r)$ says that $A_{\mathfrak p}$ is regular for every prime with $\operatorname{ht}\mathfrak p\leq r$. Condition $(S_r)$ says that
+$$
+\operatorname{depth}A_{\mathfrak p}\geq\min\{r,\dim A_{\mathfrak p}\}
+$$
+for every prime $\mathfrak p$. Both conditions are inherited by localizations: the primes of $A_{\mathfrak p}$ are the $\mathfrak qA_{\mathfrak p}$ with $\mathfrak q\subseteq\mathfrak p$, their heights agree with the heights of $\mathfrak q$ in $A$, and $(A_{\mathfrak p})_{\mathfrak qA_{\mathfrak p}}=A_{\mathfrak q}$. Note also that $(R_1)$ implies $(R_0)$ and that $(S_2)$ implies $(S_1)$.
+
+**Proposition 14.21.** A noetherian ring $A$ satisfies $(S_1)$ if and only if every associated prime of $A$ is a minimal prime.
+
+**Proof.** For a prime $\mathfrak p$, the localization compatibility of associated primes gives $\mathfrak pA_{\mathfrak p}\in\operatorname{Ass}A_{\mathfrak p}$ precisely when $\mathfrak p\in\operatorname{Ass}A$, and by Lemma 14.1 this happens precisely when $\operatorname{depth}A_{\mathfrak p}=0$. Also $\dim A_{\mathfrak p}=0$ precisely when $\mathfrak p$ is minimal. So $(S_1)$, which asserts that $\operatorname{depth}A_{\mathfrak p}=0$ forces $\dim A_{\mathfrak p}=0$, says exactly that associated primes are minimal. $\square$
+
+**Theorem 14.22.** A noetherian ring is reduced if and only if it satisfies $(R_0)$ and $(S_1)$.
+
+**Proof.** Suppose $A$ is reduced. For a minimal prime $\mathfrak p$, the ring $A_{\mathfrak p}$ is reduced with a unique prime ideal, which is therefore its nilradical and hence zero; so $A_{\mathfrak p}$ is a field and $(R_0)$ holds. For $(S_1)$, let $\mathfrak p\in\operatorname{Ass}A$ and localize: $A_{\mathfrak p}$ is reduced and $\mathfrak pA_{\mathfrak p}=\operatorname{Ann}(a)$ for some $a\neq0$. If $a\in\mathfrak pA_{\mathfrak p}$, then $a^2=0$, contradicting reducedness; so $a$ is a unit in the local ring $A_{\mathfrak p}$ and $\mathfrak pA_{\mathfrak p}=\operatorname{Ann}(a)=0$. Thus $A_{\mathfrak p}$ is a field, $\mathfrak p$ is minimal, and Proposition 14.21 gives $(S_1)$.
+
+Conversely assume $(R_0)$ and $(S_1)$. Consider the map
+$$
+A\longrightarrow\prod_{\mathfrak p\in\operatorname{Min}A}A_{\mathfrak p}.
+$$
+If $a\neq0$, its annihilator is contained in some associated prime $\mathfrak p$, which is minimal by Proposition 14.21; since no element outside $\mathfrak p$ annihilates $a$, the image of $a$ in $A_{\mathfrak p}$ is nonzero. Hence the map is injective. By $(R_0)$ each factor is a field, so the product is reduced, and therefore so is $A$. $\square$
+
+The next theorem is the $(S_2)$ half of Serre's criterion, and it is the statement that Section 4.1 used without proof.
+
+**Theorem 14.23.** Let $A$ be a noetherian local domain that is integrally closed in its fraction field. Then
+$$
+\operatorname{depth}A\geq\min\{2,\dim A\}.
+$$
+
+**Proof.** If $\dim A=0$ there is nothing to prove. If $\dim A\geq1$, then $\mathfrak m\neq0$ and any nonzero element of $\mathfrak m$ is a nonzerodivisor, so $\operatorname{depth}A\geq1$.
+
+Assume $\dim A\geq2$ and suppose $\operatorname{depth}A=1$. Choose a nonzero $a\in\mathfrak m$. It is a nonzerodivisor, and it cannot be extended to an $A$-regular sequence of length two, since $\operatorname{depth}A=1$ is the supremum of the lengths. So every element of $\mathfrak m$ is a zerodivisor on $A/aA$, and Lemma 14.1 gives $\mathfrak m\in\operatorname{Ass}(A/aA)$. Thus there is $b\in A\setminus aA$ with $b\mathfrak m\subseteq aA$. Put
+$$
+u=\frac ba\in\operatorname{Frac}(A),\qquad u\notin A,\qquad u\mathfrak m\subseteq A .
+$$
+The set $u\mathfrak m$ is an ideal of $A$, so either $u\mathfrak m\subseteq\mathfrak m$ or $u\mathfrak m=A$.
+
+In the first case multiplication by $u$ is an endomorphism of the finite faithful $A$-module $\mathfrak m$, and the determinant trick produces a monic equation for $u$ over $A$. Integral closedness forces $u\in A$, a contradiction.
+
+In the second case $u\neq0$ and $\mathfrak m=u^{-1}A=(a/b)A$ is principal. Krull's height theorem then bounds $\dim A=\operatorname{ht}\mathfrak m$ by one, contradicting $\dim A\geq2$. $\square$
+
+**Theorem 14.24.** Let $A$ be a noetherian domain satisfying $(S_2)$, with fraction field $K$. Then
+$$
+A=\bigcap_{\operatorname{ht}\mathfrak p=1}A_{\mathfrak p}\qquad\text{inside }K .
+$$
+
+**Proof.** The inclusion from left to right is clear. Let $x=b/a$ with $a\neq0$ lie in $A_{\mathfrak p}$ for every height-one prime $\mathfrak p$; we must show $b\in aA$.
+
+First, every associated prime of $A/aA$ has height one. Indeed, let $\mathfrak q\in\operatorname{Ass}(A/aA)$. Since $A$ is a domain and $a\neq0$, every prime containing $a$ has height at least one, and $\operatorname{ht}\mathfrak q\geq1$. If $\operatorname{ht}\mathfrak q\geq2$, then $\dim A_{\mathfrak q}\geq2$ and $(S_2)$ gives $\operatorname{depth}A_{\mathfrak q}\geq2$; but $\mathfrak q\in\operatorname{Ass}(A/aA)$ localizes to $\mathfrak qA_{\mathfrak q}\in\operatorname{Ass}(A_{\mathfrak q}/aA_{\mathfrak q})$, so $\operatorname{depth}A_{\mathfrak q}/aA_{\mathfrak q}=0$ by Lemma 14.1, and Theorem 14.5 gives $\operatorname{depth}A_{\mathfrak q}=1$, a contradiction.
+
+Now suppose the residue $\bar b\in A/aA$ is nonzero. Its annihilator $(aA:b)$ is contained in some associated prime $\mathfrak q$ of $A/aA$, which has height one by the previous paragraph. But $x\in A_{\mathfrak q}$ means $b/1\in aA_{\mathfrak q}$, that is, $sb\in aA$ for some $s\notin\mathfrak q$; then $s\in(aA:b)\subseteq\mathfrak q$, a contradiction. Hence $\bar b=0$ and $x\in A$. $\square$
+
+**Lemma 14.25.** A noetherian local ring satisfying $(R_1)$ and $(S_2)$ is a domain.
+
+**Proof.** By Theorem 14.22 the ring $A$ is reduced, since $(R_1)$ implies $(R_0)$ and $(S_2)$ implies $(S_1)$. Suppose $A$ has at least two minimal primes and let $\mathfrak p_1,\ldots,\mathfrak p_t$, $t\geq2$, be the complete list. Put
+$$
+I=\mathfrak p_1,\qquad J=\mathfrak p_2\cap\cdots\cap\mathfrak p_t .
+$$
+Then $I\cap J$ is the nilradical, hence zero, and $I+J\subseteq\mathfrak m$ is a proper ideal. The sequence
+$$
+0\to A\to A/I\oplus A/J\to A/(I+J)\to0,
+\qquad a\mapsto(a,a),\quad(b,c)\mapsto b-c,
+$$
+is exact. Let $\mathfrak q$ be a prime minimal over $I+J$ and localize at $\mathfrak q$; localization is exact, and $(A/(I+J))_{\mathfrak q}$ is nonzero with support the single prime $\mathfrak qA_{\mathfrak q}$, because $\mathfrak q$ is minimal over $I+J$. Its associated primes are nonempty and contained in that support, so $\mathfrak qA_{\mathfrak q}$ is one of them and Lemma 14.1 gives depth zero.
+
+Suppose $\operatorname{depth}A_{\mathfrak q}\geq2$. Then $\operatorname{Ext}^1(\kappa,A_{\mathfrak q})=0$ for the residue field $\kappa$ of $A_\mathfrak q$, and the long exact sequence
+$$
+\operatorname{Hom}(\kappa,(A/I\oplus A/J)_{\mathfrak q})\to\operatorname{Hom}(\kappa,(A/(I+J))_{\mathfrak q})\to\operatorname{Ext}^1(\kappa,A_{\mathfrak q})=0
+$$
+shows that $(A/I)_{\mathfrak q}$ or $(A/J)_{\mathfrak q}$ has depth zero. Both $A/I$ and $A/J$ are reduced, being intersections of primes, so by Theorem 14.22 and Proposition 14.21 depth zero at $\mathfrak q$ means that $\mathfrak q$ is a minimal prime of $A/I$, that is $\mathfrak q=\mathfrak p_1$, or a minimal prime of $A/J$, that is $\mathfrak q=\mathfrak p_i$ for some $i\geq2$. Either alternative is impossible: $\mathfrak q$ contains $I+J$, so $\mathfrak q=\mathfrak p_1$ would give $\mathfrak p_1\supseteq\mathfrak p_2$ and $\mathfrak q=\mathfrak p_i$ would give $\mathfrak p_i\supseteq\mathfrak p_1$, contradicting the incomparability of distinct minimal primes.
+
+Therefore $\operatorname{depth}A_{\mathfrak q}\leq1$, and $(S_2)$ forces $\dim A_{\mathfrak q}\leq1$. If $\dim A_{\mathfrak q}=1$, then $(R_1)$ makes $A_{\mathfrak q}$ regular, hence a domain by Proposition 14.15, so $\mathfrak q$ contains exactly one minimal prime; but it contains $\mathfrak p_1$ and $\mathfrak p_2$. If $\dim A_{\mathfrak q}=0$, then $\mathfrak q$ is itself minimal and again contains the two distinct minimal primes $\mathfrak p_1,\mathfrak p_2$. Both cases are absurd, so $t=1$ and the reduced ring $A$ is a domain. $\square$
+
+**Theorem 14.26 (Serre's normality criterion).** A noetherian ring $A$ is normal — that is, $A_{\mathfrak p}$ is an integrally closed domain for every prime $\mathfrak p$ — if and only if it satisfies $(R_1)$ and $(S_2)$. Such a ring is automatically reduced.
+
+**Proof.** Suppose $A$ is normal. For $(R_1)$, let $\operatorname{ht}\mathfrak p\leq1$. If $\operatorname{ht}\mathfrak p=0$, then $A_{\mathfrak p}$ is a zero-dimensional domain, hence a field, hence regular. If $\operatorname{ht}\mathfrak p=1$, then $A_{\mathfrak p}$ is a one-dimensional noetherian local integrally closed domain, hence a discrete valuation ring by the characterizations of Book 1, Theorem 4.1, and a discrete valuation ring is regular by Proposition 4.2. For $(S_2)$, apply Theorem 14.23 to each $A_{\mathfrak p}$.
+
+Conversely assume $(R_1)$ and $(S_2)$. Both conditions pass to localizations, so it suffices to prove that a noetherian local ring $A$ with $(R_1)$ and $(S_2)$ is an integrally closed domain. It is a domain by Lemma 14.25. Let $K$ be its fraction field and let $x\in K$ be integral over $A$. For every height-one prime $\mathfrak p$, the element $x$ is integral over $A_{\mathfrak p}$, which is a regular local ring of dimension one by $(R_1)$ and Proposition 14.15, hence a discrete valuation ring by Proposition 4.2 and therefore integrally closed in $K$; so $x\in A_{\mathfrak p}$. Theorem 14.24 now gives $x\in A$. Reducedness is Theorem 14.22. $\square$
+
+This is the complete proof of Theorem 4.1, whose statement included reducedness explicitly; the criterion shows that reducedness is a consequence rather than an extra hypothesis. It is also the tool used in Theorem 14.20 and in the example of the quadratic cone, and it is what makes the phrase "normalization repairs codimension one" precise: by $(R_1)$ a normal ring has discrete valuation rings at all height-one primes, and by Theorem 14.24 its elements are detected there.
+
+### 14.6 Freeness in dimension two
+
+The purity arguments of later books need a converse to the intuition that a module of maximal depth is as good as free. Over a regular local ring it is exactly true, and no finiteness of projective dimension has to be assumed in advance.
+
+**Theorem 14.27.** Let $A$ be a regular local ring of dimension $n$ and let $M\neq0$ be a finite $A$-module with $\operatorname{depth}M=n$. Then $M$ is free.
+
+**Proof.** Induct on $n$. If $n=0$, then $A$ is a field and every module is free.
+
+Let $n\geq1$. Since $\operatorname{depth}M=n\geq1$, Lemma 14.1 gives $\mathfrak m\notin\operatorname{Ass}M$, so every $\mathfrak p\in\operatorname{Ass}M$ is properly contained in $\mathfrak m$. Also $\mathfrak m\neq\mathfrak m^2$. Prime avoidance in the version allowing one non-prime member produces
+$$
+z\in\mathfrak m\setminus\Bigl(\mathfrak m^2\cup\bigcup_{\mathfrak p\in\operatorname{Ass}M}\mathfrak p\Bigr),
+$$
+so $z$ is a nonzerodivisor on $M$, and $z\neq0$ is a nonzerodivisor on the domain $A$. By Lemma 14.14 the ring $\bar A=A/(z)$ is regular local of dimension $n-1$, and by Theorem 14.5 together with Proposition 14.8 the module $\bar M=M/zM$ has
+$$
+\operatorname{depth}_{\bar A}\bar M=\operatorname{depth}_A\bar M=n-1=\dim\bar A .
+$$
+By induction $\bar M$ is free over $\bar A$, say of rank $r$.
+
+Choose $m_1,\ldots,m_r\in M$ whose residues form a basis of $\bar M$. Their residues modulo $\mathfrak m$ form a basis of $M/\mathfrak mM=\bar M/\bar{\mathfrak m}\bar M$, so by Nakayama they generate $M$. Let
+$$
+0\to N\to A^r\xrightarrow{\ \varphi\ }M\to0
+$$
+be the resulting presentation. Tensoring the exact sequence $0\to A\xrightarrow{z}A\to\bar A\to0$ with $M$ computes $\operatorname{Tor}^A_1(M,\bar A)=\{m\in M:zm=0\}=0$, because $z$ is a nonzerodivisor on $M$. Hence tensoring the presentation with $\bar A$ leaves
+$$
+0\to N/zN\to\bar A^{\,r}\xrightarrow{\ \bar\varphi\ }\bar M\to0
+$$
+exact. Now $\bar\varphi$ is a surjection of free $\bar A$-modules of the same finite rank $r$, hence an isomorphism: a surjective endomorphism of a finite module over a commutative ring is injective. Therefore $N/zN=0$, so $N=zN$ with $z\in\mathfrak m$, and Nakayama gives $N=0$. Thus $\varphi$ is an isomorphism and $M\simeq A^r$. $\square$
+
+Theorem 14.27 is the Auslander–Buchsbaum formula in the case where it is most often applied, but it does not presuppose $\operatorname{pd}M<\infty$; conversely, once $M$ is known to be free, Theorem 14.12 reads $0+n=n$, which is Theorem 14.16.
+
+Modules of maximal depth arise in practice as duals.
+
+**Proposition 14.28.** Let $A$ be a noetherian local ring and $N$ a finite $A$-module. Then
+$$
+\operatorname{depth}\operatorname{Hom}_A(N,A)\geq\min\{2,\operatorname{depth}A\}.
+$$
+
+**Proof.** If $\operatorname{Hom}_A(N,A)=0$ the claim is vacuous by the convention on the zero module. Choose a finite presentation $F_1\to F_0\to N\to0$ with $F_0,F_1$ finite free. Applying $\operatorname{Hom}_A(-,A)$ gives an exact sequence
+$$
+0\to N^{*}\to F_0^{*}\to F_1^{*},
+$$
+so $N^{*}$ fits into a short exact sequence $0\to N^{*}\to F_0^{*}\to C\to0$ where $C$ is the image of $F_0^{*}\to F_1^{*}$, a submodule of the free module $F_1^{*}$. If $C=0$ then $N^{*}$ is free and its depth is $\operatorname{depth}A$. Otherwise, $\operatorname{Ass}C\subseteq\operatorname{Ass}F_1^{*}=\operatorname{Ass}A$, so $\operatorname{depth}C=0$ would force $\operatorname{depth}A=0$; hence $\operatorname{depth}C\geq\min\{1,\operatorname{depth}A\}$. Lemma 14.7 gives
+$$
+\operatorname{depth}N^{*}\geq\min\{\operatorname{depth}F_0^{*},\operatorname{depth}C+1\}
+\geq\min\{\operatorname{depth}A,\ \min\{1,\operatorname{depth}A\}+1\},
+$$
+which is $\min\{2,\operatorname{depth}A\}$. $\square$
+
+**Corollary 14.29.** Let $A$ be a regular local ring of dimension two and let $M\neq0$ be a finite $A$-module isomorphic to the dual $N^{*}=\operatorname{Hom}_A(N,A)$ of some finite $A$-module $N$. In particular, let $M$ be reflexive, so that the natural map $M\to M^{**}$ is an isomorphism. Then $M$ is free.
+
+**Proof.** By Theorem 14.16, $\operatorname{depth}A=2$, so Proposition 14.28 gives $\operatorname{depth}M\geq2$, and Corollary 14.4 gives $\operatorname{depth}M\leq\dim M\leq2$. Theorem 14.27 applies. $\square$
+
+**Theorem 14.30.** Let $A$ be a regular local ring of dimension two and let $B$ be a local $A$-algebra, finite as an $A$-module, which is a normal domain of dimension two. Then $B$ is free as an $A$-module.
+
+**Proof.** By Theorem 14.23, $\operatorname{depth}_BB\geq2$, and Proposition 14.8 gives $\operatorname{depth}_AB=\operatorname{depth}_BB\geq2$. On the other hand $\operatorname{depth}_AB\leq\dim_AB\leq\dim A=2$ by Corollary 14.4. Hence $\operatorname{depth}_AB=2=\dim A$, and Theorem 14.27 makes $B$ free over $A$. $\square$
+
+The dimension hypothesis on $B$ is automatic when $A\to B$ is injective, by the incomparability and going-up theorems for finite extensions; it is stated separately so that no such theorem is needed for the proof itself. Applied to the local ring at a closed point of a regular arithmetic surface, Theorem 14.30 says that a finite normal cover is locally free there, which is the algebraic content of purity statements about branched covers of surfaces: the direct image of the structure sheaf of the cover is locally free, so its rank is constant and can be computed generically.
+
+### 14.7 What the criteria return to the models
+
+The chapter closes by recording where each result is used.
+
+Section 4.1 stated Serre's criterion. Its proof is Theorem 14.26, together with Theorem 14.23 for the forward implication and Theorem 14.24 and Lemma 14.25 for the converse. The definition of $(S_2)$ used there is the definition adopted in Section 14.5, and Theorem 14.6 makes it independent of which maximal regular sequence is chosen to compute depth.
+
+Section 4.2 identified normal, regular, and discrete valuation rings in dimension one. That identification is used inside Theorem 14.26 and is not reproved here; Book 1, Theorem 4.1 is the source for the valuation-theoretic half.
+
+Section 4.3 asserted that the quadratic cone is normal because it is a Cohen–Macaulay hypersurface with a codimension-two singularity. The example after Theorem 14.20 proves it, and the same three steps prove Theorem 14.20 itself for the arithmetic family $xy=\pi^n$.
+
+Section 4.4 gave the hypersurface regularity test $f\notin\mathfrak n^2$; that is Corollary 14.18, and it identifies $n=1$ as the only regular member of the family $xy=\pi^n$.
+
+Sections 8.5 and 10.4 blow up the singular members of that family. Theorem 14.20 shows what the blowups are for: the surfaces $xy=\pi^n$ with $n\geq2$ are normal, so normalization is powerless against them and only a resolution helps. This is the precise sense in which normalization and resolution repair different defects.
+
+Section 11.4 and Section 12.4 use the semistable local equation $xy=\pi$ and its completion. Theorem 14.20(3) proves regularity of the algebraic local ring at the node, and regularity is unchanged by completion, because dimension and the cotangent space are both preserved; the same holds for the Cohen–Macaulay property by Proposition 14.9. Under the standard identification of the completion of $R[x,y]_{(\pi,x,y)}$ with $\widehat R[[x,y]]$, the completed ring is the one displayed in Section 12.4, so that ring is regular and no resolution acts on it.
+
+Finally, Theorems 14.27 and 14.30 and Corollary 14.29 are stated in the form that later books require: over a two-dimensional regular local ring, a finite module of depth two is free, and this applies to reflexive modules and to finite normal local domains. The hypothesis that cannot be dropped is depth, not torsion-freeness: a torsion-free module has depth at least one, which in dimension two is not enough, and the freeness statement genuinely uses the second regular parameter.
