@@ -41,7 +41,7 @@
 8. [Resolving surface singularities](#8-resolving-surface-singularities)
    - [The resolution theorem in the required setting](#81-the-resolution-theorem-in-the-required-setting)
    - [Preparing the singular locus](#82-preparing-the-singular-locus)
-   - [The differential trace in inseparable degree p](#83-the-differential-trace-in-inseparable-degree-p)
+   - [Finite differentials and good traces](#83-finite-differentials-and-good-traces)
    - [Quadratic transformations](#84-quadratic-transformations)
    - [The remaining local resolution chain](#85-the-remaining-local-resolution-chain)
    - [Why a three-entry local invariant is insufficient](#86-why-a-three-entry-local-invariant-is-insufficient)
@@ -599,95 +599,292 @@ is. It does not follow merely from excellence that a center constructed in $\wid
 $A$, nor that numerical inequalities proved after completion survive an approximation. Those are
 parts of a proof of Theorem 8.1, not consequences of the preparation lemma.
 
-### 8.3 The differential trace in inseparable degree $p$
+### 8.3 Finite differentials and good traces
 
-The boundedness argument used below must survive a finite purely inseparable extension. Ordinary
-field trace vanishes in that case, so we first construct the replacement on differential forms.
+The reduction argument must work over an imperfect coefficient field and through purely
+inseparable extensions. Ordinary Kähler differentials of a power-series ring are too large for
+this purpose, while ordinary field trace is zero in a purely inseparable extension. We construct
+the finite differential module and its exterior trace together; the integrality proof below does
+not classify extensions of discrete valuations, and therefore does not lose the immediate or
+inseparable-residue cases.
 
-Let $R$ be an $\mathbf F_p$-algebra, let $a\in R$, and put
-$T=R[x]/(x^p-a)$. As an $R$-module, $\Omega_{T/R}$ is free on
-$dx,x,dx,\ldots,x^{p-1}dx$. Define
+#### 8.3.1 Finite differentials and admissible coefficient fields
 
-$$
-\tau_x:\Omega_{T/R}\longrightarrow\Omega_R,
-\qquad
-\tau_x(x^i dx)=
-\begin{cases}
-0,&i<p-1,\\
-da,&i=p-1.
-\end{cases}
-\tag{8.1}
-$$
-
-**Lemma 8.3 (coordinate independence).** If
-$R[x]/(x^p-a)\to R[y]/(y^p-b)$ is an $R$-algebra map, then
-$\tau_x=\tau_y\circ d$.
-
-**Proof.** Write the image of $x$ as
-$u=\lambda_0+\lambda_1y+\cdots+\lambda_{p-1}y^{p-1}$. The relation $u^p=a$ says
+Let $k$ have characteristic $p>0$. A **coefficient subfield** is a field
 
 $$
-a=\lambda_0^p+\lambda_1^pb+\cdots+\lambda_{p-1}^pb^{p-1}.
+k^p\subseteq k_0\subseteq k,\qquad [k:k_0]=p^e<\infty.
+$$
+
+For a complete local $k$-algebra $(R,\mathfrak n)$ with residue field finite over $k$, put
+
+$$
+Q(R/k_0)=\varprojlim_j\Omega_{(R/\mathfrak n^j)/k_0}.
+$$
+
+If $B$ is a localization of a finite-type $R$-algebra, define $Q(B/k_0)$ from the exact
+presentation
+
+$$
+B\otimes_RQ(R/k_0)\longrightarrow Q(B/k_0)
+   \longrightarrow\Omega_{B/R}\longrightarrow0                 \tag{8.1}
+$$
+
+by imposing $d_Br=1\otimes d_Rr$. Thus $Q(B/k_0)$ represents those $k_0$-derivations into
+finite $B$-modules whose restriction to $R$ is $\mathfrak n$-adically continuous. A change of
+complete presentation gives the same representing functor and hence the same pair
+$(Q(B/k_0),d_B)$. If $R=k[[u_1,\ldots,u_s]]$, direct passage to the inverse limit gives
+
+$$
+Q(R/k_0)=
+ (R\otimes_k\Omega_{k/k_0})\oplus R,du_1\oplus\cdots\oplus R,du_s,
 \tag{8.2}
 $$
 
-For $i<p-1$, the coefficient of every $y^{mp-1}$ in $u^i(du/dy)$ is zero, since this
-polynomial is $(i+1)^{-1}d(u^{i+1})/dy$. Reduction by $y^p=b$ therefore gives
-$\tau_y(u^i,du)=0$. For $i=p-1$, perform the calculation over
-$\mathbf Z[b,\lambda_0,\ldots,\lambda_{p-1}]$ before reducing modulo $p$. The coefficients of
-$y^{mp-1}$ in $u^{p-1}du/dy=p^{-1}d(u^p)/dy$ reduce to
+and, equivalently in characteristic $p$, $Q(B/k_0)$ is the usual module of
+$k_0[[u_1^p,\ldots,u_s^p]]$-differentials. Formula (8.2), followed by (8.1), proves that all
+these modules are finite. We write $Q^r(B/k_0)=\bigwedge_B^rQ(B/k_0)$.
+
+For a domain $B$ essentially of finite type over a power-series ring, let $n(B)$ be the
+dimension of a finite power-series subring and let $t(B)$ be the transcendence degree of its
+fraction field over that subring. These numbers are independent of the chosen subring by the
+dimension formula. We call $k_0$ **admissible for $B$** when $B$ is regular and
+$Q(B/k_0)$ is free of rank $n(B)+t(B)+e$; it is admissible for a field when the corresponding
+vector-space dimension has that value.
+
+**Lemma 8.3 (existence and spreading of admissible fields).** Let
+$R=k[[u_1,\ldots,u_s]]$, let $K=\operatorname{Frac}R$, and let $L/K$ be finitely generated.
+Every coefficient subfield $k_*\subseteq k$ contains one admissible for $L$. More generally, if
+$X$ is reduced and finite type over $R$, one may choose $k_0\subseteq k_*$ for which
+$Q(X/k_0)$ is locally free of the expected rank at every regular point of $X$.
+
+**Proof.** Put $G_0=k_0((u_1,\ldots,u_s))$. The $p$-degree formula says
 
 $$
-\lambda_1^p+2\lambda_2^pb+\cdots+(p-1)\lambda_{p-1}^pb^{p-2}.
+\dim_LQ(L/k_0)\ge s+t(L)+e,
 $$
 
-Multiplying by $db$ gives $da$ by differentiating (8.2). These values agree with (8.1) on its
-$R$-basis. $\square$
-
-**Lemma 8.4 (trace on exterior powers).** If
-$\mathbf F_p\subseteq\Lambda\subseteq R\subseteq T$ and $T=R[x]/(x^p-a)$, there are canonical
-$R$-linear maps, for $q\ge1$,
+with equality exactly when $G_0$ and $L$ are linearly disjoint over $K$. To see both assertions,
+choose $F=K(v_1,\ldots,v_t)\subset L$ with $L/F$ finite. For successively smaller coefficient
+fields $k_0$, the integer $[G_0L:G_0F]$ is nondecreasing and bounded by $[L:F]$, hence
+stabilizes. Moreover
 
 $$
-\tau:\Omega^q_{T/\Lambda}\longrightarrow\Omega^q_{R/\Lambda}
+\bigcap_{k_0\subseteq k_*}G_0F=F.                              \tag{8.3}
 $$
 
-which kill the image of $T\otimes_R\Omega^q_{R/\Lambda}$ and satisfy
+Indeed, after taking a $p$-power, an element of the intersection is a polynomial in the $v_i$
+with coefficients in $k[[u_1,\ldots,u_s]]$. A coefficient outside $K$ is excluded by removing
+one member of a $p$-basis of the current coefficient field. At a stabilized field, a
+$G_0F$-basis of $G_0L$ consequently spans $L$ over $F$ by (8.3), so equality holds and $k_0$ is
+admissible for $L$.
+
+For the scheme assertion let $Z(k_0)$ be the closed nonfree locus of $Q(X/k_0)$ at the expected
+rank and choose $k_0$ for which this closed set is minimal. If $x\in Z(k_0)$ were regular, apply
+the field assertion to $\kappa(x)$. Shrinking $k_0$ makes $Q(\kappa(x)/k_0)$ have the expected
+dimension. The cotangent exact sequence
 
 $$
-\tau(\eta_1\wedge\cdots\wedge\eta_{q-1}\wedge x^i dx)
-=\eta_1\wedge\cdots\wedge\eta_{q-1}\wedge\tau_x(x^i dx).
+\mathfrak m_x/\mathfrak m_x^2\longrightarrow
+ Q(\mathcal O_{X,x}/k_0)\otimes\kappa(x)\longrightarrow
+ Q(\kappa(x)/k_0)\longrightarrow0
 $$
 
-**Proof.** The cotangent sequence has the presentation
+and the dimension formula show, by Nakayama, that $Q(\mathcal O_{X,x}/k_0)$ is free of the
+expected rank. Passing to a smaller coefficient field only adds the differentials of a finite
+$p$-basis, so it preserves freeness and contradicts minimality of $Z(k_0)$. $\square$
+
+This construction is the equicharacteristic part of the finite regular-subring theorem used
+later. In equal characteristic a coefficient field and a parameter ideal give
+$k[[x,y]]\hookrightarrow A$ finite. In mixed characteristic Cohen lifting gives a complete
+discrete valuation coefficient ring $C$ and $C[[x]]\hookrightarrow A$ finite, with $(p,x)$ a
+parameter ideal. In either case injectivity follows from equality of dimensions and the fact that
+$A$ is a domain; finiteness follows by lifting a basis modulo the parameter ideal successively
+and applying completeness and Nakayama.
+
+#### 8.3.2 Exterior trace without a separability hypothesis
+
+Suppose $k_0$ is admissible for the fields in a finite tower. For a finite separable step
+$L'/L$, define
 
 $$
-T\,d(x^p-a)\longrightarrow T\otimes_R\Omega_{R/\Lambda}
-\longrightarrow\Omega_{T/\Lambda}\longrightarrow T,dx\longrightarrow0.
+\tau:Q^r(L'/k_0)=L'\otimes_LQ^r(L/k_0)\longrightarrow Q^r(L/k_0)
 $$
 
-Its first arrow sends the displayed generator to $-da$. Quotient
-$\Omega_{R/\Lambda}$ by $R,da$, take the $(q-1)$-st exterior power, and tensor with
-$\Omega_{T/R}$. Wedging the resulting class with $\tau_x$ is independent of the chosen lifts,
-because every ambiguity is a multiple of $da$ and $da\wedge da=0$. Lemma 8.3 proves
-functoriality and hence canonicity. $\square$
-
-**Proposition 8.5 (trace on normal surfaces).** Let $Y\to X$ be finite between noetherian normal
-integral schemes of characteristic $p$, with purely inseparable function-field extension of
-degree $p$. If $X$ is of finite type over a base $S$, the generic trace extends uniquely to
+by field trace on the first factor. For a purely inseparable step $L'=L(a)$ of degree $p$, with
+$a^p=b\in L$, define
 
 $$
-f_*\Omega^q_{Y/S}\longrightarrow(\Omega^q_{X/S})^{**},\qquad q\ge1.
-\tag{8.3}
+\tau\bigl((c_0+c_1a+\cdots+c_{p-1}a^{p-1}),da\wedge\eta\bigr)
+ =c_{p-1},db\wedge\eta,                                    \tag{8.4}
 $$
 
-**Proof.** Both sides are coherent, and the target is reflexive. A map into a reflexive module on
-a normal scheme extends uniquely once it extends at every height-one point. At such a point the
-local ring of $X$ is a DVR. Its integral closure in the degree-$p$ extension is again a DVR and
-is either totally ramified or has residue degree $p$; in both cases it has the form
-$A[t]/(t^p-c)$, with $c$ respectively a uniformizer or a unit. Lemma 8.4 supplies the integral
-map there. Intersecting the height-one extensions inside the generic reflexive module gives
-(8.3). $\square$
+and make $\tau$ zero on $L'\otimes_LQ^r(L/k_0)$. The cotangent relation is $db=0$ after
+extension to $L'$, so (8.4) descends to exterior powers.
+
+**Lemma 8.4 (coordinate independence).** Formula (8.4) is independent of the generator $a$ and
+is functorial in towers of degree-$p$ extensions.
+
+**Proof.** If $a=\lambda_0+\lambda_1c+\cdots+\lambda_{p-1}c^{p-1}$ and $c^p=d$, then
+
+$$
+b=\lambda_0^p+\lambda_1^pd+\cdots+\lambda_{p-1}^pd^{p-1}.
+$$
+
+For $i<p-1$, every coefficient of degree $mp-1$ in
+$a^i(da/dc)=(i+1)^{-1}d(a^{i+1})/dc$ vanishes. For $i=p-1$, calculate before reduction modulo
+$p$: the coefficient surviving after $c^p=d$ is
+$\lambda_1^p+2\lambda_2^pd+\cdots+(p-1)\lambda_{p-1}^pd^{p-2}$, whose product with $dd$ is
+$db$. This verifies (8.4) on a basis; composition gives functoriality. $\square$
+
+The essential point is integrality at a height-one ring.
+
+**Lemma 8.5 (integral exterior trace).** Let $D$ be a semilocal Dedekind domain essentially of
+finite type over a complete power-series ring, and let $D'$ be its finite integral closure in a
+finite field extension. Assume $k_0$ is admissible at the regular points involved. At every step
+of a tower consisting of one separable extension or one purely inseparable extension of degree
+$p$,
+
+$$
+\tau\bigl(\operatorname{im}(Q^r(D'/k_0)\to Q^r(L'/k_0))\bigr)
+ \subseteq \operatorname{im}(Q^r(D/k_0)\to Q^r(L/k_0)).       \tag{8.5}
+$$
+
+In the inseparable case, multiplication by $z\in L'$ preserves the left side of (8.5) if and
+only if $z\in D'$. In the separable case the same assertion holds provided $Q(D'/k_0)$ is
+torsion-free. These statements include ramified, inseparable-residue, and immediate cases.
+
+**Proof.** Localize, so $D$ and $D'$ are DVRs. In the degree-$p$ case choose
+$a\in D'$ with $L'=L(a)$ and $D'=D[a]$ after replacing $a$ by a suitable integral primitive
+element. Write
+
+$$
+db=\sum_{i=1}^r b_i,d\alpha_i,
+$$
+
+where the $d\alpha_i$ generate the image of $Q(D/k_0)$ in $Q(L/k_0)$. The module for $D'$ is
+generated by $da,d\alpha_1,\ldots,d\alpha_r$ with the single generic relation displayed above.
+Admissibility and torsion-freeness force the $b_i$ to generate the unit ideal: otherwise the top
+exterior module would acquire torsion or need too many generators. Taking $b_1$ to be a unit,
+the top lattice is generated by $da\wedge d\alpha_2\wedge\cdots\wedge d\alpha_r$, and (8.4)
+maps it into the $D$-lattice. The same basis calculation says that an element and all its
+multiples preserve this lattice precisely when its coefficients in
+$1,a,\ldots,a^{p-1}$ lie in $D$, proving the multiplier assertion. Notice that no assertion that
+$b$ is a unit or a uniformizer has been made.
+
+For a separable step choose bases of the two differential lattices. If $\Delta$ is the determinant
+of their change-of-basis matrix, then
+$Q^r(D'/k_0)=\Delta^{-1}D'\otimes_DQ^r(D/k_0)$. The zeroth Fitting ideal of the torsion
+cokernel is the Kähler different; torsion-freeness makes it exactly $(\Delta)$. The trace-dual
+description of the Dedekind different gives
+$\operatorname{Tr}_{L'/L}(\Delta^{-1}D')=D$, which proves (8.5) and the multiplier assertion.
+This argument concerns lattices, not ramification indices, so it also covers every defect-like
+valuation presentation allowed by finiteness of $D'/D$. $\square$
+
+#### 8.3.3 Good traces and a prescribed height-one prime
+
+Let $R=k[[u,v]]$, $K=\operatorname{Frac}R$, and let $L/K$ be finite. Choose an admissible
+$k_0$, a tower from $K$ to $L$ with first step separable and later steps purely inseparable of
+degree $p$, and compose the maps of Lemma 8.5. Choose $y_1,\ldots,y_r\in B$ whose
+differentials form an $L$-basis after clearing denominators, put
+$\zeta=dy_1\wedge\cdots\wedge dy_r$, and choose a generator $\xi$ of the free module
+$Q^r(R/k_0)$. There is a unique nonzero
+$K$-linear map
+
+$$
+T:L\longrightarrow K,\qquad \tau(\lambda\zeta)=T(\lambda)\xi. \tag{8.6}
+$$
+
+For every two-dimensional regular local ring $S$ with $R\subset S\subset K$, write $\widetilde
+S$ for its integral closure in $L$. If $S'$ is a quadratic transform of $S$, the chart identity
+$d(x/y)=y^{-1}(dx-(x/y)dy)$ shows that the top differential lattice changes by the inverse of
+$\mathfrak m_SS'$. Induction therefore identifies it with the canonical transform $\omega_S$.
+Lemma 8.5, intersected over the height-one localizations of $S$, gives
+
+$$
+T(\widetilde S)\subseteq\omega_S.                              \tag{8.7}
+$$
+
+A nonzero map satisfying (8.7) is called a **good trace**.
+
+**Proposition 8.5A (good determinant).** For every height-one prime $\mathfrak p\subset R$ there
+are $e_1,\ldots,e_n$ in the integral closure $B$ of $R$ in $L$ and a good trace $T$ such that
+
+$$
+d_{\mathfrak p}=\det(T(e_ie_j))\notin\mathfrak p.              \tag{8.8}
+$$
+
+**Proof.** Apply Lemma 8.3 to the normalization of a finite model containing the primes over
+$\mathfrak p$; after shrinking $k_0$, all its height-one differential lattices are free. Choose
+an $R_{\mathfrak p}$-basis $e'_1,\ldots,e'_n$ of the semilocal integral closure and multiply by
+$r\notin\mathfrak p$ so that $e_i=re'_i\in B$. Choose the top form in (8.6) to generate the
+free differential lattice at those primes. The multiplier assertion in Lemma 8.5 says
+
+$$
+T\!\left(\sum c_i e'_i e'_j\right)\in R_{\mathfrak p}\ (1\le j\le n)
+ \quad\Longleftrightarrow\quad c_i\in R_{\mathfrak p}\ (1\le i\le n).
+$$
+
+Thus the inverse of the matrix $(T(e'_ie'_j))$ has entries in $R_{\mathfrak p}$, while the
+matrix itself is integral there. Its determinant is a unit. Multiplication by $r^{2n}$ preserves
+that conclusion and gives (8.8). $\square$
+
+#### 8.3.4 Rank-two centers
+
+We also need the separable trace divisor, where one cannot arrange a single determinant to be a
+unit at every height-one prime.
+
+**Proposition 8.5B (eventual regularity along a rank-two valuation).** Let $(D,\mathfrak n)$ be a
+two-dimensional noetherian local domain with normal completion, and let $w$ be a rank-two
+valuation of its fraction field dominating $D$. Form successively the local rings dominated by
+$w$ on the normalized blowups of their closed points. Some ring in this sequence is regular.
+
+**Proof.** Normality of the completions persists: a blowup chart is essentially of finite type,
+normalization is finite, and completion is a regular base change. The union of the local rings in
+the sequence is the valuation ring. The isolated subgroup of the rank-two value group gives a
+principal maximal ideal $(x)$ in the corresponding rank-one quotient; after finitely many steps
+$x$ belongs to the current ring and the finite residue extensions have stabilized. From then on
+the ordinary (not yet normalized) quadratic sequence along $w$ has unchanged residue field and
+$\mathfrak n_iD_{i+1}=xD_{i+1}$.
+
+We include the termination calculation. Complete the first of these rings and extend $x$ to
+generators $x,y_1,\ldots,y_s$. The unchanged residue field permits choices $c_{ij}$ such that at
+the $j$-th transform
+
+$$
+\mathfrak n_j=(x,x^{-j}z_1,\ldots,x^{-j}z_s),\qquad
+z_i=y_i-\sum_{h<j}c_{ih}x^h.                                  \tag{8.9}
+$$
+
+Put $P_j=(x^{-j}z_1,\ldots,x^{-j}z_s)$. Then $D_j/P_j$ is a DVR with parameter $x$, the
+$P_j$ contract to one prime $P$, and $(D_j)_{P_j}=D_P$ is regular because the completed ring is
+normal and the singularity is isolated. If $d=\dim D_P$ and more than $d$ displayed generators
+of $P_j$ remain minimal, a relation in the regular local ring $D_P$ has coefficients
+$u_ix^{q_i}$ modulo $P$, with one $q_i$ minimal. Dividing after $q=\min q_i$ further transforms
+makes one of the generators $x^{-j-q}z_i$ redundant by Nakayama. Repeating at most $s-d$ times
+makes $P_j$ generated by $d$ elements; then $\mathfrak n_j$ has $d+1=\dim D_j$ generators and
+$D_j$ is regular. Thus $w$ dominates a regular local ring $D'$ essentially of finite type and
+birational over the original $D$.
+
+Some ring $D_n$ in the normalized sequence contains $D'$, because their union is the valuation
+ring. We need one elementary fact about this passage. A normal two-dimensional local ring
+essentially birational over a regular local ring is rational: take a projective normal model
+containing it. Write a projective domination as the blowup of a base ideal. Successive point
+blowups of the regular surface principalize that ideal: for two general members, the sum of their
+local intersection colengths strictly falls at every unresolved base point. The resulting regular
+surface dominates the model. The elementary two-chart computation for a point blowup gives zero
+$H^1$, and Leray injects the $H^1$ of every intervening normal local modification into zero. For a
+rational normal local surface,
+the blowup of its maximal ideal is normal. Indeed, on the normalization $Z$ of that blowup the
+invertible ideal $I=\mathfrak m\mathcal O_Z$ is globally generated. If
+$0\to F\to\mathcal O_Z^r\to I\to0$, the Koszul sections generate $F\otimes I$; rationality and
+fiber dimension give $H^1(Z,G)=0$ for every globally generated $G$. Induction yields
+$H^0(Z,I^q)=\mathfrak m^q$ for all $q$. The normalized and ordinary Rees algebras therefore have
+the same graded pieces, so the blowup was normal.
+
+Apply this fact first to $D_n$ and then inductively. Its normal transforms along $w$ are ordinary
+quadratic transforms and remain rational. The displayed termination calculation, now starting at
+$D_n$, shows that a later $D_N$ is regular. $\square$
 
 ### 8.4 Quadratic transformations
 
@@ -764,17 +961,34 @@ Over a finite residue field, use the product of all closed base points; the resi
 formula give the same decrease. Eventually the ideal is invertible, and the universal property of
 the blowup supplies $T_r\to Z$. $\square$
 
-**Lemma 8.9 (normalized-blowup domination).** Let $A$ be a two-dimensional normal noetherian
-local domain with finite normalization after every finite-type modification. Every proper
-birational modification of $\operatorname{Spec}A$ is dominated by a finite composite of
-normalized blowups in ideals supported at the closed point.
+**Lemma 8.9 (normalized point-blowup domination).** Let $A$ be a two-dimensional normal Nagata
+local domain. Every proper birational modification of $\operatorname{Spec}A$ is dominated by a
+finite composite of normalized blowups at closed points.
 
-**Proof.** Chow's lemma gives a projective modification dominating the given one. A projective
-birational morphism is the blowup of a fractional ideal after taking a generated relatively ample
-power. Replace its Rees algebra by its finite graded normalization. The resulting normalized
-blowup dominates the projective modification. Repeating on the finitely many affine charts where
-the comparison is not yet a morphism decreases the base-ideal colength exactly as in Lemma 8.8;
-no new codimension-one center occurs because both schemes are normal and already agree there.
+**Proof.** Normalize the source. The morphism is an isomorphism outside the closed point, and it
+has only finitely many exceptional curves. Induct on their number. Blow up the closed point of the
+target and normalize; normalize also its fiber product with the source. Exceptional curves of the
+new comparison inject into the old exceptional curves, because normalization is finite and the
+comparison is an isomorphism at every old codimension-one point.
+
+It remains to show that repeated normalized point blowups remove at least one old curve $C$.
+At its generic point choose a rational function $u=a/b$ whose residue is transcendental over the
+residue field of the closed point. Necessarily $a,b$ belong to the maximal ideal. Put
+
+$$
+N_C(a,b)=\min\{\operatorname{ord}_C(a),\operatorname{ord}_C(b)\}>0.
+$$
+
+If $C'$ above $C$ remains exceptional after the normalized blowup, then on the relevant chart
+$a=a'd$ and $b=b'd$, where $d$ cuts out the exceptional Cartier divisor. Normalization is an
+isomorphism at the generic point of $C$, so
+
+$$
+N_{C'}(a',b')=N_C(a,b)-\operatorname{ord}_C(d)<N_C(a,b).
+$$
+
+After finitely many steps $C$ can no longer occur. The number of exceptional curves then drops,
+and induction ends. Finiteness of every normalization follows from the Nagata hypothesis.
 $\square$
 
 ### 8.5 The remaining local resolution chain
@@ -969,74 +1183,163 @@ all normal modifications. Thus every use of (8.8) and Proposition 8.12 below may
 made on a projective comparison without changing either bound or the definition of a rational
 singularity.
 
-**Lemma 8.13 (annihilator bound).** Fix $0\ne a\in A$. The lengths of
-$H^1(X,\mathcal O_X)[a]$ are bounded independently of the normal modification $X$.
-
-**Proof.** The exact sequence cut out by $a$ identifies this torsion module with the cokernel of
-$A\to H^0(Z,\mathcal O_Z)$. Approximation in the Krull domain gives $c$ with valuation one at
-each height-one prime dividing $a$ and with $a\mid c^N$ for fixed $N$. Since the principal
-quotient of the Cohen--Macaulay domain $A$ has no embedded primes, these valuation-one conditions
-make $A/(c)$ reduced. Multiplication by $c$ gives exact sequences
+Let $R$ be a complete regular local ring of dimension two, let $K$ be its fraction field, let
+$L/K$ be finite, and let $B$ be the integral closure of $R$ in $L$. Fix a nonzero
+$K$-linear map $T:L\to K$. With $\omega_R$ identified with the canonical fractional ideal on
+every regular modification of $R$, put
 
 $$
-0\longrightarrow H^1(X,\mathcal O_X)[c]\longrightarrow
-H^1(X,\mathcal O_X)[c^{r+1}]\xrightarrow{c}
-H^1(X,\mathcal O_X)[c^r],
+C=\{z\in L:T(zB)\subseteq\omega_R\}.
 $$
 
-so the $c^N$-torsion has a filtration of length $N$ with subquotients bounded by the
-$c$-torsion. Because $a\mid c^N$, it remains to bound the latter.
+This is a finite rank-one reflexive $B$-module. Trace adjunction identifies it with
+$\operatorname{Hom}_R(B,\omega_R)=\omega_B$.
 
-Let $Z_c\subset X$ be cut out by $c$ and let $Z'$ be the scheme-theoretic closure of its
-restriction to the punctured surface. It is proper and quasi-finite over
-$\operatorname{Spec}A/(c)$, hence finite, say $Z'=\operatorname{Spec}B'$. Reducedness gives
-
-$$
-A/(c)\subset B'\subset (A/(c))^\nu.
-$$
-
-The map $H^0(Z_c,\mathcal O_{Z_c})\to H^0(Z',\mathcal O_{Z'})$ is injective. Indeed, a section in
-its kernel maps through the boundary homomorphism to a class in $H^1(X,\mathcal O_X)$ which
-vanishes on the punctured surface; Lemma 8.11 makes that class zero, so the section comes from
-$A/(c)$, where injectivity into $B'$ makes it zero. Consequently
-$H^1(X,\mathcal O_X)[c]$ is a subquotient of the fixed finite-length module
-$(A/(c))^\nu/(A/(c))$. Multiplying this bound by $N$ proves the assertion. $\square$
-
-Call $A$ **bounded** if the integers $g(X)$ are bounded. Choosing a modification with maximal
-$g(X)$ and using (8.9) shows that every local ring on it has
-$H^1(Y,\mathcal O_Y)=0$ for every further normal modification $Y$; such a local ring is called a
-**rational singularity**. Lemma 8.9 replaces the chosen modification by a finite sequence of
-normalized blowups without losing this property.
-
-**Lemma 8.14 (finite extensions preserve boundedness).** Let $A\subset B$ be finite between
-normal two-dimensional local domains.
-
-1. If the fraction-field extension is separable and $A$ is bounded, then $B$ is bounded.
-2. If $A=k[[u,v]]$ has characteristic $p$ and the fraction-field extension is purely inseparable
-   of degree $p$, then $B$ is bounded.
-
-**Proof.** In the separable case choose a field basis in $B$. The determinant $d\ne0$ of its
-trace pairing makes $\pi_*\mathcal O_Y$ sit between two free modules with cokernel killed by $d$
-on every finite comparison $Y\to X$. Cohomology, (8.9), and Lemma 8.13 give a uniform bound.
-
-For the inseparable case write $L=K(t)$, $t^p=q$. Choose a finite subfield
-$k^p\subset k_0\subset k$ such that $dq\ne0$ over
-$A_0=k_0[[u^p,v^p]]$. Put $r=\operatorname{rank}\Omega_{A/A_0}$ and
-$\omega_A=\Omega^r_{A/A_0}$. Proposition 8.5 and the blowup calculation in Lemma 8.6 give, on
-every finite comparison $Y\to X$,
+**Lemma 8.13 (the canonical lattice measures $H^1$).** Let $X\to\operatorname{Spec}R$ be an
+iterated blowup at closed points and let $\bar X$ be its normalization in $L$. Under the generic
+identification above, set
 
 $$
-\pi_*(\Omega^r_{Y/A_0})^{**}\longrightarrow
-(\Omega^r_{X/A_0})^{**}\longrightarrow\omega_X.
+C_{\bar X}=H^0(\bar X,\omega_{\bar X})\subseteq C.
 $$
 
-Choose $\eta$ with $\theta=\eta\wedge dq\ne0$. The forms
-$\eta\wedge t^{p-1-i}dt$ map to the $A$-linear functionals sending $t^j$ to
-$\delta_{ij}\theta$. Hence a fixed nonzero element kills the cokernel of
-$H^0(Y,\omega_Y)\to\omega_B$. By (8.8), (8.7), and Proposition 8.12 this cokernel is the Matlis
-dual of $H^1(Y,\mathcal O_Y)$; Lemma 8.13 supplies the uniform bound. $\square$
+Then $C/C_{\bar X}$ is Matlis dual to $H^1(\bar X,\mathcal O_{\bar X})$. Moreover every normal
+modification of $\operatorname{Spec}B$ is dominated by some such $\bar X$.
+
+**Proof.** Proposition 8.12 and (8.8), applied to $\bar X\to\operatorname{Spec}B$, turn the
+triangle
+
+$$
+B\longrightarrow Rf_*\mathcal O_{\bar X}\longrightarrow
+H^1(\bar X,\mathcal O_{\bar X})[-1]
+$$
+
+into the exact sequence
+
+$$
+0\longrightarrow C_{\bar X}\longrightarrow C\longrightarrow
+H^1(\bar X,\mathcal O_{\bar X})^\vee\longrightarrow0.          \tag{8.9a}
+$$
+
+For domination, compose a normal modification of $B$ with the finite map to $R$. Flattening its
+graph is a blowup of an ideal supported at the closed point of $R$. Lemma 8.8 principalizes that
+ideal by point blowups of the regular surface. Normalizing in $L$ then dominates the original
+modification. $\square$
+
+**Lemma 8.14 (uniform canonical-lattice bound).** In the preceding situation the lengths
+$\operatorname{length}_B(C/C_{\bar X})$, as $X$ ranges over iterated point blowups of $R$, are
+bounded. Consequently $B$ is bounded.
+
+**Proof.** First suppose that $R=k[[u,v]]$. For every height-one prime $\mathfrak p$,
+Proposition 8.5A gives a good trace $T_{\mathfrak p}$, elements $e_i\in B$, and a determinant
+$d_{\mathfrak p}\notin\mathfrak p$. Cramer's rule, exactly as in the proof of that proposition,
+gives
+
+$$
+d_{\mathfrak p}C\subseteq C_{\bar X}                         \tag{8.9b}
+$$
+
+for every $X$: goodness supplies integrality at every height-one point of $X$, and reflexivity
+intersects those lattices. Here all lattices may be measured using the one initially fixed trace.
+Indeed any two nonzero $K$-linear functionals $L\to K$ have the form
+$T'(z)=T(sz)$ for a unique $s\in L^\times$; both $C$ and every $C_{\bar X}$ are then multiplied
+by $s^{-1}$, so (8.9b) is unchanged. The ideal generated by all $d_{\mathfrak p}$ has no height-one prime
+over it. Noetherianity permits a finite subcollection with the same property, so the resulting
+ideal is $\mathfrak m$-primary. Hence $\mathfrak m^NC\subseteq C_{\bar X}$ for one $N$ and all
+$X$, and (8.9a) gives the fixed bound $\operatorname{length}(C/\mathfrak m^NC)$.
+
+Now suppose $L/K$ is separable; this includes the mixed-characteristic application. Ordinary
+field trace is a good trace. A basis $e_1,\ldots,e_n\in B$ has nonzero trace determinant $d$, and
+Cramer's rule gives $dC\subseteq C_{\bar X}$ for all $X$. We cannot replace $d$ by a fictitious
+principal divisor having reduced quotient. Instead resolve the finitely many valuation centers
+over its actual divisor.
+
+Let $\mathfrak p_1,\ldots,\mathfrak p_s$ be the height-one primes dividing $d$. Normalize each
+$R/\mathfrak p_i$; its finitely many DVR localizations compose with the
+$\mathfrak p_i$-adic valuation to rank-two valuations of $K$. Extend these valuations to $L$;
+there are finitely many. Proposition 8.5B and a common refinement by point blowups give an
+iterated blowup $X_0$ such that all their centers on $\bar X_0$ are regular. Every closed point
+over the strict transform of $V(d)$ is one of these centers: its local ring dominates first the
+height-one valuation and then a branch valuation of the normalized residue curve. Thus all such
+points are regular, hence rational.
+
+Choose $N$ so that $\mathfrak m^N(C/C_{\bar X_0})=0$ and so that on
+$X_0$ away from the strict transform of $V(d)$ one has
+$\mathfrak m^N\mathcal O_{X_0}\subseteq d\mathcal O_{X_0}$. For any further iterated blowup
+$X\to X_0$, at a point away from that strict transform we have
+
+$$
+\mathfrak m^NC\subseteq dC\subseteq C_{\bar X}.
+$$
+
+Above the strict transform, the starting local ring on $\bar X_0$ is rational; (8.9) for a local
+comparison says its canonical lattice does not shrink under any further normal modification.
+Hence there too $\mathfrak m^NC\subseteq C_{\bar X_0}=C_{\bar X}$ locally. Reflexivity gives the
+global inclusion and the same fixed length bound.
+
+Finally, an arbitrary finite $L/K$ factors into a separable extension followed by a tower of
+purely inseparable extensions of degree $p$. The equal-characteristic argument treats the whole
+tower at once through the exterior trace; the separable argument treats characteristic zero.
+Lemma 8.13 then transfers the bound to every normal modification of $B$. $\square$
+
+Call a normal two-dimensional local ring **bounded** if its values $g(X)$ are bounded. Choose a
+normal modification with maximal $g$. If $Y$ is any normal modification of the local ring at one
+of its closed points, spread $Y$ to a modification of the surface and use (8.9). Maximality makes
+the last term zero, so $H^1(Y,\mathcal O_Y)=0$. Such a ring is a **rational singularity**.
+Conversely that vanishing is stable under normal birational localization by the same spreading
+argument. Thus Lemma 8.14 supplies a normal modification all of whose singular local rings are
+rational; Lemma 8.9 may then replace that modification by normalized point blowups without
+losing rationality.
 
 #### 8.5.4 Rational singularities and the Gorenstein reduction
+
+An ideal in a normal domain is **complete** if it is integrally closed. The following surface
+theorem is the precise input needed to keep point blowups normal; it is stronger than the special
+calculation for powers of the maximal ideal and prevents a normalized-blowup domination statement
+from being mistaken for a factorization by ordinary point blowups.
+
+**Proposition 8.14A (complete ideals on a rational surface).** Let $A$ be a rational normal
+two-dimensional local domain.
+
+1. A product of complete $\mathfrak m$-primary ideals is complete.
+2. The blowup of a complete $\mathfrak m$-primary ideal is normal, and all of its local rings are
+   rational.
+
+**Proof.** Let $I,J$ be complete. Take the normalization of the join of their two blowups. On
+this normal modification $f:X\to\operatorname{Spec}A$, the sheaves
+$L=I\mathcal O_X$ and $M=J\mathcal O_X$ are invertible and generated by their global sections.
+Completeness is the contraction statement
+
+$$
+I=H^0(X,L),\qquad J=H^0(X,M).                                \tag{8.9c}
+$$
+
+Indeed an element of the fraction field belongs to the contraction exactly when its order is at
+least that of the ideal at every height-one local ring of $X$; these are the valuative
+inequalities for integral dependence.
+
+Choose generators $x_0,\ldots,x_r$ of $L$ and write
+$0\to F\to\mathcal O_X^{r+1}\to L\to0$. If $x_j$ generates $L$ on an open set, $F$ there has
+basis $e_i-(x_i/x_j)e_j$. Consequently $F\otimes M$ is generated globally by the sections
+$(x_je_i-x_ie_j)y$, where $y$ ranges over generators of $M$. A globally generated coherent
+sheaf $G$ on a normal modification of a rational singularity has $H^1(X,G)=0$: choose
+$\mathcal O_X^q\twoheadrightarrow G$; its kernel has no $H^2$ because the fibers have dimension
+at most one, while $H^1(X,\mathcal O_X)=0$. Applying this to $F\otimes M$ shows that
+
+$$
+H^0(X,L)\otimes H^0(X,M)\twoheadrightarrow H^0(X,L\otimes M).
+$$
+
+Thus $H^0(X,L\otimes M)=IJ$. The same height-one criterion used in (8.9c) says this contraction
+is complete, proving (1).
+
+For a complete $I$, all $I^n$ are complete by (1). The integral closure of the Rees algebra
+$A[It]$ in $A[t]$ has degree-$n$ part $\overline{I^n}=I^n$, so the Rees algebra and its Proj are
+normal. To prove rationality at a point $x$ of the blowup, spread any projective normal
+modification of $\operatorname{Spec}\mathcal O_{X,x}$ to a modification $X'\to X$. Both $X$
+and $X'$ are normal modifications of $A$, hence have zero $H^1$; their $H^2$ vanish by fiber
+dimension. Leray gives $R^1(X'\to X)_*\mathcal O_{X'}=0$, and its stalk at $x$ is the required
+local vanishing. Chow domination handles a proper nonprojective modification. $\square$
 
 **Lemma 8.15 (blowing up a rational singularity).** If $A$ is rational, the ordinary blowup
 $X'=\operatorname{Proj}\bigoplus_{n\ge0}\mathfrak m^n$ is normal, and every local ring on it is
@@ -1140,11 +1443,21 @@ gives $\omega_X|_E=\omega_E(1)$. The curve duality calculation and (8.10) show
 $H^1(X,\omega_X(n))=0$ for $n\ge0$ and that $\omega_E(1)$ is generated. Hence
 $f^*\omega_A\to\omega_X$ is surjective at every singular point.
 
-Blow up the Fitting ideal of the rank-one module $\omega_A$; its torsion-free transform is
-invertible. Dominate this blowup by point blowups using Lemma 8.9. Lemma 8.15 says each stage is
-normal and rational. Along a chain ending at a singular point the preceding surjections persist;
-there the invertible torsion-free transform surjects onto the torsion-free rank-one module
-$\omega_X$, hence is an isomorphism. At regular points the dualizing module is already invertible.
+Choose a generator of the one-dimensional $K$-space $\omega_A\otimes_AK$. Torsion-freeness
+embeds $\omega_A$ as a fractional ideal of $A$; after clearing one denominator it is an ordinary
+ideal $I\subset A$. On $Y=\operatorname{Bl}_I A$ the image of the pullback of $\omega_A$ modulo
+torsion is the tautological invertible ideal $I\mathcal O_Y$. Apply Lemma 8.9 to obtain a
+sequence of normalized blowups at closed points dominating $Y$. At any rational stage the maximal
+ideal of a closed point is complete; Proposition 8.14A says its ordinary blowup is already normal
+and rational. Hence every normalized point blowup in this sequence is an ordinary point blowup,
+and centers which are regular may be omitted because their blowups remain regular.
+
+Let $X$ be the final surface. Along a chain ending at a singular point, the preceding canonical
+surjections persist at every point blowup. The torsion-free pullback of $\omega_A$ is invertible
+because $X$ dominates $Y$, and it surjects onto the torsion-free rank-one module $\omega_X$.
+After trivializing the source this is an ideal quotient of $\mathcal O_X$ which is generically a
+unit; surjectivity forces the quotient ideal to be the whole local ring. Thus the two modules are
+isomorphic. At regular points the dualizing module is already invertible. $\square$
 $\square$
 
 A rational singularity with invertible dualizing module is called a **rational double point**.
@@ -1366,8 +1679,8 @@ $$
 X'\longrightarrow X\longrightarrow\operatorname{Spec}A
 $$
 
-such that $X'\to\operatorname{Spec}A$ is a finite sequence of normalized blowups in ideals
-supported at closed points.
+such that $X'\to\operatorname{Spec}A$ is a finite sequence of normalized blowups at closed
+points.
 
 **Proof.** We first record two rationality facts used in the conversion. A complete regular
 two-dimensional local ring $R$ is rational. Indeed, given a normal modification $W\to
@@ -1447,8 +1760,8 @@ that $A_0\to A$ is finite and injective. Thus in both cases $A_0$ is a complete 
 domain and $K/K_0=\operatorname{Frac}(A)/\operatorname{Frac}(A_0)$ is finite.
 
 The first paragraph of Lemma 8.20A proves more than regularity of $A_0$: every normal modification
-of $A_0$ has zero $H^1$. Thus $A_0$ is bounded, with bound zero, which is the base hypothesis
-needed in Lemma 8.14.
+of $A_0$ has zero $H^1$. Thus $A_0$ is rational. The finite extension
+$A_0\subset A$ is exactly the setting of Lemma 8.14.
 
 Induct on $[K:K_0]$ to construct some resolution. Degree one gives $A=A_0$. If
 $K_0\subsetneq L\subsetneq K$, let $B$ be the integral closure of $A_0$ in $L$; it is finite and
@@ -1462,8 +1775,8 @@ intermediate field.
 
 Such an extension is either separable, or has characteristic $p$ and is purely inseparable of
 degree $p$. In mixed characteristic only the first case occurs. Lemma 8.14 gives boundedness in
-the separable case and, since the base is the regular complete ring $A_0$, in the inseparable
-degree-$p$ case. Choose a normal modification on which $g$ is maximal. Equation (8.9) then makes
+both cases (and in fact for the original finite extension without this last reduction). Choose a
+normal modification on which $g$ is maximal. Equation (8.9) then makes
 every singular local ring rational. Lemma 8.16 replaces it by a normal modification whose
 singular local rings are rational double points, and Lemma 8.18D resolves those by finitely many
 point blowups. This produces a resolution, and
