@@ -1422,7 +1422,8 @@ now supplies a universally exact finite ambient resolution of it. On every
 Koszul chart that resolution is homotopy equivalent to the composite perfect object, and the
 fundamental-class cocycle makes these identifications canonical in the derived category. On
 duals, the canonical identification is the sheafified dg currying isomorphism. Writing
-$Q=P_1\times_SP_2$, $Y=X\times_SP_2$, and $k:Y\hookrightarrow Q$, it is
+$Q=P_1\times_SP_2$, $Y=X\times_SP_2$, $k:Y\hookrightarrow Q$, and
+$j:X\hookrightarrow Y$ for the graph, it is
 
 $$
 R\mathcal Hom_Q(k_*j_*\mathcal O_X,\omega_{Q/S})
