@@ -2218,7 +2218,113 @@ Hence descent is a two-part test: descend the object and its polarization, then 
 
 Existence leaves many choices: blowing up any closed point of a regular model gives another regular model. Minimality removes precisely this artificial freedom.
 
-Let $R$ be a discrete valuation ring and $X/R$ a regular proper model. A vertical integral curve $E$ is an **exceptional curve of the first kind** if, after accounting for its residue field, it is a projective line with normal bundle of degree $-1$. Equivalently over an algebraically closed residue field, $E\simeq\mathbf P^1$ and $E^2=-1$. The intersection notation is used here only for this contraction criterion; systematic component pairings are developed in Book 12.
+Let $R$ be a discrete valuation ring with residue field $k$, and let $X/R$ be a regular proper
+model. A vertical integral curve $E$ is an **exceptional curve of the first kind** if, after
+accounting for its field of constants, it is a projective line with normal bundle of degree
+$-1$. Equivalently, if $k_E=H^0(E,\mathcal O_E)$, then
+$E\simeq\mathbf P^1_{k_E}$ and $\mathcal O_E(E)\simeq\mathcal O_E(-1)$.
+
+The following finite package contains all the intersection theory needed for minimal models. It
+is proved here so that neither contraction nor factorization depends on Book 12.
+
+**Proposition 11.0 (local intersection, blowup, and adjunction package).** Let $X$ be a regular
+proper arithmetic surface over a discrete valuation ring $R$ with residue field $k$.
+
+1. If $D$ is a Cartier divisor and $C$ is a vertical integral curve, set
+
+   $$
+   D\cdot C=\deg_k(\mathcal O_X(D)|_C)
+   =[H^0(C,\mathcal O_C):k]\deg_{H^0(C,\mathcal O_C)}(\mathcal O_X(D)|_C).
+   \tag{11.i}
+   $$
+
+   This is bilinear. If $D$ and $C$ have no common component, then
+
+   $$
+   D\cdot C=\sum_{x\in |D|\cap C}[\kappa(x):k]
+   \operatorname{length}_{\mathcal O_{X,x}}\mathcal O_{X,x}/(f,g),       \tag{11.ii}
+   $$
+
+   where $f,g$ are local equations for $D,C$. In particular distinct effective integral curves
+   have nonnegative intersection.
+2. For a proper morphism $f:X\to Y$ of regular arithmetic surfaces, a Cartier divisor $D$ on
+   $Y$, and a vertical integral curve $C$ on $X$,
+
+   $$
+   f^*D\cdot C=D\cdot f_*C,                                      \tag{11.iii}
+   $$
+
+   where $f_*C=0$ if $C$ is contracted and otherwise is the image curve multiplied by the degree
+   of its function-field extension.
+3. If $b:X'\to X$ is the blowup of a closed point $x$ and
+   $e=[\kappa(x):k]$, its exceptional curve is
+   $E=\mathbf P^1_{\kappa(x)}$ and
+
+   $$
+   E^2=-e,\qquad b^*D=D'+m_x(D)E,\qquad b^*D\cdot E=0,             \tag{11.iv}
+   $$
+
+   hence $D'\cdot E=m_x(D)e$ and $(D')^2=D^2-m_x(D)^2e$ whenever
+   the displayed self-intersections are defined. Moreover
+
+   $$
+   K_{X'/R}=b^*K_{X/R}+E.                                        \tag{11.v}
+   $$
+4. If $C$ is a vertical integral curve, $k_C=H^0(C,\mathcal O_C)$, and arithmetic genus is taken
+   over $k_C$, then
+
+   $$
+   [k_C:k](2p_a(C)-2)=C^2+K_{X/R}\cdot C.                         \tag{11.vi}
+   $$
+5. Write a connected closed fiber as $F=\sum m_iC_i$. Its intersection matrix is negative
+   semidefinite and its kernel over $\mathbf Q$ is spanned by $F$. Consequently the form is
+   negative definite on any collection of components which omits at least one component of the
+   fiber.
+
+**Proof.** A vertical integral curve on the regular surface is an effective Cartier divisor.
+For a rational section of a line bundle on $C$, the degree of its divisor is the sum of the
+orders multiplied by $[\kappa(x):k_C]$. Apply this to the restriction of a local equation $f$
+of $D$. In the one-dimensional Cohen--Macaulay local ring $\mathcal O_{C,x}$, its order is
+$\operatorname{length}\mathcal O_{C,x}/f$; writing
+$\mathcal O_{C,x}=\mathcal O_{X,x}/(g)$ proves (11.ii), including its residue factor.
+Bilinearity follows from tensor products of line bundles. The divisor of the norm of a rational
+section has at a closed point the residue-weighted sum of the orders above it. Applied to the
+restriction of an equation for $D$, this is (11.iii); the contracted case has degree zero because
+a pullback from a point is trivial on $C$.
+
+For the blowup, the two parameter charts of Section 8.4 identify
+$E$ with $\mathbf P^1_{\kappa(x)}$ and its conormal bundle with $\mathcal O_E(1)$, so
+$\mathcal O_E(E)=\mathcal O_E(-1)$ and $E^2=-e$. Dividing the pullback of a local equation of
+$D$ by the largest exceptional power gives $b^*D=D'+m_x(D)E$. Formula (11.iii) gives
+$b^*D\cdot E=0$; the remaining assertions of (11.iv) follow by expansion. On the same two
+charts, if $(u,v)$ is a regular system of parameters, the Jacobians of
+$(u,v)=(u,ut)$ and $(sv,v)$ are respectively $u$ and $v$. The transition quotient is the
+canonical section of $\mathcal O(E)$, proving (11.v). Equivalently this is the codimension-one
+case of the lci duality and transitivity theorem of Book 9.
+
+The Cartier sequence for $C$, followed by the lci adjunction theorem of Book 9, gives
+
+$$
+(\omega_{X/R}\otimes\mathcal O_X(C))|_C\simeq\omega_{C/k}.
+$$
+
+Degree over $k$ of the right side is
+$[k_C:k](2p_a(C)-2)$ by curve duality, proving (11.vi).
+
+Finally the divisor $F$ is cut out by a uniformizer, hence
+$F\cdot C_i=0$ for every $i$. For $V=\sum a_iC_i$, eliminate the diagonal terms from $V^2$ by
+these equalities. One obtains
+
+$$
+V^2=-\sum_{i<j}m_im_j(C_i\cdot C_j)
+       \left(\frac{a_i}{m_i}-\frac{a_j}{m_j}\right)^2.           \tag{11.vii}
+$$
+
+All coefficients are nonnegative by (11.ii). Equality says that $a_i/m_i$ is constant along
+every edge of the component incidence graph. Connectedness of the fiber makes that graph
+connected: otherwise the two unions of components would be disjoint open-and-closed subsets of
+the fiber. Thus equality holds precisely for multiples of $F$. A vector supported on a proper
+subset cannot be such a multiple, proving the last assertion. $\square$
 
 **Theorem 11.1 (relative Castelnuovo contraction).** Let $S$ be an excellent Dedekind scheme, let $X/S$ be a regular proper arithmetic surface, and let $E$ be a vertical exceptional curve of the first kind. There is a regular proper $S$-scheme $Y$ and a proper birational morphism
 
@@ -2404,28 +2510,9 @@ A regular proper model is **relatively minimal** if none of its fibers contains 
 
 Contraction gives existence. We now prove the comparison needed for its universal property.
 
-For a fiber $F=\sum m_i\Gamma_i$, local-length intersection and
-$(F\cdot\Gamma_i)=0$ give, for $V=\sum a_i\Gamma_i$,
-
-$$
-(\sum a_i\Gamma_i)^2=-\sum_{i<j}m_im_j(\Gamma_i\cdot\Gamma_j)
-\left(\frac{a_i}{m_i}-\frac{a_j}{m_j}\right)^2.
-\tag{11.1}
-$$
-
-Indeed the diagonal terms satisfy
-$m_i\Gamma_i^2=-\sum_{j\ne i}m_j(\Gamma_i\cdot\Gamma_j)$; substituting these in $V^2$ and
-pairing the $(i,j)$ and $(j,i)$ terms gives the displayed square exactly.
-
-Thus the fiber matrix is negative semidefinite; on each connected block its kernel is spanned by
-the corresponding whole fiber. Blowup charts give
-$E^2=-[\kappa(x):k]$ and $K_{\widetilde X}=b^*K_X+E$. If
-$d_C=[H^0(C,\mathcal O_C):k]$ and arithmetic genus is taken over this constant field, the
-conormal sequence and curve duality give
-
-$$
-d_C(2p_a(C)-2)=C^2+K_X\cdot C.                              \tag{11.1a}
-$$
+Proposition 11.0 supplies, before any use of factorization, the local-length pairing, its residue
+weights and projection formula, the blowup and canonical-divisor formulas, adjunction, and the
+negative-definite restriction of the fiber matrix. We now use that package.
 
 **Factorization lemma.** Every proper birational morphism between regular arithmetic surfaces over
 $R$ which is the identity on the generic fiber factors into blowups at closed regular points.
@@ -2459,11 +2546,11 @@ $$
 K_{X/R}=f^*K_{Y/R}+D.                                       \tag{11.1b}
 $$
 
-The intersection form is negative definite on the curves contracted by $f$. To see this directly
-from (11.1), work one connected fiber block at a time. The full fiber form is negative
-semidefinite with kernel its multiplicity vector, whereas a divisor supported only on contracted
-components omits the strict transform of at least one component of the target fiber. It therefore
-cannot lie in the kernel. Since $D\ne0$, we have $D^2<0$, and hence
+The intersection form is negative definite on the curves contracted by $f$. Indeed,
+Proposition 11.0(5), applied one connected fiber at a time, says that the full fiber form is
+negative semidefinite with kernel its multiplicity vector, whereas a divisor supported only on
+contracted components omits the strict transform of at least one component of the target fiber.
+It therefore cannot lie in the kernel. Since $D\ne0$, we have $D^2<0$, and hence
 $D\cdot E<0$ for some exceptional component $E$.
 
 The projection formula gives $f^*K_{Y/R}\cdot E=0$, so (11.1b) gives
@@ -2474,7 +2561,7 @@ $$
 E^2=-ad,\qquad K_{X/R}\cdot E=-bd
 $$
 
-with positive integers $a,b$. Adjunction (11.1a) gives
+with positive integers $a,b$. Proposition 11.0(4) gives
 $2p_a(E)-2=-(a+b)$. Since $p_a(E)\ge0$, necessarily
 $p_a(E)=0$ and $a=b=1$. The normalization-conductor sequence then says that $E$ is a smooth
 genus-zero curve over its constant field. The degree-one line bundle
@@ -2509,13 +2596,13 @@ $$
 K_{Y/R}\cdot\Gamma=d_\Gamma(2p_a(\Gamma)-2)-\Gamma^2.       \tag{11.2}
 $$
 
-Formula (11.1) gives $\Gamma^2\leq0$. If $p_a(\Gamma)\geq1$, (11.2) is nonnegative. If
+Proposition 11.0(5) gives $\Gamma^2\leq0$. If $p_a(\Gamma)\geq1$, (11.2) is nonnegative. If
 $p_a(\Gamma)=0$, the normalization and the conductor exact sequence show that $\Gamma$ is a
 smooth genus-zero curve over its constant field. If $\Gamma^2=-d_\Gamma$, the line bundle
 $\mathcal O_\Gamma(-\Gamma)$ has degree one, so $\Gamma$ is a projective line and is exceptional;
 relative minimality excludes this. The next possible negative normal degree is at most
 $-2d_\Gamma$, which again makes (11.2) nonnegative. It remains only the case
-$\Gamma^2=0$. Equality in (11.1), applied to a vector supported on $\Gamma$, says that the whole
+$\Gamma^2=0$. Equality in (11.vii), applied to a vector supported on $\Gamma$, says that the whole
 connected fiber is $F=m\Gamma$. The filtration by powers of the ideal of $\Gamma$ has quotients
 
 $$
