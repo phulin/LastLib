@@ -1010,7 +1010,7 @@ R\mathcal Hom_P(i_*\mathcal F,\omega_P[N])
 i_*R\mathcal Hom_X(\mathcal F,\omega_X[1]). \tag{9.5}
 $$
 
-Naturality is strict already in the bar construction and hence survives passage to the derived
+Naturality is strict in the coinduction equality (9.5a) and hence survives passage to the derived
 category. Combining (9.2) and (9.5) proves, functorially,
 
 $$
