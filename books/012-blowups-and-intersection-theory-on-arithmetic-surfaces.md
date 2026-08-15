@@ -77,7 +77,7 @@
 
 ### 1.1 From models to comparisons
 
-Book 11 constructed regular proper models of smooth curves over excellent Dedekind schemes. Existence is only the beginning. A model can be blown up at any closed point, producing another regular model with the same generic curve. Sections that met in the old model may separate in the new one; two components that met may cease to meet; a new rational component appears. To decide whether this change improves the geometry, and to compare constructions made from different equations, one needs numbers that remember contact and transform predictably.
+Conditional on the surface-resolution prerequisite SR2 isolated in Book 11, that book constructs regular proper models of smooth curves over excellent Dedekind schemes. This book does not need SR2 once a regular arithmetic surface has been supplied: such a model can be blown up at any closed point, producing another regular model with the same generic curve. Sections that met in the old model may separate in the new one; two components that met may cease to meet; a new rational component appears. To decide whether this change improves the geometry, and to compare constructions made from different equations, one needs numbers that remember contact and transform predictably.
 
 Intersection theory provides those numbers. At its most local, it answers a concrete question: if two curves on a regular surface meet at a point, with what multiplicity do they meet? At its most global in this book, it turns a special fiber into a symmetric matrix. That matrix detects redundant exceptional components, governs vertical corrections of horizontal divisors, and prepares the component pairings used in the study of semistable curves and their Jacobians.
 
@@ -116,9 +116,11 @@ $$
 
 Thus residue-field degrees are built into every global fiberwise intersection. If $x$ is a closed point of $C$, a length at $x$ contributes its length multiplied by $[\kappa(x):k]$.
 
-Regularity is essential for the clean Cartier--Weil dictionary and for finite free resolutions at intersections. Properness of vertical curves is essential for degree. Flatness makes fibers effective Cartier divisors and relates their multiplicities to the base valuation. Excellence is used for finite normalization and resolution, but not for elementary blowup charts. When a statement needs only a noetherian scheme or a regular local surface, it will say so.
+Regularity is essential for the clean Cartier--Weil dictionary and for finite free resolutions at intersections. Properness of vertical curves is essential for degree. Flatness makes fibers effective Cartier divisors and relates their multiplicities to the base valuation. Excellence is used for finite normalization and is a hypothesis of SR2, but not for elementary blowup charts. When a statement needs only a noetherian scheme or a regular local surface, it will say so.
 
-Book 9 supplies Cartier divisors, line bundles, degree, dualizing sheaves, and Riemann--Roch on proper curves. Book 11 supplies normalization, resolution of excellent surfaces, and regular proper models. We recall these inputs only where their conventions matter and prove the intersection calculations that were deliberately deferred.
+Book 9 supplies Cartier divisors, line bundles, degree, and the elementary Euler-characteristic form of Riemann--Roch on proper curves unconditionally. Its dualizing sheaves, Serre duality, and relative base-change statements are conditional on the **absolute curve-duality package** of Section 9.2 and the **relative curve-duality package** of Section 9.3. Book 11 supplies normalization unconditionally, while its resolution of excellent surfaces and construction of regular proper models are conditional on **SR2**. Its Section 11.4 also isolates embedded resolution of a marked boundary as a separate input not contained in SR2. We recall these inputs only where their conventions matter and prove the elementary blowup and intersection calculations independently of them.
+
+Accordingly Chapters 2--5 and 7--11, the fiber-matrix theorem of Chapter 13, and the vertical-correction theory of Chapter 14 do not require either duality package or SR2 once a regular arithmetic surface is given. Chapter 12 is conditional on the two Book 9 duality packages where explicitly indicated. Chapter 6 separates direct chart calculations from general applications of SR2 and from the additional embedded-boundary input.
 
 We use the quotient convention for projective bundles:
 
@@ -221,7 +223,7 @@ $$
 
 Over an excellent finite-type surface this normalization is finite. It follows that the normalized blowup remains projective and birational. This construction is needed when one starts from a normal singular surface. When one blows up a regular surface at a regular closed point, the ordinary blowup is already regular, so normalization adds nothing.
 
-Integral closure also explains why ideals with the same integral closures of all positive powers determine the same normalized blowup. No classification of exceptional valuations is needed below: every resolution calculation will instead use the explicit normalized blowup supplied by Book 11 and the component intersections developed here.
+Integral closure also explains why ideals with the same integral closures of all positive powers determine the same normalized blowup. No classification of exceptional valuations is needed below. The explicit examples are checked directly on charts; any passage from an arbitrary normal excellent surface to a regular one is conditional on SR2 from Book 11.
 
 ## 3. Blowups from relative Proj
 
@@ -418,7 +420,7 @@ On the first chart, points of the exceptional divisor have $u=0$ and a chosen va
 
 No algebraic closure of the residue field is needed. The exceptional curve may acquire more closed points after extending the residue field, but it is already a projective line over $\kappa(x)$.
 
-Blowing up a nonreduced zero-dimensional center on a regular surface need not remain regular. Nor does blowing up the reduced singular point of a singular surface automatically resolve it. Resolution in Book 11 permits chosen ideals and intermediate normalization precisely because the simple regular-point theorem has narrower hypotheses.
+Blowing up a nonreduced zero-dimensional center on a regular surface need not remain regular. Nor does blowing up the reduced singular point of a singular surface automatically resolve it. Conditional SR2 in Book 11 permits a general projective birational modification precisely because the simple regular-point theorem has narrower hypotheses; SR2 does not assert that the modification factors into any specified sequence of blowups.
 
 ### 5.2 The exceptional curve and its normal bundle
 
@@ -454,15 +456,15 @@ $$
 
 Over a nonclosed field one must retain the actual form of the curve and its normal bundle; the numerical equality over the smaller field becomes $E^2=-[H^0(E,\mathcal O_E):k]$ when $E$ is a projective line over its constant field. A negative self-intersection alone is not enough: a $(-2)$-curve is not the exceptional curve of a regular point blowup, and a curve of positive genus remains nonexceptional regardless of negativity.
 
-When a birational comparison is already presented as a sequence of regular point blowups and their given inverse morphisms, every numerical change is therefore reduced to the formulas for one point. General common dominations may also contain normalized blowups used to resolve singular intermediate surfaces; their intersection comparisons are handled on the final regular domination by the projection formula. We do not silently replace that construction by an unproved factorization into regular point blowups or assert that numerical data alone construct a contraction.
+When a birational comparison is already presented as a sequence of regular point blowups and their given inverse morphisms, every numerical change is therefore reduced to the formulas for one point. Assuming SR2 when needed, a general common domination may instead pass through singular intermediate surfaces before reaching a final regular model; its intersection comparisons are handled there by the projection formula. We do not silently replace that construction by an unproved factorization into regular point blowups or assert that numerical data alone construct a contraction.
 
 ## 6. Resolution steps in arithmetic geometry
 
 ### 6.1 What resolution must preserve
 
-The resolution theorem of Book 11 starts from a normal excellent surface and produces a regular one by projective modifications supported on the singular locus. Here our concern is more focused: what do the individual steps do to curves, fibers, and their multiplicities?
+Assume SR2 when invoking resolution for an arbitrary normal excellent surface. That prerequisite produces a regular surface by a projective birational modification supported away from a prescribed regular open. It does not prescribe a factorization into the elementary point blowups studied here. Our concern is more focused: once a modification is explicitly presented, what does each displayed blowup do to curves, fibers, and their multiplicities?
 
-For a model over a discrete valuation ring, every center used to repair the bad fiber should be vertical. Then the generic curve is unchanged. If a chosen open is already regular with a normal-crossing boundary, the centers should avoid it. After the total space becomes regular, further point blowups may be required to make the reduced special fiber and marked sections meet with normal crossings. This second process is **embedded resolution of the boundary**, not resolution of the surface.
+For a model over a discrete valuation ring, SR2 may be applied with the generic fiber in the preserved regular open, so its modification is vertical and the generic curve is unchanged. If a chosen open is already regular with a normal-crossing boundary, it too may be included in the preserved open. After the total space becomes regular, further point blowups may be required to make the reduced special fiber and marked sections meet with normal crossings. The assertion that a finite sequence always achieves this is the separate **embedded-boundary resolution input** isolated in Book 11, Section 11.4; it is not a consequence of SR2. The local calculations below describe such steps but do not prove general termination.
 
 Three quantities guide a local step:
 
@@ -494,7 +496,7 @@ The exact shape depends on whether one resolves the singular surface, the marked
 
 ### 6.3 Embedded resolution of special fibers and sections
 
-On a regular surface a special fiber can still have a cusp, a tangency, or three components through one point. Point blowups repair these boundary defects.
+On a regular surface a special fiber can still have a cusp, a tangency, or three components through one point. The following point-blowup calculations repair the displayed boundary defects. The general existence and termination assertion remains conditional on the embedded-boundary resolution input of Book 11, Section 11.4.
 
 Consider a cusp $y^2=x^3$ in a special fiber of a regular total space. The first blowup gives strict transform $t^2=x$, smooth but tangent to the exceptional divisor. Blowing up their tangency separates the tangent directions, but at the new point the reduced total transform can have three branches; a further blowup is needed for a strict normal-crossing divisor, where at most two components meet at any point. Thus “the curve is smooth after one blowup” does not imply “the boundary has normal crossings after one blowup.”
 
@@ -930,9 +932,15 @@ One caution is decisive: self-intersections belong to a particular surface. The 
 
 ## 12. Canonical divisors, adjunction, and genus
 
+This chapter is conditional on the absolute and relative curve-duality packages of Book 9,
+Sections 9.2 and 9.3. The determinant-line calculations display the expected objects and prove
+their blowup transformation once the relative package identifies them with dualizing lines. They
+do not independently construct the trace, establish derived duality, prove embedding
+independence, or supply the transitivity and base-change compatibilities used by adjunction.
+
 ### 12.1 Relative canonical divisors
 
-Let $X\to S$ be a regular arithmetic surface. The fibers need not be reduced, so we record why the needed relative dualizing line still exists. Locally factor $X\to S$ as a closed immersion into a scheme $P$ smooth over $S$. The local rings of $P$ and $X$ are regular, and the dimension formula shows that the defining ideal is generated by a regular sequence. Thus $X\to S$ is a flat local complete-intersection morphism of relative dimension one. If $\mathcal I$ is the ideal of such an immersion, the Koszul calculation gives
+Let $X\to S$ be a regular arithmetic surface. The fibers need not be reduced, so we record the local-complete-intersection determinant line underlying the relative duality package. Locally factor $X\to S$ as a closed immersion into a scheme $P$ smooth over $S$. The local rings of $P$ and $X$ are regular, and the dimension formula shows that the defining ideal is generated by a regular sequence. Thus $X\to S$ is a flat local complete-intersection morphism of relative dimension one. If $\mathcal I$ is the ideal of such an immersion, the Koszul calculation gives
 
 $$
 \omega_{X/S}
@@ -940,7 +948,7 @@ $$
 \otimes\det(\Omega^1_{P/S})|_X. \tag{12.1}
 $$
 
-Conormal exact sequences identify these lines for two factorizations, so they glue. The same Koszul resolution identifies this line with the relative dualizing sheaf and shows compatibility with local-complete-intersection base change. In particular $X/S$ is Gorenstein. A **relative canonical divisor** $K_{X/S}$ is any Cartier divisor with
+Conormal exact sequences identify these determinant lines for two factorizations, so they glue. Conditional on the relative curve-duality package of Book 9, Section 9.3, its local-complete-intersection compatibility identifies this line with the relative dualizing sheaf, with the required trace, transitivity, and base-change compatibilities. In particular $X/S$ is Gorenstein in the duality sense. A **relative canonical divisor** $K_{X/S}$ is any Cartier divisor with
 
 $$
 \mathcal O_X(K_{X/S})\simeq\omega_{X/S}.
@@ -948,7 +956,7 @@ $$
 
 It is determined only up to a principal divisor, which is enough for intersection with proper vertical curves.
 
-Under a point blowup $b:Y\to X$, compatible canonical divisors may be chosen so that
+Under that identification, a point blowup $b:Y\to X$ admits compatible canonical divisors such that
 
 $$
 K_{Y/S}=b^*K_{X/S}+E. \tag{12.2}
@@ -978,7 +986,7 @@ Over $\kappa(x)$ this is $-1$, as expected for an exceptional projective line.
 
 ### 12.2 Adjunction
 
-Let $C$ be an effective integral Cartier curve on $X$ supported over $s$, and put $k=\kappa(s)$. The transitivity of the two Cartier immersions $C\hookrightarrow X\to S$ and $s\hookrightarrow S$ gives the precise vertical adjunction isomorphism
+Assume both curve-duality packages of Book 9 and their stated compatibility on fibers. Let $C$ be an effective integral Cartier curve on $X$ supported over $s$, and put $k=\kappa(s)$. Transitivity for the two Cartier immersions $C\hookrightarrow X\to S$ and $s\hookrightarrow S$ then gives the precise vertical adjunction isomorphism
 
 $$
 \omega_{C/k}\simeq
@@ -988,7 +996,7 @@ $$
 
 The final factor is the one-dimensional conormal space of $s$ in $S$. A choice of uniformizer trivializes it, which explains the commonly written version without that factor, but the isomorphism is not canonical until such a choice is made. Its degree on $C$ is zero, so it disappears from the numerical formula.
 
-Taking degrees yields the **adjunction formula**
+Taking degrees and using the absolute duality package yields the **adjunction formula**
 
 $$
 2p_a(C)-2=(K_{X/S}+C\mathbin{\cdot}C), \tag{12.5}
@@ -1000,7 +1008,7 @@ $$
 p_a(C)=1-\chi(C,\mathcal O_C)
 $$
 
-and Euler characteristic and degree are taken over $k$. Indeed Riemann--Roch and duality on the proper Gorenstein curve give
+and Euler characteristic and degree are taken over $k$. Indeed the elementary Euler-characteristic Riemann--Roch identity from Book 9, together with its conditional absolute duality package, gives
 
 $$
 \deg_k\omega_{C/k}=-2\chi(C,\mathcal O_C)=2p_a(C)-2.
@@ -1010,7 +1018,7 @@ This convention remains valid if the constant field of $C$ is a finite extension
 
 The proof requires $C$ to be Cartier and the ambient surface to have an invertible dualizing sheaf. On a singular non-Gorenstein surface, a correction term can appear and (12.5) must not be used unchanged.
 
-Adjunction also holds for a relative effective Cartier divisor $H$ finite and flat over $S$ as an isomorphism of dualizing line bundles:
+Conditional on the relative package and its transitivity, adjunction also holds for a relative effective Cartier divisor $H$ finite and flat over $S$ as an isomorphism of dualizing line bundles:
 
 $$
 \omega_{H/S}\simeq
@@ -1021,7 +1029,7 @@ It is then line-bundle information on $H$ rather than an automatic integer.
 
 ### 12.3 Arithmetic genus and blowup
 
-Let $D$ be a proper Cartier curve on a regular surface in a context with a numerical intersection pairing, and suppose it has multiplicity $m$ at the blowup center $x$. Combine
+Continue to assume the Book 9 duality packages. Let $D$ be a proper Cartier curve on a regular surface in a context with a numerical intersection pairing, and suppose it has multiplicity $m$ at the blowup center $x$. Combine
 
 $$
 \widetilde D=b^*D-mE,
@@ -1326,7 +1334,7 @@ $$
 
 because both sides are the projection formula applied to $D+\Phi_s(D)$. In particular, if $f$ has generic degree $n$, then pullback against pullback scales by $n$, by (10.6). Flatness is retained here precisely because that length-scaling formula was proved under flatness.
 
-Base change deserves caution. An unramified residue extension may split components and closed intersection points; residue-degree weights ensure their total contribution is preserved. A ramified extension changes fiber multiplicities and can make the base-changed total space singular. One must normalize and resolve before forming its regular component matrix. The new matrix is related to the old one through pullback and pushforward on a common regular domination, not by simply copying the old graph.
+Base change deserves caution. An unramified residue extension may split components and closed intersection points; residue-degree weights ensure their total contribution is preserved. A ramified extension changes fiber multiplicities and can make the base-changed total space singular. One must normalize and, assuming SR2, resolve before forming its regular component matrix. Conditional on SR2, the new matrix is related to the old one through pullback and pushforward on a common regular domination, not by simply copying the old graph.
 
 Birational invariance is similarly controlled. If $b:Y\to X$ is a point blowup, adding the exceptional component enlarges the vertical matrix by one negative direction, while total pullbacks remain orthogonal to it. For a degree-zero horizontal divisor $D$, write $b^*D=\widetilde D+mE$. The balanced divisor upstairs is
 
@@ -1350,12 +1358,12 @@ We can now collect the results in the form used by subsequent geometry.
 4. Effective curves meeting properly at $x$ have local intersection $\operatorname{length}\mathcal O_{X,x}/(f,g)$. Global fiberwise intersections multiply this length by $[\kappa(x):\kappa(s)]$.
 5. For a vertical integral curve $C$, $(D\cdot C)=\deg\mathcal O_X(D)|_C$. This extends intersection to common vertical components and makes it symmetric and bilinear.
 6. Proper pushforward and Cartier pullback satisfy $(f^*D\cdot C)=(D\cdot f_*C)$. For a finite flat map of generic degree $n$, pullback intersections scale by $n$ after degrees are taken on the same base.
-7. Relative canonical divisors obey $K_Y=b^*K_X+E$. Every integral vertical Cartier curve satisfies $2p_a(C)-2=(K_X+C)\cdot C$; a relative horizontal Cartier divisor satisfies the corresponding line-bundle adjunction without an automatic integer degree.
+7. Conditional on the absolute and relative curve-duality packages of Book 9, relative canonical divisors obey $K_Y=b^*K_X+E$. Every integral vertical Cartier curve satisfies $2p_a(C)-2=(K_X+C)\cdot C$; a relative horizontal Cartier divisor satisfies the corresponding line-bundle adjunction without an automatic integer degree.
 8. For a connected fiber $F=\sum m_i\Gamma_i$, the component matrix is negative semidefinite with rational kernel exactly $\mathbf Q(m_i)$. It is negative definite modulo the whole fiber.
 9. Every generic degree-zero divisor has a rational vertical correction balanced on all components, unique modulo $\mathbf QF$. For divisors with disjoint generic supports, the induced component energy is nonnegative and the corrected local pairing is symmetric and rational.
-10. The resolution theorem of Book 11 applies by normalized blowups supported on the singular locus. For $xy=\pi^n$, the explicit charts reduce $n$ one step at a time and give the $(-2)$-chain described in Chapter 6; after the total space is regular, point blowups resolve the marked fiber boundary while transporting every multiplicity by total transform.
+10. Conditional on SR2 from Book 11, an arbitrary normal excellent surface admits the required projective resolution while preserving a chosen regular open. For $xy=\pi^n$, the explicit charts independently reduce $n$ one step at a time and give the $(-2)$-chain described in Chapter 6. Conditional also on the separate embedded-boundary resolution input of Book 11, Section 11.4, point blowups resolve a marked fiber boundary; whenever such a sequence is supplied, every multiplicity is transported unconditionally by total transform.
 
-Every adjective in the theorem has a job. Regularity supplies Cartier components and regular sequences. Properness supplies degrees on vertical curves. Flatness makes the fiber Cartier and makes horizontal prime divisors finite flat near a closed fiber. Connectedness makes the radical one-dimensional. Excellence supports the resolution operations around the numerical theory.
+Every adjective in the theorem has a job. Regularity supplies Cartier components and regular sequences. Properness supplies degrees on vertical curves. Flatness makes the fiber Cartier and makes horizontal prime divisors finite flat near a closed fiber. Connectedness makes the radical one-dimensional. Excellence supplies finite normalization and is the ring-theoretic hypothesis in conditional SR2.
 
 ### 15.2 A calculation protocol
 
@@ -1373,7 +1381,7 @@ $$
 
 rather than guessing them from a picture. Check that the multiplicity vector lies in the kernel and that the matrix is negative semidefinite.
 
-Fourth, when canonical divisors occur, test the answer by adjunction. A rational $(-1)$-curve must satisfy $K\cdot E=-1$ over its constant field; a rational $(-2)$-curve must satisfy $K\cdot E=0$.
+Fourth, when the Book 9 duality packages are assumed and canonical divisors occur, test the answer by adjunction. A rational $(-1)$-curve must satisfy $K\cdot E=-1$ over its constant field; a rational $(-2)$-curve must satisfy $K\cdot E=0$.
 
 Finally, for a degree-zero horizontal divisor, form its component intersection vector and verify its weighted sum is zero. Solve the correction equations over $\mathbf Q$, state the normalization used, and remember that only the class modulo the full fiber is intrinsic.
 
@@ -1397,8 +1405,8 @@ Finally, a negative rational curve is not automatically the exceptional curve of
 
 A regular arithmetic surface turns codimension-one geometry into arithmetic linear algebra. Local equations yield lengths; lengths assemble into degrees; degrees form a symmetric component matrix; and the fiber equation turns that matrix into a negative weighted Laplacian. Blowups are the transformations under which every stage remains computable.
 
-The exceptional divisor is the bridge. Geometrically it is the space of tangent directions. Divisor-theoretically it is the correction between total and strict transform. Numerically it has negative normal degree and is orthogonal to pullbacks. Canonically it contributes once to the transformed dualizing divisor. These four descriptions force the blowup formulas and make their signs inevitable.
+The exceptional divisor is the bridge. Geometrically it is the space of tangent directions. Divisor-theoretically it is the correction between total and strict transform. Numerically it has negative normal degree and is orthogonal to pullbacks. Conditional on the Book 9 duality packages, it contributes once to the transformed dualizing divisor. These descriptions force the blowup formulas and make their signs inevitable.
 
 The resulting vertical theory is both integral and rational in exactly the right places. Local multiplicities, residue-weighted intersections, and component matrices are integral. Balancing a degree-zero divisor requires inverting the component matrix modulo its fiber kernel, so rational coefficients naturally appear. Their denominators retain finite information that later becomes component-group and monodromy data.
 
-We have stayed within the geometry of regular relative curves over Dedekind schemes. No general higher-dimensional intersection ring was needed. The tools established here—transform formulas, projection, adjunction, fiber negativity, and corrected component pairings—are precisely the numerical language in which semistable dual graphs, relative Picard geometry, and component groups can now be developed.
+We have stayed within the geometry of regular relative curves over Dedekind schemes. No general higher-dimensional intersection ring was needed. The unconditional transform formulas, projection, fiber negativity, and corrected component pairings, together with adjunction conditional on Book 9 duality, are precisely the numerical language in which semistable dual graphs, relative Picard geometry, and component groups can now be developed.
