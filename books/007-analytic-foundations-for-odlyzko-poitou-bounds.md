@@ -162,7 +162,9 @@ These conclusions require strict bookkeeping. If arithmetic gives $\operatorname
 
 ### 1.4 Scope and standing conventions
 
-Only discriminant bounds are developed here. No distribution theorem for Frobenius classes enters any proof. The foundational tools are real and complex integration, Fourier inversion and Poisson summation for rapidly decreasing functions, the residue theorem, standard gamma-function identities, geometry of numbers, unique factorization of ideals, Dirichlet's unit theorem, and the elementary arithmetic of number-field discriminants. Finiteness of the ideal class group also follows from Theorem 2.1, because only finitely many integral ideals have bounded norm.
+Only discriminant bounds are developed here. No distribution theorem for Frobenius classes enters any proof. The foundational tools are real and complex integration, including Tonelli's theorem, Fubini's theorem, and dominated convergence; Fourier inversion and Poisson summation for rapidly decreasing functions; the residue theorem; standard gamma-function identities and Stirling estimates; geometry of numbers; unique factorization of ideals; Dirichlet's unit theorem; and the elementary arithmetic of number-field discriminants. Finiteness of the ideal class group also follows from Theorem 2.1, because only finitely many integral ideals have bounded norm.
+
+One theorem-sized complex-analytic input must be distinguished from that baseline list. We use the Hadamard factorization theorem for an entire function of order at most one, Jensen's formula, and the Phragmén--Lindelöf principle on a vertical strip of bounded width. Section 4.4 states the exact specialization needed here, derives the required growth bound from the theta integral, and explains how these results give the logarithmic derivative and zero count. Nothing stronger, such as a zero-free region or a prime-number theorem, is being assumed. Within this book, Theorem 6.1 and all later discriminant bounds are relative to these declared classical analytic foundations, not to any unmentioned arithmetic theorem.
 
 Fourier transforms use angular frequency:
 
@@ -523,13 +525,41 @@ $$
 
 This choice of radial parameter is essential: $t$ is the determinant scale, not the square of a common coordinate scale. It is what makes the Mellin exponent independent of the degree.
 
-To connect (4.1) with ideals, integrate over $P$. A nonzero vector arising from $x_0\in\mathfrak a$ is counted once modulo the free part of the unit group, with the common roots-of-unity multiplicity absorbed below, and its orbit corresponds to the integral ideal $x_0\mathfrak a^{-1}$ in the inverse ideal class. The normalized archimedean product of that vector is
+We record the convergence needed to integrate the series. The bounded parallelepiped $P$, or
+equivalently its compact closure, has all singular values bounded above and below in $Y$. If
+$m_{\mathfrak a}$ is the length of a shortest nonzero vector of $L_{\mathfrak a}$, there are
+constants $c,C>0$ such that, uniformly for $y\in P$ and $t\geq1$,
+
+$$
+0\leq\Theta_{\mathfrak a}(t,y)-1
+\leq C\exp(-ct^{2/n}).
+$$
+
+One way to obtain the displayed bound is to count lattice points in successive unit shells, use $\#(L_{\mathfrak a}\cap B_R)=O_{\mathfrak a}((R+1)^n)$, and sum the resulting Gaussian tail. The same argument, with an additional polynomial in $t^{1/n}\lVert x\rVert$, treats every $t$-derivative. On a compact $t$-interval it instead gives a normally convergent lattice series. Consequently every use of Fubini below has an explicit locally integrable majorant.
+
+To connect (4.1) with ideals, integrate over $P$. Multiplication by a unit carries $L_{\mathfrak a}$ to itself, and its archimedean absolute values translate $\log y$ by the unit lattice. Thus the summand attached to $x_0\in\mathfrak a\setminus\{0\}$ descends to the quotient by the free part of $\mathcal O_K^\times$. Its orbit corresponds to the integral ideal $x_0\mathfrak a^{-1}$ in the inverse ideal class; every such ideal occurs, and the only remaining multiplicity is the common finite number of roots of unity. The normalized archimedean product of that vector is
 
 $$
 D_K^{-1/2}N(x_0\mathfrak a^{-1}).
 $$
 
-Passing from $(t,y)$ to the independent positive archimedean scales and applying the Mellin integrals of §4.1 therefore gives, initially for $\Re(s)>1$,
+Here is the measure calculation behind the unfolding. Give a real place weight $d_v=1$ and a complex place weight $d_v=2$. For independent positive radii $r_v$, put
+
+$$
+t=\prod_v r_v^{d_v},
+\qquad y_v=r_vt^{-1/n}.
+$$
+
+Then $y\in Y$, and logarithmic coordinates split the measure as a constant multiple of
+$dt/t$ times Haar measure on $Y$. That constant, the volume chosen for the unit parallelepiped,
+the angular integrals, and the roots-of-unity multiplicity are independent of $s$ and of the
+ideal class. The radial integrals are exactly the two Mellin integrals of §4.1.
+
+For real $s=\sigma>1$ all unfolded summands are nonnegative, so Tonelli applies. For complex
+$s$ with the same real part, the absolute value is bounded by the $\sigma$-integrand. The
+unfolded sum is the partial zeta series, which converges absolutely by §3.1. This proves both
+absolute convergence and the interchange of the lattice sum, the $P$-integral, and the
+$t$-integral. We therefore obtain, initially for $\Re(s)>1$,
 
 $$
 \int_0^\infty\int_P
@@ -562,7 +592,11 @@ I_{\mathfrak a}(s)={}&
 \end{aligned}
 $$
 
-The two integrals on the right are entire in $s$, because the theta series minus its zero term decays exponentially as $t\to\infty$. The rational term is the zero-vector contribution:
+The uniform estimate preceding (4.2) bounds either integrand on a compact $s$-set by
+$C_K(1+t^{R})e^{-ct^{2/n}}/t$ for a suitable $R$. This is integrable on $[1,\infty)$, and the
+same is true after any number of $s$-derivatives, which merely insert powers of $\log t$.
+Dominated differentiation therefore proves that the two integrals on the right are entire in
+$s$. The rational term is the zero-vector contribution:
 
 $$
 \int_0^1(t^{-1}-1)t^s\,\frac{dt}{t}
@@ -603,7 +637,26 @@ $$
 \xi_K(s)=\frac12s(s-1)\Lambda_K(s).
 $$
 
-The preceding integral representation shows that $\xi_K$ is entire. Repeated integration by parts in the exponentially convergent theta integrals, together with Stirling's estimate for the gamma factors in vertical strips, shows that it has order one. It satisfies
+The preceding integral representation shows that $\xi_K$ is entire. It also gives the growth
+estimate used later. If $|s|\leq R$, the estimate before (4.2) bounds the integral over
+$t\geq1$ by a constant times
+
+$$
+\int_1^\infty e^{-ct^{2/n}}t^R\,\frac{dt}{t}
+\leq C_K^{R+1}\Gamma\left(\frac{nR}{2}+1\right).
+$$
+
+The same estimate applies to the dual integral in (4.3), and multiplication by $s(s-1)$
+removes its rational term. Stirling's estimate now gives
+
+$$
+\log\max_{|s|\leq R}|\xi_K(s)|=O_K(R\log(R+3)).
+\tag{4.4a}
+$$
+
+Thus $\xi_K$ has order at most one. It actually has order one: on the positive real axis,
+$\zeta_K(\sigma)\to1$, and Stirling applied to the gamma factors gives the matching lower order.
+Only the upper bound is needed below. The symmetries are
 
 $$
 \xi_K(s)=\xi_K(1-s),
@@ -615,14 +668,59 @@ Its zeros lie in the closed critical strip $0\leq\Re(s)\leq1$. Indeed, the Euler
 
 Away from the residual simple pole of $\Lambda_K$ at $s=0$, the gamma poles are canceled by the trivial zeros of $\zeta_K$; the other simple pole is at $s=1$. It is safer in the explicit formula to retain the aggregate trivial-zero contribution inside the archimedean integrals than to enumerate it. The factors $s(s-1)$ remove the two poles of $\Lambda_K$ and create the finite-degree pole term seen later.
 
-The order-one bound also gives a symmetric zero-counting estimate
+We now isolate the exact entire-function consequence used in the contour shift.
+
+**Lemma 4.2 (zeros and logarithmic derivative).** Uniformly for $T\geq2$,
 
 $$
 N_K(T+1)-N_K(T)\ll \log D_K+n\log(T+3),
 \tag{4.4}
 $$
 
-for $T\geq2$, where $N_K(T)$ counts zeros with $|\Im\rho|\leq T$. To prove (4.4), apply the argument principle to $\xi_K$ on a unit-width rectangle, use Stirling's formula on the gamma factors, and bound $\zeta_K$ on the right by $\zeta(1+1/\log(T+3))^n$; the functional equation controls the left. This estimate is enough to justify every symmetric zero limit below.
+where $N_K(T)$ counts zeros with $|\Im\rho|\leq T$. Moreover, away from zeros,
+
+$$
+\frac{\xi_K'}{\xi_K}(s)
+=b_K+\sum_\rho\left(\frac1{s-\rho}+\frac1\rho\right),
+\tag{4.4b}
+$$
+
+with zeros repeated according to multiplicity and the sum taken in symmetric expanding discs.
+It converges normally on compact sets avoiding the zeros.
+
+**Proof.** This is the exact point at which the entire-function input declared in §1.4 enters.
+The growth estimate (4.4a) and Jensen's formula imply that the number of zeros in a disc of
+radius $R$ is $O_K(R\log(R+3))$ and that the exponent of convergence is at most one. Hadamard
+factorization therefore gives
+
+$$
+\xi_K(s)=e^{a_K+b_Ks}\prod_\rho
+\left(1-\frac{s}{\rho}\right)e^{s/\rho}.
+$$
+
+If the chosen origin is a zero, its power is first factored off. Logarithmic differentiation on
+compacta gives (4.4b), with the corresponding elementary term included.
+
+For the sharper fixed-height count, center Jensen's formula at $2+iT$. On a fixed-radius outer
+circle, the Euler-product bound on the portion $\Re(s)>1$, the functional equation on the
+reflected portion, Phragmén--Lindelöf on the intervening strips of bounded width, and Stirling's
+estimates on the gamma factors give
+$O(\log D_K+n\log(T+3))$ for the logarithmic maximum relative to the center. The Euler product
+also supplies the needed lower bound at the center: at $\sigma=2$,
+
+$$
+|\zeta_K(2+iT)|^{-1}
+\leq\prod_{\mathfrak p}(1+(N\mathfrak p)^{-2})
+\leq\zeta(2)^n.
+$$
+
+The inner disc may be chosen to contain the whole rectangle
+$0\leq\Re(s)\leq1$, $T\leq\Im(s)\leq T+1$. Jensen's formula consequently gives (4.4) for
+positive ordinates; conjugation gives the negative ordinates. This proves the lemma. $\square$
+
+This lemma is enough to justify every symmetric zero limit below. It also makes the logical
+boundary explicit: Hadamard factorization and Jensen's formula are classical complex-analysis
+inputs, whereas no arithmetic statement about prime distribution or zero location is used.
 
 ### 4.5 Discriminant and analytic conductor
 
@@ -761,33 +859,39 @@ $$
 \tag{6.2}
 $$
 
-where $E_T$ consists of the two horizontal integrals. From the order-one estimate in §4.4,
-there are constants $a>0$, $d\in\mathbf N$, and a sequence $T_j\to\infty$ such that, for every
-nontrivial zero $\rho$,
+where $E_T$ consists of the two horizontal integrals. Lemma 4.2 supplies a sequence of heights
+with quantified separation from every zero ordinate. For each sufficiently large integer $j$,
+let $Z_j$ be the multiset of ordinates in $[j-1,j+2]$. Its cardinality is
+$O(\log D_K+n\log(j+3))$. Choose an integer $d\geq2$. The union of the intervals of radius
+$(j+3)^{-d}$ about the members of $Z_j$ has length
+$O((\log D_K+n\log(j+3))(j+3)^{-d})<1$ for all sufficiently large $j$. We may therefore choose
+$T_j\in[j,j+1]$ outside that union. Zeros with ordinate outside $[j-1,j+2]$ are at distance at
+least one. After discarding finitely many $j$, there is consequently a constant $a>0$ such that,
+for every nontrivial zero $\rho$,
 
 $$
 |T_j-\operatorname{Im}\rho|\geq\frac{a}{(T_j+3)^d}.
 $$
 
-Indeed, (4.4) bounds the number of zero ordinates within distance one of $[j,j+1]$ by
-$O(\log D_K+n\log(j+3))$. Remove intervals of radius $(j+3)^{-d}$ about those ordinates. For
-some fixed $d\geq2$ their total length is less than $1$ for all large $j$, so a point $T_j$ remains
-in $[j,j+1]$; increasing $d$ and decreasing a positive constant $a$ handles the finitely many
-initial intervals.
-
-The partial-fraction expansion of the logarithmic derivative, together with (4.4), now gives
+To estimate the logarithmic derivative, use (4.4b). First split off $|\rho|\leq T_j/2$.
+For these zeros, $|s-\rho|\gg T_j$ on the horizontal edge, and summing
+$s/(\rho(s-\rho))$ in unit bands from the origin gives
+$O_K(1)+O(\log Q_K(T_j)\log(T_j+3))$. For the remaining zeros, group ordinates by
+$k\leq|\operatorname{Im}\rho-T_j|<k+1$. The band $k=0$ contributes at most the inverse
+separation times $O(\log Q_K(T_j))$. For $1\leq k\leq2T_j+3$, the canonical summand and (4.4)
+give $O(\log Q_K(T_j)/(k+1))$ per band. For larger $k$, the factor
+$s/(\rho(s-\rho))$ gives a convergent $O(T_j\log(k+3)/k^2)$ tail. The constant term is harmless.
+Hence
 
 $$
 \frac{\xi_K'}{\xi_K}(\sigma\mathbin{\pm}iT_j)
 =O\left((T_j+3)^d\log(Q_K(T_j))^2\right)
 $$
 
-uniformly for $1-c\leq\sigma\leq c$. Indeed, each zero in a fixed-height band contributes
-at most the reciprocal of the separation distance, while (4.4) bounds the number of such zeros
-logarithmically; the remaining part of the partial-fraction expansion has the usual logarithmic
-bound. The estimate on the lower edge follows as well from the conjugation symmetry of $\xi_K$.
-The displayed bound is deliberately coarse, but it records the inverse-polynomial loss that
-cannot be discarded.
+uniformly for $1-c\leq\sigma\leq c$ on the upper edge; the lower edge follows from the
+conjugation symmetry of $\xi_K$. The displayed bound is deliberately coarse, but it records the
+inverse-polynomial loss and derives the previously implicit logarithmic bound from the canonical
+product.
 
 Repeated integration by parts in the definition of $\Phi_F$ gives
 $\Phi_F(\sigma+iT)=O_{F,M}(T^{-M})$ for every $M$, uniformly in the same strip. Taking $M>d$
@@ -819,7 +923,19 @@ $$
 \tag{6.3}
 $$
 
-Putting $y=m\log N\mathfrak p$ and interchanging the absolutely convergent series and integral gives a negative prime-power contribution on the contour side. The derivative of $D_K^{s/2}$ is $\frac12\log D_K$; doubling the right vertical line turns it into $\log D_K$. Solving the contour identity for this discriminant term moves the negative prime contribution to the other side, giving its positive sign in (6.1).
+Putting $y=m\log N\mathfrak p$ and interchanging the series and integral gives a negative
+prime-power contribution on the contour side. This interchange is absolute: on $\Re(s)=c$,
+$\int_{\mathbf R}|\Phi_F(c+it)|\,dt<\infty$ by repeated integration by parts, while
+
+$$
+\sum_{\mathfrak p,m\geq1}
+(\log N\mathfrak p)(N\mathfrak p)^{-mc}<\infty
+$$
+
+by §3.3. Fubini therefore applies before inversion. The derivative of $D_K^{s/2}$ is
+$\frac12\log D_K$; doubling the right vertical line turns it into $\log D_K$. Solving the
+contour identity for this discriminant term moves the negative prime contribution to the other
+side, giving its positive sign in (6.1).
 
 There is no conditional rearrangement here. If $F$ is supported in $[-T_0,T_0]$, only prime powers with $(N\mathfrak p)^m\leq e^{T_0}$ occur. This also explains why known splitting data can be inserted one prime at a time.
 
@@ -880,9 +996,18 @@ F_\varepsilon=
 $$
 
 These functions are even, smooth, compactly supported, normalized at zero, and converge to $F$
-uniformly and in the weighted integrals of (6.1). Uniform bounded variation gives a common
-$O((1+|t|)^{-2})$ transform majorant. Dominated convergence handles the zero sum, (5.1) handles
-the $\sinh$ kernel at zero, and compact support handles the prime sum. Formula (6.1) follows. This also covers triangles; their endpoint convention has no effect once the universal prime sum is discarded.
+uniformly. Their supports lie in one compact interval. Since the one-sided derivatives of $F$
+have bounded variation, convolution does not increase that variation; after the normalizing
+denominator, which tends to $1$, two integrations by parts give one common
+$O((1+|t|)^{-2})$ transform majorant. In particular, (4.4) and summation by horizontal unit bands
+give a summable majorant for the zero sum.
+
+The only weighted integral needing care is the $\sinh$ kernel at zero. The same derivative bound
+gives $|1-F_\varepsilon(x)|\leq C|x|$ for $|x|\leq1$, with $C$ independent of small
+$\varepsilon$; away from zero, common compact support suffices. Dominated convergence therefore
+handles all three archimedean integrals. Finally, a common compact support makes the prime sum
+finite, and its individual terms converge. Formula (6.1) follows. This also covers triangles;
+their endpoint convention has no effect once the universal prime sum is discarded.
 
 ### 6.6 Normalization diagnostics
 
@@ -1069,9 +1194,14 @@ $$
 
 is smooth, even, nonnegative, compactly supported, and has nonnegative Fourier transform.
 Take, for example, $\varepsilon_j=T/(8j)$. Then $h_{\varepsilon_j}$ converges to the interval
-indicator in $L^1$ and $L^2$, so $G_{T,\varepsilon_j}$ converges to $G_T$ uniformly and in
-$L^1$; all supports lie in $[-T-T/4,T+T/4]$. There is also a common majorant at the singular
-endpoint. Indeed, $0\leq h_\varepsilon\leq1$, its total variation is at most $2$, and, for
+indicator in $L^1$ and $L^2$. Young's inequality, first in the $L^2*L^2\to L^\infty$ form and
+then in the $L^1*L^1\to L^1$ form, shows that the autocorrelations converge respectively
+uniformly and in $L^1$. Their values at zero converge to $T$, so
+$G_{T,\varepsilon_j}\to G_T$ in both senses; all supports lie in
+$[-T-T/4,T+T/4]$.
+
+There is also a common majorant at the singular endpoint. Indeed,
+$0\leq h_\varepsilon\leq1$, its total variation is at most $2$, and, for
 $0<\varepsilon\leq T/8$,
 
 $$
@@ -1088,11 +1218,30 @@ $$
 =\frac12\|h_\varepsilon(\,\cdot+x)-h_\varepsilon\|_2^2
 $$
 
-therefore gives $0\leq1-G_{T,\varepsilon}(x)\leq4|x|/(3T)$. After division by
-$\cosh(x/2)$ the same linear bound, with an $O(x^2)$ addition independent of $\varepsilon$,
-dominates the singular $B$-kernel; common compact support handles the other kernels. Thus all
-three weighted integrals converge to their triangular values by dominated convergence. For the
-limit itself, as $x\downarrow0$,
+follows by expanding the square and translating one of the two $L^2$ integrals. Moreover,
+$|h_\varepsilon(u+x)-h_\varepsilon(u)|\leq1$, so its squared $L^2$ norm is at most its
+$L^1$ norm. The preceding bounds therefore give
+
+$$
+0\leq1-G_{T,\varepsilon}(x)\leq\frac{4|x|}{3T}.
+$$
+
+Put $F_{T,\varepsilon}=G_{T,\varepsilon}/\cosh(x/2)$. On $0<x\leq1$,
+
+$$
+0\leq1-F_{T,\varepsilon}(x)
+\leq\frac{4x}{3T}+\bigl(1-\operatorname{sech}(x/2)\bigr)
+\leq C_Tx,
+$$
+
+with $C_T$ independent of $\varepsilon$. Since $2\sinh(x/2)\geq x$, the $B$-integrands are
+bounded near zero by $C_T$; on the common compact support they have an ordinary bounded
+majorant, and beyond it they equal the fixed integrable kernel $1/(2\sinh(x/2))$. For the
+$C$-integral the denominator is bounded away from zero at the origin, and for the $A$-integral
+$F_{T,\varepsilon}(x)\cosh(x/2)=G_{T,\varepsilon}(x)$. These are explicit integrable majorants
+for all three applications of dominated convergence.
+
+For the limit itself, as $x\downarrow0$,
 
 $$
 1-F_T^{\mathrm{un}}(x)=\frac{x}{T}+O(x^2),
@@ -1168,7 +1317,10 @@ $$
 \tag{10.2}
 $$
 
-give rational bounds for $\pi$; (10.2) is checked by taking tangents. For every integer $N>0$,
+give rational bounds for $\pi$. More explicitly,
+$4\arctan(1/5)-\arctan(1/239)$ lies in $(0,\pi/2)$ and has tangent $1$, as the addition
+formula verifies by rational arithmetic; it is therefore $\pi/4$, which proves (10.2) without
+using a decimal value of $\pi$. For every integer $N>0$,
 Euler--Maclaurin gives
 
 $$
@@ -1207,7 +1359,11 @@ $$
 
 which proves the directed error bound used below.
 
-With $N=10^4$ and (10.1)--(10.2), directed rational arithmetic yields
+For the logarithm in (10.3), use
+$\log(10^4)=4\log10=4(\log2+\log5)$, evaluate $\log2$ from (10.1) with $y=1/3$ and $M=20$,
+and evaluate $\log(5/4)$ with $y=1/9$ and $M=8$. Thus $\log5=2\log2+\log(5/4)$ is also a
+directed rational interval. With $N=10^4$, the harmonic number is a finite rational sum, so
+(10.1)--(10.3) yield entirely by rational arithmetic
 
 $$
 0.577215664901532<\gamma<0.577215664901533,
@@ -1215,6 +1371,34 @@ $$
 3.141592653589793<\pi<3.141592653589794.
 \tag{10.4}
 $$
+
+The other logarithms used by the cutoff ledger have similarly fixed term counts. Use $M=14$
+and $y=1/5$ for $\log(3/2)$, so $\log3=\log2+\log(3/2)$. For $\log(8\pi)$, write
+
+$$
+\log(8\pi)=5\log2+
+\log\left(\frac\pi4\right),
+\qquad
+y=\frac{\pi-4}{\pi+4},
+$$
+
+and use $M=12$ in (10.1), evaluating the monotone rational function $y$ at the directed
+$\pi$-endpoints in (10.4). The remainder in every case is the one displayed in (10.1).
+Cross-multiplication of the resulting finite sums gives
+
+$$
+\begin{aligned}
+0.6931471805599453094&<\log2<0.6931471805599453095,\\
+1.0986122886681096&<\log3<1.0986122886681098,\\
+1.6094379124341003&<\log5<1.6094379124341005,\\
+3.224171427529236&<\log(8\pi)<3.224171427529237.
+\end{aligned}
+\tag{10.4a}
+$$
+
+Every endpoint in (10.4)--(10.4a) is a terminating decimal and hence an exact rational number.
+The displayed term counts and remainder formulas, rather than a transcendental-function
+evaluation, are the provenance of these intervals.
 
 ### 10.2 Finite formulas for $B_T$ and $C_T$
 
@@ -1473,6 +1657,13 @@ A certificate records $T$, $(n,\alpha)$, directed enclosures for all constants, 
 
 ## 11. The finite-degree certificate ledger
 
+Every terminating decimal retained as a certificate endpoint in this chapter is an exact
+rational number. Its proof source is either one of the finite sums and directed remainders in
+Chapter 10 or one of the explicit integer comparisons below. A decimal followed by $\ldots$ is
+only a readability aid and is never an endpoint used to prove a comparison. The geometric rows
+can be checked with especially small data: put
+$p_0=6283/2000=3.1415$, so (10.4) gives $p_0<\pi$.
+
 ### 11.1 The threshold $4$
 
 At very small thresholds, Minkowski is sharper and simpler. At degree $12$ and worst signature,
@@ -1483,21 +1674,28 @@ $$
 >4.0432402329>4.
 $$
 
-This is certified by exact integer arithmetic, (10.4), and repeated squaring after raising both positive sides to the sixth power. Since $M_n$ increases,
+This is certified without its displayed approximation by the exact integer inequality
+
+$$
+6283^6\,12^{12}>16^6\,2000^6\,12!,
+$$
+
+which is what results after substituting $p_0$ and taking sixth powers. Since $M_n$ increases,
 
 $$
 \boxed{\operatorname{rd}(K)<4\Longrightarrow [K:\mathbf Q]\leq11.}
 \tag{11.1}
 $$
 
-For a totally real field, $M_6>4.0165977004>4$, giving
+For a totally real field, $M_6>4.0165977004>4$. Here the exact certificate is simply
+$6^6>4^3\,6!$, obtained by taking third powers. Thus
 
 $$
 \boxed{\operatorname{rd}(K)<4,\ K\text{ totally real}\Longrightarrow [K:\mathbf Q]\leq5.}
 \tag{11.2}
 $$
 
-The second comparison is exact after raising to the third power. These two rows illustrate an important optimization rule: a zeta-function bound need not replace a simpler geometric argument when the latter is stronger.
+These two rows illustrate an important optimization rule: a zeta-function bound need not replace a simpler geometric argument when the latter is stronger.
 
 ### 11.2 The threshold $3^{3/2}$
 
@@ -1515,7 +1713,15 @@ $$
 3^{3/2}=5.1961524227\ldots.
 $$
 
-Squaring removes the square root, and raising to the $53$rd power reduces the comparison to integers and the rational lower endpoint for $\pi$. Thus
+Squaring removes the square root, and raising to the $53$rd power reduces the comparison to the
+integer certificate
+
+$$
+6283^{106}53^{212}>
+2000^{106}16^{53}27^{53}(53!)^4.
+$$
+
+Thus
 
 $$
 \boxed{\operatorname{rd}(K)<3^{3/2}\Longrightarrow [K:\mathbf Q]\leq52.}
@@ -1524,7 +1730,14 @@ $$
 
 This arbitrary-signature cutoff is deliberately stated at the first excluded degree. No asymptotic inference is being substituted for it.
 
-For totally real fields, $M_{13}>5.2610732465>3^{3/2}$, so
+For totally real fields, $M_{13}>5.2610732465>3^{3/2}$; after squaring and taking thirteenth
+powers, the exact certificate is
+
+$$
+13^{52}>27^{13}(13!)^4.
+$$
+
+Therefore
 
 $$
 \boxed{\operatorname{rd}(K)<3^{3/2},\ K\text{ totally real}\Longrightarrow [K:\mathbf Q]\leq12.}
@@ -1543,13 +1756,14 @@ $$
 \end{aligned}
 $$
 
-Formula (10.1) gives $(5/4)\log5<2.011798$. Hence
+Formula (10.4a) gives
 
 $$
-\operatorname{rd}(K)>7.6556>5^{5/4}=7.4767439061\ldots,
+\frac54\log5<2.011797390542625625<2.011798.
 $$
 
-and monotonicity proves
+The strict logarithmic comparison already proves the contradiction; the corresponding decimal
+sizes are approximately $7.6556$ and $7.4767$. Monotonicity proves
 
 $$
 \boxed{\operatorname{rd}(K)<5^{5/4}\Longrightarrow [K:\mathbf Q]\leq16.}
@@ -1572,12 +1786,14 @@ $$
 \begin{aligned}
 \log\operatorname{rd}(K)
 &>\gamma+\log(8\pi)-\frac{12}{21}-1.10356\\
-&>2.126398521002197.
+&>2.1263985210021965.
 \end{aligned}
 \tag{11.6}
 $$
 
-On the other hand, (10.1) applied to $\log2$ and $\log3$ gives
+Here the last endpoint in (11.6) uses the lower endpoints for $\gamma$ and $\log(8\pi)$ in
+(10.4)--(10.4a), together with the exact rational $12/21$ and the upper endpoint for $B_6$.
+On the other hand, (10.4a) gives
 
 $$
 \log U_{2,3}=\frac32\log3+\frac23\log2<2.110016553375462.
@@ -1587,15 +1803,12 @@ $$
 The logarithmic margin is greater than
 
 $$
-0.016381967626735.
+0.016381967626734.
 $$
 
-Exponentiating only for readability,
-
-$$
-\operatorname{rd}(K)>8.38461535304387
->8.248377821991615758\ldots=U_{2,3}.
-$$
+For readability, the two sides are approximately $8.38461535304387$ and
+$8.24837782199162$. The proof uses the directed logarithmic intervals (11.6)--(11.7), not these
+rounded exponentials.
 
 Consequently,
 
@@ -1647,7 +1860,15 @@ $$
 >2.19782.
 $$
 
-Thus $\operatorname{rd}(K)>9.0053>4\sqrt5$, and
+Also, (10.4a) gives
+
+$$
+\log(4\sqrt5)=2\log2+\frac12\log5
+<2.191013317336940869<2.19782.
+$$
+
+Thus the logarithmic comparison, independently of rounded square-root or exponential values,
+gives
 
 $$
 \boxed{\operatorname{rd}(K)<4\sqrt5\Longrightarrow [K:\mathbf Q]\leq23.}
