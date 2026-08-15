@@ -497,7 +497,30 @@ where these are subalgebras of the appropriate localization, not polynomial ring
 
 Blowing up a regular surface at a closed regular point preserves regularity. In the chart above, regular parameters $(x,y)$ become $(x,t)$ or $(s,y)$. If the residue field is not algebraically closed, the exceptional curve is $\mathbf P^1_{\kappa(x)}$. The exceptional curve records tangent directions at the center.
 
-Blowup commutes with arbitrary base change because its Rees algebra does. Strict transform does not always commute so innocently: one must remove components created inside the exceptional divisor, and flatness hypotheses prevent anomalies.
+Blowup commutes with **flat** base change, but not with arbitrary base change. On affine rings, for a map $A\to B$ and an ideal $I\subset A$, multiplication gives a natural graded map
+
+$$
+\left(\bigoplus_{n\geq0}I^n\right)\otimes_A B
+\longrightarrow
+\bigoplus_{n\geq0}(IB)^n,
+$$
+
+whose degree-$n$ component is
+
+$$
+I^n\otimes_A B\longrightarrow(IB)^n.
+$$
+
+Its image is $I^nB=(IB)^n$, but for a nonflat map it can have a kernel: tensoring need not preserve the inclusion $I^n\hookrightarrow A$. If $B$ is flat, every degree map is an isomorphism, so the base-changed Rees algebra is the Rees algebra of $IB$ and relative Proj gives
+
+$$
+\operatorname{Bl}_I(\operatorname{Spec}A)\times_{\operatorname{Spec}A}
+\operatorname{Spec}B
+\simeq
+\operatorname{Bl}_{IB}(\operatorname{Spec}B).
+$$
+
+The failure can be drastic. If $A=k[x]$, $I=(x)$, and $B=A/(x)$, then $I\otimes_A B\simeq B$ maps to $IB=0$. The original blowup is $\operatorname{Spec}A$ because $I$ is invertible, so its base change is $\operatorname{Spec}B$, whereas the blowup of the zero ideal on $\operatorname{Spec}B$ is empty. Strict transforms have a further saturation issue: one must remove components created inside the exceptional divisor. None of the resolution arguments below transports a chosen blowup through a nonflat base change; after ramified base change, Chapter 10 instead normalizes and resolves the new model afresh.
 
 ### 7.3 Normalized blowups
 
