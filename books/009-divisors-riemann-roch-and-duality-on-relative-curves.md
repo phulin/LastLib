@@ -1128,7 +1128,7 @@ neither formal functions nor nonflat base change is hidden in a kernel--cokernel
 
 **(i) Proper finiteness.** We first prove the precise relative Chow lemma needed here.
 
-> Let $A$ be noetherian and let $T$ be separated and of finite type over $A$. There is a proper
+> Let $A$ be noetherian and let $T$ be separated and of finite type over $A$. There is a projective
 > surjection $p:T'\to T$ and a dense open $U\subseteq T$ such that $p^{-1}(U)\to U$ is an
 > isomorphism and $T'$ is quasi-projective over $A$. If $T$ is proper over $A$, then $T'$ is
 > projective over $A$.
@@ -1149,7 +1149,9 @@ $$
 in which every $U_i$ contains every generic point. Hence
 $U=U_1\cap\cdots\cap U_m$ is dense. Replace $T$ by the scheme-theoretic closure of $U$ in $T$.
 This is a surjective closed immersion, is an isomorphism over $U$, and its intersection with every
-$U_i$ is a closed affine subscheme. Thus it costs nothing and makes $U$ schematically dense.
+$U_i$ is a closed affine subscheme. Composing a projective modification of this closure with that
+closed immersion gives the required modification of the original $T$, so we rename the closure
+$T$. This makes $U$ schematically dense.
 
 Each affine $U_i$ is of finite type over $A$, so generators of its coordinate algebra give an
 immersion
@@ -1159,10 +1161,14 @@ j_i:U_i\longrightarrow P_i=\mathbf P_A^{n_i}.
 $$
 
 Let $Z_i\subseteq P_i$ be its scheme-theoretic closure. Then $U_i\subseteq Z_i$ is a
-schematically dense open and $Z_i$ is projective over $A$. These closures have an explicit Rees
-description. If on an affine chart the homogeneous coordinates have been cleared to
-$a_0,\ldots,a_n\in R$ and $I=(a_0,\ldots,a_n)$, the closure of the graph over
-$D(I)$ is
+schematically dense open and $Z_i$ is projective over $A$. These closures have an explicit finite
+Rees description. Fix an affine $W=\operatorname{Spec}R$ from the finite cover above and one of
+the standard affine charts of some $P_i$. The inverse image of that chart in $U\cap W$ is a
+quasi-compact open of $W$, hence is covered by finitely many principal opens $D(f)\subseteq W$.
+On $D(f)$ the affine
+coordinates of the map are fractions in $R_f$. Multiplying by a common power of $f$ gives
+homogeneous coordinates $a_0,\ldots,a_n\in R$ with $a_0=f^N$, say, and
+$I=(a_0,\ldots,a_n)$. The tuple defines a map on $D(I)$, and the closure of its graph is
 
 $$
 \operatorname{Bl}_I(\operatorname{Spec}R)
@@ -1171,27 +1177,26 @@ $$
 
 On the chart where $a_i$ is the chosen homogeneous coordinate, both sides have coordinate ring
 $R[I/a_i]\subseteq R_{a_i}$; these charts cover, proving (9.8d), projectivity, and the fact that
-the blowup is an isomorphism where $I$ is the unit ideal. A morphism from the quasi-compact open
-$U$ to projective space has only finitely many affine coordinate expressions. Clearing their
-denominators on an affine neighborhood in $T$ produces a tuple $a_0,\ldots,a_n$ whose domain
-contains the relevant part of $U$. Its graph closure is a closed subscheme of the Rees blowup in
-(9.8d), and it equals that blowup when the domain is all of $D(I)$. Thus the global
-scheme-theoretic graph closure is covered by closed subschemes of finitely many explicit Rees
-charts $R[I/a_i]$ and is projective over $T$. This is all the graph-and-blowup input used below;
-no compactification theorem is being inserted.
+the blowup is an isomorphism where $I$ is the unit ideal. The closure of the graph from the
+smaller open $D(f)$ is a closed subscheme of this blowup. There are only finitely many $W$, $i$,
+standard charts, and principal opens $D(f)$, so only finitely many ideals $I$ occur. Consequently
+the global scheme-theoretic graph closure is covered by closed subschemes of finitely many
+explicit Rees charts $R[I/a_i]$ and, independently, is projective over $T$ because it is closed in
+$T\times_A P_i$. This is all the graph-and-blowup input used below; no compactification theorem is
+being inserted.
 
 Now form
 
 $$
 j=(j_1|_U,\ldots,j_m|_U):
-U\longrightarrow P_1\times_A\cdots\times_AP_m
+U\longrightarrow P_1\times_A\cdots\times_A P_m
 $$
 
 and let $Z$ be its scheme-theoretic closure. The product map is an immersion, so $U$ is open and
 schematically dense in $Z$; the preceding Rees calculation is also the affine-chart construction
 of the closure of its graph. The scheme $Z$ is closed in a product of projective spaces, hence
 projective over $A$. The $i$th projection $Z\to P_i$ factors through $Z_i$: the ideal of $Z_i$
-vanishes on the schematically dense open $U$. Denote the resulting proper map by
+vanishes on the schematically dense open $U$. Denote the resulting map by
 $p_i:Z\to Z_i$ and put
 
 $$
@@ -1200,7 +1205,10 @@ V_i=p_i^{-1}(U_i),
 T'=V_1\cup\cdots\cup V_m\subseteq Z.
 $$
 
-Thus $T'$ is quasi-projective over $A$. The maps $p_i|_{V_i}:V_i\to U_i\subseteq T$ agree on
+The map $p_i$ is proper: an $A$-map from the $A$-proper scheme $Z$ to the $A$-separated scheme
+$Z_i$ is proper, as follows by factoring it through its closed graph in $Z\times_A Z_i$ and then
+the base change $Z\times_A Z_i\to Z_i$ of $Z\to\operatorname{Spec}A$. Thus $T'$ is
+quasi-projective over $A$. The maps $p_i|_{V_i}:V_i\to U_i\subseteq T$ agree on
 overlaps: they agree on $U$, which is schematically dense in every $V_i\cap V_j$, and the
 equalizer of two maps to the separated $A$-scheme $T$ is closed. They therefore glue to
 $p:T'\to T$.
@@ -1208,12 +1216,22 @@ $p:T'\to T$.
 We verify properness rather than inferring it from the graph. First
 $p^{-1}(U_i)=V_i$. One inclusion is immediate. Inside $p^{-1}(U_i)$ the open immersion
 $V_i\hookrightarrow p^{-1}(U_i)$ is proper because $V_i\to U_i$ is the restriction of the
-proper map $p_i$ and $p^{-1}(U_i)\to U_i$ is separated. It is therefore also closed, and it
+proper map $p_i$ and $p^{-1}(U_i)\to U_i$ is separated. Explicitly, its graph is closed and its
+projection to $p^{-1}(U_i)$ is the base change of $V_i\to U_i$. It is therefore also closed, and it
 contains the schematically dense open $U$; hence it is the whole inverse image. Consequently
 $p$ is proper on the finite open cover $\{U_i\}$ and is proper globally. The same argument with
 $U$ in place of $U_i$ gives $p^{-1}(U)=U$. Finally, the image of the proper map $p$ is closed
 and contains the dense open $U$, so it is all of $T$. This proves the asserted surjectivity and
-the modification statement.
+the modification statement, or proper birationality in the sense appropriate to a possibly
+reducible and nonreduced scheme.
+
+This modification is literally the graph closure just described. Let
+$P=P_1\times_A\cdots\times_A P_m$ and let $\iota:T'\hookrightarrow P$ be the immersion already
+constructed. The map $(p,\iota):T'\to T\times_A P$ is proper over $T$: its source is proper over
+$T$ and its target is separated over $T$, so the same closed-graph factorization applies. Since it
+is also an immersion, it is a closed immersion. Its image is the scheme-theoretic closure of the
+graph of $j:U\to P$, because $U$ is schematically dense in $T'$. Thus the finitely many Rees
+blowups above are affine-chart models of the actual modification, not merely auxiliary examples.
 
 If $T$ is proper over $A$, then so is $T'$. Choose the immersion
 $T'\hookrightarrow\mathbf P_A^N$ supplied by the product projective space and the Segre map.
@@ -1221,8 +1239,9 @@ Any $A$-map from the proper scheme $T'$ to the separated scheme $\mathbf P_A^N$ 
 proper immersion is closed. Thus this immersion is a closed immersion and $T'$ is projective over
 $A$, completing the relative Chow lemma.
 
-We now prove proper finiteness by noetherian induction on a closed support
-$T\subseteq Z$. Given a coherent $G$ supported on $T$, equip its support with the closed scheme
+We now prove proper finiteness by noetherian induction on a closed support; the empty support is
+the initial case. Let $T\subseteq Z$ be a closed support. Given a coherent $G$ supported on $T$,
+equip its support with the closed scheme
 structure cut out by $\operatorname{Ann}(G)$, so that $G$ is genuinely a coherent sheaf on that
 proper scheme. Apply the lemma to it. We obtain a projective modification $p:T'\to T$ which is an
 isomorphism over a dense open $U$ meeting every generic point. Put $G'=p^*G$. The adjunction map
