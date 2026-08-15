@@ -1126,29 +1126,147 @@ ampleness. The input is the following proper-curve complex lemma.
 We include the proof without assuming $Z$ projective. Four ingredients are separated so that
 neither formal functions nor nonflat base change is hidden in a kernel--cokernel induction.
 
-**(i) Proper finiteness.** Relative Chow's lemma follows from the graph-and-blowup construction.
-Choose a finite affine cover, clear the finitely many coordinate functions on overlaps, and blow
-up the product of the boundary ideals. The strict transform $p:Z'\to Z$ is projective, is an
-isomorphism over a schematically dense open $U$, and is quasi-projective over $A$. Since it is
-also proper over $A$, it is projective over $A$.
+**(i) Proper finiteness.** We first prove the precise relative Chow lemma needed here.
 
-We prove by noetherian induction on a closed support $T\subseteq Z$ that the cohomology of every
-coherent sheaf supported on $T$ is finite over $A$. Apply the Chow construction to the reduced
-closed scheme $T$ itself, so its projective modification is an isomorphism over an open meeting
-every generic point of $T$. On the projective modification finiteness is the graded-resolution
-theorem of Book 8. Regard a coherent $G$ supported on $T$ as a sheaf on $T$ and put
-$G'=p^*G$. This is coherent, and the adjunction map
-$G\to p_*p^*G$ is the identity on the open where $p$ is an isomorphism. Its kernel and cokernel,
-and the coherent sheaves $R^jp_*G'$ for $j>0$, are therefore supported on a proper closed subset
-of $T$.
-A coherent sheaf supported there is killed by a power of its ideal and therefore has a finite
-filtration by pushforwards of coherent sheaves on the reduced closed subset. The two long exact
-sequences and the Leray spectral sequence reduce finiteness to strictly smaller supports. This
-is a genuine induction in the noetherian topological space and terminates. Applying the result
-to the cohomology sheaves of a bounded coherent complex gives proper finiteness for such
-complexes. In particular, $R\Gamma(Z,G)$ lies in $D^b_{\mathrm{finite}}(A)$ once the
-cohomological-dimension bound in (iii) is known, and hence is pseudo-coherent: resolve its finite
-cohomology modules successively by finite free modules.
+> Let $A$ be noetherian and let $T$ be separated and of finite type over $A$. There is a proper
+> surjection $p:T'\to T$ and a dense open $U\subseteq T$ such that $p^{-1}(U)\to U$ is an
+> isomorphism and $T'$ is quasi-projective over $A$. If $T$ is proper over $A$, then $T'$ is
+> projective over $A$.
+
+The construction begins with a finite affine cover having a common dense core. Write
+$T_1,\ldots,T_r$ for the irreducible components and $\eta_1,\ldots,\eta_r$ for their generic
+points. Every $x\in T$ has an affine neighborhood containing all the $\eta_j$. Indeed, start
+with an affine neighborhood $W$ of $x$. If $W$ meets $T_j$, then it contains $\eta_j$. For each
+remaining component choose an affine neighborhood of $\eta_j$ inside
+$T\setminus\bigcup_{\ell\ne j}T_\ell$; these neighborhoods are pairwise disjoint and disjoint
+from $W$, so their finite disjoint union with $W$ is affine. Quasi-compactness now gives a finite
+affine cover
+
+$$
+T=U_1\cup\cdots\cup U_m
+$$
+
+in which every $U_i$ contains every generic point. Hence
+$U=U_1\cap\cdots\cap U_m$ is dense. Replace $T$ by the scheme-theoretic closure of $U$ in $T$.
+This is a surjective closed immersion, is an isomorphism over $U$, and its intersection with every
+$U_i$ is a closed affine subscheme. Thus it costs nothing and makes $U$ schematically dense.
+
+Each affine $U_i$ is of finite type over $A$, so generators of its coordinate algebra give an
+immersion
+
+$$
+j_i:U_i\longrightarrow P_i=\mathbf P_A^{n_i}.
+$$
+
+Let $Z_i\subseteq P_i$ be its scheme-theoretic closure. Then $U_i\subseteq Z_i$ is a
+schematically dense open and $Z_i$ is projective over $A$. These closures have an explicit Rees
+description. If on an affine chart the homogeneous coordinates have been cleared to
+$a_0,\ldots,a_n\in R$ and $I=(a_0,\ldots,a_n)$, the closure of the graph over
+$D(I)$ is
+
+$$
+\operatorname{Bl}_I(\operatorname{Spec}R)
+=\operatorname{Proj}_R\!\left(\bigoplus_{d\geq0}I^d\right). \tag{9.8d}
+$$
+
+On the chart where $a_i$ is the chosen homogeneous coordinate, both sides have coordinate ring
+$R[I/a_i]\subseteq R_{a_i}$; these charts cover, proving (9.8d), projectivity, and the fact that
+the blowup is an isomorphism where $I$ is the unit ideal. A morphism from the quasi-compact open
+$U$ to projective space has only finitely many affine coordinate expressions. Clearing their
+denominators on an affine neighborhood in $T$ produces a tuple $a_0,\ldots,a_n$ whose domain
+contains the relevant part of $U$. Its graph closure is a closed subscheme of the Rees blowup in
+(9.8d), and it equals that blowup when the domain is all of $D(I)$. Thus the global
+scheme-theoretic graph closure is covered by closed subschemes of finitely many explicit Rees
+charts $R[I/a_i]$ and is projective over $T$. This is all the graph-and-blowup input used below;
+no compactification theorem is being inserted.
+
+Now form
+
+$$
+j=(j_1|_U,\ldots,j_m|_U):
+U\longrightarrow P_1\times_A\cdots\times_AP_m
+$$
+
+and let $Z$ be its scheme-theoretic closure. The product map is an immersion, so $U$ is open and
+schematically dense in $Z$; the preceding Rees calculation is also the affine-chart construction
+of the closure of its graph. The scheme $Z$ is closed in a product of projective spaces, hence
+projective over $A$. The $i$th projection $Z\to P_i$ factors through $Z_i$: the ideal of $Z_i$
+vanishes on the schematically dense open $U$. Denote the resulting proper map by
+$p_i:Z\to Z_i$ and put
+
+$$
+V_i=p_i^{-1}(U_i),
+\qquad
+T'=V_1\cup\cdots\cup V_m\subseteq Z.
+$$
+
+Thus $T'$ is quasi-projective over $A$. The maps $p_i|_{V_i}:V_i\to U_i\subseteq T$ agree on
+overlaps: they agree on $U$, which is schematically dense in every $V_i\cap V_j$, and the
+equalizer of two maps to the separated $A$-scheme $T$ is closed. They therefore glue to
+$p:T'\to T$.
+
+We verify properness rather than inferring it from the graph. First
+$p^{-1}(U_i)=V_i$. One inclusion is immediate. Inside $p^{-1}(U_i)$ the open immersion
+$V_i\hookrightarrow p^{-1}(U_i)$ is proper because $V_i\to U_i$ is the restriction of the
+proper map $p_i$ and $p^{-1}(U_i)\to U_i$ is separated. It is therefore also closed, and it
+contains the schematically dense open $U$; hence it is the whole inverse image. Consequently
+$p$ is proper on the finite open cover $\{U_i\}$ and is proper globally. The same argument with
+$U$ in place of $U_i$ gives $p^{-1}(U)=U$. Finally, the image of the proper map $p$ is closed
+and contains the dense open $U$, so it is all of $T$. This proves the asserted surjectivity and
+the modification statement.
+
+If $T$ is proper over $A$, then so is $T'$. Choose the immersion
+$T'\hookrightarrow\mathbf P_A^N$ supplied by the product projective space and the Segre map.
+Any $A$-map from the proper scheme $T'$ to the separated scheme $\mathbf P_A^N$ is proper; a
+proper immersion is closed. Thus this immersion is a closed immersion and $T'$ is projective over
+$A$, completing the relative Chow lemma.
+
+We now prove proper finiteness by noetherian induction on a closed support
+$T\subseteq Z$. Given a coherent $G$ supported on $T$, equip its support with the closed scheme
+structure cut out by $\operatorname{Ann}(G)$, so that $G$ is genuinely a coherent sheaf on that
+proper scheme. Apply the lemma to it. We obtain a projective modification $p:T'\to T$ which is an
+isomorphism over a dense open $U$ meeting every generic point. Put $G'=p^*G$. The adjunction map
+$\alpha:G\to p_*G'$ is the identity over $U$. Hence
+
+$$
+K=\ker\alpha,
+\qquad C=\operatorname{coker}\alpha,
+\qquad R^bp_*G'\ (b>0)
+$$
+
+are coherent and supported on the proper closed subset $W=T\setminus U$. Coherence of the higher
+direct images follows from the projective graded-resolution theorem of Book 8 applied to
+$p:T'\to T$. A coherent sheaf supported on $W$ is killed by a power of the ideal of $W$ and has
+a finite filtration whose quotients are pushforwards of coherent sheaves on $W_{\mathrm{red}}$.
+The induction hypothesis therefore makes the cohomology of $K,C$, and every $R^bp_*G'$ for
+$b>0$ finite over $A$.
+
+The cohomology of $G'$ on the projective $A$-scheme $T'$ is finite by Book 8. In the bounded
+Leray spectral sequence
+
+$$
+E_2^{a,b}=H^a(T,R^bp_*G')
+\Longrightarrow H^{a+b}(T',G'),
+$$
+
+all rows $b>0$ are finite by induction. The bottom row is finite as well: $E_\infty^{a,0}$ is a
+subquotient of the finite abutment, and, page by page backwards, the only incoming differential
+comes from a finite higher row while every outgoing differential from $b=0$ is zero. Thus
+$H^a(T,p_*G')$ is finite. If $I=\operatorname{im}\alpha$, the two exact sequences
+
+$$
+0\to K\to G\to I\to0,
+\qquad
+0\to I\to p_*G'\to C\to0
+$$
+
+and their long cohomology sequences now prove that every $H^a(T,G)$ is finite over $A$. This is a
+genuine induction on closed subsets of the noetherian space and terminates.
+
+Applying the result to the cohomology sheaves of a bounded coherent complex gives proper
+finiteness for such complexes. In particular, $R\Gamma(Z,G)$ lies in
+$D^b_{\mathrm{finite}}(A)$ once the cohomological-dimension bound in (iii) is known, and hence is
+pseudo-coherent: resolve its finite cohomology modules successively by finite free modules.
 
 **(ii) Formal functions, with the pro-step included.** Let $I\subset A$ and $G$ be coherent.
 Put $G_n=I^nG$ and $\mathcal R=\bigoplus_{n\geq0}I^n$. This is a noetherian graded
