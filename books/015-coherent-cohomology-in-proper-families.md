@@ -207,9 +207,49 @@ The theorem is often called a theorem of finite presentation for cohomology. Its
 
 ### 2.4 From projective to proper
 
-Not every proper morphism is projective. Finiteness must therefore be detached from the chosen embedding. The bridge is a projective modification and noetherian induction.
+Not every proper morphism is projective. Finiteness must therefore be detached from the chosen embedding. The bridge is a projective modification and noetherian induction. The modification is produced by Chow's lemma, which we prove in full because later books invoke exactly this statement.
 
-**Proper reduction lemma.** Let $f:X\to S$ be proper with $S$ noetherian. After treating the irreducible components separately, there is a proper surjection $p:X'\to X$ with $X'\to S$ projective and an ideal $\mathcal J\subseteq\mathcal O_X$ whose zero set omits every generic point of $X$, such that, for each coherent $\mathcal F$, after replacing $\mathcal J$ by a power the map
+**Chow's lemma.** Let $S$ be noetherian and let $f:X\to S$ be separated and of finite type. Assume that $X$ is covered by finitely many open subschemes that are quasi-projective over $S$; this is automatic when $S$ is affine, which is the only case used below. Then there is an $S$-morphism $p:X'\to X$ with the following properties.
+
+1. $p$ is projective and surjective.
+2. There is a dense open $V\subseteq X$, necessarily containing every generic point of $X$, such that $p^{-1}(V)\to V$ is an isomorphism.
+3. There is an immersion $X'\hookrightarrow\mathbf P^N_S$ over $S$ for some $N$. If $f$ is proper, then $X'\to S$ is proper and that immersion is closed, so $X'\to S$ is projective.
+
+**Proof.** We first reduce to an irreducible $X$; no reducedness will be assumed anywhere. Let $X_1,\ldots,X_m$ be the irreducible components of the noetherian space $X$, and for each $k$ let $V_k=X\setminus\bigcup_{l\neq k}X_l$, a nonempty open subscheme of $X$ whose space lies in $X_k$. Let $X_k^\sharp\subseteq X$ be the scheme-theoretic closure of $V_k$, a closed subscheme with underlying space $X_k$; it is separated and of finite type over $S$, proper over $S$ when $f$ is, and its intersections with the given cover are closed subschemes of quasi-projective $S$-schemes, hence quasi-projective over $S$ by the permanence properties of Book 8. Restricting a scheme-theoretic closure to an open subscheme computes the closure there, so $X_k^\sharp$ induces on $V_k$ its original structure. Granting the lemma for irreducible schemes, choose $p_k:X_k'\to X_k^\sharp$ and a dense open $W_k\subseteq X_k^\sharp$ over which $p_k$ is an isomorphism, and put $V_k'=W_k\cap V_k$, a nonempty open of $X$. Let $X'=\coprod_kX_k'$ with $p$ the disjoint union of the composites $X_k'\to X_k^\sharp\hookrightarrow X$ and let $V=\bigcup_kV_k'$; the $V_k'$ are pairwise disjoint because $V_k\cap V_l=\varnothing$ for $k\neq l$, and $V$ is dense because it meets every component. Since $p_l$ has image $X_l$, which misses $V_k'$ for $l\neq k$, the preimage of $V_k'$ is $p_k^{-1}(V_k')\simeq V_k'$, so $p^{-1}(V)\to V$ is an isomorphism, and $p$ is surjective because the $X_k$ cover $X$. A finite disjoint union of projective, respectively quasi-projective, schemes over a base is again such: embed the pieces in one $\mathbf P^N$ over that base and place $m$ copies of $\mathbf P^N$ as pairwise disjoint linear subspaces of $\mathbf P^{m(N+1)-1}$, so that the images have pairwise disjoint closures and their union is closed in a single open subscheme. This gives the three assertions for $X$ from the same assertions for the $X_k^\sharp$.
+
+So let $X$ be irreducible. Choose nonempty opens $U_1,\ldots,U_r$ covering $X$, each quasi-projective over $S$, and for each $i$ an immersion $\phi_i:U_i\to P_i=\mathbf P^{n_i}_S$ together with an open $A_i\subseteq P_i$ in which $\phi_i$ is a closed immersion. When $S=\operatorname{Spec}A$ is affine one takes the $U_i$ affine; a finite set of algebra generators of $\mathcal O(U_i)$ over $A$ then gives a closed immersion into $A_i=\mathbf A^{n_i}_S\subseteq P_i$. Put $P=P_1\times_S\cdots\times_SP_r$ and $U=\bigcap_iU_i$, which is nonempty and dense because $X$ is irreducible, and quasi-compact because $X$ is separated. Let
+
+$$
+j=(\iota,\phi_1|_U,\ldots,\phi_r|_U):U\longrightarrow X\times_SP
+$$
+
+with $\iota$ the inclusion, and let $X'$ be the scheme-theoretic image of $j$, that is, the smallest closed subscheme of $X\times_SP$ through which $j$ factors. Since $j$ is quasi-compact, this closure may be computed on any open subscheme of $X\times_SP$, and $U$ is schematically dense in $X'$: no closed subscheme of an open $Y\subseteq X'$ other than $Y$ contains $U\cap Y$. Write $p:X'\to X$ and $q:X'\to P$ for the two projections and $q_i$ for the $i$th component of $q$.
+
+The morphism $X\times_SP\to X$ is proper, being a base change of $P\to S$, and the Segre immersion of Book 8 makes $P$ a closed subscheme of $\mathbf P^N_S$ with $N=\prod_i(n_i+1)-1$. Hence $X'$ is a closed subscheme of $\mathbf P^N_X$ and $p$ is projective. Over $U$ it is an isomorphism: the graph of $(\phi_i|_U)_i$ is a closed subscheme of $U\times_SP$ isomorphic to $U$, because $P$ is separated over $S$, and $X'\cap(U\times_SP)$ is the scheme-theoretic closure of $U$ inside that open subscheme, hence is exactly this graph. Being proper, $p$ is closed, and its image contains the dense $U$, so $p$ is surjective. This proves the first two assertions with $V=U$.
+
+The crux is that $q$ is an immersion. Fix $i$ and let $\Gamma_i\subseteq X\times_SP_i$ be the image of $(\iota_i,\phi_i):U_i\to X\times_SP_i$, where $\iota_i$ is the inclusion of $U_i$. It is an immersion, since its composite with the projection to $X$ is an open immersion and that projection is separated. It is closed in $U_i\times_SP_i$, being the graph of a morphism to a scheme separated over $S$. It is also closed in $X\times_SA_i$: the composite $\Gamma_i\to X\times_SA_i\to A_i$ is the closed immersion $\phi_i$ and in particular proper, while $X\times_SA_i\to A_i$ is separated because $X\to S$ is, so cancellation makes $\Gamma_i\to X\times_SA_i$ proper, and a proper immersion is a closed immersion. Closedness is local on the target, so $\Gamma_i$ is a closed subscheme of the open subscheme
+
+$$
+C_i=(U_i\times_SP_i)\cup(X\times_SA_i)\subseteq X\times_SP_i.
+$$
+
+The second closedness statement carries the geometric content of the argument: a point of $X'$ whose $i$th coordinate stays inside the affine chart $A_i$ cannot have escaped from $U_i$, precisely because $U_i$ was made closed in $A_i$. Only separatedness of $X$ over $S$ is used for it.
+
+Apply this to $(p,q_i):X'\to X\times_SP_i$. The preimage of $U_i\times_SP_i$ is the open $X_i'=p^{-1}(U_i)$, the preimage of $X\times_SA_i$ is the open $Y_i=q_i^{-1}(A_i)$, and the preimage of $C_i$ is $X_i'\cup Y_i$, which contains $U$. On $U$ the morphism $(p,q_i)$ is $(\iota_i,\phi_i)|_U$ and therefore factors through $\Gamma_i$. Its preimage is a closed subscheme of $X_i'\cup Y_i$ containing $U$, so by schematic density it is all of $X_i'\cup Y_i$. Composing with the two projections of $\Gamma_i\simeq U_i$ now gives $p(X_i'\cup Y_i)\subseteq U_i$ and $q_i(X_i'\cup Y_i)\subseteq A_i$, whence
+
+$$
+X_i'=p^{-1}(U_i)=q_i^{-1}(A_i)=Y_i,
+$$
+
+and on this open subscheme $(p,q_i)$ factors through $\Gamma_i$, that is, $q_i=\phi_i\circ p$ there.
+
+Let $\Omega_i\subseteq P$ be the preimage of $A_i$ under the $i$th projection and let $G_i\subseteq X\times_S\Omega_i$ be the preimage of $\Gamma_i$ under $X\times_S\Omega_i\to X\times_SA_i$, a closed subscheme whose projection $G_i\to\Omega_i$ is a closed immersion, being the base change of the closed immersion $\Gamma_i\to A_i$ along $\Omega_i\to A_i$. The displayed equality gives $q^{-1}(\Omega_i)=X_i'$, so $X_i'=X'\cap(X\times_S\Omega_i)$ is closed in $X\times_S\Omega_i$, and the factorization through $\Gamma_i$ places it inside $G_i$. Hence $X_i'$ is a closed subscheme of $G_i$ and $q$ restricts to a closed immersion $X_i'\to\Omega_i$. The opens $X_i'$ cover $X'$ because the $U_i$ cover $X$, so $q$ maps $X'$ into the open subscheme $\Omega=\bigcup_i\Omega_i$ and $q^{-1}(\Omega_i)\to\Omega_i$ is a closed immersion for every $i$. Being a closed immersion is local on the target, so $X'\to\Omega$ is a closed immersion and $q:X'\to P$ is an immersion. Composing with Segre gives an immersion $X'\to\mathbf P^N_S$.
+
+Finally suppose $f$ is proper. Then $X'\to S$ is proper, being the composite of the proper morphisms $p$ and $f$; since $P\to S$ is separated, cancellation makes $q$ proper, and a proper immersion is a closed immersion. Thus $X'$ is a closed subscheme of $\mathbf P^N_S$ and $X'\to S$ is projective. $\square$
+
+The construction cannot be simplified to a single chart. Taking one dense affine open $U_1\subseteq X$ and closing up its graph in $X\times_S\mathbf P^{n_1}_S$ does produce a scheme projective over $X$ and proper over $S$, but its projection to $\mathbf P^{n_1}_S$ need not be an immersion, since points of $X\setminus U_1$ can contribute positive-dimensional fibers over the hyperplane at infinity. Projectivity over $S$ is exactly what the induction below consumes, so the full cover, with one projective factor for each chart, is needed.
+
+**Proper reduction lemma.** Let $f:X\to S$ be proper with $S$ noetherian. There is a projective surjection $p:X'\to X$ with $X'\to S$ projective and an ideal $\mathcal J\subseteq\mathcal O_X$ whose zero set omits every generic point of $X$, such that, for each coherent $\mathcal F$, after replacing $\mathcal J$ by a power the map
 
 $$
 \mathcal J\mathcal F\longrightarrow
@@ -218,7 +258,7 @@ $$
 
 is injective.
 
-**Proof.** The assertion is local on $S$, so first take $S$ affine. Choose, on each irreducible component, an affine dense open and embed it in an affine space over $S$. The closure of its graph in the corresponding projective space is projective over $S$ and maps properly and birationally to that component. Taking their disjoint union gives $p$, which is an isomorphism over a dense open $U\subseteq X$. Let $\mathcal J$ define $X\setminus U$. The kernel $\mathcal K$ of $\mathcal F\to p_*p^*\mathcal F$ restricts to zero on $U$, hence is coherent and killed by a power of $\mathcal J$. Artin--Rees gives, for one $c$ and all large $n$,
+**Proof.** The assertion is local on $S$, so first take $S$ affine. Every affine open of $X$ is then of finite type over an affine base, hence quasi-projective over $S$, and Chow's lemma applies: it gives a projective surjection $p:X'\to X$ with $X'\to S$ projective, together with a dense open $V\subseteq X$ over which $p$ is an isomorphism. Let $\mathcal J$ be the ideal of the reduced closed complement of $V$; its zero set omits every generic point because $V$ is dense. Direct image commutes with restriction to an open subscheme of the target, so the kernel $\mathcal K$ of $\mathcal F\to p_*p^*\mathcal F$ restricts to zero on $V$; being coherent, it is killed by a power of $\mathcal J$. Artin--Rees gives, for one $c$ and all large $n$,
 
 $$
 \mathcal K\cap\mathcal J^n\mathcal F
@@ -233,7 +273,7 @@ $$
 H^a(X,R^bp_*\mathcal G)\Longrightarrow H^{a+b}(X',\mathcal G)
 $$
 
-then compares cohomology upstairs with cohomology of these sheaves downstairs. For $b>0$ they vanish over $U$, hence have smaller support. The two long exact sequences associated with the injection and its cokernel reduce any assertion stable under extensions to the projective composite $X'\to S$ and to coherent sheaves supported on a proper closed subset. Noetherian induction terminates.
+then compares cohomology upstairs with cohomology of these sheaves downstairs. For $b>0$ they vanish over $V$, hence have smaller support. The two long exact sequences associated with the injection and its cokernel reduce any assertion stable under extensions to the projective composite $X'\to S$ and to coherent sheaves supported on a proper closed subset. Noetherian induction terminates.
 
 For base change one needs a stronger conclusion, and the flatness hypothesis supplies it.
 
@@ -1445,7 +1485,7 @@ The derived language supplies the maps and remembers Tor and inverse-limit terms
 
 ### 15.2 A theorem checklist for later use
 
-For a proper morphism of locally noetherian schemes and a coherent sheaf, all higher direct images are coherent. For a proper finitely presented family and a base-flat coherent sheaf, a bounded finite locally free complex exists locally on the base and governs arbitrary coefficient modules. Fiber cohomology dimensions are upper semicontinuous, and Euler characteristic is locally constant.
+Every scheme separated and of finite type over a noetherian affine base admits, by Chow's lemma of Section 2.4, a projective surjection from a scheme quasi-projective over that base which is an isomorphism over a dense open; when the scheme is proper, the source is projective over the base. For a proper morphism of locally noetherian schemes and a coherent sheaf, all higher direct images are coherent. For a proper finitely presented family and a base-flat coherent sheaf, a bounded finite locally free complex exists locally on the base and governs arbitrary coefficient modules. Fiber cohomology dimensions are upper semicontinuous, and Euler characteristic is locally constant.
 
 At a point, surjectivity of the degree-$i$ base-change map persists nearby. Under that surjectivity, $R^if_*\mathcal F$ is locally free exactly when base change is also surjective in degree $i-1$. When both adjacent conditions hold, degree-$i$ cohomology commutes with arbitrary base change. Flat base change needs no local-freeness conclusion.
 
