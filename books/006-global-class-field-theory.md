@@ -1037,6 +1037,53 @@ C^\bullet(G_{F,S},A)\longrightarrow
 \right)[-1].
 $$
 
+We use the following signs throughout. If
+$\lambda:C^\bullet(G_{F,S},A)\to L_S^\bullet(A)$ is localization, where
+$L_S^\bullet(A)=\bigoplus_{v\in S}C^\bullet(F_v,A)$ with the modified
+archimedean terms just specified, then
+
+$$
+C_{S,c}^q(A)=C^q(G_{F,S},A)\oplus L_S^{q-1}(A),\qquad
+d(a,b)=(da,\lambda(a)-db).                              \tag{4.C1}
+$$
+
+For inhomogeneous cochains our differential and cup product are
+
+$$
+\begin{aligned}
+(df)(g_1,\ldots,g_{r+1})={}&g_1f(g_2,\ldots,g_{r+1})\\
+ &+\sum_{i=1}^{r}(-1)^if(g_1,\ldots,g_ig_{i+1},\ldots,g_{r+1})
+   +(-1)^{r+1}f(g_1,\ldots,g_r),                         \tag{4.C2}\\
+(f\smile h)(g_1,\ldots,g_{r+s})={}&
+ f(g_1,\ldots,g_r)\otimes
+ (g_1\cdots g_r)h(g_{r+1},\ldots,g_{r+s}).               \tag{4.C3}
+\end{aligned}
+$$
+
+If $(a,b)\in C_{S,c}^q(A_n)$ and
+$y\in C^{3-q}(G_{F,S},\mu_n)$, the cochain-level pairing is
+
+$$
+ \langle(a,b),y\rangle
+ =\sum_{v\in S}\operatorname {inv}_v
+       \bigl(b_v\smile\lambda_v(y)\bigr).                \tag{4.C4}
+$$
+
+The right side has local degree two. With the differential
+$d\phi(x)=(-1)^{q+1}\phi(dx)$ on the degree-$q$ part of the dual complex,
+(4.C2)--(4.C3) show that its two local boundary terms cancel. The term left
+over is the sum of the invariants of the localization of the global cocycle
+$a\smile y$, hence is zero by (4.I12). Consequently (4.C4) is a cochain
+map. In degree three the same formula, with $y=1$, is
+
+$$
+ \operatorname {tr}_{F,S}[(a,b)]
+   =\sum_{v\in S}\operatorname {inv}_v[b_v].             \tag{4.C5}
+$$
+
+Formula (4.C1) and global reciprocity for Brauer invariants prove directly
+that (4.C5) is independent of the representative.
+
 **Theorem 4.2 (finite Artin--Verdier duality for $A_n$ and $\mu_n$).** For every number
 field $F$, every $n\geq1$, and every such $S$, the following data and assertions are
 available.
@@ -1205,16 +1252,64 @@ B_{S,n}=\ker\left(
 \right),                                                   \tag{4.F4d}
 $$
 
-by (4.I12). Choose generators of this finite group, lift them to global
-continuous two-cocycles using (4.I12), and attach one free relation module
-recording their orders.
-This gives a finite degree-two extension of (4.F4) which maps
-quasi-isomorphically to $R\Gamma(G_{F,S},\mu_n)$ in degrees $0,1,2$.
-Changing the lifts changes the map by an explicit cochain homotopy: the
-difference is a global Brauer coboundary by injectivity in (4.I12).
-Formula (4.F4a), together with this attached Brauer block, therefore gives the
-full $S$-unit, $S$-class, and degree-two terms without first killing the class
-group.
+by (4.I12). Here is the Brauer block, including its differential. Write
+
+$$
+B_{S,n}=\bigoplus_{j=1}^t\mathbf Z/e_j\mathbf Z\,\beta_j,
+\qquad e_j\mid n.                                       \tag{4.F4j}
+$$
+
+Choose a finite quotient $Q_T$ of $G_{F,S}$ through which representatives of
+the finitely many $\beta_j$ factor, normalized inhomogeneous cocycles
+$z_j\in Z^2(Q_T,\mu_n)$ representing them, and normalized cochains
+$h_j\in C^1(Q_T,\mu_n)$ satisfying
+
+$$
+dh_j=e_jz_j.                                             \tag{4.F4k}
+$$
+
+Such $h_j$ exist because $e_j\beta_j=0$; after replacing $Q_T$ by the finite
+quotient through which the finitely many values of the chosen cochains
+factor, (4.F4k) already holds on $Q_T$. Put
+
+$$
+R_B=\bigoplus_j\mathbf Zr_j,qquad
+P_B=\bigoplus_j\mathbf Zp_j,qquad
+d_B(r_j)=e_jp_j.                                        \tag{4.F4l}
+$$
+
+Place $R_B,P_B$ in degrees $1,2$. The map
+$r_j\mapsto h_j$, $p_j\mapsto z_j$ is a cochain map by (4.F4k), and
+$H^1([R_B\to P_B])=0$, $H^2([R_B\to P_B])=B_{S,n}$.
+Define $\mathcal G_{S,T}(\mu_n)$ to be (4.F4) with this two-term block
+adjoined in degrees $1,2$; its terms and differentials are
+
+$$
+\begin{aligned}
+\mathcal G^0&=F_{S,T}^{\times},\\
+\mathcal G^1&=D_{S,T}\oplus F_{S,T}^{\times}\oplus R_B,\\
+\mathcal G^2&=D_{S,T}\oplus P_B,\\
+d^0(a)&=(\operatorname {div}_{S,T}(a),a^n,0),\\
+d^1(D,b,r)&=(nD-\operatorname {div}_{S,T}(b),d_Br).
+                                                               \tag{4.F4m}
+\end{aligned}
+$$
+
+Thus $d^1d^0=0$ visibly. Mapping the first summand by Kummer cochains and
+the Brauer block by (4.F4k) gives
+
+$$
+\mathcal G_{S,T}(\mu_n)\longrightarrow
+\tau_{\le2}C^\bullet(Q_T,\mu_n).                         \tag{4.F4n}
+$$
+
+The kernel and cokernel calculation in (4.F4a), followed by (4.I12), says
+that (4.F4n) is a quasi-isomorphism in degrees $0,1,2$. If
+$z'_j=z_j+dk_j$ and $h'_j=h_j+e_jk_j+d\ell_j$, the assignments
+$p_j\mapsto k_j$, $r_j\mapsto\ell_j$ give the cochain homotopy between the
+two choices. This proves choice-independence without calling two
+cohomologous cocycles literally equal. It also supplies the full
+$S$-unit, $S$-class, and Brauer terms without first killing the class group.
 
 The local truncation must be made simultaneously on a module and on its
 dual. An unspecified ``sufficiently deep'' integer does not do this: the
@@ -1305,22 +1400,54 @@ layers. Passing from the raw logarithmic quotient to its image in $P_v$
 and applying $(Q/R)^\vee=R^\perp/Q^\perp$ gives (4.F4f), including layers
 where an $n$th root lies in a shallower unit group.
 
-Use $P_v$ and $P_v^\vee$, with their valuation, residue, and unit
-filtrations above, in the two local Kummer complexes. At a real place retain
-the two terms of the complete Tate resolution which meet degrees
-$0,\ldots ,3$; at a complex place use zero. Taking the localization cone
-gives a finite complex $\mathcal C_{S,T,c}$. Replacing $c_v$ by a larger
-cutoff factors through the same finite group $P_v$ and gives a canonical
-homotopy equivalence, and
+We now define the finite localization cone that will be compared with
+(4.F4m). Enlarge $Q_T$ so that the finitely many Kummer cochains used in
+(4.F4n), their local restrictions, and the cochains $h_j,z_j$ all factor
+through it. For $q\geq0$ put
+
+$$
+C_T^q(M)=\operatorname {Map}(Q_T^q,M),qquad
+L_T^q(M)=\bigoplus_{v\in S}\operatorname {Map}(Q_{T,v}^q,M),              \tag{4.F4o}
+$$
+
+where $Q_{T,v}$ is the image of a decomposition group in $Q_T$. The
+differential is (4.C2), restriction is literal restriction of functions,
+and
+
+$$
+\mathcal C_{S,T}^q(M)=C_T^q(M)\oplus L_T^{q-1}(M),\qquad
+d(a,b)=(da,\operatorname {res}a-db).                     \tag{4.F4p}
+$$
+
+These are finite groups and every arrow has now been specified. At a real
+place replace $\operatorname {Map}(Q_{T,v}^q,M)$ by the two-periodic complete
+resolution
+
+$$
+\cdots\xrightarrow{1-c}M\xrightarrow{1+c}M
+\xrightarrow{1-c}M\xrightarrow{1+c}M\xrightarrow{1-c}\cdots,             \tag{4.F4q}
+$$
+
+with the copy meeting degree zero chosen so that $d^{-1}=1+c$; at a complex
+place put zero. Thus the real norm quotient, and not ordinary degree-zero
+cohomology, occurs in (4.F4p).
+
+Kummer theory and local reciprocity identify the degree-one cohomology of
+the local columns with $P_v$ and $P_v^\vee$. Use their valuation, residue,
+and unit filtrations above on these columns, pulling the filtration back to
+cocycles and adjoining boundaries at every step. Replacing $c_v$ by a larger
+cutoff adds the two-term identity complex on
+$\overline U_v^{c_v}/\overline U_v^{c'_v}$; its contraction is
+$s(0,x)=(x,0)$. Hence it is a canonical homotopy equivalence, and
 
 $$
 \varinjlim_T\mathcal C_{S,T,c}\simeq
 C_{S,c}^{\bullet}(\mu_n).                                 \tag{4.F4b}
 $$
 
-Construct the analogous finite complex for $A_n$. Cup product followed by the
-sum of local invariants is a cochain map because (4.F2) says exactly that its
-two global-to-local differentials are adjoint.
+Construct the analogous finite complex for $A_n$. On its terms the comparison
+map is exactly (4.C4), using (4.C3); its being a cochain map was checked after
+(4.C4), not inferred from an order equality.
 
 Filter the finite local modules by
 $\overline U_v^r$ and $X_v^{\le r}$. The successive pairings are (4.F4f);
@@ -1329,18 +1456,45 @@ and residue boundary blocks are the two blocks described immediately after
 (4.F4f). At a real place the complete resolution gives the perfect sign
 pairing, and at a complex place both modified complexes vanish.
 
-Now choose bases of the free parts of the finitely generated group
-$F_{S,T}^{\times}$ and the finite free group $D_{S,T}$ and put the divisor
-matrix in Smith normal form. The dual complex has the transpose matrix. The
-torsion-unit block pairs with roots of unity, the free-unit block with the
-archimedean block, and (4.F4f) pairs the remaining local-unit blocks. The
-attached group $B_{S,n}$ pairs with the cokernel of the invariant sum; its
-perfectness is the $n$-torsion exact sequence (4.I12). Order the filtration by
-divisor degree, unit depth, archimedean degree, and finally this Brauer block.
-Every successive quotient of the comparison cone is therefore the cone of an
-isomorphism of finite groups. Starting at the deepest unit layer and lifting
-a contracting homotopy one quotient at a time proves that the whole cone is
-acyclic.
+Choose bases of the free parts of $F_{S,T}^{\times}$ and $D_{S,T}$ and put
+the homomorphism $\operatorname {div}_{S,T}$ in Smith form
+$\operatorname {diag}(a_1,\ldots ,a_r,0,\ldots ,0)$. In the dual diagram the
+matrix is its transpose. Its $i$th finite square is
+
+$$
+\begin{CD}
+\mathbf Z/n @>{a_i}>> \mathbf Z/n\\
+@V{x\mapsto(y\mapsto xy/n)}V{\sim}V
+ @VV{\sim}V\\
+(\mathbf Z/n)^\vee @>{a_i^t}>> (\mathbf Z/n)^\vee,
+\end{CD}                                                  \tag{4.F4r}
+$$
+
+and the kernel and cokernel annihilate one another because both are the
+cyclic group of order $\gcd(a_i,n)$. The zero diagonal blocks pair the free
+units with the archimedean logarithmic/sign blocks; torsion units pair with
+roots of unity. The local valuation block pairs with unramified characters,
+the residue block with tame characters, and every wild successive quotient
+is the isomorphism (4.F4f), with its coordinate realization (4.F4i).
+
+Finally the Brauer presentation (4.F4l) is paired with the last invariant
+coordinate. Exactness of (4.I12) on $n$-torsion says explicitly that
+$\ker(\sum\operatorname {inv}_v)=B_{S,n}$ and that its annihilator is the
+cokernel of the transposed invariant row. Thus this last square has the same
+kernel/cokernel property as (4.F4r). Filter the comparison cone in the order
+divisor blocks, valuation, residue, increasing unit depth, real sign, and
+Brauer presentation. Each associated quotient is the cone of one of the
+displayed isomorphisms. If $s_{r-1}$ contracts the preceding filtered piece
+and $t_r$ contracts the quotient, lift $t_r$ arbitrarily and replace it by
+
+$$
+s_r=s_{r-1}+t_r-s_{r-1}(dt_r+t_rd-1).                    \tag{4.F4s}
+$$
+
+A direct multiplication gives $ds_r+s_rd=1$ on the next piece. Induction
+therefore contracts the entire comparison cone. This proves finite-level
+perfectness and, more strongly, identifies both annihilators in every exact
+localization diagram.
 
 On the Kummer side filtered colimits are exact. On the dual side,
 $\operatorname {Hom}(\varinjlim K_T,\mathbf Q/\mathbf Z)
