@@ -1480,7 +1480,7 @@ comparison is explicit. If $N_a=\dim(P_a/S)$ and $\omega_X^{(1)}$ is the Ext she
 from $i_1$, base change of the universally exact resolution for $i_1$ gives
 
 $$
-k^!\omega_{Q/S}simeq
+k^!\omega_{Q/S}\simeq
 \operatorname{pr}_X^*\omega_X^{(1)}[-(N_1-1)]
 \otimes\operatorname{pr}_{P_2}^*\omega_{P_2/S}.
 $$
