@@ -60,17 +60,11 @@
   - [11.1 The base-change morphism](#111-the-base-change-morphism)
   - [11.2 A spectral criterion for base change](#112-a-spectral-criterion-for-base-change)
   - [11.3 Coefficient change and derived completion](#113-coefficient-change-and-derived-completion)
-- [12. Nearby cycles and specialization](#12-nearby-cycles-and-specialization)
-  - [12.1 The trait and its oriented fiber](#121-the-trait-and-its-oriented-fiber)
-  - [12.2 Nearby and vanishing cycles](#122-nearby-and-vanishing-cycles)
-  - [12.3 Nearby-cycle spectral sequences](#123-nearby-cycle-spectral-sequences)
-  - [12.4 Inertia and arithmetic consequences](#124-inertia-and-arithmetic-consequences)
-  - [12.5 A specialization checklist](#125-a-specialization-checklist)
-- [13. Reusable comparison theorems](#13-reusable-comparison-theorems)
-  - [13.1 The filtered comparison package](#131-the-filtered-comparison-package)
-  - [13.2 The derived-composition package](#132-the-derived-composition-package)
-  - [13.3 The arithmetic base-change package](#133-the-arithmetic-base-change-package)
-  - [13.4 Final synthesis](#134-final-synthesis)
+- [12. Reusable comparison theorems](#12-reusable-comparison-theorems)
+  - [12.1 The filtered comparison package](#121-the-filtered-comparison-package)
+  - [12.2 The derived-composition package](#122-the-derived-composition-package)
+  - [12.3 The arithmetic base-change package](#123-the-arithmetic-base-change-package)
+  - [12.4 Final synthesis](#124-final-synthesis)
 
 ## 1. Cohomology as layered arithmetic information
 
@@ -99,7 +93,15 @@ and there need be no canonical splitting. Remembering this filtration is essenti
 
 An **abelian category** is an additive category with a zero object, kernels and cokernels, in which every monomorphism is a kernel and every epimorphism is a cokernel. Modules over a ring, sheaves of modules on a site, and equivariant sheaves of modules are the principal examples. We use the ordinary diagram lemmas of abelian categories, including the snake lemma and the $3\times3$ lemma; each follows by factoring maps through kernels and cokernels and chasing their universal properties.
 
-A **Grothendieck abelian category** is an abelian category with all small coproducts, exact filtered colimits, and a generator. The category of sheaves of modules on any small ringed site is Grothendieck. Here is the relevant reason. Sheafification is exact for modules, and filtered colimits are obtained by sheafifying objectwise colimits. For each object $U$ of the site, sheafify the free presheaf module represented by $U$. The resulting set of objects detects nonzero sections, and its coproduct is a generator. A standard transfinite enlargement argument then embeds every object into an injective one: successively adjoin solutions to extension problems from subobjects of the generator and take the filtered colimit. Exactness of filtered colimits preserves the monomorphism. Choosing a regular cardinal larger than the set of relevant morphisms makes the construction stationary, and the stationary object has the extension property characterizing injectivity.
+A **Grothendieck abelian category** is an abelian category with all small coproducts, exact filtered colimits, and a generator. The category of sheaves of modules on any small ringed site is Grothendieck. Here is the relevant reason. Sheafification is exact for modules, and filtered colimits are obtained by sheafifying objectwise colimits. For each object $U$ of the site, sheafify the free presheaf module represented by $U$. The resulting set of objects detects nonzero sections, and its coproduct is a generator.
+
+The one nonformal input we take from this axiomatics is Grothendieck's theorem that such categories are hospitable to injective resolutions.
+
+**Enough injectives in a Grothendieck abelian category.** Every Grothendieck abelian category $\mathcal A$ has enough injectives: every object of $\mathcal A$ admits a monomorphism into an injective object.
+
+This is MATHLIB background, not something we reprove. The formalization is `Mathlib/CategoryTheory/Abelian/GrothendieckCategory/EnoughInjectives.lean`, which establishes the `EnoughInjectives` instance for a Grothendieck abelian category. Everything in Chapter 3 that resolves an object or a bounded-below complex injectively rests on that statement, and on nothing further about the site.
+
+*Commentary on the argument.* The Mathlib proof runs through lifting properties rather than through a hand-built transfinite tower, and it is worth recording its shape once, since the same small-object mechanism reappears whenever a replacement has to be produced. Injectivity is first characterized by a lifting property: an object $I$ is injective exactly when $I\to0$ has the right lifting property with respect to all monomorphisms. The technical heart is that this apparently unbounded test class can be replaced by a set. If $G$ is a generator of $\mathcal A$, then a morphism has the right lifting property with respect to the inclusions of subobjects of $G$ if and only if it has it with respect to every monomorphism. One may therefore apply the small object argument to the set of inclusions of subobjects of $G$. Factoring $X\to0$ through it yields $X\to I\to0$ in which $I\to0$ has the required right lifting properties, hence $I$ is injective, and in which $X\to I$ is a transfinite composition of monomorphisms, hence itself a monomorphism because filtered colimits are exact. That last step is where the AB5 axiom is genuinely used, and it is the step a naive stationarity argument tends to leave unexamined.
 
 We work on a ringed site $(X,\mathcal O_X)$ with category $\operatorname{Mod}(X)$ of sheaves of $\mathcal O_X$-modules. An **arithmetic sheaf category** in this book means one of the following: $\operatorname{Mod}(X)$; modules over a sheaf of algebras on $X$; discrete sheaves with an action of a profinite group; or the ambient abelian category of inverse systems of such sheaves when completeness is imposed explicitly on the objects. We do not silently replace that ambient category by a full subcategory of complete objects, which need not be abelian. Nothing about the topology beyond the stated exactness and acyclicity hypotheses is silently used.
 
@@ -135,7 +137,7 @@ separate descent obstruction from geometric degree. In low degree, an invariant 
 
 Third, hypercohomology treats a complex of sheaves whose cohomology sheaves occupy several degrees. A two-term complex $[\mathcal F\to\mathcal G]$ is not determined by the kernel and cokernel of its differential: the extension joining them can produce a nonzero spectral differential.
 
-Fourth, nearby cycles separate local degeneration degree from special-fiber cohomology. In a locally constant family they occur only in degree zero. Singularities can create higher nearby-cycle sheaves supported at special points. Sparseness then helps, but degeneration follows only after checking every possible differential bidegree.
+Fourth, a cartesian square asks whether cohomology computed before a change of base agrees with cohomology computed after it. The two higher direct-image spectral sequences attached to the square separate the derived pullback degree from the direct-image degree, and the discrepancy lives in specific bidegrees. A base-change isomorphism is proved by comparing whole pages, never by comparing abutments alone.
 
 Each prototype therefore contains a tower, successive layers, an exact couple, and a filtered target. Only the arithmetic meaning of the layers changes.
 
@@ -316,6 +318,8 @@ A useful counterexample explains the letter K. A termwise flat unbounded complex
 For the unbounded theory we use the following precise hypothesis. It separates the formal arguments in this book from the existence of the particular replacements required by a chosen sheaf category.
 
 **Replacement hypothesis.** Whenever an unbounded right-derived operation is used, every complex in the Grothendieck abelian category under consideration admits a quasi-isomorphism $K\to I$ with $I$ K-injective. Whenever unbounded derived tensor is used in a module or sheaf-module category, every complex admits a quasi-isomorphism $P\to K$ with $P$ K-flat. For sheaf-valued internal Hom we additionally require an internal K-injective replacement: $L\to I$ such that $\mathcal Hom(A,I)$ is acyclic for every acyclic complex $A$, and the same remains true after restriction to every object of the site.
+
+It is worth recording how much of this hypothesis is already discharged by MATHLIB, because the bounded-below and the unbounded halves stand on very different ground. The notion of a K-injective cochain complex and its basic theory are formalized in `Mathlib/Algebra/Homology/HomotopyCategory/KInjective.lean`, with exactly the definition used in Section 3.2 — a complex $L$ is K-injective when every morphism $K\to L$ out of an acyclic complex is homotopic to zero — together with the theorem that a bounded-below complex of injective objects is K-injective. The lifting theorem of Section 3.2 is formalized in `Mathlib/Algebra/Homology/DerivedCategory/KInjective.lean`, which shows that for K-injective $L$ the localization functor induces a bijection from homotopy classes of morphisms into $L$ to morphisms in the derived category, and deduces that a morphism between K-injective complexes is a quasi-isomorphism if and only if it is a homotopy equivalence. Finally, `Mathlib/Algebra/Homology/ModelCategory/Injective.lean` constructs, over any abelian category with enough injectives, the injective model structure on the category of bounded-below cochain complexes, in which the cofibrations are the monomorphisms, the weak equivalences are the quasi-isomorphisms, and the fibrations are the degreewise epimorphisms with injective kernel; its factorization axiom supplies bounded-below K-injective replacements directly. Consequently the bounded-below half of the replacement hypothesis is not a hypothesis at all in the situations of this book: it is the Cartan--Eilenberg construction proved below, and it is Mathlib-backed. What remains genuinely hypothetical is the unbounded Spaltenstein statement — K-injective replacement for arbitrary unbounded complexes, and its K-flat counterpart — which is not yet available and which we therefore continue to carry as the named standing hypothesis above.
 
 We now prove the construction in the bounded directions actually used most often. The ingredient is the Cartan--Eilenberg construction. For every degree $n$ of a bounded-below complex $K$, consider
 
@@ -558,7 +562,7 @@ $$
 
 Applying a cohomological functor gives an exact couple and hence a spectral sequence. A filtered complex produces such a tower with $X^p=F^pK$ and $G^p=\operatorname{gr}^pK$. Conversely, a finite spectral object can be realized inductively by extensions, though not canonically by literal subcomplexes.
 
-This viewpoint has two advantages. First, it is invariant under filtered quasi-isomorphism. Second, it lets truncation towers, derived direct images, and nearby-cycle filtrations enter the same machine even when no convenient pointwise filtration has been chosen.
+This viewpoint has two advantages. First, it is invariant under filtered quasi-isomorphism. Second, it lets truncation towers, derived direct images, and the filtrations produced by derived completion enter the same machine even when no convenient pointwise filtration has been chosen.
 
 ### 5.5 Filtrations from arithmetic geometry
 
@@ -1150,117 +1154,9 @@ $$
 
 Thus reduction commutes with cohomology exactly when the next cohomology group has no $\pi$-torsion. Iterating this statement controls the transition maps modulo $\pi^m$ when every $\pi^m$ is again a non-zero-divisor. If $\Lambda$ is noetherian and complete and $K$ is a bounded complex with finitely generated cohomology, the Artin--Rees stabilization of the relevant torsion and quotient systems gives the Mittag--Leffler condition. Without these finiteness hypotheses, inverse systems can retain infinitely receding torsion and ordinary completion need not recover the derived one.
 
-## 12. Nearby cycles and specialization
+## 12. Reusable comparison theorems
 
-### 12.1 The trait and its oriented fiber
-
-Let $S$ be the spectrum of a henselian discrete valuation ring, with generic point $\eta$, closed point $s$, geometric points $\bar\eta,\bar s$, and inertia group $I$. For a finite-type $S$-space $f:X\to S$, write $X_{\bar\eta}$ and $X_{\bar s}$ for geometric fibers. The specialization problem asks how cohomology on $X_{\bar\eta}$ approaches the special fiber.
-
-There is no honest inclusion $X_{\bar\eta}\hookrightarrow X_{\bar s}$. Nearby cycles correct this by working on the oriented fiber site $X_{\overleftarrow S}$, whose objects remember a geometric point near $X_{\bar s}$ together with a specialization from the geometric generic direction. There are morphisms of sites
-
-$$
-X_{\bar\eta}\xrightarrow{j}X_{\overleftarrow S}
-\xleftarrow{\iota}X_{\bar s}.
-$$
-
-Write $j_0:X_{\bar\eta}\to X$ and $i_0:X_{\bar s}\to X$ for the ordinary fiber morphisms. The composite $\iota^*Rj_*$ is meaningful and retains the inertia action, while $i_0^*$ and $j_0^*$ restrict a complex on $X$ to its two geometric fibers.
-
-### 12.2 Nearby and vanishing cycles
-
-For a bounded-below complex $K$ on $X_{\bar\eta}$, assume first that the inverse-image functors in this paragraph are exact in the chosen coefficient category and define
-
-$$
-R\Psi_fK=\iota^*Rj_*K.
-$$
-
-For modules over varying structure sheaves, replace $\iota^*$ by $L\iota^*$; all spectral arguments below then use the cohomology sheaves of that derived pullback. We keep the conventional notation $R\Psi_f$ in both cases.
-
-If $L$ is a complex on $X$ itself, adjunction gives a specialization map
-
-$$
-i_0^*L\longrightarrow R\Psi_f(j_0^*L).
-$$
-
-Its cone is the vanishing-cycle complex:
-
-$$
-R\Phi_f(L)=\operatorname{Cone}
-\bigl(i_0^*L\to R\Psi_f(j_0^*L)\bigr).
-$$
-
-Thus there is a distinguished triangle
-
-$$
-i_0^*L\to R\Psi_f(j_0^*L)\to R\Phi_f(L)\to i_0^*L[1].
-$$
-
-The associated long exact sequence says exactly which classes fail to specialize locally constantly. In a locally acyclic family the specialization map is an isomorphism, hence vanishing cycles vanish. For this fixed trait and specialization, vanishing of $R\Phi$ says that no local vanishing cycles occur. Full local acyclicity requires the corresponding vanishing after every permitted base change and at every geometric specialization, so it is not inferred from a single vanishing calculation.
-
-Because $j$ is defined over the geometric generic direction, $I$ acts on $R\Psi_fK$. The specialization map is $I$-equivariant when the special-fiber term has trivial inertia action. No assertion of unipotence or a monodromy filtration is needed for the constructions here.
-
-### 12.3 Nearby-cycle spectral sequences
-
-Apply hypercohomology on $X_{\bar s}$ to the cohomology sheaves
-
-$$
-R^q\Psi_fK=\mathcal H^q(R\Psi_fK).
-$$
-
-The truncation tower gives
-
-$$
-E_2^{p,q}=H^p(X_{\bar s},R^q\Psi_fK)
-\Longrightarrow
-\mathbb H^{p+q}(X_{\bar s},R\Psi_fK).
-$$
-
-If the comparison morphism
-
-$$
-R\Gamma(X_{\bar s},R\Psi_fK)
-\longrightarrow R\Gamma(X_{\bar\eta},K)
-$$
-
-is an isomorphism, the abutment is $H^{p+q}(X_{\bar\eta},K)$. This comparison is a separate geometric hypothesis, not a formal consequence of the definition of nearby cycles. A geometric application must establish it by an appropriate properness or compact-support argument before using the generic-fiber abutment.
-
-**Nearby-cycle convergence theorem.** Suppose the nearby-cycle $E_2$ page has only finitely many nonzero terms on each total diagonal. This holds, in particular, when $R\Psi_fK$ is bounded below, as it is for bounded-below $K$ when the inverse image used in its definition is exact. Then the nearby-cycle spectral sequence converges strongly. If the displayed global comparison is an isomorphism, it induces a finite, functorial, inertia-stable filtration on $H^n(X_{\bar\eta},K)$ with graded pieces $E_\infty^{p,n-p}$.
-
-**Proof.** The hypothesis makes the truncation spectral object finite along each total diagonal. Section 6.1 gives strong convergence. In the stated bounded-below case, $p\ge0$ and $q$ has a lower bound, so a fixed equation $p+q=n$ has only finitely many solutions. All truncation maps and the inertia action commute, so each page and the limiting filtration are $I$-stable. Transport the filtration across the global comparison. $\square$
-
-If $R^q\Psi_fK=0$ unless $q=0,1$, only two rows occur. The only possible nonzero higher differential is
-
-$$
-d_2:E_2^{p,1}\to E_2^{p+2,0}.
-$$
-
-The five-term sequence then isolates the obstruction for a global section of $R^1\Psi_fK$ to lift to global generic-fiber cohomology.
-
-### 12.4 Inertia and arithmetic consequences
-
-Taking continuous inertia invariants after nearby cycles gives a second spectral sequence
-
-$$
-H^a_{\mathrm{cts}}
-\bigl(I,H^b(X_{\bar s},R\Psi_fK)\bigr)
-\Longrightarrow H^{a+b}_{\mathrm{cts}}
-\bigl(I,R\Gamma(X_{\bar s},R\Psi_fK)\bigr).
-$$
-
-It converges under finite cohomological dimension and boundedness. Combining it with the nearby-cycle sequence requires a comparison of two filtrations on a triple complex. Filter first by nearby-cycle degree and then by group-cochain degree, or in the reverse order. Both totalizations agree when each total diagonal is finite; the resulting spectral sequences therefore compute the same object.
-
-This observation supplies a disciplined strategy for degeneration questions. First compute local nearby-cycle sheaves, then their special-fiber cohomology, and only then take inertia cohomology. At every step, edge maps record a concrete obstruction. Collapsing all three stages into an unqualified equality would lose extension data and could also lose derived inverse-limit terms.
-
-### 12.5 A specialization checklist
-
-A nearby-cycle calculation has four logically distinct stages. First, construct $R\Psi$ on the oriented fiber and record its inertia action. Second, bound its cohomological amplitude; without this, the local-to-global sequence may not converge strongly. Third, compute or compare the sheaves $R^q\Psi K$ on the special fiber. Fourth, justify the global comparison between special-fiber nearby cohomology and generic-fiber cohomology, usually through a properness or compact-support theorem suited to the chosen site.
-
-These stages should not be collapsed. Local acyclicity proves $R\Phi=0$ and identifies $i_0^*L$ with $R\Psi(j_0^*L)$, but says nothing by itself about global cohomology if global base change is unavailable. Properness may provide the global comparison while local singularities still make higher $R^q\Psi$ nonzero. Trivial inertia on the $E_2$ page need not imply trivial inertia on the target if hidden extensions carry a nontrivial action.
-
-Suppose, for illustration, that $R^q\Psi K$ vanishes except for $q=0,1$, that $R^1\Psi K$ is supported on finitely many closed points and is acyclic there, and that the special fiber has cohomological dimension one. Then $H^p(R^1\Psi K)=0$ for $p>0$, and $H^p(R^0\Psi K)=0$ for $p>1$. There is no possible nonzero $d_2$, so the sequence degenerates. The generic cohomology receives a two-step inertia-stable filtration. Even here, the extension between its two graded pieces remains to be determined.
-
-## 13. Reusable comparison theorems
-
-### 13.1 The filtered comparison package
+### 12.1 The filtered comparison package
 
 The following theorem is designed for repeated use.
 
@@ -1277,7 +1173,7 @@ Then $u$ is a quasi-isomorphism. It induces an isomorphism of filtered cohomolog
 
 The completeness clause is essential: an infinitely deep nonzero subobject has zero associated graded and would otherwise furnish a false comparison.
 
-### 13.2 The derived-composition package
+### 12.2 The derived-composition package
 
 **Derived-composition theorem.** Let $F$ and $G$ be left exact functors between Grothendieck abelian categories, and work on a subcategory on which $RG$, $RF$, and $R(F\circ G)$ exist. There is a canonical comparison
 
@@ -1306,9 +1202,9 @@ $$
 
 which explains the direction of the canonical comparison. Since every $G(I^q)$ is $F$-acyclic, the Cartan--Eilenberg argument of Section 8.1 shows that this map is a quasi-isomorphism. The unbounded proof is identical with the stated K-injective hypotheses: $G(I)$ computes $RG(A)$, its $F$-acyclicity makes $F(G(I))$ compute $RF(RG(A))$, and the chosen replacement also computes the derived composite. Filtering the Cartan--Eilenberg model by one resolution degree gives the displayed pages; comparison uniqueness supplies naturality. The product and convergence statements follow from Chapters 10 and 6. $\square$
 
-Leray, Hochschild--Serre, and the invariant-after-nearby-cycles sequence are instances of this single result.
+Leray and Hochschild--Serre are instances of this single result, as is any further composite of left exact functors satisfying the stated acyclicity condition.
 
-### 13.3 The arithmetic base-change package
+### 12.3 The arithmetic base-change package
 
 **Arithmetic comparison theorem.** In a cartesian square as in Section 11.1, let $K$ be a bounded-below complex of arithmetic sheaves. Assume:
 
@@ -1337,8 +1233,8 @@ The isomorphism is compatible with composition of squares, with any coefficient 
 
 The theorem deliberately separates formal homological conditions from geometric base-change input. For flat base change, $b=0$ is the only row in item 3, and the hypotheses reduce to the sheafwise maps of Section 11.2. In a nonflat application, the compatible higher maps in item 3 must actually be constructed; their existence is not hidden in the word “cartesian.” Identifying the coefficient-reduced right side with the direct image of reduced coefficients additionally requires the corresponding projection formula.
 
-### 13.4 Final synthesis
+### 12.4 Final synthesis
 
 The constructions of this book reduce layered arithmetic cohomology to a stable sequence of decisions. Replace complexes by objects on which the desired operation respects quasi-isomorphisms. Express a composite operation or a filtration as a spectral object. Identify its graded layers, verify finite-diagonal convergence or derived completeness, and retain the induced filtration and edge maps. When products, base change, or group actions are present, construct them before passing to pages so their compatibility survives to the target.
 
-Three warnings remain permanent. A degenerate spectral sequence gives graded pieces, not a canonical splitting. A termwise injective or flat unbounded complex need not be an admissible replacement. An inverse limit can contribute a first derived-limit term. With these obstructions made explicit, hypercohomology, Leray, Hochschild--Serre, and nearby cycles become manifestations of one rigorous method. The comparison theorems above provide a closed toolkit for carrying that method into coherent, equivariant, torsion, and completed arithmetic sheaf theories.
+Three warnings remain permanent. A degenerate spectral sequence gives graded pieces, not a canonical splitting. A termwise injective or flat unbounded complex need not be an admissible replacement. An inverse limit can contribute a first derived-limit term. With these obstructions made explicit, hypercohomology, Leray, Hochschild--Serre, and base change become manifestations of one rigorous method. The comparison theorems above provide a closed toolkit for carrying that method into coherent, equivariant, torsion, and completed arithmetic sheaf theories.

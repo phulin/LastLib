@@ -7,10 +7,13 @@
    - [1.2 Conventions and normalizations](#12-conventions-and-normalizations)
    - [1.3 Strictly semistable curves](#13-strictly-semistable-curves)
 [2. The nearby-cycle construction](#2-the-nearby-cycle-construction)
-   - [2.1 The oriented specialization space](#21-the-oriented-specialization-space)
+   - [2.1 The oriented fiber site](#21-the-oriented-fiber-site)
    - [2.2 Nearby and vanishing cycles](#22-nearby-and-vanishing-cycles)
    - [2.3 Stalks, proper comparison, and base change](#23-stalks-proper-comparison-and-base-change)
    - [2.4 Duality and functoriality](#24-duality-and-functoriality)
+   - [2.5 Convergence of the nearby-cycle spectral sequence](#25-convergence-of-the-nearby-cycle-spectral-sequence)
+   - [2.6 Inertia invariants and iterated spectral sequences](#26-inertia-invariants-and-iterated-spectral-sequences)
+   - [2.7 A specialization checklist](#27-a-specialization-checklist)
 [3. The semistable local calculation](#3-the-semistable-local-calculation)
    - [3.1 The punctured normal-crossings chart](#31-the-punctured-normal-crossings-chart)
    - [3.2 The exterior-algebra theorem](#32-the-exterior-algebra-theorem)
@@ -165,18 +168,20 @@ A regular model of a curve with reduced nodal fiber is strictly semistable preci
 
 ## 2. The nearby-cycle construction
 
-### 2.1 The oriented specialization space
+### 2.1 The oriented fiber site
 
-The generic and special fibers are disjoint subschemes of $X$. Consequently no ordinary restriction map can carry a sheaf directly from $X_{\bar\eta}$ to $X_{\bar s}$. What relates them is a chosen specialization: a geometric point near the special fiber together with a path from the geometric generic direction. The corresponding oriented specialization space records precisely that data.
+The generic and special fibers are disjoint subschemes of $X$. There is in particular no honest inclusion $X_{\bar\eta}\hookrightarrow X_{\bar s}$, and consequently no ordinary restriction map can carry a sheaf directly from one to the other. What relates them is a chosen specialization: a geometric point near the special fiber together with a path from the geometric generic direction. The **oriented fiber site** $X_{\overleftarrow S}$ is the site whose objects record precisely that data — a geometric point of $X$ above the special fiber, together with a specialization from the geometric generic direction — and whose topology is the one making that data descend along étale maps. It is the oriented product of $X$ with the geometric trait over $S$; the associated topos is also called the vanishing topos, since it is the ambient object on which the comparison between the two fibers becomes an actual morphism of sheaves.
 
-Denote by
+There are morphisms of sites
 
 $$
-X_{\bar\eta}\xrightarrow{\bar j}X_{\bar S}
+X_{\bar\eta}\xrightarrow{\bar j}X_{\overleftarrow S}
 \xleftarrow{\bar i}X_{\bar s}
 $$
 
-the generic and special directions after strict localization and geometric base change. For a bounded constructible complex $K$ on $X_{\bar\eta}$ define
+realizing the generic and special directions after strict localization and geometric base change. Write $j_0:X_{\bar\eta}\to X$ and $i_0:X_{\bar s}\to X$ for the two ordinary fiber morphisms. The point of the construction is that the composite $\bar i^*R\bar j_*$ is meaningful and retains the inertia action, whereas $j_0^*$ and $i_0^*$ merely restrict a complex on $X$ to its two geometric fibers and remember nothing that connects them. When $L$ is a complex on $X$ itself we abbreviate $j_0^*L$ and $i_0^*L$ to $\bar j^*L$ and $\bar i^*L$; the intended functor is determined by where its argument lives, so no ambiguity arises.
+
+For a bounded constructible complex $K$ on $X_{\bar\eta}$ define
 
 $$
 R\Psi_fK=\bar i^*R\bar j_*K.
@@ -184,6 +189,8 @@ R\Psi_fK=\bar i^*R\bar j_*K.
 $$
 
 The right side is a complex on $Y$, but it is not merely a complex of sheaves: changing the generic geometric point through inertia acts on it. Thus $R\Psi_fK$ carries a continuous $I_K$-action.
+
+For the prime-to-$p$ torsion and $\ell$-adic coefficients fixed in Section 1.2 the inverse image $\bar i^*$ is exact, so no derived pullback is needed in (2.1). In a coefficient category where the structure sheaf varies, $\bar i^*$ must be replaced by $L\bar i^*$ and every statement below read on the cohomology sheaves of that derived pullback. We keep the notation $R\Psi_f$ in both cases.
 
 The stalk has a useful geometric description. If $\bar x\to Y$ is a geometric point and $X_{(\bar x)}$ is the strict localization of $X$ at $\bar x$, then
 
@@ -221,7 +228,11 @@ $$
 \tag{2.5}
 $$
 
-This definition makes the conceptual role exact. Nearby cycles are what the generic coefficient looks like from the special fiber; vanishing cycles are the defect of local constancy. If $f$ is smooth near the support of a lisse coefficient, local acyclicity makes (2.3) an isomorphism, so $R\Phi_fL=0$. Conversely, vanishing of (2.4) is the derived local-acyclicity condition for $L$.
+This definition makes the conceptual role exact. Nearby cycles are what the generic coefficient looks like from the special fiber; vanishing cycles are the defect of local constancy. If $f$ is smooth near the support of a lisse coefficient, local acyclicity makes (2.3) an isomorphism, so $R\Phi_fL=0$.
+
+The converse must be stated with care. For the fixed trait and the fixed specialization, vanishing of (2.4) says exactly that no local vanishing cycles occur here. Full local acyclicity is a stronger condition: it demands the corresponding vanishing after every permitted base change of the trait and at every geometric specialization, and it is not inferred from a single vanishing calculation. Chapter 11 returns to this point, where a ramified base change is precisely what exposes the difference.
+
+Because $\bar j$ is defined over the geometric generic direction, $I_K$ acts on $R\Psi_f\bar j^*L$, and the specialization morphism (2.3) is $I_K$-equivariant when the special-fiber term carries the trivial action. Nothing at this stage asserts unipotence or produces a monodromy filtration; those are the work of Chapters 4 and 5.
 
 Applying hypercohomology to (2.5) gives the global specialization sequence
 
@@ -299,6 +310,60 @@ $$
 after placing twists so both terms have the same target.
 
 If $X\xleftarrow{a}Z\xrightarrow{b}X$ extends over $S$ and the pull--push $b_*a^*$ is oriented and degree-preserving in the sense of low-dimensional duality—for example, for the finite flat lci legs used below—then it acts on nearby cycles and commutes with inertia. Properness of $b$ alone does not create an untwisted pushforward: the orientation fixes its shift and twist. A correspondence existing only on the generic fiber need not act on a chosen semistable complex by its naive closure, because that closure may acquire vertical components. Those components contribute genuine restriction or Gysin maps.
+
+### 2.5 Convergence of the nearby-cycle spectral sequence
+
+The hypercohomology sequence (2.7) becomes usable only after two logically separate questions are answered: whether it converges, and whether its abutment may be replaced by generic-fiber cohomology. Neither is automatic, and conflating them is the commonest error in a specialization argument.
+
+The second question is the one already raised at (1.3). If the comparison morphism
+
+$$
+R\Gamma(Y,R\Psi_fK)
+\longrightarrow R\Gamma(X_{\bar\eta},K)
+\tag{2.12}
+$$
+
+is an isomorphism, then the abutment of (2.7) is $H^{a+b}(X_{\bar\eta},K)$. This comparison is a separate geometric hypothesis, not a formal consequence of the definition of nearby cycles. A geometric application must establish it by an appropriate properness or compact-support argument before invoking the generic-fiber abutment. For proper $f$ it is exactly (1.3); Section 2.3 records what has to replace it otherwise.
+
+The first question is settled by a finite-diagonal criterion.
+
+**Nearby-cycle convergence theorem.** Suppose the page (2.7) has only finitely many nonzero terms on each total diagonal $a+b=m$. This holds in particular when $R\Psi_fK$ is bounded below, as it is for bounded constructible $K$ with the exact inverse image of Section 2.1. Then the nearby-cycle spectral sequence converges strongly. If in addition (2.12) is an isomorphism, it induces a finite, functorial, inertia-stable filtration on $H^m(X_{\bar\eta},K)$ whose graded pieces are the terms $E_\infty^{a,m-a}$.
+
+**Proof.** The hypothesis makes the truncation spectral object finite along each total diagonal, and the standard finite-diagonal convergence criterion for a filtered complex, part of the derived-cohomology background assumed in Section 1.1, then gives strong convergence. In the bounded-below case $a\ge0$ and $b$ is bounded below, so a fixed equation $a+b=m$ admits only finitely many solutions. Every truncation map is compatible with the inertia action of (2.1), so each page and the limiting filtration are $I_K$-stable. Transporting the filtration across (2.12) gives the last assertion. $\square$
+
+The sparse case is the one that governs curves. If $R^b\Psi_fK=0$ unless $b=0,1$, only two rows occur, and the sole possible nonzero higher differential is
+
+$$
+d_2:E_2^{a,1}\longrightarrow E_2^{a+2,0}.
+\tag{2.13}
+$$
+
+The associated five-term exact sequence then isolates the obstruction for a global section of $R^1\Psi_fK$ to lift to a class in generic-fiber cohomology. Chapter 3 shows that constant coefficients on a strictly semistable curve fall into precisely this two-row situation, with $R^1\Psi E$ a sum of skyscrapers at the nodes; the weight spectral sequence of Chapter 6 is the refinement that keeps track of weights as well as degrees.
+
+### 2.6 Inertia invariants and iterated spectral sequences
+
+Taking continuous inertia cohomology after nearby cycles produces a second spectral sequence
+
+$$
+E_2^{c,d}=H^c_{\mathrm{cts}}
+\bigl(I_K,H^d(Y,R\Psi_fK)\bigr)
+\Longrightarrow
+H^{c+d}_{\mathrm{cts}}
+\bigl(I_K,R\Gamma(Y,R\Psi_fK)\bigr).
+\tag{2.14}
+$$
+
+It converges under finite cohomological dimension and boundedness, both of which hold for the coefficients fixed in Section 1.2. Combining (2.14) with (2.7) means comparing two filtrations on one triple complex. One may filter first by nearby-cycle degree and then by group-cochain degree, or in the reverse order; the two totalizations agree whenever each total diagonal is finite, so the two resulting spectral sequences compute the same object.
+
+This observation dictates the order of work in a degeneration problem. First compute the local nearby-cycle sheaves, then their cohomology on $Y$, and only then take inertia cohomology. At every step an edge map records a concrete obstruction. Collapsing the three stages into an unqualified equality loses extension data, and with integral coefficients it can also lose a derived inverse-limit term. Trivial inertia action on a page is likewise not trivial inertia action on the target, since a hidden extension may carry one.
+
+### 2.7 A specialization checklist
+
+A nearby-cycle calculation has four logically distinct stages, and they should not be collapsed. First, construct $R\Psi_f$ on the oriented fiber site and record its inertia action. Second, bound its cohomological amplitude; without this the local-to-global sequence may fail to converge strongly. Third, compute or compare the sheaves $R^b\Psi_fK$ on the special fiber. Fourth, justify the global comparison (2.12) between special-fiber nearby cohomology and generic-fiber cohomology, through a properness or compact-support theorem suited to the situation at hand.
+
+Each stage answers a different question. Local acyclicity proves $R\Phi_f=0$ and identifies $\bar i^*L$ with $R\Psi_f\bar j^*L$, but says nothing by itself about global cohomology when global base change is unavailable. Properness may supply the global comparison while local singularities keep higher $R^b\Psi_f$ nonzero. A vanishing computed at one specialization is not local acyclicity, as Section 2.2 already warned.
+
+Suppose, for illustration, that $R^b\Psi_fK$ vanishes except for $b=0,1$, that $R^1\Psi_fK$ is supported on finitely many closed points and acyclic there, and that $Y$ has cohomological dimension one. Then $H^a(Y,R^1\Psi_fK)=0$ for $a>0$ and $H^a(Y,R^0\Psi_fK)=0$ for $a>1$. No nonzero $d_2$ of the shape (2.13) is possible, so the sequence degenerates and generic cohomology receives a two-step inertia-stable filtration. Even here the extension between the two graded pieces remains to be determined; that extension is where the monodromy operator of Chapter 5 lives, and it is the reason a degeneration is not remembered by its special fiber alone.
 
 ## 3. The semistable local calculation
 
@@ -1277,7 +1342,7 @@ Good reduction implies $R\Phi E=0$, $N=0$, and unramified cohomology. The conver
 
 ### 11.4 A calculation protocol
 
-A local calculation for a semistable curve is reliable when performed in the following order.
+The four stages of Section 2.7 apply to any nearby-cycle calculation. For a semistable curve they refine into the following order, which is the one to follow in practice.
 
 1. Pass to a finite extension on which a strict semistable model exists, but retain the finite descent group.
 2. List the geometric strata $Y^{(1)}$ and $Y^{(2)}$, including residue actions, edge orientations, and thicknesses.
