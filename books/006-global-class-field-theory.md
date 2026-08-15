@@ -1478,26 +1478,11 @@ and zero elsewhere, so the map is a quasi-isomorphism in the displayed
 range. This proves the lemma; it does not infer a cochain map from an
 isomorphism of cohomology groups.
 
-Apply the lemma to the good truncation of
-$C^\bullet(G_{F,S},\mu_n)$ in degrees $0,1,2$, using the arithmetic
-presentations (4.F4a), (4.F4d), (4.F4j'), and Smith presentations of the
-resulting finite groups. Denote the resulting complex by
-$\mathcal P_{S,T}(\mu_n)$.
-The construction gives a specified cochain map
-
-$$
-\mathcal P_{S,T}(\mu_n)\longrightarrow
-\tau_{\le2}C^\bullet(G_{F,S},\mu_n)                  \tag{4.F4n}
-$$
-
-which is a quasi-isomorphism in degrees $0,1,2$. Only finitely many cocycles
-and boundary primitives occur. They are continuous with finite values, so
-they factor through one finite quotient $Q_T$ of $G_{F,S}$; equality
-(4.F4m) continues to hold on that quotient because inflation of cochains is
-injective. Thus (4.F4n) is a genuine finite-level cochain construction.
-The unit, divisor, class-group, and Brauer calculations specify its
-cohomology presentations; no nonhomomorphic choice of an $n$-th root on
-$F_{S,T}^\times$ is called a map of complexes.
+We shall apply the lemma only after putting an actual filtration on the
+cochain model. Applying it separately to the two sides and then choosing
+Smith bases would not suffice: arbitrary lifts of cohomology generators need
+not make the cup-product matrix the transpose of the divisor matrix. The
+filtered construction is given after the local blocks have been fixed.
 
 The local truncation must be made simultaneously on a module and on its
 dual. An unspecified ``sufficiently deep'' integer does not do this: the
@@ -1588,114 +1573,154 @@ layers. Passing from the raw logarithmic quotient to its image in $P_v$
 and applying $(Q/R)^\vee=R^\perp/Q^\perp$ gives (4.F4f), including layers
 where an $n$th root lies in a shallower unit group.
 
-We now construct the finite comparison cone without replacing continuous
-cohomology by the cohomology of one finite quotient. Since $\mu_n\subset F$,
-a choice of primitive $n$-th root identifies $A_n$ and $\mu_n$ as
-$G_{F,S}$-modules. The arithmetic descriptions above, local finiteness, and
-the localization long exact sequence show that the cohomology of
-$C_{S,c}^\bullet(A_n)$ is finite in degrees $0,\ldots,3$. Apply the
-cellular realization lemma to its good truncation and write
+We now construct one filtered localization cone; we do not choose an
+unrelated cellular model for its dual. Since $\mu_n\subset F$, fix a
+primitive $n$-th root and identify $A_n$ with $\mu_n$. Resolve the three
+terms of (4.F4) by finite free abelian groups (resolve the finite torsion in
+$F_{S,T}^{\times}$ by one relation cell), and take the resulting total
+complex. Give it the increasing filtration
 
 $$
-\mathcal P^c_{S,T}(A_n)\longrightarrow
-\tau_{[0,3]}C_{S,c}^\bullet(A_n)                     \tag{4.F4o}
+\text{roots of unity}\subset\text{$S$-units}\subset
+\text{divisors}\subset\text{class relations}\subset\text{Brauer cells}.
+                                                               \tag{4.F4n}
 $$
 
-for the resulting quasi-isomorphism. Choose the free presentations
-successively along the finite unit, divisor, local-unit, real-sign, and
-Brauer filtrations. This is possible by lifting generators of each successive
-subgroup and adjoining its relation module; the proof of the cellular lemma
-then supplies compatible cocycles and boundary primitives.
-
-The cochain map (4.C4), followed by restriction along (4.F4n), now gives the
-specified finite comparison
+The last cells are attached using the actual extension (4.F4j'): choose a
+local Brauer family representing each generator of $B_{S,n}$, lift its
+relations to the class-group cells, and use the bar cocycles supplied by the
+Kummer connecting map. On a unit generator $b$, choose $\beta^n=b$ and use
+$\sigma\mapsto\sigma(\beta)/\beta$; on a relation use the corresponding
+zero-cochain $\beta$. Thus the cellular realization lemma, applied in this
+stated order, gives a filtered finite free complex
+$\mathcal P_{S,T}$ and a filtered map
 
 $$
-\Phi_{S,T}:\mathcal P^c_{S,T}(A_n)\longrightarrow
-\operatorname {Hom}\left(
-\mathcal P_{S,T}^{3-\bullet}(\mu_n),
-\tfrac1n\mathbf Z/\mathbf Z\right).                    \tag{4.F4p}
+\mathcal P_{S,T}\longrightarrow
+\tau_{\le2}C^\bullet(G_{F,S},\mu_n)                    \tag{4.F4o}
 $$
 
-This is an actual composite of cochain maps. Only finitely many cellular
-cocycles, primitives, and their local restrictions occur, so all of them
-factor through one finite quotient $Q_T$ of $G_{F,S}$. That observation
-makes every matrix in (4.F4p) finite; it is not used to assert that
-$H^\bullet(Q_T,-)$ already equals continuous cohomology. At a real place
-the local part is taken from the two-periodic complete resolution
+whose associated-graded maps are, respectively, inclusion of roots,
+localization of units, the valuation map, the class-relation map, and the
+local Brauer cocycles. The equality on a relation is an equality of bar
+cochains, because its chosen boundary primitive is attached as a cell; it is
+not merely equality in cohomology. Only finitely many cocycles and primitives
+occur, so after enlarging $T$ they factor through one finite quotient. This
+does not assert that the cohomology of that quotient is continuous
+cohomology.
+
+For each $v\in S$, make the local model in the same way, beginning with the
+valuation factor of $P_v$, then the residue units, and then
+$\overline U_v^1\supset\cdots\supset\overline U_v^{c_v}=0$. Make its dual
+model from the annihilator filtration
+$X_v^{\le0}\subset\cdots\subset X_v^{\le c_v}$. The attaching maps are
+the actual local Kummer cocycles and the local invariant cochain $t_v$.
+Consequently the comparison on every successive quotient is literally
+evaluation (4.F4f); on a logarithmic coordinate it is (4.F4i). At a real
+place use the two-periodic complete resolution
 
 $$
 \cdots\xrightarrow{1-c}M\xrightarrow{1+c}M
-\xrightarrow{1-c}M\xrightarrow{1+c}M\xrightarrow{1-c}\cdots,             \tag{4.F4q}
+\xrightarrow{1-c}M\xrightarrow{1+c}M\xrightarrow{1-c}\cdots,             \tag{4.F4p}
 $$
 
-with the copy meeting degree zero chosen so that $d^{-1}=1+c$; at a complex
-place it is zero. Pull the valuation, residue, and unit filtrations back to
-the cellular presentations. Replacing a local cutoff $c_v$ by a larger one
-adjoins the two-term identity complex on
-$\overline U_v^{c_v}/\overline U_v^{c'_v}$, contracted by
-$s(0,x)=(x,0)$. Thus cutoff changes are genuine homotopy equivalences.
-On the terms of (4.F4p) the comparison is exactly (4.C4), using (4.C3);
-its being a cochain map was checked after (4.C4), not inferred from an order
-equality.
+with $d^{-1}=1+c$, and at a complex place use zero. Denote the direct sum of
+these local models by $\mathcal L_{S,T}$. Restriction of the selected global
+bar cocycles gives, cell by cell, a filtered map
 
-Filter the finite local modules by
-$\overline U_v^r$ and $X_v^{\le r}$. The successive pairings are (4.F4f);
-on logarithmic coordinates their different shift is (4.F4i). The valuation
-and residue boundary blocks are the two blocks described immediately after
-(4.F4f). At a real place the complete resolution gives the perfect sign
-pairing, and at a complex place both modified complexes vanish.
+$$
+\lambda_{S,T}:\mathcal P_{S,T}\longrightarrow\mathcal L_{S,T}.          \tag{4.F4q}
+$$
 
-Choose bases of the free parts of $F_{S,T}^{\times}$ and $D_{S,T}$ and put
-the homomorphism $\operatorname {div}_{S,T}$ in Smith form
-$\operatorname {diag}(a_1,\ldots ,a_r,0,\ldots ,0)$. In the dual diagram the
-matrix is its transpose. Its $i$th finite square is
+When a relation cell is reached, the already chosen global primitive
+restricts to the required local primitive, so no comparison theorem is being
+used to invent this arrow. Its cone
+
+$$
+\mathcal P^c_{S,T}=\operatorname {Cone}(\lambda_{S,T})[-1]               \tag{4.F4r}
+$$
+
+maps by a filtered quasi-isomorphism to the good truncation of
+$C_{S,c}^\bullet(A_n)$. Replacing $c_v$ by a larger cutoff adjoins on both
+sides the two-term identity complex on the added unit quotient, contracted
+by $s(0,x)=(x,0)$, so the construction is independent of the cutoff.
+
+Restrict (4.C4) to these models. It gives an actual filtered cochain map
+
+$$
+\Phi_{S,T}:\mathcal P^c_{S,T}\longrightarrow
+ \operatorname {Hom}\left(
+ \mathcal P_{S,T}^{3-\bullet},\tfrac1n\mathbf Z/\mathbf Z\right).        \tag{4.F4s}
+$$
+
+We check its associated-graded maps. At $v\in S$, they are the valuation--
+unramified, residue--tame, and successive unit pairings (4.F4f), with the
+different shift (4.F4i). The real quotient is the sign pairing in the
+complete resolution; the complex quotient is zero. Outside $S$, (4.F3) says
+on cochains that valuation of one entry is paired with residue of the other,
+with the two terms interchanged and the Koszul sign. Thus, after choosing
+bases of $F_{S,T}^{\times}/\mu(F)$ and $D_{S,T}$, the divisor block and its
+dual have matrices $D$ and $D^t$. Putting $D$ in Smith form reduces each
+nonzero diagonal block to
 
 $$
 \begin{CD}
 \mathbf Z/n @>{a_i}>> \mathbf Z/n\\
 @V{x\mapsto(y\mapsto xy/n)}V{\sim}V
  @VV{\sim}V\\
-(\mathbf Z/n)^\vee @>{a_i^t}>> (\mathbf Z/n)^\vee,
-\end{CD}                                                  \tag{4.F4r}
+(\mathbf Z/n)^\vee @>{a_i^t}>> (\mathbf Z/n)^\vee .
+\end{CD}                                                  \tag{4.F4t}
 $$
 
-and the kernel and cokernel annihilate one another because both are the
-cyclic group of order $\gcd(a_i,n)$. The zero diagonal blocks pair the free
-units with the archimedean logarithmic/sign blocks; torsion units pair with
-roots of unity. The local valuation block pairs with unramified characters,
-the residue block with tame characters, and every wild successive quotient
-is the isomorphism (4.F4f), with its coordinate realization (4.F4i).
-
-Finally the degree-two presentation chosen in (4.F4k) is paired with the last invariant
-coordinate. Exactness of (4.I9h) on $n$-torsion says explicitly that
-$\ker(\sum\operatorname {inv}_v)=B_{S,n}$ and that its annihilator is the
-cokernel of the transposed invariant row. Thus this last square has the same
-kernel/cokernel property as (4.F4r). Filter the comparison cone in the order
-divisor blocks, valuation, residue, increasing unit depth, real sign, and
-Brauer presentation. Each associated quotient is the cone of one of the
-displayed isomorphisms. If $s_{r-1}$ contracts the preceding filtered piece
-and $t_r$ contracts the quotient, use the direct-sum splitting supplied by
-the cellular Smith presentations to lift $t_r$ so that it vanishes on the
-preceding piece, and put
+The zero columns are the $S$-unit cells. Their matrix is not replaced by an
+order count: its $(u,v)$ entry is the actual local symbol $(u,x_v)_{v,n}$.
+The product formula (4.F2) identifies its transpose with the relation among
+the outside valuation rows. Hence the elementary identity
+$(Q/R)^\vee=R^\perp/Q^\perp$, applied successively to the displayed unit
+filtration, identifies the kernel on each side with the annihilator on the
+other. There is no possible residual finite quotient: if $S_f$ is the set of
+finite places in $S$, Dirichlet gives
 
 $$
-s_r=t_r-s_{r-1}(dt_r+t_rd-1).                            \tag{4.F4s}
+|E_S/E_S^n|=|\mu_n(F)|\,
+n^{r_1+r_2-1+|S_f|},                                    \tag{4.F4t'}
 $$
 
-Indeed $e_r=dt_r+t_rd-1$ is a chain map with image in the preceding piece,
-and $(ds_{r-1}+s_{r-1}d)e_r=e_r$. Hence a direct multiplication gives
-$ds_r+s_rd=1$ on the next piece. Induction
-therefore contracts the entire comparison cone. This proves finite-level
-perfectness and, more strongly, identifies both annihilators in every exact
-localization diagram.
-Both vertical maps from the cellular complexes to the good truncations are
-quasi-isomorphisms. Since $\tfrac1n\mathbf Z/\mathbf Z$ is injective,
-$\operatorname {Hom}(-,\tfrac1n\mathbf Z/\mathbf Z)$ carries the
-global cellular quasi-isomorphism to a quasi-isomorphism in the opposite
-direction. The contraction of the cone of $\Phi_{S,T}$ and the two-out-of-three
-property therefore prove that the original cochain map (4.C4) is a
-quasi-isomorphism on the good truncations:
+while Book 5's local calculation gives
+$|F_v^\times/F_v^{\times n}|=n|\mu_n(F_v)|/|n|_v$ at a
+finite place, the sign factor at a real place, and one at a complex place.
+Multiplying these formulas, using the product formula for $n$, and cancelling
+the invariant factors $\gcd(a_i,n)$ from (4.F4t), gives equal orders for the
+two annihilator quotients. The inclusion just proved is therefore equality.
+Torsion units give the root-of-unity evaluation block. Finally, on the Brauer
+cells the map is
+
+$$
+\bigoplus_{v\in S}\operatorname {Br}(F_v)[n]
+ \xrightarrow{\ \sum\operatorname {inv}_v\ }
+\tfrac1n\mathbf Z/\mathbf Z;                             \tag{4.F4u}
+$$
+
+its kernel is $B_{S,n}$ and its transposed cokernel is its full annihilator
+by (4.I9h). These calculations account for every associated quotient of the
+filtration of the cone of $\Phi_{S,T}$.
+
+We use the following filtered-complex fact. If a bounded finite free complex
+$C$ has a finite split filtration and every $\operatorname {gr}_r C$ is
+contractible, then $C$ is contractible. Indeed, if $s_{r-1}$ contracts the
+preceding piece and $t_r$ is a lifted contraction of the quotient, put
+
+$$
+s_r=t_r-s_{r-1}(dt_r+t_rd-1).                            \tag{4.F4v}
+$$
+
+The parenthesized endomorphism is a chain map with image in the preceding
+piece, and direct multiplication gives $ds_r+s_rd=1$. Induction proves the
+claim. Apply it to the cone of (4.F4s). The preceding explicit graded checks
+make that cone contractible. Since $\tfrac1n\mathbf Z/\mathbf Z$ is
+injective, dualizing the filtered quasi-isomorphism (4.F4o) preserves
+quasi-isomorphisms. Two-out-of-three therefore proves that the original
+cochain map (4.C4) is a quasi-isomorphism on the good truncations:
 
 $$
 C_{S,c}^\bullet(A_n)\longrightarrow
