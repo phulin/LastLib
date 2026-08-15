@@ -47,7 +47,7 @@
     - [Pushforward of curves and points](#101-pushforward-of-curves-and-points)
     - [Pullback of divisors](#102-pullback-of-divisors)
     - [The projection formula](#103-the-projection-formula)
-    - [Finite maps and degree](#104-finite-maps-and-degree)
+    - [Finite and generically finite maps](#104-finite-and-generically-finite-maps)
 11. [The calculus of a point blowup](#11-the-calculus-of-a-point-blowup)
     - [The four fundamental formulas](#111-the-four-fundamental-formulas)
     - [Intersections of strict transforms](#112-intersections-of-strict-transforms)
@@ -365,7 +365,8 @@ $$
 \mathcal O_Y(-E)=\mathcal I\mathcal O_Y.
 $$
 
-Set-theoretically, $E$ is the inverse image of the center, though its scheme structure records multiplicity. If the center is a regular closed subscheme, then
+Set-theoretically, $E$ is the inverse image of the center, though its scheme structure records
+multiplicity. If the inclusion of the center is a regular closed immersion, then
 
 $$
 E\simeq\mathbf P_Z(\mathcal I/\mathcal I^2)
@@ -390,7 +391,10 @@ $$
 
 For a general closed subscheme, the scheme-theoretic strict transform is obtained from the inverse image by removing sections killed by a power of the exceptional ideal; algebraically this is saturation. Simply taking the inverse image gives the total transform and usually adds an unwanted exceptional component.
 
-Suppose the center is regular and integral and the order of a local equation of an effective Cartier divisor $D$ is generically the constant $m$ along it. Then
+Suppose $X$ is regular in a neighborhood of an integral regular center $Z$, and
+$Z\hookrightarrow X$ is a regular closed immersion. The exceptional divisor is then the
+integral projective bundle $E=\mathbf P_Z(\mathcal I/\mathcal I^2)$. If the order of a local
+equation of an effective Cartier divisor $D$ is generically $m$ along $Z$, then
 
 $$
 b^*D=\widetilde D+mE. \tag{4.1}
@@ -402,7 +406,19 @@ $$
 m_x(D)=\max\{m:f\in\mathfrak m_x^m\}.
 $$
 
-The equality follows on each chart by dividing the pulled-back equation by the largest common exceptional factor. It is an equality of Cartier divisors, not merely supports. We use it below chiefly for a closed regular point; for a reducible or nonregular center, a single integer $m$ and a single exceptional prime need not describe the total transform.
+The equality follows on each chart by dividing the pulled-back equation by the largest common
+exceptional factor. Regularity of the blowup along the regular center ensures that the residual
+effective Cartier divisor, which has no exceptional component, is the saturated strict transform.
+Thus this is an equality of Cartier divisors, not merely supports.
+
+For a general center on an integral scheme, the effective exceptional Cartier divisor can have
+several prime components $E_\alpha$. The coefficient of $E_\alpha$ in $b^*D$ is the value of a
+local equation of $D$ under the corresponding divisorial valuation, whenever that valuation is
+defined, for example on a normal blowup. Those values need not agree. Thus regularity of the
+center as an abstract scheme is not enough for (4.1): without the regular-ambient,
+regular-immersion hypotheses above, a single integer $m$ and a single exceptional prime need not
+describe the total transform. Below we use (4.1) chiefly for a closed regular point of a regular
+surface.
 
 ### 4.3 Multiplicity at a regular point
 
@@ -554,7 +570,13 @@ $$
 
 Thus the thickness decreases. Iteration ends at $xy=\pi$, whose total space is regular and whose special fiber has two components crossing transversely.
 
-Over an algebraically closed residue field, the minimal resolution of $xy=\pi^n$ inserts a chain of $n-1$ smooth rational curves between the strict transforms of $x=0$ and $y=0$. Consecutive curves meet once and no other pair meets. Each exceptional curve has self-intersection $-2$. This can be checked directly on the recursive charts; it also follows from the fiber relation of Chapter 13, since every inserted component has multiplicity one and meets its two neighbors transversely. The local intersection matrix of the exceptional chain is therefore the negative Cartan matrix of a chain.
+Over an algebraically closed residue field, iterating the recursive charts in the minimal
+resolution of $xy=\pi^n$ inserts a chain of $n-1$ smooth rational curves between the strict
+transforms of $x=0$ and $y=0$. Consecutive curves meet once and no other pair meets. The chart
+calculation also shows that every component of the total fiber has multiplicity one. We defer the
+self-intersections until the fiber relation has been proved; Section 13.4 will then show that every
+inserted component has square $-2$ and that the exceptional-chain matrix is the negative Cartan
+matrix of a chain.
 
 The exact shape depends on whether one resolves the singular surface, the marked boundary, or both. A nonminimal sequence can add $(-1)$-vertices without changing the generic curve. Intersection numbers distinguish these choices.
 
@@ -737,12 +759,18 @@ This viewpoint explains both the regularity hypothesis and the danger of imprope
 
 ### 8.1 Zero-cycles and fiberwise numbers
 
-Let $D$ and $G$ be Cartier divisors on a regular arithmetic surface $X/S$ with no common irreducible component. Their scheme-theoretic intersections form a finite set of closed points if their horizontal generic divisors are disjoint. The intersection zero-cycle is
+Let $D$ and $G$ be effective Cartier divisors on a regular arithmetic surface $X/S$ with no
+common irreducible component. Their scheme-theoretic intersection is a finite zero-dimensional
+scheme if their horizontal generic divisors are disjoint. Its intersection zero-cycle is
 
 $$
 D\mathbin{\cdot}G
 =\sum_x i_x(D,G)[x].
 $$
+
+For signed Cartier divisors whose supports have no common prime component, define this zero-cycle
+by bilinear extension from the effective case. It is then an intersection cycle, not itself the
+scheme-theoretic intersection of two signed objects.
 
 For a closed point $s\in S$, push the part supported on $X_s$ to $s$:
 
@@ -938,7 +966,7 @@ $$
 
 Orthogonality of pullbacks to exceptional curves is the engine behind all blowup formulas.
 
-### 10.4 Finite maps and degree
+### 10.4 Finite and generically finite maps
 
 Let $f:Y\to X$ be finite dominant of generic degree $n$. For a prime divisor $B$ on $X$,
 
@@ -968,6 +996,60 @@ $$
 after pushing to the same base and taking the appropriate degrees. Flatness ensures that scheme-theoretic inverse images have the expected lengths. Without flatness, (10.5) at the divisor-cycle level remains valid in the normal finite setting just described, but the length identity (10.6) is not being asserted.
 
 Under a finite extension of discrete valuation rings, ramification changes the scheme-theoretic fiber: $\pi=u(\pi')^e$. Consequently pullback multiplies the total fiber divisor by $e$. Residue extension multiplies degrees in the other direction. Formulas (10.3)--(10.6), rather than visual counting of geometric components, keep both effects consistent.
+
+The base-change comparison in Chapter 14 also needs the corresponding divisor identity when a
+proper generically finite map is not finite because it has exceptional curves.
+
+**Proposition 10.2 (proper generically finite push--pull).** Let $f:Y\to X$ be a proper dominant
+morphism of integral regular noetherian surfaces, generically finite of degree $n$. Then every
+Cartier divisor $D$ on $X$ satisfies
+
+$$
+f_*f^*D=nD                                                   \tag{10.7}
+$$
+
+as a divisor cycle on $X$.
+
+**Proof.** Use the Stein factorization
+
+$$
+Y\xrightarrow{h}Z\xrightarrow{p}X.
+$$
+
+Proper coherence makes $p$ finite, and its generic degree is $n$. Moreover $Z$ is normal. Indeed,
+for an affine open $U\subseteq Z$, the ring
+$\Gamma(U,\mathcal O_Z)=\Gamma(h^{-1}(U),\mathcal O_Y)$ is integrally closed in the common
+function field because $h^{-1}(U)$ is an open subscheme of the normal integral scheme $Y$.
+
+The proper birational map $h$ is an isomorphism over every codimension-one point $\xi$ of $Z$.
+Indeed, base change to the discrete valuation ring $T=\operatorname{Spec}\mathcal O_{Z,\xi}$ and
+take the closure $W$ of the common generic point. The integral curve $W$ is proper and birational
+over $T$. It is quasi-finite: a positive-dimensional closed fiber would be all of $W$, contrary
+to dominance. Thus $W\to T$ is finite, and finite birationality to the normal scheme $T$ makes it
+an isomorphism. No other component dominates $T$ because the generic fiber is one point.
+Consequently the strict transform of a prime divisor has the same valuation, while every
+$h$-exceptional curve pushes forward to zero. Hence
+
+$$
+h_*h^*A=A
+$$
+
+for every Cartier divisor $A$ on $Z$.
+
+For the finite normal map $p$, the coefficient over a prime divisor $B\subseteq X$ is
+
+$$
+\sum_{C\mapsto B}e(C/B)[k(C):k(B)]=n,
+$$
+
+the fundamental equality for the finite extension of the discrete valuation at $B$. Thus
+$p_*p^*D=nD$. Applying the birational identity to $A=p^*D$ and composing pushforwards proves
+(10.7). $\square$
+
+This is an equality of divisor cycles, not an assertion that intersections with common vertical
+components are scheme-theoretic zero-cycles. Whenever the controlled intersection numbers of
+Chapter 8 are defined, one may expand into integral curves and combine (10.7) with the projection
+formula curve by curve.
 
 ## 11. The calculus of a point blowup
 
@@ -1201,7 +1283,11 @@ p_a(\widetilde D)
 =p_a(D)-\frac{m(m-1)}2d_x. \tag{12.6}
 $$
 
-For a smooth branch, $m=1$ and genus is unchanged. For a singular curve, the decrease measures part of the singularity defect resolved at that point. A double point can lower arithmetic genus by one per rational center, but whether it does so depends on how the strict transform and exceptional divisor meet.
+For a smooth branch, $m=1$ and genus is unchanged. For a singular curve, the decrease measures
+part of the singularity defect resolved at that point. In particular, a multiplicity-two point
+lowers the arithmetic genus by exactly $d_x$ at this blowup. How the strict transform meets the
+exceptional divisor determines the singularity and contact that remain for later blowups, not this
+first genus drop.
 
 The arithmetic genus of the entire surface fiber is unchanged by point blowups. More precisely, a point blowup satisfies
 
@@ -1392,6 +1478,14 @@ Its eigenvalues are $0$ and $-2r$; the kernel is spanned by $(1,1)$. If the inte
 
 For a reduced normal-crossing fiber whose dual graph is a chain and whose edge intersections are rational and transverse, $M$ is the negative graph Laplacian: the diagonal entry is minus the valency and adjacent off-diagonal entries are $1$. A component at the end has square $-1$ in the total fiber configuration. It has the signature of an inverse point blowup only if it is also a projective line with normal bundle $\mathcal O(-1)$; numerical data alone do not supply the inverse morphism.
 
+Apply this calculation to the minimal resolution of $xy=\pi^n$ from Section 6.2. The full reduced
+fiber is a chain whose end vertices are the strict transforms of $x=0$ and $y=0$. Each of the
+$n-1$ inserted exceptional components is an interior vertex: it has multiplicity one and meets
+exactly its two neighbors transversely. Equation (13.1) therefore gives square $-2$ for every
+inserted component. Their mutual intersection matrix has diagonal entries $-2$, entries $1$ for
+adjacent components, and zero otherwise, so it is the negative Cartan matrix of a chain. This is
+the numerical conclusion deliberately deferred in Section 6.2.
+
 For a multiple irreducible fiber $F=m\Gamma$, relation (13.1) gives $m\Gamma^2=0$, hence $\Gamma^2=0$. The matrix alone does not detect the multiplicity $m$; the labeled fiber divisor is part of the data.
 
 ## 14. Vertical corrections and component pairings
@@ -1579,16 +1673,27 @@ trivial. Hence $V_D+g^*\Phi(D)$ is a correction for the horizontal divisor $D_Y$
 all exceptional components introduced by normalization and resolution.
 
 Let $D,G$ have degree zero and disjoint generic support, and define $G_Y,V_G$ similarly. Because
-the balanced divisor $g^*(D+\Phi(D))$ is orthogonal to $V_G$, projection and
-$g_*g^*G=nG$ give, as residue-weighted zero-cycles on $X$,
+the balanced divisor $g^*(D+\Phi(D))$ is orthogonal to $V_G$, the corrected intersection upstairs
+can be computed using the total pullback:
 
 $$
-g_*\bigl(g^*(D+\Phi(D))\mathbin{\cdot}g^*G\bigr)
-=n\bigl((D+\Phi(D))\mathbin{\cdot}G\bigr).
+\langle D_Y,G_Y\rangle_{R'}
+=\bigl(g^*(D+\Phi(D))\mathbin{\cdot}g^*G\bigr)_{R'}.
 $$
 
-For a zero-cycle $z$ on $Y_s$, degrees satisfy
-$\deg_k(g_*z)=f\deg_{k'}(z)$. Consequently
+These are the controlled intersection numbers of Chapter 8: proper horizontal intersections are
+computed by local lengths, and terms with vertical components are computed by restriction and
+degree. Apply the projection formula to each integral-curve term and Proposition 10.2 to the
+divisor $G$. Changing degree from $k'=\kappa(s')$ to $k=\kappa(s)$ contributes the residue degree
+$f=[k':k]$, so
+
+$$
+f\bigl(g^*(D+\Phi(D))\mathbin{\cdot}g^*G\bigr)_{R'}
+=\bigl((D+\Phi(D))\mathbin{\cdot}g_*g^*G\bigr)_R
+=n\bigl((D+\Phi(D))\mathbin{\cdot}G\bigr)_R.
+$$
+
+Since $n=ef$, cancellation of the residue degree gives
 
 $$
 \boxed{\ \langle D_Y,G_Y\rangle_{R'}
@@ -1655,11 +1760,11 @@ We can now collect the results in the form used by subsequent geometry.
 3. If a Cartier divisor has multiplicity $m$ at $x$, then $b^*D=\widetilde D+mE$, $(\widetilde D\cdot E)=m[\kappa(x):\kappa(s)]$, and $\widetilde D^2=D^2-m^2[\kappa(x):\kappa(s)]$ whenever the square is numerical.
 4. Effective curves meeting properly at $x$ have local intersection $\operatorname{length}\mathcal O_{X,x}/(f,g)$. Global fiberwise intersections multiply this length by $[\kappa(x):\kappa(s)]$.
 5. For a vertical integral curve $C$, $(D\cdot C)=\deg\mathcal O_X(D)|_C$. This extends intersection to common vertical components and makes it symmetric and bilinear.
-6. Proper pushforward and Cartier pullback satisfy $(f^*D\cdot C)=(D\cdot f_*C)$. For a finite flat map of generic degree $n$, pullback intersections scale by $n$ after degrees are taken on the same base.
+6. Proper pushforward and Cartier pullback satisfy $(f^*D\cdot C)=(D\cdot f_*C)$. A proper generically finite map of degree $n$ satisfies $f_*f^*D=nD$ on divisor cycles. For a finite flat map of generic degree $n$, pullback intersections scale by $n$ after degrees are taken on the same base.
 7. Relative canonical divisors obey $K_Y=b^*K_X+E$. Every integral vertical Cartier curve satisfies $2p_a(C)-2=(K_X+C)\cdot C$; a relative horizontal Cartier divisor satisfies the corresponding line-bundle adjunction without an automatic integer degree.
 8. For a connected fiber $F=\sum m_i\Gamma_i$, the component matrix is negative semidefinite with rational kernel exactly $\mathbf Q(m_i)$. It is negative definite modulo the whole fiber.
 9. Every generic degree-zero divisor has a rational vertical correction balanced on all components, unique modulo $\mathbf QF$. For divisors with disjoint generic supports, the induced component energy is nonnegative and the corrected local pairing is symmetric and rational. It is unchanged by regular point blowups; the pairing of the horizontal generic pullbacks under a finite extension of discrete valuation rings scales by the ramification index after normalization and resolution.
-10. Every reduced excellent noetherian scheme of dimension at most two admits a projective resolution preserving a chosen regular open, by Book 11, Theorem 8.1. For $xy=\pi^n$, the explicit charts independently reduce $n$ one step at a time and give the $(-2)$-chain described in Chapter 6. Book 11, Section 11.4 proves that closed-point blowups resolve a reduced boundary with finitely many regular marked branches, and total transform transports every fiber multiplicity through that terminating sequence.
+10. Every reduced excellent noetherian scheme of dimension at most two admits a projective resolution preserving a chosen regular open, by Book 11, Theorem 8.1. For $xy=\pi^n$, the explicit charts reduce $n$ one step at a time and give the incidence chain described in Chapter 6; after the fiber relation is proved, Section 13.4 computes every exceptional square as $-2$. Book 11, Section 11.4 proves that closed-point blowups resolve a reduced boundary with finitely many regular marked branches, and total transform transports every fiber multiplicity through that terminating sequence.
 11. Over an excellent discrete valuation ring, every birational map between regular proper arithmetic surfaces has a common regular resolution whose projections factor into closed-point blowups. A vertical projective line with normal bundle of degree $-1$ contracts to a regular point, and the original surface is its point blowup.
 
 Every adjective in the theorem has a job. Regularity supplies Cartier components and regular sequences. Properness supplies degrees on vertical curves. Flatness makes the fiber Cartier and makes horizontal prime divisors finite flat near a closed fiber. Connectedness makes the radical one-dimensional. Excellence supplies finite normalization and is the ring-theoretic hypothesis of the resolution, embedded-resolution, and contraction theorems proved in Book 11.
