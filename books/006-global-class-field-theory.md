@@ -1210,6 +1210,31 @@ C^\bullet(G_{F,S},A)\longrightarrow
 \right)[-1].
 $$
 
+We shall also use one explicitly truncated endpoint. Write
+
+$$
+C_{S,c,\leq2}^\bullet(A)=
+\operatorname {Cone}\left(
+ \tau_{\leq2}C^\bullet(G_{F,S},A)\longrightarrow
+ \tau_{\leq2}\!\bigoplus_{u\in S}C^\bullet(F_u,A)
+\right)[-1],                                             \tag{4.C0c}
+$$
+
+where $\tau_{\leq2}$ is the intelligent truncation. The natural map from
+(4.C0c) to $C_{S,c}^\bullet(A)$ is an isomorphism on cohomology in degrees
+$1$ and $2$, whereas
+
+$$
+H^3(C_{S,c,\leq2}^\bullet(A))=
+\operatorname {coker}\left(
+H^2(G_{F,S},A)\longrightarrow\bigoplus_{u\in S}H^2(F_u,A)
+\right).                                                \tag{4.C0d}
+$$
+
+The group in (4.C0d) is an auxiliary boundary term, not an assertion about
+$H^3(C_{S,c}^\bullet(A))$. This distinction avoids silently assuming that
+$H^3(G_{F,S},A)\to\bigoplus_uH^3(F_u,A)$ is injective.
+
 The invariant must be lifted to cochains before it can be used in a cone
 pairing. We make that lift now. For a local complex
 $C_v^\bullet=C^\bullet(F_v,\mu_n)$, put
@@ -1256,8 +1281,8 @@ Thus $\kappa_S$ is the specified nullhomotopy of the total local invariant
 on global cochains. Different choices in (4.C0) differ by a functional
 vanishing on $Z_v^2$, hence factor through $d:C_v^2\to B_v^3$; extending
 that factor to $C_v^3$ changes $\kappa_S$ by the corresponding cochain
-homotopy. The induced compact-support trace is therefore independent of the
-extensions.
+homotopy. The induced compact-support functional is therefore independent
+of the extensions.
 
 We use the following signs throughout. If
 $\lambda:C^\bullet(G_{F,S},A)\to L_S^\bullet(A)$ is localization, where
@@ -1306,47 +1331,50 @@ $$
 
 Formula (4.C0b) proves directly that (4.C5) kills boundaries. On cocycles it
 reduces to the sum of the normalized local invariants, modulo the global
-relation, so it has the required normalization.
+relation. Its restriction to the truncated endpoint (4.C0d) is the auxiliary
+trace in Theorem 4.2. No isomorphism assertion about the full actual
+$H^3(C_{S,c}^\bullet(\mu_n))$ is made.
 
-**Theorem 4.2 (finite Artin--Verdier duality for $A_n$ and $\mu_n$).** For every number
-field $F$, every $n\geq1$, and every such $S$, the following data and assertions are
-available.
+**Theorem 4.2 (finite degree-one Artin--Verdier duality for $A_n$ and
+$\mu_n$).** For every number field $F$, every $n\geq1$, and every such $S$,
+the following data and assertions are available.
 
-1. Continuous cup products and the sum of the normalized local invariant maps define a
-   trace
+1. Continuous cup products and the sum of the normalized local invariant maps define an
+   auxiliary endpoint trace
 
    $$
-   \operatorname{tr}_{F,S}:H^3(C_{S,c}^\bullet(\mu_n))
+   \operatorname{tr}_{F,S}^{\leq2}:H^3(C_{S,c,\leq2}^\bullet(\mu_n))
    \xrightarrow{\sim}\tfrac1n\mathbf Z/\mathbf Z
    $$
 
    and pairings
 
    $$
-   H^i(C_{S,c}^\bullet(A_n))\times
-   H^{3-i}(G_{F,S},\mu_n)
+   H^2(C_{S,c}^\bullet(A_n))\times
+   H^1(G_{F,S},\mu_n)
    \longrightarrow\tfrac1n\mathbf Z/\mathbf Z
    \tag{4.1}
    $$
 
-   for $i=2,3$, together with the pairings obtained by interchanging $A_n$ and
-   $\mu_n$. More precisely, these pairings are induced by cochain maps
+   together with the pairing obtained by interchanging $A_n$ and $\mu_n$.
+   More precisely, these pairings are induced by cochain maps
 
    $$
    C_{S,c}^\bullet(A_n)\longrightarrow
    \mathbb D_n\!\left(C^\bullet(G_{F,S},\mu_n)\right)[-3]
    $$
 
-   and its swapped analogue. These maps induce isomorphisms on cohomology in
-   precisely the displayed two degrees. Degree $2$, paired with global degree
-   $1$, is the character-globalization statement used below. Degree $3$,
-   paired with global degree $0$, is retained because it is the one adjacent
-   endpoint needed for integral cyclotomic descent. No assertion is made here
-   about compact degrees below $2$ or global degrees above $1$.
-2. All groups in these pairings are finite, and each pairing identifies either factor with
-   the full Pontryagin dual of the other. The identification is compatible with the long
-   exact localization sequences, connecting maps, cup products, and the transition maps as
-   $S$ grows.
+   and its swapped analogue. These maps induce isomorphisms in the displayed
+   degree. When $\mu_n\subset F$, the finite supporting calculation also gives
+   the actual compact-degree-$1$/global-degree-$2$ pairing and the truncated
+   compact-degree-$3$/global-degree-$0$ endpoint. Those two adjacent cells are
+   used only inside the finite descent calculation. No assertion is made about
+   actual compact degree $3$, compact degree $0$, or global degree above $2$.
+2. The groups in these pairings are finite, and each pairing identifies either factor with
+   the full Pontryagin dual of the other. Moreover
+   $H^q(G_{F,S},A_n)$ and $H^q(G_{F,S},\mu_n)$ are finite for $0\leq q\leq2$.
+   The identification is compatible with the long exact localization sequences, connecting
+   maps, cup products, and the transition maps as $S$ grows.
 3. Restriction and corestriction are adjoint, including at real places. Descent through any
    finite extension, in particular through $F(\mu_n)/F$, is integral: it is induced on the
    relevant Hochschild--Serre total complexes and does not divide by the extension degree.
@@ -1704,8 +1732,19 @@ $$
 $$
 
 maps to $C_{S,c}^\bullet(A_n)$ and is an isomorphism in compact degrees
-$2$ and $3$. Here is the endpoint check. Put the long exact cohomology rows
-of the two localization cones one above the other, beginning with
+$1$ and $2$. It also maps to the truncated cone (4.C0c) and is an
+isomorphism there in degrees $1,2,3$. Here is the endpoint check. Put the
+long exact rows beginning with
+
+$$
+H^0(F,A_n)\longrightarrow\bigoplus_{v\in S}H^0(F_v,A_n)
+\longrightarrow H^1_c(F,A_n)\longrightarrow H^1(F,A_n)
+\longrightarrow\bigoplus_{v\in S}H^1(F_v,A_n)
+$$
+
+one above the other. The four outside arrows are the isomorphisms supplied
+by the degree-$0,1$ global and local cells, so the kernel--cokernel lemma
+gives the middle isomorphism. Repeating the argument with
 
 $$
 H^1(F,A_n)\longrightarrow\bigoplus_{v\in S}H^1(F_v,A_n)
@@ -1713,17 +1752,17 @@ H^1(F,A_n)\longrightarrow\bigoplus_{v\in S}H^1(F_v,A_n)
 \longrightarrow\bigoplus_{v\in S}H^2(F_v,A_n).          \tag{4.F4r'}
 $$
 
-The four outside vertical arrows are the isomorphisms supplied by the
-degree-$0,1,2$ global and local cells, so the kernel--cokernel lemma gives
-the middle isomorphism. At the next spot, the cokernel of the last arrow is
-represented by the invariant-sum cell (4.F4u); exactness of (4.I9h)
-identifies it with $D_n$. At a real place the two adjacent maps are
-literally $1-c$ and $1+c$ in (4.F4p), which are adjoint and retain the sign
-quotient. The same kernel--cokernel chase gives compact degree $3$. No
-global degree-$3$ or degree-$4$ cocycle, boundary primitive, or vanishing
-claim enters this argument. Replacing $c_v$ by a larger cutoff adjoins on both
-sides the two-term identity complex on the added unit quotient, contracted
-by $s(0,x)=(x,0)$, so the construction is independent of the cutoff.
+gives compact degree $2$. In the truncated cone, degree $3$ is by definition
+the cokernel of the last arrow. It is represented by the invariant-sum cell
+(4.F4u), and exactness of (4.I9h) identifies it with $D_n$. At a real place
+the two adjacent maps are literally $1-c$ and $1+c$ in (4.F4p), which are
+adjoint and retain the sign quotient. Thus this last comparison concerns
+only (4.C0d); it does not discard the possible kernel at the next spot of
+the actual localization sequence. No global degree-$3$ or degree-$4$
+cocycle, boundary primitive, or vanishing claim enters this argument.
+Replacing $c_v$ by a larger cutoff adjoins on both sides the two-term
+identity complex on the added unit quotient, contracted by
+$s(0,x)=(x,0)$, so the construction is independent of the cutoff.
 
 Restrict (4.C4) to these models. It gives an actual filtered cochain map
 
@@ -1784,8 +1823,8 @@ window, then the cone is acyclic in that window. Lift a cycle to the least
 filtration piece where it occurs, kill its graded class by a graded
 boundary, and repeat; the filtration length is finite. Apply this to
 (4.F4s). The preceding graded calculations, including the invariant-sum
-endpoint and the complete real block, make its cone acyclic in degrees
-$2,3$.
+auxiliary endpoint and the complete real block, make its cone acyclic in
+degrees $1,2,3$.
 Injectivity in (4.D0) shows directly that $\mathbb D_n$ carries the cone of
 (4.F4o) to an acyclic complex in the dual window. Two-out-of-three
 therefore proves that (4.C4) induces isomorphisms in precisely the stated
@@ -1796,12 +1835,14 @@ C_{S,c}^\bullet(A_n)\longrightarrow
 \mathbb D_n\!\left(C^\bullet(G_{F,S},\mu_n)\right)[-3].   \tag{4.F5}
 $$
 
-The induced maps are isomorphisms for $q=2,3$. This conclusion
+The induced maps are isomorphisms for $q=1,2$ over the field containing
+$\mu_n$; in degree $3$ the model identifies the truncated endpoint (4.C0d),
+not actual compact-support cohomology. This conclusion
 comes from the comparison cone, not from the number of elements in its
 cohomology.
 
-The compact degree-$3$ endpoint is (4.I9h) on $n$-torsion. Compact degree
-$2$ is the following statement about Galois characters. By the definition of continuous
+The truncated degree-$3$ endpoint is (4.I9h) on $n$-torsion. Actual compact
+degree $2$ is the following statement about Galois characters. By the definition of continuous
 cohomology for the trivial module,
 
 $$
@@ -1851,25 +1892,83 @@ $$
 followed by the local invariant/corestriction sum. Dualizing this formula
 gives the corresponding map on the negative half of $\widehat P$.
 
-Only a two-column calculation is required. Global total degree $1$ has the
-bidegrees $(p,q)=(0,1),(1,0)$. Under the dual complete resolution they pair
-respectively with compact bidegrees
+Computing middle cohomology requires the incoming and outgoing matrices, so
+two columns do not suffice. The finite part of the ordinary total complex
+which computes global degree $1$ consists of total degrees $0,1,2$:
 
 $$
-(-p,3-q)=(0,2),(-1,3).                                  \tag{4.F6a}
+\begin{array}{c|c|c}
+\text{total degree}&(p,q)&\text{dual compact cells }(-p,3-q)\\ \hline
+0&(0,0)&(0,3)\\
+1&(0,1),(1,0)&(0,2),(-1,3)\\
+2&(0,2),(1,1),(2,0)&(0,1),(-1,2),(-2,3).
+\end{array}                                               \tag{4.F6a}
 $$
 
-These are exactly the two upstairs compact degrees already proved. The
-differential between the two columns in (4.F6a) is the dual of the ordinary
-bar differential; at the splice it is the norm. At a real orbit the same
-coset calculation leaves the alternating $1-c,1+c$ block (4.F4p). Placing
-the two upstairs perfect pairings in this two-column diagram, the
-kernel--cokernel lemma proves the downstairs compact-degree-$2$/global-
-degree-$1$ perfect pairing. For compact degree $3$, global degree $0$ has
-only bar degree $0$, and the invariant-sum endpoint proves perfectness
-directly. No bar degree outside $-1,0,1$ and no global cohomological degree
-above $2$ occurs. This is the required finite low-degree five-lemma, rather
-than an assertion about an unbounded Hochschild--Serre tail.
+Thus the genuinely necessary range uses ordinary bar degrees $0,1,2$ and
+complete bar degrees $0,-1,-2$. On the compact side vertical degrees $1$
+and $2$ are actual compact-support cohomology over $F'$, while every
+vertical degree-$3$ entry means the truncated endpoint (4.C0d). These are
+exactly the three split-coefficient cells proved above. No actual compact
+degree $3$ has been inserted into the diagram.
+
+For clarity, the finite algebra replacing an invocation of an unbounded
+five-lemma is the following. Let
+
+$$
+X^0\xrightarrow{d^0}X^1\xrightarrow{d^1}X^2
+$$
+
+be the three displayed ordinary total degrees after the finite cellular
+replacement. Formula (4.F6), including its Koszul signs, identifies the
+three compact total degrees with
+
+$$
+\mathbb D_n(X^2)\xrightarrow{\mathbb D_n(d^1)}
+\mathbb D_n(X^1)\xrightarrow{\mathbb D_n(d^0)}
+\mathbb D_n(X^0).                                       \tag{4.F6b}
+$$
+
+Indeed, the vertical matrices are the three split-coefficient pairings and
+the horizontal matrices are transposes of the bar differentials; at the
+splice the latter is the norm. Since $D_n$ is injective, restriction of
+functionals gives
+
+$$
+\begin{aligned}
+\ker\mathbb D_n(d^0)&=(\operatorname {im}d^0)^\perp,\\
+\operatorname {im}\mathbb D_n(d^1)&=(\ker d^1)^\perp.
+\end{aligned}
+$$
+
+The second equality uses injectivity to extend every functional on
+$\operatorname {im}d^1\subset X^2$ to $X^2$. Taking the quotient gives the literal
+middle-cohomology isomorphism
+
+$$
+H^2((4.F6b))\cong
+\operatorname {Hom}_{R_n}\!\left(
+\ker d^1/\operatorname {im}d^0,D_n\right).              \tag{4.F6c}
+$$
+
+Alexander--Whitney and shuffle identify the group on the right with the
+dual of $H^1(G_{F,S},\mu_n)$; the local coset versions and the localization
+cone identify the group on the left with actual
+$H^2(C_{S,c}^\bullet(A_n))$. These identifications in the middle degree use
+only the six cells of (4.F6a). Concretely, collection sends a downstairs
+cochain to its section components, shuffle sends those components back, and
+the two composites differ by the usual adjacent-transposition prism in the
+next displayed degree. Hence this is a comparison of the displayed
+three-term complexes, not a convergence claim for an unbounded complete-bar
+spectral sequence. At a real orbit the same coset calculation leaves the
+alternating $1-c,1+c$ block (4.F4p). The auxiliary endpoint trace
+over $F$ itself is (4.C0d) followed by the invariant-sum isomorphism in
+(4.I9h). Thus no bar degree outside $-2,-1,0,1,2$ and no global
+cohomological degree above $2$ occurs.
+
+The same ordinary triangular total complexes in total degrees $0,1,2$ have
+finite terms after the cellular replacement. Their cohomology proves the
+asserted finiteness of both coefficient systems in those degrees.
 
 No averaging idempotent and no division by $|\Delta|$ occurs, so the proof
 remains valid when $|\Delta|$ and $n$ have a common factor. Shapiro
@@ -3235,7 +3334,10 @@ $$
 \tag{4.14}
 $$
 
-Why degree three? A local Brauer class has degree two, while the cone in (4.13) shifts the local term upward by one. Why is the trace well defined? Changing a representative by a localized global degree-two cocycle changes the proposed value by the sum of the invariants of one global Brauer class, which is zero by (4.8). Conversely, exactness of (4.8) shows that no further relation has been imposed.
+Why degree three? A local Brauer class has degree two, while the cone in (4.13) shifts the local term upward by one. Why is the trace well defined? Changing a representative by a localized global degree-two cocycle changes the proposed value by the sum of the invariants of one global Brauer class, which is zero by (4.8). More precisely, exactness identifies the truncated cokernel endpoint (4.C0d)
+with the indicated target. The actual group in (4.14) can also contain the
+kernel of global-to-local cohomology in degree three, on which this trace
+vanishes. Thus (4.14) is a functional, not an asserted isomorphism.
 
 Cup product of a compactly supported cochain with an ordinary cochain, followed by (4.14), gives
 
