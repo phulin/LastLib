@@ -630,17 +630,24 @@ $$
 
 for every $A\to B$. Here is the finite replacement construction. Descend the finitely many
 coefficients of a presentation of $\mathcal G$ to a noetherian subring $A_0$; finite-presentation
-flatness descends after enlarging $A_0$ once. The $r+1$-term standard Čech complex is a bounded
-complex of flat $A_0$-modules and its cohomology modules are finite. Starting at its right end,
-choose a finite free module surjecting onto the last cokernel, lift its generators to Čech
-cocycles, and take the mapping cone. The new last differential is split surjective and may be
-deleted. Repeat to the left. At the $i$th step, the kernel to be presented is finite because it
-fits between a finite cohomology module and the finite free module chosen at the preceding step;
-noetherianity supplies a finite presentation. After the $r+1$ Čech degrees, this yields a bounded
-complex of finite free $A_0$-modules and a quasi-isomorphism which remains one after tensoring:
-the original Čech terms and every deleted kernel are flat, the latter by the local flatness
-criterion applied to the $A_0$-flat sheaf. This is the finite Čech replacement
-$K^\bullet(\mathcal G_0)$. Base-changing it to $A$ gives (6.1). Thus the noetherian subring is
+flatness descends after enlarging $A_0$ once. The $r+1$-term standard Čech complex
+$C^\bullet$ is a bounded complex of flat $A_0$-modules, computes cohomology after every scalar
+extension, and has finite cohomology modules.
+
+We use the following elementary perfect-complex lemma. Over a noetherian ring, a bounded complex
+of flat modules with finite cohomology is, locally on the base, quasi-isomorphic to a bounded
+complex of finite free modules. Indeed, choose finite free modules mapping onto the cohomology and
+cycles successively from the right. This constructs a bounded-above finite-free resolution. The
+original complex has a fixed finite flat amplitude, so after enough steps its last syzygy is flat:
+vanishing of the next homology after tensoring with every module is exactly the local flatness
+criterion. That syzygy is also finitely presented, hence locally projective, and the resolution
+can be truncated there. Notice that this argument does **not** assert that the individual cycles
+of the original Čech complex are flat; cohomology can jump even in a flat family.
+
+Apply the lemma to $C^\bullet$ and call the resulting finite free complex
+$K^\bullet(\mathcal G_0)$. Both complexes are bounded complexes of flat modules, hence compute
+their own derived tensor products. Their quasi-isomorphism therefore remains a quasi-isomorphism
+after every $A_0\to B$. Base-changing first to $A$ gives (6.1). Thus the noetherian subring is
 only a construction device, and every matrix of $K^\bullet$ is fixed before the arbitrary scalar
 extension $A\to B$.
 
@@ -671,7 +678,21 @@ H^0(\mathcal F(n))\otimes_AH^0(\mathcal O(1))
 \quad(n\geq m).
 $$
 
-One chooses a hyperplane avoiding the relevant associated points and inducts on $r$; over a finite residue field, pass faithfully flatly to an infinite field, make the choice there, and descend the resulting vanishing and generation statements by faithful flatness. Regularity packages all high-degree behavior into one integer. No uniform bound for varying ideals is used in this section.
+These implications are valid over the ring $A$ itself. Use the exact Koszul complex of the
+surjection
+
+$$
+\mathcal O(-1)^{r+1}\xrightarrow{(x_0,\ldots,x_r)}\mathcal O
+$$
+
+and its exterior powers. After tensoring by $\mathcal F(n)$, the defining vanishings kill the
+higher-cohomology terms in the associated finite hypercohomology diagram. Its edge maps are
+exactly the evaluation map and the displayed multiplication map; shifting the same diagram by
+one proves persistence of regularity. This argument is defined over $\mathbf Z$, so it needs no
+choice of a hyperplane and works over finite residue fields and general base rings alike. Over an
+infinite field it is equivalent to the familiar proof by choosing a hyperplane away from the
+associated points and inducting on $r$. Regularity packages all high-degree behavior into one
+integer. No uniform bound for varying ideals is used in this section.
 
 ## 7. Hilbert functions and Hilbert polynomials
 
