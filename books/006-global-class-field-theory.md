@@ -3771,7 +3771,7 @@ $\log_{\mathcal F}([a]X)=a\log_{\mathcal F}(X)$.
 
 **Lemma 11.2 (Lubin--Tate Hodge--Tate line).** For every embedding $\tau:L\hookrightarrow E$,
 the conjugate character $\tau\circ\chi_{\mathrm{LT}}$ is Hodge--Tate with labeled weight
-$1$ at $\tau$ and $0$ at the other embeddings, with all signs reversed for its dual.
+$-1$ at $\tau$ and $0$ at the other embeddings, with all signs reversed for its dual.
 Finite-image and unramified characters have weight zero.
 
 **Proof.** This follows directly from the proved rank-one Sen calculation,
@@ -3791,9 +3791,11 @@ $$
 $$
 
 In (11.HT2) the only nonzero coefficient is $-1$ in the $\tau$-component.
-Lemma 11.1 says precisely that this character is Hodge--Tate with that single
-integral labeled weight; the sign becomes the stated one after applying the
-fixed arithmetic-reciprocity convention, and dualizing reverses it.
+With the convention in (11.HT1), $\mathbf C_\ell(m)\otimes V$ has invariants
+for $m=-1$ when $V$ is the Lubin--Tate line. Thus Lemma 11.1 gives labeled
+weight $-1$ at $\tau$; dualizing gives weight $1$. This is the same sign as
+the coefficient just computed, because arithmetic reciprocity was already
+used in (11.HT5).
 
 For a finite-image character, pass to a finite extension on which it is
 trivial. For an unramified character, the logarithm on principal units is
