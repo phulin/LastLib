@@ -79,7 +79,7 @@ for the full congruence kernel is required or developed.
 14. [The saturated Ihara package](#14-the-saturated-ihara-package)
     - [Main theorem](#141-main-theorem)
     - [Proof of the main theorem](#142-proof-of-the-main-theorem)
-    - [Hypothesis and dependency ledger](#143-hypothesis-and-dependency-ledger)
+    - [Hypotheses and dependencies](#143-hypotheses-and-dependencies)
     - [Exact boundary of the theorem](#144-exact-boundary-of-the-theorem)
 15. [Conclusion](#15-conclusion)
    - [The mathematical package](#151-the-mathematical-package)
@@ -142,13 +142,13 @@ $$
 
 The kernel of $\delta$ can contain a finite subgroup even if its tangent map is injective. Such a subgroup is harmless at a non-Eisenstein localization only after its Hecke action has been calculated. Declaring the kernel finite is not enough: its order may be divisible by $\ell$, and its reduction may then create exactly the kernel in (1.2).
 
-The tree calculation below identifies the entire residual kernel exactly. It also proves that the part coming from congruence-continuous characters of the norm-one arithmetic group is Eisenstein. Reduced norm, the center, and the component set are incorporated separately through component routing, central-character twists, and tame descent. The full profinite completion maps onto the congruence completion, and inflation--restriction identifies the remaining quotient with the kernel of transgression on invariant characters of that congruence kernel. What the calculation does not prove from the stated catalog hypotheses is that this transgression kernel vanishes, or the weaker assertion that its localized routed part has Eisenstein Hecke transfer. That distinction is decisive. The integral saturation and component package is therefore proved under the exact residual vanishing condition isolated in Section 6.4; Section 14 records why removing that condition requires a new arithmetic theorem at every level actually used downstream.
+The tree calculation below identifies the entire residual kernel exactly. It also proves that the part coming from congruence-continuous characters of the norm-one arithmetic group is Eisenstein. Reduced norm, the center, and the component set are incorporated separately through component routing, central-character twists, and tame descent. The full profinite completion maps onto the congruence completion, and inflation--restriction identifies the remaining quotient with the kernel of transgression on invariant characters of that congruence kernel. The first seven geometric and arithmetic hypotheses do not force this transgression kernel to vanish, nor do they force its localized routed part to have Eisenstein Hecke transfer. That distinction is decisive. The integral saturation and component package is therefore proved under the exact residual vanishing condition isolated in Section 6.4; Section 14 states the corresponding levelwise arithmetic conditions explicitly.
 
 ### 1.3 The geometric mechanism
 
 There are two geometries, one generic and one integral.
 
-At the generic place, the Bruhat--Tits tree for $\operatorname{PGL}_2(F_v)$ has two adjacent vertices stabilized by the two hyperspecial levels and an edge stabilized by the Iwahori level. The two degeneracy maps become the two restriction maps in the cohomology of vertex and edge stabilizers. The cellular resolution of the tree shows that the kernel comes from the cohomology of the group obtained by allowing arbitrary level at $v$. In degree one with constant coefficients, this cohomology consists of additive characters. A direct double-coset calculation expresses the difference between a good Hecke operator and its Eisenstein degree as an explicit commensurator discrepancy. That discrepancy vanishes on congruence-continuous characters; its possible noncongruence part is the exact unresolved term. Non-Eisenstein localization kills the whole kernel only when that remaining term vanishes.
+At the generic place, the Bruhat--Tits tree for $\operatorname{PGL}_2(F_v)$ has two adjacent vertices stabilized by the two hyperspecial levels and an edge stabilized by the Iwahori level. The two degeneracy maps become the two restriction maps in the cohomology of vertex and edge stabilizers. The cellular resolution of the tree shows that the kernel comes from the cohomology of the group obtained by allowing arbitrary level at $v$. In degree one with constant coefficients, this cohomology consists of additive characters. A direct double-coset calculation expresses the difference between a good Hecke operator and its Eisenstein degree as an explicit commensurator discrepancy. That discrepancy vanishes on congruence-continuous characters; its possible noncongruence part is the exact remaining obstruction. Non-Eisenstein localization kills the whole kernel only when that remaining term vanishes.
 
 At the integral place, the fine Iwahori PEL model is regular semistable. Its completed nodal charts are
 
@@ -180,7 +180,7 @@ Book 16 supplies the normalization sequence of a nodal curve, graph homology, we
 
 No listed prerequisite computes the prime-to-small-prime abelianization of the norm-one $S$-arithmetic group or the action of its good-place commensurators. Book 24 identifies what inflation--restriction would require but proves no arithmetic vanishing for the kernel in (5.21). In particular Book 118 proves strong approximation, which gives density and the one-edge tree quotient, but not a congruence-subgroup property and not continuity of an abstract finite character for the congruence topology.
 
-The new work here is the specialization of strong approximation to the tree quotient, the exact Bass--Serre and Mayer--Vietoris calculation, the good-place calculation on congruence-continuous norm-one characters with the separate norm and component routing, the full-profinite inflation--restriction identification of the noncongruence obstruction, invariance of the full congruence kernel under every open spectator level for fixed $(F,B,v)$, the conditional primitive-image and torsion-free-quotient theorems, and their synthesis with the monodromy, component, and branch-correction sequences. No rational old--new decomposition, later level-change theorem, or later automorphic comparison is used to conceal the unresolved localized abelian input.
+The new work here is the specialization of strong approximation to the tree quotient, the exact Bass--Serre and Mayer--Vietoris calculation, the good-place calculation on congruence-continuous norm-one characters with the separate norm and component routing, the full-profinite inflation--restriction identification of the noncongruence obstruction, invariance of the full congruence kernel under every open spectator level for fixed $(F,B,v)$, the conditional primitive-image and torsion-free-quotient theorems, and their synthesis with the monodromy, component, and branch-correction sequences. The localized abelian vanishing is retained as an explicit hypothesis rather than inferred from a rational old--new decomposition, a later level-change theorem, or a later automorphic comparison.
 
 Accordingly, the principal theorem of the volume is the conditional geometric theorem of
 Chapter 14.  Sections 5.5--5.6 identify the exact profinite obstruction, and Section 14.4
@@ -270,7 +270,7 @@ We always distinguish $v$ from the coefficient prime $\ell$. The assumption $v\n
 
 ### 2.3 Coefficients, neatness, and exceptional primes
 
-Let $E/\mathbf Q_\ell$ be finite, $\mathcal O$ its valuation ring, $\varpi$ a uniformizer, and $k$ its residue field. We work in the catalog's clean coefficient range $\ell\ge7$. This also avoids the classical stabilizer orders on the selected fine quotient. Some fine-level arguments remain valid at smaller odd primes, but the uniform theorem does not suppress the extra checks they require.
+Let $E/\mathbf Q_\ell$ be finite, $\mathcal O$ its valuation ring, $\varpi$ a uniformizer, and $k$ its residue field. We work in the clean coefficient range $\ell\ge7$. This also avoids the classical stabilizer orders on the selected fine quotient. Some fine-level arguments remain valid at smaller odd primes, but the uniform theorem does not suppress the extra checks they require.
 
 All cohomology modules are taken with constant coefficients. We write
 
@@ -2460,7 +2460,7 @@ If $q_v\equiv1$, the two residual roots $\varepsilon$ and $\varepsilon q_v$ of t
 
 If $q_v\equiv-1$, the two roots $\varepsilon$ and $-\varepsilon$ remain distinct for odd $\ell$, but both signed Gram factors in (11.7) can vanish. The valuation identity (11.8) fails. A $U_v$-selected determinant calculation can distinguish the branches, but the unselected Gram determinant cannot.
 
-A **vexing** local datum is one in which the residual scalar or ramified type admits more than one integral lattice or flag with the same unlabelled reduction. Even after the constant-coefficient abelian Ihara condition is supplied, the resulting theorem controls only the full cohomology lattice; it does not assert that an independently chosen type projector has saturated image. Such a case requires the type-enhanced level structure and its own prime-to-stabilizer hypotheses. Primitive wild supercuspidal types are outside the catalog scope.
+A **vexing** local datum is one in which the residual scalar or ramified type admits more than one integral lattice or flag with the same unlabelled reduction. Even after the constant-coefficient abelian Ihara condition is supplied, the resulting theorem controls only the full cohomology lattice; it does not assert that an independently chosen type projector has saturated image. Such a case requires the type-enhanced level structure and its own prime-to-stabilizer hypotheses. Primitive wild supercuspidal types are outside the present scope.
 
 Even when the abelian Ihara condition holds, the branch correction need not vanish. Its support is the Smith support of $1-(F_v^*)^2$, so it is expected at a signed level-raising congruence. It does not alter conditional residual injectivity or the resulting freeness of $Q$; it changes the integral identification of the bottom monodromy lattice and must be carried in any lowering argument.
 
@@ -2592,7 +2592,7 @@ Quotienting the filtration yields (10.14)--(10.15): the top graph lattice surviv
 
 Correspondence extension, graph adjunction, and descent preserve each construction, proving clause 8. $\square$
 
-### 14.3 Hypothesis and dependency ledger
+### 14.3 Hypotheses and dependencies
 
 The logical use of the eight direct prerequisites is exact.
 
@@ -2610,16 +2610,16 @@ The logical use of the eight direct prerequisites is exact.
 
 The tree Mayer--Vietoris sequence, the local-factor calculation on congruence-continuous arithmetic characters, the full-profinite inflation--restriction identification of the exact noncongruence obstruction, spectator-level invariance, the conditional saturation criterion, and the branch Smith calculation are proved here. Strong approximation is imported only from Book 118. No structure theorem for the full congruence kernel, automorphic decomposition, multiplicity-one theorem, local newvector theorem, or modularity argument is invoked as if already proved.
 
-An alias audit does not find the missing injection elsewhere in the catalog.  Book 84 defines
-the quaternionic degeneracy operators and their adjoints but explicitly makes no direct-sum or
-saturation assertion.  Book 122 constructs the integral degeneracy complex and explicitly
-leaves its localized injectivity to an Ihara input.  Book 126 attaches a rank-two Galois
-representation to a characteristic-zero packet; good-prime Frobenius polynomials do not define
-the rational-quaternion commensurator action in (5.12).  Book 131 treats modular Jacobians and
-their integral quotients but proves no transfer of the classical modular-curve Ihara kernel to
-a compact quaternionic Shimura curve over a general totally real field.  Later Books 140,
-174--178 assume the applicable instances of (6.11) whenever they use this constant-row
-package.  Thus none of these volumes proves (14.2) under a different name.
+The localized injection is not among the conclusions of the earlier constructions.  Book 84
+defines the quaternionic degeneracy operators and their adjoints without a direct-sum or
+saturation conclusion.  Book 122 constructs the integral degeneracy complex with localized
+injectivity as an Ihara hypothesis.  Book 126 attaches a rank-two Galois representation to a
+characteristic-zero packet, but good-prime Frobenius polynomials do not determine the
+rational-quaternion commensurator action in (5.12).  Book 131 treats modular Jacobians and
+their integral quotients without transferring the classical modular-curve Ihara kernel to a
+compact quaternionic Shimura curve over a general totally real field.  Accordingly, whenever
+the constant-row package is applied, the relevant instance of (6.11) must be assumed or proved
+separately.
 
 The mathematical direct-dependency row is therefore
 
@@ -2627,13 +2627,13 @@ $$
 139\mid 16,24,38,39,85,118,122,124. \tag{14.1}
 $$
 
-The first seven hypotheses of Theorem 14.1 do not currently imply hypothesis 8 from those sources. A proof of (5.18) on the localized noncongruence quotient, an exact computation of (5.19), or a different theorem proving the last vanishing in (6.10) would close the catalog objective. Strong approximation alone cannot do so.
+The first seven hypotheses of Theorem 14.1 do not imply hypothesis 8 within the argument. It is enough in addition to prove (5.18) on the localized noncongruence quotient, compute (5.19) and obtain the required vanishing, or prove the last vanishing in (6.10) directly. Strong approximation alone does not give any of these conclusions.
 
 ### 14.4 Exact boundary of the theorem
 
 The theorem proves the clean full-Iwahori two-map statement conditional on the exact abelian Ihara condition. It does not assert that condition from the geometric and strong-approximation hypotheses alone.
 
-The missing arithmetic input must be stated on the levels which the argument actually routes
+The additional arithmetic condition must be stated on the levels which the argument actually routes
 through.  Let $\mathscr R$ be a finite family of constant-coefficient degeneracy rows.  An
 element $R\in\mathscr R$ records the changing place $v_R$, the actual tame, ray, and auxiliary
 spectator level away from $v_R$, the full Hecke-stable component orbit, its prime-to-$\ell$
@@ -2659,8 +2659,8 @@ that this common kernel has no odd-primary character covers all those levels at 
 does not identify weaker localized transgression kernels, because their quotient actions and
 localizations remain level-dependent.
 
-**Missing arithmetic theorem $({\rm AC}^{\rm loc}_\ell)_{\mathscr R}$ (localized
-odd-primary abelian congruence).** For every $R\in\mathscr R$, with residue field $k_R$, one
+**Localized odd-primary abelian congruence condition
+$({\rm AC}^{\rm loc}_\ell)_{\mathscr R}$.** For every $R\in\mathscr R$, with residue field $k_R$, one
 has
 
 $$
@@ -2676,7 +2676,7 @@ H^2_{\rm cont}(K_{R,c}^{v_R},k_R)
 \right)_{\mathfrak m_R}=0. \tag{14.2}
 $$
 
-This is the exact localized statement needed by the catalog.  Proposition 5.4 identifies
+This is the exact localized condition needed for the saturated Ihara conclusion.  Proposition 5.4 identifies
 (14.2) with
 
 $$
@@ -2738,10 +2738,11 @@ saturated image.  The quotient is finite torsion-free over the coefficient DVR a
 as in Theorem 7.1.  Applying the remaining parts of Theorem 14.1 row by row gives the component,
 monodromy, and branch statements with their stated independent hypotheses. $\square$
 
-None of (14.2), (14.2a), and (14.2b) is proved from the declared arithmetic sources.
-For an **indefinite curve-switch construction** of the signed-special seed, the minimal
-unresolved assertion is (14.2) itself, specialized to the finite family of constant rows
-actually used.  In the notation of Book 181 this route-specific input is
+Theorem 14.1 requires (14.2), either directly or through the stronger sufficient conditions
+(14.2a) and (14.2b), rather than deriving it from hypotheses 1--7.  For an
+**indefinite curve-switch construction** of the signed-special seed, the additional condition
+is (14.2), specialized to the finite family of constant rows actually used.  In the notation
+of Book 181 this route-specific input is
 $({\rm AIH}_{\mathscr F})$.  Neither a theorem about the full congruence kernel nor an
 all-level or all-prime uniform statement is part of that route.
 
@@ -2755,14 +2756,14 @@ then it does not consume Book 139 and (14.2) is absent from that proof path.  Th
 formal: all those definite-side assertions must then be proved directly.  Calling (14.2) an
 unconditional prerequisite of Book 181 would therefore overstate the dependency.
 
-Book 176's direct finite-set package $({\rm IAV}_S)$ is a second precise bypass.  It patches
-the desired and avoidance deformation problems simultaneously, transfers support through
-their common special fiber and component bijection, and never forms the old--new degeneracy
-cube.  Consequently $({\rm IAV}_S)$ consumes neither (14.2) nor a mixed Ihara theorem.  Its
-unresolved inputs are instead the paired local-ring comparison, synchronized automorphic
-Taylor--Wiles systems, patched support transfer, and solvable descent stated in Book 176,
-Section 1.5.  Replacing (14.2) by the symbol $({\rm IAV}_S)$ therefore changes proof routes; it
-does not prove Ihara under another name.
+A possible later application may instead use a direct finite-set Ihara-avoidance package
+$({\rm IAV}_S)$.  Such a package patches the desired and avoidance deformation problems
+simultaneously, transfers support through their common special fiber and component bijection,
+and never forms the old--new degeneracy cube.  Consequently this route consumes neither
+(14.2) nor a mixed Ihara theorem; it requires instead a paired local-ring comparison,
+synchronized automorphic Taylor--Wiles systems, patched support transfer, and solvable descent.
+Replacing (14.2) by $({\rm IAV}_S)$ therefore changes proof routes; it does not prove Ihara
+under another name.
 
 There is also a sharp image-theoretic boundary to a patching substitute.  A patched Ihara
 theorem for an indefinite Shimura curve can prove the localized two-map injection when the
@@ -2782,7 +2783,7 @@ Consequently the exact alternatives are:
 2. prove a different small-image patching or commensurator-transfer theorem which implies
    those same localized vanishings; or
 3. construct the exact definite seed without passing through the indefinite constant rows,
-   for example by supplying Book 176's direct finite-set $({\rm IAV}_S)$ package.
+   for example through a direct finite-set Ihara-avoidance package.
 
 Only the first two alternatives are Ihara inputs.  The third is an Ihara-avoidance route and
 must not be advertised as a proof of (14.2).
@@ -2804,10 +2805,10 @@ The downstream interface is therefore the following. Every freeness, type-transf
 | Book 140 | It may use the exact tree kernel unconditionally. Under $({\rm AIH})_{v,\mathfrak m}$ it may additionally use residual injectivity, the saturated old image, free $Q$, quotient--orthogonal duality, the Gram matrix, and (10.14)--(10.17). Its formula (8.2) is precisely the corrected filtration here. Identifying $X$ with a switched definite quaternionic lattice still requires node uniformization; relative to the same abelian Ihara input, Book 140 proves generic support from Book 125 and the corrected filtration rather than assuming it separately. |
 | Book 176 | Its one-prime nonminimal comparison may import the same conditional free-quotient package and the three distinct finite modules: Gram, component, and branch. It may not promote the one-prime theorem to the finite set required by its final modularity-lifting target; mixed Ihara, product residue, and joint support remain additional inputs. |
 | Book 174 | Constant-coefficient residual injectivity may be used in the integral flag-excision argument only after $({\rm AIH})$ has been imposed for **every** constant-level curve in the finite flag diagram, with the actual tame spectator levels. Book 139 neither proves the type-coefficient transfer nor makes its quotient projective over a tame deformation algebra; those are the conditional achievements of Book 174 after flag excision. |
-| Book 181 | Book 139 supplies no automorphic seed by itself. On an indefinite curve-switch route, (14.2) is the first missing constant-row input in proof order; even after it is supplied, node uniformization, the relevant one- or several-prime carrier, component support, and the other seed hypotheses must still be verified. A direct exact definite-carrier construction, including Book 176's $({\rm IAV}_S)$ finite-set route, bypasses (14.2) but must prove its definite-side or paired-patching properties without importing them from the curve switch. No balanced-lift or finite-image conclusion flows directly from this book. |
+| Book 181 | Book 139 does not construct an automorphic seed. An indefinite curve-switch route must assume (14.2) for every constant row actually used; it must also verify node uniformization, the relevant one- or several-prime carrier, component support, and the other seed hypotheses. A direct exact definite-carrier construction, including a direct finite-set Ihara-avoidance route, bypasses (14.2) but must prove its definite-side or paired-patching properties without importing them from the curve switch. No balanced-lift or finite-image conclusion flows directly from this book. |
 | level lowering | Even under $({\rm AIH})$, require $\Phi[\varpi]_{\mathfrak n}=0$ and $\mathcal C_{\mathrm{br},v}[\varpi]_{\mathfrak n}=0$, or work inside the full extension (10.17). Component cleanliness does not erase the branch correction. |
 
-In particular, no consumer can use $T_w\chi=(q_w+1)P_w\chi$ for every abstract character without first supplying (5.18) or (14.2). After that arithmetic gap is closed, a statement that the component group is the only finite module in the semistable quotient, or that component cleanliness alone makes residual monodromy an isomorphism between the two graph copies, still requires the independent hypothesis $\mathcal C_{\mathrm{br},v}=0$.
+In particular, the identity $T_w\chi=(q_w+1)P_w\chi$ cannot be used for every abstract character without first supplying (5.18) or (14.2). Even under that arithmetic hypothesis, a statement that the component group is the only finite module in the semistable quotient, or that component cleanliness alone makes residual monodromy an isomorphism between the two graph copies, still requires the independent hypothesis $\mathcal C_{\mathrm{br},v}=0$.
 
 ## 15. Conclusion
 
@@ -2819,7 +2820,7 @@ The Bruhat--Tits tree turns the two pullbacks into a Mayer--Vietoris map. On the
 
 An abstract finite character need not be congruence-continuous.  The full profinite completion
 maps onto the congruence completion with kernel $C_c$, and inflation--restriction identifies
-the unresolved quotient with the kernel of transgression on
+the remaining quotient with the kernel of transgression on
 $\operatorname{Hom}_{\rm cont}(C_c,k)^{K_c^v}$.  After component descent and localization this
 is exactly $\bigl(H^1_{\mathrm{nc}}(\Gamma^v,k)^\Delta\bigr)_{\mathfrak m}$, so residual Ihara is
 equivalent to its vanishing.  This is the exact point at which an indefinite curve-switch
