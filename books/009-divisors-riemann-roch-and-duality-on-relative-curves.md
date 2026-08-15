@@ -1729,18 +1729,44 @@ sequence; only an identification of its last line with $\kappa(q)$ requires such
 
 For a reduced curve with more general singularities one must make one further correction over an
 imperfect field. Its normalization is regular but need not be smooth, so
-$\Omega^1_{\widetilde C/k}$ need not be the normalization's dualizing line. Replace it by
-$\omega_{\widetilde C/k}$, allow the poles prescribed by the conductor, and define the local
-residue on that line by finite duality for Cartier thickenings. Then replace opposite residues by
-the condition
+$\Omega^1_{\widetilde C/k}$ need not be the normalization's dualizing line. Let
+$\mathfrak c=\operatorname{Ann}_{\mathcal O_C}
+(\nu_*\mathcal O_{\widetilde C}/\mathcal O_C)$ be the conductor. Its extension to the regular
+curve $\widetilde C$ is an invertible ideal and cuts out an effective Cartier divisor
+$D_{\mathfrak c}$. For the finite part of this divisor over $q$, Cartier adjunction identifies
 
 $$
+\omega_{\widetilde C/k}(D_{\mathfrak c})/
+\omega_{\widetilde C/k}
+\simeq
+\mathcal Hom_k(\mathcal O_{D_{\mathfrak c}},k).
+$$
+
+Evaluation at $1$ defines the local residue even when the residue fields are inseparable. The
+precise Rosenlicht formula is
+
+$$
+\omega_C=
+\left\{
+\eta\in\nu_*\omega_{\widetilde C/k}(D_{\mathfrak c}):
 \sum_{p\mapsto q}\operatorname{Res}_p(f\eta)=0
-\quad\text{for every }f\in\mathcal O_{C,q}.
+\text{ for every }q\in C\text{ and }f\in\mathcal O_{C,q}
+\right\}. \tag{10.5a}
 $$
 
-With this corrected normalization dualizing sheaf, finite duality for
-$\nu:\widetilde C\to C$ identifies the displayed module with $\omega_C$; it need not be
+To prove this locally, write $A\subset\widetilde A$ and $Q=\widetilde A/A$. The conductor kills
+$Q$, so all relevant polar functionals are detected on the conductor thickenings. Applying
+$\operatorname{Hom}_A(-,\omega_A)$ to $0\to A\to\widetilde A\to Q\to0$, finite duality
+identifies $\operatorname{Hom}_A(\widetilde A,\omega_A)$ with $\omega_{\widetilde A}$ and local
+duality identifies $\operatorname{Ext}^1_A(Q,\omega_A)$ with $\operatorname{Hom}_k(Q,k)$.
+The resulting exact sequence identifies
+$\omega_A/\omega_{\widetilde A}$ with $\operatorname{Hom}_k(Q,k)$. On the other hand Cartier
+adjunction identifies the conductor-bounded polar quotient with
+$\operatorname{Hom}_k(\widetilde A/\mathfrak c,k)$, under which the class of $\eta$ evaluates
+$f$ as $\sum_{p\mapsto q}\operatorname{Res}_p(f\eta)$. Dualizing
+$0\to A/\mathfrak c\to\widetilde A/\mathfrak c\to Q\to0$ identifies
+$\operatorname{Hom}_k(Q,k)$ with the annihilator of $A/\mathfrak c$. Thus this annihilator is
+exactly $\omega_A/\omega_{\widetilde A}$, proving (10.5a). The resulting sheaf need not be
 invertible when the curve is not Gorenstein. When the normalization is smooth, in particular for
 the geometrically nodal curves under discussion, $\omega_{\widetilde C/k}$ is
 $\Omega^1_{\widetilde C/k}$ and this recovers (10.4). At a split rational node, testing $f=1$
