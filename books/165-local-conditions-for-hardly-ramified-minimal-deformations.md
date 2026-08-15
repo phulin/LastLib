@@ -31,10 +31,10 @@
   - [5.2 Input to relation obstructions](#52-input-to-relation-obstructions)
   - [5.3 Input to the balanced lift argument](#53-input-to-the-balanced-lift-argument)
   - [5.4 Non-exports](#54-non-exports)
-- [6. The theorem package and dependency audit](#6-the-theorem-package-and-dependency-audit)
+- [6. The theorem package and its prerequisites](#6-the-theorem-package-and-its-prerequisites)
   - [6.1 Main theorem](#61-main-theorem)
   - [6.2 Hypothesis and boundary ledger](#62-hypothesis-and-boundary-ledger)
-  - [6.3 Direct prerequisites and circularity audit](#63-direct-prerequisites-and-circularity-audit)
+  - [6.3 Direct prerequisites](#63-direct-prerequisites)
   - [6.4 Conclusion](#64-conclusion)
 
 ## 1. The Frey minimal problem
@@ -1149,9 +1149,9 @@ Book 181 receives:
 - the tangent and obstruction inputs already passed through Books 166--167.
 
 Book 181 treats the global finite-special-fibre input separately.  An exact
-automorphic seed and Book 173 supply one sufficient source.  On the preferred
-route, Book 176, Theorem 1.1H and Corollary 1.1I supply the same input without
-minimal $R=\mathbb T$ by proving $({\rm CIAV}_{P_{\rm tar}})$. This book exports only the
+automorphic seed and Book 173 supply one sufficient source.  A later target-IAV
+comparison could supply the same input without minimal $R=\mathbb T$ by proving
+$({\rm CIAV}_{P_{\rm tar}})$. This book exports only the
 Galois local conditions and the represented global deformation functor; it
 neither proves nor assumes either source of global finiteness.
 
@@ -1173,7 +1173,7 @@ this book to Books 166--167 and 181 is exactly the Frey-special specialization
 recorded in Sections 5.1--5.3; no different local profile may be substituted
 for the conductor-one Frey transvection.
 
-## 6. The theorem package and dependency audit
+## 6. The theorem package and its prerequisites
 
 ### 6.1 Main theorem
 
@@ -1263,7 +1263,7 @@ $\ell=5$ the displayed local computations are favorable, but the later
 global image and modularity machinery is stated uniformly for
 $\ell\geq7$.
 
-### 6.3 Direct prerequisites and circularity audit
+### 6.3 Direct prerequisites
 
 The proof uses only foundational mathematics and books preceding this one.
 
@@ -1285,10 +1285,9 @@ theorems rather than silently strengthening them.  No result from Books 166--167
 listed in Chapter 5.
 
 There is therefore no hidden conditional theorem in the local package.
-The later global conclusion remains external: Book 181 takes either the
-finite-special-fibre consequence of an exact Book 173 seed or, on the preferred
-route, the consequence of Book 176's proved target-IAV comparison. It then uses its balanced-ring
-argument to produce a characteristic-zero point.  No separate
+The later global conclusion remains external: a balanced-ring argument may take either the
+finite-special-fibre consequence of an exact automorphic seed or the consequence of a
+separately proved target-IAV comparison and then produce a characteristic-zero point.  No separate
 reduced-finiteness hypothesis is part of that downstream statement.
 
 ### 6.4 Conclusion
@@ -1313,6 +1312,6 @@ is (4.9).  They supply exact local nullhomotopies and dimension corrections,
 but no global lift by themselves.  That boundary is the correct interface:
 Book 166 performs the supported cohomology calculation, Book 167 converts
 relations into supported obstructions, and Book 181 adds its separately
-stated finite-special-fibre certificate.  That certificate may come from the
-stronger Book 173 seed or from Book 176's proved target-IAV route. The local deformation node
+stated finite-special-fibre certificate.  That certificate may come from a
+stronger exact seed or from a separately proved target-IAV route. The local deformation node
 is complete without importing any conclusion from those later stages.

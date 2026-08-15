@@ -50,6 +50,7 @@
   - [9.6 The degeneracy complex and its boundary](#96-the-degeneracy-complex-and-its-boundary)
   - [9.7 Functorial monodromy and projectors](#97-functorial-monodromy-and-projectors)
   - [9.8 Principal and ray towers over the parahoric diagram](#98-principal-and-ray-towers-over-the-parahoric-diagram)
+    - [The Drinfeld tower and the unavoidable wild ledger](#the-drinfeld-tower-and-the-unavoidable-wild-ledger)
 - [10. The semistable curve theorem](#10-the-semistable-curve-theorem)
   - [10.1 Statement](#101-statement)
   - [10.2 Scope and failure modes](#102-scope-and-failure-modes)
@@ -218,11 +219,11 @@ by its semisimplification is retained. Book 127 constructs the global representa
 the curve packet but supplies no bad local scalar used in this proof. Theorem 9.1 supplies
 exactly the graph-multiplicity-one and scalar input denoted $(\mathrm B_v)$ in Book 128,
 under the stricter local ledger stated here; Book 128's separate raw-to-global condition
-is untouched. Finally, the “normalized bad operator” in Book 168 is the
-geometric-normalized scalar $\beta_v$ on the new line: in the present conventions it is
-the eigenvalue of the raw unnormalized $U_v$, not of $q^{-1}U_v$. Thus Book 168 may use
-this result in the stated split dyadic range, while all of its coefficient-prime,
-raw-to-global, and purity hypotheses remain in force.
+is untouched. For later semisimple packet applications, the phrase “normalized bad
+operator” should mean the geometric-normalized scalar $\beta_v$ on the new line: in the
+present conventions it is the eigenvalue of the raw unnormalized $U_v$, not of
+$q^{-1}U_v$. This book supplies that scalar in the stated split dyadic range; any later
+application must retain its own coefficient-prime, raw-to-global, and purity hypotheses.
 
 ## 2. Iwahori PEL data and the integral curve
 
@@ -1818,8 +1819,8 @@ $$
 
 On the reduced branch, $w=\varphi(e_2)$ satisfies
 $w\mapsto[\widetilde d]_G(w)$.  Hence the inertia subgroup is the kernel of the quotient
-character $B_L\to k_v^\times$, $\left(\begin{smallmatrix}a&b\\0&d\end{smallmatrix}\right)
-\mapsto d$, its wild subgroup is exactly $U_L$, and its remaining inertia quotient has order
+character $B_L\to k_v^\times$, $\left(\begin{smallmatrix}a&b\\0&d\end{smallmatrix}\right)\mapsto d$,
+its wild subgroup is exactly $U_L$, and its remaining inertia quotient has order
 $q-1$.  The wild group fixes the reduced branch pointwise but is not trivial on the generic
 principal cover.  Indeed, restricting (9.29a) to the generic point of that branch gives
 
@@ -2179,8 +2180,7 @@ e_\lambda&=q^{n-1}(q-1),\\
 \end{aligned}                                             \tag{9.29t}
 $$
 
-Thus $|I_{n,\lambda}|=e_\lambda
-[\kappa_\lambda:\bar k((t))]_{\rm insep}$: the subgroup with
+Thus $|I_{n,\lambda}|=e_\lambda[\kappa_\lambda:\bar k((t))]_{\rm insep}$: the subgroup with
 $a\in1+\pi R_n$ supplies the wild part of the normal ramification, while the additive
 $b$-subgroup is visible in the inseparable residue thickness.  In particular
 
@@ -2826,8 +2826,8 @@ Then:
 
    over $k_{j,\mathfrak q_j}$.  The irreducible factors of (9.36b) after completion at this
    endpoint are indexed by the factors $G_{j,\mathfrak q_j,\beta}$.  Put
-   $k_{j,\mathfrak q_j,\beta}=k_{j,\mathfrak q_j}[Z]/
-   (G_{j,\mathfrak q_j,\beta})$ and let $\zeta_\beta$ be the class of $Z$.  The
+   $k_{j,\mathfrak q_j,\beta}=k_{j,\mathfrak q_j}[Z]/(G_{j,\mathfrak q_j,\beta})$ and let
+   $\zeta_\beta$ be the class of $Z$.  The
    corresponding completed field is
 
    $$
@@ -2857,8 +2857,8 @@ Then:
    $$
 
    If both fields are Galois, $H_L,H_\dagger$ are normal and
-   $\operatorname{Gal}(E/K_{\mathrm{br}})=
-   \Pi^{\rm t}_{\mathrm{br}}/overline{\langle H_L,H_\dagger\rangle}$; the two maps in
+   $\operatorname{Gal}(E/K_{\mathrm{br}})=\Pi^{\rm t}_{\mathrm{br}}/\overline{\langle H_L,H_\dagger\rangle}$;
+   the two maps in
    (9.37a) are its quotient maps.  Formula (9.42e) determines the arithmetic-Frobenius
    permutation of the constant factors.  Together, (9.42e)--(9.42f) in a chosen tame closure
    determine the local action on the endpoint Kummer roots.  For a selected endpoint
@@ -2933,9 +2933,8 @@ Because $K^\dagger/K_{\mathrm{br}}$ is tame,
 $\iota_{j,\alpha}(L_{H\lambda})\cap K^\dagger$ equals
 $(\iota_{j,\alpha}(L_{H\lambda})\cap K_{\mathrm{br}}^{\rm t})\cap K^\dagger$.  For these two
 tame fields in one tame closure, Galois correspondence gives
-$(K_{\mathrm{br}}^{\rm t})^{H_L}\cap
-(K_{\mathrm{br}}^{\rm t})^{H_\dagger}
-=(K_{\mathrm{br}}^{\rm t})^{\overline{\langle H_L,H_\dagger\rangle}}$; this proves
+$(K_{\mathrm{br}}^{\rm t})^{H_L}\cap(K_{\mathrm{br}}^{\rm t})^{H_\dagger}=(K_{\mathrm{br}}^{\rm t})^{\overline{\langle H_L,H_\dagger\rangle}}$;
+this proves
 (9.42g), including the restriction maps.  Finally, along $x=0$ equation (9.42h) reads
 $\pi=(\epsilon y^b)x^a$.  Proposition 9.5 applied to that divisorial valuation gives
 (9.42i).  The two blowup substitutions $y=xy_1$ and $x=x_1y$ give the stated pairs, so
@@ -3073,8 +3072,8 @@ adjunction required in $({\rm RGC}_v)$.
 **Proof.**  Work first with finite $\ell$-power coefficients.  On the generic fiber both legs
 are finite maps of smooth curves.  On the actual common generic algebra, level transport
 induces the coefficient isomorphism
-$\alpha_\eta:f_{0,\eta}^*\mathcal F_W\simeq
-f_{1,\eta}^*\mathcal F_W$.  The oriented lci fundamental class of the second leg gives
+$\alpha_\eta:f_{0,\eta}^*\mathcal F_W\simeq f_{1,\eta}^*\mathcal F_W$.  The oriented lci
+fundamental class of the second leg gives
 
 $$
 c_\eta:f_{0,\eta}^*\mathcal F_W
@@ -4133,18 +4132,19 @@ the unitary model back to the basic model.  It is not necessary merely to identi
 resulting globally semisimple packet system.  When $B$ is split at every dyadic factor, the
 generic common-adjoint cover of Book 118 already proves characteristic-zero occurrence of the
 same packet on the unitary curve.  The intrinsic unitary model of Proposition 10.2 computes
-its raw SP pair.  Book 168, Proposition 7.6A then uses $(\mathrm{HT}_1)$ to make that raw
-factor semisimple and compares it with the restriction of the basic system by good Frobenius
-polynomials.  At a dyadic prime split in the CM field the two local fields are equal, so the
-full SP pair transfers without extending (10.5) integrally.
+its raw SP pair.  A later argument may instead impose $(\mathrm{HT}_1)$, semisimplify that
+raw factor, and compare it with the restriction of the basic system by good Frobenius
+polynomials.  At a dyadic prime split in the CM field the two local fields are equal, so such
+an argument can transfer the full SP pair without extending (10.5) integrally.
 
-This later bypass does not weaken the hypotheses of Proposition 10.2.  In particular it still
-requires $B$ to be split at every dyadic factor.  It therefore removes (10.5) from the
-semisimple FLT interface when an all-dyadic-split automorphic carrier exists.  Proposition
-10.2A supplies the complementary even-degree source: for a fixed split target it permits the
-parity place to remain ramified as an extreme-CM spectator.  Book 168, Proposition 7.6B uses
-two distinct ramified spectator fields to descend through the finite-inertia ambiguity and
-cycles the parity place over all targets.
+This possible later bypass does not weaken the hypotheses of Proposition 10.2.  In particular
+it still requires $B$ to be split at every dyadic factor.  If its separate semisimplicity and
+comparison hypotheses are established, it removes (10.5) from that semisimple application
+when an all-dyadic-split automorphic carrier exists.  Proposition 10.2A supplies a
+complementary even-degree source: for a fixed split target it permits the parity place to
+remain ramified as an extreme-CM spectator.  A further later descent through the
+finite-inertia ambiguity may use two distinct ramified spectator fields and cycle the parity
+place over all targets; no such descent is used here.
 
 ### 10.6 Conclusion
 
@@ -4169,8 +4169,9 @@ common-norm Hodge lift. What is not yet supplied is the integral finite comparis
 including its unramified component field and expansion-one branch routing. Proposition 10.3
 shows that this single boundary is exactly what remains before the mixed one-split packet can
 use the unitary source as its **raw basic-model** signed-special carrier, once an eligible pair
-$(B,K)$ has been supplied.  For the downstream semisimple packet system, Book 168's bypass
-removes this comparison whenever $B$ is already split at every dyadic factor. Proposition
-10.2A and Book 168, Proposition 7.6B also remove it for the targetwise even-degree parity
-carriers. The raw-to-raw comparison (10.5) remains a genuine stronger theorem, but it is no
-longer a premise of the semisimple FLT SP record.
+$(B,K)$ has been supplied.  For a later semisimple packet system, the bypass described above
+can remove this comparison when $B$ is already split at every dyadic factor, provided its
+separate semisimplicity and comparison hypotheses hold. Proposition 10.2A similarly provides
+the geometric source for a targetwise even-degree parity argument, but the required
+finite-inertia descent remains outside this book. The raw-to-raw comparison (10.5) is a
+genuine stronger theorem and remains the exact boundary of the integral statement here.

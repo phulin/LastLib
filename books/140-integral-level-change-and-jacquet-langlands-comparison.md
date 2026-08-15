@@ -75,7 +75,7 @@
 15. [The complete comparison theorem](#15-the-complete-comparison-theorem)
     - [Statement](#151-statement)
     - [Proof](#152-proof)
-    - [Dependency and normalization record](#153-dependency-and-normalization-record)
+    - [Prerequisites and normalization](#153-prerequisites-and-normalization)
     - [Exact scope](#154-exact-scope)
 16. [Conclusion](#16-conclusion)
    - [The established package](#161-the-established-package)
@@ -848,7 +848,7 @@ $$
 be the coefficient-flag functor supplied by the chosen principal-tower presentation.  Its
 geometric fiber is the standard finite flag set $\mathbf P^1(k_v)$, with the actual
 stabilizer action coming from the rigidifying cover.  It is the finite set whose free module
-gives the permutation coefficient of Book 174.  It is **not** the geometric fiber of a
+gives the permutation coefficient used in later type-enhanced applications.  It is **not** the geometric fiber of a
 degree-$q_v+1$ finite etale cover of the bad integral model, and at a superspecial node it is
 not the set of special-fiber subgroup schemes: those subgroups coalesce in the incidence
 model.  Retaining $H_v$ therefore does not by itself retain the representation
@@ -951,15 +951,14 @@ prerequisites proves essential surjectivity or full faithfulness of (5.9a). The 
 $xy=\varpi_v$ determines two branches but does not classify their global node groupoid, and
 rational Jacquet--Langlands compares representations rather than integral PEL objects.
 
-The local source audit is exact. Books 118--120 construct the Shimura datum, the PEL moduli
+The limits of the available earlier results are exact. Books 118--120 construct the Shimura datum, the PEL moduli
 problem, complex uniformization, components, and generic Hecke descent. Books 121--122
 construct the good and Iwahori integral models, the node chart, the two global branches,
 Frobenius, and bad-fiber routing. Books 123--124 organize the curve and correspondence
 formalism, including coarse multiplicities and transpose. Book 125 supplies only the
 characteristic-zero component-routed automorphic decomposition. Book 131 gives the modular
 supersingular weighted-graph analogue, not the quaternionic PEL basic-locus classification.
-Book 139 explicitly stops before the switched-definite node identification, and Book 174
-explicitly retains the enhanced flagged classification as an input. None proves that every
+Book 139 explicitly stops before the switched-definite node identification. None of these results proves that every
 switched adelic lattice is realized by a node, identifies all arrows and central kernels, or
 matches all the enhancements in Hypothesis 5.1.
 
@@ -1033,7 +1032,7 @@ Then $\Psi_{\mathscr D,v}$ has the following consequences.
 
 These conclusions hold after finite flat coefficient change and, on the fixed neat cover,
 after the declared exact prime-to-$\ell$ descent. In particular, the quotient/augmentation stabilizer
-representations required by Book 174 are formal consequences of (5.9a), not a second
+representations needed in later type-enhanced applications are formal consequences of (5.9a), not a second
 classification theorem.
 
 **Proof.** An equivalence of effective groupoids induces a bijection on isomorphism classes and
@@ -1636,14 +1635,14 @@ For an irreducible unramified principal series, the $I$-fixed space has dimensio
 
 For an unramified Steinberg twist, the $I$-fixed space is a line and the $K$-fixed space is zero. It is entirely new. Its centered special parameter has nonzero monodromy, so its top residue in $X_{v,E}(-1)$ is nonzero. Conversely a nonzero graph residue cannot arise from a good-reduction spherical packet, since good reduction has zero monodromy. At the reducible boundary of principal induction, the special constituent is exactly this Steinberg line and the other, character constituent is Eisenstein. This proves the equality of support in (8.6) throughout the clean special block.
 
-Thus generic support in the constant-coefficient theorem is source-closed relative to the
-already separated abelian Ihara hypothesis: Book 125 supplies the semisimple packet
+Thus generic support in the constant-coefficient theorem follows from the stated earlier
+inputs together with the already separated abelian Ihara hypothesis: Book 125 supplies the semisimple packet
 decomposition on the actual curve, the corrected filtration supplies its two graph extremes,
 and the preceding local calculation removes exactly the spherical old packets. No additional
 generic-support hypothesis is used after the source condition in item 13 of Section 1.3 has
 been matched. This constant-coefficient argument by itself does not supply the typed integral
-filtration of Section 13.1; once that filtration is available, Book 174, Proposition 6.3
-derives its typed generic-residue kernel equality from the same routed packet decomposition.
+filtration of Section 13.1. Once the separate typed filtration is available, the same routed
+packet decomposition can be used in a later application to derive its generic-residue kernel equality.
 
 ### 8.4 Equality of localized Hecke orders
 
@@ -2270,7 +2269,7 @@ $(q_v+1)^{-1}u\circ\operatorname{aug}$ makes both type lattices direct summands 
 permutation row.  After the actual parahoric extension has been supplied, Shapiro and the
 constant Ihara theorem then give type-Ihara and the normalization filtration on that summand.
 Only the nonbanal range $q_v\equiv-1\pmod\ell$ retains the quotient-new snake-lemma
-obstruction and the primitive filtered-cofiber obstruction isolated in Book 174.  The
+obstruction and the primitive filtered-cofiber obstruction.  The
 augmentation companion pull is already a subrow of the permutation pull even in that range;
 duality turns the unresolved primary pull into a companion norm question and does not confuse
 the two.
@@ -2296,13 +2295,13 @@ filtrations, and reduces the normalized spectator/ray compositum to its actual K
 factorization and intersection field. Propositions 9.6--9.7 factor the completed endpoints
 from actual valuations and leading coefficients and give the exact Milnor-tube formalism;
 Proposition 9.8 proves $({\rm RGC}_v)$ on component-routed and contracted terms.  For the
-permutation and quotient/augmentation rows consumed by Book 174, Book 122, Proposition 9.9 supplies the
+permutation and quotient/augmentation rows used in later applications, Book 122, Proposition 9.9 supplies the
 strict ray field, vertical unit, endpoint factors, Frobenius orbits, and active/ray
 intersection; Proposition 9.10 computes the completed tubes, actions, and generization maps;
-and Corollary 9.11 proves $({\rm PNS}_v)_{\rm act}$. Book 174, Theorem
-$({\rm TPE}_v)$, combines those results with its strict global ray choice and proves the typed
-parahoric extension for the actual permutation, quotient, and augmentation rows. Thus the
-extension is proved for those actual rows. An arbitrary intermediate representation or arbitrary cyclic ray datum still
+and Corollary 9.11 proves $({\rm PNS}_v)_{\rm act}$. These results provide the local
+normalization data for a typed parahoric extension, but the strict global ray choice and the
+typed extension theorem are additional inputs not proved in this book. An arbitrary
+intermediate representation or arbitrary cyclic ray datum likewise
 requires $({\rm HDB}_v)_{\rm gen}$ and $({\rm BTK})_{\rm gen}$; a generic stable lattice or
 objectwise finite flatness alone does not prove that general extension.
 
@@ -2311,14 +2310,13 @@ equivalence (5.9a), it transports the **separate coefficient-flag representation
 actual rows from the node groupoid to the switched definite groupoid with coefficient one and
 the pull--trace/mass normalization already required in Hypothesis 5.1(5). It does not turn the
 coefficient flag into a finite etale cover of the bad model. It neither proves (5.9a)
-from $({\rm PNS}_v)_{\rm act}$ or $({\rm TPE}_v)$ nor uses the flagged classification to
+from the local normalization data or a typed extension hypothesis, nor uses the flagged classification to
 reprove their completed-tube and generization calculations.
 
-Book 174, Proposition 6.3 later proves, from the proved $({\rm PNS}_v)_{\rm act}$,
-$({\rm TPE}_v)$, its other typed inputs, and
-Book 125's component-routed semisimple decomposition on the common principal cover, that the
-curve-new and graph generic Hecke kernels agree. Thus typed generic support is not a further
-independent hypothesis. Apart from the quotient/augmentation projector deductions in the
+Once the typed extension, the other typed inputs, and Book 125's component-routed semisimple
+decomposition on the common principal cover are supplied, a later application can compare the
+curve-new and graph generic Hecke kernels. That comparison lies outside the present chronology
+and is not used here. Apart from the quotient/augmentation projector deductions in the
 preceding paragraph, the extension, routing, and general compact-type assertions do not follow
 merely from the constant-coefficient abelian Ihara condition. In particular, at a coalesced
 special flag a trace may be multiplication by $q_v+1$ on a rank-one stalk; if
@@ -2368,11 +2366,11 @@ The basic one-prime semistable theorem includes the unramified special family at
 Ramified special twists, unramified quadratic depth-zero packets, and tame positive-depth
 dihedral packets are included only in the conditional type-enhanced variant of Section 13.1,
 imposing Book 122's general $({\rm PNS}_v)_{\rm gen}$, pull--norm, unit-order coarse descent, and
-the applicable type-Ihara and primitive-residue inputs.  For Book 174's
-quotient/augmentation pair the latter two are automatic in the $q_v+1$-unit range and reduce
-to its explicit nonbanal maps otherwise; no such deduction is asserted here for arbitrary
-compact types. Book 174, Proposition 6.3 derives the resulting generic-residue kernel equality
-from that filtration and Book 125 rather than imposing it separately.
+the applicable type-Ihara and primitive-residue inputs.  For the quotient/augmentation pair,
+the latter two are automatic in the $q_v+1$-unit range and reduce to explicit nonbanal maps
+otherwise; no such deduction is asserted here for arbitrary compact types. A later typed
+application may derive the resulting generic-residue kernel equality from that filtration and
+Book 125 rather than imposing it separately.
 
 It excludes primitive wild packets and ramified dyadic positive-depth packets. The local character and type-lattice comparison used in Chapter 4 is not proved there. It also excludes a type projector that exists only after inverting $\varpi$: applying such a projector to a saturated full cohomology lattice can create a nonsaturated intersection.
 
@@ -2570,7 +2568,7 @@ Pull--norm composition proves clause 8. For clause 9, use the signed Gram vector
 
 For clause 11, assume the lower localization is zero. The normalization contribution then vanishes. Component cleanliness makes $q_\Gamma$ invertible after reduction, and branch cleanliness keeps $X_v^\vee\to L_0$ injective after reduction. Thus zero monodromy kills the top, and adjoint-stable perfect duality kills the bottom. The whole new block would vanish, a contradiction. Thus the lower block is nonzero. All compatibility assertions have already been checked for the constituent maps and pairings, so they hold for the assembled theorem. $\square$
 
-### 15.3 Dependency and normalization record
+### 15.3 Prerequisites and normalization
 
 The logical sources and retained hypotheses are as follows.
 
@@ -2583,28 +2581,19 @@ The logical sources and retained hypotheses are as follows.
 | Book 139: conditional saturated Ihara theory | exact tree kernel, conditional primitive old image and free quotient, Gram matrix, graph discriminant, branch Smith correction | proper clean curves; constant coefficients; $v\nmid\ell$; neat or tame descent; non-Eisenstein localization plus the independent abelian Ihara condition (1.5d) | uses its corrected filtration in raising, lowering, and order comparison |
 | node uniformization | superspecial nodes identified with the switched definite class set, including the complete PEL tuple, effective relation groups, the separate coefficient flag, both branches, Frobenius, full Hecke spans, routing, pull--trace/mass weights, and coefficient-one scale | the enhanced PEL groupoid equivalence (5.9a), an explicit external hypothesis for the chosen datum; neither the local node chart nor rational Jacquet--Langlands implies it | integral graph--definite lattice map and formal flag-linearized transport after the normalization has been supplied |
 
-The direct-dependency record adds Book 125's source for the generic-support proof to the local
-Jacquet--Langlands, Hecke, global Jacquet--Langlands, and Ihara sources.  The conditional typed
-interface in Chapter 13 also directly uses Book 22's ramified node complex, Book 122's normalized
-tower reduction, and Book 138's primary--companion lattices. The exact current row is
+The generic-support proof additionally uses Book 125, while the conditional typed interface in
+Chapter 13 uses Book 22's ramified node complex, Book 122's normalized tower reduction, and
+Book 138's primary--companion lattices. The theorem is also conditional on the
+datum-specific node-uniformization hypothesis and on Book 139's abelian Ihara condition.
 
-$$
-140\mid22,80,85,104,122,125,138,139.
-\tag{15.1a}
-$$
-
-and the theorem is additionally conditional on the datum-specific node-uniformization hypothesis and on Book 139's abelian Ihara condition. Book 139 in turn records its own direct prerequisites $16,24,38,39,85,118,122,124$; they are transitive rather than silently reproved here. The repository dependency table records both corrected rows.
-
-The downstream interface is equally exact.
-
-| consumer | valid output from this book | condition that the consumer must retain |
-|---|---|---|
-| Book 176 | one-prime special raising/lowering and common away-from-$v$ acting order | (1.5d), node uniformization, Book 125's component-routing source condition, both finite modules in (8.3a), and Section 11.4 before using a scalar as an augmented congruence ideal |
-| Book 170 | free $Q$, equality of faithful inner-form trace orders, and geometric lowering criterion | freeness and order equality are conditional on abelian Ihara; lowering requires both $\Phi[\varpi]=0$ and $\mathcal C_{\mathrm{br},v}[\varpi]=0$ |
-| Book 174 | coefficient-one constant graph--definite map $X_v\simeq S^\dagger$ and Theorem 5.2's formal linearization of the separate coefficient-flag representation after (5.9a) | Book 140 does not give $\operatorname{gr}_0Q=X_v^\vee$; for the actual quotient/augmentation rows Book 122 proves $({\rm PNS}_v)_{\rm act}$ and Book 174 proves $({\rm TPE}_v)$, while Book 174 still retains $({\rm AIH}_{\mathscr F})$, unit-order coarse descent, and every enhancement and normalization in (5.9a), together, only in the nonbanal range, with the quotient-new and filtered-cofiber assertions (5.0d), (6.0d); arbitrary compact-type rows remain subject to $({\rm PNS}_v)_{\rm gen}$ |
-| Book 175 | no inner-form order index and the signed Gram Smith factor | the factor is an augmented congruence ideal only under Section 11.4; scalar/vexing refinements and all fixed-prime Tor/augmentation statements require the separate Book 174 hypotheses |
-
-In particular, no downstream patching or reciprocity argument can retroactively prove (1.5d), delete $\mathcal C_{\mathrm{br},v}$, or turn the conditional several-prime discussion into a theorem.
+Later applications may use the one-prime raising and lowering statements, the common
+away-from-$v$ acting order, the coefficient-one graph--definite map, or the signed Gram Smith
+factor. They must retain (1.5d), node uniformization, Book 125's component-routing source
+condition, both finite modules in (8.3a), and the extra hypotheses of Section 11.4 before
+interpreting a scalar as an augmented congruence ideal. Typed applications must additionally
+supply their typed extension and residue inputs. No later patching or reciprocity argument can
+retroactively prove (1.5d), delete $\mathcal C_{\mathrm{br},v}$, or turn the conditional
+several-prime discussion into a theorem.
 
 The normalization chain is equally rigid:
 
@@ -2633,16 +2622,16 @@ Its unresolved conditions are the abelian Ihara vanishing which Book 139 leaves 
 datum-specific enhanced node classification.  The latter includes essential surjectivity and
 full faithfulness, polarization and multiplier, integral incidence data, effective central
 relation groups, the separate coefficient-flag action, both branches, Frobenius, full Hecke
-spans, routing, and the coefficient-one pull--trace/mass normalization.  No repository source
-among Books 118--125, 131, 139, and 174 proves that package. Under Book 125's stated
+spans, routing, and the coefficient-one pull--trace/mass normalization.  The earlier results
+summarized above do not prove that package. Under Book 125's stated
 component-routing source condition, generic support is proved in Section 8.3 from its
 semisimple decomposition and the corrected filtration. It covers the full two-map Iwahori
 lattice and its special sign blocks when the roots separate. Type-enhanced variants require
 the longer hypothesis list of Section 13.1, not merely extension of a type sheaf.
 
-The actual-row $({\rm PNS}_v)_{\rm act}$ and $({\rm TPE}_v)$ theorems retained in Section
-13.1 construct and compare the normalized bad-fiber coefficient rows; they do not imply the
-global equivalence (5.9a). Conversely, Theorem 5.2 transports the separate coefficient-flag
+The actual-row $({\rm PNS}_v)_{\rm act}$ result and the additional typed extension hypothesis
+retained in Section 13.1 construct and compare the normalized bad-fiber coefficient rows; they
+do not imply the global equivalence (5.9a). Conversely, Theorem 5.2 transports the separate coefficient-flag
 representations across the switched groupoid only after every enhancement and normalization
 in (5.9a) is supplied; it does not reprove their local geometry. The
 constant-coefficient generic-support equality remains the proved result of Section 8.3, while
