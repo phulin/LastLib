@@ -1148,17 +1148,19 @@ cohomological-dimension bound in (iii) is known, and hence is pseudo-coherent: r
 cohomology modules successively by finite free modules.
 
 **(ii) Formal functions, with the pro-step included.** Let $I\subset A$ and $G$ be coherent.
-Put $G_n=I^nG$. The same Chow induction, applied to the Rees sheaf
-$\bigoplus_{n\geq0}G_n$, proves that
+Put $G_n=I^nG$ and $\mathcal R=\bigoplus_{n\geq0}I^n$. This is a noetherian graded
+$A$-algebra. The graded Rees module $\bigoplus_nG_n$ is finite over the pullback of
+$\mathcal R$ to $Z$, so it corresponds to a coherent sheaf $\mathcal H$ on
+$Z_{\mathcal R}=Z\times_A\operatorname{Spec}\mathcal R$. The latter is proper over the
+noetherian ring $\mathcal R$, and part (i), now applied with base $\mathcal R$, makes
+$H^q(Z_{\mathcal R},\mathcal H)$ finite over $\mathcal R$. The affine projection to $Z$ and
+commutation of cohomology with direct sums identify this module with
 
 $$
 \bigoplus_{n\geq0}H^q(Z,G_n)
 $$
 
-is a finite graded module over the noetherian Rees algebra
-$\bigoplus_{n\geq0}I^n$. In the projective case this is obtained by a finite graded resolution
-and the homogeneous Čech complex; kernels, cokernels, and higher direct images in the Chow
-induction are finite graded modules, so the assertion passes through the preceding dévissage.
+as a graded $\mathcal R$-module. Thus it is finite.
 Write $M_n^r=H^r(Z,I^nG)$ and $M_0^r=H^r(Z,G)$. Finite generation gives a constant $c_r$
 with two consequences. First, the image of
 $M_{n+m}^r\to M_n^r$ is contained in $I^{m-e}M_n^r$, where
