@@ -1930,6 +1930,24 @@ identifies the common kernel with $N_{L/K}C_L$. If two global characters have
 the same localizations, their quotient cuts out an extension split at every
 place, hence is trivial by splitting-separation. $\square$
 
+**Pre-class-formation global existence theorem.** Every open finite-index
+subgroup $U\subseteq C_K$ is $N_{L/K}C_L$ for a unique finite abelian
+extension $L/K$ in the fixed separable closure.
+
+**Proof.** The character group of the finite quotient $C_K/U$ separates
+its points. Apply (4.F7) to its finitely many characters and let $L$ be the
+compositum of their cyclic fixed fields. Then $L/K$ is finite abelian and
+
+$$
+N_{L/K}C_L=\bigcap_{\chi\in(C_K/U)^\vee}\ker\chi=U.
+$$
+
+The first equality is finite reciprocity for the compositum, which was
+proved in (4.I14), and the second is finite character duality. If two
+abelian extensions have the same norm subgroup, their reciprocity quotients
+give the same finite quotient of $G_K^{\rm ab}$ and hence the same fixed
+field. No global fundamental class is used. $\square$
+
 **Pre-class-formation norm-limitation lemma.** Let $L/E$ be finite Galois
 with group $H$, and put $M=L^{[H,H]}$. Then
 
@@ -3461,7 +3479,7 @@ For $m=8$, the three nontrivial quadratic characters of $(\mathbf Z/8\mathbf Z)^
 
 ### 6.1 Why reciprocity does not yet give existence
 
-Theorem 5.1 begins with $L$ and identifies its norm subgroup. The converse begins with an open finite-index subgroup $H\subseteq C_K$ and must construct $L$. There is no formal reason that the already existing norm groups exhaust all open subgroups. We now prove that they do.
+Theorem 5.1 begins with $L$ and identifies its norm subgroup. The converse begins with an open finite-index subgroup $H\subseteq C_K$ and must construct $L$. There is no formal reason that the already existing norm groups exhaust all open subgroups. The pre-class-formation existence theorem in Section 4.2 already proved that they do; this chapter records the local--global sequence and repackages that proof in the standard norm-subgroup form.
 
 Since $C_K/H$ is finite abelian, its characters separate its points. It is therefore enough to realize every finite-order continuous character of $C_K$ as a Galois character. Taking the compositum of the resulting cyclic fields then recovers the intersection of their kernels, which is $H$.
 
