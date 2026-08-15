@@ -134,14 +134,21 @@ theorem chapter09PullbackCompositionIso_naturality
         (Scheme.Modules.pullback f).map ((Scheme.Modules.pullback g).map u) =
       (Scheme.Modules.pullback (f ≫ g)).map u ≫
         (chapter09PullbackCompositionIso f g N).hom := by
-  sorry
+  change (Scheme.Modules.pullbackComp f g).inv.app M ≫
+      (Scheme.Modules.pullback f).map ((Scheme.Modules.pullback g).map u) =
+    (Scheme.Modules.pullback (f ≫ g)).map u ≫
+      (Scheme.Modules.pullbackComp f g).inv.app N
+  exact ((Scheme.Modules.pullbackComp f g).inv.naturality u).symm
 
 theorem chapter09PullbackIdentityIso_naturality
     {X : Scheme.{u}} {M N : X.Modules} (u : M ⟶ N) :
     (chapter09PullbackIdentityIso M).hom ≫ u =
       (Scheme.Modules.pullback (𝟙 X)).map u ≫
         (chapter09PullbackIdentityIso N).hom := by
-  sorry
+  change (Scheme.Modules.pullbackId X).hom.app M ≫ u =
+    (Scheme.Modules.pullback (𝟙 X)).map u ≫
+      (Scheme.Modules.pullbackId X).hom.app N
+  exact ((Scheme.Modules.pullbackId X).hom.naturality u).symm
 
 /-! ## Čech nerve and descent data -/
 
@@ -312,9 +319,101 @@ theorem chapter09CechPullbackIso_conjugation
       φ.hom ≫ (Scheme.Modules.pullback (chapter09DoubleSecond p)).map u) :
     (chapter09CechPullbackIso p q φ).hom ≫
         (Scheme.Modules.pullback (q ≫ chapter09DoubleSecond p)).map u =
-      (Scheme.Modules.pullback (q ≫ chapter09DoubleFirst p)).map u ≫
+    (Scheme.Modules.pullback (q ≫ chapter09DoubleFirst p)).map u ≫
         (chapter09CechPullbackIso p q ψ).hom := by
-  sorry
+  have hfirst :
+      (chapter09PullbackCompositionIso q (chapter09DoubleFirst p) M).hom ≫
+          (Scheme.Modules.pullback q).map
+            ((Scheme.Modules.pullback (chapter09DoubleFirst p)).map u) =
+        (Scheme.Modules.pullback (q ≫ chapter09DoubleFirst p)).map u ≫
+          (chapter09PullbackCompositionIso q (chapter09DoubleFirst p) N).hom :=
+    chapter09PullbackCompositionIso_naturality q (chapter09DoubleFirst p) u
+  have hsecond :
+      (chapter09PullbackCompositionIso q (chapter09DoubleSecond p) M).inv ≫
+          (Scheme.Modules.pullback (q ≫ chapter09DoubleSecond p)).map u =
+        (Scheme.Modules.pullback q).map
+            ((Scheme.Modules.pullback (chapter09DoubleSecond p)).map u) ≫
+          (chapter09PullbackCompositionIso q (chapter09DoubleSecond p) N).inv := by
+    change (Scheme.Modules.pullbackComp q (chapter09DoubleSecond p)).hom.app M ≫
+          (Scheme.Modules.pullback (q ≫ chapter09DoubleSecond p)).map u =
+        (Scheme.Modules.pullback q).map
+            ((Scheme.Modules.pullback (chapter09DoubleSecond p)).map u) ≫
+          (Scheme.Modules.pullbackComp q (chapter09DoubleSecond p)).hom.app N
+    exact ((Scheme.Modules.pullbackComp q (chapter09DoubleSecond p)).hom.naturality u).symm
+  have hmap :
+      (Scheme.Modules.pullback q).map φ.hom ≫
+          (Scheme.Modules.pullback q).map
+            ((Scheme.Modules.pullback (chapter09DoubleSecond p)).map u) =
+        (Scheme.Modules.pullback q).map
+          (φ.hom ≫ (Scheme.Modules.pullback (chapter09DoubleSecond p)).map u) :=
+    ((Scheme.Modules.pullback q).map_comp φ.hom
+        ((Scheme.Modules.pullback (chapter09DoubleSecond p)).map u)).symm
+  change
+    (chapter09PullbackCompositionIso q (chapter09DoubleFirst p) M).hom ≫
+        (Scheme.Modules.pullback q).map φ.hom ≫
+        (chapter09PullbackCompositionIso q (chapter09DoubleSecond p) M).inv ≫
+        (Scheme.Modules.pullback (q ≫ chapter09DoubleSecond p)).map u =
+      (Scheme.Modules.pullback (q ≫ chapter09DoubleFirst p)).map u ≫
+        (chapter09PullbackCompositionIso q (chapter09DoubleFirst p) N).hom ≫
+        (Scheme.Modules.pullback q).map ψ.hom ≫
+        (chapter09PullbackCompositionIso q (chapter09DoubleSecond p) N).inv
+  calc
+    _ = (chapter09PullbackCompositionIso q (chapter09DoubleFirst p) M).hom ≫
+          (Scheme.Modules.pullback q).map φ.hom ≫
+          ((Scheme.Modules.pullback q).map
+              ((Scheme.Modules.pullback (chapter09DoubleSecond p)).map u) ≫
+            (chapter09PullbackCompositionIso q (chapter09DoubleSecond p) N).inv) := by
+      rw [hsecond]
+    _ = (chapter09PullbackCompositionIso q (chapter09DoubleFirst p) M).hom ≫
+          (Scheme.Modules.pullback q).map
+            (φ.hom ≫ (Scheme.Modules.pullback (chapter09DoubleSecond p)).map u) ≫
+          (chapter09PullbackCompositionIso q (chapter09DoubleSecond p) N).inv := by
+      calc
+        _ = ((chapter09PullbackCompositionIso q (chapter09DoubleFirst p) M).hom ≫
+              (Scheme.Modules.pullback q).map φ.hom) ≫
+              (Scheme.Modules.pullback q).map
+                ((Scheme.Modules.pullback (chapter09DoubleSecond p)).map u) ≫
+              (chapter09PullbackCompositionIso q (chapter09DoubleSecond p) N).inv := by
+          simp only [Category.assoc]
+        _ = (chapter09PullbackCompositionIso q (chapter09DoubleFirst p) M).hom ≫
+              (Scheme.Modules.pullback q).map
+                (φ.hom ≫ (Scheme.Modules.pullback (chapter09DoubleSecond p)).map u) ≫
+              (chapter09PullbackCompositionIso q (chapter09DoubleSecond p) N).inv := by
+          simpa only [Category.assoc] using
+            congrArg
+              (fun k =>
+                (chapter09PullbackCompositionIso q (chapter09DoubleFirst p) M).hom ≫
+                    k ≫
+                  (chapter09PullbackCompositionIso q (chapter09DoubleSecond p) N).inv)
+              hmap
+    _ = (chapter09PullbackCompositionIso q (chapter09DoubleFirst p) M).hom ≫
+          (Scheme.Modules.pullback q).map
+            ((Scheme.Modules.pullback (chapter09DoubleFirst p)).map u ≫ ψ.hom) ≫
+          (chapter09PullbackCompositionIso q (chapter09DoubleSecond p) N).inv := by
+      rw [h]
+    _ = ((chapter09PullbackCompositionIso q (chapter09DoubleFirst p) M).hom ≫
+          (Scheme.Modules.pullback q).map
+            ((Scheme.Modules.pullback (chapter09DoubleFirst p)).map u)) ≫
+          (Scheme.Modules.pullback q).map ψ.hom ≫
+          (chapter09PullbackCompositionIso q (chapter09DoubleSecond p) N).inv := by
+      rw [Functor.map_comp]
+      simp only [Category.assoc]
+    _ = ((Scheme.Modules.pullback (q ≫ chapter09DoubleFirst p)).map u ≫
+          (chapter09PullbackCompositionIso q (chapter09DoubleFirst p) N).hom) ≫
+          (Scheme.Modules.pullback q).map ψ.hom ≫
+          (chapter09PullbackCompositionIso q (chapter09DoubleSecond p) N).inv := by
+      exact (by
+        simpa only [Category.assoc] using
+        congrArg
+          (fun k =>
+            k ≫ (Scheme.Modules.pullback q).map ψ.hom ≫
+              (chapter09PullbackCompositionIso q (chapter09DoubleSecond p) N).inv)
+          hfirst)
+    _ = (Scheme.Modules.pullback (q ≫ chapter09DoubleFirst p)).map u ≫
+          (chapter09PullbackCompositionIso q (chapter09DoubleFirst p) N).hom ≫
+          (Scheme.Modules.pullback q).map ψ.hom ≫
+          (chapter09PullbackCompositionIso q (chapter09DoubleSecond p) N).inv := by
+      simp only [Category.assoc]
 
 /- The canonical overlap comparison is natural in the module being pulled
    back.  This is the comparison square needed to transport the canonical
@@ -327,7 +426,84 @@ theorem chapter09CanonicalModuleDescentOverlapIso_naturality
       (chapter09CanonicalModuleDescentOverlapIso p M).hom ≫
         (Scheme.Modules.pullback (chapter09DoubleSecond p)).map
           ((Scheme.Modules.pullback p).map u) := by
-  sorry
+  have hfirst :
+      (Scheme.Modules.pullback (chapter09DoubleFirst p)).map
+            ((Scheme.Modules.pullback p).map u) ≫
+          (chapter09PullbackCompositionIso (chapter09DoubleFirst p) p N).inv =
+        (chapter09PullbackCompositionIso (chapter09DoubleFirst p) p M).inv ≫
+          (Scheme.Modules.pullback (chapter09DoubleFirst p ≫ p)).map u := by
+    change (Scheme.Modules.pullback (chapter09DoubleFirst p)).map
+            ((Scheme.Modules.pullback p).map u) ≫
+          (Scheme.Modules.pullbackComp (chapter09DoubleFirst p) p).hom.app N =
+        (Scheme.Modules.pullbackComp (chapter09DoubleFirst p) p).hom.app M ≫
+          (Scheme.Modules.pullback (chapter09DoubleFirst p ≫ p)).map u
+    exact (Scheme.Modules.pullbackComp (chapter09DoubleFirst p) p).hom.naturality u
+  have hsecond :
+      (chapter09PullbackCompositionIso (chapter09DoubleSecond p) p M).hom ≫
+            (Scheme.Modules.pullback (chapter09DoubleSecond p)).map
+              ((Scheme.Modules.pullback p).map u) =
+        (Scheme.Modules.pullback (chapter09DoubleSecond p ≫ p)).map u ≫
+          (chapter09PullbackCompositionIso (chapter09DoubleSecond p) p N).hom :=
+    chapter09PullbackCompositionIso_naturality (chapter09DoubleSecond p) p u
+  let e : chapter09DoubleFirst p ≫ p = chapter09DoubleSecond p ≫ p :=
+    pullback.condition
+  let eM : Chapter09PullbackModule (chapter09DoubleFirst p ≫ p) M ≅
+      Chapter09PullbackModule (chapter09DoubleSecond p ≫ p) M :=
+    eqToIso (congrArg
+      (fun q : Chapter09DoubleOverlap p ⟶ S => Chapter09PullbackModule q M) e)
+  let eN : Chapter09PullbackModule (chapter09DoubleFirst p ≫ p) N ≅
+      Chapter09PullbackModule (chapter09DoubleSecond p ≫ p) N :=
+    eqToIso (congrArg
+      (fun q : Chapter09DoubleOverlap p ⟶ S => Chapter09PullbackModule q N) e)
+  have heq :
+      eM.hom ≫ (Scheme.Modules.pullback (chapter09DoubleSecond p ≫ p)).map u =
+        (Scheme.Modules.pullback (chapter09DoubleFirst p ≫ p)).map u ≫ eN.hom := by
+    simpa [eM, eN, eqToIso.hom] using
+      (eqToHom_naturality
+        (fun q : Chapter09DoubleOverlap p ⟶ S =>
+          (Scheme.Modules.pullback q).map u) e).symm
+  change
+    (Scheme.Modules.pullback (chapter09DoubleFirst p)).map
+          ((Scheme.Modules.pullback p).map u) ≫
+        (chapter09PullbackCompositionIso (chapter09DoubleFirst p) p N).inv ≫
+        eN.hom ≫
+        (chapter09PullbackCompositionIso (chapter09DoubleSecond p) p N).hom =
+      (chapter09PullbackCompositionIso (chapter09DoubleFirst p) p M).inv ≫
+        eM.hom ≫
+        (chapter09PullbackCompositionIso (chapter09DoubleSecond p) p M).hom ≫
+        (Scheme.Modules.pullback (chapter09DoubleSecond p)).map
+          ((Scheme.Modules.pullback p).map u)
+  calc
+    _ = (chapter09PullbackCompositionIso (chapter09DoubleFirst p) p M).inv ≫
+          (Scheme.Modules.pullback (chapter09DoubleFirst p ≫ p)).map u ≫
+          eN.hom ≫
+          (chapter09PullbackCompositionIso (chapter09DoubleSecond p) p N).hom := by
+      rw [← Category.assoc, hfirst]
+      simp only [Category.assoc]
+    _ = (chapter09PullbackCompositionIso (chapter09DoubleFirst p) p M).inv ≫
+          ((Scheme.Modules.pullback (chapter09DoubleFirst p ≫ p)).map u ≫ eN.hom) ≫
+          (chapter09PullbackCompositionIso (chapter09DoubleSecond p) p N).hom := by
+      simp only [Category.assoc]
+    _ = (chapter09PullbackCompositionIso (chapter09DoubleFirst p) p M).inv ≫
+          (eM.hom ≫ (Scheme.Modules.pullback (chapter09DoubleSecond p ≫ p)).map u) ≫
+          (chapter09PullbackCompositionIso (chapter09DoubleSecond p) p N).hom := by
+      rw [heq.symm]
+    _ = (chapter09PullbackCompositionIso (chapter09DoubleFirst p) p M).inv ≫
+          eM.hom ≫ (Scheme.Modules.pullback (chapter09DoubleSecond p ≫ p)).map u ≫
+          (chapter09PullbackCompositionIso (chapter09DoubleSecond p) p N).hom := by
+      simp only [Category.assoc]
+    _ = (chapter09PullbackCompositionIso (chapter09DoubleFirst p) p M).inv ≫
+          eM.hom ≫
+          ((chapter09PullbackCompositionIso (chapter09DoubleSecond p) p M).hom ≫
+            (Scheme.Modules.pullback (chapter09DoubleSecond p)).map
+              ((Scheme.Modules.pullback p).map u)) := by
+      rw [hsecond.symm]
+    _ = (chapter09PullbackCompositionIso (chapter09DoubleFirst p) p M).inv ≫
+          eM.hom ≫
+          (chapter09PullbackCompositionIso (chapter09DoubleSecond p) p M).hom ≫
+          (Scheme.Modules.pullback (chapter09DoubleSecond p)).map
+            ((Scheme.Modules.pullback p).map u) := by
+      rfl
 
 /- This named theorem is the canonical-cocycle bridge consumed by the
    effective vector-bundle datum below. -/

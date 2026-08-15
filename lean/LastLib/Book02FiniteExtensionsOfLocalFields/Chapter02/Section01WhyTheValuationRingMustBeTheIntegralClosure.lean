@@ -69,9 +69,10 @@ def chapter2ValuationSubringExtends
 /-- Uniqueness of the valuation ring above the base valuation ring. -/
 def chapter2UniqueValuationExtension
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰) : Prop :=
-  ∀ W : ValuationSubring L,
-    chapter2ValuationSubringExtends vK W →
-      (W : Set L) = (vL.valuationSubring : Set L)
+  chapter2ValuationSubringExtends vK vL.valuationSubring ∧
+    ∀ W : ValuationSubring L,
+      chapter2ValuationSubringExtends vK W →
+        (W : Set L) = (vL.valuationSubring : Set L)
 
 /-- A family of valuation rings enumerating all extensions of the base ring. -/
 def chapter2IntegralClosureIntersection
@@ -102,23 +103,28 @@ theorem chapter2_complete_base_has_unique_valuation_subring_extension
       _ _ _ hDVR
   have hL : vK.IsEquiv (vL.comap (algebraMap K L)) :=
     Valuation.HasExtension.val_isEquiv_comap
-  intro W hW
-  have hW' : (algebraMap K L) ⁻¹' (W : Set L) =
-      (vK.valuationSubring : Set K) := hW
-  have hWext : vK.HasExtension W.valuation := by
-    apply Valuation.HasExtension.ofComapInteger
-    rw [ValuationSubring.integer_valuation W]
-    ext x
-    change algebraMap K L x ∈ W ↔ x ∈ vK.valuationSubring
-    exact Set.ext_iff.mp hW' x
-  have hW' : vK.IsEquiv (W.valuation.comap (algebraMap K L)) :=
-    hWext.val_isEquiv_comap
-  have hval :=
-    LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_henselian_valuation_has_unique_branch
-      vK hhens vL W.valuation hL hW'
-  have hsub := (Valuation.isEquiv_iff_valuationSubring vL W.valuation).mp hval
-  simpa only [ValuationSubring.valuationSubring_valuation] using
-    congrArg (fun V : ValuationSubring L => (V : Set L)) hsub.symm
+  refine ⟨?_, ?_⟩
+  · ext x
+    exact (Valuation.mem_valuationSubring_iff vL (algebraMap K L x)).trans
+      ((Valuation.HasExtension.val_map_le_one_iff vK vL x).trans
+        (Valuation.mem_valuationSubring_iff vK x).symm)
+  · intro W hW
+    have hW' : (algebraMap K L) ⁻¹' (W : Set L) =
+        (vK.valuationSubring : Set K) := hW
+    have hWext : vK.HasExtension W.valuation := by
+      apply Valuation.HasExtension.ofComapInteger
+      rw [ValuationSubring.integer_valuation W]
+      ext x
+      change algebraMap K L x ∈ W ↔ x ∈ vK.valuationSubring
+      exact Set.ext_iff.mp hW' x
+    have hW' : vK.IsEquiv (W.valuation.comap (algebraMap K L)) :=
+      hWext.val_isEquiv_comap
+    have hval :=
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_henselian_valuation_has_unique_branch
+        vK hhens vL W.valuation hL hW'
+    have hsub := (Valuation.isEquiv_iff_valuationSubring vL W.valuation).mp hval
+    simpa only [ValuationSubring.valuationSubring_valuation] using
+      congrArg (fun V : ValuationSubring L => (V : Set L)) hsub.symm
 
 /-- The integral closure is the unit ball of the unique normalized extension. -/
 theorem integral_closure_eq_extension_valuation_subring
@@ -152,7 +158,7 @@ theorem integral_closure_eq_extension_valuation_subring
       ext y
       change W.valuation (algebraMap K L y) ≤ 1 ↔ vK y ≤ 1
       exact (hW.le_one_iff_le_one).symm
-    have heq := hunique W.valuation.valuationSubring hWext
+    have heq := hunique.2 W.valuation.valuationSubring hWext
     change x ∈ (W.valuation.valuationSubring : Set L)
     rw [heq]
     exact hx

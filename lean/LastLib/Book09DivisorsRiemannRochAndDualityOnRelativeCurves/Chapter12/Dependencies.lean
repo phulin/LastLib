@@ -4,7 +4,9 @@ import Mathlib.Algebra.Homology.ShortComplex.Exact
 import Mathlib.AlgebraicGeometry.Geometrically.Connected
 import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.AlgebraicGeometry.Morphisms.Finite
+import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
 import Mathlib.AlgebraicGeometry.Morphisms.Proper
+import Mathlib.AlgebraicGeometry.Morphisms.QuasiCompact
 import Mathlib.AlgebraicGeometry.Morphisms.Smooth
 import Mathlib.AlgebraicGeometry.Noetherian
 import Mathlib.CategoryTheory.Sites.SheafCohomology.Basic
@@ -41,11 +43,15 @@ Shared interfaces for Chapter 12.
 /-- A smooth proper geometrically connected relative curve over a field. -/
 structure Chapter12Curve (k : Type u) [Field k] where
   residueCurve : Chapter08ProperGeometricallyConnectedCurve k
-  functionFieldAlgebra : Algebra k residueCurve.carrier.functionField
   smoothRelative : SmoothOfRelativeDimension 1 residueCurve.structureMap
   quasiCompact : QuasiCompact residueCurve.structureMap
   locallyOfFinitePresentation : LocallyOfFinitePresentation residueCurve.structureMap
   relativeCohenMacaulay : chapter09CohenMacaulay residueCurve.carrier
+
+abbrev Chapter12Curve.functionFieldAlgebra {k : Type u} [Field k]
+    (C : Chapter12Curve k) : Algebra k C.residueCurve.carrier.functionField :=
+  (chapter08FunctionFieldAlgebraCanonical
+    C.residueCurve.toChapter08SmoothIntegralCurve).toAlgebra
 
 attribute [instance] Chapter12Curve.functionFieldAlgebra
 

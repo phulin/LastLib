@@ -164,7 +164,36 @@ theorem chapter08_exists_finite_affine_refinement
     {T S : Scheme.{u}} {p : T ⟶ S} (hp : Chapter08FpqcMorphism p)
     {U : S.Opens} (hU : IsAffineOpen U) :
     Nonempty (Chapter08FiniteAffineRefinement p U) := by
-  sorry
+  let Q : Scheme.{u} := pullback U.ι p
+  let q : Q ⟶ U.toScheme := pullback.fst U.ι p
+  have hq : Chapter08FpqcMorphism q := by
+    exact chapter08_baseChange_fpqc hp
+  let : IsAffine U.toScheme := hU
+  obtain ⟨R⟩ := Chapter02.exists_affine_singleton_refinement
+    hU (Chapter02.fpqcMorphism_is_singletonFamily hq)
+  refine ⟨{
+    index := ULift.{u} (Fin R.cardinality)
+    finite := inferInstance
+    source := fun i => (R.affineOpen i.down).toScheme
+    map := fun i => (R.affineOpen i.down).ι
+    affine := fun i => R.affine i.down
+    flat := fun i => by infer_instance
+    isOpenImmersion := fun i => by infer_instance
+    coordinateRing := fun i => Γ(Q, R.affineOpen i.down)
+    source_isSpec := fun i => ⟨(R.affine i.down).isoSpec⟩
+    jointlySurjective := ?_ }⟩
+  intro x
+  have hx : x ∈ q '' (R.sourceOpen : Set Q) := by
+    rw [R.sourceOpen_surjective]
+    exact Set.mem_univ x
+  rcases hx with ⟨y, hy, hqy⟩
+  have hy' : y ∈ ⋃ i : Fin R.cardinality,
+      (R.affineOpen i : Set Q) := by
+    rw [← R.covers]
+    exact hy
+  rcases Set.mem_iUnion.1 hy' with ⟨i, hyi⟩
+  refine ⟨ULift.up i, ⟨y, hyi⟩, ?_⟩
+  simpa [q, Q] using hqy
 
 /-- The finite affine refinement in the source supplies a product faithfully
 flat algebra over the affine coordinate ring. -/
@@ -175,7 +204,98 @@ theorem chapter08_affine_refinement_product_algebra
     Nonempty
       (Chapter08FaithfullyFlatProductAlgebra
         (S.presheaf.obj (.op U)) hcover.coordinateRing) := by
-  sorry
+  classical
+  let Q : Scheme.{u} := pullback U.ι p
+  let q : Q ⟶ U.toScheme := pullback.fst U.ι p
+  have hq : Chapter08FpqcMorphism q := by
+    exact chapter08_baseChange_fpqc hp
+  let sourceIso : ∀ i : hcover.index,
+      hcover.source i ≅ Spec (hcover.coordinateRing i) := fun i =>
+    Classical.choice (hcover.source_isSpec i)
+  let f : ∀ i : hcover.index,
+      Spec (hcover.coordinateRing i) ⟶
+        Spec (S.presheaf.obj (.op U)) := fun i =>
+    (sourceIso i).inv ≫ hcover.map i ≫ q ≫ hU.isoSpec.hom
+  let φ : ∀ i : hcover.index,
+      S.presheaf.obj (.op U) ⟶ hcover.coordinateRing i := fun i =>
+    (Scheme.ΓSpecIso (S.presheaf.obj (.op U))).inv ≫ (f i).appTop ≫
+      (Scheme.ΓSpecIso (hcover.coordinateRing i)).hom
+  have hφ_flat : ∀ i : hcover.index, RingHom.Flat (φ i).hom := by
+    intro i
+    let : Flat q := hq.1
+    let : Flat (hcover.map i) := hcover.flat i
+    have hf : Flat (f i) := by
+      dsimp [f]
+      infer_instance
+    have hfa : RingHom.Flat (f i).appTop.hom := f i |>.flat_appTop
+    change RingHom.Flat
+      (((Scheme.ΓSpecIso (S.presheaf.obj (.op U))).inv ≫ (f i).appTop ≫
+        (Scheme.ΓSpecIso (hcover.coordinateRing i)).hom).hom)
+    exact RingHom.Flat.comp
+      (RingHom.Flat.of_bijective
+        (ConcreteCategory.bijective_of_isIso
+          (Scheme.ΓSpecIso (S.presheaf.obj (.op U))).inv))
+      (RingHom.Flat.comp hfa
+        (RingHom.Flat.of_bijective
+          (ConcreteCategory.bijective_of_isIso
+            (Scheme.ΓSpecIso (hcover.coordinateRing i)).hom)))
+  let productRingHom : (S.presheaf.obj (.op U) : Type u) →+*
+      (∀ i, hcover.coordinateRing i) :=
+    RingHom.pi (fun i => (φ i).hom)
+  let : Finite hcover.index := hcover.finite
+  let : Fintype hcover.index := Fintype.ofFinite hcover.index
+  have hproduct_flat : RingHom.Flat productRingHom := by
+    let : ∀ i, Algebra (S.presheaf.obj (.op U) : Type u)
+        (hcover.coordinateRing i : Type u) :=
+      fun i => (φ i).hom.toAlgebra
+    let : ∀ i, Module.Flat (S.presheaf.obj (.op U) : Type u)
+        (hcover.coordinateRing i : Type u) :=
+      fun i => hφ_flat i
+    change Module.Flat (S.presheaf.obj (.op U) : Type u)
+      (∀ i, (hcover.coordinateRing i : Type u))
+    apply Module.Flat.of_linearEquiv
+      ((DirectSum.linearEquivFunOnFintype
+        (S.presheaf.obj (.op U) : Type u) hcover.index
+        (fun i => (hcover.coordinateRing i : Type u))).symm)
+  have hproduct_faithfullyFlat : productRingHom.FaithfullyFlat := by
+    rw [RingHom.FaithfullyFlat.iff_flat_and_comap_surjective]
+    refine ⟨hproduct_flat, ?_⟩
+    intro z
+    let x : U.toScheme := hU.isoSpec.inv z
+    obtain ⟨i, y, hxy⟩ := hcover.jointlySurjective x
+    let zi : PrimeSpectrum (hcover.coordinateRing i) := (sourceIso i).hom y
+    have hf_spec : f i = Spec.map (φ i) := by
+      apply AlgebraicGeometry.ext_of_isAffine
+      apply (cancel_mono
+        (Scheme.ΓSpecIso (hcover.coordinateRing i)).hom).1
+      rw [Scheme.ΓSpecIso_naturality]
+      simp [φ]
+    have hfi : f i zi = z := by
+      change hU.isoSpec.hom
+          (q (hcover.map i ((sourceIso i).inv ((sourceIso i).hom y)))) = z
+      have hsource : (sourceIso i).inv ((sourceIso i).hom y) = y := by
+        exact congrArg (fun g : hcover.source i ⟶ hcover.source i => g y)
+          (sourceIso i).hom_inv_id
+      rw [hsource, hxy]
+      change hU.isoSpec.hom (hU.isoSpec.inv z) = z
+      exact congrArg (fun g : Spec (S.presheaf.obj (.op U)) ⟶
+          Spec (S.presheaf.obj (.op U)) => g z) hU.isoSpec.inv_hom_id
+    have hcomap : PrimeSpectrum.comap (φ i).hom zi = z := by
+      change (Spec.map (φ i)) zi = z
+      rw [← hf_spec]
+      exact hfi
+    refine ⟨PrimeSpectrum.sigmaToPi
+      (fun i => (hcover.coordinateRing i : Type u)) ⟨i, zi⟩, ?_⟩
+    rw [PrimeSpectrum.sigmaToPi_apply, ← PrimeSpectrum.comap_comp_apply]
+    have heq : (Pi.evalRingHom (fun i => (hcover.coordinateRing i : Type u)) i).comp
+        productRingHom = (φ i).hom := by
+      ext a
+      rfl
+    rw [heq, hcomap]
+  refine ⟨{
+    finite := hcover.finite
+    algebraMap := CommRingCat.ofHom productRingHom
+    faithfullyFlat := hproduct_faithfullyFlat }⟩
 
 end
 end Chapter08

@@ -718,7 +718,10 @@ theorem chapter10_finite_extension_prime_valuation_correspondence
     [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
     (hA : vK.Integers A) :
     Chapter10ExtensionPrimeCorrespondence (A := A) (B := B) (L := L) vK hA := by
-  sorry
+  exact ⟨Equiv.ofBijective
+    (chapter10_extension_center_map (A := A) (B := B) (K := K) (L := L) vK hA)
+    ⟨chapter10_extension_center_map_injective vK hA,
+      chapter10_extension_center_map_surjective vK hA⟩⟩
 
 /-! ### Galois action on valuation branches
 

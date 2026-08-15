@@ -74,13 +74,12 @@ def chapter04NormalizedValuationRestriction
 
 /-- When `H` is normal, the fixed field is Galois over `K`, and Mathlib's
 canonical quotient equivalence identifies its Galois group with `G / H`. -/
-theorem chapter04_normal_fixed_field_quotient_galois_group
+def chapter04_normal_fixed_field_quotient_galois_group
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
     (H : Subgroup Gal(L / K)) [H.Normal] :
-    Nonempty
-      ((Gal(L / K) ⧸ H) ≃* Gal(chapter04FixedField H / K)) := by
-  exact ⟨IsGalois.normalAutEquivQuotient H⟩
+    (Gal(L / K) ⧸ H) ≃* Gal(chapter04FixedField H / K) := by
+  exact IsGalois.normalAutEquivQuotient H
 
 /-- The normal subgroup condition is the exact field-theoretic condition used
 by the quotient construction; without it, there is no canonical quotient

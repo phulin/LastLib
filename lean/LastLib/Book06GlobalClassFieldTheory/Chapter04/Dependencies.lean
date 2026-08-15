@@ -3,6 +3,7 @@ import Mathlib.Algebra.BigOperators.Finsupp.Basic
 import Mathlib.Algebra.Category.Grp.Basic
 import Mathlib.Algebra.Category.ModuleCat.Abelian
 import Mathlib.Algebra.Homology.ShortComplex.ShortExact
+import Mathlib.Algebra.Module.ZMod
 import Mathlib.Data.DFinsupp.BigOperators
 import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Data.Finsupp.Defs
@@ -17,6 +18,7 @@ import Mathlib.RepresentationTheory.Homological.GroupCohomology.Shapiro
 import Mathlib.RepresentationTheory.Homological.TateCohomology.Basic
 import Mathlib.RepresentationTheory.Induced
 import LastLib.Book06GlobalClassFieldTheory.Chapter01.Dependencies
+import LastLib.Book06GlobalClassFieldTheory.Chapter01.Section04ArchitectureOfTheProof
 import LastLib.Book05LocalClassFieldTheory.Chapter05.Section03ClassFormation
 
 namespace LastLib.Book06GlobalClassFieldTheory.Chapter04
@@ -262,6 +264,73 @@ structure Chapter04BrauerInvariantSequenceData
   local_behavior : Chapter04LocalBrauerBehavior D
   exact_sequence : chapter04BrauerInvariantExact D
 
+/-! ### The compact-support cone and the concrete degree-two boundary -/
+
+/-- A presentation of the shifted compact-support cone.
+
+The cochain differentials and their cohomology are supplied by the earlier global
+cohomology development.  This record keeps the source-order `[-1]` shift and the
+localization map visible to the degree-two Brauer interface below. -/
+structure Chapter04CompactSupportConePresentation where
+  globalCochains : ℤ → Type v
+  [globalGroup : ∀ r, AddCommGroup (globalCochains r)]
+  localCochains : ℤ → Type v
+  [localGroup : ∀ r, AddCommGroup (localCochains r)]
+  localization : ∀ r, globalCochains r →+ localCochains r
+  compactSupportCochains : ℤ → Type v
+  [compactGroup : ∀ r, AddCommGroup (compactSupportCochains r)]
+  conePresentation : ∀ r,
+    compactSupportCochains r ≃+
+      (globalCochains r × localCochains (r - 1))
+
+attribute [instance] Chapter04CompactSupportConePresentation.globalGroup
+  Chapter04CompactSupportConePresentation.localGroup
+  Chapter04CompactSupportConePresentation.compactGroup
+
+/-- The concrete global/local data needed for the degree-two Brauer row.
+
+The coefficient carriers are explicit, the cone is retained as provenance, and
+the two compatibility equations identify the displayed maps with the canonical
+global Brauer localization and total-invariant maps.  The exactness conclusion
+is deliberately not a field here: it is the arithmetic assertion supplied by
+the theorem in the Brauer section. -/
+structure Chapter04CompactSupportDegreeTwoContext
+    (F : Type u) [Field F] [NumberField F] where
+  n : ℕ
+  positive_n : 0 < n
+  cone : Chapter04CompactSupportConePresentation.{v}
+  brauer : LastLib.Book06GlobalClassFieldTheory.Chapter01.BookBrauerInvariantSequence F
+  globalH₂ : Type v
+  [globalH₂Group : AddCommGroup globalH₂]
+  localH₂ : Type v
+  [localH₂Group : AddCommGroup localH₂]
+  targetH₀ : Type v
+  [targetH₀Group : AddCommGroup targetH₀]
+  localization : globalH₂ →+ localH₂
+  totalInvariant : localH₂ →+ targetH₀
+  global_to_brauer : globalH₂ →+
+    LastLib.Book06GlobalClassFieldTheory.Chapter01.BookBrauerInvariantSequence.globalBrauer
+      brauer
+  local_to_brauer : localH₂ →+
+    DirectSum (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookPlace F)
+      brauer.localBrauer
+  invariant_to_target :
+    LastLib.Book06GlobalClassFieldTheory.Chapter01.RationalModuloIntegers →+ targetH₀
+  target_identification :
+    targetH₀ ≃+ (ZMod n →+ chapter04QModZ)
+  localization_compatibility :
+    local_to_brauer.comp localization =
+      brauer.sequence.left.comp global_to_brauer
+  totalInvariant_compatibility :
+    totalInvariant =
+      invariant_to_target.comp
+        ((LastLib.Book06GlobalClassFieldTheory.Chapter01.brauerInvariantSum brauer).comp
+          local_to_brauer)
+
+attribute [instance] Chapter04CompactSupportDegreeTwoContext.globalH₂Group
+  Chapter04CompactSupportDegreeTwoContext.localH₂Group
+  Chapter04CompactSupportDegreeTwoContext.targetH₀Group
+
 /-! ### Ideles and idele classes -/
 
 /-! The preceding global-class-field interfaces already provide the canonical adelic quotient.  Keep
@@ -334,6 +403,8 @@ structure Chapter04CompactSupportAPI (G : Type u) [Group G] where
   [globalHGroup : ∀ M r, AddCommGroup (globalH M r)]
   compactH : Chapter04GModule.{u, v} G → ℤ → Type v
   [compactHGroup : ∀ M r, AddCommGroup (compactH M r)]
+  /-- The shifted cone whose cohomology supplies `globalH` and `compactH`. -/
+  cone : Chapter04CompactSupportConePresentation.{v}
   trace : ∀ (M : Chapter04GModule.{u, v} G), compactH M 3 →+ chapter04QModZ
   trace_torsion : ∀ (M : Chapter04GModule.{u, v} G) (n : ℕ),
     chapter04NAnnihilates n M →

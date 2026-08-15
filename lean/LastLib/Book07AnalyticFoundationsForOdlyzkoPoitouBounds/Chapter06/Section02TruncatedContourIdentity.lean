@@ -157,16 +157,35 @@ theorem chapter06_contour_difference_is_twice_right_vertical
 theorem chapter06_contour_identity
     (K : Type*) [Field K] [NumberField K]
     (P : Chapter06ZetaAnalyticPackage K) {F : ℝ → ℝ}
-    (hF : Chapter06SmoothCompactSupport F) {c T : ℝ}
+    {c T : ℝ}
     (hc : 1 < c) (hT : 0 ≤ T)
-    (havoid : ∀ ρ : ℂ, ρ ∈ P.zeros.support →
-      ρ.im ≠ T ∧ ρ.im ≠ -T) :
+    (R : Chapter06RectangleResidueData K P.zeros F c T) :
     (1 / (2 * (Real.pi : ℂ) * Complex.I)) *
         (chapter06RightVerticalIntegral (K := K) F c T -
           chapter06LeftVerticalIntegral (K := K) F c T) =
       chapter06ContourResidueSum P.zeros F T +
         chapter06HorizontalError (K := K) F c T := by
-  sorry
+  have hres := chapter06_contour_residue_interface K P hc hT R
+  unfold chapter06HorizontalError
+  calc
+    (1 / (2 * (Real.pi : ℂ) * Complex.I)) *
+          (chapter06RightVerticalIntegral (K := K) F c T -
+            chapter06LeftVerticalIntegral (K := K) F c T) =
+        (1 / (2 * (Real.pi : ℂ) * Complex.I)) *
+            (chapter06RightVerticalIntegral (K := K) F c T -
+              chapter06LeftVerticalIntegral (K := K) F c T +
+              chapter06TopHorizontalIntegral (K := K) F c T +
+              chapter06BottomHorizontalIntegral (K := K) F c T) -
+          (1 / (2 * (Real.pi : ℂ) * Complex.I)) *
+            (chapter06TopHorizontalIntegral (K := K) F c T +
+              chapter06BottomHorizontalIntegral (K := K) F c T) := by
+            ring
+    _ = chapter06ContourResidueSum P.zeros F T +
+          -((1 / (2 * (Real.pi : ℂ) * Complex.I)) *
+            (chapter06TopHorizontalIntegral (K := K) F c T +
+              chapter06BottomHorizontalIntegral (K := K) F c T)) := by
+            rw [hres]
+            ring
 
 /-
 SOURCE_NOTE (books/007-analytic-foundations-for-odlyzko-poitou-bounds.md:§6.2):
@@ -188,42 +207,65 @@ theorem chapter06_horizontal_error_tendsto_zero
     (H : Chapter06ContourHeightSequence K P.zeros c) :
     Tendsto (fun j => chapter06HorizontalError (K := K) F c (H.height j)) atTop
       (𝓝 0) := by
-  sorry
+  obtain ⟨C, _, hbound⟩ :=
+    chapter06_horizontal_error_bound_of_smooth_compact K P hF hc H
+  have hden : Tendsto (fun j : ℕ => 1 + H.height j) atTop atTop := by
+    simpa using
+      (tendsto_const_nhds.add_atTop H.tendsToInfinity :
+        Tendsto (fun j : ℕ => (1 : ℝ) + H.height j) atTop atTop)
+  have hquot : Tendsto (fun j : ℕ => C / (1 + H.height j)) atTop
+      (𝓝 0) := by
+    exact tendsto_const_nhds.div_atTop hden
+  refine (tendsto_iff_norm_sub_tendsto_zero).2 ?_
+  refine squeeze_zero
+    (f := fun j : ℕ =>
+      ‖chapter06HorizontalError (K := K) F c (H.height j) - 0‖)
+    (g := fun j : ℕ => C / (1 + H.height j))
+    (fun j => norm_nonneg _) ?_ hquot
+  intro j
+  simpa using hbound j
 
 theorem chapter06_contour_identity_along_admissible_heights
     (K : Type*) [Field K] [NumberField K]
     (P : Chapter06ZetaAnalyticPackage K) {F : ℝ → ℝ}
-    (hF : Chapter06SmoothCompactSupport F) {c : ℝ} (hc : 1 < c)
+    {c : ℝ} (hc : 1 < c)
+    (hrectangle : ∀ (T : ℝ), 0 ≤ T →
+      (∀ ρ : ℂ, ρ ∈ P.zeros.support →
+        ρ.im ≠ T ∧ ρ.im ≠ -T) →
+      Chapter06RectangleResidueData K P.zeros F c T)
     (H : Chapter06ContourHeightSequence K P.zeros c) :
     ∀ᶠ j : ℕ in atTop,
       (1 / (2 * (Real.pi : ℂ) * Complex.I)) *
           (chapter06RightVerticalIntegral (K := K) F c (H.height j) -
             chapter06LeftVerticalIntegral (K := K) F c (H.height j)) =
-        chapter06ContourResidueSum P.zeros F (H.height j) +
+      chapter06ContourResidueSum P.zeros F (H.height j) +
           chapter06HorizontalError (K := K) F c (H.height j) := by
   filter_upwards [] with j
-  apply chapter06_contour_identity K P hF hc (H.positive j).le ?_
-  intro ρ hρ
-  have hbase : 0 < H.separationConstant /
+  have havoid : ∀ ρ : ℂ, ρ ∈ P.zeros.support →
+      ρ.im ≠ H.height j ∧ ρ.im ≠ -H.height j := by
+    intro ρ hρ
+    have hbase : 0 < H.separationConstant /
       Real.rpow (H.height j + 3) (H.separationExponent : ℝ) := by
-    apply div_pos H.separationConstant_pos
-    apply Real.rpow_pos_of_pos
-    linarith [H.positive j]
-  constructor
-  · intro hEq
-    have hsep := H.avoids_zero_ordinates j ρ hρ
-    have hpos : 0 < |H.height j - ρ.im| :=
-      lt_of_lt_of_le hbase hsep
-    apply (ne_of_gt hpos)
-    simp [hEq]
-  · intro hEq
-    have hρstar : star ρ ∈ P.zeros.support :=
-      (P.zeros.conjugation_partner (ρ := ρ)).mp hρ
-    have hsep := H.avoids_zero_ordinates j (star ρ) hρstar
-    have hpos : 0 < |H.height j - (star ρ).im| :=
-      lt_of_lt_of_le hbase hsep
-    apply (ne_of_gt hpos)
-    simp [hEq]
+      apply div_pos H.separationConstant_pos
+      apply Real.rpow_pos_of_pos
+      linarith [H.positive j]
+    constructor
+    · intro hEq
+      have hsep := H.avoids_zero_ordinates j ρ hρ
+      have hpos : 0 < |H.height j - ρ.im| :=
+        lt_of_lt_of_le hbase hsep
+      apply (ne_of_gt hpos)
+      simp [hEq]
+    · intro hEq
+      have hρstar : star ρ ∈ P.zeros.support :=
+        (P.zeros.conjugation_partner (ρ := ρ)).mp hρ
+      have hsep := H.avoids_zero_ordinates j (star ρ) hρstar
+      have hpos : 0 < |H.height j - (star ρ).im| :=
+        lt_of_lt_of_le hbase hsep
+      apply (ne_of_gt hpos)
+      simp [hEq]
+  exact chapter06_contour_identity K P hc (H.positive j).le
+    (hrectangle (H.height j) (H.positive j).le havoid)
 
 end
 

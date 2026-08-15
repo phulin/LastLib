@@ -44,7 +44,43 @@ theorem chapter07_complexSechHalf_periodicity (z : ℂ) :
 theorem chapter07_sechHalf_transform (t : ℝ) :
     chapter07FourierTransform chapter07SechHalf t =
       (2 * Real.pi / Real.cosh (Real.pi * t) : ℂ) := by
-  sorry
+  have hclosed :=
+    LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05_strip_kernel_fourier_closed_form
+      (0 : ℝ) t (by norm_num)
+  have hkernel : chapter07SechHalf = chapter07StripKernel 0 := by
+    funext x
+    simp [chapter07SechHalf, chapter07StripKernel]
+  have hkernel' : chapter07StripKernel 0 =
+      LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05StripKernel 0 := by
+    funext x
+    simp [chapter07StripKernel,
+      LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05StripKernel]
+  rw [hkernel]
+  rw [hkernel']
+  change LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05FourierTransform
+    (LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05StripKernel 0) t = _
+  rw [hclosed]
+  norm_num
+  have hx : (Real.pi : ℂ) * (t : ℂ) = ((Real.pi * t : ℝ) : ℂ) := by
+    rw [← Complex.ofReal_mul]
+  have harg : (2 : ℂ) * (Real.pi : ℂ) * (t : ℂ) =
+      2 * ((Real.pi * t : ℝ) : ℂ) := by
+    calc
+      (2 : ℂ) * (Real.pi : ℂ) * (t : ℂ) =
+          2 * ((Real.pi : ℂ) * (t : ℂ)) := by ring
+      _ = 2 * ((Real.pi * t : ℝ) : ℂ) := by rw [hx]
+  rw [harg, Complex.cosh_two_mul, hx]
+  have hcosh : Complex.cosh ((Real.pi * t : ℝ) : ℂ) ≠ 0 := by
+    rw [← Complex.ofReal_cosh]
+    exact Complex.ofReal_ne_zero.mpr (Real.cosh_pos _).ne'
+  have hden : Complex.cosh ((Real.pi * t : ℝ) : ℂ) ^ 2 +
+      Complex.sinh ((Real.pi * t : ℝ) : ℂ) ^ 2 + 1 =
+      2 * Complex.cosh ((Real.pi * t : ℝ) : ℂ) ^ 2 := by
+    rw [Complex.cosh_sq]
+    ring
+  rw [hden]
+  field_simp [hcosh]
+  ring
 
 theorem chapter07_sechHalf_integrable :
     Integrable chapter07SechHalf := by

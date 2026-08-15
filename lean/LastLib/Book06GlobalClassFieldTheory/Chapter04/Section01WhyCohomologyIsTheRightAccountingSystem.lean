@@ -1,4 +1,5 @@
 import LastLib.Book06GlobalClassFieldTheory.Chapter04.Dependencies
+import LastLib.Book06GlobalClassFieldTheory.Chapter01.Section04ArchitectureOfTheProof
 
 namespace LastLib.Book06GlobalClassFieldTheory.Chapter04
 
@@ -62,6 +63,27 @@ noncomputable def chapter04TateDegreeZeroNormQuotientEquiv
     chapter04TateH M 0 ≃+
       chapter04AddNormQuotient (chapter04NormToInvariants M) :=
   Classical.choice (chapter04_tate_degree_zero_is_norm_quotient M)
+
+/-! The abstract Tate quotient above is also connected to the canonical
+idele-class quotient exposed by the earlier global architecture.  Keeping
+this bridge explicit prevents the generic invariant-subgroup model from
+silently standing in for `C_K / N C_L`. -/
+theorem chapter04_canonical_tate_degree_zero_class_norm_bridge
+    {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
+    [Fintype (Gal(L / K))]
+    (D : LastLib.Book06GlobalClassFieldTheory.Chapter01.FiniteGaloisFundamentalClassData
+      K L) :
+    Nonempty
+      (LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05TateCohomology
+          (Gal(L / K))
+          (LastLib.Book06GlobalClassFieldTheory.Chapter01.globalIdeleClassCoefficientRep
+            D.ideleClassAction) 0 ≃+
+        Additive
+          (LastLib.Book06GlobalClassFieldTheory.Chapter01.finiteClassArtinQuotient
+            D.normData)) := by
+  rcases LastLib.Book06GlobalClassFieldTheory.Chapter01.global_idele_class_degree_zero_norm_bridge_exists D with ⟨B⟩
+  exact ⟨B.equiv⟩
 
 /-- The negative degree-two Tate group of the trivial module is the abelianization. -/
 theorem chapter04_tate_degree_neg_two_is_abelianization

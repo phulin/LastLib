@@ -469,7 +469,149 @@ theorem finite_complete_extension_valuation_ring
       IsDiscreteValuationRing w.valuationSubring ∧
       (w.valuationSubring : Set L) =
         (integralClosure vK.valuationSubring L : Set L) := by
-  sorry
+  let _ : IsAdicComplete
+      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring := hcomplete
+  have hfinite : Module.Finite vK.valuationSubring w.valuationSubring :=
+    complete_extension_unit_ball_is_finite vK w hcomplete
+  let : Module.Finite vK.valuationSubring w.valuationSubring := hfinite
+  let : Module.IsTorsionFree vK.valuationSubring w.valuationSubring :=
+    Module.IsTorsionFree.of_smul_eq_zero (by
+      intro a x hax
+      rcases eq_or_ne a 0 with rfl | ha
+      · exact Or.inl rfl
+      · exact Or.inr ((complete_extension_unit_ball_is_torsion_free vK w) a x ha hax))
+  let : Module.Free vK.valuationSubring w.valuationSubring :=
+    finite_torsion_free_over_dvr_is_free
+      (complete_extension_unit_ball_is_torsion_free vK w)
+  let : IsDedekindDomain w.valuationSubring :=
+    ((IsDiscreteValuationRing.TFAE w.valuationSubring
+      (IsDiscreteValuationRing.not_isField w.valuationSubring)).out 0 2).mp
+      (inferInstance : IsDiscreteValuationRing w.valuationSubring)
+  let e : ℕ :=
+    (IsLocalRing.maximalIdeal w.valuationSubring).ramificationIdx
+      vK.valuationSubring
+  have hepos : 0 < e := by
+    dsimp [e]
+    exact (IsLocalRing.maximalIdeal w.valuationSubring).ramificationIdx_pos
+      vK.valuationSubring
+  have hfact := Ideal.map_algebraMap_eq_finsetProd_pow
+    (R := w.valuationSubring) (S := vK.valuationSubring)
+    (p := IsLocalRing.maximalIdeal vK.valuationSubring)
+    (by exact IsDiscreteValuationRing.not_a_field vK.valuationSubring)
+  have hprimes := IsLocalRing.primesOver_eq
+    (R := vK.valuationSubring) (A := w.valuationSubring)
+    (p := IsLocalRing.maximalIdeal vK.valuationSubring)
+    (by exact IsDiscreteValuationRing.not_a_field vK.valuationSubring)
+  have hmap :
+      Ideal.map (algebraMap vK.valuationSubring w.valuationSubring)
+        (IsLocalRing.maximalIdeal vK.valuationSubring) =
+        (IsLocalRing.maximalIdeal w.valuationSubring) ^ e := by
+    rw [hfact]
+    simp [hprimes, e]
+  let b : Module.Basis
+      (Fin (Module.finrank vK.valuationSubring w.valuationSubring))
+      vK.valuationSubring w.valuationSubring :=
+    Module.finBasis vK.valuationSubring w.valuationSubring
+  have hcoord : Function.Bijective
+      (fun x : Fin (Module.finrank vK.valuationSubring w.valuationSubring) →
+          vK.valuationSubring =>
+        fun i => AdicCompletion.of (IsLocalRing.maximalIdeal vK.valuationSubring)
+          vK.valuationSubring (x i)) := by
+    exact Function.Bijective.piMap (fun _ =>
+      AdicCompletion.of_bijective
+        (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
+  have hcompP : Function.Bijective
+      ((AdicCompletion.piEquivFin (IsLocalRing.maximalIdeal vK.valuationSubring)
+        (Module.finrank vK.valuationSubring w.valuationSubring)) ∘
+        (AdicCompletion.of (IsLocalRing.maximalIdeal vK.valuationSubring)
+          (Fin (Module.finrank vK.valuationSubring w.valuationSubring) →
+            vK.valuationSubring))) := by
+    have h_eq :
+        (AdicCompletion.piEquivFin (IsLocalRing.maximalIdeal vK.valuationSubring)
+          (Module.finrank vK.valuationSubring w.valuationSubring) ∘
+          AdicCompletion.of (IsLocalRing.maximalIdeal vK.valuationSubring)
+            (Fin (Module.finrank vK.valuationSubring w.valuationSubring) →
+              vK.valuationSubring)) =
+          (fun x => fun i => AdicCompletion.of
+            (IsLocalRing.maximalIdeal vK.valuationSubring)
+            vK.valuationSubring (x i)) := by
+      funext x
+      ext i
+      simp [AdicCompletion.piEquivFin_apply, AdicCompletion.pi]
+      rfl
+    rw [h_eq]
+    exact hcoord
+  have hOfP : Function.Bijective
+      (AdicCompletion.of (IsLocalRing.maximalIdeal vK.valuationSubring)
+        (Fin (Module.finrank vK.valuationSubring w.valuationSubring) →
+          vK.valuationSubring)) :=
+    (Function.Bijective.of_comp_iff'
+      (AdicCompletion.piEquivFin (IsLocalRing.maximalIdeal vK.valuationSubring)
+        (Module.finrank vK.valuationSubring w.valuationSubring)).bijective
+      _).mp hcompP
+  have hcompB : Function.Bijective
+      ((AdicCompletion.congr (IsLocalRing.maximalIdeal vK.valuationSubring)
+        b.equivFun) ∘ AdicCompletion.of (IsLocalRing.maximalIdeal vK.valuationSubring)
+          w.valuationSubring) := by
+    have h_eq :
+        (AdicCompletion.congr (IsLocalRing.maximalIdeal vK.valuationSubring)
+          b.equivFun ∘ AdicCompletion.of (IsLocalRing.maximalIdeal vK.valuationSubring)
+            w.valuationSubring) =
+          (AdicCompletion.of (IsLocalRing.maximalIdeal vK.valuationSubring)
+            (Fin (Module.finrank vK.valuationSubring w.valuationSubring) →
+              vK.valuationSubring) ∘ b.equivFun) := by
+      funext x
+      simp [AdicCompletion.congr_apply, AdicCompletion.map_of]
+    rw [h_eq]
+    exact hOfP.comp b.equivFun.bijective
+  have hbase : IsAdicComplete
+      (IsLocalRing.maximalIdeal vK.valuationSubring) w.valuationSubring :=
+    AdicCompletion.of_bijective_iff.mp
+      ((Function.Bijective.of_comp_iff'
+        (AdicCompletion.congr (IsLocalRing.maximalIdeal vK.valuationSubring)
+          b.equivFun).bijective _).mp hcompB)
+  have complete_of_pow (I : Ideal w.valuationSubring) (e : ℕ) (he : 0 < e)
+      (hp : IsAdicComplete (I ^ e) w.valuationSubring) :
+      IsAdicComplete I w.valuationSubring := by
+    refine { toIsHausdorff := ?_, toIsPrecomplete := ?_ }
+    · exact ⟨fun x hx => IsHausdorff.haus hp.toIsHausdorff x (by
+        intro n
+        simpa [← pow_mul] using hx (e * n))⟩
+    · exact ⟨fun f hf => by
+        let g : ℕ → w.valuationSubring := fun n => f (e * n)
+        have hg : ∀ {m n}, m ≤ n →
+            g m ≡ g n [SMOD ((I ^ e) ^ m • ⊤ :
+              Submodule w.valuationSubring w.valuationSubring)] := by
+          intro m n hmn
+          have hmn' : e * m ≤ e * n := Nat.mul_le_mul_left e hmn
+          have h := hf hmn'
+          simpa [g, ← pow_mul] using h
+        obtain ⟨L, hL⟩ := hp.toIsPrecomplete.prec' g hg
+        refine ⟨L, fun n => ?_⟩
+        have hn : n ≤ e * n := by
+          rw [Nat.mul_comm]
+          exact Nat.le_mul_of_pos_right _ he
+        have hfn := hf hn
+        have hLn := hL n
+        have hLn' : f (e * n) ≡ L [SMOD (I ^ (e * n) • ⊤ :
+            Submodule w.valuationSubring w.valuationSubring)] := by
+          simpa [← pow_mul] using hLn
+        exact hfn.trans (SModEq.mono
+          (Submodule.smul_mono_left (Ideal.pow_le_pow_right hn)) hLn')⟩
+  have hbase_map :
+      IsAdicComplete
+        (Ideal.map (algebraMap vK.valuationSubring w.valuationSubring)
+          (IsLocalRing.maximalIdeal vK.valuationSubring)) w.valuationSubring :=
+    (IsAdicComplete.map_algebraMap_iff (I := IsLocalRing.maximalIdeal
+      vK.valuationSubring) (M := w.valuationSubring)).mpr hbase
+  have hpow : IsAdicComplete
+      ((IsLocalRing.maximalIdeal w.valuationSubring) ^ e) w.valuationSubring := by
+    rw [← hmap]
+    exact hbase_map
+  have hcompleteB := complete_of_pow
+    (IsLocalRing.maximalIdeal w.valuationSubring) e hepos hpow
+  have heq := complete_extension_unit_ball_is_integral_closure vK w hfinite
+  exact ⟨hfinite, inferInstance, hcompleteB, inferInstance, heq⟩
 
 /-- The maximal ideal extension and residue degree formulas in the complete case. -/
 theorem complete_extension_ideal_and_residue_formulas
@@ -490,7 +632,92 @@ theorem complete_extension_ideal_and_residue_formulas
       Module.finrank (IsLocalRing.ResidueField vK.valuationSubring)
           (IsLocalRing.ResidueField w.valuationSubring) = f ∧
       Module.finrank K L = e * f := by
-  sorry
+  let hfinite : Module.Finite vK.valuationSubring w.valuationSubring :=
+    complete_extension_unit_ball_is_finite vK w hcomplete
+  let : Module.Finite vK.valuationSubring w.valuationSubring := hfinite
+  let : Module.IsTorsionFree vK.valuationSubring w.valuationSubring :=
+    Module.IsTorsionFree.of_smul_eq_zero (by
+      intro a x hax
+      rcases eq_or_ne a 0 with rfl | ha
+      · exact Or.inl rfl
+      · exact Or.inr ((complete_extension_unit_ball_is_torsion_free vK w) a x ha hax))
+  let : Module.Free vK.valuationSubring w.valuationSubring :=
+    finite_torsion_free_over_dvr_is_free
+      (complete_extension_unit_ball_is_torsion_free vK w)
+  let : IsDedekindDomain w.valuationSubring :=
+    ((IsDiscreteValuationRing.TFAE w.valuationSubring
+      (IsDiscreteValuationRing.not_isField w.valuationSubring)).out 0 2).mp
+      (inferInstance : IsDiscreteValuationRing w.valuationSubring)
+  have hfact := Ideal.map_algebraMap_eq_finsetProd_pow
+    (R := w.valuationSubring) (S := vK.valuationSubring)
+    (p := IsLocalRing.maximalIdeal vK.valuationSubring)
+    (by exact IsDiscreteValuationRing.not_a_field vK.valuationSubring)
+  have hprimes := IsLocalRing.primesOver_eq
+    (R := vK.valuationSubring) (A := w.valuationSubring)
+    (p := IsLocalRing.maximalIdeal vK.valuationSubring)
+    (by exact IsDiscreteValuationRing.not_a_field vK.valuationSubring)
+  have he' : (IsLocalRing.maximalIdeal w.valuationSubring).ramificationIdx
+      vK.valuationSubring = e := he
+  have hmap :
+      Ideal.map (algebraMap vK.valuationSubring w.valuationSubring)
+        (IsLocalRing.maximalIdeal vK.valuationSubring) =
+        (IsLocalRing.maximalIdeal w.valuationSubring) ^ e := by
+    rw [hfact]
+    simp [hprimes, he']
+  have hres0 := Ideal.inertiaDeg_eq_of_isMaximal
+    (R := vK.valuationSubring) (S := w.valuationSubring)
+    (p := IsLocalRing.maximalIdeal vK.valuationSubring)
+    (q := IsLocalRing.maximalIdeal w.valuationSubring)
+  have hres : Module.finrank (IsLocalRing.ResidueField vK.valuationSubring)
+      (IsLocalRing.ResidueField w.valuationSubring) = f := by
+    change Module.finrank
+      (vK.valuationSubring ⧸ IsLocalRing.maximalIdeal vK.valuationSubring)
+      (w.valuationSubring ⧸ IsLocalRing.maximalIdeal w.valuationSubring) = f
+    rw [← hf]
+    exact hres0.symm
+  let : Fintype ((IsLocalRing.maximalIdeal vK.valuationSubring).primesOver
+      w.valuationSubring) :=
+    Set.Finite.fintype (Algebra.QuasiFinite.finite_primesOver
+      (IsLocalRing.maximalIdeal vK.valuationSubring))
+  have hq_eq (q : (IsLocalRing.maximalIdeal vK.valuationSubring).primesOver
+      w.valuationSubring) :
+      q.1 = IsLocalRing.maximalIdeal w.valuationSubring := by
+    exact IsLocalRing.eq_maximalIdeal
+      (q.2.1.isMaximal (Ideal.ne_bot_of_mem_primesOver
+        (IsDiscreteValuationRing.not_a_field vK.valuationSubring) q.2))
+  let : Unique ((IsLocalRing.maximalIdeal vK.valuationSubring).primesOver
+      w.valuationSubring) :=
+    { default := Ideal.primesOver.mk
+        (IsLocalRing.maximalIdeal vK.valuationSubring)
+        (IsLocalRing.maximalIdeal w.valuationSubring)
+      uniq := fun q => Subtype.ext (hq_eq q) }
+  have hdefault :
+      (default : (IsLocalRing.maximalIdeal vK.valuationSubring).primesOver
+        w.valuationSubring).1 = IsLocalRing.maximalIdeal w.valuationSubring :=
+    hq_eq default
+  have hfinrank : Module.finrank vK.valuationSubring w.valuationSubring =
+      Module.finrank K L := by
+    exact (IsFractionRing.finrank_eq vK.valuationSubring K
+      w.valuationSubring L).symm
+  have hsum :=
+    Ideal.sum_ramification_inertia_eq_finrank
+      (p := IsLocalRing.maximalIdeal vK.valuationSubring)
+      (S := w.valuationSubring)
+  rw [Fintype.sum_unique, hfinrank] at hsum
+  have hprod :
+      chapterRamificationIndex vK.valuationSubring w.valuationSubring
+          (IsLocalRing.maximalIdeal w.valuationSubring) *
+        chapterResidueDegree vK.valuationSubring w.valuationSubring
+          (IsLocalRing.maximalIdeal w.valuationSubring) = Module.finrank K L := by
+    simpa only [chapterRamificationIndex, chapterResidueDegree, hdefault] using hsum
+  refine ⟨hmap, hres, ?_⟩
+  calc
+    Module.finrank K L =
+        chapterRamificationIndex vK.valuationSubring w.valuationSubring
+          (IsLocalRing.maximalIdeal w.valuationSubring) *
+        chapterResidueDegree vK.valuationSubring w.valuationSubring
+          (IsLocalRing.maximalIdeal w.valuationSubring) := hprod.symm
+    _ = e * f := by rw [he, hf]
 
 /-- The degree equality needs neither separability nor perfection hypotheses. -/
 theorem complete_extension_defectless_without_separability

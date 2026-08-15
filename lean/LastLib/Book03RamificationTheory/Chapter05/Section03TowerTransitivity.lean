@@ -272,13 +272,9 @@ theorem chapter05_herbrand_tower_transitivity
     {G : Type*} [Group G] [Fintype G]
     (H : Subgroup G) [H.Normal]
     (T : Chapter05HerbrandTowerSetup G H)
-    (hLK : Function.Bijective
-      (chapter05HerbrandFunction T.quotientSetup.upstairs))
     (hLM : Function.Bijective
       (chapter05HerbrandFunction T.subextension))
-    (hMK : Function.Bijective
-      (chapter05HerbrandFunction T.quotientSetup.downstairs))
-    {u : ℝ} (hu : (-1 : ℝ) ≤ u) :
+    {u : ℝ} :
     chapter05HerbrandFunction T.quotientSetup.upstairs u =
       chapter05HerbrandFunction T.quotientSetup.downstairs
         (chapter05HerbrandFunction T.subextension u) := by
@@ -929,8 +925,7 @@ theorem chapter05_herbrand_inverse_tower_transitivity
     _ = chapter05HerbrandFunction T.quotientSetup.upstairs
         (chapter05HerbrandInverse T.subextension
           (chapter05HerbrandInverse T.quotientSetup.downstairs v)) :=
-      (chapter05_herbrand_tower_transitivity H T hLK hLM hMK
-        hsub_inv_ge).symm
+      (chapter05_herbrand_tower_transitivity H T hLM).symm
 
 /-- A closure-independent invariant is the formal interface for descent from a Galois closure. -/
 structure Chapter05ClosureIndependentInvariant (C X : Type*) where

@@ -1,5 +1,6 @@
 import Mathlib.GroupTheory.Index
 import Mathlib.FieldTheory.Perfect
+import Mathlib.FieldTheory.PurelyInseparable.Basic
 import Mathlib.LinearAlgebra.Dimension.Finite
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section01TheExtensionProblem
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section05SeveralExtensionsAndTheFundamentalEquality
@@ -40,6 +41,12 @@ def Chapter07ResidueExtensionIsSeparable
     (k l : Type*) [Field k] [Field l] [Algebra k l] : Prop :=
   ∀ x : l, IsSeparable k x
 
+/-- Purely inseparable residue growth, expressed using Mathlib's standard
+extension predicate rather than merely the failure of separability. -/
+def Chapter07ResidueExtensionIsPurelyInseparable
+    (k l : Type*) [Field k] [Field l] [Algebra k l] : Prop :=
+  IsPurelyInseparable k l
+
 /-- Separability of the generic finite extension. -/
 def Chapter07FiniteExtensionIsSeparable
     (K L : Type*) [Field K] [Field L] [Algebra K L] : Prop :=
@@ -57,14 +64,16 @@ def Chapter07UnramifiedExtension
   E.ramificationIndex = 1 ∧
     Chapter07ResidueExtensionIsSeparable k l
 
-/-- The `e = 1`/purely inseparable-residue warning case mentioned in §7.1. -/
+/-- The `e = 1`/nontrivial purely inseparable-residue warning case mentioned
+in §7.1. -/
 def Chapter07FiercelyRamifiedExtension
     {K L k l : Type*} [Field K] [Field L] [Field k] [Field l]
     [Algebra K L] [Algebra k l]
     [FiniteDimensional K L] [FiniteDimensional k l]
     (E : Chapter07FiniteLocalExtensionData K L k l) : Prop :=
   E.ramificationIndex = 1 ∧
-    ¬Chapter07ResidueExtensionIsSeparable k l
+    Chapter07ResidueExtensionIsPurelyInseparable k l ∧
+      ¬Chapter07ResidueExtensionIsSeparable k l
 
 /-- The residue-field perfection condition used in the perfect-residue
 specialization. -/
@@ -111,7 +120,7 @@ theorem chapter07_unramified_degree_eq_residue_degree
     (E : Chapter07FiniteLocalExtensionData K L k l)
     (hE : Chapter07UnramifiedExtension E) :
     Module.finrank K L = Module.finrank k l := by
-  sorry
+  rw [E.degree_eq_ramification_residue, hE.1, Nat.one_mul, E.residueDegree_eq]
 
 /-- In the complete discrete valuation setting, the separability assertion uses
 the actual residue fields and the defectless degree equality, rather than only
@@ -146,7 +155,8 @@ theorem chapter07_fierce_is_not_unramified
     (E : Chapter07FiniteLocalExtensionData K L k l)
     (hE : Chapter07FiercelyRamifiedExtension E) :
     ¬Chapter07UnramifiedExtension E := by
-  sorry
+  intro hU
+  exact hE.2.2 hU.2
 
 /-- Over a perfect residue field, the separability clause is automatic. -/
 theorem chapter07_perfect_residue_unramified_iff_e_one
@@ -156,13 +166,20 @@ theorem chapter07_perfect_residue_unramified_iff_e_one
     (E : Chapter07FiniteLocalExtensionData K L k l)
     (hk : Chapter07PerfectResidueField k) :
     Chapter07UnramifiedExtension E ↔ E.ramificationIndex = 1 := by
-  sorry
+  constructor
+  · intro h
+    exact h.1
+  · intro he
+    refine ⟨he, ?_⟩
+    intro x
+    let _ : PerfectField k := hk
+    exact Algebra.IsSeparable.isSeparable k x
 
 /-- Every finite field is perfect; this statement deliberately has no
 characteristic-zero hypothesis. -/
 theorem chapter07_finite_field_is_perfect
     (k : Type*) [Field k] [Finite k] : Chapter07PerfectResidueField k := by
-  sorry
+  exact PerfectField.ofFinite
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07

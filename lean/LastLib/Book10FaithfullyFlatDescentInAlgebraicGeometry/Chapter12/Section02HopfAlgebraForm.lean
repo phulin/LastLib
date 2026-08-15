@@ -1,4 +1,6 @@
 import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter12.Dependencies
+import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter06.Section03FiniteProjectiveModules
+import Mathlib.LinearAlgebra.Contraction
 
 namespace LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter12
 
@@ -160,7 +162,15 @@ theorem chapter12_finite_projective_descends
     (D : Chapter12ModuleBaseChangeData A B M N)
     (hN : Chapter12FiniteProjectiveModule B N) :
     Chapter12FiniteProjectiveModule A M := by
-  sorry
+  let hbase :
+      LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter06.FiniteProjective
+        B (B ⊗[A] M) := by
+    let : Module.Finite B N := hN.1
+    let : Module.Projective B N := hN.2
+    exact ⟨Module.Finite.equiv D.equivalence.symm,
+      Module.Projective.of_equiv' D.equivalence.symm⟩
+  exact LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter06.finiteProjective_of_faithfullyFlat_baseChange_of_hypothesis
+    hbase
 
 theorem chapter12_dual_of_finite_projective
     (A M : Type*) [CommRing A] [AddCommGroup M] [Module A M]
@@ -200,7 +210,51 @@ theorem chapter12_finite_projective_dual_base_change
     (j : V →ₗ[R] W) (h : IsBaseChange A j)
     (hV : Chapter12FiniteProjectiveModule R V) :
     IsBaseChange A (h.toDual) := by
-  sorry
+  letI : Module.Finite R V := hV.1
+  letI : Module.Projective R V := hV.2
+  let c₀ : Module.Dual R V →ₗ[R] (V →ₗ[R] A) :=
+    (Algebra.linearMap R A).compRight R
+  let c : A ⊗[R] Module.Dual R V →ₗ[A] (V →ₗ[R] A) :=
+    LinearMap.liftBaseChange A c₀
+  have hc_comm :
+      (c.restrictScalars R).comp (TensorProduct.comm R (Module.Dual R V) A).toLinearMap =
+        dualTensorHom R V A := by
+    apply TensorProduct.ext
+    intro φ a
+    apply LinearMap.ext
+    intro v
+    simp [c, c₀, TensorProduct.comm_tmul, Algebra.smul_def, mul_comm]
+  have hc : Function.Bijective c := by
+    apply (Function.Bijective.of_comp_iff
+      (c.restrictScalars R) (TensorProduct.comm R (Module.Dual R V) A).bijective).mp
+    change Function.Bijective ((c.restrictScalars R).comp
+      (TensorProduct.comm R (Module.Dual R V) A).toLinearMap)
+    rw [hc_comm]
+    exact dualTensorHom_bijective
+  let e₀ : A ⊗[R] Module.Dual R V →ₗ[A] Module.Dual A (A ⊗[R] V) :=
+    (LinearMap.liftBaseChangeEquiv A).toLinearMap.comp c
+  have he₀ : Function.Bijective e₀ :=
+    by
+      change Function.Bijective ((LinearMap.liftBaseChangeEquiv A).toLinearMap.comp c)
+      exact (LinearEquiv.bijective (LinearMap.liftBaseChangeEquiv A)).comp hc
+  let e₀' : A ⊗[R] Module.Dual R V ≃ₗ[A] Module.Dual A (A ⊗[R] V) :=
+    LinearEquiv.ofBijective e₀ he₀
+  have he₀_base (φ : Module.Dual R V) :
+      e₀' (1 ⊗ₜ[R] φ) = φ.baseChange A := by
+    apply LinearMap.ext
+    intro x
+    induction x using TensorProduct.induction_on with
+    | zero => simp
+    | add x y hx hy => simp [hx, hy]
+    | tmul a v =>
+        simp [e₀', e₀, c, c₀, LinearMap.liftBaseChange_tmul,
+          Module.Dual.baseChange_apply_tmul, Algebra.smul_def, mul_comm]
+  refine IsBaseChange.of_equiv
+    (e₀'.trans (Module.Dual.congr h.equiv)) ?_
+  intro φ
+  change (Module.Dual.congr h.equiv) (e₀' (1 ⊗ₜ[R] φ)) = h.toDual φ
+  rw [he₀_base]
+  exact (IsBaseChange.toDual_apply h φ).symm
 
 /-- The transpose of an algebra map, with the contravariant direction made explicit. -/
 def chapter12TransposeAlgHom

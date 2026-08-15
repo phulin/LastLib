@@ -1,5 +1,5 @@
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Dependencies
-import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Section03AffineOpenAmpleness
 
 namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
 
@@ -16,6 +16,39 @@ universe u
 def chapter04LineBundleIsomorphic
     {X : Scheme.{u}} (L M : Chapter04LineBundle X) : Prop :=
   Nonempty (L.sheaf ≅ M.sheaf)
+
+/-- Pullback commutes with the canonical tensor-power construction. -/
+theorem chapter04_lineBundle_pullback_tensorPower
+    {X Y : Scheme.{u}} (L : Chapter04LineBundle X) (g : Y ⟶ X) (n : ℕ) :
+    chapter04LineBundleIsomorphic
+      (chapter04PullbackLineBundle g (chapter04LineBundleTensorPower L n))
+      (chapter04LineBundleTensorPower (chapter04PullbackLineBundle g L) n) := by
+  sorry
+
+/-- The pullback-composition comparison remains available on tensor powers. -/
+theorem chapter04_lineBundle_pullback_tensorPower_comp
+    {X Y Z : Scheme.{u}} (L : Chapter04LineBundle X)
+    (g : Y ⟶ X) (h : Z ⟶ Y) (n : ℕ) :
+    chapter04LineBundleIsomorphic
+      (chapter04PullbackLineBundle (h ≫ g)
+        (chapter04LineBundleTensorPower L n))
+      (chapter04PullbackLineBundle h
+        (chapter04PullbackLineBundle g (chapter04LineBundleTensorPower L n))) := by
+  exact ⟨chapter04PullbackCompositionIso h g
+    (chapter04LineBundleTensorPower L n).sheaf⟩
+
+/-- The direct and iterated pullbacks of a tensor power are coherently
+isomorphic after applying the tensor-power comparison at each stage. -/
+theorem chapter04_lineBundle_pullback_tensorPower_coherent
+    {X Y Z : Scheme.{u}} (L : Chapter04LineBundle X)
+    (g : Y ⟶ X) (h : Z ⟶ Y) (n : ℕ) :
+    chapter04LineBundleIsomorphic
+      (chapter04PullbackLineBundle (h ≫ g)
+        (chapter04LineBundleTensorPower L n))
+      (chapter04LineBundleTensorPower
+        (chapter04PullbackLineBundle h
+          (chapter04PullbackLineBundle g L)) n) := by
+  sorry
 
 theorem chapter04_lineBundleIsomorphic_refl
     {X : Scheme.{u}} (L : Chapter04LineBundle X) :
@@ -43,7 +76,59 @@ theorem chapter04_ample_iff_of_lineBundleIsomorphic
     {L M : Chapter04LineBundle X}
     (hLM : chapter04LineBundleIsomorphic L M) :
     chapter04Ample f L ↔ chapter04Ample f M := by
-  sorry
+  have transport : ∀ (A B : Chapter04LineBundle X) (e : A.sheaf ≅ B.sheaf),
+      chapter04Ample f A → chapter04Ample f B := by
+    intro A B e hA
+    let tensorIso {M₁ M₂ N₁ N₂ : X.Modules}
+        (e₁ : M₁ ≅ M₂) (e₂ : N₁ ≅ N₂) :
+        chapter04Tensor M₁ N₁ ≅ chapter04Tensor M₂ N₂ := by
+      have e₁' : M₁.val ≅ M₂.val := by
+        refine
+          { hom := e₁.hom.val
+            inv := e₁.inv.val
+            hom_inv_id := ?_
+            inv_hom_id := ?_ }
+        · exact congrArg (fun q => q.val) e₁.hom_inv_id
+        · exact congrArg (fun q => q.val) e₁.inv_hom_id
+      have e₂' : N₁.val ≅ N₂.val := by
+        refine
+          { hom := e₂.hom.val
+            inv := e₂.inv.val
+            hom_inv_id := ?_
+            inv_hom_id := ?_ }
+        · exact congrArg (fun q => q.val) e₂.hom_inv_id
+        · exact congrArg (fun q => q.val) e₂.inv_hom_id
+      exact
+        (PresheafOfModules.sheafification (𝟙 X.ringCatSheaf.obj)).mapIso
+          (CategoryTheory.MonoidalCategory.tensorIso
+            (C := PresheafOfModules (X.sheaf.obj ⋙ forget₂ CommRingCat RingCat)) e₁' e₂')
+    let powerIso : ∀ n : ℕ,
+        chapter04TensorPower A.sheaf n ≅ chapter04TensorPower B.sheaf n := by
+      intro n
+      induction n with
+      | zero =>
+          exact Iso.refl _
+      | succ n ih =>
+          exact tensorIso ih e
+    obtain ⟨w⟩ := hA
+    refine ⟨{ I := w.I
+              base_open := w.base_open
+              base_open_affine := w.base_open_affine
+              base_open_cover := w.base_open_cover
+              J := w.J
+              chart := fun i j =>
+                let c := w.chart i j
+                { n := c.n
+                  positive := c.positive
+                  power_iso := c.power_iso ≪≫ powerIso c.n
+                  power := c.power
+                  sectionData := c.sectionData
+                  locus := c.locus
+                  locus_spec := c.locus_spec
+                  affine := c.affine }
+              chart_cover := w.chart_cover }⟩
+  obtain ⟨e⟩ := hLM
+  exact ⟨transport L M e, transport M L e.symm⟩
 
 /-- Positive tensor powers preserve relative ampleness. -/
 theorem chapter04_ample_tensorPower
@@ -64,25 +149,25 @@ theorem chapter04_ample_of_ample_tensorPower
 base and the morphism; those hypotheses are recorded explicitly here. -/
 /-- Over a quasi-compact base, a fixed invertible twist does not affect ampleness in sufficiently high powers. -/
 theorem chapter04_ample_eventually_tensor_twist
-    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [QuasiCompact f] [IsSeparated f]
+    {X S : Scheme.{u}} (f : X ⟶ S) [CompactSpace S] [QuasiCompact f] [IsSeparated f]
     (L M : Chapter04LineBundle X) (hL : chapter04Ample f L) :
     ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
       chapter04Ample f
         (chapter04LineBundleTensor (chapter04LineBundleTensorPower L n) M) := by
   sorry
 
-/-- Over an affine quasi-compact base, every sufficiently high power of an ample bundle is relatively very ample. -/
+/-- Over a quasi-compact base, every sufficiently high power of an ample bundle is relatively very ample. -/
 theorem chapter04_ample_eventually_veryAmple_power
-    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [IsAffine S] [QuasiCompact f]
+    {X S : Scheme.{u}} (f : X ⟶ S) [CompactSpace S] [QuasiCompact f]
     [LocallyOfFiniteType f] [QuasiSeparated f]
     (L : Chapter04LineBundle X) (hL : chapter04Ample f L) :
     ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
       chapter04VeryAmple f (chapter04LineBundleTensorPower L n) := by
   sorry
 
-/-- Over an affine quasi-compact base, an ample line bundle on a quasi-compact finite-type family has a very ample power. -/
+/-- Over a quasi-compact base, an ample line bundle on a quasi-compact finite-type family has a very ample power. -/
 theorem chapter04_ample_has_veryAmple_power
-    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [IsAffine S] [QuasiCompact f]
+    {X S : Scheme.{u}} (f : X ⟶ S) [CompactSpace S] [QuasiCompact f]
     [LocallyOfFiniteType f] [QuasiSeparated f]
     (L : Chapter04LineBundle X) (hL : chapter04Ample f L) :
     ∃ d : ℕ, 0 < d ∧ chapter04VeryAmple f (chapter04LineBundleTensorPower L d) := by
@@ -92,9 +177,9 @@ theorem chapter04_ample_has_veryAmple_power
   · exact lt_of_lt_of_le Nat.zero_lt_one (Nat.le_max_right n₀ 1)
   · exact Nat.le_max_left n₀ 1
 
-/-- Over an affine quasi-compact base, if the family is proper, a sufficiently high ample power gives a closed projective embedding. -/
+/-- Over a quasi-compact base, if the family is proper, a sufficiently high ample power gives a closed projective embedding. -/
 theorem chapter04_proper_ample_has_closed_projective_power
-    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [IsAffine S] [IsProper f] [QuasiCompact f]
+    {X S : Scheme.{u}} (f : X ⟶ S) [CompactSpace S] [IsProper f] [QuasiCompact f]
     (L : Chapter04LineBundle X) (hL : chapter04Ample f L) :
     ∃ d : ℕ, 0 < d ∧
       ∃ w : Chapter04VeryAmpleWitness f (chapter04LineBundleTensorPower L d),
@@ -111,12 +196,11 @@ theorem chapter04_proper_ample_has_closed_projective_power
   exact ⟨inferInstance, inferInstance⟩
 
 /-!
-For an affine quasi-compact base, a proper family upgrades eventual very-ampleness to closed
-immersions, so the exponent can be chosen uniformly rather than separately
-for one power.
+For a quasi-compact base, a proper family upgrades eventual very-ampleness to closed immersions,
+so the exponent can be chosen uniformly rather than separately for one power.
 -/
 theorem chapter04_proper_ample_eventually_closed_projective_power
-    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [IsAffine S] [IsProper f] [QuasiCompact f]
+    {X S : Scheme.{u}} (f : X ⟶ S) [CompactSpace S] [IsProper f] [QuasiCompact f]
     [QuasiSeparated f]
     (L : Chapter04LineBundle X) (hL : chapter04Ample f L) :
     ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
@@ -136,13 +220,12 @@ theorem chapter04_proper_ample_eventually_closed_projective_power
   exact ⟨inferInstance, inferInstance⟩
 
 theorem chapter04_proper_ample_is_projective
-    {X S : Scheme.{u}} (f : X ⟶ S) [QuasiCompact (𝟙 S)] [IsAffine S] [IsProper f] [QuasiCompact f]
+    {X S : Scheme.{u}} (f : X ⟶ S) [CompactSpace S] [IsProper f] [QuasiCompact f]
     (L : Chapter04LineBundle X) (hL : chapter04Ample f L) :
     chapter04Projective f := by
   obtain ⟨d, hd, w, hw⟩ :=
     chapter04_proper_ample_has_closed_projective_power f L hL
   exact ⟨{ projectiveBundle := w.projectiveBundle
-           universalQuotientCompatible := w.universalQuotientCompatible
            map := w.map
            closedImmersion := hw
            over := w.over }⟩
@@ -173,7 +256,12 @@ theorem chapter04_constant_pullback_can_destroy_ample
       (chapter04PullbackLineBundle g L) (chapter04TrivialLineBundle Y))
     (hY : ¬ IsAffine Y) :
     ¬ chapter04Ample (g ≫ f) (chapter04PullbackLineBundle g L) := by
-  sorry
+  intro hA
+  have _hL := hL
+  have _hconstant := hconstant
+  have htriv : chapter04Ample (g ≫ f) (chapter04TrivialLineBundle Y) :=
+    (chapter04_ample_iff_of_lineBundleIsomorphic (g ≫ f) htrivial).mp hA
+  exact (chapter04_trivial_line_bundle_not_ample_of_proper_nonAffine Y (g ≫ f) hY) htriv
 
 end
 end LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04

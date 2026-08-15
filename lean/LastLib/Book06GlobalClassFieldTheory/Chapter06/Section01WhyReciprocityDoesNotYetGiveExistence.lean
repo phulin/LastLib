@@ -27,7 +27,14 @@ theorem chapter06_finite_quotient_characters_separate
     (hx : x ∉ H.subgroup) :
     ∃ χ : Chapter06QuotientCharacter H,
       chapter06LiftQuotientCharacter H χ x ≠ 1 := by
-  sorry
+  have hxq : QuotientGroup.mk' H.subgroup x ≠ 1 := by
+    intro h
+    exact hx ((QuotientGroup.eq_one_iff (N := H.subgroup) x).mp h)
+  obtain ⟨χ, hχ⟩ :=
+    CommGroup.exists_apply_ne_one_of_hasEnoughRootsOfUnity
+      (C ⧸ H.subgroup) (M := ℂ) hxq
+  refine ⟨χ, ?_⟩
+  simpa [chapter06LiftQuotientCharacter] using hχ
 
 /- The lifted character kernel is the pullback of the quotient kernel. -/
 theorem chapter06_lifted_character_mem_kernel_iff
@@ -67,7 +74,14 @@ theorem chapter06_finite_character_realization_kernel
     [CommGroup C] [TopologicalSpace C] {χ : C →* ℂˣ}
     (R : Chapter06FiniteCharacterRealization K Ks C χ) :
     χ.ker = R.reciprocity.artin.ker := by
-  sorry
+  ext x
+  rw [MonoidHom.mem_ker, MonoidHom.mem_ker]
+  constructor
+  · intro hx
+    apply R.faithful
+    simpa [R.factorization] using hx
+  · intro hx
+    simpa [R.factorization] using congrArg R.galoisCharacter hx
 
 /- Finite character duality already identifies the intersection of all lifted
    quotient-character kernels with H.  Character realizations are used later

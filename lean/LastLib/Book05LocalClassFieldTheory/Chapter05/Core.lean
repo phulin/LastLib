@@ -1,6 +1,7 @@
 import Mathlib.Algebra.Group.Subgroup.ZPowers.Basic
 import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
 import Mathlib.FieldTheory.Galois.Basic
+import Mathlib.FieldTheory.Galois.Abelian
 import Mathlib.FieldTheory.Galois.Notation
 import Mathlib.GroupTheory.Abelianization.Defs
 import Mathlib.GroupTheory.Abelianization.Finite
@@ -47,6 +48,13 @@ def chapter05NormSubgroup
     [FiniteDimensional K L] : Subgroup Kˣ :=
   (chapter05NormMap K L).range
 
+theorem chapter05_mem_normSubgroup_iff
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] (x : Kˣ) :
+    x ∈ chapter05NormSubgroup K L ↔
+      ∃ y : Lˣ, chapter05NormMap K L y = x := by
+  rfl
+
 def chapter05AlgebraMapUnits
     (K L : Type*) [Field K] [Field L] [Algebra K L] : Kˣ →* Lˣ :=
   Units.map (algebraMap K L)
@@ -78,7 +86,27 @@ theorem chapter05FixedUnitSubgroup_eq_algebraMap_range
     [FiniteDimensional K L] [IsGalois K L] :
     chapter05FixedUnitSubgroup K L =
       (chapter05AlgebraMapUnits K L).range := by
-  sorry
+  ext x
+  constructor
+  · intro hx
+    have hfixed : ∀ σ : Gal(L / K), σ (x : L) = (x : L) := by
+      intro σ
+      exact congrArg Units.val (hx σ)
+    obtain ⟨a, ha⟩ :=
+      (IsGalois.mem_range_algebraMap_iff_fixed (F := K) (x : L)).2 hfixed
+    have ha0 : a ≠ 0 := by
+      intro ha0
+      subst a
+      apply Units.ne_zero x
+      simpa using ha.symm
+    refine ⟨Units.mk0 a ha0, ?_⟩
+    apply Units.ext
+    simpa [chapter05AlgebraMapUnits] using ha
+  · rintro ⟨y, rfl⟩
+    rw [chapter05_mem_fixedUnitSubgroup_iff]
+    intro σ
+    apply Units.ext
+    simp [chapter05AlgebraMapUnits]
 
 abbrev chapter05NormQuotient
     (K L : Type*) [Field K] [Field L] [Algebra K L]
@@ -103,12 +131,43 @@ def chapter05MaximalAbelianSubextension
     [FiniteDimensional K L] [IsGalois K L] : IntermediateField K L :=
   IntermediateField.fixedField (commutator (Gal(L / K)))
 
+instance chapter05_maximal_abelian_subextension_isGalois
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] :
+    IsGalois K (chapter05MaximalAbelianSubextension K L) := by
+  change IsGalois K (IntermediateField.fixedField (commutator (Gal(L / K))))
+  exact IsGalois.of_fixedField_normal_subgroup (K := K) (L := L)
+    (commutator (Gal(L / K)))
+
+instance chapter05_maximal_abelian_subextension_isAbelianGalois
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] :
+    IsAbelianGalois K (chapter05MaximalAbelianSubextension K L) := by
+  let e :=
+    IsGalois.normalAutEquivQuotient
+      (K := K) (L := L) (commutator (Gal(L / K)))
+  let hcomm : IsMulCommutative
+      (Gal(L / K) ⧸ commutator (Gal(L / K))) :=
+    Subgroup.Normal.quotient_commutative_iff_commutator_le.mpr le_rfl
+  change IsAbelianGalois K
+    (IntermediateField.fixedField (commutator (Gal(L / K))))
+  exact
+    { toIsGalois := IsGalois.of_fixedField_normal_subgroup (K := K) (L := L)
+        (commutator (Gal(L / K)))
+      is_comm := ⟨by
+        intro x y
+        obtain ⟨x', rfl⟩ := e.surjective x
+        obtain ⟨y', rfl⟩ := e.surjective y
+        rw [← e.map_mul, ← e.map_mul, hcomm.is_comm.comm]⟩ }
+
 noncomputable def chapter05MaximalAbelianSubextension_galoisEquiv
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] :
     Gal(chapter05MaximalAbelianSubextension K L / K) ≃*
       chapter05Abelianization (Gal(L / K)) := by
-  sorry
+  exact
+    (IsGalois.normalAutEquivQuotient
+      (K := K) (L := L) (commutator (Gal(L / K)))).symm
 
 abbrev chapter05CoefficientRep
     (K L : Type) [CommRing K] [CommRing L] [Algebra K L] :=

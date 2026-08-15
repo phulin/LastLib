@@ -81,9 +81,12 @@ theorem chapter03_unramified_totally_ramified_intersection
       e Lᵤ ⊥ = e Lᵤ F * e F ⊥)
     (htowerₜ : ∀ F : IntermediateField K Ω, F ≤ Lₜ →
       f Lₜ ⊥ = f Lₜ F * f F ⊥)
+    (hpositiveᵤ : ∀ F : IntermediateField K Ω, F ≤ Lᵤ → 0 < e Lᵤ F)
+    (hpositiveₜ : ∀ F : IntermediateField K Ω, F ≤ Lₜ → 0 < f Lₜ F)
     (hdegree : ∀ F : IntermediateField K Ω,
       Module.finrank K F = e F ⊥ * f F ⊥)
-    [FiniteDimensional K Lᵤ] [FiniteDimensional K Lₜ] :
+    [FiniteDimensional K Lᵤ] [FiniteDimensional K Lₜ]
+    [FiniteDimensional K (↥(Lᵤ ⊓ Lₜ))] :
     Lᵤ ⊓ Lₜ = ⊥ := by
   sorry
 
@@ -114,6 +117,7 @@ theorem chapter03_intermediate_e_one_f_one_is_base
     {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
     (F : IntermediateField K Ω)
     (e f : IntermediateField K Ω → IntermediateField K Ω → ℕ)
+    [FiniteDimensional K F]
     (he : e F ⊥ = 1) (hf : f F ⊥ = 1)
     (hdegree : Module.finrank K F = e F ⊥ * f F ⊥) :
     F = ⊥ := by
@@ -159,6 +163,16 @@ def chapter03SelfScalarExtensionSplits
     (K L : Type*) [CommRing K] [CommRing L] [Algebra K L] (n : ℕ) : Prop :=
   Nonempty (chapter03SelfScalarExtension K L ≃+* (Fin n → L))
 
+/-- A field factor of the self-base-change algebra, viewed over the right
+`L`-scalar structure.  A surjective `L`-algebra map records a quotient factor
+without incorrectly identifying the whole product with one field. -/
+def chapter03SelfScalarExtensionFieldFactor
+    (K L F : Type*) [CommRing K] [CommRing L] [Field F]
+    [Algebra K L] [Algebra L F] : Prop :=
+  letI : Algebra L (chapter03SelfScalarExtension K L) :=
+    Algebra.TensorProduct.rightAlgebra
+  ∃ φ : chapter03SelfScalarExtension K L →ₐ[L] F, Function.Surjective φ
+
 /-- A finite Galois self-base-change splits into copies of `L`. -/
 theorem chapter03_galois_self_scalar_extension_splits
     (K L : Type*) [Field K] [Field L] [Algebra K L]
@@ -186,10 +200,7 @@ theorem chapter03_self_scalar_extension_factors_have_e_one
     [Valuation.IsRankOneDiscrete vF]
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vL.valuationSubring) vL.valuationSubring)
-    (hfactor :
-      letI : Algebra L (chapter03SelfScalarExtension K L) :=
-        Algebra.TensorProduct.rightAlgebra
-      Nonempty (chapter03SelfScalarExtension K L ≃ₐ[L] F)) :
+    (hfactor : chapter03SelfScalarExtensionFieldFactor K L F) :
     chapter03SelfBaseChangeRamificationIndex vL vF = 1 := by
   sorry
 

@@ -14,6 +14,52 @@ namespace SchemeDescent
 
 variable {S T : Scheme.{u}}
 
+/-! ### Compatibility of affine chart comparisons -/
+
+/-- The canonical singleton descent datum carried by the pullback of an object over `S`. -/
+noncomputable def canonicalPullbackDatum {S T : Scheme.{u}} (p : T ⟶ S) (descended : Over S) :
+    Datum.{u, 0} p :=
+  (overPseudofunctor.toDescentData (fun _ : PUnit => p)).obj descended
+
+/-- A comparison of a stable affine open with the pullback of a candidate affine chart must
+intertwine the overlap datum.  The first equation says that the overlap is over the pair
+overlap, the second identifies it with the restriction of `D`'s kernel-pair isomorphism, and
+the third identifies it with the canonical overlap of the pullback of the candidate downstairs
+scheme.  Keeping these equations in the interface prevents an arbitrary isomorphism over `T`
+from being used as descent data. -/
+def AffineChartComparisonCompatible {S T : Scheme.{u}} {p : T ⟶ S} (D : Datum p)
+    (V : (descentObject D).left.Opens) {descended : Over S}
+    (comparison : V.toScheme ≅ ((Over.pullback p).obj descended).left)
+    (comparison_over :
+      comparison.hom ≫ ((Over.pullback p).obj descended).hom =
+        V.ι ≫ (descentObject D).hom) : Prop :=
+  let vMap : V.toScheme ⟶ T := V.ι ≫ (descentObject D).hom
+  ∃ overlap :
+      pullback vMap (kernelPairFst p) ≅ pullback vMap (kernelPairSnd p),
+    overlap.hom ≫ pullback.snd vMap (kernelPairSnd p) =
+        pullback.snd vMap (kernelPairFst p) ∧
+      pullback.map vMap (kernelPairFst p) (descentObject D).hom (kernelPairFst p)
+          V.ι (𝟙 _) (𝟙 _) (by simp [vMap]) (by simp) ≫
+          ((Over.forget (kernelPair p)).mapIso (kernelPairIso D)).hom =
+        overlap.hom ≫
+          pullback.map vMap (kernelPairSnd p) (descentObject D).hom (kernelPairSnd p)
+            V.ι (𝟙 _) (𝟙 _) (by simp [vMap]) (by simp) ∧
+      pullback.map vMap (kernelPairFst p)
+          ((Over.pullback p).obj descended).hom (kernelPairFst p)
+          comparison.hom (𝟙 _) (𝟙 _) (by simpa [vMap] using comparison_over.symm) (by simp) ≫
+          ((Over.forget (kernelPair p)).mapIso
+            ((canonicalPullbackDatum p descended).iso
+              (i₁ := (PUnit.unit : PUnit.{1})) (i₂ := (PUnit.unit : PUnit.{1}))
+              (kernelPairToBase p) (kernelPairFst p) (kernelPairSnd p)
+              (by rfl)
+              (by
+                change kernelPairSnd p ≫ p = kernelPairFst p ≫ p
+                exact (kernelPairFst_comp p).symm))).hom =
+        overlap.hom ≫
+          pullback.map vMap (kernelPairSnd p)
+            ((Over.pullback p).obj descended).hom (kernelPairSnd p)
+            comparison.hom (𝟙 _) (𝟙 _) (by simpa [vMap] using comparison_over.symm) (by simp)
+
 /-- The affine chart obtained in the central affine faithfully flat reduction from a
 datum-stable affine open. -/
 structure AffineChartDescent {S T : Scheme.{u}} {p : T ⟶ S} (D : Datum p)
@@ -24,6 +70,8 @@ structure AffineChartDescent {S T : Scheme.{u}} {p : T ⟶ S} (D : Datum p)
   comparison_over :
     comparison.hom ≫ ((Over.pullback p).obj descended).hom =
       V.ι ≫ (descentObject D).hom
+  comparison_compatible :
+    AffineChartComparisonCompatible D V comparison comparison_over
 
 theorem affine_stable_open_descends {S T : Scheme.{u}} {p : T ⟶ S} (D : Datum p)
     (hS : IsAffine S) (hT : IsAffine T) (hp : Scheme.IsFpqcMorphism p)

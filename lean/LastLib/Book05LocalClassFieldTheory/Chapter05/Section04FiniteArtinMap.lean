@@ -2,11 +2,14 @@ import Mathlib.Topology.Algebra.Group.Defs
 import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Instances.Discrete
 import LastLib.Book05LocalClassFieldTheory.Chapter05.Core
+import LastLib.Book05LocalClassFieldTheory.Chapter05.Section02TateHomology
 import LastLib.Book05LocalClassFieldTheory.Chapter05.Section03ClassFormation
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter05
 
 noncomputable section
+
+open CategoryTheory
 
 /-!
 ### 5.4. Definition of the finite Artin map
@@ -23,7 +26,50 @@ noncomputable def chapter05FiniteArtinQuotientEquiv
     (D : Chapter05LocalClassFormationData K L) :
     chapter05NormQuotient K L ≃*
       chapter05Abelianization (Gal(L / K)) := by
-  sorry
+  haveI : IsIso (D.capProduct.cap (⊤ : Subgroup (Gal(L / K))) (-2)) :=
+    chapter05_class_formation_top_isomorphism D (-2)
+  let capIso :
+      chapter05TateCohomology (⊤ : Subgroup (Gal(L / K)))
+          (Rep.res (⊤ : Subgroup (Gal(L / K))).subtype
+            (Rep.trivial ℤ (Gal(L / K)) ℤ)) (-2) ≅
+        chapter05TateCohomology (⊤ : Subgroup (Gal(L / K)))
+          (Rep.res (⊤ : Subgroup (Gal(L / K))).subtype
+            (chapter05CoefficientRep K L)) 0 :=
+    @asIso _ _ _ _ (D.capProduct.cap (⊤ : Subgroup (Gal(L / K))) (-2)) this
+  let topToNorm :
+      chapter05TateCohomology (⊤ : Subgroup (Gal(L / K)))
+          (Rep.res (⊤ : Subgroup (Gal(L / K))).subtype
+            (chapter05CoefficientRep K L)) 0 ≃+
+        Additive (chapter05NormQuotient K L) :=
+    (D.topRestriction.iso 0).toLinearEquiv.toAddEquiv.trans
+      D.degreeZeroNorm
+  let topMinusToNorm :
+      chapter05TateCohomology (⊤ : Subgroup (Gal(L / K)))
+          (Rep.res (⊤ : Subgroup (Gal(L / K))).subtype
+            (Rep.trivial ℤ (Gal(L / K)) ℤ)) (-2) ≃+
+        Additive (chapter05NormQuotient K L) :=
+    capIso.toLinearEquiv.toAddEquiv.trans topToNorm
+  let sourceToNorm :
+      chapter05TateCohomology (Gal(L / K))
+          (Rep.trivial ℤ (Gal(L / K)) ℤ) (-2) ≃+
+        Additive (chapter05NormQuotient K L) :=
+    ((D.topRestrictionTrivial.iso (-2)).symm.toLinearEquiv.toAddEquiv).trans
+      topMinusToNorm
+  let sourceToAbelianization :
+      chapter05TateCohomology (Gal(L / K))
+          (Rep.trivial ℤ (Gal(L / K)) ℤ) (-2) ≃+
+        Additive (chapter05Abelianization (Gal(L / K))) :=
+    (chapter05_tate_minus_two_is_homology (Gal(L / K))).toLinearEquiv.toAddEquiv.trans
+      (chapter05H1AbelianizationIso (Gal(L / K)))
+  let eAdd : Additive (chapter05NormQuotient K L) ≃+
+      Additive (chapter05Abelianization (Gal(L / K))) :=
+    sourceToNorm.symm.trans sourceToAbelianization
+  let eMul : chapter05NormQuotient K L ≃*
+      chapter05Abelianization (Gal(L / K)) :=
+    eAdd.toMultiplicativeRight.trans
+      (MulEquiv.toMultiplicative_toAdditive
+        (G := chapter05Abelianization (Gal(L / K))))
+  exact eMul
 
 def chapter05FiniteArtinMap
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -40,7 +86,9 @@ theorem chapter05FiniteArtinMap_kernel
     [Fintype (Gal(L / K))]
     (D : Chapter05LocalClassFormationData K L) :
     (chapter05FiniteArtinMap D).ker = chapter05NormSubgroup K L := by
-  sorry
+  ext x
+  change chapter05FiniteArtinMap D x = 1 ↔ x ∈ chapter05NormSubgroup K L
+  simp [chapter05FiniteArtinMap]
 
 theorem chapter05FiniteArtinMap_surjective
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -48,7 +96,10 @@ theorem chapter05FiniteArtinMap_surjective
     [Fintype (Gal(L / K))]
     (D : Chapter05LocalClassFormationData K L) :
     Function.Surjective (chapter05FiniteArtinMap D) := by
-  sorry
+  intro y
+  obtain ⟨z, rfl⟩ := (chapter05FiniteArtinQuotientEquiv D).surjective y
+  obtain ⟨x, rfl⟩ := QuotientGroup.mk'_surjective (chapter05NormSubgroup K L) z
+  exact ⟨x, rfl⟩
 
 theorem chapter05FiniteArtinMap_induced_quotient
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -92,7 +143,7 @@ theorem chapter05FiniteArtinMap_continuous
         chapter05NormQuotient K L →
           chapter05Abelianization (Gal(L / K)))) :
     Continuous (chapter05FiniteArtinMap D) := by
-  sorry
+  simpa [chapter05FiniteArtinMap] using he.comp hquot
 
 theorem chapter05FiniteArtinMap_continuous_of_open_kernel
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -105,7 +156,18 @@ theorem chapter05FiniteArtinMap_continuous_of_open_kernel
     (D : Chapter05LocalClassFormationData K L)
     (hopen : IsOpen (chapter05NormSubgroup K L : Set Kˣ)) :
     Continuous (chapter05FiniteArtinMap D) := by
-  sorry
+  apply continuous_iff_continuousAt.2
+  intro x
+  rw [ContinuousAt, nhds_discrete (chapter05Abelianization (Gal(L / K))),
+    Filter.tendsto_pure]
+  refine Filter.mem_of_superset ((hopen.leftCoset x).mem_nhds ?_) ?_
+  · exact ⟨1, (chapter05NormSubgroup K L).one_mem, by simp⟩
+  · rintro y ⟨k, hk, rfl⟩
+    change chapter05FiniteArtinMap D (x * k) = chapter05FiniteArtinMap D x
+    have hk' : chapter05FiniteArtinMap D k = 1 := by
+      rw [← MonoidHom.mem_ker, chapter05FiniteArtinMap_kernel D]
+      exact hk
+    rw [map_mul, hk', mul_one]
 
 theorem chapter05FiniteArtinMap_surjective_on_finite_level
     {K L : Type} [Field K] [Field L] [Algebra K L]

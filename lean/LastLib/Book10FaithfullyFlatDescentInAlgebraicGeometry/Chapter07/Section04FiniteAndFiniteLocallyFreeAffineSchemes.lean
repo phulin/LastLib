@@ -146,7 +146,8 @@ def Chapter07FiniteLocallyFreeAffineMorphismOfRank
 theorem chapter07_finite_flat_is_finite_locally_free
     {X S : Scheme.{u}} {f : X ⟶ S}
     (hfinite : IsFinite f)
-    (hflat : Flat f) :
+    (hflat : Flat f)
+    (hfinitePresentation : LocallyOfFinitePresentation f) :
     Chapter07FiniteLocallyFreeAffineMorphism f := by sorry
 
 theorem chapter07_finite_affine_descent
@@ -182,7 +183,8 @@ theorem chapter07_finite_flat_affine_descent
     (D : Chapter07AffineSchemeWithDescentData p)
     (R : Chapter07AffineDescentResult D)
     (hfinite : IsFinite D.map)
-    (hflat : Flat D.map) :
+    (hflat : Flat D.map)
+    (hfinitePresentation : LocallyOfFinitePresentation D.map) :
     Chapter07FiniteLocallyFreeAffineMorphism R.map := by sorry
 
 theorem chapter07_finite_locally_free_affine_rank_descends
@@ -192,6 +194,7 @@ theorem chapter07_finite_locally_free_affine_rank_descends
     (R : Chapter07AffineDescentResult D)
     (r : ℕ) (hfinite : IsFinite D.map)
     (hflat : Flat D.map)
+    (hfinitePresentation : LocallyOfFinitePresentation D.map)
     (hrank : ∀ t : T, Scheme.Hom.finrank D.map t = r) :
     Chapter07FiniteLocallyFreeAffineMorphismOfRank R.map r := by sorry
 

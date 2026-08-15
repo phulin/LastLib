@@ -3,6 +3,7 @@ import Mathlib.RingTheory.Valuation.ValuationRing
 import Mathlib.RingTheory.Valuation.Extension
 import Mathlib.LinearAlgebra.Dimension.Finite
 import Mathlib.GroupTheory.QuotientGroup.Basic
+import Mathlib.GroupTheory.Index
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.NormNum
@@ -159,6 +160,172 @@ structure Chapter10HeterogeneousExtensionData
   residueDegree : ℕ
   residueDegree_eq :
     residueDegree = Chapter10HeterogeneousResidueDegree v w h
+
+/-! The following interfaces make the canonical nature of the heterogeneous
+extension data usable in towers. In particular, the quotient and residue
+invariants are attached to the maps induced by the fields, rather than to
+unrelated finite-index embeddings. -/
+
+/-- The value-group maps attached to a composable tower are compatible with
+the composite extension. -/
+theorem chapter10_heterogeneous_value_group_map_comp
+    {K L M ΓK ΓL ΓM : Type*} [Field K] [Field L] [Field M]
+    [Algebra K L] [Algebra L M] [Algebra K M] [IsScalarTower K L M]
+    [LinearOrderedCommGroupWithZero ΓK]
+    [LinearOrderedCommGroupWithZero ΓL]
+    [LinearOrderedCommGroupWithZero ΓM]
+    [FiniteDimensional K L] [FiniteDimensional L M]
+    [FiniteDimensional K M]
+    (vK : Valuation K ΓK) (vL : Valuation L ΓL) (vM : Valuation M ΓM)
+    (hKL : vK.IsEquiv (vL.comap (algebraMap K L)))
+    (hLM : vL.IsEquiv (vM.comap (algebraMap L M)))
+    (hKM : vK.IsEquiv (vM.comap (algebraMap K M)))
+    (dKL : Chapter10HeterogeneousExtensionData vK vL hKL)
+    (dLM : Chapter10HeterogeneousExtensionData vL vM hLM)
+    (dKM : Chapter10HeterogeneousExtensionData vK vM hKM) :
+    dLM.valueGroupMap.comp dKL.valueGroupMap = dKM.valueGroupMap := by
+  apply MonoidHom.ext
+  intro a
+  change dLM.valueGroupMap (dKL.valueGroupMap a) = dKM.valueGroupMap a
+  have ha : a.1 ∈ Subgroup.closure
+      (MonoidWithZeroHom.valueMonoid vK.toMonoidWithZeroHom) := a.2
+  refine Subgroup.closure_induction
+    (p := fun x hx =>
+      dLM.valueGroupMap (dKL.valueGroupMap ⟨x, hx⟩) =
+        dKM.valueGroupMap ⟨x, hx⟩) ?_ ?_ ?_ ?_ ha
+  · intro x hx
+    have hxcl : x ∈ Subgroup.closure
+        (MonoidWithZeroHom.valueMonoid vK.toMonoidWithZeroHom) :=
+      Subgroup.subset_closure hx
+    obtain ⟨y, hy⟩ := hx
+    have hy0 : vK.toMonoidWithZeroHom y ≠ 0 := by
+      intro hy0
+      apply Units.ne_zero x
+      rw [← hy, hy0]
+    have hyL : vL (algebraMap K L y) ≠ 0 := hKL.eq_zero.ne.mp hy0
+    have hgenK :
+        (⟨x, hxcl⟩ : Chapter10ValueGroup vK) =
+          Chapter10ValueGroupGenerator vK y hy0 := by
+      apply Subtype.ext
+      apply Units.ext
+      exact hy.symm
+    have hgenL :
+        dKL.valueGroupMap (Chapter10ValueGroupGenerator vK y hy0) =
+          Chapter10ValueGroupGenerator vL (algebraMap K L y) hyL := by
+      apply Subtype.ext
+      exact dKL.valueGroupMap_spec y hy0
+    rw [hgenK, hgenL]
+    apply Subtype.ext
+    apply Units.ext
+    rw [dLM.valueGroupMap_spec (algebraMap K L y) hyL,
+      dKM.valueGroupMap_spec y hy0]
+    change vM (algebraMap L M (algebraMap K L y)) = vM (algebraMap K M y)
+    exact congrArg vM (IsScalarTower.algebraMap_apply K L M y).symm
+  · change dLM.valueGroupMap (dKL.valueGroupMap (1 : Chapter10ValueGroup vK)) =
+      dKM.valueGroupMap (1 : Chapter10ValueGroup vK)
+    simp
+  · intro x y hx hy h₁ h₂
+    change dLM.valueGroupMap (dKL.valueGroupMap
+        ((⟨x, hx⟩ : Chapter10ValueGroup vK) * ⟨y, hy⟩)) =
+      dKM.valueGroupMap ((⟨x, hx⟩ : Chapter10ValueGroup vK) * ⟨y, hy⟩)
+    simp [map_mul, h₁, h₂]
+  · intro x hx h₁
+    change dLM.valueGroupMap (dKL.valueGroupMap
+        ((⟨x, hx⟩ : Chapter10ValueGroup vK)⁻¹)) =
+      dKM.valueGroupMap ((⟨x, hx⟩ : Chapter10ValueGroup vK)⁻¹)
+    simp [h₁]
+
+/-- The residue-field maps attached to a composable tower compose to the
+residue-field map of the composite extension. -/
+theorem chapter10_heterogeneous_residue_field_map_comp
+    {K L M ΓK ΓL ΓM : Type*} [Field K] [Field L] [Field M]
+    [Algebra K L] [Algebra L M] [Algebra K M] [IsScalarTower K L M]
+    [LinearOrderedCommGroupWithZero ΓK]
+    [LinearOrderedCommGroupWithZero ΓL]
+    [LinearOrderedCommGroupWithZero ΓM]
+    (vK : Valuation K ΓK) (vL : Valuation L ΓL) (vM : Valuation M ΓM)
+    (hKL : vK.IsEquiv (vL.comap (algebraMap K L)))
+    (hLM : vL.IsEquiv (vM.comap (algebraMap L M)))
+    (hKM : vK.IsEquiv (vM.comap (algebraMap K M))) :
+    letI : Valuation.HasExtension vK vL := ⟨hKL⟩
+    letI : Valuation.HasExtension vL vM := ⟨hLM⟩
+    letI : Valuation.HasExtension vK vM := ⟨hKM⟩
+    (Chapter10ResidueFieldMap vL vM).comp
+        (Chapter10ResidueFieldMap vK vL) =
+      Chapter10ResidueFieldMap vK vM := by
+  have hKL' : Valuation.HasExtension vK vL := ⟨hKL⟩
+  have hLM' : Valuation.HasExtension vL vM := ⟨hLM⟩
+  have hKM' : Valuation.HasExtension vK vM := ⟨hKM⟩
+  change
+    (IsLocalRing.ResidueField.map (algebraMap vL.valuationSubring vM.valuationSubring)).comp
+        (IsLocalRing.ResidueField.map (algebraMap vK.valuationSubring vL.valuationSubring)) =
+      IsLocalRing.ResidueField.map (algebraMap vK.valuationSubring vM.valuationSubring)
+  rw [← IsLocalRing.ResidueField.map_comp]
+  congr 1
+  ext x
+  change algebraMap L M (algebraMap K L (x : K)) = algebraMap K M (x : K)
+  exact (IsScalarTower.algebraMap_apply K L M (x : K)).symm
+
+/-- The finite quotient cardinalities in a composable heterogeneous tower
+multiply. The displayed hypothesis records the canonical map compatibility
+needed to identify the bottom quotient with the composite quotient. -/
+theorem chapter10_heterogeneous_tower_ramification_quotient_card_mul
+    {K L M ΓK ΓL ΓM : Type*} [Field K] [Field L] [Field M]
+    [Algebra K L] [Algebra L M] [Algebra K M] [IsScalarTower K L M]
+    [LinearOrderedCommGroupWithZero ΓK]
+    [LinearOrderedCommGroupWithZero ΓL]
+    [LinearOrderedCommGroupWithZero ΓM]
+    [FiniteDimensional K L] [FiniteDimensional L M]
+    [FiniteDimensional K M]
+    (vK : Valuation K ΓK) (vL : Valuation L ΓL) (vM : Valuation M ΓM)
+    (hKL : vK.IsEquiv (vL.comap (algebraMap K L)))
+    (hLM : vL.IsEquiv (vM.comap (algebraMap L M)))
+    (hKM : vK.IsEquiv (vM.comap (algebraMap K M)))
+    (dKL : Chapter10HeterogeneousExtensionData vK vL hKL)
+    (dLM : Chapter10HeterogeneousExtensionData vL vM hLM)
+    (dKM : Chapter10HeterogeneousExtensionData vK vM hKM)
+    (hcomp : dLM.valueGroupMap.comp dKL.valueGroupMap = dKM.valueGroupMap) :
+    Nat.card (Chapter10ValueGroup vM ⧸ dKM.valueGroupMap.range) =
+      Nat.card (Chapter10ValueGroup vL ⧸ dKL.valueGroupMap.range) *
+        Nat.card (Chapter10ValueGroup vM ⧸ dLM.valueGroupMap.range) := by
+  have hrange : dKM.valueGroupMap.range =
+      dKL.valueGroupMap.range.map dLM.valueGroupMap := by
+    rw [← hcomp, MonoidHom.range_comp]
+  rw [← dKM.valueGroupMap.range.index_eq_card,
+    ← dKL.valueGroupMap.range.index_eq_card,
+    ← dLM.valueGroupMap.range.index_eq_card, hrange]
+  exact Subgroup.index_map_of_injective (H := dKL.valueGroupMap.range)
+    dLM.valueGroupMap_injective
+
+/-- The residue finranks in a composable heterogeneous tower multiply. -/
+theorem chapter10_heterogeneous_tower_residue_degree_mul
+    {K L M ΓK ΓL ΓM : Type*} [Field K] [Field L] [Field M]
+    [Algebra K L] [Algebra L M] [Algebra K M] [IsScalarTower K L M]
+    [LinearOrderedCommGroupWithZero ΓK]
+    [LinearOrderedCommGroupWithZero ΓL]
+    [LinearOrderedCommGroupWithZero ΓM]
+    [FiniteDimensional K L] [FiniteDimensional L M]
+    [FiniteDimensional K M]
+    (vK : Valuation K ΓK) (vL : Valuation L ΓL) (vM : Valuation M ΓM)
+    (hKL : vK.IsEquiv (vL.comap (algebraMap K L)))
+    (hLM : vL.IsEquiv (vM.comap (algebraMap L M)))
+    (hKM : vK.IsEquiv (vM.comap (algebraMap K M)))
+    (dKL : Chapter10HeterogeneousExtensionData vK vL hKL)
+    (dLM : Chapter10HeterogeneousExtensionData vL vM hLM)
+    (dKM : Chapter10HeterogeneousExtensionData vK vM hKM) :
+    dKM.residueDegree = dKL.residueDegree * dLM.residueDegree := by
+  have hKL' : Valuation.HasExtension vK vL := ⟨hKL⟩
+  have hLM' : Valuation.HasExtension vL vM := ⟨hLM⟩
+  have hKM' : Valuation.HasExtension vK vM := ⟨hKM⟩
+  have hKLM' : IsScalarTower vK.valuationSubring vL.valuationSubring
+      vM.valuationSubring := IsScalarTower.of_algebraMap_eq' (by
+    ext x
+    change algebraMap K M (x : K) =
+      algebraMap L M (algebraMap K L (x : K))
+    exact IsScalarTower.algebraMap_apply K L M (x : K))
+  rw [dKM.residueDegree_eq, dKL.residueDegree_eq, dLM.residueDegree_eq]
+  exact (Module.finrank_mul_finrank (Chapter10ResidueField vK)
+    (Chapter10ResidueField vL) (Chapter10ResidueField vM)).symm
 
 /-- The value-group and residue-field data exist for every finite branch. -/
 theorem chapter10_heterogeneous_extension_data_exists

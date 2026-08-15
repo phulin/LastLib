@@ -622,7 +622,7 @@ theorem chapter04_theta_series_and_derivatives_locally_uniform
     (K : Type*) [Field K] [NumberField K]
     {a : Chapter04FractionalIdeal K} (ha : a ≠ 0) :
     chapter04ThetaSeriesAndDerivativeLocallyUniform K a := by
-  sorry
+  exact chapter04_normalized_ideal_lattice_theta_series_and_derivatives_locally_uniform K ha
 
 theorem chapter04_theta_poisson_summation
     (K : Type*) [Field K] [NumberField K]
@@ -631,7 +631,7 @@ theorem chapter04_theta_poisson_summation
     chapter04Theta K a t y =
         t⁻¹ * chapter04Theta K (chapter04DualFractionalIdeal K a) t⁻¹
         (chapter04YInv K y) := by
-  sorry
+  exact chapter04_normalized_ideal_lattice_theta_poisson_summation K ha ht y
 
 theorem chapter04_unit_log_lattice_discrete
     (K : Type*) [Field K] [NumberField K] :
@@ -1152,7 +1152,7 @@ theorem chapter04_theta_mellin_constant_exists
             (chapter04AbsoluteDiscriminant K : ℂ) ^ (s / 2) *
                 chapter04ArchimedeanFactor K s *
                 chapter04PartialZeta K (chapter04InverseIdealClass K a) s := by
-  sorry
+  exact chapter04_theta_mellin_orbit_bridge K D
 
 noncomputable def chapter04MellinConstant
     (K : Type*) [Field K] [NumberField K]

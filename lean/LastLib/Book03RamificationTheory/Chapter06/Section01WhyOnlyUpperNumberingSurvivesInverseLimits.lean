@@ -3,6 +3,7 @@ import LastLib.Book03RamificationTheory.Chapter05.Section06HasseArfAndTheLimitsO
 import Mathlib.FieldTheory.IsSepClosed
 import Mathlib.LinearAlgebra.Dimension.Finite
 import Mathlib.RingTheory.Valuation.Extension
+import Mathlib.Topology.Algebra.ClopenNhdofOne
 
 namespace LastLib.Book03RamificationTheory.Chapter06
 
@@ -191,46 +192,6 @@ abbrev wildInertia
 
 end Chapter06InfiniteGaloisRamificationData
 
-/-!
-The tame quotient is a genuine group quotient of inertia by wild inertia.  The
-finite-index formulation of the three profinite properties avoids choosing a
-presentation of the profinite group.
--/
-
-def chapter06TameQuotient
-    {P : ProfiniteGrp.{u}} (S : Chapter06InfiniteUpperSystem P) : Type u :=
-  chapter06InertiaGroup S ⧸
-    (chapter06WildInertiaGroup S).subgroupOf (chapter06InertiaGroup S)
-
-instance chapter06TameQuotient_group
-    {P : ProfiniteGrp.{u}} (S : Chapter06InfiniteUpperSystem P) :
-    Group (chapter06TameQuotient S) := by
-  letI : (chapter06WildInertiaGroup S).Normal :=
-    chapter06WildInertiaGroup_normal S
-  change Group
-    (chapter06InertiaGroup S ⧸
-      (chapter06WildInertiaGroup S).subgroupOf (chapter06InertiaGroup S))
-  infer_instance
-
-noncomputable instance chapter06TameQuotient_topologicalSpace
-    {P : ProfiniteGrp.{u}} (S : Chapter06InfiniteUpperSystem P) :
-    TopologicalSpace (chapter06TameQuotient S) := by
-  exact QuotientGroup.instTopologicalSpace _
-
-def chapter06ProPGroup (p : ℕ) (G : Type*) [Group G] [TopologicalSpace G] : Prop :=
-  ∀ N : OpenNormalSubgroup G,
-    ∃ r : ℕ, Finite (G ⧸ N.toSubgroup) ∧
-      Nat.card (G ⧸ N.toSubgroup) = p ^ r
-
-def chapter06ProPrimeTo (p : ℕ) (G : Type*) [Group G] [TopologicalSpace G] : Prop :=
-  ∀ N : OpenNormalSubgroup G,
-    Finite (G ⧸ N.toSubgroup) ∧
-      Nat.Coprime p (Nat.card (G ⧸ N.toSubgroup))
-
-def chapter06Procyclic (G : Type*) [Group G] [TopologicalSpace G] : Prop :=
-  ∀ N : OpenNormalSubgroup G,
-    Finite (G ⧸ N.toSubgroup) ∧ IsCyclic (G ⧸ N.toSubgroup)
-
 /-- The following statements are consequences of the finite local-Galois
 realization carried by `D`; the pro-group conclusions are not hypotheses of
 the data structure. -/
@@ -239,29 +200,144 @@ theorem chapter06_tame_quotient_pro_prime_to
     [IsSepClosed E]
     (D : Chapter06InfiniteGaloisRamificationData K E)
     (p : ℕ) (hp : 1 < p)
+    (hlevels : Chapter06FiniteLevelLocalRamificationInterface D.upper p)
     (hp_characteristic : p = D.residue.residueCharacteristicExponent) :
     chapter06ProPrimeTo p (chapter06TameQuotient D.upper) := by
-  sorry
+  intro H
+  rcases hlevels.tame_kernel_cofinal H with ⟨N, hN⟩
+  let f := hlevels.tame_level_map N
+  have hf : Function.Surjective f := hlevels.tame_level_map_surjective N
+  letI : Finite (chapter06FiniteLevelTameQuotient D.upper N) :=
+    hlevels.tame_level_finite N
+  letI : Finite (chapter06TameQuotient D.upper ⧸ f.ker) :=
+    Finite.of_injective
+      (QuotientGroup.quotientKerEquivOfSurjective f hf)
+      (QuotientGroup.quotientKerEquivOfSurjective f hf).injective
+  let qmap : (chapter06TameQuotient D.upper ⧸ f.ker) →*
+      (chapter06TameQuotient D.upper ⧸ H.toSubgroup) :=
+    QuotientGroup.map f.ker H.toSubgroup (MonoidHom.id _) (by
+      intro x hx
+      exact hN hx)
+  have hqmap : Function.Surjective qmap := by
+    intro y
+    rcases QuotientGroup.mk'_surjective H.toSubgroup y with ⟨x, rfl⟩
+    refine ⟨QuotientGroup.mk' f.ker x, ?_⟩
+    rfl
+  have hdiv :
+      Nat.card (chapter06TameQuotient D.upper ⧸ H.toSubgroup) ∣
+    Nat.card (chapter06TameQuotient D.upper ⧸ f.ker) := by
+    rw [← Nat.card_congr
+      (QuotientGroup.quotientKerEquivOfSurjective qmap hqmap).toEquiv]
+    exact Subgroup.card_quotient_dvd_card qmap.ker
+  have hcop :
+      Nat.Coprime p (Nat.card (chapter06TameQuotient D.upper ⧸ f.ker)) := by
+    rw [Nat.card_congr
+      (QuotientGroup.quotientKerEquivOfSurjective f hf).toEquiv]
+    exact hlevels.tame_level_prime_to N
+  exact ⟨Finite.of_surjective qmap hqmap,
+    Nat.Coprime.of_dvd_right hdiv hcop⟩
 
 theorem chapter06_wild_inertia_pro_p
     {K E : Type*} [Field K] [Field E] [Algebra K E] [IsGalois K E]
     [IsSepClosed E]
     (D : Chapter06InfiniteGaloisRamificationData K E)
     (p : ℕ) (hp : 1 < p)
+    (hlevels : Chapter06FiniteLevelLocalRamificationInterface D.upper p)
     (hp_characteristic : p = D.residue.residueCharacteristicExponent) :
     chapter06ProPGroup p (chapter06WildInertiaGroup D.upper) := by
-  sorry
+  intro H
+  rcases hlevels.wild_kernel_cofinal H with ⟨N, hN⟩
+  let f := hlevels.wild_level_map N
+  have hf : Function.Surjective f := hlevels.wild_level_map_surjective N
+  letI : Finite (chapter06FiniteLevelWildInertiaGroup D.upper N) :=
+    hlevels.wild_level_finite N
+  letI : Finite (chapter06WildInertiaGroup D.upper ⧸ f.ker) :=
+    Finite.of_injective
+      (QuotientGroup.quotientKerEquivOfSurjective f hf)
+      (QuotientGroup.quotientKerEquivOfSurjective f hf).injective
+  let qmap : (chapter06WildInertiaGroup D.upper ⧸ f.ker) →*
+      (chapter06WildInertiaGroup D.upper ⧸ H.toSubgroup) :=
+    QuotientGroup.map f.ker H.toSubgroup (MonoidHom.id _) (by
+      intro x hx
+      exact hN hx)
+  have hqmap : Function.Surjective qmap := by
+    intro y
+    rcases QuotientGroup.mk'_surjective H.toSubgroup y with ⟨x, rfl⟩
+    refine ⟨QuotientGroup.mk' f.ker x, ?_⟩
+    rfl
+  have hp_prime : Nat.Prime p := by
+    letI : Field D.residue.residueField := D.residue.residueField_field
+    have hchar : p = ringExpChar D.residue.residueField :=
+      hp_characteristic.trans D.residue.characteristic_exponent_eq
+    rw [hchar]
+    exact (expChar_is_prime_or_one D.residue.residueField _).resolve_right
+      (by
+        intro h
+        apply (Nat.ne_of_gt hp)
+        exact hchar.trans h)
+  letI : Fact p.Prime := ⟨hp_prime⟩
+  have hQp : IsPGroup p (chapter06FiniteLevelWildInertiaGroup D.upper N) := by
+    obtain ⟨r, hr⟩ := hlevels.wild_level_p_power N
+    exact IsPGroup.of_card hr
+  let qmap' : (chapter06FiniteLevelWildInertiaGroup D.upper N) →*
+      (chapter06WildInertiaGroup D.upper ⧸ H.toSubgroup) :=
+    qmap.comp (QuotientGroup.quotientKerEquivOfSurjective f hf).symm.toMonoidHom
+  have hqmap' : Function.Surjective qmap' := by
+    intro y
+    rcases hqmap y with ⟨x, hx⟩
+    refine ⟨QuotientGroup.quotientKerEquivOfSurjective f hf x, ?_⟩
+    simpa [qmap'] using hx
+  have htarget :
+      IsPGroup p (chapter06WildInertiaGroup D.upper ⧸ H.toSubgroup) :=
+    hQp.of_surjective qmap' hqmap'
+  letI : Finite (chapter06WildInertiaGroup D.upper ⧸ H.toSubgroup) :=
+    Finite.of_surjective qmap' hqmap'
+  rcases IsPGroup.iff_card.mp htarget with ⟨r, hr⟩
+  exact ⟨r, inferInstance, hr⟩
 
 theorem chapter06_tame_quotient_procyclic_of_separably_closed_residue
     {K E : Type*} [Field K] [Field E] [Algebra K E] [IsGalois K E]
     [IsSepClosed E]
     (D : Chapter06InfiniteGaloisRamificationData K E)
     (p : ℕ) (hp : 1 < p)
+    (hlevels : Chapter06FiniteLevelLocalRamificationInterface D.upper p)
     (hp_characteristic : p = D.residue.residueCharacteristicExponent)
-    (hsep : letI : Field D.residue.residueField := D.residue.residueField_field
+    (hsep : letI : Field D.residue.residueField := D.residue.residueField_field;
       IsSepClosed D.residue.residueField) :
     chapter06Procyclic (chapter06TameQuotient D.upper) := by
-  sorry
+  intro H
+  rcases hlevels.tame_kernel_cofinal H with ⟨N, hN⟩
+  let f := hlevels.tame_level_map N
+  have hf : Function.Surjective f := hlevels.tame_level_map_surjective N
+  letI : Finite (chapter06FiniteLevelTameQuotient D.upper N) :=
+    hlevels.tame_level_finite N
+  letI : Finite (chapter06TameQuotient D.upper ⧸ f.ker) :=
+    Finite.of_injective
+      (QuotientGroup.quotientKerEquivOfSurjective f hf)
+      (QuotientGroup.quotientKerEquivOfSurjective f hf).injective
+  let qmap : (chapter06TameQuotient D.upper ⧸ f.ker) →*
+      (chapter06TameQuotient D.upper ⧸ H.toSubgroup) :=
+    QuotientGroup.map f.ker H.toSubgroup (MonoidHom.id _) (by
+      intro x hx
+      exact hN hx)
+  have hqmap : Function.Surjective qmap := by
+    intro y
+    rcases QuotientGroup.mk'_surjective H.toSubgroup y with ⟨x, rfl⟩
+    refine ⟨QuotientGroup.mk' f.ker x, ?_⟩
+    rfl
+  let qmap' : (chapter06FiniteLevelTameQuotient D.upper N) →*
+      (chapter06TameQuotient D.upper ⧸ H.toSubgroup) :=
+    qmap.comp (QuotientGroup.quotientKerEquivOfSurjective f hf).symm.toMonoidHom
+  have hqmap' : Function.Surjective qmap' := by
+    intro y
+    rcases hqmap y with ⟨x, hx⟩
+    refine ⟨QuotientGroup.quotientKerEquivOfSurjective f hf x, ?_⟩
+    simpa [qmap'] using hx
+  letI : IsCyclic (chapter06FiniteLevelTameQuotient D.upper N) :=
+    hlevels.tame_level_cyclic N
+  letI : Finite (chapter06TameQuotient D.upper ⧸ H.toSubgroup) :=
+    Finite.of_surjective qmap' hqmap'
+  exact ⟨inferInstance, isCyclic_of_surjective qmap' hqmap'⟩
 
 theorem chapter06_residue_characteristic_exponent_eq_one_of_charZero
     {k : Type*} [Field k] [CharZero k] :
@@ -272,19 +348,65 @@ theorem chapter06_wild_inertia_trivial_of_characteristic_zero
     {K E : Type*} [Field K] [Field E] [Algebra K E] [IsGalois K E]
     [IsSepClosed E]
     (D : Chapter06InfiniteGaloisRamificationData K E)
+    (hlevels : Chapter06FiniteLevelLocalRamificationInterface D.upper 1)
     (hcharacteristic_zero :
       D.residue.residueCharacteristicExponent = 1) :
     chapter06WildInertiaGroup D.upper = ⊥ := by
-  sorry
+  letI : CompactSpace (chapter06WildInertiaGroup D.upper) :=
+    isCompact_iff_compactSpace.mp
+      (chapter06InfiniteUpperRightLimit_closed D.upper 0).isCompact
+  apply le_antisymm
+  · intro g hg
+    change g = 1
+    by_contra hne
+    let g' : chapter06WildInertiaGroup D.upper := ⟨g, hg⟩
+    have hgne : g' ≠ 1 := by
+      intro h
+      apply hne
+      change g = 1
+      simpa [g'] using congrArg Subtype.val h
+    let U : Set (chapter06WildInertiaGroup D.upper) := ({g'} : Set _)ᶜ
+    have hUopen : IsOpen U := by
+      dsimp [U]
+      exact isClosed_singleton.isOpen_compl
+    have hone : (1 : chapter06WildInertiaGroup D.upper) ∈ U := by
+      change (1 : chapter06WildInertiaGroup D.upper) ∉ ({g'} : Set _)
+      simpa using Ne.symm hgne
+    obtain ⟨H, hH⟩ :=
+      ProfiniteGrp.exist_openNormalSubgroup_sub_open_nhds_of_one hUopen hone
+    rcases hlevels.wild_kernel_cofinal H with ⟨N, hN⟩
+    let f := hlevels.wild_level_map N
+    have hfker : f.ker = ⊤ := by
+      apply top_unique
+      intro x hx
+      apply MonoidHom.mem_ker.mpr
+      apply Subtype.ext
+      have htriv :
+          chapter06FiniteLevelWildInertiaGroup D.upper N = ⊥ :=
+        hlevels.wild_level_trivial_of_characteristic_zero rfl N
+      have hxmem :
+          (f x : chapter06ProfiniteGaloisGroup K E ⧸ N.toSubgroup) ∈
+            (⊥ : Subgroup (chapter06ProfiniteGaloisGroup K E ⧸ N.toSubgroup)) := by
+        rw [← htriv]
+        exact (f x).property
+      simpa using Subgroup.mem_bot.mp hxmem
+    have htop : (⊤ : Subgroup (chapter06WildInertiaGroup D.upper)) ≤ H.toSubgroup := by
+      rw [← hfker]
+      exact hN
+    have hgH : g' ∈ H := htop (by simp)
+    exact (hH hgH) rfl
+  · exact bot_le
 
 theorem chapter06_all_inertia_tame_of_characteristic_zero
     {K E : Type*} [Field K] [Field E] [Algebra K E] [IsGalois K E]
     [IsSepClosed E]
     (D : Chapter06InfiniteGaloisRamificationData K E)
+    (hlevels : Chapter06FiniteLevelLocalRamificationInterface D.upper 1)
     (hcharacteristic_zero :
       D.residue.residueCharacteristicExponent = 1) :
     chapter06WildInertiaGroup D.upper = ⊥ := by
   exact chapter06_wild_inertia_trivial_of_characteristic_zero D
+    hlevels
     hcharacteristic_zero
 
 end

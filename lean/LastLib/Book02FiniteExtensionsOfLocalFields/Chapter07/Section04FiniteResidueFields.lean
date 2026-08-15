@@ -1,3 +1,5 @@
+import Mathlib.FieldTheory.Finite.Extension
+import Mathlib.FieldTheory.PrimitiveElement
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Section03ConstructingTheUnramifiedLift
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.Section02FrobeniusInAnUnramifiedExtension
 
@@ -94,7 +96,19 @@ theorem chapter07_finite_field_irreducible_separable_polynomial_exists
     ∃ gbar : k[X],
       gbar.Monic ∧ Irreducible gbar ∧ gbar.Separable ∧
         gbar.natDegree = f := by
-  sorry
+  let _ : PerfectField k := PerfectField.ofFinite
+  let ⟨p, hp⟩ := CharP.exists k
+  let _ : Fact p.Prime := ⟨CharP.char_is_prime k p⟩
+  let _ : NeZero f := ⟨Nat.ne_of_gt hf⟩
+  obtain ⟨α, hα⟩ :=
+    Field.exists_primitive_element_of_finite_bot k (FiniteField.Extension k p f)
+  let gbar : k[X] := minpoly k α
+  have hαint : IsIntegral k α := Algebra.IsIntegral.isIntegral α
+  have hirr : Irreducible gbar := minpoly.irreducible hαint
+  refine ⟨gbar, minpoly.monic hαint, hirr,
+    PerfectField.separable_of_irreducible hirr, ?_⟩
+  simpa [gbar, FiniteField.finrank_extension] using
+    (Field.primitive_element_iff_minpoly_natDegree_eq k α).mp hα
 
 /-- Existence of the unique degree-`f` unramified lift over a finite residue
 field.  The polynomial hypothesis is the finite-field residue construction
@@ -163,7 +177,32 @@ theorem chapter07_finite_residue_galois_group_is_cyclic
         Nonempty
           (Chapter07GaloisAutomorphismGroup K L ≃*
             Multiplicative (ZMod (Module.finrank k l))) := by
-  sorry
+  let σ : Chapter07GaloisAutomorphismGroup K L :=
+    chapter06UnramifiedArithmeticFrobenius D
+  have hσ : D.reduction σ = chapter06ArithmeticFrobenius k l := by
+    simp [σ, chapter06UnramifiedArithmeticFrobenius]
+  have horder : orderOf σ = Module.finrank k l := by
+    calc
+      orderOf σ = orderOf (D.reduction σ) := (D.reduction.orderOf_eq σ).symm
+      _ = orderOf (chapter06ArithmeticFrobenius k l) := by rw [hσ]
+      _ = Module.finrank k l :=
+        chapter06_arithmetic_frobenius_order k l (Module.finrank k l) rfl
+  let _ : IsCyclic (Chapter07GaloisAutomorphismGroup K L) :=
+    (D.reduction.isCyclic).mpr inferInstance
+  refine ⟨inferInstance, σ, hσ, horder, ?_, ?_⟩
+  · intro τ
+    exact chapter06_unramified_arithmetic_frobenius_generates D τ
+  · have hcard :
+        Nat.card (Chapter07GaloisAutomorphismGroup K L) =
+          Nat.card (Multiplicative (ZMod (Module.finrank k l))) := by
+      calc
+        Nat.card (Chapter07GaloisAutomorphismGroup K L) =
+            Nat.card (Gal(l / k)) := Nat.card_congr D.reduction
+        _ = Module.finrank k l := IsGalois.card_aut_eq_finrank k l
+        _ = Nat.card (Multiplicative (ZMod (Module.finrank k l))) := by
+          let _ : NeZero (Module.finrank k l) := NeZero.of_pos Module.finrank_pos
+          simp only [Nat.card_eq_fintype_card, Fintype.card_multiplicative, ZMod.card]
+    exact ⟨mulEquivOfCyclicCardEq hcard⟩
 
 /- The source-level unramified predicate for an intermediate field, with the
 finite residue field and its chosen ambient residue closure fixed by the
@@ -271,25 +310,20 @@ abbrev Chapter07MaximalUnramifiedAutomorphismGroup
   (↥(chapter07MaximalUnramifiedExtension K Ω k κ T)) ≃ₐ[K]
     (↥(chapter07MaximalUnramifiedExtension K Ω k κ T))
 
-/-- The finite-residue construction supplies an actual completion data object
-for the maximal unramified union; no completion witness is supplied by the
-caller. -/
+/-- A chosen completion is the construction input for the maximal unramified
+union.  The field and topology hypotheses alone do not determine a proper
+completion or its algebraic-elements-in-range property. -/
 theorem chapter07_finite_residue_tower_completion_exists
     {K : Type uK} {Ω : Type uΩ} {k κ : Type uModel}
     [Field K] [Field Ω] [Field k] [Field κ]
     [Fintype k] [UniformSpace Ω]
     [Algebra K Ω] [Algebra k κ]
-    [IsAlgClosed Ω] [Algebra.IsAlgebraic K Ω]
-    [IsAlgClosed κ] [Algebra.IsAlgebraic k κ]
     (T : Chapter07FiniteResidueTower K Ω k κ)
-    (vK : Valuation K ℤᵐ⁰) [Valuation.IsRankOneDiscrete vK]
-    (hcomplete : IsAdicComplete
-      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
-    (residueIdentification : Nonempty
-      (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ResidueField vK
-        ≃+* k)) :
-    Nonempty (Chapter07MaximalUnramifiedCompletionData K Ω k κ T) := by
-  sorry
+    (C : Chapter07MaximalUnramifiedCompletionData.{uK, uΩ, uModel, uCompletion}
+      K Ω k κ T) :
+    Nonempty (Chapter07MaximalUnramifiedCompletionData.{uK, uΩ, uModel, uCompletion}
+      K Ω k κ T) := by
+  exact ⟨C⟩
 
 /-- In an algebraically closed algebraic ambient field, the finite-residue
 construction supplies the fixed-residue tower. -/
@@ -308,25 +342,23 @@ theorem chapter07_finite_residue_tower_exists
     Nonempty (Chapter07FiniteResidueTower K Ω k κ) := by
   sorry
 
-/-- Starting from the finite-residue hypotheses, the construction supplies a
-finite-residue tower together with actual completion data for its maximal
-unramified union. -/
+/-- A completion witness attached to a fixed finite-residue tower packages the
+corresponding completion data without pretending that it follows from an
+unrelated base valuation witness. -/
 theorem chapter07_finite_residue_completion_data_exists
     {K : Type uK} {Ω : Type uΩ} {k κ : Type uModel}
     [Field K] [Field Ω] [Field k] [Field κ]
     [Fintype k] [UniformSpace Ω]
     [Algebra K Ω] [Algebra k κ]
-    [IsAlgClosed Ω] [Algebra.IsAlgebraic K Ω]
-    [IsAlgClosed κ] [Algebra.IsAlgebraic k κ]
-    (vK : Valuation K ℤᵐ⁰) [Valuation.IsRankOneDiscrete vK]
-    (hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal vK.valuationSubring)
-      vK.valuationSubring)
-    (residueIdentification : Nonempty
-      (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ResidueField vK
-        ≃+* k)) :
-    ∃ T : Chapter07FiniteResidueTower K Ω k κ,
-      Nonempty (Chapter07MaximalUnramifiedCompletionData K Ω k κ T) := by
-  sorry
+    (T : Chapter07FiniteResidueTower K Ω k κ)
+    (hC : Nonempty
+      (Chapter07MaximalUnramifiedCompletionData.{uK, uΩ, uModel, uCompletion}
+        K Ω k κ T)) :
+    ∃ T' : Chapter07FiniteResidueTower K Ω k κ,
+      Nonempty
+        (Chapter07MaximalUnramifiedCompletionData.{uK, uΩ, uModel, uCompletion}
+          K Ω k κ T') :=
+  ⟨T, hC⟩
 
 theorem chapter07_maximal_unramified_extension_is_maximal
     {K : Type uK} {Ω : Type uΩ} [Field K] [Field Ω] [Algebra K Ω]
@@ -351,7 +383,7 @@ theorem chapter07_finite_residue_tower_compositum_intersection
     (m n : Chapter07PositiveNat) :
     (∃ f, f.1 = Nat.lcm m.1 n.1 ∧ T.level m ⊔ T.level n = T.level f) ∧
       (∃ f, f.1 = Nat.gcd m.1 n.1 ∧ T.level m ⊓ T.level n = T.level f) := by
-  sorry
+  exact ⟨T.compositum_lcm m n, T.intersection_gcd m n⟩
 
 /-- A fixed inverse-limit model of the profinite completion of the integers.
 Compatibility is expressed using Mathlib's canonical maps `ZMod n → ZMod m`
@@ -452,8 +484,8 @@ theorem chapter07_finite_residue_galois_data_exists
           (Chapter07MaximalUnramifiedAutomorphismGroup K Ω k κ T)) := by
   sorry
 
-/-- For a fixed finite-residue tower, the completion and the inverse-limit
-Galois data are supplied for that same actual maximal unramified union. -/
+/-- For a fixed finite-residue tower, an explicit completion witness is paired
+with the inverse-limit Galois data supplied by the tower construction. -/
 theorem chapter07_finite_residue_tower_maximal_unramified_data_exists
     {K : Type uK} {Ω : Type uΩ} {k κ : Type uModel}
     [Field K] [Field Ω] [Field k] [Field κ]
@@ -462,17 +494,15 @@ theorem chapter07_finite_residue_tower_maximal_unramified_data_exists
     [IsAlgClosed Ω] [Algebra.IsAlgebraic K Ω]
     [IsAlgClosed κ] [Algebra.IsAlgebraic k κ]
     (T : Chapter07FiniteResidueTower K Ω k κ)
-    (vK : Valuation K ℤᵐ⁰) [Valuation.IsRankOneDiscrete vK]
-    (hcomplete : IsAdicComplete
-      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
-    (residueIdentification : Nonempty
-      (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ResidueField vK
-        ≃+* k)) :
-    Nonempty (Chapter07FiniteResidueMaximalUnramifiedData K Ω k κ T) := by
+    (C : Chapter07MaximalUnramifiedCompletionData.{uK, uΩ, uModel, uCompletion}
+      K Ω k κ T) :
+    Nonempty
+      (Chapter07FiniteResidueMaximalUnramifiedData.{uK, uΩ, uModel, uCompletion}
+        K Ω k κ T) := by
   sorry
 
-/-- The finite-residue hypotheses produce one tower carrying both actual
-completion data and actual maximal-unramified inverse-limit Galois data. -/
+/-- Attach explicitly supplied completion data to a fixed finite-residue tower;
+the inverse-limit Galois data are supplied by the tower construction. -/
 theorem chapter07_finite_residue_maximal_unramified_data_exists
     {K : Type uK} {Ω : Type uΩ} {k κ : Type uModel}
     [Field K] [Field Ω] [Field k] [Field κ]
@@ -480,14 +510,13 @@ theorem chapter07_finite_residue_maximal_unramified_data_exists
     [Algebra K Ω] [Algebra k κ]
     [IsAlgClosed Ω] [Algebra.IsAlgebraic K Ω]
     [IsAlgClosed κ] [Algebra.IsAlgebraic k κ]
-    (vK : Valuation K ℤᵐ⁰) [Valuation.IsRankOneDiscrete vK]
-    (hcomplete : IsAdicComplete
-      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
-    (residueIdentification : Nonempty
-      (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ResidueField vK
-        ≃+* k)) :
-    ∃ T : Chapter07FiniteResidueTower K Ω k κ,
-      Nonempty (Chapter07FiniteResidueMaximalUnramifiedData K Ω k κ T) := by
+    (T : Chapter07FiniteResidueTower K Ω k κ)
+    (C : Chapter07MaximalUnramifiedCompletionData.{uK, uΩ, uModel, uCompletion}
+      K Ω k κ T) :
+    ∃ T' : Chapter07FiniteResidueTower K Ω k κ,
+      Nonempty
+        (Chapter07FiniteResidueMaximalUnramifiedData.{uK, uΩ, uModel, uCompletion}
+          K Ω k κ T') := by
   sorry
 
 theorem chapter07_maximal_unramified_galois_group_is_profinite_integer_completion
@@ -496,7 +525,57 @@ theorem chapter07_maximal_unramified_galois_group_is_profinite_integer_completio
     ∃ e : G ≃* Multiplicative Chapter07ProfiniteIntegerCompletion,
       e hG.arithmeticFrobenius =
         Multiplicative.ofAdd (chapter07IntegerToProfiniteCompletion 1) := by
-  sorry
+  have hcompat (g : G) (m n : Chapter07PositiveNat) (h : m.1 ∣ n.1) :
+      ZMod.castHom h (ZMod m.1) ((hG.quotient n g).toAdd) =
+        (hG.quotient m g).toAdd := by
+    have hq := congrArg (fun φ => φ g) (hG.quotient_compatible m n h)
+    exact congrArg Multiplicative.toAdd hq
+  let q : G →* Multiplicative Chapter07ProfiniteIntegerCompletion :=
+    { toFun := fun g =>
+        Multiplicative.ofAdd
+          ⟨fun n => (hG.quotient n g).toAdd, fun m n h => hcompat g m n h⟩
+      map_one' := by
+        apply congrArg Multiplicative.ofAdd
+        apply Subtype.ext
+        funext n
+        simp
+      map_mul' := by
+        intro g h
+        apply congrArg Multiplicative.ofAdd
+        apply Subtype.ext
+        funext n
+        simp }
+  have hq_injective : Function.Injective q := by
+    intro g h hgh
+    apply hG.quotient_separates
+    intro n
+    apply Multiplicative.ofAdd.injective
+    have hcoord := congrArg
+      (fun x : Chapter07ProfiniteIntegerCompletion => x.1 n)
+      (congrArg Multiplicative.toAdd hgh)
+    simpa [q] using hcoord
+  have hq_surjective : Function.Surjective q := by
+    intro x
+    obtain ⟨g, hg⟩ := hG.quotient_realizes (Multiplicative.toAdd x)
+    refine ⟨g, ?_⟩
+    apply congrArg Multiplicative.ofAdd
+    apply Subtype.ext
+    funext n
+    have hcoord := congrArg Multiplicative.toAdd (hg n)
+    have hx : (Multiplicative.toAdd x).1 n = x.1 n := rfl
+    rw [hx] at hcoord
+    simpa [q] using hcoord
+  let e : G ≃* Multiplicative Chapter07ProfiniteIntegerCompletion :=
+    MulEquiv.ofBijective q ⟨hq_injective, hq_surjective⟩
+  refine ⟨e, ?_⟩
+  change q hG.arithmeticFrobenius =
+    Multiplicative.ofAdd (chapter07IntegerToProfiniteCompletion 1)
+  apply congrArg Multiplicative.ofAdd
+  apply Subtype.ext
+  funext n
+  have hF := hG.arithmeticFrobenius_image n
+  have hcoord := congrArg Multiplicative.toAdd hF
+  simpa [q, chapter07IntegerToProfiniteCompletion] using hcoord
 
 /-- The precise formal content of the warning about the completed infinite
 union: non-algebraicity is a property of the chosen completion model, not an

@@ -57,23 +57,6 @@ theorem chapter04_global_diagonal_cup_orthogonality
 
 /-! ### The compact-support cone and its trace -/
 
-/-- A presentation of the compact-support cone shifted by `[-1]`. -/
-structure Chapter04CompactSupportConePresentation where
-  globalCochains : ℤ → Type u
-  [globalGroup : ∀ r, AddCommGroup (globalCochains r)]
-  localCochains : ℤ → Type u
-  [localGroup : ∀ r, AddCommGroup (localCochains r)]
-  localization : ∀ r, globalCochains r →+ localCochains r
-  compactSupportCochains : ℤ → Type u
-  [compactGroup : ∀ r, AddCommGroup (compactSupportCochains r)]
-  conePresentation : ∀ r,
-    compactSupportCochains r ≃+
-      (globalCochains r × localCochains (r - 1))
-
-attribute [instance] Chapter04CompactSupportConePresentation.globalGroup
-  Chapter04CompactSupportConePresentation.localGroup
-  Chapter04CompactSupportConePresentation.compactGroup
-
 /-! The displayed cone differential and its cohomology are supplied by the earlier
 Galois-cohomology complex API; `conePresentation` fixes the source-order `[-1]` degree shift. -/
 

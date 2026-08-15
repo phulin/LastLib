@@ -262,18 +262,6 @@ theorem chapter10_unit_filtration_separated
     intro n
     exact (chapter10UnitFiltration A n).one_mem
 
-/-- The open-subgroup and neighborhood-basis assertion for the unit filtration. -/
-theorem chapter10_unit_filtration_is_open_neighborhood_basis
-    {L : Type*} [Field L] (A : ValuationSubring L)
-    [TopologicalSpace Aˣ]
-    (hopens : ∀ n, IsOpen (chapter10UnitFiltration A n : Set Aˣ))
-    (hnbasis : ∀ s ∈ 𝓝 (1 : Aˣ), ∃ n,
-      (chapter10UnitFiltration A n : Set Aˣ) ⊆ s) :
-    (∀ n, IsOpen (chapter10UnitFiltration A n : Set Aˣ)) ∧
-      ∀ s ∈ 𝓝 (1 : Aˣ), ∃ n,
-        (chapter10UnitFiltration A n : Set Aˣ) ⊆ s := by
-  exact ⟨hopens, hnbasis⟩
-
 end
 
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10

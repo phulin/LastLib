@@ -379,7 +379,7 @@ theorem chapter06_phi_at_zero_and_one
     intro x hx
     simp [gminus, gplus, chapter05LaplaceKernel]
     rw [hF.even x]
-    ring
+    ring_nf
   have hsplit : (∫ x : ℝ, gminus x) =
       (∫ x : ℝ in Ioi 0, gminus x) +
         ∫ x : ℝ in Iic 0, gminus x := by
@@ -400,7 +400,7 @@ theorem chapter06_phi_at_zero_and_one
         (fun x : ℝ => ((2 * F x * Real.cosh (x / 2) : ℝ) : ℂ)) := by
       funext x
       simp [gminus, gplus, chapter05LaplaceKernel, Real.cosh_eq]
-      ring
+      ring_nf
     rw [hinterm]
     have hreal :
         (∫ x : ℝ in Ioi 0,

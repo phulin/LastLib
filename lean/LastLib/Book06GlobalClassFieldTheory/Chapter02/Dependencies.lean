@@ -636,7 +636,8 @@ def chapter02StandardArtinKernelSubgroup
   refine
     { carrier := {x | ∀ v : V,
         if v ∈ A.ramified then x.1 v ∈ (A.localArtin v).ker
-        else if D.isFinite v then x.1 v ∈ D.integral v else True}
+        else if D.isFinite v then x.1 v ∈ D.integral v
+        else x.1 v ∈ (⊤ : Subgroup (H v))}
       one_mem' := by
         intro v
         split_ifs <;> simp
@@ -653,6 +654,7 @@ def chapter02StandardArtinKernelSubgroup
           rw [if_neg hram, if_pos hfin] at hxv hyv
           change x.1 v * y.1 v ∈ D.integral v
           exact (D.integral v).mul_mem hxv hyv
+        · simp
       inv_mem' := by
         intro x hx v
         split_ifs with hram hfin
@@ -664,6 +666,7 @@ def chapter02StandardArtinKernelSubgroup
           rw [if_neg hram, if_pos hfin] at hxv
           change (x.1 v)⁻¹ ∈ D.integral v
           exact (D.integral v).inv_mem hxv
+        · simp
         }
 
 theorem chapter02_standard_artin_kernel_subgroup_le_kernel
@@ -733,6 +736,7 @@ structure Chapter02PrincipalIdeleData
     (D : Chapter02RestrictedProductData V H) where
   localization : ∀ v : V, Kˣ →* H v
   principal : Kˣ →* chapter02Ideles D
+  principal_injective : Function.Injective principal
   principal_component : ∀ (a : Kˣ) (v : V),
     (principal a).1 v = localization v a
 

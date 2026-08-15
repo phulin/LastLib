@@ -42,12 +42,12 @@ theorem chapter04_top_over_fixed_field_is_galois
 
 /-- The subgroup and the Galois group of the upper extension are canonically
 isomorphic. -/
-theorem chapter04_subgroup_equiv_upper_galois_group
+def chapter04_subgroup_equiv_upper_galois_group
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
     (H : Subgroup Gal(L / K)) :
-    Nonempty (H ≃* Gal(L / chapter04FixedField H)) := by
-  exact ⟨IntermediateField.subgroupEquivAlgEquiv H⟩
+    H ≃* Gal(L / chapter04FixedField H) := by
+  exact IntermediateField.subgroupEquivAlgEquiv H
 
 /-- Normality is exactly the condition that the fixed field is Galois over the
 original base. -/

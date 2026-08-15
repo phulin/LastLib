@@ -1,5 +1,6 @@
 import LastLib.Book06GlobalClassFieldTheory.Chapter10.Dependencies
 import LastLib.Book06GlobalClassFieldTheory.Chapter10.Section02ConnectedComponentOfTheIdeleClassGroup
+import LastLib.Book06GlobalClassFieldTheory.Chapter08.Section04CyclotomicRayFields
 import Mathlib.NumberTheory.NumberField.Cyclotomic.Galois
 
 namespace LastLib.Book06GlobalClassFieldTheory.Chapter10
@@ -71,12 +72,6 @@ structure Chapter10KroneckerWeberData
     (Qab : Type u) [Field Qab] [Algebra ℚ Qab] [IsGalois ℚ Qab] where
   closure : Chapter10AbelianClosureData ℚ Qab
   cyclotomic : Chapter10CyclotomicTowerData Qab
-  /-- Every finite abelian subextension is contained in a selected
-    cyclotomic field. -/
-  cyclotomic_cofinal :
-    ∀ (L : FiniteGaloisIntermediateField ℚ Qab),
-      chapter10IsAbelianFiniteGaloisExtension L →
-        ∃ m, L ≤ cyclotomic.cyclotomicField m
   complexConjugation : Gal(Qab / ℚ)
   complexConjugation_on_roots :
     ∀ m, complexConjugation (cyclotomic.rootOfUnity m) =
@@ -426,15 +421,102 @@ private theorem chapter10RootActionLimitMap_denseRange
   change chapter10RootActionCoordinate D a.unop σ ∈ fJ a
   exact Set.mem_of_eq_of_mem hcoord_a (hJ1 a ha).right
 
-/- The Kronecker--Weber assertion is exposed as a theorem, with its cofinality
-input carried by the chosen data. -/
+/- The Kronecker--Weber assertion is exposed as a theorem.  Its arithmetic
+  cofinality proof belongs to the theorem itself rather than being repeated as
+  a field of the data record. -/
 theorem chapter10_kronecker_weber_finite_containment
     {Qab : Type u} [Field Qab] [Algebra ℚ Qab] [IsGalois ℚ Qab]
     (D : Chapter10KroneckerWeberData Qab)
     (L : FiniteGaloisIntermediateField ℚ Qab)
     (hL : chapter10IsAbelianFiniteGaloisExtension L) :
     ∃ m, L ≤ D.cyclotomic.cyclotomicField m := by
-  exact D.cyclotomic_cofinal L hL
+  have hAlg : (L.toIntermediateField.algebra' : Algebra ℚ L.toIntermediateField) =
+      (inferInstance : Algebra ℚ L.toIntermediateField) := Subsingleton.elim _ _
+  have hMod : (L.toIntermediateField.algebra' : Algebra ℚ L.toIntermediateField).toModule =
+      (inferInstance : Algebra ℚ L.toIntermediateField).toModule :=
+    congrArg (fun A : Algebra ℚ L.toIntermediateField => A.toModule) hAlg
+  let _ : NumberField L :=
+    { to_charZero := inferInstance
+      to_finiteDimensional := by
+        rw [← hMod]
+        exact L.finiteDimensional }
+  let _ : Algebra ℚ L := L.toIntermediateField.algebra'
+  let _ : IsAbelianGalois ℚ L := by
+    simpa [chapter10IsAbelianFiniteGaloisExtension] using hL
+  obtain ⟨C⟩ :=
+    LastLib.Book06GlobalClassFieldTheory.Chapter08.chapter08_kronecker_weber_from_ray_class_fields
+      (L := L)
+  let _ : Field C.carrier := C.carrierField
+  let _ : Algebra ℚ C.carrier := C.carrierAlgebra
+  let _ : NumberField C.carrier := C.carrierNumberField
+  let _ : IsCyclotomicExtension {C.conductorIndex} ℚ C.carrier := C.carrierCyclotomic
+  let _ : IsAbelianGalois ℚ C.carrier :=
+    IsCyclotomicExtension.isAbelianGalois {C.conductorIndex} ℚ C.carrier
+  obtain ⟨g, hg⟩ :=
+    D.closure.contains_every_finite_abelian_extension C.carrier
+  let n : Chapter10PositiveNatural := ⟨C.conductorIndex, C.conductorIndex_pos⟩
+  let K := D.cyclotomic.cyclotomicField n
+  let _ : NeZero C.conductorIndex := ⟨Nat.ne_of_gt C.conductorIndex_pos⟩
+  let ζC : C.carrier := IsCyclotomicExtension.zeta C.conductorIndex ℚ C.carrier
+  have hζC : IsPrimitiveRoot ζC C.conductorIndex := by
+    simp [ζC]
+  have hgζ : IsPrimitiveRoot (g ζC) C.conductorIndex :=
+    hζC.map_of_injective hg
+  obtain ⟨k, -, hk⟩ :=
+    (D.cyclotomic.primitive_root n).eq_pow_of_pow_eq_one hgζ.pow_eq_one
+  have hgζ_mem : g ζC ∈ K.toIntermediateField := by
+    rw [← hk]
+    exact pow_mem
+      (Chapter10CyclotomicTowerData.rootOfUnity_mem_cyclotomicField
+        D.cyclotomic n) _
+  have h_g_mem : ∀ y : C.carrier, g y ∈ K.toIntermediateField := by
+    intro y
+    have hy : y ∈ Algebra.adjoin ℚ {ζC} := by
+      rw [IsCyclotomicExtension.adjoin_primitive_root_eq_top hζC]
+      trivial
+    induction hy using Algebra.adjoin_induction with
+    | mem y hy =>
+        rw [Set.mem_singleton_iff] at hy
+        subst y
+        exact hgζ_mem
+    | algebraMap y =>
+        rw [g.commutes]
+        exact K.toIntermediateField.algebraMap_mem y
+    | add y z hy hz ihy ihz =>
+        rw [map_add]
+        exact add_mem ihy ihz
+    | mul y z hy hz ihy ihz =>
+        rw [map_mul]
+        exact mul_mem ihy ihz
+  let φ : L →ₐ[ℚ] Qab := g.comp C.embedding
+  let _ : Normal ℚ Qab := IsGalois.to_normal
+  let σ : Gal(Qab / ℚ) :=
+    AlgEquiv.ofBijective (φ.liftNormal Qab)
+      (AlgHom.normal_bijective ℚ Qab Qab _)
+  have hσ_apply (x : L) : σ (x : Qab) = φ x := by
+    change σ (algebraMap L Qab x) = φ x
+    simpa [σ] using (AlgHom.liftNormal_commutes φ Qab x)
+  refine ⟨n, ?_⟩
+  intro x hx
+  change x ∈ K.toIntermediateField
+  let xL : L := ⟨x, hx⟩
+  have hφx : φ xL ∈ K.toIntermediateField := by
+    change g (C.embedding xL) ∈ K.toIntermediateField
+    exact h_g_mem _
+  have hσx : σ x ∈ K.toIntermediateField := by
+    change σ (xL : Qab) ∈ K.toIntermediateField
+    rw [hσ_apply xL]
+    exact hφx
+  have hstable (τ : Gal(Qab / ℚ)) {y : Qab}
+      (hy : y ∈ K.toIntermediateField) : τ y ∈ K.toIntermediateField := by
+    let yK : K := ⟨y, hy⟩
+    have hval : (((chapter10RestrictionMap K τ) yK : K) : Qab) = τ y := by
+      simp only [chapter10RestrictionMap, AlgEquiv.restrictNormalHom_apply]
+      rfl
+    rw [← hval]
+    exact (chapter10RestrictionMap K τ yK).property
+  have hback := hstable (σ⁻¹) hσx
+  simpa using hback
 
 theorem chapter10_Q_ab_eq_union_cyclotomic
     {Qab : Type u} [Field Qab] [Algebra ℚ Qab] [IsGalois ℚ Qab]

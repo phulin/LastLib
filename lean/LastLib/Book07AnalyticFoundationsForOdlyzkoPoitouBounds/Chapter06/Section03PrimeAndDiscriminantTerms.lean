@@ -86,7 +86,7 @@ theorem chapter06_bilateral_laplace_inversion
         rw [← Complex.exp_add]
         congr 1
         simp
-        ring
+        ring_nf
       _ = Complex.exp (↑(-2 * Real.pi * (ξ * x)) * Complex.I) *
           ((F x : ℂ) * Complex.exp ((↑(c - 1 / 2) : ℂ) * (x : ℂ))) := by
         ring
@@ -111,7 +111,7 @@ theorem chapter06_bilateral_laplace_inversion
     have hξ : (starRingEnd ℝ) ξ = ξ := by simp
     rw [hξ]
     congr 1
-    ring
+    ring_nf
   have hscale : Tendsto (fun T : ℝ => T / (2 * Real.pi)) atTop atTop := by
     apply (tendsto_div_const_atTop_of_pos (by positivity)).2
     exact tendsto_id
@@ -258,7 +258,7 @@ theorem chapter06_zeta_log_derivative_series_summable
     chapter06PrimeIdealNorm, chapter03LogDerivativeTerm]
   rw [hcast]
   congr 2
-  ring
+  ring_nf
 
 theorem chapter06_zeta_log_derivative_series_eq
     (K : Type*) [Field K] [NumberField K] {s : ℂ}
@@ -647,7 +647,7 @@ private theorem chapter06_smooth_compact_vertical_transform_integrable
         rw [← Complex.exp_add]
         congr 1
         simp
-        ring
+        ring_nf
       _ = Complex.exp (↑(-2 * Real.pi * (ξ * x)) * Complex.I) *
           ((F x : ℂ) * Complex.exp ((↑(c - 1 / 2) : ℂ) * (x : ℂ))) := by
         ring

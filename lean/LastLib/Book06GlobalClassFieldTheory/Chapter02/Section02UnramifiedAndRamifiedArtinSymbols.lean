@@ -35,6 +35,27 @@ theorem chapter02_isRamified_iff_not_isUnramified
     chapter02IsRamified R ↔ ¬ chapter02IsUnramified R := by
   rfl
 
+theorem chapter02_isRamified_iff_exists_nontrivial_inertia
+    {D k l : Type*} [Group D] [Field k] [Field l] [Algebra k l]
+    (R : Chapter02ResidueActionData D k l) :
+    chapter02IsRamified R ↔ ∃ i : R.inertia, (i : D) ≠ 1 := by
+  constructor
+  · intro hram
+    by_contra hnone
+    apply hram
+    apply le_antisymm
+    · intro x hx
+      change x = 1
+      by_contra hxone
+      exact hnone ⟨⟨x, hx⟩, hxone⟩
+    · exact bot_le
+  · rintro ⟨i, hi⟩ hbot
+    apply hi
+    have hi' : (i : D) ∈ (⊥ : Subgroup D) := by
+      rw [← hbot]
+      exact i.property
+    simpa using hi'
+
 theorem chapter02_unramified_local_units_are_norms
     {B E D k l : Type*} [CommGroup B] [CommGroup E] [CommGroup D]
     [Field k] [Field l] [Algebra k l]
@@ -263,6 +284,27 @@ theorem chapter02_uniformizer_change_is_inertia
   refine ⟨⟨chapter02LocalArtinMap R (u : B), hmem⟩, ?_⟩
   exact chapter02_uniformizer_change_by_unit R π π' u hπ
 
+theorem chapter02_uniformizers_differ_by_a_unit
+    {B : Type*} [CommGroup B] {U : Subgroup B}
+    (V : Chapter02DiscreteValuationData B U) {π π' : B}
+    (hπ : V.ord π = 1) (hπ' : V.ord π' = 1) :
+    ∃ u : U, π' = (u : B) * π := by
+  rcases V.decomposition π with ⟨u, hu⟩
+  rcases V.decomposition π' with ⟨u', hu'⟩
+  refine ⟨u' * u⁻¹, ?_⟩
+  rw [hu', hu, hπ', hπ]
+  simp [mul_assoc, mul_comm, mul_left_comm]
+
+theorem chapter02_uniformizer_change_is_inertia_of_ord_eq_one
+    {B E D : Type*} [CommGroup B] [CommGroup E] [CommGroup D]
+    (R : Chapter02LocalReciprocityData B E D)
+    (V : Chapter02DiscreteValuationData B R.unitSubgroup)
+    {π π' : B} (hπ : V.ord π = 1) (hπ' : V.ord π' = 1) :
+    ∃ i : R.inertia,
+      chapter02LocalArtinMap R π' = chapter02LocalArtinMap R π * i := by
+  rcases chapter02_uniformizers_differ_by_a_unit V hπ hπ' with ⟨u, hu⟩
+  exact chapter02_uniformizer_change_is_inertia R π π' u hu
+
 theorem chapter02_ramified_frobenius_lifts_are_equal_only_modulo_inertia
     {B E D k l : Type*} [CommGroup B] [CommGroup E] [CommGroup D]
     [Field k] [Field l] [Fintype k] [Finite l]
@@ -306,12 +348,11 @@ theorem chapter02_remains_prime_iff_decomposition_group_top
   Iff.rfl
 
 theorem chapter02_quadratic_unramified_symbol_eq_one_iff_split
-    {G : Type u} [CommGroup G] [Fintype G]
+    {G : Type u} [CommGroup G]
     {V : Type v} {W : Type w} [MulAction G W]
     {B E k l : Type*} [CommGroup B] [CommGroup E]
     [Field k] [Field l] [Fintype k] [Finite l]
     [Algebra k l] [Algebra.IsAlgebraic k l]
-    (hquadratic : Fintype.card G = 2)
     (P : Chapter02ChosenPlace G V W)
     (R : Chapter02LocalReciprocityData B E (chapter02DecompositionGroup P))
     (S : Chapter02ResidueActionData (chapter02DecompositionGroup P) k l)
@@ -321,7 +362,6 @@ theorem chapter02_quadratic_unramified_symbol_eq_one_iff_split
       chapter02ArithmeticFrobenius (k := k) (l := l)) :
     chapter02LocalArtinMapAtChosenPlace P R Vv.uniformizer = 1 ↔
       chapter02CompletelySplitAt P := by
-  have _hquadratic := hquadratic
   have hFrob := chapter02_local_artin_at_uniformizer_is_frobenius
     R S Vv hI hπ
   have hvalue :

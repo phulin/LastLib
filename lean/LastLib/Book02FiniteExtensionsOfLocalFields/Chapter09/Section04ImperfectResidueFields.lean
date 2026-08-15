@@ -1,4 +1,5 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09.Section03CleanDecomposition
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section01WhyTowerFormulasMatter
 import Mathlib.RingTheory.LaurentSeries
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09
@@ -23,6 +24,45 @@ structure Chapter09LaurentSeriesTower
   map_coeff : ∀ x : chapter09LaurentSeries k, ∀ n : ℤ,
     (map x).coeff n = algebraMap k l (x.coeff n)
   map_injective : Function.Injective map
+  /-- The coefficientwise embedding is also the algebra map of the local
+  Laurent-series extension. -/
+  algebra : Algebra (chapter09LaurentSeries k) (chapter09LaurentSeries l)
+  algebra_map_eq_map :
+    letI : Algebra (chapter09LaurentSeries k) (chapter09LaurentSeries l) := algebra
+    (algebraMap (chapter09LaurentSeries k) (chapter09LaurentSeries l) :
+      chapter09LaurentSeries k →+* chapter09LaurentSeries l) = map
+
+/- The valuation profile ties the displayed `e` and `f` to the actual
+coefficientwise Laurent-series field extension rather than leaving them as
+unrelated labels. -/
+def chapter09LaurentSeriesLocalProfile
+    (k l : Type*) [Field k] [Field l] [Algebra k l]
+    [Module.Finite k l] (tower : Chapter09LaurentSeriesTower k l)
+    (e f : ℕ) : Prop :=
+  letI : Algebra (chapter09LaurentSeries k) (chapter09LaurentSeries l) :=
+    tower.algebra
+  ∃ (vK : AddValuation (chapter09LaurentSeries k) (WithTop ℤ))
+    (vL : AddValuation (chapter09LaurentSeries l) (WithTop ℤ)),
+    ∃ (hExt : vK.toValuation.HasExtension vL.toValuation),
+      ∃ (hdiscK : Valuation.IsRankOneDiscrete vK.toValuation)
+        (hdiscL : Valuation.IsRankOneDiscrete vL.toValuation),
+        ∃ (_hcompleteK : IsAdicComplete
+          (IsLocalRing.maximalIdeal vK.toValuation.valuationSubring)
+          vK.toValuation.valuationSubring),
+          ∃ (_hcompleteL : IsAdicComplete
+            (IsLocalRing.maximalIdeal vL.toValuation.valuationSubring)
+            vL.toValuation.valuationSubring),
+            ∃ (hfinite : FiniteDimensional
+              (chapter09LaurentSeries k) (chapter09LaurentSeries l)),
+              letI : vK.toValuation.HasExtension vL.toValuation := hExt
+              letI : Valuation.IsRankOneDiscrete vK.toValuation := hdiscK
+              letI : Valuation.IsRankOneDiscrete vL.toValuation := hdiscL
+              letI : FiniteDimensional
+                  (chapter09LaurentSeries k) (chapter09LaurentSeries l) := hfinite
+              ∃ d : LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Chapter03FiniteLocalExtensionData
+                (chapter09LaurentSeries k) (chapter09LaurentSeries l) _
+                vK.toValuation vL.toValuation,
+                d.e = e ∧ d.f = f
 
 /-- The coefficientwise map supplies the concrete Laurent-series tower used
 in the counterexample. -/
@@ -53,6 +93,8 @@ structure Chapter09ImperfectLaurentSeriesExample
   ramification_index : ℕ
   ramification_index_eq_one : ramification_index = 1
   local_field_tower : Chapter09LaurentSeriesTower k l
+  local_profile : chapter09LaurentSeriesLocalProfile k l local_field_tower
+    ramification_index residue_degree
   maximal_separable_part_eq_base :
     chapter09MaximalSeparableResidueSubfield k l = ⊥
   no_nontrivial_unramified_residue_subextension :
@@ -70,7 +112,8 @@ def chapter09ImperfectResidueCounterexample
     Algebra.adjoin k ({alpha} : Set l) = ⊤ ∧
     IsPurelyInseparable k l ∧ e = 1 ∧ f = p ∧
     f = Module.finrank k l ∧
-    Nonempty (Chapter09LaurentSeriesTower k l) ∧
+    ∃ tower : Chapter09LaurentSeriesTower k l,
+      chapter09LaurentSeriesLocalProfile k l tower e f ∧
     chapter09MaximalSeparableResidueSubfield k l = ⊥ ∧
     ∀ s : IntermediateField k l, Algebra.IsSeparable k s → s = ⊥
 
@@ -86,10 +129,7 @@ theorem chapter09_imperfect_laurent_series_counterexample
     [Module.Finite k l]
     (hdegree : Module.finrank k l = p) :
     chapter09ImperfectResidueCounterexample k l p 1 p a alpha := by
-  refine ⟨hp, inferInstance, ha, halpha, hgenerator, hpure, rfl, rfl,
-    hdegree.symm, chapter09_laurent_series_tower_exists k l, ?_, ?_⟩
-  · sorry
-  · sorry
+  sorry
 
 /-- The example has no nontrivial unramified residue subextension and its
 remainder is not totally ramified, since its residue degree is `p`. -/
@@ -98,13 +138,16 @@ theorem chapter09_imperfect_example_has_no_clean_decomposition
     [Algebra.IsAlgebraic k l] [Module.Finite k l]
     (d : Chapter09ImperfectLaurentSeriesExample k l) :
     d.ramification_index = 1 ∧ d.residue_degree = d.p ∧
-      d.residue_degree = Module.finrank k l ∧
-      Nonempty (Chapter09LaurentSeriesTower k l) ∧
+    d.residue_degree = Module.finrank k l ∧
+      (∃ tower : Chapter09LaurentSeriesTower k l,
+        chapter09LaurentSeriesLocalProfile k l tower d.ramification_index
+          d.residue_degree) ∧
       chapter09MaximalSeparableResidueSubfield k l = ⊥ ∧
       d.residue_degree ≠ 1 ∧
       (∀ s : IntermediateField k l, Algebra.IsSeparable k s → s = ⊥) := by
   refine ⟨d.ramification_index_eq_one, d.residue_degree_eq,
-    d.residue_degree_eq_finrank, ⟨d.local_field_tower⟩,
+    d.residue_degree_eq_finrank,
+    ⟨d.local_field_tower, d.local_profile⟩,
     d.maximal_separable_part_eq_base, ?_,
     d.no_nontrivial_unramified_residue_subextension⟩
   simpa [d.residue_degree_eq] using d.prime.ne_one

@@ -54,7 +54,29 @@ theorem chapter07_hilbert_polynomial_additive_of_short_exact
         chapter07EulerCharacteristic A n + chapter07EulerCharacteristic D n) :
     chapter07HilbertPolynomial B =
       chapter07HilbertPolynomial A + chapter07HilbertPolynomial D := by
-  sorry
+  apply chapter07_polynomial_eq_of_eventually_equal
+  rcases chapter07_hilbert_polynomial_matches_euler_eventually A with
+    ⟨NA, hNA⟩
+  rcases chapter07_hilbert_polynomial_matches_euler_eventually B with
+    ⟨NB, hNB⟩
+  rcases chapter07_hilbert_polynomial_matches_euler_eventually D with
+    ⟨ND, hND⟩
+  refine ⟨max NA (max NB ND), fun n hn => ?_⟩
+  have hA := hNA n (le_trans (Nat.le_max_left _ _) hn)
+  have hB := hNB n (le_trans
+    (le_trans (Nat.le_max_left _ _) (Nat.le_max_right _ _)) hn)
+  have hD := hND n (le_trans
+    (le_trans (Nat.le_max_right _ _) (Nat.le_max_right _ _)) hn)
+  calc
+    (chapter07HilbertPolynomial B).eval (n : ℚ) =
+        (chapter07EulerCharacteristic B n : ℚ) := hB
+    _ = ((chapter07EulerCharacteristic A n +
+        chapter07EulerCharacteristic D n : ℤ) : ℚ) := by
+          exact_mod_cast hEuler n
+    _ = (chapter07HilbertPolynomial A + chapter07HilbertPolynomial D).eval
+        (n : ℚ) := by
+          rw [Polynomial.eval_add, hA, hD]
+          norm_num
 
 theorem chapter07_hilbert_polynomial_subtractive_of_short_exact
     {k : Type u} [Field k]
@@ -66,7 +88,9 @@ theorem chapter07_hilbert_polynomial_subtractive_of_short_exact
         chapter07EulerCharacteristic A n + chapter07EulerCharacteristic D n) :
     chapter07HilbertPolynomial D =
       chapter07HilbertPolynomial B - chapter07HilbertPolynomial A := by
-  sorry
+  have h := chapter07_hilbert_polynomial_additive_of_short_exact hseq hEuler
+  rw [h]
+  ring
 
 /-!
 This record packages the ideal sequence
@@ -87,11 +111,15 @@ structure Chapter07ClosedSubschemeHilbertData
       (Scheme.Modules.pullback ambientIdentification.hom).obj
         (chapter07ProjectiveSpaceTautologicalLineBundle k subscheme.r).sheaf
   ambient : Chapter07HilbertSetup k C
+  ambientStructureSheaf :
+    ambient.F.sheaf ≅ SheafOfModules.unit C.X.ringCatSheaf
   ideal : Chapter07HilbertSetup k C
   structureSheaf : Chapter07HilbertSetup k C
   idealSequence : Chapter07ShortExactSequence ideal.F ambient.F structureSheaf.F
   idealInjection_mono : Mono idealSequence.injection
   closedStructureSheaf : Chapter07CoherentSheaf subscheme.Z
+  closedStructureSheaf_isStructureSheaf :
+    closedStructureSheaf.sheaf ≅ SheafOfModules.unit subscheme.Z.ringCatSheaf
   structureSheafPushforward :
     structureSheaf.F.sheaf ≅
       (Scheme.Modules.pushforward
@@ -111,7 +139,9 @@ theorem chapter07_closed_subscheme_hilbert_polynomial
     chapter07HilbertPolynomial D.structureSheaf =
       chapter07ProjectiveSpaceHilbertPolynomial D.subscheme.r -
         chapter07HilbertPolynomial D.ideal := by
-  sorry
+  have h := chapter07_hilbert_polynomial_subtractive_of_short_exact
+    D.idealSequence D.euler_additive
+  simpa [D.ambientPolynomial] using h
 
 theorem chapter07_closed_subscheme_hilbert_function_eventually
     {k : Type u} [Field k]
@@ -121,7 +151,40 @@ theorem chapter07_closed_subscheme_hilbert_function_eventually
       chapter07HilbertFunction D.structureSheaf n =
         Nat.choose (n + D.subscheme.r) D.subscheme.r -
           chapter07HilbertFunction D.ideal n := by
-  sorry
+  rcases chapter07_hilbert_polynomial_matches_function_eventually D.ideal with
+    ⟨NI, hNI⟩
+  rcases chapter07_hilbert_polynomial_matches_function_eventually D.structureSheaf with
+    ⟨NS, hNS⟩
+  refine ⟨max NI NS, fun n hn => ?_⟩
+  have hNI' := hNI n (le_trans (Nat.le_max_left _ _) hn)
+  have hNS' := hNS n (le_trans (Nat.le_max_right _ _) hn)
+  have hrat :
+      (chapter07HilbertFunction D.structureSheaf n : ℚ) =
+        (Nat.choose (n + D.subscheme.r) D.subscheme.r : ℚ) -
+          (chapter07HilbertFunction D.ideal n : ℚ) := by
+    calc
+      (chapter07HilbertFunction D.structureSheaf n : ℚ) =
+          (chapter07HilbertPolynomial D.structureSheaf).eval (n : ℚ) := hNS'.symm
+      _ = (chapter07ProjectiveSpaceHilbertPolynomial D.subscheme.r -
+          chapter07HilbertPolynomial D.ideal).eval (n : ℚ) := by
+            rw [chapter07_closed_subscheme_hilbert_polynomial D]
+      _ = (chapter07ProjectiveSpaceHilbertPolynomial D.subscheme.r).eval (n : ℚ) -
+          (chapter07HilbertPolynomial D.ideal).eval (n : ℚ) := by simp
+      _ = (Nat.choose (n + D.subscheme.r) D.subscheme.r : ℚ) -
+          (chapter07HilbertFunction D.ideal n : ℚ) := by
+            rw [chapter07_projectiveSpaceHilbertPolynomial_eval, hNI']
+  have hrat' :
+      (Nat.choose (n + D.subscheme.r) D.subscheme.r : ℚ) =
+        (chapter07HilbertFunction D.ideal n : ℚ) +
+          (chapter07HilbertFunction D.structureSheaf n : ℚ) := by
+    rw [hrat]
+    ring
+  have hnat :
+      Nat.choose (n + D.subscheme.r) D.subscheme.r =
+        chapter07HilbertFunction D.ideal n +
+          chapter07HilbertFunction D.structureSheaf n := by
+    exact_mod_cast hrat'
+  exact (Nat.sub_eq_of_eq_add hnat).symm
 
 structure Chapter07HypersurfaceHilbertData
     (k : Type u) [Field k]
@@ -140,7 +203,45 @@ theorem chapter07_hypersurface_hilbert_polynomial
     (D : Chapter07HypersurfaceHilbertData k C) :
     chapter07HilbertPolynomial D.closedSubscheme.structureSheaf =
       chapter07HypersurfaceHilbertPolynomial D.closedSubscheme.subscheme.r D.degree := by
-  sorry
+  have hIdeal :
+      chapter07HilbertPolynomial D.closedSubscheme.ideal =
+        chapter07BinomialPolynomial D.closedSubscheme.subscheme.r D.degree := by
+    apply chapter07_polynomial_eq_of_eventually_equal
+    refine ⟨D.degree, fun n hn => ?_⟩
+    have hcast :
+        (((n : ℤ) - (D.degree : ℤ) : ℤ) : ℚ) =
+          ((n - D.degree : ℕ) : ℚ) := by
+      rw [Nat.cast_sub hn]
+      push_cast
+    calc
+      (chapter07HilbertPolynomial D.closedSubscheme.ideal).eval (n : ℚ) =
+          chapter07EulerCharacteristicAtInteger D.closedSubscheme.ideal (n : ℤ) :=
+        chapter07_hilbert_polynomial_matches_euler_at_all_integers
+          D.closedSubscheme.ideal (n : ℤ)
+      _ = chapter07EulerCharacteristicAtInteger D.closedSubscheme.ambient
+          ((n : ℤ) - (D.degree : ℤ)) := D.ideal_euler_characteristic_shift n
+      _ = (chapter07HilbertPolynomial D.closedSubscheme.ambient).eval
+          (((n : ℤ) - (D.degree : ℤ) : ℤ) : ℚ) := by
+            symm
+            exact chapter07_hilbert_polynomial_matches_euler_at_all_integers
+              D.closedSubscheme.ambient ((n : ℤ) - (D.degree : ℤ))
+      _ = (chapter07ProjectiveSpaceHilbertPolynomial
+          D.closedSubscheme.subscheme.r).eval ((n - D.degree : ℕ) : ℚ) := by
+            rw [D.closedSubscheme.ambientPolynomial, hcast]
+      _ = (Nat.choose (n - D.degree + D.closedSubscheme.subscheme.r)
+          D.closedSubscheme.subscheme.r : ℚ) :=
+        chapter07_projectiveSpaceHilbertPolynomial_eval
+          D.closedSubscheme.subscheme.r (n - D.degree)
+      _ = (Nat.choose (n + D.closedSubscheme.subscheme.r - D.degree)
+          D.closedSubscheme.subscheme.r : ℚ) := by
+            congr 2
+            omega
+      _ = (chapter07BinomialPolynomial D.closedSubscheme.subscheme.r D.degree).eval
+          (n : ℚ) :=
+        (chapter07_binomialPolynomial_eval
+          D.closedSubscheme.subscheme.r D.degree n hn).symm
+  rw [chapter07_closed_subscheme_hilbert_polynomial D.closedSubscheme, hIdeal]
+  rfl
 
 theorem chapter07_hypersurface_hilbert_polynomial_eval
     {k : Type u} [Field k]
@@ -152,7 +253,10 @@ theorem chapter07_hypersurface_hilbert_polynomial_eval
         D.closedSubscheme.subscheme.r : ℚ) -
         (Nat.choose (n + D.closedSubscheme.subscheme.r - D.degree)
           D.closedSubscheme.subscheme.r : ℚ) := by
-  sorry
+  rw [chapter07_hypersurface_hilbert_polynomial D]
+  simp only [chapter07HypersurfaceHilbertPolynomial, Polynomial.eval_sub]
+  rw [chapter07_projectiveSpaceHilbertPolynomial_eval,
+    chapter07_binomialPolynomial_eval _ _ _ hn]
 
 /-!
 No smoothness field occurs in the hypersurface data: the formula is
@@ -165,7 +269,13 @@ theorem chapter07_plane_curve_hilbert_polynomial
     (hplane : D.closedSubscheme.subscheme.r = 2) :
     chapter07HilbertPolynomial D.closedSubscheme.structureSheaf =
       chapter07PlaneCurveHilbertPolynomial D.degree := by
-  sorry
+  rw [chapter07_hypersurface_hilbert_polynomial D]
+  rw [hplane]
+  simp [chapter07HypersurfaceHilbertPolynomial,
+    chapter07ProjectiveSpaceHilbertPolynomial, chapter07BinomialPolynomial,
+    Finset.prod_range_succ]
+  push_cast
+  ring
 
 theorem chapter07_plane_curve_hilbert_polynomial_eval
     {k : Type u} [Field k]
@@ -175,7 +285,9 @@ theorem chapter07_plane_curve_hilbert_polynomial_eval
     (chapter07HilbertPolynomial D.closedSubscheme.structureSheaf).eval (n : ℚ) =
       (D.degree : ℚ) * n + 1 -
         (((D.degree : ℚ) - 1) * ((D.degree : ℚ) - 2) / 2) := by
-  sorry
+  rw [chapter07_plane_curve_hilbert_polynomial D hplane]
+  simp [chapter07PlaneCurveHilbertPolynomial]
+  ring
 
 /-! A zero-dimensional coherent sheaf is represented by its total length. -/
 structure Chapter07ZeroDimensionalHilbertData
@@ -193,7 +305,13 @@ theorem chapter07_zero_dimensional_hilbert_polynomial
     {C : Chapter07PolarizedScheme k}
     (D : Chapter07ZeroDimensionalHilbertData (k := k) (C := C)) :
     chapter07HilbertPolynomial D.setup = Polynomial.C (D.length : ℚ) := by
-  sorry
+  have h := chapter07_hilbert_polynomial_unique D.setup
+    (show Chapter07PolynomialMatchesEventually
+        (Polynomial.C (D.length : ℚ))
+        (chapter07EulerCharacteristic D.setup) from by
+      refine ⟨0, fun n _ => ?_⟩
+      simp [D.eulerCharacteristic_eq_length n])
+  exact h.symm
 
 structure Chapter07DoubledPointHilbertData
     {k : Type u} [Field k]
@@ -212,7 +330,10 @@ theorem chapter07_doubled_point_hilbert_polynomials
     (D : Chapter07DoubledPointHilbertData (k := k) (C := C)) :
     chapter07HilbertPolynomial D.doubled.setup = Polynomial.C 2 ∧
       chapter07HilbertPolynomial D.reducedSupport.setup = Polynomial.C 1 := by
-  sorry
+  constructor
+  · rw [chapter07_zero_dimensional_hilbert_polynomial D.doubled, D.doubledLength]
+  · rw [chapter07_zero_dimensional_hilbert_polynomial D.reducedSupport,
+      D.reducedLength]
 
 end
 

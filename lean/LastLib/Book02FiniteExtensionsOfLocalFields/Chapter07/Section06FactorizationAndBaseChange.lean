@@ -1,11 +1,15 @@
 import Mathlib.RingTheory.Etale.Basic
-import Mathlib.Order.Hom.Lattice
+import Mathlib.RingTheory.Etale.Field
+import Mathlib.FieldTheory.LinearDisjoint
+import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
+import Mathlib.RingTheory.Ideal.Quotient.Operations
 import Mathlib.RingTheory.TensorProduct.Maps
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Section05ExamplesBothCharacteristics
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07
 
 open Set
+open Function
 open Polynomial
 open scoped BigOperators TensorProduct WithZero
 open LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
@@ -87,13 +91,42 @@ factors. -/
 theorem chapter07_separable_quotient_is_product
     {K : Type*} [Field K] (g : K[X]) {r : ℕ} (gᵢ : Fin r → K[X])
     (hproduct : g = ∏ i, gᵢ i)
-    (hmonic : ∀ i, (gᵢ i).Monic)
     (hirreducible : ∀ i, Irreducible (gᵢ i))
     (hpairwise : Pairwise (fun i j => IsCoprime (Ideal.span ({gᵢ i} : Set K[X]))
       (Ideal.span ({gᵢ j} : Set K[X])))) :
     Nonempty (AdjoinRoot g ≃+* (∀ i, AdjoinRoot (gᵢ i))) ∧
       ∀ i, IsField (AdjoinRoot (gᵢ i)) := by
-  sorry
+  classical
+  have hcop : Pairwise (IsCoprime on
+      fun i : Fin r => Ideal.span ({gᵢ i} : Set K[X])) := by
+    intro i j hij
+    exact hpairwise hij
+  have hideal :
+      (Ideal.span ({g} : Set K[X])) =
+        ⨅ i : Fin r, Ideal.span ({gᵢ i} : Set K[X]) := by
+    calc
+      Ideal.span ({g} : Set K[X]) =
+          Ideal.span ({∏ i : Fin r, gᵢ i} : Set K[X]) := by rw [hproduct]
+      _ = ∏ i : Fin r, Ideal.span ({gᵢ i} : Set K[X]) := by
+        symm
+        simpa using
+          (Ideal.prod_span_singleton (Finset.univ : Finset (Fin r)) gᵢ)
+      _ = ⨅ i : Fin r, Ideal.span ({gᵢ i} : Set K[X]) := by
+        simpa using
+          (Ideal.prod_eq_iInf_of_pairwise_isCoprime
+            (s := (Finset.univ : Finset (Fin r)))
+            (J := fun i : Fin r => Ideal.span ({gᵢ i} : Set K[X]))
+            (by
+              intro i hi j hj hij
+              exact hcop hij))
+  let e : AdjoinRoot g ≃+* (∀ i, AdjoinRoot (gᵢ i)) :=
+    (Ideal.quotEquivOfEq hideal).trans
+      (Ideal.quotientInfRingEquivPiQuotient
+        (fun i : Fin r => Ideal.span ({gᵢ i} : Set K[X])) hcop)
+  refine ⟨⟨e⟩, ?_⟩
+  intro i
+  let _ : Fact (Irreducible (gᵢ i)) := ⟨hirreducible i⟩
+  exact Field.toIsField _
 
 /-- The local-field data attached to one lifted factor.  The factor index is
 kept in the type so that a later proof can identify the residue polynomial,
@@ -119,6 +152,13 @@ structure Chapter07SeparableFactorResidueField
   residueMap_kernel : RingHom.ker residueMap = residueIdeal
   integralModel_fractionRing : IsFractionRing integralModel L
   integralModel_etale : Algebra.Etale A integralModel
+  /-- The displayed local field is the field factor represented by the
+  selected lifted residue factor, rather than an unrelated field with the
+  same numerical profile. -/
+  factor_quotient_equiv : Nonempty
+    (L ≃ₐ[K]
+      Chapter07LiftedPolynomialQuotient K
+        (chapter07LiftedPolynomial (G.factors i)))
   residueMap_compatible :
     residueMap.comp (algebraMap A integralModel) =
       (algebraMap k l).comp res
@@ -135,38 +175,34 @@ structure Chapter07IntermediateResidueShadow
   actual :
     Chapter07ActualUnramifiedIntermediateData K Ω k κ E residue profile
 
-/- A residue-field operation on intermediate fields, with the functorial
-properties used by the compositum/intersection calculation made explicit.
-The valuation-ring construction in the book supplies this interface; the
-shadow theorem below should not silently infer it from unrelated numerical
-profiles. -/
+/- A residue shadow is defined only on the witnessed unramified carriers.  A
+global lattice map on all intermediate fields would incorrectly assign residue
+fields to ramified or otherwise unvalued intermediate extensions. -/
 structure Chapter07ResidueShadowFunctoriality
     (K Ω k κ : Type*) [Field K] [Field Ω] [Field k] [Field κ]
     [Algebra K Ω] [Algebra k κ] where
-  /-- The canonical residue operation is required to be a lattice homomorphism;
-  the theorem below uses only this reusable functorial interface. -/
-  residue : LatticeHom (IntermediateField K Ω) (IntermediateField k κ)
+  classification :
+    Chapter07CanonicalUnramifiedClassification K Ω k κ
 
 /-- The residue-field equalities for composita and intersections, with the
-chosen residue shadows made explicit. -/
+chosen reduction equivalence on witnessed unramified carriers made explicit. -/
 theorem chapter07_unramified_residue_compositum_and_intersection
     {K Ω k κ : Type*} [Field K] [Field Ω] [Field k] [Field κ]
     [Algebra K Ω] [Algebra k κ]
-    (K₁ K₂ : IntermediateField K Ω)
-    [FiniteDimensional K K₁] [FiniteDimensional K K₂]
-    [FiniteDimensional K ↥(K₁ ⊔ K₂)] [FiniteDimensional K ↥(K₁ ⊓ K₂)]
-    (S₁ : Chapter07IntermediateResidueShadow K Ω k κ K₁)
-    (S₂ : Chapter07IntermediateResidueShadow K Ω k κ K₂)
-    (S₁₂ : Chapter07IntermediateResidueShadow K Ω k κ (K₁ ⊔ K₂))
-    (S₀ : Chapter07IntermediateResidueShadow K Ω k κ (K₁ ⊓ K₂))
-    (R : Chapter07ResidueShadowFunctoriality K Ω k κ)
-    (h₁ : R.residue K₁ = S₁.residue)
-    (h₂ : R.residue K₂ = S₂.residue)
-    (h₁₂ : R.residue (K₁ ⊔ K₂) = S₁₂.residue)
-    (h₀ : R.residue (K₁ ⊓ K₂) = S₀.residue) :
-    S₁₂.residue = S₁.residue ⊔ S₂.residue ∧
-      S₀.residue = S₁.residue ⊓ S₂.residue := by
-  sorry
+    (E F : Chapter07CanonicalFiniteUnramifiedIntermediate K Ω k κ)
+    (R : Chapter07ResidueShadowFunctoriality K Ω k κ) :
+    (∃ G : Chapter07CanonicalFiniteUnramifiedIntermediate K Ω k κ,
+      G.1 = chapter07CanonicalUnramifiedCompositum E F ∧
+        (R.classification.reduction G).1 =
+          chapter07CanonicalResidueCompositum
+            (R.classification.reduction E) (R.classification.reduction F)) ∧
+      (∃ G : Chapter07CanonicalFiniteUnramifiedIntermediate K Ω k κ,
+        G.1 = chapter07CanonicalUnramifiedIntersection E F ∧
+          (R.classification.reduction G).1 =
+              chapter07CanonicalResidueIntersection
+                (R.classification.reduction E) (R.classification.reduction F)) := by
+  exact ⟨R.classification.compositum_preserved E F,
+    R.classification.intersection_preserved E F⟩
 
 /-- The residue tensor product is finite étale over the changed residue field,
 hence a finite product of separable fields. -/
@@ -175,7 +211,12 @@ theorem chapter07_residue_tensor_product_is_separable_product
     [Algebra k k'] [Algebra k l] [FiniteDimensional k l]
     [Algebra.IsSeparable k l] :
     Algebra.Etale k' (l ⊗[k] k') := by
-  sorry
+  let _ : Module.FinitePresentation k l :=
+    Module.finitePresentation_of_finite k l
+  let _ : Algebra.Etale k l :=
+    { formallyEtale := Algebra.FormallyEtale.of_isSeparable k l
+      finitePresentation := inferInstance }
+  exact Algebra.Etale.of_equiv (Algebra.TensorProduct.commRight k k' l)
 
 /-- A finite product of unramified factors after scalar extension. -/
 structure Chapter07UnramifiedScalarExtensionProduct
@@ -263,7 +304,42 @@ theorem chapter07_finite_galois_residue_extensions_linearly_disjoint
           (F := K₁ ⊓ K₂) (E := K₁) inf_le_left))
         (↥(IntermediateField.extendScalars
           (F := K₁ ⊓ K₂) (E := K₂) inf_le_right)) Ω := by
-  sorry
+  let _ : IsGalois K
+      (↥(IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₁) inf_le_left)) := by
+    change IsGalois K K₁
+    infer_instance
+  let _ : FiniteDimensional K
+      (↥(IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₁) inf_le_left)) := by
+    change FiniteDimensional K K₁
+    infer_instance
+  let _ : FiniteDimensional K
+      (↥(IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₂) inf_le_right)) := by
+    change FiniteDimensional K K₂
+    infer_instance
+  let _ : IsGalois (↥(K₁ ⊓ K₂))
+      (↥(IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₁) inf_le_left)) :=
+    IsGalois.tower_top_of_isGalois K (↥(K₁ ⊓ K₂))
+      (↥(IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₁) inf_le_left))
+  let _ : FiniteDimensional (↥(K₁ ⊓ K₂))
+      (↥(IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₁) inf_le_left)) :=
+    Module.Finite.of_restrictScalars_finite K (↥(K₁ ⊓ K₂))
+      (↥(IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₁) inf_le_left))
+  let _ : FiniteDimensional (↥(K₁ ⊓ K₂))
+      (↥(IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₂) inf_le_right)) :=
+    Module.Finite.of_restrictScalars_finite K (↥(K₁ ⊓ K₂))
+      (↥(IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₂) inf_le_right))
+  have hLD :
+      (IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₁) inf_le_left).LinearDisjoint
+        (IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₂) inf_le_right) :=
+    IntermediateField.LinearDisjoint.of_inf_eq_bot
+      (A := IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₁) inf_le_left)
+      (B := IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₂) inf_le_right)
+      (by
+        rw [IntermediateField.extendScalars_inf, IntermediateField.extendScalars_self])
+  have hLD' :=
+    (IntermediateField.linearDisjoint_iff').mp hLD
+  unfold Chapter07LinearlyDisjointOver
+  exact hLD'.injective
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07

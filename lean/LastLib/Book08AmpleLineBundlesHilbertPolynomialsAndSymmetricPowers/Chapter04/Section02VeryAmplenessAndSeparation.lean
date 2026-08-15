@@ -129,6 +129,40 @@ theorem chapter04_induced_section_system_map_isClosedImmersion_of_proper
   rw [IsClosedImmersion.iff_isProper_and_mono]
   exact ⟨inferInstance, inferInstance⟩
 
+/-- Relative very ampleness descends along a faithfully flat quasi-compact base
+change when the original morphism is qcqs and of finite presentation. -/
+theorem chapter04_veryAmple_faithfullyFlat_descent
+    {X S S' : Scheme.{u}} (f : X ⟶ S) (g : S' ⟶ S)
+    (L : Chapter04LineBundle X)
+    (hfqc : QuasiCompact f) (hfqs : QuasiSeparated f)
+    (hfp : LocallyOfFinitePresentation f)
+    (hgflat : Flat g) (hgsurj : Surjective g) (hgqc : QuasiCompact g)
+    (hL : chapter04VeryAmple (Limits.pullback.snd f g)
+      (chapter04PullbackLineBundle (Limits.pullback.fst f g) L)) :
+    chapter04VeryAmple f L := by
+  sorry
+
+/-- Immersions are detected after a faithfully flat quasi-compact base change
+under the same qcqs finite-presentation hypotheses. -/
+theorem chapter04_immersion_iff_faithfullyFlat_baseChange
+    {X S S' : Scheme.{u}} (f : X ⟶ S) (g : S' ⟶ S)
+    (hfqc : QuasiCompact f) (hfqs : QuasiSeparated f)
+    (hfp : LocallyOfFinitePresentation f)
+    (hgflat : Flat g) (hgsurj : Surjective g) (hgqc : QuasiCompact g) :
+    IsImmersion f ↔ IsImmersion (Limits.pullback.snd f g) := by
+  sorry
+
+/-- The descent direction of the immersion criterion. -/
+theorem chapter04_immersion_faithfullyFlat_descent
+    {X S S' : Scheme.{u}} (f : X ⟶ S) (g : S' ⟶ S)
+    (hfqc : QuasiCompact f) (hfqs : QuasiSeparated f)
+    (hfp : LocallyOfFinitePresentation f)
+    (hgflat : Flat g) (hgsurj : Surjective g) (hgqc : QuasiCompact g)
+    (h : IsImmersion (Limits.pullback.snd f g)) :
+    IsImmersion f := by
+  exact (chapter04_immersion_iff_faithfullyFlat_baseChange f g
+    hfqc hfqs hfp hgflat hgsurj hgqc).2 h
+
 /-- A proper family turns the locally closed immersion from very ampleness into a closed immersion. -/
 theorem chapter04_veryAmple_closed_immersion_of_proper
     {X S : Scheme.{u}} (f : X ⟶ S) [IsProper f]
@@ -148,7 +182,6 @@ theorem chapter04_proper_veryAmple_is_projective
     chapter04Projective f := by
   obtain ⟨w⟩ := hL
   exact ⟨{ projectiveBundle := w.projectiveBundle
-           universalQuotientCompatible := w.universalQuotientCompatible
            map := w.map
            closedImmersion := chapter04_veryAmple_closed_immersion_of_proper f L w
            over := w.over }⟩

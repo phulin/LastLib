@@ -81,7 +81,10 @@ theorem chapter05_artin_kernel_le_of_factorization
     (artinL : C →* G) (artinE : C →* H) (restriction : G →* H)
     (commutes : restriction.comp artinL = artinE) :
     artinL.ker ≤ artinE.ker := by
-  sorry
+  intro x hx
+  exact MonoidHom.mem_ker.mpr (by
+    rw [← commutes]
+    simp [MonoidHom.mem_ker.mp hx])
 
 /-- For a surjective finite-level Artin map, kernel inclusion is equivalent to
 factorization through the corresponding quotient action. -/
@@ -92,7 +95,15 @@ theorem chapter05_artin_factorization_iff_kernel_le
     (surjective : Function.Surjective artinL) :
     (∃ restriction : G →* H,
       restriction.comp artinL = artinE) ↔ artinL.ker ≤ artinE.ker := by
-  sorry
+  constructor
+  · rintro ⟨restriction, commutes⟩
+    exact chapter05_artin_kernel_le_of_factorization artinL artinE restriction commutes
+  · intro h
+    refine ⟨MonoidHom.liftOfSurjective artinL surjective ⟨artinE, h⟩, ?_⟩
+    simpa only [MonoidHom.liftOfSurjective] using
+      (MonoidHom.liftOfRightInverse_comp artinL
+        (Function.surjInv surjective)
+        (Function.rightInverse_surjInv surjective) ⟨artinE, h⟩)
 
 /-- The finite-level data needed to identify the Artin kernel of a compositum.
 The joint restriction map is injective for the Galois group of a compositum. -/
@@ -114,7 +125,32 @@ theorem chapter05_artin_compositum_kernel
     [Group C] [Group G] [Group G₁] [Group G₂]
     (D : Chapter05ArtinCompositumData C G G₁ G₂) :
     D.compositumArtin.ker = D.leftArtin.ker ⊓ D.rightArtin.ker := by
-  sorry
+  apply le_antisymm
+  · intro x hx
+    apply Subgroup.mem_inf.mpr
+    have hx' : D.compositumArtin x = 1 := MonoidHom.mem_ker.mp hx
+    constructor
+    · apply MonoidHom.mem_ker.mpr
+      rw [← D.left_compatibility]
+      simp [MonoidHom.comp_apply, hx']
+    · apply MonoidHom.mem_ker.mpr
+      rw [← D.right_compatibility]
+      simp [MonoidHom.comp_apply, hx']
+  · intro x hx
+    apply MonoidHom.mem_ker.mpr
+    apply D.restriction_jointly_injective
+    have hx' := Subgroup.mem_inf.mp hx
+    apply Prod.ext
+    · calc
+        D.restrictionLeft (D.compositumArtin x) = D.leftArtin x := by
+          exact congrArg (fun f : C →* G₁ => f x) D.left_compatibility
+        _ = 1 := MonoidHom.mem_ker.mp hx'.1
+        _ = D.restrictionLeft 1 := (D.restrictionLeft.map_one).symm
+    · calc
+        D.restrictionRight (D.compositumArtin x) = D.rightArtin x := by
+          exact congrArg (fun f : C →* G₂ => f x) D.right_compatibility
+        _ = 1 := MonoidHom.mem_ker.mp hx'.2
+        _ = D.restrictionRight 1 := (D.restrictionRight.map_one).symm
 
 /-- The common kernel of a family of finite-level Artin maps. -/
 def chapter05ArtinKernelIntersection
@@ -129,7 +165,7 @@ theorem chapter05_artin_kernel_intersection_mem_iff
     (artin : ∀ i, C →* G i) (x : C) :
     x ∈ chapter05ArtinKernelIntersection artin ↔
       ∀ i, artin i x = 1 := by
-  sorry
+  simp [chapter05ArtinKernelIntersection, MonoidHom.mem_ker]
 
 /-- A separation statement recovers a subgroup from the common kernels of
 its finite quotient actions. -/
@@ -139,7 +175,8 @@ theorem chapter05_artin_kernel_intersection_recovery
     (H : Subgroup C) (artin : ∀ i, C →* G i)
     (separates : ∀ x, x ∈ H ↔ ∀ i, artin i x = 1) :
     H = chapter05ArtinKernelIntersection artin := by
-  sorry
+  ext x
+  exact (separates x).trans (chapter05_artin_kernel_intersection_mem_iff artin x).symm
 
 /-- The degree-zero cap-product interface supplied by a class formation. -/
 structure Chapter05ClassFormationInterface

@@ -1,4 +1,3 @@
-import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter03.Dependencies
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11.Dependencies
 
 namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter11
@@ -43,9 +42,9 @@ theorem affineOrbitPolynomial_coeff_invariant {A B : Type u} [CommRing A] [CommR
   sorry
 
 /-- Every element is integral over the fixed subalgebra in the invariant-algebra API. -/
-theorem invariant_element_is_integral {A B : Type u} [CommRing A] [CommRing B]
-    [Algebra A B] (G : Type v) [Fintype G] [Group G] [MulSemiringAction G B]
-    [Algebra.IsInvariant A B G] : Algebra.IsIntegral A B := by
+theorem invariant_element_is_integral {B : Type u} [CommRing B]
+    (G : Type v) [Fintype G] [Group G] [MulSemiringAction G B] :
+    Algebra.IsIntegral (FixedPoints.subring B (⊤ : Subgroup G)) B := by
   sorry
 
 /-- The affine quotient ring attached to a finite action. -/

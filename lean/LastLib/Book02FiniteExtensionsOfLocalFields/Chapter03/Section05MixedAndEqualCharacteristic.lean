@@ -1,4 +1,4 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section04ScalarExtensionOfALocalField
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section01WhyTowerFormulasMatter
 import Mathlib.NumberTheory.Padics.PadicNumbers
 import Mathlib.RingTheory.LaurentSeries
 
@@ -35,6 +35,7 @@ theorem chapter03_mixed_characteristic_degree_and_prime_value
     (vK : AddValuation K (WithTop ℤ))
     [(AddValuation.toValuation (Padic.addValuation (p := p))).HasExtension
       (AddValuation.toValuation vK)]
+    [Valuation.IsRankOneDiscrete (AddValuation.toValuation vK)]
     (e f : ℕ)
     (he : chapter03RamificationIndex
       (AddValuation.toValuation (Padic.addValuation (p := p)))
@@ -118,8 +119,8 @@ structure Chapter03ResidueLift
     ∀ a : k, algebraMap k K a = (lift a : K)
 
 /-- A purely inseparable residue root has `e=1` and `f=p`. -/
--- SOURCE_ISSUE: The source suppresses the coefficient lift from the residue
--- field into the valuation ring.  `Chapter03ResidueLift` records it here.
+-- The general interface records the coefficient lift explicitly; in the
+-- Laurent-series model this is supplied by the constant coefficient field.
 theorem chapter03_purely_inseparable_residue_root_has_e_one
     (k K L : Type*) [Field k] [Field K] [Field L]
     [Algebra k K] [Algebra K L] [Algebra k L] [IsScalarTower k K L]
@@ -147,8 +148,7 @@ theorem chapter03_purely_inseparable_residue_root_has_e_one
   sorry
 
 /-- A root of `X^p-t` is purely inseparable and totally ramified. -/
--- SOURCE_ISSUE: The source leaves the value of the Laurent parameter implicit.
--- The `hvalue` hypothesis below fixes the normalization.
+-- The `hvalue` hypothesis records the source's normalization `v(t)=1`.
 theorem chapter03_purely_inseparable_uniformizer_root_has_e_p
     (k L : Type*) [Field k] [Field L]
     [Algebra (LaurentSeries k) L] [FiniteDimensional (LaurentSeries k) L]

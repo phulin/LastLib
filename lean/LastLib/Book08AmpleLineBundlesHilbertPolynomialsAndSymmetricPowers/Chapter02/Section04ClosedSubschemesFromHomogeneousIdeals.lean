@@ -330,10 +330,11 @@ structure Chapter02PolynomialHomogeneousEvaluationFamily
   transport_power : ∀ {q q'}
       (_h : chapter02QuotientPairEquivalent q q'),
       ∃ e : q.line.carrier ≅ q'.line.carrier,
-        ∃ p : Chapter02LineBundlePowerTransportData e,
-          ∀ (d : ℕ) (F : Chapter02PolynomialHomogeneousPolynomial R r d),
-            SheafOfModules.sectionsMap (p.map d).hom ((evaluation q).value d F) =
-              (evaluation q').value d F
+        q.quotient ≫ e.hom = q'.quotient ∧
+          ∃ p : Chapter02LineBundlePowerTransportData e,
+            ∀ (d : ℕ) (F : Chapter02PolynomialHomogeneousPolynomial R r d),
+              SheafOfModules.sectionsMap (p.map d).hom ((evaluation q).value d F) =
+                (evaluation q').value d F
 
 /- LOCAL_DEPENDENCY_GUESS: the quotient-compatible graded evaluation family exists. -/
 theorem chapter02_polynomial_homogeneous_evaluation_family_exists
@@ -624,6 +625,38 @@ noncomputable def chapter02_veronese_pullback_of_twisting_line
 theorem chapter02_veronese_map_is_closed_immersion
     (S : Scheme.{u}) (r d : ℕ) (hd : 0 < d) :
     IsClosedImmersion (chapter02VeroneseMap S r d) := by
+  sorry
+
+theorem chapter02_veronese_map_to_standard_target_exists
+    (S : Scheme.{u}) (r d : ℕ) (hd : 0 < d) :
+    ∃ i : chapter02ProjectiveSpace S r ⟶
+        chapter02VeroneseStandardTarget S r d,
+      i ≫ chapter02ProjectiveSpaceProjection S
+          (chapter02VeroneseTargetDimension r d) =
+        chapter02ProjectiveSpaceProjection S r ∧
+        IsClosedImmersion i := by
+  sorry
+
+/-! Postcomposing a closed immersion into projective space with a positive Veronese power gives a
+closed immersion into the standard Veronese target, with the base map and the factorization through
+the relative Veronese target retained explicitly.  This is the presentation-level twisting/
+Veronese interface used when a high tensor power is chosen in a composition argument.
+-/
+theorem chapter02_closed_immersion_postcompose_veronese
+    (S : Scheme.{u}) (r d : ℕ) (hd : 0 < d)
+    {X : Scheme.{u}} (j : X ⟶ chapter02ProjectiveSpace S r)
+    (hj : IsClosedImmersion j) :
+    ∃ k : X ⟶ chapter02VeroneseStandardTarget S r d,
+      IsClosedImmersion k ∧
+        k ≫ chapter02ProjectiveSpaceProjection S
+            (chapter02VeroneseTargetDimension r d) =
+          j ≫ chapter02ProjectiveSpaceProjection S r ∧
+        ∃ e : chapter02VeroneseTarget S r d ≅
+            chapter02VeroneseStandardTarget S r d,
+          e.hom ≫ chapter02ProjectiveSpaceProjection S
+              (chapter02VeroneseTargetDimension r d) =
+            (chapter02VeroneseTargetData S r d).bundle.projection ∧
+          k = j ≫ chapter02VeroneseMap S r d ≫ e.hom := by
   sorry
 
 /-!

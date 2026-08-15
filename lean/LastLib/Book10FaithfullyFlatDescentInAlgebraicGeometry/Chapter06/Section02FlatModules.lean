@@ -12,8 +12,7 @@ universe u v w z
 
 /-- The tensor criterion for flatness, in the left-tensor formulation. -/
 theorem flat_iff_lTensor_preserves_injective
-    {R : Type u} {M : Type v} [CommRing R] [AddCommGroup M] [Module R M]
-    [Small.{max u v} R] :
+    {R : Type u} {M : Type v} [CommRing R] [AddCommGroup M] [Module R M] :
     Module.Flat R M ↔
       ∀ ⦃N N' : Type (max u v)⦄ [AddCommGroup N] [AddCommGroup N']
         [Module R N] [Module R N'] (f : N →ₗ[R] N'),

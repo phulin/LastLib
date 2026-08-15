@@ -188,7 +188,7 @@ theorem chapter03_artin_schreier_irreducible_of_no_root
       rw [degree_neg, degree_X_add_C]
       exact_mod_cast hpone
     have h := monic_X_pow_add (p := (-(X + C a) : K[X])) (n := p) hdeg
-    convert h using 1 <;> ring
+    convert h using 1; ring
   have hnat : f.natDegree = p := by
     dsimp [f, chapter03ArtinSchreierPolynomial]
     have hdeg : degree (-(X + C a) : K[X]) < p := by
@@ -204,11 +204,11 @@ theorem chapter03_artin_schreier_irreducible_of_no_root
     rw [hnat] at this
     have hpzero : p = 0 := by simpa using this
     exact (Nat.ne_of_gt (Fact.out : Nat.Prime p).pos) hpzero
-  letI : Algebra (ZMod p) K := ZMod.algebra _ _
+  let : Algebra (ZMod p) K := ZMod.algebra _ _
   have hc0 (c : ZMod p) :
       (algebraMap (ZMod p) K c)^p - algebraMap (ZMod p) K c = 0 := by
     have hc : c ^ p = c := by
-      simpa [ZMod.card] using (FiniteField.pow_card c)
+      simp
     rw [← map_pow, hc, sub_self]
   have hftrans (c : ZMod p) :
       f.comp (X + C (algebraMap (ZMod p) K c)) = f := by
@@ -239,7 +239,7 @@ theorem chapter03_artin_schreier_irreducible_of_no_root
       (hperiod : g.comp (X + C (algebraMap (ZMod p) K h0)) = g)
       (hh : h0 ≠ 0) :
       ∀ c : ZMod p, g.comp (X + C (algebraMap (ZMod p) K c)) = g := by
-    letI : NeZero p := ⟨(Fact.out : Nat.Prime p).ne_zero⟩
+    let : NeZero p := ⟨(Fact.out : Nat.Prime p).ne_zero⟩
     intro c
     let n : ℕ := (c * h0⁻¹).val
     have hc : c = (n : ZMod p) * h0 := by
@@ -429,11 +429,11 @@ theorem chapter03_artin_schreier_degree_and_cyclic_profile
           LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ProfileRealizedByData d q ∧
             q.degree = p ∧ q.ramificationIndex = p ∧ q.residueDegree = 1 ∧
             LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10TotallyRamified q := by
-  letI : CharP (LaurentSeries k) p :=
+  let : CharP (LaurentSeries k) p :=
     charP_of_injective_ringHom
       (f := (HahnSeries.C : k →+* LaurentSeries k))
       HahnSeries.C_injective p
-  letI : CharP L p :=
+  let : CharP L p :=
     charP_of_injective_algebraMap (algebraMap (LaurentSeries k) L).injective p
   let t : LaurentSeries k :=
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter03.laurentSeriesUniformizer k
@@ -602,7 +602,7 @@ theorem chapter03_artin_schreier_degree_and_cyclic_profile
   obtain ⟨d⟩ :=
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_heterogeneous_extension_data_exists
       vK vL hext
-  letI : Finite
+  let : Finite
       (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ValueGroup vL ⧸
         d.valueGroupMap.range) := d.finite_quotient
   have hri :=
@@ -776,11 +776,11 @@ theorem chapter03_artin_schreier_extension_is_cyclic_galois
       (∀ c : L, c ^ p - c = 0 →
             ∃ σ : L ≃ₐ[LaurentSeries k] L, σ D.y = D.y + c) := by
   classical
-  letI : CharP (LaurentSeries k) p :=
+  let : CharP (LaurentSeries k) p :=
     charP_of_injective_ringHom
       (f := (HahnSeries.C : k →+* LaurentSeries k))
       HahnSeries.C_injective p
-  letI : CharP L p :=
+  let : CharP L p :=
     charP_of_injective_algebraMap (algebraMap (LaurentSeries k) L).injective p
   let t : LaurentSeries k :=
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter03.laurentSeriesUniformizer k
@@ -850,7 +850,7 @@ theorem chapter03_artin_schreier_extension_is_cyclic_galois
       _ = (minpoly (LaurentSeries k) D.y).natDegree := hadjfin
       _ = f.natDegree := by rw [hmin_eq]
       _ = p := hnat
-  letI : Algebra (ZMod p) L := ZMod.algebra L p
+  let : Algebra (ZMod p) L := ZMod.algebra L p
   have hsplit0 : (X ^ p - X : L[X]).Splits := by
     have hsplitZ :
         ((X ^ p - X : (ZMod p)[X]).map (algebraMap (ZMod p) (ZMod p))).Splits := by
@@ -878,14 +878,14 @@ theorem chapter03_artin_schreier_extension_is_cyclic_galois
     exact hmono
   have hsplitfield : f.IsSplittingField (LaurentSeries k) L :=
     (isSplittingField_iff_intermediateField).2 ⟨hsplit, hadjroot⟩
-  letI : f.IsSplittingField (LaurentSeries k) L := hsplitfield
+  let : f.IsSplittingField (LaurentSeries k) L := hsplitfield
   have hderiv : f.derivative = -1 := by
     dsimp [f]
     exact chapter03_artin_schreier_derivative p a
   have hsep : f.Separable := by
     rw [Polynomial.separable_iff_derivative_ne_zero hf, hderiv]
     exact neg_ne_zero.mpr one_ne_zero
-  letI : IsGalois (LaurentSeries k) L :=
+  let : IsGalois (LaurentSeries k) L :=
     IsGalois.of_separable_splitting_field hsep
   have hcard : Nat.card (L ≃ₐ[LaurentSeries k] L) = p := by
     rw [IsGalois.card_aut_eq_finrank]
@@ -1006,7 +1006,7 @@ private theorem chapter03_artin_schreier_first_binomial_term_has_value_m_aux
     (hm : 0 < m) (hvalue_y : vL y = -m) (hvalue_c : vL c = 0)
     (hb : 1 ≤ b) (hbp : b < p) (hc : c ^ p - c = 0) :
     vL ((1 + c / y) ^ b - 1) = m := by
-  letI : Algebra (ZMod p) L := ZMod.algebra _ _
+  let : Algebra (ZMod p) L := ZMod.algebra _ _
   have hy : y ≠ 0 := by
     intro hy
     have htop : (-(m : ℤ) : WithTop ℤ) ≠ ⊤ := WithTop.coe_ne_top
@@ -1122,11 +1122,11 @@ theorem chapter03_artin_schreier_displacement_calculation
     (hc : c ^ p - c = 0) (hσy : σ y = y + c) :
     vL (σ (chapter03ArtinSchreierUniformizer (k := k) (L := L) y a b) -
       chapter03ArtinSchreierUniformizer (k := k) (L := L) y a b) = m + 1 := by
-  letI : CharP (LaurentSeries k) p :=
+  let : CharP (LaurentSeries k) p :=
     charP_of_injective_ringHom
       (f := (HahnSeries.C : k →+* LaurentSeries k))
       HahnSeries.C_injective p
-  letI : CharP L p :=
+  let : CharP L p :=
     charP_of_injective_algebraMap (algebraMap (LaurentSeries k) L).injective p
   have hmpos : 0 < m := by
     by_contra hm'
@@ -1201,11 +1201,11 @@ theorem chapter03_artin_schreier_first_binomial_term_has_value_m
     (hm : 0 < m) (hvalue_y : vL y = -m) (hvalue_c : vL c = 0)
     (hb : 1 ≤ b) (hbp : b < p) (hc : c ^ p - c = 0) :
     vL ((1 + c / y) ^ b - 1) = m := by
-  letI : CharP (LaurentSeries k) p :=
+  let : CharP (LaurentSeries k) p :=
     charP_of_injective_ringHom
       (f := (HahnSeries.C : k →+* LaurentSeries k))
       HahnSeries.C_injective p
-  letI : CharP L p :=
+  let : CharP L p :=
     charP_of_injective_algebraMap (algebraMap (LaurentSeries k) L).injective p
   exact chapter03_artin_schreier_first_binomial_term_has_value_m_aux
     p m vL y c b hm hvalue_y hvalue_c hb hbp hc

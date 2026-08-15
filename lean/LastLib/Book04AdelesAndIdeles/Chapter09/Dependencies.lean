@@ -598,7 +598,38 @@ theorem chapter09IdeleModuleNNRealHom_eq_distribHaarChar
     chapter09IdeleModuleNNRealHom K =
       MeasureTheory.distribHaarChar
         (G := Chapter09Idele K) (A := Chapter09Adele K) := by
-  sorry
+  apply MonoidHom.ext
+  intro x
+  change (chapter09IdeleModuleHom K x : ℝ≥0) =
+    MeasureTheory.distribHaarChar
+      (G := Chapter09Idele K) (A := Chapter09Adele K) x
+  rw [LastLib.Book04AdelesAndIdeles.Chapter08.chapter08_adele_unit_distrib_haar_char_apply]
+  have hcoe : Function.Injective (Units.coeHom ℝ≥0) := by
+    intro a b hab
+    apply Units.ext
+    exact hab
+  have hfinite :
+      ((chapter09FiniteIdeleModule ((chapter09IdeleProductEquiv K x).2) :
+        Chapter09PositiveReal) : ℝ≥0) =
+        ∏ᶠ v : HeightOneSpectrum (𝓞 K),
+          ((chapter09FiniteNormUnit v
+            ((RestrictedProduct.unitsEquiv
+              (fun v : HeightOneSpectrum (𝓞 K) => v.adicCompletion K)
+              ((chapter09IdeleProductEquiv K x).2)) v) :
+              Chapter09PositiveReal) : ℝ≥0) := by
+    simpa [chapter09FiniteIdeleModule] using
+      (Units.coeHom ℝ≥0).map_finprod_of_injective hcoe
+        (f := fun v : HeightOneSpectrum (𝓞 K) =>
+          chapter09FiniteNormUnit v
+            ((RestrictedProduct.unitsEquiv
+              (fun v : HeightOneSpectrum (𝓞 K) => v.adicCompletion K)
+              ((chapter09IdeleProductEquiv K x).2)) v))
+  change ((chapter09IdeleModule x : Chapter09PositiveReal) : ℝ≥0) = _
+  rw [chapter09IdeleModule_eq_infinite_mul_finite, Units.val_mul, hfinite]
+  simp [chapter09InfiniteIdeleModule, chapter09NormUnit,
+    chapter09IdeleProductEquiv,
+    LastLib.Book04AdelesAndIdeles.Chapter08.Chapter08Integers]
+  rfl
 
 theorem chapter09IdeleModule_ne_zero
     {K : Type*} [Field K] [NumberField K] (x : Chapter09Idele K) :

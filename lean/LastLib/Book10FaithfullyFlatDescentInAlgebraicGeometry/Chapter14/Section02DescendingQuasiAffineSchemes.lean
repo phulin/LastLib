@@ -24,7 +24,11 @@ theorem chapter14_relative_global_functions_base_change_exists
     {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
     [QuasiCompact f] [QuasiSeparated f] [Flat g] :
     Nonempty (Chapter14RelativeGlobalFunctionsBaseChangeData f g) := by
-  sorry
+  have h :=
+    _root_.LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter08.chapter08_pushforward_structure_sheaf_flat_base_change_exists f g
+  exact ⟨{
+    comparison := h.some.comparison
+    comparison_restriction := h.some.comparison_restriction }⟩
 
 noncomputable def chapter14_relative_global_functions_base_change
     {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
@@ -81,22 +85,6 @@ theorem chapter14AffineEnvelopeEvaluationBaseChange_snd
   exact pullback.lift_snd _ _ _
 
 /-! ## The affine-envelope base-change comparison -/
-
-theorem chapter14_affine_envelope_base_change_exists
-    {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
-    [QuasiCompact f] [QuasiSeparated f] [Flat g]
-    [QuasiCompact (chapter14BaseChangeToBase f g)]
-    [QuasiSeparated (chapter14BaseChangeToBase f g)] :
-    Nonempty (Chapter14AffineEnvelopeBaseChangeData f g) := by
-  sorry
-
-noncomputable def chapter14AffineEnvelopeBaseChange
-    {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
-    [QuasiCompact f] [QuasiSeparated f] [Flat g]
-    [QuasiCompact (chapter14BaseChangeToBase f g)]
-    [QuasiSeparated (chapter14BaseChangeToBase f g)] :
-    Chapter14AffineEnvelopeBaseChangeData f g :=
-  Classical.choice (chapter14_affine_envelope_base_change_exists f g)
 
 def chapter14AffineEnvelopeBaseChangeIso
     {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)

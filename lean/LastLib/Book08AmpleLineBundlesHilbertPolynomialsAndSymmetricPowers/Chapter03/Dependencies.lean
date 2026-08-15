@@ -103,6 +103,11 @@ abbrev chapter03Ample {X S : Scheme.{u}} (f : X ⟶ S)
     (L : Chapter03LineBundle X) : Prop :=
   chapter03RelativelyAmple f L
 
+/-- A global polarization is the compatibility datum missing from unrelated local embeddings. -/
+structure Chapter03GlobalPolarization {X S : Scheme.{u}} (f : X ⟶ S) where
+  lineBundle : Chapter03LineBundle X
+  relativelyAmple : chapter03RelativelyAmple f lineBundle
+
 /-- Fiberwise ampleness means relative ampleness after passage to every residue-field fiber. -/
 def chapter03FiberwiseAmple {X S : Scheme.{u}} (f : X ⟶ S)
     (L : Chapter03LineBundle X) : Prop :=
@@ -208,6 +213,24 @@ abbrev chapter03Projective (f : X ⟶ S) : Prop :=
 /-- Chapter 3 re-exports the canonical quasi-projective-morphism predicate. -/
 abbrev chapter03QuasiProjective (f : X ⟶ S) : Prop :=
   Chapter02QuasiProjectiveMorphism f
+
+/-- A proper polarized family is projective over a quasi-compact, quasi-separated base.
+
+This is the safe globalization interface: local projective presentations alone do not supply the
+global hyperplane bundle needed by a single finite locally free ambient bundle. -/
+theorem chapter03_projective_of_proper_globalPolarization
+    [CompactSpace S] (f : X ⟶ S)
+    (hproper : IsProper f) (P : Chapter03GlobalPolarization f) :
+    chapter03Projective f := by
+  sorry
+
+/-- A polarized finite-type family is quasi-projective over a quasi-compact, quasi-separated base. -/
+theorem chapter03_quasiProjective_of_finiteType_globalPolarization
+    [CompactSpace S] (f : X ⟶ S)
+    (hqc : QuasiCompact f) (hft : LocallyOfFiniteType f)
+    (hqs : QuasiSeparated f) (P : Chapter03GlobalPolarization f) :
+    chapter03QuasiProjective f := by
+  sorry
 
 end
 

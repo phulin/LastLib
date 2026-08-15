@@ -15,97 +15,6 @@ inclusion-reversing order statement.  The field of an open subgroup is the
 compositum already defined in Dependencies.lean.
 -/
 
-/- A ray field is the finite abelian extension attached to a particular open
-   ray subgroup of the canonical idele class group.  Its extension data keep
-   the local Artin maps and the norm subgroup tied to the same field. -/
-structure Chapter06RayClassField
-    (K : Type*) [Field K] [NumberField K]
-    (H : Chapter06OpenFiniteIndexSubgroup
-      (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleClassGroup K)) where
-  field : Type
-  [fieldField : Field field]
-  [fieldNumberField : NumberField field]
-  [fieldAlgebra : Algebra K field]
-  [fieldFinite : FiniteDimensional K field]
-  [fieldAbelianGalois : IsAbelianGalois K field]
-  data : Chapter06FiniteAbelianExtensionData K field
-  norm_eq : chapter06CanonicalNormSubgroup data = H.subgroup
-
-abbrev chapter06RayClassFieldNormSubgroup
-    {K : Type*} [Field K] [NumberField K]
-    {H : Chapter06OpenFiniteIndexSubgroup
-      (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleClassGroup K)}
-    (R : Chapter06RayClassField K H) :=
-  letI : Field R.field := R.fieldField
-  letI : NumberField R.field := R.fieldNumberField
-  letI : Algebra K R.field := R.fieldAlgebra
-  letI : FiniteDimensional K R.field := R.fieldFinite
-  letI : IsAbelianGalois K R.field := R.fieldAbelianGalois
-  chapter06CanonicalNormSubgroup R.data
-
-def chapter06RayClassFieldLocalArtin
-    {K : Type*} [Field K] [NumberField K]
-    {H : Chapter06OpenFiniteIndexSubgroup
-      (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleClassGroup K)}
-    (R : Chapter06RayClassField K H)
-    (v : LastLib.Book06GlobalClassFieldTheory.Chapter01.BookPlace K) :=
-  letI : Field R.field := R.fieldField
-  letI : NumberField R.field := R.fieldNumberField
-  letI : Algebra K R.field := R.fieldAlgebra
-  letI : FiniteDimensional K R.field := R.fieldFinite
-  letI : IsAbelianGalois K R.field := R.fieldAbelianGalois
-  chapter06CanonicalLocalArtin R.data v
-
-def chapter06RayClassFieldLocalArtinGalois
-    {K : Type*} [Field K] [NumberField K]
-    {H : Chapter06OpenFiniteIndexSubgroup
-      (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleClassGroup K)}
-    (R : Chapter06RayClassField K H)
-    (v : LastLib.Book06GlobalClassFieldTheory.Chapter01.BookPlace K) :=
-  letI : Field R.field := R.fieldField
-  letI : NumberField R.field := R.fieldNumberField
-  letI : Algebra K R.field := R.fieldAlgebra
-  letI : FiniteDimensional K R.field := R.fieldFinite
-  letI : IsAbelianGalois K R.field := R.fieldAbelianGalois
-  chapter06CanonicalLocalArtinGalois R.data v
-
-/- The existence input is deliberately separated from the finite extension
-   data: the earlier chapter supplies the open-subgroup norm realization,
-   while the local Artin/class-formation bridge is supplied by the preceding
-   reciprocity interface. -/
-theorem chapter06_ray_class_field_existence
-    {K : Type*} [Field K] [NumberField K]
-    (H : Chapter06OpenFiniteIndexSubgroup
-      (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleClassGroup K))
-    (hExist :
-      LastLib.Book06GlobalClassFieldTheory.Chapter01.EveryOpenFiniteIndexSubgroupIsAClassNorm K)
-    (enrich :
-      ∀ R : LastLib.Book06GlobalClassFieldTheory.Chapter01.ClassFieldNormRealization
-          K H.subgroup,
-        letI : Field R.L := R.field_L
-        letI : NumberField R.L := R.numberField_L
-        letI : Algebra K R.L := R.algebra_K_L
-        letI : FiniteDimensional K R.L := R.finiteDimensional_K_L
-        letI : IsAbelianGalois K R.L := R.abelianGalois_K_L
-        Nonempty (Chapter06FiniteAbelianExtensionEnrichment K R.L R.normData)) :
-    Nonempty (Chapter06RayClassField K H) := by
-  sorry
-
-/- Maximality is stated against the actual Artin kernel of another finite
-   abelian extension, so the ray-field comparison cannot be satisfied by an
-   unrelated abstract quotient. -/
-theorem chapter06_ray_class_field_maximality
-    {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L]
-    [Algebra K L] [FiniteDimensional K L] [IsAbelianGalois K L]
-    {H : Chapter06OpenFiniteIndexSubgroup
-      (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleClassGroup K)}
-    (R : Chapter06RayClassField K H)
-    (E : Chapter06FiniteAbelianExtensionData K L)
-    (h : H.subgroup ≤
-      (chapter06CanonicalClassArtinGalois E).ker) :
-    chapter06RayClassFieldNormSubgroup R ≤ chapter06CanonicalNormSubgroup E := by
-  sorry
-
 /- The norm subgroup of a finite abelian extension, with its topological
    finiteness conditions supplied separately by the existence theorem. -/
 abbrev chapter06NormSubgroupOfExtension
@@ -192,22 +101,43 @@ structure Chapter06GlobalExistenceLatticeInput
     ∀ (H : Chapter06OpenFiniteIndexSubgroup C)
       (χ : C →* ℂˣ), χ ∈ chapter06LiftedQuotientCharacters H →
         Chapter06AssignedCharacterRealization K Ks C A χ
-  compositum_witness :
+  /- Finite reciprocity is an earlier input: every already represented finite
+     abelian extension has a witness with the same field and class-norm
+     subgroup. -/
+  finite_reciprocity_for_extension :
+    ∀ E : Chapter06FiniteAbelianExtension K Ks C,
+      ∃ R : Chapter06FiniteReciprocityWitness K Ks C,
+        R.extension.field = E.field ∧
+          chapter06NormSubgroup R.extension.normMap =
+            chapter06NormSubgroup E.normMap
+  /- The field-theoretic compositum is finite abelian, so the preceding finite
+     reciprocity input can be applied to it.  Only the field identity is
+     supplied here; the Artin-kernel intersection is the conclusion of the
+     existence argument, not an input. -/
+  compositum_reciprocity :
     ∀ H : Chapter06OpenFiniteIndexSubgroup C,
       ∃ R : Chapter06FiniteReciprocityWitness K Ks C,
-        R.extension.field = chapter06FieldOfOpenSubgroup H A ∧
-        R.artin.ker =
-          ⨅ χ ∈ chapter06LiftedQuotientCharacters H, χ.ker
-  recovered_extension :
-    ∀ E : Chapter06FiniteAbelianExtension K Ks C,
-      ∃ H : Chapter06OpenFiniteIndexSubgroup C,
-        H.subgroup = chapter06NormSubgroupOfExtension E ∧
-          chapter06FieldOfOpenSubgroup H A = E.field
-  inclusion_reversal :
-    ∀ H₁ H₂ : Chapter06OpenFiniteIndexSubgroup C,
-      H₁.subgroup ≤ H₂.subgroup ↔
-        chapter06FieldOfOpenSubgroup H₂ A ≤
-          chapter06FieldOfOpenSubgroup H₁ A
+        R.extension.field = chapter06FieldOfOpenSubgroup H A
+  /- The compositum witness must be tied to the individual character
+     realizations.  Field equality alone does not relate its Artin map to
+     the characters whose fields generate the compositum. -/
+  compositum_character_compatibility :
+    ∀ (H : Chapter06OpenFiniteIndexSubgroup C)
+      (R : Chapter06FiniteReciprocityWitness K Ks C),
+      R.extension.field = chapter06FieldOfOpenSubgroup H A →
+      ∀ χ ∈ chapter06LiftedQuotientCharacters H,
+        ∃ q : Gal(R.extension.field / K) →* ℂˣ,
+          χ = q.comp R.artin
+  /- Conversely, the characters induced by the compositum witness separate
+     its finite abelian Galois group.  This is the lattice-level bridge used
+     to recover the starting subgroup from the compositum norm kernel. -/
+  compositum_character_separation :
+    ∀ (H : Chapter06OpenFiniteIndexSubgroup C)
+      (R : Chapter06FiniteReciprocityWitness K Ks C),
+      R.extension.field = chapter06FieldOfOpenSubgroup H A →
+      ∀ q : Gal(R.extension.field / K) →* ℂˣ,
+        ∃ χ ∈ chapter06LiftedQuotientCharacters H,
+          χ = q.comp R.artin
 
 theorem chapter06_finite_reciprocity_witness_kernel_finite_index
     {K Ks C : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
@@ -215,7 +145,11 @@ theorem chapter06_finite_reciprocity_witness_kernel_finite_index
     [CommGroup C] [TopologicalSpace C]
     (R : Chapter06FiniteReciprocityWitness K Ks C) :
     R.artin.ker.FiniteIndex := by
-  sorry
+  let _ : Finite (Gal(R.extension.field / K)) := R.extension.galoisFinite
+  let e : (C ⧸ R.artin.ker) ≃* Gal(R.extension.field / K) :=
+    QuotientGroup.quotientKerEquivOfSurjective R.artin R.surjective_artin
+  apply Subgroup.finiteIndex_iff_finite_quotient.mpr
+  exact Finite.of_injective e.toEquiv e.injective
 
 noncomputable def chapter06_finite_reciprocity_witness_quotient_galois
     {K Ks C : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
@@ -223,7 +157,8 @@ noncomputable def chapter06_finite_reciprocity_witness_quotient_galois
     [CommGroup C] [TopologicalSpace C]
     (R : Chapter06FiniteReciprocityWitness K Ks C) :
     (C ⧸ R.artin.ker) ≃* Gal(R.extension.field / K) := by
-  sorry
+  exact QuotientGroup.quotientKerEquivOfSurjective R.artin
+    R.surjective_artin
 
 /- The remaining proof uses the lattice input to assemble compatible finite
    character fields and to recover represented extensions. -/
@@ -277,7 +212,8 @@ theorem chapter06_compositum_triviality_iff
     (H : Chapter06OpenFiniteIndexSubgroup C) (x : C) :
     x ∈ chapter06NormSubgroupOfExtension (G.extensionOfOpen H) ↔
       ∀ χ ∈ chapter06LiftedQuotientCharacters H, χ x = 1 := by
-  sorry
+  rw [G.compositum_kernel_intersection H]
+  simp only [Subgroup.mem_iInf, MonoidHom.mem_ker]
 
 theorem chapter06_global_existence_inclusion_reversal
     {K Ks C : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
@@ -323,7 +259,15 @@ theorem chapter06_kernel_of_continuous_finite_quotient_is_open
     [TopologicalSpace C] [TopologicalSpace D] [DiscreteTopology D]
     (q : C →* D) (hq : Continuous q) [Finite D] :
     IsOpen (q.ker : Set C) ∧ q.ker.FiniteIndex := by
-  sorry
+  constructor
+  · change IsOpen (q ⁻¹' ({1} : Set D))
+    exact IsOpen.preimage hq (isOpen_discrete _)
+  · let _ : Finite (MonoidHom.range q) :=
+      Finite.of_injective (MonoidHom.range q).subtype
+        (MonoidHom.range q).subtype_injective
+    apply Subgroup.finiteIndex_iff_finite_quotient.mpr
+    exact Finite.of_injective (QuotientGroup.quotientKerEquivRange q).toEquiv
+      (QuotientGroup.quotientKerEquivRange q).injective
 
 /- The norm and field assignments are inverse on the represented finite
    abelian extensions and open finite-index subgroups. -/

@@ -1,4 +1,6 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section03CompletionSeparatesBranches
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section01WhyTowerFormulasMatter
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section07ConcreteFiniteExtensions
+import Mathlib.FieldTheory.LinearDisjoint
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03
 
@@ -48,8 +50,47 @@ theorem chapter03_separable_scalar_extension_has_field_factors
     ∃ (I : Type (max uK (max uL uKp))) (_ : Finite I)
       (F : I → Type (max uK (max uL uKp)))
       (_ : ∀ i, Field (F i))
-      (_ : ∀ i, Algebra K' (F i)),
+      (_ : ∀ i, Algebra K' (F i))
+      (_ : ∀ i, FiniteDimensional K' (F i)),
       Nonempty (chapter03ScalarExtension K L K' ≃ₐ[K'] (∀ i, F i)) := by
+  sorry
+
+/- A factor of a scalar extension is an algebra over the new base field.  This
+interface is kept separate from the self-base-change factor above, whose new
+base happens to be `L`. -/
+def chapter03ScalarExtensionFieldFactor
+    (K L K' F : Type*) [CommRing K] [CommRing L] [CommRing K'] [Field F]
+    [Algebra K L] [Algebra K K'] [Algebra K' F] : Prop :=
+  letI : Algebra K' (chapter03ScalarExtension K L K') :=
+    Algebra.TensorProduct.rightAlgebra
+  ∃ φ : chapter03ScalarExtension K L K' →ₐ[K'] F, Function.Surjective φ
+
+/- The residue-field etale factorization lifts to the local statement: after
+an unramified extension, every field factor remains unramified. -/
+theorem chapter03_unramified_scalar_extension_field_factor_is_unramified
+    (K L K' F Γ : Type*) [Field K] [Field L] [Field K'] [Field F]
+    [LinearOrderedCommGroupWithZero Γ]
+    [Algebra K L] [Algebra K K'] [Algebra K' F] [Algebra K F]
+    [IsScalarTower K K' F]
+    [FiniteDimensional K L] [FiniteDimensional K K']
+    [FiniteDimensional K' F]
+    (vK : Valuation K Γ) (vL : Valuation L Γ)
+    (vK' : Valuation K' Γ) (vF : Valuation F Γ)
+    [vK.HasExtension vL] [vK.HasExtension vK'] [vK'.HasExtension vF]
+    [Valuation.IsRankOneDiscrete vK]
+    [Valuation.IsRankOneDiscrete vL]
+    [Valuation.IsRankOneDiscrete vK']
+    [Valuation.IsRankOneDiscrete vF]
+    (hcomplete : IsAdicComplete
+      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
+    (hunramified :
+      chapter03RamificationIndex vK vL = 1 ∧
+        LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ResidueExtensionIsSeparable
+          vK vL)
+    (hfactor : chapter03ScalarExtensionFieldFactor K L K' F) :
+    chapter03RamificationIndex vK' vF = 1 ∧
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ResidueExtensionIsSeparable
+        vK' vF := by
   sorry
 
 /-- A finite factor over a complete rank-one base has a unique local
@@ -121,7 +162,6 @@ theorem chapter03_totally_ramified_extension_after_unramified_base_change
     [LinearOrderedCommGroupWithZero Γ] [Algebra K Ω]
     (L K' : IntermediateField K Ω)
     [FiniteDimensional K L] [FiniteDimensional K K']
-    [IsGalois K K']
     (vK : Valuation K Γ)
     (vL : Valuation (↥L) Γ)
     (vK' : Valuation (↥K') Γ)
@@ -135,17 +175,21 @@ theorem chapter03_totally_ramified_extension_after_unramified_base_change
     [Valuation.IsRankOneDiscrete vL]
     [Valuation.IsRankOneDiscrete vK']
     [Valuation.IsRankOneDiscrete vC]
-    [PerfectField (IsLocalRing.ResidueField vK.valuationSubring)]
     [FiniteDimensional (↥L) (↥(chapter03BaseChangeCompositum L K'))]
     [FiniteDimensional (↥K') (↥(chapter03BaseChangeCompositum L K'))]
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
     (hL_total : chapter03ResidueDegree vK vL = 1)
-    (hK'_unramified : chapter03RamificationIndex vK vK' = 1) :
+    (hK'_unramified :
+      chapter03RamificationIndex vK vK' = 1 ∧
+        LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ResidueExtensionIsSeparable
+          vK vK') :
     (L ⊓ K' = ⊥) ∧
       L.LinearDisjoint K' ∧
       chapter03ResidueDegree vK' vC = 1 ∧
-      chapter03RamificationIndex vL vC = 1 := by
+      (chapter03RamificationIndex vL vC = 1 ∧
+        LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ResidueExtensionIsSeparable
+          vL vC) := by
   sorry
 
 end

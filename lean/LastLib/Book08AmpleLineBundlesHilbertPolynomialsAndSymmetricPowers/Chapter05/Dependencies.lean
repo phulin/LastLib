@@ -18,6 +18,7 @@ import Mathlib.AlgebraicGeometry.Restrict
 import Mathlib.RingTheory.Flat.FaithfullyFlat.Descent
 import Mathlib.RingTheory.RingHom.Flat
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Dependencies
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Section05TensorPowersAndOperations
 
 /-!
 # Chapter 5: base change and descent
@@ -96,15 +97,19 @@ theorem LineBundle.pullback_sheaf {X Y : Scheme.{u}} (L : LineBundle Y) (f : X �
     (L.pullback f).sheaf = (Scheme.Modules.pullback f).obj L.sheaf := rfl
 
 theorem lineBundle_pullback_id {X : Scheme.{u}} (L : LineBundle X) :
-    (L.pullback (𝟙 X)).Isomorphic L := by sorry
+    (L.pullback (𝟙 X)).Isomorphic L := by
+  exact ⟨(Scheme.Modules.pullbackId X).app L.sheaf⟩
 
 theorem lineBundle_pullback_comp {X Y Z : Scheme.{u}} (L : LineBundle Z)
     (f : X ⟶ Y) (g : Y ⟶ Z) :
-    ((L.pullback g).pullback f).Isomorphic (L.pullback (f ≫ g)) := by sorry
+    ((L.pullback g).pullback f).Isomorphic (L.pullback (f ≫ g)) := by
+  exact ⟨(Chapter04.chapter04PullbackCompositionIso f g L.sheaf).symm⟩
 
 theorem lineBundle_isomorphic_pullback {X Y : Scheme.{u}} {L M : LineBundle Y}
     (hLM : L.Isomorphic M) (f : X ⟶ Y) :
-    (L.pullback f).Isomorphic (M.pullback f) := by sorry
+    (L.pullback f).Isomorphic (M.pullback f) := by
+  rcases hLM with ⟨e⟩
+  exact ⟨(Scheme.Modules.pullback f).mapIso e⟩
 
 noncomputable def LineBundle.tensorPower {X : Scheme.{u}} (L : LineBundle X) (n : ℕ) :
     LineBundle X :=
@@ -126,7 +131,114 @@ structure LineBundlePowers {X : Scheme.{u}} (L : LineBundle X) where
 noncomputable def LineBundlePowers.pullback {X Y : Scheme.{u}} {L : LineBundle Y}
     (P : LineBundlePowers L) (f : X ⟶ Y) : LineBundlePowers (L.pullback f) where
   power n := (P.power n).pullback f
-  power_iso := by sorry
+  power_iso := by
+    intro n
+    exact lineBundle_isomorphic_trans
+      (lineBundle_isomorphic_pullback (P.power_iso n) f)
+      (lineBundle_pullback_tensorPower L f n)
+
+noncomputable def chapter04QuotientClassMapEquiv
+    {S : Scheme.{u}} {E F : S.Modules} (e : E ≅ F) :
+    Chapter04.Chapter04InvertibleQuotientClass E ≃
+      Chapter04.Chapter04InvertibleQuotientClass F := by
+  let forward :
+      Chapter04.Chapter04InvertibleQuotientClass E →
+        Chapter04.Chapter04InvertibleQuotientClass F :=
+    Quotient.lift
+      (fun p => Chapter04.chapter04QuotientClassMk
+        { line := p.line
+          quotient := e.inv ≫ p.quotient
+          quotient_is_epi := by
+            exact epi_comp' (by infer_instance) p.quotient_is_epi }) (by
+        intro p q hp
+        apply Quotient.sound
+        obtain ⟨a, ha⟩ := hp
+        refine ⟨a, ?_⟩
+        change (e.inv ≫ p.quotient) ≫ a.hom = e.inv ≫ q.quotient
+        rw [Category.assoc, ha])
+  let backward :
+      Chapter04.Chapter04InvertibleQuotientClass F →
+        Chapter04.Chapter04InvertibleQuotientClass E :=
+    Quotient.lift
+      (fun p => Chapter04.chapter04QuotientClassMk
+        { line := p.line
+          quotient := e.hom ≫ p.quotient
+          quotient_is_epi := by
+            exact epi_comp' (by infer_instance) p.quotient_is_epi }) (by
+        intro p q hp
+        apply Quotient.sound
+        obtain ⟨a, ha⟩ := hp
+        refine ⟨a, ?_⟩
+        change (e.hom ≫ p.quotient) ≫ a.hom = e.hom ≫ q.quotient
+        rw [Category.assoc, ha])
+  exact
+    { toFun := forward
+      invFun := backward
+      left_inv := by
+        intro p
+        refine Quotient.inductionOn p (fun q => ?_)
+        apply Quotient.sound
+        refine ⟨Iso.refl _, ?_⟩
+        simp
+      right_inv := by
+        intro p
+        refine Quotient.inductionOn p (fun q => ?_)
+        apply Quotient.sound
+        refine ⟨Iso.refl _, ?_⟩
+        simp }
+
+theorem chapter04PullbackQuotientClassAlong_mapEquiv
+    {S T U : Scheme.{u}} (f : T ⟶ S) (h : U ⟶ T)
+    {E F : S.Modules} (e : E ≅ F)
+    (q : Chapter04.Chapter04InvertibleQuotientClass
+      ((Scheme.Modules.pullback f).obj E)) :
+    Chapter04.chapter04PullbackQuotientClassAlong f h
+        (chapter04QuotientClassMapEquiv ((Scheme.Modules.pullback f).mapIso e) q) =
+      chapter04QuotientClassMapEquiv
+        ((Scheme.Modules.pullback (h ≫ f)).mapIso e)
+        (Chapter04.chapter04PullbackQuotientClassAlong f h q) := by
+  refine Quotient.inductionOn q (fun p => ?_)
+  apply Quotient.sound
+  refine ⟨Iso.refl _, ?_⟩
+  change
+    ((Chapter04.chapter04PullbackCompositionIso h f F).hom ≫
+        (Scheme.Modules.pullback h).map
+          ((Scheme.Modules.pullback f).map e.inv ≫ p.quotient)) ≫ (Iso.refl _).hom =
+      (Scheme.Modules.pullback (h ≫ f)).map e.inv ≫
+        (Chapter04.chapter04PullbackCompositionIso h f E).hom ≫
+          (Scheme.Modules.pullback h).map p.quotient
+  simp only [Iso.refl_hom, Category.comp_id]
+  have hn :
+      (Scheme.Modules.pullback (h ≫ f)).map e.inv ≫
+          (Chapter04.chapter04PullbackCompositionIso h f E).hom =
+        (Chapter04.chapter04PullbackCompositionIso h f F).hom ≫
+          (Scheme.Modules.pullback h).map ((Scheme.Modules.pullback f).map e.inv) := by
+    exact (Scheme.Modules.pullbackComp h f).inv.naturality e.inv
+  rw [(Scheme.Modules.pullback h).map_comp, ← Category.assoc, ← hn]
+  simp only [Category.assoc]
+
+noncomputable def chapter04BaseChangePointEquiv
+    {S T U : Scheme.{u}} (P : Chapter04.Chapter04ProjectiveBundle S)
+    (g : T ⟶ S) (f : U ⟶ T) :
+    {u : U ⟶ pullback P.projection g // u ≫ pullback.snd P.projection g = f} ≃
+      {v : U ⟶ P.space // v ≫ P.projection = f ≫ g} :=
+  { toFun := fun u =>
+      ⟨u.1 ≫ pullback.fst P.projection g, by
+        rw [Category.assoc, pullback.condition, ← Category.assoc, u.2]⟩
+    invFun := fun v =>
+      ⟨pullback.lift v.1 f v.2, pullback.lift_snd _ _ _⟩
+    left_inv := by
+      intro u
+      apply Subtype.ext
+      apply pullback.hom_ext
+      · exact pullback.lift_fst _ _ _
+      · exact (pullback.lift_snd
+          (f := P.projection) (g := g)
+          (u.1 ≫ pullback.fst P.projection g) f _).trans u.2.symm
+    right_inv := by
+      intro v
+      apply Subtype.ext
+      exact pullback.lift_fst _ _ _ }
 
 /- Reuse the preceding chapter's projective-bundle interface.  In particular, the ambient object
 carries the finite locally free module, its structure morphism, and its tautological line bundle;
@@ -152,12 +264,46 @@ noncomputable def RelativeProjectiveBundleData.baseChange
   tautological :=
     (Scheme.Modules.pullback
       (pullback.fst (Chapter04.Chapter04ProjectiveBundle.projection P) g)).obj P.tautological
-  tautological_isInvertible := by sorry
-  universalQuotient := by sorry
-  universalQuotient_is_epi := by sorry
-  universal_equiv := by sorry
+  tautological_isInvertible := by
+    exact (Chapter04.chapter04PullbackLineBundle
+      (pullback.fst (Chapter04.Chapter04ProjectiveBundle.projection P) g)
+      { sheaf := P.tautological
+        isInvertible := P.tautological_isInvertible }).isInvertible
+  universalQuotient :=
+    (Chapter04.chapter04PullbackCompositionIso
+        (pullback.snd (Chapter04.Chapter04ProjectiveBundle.projection P) g) g P.E).inv ≫
+      (Scheme.Modules.pullbackCongr
+        (f := pullback.snd (Chapter04.Chapter04ProjectiveBundle.projection P) g ≫ g)
+        (g := pullback.fst (Chapter04.Chapter04ProjectiveBundle.projection P) g ≫
+          Chapter04.Chapter04ProjectiveBundle.projection P)
+        pullback.condition.symm).hom.app P.E ≫
+      (Chapter04.chapter04PullbackCompositionIso
+          (pullback.fst (Chapter04.Chapter04ProjectiveBundle.projection P) g)
+          (Chapter04.Chapter04ProjectiveBundle.projection P) P.E).hom ≫
+      (Scheme.Modules.pullback
+        (pullback.fst (Chapter04.Chapter04ProjectiveBundle.projection P) g)).map
+        P.universalQuotient
+  universalQuotient_is_epi := by
+    let _ : Epi ((Scheme.Modules.pullback
+        (pullback.fst (Chapter04.Chapter04ProjectiveBundle.projection P) g)).map
+        P.universalQuotient) :=
+      @Functor.map_epi _ _ _ _
+        (Scheme.Modules.pullback
+          (pullback.fst (Chapter04.Chapter04ProjectiveBundle.projection P) g))
+        (Functor.preservesEpimorphisms_of_adjunction
+          (Scheme.Modules.pullbackPushforwardAdjunction
+            (pullback.fst (Chapter04.Chapter04ProjectiveBundle.projection P) g)))
+        _ _ P.universalQuotient P.universalQuotient_is_epi
+    infer_instance
+  universal_equiv := by
+    intro U f
+    exact (chapter04BaseChangePointEquiv P g f).trans
+      ((P.universal_equiv (f ≫ g)).trans
+        (chapter04QuotientClassMapEquiv
+          (Chapter04.chapter04PullbackCompositionIso f g P.E)))
   universal_natural := by sorry
-  projection_isProper := by sorry
+  projection_isProper := by
+    infer_instance
 
 def IsFiniteDimensionalLocallyOnBase {S : Scheme.{u}}
     (P : RelativeProjectiveBundleData S) : Prop :=
@@ -207,11 +353,27 @@ abbrev IsAmple {X S : Scheme.{u}} (f : X ⟶ S) (L : LineBundle X) : Prop :=
 
 theorem isVeryAmple_congr {X S : Scheme.{u}} (f : X ⟶ S)
     {L M : LineBundle X} (hLM : L.Isomorphic M) :
-    IsVeryAmple f L ↔ IsVeryAmple f M := by sorry
+    IsVeryAmple f L ↔ IsVeryAmple f M := by
+  constructor
+  · rintro ⟨w⟩
+    rcases hLM with ⟨e⟩
+    refine ⟨{ projectiveBundle := w.projectiveBundle
+              map := w.map
+              immersion := w.immersion
+              over := w.over
+              pullback_iso := e.symm ≪≫ w.pullback_iso }⟩
+  · rintro ⟨w⟩
+    rcases hLM with ⟨e⟩
+    refine ⟨{ projectiveBundle := w.projectiveBundle
+              map := w.map
+              immersion := w.immersion
+              over := w.over
+              pullback_iso := e ≪≫ w.pullback_iso }⟩
 
 theorem isAmple_congr {X S : Scheme.{u}} (f : X ⟶ S)
     {L M : LineBundle X} (hLM : L.Isomorphic M) :
-    IsAmple f L ↔ IsAmple f M := by sorry
+    IsAmple f L ↔ IsAmple f M := by
+  exact Chapter04.chapter04_ample_iff_of_lineBundleIsomorphic f hLM
 
 noncomputable def baseChange {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S) : Scheme.{u} :=
   pullback f g

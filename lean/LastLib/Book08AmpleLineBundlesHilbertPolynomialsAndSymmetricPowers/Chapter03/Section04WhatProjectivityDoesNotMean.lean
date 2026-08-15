@@ -1,3 +1,4 @@
+import Mathlib.Algebra.Field.ULift
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter03.Section02ElementaryPermanenceProperties
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter03.Section03SeparatednessFiniteTypeAndProperness
 
@@ -20,7 +21,8 @@ variable {X S T : Scheme.{u}}
 
 /-- Projectivity over a projective base composes to projectivity over the smaller base. -/
 theorem chapter03_projective_over_projective_base (f : X ⟶ S) (g : S ⟶ T)
-    (hf : chapter03Projective f) (hg : chapter03Projective g) :
+    (hf : chapter03Projective f) (hg : chapter03Projective g)
+    [QuasiCompact (𝟙 T)] [QuasiSeparated (𝟙 T)] :
     chapter03Projective (f ≫ g) :=
   chapter03_projective_comp f g hf hg
 
@@ -78,7 +80,13 @@ def chapter03ProjectivityCanDependOnBase : Prop :=
 
 theorem chapter03_projectivity_can_depend_on_base :
     chapter03ProjectivityCanDependOnBase := by
-  sorry
+  let k := ULift ℚ
+  let A := chapter03AffineLine k
+  let B := Spec (CommRingCat.of k)
+  refine ⟨A, A, B, 𝟙 A, chapter03AffineLineProjection k, ?_, ?_, ?_⟩
+  · exact chapter03_closedImmersion_projective (𝟙 A)
+  · simpa using chapter03_affineLine_not_projective k
+  · exact chapter03_affineLine_not_projective k
 
 /-- Fiberwise projectivity means projectivity after passage to every residue-field fiber. -/
 def chapter03FiberwiseProjective (f : X ⟶ S) : Prop :=
@@ -97,7 +105,34 @@ def chapter03FiberwiseProjectivityIsInsufficient : Prop :=
 
 theorem chapter03_fiberwiseProjectivity_is_insufficient :
     chapter03FiberwiseProjectivityIsInsufficient := by
-  sorry
+  let k := ULift.{u} ℚ
+  let B := Spec (CommRingCat.of k)
+  obtain ⟨j, hj, hbase⟩ :=
+    chapter03_affineSpace_openImmersion_into_projectiveSpace B 1
+  have hp : chapter03Projective (chapter03ProjectiveSpaceProjection B 1) := by
+    apply chapter03_projective_of_presentation
+      (chapter03ProjectiveSpaceProjection B 1)
+      (chapter03TrivialModule B 1)
+      (chapter03_trivialModule_finiteLocallyFree B 1)
+      (chapter03ProjectiveSpaceBundle B 1) (𝟙 _)
+    · dsimp [chapter03ProjectiveSpace]
+      infer_instance
+    · simp [chapter03ProjectiveSpaceProjection, chapter03ProjectiveSpace]
+  refine ⟨chapter03AffineSpace B 1, chapter03ProjectiveSpace B 1, j, ?_, ?_⟩
+  · letI : IsOpenImmersion j := hj
+    intro s
+    have hci : IsClosedImmersion (j.fiberToSpecResidueField s) := by
+      apply IsClosedImmersion.of_isPreimmersion
+      · infer_instance
+      · exact isClosed_discrete _
+    letI : IsClosedImmersion (j.fiberToSpecResidueField s) := hci
+    exact chapter03_closedImmersion_projective _
+  · intro hproj
+    have hcomp := chapter03_projective_comp j
+      (chapter03ProjectiveSpaceProjection B 1) hproj hp
+    rw [hbase] at hcomp
+    apply chapter03_affineLine_not_projective k
+    simpa [chapter03AffineLine, chapter03AffineLineProjection, B] using hcomp
 
 /-- Properness alone does not force projectivity in general. -/
 def chapter03ProperNeedNotBeProjective : Prop :=

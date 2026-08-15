@@ -39,7 +39,8 @@ theorem chapter05FiniteReciprocityMap_kernel
     [Fintype (Gal(L / K))]
     (D : Chapter05LocalClassFormationData K L) :
     (chapter05FiniteReciprocityMap D).ker = chapter05NormSubgroup K L := by
-  sorry
+  ext x
+  simp [chapter05FiniteReciprocityMap]
 
 theorem chapter05FiniteReciprocityMap_surjective
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -47,7 +48,11 @@ theorem chapter05FiniteReciprocityMap_surjective
     [Fintype (Gal(L / K))]
     (D : Chapter05LocalClassFormationData K L) :
     Function.Surjective (chapter05FiniteReciprocityMap D) := by
-  sorry
+  intro y
+  obtain ⟨z, rfl⟩ := (chapter05FiniteReciprocityIso D).surjective y
+  obtain ⟨x, rfl⟩ := QuotientGroup.mk'_surjective
+    (chapter05NormSubgroup K L) z
+  exact ⟨x, rfl⟩
 
 /- The local-field input is carried by the earlier valuation and residue-field
 interfaces.  In particular, the reduction equivalence is part of the data, so
@@ -106,12 +111,41 @@ noncomputable def Chapter05UnramifiedExtensionData.arithmeticFrobenius
   LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.chapter06UnramifiedArithmeticFrobenius
     U.reduction
 
+/- The quotient equivalence supplied by the class-formation data and the
+   residue-field equivalence supplied by `U` are independent choices.  This
+   bridge is the missing normalization datum: it identifies the canonical
+   finite-Artin quotient map with the arithmetic Frobenius selected by `U`.
+   Keeping it separate from `D` is important, since `D` is also used for
+   ramified extensions, where no unramified Frobenius datum is present. -/
+structure Chapter05FiniteReciprocityNormalization
+    {K L : Type} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L]
+    [Fintype (Gal(L / K))]
+    (D : Chapter05LocalClassFormationData K L)
+    (U : Chapter05UnramifiedExtensionData K L) where
+  quotient_uniformizer :
+    chapter05FiniteArtinQuotientEquiv D
+        (QuotientGroup.mk' (chapter05NormSubgroup K L) U.uniformizer) =
+      chapter05AbelianizationMap (Gal(L / K)) U.arithmeticFrobenius
+
+theorem chapter05FiniteReciprocityNormalization.artin_uniformizer
+    {K L : Type} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L]
+    [Fintype (Gal(L / K))]
+    (D : Chapter05LocalClassFormationData K L)
+    (U : Chapter05UnramifiedExtensionData K L)
+    (N : Chapter05FiniteReciprocityNormalization D U) :
+    chapter05FiniteArtinMap D U.uniformizer =
+      chapter05AbelianizationMap (Gal(L / K)) U.arithmeticFrobenius := by
+  simpa [chapter05FiniteArtinMap] using N.quotient_uniformizer
+
 theorem chapter05_unramified_uniformizer_is_arithmetic_frobenius
     {K L : Type} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [Fintype (Gal(L / K))]
     (D : Chapter05LocalClassFormationData K L)
-    (U : Chapter05UnramifiedExtensionData K L) :
+    (U : Chapter05UnramifiedExtensionData K L)
+    (N : Chapter05FiniteReciprocityNormalization D U) :
     chapter05FiniteReciprocityMap D U.uniformizer = U.arithmeticFrobenius := by
   sorry
 
@@ -120,10 +154,11 @@ theorem chapter05_unramified_uniformizer_is_arithmetic_frobenius_in_abelianizati
     [FiniteDimensional K L] [IsGalois K L]
     [Fintype (Gal(L / K))]
     (D : Chapter05LocalClassFormationData K L)
-    (U : Chapter05UnramifiedExtensionData K L) :
+    (U : Chapter05UnramifiedExtensionData K L)
+    (N : Chapter05FiniteReciprocityNormalization D U) :
     chapter05FiniteArtinMap D U.uniformizer =
     chapter05AbelianizationMap (Gal(L / K)) U.arithmeticFrobenius := by
-  sorry
+  exact chapter05FiniteReciprocityNormalization.artin_uniformizer D U N
 
 structure Chapter05FiniteReciprocityCompatibility
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -134,11 +169,22 @@ structure Chapter05FiniteReciprocityCompatibility
   /- The finite reciprocity map is already the map obtained from the chosen
      fundamental class.  Compatibility is therefore equality of the induced
      maps on the norm quotient, rather than an uninformative placeholder
-     proposition or the stronger definitional equality `e = ...`. -/
+     proposition or the stronger definitional equality `e = ...`.  The
+     arithmetic-Frobenius clause is kept in the fixed-level structure below:
+     it needs an explicit bridge to the independently chosen residue data. -/
   fundamental_class_compatibility :
     e.toMonoidHom.comp (QuotientGroup.mk' (chapter05NormSubgroup K L)) =
       chapter05FiniteReciprocityMap D
-  unramified_frobenius : ∀ U : Chapter05UnramifiedExtensionData K L,
+
+structure Chapter05FiniteReciprocityCompatibilityAtUnramified
+    {K L : Type} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    [Fintype (Gal(L / K))]
+    (D : Chapter05LocalClassFormationData K L)
+    (e : chapter05NormQuotient K L ≃* Gal(L / K))
+    (U : Chapter05UnramifiedExtensionData K L) where
+  base : Chapter05FiniteReciprocityCompatibility D e
+  unramified_frobenius :
     e (QuotientGroup.mk' (chapter05NormSubgroup K L) U.uniformizer) =
       U.arithmeticFrobenius
 
@@ -149,6 +195,17 @@ theorem chapter05_finite_local_reciprocity
     (D : Chapter05LocalClassFormationData K L) :
     ∃! e : chapter05NormQuotient K L ≃* Gal(L / K),
       Chapter05FiniteReciprocityCompatibility D e := by
+  sorry
+
+theorem chapter05_finite_local_reciprocity_at_unramified
+    {K L : Type} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    [Fintype (Gal(L / K))]
+    (D : Chapter05LocalClassFormationData K L)
+    (U : Chapter05UnramifiedExtensionData K L)
+    (N : Chapter05FiniteReciprocityNormalization D U) :
+    ∃! e : chapter05NormQuotient K L ≃* Gal(L / K),
+      Chapter05FiniteReciprocityCompatibilityAtUnramified D e U := by
   sorry
 
 /- The source deliberately defers the precise quotient and tower diagrams to

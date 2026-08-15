@@ -67,8 +67,6 @@ theorem chapter05_two_break_herbrand_formula
     {G : Type*} [Group G] [Fintype G]
     (H : Subgroup G) [H.Normal]
     (D : Chapter05TwoBreakData G H)
-    (_hintegrable : ∀ a' b' : ℝ,
-      IntervalIntegrable (chapter05HerbrandSlope D.profile) volume a' b')
     (u : ℝ) :
     chapter05HerbrandFunction D.profile u =
       chapter05TwoBreakHerbrand D.p D.a D.b u := by
@@ -262,11 +260,7 @@ theorem chapter05_two_break_upper_breaks
       chapter05HerbrandFunction D.profile x =
         chapter05TwoBreakHerbrand D.p D.a D.b x := by
     intro x
-    exact chapter05_two_break_herbrand_formula H D (volume := 0)
-      (by
-        intro a' b'
-        exact (intervalIntegrable_iff).2
-          (_root_.MeasureTheory.IntegrableOn.of_measure_zero (by simp))) x
+    exact chapter05_two_break_herbrand_formula H D x
   have hF_le : ∀ {x : ℝ}, x ≤ (D.a : ℝ) →
       chapter05HerbrandFunction D.profile x = x := by
     intro x hx
@@ -868,17 +862,13 @@ theorem chapter05_two_break_tower_function_composition
     {G : Type*} [Group G] [Fintype G]
     (H : Subgroup G) [H.Normal]
     (T : Chapter05TwoBreakTowerData G H)
-    (hLK : Function.Bijective
-      (chapter05HerbrandFunction T.tower.quotientSetup.upstairs))
     (hLM : Function.Bijective
       (chapter05HerbrandFunction T.tower.subextension))
-    (hMK : Function.Bijective
-      (chapter05HerbrandFunction T.tower.quotientSetup.downstairs))
-    {u : ℝ} (hu : (-1 : ℝ) ≤ u) :
+    {u : ℝ} :
     chapter05HerbrandFunction T.tower.quotientSetup.upstairs u =
       chapter05HerbrandFunction T.tower.quotientSetup.downstairs
         (chapter05HerbrandFunction T.tower.subextension u) := by
-  exact chapter05_herbrand_tower_transitivity H T.tower hLK hLM hMK hu
+  exact chapter05_herbrand_tower_transitivity H T.tower hLM
 
 theorem chapter05_two_break_integral_second_label_implies_dvd
     (p a b : ℕ) (hp : 0 < p) (hab : a < b)

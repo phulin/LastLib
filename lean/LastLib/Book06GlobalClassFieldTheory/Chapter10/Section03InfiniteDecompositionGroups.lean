@@ -24,6 +24,9 @@ structure Chapter10LocalGlobalReciprocitySquare
   localEmbedding_injective : Function.Injective localEmbedding
   localReciprocity : Kvˣ →* Gv
   decompositionMap : Gv →* Gal(Kab / K)
+  /-- The chosen global abelian closure has an abelian Galois group. -/
+  global_target_commutative :
+    ∀ σ τ : Gal(Kab / K), σ * τ = τ * σ
   commutes :
     (decompositionMap.comp localReciprocity) =
       (chapter10GlobalArtinMap F).comp localEmbedding
@@ -94,7 +97,8 @@ structure Chapter10FinitePlaceReciprocityData
   globalInertia_le_decompositionGroup :
     globalInertia ≤ Chapter10LocalGlobalReciprocitySquare.decompositionGroup S
   units_map_to_inertia :
-    valuation.ker.map (Chapter10LocalGlobalReciprocitySquare.globalLocalArtin S) ≤ globalInertia
+    valuation.ker.map (Chapter10LocalGlobalReciprocitySquare.globalLocalArtin S) ≤
+      globalInertia
   arithmeticFrobenius : Gal(Kab / K) ⧸ globalInertia
   uniformizer_maps_to_arithmeticFrobenius :
     QuotientGroup.mk' globalInertia

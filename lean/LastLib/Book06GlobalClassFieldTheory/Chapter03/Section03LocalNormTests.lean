@@ -298,19 +298,22 @@ theorem chapter03_principal_idele_is_norm_iff_local_test
 theorem chapter03_local_reciprocity_kills_norm
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
-    [IsMulCommutative (Gal(L / K))]
     {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
     {N : Chapter03NormData S_K S_L}
     (A : Chapter03ArtinReciprocityData N) (v : Chapter03Place K)
     (w : Chapter03Place L) (hw : w ∈ N.above v)
     (x : (S_L.localFactor w).carrier) :
     A.localArtin v (N.localNorm v w x) = 1 := by
-  exact A.local_norm_trivial v w hw x
+  rw [A.localArtin_canonical v w hw]
+  rw [N.localNorm_canonical v w hw x]
+  rw [← A.localReciprocity_norm v w hw]
+  exact chapter03_abelianized_local_artin_kills_norm
+    (A.localDecompositionGroup v w).subtype (A.localReciprocity v w hw)
+      (S_L.canonicalFactor w x)
 
 theorem chapter03_artin_norm_idele
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
-    [IsMulCommutative (Gal(L / K))]
     {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
     {N : Chapter03NormData S_K S_L}
     (A : Chapter03ArtinReciprocityData N) (y : Chapter03Ideles S_L) :
@@ -323,12 +326,11 @@ theorem chapter03_artin_norm_idele
   rw [map_prod]
   apply Finset.prod_eq_one
   intro w hw
-  exact A.local_norm_trivial v w hw (y w)
+  exact chapter03_local_reciprocity_kills_norm A v w hw (y w)
 
 theorem chapter03_classNorm_range_le_artin_kernel
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
-    [IsMulCommutative (Gal(L / K))]
     {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
     {N : Chapter03NormData S_K S_L}
     (A : Chapter03ArtinReciprocityData N) :

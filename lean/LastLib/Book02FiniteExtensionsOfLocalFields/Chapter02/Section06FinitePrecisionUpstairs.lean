@@ -470,6 +470,79 @@ theorem base_precision_quotient_has_nonzero_nilpotent
     rw [← map_pow]
     exact Ideal.Quotient.eq_zero_iff_mem.mpr (Ideal.pow_mem_pow hπm r)
 
+/-- For `r > 1`, the upstairs base-precision quotient also has nonzero
+nilpotent thickness. -/
+theorem finite_precision_upstairs_quotient_has_nonzero_nilpotent
+    (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
+    [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
+    [Valuation.IsRankOneDiscrete vL] [FiniteDimensional K L]
+    [Module.Finite vK.valuationSubring vL.valuationSubring]
+    (r e : ℕ)
+    (hr : 1 < r)
+    (he : chapterRamificationIndex vK.valuationSubring vL.valuationSubring
+      (IsLocalRing.maximalIdeal vL.valuationSubring) = e) :
+    ∃ x : vL.valuationSubring ⧸
+        ((IsLocalRing.maximalIdeal vK.valuationSubring).map
+          (algebraMap vK.valuationSubring vL.valuationSubring)) ^ r,
+      x ≠ 0 ∧ IsNilpotent x := by
+  let A := vK.valuationSubring
+  let B := vL.valuationSubring
+  let mB := IsLocalRing.maximalIdeal B
+  let J : Ideal B := (IsLocalRing.maximalIdeal A).map (algebraMap A B)
+  have hJ : J ^ r = mB ^ (r * e) := by
+    exact finite_precision_ideal_power_formula vK vL r e he
+  have hepos : 0 < e := by
+    rw [← he]
+    unfold chapterRamificationIndex
+    exact Ideal.ramificationIdx_pos mB A
+  have hre : 1 < r * e := by
+    have htwo : 2 ≤ r * e := by
+      calc
+        2 = 2 * 1 := by simp
+        _ ≤ r * e := Nat.mul_le_mul hr hepos
+    exact lt_of_lt_of_le (by decide) htwo
+  obtain ⟨π, hπ⟩ :=
+    Valuation.exists_isUniformizer_of_isCyclic_of_nontrivial vL
+  have hπm : (π : B) ∈ mB := by
+    change (π : B) ∈ IsLocalRing.maximalIdeal vL.valuationSubring
+    rw [hπ.is_generator]
+    exact Ideal.mem_span_singleton_self _
+  have hπ0 : (π : B) ≠ 0 := by
+    intro h
+    apply hπ.ne_zero
+    exact congrArg Subtype.val h
+  let x : B ⧸ J ^ r := Ideal.Quotient.mk (J ^ r) π
+  refine ⟨x, ?_, ?_⟩
+  · intro hx
+    have hmem : (π : B) ∈ J ^ r :=
+      Ideal.Quotient.eq_zero_iff_mem.mp hx
+    rw [hJ] at hmem
+    change (π : B) ∈ (IsLocalRing.maximalIdeal vL.valuationSubring) ^ (r * e) at hmem
+    rw [hπ.is_generator, Ideal.span_singleton_pow,
+      Ideal.mem_span_singleton'] at hmem
+    obtain ⟨a, ha⟩ := hmem
+    have hpow : a * (π : B) ^ (r * e - 1) = 1 := by
+      refine (mul_left_cancel₀ hπ0) ?_
+      calc
+        (π : B) * (a * (π : B) ^ (r * e - 1)) =
+            a * (π : B) ^ (r * e) := by
+          calc
+            (π : B) * (a * (π : B) ^ (r * e - 1)) =
+                a * ((π : B) ^ (r * e - 1) * (π : B)) := by ac_rfl
+            _ = a * (π : B) ^ (r * e) := by
+              rw [← pow_succ, Nat.sub_add_cancel hre.le]
+        _ = (π : B) := ha
+        _ = (π : B) * 1 := by simp
+    have hunitpow : IsUnit ((π : B) ^ (r * e - 1)) :=
+      isUnit_iff_exists_inv'.mpr ⟨a, hpow⟩
+    have hunit : IsUnit (π : B) :=
+      (isUnit_pow_iff (Nat.sub_ne_zero_of_lt hre)).mp hunitpow
+    exact hπ.not_isUnit hunit
+  · refine ⟨r * e, ?_⟩
+    change (Ideal.Quotient.mk (J ^ r) (π : B)) ^ (r * e) = 0
+    rw [← map_pow]
+    exact Ideal.Quotient.eq_zero_iff_mem.mpr (hJ ▸ Ideal.pow_mem_pow hπm (r * e))
+
 /-- If `e > 1`, ramification makes the first upstairs quotient nonreduced. -/
 theorem ramified_first_quotient_has_nonzero_nilpotent
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)

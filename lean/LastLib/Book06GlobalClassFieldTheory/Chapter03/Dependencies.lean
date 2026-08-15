@@ -14,15 +14,21 @@ import Mathlib.RingTheory.Norm.Transitivity
 import Mathlib.Topology.Algebra.ContinuousMonoidHom
 import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Algebra.OpenSubgroup
+import Mathlib.Topology.Algebra.ProperAction.Basic
 import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
 import LastLib.Book06GlobalClassFieldTheory.Chapter01.Dependencies
+import LastLib.Book06GlobalClassFieldTheory.Chapter01.Section01OneGaloisActionSeenAtEveryPlace
+import LastLib.Book06GlobalClassFieldTheory.Chapter02.Dependencies
 
 namespace LastLib.Book06GlobalClassFieldTheory.Chapter03
 
 noncomputable section
 
+open LastLib.Book06GlobalClassFieldTheory.Chapter02
 open Filter Set
 open scoped BigOperators IsMulCommutative RestrictedProduct
+
+attribute [local instance] Algebra.TensorProduct.rightAlgebra
 
 universe uLocal
 
@@ -57,6 +63,14 @@ structure Chapter03LocalFactor where
 attribute [instance] Chapter03LocalFactor.group Chapter03LocalFactor.topology
   Chapter03LocalFactor.topologicalGroup Chapter03LocalFactor.locallyCompact
 
+/-- The restricted product attached to a chosen family of local factors.  It is kept
+separate from `Chapter03Ideles` so that the canonical comparison can be recorded in
+`Chapter03FieldIdeleData` without a circular structure reference. -/
+abbrev Chapter03RawIdeles
+    {K : Type*} [Field K] [NumberField K]
+    (localFactor : Chapter03Place K → Chapter03LocalFactor.{uLocal}) :=
+  Πʳ v : Chapter03Place K, [(localFactor v).carrier, (localFactor v).unit]
+
 /-- Local factors for a number field, including the diagonal embedding of global units. -/
 structure Chapter03FieldIdeleData (K : Type*) [Field K] [NumberField K] where
   localFactor : Chapter03Place K → Chapter03LocalFactor.{uLocal}
@@ -74,6 +88,45 @@ structure Chapter03FieldIdeleData (K : Type*) [Field K] [NumberField K] where
   unit_compact_cofinite :
     ∀ᶠ v in cofinite,
       IsCompact ((localFactor v).unit : Set (localFactor v).carrier)
+  /-- Comparison with the canonical place index from Chapter 1. -/
+  canonicalPlace : Chapter03Place K ≃
+    LastLib.Book06GlobalClassFieldTheory.Chapter01.BookPlace K
+  canonicalPlace_finitePlace_iff :
+    ∀ v, finitePlace v ↔
+      LastLib.Book06GlobalClassFieldTheory.Chapter01.bookPlaceIsFinite
+        (canonicalPlace v)
+  /-- Every local carrier is the canonical completed local unit group, with its topology. -/
+  canonicalFactor : ∀ v,
+    (localFactor v).carrier ≃*
+      (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookPlace.completion
+        (canonicalPlace v))ˣ
+  canonicalFactor_continuous : ∀ v, Continuous (canonicalFactor v)
+  canonicalFactor_inverse_continuous : ∀ v, Continuous (canonicalFactor v).symm
+  canonicalFactor_unit_iff : ∀ v (x : (localFactor v).carrier),
+    x ∈ (localFactor v).unit ↔
+      canonicalFactor v x ∈
+        (LastLib.Book06GlobalClassFieldTheory.Chapter01.bookPlaceUnitSubgroup
+          (canonicalPlace v) : Set
+            (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookPlace.completion
+              (canonicalPlace v))ˣ)
+  canonicalFactor_embedding : ∀ v (a : Units K),
+    canonicalFactor v (embedding v a) =
+      LastLib.Book06GlobalClassFieldTheory.Chapter01.bookPlaceUnitEmbedding
+        (canonicalPlace v) a
+  /-- The whole restricted product is topologically identified with the canonical idèles. -/
+  canonicalIdele : Chapter03RawIdeles localFactor ≃*
+    LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleGroup K
+  canonicalIdele_continuous : Continuous canonicalIdele
+  canonicalIdele_inverse_continuous : Continuous canonicalIdele.symm
+  canonicalIdele_component : ∀ (x : Chapter03RawIdeles localFactor) (v),
+    LastLib.Book06GlobalClassFieldTheory.Chapter01.bookIdeleUnitComponent
+        (canonicalIdele x) (canonicalPlace v) =
+      canonicalFactor v (x v)
+  canonicalIdele_principal : ∀ a : Units K,
+    canonicalIdele
+        (⟨fun v => embedding v a, embedding_eventually_mem_unit a⟩ :
+          Chapter03RawIdeles localFactor) =
+      LastLib.Book06GlobalClassFieldTheory.Chapter01.principalIdele a
 
 instance chapter03UnitOpenFact
     {K : Type*} [Field K] [NumberField K]
@@ -86,8 +139,7 @@ groups with respect to the integral-unit subgroups. -/
 abbrev Chapter03Ideles
     {K : Type*} [Field K] [NumberField K]
     (S : Chapter03FieldIdeleData K) :=
-  Πʳ v : Chapter03Place K,
-    [(S.localFactor v).carrier, (S.localFactor v).unit]
+  Chapter03RawIdeles S.localFactor
 
 instance chapter03IdelesCommGroup
     {K : Type*} [Field K] [NumberField K]
@@ -163,13 +215,71 @@ def chapter03PrincipalSubgroup
     (S : Chapter03FieldIdeleData K) : Subgroup (Chapter03Ideles S) :=
   (chapter03PrincipalIdeleHom S).range
 
-/- The diagonal is discrete and closed in the canonical idèles.  The abstract datum records
-this as a target until the comparison with the canonical adelic embedding is supplied. -/
-def chapter03PrincipalSubgroup_discrete_closed
+/- The diagonal is discrete and closed because the field datum now contains a topological
+comparison with the canonical idèles. -/
+theorem chapter03PrincipalSubgroup_discrete_closed
     {K : Type*} [Field K] [NumberField K]
-    (S : Chapter03FieldIdeleData K) : Prop :=
-  DiscreteTopology (chapter03PrincipalSubgroup S) ∧
-    IsClosed (chapter03PrincipalSubgroup S : Set (Chapter03Ideles S))
+    (S : Chapter03FieldIdeleData K) :
+    DiscreteTopology (chapter03PrincipalSubgroup S) ∧
+      IsClosed (chapter03PrincipalSubgroup S : Set (Chapter03Ideles S)) := by
+  have hcanonical :=
+    LastLib.Book06GlobalClassFieldTheory.Chapter01.principalIdele_discrete_closed
+      (K := K)
+  have hmem : ∀ x : chapter03PrincipalSubgroup S,
+      S.canonicalIdele x.1 ∈
+        LastLib.Book06GlobalClassFieldTheory.Chapter01.principalIdeleSubgroup K := by
+    intro x
+    rcases x.2 with ⟨a, ha⟩
+    refine ⟨a, ?_⟩
+    calc
+      LastLib.Book06GlobalClassFieldTheory.Chapter01.principalIdele a =
+          S.canonicalIdele (chapter03PrincipalIdele S a) :=
+        (S.canonicalIdele_principal a).symm
+      _ = S.canonicalIdele x.1 := congrArg S.canonicalIdele ha
+  have hcont : Continuous (fun x : chapter03PrincipalSubgroup S =>
+      (⟨S.canonicalIdele x.1, hmem x⟩ :
+        LastLib.Book06GlobalClassFieldTheory.Chapter01.principalIdeleSubgroup K)) := by
+    exact Continuous.subtype_mk
+      (S.canonicalIdele_continuous.comp continuous_subtype_val) hmem
+  have hinj : Function.Injective (fun x : chapter03PrincipalSubgroup S =>
+      (⟨S.canonicalIdele x.1, hmem x⟩ :
+        LastLib.Book06GlobalClassFieldTheory.Chapter01.principalIdeleSubgroup K)) := by
+    intro x y hxy
+    apply Subtype.ext
+    apply S.canonicalIdele.injective
+    exact congrArg
+      (fun z : LastLib.Book06GlobalClassFieldTheory.Chapter01.principalIdeleSubgroup K =>
+        (z : LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleGroup K)) hxy
+  constructor
+  · exact @DiscreteTopology.of_continuous_injective
+      (chapter03PrincipalSubgroup S)
+      (LastLib.Book06GlobalClassFieldTheory.Chapter01.principalIdeleSubgroup K)
+      _ _ hcanonical.1 _ hcont hinj
+  · have hset : (chapter03PrincipalSubgroup S : Set (Chapter03Ideles S)) =
+        S.canonicalIdele ⁻¹'
+          (LastLib.Book06GlobalClassFieldTheory.Chapter01.principalIdeleSubgroup K :
+            Set (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleGroup K)) := by
+      ext x
+      constructor
+      · intro hx
+        rcases hx with ⟨a, ha⟩
+        refine ⟨a, ?_⟩
+        calc
+          LastLib.Book06GlobalClassFieldTheory.Chapter01.principalIdele a =
+              S.canonicalIdele (chapter03PrincipalIdele S a) :=
+            (S.canonicalIdele_principal a).symm
+          _ = S.canonicalIdele x := congrArg S.canonicalIdele ha
+      · intro hx
+        rcases hx with ⟨a, ha⟩
+        refine ⟨a, ?_⟩
+        apply S.canonicalIdele.injective
+        calc
+          S.canonicalIdele (chapter03PrincipalIdele S a) =
+              LastLib.Book06GlobalClassFieldTheory.Chapter01.principalIdele a :=
+            S.canonicalIdele_principal a
+          _ = S.canonicalIdele x := ha
+    rw [hset]
+    exact hcanonical.2.preimage S.canonicalIdele_continuous
 
 theorem chapter03_mem_principalSubgroup_iff
     {K : Type*} [Field K] [NumberField K]
@@ -183,15 +293,57 @@ abbrev Chapter03ClassGroup
     (S : Chapter03FieldIdeleData K) :=
   Chapter03Ideles S ⧸ chapter03PrincipalSubgroup S
 
-def chapter03ClassGroup_locallyCompact_hausdorff
+theorem chapter03ClassGroup_locallyCompact_hausdorff
     {K : Type*} [Field K] [NumberField K]
-    (S : Chapter03FieldIdeleData K) : Prop :=
-  LocallyCompactSpace (Chapter03ClassGroup S) ∧ T2Space (Chapter03ClassGroup S)
+  (S : Chapter03FieldIdeleData K) :
+    LocallyCompactSpace (Chapter03ClassGroup S) ∧ T2Space (Chapter03ClassGroup S) := by
+  have hclosed := (chapter03PrincipalSubgroup_discrete_closed S).2
+  exact ⟨inferInstance,
+    @QuotientGroup.instT2Space (Chapter03Ideles S) _ _ _
+      (chapter03PrincipalSubgroup S) hclosed⟩
 
-def chapter03ClassGroup_not_compact
+theorem chapter03ClassGroup_not_compact
     {K : Type*} [Field K] [NumberField K]
-    (S : Chapter03FieldIdeleData K) : Prop :=
-  ¬ IsCompact (Set.univ : Set (Chapter03ClassGroup S))
+    (S : Chapter03FieldIdeleData K) :
+    ¬ IsCompact (Set.univ : Set (Chapter03ClassGroup S)) := by
+  let P : Subgroup (Chapter03Ideles S) := chapter03PrincipalSubgroup S
+  let Q : Subgroup
+      (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleGroup K) :=
+    LastLib.Book06GlobalClassFieldTheory.Chapter01.principalIdeleSubgroup K
+  have hPQ : P.map S.canonicalIdele = Q := by
+    ext x
+    constructor
+    · intro hx
+      rcases Subgroup.mem_map.mp hx with ⟨y, hy, rfl⟩
+      rcases hy with ⟨a, rfl⟩
+      refine ⟨a, ?_⟩
+      change LastLib.Book06GlobalClassFieldTheory.Chapter01.principalIdele a =
+        S.canonicalIdele (chapter03PrincipalIdele S a)
+      exact (S.canonicalIdele_principal a).symm
+    · intro hx
+      rcases hx with ⟨a, rfl⟩
+      apply Subgroup.mem_map.mpr
+      refine ⟨chapter03PrincipalIdele S a, ⟨a, rfl⟩, ?_⟩
+      change S.canonicalIdele (chapter03PrincipalIdele S a) =
+        LastLib.Book06GlobalClassFieldTheory.Chapter01.principalIdele a
+      exact S.canonicalIdele_principal a
+  let e : Chapter03ClassGroup S ≃*
+      LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleClassGroup K :=
+    QuotientGroup.congr P Q S.canonicalIdele hPQ
+  have hecont : Continuous e := by
+    apply QuotientGroup.isOpenQuotientMap_mk.isQuotientMap.continuous_iff.mpr
+    change Continuous (fun x => QuotientGroup.mk' Q (S.canonicalIdele x))
+    exact QuotientGroup.continuous_mk.comp S.canonicalIdele_continuous
+  intro hcompact
+  have himage : IsCompact
+      (e '' (Set.univ : Set (Chapter03ClassGroup S))) :=
+    hcompact.image hecont
+  have hcompactCanonical : IsCompact
+      (Set.univ : Set (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleClassGroup K)) := by
+    rw [Set.image_univ, e.surjective.range_eq] at himage
+    exact himage
+  exact LastLib.Book06GlobalClassFieldTheory.Chapter01.idelicClassGroup_not_compact
+    (K := K) hcompactCanonical
 
 @[simp] theorem chapter03_class_of_principal
     {K : Type*} [Field K] [NumberField K]
@@ -211,8 +363,9 @@ local fields and upgrades this to the canonical algebra equivalence. -/
 structure Chapter03TensorProductDecomposition
     (K L V : Type*) [Field K] [Field L] [Field V]
     [Algebra K L] [Algebra K V] [FiniteDimensional K L]
-    (W : Type*) [Fintype W] (E : W → Type*) [∀ w, CommRing (E w)] where
-  equiv : TensorProduct K L V ≃+* (∀ w, E w)
+    (W : Type*) [Fintype W] (E : W → Type*) [∀ w, Field (E w)]
+    [∀ w, Algebra V (E w)] [∀ w, FiniteDimensional V (E w)] where
+  equiv : TensorProduct K L V ≃ₐ[V] (∀ w, E w)
 
 /- LOCAL_DEPENDENCY_GUESS: the canonical local-completion and local-reciprocity chapters supply
 these finite place fibres, local norm maps, openness, and unramified unit-surjectivity facts.
@@ -222,12 +375,24 @@ structure Chapter03NormData
     [Algebra K L] [FiniteDimensional K L]
     (S_K : Chapter03FieldIdeleData K)
     (S_L : Chapter03FieldIdeleData L) where
+  /-- The canonical Chapter 1 norm interface to which this model is compared. -/
+  canonicalNorm :
+    LastLib.Book06GlobalClassFieldTheory.Chapter01.GlobalNormInterface K L
   /-- The finite fibre of places of `L` lying over a base place. -/
   above : ∀ _ : Chapter03Place K, Finset (Chapter03Place L)
   above_nonempty : ∀ v, (above v).Nonempty
   below : Chapter03Place L → Chapter03Place K
   mem_above_iff :
     ∀ (v : Chapter03Place K) (w : Chapter03Place L), w ∈ above v ↔ below w = v
+  above_canonical_iff :
+    ∀ (v : Chapter03Place K) (w : Chapter03Place L),
+      w ∈ above v ↔
+        S_L.canonicalPlace w ∈
+          canonicalNorm.above (S_K.canonicalPlace v)
+  below_canonical :
+    ∀ w : Chapter03Place L,
+      S_K.canonicalPlace (below w) =
+        canonicalNorm.below (S_L.canonicalPlace w)
   /-- A place above a finite place is finite, and a place above an infinite place is infinite. -/
   finitePlace_above_iff :
     ∀ (v : Chapter03Place K) (w : Chapter03Place L), w ∈ above v →
@@ -239,8 +404,14 @@ structure Chapter03NormData
   principal_norm_component :
     ∀ (a : Units L) (v : Chapter03Place K),
       (above v).prod (fun w => localNorm v w (S_L.embedding w a)) =
-        S_K.embedding v
+      S_K.embedding v
           (LastLib.Book06GlobalClassFieldTheory.Chapter01.fieldNormUnits K L a)
+  localNorm_canonical :
+    ∀ (v : Chapter03Place K) (w : Chapter03Place L), w ∈ above v →
+      ∀ x : (S_L.localFactor w).carrier,
+        S_K.canonicalFactor v (localNorm v w x) =
+          canonicalNorm.localNorm (S_K.canonicalPlace v)
+            (S_L.canonicalPlace w) (S_L.canonicalFactor w x)
   localNorm_continuous :
     ∀ (v : Chapter03Place K) (w : Chapter03Place L), Continuous (localNorm v w)
   localNorm_range_isOpen :
@@ -346,6 +517,86 @@ theorem chapter03IdeleNorm_apply
       (N.above v).prod (fun w => N.localNorm v w (y w)) := by
   unfold chapter03IdeleNorm
   rfl
+
+theorem chapter03IdeleNorm_canonical_compatibility
+    {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L]
+    {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
+    (N : Chapter03NormData S_K S_L) (y : Chapter03Ideles S_L) :
+    S_K.canonicalIdele (chapter03IdeleNorm N y) =
+      LastLib.Book06GlobalClassFieldTheory.Chapter01.componentwiseIdeleNorm
+        N.canonicalNorm (S_L.canonicalIdele y) := by
+  classical
+  have hcomponent : ∀ v : Chapter03Place K,
+      S_K.canonicalFactor v (chapter03IdeleNorm N y v) =
+        (N.canonicalNorm.above (S_K.canonicalPlace v)).prod
+          (fun p => N.canonicalNorm.localNorm (S_K.canonicalPlace v) p
+            (LastLib.Book06GlobalClassFieldTheory.Chapter01.bookIdeleUnitComponent
+              (S_L.canonicalIdele y) p)) := by
+    intro v
+    rw [chapter03IdeleNorm_apply]
+    calc
+      S_K.canonicalFactor v
+          ((N.above v).prod (fun w => N.localNorm v w (y w))) =
+          (N.above v).prod
+            (fun w => S_K.canonicalFactor v (N.localNorm v w (y w))) := by
+        simp
+      _ = (N.above v).prod
+          (fun w => N.canonicalNorm.localNorm
+            (S_K.canonicalPlace v) (S_L.canonicalPlace w)
+            (S_L.canonicalFactor w (y w))) := by
+        apply Finset.prod_congr rfl
+        intro w hw
+        exact N.localNorm_canonical v w hw (y w)
+      _ = (N.canonicalNorm.above (S_K.canonicalPlace v)).prod
+          (fun p => N.canonicalNorm.localNorm (S_K.canonicalPlace v) p
+            (LastLib.Book06GlobalClassFieldTheory.Chapter01.bookIdeleUnitComponent
+              (S_L.canonicalIdele y) p)) := by
+        apply Finset.prod_nbij (fun w => S_L.canonicalPlace w)
+        · intro w hw
+          exact (N.above_canonical_iff v w).1 hw
+        · intro w₁ hw₁ w₂ hw₂ h
+          exact S_L.canonicalPlace.injective h
+        · intro p hp
+          refine ⟨S_L.canonicalPlace.symm p, ?_, ?_⟩
+          · exact (N.above_canonical_iff v (S_L.canonicalPlace.symm p)).2
+              (by simpa using hp)
+          · exact S_L.canonicalPlace.apply_symm_apply p
+        · intro w hw
+          rw [S_L.canonicalIdele_component]
+  have hunitComponent_injective :
+      Function.Injective (fun x :
+          LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleGroup K =>
+        fun v : LastLib.Book06GlobalClassFieldTheory.Chapter01.BookPlace K =>
+          LastLib.Book06GlobalClassFieldTheory.Chapter01.bookIdeleUnitComponent x v) := by
+    intro x z h
+    apply Units.ext
+    apply Prod.ext
+    · funext v
+      exact congrArg
+        (fun u :
+            (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookPlace.completion
+              (Sum.inr v))ˣ =>
+          (u : LastLib.Book06GlobalClassFieldTheory.Chapter01.BookPlace.completion
+            (Sum.inr v))) (congrFun h (Sum.inr v))
+    · apply IsDedekindDomain.FiniteAdeleRing.ext
+      intro v
+      exact congrArg
+        (fun u :
+            (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookPlace.completion
+              (Sum.inl v))ˣ =>
+          (u : LastLib.Book06GlobalClassFieldTheory.Chapter01.BookPlace.completion
+            (Sum.inl v))) (congrFun h (Sum.inl v))
+  apply hunitComponent_injective
+  funext p
+  obtain ⟨v, rfl⟩ := S_K.canonicalPlace.surjective p
+  change
+    LastLib.Book06GlobalClassFieldTheory.Chapter01.bookIdeleUnitComponent
+        (S_K.canonicalIdele (chapter03IdeleNorm N y)) (S_K.canonicalPlace v) =
+      LastLib.Book06GlobalClassFieldTheory.Chapter01.bookIdeleUnitComponent
+        (N.canonicalNorm.ideleNorm (S_L.canonicalIdele y)) (S_K.canonicalPlace v)
+  rw [S_K.canonicalIdele_component, N.canonicalNorm.ideleNorm_component]
+  exact hcomponent v
 
 noncomputable def chapter03ContinuousIdeleNorm
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
@@ -488,6 +739,8 @@ structure Chapter03AdelicModuleData
     [Algebra K L] [FiniteDimensional K L]
     {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
     (N : Chapter03NormData S_K S_L) where
+  canonicalPositiveReal : Chapter03PositiveReals ≃*
+    LastLib.Book06GlobalClassFieldTheory.Chapter01.PositiveReal
   baseModuleNorm : Chapter03Ideles S_K →* Chapter03PositiveReals
   topModuleNorm : Chapter03Ideles S_L →* Chapter03PositiveReals
   baseModuleNorm_surjective : Function.Surjective baseModuleNorm
@@ -503,6 +756,16 @@ structure Chapter03AdelicModuleData
   module_norm_compatibility :
     ∀ y : Chapter03Ideles S_L,
       baseModuleNorm (chapter03IdeleNorm N y) = topModuleNorm y
+  baseModuleNorm_canonical :
+    ∀ x : Chapter03Ideles S_K,
+      canonicalPositiveReal (baseModuleNorm x) =
+        LastLib.Book06GlobalClassFieldTheory.Chapter01.ideleModule
+          (S_K.canonicalIdele x)
+  topModuleNorm_canonical :
+    ∀ x : Chapter03Ideles S_L,
+      canonicalPositiveReal (topModuleNorm x) =
+        LastLib.Book06GlobalClassFieldTheory.Chapter01.ideleModule
+          (S_L.canonicalIdele x)
 
 theorem chapter03_ideleNorm_moduleNorm
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
@@ -513,36 +776,68 @@ theorem chapter03_ideleNorm_moduleNorm
     A.baseModuleNorm (chapter03IdeleNorm N y) = A.topModuleNorm y :=
   A.module_norm_compatibility y
 
-/- LOCAL_DEPENDENCY_GUESS: Chapters 1--2 provide the local and global reciprocity maps.
-The principal-idèle and finite local-product compatibilities are stored here; the global kernel
-conclusion is proved below as a chapter statement rather than assumed in this interface. -/
+/- Chapters 1--2 provide the local and global reciprocity interfaces.  The local maps below are
+required to factor through Chapter 2's abelianized local reciprocity data, so norm triviality is
+derived from the local norm-kernel theorem rather than stored as an unrelated field. -/
 structure Chapter03ArtinReciprocityData
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
-    [IsMulCommutative (Gal(L / K))]
     {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
     (N : Chapter03NormData S_K S_L) where
-  globalArtin : Chapter03Ideles S_K →* Gal(L / K)
-  localArtin : ∀ v : Chapter03Place K, (S_K.localFactor v).carrier →* Gal(L / K)
+  globalArtin : Chapter03Ideles S_K →* Abelianization (Gal(L / K))
+  localArtin : ∀ v : Chapter03Place K,
+    (S_K.localFactor v).carrier →* Abelianization (Gal(L / K))
+  localDecompositionGroup :
+    ∀ (_v : Chapter03Place K) (_w : Chapter03Place L),
+      Subgroup (Gal(L / K))
+  localReciprocity :
+    ∀ (v : Chapter03Place K) (w : Chapter03Place L)
+      (_hw : w ∈ N.above v),
+      Chapter02LocalReciprocityData
+        ((LastLib.Book06GlobalClassFieldTheory.Chapter01.BookPlace.completion
+          (S_K.canonicalPlace v))ˣ)
+        ((LastLib.Book06GlobalClassFieldTheory.Chapter01.BookPlace.completion
+          (S_L.canonicalPlace w))ˣ)
+        (localDecompositionGroup v w)
+  localReciprocity_norm :
+    ∀ (v : Chapter03Place K) (w : Chapter03Place L) (hw : w ∈ N.above v),
+      (localReciprocity v w hw).norm =
+        N.canonicalNorm.localNorm (S_K.canonicalPlace v)
+          (S_L.canonicalPlace w)
+  localArtin_canonical :
+    ∀ (v : Chapter03Place K) (w : Chapter03Place L) (hw : w ∈ N.above v)
+      (x : (S_K.localFactor v).carrier),
+      localArtin v x =
+        chapter02AbelianizedLocalArtinMap
+          (localDecompositionGroup v w).subtype (localReciprocity v w hw)
+          (S_K.canonicalFactor v x)
   globalArtin_principal :
     ∀ a : Units K, globalArtin (chapter03PrincipalIdeleHom S_K a) = 1
   globalArtin_local_product :
     ∀ x : Chapter03Ideles S_K, ∃ s : Finset (Chapter03Place K),
       (∀ v ∉ s, localArtin v (x v) = 1) ∧
         globalArtin x = s.prod (fun v => localArtin v (x v))
-  local_norm_trivial :
-    ∀ (v : Chapter03Place K) (w : Chapter03Place L) (_hw : w ∈ N.above v)
-      (x : (S_L.localFactor w).carrier),
-      localArtin v (N.localNorm v w x) = 1
+
+theorem chapter03_abelianized_local_artin_kills_norm
+    {B E G D : Type*} [CommGroup B] [CommGroup E] [Group G] [Group D]
+    (inclusion : D →* G)
+    (R : Chapter02LocalReciprocityData B E D) (x : E) :
+  chapter02AbelianizedLocalArtinMap inclusion R (R.norm x) = 1 := by
+  change Abelianization.map inclusion (R.reciprocity (R.norm x)) = 1
+  have hx : R.reciprocity (R.norm x) = 1 := by
+    apply MonoidHom.mem_ker.mp
+    rw [R.kernel_eq_norm_range]
+    exact ⟨x, rfl⟩
+  rw [hx]
+  exact (Abelianization.map inclusion).map_one
 
 noncomputable def chapter03ClassArtin
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
-    [IsMulCommutative (Gal(L / K))]
     {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
     {N : Chapter03NormData S_K S_L}
     (A : Chapter03ArtinReciprocityData N) :
-    Chapter03ClassGroup S_K →* Gal(L / K) :=
+    Chapter03ClassGroup S_K →* Abelianization (Gal(L / K)) :=
   QuotientGroup.lift (chapter03PrincipalSubgroup S_K) A.globalArtin (by
     intro x hx
     rcases hx with ⟨a, rfl⟩
@@ -551,7 +846,6 @@ noncomputable def chapter03ClassArtin
 @[simp] theorem chapter03ClassArtin_mk
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
-    [IsMulCommutative (Gal(L / K))]
     {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
     {N : Chapter03NormData S_K S_L}
     (A : Chapter03ArtinReciprocityData N) (x : Chapter03Ideles S_K) :
@@ -576,6 +870,14 @@ structure Chapter03NormTowerData
   norm_L_over_K : Chapter03NormData S_K S_L
   norm_M_over_L : Chapter03NormData S_L S_M
   norm_M_over_K : Chapter03NormData S_K S_M
+  canonicalTower :
+    LastLib.Book06GlobalClassFieldTheory.Chapter01.GlobalNormTowerInterface K L M
+  canonical_norm_L_over_K :
+    norm_L_over_K.canonicalNorm = canonicalTower.norm_L_over_K
+  canonical_norm_M_over_L :
+    norm_M_over_L.canonicalNorm = canonicalTower.norm_M_over_L
+  canonical_norm_M_over_K :
+    norm_M_over_K.canonicalNorm = canonicalTower.norm_M_over_K
   /-- Componentwise transitivity of the three local norm products. -/
   localNorm_product_transitive :
     ∀ (v : Chapter03Place K) (y : Chapter03Ideles S_M),

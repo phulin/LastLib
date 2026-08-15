@@ -520,12 +520,63 @@ def Chapter11FiniteEtaleOfDegree {X Y : Scheme.{u}} (f : X ⟶ Y) (d : ℕ) : Pr
 
 structure RelativeFiniteEtaleSubscheme {S : Scheme.{u}}
     (X T : RelativeScheme S) (d : ℕ) where
-  carrier : Scheme.{u}
-  mapToBase : carrier ⟶ T.carrier
-  mapToX : carrier ⟶ pullback X.structuralMap T.structuralMap
-  over_base : mapToX ≫ pullback.snd X.structuralMap T.structuralMap = mapToBase
-  closed : IsClosedImmersion mapToX
-  finite_etale : Chapter11FiniteEtaleOfDegree mapToBase d
+  /-- A finite étale family is represented by its ideal sheaf in `X_T`, not by
+      an arbitrary presentation of the same closed subscheme.  This is the
+      set-valued convention used by the Hilbert functor. -/
+  ideal : (pullback X.structuralMap T.structuralMap).IdealSheafData
+  finite_etale : Chapter11FiniteEtaleOfDegree
+    (ideal.subschemeι ≫ pullback.snd X.structuralMap T.structuralMap) d
+
+namespace RelativeFiniteEtaleSubscheme
+
+abbrev carrier {S : Scheme.{u}} {X T : RelativeScheme S} {d : ℕ}
+    (Z : RelativeFiniteEtaleSubscheme X T d) : Scheme.{u} :=
+  Z.ideal.subscheme
+
+abbrev mapToX {S : Scheme.{u}} {X T : RelativeScheme S} {d : ℕ}
+    (Z : RelativeFiniteEtaleSubscheme X T d) :
+    Z.carrier ⟶ pullback X.structuralMap T.structuralMap :=
+  Z.ideal.subschemeι
+
+abbrev mapToBase {S : Scheme.{u}} {X T : RelativeScheme S} {d : ℕ}
+    (Z : RelativeFiniteEtaleSubscheme X T d) : Z.carrier ⟶ T.carrier :=
+  Z.mapToX ≫ pullback.snd X.structuralMap T.structuralMap
+
+@[simp]
+theorem over_base {S : Scheme.{u}} {X T : RelativeScheme S} {d : ℕ}
+    (Z : RelativeFiniteEtaleSubscheme X T d) :
+    Z.mapToX ≫ pullback.snd X.structuralMap T.structuralMap = Z.mapToBase :=
+  rfl
+
+/- The subscheme attached to an ideal sheaf is a closed subscheme.  Keeping
+   this as a theorem, rather than as data on a second presentation, prevents
+   isomorphic copies of one family from becoming different functor values. -/
+theorem closed {S : Scheme.{u}} {X T : RelativeScheme S} {d : ℕ}
+    (Z : RelativeFiniteEtaleSubscheme X T d) : IsClosedImmersion Z.mapToX := by
+  sorry
+
+@[ext]
+theorem ext {S : Scheme.{u}} {X T : RelativeScheme S} {d : ℕ}
+    {Z W : RelativeFiniteEtaleSubscheme X T d} (h : Z.ideal = W.ideal) : Z = W := by
+  cases Z with
+  | mk ideal finite_etale =>
+    cases W with
+    | mk ideal' finite_etale' =>
+      cases h
+      rfl
+
+end RelativeFiniteEtaleSubscheme
+
+/-- An isomorphism of finite étale families over the same ambient relative scheme. -/
+structure RelativeFiniteEtaleSubscheme.Isomorphism {S : Scheme.{u}}
+    {X T : RelativeScheme S} {d : ℕ}
+    (Z W : RelativeFiniteEtaleSubscheme X T d) where
+  hom : Z.carrier ⟶ W.carrier
+  inv : W.carrier ⟶ Z.carrier
+  hom_inv_id : hom ≫ inv = 𝟙 Z.carrier
+  inv_hom_id : inv ≫ hom = 𝟙 W.carrier
+  over_base : hom ≫ W.mapToBase = Z.mapToBase
+  over_X : hom ≫ W.mapToX = Z.mapToX
 
 /-- Pullback of a finite étale family along a morphism of relative test schemes. -/
 noncomputable def RelativeFiniteEtaleSubscheme.pullback {S : Scheme.{u}}
@@ -571,6 +622,8 @@ structure Chapter11ConfigurationSpaceData {S : Scheme.{u}}
   bigDiagonal_isClosed : IsClosedImmersion bigDiagonalInclusion.hom
   diagonal_complement :
     Set.range orderedToPower.hom = Set.univ \ Set.range bigDiagonalInclusion.hom
+  /-- The underlying-point complement of the closed big diagonal.  The
+      scheme-theoretic universal property is `open_characterizes` below. -/
   open_characterizes :
     ∀ (T : RelativeScheme S) (x : T ⟶ (relativePower X d).carrier),
       Chapter11PairwiseDistinctOrderedTuple
@@ -612,8 +665,8 @@ structure Chapter11ConfigurationSpaceData {S : Scheme.{u}}
           (universalFamily_classifies T f).1 u =
         (universalFamily_classifies U (u ≫ f)).1
   universalFamily_is_classifying_point :
-    (universalFamily_classifies quotient.carrier) (𝟙 quotient.carrier) =
-      ⟨universalFamily, universalFamily_splits⟩
+    (universalFamily_classifies quotient.carrier (𝟙 quotient.carrier)).1 =
+      universalFamily
 
 /-- A local monic equation with the basis `1,z,…,z^(d-1)`. -/
 structure MonicPolynomialChart (R A : Type u) [CommRing R] [CommRing A]

@@ -107,6 +107,23 @@ theorem chapter05_cyclotomic_split_completely_iff
       Nat.ModEq m p 1 := by
   exact chapter05_cyclotomic_frobenius_unit_eq_one_iff m p hpm
 
+/-- The cyclotomic Frobenius element itself is trivial exactly in the
+split-completely congruence class. -/
+theorem chapter05_cyclotomic_frobenius_eq_one_iff
+    (m p : ℕ) [NeZero m] (K : Type*) [Field K] [NumberField K]
+    [IsCyclotomicExtension {m} ℚ K] (hp : Nat.Prime p)
+    (hpm : Nat.Coprime p m) :
+    chapter05CyclotomicFrobenius m p K hp hpm = 1 ↔ Nat.ModEq m p 1 := by
+  constructor
+  · intro h
+    apply (chapter05_cyclotomic_frobenius_unit_eq_one_iff m p hpm).mp
+    have hunit := congrArg (chapter05CyclotomicGaloisUnitsEquiv m K) h
+    simpa [chapter05CyclotomicFrobenius] using hunit
+  · intro h
+    apply (chapter05CyclotomicGaloisUnitsEquiv m K).injective
+    simpa [chapter05CyclotomicFrobenius,
+      chapter05_cyclotomic_frobenius_unit_eq_one_iff m p hpm] using h
+
 /-- Ideal Frobenius is only defined in this finite-level model away from the
 chosen modulus. -/
 def chapter05CyclotomicIdealFrobeniusDefined (m p : ℕ) : Prop :=

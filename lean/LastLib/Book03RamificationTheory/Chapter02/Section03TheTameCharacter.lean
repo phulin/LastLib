@@ -148,6 +148,40 @@ theorem chapter02_inertial_precision_two_iff_uniformizer
     rw [P.integral_generation]
     trivial
 
+private theorem chapter02_uniformizer_ratio_exists
+    (K L : Type u) [Field K] [Field L] [Algebra K L]
+    (vL : AddValuation L (WithTop ℤ))
+    [Valuation.IsRankOneDiscrete vL.toValuation]
+    (π : vL.toValuation.valuationSubring)
+    (hπ : vL.toValuation.IsUniformizer π)
+    (σ : LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05InertiaGroup
+      K vL.toValuation.valuationSubring) :
+    ∃ c : vL.toValuation.valuationSubringˣ,
+      σ • π = (c : vL.toValuation.valuationSubring) * π := by
+  let e : RingAut vL.toValuation.valuationSubring :=
+    MulSemiringAction.toRingAut _ _ σ
+  have hmap :
+      (IsLocalRing.maximalIdeal vL.toValuation.valuationSubring).map e =
+        IsLocalRing.maximalIdeal vL.toValuation.valuationSubring :=
+    IsLocalRing.map_ringEquiv_maximalIdeal e
+  have hgen :
+      IsLocalRing.maximalIdeal vL.toValuation.valuationSubring =
+        Ideal.span ({e π} : Set vL.toValuation.valuationSubring) := by
+    calc
+      IsLocalRing.maximalIdeal vL.toValuation.valuationSubring =
+          (IsLocalRing.maximalIdeal vL.toValuation.valuationSubring).map e :=
+        hmap.symm
+      _ = (Ideal.span ({π} : Set vL.toValuation.valuationSubring)).map e := by
+        rw [hπ.is_generator]
+      _ = Ideal.span ({e π} : Set vL.toValuation.valuationSubring) := by
+        rw [Ideal.map_span]
+        simp
+  have hπ' : vL.toValuation.IsUniformizer (e π) :=
+    Valuation.isUniformizer_of_maximalIdeal_eq_span vL.toValuation hgen
+  obtain ⟨c, hc⟩ := Valuation.associated_of_isUniformizer hπ hπ'
+  refine ⟨c, ?_⟩
+  simpa [e, mul_comm] using hc.symm
+
 /- DEPENDENCY_GUESS: The map called `θ₀` in Section 1.3 is not available in
    this checkout.  The structure below keeps its source and kernel explicit,
    while the quotient lift supplies the canonical induced map. -/
@@ -193,7 +227,7 @@ theorem chapter02_tame_character_injective
     (D : Chapter02TameCharacterData F l) :
     Function.Injective (chapter02TameCharacter D) := by
   let N := (F.group 1).subgroupOf (F.group 0)
-  letI : N.Normal := chapter02_lower_layer_normal F 0
+  let : N.Normal := chapter02_lower_layer_normal F 0
   have hN : N ≤ D.thetaZero.ker := by
     change (F.group 1).subgroupOf (F.group 0) ≤ D.thetaZero.ker
     rw [D.thetaZero_kernel]
@@ -210,7 +244,7 @@ theorem chapter02_tame_character_factorization
         (QuotientGroup.mk' ((F.group 1).subgroupOf (F.group 0)) σ) =
       D.thetaZero σ := by
   let N := (F.group 1).subgroupOf (F.group 0)
-  letI : N.Normal := chapter02_lower_layer_normal F 0
+  let : N.Normal := chapter02_lower_layer_normal F 0
   have hN : N ≤ D.thetaZero.ker := by
     change (F.group 1).subgroupOf (F.group 0) ≤ D.thetaZero.ker
     rw [D.thetaZero_kernel]
@@ -223,9 +257,9 @@ theorem chapter02_tame_layer_is_cyclic
     {F : Chapter02LowerFiltration G} {l : Type*} [Field l]
     (D : Chapter02TameCharacterData F l) :
     IsCyclic (chapter02TameLayer F) := by
-  letI : ((F.group 1).subgroupOf (F.group 0)).Normal :=
+  let : ((F.group 1).subgroupOf (F.group 0)).Normal :=
     chapter02_lower_layer_normal F 0
-  letI : Finite (chapter02TameLayer F) := by
+  let : Finite (chapter02TameLayer F) := by
     change Finite (F.group 0 ⧸ (F.group 1).subgroupOf (F.group 0))
     infer_instance
   exact isCyclic_of_injective_ringHom
@@ -239,9 +273,9 @@ theorem chapter02_tame_layer_order_coprime
     (p : ℕ) [Fact p.Prime] [CharP l p]
     (D : Chapter02TameCharacterData F l) :
     Nat.Coprime (Nat.card (chapter02TameLayer F)) p := by
-  letI : ((F.group 1).subgroupOf (F.group 0)).Normal :=
+  let : ((F.group 1).subgroupOf (F.group 0)).Normal :=
     chapter02_lower_layer_normal F 0
-  letI : Finite (chapter02TameLayer F) := by
+  let : Finite (chapter02TameLayer F) := by
     change Finite (F.group 0 ⧸ (F.group 1).subgroupOf (F.group 0))
     infer_instance
   rw [Nat.coprime_comm, (Fact.out : p.Prime).coprime_iff_not_dvd]
@@ -283,10 +317,14 @@ theorem chapter02_tame_layer_order_coprime
    inertia itself.  No splitting or abelianity of the wild extension is
    included in this interface. -/
 
-/- DEPENDENCY_GUESS: The canonical construction of `θ₀` needs the preceding
-   maximal-unramified-subextension and uniformizer package.  The hypotheses
-   below expose the finite, complete, discrete, defectless situation in which
-   that package is expected to supply the data. -/
+/-- The canonical tame character data exists once the valuation branch is
+    supplied with its clean unramified--uniformizer presentation.
+
+    The residue-field algebra is deliberately the one induced by the
+    valuation extension (`Valuation.HasExtension`), rather than an unrelated
+    algebra instance.  The coefficient ring and uniformizer are explicit
+    because the uniformizer precision argument needs the actual integral
+    presentation, not just its numerical invariants. -/
 theorem chapter02_canonical_tame_character_data_exists
     (K L : Type u) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
@@ -295,23 +333,170 @@ theorem chapter02_canonical_tame_character_data_exists
     [Valuation.IsRankOneDiscrete vK.toValuation]
     [Valuation.IsRankOneDiscrete vL.toValuation]
     [Finite (chapter02DecompositionGroup K vL)]
-    (hext : vK.IsEquiv (vL.comap (algebraMap K L)))
+    (hnormalized : Function.Surjective vL)
+    [Valuation.HasExtension vK.toValuation vL.toValuation]
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.toValuation.valuationSubring)
       vK.toValuation.valuationSubring)
-    [PerfectField (IsLocalRing.ResidueField vK.toValuation.valuationSubring)]
-    [Algebra (IsLocalRing.ResidueField vK.toValuation.valuationSubring)
-      (IsLocalRing.ResidueField vL.toValuation.valuationSubring)]
     [FiniteDimensional (IsLocalRing.ResidueField vK.toValuation.valuationSubring)
       (IsLocalRing.ResidueField vL.toValuation.valuationSubring)]
+    (C : Type*) [CommRing C]
+    [Algebra C vL.toValuation.valuationSubring]
+    (π : vL.toValuation.valuationSubring)
+    (hpresentation :
+      Chapter02UnramifiedUniformizerPresentation
+        K L vL.toValuation.valuationSubring C π)
     (hseparable : Algebra.IsSeparable
       (IsLocalRing.ResidueField vK.toValuation.valuationSubring)
       (IsLocalRing.ResidueField vL.toValuation.valuationSubring)) :
     Nonempty
       (Chapter02TameCharacterData
-        (chapter02CanonicalLowerFiltration K vL)
+        (chapter02CanonicalLowerFiltration K vL hnormalized)
         (IsLocalRing.ResidueField vL.toValuation.valuationSubring)) := by
-  sorry
+  have _ := hcomplete
+  have _ := hseparable
+  let A := vL.toValuation.valuationSubring
+  let D := chapter02DecompositionGroup K vL
+  let F := chapter02CanonicalLowerFiltration K vL hnormalized
+  have hπ : vL.toValuation.IsUniformizer π := by
+    exact Valuation.isUniformizer_of_maximalIdeal_eq_span vL.toValuation
+      hpresentation.uniformizer
+  have hσI (σ : F.group 0) :
+      (σ : D) ∈
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05InertiaGroup
+          K A := by
+    rw [← chapter02_lower_group_zero_eq_inertia K vL]
+    exact σ.property
+  let iσ (σ : F.group 0) :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05InertiaGroup K A :=
+    ⟨(σ : D), hσI σ⟩
+  let ratio (σ : F.group 0) : Aˣ :=
+    Classical.choose (chapter02_uniformizer_ratio_exists K L vL π hπ (iσ σ))
+  have ratio_spec (σ : F.group 0) :
+      (σ : D) • π = (ratio σ : A) * π := by
+    simpa [ratio, iσ, D, A] using
+      (Classical.choose_spec
+        (chapter02_uniformizer_ratio_exists K L vL π hπ (iσ σ)))
+  have hπA : π ≠ 0 := by
+    intro h
+    apply hπ.ne_zero
+    exact congrArg (fun x : vL.toValuation.valuationSubring => (x : L)) h
+  have hmul_iff (d : A) :
+      d ∈ IsLocalRing.maximalIdeal A ↔
+        d * π ∈ (IsLocalRing.maximalIdeal A) ^ 2 := by
+    constructor
+    · intro hd
+      have hπmem : π ∈ IsLocalRing.maximalIdeal A := by
+        rw [hpresentation.uniformizer]
+        exact Ideal.mem_span_singleton_self π
+      rw [pow_two]
+      exact Ideal.mul_mem_mul hd hπmem
+    · intro hdp
+      change d * π ∈
+        (IsLocalRing.maximalIdeal vL.toValuation.valuationSubring) ^ 2 at hdp
+      rw [hpresentation.uniformizer, Ideal.span_singleton_pow,
+        Ideal.mem_span_singleton'] at hdp
+      change d ∈ IsLocalRing.maximalIdeal vL.toValuation.valuationSubring
+      rw [hpresentation.uniformizer, Ideal.mem_span_singleton']
+      obtain ⟨a, ha⟩ := hdp
+      have hcancel : a * π = d := by
+        apply mul_right_cancel₀ hπA
+        calc
+          (a * π) * π = a * π ^ 2 := by ring
+          _ = d * π := ha
+      exact ⟨a, hcancel⟩
+  let theta : F.group 0 →* (IsLocalRing.ResidueField A)ˣ := by
+    refine
+      { toFun := fun σ =>
+          Units.map (IsLocalRing.residue A).toMonoidHom (ratio σ)
+        map_one' := ?_
+        map_mul' := ?_ }
+    · have hratio := ratio_spec (1 : F.group 0)
+      have hratio' : (ratio (1 : F.group 0) : A) = 1 := by
+        apply mul_right_cancel₀ hπA
+        simpa using hratio.symm
+      apply Units.ext
+      change IsLocalRing.residue A (ratio (1 : F.group 0) : A) = 1
+      rw [hratio']
+      rfl
+    · intro σ τ
+      apply Units.ext
+      change IsLocalRing.residue A (ratio (σ * τ) : A) =
+        IsLocalRing.residue A ((ratio σ : A) * (ratio τ : A))
+      have hcomp :
+          (ratio (σ * τ) : A) * π =
+            ((σ : D) • (ratio τ : A)) * (ratio σ : A) * π := by
+        calc
+          (ratio (σ * τ) : A) * π = (σ * τ : D) • π :=
+            (ratio_spec (σ * τ)).symm
+          _ = (σ : D) • ((τ : D) • π) := by rw [mul_smul]
+          _ = (σ : D) • ((ratio τ : A) * π) := by rw [ratio_spec τ]
+          _ = ((σ : D) • (ratio τ : A)) * ((σ : D) • π) := by
+            rw [smul_mul']
+          _ = ((σ : D) • (ratio τ : A)) * (ratio σ : A) * π := by
+            rw [ratio_spec σ]
+            ring
+      have hratio :
+          (ratio (σ * τ) : A) =
+            ((σ : D) • (ratio τ : A)) * (ratio σ : A) :=
+        mul_right_cancel₀ hπA hcomp
+      have hfix :
+          IsLocalRing.residue A ((σ : D) • (ratio τ : A)) =
+            IsLocalRing.residue A (ratio τ : A) := by
+        rw [LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.residue_action_commutes_with_reduction]
+        exact
+          (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.inertia_mem_iff_residue_fixed
+            A (σ : D)).mp (hσI σ) _
+      rw [hratio, map_mul, hfix, map_mul, mul_comm]
+  have hker : theta.ker = (F.group 1).subgroupOf (F.group 0) := by
+    ext σ
+    constructor
+    · intro hσ
+      change theta σ = 1 at hσ
+      have hres : IsLocalRing.residue A (ratio σ : A) = 1 := by
+        have h := congrArg Units.val hσ
+        simpa [theta] using h
+      have hunit : (ratio σ : A) - 1 ∈ IsLocalRing.maximalIdeal A := by
+        apply (IsLocalRing.residue_eq_zero_iff _).mp
+        simp [map_sub, hres]
+      change (σ : D) ∈ F.group 1
+      change LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05HigherCongruence
+        A 2 (σ : D)
+      apply
+        (chapter02_inertial_precision_two_iff_uniformizer
+          K L A C π hpresentation (σ : D) (hσI σ)).mpr
+      have hdiff_eq : (σ : D) • π - π =
+          ((ratio σ : A) - 1) * π := by
+        rw [ratio_spec σ]
+        ring
+      have hmul := (hmul_iff ((ratio σ : A) - 1)).mp hunit
+      rw [hdiff_eq]
+      exact hmul
+    · intro hσ
+      change (σ : D) ∈ F.group 1 at hσ
+      change LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05HigherCongruence
+        A 2 (σ : D) at hσ
+      have hdiff :=
+        (chapter02_inertial_precision_two_iff_uniformizer
+          K L A C π hpresentation (σ : D) (hσI σ)).mp hσ
+      have hmul : ((ratio σ : A) - 1) * π ∈
+          (IsLocalRing.maximalIdeal A) ^ 2 := by
+        have hdiff_eq : (σ : D) • π - π =
+            ((ratio σ : A) - 1) * π := by
+          rw [ratio_spec σ]
+          ring
+        rw [← hdiff_eq]
+        exact hdiff
+      have hunit : (ratio σ : A) - 1 ∈ IsLocalRing.maximalIdeal A :=
+        (hmul_iff ((ratio σ : A) - 1)).mpr hmul
+      apply MonoidHom.mem_ker.mpr
+      apply Units.ext
+      change IsLocalRing.residue A (ratio σ : A) = 1
+      have hzero : IsLocalRing.residue A ((ratio σ : A) - 1) = 0 :=
+        (IsLocalRing.residue_eq_zero_iff _).2 hunit
+      simpa [map_sub] using sub_eq_zero.mp hzero
+  exact ⟨{ thetaZero := by simpa [F, A] using theta
+           thetaZero_kernel := by simpa [F, A] using hker }⟩
 
 /-- The first positive group is normal in the ambient group. -/
 theorem chapter02_wild_group_normal
@@ -345,10 +530,10 @@ theorem chapter02_wild_group_is_p_group
           ih (i + 1) hEq' (by omega)
         let H : Subgroup (F.group i) :=
           (F.group (i + 1)).subgroupOf (F.group i)
-        letI : H.Normal := by
+        let : H.Normal := by
           dsimp [H]
           exact chapter02_lower_layer_normal F i
-        letI : Finite (chapter02LowerLayer F i) := by
+        let : Finite (chapter02LowerLayer F i) := by
           change Finite (F.group i ⧸ H)
           infer_instance
         have hcard : Nat.card (F.group i) =
@@ -373,7 +558,7 @@ theorem chapter02_inertia_order_factorization
     Nat.card (F.group 0) =
       Nat.card (chapter02TameLayer F) * Nat.card (chapter02WildGroup F) := by
   let H : Subgroup (F.group 0) := (F.group 1).subgroupOf (F.group 0)
-  letI : H.Normal := by
+  let : H.Normal := by
     dsimp [H]
     exact chapter02_lower_layer_normal F 0
   change Nat.card (F.group 0) =
@@ -420,29 +605,46 @@ theorem chapter02_wild_order_is_prime_power
   change ∃ n : ℕ, Nat.card (chapter02WildGroup F) = p ^ n
   exact hwild.exists_card_eq
 
+/- The ambient wild subgroup and its copy inside inertia have the same
+   cardinality.  This bridge lets the canonical p-group result feed the
+   Sylow statement, whose Sylow groups live in the inertia subgroup. -/
+theorem chapter02_wild_subgroup_in_inertia_is_p_group
+    {G : Type u} [Group G] [Finite G]
+    (F : Chapter02LowerFiltration G) (p : ℕ) [Fact p.Prime]
+    (hwild : IsPGroup p (chapter02WildGroup F)) :
+    IsPGroup p (chapter02WildSubgroupInInertia F) := by
+  let W : Subgroup (F.group 0) := chapter02WildSubgroupInInertia F
+  have hcard : Nat.card W = Nat.card (chapter02WildGroup F) := by
+    change Nat.card ((F.group 1).subgroupOf (F.group 0)) = Nat.card (F.group 1)
+    exact Nat.card_congr (Subgroup.subgroupOfEquivOfLe (F.descending 0)).toEquiv
+  obtain ⟨n, hn⟩ := hwild.exists_card_eq
+  apply IsPGroup.of_card
+  rw [hcard, hn]
+
 /-- The wild subgroup is the unique subgroup of inertia of the Sylow order. -/
 theorem chapter02_wild_group_unique_sylow
     {G : Type u} [Group G] [Finite G]
     (F : Chapter02LowerFiltration G) (p : ℕ) [Fact p.Prime]
     (htame : Nat.Coprime (Nat.card (chapter02TameLayer F)) p)
-    (hwild : IsPGroup p (chapter02WildSubgroupInInertia F)) :
+    (hwild : IsPGroup p (chapter02WildGroup F)) :
     ∀ P : Sylow p (F.group 0),
       (P : Subgroup (F.group 0)) = chapter02WildSubgroupInInertia F := by
   let W : Subgroup (F.group 0) := chapter02WildSubgroupInInertia F
-  letI : W.Normal := by
+  let : W.Normal := by
     change ((F.group 1).subgroupOf (F.group 0)).Normal
     exact chapter02_lower_layer_normal F 0
-  change IsPGroup p W at hwild
+  have hwild' : IsPGroup p W :=
+    chapter02_wild_subgroup_in_inertia_is_p_group F p hwild
   have hindex : W.index = Nat.card (chapter02TameLayer F) := by
     change W.index = Nat.card ((F.group 0) ⧸ W)
     rw [Subgroup.index_eq_card]
   have hnot : ¬ p ∣ W.index := by
     rw [hindex]
     exact (Fact.out : p.Prime).coprime_iff_not_dvd.mp htame.symm
-  let P0 : Sylow p (F.group 0) := hwild.toSylow hnot
+  let P0 : Sylow p (F.group 0) := hwild'.toSylow hnot
   intro P
   have hle : W ≤ (P : Subgroup (F.group 0)) :=
-    IsPGroup.le_sylow_of_normal hwild P
+    IsPGroup.le_sylow_of_normal hwild' P
   have hle' : (P0 : Subgroup (F.group 0)) ≤ (P : Subgroup (F.group 0)) := by
     simpa [P0] using hle
   have heq : (P : Subgroup (F.group 0)) = (P0 : Subgroup (F.group 0)) :=
@@ -457,9 +659,9 @@ theorem chapter02_wild_group_eq_bot_of_trivial_positive_layers
     chapter02WildGroup F = ⊥ := by
   have hstep : ∀ i : ℕ, 1 ≤ i → F.group i = F.group (i + 1) := by
     intro i hi
-    letI : ((F.group (i + 1)).subgroupOf (F.group i)).Normal :=
+    let : ((F.group (i + 1)).subgroupOf (F.group i)).Normal :=
       chapter02_lower_layer_normal F i
-    letI : Subsingleton (chapter02LowerLayer F i) := htrivial i hi
+    let : Subsingleton (chapter02LowerLayer F i) := htrivial i hi
     have htop : (F.group (i + 1)).subgroupOf (F.group i) = ⊤ :=
       QuotientGroup.subsingleton_iff.mp
         (inferInstance : Subsingleton (chapter02LowerLayer F i))

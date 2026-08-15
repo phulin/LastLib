@@ -79,9 +79,11 @@ noncomputable def orderedUniversalDivisor {S : Scheme.{u}} (C : RelativeScheme S
 def Chapter11DivisorPermutationInvariant {X : Scheme.{u}}
     (D : EffectiveCartierDivisor X) (G : Type v) [Group G]
     (action : G → (X ⟶ X)) : Prop :=
-  ∀ g : G, IsIso (action g) ∧
-    ∃ e : D.subscheme ⟶ D.subscheme,
-      IsIso e ∧ e ≫ D.inclusion = D.inclusion ≫ action g
+  action 1 = 𝟙 X ∧
+    (∀ g h : G, action (g * h) = action g ≫ action h) ∧
+      ∀ g : G, IsIso (action g) ∧
+        ∃ e : D.subscheme ⟶ D.subscheme,
+          IsIso e ∧ e ≫ D.inclusion = D.inclusion ≫ action g
 
 theorem orderedUniversalDivisor_invariant {S : Scheme.{u}} (C : RelativeScheme S) (d : ℕ)
     [Chapter11SmoothQuasiProjectiveCurve C] :
@@ -126,6 +128,14 @@ def Chapter11DivisorPullbackRelation {X Y : Scheme.{u}} (f : X ⟶ Y)
     (D : EffectiveCartierDivisor Y) (E : EffectiveCartierDivisor X) : Prop :=
   ∃ e : E.subscheme ≅ pullback D.inclusion f,
     e.hom ≫ pullback.snd D.inclusion f = E.inclusion
+
+/- Two effective Cartier divisors on the same ambient scheme are compared up
+   to the ambient-preserving isomorphism supplied by the closed-subscheme
+   pullback API.  This is the natural equality notion for restrictions. -/
+def Chapter11DivisorAmbientIso {X : Scheme.{u}}
+    (D E : EffectiveCartierDivisor X) : Prop :=
+  ∃ e : E.subscheme ≅ D.subscheme,
+    e.hom ≫ D.inclusion = E.inclusion
 
 /- The coefficients above are the affine descent calculation.  This existence
    statement records the descended Cartier divisor and its finite-flat degree.
@@ -199,10 +209,30 @@ def Chapter11UniversalDivisorPullbackRelation {S : Scheme.{u}}
   Chapter11DivisorPullbackRelation (curveBaseChangeToSymmetricAmbient C T d f)
     (universalDivisor C d) D.divisor
 
+/- The ambient map induced by restricting a divisor along a morphism of test
+   schemes.  Keeping this map explicit makes restriction scheme-theoretic. -/
+noncomputable def curveBaseChangeRestrictionMap {S : Scheme.{u}}
+    (C T U : RelativeScheme S)
+    (u : U ⟶ T) :
+    pullback C.structuralMap U.structuralMap ⟶
+      pullback C.structuralMap T.structuralMap :=
+  pullback.lift
+    (pullback.fst C.structuralMap U.structuralMap)
+    (pullback.snd C.structuralMap U.structuralMap ≫ u.hom) (by sorry)
+
 def divisorRestriction {S : Scheme.{u}} {C T U : RelativeScheme S} (d : ℕ)
     [Chapter11SmoothQuasiProjectiveCurve C] (u : U ⟶ T)
     (D : RelativeEffectiveCartierDivisor C T d) :
     RelativeEffectiveCartierDivisor C U d := by
+  sorry
+
+theorem divisorRestriction_is_pullback {S : Scheme.{u}}
+    {C T U : RelativeScheme S} (d : ℕ)
+    [Chapter11SmoothQuasiProjectiveCurve C] (u : U ⟶ T)
+    (D : RelativeEffectiveCartierDivisor C T d) :
+    Chapter11DivisorPullbackRelation
+      (curveBaseChangeRestrictionMap C T U u) D.divisor
+      (divisorRestriction d u D).divisor := by
   sorry
 
 /- The universal divisor must carry the full functor-of-points data: a
@@ -218,8 +248,7 @@ structure Chapter11UniversalDivisorRepresentingData {S : Scheme.{u}}
     Chapter11UniversalDivisorPullbackRelation C T d f (equivalence T f)
   natural : ∀ {T U : RelativeScheme S} (u : U ⟶ T)
     (f : T ⟶ symmetricPower C d),
-    divisorRestriction d u (equivalence T f) =
-      equivalence U (u ≫ f)
+    divisorRestriction d u (equivalence T f) = equivalence U (u ≫ f)
 
 noncomputable def universalDivisorRepresentingData {S : Scheme.{u}}
     (C : RelativeScheme S) (d : ℕ)
@@ -262,6 +291,15 @@ noncomputable def universalDivisorEquiv {S : Scheme.{u}} (C T : RelativeScheme S
   right_inv D := ((universalDivisorRepresentingData C d).equivalence T).right_inv D
 
 theorem universalDivisorEquiv_natural {S : Scheme.{u}} (C T U : RelativeScheme S) (d : ℕ)
+    [Chapter11SmoothQuasiProjectiveCurve C] (u : U ⟶ T)
+    (f : T ⟶ symmetricPower C d) :
+    Chapter11DivisorAmbientIso
+      (divisorRestriction d u (universalDivisorEquiv C T d f)).divisor
+      (universalDivisorEquiv C U d (u ≫ f)).divisor := by
+  sorry
+
+theorem universalDivisorEquiv_natural_eq {S : Scheme.{u}}
+    (C T U : RelativeScheme S) (d : ℕ)
     [Chapter11SmoothQuasiProjectiveCurve C] (u : U ⟶ T)
     (f : T ⟶ symmetricPower C d) :
     divisorRestriction d u (universalDivisorEquiv C T d f) =

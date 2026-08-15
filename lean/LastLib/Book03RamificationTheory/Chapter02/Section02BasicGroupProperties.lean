@@ -71,9 +71,10 @@ theorem chapter02_canonical_lower_group_eventually_trivial
     [FiniteDimensional K L] [IsGalois K L]
     (v : AddValuation L (WithTop ℤ))
     [Valuation.IsRankOneDiscrete v.toValuation]
-    [Finite (chapter02DecompositionGroup K v)] :
+    [Finite (chapter02DecompositionGroup K v)]
+    (hnormalized : Function.Surjective v) :
     ∃ N : ℕ, ∀ n : ℕ, N ≤ n → chapter02LowerGroupNat K v n = ⊥ := by
-  exact (chapter02CanonicalLowerFiltration K v).eventually_trivial
+  exact (chapter02CanonicalLowerFiltration K v hnormalized).eventually_trivial
 
 /-- The group-valued form of the commutator estimate. -/
 theorem chapter02_commutator_lower_group_le
@@ -83,13 +84,13 @@ theorem chapter02_commutator_lower_group_le
     (vL : AddValuation L (WithTop ℤ))
     [Valuation.IsRankOneDiscrete vK.toValuation]
     [Valuation.IsRankOneDiscrete vL.toValuation]
-    (hext : vK.IsEquiv (vL.comap (algebraMap K L)))
+    (_hext : vK.IsEquiv (vL.comap (algebraMap K L)))
     [Algebra (IsLocalRing.ResidueField vK.toValuation.valuationSubring)
       (IsLocalRing.ResidueField vL.toValuation.valuationSubring)]
-    (hseparable : Algebra.IsSeparable
+    (_hseparable : Algebra.IsSeparable
       (IsLocalRing.ResidueField vK.toValuation.valuationSubring)
       (IsLocalRing.ResidueField vL.toValuation.valuationSubring))
-    (i j : ℕ) (hi : 1 ≤ i) (hj : 1 ≤ j) :
+    (i j : ℕ) (_hi : 1 ≤ i) (_hj : 1 ≤ j) :
     ⁅chapter02LowerGroupNat K vL i, chapter02LowerGroupNat K vL j⁆ ≤
       chapter02LowerGroupNat K vL (i + j) := by
   classical
@@ -134,7 +135,7 @@ theorem chapter02_commutator_lower_group_le
             exact Ideal.mul_mem_mul_rev (ih a ha) hb
           have heq : g • (a * b) - (a * b) =
               g • a * (g • b - b) + b * (g • a - a) := by
-            simp [smul_mul', smul_sub]
+            simp [smul_mul']
             ring
           rw [heq]
           exact (I ^ (m + (r + 1))).add_mem hterm1 hterm2

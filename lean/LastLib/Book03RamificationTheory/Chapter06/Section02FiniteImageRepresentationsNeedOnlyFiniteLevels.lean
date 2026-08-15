@@ -1,7 +1,9 @@
 import LastLib.Book03RamificationTheory.Chapter06.Dependencies
 import Mathlib.LinearAlgebra.Dimension.Finite
+import Mathlib.LinearAlgebra.Dimension.RankNullity
 import Mathlib.MeasureTheory.Integral.Bochner.Set
 import Mathlib.RepresentationTheory.Invariants
+import Mathlib.Data.Finset.Sort
 
 namespace LastLib.Book03RamificationTheory.Chapter06
 
@@ -15,11 +17,10 @@ universe u v w
 
 /-! ## 6.2. Finite-image representations need only finite levels -/
 
-/- SOURCE_ISSUE (6.2): the source says that finite image implies an open
-kernel.  For a profinite group this also uses continuity of the representation;
-finite image alone is not enough for an arbitrary abstract representation.
-The smallest principled correction is to record openness of the kernel as the
-continuity input in the representation interface below. -/
+/- The source assumes continuity as well as finite image.  Since the target
+ representation is kept algebraic here, openness of the kernel is the exact
+ finite-quotient consequence of that continuity assumption and is recorded
+ explicitly in the interface below. -/
 
 /-- A finite-image representation of a profinite group with its open kernel. -/
 structure Chapter06FiniteImageRepresentation
@@ -534,6 +535,574 @@ theorem chapter06RepresentationUpperBreakSet_transition
           exact heq
         _ = chapter06UpperFixedSpaceCodim (S.upperProfile M) ρ w :=
           chapter06UpperFixedSpaceCodim_transition S h ρ w
+
+/-!
+The decomposition construction in Section 6.3 needs the finite chain of
+fixed spaces before it chooses invariant complements.  This interface keeps
+the three independent pieces of that argument visible: a break is exactly a
+nontrivial fixed-space jump, the fixed spaces are locally constant between
+successive breaks, and the sorted chain telescopes from wild-fixed vectors to
+the whole representation.
+-/
+structure Chapter06RepresentationFixedSpaceChain
+    {E : Type u} {G : Type v} {V : Type w}
+    [Field E] [Group G] [Finite G] [AddCommGroup V] [Module E V]
+    [FiniteDimensional E V]
+    (D : Chapter05RamificationFiltration G)
+    (ρ : Representation E G V) where
+  positiveBreaks : Finset ℝ
+  positiveBreaks_spec :
+    ∀ r, r ∈ positiveBreaks ↔
+      0 < r ∧ chapter06RepresentationUpperBreak D ρ r
+  fixed_space_jump_iff :
+    ∀ {r : ℝ}, 0 < r →
+      (chapter06RepresentationUpperBreak D ρ r ↔
+        chapter06FixedSpace ρ (chapter05UpperRamificationGroup D r) ≠
+          chapter06FixedSpace ρ (chapter05UpperRightLimit D r))
+  fixed_space_monotone :
+    Monotone (fun u : ℝ =>
+      chapter06FixedSpace ρ (chapter05UpperRamificationGroup D u))
+  locally_constant_off_breaks :
+    ∀ {u w : ℝ}, 0 < u → u ≤ w →
+      (∀ r ∈ positiveBreaks, ¬(u ≤ r ∧ r < w)) →
+      chapter06FixedSpace ρ (chapter05UpperRamificationGroup D u) =
+        chapter06FixedSpace ρ (chapter05UpperRamificationGroup D w)
+  terminal_fixed_space :
+    ∃ R : ℝ, ∀ u : ℝ, R < u →
+      chapter06FixedSpace ρ (chapter05UpperRamificationGroup D u) = ⊤
+  sorted_chain_telescopes :
+    ∃ (n : ℕ) (chain : Fin (n + 1) → Submodule E V)
+      (labels : Fin n → ℝ),
+      chain 0 = chapter06FixedSpace ρ (chapter05UpperRightLimit D 0) ∧
+      (∀ i : Fin n, chain i.succ =
+        chapter06FixedSpace ρ (chapter05UpperRightLimit D (labels i))) ∧
+      chain (Fin.last n) = ⊤ ∧
+      StrictMono labels ∧
+      (∀ i : Fin n, labels i ∈ positiveBreaks) ∧
+      (∀ r, r ∈ positiveBreaks → ∃ i : Fin n, labels i = r) ∧
+      Monotone chain ∧
+      Module.finrank E V = Module.finrank E (chain 0) +
+        ∑ i : Fin n,
+          (Module.finrank E (chain i.succ) -
+            Module.finrank E (chain i.castSucc))
+
+theorem chapter06_representation_fixed_space_chain_exists
+    {L : Type u} {G : Type v} {V : Type w}
+    [Field L] [Group G] [Finite G] [AddCommGroup V] [Module L V]
+    [FiniteDimensional L V]
+    (D : Chapter05RamificationFiltration G)
+    (hbij : Function.Bijective (chapter05HerbrandFunction D))
+    (ρ : Representation L G V) :
+    Nonempty (Chapter06RepresentationFixedSpaceChain D ρ) := by
+  classical
+  let U : ℝ → Subgroup G := chapter05UpperRamificationGroup D
+  let F : ℝ → Submodule L V :=
+    fun r => chapter06FixedSpace ρ (U r)
+  let R : ℝ → Submodule L V :=
+    fun r => chapter06FixedSpace ρ (chapter05UpperRightLimit D r)
+  have hUanti : Antitone U := by
+    simpa [U] using chapter05_upper_filtration_antitone D hbij
+  have hFmono : Monotone F := by
+    intro r s hrs
+    exact chapter06FixedSpace.antitone ρ (hUanti hrs)
+  have hright_mem : ∀ r : ℝ, ∃ w : ℝ, r < w ∧
+      U w = chapter05UpperRightLimit D r := by
+    intro r
+    let A : Set (Subgroup G) := U '' Set.Ioi r
+    have hA_nonempty : A.Nonempty := by
+      refine ⟨U (r + 1), ?_⟩
+      exact ⟨r + 1, by norm_num, rfl⟩
+    have hA_supClosed : SupClosed A := by
+      intro H hH K hK
+      rcases hH with ⟨x, hx, rfl⟩
+      rcases hK with ⟨y, hy, rfl⟩
+      by_cases hxy : x ≤ y
+      · rw [sup_eq_left.mpr (hUanti hxy)]
+        exact ⟨x, hx, rfl⟩
+      · have hyx : y ≤ x := le_of_not_ge hxy
+        rw [sup_eq_right.mpr (hUanti hyx)]
+        exact ⟨y, hy, rfl⟩
+    have hmem : sSup A ∈ A :=
+      hA_supClosed.sSup_mem_of_nonempty (Set.toFinite A) hA_nonempty
+        (by intro x hx; exact hx)
+    rcases hmem with ⟨w, hw, hUw⟩
+    exact ⟨w, hw, by simpa [A, U, chapter05UpperRightLimit, chapter05RightLimit] using hUw⟩
+  have hleft_mem : ∀ {r : ℝ}, 0 < r → ∃ u : ℝ, u < r ∧ U u = U r := by
+    intro r hr
+    let A : Set (Subgroup G) := U '' Set.Ioo (-1 : ℝ) r
+    have hA_nonempty : A.Nonempty := by
+      refine ⟨U (r / 2), ?_⟩
+      exact ⟨r / 2, by constructor <;> linarith, rfl⟩
+    have hA_infClosed : InfClosed A := by
+      intro H hH K hK
+      rcases hH with ⟨x, hx, rfl⟩
+      rcases hK with ⟨y, hy, rfl⟩
+      by_cases hxy : x ≤ y
+      · rw [inf_eq_right.mpr (hUanti hxy)]
+        exact ⟨y, hy, rfl⟩
+      · have hyx : y ≤ x := le_of_not_ge hxy
+        rw [inf_eq_left.mpr (hUanti hyx)]
+        exact ⟨x, hx, rfl⟩
+    have hmem : sInf A ∈ A :=
+      hA_infClosed.sInf_mem_of_nonempty (Set.toFinite A) hA_nonempty
+        (by intro x hx; exact hx)
+    rcases hmem with ⟨u, hu, hUu⟩
+    have hleft : U r = sInf A := by
+      simpa [A, U, chapter05LeftContinuousOnPositive] using
+        ((chapter05_upper_filtration_left_continuous_on_positive D hbij) r hr)
+    exact ⟨u, hu.2, hUu.trans hleft.symm⟩
+  have hright_upper : ∀ (r t : ℝ), r < t →
+      U t ≤ chapter05UpperRightLimit D r := by
+    intro r t hrt
+    change U t ≤ sSup (U '' Set.Ioi r)
+    exact le_sSup ⟨t, hrt, rfl⟩
+  have hright_anti : Antitone (fun r : ℝ => chapter05UpperRightLimit D r) := by
+    intro r s hrs
+    change sSup (U '' Set.Ioi s) ≤ sSup (U '' Set.Ioi r)
+    apply sSup_le
+    intro H hH
+    rcases hH with ⟨t, ht, rfl⟩
+    exact le_sSup ⟨t, lt_of_le_of_lt hrs ht, rfl⟩
+  have hRmono : Monotone R := by
+    intro r s hrs
+    exact chapter06FixedSpace.antitone ρ (hright_anti hrs)
+  have hcodim_fixed_eq {r s : ℝ} (h : F r = F s) :
+      chapter06UpperFixedSpaceCodim D ρ r =
+        chapter06UpperFixedSpaceCodim D ρ s := by
+    change Module.finrank L (V ⧸ F r) = Module.finrank L (V ⧸ F s)
+    rw [h]
+  have hfixed_eq_of_codim_eq {r s : ℝ} (hrs : r ≤ s)
+      (hcodim : chapter06UpperFixedSpaceCodim D ρ r =
+        chapter06UpperFixedSpaceCodim D ρ s) : F r = F s := by
+    apply Submodule.eq_of_le_of_finrank_eq (hFmono hrs)
+    change Module.finrank L (V ⧸ F r) = Module.finrank L (V ⧸ F s) at hcodim
+    have hrank_r := Submodule.finrank_quotient_add_finrank (F r)
+    have hrank_s := Submodule.finrank_quotient_add_finrank (F s)
+    omega
+  have hjump : ∀ {r : ℝ}, 0 < r →
+      (chapter06RepresentationUpperBreak D ρ r ↔ F r ≠ R r) := by
+    intro r hr
+    constructor
+    · intro hbreak
+      rcases hbreak with ⟨_, hcases⟩
+      rcases hcases with hzero | hpositive
+      · exfalso
+        linarith [hzero.1]
+      · intro hEq
+        obtain ⟨w₀, hw₀, hUw₀⟩ := hright_mem r
+        obtain ⟨u₀, hu₀, hUu₀⟩ := hleft_mem hr
+        let ε : ℝ := min (r - u₀) (w₀ - r)
+        have hε : 0 < ε := by
+          dsimp [ε]
+          exact lt_min (sub_pos.mpr hu₀) (sub_pos.mpr hw₀)
+        rcases hpositive.2 ε hε with
+          ⟨u, w, hu_left, hu_right, hw_left, hw_right, hcodim⟩
+        have hu₀u : u₀ ≤ u := by
+          have hmin : ε ≤ r - u₀ := min_le_left _ _
+          linarith
+        have huw : U u = U r := by
+          apply le_antisymm
+          · calc
+              U u ≤ U u₀ := hUanti hu₀u
+              _ = U r := hUu₀
+          · exact hUanti hu_right
+        have hww₀ : w ≤ w₀ := by
+          have hmin : ε ≤ w₀ - r := min_le_right _ _
+          linarith
+        have hww : U w = chapter05UpperRightLimit D r := by
+          apply le_antisymm
+          · exact (hright_upper r w hw_left)
+          · calc
+              chapter05UpperRightLimit D r = U w₀ := hUw₀.symm
+              _ ≤ U w := hUanti hww₀
+        apply hcodim
+        have hFu : F u = F r := by
+          dsimp [F]
+          rw [huw]
+        have hFw : F w = R r := by
+          dsimp [F, R]
+          rw [hww]
+        exact hcodim_fixed_eq (hFu.trans (hEq.trans hFw.symm))
+    · intro hne
+      refine ⟨hr.le, Or.inr ⟨hr, ?_⟩⟩
+      intro ε hε
+      obtain ⟨w₀, hw₀, hUw₀⟩ := hright_mem r
+      obtain ⟨u₀, hu₀, hUu₀⟩ := hleft_mem hr
+      let u := max u₀ (r - ε / 2)
+      let w := min w₀ (r + ε / 2)
+      have hu_left : r - ε < u := by
+        dsimp [u]
+        exact lt_of_lt_of_le (by linarith) (le_max_right _ _)
+      have hu_right : u ≤ r := by
+        dsimp [u]
+        exact max_le hu₀.le (by linarith)
+      have hw_left : r < w := by
+        dsimp [w]
+        exact lt_min hw₀ (by linarith)
+      have hw_right : w < r + ε := by
+        dsimp [w]
+        exact lt_of_le_of_lt (min_le_right _ _) (by linarith)
+      have hcodim :
+          chapter06UpperFixedSpaceCodim D ρ u ≠
+            chapter06UpperFixedSpaceCodim D ρ w := by
+        intro hcodim
+        have hFu : F u = F r := by
+          have hu₀u : u₀ ≤ u := by
+            dsimp [u]
+            exact le_max_left _ _
+          have huw : U u = U r := by
+            apply le_antisymm
+            · calc
+                U u ≤ U u₀ := hUanti hu₀u
+                _ = U r := hUu₀
+            · exact hUanti hu_right
+          dsimp [F]
+          rw [huw]
+        have hFw : F w = R r := by
+          have hww₀ : w ≤ w₀ := by
+            dsimp [w]
+            exact min_le_left _ _
+          have hww : U w = chapter05UpperRightLimit D r := by
+            apply le_antisymm
+            · exact hright_upper r w hw_left
+            · calc
+                chapter05UpperRightLimit D r = U w₀ := hUw₀.symm
+                _ ≤ U w := hUanti hww₀
+          dsimp [F, R]
+          rw [hww]
+        have hFuw : F u = F w :=
+          hfixed_eq_of_codim_eq (le_trans hu_right hw_left.le) hcodim
+        apply hne
+        exact hFu.symm.trans (hFuw.trans hFw)
+      exact ⟨u, w, hu_left, hu_right, hw_left, hw_right, hcodim⟩
+  let positiveBreaks : Finset ℝ :=
+    (chapter06RepresentationUpperBreakSet_finite D hbij ρ).toFinset.filter
+      (fun r => 0 < r)
+  have hpositiveBreaks_spec : ∀ r, r ∈ positiveBreaks ↔
+      0 < r ∧ chapter06RepresentationUpperBreak D ρ r := by
+    intro r
+    simp [positiveBreaks, chapter06RepresentationUpperBreakSet,
+      (chapter06RepresentationUpperBreakSet_finite D hbij ρ).mem_toFinset]
+    exact and_comm
+  have hlocal : ∀ {u w : ℝ}, 0 < u → u ≤ w →
+      (∀ r ∈ positiveBreaks, ¬(u ≤ r ∧ r < w)) → F u = F w := by
+    intro u w hu huw hno
+    by_contra hne
+    let S : Set ℝ := {x | u ≤ x ∧ x ≤ w ∧ F x = F u}
+    have huS : u ∈ S := by exact ⟨le_rfl, huw, rfl⟩
+    have hS_nonempty : S.Nonempty := ⟨u, huS⟩
+    have hS_bdd : BddAbove S := ⟨w, by intro x hx; exact hx.2.1⟩
+    let r : ℝ := sSup S
+    have hu_r : u ≤ r := by
+      exact le_csSup hS_bdd huS
+    have hr_w : r ≤ w := by
+      exact csSup_le hS_nonempty (by intro x hx; exact hx.2.1)
+    obtain ⟨q, hq_w, hUq⟩ := hleft_mem (lt_of_lt_of_le hu huw)
+    have hFq : F q = F w := by
+      dsimp [F]
+      rw [hUq]
+    have hq_upper : ∀ x ∈ S, x ≤ q := by
+      intro x hx
+      by_contra hqx
+      have hq_x : q ≤ x := le_of_not_ge hqx
+      have hchain : F u ≤ F q := by simpa [hFq] using hFmono huw
+      have hchain' : F q ≤ F x := hFmono hq_x
+      have hq_eq : F q = F u := by
+        apply le_antisymm
+        · calc F q ≤ F x := hchain'
+             _ = F u := hx.2.2
+        · exact hchain
+      exact hne (hFq.symm.trans hq_eq).symm
+    have hr_q : r ≤ q := csSup_le hS_nonempty hq_upper
+    have hr_lt_w : r < w := lt_of_le_of_lt hr_q hq_w
+    have hr_mem : r ∈ S := by
+      have hFr : F r = F u := by
+        by_contra hFr
+        obtain ⟨q', hq'_r, hUq'⟩ := hleft_mem (lt_of_lt_of_le hu hu_r)
+        have hFq' : F q' = F r := by
+          dsimp [F]
+          rw [hUq']
+        have hq'_upper : ∀ x ∈ S, x ≤ q' := by
+          intro x hx
+          by_contra hq'x
+          have hq'_x : q' ≤ x := le_of_not_ge hq'x
+          have hchain : F u ≤ F q' := by
+            simpa [hFq'] using hFmono hu_r
+          have hchain' : F q' ≤ F x := hFmono hq'_x
+          have hq'_eq : F q' = F u := by
+            apply le_antisymm
+            · calc F q' ≤ F x := hchain'
+                 _ = F u := hx.2.2
+            · exact hchain
+          exact hFr (hFq'.symm.trans hq'_eq)
+        have : r ≤ q' := csSup_le hS_nonempty hq'_upper
+        exact (not_lt_of_ge this) hq'_r
+      exact ⟨hu_r, hr_w, hFr⟩
+    have hnotbreak : ¬chapter06RepresentationUpperBreak D ρ r := by
+      intro hbreak
+      apply hno r
+      · exact (hpositiveBreaks_spec r).2 ⟨lt_of_lt_of_le hu hu_r, hbreak⟩
+      · exact ⟨hu_r, hr_lt_w⟩
+    have hFrR : F r = R r := by
+      by_contra hFrR
+      exact hnotbreak ((hjump (lt_of_lt_of_le hu hu_r)).2 hFrR)
+    obtain ⟨t, hrt, hUt⟩ := hright_mem r
+    have hFt : F t = F u := by
+      have hFtR : F t = R r := by
+        dsimp [F, R]
+        rw [hUt]
+      exact hFtR.trans (hFrR ▸ hr_mem.2.2)
+    by_cases htw : t ≤ w
+    · have htS : t ∈ S := ⟨hu_r.trans (le_of_lt hrt), htw, hFt⟩
+      have : t ≤ r := le_csSup hS_bdd htS
+      exact (not_lt_of_ge this) hrt
+    · have hwt : w < t := lt_of_not_ge htw
+      have hFw : F w = F u := by
+        apply le_antisymm
+        · calc F w ≤ F t := hFmono hwt.le
+             _ = F u := hFt
+        · exact hFmono huw
+      exact hne hFw.symm
+  obtain ⟨B, hB⟩ := D.lower_eventually_trivial
+  let b : ℕ := max B 1
+  have hbtriv : D.lowerGroup (b : ℝ) = ⊥ := hB b (le_max_left _ _)
+  have hbpos : 0 < b := lt_of_lt_of_le Nat.zero_lt_one (le_max_right _ _)
+  have hb_dom : (-1 : ℝ) ≤ (b : ℝ) := by
+    have hb_nonneg : (0 : ℝ) ≤ (b : ℝ) := by positivity
+    linarith
+  have hFbpos : 0 < chapter05HerbrandFunction D (b : ℝ) := by
+    have hstrict :=
+      (chapter05_herbrand_function_is_continuous_increasing_piecewise_linear D).2.1
+    have h := hstrict (by norm_num : (0 : ℝ) ∈ Set.Ici (-1))
+      hb_dom
+      (by exact_mod_cast hbpos)
+    simpa [chapter05_herbrand_function_zero D] using h
+  have hterminal : ∃ R₀ : ℝ, ∀ u : ℝ, R₀ < u → F u = ⊤ := by
+    refine ⟨chapter05HerbrandFunction D (b : ℝ), ?_⟩
+    intro u hu
+    have hu_pos : 0 < u := lt_of_lt_of_le hFbpos hu.le
+    have hspec := chapter05_herbrand_inverse_spec D hbij u
+    have hinv_dom : (-1 : ℝ) ≤ chapter05HerbrandInverse D u := by
+      by_contra hnot
+      have hinv_neg : chapter05HerbrandInverse D u < 0 := by linarith
+      have hzero := chapter05_herbrand_function_of_nonpositive D hinv_neg.le
+      linarith
+    have hb_inv : (b : ℝ) < chapter05HerbrandInverse D u := by
+      by_contra hnot
+      have hle : chapter05HerbrandInverse D u ≤ (b : ℝ) := le_of_not_gt hnot
+      have hFle : chapter05HerbrandFunction D
+          (chapter05HerbrandInverse D u) ≤ chapter05HerbrandFunction D (b : ℝ) := by
+        rcases lt_or_eq_of_le hle with hlt | heq
+        · exact ((chapter05_herbrand_function_is_continuous_increasing_piecewise_linear D).2.1
+            hinv_dom hb_dom hlt).le
+        · simpa [heq]
+      linarith
+    have hUbot : chapter05UpperRamificationGroup D u = ⊥ := by
+      rw [chapter05UpperRamificationGroup, if_pos (by linarith : (-1 : ℝ) ≤ u)]
+      apply le_antisymm
+      · rw [← hbtriv]
+        exact D.lower_antitone hb_inv.le
+      · exact bot_le
+    change chapter06FixedSpace ρ (chapter05UpperRamificationGroup D u) = ⊤
+    rw [hUbot]
+    change chapter06FixedSpace ρ (⊥ : Subgroup G) = ⊤
+    apply le_antisymm le_top
+    intro v hv
+    rw [chapter06FixedSpace.mem_iff]
+    intro h
+    have hh : (h : G) = 1 := Subgroup.mem_bot.mp h.property
+    change ρ (h : G) v = v
+    rw [hh, ρ.map_one]
+    rfl
+  let n : ℕ := positiveBreaks.card
+  let labels : Fin n → ℝ :=
+    positiveBreaks.orderEmbOfFin (by rfl)
+  have hlabels_strict : StrictMono labels := by
+    simpa [labels] using
+      (positiveBreaks.orderEmbOfFin (by rfl)).strictMono
+  have hlabels_mem : ∀ i : Fin n, labels i ∈ positiveBreaks := by
+    intro i
+    simpa [labels] using
+      positiveBreaks.orderEmbOfFin_mem (by rfl) i
+  have hlabels_surj : ∀ r, r ∈ positiveBreaks → ∃ i : Fin n, labels i = r := by
+    intro r hr
+    have hrange : Set.range labels = (positiveBreaks : Set ℝ) := by
+      simpa [labels] using positiveBreaks.range_orderEmbOfFin (by rfl)
+    have hrange_mem : r ∈ Set.range labels := by
+      rw [hrange]
+      exact hr
+    exact hrange_mem
+  let chain : Fin (n + 1) → Submodule L V :=
+    Fin.cases (R 0) (fun i => R (labels i))
+  have hchain_zero : chain 0 = R 0 := by
+    simp [chain]
+  have hchain_succ : ∀ i : Fin n, chain i.succ = R (labels i) := by
+    intro i
+    simp [chain]
+  have hchain_mono : Monotone chain := by
+    intro i
+    refine Fin.cases ?_ (fun i => ?_) i
+    · intro j
+      refine Fin.cases ?_ (fun j => ?_) j
+      · intro hij
+        exact le_rfl
+      · intro hij
+        simp [chain]
+        exact hRmono ((hpositiveBreaks_spec (labels j)).mp (hlabels_mem j)).1.le
+    · intro j
+      refine Fin.cases ?_ (fun j => ?_) j
+      · intro hij
+        exfalso
+        have hij' : (i.val + 1) ≤ 0 := Fin.le_iff_val_le_val.mp hij
+        omega
+      · intro hij
+        simp [chain]
+        apply hRmono
+        apply hlabels_strict.monotone
+        have hij' : (i.val + 1) ≤ (j.val + 1) :=
+          Fin.le_iff_val_le_val.mp hij
+        apply Fin.le_iff_val_le_val.mpr
+        omega
+  have hchain_last : chain (Fin.last n) = ⊤ := by
+    obtain hlast0 | ⟨iLast, hiLast⟩ := (Fin.last n).eq_zero_or_eq_succ
+    · have hn : n = 0 := by
+        have hv := congrArg Fin.val hlast0
+        simpa using hv
+      have hempty : positiveBreaks = ∅ := by
+        apply Finset.card_eq_zero.mp
+        simpa [n] using hn
+      obtain ⟨t, ht, hUt⟩ := hright_mem 0
+      obtain ⟨R₀, hR₀⟩ := hterminal
+      let W : ℝ := max (R₀ + 1) t
+      have hRW : R₀ < W := by
+        dsimp [W]
+        exact lt_of_lt_of_le (by linarith) (le_max_left _ _)
+      have htW : t ≤ W := by
+        dsimp [W]
+        exact le_max_right _ _
+      have hno : ∀ r ∈ positiveBreaks, ¬(t ≤ r ∧ r < W) := by
+        intro r hr
+        rw [hempty] at hr
+        exact False.elim (by simpa using hr)
+      have htw : F t = F W := hlocal ht htW hno
+      have hFt : F t = R 0 := by
+        dsimp [F, R]
+        rw [hUt]
+      have htop : F W = ⊤ := hR₀ W hRW
+      have hRtop : R 0 = ⊤ := hFt.symm.trans (htw.trans htop)
+      rw [hlast0, hchain_zero]
+      exact hRtop
+    · let rLast : ℝ := labels iLast
+      have hrLast : 0 < rLast := by
+        exact (hpositiveBreaks_spec rLast).mp (hlabels_mem iLast) |>.1
+      obtain ⟨t, ht, hUt⟩ := hright_mem rLast
+      obtain ⟨R₀, hR₀⟩ := hterminal
+      let W : ℝ := max (R₀ + 1) t
+      have hRW : R₀ < W := by
+        dsimp [W]
+        exact lt_of_lt_of_le (by linarith) (le_max_left _ _)
+      have htW : t ≤ W := by
+        dsimp [W]
+        exact le_max_right _ _
+      have hbreak_le : ∀ r, r ∈ positiveBreaks → r ≤ rLast := by
+        intro r hr
+        obtain ⟨j, hj⟩ := hlabels_surj r hr
+        have hjsucc : j.succ ≤ Fin.last n := Fin.le_last _
+        rw [hiLast] at hjsucc
+        have hji' : j.val.succ ≤ iLast.val.succ :=
+          Fin.le_iff_val_le_val.mp hjsucc
+        have hji : j ≤ iLast := by
+          apply Fin.le_iff_val_le_val.mpr
+          exact Nat.succ_le_succ_iff.mp hji'
+        have hlabel := hlabels_strict.monotone hji
+        simpa [rLast, hj] using hlabel
+      have hno : ∀ r ∈ positiveBreaks, ¬(t ≤ r ∧ r < W) := by
+        intro r hr htr
+        have hrlast := hbreak_le r hr
+        linarith
+      have htpos : 0 < t := lt_trans hrLast ht
+      have htw : F t = F W := hlocal htpos htW hno
+      have hFt : F t = R rLast := by
+        dsimp [F, R]
+        rw [hUt]
+      have htop : F W = ⊤ := hR₀ W hRW
+      have hRtop : R rLast = ⊤ := hFt.symm.trans (htw.trans htop)
+      rw [hiLast, hchain_succ]
+      exact hRtop
+  have htelescopes : ∀ (m : ℕ) (c : Fin (m + 1) → Submodule L V),
+      Monotone c →
+      Module.finrank L (c (Fin.last m)) =
+        Module.finrank L (c 0) +
+          ∑ i : Fin m,
+            (Module.finrank L (c i.succ) -
+              Module.finrank L (c i.castSucc)) := by
+    intro m
+    induction m with
+    | zero =>
+        intro c hc
+        simp
+    | succ m ih =>
+        intro c hc
+        let c' : Fin (m + 1) → Submodule L V := fun i => c i.castSucc
+        have hc' : Monotone c' := by
+          intro i j hij
+          exact hc (Fin.le_iff_val_le_val.mpr (Fin.le_iff_val_le_val.mp hij))
+        have hi := ih c' hc'
+        have hle : Module.finrank L (c (Fin.last m).castSucc) ≤
+            Module.finrank L (c (Fin.last m).succ) := by
+          apply Submodule.finrank_mono
+          have hfin : (Fin.last m).castSucc ≤ (Fin.last m).succ := by
+            apply Fin.le_iff_val_le_val.mpr
+            simp
+          exact hc hfin
+        rw [Fin.sum_univ_castSucc]
+        dsimp [c'] at hi
+        have hlast : (Fin.last (m + 1) : Fin (m + 1 + 1)) = (Fin.last m).succ := by
+          apply Fin.ext
+          simp
+        rw [hlast]
+        calc
+          Module.finrank L (c (Fin.last m).succ) =
+              Module.finrank L (c (Fin.last m).castSucc) +
+                (Module.finrank L (c (Fin.last m).succ) -
+                  Module.finrank L (c (Fin.last m).castSucc)) := by
+            symm
+            exact Nat.add_sub_of_le hle
+          _ = (Module.finrank L (c 0) +
+                ∑ i : Fin m,
+                  (Module.finrank L (c i.castSucc.succ) -
+                    Module.finrank L (c i.castSucc.castSucc))) +
+                  (Module.finrank L (c (Fin.last m).succ) -
+                  Module.finrank L (c (Fin.last m).castSucc)) := by
+            simp only [hi]
+            rfl
+          _ = Module.finrank L (c 0) +
+                (∑ i : Fin m,
+                  (Module.finrank L (c i.castSucc.succ) -
+                    Module.finrank L (c i.castSucc.castSucc)) +
+                  (Module.finrank L (c (Fin.last m).succ) -
+                    Module.finrank L (c (Fin.last m).castSucc))) := by
+            simp [Nat.add_assoc]
+  refine ⟨{
+    positiveBreaks := positiveBreaks
+    positiveBreaks_spec := hpositiveBreaks_spec
+    fixed_space_jump_iff := by
+      intro r hr
+      exact hjump hr
+    fixed_space_monotone := hFmono
+    locally_constant_off_breaks := by
+      intro u w hu huw hno
+      exact hlocal hu huw hno
+    terminal_fixed_space := hterminal
+    sorted_chain_telescopes := by
+      refine ⟨n, chain, labels, ?_, ?_, hchain_last, hlabels_strict,
+        hlabels_mem, hlabels_surj, hchain_mono, ?_⟩
+      · exact hchain_zero
+      · exact hchain_succ
+      · have htel := htelescopes n chain hchain_mono
+        rw [hchain_last] at htel
+        simpa using htel
+  }⟩
 
 /-!
 The two conductor functionals used later are evaluated on the finite profile.

@@ -171,7 +171,6 @@ structure Chapter05NormInclusionArtinSquare
   artinL : C_L →* G_L
   norm : C_L →* C_K
   inclusion : G_L →* G_K
-  inclusion_injective : Function.Injective inclusion
   commutes : artinK.comp norm = inclusion.comp artinL
 
 theorem chapter05_norm_corresponds_to_galois_inclusion

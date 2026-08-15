@@ -13,6 +13,14 @@ universe u v
 
 /-! ## 6.4 Rank and related invariants -/
 
+local instance chapter06SumLinearOrder (α : Type*) [LinearOrder α] :
+    LinearOrder (α ⊕ Unit) :=
+  LinearOrder.lift' (toLex : (α ⊕ Unit) ≃ (α ⊕ₗ Unit)) toLex.injective
+
+local instance chapter06SumPreorder (α : Type*) [LinearOrder α] :
+    Preorder (α ⊕ Unit) :=
+  (chapter06SumLinearOrder α).toPreorder
+
 theorem fiberRank_isLocallyConstant
     {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M]
     [Module.FinitePresentation R M] [Module.Flat R M] :
@@ -398,11 +406,1670 @@ private theorem determinantCoefficientIdeal_baseChange
         determinantCoefficientIdeal_baseChange_pi
           (A := A) (B := B) (n := n) (m := m) k f
 
+private theorem determinantCoefficientIdeal_succ_le_pi
+    {R : Type*} [CommRing R] (n m k : ℕ)
+    (f : (Fin n → R) →ₗ[R] (Fin m → R)) :
+    determinantCoefficientIdeal (R := R) (k + 1) f ≤
+      determinantCoefficientIdeal (R := R) k f := by
+  classical
+  let bU := (Pi.basisFun R (Fin n)).exteriorPower (k + 1)
+  let bV := (Pi.basisFun R (Fin m)).exteriorPower (k + 1)
+  let bU' := (Pi.basisFun R (Fin n)).exteriorPower k
+  let bV' := (Pi.basisFun R (Fin m)).exteriorPower k
+  rw [determinantCoefficientIdeal_eq_span_basisCoords (k + 1) f bU bV,
+    determinantCoefficientIdeal_eq_span_basisCoords k f bU' bV']
+  apply Ideal.span_le.mpr
+  rintro a ⟨i, j, rfl⟩
+  simp [bU, bV, bU', bV', exteriorPower.basis_coord,
+    exteriorPower.ιMultiDual_apply_ιMulti, exteriorPower.basis_apply,
+    exteriorPower.ιMulti_family, determinantMap]
+  rw [Matrix.det_succ_row _ 0]
+  apply Ideal.sum_mem
+  intro l hl
+  apply Ideal.mul_mem_left
+  let eI := Set.powersetCard.ofFinEmbEquiv.symm i
+  let eJ := Set.powersetCard.ofFinEmbEquiv.symm j
+  let i' := Set.powersetCard.ofFinEmb k _ ((Fin.succAboveOrderEmb 0).trans eI).toEmbedding
+  let j' := Set.powersetCard.ofFinEmb k _ ((Fin.succAboveOrderEmb l).trans eJ).toEmbedding
+  have hi : Set.powersetCard.ofFinEmbEquiv.symm i' =
+      (Fin.succAboveOrderEmb 0).trans eI := by
+    rw [Set.powersetCard.ofFinEmbEquiv_symm_apply]
+    symm
+    apply Finset.orderEmbOfFin_unique' i'.prop
+    intro x
+    simp [i']
+  have hj : Set.powersetCard.ofFinEmbEquiv.symm j' =
+      (Fin.succAboveOrderEmb l).trans eJ := by
+    rw [Set.powersetCard.ofFinEmbEquiv_symm_apply]
+    symm
+    apply Finset.orderEmbOfFin_unique' j'.prop
+    intro x
+    simp [j']
+  apply Ideal.subset_span
+  refine ⟨i'.val, i'.prop, j'.val, j'.prop, ?_⟩
+  simp [hi, hj, eI, eJ, Matrix.submatrix, Matrix.of_apply]
+
+private theorem determinantCoordinate_prod_succ
+    {R U V : Type*} [CommRing R]
+    [AddCommGroup U] [Module R U] [AddCommGroup V] [Module R V]
+    {ι κ : Type*} [Fintype ι] [LinearOrder ι] [Fintype κ] [LinearOrder κ]
+    (bU : Module.Basis ι R U) (bV : Module.Basis κ R V)
+    (k : ℕ) (f : U →ₗ[R] V)
+    (s : Set.powersetCard ι k) (t : Set.powersetCard κ k) :
+    letI : LinearOrder (ι ⊕ Unit) :=
+      LinearOrder.lift' (toLex : (ι ⊕ Unit) ≃ (ι ⊕ₗ Unit)) toLex.injective
+    letI : LinearOrder (κ ⊕ Unit) :=
+      LinearOrder.lift' (toLex : (κ ⊕ Unit) ≃ (κ ⊕ₗ Unit)) toLex.injective
+    let bU1 := bU.prod (Module.Basis.singleton Unit R)
+    let bV1 := bV.prod (Module.Basis.singleton Unit R)
+    let s1 : Set.powersetCard (ι ⊕ Unit) (k + 1) :=
+      ⟨s.val.disjSum {()}, by simp⟩
+    let t1 : Set.powersetCard (κ ⊕ Unit) (k + 1) :=
+      ⟨t.val.disjSum {()}, by simp⟩
+    (bV1.exteriorPower (k + 1)).coord t1
+        (determinantMap (k + 1) (f.prodMap (LinearMap.id : R →ₗ[R] R))
+          (bU1.exteriorPower (k + 1) s1)) =
+      (bV.exteriorPower k).coord t
+        (determinantMap k f (bU.exteriorPower k s)) := by
+  classical
+  dsimp
+  let bU1 := bU.prod (Module.Basis.singleton Unit R)
+  let bV1 := bV.prod (Module.Basis.singleton Unit R)
+  let s1 : Set.powersetCard (ι ⊕ Unit) (k + 1) :=
+    ⟨s.val.disjSum {()}, by simp⟩
+  let t1 : Set.powersetCard (κ ⊕ Unit) (k + 1) :=
+    ⟨t.val.disjSum {()}, by simp⟩
+  let eS : Fin k ↪o ι := Set.powersetCard.ofFinEmbEquiv.symm s
+  let eT : Fin k ↪o κ := Set.powersetCard.ofFinEmbEquiv.symm t
+  let E : Fin (k + 1) → (ι ⊕ Unit) :=
+    Fin.snoc (fun x => Sum.inl (eS x)) (Sum.inr ())
+  let F : Fin (k + 1) → (κ ⊕ Unit) :=
+    Fin.snoc (fun x => Sum.inl (eT x)) (Sum.inr ())
+  have hE : StrictMono E := by
+    intro a b hab
+    induction a using Fin.lastCases with
+    | last =>
+        exact False.elim ((not_lt_of_ge (Fin.le_last b)) hab)
+    | cast a =>
+        induction b using Fin.lastCases with
+        | last =>
+            simp only [E, Fin.snoc_castSucc, Fin.snoc_last]
+            change toLex (Sum.inl (eS a)) < toLex (Sum.inr ())
+            exact Sum.Lex.inl_lt_inr _ _
+        | cast b =>
+            have hab' : a < b := by simpa using hab
+            simp only [E, Fin.snoc_castSucc]
+            change toLex (Sum.inl (eS a)) < toLex (Sum.inl (eS b))
+            exact (Sum.Lex.inl_lt_inl_iff).2 (eS.strictMono hab')
+  have hF : StrictMono F := by
+    intro a b hab
+    induction a using Fin.lastCases with
+    | last =>
+        exact False.elim ((not_lt_of_ge (Fin.le_last b)) hab)
+    | cast a =>
+        induction b using Fin.lastCases with
+        | last =>
+            simp only [F, Fin.snoc_castSucc, Fin.snoc_last]
+            change toLex (Sum.inl (eT a)) < toLex (Sum.inr ())
+            exact Sum.Lex.inl_lt_inr _ _
+        | cast b =>
+            have hab' : a < b := by simpa using hab
+            simp only [F, Fin.snoc_castSucc]
+            change toLex (Sum.inl (eT a)) < toLex (Sum.inl (eT b))
+            exact (Sum.Lex.inl_lt_inl_iff).2 (eT.strictMono hab')
+  let Eo := OrderEmbedding.ofStrictMono E hE
+  let Fo := OrderEmbedding.ofStrictMono F hF
+  have hS : Set.powersetCard.ofFinEmbEquiv.symm s1 = Eo := by
+    rw [Set.powersetCard.ofFinEmbEquiv_symm_apply]
+    symm
+    apply Finset.orderEmbOfFin_unique' s1.prop
+    intro x
+    cases x using Fin.lastCases with
+    | last =>
+        have he : Eo (Fin.last k) = Sum.inr () := by simp [Eo, E]
+        rw [he]
+        simp [s1]
+    | cast i =>
+        have hi :=
+          (Set.powersetCard.mem_range_ofFinEmbEquiv_symm_iff_mem s (eS i)).mp
+            ⟨i, rfl⟩
+        have he : Eo i.castSucc = Sum.inl (eS i) := by simp [Eo, E]
+        rw [he]
+        simpa [s1, Set.powersetCard.mem_coe_iff] using hi
+  have hT : Set.powersetCard.ofFinEmbEquiv.symm t1 = Fo := by
+    rw [Set.powersetCard.ofFinEmbEquiv_symm_apply]
+    symm
+    apply Finset.orderEmbOfFin_unique' t1.prop
+    intro x
+    cases x using Fin.lastCases with
+    | last =>
+        have he : Fo (Fin.last k) = Sum.inr () := by simp [Fo, F]
+        rw [he]
+        simp [t1]
+    | cast i =>
+        have hi :=
+          (Set.powersetCard.mem_range_ofFinEmbEquiv_symm_iff_mem t (eT i)).mp
+            ⟨i, rfl⟩
+        have he : Fo i.castSucc = Sum.inl (eT i) := by simp [Fo, F]
+        rw [he]
+        simpa [t1, Set.powersetCard.mem_coe_iff] using hi
+  change (bV1.exteriorPower (k + 1)).coord t1
+      (determinantMap (k + 1) (f.prodMap (LinearMap.id : R →ₗ[R] R))
+        (bU1.exteriorPower (k + 1) s1)) =
+    (bV.exteriorPower k).coord t
+      (determinantMap k f (bU.exteriorPower k s))
+  simp [exteriorPower.basis_coord, exteriorPower.ιMultiDual_apply_ιMulti,
+    exteriorPower.basis_apply, exteriorPower.ιMulti_family, determinantMap]
+  rw [hS, hT]
+  rw [Matrix.det_succ_row _ (Fin.last k)]
+  simp [Fin.sum_univ_castSucc, bU1, bV1, Eo, Fo, E, F, eS, eT,
+    Module.Basis.prod_apply, Module.Basis.singleton_repr,
+    Module.Basis.prod_repr_inl, Module.Basis.prod_repr_inr,
+    Matrix.submatrix, Matrix.of_apply]
+
+private theorem determinantCoordinate_prod_empty
+    {R U V : Type*} [CommRing R]
+    [AddCommGroup U] [Module R U] [AddCommGroup V] [Module R V]
+    {ι κ : Type*} [Fintype ι] [LinearOrder ι] [Fintype κ] [LinearOrder κ]
+    (bU : Module.Basis ι R U) (bV : Module.Basis κ R V)
+    (k : ℕ) (f : U →ₗ[R] V)
+    (s : Set.powersetCard ι k) (t : Set.powersetCard κ k) :
+    letI : LinearOrder (ι ⊕ Unit) :=
+      LinearOrder.lift' (toLex : (ι ⊕ Unit) ≃ (ι ⊕ₗ Unit)) toLex.injective
+    letI : LinearOrder (κ ⊕ Unit) :=
+      LinearOrder.lift' (toLex : (κ ⊕ Unit) ≃ (κ ⊕ₗ Unit)) toLex.injective
+    let bU1 := bU.prod (Module.Basis.singleton Unit R)
+    let bV1 := bV.prod (Module.Basis.singleton Unit R)
+    let s1 : Set.powersetCard (ι ⊕ Unit) k :=
+      ⟨s.val.disjSum ∅, by simp⟩
+    let t1 : Set.powersetCard (κ ⊕ Unit) k :=
+      ⟨t.val.disjSum ∅, by simp⟩
+    (bV1.exteriorPower k).coord t1
+        (determinantMap k (f.prodMap (LinearMap.id : R →ₗ[R] R))
+          (bU1.exteriorPower k s1)) =
+      (bV.exteriorPower k).coord t
+        (determinantMap k f (bU.exteriorPower k s)) := by
+  classical
+  dsimp
+  let bU1 := bU.prod (Module.Basis.singleton Unit R)
+  let bV1 := bV.prod (Module.Basis.singleton Unit R)
+  let s1 : Set.powersetCard (ι ⊕ Unit) k :=
+    ⟨s.val.disjSum ∅, by simp⟩
+  let t1 : Set.powersetCard (κ ⊕ Unit) k :=
+    ⟨t.val.disjSum ∅, by simp⟩
+  let eS : Fin k ↪o ι := Set.powersetCard.ofFinEmbEquiv.symm s
+  let eT : Fin k ↪o κ := Set.powersetCard.ofFinEmbEquiv.symm t
+  let E : Fin k → (ι ⊕ Unit) := fun x => Sum.inl (eS x)
+  let F : Fin k → (κ ⊕ Unit) := fun x => Sum.inl (eT x)
+  have hE : StrictMono E := by
+    intro a b hab
+    simp only [E]
+    change toLex (Sum.inl (eS a)) < toLex (Sum.inl (eS b))
+    exact (Sum.Lex.inl_lt_inl_iff).2 (eS.strictMono hab)
+  have hF : StrictMono F := by
+    intro a b hab
+    simp only [F]
+    change toLex (Sum.inl (eT a)) < toLex (Sum.inl (eT b))
+    exact (Sum.Lex.inl_lt_inl_iff).2 (eT.strictMono hab)
+  let Eo := OrderEmbedding.ofStrictMono E hE
+  let Fo := OrderEmbedding.ofStrictMono F hF
+  have hS : Set.powersetCard.ofFinEmbEquiv.symm s1 = Eo := by
+    rw [Set.powersetCard.ofFinEmbEquiv_symm_apply]
+    symm
+    apply Finset.orderEmbOfFin_unique' s1.prop
+    intro x
+    have hi :=
+      (Set.powersetCard.mem_range_ofFinEmbEquiv_symm_iff_mem s (eS x)).mp
+        ⟨x, rfl⟩
+    simpa [Eo, E, s1, Set.powersetCard.mem_coe_iff] using hi
+  have hT : Set.powersetCard.ofFinEmbEquiv.symm t1 = Fo := by
+    rw [Set.powersetCard.ofFinEmbEquiv_symm_apply]
+    symm
+    apply Finset.orderEmbOfFin_unique' t1.prop
+    intro x
+    have hi :=
+      (Set.powersetCard.mem_range_ofFinEmbEquiv_symm_iff_mem t (eT x)).mp
+        ⟨x, rfl⟩
+    simpa [Fo, F, t1, Set.powersetCard.mem_coe_iff] using hi
+  change (bV1.exteriorPower k).coord t1
+      (determinantMap k (f.prodMap (LinearMap.id : R →ₗ[R] R))
+        (bU1.exteriorPower k s1)) =
+    (bV.exteriorPower k).coord t
+      (determinantMap k f (bU.exteriorPower k s))
+  simp [hS, hT, bU1, bV1, Eo, Fo, E, F, eS, eT,
+    exteriorPower.basis_coord, exteriorPower.basis_apply,
+    exteriorPower.ιMulti_family, determinantMap, Module.Basis.prod_apply,
+    Module.Basis.prod_repr_inl]
+
+private theorem determinantCoordinate_prod_empty_singleton
+    {R U V : Type*} [CommRing R]
+    [AddCommGroup U] [Module R U] [AddCommGroup V] [Module R V]
+    {ι κ : Type*} [Fintype ι] [LinearOrder ι] [Fintype κ] [LinearOrder κ]
+    (bU : Module.Basis ι R U) (bV : Module.Basis κ R V)
+    (k : ℕ) (f : U →ₗ[R] V)
+    (s : Set.powersetCard ι (k + 1)) (t : Set.powersetCard κ k) :
+    letI : LinearOrder (ι ⊕ Unit) :=
+      LinearOrder.lift' (toLex : (ι ⊕ Unit) ≃ (ι ⊕ₗ Unit)) toLex.injective
+    letI : LinearOrder (κ ⊕ Unit) :=
+      LinearOrder.lift' (toLex : (κ ⊕ Unit) ≃ (κ ⊕ₗ Unit)) toLex.injective
+    let bU1 := bU.prod (Module.Basis.singleton Unit R)
+    let bV1 := bV.prod (Module.Basis.singleton Unit R)
+    let s1 : Set.powersetCard (ι ⊕ Unit) (k + 1) :=
+      ⟨s.val.disjSum ∅, by simp⟩
+    let t1 : Set.powersetCard (κ ⊕ Unit) (k + 1) :=
+      ⟨t.val.disjSum {()}, by simp⟩
+    (bV1.exteriorPower (k + 1)).coord t1
+        (determinantMap (k + 1) (f.prodMap (LinearMap.id : R →ₗ[R] R))
+          (bU1.exteriorPower (k + 1) s1)) = 0 := by
+  classical
+  dsimp
+  let bU1 := bU.prod (Module.Basis.singleton Unit R)
+  let bV1 := bV.prod (Module.Basis.singleton Unit R)
+  let s1 : Set.powersetCard (ι ⊕ Unit) (k + 1) :=
+    ⟨s.val.disjSum ∅, by simp⟩
+  let t1 : Set.powersetCard (κ ⊕ Unit) (k + 1) :=
+    ⟨t.val.disjSum {()}, by simp⟩
+  let eS : Fin (k + 1) ↪o ι := Set.powersetCard.ofFinEmbEquiv.symm s
+  let eT : Fin k ↪o κ := Set.powersetCard.ofFinEmbEquiv.symm t
+  let E : Fin (k + 1) → (ι ⊕ Unit) := fun x => Sum.inl (eS x)
+  let F : Fin (k + 1) → (κ ⊕ Unit) :=
+    Fin.snoc (fun x => Sum.inl (eT x)) (Sum.inr ())
+  have hE : StrictMono E := by
+    intro a b hab
+    simp only [E]
+    change toLex (Sum.inl (eS a)) < toLex (Sum.inl (eS b))
+    exact (Sum.Lex.inl_lt_inl_iff).2 (eS.strictMono hab)
+  have hF : StrictMono F := by
+    intro a b hab
+    induction a using Fin.lastCases with
+    | last =>
+        exact False.elim ((not_lt_of_ge (Fin.le_last b)) hab)
+    | cast a =>
+        induction b using Fin.lastCases with
+        | last =>
+            simp only [F, Fin.snoc_castSucc, Fin.snoc_last]
+            change toLex (Sum.inl (eT a)) < toLex (Sum.inr ())
+            exact Sum.Lex.inl_lt_inr _ _
+        | cast b =>
+            have hab' : a < b := by simpa using hab
+            simp only [F, Fin.snoc_castSucc]
+            change toLex (Sum.inl (eT a)) < toLex (Sum.inl (eT b))
+            exact (Sum.Lex.inl_lt_inl_iff).2 (eT.strictMono hab')
+  let Eo := OrderEmbedding.ofStrictMono E hE
+  let Fo := OrderEmbedding.ofStrictMono F hF
+  have hS : Set.powersetCard.ofFinEmbEquiv.symm s1 = Eo := by
+    rw [Set.powersetCard.ofFinEmbEquiv_symm_apply]
+    symm
+    apply Finset.orderEmbOfFin_unique' s1.prop
+    intro x
+    have hi :=
+      (Set.powersetCard.mem_range_ofFinEmbEquiv_symm_iff_mem s (eS x)).mp
+        ⟨x, rfl⟩
+    simpa [Eo, E, s1, Set.powersetCard.mem_coe_iff] using hi
+  have hT : Set.powersetCard.ofFinEmbEquiv.symm t1 = Fo := by
+    rw [Set.powersetCard.ofFinEmbEquiv_symm_apply]
+    symm
+    apply Finset.orderEmbOfFin_unique' t1.prop
+    intro x
+    cases x using Fin.lastCases with
+    | last =>
+        have he : Fo (Fin.last k) = Sum.inr () := by simp [Fo, F]
+        rw [he]
+        simp [t1]
+    | cast i =>
+        have hi :=
+          (Set.powersetCard.mem_range_ofFinEmbEquiv_symm_iff_mem t (eT i)).mp
+            ⟨i, rfl⟩
+        have he : Fo i.castSucc = Sum.inl (eT i) := by simp [Fo, F]
+        rw [he]
+        simpa [t1, Set.powersetCard.mem_coe_iff] using hi
+  change (bV1.exteriorPower (k + 1)).coord t1
+      (determinantMap (k + 1) (f.prodMap (LinearMap.id : R →ₗ[R] R))
+        (bU1.exteriorPower (k + 1) s1)) = 0
+  simp [exteriorPower.basis_coord, exteriorPower.ιMultiDual_apply_ιMulti,
+    exteriorPower.basis_apply, exteriorPower.ιMulti_family, determinantMap]
+  rw [hS, hT]
+  apply Matrix.det_eq_zero_of_column_eq_zero (Fin.last k)
+  intro i
+  simp [bU1, bV1, Eo, Fo, E, F, eS, eT,
+    Module.Basis.prod_apply, Module.Basis.prod_repr_inr]
+
+private theorem determinantCoordinate_prod_singleton_empty
+    {R U V : Type*} [CommRing R]
+    [AddCommGroup U] [Module R U] [AddCommGroup V] [Module R V]
+    {ι κ : Type*} [Fintype ι] [LinearOrder ι] [Fintype κ] [LinearOrder κ]
+    (bU : Module.Basis ι R U) (bV : Module.Basis κ R V)
+    (k : ℕ) (f : U →ₗ[R] V)
+    (s : Set.powersetCard ι k) (t : Set.powersetCard κ (k + 1)) :
+    letI : LinearOrder (ι ⊕ Unit) :=
+      LinearOrder.lift' (toLex : (ι ⊕ Unit) ≃ (ι ⊕ₗ Unit)) toLex.injective
+    letI : LinearOrder (κ ⊕ Unit) :=
+      LinearOrder.lift' (toLex : (κ ⊕ Unit) ≃ (κ ⊕ₗ Unit)) toLex.injective
+    let bU1 := bU.prod (Module.Basis.singleton Unit R)
+    let bV1 := bV.prod (Module.Basis.singleton Unit R)
+    let s1 : Set.powersetCard (ι ⊕ Unit) (k + 1) :=
+      ⟨s.val.disjSum {()}, by simp⟩
+    let t1 : Set.powersetCard (κ ⊕ Unit) (k + 1) :=
+      ⟨t.val.disjSum ∅, by simp⟩
+    (bV1.exteriorPower (k + 1)).coord t1
+        (determinantMap (k + 1) (f.prodMap (LinearMap.id : R →ₗ[R] R))
+          (bU1.exteriorPower (k + 1) s1)) = 0 := by
+  classical
+  dsimp
+  let bU1 := bU.prod (Module.Basis.singleton Unit R)
+  let bV1 := bV.prod (Module.Basis.singleton Unit R)
+  let s1 : Set.powersetCard (ι ⊕ Unit) (k + 1) :=
+    ⟨s.val.disjSum {()}, by simp⟩
+  let t1 : Set.powersetCard (κ ⊕ Unit) (k + 1) :=
+    ⟨t.val.disjSum ∅, by simp⟩
+  let eS : Fin k ↪o ι := Set.powersetCard.ofFinEmbEquiv.symm s
+  let eT : Fin (k + 1) ↪o κ := Set.powersetCard.ofFinEmbEquiv.symm t
+  let E : Fin (k + 1) → (ι ⊕ Unit) :=
+    Fin.snoc (fun x => Sum.inl (eS x)) (Sum.inr ())
+  let F : Fin (k + 1) → (κ ⊕ Unit) := fun x => Sum.inl (eT x)
+  have hE : StrictMono E := by
+    intro a b hab
+    induction a using Fin.lastCases with
+    | last =>
+        exact False.elim ((not_lt_of_ge (Fin.le_last b)) hab)
+    | cast a =>
+        induction b using Fin.lastCases with
+        | last =>
+            simp only [E, Fin.snoc_castSucc, Fin.snoc_last]
+            change toLex (Sum.inl (eS a)) < toLex (Sum.inr ())
+            exact Sum.Lex.inl_lt_inr _ _
+        | cast b =>
+            have hab' : a < b := by simpa using hab
+            simp only [E, Fin.snoc_castSucc]
+            change toLex (Sum.inl (eS a)) < toLex (Sum.inl (eS b))
+            exact (Sum.Lex.inl_lt_inl_iff).2 (eS.strictMono hab')
+  have hF : StrictMono F := by
+    intro a b hab
+    simp only [F]
+    change toLex (Sum.inl (eT a)) < toLex (Sum.inl (eT b))
+    exact (Sum.Lex.inl_lt_inl_iff).2 (eT.strictMono hab)
+  let Eo := OrderEmbedding.ofStrictMono E hE
+  let Fo := OrderEmbedding.ofStrictMono F hF
+  have hS : Set.powersetCard.ofFinEmbEquiv.symm s1 = Eo := by
+    rw [Set.powersetCard.ofFinEmbEquiv_symm_apply]
+    symm
+    apply Finset.orderEmbOfFin_unique' s1.prop
+    intro x
+    cases x using Fin.lastCases with
+    | last =>
+        have he : Eo (Fin.last k) = Sum.inr () := by simp [Eo, E]
+        rw [he]
+        simp [s1]
+    | cast i =>
+        have hi :=
+          (Set.powersetCard.mem_range_ofFinEmbEquiv_symm_iff_mem s (eS i)).mp
+            ⟨i, rfl⟩
+        have he : Eo i.castSucc = Sum.inl (eS i) := by simp [Eo, E]
+        rw [he]
+        simpa [s1, Set.powersetCard.mem_coe_iff] using hi
+  have hT : Set.powersetCard.ofFinEmbEquiv.symm t1 = Fo := by
+    rw [Set.powersetCard.ofFinEmbEquiv_symm_apply]
+    symm
+    apply Finset.orderEmbOfFin_unique' t1.prop
+    intro x
+    have hi :=
+      (Set.powersetCard.mem_range_ofFinEmbEquiv_symm_iff_mem t (eT x)).mp
+        ⟨x, rfl⟩
+    simpa [Fo, F, t1, Set.powersetCard.mem_coe_iff] using hi
+  change (bV1.exteriorPower (k + 1)).coord t1
+      (determinantMap (k + 1) (f.prodMap (LinearMap.id : R →ₗ[R] R))
+        (bU1.exteriorPower (k + 1) s1)) = 0
+  simp [exteriorPower.basis_coord, exteriorPower.ιMultiDual_apply_ιMulti,
+    exteriorPower.basis_apply, exteriorPower.ιMulti_family, determinantMap]
+  rw [hS, hT]
+  apply Matrix.det_eq_zero_of_row_eq_zero (Fin.last k)
+  intro j
+  simp [bU1, bV1, Eo, Fo, E, F, eS, eT,
+    Module.Basis.prod_apply, Module.Basis.prod_repr_inl]
+
+private theorem determinantCoefficientIdeal_prodMap_succ
+    {R U V : Type*} [CommRing R]
+    [AddCommGroup U] [Module R U] [AddCommGroup V] [Module R V]
+    {ι κ : Type*} [Fintype ι] [LinearOrder ι] [Fintype κ] [LinearOrder κ]
+    (bU : Module.Basis ι R U) (bV : Module.Basis κ R V)
+    (k : ℕ) (f : U →ₗ[R] V)
+    (hmono : determinantCoefficientIdeal (R := R) (k + 1) f ≤
+      determinantCoefficientIdeal (R := R) k f) :
+    determinantCoefficientIdeal (R := R) (k + 1)
+        (f.prodMap (LinearMap.id : R →ₗ[R] R)) =
+      determinantCoefficientIdeal (R := R) k f := by
+  classical
+  let bU1 := bU.prod (Module.Basis.singleton Unit R)
+  let bV1 := bV.prod (Module.Basis.singleton Unit R)
+  rw [determinantCoefficientIdeal_eq_span_basisCoords (k + 1)
+      (f.prodMap (LinearMap.id : R →ₗ[R] R))
+      (bU1.exteriorPower (k + 1)) (bV1.exteriorPower (k + 1)),
+    determinantCoefficientIdeal_eq_span_basisCoords k f
+      (bU.exteriorPower k) (bV.exteriorPower k)]
+  apply le_antisymm
+  · apply Ideal.span_le.mpr
+    rintro a ⟨s, t, rfl⟩
+    have hs_right : s.val.toRight = ∅ ∨ s.val.toRight = {()} := by
+      by_cases h : () ∈ s.val.toRight
+      · right
+        ext x
+        cases x
+        simp [h]
+      · left
+        ext x
+        cases x
+        simp [h]
+    have ht_right : t.val.toRight = ∅ ∨ t.val.toRight = {()} := by
+      by_cases h : () ∈ t.val.toRight
+      · right
+        ext x
+        cases x
+        simp [h]
+      · left
+        ext x
+        cases x
+        simp [h]
+    rcases hs_right with hs_right | hs_right <;>
+      rcases ht_right with ht_right | ht_right
+    · let s0 : Set.powersetCard ι (k + 1) :=
+        ⟨s.val.toLeft, by
+          change s.val.toLeft.card = k + 1
+          have h := Set.powersetCard.card_eq s
+          rw [← Finset.toLeft_disjSum_toRight (u := s.val), Finset.card_disjSum]
+              at h
+          simpa [hs_right] using h⟩
+      let t0 : Set.powersetCard κ (k + 1) :=
+        ⟨t.val.toLeft, by
+          change t.val.toLeft.card = k + 1
+          have h := Set.powersetCard.card_eq t
+          rw [← Finset.toLeft_disjSum_toRight (u := t.val), Finset.card_disjSum]
+              at h
+          simpa [ht_right] using h⟩
+      have hs : s = (⟨s0.val.disjSum ∅, by simp⟩ :
+          Set.powersetCard (ι ⊕ Unit) (k + 1)) := by
+        apply Subtype.ext
+        calc
+          s.val = s.val.toLeft.disjSum s.val.toRight :=
+            (Finset.toLeft_disjSum_toRight (u := s.val)).symm
+          _ = s.val.toLeft.disjSum ∅ := by rw [hs_right]
+      have ht : t = (⟨t0.val.disjSum ∅, by simp⟩ :
+          Set.powersetCard (κ ⊕ Unit) (k + 1)) := by
+        apply Subtype.ext
+        calc
+          t.val = t.val.toLeft.disjSum t.val.toRight :=
+            (Finset.toLeft_disjSum_toRight (u := t.val)).symm
+          _ = t.val.toLeft.disjSum ∅ := by rw [ht_right]
+      rw [hs, ht, determinantCoordinate_prod_empty bU bV (k + 1) f s0 t0]
+      rw [← determinantCoefficientIdeal_eq_span_basisCoords k f
+        (bU.exteriorPower k) (bV.exteriorPower k)]
+      refine hmono ?_
+      rw [determinantCoefficientIdeal_eq_span_basisCoords (k + 1) f
+        (bU.exteriorPower (k + 1)) (bV.exteriorPower (k + 1))]
+      exact Ideal.subset_span ⟨s0, t0, rfl⟩
+    · let s0 : Set.powersetCard ι (k + 1) :=
+        ⟨s.val.toLeft, by
+          change s.val.toLeft.card = k + 1
+          have h := Set.powersetCard.card_eq s
+          rw [← Finset.toLeft_disjSum_toRight (u := s.val), Finset.card_disjSum]
+              at h
+          simpa [hs_right] using h⟩
+      let t0 : Set.powersetCard κ k :=
+        ⟨t.val.toLeft, by
+          change t.val.toLeft.card = k
+          have h := Set.powersetCard.card_eq t
+          rw [← Finset.toLeft_disjSum_toRight (u := t.val), Finset.card_disjSum]
+              at h
+          have h' : t.val.toLeft.card + 1 = k + 1 := by
+            simpa [ht_right] using h
+          exact Nat.add_right_cancel h'⟩
+      have hs : s = (⟨s0.val.disjSum ∅, by simp⟩ :
+          Set.powersetCard (ι ⊕ Unit) (k + 1)) := by
+        apply Subtype.ext
+        calc
+          s.val = s.val.toLeft.disjSum s.val.toRight :=
+            (Finset.toLeft_disjSum_toRight (u := s.val)).symm
+          _ = s.val.toLeft.disjSum ∅ := by rw [hs_right]
+      have ht : t = (⟨t0.val.disjSum {()}, by simp⟩ :
+          Set.powersetCard (κ ⊕ Unit) (k + 1)) := by
+        apply Subtype.ext
+        calc
+          t.val = t.val.toLeft.disjSum t.val.toRight :=
+            (Finset.toLeft_disjSum_toRight (u := t.val)).symm
+          _ = t.val.toLeft.disjSum {()} := by rw [ht_right]
+      rw [hs, ht, determinantCoordinate_prod_empty_singleton bU bV k f s0 t0]
+      exact Ideal.zero_mem _
+    · let s0 : Set.powersetCard ι k :=
+        ⟨s.val.toLeft, by
+          change s.val.toLeft.card = k
+          have h := Set.powersetCard.card_eq s
+          rw [← Finset.toLeft_disjSum_toRight (u := s.val), Finset.card_disjSum]
+              at h
+          have h' : s.val.toLeft.card + 1 = k + 1 := by
+            simpa [hs_right] using h
+          exact Nat.add_right_cancel h'⟩
+      let t0 : Set.powersetCard κ (k + 1) :=
+        ⟨t.val.toLeft, by
+          change t.val.toLeft.card = k + 1
+          have h := Set.powersetCard.card_eq t
+          rw [← Finset.toLeft_disjSum_toRight (u := t.val), Finset.card_disjSum]
+              at h
+          simpa [ht_right] using h⟩
+      have hs : s = (⟨s0.val.disjSum {()}, by simp⟩ :
+          Set.powersetCard (ι ⊕ Unit) (k + 1)) := by
+        apply Subtype.ext
+        calc
+          s.val = s.val.toLeft.disjSum s.val.toRight :=
+            (Finset.toLeft_disjSum_toRight (u := s.val)).symm
+          _ = s.val.toLeft.disjSum {()} := by rw [hs_right]
+      have ht : t = (⟨t0.val.disjSum ∅, by simp⟩ :
+          Set.powersetCard (κ ⊕ Unit) (k + 1)) := by
+        apply Subtype.ext
+        calc
+          t.val = t.val.toLeft.disjSum t.val.toRight :=
+            (Finset.toLeft_disjSum_toRight (u := t.val)).symm
+          _ = t.val.toLeft.disjSum ∅ := by rw [ht_right]
+      rw [hs, ht, determinantCoordinate_prod_singleton_empty bU bV k f s0 t0]
+      exact Ideal.zero_mem _
+    · let s0 : Set.powersetCard ι k :=
+        ⟨s.val.toLeft, by
+          change s.val.toLeft.card = k
+          have h := Set.powersetCard.card_eq s
+          rw [← Finset.toLeft_disjSum_toRight (u := s.val), Finset.card_disjSum]
+              at h
+          have h' : s.val.toLeft.card + 1 = k + 1 := by
+            simpa [hs_right] using h
+          exact Nat.add_right_cancel h'⟩
+      let t0 : Set.powersetCard κ k :=
+        ⟨t.val.toLeft, by
+          change t.val.toLeft.card = k
+          have h := Set.powersetCard.card_eq t
+          rw [← Finset.toLeft_disjSum_toRight (u := t.val), Finset.card_disjSum]
+              at h
+          have h' : t.val.toLeft.card + 1 = k + 1 := by
+            simpa [ht_right] using h
+          exact Nat.add_right_cancel h'⟩
+      have hs : s = (⟨s0.val.disjSum {()}, by simp⟩ :
+          Set.powersetCard (ι ⊕ Unit) (k + 1)) := by
+        apply Subtype.ext
+        calc
+          s.val = s.val.toLeft.disjSum s.val.toRight :=
+            (Finset.toLeft_disjSum_toRight (u := s.val)).symm
+          _ = s.val.toLeft.disjSum {()} := by rw [hs_right]
+      have ht : t = (⟨t0.val.disjSum {()}, by simp⟩ :
+          Set.powersetCard (κ ⊕ Unit) (k + 1)) := by
+        apply Subtype.ext
+        calc
+          t.val = t.val.toLeft.disjSum t.val.toRight :=
+            (Finset.toLeft_disjSum_toRight (u := t.val)).symm
+          _ = t.val.toLeft.disjSum {()} := by rw [ht_right]
+      rw [hs, ht, determinantCoordinate_prod_succ bU bV k f s0 t0]
+      exact Ideal.subset_span ⟨s0, t0, rfl⟩
+  · apply Ideal.span_le.mpr
+    rintro a ⟨s, t, rfl⟩
+    have hcoord := determinantCoordinate_prod_succ bU bV k f s t
+    rw [← hcoord]
+    exact Ideal.subset_span ⟨
+      (⟨s.val.disjSum {()}, by simp⟩ : Set.powersetCard (ι ⊕ Unit) (k + 1)),
+      (⟨t.val.disjSum {()}, by simp⟩ : Set.powersetCard (κ ⊕ Unit) (k + 1)), rfl⟩
+
+private noncomputable def piProdEquiv
+    {R : Type*} [CommRing R] (n : ℕ) :
+    ((Fin n → R) × R) ≃ₗ[R] (Fin (n + 1) → R) := by
+  let e : (Fin (n + 1) → R) ≃ₗ[R] R × (Fin n → R) :=
+    (LinearEquiv.piCongrLeft R (fun _ : Option (Fin n) => R)
+      (finSuccEquiv' (Fin.last n))).trans
+      (LinearEquiv.piOptionEquivProd R)
+  exact (LinearEquiv.prodComm R (Fin n → R) R).trans e.symm
+
+private theorem piProdEquiv_apply_castSucc
+    {R : Type*} [CommRing R] (n : ℕ) (x : Fin n → R) (r : R) (j : Fin n) :
+    piProdEquiv (R := R) n (x, r) j.castSucc = x j := by
+  simp [piProdEquiv, LinearEquiv.piCongrLeft, LinearEquiv.piOptionEquivProd,
+    Equiv.piOptionEquivProd, finSuccEquiv'_last_apply_castSucc]
+
+private theorem piProdEquiv_apply_last
+    {R : Type*} [CommRing R] (n : ℕ) (x : Fin n → R) (r : R) :
+    piProdEquiv (R := R) n (x, r) (Fin.last n) = r := by
+  simp [piProdEquiv, LinearEquiv.piCongrLeft, LinearEquiv.piOptionEquivProd,
+    Equiv.piOptionEquivProd, finSuccEquiv'_at]
+
+private theorem piProdEquiv_symm_apply_fst
+    {R : Type*} [CommRing R] (n : ℕ) (x : Fin (n + 1) → R) (j : Fin n) :
+    ((piProdEquiv (R := R) n).symm x).1 j = x j.castSucc := by
+  have h := congrFun ((piProdEquiv (R := R) n).apply_symm_apply x) j.castSucc
+  rw [piProdEquiv_apply_castSucc] at h
+  exact h
+
+private theorem piProdEquiv_symm_apply_snd
+    {R : Type*} [CommRing R] (n : ℕ) (x : Fin (n + 1) → R) :
+    ((piProdEquiv (R := R) n).symm x).2 = x (Fin.last n) := by
+  have h := congrFun ((piProdEquiv (R := R) n).apply_symm_apply x) (Fin.last n)
+  rw [piProdEquiv_apply_last] at h
+  exact h
+
+private noncomputable def piSumProdEquiv
+    {R : Type*} [CommRing R] (n d : ℕ) :
+    ((Fin n → R) × (Fin d → R)) ≃ₗ[R] (Fin (n + d) → R) := by
+  let e : (Fin (n + d) → R) ≃ₗ[R]
+      ((Fin n → R) × (Fin d → R)) :=
+    (LinearEquiv.funCongrLeft R R finSumFinEquiv).trans
+      (LinearEquiv.sumPiEquivProdPi R (Fin n) (Fin d) (fun _ => R))
+  exact e.symm
+
+private noncomputable def piReindex
+    {R : Type*} [CommRing R] {a b : ℕ} (h : a = b) :
+    (Fin a → R) ≃ₗ[R] (Fin b → R) :=
+  LinearEquiv.funCongrLeft R R (finCongr h.symm)
+
+private theorem piReindex_apply
+    {R : Type*} [CommRing R] {a b : ℕ} (h : a = b)
+    (x : Fin a → R) (j : Fin b) :
+    piReindex (R := R) h x j = x (finCongr h.symm j) := by
+  rfl
+
+private theorem piReindex_symm_apply
+    {R : Type*} [CommRing R] {a b : ℕ} (h : a = b)
+    (x : Fin b → R) (j : Fin a) :
+    (piReindex (R := R) h).symm x j = x (finCongr h j) := by
+  rfl
+
+private noncomputable def piExtendMap
+    {R : Type*} [CommRing R] (n m d : ℕ)
+    (f : (Fin n → R) →ₗ[R] (Fin m → R)) :
+    (Fin (n + d) → R) →ₗ[R] (Fin (m + d) → R) := by
+  induction d with
+  | zero => exact f
+  | succ d ih =>
+      let eU := piReindex (R := R) (Nat.add_assoc n d 1)
+      let eV := piReindex (R := R) (Nat.add_assoc m d 1)
+      exact
+        ((eV.toLinearMap.comp
+            ((piProdEquiv (R := R) (m + d)).toLinearMap.comp
+              ((ih.prodMap (LinearMap.id : R →ₗ[R] R)).comp
+                (piProdEquiv (R := R) (n + d)).symm.toLinearMap))).comp
+          eU.symm.toLinearMap)
+
+private theorem piExtendMap_succ
+    {R : Type*} [CommRing R] (n m d : ℕ)
+    (f : (Fin n → R) →ₗ[R] (Fin m → R)) :
+    piExtendMap n m (d + 1) f =
+      let eU := piReindex (R := R) (Nat.add_assoc n d 1)
+      let eV := piReindex (R := R) (Nat.add_assoc m d 1)
+      let eU' := eU.symm.trans (piProdEquiv (R := R) (n + d)).symm
+      let eV' := (piProdEquiv (R := R) (m + d)).trans eV
+      eV'.toLinearMap ∘ₗ
+        ((piExtendMap n m d f).prodMap (LinearMap.id : R →ₗ[R] R)) ∘ₗ
+          eU'.toLinearMap := by
+  let eU := piReindex (R := R) (Nat.add_assoc n d 1)
+  let eV := piReindex (R := R) (Nat.add_assoc m d 1)
+  let eU' := eU.symm.trans (piProdEquiv (R := R) (n + d)).symm
+  let eV' := (piProdEquiv (R := R) (m + d)).trans eV
+  change piExtendMap n m (d + 1) f =
+    eV'.toLinearMap ∘ₗ
+      ((piExtendMap n m d f).prodMap (LinearMap.id : R →ₗ[R] R)) ∘ₗ
+        eU'.toLinearMap
+  apply LinearMap.ext
+  intro x
+  funext j
+  simp only [piExtendMap, piReindex, eU, eV, eU', eV', LinearMap.comp_apply]
+  rfl
+
+private theorem piSumProdEquiv_apply_left
+    {R : Type*} [CommRing R] (n d : ℕ)
+    (x : Fin n → R) (y : Fin d → R) (j : Fin n) :
+    piSumProdEquiv (R := R) n d (x, y) (Fin.castAdd d j) = x j := by
+  simp [piSumProdEquiv]
+
+private theorem piSumProdEquiv_apply_right
+    {R : Type*} [CommRing R] (n d : ℕ)
+    (x : Fin n → R) (y : Fin d → R) (j : Fin d) :
+    piSumProdEquiv (R := R) n d (x, y) (Fin.natAdd n j) = y j := by
+  simp [piSumProdEquiv]
+
+private theorem piSumProdEquiv_symm_apply_fst
+    {R : Type*} [CommRing R] (n d : ℕ)
+    (x : Fin (n + d) → R) (j : Fin n) :
+    ((piSumProdEquiv (R := R) n d).symm x).1 j = x (Fin.castAdd d j) := by
+  have h := congrFun ((piSumProdEquiv (R := R) n d).apply_symm_apply x)
+    (Fin.castAdd d j)
+  rw [piSumProdEquiv_apply_left] at h
+  exact h
+
+private theorem piSumProdEquiv_symm_apply_snd
+    {R : Type*} [CommRing R] (n d : ℕ)
+    (x : Fin (n + d) → R) (j : Fin d) :
+    ((piSumProdEquiv (R := R) n d).symm x).2 j = x (Fin.natAdd n j) := by
+  have h := congrFun ((piSumProdEquiv (R := R) n d).apply_symm_apply x)
+    (Fin.natAdd n j)
+  rw [piSumProdEquiv_apply_right] at h
+  exact h
+
+private theorem piExtendMap_apply_left
+    {R : Type*} [CommRing R] (n m d : ℕ)
+    (f : (Fin n → R) →ₗ[R] (Fin m → R))
+    (x : Fin (n + d) → R) (j : Fin m) :
+    piExtendMap n m d f x (Fin.castAdd d j) =
+      f (fun i => x (Fin.castAdd d i)) j := by
+  induction d with
+  | zero =>
+      simp [piExtendMap]
+  | succ d ih =>
+      rw [piExtendMap_succ]
+      have hV :
+          finCongr (Nat.add_assoc m d 1).symm (Fin.castAdd (d + 1) j) =
+            Fin.castSucc (Fin.castAdd d j) := by
+        apply Fin.ext
+        rfl
+      have hU (i : Fin n) :
+          finCongr (Nat.add_assoc n d 1) (Fin.castSucc (Fin.castAdd d i)) =
+            Fin.castAdd (d + 1) i := by
+        apply Fin.ext
+        rfl
+      have hUlast :
+          finCongr (Nat.add_assoc n d 1) (Fin.last (n + d)) =
+            Fin.natAdd n (Fin.last d) := by
+        apply Fin.ext
+        rfl
+      change
+        piReindex (R := R) (Nat.add_assoc m d 1)
+            ((piProdEquiv (R := R) (m + d))
+              (((piExtendMap n m d f).prodMap
+                (LinearMap.id : R →ₗ[R] R))
+                ((piProdEquiv (R := R) (n + d)).symm
+                  ((piReindex (R := R) (Nat.add_assoc n d 1)).symm x))))
+            (Fin.castAdd (d + 1) j) =
+          f (fun i => x (Fin.castAdd (d + 1) i)) j
+      rw [piReindex_apply, hV, piProdEquiv_apply_castSucc]
+      change
+        piExtendMap n m d f
+            ((piProdEquiv (R := R) (n + d)).symm
+              ((piReindex (R := R) (Nat.add_assoc n d 1)).symm x)).1
+            (Fin.castAdd d j) =
+          f (fun i => x (Fin.castAdd (d + 1) i)) j
+      rw [ih]
+      apply congrArg (fun g : Fin n → R => f g j)
+      funext i
+      rw [piProdEquiv_symm_apply_fst, piReindex_symm_apply, hU]
+
+private theorem piExtendMap_apply_right
+    {R : Type*} [CommRing R] (n m d : ℕ)
+    (f : (Fin n → R) →ₗ[R] (Fin m → R))
+    (x : Fin (n + d) → R) (j : Fin d) :
+    piExtendMap n m d f x (Fin.natAdd m j) = x (Fin.natAdd n j) := by
+  induction d with
+  | zero =>
+      exact Fin.elim0 j
+  | succ d ih =>
+      obtain ⟨j, rfl⟩ := finSumFinEquiv.surjective j
+      cases j with
+      | inl j =>
+          rw [piExtendMap_succ]
+          have hV :
+              finCongr (Nat.add_assoc m d 1).symm
+                  (Fin.natAdd m (Fin.castAdd 1 j)) =
+                Fin.castSucc (Fin.natAdd m j) := by
+            apply Fin.ext
+            rfl
+          have hU (j : Fin d) :
+              finCongr (Nat.add_assoc n d 1)
+                  (Fin.castSucc (Fin.natAdd n j)) =
+                Fin.natAdd n (Fin.castAdd 1 j) := by
+            apply Fin.ext
+            rfl
+          change
+            piReindex (R := R) (Nat.add_assoc m d 1)
+                ((piProdEquiv (R := R) (m + d))
+                  (((piExtendMap n m d f).prodMap
+                    (LinearMap.id : R →ₗ[R] R))
+                    ((piProdEquiv (R := R) (n + d)).symm
+                      ((piReindex (R := R) (Nat.add_assoc n d 1)).symm x))))
+                (Fin.natAdd m (Fin.castAdd 1 j)) =
+              x (Fin.natAdd n (Fin.castAdd 1 j))
+          rw [piReindex_apply, hV, piProdEquiv_apply_castSucc]
+          change
+            piExtendMap n m d f
+                ((piProdEquiv (R := R) (n + d)).symm
+                  ((piReindex (R := R) (Nat.add_assoc n d 1)).symm x)).1
+                (Fin.natAdd m j) =
+              x (Fin.natAdd n (Fin.castAdd 1 j))
+          rw [ih, piProdEquiv_symm_apply_fst, piReindex_symm_apply, hU]
+      | inr j =>
+          rw [piExtendMap_succ]
+          have hV :
+              finCongr (Nat.add_assoc m d 1).symm
+                  (Fin.natAdd m (Fin.natAdd d j)) =
+                Fin.last (m + d) := by
+            apply Fin.ext
+            simp
+          have hUlast :
+              finCongr (Nat.add_assoc n d 1)
+                  (Fin.last (n + d)) =
+                Fin.natAdd n (Fin.natAdd d j) := by
+            apply Fin.ext
+            simp
+          change
+            piReindex (R := R) (Nat.add_assoc m d 1)
+                ((piProdEquiv (R := R) (m + d))
+                  (((piExtendMap n m d f).prodMap
+                    (LinearMap.id : R →ₗ[R] R))
+                    ((piProdEquiv (R := R) (n + d)).symm
+                      ((piReindex (R := R) (Nat.add_assoc n d 1)).symm x))))
+                (Fin.natAdd m (Fin.natAdd d j)) =
+              x (Fin.natAdd n (Fin.natAdd d j))
+          rw [piReindex_apply, hV, piProdEquiv_apply_last]
+          change
+            ((piProdEquiv (R := R) (n + d)).symm
+              ((piReindex (R := R) (Nat.add_assoc n d 1)).symm x)).2 =
+              x (Fin.natAdd n (Fin.natAdd d j))
+          rw [piProdEquiv_symm_apply_snd, piReindex_symm_apply, hUlast]
+
+private theorem determinantCoefficientIdeal_piExtendMap
+    {R : Type*} [CommRing R] (n m d k : ℕ)
+    (f : (Fin n → R) →ₗ[R] (Fin m → R)) :
+    determinantCoefficientIdeal (R := R) (k + d)
+        (piExtendMap n m d f) =
+      determinantCoefficientIdeal (R := R) k f := by
+  classical
+  induction d with
+  | zero => simp [piExtendMap]
+  | succ d ih =>
+      let eU := piReindex (R := R) (Nat.add_assoc n d 1)
+      let eV := piReindex (R := R) (Nat.add_assoc m d 1)
+      let eU' := eU.symm.trans (piProdEquiv (R := R) (n + d)).symm
+      let eV' := (piProdEquiv (R := R) (m + d)).trans eV
+      have hconj :
+          determinantCoefficientIdeal (R := R) (k + d + 1)
+              (eV'.toLinearMap ∘ₗ
+                ((piExtendMap n m d f).prodMap
+                  (LinearMap.id : R →ₗ[R] R)) ∘ₗ eU'.toLinearMap) =
+            determinantCoefficientIdeal (R := R) (k + d + 1)
+              ((piExtendMap n m d f).prodMap
+                (LinearMap.id : R →ₗ[R] R)) :=
+        determinantCoefficientIdeal_comp_eq_of_equiv
+          (R := R) (k + d + 1)
+          ((piExtendMap n m d f).prodMap (LinearMap.id : R →ₗ[R] R))
+          eU' eV'
+      have hprod := determinantCoefficientIdeal_prodMap_succ
+        (Pi.basisFun R (Fin (n + d))) (Pi.basisFun R (Fin (m + d)))
+        (k + d) (piExtendMap n m d f)
+        (determinantCoefficientIdeal_succ_le_pi
+          (n + d) (m + d) (k + d) (piExtendMap n m d f))
+      calc
+        determinantCoefficientIdeal (R := R) (k + (d + 1))
+            (piExtendMap n m (d + 1) f) =
+            determinantCoefficientIdeal (R := R) (k + d + 1)
+              (eV'.toLinearMap ∘ₗ
+                ((piExtendMap n m d f).prodMap
+                  (LinearMap.id : R →ₗ[R] R)) ∘ₗ eU'.toLinearMap) := by
+                  have hmap :
+                      piExtendMap n m (d + 1) f =
+                        eV'.toLinearMap ∘ₗ
+                          ((piExtendMap n m d f).prodMap
+                            (LinearMap.id : R →ₗ[R] R)) ∘ₗ eU'.toLinearMap := by
+                    apply LinearMap.ext
+                    intro x
+                    funext j
+                    simp only [piExtendMap, piReindex, eU, eV, eU', eV',
+                      LinearMap.comp_apply]
+                    rfl
+                  rw [hmap]
+                  simp only [Nat.add_assoc]
+        _ = determinantCoefficientIdeal (R := R) (k + d + 1)
+              ((piExtendMap n m d f).prodMap
+                (LinearMap.id : R →ₗ[R] R)) := hconj
+        _ = determinantCoefficientIdeal (R := R) (k + d)
+              (piExtendMap n m d f) := hprod
+        _ = determinantCoefficientIdeal (R := R) k f := ih
+
+private theorem piExtendMap_eq_sumConjugate
+    {R : Type*} [CommRing R] (n m d : ℕ)
+    (f : (Fin n → R) →ₗ[R] (Fin m → R)) :
+    piExtendMap n m d f =
+      (piSumProdEquiv (R := R) m d).toLinearMap ∘ₗ
+      (f.prodMap (LinearMap.id : (Fin d → R) →ₗ[R] (Fin d → R))) ∘ₗ
+          (piSumProdEquiv (R := R) n d).symm.toLinearMap := by
+  classical
+  apply LinearMap.ext
+  intro x
+  funext j
+  obtain ⟨j, rfl⟩ := finSumFinEquiv.surjective j
+  cases j with
+  | inl j =>
+      have hmain :
+          piExtendMap n m d f x (Fin.castAdd d j) =
+            f (((piSumProdEquiv (R := R) n d).symm x).1) j := by
+        rw [piExtendMap_apply_left]
+        apply congrArg (fun g : Fin n → R => f g j)
+        funext i
+        rw [piSumProdEquiv_symm_apply_fst]
+      simpa [piSumProdEquiv, LinearMap.comp_apply] using hmain
+  | inr j =>
+      have hmain :
+          piExtendMap n m d f x (Fin.natAdd m j) =
+            ((piSumProdEquiv (R := R) n d).symm x).2 j := by
+        rw [piExtendMap_apply_right, piSumProdEquiv_symm_apply_snd]
+      simpa [piSumProdEquiv, LinearMap.comp_apply] using hmain
+
+private theorem determinantCoefficientIdeal_precomp_snd
+    {R X U V : Type*} [CommRing R]
+    [AddCommGroup X] [Module R X] [AddCommGroup U] [Module R U]
+    [AddCommGroup V] [Module R V]
+    (k : ℕ) (f : U →ₗ[R] V) :
+    determinantCoefficientIdeal (R := R) k
+        (f ∘ₗ LinearMap.snd R X U) =
+      determinantCoefficientIdeal (R := R) k f := by
+  apply le_antisymm
+  · exact determinantCoefficientIdeal_comp_le_right k
+      (LinearMap.snd R X U) f
+  · have hcomp :
+        (f ∘ₗ LinearMap.snd R X U) ∘ₗ LinearMap.inr R X U = f := by
+      ext x
+      rfl
+    calc
+      determinantCoefficientIdeal (R := R) k f =
+          determinantCoefficientIdeal (R := R) k
+            ((f ∘ₗ LinearMap.snd R X U) ∘ₗ LinearMap.inr R X U) := by
+              rw [hcomp]
+      _ ≤ determinantCoefficientIdeal (R := R) k
+          (f ∘ₗ LinearMap.snd R X U) := by
+            simpa only [LinearMap.comp_assoc] using
+              determinantCoefficientIdeal_comp_le_right k
+                (LinearMap.inr R X U) (f ∘ₗ LinearMap.snd R X U)
+
+private theorem determinantCoefficientIdeal_precomp_of_rightInverse
+    {R X U V : Type*} [CommRing R]
+    [AddCommGroup X] [Module R X] [AddCommGroup U] [Module R U]
+    [AddCommGroup V] [Module R V]
+    (k : ℕ) (f : U →ₗ[R] V) (s : X →ₗ[R] U) (r : U →ₗ[R] X)
+    (hsr : s ∘ₗ r = LinearMap.id) :
+    determinantCoefficientIdeal (R := R) k (f ∘ₗ s) =
+      determinantCoefficientIdeal (R := R) k f := by
+  apply le_antisymm
+  · exact determinantCoefficientIdeal_comp_le_right k s f
+  · calc
+      determinantCoefficientIdeal (R := R) k f =
+          determinantCoefficientIdeal (R := R) k
+            ((f ∘ₗ s) ∘ₗ r) := by
+              rw [LinearMap.comp_assoc, hsr]
+              rfl
+      _ ≤ determinantCoefficientIdeal (R := R) k (f ∘ₗ s) := by
+        simpa only [LinearMap.comp_assoc] using
+          determinantCoefficientIdeal_comp_le_right k r (f ∘ₗ s)
+
+private theorem determinantCoefficientIdeal_prodMap
+    {R : Type*} [CommRing R] (n m d k : ℕ)
+    (f : (Fin n → R) →ₗ[R] (Fin m → R)) :
+    determinantCoefficientIdeal (R := R) (k + d)
+        (f.prodMap (LinearMap.id : (Fin d → R) →ₗ[R] (Fin d → R))) =
+      determinantCoefficientIdeal (R := R) k f := by
+  have hconj := determinantCoefficientIdeal_comp_eq_of_equiv
+    (R := R) (k + d)
+    (f.prodMap (LinearMap.id : (Fin d → R) →ₗ[R] (Fin d → R)))
+    (piSumProdEquiv (R := R) n d).symm (piSumProdEquiv (R := R) m d)
+  calc
+    determinantCoefficientIdeal (R := R) (k + d)
+        (f.prodMap (LinearMap.id : (Fin d → R) →ₗ[R] (Fin d → R))) =
+        determinantCoefficientIdeal (R := R) (k + d)
+          (piExtendMap n m d f) := by
+            simpa only [piExtendMap_eq_sumConjugate] using hconj.symm
+    _ = determinantCoefficientIdeal (R := R) k f :=
+      determinantCoefficientIdeal_piExtendMap n m d k f
+
+private theorem determinantCoefficientIdeal_zero
+    {R U V : Type*} [CommRing R]
+    [AddCommGroup U] [Module R U] [AddCommGroup V] [Module R V]
+    (f : U →ₗ[R] V) :
+    determinantCoefficientIdeal (R := R) 0 f = ⊤ := by
+  rw [determinantCoefficientIdeal, Ideal.eq_top_iff_one]
+  apply Ideal.subset_span
+  refine ⟨(exteriorPower.zeroEquiv R U).symm 1,
+    (exteriorPower.zeroEquiv R V).toLinearMap, ?_⟩
+  have hnat := exteriorPower.zeroEquiv_naturality (R := R) f
+  have h := congrArg (fun g => g ((exteriorPower.zeroEquiv R U).symm 1)) hnat
+  simpa [determinantMap, LinearMap.comp_apply] using h.symm
+
+private theorem determinantCoefficientIdeal_le_of_le_pi
+    {R : Type*} [CommRing R] (n m k l : ℕ)
+    (hkl : k ≤ l) (f : (Fin n → R) →ₗ[R] (Fin m → R)) :
+    determinantCoefficientIdeal (R := R) l f ≤
+      determinantCoefficientIdeal (R := R) k f := by
+  induction l, hkl using Nat.le_induction with
+  | base => exact le_rfl
+  | succ l hkl ih =>
+      exact (determinantCoefficientIdeal_succ_le_pi n m l f).trans ih
+
+private theorem determinantCoefficientIdeal_piExtendMap_top_of_le
+    {R : Type*} [CommRing R] (n m d k : ℕ)
+    (hkd : k ≤ d) (f : (Fin n → R) →ₗ[R] (Fin m → R)) :
+    determinantCoefficientIdeal (R := R) k (piExtendMap n m d f) = ⊤ := by
+  have htop : determinantCoefficientIdeal (R := R) d
+      (piExtendMap n m d f) = ⊤ := by
+    calc
+      determinantCoefficientIdeal (R := R) d (piExtendMap n m d f) =
+          determinantCoefficientIdeal (R := R) 0 f := by
+            simpa using determinantCoefficientIdeal_piExtendMap n m d 0 f
+      _ = ⊤ := determinantCoefficientIdeal_zero f
+  have hle := determinantCoefficientIdeal_le_of_le_pi
+    (n + d) (m + d) k d hkd (piExtendMap n m d f)
+  apply le_antisymm le_top
+  rw [htop] at hle
+  exact hle
+
+private theorem determinantCoefficientIdeal_prodMap_top_of_le
+    {R : Type*} [CommRing R] (n m d k : ℕ)
+    (hkd : k ≤ d) (f : (Fin n → R) →ₗ[R] (Fin m → R)) :
+    determinantCoefficientIdeal (R := R) k
+        (f.prodMap (LinearMap.id : (Fin d → R) →ₗ[R] (Fin d → R))) = ⊤ := by
+  calc
+    determinantCoefficientIdeal (R := R) k
+        (f.prodMap (LinearMap.id : (Fin d → R) →ₗ[R] (Fin d → R))) =
+        determinantCoefficientIdeal (R := R) k (piExtendMap n m d f) := by
+          simpa only [piExtendMap_eq_sumConjugate] using
+            (determinantCoefficientIdeal_comp_eq_of_equiv
+              (R := R) k
+              (f.prodMap (LinearMap.id : (Fin d → R) →ₗ[R] (Fin d → R)))
+              (piSumProdEquiv (R := R) n d).symm
+              (piSumProdEquiv (R := R) m d)).symm
+    _ = ⊤ := determinantCoefficientIdeal_piExtendMap_top_of_le
+      n m d k hkd f
+
+private theorem linearMap_factor_of_exact
+    {R X K Y Z : Type*} [CommRing R]
+    [AddCommGroup X] [Module R X] [Module.Projective R X]
+    [AddCommGroup K] [Module R K] [AddCommGroup Y] [Module R Y]
+    [AddCommGroup Z] [Module R Z]
+    (f : K →ₗ[R] Y) (g : Y →ₗ[R] Z) (hexact : Function.Exact f g)
+    (u : X →ₗ[R] Y) (hu : ∀ x, g (u x) = 0) :
+    ∃ v : X →ₗ[R] K, f ∘ₗ v = u := by
+  let fker : K →ₗ[R] LinearMap.ker g :=
+    f.codRestrict _ (fun x => by
+      change g (f x) = 0
+      have hx : f x ∈ LinearMap.range f := ⟨x, rfl⟩
+      have hx' : f x ∈ LinearMap.ker g := by
+        rw [LinearMap.exact_iff.mp hexact]
+        exact hx
+      exact hx')
+  have hfker : Function.Surjective fker := by
+    intro y
+    have hy : y.1 ∈ LinearMap.range f := by
+      rw [← LinearMap.exact_iff.mp hexact]
+      exact y.2
+    rcases hy with ⟨x, hx⟩
+    refine ⟨x, ?_⟩
+    apply Subtype.ext
+    exact hx
+  let uker : X →ₗ[R] LinearMap.ker g :=
+    u.codRestrict _ (fun x => hu x)
+  obtain ⟨v, hv⟩ := Module.projective_lifting_property fker uker hfker
+  refine ⟨v, ?_⟩
+  ext x
+  have hx := congrArg (fun w => w x) hv
+  exact congrArg Subtype.val hx
+
 theorem fittingIdeal_eq_of_presentation
     {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M]
     [Module.FinitePresentation R M] (P : FinitePresentationData R M) (i : ℕ) :
     fittingIdeal (R := R) (M := M) i = fittingIdealOfPresentation P i := by
-  sorry
+  let Q : FinitePresentationData R M :=
+    finitePresentationData (R := R) (M := M)
+  have hPzero : P.presentation ∘ₗ P.relationMap = 0 := by
+    apply LinearMap.ext
+    intro x
+    have hx : P.relationMap x ∈ LinearMap.ker P.presentation := by
+      rw [LinearMap.exact_iff.mp P.exact]
+      exact ⟨x, rfl⟩
+    exact hx
+  have hQzero : Q.presentation ∘ₗ Q.relationMap = 0 := by
+    apply LinearMap.ext
+    intro x
+    have hx : Q.relationMap x ∈ LinearMap.ker Q.presentation := by
+      rw [LinearMap.exact_iff.mp Q.exact]
+      exact ⟨x, rfl⟩
+    exact hx
+  obtain ⟨α, hα⟩ :=
+    Module.projective_lifting_property Q.presentation P.presentation
+      Q.presentation_surjective
+  have hαrel : ∀ x, Q.presentation (α (P.relationMap x)) = 0 := by
+    intro x
+    calc
+      Q.presentation (α (P.relationMap x)) =
+          P.presentation (P.relationMap x) := by
+            simpa only [LinearMap.comp_apply] using
+              congrArg (fun g => g (P.relationMap x)) hα
+      _ = 0 := by
+        simpa only [LinearMap.comp_apply, LinearMap.zero_apply] using
+          congrArg (fun g => g x) hPzero
+  obtain ⟨β, hβ⟩ :=
+    linearMap_factor_of_exact Q.relationMap Q.presentation Q.exact
+      (α ∘ₗ P.relationMap) hαrel
+  obtain ⟨γ, hγ⟩ :=
+    Module.projective_lifting_property P.presentation Q.presentation
+      P.presentation_surjective
+  have hγrel : ∀ x, P.presentation (γ (Q.relationMap x)) = 0 := by
+    intro x
+    calc
+      P.presentation (γ (Q.relationMap x)) =
+          Q.presentation (Q.relationMap x) := by
+            simpa only [LinearMap.comp_apply] using
+              congrArg (fun g => g (Q.relationMap x)) hγ
+      _ = 0 := by
+        simpa only [LinearMap.comp_apply, LinearMap.zero_apply] using
+          congrArg (fun g => g x) hQzero
+  obtain ⟨δ, hδ⟩ :=
+    linearMap_factor_of_exact P.relationMap P.presentation P.exact
+      (γ ∘ₗ Q.relationMap) hγrel
+  let p :
+      (Fin P.generators → R) × (Fin Q.generators → R) →ₗ[R] M :=
+    P.presentation.comp (LinearMap.fst R (Fin P.generators → R)
+      (Fin Q.generators → R)) +
+      Q.presentation.comp (LinearMap.snd R (Fin P.generators → R)
+        (Fin Q.generators → R))
+  let h₁ :
+      (Fin P.relations → R) ×
+          ((Fin Q.relations → R) × (Fin P.generators → R)) →ₗ[R]
+        (Fin P.generators → R) :=
+    P.relationMap.comp (LinearMap.fst R (Fin P.relations → R)
+      ((Fin Q.relations → R) × (Fin P.generators → R))) +
+      (LinearMap.snd R (Fin Q.relations → R) (Fin P.generators → R)).comp
+        (LinearMap.snd R (Fin P.relations → R)
+          ((Fin Q.relations → R) × (Fin P.generators → R)))
+  let h₂ :
+      (Fin P.relations → R) ×
+          ((Fin Q.relations → R) × (Fin P.generators → R)) →ₗ[R]
+        (Fin Q.generators → R) :=
+    Q.relationMap.comp
+        ((LinearMap.fst R (Fin Q.relations → R) (Fin P.generators → R)).comp
+          (LinearMap.snd R (Fin P.relations → R)
+            ((Fin Q.relations → R) × (Fin P.generators → R)))) -
+      α.comp
+        ((LinearMap.snd R (Fin Q.relations → R) (Fin P.generators → R)).comp
+          (LinearMap.snd R (Fin P.relations → R)
+            ((Fin Q.relations → R) × (Fin P.generators → R))))
+  let h := h₁.prod h₂
+  let h₁' :
+      (Fin P.relations → R) ×
+          ((Fin Q.relations → R) × (Fin Q.generators → R)) →ₗ[R]
+        (Fin P.generators → R) :=
+    P.relationMap.comp (LinearMap.fst R (Fin P.relations → R)
+      ((Fin Q.relations → R) × (Fin Q.generators → R))) -
+      γ.comp
+        ((LinearMap.snd R (Fin Q.relations → R) (Fin Q.generators → R)).comp
+          (LinearMap.snd R (Fin P.relations → R)
+            ((Fin Q.relations → R) × (Fin Q.generators → R))))
+  let h₂' :
+      (Fin P.relations → R) ×
+          ((Fin Q.relations → R) × (Fin Q.generators → R)) →ₗ[R]
+        (Fin Q.generators → R) :=
+    Q.relationMap.comp
+        ((LinearMap.fst R (Fin Q.relations → R) (Fin Q.generators → R)).comp
+          (LinearMap.snd R (Fin P.relations → R)
+            ((Fin Q.relations → R) × (Fin Q.generators → R)))) +
+      (LinearMap.snd R (Fin Q.relations → R) (Fin Q.generators → R)).comp
+        (LinearMap.snd R (Fin P.relations → R)
+          ((Fin Q.relations → R) × (Fin Q.generators → R)))
+  let h' := h₁'.prod h₂'
+  have hzero : p ∘ₗ h = 0 := by
+    apply LinearMap.ext
+    rintro ⟨x, y, z⟩
+    change
+      P.presentation (P.relationMap x + z) +
+          Q.presentation (Q.relationMap y - α z) = 0
+    rw [map_add, map_sub]
+    have hαz : Q.presentation (α z) = P.presentation z := by
+      simpa only [LinearMap.comp_apply] using congrArg (fun g => g z) hα
+    have hx := congrArg (fun g => g x) hPzero
+    have hy := congrArg (fun g => g y) hQzero
+    simp only [LinearMap.comp_apply, LinearMap.zero_apply] at hx hy
+    rw [hαz, hx, hy]
+    abel
+  have h'zero : p ∘ₗ h' = 0 := by
+    apply LinearMap.ext
+    rintro ⟨x, y, z⟩
+    change
+      P.presentation (P.relationMap x - γ z) +
+          Q.presentation (Q.relationMap y + z) = 0
+    rw [map_sub, map_add]
+    have hγz : P.presentation (γ z) = Q.presentation z := by
+      simpa only [LinearMap.comp_apply] using congrArg (fun g => g z) hγ
+    have hx := congrArg (fun g => g x) hPzero
+    have hy := congrArg (fun g => g y) hQzero
+    simp only [LinearMap.comp_apply, LinearMap.zero_apply] at hx hy
+    rw [hγz, hx, hy]
+    abel
+  have hexact : Function.Exact h p := by
+    apply LinearMap.exact_of_comp_eq_zero_of_ker_le_range hzero
+    rintro ⟨u, v⟩ hz
+    change P.presentation u + Q.presentation v = 0 at hz
+    have hαu : Q.presentation (α u) = P.presentation u := by
+      simpa only [LinearMap.comp_apply] using congrArg (fun g => g u) hα
+    have hvzero : Q.presentation (v + α u) = 0 := by
+      rw [map_add, hαu]
+      rw [add_comm]
+      exact hz
+    have hvrange : v + α u ∈ LinearMap.range Q.relationMap := by
+      rw [← LinearMap.exact_iff.mp Q.exact]
+      exact hvzero
+    rcases hvrange with ⟨y, hy⟩
+    refine ⟨(0, (y, u)), ?_⟩
+    apply Prod.ext
+    · change P.relationMap 0 + u = u
+      simp
+    · change Q.relationMap y - α u = v
+      rw [hy]
+      abel
+  have hexact' : Function.Exact h' p := by
+    apply LinearMap.exact_of_comp_eq_zero_of_ker_le_range h'zero
+    rintro ⟨u, v⟩ hz
+    change P.presentation u + Q.presentation v = 0 at hz
+    have hγv : P.presentation (γ v) = Q.presentation v := by
+      simpa only [LinearMap.comp_apply] using congrArg (fun g => g v) hγ
+    have huzero : P.presentation (u + γ v) = 0 := by
+      rw [map_add, hγv]
+      exact hz
+    have hurange : u + γ v ∈ LinearMap.range P.relationMap := by
+      rw [← LinearMap.exact_iff.mp P.exact]
+      exact huzero
+    rcases hurange with ⟨x, hx⟩
+    refine ⟨(x, (0, v)), ?_⟩
+    apply Prod.ext
+    · change P.relationMap x - γ v = u
+      rw [hx]
+      abel
+    · change Q.relationMap 0 + v = v
+      simp
+  have hzero' : ∀ x, p (h x) = 0 := by
+    intro x
+    have hx := congrArg (fun g => g x) hzero
+    simpa only [LinearMap.comp_apply, LinearMap.zero_apply] using hx
+  have h'zero' : ∀ x, p (h' x) = 0 := by
+    intro x
+    have hx := congrArg (fun g => g x) h'zero
+    simpa only [LinearMap.comp_apply, LinearMap.zero_apply] using hx
+  obtain ⟨s, hs⟩ := linearMap_factor_of_exact h' p hexact' h hzero'
+  obtain ⟨t, ht⟩ := linearMap_factor_of_exact h p hexact h' h'zero'
+  have hfit : ∀ k, determinantCoefficientIdeal (R := R) k h =
+      determinantCoefficientIdeal (R := R) k h' := by
+    intro k
+    apply le_antisymm
+    · calc
+        determinantCoefficientIdeal (R := R) k h =
+            determinantCoefficientIdeal (R := R) k (h' ∘ₗ s) := by rw [hs]
+        _ ≤ determinantCoefficientIdeal (R := R) k h' :=
+          determinantCoefficientIdeal_comp_le_right k s h'
+    · calc
+        determinantCoefficientIdeal (R := R) k h' =
+            determinantCoefficientIdeal (R := R) k (h ∘ₗ t) := by rw [ht]
+        _ ≤ determinantCoefficientIdeal (R := R) k h :=
+          determinantCoefficientIdeal_comp_le_right k t h
+  let eDomQ :
+      ((Fin P.relations → R) ×
+          ((Fin Q.relations → R) × (Fin P.generators → R))) ≃ₗ[R]
+        ((Fin P.relations → R) ×
+          ((Fin Q.relations → R) × (Fin P.generators → R))) :=
+    { toFun := fun z => (z.1, (z.2.1 + β z.1, z.2.2 + P.relationMap z.1))
+      invFun := fun z => (z.1, (z.2.1 - β z.1, z.2.2 - P.relationMap z.1))
+      left_inv := by
+        intro z
+        rcases z with ⟨x, y, w⟩
+        simp
+      right_inv := by
+        intro z
+        rcases z with ⟨x, y, w⟩
+        simp
+      map_add' := by
+        intro x y
+        ext <;> simp [map_add, add_assoc, add_comm, add_left_comm]
+      map_smul' := by
+        intro c x
+        ext <;> simp }
+  let eCodQ :
+      ((Fin P.generators → R) × (Fin Q.generators → R)) ≃ₗ[R]
+        ((Fin P.generators → R) × (Fin Q.generators → R)) :=
+    { toFun := fun z => (z.1, z.2 + α z.1)
+      invFun := fun z => (z.1, z.2 - α z.1)
+      left_inv := by
+        intro z
+        simp
+      right_inv := by
+        intro z
+        simp
+      map_add' := by
+        intro x y
+        ext <;> simp [map_add, add_assoc, add_comm, add_left_comm]
+      map_smul' := by
+        intro c x
+        ext <;> simp }
+  let hQ₁ :
+      (Fin P.relations → R) ×
+          ((Fin Q.relations → R) × (Fin P.generators → R)) →ₗ[R]
+        (Fin P.generators → R) :=
+    LinearMap.snd R (Fin Q.relations → R) (Fin P.generators → R) ∘ₗ
+      LinearMap.snd R (Fin P.relations → R)
+        ((Fin Q.relations → R) × (Fin P.generators → R))
+  let hQ₂ :
+      (Fin P.relations → R) ×
+          ((Fin Q.relations → R) × (Fin P.generators → R)) →ₗ[R]
+        (Fin Q.generators → R) :=
+    Q.relationMap.comp
+      ((LinearMap.fst R (Fin Q.relations → R) (Fin P.generators → R)).comp
+        (LinearMap.snd R (Fin P.relations → R)
+          ((Fin Q.relations → R) × (Fin P.generators → R))))
+  let hQ := hQ₁.prod hQ₂
+  have hQconj :
+      eCodQ.toLinearMap ∘ₗ h ∘ₗ eDomQ.symm.toLinearMap = hQ := by
+    apply LinearMap.ext
+    rintro ⟨x, y, z⟩
+    change
+      (P.relationMap x + (z - P.relationMap x),
+          Q.relationMap (y - β x) - α (z - P.relationMap x) +
+            α (P.relationMap x + (z - P.relationMap x))) =
+        (z, Q.relationMap y)
+    have hβx := congrArg (fun g => g x) hβ
+    simp only [LinearMap.comp_apply] at hβx
+    rw [map_sub, map_add, hβx]
+    apply Prod.ext <;> abel_nf
+  let eDomP :
+      ((Fin P.relations → R) ×
+          ((Fin Q.relations → R) × (Fin Q.generators → R))) ≃ₗ[R]
+        ((Fin P.relations → R) ×
+          ((Fin Q.relations → R) × (Fin Q.generators → R))) :=
+    { toFun := fun z => (z.1 + δ z.2.1, (z.2.1, z.2.2 + Q.relationMap z.2.1))
+      invFun := fun z => (z.1 - δ z.2.1, (z.2.1, z.2.2 - Q.relationMap z.2.1))
+      left_inv := by
+        intro z
+        rcases z with ⟨x, y, w⟩
+        simp
+      right_inv := by
+        intro z
+        rcases z with ⟨x, y, w⟩
+        simp
+      map_add' := by
+        intro a b
+        rcases a with ⟨x, y, z⟩
+        rcases b with ⟨x', y', z'⟩
+        apply Prod.ext
+        · change (x + x') + δ (y + y') =
+            (x + δ y) + (x' + δ y')
+          rw [map_add]
+          abel
+        · apply Prod.ext
+          · rfl
+          · change (z + z') + Q.relationMap (y + y') =
+              (z + Q.relationMap y) + (z' + Q.relationMap y')
+            rw [map_add]
+            abel
+      map_smul' := by
+        intro c x
+        ext <;> simp }
+  let eCodP :
+      ((Fin P.generators → R) × (Fin Q.generators → R)) ≃ₗ[R]
+        ((Fin P.generators → R) × (Fin Q.generators → R)) :=
+    { toFun := fun z => (z.1 + γ z.2, z.2)
+      invFun := fun z => (z.1 - γ z.2, z.2)
+      left_inv := by
+        intro z
+        simp
+      right_inv := by
+        intro z
+        simp
+      map_add' := by
+        intro x y
+        ext <;> simp [map_add, add_assoc, add_comm, add_left_comm]
+      map_smul' := by
+        intro c x
+        ext <;> simp }
+  let hP₁ :
+      (Fin P.relations → R) ×
+          ((Fin Q.relations → R) × (Fin Q.generators → R)) →ₗ[R]
+        (Fin P.generators → R) :=
+    P.relationMap.comp (LinearMap.fst R (Fin P.relations → R)
+      ((Fin Q.relations → R) × (Fin Q.generators → R)))
+  let hP₂ :
+      (Fin P.relations → R) ×
+          ((Fin Q.relations → R) × (Fin Q.generators → R)) →ₗ[R]
+        (Fin Q.generators → R) :=
+    LinearMap.snd R (Fin Q.relations → R) (Fin Q.generators → R) ∘ₗ
+      LinearMap.snd R (Fin P.relations → R)
+        ((Fin Q.relations → R) × (Fin Q.generators → R))
+  let hP := hP₁.prod hP₂
+  have hPconj :
+      eCodP.toLinearMap ∘ₗ h' ∘ₗ eDomP.symm.toLinearMap = hP := by
+    apply LinearMap.ext
+    rintro ⟨x, y, z⟩
+    change
+      (P.relationMap (x - δ y) - γ (z - Q.relationMap y) +
+          γ (Q.relationMap y + (z - Q.relationMap y)),
+        Q.relationMap y + (z - Q.relationMap y)) =
+        (P.relationMap x, z)
+    have hδy := congrArg (fun g => g y) hδ
+    simp only [LinearMap.comp_apply] at hδy
+    rw [map_sub, map_add, hδy]
+    apply Prod.ext <;> abel_nf
+  have hfitQconj : ∀ k, determinantCoefficientIdeal (R := R) k hQ =
+      determinantCoefficientIdeal (R := R) k h := by
+    intro k
+    have hh := determinantCoefficientIdeal_comp_eq_of_equiv
+      (R := R) k h eDomQ.symm eCodQ
+    simpa only [hQconj] using hh
+  have hfitPconj : ∀ k, determinantCoefficientIdeal (R := R) k hP =
+      determinantCoefficientIdeal (R := R) k h' := by
+    intro k
+    have hh := determinantCoefficientIdeal_comp_eq_of_equiv
+      (R := R) k h' eDomP.symm eCodP
+    simpa only [hPconj] using hh
+  let qprod :
+      ((Fin Q.relations → R) × (Fin P.generators → R)) →ₗ[R]
+        ((Fin Q.generators → R) × (Fin P.generators → R)) :=
+    Q.relationMap.prodMap
+      (LinearMap.id : (Fin P.generators → R) →ₗ[R] (Fin P.generators → R))
+  let qdrop :
+      ((Fin P.relations → R) ×
+          ((Fin Q.relations → R) × (Fin P.generators → R))) →ₗ[R]
+        ((Fin Q.relations → R) × (Fin P.generators → R)) :=
+    LinearMap.snd R (Fin P.relations → R)
+      ((Fin Q.relations → R) × (Fin P.generators → R))
+  let qswap :
+      ((Fin Q.generators → R) × (Fin P.generators → R)) ≃ₗ[R]
+        ((Fin P.generators → R) × (Fin Q.generators → R)) :=
+    LinearEquiv.prodComm R (Fin Q.generators → R) (Fin P.generators → R)
+  have hQfactor : qswap.toLinearMap ∘ₗ qprod ∘ₗ qdrop = hQ := by
+    apply LinearMap.ext
+    rintro ⟨x, y, z⟩
+    simp [qprod, qdrop, qswap, hQ, hQ₁, hQ₂, LinearMap.comp_apply]
+  have hfitQprod : ∀ k, determinantCoefficientIdeal (R := R) k hQ =
+      determinantCoefficientIdeal (R := R) k qprod := by
+    intro k
+    calc
+      determinantCoefficientIdeal (R := R) k hQ =
+          determinantCoefficientIdeal (R := R) k
+            (qswap.toLinearMap ∘ₗ qprod ∘ₗ qdrop) := by rw [hQfactor]
+      _ = determinantCoefficientIdeal (R := R) k (qprod ∘ₗ qdrop) := by
+        have hqrefl :
+            qswap.toLinearMap ∘ₗ (qprod ∘ₗ qdrop) ∘ₗ
+                (LinearEquiv.refl R _).toLinearMap =
+              qswap.toLinearMap ∘ₗ qprod ∘ₗ qdrop := by
+          apply LinearMap.ext
+          intro z
+          simp only [LinearMap.comp_apply]
+          rfl
+        have hh := determinantCoefficientIdeal_comp_eq_of_equiv
+          (R := R) k (qprod ∘ₗ qdrop) (LinearEquiv.refl R _) qswap
+        rw [hqrefl] at hh
+        exact hh
+      _ = determinantCoefficientIdeal (R := R) k qprod :=
+        determinantCoefficientIdeal_precomp_snd k qprod
+  let pprod :
+      ((Fin P.relations → R) × (Fin Q.generators → R)) →ₗ[R]
+        ((Fin P.generators → R) × (Fin Q.generators → R)) :=
+    P.relationMap.prodMap
+      (LinearMap.id : (Fin Q.generators → R) →ₗ[R] (Fin Q.generators → R))
+  let pdrop :
+      ((Fin P.relations → R) ×
+          ((Fin Q.relations → R) × (Fin Q.generators → R))) →ₗ[R]
+        ((Fin P.relations → R) × (Fin Q.generators → R)) :=
+    (LinearMap.fst R (Fin P.relations → R)
+      ((Fin Q.relations → R) × (Fin Q.generators → R))).prod
+      ((LinearMap.snd R (Fin Q.relations → R) (Fin Q.generators → R)).comp
+        (LinearMap.snd R (Fin P.relations → R)
+          ((Fin Q.relations → R) × (Fin Q.generators → R))))
+  let psection :
+      ((Fin P.relations → R) × (Fin Q.generators → R)) →ₗ[R]
+        ((Fin P.relations → R) ×
+          ((Fin Q.relations → R) × (Fin Q.generators → R))) :=
+    (LinearMap.fst R (Fin P.relations → R) (Fin Q.generators → R)).prod
+      ((0 : ((Fin P.relations → R) × (Fin Q.generators → R)) →ₗ[R]
+          (Fin Q.relations → R)).prod
+        (LinearMap.snd R (Fin P.relations → R) (Fin Q.generators → R)))
+  have hpsection : pdrop ∘ₗ psection = LinearMap.id := by
+    apply LinearMap.ext
+    rintro ⟨x, z⟩
+    simp [pdrop, psection, LinearMap.comp_apply]
+  have hPfactor : pprod ∘ₗ pdrop = hP := by
+    apply LinearMap.ext
+    rintro ⟨x, y, z⟩
+    simp [pprod, pdrop, hP, hP₁, hP₂, LinearMap.comp_apply]
+  have hfitPprod : ∀ k, determinantCoefficientIdeal (R := R) k hP =
+      determinantCoefficientIdeal (R := R) k pprod := by
+    intro k
+    calc
+      determinantCoefficientIdeal (R := R) k hP =
+          determinantCoefficientIdeal (R := R) k (pprod ∘ₗ pdrop) := by
+            rw [hPfactor]
+      _ = determinantCoefficientIdeal (R := R) k pprod :=
+        determinantCoefficientIdeal_precomp_of_rightInverse
+          k pprod pdrop psection hpsection
+  change determinantCoefficientIdeal (R := R) (Q.generators - i) Q.relationMap =
+    determinantCoefficientIdeal (R := R) (P.generators - i) P.relationMap
+  have hcommon (k : ℕ) :
+      determinantCoefficientIdeal (R := R) k qprod =
+        determinantCoefficientIdeal (R := R) k pprod := by
+    calc
+      determinantCoefficientIdeal (R := R) k qprod =
+          determinantCoefficientIdeal (R := R) k hQ := (hfitQprod k).symm
+      _ = determinantCoefficientIdeal (R := R) k h := hfitQconj k
+      _ = determinantCoefficientIdeal (R := R) k h' := hfit k
+      _ = determinantCoefficientIdeal (R := R) k hP := (hfitPconj k).symm
+      _ = determinantCoefficientIdeal (R := R) k pprod := hfitPprod k
+  have hQprod (k : ℕ) :
+      determinantCoefficientIdeal (R := R) (k + P.generators) qprod =
+        determinantCoefficientIdeal (R := R) k Q.relationMap := by
+    simpa [qprod] using
+      (determinantCoefficientIdeal_prodMap
+        (R := R) Q.relations Q.generators P.generators k Q.relationMap)
+  have hPprod (k : ℕ) :
+      determinantCoefficientIdeal (R := R) (k + Q.generators) pprod =
+        determinantCoefficientIdeal (R := R) k P.relationMap := by
+    simpa [pprod] using
+      (determinantCoefficientIdeal_prodMap
+        (R := R) P.relations P.generators Q.generators k P.relationMap)
+  by_cases hPi : i ≤ P.generators
+  · by_cases hQi : i ≤ Q.generators
+    · have hQsum :
+          (Q.generators - i) + P.generators =
+            P.generators + Q.generators - i := by omega
+      have hPsum :
+          (P.generators - i) + Q.generators =
+            P.generators + Q.generators - i := by omega
+      calc
+        determinantCoefficientIdeal (R := R) (Q.generators - i) Q.relationMap =
+            determinantCoefficientIdeal (R := R)
+              ((Q.generators - i) + P.generators) qprod :=
+          (hQprod (Q.generators - i)).symm
+        _ = determinantCoefficientIdeal (R := R)
+              (P.generators + Q.generators - i) qprod := by rw [hQsum]
+        _ = determinantCoefficientIdeal (R := R)
+              (P.generators + Q.generators - i) pprod := hcommon _
+        _ = determinantCoefficientIdeal (R := R)
+              ((P.generators - i) + Q.generators) pprod := by rw [hPsum]
+        _ = determinantCoefficientIdeal (R := R) (P.generators - i) P.relationMap :=
+          hPprod (P.generators - i)
+    · have hQ_le_i : Q.generators ≤ i := Nat.le_of_not_ge hQi
+      have hQ_le_P : Q.generators ≤ P.generators := by omega
+      have hqtop :
+          determinantCoefficientIdeal (R := R) P.generators qprod = ⊤ := by
+        calc
+          determinantCoefficientIdeal (R := R) P.generators qprod =
+              determinantCoefficientIdeal (R := R) (0 + P.generators) qprod := by
+                rw [zero_add]
+          _ = determinantCoefficientIdeal (R := R) 0 Q.relationMap := hQprod 0
+          _ = ⊤ := determinantCoefficientIdeal_zero Q.relationMap
+      have hpRelTop :
+          determinantCoefficientIdeal (R := R)
+              (P.generators - Q.generators) P.relationMap = ⊤ := by
+        calc
+          determinantCoefficientIdeal (R := R)
+              (P.generators - Q.generators) P.relationMap =
+              determinantCoefficientIdeal (R := R)
+                ((P.generators - Q.generators) + Q.generators) pprod :=
+            (hPprod (P.generators - Q.generators)).symm
+          _ = determinantCoefficientIdeal (R := R) P.generators pprod := by
+            rw [Nat.sub_add_cancel hQ_le_P]
+          _ = determinantCoefficientIdeal (R := R) P.generators qprod := (hcommon _).symm
+          _ = ⊤ := hqtop
+      have hPmono : P.generators - i ≤ P.generators - Q.generators := by omega
+      have hpTop :
+          determinantCoefficientIdeal (R := R)
+              (P.generators - i) P.relationMap = ⊤ := by
+        apply le_antisymm le_top
+        have hle := determinantCoefficientIdeal_le_of_le_pi
+          P.relations P.generators (P.generators - i)
+            (P.generators - Q.generators) hPmono P.relationMap
+        rw [hpRelTop] at hle
+        exact hle
+      have hqTop :
+          determinantCoefficientIdeal (R := R) (Q.generators - i) Q.relationMap = ⊤ := by
+        rw [Nat.sub_eq_zero_of_le hQ_le_i]
+        exact determinantCoefficientIdeal_zero Q.relationMap
+      rw [hqTop, hpTop]
+  · have hP_le_i : P.generators ≤ i := Nat.le_of_not_ge hPi
+    by_cases hQi : i ≤ Q.generators
+    · have hP_le_Q : P.generators ≤ Q.generators := by omega
+      have hqtop :
+          determinantCoefficientIdeal (R := R) Q.generators pprod = ⊤ := by
+        calc
+          determinantCoefficientIdeal (R := R) Q.generators pprod =
+              determinantCoefficientIdeal (R := R) (0 + Q.generators) pprod := by
+                rw [zero_add]
+          _ = determinantCoefficientIdeal (R := R) 0 P.relationMap := hPprod 0
+          _ = ⊤ := determinantCoefficientIdeal_zero P.relationMap
+      have hqRelTop :
+          determinantCoefficientIdeal (R := R)
+              (Q.generators - P.generators) Q.relationMap = ⊤ := by
+        calc
+          determinantCoefficientIdeal (R := R)
+              (Q.generators - P.generators) Q.relationMap =
+              determinantCoefficientIdeal (R := R)
+                ((Q.generators - P.generators) + P.generators) qprod :=
+            (hQprod (Q.generators - P.generators)).symm
+          _ = determinantCoefficientIdeal (R := R) Q.generators qprod := by
+            rw [Nat.sub_add_cancel hP_le_Q]
+          _ = determinantCoefficientIdeal (R := R) Q.generators pprod := hcommon _
+          _ = ⊤ := hqtop
+      have hQmono : Q.generators - i ≤ Q.generators - P.generators := by omega
+      have hqTop :
+          determinantCoefficientIdeal (R := R)
+              (Q.generators - i) Q.relationMap = ⊤ := by
+        apply le_antisymm le_top
+        have hle := determinantCoefficientIdeal_le_of_le_pi
+          Q.relations Q.generators (Q.generators - i)
+            (Q.generators - P.generators) hQmono Q.relationMap
+        rw [hqRelTop] at hle
+        exact hle
+      have hpTop :
+          determinantCoefficientIdeal (R := R) (P.generators - i) P.relationMap = ⊤ := by
+        rw [Nat.sub_eq_zero_of_le hP_le_i]
+        exact determinantCoefficientIdeal_zero P.relationMap
+      rw [hqTop, hpTop]
+    · have hQ_le_i : Q.generators ≤ i := Nat.le_of_not_ge hQi
+      have hqTop :
+          determinantCoefficientIdeal (R := R) (Q.generators - i) Q.relationMap = ⊤ := by
+        rw [Nat.sub_eq_zero_of_le hQ_le_i]
+        exact determinantCoefficientIdeal_zero Q.relationMap
+      have hpTop :
+          determinantCoefficientIdeal (R := R) (P.generators - i) P.relationMap = ⊤ := by
+        rw [Nat.sub_eq_zero_of_le hP_le_i]
+        exact determinantCoefficientIdeal_zero P.relationMap
+      rw [hqTop, hpTop]
 
 theorem fittingIdeal_baseChange
     {A B M : Type*} [CommRing A] [CommRing B] [AddCommGroup M]

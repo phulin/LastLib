@@ -161,6 +161,40 @@ theorem chapter07_finite_local_order_kernel
   ext u
   exact chapter07LocalOrder_eq_zero_iff_mem_localIntegralUnitSubgroup R K v u
 
+theorem chapter07_finite_local_order_coset_open
+    (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
+    [Algebra R K] [IsFractionRing R K]
+    (v : chapter07FinitePlace R) (n : ℤ) :
+    IsOpen {u : (chapter07LocalField R K v)ˣ |
+      chapter07LocalOrder R K v u = n} := by
+  change IsOpen ((chapter07LocalOrder R K v) ⁻¹' ({n} : Set ℤ))
+  exact (chapter07_finite_local_order_continuous R K v).isOpen_preimage
+    ({n} : Set ℤ)
+    ((discreteTopology_iff_isOpen_singleton.mp (inferInstance : DiscreteTopology ℤ)) n)
+
+theorem chapter07_finite_local_order_cosets_cover
+    (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
+    [Algebra R K] [IsFractionRing R K]
+    (v : chapter07FinitePlace R) :
+    (⋃ n : ℤ, {u : (chapter07LocalField R K v)ˣ |
+      chapter07LocalOrder R K v u = n}) = Set.univ := by
+  ext u
+  simp
+
+theorem chapter07_finite_local_order_cosets_pairwise_disjoint
+    (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
+    [Algebra R K] [IsFractionRing R K]
+    (v : chapter07FinitePlace R) :
+    Pairwise (fun m n : ℤ =>
+      Disjoint
+        {u : (chapter07LocalField R K v)ˣ |
+          chapter07LocalOrder R K v u = m}
+        {u : (chapter07LocalField R K v)ˣ |
+          chapter07LocalOrder R K v u = n}) := by
+  intro m n hmn
+  exact Set.disjoint_left.2 (fun u hum hun =>
+    hmn (by simpa using hum.symm.trans hun))
+
 theorem chapter07_finite_local_idele_coset_decomposition
     (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K]
     [Algebra R K] [IsFractionRing R K]

@@ -145,7 +145,7 @@ attribute [instance] Chapter02ReducedFiniteMinimalPrimes.reduced
 attribute [instance] Chapter02ReducedFiniteMinimalPrimes.finite
 
 theorem chapter02_totalRingOfFractionsMap_injective
-    (A : Type u) [CommRing A] [Chapter02ReducedFiniteMinimalPrimes A] :
+    (A : Type u) [CommRing A] [IsReduced A] :
     Function.Injective (chapter02TotalRingOfFractionsMap A) := by
   intro a b hab
   have hmem : a - b ∈ nilradical A := by

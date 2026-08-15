@@ -3,6 +3,12 @@ import Mathlib.RingTheory.AdicCompletion.Algebra
 import Mathlib.RingTheory.AdicCompletion.Completeness
 import Mathlib.RingTheory.Ideal.Quotient.PowTransition
 import Mathlib.RingTheory.Ideal.Quotient.Operations
+import Mathlib.RingTheory.TensorProduct.Quotient
+import Mathlib.RingTheory.TensorProduct.Free
+import Mathlib.LinearAlgebra.Dimension.Localization
+import Mathlib.LinearAlgebra.Dimension.StrongRankCondition
+import Mathlib.Algebra.Algebra.Basic
+import Mathlib.RingTheory.Unramified.LocalRing
 import Mathlib.RingTheory.PowerSeries.Basic
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Section07RootsOfUnity
 
@@ -58,6 +64,39 @@ def Chapter07FinitePrecisionFreeOfRank
     Cardinal.toNat (Module.rank (Chapter07BasePrecisionQuotient A π n)
       (Chapter07ExtensionPrecisionQuotient A B π n)) = f
 
+/-- The canonical reduction maps between successive base and extension
+precision quotients, together with their compatibility with the algebra map.
+The equations on quotient representatives characterize the transition maps
+without depending on a particular quotient-map lemma name. -/
+structure Chapter07FinitePrecisionTransitionData
+    (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
+    (π : A) where
+  baseTransition : ∀ n : ℕ,
+    Chapter07BasePrecisionQuotient A π (n + 1) →+*
+      Chapter07BasePrecisionQuotient A π n
+  baseTransition_on_mk : ∀ (n : ℕ) (x : A),
+    baseTransition n
+        (Ideal.Quotient.mk (Chapter07BasePrecisionIdeal A π (n + 1)) x) =
+      Ideal.Quotient.mk (Chapter07BasePrecisionIdeal A π n) x
+  extensionTransition : ∀ n : ℕ,
+    Chapter07ExtensionPrecisionQuotient A B π (n + 1) →+*
+      Chapter07ExtensionPrecisionQuotient A B π n
+  extensionTransition_on_mk : ∀ (n : ℕ) (x : B),
+    extensionTransition n
+        (Ideal.Quotient.mk (Chapter07ExtensionPrecisionIdeal A B π (n + 1)) x) =
+      Ideal.Quotient.mk (Chapter07ExtensionPrecisionIdeal A B π n) x
+  baseToExtension : ∀ n : ℕ,
+    Chapter07BasePrecisionQuotient A π n →+*
+      Chapter07ExtensionPrecisionQuotient A B π n
+  baseToExtension_on_mk : ∀ (n : ℕ) (x : A),
+    baseToExtension n
+        (Ideal.Quotient.mk (Chapter07BasePrecisionIdeal A π n) x) =
+      Ideal.Quotient.mk (Chapter07ExtensionPrecisionIdeal A B π n)
+        (algebraMap A B x)
+  transition_compatible : ∀ n : ℕ,
+    (extensionTransition n).comp (baseToExtension (n + 1)) =
+      (baseToExtension n).comp (baseTransition n)
+
 /-- Unramified finite freeness at every precision.  The source's “determined
 by the residue extension” phrase is represented by a compatible family of
 these quotient bases. -/
@@ -69,6 +108,24 @@ structure Chapter07FinitePrecisionTower
     0 < n → Chapter07FinitePrecisionFreeOfRank A B π f n
   residueDegree : Module.finrank k l = f
   residueSeparable : Chapter07ResidueExtensionIsSeparable k l
+  transitions : Chapter07FinitePrecisionTransitionData A B π
+  baseResidueMap : A →+* k
+  baseResidueMap_surjective : Function.Surjective baseResidueMap
+  baseResidueMap_kernel : RingHom.ker baseResidueMap =
+    Chapter07BasePrecisionIdeal A π 1
+  extensionResidueMap : B →+* l
+  extensionResidueMap_surjective : Function.Surjective extensionResidueMap
+  extensionResidueMap_kernel : RingHom.ker extensionResidueMap =
+    Chapter07ExtensionPrecisionIdeal A B π 1
+  residueMap_compatible :
+    extensionResidueMap.comp (algebraMap A B) =
+      (algebraMap k l).comp baseResidueMap
+  residueQuotientIdentification :
+    Chapter07ExtensionPrecisionQuotient A B π 1 ≃+* l
+  residueQuotientIdentification_on_mk : ∀ x : B,
+    residueQuotientIdentification
+      (Ideal.Quotient.mk (Chapter07ExtensionPrecisionIdeal A B π 1) x) =
+      extensionResidueMap x
 
 /-- For an unramified finite extension, all quotients `B/π^nB` are finite free
 of rank equal to the residue degree. -/
@@ -86,11 +143,200 @@ theorem chapter07_unramified_quotients_are_free
     (π : A) (f : ℕ)
     (hπ : IsLocalRing.maximalIdeal A = Ideal.span ({π} : Set A))
     (U : Chapter07UnramifiedLocalExtensionData A B K L k l)
-    (hf : U.profile.residueDegree = f)
-    (hresidueDegree : Module.finrank k l = f) :
+    (hf : U.profile.residueDegree = f) :
     ∀ n : ℕ, 0 < n →
       Chapter07FinitePrecisionFreeOfRank A B π f n := by
-  sorry
+  intro n hn
+  classical
+  let b : Module.Basis (Module.Free.ChooseBasisIndex A B) A B :=
+    Module.Free.chooseBasis A B
+  let bq : Module.Basis (Module.Free.ChooseBasisIndex A B)
+      (Chapter07BasePrecisionQuotient A π n)
+      (Chapter07ExtensionPrecisionQuotient A B π n) :=
+    (Algebra.TensorProduct.basis (Chapter07BasePrecisionQuotient A π n) b).map
+      (Algebra.TensorProduct.quotIdealMapEquivQuotTensor B
+        (Chapter07BasePrecisionIdeal A π n)).symm.toLinearEquiv
+  have hπmem : π ∈ IsLocalRing.maximalIdeal A := by
+    rw [hπ]
+    exact Ideal.subset_span (by simp)
+  have hpowmem : π ^ n ∈ IsLocalRing.maximalIdeal A :=
+    (IsLocalRing.maximalIdeal A).pow_mem_of_mem hπmem n hn
+  have hIle : Chapter07BasePrecisionIdeal A π n ≤
+      IsLocalRing.maximalIdeal A := by
+    apply Ideal.span_le.2
+    exact Set.singleton_subset_iff.mpr hpowmem
+  have hIne : Chapter07BasePrecisionIdeal A π n ≠ ⊤ := by
+    intro htop
+    have htopmax : (⊤ : Ideal A) ≤ IsLocalRing.maximalIdeal A := by
+      simpa [htop] using hIle
+    have hmax : IsLocalRing.maximalIdeal A = ⊤ := top_unique htopmax
+    exact (IsLocalRing.maximalIdeal.isMaximal A).lt_top.ne hmax
+  let hnontrivial : Nontrivial (Chapter07BasePrecisionQuotient A π n) :=
+    Ideal.Quotient.nontrivial_iff.mpr hIne
+  let hfree : Module.Free (Chapter07BasePrecisionQuotient A π n)
+      (Chapter07ExtensionPrecisionQuotient A B π n) :=
+    Module.Free.of_basis bq
+  let hfinite : Module.Finite (Chapter07BasePrecisionQuotient A π n)
+      (Chapter07ExtensionPrecisionQuotient A B π n) :=
+    Module.Finite.of_basis bq
+  refine ⟨hfinite, hfree, ?_⟩
+  calc
+    Cardinal.toNat (Module.rank (Chapter07BasePrecisionQuotient A π n)
+        (Chapter07ExtensionPrecisionQuotient A B π n)) =
+        Cardinal.toNat (Cardinal.mk (Module.Free.ChooseBasisIndex A B)) := by
+      rw [← bq.mk_eq_rank'']
+    _ = Fintype.card (Module.Free.ChooseBasisIndex A B) := by
+      rw [Cardinal.mk_fintype, Cardinal.toNat_natCast]
+    _ = Module.finrank A B := (Module.finrank_eq_card_basis b).symm
+    _ = Module.finrank K L := (IsFractionRing.finrank_eq A K B L).symm
+    _ = f := by
+      rw [U.profile.degree_eq_ramification_residue, U.unramified.1,
+        Nat.one_mul, hf]
+
+/-- The unramified quotient theorem can be bundled with the canonical
+transition system and its first residue quotient. -/
+theorem chapter07_unramified_precision_tower_exists
+    {A B K L k l : Type*} [CommRing A] [IsDomain A] [CommRing B]
+    [IsDomain B] [Field K] [Field L] [Field k] [Field l]
+    [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L]
+    [Algebra A L] [Algebra k l]
+    [IsScalarTower A B L] [IsScalarTower A K L]
+    [IsFractionRing A K] [IsFractionRing B L]
+    [FiniteDimensional K L] [FiniteDimensional k l]
+    [IsIntegralClosure B A L] [HenselianLocalRing A]
+    [Module.Finite A B] [Module.Free A B]
+    [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
+    (π : A) (f : ℕ)
+    (hπ : IsLocalRing.maximalIdeal A = Ideal.span ({π} : Set A))
+    (U : Chapter07UnramifiedLocalExtensionData A B K L k l)
+    (hf : U.profile.residueDegree = f)
+    (hresidueDegree : Module.finrank k l = f) :
+    Nonempty (Chapter07FinitePrecisionTower A B π f k l) := by
+  classical
+  have hbase_le : ∀ n : ℕ,
+      Chapter07BasePrecisionIdeal A π (n + 1) ≤
+        Chapter07BasePrecisionIdeal A π n := by
+    intro n
+    apply Ideal.span_le.2
+    exact Set.singleton_subset_iff.mpr <| by
+      simpa [pow_succ, mul_comm] using
+        (Ideal.mul_mem_right π (Ideal.span ({π ^ n} : Set A))
+          (Ideal.subset_span (by simp)))
+  have hext_le : ∀ n : ℕ,
+      Chapter07ExtensionPrecisionIdeal A B π (n + 1) ≤
+        Chapter07ExtensionPrecisionIdeal A B π n := by
+    intro n
+    exact Ideal.map_mono (f := algebraMap A B) (hbase_le n)
+  let baseTransition : ∀ n : ℕ,
+      Chapter07BasePrecisionQuotient A π (n + 1) →+*
+        Chapter07BasePrecisionQuotient A π n :=
+    fun n => Ideal.Quotient.factor (hbase_le n)
+  let extensionTransition : ∀ n : ℕ,
+      Chapter07ExtensionPrecisionQuotient A B π (n + 1) →+*
+        Chapter07ExtensionPrecisionQuotient A B π n :=
+    fun n => Ideal.Quotient.factor (hext_le n)
+  let baseToExtension : ∀ n : ℕ,
+      Chapter07BasePrecisionQuotient A π n →+*
+        Chapter07ExtensionPrecisionQuotient A B π n :=
+    fun n =>
+      letI := Chapter07PrecisionAlgebra A B π n
+      algebraMap (Chapter07BasePrecisionQuotient A π n)
+        (Chapter07ExtensionPrecisionQuotient A B π n)
+  have hbase1 : Chapter07BasePrecisionIdeal A π 1 =
+      IsLocalRing.maximalIdeal A := by
+    simp [Chapter07BasePrecisionIdeal, hπ]
+  have hIntegral : Algebra.IsIntegral A B := IsIntegralClosure.isIntegral_algebra A L
+  have hAB : Function.Injective (algebraMap A B) := by
+    intro x y hxy
+    apply IsFractionRing.injective A K
+    apply (algebraMap K L).injective
+    calc
+      algebraMap K L (algebraMap A K x) = algebraMap A L x :=
+        (IsScalarTower.algebraMap_apply A K L x).symm
+      _ = algebraMap B L (algebraMap A B x) :=
+        IsScalarTower.algebraMap_apply A B L x
+      _ = algebraMap B L (algebraMap A B y) := congrArg (algebraMap B L) hxy
+      _ = algebraMap A L y := (IsScalarTower.algebraMap_apply A B L y).symm
+      _ = algebraMap K L (algebraMap A K y) := IsScalarTower.algebraMap_apply A K L y
+  have hFaithful : FaithfulSMul A B :=
+    faithfulSMul_iff_algebraMap_injective A B |>.mpr hAB
+  have hEtale : Algebra.Etale A B := U.integralModel_etale
+  have hmapmax :
+      (IsLocalRing.maximalIdeal A).map (algebraMap A B) =
+        IsLocalRing.maximalIdeal B :=
+    Algebra.FormallyUnramified.map_maximalIdeal
+  have hext1 : Chapter07ExtensionPrecisionIdeal A B π 1 =
+      IsLocalRing.maximalIdeal B := by
+    rw [Chapter07ExtensionPrecisionIdeal, hbase1, hmapmax]
+  have hkernelExt : RingHom.ker U.extensionResidueMap =
+      Chapter07ExtensionPrecisionIdeal A B π 1 :=
+    U.extensionResidueMap_kernel.trans hext1.symm
+  let residueQuotientIdentification :
+      Chapter07ExtensionPrecisionQuotient A B π 1 ≃+* l :=
+    (Ideal.quotientEquivAlgOfEq B hkernelExt.symm).toRingEquiv.trans
+      (RingHom.quotientKerEquivOfSurjective U.extensionResidueMap_surjective)
+  have hbaseTransition_on_mk : ∀ (n : ℕ) (x : A),
+      baseTransition n
+          (Ideal.Quotient.mk (Chapter07BasePrecisionIdeal A π (n + 1)) x) =
+        Ideal.Quotient.mk (Chapter07BasePrecisionIdeal A π n) x := by
+    intro n x
+    exact Ideal.Quotient.factor_mk (hbase_le n) x
+  have hextensionTransition_on_mk : ∀ (n : ℕ) (x : B),
+      extensionTransition n
+          (Ideal.Quotient.mk (Chapter07ExtensionPrecisionIdeal A B π (n + 1)) x) =
+        Ideal.Quotient.mk (Chapter07ExtensionPrecisionIdeal A B π n) x := by
+    intro n x
+    exact Ideal.Quotient.factor_mk (hext_le n) x
+  have hbaseToExtension_on_mk : ∀ (n : ℕ) (x : A),
+      baseToExtension n
+          (Ideal.Quotient.mk (Chapter07BasePrecisionIdeal A π n) x) =
+        Ideal.Quotient.mk (Chapter07ExtensionPrecisionIdeal A B π n)
+          (algebraMap A B x) := by
+    intro n x
+    simp [baseToExtension]
+  have htransition_compatible : ∀ n : ℕ,
+      (extensionTransition n).comp (baseToExtension (n + 1)) =
+        (baseToExtension n).comp (baseTransition n) := by
+    intro n
+    apply RingHom.ext
+    intro x
+    induction x using Quotient.inductionOn' with
+    | _ x =>
+      simp only [RingHom.coe_comp, Function.comp_apply]
+      change
+        (extensionTransition n)
+            (baseToExtension (n + 1)
+          (Ideal.Quotient.mk (Chapter07BasePrecisionIdeal A π (n + 1)) x)) =
+          (baseToExtension n)
+            (baseTransition n
+              (Ideal.Quotient.mk (Chapter07BasePrecisionIdeal A π (n + 1)) x))
+      rw [hbaseToExtension_on_mk, hextensionTransition_on_mk,
+        hbaseTransition_on_mk, hbaseToExtension_on_mk]
+  let transitions : Chapter07FinitePrecisionTransitionData A B π :=
+    { baseTransition := baseTransition
+      baseTransition_on_mk := hbaseTransition_on_mk
+      extensionTransition := extensionTransition
+      extensionTransition_on_mk := hextensionTransition_on_mk
+      baseToExtension := baseToExtension
+      baseToExtension_on_mk := hbaseToExtension_on_mk
+      transition_compatible := htransition_compatible }
+  refine ⟨{
+    finiteFree := fun n hn =>
+      chapter07_unramified_quotients_are_free π f hπ U hf n hn
+    residueDegree := hresidueDegree
+    residueSeparable := U.unramified.2
+    transitions := transitions
+    baseResidueMap := U.baseResidueMap
+    baseResidueMap_surjective := U.baseResidueMap_surjective
+    baseResidueMap_kernel := U.baseResidueMap_kernel.trans hbase1.symm
+    extensionResidueMap := U.extensionResidueMap
+    extensionResidueMap_surjective := U.extensionResidueMap_surjective
+    extensionResidueMap_kernel := U.extensionResidueMap_kernel.trans hext1.symm
+    residueMap_compatible := U.residueMap_compatible
+    residueQuotientIdentification := residueQuotientIdentification
+    residueQuotientIdentification_on_mk := by
+      intro x
+      simp [residueQuotientIdentification] }⟩
 
 /-- A compatible family of roots modulo all powers of an ideal.  Transition
 maps are explicit because the quotient-map API depends on the chosen ideal
@@ -116,7 +362,45 @@ theorem chapter07_hensel_constructs_compatible_precision_roots
     (hroot : eval₂ (Ideal.Quotient.mk I) a p = 0)
     (hderiv : IsUnit (eval₂ (Ideal.Quotient.mk I) a p.derivative)) :
     Nonempty (Chapter07CompatibleRootApproximation R I p) := by
-  sorry
+  have hcontext : gbar.Separable ∧ p.map (Ideal.Quotient.mk I) = gbar :=
+    ⟨hseparable, hred⟩
+  let ha : ∃ a₀ : R, Ideal.Quotient.mk I a₀ = a :=
+    Ideal.Quotient.mk_surjective a
+  let a₀ : R := Classical.choose ha
+  have ha₀ : Ideal.Quotient.mk I a₀ = a := Classical.choose_spec ha
+  have hroot' := hroot
+  have hderiv'' := hderiv
+  rw [← ha₀] at hroot' hderiv''
+  have hrootbar : gbar.eval (Ideal.Quotient.mk I a₀) = 0 := by
+    rw [← hcontext.2, eval_map]
+    exact hroot'
+  let _ : IsLocalHom (Ideal.Quotient.mk I) := by
+    rw [hI]
+    exact IsLocalHom.of_surjective _ Ideal.Quotient.mk_surjective
+  have hfa : p.eval a₀ ∈ IsLocalRing.maximalIdeal R := by
+    rw [← hI, ← Ideal.Quotient.eq_zero_iff_mem]
+    have hrootbar' := hrootbar
+    rw [← hcontext.2, eval_map] at hrootbar'
+    simpa only [eval₂_at_apply] using hrootbar'
+  have hderiv' : IsUnit (p.derivative.eval a₀) := by
+    apply isUnit_of_map_unit (Ideal.Quotient.mk I) _
+    simpa [eval₂_at_apply] using hderiv''
+  let hξdata := HenselianLocalRing.is_henselian p hmonic a₀ hfa hderiv'
+  let ξ : R := Classical.choose hξdata
+  have hξ : p.IsRoot ξ := (Classical.choose_spec hξdata).1
+  let S : Chapter07CompatibleRootApproximation R I p :=
+    { root := fun n => Ideal.Quotient.mk (I ^ n) ξ
+      transition := fun n => Ideal.Quotient.factorPow I (Nat.le_succ n)
+      transition_canonical := fun n => rfl
+      root_equation := by
+        intro n
+        have h := congrArg (Ideal.Quotient.mk (I ^ n)) hξ.eq_zero
+        simpa only [Polynomial.eval₂_at_apply, map_zero] using h
+      compatible := by
+        intro n
+        exact Ideal.Quotient.factor_mk
+          (Ideal.pow_le_pow_right (Nat.le_succ n)) ξ }
+  exact ⟨S⟩
 
 /-- A compatible finite-precision root family has an inverse-limit lift in the
 adic completion, with its prescribed finite projections. -/
@@ -125,13 +409,61 @@ theorem chapter07_compatible_roots_have_adic_limit
     (S : Chapter07CompatibleRootApproximation R I p) :
     ∃ x : AdicCompletion I R, ∀ n,
       AdicCompletion.evalₐ I n x = S.root n := by
-  sorry
+  let hpow : Antitone (fun n : ℕ => I ^ n) := by
+    exact antitone_nat_of_succ_le (fun n => Ideal.pow_le_pow_right n.le_succ)
+  have hsucc : ∀ n : ℕ,
+      Ideal.Quotient.factorPow I (Nat.le_succ n) (S.root (n + 1)) = S.root n := by
+    intro n
+    rw [← S.transition_canonical n]
+    exact S.compatible n
+  have hfactor : ∀ {m n : ℕ} (hmn : m ≤ n),
+      Ideal.Quotient.factorPow I hmn (S.root n) = S.root m := by
+    intro m n hmn
+    exact (Ideal.Quotient.eq_factor_of_eq_factor_succ hpow S.root
+      (fun n => (hsucc n).symm) hmn).symm
+  let x : AdicCompletion I R :=
+    ⟨fun n => (Ideal.quotientEquivAlgOfEq R
+        (show (I ^ n • ⊤ : Ideal R) = I ^ n by ext y; simp)).symm (S.root n),
+      by
+        intro m n hmn
+        let hn : (I ^ n • ⊤ : Ideal R) = I ^ n := by ext y; simp
+        let hm : (I ^ m • ⊤ : Ideal R) = I ^ m := by ext y; simp
+        let en := Ideal.quotientEquivAlgOfEq R hn
+        let em := Ideal.quotientEquivAlgOfEq R hm
+        have hcomm : ∀ z : R ⧸ I ^ n,
+            em (Submodule.factorPow I R hmn (en.symm z)) =
+              Ideal.Quotient.factorPow I hmn z := by
+          intro z
+          induction z using Quotient.inductionOn' with
+          | _ a =>
+            change Ideal.Quotient.factor (Ideal.pow_le_pow_right hmn)
+                (Ideal.Quotient.mk (I ^ n) a) =
+              Ideal.Quotient.mk (I ^ m) a
+            exact Ideal.Quotient.factor_mk (Ideal.pow_le_pow_right hmn) a
+        change Submodule.factorPow I R hmn (en.symm (S.root n)) =
+          em.symm (S.root m)
+        apply em.injective
+        calc
+          em (Submodule.factorPow I R hmn (en.symm (S.root n))) =
+              Ideal.Quotient.factorPow I hmn (S.root n) := hcomm _
+          _ = S.root m := hfactor hmn
+          _ = em (em.symm (S.root m)) := (em.apply_symm_apply _).symm⟩
+  refine ⟨x, ?_⟩
+  intro n
+  change Ideal.quotientEquivAlgOfEq R
+      (show (I ^ n • ⊤ : Ideal R) = I ^ n by ext y; simp)
+      ((Ideal.quotientEquivAlgOfEq R
+        (show (I ^ n • ⊤ : Ideal R) = I ^ n by ext y; simp)).symm (S.root n)) =
+    S.root n
+  exact (Ideal.quotientEquivAlgOfEq R
+    (show (I ^ n • ⊤ : Ideal R) = I ^ n by ext y; simp)).apply_symm_apply _
 
 /-- In equal characteristic, a chosen coefficient field identifies the
 unramified ring with a literal power-series ring. -/
 def Chapter07CoefficientwisePowerSeriesExpansion
     (B k' : Type*) [CommRing B] [Field k'] : Prop :=
-  Nonempty (B ≃+* PowerSeries k')
+  ∃ (sectionMap : k' →+* B) (equiv : B ≃+* PowerSeries k'),
+    equiv.toRingHom.comp sectionMap = PowerSeries.C
 
 /-- In mixed characteristic there is no coefficient-field embedding of a
 positive-characteristic residue field into a characteristic-zero ring. -/
@@ -139,7 +471,12 @@ theorem chapter07_mixed_characteristic_has_no_coefficient_field
     {B k : Type*} [CommRing B] [Field k] [CharZero B]
     {p : ℕ} [CharP k p] [Fact p.Prime] :
     ¬Nonempty (k →+* B) := by
-  sorry
+  rintro ⟨f⟩
+  have hp_k : (p : k) = 0 := CharP.cast_eq_zero k p
+  have hp_B : (p : B) = 0 := by
+    rw [← map_natCast f p, hp_k, map_zero]
+  have hp : p ≠ 0 := (Fact.out : Nat.Prime p).ne_zero
+  exact (Nat.cast_ne_zero.mpr hp) hp_B
 
 /-- The warning that finite-precision data need not have a coefficientwise
 power-series expansion is a property of a chosen mixed-characteristic model,
@@ -153,7 +490,9 @@ theorem chapter07_mixed_characteristic_has_no_coefficientwise_power_series
     {B k' : Type*} [CommRing B] [Field k'] [CharZero B]
     {p : ℕ} [CharP k' p] [Fact p.Prime] :
     Chapter07FinitePrecisionHasNoCoefficientwiseExpansion (B := B) (k' := k') := by
-  sorry
+  intro h
+  exact chapter07_mixed_characteristic_has_no_coefficient_field
+    (B := B) (k := k') ⟨h.choose⟩
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07

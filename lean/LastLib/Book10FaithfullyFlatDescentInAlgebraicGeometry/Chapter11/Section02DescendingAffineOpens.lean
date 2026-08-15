@@ -1,5 +1,6 @@
 import Mathlib.AlgebraicGeometry.Morphisms.Flat
 import Mathlib.AlgebraicGeometry.Morphisms.QuasiCompact
+import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
 import Mathlib.RingTheory.TensorProduct.IncludeLeftSubRight
 
 import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter11.Section01TheoremAndHypotheses
@@ -227,6 +228,43 @@ theorem relationSecond_quasiCompact {S T : Scheme.{u}} {p : T ⟶ S}
     pullback.fst (descentObject D).hom (kernelPairSnd p))
   exact AlgebraicGeometry.quasiCompact_isStableUnderComposition.comp_mem _ _ hqc hpb
 
+theorem relationFirst_isAffineHom_of_affine {S T : Scheme.{u}} {p : T ⟶ S}
+    (D : Datum p) [IsAffine S] [IsAffine T] :
+    IsAffineHom (relationFirst D) := by
+  have hKernelPairFst : IsAffineHom (kernelPairFst p) :=
+    AlgebraicGeometry.isAffineHom_isStableUnderBaseChange.of_isPullback
+      (IsPullback.of_hasPullback p p).flip (inferInstance : IsAffineHom p)
+  have hRelationFirst : IsAffineHom
+      (pullback.fst (descentObject D).hom (kernelPairFst p)) :=
+    AlgebraicGeometry.isAffineHom_isStableUnderBaseChange.of_isPullback
+      (IsPullback.of_hasPullback _ _).flip hKernelPairFst
+  change IsAffineHom (pullback.fst (descentObject D).hom (kernelPairFst p))
+  exact hRelationFirst
+
+theorem relationSecond_isAffineHom_of_affine {S T : Scheme.{u}} {p : T ⟶ S}
+    (D : Datum p) [IsAffine S] [IsAffine T] :
+    IsAffineHom (relationSecond D) := by
+  have hKernelPairSnd : IsAffineHom (kernelPairSnd p) :=
+    AlgebraicGeometry.isAffineHom_isStableUnderBaseChange.of_isPullback
+      (IsPullback.of_hasPullback p p) (inferInstance : IsAffineHom p)
+  have hRelationSecondBase : IsAffineHom
+      (pullback.fst (descentObject D).hom (kernelPairSnd p)) :=
+    AlgebraicGeometry.isAffineHom_isStableUnderBaseChange.of_isPullback
+      (IsPullback.of_hasPullback _ _).flip hKernelPairSnd
+  have hIso : IsIso (kernelPairIso D).hom.left := IsIso.mk' ⟨
+    (kernelPairIso D).inv.left,
+    Over.inv_left_hom_left (kernelPairIso D),
+    Over.hom_left_inv_left (kernelPairIso D)⟩
+  have hAffineIso : IsAffineHom (kernelPairIso D).hom.left :=
+    ⟨fun U hU ↦ @IsAffineOpen.preimage_of_isIso _ _ _ hU (kernelPairIso D).hom.left hIso⟩
+  change IsAffineHom ((kernelPairIso D).hom.left ≫
+    pullback.fst (descentObject D).hom (kernelPairSnd p))
+  exact {
+    isAffine_preimage := fun U hU ↦ by
+      rw [Scheme.Hom.comp_base, TopologicalSpace.Opens.map_comp_obj]
+      exact hAffineIso.isAffine_preimage _
+        (hRelationSecondBase.isAffine_preimage _ hU) }
+
 def orbit {S T : Scheme.{u}} {p : T ⟶ S} (D : Datum p)
     (x : (descentObject D).left) : Set (descentObject D).left :=
   { y | ∃ z : relationScheme D, relationFirst D z = x ∧ relationSecond D z = y }
@@ -353,6 +391,11 @@ theorem AmitsurEqualizerCondition.of_faithfullyFlat (A B : Type u) [CommRing A] 
     [Algebra A B] [Module.FaithfullyFlat A B] :
     AmitsurEqualizerCondition A B := by
   exact Algebra.IsEffective.of_faithfullyFlat A B
+
+theorem amitsur_unit_injective (A B : Type u) [CommRing A] [CommRing B]
+    [Algebra A B] [Module.FaithfullyFlat A B] :
+    Function.Injective (Algebra.linearMap A B) := by
+  exact FaithfulSMul.algebraMap_injective A B
 
 theorem amitsur_exact (A B : Type u) [CommRing A] [CommRing B] [Algebra A B]
     (h : AmitsurEqualizerCondition A B) :

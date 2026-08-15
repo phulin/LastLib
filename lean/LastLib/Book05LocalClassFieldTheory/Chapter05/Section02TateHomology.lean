@@ -32,23 +32,37 @@ theorem chapter05BarOneChainClass_mul
     (G : Type) [Group G] (g h : G) :
     chapter05BarOneChainClass G (g * h) =
       chapter05BarOneChainClass G g + chapter05BarOneChainClass G h := by
-  sorry
+  apply (chapter05H1AbelianizationIso G).injective
+  simp [chapter05H1AbelianizationIso, chapter05H1TensorAbelianizationIso,
+    chapter05BarOneChainClass]
+  rw [groupHomology.H1AddEquivOfIsTrivial_single
+      (A := Rep.trivial ℤ G ℤ) (g * h) (1 : ℤ),
+    groupHomology.H1AddEquivOfIsTrivial_single
+      (A := Rep.trivial ℤ G ℤ) g (1 : ℤ),
+    groupHomology.H1AddEquivOfIsTrivial_single
+      (A := Rep.trivial ℤ G ℤ) h (1 : ℤ)]
+  simp [TensorProduct.rid_tmul]
 
 theorem chapter05BarOneChainClass_commutator
     (G : Type) [Group G] (g h : G) :
     chapter05BarOneChainClass G (g * h * g⁻¹ * h⁻¹) = 0 := by
-  sorry
+  apply (groupHomology.H1AddEquivOfIsTrivial
+    (A := Rep.trivial ℤ G ℤ)).injective
+  simp only [chapter05BarOneChainClass]
+  rw [groupHomology.H1AddEquivOfIsTrivial_single
+      (A := Rep.trivial ℤ G ℤ) (g * h * g⁻¹ * h⁻¹) (1 : ℤ)]
+  simp
 
 theorem chapter05BarOneChain_mul
     (G : Type) [Group G] (g h : G) :
     chapter05BarOneChain G (g * h) =
       chapter05BarOneChain G g + chapter05BarOneChain G h := by
-  sorry
+  simp [chapter05BarOneChain]
 
 theorem chapter05BarOneChain_commutator
     (G : Type) [Group G] (g h : G) :
     chapter05BarOneChain G (g * h * g⁻¹ * h⁻¹) = 0 := by
-  sorry
+  simp [chapter05BarOneChain]
 
 /- The bar construction gives the inverse direction of the homology--
 abelianization equivalence.  Keeping this map explicit is useful when a
@@ -63,7 +77,14 @@ theorem chapter05BarH1Map_on_one_chain
     (G : Type) [Group G] (g : G) :
     chapter05BarH1Map G (chapter05BarOneChain G g) =
       chapter05BarOneChainClass G g := by
-  sorry
+  apply (chapter05H1AbelianizationIso G).injective
+  simp [chapter05BarH1Map, chapter05BarOneChain,
+    chapter05H1AbelianizationIso, chapter05H1TensorAbelianizationIso,
+    chapter05BarOneChainClass]
+  rw [groupHomology.H1AddEquivOfIsTrivial_single
+      (A := Rep.trivial ℤ G ℤ) g (1 : ℤ)]
+  simp [TensorProduct.rid_tmul]
+  rfl
 
 noncomputable def chapter05_tate_minus_two_is_homology
     (G : Type) [Group G] [Fintype G] :

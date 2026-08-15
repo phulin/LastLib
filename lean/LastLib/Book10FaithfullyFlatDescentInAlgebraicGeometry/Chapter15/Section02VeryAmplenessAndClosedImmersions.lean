@@ -106,7 +106,6 @@ theorem DescendedFiniteLinearSystem.isVeryAmple
       LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter05.RelativeVeryAmpleWitness
         f Z.lineBundle :=
     { projectiveBundle := Z.embedding.projectiveBundle
-      universalQuotientCompatible := Z.embedding.universalQuotientCompatible
       map := Z.embedding.map
       immersion := Z.embedding.immersion
       over := Z.embedding.over
@@ -122,7 +121,6 @@ theorem DescendedFiniteLinearSystem.hasGlobalFiniteRankEmbeddingFor
   refine ⟨{
     witness := {
       projectiveBundle := Z.embedding.projectiveBundle
-      universalQuotientCompatible := Z.embedding.universalQuotientCompatible
       map := Z.embedding.map
       immersion := Z.embedding.immersion
       over := Z.embedding.over

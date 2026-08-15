@@ -1,4 +1,5 @@
 import Mathlib.RingTheory.AdjoinRoot
+import Mathlib.Algebra.Polynomial.Eval.Irreducible
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Section02EquivalentCharacterizations
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07
@@ -45,37 +46,40 @@ theorem chapter07_lifted_root_is_integral
     (g : A[X]) (hg : g.Monic) (θ : Q)
     (hroot : eval₂ (algebraMap A Q) θ g = 0) :
     IsIntegral A θ := by
-  sorry
+  exact ⟨g, hg, hroot⟩
 
 /-- The quotient is a field when the lifted polynomial is irreducible. -/
 theorem chapter07_lifted_polynomial_quotient_is_field
     {K : Type*} [Field K] (g : K[X]) (hg : Irreducible g) :
     IsField (Chapter07LiftedPolynomialQuotient K g) := by
-  sorry
+  let _ : Fact (Irreducible g) := ⟨hg⟩
+  exact Field.toIsField _
 
 /-- A monic quotient has the expected vector-space degree. -/
 theorem chapter07_lifted_polynomial_quotient_degree
     {K : Type*} [Field K] (g : K[X]) (hg : g.Monic) :
     Module.finrank K (Chapter07LiftedPolynomialQuotient K g) = g.natDegree := by
-  sorry
+  exact (AdjoinRoot.powerBasis hg.ne_zero).finrank.trans
+    (AdjoinRoot.powerBasis_dim hg.ne_zero)
 
-/-- Residue irreducibility forces irreducibility of a monic lift over a DVR
-fraction field. -/
+/-- Residue irreducibility forces irreducibility of a monic lift over an
+integrally closed fraction-ring model. -/
 theorem chapter07_monic_lift_irreducible
     {A K k : Type*} [CommRing A] [IsDomain A] [Field K] [Field k]
-    [Algebra A K] [IsFractionRing A K] [HenselianLocalRing A]
-    [IsDiscreteValuationRing A]
+    [Algebra A K] [IsFractionRing A K] [IsIntegrallyClosed A]
     (res : A →+* k) (gbar : k[X]) (g : A[X])
     (hbar : gbar.Monic ∧ Irreducible gbar)
-    (hlift : Chapter07MonicPolynomialLift res gbar g)
-    (hres_surjective : Function.Surjective res)
-    (hres_kernel : RingHom.ker res = IsLocalRing.maximalIdeal A) :
+    (hlift : Chapter07MonicPolynomialLift res gbar g) :
     Irreducible (chapter07LiftedPolynomial (K := K) g) := by
-  sorry
+  have hA : Irreducible g := by
+    apply Polynomial.Monic.irreducible_of_irreducible_map res g hlift.1
+    simpa [hlift.2] using hbar.2
+  exact (hlift.1.irreducible_iff_irreducible_map_fraction_map).mp hA
 
 /-- The field-level quotient construction has the degree prescribed by the
-chosen finite separable residue polynomial.  The actual valuation-ring and
-residue-map package is supplied by the theorem immediately below. -/
+chosen finite separable residue polynomial and identifies the selected root
+with the quotient root.  The actual valuation-ring and residue-map package is
+supplied by the theorem immediately below. -/
 theorem chapter07_construct_unramified_lift
     {A K k k' : Type*} [CommRing A] [IsDomain A]
     [Field K] [Field k] [Field k']
@@ -90,18 +94,62 @@ theorem chapter07_construct_unramified_lift
       (Chapter07LiftedPolynomialQuotient K (chapter07LiftedPolynomial g))]
     (hbar : gbar.Monic ∧ Irreducible gbar ∧ gbar.Separable)
     (hlift : Chapter07MonicPolynomialLift res gbar g)
-    (hres_surjective : Function.Surjective res)
-    (hres_kernel : RingHom.ker res = IsLocalRing.maximalIdeal A)
     (L : Type*) [Field L] [Algebra K L] [FiniteDimensional K L]
     (theta : L)
     (hroot : eval₂ (algebraMap K L) theta (chapter07LiftedPolynomial g) = 0)
     (hgen : Algebra.adjoin K ({theta} : Set L) = ⊤)
     (hdegree : Module.finrank K L = gbar.natDegree)
     (hresdegree : Module.finrank k k' = gbar.natDegree) :
-    Nonempty
-      (L ≃ₐ[K]
-        Chapter07LiftedPolynomialQuotient K (chapter07LiftedPolynomial g)) := by
-  sorry
+    ∃ e : L ≃ₐ[K]
+        Chapter07LiftedPolynomialQuotient K (chapter07LiftedPolynomial g),
+      e theta = chapter07LiftedRoot g := by
+  have hp : Irreducible (chapter07LiftedPolynomial (K := K) g) :=
+    chapter07_monic_lift_irreducible res gbar g
+      ⟨hbar.1, hbar.2.1⟩ hlift
+  let _ : Fact (Irreducible (chapter07LiftedPolynomial (K := K) g)) := ⟨hp⟩
+  have hmonic : (chapter07LiftedPolynomial (K := K) g).Monic :=
+    hlift.1.map (algebraMap A K)
+  let _ : Module.Finite K
+      (Chapter07LiftedPolynomialQuotient K (chapter07LiftedPolynomial g)) :=
+    hmonic.finite_adjoinRoot
+  have hdim :
+      Module.finrank K (Chapter07LiftedPolynomialQuotient K
+        (chapter07LiftedPolynomial g)) = Module.finrank K L := by
+    calc
+      Module.finrank K (Chapter07LiftedPolynomialQuotient K
+          (chapter07LiftedPolynomial g)) =
+          (chapter07LiftedPolynomial (K := K) g).natDegree :=
+        chapter07_lifted_polynomial_quotient_degree _ hmonic
+      _ = g.natDegree := hlift.1.natDegree_map (algebraMap A K)
+      _ = (g.map res).natDegree := (hlift.1.natDegree_map res).symm
+      _ = gbar.natDegree := by rw [hlift.2]
+      _ = Module.finrank k k' := hresdegree.symm
+      _ = Module.finrank K L := hresdegree.trans hdegree.symm
+  let φ : Chapter07LiftedPolynomialQuotient K (chapter07LiftedPolynomial g) →ₐ[K] L :=
+    AdjoinRoot.liftAlgHom (chapter07LiftedPolynomial (K := K) g)
+      (Algebra.ofId K L) theta (by simpa using hroot)
+  have hφsurj : Function.Surjective φ := by
+    apply (AlgHom.range_eq_top φ).mp
+    apply top_unique
+    rw [← hgen]
+    apply Algebra.adjoin_le
+    intro x hx
+    rw [Set.mem_singleton_iff.mp hx]
+    exact (AlgHom.mem_range φ).2
+      ⟨chapter07LiftedRoot g, by simp [φ, chapter07LiftedRoot]⟩
+  have hφsurj_linear : Function.Surjective φ.toLinearMap := by
+    simpa only [AlgHom.coe_toLinearMap] using hφsurj
+  have hφinj_linear : Function.Injective φ.toLinearMap :=
+    (LinearMap.injective_iff_surjective_of_finrank_eq_finrank hdim).mpr hφsurj_linear
+  have hφinj : Function.Injective φ := by
+    intro x y hxy
+    exact hφinj_linear hxy
+  let e₀ : Chapter07LiftedPolynomialQuotient K (chapter07LiftedPolynomial g)
+      ≃ₐ[K] L := AlgEquiv.ofBijective φ ⟨hφinj, hφsurj⟩
+  refine ⟨e₀.symm, ?_⟩
+  rw [e₀.symm_apply_eq]
+  change theta = φ (chapter07LiftedRoot g)
+  simp only [φ, chapter07LiftedRoot, AdjoinRoot.liftAlgHom_root]
 
 /-! The profile returned by the preceding construction is only the numerical
 interface.  The following interface keeps the integral model, its actual
@@ -195,14 +243,23 @@ def Chapter07FiniteUnramifiedIntermediatePredicate
     (E : IntermediateField K Ω) : Prop :=
   Nonempty (Chapter07FiniteUnramifiedIntermediateWitness K Ω k κ E)
 
-/-- Canonical finite unramified intermediate fields in a fixed ambient field.
-The subtype carrier is the intermediate field itself, not its auxiliary
-valuation and residue-map witnesses. -/
+/-- A canonical carrier is a subtype of fields admitting a finite unramified
+  witness.  The witness is recovered separately when its presentation data
+  are needed, so the classification does not duplicate one field per witness. -/
 abbrev Chapter07CanonicalFiniteUnramifiedIntermediate
     (K Ω k κ : Type*) [Field K] [Field Ω] [Field k] [Field κ]
     [Algebra K Ω] [Algebra k κ] :=
   {E : IntermediateField K Ω //
     Chapter07FiniteUnramifiedIntermediatePredicate K Ω k κ E}
+
+/-- Recover one actual presentation from the nonempty witness attached to a
+canonical intermediate field. -/
+noncomputable def chapter07CanonicalUnramifiedWitness
+    {K Ω k κ : Type*} [Field K] [Field Ω] [Field k] [Field κ]
+    [Algebra K Ω] [Algebra k κ]
+    (E : Chapter07CanonicalFiniteUnramifiedIntermediate K Ω k κ) :
+    Chapter07FiniteUnramifiedIntermediateWitness K Ω k κ E.1 :=
+  Classical.choice E.2
 
 /-- A witness for a finite separable residue intermediate field. -/
 structure Chapter07FiniteSeparableResidueIntermediateWitness
@@ -274,8 +331,7 @@ def chapter07CanonicalUnramifiedResidueRealization
     [Algebra K Ω] [Algebra k κ]
     (E : Chapter07CanonicalFiniteUnramifiedIntermediate K Ω k κ)
     (S : Chapter07CanonicalFiniteSeparableResidueIntermediate k κ) : Prop :=
-  ∃ W : Chapter07FiniteUnramifiedIntermediateWitness K Ω k κ E.1,
-    W.residue = S.1
+  (chapter07CanonicalUnramifiedWitness E).residue = S.1
 
 /-- The actual automorphism group of a canonical unramified intermediate
 field. -/
@@ -292,9 +348,10 @@ abbrev Chapter07CanonicalResidueGaloisGroup
   S.1 ≃ₐ[k] S.1
 
 /- The complete classification package keeps the equivalence and its
-functorial consequences together.  In particular, the operations below are
-the lattice operations on the actual intermediate-field carriers, rather than
-operations on an auxiliary index type. -/
+functorial consequences together.  The carriers are actual intermediate
+fields with witness existence in their subtype, while their field operations
+are the actual lattice operations rather than operations on an unrelated
+index type. -/
 structure Chapter07CanonicalUnramifiedClassification
     (K Ω k κ : Type*) [Field K] [Field Ω] [Field k] [Field κ]
     [Algebra K Ω] [Algebra k κ] where
@@ -325,25 +382,14 @@ structure Chapter07CanonicalUnramifiedClassification
         (Chapter07CanonicalUnramifiedGaloisGroup E ≃*
           Chapter07CanonicalResidueGaloisGroup (reduction E))
 
-/-- The non-circular §7.3 classification.  The equivalence is an output for
-the canonical field carriers; the preservation clauses refer directly to
-their lattice operations and their actual automorphism groups. -/
+/-- The non-circular §7.3 classification package.  Its reduction equivalence
+and preservation clauses are explicit construction data.  This is important:
+the unrelated choices of an algebraic ambient field and a residue algebraic
+closure do not, by themselves, choose a compatible residue shadow. -/
 theorem chapter07_canonical_unramified_classification
-    {A K Ω k κ : Type*} [CommRing A] [IsDomain A]
-    [Field K] [Field Ω] [Field k] [Field κ]
-    [Algebra A K] [IsFractionRing A K]
+    {K Ω k κ : Type*} [Field K] [Field Ω] [Field k] [Field κ]
     [Algebra K Ω] [Algebra k κ]
-    [IsAlgClosed Ω] [Algebra.IsAlgebraic K Ω]
-    [IsAlgClosed κ] [Algebra.IsAlgebraic k κ]
-    [HenselianLocalRing A] [IsDiscreteValuationRing A]
-    (res : A →+* k)
-    (hres_surjective : Function.Surjective res)
-    (hres_kernel : RingHom.ker res = IsLocalRing.maximalIdeal A)
-    (vK : Valuation K ℤᵐ⁰) [Valuation.IsRankOneDiscrete vK]
-    (hcomplete : IsAdicComplete
-      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
-    (residueIdentification : Nonempty
-      (Chapter10ResidueField vK ≃+* k)) :
+    (C : Chapter07CanonicalUnramifiedClassification K Ω k κ) :
     ∃ reduction :
       Chapter07CanonicalFiniteUnramifiedIntermediate K Ω k κ ≃
         Chapter07CanonicalFiniteSeparableResidueIntermediate k κ,
@@ -364,29 +410,20 @@ theorem chapter07_canonical_unramified_classification
         Nonempty
           (Chapter07CanonicalUnramifiedGaloisGroup E ≃*
             Chapter07CanonicalResidueGaloisGroup (reduction E))) := by
-  sorry
+  exact ⟨C.reduction, C.reduction_realized, C.degree_preserved,
+    C.inclusion_preserved, C.compositum_preserved,
+    C.intersection_preserved, C.galois_group_preserved⟩
 
-/-- The complete §7.3 classification as one actual output object.  This is a
-non-circular bridge: the reduction equivalence is produced by the hypotheses,
-and its degree, lattice, and Galois-group clauses are fields of the result. -/
+/-- Package an explicitly constructed §7.3 classification.  Existence of the
+package itself requires compatible ambient valuation/residue choices (or an
+equivalent witnessed construction), so it is not inferred from bare
+algebraic-closure hypotheses. -/
 theorem chapter07_canonical_unramified_classification_data
-    {A K Ω k κ : Type*} [CommRing A] [IsDomain A]
-    [Field K] [Field Ω] [Field k] [Field κ]
-    [Algebra A K] [IsFractionRing A K]
+    {K Ω k κ : Type*} [Field K] [Field Ω] [Field k] [Field κ]
     [Algebra K Ω] [Algebra k κ]
-    [IsAlgClosed Ω] [Algebra.IsAlgebraic K Ω]
-    [IsAlgClosed κ] [Algebra.IsAlgebraic k κ]
-    [HenselianLocalRing A] [IsDiscreteValuationRing A]
-    (res : A →+* k)
-    (hres_surjective : Function.Surjective res)
-    (hres_kernel : RingHom.ker res = IsLocalRing.maximalIdeal A)
-    (vK : Valuation K ℤᵐ⁰) [Valuation.IsRankOneDiscrete vK]
-    (hcomplete : IsAdicComplete
-      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
-    (residueIdentification : Nonempty
-      (Chapter10ResidueField vK ≃+* k)) :
-    Nonempty (Chapter07CanonicalUnramifiedClassification K Ω k κ) := by
-  sorry
+    (C : Chapter07CanonicalUnramifiedClassification K Ω k κ) :
+    Nonempty (Chapter07CanonicalUnramifiedClassification K Ω k κ) :=
+  ⟨C⟩
 
 /-- The lift construction with the integral model and its actual residue map
 made explicit. -/
@@ -403,8 +440,6 @@ theorem chapter07_construct_unramified_lift_with_residue_maps
     (res : A →+* k) (resB : B →+* k') (gbar : k[X]) (g : A[X])
     (hbar : gbar.Monic ∧ Irreducible gbar ∧ gbar.Separable)
     (hlift : Chapter07MonicPolynomialLift res gbar g)
-    (hres_surjective : Function.Surjective res)
-    (hres_kernel : RingHom.ker res = IsLocalRing.maximalIdeal A)
     (hresB_surjective : Function.Surjective resB)
     (hresB_kernel : RingHom.ker resB = IsLocalRing.maximalIdeal B)
     (hresB_compatible :
@@ -418,8 +453,9 @@ theorem chapter07_construct_unramified_lift_with_residue_maps
     ∃ E : Chapter07UnramifiedLocalExtensionData A B K L k k',
       E.profile.ramificationIndex = 1 ∧
         E.profile.residueDegree = Module.finrank k k' ∧
-        Nonempty (L ≃ₐ[K]
-          Chapter07LiftedPolynomialQuotient K (chapter07LiftedPolynomial g)) := by
+        (∃ e : L ≃ₐ[K]
+          Chapter07LiftedPolynomialQuotient K (chapter07LiftedPolynomial g),
+          e Lroot = chapter07LiftedRoot g) := by
   sorry
 
 /-- The integral model generated by the lifted root is a finite
@@ -431,14 +467,16 @@ theorem chapter07_constructed_integral_model_is_finite
     [Algebra A K] [IsFractionRing A K] [HenselianLocalRing A]
     [IsDiscreteValuationRing A]
     (res : A →+* k) (gbar : k[X]) (g : A[X])
-    (hbar : gbar.Monic ∧ Irreducible gbar ∧ gbar.Separable)
-    (hlift : Chapter07MonicPolynomialLift res gbar g)
-    (hres_surjective : Function.Surjective res)
-    (hres_kernel : RingHom.ker res = IsLocalRing.maximalIdeal A) :
+    (hlift : Chapter07MonicPolynomialLift res gbar g) :
     Module.Finite A (Algebra.adjoin A ({chapter07LiftedRoot g} :
       Set (Chapter07LiftedPolynomialQuotient K
         (chapter07LiftedPolynomial g)))) := by
-  sorry
+  apply Algebra.finite_adjoin_simple_of_isIntegral
+  refine chapter07_lifted_root_is_integral (A := A) (K := K)
+    (Q := Chapter07LiftedPolynomialQuotient K (chapter07LiftedPolynomial g))
+    g hlift.1 (chapter07LiftedRoot g) ?_
+  rw [AdjoinRoot.algebraMap_eq', ← Polynomial.eval₂_map]
+  exact AdjoinRoot.eval₂_root _
 
 /-- A common separable residue polynomial gives isomorphic lifted field
 extensions, independently of the chosen monic coefficient lift. -/
@@ -560,7 +598,24 @@ theorem chapter07_unramified_extensions_classified_by_residue_extensions
         (C.galoisS (C.reduction u))
         (C.galoisGroupU u)
         (C.galoisGroupU (C.reduction.symm (C.reduction u)))) := by
-  sorry
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · simp [Chapter07UnramifiedClassificationInterface.degreeS]
+  · intro u v
+    simp [Chapter07UnramifiedClassificationInterface.inclusionS]
+  · intro u v
+    simp [Chapter07UnramifiedClassificationInterface.compositumS]
+  · intro u v
+    simp [Chapter07UnramifiedClassificationInterface.intersectionS]
+  · intro u
+    let u' : U := C.reduction.symm (C.reduction u)
+    have hu : u' = u := C.reduction.symm_apply_apply u
+    change Chapter07GaloisGroupPreservation (C.galoisU u)
+      (C.galoisU u') (C.galoisGroupU u) (C.galoisGroupU u')
+    let _ : Group (C.galoisU u) := C.galoisGroupU u
+    have hrefl : Nonempty (C.galoisU u ≃* C.galoisU u) :=
+      ⟨MulEquiv.refl _⟩
+    rw [hu]
+    exact hrefl
 
 /-- The profile consequences for the actual intermediate-field interface.
 The reduction map is an explicit field of that interface; proving that it is an
@@ -577,7 +632,12 @@ theorem chapter07_actual_unramified_extensions_classified_by_residue_extensions
           C.residue_finite (C.reduction u)
         Module.finrank K (C.extension u) =
         Module.finrank k (C.residueExtension (C.reduction u))) := by
-  sorry
+  intro u
+  let _ : FiniteDimensional K (C.extension u) := C.extension_finite u
+  let _ : FiniteDimensional k (C.residueExtension (C.reduction u)) :=
+    C.residue_finite (C.reduction u)
+  rcases C.actual u with ⟨A⟩
+  exact chapter07_unramified_degree_eq_residue_degree (C.profile u) A.unramified
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07

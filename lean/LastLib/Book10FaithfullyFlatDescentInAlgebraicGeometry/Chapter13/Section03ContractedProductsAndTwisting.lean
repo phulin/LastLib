@@ -270,6 +270,61 @@ noncomputable def chapter13ModuleBaseChangeComparison
     eqToIso (congrArg (fun q : U ⟶ S => (Scheme.Modules.pullback q).obj M) h) ≪≫
       (chapter13ModuleBaseChangeCompIso t q₂ M).symm
 
+/- The torsor identity supplies the group-valued point taking one map to the other.  This is the
+   point at which the representation action enters the associated-bundle descent datum. -/
+noncomputable def chapter13TorsorDivisionPoint
+    {S : Scheme.{u}} {G : Chapter13GroupScheme S}
+    (P : Chapter13FpqcTorsor G) {U : Scheme.{u}}
+    (q₁ q₂ : U ⟶ P.carrier.left)
+    (h : q₁ ≫ P.carrier.hom = q₂ ≫ P.carrier.hom) :
+    Over.mk (q₁ ≫ P.carrier.hom) ⟶ G.X := by
+  let p₁ : Over.mk (q₁ ≫ P.carrier.hom) ⟶ P.carrier := Over.homMk q₁
+  let p₂ : Over.mk (q₁ ≫ P.carrier.hom) ⟶ P.carrier :=
+    Over.homMk q₂ (by simpa using h.symm)
+  exact Classical.choose
+    (((chapter13_torsorIdentity_iff_unique P.action).mp P.identity
+      (Over.mk (q₁ ≫ P.carrier.hom)) p₁ p₂).exists)
+
+theorem chapter13TorsorDivisionPoint_spec
+    {S : Scheme.{u}} {G : Chapter13GroupScheme S}
+    (P : Chapter13FpqcTorsor G) {U : Scheme.{u}}
+    (q₁ q₂ : U ⟶ P.carrier.left)
+    (h : q₁ ≫ P.carrier.hom = q₂ ≫ P.carrier.hom) :
+    let p₁ : Over.mk (q₁ ≫ P.carrier.hom) ⟶ P.carrier := Over.homMk q₁
+    let p₂ : Over.mk (q₁ ≫ P.carrier.hom) ⟶ P.carrier :=
+      Over.homMk q₂ (by simpa using h.symm)
+    CartesianMonoidalCategory.lift p₁
+        (chapter13TorsorDivisionPoint P q₁ q₂ h) ≫ P.action.act = p₂ := by
+  sorry
+
+theorem chapter13TorsorDivisionPoint_unique
+    {S : Scheme.{u}} {G : Chapter13GroupScheme S}
+    (P : Chapter13FpqcTorsor G) {U : Scheme.{u}}
+    (q₁ q₂ : U ⟶ P.carrier.left)
+    (h : q₁ ≫ P.carrier.hom = q₂ ≫ P.carrier.hom)
+    (g : Over.mk (q₁ ≫ P.carrier.hom) ⟶ G.X)
+    (hg :
+      let p₁ : Over.mk (q₁ ≫ P.carrier.hom) ⟶ P.carrier := Over.homMk q₁
+      let p₂ : Over.mk (q₁ ≫ P.carrier.hom) ⟶ P.carrier :=
+        Over.homMk q₂ (by simpa using h.symm)
+      CartesianMonoidalCategory.lift p₁ g ≫ P.action.act = p₂) :
+    g = chapter13TorsorDivisionPoint P q₁ q₂ h := by
+  sorry
+
+noncomputable def chapter13RepresentationActionComparison
+    {S : Scheme.{u}} {G : Chapter13GroupScheme S}
+    (P : Chapter13FpqcTorsor G) (V : Chapter13SheafRepresentation G)
+    {U : Scheme.{u}} (q₁ q₂ : U ⟶ P.carrier.left)
+    (h : q₁ ≫ P.carrier.hom = q₂ ≫ P.carrier.hom) :
+    (Scheme.Modules.pullback q₁).obj ((Scheme.Modules.pullback P.carrier.hom).obj V.sheaf) ≅
+      (Scheme.Modules.pullback q₂).obj ((Scheme.Modules.pullback P.carrier.hom).obj V.sheaf) :=
+    (chapter04PullbackCompositionIso q₁ P.carrier.hom V.sheaf).symm ≪≫
+    (V.action (q₁ ≫ P.carrier.hom)
+      (chapter13TorsorDivisionPoint P q₁ q₂ h)).symm ≪≫
+      eqToIso (congrArg (fun q : U ⟶ S =>
+        (Scheme.Modules.pullback q).obj V.sheaf) h) ≪≫
+        chapter04PullbackCompositionIso q₂ P.carrier.hom V.sheaf
+
 /- The action laws and the canonical point pullback supply the C̆ech datum for the associated
    representation.  Keeping this as a named coherent object prevents later descent statements
    from silently using an unrelated double-overlap isomorphism. -/
@@ -279,7 +334,8 @@ noncomputable def chapter13RepresentationDescentDatum
     Chapter13ModuleDescentDatum P.carrier.hom := by
   exact
     { upstairs := (Scheme.Modules.pullback P.carrier.hom).obj V.sheaf
-      compare := by sorry
+      compare := fun {U} q₁ q₂ h =>
+        chapter13RepresentationActionComparison P V q₁ q₂ h
       compare_self := by sorry
       compare_comp := by sorry
       compare_pull := by sorry }

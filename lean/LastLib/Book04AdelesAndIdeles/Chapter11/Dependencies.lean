@@ -165,7 +165,18 @@ theorem le_trans {m n r : RayModulus K} : LE m n → LE n r → LE m r := by
     exact hnr.2 v (hmn.2 v hv)
 
 theorem le_antisymm {m n : RayModulus K} : LE m n → LE n m → m = n := by
-  sorry
+  intro hmn hnm
+  cases m with
+  | mk mf mi hm =>
+    cases n with
+    | mk nf ni hn =>
+      simp only [RayModulus.mk.injEq]
+      constructor
+      · apply Finsupp.ext
+        intro v
+        exact Nat.le_antisymm (hmn.1 v) (hnm.1 v)
+      · ext v
+        exact ⟨fun hv => hmn.2 v hv, fun hv => hnm.2 v hv⟩
 
 instance : _root_.LE (RayModulus K) := ⟨RayModulus.LE⟩
 
@@ -231,7 +242,14 @@ theorem chapter11LocalUnitFiltration_antitone {A : Type*} [CommRing A] [IsLocalR
     {m n : ℕ} (hmn : m ≤ n) :
     chapter11LocalUnitFiltration (A := A) n ≤
       chapter11LocalUnitFiltration (A := A) m := by
-  sorry
+  intro u hu
+  rw [chapter11LocalUnitFiltration_mem_iff] at hu ⊢
+  by_cases hn : n = 0
+  · have hm0 : m ≤ 0 := by simpa [hn] using hmn
+    exact Or.inl (Nat.eq_zero_of_le_zero hm0)
+  · by_cases hm : m = 0
+    · exact Or.inl hm
+    · exact Or.inr ((Ideal.pow_le_pow_right hmn) (hu.resolve_left hn))
 
 def chapter11AdditiveLocalDepth {A : Type*} [CommRing A] [IsLocalRing A]
     (n : ℕ) : Submodule A A :=
@@ -259,13 +277,57 @@ theorem chapter11FiniteLocalUnitGroup_zero (K : Type*) [Field K] [NumberField K]
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) :
     chapter11FiniteLocalUnitGroup K v 0 =
       (v.adicCompletionIntegers K).unitGroup := by
-  sorry
+  rw [chapter11FiniteLocalUnitGroup, chapter11LocalUnitFiltration_zero]
+  ext x
+  constructor
+  · rintro ⟨u, -, rfl⟩
+    rw [ValuationSubring.mem_unitGroup_iff]
+    change (v.adicCompletionIntegers K).valuation
+      ((Units.map (v.adicCompletionIntegers K).subtype.toMonoidHom u :
+        (v.adicCompletion K)ˣ) : v.adicCompletion K) = 1
+    simp
+  · intro hx
+    let x' : (v.adicCompletionIntegers K).unitGroup := ⟨x, hx⟩
+    refine ⟨(v.adicCompletionIntegers K).unitGroupMulEquiv x', trivial, ?_⟩
+    apply Units.ext
+    change (((v.adicCompletionIntegers K).unitGroupMulEquiv x' :
+      (v.adicCompletionIntegers K)ˣ) : v.adicCompletionIntegers K) = (x : v.adicCompletion K)
+    exact (v.adicCompletionIntegers K).coe_unitGroupMulEquiv_apply x'
 
 theorem chapter11FiniteLocalUnitGroup_one (K : Type*) [Field K] [NumberField K]
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) :
     chapter11FiniteLocalUnitGroup K v 1 =
       (v.adicCompletionIntegers K).principalUnitGroup := by
-  sorry
+  rw [chapter11FiniteLocalUnitGroup]
+  ext x
+  constructor
+  · rintro ⟨u, hu, rfl⟩
+    rw [ValuationSubring.mem_principalUnitGroup_iff]
+    change (u : v.adicCompletionIntegers K) - 1 ∈
+      (IsLocalRing.maximalIdeal (v.adicCompletionIntegers K)) ^ 1 at hu
+    rw [pow_one] at hu
+    exact (ValuationSubring.valuation_lt_one_iff (v.adicCompletionIntegers K)
+      ((u : v.adicCompletionIntegers K) - 1)).1 hu
+  · intro hx
+    let x' : (v.adicCompletionIntegers K).unitGroup :=
+      ⟨x, (v.adicCompletionIntegers K).principal_units_le_units hx⟩
+    refine ⟨(v.adicCompletionIntegers K).unitGroupMulEquiv x', ?_, ?_⟩
+    · change ((↑((v.adicCompletionIntegers K).unitGroupMulEquiv x') :
+      v.adicCompletionIntegers K) - 1) ∈
+        (IsLocalRing.maximalIdeal (v.adicCompletionIntegers K)) ^ 1
+      rw [pow_one]
+      exact (ValuationSubring.valuation_lt_one_iff (v.adicCompletionIntegers K) _).2
+        (by
+          have hx' : (v.adicCompletionIntegers K).valuation
+              ((x : v.adicCompletion K) - 1) < 1 :=
+            (ValuationSubring.mem_principalUnitGroup_iff
+              (v.adicCompletionIntegers K) x).1 hx
+          simpa [(v.adicCompletionIntegers K).coe_unitGroupMulEquiv_apply x'] using hx')
+    · apply Units.ext
+      change (((v.adicCompletionIntegers K).unitGroupMulEquiv x' :
+        (v.adicCompletionIntegers K)ˣ) : v.adicCompletionIntegers K) =
+        (x : v.adicCompletion K)
+      exact (v.adicCompletionIntegers K).coe_unitGroupMulEquiv_apply x'
 
 def chapter11FiniteAdeleComponent (K : Type*) [Field K] [NumberField K]
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) :
@@ -386,16 +448,32 @@ def chapter11RayClassProjection (m : RayModulus K) :
 
 def chapter11IdeleClassToRayClass (m : RayModulus K) :
     Chapter11IdeleClassGroup K →* chapter11RayClassGroup m := by
-  sorry
+  exact QuotientGroup.map (chapter11PrincipalIdeleSubgroup (K := K))
+    (chapter11PrincipalIdeleSubgroup (K := K) ⊔ chapter11RayUnitSubgroup m)
+    (MonoidHom.id _) (by
+      intro x hx
+      exact (show chapter11PrincipalIdeleSubgroup (K := K) ≤
+          chapter11PrincipalIdeleSubgroup (K := K) ⊔ chapter11RayUnitSubgroup m from
+        le_sup_left) hx)
 
 def chapter11IdealPrimeToModulus (m : RayModulus K) :
     Subgroup (Chapter11FractionalIdealUnitGroup K) where
   carrier := {I |
     ∀ v, m.finiteExponent v ≠ 0 →
       FractionalIdeal.count K v (I : FractionalIdeal (𝓞 K)⁰ K) = 0}
-  one_mem' := by sorry
-  mul_mem' := by sorry
-  inv_mem' := by sorry
+  one_mem' := by
+    intro v hv
+    exact FractionalIdeal.count_one K v
+  mul_mem' := by
+    intro I J hI hJ v hv
+    change FractionalIdeal.count K v
+      ((I : FractionalIdeal (𝓞 K)⁰ K) * (J : FractionalIdeal (𝓞 K)⁰ K)) = 0
+    rw [FractionalIdeal.count_mul K v (Units.ne_zero _) (Units.ne_zero _),
+      hI v hv, hJ v hv, add_zero]
+  inv_mem' := by
+    intro I hI v hv
+    rw [Units.val_inv_eq_inv_val]
+    rw [FractionalIdeal.count_inv K v, hI v hv, neg_zero]
 
 abbrev Chapter11IdealGroup (m : RayModulus K) :=
   chapter11IdealPrimeToModulus m

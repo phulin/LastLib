@@ -17,6 +17,22 @@ def Chapter02TensorCompletionBranchDecomposition
     [∀ i, CommRing (Lω i)] : Prop :=
   Nonempty (L ⊗[K] Kᵥ ≃+* (∀ i, Lω i))
 
+/- The same branch-indexing interface is needed at archimedean places; the
+finite version below is not a substitute because the completions and the
+place relation are different APIs. -/
+structure Chapter02InfiniteLocalBranchDecomposition
+    {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L]
+    (v : Chapter02InfinitePlace K) {ι : Type*} [Fintype ι]
+    (w : ι → Chapter02InfinitePlace L) where
+  liesOver : ∀ i, (w i).LiesOver v
+  distinct : Function.Injective w
+  exhaustive : ∀ z : Chapter02InfinitePlace L,
+    z.LiesOver v → ∃ i, w i = z
+  decomposition : Nonempty
+    (L ⊗[K] v.Completion ≃+*
+      (∀ i, (w i).Completion))
+
 /-- A finite branch lies over a base finite place when its restriction is in the
 same absolute-value class. -/
 def Chapter02FinitePlaceLiesOver
@@ -40,6 +56,40 @@ structure Chapter02FiniteLocalBranchDecomposition
     (L ⊗[K] Chapter02FiniteCompletion v ≃+*
       (∀ i, Chapter02FiniteCompletion (w i)))
 
+/-- A packaged existential witness for the finite-place completed product. -/
+structure Chapter02FiniteLocalBranchDecompositionWitness
+    {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L]
+    (v : Chapter02FinitePlace K) where
+  index : Type*
+  [index_fintype : Fintype index]
+  branches : index → Chapter02FinitePlace L
+  decomposition : Chapter02FiniteLocalBranchDecomposition v branches
+
+theorem chapter02_finite_local_branch_decomposition_exists
+    {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L]
+    (v : Chapter02FinitePlace K) :
+    Nonempty (Chapter02FiniteLocalBranchDecompositionWitness (K := K) (L := L) v) := by
+  sorry
+
+/-- A packaged existential witness for the infinite-place completed product. -/
+structure Chapter02InfiniteLocalBranchDecompositionWitness
+    {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L]
+    (v : Chapter02InfinitePlace K) where
+  index : Type*
+  [index_fintype : Fintype index]
+  branches : index → Chapter02InfinitePlace L
+  decomposition : Chapter02InfiniteLocalBranchDecomposition v branches
+
+theorem chapter02_infinite_local_branch_decomposition_exists
+    {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L]
+    (v : Chapter02InfinitePlace K) :
+    Nonempty (Chapter02InfiniteLocalBranchDecompositionWitness (K := K) (L := L) v) := by
+  sorry
+
 /-- The integral-completion branch used by the earlier CRT API. -/
 abbrev Chapter02BranchCompletion
     (B : Type*) [CommRing B] (P : Ideal B) [P.IsPrime] : Type _ :=
@@ -58,7 +108,8 @@ structure Chapter02TensorCompletionBranchData
 exposed in the branch notation used here. -/
 theorem chapter02_completed_product_decomposition
     {A B : Type*} [CommRing A] [CommRing B] [IsDomain A] [IsDomain B]
-    [IsDiscreteValuationRing A] [Algebra A B] [Algebra.IsIntegral A B]
+    [IsDiscreteValuationRing A] [IsIntegrallyClosed B] [Algebra A B]
+    [Algebra.IsIntegral A B]
     {g : ℕ} (m : Ideal A) (π : A) (P : Fin g → Ideal B) (e : Fin g → ℕ)
     [m.IsMaximal] [hprime : ∀ i, (P i).IsPrime]
     [hmax : ∀ i, (P i).IsMaximal]
@@ -81,7 +132,8 @@ theorem chapter02_completed_product_decomposition
       (Chapter02BranchCompletion B (P i))] :
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.hasCompletedAlgebraProduct
       A B (AdicCompletion m A) (fun i => Chapter02BranchCompletion B (P i)) := by
-  sorry
+  exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.completed_product_decomposition
+    m π P e huniformizer hfinite hfree hfactor he hpair hP hP_exhaustive hP_distinct
 
 /-- The finite-precision version of branch separation. -/
 theorem chapter02_finite_precision_branch_indexing
@@ -90,7 +142,8 @@ theorem chapter02_finite_precision_branch_indexing
     (hcrt : LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Chapter12CompatibleCRTSystem
       I J) :
     Nonempty (AdicCompletion I R ≃+* (∀ i, AdicCompletion (J i) R)) := by
-  sorry
+  exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.completion_product_of_finite_precision_crt
+    I J hcrt
 
 /-- The normalized absolute value attached to an additive valuation and a
 residue-field cardinality. -/
@@ -129,7 +182,24 @@ theorem chapter02_normalized_local_norm_identity
     [FiniteDimensional K L]
     (D : Chapter02NormalizedLocalNormData K L) (y : L) :
     D.abvK (Algebra.norm K y) = D.abvL y := by
-  sorry
+  by_cases hy : y = 0
+  · subst y
+    simp [D.abvK_normalized, D.abvL_normalized,
+      Chapter02ValuationNormalizedValue]
+  have hnorm : Algebra.norm K y ≠ 0 := Algebra.norm_ne_zero_iff.mpr hy
+  rw [D.abvK_normalized, D.abvL_normalized]
+  simp [Chapter02ValuationNormalizedValue, hnorm, hy]
+  rw [D.norm_valuation y hy, WithTop.untopD_zero_mul]
+  rw [D.residue_cardinality]
+  rw [Nat.cast_pow]
+  push_cast
+  rw [← Real.rpow_natCast, ← Real.rpow_mul
+    (by positivity : (0 : ℝ) ≤ (D.qK : ℝ))]
+  congr 2
+  have hf : WithTop.untopD (0 : ℤ) (D.f : WithTop ℤ) = (D.f : ℤ) := rfl
+  rw [hf]
+  push_cast
+  ring
 
 theorem chapter02_normalized_local_norm_identity_on_nonzero_elements
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -144,7 +214,14 @@ theorem chapter02_normalized_local_scalar_restriction
     (D : Chapter02NormalizedLocalNormData K L) (a : K) :
     D.abvL (algebraMap K L a) =
       D.abvK a ^ Module.finrank K L := by
-  sorry
+  calc
+    D.abvL (algebraMap K L a) =
+        D.abvK (Algebra.norm K (algebraMap K L a)) :=
+      (chapter02_normalized_local_norm_identity D (algebraMap K L a)).symm
+    _ = D.abvK (a ^ Module.finrank K L) := by
+      rw [Algebra.norm_algebraMap]
+    _ = D.abvK a ^ Module.finrank K L := by
+      rw [map_pow]
 
 theorem chapter02_finite_branch_norm_formula_from_order_and_residue_degree
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -155,7 +232,16 @@ theorem chapter02_finite_branch_norm_formula_from_order_and_residue_degree
       vK (Algebra.norm K y) = (f : WithTop ℤ) * vL y) {y : L} (hy : y ≠ 0) :
     Chapter02ValuationNormalizedValue qK vK (Algebra.norm K y) =
       Chapter02ValuationNormalizedValue qL vL y := by
-  sorry
+  have hnorm : Algebra.norm K y ≠ 0 := Algebra.norm_ne_zero_iff.mpr hy
+  simp [Chapter02ValuationNormalizedValue, hnorm, hy]
+  rw [hord y hy, WithTop.untopD_zero_mul, hq, Nat.cast_pow]
+  rw [← Real.rpow_natCast, ← Real.rpow_mul
+    (by positivity : (0 : ℝ) ≤ (qK : ℝ))]
+  congr 2
+  have hf : WithTop.untopD (0 : ℤ) (f : WithTop ℤ) = (f : ℤ) := rfl
+  rw [hf]
+  push_cast
+  ring
 
 /-- The norm on a finite product algebra is the product of the component norms. -/
 def Chapter02ProductAlgebraNorm
@@ -182,7 +268,8 @@ theorem chapter02_product_algebra_norm_absolute_value_is_componentwise
     (hω : ∀ i y, abvK (Algebra.norm K y) = abvω i y)
     (x : ∀ i, Lω i) :
     abvK (Chapter02ProductAlgebraNorm K Lω x) = ∏ i, abvω i (x i) := by
-  sorry
+  rw [Chapter02ProductAlgebraNorm, map_prod]
+  exact Finset.prod_congr rfl (fun i _ => hω i (x i))
 
 theorem chapter02_local_norms_are_compatible_with_the_product_formula
     (K : Type*) [Field K] {ι : Type*} [Fintype ι]

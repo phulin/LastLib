@@ -166,7 +166,17 @@ theorem chapter08_locallyFinitelyPresented_fpqc_local
     (hM : M.IsQuasicoherent) :
     Chapter08LocallyFinitelyPresented M ↔
       Chapter08LocallyFinitelyPresented ((Scheme.Modules.pullback p).obj M) := by
-  sorry
+  change (M.IsQuasicoherent ∧ M.IsFinitePresentation) ↔
+    ((Scheme.Modules.pullback p).obj M).IsQuasicoherent ∧
+      ((Scheme.Modules.pullback p).obj M).IsFinitePresentation
+  have hpullqc : ((Scheme.Modules.pullback p).obj M).IsQuasicoherent :=
+    chapter08_pullback_is_quasicoherent p ⟨M, hM⟩
+  have hfp := chapter08_finitePresentation_fpqc_local hp M hM
+  constructor
+  · rintro ⟨_, hfinite⟩
+    exact ⟨hpullqc, hfp.mp hfinite⟩
+  · rintro ⟨_, hfinite⟩
+    exact ⟨hM, hfp.mpr hfinite⟩
 
 /-- The kernel-finite coherence convention: quasi-coherence and finite type,
 with finite-type kernels for maps from finite free sheaves. -/
@@ -205,7 +215,18 @@ theorem chapter08_noetherian_coherent_descends_of_pullback_locallyFinitelyPresen
       Chapter08LocallyFinitelyPresented
         ((Scheme.Modules.pullback p).obj M)) :
     Chapter08NoetherianCoherent M := by
-  sorry
+  change M.IsQuasicoherent ∧ M.IsFiniteType
+  have hlocal : Chapter08LocallyFinitelyPresented M :=
+    (chapter08_locallyFinitelyPresented_fpqc_local h.fpqc M hM).mpr hpull
+  change M.IsQuasicoherent ∧ M.IsFinitePresentation at hlocal
+  obtain ⟨σ, hσ⟩ := hlocal.2.exists_quasicoherentData
+  have hσft : σ.localGeneratorsData.IsFiniteType := by
+    constructor
+    intro i
+    dsimp [SheafOfModules.QuasicoherentData.localGeneratorsData]
+    exact (hσ.isFinite_presentation i).isFiniteType_generators
+  refine ⟨hM, ?_⟩
+  exact { exists_localGeneratorsData := ⟨σ.localGeneratorsData, hσft⟩ }
 
 /-- Kernel-finite coherence descends along the quasi-compact faithfully flat
     cover used in the chapter.  The converse is not asserted: a faithfully

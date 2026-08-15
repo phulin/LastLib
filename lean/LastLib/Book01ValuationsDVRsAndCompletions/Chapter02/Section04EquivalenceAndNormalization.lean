@@ -325,6 +325,8 @@ def Chapter02ConvexQuotientInterface
     (H : AddSubgroup Γ) (q : Γ →+o Λ) : Prop :=
   Function.Surjective q ∧
     (∀ γ : Γ, q γ = 0 ↔ γ ∈ H) ∧
+    (∀ a b : Γ, q a ≤ q b ↔
+      ∃ h : H, a ≤ b + (h : Γ)) ∧
     ∀ {Ω : Type*} [AddCommGroup Ω] [LinearOrder Ω]
       [IsOrderedAddMonoid Ω] (f : Γ →+o Ω),
       (∀ h : Γ, h ∈ H → f h = 0) →
@@ -348,7 +350,7 @@ theorem chapter02_convex_subgroup_gives_ordered_quotient
     (horder : ∀ a b : Γ, q a ≤ q b ↔
       ∃ h : H, a ≤ b + (h : Γ)) :
     Chapter02ConvexQuotientInterface H q := by
-  refine ⟨hq, hker, ?_⟩
+  refine ⟨hq, hker, horder, ?_⟩
   intro Ω _ _ _ f hfH
   have hwell : ∀ {a b : Γ}, q a = q b → f a = f b := by
     intro a b hab

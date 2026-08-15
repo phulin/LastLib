@@ -79,6 +79,390 @@ def chapter05CyclicHasseArfSum
       (fun i => (Nat.card (D.lowerGroup (i : ℝ)) : ℚ))) /
     (Nat.card (D.lowerGroup 0) : ℚ)
 
+/-!
+  The cyclic proof in the source has three arithmetic inputs.  They are kept
+  separate from the final integrality statement: the fixed-point input gives
+  divisibility, the ramification-number input turns that divisibility into
+  congruences, and the lower-layer input performs the final finite sum.
+
+  The first record is the kernel-facing part of the periodic fixed-point
+  argument.  `primitive_period_count` is the Moebius-inverted fixed-point
+  multiplicity.  The specialized prime-power identity is the only part of
+  the inversion used by the ramification-number congruence below.
+-/
+structure Chapter05CyclicFixedPointMultiplicityData
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    (D : Chapter05LocalGaloisUpperData K L)
+    (σ : Gal(L / K)) where
+  automorphism_order : ℕ
+  automorphism_order_pos : 0 < automorphism_order
+  automorphism_period : σ ^ automorphism_order = 1
+  automorphism_order_minimal :
+    ∀ {n : ℕ}, σ ^ n = 1 → automorphism_order ∣ n
+  /- `fixed_point_length n` is the length of the fixed-point scheme of
+     `σ ^ n`; `primitive_period_count` is its Moebius inversion.  Keeping
+     these as lengths, rather than as arbitrary signed numbers, matches the
+     periodic-point argument and leaves the divisibility conclusion to the
+     theorem below. -/
+  fixed_point_length : ℕ → ℕ
+  fixed_point_length_nontrivial :
+    ∀ {n : ℕ}, σ ^ n ≠ 1 → 0 < fixed_point_length n
+  primitive_period_count : ℕ → ℕ
+  primitive_period_count_eq_periodic_orbits :
+    ∃ periodic_orbit_count : ℕ → ℕ,
+      (∀ n : ℕ,
+        primitive_period_count n = periodic_orbit_count n) ∧
+      (∀ {n : ℕ}, 0 < n → n ∣ periodic_orbit_count n)
+  prime_power_mobius_identity :
+    ∀ {p r : ℕ}, Nat.Prime p → 0 < r →
+      primitive_period_count (p ^ r) =
+        fixed_point_length (p ^ r) - fixed_point_length (p ^ (r - 1))
+
+theorem chapter05_cyclic_fixed_point_multiplicity_divisibility
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    {D : Chapter05LocalGaloisUpperData K L}
+    {σ : Gal(L / K)}
+    (P : Chapter05CyclicFixedPointMultiplicityData D σ)
+    {n : ℕ} (hn : 0 < n) :
+    n ∣ P.primitive_period_count n := by
+  rcases P.primitive_period_count_eq_periodic_orbits with
+    ⟨periodic_orbit_count, hcount, hdiv⟩
+  rw [hcount]
+  exact hdiv hn
+
+/-!
+  A ramification-number datum records the value of the fixed-point
+  multiplicity at the prime powers of the wild order.  The congruence theorem
+  below is deliberately stated before any lower-group sum: it cannot assume
+  Hasse--Arf or the integrality of that sum.
+-/
+structure Chapter05CyclicRamificationNumberData
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    {D : Chapter05LocalGaloisUpperData K L}
+    {σ : Gal(L / K)}
+    (P : Chapter05CyclicFixedPointMultiplicityData D σ) where
+  p : ℕ
+  tame_factor : ℕ
+  p_prime : Nat.Prime p
+  tame_factor_coprime_p : Nat.Coprime tame_factor p
+  wild_exponent : ℕ
+  q : ℕ → ℕ
+  q_prime_power :
+    ∀ {r : ℕ}, r < wild_exponent →
+      q r + 1 = P.fixed_point_length (p ^ r)
+  q_monotone :
+    ∀ {r : ℕ}, 0 < r → r < wild_exponent → q (r - 1) ≤ q r
+
+theorem chapter05_cyclic_ramification_number_congruence
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    {D : Chapter05LocalGaloisUpperData K L}
+    {σ : Gal(L / K)}
+    (P : Chapter05CyclicFixedPointMultiplicityData D σ)
+    (Q : Chapter05CyclicRamificationNumberData P)
+    {r : ℕ} (hr : 0 < r) (hr_last : r < Q.wild_exponent) :
+    Q.p ^ r ∣ Q.q r - Q.q (r - 1) := by
+  have hr_prev : r - 1 < Q.wild_exponent := by
+    exact lt_of_le_of_lt (Nat.sub_le r 1) hr_last
+  have hdiv :
+      Q.p ^ r ∣ P.primitive_period_count (Q.p ^ r) :=
+    chapter05_cyclic_fixed_point_multiplicity_divisibility P
+      (by exact pow_pos Q.p_prime.pos r)
+  rw [P.prime_power_mobius_identity Q.p_prime hr] at hdiv
+  rw [← Q.q_prime_power hr_last, ← Q.q_prime_power hr_prev] at hdiv
+  simpa [Nat.add_sub_add_right] using hdiv
+
+/-!
+  The following record is the finite lower-layer calculation after the
+  congruence has been established.  `tame_factor` is the prime-to-`p` factor
+  of inertia.  `qPrevious` makes the initial layer explicit (`qPrevious 0 =
+  0`) and avoids an informal negative index in the Lean statement.
+-/
+structure Chapter05CyclicLowerLayerShape
+    {G : Type*} [Group G] [Finite G]
+    (D : Chapter05RamificationFiltration G) (b : ℕ) where
+  tame_factor : ℕ
+  tame_factor_pos : 0 < tame_factor
+  p : ℕ
+  p_prime : Nat.Prime p
+  wild_exponent : ℕ
+  wild_exponent_pos : 0 < wild_exponent
+  q : ℕ → ℕ
+  qPrevious : ℕ → ℕ
+  qPrevious_zero : qPrevious 0 = 0
+  qPrevious_succ : ∀ r : ℕ, qPrevious (r + 1) = q r
+  zeroth_cardinality :
+    Nat.card (D.lowerGroup 0) = tame_factor * p ^ wild_exponent
+  last_break : q (wild_exponent - 1) = b
+  layer_order :
+    ∀ {r i : ℕ}, r < wild_exponent → qPrevious r < i → i ≤ q r →
+      Nat.card (D.lowerGroup (i : ℝ)) = p ^ (wild_exponent - r)
+  layer_breaks_strict :
+    ∀ {r : ℕ}, r < wild_exponent → qPrevious r < q r
+  tame_divides_first_break : tame_factor ∣ q 0
+
+/- The divisibility of the later jumps is the output of the
+   ramification-number congruence, not part of the filtration shape. -/
+structure Chapter05CyclicLowerLayerDecomposition
+    {G : Type*} [Group G] [Finite G]
+    (D : Chapter05RamificationFiltration G) (b : ℕ)
+    extends Chapter05CyclicLowerLayerShape D b where
+  tame_wild_jump_divisibility :
+    ∀ {r : ℕ}, 0 < r → r < wild_exponent →
+      tame_factor * p ^ r ∣ q r - q (r - 1)
+
+/-!
+  This is the complete local arithmetic interface used by the cyclic proof.
+  The fixed-point and ramification-number records are tied to the lower-layer
+  shape by the displayed parameter equalities.  The tame-factor relation and
+  weighted jump divisibility required by the finite lower-group sum are explicit
+  fields of this interface; the final integrality is not an input field.
+-/
+structure Chapter05CyclicLocalArithmeticInterface
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    (D : Chapter05LocalGaloisUpperData K L)
+    (σ : Gal(L / K)) (b : ℕ) where
+  cyclic_group : IsCyclic (Gal(L / K))
+  fixed_point : Chapter05CyclicFixedPointMultiplicityData D σ
+  ramification_number :
+    Chapter05CyclicRamificationNumberData fixed_point
+  layer_shape :
+    Chapter05CyclicLowerLayerShape D.profile b
+  p_eq : layer_shape.p = ramification_number.p
+  wild_exponent_eq :
+    layer_shape.wild_exponent = ramification_number.wild_exponent
+  automorphism_order_eq :
+    fixed_point.automorphism_order =
+      ramification_number.p ^ ramification_number.wild_exponent
+  q_eq : ∀ r : ℕ,
+    layer_shape.q r = ramification_number.q r
+  tame_factor_eq :
+    layer_shape.tame_factor = ramification_number.tame_factor
+  tame_wild_jump_divisibility :
+    ∀ {r : ℕ}, 0 < r → r < layer_shape.wild_exponent →
+      layer_shape.tame_factor * layer_shape.p ^ r ∣
+        layer_shape.q r - layer_shape.q (r - 1)
+
+theorem chapter05_cyclic_local_arithmetic_lower_layer_decomposition
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    (D : Chapter05LocalGaloisUpperData K L)
+    {σ : Gal(L / K)} {b : ℕ}
+    (A : Chapter05CyclicLocalArithmeticInterface D σ b) :
+    Nonempty (Chapter05CyclicLowerLayerDecomposition D.profile b) := by
+  sorry
+
+theorem chapter05_cyclic_lower_layer_sum_decomposition
+    {G : Type*} [Group G] [Finite G]
+    {D : Chapter05RamificationFiltration G} {b : ℕ}
+    (A : Chapter05CyclicLowerLayerDecomposition D b) :
+    chapter05CyclicHasseArfSum D b =
+      (A.q 0 : ℚ) / A.tame_factor +
+        ∑ r ∈ Finset.Icc 1 (A.wild_exponent - 1),
+          ((A.q r - A.q (r - 1) : ℕ) : ℚ) /
+            ((A.tame_factor * A.p ^ r : ℕ) : ℚ) := by
+  have hfirst :
+      (∑ i ∈ Finset.Icc 1 (A.q 0),
+        Nat.card (D.lowerGroup (i : ℝ))) =
+        A.q 0 * A.p ^ A.wild_exponent := by
+    rw [Finset.sum_const_nat (m := A.p ^ A.wild_exponent)]
+    · simp
+    · intro i hi
+      have hi' := Finset.mem_Icc.mp hi
+      exact A.layer_order (r := 0) (i := i)
+        A.wild_exponent_pos
+        (by simpa [A.qPrevious_zero] using (show 0 < i by omega))
+        hi'.2
+  have hsum_interval (l u c : ℕ) (hlu : l ≤ u)
+      (hconst : ∀ i ∈ Finset.Icc (l + 1) u,
+        Nat.card (D.lowerGroup (i : ℝ)) = c) :
+      (∑ i ∈ Finset.Icc (l + 1) u,
+        Nat.card (D.lowerGroup (i : ℝ))) = (u - l) * c := by
+    rw [Finset.sum_const_nat (m := c)]
+    · have hcard : u + 1 - (l + 1) = u - l := by omega
+      rw [Nat.card_Icc, hcard]
+    · exact hconst
+  have hq_succ {r : ℕ} (hr : r + 1 < A.wild_exponent) :
+      A.q r < A.q (r + 1) := by
+    have h := A.layer_breaks_strict (r := r + 1) hr
+    rw [A.qPrevious_succ r] at h
+    exact h
+  have hprefix : ∀ r : ℕ, r < A.wild_exponent →
+      (∑ i ∈ Finset.Icc 1 (A.q r),
+        Nat.card (D.lowerGroup (i : ℝ))) =
+        A.q 0 * A.p ^ A.wild_exponent +
+          ∑ k ∈ Finset.Icc 1 r,
+            (A.q k - A.q (k - 1)) *
+              A.p ^ (A.wild_exponent - k) := by
+    intro r
+    induction r with
+    | zero =>
+        intro hr
+        simpa using hfirst
+    | succ r ihr =>
+        intro hr
+        have hr_lt : r < A.wild_exponent := by omega
+        have ih := ihr hr_lt
+        have hq : A.q r < A.q (r + 1) := hq_succ hr
+        have hnew :
+            (∑ i ∈ Finset.Icc (A.q r + 1) (A.q (r + 1)),
+              Nat.card (D.lowerGroup (i : ℝ))) =
+              (A.q (r + 1) - A.q r) *
+                A.p ^ (A.wild_exponent - (r + 1)) := by
+          apply hsum_interval (A.q r) (A.q (r + 1))
+            (A.p ^ (A.wild_exponent - (r + 1))) hq.le
+          intro i hi
+          have hi' := Finset.mem_Icc.mp hi
+          apply A.layer_order (r := r + 1) (i := i) hr
+          · rw [A.qPrevious_succ r]
+            omega
+          · exact hi'.2
+        have hset :
+            Finset.Icc 1 (A.q (r + 1)) =
+              Finset.Icc 1 (A.q r) ∪
+                Finset.Icc (A.q r + 1) (A.q (r + 1)) := by
+          ext i
+          simp only [Finset.mem_Icc, Finset.mem_union]
+          omega
+        have hdisj :
+            Disjoint (Finset.Icc 1 (A.q r))
+              (Finset.Icc (A.q r + 1) (A.q (r + 1))) := by
+          rw [Finset.disjoint_left]
+          intro i hi₁ hi₂
+          have hi₁' := Finset.mem_Icc.mp hi₁
+          have hi₂' := Finset.mem_Icc.mp hi₂
+          omega
+        rw [hset, Finset.sum_union hdisj, ih, hnew]
+        have hks :
+            Finset.Icc 1 (r + 1) =
+              insert (r + 1) (Finset.Icc 1 r) := by
+          ext k
+          simp only [Finset.mem_Icc, Finset.mem_insert]
+          omega
+        have hnotmem : r + 1 ∉ Finset.Icc 1 r := by
+          simp [Finset.mem_Icc]
+        rw [hks, Finset.sum_insert hnotmem]
+        simp
+        ac_rfl
+  have hexp : A.wild_exponent - 1 < A.wild_exponent := by
+    exact Nat.sub_lt A.wild_exponent_pos Nat.zero_lt_one
+  have hlast := hprefix (A.wild_exponent - 1) hexp
+  have htame : (A.tame_factor : ℚ) ≠ 0 := by
+    exact_mod_cast (Nat.ne_of_gt A.tame_factor_pos)
+  have hp : (A.p : ℚ) ≠ 0 := by
+    exact_mod_cast A.p_prime.ne_zero
+  have hsum_bound :
+      (∑ i ∈ Finset.Icc 1 b,
+        (Nat.card (D.lowerGroup (i : ℝ)) : ℚ)) =
+      ∑ i ∈ Finset.Icc 1 (A.q (A.wild_exponent - 1)),
+        (Nat.card (D.lowerGroup (i : ℝ)) : ℚ) := by
+    simp only [A.last_break]
+  have hlastq :
+      (∑ i ∈ Finset.Icc 1 (A.q (A.wild_exponent - 1)),
+        (Nat.card (D.lowerGroup (i : ℝ)) : ℚ)) =
+      ((A.q 0 * A.p ^ A.wild_exponent : ℕ) : ℚ) +
+        ∑ k ∈ Finset.Icc 1 (A.wild_exponent - 1),
+          (((A.q k - A.q (k - 1)) *
+            A.p ^ (A.wild_exponent - k) : ℕ) : ℚ) := by
+    have hcast := congrArg (fun n : ℕ => (n : ℚ)) hlast
+    simpa only [Nat.cast_add, Nat.cast_sum] using hcast
+  unfold chapter05CyclicHasseArfSum
+  rw [hsum_bound, hlastq, A.zeroth_cardinality]
+  simp only [Nat.cast_mul, Nat.cast_pow]
+  rw [add_div, Finset.sum_div]
+  have hzero :
+      (A.q 0 : ℚ) * (A.p : ℚ) ^ A.wild_exponent /
+          ((A.tame_factor : ℚ) * (A.p : ℚ) ^ A.wild_exponent) =
+        (A.q 0 : ℚ) / A.tame_factor := by
+    field_simp [htame, hp]
+  rw [hzero]
+  have hsum_terms :
+      (∑ r ∈ Finset.Icc 1 (A.wild_exponent - 1),
+        ((A.q r - A.q (r - 1) : ℕ) : ℚ) *
+            (A.p : ℚ) ^ (A.wild_exponent - r) /
+              ((A.tame_factor : ℚ) * (A.p : ℚ) ^ A.wild_exponent)) =
+      ∑ r ∈ Finset.Icc 1 (A.wild_exponent - 1),
+        ((A.q r - A.q (r - 1) : ℕ) : ℚ) /
+          ((A.tame_factor : ℚ) * (A.p : ℚ) ^ r) := by
+    apply Finset.sum_congr rfl
+    intro r hr
+    have hr' := Finset.mem_Icc.mp hr
+    have hpow :
+        (A.p : ℚ) ^ (A.wild_exponent - r) * (A.p : ℚ) ^ r =
+          (A.p : ℚ) ^ A.wild_exponent := by
+      rw [← pow_add, Nat.sub_add_cancel (by omega : r ≤ A.wild_exponent)]
+    field_simp [htame, hp]
+    rw [mul_assoc, hpow]
+  exact congrArg
+    (fun x : ℚ => (A.q 0 : ℚ) / A.tame_factor + x) hsum_terms
+
+theorem chapter05_cyclic_lower_layer_sum_integral
+    {G : Type*} [Group G] [Finite G]
+    {D : Chapter05RamificationFiltration G} {b : ℕ}
+    (A : Chapter05CyclicLowerLayerDecomposition D b) :
+    ∃ z : ℤ, (z : ℚ) = chapter05CyclicHasseArfSum D b := by
+  classical
+  let c0 : ℕ := Classical.choose A.tame_divides_first_break
+  have hc0 : A.q 0 = A.tame_factor * c0 := by
+    exact Classical.choose_spec A.tame_divides_first_break
+  let c : ℕ → ℕ := fun r =>
+    if hr : 0 < r ∧ r < A.wild_exponent then
+      Classical.choose (A.tame_wild_jump_divisibility hr.1 hr.2)
+    else 0
+  have hc {r : ℕ} (hr : 0 < r) (hrlt : r < A.wild_exponent) :
+      A.q r - A.q (r - 1) =
+        A.tame_factor * A.p ^ r * c r := by
+    dsimp [c]
+    rw [dif_pos ⟨hr, hrlt⟩]
+    exact Classical.choose_spec (A.tame_wild_jump_divisibility hr hrlt)
+  have htame : (A.tame_factor : ℚ) ≠ 0 := by
+    exact_mod_cast (Nat.ne_of_gt A.tame_factor_pos)
+  have hp : (A.p : ℚ) ≠ 0 := by
+    exact_mod_cast A.p_prime.ne_zero
+  have hzero :
+      (A.q 0 : ℚ) / A.tame_factor = (c0 : ℚ) := by
+    rw [hc0]
+    simp only [Nat.cast_mul]
+    field_simp [htame]
+  have hterm {r : ℕ} (hr : r ∈ Finset.Icc 1 (A.wild_exponent - 1)) :
+      ((A.q r - A.q (r - 1) : ℕ) : ℚ) /
+          ((A.tame_factor * A.p ^ r : ℕ) : ℚ) = (c r : ℚ) := by
+    have hr' := Finset.mem_Icc.mp hr
+    have hcr := hc hr'.1 (by omega : r < A.wild_exponent)
+    rw [hcr]
+    simp only [Nat.cast_mul, Nat.cast_pow]
+    field_simp [htame, hp]
+  let z : ℤ := (c0 : ℤ) + ∑ r ∈ Finset.Icc 1 (A.wild_exponent - 1), (c r : ℤ)
+  refine ⟨z, ?_⟩
+  rw [chapter05_cyclic_lower_layer_sum_decomposition A]
+  simp only [z, Int.cast_add, Int.cast_sum]
+  norm_num
+  have hsum :
+      (∑ r ∈ Finset.Icc 1 (A.wild_exponent - 1), (c r : ℚ)) =
+        ∑ r ∈ Finset.Icc 1 (A.wild_exponent - 1),
+          ((A.q r - A.q (r - 1) : ℕ) : ℚ) /
+            ((A.tame_factor * A.p ^ r : ℕ) : ℚ) := by
+    apply Finset.sum_congr rfl
+    intro r hr
+    exact (hterm hr).symm
+  rw [hzero, hsum]
+  simp only [Nat.cast_mul, Nat.cast_pow]
+
+theorem chapter05_cyclic_local_arithmetic_integrality
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    (D : Chapter05LocalGaloisUpperData K L)
+    {σ : Gal(L / K)} {b : ℕ}
+    (A : Chapter05CyclicLocalArithmeticInterface D σ b) :
+    ∃ z : ℤ, (z : ℚ) = chapter05CyclicHasseArfSum D.profile b := by
+  rcases chapter05_cyclic_local_arithmetic_lower_layer_decomposition D A with
+    ⟨A'⟩
+  exact chapter05_cyclic_lower_layer_sum_integral A'
+
 /-- The canonical fixed field cut out by a character kernel. -/
 abbrev chapter05CharacterKernelFixedField
     {K L C : Type*} [Field K] [Field L] [Algebra K L] [Group C]
@@ -117,6 +501,30 @@ structure Chapter05CharacterKernelHasseArfData
   quotient_setup_upstairs_eq : quotient_setup.upstairs = local_data.profile
   quotient_local :
     Chapter05LocalGaloisUpperData K (chapter05CharacterKernelFixedField χ)
+  /- The cyclic quotient may still have an unramified stage.  Its inertia
+     fixed field is a second fixed-field transfer, distinct from `transfer`,
+     which concerns the original χ-kernel extension. -/
+  quotient_inertia_transfer :
+    Chapter05FixedFieldSubextensionTransfer
+      (quotient_local.profile.lowerGroup 0)
+      quotient_local.profile
+  /- The top valuation in the inertia transfer is the valuation used by
+     `quotient_local`.  This is the valuation-subring compatibility needed
+     to reuse the canonical quotient profile at the transfer's top field. -/
+  quotient_inertia_top_valuation_eq :
+    quotient_local.vL = quotient_inertia_transfer.vL
+  /- Both transfer records describe extensions over the same base field `K`.
+     This equality transports residue-field hypotheses to the base valuation
+     expected by the canonical inertia bridge. -/
+  quotient_inertia_base_valuation_eq :
+    quotient_local.vK = quotient_inertia_transfer.vK
+  /- The base of the totally ramified inertia stage is the transfer's `vM`,
+     not the original valuation on `K`; its residue perfectness is therefore
+     recorded at that exact stage. -/
+  quotient_inertia_base_residue_perfect :
+    PerfectField
+      (IsLocalRing.ResidueField
+        quotient_inertia_transfer.vM.toValuation.valuationSubring)
   quotient_galois_equiv :
     (Gal(L / K) ⧸ MonoidHom.ker χ) ≃*
       Gal(chapter05CharacterKernelFixedField χ / K)
@@ -136,6 +544,191 @@ structure Chapter05CharacterKernelHasseArfData
   quotient_residue_perfect :
     PerfectField
       (IsLocalRing.ResidueField quotient_local.vK.toValuation.valuationSubring)
+
+theorem chapter05_character_kernel_quotient_profile_canonical_at_inertia_top
+    {K L C : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    [Group C] [Finite C]
+    (χ : Gal(L / K) →* C)
+    (R : Chapter05CharacterKernelHasseArfData χ) (n : ℕ) :
+    R.quotient_local.profile.lowerGroup (n : ℝ) =
+      chapter05RamificationGroupInG (F := K)
+        R.quotient_inertia_transfer.vL.toValuation.valuationSubring (n + 1) := by
+  rw [← R.quotient_inertia_top_valuation_eq]
+  exact R.quotient_local.lower_canonical n
+
+theorem chapter05_character_kernel_inertia_base_residue_is_perfect
+    {K L C : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    [Group C] [Finite C]
+    (χ : Gal(L / K) →* C)
+    (R : Chapter05CharacterKernelHasseArfData χ) :
+    PerfectField
+      (IsLocalRing.ResidueField
+    R.quotient_inertia_transfer.vM.toValuation.valuationSubring) := by
+  exact R.quotient_inertia_base_residue_perfect
+
+theorem chapter05_character_kernel_inertia_base_residue_over_base_is_perfect
+    {K L C : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    [Group C] [Finite C]
+    (χ : Gal(L / K) →* C)
+    (R : Chapter05CharacterKernelHasseArfData χ) :
+    PerfectField
+      (IsLocalRing.ResidueField
+        R.quotient_inertia_transfer.vK.toValuation.valuationSubring) := by
+  rw [← R.quotient_inertia_base_valuation_eq]
+  exact R.quotient_residue_perfect
+
+theorem chapter05_character_kernel_inertia_is_cyclic
+    {K L C : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    [Group C] [Finite C]
+    (χ : Gal(L / K) →* C)
+    (R : Chapter05CharacterKernelHasseArfData χ) :
+    IsCyclic (R.quotient_local.profile.lowerGroup 0) := by
+  exact @Subgroup.isCyclic
+    (Gal(chapter05CharacterKernelFixedField χ / K)) _ R.quotient_cyclic
+    (R.quotient_local.profile.lowerGroup 0)
+
+/-!
+  A positive break is detected on a cyclic character quotient by taking a
+  character nontrivial on the corresponding graded layer.  This package is
+  deliberately a data interface: its source profile is retained, while the
+  selected quotient is required to have the selected break as its maximal
+  positive break.  The inertia bridge then supplies the last lower break used
+  by the cyclic arithmetic interface.
+-/
+structure Chapter05AbelianBreakDetectionConstructionData
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    (D : Chapter05RamificationFiltration (Gal(L / K))) (v : ℝ) where
+  C : Type*
+  [group_C : Group C]
+  [finite_C : Finite C]
+  reduced_character : Gal(L / K) →* C
+  reduced_package :
+    @Chapter05CharacterKernelHasseArfData K L C
+      _ _ _ _ _ _ group_C finite_C reduced_character _ _ _ _ _ _
+  source_profile_eq : reduced_package.local_data.profile = D
+  selected_break :
+    chapter05UpperBreak reduced_package.quotient_local.profile v
+  maximal_positive_break :
+    ∀ r : ℝ, 0 < r →
+      chapter05UpperBreak reduced_package.quotient_local.profile r → r ≤ v
+  reduced_inertia_cyclic :
+    IsCyclic (reduced_package.quotient_local.profile.lowerGroup 0)
+  inertia_bridge :
+    ∃ b : ℕ,
+      Chapter05FixedFieldInertiaBridge
+        (reduced_package.quotient_local.profile.lowerGroup 0)
+        reduced_package.quotient_local.profile
+        reduced_package.quotient_inertia_transfer v b
+
+structure Chapter05AbelianBreakDetectionData
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    (D : Chapter05RamificationFiltration (Gal(L / K))) (v : ℝ) where
+  C : Type*
+  [group_C : Group C]
+  [finite_C : Finite C]
+  reduced_character : Gal(L / K) →* C
+  reduced_package :
+    @Chapter05CharacterKernelHasseArfData K L C
+      _ _ _ _ _ _ group_C finite_C reduced_character _ _ _ _ _ _
+  source_profile_eq : reduced_package.local_data.profile = D
+  source_break : chapter05UpperBreak D v
+  selected_break :
+    chapter05UpperBreak reduced_package.quotient_local.profile v
+  maximal_positive_break :
+    ∀ r : ℝ, 0 < r →
+      chapter05UpperBreak reduced_package.quotient_local.profile r → r ≤ v
+  reduced_inertia_cyclic :
+    IsCyclic (reduced_package.quotient_local.profile.lowerGroup 0)
+  inertia_bridge :
+    ∃ b : ℕ,
+      Chapter05FixedFieldInertiaBridge
+        (reduced_package.quotient_local.profile.lowerGroup 0)
+        reduced_package.quotient_local.profile
+        reduced_package.quotient_inertia_transfer v b
+
+theorem chapter05_abelian_break_detection_data_of_construction
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    {D : Chapter05RamificationFiltration (Gal(L / K))} {v : ℝ}
+    (B : Chapter05AbelianBreakDetectionConstructionData D v)
+    (hbreak : chapter05UpperBreak D v) :
+    Nonempty (Chapter05AbelianBreakDetectionData D v) := by
+  sorry
+
+theorem chapter05_abelian_break_detection_construction
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    (D : Chapter05LocalGaloisUpperData K L)
+    (habelian : ∀ σ τ : Gal(L / K), σ * τ = τ * σ)
+    [PerfectField (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)]
+    {v : ℝ} (hv : 0 < v)
+    (hbreak : chapter05UpperBreak D.profile v) :
+    Nonempty (Chapter05AbelianBreakDetectionConstructionData D.profile v) := by
+  sorry
+
+theorem chapter05_abelian_break_detection
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    (D : Chapter05LocalGaloisUpperData K L)
+    (habelian : ∀ σ τ : Gal(L / K), σ * τ = τ * σ)
+    [PerfectField (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)]
+    {v : ℝ} (hv : 0 < v)
+    (hbreak : chapter05UpperBreak D.profile v) :
+    Nonempty (Chapter05AbelianBreakDetectionData D.profile v) := by
+  sorry
+
+theorem chapter05_character_kernel_positive_break_reduction
+    {K L C : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    [Group C] [Finite C]
+    (χ : Gal(L / K) →* C)
+    (R : Chapter05CharacterKernelHasseArfData χ)
+    {v : ℝ} (hv : 0 < v)
+    (hbreak : chapter05UpperBreak R.quotient_local.profile v) :
+    Nonempty
+      (Chapter05AbelianBreakDetectionData R.quotient_local.profile v) := by
+  have habelian :
+      ∀ σ τ : Gal(chapter05CharacterKernelFixedField χ / K),
+        σ * τ = τ * σ := by
+    intro σ τ
+    exact (@IsCyclic.isMulCommutative
+      (Gal(chapter05CharacterKernelFixedField χ / K)) _ R.quotient_cyclic).is_comm.comm
+      σ τ
+  exact @chapter05_abelian_break_detection _ _ _ _ _ _ _ _
+    R.quotient_local habelian R.quotient_residue_perfect v hv hbreak
+
+/-!
+ The cyclic quotient `quotient_local` can still have an unramified stage.
+ This bridge records the missing passage to the inertia fixed field: its
+ transfer is a genuine fixed-field transfer, its upper breaks are transported
+ at positive depth, and its lower profile is the totally ramified cyclic one
+ to which the cyclic lemma applies.  It is only a maximal-positive-break
+ bridge; an arbitrary positive break requires a separate graded-layer or
+ character-kernel reduction.  The construction is kept separate from the
+ character-kernel package so that a quotient theorem cannot silently be
+ replaced by a false equality of lower indices.
+-/
+theorem chapter05_character_kernel_positive_break_inertia_bridge
+    {K L C : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    [Group C] [Finite C]
+    (χ : Gal(L / K) →* C)
+    (R : Chapter05CharacterKernelHasseArfData χ)
+    {v : ℝ} (hv : 0 < v)
+    (hbreak : chapter05UpperBreak R.quotient_local.profile v)
+    (hmax : ∀ r : ℝ, 0 < r →
+      chapter05UpperBreak R.quotient_local.profile r → r ≤ v) :
+    ∃ b : ℕ,
+      Chapter05FixedFieldInertiaBridge
+        (R.quotient_local.profile.lowerGroup 0)
+        R.quotient_local.profile R.quotient_inertia_transfer v b := by
+  sorry
 
 private theorem chapter05_nat_card_map_group_equiv
     {G G' : Type*} [Group G] [Group G'] [Finite G] [Finite G']
@@ -207,6 +800,140 @@ private theorem chapter05_upper_group_transport_of_profile
     hinverse]
   exact hprofile _
 
+/- The source's cyclic lemma is exposed separately so the abelian theorem can
+   reduce to cyclic quotients without hiding the integrality input in its
+   conclusion. -/
+theorem chapter05_cyclic_local_arithmetic_interface_of_last_break
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    (D : Chapter05LocalGaloisUpperData K L)
+    (hcyclic : IsCyclic (Gal(L / K)))
+    [PerfectField (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)]
+    {b : ℕ}
+    (hlast : ∀ n : ℕ, b < n →
+      D.profile.lowerGroup (n : ℝ) = ⊥)
+    (hbreak : b = 0 ∨
+      D.profile.lowerGroup (b : ℝ) ≠
+        D.profile.lowerGroup (b + 1 : ℕ))
+    (htotally_ramified : D.profile.lowerGroup 0 = ⊤) :
+    ∃ σ : Gal(L / K),
+      Nonempty (Chapter05CyclicLocalArithmeticInterface D σ b) := by
+  sorry
+
+theorem chapter05_cyclic_hasse_arf_lemma
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    (D : Chapter05LocalGaloisUpperData K L)
+    (hcyclic : IsCyclic (Gal(L / K)))
+    [PerfectField (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)]
+    {b : ℕ}
+    (hlast : ∀ n : ℕ, b < n →
+      D.profile.lowerGroup (n : ℝ) = ⊥)
+    (hbreak : b = 0 ∨
+      D.profile.lowerGroup (b : ℝ) ≠
+        D.profile.lowerGroup (b + 1 : ℕ))
+    (htotally_ramified : D.profile.lowerGroup 0 = ⊤) :
+    ∃ z : ℤ, (z : ℚ) = chapter05CyclicHasseArfSum D.profile b := by
+  rcases chapter05_cyclic_local_arithmetic_interface_of_last_break
+      D hcyclic hlast hbreak htotally_ramified with ⟨σ, ⟨A⟩⟩
+  exact chapter05_cyclic_local_arithmetic_integrality D A
+
+/- The inertia stage is naturally presented by a fixed-field transfer rather
+   than by the original quotient local data.  This version keeps its base
+   valuation and canonical subextension profile visible. -/
+theorem chapter05_cyclic_hasse_arf_lemma_of_fixed_field_transfer
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    {H : Subgroup (Gal(L / K))} [H.Normal]
+    [FiniteDimensional K
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05FixedField H)]
+    [IsGalois K
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05FixedField H)]
+    [Finite
+      (Gal(
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05FixedField H / K))]
+    [FiniteDimensional
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05FixedField H) L]
+    [IsGalois
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05FixedField H) L]
+    [Finite
+      (Gal(
+        L /
+          LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05FixedField H))]
+    (D : Chapter05RamificationFiltration (Gal(L / K)))
+    (T : Chapter05FixedFieldSubextensionTransfer H D)
+    (hcyclic : IsCyclic (Gal(
+      L /
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05FixedField H)))
+    (hperfect : PerfectField
+      (IsLocalRing.ResidueField T.vM.toValuation.valuationSubring))
+    {b : ℕ}
+    (hlast : ∀ n : ℕ, b < n →
+      T.subextension_profile.lowerGroup (n : ℝ) = ⊥)
+    (hbreak : b = 0 ∨
+      T.subextension_profile.lowerGroup (b : ℝ) ≠
+        T.subextension_profile.lowerGroup (b + 1 : ℕ))
+    (htotally_ramified : T.subextension_profile.lowerGroup 0 = ⊤) :
+    ∃ z : ℤ, (z : ℚ) =
+      chapter05CyclicHasseArfSum T.subextension_profile b := by
+  let M :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05FixedField H
+  let D' : Chapter05LocalGaloisUpperData M L :=
+    { vK := T.vM
+      vL := T.vL
+      vK_rank_one_discrete := T.vM_rank_one_discrete
+      vL_rank_one_discrete := T.vL_rank_one_discrete
+      restriction := T.vM_restriction_to_L
+      base_complete := T.fixed_field_complete
+      extension_complete := T.extension_complete
+      unique_valuation_extension := T.unique_normalized_ML
+      decomposition_top := T.decomposition_top_ML
+      profile := T.subextension_profile
+      lower_canonical := T.subextension_lower_canonical }
+  exact @chapter05_cyclic_hasse_arf_lemma _ _ _ _ _ _ _ _
+    D' hcyclic hperfect b hlast hbreak htotally_ramified
+
+/-- The fixed-field transfer supplies the local quotient input for the cyclic
+ Hasse--Arf lemma on a character-kernel quotient. -/
+theorem chapter05_character_kernel_cyclic_hasse_arf
+    {K L C : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    [Group C] [Finite C]
+    (χ : Gal(L / K) →* C)
+    (R : Chapter05CharacterKernelHasseArfData χ)
+    {b : ℕ}
+    (hlast : ∀ n : ℕ, b < n →
+      R.quotient_local.profile.lowerGroup (n : ℝ) = ⊥)
+    (hbreak : b = 0 ∨
+      R.quotient_local.profile.lowerGroup (b : ℝ) ≠
+        R.quotient_local.profile.lowerGroup (b + 1 : ℕ))
+    (htotally_ramified : R.quotient_local.profile.lowerGroup 0 = ⊤) :
+    ∃ z : ℤ,
+      (z : ℚ) = chapter05CyclicHasseArfSum R.quotient_local.profile b := by
+  exact @chapter05_cyclic_hasse_arf_lemma _ _ _ _ _ _ _ _
+    R.quotient_local R.quotient_cyclic R.quotient_residue_perfect
+    b hlast hbreak htotally_ramified
+
+theorem chapter05_character_kernel_inertia_cyclic_hasse_arf
+    {K L C : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    [Group C] [Finite C]
+    (χ : Gal(L / K) →* C)
+    (R : Chapter05CharacterKernelHasseArfData χ)
+    {v : ℝ} {bn : ℕ}
+    (B : Chapter05FixedFieldInertiaBridge
+      (R.quotient_local.profile.lowerGroup 0)
+      R.quotient_local.profile R.quotient_inertia_transfer v bn) :
+    ∃ z : ℤ,
+      (z : ℚ) =
+        chapter05CyclicHasseArfSum
+          R.quotient_inertia_transfer.subextension_profile bn := by
+  exact chapter05_cyclic_hasse_arf_lemma_of_fixed_field_transfer
+    R.quotient_local.profile R.quotient_inertia_transfer
+    B.cyclic_subextension R.quotient_inertia_base_residue_perfect
+    B.subextension_last_lower
+    B.subextension_lower_break B.subextension_totally_ramified
+
 theorem chapter05_character_kernel_upper_break_integer
     {K L C : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
@@ -216,7 +943,34 @@ theorem chapter05_character_kernel_upper_break_integer
     {v : ℝ}
     (hv : chapter05UpperBreak R.quotient_local.profile v) :
     chapter05UpperBreakIsInteger v := by
-  sorry
+  by_cases hvpos : 0 < v
+  · sorry
+  · classical
+    rcases (chapter05_upper_break_iff_herbrand_image_of_lower_break
+        R.quotient_local.profile
+        (chapter05_herbrand_bijective_of_filtration
+          R.quotient_local.profile)).mp hv with
+      hneg | ⟨m, _, hFm⟩
+    · refine ⟨(-1 : ℤ), ?_⟩
+      norm_num
+      exact hneg.1.symm
+    · have hmono : StrictMonoOn
+          (chapter05HerbrandFunction R.quotient_local.profile)
+          (Set.Ici (-1 : ℝ)) :=
+        (chapter05_herbrand_function_is_continuous_increasing_piecewise_linear
+          R.quotient_local.profile).2.1
+      have hm_mem : (m : ℝ) ∈ Set.Ici (-1 : ℝ) := by
+        change (-1 : ℝ) ≤ (m : ℝ)
+        have hm_nonneg : (0 : ℝ) ≤ (m : ℝ) := by positivity
+        linarith
+      have hzero_mem : (0 : ℝ) ∈ Set.Ici (-1 : ℝ) := by norm_num
+      have hmono' := hmono.monotoneOn hzero_mem hm_mem
+        (by exact_mod_cast Nat.zero_le m)
+      rw [chapter05_herbrand_function_zero
+        R.quotient_local.profile] at hmono'
+      have hvzero : v = 0 := by linarith [hmono', hFm]
+      refine ⟨(0 : ℤ), ?_⟩
+      norm_num [hvzero]
 
 /-!
  The actual order-`p²` specialization.  The surviving subgroup in the
@@ -248,11 +1002,7 @@ theorem chapter05_character_kernel_detects_two_break_second_upper
   have hformula (x : ℝ) :
       chapter05HerbrandFunction T.twoBreak.profile x =
         chapter05TwoBreakHerbrand T.twoBreak.p T.twoBreak.a T.twoBreak.b x := by
-    exact chapter05_two_break_herbrand_formula H T.twoBreak (volume := 0)
-      (by
-        intro a' b'
-        exact (intervalIntegrable_iff).2
-          (_root_.MeasureTheory.IntegrableOn.of_measure_zero (by simp))) x
+    exact chapter05_two_break_herbrand_formula H T.twoBreak x
   have hF_le_a {x : ℝ} (hx : x ≤ (T.twoBreak.a : ℝ)) :
       chapter05HerbrandFunction T.twoBreak.profile x = x := by
     rw [hformula]
@@ -366,7 +1116,7 @@ theorem chapter05_character_kernel_detects_two_break_second_upper
       linarith
     rw [chapter05UpperRamificationGroup, if_pos hw_dom,
       T.twoBreak.lower_after_second_layer _ hψ_gt_b]
-  letI : Fintype (Gal(L / K)) := AlgEquiv.fintype K L
+  let : Fintype (Gal(L / K)) := AlgEquiv.fintype K L
   let Q := R.quotient_setup
   have hQ_profile : Q.upstairs = R.local_data.profile := by
     exact R.quotient_setup_upstairs_eq
@@ -510,46 +1260,6 @@ theorem chapter05_perfect_residue_p_squared_two_break_second_upper_integral
     T.twoBreak.p T.twoBreak.a T.twoBreak.b T.twoBreak.p_prime.pos
     T.twoBreak.a_lt_b hintegral
 
-/- The source's cyclic lemma is exposed separately so the abelian theorem can
-   reduce to cyclic quotients without hiding the integrality input in its
-   conclusion. -/
-theorem chapter05_cyclic_hasse_arf_lemma
-    {K L : Type*} [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
-    (D : Chapter05LocalGaloisUpperData K L)
-    (hcyclic : IsCyclic (Gal(L / K)))
-    [PerfectField (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)]
-    {b : ℕ}
-    (hlast : ∀ n : ℕ, b < n →
-      D.profile.lowerGroup (n : ℝ) = ⊥)
-    (hbreak : b = 0 ∨
-      D.profile.lowerGroup (b : ℝ) ≠
-        D.profile.lowerGroup (b + 1 : ℕ))
-    (htotally_ramified : D.profile.lowerGroup 0 = ⊤) :
-    ∃ z : ℤ, (z : ℚ) = chapter05CyclicHasseArfSum D.profile b := by
-  sorry
-
-/-- The fixed-field transfer supplies the local quotient input for the cyclic
- Hasse--Arf lemma on a character-kernel quotient. -/
-theorem chapter05_character_kernel_cyclic_hasse_arf
-    {K L C : Type*} [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
-    [Group C] [Finite C]
-    (χ : Gal(L / K) →* C)
-    (R : Chapter05CharacterKernelHasseArfData χ)
-    {b : ℕ}
-    (hlast : ∀ n : ℕ, b < n →
-      R.quotient_local.profile.lowerGroup (n : ℝ) = ⊥)
-    (hbreak : b = 0 ∨
-      R.quotient_local.profile.lowerGroup (b : ℝ) ≠
-        R.quotient_local.profile.lowerGroup (b + 1 : ℕ))
-    (htotally_ramified : R.quotient_local.profile.lowerGroup 0 = ⊤) :
-    ∃ z : ℤ,
-      (z : ℚ) = chapter05CyclicHasseArfSum R.quotient_local.profile b := by
-  exact @chapter05_cyclic_hasse_arf_lemma _ _ _ _ _ _ _ _
-    R.quotient_local R.quotient_cyclic R.quotient_residue_perfect
-    b hlast hbreak htotally_ramified
-
 /-- The Hasse--Arf theorem in the local field interface of this chapter. -/
 theorem chapter05_hasse_arf
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -559,7 +1269,39 @@ theorem chapter05_hasse_arf
     [PerfectField (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)]
     :
     chapter05AllUpperBreaksIntegral D.profile := by
-  sorry
+  intro v hv
+  by_cases hvpos : 0 < v
+  · have hB :
+        Nonempty (Chapter05AbelianBreakDetectionData.{_, _, 0} D.profile v) := by
+      exact chapter05_abelian_break_detection D habelian hvpos hv
+    rcases hB with ⟨B⟩
+    exact @chapter05_character_kernel_upper_break_integer
+      _ _ B.C _ _ _ _ _ _ B.group_C B.finite_C
+      B.reduced_character B.reduced_package v B.selected_break
+  · classical
+    rcases (chapter05_upper_break_iff_herbrand_image_of_lower_break
+        D.profile
+        (chapter05_herbrand_bijective_of_filtration D.profile)).mp hv with
+      hneg | ⟨m, _, hFm⟩
+    · refine ⟨(-1 : ℤ), ?_⟩
+      norm_num
+      exact hneg.1.symm
+    · have hmono : StrictMonoOn
+          (chapter05HerbrandFunction D.profile)
+          (Set.Ici (-1 : ℝ)) :=
+        (chapter05_herbrand_function_is_continuous_increasing_piecewise_linear
+          D.profile).2.1
+      have hm_mem : (m : ℝ) ∈ Set.Ici (-1 : ℝ) := by
+        change (-1 : ℝ) ≤ (m : ℝ)
+        have hm_nonneg : (0 : ℝ) ≤ (m : ℝ) := by positivity
+        linarith
+      have hzero_mem : (0 : ℝ) ∈ Set.Ici (-1 : ℝ) := by norm_num
+      have hmono' := hmono.monotoneOn hzero_mem hm_mem
+        (by exact_mod_cast Nat.zero_le m)
+      rw [chapter05_herbrand_function_zero D.profile] at hmono'
+      have hvzero : v = 0 := by linarith [hmono', hFm]
+      refine ⟨(0 : ℤ), ?_⟩
+      norm_num [hvzero]
 
 theorem chapter05_hasse_arf_upper_break_integer
     {K L : Type*} [Field K] [Field L] [Algebra K L]

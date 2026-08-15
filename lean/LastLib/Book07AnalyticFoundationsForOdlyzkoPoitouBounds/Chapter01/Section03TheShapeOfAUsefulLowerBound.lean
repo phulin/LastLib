@@ -32,14 +32,14 @@ theorem chapter01_analytic_lower_bound
   exact B.lower_bound K
 
 theorem chapter01_analytic_lower_bound_degree_mono
-    (B : Chapter01AnalyticLowerBound) {n m r₁ : ℕ}
+    (B : Chapter01AnalyticLowerBound.{u}) {n m r₁ : ℕ}
     (hn : chapter01ValidSignature n r₁)
     (hm : chapter01ValidSignature m r₁) (hnm : n ≤ m) :
     B.bound n r₁ ≤ B.bound m r₁ := by
   exact B.degree_mono hn hm hnm
 
 theorem chapter01_analytic_lower_bound_real_mono
-    (B : Chapter01AnalyticLowerBound) {n r₁ s₁ : ℕ}
+    (B : Chapter01AnalyticLowerBound.{u}) {n r₁ s₁ : ℕ}
     (hn : chapter01ValidSignature n r₁)
     (hs : chapter01ValidSignature n s₁) (hrs : r₁ ≤ s₁) :
     B.bound n r₁ ≤ B.bound n s₁ := by

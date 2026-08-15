@@ -337,17 +337,26 @@ unchanged. -/
 abbrev Chapter14AffineEnvelope {X S : Scheme.{u}} (f : X ⟶ S)
     [QuasiCompact f] [QuasiSeparated f] := Chapter14RelativeSpec f
 
-theorem chapter14_affine_envelope_exists {X S : Scheme.{u}} (f : X ⟶ S)
-    [QuasiCompact f] [QuasiSeparated f] : Nonempty (Chapter14AffineEnvelope f) := by
+theorem chapter14_relative_spec_exists {X S : Scheme.{u}} (f : X ⟶ S)
+    [QuasiCompact f] [QuasiSeparated f] : Nonempty (Chapter14RelativeSpec f) := by
   sorry
 
-noncomputable def chapter14AffineEnvelope {X S : Scheme.{u}} (f : X ⟶ S)
-    [QuasiCompact f] [QuasiSeparated f] : Chapter14AffineEnvelope f :=
-  Classical.choice (chapter14_affine_envelope_exists f)
+theorem chapter14_affine_envelope_exists {X S : Scheme.{u}} (f : X ⟶ S)
+    [QuasiCompact f] [QuasiSeparated f] : Nonempty (Chapter14AffineEnvelope f) := by
+  exact chapter14_relative_spec_exists f
 
 noncomputable def chapter14RelativeSpec {X S : Scheme.{u}} (f : X ⟶ S)
     [QuasiCompact f] [QuasiSeparated f] : Chapter14RelativeSpec f :=
-  chapter14AffineEnvelope f
+  Classical.choice (chapter14_relative_spec_exists f)
+
+theorem chapter14_relative_spec_function_algebra {X S : Scheme.{u}} (f : X ⟶ S)
+    [QuasiCompact f] [QuasiSeparated f] :
+    (chapter14RelativeSpec f).functionAlgebra = chapter14RelativeFunctionAlgebra f := by
+  exact (chapter14RelativeSpec f).functionAlgebra_canonical
+
+noncomputable def chapter14AffineEnvelope {X S : Scheme.{u}} (f : X ⟶ S)
+    [QuasiCompact f] [QuasiSeparated f] : Chapter14AffineEnvelope f :=
+  chapter14RelativeSpec f
 
 abbrev chapter14AffineEnvelopeScheme {X S : Scheme.{u}} (f : X ⟶ S)
     [QuasiCompact f] [QuasiSeparated f] : Scheme.{u} :=
@@ -433,6 +442,9 @@ structure Chapter14AffineEnvelopeBaseChangeData
     [QuasiCompact f] [QuasiSeparated f]
     [QuasiCompact (chapter14BaseChangeToBase f g)]
     [QuasiSeparated (chapter14BaseChangeToBase f g)] [Flat g] where
+  /-- The affine-envelope comparison is built from the sheaf-level flat
+  base-change comparison for relative global functions. -/
+  globalFunctionsBaseChange : Chapter14RelativeGlobalFunctionsBaseChangeData f g
   comparison :
     pullback (chapter14AffineEnvelopeMap f) g ≅
       (chapter14AffineEnvelope (chapter14BaseChangeToBase f g)).envelope
@@ -442,6 +454,22 @@ structure Chapter14AffineEnvelopeBaseChangeData
   comparison_evaluation :
     chapter14AffineEnvelopeEvaluationBaseChange f g ≫ comparison.hom =
       chapter14AffineEnvelopeEvaluation (chapter14BaseChangeToBase f g)
+
+theorem chapter14_affine_envelope_base_change_exists
+    {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
+    [QuasiCompact f] [QuasiSeparated f] [Flat g]
+    [QuasiCompact (chapter14BaseChangeToBase f g)]
+    [QuasiSeparated (chapter14BaseChangeToBase f g)] :
+    Nonempty (Chapter14AffineEnvelopeBaseChangeData f g) := by
+  sorry
+
+noncomputable def chapter14AffineEnvelopeBaseChange
+    {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
+    [QuasiCompact f] [QuasiSeparated f] [Flat g]
+    [QuasiCompact (chapter14BaseChangeToBase f g)]
+    [QuasiSeparated (chapter14BaseChangeToBase f g)] :
+    Chapter14AffineEnvelopeBaseChangeData f g :=
+  Classical.choice (chapter14_affine_envelope_base_change_exists f g)
 
 abbrev chapter14Fpqc {T S : Scheme.{u}} (g : T ⟶ S) : Prop :=
   LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter11.Scheme.IsFpqcMorphism g

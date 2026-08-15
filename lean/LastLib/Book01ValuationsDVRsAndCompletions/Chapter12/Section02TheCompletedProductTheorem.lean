@@ -1,4 +1,7 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section01SeparatingBranchesByCompletion
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section03IntegralElementsAreBounded
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section01FromOneLocalRingToSeveral
+import Mathlib.Algebra.Module.PID
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
 
@@ -314,7 +317,133 @@ theorem complete_one_branch_fundamental_equality
     (hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal v.valuationSubring)
       v.valuationSubring) :
     Module.finrank K L = e * f := by
-  sorry
+  have hfinite : Module.Finite v.valuationSubring w.valuationSubring := by
+    let : Chapter09.CompleteDVR v.valuationSubring :=
+      { toIsDiscreteValuationRing := inferInstance
+        isAdicComplete' := hcomplete }
+    have hH : Chapter10.Chapter10IsHenselianValuedField v :=
+      Chapter09.complete_DVR_is_henselian
+    have hEqVal (W : Chapter10.Chapter10ValuationOnField L)
+        (hW : v.IsEquiv (W.valuation.comap (algebraMap K L))) :
+        W.valuation.IsEquiv w :=
+      Chapter10.chapter10_henselian_valuation_has_unique_branch v hH W.valuation w hW
+        (Valuation.HasExtension.val_isEquiv_comap (vR := v) (vA := w))
+    obtain ⟨W₀, hW₀⟩ :=
+      Chapter10.chapter10_algebraic_valuation_extension_exists
+        (K := K) (L := L) (Γ₀ := Γ) v
+    let W₀' : Chapter10.Chapter10ValuationOnField L :=
+      { valueGroup := W₀.ValueGroup
+        valuation := W₀.valuation }
+    have hW₀' : v.IsEquiv (W₀'.valuation.comap (algebraMap K L)) := by
+      apply Valuation.isEquiv_of_val_le_one
+      intro x
+      change x ∈ v.valuationSubring ↔ W₀.valuation (algebraMap K L x) ≤ 1
+      constructor
+      · intro hx
+        exact (ValuationSubring.valuation_le_one_iff W₀ _).mpr ((hW₀ x).mpr hx)
+      · intro hx
+        exact (hW₀ x).mp ((ValuationSubring.valuation_le_one_iff W₀ _).mp hx)
+    have hclosure : (w.valuationSubring : Set L) =
+        {x : L | IsIntegral v.valuationSubring x} := by
+      ext x
+      change x ∈ w.valuationSubring ↔ IsIntegral v.valuationSubring x
+      rw [show IsIntegral v.valuationSubring x ↔
+          ∀ (W : Chapter10.Chapter10ValuationOnField L),
+            v.IsEquiv (W.valuation.comap (algebraMap K L)) →
+              x ∈ W.valuation.valuationSubring by
+            simpa [Chapter10.Chapter10IntegralElements] using
+              (Set.ext_iff.mp (Chapter10.chapter10_integral_closure_valuative_criterion v) x)]
+      constructor
+      · intro hx W hW
+        have hEq : W.valuation.valuationSubring = w.valuationSubring :=
+          (Valuation.isEquiv_iff_valuationSubring W.valuation w).mp (hEqVal W hW)
+        rw [hEq]
+        exact hx
+      · intro hx
+        have hxW := hx W₀' hW₀'
+        have hEq : W₀'.valuation.valuationSubring = w.valuationSubring :=
+          (Valuation.isEquiv_iff_valuationSubring W₀'.valuation w).mp
+            (hEqVal W₀' hW₀')
+        rw [← hEq]
+        exact hxW
+    have hnorm : Module.Finite v.valuationSubring (integralClosure v.valuationSubring L) := by
+      let hcdvr : Chapter11.chapter11IsCompleteDVR v.valuationSubring :=
+        { isAdicComplete := hcomplete }
+      exact Chapter11.chapter11_complete_dvr_valuation_ring_is_finite
+        v.valuationSubring K L hcdvr
+    let e' : (integralClosure v.valuationSubring L) ≃ₗ[v.valuationSubring]
+        w.valuationSubring :=
+      { toFun := fun x =>
+          ⟨x.1, (Set.ext_iff.mp hclosure x.1).mpr x.2⟩
+        invFun := fun x =>
+          ⟨x.1, (Set.ext_iff.mp hclosure x.1).mp x.2⟩
+        left_inv := by intro x; apply Subtype.ext; rfl
+        right_inv := by intro x; apply Subtype.ext; rfl
+        map_add' := by intro x y; apply Subtype.ext; rfl
+        map_smul' := by intro c x; apply Subtype.ext; rfl }
+    let : Module.Finite v.valuationSubring (integralClosure v.valuationSubring L) := hnorm
+    exact Module.Finite.equiv e'
+  let : Module.Finite v.valuationSubring w.valuationSubring := hfinite
+  let : Module.IsTorsionFree v.valuationSubring w.valuationSubring := by
+    apply Module.IsTorsionFree.of_smul_eq_zero
+    intro a x hax
+    rcases eq_or_ne a 0 with rfl | ha
+    · exact Or.inl rfl
+    · exact Or.inr (mul_left_cancel₀
+        (show algebraMap v.valuationSubring w.valuationSubring a ≠ 0 by
+          intro h
+          have hz : algebraMap v.valuationSubring w.valuationSubring a =
+              algebraMap v.valuationSubring w.valuationSubring (0 : v.valuationSubring) := by
+            simpa using h
+          exact ha ((Valuation.HasExtension.algebraMap_injective
+            (vK := v) (vA := w)) hz))
+        (by simpa [Algebra.smul_def] using hax))
+  let : Module.Free v.valuationSubring w.valuationSubring := by infer_instance
+  let : FaithfulSMul v.valuationSubring w.valuationSubring :=
+    (faithfulSMul_iff_algebraMap_injective _ _).mpr
+      (Valuation.HasExtension.algebraMap_injective (vK := v) (vA := w))
+  let : Fintype ((IsLocalRing.maximalIdeal v.valuationSubring).primesOver
+      w.valuationSubring) :=
+    Set.Finite.fintype (Algebra.QuasiFinite.finite_primesOver
+      (IsLocalRing.maximalIdeal v.valuationSubring))
+  have hq_eq (q : (IsLocalRing.maximalIdeal v.valuationSubring).primesOver
+      w.valuationSubring) :
+      q.1 = IsLocalRing.maximalIdeal w.valuationSubring := by
+    exact IsLocalRing.eq_maximalIdeal
+      (q.2.1.isMaximal (Ideal.ne_bot_of_mem_primesOver
+        (IsDiscreteValuationRing.not_a_field v.valuationSubring) q.2))
+  let : Unique ((IsLocalRing.maximalIdeal v.valuationSubring).primesOver
+      w.valuationSubring) :=
+    { default := Ideal.primesOver.mk
+        (IsLocalRing.maximalIdeal v.valuationSubring)
+        (IsLocalRing.maximalIdeal w.valuationSubring)
+      uniq := fun q => Subtype.ext (hq_eq q) }
+  have hdefault :
+      (default : (IsLocalRing.maximalIdeal v.valuationSubring).primesOver
+        w.valuationSubring).1 = IsLocalRing.maximalIdeal w.valuationSubring :=
+    hq_eq default
+  have hfinrank : Module.finrank v.valuationSubring w.valuationSubring =
+      Module.finrank K L := by
+    exact (IsFractionRing.finrank_eq v.valuationSubring K
+      w.valuationSubring L).symm
+  have hsum :=
+    Ideal.sum_ramification_inertia_eq_finrank
+      (p := IsLocalRing.maximalIdeal v.valuationSubring)
+      (S := w.valuationSubring)
+  rw [Fintype.sum_unique, hfinrank] at hsum
+  have hprod :
+      chapterRamificationIndex v.valuationSubring w.valuationSubring
+          (IsLocalRing.maximalIdeal w.valuationSubring) *
+        chapterResidueDegree v.valuationSubring w.valuationSubring
+          (IsLocalRing.maximalIdeal w.valuationSubring) = Module.finrank K L := by
+    simpa only [chapterRamificationIndex, chapterResidueDegree, hdefault] using hsum
+  calc
+    Module.finrank K L =
+        chapterRamificationIndex v.valuationSubring w.valuationSubring
+          (IsLocalRing.maximalIdeal w.valuationSubring) *
+        chapterResidueDegree v.valuationSubring w.valuationSubring
+          (IsLocalRing.maximalIdeal w.valuationSubring) := hprod.symm
+    _ = e * f := by rw [he, hf]
 
 end
 

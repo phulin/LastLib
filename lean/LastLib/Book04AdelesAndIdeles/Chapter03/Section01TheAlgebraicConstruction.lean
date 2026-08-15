@@ -99,11 +99,10 @@ abbrev Chapter03StageCoordinateProduct
     (H : ∀ i, Subgroup (G i)) (S : Set I) : Type _ :=
   ∀ i, chapter03StageCoordinateType H S i
 
-theorem chapter03_stage_is_coordinate_product
+noncomputable def chapter03_stage_is_coordinate_product
     {I : Type u} {G : I → Type v} [∀ i, Group (G i)]
     (H : ∀ i, Subgroup (G i)) {S : Set I} (hS : S.Finite) :
-    Nonempty (Chapter03Stage H S ≃
-      Chapter03StageCoordinateProduct H S) := by
+    Chapter03Stage H S ≃ Chapter03StageCoordinateProduct H S := by
   classical
   have hmem : ∀ i, i ∈ S → chapter03StageCoordinateType H S i = G i := by
     intro i hi
@@ -139,11 +138,11 @@ theorem chapter03_stage_is_coordinate_product
           have htype := hnotmem i hi'
           have hprop := (htype ▸ y i).property
           convert hprop using 1; simp [chapter03StageCoordinateType, hi']⟩
-  refine ⟨{
+  refine {
     toFun := forward
     invFun := backward
     left_inv := ?_
-    right_inv := ?_ }⟩
+    right_inv := ?_ }
   · intro x
     apply Subtype.ext
     apply Subtype.ext

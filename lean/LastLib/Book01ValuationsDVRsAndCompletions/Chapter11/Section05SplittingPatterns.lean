@@ -126,7 +126,8 @@ theorem chapter11_equal_characteristic_power_cover_profile
         Chapter10ProfileRealizedByData d p ∧
           p.degree = n ∧ p.ramificationIndex = n ∧ p.residueDegree = 1 ∧
           Chapter10TotallyRamified p := by
-  sorry
+  exact chapter10_equal_characteristic_totally_ramified_profile (k := k) t u n hn
+    hparameter hirreducible hdegree vK vL hvK hvL hext ht hu
 
 /-- A constant residue-field extension has `e = 1` and residue degree equal to
 the field degree in the completed Laurent-series model. -/
@@ -154,7 +155,7 @@ theorem chapter11_constant_residue_extension_profile
           Chapter10UnramifiedBranch
             (Chapter10LaurentSeriesValuation k)
             (Chapter10LaurentSeriesValuation k') h d := by
-  sorry
+  exact chapter10_constant_field_extension_profile hparameter hseparable h
 
 /-- Reduction of a polynomial modulo an ideal. -/
 def chapter11Reduction (R : Type*) [CommRing R] (p : Ideal R) (f : R[X]) : (R ⧸ p)[X] :=
@@ -2424,7 +2425,509 @@ theorem chapter11_distinct_residue_factors_give_local_unramified_factorization
     ∃ D : Chapter11LocalFactorizationData A B K L p f g,
       (∀ i, D.ramificationIndex i = 1) ∧
         (∀ i, D.residueDegree i = (q i).natDegree) := by
-  sorry
+  classical
+  have _ : 0 < g := hg
+  have _ : chapter11DiscriminantUnitAt A p f := hdisc
+  rcases hfield with ⟨e⟩
+  let instDomain : IsDomain (K[X] ⧸ Ideal.span {f.map (algebraMap A K)}) := by
+    change IsDomain (AdjoinRoot (f.map (algebraMap A K)))
+    exact e.symm.toRingEquiv.toMulEquiv.isDomain L
+  have hq : (Ideal.span {f.map (algebraMap A K)}).IsPrime := by
+    apply (Ideal.Quotient.isDomain_iff_prime _).mp
+    infer_instance
+  have hprimeK : Prime (f.map (algebraMap A K)) :=
+    (Ideal.span_singleton_prime (hf.map _).ne_zero).mp hq
+  have hirrK : Irreducible (f.map (algebraMap A K)) := hprimeK.irreducible
+  have hirrA : Irreducible f :=
+    hf.irreducible_iff_irreducible_map_fraction_map.mpr hirrK
+  rcases hmonogenic with ⟨α, hα, horder⟩
+  have hαint : IsIntegral A α := by
+    exact ⟨f, hf, by simpa [aeval_def] using hα⟩
+  let eIB : B ≃ₐ[A] integralClosure A L :=
+    IsIntegralClosure.equiv A B L (integralClosure A L)
+  let αB : B := eIB.symm ⟨α, hαint⟩
+  have heIBα : eIB αB = (⟨α, hαint⟩ : integralClosure A L) := by
+    simp [αB]
+  have hαmap : algebraMap B L αB = α := by
+    have h := IsIntegralClosure.algebraMap_equiv A B L (integralClosure A L) αB
+    rw [heIBα] at h
+    simpa using h.symm
+  have hαBint : IsIntegral A αB := by
+    apply (isIntegral_algHom_iff (IsScalarTower.toAlgHom A B L)
+      (IsIntegralClosure.algebraMap_injective B A L)).mp
+    simpa [hαmap] using hαint
+  have hrootB : Polynomial.aeval αB f = 0 := by
+    apply (IsIntegralClosure.algebraMap_injective B A L)
+    rw [map_aeval_eq_aeval_map (φ := RingHom.id A)
+      (ψ := (algebraMap B L))
+      (by
+        ext x
+        simpa only [RingHom.comp_apply, RingHom.id_apply] using
+          (IsScalarTower.algebraMap_apply A B L x))]
+    rw [hαmap]
+    simpa [Polynomial.aeval_def] using hα
+  let instDedekindA : IsDedekindDomain A :=
+    ((IsDiscreteValuationRing.TFAE A (IsDiscreteValuationRing.not_isField A)).out 0 2).mp
+      (inferInstance : IsDiscreteValuationRing A)
+  let instDedekindB : IsDedekindDomain B :=
+    chapter11_finite_normalization_is_dedekind A K L B hfinite
+  let instFractionB : IsFractionRing B L :=
+    IsIntegralClosure.isFractionRing_of_finite_extension A K L B
+  let instFinite : Module.Finite A B := hfinite
+  have horder' : Algebra.adjoin A ({α} : Set L) = integralClosure A L := by
+    simpa [chapter11RootOrderIsIntegralClosure, chapter11RootOrder] using horder
+  have hadjoinIC : Algebra.adjoin A
+      ({(⟨α, hαint⟩ : integralClosure A L)} : Set (integralClosure A L)) = ⊤ := by
+    apply Subalgebra.map_injective (f := (integralClosure A L).val)
+      Subtype.val_injective
+    rw [AlgHom.map_adjoin, Set.image_singleton]
+    change Algebra.adjoin A ({α} : Set L) =
+      Subalgebra.map (integralClosure A L).val ⊤
+    rw [horder']
+    apply le_antisymm
+    · rintro x hx
+      exact ⟨⟨x, hx⟩, Set.mem_univ _, rfl⟩
+    · rintro x ⟨y, _, rfl⟩
+      exact y.property
+  have hmaptop : Subalgebra.map eIB.toAlgHom ⊤ = ⊤ := by
+    apply le_antisymm le_top
+    rintro x -
+    rcases eIB.surjective x with ⟨y, rfl⟩
+    exact ⟨y, Set.mem_univ _, rfl⟩
+  have hadjoinB : Algebra.adjoin A ({αB} : Set B) = ⊤ := by
+    apply Subalgebra.map_injective (f := eIB.toAlgHom) eIB.injective
+    rw [AlgHom.map_adjoin, Set.image_singleton]
+    rw [show (eIB.toAlgHom) αB = (⟨α, hαint⟩ : integralClosure A L) by exact heIBα,
+      hadjoinIC]
+    exact hmaptop.symm
+  have hcon : conductor A αB = ⊤ :=
+    conductor_eq_top_of_adjoin_eq_top hadjoinB
+  have hcon' : (conductor A αB).comap (algebraMap A B) ⊔ p = ⊤ := by
+    simp [hcon]
+  have hmin : f = minpoly A αB := by
+    apply Polynomial.eq_of_monic_of_associated hf (minpoly.monic hαBint)
+    exact
+      (Irreducible.associated_of_dvd
+        (minpoly.prime_of_isIntegrallyClosed hαBint).irreducible hirrA
+        (minpoly.isIntegrallyClosed_dvd hαBint hrootB)).symm
+  let instField : Field (A ⧸ p) := Ideal.Quotient.field p
+  have hredmonic : (chapter11Reduction A p f).Monic := by
+    simpa [chapter11Reduction] using hf.map (Ideal.Quotient.mk p)
+  have hred0 : chapter11Reduction A p f ≠ 0 := hredmonic.ne_zero
+  rcases hfactor with ⟨hinj, hqdata, hprod⟩
+  have hnormred :
+      normalizedFactors (chapter11Reduction A p f) =
+        (Finset.univ : Finset (Fin g)).1.map q := by
+    rw [hprod, Finset.prod_eq_multiset_prod]
+    have hs : ∀ a ∈ (Finset.univ : Finset (Fin g)).1.map q, Irreducible a := by
+      intro a ha
+      obtain ⟨i, hi, hia⟩ := Multiset.mem_map.mp ha
+      rw [← hia]
+      exact (hqdata i).2
+    rw [normalizedFactors_prod_eq _ hs]
+    simp only [Multiset.map_map]
+    apply Multiset.map_congr
+    · rfl
+    · intro i hi
+      exact (hqdata i).1.normalize_eq_self
+  have hredmin : chapter11Reduction A p f =
+      Polynomial.map (Ideal.Quotient.mk p) (minpoly A αB) := by
+    simp [chapter11Reduction, hmin]
+  have hqmem : ∀ i, q i ∈ normalizedFactors (chapter11Reduction A p f) := by
+    intro i
+    apply (Polynomial.mem_normalizedFactors_iff hred0).2
+    refine ⟨(hqdata i).2, (hqdata i).1, ?_⟩
+    rw [hprod]
+    exact Finset.dvd_prod_of_mem q (Finset.mem_univ i)
+  have hqmem' : ∀ i, q i ∈ normalizedFactors
+      (Polynomial.map (Ideal.Quotient.mk p) (minpoly A αB)) := by
+    intro i
+    simpa [hredmin] using hqmem i
+  have hp0 : p ≠ (⊥ : Ideal A) := by
+    rw [hp]
+    exact IsDiscreteValuationRing.not_a_field A
+  let eKD :=
+    KummerDedekind.normalizedFactorsMapEquivNormalizedFactorsMinPolyMk
+      (R := A) (S := B) (x := αB) (I := p)
+      (inferInstance : p.IsMaximal) hp0 hcon' hαBint
+  let q' : (i : Fin g) →
+      {d : (A ⧸ p)[X] |
+        d ∈ normalizedFactors
+          (Polynomial.map (Ideal.Quotient.mk p) (minpoly A αB))} :=
+    fun i => ⟨q i, hqmem' i⟩
+  let P : (i : Fin g) → Ideal B :=
+    fun i => (eKD.symm (q' i) : Ideal B)
+  have hPmem : ∀ i, P i ∈ normalizedFactors (p.map (algebraMap A B)) := by
+    intro i
+    exact (eKD.symm (q' i)).property
+  have hP0 : ∀ i, P i ≠ (⊥ : Ideal B) := by
+    intro i
+    exact ne_zero_of_mem_normalizedFactors (hPmem i)
+  have hPprime : ∀ i, (P i).IsPrime := by
+    intro i
+    exact Ideal.isPrime_of_prime (prime_of_normalized_factor (P i) (hPmem i))
+  have hPmax : ∀ i, (P i).IsMaximal := by
+    intro i
+    exact Ring.DimensionLEOne.maximalOfPrime (hP0 i) (hPprime i)
+  have hPover : ∀ i, (P i).LiesOver p := by
+    intro i
+    apply (Ideal.liesOver_iff_dvd_map (hPprime i).ne_top).2
+    exact dvd_of_mem_normalizedFactors (hPmem i)
+  have hP_inj : Function.Injective P := by
+    intro i j hij
+    apply hinj
+    have hsub : eKD.symm (q' i) = eKD.symm (q' j) := by
+      apply Subtype.ext
+      simpa [P] using hij
+    exact congrArg Subtype.val (eKD.symm.injective hsub)
+  have hresidue : ∀ i, (P i).inertiaDeg A = (q i).natDegree := by
+    intro i
+    let _ : (P i).IsPrime := hPprime i
+    let _ : (P i).IsMaximal := hPmax i
+    let _ : (P i).LiesOver p := hPover i
+    obtain ⟨Q, hQ⟩ :=
+      Polynomial.map_surjective (Ideal.Quotient.mk p)
+        Ideal.Quotient.mk_surjective (q i)
+    have hQmem : Polynomial.map (Ideal.Quotient.mk p) Q ∈
+        normalizedFactors
+          (Polynomial.map (Ideal.Quotient.mk p) (minpoly A αB)) := by
+      rw [hQ]
+      exact hqmem' i
+    have h_eq₁ : Ideal.span {Polynomial.map (Ideal.Quotient.mk p) Q} =
+        Ideal.span {Polynomial.map (Ideal.Quotient.mk p) (minpoly A αB)} ⊔
+          Ideal.span {Polynomial.map (Ideal.Quotient.mk p) Q} := by
+      rw [← Ideal.span_insert, Ideal.span_pair_comm,
+        Ideal.span_pair_eq_span_left_iff_dvd.mpr]
+      exact ((Polynomial.mem_normalizedFactors_iff
+        (Polynomial.map_monic_ne_zero (minpoly.monic hαBint))).mp hQmem).2.2
+    have h_eq₂ : p.map (algebraMap A B) ⊔
+        Ideal.span {Polynomial.aeval αB Q} =
+          Ideal.span (p.map (algebraMap A B) ∪ {Polynomial.aeval αB Q}) := by
+      rw [Ideal.span_union, Ideal.span_eq]
+    let F :=
+      KummerDedekind.quotMapEquivQuotQuotMap
+        (R := A) (S := B) (x := αB) (I := p) hcon' hαBint
+    let Falg : (B ⧸ Ideal.map (algebraMap A B) p) ≃ₐ[A ⧸ p]
+        (A ⧸ p)[X] ⧸ Ideal.span {
+          Polynomial.map (Ideal.Quotient.mk p) (minpoly A αB) } :=
+      AlgEquiv.ofRingEquiv (f := F) (by
+        intro z
+        obtain ⟨z, rfl⟩ := Ideal.Quotient.mk_surjective z
+        have hinput :
+            (algebraMap (A ⧸ p) (B ⧸ Ideal.map (algebraMap A B) p)
+                (Ideal.Quotient.mk p z)) =
+              Ideal.Quotient.mk (Ideal.map (algebraMap A B) p)
+                (algebraMap A B z) := by
+          rw [← Ideal.Quotient.algebraMap_eq p]
+          rw [← IsScalarTower.algebraMap_apply A (A ⧸ p)
+            (B ⧸ Ideal.map (algebraMap A B) p) z]
+          rw [Ideal.Quotient.mk_algebraMap]
+        have hC :
+            (quotAdjoinEquivQuotMap (R := A) (S := B) (x := αB) (I := p)
+                hcon' (FaithfulSMul.algebraMap_injective
+                  (Algebra.adjoin A ({αB} : Set B)) B)).symm
+                (Ideal.Quotient.mk (Ideal.map (algebraMap A B) p)
+                  (algebraMap A B z)) =
+              Ideal.Quotient.mk
+                (Ideal.map
+                  (algebraMap A (Algebra.adjoin A ({αB} : Set B))) p)
+                (algebraMap A (Algebra.adjoin A ({αB} : Set B)) z) := by
+          apply (quotAdjoinEquivQuotMap (R := A) (S := B) (x := αB) (I := p)
+            hcon' (FaithfulSMul.algebraMap_injective
+              (Algebra.adjoin A ({αB} : Set B)) B)).injective
+          rw [RingEquiv.apply_symm_apply]
+          simpa using
+            (quotAdjoinEquivQuotMap_apply_mk (R := A) (S := B) (x := αB)
+              (I := p) hcon' (FaithfulSMul.algebraMap_injective
+                (Algebra.adjoin A ({αB} : Set B)) B)
+              (algebraMap A (Algebra.adjoin A ({αB} : Set B)) z)).symm
+        rw [hinput]
+        simp only [F, KummerDedekind.quotMapEquivQuotQuotMap,
+          RingEquiv.trans_apply]
+        rw [hC]
+        rw [Ideal.Quotient.mk_algebraMap A
+          (Ideal.map (algebraMap A (Algebra.adjoin A ({αB} : Set B))) p) z]
+        rw [show
+          ((Algebra.adjoin.powerBasis' hαBint).quotientEquivQuotientMinpolyMap p).toRingEquiv
+              (algebraMap A
+                (Algebra.adjoin A ({αB} : Set B) ⧸
+                  Ideal.map (algebraMap A (Algebra.adjoin A ({αB} : Set B))) p) z) =
+            algebraMap A
+              ((A ⧸ p)[X] ⧸
+                Ideal.span {
+                  Polynomial.map (Ideal.Quotient.mk p)
+                    (minpoly A (Algebra.adjoin.powerBasis' hαBint).gen) }) z by
+          exact
+            ((Algebra.adjoin.powerBasis' hαBint).quotientEquivQuotientMinpolyMap p).commutes z]
+        rw [IsScalarTower.algebraMap_apply A (A ⧸ p)
+          ((A ⧸ p)[X] ⧸
+            Ideal.span {
+              Polynomial.map (Ideal.Quotient.mk p)
+                (minpoly A (Algebra.adjoin.powerBasis' hαBint).gen) }) z]
+        rw [Ideal.Quotient.algebraMap_eq p]
+        rw [← Ideal.Quotient.mk_algebraMap (A ⧸ p)
+          (Ideal.span {
+            Polynomial.map (Ideal.Quotient.mk p)
+              (minpoly A (Algebra.adjoin.powerBasis' hαBint).gen) })
+          (Ideal.Quotient.mk p z)]
+        rw [Ideal.quotEquivOfEq_mk]
+        rw [Ideal.Quotient.mk_algebraMap (A ⧸ p)
+          (Ideal.span {
+            Polynomial.map (Ideal.Quotient.mk p) (minpoly A αB) })
+          (Ideal.Quotient.mk p z)]
+        )
+    have hqi : q' i =
+        ⟨Polynomial.map (Ideal.Quotient.mk p) Q, hQmem⟩ := by
+      apply Subtype.ext
+      exact hQ.symm
+    have hP_eq :
+        P i = Ideal.span (p.map (algebraMap A B) ∪ {Polynomial.aeval αB Q}) := by
+      change (eKD.symm (q' i) : Ideal B) = _
+      rw [hqi]
+      exact
+        KummerDedekind.normalizedFactorsMapEquivNormalizedFactorsMinPolyMk_symm_apply_eq_span
+          (R := A) (S := B) (x := αB) (I := p)
+          (inferInstance : p.IsMaximal) hQmem hp0 hcon' hαBint
+    let gRing :
+        (B ⧸ Ideal.map (algebraMap A B) p) ⧸
+            Ideal.map (Ideal.Quotient.mk (Ideal.map (algebraMap A B) p))
+              (Ideal.span {Polynomial.aeval αB Q}) ≃+*
+          B ⧸ P i :=
+      (DoubleQuot.quotQuotEquivQuotSup _ _).trans
+        (Ideal.quotEquivOfEq (h_eq₂.trans hP_eq.symm))
+    let gAlg :
+        ((B ⧸ Ideal.map (algebraMap A B) p) ⧸
+            Ideal.map (Ideal.Quotient.mk (Ideal.map (algebraMap A B) p))
+              (Ideal.span {Polynomial.aeval αB Q})) ≃ₐ[A ⧸ p]
+          B ⧸ P i :=
+      AlgEquiv.ofRingEquiv (f := gRing) (by
+        intro z
+        obtain ⟨z, rfl⟩ := Ideal.Quotient.mk_surjective z
+        rfl)
+    let e₁alg :
+        ((A ⧸ p)[X] ⧸ Ideal.span {Polynomial.map (Ideal.Quotient.mk p) Q}) ≃ₐ[A ⧸ p]
+          (A ⧸ p)[X] ⧸
+            (Ideal.span {Polynomial.map (Ideal.Quotient.mk p) (minpoly A αB)} ⊔
+              Ideal.span {Polynomial.map (Ideal.Quotient.mk p) Q}) :=
+      Ideal.quotientEquivAlgOfEq (A ⧸ p) h_eq₁
+    let e₂alg :
+        (((A ⧸ p)[X] ⧸
+            Ideal.span {Polynomial.map (Ideal.Quotient.mk p) (minpoly A αB)}) ⧸
+          Ideal.map
+            (Ideal.Quotient.mk (Ideal.span {
+              Polynomial.map (Ideal.Quotient.mk p) (minpoly A αB)}))
+            (Ideal.span {Polynomial.map (Ideal.Quotient.mk p) Q})) ≃ₐ[A ⧸ p]
+          (A ⧸ p)[X] ⧸
+            (Ideal.span {Polynomial.map (Ideal.Quotient.mk p) (minpoly A αB)} ⊔
+              Ideal.span {Polynomial.map (Ideal.Quotient.mk p) Q}) :=
+      DoubleQuot.quotQuotEquivQuotSupₐ (A ⧸ p)
+        (Ideal.span {Polynomial.map (Ideal.Quotient.mk p) (minpoly A αB)})
+        (Ideal.span {Polynomial.map (Ideal.Quotient.mk p) Q})
+    let e₃alg :
+        (((A ⧸ p)[X] ⧸
+            Ideal.span {Polynomial.map (Ideal.Quotient.mk p) (minpoly A αB)}) ⧸
+          Ideal.map
+            (Ideal.Quotient.mk (Ideal.span {
+              Polynomial.map (Ideal.Quotient.mk p) (minpoly A αB)}))
+            (Ideal.span {Polynomial.map (Ideal.Quotient.mk p) Q})) ≃ₐ[A ⧸ p]
+          ((B ⧸ Ideal.map (algebraMap A B) p) ⧸
+            Ideal.map
+              (Ideal.Quotient.mk (Ideal.map (algebraMap A B) p))
+              (Ideal.span {Polynomial.aeval αB Q})) :=
+      Ideal.quotientEquivAlg
+        (Ideal.map
+          (Ideal.Quotient.mk
+            (Ideal.span {Polynomial.map (Ideal.Quotient.mk p) (minpoly A αB)}))
+          (Ideal.span {Polynomial.map (Ideal.Quotient.mk p) Q}))
+        (Ideal.map
+          (Ideal.Quotient.mk (Ideal.map (algebraMap A B) p))
+          (Ideal.span {Polynomial.aeval αB Q}))
+        Falg.symm
+        (by
+          have hFQ :
+              F.symm
+                  (Ideal.Quotient.mk
+                    (Ideal.span {
+                      Polynomial.map (Ideal.Quotient.mk p)
+                        (minpoly A αB) })
+                    (Polynomial.map (Ideal.Quotient.mk p) Q)) =
+                Polynomial.aeval αB Q := by
+            simpa [F] using
+              (KummerDedekind.quotMapEquivQuotQuotMap_symm_apply
+                (R := A) (S := B) (x := αB) (I := p) hcon' hαBint Q)
+          simpa [Falg, Ideal.map_span] using
+            (congrArg
+              (fun x =>
+                Ideal.span ({x} : Set (B ⧸ Ideal.map (algebraMap A B) p)))
+              hFQ).symm)
+    let eQalg :
+        ((A ⧸ p)[X] ⧸ Ideal.span {Polynomial.map (Ideal.Quotient.mk p) Q}) ≃ₐ[A ⧸ p]
+          B ⧸ P i :=
+      (e₁alg.trans e₂alg.symm).trans (e₃alg.trans gAlg)
+    rw [Ideal.inertiaDeg_eq_of_isMaximal p (P i), ← hQ,
+      ← finrank_quotient_span_eq_natDegree]
+    exact eQalg.toLinearEquiv.finrank_eq.symm
+  have hmap0 : p.map (algebraMap A B) ≠ (⊥ : Ideal B) :=
+    map_ne_bot_of_ne_bot hp0
+  have hqem : ∀ i, emultiplicity (q i) (chapter11Reduction A p f) = 1 := by
+    intro i
+    rw [UniqueFactorizationMonoid.emultiplicity_eq_count_normalizedFactors
+      (hqdata i).2 hred0, hnormred]
+    rw [(hqdata i).1.normalize_eq_self]
+    rw [Multiset.count_map_eq_count' q _ hinj]
+    simp
+  have hram : ∀ i, (P i).ramificationIdx A = 1 := by
+    intro i
+    let _ : (P i).IsPrime := hPprime i
+    let _ : (P i).LiesOver p := hPover i
+    have hK :=
+      KummerDedekind.emultiplicity_factors_map_eq_emultiplicity
+        (R := A) (S := B) (I := p) (x := αB)
+        (inferInstance : p.IsMaximal) hp0 hcon' hαBint (hPmem i)
+    change emultiplicity (P i) (p.map (algebraMap A B)) =
+      emultiplicity (↑(eKD ⟨P i, hPmem i⟩))
+        (Polynomial.map (Ideal.Quotient.mk p) (minpoly A αB)) at hK
+    have heq : eKD ⟨P i, hPmem i⟩ = q' i := by
+      change eKD (eKD.symm (q' i)) = q' i
+      exact eKD.apply_symm_apply (q' i)
+    rw [heq] at hK
+    have hK' : emultiplicity (P i) (p.map (algebraMap A B)) =
+        emultiplicity (q i) (chapter11Reduction A p f) := by
+      simpa [q', hredmin] using hK
+    have hPiFinite : FiniteMultiplicity (P i) (p.map (algebraMap A B)) :=
+      FiniteMultiplicity.of_prime_left
+        (prime_of_normalized_factor (P i) (hPmem i)) hmap0
+    rw [Ideal.IsDedekindDomain.ramificationIdx_eq_multiplicity p (P i) hmap0]
+    exact_mod_cast hPiFinite.emultiplicity_eq_multiplicity.symm.trans
+      (hK'.trans (hqem i))
+  have hdegmap : (chapter11Reduction A p f).natDegree = f.natDegree := by
+    simpa [chapter11Reduction] using
+      (Polynomial.natDegree_map_eq_of_isUnit_leadingCoeff
+        (Ideal.Quotient.mk p) (by rw [hf]; exact isUnit_one))
+  have hfinrank : Module.finrank K L = f.natDegree := by
+    calc
+      Module.finrank K L = Module.finrank K (AdjoinRoot (f.map (algebraMap A K))) :=
+        e.toLinearEquiv.finrank_eq
+      _ = (AdjoinRoot.powerBasis hirrK.ne_zero).dim :=
+        (AdjoinRoot.powerBasis hirrK.ne_zero).finrank
+      _ = (f.map (algebraMap A K)).natDegree :=
+        AdjoinRoot.powerBasis_dim hirrK.ne_zero
+      _ = f.natDegree := by
+        exact Polynomial.natDegree_map_eq_of_injective
+          (FaithfulSMul.algebraMap_injective A K) f
+  have hnorm_branch (Q : Ideal B)
+      (hQ : Q ∈ normalizedFactors (p.map (algebraMap A B))) :
+      chapter11Branch A B p Q := by
+    have hQ0 : Q ≠ (⊥ : Ideal B) := ne_zero_of_mem_normalizedFactors hQ
+    have hQprime : Q.IsPrime :=
+      Ideal.isPrime_of_prime (prime_of_normalized_factor Q hQ)
+    have hQmax : Q.IsMaximal := Ring.DimensionLEOne.maximalOfPrime hQ0 hQprime
+    have hQover : Q.LiesOver p := by
+      apply (Ideal.liesOver_iff_dvd_map hQprime.ne_top).2
+      exact dvd_of_mem_normalizedFactors hQ
+    exact ⟨hQprime, hQmax, hQover⟩
+  have hexhaustive : ∀ Q, chapter11Branch A B p Q → ∃ i, P i = Q := by
+    intro Q hQ
+    have hQmem : Q ∈ normalizedFactors (p.map (algebraMap A B)) := by
+      apply (Ideal.mem_normalizedFactors_iff hmap0).2
+      refine ⟨hQ.1, ?_⟩
+      exact (Ideal.dvd_iff_le).mp
+        ((Ideal.liesOver_iff_dvd_map hQ.1.ne_top).1 hQ.2.2)
+    have hqmemQ : (eKD ⟨Q, hQmem⟩ : _).val ∈
+        normalizedFactors (Polynomial.map (Ideal.Quotient.mk p) (minpoly A αB)) :=
+      (eKD ⟨Q, hQmem⟩).property
+    have hqmemQ' : (eKD ⟨Q, hQmem⟩ : _).val ∈
+        normalizedFactors (chapter11Reduction A p f) := by
+      simpa [hredmin] using hqmemQ
+    rw [hnormred] at hqmemQ'
+    obtain ⟨i, hi, hqi⟩ := Multiset.mem_map.mp hqmemQ'
+    have htarget : eKD ⟨Q, hQmem⟩ = q' i := by
+      apply Subtype.ext
+      exact hqi.symm
+    have hsource := congrArg eKD.symm htarget
+    have hsource' : (⟨Q, hQmem⟩ : _) = eKD.symm (q' i) := by
+      simpa using hsource
+    have hQP : Q = P i := by
+      simpa [P] using congrArg Subtype.val hsource'
+    exact ⟨i, hQP.symm⟩
+  have hcount : ∀ i, (normalizedFactors (p.map (algebraMap A B))).count (P i) = 1 := by
+    intro i
+    let _ : (P i).IsPrime := hPprime i
+    let _ : (P i).LiesOver p := hPover i
+    rw [← Ideal.IsDedekindDomain.ramificationIdx_eq_normalizedFactors_count
+      p (P i) hmap0, hram i]
+  have hnormP : normalizedFactors (p.map (algebraMap A B)) =
+      (Finset.univ : Finset (Fin g)).1.map P := by
+    apply Multiset.ext.2
+    intro Q
+    by_cases hQrange : ∃ i, P i = Q
+    · rcases hQrange with ⟨i, rfl⟩
+      have hcount' :
+          ((Finset.univ : Finset (Fin g)).1.map P).count (P i) = 1 := by
+        rw [Multiset.count_map_eq_count' P _ hP_inj]
+        simp
+      exact (hcount i).trans hcount'.symm
+    · have hQnot : Q ∉ normalizedFactors (p.map (algebraMap A B)) := by
+        intro hQ
+        rcases hexhaustive Q (hnorm_branch Q hQ) with ⟨i, hi⟩
+        exact hQrange ⟨i, hi⟩
+      have hQnot' : Q ∉ (Finset.univ : Finset (Fin g)).1.map P := by
+        intro hQ
+        obtain ⟨i, hi, hQi⟩ := Multiset.mem_map.mp hQ
+        exact hQrange ⟨i, hQi⟩
+      exact (Multiset.count_eq_zero.mpr hQnot).trans
+        (Multiset.count_eq_zero.mpr hQnot').symm
+  have hglobalP : p.map (algebraMap A B) = ∏ i : Fin g, P i := by
+    rw [← Ideal.prod_normalizedFactors_eq_self hmap0, hnormP]
+    simp [Finset.prod_eq_multiset_prod]
+  obtain ⟨π, hπ⟩ := IsPrincipalIdealRing.principal (IsLocalRing.maximalIdeal A)
+  have hπu : chapter11IsUniformizer A p π := by
+    dsimp [chapter11IsUniformizer]
+    exact hp.trans hπ
+  have hlocal : ∀ i,
+      Ideal.map (algebraMap A (Localization.AtPrime (P i))) p =
+        (Ideal.map (algebraMap B (Localization.AtPrime (P i))) (P i)) ^
+          (P i).ramificationIdx A := by
+    intro i
+    let _ : (P i).IsPrime := hPprime i
+    let _ : (P i).LiesOver p := hPover i
+    have hloc : Ideal.map (algebraMap A (Localization.AtPrime (P i))) p ≠ ⊥ := by
+      rw [Ne, Ideal.map_eq_bot_iff_of_injective
+        (FaithfulSMul.algebraMap_injective A (Localization.AtPrime (P i)))]
+      exact hp0
+    rw [hπu]
+    exact chapter11_local_uniformizer_factorization A B p π hp hπu (P i)
+      hp0 (hP0 i) hloc
+  have hglobal : p.map (algebraMap A B) =
+      ∏ i : Fin g, (P i) ^ (P i).ramificationIdx A := by
+    rw [hglobalP]
+    simp [hram]
+  refine ⟨{
+    finite_normalization := hfinite
+    base_ideal := hp
+    polynomial_monic := hf
+    field_presentation := ⟨e⟩
+    branch := P
+    branch_isPrime := hPprime
+    branch_isMaximal := hPmax
+    branch_liesOver := hPover
+    branch_injective := hP_inj
+    exhaustive := hexhaustive
+    branch_local_dvr := by
+      intro i
+      exact IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain
+        B (hP0 i) (Localization.AtPrime (P i))
+    ramificationIndex := fun i => (P i).ramificationIdx A
+    residueDegree := fun i => (P i).inertiaDeg A
+    local_factorization := hlocal
+    global_factorization := hglobal
+    ramificationIndex_eq := by intro i; rfl
+    residueDegree_eq := by intro i; rfl
+  }, ?_, ?_⟩
+  · intro i
+    exact hram i
+  · intro i
+    exact hresidue i
 
 /-- An irreducible quadratic residue factor determines the inert profile under
 the same finite-normalization and field-presentation hypotheses. -/

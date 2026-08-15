@@ -513,6 +513,29 @@ def chapter04ThetaSeriesAndDerivativeLocallyUniform
         fun t : ℝ => chapter04ThetaDerivativeTerm k K a y x t)
       (Set.Icc δ R)
 
+/-!
+The two analytic interfaces below are deliberately kept in the shared
+dependency file.  They are the normalized-lattice contracts needed by the
+theta continuation: the first supplies every derivative family on compact
+positive `t`-intervals, and the second fixes the trace-Gaussian Poisson
+normalization before any Mellin manipulation is performed.
+-/
+
+theorem chapter04_normalized_ideal_lattice_theta_series_and_derivatives_locally_uniform
+    (K : Type*) [Field K] [NumberField K]
+    {a : Chapter04FractionalIdeal K} (ha : a ≠ 0) :
+    chapter04ThetaSeriesAndDerivativeLocallyUniform K a := by
+  sorry
+
+theorem chapter04_normalized_ideal_lattice_theta_poisson_summation
+    (K : Type*) [Field K] [NumberField K]
+    {a : Chapter04FractionalIdeal K} (ha : a ≠ 0)
+    {t : ℝ} (ht : 0 < t) (y : chapter04Y K) :
+    chapter04Theta K a t y =
+      t⁻¹ * chapter04Theta K (chapter04DualFractionalIdeal K a) t⁻¹
+        (chapter04YInv K y) := by
+  sorry
+
 /-- The unit logarithm hyperplane, in the determinant-weighted coordinates. -/
 def chapter04UnitLogHyperplane
     (K : Type*) [Field K] [NumberField K] :
@@ -633,3 +656,25 @@ noncomputable def chapter04InverseIdealClass
     (K : Type*) [Field K] [NumberField K]
     (a : Chapter04NonzeroFractionalIdeal K) : ClassGroup (𝓞 K) :=
   (ClassGroup.mk K a)⁻¹
+
+/-!
+This is the reusable orbit/Mellin bridge for the normalized ideal theta
+series.  Its proof packages the unit fundamental-domain orbit decomposition,
+Tonelli and the positive change of variables, the real/complex Gaussian
+Mellin factors, and the resulting positive constant independent of the ideal
+class.  Keeping the complete contract here lets the continuation section use
+it without importing a later section back into the dependency interface.
+-/
+
+theorem chapter04_theta_mellin_orbit_bridge
+    (K : Type*) [Field K] [NumberField K]
+    (D : Chapter04UnitFundamentalDomain K) :
+    ∃ c : ℝ, 0 < c ∧
+      ∀ (a : Chapter04NonzeroFractionalIdeal K) {s : ℂ}, 1 < s.re →
+        chapter04ThetaMellinIntegral K D
+            (a : Chapter04FractionalIdeal K) s =
+          (c : ℂ) *
+            (chapter04AbsoluteDiscriminant K : ℂ) ^ (s / 2) *
+                chapter04ArchimedeanFactor K s *
+                chapter04PartialZeta K (chapter04InverseIdealClass K a) s := by
+  sorry

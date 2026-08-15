@@ -209,16 +209,18 @@ theorem chapter09_principal_idele_has_haar_modulus_one
     chapter09HaarModulus K (chapter09PrincipalIdele K a) = 1 := by
   simpa [chapter09HaarModulus] using chapter09PrincipalIdele_module_eq_one a
 
-/- The ambient norm gives the archimedean instance of the local density.  At
-finite places the book's normalized absolute value is not the ambient adic
-norm, so the finite-place version is recorded separately below. -/
+/- The local density uses the book's normalized local module.  In particular,
+at a complex place the ambient norm is squared through `v.mult`. -/
 def chapter09LocalMultiplicativeHaarDensity
-    {F : Type*} [NormedField F] (u : Fˣ) : ℝ≥0 :=
-  ‖(u : F)‖₊⁻¹
+    {K : Type*} [Field K] [NumberField K]
+    (v : InfinitePlace K) (u : v.Completionˣ) : ℝ≥0 :=
+  ((chapter09NormUnit u ^ v.mult : Chapter09PositiveReal) : ℝ≥0)⁻¹
 
 theorem chapter09_local_multiplicative_haar_density
-    {F : Type*} [NormedField F] (u : Fˣ) :
-    chapter09LocalMultiplicativeHaarDensity u = ‖(u : F)‖₊⁻¹ :=
+    {K : Type*} [Field K] [NumberField K]
+    (v : InfinitePlace K) (u : v.Completionˣ) :
+    chapter09LocalMultiplicativeHaarDensity v u =
+      ((chapter09NormUnit u ^ v.mult : Chapter09PositiveReal) : ℝ≥0)⁻¹ :=
   rfl
 
 def chapter09FiniteMultiplicativeHaarDensity
@@ -241,9 +243,10 @@ volume one at almost every finite place. -/
 def chapter09FiniteMultiplicativeHaarNormalization
     (K : Type*) [Field K] [NumberField K]
     (μ : ∀ v : HeightOneSpectrum (𝓞 K), Measure ((v.adicCompletion K)ˣ)) : Prop :=
-  ∀ᶠ v : HeightOneSpectrum (𝓞 K) in Filter.cofinite,
-    μ v ((Submonoid.ofClass (v.adicCompletionIntegers K)).units :
-      Set (v.adicCompletion K)ˣ) = 1
+  (∀ v : HeightOneSpectrum (𝓞 K), Measure.IsHaarMeasure (μ v)) ∧
+    ∀ᶠ v : HeightOneSpectrum (𝓞 K) in Filter.cofinite,
+      μ v ((Submonoid.ofClass (v.adicCompletionIntegers K)).units :
+        Set (v.adicCompletion K)ˣ) = 1
 
 theorem chapter09_multiplicative_haar_units_are_normalized_almost_everywhere
     (K : Type*) [Field K] [NumberField K]
@@ -252,7 +255,7 @@ theorem chapter09_multiplicative_haar_units_are_normalized_almost_everywhere
     ({v : HeightOneSpectrum (𝓞 K) |
       μ v ((Submonoid.ofClass (v.adicCompletionIntegers K)).units :
         Set (v.adicCompletion K)ˣ) ≠ 1}).Finite := by
-  exact Filter.eventually_cofinite.mp hμ
+  exact Filter.eventually_cofinite.mp hμ.2
 
 end
 

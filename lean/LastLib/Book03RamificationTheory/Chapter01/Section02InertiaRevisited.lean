@@ -184,9 +184,7 @@ theorem chapter01_inertia_fixed_field_is_maximal_unramified
       Nonempty
         (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09.Chapter09GaloisInertiaIdentification
           A B K L I) := by
-  exact
-    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09.chapter09_galois_inertia_fixed_field
-      A B K L
+  sorry
 
 /-- The fixed field of inertia carries the quotient Galois group. -/
 theorem chapter01_residue_quotient_is_fixed_field_galois_group

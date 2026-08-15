@@ -1,4 +1,4 @@
-import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter10.Section03TailBoundsAndIntervalPropagation
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter10.Section02FiniteFormulasForBTAndCT
 
 namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter10
 

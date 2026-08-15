@@ -1,4 +1,7 @@
 import LastLib.Book06GlobalClassFieldTheory.Chapter01.Dependencies
+import LastLib.Book04AdelesAndIdeles.Chapter07.Section05PrincipalIdeles
+import LastLib.Book04AdelesAndIdeles.Chapter09.Section04StructureOfIdeleClassGroup
+import LastLib.Book04AdelesAndIdeles.Chapter09.Section05CompactKernelOverIdealClassGroup
 
 namespace LastLib.Book06GlobalClassFieldTheory.Chapter01
 
@@ -52,24 +55,60 @@ theorem basicIdeleOpenSubgroup_isOpen {K : Type*} [Field K] [NumberField K]
 theorem principalIdele_discrete_closed {K : Type*} [Field K] [NumberField K] :
     DiscreteTopology (principalIdeleSubgroup K) ∧
       IsClosed (principalIdeleSubgroup K : Set (I_K K)) := by
-  sorry
+  constructor
+  · exact isDiscrete_iff_discreteTopology.mp
+      (LastLib.Book04AdelesAndIdeles.Chapter07.chapter07_principal_ideles_are_discrete
+        (𝓞 K) K)
+  · exact LastLib.Book04AdelesAndIdeles.Chapter07.chapter07_principal_ideles_are_closed
+      (𝓞 K) K
 
 /- Passing to the quotient by the diagonal subgroup preserves the expected
 locally compact Hausdorff structure. -/
 theorem idelicClassGroup_locallyCompact_hausdorff
     {K : Type*} [Field K] [NumberField K] :
     LocallyCompactSpace (C_K K) ∧ T2Space (C_K K) := by
-  sorry
+  constructor
+  · exact LastLib.Book04AdelesAndIdeles.Chapter07.chapter07_idele_class_group_is_locally_compact
+      (𝓞 K) K
+  · exact LastLib.Book04AdelesAndIdeles.Chapter07.chapter07_idele_class_group_is_hausdorff
+      (𝓞 K) K
 
 theorem idelicClassGroup_not_compact
     {K : Type*} [Field K] [NumberField K] :
     ¬ IsCompact (Set.univ : Set (C_K K)) := by
-  sorry
+  exact LastLib.Book04AdelesAndIdeles.Chapter09.chapter09_idele_class_group_is_not_compact K
 
 /- The idelic module, its norm-one subgroup, and its archimedean quotient. -/
 theorem classModule_kernel_compact {K : Type*} [Field K] [NumberField K] :
     IsCompact (classModuleOneSubgroup K : Set (C_K K)) := by
-  sorry
+  have hsub : classModuleOneSubgroup K =
+      LastLib.Book04AdelesAndIdeles.Chapter09.chapter09ClassNormOne K := by
+    apply Subgroup.ext
+    intro c
+    constructor
+    · intro hc
+      rcases QuotientGroup.mk'_surjective (principalIdeleSubgroup K) c with ⟨x, rfl⟩
+      change classModule (classQuotient x) = 1 at hc
+      change LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleClassModule K
+        (QuotientGroup.mk x) = 1
+      rw [LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleClassModule_apply]
+      change LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModule x = 1
+      apply Units.ext
+      apply NNReal.eq
+      exact congrArg (fun t : PositiveReal => (t : ℝ)) hc
+    · intro hc
+      rcases QuotientGroup.mk'_surjective (principalIdeleSubgroup K) c with ⟨x, rfl⟩
+      change LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleClassModule K
+        (QuotientGroup.mk x) = 1 at hc
+      rw [LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleClassModule_apply] at hc
+      change LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModule x = 1 at hc
+      change classModule (classQuotient x) = 1
+      apply positiveReal_ext
+      exact congrArg
+        (fun t : LastLib.Book04AdelesAndIdeles.Chapter09.Chapter09PositiveReal =>
+          ((t : NNReal) : ℝ)) hc
+  rw [hsub]
+  exact LastLib.Book04AdelesAndIdeles.Chapter09.chapter09_classNormOne_is_compact K
 
 structure ClassModuleQuotientEquivalence
     (K : Type*) [Field K] [NumberField K] where
@@ -80,12 +119,17 @@ structure ClassModuleQuotientEquivalence
 theorem classModule_quotient_positiveReal_equiv
     {K : Type*} [Field K] [NumberField K] :
     Nonempty (ClassModuleQuotientEquivalence K) := by
-  sorry
+  let e : (C_K K ⧸ classModuleOneSubgroup K) ≃* PositiveReal :=
+    QuotientGroup.quotientKerEquivOfSurjective
+      (classModule (K := K)) (classModule_surjective (K := K))
+  refine ⟨{ equiv := e, compatible := ?_ }⟩
+  intro c
+  rfl
 
 theorem classModule_is_archimedean_size
     {K : Type*} [Field K] [NumberField K] (c : C_K K) :
     (classModule c : PositiveReal) = 1 ↔ c ∈ classModuleOneSubgroup K := by
-  sorry
+  rfl
 
 /-! ### The global and finite-level reciprocity interfaces -/
 
@@ -131,7 +175,13 @@ theorem finiteLevel_classArtin_quotient_equiv
     (hkernel : ArtinKernelIsClassNorm A N)
     (hsurjective : Function.Surjective (classArtin A)) :
     Nonempty (FiniteLevelClassArtinQuotientEquivalence A N) := by
-  sorry
+  change (classArtin A).ker = classNormGroup N at hkernel
+  let e : (C_K K ⧸ classNormGroup N) ≃*
+      GroupAbelianization (Gal(L / K)) :=
+    QuotientGroup.liftEquiv (classNormGroup N) hsurjective hkernel.symm
+  refine ⟨{ equiv := e, compatible := ?_ }⟩
+  intro c
+  rfl
 
 /- The class norm is the image of principal ideles times idelic norms. -/
 theorem classNorm_is_principal_times_ideleNorm

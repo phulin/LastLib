@@ -14,10 +14,12 @@ import Mathlib.Data.Finsupp.Basic
 import Mathlib.Data.Nat.Choose.Basic
 import Mathlib.LinearAlgebra.TensorProduct.Defs
 import Mathlib.Algebra.Polynomial.Eval.Defs
+import Mathlib.Algebra.Polynomial.Eval.SMul
 import Mathlib.RingTheory.Flat.Basic
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Dependencies
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter01.Section01ProjectiveGeometryOverABase
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02.Section01ProjectiveBundles
+import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02.Section02InvertibleQuotients
 
 namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter06
 
@@ -135,7 +137,7 @@ chapter.  The preceding chapters should supply derived global sections and their
 
 The coefficient ring is explicit: for projective space over `A` use `A`; for statements that only
 need additive groups, use `ℤ`. -/
-structure Chapter06CohomologyTheory (R : Type v) [Ring R] where
+structure Chapter06CohomologyTheory (R : Type v) [CommRing R] where
   H : ∀ {X : AlgebraicGeometry.Scheme.{u}}, X.Modules → ℕ → ModuleCat.{u} R
   /-- Cohomology is functorial in the coefficient sheaf. -/
   map : ∀ {X : AlgebraicGeometry.Scheme.{u}} {F G : X.Modules},
@@ -157,23 +159,88 @@ structure Chapter06CohomologyTheory (R : Type v) [Ring R] where
       (F : X.Modules) (j : ℕ),
       Nonempty (H ((Scheme.Modules.pushforward i).obj F) j ≅ H F j)
 
-def chapter06Cohomology {R : Type v} [Ring R]
+def chapter06Cohomology {R : Type v} [CommRing R]
     (C : Chapter06CohomologyTheory R) {X : Chapter06Scheme} (F : X.Modules) (i : ℕ) :
     ModuleCat.{u} R :=
   C.H F i
 
-def chapter06CohomologyIsZero {R : Type v} [Ring R]
+def chapter06CohomologyIsZero {R : Type v} [CommRing R]
     (C : Chapter06CohomologyTheory R) {X : Chapter06Scheme} (F : X.Modules) (i : ℕ) : Prop :=
   ∀ x : C.H F i, x = 0
 
-theorem chapter06_cohomology_is_zero_iff_subsingleton {R : Type v} [Ring R]
+theorem chapter06_cohomology_is_zero_iff_subsingleton {R : Type v} [CommRing R]
     (C : Chapter06CohomologyTheory R) {X : Chapter06Scheme} (F : X.Modules) (i : ℕ) :
     chapter06CohomologyIsZero C F i ↔ Subsingleton (C.H F i) := by
-  sorry
+  constructor
+  · intro h
+    constructor
+    intro a b
+    calc
+      a = 0 := h a
+      _ = b := (h b).symm
+  · intro h x
+    exact Subsingleton.elim x 0
 
-def chapter06EulerCharacteristic {R : Type v} [Ring R]
+def chapter06EulerCharacteristic {R : Type v} [CommRing R]
     (C : Chapter06CohomologyTheory R) {X : Chapter06Scheme} (F : X.Modules) : ℚ :=
   C.eulerCharacteristic F
+
+/-!
+The pinned snapshot has the sheaf-theoretic cohomology construction in additive groups, but not the
+book's module-valued derived global-sections package.  This record is the bridge used by Chapter 6:
+it identifies the chosen module-valued groups with a sheaf-cohomology realization and records the
+compatibilities that are needed when twists, tensor products, and closed immersions are introduced.
+The fields are deliberately explicit; a bare `Chapter06CohomologyTheory` is not enough to justify
+the geometric theorems below.
+-/
+structure Chapter06CanonicalCohomologyRealization
+    {R : Type v} [CommRing R] (C : Chapter06CohomologyTheory R) where
+  /-- The module-valued realization of sheaf cohomology. -/
+  sheafCohomology :
+    ∀ {X : Chapter06Scheme}, X.Modules → ℕ → ModuleCat.{u} R
+  /-- The displayed cohomology theory is identified with that realization. -/
+  sheafCohomologyIso :
+    ∀ {X : Chapter06Scheme} (F : X.Modules) (i : ℕ),
+      Nonempty (C.H F i ≅ sheafCohomology F i)
+  /-- The additive underlying object is the canonical sheaf cohomology from Chapter 4. -/
+  canonicalAdditiveCohomologyIso :
+    ∀ {X : Chapter06Scheme} (F : X.Modules) (i : ℕ),
+      Nonempty
+        (AddCommGrpCat.of (ULift.{u + 1} (C.H F i)) ≅
+          LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04Cohomology
+            F i)
+  /-- Euler characteristic computed from the sheaf-cohomology realization. -/
+  sheafEulerCharacteristic :
+    ∀ {X : Chapter06Scheme}, X.Modules → ℚ
+  eulerCharacteristic_eq_sheaf :
+    ∀ {X : Chapter06Scheme} (F : X.Modules),
+      C.eulerCharacteristic F = sheafEulerCharacteristic F
+  /-- The realization respects tensor twists. -/
+  twist_compatibility :
+    ∀ {X : Chapter06Scheme} (T : Chapter06TwistSystem X) (F : X.Modules)
+      (m n : ℤ) (i : ℕ),
+      Nonempty
+        (sheafCohomology
+            (chapter06Tensor (T.twist F m) (T.twist T.structureSheaf n)) i ≅
+          sheafCohomology (T.twist F (m + n)) i)
+  /-- The realization is unchanged by pushforward along a closed immersion. -/
+  closedImmersionIso :
+    ∀ {X Y : Chapter06Scheme} (i : X ⟶ Y) [IsClosedImmersion i]
+      (F : X.Modules) (j : ℕ),
+      Nonempty
+        (sheafCohomology ((Scheme.Modules.pushforward i).obj F) j ≅
+          sheafCohomology F j)
+  cohomologyClosedImmersionIso :
+    ∀ {X Y : Chapter06Scheme} (i : X ⟶ Y) [IsClosedImmersion i]
+      (F : X.Modules) (j : ℕ),
+      Nonempty (C.H ((Scheme.Modules.pushforward i).obj F) j ≅ C.H F j)
+  /-- The canonical multiplication of the realized global sections. -/
+  sectionMultiplication :
+    ∀ {X : Chapter06Scheme} (T : Chapter06TwistSystem X)
+      (F : X.Modules) (n : ℤ),
+      TensorProduct R (C.H (T.twist F n) 0)
+          (C.H (T.twist T.structureSheaf 1) 0) →ₗ[R]
+        C.H (T.twist F (n + 1)) 0
 
 /-- A standard projective space package over an arbitrary commutative ring.
 
@@ -250,7 +317,9 @@ def Chapter06MonomialIndex (r n : ℕ) :=
 
 noncomputable instance chapter06MonomialIndexFintype (r n : ℕ) :
     Fintype (Chapter06MonomialIndex r n) :=
-  Fintype.subtype (Finset.univ.filter fun e => chapter06MonomialDegree r n e = n) (by sorry)
+  Fintype.subtype (Finset.univ.filter fun e => chapter06MonomialDegree r n e = n) (by
+    intro e
+    simp)
 
 abbrev Chapter06PolynomialDegreePiece (A : Type u) (r n : ℕ) [AddCommMonoid A] :=
   Chapter06MonomialIndex r n →₀ A
@@ -266,39 +335,173 @@ def chapter06ModuleSpans (R : Type u) [Ring R]
 def chapter06NegativeLaurentMonomial (r : ℕ) (n : ℤ) : Type :=
   {e : Fin (r + 1) → ℤ // (∀ i, e i < 0) ∧ ∑ i, e i = n}
 
-def chapter06ProjectiveCohomology {R : Type v} [Ring R]
+def chapter06ProjectiveCohomology {R : Type v} [CommRing R]
     {A : Type u} [CommRing A] {r : ℕ}
     (C : Chapter06CohomologyTheory R)
     (P : Chapter06ProjectiveSpaceData A r) (F : P.X.Modules)
     (n : ℤ) (i : ℕ) : ModuleCat.{u} R :=
   C.H (P.twisting.twist F n) i
 
-def chapter06ProjectiveEulerCharacteristic {R : Type v} [Ring R]
+def chapter06ProjectiveEulerCharacteristic {R : Type v} [CommRing R]
     {A : Type u} [CommRing A] {r : ℕ}
     (C : Chapter06CohomologyTheory R)
     (P : Chapter06ProjectiveSpaceData A r) (F : P.X.Modules) (n : ℤ) : ℚ :=
   C.eulerCharacteristic (P.twisting.twist F n)
 
-def chapter06MRegular {R : Type v} [Ring R]
+/- The Euler-characteristic calculation is stated separately because its coefficient ring is a
+field in the source theorem. -/
+def chapter06BinomialPolynomial (r : ℕ) : Polynomial ℚ :=
+  (r.factorial : ℚ)⁻¹ •
+    (∏ j ∈ Finset.range r, (Polynomial.X + Polynomial.C (j + 1 : ℚ)))
+
+def chapter06BinomialPolynomialEval (r : ℕ) (n : ℤ) : ℚ :=
+  (chapter06BinomialPolynomial r).eval (n : ℚ)
+
+theorem chapter06_binomial_polynomial_eval_nat (r n : ℕ) :
+    chapter06BinomialPolynomialEval r n = Nat.choose (n + r) r := by
+  simp only [chapter06BinomialPolynomialEval, chapter06BinomialPolynomial,
+    Polynomial.eval_smul, Polynomial.eval_prod, Polynomial.eval_add,
+    Polynomial.eval_X, Polynomial.eval_C, smul_eq_mul]
+  have hprod :
+      (∏ x ∈ Finset.range r, (((n : ℤ) : ℚ) + ((x : ℚ) + 1))) =
+        ((n + 1).ascFactorial r : ℚ) := by
+    induction r with
+    | zero => simp
+    | succ r ih =>
+        rw [Finset.prod_range_succ, ih, Nat.ascFactorial_succ]
+        push_cast
+        ring
+  rw [hprod, Nat.ascFactorial_eq_factorial_mul_choose]
+  have hfac : (r.factorial : ℚ) ≠ 0 := by
+    exact_mod_cast Nat.factorial_ne_zero r
+  rw [Nat.cast_mul]
+  field_simp
+
+/-! ### Canonical projective-space and scalar-extension interfaces -/
+
+structure Chapter06ProjectiveSpaceBaseChange
+    {A B : Type u} [CommRing A] [CommRing B] {r : ℕ}
+    (φ : A →+* B) (P_A : Chapter06ProjectiveSpaceData A r)
+    (P_B : Chapter06ProjectiveSpaceData B r) where
+  /-- The B-projective space is identified with the pullback of the A-projective space. -/
+  spaceIso :
+    P_B.X ≅
+      Limits.pullback P_A.toBase
+        (AlgebraicGeometry.Spec.map (CommRingCat.ofHom φ))
+  spaceIso_over_base :
+    spaceIso.hom ≫
+        Limits.pullback.snd P_A.toBase
+          (AlgebraicGeometry.Spec.map (CommRingCat.ofHom φ)) =
+      P_B.toBase
+  /-- The chosen twisting systems agree under this scalar/base change. -/
+  twistIso :
+    ∀ n : ℤ,
+      Nonempty
+        ((Scheme.Modules.pullback
+            (spaceIso.hom ≫
+              Limits.pullback.fst P_A.toBase
+                (AlgebraicGeometry.Spec.map (CommRingCat.ofHom φ)))).obj
+            (P_A.twisting.twist P_A.twisting.structureSheaf n) ≅
+          P_B.twisting.twist P_B.twisting.structureSheaf n)
+
+structure Chapter06ProjectiveSpaceCohomologyBaseChange
+    {A B : Type u} [CommRing A] [CommRing B] {r : ℕ}
+    (φ : A →+* B)
+    (C_A : Chapter06CohomologyTheory A)
+    (C_B : Chapter06CohomologyTheory B)
+    (P_A : Chapter06ProjectiveSpaceData A r)
+    (P_B : Chapter06ProjectiveSpaceData B r) where
+  projectiveSpace : Chapter06ProjectiveSpaceBaseChange φ P_A P_B
+  /-- Cohomology over B is the scalar extension of the corresponding A-cohomology. -/
+  cohomologyIso :
+    ∀ (n : ℤ) (i : ℕ),
+      Nonempty
+        (C_B.H (P_B.twisting.twist P_B.twisting.structureSheaf n) i ≅
+          (ModuleCat.extendScalars φ).obj
+            (C_A.H (P_A.twisting.twist P_A.twisting.structureSheaf n) i))
+
+structure Chapter06ProjectiveSpaceCechRealization
+    {A : Type u} [CommRing A] {r : ℕ}
+    (C : Chapter06CohomologyTheory A) (P : Chapter06ProjectiveSpaceData A r) where
+  /-- This calculation is made for the canonical sheaf-cohomology realization. -/
+  canonical : Chapter06CanonicalCohomologyRealization C
+  intermediateVanishing :
+    ∀ (n : ℤ) (i : ℕ), 0 < i → i < r →
+      chapter06CohomologyIsZero C
+        (P.twisting.twist P.twisting.structureSheaf n) i
+  nonnegativeVanishing :
+    ∀ (n i : ℕ), 0 < i →
+      chapter06CohomologyIsZero C
+        (P.twisting.twist P.twisting.structureSheaf n) i
+  h0Iso :
+    ∀ n : ℕ,
+      Nonempty
+        (C.H (P.twisting.twist P.twisting.structureSheaf n) 0 ≅
+          ModuleCat.of A (Chapter06PolynomialDegreePiece A r n))
+  topCohomologyGenerators :
+    ∀ (_hr : 0 < r) (n : ℤ),
+      ∃ g : chapter06NegativeLaurentMonomial r n →
+        C.H (P.twisting.twist P.twisting.structureSheaf n) r,
+        chapter06ModuleSpans A
+          (C.H (P.twisting.twist P.twisting.structureSheaf n) r) g
+  topCohomologyBasis :
+    ∀ (_hr : 0 < r) (n : ℤ),
+      Nonempty
+        (C.H (P.twisting.twist P.twisting.structureSheaf n) r ≅
+          ModuleCat.of A (chapter06NegativeLaurentMonomial r n →₀ A))
+  topCohomologyVanishing :
+    ∀ (_hr : 0 < r) (n : ℤ), -(r : ℤ) ≤ n →
+      chapter06CohomologyIsZero C
+        (P.twisting.twist P.twisting.structureSheaf n) r
+  eulerCharacteristic :
+    ∀ (n : ℤ),
+      chapter06ProjectiveEulerCharacteristic C P P.twisting.structureSheaf n =
+        chapter06BinomialPolynomialEval r n
+
+def chapter06MRegular {R : Type v} [CommRing R]
     {X : Chapter06Scheme}
     (C : Chapter06CohomologyTheory R)
     (T : Chapter06TwistSystem X) (F : X.Modules) (m : ℤ) : Prop :=
   ∀ i : ℕ, 0 < i →
     chapter06CohomologyIsZero C (T.twist F (m - i)) i
 
-def chapter06HasHilbertPolynomial {R : Type v} [Ring R]
+def chapter06HasHilbertPolynomial {R : Type v} [CommRing R]
     {X : Chapter06Scheme}
     (C : Chapter06CohomologyTheory R)
     (T : Chapter06TwistSystem X) (F : X.Modules) (P : Polynomial ℚ) : Prop :=
   ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
     C.eulerCharacteristic (T.twist F n) = P.eval (n : ℚ)
 
+/-!
+The common conclusion of the Serre-generation statements below is kept as a separate predicate.
+The pinned APIs do not yet expose the projective-space Cech argument or its relative version, so
+the corresponding interfaces record this conclusion for arbitrary coherent coefficient sheaves.
+They are hypotheses about the missing construction, not aliases for a particular theorem below.
+-/
+def chapter06SerreHighDegreeConclusion {R : Type v} [CommRing R]
+    {X : Chapter06Scheme} (C : Chapter06CohomologyTheory R)
+    (T : Chapter06TwistSystem X) (F : X.Modules) : Prop :=
+  ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
+    (∀ i : ℕ, 0 < i → chapter06CohomologyIsZero C (T.twist F n) i) ∧
+      chapter06FinitelyGloballyGenerated (T.twist F n)
+
+/-- The arbitrary-coherent-sheaf part of the projective-space Cech calculation. -/
+structure Chapter06ProjectiveSpaceSerreInterface
+    {A : Type u} [CommRing A] {r : ℕ}
+    (hA : IsNoetherianRing A)
+    (C : Chapter06CohomologyTheory A)
+    (P : Chapter06ProjectiveSpaceData A r)
+    (hC : Chapter06ProjectiveSpaceCechRealization C P) where
+  for_coherent :
+    ∀ (F : P.X.Modules), Chapter06Coherent F →
+      chapter06SerreHighDegreeConclusion C P.twisting F
+
 /- `DEPENDENCY_GUESS`: reuse the preceding coherent-ideal bundle until the sheaf-theoretic ideal
 closure operation is available in the pinned API.  Its carrier is still tied to the structure
 sheaf, rather than merely being an arbitrary subobject of an unrelated module. -/
 def chapter06IdealSheaf {X : Chapter06Scheme} (F : X.Modules) : Prop :=
   ∃ I : LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Chapter04CoherentIdealSheaf X,
-    I.carrier = F
+    Nonempty (I.carrier ≅ F)
 
 def chapter06CechIntersection
     {A : Type u} [CommRing A] {r : ℕ}
@@ -356,12 +559,35 @@ theorem chapter06_projective_presentation_locally_noetherian
     {X S : Chapter06Scheme} {f : X ⟶ S}
     (P : Chapter06ProjectivePresentation f) (hS : IsLocallyNoetherian S) :
     IsLocallyNoetherian X := by
-  sorry
+  have hE : Chapter02.Chapter02FiniteLocallyFreeModule P.ambient.module := by
+    exact ⟨P.ambient.module.is_quasi_coherent,
+      P.ambient.finiteLocallyFree.1, P.ambient.finiteLocallyFree.2⟩
+  have hfinite := Chapter02.chapter02_projective_bundle_is_finite_type
+    P.ambient.canonical hE
+  have hambient : IsLocallyNoetherian P.ambient.X :=
+    @LocallyOfFiniteType.isLocallyNoetherian _ _ P.ambient.toBase hfinite.2 hS
+  have himm : LocallyOfFiniteType P.immersion :=
+    @instLocallyOfFiniteTypeOfIsClosedImmersion _ _ P.immersion P.closedImmersion
+  exact @LocallyOfFiniteType.isLocallyNoetherian _ _ P.immersion himm hambient
 
 /-- The canonical sheaf pushforward already present in Mathlib. -/
 def chapter06Pushforward {X Y : Chapter06Scheme} (f : X ⟶ Y) :
     X.Modules → Y.Modules :=
   (Scheme.Modules.pushforward f).obj
+
+/-- Coherent-sheaf closure facts used when a projective-space calculation is transferred to a
+closed subscheme.  The standard locally-Noetherian proofs belong to the earlier coherent-sheaf
+development; this record keeps that bridge explicit in the pinned snapshot. -/
+structure Chapter06CoherentClosureInterface : Prop where
+  kernel_of_epi :
+    ∀ {X : AlgebraicGeometry.Scheme.{u}} [IsLocallyNoetherian X]
+      (M F : X.Modules) (_hM : Chapter06Coherent M) (_hF : Chapter06Coherent F)
+      (p : M ⟶ F) [Epi p],
+      Chapter06Coherent (CategoryTheory.Limits.kernel p)
+  closedImmersion_pushforward :
+    ∀ {X Y : AlgebraicGeometry.Scheme.{u}} (i : X ⟶ Y) [IsClosedImmersion i]
+      [IsLocallyNoetherian Y] (G : X.Modules) (_hG : Chapter06Coherent G),
+      Chapter06Coherent (chapter06Pushforward i G)
 
 def chapter06PullbackSheaf {X Y : Chapter06Scheme} (f : X ⟶ Y) :
     Y.Modules → X.Modules :=
@@ -371,7 +597,7 @@ def chapter06RestrictToOpen {X : Chapter06Scheme} (U : X.Opens) :
     X.Modules → U.toScheme.Modules :=
   (Scheme.Modules.pullback U.ι).obj
 
-def chapter06CohomologyOnOpen {R : Type v} [Ring R]
+def chapter06CohomologyOnOpen {R : Type v} [CommRing R]
     (C : Chapter06CohomologyTheory R) {X : Chapter06Scheme}
     (U : X.Opens) (F : X.Modules) (i : ℕ) : ModuleCat.{u} R :=
   C.H (chapter06RestrictToOpen U F) i
@@ -385,6 +611,33 @@ structure Chapter06TwistCompatibility {X Y : Chapter06Scheme} (i : X ⟶ Y)
     (T_X : Chapter06TwistSystem X) (T_Y : Chapter06TwistSystem Y) where
   iso : ∀ (F : X.Modules) (n : ℤ),
     chapter06Pushforward i (T_X.twist F n) ≅ T_Y.twist (chapter06Pushforward i F) n
+
+/- `DEPENDENCY_GUESS`: this is the smallest local bridge that records both a projective
+presentation and a very-ample power of the chosen twist.  It should be replaced by the canonical
+relative line-bundle/Proj interface when the preceding chapters are available. -/
+class Chapter06RelativelyAmple {X S : Chapter06Scheme} (f : X ⟶ S)
+    (T : Chapter06TwistSystem X) where
+  projectivePresentation : Chapter06ProjectivePresentation f
+  power : ℕ
+  power_pos : 0 < power
+  veryAmplePower :
+    T.twist T.structureSheaf (power : ℤ) ≅
+      chapter06PullbackSheaf projectivePresentation.immersion
+        (projectivePresentation.ambient.twisting.twist
+          projectivePresentation.ambient.twisting.structureSheaf 1)
+
+/-- The relative Serre package for a projective morphism and an ample twist. -/
+structure Chapter06RelativeSerreInterface
+    {R : Type v} [CommRing R]
+    {X S : Chapter06Scheme} (f : X ⟶ S) (T : Chapter06TwistSystem X)
+    (C : Chapter06CohomologyTheory R)
+    (hC : Chapter06CanonicalCohomologyRealization C) where
+  for_projective_ample :
+    ∀ (_hS : IsLocallyNoetherian S) [IsAffine S]
+      (_hproj : chapter06IsProjective f)
+      (_hT : Chapter06RelativelyAmple f T)
+      (F : X.Modules), Chapter06Coherent F →
+        chapter06SerreHighDegreeConclusion C T F
 
 /-!
 The following two records are intentionally data interfaces rather than aliases to arbitrary
@@ -405,6 +658,31 @@ structure Chapter06DerivedPushforwardTheory where
       (Scheme.Modules.pullback g).obj (derivedPushforward f F i) ⟶
         derivedPushforward (Limits.pullback.snd f g)
           ((Scheme.Modules.pullback (Limits.pullback.fst f g)).obj F) i
+  /-- The affine Cech calculation produces finite cohomology modules. -/
+  affineCohomologyFinite :
+    ∀ {X S : Chapter06Scheme} (f : X ⟶ S) (_hproj : chapter06IsProjective f)
+      (_hS : IsLocallyNoetherian S) (F : X.Modules) (_hF : Chapter06Coherent F)
+      (U : S.Opens) (_hU : IsAffineOpen U)
+      (C : Chapter06CohomologyTheory (chapter06AffineBaseRing S U)),
+      (∀ i : ℕ, Module.Finite (chapter06AffineBaseRing S U)
+        (C.H (chapter06RestrictToOpen (f ⁻¹ᵁ U) F) i)) ∧
+        ∃ N : ℕ, ∀ i : ℕ, N < i →
+          chapter06CohomologyIsZero C
+            (chapter06RestrictToOpen (f ⁻¹ᵁ U) F) i
+  /-- The outputs are coherent higher direct images for projective morphisms. -/
+  higherDirectImageCoherent :
+    ∀ {X S : Chapter06Scheme} (f : X ⟶ S), chapter06IsProjective f →
+      IsLocallyNoetherian S →
+      ∀ (F : X.Modules), Chapter06Coherent F → ∀ i : ℕ,
+        Chapter06Coherent (derivedPushforward f F i)
+  /-- The chosen derived pushforward has relative Serre vanishing. -/
+  relativeSerreVanishing :
+    ∀ {X S : Chapter06Scheme} (f : X ⟶ S), chapter06IsProjective f →
+      IsLocallyNoetherian S →
+      ∀ (T : Chapter06TwistSystem X), Chapter06RelativelyAmple f T →
+      ∀ (F : X.Modules), Chapter06Coherent F →
+        ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n → ∀ i : ℕ, 0 < i →
+          Limits.IsZero (derivedPushforward f (T.twist F n) i)
 
 def chapter06DerivedPushforward (D : Chapter06DerivedPushforwardTheory)
     {X Y : Chapter06Scheme} (f : X ⟶ Y) (F : X.Modules) (i : ℕ) : Y.Modules :=
@@ -458,7 +736,7 @@ def chapter06FiberCohomology {X S : AlgebraicGeometry.Scheme.{u}} {f : X ⟶ S}
   (B.fiberCohomologyTheory s).H G i
 
 /-- A compact predicate for vanishing in all cohomological degrees above a bound. -/
-def chapter06VanishingAbove {R : Type v} [Ring R]
+def chapter06VanishingAbove {R : Type v} [CommRing R]
     (C : Chapter06CohomologyTheory R) {X : Chapter06Scheme} (F : X.Modules) (N : ℕ) : Prop :=
   ∀ i : ℕ, N < i → chapter06CohomologyIsZero C F i
 
@@ -494,31 +772,56 @@ def chapter06StalkFlat {X S : AlgebraicGeometry.Scheme.{u}} (f : X ⟶ S)
 class Chapter06FlatOver {X S : AlgebraicGeometry.Scheme.{u}} (f : X ⟶ S) (F : X.Modules) : Prop where
   flatAtStalk : ∀ x : X, chapter06StalkFlat f F x
 
-/- `DEPENDENCY_GUESS`: this is the smallest local bridge that records both a projective
-presentation and a very-ample power of the chosen twist.  It should be replaced by the canonical
-relative line-bundle/Proj interface when the preceding chapters are available. -/
-class Chapter06RelativelyAmple {X S : Chapter06Scheme} (f : X ⟶ S)
-    (T : Chapter06TwistSystem X) where
-  projectivePresentation : Chapter06ProjectivePresentation f
-  power : ℕ
-  power_pos : 0 < power
-  veryAmplePower :
-    T.twist T.structureSheaf (power : ℤ) ≅
-      chapter06PullbackSheaf projectivePresentation.immersion
-        (projectivePresentation.ambient.twisting.twist
-          projectivePresentation.ambient.twisting.structureSheaf 1)
+/-!
+The fiber comparison is a separate compatibility datum: an arbitrary module-valued output on the
+base and an arbitrary residue-field cohomology theory do not give the high-twist base-change
+statement in Section 6.3.  Its quantifiers mirror the theorem: flatness and a sufficiently high
+twist are part of the comparison, rather than an unjustified assertion for every sheaf and degree.
+-/
+structure Chapter06DerivedFiberCompatibility
+    (D : Chapter06DerivedPushforwardTheory)
+    {X S : Chapter06Scheme} (f : X ⟶ S) (B : Chapter06FiberTheory f) where
+  fiberCohomologyIso :
+    ∀ (T : Chapter06TwistSystem X) (_hT : Chapter06RelativelyAmple f T)
+      (F : X.Modules) (_hF : Chapter06Coherent F) (_hflat : Chapter06FlatOver f F),
+      ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
+        ∀ s : S, Nonempty
+          (B.fiberOfSheaf s (D.derivedPushforward f (T.twist F n) 0) ≅
+            (B.fiberCohomologyTheory s).H
+              (chapter06FiberTwist f T s F n) 0)
 
-/-- The integer-valued binomial polynomial used in the projective-space Euler characteristic. -/
-def chapter06BinomialPolynomial (r : ℕ) : Polynomial ℚ :=
-  (r.factorial : ℚ)⁻¹ •
-    (∏ j ∈ Finset.range r, (Polynomial.X + Polynomial.C (j + 1 : ℚ)))
-
-def chapter06BinomialPolynomialEval (r : ℕ) (n : ℤ) : ℚ :=
-  (chapter06BinomialPolynomial r).eval (n : ℚ)
-
-theorem chapter06_binomial_polynomial_eval_nat (r n : ℕ) :
-    chapter06BinomialPolynomialEval r n = Nat.choose (n + r) r := by
-  sorry
+/-!
+Local freeness of the degree-zero derived pushforward is the part of cohomological base change
+which is not determined by the names of `derivedPushforward` and `fiberOfSheaf`.  This interface is
+kept separate from the fiber comparison above so that both pieces have to be supplied together.
+-/
+structure Chapter06RelativeFlatBaseChangeInterface
+    (D : Chapter06DerivedPushforwardTheory)
+    {X S : Chapter06Scheme} (f : X ⟶ S) where
+  local_freeness :
+    ∀ (_hproj : chapter06IsProjective f) (_hS : IsLocallyNoetherian S)
+      (T : Chapter06TwistSystem X) (_hT : Chapter06RelativelyAmple f T)
+      (F : X.Modules) (_hF : Chapter06Coherent F) (_hflat : Chapter06FlatOver f F)
+      (U : S.Opens) (_hU : IsAffineOpen U),
+      ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
+        chapter06LocallyFree
+          (chapter06RestrictToOpen U (D.derivedPushforward f (T.twist F n) 0))
+  /-- The local bound also controls arbitrary base change, not just residue-field fibers. -/
+  local_base_change :
+    ∀ (_hproj : chapter06IsProjective f) (_hS : IsLocallyNoetherian S)
+      (T : Chapter06TwistSystem X) (_hT : Chapter06RelativelyAmple f T)
+      (F : X.Modules) (_hF : Chapter06Coherent F) (_hflat : Chapter06FlatOver f F)
+      (U : S.Opens) (_hU : IsAffineOpen U),
+      ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
+        chapter06DerivedPushforwardCommutesWithBaseChange D f (T.twist F n) 0
+  quasi_compact_freeness_and_base_change :
+    ∀ (_hproj : chapter06IsProjective f) (_hS : IsLocallyNoetherian S)
+      (_hqc : QuasiCompact (𝟙 S))
+      (T : Chapter06TwistSystem X) (_hT : Chapter06RelativelyAmple f T)
+      (F : X.Modules) (_hF : Chapter06Coherent F) (_hflat : Chapter06FlatOver f F),
+      ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
+        chapter06LocallyFree (D.derivedPushforward f (T.twist F n) 0) ∧
+        chapter06DerivedPushforwardCommutesWithBaseChange D f (T.twist F n) 0
 
 /- The Euler-characteristic calculation is stated separately because its coefficient ring is a
 field in the source theorem. -/

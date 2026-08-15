@@ -192,6 +192,73 @@ def CompatibleIso {ι : Type v} {S : Scheme.{u}} {X : ι → Scheme.{u}}
   { e : A.descended ≅ B.descended //
       A.comparison.hom ≫ (overPseudofunctor.toDescentData f).map e.hom = B.comparison.hom }
 
+private theorem pullbackComp_left_fst_fst {A X Y Z : Scheme.{u}}
+    (f : X ⟶ Y) (g : Y ⟶ Z) (h : A ⟶ Z) :
+    ((Over.pullbackComp f g).hom.app (Over.mk h)).left ≫
+        pullback.fst (pullback.snd h g) f ≫ pullback.fst h g =
+      pullback.fst h (f ≫ g) := by
+  have hc := congrArg (fun k => k.left)
+    (conjugateEquiv_counit (Over.mapPullbackAdj (f ≫ g))
+      ((Over.mapPullbackAdj f).comp (Over.mapPullbackAdj g))
+      ((Over.mapComp f g).inv) (Over.mk h))
+  simpa [Over.pullbackComp] using hc
+
+private theorem pullbackComp_inv_fst_fst {A X Y Z : Scheme.{u}}
+    (f : X ⟶ Y) (g : Y ⟶ Z) (h : A ⟶ Z) :
+    ((Over.pullbackComp f g).inv.app (Over.mk h)).left ≫
+        pullback.fst h (f ≫ g) =
+      pullback.fst (pullback.snd h g) f ≫ pullback.fst h g := by
+  calc
+    ((Over.pullbackComp f g).inv.app (Over.mk h)).left ≫ pullback.fst h (f ≫ g) =
+        ((Over.pullbackComp f g).inv.app (Over.mk h)).left ≫
+          (((Over.pullbackComp f g).hom.app (Over.mk h)).left ≫
+            pullback.fst (pullback.snd h g) f ≫ pullback.fst h g) := by
+              rw [pullbackComp_left_fst_fst f g h]
+    _ = pullback.fst (pullback.snd h g) f ≫ pullback.fst h g := by
+      have hi := congrArg (fun k =>
+          k.left ≫ pullback.fst (pullback.snd h g) f ≫ pullback.fst h g)
+        ((Over.pullbackComp f g).inv_hom_id_app (Over.mk h))
+      change (((Over.pullbackComp f g).inv.app (Over.mk h)).left ≫
+          ((Over.pullbackComp f g).hom.app (Over.mk h)).left ≫
+            pullback.fst (pullback.snd h g) f ≫ pullback.fst h g) =
+        (pullback.fst (pullback.snd h g) f ≫ pullback.fst h g) at hi
+      exact hi
+
+private theorem eqToIso_pullback_fst {A B S : Scheme.{u}} {f g : B ⟶ S}
+    (hfg : f = g) (k : A ⟶ S) :
+    (eqToIso (congrArg (fun q : B ⟶ S =>
+        (Over.pullback q).obj (Over.mk k)) hfg)).hom.left ≫ pullback.fst k g =
+      pullback.fst k f := by
+  subst g
+  simp
+
+private theorem pullbackComp_comparison_fst
+    {A D T S : Scheme.{u}} (f₁ f₂ : D ⟶ T) (p : T ⟶ S)
+    (hfg : f₁ ≫ p = f₂ ≫ p) (h : A ⟶ S) :
+    ((Over.pullbackComp f₁ p).inv.app (Over.mk h)).left ≫
+        (eqToIso (congrArg (fun q : D ⟶ S =>
+          (Over.pullback q).obj (Over.mk h)) hfg)).hom.left ≫
+        ((Over.pullbackComp f₂ p).hom.app (Over.mk h)).left ≫
+          pullback.fst (pullback.snd h p) f₂ ≫ pullback.fst h p =
+      pullback.fst (pullback.snd h p) f₁ ≫ pullback.fst h p := by
+  calc
+    _ = ((Over.pullbackComp f₁ p).inv.app (Over.mk h)).left ≫
+          (eqToIso (congrArg (fun q : D ⟶ S =>
+            (Over.pullback q).obj (Over.mk h)) hfg)).hom.left ≫
+          pullback.fst h (f₂ ≫ p) := by
+            simpa only [Category.assoc] using congrArg
+              (fun k => ((Over.pullbackComp f₁ p).inv.app (Over.mk h)).left ≫
+                (eqToIso (congrArg (fun q : D ⟶ S =>
+                  (Over.pullback q).obj (Over.mk h)) hfg)).hom.left ≫ k)
+              (pullbackComp_left_fst_fst f₂ p h)
+    _ = ((Over.pullbackComp f₁ p).inv.app (Over.mk h)).left ≫
+          pullback.fst h (f₁ ≫ p) := by
+            simpa only [Category.assoc] using congrArg
+              (fun k => ((Over.pullbackComp f₁ p).inv.app (Over.mk h)).left ≫ k)
+              (eqToIso_pullback_fst hfg h)
+    _ = pullback.fst (pullback.snd h p) f₁ ≫ pullback.fst h p :=
+      pullbackComp_inv_fst_fst f₁ p h
+
 theorem singleton_effective_of_fpqc {S T : Scheme.{u}} (p : T ⟶ S)
     (hp : Scheme.IsFpqcMorphism p) :
     IsEffective (fun _ : PUnit => p) := by
@@ -204,7 +271,282 @@ theorem family_effective_of_fpqc (𝒰 : FpqcFamily S) :
 noncomputable def singleton_morphisms_descend_uniquely {S T : Scheme.{u}} (p : T ⟶ S)
     (hp : Scheme.IsFpqcMorphism p) :
     (overPseudofunctor.toDescentData (fun _ : PUnit => p)).FullyFaithful := by
-  sorry
+  classical
+  letI : Flat p := hp.flat
+  letI : Surjective p := hp.surjective
+  letI : QuasiCompact p := hp.quasiCompact
+  refine { preimage := ?_, map_preimage := ?_, preimage_map := ?_ }
+  · intro A B φ
+    let A' : Over S := A
+    let B' : Over S := B
+    let q : (pullback A'.hom p) ⟶ A'.left := pullback.fst A'.hom p
+    let e : (pullback A'.hom p) ⟶ B'.left :=
+      (φ.hom PUnit.unit).left ≫ pullback.fst B'.hom p
+    have hq : ∀ {Z : Scheme} (g₁ g₂ : Z ⟶ pullback A'.hom p),
+        g₁ ≫ q = g₂ ≫ q → g₁ ≫ e = g₂ ≫ e := by
+      intro Z g₁ g₂ h
+      let t₁ : Z ⟶ T := g₁ ≫ pullback.snd A'.hom p
+      let t₂ : Z ⟶ T := g₂ ≫ pullback.snd A'.hom p
+      have ht : t₁ ≫ p = t₂ ≫ p := by
+          simpa [t₁, t₂, q, A', Category.assoc, pullback.condition] using
+          congrArg (fun k => k ≫ A'.hom) h
+      let q₁ : Z ⟶ S := t₁ ≫ p
+      have hq₁ : t₁ ≫ p = q₁ := rfl
+      have hq₂ : t₂ ≫ p = q₁ := by
+        simpa [q₁] using ht.symm
+      have hcomm := φ.comm (i₁ := PUnit.unit) (i₂ := PUnit.unit)
+        q₁ t₁ t₂ hq₁ hq₂
+      have hmap₁ :=
+        CategoryTheory.Pseudofunctor.LocallyDiscreteOpToCat.map_eq_pullHom
+          (F := overPseudofunctor) (φ.hom PUnit.unit) t₁ q₁ q₁ hq₁ hq₁
+      have hmap₂ :=
+        CategoryTheory.Pseudofunctor.LocallyDiscreteOpToCat.map_eq_pullHom
+          (F := overPseudofunctor) (φ.hom PUnit.unit) t₂ q₁ q₁ hq₂ hq₂
+      dsimp [Pseudofunctor.toDescentData] at hcomm hmap₁ hmap₂
+      have hcomm₂ := hmap₁ ▸ hcomm
+      have hcomm₃ := hmap₂ ▸ hcomm₂
+      dsimp [Pseudofunctor.DescentData.ofObj] at hcomm₃
+      dsimp [Pseudofunctor.LocallyDiscreteOpToCat.pullHom] at hcomm₃
+      simp only [Cat.Hom.inv_hom_id_toNatTrans_app_assoc,
+        Cat.Hom.hom_inv_id_toNatTrans_app_assoc, Category.assoc] at hcomm₃
+      have hq₁op : p.op.toLoc ≫ t₁.op.toLoc = q₁.op.toLoc := by
+        simpa using congrArg (fun f => f.op.toLoc) hq₁
+      have hq₂op : p.op.toLoc ≫ t₂.op.toLoc = q₁.op.toLoc := by
+        simpa using congrArg (fun f => f.op.toLoc) hq₂
+      let c₁ := overPseudofunctor.mapComp' p.op.toLoc t₁.op.toLoc q₁.op.toLoc hq₁op
+      let c₂ := overPseudofunctor.mapComp' p.op.toLoc t₂.op.toLoc q₁.op.toLoc hq₂op
+      have hc₂B : c₂.inv.toNatTrans.app B ≫ c₂.hom.toNatTrans.app B = 𝟙 _ :=
+        Cat.Hom.inv_hom_id_toNatTrans_app c₂ B
+      simp only [c₂, Category.assoc, hc₂B, Functor.comp_obj, Category.comp_id] at hcomm₃
+      have hc₁A :
+          (overPseudofunctor.mapComp' p.op.toLoc t₁.op.toLoc q₁.op.toLoc
+            (by rfl)).inv.toNatTrans.app A =
+            (Over.pullbackComp t₁ p).inv.app A := by
+        rfl
+      have hcomp₁A :
+          ((Over.pullbackComp t₁ p).inv.app A').left ≫
+              pullback.fst A'.hom (t₁ ≫ p) =
+            pullback.fst (pullback.snd A'.hom p) t₁ ≫ pullback.fst A'.hom p := by
+        have hconj :=
+          conjugateEquiv_counit
+            ((Over.mapPullbackAdj t₁).comp (Over.mapPullbackAdj p))
+            (Over.mapPullbackAdj (t₁ ≫ p)) (Over.mapComp t₁ p).hom A'
+        simpa [Over.pullbackComp, conjugateIsoEquiv, Over.mapComp,
+          Adjunction.comp_counit_app, Over.mapPullbackAdj_counit_app] using
+          congrArg (fun k => k.left) hconj
+      have hc₁B :
+          (overPseudofunctor.mapComp' p.op.toLoc t₁.op.toLoc q₁.op.toLoc
+            (by rfl)).inv.toNatTrans.app B =
+            (Over.pullbackComp t₁ p).inv.app B := by
+        rfl
+      have hcomp₁B :
+          ((Over.pullbackComp t₁ p).inv.app B').left ≫
+              pullback.fst B'.hom (t₁ ≫ p) =
+            pullback.fst (pullback.snd B'.hom p) t₁ ≫ pullback.fst B'.hom p := by
+        have hconj :=
+          conjugateEquiv_counit
+            ((Over.mapPullbackAdj t₁).comp (Over.mapPullbackAdj p))
+            (Over.mapPullbackAdj (t₁ ≫ p)) (Over.mapComp t₁ p).hom B'
+        simpa [Over.pullbackComp, conjugateIsoEquiv, Over.mapComp,
+          Adjunction.comp_counit_app, Over.mapPullbackAdj_counit_app] using
+          congrArg (fun k => k.left) hconj
+      have hcomp₁₂B :
+          (c₁.inv.toNatTrans.app B).left ≫ (c₂.hom.toNatTrans.app B).left ≫
+              pullback.fst (pullback.snd B'.hom p) t₂ ≫ pullback.fst B'.hom p =
+            pullback.fst (pullback.snd B'.hom p) t₁ ≫ pullback.fst B'.hom p := by
+        have hc₂hom :
+            (c₂.hom.toNatTrans.app B) =
+              (eqToIso (congrArg (fun q : Z ⟶ S => (Over.pullback q).obj B)
+                hq₂.symm)).hom ≫ (Over.pullbackComp t₂ p).hom.app B := by
+          have hmapc₂ :
+              overPseudofunctor.map q₁.op.toLoc =
+                overPseudofunctor.map (p.op.toLoc ≫ t₂.op.toLoc) :=
+            congrArg (fun f => overPseudofunctor.map f) hq₂op.symm
+          have hmapcomp₂ :
+              overPseudofunctor.mapComp p.op.toLoc t₂.op.toLoc =
+                Cat.Hom.isoMk (Over.pullbackComp t₂ p) := by
+            rfl
+          have hc₂hom' :
+              c₂.hom.toNatTrans.app B =
+                (eqToIso hmapc₂).hom.toNatTrans.app B ≫
+                  (overPseudofunctor.mapComp p.op.toLoc t₂.op.toLoc).hom.toNatTrans.app B := by
+            dsimp [c₂, Pseudofunctor.mapComp', PrelaxFunctor.mapFunctor]
+            simp only [PrelaxFunctor.map₂_eqToHom]
+          rw [hc₂hom', hmapcomp₂]
+          rw [eqToIso.hom, Cat.eqToHom_app]
+          rfl
+        rw [hc₂hom]
+        change
+          ((Over.pullbackComp t₁ p).inv.app B).left ≫
+            (eqToIso (congrArg (fun q : Z ⟶ S => (Over.pullback q).obj B) hq₂.symm)).hom.left ≫
+            ((Over.pullbackComp t₂ p).hom.app B).left ≫
+            pullback.fst (pullback.snd B'.hom p) t₂ ≫ pullback.fst B'.hom p =
+            pullback.fst (pullback.snd B'.hom p) t₁ ≫ pullback.fst B'.hom p
+        exact pullbackComp_comparison_fst t₁ t₂ p ht B'.hom
+      let l₁ : Z ⟶ pullback (pullback.snd A'.hom p) t₁ :=
+        pullback.lift g₁ (𝟙 _) (by simp [t₁])
+      let r₂ : pullback (pullback.snd B'.hom p) t₂ ⟶ B'.left :=
+        pullback.fst (pullback.snd B'.hom p) t₂ ≫ pullback.fst B'.hom p
+      have hmap_t₁ :
+          ((overPseudofunctor.map t₁.op.toLoc).toFunctor.map
+            (φ.hom PUnit.unit)).left =
+            pullback.lift
+              (pullback.fst (pullback.snd A'.hom p) t₁ ≫
+                (φ.hom PUnit.unit).left)
+              (pullback.snd (pullback.snd A'.hom p) t₁) (by
+                have hw := congrArg
+                  (fun k => pullback.fst (pullback.snd A'.hom p) t₁ ≫ k)
+                  (φ.hom PUnit.unit).w
+                calc
+                  (pullback.fst (pullback.snd A'.hom p) t₁ ≫
+                      (φ.hom PUnit.unit).left) ≫
+                      Over.hom (((overPseudofunctor.toDescentData
+                        (fun _ : PUnit => p)).obj B).obj PUnit.unit) =
+                    pullback.fst (pullback.snd A'.hom p) t₁ ≫
+                      ((φ.hom PUnit.unit).left ≫
+                        Over.hom (((overPseudofunctor.toDescentData
+                          (fun _ : PUnit => p)).obj B).obj PUnit.unit)) := by
+                            exact Category.assoc _ _ _
+                  _ = pullback.fst (pullback.snd A'.hom p) t₁ ≫
+                      Over.hom (((overPseudofunctor.toDescentData
+                        (fun _ : PUnit => p)).obj A).obj PUnit.unit) := hw
+                  _ = pullback.snd (pullback.snd A'.hom p) t₁ ≫ t₁ := by
+                    change pullback.fst (pullback.snd A'.hom p) t₁ ≫
+                        pullback.snd A'.hom p =
+                      pullback.snd (pullback.snd A'.hom p) t₁ ≫ t₁
+                    rw [pullback.condition]) := by
+        rfl
+      have hcompBq :
+          ((Over.pullbackComp t₁ p).inv.app B').left ≫
+              (eqToIso (congrArg (fun q : Z ⟶ S => (Over.pullback q).obj B')
+                hq₂.symm)).hom.left ≫
+              ((Over.pullbackComp t₂ p).hom.app B').left ≫
+                pullback.fst (pullback.snd B'.hom p) t₂ ≫ pullback.fst B'.hom p =
+            pullback.fst (pullback.snd B'.hom p) t₁ ≫ pullback.fst B'.hom p := by
+        exact pullbackComp_comparison_fst t₁ t₂ p ht B'.hom
+      have hleft :
+          l₁ ≫
+              ((overPseudofunctor.map t₁.op.toLoc).toFunctor.map
+                  (φ.hom PUnit.unit)).left ≫
+              ((Over.pullbackComp t₁ p).inv.app B').left ≫
+              (eqToIso (congrArg (fun q : Z ⟶ S => (Over.pullback q).obj B')
+                hq₂.symm)).hom.left ≫
+              ((Over.pullbackComp t₂ p).hom.app B').left ≫
+              pullback.fst (pullback.snd B'.hom p) t₂ ≫ pullback.fst B'.hom p =
+            g₁ ≫ e := by
+        rw [hmap_t₁]
+        have hcompBq' := congrArg
+          (fun k => ((overPseudofunctor.map t₁.op.toLoc).toFunctor.map
+            (φ.hom PUnit.unit)).left ≫ k) hcompBq
+        rw [hmap_t₁] at hcompBq'
+        exact (congrArg (fun k => l₁ ≫ k) hcompBq').trans (by
+          have hw :
+              (pullback.fst (pullback.snd A'.hom p) t₁ ≫
+                  (φ.hom PUnit.unit).left) ≫ pullback.snd B'.hom p =
+                pullback.snd (pullback.snd A'.hom p) t₁ ≫ t₁ := by
+            have hw := congrArg
+              (fun k => pullback.fst (pullback.snd A'.hom p) t₁ ≫ k)
+              (φ.hom PUnit.unit).w
+            calc
+              (pullback.fst (pullback.snd A'.hom p) t₁ ≫
+                  (φ.hom PUnit.unit).left) ≫
+                  pullback.snd B'.hom p =
+                pullback.fst (pullback.snd A'.hom p) t₁ ≫
+                  ((φ.hom PUnit.unit).left ≫ pullback.snd B'.hom p) := by
+                    exact Category.assoc _ _ _
+              _ = pullback.fst (pullback.snd A'.hom p) t₁ ≫
+                    pullback.snd A'.hom p := hw
+              _ = pullback.snd (pullback.snd A'.hom p) t₁ ≫ t₁ := by
+                rw [pullback.condition]
+          have hm_assoc :
+              pullback.lift
+                  (pullback.fst (pullback.snd A'.hom p) t₁ ≫
+                    (φ.hom PUnit.unit).left)
+                  (pullback.snd (pullback.snd A'.hom p) t₁) hw ≫
+                pullback.fst (pullback.snd B'.hom p) t₁ ≫ pullback.fst B'.hom p =
+              (pullback.fst (pullback.snd A'.hom p) t₁ ≫
+                (φ.hom PUnit.unit).left) ≫ pullback.fst B'.hom p := by
+            exact pullback.lift_fst_assoc _ _ hw _
+          have hl_assoc :
+              l₁ ≫
+                  (pullback.fst (pullback.snd A'.hom p) t₁ ≫
+                    (φ.hom PUnit.unit).left) ≫ pullback.fst B'.hom p =
+                g₁ ≫ (φ.hom PUnit.unit).left ≫ pullback.fst B'.hom p := by
+            dsimp [l₁]
+            simpa only [Category.assoc] using
+              (pullback.lift_fst_assoc g₁ (𝟙 _) (by simp [t₁])
+                ((φ.hom PUnit.unit).left ≫ pullback.fst B'.hom p))
+          exact (congrArg (fun k => l₁ ≫ k) hm_assoc).trans hl_assoc
+          )
+      have hcomm'' := congrArg (fun k => l₁ ≫ k.left ≫ r₂) hcomm₃
+      have hc₁invA :
+          (overPseudofunctor.mapComp' p.op.toLoc t₁.op.toLoc q₁.op.toLoc
+            hq₁op).inv.toNatTrans.app A = (Over.pullbackComp t₁ p).inv.app A := by
+        rfl
+      have hc₁invB :
+          (overPseudofunctor.mapComp' p.op.toLoc t₁.op.toLoc q₁.op.toLoc
+            hq₁op).inv.toNatTrans.app B = (Over.pullbackComp t₁ p).inv.app B := by
+        rfl
+      have hc₂homA :
+          (overPseudofunctor.mapComp' p.op.toLoc t₂.op.toLoc q₁.op.toLoc
+            hq₂op).hom.toNatTrans.app A =
+            (eqToIso (congrArg (fun q : Z ⟶ S => (Over.pullback q).obj A)
+              hq₂.symm)).hom ≫ (Over.pullbackComp t₂ p).hom.app A := by
+        have hmapc₂ :
+            overPseudofunctor.map q₁.op.toLoc =
+              overPseudofunctor.map (p.op.toLoc ≫ t₂.op.toLoc) :=
+          congrArg (fun f => overPseudofunctor.map f) hq₂op.symm
+        have hmapcomp₂ :
+            overPseudofunctor.mapComp p.op.toLoc t₂.op.toLoc =
+              Cat.Hom.isoMk (Over.pullbackComp t₂ p) := by
+          rfl
+        have hc₂hom' :
+            (overPseudofunctor.mapComp' p.op.toLoc t₂.op.toLoc q₁.op.toLoc
+              hq₂op).hom.toNatTrans.app A =
+              (eqToIso hmapc₂).hom.toNatTrans.app A ≫
+                (overPseudofunctor.mapComp p.op.toLoc t₂.op.toLoc).hom.toNatTrans.app A := by
+          dsimp [Pseudofunctor.mapComp', PrelaxFunctor.mapFunctor]
+          simp only [PrelaxFunctor.map₂_eqToHom]
+        rw [hc₂hom', hmapcomp₂]
+        rw [eqToIso.hom, Cat.eqToHom_app]
+        rfl
+      have hc₂homB :
+          (overPseudofunctor.mapComp' p.op.toLoc t₂.op.toLoc q₁.op.toLoc
+            hq₂op).hom.toNatTrans.app B =
+            (eqToIso (congrArg (fun q : Z ⟶ S => (Over.pullback q).obj B)
+              hq₂.symm)).hom ≫ (Over.pullbackComp t₂ p).hom.app B := by
+        have hmapc₂ :
+            overPseudofunctor.map q₁.op.toLoc =
+              overPseudofunctor.map (p.op.toLoc ≫ t₂.op.toLoc) :=
+          congrArg (fun f => overPseudofunctor.map f) hq₂op.symm
+        have hmapcomp₂ :
+            overPseudofunctor.mapComp p.op.toLoc t₂.op.toLoc =
+              Cat.Hom.isoMk (Over.pullbackComp t₂ p) := by
+          rfl
+        have hc₂hom' :
+            (overPseudofunctor.mapComp' p.op.toLoc t₂.op.toLoc q₁.op.toLoc
+              hq₂op).hom.toNatTrans.app B =
+              (eqToIso hmapc₂).hom.toNatTrans.app B ≫
+                (overPseudofunctor.mapComp p.op.toLoc t₂.op.toLoc).hom.toNatTrans.app B := by
+          dsimp [Pseudofunctor.mapComp', PrelaxFunctor.mapFunctor]
+          simp only [PrelaxFunctor.map₂_eqToHom]
+        rw [hc₂hom', hmapcomp₂]
+        rw [eqToIso.hom, Cat.eqToHom_app]
+        rfl
+      simp only [hc₁invA, hc₁invB, hc₂homA, hc₂homB] at hcomm''
+      simpa [l₁, r₂, e, q, t₁, t₂, Pseudofunctor.LocallyDiscreteOpToCat.pullHom,
+        Pseudofunctor.toDescentData, Pseudofunctor.DescentData.ofObj,
+        Over.comp_left, Category.assoc] using hcomm''
+    let g : A'.left ⟶ B'.left := EffectiveEpi.desc q e hq
+    refine Over.homMk g ?_
+    apply (cancel_epi q).1
+    dsimp [q, e, g]
+    simp only [EffectiveEpi.fac, Category.assoc]
+    exact (φ.hom PUnit.unit).w
+  · intro A B φ
+    sorry
+  · intro A B φ
+    sorry
 
 noncomputable def family_morphisms_descend_uniquely (𝒰 : FpqcFamily S) :
     (overPseudofunctor.toDescentData (fun i => 𝒰.cover.f i)).FullyFaithful := by

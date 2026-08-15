@@ -268,10 +268,185 @@ theorem chapter02_lower_group_mem_iff_displacement
     (K : Type u) {L : Type u} [Field K] [Field L] [Algebra K L]
     (v : AddValuation L (WithTop ℤ))
     [Valuation.IsRankOneDiscrete v.toValuation]
+    (hnormalized : Function.Surjective v)
     (σ : chapter02DecompositionGroup K v) (hσ : σ ≠ 1) (n : ℕ) :
     σ ∈ chapter02LowerGroup K v n ↔
       ((n + 1 : ℕ) : WithTop ℤ) ≤ chapter02Displacement K v σ := by
-  sorry
+  classical
+  let A := v.toValuation.valuationSubring
+  let w := v.toValuation
+  have hval (z : WithTop ℤ) :
+      Multiplicative.ofAdd (OrderDual.toDual z) ≤
+          (1 : Multiplicative (WithTop ℤ)ᵒᵈ) ↔ 0 ≤ z := by
+    change Multiplicative.ofAdd (OrderDual.toDual z) ≤
+        Multiplicative.ofAdd (OrderDual.toDual (0 : WithTop ℤ)) ↔ 0 ≤ z
+    rw [Multiplicative.ofAdd_le, OrderDual.toDual_le_toDual]
+  have hval_lt (z : WithTop ℤ) :
+      Multiplicative.ofAdd (OrderDual.toDual z) <
+          (1 : Multiplicative (WithTop ℤ)ᵒᵈ) ↔ 0 < z := by
+    change Multiplicative.ofAdd (OrderDual.toDual z) <
+        Multiplicative.ofAdd (OrderDual.toDual (0 : WithTop ℤ)) ↔ 0 < z
+    rw [Multiplicative.ofAdd_lt, OrderDual.toDual_lt_toDual]
+  have hpos_one : ∀ z : WithTop ℤ, 0 < z → (1 : WithTop ℤ) ≤ z := by
+    intro z hz
+    induction z using WithTop.recTopCoe with
+    | top => exact le_top
+    | coe z =>
+        apply WithTop.coe_le_coe.mpr
+        rw [WithTop.coe_pos] at hz
+        omega
+  have hsub_nonneg : ∀ {z : WithTop ℤ},
+      (1 : WithTop ℤ) ≤ z → (0 : WithTop ℤ) ≤ z - 1 := by
+    intro z hz
+    induction z using WithTop.recTopCoe with
+    | top => simp
+    | coe z =>
+        change (0 : WithTop ℤ) ≤ (↑(z - 1) : WithTop ℤ)
+        have hz' : (1 : ℤ) ≤ z := by
+          exact_mod_cast hz
+        have : (0 : ℤ) ≤ z - 1 := sub_nonneg.mpr hz'
+        exact_mod_cast this
+  have hsub_nonneg' : ∀ {a b : WithTop ℤ},
+      b ≤ a → (0 : WithTop ℤ) ≤ a - b := by
+    intro a b hab
+    induction a using WithTop.recTopCoe with
+    | top => simp
+    | coe a =>
+        induction b using WithTop.recTopCoe with
+        | top => simp at hab
+        | coe b =>
+            change (0 : WithTop ℤ) ≤ (↑(a - b) : WithTop ℤ)
+            apply WithTop.coe_le_coe.mpr
+            apply sub_nonneg.mpr
+            exact WithTop.coe_le_coe.mp hab
+  obtain ⟨πL, hπL⟩ := hnormalized 1
+  have hπA : πL ∈ A := by
+    apply (Valuation.mem_valuationSubring_iff w πL).2
+    apply (hval _).2
+    change 0 ≤ v πL
+    simp [hπL]
+  let π : A := ⟨πL, hπA⟩
+  have hπval : v (π : L) = 1 := hπL
+  have hπne : (π : L) ≠ 0 := by
+    intro hzero
+    have hzero' := hπval
+    rw [hzero, AddValuation.map_zero] at hzero'
+    simp at hzero'
+  have hπI : π ∈ IsLocalRing.maximalIdeal A := by
+    apply (Valuation.mem_maximalIdeal_iff L w).2
+    apply (hval_lt _).2
+    change 0 < v (π : L)
+    simp [hπval]
+  have hpowval (m : ℕ) : v ((π : L) ^ m) = (m : WithTop ℤ) := by
+    rw [AddValuation.map_pow, hπval]
+    simp
+  have hIval (a : A) (ha : a ∈ IsLocalRing.maximalIdeal A) :
+      (1 : WithTop ℤ) ≤ v (a : L) := by
+    apply hpos_one
+    apply (hval_lt _).mp
+    exact (Valuation.mem_maximalIdeal_iff L w).mp ha
+  have hIeq : IsLocalRing.maximalIdeal A = Ideal.span ({π} : Set A) := by
+    apply le_antisymm
+    · intro a ha
+      apply Ideal.mem_span_singleton.mpr
+      let y : L := (a : L) / (π : L)
+      have hyval : 0 ≤ v y := by
+        dsimp [y]
+        rw [AddValuation.map_div, hπval]
+        exact hsub_nonneg (hIval a ha)
+      have hyA : y ∈ A := by
+        apply (Valuation.mem_valuationSubring_iff w y).2
+        exact (hval _).2 hyval
+      refine ⟨⟨y, hyA⟩, ?_⟩
+      apply Subtype.ext
+      dsimp [y]
+      field_simp
+    · exact Ideal.span_le.mpr (by
+        intro x hx
+        have hx' : x = π := by simpa using hx
+        simpa [hx'] using hπI)
+  have hmem_val (m : ℕ) (x : A) :
+      x ∈ (IsLocalRing.maximalIdeal A) ^ m ↔
+        (m : WithTop ℤ) ≤ v (x : L) := by
+    rw [hIeq, Ideal.span_singleton_pow, Ideal.mem_span_singleton]
+    constructor
+    · rintro ⟨y, rfl⟩
+      have hyval : 0 ≤ v (y : L) := by
+        exact (hval _).mp (Valuation.mem_valuationSubring_iff w y |>.mp y.property)
+      change (m : WithTop ℤ) ≤ v ((π : L) ^ m * (y : L))
+      rw [AddValuation.map_mul, hpowval]
+      exact le_add_of_nonneg_right hyval
+    · intro hx
+      let y : L := (x : L) / (π : L) ^ m
+      have hyval : 0 ≤ v y := by
+        dsimp [y]
+        rw [AddValuation.map_div, hpowval]
+        exact hsub_nonneg' hx
+      have hyA : y ∈ A := by
+        apply (Valuation.mem_valuationSubring_iff w y).2
+        exact (hval _).2 hyval
+      refine ⟨⟨y, hyA⟩, ?_⟩
+      apply Subtype.ext
+      dsimp [y]
+      field_simp
+  change σ ∈
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05RamificationGroup
+        K A (n + 1) ↔ _
+  change LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05HigherCongruence
+      A (n + 1) σ ↔ _
+  constructor
+  · intro hσ'
+    rw [chapter02Displacement, if_neg hσ]
+    apply le_csInf
+    · exact ⟨v ((σ : Gal(L / K)) (0 : L) - (0 : L)), ⟨0, rfl⟩⟩
+    · intro b hb
+      rcases hb with ⟨x, rfl⟩
+      exact (hmem_val (n + 1) ((σ • x : A) - x)).mp (hσ' x)
+  · intro hdisp x
+    apply (hmem_val (n + 1) ((σ • x : A) - x)).2
+    have hdiff_nonneg (y : A) :
+        (0 : WithTop ℤ) ≤ v ((σ : Gal(L / K)) (y : L) - (y : L)) := by
+      have hyA : (((σ • y : A) - y : A) : L) ∈ A :=
+        (σ • y : A) - y |>.property
+      have hyv :=
+        (hval _).mp ((Valuation.mem_valuationSubring_iff w _).mp hyA)
+      change 0 ≤ v (((σ • y : A) - y : A) : L) at hyv
+      have hsmul : ((σ • y : A) : L) =
+          (σ : Gal(L / K)) (y : L) := rfl
+      have hsub : (((σ • y : A) - y : A) : L) =
+          (σ : Gal(L / K)) (y : L) - (y : L) := by
+        change ((σ • y : A) : L) - (y : L) = _
+        rw [hsmul]
+      rw [hsub] at hyv
+      exact hyv
+    have hBdd :
+        BddBelow (Set.range (fun y : A =>
+          v ((σ : Gal(L / K)) (y : L) - (y : L)))) := by
+      refine ⟨0, ?_⟩
+      rintro z ⟨y, rfl⟩
+      exact hdiff_nonneg y
+    have hle : chapter02Displacement K v σ ≤
+        v ((σ : Gal(L / K)) (x : L) - (x : L)) := by
+      rw [chapter02Displacement, if_neg hσ]
+      exact csInf_le hBdd ⟨x, rfl⟩
+    exact hdisp.trans hle
+
+/- The identity has displacement `+∞`, so the displacement criterion also
+   applies to it.  Keeping this all-elements bridge alongside the nonidentity
+   theorem preserves the book's literal set-membership formulation without
+   changing the narrower API used by the canonical filtration structure. -/
+theorem chapter02_lower_group_mem_iff_displacement_all
+    (K : Type u) {L : Type u} [Field K] [Field L] [Algebra K L]
+    (v : AddValuation L (WithTop ℤ))
+    [Valuation.IsRankOneDiscrete v.toValuation]
+    (hnormalized : Function.Surjective v)
+    (σ : chapter02DecompositionGroup K v) (n : ℕ) :
+    σ ∈ chapter02LowerGroup K v n ↔
+      ((n + 1 : ℕ) : WithTop ℤ) ≤ chapter02Displacement K v σ := by
+  by_cases hσ : σ = 1
+  · subst σ
+    simp [chapter02Displacement]
+  · exact chapter02_lower_group_mem_iff_displacement K v hnormalized σ hσ n
 
 /-- Reduction detects non-inertial displacement at value zero. -/
 theorem chapter02_not_inertia_has_zero_displacement
@@ -310,7 +485,7 @@ theorem chapter02_not_inertia_has_zero_displacement
     exact hσ ((
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.inertia_iff_positive_valuation_displacement
         v σ).2 hpos)
-  push_neg at hnotpos
+  push Not at hnotpos
   obtain ⟨x, hx⟩ := hnotpos
   exact ⟨x, le_antisymm hx (hnonneg x)⟩
 
@@ -370,14 +545,14 @@ theorem chapter02_displacement_eq_uniformizer
     (vL : AddValuation L (WithTop ℤ))
     [Valuation.IsRankOneDiscrete vK.toValuation]
     [Valuation.IsRankOneDiscrete vL.toValuation]
-    (hext : vK.IsEquiv (vL.comap (algebraMap K L)))
+    (_hext : vK.IsEquiv (vL.comap (algebraMap K L)))
     (π : vL.toValuation.valuationSubring)
-    (hπ : vL.toValuation.IsUniformizer (π : L))
+    (_hπ : vL.toValuation.IsUniformizer (π : L))
     (C : Type*) [CommRing C]
     [Algebra C vL.toValuation.valuationSubring]
     [Algebra (IsLocalRing.ResidueField vK.toValuation.valuationSubring)
       (IsLocalRing.ResidueField vL.toValuation.valuationSubring)]
-    (hseparable : Algebra.IsSeparable
+    (_hseparable : Algebra.IsSeparable
       (IsLocalRing.ResidueField vK.toValuation.valuationSubring)
       (IsLocalRing.ResidueField vL.toValuation.valuationSubring))
     (hgen : chapter02IntegralRingGeneratedByUniformizer
@@ -536,7 +711,8 @@ def chapter02CanonicalLowerFiltration
     -- The finite Galois hypothesis normally supplies this instance; it is
     -- explicit here because the book-facing filtration stores finiteness.
     [Valuation.IsRankOneDiscrete v.toValuation]
-    [Finite (chapter02DecompositionGroup K v)] :
+    [Finite (chapter02DecompositionGroup K v)]
+    (hnormalized : Function.Surjective v) :
     Chapter02LowerFiltration (chapter02DecompositionGroup K v) where
   group := chapter02LowerGroupNat K v
   normal := by
@@ -700,7 +876,7 @@ def chapter02CanonicalLowerFiltration
         exact hnonneg x
   lower_mem_iff := by
     intro σ hσ n
-    exact chapter02_lower_group_mem_iff_displacement K v σ hσ n
+    exact chapter02_lower_group_mem_iff_displacement K v hnormalized σ hσ n
 
 end
 

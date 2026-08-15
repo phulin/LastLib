@@ -155,6 +155,56 @@ theorem chapter08_pushforward_structure_sheaf_is_quasicoherent
       (SheafOfModules.unit X.ringCatSheaf)).IsQuasicoherent := by
   sorry
 
+/-- The relative global-functions module attached to a quasi-compact,
+quasi-separated morphism.  Naming this object here gives later chapters a
+stable interface without having to repeat the pushforward expression. -/
+abbrev chapter08StructureSheafPushforward
+    {X S : Scheme.{u}} (f : X ⟶ S) : S.Modules :=
+  (Scheme.Modules.pushforward f).obj (SheafOfModules.unit X.ringCatSheaf)
+
+/-- The structure-sheaf pushforward after base change of its morphism. -/
+abbrev chapter08StructureSheafPushforwardBaseChange
+    {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S) : T.Modules :=
+  (Scheme.Modules.pushforward (pullback.snd f g)).obj
+    (SheafOfModules.unit (pullback f g).ringCatSheaf)
+
+/-- A sheaf-level flat base-change comparison for relative global functions.
+The restriction field is part of the interface: an objectwise isomorphism is
+not enough for later affine-envelope constructions. -/
+structure Chapter08StructureSheafFlatBaseChangeData
+    {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
+    [QuasiCompact f] [QuasiSeparated f] [Flat g] where
+  comparison :
+    (Scheme.Modules.pullback g).obj (chapter08StructureSheafPushforward f) ≅
+      chapter08StructureSheafPushforwardBaseChange f g
+  comparison_restriction :
+    ∀ {U V : T.Opens} (i : U ⟶ V),
+      ((Scheme.Modules.pullback g).obj (chapter08StructureSheafPushforward f)).val.map i.op ≫
+        (ModuleCat.restrictScalars
+          (RingCat.Hom.hom (T.ringCatSheaf.obj.map i.op))).map
+          (comparison.hom.val.app (.op U)) =
+      comparison.hom.val.app (.op V) ≫
+        (chapter08StructureSheafPushforwardBaseChange f g).val.map i.op
+
+/-- Flat base change for the pushforward of the structure sheaf, with its
+restriction naturality.  The proof is supplied by the affine-section
+base-change theorem in the eventual implementation; this declaration is the
+shared book-facing interface. -/
+theorem chapter08_pushforward_structure_sheaf_flat_base_change_exists
+    {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
+    [QuasiCompact f] [QuasiSeparated f] [Flat g] :
+    Nonempty (Chapter08StructureSheafFlatBaseChangeData f g) := by
+  sorry
+
+/-- The chosen structure-sheaf flat-base-change comparison. -/
+noncomputable def chapter08_pushforward_structure_sheaf_flat_base_change
+    {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S)
+    [QuasiCompact f] [QuasiSeparated f] [Flat g] :
+    (Scheme.Modules.pullback g).obj (chapter08StructureSheafPushforward f) ≅
+      chapter08StructureSheafPushforwardBaseChange f g :=
+  (Classical.choice
+    (chapter08_pushforward_structure_sheaf_flat_base_change_exists f g)).comparison
+
 /-- The full subcategory of descent data whose local modules are
 quasi-coherent. -/
 abbrev Chapter08QuasiCoherentModuleDescentData
@@ -183,7 +233,7 @@ noncomputable def chapter08CanonicalQuasiCoherentDescentDataBase
     Chapter08QuasiCoherentModuleDescentData choices := by
   refine ⟨chapter08CanonicalModuleDescentData choices M, ?_⟩
   intro i
-  sorry
+  exact chapter08_pullback_is_quasicoherent (f i) M
 
 /- This package keeps the canonical pullback datum, its component comparisons,
    and its functorial maps in one interface.  The datum is fixed by the
@@ -216,7 +266,38 @@ noncomputable def chapter08CanonicalQuasiCoherentDescentPackage
     {S : Scheme.{u}} {ι : Type*} {X : ι → Scheme.{u}}
     {f : ∀ i, X i ⟶ S} (choices : Chapter08PullbackChoices X f) :
     Chapter08CanonicalQuasiCoherentDescentPackage choices := by
-  sorry
+  refine
+    { component := ?_
+      map := ?_
+      map_component := ?_
+      map_id := ?_
+      map_comp := ?_ }
+  · intro M i
+    exact Iso.refl _
+  · intro M N φ
+    exact ObjectProperty.homMk
+      ((Pseudofunctor.DescentData'.fromDescentDataFunctor chapter08ModulesPseudofunctor
+          choices.sq choices.sq₃).map
+        (((chapter08ModulesPseudofunctor).toDescentData f).map φ.hom))
+  · intro M N φ i
+    rfl
+  · intro M
+    apply ObjectProperty.hom_ext
+    simp only [ObjectProperty.FullSubcategory.id_hom]
+    dsimp [Pseudofunctor.DescentData'.fromDescentDataFunctor]
+    apply Pseudofunctor.DescentData'.hom_ext
+    intro i
+    exact congrArg (fun q => q.hom i)
+      ((chapter08ModulesPseudofunctor.toDescentData f).map_id M.obj)
+  · intro M N P φ ψ
+    apply ObjectProperty.hom_ext
+    simp only [ObjectProperty.FullSubcategory.comp_hom]
+    dsimp [ObjectProperty.homMk,
+      Pseudofunctor.DescentData'.fromDescentDataFunctor]
+    apply Pseudofunctor.DescentData'.hom_ext
+    intro i
+    exact congrArg (fun q => q.hom i)
+      ((chapter08ModulesPseudofunctor.toDescentData f).map_comp φ.hom ψ.hom)
 
 /-- The canonical quasi-coherent descent datum obtained by pulling a global
 module sheaf back to every member of a chosen cover.  Keeping this datum
@@ -398,6 +479,22 @@ noncomputable def chapter08AffineQuasiCoherentEquivalence (R : CommRingCat.{u}) 
     ModuleCat R ≌ Chapter08QuasiCoherentModules (Spec R) :=
   tildeEquiv (R := R)
 
+/-- Natural affine base change for the tilde construction.  This is the
+functorial form of the usual statement that pullback along `Spec.map φ`
+corresponds to extension of scalars along `φ`. -/
+noncomputable def chapter08AffineTildeBaseChangeIso
+    {R S : CommRingCat.{u}} (φ : R ⟶ S) :
+    tilde.functor R ⋙ Scheme.Modules.pullback (Spec.map φ) ≅
+      ModuleCat.extendScalars φ.hom ⋙ tilde.functor S := by
+  sorry
+
+/-- The objectwise affine tilde base-change comparison. -/
+noncomputable def chapter08AffineTildeBaseChangeIsoAt
+    {R S : CommRingCat.{u}} (φ : R ⟶ S) (M : ModuleCat R) :
+    (Scheme.Modules.pullback (Spec.map φ)).obj (tilde M) ≅
+      tilde ((ModuleCat.extendScalars φ.hom).obj M) :=
+  (chapter08AffineTildeBaseChangeIso φ).app M
+
 /-- The basic open `D(f)` on an affine scheme. -/
 def chapter08AffineBasicOpen {R : CommRingCat.{u}} (f : R) : (Spec R).Opens :=
   PrimeSpectrum.basicOpen f
@@ -406,6 +503,27 @@ def chapter08AffineBasicOpen {R : CommRingCat.{u}} (f : R) : (Spec R).Opens :=
 def chapter08LocalizedModule {R : CommRingCat.{u}} (M : ModuleCat R) (f : R) :
     ModuleCat (Localization.Away f) :=
   (ModuleCat.extendScalars (algebraMap R (Localization.Away f))).obj M
+
+/-- Natural restriction of an affine tilde sheaf to a basic open.  The target
+is written through the canonical affine identification of `D(f)` with the
+spectrum of the localization, so the comparison is usable under further
+pullback and restriction. -/
+noncomputable def chapter08AffineTildeBasicOpenRestrictionIso
+    {R : CommRingCat.{u}} (f : R) :
+    tilde.functor R ⋙
+        Scheme.Modules.pullback (chapter08AffineBasicOpen f).ι ≅
+      ModuleCat.extendScalars (algebraMap R (Localization.Away f)) ⋙
+        tilde.functor (CommRingCat.of (Localization.Away f)) ⋙
+          Scheme.Modules.pullback (basicOpenIsoSpecAway f).hom := by
+  sorry
+
+/-- The objectwise basic-open restriction/localization comparison. -/
+noncomputable def chapter08AffineTildeBasicOpenRestrictionIsoAt
+    {R : CommRingCat.{u}} (f : R) (M : ModuleCat R) :
+    (Scheme.Modules.pullback (chapter08AffineBasicOpen f).ι).obj (tilde M) ≅
+      (Scheme.Modules.pullback (basicOpenIsoSpecAway f).hom).obj
+        (tilde (chapter08LocalizedModule M f)) := by
+  exact (chapter08AffineTildeBasicOpenRestrictionIso f).app M
 
 /-- A named comparison interface for the affine restriction calculation. -/
 structure Chapter08AffineRestrictionComparison
@@ -430,6 +548,12 @@ structure Chapter08AffineRestrictionSheafComparison
     {R : CommRingCat.{u}} (M : ModuleCat R) (f : R) where
   localizationIso : (chapter08AffineBasicOpen f).toScheme ≅
     Spec (CommRingCat.of (Localization.Away f))
+  /-- The chosen isomorphism is the canonical localization chart, not merely
+  an unrelated isomorphism of schemes. -/
+  localizationIso_commutes :
+    localizationIso.hom ≫
+        Spec.map (CommRingCat.ofHom (algebraMap R (Localization.Away f))) =
+      (chapter08AffineBasicOpen f).ι
   comparison :
     (Scheme.Modules.pullback (chapter08AffineBasicOpen f).ι).obj
         (chapter08AffineSheafOfModule M) ≅
@@ -441,7 +565,11 @@ structure Chapter08AffineRestrictionSheafComparison
 theorem chapter08_affine_restriction_sheaf_comparison
     {R : CommRingCat.{u}} (M : ModuleCat R) (f : R) :
     Nonempty (Chapter08AffineRestrictionSheafComparison M f) := by
-  sorry
+  exact ⟨{
+    localizationIso := basicOpenIsoSpecAway f
+    localizationIso_commutes := basicOpenIsoSpecAway_hom_SpecMap f
+    comparison := chapter08AffineTildeBasicOpenRestrictionIsoAt f M
+  }⟩
 
 /- An affine open cover written directly as maps from affine schemes. -/
 structure Chapter08AffineOpenCover (S : Scheme.{u}) where

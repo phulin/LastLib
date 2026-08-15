@@ -1,8 +1,11 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section06LocalizationAndResidues
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter01.Section03WhatShouldCountAsIntegral
 import Mathlib.Data.ENat.BigOperators
+import Mathlib.LinearAlgebra.Dimension.Constructions
 import Mathlib.LinearAlgebra.FreeModule.Norm
 import Mathlib.RingTheory.Ideal.Norm.RelNorm
+import Mathlib.RingTheory.Ideal.IsPrincipalPowQuotient
+import Mathlib.RingTheory.Trace.Quotient
 
 universe u v
 
@@ -12,6 +15,7 @@ noncomputable section
 
 open Ideal IsLocalRing
 open Module
+open Module.Basis
 open Polynomial
 open UniqueFactorizationMonoid
 open scoped BigOperators TensorProduct WithZero Polynomial nonZeroDivisors
@@ -85,9 +89,242 @@ def chapter11DvrResidueTraceNormStatement
           (e : k) * Algebra.trace k l (redB t) ∧
         redA (Algebra.intNorm A B n) = Algebra.norm k (redB n) ^ e := Iff.rfl
 
+private theorem chapter11_dvr_maximalIdeal_map_eq_pow_ramificationIdx
+    (A B : Type*) [CommRing A] [IsDomain A]
+    [IsDiscreteValuationRing A] [CommRing B] [IsDomain B]
+    [IsDiscreteValuationRing B] [Algebra A B]
+    [Algebra.IsIntegral A B] [Module.IsTorsionFree A B] [Module.Finite A B] :
+    Ideal.map (algebraMap A B) (IsLocalRing.maximalIdeal A) =
+      (IsLocalRing.maximalIdeal B) ^
+        (IsLocalRing.maximalIdeal B).ramificationIdx A := by
+  classical
+  let m : Ideal A := IsLocalRing.maximalIdeal A
+  let P : Ideal B := IsLocalRing.maximalIdeal B
+  have hm0 : m ≠ (⊥ : Ideal A) := by
+    exact IsDiscreteValuationRing.not_a_field A
+  have hmap_le : Ideal.map (algebraMap A B) m ≤ P := by
+    rw [Ideal.map_le_iff_le_comap]
+    intro a ha
+    simpa [P, IsLocalRing.mem_maximalIdeal] using
+      map_nonunit (algebraMap A B) a
+        (by simpa [m] using ha)
+  have hmap0 : Ideal.map (algebraMap A B) m ≠ (⊥ : Ideal B) :=
+    Ideal.map_ne_bot_of_ne_bot hm0
+  obtain ⟨n, hPn⟩ :=
+    exists_maximalIdeal_pow_eq_of_principal B
+      (IsPrincipalIdealRing.principal P)
+      (Ideal.map (algebraMap A B) m) hmap0
+  have hram : P.ramificationIdx A = n := by
+    let _ : IsDiscreteValuationRing (Localization.AtPrime P) :=
+      IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain B
+        (IsDiscreteValuationRing.not_a_field B) (Localization.AtPrime P)
+    rw [Ideal.ramificationIdx_eq m P]
+    change (Module.length (Localization.AtPrime P)
+      (Localization.AtPrime P ⧸
+        Ideal.map (algebraMap A (Localization.AtPrime P)) m)).toNat = n
+    have hPn' := congrArg
+      (Ideal.map (algebraMap B (Localization.AtPrime P))) hPn
+    rw [Ideal.map_map, ← IsScalarTower.algebraMap_eq A B
+      (Localization.AtPrime P), Ideal.map_pow,
+      Localization.AtPrime.map_eq_maximalIdeal] at hPn'
+    rw [hPn', IsDiscreteValuationRing.length_quotient_pow_maximalIdeal]
+    rfl
+  simpa [m, P, hram] using hPn
+
+private theorem chapter11_residue_map_quotient_equiv
+    (R k : Type*) [CommRing R] [Field k] (m : Ideal R)
+    (ρ : R →+* k) (hρ : chapter11ResidueMap R k m ρ) :
+    Nonempty ((R ⧸ m) ≃+* k) := by
+  have hker : RingHom.ker ρ = m := by
+    ext x
+    rw [RingHom.mem_ker]
+    exact hρ.2 x
+  let e : (R ⧸ m) ≃+* k :=
+    (Ideal.quotEquivOfEq hker.symm).trans
+      (RingHom.quotientKerEquivOfSurjective hρ.1)
+  exact ⟨e⟩
+
 /- The determinant calculation behind the following interface is the finite
    local calculation `B / m_A B`, whose `e` successive residue layers all
    carry the same multiplication operator on `B / m_B`. -/
+private theorem chapter11_trace_eq_trace_restrict_add_trace_quotient
+    {k V : Type*} [Field k] [AddCommGroup V] [Module k V]
+    (W : Submodule k V) [Module.Free k W] [Module.Finite k W]
+    [Module.Free k (V ⧸ W)] [Module.Finite k (V ⧸ W)]
+    (f : V →ₗ[k] V) (hf : W ≤ W.comap f) :
+    LinearMap.trace k V f =
+      LinearMap.trace k W (f.restrict hf) +
+        LinearMap.trace k (V ⧸ W) (W.mapQ W f hf) := by
+  let m := Module.Free.ChooseBasisIndex k W
+  let bW : Basis m k W := Module.Free.chooseBasis k W
+  let n := Module.Free.ChooseBasisIndex k (V ⧸ W)
+  let bQ : Basis n k (V ⧸ W) := Module.Free.chooseBasis k (V ⧸ W)
+  let b := sumQuot bW bQ
+  let A : Matrix m m k := LinearMap.toMatrix bW bW (f.restrict hf)
+  let B : Matrix m n k := Matrix.of fun i l ↦
+    ((sumQuot bW bQ).repr (f ((sumQuot bW bQ) (Sum.inr l)))) (Sum.inl i)
+  let D : Matrix n n k := LinearMap.toMatrix bQ bQ (W.mapQ W f hf)
+  have hmatrix : LinearMap.toMatrix b b f = Matrix.fromBlocks A B 0 D := by
+    ext u v
+    cases u with
+    | inl i =>
+      cases v with
+      | inl k =>
+        simp only [b, sumQuot_inl, Matrix.fromBlocks_apply₁₁, A, LinearMap.toMatrix_apply]
+        apply sumQuot_repr_inl_of_mem
+      | inr l =>
+        simp [b, LinearMap.toMatrix_apply, Matrix.fromBlocks_apply₁₂, B]
+    | inr j =>
+      cases v with
+      | inl k =>
+        suffices W.mkQ (f (bW k)) = 0 by simp [LinearMap.toMatrix_apply, b, this]
+        rw [← LinearMap.mem_ker, Submodule.ker_mkQ]
+        exact hf (Submodule.coe_mem (bW k))
+      | inr l =>
+        simp only [LinearMap.toMatrix_apply, sumQuot_repr_inr,
+          Matrix.fromBlocks_apply₂₂, b, D]
+        rw [← sumQuot_inr bW bQ l, W.mapQ_apply]
+        simp
+  rw [LinearMap.trace_eq_matrix_trace k b, hmatrix]
+  simp [Matrix.trace, Matrix.fromBlocks, A, D]
+  rw [LinearMap.trace_eq_matrix_trace k bW,
+    LinearMap.trace_eq_matrix_trace k bQ]
+  rfl
+
+private theorem chapter11_trace_chain
+    {k L : Type*} [Field k] [AddCommGroup L] [Module k L]
+    [FiniteDimensional k L]
+    (n : ℕ)
+    (V : ℕ → Type*) [∀ i, AddCommGroup (V i)] [∀ i, Module k (V i)]
+    [∀ i, FiniteDimensional k (V i)]
+    (f : ∀ i, V i →ₗ[k] V i) (g : L →ₗ[k] L)
+    (W : ∀ i, i < n → Submodule k (V (i + 1)))
+    (q : ∀ (i : ℕ) (hi : i < n),
+      (V (i + 1) ⧸ W i hi) ≃ₗ[k] V i)
+    (w : ∀ (i : ℕ) (hi : i < n), L ≃ₗ[k] W i hi)
+    (hstable : ∀ (i : ℕ) (hi : i < n),
+      W i hi ≤ (W i hi).comap (f (i + 1)))
+    (hquot : ∀ (i : ℕ) (hi : i < n),
+      (q i hi).conj ((W i hi).mapQ (W i hi) (f (i + 1)) (hstable i hi)) = f i)
+    (hlayer : ∀ (i : ℕ) (hi : i < n),
+      (w i hi).conj g = (f (i + 1)).restrict (hstable i hi)) :
+    ∀ i, i ≤ n → LinearMap.trace k (V i) (f i) =
+      LinearMap.trace k (V 0) (f 0) +
+        i • LinearMap.trace k L g := by
+  intro i
+  induction i with
+  | zero => intro _; simp
+  | succ i ih =>
+      intro hi
+      have hi' : i < n := Nat.lt_of_succ_le hi
+      calc
+        LinearMap.trace k (V (i + 1)) (f (i + 1)) =
+            LinearMap.trace k (W i hi')
+                ((f (i + 1)).restrict (hstable i hi')) +
+              LinearMap.trace k (V (i + 1) ⧸ W i hi')
+                ((W i hi').mapQ (W i hi') (f (i + 1)) (hstable i hi')) :=
+          chapter11_trace_eq_trace_restrict_add_trace_quotient
+            (W i hi') (f (i + 1)) (hstable i hi')
+        _ = LinearMap.trace k L g +
+              LinearMap.trace k (V i) (f i) := by
+          rw [← hlayer i hi', LinearMap.trace_conj' g (w i hi'),
+            ← LinearMap.trace_conj'
+              ((W i hi').mapQ (W i hi') (f (i + 1)) (hstable i hi'))
+              (q i hi'), hquot i hi']
+        _ = LinearMap.trace k (V 0) (f 0) +
+              (i + 1) • LinearMap.trace k L g := by
+          rw [ih (Nat.le_trans (Nat.le_succ i) hi)]
+          ring
+
+private theorem chapter11_det_chain
+    {k L : Type*} [Field k] [AddCommGroup L] [Module k L]
+    [FiniteDimensional k L]
+    (n : ℕ)
+    (V : ℕ → Type*) [∀ i, AddCommGroup (V i)] [∀ i, Module k (V i)]
+    [∀ i, FiniteDimensional k (V i)]
+    (f : ∀ i, V i →ₗ[k] V i) (g : L →ₗ[k] L)
+    (W : ∀ i, i < n → Submodule k (V (i + 1)))
+    (q : ∀ (i : ℕ) (hi : i < n),
+      (V (i + 1) ⧸ W i hi) ≃ₗ[k] V i)
+    (w : ∀ (i : ℕ) (hi : i < n), L ≃ₗ[k] W i hi)
+    (hstable : ∀ (i : ℕ) (hi : i < n),
+      W i hi ≤ (W i hi).comap (f (i + 1)))
+    (hquot : ∀ (i : ℕ) (hi : i < n),
+      (q i hi).conj ((W i hi).mapQ (W i hi) (f (i + 1)) (hstable i hi)) = f i)
+    (hlayer : ∀ (i : ℕ) (hi : i < n),
+      (w i hi).conj g = (f (i + 1)).restrict (hstable i hi)) :
+    ∀ i, i ≤ n → LinearMap.det (f i) =
+      LinearMap.det (f 0) * LinearMap.det g ^ i := by
+  intro i
+  induction i with
+  | zero => intro _; simp
+  | succ i ih =>
+      intro hi
+      have hi' : i < n := Nat.lt_of_succ_le hi
+      have hdet := LinearMap.det_eq_det_mul_det
+        (W i hi') (f (i + 1)) (hstable i hi')
+      calc
+        LinearMap.det (f (i + 1)) =
+            LinearMap.det ((f (i + 1)).restrict (hstable i hi')) *
+              LinearMap.det ((W i hi').mapQ (W i hi') (f (i + 1)) (hstable i hi')) := hdet
+        _ = LinearMap.det g * LinearMap.det (f i) := by
+          have hwdet :
+              LinearMap.det ((f (i + 1)).restrict (hstable i hi')) =
+                LinearMap.det g := by
+            rw [← hlayer i hi']
+            simpa only [LinearEquiv.conj_apply, LinearMap.comp_assoc] using
+              (LinearMap.det_conj g (w i hi'))
+          have hqdet :
+              LinearMap.det ((W i hi').mapQ (W i hi') (f (i + 1)) (hstable i hi')) =
+                LinearMap.det (f i) := by
+            calc
+              LinearMap.det ((W i hi').mapQ (W i hi') (f (i + 1)) (hstable i hi')) =
+                  LinearMap.det ((q i hi').conj
+                    ((W i hi').mapQ (W i hi') (f (i + 1)) (hstable i hi'))) := by
+                symm
+                simpa only [LinearEquiv.conj_apply, LinearMap.comp_assoc] using
+                  (LinearMap.det_conj
+                    ((W i hi').mapQ (W i hi') (f (i + 1)) (hstable i hi')) (q i hi'))
+              _ = LinearMap.det (f i) := by rw [hquot i hi']
+          rw [hwdet, hqdet]
+        _ = LinearMap.det (f 0) * LinearMap.det g ^ (i + 1) := by
+          rw [ih (Nat.le_trans (Nat.le_succ i) hi), pow_succ]
+          ring
+
+private theorem chapter11_norm_quotient_mk
+    (R S : Type*) [CommRing R] [CommRing S] [Algebra R S]
+    [IsLocalRing R] [Module.Free R S] [Module.Finite R S] (x : S) :
+    Algebra.norm (R ⧸ IsLocalRing.maximalIdeal R)
+        (Ideal.Quotient.mk
+          (Ideal.map (algebraMap R S) (IsLocalRing.maximalIdeal R)) x) =
+      Ideal.Quotient.mk (IsLocalRing.maximalIdeal R) (Algebra.norm R x) := by
+  let ι := Module.Free.ChooseBasisIndex R S
+  let b : Module.Basis ι R S := Module.Free.chooseBasis R S
+  rw [Algebra.norm_eq_matrix_det b,
+    Algebra.norm_eq_matrix_det (basisQuotient b), RingHom.map_det]
+  congr 1
+  ext i j
+  simp only [Algebra.leftMulMatrix_apply, Algebra.coe_lmul_eq_mul, LinearMap.toMatrix_apply,
+    basisQuotient_apply, LinearMap.mul_apply',
+    RingHom.mapMatrix_apply, Matrix.map_apply, ← map_mul,
+    basisQuotient_repr]
+
+private def chapter11_ringEquiv_toLinearEquiv
+    {k R S : Type*} [CommRing R] [CommRing S] [Field k]
+    [Algebra k R] [Algebra k S]
+    (e : R ≃+* S)
+    (he : ∀ c : k, e (algebraMap k R c) = algebraMap k S c) :
+    R ≃ₗ[k] S :=
+  { e.toAddEquiv with
+    map_smul' := by
+      intro c x
+      simp only [Algebra.smul_def, RingHom.id_apply]
+      calc
+        e.toFun (algebraMap k R c * x) =
+            e.toFun (algebraMap k R c) * e.toFun x := e.map_mul _ _
+        _ = algebraMap k S c * e.toFun x :=
+          congrArg (fun z => z * e.toFun x) (he c) }
+
 theorem chapter11_finite_dvr_residue_trace_and_norm
     (A B k l : Type*) [CommRing A] [IsDomain A]
     [IsDiscreteValuationRing A] [IsIntegrallyClosed A]
@@ -1308,6 +1545,34 @@ theorem chapter11_norm_valuation_formula
         apply Finset.sum_congr rfl
         intro i hi
         rw [hw_div i]
+
+
+/-! A one-branch interface is useful to later chapters that work with a
+single chosen extension rather than the full normalization.  The explicit
+unique-extension and degree hypotheses are the numerical form of the
+branch-correspondence and defectlessness assumptions used above. -/
+
+/-- The norm valuation formula for a single normalized branch.
+
+The restriction factor `e`, residue degree `f`, uniqueness of the branch,
+and the degree equality are stated explicitly so this theorem can be used
+without reconstructing the finite normalization in every later chapter. -/
+theorem chapter11_single_branch_norm_valuation_formula
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] {vK : AddValuation K (WithTop ℤ)}
+    {vL : AddValuation L (WithTop ℤ)} (e f : ℕ)
+    [Valuation.IsRankOneDiscrete vK.toValuation]
+    [Valuation.IsRankOneDiscrete vL.toValuation]
+    (hext : vK.IsEquiv (AddValuation.comap (algebraMap K L) vL))
+    (hrestrict : ∀ y : K,
+      vL (algebraMap K L y) = (e : WithTop ℤ) * vK y)
+    (hf : f = chapter11AdditiveResidueDegree vK vL hext)
+    (hunique : ∀ w : AddValuation L (WithTop ℤ),
+      vK.IsEquiv (AddValuation.comap (algebraMap K L) w) →
+        vL.IsEquiv w)
+    (hdegree : Module.finrank K L = e * f) (x : L) (hx : x ≠ 0) :
+    vK (Algebra.norm K x) = (f : WithTop ℤ) * vL x := by
+  sorry
 
 
 /-- If the branch values of an element are the specified `e_i`, the norm sees

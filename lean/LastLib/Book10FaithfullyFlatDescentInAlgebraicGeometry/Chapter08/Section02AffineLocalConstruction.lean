@@ -87,7 +87,23 @@ theorem chapter08_affine_local_gluing_comparison
     Nonempty
       ((Scheme.Modules.pullback (C.map i)).obj W.descended.obj ≅
         tilde (D.module i)) := by
-  sorry
+  let e := Classical.choice W.descentComparison
+  let ei := Classical.choice (D.tildeComparison i)
+  change tilde (D.module i) ≅ D.descent.obj.obj i at ei
+  let h := e.hom.hom.hom i
+  let hi := e.inv.hom.hom i
+  have h_hinv : h ≫ hi = 𝟙 _ := by
+    exact congrArg (fun q => q.hom.hom i) e.hom_inv_id
+  have hi_h : hi ≫ h = 𝟙 _ := by
+    exact congrArg (fun q => q.hom.hom i) e.inv_hom_id
+  let hIso :
+      (chapter08CanonicalQuasiCoherentDescentData choices W.descended).obj.obj i ≅
+        D.descent.obj.obj i :=
+    { hom := h
+      inv := hi
+      hom_inv_id := h_hinv
+      inv_hom_id := hi_h }
+  exact ⟨hIso ≪≫ ei.symm⟩
 
 /- The canonical identifications of the affine sheaves agree on every
 pairwise intersection. -/
@@ -346,8 +362,10 @@ the direct descent calculation on a basic open. -/
 theorem chapter08_affine_descent_commutes_with_restriction
     {R : CommRingCat.{u}} (M : ModuleCat R) (f : R) :
     chapter08AffineRestrictedModule M f =
-      (ModuleCat.extendScalars (algebraMap R (Localization.Away f))).obj M := by
-  exact chapter08_affine_restriction_is_scalar_extension M f
+      (ModuleCat.extendScalars (algebraMap R (Localization.Away f))).obj M ∧
+        Nonempty (Chapter08AffineRestrictionSheafComparison M f) := by
+  exact ⟨chapter08_affine_restriction_is_scalar_extension M f,
+    chapter08_affine_restriction_sheaf_comparison M f⟩
 
 /-- Base change of an fpqc cover is the cover used for descent over a morphism
 `X ⟶ S`. -/

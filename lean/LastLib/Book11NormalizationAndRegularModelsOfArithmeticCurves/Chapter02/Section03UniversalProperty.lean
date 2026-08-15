@@ -246,7 +246,317 @@ private theorem chapter02_normal_source_generic_ringMap_base
       (chapter02_normal_source_generic_ringMap X Y L D U V hVU).comp
         (algebraMap Γ(X, U) (chapter02AffineIntegralClosure
           (chapter02FunctionFieldExtensionMap X L) U.1)) := by
-  sorry
+  classical
+  let f0 := chapter02FunctionFieldExtensionMap X L
+  have hU : IsAffineOpen (U : X.Opens) := by
+    simpa only [Scheme.affineOpens, Set.mem_ofPred_eq] using U.2
+  have hpre :
+      D.generic ⁻¹ᵁ f0.fromNormalization ⁻¹ᵁ (U : X.Opens) = ⊤ :=
+    chapter02_normal_source_generic_preimage_affine X Y L D U V hVU
+  have hnorm :
+      CommRingCat.ofHom (algebraMap Γ(X, U)
+        (chapter02AffineIntegralClosure f0 U.1)) ≫
+        (f0.normalizationObjIso hU).inv =
+      (f0.fromNormalization).app U.1 := by
+    change _ = (f0.fromNormalization).app U.1
+    exact (Scheme.Hom.fromNormalization_app f0 hU).symm
+  have hcomp1 :
+      f0.fromNormalization.app (U : X.Opens) ≫
+          D.generic.appLE (f0.fromNormalization ⁻¹ᵁ (U : X.Opens)) ⊤
+            (by simpa [f0] using hpre.ge) =
+        (D.generic ≫ f0.fromNormalization).appLE (U : X.Opens) ⊤
+          (by
+            rw [Scheme.Hom.comp_preimage]
+            exact hpre.ge) := by
+    rw [f0.fromNormalization.app_eq_appLE]
+    apply Scheme.Hom.appLE_comp_appLE
+  have hpreComp :
+      (Y.fromSpecStalk (genericPoint Y) ≫ D.map) ⁻¹ᵁ (U : X.Opens) = ⊤ := by
+    rw [← D.generic_over]
+    simpa [f0] using hpre
+  have hcompEq :
+      (D.generic ≫ f0.fromNormalization).appLE (U : X.Opens) ⊤
+          (by
+            rw [Scheme.Hom.comp_preimage]
+            exact hpre.ge) =
+        (Y.fromSpecStalk (genericPoint Y) ≫ D.map).appLE
+          (U : X.Opens) ⊤ hpreComp.ge := by
+    simp only [Scheme.Hom.appLE, Scheme.Hom.comp_app, Scheme.Hom.comp_preimage]
+    rw [← Scheme.Hom.comp_app D.generic f0.fromNormalization U,
+      ← Scheme.Hom.comp_app (Y.fromSpecStalk (genericPoint Y)) D.map U]
+    rw [Scheme.Hom.congr_app D.generic_over U]
+    simp
+    simp only [← Functor.map_comp]
+    congr 1
+  have hgenericV : genericPoint Y ∈ (V : Y.Opens) := by
+    exact ((genericPoint_spec Y).mem_open_set_iff V.1.isOpen).mpr
+      (by simpa using (inferInstance : Nonempty V.1))
+  have hpoint :
+      Y.fromSpecStalk (genericPoint Y)
+          (genericPoint (Spec (CommRingCat.of Y.functionField))) = genericPoint Y := by
+    have hbot : (⊥ : PrimeSpectrum Y.functionField) =
+        IsLocalRing.closedPoint Y.functionField := by
+      apply PrimeSpectrum.ext
+      change (⊥ : Ideal Y.functionField) = IsLocalRing.maximalIdeal Y.functionField
+      rw [IsLocalRing.maximalIdeal_eq_bot]
+    simp [genericPoint_eq_bot_of_affine]
+    rw [hbot]
+    exact Scheme.fromSpecStalk_closedPoint (X := Y) (x := genericPoint Y)
+  have hVtop : (⊤ : (Spec (CommRingCat.of Y.functionField)).Opens) ≤
+      Y.fromSpecStalk (genericPoint Y) ⁻¹ᵁ (V : Y.Opens) := by
+    intro z hz
+    have hz' : z = genericPoint (Spec (CommRingCat.of Y.functionField)) :=
+      Subsingleton.elim _ _
+    subst z
+    change Y.fromSpecStalk (genericPoint Y)
+        (genericPoint (Spec (CommRingCat.of Y.functionField))) ∈ (V : Y.Opens)
+    rw [hpoint]
+    exact hgenericV
+  have hpreV :
+      Y.fromSpecStalk (genericPoint Y) ⁻¹ᵁ (V : Y.Opens) =
+        (⊤ : (Spec (CommRingCat.of Y.functionField)).Opens) :=
+    le_antisymm le_top hVtop
+  have hmapV : homOfLE hVtop = eqToHom hpreV.symm := Subsingleton.elim _ _
+  have htarget :
+      (Y.fromSpecStalk (genericPoint Y)).appLE (V : Y.Opens) ⊤ hVtop ≫
+          (Scheme.ΓSpecIso (CommRingCat.of Y.functionField)).hom =
+        (Scheme.Hom.app (Y.fromSpecStalk (genericPoint Y)) (V : Y.Opens) ≫
+          ((Spec (CommRingCat.of Y.functionField)).presheaf.mapIso
+            (eqToIso hpreV.symm).op ≪≫
+            Scheme.ΓSpecIso (CommRingCat.of Y.functionField)).hom) := by
+    simp [Scheme.Hom.appLE, hmapV, Category.assoc, CommRingCat.of_carrier]
+  have hclosed :
+      Y.fromSpecStalk (genericPoint Y)
+          (IsLocalRing.closedPoint Y.functionField) = genericPoint Y :=
+    Scheme.fromSpecStalk_closedPoint (X := Y) (x := genericPoint Y)
+  have hmemV :
+      Y.fromSpecStalk (genericPoint Y)
+          (IsLocalRing.closedPoint Y.functionField) ∈ (V : Y.Opens) := by
+    rw [hclosed]
+    exact hgenericV
+  have hgen := Scheme.germ_stalkClosedPointTo
+    (f := Y.fromSpecStalk (genericPoint Y)) (U := (V : Y.Opens)) hmemV
+  have hfrom :
+      (Y.fromSpecStalk (genericPoint Y)).appLE (V : Y.Opens) ⊤ hVtop ≫
+          (Scheme.ΓSpecIso (CommRingCat.of Y.functionField)).hom =
+        CommRingCat.ofHom (algebraMap Γ(Y, V) Y.functionField) := by
+    rw [htarget]
+    ext r
+    have hright :
+        (CommRingCat.Hom.hom
+          ((Y.fromSpecStalk (genericPoint Y)).app (V : Y.Opens) ≫
+            ((Spec (CommRingCat.of Y.functionField)).presheaf.mapIso
+              (eqToIso hpreV.symm).op ≪≫
+              Scheme.ΓSpecIso (CommRingCat.of Y.functionField)).hom)) r =
+          (Y.presheaf.germ (V : Y.Opens)
+              (Y.fromSpecStalk (genericPoint Y)
+                (IsLocalRing.closedPoint Y.functionField)) hmemV ≫
+            Scheme.stalkClosedPointTo
+              (Y.fromSpecStalk (genericPoint Y))).hom r := by
+      simpa [Scheme.Hom.comp_app, Category.assoc, CommRingCat.of_carrier] using
+        congrArg (fun q => q r) hgen.symm
+    rw [hright, Scheme.stalkClosedPointTo_fromSpecStalk]
+    simp only [TopCat.Presheaf.stalkCongr_hom]
+    let hspec : genericPoint Y ⤳
+        Y.fromSpecStalk (genericPoint Y)
+          (IsLocalRing.closedPoint Y.functionField) := by
+      rw [hclosed]
+    change
+      (Y.presheaf.germ (V : Y.Opens)
+          (Y.fromSpecStalk (genericPoint Y)
+            (IsLocalRing.closedPoint Y.functionField)) hmemV ≫
+        Y.presheaf.stalkSpecializes hspec).hom r =
+        (algebraMap Γ(Y, V) Y.functionField) r
+    have hgs := Y.presheaf.germ_stalkSpecializes
+      (U := (V : Y.Opens)) hmemV hspec
+    have hgs' := congrArg (fun q => q r)
+      (congrArg CommRingCat.Hom.hom hgs)
+    have halg := Scheme.algebraMap_germ_eq_germToFunctionField
+      (X := Y) (U := (V : Y.Opens)) (x := genericPoint Y) hgenericV r
+    simp [Scheme.germToFunctionField, RingHom.algebraMap_toAlgebra]
+  have hcomp2 :
+      (D.map.appLE U.1 V.1 hVU) ≫
+          (Y.fromSpecStalk (genericPoint Y)).appLE (V : Y.Opens) ⊤ hVtop =
+        (Y.fromSpecStalk (genericPoint Y) ≫ D.map).appLE (U : X.Opens) ⊤
+          hpreComp.ge := by
+    apply Scheme.Hom.appLE_comp_appLE
+  have hmap :
+      D.map.appLE U.1 V.1 hVU ≫
+          CommRingCat.ofHom (algebraMap Γ(Y, V) Y.functionField) =
+        CommRingCat.ofHom (algebraMap Γ(X, U)
+          (chapter02AffineIntegralClosure f0 U.1)) ≫
+          (f0.normalizationObjIso hU).inv ≫
+          D.generic.appLE (f0.fromNormalization ⁻¹ᵁ (U : X.Opens)) ⊤
+            (by simpa [f0] using hpre.ge) ≫
+          (Scheme.ΓSpecIso (CommRingCat.of Y.functionField)).hom := by
+    calc
+      _ = D.map.appLE U.1 V.1 hVU ≫
+          ((Y.fromSpecStalk (genericPoint Y)).appLE (V : Y.Opens) ⊤ hVtop ≫
+            (Scheme.ΓSpecIso (CommRingCat.of Y.functionField)).hom) := by rw [hfrom]
+      _ = (D.map.appLE U.1 V.1 hVU ≫
+          (Y.fromSpecStalk (genericPoint Y)).appLE (V : Y.Opens) ⊤ hVtop) ≫
+            (Scheme.ΓSpecIso (CommRingCat.of Y.functionField)).hom := by simp [Category.assoc]
+      _ = (Y.fromSpecStalk (genericPoint Y) ≫ D.map).appLE (U : X.Opens) ⊤
+          hpreComp.ge ≫ (Scheme.ΓSpecIso (CommRingCat.of Y.functionField)).hom := by
+        rw [hcomp2]
+      _ = (D.generic ≫ f0.fromNormalization).appLE (U : X.Opens) ⊤
+          (by
+            rw [Scheme.Hom.comp_preimage]
+            exact hpre.ge) ≫
+            (Scheme.ΓSpecIso (CommRingCat.of Y.functionField)).hom := by
+        rw [hcompEq]
+      _ = (f0.fromNormalization.app (U : X.Opens) ≫
+          D.generic.appLE (f0.fromNormalization ⁻¹ᵁ (U : X.Opens)) ⊤
+            (by simpa [f0] using hpre.ge)) ≫
+            (Scheme.ΓSpecIso (CommRingCat.of Y.functionField)).hom := by
+        rw [hcomp1]
+      _ = (CommRingCat.ofHom (algebraMap Γ(X, U)
+            (chapter02AffineIntegralClosure f0 U.1)) ≫
+          (f0.normalizationObjIso hU).inv ≫
+          D.generic.appLE (f0.fromNormalization ⁻¹ᵁ (U : X.Opens)) ⊤
+            (by simpa [f0] using hpre.ge)) ≫
+            (Scheme.ΓSpecIso (CommRingCat.of Y.functionField)).hom := by
+        exact (congrArg (fun q =>
+          (q ≫ D.generic.appLE (f0.fromNormalization ⁻¹ᵁ (U : X.Opens)) ⊤
+            (by simpa [f0] using hpre.ge)) ≫
+            (Scheme.ΓSpecIso (CommRingCat.of Y.functionField)).hom) hnorm).symm
+  change
+    (CommRingCat.Hom.hom
+      (D.map.appLE U.1 V.1 hVU ≫
+        CommRingCat.ofHom (algebraMap Γ(Y, V) Y.functionField))) =
+      (CommRingCat.Hom.hom
+        (CommRingCat.ofHom (algebraMap Γ(X, U)
+          (chapter02AffineIntegralClosure f0 U.1)) ≫
+          (f0.normalizationObjIso hU).inv ≫
+          D.generic.appLE (f0.fromNormalization ⁻¹ᵁ (U : X.Opens)) ⊤
+            (by simpa [f0] using hpre.ge) ≫
+          (Scheme.ΓSpecIso (CommRingCat.of Y.functionField)).hom))
+  exact congrArg CommRingCat.Hom.hom hmap
+
+private noncomputable def chapter02_normal_source_affine_ringMap
+    (X Y : Scheme.{u}) (L : Type u) [IsIntegral X] [IsIntegral Y]
+    [IsLocallyNoetherian X] [IsLocallyNoetherian Y] [Chapter02Normal Y]
+    [Field L] [Algebra X.functionField L]
+    [FiniteDimensional X.functionField L]
+    [QuasiCompact (chapter02FunctionFieldExtensionMap X L)]
+    [QuasiSeparated (chapter02FunctionFieldExtensionMap X L)]
+    (D : Chapter02NormalSourceGenericFactorization X Y L)
+    (U : X.affineOpens) (V : Y.affineOpens) [Nonempty V]
+    (hVU : (V : Y.Opens) ≤ D.map ⁻¹ᵁ (U : X.Opens)) :
+    Γ((chapter02FunctionFieldExtensionMap X L).normalization,
+      (chapter02FunctionFieldExtensionMap X L).fromNormalization ⁻¹ᵁ (U : X.Opens)) →+*
+      Γ(Y, V) := by
+  classical
+  let f0 := chapter02FunctionFieldExtensionMap X L
+  have hU : IsAffineOpen (U : X.Opens) := by
+    simpa only [Scheme.affineOpens, Set.mem_ofPred_eq] using U.2
+  have hV : IsAffineOpen (V : Y.Opens) := by
+    simpa only [Scheme.affineOpens, Set.mem_ofPred_eq] using V.2
+  letI := (f0.app (U : X.Opens)).hom.toAlgebra
+  letI : IsFractionRing Γ(Y, V) Y.functionField :=
+    functionField_isFractionRing_of_isAffineOpen Y (V : Y.Opens) hV
+  have hclosed : IsIntegrallyClosed Γ(Y, V) := by
+    apply IsIntegrallyClosed.of_localization_maximal
+    intro p hp hpm
+    let y : PrimeSpectrum Γ(Y, V) := ⟨p, hpm.isPrime⟩
+    let x : (V : Y.Opens) := hV.isoSpec.inv y
+    have hxy : hV.primeIdealOf x = y := by
+      change hV.isoSpec.hom (hV.isoSpec.inv y) = y
+      have h := congrArg (fun q => q y) hV.isoSpec.inv_hom_id
+      change hV.isoSpec.hom (hV.isoSpec.inv y) = y at h
+      simpa using h
+    have hloc := hV.isLocalization_stalk x
+    rw [hxy] at hloc
+    exact (Chapter02Normal.integrallyClosed_stalk x.1).of_equiv
+      (IsLocalization.algEquiv p.primeCompl
+        (Y.presheaf.stalk x.1) (Localization.AtPrime p)).toRingEquiv
+  letI : Algebra Γ(X, U) Γ(Y, V) :=
+    (D.map.appLE U.1 V.1 hVU).hom.toAlgebra
+  let φ : chapter02AffineIntegralClosure f0 U.1 →+* Y.functionField :=
+    chapter02_normal_source_generic_ringMap X Y L D U V hVU
+  letI : Algebra (chapter02AffineIntegralClosure f0 U.1) Y.functionField :=
+    φ.toAlgebra
+  letI : Algebra Γ(X, U) Y.functionField :=
+    ((algebraMap Γ(Y, V) Y.functionField).comp
+      (D.map.appLE U.1 V.1 hVU).hom).toAlgebra
+  letI : IsScalarTower Γ(X, U) Γ(Y, V) Y.functionField := by
+    apply IsScalarTower.of_algebraMap_eq
+    intro r
+    rfl
+  letI : IsScalarTower Γ(X, U)
+      (chapter02AffineIntegralClosure f0 U.1) Y.functionField := by
+    apply IsScalarTower.of_algebraMap_eq
+    intro r
+    have hbase := chapter02_normal_source_generic_ringMap_base
+      X Y L D U V hVU
+    exact congrArg (fun q => q r) hbase
+  letI : Algebra.IsIntegral Γ(X, U)
+      (chapter02AffineIntegralClosure f0 U.1) := by
+    change Algebra.IsIntegral Γ(X, U)
+      (integralClosure Γ(X, U) Γ(Spec (CommRingCat.of L), f0 ⁻¹ᵁ (U : X.Opens)))
+    exact ⟨fun z => integralClosure.isIntegral z⟩
+  let φAlg : chapter02AffineIntegralClosure f0 U.1 →ₐ[Γ(X, U)] Y.functionField :=
+    { φ with
+      commutes' := fun r =>
+        (IsScalarTower.algebraMap_apply Γ(X, U)
+          (chapter02AffineIntegralClosure f0 U.1) Y.functionField r).symm }
+  have hφ_int : ∀ z : chapter02AffineIntegralClosure f0 U.1,
+      IsIntegral Γ(Y, V) (φ z) := by
+    intro z
+    exact (Algebra.IsIntegral.isIntegral (R := Γ(X, U)) z).map φAlg |>.tower_top
+  let l : chapter02AffineIntegralClosure f0 U.1 →+* Γ(Y, V) :=
+    { toFun := fun z => Classical.choose (hclosed.algebraMap_eq_of_integral (hφ_int z))
+      map_one' := by
+        apply IsFractionRing.injective Γ(Y, V) Y.functionField
+        have hz := Classical.choose_spec (hclosed.algebraMap_eq_of_integral (hφ_int 1))
+        simp [φ]
+      map_zero' := by
+        apply IsFractionRing.injective Γ(Y, V) Y.functionField
+        have hz := Classical.choose_spec (hclosed.algebraMap_eq_of_integral (hφ_int 0))
+        simp [φ]
+      map_add' := by
+        intro x y
+        apply IsFractionRing.injective Γ(Y, V) Y.functionField
+        have hx := Classical.choose_spec (hclosed.algebraMap_eq_of_integral (hφ_int x))
+        have hy := Classical.choose_spec (hclosed.algebraMap_eq_of_integral (hφ_int y))
+        have hxy := Classical.choose_spec
+          (hclosed.algebraMap_eq_of_integral (hφ_int (x + y)))
+        calc
+          algebraMap Γ(Y, V) Y.functionField
+              (Classical.choose (hclosed.algebraMap_eq_of_integral (hφ_int (x + y)))) =
+              φ (x + y) := hxy
+          _ = φ x + φ y := φ.map_add x y
+          _ = algebraMap Γ(Y, V) Y.functionField
+                (Classical.choose (hclosed.algebraMap_eq_of_integral (hφ_int x))) +
+              algebraMap Γ(Y, V) Y.functionField
+                (Classical.choose (hclosed.algebraMap_eq_of_integral (hφ_int y))) := by
+            rw [hx, hy]
+          _ = algebraMap Γ(Y, V) Y.functionField
+                (Classical.choose (hclosed.algebraMap_eq_of_integral (hφ_int x)) +
+                  Classical.choose (hclosed.algebraMap_eq_of_integral (hφ_int y))) := by
+            rw [map_add]
+      map_mul' := by
+        intro x y
+        apply IsFractionRing.injective Γ(Y, V) Y.functionField
+        have hx := Classical.choose_spec (hclosed.algebraMap_eq_of_integral (hφ_int x))
+        have hy := Classical.choose_spec (hclosed.algebraMap_eq_of_integral (hφ_int y))
+        have hxy := Classical.choose_spec
+          (hclosed.algebraMap_eq_of_integral (hφ_int (x * y)))
+        calc
+          algebraMap Γ(Y, V) Y.functionField
+              (Classical.choose (hclosed.algebraMap_eq_of_integral (hφ_int (x * y)))) =
+              φ (x * y) := hxy
+          _ = φ x * φ y := φ.map_mul x y
+          _ = algebraMap Γ(Y, V) Y.functionField
+                (Classical.choose (hclosed.algebraMap_eq_of_integral (hφ_int x))) *
+              algebraMap Γ(Y, V) Y.functionField
+                (Classical.choose (hclosed.algebraMap_eq_of_integral (hφ_int y))) := by
+            rw [hx, hy]
+          _ = algebraMap Γ(Y, V) Y.functionField
+                (Classical.choose (hclosed.algebraMap_eq_of_integral (hφ_int x)) *
+                  Classical.choose (hclosed.algebraMap_eq_of_integral (hφ_int y))) := by
+            rw [map_mul] }
+  exact l.comp (f0.normalizationObjIso hU).hom.hom
 
 theorem chapter02_normalization_universal_property_normal_source
     (X Y : Scheme.{u}) (L : Type u) [IsIntegral X] [IsIntegral Y]

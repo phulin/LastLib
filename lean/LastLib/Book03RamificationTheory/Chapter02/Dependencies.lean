@@ -22,7 +22,9 @@ The preceding book-facing API defines congruence groups at the powers of the
 maximal ideal.  This chapter uses the lower-numbering shift
 `G_i = RamificationGroup (i + 1)`, while `G₋₁` is the whole decomposition group.
 The displacement is kept in the normalized additive value group `WithTop ℤ` so
-that the minimum formulation and the congruence formulation can be compared.
+that the minimum formulation and the congruence formulation can be compared;
+results comparing numeric displacement thresholds to ideal powers therefore
+carry an explicit surjectivity witness for the valuation.
 -/
 
 universe u v

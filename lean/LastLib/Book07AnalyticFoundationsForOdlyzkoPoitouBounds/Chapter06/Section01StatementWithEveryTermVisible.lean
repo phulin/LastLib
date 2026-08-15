@@ -494,8 +494,8 @@ theorem chapter06_prime_contribution_eq_nested_sum
 /-
 Chapter 4 supplies the canonical completed-zeta and zero data.  The package
 parametrization below remains useful for the contour proof, while
-`chapter06CanonicalZetaAnalyticPackage` exposes the source theorem without an
-extra caller-supplied analytic package.
+`chapter06CanonicalZetaAnalyticPackage` exposes that canonical analytic core;
+the Chapter 6 explicit formula remains a statement proved separately.
 -/
 theorem chapter06_weil_poitou_explicit_formula
     (K : Type*) [Field K] [NumberField K]
@@ -503,7 +503,7 @@ theorem chapter06_weil_poitou_explicit_formula
     (hF : Chapter06BasicallyAdmissible F) :
     Real.log (chapter06AbsoluteDiscriminant K) =
       chapter06ExplicitFormulaRightHandSide K P.zeros F := by
-  sorry
+  exact chapter06_weil_poitou_explicit_formula_bridge K P hF
 
 theorem chapter06_weil_poitou_explicit_formula_canonical
     (K : Type*) [Field K] [NumberField K] {F : ℝ → ℝ}

@@ -1,4 +1,4 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Section03HigherQuotientsAreAdditiveResidueFields
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Dependencies
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10
 
@@ -286,6 +286,104 @@ noncomputable def chapter10GaloisUnitLayerAction
       chapter10UnitFiltration A (n + 1)
     exact (chapter10_galois_unit_filtration_stable A σ hmax) (n + 1)
       (u : Aˣ) hu)
+
+/-- An automorphism of the valuation ring acts bijectively on every unit layer. -/
+theorem chapter10_galois_unit_layer_action_bijective
+    {L : Type*} [Field L] (A : ValuationSubring L) (σ : A ≃+* A)
+    (hmax : Ideal.map σ.toRingHom (IsLocalRing.maximalIdeal A) =
+      IsLocalRing.maximalIdeal A) (n : ℕ) :
+    Function.Bijective (chapter10GaloisUnitLayerAction A σ hmax n) := by
+  classical
+  let U : Subgroup Aˣ := chapter10UnitFiltration A n
+  let V : Subgroup U :=
+    (chapter10UnitFiltration A (n + 1)).subgroupOf U
+  let f : U →* U :=
+    { toFun := fun u =>
+        ⟨chapter10GaloisUnitAction σ (u : Aˣ),
+          (chapter10_galois_unit_filtration_stable A σ hmax) n
+            (u : Aˣ) u.property⟩
+      map_one' := by
+        apply Subtype.ext
+        simp [chapter10GaloisUnitAction]
+      map_mul' := by
+        intro u v
+        apply Subtype.ext
+        simp [chapter10GaloisUnitAction] }
+  have hf : V ≤ V.comap f := by
+    intro u hu
+    change chapter10GaloisUnitAction σ (u : Aˣ) ∈
+      chapter10UnitFiltration A (n + 1)
+    exact (chapter10_galois_unit_filtration_stable A σ hmax) (n + 1)
+      (u : Aˣ) hu
+  change Function.Bijective (QuotientGroup.map V V f hf)
+  have hmaxSymm :
+      Ideal.map σ.symm.toRingHom (IsLocalRing.maximalIdeal A) =
+        IsLocalRing.maximalIdeal A := by
+    calc
+      Ideal.map σ.symm.toRingHom (IsLocalRing.maximalIdeal A) =
+          Ideal.map σ.symm.toRingHom
+            (Ideal.map σ.toRingHom (IsLocalRing.maximalIdeal A)) := by
+            rw [hmax]
+      _ = IsLocalRing.maximalIdeal A := by
+        exact Ideal.map_of_equiv σ
+  let f' : U →* U :=
+    { toFun := fun u =>
+        ⟨chapter10GaloisUnitAction σ.symm (u : Aˣ),
+          (chapter10_galois_unit_filtration_stable A σ.symm hmaxSymm) n
+            (u : Aˣ) u.property⟩
+      map_one' := by
+        apply Subtype.ext
+        simp [chapter10GaloisUnitAction]
+      map_mul' := by
+        intro u v
+        apply Subtype.ext
+        simp [chapter10GaloisUnitAction] }
+  have hff' : Function.LeftInverse f' f := by
+    intro u
+    apply Subtype.ext
+    change chapter10GaloisUnitAction σ.symm
+        (chapter10GaloisUnitAction σ (u : Aˣ)) = (u : Aˣ)
+    apply Units.ext
+    change σ.symm (σ ((u : Aˣ) : A)) = ((u : Aˣ) : A)
+    exact σ.symm_apply_apply _
+  have hf'f : Function.LeftInverse f f' := by
+    intro u
+    apply Subtype.ext
+    change chapter10GaloisUnitAction σ
+        (chapter10GaloisUnitAction σ.symm (u : Aˣ)) = (u : Aˣ)
+    apply Units.ext
+    change σ (σ.symm ((u : Aˣ) : A)) = ((u : Aˣ) : A)
+    exact σ.apply_symm_apply _
+  have hVf : V ≤ V.comap f' := by
+    intro u hu
+    change chapter10GaloisUnitAction σ.symm (u : Aˣ) ∈
+      chapter10UnitFiltration A (n + 1)
+    exact (chapter10_galois_unit_filtration_stable A σ.symm hmaxSymm) (n + 1)
+      (u : Aˣ) hu
+  have hleft (x : U ⧸ V) :
+      QuotientGroup.map V V f' hVf
+          (QuotientGroup.map V V f hf x) = x := by
+    refine QuotientGroup.induction_on x ?_
+    intro u
+    change QuotientGroup.mk' V (f' (f u)) = QuotientGroup.mk' V u
+    rw [hff' u]
+  have hright (x : U ⧸ V) :
+      QuotientGroup.map V V f hf
+          (QuotientGroup.map V V f' hVf x) = x := by
+    refine QuotientGroup.induction_on x ?_
+    intro u
+    change QuotientGroup.mk' V (f (f' u)) = QuotientGroup.mk' V u
+    rw [hf'f u]
+  constructor
+  · intro x y hxy
+    calc
+      x = QuotientGroup.map V V f' hVf
+          (QuotientGroup.map V V f hf x) := (hleft x).symm
+      _ = QuotientGroup.map V V f' hVf
+          (QuotientGroup.map V V f hf y) := congrArg _ hxy
+      _ = y := hleft y
+  · intro y
+    refine ⟨QuotientGroup.map V V f' hVf y, hright y⟩
 
 /--
 After choosing a uniformizer, the induced action on the `n`th unit layer is

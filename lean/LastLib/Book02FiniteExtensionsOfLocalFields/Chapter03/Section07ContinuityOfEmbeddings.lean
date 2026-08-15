@@ -1,4 +1,3 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section06QuadraticLaboratory
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.Section04AbsoluteValueNormalizations
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03
@@ -55,6 +54,18 @@ theorem chapter03_embedding_preserves_normalized_valuation
     ∀ x : L, vΩ (σ x) = vL x := by
   sorry
 
+/-- An ambient valuation extending the base valuation automatically pulls back
+to the unique normalized valuation on an embedded finite extension. -/
+theorem chapter03_embedding_preserves_normalized_valuation_of_base_extension
+    {K L Ω Γ : Type*} [Field K] [Field L] [Field Ω]
+    [LinearOrderedCommGroupWithZero Γ] [Algebra K L] [Algebra K Ω]
+    (vK : Valuation K Γ) (vL : Valuation L Γ) (vΩ : Valuation Ω Γ)
+    (σ : L →ₐ[K] Ω)
+    (hunique : chapter03UniqueNormalizedValuationExtension vK vL)
+    (hΩ : chapter03ValuationExtendsExactly vK vΩ) :
+    ∀ x : L, vΩ (σ x) = vL x := by
+  sorry
+
 /-- The value of a normalized additive valuation after dividing by its scale. -/
 def chapter03NormalizedValuationValue
     {K : Type*} [Field K]
@@ -100,12 +111,14 @@ def chapter03IsometricEmbedding
     {L Ω : Type*} [Norm L] [Norm Ω] (σ : L → Ω) : Prop :=
   ∀ x : L, ‖σ x‖ = ‖x‖
 
-theorem chapter03_algebraic_embedding_is_isometric_and_continuous
+/- A finite-dimensional normed-algebra embedding is continuous.  Isometry is
+provided by the valuation-normalization results above once the norms are the
+corresponding local norms. -/
+theorem chapter03_algebraic_embedding_is_continuous
     {K L Ω : Type*} [NormedField K] [NormedField L] [NormedField Ω]
-    [Algebra K L] [Algebra K Ω] [FiniteDimensional K L]
-    (σ : L →ₐ[K] Ω)
-    (hnorm : chapter03IsometricEmbedding σ) :
-    Isometry σ ∧ Continuous σ := by
+    [NormedAlgebra K L] [NormedAlgebra K Ω] [FiniteDimensional K L]
+    (σ : L →ₐ[K] Ω) :
+    Continuous σ := by
   sorry
 
 /-- Galois automorphisms are continuous for the extending local absolute value. -/

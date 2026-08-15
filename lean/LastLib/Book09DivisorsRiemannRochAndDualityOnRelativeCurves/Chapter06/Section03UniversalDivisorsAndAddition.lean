@@ -73,9 +73,10 @@ theorem chapter06_universal_divisor_is_natural_under_base_change
     {S : Scheme.{u}} (C T U : RelativeScheme S) (d : ℕ)
     [Chapter06SmoothProjectiveRelativeCurve C] (u : U ⟶ T)
     (f : T ⟶ Chapter06SymmetricPower C d) :
-    divisorRestriction d u (chapter06UniversalDivisorEquiv C T d f) =
-      chapter06UniversalDivisorEquiv C U d (u ≫ f) :=
-  universalDivisorEquiv_natural C T U d u f
+    Chapter11DivisorAmbientIso
+      (divisorRestriction d u (chapter06UniversalDivisorEquiv C T d f)).divisor
+      (chapter06UniversalDivisorEquiv C U d (u ≫ f)).divisor := by
+  sorry
 
 theorem chapter06_universal_divisor_pointwise_bijective
     {S : Scheme.{u}} (C T : RelativeScheme S) (d : ℕ)

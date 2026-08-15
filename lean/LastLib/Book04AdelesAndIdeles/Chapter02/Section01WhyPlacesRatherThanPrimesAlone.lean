@@ -1,4 +1,5 @@
 import LastLib.Book04AdelesAndIdeles.Chapter02.Core
+import Mathlib.NumberTheory.Padics.Hensel
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter02
 
@@ -14,13 +15,28 @@ open scoped BigOperators
 `p`-adic field although it has no real root. -/
 theorem chapter02_x_squared_plus_one_no_real_root :
     ¬ ∃ x : ℝ, x ^ 2 + 1 = 0 := by
-  sorry
+  intro h
+  rcases h with ⟨x, hx⟩
+  nlinarith
 
 theorem chapter02_x_squared_plus_one_has_a_padic_root :
     ∃ p : Chapter02RationalPrime,
       letI : Fact p.1.Prime := ⟨p.2⟩
       ∃ x : ℚ_[p.1], x ^ 2 + 1 = 0 := by
-  sorry
+  refine ⟨⟨5, by norm_num⟩, ?_⟩
+  let : Fact (5 : ℕ).Prime := ⟨by norm_num⟩
+  change ∃ x : ℚ_[5], x ^ 2 + 1 = 0
+  have h5 : ‖(5 : ℤ_[5])‖ < 1 :=
+    (PadicInt.norm_natCast_lt_one_iff).2 (by norm_num)
+  have h4 : ‖(4 : ℤ_[5])‖ = 1 :=
+    (PadicInt.norm_natCast_eq_one_iff).2 (by norm_num)
+  have hcond : ‖((5 : ℤ_[5]))‖ < ‖(4 : ℤ_[5])‖ ^ 2 := by
+    simpa [h4] using h5
+  have h := hensels_lemma (F := (Polynomial.X ^ 2 + 1 : Polynomial ℤ))
+    (a := (2 : ℤ_[5])) (by simpa [Polynomial.aeval_def] using hcond)
+  rcases h with ⟨z, hz, _, _, _⟩
+  refine ⟨algebraMap ℤ_[5] ℚ_[5] z, ?_⟩
+  simpa [Polynomial.aeval_def] using congrArg (algebraMap ℤ_[5] ℚ_[5]) hz
 
 /-- Equivalence of absolute values is the order-equivalence relation used for
 the topology of a place. -/
@@ -53,7 +69,7 @@ theorem chapter02_equivalent_representatives_can_change_global_values
 theorem chapter02_linearly_ordered_value_groups_have_no_torsion
     {Γ : Type*} [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
     {x : Γ} {n : ℕ} (hn : 0 < n) (h : n • x = 0) : x = 0 := by
-  sorry
+  exact (nsmul_eq_zero_iff).mp h |>.resolve_right (Nat.ne_of_gt hn)
 
 /-- A finite place is obtained from one nonzero prime ideal of the ring of
 integers. -/
@@ -123,7 +139,7 @@ theorem chapter02_conjugate_embeddings_define_the_same_place
 theorem chapter02_conjugate_embeddings_have_the_same_local_size
     {K : Type*} [Field K] (φ : K →+* ℂ) (x : K) :
     ‖ComplexEmbedding.conjugate φ x‖ = ‖φ x‖ := by
-  sorry
+  simp [ComplexEmbedding.conjugate_coe_eq]
 
 theorem chapter02_complex_place_iff_conjugate_embedding_pair
     {K : Type*} [Field K] [NumberField K] (φ ψ : Chapter02ComplexEmbedding K) :

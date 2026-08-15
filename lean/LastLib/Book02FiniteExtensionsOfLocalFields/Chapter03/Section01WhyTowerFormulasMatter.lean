@@ -87,16 +87,12 @@ theorem chapter03_fundamental_equality_iff_extension_data
       Nonempty (Chapter03FiniteLocalExtensionData K L Γ vK vL) := by
   sorry
 
--- SOURCE_ISSUE: Completeness and discreteness alone do not imply the
--- fundamental equality over imperfect residue fields; finite defect can occur.
--- The interface therefore makes a standard defectless hypothesis explicit.
 theorem chapter03_complete_fundamental_equality
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L]
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
     [Valuation.IsRankOneDiscrete vL]
-    [PerfectField (IsLocalRing.ResidueField vK.valuationSubring)]
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
     chapter03FundamentalEquality vK vL := by
@@ -150,6 +146,7 @@ theorem chapter03_ideal_power_tower_formula
     [IsDiscreteValuationRing C]
     [Module.Finite A B] [Module.Finite B C]
     [Module.Flat A B] [Module.Flat B C]
+    [Module.IsTorsionFree A C] [Module.IsTorsionFree B C]
     [Algebra.IsIntegral A B] [Algebra.IsIntegral B C]
     (p : Ideal A) (q : Ideal B) (r : Ideal C)
     [p.IsPrime] [q.IsPrime] [r.IsPrime]

@@ -141,8 +141,15 @@ noncomputable def Chapter09LocalFiniteReciprocityBridge.toClassFormationData
         (E := chapter09LocalMaximalAbelianSubextension
           (K_v := K_v) (L_w := L_w) e)
         B.right B.right_norm
-    leftReciprocity_compatibility := by sorry
-    rightReciprocity_compatibility := by sorry }
+    leftReciprocity_compatibility := by
+      apply MonoidHom.ext
+      intro x
+      rfl
+    rightReciprocity_compatibility := by
+      apply MonoidHom.ext
+      intro x
+      rw [B.reciprocity_eq]
+      rfl }
 
 theorem chapter09_local_maximal_abelian_subextension_def
     {K_v L_w D : Type*} [Field K_v] [Field L_w] [Algebra K_v L_w]
@@ -257,7 +264,10 @@ theorem chapter09_common_class_norm_group_left_le_right
     (C : Chapter09ClassNormComparisonData K L I_K I_L I_M M) :
     chapter09CommonClassNormGroup C.basePrincipal C.ideleNormL ≤
       chapter09CommonClassNormGroup C.basePrincipal C.ideleNormM := by
-  sorry
+  rintro z ⟨x, rfl⟩
+  refine ⟨C.descent x, ?_⟩
+  exact congrArg (QuotientGroup.mk' C.basePrincipal.range)
+    (DFunLike.congr_fun C.ideleNorm_descent_compatibility x)
 
 /-!
 The functorial comparison record alone supplies only the inclusion above.  The
@@ -375,7 +385,17 @@ theorem chapter09_global_class_norm_limitation
     (R : Chapter09GlobalClassFormationData C) :
     chapter09CommonClassNormGroup C.basePrincipal C.ideleNormL =
       chapter09CommonClassNormGroup C.basePrincipal C.ideleNormM := by
-  sorry
+  have hleft :
+      chapter09CommonClassNormGroup C.basePrincipal C.ideleNormL = R.artin.ker := by
+    rw [← R.leftReciprocity_compatibility,
+      MonoidHom.ker_comp_of_injective _ _ R.leftReciprocity.injective,
+      QuotientGroup.ker_mk']
+  have hright :
+      chapter09CommonClassNormGroup C.basePrincipal C.ideleNormM = R.artin.ker := by
+    rw [← R.rightReciprocity_compatibility,
+      MonoidHom.ker_comp_of_injective _ _ R.rightReciprocity.injective,
+      QuotientGroup.ker_mk']
+  exact hleft.trans hright.symm
 
 theorem chapter09_global_class_norm_limitation_of_finite_reciprocity
     {K L I_K I_L I_M C_L C_M : Type*}
@@ -426,7 +446,26 @@ theorem chapter09_global_class_norm_index
       Module.finrank K
           (chapter09GlobalMaximalAbelianSubextension (K := K) (L := L)) =
         Nat.card (Abelianization (Gal(L / K))) := by
-  sorry
+  have hfin :
+      Module.finrank K
+          (chapter09GlobalMaximalAbelianSubextension (K := K) (L := L)) =
+        Nat.card (Abelianization (Gal(L / K))) := by
+    change Module.finrank K
+        (IntermediateField.fixedField (commutator (Gal(L / K)))) = _
+    rw [IntermediateField.finrank_eq_fixingSubgroup_index,
+      IntermediateField.fixingSubgroup_fixedField, Subgroup.index_eq_card]
+    rfl
+  constructor
+  · calc
+      (chapter09CommonClassNormGroup C.basePrincipal C.ideleNormL).index =
+          Nat.card (chapter09CommonIdeleClassGroup C.basePrincipal ⧸
+            chapter09CommonClassNormGroup C.basePrincipal C.ideleNormL) :=
+        Subgroup.index_eq_card _
+      _ = Nat.card (Abelianization (Gal(L / K))) :=
+        Nat.card_congr R.leftReciprocity.toEquiv
+      _ = Module.finrank K
+          (chapter09GlobalMaximalAbelianSubextension (K := K) (L := L)) := hfin.symm
+  · exact hfin
 
 theorem chapter09_global_class_norm_index_as_abelianization
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -435,7 +474,12 @@ theorem chapter09_global_class_norm_index_as_abelianization
     Module.finrank K
         (chapter09GlobalMaximalAbelianSubextension (K := K) (L := L)) =
       Nat.card (chapter09GlobalGaloisAbelianization K L) := by
-  sorry
+  change Module.finrank K
+      (IntermediateField.fixedField (commutator (Gal(L / K)))) =
+    Nat.card (Abelianization (Gal(L / K)))
+  rw [IntermediateField.finrank_eq_fixingSubgroup_index,
+    IntermediateField.fixingSubgroup_fixedField, Subgroup.index_eq_card]
+  rfl
 
 theorem chapter09_local_norm_limitation
     {K_v L_w D : Type*} [Field K_v] [Field L_w] [Algebra K_v L_w]
@@ -445,7 +489,18 @@ theorem chapter09_local_norm_limitation
     chapter09LocalFieldNormSubgroup K_v L_w =
       chapter09LocalFieldNormSubgroup K_v
         (chapter09LocalMaximalAbelianSubextension (K_v := K_v) (L_w := L_w) e) := by
-  sorry
+  have hleft : chapter09LocalFieldNormSubgroup K_v L_w = R.artin.ker := by
+    rw [← R.leftReciprocity_compatibility,
+      MonoidHom.ker_comp_of_injective _ _ R.leftReciprocity.injective,
+      QuotientGroup.ker_mk']
+  have hright :
+      chapter09LocalFieldNormSubgroup K_v
+          (chapter09LocalMaximalAbelianSubextension (K_v := K_v) (L_w := L_w) e) =
+        R.artin.ker := by
+    rw [← R.rightReciprocity_compatibility,
+      MonoidHom.ker_comp_of_injective _ _ R.rightReciprocity.injective,
+      QuotientGroup.ker_mk']
+  exact hleft.trans hright.symm
 
 /-!
 The global fixed-field construction and the local fixed-field construction

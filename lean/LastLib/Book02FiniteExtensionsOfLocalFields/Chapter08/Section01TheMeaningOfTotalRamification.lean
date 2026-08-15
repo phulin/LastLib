@@ -56,9 +56,8 @@ totally ramified endpoint. -/
 theorem chapter08_total_ramification_degree_formula
     (p : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile)
     (hdegree : p.degree = p.ramificationIndex * p.residueDegree)
-    (htotal : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10TotallyRamified p) :
+    (hresidue : p.residueDegree = 1) :
     p.degree = p.ramificationIndex := by
-  rcases htotal with ⟨_, hresidue⟩
   simpa [hresidue] using hdegree
 
 /-- A root relation of the form used by the equal-characteristic example
@@ -155,12 +154,10 @@ theorem chapter08_total_ramification_inherited_by_subextensions
 -- preservation statement vacuous.
 /-- The invariant-level interface for the unramified base-change assertion in
 Book §8.1. -/
-def chapter08UnramifiedBaseChangeProfile
+abbrev chapter08UnramifiedBaseChangeProfile
     (base p p' : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile) : Prop :=
-  LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10Unramified base ∧
-    p'.degree = p.degree ∧
-    p'.ramificationIndex = p.ramificationIndex ∧
-    p'.residueDegree = p.residueDegree
+  LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10UnramifiedBaseChangeProfile
+    base p p'
 
 /-- Book §8.1: unramified base change preserves total ramification once the
 residue-degree compatibility supplied by the base-change theorem is recorded. -/

@@ -64,6 +64,19 @@ noncomputable def pulledDescentDatum (D : DescentDatum A B) :
     BaseChangedDescentDatum (A := A) (B := B) (A' := A') := by
   sorry
 
+/-- The underlying module of the pulled datum is the scalar extension of the original `B`-module
+along the left tensor-factor map `B → B ⊗[A] A'`.  This is the module-level part of pulling a
+descent datum through base change; the compatible coaction is retained by
+`pulledDescentDatum`. -/
+theorem pulledDescentDatum_underlying_iso (D : DescentDatum A B) :
+    Nonempty
+      ((pulledDescentDatum (A := A) (B := B) (A' := A') D).A ≅
+        letI : Algebra B (baseChangedRing (A := A) (B := B) (A' := A')) :=
+          Algebra.TensorProduct.leftAlgebra
+        (ModuleCat.extendScalars
+          (algebraMap B (baseChangedRing (A := A) (B := B) (A' := A')))).obj D.A) := by
+  sorry
+
 /-- The canonical datum on the scalar extension of the descended module. -/
 noncomputable def canonicalBaseChangedDescentDatum (D : DescentDatum A B) :
     BaseChangedDescentDatum (A := A) (B := B) (A' := A') := by
@@ -88,7 +101,7 @@ theorem baseChange_of_invariant_module
   sorry
 
 theorem flat_base_change_preserves_invariant_equalizer_after_base_change
-    [Module.FaithfullyFlat A B] [Module.Flat A A'] (D : DescentDatum A B) :
+    [Module.FaithfullyFlat A B] (D : DescentDatum A B) :
     Nonempty
       (baseChangedInvariantModule (A := A) (B := B) (A' := A') D ≅
         letI : Algebra A' (baseChangedRing (A := A) (B := B) (A' := A')) := baseChangeAlgebra
@@ -164,6 +177,13 @@ noncomputable def restrictDescentDatumToIntermediate
     [tower : IsScalarTower A B C]
     (D : DescentDatum.{u, u} A C) :
     DescentDatum.{u, u} B C := by
+  sorry
+
+@[simp]
+theorem restrictDescentDatumToIntermediate_underlying
+    [tower : IsScalarTower A B C]
+    (D : DescentDatum.{u, u} A C) :
+    (restrictDescentDatumToIntermediate (A := A) (B := B) (C := C) D).A = D.A := by
   sorry
 
 theorem remaining_compatibility_descends_by_fullFaithfulness

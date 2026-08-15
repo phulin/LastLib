@@ -38,8 +38,6 @@ structure Chapter05SingleWildBreakData
 theorem chapter05_single_wild_break_herbrand_formula
     {G : Type*} [Group G] [Fintype G]
     (D : Chapter05SingleWildBreakData G)
-    (_hintegrable : ∀ a b : ℝ,
-      IntervalIntegrable (chapter05HerbrandSlope D.profile) volume a b)
     (u : ℝ) :
     chapter05HerbrandFunction D.profile u =
       chapter05SingleBreakHerbrand D.p D.m u := by
@@ -106,9 +104,7 @@ theorem chapter05_single_wild_break_herbrand_formula
 theorem chapter05_single_wild_break_upper_label_is_the_same
     {G : Type*} [Group G] [Fintype G]
     (D : Chapter05SingleWildBreakData G)
-    (hbij : Function.Bijective (chapter05HerbrandFunction D.profile))
-    (_hintegrable : ∀ a b : ℝ,
-      IntervalIntegrable (chapter05HerbrandSlope D.profile) volume a b) :
+    (hbij : Function.Bijective (chapter05HerbrandFunction D.profile)) :
     chapter05UpperBreak D.profile (D.m : ℝ) ∧
       chapter05HerbrandFunction D.profile (D.m : ℝ) = (D.m : ℝ) ∧
       ∀ v : ℝ, chapter05UpperBreak D.profile v → v = (D.m : ℝ) := by
@@ -119,11 +115,7 @@ theorem chapter05_single_wild_break_upper_label_is_the_same
       chapter05HerbrandFunction D.profile x =
         chapter05SingleBreakHerbrand D.p D.m x := by
     intro x
-    exact chapter05_single_wild_break_herbrand_formula D (volume := 0)
-      (by
-        intro a' b'
-        exact (intervalIntegrable_iff).2
-          (_root_.MeasureTheory.IntegrableOn.of_measure_zero (by simp))) x
+    exact chapter05_single_wild_break_herbrand_formula D x
   have hm0 : (0 : ℝ) ≤ (D.m : ℝ) := by
     exact_mod_cast D.m_pos.le
   have hF_le : ∀ {x : ℝ}, x ≤ (D.m : ℝ) →
@@ -274,8 +266,6 @@ theorem chapter05_tame_herbrand_formula
     (hcard : Nat.card (D.lowerGroup 0) = e)
     (_htotal : Nat.card G = e)
     (htrivial : ∀ u : ℝ, 0 < u → D.lowerGroup u = ⊥)
-    (_hintegrable : ∀ a b : ℝ,
-      IntervalIntegrable (chapter05HerbrandSlope D) volume a b)
     (u : ℝ) :
     chapter05HerbrandFunction D u = chapter05TameHerbrand e u := by
   by_cases hu : u ≤ 0
@@ -327,11 +317,7 @@ theorem chapter05_tame_has_only_zero_break
       chapter05HerbrandFunction D x = chapter05TameHerbrand e x := by
     intro x
     exact chapter05_tame_herbrand_formula D e (by omega) hcard htotal
-      htrivial (volume := 0)
-      (by
-        intro a' b'
-        exact (intervalIntegrable_iff).2
-          (_root_.MeasureTheory.IntegrableOn.of_measure_zero (by simp))) x
+      htrivial x
   have hupper_neg : ∀ {v : ℝ}, (-1 : ℝ) ≤ v → v < 0 →
       chapter05UpperRamificationGroup D v = ⊤ := by
     intro v hv hv0

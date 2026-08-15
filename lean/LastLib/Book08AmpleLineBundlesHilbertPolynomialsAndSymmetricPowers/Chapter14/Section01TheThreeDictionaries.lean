@@ -184,7 +184,7 @@ theorem chapter14_ample_bundle_gives_the_three_asymptotic_forms
   · change ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
       chapter04VeryAmple O.family (chapter04LineBundleTensorPower L n)
     exact @chapter04_ample_eventually_veryAmple_power X O.base O.family
-      O.baseQuasiCompact O.baseAffine O.familyQuasiCompact O.familyLocallyOfFiniteType
+      O.baseQuasiCompact O.familyQuasiCompact O.familyLocallyOfFiniteType
       O.familyQuasiSeparated L hL
 
 def chapter14VeryAmplePowerEmbeddingStatement

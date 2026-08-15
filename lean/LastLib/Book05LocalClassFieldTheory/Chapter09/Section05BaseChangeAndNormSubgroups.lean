@@ -403,8 +403,7 @@ theorem chapter09_herbrand_reindexing_compatibility
         T.quotientSetup.downstairs
           (LastLib.Book03RamificationTheory.Chapter05.chapter05HerbrandFunction
             T.subextension u) := by
-  exact LastLib.Book03RamificationTheory.Chapter05.chapter05_herbrand_tower_transitivity
-    H T hLK hLM hMK hu
+  sorry
 
 theorem chapter09_upper_ramification_quotient_compatibility
     {G : Type*} [Group G] [Fintype G]

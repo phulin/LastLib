@@ -7,7 +7,7 @@ noncomputable section
 open CategoryTheory
 open AlgebraicGeometry
 
-universe u
+universe u v
 
 /-! ## 9.3 Determinants, sections, and forms -/
 
@@ -666,12 +666,414 @@ def chapter09InternalHomDescentCompatible
     (E : Chapter09ModuleDescentDatum p s) : Prop :=
   chapter09CechCocycleCondition p D.nerve (chapter09InternalHomOverlapIso D E)
 
+private theorem chapter09_tensor_overlap_transport
+    {S T : Scheme.{u}} {p : T ⟶ S} {r s : ℕ}
+    (D : Chapter09ModuleDescentDatum p r)
+    (E : Chapter09ModuleDescentDatum p s) :
+    ∀ {U : Scheme.{u}} (q : U ⟶ Chapter09DoubleOverlap p),
+      (chapter09_tensor_commutes_with_pullback
+          (q ≫ chapter09DoubleFirst p) D.upstairs.carrier E.upstairs.carrier).hom ≫
+        chapter09SheafOperations.tensorMap
+          ((chapter09CechPullbackIso p q D.overlapIso).hom)
+          ((chapter09CechPullbackIso p q E.overlapIso).hom) =
+      (chapter09CechPullbackIso p q (chapter09TensorOverlapIso D E)).hom ≫
+        (chapter09_tensor_commutes_with_pullback
+          (q ≫ chapter09DoubleSecond p) D.upstairs.carrier E.upstairs.carrier).hom := by
+  intro U q
+  have htpF :
+      (chapter09PullbackCompositionIso q (chapter09DoubleFirst p)
+          (chapter09TensorModule D.upstairs.carrier E.upstairs.carrier)).hom ≫
+        (Scheme.Modules.pullback q).map
+          (chapter09_tensor_commutes_with_pullback (chapter09DoubleFirst p)
+            D.upstairs.carrier E.upstairs.carrier).hom ≫
+        (chapter09_tensor_commutes_with_pullback q
+          (Chapter09PullbackModule (chapter09DoubleFirst p) D.upstairs.carrier)
+          (Chapter09PullbackModule (chapter09DoubleFirst p) E.upstairs.carrier)).hom ≫
+        (chapter09TensorMapIso
+          (chapter09PullbackCompositionIso q (chapter09DoubleFirst p)
+            D.upstairs.carrier).symm
+          (chapter09PullbackCompositionIso q (chapter09DoubleFirst p)
+            E.upstairs.carrier).symm).hom =
+      (chapter09_tensor_commutes_with_pullback
+        (q ≫ chapter09DoubleFirst p) D.upstairs.carrier E.upstairs.carrier).hom := by
+    exact congrArg (fun e => e.hom)
+      (Chapter09SheafOperationsData.tensorPullback_cech
+        chapter09SheafOperations (chapter09DoubleFirst p) q
+          D.upstairs.carrier E.upstairs.carrier)
+  have htpG :
+      (chapter09PullbackCompositionIso q (chapter09DoubleSecond p)
+          (chapter09TensorModule D.upstairs.carrier E.upstairs.carrier)).hom ≫
+        (Scheme.Modules.pullback q).map
+          (chapter09_tensor_commutes_with_pullback (chapter09DoubleSecond p)
+            D.upstairs.carrier E.upstairs.carrier).hom ≫
+        (chapter09_tensor_commutes_with_pullback q
+          (Chapter09PullbackModule (chapter09DoubleSecond p) D.upstairs.carrier)
+          (Chapter09PullbackModule (chapter09DoubleSecond p) E.upstairs.carrier)).hom ≫
+        (chapter09TensorMapIso
+          (chapter09PullbackCompositionIso q (chapter09DoubleSecond p)
+            D.upstairs.carrier).symm
+          (chapter09PullbackCompositionIso q (chapter09DoubleSecond p)
+            E.upstairs.carrier).symm).hom =
+      (chapter09_tensor_commutes_with_pullback
+        (q ≫ chapter09DoubleSecond p) D.upstairs.carrier E.upstairs.carrier).hom := by
+    exact congrArg (fun e => e.hom)
+      (Chapter09SheafOperationsData.tensorPullback_cech
+        chapter09SheafOperations (chapter09DoubleSecond p) q
+          D.upstairs.carrier E.upstairs.carrier)
+  have hnat :
+      (chapter09_tensor_commutes_with_pullback q
+          (Chapter09PullbackModule (chapter09DoubleFirst p) D.upstairs.carrier)
+          (Chapter09PullbackModule (chapter09DoubleFirst p) E.upstairs.carrier)).hom ≫
+        chapter09SheafOperations.tensorMap
+          ((Scheme.Modules.pullback q).map D.overlapIso.hom)
+          ((Scheme.Modules.pullback q).map E.overlapIso.hom) =
+      (Scheme.Modules.pullback q).map
+          (chapter09SheafOperations.tensorMap D.overlapIso.hom E.overlapIso.hom) ≫
+        (chapter09_tensor_commutes_with_pullback q
+          (Chapter09PullbackModule (chapter09DoubleSecond p) D.upstairs.carrier)
+          (Chapter09PullbackModule (chapter09DoubleSecond p) E.upstairs.carrier)).hom := by
+    exact Chapter09SheafOperationsData.tensorPullback_natural
+      chapter09SheafOperations q D.overlapIso.hom E.overlapIso.hom
+  have hIsoF :
+      (chapter09TensorMapIso
+          (chapter09PullbackCompositionIso q (chapter09DoubleFirst p)
+            D.upstairs.carrier).symm
+          (chapter09PullbackCompositionIso q (chapter09DoubleFirst p)
+            E.upstairs.carrier).symm).hom =
+        chapter09SheafOperations.tensorMap
+          (chapter09PullbackCompositionIso q (chapter09DoubleFirst p)
+            D.upstairs.carrier).inv
+          (chapter09PullbackCompositionIso q (chapter09DoubleFirst p)
+            E.upstairs.carrier).inv := by
+    change ((Chapter09SheafOperationsData.tensorMapIso chapter09SheafOperations
+      (chapter09PullbackCompositionIso q (chapter09DoubleFirst p)
+        D.upstairs.carrier).symm
+      (chapter09PullbackCompositionIso q (chapter09DoubleFirst p)
+        E.upstairs.carrier).symm).1).hom = _
+    exact (Chapter09SheafOperationsData.tensorMapIso chapter09SheafOperations
+      (chapter09PullbackCompositionIso q (chapter09DoubleFirst p)
+        D.upstairs.carrier).symm
+      (chapter09PullbackCompositionIso q (chapter09DoubleFirst p)
+        E.upstairs.carrier).symm).2
+  have hIsoG :
+      (chapter09TensorMapIso
+          (chapter09PullbackCompositionIso q (chapter09DoubleSecond p)
+            D.upstairs.carrier).symm
+          (chapter09PullbackCompositionIso q (chapter09DoubleSecond p)
+            E.upstairs.carrier).symm).hom =
+        chapter09SheafOperations.tensorMap
+          (chapter09PullbackCompositionIso q (chapter09DoubleSecond p)
+            D.upstairs.carrier).inv
+          (chapter09PullbackCompositionIso q (chapter09DoubleSecond p)
+            E.upstairs.carrier).inv := by
+    change ((Chapter09SheafOperationsData.tensorMapIso chapter09SheafOperations
+      (chapter09PullbackCompositionIso q (chapter09DoubleSecond p)
+        D.upstairs.carrier).symm
+      (chapter09PullbackCompositionIso q (chapter09DoubleSecond p)
+        E.upstairs.carrier).symm).1).hom = _
+    exact (Chapter09SheafOperationsData.tensorMapIso chapter09SheafOperations
+      (chapter09PullbackCompositionIso q (chapter09DoubleSecond p)
+        D.upstairs.carrier).symm
+      (chapter09PullbackCompositionIso q (chapter09DoubleSecond p)
+        E.upstairs.carrier).symm).2
+  simp only [chapter09CechPullbackIso, chapter09TensorOverlapIso,
+    Iso.trans_hom, Iso.symm_hom, Functor.mapIso_hom]
+  rw [← htpF, ← htpG, hIsoF, hIsoG]
+  simp only [Functor.map_comp, Chapter09SheafOperationsData.tensorMap_comp,
+    Category.assoc]
+  have hcancelF :
+      chapter09SheafOperations.tensorMap
+          (chapter09PullbackCompositionIso q (chapter09DoubleFirst p)
+            D.upstairs.carrier).inv
+          (chapter09PullbackCompositionIso q (chapter09DoubleFirst p)
+            E.upstairs.carrier).inv ≫
+        chapter09SheafOperations.tensorMap
+          (chapter09PullbackCompositionIso q (chapter09DoubleFirst p)
+            D.upstairs.carrier).hom
+          (chapter09PullbackCompositionIso q (chapter09DoubleFirst p)
+            E.upstairs.carrier).hom =
+      𝟙 _ := by
+    rw [← Chapter09SheafOperationsData.tensorMap_comp chapter09SheafOperations
+        (chapter09PullbackCompositionIso q (chapter09DoubleFirst p)
+          D.upstairs.carrier).inv
+        (chapter09PullbackCompositionIso q (chapter09DoubleFirst p)
+          D.upstairs.carrier).hom
+        (chapter09PullbackCompositionIso q (chapter09DoubleFirst p)
+          E.upstairs.carrier).inv
+        (chapter09PullbackCompositionIso q (chapter09DoubleFirst p)
+          E.upstairs.carrier).hom]
+    simp only [Iso.inv_hom_id, Chapter09SheafOperationsData.tensorMap_id]
+  simp only [← Category.assoc, hcancelF, Category.id_comp]
+  simp only [Category.assoc]
+  rw [← Category.assoc
+    (chapter09_tensor_commutes_with_pullback q
+      (Chapter09PullbackModule (chapter09DoubleFirst p) D.upstairs.carrier)
+      (Chapter09PullbackModule (chapter09DoubleFirst p) E.upstairs.carrier)).hom
+    (chapter09SheafOperations.tensorMap
+      ((Scheme.Modules.pullback q).map D.overlapIso.hom)
+      ((Scheme.Modules.pullback q).map E.overlapIso.hom))
+    (chapter09SheafOperations.tensorMap
+      (chapter09PullbackCompositionIso q (chapter09DoubleSecond p)
+        D.upstairs.carrier).inv
+      (chapter09PullbackCompositionIso q (chapter09DoubleSecond p)
+        E.upstairs.carrier).inv)]
+  rw [hnat]
+  simp only [Category.assoc, Iso.inv_hom_id_assoc]
+  have hIsoDE :
+      (chapter09TensorMapIso D.overlapIso E.overlapIso).hom =
+        chapter09SheafOperations.tensorMap D.overlapIso.hom E.overlapIso.hom := by
+    change ((Chapter09SheafOperationsData.tensorMapIso chapter09SheafOperations
+      D.overlapIso E.overlapIso).1).hom = _
+    exact (Chapter09SheafOperationsData.tensorMapIso chapter09SheafOperations
+      D.overlapIso E.overlapIso).2
+  have hcancelG :
+      (Scheme.Modules.pullback q).map
+          (chapter09_tensor_commutes_with_pullback (chapter09DoubleSecond p)
+            D.upstairs.carrier E.upstairs.carrier).inv ≫
+        (Scheme.Modules.pullback q).map
+          (chapter09_tensor_commutes_with_pullback (chapter09DoubleSecond p)
+            D.upstairs.carrier E.upstairs.carrier).hom =
+      𝟙 _ := by
+    rw [← Functor.map_comp]
+    simp
+  rw [hIsoDE]
+  simp only [← Category.assoc, hcancelG, Category.id_comp]
+
+private theorem chapter09_tensor_cech_expansion
+    {S T : Scheme.{u}} {p : T ⟶ S} {r s : ℕ}
+    (D : Chapter09ModuleDescentDatum p r)
+    (E : Chapter09ModuleDescentDatum p s)
+    {U : Scheme.{u}} (q : U ⟶ Chapter09DoubleOverlap p) :
+    (chapter09CechPullbackIso p q (chapter09TensorOverlapIso D E)).hom =
+      (chapter09_tensor_commutes_with_pullback
+        (q ≫ chapter09DoubleFirst p) D.upstairs.carrier E.upstairs.carrier).hom ≫
+        chapter09SheafOperations.tensorMap
+          (chapter09CechPullbackIso p q D.overlapIso).hom
+          (chapter09CechPullbackIso p q E.overlapIso).hom ≫
+        (chapter09_tensor_commutes_with_pullback
+          (q ≫ chapter09DoubleSecond p) D.upstairs.carrier E.upstairs.carrier).inv := by
+  apply (cancel_mono
+    (chapter09_tensor_commutes_with_pullback
+      (q ≫ chapter09DoubleSecond p) D.upstairs.carrier E.upstairs.carrier).hom).1
+  simpa only [Category.assoc, Iso.inv_hom_id, Category.comp_id] using
+    (chapter09_tensor_overlap_transport D E (q := q)).symm
+
+private theorem chapter09_tensor_pullback_eqToIso_naturality
+    {S T : Scheme.{u}} {p : T ⟶ S} {r s : ℕ}
+    (D : Chapter09ModuleDescentDatum p r)
+    (E : Chapter09ModuleDescentDatum p s)
+    {q q' : LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter04.chapter04TripleProduct p ⟶ T}
+    (e : q = q') :
+    (chapter09_tensor_commutes_with_pullback q
+      D.upstairs.carrier E.upstairs.carrier).hom ≫
+        chapter09SheafOperations.tensorMap
+          (eqToIso (congrArg
+            (fun q :
+                LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter04.chapter04TripleProduct p ⟶ T =>
+              Chapter09PullbackModule q D.upstairs.carrier) e)).hom
+          (eqToIso (congrArg
+            (fun q :
+                LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter04.chapter04TripleProduct p ⟶ T =>
+              Chapter09PullbackModule q E.upstairs.carrier) e)).hom =
+      (eqToIso (congrArg
+          (fun q :
+              LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter04.chapter04TripleProduct p ⟶ T =>
+            Chapter09PullbackModule q
+              (chapter09TensorModule D.upstairs.carrier E.upstairs.carrier)) e)).hom ≫
+        (chapter09_tensor_commutes_with_pullback q'
+          D.upstairs.carrier E.upstairs.carrier).hom := by
+  cases e
+  simp only [eqToIso_refl, Iso.refl_hom,
+    Chapter09SheafOperationsData.tensorMap_id, Category.comp_id, Category.id_comp]
+
+private theorem chapter09_tensor_pullback_eqToIso_conjugation
+    {S T : Scheme.{u}} {p : T ⟶ S} {r s : ℕ}
+    (D : Chapter09ModuleDescentDatum p r)
+    (E : Chapter09ModuleDescentDatum p s)
+    {q q' : LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter04.chapter04TripleProduct p ⟶ T}
+    (e : q = q') :
+    (chapter09_tensor_commutes_with_pullback q
+      D.upstairs.carrier E.upstairs.carrier).inv ≫
+        (eqToIso (congrArg
+          (fun q :
+              LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter04.chapter04TripleProduct p ⟶ T =>
+            Chapter09PullbackModule q
+              (chapter09TensorModule D.upstairs.carrier E.upstairs.carrier)) e)).hom ≫
+      (chapter09_tensor_commutes_with_pullback q'
+        D.upstairs.carrier E.upstairs.carrier).hom =
+    chapter09SheafOperations.tensorMap
+      (eqToIso (congrArg
+        (fun q :
+            LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter04.chapter04TripleProduct p ⟶ T =>
+          Chapter09PullbackModule q D.upstairs.carrier) e)).hom
+      (eqToIso (congrArg
+        (fun q :
+            LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter04.chapter04TripleProduct p ⟶ T =>
+          Chapter09PullbackModule q E.upstairs.carrier) e)).hom := by
+  rw [← chapter09_tensor_pullback_eqToIso_naturality D E e]
+  simp only [Iso.inv_hom_id_assoc]
+
+private theorem chapter09_tensor_cocycle_of
+    {C : Type v} [Category C]
+    (P : C → C → C)
+    (tm : ∀ {A A' B B' : C}, (A ⟶ A') → (B ⟶ B') →
+      Quiver.Hom (P A B) (P A' B'))
+    (tm_comp : ∀ {A A' A'' B B' B'' : C}
+      (f : A ⟶ A') (f' : A' ⟶ A'') (g : B ⟶ B') (g' : B' ⟶ B''),
+      tm (f ≫ f') (g ≫ g') = tm f g ≫ tm f' g')
+    {DF12 DS12 DF23 DS23 DF13 DS13 EF12 ES12 EF23 ES23 EF13 ES13 : C}
+    {TF12 TS12 TF23 TS23 TF13 TS13 : C}
+    (d12 : DF12 ⟶ DS12) (d23 : DF23 ⟶ DS23) (d13 : DF13 ⟶ DS13)
+    (fd2 : DS12 ⟶ DF23) (fd3 : DS23 ⟶ DS13) (fd1 : DF12 ⟶ DF13)
+    (e12 : EF12 ⟶ ES12) (e23 : EF23 ⟶ ES23) (e13 : EF13 ⟶ ES13)
+    (fe2 : ES12 ⟶ EF23) (fe3 : ES23 ⟶ ES13) (fe1 : EF12 ⟶ EF13)
+    (t12F : TF12 ≅ P DF12 EF12) (t12S : TS12 ≅ P DS12 ES12)
+    (t23F : TF23 ≅ P DF23 EF23) (t23S : TS23 ≅ P DS23 ES23)
+    (t13F : TF13 ≅ P DF13 EF13) (t13S : TS13 ≅ P DS13 ES13)
+    (c12 : TF12 ⟶ TS12) (c23 : TF23 ⟶ TS23) (c13 : TF13 ⟶ TS13)
+    (f2 : TS12 ⟶ TF23) (f3 : TS23 ⟶ TS13) (f1 : TF12 ⟶ TF13)
+    (hc12 : c12 = t12F.hom ≫ tm d12 e12 ≫ t12S.inv)
+    (hc23 : c23 = t23F.hom ≫ tm d23 e23 ≫ t23S.inv)
+    (hc13 : c13 = t13F.hom ≫ tm d13 e13 ≫ t13S.inv)
+    (h2 : t12S.inv ≫ f2 ≫ t23F.hom = tm fd2 fe2)
+    (h3 : t23S.inv ≫ f3 ≫ t13S.hom = tm fd3 fe3)
+    (h1 : f1 ≫ t13F.hom = t12F.hom ≫ tm fd1 fe1)
+    (hD : d12 ≫ fd2 ≫ d23 ≫ fd3 = fd1 ≫ d13)
+    (hE : e12 ≫ fe2 ≫ e23 ≫ fe3 = fe1 ≫ e13) :
+    c12 ≫ f2 ≫ c23 ≫ f3 = f1 ≫ c13 := by
+  rw [hc12, hc23, hc13]
+  apply (cancel_mono t13S.hom).1
+  have h2tail := congrArg
+    (fun k => k ≫ tm d23 e23 ≫ t23S.inv ≫ f3 ≫ t13S.hom) h2
+  have h1tail := congrArg (fun k => k ≫ tm d13 e13) h1
+  simp only [Category.assoc, Iso.inv_hom_id, Category.comp_id] at h2tail h1tail ⊢
+  rw [h2tail, h3, h1tail]
+  rw [← tm_comp, ← tm_comp, ← tm_comp, ← tm_comp]
+  rw [hD, hE]
+
 theorem chapter09_tensor_preserves_descent
     {S T : Scheme.{u}} {p : T ⟶ S} {r s : ℕ}
     (D : Chapter09ModuleDescentDatum p r)
     (E : Chapter09ModuleDescentDatum p s) :
     chapter09TensorDescentCompatible D E := by
-  sorry
+  let P12 :=
+    LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter04.chapter04P12 p
+  let P23 :=
+    LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter04.chapter04P23 p
+  let P13 :=
+    LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter04.chapter04P13 p
+  let d12 := (chapter09CechPullbackIso p P12 D.overlapIso).hom
+  let d23 := (chapter09CechPullbackIso p P23 D.overlapIso).hom
+  let d13 := (chapter09CechPullbackIso p P13 D.overlapIso).hom
+  let fd2 := (eqToIso (congrArg
+    (fun q => Chapter09PullbackModule q D.upstairs.carrier)
+    (chapter09CechSecondFace p))).hom
+  let fd3 := (eqToIso (congrArg
+    (fun q => Chapter09PullbackModule q D.upstairs.carrier)
+    (chapter09CechThirdFace p))).hom
+  let fd1 := (eqToIso (congrArg
+    (fun q => Chapter09PullbackModule q D.upstairs.carrier)
+    (chapter09CechFirstFace p))).hom
+  let e12 := (chapter09CechPullbackIso p P12 E.overlapIso).hom
+  let e23 := (chapter09CechPullbackIso p P23 E.overlapIso).hom
+  let e13 := (chapter09CechPullbackIso p P13 E.overlapIso).hom
+  let fe2 := (eqToIso (congrArg
+    (fun q => Chapter09PullbackModule q E.upstairs.carrier)
+    (chapter09CechSecondFace p))).hom
+  let fe3 := (eqToIso (congrArg
+    (fun q => Chapter09PullbackModule q E.upstairs.carrier)
+    (chapter09CechThirdFace p))).hom
+  let fe1 := (eqToIso (congrArg
+    (fun q => Chapter09PullbackModule q E.upstairs.carrier)
+    (chapter09CechFirstFace p))).hom
+  let t12F := chapter09_tensor_commutes_with_pullback
+    (P12 ≫ chapter09DoubleFirst p) D.upstairs.carrier E.upstairs.carrier
+  let t12S := chapter09_tensor_commutes_with_pullback
+    (P12 ≫ chapter09DoubleSecond p) D.upstairs.carrier E.upstairs.carrier
+  let t23F := chapter09_tensor_commutes_with_pullback
+    (P23 ≫ chapter09DoubleFirst p) D.upstairs.carrier E.upstairs.carrier
+  let t23S := chapter09_tensor_commutes_with_pullback
+    (P23 ≫ chapter09DoubleSecond p) D.upstairs.carrier E.upstairs.carrier
+  let t13F := chapter09_tensor_commutes_with_pullback
+    (P13 ≫ chapter09DoubleFirst p) D.upstairs.carrier E.upstairs.carrier
+  let t13S := chapter09_tensor_commutes_with_pullback
+    (P13 ≫ chapter09DoubleSecond p) D.upstairs.carrier E.upstairs.carrier
+  let c12 := (chapter09CechPullbackIso p P12
+    (chapter09TensorOverlapIso D E)).hom
+  let c23 := (chapter09CechPullbackIso p P23
+    (chapter09TensorOverlapIso D E)).hom
+  let c13 := (chapter09CechPullbackIso p P13
+    (chapter09TensorOverlapIso D E)).hom
+  let f2 := (eqToIso (congrArg
+    (fun q => Chapter09PullbackModule q
+      (chapter09TensorModule D.upstairs.carrier E.upstairs.carrier))
+    (chapter09CechSecondFace p))).hom
+  let f3 := (eqToIso (congrArg
+    (fun q => Chapter09PullbackModule q
+      (chapter09TensorModule D.upstairs.carrier E.upstairs.carrier))
+    (chapter09CechThirdFace p))).hom
+  let f1 := (eqToIso (congrArg
+    (fun q => Chapter09PullbackModule q
+      (chapter09TensorModule D.upstairs.carrier E.upstairs.carrier))
+    (chapter09CechFirstFace p))).hom
+  have hc12 : c12 = t12F.hom ≫ chapter09SheafOperations.tensorMap d12 e12 ≫ t12S.inv := by
+    simpa [c12, t12F, t12S, d12, e12, P12] using
+      (chapter09_tensor_cech_expansion D E (q := P12))
+  have hc23 : c23 = t23F.hom ≫ chapter09SheafOperations.tensorMap d23 e23 ≫ t23S.inv := by
+    simpa [c23, t23F, t23S, d23, e23, P23] using
+      (chapter09_tensor_cech_expansion D E (q := P23))
+  have hc13 : c13 = t13F.hom ≫ chapter09SheafOperations.tensorMap d13 e13 ≫ t13S.inv := by
+    simpa [c13, t13F, t13S, d13, e13, P13] using
+      (chapter09_tensor_cech_expansion D E (q := P13))
+  have h2 : t12S.inv ≫ f2 ≫ t23F.hom =
+      chapter09SheafOperations.tensorMap fd2 fe2 := by
+    simpa [t12S, t23F, f2, fd2, fe2, P12, P23] using
+      (chapter09_tensor_pullback_eqToIso_conjugation D E
+        (chapter09CechSecondFace p))
+  have h3 : t23S.inv ≫ f3 ≫ t13S.hom =
+      chapter09SheafOperations.tensorMap fd3 fe3 := by
+    simpa [t23S, t13S, f3, fd3, fe3, P23, P13] using
+      (chapter09_tensor_pullback_eqToIso_conjugation D E
+        (chapter09CechThirdFace p))
+  have h1 : f1 ≫ t13F.hom = t12F.hom ≫
+      chapter09SheafOperations.tensorMap fd1 fe1 := by
+    simpa [t12F, t13F, f1, fd1, fe1, P12, P13] using
+      (chapter09_tensor_pullback_eqToIso_naturality D E
+        (chapter09CechFirstFace p)).symm
+  have hD : d12 ≫ fd2 ≫ d23 ≫ fd3 = fd1 ≫ d13 := by
+    simpa only [chapter09CechCocycleCondition, chapter09CechTripleCondition,
+      d12, d23, d13, fd1, fd2, fd3, P12, P23, P13] using D.cocycle
+  have hE : e12 ≫ fe2 ≫ e23 ≫ fe3 = fe1 ≫ e13 := by
+    simpa only [chapter09CechCocycleCondition, chapter09CechTripleCondition,
+      e12, e23, e13, fe1, fe2, fe3, P12, P23, P13] using E.cocycle
+  have h2' := h2
+  simp only [P12, P23, t12S, t23F, f2, fd2, fe2] at h2'
+  have h3' := h3
+  simp only [P23, P13, t23S, t13S, f3, fd3, fe3] at h3'
+  have h1' := h1
+  simp only [P12, P13, t12F, t13F, f1, fd1, fe1] at h1'
+  have hD' := hD
+  simp only [P12, P23, P13, d12, d23, d13, fd1, fd2, fd3] at hD'
+  have hE' := hE
+  simp only [P12, P23, P13, e12, e23, e13, fe1, fe2, fe3] at hE'
+  unfold chapter09TensorDescentCompatible chapter09CechCocycleCondition
+    chapter09CechTripleCondition
+  rw [chapter09_tensor_cech_expansion D E (q := P12)]
+  rw [chapter09_tensor_cech_expansion D E (q := P23)]
+  rw [chapter09_tensor_cech_expansion D E (q := P13)]
+  simp only [Category.assoc]
+  simp only [P12, P23, P13]
+  rw [h2', h3', h1']
+  simp only [Category.assoc]
+  apply (cancel_mono t13S.hom).1
+  apply (cancel_epi t12F.hom).1
+  simp only [Category.assoc, Iso.inv_hom_id, Iso.hom_inv_id,
+    Category.comp_id, Category.id_comp]
+  rw [← Chapter09SheafOperationsData.tensorMap_comp,
+    ← Chapter09SheafOperationsData.tensorMap_comp,
+    ← Chapter09SheafOperationsData.tensorMap_comp,
+    ← Chapter09SheafOperationsData.tensorMap_comp]
+  rw [hD', hE']
 
 theorem chapter09_dual_preserves_descent
     {S T : Scheme.{u}} {p : T ⟶ S} {r : ℕ}

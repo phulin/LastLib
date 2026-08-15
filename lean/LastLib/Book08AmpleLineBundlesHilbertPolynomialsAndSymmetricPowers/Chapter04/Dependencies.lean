@@ -7,7 +7,9 @@ import Mathlib.CategoryTheory.Sites.SheafCohomology.Basic
 import Mathlib.AlgebraicGeometry.AffineScheme
 import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+import Mathlib.AlgebraicGeometry.Morphisms.Flat
 import Mathlib.AlgebraicGeometry.Morphisms.Finite
+import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
 import Mathlib.AlgebraicGeometry.Morphisms.FiniteType
 import Mathlib.AlgebraicGeometry.Morphisms.Immersion
 import Mathlib.AlgebraicGeometry.Morphisms.Proper
@@ -15,6 +17,7 @@ import Mathlib.AlgebraicGeometry.Morphisms.QuasiCompact
 import Mathlib.AlgebraicGeometry.Morphisms.QuasiSeparated
 import Mathlib.AlgebraicGeometry.Morphisms.Separated
 import Mathlib.AlgebraicGeometry.Noetherian
+import Mathlib.AlgebraicGeometry.Restrict
 import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
 import Mathlib.AlgebraicGeometry.ResidueField
 import Mathlib.RingTheory.Length
@@ -299,6 +302,84 @@ noncomputable def chapter04PullbackQuotientClassAlong
             (Scheme.Modules.pullback h).map q.quotient
       rw [Category.assoc, ← (Scheme.Modules.pullback h).map_comp, he])
 
+/-- Transport quotient classes along an isomorphism of the source module sheaf. -/
+noncomputable def chapter04QuotientClassMapEquiv
+    {S : Scheme.{u}} {E F : S.Modules} (e : E ≅ F) :
+    Chapter04InvertibleQuotientClass E ≃
+      Chapter04InvertibleQuotientClass F := by
+  let forward :
+      Chapter04InvertibleQuotientClass E →
+        Chapter04InvertibleQuotientClass F :=
+    Quotient.lift
+      (fun p => chapter04QuotientClassMk
+        { line := p.line
+          quotient := e.inv ≫ p.quotient
+          quotient_is_epi := by
+            exact epi_comp' (by infer_instance) p.quotient_is_epi }) (by
+        intro p q hp
+        apply Quotient.sound
+        obtain ⟨a, ha⟩ := hp
+        refine ⟨a, ?_⟩
+        change (e.inv ≫ p.quotient) ≫ a.hom = e.inv ≫ q.quotient
+        rw [Category.assoc, ha])
+  let backward :
+      Chapter04InvertibleQuotientClass F →
+        Chapter04InvertibleQuotientClass E :=
+    Quotient.lift
+      (fun p => chapter04QuotientClassMk
+        { line := p.line
+          quotient := e.hom ≫ p.quotient
+          quotient_is_epi := by
+            exact epi_comp' (by infer_instance) p.quotient_is_epi }) (by
+        intro p q hp
+        apply Quotient.sound
+        obtain ⟨a, ha⟩ := hp
+        refine ⟨a, ?_⟩
+        change (e.hom ≫ p.quotient) ≫ a.hom = e.hom ≫ q.quotient
+        rw [Category.assoc, ha])
+  exact
+    { toFun := forward
+      invFun := backward
+      left_inv := by
+        intro p
+        refine Quotient.inductionOn p (fun q => ?_)
+        apply Quotient.sound
+        refine ⟨Iso.refl _, ?_⟩
+        simp
+      right_inv := by
+        intro p
+        refine Quotient.inductionOn p (fun q => ?_)
+        apply Quotient.sound
+        refine ⟨Iso.refl _, ?_⟩
+        simp }
+
+/-- The canonical module-sheaf transport comparing the two parenthesizations of a
+triple pullback. -/
+noncomputable def chapter04PullbackTripleAssociativityIso
+    {S T U V : Scheme.{u}} (f : T ⟶ S) (h : U ⟶ T) (g : V ⟶ U)
+    (E : S.Modules) :
+    ((Scheme.Modules.pullback (g ≫ (h ≫ f))).obj E) ≅
+      ((Scheme.Modules.pullback ((g ≫ h) ≫ f)).obj E) :=
+  chapter04PullbackCompositionIso g (h ≫ f) E ≪≫
+    (Scheme.Modules.pullback g).mapIso
+      (chapter04PullbackCompositionIso h f E) ≪≫
+    (chapter04PullbackCompositionIso g h
+      ((Scheme.Modules.pullback f).obj E)).symm ≪≫
+    (chapter04PullbackCompositionIso (g ≫ h) f E).symm
+
+/-- Pullback of quotient classes is associative, after the canonical
+`Scheme.Modules.pullbackComp` transports. -/
+theorem chapter04_pullbackQuotientClassAlong_assoc
+    {S T U V : Scheme.{u}} (f : T ⟶ S) (h : U ⟶ T) (g : V ⟶ U)
+    {E : S.Modules}
+    (q : Chapter04InvertibleQuotientClass ((Scheme.Modules.pullback f).obj E)) :
+    chapter04QuotientClassMapEquiv
+        (chapter04PullbackTripleAssociativityIso f h g E)
+        (chapter04PullbackQuotientClassAlong (h ≫ f) g
+          (chapter04PullbackQuotientClassAlong f h q)) =
+      chapter04PullbackQuotientClassAlong f (g ≫ h) q := by
+  sorry
+
 /-- A scheme morphism is constant when it factors through one residue-field point. -/
 def chapter04UnderlyingConstant
     {X Y : Scheme.{u}} (g : Y ⟶ X) : Prop :=
@@ -321,6 +402,13 @@ def chapter04TwistGeneratedByRelativeGlobalSections
 /-- Finite locally free module sheaves, using Mathlib's local-generator predicates. -/
 def chapter04FiniteLocallyFree {S : Scheme.{u}} (E : S.Modules) : Prop :=
   E.IsQuasicoherent ∧ SheafOfModules.IsLocallyFree E ∧ SheafOfModules.IsFiniteType E
+
+/-- Pullback preserves the finite locally free module-sheaf interface. -/
+theorem chapter04_finiteLocallyFree_pullback
+    {S T : Scheme.{u}} (g : T ⟶ S) (E : S.Modules)
+    (hE : chapter04FiniteLocallyFree E) :
+    chapter04FiniteLocallyFree ((Scheme.Modules.pullback g).obj E) := by
+  sorry
 
 /-- The relative projective bundle and its tautological invertible sheaf. -/
 structure Chapter04ProjectiveBundle (S : Scheme.{u}) where
@@ -432,8 +520,6 @@ theorem chapter04_projective_bundle_universal_point_is_pullback_universal_quotie
 structure Chapter04VeryAmpleWitness
     {X S : Scheme.{u}} (f : X ⟶ S) (L : Chapter04LineBundle X) where
   projectiveBundle : Chapter04ProjectiveBundle S
-  universalQuotientCompatible :
-    chapter04ProjectiveBundleUniversalQuotientCompatible projectiveBundle
   map : X ⟶ projectiveBundle.space
   immersion : IsImmersion map
   over : map ≫ projectiveBundle.projection = f
@@ -449,8 +535,6 @@ def chapter04VeryAmple
 structure Chapter04ProjectiveWitness
     {X S : Scheme.{u}} (f : X ⟶ S) where
   projectiveBundle : Chapter04ProjectiveBundle S
-  universalQuotientCompatible :
-    chapter04ProjectiveBundleUniversalQuotientCompatible projectiveBundle
   map : X ⟶ projectiveBundle.space
   closedImmersion : IsClosedImmersion map
   over : map ≫ projectiveBundle.projection = f
@@ -514,6 +598,36 @@ structure Chapter04AmpleWitness
 def chapter04Ample
     {X S : Scheme.{u}} (f : X ⟶ S) (L : Chapter04LineBundle X) : Prop :=
   Nonempty (Chapter04AmpleWitness f L)
+
+/-- An affine-open ampleness witness survives arbitrary base change.  The target
+witness may refine the pulled-back affine base cover, as required when the inverse
+image of an affine open is covered by affine opens. -/
+theorem chapter04_ampleWitness_baseChange
+    {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S) (L : Chapter04LineBundle X)
+    (w : Chapter04AmpleWitness f L) :
+    Nonempty (Chapter04AmpleWitness
+      (Limits.pullback.snd f g)
+      (chapter04PullbackLineBundle (Limits.pullback.fst f g) L)) := by
+  sorry
+
+/-- The witness transport specialized to restriction over an open of the base. -/
+theorem chapter04_ampleWitness_restrict
+    {X S : Scheme.{u}} (f : X ⟶ S) (L : Chapter04LineBundle X)
+    (U : S.Opens) (w : Chapter04AmpleWitness f L) :
+    Nonempty (Chapter04AmpleWitness
+      (f ∣_ U)
+      (chapter04PullbackLineBundle (f ⁻¹ᵁ U).ι L)) := by
+  sorry
+
+/-- Relative ampleness itself is preserved by arbitrary base change. -/
+theorem chapter04_ample_baseChange
+    {X S T : Scheme.{u}} (f : X ⟶ S) (g : T ⟶ S) (L : Chapter04LineBundle X)
+    (hL : chapter04Ample f L) :
+    chapter04Ample
+      (Limits.pullback.snd f g)
+      (chapter04PullbackLineBundle (Limits.pullback.fst f g) L) := by
+  obtain ⟨w⟩ := hL
+  exact chapter04_ampleWitness_baseChange f g L w
 
 /-! ### Canonical projective line interfaces -/
 
@@ -820,6 +934,23 @@ noncomputable def chapter04CanonicalCohomologyContext (X : Scheme.{u}) :
         (Opens.grothendieckTopology X.toPresheafedSpace) i).map_comp]
       rfl
   }
+
+/-! A field-valued cohomology comparison retains the canonical additive-group
+object while recording the scalar action needed by `Module.finrank`. -/
+structure Chapter04FieldCohomologyComparison
+    (K : Type u) [Field K] {X : Scheme.{u}} (F : X.Modules) (i : ℕ)
+    (M : ModuleCat.{u + 1} K) where
+  cohomologyModule : Module K (chapter04Cohomology F i)
+  linearIso :
+    letI := cohomologyModule
+    M ≅ ModuleCat.of K (chapter04Cohomology F i)
+
+/-- The finrank of a field-valued cohomology module in a comparison. -/
+noncomputable def chapter04FieldCohomologyFinrank
+    {K : Type u} [Field K] {X : Scheme.{u}} {F : X.Modules} {i : ℕ}
+    {M : ModuleCat.{u + 1} K}
+    (_comparison : Chapter04FieldCohomologyComparison K F i M) : ℕ :=
+  Module.finrank K M
 
 def chapter04CohomologyVanishes
     {X : Scheme.{u}} (F : X.Modules) (i : ℕ) : Prop :=

@@ -451,7 +451,7 @@ theorem chapter10_gamma_interval_contains :
     chapter10GammaInterval.Contains Real.eulerMascheroniConstant := by
   change (chapter10GammaLower : ℝ) ≤ Real.eulerMascheroniConstant ∧
     Real.eulerMascheroniConstant ≤ (chapter10GammaUpper : ℝ)
-  have h := chapter09_gamma_directed_bounds
+  have h := chapter10_gamma_directed_bounds
   exact ⟨le_of_lt h.1, le_of_lt h.2⟩
 
 theorem chapter10_gamma_interval_valid : chapter10GammaInterval.Valid := by
@@ -518,6 +518,504 @@ theorem chapter10_exp_negative_square_interval
     mul_nonneg (sub_nonneg.mpr hhi) (by linarith)
   constructor <;> nlinarith [hleft, hright]
 
+private theorem chapter10_nonneg_pow_mono {a b : ℝ} (ha : 0 ≤ a)
+    (hab : a ≤ b) (k : ℕ) : a ^ k ≤ b ^ k := by
+  gcongr
+
+private theorem chapter10_log_strict_mono {a b : ℝ} (ha : 0 < a)
+    (hab : a < b) : Real.log a < Real.log b := by
+  exact Real.strictMonoOn_log ha (lt_trans ha hab) hab
+
+private theorem chapter10_log_two_box :
+    (6931471805 / 10 ^ 10 : ℝ) < Real.log 2 ∧
+      Real.log 2 < (6931471806 / 10 ^ 10 : ℝ) := by
+  have h := chapter10_log_two_series_remainder_bound 10
+  have hid := chapter10_log_two_series_identity 10
+  have hr := (abs_le.mp h)
+  rw [hid]
+  norm_num [chapter10LogPartialSum, Finset.sum_range_succ] at hr ⊢
+  constructor <;> linarith [hr.1, hr.2]
+
+private theorem chapter10_log_ratio_lower_of_partial {q c : ℝ}
+    (hq0 : 0 ≤ q) (hq1 : q < 1)
+    (hc : c < chapter10LogPartialSum q 3 -
+      2 * |q| ^ (2 * 3 + 3) /
+        (((2 * 3 + 3 : ℕ) : ℝ) * (1 - q ^ 2))) :
+    c < Real.log ((1 + q) / (1 - q)) := by
+  have hqabs : |q| < 1 := by simpa [abs_of_nonneg hq0] using hq1
+  have h := chapter10_log_series_remainder_bound hqabs 3
+  have hid := chapter10_log_series_identity q 3
+  have hr := (abs_le.mp h)
+  rw [hid]
+  linarith [hr.1]
+
+private theorem chapter10_log_ratio_upper_of_partial {q c : ℝ}
+    (hq0 : 0 ≤ q) (hq1 : q < 1)
+    (hc : chapter10LogPartialSum q 3 +
+      2 * |q| ^ (2 * 3 + 3) /
+        (((2 * 3 + 3 : ℕ) : ℝ) * (1 - q ^ 2)) < c) :
+    Real.log ((1 + q) / (1 - q)) < c := by
+  have hqabs : |q| < 1 := by simpa [abs_of_nonneg hq0] using hq1
+  have h := chapter10_log_series_remainder_bound hqabs 3
+  have hid := chapter10_log_series_identity q 3
+  have hr := (abs_le.mp h)
+  rw [hid]
+  linarith [hr.2]
+
+private theorem chapter10_log_one_add_lower_of_partial {q c : ℝ}
+    (hq0 : 0 ≤ q)
+    (hc : c < chapter10LogPartialSum (q / (2 + q)) 3 -
+      2 * |q / (2 + q)| ^ (2 * 3 + 3) /
+        (((2 * 3 + 3 : ℕ) : ℝ) * (1 - (q / (2 + q)) ^ 2))) :
+    c < Real.log (1 + q) := by
+  have hu0 : 0 ≤ q / (2 + q) := by positivity
+  have hu1 : q / (2 + q) < 1 := by
+    apply (div_lt_one₀ (by linarith)).2
+    linarith
+  have huabs : |q / (2 + q)| < 1 := by
+    simpa [abs_of_nonneg hu0] using hu1
+  have h := chapter10_log_series_remainder_bound huabs 3
+  have hid := chapter10_log_series_identity (q / (2 + q)) 3
+  have harg :
+      (1 + q / (2 + q)) / (1 - q / (2 + q)) = 1 + q := by
+    field_simp
+    ring
+  rw [harg] at hid
+  have hr := (abs_le.mp h)
+  rw [hid]
+  linarith [hr.1]
+
+private theorem chapter10_log_one_add_upper_of_partial {q c : ℝ}
+    (hq0 : 0 ≤ q)
+    (hc : chapter10LogPartialSum (q / (2 + q)) 3 +
+      2 * |q / (2 + q)| ^ (2 * 3 + 3) /
+        (((2 * 3 + 3 : ℕ) : ℝ) * (1 - (q / (2 + q)) ^ 2)) < c) :
+    Real.log (1 + q) < c := by
+  have hu0 : 0 ≤ q / (2 + q) := by positivity
+  have hu1 : q / (2 + q) < 1 := by
+    apply (div_lt_one₀ (by linarith)).2
+    linarith
+  have huabs : |q / (2 + q)| < 1 := by
+    simpa [abs_of_nonneg hu0] using hu1
+  have h := chapter10_log_series_remainder_bound huabs 3
+  have hid := chapter10_log_series_identity (q / (2 + q)) 3
+  have harg :
+      (1 + q / (2 + q)) / (1 - q / (2 + q)) = 1 + q := by
+    field_simp
+    ring
+  rw [harg] at hid
+  have hr := (abs_le.mp h)
+  rw [hid]
+  linarith [hr.2]
+
+private theorem chapter10_log_coth_transfer
+    {T qlo qhi cL cU : ℝ} (hT : 0 < T)
+    (hqlo0 : 0 ≤ qlo) (hqlo : qlo < Real.exp (-T))
+    (hqhi : Real.exp (-T) < qhi) (hqhi1 : qhi < 1)
+    (hlo : cL < Real.log ((1 + qlo) / (1 - qlo)))
+    (hhi : Real.log ((1 + qhi) / (1 - qhi)) < cU) :
+    cL < Real.log (chapter10Coth (T / 2)) ∧
+      Real.log (chapter10Coth (T / 2)) < cU := by
+  have hq0 : 0 < Real.exp (-T) := Real.exp_pos _
+  have hq1 : Real.exp (-T) < 1 := lt_trans hqhi hqhi1
+  have hqlo1 : qlo < 1 := lt_trans hqlo (lt_trans hqhi hqhi1)
+  have hdenlo : 0 < 1 - qlo := by linarith
+  have hden : 0 < 1 - Real.exp (-T) := by linarith
+  have hratioLo :
+      (1 + qlo) / (1 - qlo) <
+        (1 + Real.exp (-T)) / (1 - Real.exp (-T)) := by
+    apply (div_lt_div_iff₀ (by linarith) (by linarith)).2
+    nlinarith [hqlo]
+  have hratioHi :
+      (1 + Real.exp (-T)) / (1 - Real.exp (-T)) <
+        (1 + qhi) / (1 - qhi) := by
+    apply (div_lt_div_iff₀ (by linarith) (by linarith)).2
+    nlinarith [hqhi]
+  have hlogLo := chapter10_log_strict_mono
+    (div_pos (by linarith) hdenlo) hratioLo
+  have hlogHi := chapter10_log_strict_mono
+    (div_pos (by positivity) hden) hratioHi
+  have hrewrite :
+      Real.log (chapter10Coth (T / 2)) =
+        Real.log ((1 + Real.exp (-T)) / (1 - Real.exp (-T))) := by
+    calc
+      Real.log (chapter10Coth (T / 2)) =
+          Real.log (1 + Real.exp (-T)) - Real.log (1 - Real.exp (-T)) :=
+        chapter10_log_coth_rewrite hT
+      _ = Real.log ((1 + Real.exp (-T)) / (1 - Real.exp (-T))) := by
+        rw [Real.log_div (by positivity) (ne_of_gt hden)]
+  rw [hrewrite]
+  exact ⟨lt_trans hlo hlogLo, lt_trans hlogHi hhi⟩
+
+private theorem chapter10_log_one_add_transfer
+    {q qlo qhi cL cU : ℝ} (hqlo0 : 0 ≤ qlo)
+    (hqlo : qlo < q) (hqhi : q < qhi)
+    (hlo : cL < Real.log (1 + qlo))
+    (hhi : Real.log (1 + qhi) < cU) :
+    cL < Real.log (1 + q) ∧ Real.log (1 + q) < cU := by
+  have hq0 : 0 < q := lt_of_le_of_lt hqlo0 hqlo
+  have hlogLo := chapter10_log_strict_mono
+    (a := 1 + qlo) (b := 1 + q) (by positivity) (by linarith)
+  have hlogHi := chapter10_log_strict_mono
+    (a := 1 + q) (b := 1 + qhi) (by positivity) (by linarith)
+  exact ⟨lt_trans hlo hlogLo, lt_trans hlogHi hhi⟩
+
+private theorem chapter10_exp_boxes :
+    (333732 / 10 ^ 7 : ℝ) < Real.exp (-(17 / 5 : ℝ)) ∧
+      Real.exp (-(17 / 5 : ℝ)) < (333733 / 10 ^ 7 : ℝ) ∧
+    (111089 / 10 ^ 7 : ℝ) < Real.exp (-(9 / 2 : ℝ)) ∧
+      Real.exp (-(9 / 2 : ℝ)) < (111090 / 10 ^ 7 : ℝ) ∧
+    (24787 / 10 ^ 7 : ℝ) < Real.exp (-6) ∧
+      Real.exp (-6) < (24788 / 10 ^ 7 : ℝ) := by
+  have h17 := chapter10_alternating_exp_remainder_bound
+    (r := (17 / 5 : ℝ)) (by norm_num) (M := 20) (by norm_num)
+  have h17id := chapter10_alternating_exp_series_identity (17 / 5 : ℝ) 20
+  have h17sign : (-1 : ℝ) ^ (20 + 1) = -1 := by norm_num
+  rw [h17sign] at h17
+  have h17lo :
+      chapter10AlternatingExpPartialSum (17 / 5 : ℝ) 20 -
+          (17 / 5 : ℝ) ^ (20 + 1) / (Nat.factorial (20 + 1) : ℝ) ≤
+        Real.exp (-(17 / 5 : ℝ)) := by
+    rw [h17id]
+    linarith [h17.2]
+  have h17hi : Real.exp (-(17 / 5 : ℝ)) ≤
+      chapter10AlternatingExpPartialSum (17 / 5 : ℝ) 20 := by
+    rw [h17id]
+    linarith [h17.1]
+  have h9 := chapter10_alternating_exp_remainder_bound
+    (r := (9 / 2 : ℝ)) (by norm_num) (M := 30) (by norm_num)
+  have h9id := chapter10_alternating_exp_series_identity (9 / 2 : ℝ) 30
+  have h9sign : (-1 : ℝ) ^ (30 + 1) = -1 := by norm_num
+  rw [h9sign] at h9
+  have h9lo :
+      chapter10AlternatingExpPartialSum (9 / 2 : ℝ) 30 -
+          (9 / 2 : ℝ) ^ (30 + 1) / (Nat.factorial (30 + 1) : ℝ) ≤
+        Real.exp (-(9 / 2 : ℝ)) := by
+    rw [h9id]
+    linarith [h9.2]
+  have h9hi : Real.exp (-(9 / 2 : ℝ)) ≤
+      chapter10AlternatingExpPartialSum (9 / 2 : ℝ) 30 := by
+    rw [h9id]
+    linarith [h9.1]
+  have h6 := chapter10_alternating_exp_remainder_bound
+    (r := (6 : ℝ)) (by norm_num) (M := 40) (by norm_num)
+  have h6id := chapter10_alternating_exp_series_identity (6 : ℝ) 40
+  have h6sign : (-1 : ℝ) ^ (40 + 1) = -1 := by norm_num
+  rw [h6sign] at h6
+  have h6lo :
+      chapter10AlternatingExpPartialSum 6 40 -
+          (6 : ℝ) ^ (40 + 1) / (Nat.factorial (40 + 1) : ℝ) ≤
+        Real.exp (-6) := by
+    rw [h6id]
+    linarith [h6.2]
+  have h6hi : Real.exp (-6) ≤
+      chapter10AlternatingExpPartialSum 6 40 := by
+    rw [h6id]
+    linarith [h6.1]
+  constructor
+  · calc
+      (333732 / 10 ^ 7 : ℝ) <
+          chapter10AlternatingExpPartialSum (17 / 5 : ℝ) 20 -
+            (17 / 5 : ℝ) ^ (20 + 1) /
+              (Nat.factorial (20 + 1) : ℝ) := by
+            norm_num [chapter10AlternatingExpPartialSum, Finset.sum_range_succ]
+      _ ≤ Real.exp (-(17 / 5 : ℝ)) := h17lo
+  · constructor
+    · calc
+        Real.exp (-(17 / 5 : ℝ)) ≤
+            chapter10AlternatingExpPartialSum (17 / 5 : ℝ) 20 := h17hi
+        _ < (333733 / 10 ^ 7 : ℝ) := by
+          norm_num [chapter10AlternatingExpPartialSum, Finset.sum_range_succ]
+    · constructor
+      · calc
+          (111089 / 10 ^ 7 : ℝ) <
+              chapter10AlternatingExpPartialSum (9 / 2 : ℝ) 30 -
+                (9 / 2 : ℝ) ^ (30 + 1) /
+                  (Nat.factorial (30 + 1) : ℝ) := by
+                norm_num [chapter10AlternatingExpPartialSum, Finset.sum_range_succ]
+          _ ≤ Real.exp (-(9 / 2 : ℝ)) := h9lo
+      · constructor
+        · calc
+            Real.exp (-(9 / 2 : ℝ)) ≤
+                chapter10AlternatingExpPartialSum (9 / 2 : ℝ) 30 := h9hi
+            _ < (111090 / 10 ^ 7 : ℝ) := by
+              norm_num [chapter10AlternatingExpPartialSum, Finset.sum_range_succ]
+        · constructor
+          · calc
+              (24787 / 10 ^ 7 : ℝ) <
+                  chapter10AlternatingExpPartialSum 6 40 -
+                    (6 : ℝ) ^ (40 + 1) /
+                      (Nat.factorial (40 + 1) : ℝ) := by
+                    norm_num [chapter10AlternatingExpPartialSum, Finset.sum_range_succ]
+              _ ≤ Real.exp (-6) := h6lo
+          · calc
+              Real.exp (-6) ≤ chapter10AlternatingExpPartialSum 6 40 := h6hi
+              _ < (24788 / 10 ^ 7 : ℝ) := by
+                norm_num [chapter10AlternatingExpPartialSum, Finset.sum_range_succ]
+
+private theorem chapter10_archimedean_log_boxes :
+    ((667711 / 10 ^ 7 : ℝ) <
+        Real.log (chapter10Coth ((17 / 5 : ℝ) / 2)) ∧
+      Real.log (chapter10Coth ((17 / 5 : ℝ) / 2)) < (667715 / 10 ^ 7 : ℝ)) ∧
+    ((328284 / 10 ^ 7 : ℝ) < Real.log (1 + Real.exp (-(17 / 5 : ℝ))) ∧
+      Real.log (1 + Real.exp (-(17 / 5 : ℝ))) < (328286 / 10 ^ 7 : ℝ)) ∧
+    ((222187 / 10 ^ 7 : ℝ) <
+        Real.log (chapter10Coth ((9 / 2 : ℝ) / 2)) ∧
+      Real.log (chapter10Coth ((9 / 2 : ℝ) / 2)) < (222190 / 10 ^ 7 : ℝ)) ∧
+    ((110476 / 10 ^ 7 : ℝ) < Real.log (1 + Real.exp (-(9 / 2 : ℝ))) ∧
+      Real.log (1 + Real.exp (-(9 / 2 : ℝ))) < (110479 / 10 ^ 7 : ℝ)) ∧
+    ((49574 / 10 ^ 7 : ℝ) < Real.log (chapter10Coth ((6 : ℝ) / 2)) ∧
+      Real.log (chapter10Coth ((6 : ℝ) / 2)) < (49577 / 10 ^ 7 : ℝ)) ∧
+    ((24756 / 10 ^ 7 : ℝ) < Real.log (1 + Real.exp (-6)) ∧
+      Real.log (1 + Real.exp (-6)) < (24758 / 10 ^ 7 : ℝ)) := by
+  rcases chapter10_exp_boxes with
+    ⟨h17lo, h17hi, h9lo, h9hi, h6lo, h6hi⟩
+  have h17cl : (667711 / 10 ^ 7 : ℝ) <
+      Real.log ((1 + 333732 / 10 ^ 7) / (1 - 333732 / 10 ^ 7)) := by
+    apply chapter10_log_ratio_lower_of_partial (by norm_num) (by norm_num)
+    norm_num [chapter10LogPartialSum, Finset.sum_range_succ]
+  have h17cu : Real.log ((1 + 333733 / 10 ^ 7) / (1 - 333733 / 10 ^ 7)) <
+      (667715 / 10 ^ 7 : ℝ) := by
+    apply chapter10_log_ratio_upper_of_partial (by norm_num) (by norm_num)
+    norm_num [chapter10LogPartialSum, Finset.sum_range_succ]
+  have h17c := chapter10_log_coth_transfer
+    (T := (17 / 5 : ℝ)) (qlo := 333732 / 10 ^ 7) (qhi := 333733 / 10 ^ 7)
+    (cL := 667711 / 10 ^ 7) (cU := 667715 / 10 ^ 7)
+    (by norm_num) (by norm_num) h17lo h17hi (by norm_num) h17cl h17cu
+  have h17pl : (328284 / 10 ^ 7 : ℝ) <
+      Real.log (1 + 333732 / 10 ^ 7) := by
+    apply chapter10_log_one_add_lower_of_partial (by norm_num)
+    norm_num [chapter10LogPartialSum, Finset.sum_range_succ]
+  have h17pu : Real.log (1 + 333733 / 10 ^ 7) <
+      (328286 / 10 ^ 7 : ℝ) := by
+    apply chapter10_log_one_add_upper_of_partial (by norm_num)
+    norm_num [chapter10LogPartialSum, Finset.sum_range_succ]
+  have h17p := chapter10_log_one_add_transfer
+    (q := Real.exp (-(17 / 5 : ℝ))) (qlo := 333732 / 10 ^ 7)
+    (qhi := 333733 / 10 ^ 7) (cL := 328284 / 10 ^ 7)
+    (cU := 328286 / 10 ^ 7) (by norm_num) h17lo h17hi h17pl h17pu
+  have h9cl : (222187 / 10 ^ 7 : ℝ) <
+      Real.log ((1 + 111089 / 10 ^ 7) / (1 - 111089 / 10 ^ 7)) := by
+    apply chapter10_log_ratio_lower_of_partial (by norm_num) (by norm_num)
+    norm_num [chapter10LogPartialSum, Finset.sum_range_succ]
+  have h9cu : Real.log ((1 + 111090 / 10 ^ 7) / (1 - 111090 / 10 ^ 7)) <
+      (222190 / 10 ^ 7 : ℝ) := by
+    apply chapter10_log_ratio_upper_of_partial (by norm_num) (by norm_num)
+    norm_num [chapter10LogPartialSum, Finset.sum_range_succ]
+  have h9c := chapter10_log_coth_transfer
+    (T := (9 / 2 : ℝ)) (qlo := 111089 / 10 ^ 7) (qhi := 111090 / 10 ^ 7)
+    (cL := 222187 / 10 ^ 7) (cU := 222190 / 10 ^ 7)
+    (by norm_num) (by norm_num) h9lo h9hi (by norm_num) h9cl h9cu
+  have h9pl : (110476 / 10 ^ 7 : ℝ) <
+      Real.log (1 + 111089 / 10 ^ 7) := by
+    apply chapter10_log_one_add_lower_of_partial (by norm_num)
+    norm_num [chapter10LogPartialSum, Finset.sum_range_succ]
+  have h9pu : Real.log (1 + 111090 / 10 ^ 7) <
+      (110479 / 10 ^ 7 : ℝ) := by
+    apply chapter10_log_one_add_upper_of_partial (by norm_num)
+    norm_num [chapter10LogPartialSum, Finset.sum_range_succ]
+  have h9p := chapter10_log_one_add_transfer
+    (q := Real.exp (-(9 / 2 : ℝ))) (qlo := 111089 / 10 ^ 7)
+    (qhi := 111090 / 10 ^ 7) (cL := 110476 / 10 ^ 7)
+    (cU := 110479 / 10 ^ 7) (by norm_num) h9lo h9hi h9pl h9pu
+  have h6cl : (49574 / 10 ^ 7 : ℝ) <
+      Real.log ((1 + 24787 / 10 ^ 7) / (1 - 24787 / 10 ^ 7)) := by
+    apply chapter10_log_ratio_lower_of_partial (by norm_num) (by norm_num)
+    norm_num [chapter10LogPartialSum, Finset.sum_range_succ]
+  have h6cu : Real.log ((1 + 24788 / 10 ^ 7) / (1 - 24788 / 10 ^ 7)) <
+      (49577 / 10 ^ 7 : ℝ) := by
+    apply chapter10_log_ratio_upper_of_partial (by norm_num) (by norm_num)
+    norm_num [chapter10LogPartialSum, Finset.sum_range_succ]
+  have h6c := chapter10_log_coth_transfer
+    (T := (6 : ℝ)) (qlo := 24787 / 10 ^ 7) (qhi := 24788 / 10 ^ 7)
+    (cL := 49574 / 10 ^ 7) (cU := 49577 / 10 ^ 7)
+    (by norm_num) (by norm_num) h6lo h6hi (by norm_num) h6cl h6cu
+  have h6pl : (24756 / 10 ^ 7 : ℝ) <
+      Real.log (1 + 24787 / 10 ^ 7) := by
+    apply chapter10_log_one_add_lower_of_partial (by norm_num)
+    norm_num [chapter10LogPartialSum, Finset.sum_range_succ]
+  have h6pu : Real.log (1 + 24788 / 10 ^ 7) <
+      (24758 / 10 ^ 7 : ℝ) := by
+    apply chapter10_log_one_add_upper_of_partial (by norm_num)
+    norm_num [chapter10LogPartialSum, Finset.sum_range_succ]
+  have h6p := chapter10_log_one_add_transfer
+    (q := Real.exp (-6)) (qlo := 24787 / 10 ^ 7)
+    (qhi := 24788 / 10 ^ 7) (cL := 24756 / 10 ^ 7)
+    (cU := 24758 / 10 ^ 7) (by norm_num) h6lo h6hi h6pl h6pu
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
+  · exact h17c
+  · exact h17p
+  · exact h9c
+  · exact h9p
+  · exact h6c
+  · exact h6p
+
+private theorem chapter10_B_series_first_two_decomposition
+    {T : ℝ} (hT : 0 < T) :
+    chapter10BSeriesTerm T 0 + chapter10BSeriesTerm T 1 +
+        chapter10BSeriesTail T 1 =
+      ∑' k : ℕ, chapter10BSeriesTerm T k := by
+  have h := (chapter08_B_series_summable (T := T) hT).sum_add_tsum_nat_add 2
+  change chapter08BSeriesTerm T 0 + chapter08BSeriesTerm T 1 +
+      (∑' k : ℕ, chapter08BSeriesTerm T (1 + 1 + k)) =
+    ∑' k : ℕ, chapter08BSeriesTerm T k
+  simpa [Nat.add_comm, Nat.add_left_comm, Nat.add_assoc,
+    Finset.sum_range_succ] using h
+
+private theorem chapter10_omitted_B_series_contribution_bound_aux
+    {T : ℝ} (hT : 0 < T) (m : ℕ) :
+    0 ≤ (2 / T) * chapter10BSeriesTail T m ∧
+      (2 / T) * chapter10BSeriesTail T m ≤
+        (2 / T) * (1 + T) * Real.exp (-((2 * m + 3 : ℕ) : ℝ) * T) /
+          (1 - Real.exp (-2 * T)) := by
+  have htail := chapter10_B_series_tail_bound hT m
+  have hscale : 0 < 2 / T := by positivity
+  constructor
+  · exact mul_nonneg (le_of_lt hscale) htail.1
+  · have hden : 0 < 1 - Real.exp (-2 * T) := by
+      apply sub_pos.mpr
+      rw [Real.exp_lt_one_iff]
+      linarith
+    calc
+      (2 / T) * chapter10BSeriesTail T m ≤
+          (2 / T) * ((1 + T) * Real.exp (-((2 * m + 3 : ℕ) : ℝ) * T) /
+            (1 - Real.exp (-2 * T))) :=
+        mul_le_mul_of_nonneg_left htail.2 (le_of_lt hscale)
+      _ = (2 / T) * (1 + T) * Real.exp (-((2 * m + 3 : ℕ) : ℝ) * T) /
+          (1 - Real.exp (-2 * T)) := by
+        field_simp [ne_of_gt hden]
+
+private theorem chapter10_omitted_B_series_first_row_lt_aux :
+    (2 / (17 / 5 : ℝ)) * chapter10BSeriesTail (17 / 5 : ℝ) 1 <
+      (1.072709 : ℝ) * 10 ^ (-7 : ℤ) := by
+  have h17raw := chapter10_alternating_exp_remainder_bound
+    (r := (17 : ℝ)) (by norm_num) (M := 100) (by norm_num)
+  have h17id := chapter10_alternating_exp_series_identity (17 : ℝ) 100
+  have h17le : Real.exp (-17) ≤
+      chapter10AlternatingExpPartialSum 17 100 := by
+    have hsign : (-1 : ℝ) ^ (100 + 1) = -1 := by norm_num
+    rw [hsign] at h17raw
+    rw [h17id]
+    linarith [h17raw.1]
+  have h17 : Real.exp (-17) < (413994 : ℝ) / 10 ^ 13 := by
+    calc
+      Real.exp (-17) ≤ chapter10AlternatingExpPartialSum 17 100 := h17le
+      _ < (413994 : ℝ) / 10 ^ 13 := by
+        norm_num [chapter10AlternatingExpPartialSum, Finset.sum_range_succ]
+  have h68raw := chapter10_alternating_exp_remainder_bound
+    (r := (34 / 5 : ℝ)) (by norm_num) (M := 50) (by norm_num)
+  have h68id := chapter10_alternating_exp_series_identity (34 / 5 : ℝ) 50
+  have h68le : Real.exp (-(34 / 5 : ℝ)) ≤
+      chapter10AlternatingExpPartialSum (34 / 5 : ℝ) 50 := by
+    have hsign : (-1 : ℝ) ^ (50 + 1) = -1 := by norm_num
+    rw [hsign] at h68raw
+    rw [h68id]
+    linarith [h68raw.1]
+  have h68 : Real.exp (-(34 / 5 : ℝ)) < (111378 : ℝ) / 10 ^ 8 := by
+    calc
+      Real.exp (-(34 / 5 : ℝ)) ≤
+          chapter10AlternatingExpPartialSum (34 / 5 : ℝ) 50 := h68le
+      _ < (111378 : ℝ) / 10 ^ 8 := by
+        norm_num [chapter10AlternatingExpPartialSum, Finset.sum_range_succ]
+  have hbound := chapter10_omitted_B_series_contribution_bound_aux
+    (T := (17 / 5 : ℝ)) (by norm_num) 1
+  have hden : 0 < 1 - Real.exp (-(34 / 5 : ℝ)) := by
+    linarith [h68]
+  calc
+    (2 / (17 / 5 : ℝ)) * chapter10BSeriesTail (17 / 5 : ℝ) 1 ≤
+        (2 / (17 / 5 : ℝ)) * (1 + (17 / 5 : ℝ)) *
+          Real.exp (-17) / (1 - Real.exp (-(34 / 5 : ℝ))) := by
+      convert hbound.2 using 1 ; norm_num
+    _ < (1.072709 : ℝ) * 10 ^ (-7 : ℤ) := by
+      apply (div_lt_iff₀ hden).2
+      nlinarith [h17, h68]
+
+private theorem chapter10_omitted_B_series_rows_lt_aux :
+    ((2 / (9 / 2 : ℝ)) * chapter10BSeriesTail (9 / 2 : ℝ) 1 <
+        (4.136261 : ℝ) * 10 ^ (-10 : ℤ)) ∧
+      ((2 / (6 : ℝ)) * chapter10BSeriesTail 6 1 <
+        (2.183459 : ℝ) * 10 ^ (-13 : ℤ)) := by
+  have h45raw := chapter10_alternating_exp_remainder_bound
+    (r := (45 / 2 : ℝ)) (by norm_num) (M := 100) (by norm_num)
+  have h45id := chapter10_alternating_exp_series_identity (45 / 2 : ℝ) 100
+  have h45le : Real.exp (-(45 / 2 : ℝ)) ≤
+      chapter10AlternatingExpPartialSum (45 / 2 : ℝ) 100 := by
+    have hsign : (-1 : ℝ) ^ (100 + 1) = -1 := by norm_num
+    rw [hsign] at h45raw
+    rw [h45id]
+    linarith [h45raw.1]
+  have h45 : Real.exp (-(45 / 2 : ℝ)) < (169189793 : ℝ) / 10 ^ 18 := by
+    calc
+      Real.exp (-(45 / 2 : ℝ)) ≤
+          chapter10AlternatingExpPartialSum (45 / 2 : ℝ) 100 := h45le
+      _ < (169189793 : ℝ) / 10 ^ 18 := by
+        norm_num [chapter10AlternatingExpPartialSum, Finset.sum_range_succ]
+  have h9raw := chapter10_alternating_exp_remainder_bound
+    (r := (9 : ℝ)) (by norm_num) (M := 50) (by norm_num)
+  have h9id := chapter10_alternating_exp_series_identity (9 : ℝ) 50
+  have h9le : Real.exp (-9) ≤
+      chapter10AlternatingExpPartialSum 9 50 := by
+    have hsign : (-1 : ℝ) ^ (50 + 1) = -1 := by norm_num
+    rw [hsign] at h9raw
+    rw [h9id]
+    linarith [h9raw.1]
+  have h9 : Real.exp (-9) < (1234099 : ℝ) / 10 ^ 10 := by
+    calc
+      Real.exp (-9) ≤ chapter10AlternatingExpPartialSum 9 50 := h9le
+      _ < (1234099 : ℝ) / 10 ^ 10 := by
+        norm_num [chapter10AlternatingExpPartialSum, Finset.sum_range_succ]
+  have h30raw := chapter10_alternating_exp_remainder_bound
+    (r := (30 : ℝ)) (by norm_num) (M := 200) (by norm_num)
+  have h30id := chapter10_alternating_exp_series_identity (30 : ℝ) 200
+  have h30le : Real.exp (-30) ≤
+      chapter10AlternatingExpPartialSum 30 200 := by
+    have hsign : (-1 : ℝ) ^ (200 + 1) = -1 := by norm_num
+    rw [hsign] at h30raw
+    rw [h30id]
+    linarith [h30raw.1]
+  have h30 : Real.exp (-30) < (9357623 : ℝ) / 10 ^ 20 := by
+    calc
+      Real.exp (-30) ≤ chapter10AlternatingExpPartialSum 30 200 := h30le
+      _ < (9357623 : ℝ) / 10 ^ 20 := by
+        norm_num [chapter10AlternatingExpPartialSum, Finset.sum_range_succ]
+  have h12raw := chapter10_alternating_exp_remainder_bound
+    (r := (12 : ℝ)) (by norm_num) (M := 50) (by norm_num)
+  have h12id := chapter10_alternating_exp_series_identity (12 : ℝ) 50
+  have h12le : Real.exp (-12) ≤
+      chapter10AlternatingExpPartialSum 12 50 := by
+    have hsign : (-1 : ℝ) ^ (50 + 1) = -1 := by norm_num
+    rw [hsign] at h12raw
+    rw [h12id]
+    linarith [h12raw.1]
+  have h12 : Real.exp (-12) < (61443 : ℝ) / 10 ^ 10 := by
+    calc
+      Real.exp (-12) ≤ chapter10AlternatingExpPartialSum 12 50 := h12le
+      _ < (61443 : ℝ) / 10 ^ 10 := by
+        norm_num [chapter10AlternatingExpPartialSum, Finset.sum_range_succ]
+  have hbound45 := chapter10_omitted_B_series_contribution_bound_aux
+    (T := (9 / 2 : ℝ)) (by norm_num) 1
+  have hbound6 := chapter10_omitted_B_series_contribution_bound_aux
+    (T := (6 : ℝ)) (by norm_num) 1
+  have hden9 : 0 < 1 - Real.exp (-9) := by linarith [h9]
+  have hden12 : 0 < 1 - Real.exp (-12) := by linarith [h12]
+  constructor
+  · calc
+      (2 / (9 / 2 : ℝ)) * chapter10BSeriesTail (9 / 2 : ℝ) 1 ≤
+          (2 / (9 / 2 : ℝ)) * (1 + (9 / 2 : ℝ)) *
+            Real.exp (-(45 / 2 : ℝ)) / (1 - Real.exp (-9)) := by
+        convert hbound45.2 using 1 ; norm_num
+      _ < (4.136261 : ℝ) * 10 ^ (-10 : ℤ) := by
+        apply (div_lt_iff₀ hden9).2
+        nlinarith [h45, h9]
+  · calc
+      (2 / (6 : ℝ)) * chapter10BSeriesTail 6 1 ≤
+          (2 / (6 : ℝ)) * (1 + (6 : ℝ)) * Real.exp (-30) /
+            (1 - Real.exp (-12)) := by
+        convert hbound6.2 using 1 ; norm_num
+      _ < (2.183459 : ℝ) * 10 ^ (-13 : ℤ) := by
+        apply (div_lt_iff₀ hden12).2
+        nlinarith [h30, h12]
+
 structure Chapter10ArchimedeanLedgerRow where
   T : ℚ
   A : ℚ
@@ -556,7 +1054,84 @@ theorem chapter10_archimedean_ledger_row_seventeen_over_five :
       chapter10BT (17 / 5 : ℝ) < (chapter10RowSeventeenOverFive.B_upper : ℝ) ∧
       (chapter10RowSeventeenOverFive.C_lower : ℝ) < chapter10CT (17 / 5 : ℝ) ∧
       chapter10CT (17 / 5 : ℝ) < (chapter10RowSeventeenOverFive.C_upper : ℝ) := by
-  sorry
+  have hT : 0 < (17 / 5 : ℝ) := by norm_num
+  have hB := chapter10_B_finite_formula hT
+  rw [← chapter10_B_series_first_two_decomposition hT] at hB
+  have hC := chapter10_C_finite_formula hT
+  rw [chapter10_log_cosh_half_rewrite hT] at hC
+  have hpi := chapter10_pi_directed_bounds
+  norm_num [chapter10PiLower, chapter10PiUpper] at hpi
+  have hpi2lo :
+      ((3141592653589793 / 10 ^ 15 : ℝ) ^ 2) < Real.pi ^ 2 := by
+    have hpos : 0 < Real.pi + (3141592653589793 / 10 ^ 15 : ℝ) := by
+      nlinarith [hpi.1]
+    have hmul := mul_pos (sub_pos.mpr hpi.1) hpos
+    nlinarith
+  have hpi2hi : Real.pi ^ 2 <
+      (3141592653589794 / 10 ^ 15 : ℝ) ^ 2 := by
+    have hpos : 0 < (3141592653589794 / 10 ^ 15 : ℝ) + Real.pi := by
+      nlinarith [hpi.1]
+    have hmul := mul_pos (sub_pos.mpr hpi.2) hpos
+    nlinarith
+  have hlog2 := chapter10_log_two_box
+  have hlogs := chapter10_archimedean_log_boxes
+  rcases hlogs with ⟨h17c, h17p, h9c, h9p, h6c, h6p⟩
+  have hexps := chapter10_exp_boxes
+  rcases hexps with ⟨hq17lo, hq17hi, hq9lo, hq9hi, hq6lo, hq6hi⟩
+  have hterm0 : chapter10BSeriesTerm (17 / 5 : ℝ) 0 =
+      (1 + (17 / 5 : ℝ)) * Real.exp (-(17 / 5 : ℝ)) := by
+    norm_num [chapter10BSeriesTerm, chapter08BSeriesTerm, chapter08Odd]
+  have hexp3 : Real.exp (-(51 / 5 : ℝ)) =
+      (Real.exp (-(17 / 5 : ℝ))) ^ 3 := by
+    calc
+      Real.exp (-(51 / 5 : ℝ)) =
+          Real.exp ((3 : ℕ) * (-(17 / 5 : ℝ))) := by
+            congr 1
+            norm_num
+      _ = (Real.exp (-(17 / 5 : ℝ))) ^ 3 := by
+        simpa using (Real.exp_nat_mul (-(17 / 5 : ℝ)) 3)
+  have hterm1 : chapter10BSeriesTerm (17 / 5 : ℝ) 1 =
+      ((1 + 3 * (17 / 5 : ℝ)) / 9) *
+        (Real.exp (-(17 / 5 : ℝ))) ^ 3 := by
+    norm_num [chapter10BSeriesTerm, chapter08BSeriesTerm, chapter08Odd]
+    rw [hexp3]
+    ring
+  rw [hterm0, hterm1] at hB
+  have hq17powlo :
+      (333732 / 10 ^ 7 : ℝ) ^ 3 ≤
+        (Real.exp (-(17 / 5 : ℝ))) ^ 3 :=
+    chapter10_nonneg_pow_mono (by norm_num) (le_of_lt hq17lo) 3
+  have hq17powhi :
+      (Real.exp (-(17 / 5 : ℝ))) ^ 3 ≤ (333733 / 10 ^ 7 : ℝ) ^ 3 :=
+    chapter10_nonneg_pow_mono (by positivity) (le_of_lt hq17hi) 3
+  have hSlo : (1468883 / 10 ^ 7 : ℝ) <
+      (1 + (17 / 5 : ℝ)) * Real.exp (-(17 / 5 : ℝ)) +
+        ((1 + 3 * (17 / 5 : ℝ)) / 9) *
+          (Real.exp (-(17 / 5 : ℝ))) ^ 3 := by
+    nlinarith [hq17lo, hq17powlo]
+  have hShi :
+      (1 + (17 / 5 : ℝ)) * Real.exp (-(17 / 5 : ℝ)) +
+        ((1 + 3 * (17 / 5 : ℝ)) / 9) *
+          (Real.exp (-(17 / 5 : ℝ))) ^ 3 < (1468888 / 10 ^ 7 : ℝ) := by
+    nlinarith [hq17hi, hq17powhi]
+  have htail := chapter10_omitted_B_series_contribution_bound_aux
+    (T := (17 / 5 : ℝ)) hT 1
+  have htailsmall := chapter10_omitted_B_series_first_row_lt_aux
+  norm_num at hB hC htail htailsmall hSlo hShi hpi2lo hpi2hi
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · norm_num [chapter10AT]
+  · have h : (139921 / 100000 : ℝ) < chapter10BT (17 / 5 : ℝ) := by
+      linarith [hB, hlog2.1, hpi2lo, h17c.1, hShi, htailsmall]
+    simpa [chapter10RowSeventeenOverFive] using h
+  · have h : chapter10BT (17 / 5 : ℝ) < (139923 / 100000 : ℝ) := by
+      linarith [hB, hlog2.2, hpi2hi, h17c.2, hSlo, htail.1]
+    simpa [chapter10RowSeventeenOverFive] using h
+  · have h : (95921 / 100000 : ℝ) < chapter10CT (17 / 5 : ℝ) := by
+      linarith [hC, hpi.1, hlog2.2, h17p.2]
+    simpa [chapter10RowSeventeenOverFive] using h
+  · have h : chapter10CT (17 / 5 : ℝ) < (95923 / 100000 : ℝ) := by
+      linarith [hC, hpi.2, hlog2.1, h17p.1]
+    simpa [chapter10RowSeventeenOverFive] using h
 
 theorem chapter10_archimedean_ledger_row_nine_halves :
     chapter10AT (9 / 2 : ℝ) = 9 / 4 ∧
@@ -564,7 +1139,84 @@ theorem chapter10_archimedean_ledger_row_nine_halves :
       chapter10BT (9 / 2 : ℝ) < (chapter10RowNineHalves.B_upper : ℝ) ∧
       (chapter10RowNineHalves.C_lower : ℝ) < chapter10CT (9 / 2 : ℝ) ∧
       chapter10CT (9 / 2 : ℝ) < (chapter10RowNineHalves.C_upper : ℝ) := by
-  sorry
+  have hT : 0 < (9 / 2 : ℝ) := by norm_num
+  have hB := chapter10_B_finite_formula hT
+  rw [← chapter10_B_series_first_two_decomposition hT] at hB
+  have hC := chapter10_C_finite_formula hT
+  rw [chapter10_log_cosh_half_rewrite hT] at hC
+  have hpi := chapter10_pi_directed_bounds
+  norm_num [chapter10PiLower, chapter10PiUpper] at hpi
+  have hpi2lo :
+      ((3141592653589793 / 10 ^ 15 : ℝ) ^ 2) < Real.pi ^ 2 := by
+    have hpos : 0 < Real.pi + (3141592653589793 / 10 ^ 15 : ℝ) := by
+      nlinarith [hpi.1]
+    have hmul := mul_pos (sub_pos.mpr hpi.1) hpos
+    nlinarith
+  have hpi2hi : Real.pi ^ 2 <
+      (3141592653589794 / 10 ^ 15 : ℝ) ^ 2 := by
+    have hpos : 0 < (3141592653589794 / 10 ^ 15 : ℝ) + Real.pi := by
+      nlinarith [hpi.1]
+    have hmul := mul_pos (sub_pos.mpr hpi.2) hpos
+    nlinarith
+  have hlog2 := chapter10_log_two_box
+  have hlogs := chapter10_archimedean_log_boxes
+  rcases hlogs with ⟨h17c, h17p, h9c, h9p, h6c, h6p⟩
+  have hexps := chapter10_exp_boxes
+  rcases hexps with ⟨hq17lo, hq17hi, hq9lo, hq9hi, hq6lo, hq6hi⟩
+  have hterm0 : chapter10BSeriesTerm (9 / 2 : ℝ) 0 =
+      (1 + (9 / 2 : ℝ)) * Real.exp (-(9 / 2 : ℝ)) := by
+    norm_num [chapter10BSeriesTerm, chapter08BSeriesTerm, chapter08Odd]
+  have hexp3 : Real.exp (-(27 / 2 : ℝ)) =
+      (Real.exp (-(9 / 2 : ℝ))) ^ 3 := by
+    calc
+      Real.exp (-(27 / 2 : ℝ)) =
+          Real.exp ((3 : ℕ) * (-(9 / 2 : ℝ))) := by
+            congr 1
+            norm_num
+      _ = (Real.exp (-(9 / 2 : ℝ))) ^ 3 := by
+        simpa using (Real.exp_nat_mul (-(9 / 2 : ℝ)) 3)
+  have hterm1 : chapter10BSeriesTerm (9 / 2 : ℝ) 1 =
+      ((1 + 3 * (9 / 2 : ℝ)) / 9) *
+        (Real.exp (-(9 / 2 : ℝ))) ^ 3 := by
+    norm_num [chapter10BSeriesTerm, chapter08BSeriesTerm, chapter08Odd]
+    rw [hexp3]
+    ring
+  rw [hterm0, hterm1] at hB
+  have hq9powlo :
+      (111089 / 10 ^ 7 : ℝ) ^ 3 ≤
+        (Real.exp (-(9 / 2 : ℝ))) ^ 3 :=
+    chapter10_nonneg_pow_mono (by norm_num) (le_of_lt hq9lo) 3
+  have hq9powhi :
+      (Real.exp (-(9 / 2 : ℝ))) ^ 3 ≤ (111090 / 10 ^ 7 : ℝ) ^ 3 :=
+    chapter10_nonneg_pow_mono (by positivity) (le_of_lt hq9hi) 3
+  have hSlo : (611011 / 10 ^ 7 : ℝ) <
+      (1 + (9 / 2 : ℝ)) * Real.exp (-(9 / 2 : ℝ)) +
+        ((1 + 3 * (9 / 2 : ℝ)) / 9) *
+          (Real.exp (-(9 / 2 : ℝ))) ^ 3 := by
+    nlinarith [hq9lo, hq9powlo]
+  have hShi :
+      (1 + (9 / 2 : ℝ)) * Real.exp (-(9 / 2 : ℝ)) +
+        ((1 + 3 * (9 / 2 : ℝ)) / 9) *
+          (Real.exp (-(9 / 2 : ℝ))) ^ 3 < (611018 / 10 ^ 7 : ℝ) := by
+    nlinarith [hq9hi, hq9powhi]
+  have htail := chapter10_omitted_B_series_contribution_bound_aux
+    (T := (9 / 2 : ℝ)) hT 1
+  have htailsmall := chapter10_omitted_B_series_rows_lt_aux
+  norm_num at hB hC htail htailsmall hSlo hShi hpi2lo hpi2hi
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · norm_num [chapter10AT]
+  · have h : (123652 / 100000 : ℝ) < chapter10BT (9 / 2 : ℝ) := by
+      linarith [hB, hlog2.1, hpi2lo, h9c.1, hShi, htailsmall.1]
+    simpa [chapter10RowNineHalves] using h
+  · have h : chapter10BT (9 / 2 : ℝ) < (123653 / 100000 : ℝ) := by
+      linarith [hB, hlog2.2, hpi2hi, h9c.2, hSlo, htail.1]
+    simpa [chapter10RowNineHalves] using h
+  · have h : (87395 / 100000 : ℝ) < chapter10CT (9 / 2 : ℝ) := by
+      linarith [hC, hpi.1, hlog2.2, h9p.2]
+    simpa [chapter10RowNineHalves] using h
+  · have h : chapter10CT (9 / 2 : ℝ) < (87396 / 100000 : ℝ) := by
+      linarith [hC, hpi.2, hlog2.1, h9p.1]
+    simpa [chapter10RowNineHalves] using h
 
 theorem chapter10_archimedean_ledger_row_six :
     chapter10AT 6 = 3 ∧
@@ -572,7 +1224,79 @@ theorem chapter10_archimedean_ledger_row_six :
       chapter10BT 6 < (chapter10RowSix.B_upper : ℝ) ∧
       (chapter10RowSix.C_lower : ℝ) < chapter10CT 6 ∧
       chapter10CT 6 < (chapter10RowSix.C_upper : ℝ) := by
-  sorry
+  have hT : 0 < (6 : ℝ) := by norm_num
+  have hB := chapter10_B_finite_formula hT
+  rw [← chapter10_B_series_first_two_decomposition hT] at hB
+  have hC := chapter10_C_finite_formula hT
+  rw [chapter10_log_cosh_half_rewrite hT] at hC
+  have hpi := chapter10_pi_directed_bounds
+  norm_num [chapter10PiLower, chapter10PiUpper] at hpi
+  have hpi2lo :
+      ((3141592653589793 / 10 ^ 15 : ℝ) ^ 2) < Real.pi ^ 2 := by
+    have hpos : 0 < Real.pi + (3141592653589793 / 10 ^ 15 : ℝ) := by
+      nlinarith [hpi.1]
+    have hmul := mul_pos (sub_pos.mpr hpi.1) hpos
+    nlinarith
+  have hpi2hi : Real.pi ^ 2 <
+      (3141592653589794 / 10 ^ 15 : ℝ) ^ 2 := by
+    have hpos : 0 < (3141592653589794 / 10 ^ 15 : ℝ) + Real.pi := by
+      nlinarith [hpi.1]
+    have hmul := mul_pos (sub_pos.mpr hpi.2) hpos
+    nlinarith
+  have hlog2 := chapter10_log_two_box
+  have hlogs := chapter10_archimedean_log_boxes
+  rcases hlogs with ⟨h17c, h17p, h9c, h9p, h6c, h6p⟩
+  have hexps := chapter10_exp_boxes
+  rcases hexps with ⟨hq17lo, hq17hi, hq9lo, hq9hi, hq6lo, hq6hi⟩
+  have hterm0 : chapter10BSeriesTerm 6 0 =
+      (1 + (6 : ℝ)) * Real.exp (-6) := by
+    norm_num [chapter10BSeriesTerm, chapter08BSeriesTerm, chapter08Odd]
+  have hexp3 : Real.exp (-18 : ℝ) = (Real.exp (-6)) ^ 3 := by
+    calc
+      Real.exp (-18 : ℝ) = Real.exp ((3 : ℕ) * (-6 : ℝ)) := by
+        congr 1
+        norm_num
+      _ = (Real.exp (-6)) ^ 3 := by
+        simpa using (Real.exp_nat_mul (-6 : ℝ) 3)
+  have hterm1 : chapter10BSeriesTerm 6 1 =
+      ((1 + 3 * (6 : ℝ)) / 9) * (Real.exp (-6)) ^ 3 := by
+    norm_num [chapter10BSeriesTerm, chapter08BSeriesTerm, chapter08Odd]
+    rw [hexp3]
+    ring
+  rw [hterm0, hterm1] at hB
+  have hq6powlo :
+      (24787 / 10 ^ 7 : ℝ) ^ 3 ≤ (Real.exp (-6)) ^ 3 :=
+    chapter10_nonneg_pow_mono (by norm_num) (le_of_lt hq6lo) 3
+  have hq6powhi :
+      (Real.exp (-6)) ^ 3 ≤ (24788 / 10 ^ 7 : ℝ) ^ 3 :=
+    chapter10_nonneg_pow_mono (by positivity) (le_of_lt hq6hi) 3
+  have hSlo : (173509 / 10 ^ 7 : ℝ) <
+      (1 + (6 : ℝ)) * Real.exp (-6) +
+        ((1 + 3 * (6 : ℝ)) / 9) * (Real.exp (-6)) ^ 3 := by
+    nlinarith [hq6lo, hq6powlo]
+  have hShi :
+      (1 + (6 : ℝ)) * Real.exp (-6) +
+        ((1 + 3 * (6 : ℝ)) / 9) * (Real.exp (-6)) ^ 3 <
+          (173517 / 10 ^ 7 : ℝ) := by
+    nlinarith [hq6hi, hq6powhi]
+  have htail := chapter10_omitted_B_series_contribution_bound_aux
+    (T := (6 : ℝ)) hT 1
+  have htailsmall := chapter10_omitted_B_series_rows_lt_aux
+  norm_num at hB hC htail htailsmall hSlo hShi hpi2lo hpi2hi
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · norm_num [chapter10AT]
+  · have h : (110355 / 100000 : ℝ) < chapter10BT 6 := by
+      linarith [hB, hlog2.1, hpi2lo, h6c.1, hShi, htailsmall.2]
+    simpa [chapter10RowSix] using h
+  · have h : chapter10BT 6 < (110356 / 100000 : ℝ) := by
+      linarith [hB, hlog2.2, hpi2hi, h6c.2, hSlo, htail.1]
+    simpa [chapter10RowSix] using h
+  · have h : (80102 / 100000 : ℝ) < chapter10CT 6 := by
+      linarith [hC, hpi.1, hlog2.2, h6p.2]
+    simpa [chapter10RowSix] using h
+  · have h : chapter10CT 6 < (80103 / 100000 : ℝ) := by
+      linarith [hC, hpi.2, hlog2.1, h6p.1]
+    simpa [chapter10RowSix] using h
 
 theorem chapter10_omitted_B_series_contribution_bound
     {T : ℝ} (hT : 0 < T) (m : ℕ) :

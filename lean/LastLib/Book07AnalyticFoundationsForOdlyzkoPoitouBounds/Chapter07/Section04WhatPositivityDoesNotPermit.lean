@@ -1,4 +1,7 @@
 import Mathlib.Analysis.Calculus.Deriv.Abs
+import Mathlib.Analysis.Calculus.ContDiff.Convolution
+import Mathlib.Analysis.Calculus.BumpFunction.Convolution
+import Mathlib.Analysis.Calculus.BumpFunction.Normed
 import Mathlib.Analysis.SpecialFunctions.Gaussian.FourierTransform
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Order.Interval.Finset.Floor
@@ -11,7 +14,8 @@ noncomputable section
 
 open MeasureTheory Filter
 open scoped Topology
-open scoped BigOperators ContDiff
+open scoped BigOperators ContDiff Pointwise
+open scoped Convolution FourierTransform
 
 /- Fourier positivity is the condition used for the zero term; pointwise
    positivity is the condition used for the prime-power term. -/
@@ -78,7 +82,7 @@ theorem chapter07_weightedPrimeContribution_mono
 
 theorem chapter07_discard_nonnegative_prime_term
     (base prime : ℝ) (hprime : 0 ≤ prime) :
-    base - prime ≤ base := by
+    base ≤ base + prime := by
   linarith
 
 def chapter07Gaussian (σ : ℝ) (x : ℝ) : ℝ :=
@@ -799,7 +803,386 @@ theorem chapter07_triangle_smoothing_interface
     (T ε : ℝ) (hT : 0 < T) (hε : 0 < ε) :
     ∃ H : Chapter07TestFunction,
       chapter07SmoothApproximation (chapter07Triangle T) H ε := by
-  sorry
+  classical
+  let r : ℝ := min (T / 8) (ε * T / 64)
+  have hr : 0 < r := by
+    dsimp [r]
+    exact lt_min (by linarith) (by positivity)
+  let b : ContDiffBump (0 : ℝ) :=
+    { rIn := r / 2
+      rOut := r
+      rIn_pos := by positivity
+      rIn_lt_rOut := by linarith }
+  let η : ℝ → ℝ := (b.normed (volume : Measure ℝ))
+  have hηint : Integrable η := by
+    simpa [η] using b.integrable_normed
+  have hηcompact : HasCompactSupport η := by
+    simpa [η] using b.hasCompactSupport_normed
+  have hηdiff : ContDiff ℝ ∞ η := by
+    simpa [η] using b.contDiff_normed
+  have hηnonneg : ∀ x : ℝ, 0 ≤ η x := by
+    intro x
+    simpa [η] using b.nonneg_normed x
+  have hηeven : Function.Even η := by
+    intro x
+    simpa [η] using b.normed_neg x
+  have hηmass : ∫ x : ℝ, η x = 1 := by
+    simpa [η] using b.integral_normed
+  have hηsupport : ∀ x : ℝ, η x ≠ 0 → |x| < r := by
+    intro x hx
+    have hx' : x ∈ Function.support ((b).normed (volume : Measure ℝ)) := hx
+    rw [(b).support_normed_eq] at hx'
+    rw [Metric.mem_ball, dist_zero_right] at hx'
+    simpa [b] using hx'
+  let κ : ℝ → ℝ :=
+    LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05Autocorrelation η
+  have hηL2 : MemLp η 2 := hηdiff.continuous.memLp_of_hasCompactSupport hηcompact
+  have hκpt : chapter07PositiveType κ := by
+    dsimp [κ]
+    exact LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05_autocorrelation_is_positive_type
+      η hηint hηL2
+  have hreflectη :
+      LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05Reflect η = η := by
+    funext x
+    exact hηeven x
+  have hκeq : κ =
+      LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05Convolution η η := by
+    simp [κ, LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05Autocorrelation,
+      hreflectη]
+  have hκcompact : HasCompactSupport κ := by
+    rw [hκeq]
+    exact hηcompact.convolution (ContinuousLinearMap.lsmul ℝ ℝ) hηcompact
+  have hκdiff : ContDiff ℝ ∞ κ := by
+    rw [hκeq]
+    exact hηcompact.contDiff_convolution_left
+      (ContinuousLinearMap.lsmul ℝ ℝ) hηdiff hηint.locallyIntegrable
+  have hκint : Integrable κ := hκpt.integrable
+  have hκnonneg : ∀ x : ℝ, 0 ≤ κ x := by
+    intro x
+    dsimp [κ]
+    unfold LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05Autocorrelation
+    unfold LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05Convolution
+    apply integral_nonneg
+    intro y
+    exact mul_nonneg (hηnonneg y) (hηnonneg (-(x - y)))
+  have hκeven : Function.Even κ := by
+    exact LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05_autocorrelation_is_even
+      η hηint hηL2
+  have hκmass : ∫ x : ℝ, κ x = 1 := by
+    rw [hκeq]
+    unfold LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05Convolution
+    rw [MeasureTheory.integral_convolution (ContinuousLinearMap.lsmul ℝ ℝ)
+      hηint hηint]
+    simp [hηmass, ContinuousLinearMap.lsmul_apply]
+  have hκsupport : ∀ x : ℝ, κ x ≠ 0 → |x| < 2 * r := by
+    intro x hx
+    have hxsum : x ∈ Function.support η + Function.support η := by
+      apply (MeasureTheory.support_convolution_subset
+        (L := ContinuousLinearMap.lsmul ℝ ℝ) (μ := (volume : Measure ℝ))
+        (f := η) (g := η))
+      change LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05Convolution
+        η η x ≠ 0
+      rw [← hκeq]
+      exact hx
+    rcases hxsum with ⟨a, ha, c, hc, rfl⟩
+    have ha' : |a| < r := hηsupport a ha
+    have hc' : |c| < r := hηsupport c hc
+    exact (abs_add_le a c).trans_lt (by simpa [two_mul] using add_lt_add ha' hc')
+  let F : ℝ → ℝ := chapter07Triangle T
+  have hFint : Integrable F := by
+    dsimp [F]
+    exact chapter07_triangle_integrable T hT
+  have hFcompact : HasCompactSupport F := by
+    dsimp [F]
+    exact chapter07_triangle_has_compact_support T hT
+  have hFcont : Continuous F := by
+    change Continuous (fun x : ℝ => max 0 (1 - |x| / T))
+    exact continuous_const.max (continuous_const.sub (continuous_abs.div_const T))
+  have hFnonneg : ∀ x : ℝ, 0 ≤ F x := by
+    intro x
+    dsimp [F]
+    exact le_max_left _ _
+  have hFle : ∀ x : ℝ, F x ≤ 1 := by
+    intro x
+    dsimp [F, chapter07Triangle]
+    apply max_le
+    · norm_num
+    · have : 0 ≤ |x| / T := div_nonneg (abs_nonneg _) hT.le
+      linarith
+  have hFeven : Function.Even F := by
+    intro x
+    dsimp [F, chapter07Triangle]
+    rw [abs_neg]
+  have hFpt : chapter07PositiveType F := by
+    dsimp [F]
+    exact chapter07_triangle_positiveType T hT
+  have hFlip : ∀ x y : ℝ, |F x - F y| ≤ |x - y| / T := by
+    intro x y
+    dsimp [F, chapter07Triangle]
+    calc
+      |max 0 (1 - |x| / T) - max 0 (1 - |y| / T)| =
+          |max (1 - |x| / T) 0 - max (1 - |y| / T) 0| := by
+        rw [max_comm 0, max_comm 0]
+      _ ≤ |(1 - |x| / T) - (1 - |y| / T)| :=
+        abs_max_sub_max_le_abs _ _ _
+      _ = |(|x| - |y|) / T| := by
+        rw [show (1 - |x| / T) - (1 - |y| / T) =
+          -((|x| - |y|) / T) by ring, abs_neg]
+      _ ≤ |x - y| / T := by
+        rw [abs_div, abs_of_pos hT]
+        exact div_le_div_of_nonneg_right
+          (abs_abs_sub_abs_le_abs_sub x y) hT.le
+  let R : ℝ → ℝ :=
+    LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05Convolution κ F
+  have hRcompact : HasCompactSupport R := by
+    dsimp [R]
+    exact hκcompact.convolution (ContinuousLinearMap.lsmul ℝ ℝ) hFcompact
+  have hRdiff : ContDiff ℝ ∞ R := by
+    dsimp [R]
+    exact hκcompact.contDiff_convolution_left
+      (ContinuousLinearMap.lsmul ℝ ℝ) hκdiff hFint.locallyIntegrable
+  have hRcont : Continuous R := hRdiff.continuous
+  have hRint : Integrable R := hRcont.integrable_of_hasCompactSupport hRcompact
+  have hRnonneg : ∀ x : ℝ, 0 ≤ R x := by
+    intro x
+    dsimp [R]
+    unfold LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05Convolution
+    apply integral_nonneg
+    intro y
+    exact mul_nonneg (hκnonneg y) (hFnonneg (x - y))
+  have hReven : Function.Even R := by
+    intro x
+    dsimp [R]
+    apply MeasureTheory.convolution_neg_of_neg_eq
+    · exact Filter.Eventually.of_forall hκeven
+    · exact Filter.Eventually.of_forall hFeven
+  have hRclose : ∀ x : ℝ, |R x - F x| ≤ 2 * r / T := by
+    intro x
+    have hsupp : Function.support κ ⊆ Metric.ball (0 : ℝ) (2 * r) := by
+      intro y hy
+      have hy' : |y| < 2 * r := hκsupport y hy
+      simpa [Metric.mem_ball, dist_zero_right] using hy'
+    have hlocal : ∀ y ∈ Metric.ball (x : ℝ) (2 * r),
+        dist (F y) (F x) ≤ 2 * r / T := by
+      intro y hy
+      rw [Real.dist_eq]
+      have hy' : |y - x| < 2 * r := by
+        simpa [Metric.mem_ball, Real.dist_eq, abs_sub_comm] using hy
+      have hbound := hFlip y x
+      rw [abs_sub_comm y x] at hbound
+      exact hbound.trans (by
+        rw [abs_sub_comm x y]
+        exact div_le_div_of_nonneg_right (le_of_lt hy') hT.le)
+    have hdist := MeasureTheory.dist_convolution_le
+      (μ := (volume : Measure ℝ)) (g := F) (x₀ := x) (R := 2 * r)
+      (z₀ := F x) (by positivity) hsupp hκnonneg hκmass
+      hFcont.measurable.aestronglyMeasurable hlocal
+    simpa [R, LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05Convolution,
+      Real.dist_eq] using hdist
+  have hRpt : chapter07PositiveType R := by
+    refine
+      { continuous := hRcont
+        integrable := hRint
+        transformNonnegative := ?_ }
+    intro t
+    let ξ : ℝ := t / (2 * Real.pi)
+    let κC : ℝ → ℂ := fun x => (κ x : ℂ)
+    let FC : ℝ → ℂ := fun x => (F x : ℂ)
+    have hκC : Integrable κC := by
+      change Integrable (fun x : ℝ => (κ x : ℂ))
+      exact hκint.ofReal
+    have hFC : Integrable FC := by
+      change Integrable (fun x : ℝ => (F x : ℂ))
+      exact hFint.ofReal
+    have hconv :
+        (fun x : ℝ => (R x : ℂ)) =
+          κC ⋆[ContinuousLinearMap.lsmul ℂ ℂ] FC := by
+      funext x
+      unfold R κC FC
+      unfold LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05Convolution
+      rw [MeasureTheory.convolution_def, MeasureTheory.convolution_def]
+      simp only [ContinuousLinearMap.lsmul_apply, smul_eq_mul]
+      simp_rw [← Complex.ofReal_mul]
+      exact (integral_ofReal).symm
+    have hκmath : 𝓕 κC ξ =
+        chapter07FourierTransform κ t := by
+      symm
+      simpa [ξ, κC] using
+        (LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05_fourierTransform_eq_mathlib_angular
+          κ hκint t)
+    have hFmath : 𝓕 FC ξ =
+        chapter07FourierTransform F t := by
+      symm
+      simpa [ξ, FC] using
+        (LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05_fourierTransform_eq_mathlib_angular
+          F hFint t)
+    have hRmath : chapter07FourierTransform R t =
+        𝓕 (fun x : ℝ => (R x : ℂ)) ξ := by
+      simpa [ξ] using
+        (LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05_fourierTransform_eq_mathlib_angular
+          R hRint t)
+    have hconvFT := Real.fourier_smul_convolution_eq hκC hFC ξ
+    have hproduct : chapter07FourierTransform R t =
+        chapter07FourierTransform κ t * chapter07FourierTransform F t := by
+      calc
+        chapter07FourierTransform R t =
+            𝓕 (fun x : ℝ => (R x : ℂ)) ξ := hRmath
+        _ = 𝓕 (κC ⋆[ContinuousLinearMap.lsmul ℂ ℂ] FC) ξ := by
+          rw [hconv]
+        _ = (𝓕 κC ξ) • (𝓕 FC ξ) := hconvFT
+        _ = chapter07FourierTransform κ t * chapter07FourierTransform F t := by
+          rw [hκmath, hFmath]
+          rfl
+    have hκnonneg' := hκpt.transformNonnegative t
+    have hFnonneg' := hFpt.transformNonnegative t
+    change (chapter07FourierTransform R t).im = 0 ∧
+      0 ≤ (chapter07FourierTransform R t).re
+    rw [hproduct, Complex.mul_im, Complex.mul_re]
+    constructor
+    · rw [hκnonneg'.1, hFnonneg'.1]
+      ring
+    · rw [hκnonneg'.1, hFnonneg'.1]
+      simpa using mul_nonneg hκnonneg'.2 hFnonneg'.2
+  have hr8 : r ≤ T / 8 := min_le_left _ _
+  have hre : r ≤ ε * T / 64 := min_le_right _ _
+  have ha : 0 ≤ 2 * r / T := by positivity
+  have ha_quarter : 2 * r / T ≤ (1 : ℝ) / 4 := by
+    apply (div_le_iff₀ hT).2
+    linarith
+  have ha_eps : 4 * (2 * r / T) ≤ ε := by
+    calc
+      4 * (2 * r / T) = 8 * r / T := by ring
+      _ ≤ ε := by
+        apply (div_le_iff₀ hT).2
+        nlinarith
+  have hFzero : F 0 = 1 := by
+    simp [F, chapter07Triangle]
+  have hRzero_close : |R 0 - 1| ≤ 2 * r / T := by
+    simpa [hFzero] using hRclose 0
+  have hRzero_lower : 1 - 2 * r / T ≤ R 0 := by
+    have hsymm : |1 - R 0| = |R 0 - 1| := abs_sub_comm _ _
+    have hleabs : 1 - R 0 ≤ 2 * r / T :=
+      (le_abs_self (1 - R 0)).trans (hsymm ▸ hRzero_close)
+    linarith
+  have hRzero_pos : 0 < R 0 := by
+    have hupper : 2 * r / T ≤ (1 : ℝ) / 4 := ha_quarter
+    linarith
+  let H : ℝ → ℝ := fun x => R x / R 0
+  have hHdiff : ContDiff ℝ ∞ H := by
+    dsimp [H]
+    exact hRdiff.div_const _
+  have hHcont : Continuous H := by
+    dsimp [H]
+    exact hRcont.div_const _
+  have hHcompact : HasCompactSupport H := by
+    dsimp [H]
+    exact hRcompact.mul_right (f' := fun _ : ℝ => (R 0)⁻¹)
+  have hHint : Integrable H := hHcont.integrable_of_hasCompactSupport hHcompact
+  have hHeven : Function.Even H := by
+    intro x
+    dsimp [H]
+    rw [hReven x]
+  have hHnonneg : ∀ x : ℝ, 0 ≤ H x := by
+    intro x
+    dsimp [H]
+    exact div_nonneg (hRnonneg x) hRzero_pos.le
+  have hHzero : H 0 = 1 := by
+    dsimp [H]
+    exact div_self hRzero_pos.ne'
+  have hHclose : ∀ x : ℝ, |H x - F x| ≤ ε := by
+    intro x
+    have hclose := hRclose x
+    have hFxabs : |F x| ≤ 1 := by
+      exact abs_le.2 ⟨by linarith [hFnonneg x], hFle x⟩
+    have hnum : |R x - R 0 * F x| ≤ 2 * r / T + 2 * r / T := by
+      calc
+        |R x - R 0 * F x| =
+            |(R x - F x) + F x * (1 - R 0)| := by
+          congr 1
+          ring
+        _ ≤ |R x - F x| + |F x * (1 - R 0)| := abs_add_le _ _
+        _ ≤ 2 * r / T + |F x| * |R 0 - 1| := by
+          calc
+            |R x - F x| + |F x * (1 - R 0)| =
+                |R x - F x| + |F x| * |R 0 - 1| := by
+              rw [abs_mul, abs_sub_comm (1 : ℝ) (R 0)]
+            _ ≤ 2 * r / T + |F x| * |R 0 - 1| :=
+              add_le_add hclose (le_refl _)
+        _ ≤ 2 * r / T + 2 * r / T := by
+          have hprod : |F x| * |R 0 - 1| ≤ 2 * r / T := by
+            calc
+              |F x| * |R 0 - 1| ≤ 1 * |R 0 - 1| :=
+                mul_le_mul_of_nonneg_right hFxabs (abs_nonneg _)
+              _ ≤ 1 * (2 * r / T) :=
+                mul_le_mul_of_nonneg_left hRzero_close (by norm_num)
+              _ = 2 * r / T := by ring
+          exact add_le_add (le_refl _) hprod
+    have hrewrite : H x - F x =
+        (R x - R 0 * F x) / R 0 := by
+      dsimp [H]
+      field_simp [hRzero_pos.ne']
+    rw [hrewrite, abs_div]
+    rw [abs_of_pos hRzero_pos]
+    have hden : (1 : ℝ) / 2 ≤ R 0 := by linarith [hRzero_lower, ha_quarter]
+    have hquot : (2 * r / T + 2 * r / T) / R 0 ≤
+        4 * (2 * r / T) := by
+      apply (div_le_iff₀ hRzero_pos).2
+      nlinarith [hden, ha]
+    exact (div_le_div_of_nonneg_right hnum hRzero_pos.le).trans
+      (hquot.trans ha_eps)
+  have hHpt : chapter07PositiveType H := by
+    refine
+      { continuous := hHcont
+        integrable := hHint
+        transformNonnegative := ?_ }
+    intro t
+    have hHfourier :=
+      LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05_fourier_transform_eq_ofReal_real_transform
+        hHint hHeven t
+    have hRfourier :=
+      LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05_fourier_transform_eq_ofReal_real_transform
+        hRint hReven t
+    have hHre : (chapter07FourierTransform H t).re =
+        chapter07CosineTransform H t := by
+      change (LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05FourierTransform H t).re =
+        LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05RealFourierTransform H t
+      rw [hHfourier]
+      simp
+    have hHim : (chapter07FourierTransform H t).im = 0 := by
+      change (LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05FourierTransform H t).im = 0
+      rw [hHfourier]
+      simp
+    have hRre : (chapter07FourierTransform R t).re =
+        chapter07CosineTransform R t := by
+      change (LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05FourierTransform R t).re =
+        LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05RealFourierTransform R t
+      rw [hRfourier]
+      simp
+    have hRcos : 0 ≤ chapter07CosineTransform R t := by
+      rw [← hRre]
+      exact hRpt.transformNonnegative t |>.2
+    have hscale : chapter07CosineTransform H t =
+        chapter07CosineTransform R t / R 0 := by
+      unfold chapter07CosineTransform
+      change (∫ x : ℝ, (R x / R 0) * Real.cos (t * x)) =
+        (∫ x : ℝ, R x * Real.cos (t * x)) / R 0
+      have hscale' :
+          (fun x : ℝ => (R x / R 0) * Real.cos (t * x)) =
+            (fun x : ℝ => (R x * Real.cos (t * x)) / R 0) := by
+        funext x
+        field_simp [hRzero_pos.ne']
+      rw [hscale']
+      exact MeasureTheory.integral_div (R 0)
+        (fun x : ℝ => R x * Real.cos (t * x))
+    have hHcos : 0 ≤ chapter07CosineTransform H t := by
+      rw [hscale]
+      exact div_nonneg hRcos hRzero_pos.le
+    constructor
+    · exact hHim
+    · simpa [hHre] using hHcos
+  refine ⟨H, ?_⟩
+  exact ⟨hHdiff, hHcompact, hHint, hHeven, hHnonneg, hHpt, hHzero,
+    hHclose⟩
 
 def chapter07IntervalBump (T : ℝ) (x : ℝ) : ℝ :=
   if |x| ≤ T then 1 else 0
@@ -1151,6 +1534,20 @@ theorem chapter07_oscillatoryGaussian_fourierNonnegative
   constructor
   · positivity
   · rfl
+
+theorem chapter07_oscillatoryGaussian_positiveType
+    (σ : ℝ) (hσ : 0 < σ) :
+    chapter07PositiveType (chapter07OscillatoryGaussian σ) := by
+  have hcont : Continuous (chapter07OscillatoryGaussian σ) := by
+    unfold chapter07OscillatoryGaussian
+    apply Continuous.mul
+    · unfold chapter07Gaussian
+      fun_prop
+    · exact Real.continuous_cos
+  have hfourier := chapter07_oscillatoryGaussian_fourierNonnegative σ hσ
+  refine ⟨hcont, hfourier.1, ?_⟩
+  intro t
+  exact ⟨(hfourier.2 t).2, (hfourier.2 t).1⟩
 
 theorem chapter07_oscillatoryGaussian_not_pointwiseNonnegative
     (σ : ℝ) (hσ : 0 < σ) :

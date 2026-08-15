@@ -85,19 +85,21 @@ theorem chapter08_norm_of_totally_ramified_uniformizer
     (hedegree : e = Module.finrank K L)
     (hscale : ∀ x : K, x ≠ 0 →
       vL (algebraMap K L x) = e • vK x)
+    (hnorm : ∀ x : L, x ≠ 0 →
+      vK (Algebra.norm K x) = (1 : WithTop ℤ) * vL x)
     (πK : K) (πL : L)
     (hπK : vK πK = 1) (hπL : vL πL = 1)
     (htotal : chapter08TotallyRamified vK vL hval) :
     chapter08NormOfUniformizerForm vK πK πL := by
   unfold chapter08NormOfUniformizerForm
-  have hnorm := chapter08_uniformizer_norm_has_value_one
-    vK vL hval e he hedegree hscale htotal πL hπL
+  have hnorm_varpi := chapter08_uniformizer_norm_has_value_one
+    vK vL hval e he hedegree hscale hnorm htotal πL hπL
   have hπK0 : πK ≠ 0 := by
     intro hzero
     subst πK
     simp at hπK
   refine ⟨Algebra.norm K πL / πK, ?_, ?_⟩
-  · rw [AddValuation.map_div, hnorm, hπK]
+  · rw [AddValuation.map_div, hnorm_varpi, hπK]
     norm_num
   · field_simp [hπK0]
 

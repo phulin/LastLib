@@ -80,7 +80,12 @@ theorem chapter08_effective_full_faithful_of_package
     {F : C ⥤ D}
     (P : Chapter08EffectiveFullFaithfulDescentPackage F) :
     Chapter08EffectiveFullFaithfulDescent F := by
-  sorry
+  let e := Classical.choice P.canonical
+  let hEq : F.IsEquivalence := Functor.isEquivalence_of_iso e.symm
+  exact
+    { effective := hEq
+      full := hEq.full
+      faithful := hEq.faithful }
 
 /- The equivalence used below is bundled with its comparison to the canonical
    pullback functor.  The quasi-coherent package is an instance of the generic
@@ -148,12 +153,16 @@ compatibility. -/
 theorem chapter08_pullback_is_full
     {T S : Scheme.{u}} {p : T ⟶ S} (hp : Chapter08FpqcMorphism p) :
     (chapter08QuasiCoherentPullbackDescentFunctor hp).Full := by
-  sorry
+  exact
+    (chapter08_effective_full_faithful_of_package
+      (chapter08QuasiCoherentDescentEquivalencePackage hp)).full
 
 theorem chapter08_pullback_is_faithful
     {T S : Scheme.{u}} {p : T ⟶ S} (hp : Chapter08FpqcMorphism p) :
     (chapter08QuasiCoherentPullbackDescentFunctor hp).Faithful := by
-  sorry
+  exact
+    (chapter08_effective_full_faithful_of_package
+      (chapter08QuasiCoherentDescentEquivalencePackage hp)).faithful
 
 /- The canonical quasi-coherent descent functor therefore has one reusable
    effective/full/faithful interface, rather than requiring downstream users to
@@ -162,7 +171,8 @@ theorem chapter08_quasiCoherent_descent_effective_full_faithful
     {T S : Scheme.{u}} {p : T ⟶ S} (hp : Chapter08FpqcMorphism p) :
     Chapter08EffectiveFullFaithfulDescent
       (chapter08QuasiCoherentPullbackDescentFunctor hp) := by
-  sorry
+  exact chapter08_effective_full_faithful_of_package
+    (chapter08QuasiCoherentDescentEquivalencePackage hp)
 
 /-- Effectivity: every quasi-coherent descent datum has a descended sheaf. -/
 noncomputable def chapter08DescendedQuasiCoherentModule
@@ -192,7 +202,18 @@ noncomputable def chapter08EffectivityComparison
     (Scheme.Modules.pullback p).obj
         (chapter08DescendedQuasiCoherentModule hp D).obj ≅
       (D.obj).obj () := by
-  sorry
+  let e := chapter08CanonicalEffectivityComparison hp D
+  let h := e.hom.hom.hom ()
+  let hi := e.inv.hom.hom ()
+  have h_hinv : h ≫ hi = 𝟙 _ := by
+    exact congrArg (fun q => q.hom.hom ()) e.hom_inv_id
+  have hi_h : hi ≫ h = 𝟙 _ := by
+    exact congrArg (fun q => q.hom.hom ()) e.inv_hom_id
+  exact
+    { hom := h
+      inv := hi
+      hom_inv_id := h_hinv
+      inv_hom_id := hi_h }
 
 /-- Effectivity and full faithfulness together package the quasi-coherent
 descent theorem for a single fpqc morphism. -/
@@ -292,7 +313,9 @@ theorem chapter08_family_pullback_is_full_and_faithful
     (choices : Chapter08PullbackChoices C.source C.map) :
     (chapter08FamilyQuasiCoherentPullbackDescentFunctor C choices).Full ∧
       (chapter08FamilyQuasiCoherentPullbackDescentFunctor C choices).Faithful := by
-  sorry
+  let h := chapter08_effective_full_faithful_of_package
+    (chapter08FamilyQuasiCoherentDescentEquivalencePackage C choices)
+  exact ⟨h.full, h.faithful⟩
 
 /-- Family descent is interpreted on the pairwise and triple overlaps selected
 by `choices`. -/
@@ -316,7 +339,15 @@ theorem chapter08_compatible_map_descends_uniquely
       (chapter08QuasiCoherentPullbackDescentFunctor hp).map ψ =
         (chapter08CanonicalEffectivityComparison hp D).hom ≫ φ ≫
           (chapter08CanonicalEffectivityComparison hp E).inv := by
-  sorry
+  let cD := chapter08CanonicalEffectivityComparison hp D
+  let cE := chapter08CanonicalEffectivityComparison hp E
+  let u := cD.hom ≫ φ ≫ cE.inv
+  obtain ⟨ψ, hψ⟩ := (chapter08_pullback_is_full hp).map_surjective u
+  refine ⟨ψ, ?_, ?_⟩
+  · exact hψ
+  · intro ψ' hψ'
+    apply (chapter08_pullback_is_faithful hp).map_injective
+    rw [hψ, hψ']
 
 end
 end Chapter08

@@ -95,9 +95,7 @@ theorem chapter07_unramified_criteria
     (hf : E.residueDegree =
       P.inertiaDeg A) :
     Chapter07UnramifiedExtension E ↔
-      (E.ramificationIndex = 1 ∧
-          Chapter07ResidueExtensionIsSeparable k l) ∧
-        (Chapter07MaximalIdealExtension A B m P ∧
+      (Chapter07MaximalIdealExtension A B m P ∧
           Chapter07ResidueExtensionIsSeparable k l) ∧
         Nonempty (Chapter07MonogenicResiduePresentation A B K L k l P res) ∧
         Chapter07FiniteEtaleExtension A B := by

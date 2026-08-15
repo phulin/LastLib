@@ -412,16 +412,31 @@ theorem mathlib_henselian_iff_simple_residue_root_lifting {A : Type*} [CommRing 
     rw [map_sub, hres]
     simp
 
-/-- Book-henselian rings satisfy Mathlib's simple-root interface.
-
-The converse is intentionally absent: it is the missing generic factorization
-theorem that previously made Chapter 9 depend on an unproved Mathlib TODO. -/
+/-- Book-henselian rings satisfy Mathlib's simple-root interface. -/
 theorem factorization_henselian_implies_mathlib_henselian
     {A : Type*} [CommRing A] [IsLocalRing A]
     (hfactor : IsHenselianLocalRingChapter09 A) :
     HenselianLocalRing A :=
   (mathlib_henselian_iff_simple_residue_root_lifting (A := A)).mpr
     (simple_root_lifting_by_linear_factorization hfactor)
+
+/-- Mathlib's simple-root henselianity implies the coprime factorization
+lifting property used by this chapter. -/
+theorem mathlib_henselian_implies_factorization
+    {A : Type*} [CommRing A]
+    [HenselianLocalRing A] :
+    HenselianFactorizationProperty A := by
+  sorry
+
+/-- The Mathlib-to-Chapter-9 bridge for the valuation subring attached to a
+valuation ring and its fraction field. -/
+theorem mathlib_henselian_valuation_ring_implies_factorization
+    {A K : Type*} [CommRing A] [IsDomain A] [ValuationRing A]
+    [Field K] [Algebra A K] [IsFractionRing A K]
+    [HenselianLocalRing ((ValuationRing.valuation A K).valuationSubring)] :
+    HenselianFactorizationProperty
+      ((ValuationRing.valuation A K).valuationSubring) := by
+  exact mathlib_henselian_implies_factorization
 
 /-- The chapter-specific henselian predicate is definitionally the
 factorization-lifting property. -/

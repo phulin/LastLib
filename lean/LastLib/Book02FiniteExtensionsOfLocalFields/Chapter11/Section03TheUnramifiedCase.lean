@@ -17,15 +17,25 @@ def chapter11IsUniformizer {K : Type*} [Field K]
     (p : K) = π ∧
       IsLocalRing.maximalIdeal (chapter11ValuationRing v) = Ideal.span {p}
 
-/- The unramified valued-extension interface includes both normalization and
-   completeness; residue-field separability is supplied by the residue-field
-   typeclass assumptions in the theorems below. -/
+/- Residue separability for the canonical residue-field algebra induced by a
+   chosen valuation extension.  This is kept explicit because the valuation
+   extension itself is a proposition rather than a typeclass. -/
+def chapter11ResidueSeparableValuedExtension
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ)) : Prop :=
+  ∀ hext : chapter11ValuationExtension vK vL,
+    letI : Valuation.HasExtension vK.toValuation vL.toValuation := ⟨hext⟩
+    Algebra.IsSeparable (chapter11ResidueField vK) (chapter11ResidueField vL)
+
+/- The unramified valued-extension interface includes normalization,
+   completeness, and separable residue growth. -/
 def chapter11UnramifiedValuedExtension
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ)) : Prop :=
   chapter11ValuationExtension vK vL ∧
     chapter11ValuationScaling vK vL 1 ∧
-    chapter11ValuationComplete vK ∧ chapter11ValuationComplete vL
+    chapter11ValuationComplete vK ∧ chapter11ValuationComplete vL ∧
+      chapter11ResidueSeparableValuedExtension vK vL
 
 /- A common uniformizer is the same element under the base embedding. -/
 def chapter11CommonUniformizer

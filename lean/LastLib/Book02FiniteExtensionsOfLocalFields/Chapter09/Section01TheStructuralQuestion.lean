@@ -149,10 +149,6 @@ theorem chapter09_perfect_residue_field_gives_separable_extension
   infer_instance
 
 /-- The degree formula separates value-group growth from residue-field growth. -/
--- SOURCE_ISSUE: The source's unrestricted degree formula is false for finite
--- defect extensions over imperfect residue fields.  The minimal correction
--- here is to assume a perfect base residue field (an explicit defectless
--- hypothesis would also suffice).
 theorem chapter09_local_degree_formula
     (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
@@ -164,7 +160,6 @@ theorem chapter09_local_degree_formula
     [FaithfulSMul A B] [IsIntegralClosure B A L]
     [Module.Finite (chapter09BaseResidueField A)
       (chapter09ExtensionResidueField B)]
-    [PerfectField (chapter09BaseResidueField A)]
     [Chapter09FiniteLocalExtension A B K L] :
     Module.finrank K L =
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex A B

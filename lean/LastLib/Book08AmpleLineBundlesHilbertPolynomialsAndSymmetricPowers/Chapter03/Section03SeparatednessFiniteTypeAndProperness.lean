@@ -24,16 +24,18 @@ def chapter03FiniteType (f : X ⟶ S) : Prop :=
 
 /-- The finite-presentation package for a morphism. -/
 def chapter03FinitelyPresented (f : X ⟶ S) : Prop :=
-  QuasiCompact f ∧ LocallyOfFinitePresentation f
+  QuasiCompact f ∧ QuasiSeparated f ∧ LocallyOfFinitePresentation f
 
 /-- Finite type is the conjunction of quasi-compactness and locally finite type. -/
 theorem chapter03_finiteType_iff (f : X ⟶ S) :
     chapter03FiniteType f ↔ QuasiCompact f ∧ LocallyOfFiniteType f :=
   Iff.rfl
 
-/-- Finite presentation is the conjunction of quasi-compactness and locally finite presentation. -/
+/-- Finite presentation is the conjunction of quasi-compactness, quasi-separatedness, and locally
+of finite presentation. -/
 theorem chapter03_finitelyPresented_iff (f : X ⟶ S) :
-    chapter03FinitelyPresented f ↔ QuasiCompact f ∧ LocallyOfFinitePresentation f :=
+    chapter03FinitelyPresented f ↔
+      QuasiCompact f ∧ QuasiSeparated f ∧ LocallyOfFinitePresentation f :=
   Iff.rfl
 
 /-- Relative projective bundles are separated. -/
@@ -81,7 +83,7 @@ theorem chapter03_relativeProjectiveBundle_finitelyPresented
     (P : Chapter03RelativeProjectiveBundle S E) :
     chapter03FinitelyPresented P.projection := by
   let : IsProper P.projection := P.proper
-  exact ⟨inferInstance, P.finite_presentation⟩
+  exact ⟨inferInstance, inferInstance, P.finite_presentation⟩
 
 /-- Every projective morphism is separated. -/
 theorem chapter03_projective_isSeparated (f : X ⟶ S)
@@ -165,7 +167,9 @@ theorem chapter03_finitelyPresented_of_projectivePresentation
     chapter03FinitelyPresented f := by
   let : IsClosedImmersion P.embedding := P.isClosedImmersion
   let : IsProper P.ambient.projection := P.ambient.proper
-  refine ⟨?_, ?_⟩
+  refine ⟨?_, ?_, ?_⟩
+  · rw [← P.overBase]
+    infer_instance
   · rw [← P.overBase]
     infer_instance
   · rw [← P.overBase]
@@ -177,17 +181,30 @@ theorem chapter03_finitelyPresented_of_quasiProjectivePresentation
     [LocallyOfFinitePresentation P.embedding]
     [LocallyOfFinitePresentation P.ambient.projection] (hq : QuasiCompact f) :
     chapter03FinitelyPresented f := by
-  exact ⟨hq, by
-    rw [← P.overBase]
-    infer_instance⟩
+  let : IsImmersion P.embedding := P.isImmersion
+  refine ⟨hq, ?_, ?_⟩
+  · rw [← P.overBase]
+    let : IsSeparated (P.embedding ≫ P.ambient.projection) := by
+      apply chapter03_quasiProjective_isSeparated _
+      exact ⟨{
+        module := P.module
+        ambient := P.ambient
+        embedding := P.embedding
+        isImmersion := P.isImmersion
+        overBase := rfl }⟩
+    infer_instance
+  · rw [← P.overBase]
+    infer_instance
 
 /-- Projective morphisms are finitely presented over a locally noetherian base. -/
 theorem chapter03_projective_finitelyPresented_of_locallyNoetherian
     (f : X ⟶ S) (hf : chapter03Projective f) [IsLocallyNoetherian S] :
     chapter03FinitelyPresented f := by
-  refine ⟨chapter03_projective_quasiCompact f hf, ?_⟩
-  let : LocallyOfFiniteType f := chapter03_projective_locallyOfFiniteType f hf
-  infer_instance
+  refine ⟨chapter03_projective_quasiCompact f hf, ?_, ?_⟩
+  · let : IsSeparated f := chapter03_projective_isSeparated f hf
+    infer_instance
+  · let : LocallyOfFiniteType f := chapter03_projective_locallyOfFiniteType f hf
+    infer_instance
 
 /-- Quasi-projective morphisms are finitely presented when the morphism is quasi-compact and the
 base is locally noetherian. -/
@@ -195,9 +212,11 @@ theorem chapter03_quasiProjective_finitelyPresented_of_locallyNoetherian
     (f : X ⟶ S) (hf : chapter03QuasiProjective f) (hq : QuasiCompact f)
     [IsLocallyNoetherian S] :
     chapter03FinitelyPresented f := by
-  refine ⟨hq, ?_⟩
-  let : LocallyOfFiniteType f := chapter03_quasiProjective_locallyOfFiniteType f hf
-  infer_instance
+  refine ⟨hq, ?_, ?_⟩
+  · let : IsSeparated f := chapter03_quasiProjective_isSeparated f hf
+    infer_instance
+  · let : LocallyOfFiniteType f := chapter03_quasiProjective_locallyOfFiniteType f hf
+    infer_instance
 
 /-- A closed immersion into a proper scheme is proper. -/
 theorem chapter03_closedImmersion_comp_proper_isProper

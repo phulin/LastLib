@@ -185,7 +185,11 @@ theorem chapter10_factor_contribution_le_factor_dimension
     (P : Ideal (L ⊗[K] Kh)) (n : ℕ)
     (h : Chapter10FactorContributionIndependent P n) :
     n ≤ Chapter10TensorFactorDimension P := by
-  sorry
+  let : Algebra Kh (L ⊗[K] Kh) := Algebra.TensorProduct.rightAlgebra
+  let : Module.Finite Kh (L ⊗[K] Kh) :=
+    Module.Finite.equiv (Algebra.TensorProduct.commRight K Kh L).toLinearEquiv
+  simpa [Chapter10FactorContributionIndependent, Chapter10TensorFactorDimension] using
+    (show ∃ f : Fin n → (L ⊗[K] Kh) ⧸ P, LinearIndependent Kh f from h).choose_spec.fintype_card_le_finrank
 
 /-! A finite henselized tensor separates the inequivalent heterogeneous
 valuation branches.  The package below keeps the branch-to-factor
@@ -540,7 +544,8 @@ theorem chapter10_finite_dvr_normalization_fundamental_equality
     (v : Valuation K ΓK) (hA : v.Integers A)
     (hfinite : Module.Finite A (integralClosure A L))
     (S : Finset (Chapter10ValuationBranch (K := K) (L := L) v))
-    (hcomplete : Chapter10CompleteBranchFamily v S) :
+    (hcomplete : Chapter10CompleteBranchFamily v S)
+    (hprofile : ∀ b ∈ S, Chapter10BranchProfileCorrect v b) :
     Finset.sum S (fun b => Chapter10BranchContribution b.profile) = Module.finrank K L := by
   sorry
 
@@ -570,13 +575,14 @@ theorem chapter10_finite_normalization_defectless
     (hfinite : Module.Finite v.valuationSubring
       (integralClosure v.valuationSubring L))
     (S : Finset (Chapter10ValuationBranch (K := K) (L := L) v))
-    (hcomplete : Chapter10CompleteBranchFamily v S) :
+    (hcomplete : Chapter10CompleteBranchFamily v S)
+    (hprofile : ∀ b ∈ S, Chapter10BranchProfileCorrect v b) :
     Finset.sum S (fun b => Chapter10BranchContribution b.profile) = Module.finrank K L := by
   let : IsFractionRing v.valuationSubring K :=
     (Valuation.valuationSubring.integers v).isFractionRing
   exact chapter10_finite_dvr_normalization_fundamental_equality
     (A := v.valuationSubring) (K := K) (L := L) v
-    (Valuation.valuationSubring.integers v) hfinite S hcomplete
+    (Valuation.valuationSubring.integers v) hfinite S hcomplete hprofile
 
 end
 

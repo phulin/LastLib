@@ -20,8 +20,8 @@ def Chapter02FiniteNormalizedValue
 noncomputable def Chapter02FiniteOrder
     {K : Type*} [Field K] [NumberField K]
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) (x : Kˣ) : ℤ :=
-  (WithZero.unzero
-      ((v.valuation K).ne_zero_iff.mpr x.ne_zero)).toAdd
+  -((WithZero.unzero
+      ((v.valuation K).ne_zero_iff.mpr x.ne_zero)).toAdd)
 
 /-- The finite normalization is `N(v)^(-ord_v)` on `Kˣ`. -/
 theorem chapter02_finite_normalization_formula
@@ -45,7 +45,7 @@ theorem chapter02_complex_normalized_value_conjugate_invariant
     {K : Type*} [Field K] (σ : K →+* ℂ) (x : K) :
     Chapter02ComplexNormalizedValue (ComplexEmbedding.conjugate σ) x =
       Chapter02ComplexNormalizedValue σ x := by
-  sorry
+  simp [Chapter02ComplexNormalizedValue, ComplexEmbedding.conjugate_coe_eq]
 
 /-- The normalized value attached to an infinite place. -/
 def Chapter02InfiniteNormalizedValue
@@ -57,7 +57,11 @@ theorem chapter02_real_infinite_place_uses_real_embedding
     (w : Chapter02InfinitePlace K) (hw : w.IsReal) :
     ∃ σ : K →+* ℝ, ∀ x : K,
       Chapter02InfiniteNormalizedValue w x = Chapter02RealNormalizedValue σ x := by
-  sorry
+  refine ⟨NumberField.InfinitePlace.embedding_of_isReal hw, ?_⟩
+  intro x
+  simpa [Chapter02InfiniteNormalizedValue, Chapter02RealNormalizedValue,
+    hw.mult_eq_one, Real.norm_eq_abs] using
+    (NumberField.InfinitePlace.norm_embedding_of_isReal hw x).symm
 
 theorem chapter02_complex_infinite_place_uses_conjugate_pair
     {K : Type*} [Field K] [NumberField K]
@@ -65,7 +69,10 @@ theorem chapter02_complex_infinite_place_uses_conjugate_pair
     ∃ σ : K →+* ℂ, ¬ComplexEmbedding.IsReal σ ∧
       ∀ x : K,
         Chapter02InfiniteNormalizedValue w x = Chapter02ComplexNormalizedValue σ x := by
-  sorry
+  refine ⟨w.embedding, NumberField.InfinitePlace.isComplex_iff.mp hw, ?_⟩
+  intro x
+  simp [Chapter02InfiniteNormalizedValue, Chapter02ComplexNormalizedValue,
+    hw.mult_eq_two, NumberField.InfinitePlace.norm_embedding_eq]
 
 /-- The archimedean part of the product formula. -/
 theorem chapter02_infinite_part_product_formula
@@ -99,13 +106,14 @@ def Chapter02ComplexHaarScalingFactor (z : ℂ) : ℝ := Complex.normSq z
 
 theorem chapter02_complex_haar_scaling_factor_is_the_square
     (z : ℂ) : Chapter02ComplexHaarScalingFactor z = ‖z‖ ^ 2 := by
-  sorry
+  simpa [Chapter02ComplexHaarScalingFactor] using Complex.normSq_eq_norm_sq z
 
 theorem chapter02_complex_normalized_value_is_the_haar_scaling_factor
     {K : Type*} [Field K] (σ : K →+* ℂ) (x : K) :
     Chapter02ComplexNormalizedValue σ x =
       Chapter02ComplexHaarScalingFactor (σ x) := by
-  sorry
+  simpa [Chapter02ComplexNormalizedValue, Chapter02ComplexHaarScalingFactor] using
+    (Complex.normSq_eq_norm_sq (σ x)).symm
 
 /-- The exact relation between the unweighted complex absolute value and the
 book's normalized complex factor. -/
@@ -118,14 +126,19 @@ theorem chapter02_complex_weight_is_two
     (w : Chapter02InfinitePlace K) (hw : w.IsComplex) (x : K) :
     Chapter02InfiniteNormalizedValue w x =
       Chapter02UnweightedInfiniteValue w x ^ 2 := by
-  sorry
+  rw [Chapter02InfiniteNormalizedValue, Chapter02UnweightedInfiniteValue,
+    hw.mult_eq_two]
 
 theorem chapter02_complex_unweighted_and_squared_conventions_differ
     {K : Type*} [Field K] [NumberField K]
     (w : Chapter02InfinitePlace K) (hw : w.IsComplex) :
     ∃ x : K,
       Chapter02InfiniteNormalizedValue w x ≠ Chapter02UnweightedInfiniteValue w x := by
-  sorry
+  refine ⟨(2 : K), ?_⟩
+  have hw2 : w (2 : K) = 2 := w.map_natCast 2
+  simp [Chapter02InfiniteNormalizedValue, Chapter02UnweightedInfiniteValue,
+    hw.mult_eq_two, hw2]
+  norm_num
 
 theorem chapter02_mixing_squared_and_unsquared_complex_conventions_changes_the_product
     {K : Type*} [Field K] [NumberField K]
@@ -134,7 +147,8 @@ theorem chapter02_mixing_squared_and_unsquared_complex_conventions_changes_the_p
         Chapter02UnweightedInfiniteValue w x) ↔
       ∀ x : K, Chapter02UnweightedInfiniteValue w x ^ 2 =
         Chapter02UnweightedInfiniteValue w x := by
-  sorry
+  simp [Chapter02InfiniteNormalizedValue, Chapter02UnweightedInfiniteValue,
+    hw.mult_eq_two]
 
 end
 

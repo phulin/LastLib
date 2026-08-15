@@ -48,6 +48,10 @@ namespace Chapter05RamificationFiltration
 
 variable {G : Type*} [Group G] [Finite G]
 
+instance lowerGroup_normal
+    (D : Chapter05RamificationFiltration G) (u : ℝ) :
+    (D.lowerGroup u).Normal := D.lower_normal u
+
 instance :
     CoeFun (Chapter05RamificationFiltration G) (fun _ => ℝ → Subgroup G) :=
   ⟨Chapter05RamificationFiltration.lowerGroup⟩

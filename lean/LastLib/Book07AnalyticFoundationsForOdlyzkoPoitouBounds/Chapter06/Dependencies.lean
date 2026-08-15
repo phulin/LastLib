@@ -24,7 +24,7 @@ noncomputable section
 open LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter04
 open LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05
 open MeasureTheory Set Filter NumberField
-open scoped BigOperators ContDiff Topology
+open scoped BigOperators ContDiff FourierTransform Topology
 
 /-!
 Shared interfaces for Chapter 6.  Chapter 4 supplies the global completed
@@ -102,6 +102,427 @@ def chapter06Phi (F : ℝ → ℝ) (s : ℂ) : ℂ :=
 
 def Chapter06SmoothCompactSupport (F : ℝ → ℝ) : Prop :=
   Function.Even F ∧ (ContDiff ℝ ∞ F) ∧ HasCompactSupport F
+
+private lemma chapter06_iteratedDeriv_complexExp_mul_real
+    (a : ℂ) (n : ℕ) (x : ℝ) :
+    iteratedDeriv n (fun y : ℝ => Complex.exp (a * (y : ℂ))) x =
+      a ^ n * Complex.exp (a * (x : ℂ)) := by
+  induction n generalizing x with
+  | zero => simp
+  | succ n ih =>
+      rw [iteratedDeriv_succ']
+      rw [show iteratedDeriv n (deriv (fun y : ℝ =>
+          Complex.exp (a * (y : ℂ)))) x =
+        iteratedDeriv n (fun y : ℝ =>
+          a * Complex.exp (a * (y : ℂ))) x by
+          congr 1
+          funext y
+          have harg : HasDerivAt (fun z : ℝ => a * (z : ℂ)) a y := by
+            convert! ((Complex.ofRealCLM.hasDerivAt (x := y)).const_mul a) using 1
+            simp
+          have hexp : HasDerivAt (fun z : ℝ =>
+              Complex.exp (a * (z : ℂ)))
+              (Complex.exp (a * (y : ℂ)) * a) y := by
+            exact (Complex.hasDerivAt_exp (a * (y : ℂ))).comp y harg
+          simp [hexp.deriv, mul_comm]]
+      rw [iteratedDeriv_const_mul_field]
+      rw [ih]
+      ring
+
+/-!
+Smooth compact support gives the rapid vertical-line decay used when the
+horizontal sides of a contour are sent to infinity.  The weaker
+`Chapter05BasicallyAdmissible` interface deliberately exposes only the
+quadratic decay needed for zero-sum summability; contour arguments need the
+full Schwartz-type family of bounds.
+-/
+theorem chapter06_smooth_compact_phi_decay
+    {F : ℝ → ℝ} (hF : Chapter06SmoothCompactSupport F) :
+    ∀ M : ℕ, ∀ R : ℝ, 0 ≤ R →
+      ∃ C : ℝ, 0 ≤ C ∧ ∀ σ t : ℝ, |σ| ≤ R →
+        ‖chapter06Phi F (chapter06VerticalLinePoint σ t)‖ ≤
+          C / (1 + |t|) ^ M := by
+  classical
+  intro M R hR
+  let f : ℝ → ℂ := fun x => (F x : ℂ)
+  have hfc : HasCompactSupport f := by
+    simpa [f, Function.comp_def] using
+      hF.2.2.comp_left (g := fun x : ℝ => (x : ℂ)) (by simp)
+  have hfcd : ContDiff ℝ ∞ f := by
+    dsimp [f]
+    exact Complex.ofRealCLM.contDiff.comp hF.2.1
+  obtain ⟨r, hr⟩ := hfc.isBounded.subset_closedBall (0 : ℝ)
+  let A : ℝ := |r| + 1
+  have hA : 0 ≤ A := by
+    dsimp [A]
+    linarith [abs_nonneg r]
+  have hAr : r < A := by
+    dsimp [A]
+    linarith [le_abs_self r]
+  have hsupport : tsupport f ⊆ Icc (-A) A := by
+    intro x hx
+    have hxball : x ∈ Metric.closedBall (0 : ℝ) r := hr hx
+    have hxabs : |x| ≤ r := by
+      simpa [Metric.mem_closedBall, Real.dist_eq] using hxball
+    constructor <;> dsimp [A] <;>
+      linarith [le_abs_self x, neg_le_abs x, hxabs, abs_nonneg r]
+  have hleftnot : -A ∉ tsupport f := by
+    intro hx
+    have hxball : -A ∈ Metric.closedBall (0 : ℝ) r := hr hx
+    have hxabs : |-A| ≤ r := by
+      simpa [Metric.mem_closedBall, Real.dist_eq] using hxball
+    rw [abs_neg, abs_of_nonneg hA] at hxabs
+    linarith
+  have hrightnot : A ∉ tsupport f := by
+    intro hx
+    have hxball : A ∈ Metric.closedBall (0 : ℝ) r := hr hx
+    have hxabs : |A| ≤ r := by
+      simpa [Metric.mem_closedBall, Real.dist_eq] using hxball
+    rw [abs_of_nonneg hA] at hxabs
+    linarith
+  have hsupportIoc : tsupport f ⊆ Ioc (-A) A := by
+    intro x hx
+    have hx' := hsupport hx
+    have hxl : -A ≤ x := hx'.1
+    have hxr : x ≤ A := hx'.2
+    constructor
+    · by_contra h
+      have : x = -A := le_antisymm (le_of_not_gt h) hxl
+      exact hleftnot (this ▸ hx)
+    · exact hxr
+  let fs : SchwartzMap ℝ ℂ := hfc.toSchwartzMap hfcd
+  let B : ℕ → ℝ := fun n => SchwartzMap.seminorm ℝ 0 n fs
+  have hB : ∀ n x, ‖iteratedDeriv n f x‖ ≤ B n := by
+    intro n x
+    have h := SchwartzMap.le_seminorm ℝ 0 n fs x
+    change ‖x‖ ^ 0 * ‖iteratedFDeriv ℝ n f x‖ ≤ B n at h
+    simpa [B, norm_iteratedFDeriv_eq_norm_iteratedDeriv] using h
+  have hBnonneg : ∀ n, 0 ≤ B n := by
+    intro n
+    exact le_trans (norm_nonneg _) (hB n 0)
+  let e : ℝ → ℝ → ℂ := fun σ x =>
+    Complex.exp (((σ - 1 / 2 : ℝ) : ℂ) * (x : ℂ))
+  let g : ℝ → ℝ → ℂ := fun σ x => f x * e σ x
+  have hecd : ∀ σ, ContDiff ℝ ∞ (e σ) := by
+    intro σ
+    dsimp [e]
+    apply Complex.contDiff_exp.comp
+    exact contDiff_const.mul (Complex.ofRealCLM.contDiff.comp contDiff_id)
+  have hgcd : ∀ σ, ContDiff ℝ ∞ (g σ) := by
+    intro σ
+    dsimp [g]
+    exact hfcd.mul (hecd σ)
+  have hgc : ∀ σ, HasCompactSupport (g σ) := by
+    intro σ
+    dsimp [g]
+    exact hfc.mul_right
+  have htsupportg : ∀ σ, tsupport (g σ) ⊆ tsupport f := by
+    intro σ
+    dsimp [g]
+    exact tsupport_mul_subset_left
+  let D : ℕ → ℝ := fun n =>
+    ∑ i ∈ Finset.range (n + 1),
+      (n.choose i : ℝ) * B i * (R + 1) ^ (n - i) *
+        Real.exp ((R + 1) * A)
+  have hDnonneg : ∀ n, 0 ≤ D n := by
+    intro n
+    dsimp [D]
+    apply Finset.sum_nonneg
+    intro i hi
+    positivity
+  have hsig : ∀ {σ : ℝ}, |σ| ≤ R → |σ - (1 / 2 : ℝ)| ≤ R + 1 := by
+    intro σ hσ
+    calc
+      |σ - (1 / 2 : ℝ)| ≤ |σ| + |(1 / 2 : ℝ)| := abs_sub _ _
+      _ ≤ R + 1 := by linarith
+  have hexp_bound : ∀ {σ x : ℝ}, |σ| ≤ R → x ∈ Icc (-A) A →
+      ‖e σ x‖ ≤ Real.exp ((R + 1) * A) := by
+    intro σ x hσ hx
+    have hxabs : |x| ≤ A := (abs_le).2 ⟨hx.1, hx.2⟩
+    have hprod : (σ - (1 / 2 : ℝ)) * x ≤ (R + 1) * A := by
+      calc
+        (σ - (1 / 2 : ℝ)) * x ≤ |(σ - (1 / 2 : ℝ)) * x| := le_abs_self _
+        _ = |σ - (1 / 2 : ℝ)| * |x| := abs_mul _ _
+        _ ≤ (R + 1) * A := by
+          exact mul_le_mul (hsig hσ) hxabs (abs_nonneg x) (by linarith)
+    rw [Complex.norm_exp]
+    apply Real.exp_le_exp.mpr
+    simpa [Complex.mul_re] using hprod
+  have hderiv_exp_bound : ∀ {σ x : ℝ} (k : ℕ), |σ| ≤ R → x ∈ Icc (-A) A →
+      ‖iteratedDeriv k (e σ) x‖ ≤
+        (R + 1) ^ k * Real.exp ((R + 1) * A) := by
+    intro σ x k hσ hx
+    rw [show e σ = (fun y : ℝ =>
+      Complex.exp (((σ - 1 / 2 : ℝ) : ℂ) * (y : ℂ))) by rfl]
+    rw [chapter06_iteratedDeriv_complexExp_mul_real]
+    have ha : ‖((σ - 1 / 2 : ℝ) : ℂ)‖ = |σ - (1 / 2 : ℝ)| := by
+      simpa [Real.norm_eq_abs] using (Complex.norm_real (σ - (1 / 2 : ℝ)))
+    rw [norm_mul, norm_pow, ha]
+    have hp : |σ - (1 / 2 : ℝ)| ^ k ≤ (R + 1) ^ k := by
+      gcongr
+      exact hsig hσ
+    exact mul_le_mul hp (hexp_bound hσ hx) (by positivity) (by positivity)
+  have hderiv_bound : ∀ {σ x : ℝ} (n : ℕ), |σ| ≤ R →
+      ‖iteratedFDeriv ℝ n (g σ) x‖ ≤ D n := by
+    intro σ x n hσ
+    have hsupport_deriv :
+        Function.support (iteratedFDeriv ℝ n (g σ)) ⊆ tsupport f :=
+      (support_iteratedFDeriv_subset n).trans (htsupportg σ)
+    by_cases hx : x ∈ Icc (-A) A
+    · have hformula : iteratedDeriv n (g σ) x =
+          ∑ i ∈ Finset.range (n + 1),
+            n.choose i * iteratedDeriv i f x * iteratedDeriv (n - i) (e σ) x := by
+        have hmul := iteratedDeriv_mul (n := n) (x := x) (f := f) (g := e σ)
+            ((hfcd.contDiffAt (x := x)).of_le
+              (WithTop.coe_le_coe.2 (ENat.natCast_lt_top n).le))
+            (((hecd σ).contDiffAt (x := x)).of_le
+              (WithTop.coe_le_coe.2 (ENat.natCast_lt_top n).le))
+        change iteratedDeriv n (f * e σ) x = _
+        exact hmul
+      rw [norm_iteratedFDeriv_eq_norm_iteratedDeriv, hformula]
+      calc
+        ‖∑ i ∈ Finset.range (n + 1),
+            n.choose i * iteratedDeriv i f x * iteratedDeriv (n - i) (e σ) x‖ ≤
+            ∑ i ∈ Finset.range (n + 1),
+              ‖n.choose i * iteratedDeriv i f x *
+                iteratedDeriv (n - i) (e σ) x‖ := norm_sum_le _ _
+        _ ≤ ∑ i ∈ Finset.range (n + 1),
+            (n.choose i : ℝ) * B i * (R + 1) ^ (n - i) *
+              Real.exp ((R + 1) * A) := by
+          apply Finset.sum_le_sum
+          intro i hi
+          rw [norm_mul, norm_mul]
+          simp only [norm_natCast]
+          calc
+            (n.choose i : ℝ) * ‖iteratedDeriv i f x‖ *
+                ‖iteratedDeriv (n - i) (e σ) x‖ ≤
+                (n.choose i : ℝ) *
+                  (B i * ((R + 1) ^ (n - i) * Real.exp ((R + 1) * A))) := by
+              calc
+                (n.choose i : ℝ) * ‖iteratedDeriv i f x‖ *
+                    ‖iteratedDeriv (n - i) (e σ) x‖ =
+                    (n.choose i : ℝ) *
+                      (‖iteratedDeriv i f x‖ *
+                        ‖iteratedDeriv (n - i) (e σ) x‖) := by ring
+                _ ≤ (n.choose i : ℝ) *
+                    (B i * ((R + 1) ^ (n - i) *
+                      Real.exp ((R + 1) * A))) := by
+                  apply mul_le_mul_of_nonneg_left
+                  · exact mul_le_mul (hB i x)
+                      (hderiv_exp_bound (n - i) hσ hx)
+                      (by positivity) (hBnonneg i)
+                  · positivity
+            _ = (n.choose i : ℝ) * B i * (R + 1) ^ (n - i) *
+                Real.exp ((R + 1) * A) := by ring
+        _ = D n := by rfl
+    · have hxnot : x ∉ Function.support (iteratedFDeriv ℝ n (g σ)) := by
+        intro hxs
+        exact hx (hsupport (hsupport_deriv hxs))
+      rw [norm_iteratedFDeriv_eq_norm_iteratedDeriv]
+      have hz : iteratedFDeriv ℝ n (g σ) x = 0 := by
+        simp only [Function.mem_support] at hxnot
+        exact not_not.mp hxnot
+      have hz' : iteratedDeriv n (g σ) x = 0 := by
+        rw [iteratedDeriv_eq_iteratedFDeriv, hz]
+        simp
+      rw [hz']
+      simpa using hDnonneg n
+  have hweighted_integrable : ∀ σ k n,
+      Integrable (fun v : ℝ =>
+        ‖v‖ ^ k * ‖iteratedFDeriv ℝ n (g σ) v‖) volume := by
+    intro σ k n
+    have hcont : Continuous (fun v : ℝ =>
+        ‖v‖ ^ k * ‖iteratedFDeriv ℝ n (g σ) v‖) := by
+      apply Continuous.mul
+      · fun_prop
+      · exact ((hgcd σ).of_le
+          (WithTop.coe_le_coe.2 (ENat.natCast_lt_top n).le)).continuous_iteratedFDeriv'.norm
+    have hcomp : HasCompactSupport (fun v : ℝ =>
+        ‖v‖ ^ k * ‖iteratedFDeriv ℝ n (g σ) v‖) := by
+      exact (hgc σ).iteratedFDeriv n |>.norm.mul_left
+    exact hcont.integrable_of_hasCompactSupport hcomp
+  have hsupport_deriv_all : ∀ σ n,
+      Function.support (iteratedFDeriv ℝ n (g σ)) ⊆ tsupport f := by
+    intro σ n
+    exact (support_iteratedFDeriv_subset n).trans (htsupportg σ)
+  have hIntegral_bound : ∀ {σ : ℝ} n, |σ| ≤ R →
+      (∫ v : ℝ, ‖v‖ ^ 0 * ‖iteratedFDeriv ℝ n (g σ) v‖) ≤
+        2 * A * D n := by
+    intro σ n hσ
+    let w : ℝ → ℝ := fun v =>
+      ‖v‖ ^ 0 * ‖iteratedFDeriv ℝ n (g σ) v‖
+    have hw_support : Function.support w ⊆ Ioc (-A) A := by
+      intro v hv
+      have hv' : ‖iteratedFDeriv ℝ n (g σ) v‖ ≠ 0 := by
+        simpa [w] using hv
+      have hv'' : v ∈ Function.support (iteratedFDeriv ℝ n (g σ)) := by
+        intro hz
+        exact hv' (by rw [hz]; simp)
+      exact hsupportIoc (hsupport_deriv_all σ n hv'')
+    have hw_int : IntervalIntegrable w volume (-A) A := by
+      simpa [w] using (hweighted_integrable σ 0 n).intervalIntegrable
+    have hconst_int : IntervalIntegrable (fun _ : ℝ => D n) volume (-A) A :=
+      intervalIntegrable_const
+    have hw_le : ∀ x ∈ Icc (-A) A, w x ≤ D n := by
+      intro x hx
+      simpa [w] using (hderiv_bound (σ := σ) (x := x) n hσ)
+    rw [← intervalIntegral.integral_eq_integral_of_support_subset hw_support]
+    calc
+      (∫ x in -A..A, w x) ≤ ∫ x in -A..A, D n :=
+        intervalIntegral.integral_mono_on (by linarith) hw_int hconst_int hw_le
+      _ = (A - (-A)) * D n := by simp
+      _ = 2 * A * D n := by ring
+  have hphi : ∀ (σ ξ : ℝ),
+      chapter06Phi F (chapter06VerticalLinePoint σ (-(2 * Real.pi * ξ))) =
+        𝓕 (g σ) ξ := by
+    intro σ ξ
+    rw [Real.fourier_eq']
+    unfold chapter06Phi chapter05BilateralLaplaceTransform chapter05LaplaceKernel
+    apply integral_congr_ae
+    filter_upwards with x
+    dsimp [g, e, f, chapter06VerticalLinePoint]
+    calc
+      (F x : ℂ) * Complex.exp
+          ((↑σ + ↑(-(2 * Real.pi * ξ)) * Complex.I - 1 / 2) * (x : ℂ)) =
+          (F x : ℂ) *
+            (Complex.exp (↑(-2 * Real.pi * (ξ * x)) * Complex.I) *
+              Complex.exp ((↑(σ - 1 / 2) : ℂ) * (x : ℂ))) := by
+        rw [← Complex.exp_add]
+        congr 1
+        congr 1
+        simp
+        ring_nf
+      _ = Complex.exp (↑(-2 * Real.pi * (ξ * x)) * Complex.I) *
+          ((F x : ℂ) * Complex.exp ((↑(σ - 1 / 2) : ℂ) * (x : ℂ))) := by
+        ring
+  let Q : ℝ :=
+    (2 * Real.pi) ^ (0 : ℕ) * (2 * (0 : ℕ) + 2) ^ M *
+      ∑ p ∈ Finset.range (0 + 1) ×ˢ Finset.range (M + 1),
+        2 * A * D p.2
+  have hQnonneg : 0 ≤ Q := by
+    dsimp [Q]
+    apply mul_nonneg
+    · positivity
+    · apply Finset.sum_nonneg
+      intro p hp
+      positivity
+  have hfourier_bound : ∀ {σ w : ℝ}, |σ| ≤ R →
+      ‖w‖ ^ M * ‖𝓕 (g σ) w‖ ≤ Q := by
+    intro σ w hσ
+    have hgcdM : ContDiff ℝ (M : ℕ∞) (g σ) :=
+      (hgcd σ).of_le (WithTop.coe_le_coe.2 (ENat.natCast_lt_top M).le)
+    have hfourier := Real.pow_mul_norm_iteratedFDeriv_fourier_le
+      (f := g σ) (K := (0 : ℕ∞)) (N := (M : ℕ∞))
+      (k := 0) (n := M) hgcdM
+      (fun k n hk hn => hweighted_integrable σ k n)
+      (by exact le_rfl) (by exact le_rfl) w
+    calc
+      ‖w‖ ^ M * ‖𝓕 (g σ) w‖ ≤
+          (2 * Real.pi) ^ 0 * (2 * 0 + 2) ^ M *
+            ∑ p ∈ Finset.range (0 + 1) ×ˢ Finset.range (M + 1),
+              ∫ v, ‖v‖ ^ p.1 *
+                ‖iteratedFDeriv ℝ p.2 (g σ) v‖ := by simpa using hfourier
+      _ ≤ Q := by
+        dsimp [Q]
+        norm_num
+        apply Finset.sum_le_sum
+        intro x hx
+        simpa using (hIntegral_bound (σ := σ) x hσ)
+  let L : ℝ := 2 * A * D 0
+  have hLnonneg : 0 ≤ L := by
+    dsimp [L]
+    positivity
+  have htransform_bound : ∀ {σ w : ℝ}, |σ| ≤ R →
+      ‖𝓕 (g σ) w‖ ≤ L := by
+    intro σ w hσ
+    have hnorm := VectorFourier.norm_fourierIntegral_le_integral_norm
+      Real.fourierChar (volume : Measure ℝ) (innerₗ ℝ) (g σ) w
+    have hnorm' : ‖𝓕 (g σ) w‖ ≤ ∫ v : ℝ, ‖g σ v‖ := by
+      exact hnorm
+    calc
+      ‖𝓕 (g σ) w‖ ≤ ∫ v : ℝ, ‖g σ v‖ := hnorm'
+      _ ≤ L := by
+        simpa [L, g, norm_iteratedFDeriv_zero] using
+          (hIntegral_bound (σ := σ) 0 hσ)
+  let C : ℝ := L * 2 ^ M + Q * (4 * Real.pi) ^ M
+  have hCnonneg : 0 ≤ C := by
+    dsimp [C]
+    exact add_nonneg (mul_nonneg hLnonneg (by positivity))
+      (mul_nonneg hQnonneg (by positivity))
+  refine ⟨C, hCnonneg, ?_⟩
+  intro σ t hσ
+  have hphi_t :
+      chapter06Phi F (chapter06VerticalLinePoint σ t) =
+        𝓕 (g σ) (-t / (2 * Real.pi)) := by
+    have harg : -(2 * Real.pi * (-t / (2 * Real.pi))) = t := by
+      field_simp [Real.pi_ne_zero]
+    calc
+      chapter06Phi F (chapter06VerticalLinePoint σ t) =
+          chapter06Phi F
+            (chapter06VerticalLinePoint σ (-(2 * Real.pi * (-t / (2 * Real.pi))))) := by
+              rw [harg]
+      _ = 𝓕 (g σ) (-t / (2 * Real.pi)) := hphi σ (-t / (2 * Real.pi))
+  by_cases ht : |t| ≤ 1
+  · have hden : 0 < (1 + |t|) ^ M := by positivity
+    apply (le_div_iff₀ hden).2
+    calc
+      ‖chapter06Phi F (chapter06VerticalLinePoint σ t)‖ *
+          (1 + |t|) ^ M =
+          ‖𝓕 (g σ) (-t / (2 * Real.pi))‖ * (1 + |t|) ^ M := by
+            rw [hphi_t]
+      _ ≤ L * 2 ^ M := by
+        apply mul_le_mul (htransform_bound (σ := σ)
+          (w := -t / (2 * Real.pi)) hσ)
+        · gcongr
+          linarith
+        · positivity
+        · exact hLnonneg
+      _ ≤ C := by
+        dsimp [C]
+        exact le_add_of_nonneg_right (mul_nonneg hQnonneg (by positivity))
+  · have ht1 : 1 ≤ |t| := le_of_lt (lt_of_not_ge ht)
+    let w : ℝ := -t / (2 * Real.pi)
+    have hw : ‖w‖ = |t| / (2 * Real.pi) := by
+      dsimp [w]
+      rw [abs_div, abs_neg,
+        abs_of_pos (by positivity : 0 < (2 * Real.pi : ℝ))]
+    have hscale : (1 + |t|) ^ M ≤
+        (4 * Real.pi) ^ M * ‖w‖ ^ M := by
+      have hbase : 1 + |t| ≤ 4 * Real.pi * ‖w‖ := by
+        rw [hw]
+        calc
+          1 + |t| ≤ 2 * |t| := by linarith
+          _ = 4 * Real.pi * (|t| / (2 * Real.pi)) := by
+            field_simp [Real.pi_ne_zero]
+            norm_num
+      calc
+        (1 + |t|) ^ M ≤ (4 * Real.pi * ‖w‖) ^ M := by gcongr
+        _ = (4 * Real.pi) ^ M * ‖w‖ ^ M := by rw [mul_pow]
+    have hprod : ‖𝓕 (g σ) w‖ * (1 + |t|) ^ M ≤
+        Q * (4 * Real.pi) ^ M := by
+      calc
+        ‖𝓕 (g σ) w‖ * (1 + |t|) ^ M ≤
+            ‖𝓕 (g σ) w‖ * ((4 * Real.pi) ^ M * ‖w‖ ^ M) :=
+          mul_le_mul_of_nonneg_left hscale (norm_nonneg _)
+        _ = (4 * Real.pi) ^ M *
+            (‖w‖ ^ M * ‖𝓕 (g σ) w‖) := by ring
+        _ ≤ (4 * Real.pi) ^ M * Q :=
+          mul_le_mul_of_nonneg_left
+            (hfourier_bound (σ := σ) (w := w) hσ) (by positivity)
+        _ = Q * (4 * Real.pi) ^ M := by ring
+    have hden : 0 < (1 + |t|) ^ M := by positivity
+    apply (le_div_iff₀ hden).2
+    have hphi_w :
+        chapter06Phi F (chapter06VerticalLinePoint σ t) = 𝓕 (g σ) w := by
+      simpa [w] using hphi_t
+    calc
+      ‖chapter06Phi F (chapter06VerticalLinePoint σ t)‖ *
+          (1 + |t|) ^ M = ‖𝓕 (g σ) w‖ * (1 + |t|) ^ M := by
+            rw [hphi_w]
+      _ ≤ Q * (4 * Real.pi) ^ M := hprod
+      _ ≤ C := by
+        dsimp [C]
+        exact le_add_of_nonneg_left (mul_nonneg hLnonneg (by positivity))
 
 def chapter06A (F : ℝ → ℝ) : ℝ :=
   ∫ x : ℝ in Ioi 0, F x * Real.cosh (x / 2)
@@ -408,6 +829,105 @@ heights used in §6.2.  It is deliberately an input interface for that
 remaining contour data, not an axiom or a conclusion engineered from the
 explicit formula.
 -/
+/-! ### Shared zero, explicit-formula, and contour interfaces -/
+
+def chapter06ZeroWindow
+    {K : Type*} [Field K] [NumberField K]
+    (Z : Chapter06ZeroSpectrum K) (T : ℝ) : Set ℂ :=
+  {ρ | ρ ∈ Z.support ∧ |ρ.im| < T}
+
+noncomputable def chapter06ZeroWindowFinset
+    {K : Type*} [Field K] [NumberField K]
+    (Z : Chapter06ZeroSpectrum K) (T : ℝ) : Finset ℂ :=
+  (Z.locally_finite T).toFinset
+
+def chapter06ZeroSummand
+    {K : Type*} [Field K] [NumberField K]
+    (Z : Chapter06ZeroSpectrum K) (F : ℝ → ℝ) (ρ : ℂ) : ℂ :=
+  (Z.multiplicity ρ : ℂ) * chapter06Phi F ρ
+
+noncomputable def chapter06SymmetricZeroSum
+    {K : Type*} [Field K] [NumberField K]
+    (Z : Chapter06ZeroSpectrum K) (F : ℝ → ℝ) : ℂ :=
+  ∑' ρ : ℂ, chapter06ZeroSummand Z F ρ
+
+noncomputable def chapter06ZeroPartialSum
+    {K : Type*} [Field K] [NumberField K]
+    (Z : Chapter06ZeroSpectrum K) (F : ℝ → ℝ) (T : ℝ) : ℂ :=
+  ∑ ρ ∈ chapter06ZeroWindowFinset Z T, chapter06ZeroSummand Z F ρ
+
+def chapter06ZeroContribution
+    {K : Type*} [Field K] [NumberField K]
+    (Z : Chapter06ZeroSpectrum K) (F : ℝ → ℝ) : ℝ :=
+  (chapter06SymmetricZeroSum Z F).re
+
+def chapter06ExplicitFormulaRightHandSide
+    (K : Type*) [Field K] [NumberField K]
+    (Z : Chapter06ZeroSpectrum K) (F : ℝ → ℝ) : ℝ :=
+  (chapter06Degree K : ℝ) * chapter06GammaConstant +
+    (chapter06RealPlaces K : ℝ) * (Real.pi / 2) -
+    4 * chapter06A F - (chapter06Degree K : ℝ) * chapter06B F -
+    (chapter06RealPlaces K : ℝ) * chapter06C F +
+    chapter06ZeroContribution Z F + chapter06PrimeContribution K F
+
+def chapter06ContourRectangle (c T : ℝ) : Set ℂ :=
+  {s | 1 - c ≤ s.re ∧ s.re ≤ c ∧ |s.im| ≤ T}
+
+def chapter06ContourIntegrand
+    {K : Type*} [Field K] [NumberField K]
+    (F : ℝ → ℝ) (s : ℂ) : ℂ :=
+  chapter06LogDerivative (chapter06Xi K) s * chapter06Phi F s
+
+/-!
+The residue theorem needs more than local zero residues.  This record keeps
+the global meromorphicity, all four parametrized contour integrals, complete
+boundary avoidance, the residue at every zero, the absence of other poles in
+the rectangle, and finiteness of the possible poles together in one input
+interface.
+-/
+structure Chapter06RectangleResidueData
+    (K : Type*) [Field K] [NumberField K]
+    (Z : Chapter06ZeroSpectrum K) (F : ℝ → ℝ) (c T : ℝ) where
+  contour_integrand_meromorphic :
+    MeromorphicOn (chapter06ContourIntegrand (K := K) F) (Set.univ : Set ℂ)
+  right_vertical_integrable :
+    IntervalIntegrable
+      (fun t : ℝ =>
+        chapter06ContourIntegrand (K := K) F
+          (chapter06VerticalLinePoint c t) * Complex.I)
+      volume (-T) T
+  left_vertical_integrable :
+    IntervalIntegrable
+      (fun t : ℝ =>
+        chapter06ContourIntegrand (K := K) F
+          (chapter06VerticalLinePoint (1 - c) t) * Complex.I)
+      volume (-T) T
+  top_horizontal_integrable :
+    IntervalIntegrable
+      (fun σ : ℝ =>
+        chapter06ContourIntegrand (K := K) F
+          (chapter06VerticalLinePoint σ T))
+      volume c (1 - c)
+  bottom_horizontal_integrable :
+    IntervalIntegrable
+      (fun σ : ℝ =>
+        chapter06ContourIntegrand (K := K) F
+          (chapter06VerticalLinePoint σ (-T)))
+      volume (1 - c) c
+  boundary_avoidance :
+    ∀ ρ, ρ ∈ Z.support →
+      ρ.re ≠ c ∧ ρ.re ≠ 1 - c ∧ ρ.im ≠ T ∧ ρ.im ≠ -T
+  zero_residue :
+    ∀ {ρ}, ρ ∈ Z.support →
+      chapter06SimplePoleWithResidue
+        (chapter06ContourIntegrand (K := K) F) ρ
+        ((Z.multiplicity ρ : ℂ) * chapter06Phi F ρ)
+  no_other_poles :
+    ∀ {ρ}, ρ ∈ chapter06ContourRectangle c T → ρ ∉ Z.support →
+      AnalyticAt ℂ (chapter06ContourIntegrand (K := K) F) ρ
+  finite_poles :
+    Set.Finite {ρ : ℂ | ρ ∈ Z.support ∧ ρ ∈ chapter06ContourRectangle c T}
+
 structure Chapter06ContourHeightSequence
     (K : Type*) [Field K] [NumberField K]
     (Z : Chapter06ZeroSpectrum K) (c : ℝ) where
@@ -488,9 +1008,10 @@ theorem chapter06_canonical_contour_height_sequence_nonempty
 
 /-!
 Chapter 4 supplies the canonical completed-zeta, zero, growth, and generic
-contour-height data.  Expose the resulting package as a nonempty interface
-rather than making the book's explicit formula permanently conditional on a
-caller-built duplicate package.
+contour-height data.  The explicit formula and rectangle residue theorem are
+Chapter 6 results, so they are deliberately not fields of this canonical
+analytic package; keeping them out avoids making their proofs prerequisites
+for constructing the package they analyze.
 -/
 theorem chapter06_zeta_analytic_package_nonempty
     (K : Type*) [Field K] [NumberField K] :
@@ -509,7 +1030,8 @@ theorem chapter06_zeta_analytic_package_nonempty
     contour_heights := by
       intro c hc
       exact Classical.choice
-        (chapter06_canonical_contour_height_sequence_nonempty K hc) }⟩
+        (chapter06_canonical_contour_height_sequence_nonempty K hc)
+    }⟩
 
 noncomputable def chapter06CanonicalZetaAnalyticPackage
     (K : Type*) [Field K] [NumberField K] :
@@ -527,7 +1049,8 @@ noncomputable def chapter06CanonicalZetaAnalyticPackage
     contour_heights := by
       intro c hc
       exact Classical.choice
-        (chapter06_canonical_contour_height_sequence_nonempty K hc) }
+        (chapter06_canonical_contour_height_sequence_nonempty K hc)
+    }
 
 @[simp] theorem chapter06_canonical_zeta_analytic_package_zeros
     (K : Type*) [Field K] [NumberField K] :
@@ -617,23 +1140,6 @@ def chapter06ZeroBandCount
       intro ρ hρ
       exact ⟨hρ.1,
         lt_of_le_of_lt hρ.2.2 (by linarith)⟩))
-
-/-! ### Symmetric zero sums -/
-
-def chapter06ZeroWindow
-    {K : Type*} [Field K] [NumberField K]
-    (Z : Chapter06ZeroSpectrum K) (T : ℝ) : Set ℂ :=
-  {ρ | ρ ∈ Z.support ∧ |ρ.im| < T}
-
-noncomputable def chapter06ZeroWindowFinset
-    {K : Type*} [Field K] [NumberField K]
-    (Z : Chapter06ZeroSpectrum K) (T : ℝ) : Finset ℂ :=
-  (Z.locally_finite T).toFinset
-
-def chapter06ZeroSummand
-    {K : Type*} [Field K] [NumberField K]
-    (Z : Chapter06ZeroSpectrum K) (F : ℝ → ℝ) (ρ : ℂ) : ℂ :=
-  (Z.multiplicity ρ : ℂ) * chapter06Phi F ρ
 
 theorem chapter06_zero_summand_summable_of_basic
     (K : Type*) [Field K] [NumberField K]
@@ -1064,22 +1570,7 @@ theorem chapter06_zero_summand_summable_of_basic
   have hf : Summable f := hnormsum.of_norm
   simpa [f] using hf
 
-noncomputable def chapter06SymmetricZeroSum
-    {K : Type*} [Field K] [NumberField K]
-    (Z : Chapter06ZeroSpectrum K) (F : ℝ → ℝ) : ℂ :=
-  ∑' ρ : ℂ, chapter06ZeroSummand Z F ρ
-
-noncomputable def chapter06ZeroPartialSum
-    {K : Type*} [Field K] [NumberField K]
-    (Z : Chapter06ZeroSpectrum K) (F : ℝ → ℝ) (T : ℝ) : ℂ :=
-  ∑ ρ ∈ chapter06ZeroWindowFinset Z T, chapter06ZeroSummand Z F ρ
-
-def chapter06ZeroContribution
-    {K : Type*} [Field K] [NumberField K]
-    (Z : Chapter06ZeroSpectrum K) (F : ℝ → ℝ) : ℝ :=
-  (chapter06SymmetricZeroSum Z F).re
-
-def chapter06GRH {K : Type*} [Field K] [NumberField K]
+def chapter06GRH {K : Type*} [Field K] [NumberField K] 
     (Z : Chapter06ZeroSpectrum K) : Prop :=
   ∀ ρ, ρ ∈ Z.support → ρ.re = 1 / 2
 
@@ -1274,24 +1765,23 @@ theorem chapter06_canonical_grh_zero_contribution_nonnegative
   rw [hreal]
   exact tsum_nonneg (fun ρ => hterm ρ)
 
-def chapter06ExplicitFormulaRightHandSide
+/-!
+This is the dependency-level target for the exact explicit formula.  The
+analytic package is a presentation of the canonical completed-zeta data: its
+zero spectrum carries the zero locations, multiplicities, symmetries, and
+logarithmic-derivative residues, while the finite and archimedean terms below
+are fixed by `K` and `F`.  The identity itself is proved at the Chapter 6
+statement layer rather than being assumed while constructing the package.
+-/
+theorem chapter06_weil_poitou_explicit_formula_bridge
     (K : Type*) [Field K] [NumberField K]
-    (Z : Chapter06ZeroSpectrum K) (F : ℝ → ℝ) : ℝ :=
-  (chapter06Degree K : ℝ) * chapter06GammaConstant +
-    (chapter06RealPlaces K : ℝ) * (Real.pi / 2) -
-    4 * chapter06A F - (chapter06Degree K : ℝ) * chapter06B F -
-    (chapter06RealPlaces K : ℝ) * chapter06C F +
-    chapter06ZeroContribution Z F + chapter06PrimeContribution K F
+    (P : Chapter06ZetaAnalyticPackage K) {F : ℝ → ℝ}
+    (hF : Chapter06BasicallyAdmissible F) :
+    Real.log (chapter06AbsoluteDiscriminant K) =
+      chapter06ExplicitFormulaRightHandSide K P.zeros F := by
+  sorry
 
 /-! ### The contour and Laplace-inversion conventions -/
-
-def chapter06ContourRectangle (c T : ℝ) : Set ℂ :=
-  {s | 1 - c ≤ s.re ∧ s.re ≤ c ∧ |s.im| ≤ T}
-
-def chapter06ContourIntegrand
-    {K : Type*} [Field K] [NumberField K]
-    (F : ℝ → ℝ) (s : ℂ) : ℂ :=
-  chapter06LogDerivative (chapter06Xi K) s * chapter06Phi F s
 
 noncomputable def chapter06RightVerticalIntegral
     {K : Type*} [Field K] [NumberField K]
@@ -1329,6 +1819,368 @@ noncomputable def chapter06ContourResidueSum
     {K : Type*} [Field K] [NumberField K]
     (Z : Chapter06ZeroSpectrum K) (F : ℝ → ℝ) (T : ℝ) : ℂ :=
   ∑ ρ ∈ chapter06ZeroWindowFinset Z T, chapter06ZeroSummand Z F ρ
+
+/-!
+The rectangle theorem consumes the full analytic residue package.  In
+particular, local zero residues and a finite zero set alone are not treated
+as a substitute for global meromorphicity, edge integrability, or the
+exclusion of nonzero poles.
+-/
+theorem chapter06_rectangle_residue_theorem
+    (K : Type*) [Field K] [NumberField K]
+    (Z : Chapter06ZeroSpectrum K) {F : ℝ → ℝ} {c T : ℝ}
+    (hc : 1 < c) (hT : 0 ≤ T)
+    (R : Chapter06RectangleResidueData K Z F c T) :
+    (1 / (2 * (Real.pi : ℂ) * Complex.I)) *
+        (chapter06RightVerticalIntegral (K := K) F c T -
+          chapter06LeftVerticalIntegral (K := K) F c T +
+          chapter06TopHorizontalIntegral (K := K) F c T +
+          chapter06BottomHorizontalIntegral (K := K) F c T) =
+      chapter06ContourResidueSum Z F T := by
+  sorry
+
+/-!
+Residue-theorem interface for the positively oriented boundary of
+`chapter06ContourRectangle`: the right side is traversed upward, the left
+side downward, and the horizontal sides use their displayed orientations.
+-/
+theorem chapter06_contour_residue_interface
+    (K : Type*) [Field K] [NumberField K]
+    (P : Chapter06ZetaAnalyticPackage K) {F : ℝ → ℝ}
+    {c T : ℝ}
+    (hc : 1 < c) (hT : 0 ≤ T)
+    (R : Chapter06RectangleResidueData K P.zeros F c T) :
+    (1 / (2 * (Real.pi : ℂ) * Complex.I)) *
+        (chapter06RightVerticalIntegral (K := K) F c T -
+          chapter06LeftVerticalIntegral (K := K) F c T +
+          chapter06TopHorizontalIntegral (K := K) F c T +
+          chapter06BottomHorizontalIntegral (K := K) F c T) =
+      chapter06ContourResidueSum P.zeros F T := by
+  exact chapter06_rectangle_residue_theorem K P.zeros hc hT R
+
+/-!
+The logarithmic-derivative growth in a contour-height package is polynomial
+in the height.  Together with the rapid transform decay above, this gives a
+uniform inverse-height majorant for the horizontal error.  The majorant is a
+more useful dependency interface than baking a particular contour proof into
+the height structure.
+-/
+theorem chapter06_horizontal_error_bound_of_smooth_compact
+    (K : Type*) [Field K] [NumberField K]
+    (P : Chapter06ZetaAnalyticPackage K) {F : ℝ → ℝ}
+    (hF : Chapter06SmoothCompactSupport F) {c : ℝ}
+    (hc : 1 < c) (H : Chapter06ContourHeightSequence K P.zeros c) :
+    ∃ C : ℝ, 0 ≤ C ∧ ∀ j : ℕ,
+      ‖chapter06HorizontalError (K := K) F c (H.height j)‖ ≤
+        C / (1 + H.height j) := by
+  classical
+  obtain ⟨Cld, hCld, hld⟩ := H.logDerivativeBound
+  have hcpos : 0 < c := by linarith
+  obtain ⟨Cphi, hCphi, hphi⟩ :=
+    chapter06_smooth_compact_phi_decay hF (H.separationExponent + 4) c
+      (le_of_lt hcpos)
+  let D₀ : ℝ := |Real.log (chapter06AbsoluteDiscriminant K)|
+  let N : ℝ := chapter06Degree K
+  let Q : ℝ := D₀ + 3 * N
+  let Cint : ℝ := Cld * Q ^ 2 * Cphi * 3 ^ (H.separationExponent + 2)
+  let C : ℝ :=
+    ‖(1 / (2 * (Real.pi : ℂ) * Complex.I))‖ *
+      (2 * (2 * c - 1) * Cint)
+  have hD₀ : 0 ≤ D₀ := by
+    dsimp [D₀]
+    exact abs_nonneg _
+  have hN : 0 ≤ N := by
+    dsimp [N]
+    positivity
+  have hQ : 0 ≤ Q := by
+    dsimp [Q]
+    positivity
+  have hCint : 0 ≤ Cint := by
+    dsimp [Cint]
+    positivity
+  have hC : 0 ≤ C := by
+    dsimp [C]
+    have hcscale : 0 ≤ 2 * c - 1 := by linarith
+    have hscale : 0 ≤ 2 * (2 * c - 1) * Cint := by positivity
+    have hnorm : 0 ≤ ‖(1 / (2 * (Real.pi : ℂ) * Complex.I))‖ :=
+      norm_nonneg _
+    have hprod := mul_nonneg hnorm hscale
+    change 0 ≤ ‖(1 / (2 * (Real.pi : ℂ) * Complex.I))‖ *
+      (2 * (2 * c - 1) * Cint)
+    exact hprod
+  refine ⟨C, hC, ?_⟩
+  intro j
+  let T : ℝ := H.height j
+  have hT : 0 < T := H.positive j
+  have hT0 : 0 ≤ T := le_of_lt hT
+  have hT3 : 0 < T + 3 := by linarith
+  have hT1 : 0 < 1 + T := by linarith
+  have hσbound : ∀ σ : ℝ, 1 - c ≤ σ → σ ≤ c → |σ| ≤ c := by
+    intro σ hleft hright
+    rw [abs_le]
+    constructor <;> linarith
+  have hlog_nonneg : 0 ≤ Real.log (T + 3) := by
+    apply Real.log_nonneg
+    linarith
+  have hlog_le : Real.log (T + 3) ≤ T + 3 := by
+    have h := Real.log_le_sub_one_of_pos hT3
+    linarith
+  have hlog_abs : |Real.log (T + 3)| ≤ T + 3 := by
+    rw [abs_of_nonneg hlog_nonneg]
+    exact hlog_le
+  have hconductor_abs :
+      |Real.log (chapter06AnalyticConductor K T)| ≤ Q * (T + 3) := by
+    rw [show chapter06AnalyticConductor K T =
+        chapter04AnalyticConductor K T by rfl]
+    rw [chapter04_log_analytic_conductor_eq]
+    rw [abs_of_nonneg hT0]
+    have hsum :
+        |Real.log (chapter06AbsoluteDiscriminant K) +
+            N * Real.log (T + 3)| ≤ D₀ + N * (T + 3) := by
+      calc
+        |Real.log (chapter06AbsoluteDiscriminant K) +
+            N * Real.log (T + 3)| ≤
+            |Real.log (chapter06AbsoluteDiscriminant K)| +
+              |N * Real.log (T + 3)| := abs_add_le _ _
+        _ = D₀ + N * Real.log (T + 3) := by
+          rw [abs_mul, abs_of_nonneg hN, abs_of_nonneg hlog_nonneg]
+        _ ≤ D₀ + N * (T + 3) := by
+          gcongr
+    have hQmul : D₀ + N * (T + 3) ≤ Q * (T + 3) := by
+      dsimp [Q]
+      nlinarith
+    exact hsum.trans hQmul
+  have hconductor_sq :
+      (Real.log (chapter06AnalyticConductor K T)) ^ 2 ≤
+        Q ^ 2 * (T + 3) ^ 2 := by
+    calc
+      (Real.log (chapter06AnalyticConductor K T)) ^ 2 ≤
+          (Q * (T + 3)) ^ 2 := by
+        apply (sq_le_sq).2
+        rw [abs_of_nonneg (mul_nonneg hQ (le_of_lt hT3))]
+        exact hconductor_abs
+      _ = Q ^ 2 * (T + 3) ^ 2 := by ring
+  have hTpow :
+      (T + 3) ^ H.separationExponent *
+          (Real.log (chapter06AnalyticConductor K T)) ^ 2 ≤
+        Q ^ 2 * (T + 3) ^ (H.separationExponent + 2) := by
+    calc
+      (T + 3) ^ H.separationExponent *
+          (Real.log (chapter06AnalyticConductor K T)) ^ 2 ≤
+        (T + 3) ^ H.separationExponent *
+          (Q ^ 2 * (T + 3) ^ 2) := by
+            gcongr
+      _ = Q ^ 2 * (T + 3) ^ (H.separationExponent + 2) := by
+        rw [pow_add]
+        ring
+  have hlogderiv_bound : ∀ σ : ℝ, 1 - c ≤ σ → σ ≤ c →
+      ‖chapter06LogDerivative (chapter06Xi K)
+          (chapter06VerticalLinePoint σ T)‖ ≤
+        Cld * Q ^ 2 * (T + 3) ^ (H.separationExponent + 2) := by
+    intro σ hleft hright
+    calc
+      ‖chapter06LogDerivative (chapter06Xi K)
+          (chapter06VerticalLinePoint σ T)‖ ≤
+        Cld * (H.height j + 3) ^ H.separationExponent *
+          Real.log (chapter06AnalyticConductor K (H.height j)) ^ 2 := by
+            simpa [T] using (hld j σ hleft hright).1
+      _ = Cld * ((T + 3) ^ H.separationExponent *
+          Real.log (chapter06AnalyticConductor K T) ^ 2) := by
+            simp [T]
+            ring
+      _ ≤ Cld * (Q ^ 2 * (T + 3) ^ (H.separationExponent + 2)) :=
+        mul_le_mul_of_nonneg_left hTpow hCld
+      _ = Cld * Q ^ 2 * (T + 3) ^ (H.separationExponent + 2) := by ring
+  have hphi_bound : ∀ σ : ℝ, 1 - c ≤ σ → σ ≤ c →
+      ‖chapter06Phi F (chapter06VerticalLinePoint σ T)‖ ≤
+        Cphi / (1 + T) ^ (H.separationExponent + 4) := by
+    intro σ hleft hright
+    simpa [T, abs_of_nonneg hT0] using
+      hphi σ (H.height j) (hσbound σ hleft hright)
+  have hratio :
+      (T + 3) ^ (H.separationExponent + 2) /
+          (1 + T) ^ (H.separationExponent + 4) ≤
+        3 ^ (H.separationExponent + 2) / (1 + T) ^ 2 := by
+    have hbase : T + 3 ≤ 3 * (1 + T) := by linarith
+    have hp := pow_le_pow_left₀ (by positivity : 0 ≤ T + 3) hbase
+      (H.separationExponent + 2)
+    apply (div_le_div_iff₀ (by positivity) (by positivity)).2
+    calc
+      (T + 3) ^ (H.separationExponent + 2) * (1 + T) ^ 2 ≤
+          (3 * (1 + T)) ^ (H.separationExponent + 2) * (1 + T) ^ 2 :=
+        mul_le_mul_of_nonneg_right hp (by positivity)
+      _ = 3 ^ (H.separationExponent + 2) *
+          (1 + T) ^ (H.separationExponent + 4) := by
+        rw [mul_pow]
+        ring
+  have hintegrand_top : ∀ σ : ℝ, 1 - c ≤ σ → σ ≤ c →
+      ‖chapter06ContourIntegrand (K := K) F
+          (chapter06VerticalLinePoint σ T)‖ ≤
+        Cint / (1 + T) ^ 2 := by
+    intro σ hleft hright
+    rw [chapter06ContourIntegrand, norm_mul]
+    calc
+      ‖chapter06LogDerivative (chapter06Xi K)
+          (chapter06VerticalLinePoint σ T)‖ *
+          ‖chapter06Phi F (chapter06VerticalLinePoint σ T)‖ ≤
+        (Cld * Q ^ 2 * (T + 3) ^ (H.separationExponent + 2)) *
+          (Cphi / (1 + T) ^ (H.separationExponent + 4)) :=
+            mul_le_mul (hlogderiv_bound σ hleft hright)
+              (hphi_bound σ hleft hright) (norm_nonneg _) (by positivity)
+      _ = Cld * Q ^ 2 * Cphi *
+          ((T + 3) ^ (H.separationExponent + 2) /
+            (1 + T) ^ (H.separationExponent + 4)) := by
+        field_simp
+      _ ≤ Cint / (1 + T) ^ 2 := by
+        calc
+          Cld * Q ^ 2 * Cphi *
+              ((T + 3) ^ (H.separationExponent + 2) /
+                (1 + T) ^ (H.separationExponent + 4)) ≤
+            (Cld * Q ^ 2 * Cphi) *
+              (3 ^ (H.separationExponent + 2) / (1 + T) ^ 2) := by
+                exact mul_le_mul_of_nonneg_left hratio (by positivity)
+          _ = Cint / (1 + T) ^ 2 := by
+            dsimp [Cint]
+            ring
+  have hintegrand_bottom : ∀ σ : ℝ, 1 - c ≤ σ → σ ≤ c →
+      ‖chapter06ContourIntegrand (K := K) F
+          (chapter06VerticalLinePoint σ (-T))‖ ≤
+        Cint / (1 + T) ^ 2 := by
+    intro σ hleft hright
+    rw [chapter06ContourIntegrand, norm_mul]
+    calc
+      ‖chapter06LogDerivative (chapter06Xi K)
+          (chapter06VerticalLinePoint σ (-T))‖ *
+          ‖chapter06Phi F (chapter06VerticalLinePoint σ (-T))‖ ≤
+        (Cld * Q ^ 2 * (T + 3) ^ (H.separationExponent + 2)) *
+          (Cphi / (1 + T) ^ (H.separationExponent + 4)) :=
+            mul_le_mul (by
+                calc
+                  ‖chapter06LogDerivative (chapter06Xi K)
+                      (chapter06VerticalLinePoint σ (-T))‖ ≤
+                    Cld * (H.height j + 3) ^ H.separationExponent *
+                      Real.log (chapter06AnalyticConductor K (H.height j)) ^ 2 := by
+                        simpa [T] using (hld j σ hleft hright).2
+                  _ = Cld * ((T + 3) ^ H.separationExponent *
+                      Real.log (chapter06AnalyticConductor K T) ^ 2) := by
+                        simp [T]
+                        ring
+                  _ ≤ Cld * (Q ^ 2 * (T + 3) ^
+                      (H.separationExponent + 2)) :=
+                    mul_le_mul_of_nonneg_left hTpow hCld
+                  _ = Cld * Q ^ 2 * (T + 3) ^
+                      (H.separationExponent + 2) := by ring)
+              (by simpa [T, abs_of_nonneg hT0] using
+                hphi σ (-H.height j) (hσbound σ hleft hright))
+              (norm_nonneg _) (by positivity)
+      _ = Cld * Q ^ 2 * Cphi *
+          ((T + 3) ^ (H.separationExponent + 2) /
+            (1 + T) ^ (H.separationExponent + 4)) := by
+        field_simp
+      _ ≤ Cint / (1 + T) ^ 2 := by
+        calc
+          Cld * Q ^ 2 * Cphi *
+              ((T + 3) ^ (H.separationExponent + 2) /
+                (1 + T) ^ (H.separationExponent + 4)) ≤
+            (Cld * Q ^ 2 * Cphi) *
+              (3 ^ (H.separationExponent + 2) / (1 + T) ^ 2) := by
+                exact mul_le_mul_of_nonneg_left hratio (by positivity)
+          _ = Cint / (1 + T) ^ 2 := by
+            dsimp [Cint]
+            ring
+  have hinterval : 1 - c ≤ c := by linarith
+  have hlen : (c - (1 - c) : ℝ) = 2 * c - 1 := by ring
+  have htop :
+      ‖chapter06TopHorizontalIntegral (K := K) F c T‖ ≤
+        (2 * c - 1) * (Cint / (1 + T) ^ 2) := by
+    unfold chapter06TopHorizontalIntegral
+    rw [intervalIntegral.integral_symm, norm_neg]
+    calc
+      ‖∫ σ in (1 - c)..c,
+          chapter06ContourIntegrand (K := K) F
+            (chapter06VerticalLinePoint σ T)‖ ≤
+        (Cint / (1 + T) ^ 2) * |c - (1 - c)| := by
+          apply intervalIntegral.norm_integral_le_of_norm_le_const
+          intro σ hσ
+          have hσ'' : σ ∈ uIcc (1 - c) c := uIoc_subset_uIcc hσ
+          have hσ' : σ ∈ Set.Icc (1 - c) c := by
+            simpa [uIcc_of_le hinterval] using hσ''
+          exact hintegrand_top σ hσ'.1 hσ'.2
+      _ ≤ (Cint / (1 + T) ^ 2) * |c - (1 - c)| := le_rfl
+      _ = (2 * c - 1) * (Cint / (1 + T) ^ 2) := by
+        rw [abs_of_nonneg (by linarith : 0 ≤ c - (1 - c))]
+        rw [hlen]
+        ring
+  have hbottom :
+      ‖chapter06BottomHorizontalIntegral (K := K) F c T‖ ≤
+        (2 * c - 1) * (Cint / (1 + T) ^ 2) := by
+    unfold chapter06BottomHorizontalIntegral
+    calc
+      ‖∫ σ in (1 - c)..c,
+          chapter06ContourIntegrand (K := K) F
+            (chapter06VerticalLinePoint σ (-T))‖ ≤
+        (Cint / (1 + T) ^ 2) * |c - (1 - c)| := by
+          apply intervalIntegral.norm_integral_le_of_norm_le_const
+          intro σ hσ
+          have hσ'' : σ ∈ uIcc (1 - c) c := uIoc_subset_uIcc hσ
+          have hσ' : σ ∈ Set.Icc (1 - c) c := by
+            simpa [uIcc_of_le hinterval] using hσ''
+          exact hintegrand_bottom σ hσ'.1 hσ'.2
+      _ ≤ (Cint / (1 + T) ^ 2) * |c - (1 - c)| := le_rfl
+      _ = (2 * c - 1) * (Cint / (1 + T) ^ 2) := by
+        rw [abs_of_nonneg (by linarith : 0 ≤ c - (1 - c))]
+        rw [hlen]
+        ring
+  unfold chapter06HorizontalError
+  rw [norm_neg, norm_mul]
+  calc
+    ‖1 / (2 * (Real.pi : ℂ) * Complex.I)‖ *
+        ‖chapter06TopHorizontalIntegral (K := K) F c T +
+          chapter06BottomHorizontalIntegral (K := K) F c T‖ ≤
+      ‖1 / (2 * (Real.pi : ℂ) * Complex.I)‖ *
+        (2 * ((2 * c - 1) * (Cint / (1 + T) ^ 2))) := by
+          gcongr
+          calc
+            ‖chapter06TopHorizontalIntegral (K := K) F c T +
+                chapter06BottomHorizontalIntegral (K := K) F c T‖ ≤
+              ‖chapter06TopHorizontalIntegral (K := K) F c T‖ +
+                ‖chapter06BottomHorizontalIntegral (K := K) F c T‖ :=
+              norm_add_le _ _
+            _ ≤ 2 * ((2 * c - 1) * (Cint / (1 + T) ^ 2)) := by
+              linarith [htop, hbottom]
+    _ ≤ C / (1 + T) := by
+      dsimp [C]
+      have hfrac : 1 / (1 + T) ^ 2 ≤ 1 / (1 + T) := by
+        apply (div_le_div_iff₀ (by positivity) (by positivity)).2
+        nlinarith [sq_nonneg (1 + T)]
+      have hcscale : 0 ≤ 2 * c - 1 := by linarith
+      have hfactor : 0 ≤ 2 * (2 * c - 1) * Cint := by positivity
+      have hnorm : 0 ≤ ‖(1 / (2 * (Real.pi : ℂ) * Complex.I))‖ :=
+        norm_nonneg _
+      calc
+        ‖1 / (2 * (Real.pi : ℂ) * Complex.I)‖ *
+            (2 * ((2 * c - 1) * (Cint / (1 + T) ^ 2))) ≤
+          (‖1 / (2 * (Real.pi : ℂ) * Complex.I)‖ *
+            (2 * (2 * c - 1) * Cint)) / (1 + T) := by
+              calc
+                ‖1 / (2 * (Real.pi : ℂ) * Complex.I)‖ *
+                    (2 * ((2 * c - 1) * (Cint / (1 + T) ^ 2))) ≤
+                  ‖1 / (2 * (Real.pi : ℂ) * Complex.I)‖ *
+                    ((2 * (2 * c - 1) * Cint) / (1 + T)) := by
+                    apply mul_le_mul_of_nonneg_left
+                    · calc
+                        2 * ((2 * c - 1) * (Cint / (1 + T) ^ 2)) =
+                            (2 * (2 * c - 1) * Cint) *
+                              (1 / (1 + T) ^ 2) := by ring
+                        _ ≤ (2 * (2 * c - 1) * Cint) *
+                              (1 / (1 + T)) :=
+                          mul_le_mul_of_nonneg_left hfrac hfactor
+                        _ = (2 * (2 * c - 1) * Cint) / (1 + T) := by
+                          ring
+                    · exact hnorm
+                _ = (‖1 / (2 * (Real.pi : ℂ) * Complex.I)‖ *
+                    (2 * (2 * c - 1) * Cint)) / (1 + T) := by ring
+        _ = C / (1 + T) := by rfl
 
 noncomputable def chapter06LaplaceInversePartial
     (F : ℝ → ℝ) (c y T : ℝ) : ℂ :=

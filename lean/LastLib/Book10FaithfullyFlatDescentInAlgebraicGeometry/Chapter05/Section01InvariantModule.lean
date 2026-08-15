@@ -149,6 +149,28 @@ noncomputable def descentTheta (D : DescentDatum A B) :
     firstOverlap (A := A) (B := B) D.A ≅ secondOverlap (A := A) (B := B) D.A := by
   sorry
 
+/-- The canonical tensor representing `n ⊗ 1` in the first overlap, after using the commutative
+source-order convention for `firstOverlap`. -/
+noncomputable def firstOverlapUnit (D : DescentDatum A B)
+    (n : (ModuleCat.restrictScalars (algebraMap A B)).obj D.A) :
+    firstOverlapModule (A := A) (B := B) D.A := by
+  letI : Module B (CechRing A B) := (cech_d1 A B).toRingHom.toModule
+  exact (1 : CechRing A B) ⊗ₜ[B] n
+
+/-- The canonical tensor representing `1 ⊗ n` in the second overlap, after using the commutative
+source-order convention for `secondOverlap`. -/
+noncomputable def secondOverlapUnit (D : DescentDatum A B)
+    (n : (ModuleCat.restrictScalars (algebraMap A B)).obj D.A) :
+    secondOverlapModule (A := A) (B := B) D.A := by
+  letI : Module B (CechRing A B) := (cech_d0 A B).toRingHom.toModule
+  exact (1 : CechRing A B) ⊗ₜ[B] n
+
+theorem mem_invariantModule_iff_descentTheta (D : DescentDatum A B)
+    (n : (ModuleCat.restrictScalars (algebraMap A B)).obj D.A) :
+    n ∈ invariantModule D ↔
+      (descentTheta D).hom (firstOverlapUnit D n) = secondOverlapUnit D n := by
+  sorry
+
 theorem descentTheta_cocycle (D : DescentDatum A B) :
     D.a ≫ (descentComonad A B).δ.app D.A =
       D.a ≫ (descentComonad A B).map D.a := by

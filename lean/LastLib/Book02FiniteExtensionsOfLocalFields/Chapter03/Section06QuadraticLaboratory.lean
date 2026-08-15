@@ -1,4 +1,4 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section05MixedAndEqualCharacteristic
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section01WhyTowerFormulasMatter
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section07UnramifiedAndTotallyRamifiedEndpoints
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03
@@ -44,6 +44,12 @@ def chapter03UnitNonsquare
     (A : Type*) [CommRing A] (u : Aˣ) : Prop :=
   ¬ ∃ x : A, x ^ 2 = (u : A)
 
+/-- A unit whose residue class is not a square. -/
+def chapter03ResidueUnitNonsquare
+    (A k : Type*) [CommRing A] [Field k]
+    (ρ : A →+* k) (u : Aˣ) : Prop :=
+  ¬ ∃ x : k, x ^ 2 = ρ (u : A)
+
 /-- A finite residue field of odd cardinality. -/
 def chapter03FiniteOddResidueField
     (k : Type*) [Field k] [Fintype k] : Prop :=
@@ -55,8 +61,6 @@ theorem chapter03FiniteOddResidueField_iff
 
 /-- An irreducible separable reduction of `T^2-u` gives an unramified
 quadratic extension. -/
--- SOURCE_ISSUE: “nonsquare unit” must be interpreted through its residue
--- class, and the source leaves the residue quotient identification implicit.
 theorem chapter03_unit_quadratic_is_unramified
     (A k K L : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
     [Field k] [Field K] [Field L] [Fintype k]
@@ -64,7 +68,7 @@ theorem chapter03_unit_quadratic_is_unramified
     [IsFractionRing A K] [IsScalarTower A K L]
     [FiniteDimensional K L] (u : Aˣ)
     (hodd : chapter03FiniteOddResidueField k)
-    (hnonsquare : chapter03UnitNonsquare A u)
+    (hnonsquare : chapter03ResidueUnitNonsquare A k (algebraMap A k) u)
     (hred :
       chapter03QuadraticReductionCondition A k
         (algebraMap A k)
@@ -193,7 +197,7 @@ theorem chapter03_finite_odd_field_has_two_square_classes
 residue quotient. -/
 def chapter03LocalSquareClassDecomposition
     (K k : Type*) [Field K] [Field k] : Prop :=
-  Nonempty
+    Nonempty
     (chapter03SquareClassGroup K ≃*
       Multiplicative (ZMod 2) × chapter03SquareClassGroup k)
 
@@ -276,9 +280,8 @@ def chapter03PrincipalUnitSquaringBijective
   Function.Bijective (chapter03PrincipalUnitSquaringMap A m)
 
 /-- The dyadic case does not have the odd-residue square-class count. -/
--- SOURCE_ISSUE: The source warning is not a universal cardinality formula
--- without the local DVR, fraction-field, and non-bijective-principal-unit
--- hypotheses; they are made explicit here.
+-- The qualitative source warning is represented by a conditional cardinality
+-- theorem, so its local-DVR hypotheses are explicit here.
 theorem chapter03_residue_characteristic_two_needs_a_different_square_class_count
     (A K k : Type*) [CommRing A] [IsDomain A]
     [Field K] [Field k] [Algebra A K]

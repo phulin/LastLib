@@ -1,6 +1,6 @@
 import LastLib.Book04AdelesAndIdeles.Chapter15.Section04DoubleQuotientsAndLattices
 import LastLib.Book04AdelesAndIdeles.Chapter15.Section03CompactOpenLevel
-import LastLib.Book04AdelesAndIdeles.Chapter11.Section04FinitenessOfRayClassGroups
+import LastLib.Book04AdelesAndIdeles.Chapter11.Dependencies
 import Mathlib.MeasureTheory.Group.Measure
 import Mathlib.Topology.Algebra.Group.Quotient
 
@@ -35,6 +35,11 @@ theorem chapter15IdeleClassMap_kernel :
 theorem chapter15_idele_class_group_is_locally_compact
     (K : Type*) [Field K] [NumberField K] :
     LocallyCompactSpace (Chapter15IdeleClassGroup (R := 𝓞 K) (K := K)) := by
+  sorry
+
+theorem chapter15_idele_class_group_is_hausdorff
+    (K : Type*) [Field K] [NumberField K] :
+    T2Space (Chapter15IdeleClassGroup (R := 𝓞 K) (K := K)) := by
   sorry
 
 /-- The rank-one automorphic quotient with no finite level. -/

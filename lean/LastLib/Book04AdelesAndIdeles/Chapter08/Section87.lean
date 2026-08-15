@@ -1,10 +1,12 @@
 import LastLib.Book04AdelesAndIdeles.Chapter08.Section82
+import LastLib.Book04AdelesAndIdeles.Chapter06.Dependencies
+import Mathlib.MeasureTheory.Measure.Haar.DistribChar
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter08
 
 noncomputable section
 
-open scoped BigOperators nonZeroDivisors RestrictedProduct
+open scoped BigOperators NNReal nonZeroDivisors RestrictedProduct
 open IsDedekindDomain
 
 /-! ## 8.7 Divisor sequence in one view -/
@@ -181,6 +183,39 @@ theorem chapter08_divisor_to_ideal_principal
   change chapter08FiniteIdeleFractionalIdeal
       (chapter08FinitePrincipalIdele a) = _
   exact congrArg Units.val (chapter08_finite_idele_ideal_principal a)
+
+/-! The canonical additive Haar character sees the same local factors as the
+idele module: weighted archimedean norms and the normalized finite-place
+factors.  This pointwise bridge is kept in the earlier chapter so later
+measure-theoretic sections need not duplicate the valuation bookkeeping. -/
+
+theorem chapter08_adele_unit_distrib_haar_char_apply
+    (K : Type*) [Field K] [NumberField K]
+    [LocallyCompactSpace (NumberField.AdeleRing (Chapter08Integers K) K)]
+    (x : (NumberField.AdeleRing (Chapter08Integers K) K)ˣ) :
+    MeasureTheory.distribHaarChar
+        (G := (NumberField.AdeleRing (Chapter08Integers K) K)ˣ)
+        (A := NumberField.AdeleRing (Chapter08Integers K) K) x =
+      (∏ v : NumberField.InfinitePlace K,
+        ‖((MulEquiv.piUnits (MulEquiv.prodUnits x).1) v : v.Completion)‖₊ ^ v.mult) *
+        (∏ᶠ v : HeightOneSpectrum (Chapter08Integers K),
+          (Ideal.absNorm v.asIdeal : ℝ≥0) ^
+            (-chapter08LocalOrder v
+              ((RestrictedProduct.unitsEquiv
+                (fun v : HeightOneSpectrum (Chapter08Integers K) =>
+                  v.adicCompletion K) (MulEquiv.prodUnits x).2) v :
+                v.adicCompletion K))) := by
+  have hlocal : ∀ (v : HeightOneSpectrum (Chapter08Integers K))
+      (y : v.adicCompletion K),
+      LastLib.Book04AdelesAndIdeles.Chapter06.chapter06StandardNumberFieldLocalOrder v y =
+        chapter08LocalOrder v y := by
+    intro v y
+    rfl
+  simpa [LastLib.Book04AdelesAndIdeles.Chapter06.chapter06StandardNumberFieldInfiniteHaarFactor,
+    LastLib.Book04AdelesAndIdeles.Chapter06.chapter06StandardNumberFieldFiniteHaarFactor,
+    hlocal] using
+    (LastLib.Book04AdelesAndIdeles.Chapter06.chapter06_standard_number_field_adele_unit_distrib_haar_char_apply
+      K x)
 
 def chapter08DivisorClassMap (K : Type*) [Field K] [NumberField K] :
     Chapter08DivisorClassGroup K →* Chapter08OrdinaryClassGroup K :=

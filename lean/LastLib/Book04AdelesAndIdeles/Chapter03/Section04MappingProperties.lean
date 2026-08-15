@@ -75,6 +75,26 @@ theorem chapter03_restrictedProductMap_comp_apply
       g i (f i ((x : ∀ i, G i) i)) := by
   rfl
 
+theorem chapter03_restrictedProductMap_comp
+    {G'' : I → Type z} [∀ i, Group (G'' i)]
+    (H : ∀ i, Subgroup (G i)) (H' : ∀ i, Subgroup (G' i))
+    (H'' : ∀ i, Subgroup (G'' i))
+    (f : ∀ i, G i →* G' i) (g : ∀ i, G' i →* G'' i)
+    (hf : chapter03CoordinatewiseMapCondition H H' f)
+    (hg : chapter03CoordinatewiseMapCondition H' H'' g) :
+    (chapter03RestrictedProductMap H' H'' g hg).comp
+        (chapter03RestrictedProductMap H H' f hf) =
+      chapter03RestrictedProductMap H H''
+        (fun i => (g i).comp (f i)) (by
+          filter_upwards [hf, hg] with i hfi hgi
+          intro x hx
+          exact hgi _ (hfi _ hx)) := by
+  apply MonoidHom.ext
+  intro x
+  apply chapter03_restrictedProduct_ext H''
+  intro i
+  rfl
+
 theorem chapter03_restrictedProductMap_continuous
     [∀ i, TopologicalSpace (G i)] [∀ i, TopologicalSpace (G' i)]
     [∀ i, IsTopologicalGroup (G i)] [∀ i, IsTopologicalGroup (G' i)]
@@ -393,6 +413,15 @@ theorem chapter03_restrictedScalarProduct_has_finite_support
     chapter03ScalarProductSupportedOnFiniteSet
       (fun i y => φ i y) (x : ∀ i, G i) := by
   exact chapter03_scalarExceptionalSet_finite_of_tail_condition H φ hφ x
+
+theorem chapter03_restrictedScalarProduct_is_defined
+    {M : Type w} [CommMonoid M] [TopologicalSpace M]
+    (H : ∀ i, Subgroup (G i)) (φ : ∀ i, G i →* M)
+    (hφ : chapter03ScalarProductTailCondition H φ)
+    (x : Chapter03RestrictedProduct H) :
+    chapter03ScalarProductIsDefined
+      (fun i y => φ i y) (x : ∀ i, G i) := by
+  exact Or.inl (chapter03_restrictedScalarProduct_has_finite_support H φ hφ x)
 
 theorem chapter03_restrictedScalarProduct_is_one_of_coordinatewise_one
     {M : Type w} [CommMonoid M]

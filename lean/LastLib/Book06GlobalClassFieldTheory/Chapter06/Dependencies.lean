@@ -1,4 +1,5 @@
 import Mathlib.Algebra.BrauerGroup.Defs
+import Mathlib.Algebra.CharZero.Quotient
 import Mathlib.Data.ZMod.QuotientGroup
 import Mathlib.FieldTheory.Galois.Abelian
 import Mathlib.FieldTheory.Galois.Profinite
@@ -8,10 +9,12 @@ import Mathlib.GroupTheory.FiniteAbelian.Duality
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+import Mathlib.RepresentationTheory.Basic
 import Mathlib.Topology.Algebra.Group.Compact
 import Mathlib.Topology.Algebra.RestrictedProduct.Basic
 import Mathlib.RepresentationTheory.Homological.ContCohomology.Basic
 import Mathlib.RepresentationTheory.Homological.TateCohomology.Basic
+import Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed
 import LastLib.Book06GlobalClassFieldTheory.Chapter01.Dependencies
 import LastLib.Book06GlobalClassFieldTheory.Chapter01.Section01OneGaloisActionSeenAtEveryPlace
 import LastLib.Book06GlobalClassFieldTheory.Chapter05.Section01TheReciprocityIsomorphism
@@ -38,6 +41,52 @@ statements.
 /- The finite coefficient module A_n = ZMod n, with its additive structure. -/
 abbrev Chapter06A (n : ℕ) : Type := ZMod n
 
+/- The canonical coefficient inclusion used by the exceptional
+   Grunwald--Wang lift.  It is the additive map induced by the integer map
+   z ↦ 2z, with the relation n ↦ 0 respected in `ZMod (2 * n)`. -/
+noncomputable def chapter06CanonicalAEmbedding (n : ℕ) :
+    Chapter06A n →+ Chapter06A (2 * n) := by
+  let f : ℤ →+ Chapter06A (2 * n) :=
+    { toFun := fun z => (2 : Chapter06A (2 * n)) * (z : Chapter06A (2 * n))
+      map_zero' := by simp
+      map_add' := by
+        intro x y
+        simp [mul_add] }
+  exact ZMod.lift n ⟨f, by
+    dsimp [f]
+    have h : ((2 * (n : ℤ) : ℤ) : Chapter06A (2 * n)) = 0 :=
+      (ZMod.intCast_zmod_eq_zero_iff_dvd (2 * (n : ℤ)) (2 * n)).2
+        (dvd_refl (2 * (n : ℤ)))
+    simpa only [Int.cast_mul, Int.cast_ofNat] using h⟩
+
+@[simp]
+theorem chapter06CanonicalAEmbedding_intCast (n : ℕ) (z : ℤ) :
+    chapter06CanonicalAEmbedding n (z : Chapter06A n) =
+      (2 : Chapter06A (2 * n)) * (z : Chapter06A (2 * n)) := by
+  simp [chapter06CanonicalAEmbedding]
+
+theorem chapter06CanonicalAEmbedding_injective {n : ℕ} (hn : 0 < n) :
+    Function.Injective (chapter06CanonicalAEmbedding n) := by
+  have _hn : 0 < n := hn
+  intro x y h
+  obtain ⟨a, rfl⟩ := ZMod.intCast_surjective x
+  obtain ⟨b, rfl⟩ := ZMod.intCast_surjective y
+  rw [chapter06CanonicalAEmbedding_intCast, chapter06CanonicalAEmbedding_intCast] at h
+  have h' : ((2 * a : ℤ) : Chapter06A (2 * n)) =
+      ((2 * b : ℤ) : Chapter06A (2 * n)) := by
+    simpa only [Int.cast_mul, Int.cast_ofNat] using h
+  have hdiv : (2 * n : ℤ) ∣ 2 * b - 2 * a :=
+    (ZMod.intCast_eq_intCast_iff_dvd_sub (2 * a) (2 * b) (2 * n)).mp h'
+  rcases hdiv with ⟨k, hk⟩
+  apply (ZMod.intCast_eq_intCast_iff_dvd_sub a b n).mpr
+  refine ⟨k, ?_⟩
+  have hcancel : (2 : ℤ) * (b - a) = 2 * (n * k) := by
+    calc
+      (2 : ℤ) * (b - a) = 2 * b - 2 * a := by ring
+      _ = (2 * n) * k := hk
+      _ = 2 * (n * k) := by ring
+  exact (mul_left_cancel₀ (by norm_num : (2 : ℤ) ≠ 0) hcancel)
+
 /- The trivial action of a group on an additive coefficient module. -/
 def chapter06TrivialAction
     (G M : Type*) [Group G] [AddCommGroup M] : G → M →+ M :=
@@ -47,6 +96,49 @@ def chapter06TrivialAction
 subgroup of nth roots of unity in the unit group. -/
 abbrev Chapter06CartierDual (K : Type*) [Field K] (n : ℕ) :=
   rootsOfUnity n K
+
+/- The geometric roots-of-unity group lives in the chosen separable closure;
+   unlike `Chapter06CartierDual`, it does not assume that K contains the
+   roots.  Its canonical Galois action is installed immediately below. -/
+abbrev Chapter06GeometricCartierDual
+    (K Ks : Type*) [Field K] [Field Ks] [Algebra K Ks] (n : ℕ) :=
+  rootsOfUnity n Ks
+
+/- The geometric roots are not merely a carrier: the chosen absolute Galois
+   group acts on them by restricting its field automorphisms.  This is the
+   coefficient action used by the twisted Cartier dual. -/
+noncomputable instance chapter06GeometricCartierDualMulDistribMulAction
+    (K Ks : Type*) [Field K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks] (n : ℕ) :
+    MulDistribMulAction (Gal(Ks / K))
+      (Chapter06GeometricCartierDual K Ks n) where
+  smul σ ζ := restrictRootsOfUnity σ.toAlgHom n ζ
+  one_smul ζ := by
+    apply Subtype.ext
+    apply Units.ext
+    rfl
+  mul_smul σ τ ζ := by
+    apply Subtype.ext
+    apply Units.ext
+    rfl
+  smul_one σ := by
+    change restrictRootsOfUnity σ.toAlgHom n (1 : rootsOfUnity n Ks) = 1
+    exact (restrictRootsOfUnity σ.toAlgHom n).map_one
+  smul_mul σ ζ ξ := by
+    change restrictRootsOfUnity σ.toAlgHom n (ζ * ξ) =
+      restrictRootsOfUnity σ.toAlgHom n ζ * restrictRootsOfUnity σ.toAlgHom n ξ
+    exact (restrictRootsOfUnity σ.toAlgHom n).map_mul ζ ξ
+
+/- A representation-level form of the action, suitable for group-cohomology
+   interfaces.  The base-field roots alias below remains reserved for the
+   primitive-root self-duality specialization. -/
+noncomputable def chapter06GeometricCartierDualRepresentation
+    (K Ks : Type*) [Field K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks] (n : ℕ) :
+    Representation ℤ (Gal(Ks / K))
+      (Additive (Chapter06GeometricCartierDual K Ks n)) :=
+  Representation.ofMulDistribMulAction (Gal(Ks / K))
+    (Chapter06GeometricCartierDual K Ks n)
 
 /- The rational circle used for the target of the global invariant sum. -/
 abbrev Chapter06QModZ : Type :=
@@ -87,7 +179,65 @@ def chapter06InvariantTargetInclusion (n : ℕ) :
 noncomputable def chapter06_oneOverNModOne_equiv_zmod
     (n : ℕ) (hn : 0 < n) :
     Chapter06OneOverNModOne n ≃+ ZMod n := by
-  sorry
+  have hn0 : (n : ℚ) ≠ 0 := by exact_mod_cast (Nat.ne_of_gt hn)
+  let q : Chapter06QModZ :=
+    QuotientAddGroup.mk' (AddSubgroup.zmultiples (1 : ℚ)) ((1 : ℚ) / n)
+  have hq : n • q = 0 := by
+    dsimp [q]
+    rw [← QuotientAddGroup.mk_nat_mul]
+    rw [QuotientAddGroup.eq_zero_iff, AddSubgroup.mem_zmultiples_iff]
+    refine ⟨1, ?_⟩
+    field_simp [hn0]
+    simp
+  let u : Chapter06OneOverNModOne n := ⟨q, hq⟩
+  let f : ℤ →+ Chapter06OneOverNModOne n :=
+    { toFun := fun z => z • u
+      map_zero' := by simp
+      map_add' := by intro x y; simp [add_zsmul] }
+  have hf : f (n : ℤ) = 0 := by
+    change (n : ℤ) • u = 0
+    apply Subtype.ext
+    simpa [u] using hq
+  let g : ZMod n →+ Chapter06OneOverNModOne n :=
+    ZMod.lift n ⟨f, hf⟩
+  have hg_inj : Function.Injective g := by
+    change Function.Injective (ZMod.lift n ⟨f, hf⟩)
+    apply (ZMod.lift_injective (n := n) (f := ⟨f, hf⟩)).2
+    intro m hm
+    have hmq : (m : ℤ) • q = 0 := by
+      have hm' := congrArg Subtype.val hm
+      simpa [f, u] using hm'
+    dsimp [q] at hmq
+    rw [← QuotientAddGroup.mk_int_mul] at hmq
+    have hmem : (m : ℚ) * ((1 : ℚ) / n) ∈
+        AddSubgroup.zmultiples (1 : ℚ) :=
+      (QuotientAddGroup.eq_zero_iff _).mp hmq
+    rw [AddSubgroup.mem_zmultiples_iff] at hmem
+    rcases hmem with ⟨k, hk⟩
+    have hmk : (m : ℚ) = (n : ℚ) * k := by
+      field_simp [hn0] at hk
+      simpa [smul_eq_mul, mul_comm] using hk.symm
+    apply (ZMod.intCast_zmod_eq_zero_iff_dvd m n).2
+    refine ⟨k, ?_⟩
+    exact_mod_cast hmk
+  have hg_surj : Function.Surjective g := by
+    intro x
+    have hx : n • (x : Chapter06QModZ) = 0 := x.property
+    have hx' : ∃ k : Fin n,
+        (x : Chapter06QModZ) = 0 +
+          (k : ℕ) • (((1 : ℚ) / (n : ℚ)) : Chapter06QModZ) := by
+      apply (QuotientAddGroup.zmultiples_nsmul_eq_nsmul_iff
+        (R := ℚ) (p := (1 : ℚ)) (ψ := (x : Chapter06QModZ))
+        (θ := 0) (n := n) (Nat.ne_of_gt hn)).mp
+      simpa using hx
+    rcases hx' with ⟨k, hk⟩
+    refine ⟨(((k : ℕ) : ℤ) : ZMod n), ?_⟩
+    rw [show g (((k : ℕ) : ℤ) : ZMod n) = f ((k : ℕ) : ℤ) by
+      simpa [g] using (ZMod.lift_coe n ⟨f, hf⟩ ((k : ℕ) : ℤ))]
+    change ((k : ℕ) : ℤ) • u = x
+    apply Subtype.ext
+    simpa [u, q] using hk.symm
+  exact (AddEquiv.ofBijective g ⟨hg_inj, hg_surj⟩).symm
 
 /- The subgroup of nth powers in the multiplicative group of a field. -/
 abbrev Chapter06NthPowerSubgroup (F : Type*) [Field F] (n : ℕ) : Subgroup Fˣ :=
@@ -121,7 +271,7 @@ theorem chapter06_kummer_restriction_mk
     {K F : Type*} [Field K] [Field F] (n : ℕ) (f : K →+* F) (x : Kˣ) :
     chapter06KummerRestriction n f (chapter06KummerClassMk n x) =
       chapter06KummerClassMk n (Units.map f.toMonoidHom x) := by
-  sorry
+  simp [chapter06KummerRestriction, chapter06KummerClassMk]
 
 /- A continuous finite-image character of a topological group. -/
 structure Chapter06ContinuousFiniteImageCharacter
@@ -167,6 +317,11 @@ class Chapter06IdeleClassGroup (K : Type*) [Field K] [NumberField K] where
   [carrierT2Space : T2Space carrier]
   principal : Kˣ →* carrier
   principal_trivial : principal = 1
+  /- The carrier is only an interface for the canonical quotient exposed by
+     Chapter 1; it must not be an unrelated abstract topological group. -/
+  canonical : carrier ≃* LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleClassGroup K
+  canonical_continuous : Continuous canonical
+  canonical_inverse_continuous : Continuous canonical.symm
 
 attribute [instance_reducible] Chapter06IdeleClassGroup.carrierCommGroup
   Chapter06IdeleClassGroup.carrierTopology
@@ -510,6 +665,15 @@ structure Chapter06FiniteReciprocityWitness
      Keeping this equivalent finite-quotient formulation avoids imposing an
      arbitrary topology on the finite Galois group in the interface. -/
   artin_kernel_open : IsOpen (artin.ker : Set C)
+  /- The finite witness is a quotient of the chosen absolute Galois group;
+     this prevents an unrelated abstract finite group from being presented as
+     the Galois group of `extension.field`. -/
+  restriction_surjective :
+    Function.Surjective (chapter06FiniteExtensionRestriction extension)
+  field_eq_fixed :
+    extension.field =
+      IntermediateField.fixedField
+        (chapter06FiniteExtensionRestriction extension).ker
 
 /- An open finite-index subgroup of the idele class group. -/
 structure Chapter06OpenFiniteIndexSubgroup
@@ -555,7 +719,11 @@ theorem chapter06_lifted_quotient_character_finite_order
     (χ : Chapter06QuotientCharacter H) :
     ∃ n : ℕ, 0 < n ∧
       ∀ c, (chapter06LiftQuotientCharacter H χ c) ^ n = 1 := by
-  sorry
+  refine ⟨Nat.card (C ⧸ H.subgroup), Nat.card_pos, ?_⟩
+  intro c
+  change (χ (QuotientGroup.mk' H.subgroup c)) ^ Nat.card (C ⧸ H.subgroup) = 1
+  rw [← χ.map_pow, pow_card_eq_one']
+  exact χ.map_one
 
 /- Openness of the subgroup makes every lifted finite-quotient character
    continuous on the idele-class topology. -/
@@ -565,7 +733,10 @@ theorem chapter06_lifted_quotient_character_continuous
     (H : Chapter06OpenFiniteIndexSubgroup C)
     (χ : Chapter06QuotientCharacter H) :
     Continuous (chapter06LiftQuotientCharacter H χ) := by
-  sorry
+  have hdisc : DiscreteTopology (C ⧸ H.subgroup) := QuotientGroup.discreteTopology H.isOpen'
+  change Continuous (χ.comp (QuotientGroup.mk' H.subgroup))
+  exact (@continuous_of_discreteTopology (C ⧸ H.subgroup) _ hdisc ℂˣ _ χ).comp
+    QuotientGroup.continuous_mk
 
 /- The canonical fixed field of a finite character of the absolute Galois
 group. -/
@@ -582,7 +753,7 @@ theorem chapter06_mem_fixedField_of_character_iff
     {n : ℕ} (c : Gal(Ks / K) →* Multiplicative (Chapter06A n)) (x : Ks) :
     x ∈ chapter06FixedFieldOfCharacter c ↔
       ∀ σ, c σ = 1 → σ x = x := by
-  sorry
+  simp [chapter06FixedFieldOfCharacter, IntermediateField.mem_fixedField_iff]
 
 /- The finite extension degree used in the chapter's index formula.  This is
    deliberately the module-theoretic degree rather than the cardinality of a
@@ -603,7 +774,7 @@ theorem chapter06_compositum_le_iff
     {ι : Type*} (L : ι → IntermediateField K Ks)
     (M : IntermediateField K Ks) :
     chapter06Compositum L ≤ M ↔ ∀ i, L i ≤ M := by
-  sorry
+  simp [chapter06Compositum]
 
 /- A finite quotient character family used in the compositum construction. -/
 structure Chapter06CharacterFieldAssignment
@@ -630,14 +801,38 @@ theorem chapter06_field_of_open_subgroup_le_iff
     chapter06FieldOfOpenSubgroup H A ≤ M ↔
       ∀ χ ∈ chapter06LiftedQuotientCharacters H,
         A.fieldOfCharacter χ ≤ M := by
-  sorry
+  simp [chapter06FieldOfOpenSubgroup]
 
 /- The finite character intersection behind the global existence theorem. -/
 theorem chapter06_lifted_quotient_character_kernels_inf
     {C : Type*} [CommGroup C] [TopologicalSpace C]
     (H : Chapter06OpenFiniteIndexSubgroup C) :
     ⨅ χ ∈ chapter06LiftedQuotientCharacters H, χ.ker = H.subgroup := by
-  sorry
+  ext x
+  simp only [Subgroup.mem_iInf, chapter06LiftedQuotientCharacters, Set.mem_range,
+    forall_exists_index, MonoidHom.mem_ker]
+  have hsep :
+      (∀ a : Chapter06QuotientCharacter H,
+          a (QuotientGroup.mk' H.subgroup x) = 1) ↔
+        QuotientGroup.mk' H.subgroup x = 1 := by
+    simpa using
+      (CommGroup.forall_apply_eq_apply_iff (C ⧸ H.subgroup) (M := ℂ)
+        (g := QuotientGroup.mk' H.subgroup x) (g' := 1))
+  constructor
+  · intro hx
+    have hchars : ∀ a : Chapter06QuotientCharacter H,
+        (chapter06LiftQuotientCharacter H a) x = 1 := by
+      intro a
+      exact hx _ a rfl
+    have hq : QuotientGroup.mk' H.subgroup x = 1 :=
+      hsep.mp (by simpa [chapter06LiftQuotientCharacter] using hchars)
+    exact (QuotientGroup.eq_one_iff x).mp hq
+  · intro hx i a hai
+    subst i
+    have hq : QuotientGroup.mk' H.subgroup x = 1 :=
+      (QuotientGroup.eq_one_iff x).mpr hx
+    have hq' := congrArg a hq
+    simpa [chapter06LiftQuotientCharacter] using hq'
 
 end
 

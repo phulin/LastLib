@@ -112,6 +112,63 @@ theorem chapter06_coordinatewise_adelic_lattice
       (chapter06_coordinatewise_fundamental_set_compact P D.carrier m D.compact)
       (chapter06_coordinatewise_reduced_to_fundamental_set P D m)
 
+/-- Finite-coordinate discreteness is inherited from the rank-one diagonal.
+
+This is the missing transfer step behind the source's assertion that the same
+argument applies to `K^m`: the coordinatewise diagonal is a finite product of
+copies of the rank-one diagonal. -/
+theorem chapter06_coordinatewise_discrete_of_discrete
+    (P : Chapter06AdeleData K O KInf Af Ohat) (m : ℕ)
+    (hdiscrete : Chapter06DiscreteEmbedding (chapter06Diagonal P)) :
+    Chapter06DiscreteEmbedding (chapter06CoordinatewiseDiagonal P m) := by
+  refine ⟨?_, ?_⟩
+  · intro x y hxy
+    funext i
+    apply hdiscrete.1
+    simpa [chapter06CoordinatewiseDiagonal_apply, chapter06Diagonal_apply] using
+      congrArg (fun z : (Fin m → KInf) × (Fin m → Af) => (z.1 i, z.2 i)) hxy
+  · intro x
+    choose U hUopen hUmem hUisol using fun i => hdiscrete.2 (x i)
+    let S : Set ((Fin m → KInf) × (Fin m → Af)) :=
+      ⋂ i : Fin m, (fun z => (z.1 i, z.2 i)) ⁻¹' U i
+    have hSopen : IsOpen S := by
+      dsimp [S]
+      apply isOpen_iInter_of_finite
+      intro i
+      have hcontInf :
+          Continuous (fun z : (Fin m → KInf) × (Fin m → Af) => z.1 i) :=
+        (continuous_apply i).comp continuous_fst
+      have hcontFin :
+          Continuous (fun z : (Fin m → KInf) × (Fin m → Af) => z.2 i) :=
+        (continuous_apply i).comp continuous_snd
+      exact (hUopen i).preimage (hcontInf.prodMk hcontFin)
+    refine ⟨S, hSopen, ?_, ?_⟩
+    · simp only [S, Set.mem_iInter, Set.mem_preimage]
+      intro i
+      simpa [chapter06CoordinatewiseDiagonal_apply, chapter06Diagonal_apply] using
+        hUmem i
+    · intro y hy
+      have hy' : ∀ i : Fin m,
+          ((chapter06CoordinatewiseDiagonal P m y).1 i,
+            (chapter06CoordinatewiseDiagonal P m y).2 i) ∈ U i := by
+        simpa only [S, Set.mem_iInter, Set.mem_preimage] using hy
+      funext i
+      apply hUisol i
+      simpa [chapter06CoordinatewiseDiagonal_apply, chapter06Diagonal_apply] using
+        hy' i
+
+/-- The coordinatewise lattice theorem with the rank-one discreteness
+    hypothesis exposed, as in the book's finite-power reduction. -/
+theorem chapter06_coordinatewise_adelic_lattice_of_discrete
+    (P : Chapter06AdeleData K O KInf Af Ohat)
+    (D : Chapter06ArchimedeanCell P) (m : ℕ)
+    [IsTopologicalAddGroup KInf] [IsTopologicalAddGroup Af]
+    [T2Space KInf] [T2Space Af]
+    (hdiscrete : Chapter06DiscreteEmbedding (chapter06Diagonal P)) :
+    Chapter06AdditiveLattice (chapter06CoordinatewiseDiagonal P m) := by
+  exact chapter06_coordinatewise_adelic_lattice P D m
+    (chapter06_coordinatewise_discrete_of_discrete P m hdiscrete)
+
 /-- A basis-coordinate interface for a finite-dimensional adelic vector space.
 It makes the reduction to the coordinatewise statement explicit without
 choosing a noncanonical tensor-product presentation in this chapter. -/
@@ -152,6 +209,36 @@ variable [AddCommGroup V] [Module K V] [FiniteDimensional K V]
 
 end Chapter06AdelicVectorSpaceData
 
+/-- A basis-coordinate equivalence transfers discreteness from the
+    coordinatewise diagonal to the adelic vector-space diagonal. -/
+theorem chapter06_adelic_vector_space_discrete_of_coordinatewise_discrete
+    {V : Type uV} {VA : Type uVA}
+    [AddCommGroup V] [Module K V] [FiniteDimensional K V]
+    [AddCommGroup VA] [TopologicalSpace VA]
+    (W : Chapter06AdelicVectorSpaceData P V VA)
+    (hdiscrete : Chapter06DiscreteEmbedding
+      (chapter06CoordinatewiseDiagonal P W.rank)) :
+    Chapter06DiscreteEmbedding W.diagonal := by
+  refine ⟨?_, ?_⟩
+  · intro x y hxy
+    apply W.globalCoordinates.injective
+    apply hdiscrete.1
+    simpa only [Chapter06AdelicVectorSpaceData.coordinates_compatible_apply] using
+      congrArg W.adelicCoordinates hxy
+  · intro x
+    rcases hdiscrete.2 (W.globalCoordinates x) with ⟨U, hUopen, hUmem, hUisol⟩
+    refine ⟨W.adelicCoordinates ⁻¹' U, hUopen.preimage W.adelicCoordinates_continuous,
+      ?_, ?_⟩
+    · change W.adelicCoordinates (W.diagonal x) ∈ U
+      rw [Chapter06AdelicVectorSpaceData.coordinates_compatible_apply]
+      exact hUmem
+    · intro y hy
+      apply W.globalCoordinates.injective
+      apply hUisol (W.globalCoordinates y)
+      change W.adelicCoordinates (W.diagonal y) ∈ U at hy
+      rw [Chapter06AdelicVectorSpaceData.coordinates_compatible_apply] at hy
+      exact hy
+
 /-- Finite-dimensional adelic vector spaces inherit discreteness and
 cocompactness from the coordinatewise lattice. -/
 theorem chapter06_finite_dimensional_adelic_lattice
@@ -186,6 +273,39 @@ theorem chapter06_finite_dimensional_adelic_lattice
   · exact ha
   · rw [← hcoord]
     exact W.adelicCoordinates.symm_apply_apply _
+
+/-- The finite-dimensional lattice theorem with discreteness supplied in
+    coordinates, which is the basis-reduction form used in the source. -/
+theorem chapter06_finite_dimensional_adelic_lattice_of_coordinatewise_discrete
+    {V : Type uV} {VA : Type uVA}
+    [AddCommGroup V] [Module K V] [FiniteDimensional K V]
+    [AddCommGroup VA] [TopologicalSpace VA]
+    (W : Chapter06AdelicVectorSpaceData P V VA)
+    (D : Chapter06ArchimedeanCell P)
+    [IsTopologicalAddGroup KInf] [IsTopologicalAddGroup Af]
+    [T2Space KInf] [T2Space Af]
+    [IsTopologicalAddGroup VA] [T2Space VA]
+    (hdiscrete : Chapter06DiscreteEmbedding
+      (chapter06CoordinatewiseDiagonal P W.rank)) :
+    Chapter06AdditiveLattice W.diagonal := by
+  exact chapter06_finite_dimensional_adelic_lattice W D
+    (chapter06_adelic_vector_space_discrete_of_coordinatewise_discrete W hdiscrete)
+
+/-- The finite-dimensional lattice theorem obtained directly from the
+    rank-one diagonal discreteness, via finite coordinates and a basis. -/
+theorem chapter06_finite_dimensional_adelic_lattice_of_discrete
+    {V : Type uV} {VA : Type uVA}
+    [AddCommGroup V] [Module K V] [FiniteDimensional K V]
+    [AddCommGroup VA] [TopologicalSpace VA]
+    (W : Chapter06AdelicVectorSpaceData P V VA)
+    (D : Chapter06ArchimedeanCell P)
+    [IsTopologicalAddGroup KInf] [IsTopologicalAddGroup Af]
+    [T2Space KInf] [T2Space Af]
+    [IsTopologicalAddGroup VA] [T2Space VA]
+    (hdiscrete : Chapter06DiscreteEmbedding (chapter06Diagonal P)) :
+    Chapter06AdditiveLattice W.diagonal := by
+  exact chapter06_finite_dimensional_adelic_lattice_of_coordinatewise_discrete W D
+    (chapter06_coordinatewise_discrete_of_discrete P W.rank hdiscrete)
 
 /-- A compact set meets a discrete lattice in finitely many points. -/
 theorem chapter06_compact_intersects_discrete_lattice_finitely

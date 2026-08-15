@@ -75,6 +75,16 @@ noncomputable def relativeProduct_swap_iso {S : Scheme.{u}} (X Y : RelativeSchem
     RelativeScheme.Iso (relativeProduct X Y).carrier (relativeProduct Y X).carrier := by
   sorry
 
+theorem relativeProduct_swap_iso_fst {S : Scheme.{u}} (X Y : RelativeScheme S) :
+    (relativeProduct_swap_iso X Y).hom ≫ (relativeProduct Y X).fst =
+      (relativeProduct X Y).snd := by
+  sorry
+
+theorem relativeProduct_swap_iso_snd {S : Scheme.{u}} (X Y : RelativeScheme S) :
+    (relativeProduct_swap_iso X Y).hom ≫ (relativeProduct Y X).snd =
+      (relativeProduct X Y).fst := by
+  sorry
+
 noncomputable def symmetricPower_index_swap_iso {S : Scheme.{u}} (C : RelativeScheme S) (d e : ℕ)
     [Chapter11SmoothQuasiProjectiveCurve C] :
     RelativeScheme.Iso (symmetricPower C (d + e)) (symmetricPower C (e + d)) := by
@@ -126,14 +136,16 @@ def Chapter11AdditionLeftUnitStatement {S : Scheme.{u}} (C : RelativeScheme S)
   ∃ e : RelativeScheme.Iso
       (relativeProduct (symmetricPower C 0) (symmetricPower C d)).carrier
       (symmetricPower C d),
-    e.hom = symmetricPowerAddition C 0 d ≫ (symmetricPower_zero_add_iso C d).hom
+    e.hom = symmetricPowerAddition C 0 d ≫ (symmetricPower_zero_add_iso C d).hom ∧
+      e.hom = (relativeProduct (symmetricPower C 0) (symmetricPower C d)).snd
 
 def Chapter11AdditionRightUnitStatement {S : Scheme.{u}} (C : RelativeScheme S)
     (d : ℕ) [Chapter11SmoothQuasiProjectiveCurve C] : Prop :=
   ∃ e : RelativeScheme.Iso
       (relativeProduct (symmetricPower C d) (symmetricPower C 0)).carrier
       (symmetricPower C d),
-    e.hom = symmetricPowerAddition C d 0 ≫ (symmetricPower_add_zero_iso C d).hom
+    e.hom = symmetricPowerAddition C d 0 ≫ (symmetricPower_add_zero_iso C d).hom ∧
+      e.hom = (relativeProduct (symmetricPower C d) (symmetricPower C 0)).fst
 
 theorem symmetricPowerAddition_left_unit {S : Scheme.{u}} (C : RelativeScheme S)
     (d : ℕ) [Chapter11SmoothQuasiProjectiveCurve C] :
@@ -285,14 +297,28 @@ structure Chapter11GradedCommutativeMonoidScheme {S : Scheme.{u}} where
     (relativeProduct (component d)
       (relativeProduct (component e) (component f)).carrier).carrier ⟶
       component (d + (e + f))
+  leftAssociated_spec : ∀ d e f : ℕ,
+    let P := relativeProduct (relativeProduct (component d) (component e)).carrier
+      (component f)
+    let Q := relativeProduct (component (d + e)) (component f)
+    leftAssociated d e f =
+      RelativeProduct.lift Q (P.fst ≫ add d e) P.snd ≫ add (d + e) f
+  rightAssociated_spec : ∀ d e f : ℕ,
+    let P := relativeProduct (component d)
+      (relativeProduct (component e) (component f)).carrier
+    let Q := relativeProduct (component d) (component (e + f))
+    rightAssociated d e f =
+      RelativeProduct.lift Q P.fst (P.snd ≫ add e f) ≫ add d (e + f)
   leftUnit : ∀ d : ℕ,
     ∃ e : RelativeScheme.Iso
         (relativeProduct (component 0) (component d)).carrier (component d),
-      e.hom = add 0 d ≫ (zeroAdd d).hom
+      e.hom = add 0 d ≫ (zeroAdd d).hom ∧
+        e.hom = (relativeProduct (component 0) (component d)).snd
   rightUnit : ∀ d : ℕ,
     ∃ e : RelativeScheme.Iso
         (relativeProduct (component d) (component 0)).carrier (component d),
-      e.hom = add d 0 ≫ (addZero d).hom
+      e.hom = add d 0 ≫ (addZero d).hom ∧
+        e.hom = (relativeProduct (component d) (component 0)).fst
   commutative : ∀ d e : ℕ,
     ∃ eSwap : RelativeScheme.Iso
         (relativeProduct (component d) (component e)).carrier
@@ -343,6 +369,8 @@ noncomputable def symmetricPowerGradedCommutativeMonoid {S : Scheme.{u}}
   addSwap := fun d e => symmetricPower_index_swap_iso C d e
   leftAssociated := fun d e f => leftAssociatedAddition C d e f
   rightAssociated := fun d e f => rightAssociatedAddition C d e f
+  leftAssociated_spec := by sorry
+  rightAssociated_spec := by sorry
   leftUnit := fun d => by
     simpa [Chapter11AdditionLeftUnitStatement] using symmetricPowerAddition_left_unit C d
   rightUnit := fun d => by
@@ -351,10 +379,9 @@ noncomputable def symmetricPowerGradedCommutativeMonoid {S : Scheme.{u}}
     simpa [Chapter11AdditionCommutativityStatement] using symmetricPowerAddition_commutative C d e
   associative := by sorry
 
-/- SOURCE_ISSUE: §11.5 says that the graded union is not finite type without
-   spelling out the quasi-compactness distinction.  The formal statement uses
-   the finite-type package `QuasiCompact ∧ LocallyOfFiniteType`; an infinite
-   coproduct can still be locally of finite type. -/
+/- The graded union is not finite type because it is not quasi-compact, even
+   though its individual components are locally of finite type.  The formal
+   statement uses the package `QuasiCompact ∧ LocallyOfFiniteType`. -/
 noncomputable def symmetricPowerDisjointUnion {S : Scheme.{u}}
     (C : RelativeScheme S) [Chapter11SmoothQuasiProjectiveCurve C] : Scheme.{u} :=
   ∐ fun d : ℕ => (symmetricPower C d).carrier

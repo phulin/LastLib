@@ -3,10 +3,12 @@ import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section03IntegralEle
 import Mathlib.Analysis.Normed.Unbundled.FiniteExtension
 import Mathlib.Analysis.Normed.Unbundled.SpectralNorm
 import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+import Mathlib.NumberTheory.Padics.Complex
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
 import Mathlib.RingTheory.Norm.Transitivity
+import Mathlib.Topology.UniformSpace.UniformEmbedding
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
 
@@ -649,6 +651,74 @@ theorem chapter10_algebraic_element_in_finite_subextension
   refine ⟨E, ?_, ?_⟩
   · exact IntermediateField.subset_adjoin K ({x} : Set L) (Set.mem_singleton x)
   · exact IntermediateField.adjoin.finiteDimensional hx.isIntegral
+
+/-- A proper algebraic subfield of an ambient field misses a transcendental
+element whenever every algebraic ambient element is already in its image. -/
+theorem chapter10_proper_algebraic_completion_contains_transcendental
+    {K A C : Type*} [Field K] [Field A] [Field C]
+    [Algebra K C]
+    (embedding : A → C)
+    (embedding_not_surjective : ¬ Function.Surjective embedding)
+    (algebraic_elements_in_range : ∀ x : C, IsAlgebraic K x →
+      ∃ y : A, embedding y = x) :
+    ∃ x : C, ¬ IsAlgebraic K x := by
+  classical
+  by_contra h
+  apply embedding_not_surjective
+  intro x
+  have hxalg : IsAlgebraic K x := by
+    by_contra hx
+    exact h ⟨x, hx⟩
+  exact algebraic_elements_in_range x hxalg
+
+/-- A proper dense uniformly induced embedding into a separated ambient space
+cannot have a complete source.  In particular this applies to a proper
+completion; the preceding theorem supplies the missing transcendental element
+when its algebraic elements all come from the source. -/
+theorem chapter10_proper_dense_completion_is_not_complete
+    {A C : Type*} [UniformSpace A] [UniformSpace C] [T2Space C]
+    (embedding : A → C)
+    (embedding_injective : Function.Injective embedding)
+    (embedding_isUniformInducing : IsUniformInducing embedding)
+    (embedding_dense : DenseRange embedding)
+    (embedding_not_surjective : ¬ Function.Surjective embedding) :
+    ¬ CompleteSpace A := by
+  intro hcomplete
+  let : CompleteSpace A := hcomplete
+  have hclosed : IsClosed (Set.range (embedding : A → C)) := by
+    let hembedding : IsUniformEmbedding (embedding : A → C) :=
+      ⟨embedding_isUniformInducing, embedding_injective⟩
+    exact hembedding.isClosedEmbedding.isClosed_range
+  have hrange : Set.range (embedding : A → C) = Set.univ := by
+    rw [← hclosed.closure_eq, embedding_dense.closure_range]
+  exact embedding_not_surjective (Set.range_eq_univ.mp hrange)
+
+/-- A proper algebraic completion has both a transcendental element and an
+incomplete source.  The first component records the algebraic obstruction,
+while the second uses the dense uniform embedding obstruction. -/
+theorem chapter10_proper_algebraic_dense_completion_not_complete
+    {K A C : Type*} [Field K] [Field A] [Field C]
+    [Algebra K C] [UniformSpace A] [UniformSpace C] [T2Space C]
+    (embedding : A → C)
+    (embedding_injective : Function.Injective embedding)
+    (embedding_isUniformInducing : IsUniformInducing embedding)
+    (embedding_dense : DenseRange embedding)
+    (embedding_not_surjective : ¬ Function.Surjective embedding)
+    (algebraic_elements_in_range : ∀ x : C, IsAlgebraic K x →
+      ∃ y : A, embedding y = x) :
+    (∃ x : C, ¬ IsAlgebraic K x) ∧ ¬ CompleteSpace A := by
+  constructor
+  · exact chapter10_proper_algebraic_completion_contains_transcendental
+      embedding embedding_not_surjective algebraic_elements_in_range
+  · exact chapter10_proper_dense_completion_is_not_complete
+      embedding embedding_injective embedding_isUniformInducing embedding_dense
+        embedding_not_surjective
+
+/-- The fixed algebraic closure of a p-adic field is not complete. -/
+theorem chapter10_padic_algebraic_closure_is_not_complete
+    {p : ℕ} [Fact (Nat.Prime p)] :
+    ¬ CompleteSpace (PadicAlgCl p) := by
+  sorry
 
 /-- Compatible finite-extension norms glue over an infinite algebraic extension. -/
 theorem chapter10_compatible_finite_values_glue

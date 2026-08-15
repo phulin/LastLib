@@ -51,7 +51,267 @@ theorem completed_branch_preserves_ef
     (hf : chapterResidueDegree A B P = f) :
     chapterRamificationIndex Ahat Bhat Phat = e ∧
       chapterResidueDegree Ahat Bhat Phat = f := by
-  sorry
+  let : P.IsPrime := transport.source_prime
+  let : Phat.IsPrime := transport.target_prime
+  let : Algebra A Bhat := by
+    exact (RingHom.comp (algebraMap Ahat Bhat) transport.baseEquiv.toRingHom).toAlgebra
+  let : Algebra B Bhat := by
+    exact transport.branchEquiv.toRingHom.toAlgebra
+  let : IsScalarTower A B Bhat := by
+    apply IsScalarTower.of_algebraMap_smul
+    intro a x
+    obtain ⟨b, rfl⟩ := transport.branchEquiv.surjective x
+    change transport.branchEquiv ((algebraMap A B) a) * transport.branchEquiv b =
+      algebraMap Ahat Bhat (transport.baseEquiv a) * transport.branchEquiv b
+    simpa only [map_mul] using transport.scalar_compatibility a b
+  let eB : B ≃ₐ[B] Bhat :=
+    AlgEquiv.ofRingEquiv (R := B) (f := transport.branchEquiv) (by
+      intro b
+      rfl)
+  let : Module.Finite B Bhat := Module.Finite.equiv eB.toLinearEquiv
+  let : Module.Free B Bhat :=
+    Module.Free.of_equiv' (P := B) (by infer_instance) eB.toLinearEquiv
+  let : Module.Flat B Bhat := by infer_instance
+  have hmap : Ideal.map transport.branchEquiv.toRingHom P = Phat := by
+    exact transport.branchIdeal_map
+  have hPB : P = Ideal.comap (algebraMap B Bhat) Phat := by
+    change P = Ideal.comap transport.branchEquiv.toRingHom Phat
+    calc
+      P = Ideal.comap transport.branchEquiv.toRingHom
+          (Ideal.map transport.branchEquiv.toRingHom P) :=
+        (Ideal.comap_map_of_bijective (f := transport.branchEquiv.toRingHom)
+          transport.branchEquiv.bijective (I := P)).symm
+      _ = Ideal.comap transport.branchEquiv.toRingHom Phat :=
+        congrArg (Ideal.comap transport.branchEquiv.toRingHom) hmap
+  let : Phat.LiesOver P := ⟨hPB⟩
+  have hdef :
+      algebraMap A Bhat =
+        (algebraMap Ahat Bhat).comp transport.baseEquiv.toRingHom := rfl
+  let eBA : B ≃ₐ[A] Bhat :=
+    AlgEquiv.ofRingEquiv (R := A) (f := transport.branchEquiv) (by
+      intro a
+      have hs :
+          transport.branchEquiv (algebraMap A B a) =
+            algebraMap Ahat Bhat (transport.baseEquiv a) := by
+        simpa only [mul_one, map_one] using transport.scalar_compatibility a 1
+      have hd :=
+        congrArg (fun h : A →+* Bhat => h a) hdef
+      exact hs.trans hd.symm)
+  have hAlgMap :
+      eBA.toRingHom.comp (algebraMap A B) = algebraMap A Bhat := by
+    apply RingHom.ext
+    intro a
+    change transport.branchEquiv (algebraMap A B a) = (algebraMap A Bhat) a
+    have hs :
+        transport.branchEquiv (algebraMap A B a) =
+          algebraMap Ahat Bhat (transport.baseEquiv a) := by
+      simpa only [mul_one, map_one] using transport.scalar_compatibility a 1
+    have hd :=
+      congrArg (fun h : A →+* Bhat => h a) hdef
+    exact hs.trans hd.symm
+  have hPB' : P = Ideal.comap eBA.toRingHom Phat := by
+    change P = Ideal.comap transport.branchEquiv.toRingHom Phat
+    exact hPB
+  have hsourceOver : p = Ideal.comap (algebraMap A B) P :=
+    transport.source_liesOver.over
+  have hunder :
+      Ideal.comap (algebraMap A Bhat) Phat =
+        Ideal.comap (algebraMap A B) P := by
+    calc
+      Ideal.comap (algebraMap A Bhat) Phat =
+          Ideal.comap (eBA.toRingHom.comp (algebraMap A B)) Phat := by
+        rw [hAlgMap]
+      _ = (Ideal.comap eBA.toRingHom Phat).comap (algebraMap A B) := by
+        rw [Ideal.comap_comap]
+      _ = Ideal.comap (algebraMap A B) P := by
+        exact congrArg (Ideal.comap (algebraMap A B)) hPB'.symm
+  have htargetOver : p = Ideal.comap (algebraMap A Bhat) Phat := by
+    calc
+      p = Ideal.comap (algebraMap A B) P := hsourceOver
+      _ = Ideal.comap (algebraMap A Bhat) Phat := hunder.symm
+  let : P.LiesOver p := ⟨hsourceOver⟩
+  let : Phat.LiesOver p := ⟨htargetOver⟩
+  have hramSameBase : Phat.ramificationIdx A = P.ramificationIdx A := by
+    let fLoc : Localization.AtPrime P ≃ₐ[A] Localization.AtPrime Phat :=
+      Localization.localAlgEquiv P Phat eBA hPB'
+    let : Algebra (Localization.AtPrime P) (Localization.AtPrime Phat) :=
+      fLoc.toRingHom.toAlgebra
+    let : IsScalarTower A (Localization.AtPrime P) (Localization.AtPrime Phat) :=
+      IsScalarTower.of_algHom fLoc.toAlgHom
+    let fId :
+        Localization.AtPrime P ≃ₐ[Localization.AtPrime P] Localization.AtPrime Phat :=
+      AlgEquiv.ofRingEquiv (R := Localization.AtPrime P)
+        (f := fLoc.toRingEquiv) (by
+          intro x
+          rfl)
+    let eq :
+        (Localization.AtPrime P ⧸
+            p.map (algebraMap A (Localization.AtPrime P))) ≃ₐ[Localization.AtPrime P]
+          (Localization.AtPrime Phat ⧸
+            p.map (algebraMap A (Localization.AtPrime Phat))) :=
+      Ideal.quotientEquivAlg _ _ fId (by
+        rw [Ideal.map_map]
+        congr 1
+        ext a
+        change algebraMap A (Localization.AtPrime Phat) a =
+          fLoc (algebraMap A (Localization.AtPrime P) a)
+        exact (fLoc.commutes a).symm)
+    rw [Ideal.ramificationIdx_eq (R := A) (S := Bhat) p Phat,
+      Ideal.ramificationIdx_eq (R := A) (S := B) p P,
+      eq.toLinearEquiv.length_eq, Module.length_eq_of_surjective fLoc.surjective]
+  have hbaseMap : Ideal.map transport.baseEquiv.toRingHom p = phat := by
+    exact transport.baseIdeal_map
+  have hbaseComap : p = Ideal.comap transport.baseEquiv.toRingHom phat := by
+    calc
+      p = Ideal.comap transport.baseEquiv.toRingHom
+          (Ideal.map transport.baseEquiv.toRingHom p) :=
+        (Ideal.comap_map_of_bijective (f := transport.baseEquiv.toRingHom)
+          transport.baseEquiv.bijective (I := p)).symm
+      _ = Ideal.comap transport.baseEquiv.toRingHom phat :=
+        congrArg (Ideal.comap transport.baseEquiv.toRingHom) hbaseMap
+  let : Phat.LiesOver phat := transport.target_liesOver
+  let : p.IsPrime := Ideal.isPrime_of_liesOver P p
+  let : phat.IsPrime := Ideal.isPrime_of_liesOver Phat phat
+  let : Algebra A Ahat := transport.baseEquiv.toRingHom.toAlgebra
+  let : phat.LiesOver p := by
+    constructor
+    change p = Ideal.comap transport.baseEquiv.toRingHom phat
+    exact hbaseComap
+  let eBase : A ≃ₐ[A] Ahat :=
+    AlgEquiv.ofRingEquiv (R := A) (f := transport.baseEquiv) (by
+      intro a
+      rfl)
+  let : Module.Finite A Ahat := Module.Finite.equiv eBase.toLinearEquiv
+  let : Module.Free A Ahat :=
+    Module.Free.of_equiv' (P := A) (by infer_instance) eBase.toLinearEquiv
+  let : Module.Flat A Ahat := by infer_instance
+  let : IsScalarTower A Ahat Bhat := by
+    apply IsScalarTower.of_algebraMap_eq
+    intro a
+    change (algebraMap A Bhat) a =
+      algebraMap Ahat Bhat (transport.baseEquiv a)
+    exact congrArg (fun h : A →+* Bhat => h a) hdef
+  have hformalBase :
+      Algebra.FormallyUnramified A (Localization.AtPrime p) :=
+    Algebra.FormallyUnramified.of_isLocalization p.primeCompl
+  let : Algebra.FormallyUnramified A (Localization.AtPrime p) := hformalBase
+  let fLocBase :
+      Localization.AtPrime p ≃ₐ[A] Localization.AtPrime phat :=
+    Localization.localAlgEquiv p phat eBase hbaseComap
+  have hformalBase' :
+      Algebra.FormallyUnramified A (Localization.AtPrime phat) :=
+    Algebra.FormallyUnramified.of_equiv fLocBase
+  let : Algebra.FormallyUnramified A (Localization.AtPrime phat) := hformalBase'
+  have hbaseRam : phat.ramificationIdx A = 1 :=
+    Ideal.ramificationIdx_eq_one phat A
+  let : p.LiesOver p := ⟨rfl⟩
+  let : Algebra (Localization.AtPrime p) (Localization.AtPrime p) :=
+    Localization.AtPrime.algebraOfLiesOver p p
+  let : Algebra (Localization.AtPrime p) (Localization.AtPrime phat) :=
+    Localization.AtPrime.algebraOfLiesOver p phat
+  let eRes := Ideal.residueFieldAlgEquiv' p p phat eBase hbaseComap
+  let halg : Algebra p.ResidueField p.ResidueField :=
+    IsLocalRing.ResidueField.instAlgebra
+  have hAA : algebraMap A A = RingHom.id A := by
+    ext x
+    rfl
+  have hloc :
+      algebraMap (Localization.AtPrime p) (Localization.AtPrime p) =
+        RingHom.id (Localization.AtPrime p) := by
+    change Localization.localRingHom p p (algebraMap A A) _ =
+      RingHom.id (Localization.AtPrime p)
+    simpa only [hAA] using (Localization.localRingHom_id (R := A) p)
+  have hmapself : halg.algebraMap = RingHom.id p.ResidueField := by
+    apply RingHom.ext
+    intro z
+    have hz :
+        ∃ y : Localization.AtPrime p,
+          IsLocalRing.residue (Localization.AtPrime p) y = z :=
+      IsLocalRing.residue_surjective z
+    obtain ⟨y, hy⟩ := hz
+    rw [← hy]
+    simp [halg, IsLocalRing.ResidueField.algebraMap_residue, hloc]
+  let m_alg : Module p.ResidueField p.ResidueField := halg.toModule
+  have hm : m_alg = (Semiring.toModule : Module p.ResidueField p.ResidueField) := by
+    apply Module.ext' m_alg Semiring.toModule
+    intro r x
+    simp only [Algebra.smul_def']
+    change halg.algebraMap r * x = r * x
+    rw [hmapself]
+    simp only [RingHom.id_apply]
+  have hfin : @Module.finrank p.ResidueField p.ResidueField _ _ m_alg = 1 := by
+    rw [hm]
+    exact Module.finrank_self _
+  have hlin := eRes.toLinearEquiv.finrank_eq
+  have hbaseResidue : phat.inertiaDeg A = 1 := by
+    rw [Ideal.inertiaDeg_eq (R := A) (S := Ahat) p phat]
+    exact hlin.symm.trans hfin
+  let : IsScalarTower A Bhat (Localization.AtPrime Phat) := by
+    apply IsScalarTower.of_algebraMap_eq
+    intro a
+    rfl
+  let : IsScalarTower Ahat Bhat (Localization.AtPrime Phat) := by
+    apply IsScalarTower.of_algebraMap_eq
+    intro a
+    rfl
+  let : Algebra (Localization.AtPrime phat) (Localization.AtPrime Phat) :=
+    Localization.AtPrime.algebraOfLiesOver phat Phat
+  have hLocMap :
+      algebraMap A (Localization.AtPrime Phat) =
+        (algebraMap Ahat (Localization.AtPrime Phat)).comp
+          transport.baseEquiv.toRingHom := by
+    ext a
+    rw [IsScalarTower.algebraMap_apply A Bhat (Localization.AtPrime Phat), hdef]
+    change (algebraMap Bhat (Localization.AtPrime Phat))
+        ((algebraMap Ahat Bhat) (transport.baseEquiv a)) =
+      (algebraMap Ahat (Localization.AtPrime Phat)) (transport.baseEquiv a)
+    exact (IsScalarTower.algebraMap_apply Ahat Bhat
+      (Localization.AtPrime Phat) (transport.baseEquiv a)).symm
+  have hramBase : Phat.ramificationIdx A = Phat.ramificationIdx Ahat := by
+    have hideal :
+        p.map (algebraMap A (Localization.AtPrime Phat)) =
+          phat.map (algebraMap Ahat (Localization.AtPrime Phat)) := by
+      calc
+        p.map (algebraMap A (Localization.AtPrime Phat)) =
+            p.map ((algebraMap Ahat (Localization.AtPrime Phat)).comp
+              transport.baseEquiv.toRingHom) := by rw [hLocMap]
+        _ = (p.map transport.baseEquiv.toRingHom).map
+            (algebraMap Ahat (Localization.AtPrime Phat)) := by
+          rw [Ideal.map_map]
+        _ = phat.map (algebraMap Ahat (Localization.AtPrime Phat)) := by
+          rw [hbaseMap]
+    rw [Ideal.ramificationIdx_eq (R := A) (S := Bhat) p Phat,
+      Ideal.ramificationIdx_eq (R := Ahat) (S := Bhat) phat Phat, hideal]
+  have hresBaseTower :
+      Phat.inertiaDeg A =
+        phat.inertiaDeg A * Phat.inertiaDeg Ahat := by
+    exact Ideal.inertiaDeg_tower (R := A) (S := Ahat) (T := Bhat) phat Phat
+  have hresBase : Phat.inertiaDeg A = Phat.inertiaDeg Ahat := by
+    rw [hresBaseTower, hbaseResidue, one_mul]
+  have hram : Phat.ramificationIdx Ahat = P.ramificationIdx A :=
+    hramBase.symm.trans hramSameBase
+  let : Algebra (Localization.AtPrime p) (Localization.AtPrime P) :=
+    Localization.AtPrime.algebraOfLiesOver p P
+  let : Algebra (Localization.AtPrime p) (Localization.AtPrime Phat) :=
+    Localization.AtPrime.algebraOfLiesOver p Phat
+  let eResBranch := Ideal.residueFieldAlgEquiv' p P Phat eBA hPB'
+  have hresSameBase : Phat.inertiaDeg A = P.inertiaDeg A := by
+    rw [Ideal.inertiaDeg_eq (R := A) (S := Bhat) p Phat,
+      Ideal.inertiaDeg_eq (R := A) (S := B) p P]
+    exact eResBranch.toLinearEquiv.finrank_eq.symm
+  have hres : Phat.inertiaDeg Ahat = P.inertiaDeg A :=
+    hresBase.symm.trans hresSameBase
+  constructor
+  · calc
+      chapterRamificationIndex Ahat Bhat Phat = Phat.ramificationIdx Ahat := rfl
+      _ = P.ramificationIdx A := hram
+      _ = chapterRamificationIndex A B P := rfl
+      _ = e := he
+  · calc
+      chapterResidueDegree Ahat Bhat Phat = Phat.inertiaDeg Ahat := rfl
+      _ = P.inertiaDeg A := hres
+      _ = chapterResidueDegree A B P := rfl
+      _ = f := hf
 
 /-- The completed polynomial quotient associated to a polynomial over a field. -/
 abbrev completedPolynomialQuotient

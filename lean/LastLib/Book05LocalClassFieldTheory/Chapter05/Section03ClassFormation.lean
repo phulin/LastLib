@@ -1,4 +1,5 @@
 import Mathlib.Algebra.Module.ZMod
+import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
 import LastLib.Book05LocalClassFieldTheory.Chapter05.Core
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter05
@@ -118,10 +119,10 @@ noncomputable def chapter05LocalInvariantRangeEquiv
       (chapter05CoefficientRep K L) 2}
     (I : Chapter05LocalBrauerInvariantSystem K L u)
     (H : Subgroup (Gal(L / K))) :
-    (chapter05GroupCohomology H
+      (chapter05GroupCohomology H
       (Rep.res H.subtype (chapter05CoefficientRep K L)) 2) ≃+
       (I.invariant H).range := by
-  sorry
+  exact AddMonoidHom.ofInjective (I.invariant_injective H)
 
 theorem chapter05_tate_nakayama_induction
     {G : Type} [Group G] [Fintype G] {C : Rep ℤ G}
@@ -165,7 +166,7 @@ theorem chapter05_galois_group_card_eq_degree
     [FiniteDimensional K L] [IsGalois K L]
     [Fintype (Gal(L / K))] :
     Nat.card (Gal(L / K)) = Module.finrank K L := by
-  sorry
+  exact IsGalois.card_aut_eq_finrank K L
 
 def chapter05SubgroupFixedField
     (K L : Type*) [Field K] [Field L] [Algebra K L]
@@ -186,7 +187,21 @@ theorem chapter05_restriction_invariant_fraction
     [Fintype (Gal(L / K))] (H : Subgroup (Gal(L / K))) :
     chapter05RestrictionInvariantFraction K L H =
       (1 : ℚ) / (Nat.card H : ℚ) := by
-  sorry
+  unfold chapter05RestrictionInvariantFraction
+  have hdim := Module.finrank_mul_finrank K
+    (chapter05SubgroupFixedField K L H) L
+  unfold chapter05SubgroupFixedField at hdim
+  rw [IntermediateField.finrank_fixedField_eq_card H] at hdim
+  have hcard : (Nat.card H : ℚ) ≠ 0 := by
+    exact Nat.cast_ne_zero.mpr (Nat.card_pos.ne' : Nat.card H ≠ 0)
+  have hL : (Module.finrank K L : ℚ) ≠ 0 := by
+    exact Nat.cast_ne_zero.mpr Module.finrank_pos.ne'
+  have hdimq :
+      (Module.finrank K (chapter05SubgroupFixedField K L H) : ℚ) *
+          (Nat.card H : ℚ) = (Module.finrank K L : ℚ) := by
+    exact_mod_cast hdim
+  apply (div_eq_div_iff hL hcard).2
+  simpa using hdimq
 
 theorem chapter05_restriction_invariant_fraction_mod_integer
     (K L : Type*) [Field K] [Field L] [Algebra K L]
@@ -194,7 +209,9 @@ theorem chapter05_restriction_invariant_fraction_mod_integer
     [Fintype (Gal(L / K))] (H : Subgroup (Gal(L / K))) :
     chapter05RationalResidueMk (chapter05RestrictionInvariantFraction K L H) =
       chapter05RationalResidueOneOver (Nat.card H) := by
-  sorry
+  simpa [chapter05RationalResidueOneOver] using
+    congrArg chapter05RationalResidueMk
+      (chapter05_restriction_invariant_fraction K L H)
 
 theorem chapter05_local_invariant_restriction_formula
     (K L : Type) [Field K] [Field L] [Algebra K L]
@@ -214,7 +231,7 @@ theorem chapter05_class_formation_top_isomorphism
     [Fintype (Gal(L / K))]
     (D : Chapter05LocalClassFormationData K L) (r : ℤ) :
     IsIso (D.capProduct.cap (⊤ : Subgroup (Gal(L / K))) r) := by
-  sorry
+  exact chapter05_class_formation_isomorphism D ⊤ r
 
 theorem chapter05_regular_representation_tate_zero
     (G : Type) [Group G] [Fintype G] (H : Subgroup G) (r : ℤ) :
@@ -225,7 +242,44 @@ theorem chapter05_regular_representation_tate_zero
 theorem chapter05_trivial_tate_minus_one_zero
     (H : Type) [Group H] [Fintype H] :
     IsZero (chapter05TateCohomology H (Rep.trivial ℤ H ℤ) (-1)) := by
-  sorry
+  change IsZero ((tateComplex (Rep.trivial ℤ H ℤ)).homology (-1))
+  rw [← HomologicalComplex.exactAt_iff_isZero_homology]
+  apply (HomologicalComplex.exactAt_iff'
+    (K := tateComplex (Rep.trivial ℤ H ℤ))
+    (i := (-2 : ℤ)) (j := (-1 : ℤ)) (k := (0 : ℤ))
+    (by norm_num) (by norm_num)).2
+  apply (ShortComplex.exact_iff_mono _ ?_).2
+  · change Mono (Rep.trivial ℤ H ℤ).tateNorm
+    rw [ModuleCat.mono_iff_injective]
+    rw [Rep.tateNorm_eq]
+    intro x y hxy
+    apply Finsupp.ext
+    intro i
+    have hi : i = (default : Fin 0 → H) := Subsingleton.elim _ _
+    subst i
+    have hx : x = Finsupp.single (default : Fin 0 → H) (x default) := by
+      apply Finsupp.ext
+      intro j
+      have hj : j = (default : Fin 0 → H) := Subsingleton.elim _ _
+      subst j
+      simp
+    have hy : y = Finsupp.single (default : Fin 0 → H) (y default) := by
+      apply Finsupp.ext
+      intro j
+      have hj : j = (default : Fin 0 → H) := Subsingleton.elim _ _
+      subst j
+      simp
+    have hxy' := congrFun hxy (default : Fin 0 → H)
+    rw [hx, hy] at hxy'
+    apply nsmul_right_injective (n := Fintype.card H)
+    · simp
+    · simpa [Finsupp.lsum_single, LinearMap.pi_apply, Representation.norm,
+        Finset.sum_const] using hxy'
+  · change (groupHomology.inhomogeneousChains (Rep.trivial ℤ H ℤ)).d 1 0 = 0
+    apply (cancel_mono (groupHomology.chainsIso₀ (Rep.trivial ℤ H ℤ)).hom).1
+    rw [← groupHomology.comp_d₁₀_eq (Rep.trivial ℤ H ℤ),
+      groupHomology.d₁₀_eq_zero_of_isTrivial]
+    simp
 
 theorem chapter05_degree_zero_connecting_iso
     {G : Type} [Group G] [Fintype G] {C : Rep ℤ G}
@@ -238,7 +292,21 @@ theorem chapter05_degree_zero_connecting_iso
     ∃ e : ZMod (Nat.card H) ≃+
         chapter05GroupCohomology H (Rep.res H.subtype C) 2,
       e 1 = chapter05RestrictTwoClass H u := by
-  sorry
+  have hg : ∀ y : chapter05GroupCohomology H (Rep.res H.subtype C) 2,
+      y ∈ AddSubgroup.zmultiples (chapter05RestrictTwoClass H u) := by
+    intro y
+    rw [AddSubgroup.mem_zmultiples_iff]
+    have hy : y ∈ Submodule.span ℤ {chapter05RestrictTwoClass H u} := by
+      rw [hgen]
+      exact Submodule.mem_top
+    obtain ⟨k, hk⟩ := Submodule.mem_span_singleton.mp hy
+    refine ⟨k, ?_⟩
+    rw [← int_smul_eq_zsmul (inferInstance : Module ℤ
+      (chapter05GroupCohomology H (Rep.res H.subtype C) 2)) k
+      (chapter05RestrictTwoClass H u)]
+    exact hk
+  refine ⟨zmodAddEquivOfGenerator hg hcyclic.card_eq, ?_⟩
+  exact zmodAddEquivOfGenerator_apply_one hg hcyclic.card_eq
 
 theorem chapter05_middle_two_extension_vanishing
     {G : Type} [Group G] [Fintype G] {C : Rep ℤ G}
@@ -279,7 +347,37 @@ theorem chapter05_local_hilbert90
     [Fintype (Gal(L / K))] (H : Subgroup (Gal(L / K))) :
     IsZero (chapter05GroupCohomology H
       (Rep.res H.subtype (chapter05CoefficientRep K L)) 1) := by
-  sorry
+  let e : H ≃* Gal(L / IntermediateField.fixedField H) :=
+    IntermediateField.subgroupEquivAlgEquiv H
+  let e' : (Rep.res H.subtype (chapter05CoefficientRep K L)).V ≃ₗ[ℤ]
+      (Rep.ofAlgebraAutOnUnits (IntermediateField.fixedField H) L).V :=
+    LinearEquiv.refl ℤ _
+  have he : ∀ h : H,
+      e'.toLinearMap ∘ₗ (Rep.res H.subtype (chapter05CoefficientRep K L)).ρ h =
+        (Rep.ofAlgebraAutOnUnits (IntermediateField.fixedField H) L).ρ (e h) ∘ₗ
+          e'.toLinearMap := by
+    intro h
+    ext x
+    rfl
+  let E : chapter05GroupCohomology H
+      (Rep.res H.subtype (chapter05CoefficientRep K L)) 1 ≅
+      chapter05GroupCohomology (Gal(L / IntermediateField.fixedField H))
+        (Rep.ofAlgebraAutOnUnits (IntermediateField.fixedField H) L) 1 :=
+    groupCohomology.mapIso e e' he 1
+  have hunique : Unique (groupCohomology.H1
+      (Rep.ofAlgebraAutOnUnits (IntermediateField.fixedField H) L)) :=
+    groupCohomology.H1ofAutOnUnitsUnique
+      (IntermediateField.fixedField H) L
+  have hinj : Function.Injective E.hom :=
+    (ModuleCat.mono_iff_injective E.hom).mp (inferInstance : Mono E.hom)
+  have htarget : Subsingleton (chapter05GroupCohomology
+      (Gal(L / IntermediateField.fixedField H))
+      (Rep.ofAlgebraAutOnUnits (IntermediateField.fixedField H) L) 1) :=
+    ⟨fun x y => (hunique.uniq x).trans (hunique.uniq y).symm⟩
+  have hsource : Subsingleton (chapter05GroupCohomology H
+      (Rep.res H.subtype (chapter05CoefficientRep K L)) 1) :=
+    ⟨fun x y => hinj (@Subsingleton.elim _ htarget (E.hom x) (E.hom y))⟩
+  exact (ModuleCat.isZero_iff_subsingleton).2 hsource
 
 theorem chapter05_local_H2_cyclic
     (K L : Type) [Field K] [Field L] [Algebra K L]
@@ -306,7 +404,46 @@ theorem chapter05_local_restriction_generates
       (chapter05GroupCohomology H
         (Rep.res H.subtype (chapter05CoefficientRep K L)) 2)
       (chapter05RestrictTwoClass H u) := by
-  sorry
+  unfold chapter05Generates
+  apply top_unique
+  intro y hy
+  have hyinv : I.invariant H y ∈ (I.invariant H).range := ⟨y, rfl⟩
+  rw [I.invariant_range H] at hyinv
+  obtain ⟨k, hk⟩ := AddSubgroup.mem_zmultiples_iff.mp hyinv
+  have hinv :
+      I.invariant H (k • chapter05RestrictTwoClass H u) = I.invariant H y := by
+    rw [map_zsmul, I.restriction_formula H, hk]
+  have heq : k • chapter05RestrictTwoClass H u = y :=
+    I.invariant_injective H hinv
+  apply Submodule.mem_span_singleton.mpr
+  refine ⟨k, ?_⟩
+  change (ModuleCat.isModule
+      (chapter05GroupCohomology H
+        (Rep.res H.subtype (chapter05CoefficientRep K L)) 2)).smul k
+      (chapter05RestrictTwoClass H u) = y
+  rw [int_smul_eq_zsmul (ModuleCat.isModule
+      (chapter05GroupCohomology H
+        (Rep.res H.subtype (chapter05CoefficientRep K L)) 2)) k
+      (chapter05RestrictTwoClass H u)]
+  exact heq
+
+/- The three local inputs used in the source proof assemble into the exact
+   subgroup-wise hypotheses required by Tate--Nakayama.  Keeping this package
+   explicit prevents the class-formation theorem from silently treating those
+   local-field facts as an unrelated conclusion. -/
+theorem chapter05_local_tate_nakayama_hypotheses
+    (K L : Type) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L]
+    [Fintype (Gal(L / K))]
+    {u : chapter05GroupCohomology (Gal(L / K))
+      (chapter05CoefficientRep K L) 2}
+    (I : Chapter05LocalBrauerInvariantSystem K L u) :
+    Chapter05TateNakayamaHypotheses (Gal(L / K))
+      (chapter05CoefficientRep K L) u := by
+  refine
+    { hH1 := fun H => chapter05_local_hilbert90 K L H
+      hH2 := fun H => chapter05_local_H2_cyclic K L I H
+      hres_generates := fun H => chapter05_local_restriction_generates K L I H }
 
 end
 

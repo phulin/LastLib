@@ -7,6 +7,7 @@ noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
 open RelativeScheme
+open scoped BigOperators
 
 universe u v
 
@@ -107,6 +108,28 @@ abbrev unorderedConfigurationMap {S : Scheme.{u}} (X : RelativeScheme S) (d : �
     [Chapter11QuasiProjectiveOver X] :
     (configurationSpace X d).carrier ⟶ unorderedConfigurationSpace X d :=
   (unorderedConfigurationQuotient X d).quotientMap
+
+/- The quotient of the collision-free locus maps canonically to the full
+   symmetric power.  This bridge is the scheme-theoretic meaning of calling
+   the quotient an open part of the symmetric power; the factorization below
+   records the map before any pointwise identification is used. -/
+noncomputable def unorderedConfigurationToSymmetricPower {S : Scheme.{u}}
+    (X : RelativeScheme S) (d : ℕ) [Chapter11QuasiProjectiveOver X] :
+    unorderedConfigurationSpace X d ⟶ symmetricPower X d := by
+  exact ((unorderedConfigurationQuotient X d).quotient.universal
+    (configurationInclusion X d ≫ symmetricPowerMap X d) (by sorry)
+    ).choose
+
+theorem unorderedConfigurationToSymmetricPower_factorization {S : Scheme.{u}}
+    (X : RelativeScheme S) (d : ℕ) [Chapter11QuasiProjectiveOver X] :
+    configurationInclusion X d ≫ symmetricPowerMap X d =
+      unorderedConfigurationMap X d ≫ unorderedConfigurationToSymmetricPower X d := by
+  sorry
+
+theorem unorderedConfigurationToSymmetricPower_isOpen {S : Scheme.{u}}
+    (X : RelativeScheme S) (d : ℕ) [Chapter11QuasiProjectiveOver X] :
+    IsOpenImmersion (unorderedConfigurationToSymmetricPower X d).hom := by
+  sorry
 
 theorem unorderedConfiguration_finite_etale {S : Scheme.{u}}
     (X : RelativeScheme S) (d : ℕ) [Chapter11QuasiProjectiveOver X] :
@@ -216,6 +239,14 @@ structure BigDiagonalData {S : Scheme.{u}} (X : RelativeScheme S) (d r : ℕ)
   codimension : Chapter11FiberwiseHeightCodimension inclusion.hom r
   pairwiseDiagonals : ∀ (i j : Fin d), i ≠ j →
     Chapter11PairwiseDiagonalData X d r i j
+  pairwise_factors_through_bigDiagonal :
+    ∀ (i j : Fin d) (hij : i ≠ j),
+      ∃ e : (pairwiseDiagonals i j hij).carrier ⟶ carrier,
+        e ≫ inclusion = (pairwiseDiagonals i j hij).inclusion
+  pairwise_union :
+    Set.range inclusion.hom =
+      (⋃ (i : Fin d), ⋃ (j : Fin d), ⋃ (hij : i ≠ j),
+        Set.range ((pairwiseDiagonals i j hij).inclusion.hom))
   complement : ConfigurationSpace X d
   complement_eq :
     Set.range complement.inclusion.hom = Set.univ \ Set.range inclusion.hom
@@ -235,12 +266,40 @@ theorem bigDiagonal_expected_codimension {S : Scheme.{u}} (X : RelativeScheme S)
       Chapter11FiberwiseHeightCodimension D.inclusion.hom r := by
   sorry
 
+/- The source also records that passing to the finite permutation quotient does
+   not change the codimension of the big diagonal.  The quotient construction
+   itself is supplied by the symmetric-power package; this record keeps the
+   resulting closed image and its codimension explicit. -/
+structure QuotientBigDiagonalData {S : Scheme.{u}} (X : RelativeScheme S)
+    (d r : ℕ) [Chapter11QuasiProjectiveOver X]
+    (D : BigDiagonalData X d r) where
+  carrier : RelativeScheme S
+  inclusion : carrier ⟶ symmetricPower X d
+  closed : IsClosedImmersion inclusion.hom
+  codimension : Chapter11FiberwiseHeightCodimension inclusion.hom r
+  factors_through_image :
+    ∃ e : D.carrier ⟶ carrier,
+      e ≫ inclusion = D.inclusion ≫ symmetricPowerMap X d
+  image :
+    Set.range inclusion.hom =
+      Set.range (D.inclusion ≫ symmetricPowerMap X d).hom
+
+theorem quotient_bigDiagonal_exists {S : Scheme.{u}} (X : RelativeScheme S)
+    (d r : ℕ) [Chapter11QuasiProjectiveOver X]
+    (hd : 2 ≤ d) (hr : 0 < r)
+    (hX : SmoothOfRelativeDimension r X.structuralMap)
+    (D : BigDiagonalData X d r) :
+    Nonempty (QuotientBigDiagonalData X d r D) := by
+  sorry
+
 theorem curve_bigDiagonal_is_divisor_after_hypotheses {S : Scheme.{u}}
     (X : RelativeScheme S) (d : ℕ) [Chapter11QuasiProjectiveOver X]
     (hd : 2 ≤ d)
     (hX : SmoothOfRelativeDimension 1 X.structuralMap) :
     ∃ D : BigDiagonalData X d 1,
         ∃ E : EffectiveCartierDivisor ((relativePower X d).carrier.carrier),
+        (∃ e : E.subscheme ≅ D.carrier.carrier,
+          e.hom ≫ D.inclusion.hom = E.inclusion) ∧
         (E.ideal.support : Set ((relativePower X d).carrier.carrier)) =
             Set.range D.inclusion.hom ∧
           Chapter11FiberwiseHeightCodimension D.inclusion.hom 1 := by
@@ -394,6 +453,8 @@ structure ConfigurationFamilyPullbackAction {S : Scheme.{u}}
 structure ConfigurationFamilyDescent {S : Scheme.{u}}
     (X : RelativeScheme S) (d : ℕ) [Chapter11QuasiProjectiveOver X] where
   family : RelativeFiniteEtaleSubscheme X (unorderedConfigurationSpace X d) d
+  family_is_universal :
+    family = unorderedConfigurationUniversalFamily X d
   pullbackAction : ConfigurationFamilyPullbackAction X d family
   comparison :
     orderedConfigurationFamilyTotal d (configurationSpace X d) ⟶

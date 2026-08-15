@@ -4,6 +4,8 @@ namespace LastLib.Book06GlobalClassFieldTheory.Chapter03
 
 noncomputable section
 
+attribute [local instance] Algebra.TensorProduct.rightAlgebra
+
 open Filter Set
 open scoped BigOperators RestrictedProduct
 
@@ -14,10 +16,11 @@ open scoped BigOperators RestrictedProduct
 def chapter03_local_tensor_product_decomposition
     {K L V : Type*} [Field K] [Field L] [Field V]
     [Algebra K L] [Algebra K V] [FiniteDimensional K L]
-    (W : Type*) [Fintype W] (E : W → Type*) [∀ w, CommRing (E w)]
+    (W : Type*) [Fintype W] (E : W → Type*) [∀ w, Field (E w)]
+    [∀ w, Algebra V (E w)] [∀ w, FiniteDimensional V (E w)]
     (T : Chapter03TensorProductDecomposition K L V W E) :
     TensorProduct K L V ≃+* (∀ w, E w) :=
-  T.equiv
+  T.equiv.toRingEquiv
 
 theorem chapter03_norm_component
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]

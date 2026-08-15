@@ -126,6 +126,21 @@ instance chapter03FiniteStageIndexPreorder :
   le_refl S := Set.Subset.refl S.1
   le_trans _ _ _ hST hTU := Set.Subset.trans hST hTU
 
+instance chapter03FiniteStageIndex_nonempty :
+    Nonempty (Chapter03FiniteStageIndex (I := I)) :=
+  ⟨⟨∅, Set.finite_empty⟩⟩
+
+instance chapter03FiniteStageIndex_isDirected :
+    IsDirectedOrder (Chapter03FiniteStageIndex (I := I)) where
+  directed S T := by
+    refine ⟨⟨S.1 ∪ T.1, S.2.union T.2⟩, ?_, ?_⟩
+    · change S.1 ⊆ S.1 ∪ T.1
+      intro i hi
+      exact Or.inl hi
+    · change T.1 ⊆ S.1 ∪ T.1
+      intro i hi
+      exact Or.inr hi
+
 /-- The subgroup with unrestricted coordinates in `S` and integral tail. -/
 def chapter03StageSubgroup (H : ∀ i, Subgroup (G i)) (S : Set I) :
     Subgroup (Chapter03RestrictedProduct H) where

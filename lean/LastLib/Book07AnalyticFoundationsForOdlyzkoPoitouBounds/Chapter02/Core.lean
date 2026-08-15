@@ -1,6 +1,7 @@
 import Mathlib.NumberTheory.NumberField.ClassNumber
 import Mathlib.NumberTheory.NumberField.CanonicalEmbedding.ConvexBody
 import Mathlib.NumberTheory.NumberField.Discriminant.Basic
+import Mathlib.Algebra.Module.ZLattice.Summable
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
@@ -8,6 +9,8 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Analysis.SpecialFunctions.Stirling
 import Mathlib.Analysis.SumIntegralComparisons
+import Mathlib.LinearAlgebra.BilinearForm.DualLattice
+import Mathlib.Analysis.InnerProductSpace.Basic
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
 import Mathlib.RingTheory.TensorProduct.Basic
 import Mathlib.RingTheory.TensorProduct.Finite
@@ -89,6 +92,93 @@ theorem chapter02_minkowski_space_finrank
     (K : Type*) [Field K] [NumberField K] :
     Module.finrank ℝ (chapter02MinkowskiSpace K) = chapter02Degree K := by
   exact NumberField.mixedEmbedding.finrank K
+
+/-! ### A finite-dimensional Gaussian lattice interface
+
+The theta construction in Chapter 4 needs two facts that are independent of
+number fields: rapid uniform summability of every parameter derivative on a
+compact positive parameter interval, and Poisson summation for the dual
+lattice.  They belong before the number-field specialization, so the
+interfaces are recorded here in the standard real-inner-product normalization.
+-/
+
+/-- The lattice dual for the real inner product pairing. -/
+noncomputable def chapter02DualLattice
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (L : Submodule ℤ E) : Submodule ℤ E :=
+  LinearMap.BilinForm.dualSubmodule (R := ℤ) (S := ℝ) (M := E) (innerₗ E) L
+
+/-- Membership in the dual lattice is integrality of the inner products. -/
+theorem chapter02_mem_dual_lattice_iff
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (L : Submodule ℤ E) (y : E) :
+    y ∈ chapter02DualLattice L ↔
+      ∀ x ∈ L, (innerₗ E) y x ∈ (1 : Submodule ℤ ℝ) := by
+  change y ∈ LinearMap.BilinForm.dualSubmodule
+      (R := ℤ) (S := ℝ) (M := E) (innerₗ E) L ↔ _
+  exact LinearMap.BilinForm.mem_dualSubmodule
+    (R := ℤ) (S := ℝ) (M := E) (B := innerₗ E) (N := L) (x := y)
+
+/-- The scalar-parameter Gaussian used in the lattice theta series. -/
+noncomputable def chapter02LatticeGaussianTerm
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (t : ℝ) (x : E) : ℝ :=
+  Real.exp (-Real.pi * t * ‖x‖ ^ 2)
+
+/-- The `k`th parameter derivative of the lattice Gaussian. -/
+noncomputable def chapter02LatticeGaussianDerivativeTerm
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (k : ℕ) (x : E) (t : ℝ) : ℝ :=
+  match k with
+  | 0 => chapter02LatticeGaussianTerm t x
+  | k + 1 => deriv (fun u : ℝ =>
+      chapter02LatticeGaussianDerivativeTerm k x u) t
+
+/-- Compact-positive-parameter uniform summable majorants for all Gaussian
+derivatives on a full lattice. -/
+def chapter02LatticeGaussianDerivativeMajorant
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (L : Submodule ℤ E) : Prop :=
+  ∀ k : ℕ, ∀ δ R : ℝ, 0 < δ → δ ≤ R →
+    ∃ g : L → ℝ, (∀ x, 0 ≤ g x) ∧ Summable g ∧
+      ∀ x : L, ∀ t ∈ Set.Icc δ R,
+        ‖chapter02LatticeGaussianDerivativeTerm k (x : E) t‖ ≤ g x
+
+/-- Every finite-dimensional full-rank lattice has the preceding Gaussian
+majorants. -/
+theorem chapter02_full_rank_lattice_gaussian_derivative_majorant
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    [FiniteDimensional ℝ E] (L : Submodule ℤ E)
+    [DiscreteTopology L] [IsZLattice ℝ L] :
+    chapter02LatticeGaussianDerivativeMajorant L := by
+  sorry
+
+/-- The Gaussian integral normalization for a self-dual Haar measure. -/
+def chapter02GaussianMeasureNormalization
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    [FiniteDimensional ℝ E] [MeasurableSpace E] (μ : MeasureTheory.Measure E) : Prop :=
+  ∀ {t : ℝ}, 0 < t →
+    (∫ x : E, chapter02LatticeGaussianTerm t x ∂μ) =
+      Real.rpow t (-(Module.finrank ℝ E : ℝ) / 2)
+
+/-- Multidimensional Poisson summation for the Gaussian, with the dual
+lattice defined by the real inner product and the self-dual Haar measure. -/
+theorem chapter02_full_rank_lattice_gaussian_poisson_summation
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E]
+    (μ : MeasureTheory.Measure E) [Measure.IsAddHaarMeasure μ]
+    (hμ : chapter02GaussianMeasureNormalization μ)
+    (L : Submodule ℤ E)
+    [DiscreteTopology L] [IsZLattice ℝ L]
+    [DiscreteTopology (chapter02DualLattice L)]
+    [IsZLattice ℝ (chapter02DualLattice L)]
+    {t : ℝ} (ht : 0 < t) :
+    (∑' x : L, chapter02LatticeGaussianTerm t (x : E)) =
+      (ZLattice.covolume L μ)⁻¹ *
+          Real.rpow t (-(Module.finrank ℝ E : ℝ) / 2) *
+        (∑' y : chapter02DualLattice L,
+          chapter02LatticeGaussianTerm t⁻¹ (y : E)) := by
+  sorry
 
 /-- Ordinary two-dimensional Lebesgue measure on each complex coordinate. -/
 abbrev chapter02ComplexCoordinateMeasure : MeasureTheory.Measure ℂ := volume

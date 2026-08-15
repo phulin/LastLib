@@ -146,7 +146,19 @@ theorem chapter01_restriction_scale_is_same_place
     (vL : AddValuation L (WithTop ℤ)) (e : ℕ)
     (hscale : chapter01ValuationRestrictionScale vK vL e) :
     chapter01SamePlace vK.toValuation vL.toValuation := by
-  sorry
+  unfold chapter01SamePlace
+  apply Valuation.isEquiv_of_val_le_one
+  intro x
+  change vK.toValuation x ≤ 1 ↔ vL.toValuation (algebraMap K L x) ≤ 1
+  change 0 ≤ vK x ↔ 0 ≤ vL (algebraMap K L x)
+  by_cases hx : x = 0
+  · simp [hx]
+  · rw [hscale.2 x hx]
+    constructor
+    · intro h
+      exact (nsmul_nonneg h e)
+    · intro h
+      exact (nsmul_nonneg_iff hscale.1.ne').mp h
 
 /-- Equivalent valuations have the same valuation subring after restriction. -/
 theorem chapter01_same_place_iff_valuation_subring_eq

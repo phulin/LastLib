@@ -77,6 +77,13 @@ theorem chapter04_local_corestriction_is_transitive
     T.composite.cor z = T.first.cor (T.second.cor z) := by
   exact T.corestriction_transitive z
 
+theorem chapter04_local_degree_is_multiplicative
+    {B₀ B₁ B₂ : Type*}
+    [AddCommGroup B₀] [AddCommGroup B₁] [AddCommGroup B₂]
+    (T : Chapter04LocalBrauerTowerData B₀ B₁ B₂) :
+    T.composite.degree = T.second.degree * T.first.degree := by
+  exact T.degree_mul
+
 /-! ### Products of completions -/
 
 /-- Brauer restriction/corestriction and invariant maps for a finite étale product. -/

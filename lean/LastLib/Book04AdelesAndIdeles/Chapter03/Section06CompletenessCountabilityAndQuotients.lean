@@ -362,6 +362,60 @@ theorem chapter03_restrictedProduct_secondCountable_sigmaCompact
     chapter03_restrictedProduct_sigmaCompact_of_local_data H hlocal hsecond
       hHcompact hHopen⟩
 
+section AdditiveCountability
+
+variable {I : Type u} {G : I → Type v} [∀ i, AddGroup (G i)]
+
+theorem chapter03_additiveRestrictedProduct_metrizable
+    [∀ i, TopologicalSpace (G i)]
+    [∀ i, IsTopologicalAddGroup (G i)]
+    (H : ∀ i, AddSubgroup (G i))
+    [Countable I]
+    (hmetric : ∀ i, MetrizableSpace (G i))
+    (hH : ∀ i, IsOpen (H i : Set (G i))) :
+    MetrizableSpace (Chapter03AdditiveRestrictedProduct H) := by
+  exact chapter03_restrictedProduct_metrizable
+    (fun i => AddSubgroup.toSubgroup (H i)) hmetric hH
+
+theorem chapter03_additiveRestrictedProduct_secondCountable
+    [∀ i, TopologicalSpace (G i)]
+    (H : ∀ i, AddSubgroup (G i))
+    [Countable I]
+    (hsecond : ∀ i, SecondCountableTopology (G i))
+    (hH : ∀ i, IsOpen (H i : Set (G i))) :
+    SecondCountableTopology (Chapter03AdditiveRestrictedProduct H) := by
+  exact chapter03_restrictedProduct_secondCountable
+    (fun i => AddSubgroup.toSubgroup (H i)) hsecond hH
+
+theorem chapter03_additiveRestrictedProduct_sigmaCompact_of_local_data
+    [∀ i, TopologicalSpace (G i)]
+    (H : ∀ i, AddSubgroup (G i))
+    [Countable I]
+    (hlocal : ∀ i, LocallyCompactSpace (G i))
+    (hsecond : ∀ i, SecondCountableTopology (G i))
+    (hHcompact : ∀ i, IsCompact (H i : Set (G i)))
+    (hHopen : ∀ i, IsOpen (H i : Set (G i))) :
+    SigmaCompactSpace (Chapter03AdditiveRestrictedProduct H) := by
+  exact chapter03_restrictedProduct_sigmaCompact_of_local_data
+    (fun i => AddSubgroup.toSubgroup (H i)) hlocal hsecond hHcompact hHopen
+
+theorem chapter03_additiveRestrictedProduct_secondCountable_sigmaCompact
+    [∀ i, TopologicalSpace (G i)]
+    (H : ∀ i, AddSubgroup (G i))
+    [Countable I]
+    (hlocal : ∀ i, LocallyCompactSpace (G i))
+    (hsecond : ∀ i, SecondCountableTopology (G i))
+    (hHcompact : ∀ i, IsCompact (H i : Set (G i)))
+    (hHopen : ∀ i, IsOpen (H i : Set (G i))) :
+    SecondCountableTopology (Chapter03AdditiveRestrictedProduct H) ∧
+      SigmaCompactSpace (Chapter03AdditiveRestrictedProduct H) := by
+  exact ⟨chapter03_restrictedProduct_secondCountable
+      (fun i => AddSubgroup.toSubgroup (H i)) hsecond hHopen,
+    chapter03_restrictedProduct_sigmaCompact_of_local_data
+      (fun i => AddSubgroup.toSubgroup (H i)) hlocal hsecond hHcompact hHopen⟩
+
+end AdditiveCountability
+
 theorem chapter03_secondCountable_closure_has_convergent_sequence
     {X : Type v} [TopologicalSpace X] [SecondCountableTopology X]
     (s : Set X) {x : X} (hx : x ∈ closure s) :
@@ -385,10 +439,6 @@ def chapter03CauchyTailCondition
 
 /-- A natural uniformity is recorded by the coordinatewise Cauchy and tail
 characterization used in the proof of completeness. -/
-/- DEPENDENCY_GUESS: No earlier LastLib restricted-product uniformity is
-available in the assigned workspace.  The later reconciliation pass should
-replace these characterizations with the canonical uniform-space construction
-if one is introduced by another chapter draft. -/
 def chapter03NaturalCauchySequenceCharacterization
     [∀ i, UniformSpace (G i)]
     (H : ∀ i, Subgroup (G i))
@@ -437,6 +487,21 @@ def chapter03NaturalConvergenceFilterCharacterization
           ∃ S : Set I, S.Finite ∧
             ∀ᶠ y : Chapter03RestrictedProduct H in l, ∀ i, i ∉ S →
               ((y : ∀ i, G i) i) ∈ H i
+
+/-- The natural-uniformity interface needed by the completeness theorem.
+
+This class deliberately records the two structural characterizations rather
+than choosing a competing uniformity on the restricted product. -/
+class Chapter03NaturalRestrictedProductUniformity
+    [∀ i, UniformSpace (G i)]
+    (H : ∀ i, Subgroup (G i))
+    [UniformSpace (Chapter03RestrictedProduct H)] : Prop where
+  sequence_characterization : chapter03NaturalCauchySequenceCharacterization H
+  cauchy_characterization : chapter03NaturalCauchyFilterCharacterization H
+  convergence_characterization : chapter03NaturalConvergenceFilterCharacterization H
+  topology_compatibility :
+    UniformSpace.toTopologicalSpace (α := Chapter03RestrictedProduct H) =
+      chapter03RestrictedProductTopology H
 
 theorem chapter03_cauchy_sequence_has_eventually_integral_tail
     [∀ i, UniformSpace (G i)]
@@ -524,6 +589,193 @@ theorem chapter03_restrictedProduct_complete_of_natural_characterization
   exact ⟨z, Filter.tendsto_id'.mp (by
     convert hzconv using 1 ; rfl)⟩
 
+theorem chapter03_restrictedProduct_complete_of_complete_local_closed_natural
+    [∀ i, UniformSpace (G i)]
+    (H : ∀ i, Subgroup (G i))
+    [UniformSpace (Chapter03RestrictedProduct H)]
+    [Chapter03NaturalRestrictedProductUniformity H]
+    (hlocal : ∀ i, CompleteSpace (G i))
+    (hclosed : ∀ i, IsClosed (H i : Set (G i))) :
+    CompleteSpace (Chapter03RestrictedProduct H) := by
+  exact chapter03_restrictedProduct_complete_of_natural_characterization H hlocal hclosed
+    (Chapter03NaturalRestrictedProductUniformity.cauchy_characterization (H := H))
+    (Chapter03NaturalRestrictedProductUniformity.convergence_characterization (H := H))
+
+section AdditiveCompleteness
+
+variable {I : Type u} {G : I → Type v} [∀ i, AddGroup (G i)]
+
+/-! The same Cauchy and convergence interfaces are needed for additive
+restricted products.  They are stated separately because Lean's additive and
+multiplicative group hierarchies are distinct. -/
+
+def chapter03AdditiveCauchyTailCondition
+    [∀ i, UniformSpace (G i)]
+    (H : ∀ i, AddSubgroup (G i))
+    (u : ℕ → Chapter03AdditiveRestrictedProduct H) : Prop :=
+  ∃ S : Set I, S.Finite ∧
+    ∀ᶠ n in Filter.atTop, ∀ m : ℕ, n ≤ m →
+      ∀ i, i ∉ S →
+        -(((u n : ∀ i, G i) i)) + ((u m : ∀ i, G i) i) ∈ H i
+
+def chapter03AdditiveNaturalCauchySequenceCharacterization
+    [∀ i, UniformSpace (G i)]
+    (H : ∀ i, AddSubgroup (G i))
+    [UniformSpace (Chapter03AdditiveRestrictedProduct H)] : Prop :=
+  ∀ u : ℕ → Chapter03AdditiveRestrictedProduct H,
+    CauchySeq u ↔
+      (∀ i, CauchySeq (fun n => ((u n : ∀ i, G i) i))) ∧
+        chapter03AdditiveCauchyTailCondition H u
+
+def chapter03AdditiveCauchyFilterTailCondition
+    [∀ i, UniformSpace (G i)]
+    (H : ∀ i, AddSubgroup (G i))
+    (l : Filter (Chapter03AdditiveRestrictedProduct H)) : Prop :=
+  ∃ S : Set I, S.Finite ∧
+    ∀ᶠ p in l ×ˢ l, ∀ i, i ∉ S →
+      -((((p.1 : Chapter03AdditiveRestrictedProduct H) : ∀ i, G i) i)) +
+        (((p.2 : Chapter03AdditiveRestrictedProduct H) : ∀ i, G i) i) ∈ H i
+
+def chapter03AdditiveNaturalCauchyFilterCharacterization
+    [∀ i, UniformSpace (G i)]
+    (H : ∀ i, AddSubgroup (G i))
+    [UniformSpace (Chapter03AdditiveRestrictedProduct H)] : Prop :=
+  ∀ l : Filter (Chapter03AdditiveRestrictedProduct H),
+    Cauchy l ↔
+      (∀ i, Cauchy (l.map (fun x : Chapter03AdditiveRestrictedProduct H =>
+        ((x : ∀ i, G i) i)))) ∧
+        chapter03AdditiveCauchyFilterTailCondition H l
+
+def chapter03AdditiveNaturalConvergenceFilterCharacterization
+    [∀ i, UniformSpace (G i)]
+    (H : ∀ i, AddSubgroup (G i))
+    [UniformSpace (Chapter03AdditiveRestrictedProduct H)] : Prop :=
+  ∀ l : Filter (Chapter03AdditiveRestrictedProduct H),
+    ∀ x : Chapter03AdditiveRestrictedProduct H,
+      Tendsto (fun y : Chapter03AdditiveRestrictedProduct H => y) l
+        (@nhds _
+          (UniformSpace.toTopologicalSpace
+            (α := Chapter03AdditiveRestrictedProduct H)) x) ↔
+          (∀ i, Tendsto (fun y : Chapter03AdditiveRestrictedProduct H =>
+          ((y : ∀ i, G i) i)) l
+            (𝓝 (((x : ∀ i, G i) i)))) ∧
+          ∃ S : Set I, S.Finite ∧
+            ∀ᶠ y : Chapter03AdditiveRestrictedProduct H in l, ∀ i, i ∉ S →
+              ((y : ∀ i, G i) i) ∈ H i
+
+class Chapter03NaturalAdditiveRestrictedProductUniformity
+    [∀ i, UniformSpace (G i)]
+    (H : ∀ i, AddSubgroup (G i))
+    [UniformSpace (Chapter03AdditiveRestrictedProduct H)] : Prop where
+  sequence_characterization :
+    chapter03AdditiveNaturalCauchySequenceCharacterization H
+  cauchy_characterization :
+    chapter03AdditiveNaturalCauchyFilterCharacterization H
+  convergence_characterization :
+    chapter03AdditiveNaturalConvergenceFilterCharacterization H
+  topology_compatibility :
+    UniformSpace.toTopologicalSpace (α := Chapter03AdditiveRestrictedProduct H) =
+      chapter03AdditiveRestrictedProductTopology H
+
+theorem chapter03_additive_cauchy_sequence_has_eventually_integral_tail
+    [∀ i, UniformSpace (G i)]
+    (H : ∀ i, AddSubgroup (G i))
+    [UniformSpace (Chapter03AdditiveRestrictedProduct H)]
+    (hchar : chapter03AdditiveNaturalCauchySequenceCharacterization H)
+    (u : ℕ → Chapter03AdditiveRestrictedProduct H) (hu : CauchySeq u) :
+    chapter03AdditiveCauchyTailCondition H u := by
+  exact ((hchar u).mp hu).2
+
+theorem chapter03_additive_cauchy_filter_has_eventually_integral_tail
+    [∀ i, UniformSpace (G i)]
+    (H : ∀ i, AddSubgroup (G i))
+    [UniformSpace (Chapter03AdditiveRestrictedProduct H)]
+    (hchar : chapter03AdditiveNaturalCauchyFilterCharacterization H)
+    (l : Filter (Chapter03AdditiveRestrictedProduct H)) (hl : Cauchy l) :
+    chapter03AdditiveCauchyFilterTailCondition H l := by
+  exact ((hchar l).mp hl).2
+
+theorem chapter03_additiveRestrictedProduct_complete_of_natural_characterization
+    [∀ i, UniformSpace (G i)]
+    (H : ∀ i, AddSubgroup (G i))
+    [UniformSpace (Chapter03AdditiveRestrictedProduct H)]
+    (hlocal : ∀ i, CompleteSpace (G i))
+    (hclosed : ∀ i, IsClosed (H i : Set (G i)))
+    (hchar : chapter03AdditiveNaturalCauchyFilterCharacterization H)
+    (hconv : chapter03AdditiveNaturalConvergenceFilterCharacterization H) :
+    CompleteSpace (Chapter03AdditiveRestrictedProduct H) := by
+  classical
+  let _ : ∀ i, CompleteSpace (G i) := hlocal
+  refine ⟨?_⟩
+  intro l hl
+  rcases ((hchar l).mp hl) with ⟨hcoord, htail⟩
+  choose x hxcoord using fun i => CompleteSpace.complete (hcoord i)
+  have hcoordTendsto : ∀ i, Tendsto
+      (fun y : Chapter03AdditiveRestrictedProduct H => ((y : ∀ i, G i) i)) l (𝓝 (x i)) :=
+    fun i => hxcoord i
+  let _ : NeBot l := hl.1
+  rcases htail with ⟨S, hS, htail⟩
+  rcases Filter.mem_prod_iff.mp htail with ⟨s, hs, t, ht, hst⟩
+  obtain ⟨a, ha⟩ := Filter.nonempty_of_mem hs
+  have hT : {i | ((a : ∀ i, G i) i) ∉ H i}.Finite :=
+    Filter.eventually_cofinite.mp a.property
+  let R : Set I := S ∪ {i | ((a : ∀ i, G i) i) ∉ H i}
+  have hR : R.Finite := hS.union hT
+  have hRtail : ∀ᶠ y : Chapter03AdditiveRestrictedProduct H in l, ∀ i, i ∉ R →
+      ((y : ∀ i, G i) i) ∈ H i := by
+    filter_upwards [ht] with y hy
+    intro i hiR
+    have hiR' : i ∉ S ∪ {i | ((a : ∀ i, G i) i) ∉ H i} := by
+      simpa [R] using hiR
+    have hiS : i ∉ S := by
+      intro hi
+      exact hiR' (Or.inl hi)
+    have hiT : i ∉ {i | ((a : ∀ i, G i) i) ∉ H i} := by
+      intro hi
+      exact hiR' (Or.inr hi)
+    have haH : ((a : ∀ i, G i) i) ∈ H i := by
+      by_contra hne
+      apply hiT
+      exact hne
+    have hrel :
+        -(((a : Chapter03AdditiveRestrictedProduct H) : ∀ i, G i) i) +
+            (((y : Chapter03AdditiveRestrictedProduct H) : ∀ i, G i) i) ∈ H i := by
+      have hpair : (a, y) ∈ s ×ˢ t := ⟨ha, hy⟩
+      exact hst hpair i hiS
+    have hadd := (H i).add_mem haH hrel
+    simpa [add_assoc] using hadd
+  have hxHtail : ∀ i, i ∉ R → x i ∈ H i := by
+    intro i hiR
+    apply (hclosed i).mem_of_tendsto (hcoordTendsto i)
+    exact hRtail.mono fun y hy => hy i hiR
+  have hxmem : ∀ᶠ i in Filter.cofinite, x i ∈ H i := by
+    filter_upwards [hR.compl_mem_cofinite] with i hiR
+    exact hxHtail i hiR
+  let z : Chapter03AdditiveRestrictedProduct H := ⟨x, hxmem⟩
+  have hzconv : Tendsto (fun y : Chapter03AdditiveRestrictedProduct H => y) l
+      (@nhds _
+        (UniformSpace.toTopologicalSpace
+          (α := Chapter03AdditiveRestrictedProduct H)) z) := by
+    apply (hconv l z).2
+    refine ⟨hcoordTendsto, ?_⟩
+    exact ⟨R, hR, hRtail⟩
+  exact ⟨z, Filter.tendsto_id'.mp (by
+    convert hzconv using 1 ; rfl)⟩
+
+theorem chapter03_additiveRestrictedProduct_complete_of_complete_local_closed_natural
+    [∀ i, UniformSpace (G i)]
+    (H : ∀ i, AddSubgroup (G i))
+    [UniformSpace (Chapter03AdditiveRestrictedProduct H)]
+    [Chapter03NaturalAdditiveRestrictedProductUniformity H]
+    (hlocal : ∀ i, CompleteSpace (G i))
+    (hclosed : ∀ i, IsClosed (H i : Set (G i))) :
+    CompleteSpace (Chapter03AdditiveRestrictedProduct H) := by
+  exact chapter03_additiveRestrictedProduct_complete_of_natural_characterization H hlocal hclosed
+    (Chapter03NaturalAdditiveRestrictedProductUniformity.cauchy_characterization (H := H))
+    (Chapter03NaturalAdditiveRestrictedProductUniformity.convergence_characterization (H := H))
+
+end AdditiveCompleteness
+
 /-!
 The source's completeness assertion is conditional on complete local uniform
 spaces and closed distinguished subgroups.  Since this chapter does not yet
@@ -576,6 +828,41 @@ theorem chapter03_closed_diagonal_quotient_is_locallyCompact_hausdorff
   exact hι
 
 end ClosedSubgroupsAndQuotients
+
+section AdditiveClosedSubgroupsAndQuotients
+
+variable {G : Type v} [AddCommGroup G] [TopologicalSpace G]
+
+theorem chapter03_closed_addSubgroup_is_locallyCompact
+    [LocallyCompactSpace G] [T2Space G]
+    (H : AddSubgroup G) (hclosed : IsClosed (H : Set G)) :
+    LocallyCompactSpace H := by
+  exact hclosed.locallyCompactSpace
+
+theorem chapter03_closed_normal_addQuotient_is_locallyCompact_hausdorff
+    [IsTopologicalAddGroup G] [LocallyCompactSpace G] [T2Space G]
+    (N : AddSubgroup G) (hclosed : IsClosed (N : Set G)) :
+    LocallyCompactSpace (G ⧸ N) ∧ T2Space (G ⧸ N) := by
+  let _ : IsClosed (N : Set G) := hclosed
+  exact ⟨inferInstance, inferInstance⟩
+
+/-- The additive version of the closed-diagonal quotient interface. -/
+def chapter03AdditiveDiagonalRangeClosed {A : Type*} [AddZeroClass A]
+    (ι : A →+ G) : Prop :=
+  IsClosed (Set.range ι)
+
+theorem chapter03_closed_additive_diagonal_quotient_is_locallyCompact_hausdorff
+    {A : Type*} [AddCommGroup A]
+    [IsTopologicalAddGroup G] [LocallyCompactSpace G] [T2Space G]
+    (ι : A →+ G) (N : AddSubgroup G)
+    (hι : chapter03AdditiveDiagonalRangeClosed ι)
+    (hrange : Set.range ι = (N : Set G)) :
+    LocallyCompactSpace (G ⧸ N) ∧ T2Space (G ⧸ N) := by
+  apply chapter03_closed_normal_addQuotient_is_locallyCompact_hausdorff N
+  rw [← hrange]
+  exact hι
+
+end AdditiveClosedSubgroupsAndQuotients
 
 end
 end LastLib.Book04AdelesAndIdeles.Chapter03

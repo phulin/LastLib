@@ -205,7 +205,7 @@ theorem chapter09_hensel_lifts_separable_residue_generator
     [FaithfulSMul A B] [IsIntegralClosure B A L]
     [Module.Finite (chapter09BaseResidueField A)
       (chapter09ExtensionResidueField B)]
-    [Chapter09FiniteLocalExtension A B K L] [HenselianLocalRing B]
+    [Chapter09FiniteLocalExtension A B K L]
     (θbar : chapter09MaximalSeparableResidueSubfield
       (chapter09BaseResidueField A) (chapter09ExtensionResidueField B))
     (gbar : (chapter09BaseResidueField A)[X]) (g : A[X])
@@ -278,6 +278,23 @@ structure Chapter09RemainderInvariantData
       (chapter09BaseResidueField A) (chapter09ExtensionResidueField B)))
   ramification_index : ℕ
   residue_degree : ℕ
+  /-- The numerical ramification index is the canonical index for the
+  induced integral extension from the selected unramified coefficient ring
+  to `B`, not merely a copy of the original index. -/
+  remainder_ramification_index_is_actual :
+    let d := Classical.choice base_data
+    letI : Algebra d.ring B := d.ring_to_extension.toRingHom.toAlgebra
+    ramification_index =
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex
+        d.ring B (IsLocalRing.maximalIdeal B)
+  /-- The numerical residue degree is the canonical residue degree for the
+  actual remainder extension. -/
+  remainder_residue_degree_is_actual :
+    let d := Classical.choice base_data
+    letI : Algebra d.ring B := d.ring_to_extension.toRingHom.toAlgebra
+    residue_degree =
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterResidueDegree
+        d.ring B (IsLocalRing.maximalIdeal B)
   ramification_index_eq : ramification_index =
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex A B
       (IsLocalRing.maximalIdeal B)
@@ -286,6 +303,9 @@ structure Chapter09RemainderInvariantData
       (chapter09MaximalSeparableResidueSubfield
         (chapter09BaseResidueField A) (chapter09ExtensionResidueField B))
       (chapter09ExtensionResidueField B)
+  /-- The remainder still satisfies the fundamental degree formula. -/
+  remainder_degree_formula :
+    Module.finrank K₀ L = ramification_index * residue_degree
   residue_extension_purely_inseparable :
     IsPurelyInseparable
       (chapter09MaximalSeparableResidueSubfield

@@ -1,4 +1,5 @@
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Dependencies
+import Mathlib.CategoryTheory.Limits.Shapes.Products
 
 namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04
 
@@ -62,7 +63,32 @@ theorem chapter04_projective_line_trivial_constant_section_generates
     Epi (((chapter04ProjectiveLineTrivialLineBundle K).sheaf.freeHomEquiv
       (I := ULift.{u} (Fin 1))).symm
       (fun _ : ULift.{u} (Fin 1) => chapter04ProjectiveLineConstantSection K)) := by
-  sorry
+  let X := chapter04ProjectiveLine K
+  let I := ULift.{u} (Fin 1)
+  change Epi (((SheafOfModules.unit X.ringCatSheaf).freeHomEquiv
+    (I := I)).symm
+      (fun _ : I => (SheafOfModules.unitHomEquiv
+        (SheafOfModules.unit X.ringCatSheaf)) (𝟙 _)))
+  let e : SheafOfModules.free (R := X.ringCatSheaf) I ≅
+      SheafOfModules.unit X.ringCatSheaf := by
+    exact Limits.coproductUniqueIso (fun _ : I ↦ SheafOfModules.unit X.ringCatSheaf)
+  have he : Epi e.hom := @IsIso.epi_of_iso _ _ _ _ e.hom e.isIso_hom
+  have hEq :
+      ((SheafOfModules.unit X.ringCatSheaf).freeHomEquiv
+        (I := I)).symm
+          (fun _ : I => (SheafOfModules.unitHomEquiv
+            (SheafOfModules.unit X.ringCatSheaf)) (𝟙 _)) = e.hom := by
+    apply (SheafOfModules.unit X.ringCatSheaf).freeHomEquiv.injective
+    funext i
+    simp only [Equiv.apply_symm_apply]
+    change (SheafOfModules.unit X.ringCatSheaf).unitHomEquiv (𝟙 _) =
+      (SheafOfModules.unit X.ringCatSheaf).unitHomEquiv
+        (SheafOfModules.ιFree i ≫ e.hom)
+    congr 1
+    exact (Limits.ι_coproductUniqueIso_hom
+      (fun _ : I => SheafOfModules.unit X.ringCatSheaf) i).symm
+  rw [hEq]
+  exact he
 
 theorem chapter04_projective_line_trivial_is_generated
     (K : Type u) [Field K] :

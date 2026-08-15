@@ -40,7 +40,6 @@ def Chapter08NonsquareResidueUnit
 /-- A nonsquare residue unit cannot be a square in the local ring. -/
 theorem chapter08_nonsquare_residue_unit_not_square
     (A : Type*) [CommRing A] [IsLocalRing A] (u : A)
-    (_hu : IsUnit u)
     (hns : ¬ ∃ y : IsLocalRing.ResidueField A,
       y ^ 2 = IsLocalRing.residue A u) :
     ¬ ∃ x : A, x ^ 2 = u := by
@@ -56,13 +55,12 @@ theorem chapter08_nonsquare_residue_unit_not_square
 -- The quadratic X^2-u is an explicit algebraic obstruction. -/
 theorem chapter08_quadratic_without_root_from_nonsquare_residue
     (A : Type*) [CommRing A] [IsLocalRing A] (u : A)
-    (hu : IsUnit u)
     (hns : ¬ ∃ y : IsLocalRing.ResidueField A,
       y ^ 2 = IsLocalRing.residue A u) :
     ¬ ∃ x : A, (Polynomial.X ^ 2 - Polynomial.C u).eval x = 0 := by
   classical
   rintro ⟨x, hx⟩
-  apply chapter08_nonsquare_residue_unit_not_square A u hu hns
+  apply chapter08_nonsquare_residue_unit_not_square A u hns
   refine ⟨x, ?_⟩
   exact sub_eq_zero.mp (by
     simpa [Polynomial.eval_sub, Polynomial.eval_pow] using hx)

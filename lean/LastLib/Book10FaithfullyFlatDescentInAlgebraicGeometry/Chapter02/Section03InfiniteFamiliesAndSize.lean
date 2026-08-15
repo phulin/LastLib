@@ -189,7 +189,7 @@ theorem disjointAffineComponentFamily_coproductMap_eq_id
   intro i
   simp
 
-/-- Adding redundant identity members leaves the family-level fpqc condition unchanged. -/
+/-- Adding identity members to an already fpqc family preserves the family-level fpqc condition. -/
 def addRedundantMembers {S : Scheme.{u}} {I J : Type v}
     (F : SchemeFamily S I) : SchemeFamily S (I ⊕ J) where
   obj := fun ij ↦ match ij with
@@ -220,6 +220,27 @@ theorem addRedundantMembers_is_fpqc
       ⋃ j : Fin R.cardinality,
         F.map (R.member j) '' (R.sourceOpen j : Set (F.obj (R.member j)))
     exact R.covers
+
+theorem addRedundantMembers_is_fppf
+    {S : Scheme.{u}} {I J : Type v} {F : SchemeFamily S I}
+    (hF : FppfCoveringFamily F) :
+    FppfCoveringFamily (addRedundantMembers (J := J) F) := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro s
+    obtain ⟨i, x, hx⟩ := hF.jointly_surjective s
+    exact ⟨Sum.inl i, x, hx⟩
+  · intro ij
+    cases ij with
+    | inl i => exact hF.flat i
+    | inr j =>
+      change Flat (𝟙 S)
+      infer_instance
+  · intro ij
+    cases ij with
+    | inl i => exact hF.locally_of_finite_presentation i
+    | inr j =>
+      change LocallyOfFinitePresentation (𝟙 S)
+      infer_instance
 
 /-- A bundled sequence of flat modules whose infinite product is not flat. -/
 structure FlatModuleSequence (R : Type u) [CommRing R] where

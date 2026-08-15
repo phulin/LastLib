@@ -195,14 +195,14 @@ theorem chapter15_restricted_matrix_group_tail
 /-! ### The local integral model -/
 
 theorem chapter15_finite_integral_matrix_mem_iff
-    (n : ℕ) (hn : 0 < n) (v : Chapter15FinitePlace R)
+    (n : ℕ) (_hn : 0 < n) (v : Chapter15FinitePlace R)
     (g : Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion K)) :
     g ∈ chapter15FiniteMatrixIntegralSubgroup n v ↔
       (∀ i j : Fin n, g i j ∈ v.adicCompletionIntegers K) ∧
       ∃ u : (v.adicCompletionIntegers K)ˣ,
         Units.map (v.adicCompletionIntegers K).subtype.toMonoidHom u =
           Matrix.GeneralLinearGroup.det g := by
-  letI : Nonempty (Fin n) := ⟨⟨0, hn⟩⟩
+  let : Nonempty (Fin n) := ⟨⟨0, _hn⟩⟩
   constructor
   · rintro ⟨x, rfl⟩
     constructor
@@ -506,10 +506,10 @@ theorem chapter15_adelic_matrix_group_is_locally_compact
       LocallyCompactSpace
         (Matrix.GeneralLinearGroup (Fin n) v.Completion) := by
     intro v
-    letI : LocallyCompactSpace
+    let : LocallyCompactSpace
         (Matrix (Fin n) (Fin n) v.Completion) :=
       Pi.locallyCompactSpace_of_finite
-    letI : T1Space
+    let : T1Space
         (Matrix (Fin n) (Fin n) v.Completion) := by
       infer_instance
     exact
@@ -526,27 +526,27 @@ theorem chapter15_adelic_matrix_group_is_locally_compact
     have hopen : IsOpen
         (v.adicCompletionIntegers L : Set (v.adicCompletion L)) :=
       Valued.isOpen_valuationSubring _
-    letI : LocallyCompactSpace (v.adicCompletion L) :=
+    let : LocallyCompactSpace (v.adicCompletion L) :=
       hcompact.locallyCompactSpace_of_mem_nhds_of_addGroup
         (hopen.mem_nhds (show (0 : v.adicCompletion L) ∈
           (v.adicCompletionIntegers L : Set (v.adicCompletion L)) by simp))
-    letI : LocallyCompactSpace
+    let : LocallyCompactSpace
         (Matrix (Fin n) (Fin n) (v.adicCompletion L)) :=
       Pi.locallyCompactSpace_of_finite
-    letI : T1Space
+    let : T1Space
         (Matrix (Fin n) (Fin n) (v.adicCompletion L)) := by
       infer_instance
     exact
       (inferInstance :
         LocallyCompactSpace
           (Matrix (Fin n) (Fin n) (v.adicCompletion L))ˣ)
-  letI : ∀ v : NumberField.InfinitePlace L,
+  let : ∀ v : NumberField.InfinitePlace L,
       LocallyCompactSpace
         (Matrix.GeneralLinearGroup (Fin n) v.Completion) := harch
-  letI : ∀ v : Chapter15FinitePlace (𝓞 L),
+  let : ∀ v : Chapter15FinitePlace (𝓞 L),
       LocallyCompactSpace
         (Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion L)) := hfiniteLocal
-  letI : Fact (∀ v : Chapter15FinitePlace (𝓞 L),
+  let : Fact (∀ v : Chapter15FinitePlace (𝓞 L),
       IsOpen
         (chapter15FiniteMatrixIntegralSubgroup (R := 𝓞 L) (K := L) n v :
           Set (Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion L)))) :=
@@ -560,9 +560,9 @@ theorem chapter15_adelic_matrix_group_is_locally_compact
         chapter15FiniteMatrixIntegralSubgroup (R := 𝓞 L) (K := L) n v)
       (Filter.Eventually.of_forall (fun v =>
         chapter15_finite_integral_matrix_group_is_compact n v))
-  letI : LocallyCompactSpace
+  let : LocallyCompactSpace
       (Chapter15FiniteMatrixGroup n (𝓞 L) L) := hfinite
-  letI : LocallyCompactSpace
+  let : LocallyCompactSpace
       (Chapter15ArchimedeanMatrixGroup n L) :=
     Pi.locallyCompactSpace_of_finite
   exact inferInstance
@@ -776,7 +776,7 @@ def chapter15_rank_one_recovers_ideles
 theorem chapter15_idele_group_is_locally_compact
     (K : Type*) [Field K] [NumberField K] :
     LocallyCompactSpace (Chapter15IdeleGroup (𝓞 K) K) := by
-  letI : LocallyCompactSpace (Chapter15GLnAdeles 1 (𝓞 K) K) :=
+  let : LocallyCompactSpace (Chapter15GLnAdeles 1 (𝓞 K) K) :=
     chapter15_adelic_matrix_group_is_locally_compact_of_ring_of_integers 1
   exact
     (chapter15_rank_one_recovers_ideles K).toHomeomorph.symm.isOpenEmbedding.locallyCompactSpace

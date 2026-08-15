@@ -401,6 +401,17 @@ noncomputable def chapter13_leftTranslation_is_equivariant
               simpa only [Category.assoc] using
                 congrArg (fun q => q ≫ MonObj.mul) hright.symm }
 
+theorem chapter13_fiberEquivariantIso_is_leftTranslation
+    {S : Scheme.{u}} (G : Chapter13GroupScheme S) {A : Over S}
+    (e : Chapter13EquivariantIso
+      (chapter13FiberRegularRightAction G A)
+      (chapter13FiberRegularRightAction G A))
+    (hbase : e.iso.hom ≫ CartesianMonoidalCategory.fst A G.X =
+      CartesianMonoidalCategory.fst A G.X) :
+    ∃! h : A ⟶ G.X,
+      e.iso.hom = chapter13LeftTranslation G h := by
+  sorry
+
 noncomputable def chapter13_torsorCocycle_transition_is_equivariant
     {S : Scheme.{u}} {ι : Type v}
     {G : Chapter13GroupScheme S} {T : ι → Scheme.{u}}
@@ -620,6 +631,19 @@ structure Chapter13TorsorCocycleRealization
     chapter13_localTrivializationTransition_is_equivariant
         torsor trivialization i j =
       chapter13_torsorCocycle_transition_is_equivariant D i j
+
+/-- A covered family of chosen trivializations realizes the cocycle induced by them. -/
+theorem chapter13_localTrivializationCocycle_is_realized
+    {S : Scheme.{u}} {ι : Type v}
+    {G : Chapter13GroupScheme S} {T : ι → Scheme.{u}}
+    {t : ∀ i, T i ⟶ S}
+    (Q : Chapter13FpqcTorsor G)
+    (trivialization : ∀ i,
+      Chapter13TorsorLocalTrivialization Q.action (t i))
+    (hcover : Chapter13FpqcCoverFamily T t) :
+    Nonempty (Chapter13TorsorCocycleRealization
+      (chapter13LocalTrivializationCocycle Q trivialization)) := by
+  sorry
 
 theorem chapter13_torsorCocycle_realized_by_torsor
     {S : Scheme.{u}} {ι : Type v}

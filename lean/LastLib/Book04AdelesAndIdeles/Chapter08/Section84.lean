@@ -264,6 +264,30 @@ abbrev Chapter08HomotheticLatticeClassGroup
     (K : Type*) [Field K] [NumberField K] :=
   Chapter08IdealGroup K ⧸ (toPrincipalIdeal (Chapter08Integers K) K).range
 
+theorem chapter08_homothetic_fractional_ideal_iff_quotient_eq
+    {K : Type*} [Field K] [NumberField K]
+    {I J : Chapter08IdealGroup K} :
+    chapter08HomotheticFractionalIdeal I J ↔
+      QuotientGroup.mk' (toPrincipalIdeal (Chapter08Integers K) K).range I =
+        QuotientGroup.mk' (toPrincipalIdeal (Chapter08Integers K) K).range J := by
+  constructor
+  · rintro ⟨a, hI⟩
+    apply (QuotientGroup.mk'_eq_mk' _).2
+    refine ⟨(toPrincipalIdeal (Chapter08Integers K) K a)⁻¹, ?_, ?_⟩
+    · exact MonoidHom.mem_range.mpr ⟨a⁻¹, by simp⟩
+    · rw [hI]
+      simp [mul_assoc]
+  · intro hq
+    rw [QuotientGroup.mk'_eq_mk'] at hq
+    obtain ⟨z, hz, hzij⟩ := hq
+    rcases hz with ⟨a, rfl⟩
+    refine ⟨a⁻¹, ?_⟩
+    calc
+      I = (I * toPrincipalIdeal (Chapter08Integers K) K a) *
+          (toPrincipalIdeal (Chapter08Integers K) K a)⁻¹ := by simp [mul_assoc]
+      _ = J * (toPrincipalIdeal (Chapter08Integers K) K a)⁻¹ := by rw [hzij]
+      _ = J * toPrincipalIdeal (Chapter08Integers K) K (a⁻¹) := by simp
+
 noncomputable def chapter08HomotheticLatticeClassEquiv
     (K : Type*) [Field K] [NumberField K] :
     Chapter08OrdinaryClassGroup K ≃*

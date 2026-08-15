@@ -433,9 +433,23 @@ theorem chapter03_classModuleNorm_surjective
   rw [chapter03ClassModuleNorm_mk]
   exact hy
 
-/- The compact-kernel and finite-index assertions below still depend on the canonical
-class-group topology, so this section records them as target propositions until that earlier
-interface is connected. -/
+theorem chapter03_classModule_quotient_positiveReal_of_surjective
+    {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L]
+    {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
+    {N : Chapter03NormData S_K S_L}
+    (A : Chapter03AdelicModuleData N) :
+    chapter03_classModule_quotient_positiveReal A := by
+  refine ⟨QuotientGroup.quotientKerEquivOfSurjective
+      (chapter03ClassModuleNorm A)
+      (chapter03_classModuleNorm_surjective A), ?_⟩
+  intro c
+  exact QuotientGroup.kerLift_mk (chapter03ClassModuleNorm A) c
+
+/- The field-data structure now carries the canonical idèle comparison and the module structure
+is required to transport the canonical module.  The predicate names are retained for dependent
+interfaces, while the canonical theorem APIs below provide the unconditional chapter-facing
+assertions. -/
 def chapter03_classModuleOne_compact
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
     [Algebra K L] [FiniteDimensional K L]
@@ -553,6 +567,17 @@ theorem chapter03_normClassSubgroup_finiteIndex_of_compact_quotient
       hcompactSpace hdiscrete
   exact ⟨@Subgroup.index_ne_zero_of_finite _ _ (chapter03NormClassSubgroup N) hfinite⟩
 
+theorem chapter03_normClassSubgroup_finiteIndex_of_module_one_compact
+    {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L]
+    {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
+    {N : Chapter03NormData S_K S_L}
+    (A : Chapter03AdelicModuleData N)
+    (hcompact : chapter03_classModuleOne_compact A) :
+    (chapter03NormClassSubgroup N).FiniteIndex := by
+  exact chapter03_normClassSubgroup_finiteIndex_of_compact_quotient
+    (chapter03_classNormQuotient_compact_of_module_one_compact A hcompact)
+
 theorem chapter03_classNormQuotient_finite_of_compact_quotient
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
     [Algebra K L] [FiniteDimensional K L]
@@ -583,6 +608,144 @@ def chapter03_classNormQuotient_finite
     {N : Chapter03NormData S_K S_L} :
     Prop :=
   Finite (Chapter03ClassNormQuotient N)
+
+/- The canonical bridges in `Chapter03FieldIdeleData` and `Chapter03AdelicModuleData` make these
+theorem APIs available without treating the target propositions as hypotheses. -/
+theorem chapter03_classModuleOne_compact_canonical
+    {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L]
+    {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
+    {N : Chapter03NormData S_K S_L}
+    (A : Chapter03AdelicModuleData N) :
+    chapter03_classModuleOne_compact A := by
+  classical
+  change IsCompact (chapter03ClassModuleOneSubgroup A :
+    Set (Chapter03ClassGroup S_K))
+  let P : Subgroup (Chapter03Ideles S_K) := chapter03PrincipalSubgroup S_K
+  let Q : Subgroup
+      (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleGroup K) :=
+    LastLib.Book06GlobalClassFieldTheory.Chapter01.principalIdeleSubgroup K
+  have hPQ : P.map S_K.canonicalIdele = Q := by
+    ext x
+    constructor
+    · intro hx
+      rcases Subgroup.mem_map.mp hx with ⟨y, hy, rfl⟩
+      rcases hy with ⟨a, rfl⟩
+      refine ⟨a, ?_⟩
+      change LastLib.Book06GlobalClassFieldTheory.Chapter01.principalIdele a =
+        S_K.canonicalIdele (chapter03PrincipalIdele S_K a)
+      exact (S_K.canonicalIdele_principal a).symm
+    · intro hx
+      rcases hx with ⟨a, rfl⟩
+      apply Subgroup.mem_map.mpr
+      refine ⟨chapter03PrincipalIdele S_K a, ⟨a, rfl⟩, ?_⟩
+      change S_K.canonicalIdele (chapter03PrincipalIdele S_K a) =
+        LastLib.Book06GlobalClassFieldTheory.Chapter01.principalIdele a
+      exact S_K.canonicalIdele_principal a
+  let e : Chapter03ClassGroup S_K ≃*
+      LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleClassGroup K :=
+    QuotientGroup.congr P Q S_K.canonicalIdele hPQ
+  have hecont : Continuous e := by
+    apply QuotientGroup.isOpenQuotientMap_mk.isQuotientMap.continuous_iff.mpr
+    change Continuous (fun x => QuotientGroup.mk' Q (S_K.canonicalIdele x))
+    exact QuotientGroup.continuous_mk.comp S_K.canonicalIdele_continuous
+  have hecont_symm : Continuous e.symm := by
+    apply QuotientGroup.isOpenQuotientMap_mk.isQuotientMap.continuous_iff.mpr
+    change Continuous (fun x => QuotientGroup.mk' P (S_K.canonicalIdele.symm x))
+    exact QuotientGroup.continuous_mk.comp S_K.canonicalIdele_inverse_continuous
+  have hmodule :
+      (LastLib.Book06GlobalClassFieldTheory.Chapter01.classModule (K := K)).comp e =
+        A.canonicalPositiveReal.toMonoidHom.comp (chapter03ClassModuleNorm A) := by
+    apply QuotientGroup.monoidHom_ext
+    apply MonoidHom.ext
+    intro x
+    simp only [MonoidHom.comp_apply, e, chapter03ClassModuleNorm_mk]
+    change LastLib.Book06GlobalClassFieldTheory.Chapter01.classModule
+          (QuotientGroup.mk' Q (S_K.canonicalIdele x)) =
+      A.canonicalPositiveReal (A.baseModuleNorm x)
+    change LastLib.Book06GlobalClassFieldTheory.Chapter01.ideleModule
+          (S_K.canonicalIdele x) =
+      A.canonicalPositiveReal (A.baseModuleNorm x)
+    exact (A.baseModuleNorm_canonical x).symm
+  have hker :
+      e '' (chapter03ClassModuleOneSubgroup A : Set (Chapter03ClassGroup S_K)) =
+        (LastLib.Book06GlobalClassFieldTheory.Chapter01.classModuleOneSubgroup K :
+          Set (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleClassGroup K)) := by
+    ext z
+    constructor
+    · rintro ⟨c, hc, rfl⟩
+      change (LastLib.Book06GlobalClassFieldTheory.Chapter01.classModule (K := K)).comp e c = 1
+      rw [hmodule]
+      change A.canonicalPositiveReal (chapter03ClassModuleNorm A c) = 1
+      rw [show chapter03ClassModuleNorm A c = 1 from hc]
+      simp
+    · intro hz
+      rcases e.surjective z with ⟨c, rfl⟩
+      refine ⟨c, ?_, rfl⟩
+      change chapter03ClassModuleNorm A c = 1
+      apply A.canonicalPositiveReal.injective
+      rw [map_one]
+      change (LastLib.Book06GlobalClassFieldTheory.Chapter01.classModule (K := K)).comp e c = 1 at hz
+      rw [hmodule] at hz
+      exact hz
+  have hcompactCanonical : IsCompact
+      (LastLib.Book06GlobalClassFieldTheory.Chapter01.classModuleOneSubgroup K :
+        Set (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleClassGroup K)) :=
+    LastLib.Book06GlobalClassFieldTheory.Chapter01.classModule_kernel_compact (K := K)
+  have himage : IsCompact
+      (e.symm ''
+        (LastLib.Book06GlobalClassFieldTheory.Chapter01.classModuleOneSubgroup K :
+          Set (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleClassGroup K))) :=
+    hcompactCanonical.image hecont_symm
+  have himage_eq : e.symm ''
+        (LastLib.Book06GlobalClassFieldTheory.Chapter01.classModuleOneSubgroup K :
+          Set (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleClassGroup K)) =
+      (chapter03ClassModuleOneSubgroup A : Set (Chapter03ClassGroup S_K)) := by
+    rw [← hker]
+    ext c
+    constructor
+    · rintro ⟨z, hz, rfl⟩
+      rcases hz with ⟨c', hc', hzc'⟩
+      have hce : e.symm z = c' := by
+        rw [← hzc']
+        exact e.symm_apply_apply c'
+      rw [hce]
+      exact hc'
+    · intro hc
+      refine ⟨e c, ?_, e.symm_apply_apply c⟩
+      exact ⟨c, hc, rfl⟩
+  rw [himage_eq] at himage
+  exact himage
+
+theorem chapter03_classNormQuotient_compact_canonical
+    {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L]
+    {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
+    {N : Chapter03NormData S_K S_L}
+    (A : Chapter03AdelicModuleData N) :
+    chapter03_classNormQuotient_compact (N := N) := by
+  exact chapter03_classNormQuotient_compact_of_module_one_compact A
+    (chapter03_classModuleOne_compact_canonical A)
+
+theorem chapter03_normClassSubgroup_finiteIndex_canonical
+    {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L]
+    {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
+    {N : Chapter03NormData S_K S_L}
+    (A : Chapter03AdelicModuleData N) :
+    (chapter03NormClassSubgroup N).FiniteIndex := by
+  exact chapter03_normClassSubgroup_finiteIndex_of_compact_quotient
+    (chapter03_classNormQuotient_compact_canonical A)
+
+theorem chapter03_classNormQuotient_finite_canonical
+    {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
+    [Algebra K L] [FiniteDimensional K L]
+    {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
+    {N : Chapter03NormData S_K S_L}
+    (A : Chapter03AdelicModuleData N) :
+    Finite (Chapter03ClassNormQuotient N) := by
+  exact chapter03_classNormQuotient_finite_of_compact_quotient
+    (chapter03_classNormQuotient_compact_canonical A)
 
 end
 end LastLib.Book06GlobalClassFieldTheory.Chapter03

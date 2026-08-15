@@ -45,112 +45,20 @@ theorem chapter09_split_place_local_norm_is_product
 
 /-!
 Mathlib currently supplies the category of central simple algebras but not the
-cyclic-algebra construction or the number-field Brauer invariant sequence.
-This is the book-facing interface for those two canonical constructions.  The substantive split
-and local--global assertions are theorem-level interfaces below rather than fields of the input
-record, so the Hasse norm theorem cannot be discharged merely by packaging its conclusion as data.
+cyclic-algebra construction or the number-field Brauer invariant sequence.  We
+retain the split predicate as a book-facing definition, while the actual Hasse
+norm theorem below is stated through the canonical element/local-norm interface
+from Chapter 1.  In particular, no arbitrary local predicate or arbitrary CSA
+construction is allowed to masquerade as the cyclic-algebra theorem.
 -/
 def chapter09CsaIsSplit {K : Type uK} [Field K] (A : CSA.{uK, uK} K) : Prop :=
   ∃ n : ℕ, n ≠ 0 ∧ Nonempty (A ≃ₐ[K] Matrix (Fin n) (Fin n) K)
 
-/- LOCAL_DEPENDENCY_GUESS: construct the cyclic algebra attached to a cyclic
-extension and identify its split locus with the field norm subgroup. -/
-structure Chapter09CyclicNormData
-    (K : Type uK) (L : Type uL) [Field K] [Field L] [Algebra K L]
-    [NumberField K] [NumberField L]
-    [FiniteDimensional K L] [IsGalois K L] [IsCyclic (Gal(L / K))] where
-  places : Type uK
-  K_v : places → Type uL
-  A_v : places → Type uL
-  [localFieldMonoid : ∀ v, Monoid (K_v v)]
-  [localAlgebraMonoid : ∀ v, Monoid (A_v v)]
-  baseEmbedding : ∀ v, Kˣ →* (K_v v)ˣ
-  localNorm : ∀ v, (A_v v)ˣ →* (K_v v)ˣ
-  splitPlaceData : Chapter09SplitPlaceNormData places K_v A_v
-  splitPlaceData_localNorm : ∀ v, splitPlaceData.localNorm v = localNorm v
-  cyclicAlgebra : Kˣ → CSA.{uK, uK} K
-  localSplit : places → CSA.{uK, uK} K → Prop
-
-attribute [instance] Chapter09CyclicNormData.localFieldMonoid
-  Chapter09CyclicNormData.localAlgebraMonoid
-
-def chapter09CyclicEverywhereLocalNorm
-    {K L : Type*} [Field K] [Field L] [Algebra K L]
-    [NumberField K] [NumberField L]
-    [FiniteDimensional K L] [IsGalois K L] [IsCyclic (Gal(L / K))]
-    (P : Chapter09CyclicNormData K L) (a : Kˣ) : Prop :=
-  ∀ v, P.baseEmbedding v a ∈ (P.localNorm v).range
-
-theorem chapter09_cyclic_algebra_split_iff_norm
-    {K L : Type*} [Field K] [Field L] [Algebra K L]
-    [NumberField K] [NumberField L]
-    [FiniteDimensional K L] [IsGalois K L] [IsCyclic (Gal(L / K))]
-    (P : Chapter09CyclicNormData K L) (a : Kˣ) :
-    chapter09CsaIsSplit (P.cyclicAlgebra a) ↔
-      a ∈ chapter09FieldNormSubgroup K L := by
-  sorry
-
-theorem chapter09_cyclic_algebra_local_split_iff_norm
-    {K L : Type*} [Field K] [Field L] [Algebra K L]
-    [NumberField K] [NumberField L]
-    [FiniteDimensional K L] [IsGalois K L] [IsCyclic (Gal(L / K))]
-    (P : Chapter09CyclicNormData K L) (a : Kˣ) (v : P.places) :
-    P.localSplit v (P.cyclicAlgebra a) ↔
-      P.baseEmbedding v a ∈ (P.localNorm v).range := by
-  sorry
-
-theorem chapter09_cyclic_split_place_product_norm
-    {K L : Type*} [Field K] [Field L] [Algebra K L]
-    [NumberField K] [NumberField L]
-    [FiniteDimensional K L] [IsGalois K L] [IsCyclic (Gal(L / K))]
-    (P : Chapter09CyclicNormData K L) (v : P.places)
-    (h : P.splitPlaceData.splitPlace v) :
-    P.localNorm v =
-      (P.splitPlaceData.factorNorm v).comp
-        (Units.map (P.splitPlaceData.productEquiv v h).toMonoidHom) := by
-  rw [← P.splitPlaceData_localNorm v]
-  exact P.splitPlaceData.localNorm_eq_product v h
-
-theorem chapter09_cyclic_algebra_hasse_split_iff
-    {K : Type uK} {L : Type uL} [Field K] [Field L] [Algebra K L]
-    [NumberField K] [NumberField L]
-    [FiniteDimensional K L] [IsGalois K L] [IsCyclic (Gal(L / K))]
-    (P : Chapter09CyclicNormData K L) (a : Kˣ) :
-    chapter09CsaIsSplit (P.cyclicAlgebra a) ↔
-      ∀ v, P.localSplit v (P.cyclicAlgebra a) := by
-  sorry
-
 /-!
-The family `A_v` in `Chapter09CyclicNormData` is also the split-place
-convention from the text: at a split place it is a finite product of local
-fields, and its norm is the product norm.  The following theorem is the exact
-Hasse norm statement in unit-group form.
--/
-theorem chapter09_hasse_norm_theorem
-    {K L : Type*} [Field K] [Field L] [Algebra K L]
-    [NumberField K] [NumberField L] [FiniteDimensional K L]
-    [IsGalois K L] [IsCyclic (Gal(L / K))]
-    (P : Chapter09CyclicNormData K L) (a : Kˣ) :
-    a ∈ chapter09FieldNormSubgroup K L ↔
-      chapter09CyclicEverywhereLocalNorm P a := by
-  constructor
-  · intro ha v
-    have hsplit : chapter09CsaIsSplit (P.cyclicAlgebra a) :=
-      (chapter09_cyclic_algebra_split_iff_norm P a).2 ha
-    have hlocal : ∀ v, P.localSplit v (P.cyclicAlgebra a) :=
-      (chapter09_cyclic_algebra_hasse_split_iff P a).1 hsplit
-    exact (chapter09_cyclic_algebra_local_split_iff_norm P a v).1 (hlocal v)
-  · intro ha
-    apply (chapter09_cyclic_algebra_split_iff_norm P a).1
-    apply (chapter09_cyclic_algebra_hasse_split_iff P a).2
-    intro v
-    exact (chapter09_cyclic_algebra_local_split_iff_norm P a v).2 (ha v)
-
-/-!
-The preceding witness-based API is useful for the cyclic-algebra proof
-interface, but the theorem itself must not quantify over a guessed package of
-local fields and split criteria.  Chapter 1 already exposes the canonical
-local tensor algebra and the unconditional cyclic Hasse-norm principle.
+Chapter 1 exposes the canonical local tensor algebra and the unconditional
+cyclic Hasse-norm principle.  The theorem below is therefore the element-level
+statement used by this chapter; it does not quantify over guessed local fields,
+split predicates, or a guessed cyclic-algebra construction.
 -/
 abbrev chapter09CanonicalLocalScalarExtensionAt
     (K L : Type*) [Field K] [NumberField K] [Field L] [NumberField L]
@@ -207,7 +115,26 @@ theorem chapter09_hasse_norm_theorem_unconditional_units
     [IsCyclic (Gal(L / K))] (a : Kˣ) :
     a ∈ chapter09FieldNormSubgroup K L ↔
       chapter09CanonicalEverywhereLocalElementNorm K L (a : K) := by
-  sorry
+  constructor
+  · rintro ⟨y, hy⟩
+    have ha : (a : K) ≠ 0 := Units.ne_zero a
+    have hnorm : LastLib.Book06GlobalClassFieldTheory.Chapter01.IsElementNorm
+        K L (a : K) := by
+      refine ⟨(y : L), Units.ne_zero y, ?_⟩
+      have h := congrArg Units.val hy
+      simpa using h
+    exact LastLib.Book06GlobalClassFieldTheory.Chapter01.elementNorm_implies_local_elementNorm
+      ha hnorm
+  · intro hlocal
+    have ha : (a : K) ≠ 0 := Units.ne_zero a
+    have hnorm : LastLib.Book06GlobalClassFieldTheory.Chapter01.IsElementNorm
+        K L (a : K) :=
+      (chapter09_hasse_norm_theorem_unconditional (a := (a : K)) ha).mpr hlocal
+    rcases hnorm with ⟨y, hy, hnorm⟩
+    refine ⟨Units.mk0 y hy, ?_⟩
+    apply Units.ext
+    change Algebra.norm K y = (a : K)
+    exact hnorm
 
 def chapter09PositiveRealUnit (a : ℝˣ) : Prop :=
   0 < (a : ℝ)
@@ -219,11 +146,42 @@ archimedean sign condition needed in the cyclic theorem.
 -/
 theorem chapter09_real_quadratic_norm_iff (a : ℝˣ) :
     a ∈ chapter09FieldNormSubgroup ℝ ℂ ↔ chapter09PositiveRealUnit a := by
-  sorry
+  have norm_eq_normSq : ∀ z : ℂ, Algebra.norm ℝ z = Complex.normSq z := by
+    intro z
+    rw [Algebra.norm_apply]
+    simp [Algebra.lmul, Complex.normSq]
+    rw [← LinearMap.det_toMatrix Complex.basisOneI]
+    rw [Matrix.det_fin_two]
+    simp [LinearMap.toMatrix_apply, Complex.basisOneI]
+  constructor
+  · rintro ⟨z, hz⟩
+    have hnorm : Algebra.norm ℝ (z : ℂ) = (a : ℝ) := by
+      simpa using congrArg Units.val hz
+    have hnormSq : Complex.normSq (z : ℂ) = (a : ℝ) := by
+      exact (norm_eq_normSq (z : ℂ)).symm.trans hnorm
+    have hne : Complex.normSq (z : ℂ) ≠ 0 := by
+      rw [hnormSq]
+      exact Units.ne_zero a
+    change 0 < (a : ℝ)
+    rw [← hnormSq]
+    exact (lt_of_le_of_ne (Complex.normSq_nonneg _) (Ne.symm hne))
+  · intro ha
+    change 0 < (a : ℝ) at ha
+    have hsqrt : (Real.sqrt (a : ℝ)) ^ 2 = (a : ℝ) := by
+      exact Real.sq_sqrt (le_of_lt ha)
+    have hsqrt0 : Real.sqrt (a : ℝ) ≠ 0 := by
+      exact ne_of_gt (Real.sqrt_pos.2 ha)
+    refine ⟨Units.mk0 (Real.sqrt (a : ℝ) : ℂ) ?_, ?_⟩
+    · exact_mod_cast hsqrt0
+    · apply Units.ext
+      change Algebra.norm ℝ (Real.sqrt (a : ℝ) : ℂ) = (a : ℝ)
+      rw [norm_eq_normSq, Complex.normSq_ofReal]
+      simpa [pow_two] using hsqrt
 
 theorem chapter09_real_quadratic_norm_is_positive (a : ℂˣ) :
     chapter09PositiveRealUnit (chapter09FieldNormUnitHom ℝ ℂ a) := by
-  sorry
+  exact (chapter09_real_quadratic_norm_iff
+    (chapter09FieldNormUnitHom ℝ ℂ a)).mp ⟨a, rfl⟩
 
 end
 

@@ -44,7 +44,7 @@ theorem chapter02_lower_break_zero_iff_tame_layer_nontrivial
     (F : Chapter02LowerFiltration G) :
     chapter02LowerBreak F 0 ↔ Nontrivial (chapter02TameLayer F) := by
   let N := (F.group 1).subgroupOf (F.group 0)
-  letI : N.Normal := chapter02_lower_layer_normal F 0
+  let : N.Normal := chapter02_lower_layer_normal F 0
   change F.group 0 ≠ F.group 1 ↔ Nontrivial (F.group 0 ⧸ N)
   rw [QuotientGroup.nontrivial_iff]
   constructor
@@ -82,7 +82,7 @@ theorem chapter02_positive_lower_break_is_wild
 theorem chapter02_inertial_membership_range
     {G : Type u} [Group G] [Finite G]
     (F : Chapter02LowerFiltration G) (σ : G) (hσ : σ ≠ 1)
-    (hI : σ ∈ F.group 0)
+    (_hI : σ ∈ F.group 0)
     (d : ℕ) (hd : F.displacement σ = (d : WithTop ℤ)) :
     ∀ n : ℕ, σ ∈ F.group n ↔ n < d := by
   intro n
@@ -236,7 +236,7 @@ lower levels of the nonidentity automorphisms.
 theorem chapter02_lower_cardinality_sum_eq_visible_depth_sum
     {G : Type u} [Group G] [Finite G]
     (F : Chapter02LowerFiltration G) (N : ℕ)
-    (hN : ∀ n : ℕ, N ≤ n → F.group n = ⊥) :
+    (_hN : ∀ n : ℕ, N ≤ n → F.group n = ⊥) :
     (Finset.sum (Finset.range N) (fun n => Nat.card (F.group n) - 1)) =
       ∑ σ : G, (chapter02VisibleLowerLevels F N σ).card := by
   classical
@@ -244,11 +244,7 @@ theorem chapter02_lower_cardinality_sum_eq_visible_depth_sum
       (chapter02VisibleLowerLevels F N σ).card =
         ∑ n ∈ Finset.range N,
           if σ ≠ 1 ∧ σ ∈ F.group n then 1 else 0 := by
-    simpa [chapter02VisibleLowerLevels] using
-      (Finset.card_eq_sum_ite
-        (s := chapter02VisibleLowerLevels F N σ)
-        (t := Finset.range N)
-        (Finset.filter_subset (Finset.range N)))
+    simp [chapter02VisibleLowerLevels]
   have hinner (n : ℕ) :
       (∑ σ : G, if σ ≠ 1 ∧ σ ∈ F.group n then 1 else 0) =
         Nat.card (F.group n) - 1 := by

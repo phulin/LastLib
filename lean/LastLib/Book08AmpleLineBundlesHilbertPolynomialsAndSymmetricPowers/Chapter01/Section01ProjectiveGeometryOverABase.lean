@@ -2,6 +2,7 @@ import Mathlib.Algebra.Category.ModuleCat.Sheaf.LocallyFree
 import Mathlib.Algebra.Category.ModuleCat.Presheaf.Monoidal
 import Mathlib.Algebra.Category.ModuleCat.Presheaf.Sheafification
 import Mathlib.Algebra.Category.ModuleCat.Sheaf.Free
+import Mathlib.Algebra.Category.ModuleCat.Sheaf.PullbackFree
 import Mathlib.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
 import Mathlib.AlgebraicGeometry.Fiber
 import Mathlib.AlgebraicGeometry.IdealSheaf.Subscheme
@@ -143,15 +144,89 @@ noncomputable def chapter01LineBundleTensorPower {X : Scheme.{u}}
   | zero =>
       exact
         { module := SheafOfModules.unit X.ringCatSheaf
-          isLineBundle := by sorry }
+          isLineBundle := by
+            let e : SheafOfModules.free (R := X.ringCatSheaf) PUnit ≅
+                SheafOfModules.unit X.ringCatSheaf :=
+              Limits.coproductUniqueIso
+                (fun _ : PUnit => SheafOfModules.unit X.ringCatSheaf)
+            have hepi : Epi e.hom := by
+              constructor
+              intro Z g h w
+              calc
+                g = 𝟙 _ ≫ g := by simp
+                _ = (e.inv ≫ e.hom) ≫ g := by rw [e.inv_hom_id]
+                _ = e.inv ≫ (e.hom ≫ g) := by rw [Category.assoc]
+                _ = e.inv ≫ (e.hom ≫ h) := by rw [w]
+                _ = (e.inv ≫ e.hom) ≫ h := by rw [Category.assoc]
+                _ = 𝟙 _ ≫ h := by rw [e.inv_hom_id]
+                _ = h := by simp
+            let G : (SheafOfModules.unit X.ringCatSheaf).GeneratingSections :=
+              { I := PUnit
+                s := (SheafOfModules.unit X.ringCatSheaf).freeHomEquiv e.hom
+                epi := by
+                  change Epi
+                    ((SheafOfModules.unit X.ringCatSheaf).freeHomEquiv.symm
+                      ((SheafOfModules.unit X.ringCatSheaf).freeHomEquiv e.hom))
+                  simpa only [Equiv.symm_apply_apply] using hepi }
+            have hG : G.π = e.hom := by
+              dsimp [G]
+              exact Equiv.symm_apply_apply _ _
+            have hloc (i : X.Opens) :
+                IsIso
+                  (G.map (SheafOfModules.pushforward
+                    (𝟙 (Sheaf.over X.ringCatSheaf i)))
+                    (Iso.refl (SheafOfModules.unit (Sheaf.over X.ringCatSheaf i)))).π := by
+              rw [SheafOfModules.GeneratingSections.map_π_eq G
+                (SheafOfModules.pushforward (𝟙 (Sheaf.over X.ringCatSheaf i)))
+                (Iso.refl _)]
+              rw [hG]
+              change IsIso
+                ((SheafOfModules.mapFreeIso
+                    (SheafOfModules.pushforward
+                      (𝟙 (Sheaf.over X.ringCatSheaf i))) G.I
+                    (Iso.refl _)).hom ≫
+                  (SheafOfModules.pushforward
+                    (𝟙 (Sheaf.over X.ringCatSheaf i))).map e.hom)
+              simpa only [Functor.mapIso_hom, Iso.trans_hom] using
+                (Iso.isIso_hom
+                  ((SheafOfModules.mapFreeIso
+                      (SheafOfModules.pushforward
+                        (𝟙 (Sheaf.over X.ringCatSheaf i))) G.I
+                      (Iso.refl _)).trans
+                    ((SheafOfModules.pushforward
+                      (𝟙 (Sheaf.over X.ringCatSheaf i))).mapIso e)))
+            refine ⟨G.localGeneratorsData, ?_, ?_⟩
+            · constructor
+              intro i
+              dsimp only [SheafOfModules.GeneratingSections.localGeneratorsData]
+              exact hloc i
+            · intro i
+              change ∃ e : PUnit, ∀ j : PUnit, j = e
+              exact ⟨PUnit.unit, fun _ => Subsingleton.elim _ _⟩ }
   | succ n ih =>
       exact
         { module := chapter01SheafTensor ih.module L.module
           isLineBundle := by sorry }
 
-/-! Negative powers use a dual line bundle, not an unrelated arbitrary line
-bundle.  The data record keeps the duality and power comparison explicit while
-the underlying bundle remains available through the book-facing definition. -/
+/-! Negative powers use one chosen dual line bundle, not a potentially different
+dual for each exponent.  The data record keeps the duality and power comparison
+explicit while the underlying bundle remains available through the book-facing
+definition. -/
+structure Chapter01LineBundleDualData {X : Scheme.{u}}
+    (L : Chapter01LineBundle X) where
+  dual : Chapter01LineBundle X
+  duality : chapter01SheafTensor dual.module L.module ≅
+    SheafOfModules.unit X.ringCatSheaf
+
+theorem chapter01_line_bundle_dual_data_exists {X : Scheme.{u}}
+    (L : Chapter01LineBundle X) :
+    Nonempty (Chapter01LineBundleDualData L) := by
+  sorry
+
+noncomputable def chapter01LineBundleDualData {X : Scheme.{u}}
+    (L : Chapter01LineBundle X) : Chapter01LineBundleDualData L :=
+  Classical.choice (chapter01_line_bundle_dual_data_exists L)
+
 structure Chapter01LineBundleDualPowerData {X : Scheme.{u}}
     (L : Chapter01LineBundle X) (n : ℕ) where
   bundle : Chapter01LineBundle X
@@ -164,7 +239,12 @@ structure Chapter01LineBundleDualPowerData {X : Scheme.{u}}
 noncomputable def chapter01LineBundleDualPowerData {X : Scheme.{u}}
     (L : Chapter01LineBundle X) (n : ℕ) :
     Chapter01LineBundleDualPowerData L n := by
-  sorry
+  let D := chapter01LineBundleDualData L
+  refine
+    { bundle := chapter01LineBundleTensorPower D.dual n
+      dual := D.dual
+      duality := D.duality
+      power := Iso.refl _ }
 
 noncomputable def chapter01LineBundleDualPower {X : Scheme.{u}}
     (L : Chapter01LineBundle X) (n : ℕ) : Chapter01LineBundle X := by
@@ -332,7 +412,41 @@ theorem chapter01_polynomial_grading_data_exists
     {k : Type*} [CommRing k] (r : ℕ) (w : Fin (r + 1) → ℕ)
     (hw : ∀ i, 0 < w i) :
     Nonempty (Chapter01PolynomialGradingData k r w) := by
-  sorry
+  classical
+  let grading : ℕ → Submodule ℤ (MvPolynomial (Fin (r + 1)) k) :=
+    fun n => (MvPolynomial.weightedHomogeneousSubmodule k w n).restrictScalars ℤ
+  refine ⟨grading, ?_, ?_, ?_, hw⟩
+  · letI : GradedAlgebra (fun n => MvPolynomial.weightedHomogeneousSubmodule k w n) :=
+      MvPolynomial.weightedGradedAlgebra (R := k) w
+    exact
+      { one_mem :=
+          (MvPolynomial.WeightedHomogeneousSubmodule.gradedMonoid
+            (R := k) (w := w)).one_mem
+        mul_mem :=
+          (MvPolynomial.WeightedHomogeneousSubmodule.gradedMonoid
+            (R := k) (w := w)).mul_mem
+        decompose' := (MvPolynomial.weightedDecomposition (R := k) w).decompose'
+        left_inv := (MvPolynomial.weightedDecomposition (R := k) w).left_inv
+        right_inv := (MvPolynomial.weightedDecomposition (R := k) w).right_inv }
+  · intro n p
+    change p ∈ MvPolynomial.weightedHomogeneousSubmodule k w n ↔ _
+    rw [MvPolynomial.mem_weightedHomogeneousSubmodule]
+    constructor
+    · intro hp
+      by_cases hp0 : p = 0
+      · exact Or.inl hp0
+      · right
+        intro m hm
+        simpa [Finsupp.weight_eq_sum, smul_eq_mul, Nat.mul_comm] using
+          hp (MvPolynomial.mem_support_iff.mp hm)
+    · rintro (rfl | hp)
+      · exact MvPolynomial.isWeightedHomogeneous_zero k w n
+      · intro m hm
+        simpa [Finsupp.weight_eq_sum, smul_eq_mul, Nat.mul_comm] using
+          hp m (MvPolynomial.mem_support_iff.mpr hm)
+  · intro i
+    change MvPolynomial.X i ∈ MvPolynomial.weightedHomogeneousSubmodule k w (w i)
+    exact MvPolynomial.isWeightedHomogeneous_X (R := k) w i
 
 noncomputable def chapter01StandardPolynomialGradingData
     {k : Type*} [CommRing k] (r : ℕ) :
@@ -529,7 +643,8 @@ structure Chapter01RelativeGradedAlgebra (S : Scheme.{u}) where
   sheaf_multiplication_assoc : ∀ m n k,
     chapter01SheafTensorMap (sheaf_multiplication m n) (𝟙 (component k)) ≫
         sheaf_multiplication (m + n) k ≫
-        eqToHom (by sorry : component ((m + n) + k) = component (m + (n + k))) =
+        eqToHom (by rw [Nat.add_assoc] :
+          component ((m + n) + k) = component (m + (n + k))) =
       (chapter01SheafTensorAssociator (component m) (component n) (component k)).hom ≫
         chapter01SheafTensorMap (𝟙 (component m)) (sheaf_multiplication n k) ≫
         sheaf_multiplication m (n + k)
@@ -1582,14 +1697,19 @@ structure Chapter01RelativePullbackData {S T : Scheme.{u}}
   restriction_preserves :
     ∀ {U V : T.Opens} (i : U ⟶ V) (n : ℕ) (x : algebra.sections V),
       x ∈ algebra.grading V n → algebra.restriction i x ∈ algebra.grading U n
-  /-- The canonical comparison morphism between the pulled-back Proj and the
-  Proj of the pulled-back sheaf-valued graded algebra. -/
-  proj_base_change_comparison :
+
+/-! The algebraic pullback data above deliberately stops before the geometric
+comparison.  This prevents the base-change conclusion from being smuggled in
+as a field of the object whose construction is supposed to precede it. -/
+structure Chapter01RelativeProjBaseChangeData {S T : Scheme.{u}}
+    (𝒜 : Chapter01RelativeGradedAlgebra S) (g : T ⟶ S)
+    (𝓑 : Chapter01RelativeGradedAlgebra T) where
+  comparison :
     chapter01RelativeProjBaseChange 𝒜 g ⟶
-      (chapter01RelativeProj algebra).scheme
-  proj_base_change_comparison_isIso : IsIso proj_base_change_comparison
-  proj_base_change_comparison_over :
-    proj_base_change_comparison ≫ (chapter01RelativeProj algebra).projection =
+      (chapter01RelativeProj 𝓑).scheme
+  comparison_isIso : IsIso comparison
+  comparison_over :
+    comparison ≫ (chapter01RelativeProj 𝓑).projection =
       Limits.pullback.snd (chapter01RelativeProj 𝒜).projection g
 
 noncomputable def chapter01RelativePullbackData {S T : Scheme.{u}}
@@ -1608,11 +1728,22 @@ noncomputable def chapter01RelativePullback {S T : Scheme.{u}}
     Chapter01RelativeGradedAlgebra T :=
   (chapter01RelativePullbackData 𝒜 g).algebra
 
+theorem chapter01_relative_proj_base_change_data_exists {S T : Scheme.{u}}
+    (𝒜 : Chapter01RelativeGradedAlgebra S) (g : T ⟶ S) :
+    Nonempty (Chapter01RelativeProjBaseChangeData 𝒜 g
+      (chapter01RelativePullback 𝒜 g)) := by
+  sorry
+
+noncomputable def chapter01RelativeProjBaseChangeData {S T : Scheme.{u}}
+    (𝒜 : Chapter01RelativeGradedAlgebra S) (g : T ⟶ S) :
+    Chapter01RelativeProjBaseChangeData 𝒜 g (chapter01RelativePullback 𝒜 g) :=
+  Classical.choice (chapter01_relative_proj_base_change_data_exists 𝒜 g)
+
 noncomputable def chapter01RelativeProjBaseChangeComparison {S T : Scheme.{u}}
     (𝒜 : Chapter01RelativeGradedAlgebra S) (g : T ⟶ S) :
     chapter01RelativeProjBaseChange 𝒜 g ⟶
       (chapter01RelativeProj (chapter01RelativePullback 𝒜 g)).scheme :=
-  (chapter01RelativePullbackData 𝒜 g).proj_base_change_comparison
+  (chapter01RelativeProjBaseChangeData 𝒜 g).comparison
 
 theorem chapter01_relative_proj_base_change {S T : Scheme.{u}}
     (𝒜 : Chapter01RelativeGradedAlgebra S) (g : T ⟶ S) :
@@ -1622,8 +1753,8 @@ theorem chapter01_relative_proj_base_change {S T : Scheme.{u}}
         e ≫ (chapter01RelativeProj (chapter01RelativePullback 𝒜 g)).projection =
           Limits.pullback.snd (chapter01RelativeProj 𝒜).projection g := by
   refine ⟨chapter01RelativeProjBaseChangeComparison 𝒜 g, ?_, ?_⟩
-  · exact (chapter01RelativePullbackData 𝒜 g).proj_base_change_comparison_isIso
-  · exact (chapter01RelativePullbackData 𝒜 g).proj_base_change_comparison_over
+  · exact (chapter01RelativeProjBaseChangeData 𝒜 g).comparison_isIso
+  · exact (chapter01RelativeProjBaseChangeData 𝒜 g).comparison_over
 
 /- The ring-level chart statement is orientation-independent up to the canonical
 commutativity isomorphism; Mathlib's tensor product uses `R' ⊗[R] A`. -/
@@ -2078,7 +2209,7 @@ structure Chapter01OrdinaryTwistingSheafFamily {A : Type*} [CommRing A]
   unit_iso : sheaf 0 ≅ SheafOfModules.unit (AlgebraicGeometry.«Proj» 𝒜).ringCatSheaf
   /-- Twists tensor canonically only after the grading is generated in degree one.
   Without that hypothesis, weighted gradings can have noninvertible `O(1)`. -/
-  tensor_iso : ∀ (h : chapter01GeneratedInDegreeOne 𝒜) (m n : ℤ),
+  tensor_iso : ∀ (_h : chapter01GeneratedInDegreeOne 𝒜) (m n : ℤ),
     chapter01SheafTensor (sheaf m) (sheaf n) ≅ sheaf (m + n)
   tensor_unit_left : ∀ (h : chapter01GeneratedInDegreeOne 𝒜) (n : ℤ),
     chapter01SheafTensorMap unit_iso.hom (𝟙 (sheaf n)) ≫
@@ -2091,13 +2222,14 @@ structure Chapter01OrdinaryTwistingSheafFamily {A : Type*} [CommRing A]
   tensor_assoc : ∀ (h : chapter01GeneratedInDegreeOne 𝒜) (m n k : ℤ),
     chapter01SheafTensorMap (tensor_iso h m n).hom (𝟙 (sheaf k)) ≫
         (tensor_iso h (m + n) k).hom ≫
-        eqToHom (by sorry : sheaf ((m + n) + k) = sheaf (m + (n + k))) =
+        eqToHom (by rw [add_assoc] :
+          sheaf ((m + n) + k) = sheaf (m + (n + k))) =
       (chapter01SheafTensorAssociator (sheaf m) (sheaf n) (sheaf k)).hom ≫
         chapter01SheafTensorMap (𝟙 (sheaf m)) (tensor_iso h n k).hom ≫
         (tensor_iso h m (n + k)).hom
   dual_data : ∀ (n : ℤ) (hM : Chapter01IsLineBundle (sheaf n)),
     Chapter01SheafDualData (sheaf n) hM
-  dual_iso : ∀ (h : chapter01GeneratedInDegreeOne 𝒜) (n : ℤ)
+  dual_iso : ∀ (_h : chapter01GeneratedInDegreeOne 𝒜) (n : ℤ)
     (hM : Chapter01IsLineBundle (sheaf n)),
     (dual_data n hM).dual ≅ sheaf (-n)
   line_bundle_one :
@@ -2119,7 +2251,8 @@ theorem chapter01_ordinary_proj_sheafification_exists
     {A : Type*} [CommRing A]
     (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜] (n : ℤ) :
     Nonempty (Chapter01OrdinaryProjSheafification 𝒜 n) := by
-  sorry
+  let F := chapter01OrdinaryTwistingSheafFamily 𝒜
+  exact ⟨⟨F, F.sheaf n, rfl, F.sheaf_isQuasicoherent n⟩⟩
 
 noncomputable def chapter01OrdinaryTwistingSheaf {A : Type*} [CommRing A]
     (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜] (n : ℤ) :
@@ -2217,7 +2350,7 @@ structure Chapter01RelativeTwistingSheafFamily {S : Scheme.{u}}
   unit_iso : sheaf 0 ≅ SheafOfModules.unit P.scheme.ringCatSheaf
   /-- As in the ordinary case, tensor and dual identifications require
   degree-one generation. -/
-  tensor_iso : ∀ (h : chapter01RelativeGeneratedInDegreeOneByFiniteType 𝒜)
+  tensor_iso : ∀ (_h : chapter01RelativeGeneratedInDegreeOneByFiniteType 𝒜)
     (m n : ℤ),
     chapter01SheafTensor (sheaf m) (sheaf n) ≅ sheaf (m + n)
   tensor_unit_left : ∀ (h : chapter01RelativeGeneratedInDegreeOneByFiniteType 𝒜)
@@ -2234,13 +2367,14 @@ structure Chapter01RelativeTwistingSheafFamily {S : Scheme.{u}}
     (m n k : ℤ),
     chapter01SheafTensorMap (tensor_iso h m n).hom (𝟙 (sheaf k)) ≫
         (tensor_iso h (m + n) k).hom ≫
-        eqToHom (by sorry : sheaf ((m + n) + k) = sheaf (m + (n + k))) =
+        eqToHom (by rw [add_assoc] :
+          sheaf ((m + n) + k) = sheaf (m + (n + k))) =
       (chapter01SheafTensorAssociator (sheaf m) (sheaf n) (sheaf k)).hom ≫
         chapter01SheafTensorMap (𝟙 (sheaf m)) (tensor_iso h n k).hom ≫
         (tensor_iso h m (n + k)).hom
   dual_data : ∀ (n : ℤ) (hM : Chapter01IsLineBundle (sheaf n)),
     Chapter01SheafDualData (sheaf n) hM
-  dual_iso : ∀ (h : chapter01RelativeGeneratedInDegreeOneByFiniteType 𝒜)
+  dual_iso : ∀ (_h : chapter01RelativeGeneratedInDegreeOneByFiniteType 𝒜)
     (n : ℤ) (hM : Chapter01IsLineBundle (sheaf n)),
     (dual_data n hM).dual ≅ sheaf (-n)
   line_bundle_one :
@@ -2264,7 +2398,8 @@ theorem chapter01_relative_proj_sheafification_exists {S : Scheme.{u}}
     (𝒜 : Chapter01RelativeGradedAlgebra S)
     (P : Chapter01RelativeProj 𝒜) (n : ℤ) :
     Nonempty (Chapter01RelativeProjSheafification 𝒜 P n) := by
-  sorry
+  let F := chapter01RelativeTwistingSheafFamily 𝒜 P
+  exact ⟨⟨F, F.sheaf n, rfl, F.sheaf_isQuasicoherent n⟩⟩
 
 noncomputable def chapter01RelativeTwistingSheaf {S : Scheme.{u}}
     (𝒜 : Chapter01RelativeGradedAlgebra S)
@@ -2457,7 +2592,37 @@ def chapter01VeroneseComponent {A : Type*} [CommRing A]
 theorem chapter01_veronese_inclusion_injective {A : Type*} [CommRing A]
     (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜] {d : ℕ} (hd : 0 < d) :
     Function.Injective (chapter01VeroneseInclusion 𝒜 d) := by
-  sorry
+  intro x y hxy
+  have hdecomp :
+      ∀ z : chapter01Veronese 𝒜 d, ∀ n : ℕ,
+        (DirectSum.decompose 𝒜
+          (chapter01VeroneseInclusion 𝒜 d z) (n * d) : A) = z n := by
+    intro z n
+    induction z using DirectSum.induction_on with
+    | zero =>
+        simp [chapter01VeroneseInclusion]
+    | of i z =>
+        by_cases hi : i = n
+        · subst n
+          simp [chapter01VeroneseInclusion]
+        · have hmul : i * d ≠ n * d := by
+            intro h'
+            apply hi
+            exact Nat.eq_of_mul_eq_mul_right (Nat.pos_of_ne_zero (Nat.ne_of_gt hd)) h'
+          simp only [chapter01VeroneseInclusion, DirectSum.coeRingHom_of]
+          rw [DirectSum.decompose_of_mem _ z.property]
+          rw [DirectSum.of_eq_of_ne _ _ _ hmul.symm,
+            DirectSum.of_eq_of_ne _ _ _ (Ne.symm hi)]
+    | add z z' hz hz' =>
+        rw [chapter01VeroneseInclusion, map_add, DirectSum.decompose_add]
+        exact congrArg₂ (· + ·) hz hz'
+  apply DFinsupp.ext
+  intro n
+  apply Subtype.ext
+  have h := congrArg
+    (fun z : A => (DirectSum.decompose 𝒜 z (n * d) : A)) hxy
+  rw [hdecomp x n, hdecomp y n] at h
+  exact h
 
 structure Chapter01VeroneseGradingData {A : Type*} [CommRing A]
     (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜] (d : ℕ) where
@@ -2507,7 +2672,32 @@ theorem chapter01_veronese_covers_proj_of_pos
     {A : Type*} [CommRing A] (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜]
     {d : ℕ} (hd : 0 < d) :
     chapter01VeroneseCoversProj 𝒜 d := by
-  sorry
+  intro x
+  have hnotforall :
+      ¬ ∀ n : ℕ, 0 < n →
+        .ofClass (𝒜 n) ≤ x.asHomogeneousIdeal.toAddSubmonoid := by
+    intro h
+    apply chapter01_proj_point_is_relevant 𝒜 x
+    exact (HomogeneousIdeal.irrelevant_le 𝒜 (P := x.asHomogeneousIdeal)).2 h
+  obtain ⟨n, hnnot⟩ := not_forall.mp hnotforall
+  have ⟨hn, hnnotle⟩ := Classical.not_imp.mp hnnot
+  have hnnot' : ¬ ∀ a : A, a ∈ 𝒜 n → a ∈ x.asHomogeneousIdeal := by
+    intro h
+    apply hnnotle
+    intro a ha
+    exact h a ha
+  obtain ⟨a, hannot⟩ := not_forall.mp hnnot'
+  have ⟨ha, ha_not⟩ := Classical.not_imp.mp hannot
+  by_contra hcover
+  have hbad : ∀ b : A, b ∈ 𝒜 (n * d) → b ∈ x.asHomogeneousIdeal := by
+    intro b hb
+    by_contra hb_not
+    apply hcover
+    exact ⟨n, Nat.mul_pos hn hd, b, hb, hb_not⟩
+  have hapow : a ^ d ∈ 𝒜 (n * d) := by
+    simpa [smul_eq_mul, Nat.mul_comm] using SetLike.pow_mem_graded d ha
+  have hapow_mem : a ^ d ∈ x.asHomogeneousIdeal := hbad (a ^ d) hapow
+  exact ha_not ((chapter01_proj_point_is_prime 𝒜 x).mem_of_pow_mem d hapow_mem)
 
 theorem chapter01_veronese_covers_proj_of_generated_in_degree_one
     {A : Type*} [CommRing A] (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜]
@@ -2571,6 +2761,13 @@ theorem chapter01_proj_veronese_iso {A : Type*} [CommRing A]
     Nonempty (AlgebraicGeometry.«Proj» 𝒜 ≅ chapter01VeroneseProj V) := by
   exact ⟨(Classical.choice (chapter01_proj_veronese_iso_and_twist 𝒜 hd hcover V)).iso⟩
 
+theorem chapter01_proj_veronese_iso_of_pos {A : Type*} [CommRing A]
+    (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜] {d : ℕ} (hd : 0 < d)
+    (V : Chapter01VeroneseGradingData 𝒜 d) :
+    Nonempty (AlgebraicGeometry.«Proj» 𝒜 ≅ chapter01VeroneseProj V) := by
+  exact chapter01_proj_veronese_iso 𝒜 hd
+    (chapter01_veronese_covers_proj_of_pos 𝒜 hd) V
+
 noncomputable def chapter01ProjVeroneseIso {A : Type*} [CommRing A]
     (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜] {d : ℕ} (hd : 0 < d)
     (hcover : chapter01VeroneseCoversProj 𝒜 d)
@@ -2586,6 +2783,17 @@ theorem chapter01_veronese_twist_correspondence {A : Type*} [CommRing A]
         (chapter01VeroneseTwistingSheaf V 1) ≅
       chapter01OrdinaryTwistingSheaf 𝒜 (d : ℤ)) := by
   exact ⟨(Classical.choice (chapter01_proj_veronese_iso_and_twist 𝒜 hd hcover V)).twist_iso⟩
+
+theorem chapter01_veronese_twist_correspondence_of_pos {A : Type*} [CommRing A]
+    (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜] {d : ℕ} (hd : 0 < d)
+    (V : Chapter01VeroneseGradingData 𝒜 d) :
+      Nonempty ((Scheme.Modules.pullback
+          (chapter01ProjVeroneseIso 𝒜 hd
+            (chapter01_veronese_covers_proj_of_pos 𝒜 hd) V).hom).obj
+        (chapter01VeroneseTwistingSheaf V 1) ≅
+      chapter01OrdinaryTwistingSheaf 𝒜 (d : ℤ)) := by
+  exact chapter01_veronese_twist_correspondence 𝒜 hd
+    (chapter01_veronese_covers_proj_of_pos 𝒜 hd) V
 
 theorem chapter01_veronese_over_base {A : Type*} [CommRing A]
     (𝒜 : ℕ → Submodule ℤ A) [GradedAlgebra 𝒜] {d : ℕ} (hd : 0 < d)
@@ -2744,10 +2952,56 @@ structure Chapter01PullbackSectionData
       unitComparison.inv ≫
         (Scheme.Modules.pullback f).map (M.unitHomEquiv.symm s)
 
+private instance chapter01_scheme_pushforward_is_right_adjoint
+    {S T : Scheme.{u}} (f : T ⟶ S) :
+    (SheafOfModules.pushforward.{u} f.toRingCatSheafHom).IsRightAdjoint :=
+  (Scheme.Modules.pullbackPushforwardAdjunction f).isRightAdjoint
+
+private instance chapter01_scheme_opens_map_final
+    {S T : Scheme.{u}} (f : T ⟶ S) :
+    (TopologicalSpace.Opens.map f.base).Final :=
+  final_of_representablyFlat _
+
+private instance chapter01_scheme_pullback_unit_is_iso
+    {S T : Scheme.{u}} (f : T ⟶ S) :
+    IsIso (SheafOfModules.pullbackObjUnitToUnit.{u}
+      (F := TopologicalSpace.Opens.map f.base) f.toRingCatSheafHom) := by
+  rw [isIso_iff_coyoneda_map_bijective]
+  intro N
+  rw [← ((SheafOfModules.pullbackPushforwardAdjunction.{u}
+      f.toRingCatSheafHom).homEquiv _ _).bijective.of_comp_iff',
+    ← (SheafOfModules.unitHomEquiv _).bijective.of_comp_iff']
+  convert! (SheafOfModules.bijective_pushforwardSections
+    f.toRingCatSheafHom N).comp (SheafOfModules.unitHomEquiv _).bijective
+  ext g : 1
+  dsimp
+  rw [SheafOfModules.pushforwardSections_unitHomEquiv
+      (φ := f.toRingCatSheafHom) (M := N) g,
+    EmbeddingLike.apply_eq_iff_eq, Adjunction.homEquiv_naturality_right,
+    SheafOfModules.pullbackPushforwardAdjunction_homEquiv_pullbackObjUnitToUnit
+      (φ := f.toRingCatSheafHom) (F := TopologicalSpace.Opens.map f.base)]
+
 theorem chapter01_pullback_section_data_exists
     {S T : Scheme.{u}} (f : T ⟶ S) (M : S.Modules) :
     Nonempty (Chapter01PullbackSectionData f M) := by
-  sorry
+  let e0 : (SheafOfModules.pullback.{u} (F := TopologicalSpace.Opens.map f.base)
+      f.toRingCatSheafHom).obj (SheafOfModules.unit S.ringCatSheaf) ≅
+      SheafOfModules.unit T.ringCatSheaf :=
+    asIso (SheafOfModules.pullbackObjUnitToUnit.{u}
+      (F := TopologicalSpace.Opens.map f.base) f.toRingCatSheafHom)
+  let e : (Scheme.Modules.pullback f).obj (SheafOfModules.unit S.ringCatSheaf) ≅
+      SheafOfModules.unit T.ringCatSheaf := by
+    exact
+      { hom := e0.hom
+        inv := e0.inv
+        hom_inv_id := e0.hom_inv_id
+        inv_hom_id := e0.inv_hom_id }
+  refine ⟨⟨e, ?_, ?_⟩⟩
+  · intro s
+    exact ((Scheme.Modules.pullback f).obj M).unitHomEquiv
+      (e.inv ≫ (Scheme.Modules.pullback f).map (M.unitHomEquiv.symm s))
+  · intro s
+    exact (SheafOfModules.unitHomEquiv ((Scheme.Modules.pullback f).obj M)).symm_apply_apply _
 
 noncomputable def chapter01PullbackUnitComparison
     {S T : Scheme.{u}} (f : T ⟶ S) :
@@ -2781,7 +3035,7 @@ theorem chapter01_pullback_section_map_spec
         (chapter01PullbackSectionMap f M s) =
       (chapter01PullbackSectionData f M).unitComparison.inv ≫
         (Scheme.Modules.pullback f).map (M.unitHomEquiv.symm s) := by
-  sorry
+  exact (chapter01PullbackSectionData f M).map_spec s
 
 theorem chapter01_pullback_section_map_natural
     {S T : Scheme.{u}} (f : T ⟶ S) {M N : S.Modules}
@@ -2789,7 +3043,85 @@ theorem chapter01_pullback_section_map_natural
     chapter01PullbackSectionMap f N (SheafOfModules.sectionsMap h s) =
       SheafOfModules.sectionsMap ((Scheme.Modules.pullback f).map h)
         (chapter01PullbackSectionMap f M s) := by
-  sorry
+  apply ((Scheme.Modules.pullback f).obj N).unitHomEquiv.symm.injective
+  rw [chapter01_pullback_section_map_spec]
+  have hN :
+      ((Scheme.Modules.pullback f).obj N).unitHomEquiv.symm
+          (SheafOfModules.sectionsMap ((Scheme.Modules.pullback f).map h)
+            (chapter01PullbackSectionMap f M s)) =
+          ((Scheme.Modules.pullback f).obj M).unitHomEquiv.symm
+          (chapter01PullbackSectionMap f M s) ≫
+          (Scheme.Modules.pullback f).map h := by
+    apply ((Scheme.Modules.pullback f).obj N).unitHomEquiv.injective
+    rw [Equiv.apply_symm_apply]
+    change
+      PresheafOfModules.sectionsMap ((Scheme.Modules.pullback f).map h).val
+          (chapter01PullbackSectionMap f M s) =
+        ((Scheme.Modules.pullback f).obj N).val.unitHomEquiv
+          (((Scheme.Modules.pullback f).obj M).val.unitHomEquiv.symm
+            (chapter01PullbackSectionMap f M s) ≫
+            ((Scheme.Modules.pullback f).map h).val)
+    have hcomp :
+        ((Scheme.Modules.pullback f).obj N).val.unitHomEquiv
+            (((Scheme.Modules.pullback f).obj M).val.unitHomEquiv.symm
+                (chapter01PullbackSectionMap f M s) ≫
+              ((Scheme.Modules.pullback f).map h).val) =
+          PresheafOfModules.sectionsMap ((Scheme.Modules.pullback f).map h).val
+            (chapter01PullbackSectionMap f M s) := by
+      let g :=
+        ((Scheme.Modules.pullback f).obj M).val.unitHomEquiv.symm
+          (chapter01PullbackSectionMap f M s)
+      have hg :
+          ((Scheme.Modules.pullback f).obj N).val.unitHomEquiv
+              (g ≫ ((Scheme.Modules.pullback f).map h).val) =
+            PresheafOfModules.sectionsMap ((Scheme.Modules.pullback f).map h).val
+              (((Scheme.Modules.pullback f).obj M).val.unitHomEquiv g) := by
+        apply PresheafOfModules.sections_ext
+        intro X
+        rfl
+      simpa [g] using hg
+    exact hcomp.symm
+  rw [hN, chapter01_pullback_section_map_spec]
+  have hM :
+        N.unitHomEquiv.symm (SheafOfModules.sectionsMap h s) =
+        M.unitHomEquiv.symm s ≫ h := by
+    apply N.unitHomEquiv.injective
+    rw [Equiv.apply_symm_apply]
+    change
+      PresheafOfModules.sectionsMap h.val s =
+        N.val.unitHomEquiv
+          (M.val.unitHomEquiv.symm s ≫ h.val)
+    have hcomp :
+        N.val.unitHomEquiv (M.val.unitHomEquiv.symm s ≫ h.val) =
+          PresheafOfModules.sectionsMap h.val s := by
+      let g := M.val.unitHomEquiv.symm s
+      have hg :
+          N.val.unitHomEquiv (g ≫ h.val) =
+            PresheafOfModules.sectionsMap h.val (M.val.unitHomEquiv g) := by
+        apply PresheafOfModules.sections_ext
+        intro X
+        rfl
+      simpa [g] using hg
+    exact hcomp.symm
+  rw [hM]
+  calc
+    (chapter01PullbackSectionData f N).unitComparison.inv ≫
+        (Scheme.Modules.pullback f).map
+          (M.unitHomEquiv.symm s ≫ h) =
+      (chapter01PullbackSectionData f N).unitComparison.inv ≫
+        ((Scheme.Modules.pullback f).map (M.unitHomEquiv.symm s) ≫
+          (Scheme.Modules.pullback f).map h) := by
+      have hmap :=
+        (Functor.map_comp (Scheme.Modules.pullback f)
+          (M.unitHomEquiv.symm s) h)
+      rw [hmap]
+    _ = ((chapter01PullbackSectionData f M).unitComparison.inv ≫
+          (Scheme.Modules.pullback f).map (M.unitHomEquiv.symm s)) ≫
+        (Scheme.Modules.pullback f).map h := by
+      exact (Category.assoc
+        (chapter01PullbackSectionData f M).unitComparison.inv
+        ((Scheme.Modules.pullback f).map (M.unitHomEquiv.symm s))
+        ((Scheme.Modules.pullback f).map h)).symm
 
 /-! Bundle the pullback comparison and section maps so that all modules over a fixed
 scheme morphism use the same structure-sheaf comparison. -/
@@ -2825,7 +3157,9 @@ noncomputable def chapter01PullbackInterface
     intro M s
     exact (SheafOfModules.unitHomEquiv ((Scheme.Modules.pullback f).obj M)).symm_apply_apply _
   sectionMap_natural := by
-    sorry
+    intro M N h s
+    simpa [chapter01PullbackSectionMap, chapter01PullbackSectionData] using
+      (chapter01_pullback_section_map_natural f h s)
 
 /-! A symmetric monoidal module-sheaf interface with explicit coherence. -/
 
@@ -3554,6 +3888,52 @@ noncomputable def chapter01HomogeneousEvaluationFamily
     (f : T ⟶ chapter01Spec R) : Chapter01HomogeneousEvaluationFamily R r f :=
   Classical.choice (chapter01_homogeneous_evaluation_family_exists R r f)
 
+/-! A family indexed by all test schemes is the base-change-compatible form
+needed when a quotient-point description is used as a functor. -/
+structure Chapter01HomogeneousEvaluationNaturalFamily
+    (R : Type u) [CommRing R] (r : ℕ) where
+  evaluation : ∀ (T : Scheme.{u}) (f : T ⟶ chapter01Spec R)
+      (q : Chapter01InvertibleQuotient
+        (chapter01PolynomialFreeModule R r) f),
+    Chapter01HomogeneousEvaluation R r f q
+  transport : ∀ {T : Scheme.{u}} {f : T ⟶ chapter01Spec R}
+      {q q' : Chapter01InvertibleQuotient
+        (chapter01PolynomialFreeModule R r) f}
+      (_h : chapter01InvertibleQuotientEquivalent q q')
+      (d : ℕ) (F : Chapter01PolynomialHomogeneousPolynomial R r d),
+    ∃ e : (chapter01LineBundleTensorPower q.lineBundle d).module ≅
+          (chapter01LineBundleTensorPower q'.lineBundle d).module,
+      SheafOfModules.sectionsMap e.hom
+          ((evaluation T f q).value d F) =
+        (evaluation T f q').value d F
+  /-- Evaluation commutes with pullback, up to the canonical comparison of
+  tensor powers of the quotient line bundles. -/
+  base_change : ∀ {T U : Scheme.{u}} (f : T ⟶ chapter01Spec R) (h : U ⟶ T)
+      (q : Chapter01InvertibleQuotient
+        (chapter01PolynomialFreeModule R r) f)
+      (d : ℕ) (F : Chapter01PolynomialHomogeneousPolynomial R r d),
+    ∃ e : (Scheme.Modules.pullback h).obj
+          (chapter01LineBundleTensorPower q.lineBundle d).module ≅
+        (chapter01LineBundleTensorPower
+          (chapter01PullbackLineBundle h q.lineBundle) d).module,
+      SheafOfModules.sectionsMap e.hom
+          (chapter01PullbackSectionMap h
+            (chapter01LineBundleTensorPower q.lineBundle d).module
+            ((evaluation T f q).value d F)) =
+        (evaluation U (h ≫ f)
+          (chapter01PullbackInvertibleQuotientAlong f h q)).value d F
+
+theorem chapter01_homogeneous_evaluation_natural_family_exists
+    (R : Type u) [CommRing R] (r : ℕ) :
+    Nonempty (Chapter01HomogeneousEvaluationNaturalFamily R r) := by
+  sorry
+
+noncomputable def chapter01HomogeneousEvaluationNaturalFamily
+    (R : Type u) [CommRing R] (r : ℕ) :
+    Chapter01HomogeneousEvaluationNaturalFamily R r :=
+  Classical.choice
+    (chapter01_homogeneous_evaluation_natural_family_exists R r)
+
 structure Chapter01PolynomialVPlusPoint
     (R : Type u) [CommRing R] (r : ℕ)
     (I : Chapter01PolynomialHomogeneousIdealData R r)
@@ -3563,8 +3943,8 @@ structure Chapter01PolynomialVPlusPoint
   vanishes_on_ideal :
     ∀ q : Chapter01InvertibleQuotient (chapter01PolynomialFreeModule R r) f,
       chapter01InvertibleQuotientClassMk q = quotientClass →
-        ∀ d (F : chapter01PolynomialHomogeneousPolynomialInIdeal R r I d),
-          ((chapter01HomogeneousEvaluationFamily R r f).evaluation q).value
+          ∀ d (F : chapter01PolynomialHomogeneousPolynomialInIdeal R r I d),
+          ((chapter01HomogeneousEvaluationNaturalFamily R r).evaluation T f q).value
               d ⟨F.1, F.2.2⟩ =
             chapter01ZeroSection
               (chapter01LineBundleTensorPower q.lineBundle d).module
@@ -3576,6 +3956,70 @@ abbrev Chapter01PolynomialVPlusPointOver
   {t : T ⟶ chapter01PolynomialVPlus R r I //
     t ≫ chapter01PolynomialVPlusProjection R r I = f}
 
+/-! Pullback on quotient classes is the descent datum needed to make the
+point description functorial.  The underlying quotient is obtained from the
+canonical pullback of an invertible quotient; the proof that this is
+independent of the chosen representative is the usual transport of an
+isomorphism of quotient line bundles. -/
+noncomputable def chapter01InvertibleQuotientClassPullbackAlong
+    {S T U : Scheme.{u}} (E : S.Modules) (g : T ⟶ S) (h : U ⟶ T) :
+    Chapter01InvertibleQuotientClass E g →
+      Chapter01InvertibleQuotientClass E (h ≫ g) :=
+  Quotient.lift
+    (fun p => chapter01InvertibleQuotientClassMk
+      (chapter01PullbackInvertibleQuotientAlong g h p)) (by
+        intro p q hpq
+        sorry)
+
+def chapter01PolynomialVPlusPointOverPullback
+    (R : Type u) [CommRing R] (r : ℕ)
+    (I : Chapter01PolynomialHomogeneousIdealData R r)
+    {T U : Scheme.{u}} (f : T ⟶ chapter01Spec R) (h : U ⟶ T) :
+    Chapter01PolynomialVPlusPointOver R r I f →
+      Chapter01PolynomialVPlusPointOver R r I (h ≫ f) :=
+  fun t => ⟨h ≫ t.1, by simp only [Category.assoc, t.2]⟩
+
+noncomputable def chapter01PolynomialVPlusPointPullback
+    (R : Type u) [CommRing R] (r : ℕ)
+    (I : Chapter01PolynomialHomogeneousIdealData R r)
+    {T U : Scheme.{u}} (f : T ⟶ chapter01Spec R) (h : U ⟶ T) :
+    Chapter01PolynomialVPlusPoint R r I f →
+      Chapter01PolynomialVPlusPoint R r I (h ≫ f) := by
+  intro p
+  refine
+    { quotientClass :=
+        chapter01InvertibleQuotientClassPullbackAlong
+          (chapter01PolynomialFreeModule R r) f h p.quotientClass
+      vanishes_on_ideal := ?_ }
+  intro q hq d F
+  sorry
+
+/-! The quotient-point description is a natural equivalence of functors on
+test schemes, not merely a collection of unrelated equivalences. -/
+structure Chapter01PolynomialVPlusPointsNaturalEquivalence
+    (R : Type u) [CommRing R] (r : ℕ)
+    (I : Chapter01PolynomialHomogeneousIdealData R r) where
+  equiv : ∀ (T : Scheme.{u}) (f : T ⟶ chapter01Spec R),
+    Chapter01PolynomialVPlusPointOver R r I f ≃
+      Chapter01PolynomialVPlusPoint R r I f
+  natural : ∀ {T U : Scheme.{u}} (f : T ⟶ chapter01Spec R)
+    (h : U ⟶ T) (t : Chapter01PolynomialVPlusPointOver R r I f),
+    equiv U (h ≫ f) (chapter01PolynomialVPlusPointOverPullback R r I f h t) =
+      chapter01PolynomialVPlusPointPullback R r I f h (equiv T f t)
+
+theorem chapter01_polynomial_vplus_points_natural_equivalence_exists
+    (R : Type u) [CommRing R] (r : ℕ)
+    (I : Chapter01PolynomialHomogeneousIdealData R r) :
+    Nonempty (Chapter01PolynomialVPlusPointsNaturalEquivalence R r I) := by
+  sorry
+
+noncomputable def chapter01PolynomialVPlusPointsNaturalEquivalence
+    (R : Type u) [CommRing R] (r : ℕ)
+    (I : Chapter01PolynomialHomogeneousIdealData R r) :
+    Chapter01PolynomialVPlusPointsNaturalEquivalence R r I :=
+  Classical.choice
+    (chapter01_polynomial_vplus_points_natural_equivalence_exists R r I)
+
 /-! This is the scheme-level form of the quotient-point description: the
 quotient class is independent of the chosen presentation of its invertible
 quotient, and all homogeneous equations are evaluated in the corresponding
@@ -3586,7 +4030,7 @@ theorem chapter01_polynomial_vplus_points_equiv
     {T : Scheme.{u}} (f : T ⟶ chapter01Spec R) :
     Nonempty (Chapter01PolynomialVPlusPointOver R r I f ≃
       Chapter01PolynomialVPlusPoint R r I f) := by
-  sorry
+  exact ⟨(chapter01PolynomialVPlusPointsNaturalEquivalence R r I).equiv T f⟩
 
 noncomputable def chapter01PolynomialVPlusPointsEquiv
     (R : Type u) [CommRing R] (r : ℕ)
@@ -3594,7 +4038,18 @@ noncomputable def chapter01PolynomialVPlusPointsEquiv
     {T : Scheme.{u}} (f : T ⟶ chapter01Spec R) :
     Chapter01PolynomialVPlusPointOver R r I f ≃
       Chapter01PolynomialVPlusPoint R r I f :=
-  Classical.choice (chapter01_polynomial_vplus_points_equiv R r I f)
+  (chapter01PolynomialVPlusPointsNaturalEquivalence R r I).equiv T f
+
+theorem chapter01_polynomial_vplus_points_equiv_natural
+    (R : Type u) [CommRing R] (r : ℕ)
+    (I : Chapter01PolynomialHomogeneousIdealData R r)
+    {T U : Scheme.{u}} (f : T ⟶ chapter01Spec R) (h : U ⟶ T)
+    (t : Chapter01PolynomialVPlusPointOver R r I f) :
+    chapter01PolynomialVPlusPointsEquiv R r I (h ≫ f)
+        (chapter01PolynomialVPlusPointOverPullback R r I f h t) =
+      chapter01PolynomialVPlusPointPullback R r I f h
+        (chapter01PolynomialVPlusPointsEquiv R r I f t) := by
+  exact (chapter01PolynomialVPlusPointsNaturalEquivalence R r I).natural f h t
 
 /-! Finite monomial indexing and the universal Veronese map. -/
 
@@ -3603,15 +4058,22 @@ def Chapter01MonomialIndex (r d : ℕ) :=
 
 theorem chapter01_monomial_index_finite (r d : ℕ) :
     Finite (Chapter01MonomialIndex r d) := by
-  sorry
+  let f : Fintype (Chapter01MonomialIndex r d) :=
+    Fintype.ofEquiv _ (Sym.equivNatSum (Fin (r + 1)) d)
+  exact @Finite.of_fintype _ f
 
 noncomputable instance chapter01_monomial_index_fintype (r d : ℕ) :
     Fintype (Chapter01MonomialIndex r d) := by
-  sorry
+  letI := chapter01_monomial_index_finite r d
+  exact Fintype.ofFinite _
 
 theorem chapter01_monomial_index_cardinality (r d : ℕ) :
     Fintype.card (Chapter01MonomialIndex r d) = Nat.choose (r + d) d := by
-  sorry
+  have e : Sym (Fin (r + 1)) d ≃ Chapter01MonomialIndex r d :=
+    Sym.equivNatSum (Fin (r + 1)) d
+  simpa using
+    (Fintype.card_congr e).symm.trans
+      (Sym.card_sym_eq_choose (α := Fin (r + 1)) d)
 
 def chapter01VeroneseTargetDimension (r d : ℕ) : ℕ :=
   Nat.choose (r + d) d - 1
@@ -3619,7 +4081,11 @@ def chapter01VeroneseTargetDimension (r d : ℕ) : ℕ :=
 theorem chapter01_veronese_target_index_reindexing (r d : ℕ) :
     Nonempty (Chapter01MonomialIndex r d ≃
       Fin (chapter01VeroneseTargetDimension r d + 1)) := by
-  sorry
+  have hpos : 0 < Nat.choose (r + d) d := Nat.choose_pos (by omega)
+  refine ⟨Fintype.equivFinOfCardEq ?_⟩
+  change Fintype.card (Chapter01MonomialIndex r d) = Nat.choose (r + d) d - 1 + 1
+  rw [Nat.sub_add_cancel (Nat.succ_le_of_lt hpos)]
+  exact chapter01_monomial_index_cardinality r d
 
 abbrev chapter01VeroneseTargetIndex (r d : ℕ) : Type u :=
   ULift.{u} (Chapter01MonomialIndex r d)
@@ -3741,13 +4207,53 @@ theorem chapter01_veronese_quadratic_relation_maps_to_zero
     (h : Chapter01VeroneseQuadraticRelationPredicate r d a b c e) :
     chapter01VeroneseMonomialRingHom R r d
         (chapter01VeroneseQuadraticRelation R r d a b c e) = 0 := by
-  sorry
+  let f : Chapter01MonomialIndex r d → MvPolynomial (Fin (r + 1)) R :=
+    fun i => MvPolynomial.monomial i.1 1
+  change MvPolynomial.bind₁ f
+    (chapter01VeroneseQuadraticRelation R r d a b c e) = 0
+  rw [chapter01VeroneseQuadraticRelation, map_sub]
+  have hmon (s : Chapter01MonomialIndex r d →₀ ℕ) :
+      MvPolynomial.bind₁ f (MvPolynomial.monomial s 1) =
+        MvPolynomial.monomial (s.sum (fun i n => n • i.1)) 1 := by
+    dsimp [f]
+    rw [MvPolynomial.bind₁_monomial]
+    calc
+      MvPolynomial.C (1 : R) * ∏ i ∈ s.support,
+          MvPolynomial.monomial i.1 (1 : R) ^ s i =
+          MvPolynomial.C (1 : R) * s.prod
+            (fun i n => MvPolynomial.monomial (n • i.1) (1 : R)) := by
+              simp [Finsupp.prod, MvPolynomial.monomial_pow]
+      _ = MvPolynomial.monomial (s.sum (fun i n => n • i.1)) (1 : R) := by
+        symm
+        exact MvPolynomial.monomial_finsupp_sum_index s
+          (fun i n => n • i.1) (1 : R)
+  have hab :
+      (Finsupp.single a 1 + Finsupp.single b 1).sum
+          (fun (i : Chapter01MonomialIndex r d) (n : ℕ) => n • i.1) = a.1 + b.1 := by
+    rw [Finsupp.sum_add_index'
+      (h := fun (i : Chapter01MonomialIndex r d) (n : ℕ) => n • i.1)
+      (fun _ => by simp) (fun _ _ _ => by simp [add_nsmul])]
+    rw [Finsupp.sum_single_index (by simp), Finsupp.sum_single_index (by simp)]
+    simp
+  have hce :
+      (Finsupp.single c 1 + Finsupp.single e 1).sum
+          (fun (i : Chapter01MonomialIndex r d) (n : ℕ) => n • i.1) = c.1 + e.1 := by
+    rw [Finsupp.sum_add_index'
+      (h := fun (i : Chapter01MonomialIndex r d) (n : ℕ) => n • i.1)
+      (fun _ => by simp) (fun _ _ _ => by simp [add_nsmul])]
+    rw [Finsupp.sum_single_index (by simp), Finsupp.sum_single_index (by simp)]
+    simp
+  rw [hmon, hmon, hab, hce, h]
+  simp
 
 theorem chapter01_veronese_image_ideal_le_kernel
     (R : Type u) [CommRing R] (r d : ℕ) :
     chapter01VeroneseImageIdeal R r d ≤
       RingHom.ker (chapter01VeroneseMonomialRingHom R r d).toRingHom := by
-  sorry
+  rw [chapter01VeroneseImageIdeal]
+  refine Ideal.span_le.2 ?_
+  rintro F ⟨a, b, c, e, h, rfl⟩
+  exact chapter01_veronese_quadratic_relation_maps_to_zero R r d a b c e h
 
 theorem chapter01_veronese_image_ideal_eq_kernel
     (R : Type u) [CommRing R] (r d : ℕ) (hd : 0 < d) :

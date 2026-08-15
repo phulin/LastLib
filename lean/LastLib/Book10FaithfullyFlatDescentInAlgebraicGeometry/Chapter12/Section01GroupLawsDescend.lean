@@ -80,53 +80,91 @@ private theorem chapter12_commutativity_descends_aux
 private theorem chapter12_commutative_group_comparison_underlying
     {S T U : Scheme.{u}} (p : T ⟶ S) (G : Chapter12GroupScheme S)
     [IsCommMonObj G.X] (q₁ q₂ : U ⟶ T) (h : q₁ ≫ p = q₂ ≫ p) :
-    Over.Hom.left
+      Over.Hom.left
         (chapter12CommutativeGroupSchemeBaseChangeComparison p { X := G.X } q₁ q₂ h).hom.hom.hom.hom =
       Over.Hom.left (chapter12GroupSchemeBaseChangeComparison p G q₁ q₂ h).hom.hom.hom := by
-  have h₁ :
-      (chapter12CommutativeGroupSchemeBaseChangeCompIso p q₁
-        { X := G.X, grp := G.grp, comm := inferInstance }).hom.hom.hom =
-        (chapter12GroupSchemeBaseChangeCompIso p q₁ G).hom.hom := by
-    apply Mon.Hom.ext
+  have hc₁ :
+      (CommGrp.forget₂Grp (Over U)).mapIso
+          ((Functor.mapCommGrpCompIso (F := Over.pullback p)
+            (G := Over.pullback q₁)).app { X := G.X }) =
+        (Functor.mapGrpCompIso (F := Over.pullback p)
+          (G := Over.pullback q₁)).app G := by
+    apply Iso.ext
+    apply Grp.hom_ext
     apply Over.OverMorphism.ext
     rfl
-  have h₂ :
-      (chapter12CommutativeGroupSchemeBaseChangeCompIso p q₂
-        { X := G.X, grp := G.grp, comm := inferInstance }).hom.hom.hom =
-        (chapter12GroupSchemeBaseChangeCompIso p q₂ G).hom.hom := by
-    apply Mon.Hom.ext
+  have hc₂ :
+      (CommGrp.forget₂Grp (Over U)).mapIso
+          ((Functor.mapCommGrpCompIso (F := Over.pullback p)
+            (G := Over.pullback q₂)).app { X := G.X }) =
+        (Functor.mapGrpCompIso (F := Over.pullback p)
+          (G := Over.pullback q₂)).app G := by
+    apply Iso.ext
+    apply Grp.hom_ext
     apply Over.OverMorphism.ext
     rfl
-  have h₂i :
-      (chapter12CommutativeGroupSchemeBaseChangeCompIso p q₂
-        { X := G.X, grp := G.grp, comm := inferInstance }).inv.hom.hom =
-        (chapter12GroupSchemeBaseChangeCompIso p q₂ G).inv.hom := by
-    apply Mon.Hom.ext
+  have hn₁ :
+      (CommGrp.forget₂Grp (Over U)).mapIso
+          ((Functor.mapCommGrpNatIso (Over.pullbackComp q₁ p)).app { X := G.X }) =
+        (Functor.mapGrpNatIso (Over.pullbackComp q₁ p)).app G := by
+    apply Iso.ext
+    apply Grp.hom_ext
     apply Over.OverMorphism.ext
     rfl
-  simp only [chapter12CommutativeGroupSchemeBaseChangeComparison,
-    chapter12GroupSchemeBaseChangeComparison, Iso.trans_hom, Iso.symm_hom,
-    h₁, h₂, h₂i, eqToIso.hom, Over.comp_left, Category.assoc]
-  have hcomm {A B : CommGrp (Over U)} (r : A = B) :
-      Over.Hom.left ((eqToHom r : A ⟶ B).hom.hom.hom) ≍ 𝟙 A.X.left := by
-    subst r
+  have hn₂ :
+      (CommGrp.forget₂Grp (Over U)).mapIso
+          ((Functor.mapCommGrpNatIso (Over.pullbackComp q₂ p)).app { X := G.X }) =
+        (Functor.mapGrpNatIso (Over.pullbackComp q₂ p)).app G := by
+    apply Iso.ext
+    apply Grp.hom_ext
+    apply Over.OverMorphism.ext
     rfl
-  have hgrp {A B : Grp (Over U)} (r : A = B) :
-      Over.Hom.left ((eqToHom r : A ⟶ B).hom.hom) ≍ 𝟙 A.X.left := by
-    subst r
+  have hci₁ :
+      (CommGrp.forget₂Grp (Over U)).mapIso
+          (chapter12CommutativeGroupSchemeBaseChangeCompIso p q₁ { X := G.X }) =
+        chapter12GroupSchemeBaseChangeCompIso p q₁ G := by
+    change
+      (CommGrp.forget₂Grp (Over U)).mapIso
+          (((Functor.mapCommGrpCompIso (F := Over.pullback p)
+              (G := Over.pullback q₁)).app { X := G.X }).symm ≪≫
+            ((Functor.mapCommGrpNatIso (Over.pullbackComp q₁ p)).app
+              { X := G.X }).symm) =
+        ((Functor.mapGrpCompIso (F := Over.pullback p)
+            (G := Over.pullback q₁)).app G).symm ≪≫
+          ((Functor.mapGrpNatIso (Over.pullbackComp q₁ p)).app G).symm
+    rw [Functor.mapIso_trans, Functor.mapIso_symm, Functor.mapIso_symm, hc₁, hn₁]
     rfl
-  simp [InducedCategory.eqToHom_hom, Over.eqToHom_left,
-    Chapter12CommutativeGroupScheme.baseChange,
-    Chapter12GroupScheme.baseChange, Functor.mapCommGrp, Functor.mapGrp]
-  congr 1
-  congr 1
-  apply eq_of_heq
-  exact
-    (hcomm
-      (A := Chapter12CommutativeGroupScheme.baseChange (q₁ ≫ p) { X := G.X })
-      (B := Chapter12CommutativeGroupScheme.baseChange (q₂ ≫ p) { X := G.X }) _).trans
-      (hgrp (A := Chapter12GroupScheme.baseChange (q₁ ≫ p) G)
-        (B := Chapter12GroupScheme.baseChange (q₂ ≫ p) G) _).symm
+  have hci₂ :
+      (CommGrp.forget₂Grp (Over U)).mapIso
+          (chapter12CommutativeGroupSchemeBaseChangeCompIso p q₂ { X := G.X }) =
+        chapter12GroupSchemeBaseChangeCompIso p q₂ G := by
+    change
+      (CommGrp.forget₂Grp (Over U)).mapIso
+          (((Functor.mapCommGrpCompIso (F := Over.pullback p)
+              (G := Over.pullback q₂)).app { X := G.X }).symm ≪≫
+            ((Functor.mapCommGrpNatIso (Over.pullbackComp q₂ p)).app
+              { X := G.X }).symm) =
+        ((Functor.mapGrpCompIso (F := Over.pullback p)
+            (G := Over.pullback q₂)).app G).symm ≪≫
+          ((Functor.mapGrpNatIso (Over.pullbackComp q₂ p)).app G).symm
+    rw [Functor.mapIso_trans, Functor.mapIso_symm, Functor.mapIso_symm, hc₂, hn₂]
+    rfl
+  have hforget :
+      (CommGrp.forget₂Grp (Over U)).mapIso
+          (chapter12CommutativeGroupSchemeBaseChangeComparison p { X := G.X } q₁ q₂ h) =
+        chapter12GroupSchemeBaseChangeComparison p G q₁ q₂ h := by
+    simp only [chapter12CommutativeGroupSchemeBaseChangeComparison,
+      chapter12GroupSchemeBaseChangeComparison]
+    rw [Functor.mapIso_trans]
+    rw [hci₁]
+    rw [Functor.mapIso_trans, eqToIso_map, Functor.mapIso_symm, hci₂]
+    rfl
+  change Over.Hom.left
+      (((CommGrp.forget₂Grp (Over U)).map
+        (chapter12CommutativeGroupSchemeBaseChangeComparison p { X := G.X } q₁ q₂ h).hom).hom.hom) =
+    Over.Hom.left (chapter12GroupSchemeBaseChangeComparison p G q₁ q₂ h).hom.hom.hom
+  rw [← hforget]
+  rfl
 
 private def chapter12_commutative_descentDatum_to_group
     {S T : Scheme.{u}} {p : T ⟶ S}
@@ -172,49 +210,18 @@ private theorem chapter12_commutative_group_comparison_compatible
     ∃ G' : Chapter12CommutativeGroupScheme S,
       ∃ e' : Chapter12CommutativeGroupScheme.baseChange p G' ≅ D.upstairs,
         chapter12CommutativeGroupSchemeDescentComparisonCompatible D G' e' := by
-  let D' : Chapter12GroupSchemeDescentDatum p :=
-    chapter12_commutative_descentDatum_to_group D
-  let e' : Chapter12GroupScheme.baseChange p G ≅ D.upstairs.toGrp := e
-  let hG : IsCommMonObj G.X :=
-    chapter12_commutativity_descends_aux p ⟨hp.2.1, hp.2.2⟩ G D.upstairs.toGrp e'
-      (by infer_instance)
-  letI : IsCommMonObj G.X := hG
-  let G' : Chapter12CommutativeGroupScheme S := { X := G.X }
-  let e₀ : (Chapter12CommutativeGroupScheme.baseChange p G').X ≅ D.upstairs.X :=
-    { hom := e'.hom.hom.hom
-      inv := e'.inv.hom.hom
-      hom_inv_id := congrArg (fun k => k.hom.hom) e'.hom_inv_id
-      inv_hom_id := congrArg (fun k => k.hom.hom) e'.inv_hom_id }
-  let e'' : Chapter12CommutativeGroupScheme.baseChange p G' ≅ D.upstairs :=
-    CommGrp.mkIso e₀ (IsMonHom.one_hom e'.hom.hom.hom) (IsMonHom.mul_hom e'.hom.hom.hom)
-  refine ⟨G', e'', ?_⟩
+  let comm : IsCommMonObj G.X :=
+    chapter12_commutativity_descends_aux p ⟨hp.2.1, hp.2.2⟩ G D.upstairs.toGrp e D.upstairs.comm
+  let G' : Chapter12CommutativeGroupScheme S := { X := G.X, comm := comm }
+  let e' : Chapter12CommutativeGroupScheme.baseChange p G' ≅ D.upstairs :=
+    InducedCategory.isoMk e
+  refine ⟨G', e', ?_⟩
   intro U q₁ q₂ h
   apply CommGrp.hom_ext
-  dsimp [G', e₀, e''] at *
-  change
-    ((Chapter12CommutativeGroupScheme.baseChangeIso q₁ e'').hom.hom.hom ≫
-        (D.compare q₁ q₂ h).hom.hom.hom) =
-      ((chapter12CommutativeGroupSchemeBaseChangeComparison p G' q₁ q₂ h).hom.hom.hom ≫
-        (Chapter12CommutativeGroupScheme.baseChangeIso q₂ e'').hom.hom.hom)
-  have hh := congrArg (fun k => k.hom.hom) (he q₁ q₂ h)
-  have hb₁ :
-      (Chapter12CommutativeGroupScheme.baseChangeIso q₁ e'').hom.hom.hom =
-        (Chapter12GroupScheme.baseChangeIso q₁ e').hom.hom.hom := by
-    rfl
-  have hb₂ :
-      (Chapter12CommutativeGroupScheme.baseChangeIso q₂ e'').hom.hom.hom =
-        (Chapter12GroupScheme.baseChangeIso q₂ e').hom.hom.hom := by
-    rfl
-  have hc :
-      (D.compare q₁ q₂ h).hom.hom.hom = (D'.compare q₁ q₂ h).hom.hom := by
-    rfl
-  have hk :
-      (chapter12CommutativeGroupSchemeBaseChangeComparison p G' q₁ q₂ h).hom.hom.hom =
-        (chapter12GroupSchemeBaseChangeComparison p G q₁ q₂ h).hom.hom := by
-    apply Mon.Hom.ext
-    apply Over.OverMorphism.ext
-    exact chapter12_commutative_group_comparison_underlying p G q₁ q₂ h
-  rw [hb₁, hc, hk, hb₂]
+  apply Over.OverMorphism.ext
+  have hh := congrArg (fun k => k.hom.hom.left) (he q₁ q₂ h)
+  simp only [CommGrp.comp_hom, Grp.comp_hom_hom, Over.comp_left]
+  rw [@chapter12_commutative_group_comparison_underlying S T U p G comm q₁ q₂ h]
   exact hh
 
 theorem chapter12_commutative_group_laws_descend

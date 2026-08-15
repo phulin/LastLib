@@ -1,7 +1,5 @@
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter05.Dependencies
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter05.Section03DescentOfAmplenessAndProjectivity
-import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Section03AffineOpenAmpleness
-import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.Section05TensorPowersAndOperations
 
 /-!
 # 5.4 Necessary hypotheses and failures
@@ -21,6 +19,7 @@ noncomputable section
 
 structure OpenPositivityCounterexample {X S : Scheme.{u}} (f : X ⟶ S) (L : LineBundle X)
     (U : S.Opens) : Prop where
+  nonempty : ∃ s : S, s ∈ U
   not_faithfullyFlat : ¬ IsFaithfullyFlat U.ι
   upstairs_veryAmple : IsVeryAmple (f ∣_ U) (L.pullback (f ⁻¹ᵁ U).ι)
   downstairs_not_veryAmple : ¬ IsVeryAmple f L
@@ -53,7 +52,8 @@ structure ProperFiberwiseAmpleButNotRelativelyAmple {X S : Scheme.{u}}
   not_relatively_ample : ¬ IsAmple f L
 
 theorem veryAmple_after_positive_power_implies_ample
-    {X S : Scheme.{u}} (f : X ⟶ S) (L : LineBundle X) (P : LineBundlePowers L)
+    {X S : Scheme.{u}} (f : X ⟶ S) (L : LineBundle X)
+    (hfqc : QuasiCompact f) (P : LineBundlePowers L)
     (h : IsVeryAmpleAfterPositivePower f L P) :
     IsAmple f L := by sorry
 
@@ -64,7 +64,31 @@ theorem veryAmple_positive_power_after_faithfullyFlat_baseChange_implies_ample
     (hgff : IsFaithfullyFlat g) (hgqc : QuasiCompact g)
     (h : ∃ n, 0 < n ∧
       IsVeryAmple (baseChangeToBase f g) (baseChangeLineBundle f g (P.power n))) :
-    IsAmple f L := by sorry
+    IsAmple f L := by
+  obtain ⟨n, hn, hV⟩ := h
+  let _ : QuasiCompact f := hfqc
+  let _ : QuasiCompact g := hgqc
+  let _ : QuasiSeparated f := hfqs
+  let _ : QuasiCompact (baseChangeToBase f g) := by
+    change QuasiCompact (pullback.snd f g)
+    infer_instance
+  have hA : IsAmple (baseChangeToBase f g)
+      (baseChangeLineBundle f g (P.power n)) :=
+    Chapter04.chapter04_veryAmple_implies_ample
+      (baseChangeToBase f g) (baseChangeLineBundle f g (P.power n)) hV
+  let Q := P.pullback (baseChangeToSource f g)
+  have hQ : IsAmple (baseChangeToBase f g) (Q.power n) := by
+    change IsAmple (baseChangeToBase f g)
+      (baseChangeLineBundle f g (P.power n))
+    exact hA
+  have hTensor : IsAmple (baseChangeToBase f g)
+      ((baseChangeLineBundle f g L).tensorPower n) :=
+    (isAmple_congr (baseChangeToBase f g) (Q.power_iso n)).mp hQ
+  have hBase : IsAmple (baseChangeToBase f g)
+      (baseChangeLineBundle f g L) :=
+    Chapter04.chapter04_ample_of_ample_tensorPower
+      (baseChangeToBase f g) (baseChangeLineBundle f g L) n hn hTensor
+  exact ample_faithfullyFlat_descent f g L hfqc hfqs hgff hgqc hBase
 
 /- This predicate records the corrected §5.4 warning: on an elliptic curve, a line bundle of degree
 2 need not be very ample, whereas its square has degree 4 and is very ample. -/

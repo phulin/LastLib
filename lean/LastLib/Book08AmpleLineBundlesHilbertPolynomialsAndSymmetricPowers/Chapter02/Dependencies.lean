@@ -1,5 +1,6 @@
 import LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter01.Section01ProjectiveGeometryOverABase
 import Mathlib.Algebra.Category.ModuleCat.Sheaf.Free
+import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
 import Mathlib.Algebra.Category.ModuleCat.Sheaf.LocallyFree
 import Mathlib.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
 import Mathlib.Algebra.Category.ModuleCat.Presheaf.Monoidal
@@ -13,15 +14,19 @@ import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
 import Mathlib.AlgebraicGeometry.Morphisms.Immersion
 import Mathlib.AlgebraicGeometry.Morphisms.Proper
 import Mathlib.AlgebraicGeometry.Morphisms.QuasiCompact
+import Mathlib.AlgebraicGeometry.Morphisms.QuasiSeparated
 import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Basic
 import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Functor
 import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Proper
+import Mathlib.AlgebraicGeometry.Cover.Open
+import Mathlib.AlgebraicGeometry.Restrict
 import Mathlib.Algebra.MvPolynomial.Basic
 import Mathlib.Data.Finsupp.Basic
 import Mathlib.LinearAlgebra.SymmetricAlgebra.Basic
 import Mathlib.RingTheory.GradedAlgebra.Basic
 import Mathlib.RingTheory.GradedAlgebra.Homogeneous.Ideal
+import Mathlib.RingTheory.RingHom.Flat
 
 namespace LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02
 
@@ -302,6 +307,19 @@ structure Chapter02ProjectiveBundleData
                 (Scheme.Modules.pullbackComp u.1 projection).inv.app E.carrier ≫
                 (Scheme.Modules.pullback u.1).map universalQuotient
 
+/-!
+Two packages representing the same invertible-quotient functor are canonically isomorphic over the
+base.  This comparison is kept as an earlier interface so later chapters can move between the
+chosen relative Proj package and a finite projective-bundle package without identifying their
+underlying choices definitionally.
+-/
+theorem chapter02_projective_bundle_data_comparison
+    {S : Scheme.{u}} {E : Chapter02QuasiCoherentModule S}
+    (P Q : Chapter02ProjectiveBundleData S E) :
+    ∃ e : P.scheme ≅ Q.scheme,
+      e.hom ≫ Q.projection = P.projection := by
+  sorry
+
 abbrev Chapter02CanonicalProjectiveBundleData {S : Scheme.{u}}
     (E : Chapter02QuasiCoherentModule S) :=
   Chapter01.Chapter01ProjectiveBundleData
@@ -500,6 +518,23 @@ def Chapter02FiniteLocallyFreeModule {S : Scheme.{u}}
     (E : Chapter02QuasiCoherentModule S) : Prop :=
   Chapter01.Chapter01FiniteLocallyFree E.carrier
 
+/-!
+Finite locally free sheaves are stable under arbitrary pullback.  The bundled version below keeps
+the quasi-coherence witness attached to the pulled-back module; the unbundled version is convenient
+for later chapters whose finite-locally-free predicate is stated directly on `S.Modules`.
+-/
+theorem chapter02_pullback_preserves_finite_locally_free
+    {S T : Scheme.{u}} (f : T ⟶ S) (E : S.Modules)
+    (hE : Chapter01.Chapter01FiniteLocallyFree E) :
+    Chapter01.Chapter01FiniteLocallyFree ((Scheme.Modules.pullback f).obj E) := by
+  sorry
+
+theorem chapter02_pullback_preserves_finite_locally_free_module
+    {S T : Scheme.{u}} (f : T ⟶ S) (E : Chapter02QuasiCoherentModule S)
+    (hE : Chapter02FiniteLocallyFreeModule E) :
+    Chapter02FiniteLocallyFreeModule (chapter02PullbackQuasiCoherentModule f E) := by
+  sorry
+
 /-! Canonical variable-rank package.  The fixed-rank `Chapter01FiniteProjectiveBundle` remains
 available for the notation `P^r`, while this interface is the one used for an arbitrary finite
 locally free module and carries properness and finite presentation with its relative Proj. -/
@@ -551,6 +586,22 @@ abbrev Chapter02RelativeProjectiveBundle.projection
     (P : Chapter02RelativeProjectiveBundle S E) : P.carrier ⟶ S :=
   P.data.projection
 
+/-!
+Base change of a finite relative Proj is recorded with its actual comparison morphism.  In
+particular, this is stronger than merely asserting existence of some projective bundle over the
+pulled-back module: it identifies that bundle with the scheme-theoretic pullback of the original
+one over the target.
+-/
+theorem chapter02_relative_projective_bundle_base_change_exists
+    {S T : Scheme.{u}} (f : T ⟶ S) (E : Chapter02QuasiCoherentModule S)
+    (_hE : Chapter02FiniteLocallyFreeModule E)
+    (P : Chapter02RelativeProjectiveBundle S E) :
+    ∃ (Q : Chapter02RelativeProjectiveBundle T
+        (chapter02PullbackQuasiCoherentModule f E))
+      (e : Limits.pullback P.projection f ⟶ Q.carrier),
+      IsIso e ∧ e ≫ Q.projection = Limits.pullback.snd P.projection f := by
+  sorry
+
 abbrev Chapter02RelativeProjectiveBundle.twistingLineBundle
     {S : Scheme.{u}} {E : Chapter02QuasiCoherentModule S}
     (P : Chapter02RelativeProjectiveBundle S E) :
@@ -600,6 +651,19 @@ structure Chapter02ProjectivePresentation
 def Chapter02ProjectiveMorphism {X S : Scheme.{u}} (f : X ⟶ S) : Prop :=
   Nonempty (Chapter02ProjectivePresentation f)
 
+/-! A closed immersion into the base can be transported across a relative projective bundle that is
+identified with the base.  This categorical bridge is the precise rank-one identity interface used
+when presenting closed immersions as projective morphisms.
+-/
+theorem chapter02_closed_immersion_transport_to_identity_bundle
+    {X S : Scheme.{u}} (i : X ⟶ S) (hi : IsClosedImmersion i)
+    {E : Chapter02QuasiCoherentModule S}
+    (P : Chapter02RelativeProjectiveBundle S E)
+    (e : P.carrier ≅ S)
+    (he : e.hom = P.projection) :
+    ∃ j : X ⟶ P.carrier, IsClosedImmersion j ∧ j ≫ P.projection = i := by
+  sorry
+
 structure Chapter02QuasiProjectivePresentation
     {X S : Scheme.{u}} (f : X ⟶ S) where
   module : Chapter02QuasiCoherentModule S
@@ -612,6 +676,12 @@ def Chapter02QuasiProjectiveMorphism {X S : Scheme.{u}} (f : X ⟶ S) : Prop :=
   Nonempty (Chapter02QuasiProjectivePresentation f)
 
 /-!
+On a compact base, a presentation on every member of an open cover can be glued after restricting
+to a finite subcover and taking the direct sum of the ambient modules.  The theorem is stated in
+the exact open-cover language consumed by the next chapter; the finite-cover construction belongs
+to its proof, not to an additional choice in the API.
+-/
+/-!
 Mathlib's `free` sheaf gives the canonical free module and its global-section equivalence.  The
 quasi-coherence proof is intentionally kept here so all later sections use the same free module.
 -/
@@ -619,6 +689,27 @@ def chapter02FreeQuasiCoherentModule (S : Scheme.{u}) (I : Type u) :
     Chapter02QuasiCoherentModule S where
   carrier := SheafOfModules.free (R := S.ringCatSheaf) I
   is_quasi_coherent := by infer_instance
+
+/-! The rank-one free projective bundle is the base scheme itself, up to the unique comparison
+over the base.  This is the identity ambient needed to transport a closed immersion into a
+projective presentation.
+-/
+abbrev Chapter02FreeRankOneModule (S : Scheme.{u}) : Chapter02QuasiCoherentModule S :=
+  chapter02FreeQuasiCoherentModule S (ULift.{u} (Fin 1))
+
+theorem chapter02_free_rank_one_projective_bundle_is_base
+    (S : Scheme.{u})
+    (P : Chapter02RelativeProjectiveBundle S (Chapter02FreeRankOneModule S)) :
+    ∃ e : P.carrier ≅ S, e.hom = P.projection := by
+  sorry
+
+theorem chapter02_rank_one_projective_bundle_is_base
+    {S : Scheme.{u}} (E : Chapter02QuasiCoherentModule S)
+    (_hE : Chapter02FiniteLocallyFreeModule E)
+    (_hRank : Chapter02LocallyFreeRank E.carrier 1)
+    (P : Chapter02RelativeProjectiveBundle S E) :
+    ∃ e : P.carrier ≅ S, e.hom = P.projection := by
+  sorry
 
 /-- The zero global section. -/
 noncomputable def chapter02ZeroSection {S : Scheme.{u}} (M : S.Modules) : M.sections :=
@@ -762,6 +853,88 @@ theorem chapter02_pullback_section_map_spec
         (chapter02PullbackSectionMap f M s) =
       (chapter02PullbackSectionData f M).unitComparison.inv ≫
         (Scheme.Modules.pullback f).map (M.unitHomEquiv.symm s) := by
+  sorry
+
+/-!
+The global-section map above is not enough for affine-chart arguments: a section on an affine open
+of the base has to be pulled back to every open lying over it.  This interface records the canonical
+local operation, its naturality in the module, and its agreement with the previously exposed map on
+global sections.  The open containment is explicit, so the declaration also covers restrictions to
+smaller opens of the pullback.
+-/
+structure Chapter02PullbackLocalSectionInterface
+    {S T : Scheme.{u}} (f : T ⟶ S) where
+  sectionMap : ∀ (M : S.Modules) {U : S.Opens} {V : T.Opens},
+    V ≤ f ⁻¹ᵁ U → Γ(M, U) →
+      Γ((Scheme.Modules.pullback f).obj M, V)
+  sectionMap_natural : ∀ {M N : S.Modules} (h : M ⟶ N)
+      {U : S.Opens} {V : T.Opens} (hVU : V ≤ f ⁻¹ᵁ U) (s : Γ(M, U)),
+    sectionMap N hVU ((h.val.app (Opposite.op U)) s) =
+      (((Scheme.Modules.pullback f).map h).val.app (Opposite.op V))
+        (sectionMap M hVU s)
+  global_section_compatibility : ∀ (M : S.Modules) (s : M.sections),
+    sectionMap M (U := ⊤) (V := ⊤) (by simp)
+        (s.1 (Opposite.op ⊤)) =
+      (chapter02PullbackSectionMap f M s).1 (Opposite.op ⊤)
+
+theorem chapter02_pullback_local_section_interface_exists
+    {S T : Scheme.{u}} (f : T ⟶ S) :
+    Nonempty (Chapter02PullbackLocalSectionInterface f) := by
+  sorry
+
+noncomputable def chapter02PullbackLocalSectionInterface
+    {S T : Scheme.{u}} (f : T ⟶ S) :
+    Chapter02PullbackLocalSectionInterface f :=
+  Classical.choice (chapter02_pullback_local_section_interface_exists f)
+
+noncomputable def chapter02PullbackLocalSectionMap
+    {S T : Scheme.{u}} (f : T ⟶ S) (M : S.Modules)
+    {U : S.Opens} {V : T.Opens} (hVU : V ≤ f ⁻¹ᵁ U) (s : Γ(M, U)) :
+    Γ((Scheme.Modules.pullback f).obj M, V) :=
+  (chapter02PullbackLocalSectionInterface f).sectionMap M hVU s
+
+theorem chapter02_pullback_local_section_map_natural
+    {S T : Scheme.{u}} (f : T ⟶ S) {M N : S.Modules}
+    (h : M ⟶ N) {U : S.Opens} {V : T.Opens} (hVU : V ≤ f ⁻¹ᵁ U)
+    (s : Γ(M, U)) :
+    chapter02PullbackLocalSectionMap f N hVU ((h.val.app (Opposite.op U)) s) =
+      (((Scheme.Modules.pullback f).map h).val.app (Opposite.op V))
+        (chapter02PullbackLocalSectionMap f M hVU s) := by
+  exact (chapter02PullbackLocalSectionInterface f).sectionMap_natural h hVU s
+
+theorem chapter02_pullback_local_section_map_global_compatibility
+    {S T : Scheme.{u}} (f : T ⟶ S) (M : S.Modules) (s : M.sections) :
+    chapter02PullbackLocalSectionMap f M (U := ⊤) (V := ⊤) (by simp)
+        (s.1 (Opposite.op ⊤)) =
+      (chapter02PullbackSectionMap f M s).1 (Opposite.op ⊤) := by
+  exact (chapter02PullbackLocalSectionInterface f).global_section_compatibility M s
+
+/-!
+For a flat change of an affine base, qcqs global sections commute with scalar extension.  The
+module structures are displayed in the type rather than inferred from unrelated choices; this is
+the form needed by affine degree-zero arguments in the faithfully-flat descent chapter.
+-/
+noncomputable def chapter02AffineGlobalSectionsBaseChange
+    {X : Scheme.{u}} {A A' : Type u} [CommRing A] [CommRing A']
+    (f : X ⟶ AlgebraicGeometry.Spec (CommRingCat.of A))
+    (hfqc : QuasiCompact f) (hfqs : QuasiSeparated f)
+    (φ : A →+* A') (hφ : RingHom.Flat φ)
+    (M : X.Modules) (hM : M.IsQuasicoherent) :
+    let g : AlgebraicGeometry.Spec (CommRingCat.of A') ⟶
+      AlgebraicGeometry.Spec (CommRingCat.of A) :=
+      AlgebraicGeometry.Spec.map (CommRingCat.ofHom φ)
+    let f' := Limits.pullback.snd f g
+    let A_to_X : A →+* Γ(X, ⊤) :=
+      ((Scheme.ΓSpecIso (.of A)).inv ≫ f.appTop).hom
+    let A'_to_X' : A' →+* Γ(Limits.pullback f g, ⊤) :=
+      ((Scheme.ΓSpecIso (.of A')).inv ≫ f'.appTop).hom
+    letI : Module A Γ(M, ⊤) := Module.compHom _ A_to_X
+    letI : Module A' Γ((Scheme.Modules.pullback (Limits.pullback.fst f g)).obj M, ⊤) :=
+      Module.compHom _ A'_to_X'
+    ((ModuleCat.extendScalars φ).obj
+      (ModuleCat.of A Γ(M, ⊤)) ≅
+      ModuleCat.of A'
+        Γ((Scheme.Modules.pullback (Limits.pullback.fst f g)).obj M, ⊤)) := by
   sorry
 
 structure Chapter02PullbackInterface
@@ -946,6 +1119,36 @@ noncomputable def chapter02TensorAssociator
       chapter02Tensor M (chapter02Tensor N P) :=
   Chapter01.chapter01SheafTensorAssociator M N P
 
+/-! A finite locally free model of the tensor product.  The explicit comparison keeps later Segre
+interfaces tied to the canonical sheaf tensor operation rather than to an unrelated module.
+-/
+structure Chapter02FiniteTensorProductModule (S : Scheme.{u})
+    (E F : S.Modules) where
+  module : S.Modules
+  finiteLocallyFree : Chapter01.Chapter01FiniteLocallyFree module
+  tensorProductIso : module ≅ Chapter01.chapter01SheafTensor E F
+
+theorem chapter02_sheaf_tensor_preserves_finite_locally_free
+    {S : Scheme.{u}} (E F : S.Modules)
+    (hE : Chapter01.Chapter01FiniteLocallyFree E)
+    (hF : Chapter01.Chapter01FiniteLocallyFree F) :
+    Chapter01.Chapter01FiniteLocallyFree (Chapter01.chapter01SheafTensor E F) := by
+  sorry
+
+theorem chapter02_finite_tensor_product_module_exists
+    {S : Scheme.{u}} (E F : S.Modules)
+    (hE : Chapter01.Chapter01FiniteLocallyFree E)
+    (hF : Chapter01.Chapter01FiniteLocallyFree F) :
+    Nonempty (Chapter02FiniteTensorProductModule S E F) := by
+  sorry
+
+noncomputable def chapter02FiniteTensorProductQuasiCoherentModule
+    {S : Scheme.{u}} {E F : S.Modules}
+    (R : Chapter02FiniteTensorProductModule S E F) :
+    Chapter02QuasiCoherentModule S where
+  carrier := R.module
+  is_quasi_coherent := R.finiteLocallyFree.1
+
 /-!
 The tensor sheaf has a canonical product on global sections.  Recording its value on every open is
 important here: an arbitrary bilinear operation on global sections would also admit the zero
@@ -1051,6 +1254,98 @@ def chapter02LineBundlePowerBundle
     {S : Scheme.{u}} (L : Chapter02LineBundle S) (d : ℕ) : Chapter02LineBundle S where
   carrier := chapter02LineBundlePower L d
   invertible := (chapter02LineBundlePowerData L).power_invertible d
+
+/-! A section on a base open is tested at a point using its germ in the stalk.  This is the
+local form of the nonvanishing condition in the affine-open definition of relative ampleness. -/
+def chapter02LocalSectionGeneratesAt
+    {X : Scheme.{u}} (M : X.Modules) {U : X.Opens} (s : Γ(M, U))
+    (x : X) (hx : x ∈ U) : Prop :=
+  letI : Module (X.presheaf.stalk x) (M.presheaf.stalk x) := by
+    change Module (X.presheaf.stalk x) (↑(TopCat.Presheaf.stalk M.val.presheaf x))
+    exact
+      PresheafOfModules.instModuleCarrierStalkCommRingCatCarrierAbPresheafOpensCarrier
+        (R := X.presheaf) M.val x
+  Submodule.span (X.presheaf.stalk x)
+      ({TopCat.Presheaf.germ M.presheaf U x hx s} :
+        Set (M.presheaf.stalk x)) = ⊤
+
+/-! One affine nonvanishing chart for a positive tensor power.  The support is recorded as an open
+of the source rather than as a pointwise predicate so that the witness can be used for actual
+localizations and projective presentations. -/
+structure Chapter02AffineNonvanishingSection
+    {X S : Scheme.{u}} (f : X ⟶ S) (L : Chapter02LineBundle X) (U : S.Opens) where
+  n : ℕ
+  positive : 0 < n
+  sectionData : Γ((chapter02LineBundlePowerBundle L n).carrier, f ⁻¹ᵁ U)
+  locus : X.Opens
+  locus_spec : ∀ x : X,
+    x ∈ locus ↔
+      ∃ hx : x ∈ f ⁻¹ᵁ U,
+        chapter02LocalSectionGeneratesAt
+          (chapter02LineBundlePowerBundle L n).carrier sectionData x hx
+  affine : IsAffineOpen locus
+
+/-! A relative ample line bundle is packaged by affine base opens and affine nonvanishing loci of
+positive powers.  This is intentionally only a witness interface; its globalization theorem is
+left as a proposition placeholder for the later projective-morphism chapter. -/
+structure Chapter02AffineOpenAmpleWitness
+    {X S : Scheme.{u}} (f : X ⟶ S) (L : Chapter02LineBundle X) where
+  I : Type u
+  base_open : I → S.Opens
+  base_open_affine : ∀ i, IsAffineOpen (base_open i)
+  base_open_cover : ∀ s : S, ∃ i, s ∈ base_open i
+  J : I → Type u
+  chart : ∀ i, J i → Chapter02AffineNonvanishingSection f L (base_open i)
+  chart_cover : ∀ i (x : X), x ∈ f ⁻¹ᵁ (base_open i) → ∃ j, x ∈ (chart i j).locus
+
+def Chapter02RelativelyAmple
+    {X S : Scheme.{u}} (f : X ⟶ S) (L : Chapter02LineBundle X) : Prop :=
+  Nonempty (Chapter02AffineOpenAmpleWitness f L)
+
+/-! A polarization keeps the line bundle and its relative ampleness together.  In particular, a
+collection of unrelated local projective embeddings is not accepted as a global polarization. -/
+structure Chapter02GlobalPolarization {X S : Scheme.{u}} (f : X ⟶ S) where
+  lineBundle : Chapter02LineBundle X
+  relativelyAmple : Chapter02RelativelyAmple f lineBundle
+
+/- LOCAL_DEPENDENCY_GUESS: affine-open relative ampleness globalizes to a projective presentation. -/
+theorem chapter02_projective_presentation_of_affine_open_polarization
+    {X S : Scheme.{u}} [CompactSpace S] (f : X ⟶ S)
+    (hproper : IsProper f) (P : Chapter02GlobalPolarization f) :
+    Nonempty (Chapter02ProjectivePresentation f) := by
+  sorry
+
+/- LOCAL_DEPENDENCY_GUESS: affine-open relative ampleness globalizes to a quasi-projective
+presentation under the finite-type hypotheses. -/
+theorem chapter02_quasi_projective_presentation_of_affine_open_polarization
+    {X S : Scheme.{u}} [CompactSpace S] (f : X ⟶ S)
+    (hqc : QuasiCompact f) (hft : LocallyOfFiniteType f)
+    (hqs : QuasiSeparated f) (P : Chapter02GlobalPolarization f) :
+    Nonempty (Chapter02QuasiProjectivePresentation f) := by
+  sorry
+
+/-!
+On a compact base, a compatible polarization permits a presentation on every member of an open
+cover to be glued after restricting to a finite subcover and taking the direct sum of the ambient
+modules.  The polarization is explicit because unrelated local embeddings do not globalize. -/
+theorem chapter02_projective_presentation_of_compact_open_cover
+    {X S : Scheme.{u}} [CompactSpace S] (f : X ⟶ S) (𝒰 : S.OpenCover.{u})
+    (h𝒰 : ∀ i : 𝒰.I₀,
+      Nonempty (Chapter02ProjectivePresentation
+        (f ∣_ (𝒰.f i).opensRange)))
+    (P : Chapter02GlobalPolarization f) :
+    Nonempty (Chapter02ProjectivePresentation f) := by
+  sorry
+
+theorem chapter02_quasi_projective_presentation_of_compact_open_cover
+    {X S : Scheme.{u}} [CompactSpace S] (f : X ⟶ S) (𝒰 : S.OpenCover.{u})
+    (h𝒰 : ∀ i : 𝒰.I₀,
+      Nonempty (Chapter02QuasiProjectivePresentation
+        (f ∣_ (𝒰.f i).opensRange)))
+    (hqc : QuasiCompact f) (hft : LocallyOfFiniteType f)
+    (hqs : QuasiSeparated f) (P : Chapter02GlobalPolarization f) :
+    Nonempty (Chapter02QuasiProjectivePresentation f) := by
+  sorry
 
 noncomputable def chapter02PowerUnitSection
     {S : Scheme.{u}} (L : Chapter02LineBundle S) :

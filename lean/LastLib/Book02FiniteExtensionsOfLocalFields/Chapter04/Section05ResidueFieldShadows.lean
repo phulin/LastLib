@@ -84,7 +84,32 @@ theorem chapter04_residue_trace_and_norm
     (he : e = (IsLocalRing.maximalIdeal B).ramificationIdx A) :
     chapter04ResidueTraceNormStatement
       redA redB e t n x (u : B) := by
-  sorry
+  have ht : t = Algebra.intTrace A B x := by
+    apply (IsFractionRing.injective A K)
+    rw [htrace,
+      (Algebra.algebraMap_intTrace (A := A) (B := B) (K := K) (L := L) x).symm]
+  have hn : n = Algebra.intNorm A B (u : B) := by
+    apply (IsFractionRing.injective A K)
+    rw [hnorm,
+      (Algebra.algebraMap_intNorm (A := A) (B := B) (K := K) (L := L) (u : B)).symm]
+  have hredA' :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11ResidueMap
+        A k (IsLocalRing.maximalIdeal A) redA := by
+    simpa only [chapter04ResidueMap,
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11ResidueMap] using hredA
+  have hredB' :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11ResidueMap
+        B l (IsLocalRing.maximalIdeal B) redB := by
+    simpa only [chapter04ResidueMap,
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11ResidueMap] using hredB
+  have hres :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11_finite_dvr_residue_trace_and_norm
+      A B k l redA redB hredA' hredB' hcompat e x (u : B) he
+  change redA t = (e : k) * Algebra.trace k l (redB x) ∧
+    redA n = Algebra.norm k (redB (u : B)) ^ e
+  refine ⟨?_, ?_⟩
+  · simpa [ht] using hres.1
+  · simpa [hn] using hres.2
 
 /- For an unramified extension, the integer factor is one (§4.5). -/
 theorem chapter04_unramified_reduction_commutes_with_trace_and_norm

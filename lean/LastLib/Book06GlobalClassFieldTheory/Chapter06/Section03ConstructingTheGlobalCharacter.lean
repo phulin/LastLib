@@ -35,6 +35,14 @@ structure Chapter06FiniteOrderCoordinate
   invariant_realization :
     Multiplicative (Chapter06OneOverNModOne n) →* ℂˣ
   faithful_invariant_realization : Function.Injective invariant_realization
+  /- The invariant exponential is the same finite-image coordinate as the
+     chosen character realization, transported across the normalized
+     (1/n)Z/Z ≃ Z/nZ identification. -/
+  invariant_coordinate :
+    Multiplicative (Chapter06OneOverNModOne n) →* Multiplicative (Chapter06A n)
+  invariant_coordinate_bijective : Function.Bijective invariant_coordinate
+  invariant_realization_compatibility :
+    invariant_realization = realization.comp invariant_coordinate
   image_identification :
     Nonempty (MonoidHom.range χ ≃* MonoidHom.range coordinate)
 
@@ -43,7 +51,92 @@ theorem chapter06_finite_order_character_has_coordinate
     (χ : Chapter06ContinuousFiniteOrderCharacter C) :
     ∃ n : ℕ, 0 < n ∧
       Nonempty (Chapter06FiniteOrderCoordinate C n χ.hom) := by
-  sorry
+  classical
+  obtain ⟨n₀, hn₀, hχ⟩ := χ.finite_order
+  have hle : MonoidHom.range χ.hom ≤ rootsOfUnity n₀ ℂ := by
+    intro z hz
+    rcases hz with ⟨c, rfl⟩
+    change (χ.hom c : ℂˣ) ^ n₀ = 1
+    exact hχ c
+  have hcyclic : IsCyclic (MonoidHom.range χ.hom) := by
+    let _ : NeZero n₀ := ⟨Nat.ne_of_gt hn₀⟩
+    exact Subgroup.isCyclic_of_le hle
+  have hfinite : Finite (MonoidHom.range χ.hom) := by
+    let _ : NeZero n₀ := ⟨Nat.ne_of_gt hn₀⟩
+    exact Finite.of_injective (Subgroup.inclusion hle)
+      (Subgroup.inclusion_injective hle)
+  let _ : Finite (MonoidHom.range χ.hom) := hfinite
+  let n : ℕ := Nat.card (MonoidHom.range χ.hom)
+  have hn : 0 < n := by
+    exact Nat.card_pos
+  let e : Multiplicative (Chapter06A n) ≃*
+      MonoidHom.range χ.hom :=
+    let _ : IsCyclic (MonoidHom.range χ.hom) := hcyclic
+    zmodCyclicMulEquiv (inferInstance : IsCyclic (MonoidHom.range χ.hom))
+  let coordinate : C →* Multiplicative (Chapter06A n) :=
+    e.symm.toMonoidHom.comp χ.hom.rangeRestrict
+  let realization : Multiplicative (Chapter06A n) →* ℂˣ :=
+    (MonoidHom.range χ.hom).subtype.comp e.toMonoidHom
+  let invariantEquiv :
+      Multiplicative (Chapter06OneOverNModOne n) ≃*
+        Multiplicative (Chapter06A n) :=
+    (chapter06_oneOverNModOne_equiv_zmod n hn).toMultiplicative
+  let invariantCoordinate :
+      Multiplicative (Chapter06OneOverNModOne n) →*
+        Multiplicative (Chapter06A n) := invariantEquiv.toMonoidHom
+  let invariantRealization :
+      Multiplicative (Chapter06OneOverNModOne n) →* ℂˣ :=
+    realization.comp invariantCoordinate
+  let f₀ : MonoidHom.range χ.hom →* Multiplicative (Chapter06A n) :=
+    e.symm.toMonoidHom
+  have hf₀ : ∀ z : MonoidHom.range χ.hom,
+      f₀ z ∈ MonoidHom.range coordinate := by
+    intro z
+    rcases z.property with ⟨c, hc⟩
+    refine ⟨c, ?_⟩
+    have hz : (⟨χ.hom c, ⟨c, rfl⟩⟩ : MonoidHom.range χ.hom) = z := by
+      apply Subtype.ext
+      exact hc
+    change e.symm (χ.hom.rangeRestrict c) = e.symm z
+    exact congrArg e.symm hz
+  let f : MonoidHom.range χ.hom ≃* MonoidHom.range coordinate :=
+    { toFun := fun z => ⟨f₀ z, hf₀ z⟩
+      invFun := fun z => e (z : Multiplicative (Chapter06A n))
+      left_inv := by
+        intro z
+        apply Subtype.ext
+        simp [f₀, e]
+      right_inv := by
+        intro z
+        apply Subtype.ext
+        simp [f₀, e]
+      map_mul' := by
+        intro x y
+        apply Subtype.ext
+        simp [f₀] }
+  refine ⟨n, hn, ⟨{
+    positive := hn
+    coordinate := coordinate
+    realization := realization
+    realizes := by
+      ext c
+      simp [coordinate, realization]
+    faithful_realization := by
+      intro x y hxy
+      apply e.injective
+      apply Subtype.ext
+      simpa [realization] using hxy
+    invariant_realization := invariantRealization
+    faithful_invariant_realization := by
+      intro x y hxy
+      apply invariantEquiv.injective
+      apply e.injective
+      apply Subtype.ext
+      simpa [invariantRealization, invariantCoordinate, realization] using hxy
+    invariant_coordinate := invariantCoordinate
+    invariant_coordinate_bijective := invariantEquiv.bijective
+    invariant_realization_compatibility := rfl
+    image_identification := ⟨f⟩ }⟩⟩
 
 /- Evaluation of an invariant in the chosen finite image.  This is the
    book's exponential of 2 pi i times the invariant, expressed through the
@@ -150,7 +243,84 @@ theorem chapter06_idele_character_is_orthogonal
     (R : Chapter06CharacterLocalReciprocityData
       K Ks ι n HLocal HMu HBr HTate χ coordinate D) :
     chapter06LocalGlobalLambda D R.localCharacter = 0 := by
-  sorry
+  classical
+  apply AddMonoidHom.ext
+  intro a
+  change chapter06LocalGlobalLambdaValue D R.localCharacter a = 0
+  let s : Set ι := {v |
+    R.localCharacter v ∉ D.localData.unramified v ∨
+      D.kummerRestriction v a ∉ D.localData.unramifiedDual v}
+  let hs : s.Finite := by
+    have hu :
+        ({v | R.localCharacter v ∉ D.localData.unramified v} ∪
+          {v | D.kummerRestriction v a ∉ D.localData.unramifiedDual v}).Finite :=
+      Set.Finite.union R.localCharacter.property (D.kummer_support_finite a)
+    apply Set.Finite.subset hu
+    intro v hv
+    simpa only [s, Set.mem_union, Set.mem_ofPred_eq] using hv
+  have hprod :
+      hs.toFinset.prod (fun v =>
+        R.localEvaluation v (R.localCharacter v)
+          (D.kummerRestriction v a)) =
+        χ.hom (R.principal_idele (Multiplicative.ofAdd a)) := by
+    simpa [s, hs] using R.local_product_eq_principal a
+  have hprincipal :
+      χ.hom (R.principal_idele (Multiplicative.ofAdd a)) = 1 := by
+    have h := congrArg (fun f => f (Multiplicative.ofAdd a))
+      R.principal_idele_trivial
+    simpa using h
+  have hexpprod :
+      hs.toFinset.prod (fun v =>
+        coordinate.invariant_realization
+          (Multiplicative.ofAdd
+            (D.localData.pairing v (R.localCharacter v)
+              (D.kummerRestriction v a)))) = 1 := by
+    calc
+      _ = hs.toFinset.prod (fun v =>
+          R.localEvaluation v (R.localCharacter v)
+            (D.kummerRestriction v a)) := by
+        apply Finset.prod_congr rfl
+        intro v hv
+        rw [← R.exponential_formula v (R.localCharacter v)
+          (D.kummerRestriction v a)]
+        simp [R.exponential_pairing_formula, chapter06ExponentialOfInvariant]
+      _ = χ.hom (R.principal_idele (Multiplicative.ofAdd a)) := hprod
+      _ = 1 := hprincipal
+  have hmul : ∀ T : Finset ι,
+      T.prod (fun v =>
+        coordinate.invariant_realization
+          (Multiplicative.ofAdd
+            (D.localData.pairing v (R.localCharacter v)
+              (D.kummerRestriction v a)))) =
+        coordinate.invariant_realization
+          (Multiplicative.ofAdd
+            (T.sum (fun v => D.localData.pairing v (R.localCharacter v)
+              (D.kummerRestriction v a)))) := by
+    intro T
+    induction T using Finset.induction_on with
+    | empty => simp
+    | @insert v T hv ih =>
+        rw [Finset.prod_insert hv, Finset.sum_insert hv, ih]
+        simp
+  let qsum : Chapter06OneOverNModOne n :=
+    hs.toFinset.sum (fun v =>
+      D.localData.pairing v (R.localCharacter v) (D.kummerRestriction v a))
+  have hqsum_val : (qsum : Chapter06QModZ) =
+      chapter06LocalGlobalLambdaValue D R.localCharacter a := by
+    simp [qsum, chapter06LocalGlobalLambdaValue, s,
+      chapter06InvariantTargetInclusion]
+  have heval :
+      coordinate.invariant_realization (Multiplicative.ofAdd qsum) = 1 := by
+    rw [← hmul hs.toFinset]
+    exact hexpprod
+  have hqsum : qsum = 0 := by
+    apply coordinate.faithful_invariant_realization
+    change coordinate.invariant_realization (Multiplicative.ofAdd qsum) =
+      coordinate.invariant_realization
+        (Multiplicative.ofAdd (0 : Chapter06OneOverNModOne n))
+    simpa using heval
+  rw [hqsum] at hqsum_val
+  simpa using hqsum_val.symm
 
 /- The exact sequence gives a unique global degree-one class with these
    local restrictions. -/
@@ -227,7 +397,99 @@ theorem chapter06_global_class_fixed_field_is_cyclic
     [DiscreteTopology (Chapter06A n)]
     (c : Chapter06H1A (Chapter06AbsoluteGaloisGroup K Ks) n) :
     Nonempty (Chapter06CyclicCharacterField K Ks n c) := by
-  sorry
+  classical
+  let φ : Gal(Ks / K) →* Multiplicative (Chapter06A n) := c.toMul.1
+  let H : Subgroup (Gal(Ks / K)) := φ.ker
+  have hopenH : IsOpen (H : Set (Gal(Ks / K))) := by
+    change IsOpen (φ ⁻¹' ({1} : Set (Multiplicative (Chapter06A n))))
+    exact IsOpen.preimage c.toMul.2 (isOpen_discrete _)
+  have hclosedH : IsClosed (H : Set (Gal(Ks / K))) := by
+    change IsClosed (φ ⁻¹' ({1} : Set (Multiplicative (Chapter06A n))))
+    exact IsClosed.preimage c.toMul.2 (isClosed_discrete _)
+  let _ : H.Normal := MonoidHom.normal_ker φ
+  let Hclosed : ClosedSubgroup (Gal(Ks / K)) := ⟨H, hclosedH⟩
+  let L : IntermediateField K Ks := IntermediateField.fixedField H
+  have hfix : L.fixingSubgroup = H := by
+    change (IntermediateField.fixedField H).fixingSubgroup = H
+    exact InfiniteGalois.fixingSubgroup_fixedField Hclosed
+  have hfiniteDimensional : FiniteDimensional K L := by
+    apply (InfiniteGalois.isOpen_iff_finite L).mp
+    rw [hfix]
+    exact hopenH
+  let _ : FiniteDimensional K L := hfiniteDimensional
+  let _ : IsGalois K L := IsGalois.of_fixedField_normal_subgroup H
+  let e : (Gal(Ks / K) ⧸ H) ≃* Gal(L / K) :=
+    InfiniteGalois.normalAutEquivQuotient Hclosed
+  let q : (Gal(Ks / K) ⧸ H) ≃* MonoidHom.range φ := by
+    simpa [H] using (QuotientGroup.quotientKerEquivRange φ)
+  have hcycRange : IsCyclic (MonoidHom.range φ) := by
+    let _ : IsCyclic (Multiplicative (Chapter06A n)) := by
+      infer_instance
+    exact Subgroup.isCyclic_of_le (show MonoidHom.range φ ≤ ⊤ from le_top)
+  let _ : IsCyclic (Gal(L / K)) := by
+    apply isCyclic_of_surjective
+      (e.toMonoidHom.comp q.symm.toMonoidHom)
+    exact e.surjective.comp q.symm.surjective
+  let _ : IsAbelianGalois K L := IsAbelianGalois.of_isCyclic K L
+  let galoisCharacter : Gal(L / K) →* Multiplicative (Chapter06A n) :=
+    (MonoidHom.range φ).subtype.comp
+      (q.toMonoidHom.comp e.symm.toMonoidHom)
+  have hfactor :
+      φ = galoisCharacter.comp
+        (chapter06AbelianGaloisRestriction (K := K) L
+          (inferInstance : IsAbelianGalois K L)) := by
+    apply MonoidHom.ext
+    intro σ
+    change φ σ = galoisCharacter
+      (chapter06AbelianGaloisRestriction (K := K) L
+        (inferInstance : IsAbelianGalois K L) σ)
+    have heq : e (QuotientGroup.mk' H σ) =
+        chapter06AbelianGaloisRestriction (K := K) L
+          (inferInstance : IsAbelianGalois K L) σ := by
+      exact InfiniteGalois.normalAutEquivQuotient_apply Hclosed σ
+    rw [← heq]
+    dsimp [galoisCharacter]
+    rw [e.symm_apply_apply]
+    change φ σ = ((q (QuotientGroup.mk' H σ) : MonoidHom.range φ) :
+      Multiplicative (Chapter06A n))
+    have hq : q (QuotientGroup.mk' H σ) =
+        (⟨φ σ, ⟨σ, rfl⟩⟩ : MonoidHom.range φ) := by
+      rfl
+    rw [hq]
+  have hfaithful : Function.Injective galoisCharacter := by
+    intro x y hxy
+    apply e.symm.injective
+    apply q.injective
+    apply Subtype.ext
+    exact hxy
+  have hsurjective :
+      Function.Surjective
+        (chapter06AbelianGaloisRestriction (K := K) L
+          (inferInstance : IsAbelianGalois K L)) := by
+    simpa [chapter06AbelianGaloisRestriction, chapter06GaloisRestriction] using
+      (AlgEquiv.restrictNormalHom_surjective
+        (F := K) (K₁ := L) (E := Ks))
+  refine ⟨{
+    positive := hn
+    field := L
+    finite := hfiniteDimensional
+    abelian := inferInstance
+    galoisFinite := inferInstance
+    cyclic := inferInstance
+    field_eq_fixed := rfl
+    surjective_restriction := hsurjective
+    galoisCharacter := galoisCharacter
+    faithful := hfaithful
+    factorization := by simpa [φ] using hfactor
+    degree_eq_image := by
+      change Module.finrank K L = Nat.card (MonoidHom.range φ)
+      calc
+        Module.finrank K L = Nat.card (Gal(L / K)) :=
+          (IsGalois.card_aut_eq_finrank K L).symm
+        _ = Nat.card (Gal(Ks / K) ⧸ H) :=
+          (Nat.card_congr e.toEquiv).symm
+        _ = Nat.card (MonoidHom.range φ) := Nat.card_congr q.toEquiv
+  }⟩
 
 /- The intrinsic correspondence predicate for the finite-image character
    in Lemma 6.2.  It uses a C-valued finite reciprocity witness and a
@@ -351,17 +613,40 @@ structure Chapter06RootOfUnitySelfDuality
   kummer_field :
     ∀ a : K, Nonempty (Chapter06KummerRadicalField K n a)
 
-/- The actual twisted dual module remains the roots-of-unity module even
-   when no primitive root is chosen in K. -/
+/- The actual twisted dual is a Galois representation on the geometric
+   roots-of-unity module.  No primitive root in K is needed; the base-field
+   roots alias above remains reserved for the self-dual specialization. -/
+abbrev Chapter06TwistedCartierDualCarrier
+    (K Ks : Type*) [Field K] [Field Ks] [Algebra K Ks] (n : ℕ) :=
+  Additive (Chapter06GeometricCartierDual K Ks n)
+
 abbrev Chapter06TwistedCartierDual
-    (K : Type*) [Field K] (n : ℕ) :=
-  Additive (Chapter06CartierDual K n)
+    (K Ks : Type*) [Field K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks] (n : ℕ) :=
+  Representation ℤ (Gal(Ks / K)) (Chapter06TwistedCartierDualCarrier K Ks n)
+
+noncomputable def chapter06TwistedCartierDualRepresentation
+    (K Ks : Type*) [Field K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks] (n : ℕ) :
+    Chapter06TwistedCartierDual K Ks n :=
+  chapter06GeometricCartierDualRepresentation K Ks n
+
+@[simp]
+theorem chapter06TwistedCartierDualRepresentation_apply
+    {K Ks : Type*} [Field K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks] (n : ℕ)
+    (σ : Gal(Ks / K))
+    (ζ : Chapter06GeometricCartierDual K Ks n) :
+    chapter06TwistedCartierDualRepresentation K Ks n σ
+        (Additive.ofMul ζ) =
+      Additive.ofMul (restrictRootsOfUnity σ.toAlgHom n ζ) := by
+  rfl
 
 theorem chapter06_without_roots_of_unity_uses_twisted_dual
-    {K : Type*} [Field K] (n : ℕ) :
-    Chapter06TwistedCartierDual K n =
-      Additive (Chapter06CartierDual K n) :=
-  rfl
+    {K Ks : Type*} [Field K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks] (n : ℕ) :
+    Nonempty (Chapter06TwistedCartierDual K Ks n) :=
+  ⟨chapter06TwistedCartierDualRepresentation K Ks n⟩
 
 /- The coordinate, the local duality data, and the finite reciprocity witness
    are proof data for the construction; the theorem above states uniqueness

@@ -95,7 +95,7 @@ theorem chapter02_precision_action_exists
     (K L : Type u) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
     (A : ValuationSubring L) (i : ℕ)
-    (hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A) :
+    (_hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A) :
     Nonempty (Chapter02PrecisionActionData K L A i) := by
   let I : Ideal A := IsLocalRing.maximalIdeal A
   let J : Ideal A := I ^ (i + 1)
@@ -106,7 +106,7 @@ theorem chapter02_precision_action_exists
       K A) : J.map (e σ) = J := by
     dsimp [J, I]
     rw [Ideal.map_pow]
-    simpa using (IsLocalRing.map_ringEquiv_maximalIdeal (e σ))
+    simp
   let qval (σ : LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup
       K A) : RingAut (chapter02PrecisionQuotient A (i + 1)) := by
     change RingAut (A ⧸ J)
@@ -134,7 +134,7 @@ theorem chapter02_precision_action_exists
       calc
         qval (σ * τ) (Ideal.Quotient.mk J x) =
             Ideal.Quotient.mk J (e (σ * τ) x) := hqval_apply (σ * τ) x
-        _ = Ideal.Quotient.mk J (e σ (e τ x)) := by simp [e, mul_smul]
+        _ = Ideal.Quotient.mk J (e σ (e τ x)) := by simp [e]
         _ = qval σ (Ideal.Quotient.mk J (e τ x)) := (hqval_apply σ _).symm
         _ = qval σ (qval τ (Ideal.Quotient.mk J x)) := by rw [hqval_apply τ x] }
   have hq_apply
@@ -257,8 +257,8 @@ theorem chapter02_unit_ratio_mem_deeper_principal_units
     (vL : AddValuation L (WithTop ℤ))
     [Valuation.IsRankOneDiscrete vK.toValuation]
     [Valuation.IsRankOneDiscrete vL.toValuation]
-    (hext : vK.IsEquiv (vL.comap (algebraMap K L)))
-    (hcomplete : IsAdicComplete
+    (_hext : vK.IsEquiv (vL.comap (algebraMap K L)))
+    (_hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.toValuation.valuationSubring)
       vK.toValuation.valuationSubring)
     [Algebra (IsLocalRing.ResidueField vK.toValuation.valuationSubring)
@@ -266,8 +266,8 @@ theorem chapter02_unit_ratio_mem_deeper_principal_units
     [FiniteDimensional (IsLocalRing.ResidueField vK.toValuation.valuationSubring)
       (IsLocalRing.ResidueField vL.toValuation.valuationSubring)]
     (i n : ℕ)
-    (hi : 1 ≤ i) (hn : 1 ≤ n)
-    (hseparable : Algebra.IsSeparable
+    (_hi : 1 ≤ i) (_hn : 1 ≤ n)
+    (_hseparable : Algebra.IsSeparable
       (IsLocalRing.ResidueField vK.toValuation.valuationSubring)
       (IsLocalRing.ResidueField vL.toValuation.valuationSubring))
     (σ : LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup
@@ -331,7 +331,7 @@ theorem chapter02_unit_ratio_mem_deeper_principal_units
                 (e (π : A) - (π : A)) * (π : A) ^ m ∈
               I ^ ((m + 1) + i) :=
           (I ^ ((m + 1) + i)).add_mem hleft'' hright'
-        convert hsum using 1 <;> ring
+        convert hsum using 1; ring
   obtain ⟨a, ha⟩ : ∃ a : A, a * (π : A) ^ n = (z : A) - 1 := by
     rw [hπ.is_generator, Ideal.span_singleton_pow] at hz
     exact Ideal.mem_span_singleton'.mp hz
@@ -351,9 +351,9 @@ theorem chapter02_unit_ratio_mem_deeper_principal_units
         (e a - a) * e (π : A) ^ n +
             a * (e (π : A) ^ n - (π : A) ^ n) ∈ I ^ (n + i) :=
       (I ^ (n + i)).add_mem hfirst hsecond
-    convert hsum using 1 <;> ring
+    convert hsum using 1; ring
   have hdeep : e (z : A) - (z : A) ∈ I ^ (n + i) := by
-    convert hdeep' using 1 <;> simp [map_sub]
+    convert hdeep' using 1; simp [map_sub]
   let w : Aˣ := Units.map e.toRingHom.toMonoidHom z / z
   have hw : ((w : Aˣ) : A) - 1 ∈ I ^ (n + i) := by
     change (e (z : A) * ((z⁻¹ : Aˣ) : A) - 1) ∈ I ^ (n + i)

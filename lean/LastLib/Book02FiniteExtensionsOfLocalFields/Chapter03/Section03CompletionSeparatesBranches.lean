@@ -1,5 +1,6 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section02IntersectionsAndComposita
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section01WhyTowerFormulasMatter
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.Section02ExistenceUniquenessAndCompleteness
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section01TheExtensionProblem
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section04FactorizationOfTheMaximalIdeal
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03
@@ -17,12 +18,13 @@ abbrev chapter03CompletedBranch
     (w : Valuation E Γ) : Type _ :=
   Valuation.Completion w
 
-/-- A valuation branch is a valuation extension in a fixed value group. -/
+/-- A valuation branch may use a genuinely larger value group upstairs. -/
 abbrev chapter03ValuationBranch
     {K₀ E Γ : Type*} [Field K₀] [Field E]
     [LinearOrderedCommGroupWithZero Γ] [Algebra K₀ E]
     (v : Valuation K₀ Γ) : Type _ :=
-  ValuationExtension v E
+  LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10HeterogeneousValuationExtension
+    E v
 
 /-- Representatives for all valuation branches, modulo equivalence. -/
 structure Chapter03CompletionBranchData
@@ -35,9 +37,10 @@ structure Chapter03CompletionBranchData
   branch : index → chapter03ValuationBranch (K₀ := K₀) (E := E) (Γ := Γ) v
   branch_exhaustive :
     ∀ w : chapter03ValuationBranch (K₀ := K₀) (E := E) (Γ := Γ) v,
-      ∃ i, (branch i).1.IsEquiv w.1
+      ∃ i, (branch i).valuation.IsEquiv w.valuation
   branch_pairwise_inequivalent :
-    Pairwise (fun i j => ¬(branch i).1.IsEquiv (branch j).1)
+    Pairwise (fun i j =>
+      ¬(branch i).valuation.IsEquiv (branch j).valuation)
 
 instance {K₀ E Γ : Type*} [Field K₀] [Field E]
     [LinearOrderedCommGroupWithZero Γ] [Algebra K₀ E]
@@ -52,10 +55,11 @@ theorem chapter03_completion_tensor_product_decomposition
     (v : Valuation K₀ Γ) [Algebra K₀ (Valuation.Completion v)]
     [Valuation.IsRankOneDiscrete v]
     [FiniteDimensional K₀ E] [Algebra.IsSeparable K₀ E]
-    (D : Chapter03CompletionBranchData K₀ E Γ v) :
+    (D : Chapter03CompletionBranchData K₀ E Γ v)
+    (hne : Nonempty D.index) :
     Nonempty
       (E ⊗[K₀] Valuation.Completion v ≃+*
-        (∀ i, chapter03CompletedBranch (D.branch i).1)) := by
+        (∀ i, chapter03CompletedBranch (D.branch i).valuation)) := by
   sorry
 
 /-- The degree of one completed branch is its ramification factor times its
@@ -64,17 +68,19 @@ theorem chapter03_completed_branch_degree
     {K₀ E Γ : Type*} [Field K₀] [Field E]
     [LinearOrderedCommGroupWithZero Γ] [Algebra K₀ E]
     (v : Valuation K₀ Γ) (w : Valuation E Γ)
-    [Valuation.IsRankOneDiscrete v] [Valuation.IsRankOneDiscrete w]
+    (vComp : Valuation (Valuation.Completion v) Γ)
+    (wComp : Valuation (Valuation.Completion w) Γ)
     [Algebra (Valuation.Completion v) (Valuation.Completion w)]
+    [vComp.HasExtension wComp]
+    [Valuation.IsRankOneDiscrete vComp]
+    [Valuation.IsRankOneDiscrete wComp]
     [FiniteDimensional (Valuation.Completion v) (Valuation.Completion w)]
-    [PerfectField
-      (IsLocalRing.ResidueField (Valuation.Completion v))]
+    (hcomplete : IsAdicComplete
+      (IsLocalRing.maximalIdeal vComp.valuationSubring) vComp.valuationSubring)
     (e f : ℕ)
     (hbranch : v.IsEquiv (w.comap (algebraMap K₀ E)))
-    (he : (IsLocalRing.maximalIdeal (Valuation.Completion w)).ramificationIdx
-      (Valuation.Completion v) = e)
-    (hf : (IsLocalRing.maximalIdeal (Valuation.Completion w)).inertiaDeg
-      (Valuation.Completion v) = f) :
+    (he : chapter03RamificationIndex vComp wComp = e)
+    (hf : chapter03ResidueDegree vComp wComp = f) :
     Module.finrank (Valuation.Completion v) (Valuation.Completion w) = e * f := by
   sorry
 
@@ -123,7 +129,7 @@ theorem chapter03_complete_base_tensor_product_is_one_completion
     ∃ i : D.index,
       Nonempty
         (E ⊗[K₀] Valuation.Completion v ≃+*
-          chapter03CompletedBranch (D.branch i).1) := by
+          chapter03CompletedBranch (D.branch i).valuation) := by
   sorry
 
 end

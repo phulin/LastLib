@@ -66,6 +66,13 @@ theorem chapter02_sections_generate_iff_stalkwise_generation
       ∀ x : X, ∃ i, chapter02SectionGeneratesAt (s i) x := by
   sorry
 
+theorem chapter02_sections_generate_implies_closed_pointwise_generation
+    {X : Scheme.{u}} (L : Chapter02LineBundle X) {I : Type u}
+    (s : I → Chapter02LineBundleSections L)
+    (h : Chapter02SectionsGenerate L s) :
+    Chapter02ClosedPointwiseGeneration L s := by
+  sorry
+
 /-!
 The free presentation has to be transported across base change.  Merely pulling back the old
 evaluation map gives an epimorphism from the pulled-back free sheaf, but the book's statement is
@@ -118,6 +125,14 @@ theorem chapter02_pullback_evaluation_map_on_sections
     g (chapter02EvaluationMap L s) (SheafOfModules.freeSection (R := X.ringCatSheaf) i)
   exact hn.symm.trans (congrArg (chapter02PullbackSectionMap g L.carrier)
     (SheafOfModules.sectionsMap_freeHomEquiv_symm_freeSection s i))
+
+theorem chapter02_sections_generate_after_base_change
+    {X Y : Scheme.{u}} (g : Y ⟶ X) (L : Chapter02LineBundle X)
+    {I : Type u} (s : I → Chapter02LineBundleSections L)
+    (h : Chapter02SectionsGenerate L s) :
+    Chapter02SectionsGenerate (chapter02PullbackLineBundle g L)
+      (fun i => chapter02PullbackSectionMap g L.carrier (s i)) := by
+  sorry
 
 /-!
 The projective-bundle theorem turns a generating tuple into a unique map to projective space.

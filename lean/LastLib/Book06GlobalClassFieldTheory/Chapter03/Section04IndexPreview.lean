@@ -45,18 +45,16 @@ can use the canonical map rather than restating it.
 noncomputable def chapter03ArtinQuotientMap
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
-    [IsMulCommutative (Gal(L / K))]
     {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
     {N : Chapter03NormData S_K S_L}
     (A : Chapter03ArtinReciprocityData N) :
-    Chapter03ClassNormQuotient N →* Gal(L / K) :=
+    Chapter03ClassNormQuotient N →* Abelianization (Gal(L / K)) :=
   QuotientGroup.lift (chapter03NormClassSubgroup N) (chapter03ClassArtin A) (by
     exact chapter03_classNorm_range_le_artin_kernel A)
 
 @[simp] theorem chapter03ArtinQuotientMap_mk
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
-    [IsMulCommutative (Gal(L / K))]
     {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
     {N : Chapter03NormData S_K S_L}
     (A : Chapter03ArtinReciprocityData N) (c : Chapter03ClassGroup S_K) :
@@ -78,12 +76,11 @@ noncomputable def chapter03ArtinQuotientMap
 def chapter03ClassNormQuotientEquivGalois
     {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
-    [IsMulCommutative (Gal(L / K))]
     {S_K : Chapter03FieldIdeleData K} {S_L : Chapter03FieldIdeleData L}
     {N : Chapter03NormData S_K S_L}
     (A : Chapter03ArtinReciprocityData N) :
     Prop :=
-  ∃ e : Chapter03ClassNormQuotient N ≃* Gal(L / K),
+  ∃ e : Chapter03ClassNormQuotient N ≃* Abelianization (Gal(L / K)),
     ∀ c : Chapter03ClassGroup S_K,
       e (QuotientGroup.mk' (chapter03NormClassSubgroup N) c) =
         chapter03ClassArtin A c

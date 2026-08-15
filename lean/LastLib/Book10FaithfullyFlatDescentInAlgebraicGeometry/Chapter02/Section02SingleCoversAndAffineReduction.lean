@@ -20,6 +20,10 @@ universe u v
 def IsFpqcMorphism {S T : Scheme.{u}} (p : T ⟶ S) : Prop :=
   Flat p ∧ QuasiCompact p ∧ Surjective p
 
+/-- A flat morphism locally of finite presentation in the book's fppf terminology. -/
+def IsFppfMorphism {S T : Scheme.{u}} (p : T ⟶ S) : Prop :=
+  Flat p ∧ LocallyOfFinitePresentation p
+
 /-- The singleton family associated to one scheme morphism. -/
 def singletonFamily {S T : Scheme.{u}} (p : T ⟶ S) : SchemeFamily S Unit where
   obj := fun _ ↦ T
@@ -28,6 +32,26 @@ def singletonFamily {S T : Scheme.{u}} (p : T ⟶ S) : SchemeFamily S Unit where
 /-- The family-level fpqc condition for a singleton. -/
 def IsFpqcSingletonFamily {S T : Scheme.{u}} (p : T ⟶ S) : Prop :=
   FpqcCoveringFamily (singletonFamily p)
+
+theorem fppfMorphism_is_singletonFamily_of_surjective
+    {S T : Scheme.{u}} {p : T ⟶ S}
+    (hp : IsFppfMorphism p) (hsurj : Surjective p) :
+    FppfCoveringFamily (singletonFamily p) := by
+  refine ⟨?_, ?_, ?_⟩
+  intro s
+  obtain ⟨x, hx⟩ := hsurj.surj s
+  exact ⟨(), x, hx⟩
+  · intro i
+    simpa [singletonFamily] using hp.1
+  · intro i
+    simpa [singletonFamily] using hp.2
+
+theorem fppfMorphism_is_fpqcSingletonFamily_of_surjective
+    {S T : Scheme.{u}} {p : T ⟶ S}
+    (hp : IsFppfMorphism p) (hsurj : Surjective p) :
+    IsFpqcSingletonFamily p := by
+  exact fppfCoveringFamily_is_fpqc
+    (fppfMorphism_is_singletonFamily_of_surjective hp hsurj)
 
 /-- The finite-reduction condition for one morphism, with the source open exposed explicitly. -/
 def SingletonFiniteReductionCondition {S T : Scheme.{u}} (p : T ⟶ S) : Prop :=

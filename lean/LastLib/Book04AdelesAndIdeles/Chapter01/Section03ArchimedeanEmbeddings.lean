@@ -130,6 +130,11 @@ theorem chapter01_minkowski_quotient_compact :
 theorem chapter01_complex_coordinate_area_scale (z : ℂ) :
     chapter01ComplexAreaScale z = ‖z‖ ^ 2 := rfl
 
+theorem chapter01_complex_area_scale_mul (z w : ℂ) :
+    chapter01ComplexAreaScale (z * w) =
+      chapter01ComplexAreaScale z * chapter01ComplexAreaScale w := by
+  simp [chapter01ComplexAreaScale, mul_pow]
+
 end
 
 end LastLib.Book04AdelesAndIdeles.Chapter01

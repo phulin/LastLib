@@ -1,9 +1,12 @@
 import Mathlib.Data.ZMod.Basic
 import Mathlib.NumberTheory.Padics.PadicNumbers
+import Mathlib.NumberTheory.Padics.Hensel
 import Mathlib.RepresentationTheory.Homological.GroupCohomology.FiniteCyclic
+import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.NormNum.ModEq
 import LastLib.Book06GlobalClassFieldTheory.Chapter01.Section03FourKindsOfNormAssertion
+import LastLib.Book06GlobalClassFieldTheory.Chapter04.Section03ConstructionOfTheFundamentalClass
 import LastLib.Book06GlobalClassFieldTheory.Chapter09.Section01TheKnotBetweenLocalAndGlobalNorms
 
 namespace LastLib.Book06GlobalClassFieldTheory.Chapter09
@@ -47,7 +50,10 @@ noncomputable def chapter09H3LocalizationMap
       funext v
       simp [chapter09H3Restriction]
     map_smul' := by
-      sorry }
+      intro r x
+      funext v
+      simp [chapter09H3Restriction]
+      exact Int.cast_smul_eq_zsmul ℤ r _ }
 
 def chapter09H3LocalizationKernel
     {G : Type} [Group G] (P : Chapter09DecompositionData G) :
@@ -88,45 +94,106 @@ noncomputable def chapter09_fundamental_class_shift_by_two
       groupCohomology F.shiftedModule 3 :=
   F.shift_by_two
 
-/- LOCAL_DEPENDENCY_GUESS: the following data package is the canonical idele
-resolution/local-decomposition realization of the exact sequence in Section
-9.1.  Mathlib has the cohomology, Shapiro, and Tate interfaces, but not this
-global idelic comparison theorem.  Packaging the decomposition data keeps an
-arbitrary family of subgroups from being mistaken for the actual local
-decomposition groups of `L / K`; the comparison itself is stated as a theorem
-interface below.
+/-!
+The cohomological formula is tied to the canonical norm interface and to a
+global place system.  In particular, the decomposition groups come from the
+global Galois action/decomposition interface, rather than an unrelated family
+of subgroups.
+`Chapter04PlaceSystem` is the earlier source-order interface for precisely
+this action/decomposition data; the remaining comparison theorem is stated
+below as a theorem, not smuggled in as an arbitrary field of the realization.
 -/
-structure Chapter09KnotCohomologyRealization
+structure Chapter09CanonicalKnotCohomologyData
+    (K L : Type) [Field K] [Field L] [Algebra K L]
+    [NumberField K] [NumberField L] [FiniteDimensional K L]
+    [IsGalois K L] [Fintype (Gal(L / K))] where
+  normData :
+    LastLib.Book06GlobalClassFieldTheory.Chapter01.GlobalNormInterface K L
+  placeSystem :
+    LastLib.Book06GlobalClassFieldTheory.Chapter04.Chapter04PlaceSystem
+      (Gal(L / K))
+      (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookPlace L)
+      (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookPlace K)
+  placeSystem_below : placeSystem.below = normData.below
+  decomposition_cyclic_off_finite :
+    Set.Finite {w : LastLib.Book06GlobalClassFieldTheory.Chapter01.BookPlace L |
+      ¬ IsCyclic (placeSystem.decomposition w)}
+
+noncomputable def chapter09CanonicalIdeleNormData
     {K L : Type} [Field K] [Field L] [Algebra K L]
     [NumberField K] [NumberField L] [FiniteDimensional K L]
     [IsGalois K L] [Fintype (Gal(L / K))]
-    {I_K I_L : Type*} [CommGroup I_K] [CommGroup I_L]
-    (D : Chapter09IdeleNormData K L I_K I_L)
-    [Finite (chapter09KnotGroup D)]
-    [TopologicalSpace (chapter09KnotGroup D)]
-    [IsTopologicalGroup (chapter09KnotGroup D)]
-    [DiscreteTopology (chapter09KnotGroup D)] where
-  decompositionData : Chapter09DecompositionData (Gal(L / K))
+    (R : Chapter09CanonicalKnotCohomologyData K L) :
+    Chapter09IdeleNormData K L
+      (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleGroup K)
+      (LastLib.Book06GlobalClassFieldTheory.Chapter01.BookIdeleGroup L) :=
+  chapter09IdeleNormDataOfGlobalNormInterface R.normData
+
+def chapter09CanonicalDecompositionData
+    {K L : Type} [Field K] [Field L] [Algebra K L]
+    [NumberField K] [NumberField L] [FiniteDimensional K L]
+    [IsGalois K L] [Fintype (Gal(L / K))]
+    (R : Chapter09CanonicalKnotCohomologyData K L) :
+  Chapter09DecompositionData (Gal(L / K)) :=
+  { places := LastLib.Book06GlobalClassFieldTheory.Chapter01.BookPlace L
+    decompositionGroup := R.placeSystem.decomposition }
+
+theorem chapter09KnotCohomologyFormula
+    {K L : Type} [Field K] [Field L] [Algebra K L]
+    [NumberField K] [NumberField L] [FiniteDimensional K L]
+    [IsGalois K L] [Fintype (Gal(L / K))]
+    (R : Chapter09CanonicalKnotCohomologyData K L)
+    [Finite (chapter09KnotGroup (chapter09CanonicalIdeleNormData R))]
+    [TopologicalSpace (chapter09KnotGroup (chapter09CanonicalIdeleNormData R))]
+    [IsTopologicalGroup (chapter09KnotGroup (chapter09CanonicalIdeleNormData R))]
+    [DiscreteTopology (chapter09KnotGroup (chapter09CanonicalIdeleNormData R))] :
+    Nonempty
+      (Additive (PontryaginDual (chapter09KnotGroup
+        (chapter09CanonicalIdeleNormData R))) ≃+
+        chapter09H3LocalizationKernel (chapter09CanonicalDecompositionData R)) := by
+  sorry
 
 noncomputable def chapter09_knot_cohomology_formula_at
     {K L : Type} [Field K] [Field L] [Algebra K L]
     [NumberField K] [NumberField L] [FiniteDimensional K L]
     [IsGalois K L] [Fintype (Gal(L / K))]
-    {I_K I_L : Type*} [CommGroup I_K] [CommGroup I_L]
-    (D : Chapter09IdeleNormData K L I_K I_L)
-    [Finite (chapter09KnotGroup D)]
-    [TopologicalSpace (chapter09KnotGroup D)]
-    [IsTopologicalGroup (chapter09KnotGroup D)]
-    [DiscreteTopology (chapter09KnotGroup D)]
-    (R : Chapter09KnotCohomologyRealization D) :
-    Additive (PontryaginDual (chapter09KnotGroup D)) ≃+
-      chapter09H3LocalizationKernel R.decompositionData := by
-  sorry
+    (R : Chapter09CanonicalKnotCohomologyData K L)
+    [Finite (chapter09KnotGroup (chapter09CanonicalIdeleNormData R))]
+    [TopologicalSpace (chapter09KnotGroup (chapter09CanonicalIdeleNormData R))]
+    [IsTopologicalGroup (chapter09KnotGroup (chapter09CanonicalIdeleNormData R))]
+    [DiscreteTopology (chapter09KnotGroup (chapter09CanonicalIdeleNormData R))] :
+    Additive (PontryaginDual (chapter09KnotGroup
+      (chapter09CanonicalIdeleNormData R))) ≃+
+      chapter09H3LocalizationKernel (chapter09CanonicalDecompositionData R) :=
+  Classical.choice (chapter09KnotCohomologyFormula R)
 
 theorem chapter09_h3_cyclic_subgroup_vanishes
     {C : Type} [Group C] [Fintype C] [IsCyclic C] :
     Subsingleton (chapter09H3 C) := by
-  sorry
+  obtain ⟨g, hg⟩ := IsCyclic.exists_generator (α := C)
+  let _ : CommGroup C := IsCyclic.commGroup
+  let A : Rep ℤ C := Rep.trivial ℤ C ℤ
+  let S := Rep.FiniteCyclicGroup.subCompNormHom A g
+  have hexact : S.Exact := by
+    rw [CategoryTheory.ShortComplex.moduleCat_exact_iff]
+    intro x hx
+    refine ⟨0, ?_⟩
+    change (Rep.norm A).hom x = 0 at hx
+    rw [Rep.norm_apply] at hx
+    simp [A, Representation.norm] at hx
+    have hx' : (Fintype.card C : ℤ) * x = 0 := by
+      simpa [Finset.sum_const, nsmul_eq_mul] using hx
+    have hcard : (Fintype.card C : ℤ) ≠ 0 := by
+      exact_mod_cast (Fintype.card_ne_zero : Fintype.card C ≠ 0)
+    have hx0 : x = 0 := (mul_eq_zero.mp hx').resolve_left hcard
+    simp [S, A, hx0]
+  have hz : CategoryTheory.Limits.IsZero S.homology :=
+    (S.exact_iff_isZero_homology).mp hexact
+  have hz' : CategoryTheory.Limits.IsZero (groupCohomology A 3) :=
+    hz.of_iso (Rep.FiniteCyclicGroup.groupCohomologyIsoOdd A g hg 3
+      (by exact ⟨1, by norm_num⟩))
+  change Subsingleton (groupCohomology A 3)
+  exact ModuleCat.isZero_iff_subsingleton.mp hz'
 
 abbrev chapter09KleinFour : Type :=
   Multiplicative (ZMod 2 × ZMod 2)
@@ -167,15 +234,84 @@ theorem chapter09_biquadratic_congruence_at_2 :
 
 theorem chapter09_seventeen_is_square_in_13adic [Fact (Nat.Prime 13)] :
     IsSquare (17 : ℚ_[13]) := by
-  sorry
+  let F : Polynomial (ℤ_[13]) := Polynomial.X ^ 2 - Polynomial.C (17 : ℤ_[13])
+  have hF : F.aeval (2 : ℤ_[13]) = (-13 : ℤ_[13]) := by
+    norm_num [F, Polynomial.aeval_def, Polynomial.eval₂_at_apply]
+  have hFd : F.derivative.aeval (2 : ℤ_[13]) = (4 : ℤ_[13]) := by
+    norm_num [F, Polynomial.aeval_def, Polynomial.eval₂_at_apply]
+  have hnorm : ‖F.aeval (2 : ℤ_[13])‖ <
+      ‖F.derivative.aeval (2 : ℤ_[13])‖ ^ 2 := by
+    rw [hF, hFd]
+    have h13 : ‖(13 : ℤ_[13])‖ = (13 : ℝ)⁻¹ := PadicInt.norm_p
+    rw [norm_neg, h13]
+    have h4 : ‖(4 : ℤ_[13])‖ = 1 :=
+      (PadicInt.norm_natCast_eq_one_iff).2 (by norm_num)
+    rw [h4]
+    norm_num
+  obtain ⟨z, hz, _, _, _⟩ :=
+    hensels_lemma (p := 13) (F := F) (a := (2 : ℤ_[13])) hnorm
+  refine ⟨(z : ℚ_[13]), ?_⟩
+  have hz' := congrArg (fun x : ℤ_[13] => (x : ℚ_[13])) hz
+  have h17 : ((17 : ℤ_[13]) : ℚ_[13]) = (17 : ℚ_[13]) :=
+    PadicInt.coe_natCast 17
+  have hz'' : (z : ℚ_[13]) ^ 2 - ((17 : ℤ_[13]) : ℚ_[13]) = 0 := by
+    simpa [F, Polynomial.aeval_def, Polynomial.eval₂_at_apply] using hz'
+  rw [h17] at hz''
+  simpa [pow_two] using (sub_eq_zero.mp hz'').symm
 
 theorem chapter09_thirteen_is_square_in_17adic [Fact (Nat.Prime 17)] :
     IsSquare (13 : ℚ_[17]) := by
-  sorry
+  let F : Polynomial (ℤ_[17]) := Polynomial.X ^ 2 - Polynomial.C (13 : ℤ_[17])
+  have hF : F.aeval (8 : ℤ_[17]) = (51 : ℤ_[17]) := by
+    norm_num [F, Polynomial.aeval_def, Polynomial.eval₂_at_apply]
+  have hFd : F.derivative.aeval (8 : ℤ_[17]) = (16 : ℤ_[17]) := by
+    norm_num [F, Polynomial.aeval_def, Polynomial.eval₂_at_apply]
+  have hnorm : ‖F.aeval (8 : ℤ_[17])‖ <
+      ‖F.derivative.aeval (8 : ℤ_[17])‖ ^ 2 := by
+    rw [hF, hFd]
+    have h51 : ‖(51 : ℤ_[17])‖ < 1 :=
+      (PadicInt.norm_intCast_lt_one_iff).2 (by norm_num)
+    have h16 : ‖(16 : ℤ_[17])‖ = 1 :=
+      (PadicInt.norm_natCast_eq_one_iff).2 (by norm_num)
+    calc
+      ‖(51 : ℤ_[17])‖ < 1 := h51
+      _ = ‖(16 : ℤ_[17])‖ ^ 2 := by rw [h16]; norm_num
+  obtain ⟨z, hz, _, _, _⟩ :=
+    hensels_lemma (p := 17) (F := F) (a := (8 : ℤ_[17])) hnorm
+  refine ⟨(z : ℚ_[17]), ?_⟩
+  have hz' := congrArg (fun x : ℤ_[17] => (x : ℚ_[17])) hz
+  have h13 : ((13 : ℤ_[17]) : ℚ_[17]) = (13 : ℚ_[17]) :=
+    PadicInt.coe_natCast 13
+  have hz'' : (z : ℚ_[17]) ^ 2 - ((13 : ℤ_[17]) : ℚ_[17]) = 0 := by
+    simpa [F, Polynomial.aeval_def, Polynomial.eval₂_at_apply] using hz'
+  rw [h13] at hz''
+  simpa [pow_two] using (sub_eq_zero.mp hz'').symm
 
 theorem chapter09_seventeen_is_square_in_2adic [Fact (Nat.Prime 2)] :
     IsSquare (17 : ℚ_[2]) := by
-  sorry
+  let F : Polynomial (ℤ_[2]) := Polynomial.X ^ 2 - Polynomial.C (17 : ℤ_[2])
+  have hF : F.aeval (1 : ℤ_[2]) = (-16 : ℤ_[2]) := by
+    norm_num [F, Polynomial.aeval_def, Polynomial.eval₂_at_apply]
+  have hFd : F.derivative.aeval (1 : ℤ_[2]) = (2 : ℤ_[2]) := by
+    norm_num [F, Polynomial.aeval_def, Polynomial.eval₂_at_apply]
+  have hnorm : ‖F.aeval (1 : ℤ_[2])‖ <
+      ‖F.derivative.aeval (1 : ℤ_[2])‖ ^ 2 := by
+    rw [hF, hFd]
+    have h16 : (16 : ℤ_[2]) = (2 : ℤ_[2]) ^ 4 := by norm_num
+    rw [norm_neg, h16, norm_pow]
+    have hnorm2 : ‖(2 : ℤ_[2])‖ = (2 : ℝ)⁻¹ := PadicInt.norm_p
+    rw [hnorm2]
+    norm_num
+  obtain ⟨z, hz, _, _, _⟩ :=
+    hensels_lemma (p := 2) (F := F) (a := (1 : ℤ_[2])) hnorm
+  refine ⟨(z : ℚ_[2]), ?_⟩
+  have hz' := congrArg (fun x : ℤ_[2] => (x : ℚ_[2])) hz
+  have h17 : ((17 : ℤ_[2]) : ℚ_[2]) = (17 : ℚ_[2]) :=
+    PadicInt.coe_natCast 17
+  have hz'' : (z : ℚ_[2]) ^ 2 - ((17 : ℤ_[2]) : ℚ_[2]) = 0 := by
+    simpa [F, Polynomial.aeval_def, Polynomial.eval₂_at_apply] using hz'
+  rw [h17] at hz''
+  simpa [pow_two] using (sub_eq_zero.mp hz'').symm
 
 theorem chapter09_biquadratic_positive_at_infinity :
     0 < (13 : ℝ) ∧ 0 < (17 : ℝ) := by
@@ -239,7 +375,44 @@ theorem chapter09_biquadratic_only_13_17_ramify
     [Fintype (Gal(L / ℚ))]
     (A : Chapter09BiquadraticLocalAnalysis L E P) :
     ∀ v, A.ramified v ↔ A.primeBelow v = 13 ∨ A.primeBelow v = 17 := by
-  sorry
+  intro v
+  rw [A.ramified_iff_discriminant_support v, A.quadraticDiscriminants_eq]
+  constructor
+  · rintro ⟨d, hd, hdiv⟩
+    simp only [chapter09BiquadraticDiscriminants, Set.mem_insert_iff,
+      Set.mem_singleton_iff] at hd
+    have hp := A.primeBelow_prime v
+    rcases hd with rfl | rfl | rfl
+    · left
+      have hdiv' : A.primeBelow v ∣ 13 := by
+        exact_mod_cast hdiv
+      rcases (Nat.dvd_prime (by decide : Nat.Prime 13)).mp hdiv' with h | h
+      · exact (hp.ne_one h).elim
+      · exact h
+    · right
+      have hdiv' : A.primeBelow v ∣ 17 := by
+        exact_mod_cast hdiv
+      rcases (Nat.dvd_prime (by decide : Nat.Prime 17)).mp hdiv' with h | h
+      · exact (hp.ne_one h).elim
+      · exact h
+    · have hdiv' : A.primeBelow v ∣ 13 * 17 := by
+        exact_mod_cast hdiv
+      rcases (hp.dvd_mul).mp hdiv' with h13 | h17
+      · left
+        rcases (Nat.dvd_prime (by decide : Nat.Prime 13)).mp h13 with h | h
+        · exact (hp.ne_one h).elim
+        · exact h
+      · right
+        rcases (Nat.dvd_prime (by decide : Nat.Prime 17)).mp h17 with h | h
+        · exact (hp.ne_one h).elim
+        · exact h
+  · rintro (h | h)
+    · refine ⟨13, by simp [chapter09BiquadraticDiscriminants], ?_⟩
+      rw [h]
+      norm_num
+    · refine ⟨17, by simp [chapter09BiquadraticDiscriminants], ?_⟩
+      rw [h]
+      norm_num
 
 theorem chapter09_biquadratic_ramified_iff_discriminant_support
     {L : Type} [Field L] [Algebra ℚ L] [NumberField L]
@@ -270,7 +443,17 @@ theorem chapter09_biquadratic_decomposition_groups_are_cyclic
     [Fintype (Gal(L / ℚ))]
     (A : Chapter09BiquadraticLocalAnalysis L E P) :
     ∀ v, IsCyclic (P.decompositionGroup v) := by
-  sorry
+  intro v
+  have hpos : 0 < Nat.card (P.decompositionGroup v) := Nat.card_pos
+  have hle : Nat.card (P.decompositionGroup v) ≤ 2 :=
+    A.decomposition_groups_card_le_two v
+  have hcard : Nat.card (P.decompositionGroup v) = 1 ∨
+      Nat.card (P.decompositionGroup v) = 2 := by
+    omega
+  rcases hcard with hcard | hcard
+  · exact @isCyclic_of_subsingleton _ _
+      (Nat.card_eq_one_iff_unique.mp hcard).1
+  · exact isCyclic_of_prime_card hcard
 
 theorem chapter09_biquadratic_decomposition_groups_card_le_two
     {L : Type} [Field L] [Algebra ℚ L] [NumberField L]
@@ -298,8 +481,6 @@ structure Chapter09CanonicalBiquadraticCounterexample where
   [galois_L : IsGalois ℚ L]
   [fintype_galois_L : Fintype (Gal(L / ℚ))]
   presentation : Chapter09BiquadraticPresentation L
-  decompositionData : Chapter09DecompositionData (Gal(L / ℚ))
-  localAnalysis : Chapter09BiquadraticLocalAnalysis L presentation decompositionData
 
 attribute [instance] Chapter09CanonicalBiquadraticCounterexample.field_L
   Chapter09CanonicalBiquadraticCounterexample.numberField_L
@@ -316,7 +497,8 @@ theorem chapter09_canonical_biquadratic_local_products
   LastLib.Book06GlobalClassFieldTheory.Chapter01.local_tensor_product_product_decomposition
 
 /- LOCAL_DEPENDENCY_GUESS: this is the canonical realization of the displayed
-biquadratic field, its decomposition groups, and its local tensor norms. -/
+biquadratic field presentation.  The finite-place decomposition analysis is
+kept in the separate `Chapter09BiquadraticLocalAnalysis` interface below. -/
 theorem chapter09_canonical_biquadratic_counterexample_data :
     Nonempty Chapter09CanonicalBiquadraticCounterexample := by
   sorry
@@ -350,25 +532,25 @@ structure Chapter09NormRealizationData
     ∀ a, chapter09EverywhereLocalNorm localNormData a ↔
       a ∈ chapter09PrincipalNormSubgroup idele
 
-/- LOCAL_DEPENDENCY_GUESS: instantiate `R` with the canonical idele and local
-completion data of the displayed biquadratic field.  The hypotheses are the
-norm-realization compatibility and the cohomological order-two computation,
-not the desired existence conclusion itself.
+/- LOCAL_DEPENDENCY_GUESS: instantiate the canonical norm/place-system data
+with the idele and local completion data of the displayed biquadratic field.
+The theorem above is the global idele/cohomology comparison; the theorem below
+only consumes that canonical comparison together with the local decomposition
+analysis.
 -/
 theorem chapter09_biquadratic_knot_has_order_two
-    {L : Type} {I_K I_L : Type*} [Field L] [Algebra ℚ L]
+    {L : Type} [Field L] [Algebra ℚ L]
     [NumberField L] [FiniteDimensional ℚ L] [IsGalois ℚ L]
     [Fintype (Gal(L / ℚ))]
     (E : Chapter09BiquadraticPresentation L)
-    [CommGroup I_K] [CommGroup I_L]
-    (D : Chapter09IdeleNormData ℚ L I_K I_L)
-    [Finite (chapter09KnotGroup D)]
-    [TopologicalSpace (chapter09KnotGroup D)]
-    [IsTopologicalGroup (chapter09KnotGroup D)]
-    [DiscreteTopology (chapter09KnotGroup D)]
-    (R : Chapter09KnotCohomologyRealization D)
-    (A : Chapter09BiquadraticLocalAnalysis L E R.decompositionData) :
-    Nat.card (chapter09KnotGroup D) = 2 := by
+    (R : Chapter09CanonicalKnotCohomologyData ℚ L)
+    [Finite (chapter09KnotGroup (chapter09CanonicalIdeleNormData R))]
+    [TopologicalSpace (chapter09KnotGroup (chapter09CanonicalIdeleNormData R))]
+    [IsTopologicalGroup (chapter09KnotGroup (chapter09CanonicalIdeleNormData R))]
+    [DiscreteTopology (chapter09KnotGroup (chapter09CanonicalIdeleNormData R))]
+    (A : Chapter09BiquadraticLocalAnalysis L E
+      (chapter09CanonicalDecompositionData R)) :
+    Nat.card (chapter09KnotGroup (chapter09CanonicalIdeleNormData R)) = 2 := by
   sorry
 
 theorem chapter09_biquadratic_exists_local_not_global_norm
@@ -383,7 +565,26 @@ theorem chapter09_biquadratic_exists_local_not_global_norm
     ∃ a : ℚˣ,
       chapter09EverywhereLocalNorm R.localNormData a ∧
         a ∉ chapter09FieldNormSubgroup ℚ L := by
-  sorry
+  have hne : chapter09PrincipalNormSubgroup R.idele ≠
+      chapter09FieldNormSubgroup ℚ L := by
+    intro heq
+    have hsub : Subsingleton (chapter09KnotGroup R.idele) :=
+      (chapter09_knot_trivial_iff R.idele).2 heq
+    have hone : Nat.card (chapter09KnotGroup R.idele) = 1 :=
+      Nat.card_eq_one_iff_unique.mpr ⟨hsub, ⟨1⟩⟩
+    omega
+  obtain ⟨a, ha_principal, ha_not_field⟩ :
+      ∃ a : ℚˣ, a ∈ chapter09PrincipalNormSubgroup R.idele ∧
+        a ∉ chapter09FieldNormSubgroup ℚ L := by
+    by_contra h
+    push Not at h
+    apply hne
+    apply le_antisymm
+    · intro a ha
+      exact h a ha
+    · exact chapter09_field_norm_le_principal_norm R.idele
+  refine ⟨a, ?_, ha_not_field⟩
+  exact (R.everywhere_iff_principal a).2 ha_principal
 
 end
 

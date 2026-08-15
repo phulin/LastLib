@@ -1,6 +1,9 @@
 import LastLib.Book03RamificationTheory.Chapter05.Section01ANumberingDesignedForQuotients
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.Section04FixedFieldsOfInertia
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section04RamificationIndexAndResidueDegree
 import Mathlib.Algebra.Group.Subgroup.Finite
+import Mathlib.FieldTheory.Fixed
+import Mathlib.FieldTheory.Perfect
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
 import Mathlib.RingTheory.Valuation.Discrete.RankOne
@@ -294,21 +297,21 @@ theorem chapter05_coset_displacement_identity
         ∑ τ : H, (S.upstairs.displacement (σ * (τ : G)) : ℚ) := by
   classical
   let R := S.local_field_realization
-  letI : Field R.K := R.field_K
-  letI := R.field_M
-  letI := R.field_M0
-  letI := R.field_L
-  letI := R.algebra_KM
-  letI := R.algebra_KM0
-  letI := R.algebra_KL
-  letI := R.algebra_MM0
-  letI := R.algebra_ML
-  letI := R.algebra_M0L
-  letI := R.scalar_tower_KML
-  letI := R.scalar_tower_KMM0
-  letI := R.scalar_tower_KM0L
-  letI := R.scalar_tower_MM0L
-  letI := R.H0_finite
+  let : Field R.K := R.field_K
+  let := R.field_M
+  let := R.field_M0
+  let := R.field_L
+  let := R.algebra_KM
+  let := R.algebra_KM0
+  let := R.algebra_KL
+  let := R.algebra_MM0
+  let := R.algebra_ML
+  let := R.algebra_M0L
+  let := R.scalar_tower_KML
+  let := R.scalar_tower_KMM0
+  let := R.scalar_tower_KM0L
+  let := R.scalar_tower_MM0L
+  let := R.H0_finite
   have hq_ne : chapter05QuotientMap H σ ≠ 1 := by
     intro hq
     apply hσ
@@ -1091,7 +1094,10 @@ theorem chapter05_coset_displacement_identity_of_coefficient_minimum
   rw [hcoefficient hσ, hquotient hσ]
   exact chapter05_coset_displacement_identity_integral_form H S hσ
 
-private def chapter05SubgroupRamificationFiltration
+/-- Restrict a lower-numbered profile to a normal subgroup.  The construction
+    is public because inertia reduction uses the resulting subextension
+    profile before applying the fixed-field quotient theorem. -/
+def chapter05SubgroupRamificationFiltration
     {G : Type*} [Group G] [Fintype G]
     (H : Subgroup G) [H.Normal]
     (D : Chapter05RamificationFiltration G) :
@@ -2115,6 +2121,516 @@ structure Chapter05FixedFieldSubextensionTransfer
   quotient_galois_equiv :
     (Gal(L / K) ⧸ H) ≃* Gal(
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05FixedField H / K)
+
+/-!
+ The transfer record above supplies valuations and canonical profiles at all
+ three stages, but it does not by itself say that the chosen subgroup is the
+ inertia subgroup of the upstairs profile.  The following bridge keeps that
+ identification, the cyclic totally ramified stage, and the positive upper
+ numbering transport together.  In particular, it does not identify a
+ quotient's lower indices with the upstairs lower indices.
+-/
+structure Chapter05FixedFieldInertiaBridge
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    (H : Subgroup (Gal(L / K))) [H.Normal]
+    (D : Chapter05RamificationFiltration (Gal(L / K)))
+    (T : Chapter05FixedFieldSubextensionTransfer H D)
+    (v : ℝ) (b : ℕ) where
+  inertia_eq_lower_zero : H = D.lowerGroup 0
+  cyclic_subextension : IsCyclic (Gal(
+    L /
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05FixedField H))
+  subextension_cardinality :
+    Nat.card (Gal(
+      L /
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05FixedField H)) =
+      Nat.card H
+  subextension_totally_ramified :
+    T.subextension_profile.lowerGroup 0 = ⊤
+  subextension_last_lower :
+    ∀ n : ℕ, b < n → T.subextension_profile.lowerGroup (n : ℝ) = ⊥
+  subextension_lower_break :
+    b = 0 ∨
+      T.subextension_profile.lowerGroup (b : ℝ) ≠
+        T.subextension_profile.lowerGroup (b + 1 : ℕ)
+  subextension_upper_break :
+    chapter05UpperBreak T.subextension_profile v
+  /- The last-break fields above describe the maximal positive break of the
+     chosen cyclic inertia stage.  This is not automatic for an arbitrary
+     positive break of `D`, so the maximality witness is part of the bridge. -/
+  upper_break_maximal :
+    ∀ r : ℝ, 0 < r → chapter05UpperBreak D r → r ≤ v
+  upper_break_transport :
+    ∀ {r : ℝ}, 0 < r →
+      (chapter05UpperBreak D r ↔
+        chapter05UpperBreak T.subextension_profile r)
+  upper_value :
+    chapter05HerbrandFunction T.subextension_profile (b : ℝ) = v
+  base_residue_perfect :
+    PerfectField (IsLocalRing.ResidueField T.vK.toValuation.valuationSubring)
+  fixed_field_residue_perfect :
+    PerfectField (IsLocalRing.ResidueField T.vM.toValuation.valuationSubring)
+
+/-!
+ This is the field-facing maximal-positive-break inertia step used by
+ Hasse--Arf.  An arbitrary positive break needs a separate graded-layer or
+ character-kernel reduction before this bridge can be applied.
+ The canonicality hypothesis is deliberately explicit: without it an
+ arbitrary abstract filtration `D` need not be the displacement filtration
+ attached to the valuation carried by `T`, so no upper-break transport would
+ follow merely from `H = D.lowerGroup 0`.
+-/
+theorem chapter05_fixed_field_inertia_bridge_of_canonical_profile
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    (H : Subgroup (Gal(L / K))) [H.Normal]
+    (D : Chapter05RamificationFiltration (Gal(L / K)))
+    (T : Chapter05FixedFieldSubextensionTransfer H D)
+    (hcanonical : ∀ n : ℕ, D.lowerGroup (n : ℝ) =
+      chapter05RamificationGroupInG (F := K)
+        T.vL.toValuation.valuationSubring (n + 1))
+    (hinertia : H = D.lowerGroup 0)
+    (hcyclic : IsCyclic H)
+    (hbase_perfect :
+      PerfectField (IsLocalRing.ResidueField T.vK.toValuation.valuationSubring))
+    {v : ℝ} (hv : 0 < v)
+    (hbreak : chapter05UpperBreak D v)
+    (hmax : ∀ r : ℝ, 0 < r → chapter05UpperBreak D r → r ≤ v) :
+    ∃ b : ℕ, Chapter05FixedFieldInertiaBridge H D T v b := by
+  let e : H ≃* Gal(L / IntermediateField.fixedField H) :=
+    IntermediateField.subgroupEquivAlgEquiv H
+  have he_apply (h : H) (x : L) :
+      e h x = (h : Gal(L / K)) x := by
+    rfl
+  have hD_le_H (n : ℕ) : D.lowerGroup (n : ℝ) ≤ H := by
+    rw [hinertia]
+    exact D.lower_antitone (by positivity)
+  have hprofile_nat (n : ℕ) :
+      T.subextension_profile.lowerGroup (n : ℝ) =
+        ((D.lowerGroup (n : ℝ)).comap H.subtype).map e.toMonoidHom := by
+    rw [T.subextension_lower_canonical n]
+    unfold chapter05RamificationGroupInG
+    ext y
+    constructor
+    · rintro ⟨z, hz, rfl⟩
+      let h : H := e.symm (z : Gal(L / IntermediateField.fixedField H))
+      have hD0 : (h : Gal(L / K)) ∈ D.lowerGroup (0 : ℝ) := by
+        simpa only [hinertia] using h.property
+      have hK0 : (h : Gal(L / K)) ∈ chapter05RamificationGroupInG
+          (F := K) T.vL.toValuation.valuationSubring 1 := by
+        rw [← hcanonical 0]
+        simpa using hD0
+      rcases hK0 with ⟨w, hw, hweq⟩
+      have hdec : (h : Gal(L / K)) ∈
+          LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup
+            K T.vL.toValuation.valuationSubring := by
+        rw [← hweq]
+        exact w.property
+      let hKelt :
+          LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup
+            K T.vL.toValuation.valuationSubring :=
+        ⟨(h : Gal(L / K)), hdec⟩
+      have hK : (h : Gal(L / K)) ∈ chapter05RamificationGroupInG
+          (F := K) T.vL.toValuation.valuationSubring (n + 1) := by
+        refine ⟨hKelt, ?_⟩
+        constructor
+        · change LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05HigherCongruence
+            T.vL.toValuation.valuationSubring (n + 1) hKelt
+          change LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05HigherCongruence
+            T.vL.toValuation.valuationSubring (n + 1) z at hz
+          unfold LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05HigherCongruence at hz ⊢
+          intro x
+          have hzx : z • x = hKelt • x := by
+            apply Subtype.ext
+            change (z : Gal(L / IntermediateField.fixedField H)) (x : L) =
+              (h : Gal(L / K)) (x : L)
+            have heq : e h = z := by
+              exact e.apply_symm_apply z
+            rw [← heq, he_apply]
+          rw [← hzx]
+          exact hz x
+        · rfl
+      have hD : (h : Gal(L / K)) ∈ D.lowerGroup (n : ℝ) := by
+        rw [hcanonical n]
+        exact hK
+      refine ⟨h, hD, ?_⟩
+      rfl
+    · rintro ⟨h, hh, rfl⟩
+      have hD : (h : Gal(L / K)) ∈ D.lowerGroup (n : ℝ) := hh
+      have hK : (h : Gal(L / K)) ∈ chapter05RamificationGroupInG
+          (F := K) T.vL.toValuation.valuationSubring (n + 1) := by
+        rw [← hcanonical n]
+        exact hD
+      rcases hK with ⟨w, hw, hweq⟩
+      have hdec : (h : Gal(L / K)) ∈
+          LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup
+            K T.vL.toValuation.valuationSubring := by
+        rw [← hweq]
+        exact w.property
+      let hKelt :
+          LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup
+            K T.vL.toValuation.valuationSubring :=
+        ⟨(h : Gal(L / K)), hdec⟩
+      have hMdec : (e h : Gal(L / IntermediateField.fixedField H)) ∈
+          LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup
+            (IntermediateField.fixedField H) T.vL.toValuation.valuationSubring := by
+        rw [T.decomposition_top_ML]
+        simp
+      let hMelt :
+          LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup
+            (IntermediateField.fixedField H) T.vL.toValuation.valuationSubring :=
+        ⟨(e h : Gal(L / IntermediateField.fixedField H)), hMdec⟩
+      refine ⟨hMelt, ?_⟩
+      constructor
+      · change LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05HigherCongruence
+          T.vL.toValuation.valuationSubring (n + 1) hMelt
+        change LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05HigherCongruence
+          T.vL.toValuation.valuationSubring (n + 1) w at hw
+        unfold LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05HigherCongruence at hw ⊢
+        intro x
+        have hzx : hMelt • x = hKelt • x := by
+          apply Subtype.ext
+          change (e h : Gal(L / IntermediateField.fixedField H)) (x : L) =
+            (h : Gal(L / K)) (x : L)
+          exact he_apply h x
+        rw [hzx]
+        have hw_eq : w = hKelt := by
+          apply Subtype.ext
+          exact hweq
+        simpa [hw_eq] using hw x
+      · rfl
+  have hprofile_real {u : ℝ} (hu : 0 ≤ u) :
+      T.subextension_profile.lowerGroup u =
+        ((D.lowerGroup u).comap H.subtype).map e.toMonoidHom := by
+    by_cases hnat : ∃ n : ℕ, u = (n : ℝ)
+    · rcases hnat with ⟨n, rfl⟩
+      exact hprofile_nat n
+    · let n : ℕ := ⌊u⌋₊
+      have hn_le : (n : ℝ) ≤ u := by
+        exact Nat.floor_le hu
+      have hn_lt : (n : ℝ) < u := by
+        exact lt_of_le_of_ne hn_le (Ne.symm (by
+          intro h
+          apply hnat
+          exact ⟨n, h⟩))
+      have hu_upper : u ≤ ((n + 1 : ℕ) : ℝ) := by
+        simpa [n, Nat.cast_add, Nat.cast_one] using
+          (Nat.lt_floor_add_one u).le
+      rw [T.subextension_profile.lower_real_convention n u hn_lt hu_upper,
+        D.lower_real_convention n u hn_lt hu_upper,
+        hprofile_nat (n + 1)]
+  have hD_le_real {u : ℝ} (hu : 0 ≤ u) : D.lowerGroup u ≤ H := by
+    rw [hinertia]
+    exact D.lower_antitone hu
+  have hcard_map {A : Subgroup (Gal(L / K))} (hA : A ≤ H) :
+      Nat.card A = Nat.card (A.comap H.subtype |>.map e.toMonoidHom) := by
+    let hAequiv : A ≃ (A.comap H.subtype) :=
+      { toFun := fun x => ⟨⟨x, hA x.property⟩, x.property⟩
+        invFun := fun x => ⟨(x : H), x.property⟩
+        left_inv := by intro x; rfl
+        right_inv := by intro x; rfl }
+    exact Nat.card_congr (hAequiv.trans
+      (e.subgroupMap (A.comap H.subtype)).toEquiv)
+  have hcard_real {u : ℝ} (hu : 0 ≤ u) :
+      Nat.card (T.subextension_profile.lowerGroup u) =
+        Nat.card (D.lowerGroup u) := by
+    rw [hprofile_real hu]
+    exact (hcard_map (hD_le_real hu)).symm
+  have hslope (u : ℝ) :
+      chapter05HerbrandSlope T.subextension_profile u =
+        chapter05HerbrandSlope D u := by
+    by_cases hu : u ≤ 0
+    · simp [chapter05HerbrandSlope, hu]
+    · have hu0 : 0 ≤ u := le_of_not_ge hu
+      rw [chapter05HerbrandSlope, chapter05HerbrandSlope,
+        if_neg hu, if_neg hu, hcard_real hu0, hcard_real (u := 0) le_rfl]
+  have hfunction (u : ℝ) :
+      chapter05HerbrandFunction T.subextension_profile u =
+        chapter05HerbrandFunction D u := by
+    by_cases hu : u ≤ 0
+    · simp [chapter05_herbrand_function_of_nonpositive _ hu]
+    · simp only [chapter05HerbrandFunction, hu]
+      apply intervalIntegral.integral_congr_ae
+      filter_upwards [] with t ht
+      exact hslope t
+  have hbijD : Function.Bijective (chapter05HerbrandFunction D) :=
+    chapter05_herbrand_bijective_of_filtration D
+  have hbijT : Function.Bijective
+      (chapter05HerbrandFunction T.subextension_profile) :=
+    chapter05_herbrand_bijective_of_filtration T.subextension_profile
+  have hmapD_inj
+      {A B : Subgroup (Gal(L / K))}
+      (hA : A ≤ H) (hB : B ≤ H)
+      (heq : (A.comap H.subtype).map e.toMonoidHom =
+        (B.comap H.subtype).map e.toMonoidHom) : A = B := by
+    ext x
+    constructor
+    · intro hx
+      have hxH : x ∈ H := hA hx
+      let xH : H := ⟨x, hxH⟩
+      have hxmap : e xH ∈ (A.comap H.subtype).map e.toMonoidHom := by
+        exact ⟨xH, hx, rfl⟩
+      rw [heq] at hxmap
+      rcases hxmap with ⟨y, hy, hyeq⟩
+      have hyx : y = xH := e.injective hyeq
+      have hy' : (y : Gal(L / K)) ∈ B := by exact hy
+      rw [hyx] at hy'
+      exact hy'
+    · intro hx
+      have hxH : x ∈ H := hB hx
+      let xH : H := ⟨x, hxH⟩
+      have hxmap : e xH ∈ (B.comap H.subtype).map e.toMonoidHom := by
+        exact ⟨xH, hx, rfl⟩
+      rw [← heq] at hxmap
+      rcases hxmap with ⟨y, hy, hyeq⟩
+      have hyx : y = xH := e.injective hyeq
+      have hy' : (y : Gal(L / K)) ∈ A := by exact hy
+      rw [hyx] at hy'
+      exact hy'
+  have hlower_break_iff (n : ℕ) :
+      chapter05LowerBreak T.subextension_profile n ↔
+        chapter05LowerBreak D n := by
+    unfold chapter05LowerBreak
+    constructor
+    · intro hne hEq
+      apply hne
+      rw [hprofile_nat n, hprofile_nat (n + 1), hEq]
+    · intro hne hEq
+      apply hne
+      apply hmapD_inj (hD_le_H n) (hD_le_H (n + 1))
+      calc
+        ((D.lowerGroup (n : ℝ)).comap H.subtype).map e.toMonoidHom =
+            T.subextension_profile.lowerGroup (n : ℝ) :=
+          (hprofile_nat n).symm
+        _ = T.subextension_profile.lowerGroup (n + 1 : ℕ) := hEq
+        _ = ((D.lowerGroup (n + 1 : ℕ)).comap H.subtype).map e.toMonoidHom :=
+          hprofile_nat (n + 1)
+  have hbreak_transport {r : ℝ} (hr : 0 < r) :
+      chapter05UpperBreak D r ↔
+        chapter05UpperBreak T.subextension_profile r := by
+    rw [chapter05_upper_break_iff_herbrand_image_of_lower_break D hbijD,
+      chapter05_upper_break_iff_herbrand_image_of_lower_break
+        T.subextension_profile hbijT]
+    constructor
+    · rintro (hneg | ⟨m, hm, hFm⟩)
+      · exfalso
+        linarith [hneg.1]
+      · right
+        refine ⟨m, (hlower_break_iff m).2 hm, ?_⟩
+        exact (hfunction (m : ℝ)).trans hFm
+    · rintro (hneg | ⟨m, hm, hFm⟩)
+      · exfalso
+        linarith [hneg.1]
+      · right
+        refine ⟨m, (hlower_break_iff m).1 hm, ?_⟩
+        exact (hfunction (m : ℝ)).symm.trans hFm
+  have htotal : T.subextension_profile.lowerGroup 0 = ⊤ := by
+    have hzero := hprofile_nat 0
+    norm_num at hzero
+    have hsubgroup : (D.lowerGroup 0).subgroupOf H = ⊤ := by
+      ext x
+      constructor
+      · intro hx
+        trivial
+      · intro hx
+        change (x : Gal(L / K)) ∈ D.lowerGroup 0
+        rw [← hinertia]
+        exact x.property
+    rw [hzero, hsubgroup]
+    simp
+  have hcyclic_sub : IsCyclic (Gal(
+      L /
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05FixedField H)) :=
+    (e.isCyclic).mp hcyclic
+  have hcard_sub : Nat.card (Gal(
+      L /
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05FixedField H)) =
+      Nat.card H := by
+    exact (Nat.card_congr e.toEquiv).symm
+  have hbreakT_v : chapter05UpperBreak T.subextension_profile v :=
+    (hbreak_transport hv).mp hbreak
+  have hpositive_data : ∃ m : ℕ, 0 < m ∧
+      chapter05LowerBreak T.subextension_profile m ∧
+        chapter05HerbrandFunction T.subextension_profile (m : ℝ) = v := by
+    rcases (chapter05_upper_break_iff_herbrand_image_of_lower_break
+      T.subextension_profile hbijT).mp hbreakT_v with hneg | ⟨m, hm, hFm⟩
+    · exfalso
+      linarith [hneg.1]
+    · have hm_pos : 0 < m := by
+        by_contra hm_not
+        have hm_zero : m = 0 := Nat.eq_zero_of_not_pos hm_not
+        subst m
+        have hFm_zero :
+            chapter05HerbrandFunction T.subextension_profile (0 : ℝ) = v := by
+          simpa using hFm
+        rw [chapter05_herbrand_function_zero T.subextension_profile] at hFm_zero
+        linarith
+      exact ⟨m, hm_pos, hm, hFm⟩
+  obtain ⟨m₀, hm₀_pos, hm₀_break, hm₀_value⟩ := hpositive_data
+  have hnot_triv_one :
+      T.subextension_profile.lowerGroup (1 : ℝ) ≠ ⊥ := by
+    intro hone
+    have hm_le : T.subextension_profile.lowerGroup (m₀ : ℝ) ≤
+        T.subextension_profile.lowerGroup (1 : ℝ) := by
+      apply T.subextension_profile.lower_antitone
+      exact_mod_cast hm₀_pos
+    have hm_succ_le : T.subextension_profile.lowerGroup
+        ((m₀ + 1 : ℕ) : ℝ) ≤
+        T.subextension_profile.lowerGroup (1 : ℝ) := by
+      apply T.subextension_profile.lower_antitone
+      exact_mod_cast (Nat.succ_le_succ (Nat.zero_le m₀))
+    rw [hone] at hm_le hm_succ_le
+    exact hm₀_break ((bot_unique hm_le).trans (bot_unique hm_succ_le).symm)
+  obtain ⟨B, hB⟩ := T.subextension_profile.lower_eventually_trivial
+  have hextriv : ∃ n : ℕ,
+      T.subextension_profile.lowerGroup (n : ℝ) = ⊥ := by
+    exact ⟨B, hB B le_rfl⟩
+  let n : ℕ := Nat.find hextriv
+  have hntriv : T.subextension_profile.lowerGroup (n : ℝ) = ⊥ := by
+    simpa [n] using Nat.find_spec hextriv
+  have hnot_triv_before : ∀ k : ℕ, k < n →
+      T.subextension_profile.lowerGroup (k : ℝ) ≠ ⊥ := by
+    intro k hk hktriv
+    have hle : n ≤ k := by
+      simpa [n] using Nat.find_min' hextriv hktriv
+    omega
+  have hn_ne_one : n ≠ 1 := by
+    intro hn
+    apply hnot_triv_one
+    simpa [hn] using hntriv
+  have hn_ne_zero : n ≠ 0 := by
+    intro hn
+    have htop_bot : (⊤ : Subgroup (Gal(
+        L /
+          LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05FixedField H))) =
+        ⊥ := by
+      rw [← htotal]
+      simpa [hn] using hntriv
+    have htop_ne_bot : (⊤ : Subgroup (Gal(
+        L /
+          LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05FixedField H))) ≠
+        ⊥ := by
+      intro htop
+      apply hnot_triv_one
+      have hone_le : T.subextension_profile.lowerGroup (1 : ℝ) ≤
+          (⊤ : Subgroup (Gal(
+            L /
+              LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05FixedField H))) :=
+        le_top
+      rw [htop] at hone_le
+      exact bot_unique hone_le
+    exact htop_ne_bot htop_bot
+  have hn_gt_one : 1 < n := by omega
+  let b : ℕ := n - 1
+  have hb_pos : 0 < b := by
+    dsimp [b]
+    omega
+  have hb_succ : b + 1 = n := by
+    dsimp [b]
+    omega
+  have hb_not_triv :
+      T.subextension_profile.lowerGroup (b : ℝ) ≠ ⊥ := by
+    apply hnot_triv_before b
+    dsimp [b]
+    omega
+  have hb_break : chapter05LowerBreak T.subextension_profile b := by
+    rw [chapter05LowerBreak]
+    intro heq
+    apply hb_not_triv
+    rw [heq, hb_succ]
+    exact hntriv
+  have hmono : StrictMonoOn
+      (chapter05HerbrandFunction T.subextension_profile) (Set.Ici (-1 : ℝ)) :=
+    (chapter05_herbrand_function_is_continuous_increasing_piecewise_linear
+      T.subextension_profile).2.1
+  have hb_mem : (b : ℝ) ∈ Set.Ici (-1 : ℝ) := by
+    change (-1 : ℝ) ≤ (b : ℝ)
+    have hb_nonneg : (0 : ℝ) ≤ (b : ℝ) := by positivity
+    linarith
+  have hFb_pos : 0 <
+      chapter05HerbrandFunction T.subextension_profile (b : ℝ) := by
+    have hstrict := hmono
+      (show (0 : ℝ) ∈ Set.Ici (-1 : ℝ) by norm_num)
+      hb_mem (by exact_mod_cast hb_pos)
+    simpa [chapter05_herbrand_function_zero T.subextension_profile] using hstrict
+  have hbreakT_b : chapter05UpperBreak T.subextension_profile
+      (chapter05HerbrandFunction T.subextension_profile (b : ℝ)) :=
+    chapter05_lower_break_maps_to_upper_break T.subextension_profile hbijT b hb_break
+  have hbreakD_b : chapter05UpperBreak D
+      (chapter05HerbrandFunction T.subextension_profile (b : ℝ)) :=
+    (hbreak_transport hFb_pos).mpr hbreakT_b
+  have hFb_le_v :
+      chapter05HerbrandFunction T.subextension_profile (b : ℝ) ≤ v :=
+    hmax _ hFb_pos hbreakD_b
+  have hm₀_lt_n : m₀ < n := by
+    by_contra hnot
+    have hnm : n ≤ m₀ := le_of_not_gt hnot
+    have hm₀_bot : T.subextension_profile.lowerGroup (m₀ : ℝ) = ⊥ := by
+      apply le_antisymm
+      · rw [← hntriv]
+        apply T.subextension_profile.lower_antitone
+        exact_mod_cast hnm
+      · exact bot_le
+    have hm₀_succ_bot :
+        T.subextension_profile.lowerGroup ((m₀ + 1 : ℕ) : ℝ) = ⊥ := by
+      apply le_antisymm
+      · rw [← hntriv]
+        apply T.subextension_profile.lower_antitone
+        exact_mod_cast (hnm.trans (Nat.le_succ m₀))
+      · exact bot_le
+    exact hm₀_break (hm₀_bot.trans hm₀_succ_bot.symm)
+  have hm₀_le_b : m₀ ≤ b := by
+    dsimp [b]
+    omega
+  have hv_le_Fb : v ≤
+      chapter05HerbrandFunction T.subextension_profile (b : ℝ) := by
+    have hm₀_mem : (m₀ : ℝ) ∈ Set.Ici (-1 : ℝ) := by
+      change (-1 : ℝ) ≤ (m₀ : ℝ)
+      have hm₀_nonneg : (0 : ℝ) ≤ (m₀ : ℝ) := by positivity
+      linarith
+    have hm₀b_real : (m₀ : ℝ) ≤ (b : ℝ) := by
+      exact_mod_cast hm₀_le_b
+    have hmono_value := hmono.monotoneOn hm₀_mem hb_mem hm₀b_real
+    simpa [hm₀_value] using hmono_value
+  have hupper_value :
+      chapter05HerbrandFunction T.subextension_profile (b : ℝ) = v :=
+    le_antisymm hFb_le_v hv_le_Fb
+  have hlast_lower : ∀ k : ℕ, b < k →
+      T.subextension_profile.lowerGroup (k : ℝ) = ⊥ := by
+    intro k hbk
+    apply le_antisymm
+    · rw [← hntriv]
+      apply T.subextension_profile.lower_antitone
+      exact_mod_cast (show n ≤ k by omega)
+    · exact bot_le
+  refine ⟨b, {
+    inertia_eq_lower_zero := hinertia
+    cyclic_subextension := hcyclic_sub
+    subextension_cardinality := hcard_sub
+    subextension_totally_ramified := htotal
+    subextension_last_lower := hlast_lower
+    subextension_lower_break := Or.inr hb_break
+    subextension_upper_break := hbreakT_v
+    upper_break_maximal := hmax
+    upper_break_transport := by
+      intro r hr
+      exact hbreak_transport hr
+    upper_value := hupper_value
+    base_residue_perfect := hbase_perfect
+    fixed_field_residue_perfect := by
+      let _ : T.vK.toValuation.HasExtension T.vM.toValuation :=
+        ⟨T.vK_restriction_to_M⟩
+      let _ : FiniteDimensional
+          (IsLocalRing.ResidueField T.vK.toValuation.valuationSubring)
+          (IsLocalRing.ResidueField T.vM.toValuation.valuationSubring) :=
+        LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_residue_degree_finite
+          T.vK.toValuation T.vM.toValuation
+      let _ : PerfectField
+          (IsLocalRing.ResidueField T.vK.toValuation.valuationSubring) := hbase_perfect
+      exact Algebra.IsAlgebraic.perfectField
+        (IsLocalRing.ResidueField T.vK.toValuation.valuationSubring)
+  }⟩
 
 /-- Herbrand's theorem in the fixed-field notation of the source. -/
 theorem chapter05_herbrand_fixed_field_quotient_theorem

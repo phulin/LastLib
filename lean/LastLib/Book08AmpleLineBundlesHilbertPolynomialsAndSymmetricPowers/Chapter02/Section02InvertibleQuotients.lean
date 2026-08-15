@@ -251,6 +251,26 @@ theorem chapter02_arbitrary_quasi_coherent_projective_bundle_need_not_be_finite_
         ¬ Chapter02FiniteTypeMorphism (chapter02ProjectiveBundleProjection S E) := by
   exact ⟨_, _, chapter02_explicit_infinite_quasi_coherent_counterexample⟩
 
+/-! The bounded twisting step for composing projective presentations is made available as an
+earlier interface.  The finite-rank ambient module produced by the construction is intentionally
+hidden behind the presentation object; callers only need the resulting closed (or locally closed)
+immersion over the composite base map.
+-/
+theorem chapter02_projective_presentation_comp
+    {X Y S : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ S)
+    (P : Chapter02ProjectivePresentation f)
+    (Q : Chapter02ProjectivePresentation g) :
+    Nonempty (Chapter02ProjectivePresentation (f ≫ g)) := by
+  sorry
+
+theorem chapter02_quasi_projective_presentation_comp
+    {X Y S : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ S)
+    (P : Chapter02QuasiProjectivePresentation f)
+    (Q : Chapter02QuasiProjectivePresentation g)
+    (hfqc : QuasiCompact f) (hgqc : QuasiCompact g) :
+    Nonempty (Chapter02QuasiProjectivePresentation (f ≫ g)) := by
+  sorry
+
 end
 
 end LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02

@@ -414,6 +414,127 @@ instance chapter06WildInertiaGroup_normal_instance
     (chapter06WildInertiaGroup S).Normal :=
   chapter06WildInertiaGroup_normal S
 
+def chapter06TameQuotient
+    {P : ProfiniteGrp.{u}} (S : Chapter06InfiniteUpperSystem P) : Type u :=
+  chapter06InertiaGroup S ⧸
+    (chapter06WildInertiaGroup S).subgroupOf (chapter06InertiaGroup S)
+
+instance chapter06TameQuotient_group
+    {P : ProfiniteGrp.{u}} (S : Chapter06InfiniteUpperSystem P) :
+    Group (chapter06TameQuotient S) := by
+  letI : (chapter06WildInertiaGroup S).Normal :=
+    chapter06WildInertiaGroup_normal S
+  change Group
+    (chapter06InertiaGroup S ⧸
+      (chapter06WildInertiaGroup S).subgroupOf (chapter06InertiaGroup S))
+  infer_instance
+
+noncomputable instance chapter06TameQuotient_topologicalSpace
+    {P : ProfiniteGrp.{u}} (S : Chapter06InfiniteUpperSystem P) :
+    TopologicalSpace (chapter06TameQuotient S) := by
+  exact QuotientGroup.instTopologicalSpace _
+
+/-!
+Finite quotients used by the local ramification certificate.  Lower groups
+are used because their normality is part of the finite profile interface;
+Chapter 5 identifies the level-one lower group with the finite upper
+zero-plus group after the Herbrand bijectivity supplied by `S`.
+-/
+
+abbrev chapter06FiniteLevelInertiaGroup
+    {P : ProfiniteGrp.{u}} (S : Chapter06InfiniteUpperSystem P)
+    (N : OpenNormalSubgroup P) : Subgroup (P ⧸ N.toSubgroup) :=
+  (S.upperProfile N).lowerGroup 0
+
+abbrev chapter06FiniteLevelWildInertiaGroup
+    {P : ProfiniteGrp.{u}} (S : Chapter06InfiniteUpperSystem P)
+    (N : OpenNormalSubgroup P) : Subgroup (P ⧸ N.toSubgroup) :=
+  (S.upperProfile N).lowerGroup 1
+
+def chapter06FiniteLevelTameQuotient
+    {P : ProfiniteGrp.{u}} (S : Chapter06InfiniteUpperSystem P)
+    (N : OpenNormalSubgroup P) : Type u :=
+  chapter06FiniteLevelInertiaGroup S N ⧸
+    (chapter06FiniteLevelWildInertiaGroup S N).subgroupOf
+      (chapter06FiniteLevelInertiaGroup S N)
+
+instance chapter06FiniteLevelTameQuotient_group
+    {P : ProfiniteGrp.{u}} (S : Chapter06InfiniteUpperSystem P)
+    (N : OpenNormalSubgroup P) :
+    Group (chapter06FiniteLevelTameQuotient S N) := by
+  letI : (chapter06FiniteLevelWildInertiaGroup S N).Normal :=
+    (S.upperProfile N).lower_normal 1
+  change Group
+    (chapter06FiniteLevelInertiaGroup S N ⧸
+      (chapter06FiniteLevelWildInertiaGroup S N).subgroupOf
+        (chapter06FiniteLevelInertiaGroup S N))
+  infer_instance
+
+def chapter06ProPGroup (p : ℕ) (G : Type*) [Group G] [TopologicalSpace G] : Prop :=
+  ∀ N : OpenNormalSubgroup G,
+    ∃ r : ℕ, Finite (G ⧸ N.toSubgroup) ∧
+      Nat.card (G ⧸ N.toSubgroup) = p ^ r
+
+def chapter06ProPrimeTo (p : ℕ) (G : Type*) [Group G] [TopologicalSpace G] : Prop :=
+  ∀ N : OpenNormalSubgroup G,
+    Finite (G ⧸ N.toSubgroup) ∧
+      Nat.Coprime p (Nat.card (G ⧸ N.toSubgroup))
+
+def chapter06Procyclic (G : Type*) [Group G] [TopologicalSpace G] : Prop :=
+  ∀ N : OpenNormalSubgroup G,
+    Finite (G ⧸ N.toSubgroup) ∧ IsCyclic (G ⧸ N.toSubgroup)
+
+/-!
+This certificate supplies the finite local arithmetic and the cofinal kernel
+maps needed to turn the compatible finite profiles into profinite statements.
+Finite order facts alone would not control arbitrary open quotients of the
+inverse-limit subgroups, hence the explicit cofinality fields.
+-/
+structure Chapter06FiniteLevelLocalRamificationInterface
+    {P : ProfiniteGrp.{u}} (S : Chapter06InfiniteUpperSystem P) (p : ℕ) where
+  tame_level_map :
+    ∀ N : OpenNormalSubgroup P,
+      chapter06TameQuotient S →*
+        chapter06FiniteLevelTameQuotient S N
+  tame_level_map_surjective :
+    ∀ N : OpenNormalSubgroup P,
+      Function.Surjective (tame_level_map N)
+  tame_kernel_cofinal :
+    ∀ H : OpenNormalSubgroup (chapter06TameQuotient S),
+      ∃ N : OpenNormalSubgroup P,
+        (tame_level_map N).ker ≤ H.toSubgroup
+  tame_level_finite :
+    ∀ N : OpenNormalSubgroup P,
+      Finite (chapter06FiniteLevelTameQuotient S N)
+  tame_level_prime_to :
+    ∀ N : OpenNormalSubgroup P,
+      Nat.Coprime p (Nat.card (chapter06FiniteLevelTameQuotient S N))
+  tame_level_cyclic :
+    ∀ N : OpenNormalSubgroup P,
+      IsCyclic (chapter06FiniteLevelTameQuotient S N)
+  wild_level_map :
+    ∀ N : OpenNormalSubgroup P,
+      chapter06WildInertiaGroup S →*
+        chapter06FiniteLevelWildInertiaGroup S N
+  wild_level_map_surjective :
+    ∀ N : OpenNormalSubgroup P,
+      Function.Surjective (wild_level_map N)
+  wild_kernel_cofinal :
+    ∀ H : OpenNormalSubgroup (chapter06WildInertiaGroup S),
+      ∃ N : OpenNormalSubgroup P,
+        (wild_level_map N).ker ≤ H.toSubgroup
+  wild_level_finite :
+    ∀ N : OpenNormalSubgroup P,
+      Finite (chapter06FiniteLevelWildInertiaGroup S N)
+  wild_level_p_power :
+    ∀ N : OpenNormalSubgroup P,
+      ∃ r : ℕ,
+        Nat.card (chapter06FiniteLevelWildInertiaGroup S N) = p ^ r
+  wild_level_trivial_of_characteristic_zero :
+    p = 1 →
+      ∀ N : OpenNormalSubgroup P,
+        chapter06FiniteLevelWildInertiaGroup S N = ⊥
+
 end
 
 end LastLib.Book03RamificationTheory.Chapter06

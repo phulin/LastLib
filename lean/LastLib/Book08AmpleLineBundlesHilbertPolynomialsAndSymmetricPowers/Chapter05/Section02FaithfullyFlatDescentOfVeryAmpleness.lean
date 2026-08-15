@@ -21,21 +21,21 @@ theorem injective_iff_faithfullyFlat_lTensor
     [Algebra R S] [Module R M] [Module R N] [Module.FaithfullyFlat R S]
     (u : M →ₗ[R] N) :
     Function.Injective (u.lTensor S) ↔ Function.Injective u := by
-  sorry
+  exact Module.FaithfullyFlat.lTensor_injective_iff_injective (M := S) (f := u)
 
 theorem surjective_iff_faithfullyFlat_lTensor
     {R S M N : Type u} [CommRing R] [CommRing S] [AddCommGroup M] [AddCommGroup N]
     [Algebra R S] [Module R M] [Module R N] [Module.FaithfullyFlat R S]
     (u : M →ₗ[R] N) :
     Function.Surjective (u.lTensor S) ↔ Function.Surjective u := by
-  sorry
+  exact Module.FaithfullyFlat.lTensor_surjective_iff_surjective (M := S) (f := u)
 
 theorem bijective_iff_faithfullyFlat_lTensor
     {R S M N : Type u} [CommRing R] [CommRing S] [AddCommGroup M] [AddCommGroup N]
     [Algebra R S] [Module R M] [Module R N] [Module.FaithfullyFlat R S]
     (u : M →ₗ[R] N) :
     Function.Bijective (u.lTensor S) ↔ Function.Bijective u := by
-  sorry
+  exact Module.FaithfullyFlat.lTensor_bijective_iff_bijective (M := S) (f := u)
 
 /- The target of this proposition is the Lean presentation of
 `Γ(X, L^n) ⊗_A A' ≃ Γ(X_{S'}, L_{S'}^n)`.  The module structures are induced by the two
@@ -74,7 +74,9 @@ theorem veryAmple_faithfullyFlat_descent_of_descended_line_bundle
     (hfp : LocallyOfFinitePresentation f)
     (hgff : IsFaithfullyFlat g) (hgqc : QuasiCompact g)
     (hMvery : IsVeryAmple (baseChangeToBase f g) M) :
-    IsVeryAmple f L := by sorry
+    IsVeryAmple f L := by
+  apply veryAmple_faithfullyFlat_descent f g L hfqc hfqs hfp hgff hgqc
+  exact (isVeryAmple_congr (baseChangeToBase f g) hM).mp hMvery
 
 theorem immersion_iff_faithfullyFlat_baseChange
     {X S S' : Scheme.{u}} (f : X ⟶ S) (g : S' ⟶ S)
@@ -89,11 +91,15 @@ theorem immersion_faithfullyFlat_descent
     (hfp : LocallyOfFinitePresentation f)
     (hgff : IsFaithfullyFlat g) (hgqc : QuasiCompact g)
     (h : IsImmersion (baseChangeToBase f g)) :
-    IsImmersion f := by sorry
+    IsImmersion f := by
+  exact (immersion_iff_faithfullyFlat_baseChange f g hfqc hfqs hfp hgff hgqc).2 h
 
 theorem closedImmersion_of_proper_immersion {X Y : Scheme.{u}} (f : X ⟶ Y)
     (hproper : IsProper f) (himmersion : IsImmersion f) :
-    IsClosedImmersion f := by sorry
+    IsClosedImmersion f := by
+  let _ : IsProper f := hproper
+  let _ : IsImmersion f := himmersion
+  exact (IsClosedImmersion.iff_isProper_and_mono f).2 ⟨hproper, inferInstance⟩
 
 theorem veryAmple_faithfullyFlat_descent_with_finiteness
     {X S S' : Scheme.{u}} (f : X ⟶ S) (g : S' ⟶ S) (L : LineBundle X)
@@ -103,7 +109,15 @@ theorem veryAmple_faithfullyFlat_descent_with_finiteness
     (hL : IsVeryAmple (baseChangeToBase f g) (baseChangeLineBundle f g L)) :
     ∃ w : RelativeVeryAmpleWitness f L,
       IsClosedImmersion w.embedding ∧
-        IsFiniteDimensionalLocallyOnBase w.projectiveBundle := by sorry
+        IsFiniteDimensionalLocallyOnBase w.projectiveBundle := by
+  obtain ⟨w⟩ := veryAmple_faithfullyFlat_descent f g L hfqc hfqs hfp hgff hgqc hL
+  let _ : IsProper (w.map ≫ w.projectiveBundle.projection) := by
+    rw [w.over]
+    exact hproper
+  have hembedding : IsProper w.map :=
+    IsProper.of_comp w.map w.projectiveBundle.projection
+  exact ⟨w, closedImmersion_of_proper_immersion w.map hembedding w.immersion,
+    relativeProjectiveBundleData_finiteDimensional w.projectiveBundle⟩
 
 end
 

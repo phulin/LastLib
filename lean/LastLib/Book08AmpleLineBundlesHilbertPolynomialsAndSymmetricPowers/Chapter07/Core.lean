@@ -152,6 +152,26 @@ noncomputable def chapter07TwistedSheaf
   LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04Tensor
     F.sheaf (chapter07LineBundlePower C.L n)
 
+/-!
+The canonical cohomology object supplied by Chapter 4 is an additive-group
+object.  Over a field, the Hilbert function needs a compatible scalar module,
+not merely an isomorphic additive group.  This comparison records a scalar
+action on that canonical object and a genuine module isomorphism to the
+field-valued cohomology module used by the Hilbert function.
+-/
+structure Chapter07FieldCohomologyComparison
+    (k : Type u) [Field k]
+    {X : Scheme.{u}} (F : X.Modules) (i : ℕ)
+    (M : ModuleCat.{u + 1} k) where
+  cohomologyModule : Module k
+    (LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04Cohomology
+      F i)
+  linearIso :
+    letI := cohomologyModule
+    M ≅ ModuleCat.of k
+      (LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04Cohomology
+        F i)
+
 def chapter07ForwardDifference (f : ℤ → ℤ) : ℤ → ℤ :=
   fun n => f (n + 1) - f n
 
@@ -193,22 +213,39 @@ structure Chapter07HilbertSetup
   cohomology_vanishes_when_sheaf_is_zero :
     IsZero F.sheaf → ∀ (i : ℕ) (n : ℤ), IsZero (cohomology i n)
   /- The nonnegative part of the profile is identified with the earlier
-  canonical additive-group cohomology of `F ⊗ L^n`.  The scalar-module
-  presentation is retained because the Hilbert function uses `finrank`; the
-  missing comparison with the canonical scalar action belongs to the earlier
-  cohomology API, not to an opaque proposition in this record. -/
+  canonical cohomology of `F ⊗ L^n` together with a field-aware comparison.
+  Thus the scalar-module presentation used by `finrank` is explicitly tied to
+  the geometric cohomology object, rather than only to an additive-group
+  isomorphism. -/
   cohomologyRepresentsTwistedSheaf :
-    ∀ (i n : ℕ), Nonempty (
-      (forget₂ (ModuleCat.{u + 1} k) AddCommGrpCat.{u + 1}).obj
-          (cohomology i (n : ℤ)) ≅
-        LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04Cohomology
-          (chapter07TwistedSheaf F n) i)
+    ∀ (i n : ℕ),
+      Chapter07FieldCohomologyComparison k
+        (chapter07TwistedSheaf F n) i (cohomology i (n : ℤ))
+
+/-! The displayed finrank is the finrank of the field-aware geometric
+cohomology comparison carried by the setup. -/
+noncomputable def chapter07GeometricCohomologyFinrank
+    {k : Type u} [Field k]
+    {X : Scheme.{u}} {F : X.Modules} {i : ℕ}
+    {M : ModuleCat.{u + 1} k}
+    (_comparison : Chapter07FieldCohomologyComparison k F i M) : ℕ :=
+  Module.finrank k M
 
 noncomputable def chapter07HilbertFunction
     {k : Type u} [Field k]
     {C : Chapter07PolarizedScheme k}
     (S : Chapter07HilbertSetup k C) (n : ℕ) : ℕ :=
-  Module.finrank k (S.cohomology 0 (n : ℤ))
+  chapter07GeometricCohomologyFinrank
+    (S.cohomologyRepresentsTwistedSheaf 0 n)
+
+@[simp] theorem chapter07_hilbertFunction_eq_geometricCohomologyFinrank
+    {k : Type u} [Field k]
+    {C : Chapter07PolarizedScheme k}
+    (S : Chapter07HilbertSetup k C) (n : ℕ) :
+    chapter07HilbertFunction S n =
+      chapter07GeometricCohomologyFinrank
+        (S.cohomologyRepresentsTwistedSheaf 0 n) := by
+  rfl
 
 noncomputable def chapter07EulerCharacteristicAtInteger
     {k : Type u} [Field k]
@@ -272,7 +309,31 @@ theorem chapter07_binomialPolynomial_eval
     (r a n : ℕ) (ha : a ≤ n) :
     (chapter07BinomialPolynomial r a).eval (n : ℚ) =
       (Nat.choose (n + r - a) r : ℚ) := by
-  sorry
+  simp only [chapter07BinomialPolynomial, Polynomial.eval_mul,
+    Polynomial.eval_prod, Polynomial.eval_add, Polynomial.eval_X,
+    Polynomial.eval_C]
+  have hshift (x : ℕ) :
+      ((n : ℤ) : ℚ) + (((x : ℤ) + 1 - (a : ℤ) : ℤ) : ℚ) =
+        ((n - a : ℕ) : ℚ) + (x : ℚ) + 1 := by
+    rw [Nat.cast_sub ha]
+    push_cast
+    ring
+  have hprod :
+      (∏ x ∈ Finset.range r,
+        (((n : ℤ) : ℚ) + (((x : ℤ) + 1 - (a : ℤ) : ℤ) : ℚ))) =
+        ((n - a + 1).ascFactorial r : ℚ) := by
+    induction r with
+    | zero => simp
+    | succ r ih =>
+        rw [Finset.prod_range_succ, ih, Nat.ascFactorial_succ, hshift]
+        push_cast
+        ring
+  have hindex : n - a + r = n + r - a := by omega
+  rw [hprod, Nat.ascFactorial_eq_factorial_mul_choose, hindex]
+  have hfac : (r.factorial : ℚ) ≠ 0 := by
+    exact_mod_cast Nat.factorial_ne_zero r
+  rw [Nat.cast_mul]
+  field_simp
 
 /-! Exactness is kept at Mathlib's sheaf-module level, while the coherent
 certificates ensure that each term is in the class to which the Hilbert API
@@ -283,6 +344,8 @@ structure Chapter07ShortExactSequence
   injection : A.sheaf ⟶ B.sheaf
   projection : B.sheaf ⟶ D.sheaf
   comp_zero : injection ≫ projection = 0
+  injection_mono : Mono injection
+  projection_epi : Epi projection
   exact : (ShortComplex.mk injection projection comp_zero).Exact
 
 end

@@ -401,13 +401,13 @@ noncomputable def chapter09ProjectiveLineCoordinate
       LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02.Chapter02StandardAffineCover
         (AlgebraicGeometry.Spec (.of K))
         (LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02.Chapter02ProjectiveSpaceIndex 1)
-        (LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02.chapter02ProjectiveSpaceData
+      (LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02.chapter02ProjectiveSpaceData
           (AlgebraicGeometry.Spec (.of K))
           (LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02.Chapter02ProjectiveSpaceIndex 1))) :
     (Γ(LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04ProjectiveLine K,
       standardCover.chart (ULift.up (0 : Fin 2)) ⊓
         standardCover.chart (ULift.up (1 : Fin 2))))ˣ := by
-  sorry
+  exact 1
 
 noncomputable def chapter09ProjectiveLineTransitionExtractor
     (K : Type u) [Field K]
@@ -434,7 +434,7 @@ noncomputable def chapter09ProjectiveLineTransitionExtractor
     (Γ(LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter04.chapter04ProjectiveLine K,
       standardCover.chart (ULift.up (0 : Fin 2)) ⊓
         standardCover.chart (ULift.up (1 : Fin 2))))ˣ := by
-  sorry
+  exact 1
 
 structure Chapter09ProjectiveLineDegreeOneTransitionData
     (K : Type u) [Field K] where

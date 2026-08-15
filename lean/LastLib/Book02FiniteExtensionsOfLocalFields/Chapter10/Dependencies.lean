@@ -104,7 +104,7 @@ def Chapter10UnitFiltrationNeighborhoodBasis
     ∀ s ∈ 𝓝 (1 : G), ∃ n, (U n : Set G) ⊆ s
 
 /-- A compactness predicate for a topological group. -/
-def Chapter10CompactUnitGroup {G : Type*} [TopologicalSpace G] : Prop :=
+def Chapter10CompactUnitGroup {G : Type*} [Group G] [TopologicalSpace G] : Prop :=
   IsCompact (Set.univ : Set G)
 
 /-- A local-field unit expansion records convergence of successive corrections. -/

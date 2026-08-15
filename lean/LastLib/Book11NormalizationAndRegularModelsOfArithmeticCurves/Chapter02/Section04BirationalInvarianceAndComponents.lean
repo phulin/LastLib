@@ -308,7 +308,104 @@ private theorem chapter02_isIntegralHom_sigmaDesc
     (Z : ι → Scheme.{u}) (g : ∀ i, Z i ⟶ Y)
     (hg : ∀ i, IsIntegralHom (g i)) :
     IsIntegralHom (Sigma.desc g) := by
-  sorry
+  classical
+  revert Z g hg
+  induction ι using Finite.induction_empty_option with
+  | of_equiv e ih =>
+      intro Z g hg
+      have h := ih (fun i => Z (e i)) (fun i => g (e i)) (fun i => hg (e i))
+      have hdesc : (Sigma.reindex e Z).hom ≫ Sigma.desc g =
+          Sigma.desc (fun i => g (e i)) := by
+        apply Sigma.hom_ext
+        intro i
+        simp only [← Category.assoc, Sigma.ι_reindex_hom, Sigma.ι_desc]
+      have hcomp0 : IsIntegralHom ((Sigma.reindex e Z).hom ≫ Sigma.desc g) := by
+        rw [hdesc]
+        exact h
+      have := hcomp0
+      have hr : IsIntegralHom ((Sigma.reindex e Z).inv) := by
+        have : IsIso (Sigma.reindex e Z).inv :=
+          CategoryTheory.Iso.isIso_inv _
+        exact chapter02_isIntegralHom_of_isIso _
+      have := hr
+      have hcomp : IsIntegralHom ((Sigma.reindex e Z).inv ≫
+          ((Sigma.reindex e Z).hom ≫ Sigma.desc g)) := inferInstance
+      have heq : (Sigma.reindex e Z).inv ≫
+          ((Sigma.reindex e Z).hom ≫ Sigma.desc g) = Sigma.desc g := by
+        simp
+      exact heq ▸ hcomp
+  | h_empty =>
+      intro Z g hg
+      let e := sigmaMk Z
+      have : IsEmpty (∐ (fun i => Z i) : Scheme.{u}) :=
+        ⟨fun x => isEmptyElim (e.symm x)⟩
+      have hEmpty : (∐ (fun i => Z i) : Scheme.{u}) → False := isEmptyElim
+      have : IsAffineHom (Sigma.desc g) := ⟨fun U hU => by
+        have : IsEmpty ((Sigma.desc g ⁻¹ᵁ U : Scheme.{u})) :=
+          ⟨fun x => hEmpty ((Sigma.desc g ⁻¹ᵁ U).ι x)⟩
+        exact isAffine_of_isEmpty⟩
+      refine { isIntegral_app := ?_ }
+      intro U hU
+      have : IsEmpty ((Sigma.desc g ⁻¹ᵁ U : Scheme.{u})) :=
+        ⟨fun x => hEmpty ((Sigma.desc g ⁻¹ᵁ U).ι x)⟩
+      apply (RingHom.Finite.of_surjective _ ?_).to_isIntegral
+      intro x
+      exact ⟨0, Subsingleton.elim _ _⟩
+  | h_option ih =>
+      intro Z g hg
+      have hrest : IsIntegralHom (Sigma.desc (fun i => g (some i))) :=
+        ih _ (fun i => g (some i)) (fun i => hg (some i))
+      have : IsIntegralHom (Sigma.desc (fun i => g (some i))) := hrest
+      have : IsIntegralHom (g none) := hg none
+      have hcop : IsIntegralHom
+          (coprod.desc (g none) (Sigma.desc (fun i => g (some i)))) := inferInstance
+      let e : Z none ⨿ (∐ fun i => Z (some i)) ≅ ∐ Z :=
+        { hom := coprod.desc (Sigma.ι Z none)
+            (Sigma.desc (fun i => Sigma.ι Z (some i)))
+          inv := Sigma.desc (fun i => match i with
+            | none => coprod.inl
+            | some i => Sigma.ι (fun j => Z (some j)) i ≫ coprod.inr)
+          hom_inv_id := by
+            apply coprod.hom_ext
+            · rw [← Category.assoc, coprod.inl_desc, Sigma.ι_desc]
+              simp
+            · rw [← Category.assoc, coprod.inr_desc]
+              apply Sigma.hom_ext
+              intro i
+              rw [← Category.assoc, Sigma.ι_desc, Sigma.ι_desc]
+              simp
+          inv_hom_id := by
+            apply Sigma.hom_ext
+            intro i
+            cases i
+            · rw [← Category.assoc, Sigma.ι_desc, coprod.inl_desc]
+              simp
+            · rw [← Category.assoc, Sigma.ι_desc, Category.assoc,
+                coprod.inr_desc, Sigma.ι_desc]
+              simp }
+      have hfac : e.hom ≫ Sigma.desc g =
+          coprod.desc (g none) (Sigma.desc (fun i => g (some i))) := by
+        dsimp [e]
+        apply coprod.hom_ext
+        · rw [← Category.assoc, coprod.inl_desc, Sigma.ι_desc]
+          rw [coprod.inl_desc]
+        · rw [← Category.assoc, coprod.inr_desc]
+          apply Sigma.hom_ext
+          intro i
+          rw [← Category.assoc, Sigma.ι_desc, Sigma.ι_desc]
+          rw [coprod.inr_desc, Sigma.ι_desc]
+      have hcomp0 : IsIntegralHom (e.hom ≫ Sigma.desc g) := by
+        rw [hfac]
+        exact hcop
+      have := hcomp0
+      have heinv : IsIntegralHom e.inv := by
+        have : IsIso e.inv := CategoryTheory.Iso.isIso_inv _
+        exact chapter02_isIntegralHom_of_isIso _
+      have := heinv
+      have hcomp : IsIntegralHom (e.inv ≫ (e.hom ≫ Sigma.desc g)) := inferInstance
+      have heq : e.inv ≫ (e.hom ≫ Sigma.desc g) = Sigma.desc g := by
+        simp
+      exact heq ▸ hcomp
 
 /-- The finite-component form of the coproduct statement.  The binary comparison above is the
 inductive step used to construct this finite coproduct comparison. -/

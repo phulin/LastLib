@@ -1,6 +1,7 @@
 import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter12.Dependencies
 import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter12.Section01GroupLawsDescend
 import LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter12.Section02HopfAlgebraForm
+import Mathlib.RingTheory.Flat.CategoryTheory
 
 namespace LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter12
 
@@ -21,7 +22,7 @@ def chapter12OverBaseChangeCompIso
     {S T U : Scheme.{u}} (p : T ⟶ S) (q : U ⟶ T) (X : Over S) :
     (Over.pullback q).obj ((Over.pullback p).obj X) ≅
       (Over.pullback (q ≫ p)).obj X := by
-  sorry
+  exact (Over.pullbackComp q p).app X |>.symm
 
 /-- Coherent descent data for an object of the slice `Over T`. -/
 structure Chapter12OverDescentDatum {S T : Scheme.{u}} (p : T ⟶ S) where
@@ -48,7 +49,8 @@ def chapter12OverBaseChangeComparison
     (q₁ q₂ : U ⟶ T) (h : q₁ ≫ p = q₂ ≫ p) :
     (Over.pullback q₁).obj ((Over.pullback p).obj X) ≅
       (Over.pullback q₂).obj ((Over.pullback p).obj X) := by
-  sorry
+  exact (Over.pullbackComp q₁ p).app X |>.symm ≪≫
+    eqToIso (by rw [h]) ≪≫ (Over.pullbackComp q₂ p).app X
 
 def chapter12OverDescentComparisonCompatible
     {S T : Scheme.{u}} {p : T ⟶ S}
@@ -78,7 +80,9 @@ def chapter12ActionProductBaseChangeComparison
     (q₁ q₂ : U ⟶ T) (h : q₁ ≫ p = q₂ ≫ p) :
     (Over.pullback q₁).obj (groupD.upstairs.X ⊗ targetD.upstairs) ≅
       (Over.pullback q₂).obj (groupD.upstairs.X ⊗ targetD.upstairs) := by
-  sorry
+  exact (Over.pullbackComp q₁ p).app (groupD.upstairs.X ⊗ targetD.upstairs) |>.symm ≪≫
+    eqToIso (by rw [h]) ≪≫
+      (Over.pullbackComp q₂ p).app (groupD.upstairs.X ⊗ targetD.upstairs)
 
 /-! ### Actions, fixed points, and effective quotients -/
 
@@ -228,11 +232,19 @@ def chapter12InvariantSubalgebra (A H R : Type*)
     [Algebra A H] [Algebra A R]
     (coaction : R →ₐ[A] H ⊗[A] R) : Subalgebra A R where
   carrier := {r | coaction r = Algebra.TensorProduct.includeRight r}
-  zero_mem' := by sorry
-  add_mem' := by sorry
-  one_mem' := by sorry
-  mul_mem' := by sorry
-  algebraMap_mem' := by sorry
+  zero_mem' := by simp
+  add_mem' := by
+    intro x y hx hy
+    change coaction (x + y) = Algebra.TensorProduct.includeRight (x + y)
+    rw [map_add, map_add, hx, hy]
+  one_mem' := by simp
+  mul_mem' := by
+    intro x y hx hy
+    change coaction (x * y) = Algebra.TensorProduct.includeRight (x * y)
+    rw [map_mul, map_mul, hx, hy]
+  algebraMap_mem' := by
+    intro r
+    exact (coaction.commutes r).trans (Algebra.TensorProduct.includeRight.commutes r).symm
 
 @[simp]
 theorem mem_chapter12InvariantSubalgebra_iff (A H R : Type*)
@@ -253,15 +265,31 @@ def chapter12InvariantSubalgebra_isEqualizer (A H R : Type u)
         (g := CommRingCat.ofHom
           (Algebra.TensorProduct.includeRight (R := A) (A := H) (B := R)).toRingHom)
         (CommRingCat.ofHom (chapter12InvariantSubalgebra A H R coaction).val.toRingHom)
-        (by sorry)) := by
-  sorry
+        (by
+          ext r
+          exact (chapter12InvariantSubalgebra A H R coaction).property r)) := by
+  fapply Fork.IsLimit.mk'
+  intro s
+  use CommRingCat.ofHom <| s.ι.hom.codRestrict _ (fun r => ?_)
+  · change coaction (s.ι.hom r) = Algebra.TensorProduct.includeRight (s.ι.hom r)
+    exact ConcreteCategory.congr_hom s.condition r
+  constructor
+  · ext
+    rfl
+  · intro m hm
+    apply CommRingCat.hom_ext
+    apply RingHom.ext
+    intro r
+    apply Subtype.ext
+    exact RingHom.congr_fun (congrArg Hom.hom hm) r
 
 /-- Flat extension of scalars preserves the finite limits, hence equalizers, used above. -/
 theorem chapter12_flat_tensor_preserves_equalizers
     {A B : Type u} [CommRing A] [CommRing B] [Algebra A B]
     (hflat : (algebraMap A B).Flat) :
     PreservesFiniteLimits (tensorLeft (ModuleCat.of A B)) := by
-  sorry
+  letI : Module.Flat A B := (RingHom.flat_algebraMap_iff).mp hflat
+  exact inferInstance
 
 /-! ### Affine quotients -/
 
@@ -309,8 +337,11 @@ def chapter12_affine_quotient_is_equalizer
         (g := CommRingCat.ofHom
           (Algebra.TensorProduct.includeRight (R := A) (A := H) (B := R)).toRingHom)
         (CommRingCat.ofHom (chapter12AffineInvariantRing D).val.toRingHom)
-        (by sorry)) := by
-  sorry
+        (by
+          ext r
+          exact (chapter12AffineInvariantRing D).property r)) := by
+  simpa [chapter12AffineInvariantRing] using
+    (chapter12InvariantSubalgebra_isEqualizer A H R D.coaction)
 
 /-- The flat-base-change mechanism for affine invariants: tensoring preserves their equalizer. -/
 theorem chapter12_affine_invariants_equalizer_preserved_by_flat_base_change
@@ -371,11 +402,22 @@ theorem chapter12_torsor_is_free
     {S : Scheme.{u}} {G : Chapter12GroupScheme S} {X : Over S}
     {a : Chapter12Action G X} (T : Chapter12Torsor a) :
     Chapter12Action.IsFree a := by
-  sorry
+  letI := T.orbitRelationIsIso
+  have horbit :
+      CartesianMonoidalCategory.lift a.hom
+          (CartesianMonoidalCategory.snd G.X X) =
+        Chapter12EffectiveQuotient.orbitRelationMap T.toEffectiveQuotient := by
+    apply Over.OverMorphism.ext
+    rfl
+  change Mono (CartesianMonoidalCategory.lift a.hom
+    (CartesianMonoidalCategory.snd G.X X))
+  rw [horbit]
+  infer_instance
 
 theorem chapter12_torsor_quotient_finiteLocallyFree
     {S : Scheme.{u}} {G : Chapter12GroupScheme S} {X : Over S}
     {a : Chapter12Action G X} (T : Chapter12Torsor a)
+    (hq : QuasiCompact T.quotientMap.left)
     (hG : Chapter12FiniteLocallyFree G.X.hom) :
     Chapter12FiniteLocallyFree T.quotientMap.left := by
   sorry

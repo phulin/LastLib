@@ -15,18 +15,18 @@ use of coprimality makes the characteristic-zero case automatic because
 ringExpChar is one there.  This predicate records the numerical prime-to-`p`
 condition; extension-level tameness also carries the separate
 residue-separability hypothesis used below. -/
-def chapter09Tame (k : Type*) [Ring k] (e : ℕ) : Prop :=
+def chapter09Tame (k : Type*) [Field k] (e : ℕ) : Prop :=
   Nat.Coprime e (ringExpChar k)
 
 /-- Wild ramification in the separable-residue setting. -/
-def chapter09Wild (k : Type*) [Ring k] (e : ℕ)
+def chapter09Wild (k : Type*) [Field k] (e : ℕ)
     (residueSeparable : Prop) : Prop :=
   residueSeparable ∧ ¬ chapter09Tame k e
 
 /-- In residue characteristic zero the characteristic exponent is one, so
 every ramification index is tame. -/
 theorem chapter09_char_zero_is_tame
-    (k : Type*) [Ring k] [CharZero k] (e : ℕ) :
+    (k : Type*) [Field k] [CharZero k] (e : ℕ) :
     chapter09Tame k e := by
   simp [chapter09Tame]
 
@@ -56,7 +56,7 @@ theorem chapter09_wild_iff_prime_dvd
 criterion.  This is the bridge from the numerical definition to the finite
 Galois statement about inertia. -/
 theorem chapter09_tame_iff_inertia_order_coprime
-    (k G : Type*) [Ring k] [Group G] [Finite G]
+    (k G : Type*) [Field k] [Group G] [Finite G]
     (e : ℕ) (I : Subgroup G) (hI : Nat.card I = e) :
     chapter09Tame k e ↔ Nat.Coprime (Nat.card I) (ringExpChar k) := by
   simp [chapter09Tame, hI]
@@ -113,16 +113,33 @@ structure Chapter09TameKummerPresentation
     [Algebra A K] [Algebra K L] [Algebra A L]
     [IsScalarTower A K L] [IsFractionRing A K]
     [FiniteDimensional K L]
-    (e : ℕ) (π : A) where
+    (e : ℕ) (u : Aˣ) (π : A) where
   tame : chapter09Tame (chapter09BaseResidueField A) e
   positive : 0 < e
   roots_of_unity : ∃ ζ : K, IsPrimitiveRoot ζ e
   uniformizer :
     Ideal.span ({π} : Set A) = IsLocalRing.maximalIdeal A
   alpha : L
-  alpha_pow_eq_uniformizer : alpha ^ e = algebraMap A L π
+  alpha_pow_eq_unit_mul_uniformizer : alpha ^ e =
+    algebraMap A L ((u : A) * π)
   generates : Algebra.adjoin K ({alpha} : Set L) = ⊤
   degree : Module.finrank K L = e
+
+/- The radical presentation supplies the Galois conclusion and the
+root-of-unity parametrization of its automorphisms. -/
+theorem chapter09_tame_kummer_is_galois_with_roots_of_unity
+    (A K L : Type*) [CommRing A] [IsDomain A]
+    [IsDiscreteValuationRing A] [Field K] [Field L]
+    [Algebra A K] [Algebra K L] [Algebra A L]
+    [IsScalarTower A K L] [IsFractionRing A K]
+    [FiniteDimensional K L]
+    (e : ℕ) (u : Aˣ) (π : A)
+    (d : Chapter09TameKummerPresentation A K L e u π) :
+    IsGalois K L ∧
+      ∃ κ : rootsOfUnity e K ≃* (L ≃ₐ[K] L),
+        ∀ ζ : rootsOfUnity e K,
+          κ ζ d.alpha = algebraMap K L ((ζ : Kˣ) : K) * d.alpha := by
+  sorry
 
 /- The chapter deliberately stops before introducing higher ramification
 filtrations, jumps, wild inertia subgroups, different ideals, or discriminants. -/

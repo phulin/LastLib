@@ -6,6 +6,7 @@ import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.MeasureTheory.Measure.Dirac
 import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Core
 import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Section01TransformConventions
+import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Section03PositiveType
 import LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.Dependencies
 
 namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter07
@@ -13,7 +14,7 @@ namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter07
 noncomputable section
 
 open MeasureTheory
-open scoped BigOperators ComplexConjugate
+open scoped BigOperators ComplexConjugate FourierTransform Convolution
 
 /-!
 Shared interfaces for Chapter 7.
@@ -132,7 +133,8 @@ theorem chapter07_positiveType_mul
     (f g : Chapter07TestFunction)
     (hf : chapter07PositiveType f) (hg : chapter07PositiveType g) :
     chapter07PositiveType (fun x => f x * g x) := by
-  sorry
+  exact LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05_positive_type_mul
+    f g hf hg
 
 theorem chapter07_positiveType_fourierNonnegative
     (f : Chapter07TestFunction) (hpositive : chapter07PositiveType f) :
@@ -147,6 +149,226 @@ noncomputable def chapter07ComplexConvolution
     (u v : ℝ → ℂ) (t : ℝ) : ℂ :=
   ∫ s : ℝ, u s * v (t - s)
 
+private theorem chapter07_mathlib_transform_integrable_of_angular
+    (f : Chapter07TestFunction) (hf : Integrable f)
+    (hfhat : Integrable (chapter07FourierTransform f)) :
+    Integrable (fun ξ : ℝ => 𝓕 (fun x : ℝ => (f x : ℂ)) ξ) := by
+  have hscaled := hfhat.comp_mul_left' (R := 2 * Real.pi)
+    (by positivity : (2 * Real.pi : ℝ) ≠ 0)
+  convert hscaled using 1
+  funext ξ
+  change 𝓕 (fun x : ℝ => (f x : ℂ)) ξ =
+    LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05FourierTransform
+      f (2 * Real.pi * ξ)
+  rw [LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05_fourierTransform_eq_mathlib_angular
+    f hf (2 * Real.pi * ξ)]
+  field_simp [Real.pi_ne_zero]
+
+private theorem chapter07_pointwise_product_integrable_of_fourier_integrable
+    (f g : Chapter07TestFunction)
+    (hf : Integrable f) (hg : Integrable g)
+    (hfhat : Integrable (chapter07FourierTransform f)) :
+    Integrable (fun x : ℝ => (f x * g x : ℂ)) := by
+  have hFmath := chapter07_mathlib_transform_integrable_of_angular f hf hfhat
+  have hfC : Integrable (fun x : ℝ => (f x : ℂ)) := hf.ofReal
+  have hgC : Integrable (fun x : ℝ => (g x : ℂ)) := hg.ofReal
+  have hinv :=
+    LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05_fourier_inverse_ae
+      hfC hFmath
+  have hbound (x : ℝ) :
+      ‖𝓕⁻ (fun ξ : ℝ => 𝓕 (fun y : ℝ => (f y : ℂ)) ξ) x‖ ≤
+        ∫ ξ : ℝ, ‖𝓕 (fun y : ℝ => (f y : ℂ)) ξ‖ := by
+    rw [Real.fourierInv_eq]
+    calc
+      ‖(∫ v : ℝ, 𝐞 (inner ℝ v x) • 𝓕 (fun y : ℝ => (f y : ℂ)) v)‖ ≤
+          ∫ v : ℝ, ‖𝐞 (inner ℝ v x) • 𝓕 (fun y : ℝ => (f y : ℂ)) v‖ :=
+        norm_integral_le_integral_norm _
+      _ = ∫ v : ℝ, ‖𝓕 (fun y : ℝ => (f y : ℂ)) v‖ := by
+        apply integral_congr_ae
+        filter_upwards [] with v
+        simp
+  apply Integrable.mono' (hgC.norm.const_mul
+    (∫ ξ : ℝ, ‖𝓕 (fun y : ℝ => (f y : ℂ)) ξ‖))
+  · exact hfC.aestronglyMeasurable.mul hgC.aestronglyMeasurable
+  · filter_upwards [hinv] with x hx
+    rw [← hx]
+    change ‖𝓕⁻ (fun ξ : ℝ => 𝓕 (fun y : ℝ => (f y : ℂ)) ξ) x *
+      (g x : ℂ)‖ ≤
+      (∫ ξ : ℝ, ‖𝓕 (fun y : ℝ => (f y : ℂ)) ξ‖) * ‖(g x : ℂ)‖
+    rw [norm_mul]
+    gcongr
+    exact hbound x
+
+private theorem chapter07_double_mathlib_fourier_ae
+    (f : Chapter07TestFunction) (hf : Integrable f)
+    (hfhat : Integrable (chapter07FourierTransform f)) :
+    𝓕 (𝓕 (fun x : ℝ => (f x : ℂ))) =ᵐ[volume]
+      (fun x : ℝ => (f (-x) : ℂ)) := by
+  have hFmath := chapter07_mathlib_transform_integrable_of_angular f hf hfhat
+  have hfC : Integrable (fun x : ℝ => (f x : ℂ)) := hf.ofReal
+  have hinv :=
+    LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05_fourier_inverse_ae
+      hfC hFmath
+  have hneg :=
+    (Measure.measurePreserving_neg (volume : Measure ℝ)).quasiMeasurePreserving.ae_eq_comp hinv
+  filter_upwards [hneg] with x hx
+  change 𝓕⁻ (𝓕 (fun y : ℝ => (f y : ℂ))) (-x) = (f (-x) : ℂ) at hx
+  rw [Real.fourierInv_eq_fourier_neg] at hx
+  simpa using hx
+
+private theorem chapter07_angular_transform_fourier_ae
+    (f : Chapter07TestFunction) (hf : Integrable f)
+    (hfhat : Integrable (chapter07FourierTransform f)) :
+    𝓕 (chapter07FourierTransform f) =ᵐ[volume]
+      (fun ξ : ℝ => (2 * (Real.pi : ℂ)) * (f (-(2 * Real.pi * ξ)) : ℂ)) := by
+  let a : ℝ := 2 * Real.pi
+  have ha : 0 < a := by
+    dsimp [a]
+    positivity
+  have hdouble := chapter07_double_mathlib_fourier_ae f hf hfhat
+  have hscaled :=
+    (Measure.quasiMeasurePreserving_smul (μ := (volume : Measure ℝ)) ha.ne').ae_eq_comp hdouble
+  have hscale (ξ : ℝ) :
+      𝓕 (chapter07FourierTransform f) ξ =
+        (a : ℂ) * 𝓕 (𝓕 (fun x : ℝ => (f x : ℂ))) (a * ξ) := by
+    let q : ℝ → ℂ := fun y => 𝐞 (-(y * ξ)) • chapter07FourierTransform f y
+    have hq : 𝓕 (chapter07FourierTransform f) ξ = ∫ y : ℝ, q y := by
+      rw [Real.fourier_real_eq]
+    have hcomp := Measure.integral_comp_mul_left q a
+    have hcomp' :
+        (∫ y : ℝ, q y) = (a : ℝ) • ∫ x : ℝ, q (a * x) := by
+      rw [hcomp]
+      simp only [smul_smul]
+      rw [abs_of_pos (inv_pos.mpr ha)]
+      field_simp
+      simp
+    calc
+      𝓕 (chapter07FourierTransform f) ξ = ∫ y : ℝ, q y := hq
+      _ = (a : ℝ) • ∫ x : ℝ, q (a * x) := hcomp'
+      _ = (a : ℂ) *
+          ∫ x : ℝ, 𝐞 (-(x * (a * ξ))) •
+            𝓕 (fun y : ℝ => (f y : ℂ)) x := by
+        congr 1
+        apply integral_congr_ae
+        filter_upwards [] with x
+        dsimp [q]
+        rw [show chapter07FourierTransform f (a * x) =
+            𝓕 (fun y : ℝ => (f y : ℂ)) x by
+          change LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05FourierTransform
+            f (a * x) = 𝓕 (fun y : ℝ => (f y : ℂ)) x
+          rw [LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05_fourierTransform_eq_mathlib_angular
+            f hf (a * x)]
+          dsimp [a]
+          field_simp [Real.pi_ne_zero]]
+        congr 1
+        congr 1
+        ring
+      _ = (a : ℂ) * 𝓕 (𝓕 (fun x : ℝ => (f x : ℂ))) (a * ξ) := by
+        rw [Real.fourier_real_eq]
+  filter_upwards [hscaled] with ξ hξ
+  rw [hscale ξ]
+  change 𝓕 (𝓕 (fun x : ℝ => (f x : ℂ))) (a * ξ) =
+    (f (-(a * ξ)) : ℂ) at hξ
+  rw [hξ]
+  dsimp [a]
+  norm_num [Complex.ofReal_mul]
+
+private theorem chapter07_fourierInv_scaled_square_formula
+    (h : Chapter07TestFunction) (hh : Integrable h) (t : ℝ) :
+    𝓕⁻ (fun ξ : ℝ => (2 * Real.pi : ℂ) ^ 2 *
+      (h (-(2 * Real.pi * ξ)) : ℂ)) t =
+      (2 * (Real.pi : ℂ)) * chapter07FourierTransform h t := by
+  let a : ℝ := 2 * Real.pi
+  have ha : 0 < a := by
+    dsimp [a]
+    positivity
+  let q : ℝ → ℂ := fun y =>
+    𝐞 (-(y * (t / a))) • (h y : ℂ)
+  have hqint : ∫ y : ℝ, q y = chapter07FourierTransform h t := by
+    dsimp [q]
+    change (∫ y : ℝ, 𝐞 (-(y * (t / a))) • (h y : ℂ)) =
+      LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05FourierTransform h t
+    rw [LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05_fourierTransform_eq_mathlib_angular
+      h hh t, Real.fourier_real_eq]
+  have hcomp := Measure.integral_comp_mul_left q (-a)
+  have hsub :
+      (∫ ξ : ℝ, 𝐞 (inner ℝ ξ t) •
+          (h (-(a * ξ)) : ℂ)) =
+        |(-a)⁻¹| • ∫ y : ℝ, q y := by
+    calc
+      (∫ ξ : ℝ, 𝐞 (inner ℝ ξ t) • (h (-(a * ξ)) : ℂ)) =
+          ∫ ξ : ℝ, q ((-a) * ξ) := by
+        apply integral_congr_ae
+        filter_upwards [] with ξ
+        dsimp [q]
+        congr 1
+        · congr 1
+          simp only [starRingEnd_apply, star_trivial]
+          field_simp [ha.ne']
+        · congr 1
+          ring_nf
+      _ = |(-a)⁻¹| • ∫ y : ℝ, q y := hcomp
+  have habs : |(-a)⁻¹| = a⁻¹ := by
+    rw [inv_neg, abs_neg, abs_of_pos (inv_pos.mpr ha)]
+  rw [Real.fourierInv_eq]
+  calc
+    (∫ ξ : ℝ, 𝐞 (inner ℝ ξ t) •
+        ((2 * Real.pi : ℂ) ^ 2 * (h (-(2 * Real.pi * ξ)) : ℂ))) =
+        (a : ℂ) ^ 2 *
+          ∫ ξ : ℝ, 𝐞 (inner ℝ ξ t) • (h (-(a * ξ)) : ℂ) := by
+        rw [← integral_const_mul]
+        apply integral_congr_ae
+        filter_upwards [] with ξ
+        dsimp [a]
+        simp only [starRingEnd_apply, star_trivial]
+        simp only [Circle.smul_def]
+        norm_num [Complex.ofReal_mul] ; ring
+    _ = (a : ℂ) ^ 2 * (|(-a)⁻¹| • ∫ y : ℝ, q y) := by rw [hsub]
+    _ = (a : ℂ) ^ 2 * (a⁻¹ • chapter07FourierTransform h t) := by
+      rw [habs, hqint]
+    _ = (a : ℂ) * chapter07FourierTransform h t := by
+      rw [RCLike.real_smul_eq_coe_mul]
+      norm_num [Complex.ofReal_div]
+      field_simp [Complex.ofReal_ne_zero.mpr ha.ne']
+    _ = (2 * (Real.pi : ℂ)) * chapter07FourierTransform h t := by
+      dsimp [a]
+      norm_num [Complex.ofReal_mul]
+
+private theorem chapter07_fourierTransform_continuous_of_integrable
+    (f : Chapter07TestFunction) (hf : Integrable f) :
+    Continuous (chapter07FourierTransform f) := by
+  have hfC : Integrable (fun x : ℝ => (f x : ℂ)) := hf.ofReal
+  have hmath : Continuous (𝓕 (fun x : ℝ => (f x : ℂ))) :=
+    VectorFourier.fourierIntegral_continuous
+      (e := Real.fourierChar) (L := innerₗ ℝ) (μ := (volume : Measure ℝ))
+      Real.continuous_fourierChar continuous_inner hfC
+  have heq : chapter07FourierTransform f =
+      (fun t : ℝ => 𝓕 (fun x : ℝ => (f x : ℂ)) (t / (2 * Real.pi))) := by
+    funext t
+    exact LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05_fourierTransform_eq_mathlib_angular
+      f hf t
+  rw [heq]
+  exact hmath.comp (continuous_id.div_const (2 * Real.pi))
+
+private theorem chapter07_fourierTransform_bddAbove_of_integrable
+    (f : Chapter07TestFunction) (_hf : Integrable f) :
+    BddAbove (Set.range (fun t : ℝ => ‖chapter07FourierTransform f t‖)) := by
+  refine ⟨∫ x : ℝ, ‖(f x : ℂ)‖, ?_⟩
+  rintro _ ⟨t, rfl⟩
+  change ‖chapter07FourierTransform f t‖ ≤ ∫ x : ℝ, ‖(f x : ℂ)‖
+  rw [chapter07FourierTransform_eq_integral]
+  calc
+    ‖∫ x : ℝ, (f x : ℂ) * Complex.exp
+        (-Complex.I * (t : ℂ) * (x : ℂ))‖ ≤
+        ∫ x : ℝ, ‖(f x : ℂ) * Complex.exp
+          (-Complex.I * (t : ℂ) * (x : ℂ))‖ :=
+      norm_integral_le_integral_norm _
+    _ = ∫ x : ℝ, ‖(f x : ℂ)‖ := by
+      apply integral_congr_ae
+      filter_upwards [] with x
+      rw [norm_mul, Complex.norm_exp]
+      simp
+
 theorem chapter07_fourierTransform_mul_eq_inv_two_pi_convolution
     (f g : Chapter07TestFunction)
     (hf : Integrable f) (hg : Integrable g)
@@ -156,7 +378,80 @@ theorem chapter07_fourierTransform_mul_eq_inv_two_pi_convolution
       (1 / (2 * (Real.pi : ℂ))) *
         chapter07ComplexConvolution (chapter07FourierTransform f)
           (chapter07FourierTransform g) t := by
-  sorry
+  have hfgint := chapter07_pointwise_product_integrable_of_fourier_integrable
+    f g hf hg hfhat
+  have hFmath := chapter07_mathlib_transform_integrable_of_angular f hf hfhat
+  have hGmath := chapter07_mathlib_transform_integrable_of_angular g hg hghat
+  have hangular_f := chapter07_angular_transform_fourier_ae f hf hfhat
+  have hangular_g := chapter07_angular_transform_fourier_ae g hg hghat
+  let C : ℝ → ℂ :=
+    chapter07FourierTransform f ⋆[ContinuousLinearMap.mul ℂ ℂ]
+      chapter07FourierTransform g
+  have hCint : Integrable C := by
+    dsimp [C]
+    exact hfhat.integrable_convolution (ContinuousLinearMap.mul ℂ ℂ) hghat
+  have hCmath (ξ : ℝ) : 𝓕 C ξ =
+      (𝓕 (chapter07FourierTransform f) ξ) *
+        (𝓕 (chapter07FourierTransform g) ξ) := by
+    dsimp [C]
+    exact Real.fourier_mul_convolution_eq hfhat hghat ξ
+  have hCmath_ae : 𝓕 C =ᵐ[volume]
+      (fun ξ : ℝ => (2 * Real.pi : ℂ) ^ 2 *
+        (f (-(2 * Real.pi * ξ)) * g (-(2 * Real.pi * ξ)) : ℂ)) := by
+    filter_upwards [hangular_f, hangular_g] with ξ hξf hξg
+    rw [hCmath ξ, hξf, hξg]
+    ring
+  have hCmath_int : Integrable (fun ξ : ℝ => (2 * Real.pi : ℂ) ^ 2 *
+      (f (-(2 * Real.pi * ξ)) * g (-(2 * Real.pi * ξ)) : ℂ)) := by
+    have hscaled := hfgint.comp_mul_left' (R := -(2 * Real.pi))
+      (by exact neg_ne_zero.mpr (by positivity : (2 * Real.pi : ℝ) ≠ 0))
+    convert hscaled.const_mul ((2 * Real.pi : ℂ) ^ 2) using 1
+    funext ξ
+    simp
+  have hCmath_int' : Integrable (𝓕 C) := hCmath_int.congr hCmath_ae.symm
+  have hCcont : Continuous C := by
+    dsimp [C]
+    exact (chapter07_fourierTransform_bddAbove_of_integrable g hg).continuous_convolution_right_of_integrable
+      (ContinuousLinearMap.mul ℂ ℂ) hfhat
+      (chapter07_fourierTransform_continuous_of_integrable g hg)
+  have hInvC : 𝓕⁻ (𝓕 C) = C :=
+    hCcont.fourierInv_fourier_eq hCint hCmath_int'
+  have hfgreal : Integrable (fun x : ℝ => f x * g x) := by
+    apply (integrable_norm_iff
+      (hf.aestronglyMeasurable.mul hg.aestronglyMeasurable)).mp
+    convert hfgint.norm using 1
+    funext x
+    simp [Complex.norm_real, Real.norm_eq_abs]
+  have hC_eq : C t =
+      (2 * (Real.pi : ℂ)) *
+        chapter07FourierTransform (fun x => f x * g x) t := by
+    calc
+      C t = 𝓕⁻ (𝓕 C) t := by rw [hInvC]
+      _ = 𝓕⁻ (fun ξ : ℝ => (2 * Real.pi : ℂ) ^ 2 *
+          (f (-(2 * Real.pi * ξ)) * g (-(2 * Real.pi * ξ)) : ℂ)) t :=
+        Real.fourierInv_congr_ae hCmath_ae t
+      _ = (2 * (Real.pi : ℂ)) *
+          chapter07FourierTransform (fun x => f x * g x) t :=
+        by
+          simpa using
+            (chapter07_fourierInv_scaled_square_formula (fun x => f x * g x)
+              hfgreal t)
+  have hCdef : C t =
+      chapter07ComplexConvolution (chapter07FourierTransform f)
+        (chapter07FourierTransform g) t := by
+    rfl
+  have hpi : (2 * (Real.pi : ℂ)) ≠ 0 := by
+    norm_num [Real.pi_ne_zero]
+  calc
+    chapter07FourierTransform (fun x => f x * g x) t =
+        (1 / (2 * (Real.pi : ℂ))) *
+          ((2 * (Real.pi : ℂ)) *
+            chapter07FourierTransform (fun x => f x * g x) t) := by
+      field_simp [hpi]
+    _ = (1 / (2 * (Real.pi : ℂ))) * C t := by rw [← hC_eq]
+    _ = (1 / (2 * (Real.pi : ℂ))) *
+        chapter07ComplexConvolution (chapter07FourierTransform f)
+          (chapter07FourierTransform g) t := by rw [hCdef]
 
 def chapter07ZeroPartner (ρ : ℂ) : ℂ :=
   1 - star ρ
@@ -239,6 +534,19 @@ def chapter07CanonicalGRH
     (Z : Chapter07CanonicalZeroSpectrum K) : Prop :=
   chapter07GRH (chapter07ZeroSpectrumOfChapter06 K Z)
 
+theorem chapter07_canonicalGRH_iff_chapter06GRH
+    (K : Type*) [Field K] [NumberField K]
+    (Z : Chapter07CanonicalZeroSpectrum K) :
+    chapter07CanonicalGRH K Z ↔
+      LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.chapter06GRH Z := by
+  constructor
+  · intro hGRH ρ hρ
+    rcases hGRH ρ hρ with ⟨γ, hγ⟩
+    simpa using congrArg Complex.re hγ
+  · intro hGRH ρ hρ
+    exact LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.chapter06_grh_zero_representation
+      hGRH hρ
+
 abbrev chapter07ZeroTransform
     (f : Chapter07TestFunction) (ρ : ℂ) : ℂ :=
   LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.chapter05BilateralLaplaceTransform f ρ
@@ -273,6 +581,17 @@ theorem chapter07_zeroTermSummand_of_chapter06
 def chapter07ZeroTermConvergent
     (Z : Chapter07ZeroSpectrum) (f : Chapter07TestFunction) : Prop :=
   Summable (chapter07ZeroTermSummand Z f)
+
+theorem chapter07_canonical_zeroTermConvergent_of_basic
+    (K : Type*) [Field K] [NumberField K]
+    (Z : Chapter07CanonicalZeroSpectrum K) {f : Chapter07TestFunction}
+    (hf : LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05.Chapter05BasicallyAdmissible f) :
+    chapter07ZeroTermConvergent (chapter07ZeroSpectrumOfChapter06 K Z) f := by
+  change Summable (chapter07ZeroTermSummand (chapter07ZeroSpectrumOfChapter06 K Z) f)
+  refine (LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter06.chapter06_zero_summand_summable_of_basic
+    K Z hf).congr ?_
+  intro ρ
+  exact (chapter07_zeroTermSummand_of_chapter06 K Z f ρ).symm
 
 noncomputable def chapter07ZeroTerm
     (Z : Chapter07ZeroSpectrum) (f : Chapter07TestFunction) : ℝ :=

@@ -1,4 +1,5 @@
 import LastLib.Book06GlobalClassFieldTheory.Chapter01.Dependencies
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Section01WhyUnitsNeedTheirOwnFiltration
 
 namespace LastLib.Book06GlobalClassFieldTheory.Chapter01
 
@@ -44,7 +45,35 @@ theorem finitePlaceUnitFiltration_of_pos {K : Type*} [Field K] [NumberField K]
 theorem finitePlaceUnitFiltration_succ_nested
     {K : Type*} [Field K] [NumberField K] (v : FinitePlaceIndex K) (n : ℕ) :
     finitePlaceUnitFiltration v (n + 1) ⊆ finitePlaceUnitFiltration v n := by
-  sorry
+  intro x hx
+  cases n with
+  | zero =>
+      have hx' : x ∈ finitePlacePrincipalUnitSet v 1 := by
+        rw [← finitePlaceUnitFiltration_of_pos v (Nat.zero_lt_succ 0)]
+        exact hx
+      rcases hx' with ⟨y, hy, hxy⟩
+      rw [finitePlaceUnitFiltration_zero]
+      change ∃ u : (v.adicCompletionIntegers K)ˣ,
+        algebraMap (v.adicCompletionIntegers K) (v.adicCompletion K) (u : _) = x
+      have hy₁ : y ∈ finitePlaceMaximalIdeal v := by
+        simpa [pow_one] using hy
+      have hunit : IsUnit (1 + y) := by
+        apply IsLocalRing.notMem_maximalIdeal.mp
+        intro hmem
+        have hone : (1 : v.adicCompletionIntegers K) ∈
+            finitePlaceMaximalIdeal v := by
+          have hsub := sub_mem hmem hy₁
+          simpa only [add_sub_cancel_right, finitePlaceMaximalIdeal] using hsub
+        exact (IsLocalRing.notMem_maximalIdeal.mpr isUnit_one) hone
+      refine ⟨hunit.unit, ?_⟩
+      rw [hunit.unit_spec]
+      rw [hxy]
+      simp
+  | succ n =>
+      simp [finitePlaceUnitFiltration] at hx ⊢
+      rcases hx with ⟨y, hy, hxy⟩
+      refine ⟨y, ?_, hxy⟩
+      exact (Ideal.pow_le_pow_right (Nat.succ n).le_succ) hy
 
 theorem finitePlaceUnitFiltration_is_subgroup
     {K : Type*} [Field K] [NumberField K] (v : FinitePlaceIndex K) (n : ℕ) :
@@ -52,8 +81,87 @@ theorem finitePlaceUnitFiltration_is_subgroup
       (H : Set ((BookPlace.completion (Sum.inl v))ˣ)) =
         {u : (BookPlace.completion (Sum.inl v))ˣ |
           (u : BookPlace.completion (Sum.inl v)) ∈
-          finitePlaceUnitFiltration v n} := by
-  sorry
+            finitePlaceUnitFiltration v n} := by
+  refine ⟨LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10FieldUnitFiltration
+    (v.adicCompletionIntegers K) n, ?_⟩
+  ext u
+  change u ∈ LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10FieldUnitFiltration
+      (v.adicCompletionIntegers K) n ↔
+    (u : v.adicCompletion K) ∈ finitePlaceUnitFiltration v n
+  cases n with
+  | zero =>
+      rw [finitePlaceUnitFiltration_zero]
+      have hzero :=
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10_field_filtration_zero_one
+          (v.adicCompletionIntegers K)).1
+      rw [hzero]
+      constructor
+      · intro hu
+        change ∃ a : (v.adicCompletionIntegers K)ˣ,
+          algebraMap (v.adicCompletionIntegers K) (v.adicCompletion K) (a : _) =
+            (u : v.adicCompletion K)
+        let a : (v.adicCompletionIntegers K)ˣ :=
+          (v.adicCompletionIntegers K).unitGroupMulEquiv
+            ⟨u, hu⟩
+        refine ⟨a, ?_⟩
+        change ((v.adicCompletionIntegers K).unitGroupMulEquiv
+            (⟨u, hu⟩ : (v.adicCompletionIntegers K).unitGroup) :
+              v.adicCompletionIntegers K) = (u : v.adicCompletion K)
+        exact (v.adicCompletionIntegers K).coe_unitGroupMulEquiv_apply
+          ⟨u, hu⟩
+      · intro hu
+        change ∃ a : (v.adicCompletionIntegers K)ˣ,
+          algebraMap (v.adicCompletionIntegers K) (v.adicCompletion K) (a : _) =
+            (u : v.adicCompletion K) at hu
+        rcases hu with ⟨a, ha⟩
+        let z : (v.adicCompletionIntegers K).unitGroup :=
+          (v.adicCompletionIntegers K).unitGroupMulEquiv.symm a
+        have hz : (z : (v.adicCompletion K)ˣ) = u := by
+          apply Units.ext
+          change algebraMap (v.adicCompletionIntegers K) (v.adicCompletion K)
+              (a : v.adicCompletionIntegers K) = (u : v.adicCompletion K)
+          exact ha
+        rw [← hz]
+        exact z.property
+  | succ n =>
+      simp [finitePlaceUnitFiltration]
+      rw [LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10FieldUnitFiltration]
+      constructor
+      · intro hu
+        rcases Subgroup.mem_map.mp hu with ⟨a, ha, hua⟩
+        change ((a : v.adicCompletionIntegers K) - 1) ∈
+            (finitePlaceMaximalIdeal v) ^ (n + 1) at ha
+        refine ⟨(a : v.adicCompletionIntegers K) - 1, ha, ?_⟩
+        rw [← congrArg Units.val hua]
+        change algebraMap (v.adicCompletionIntegers K) (v.adicCompletion K)
+            (a : v.adicCompletionIntegers K) =
+          1 + algebraMap (v.adicCompletionIntegers K) (v.adicCompletion K)
+            ((a : v.adicCompletionIntegers K) - 1)
+        simp
+      · intro hu
+        rcases hu with ⟨y, hy, huy⟩
+        have hy₁ : y ∈ finitePlaceMaximalIdeal v := by
+          simpa only [pow_one] using
+            (Ideal.pow_le_pow_right
+              (Nat.succ_le_succ (Nat.zero_le n))) hy
+        have hunit : IsUnit (1 + y) := by
+          apply IsLocalRing.notMem_maximalIdeal.mp
+          intro hmem
+          have hone : (1 : v.adicCompletionIntegers K) ∈
+              finitePlaceMaximalIdeal v := by
+            have hsub := sub_mem hmem hy₁
+            simpa only [add_sub_cancel_right, finitePlaceMaximalIdeal] using hsub
+          exact (IsLocalRing.notMem_maximalIdeal.mpr isUnit_one) hone
+        refine Subgroup.mem_map.mpr ⟨hunit.unit, ?_, ?_⟩
+        · change ((hunit.unit : v.adicCompletionIntegers K) - 1) ∈
+            (finitePlaceMaximalIdeal v) ^ (n + 1)
+          rw [hunit.unit_spec]
+          simpa using hy
+        · apply Units.ext
+          change algebraMap (v.adicCompletionIntegers K) (v.adicCompletion K)
+              (hunit.unit : v.adicCompletionIntegers K) = (u : v.adicCompletion K)
+          rw [hunit.unit_spec]
+          exact huy.symm
 
 /- A stable subgroup representative is needed when local reciprocity is
    stated on a specified unit level. -/
@@ -151,7 +259,13 @@ theorem finite_local_reciprocity_uses_arithmetic_frobenius
       N.residueExtensionAlgebra
     ∀ x : N.residueExtension,
       N.residueAction (N.reciprocity N.uniformizer) x = x ^ N.q := by
-  sorry
+  let _ : Fintype (FinitePlaceResidueField v) := R.residueFintype v
+  let N := R.finite_normalization v
+  let _ : Field N.residueExtension := N.residueExtensionField
+  let _ : Fintype N.residueExtension := N.residueExtensionFintype
+  let _ : Algebra (FinitePlaceResidueField v) N.residueExtension :=
+    N.residueExtensionAlgebra
+  exact N.arithmetic_uniformizer
 
 /- At an unramified finite prime, the chosen uniformizer maps to arithmetic
 Frobenius; geometric Frobenius is its inverse. -/
@@ -184,7 +298,8 @@ theorem global_unramified_prime_uses_arithmetic_convention
 theorem complex_finite_extension_is_trivial
     (L : Type*) [Field L] [Algebra ℂ L] [FiniteDimensional ℂ L] :
     Nonempty (L ≃ₐ[ℂ] ℂ) := by
-  sorry
+  exact ⟨(AlgEquiv.ofBijective (Algebra.ofId ℂ L)
+    (IsAlgClosed.algebraMap_bijective_of_isIntegral (k := ℂ) (K := L))).symm⟩
 
 /- The complex local reciprocity map is trivial. -/
 def complexLocalReciprocity :
@@ -214,7 +329,35 @@ def negativeRealUnit : ℝˣ := Units.mk0 (-1) (by norm_num)
 /- LOCAL_DEPENDENCY_GUESS: the real local Artin map is the sign quotient
 identified with `Gal(ℂ/ℝ)`. -/
 def realLocalReciprocity : ℝˣ →* Gal(ℂ / ℝ) := by
-  sorry
+  have hconj : (RCLike.conjAe : Gal(ℂ / ℝ)) * RCLike.conjAe = 1 := by
+    ext z
+    simp [RCLike.conjAe_coe]
+  refine
+    { toFun := fun u => if 0 < (u : ℝ) then 1 else RCLike.conjAe
+      map_one' := by simp
+      map_mul' := by
+        intro u v
+        rcases lt_or_gt_of_ne (Units.ne_zero u) with hu | hu <;>
+          rcases lt_or_gt_of_ne (Units.ne_zero v) with hv | hv
+        · have huv : 0 < ((u * v : ℝˣ) : ℝ) := by
+            simpa using (mul_pos_of_neg_of_neg hu hv)
+          have hnu : ¬ 0 < (u : ℝ) := not_lt_of_ge (le_of_lt hu)
+          have hnv : ¬ 0 < (v : ℝ) := not_lt_of_ge (le_of_lt hv)
+          simpa only [if_pos huv, if_neg hnu, if_neg hnv, one_mul, mul_one]
+            using hconj.symm
+        · have huv : ((u * v : ℝˣ) : ℝ) < 0 := by
+            simpa using (mul_neg_of_neg_of_pos hu hv)
+          have hnu : ¬ 0 < (u : ℝ) := not_lt_of_ge (le_of_lt hu)
+          have hnuv : ¬ 0 < ((u * v : ℝˣ) : ℝ) := not_lt_of_ge (le_of_lt huv)
+          simp only [if_neg hnuv, if_neg hnu, if_pos hv, mul_one]
+        · have huv : ((u * v : ℝˣ) : ℝ) < 0 := by
+            simpa using (mul_neg_of_pos_of_neg hu hv)
+          have hnv : ¬ 0 < (v : ℝ) := not_lt_of_ge (le_of_lt hv)
+          have hnuv : ¬ 0 < ((u * v : ℝˣ) : ℝ) := not_lt_of_ge (le_of_lt huv)
+          simp only [if_neg hnuv, if_pos hu, if_neg hnv, one_mul]
+        · have huv : 0 < ((u * v : ℝˣ) : ℝ) := by
+            simpa using (mul_pos hu hv)
+          simp only [if_pos huv, if_pos hu, if_pos hv, mul_one] }
 
 def realComplexConjugation : Gal(ℂ / ℝ) :=
   RCLike.conjAe
@@ -227,16 +370,52 @@ structure RealLocalReciprocityQuotientEquivalence where
 
 theorem real_local_reciprocity_quotient_equiv :
     Nonempty RealLocalReciprocityQuotientEquivalence := by
-  sorry
+  have hconj_ne_one : (RCLike.conjAe : Gal(ℂ / ℝ)) ≠ 1 := by
+    intro h
+    have hI := congrArg (fun f : Gal(ℂ / ℝ) => f Complex.I) h
+    have hIm := congrArg Complex.im hI
+    norm_num at hIm
+  have hsurj : Function.Surjective realLocalReciprocity := by
+    intro σ
+    rcases Complex.real_algHom_eq_id_or_conj σ.toAlgHom with hσ | hσ
+    · have hσ' : σ = 1 := by
+        ext z
+        exact congrArg (fun f : ℂ →ₐ[ℝ] ℂ => f z) hσ
+      exact ⟨1, hσ'.symm ▸ by simp [realLocalReciprocity]⟩
+    · have hσ' : σ = realComplexConjugation := by
+        ext z
+        exact congrArg (fun f : ℂ →ₐ[ℝ] ℂ => f z) hσ
+      refine ⟨negativeRealUnit, ?_⟩
+      rw [hσ']
+      simp [realLocalReciprocity, negativeRealUnit, realComplexConjugation]
+  have hker : positiveRealUnitSubgroup = realLocalReciprocity.ker := by
+    ext u
+    change 0 < (u : ℝ) ↔ realLocalReciprocity u = 1
+    constructor
+    · intro hu
+      simp [realLocalReciprocity, hu]
+    · intro hu
+      by_contra hnot
+      rcases lt_or_gt_of_ne (Units.ne_zero u) with hneg | hpos
+      · have hnu : ¬ 0 < (u : ℝ) := not_lt_of_ge (le_of_lt hneg)
+        have : (RCLike.conjAe : Gal(ℂ / ℝ)) = 1 := by
+          simpa [realLocalReciprocity, hnu] using hu
+        exact hconj_ne_one this
+      · exact hnot hpos
+  refine ⟨⟨QuotientGroup.liftEquiv positiveRealUnitSubgroup hsurj hker, ?_⟩⟩
+  intro u
+  simpa only [QuotientGroup.mk'_apply] using
+    (QuotientGroup.liftEquiv_mk positiveRealUnitSubgroup hsurj hker u)
 
 theorem real_positive_unit_killed (u : ℝˣ)
     (hu : u ∈ positiveRealUnitSubgroup) :
     realLocalReciprocity u = 1 := by
-  sorry
+  change 0 < (u : ℝ) at hu
+  simp [realLocalReciprocity, hu]
 
 theorem real_negative_unit_is_complex_conjugation :
     realLocalReciprocity negativeRealUnit = realComplexConjugation := by
-  sorry
+  simp [realLocalReciprocity, negativeRealUnit, realComplexConjugation]
 
 /- Infinite-place ramification can only occur over a real place and produces
 a complex place. -/
@@ -258,7 +437,8 @@ theorem complex_infinite_place_never_ramifies
     (hv : NumberField.InfinitePlace.IsComplex v)
     (w : InfinitePlaceIndex L) :
     ¬ InfinitePlaceRamifies w v := by
-  sorry
+  intro h
+  exact (NumberField.InfinitePlace.ne_of_isReal_isComplex h.2.1 hv) rfl
 
 theorem real_infinite_place_may_ramify
     {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L]
@@ -308,7 +488,17 @@ theorem ideleNormClassImage_eq_classNormGroup
     [Algebra K L] [FiniteDimensional K L]
     (N : GlobalNormInterface K L) :
     ideleNormClassImage N = (classNormGroup N : Set (C_K K)) := by
-  sorry
+  ext c
+  constructor
+  · rintro ⟨x, rfl⟩
+    change classQuotient (componentwiseIdeleNorm N x) ∈
+      (classNorm N).range
+    exact ⟨classQuotient x, classNorm_apply_classQuotient N x⟩
+  · intro hc
+    change c ∈ (classNorm N).range at hc
+    rcases hc with ⟨q, rfl⟩
+    rcases QuotientGroup.mk'_surjective (principalIdeleSubgroup L) q with ⟨x, rfl⟩
+    exact ⟨x, classNorm_apply_classQuotient N x⟩
 
 theorem classNorm_membership_iff_principal_times_ideleNorm
     {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L]
@@ -316,7 +506,13 @@ theorem classNorm_membership_iff_principal_times_ideleNorm
     (N : GlobalNormInterface K L) (c : C_K K) :
     c ∈ classNormGroup N ↔
       ∃ x : I_K K, x ∈ principalTimesIdeleNormGroup N ∧ classQuotient x = c := by
-  sorry
+  rw [classNormGroup_eq_principal_times_norm_quotient N]
+  constructor
+  · intro hc
+    rcases Subgroup.mem_map.mp hc with ⟨x, hx, hxc⟩
+    exact ⟨x, hx, hxc⟩
+  · rintro ⟨x, hx, hxc⟩
+    exact Subgroup.mem_map.mpr ⟨x, hx, hxc⟩
 
 end
 end LastLib.Book06GlobalClassFieldTheory.Chapter01

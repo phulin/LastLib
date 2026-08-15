@@ -86,6 +86,13 @@ private theorem chapter12_grp_mkIso_inv_hom_abbrev
   let : IsMonHom e.hom := ⟨one_f, mul_f⟩
   exact chapter12_grp_mkIso_inv_hom e
 
+private theorem chapter12_group_eqToIso_homScheme
+    {S : Scheme.{u}} {A B : Chapter12GroupScheme S} (h : A = B) :
+    Chapter12GroupScheme.homScheme (eqToIso h).hom =
+      Over.Hom.left (eqToHom (congrArg (fun G : Chapter12GroupScheme S => G.X) h)) := by
+  cases h
+  rfl
+
 theorem chapter12_group_closed_subgroup_descends
     {S T : Scheme.{u}} (p : T ⟶ S) (hp : Chapter12FpqcCover p)
     (D_G D_K : Chapter12GroupSchemeDescentDatum p)
@@ -328,7 +335,117 @@ theorem chapter12_group_closed_subgroup_descends
     rw [hK']
   have hu :
       LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DescentCompatible p u := by
-    sorry
+    unfold LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DescentCompatible
+    dsimp [LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10OverlapFirstHom,
+      LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10OverlapSecondHomTransported]
+    have hgroup' := congrArg (fun k => Over.Hom.left k.hom.hom) hgroup
+    dsimp [Chapter12GroupScheme.baseChangeHom, Chapter12GroupScheme.baseChange] at hgroup'
+    have hcompK :
+        (chapter12GroupSchemeBaseChangeComparison p K
+            (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapFirst p)
+            (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapSecond p)
+            (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlap_condition p)).hom.hom.hom =
+            (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapComparison p X).hom := by
+      apply Over.OverMorphism.ext
+      simp only [chapter12GroupSchemeBaseChangeComparison, Iso.trans_hom,
+        Chapter12GroupScheme.homScheme_comp]
+      have hfull₁ :
+          Chapter12GroupScheme.homScheme
+            (chapter12GroupSchemeBaseChangeCompIso p
+              (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapFirst p) K).hom =
+            Over.Hom.left
+              ((Over.pullbackComp
+                (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapFirst p) p).inv.app
+                (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10OverObject X)) := by
+        change Over.Hom.left
+            ((chapter12GroupSchemeBaseChangeCompIso p
+              (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapFirst p) K).hom.hom.hom) = _
+        rfl
+      have hfull₂ :
+          Chapter12GroupScheme.homScheme
+            (chapter12GroupSchemeBaseChangeCompIso p
+              (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapSecond p) K).symm.hom =
+            Over.Hom.left
+              ((Over.pullbackComp
+                (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapSecond p) p).hom.app
+                (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10OverObject X)) := by
+        change Over.Hom.left
+            ((chapter12GroupSchemeBaseChangeCompIso p
+              (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapSecond p) K).symm.hom.hom.hom) = _
+        rfl
+      have hbc :
+          Chapter12GroupScheme.baseChange
+              (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapFirst p ≫ p) K =
+            Chapter12GroupScheme.baseChange
+              (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapSecond p ≫ p) K :=
+        congrArg (fun r => Chapter12GroupScheme.baseChange r K)
+          (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlap_condition p)
+      have hmiddle := chapter12_group_eqToIso_homScheme hbc
+      rw [hfull₁, hfull₂, hmiddle]
+      simp [LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapComparison,
+        X, Chapter12GroupScheme.baseChange]
+      congr 1
+    have hcompG :
+        (chapter12GroupSchemeBaseChangeComparison p G
+            (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapFirst p)
+            (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapSecond p)
+            (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlap_condition p)).hom.hom.hom =
+            (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapComparison p Y).hom := by
+      dsimp [Y]
+      unfold Chapter12GroupScheme.baseChange
+      apply Over.OverMorphism.ext
+      simp only [chapter12GroupSchemeBaseChangeComparison,
+        chapter12GroupSchemeBaseChangeCompIso,
+        LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapComparison,
+        Iso.trans_hom, Iso.trans_inv, Iso.symm_hom]
+      have hc₁ :
+          ((Functor.mapGrpCompIso (F := Over.pullback p)
+            (G := Over.pullback
+              (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapFirst p))).app G).symm.hom.hom.hom =
+            𝟙 _ := by
+        change 𝟙 _ = 𝟙 _
+        rfl
+      have hc₂ :
+          ((Functor.mapGrpCompIso (F := Over.pullback p)
+            (G := Over.pullback
+              (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapSecond p))).app G).symm.inv.hom.hom =
+            𝟙 _ := by
+        change 𝟙 _ = 𝟙 _
+        rfl
+      have hc₃ :
+          ((Functor.mapGrpCompIso (F := Over.pullback p)
+            (G := Over.pullback
+              (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapSecond p))).app G).symm.hom.hom.hom =
+            𝟙 _ := by
+        change 𝟙 _ = 𝟙 _
+        rfl
+      have hc₄ :
+          ((Functor.mapGrpCompIso (F := Over.pullback p)
+            (G := Over.pullback
+              (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapFirst p))).app G).symm.inv.hom.hom =
+            𝟙 _ := by
+        change 𝟙 _ = 𝟙 _
+        rfl
+      have hn₁ :
+          ((Functor.mapGrpNatIso
+            (Over.pullbackComp
+              (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapFirst p) p)).app G).symm.hom.hom.hom =
+            ((Over.pullbackComp
+              (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapFirst p) p).app G.X).inv := by
+        apply Over.OverMorphism.ext
+        rfl
+      have hn₂ :
+          ((Functor.mapGrpNatIso
+            (Over.pullbackComp
+              (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapSecond p) p)).app G).symm.inv.hom.hom =
+            ((Over.pullbackComp
+              (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapSecond p) p).app G.X).hom := by
+        apply Over.OverMorphism.ext
+        rfl
+      simp only [Iso.trans_hom, Iso.trans_inv, Over.comp_left]
+      rw [hc₁, hn₁, hc₃, hn₂]
+      simp
+    rw [hcompG, hcompK] at hgroup'
   sorry
 
 /-- A closed subgroup object with finite-locally-free structure recorded. -/
@@ -355,7 +472,10 @@ theorem chapter12_finiteLocallyFree_group_closed_subgroup_descends
         IsClosedImmersion (Chapter12GroupScheme.homScheme i) ∧
           Chapter12FiniteLocallyFree K.X.hom ∧
             Chapter12GroupScheme.baseChangeHom p i = eK.hom ≫ iT ≫ eG.inv := by
-  sorry
+  obtain ⟨K, i, eK, heK, hclosedK, hbase⟩ :=
+    chapter12_group_closed_subgroup_descends p hp D_G D_K eG heG iT hiT hclosed
+  refine ⟨K, i, eK, heK, hclosedK, ?_, hbase⟩
+  exact chapter12_finiteLocallyFree_descends p hp K D_K.upstairs eK hfiniteLocallyFree
 
 /-- A closed subgroup object in the slice. -/
 structure Chapter12ClosedSubgroup {S : Scheme.{u}}
@@ -455,7 +575,8 @@ theorem chapter12_commutative_homomorphism_descends_unique
     (h : Chapter12CommutativeGroupScheme.baseChangeHom p f =
       Chapter12CommutativeGroupScheme.baseChangeHom p g) :
     f = g := by
-  sorry
+  exact chapter12_commutative_group_hom_ext_of_faithfullyFlat p
+    ⟨hp.2.1, hp.2.2⟩ f g h
 
 theorem chapter12_homomorphism_descends_unique
     {S T : Scheme.{u}} (p : T ⟶ S) (hp : Chapter12FpqcCover p)
@@ -499,7 +620,15 @@ theorem chapter12_finiteLocallyFree_closed_subgroup_descends
         IsClosedImmersion (Chapter12CommutativeGroupScheme.homScheme i) ∧
           Chapter12FiniteLocallyFree K.X.hom ∧
         Chapter12CommutativeGroupScheme.baseChangeHom p i = eK.hom ≫ iT ≫ eG.inv := by
-  sorry
+  obtain ⟨K, i, eK, heK, hclosedK, hbase⟩ :=
+    chapter12_closed_subgroup_descends p hp D_G D_K eG heG iT hiT hclosed
+  refine ⟨K, i, eK, heK, hclosedK, ?_, hbase⟩
+  let K' : Chapter12GroupScheme S := K.toGrp
+  let eK' : Chapter12GroupScheme.baseChange p K' ≅ D_K.upstairs.toGrp :=
+    (CommGrp.forget₂Grp (Over T)).mapIso eK
+  simpa [K'] using
+    (chapter12_finiteLocallyFree_descends p hp K' D_K.upstairs.toGrp eK'
+      hfiniteLocallyFree)
 
 /-! ### Exact sequences -/
 

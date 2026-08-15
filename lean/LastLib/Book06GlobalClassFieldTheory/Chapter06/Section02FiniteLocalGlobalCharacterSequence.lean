@@ -64,8 +64,8 @@ structure Chapter06LocalCupPairingData
       Nonempty (HLocal v ≃+ HTate v)
   tatePairing : ∀ v, HTate v →+ HMu v →+ Chapter06OneOverNModOne n
   tate_pairing_agrees :
-    ∀ v (_hv : kind v = Chapter06PlaceKind.real) c a,
-      ∃ e : HLocal v ≃+ HTate v,
+    ∀ v (_hv : kind v = Chapter06PlaceKind.real),
+      ∃ e : HLocal v ≃+ HTate v, ∀ c a,
         tatePairing v (e c) a = pairing v c a
   complex_place_groups_vanishes :
     ∀ v, kind v = Chapter06PlaceKind.complex →
@@ -238,12 +238,9 @@ structure Chapter06FiniteLocalGlobalCharacterData
       Chapter06RestrictedProduct ι HLocal localData.unramified
   localization_formula :
     ∀ c v, localization c v = localizationAt v c
-  /- The finite-S calculation passes to the restricted product through a
-     finite-intersection argument on the global H¹ group.  This is the
-     finiteness input supplied by the arithmetic calculation for a number
-     field and a finite coefficient module. -/
-  global_character_finite :
-    Finite (Chapter06ContinuousACharacter G A)
+  /- The finite-S calculation is supplied by the arithmetic input below; it
+     must not be replaced by global finiteness of H¹, which is generally
+     false when ramification is allowed at arbitrary places. -/
   component_separation :
     Chapter06ComponentSeparation G A ι HLocal localizationAt
   finite_level_duality :
@@ -326,6 +323,116 @@ structure Chapter06WangDefectCalculation
       a ∈ chapter06KummerClassesTrivialOutside D S ↔
         a = 0 ∨ a = defect
 
+/- The remaining finite cyclotomic calculation translates the exceptional
+   Kummer class into the sign obstruction on prescribed local characters.
+   `specialPlaces : Finset S` makes the support condition explicit instead of
+   silently summing over places outside the prescribed set. -/
+structure Chapter06WangSignCalculation
+    (G : Type*) (ι : Type*) (HLocal : ι → Type*) (HMuGlobal : Type*)
+    [Group G] [TopologicalSpace G]
+    (n : ℕ)
+    [TopologicalSpace (Chapter06A n)]
+    [IsTopologicalAddGroup (Chapter06A n)]
+    [TopologicalSpace (Chapter06A (2 * n))]
+    [IsTopologicalAddGroup (Chapter06A (2 * n))]
+    [∀ v, AddCommGroup (HLocal v)] [AddCommGroup HMuGlobal]
+    (S : Finset ι)
+    (duality :
+      Chapter06FiniteSArithmeticDuality G (Chapter06A n) ι HLocal HMuGlobal S)
+    where
+  positive : 0 < n
+  /- This is the actual coefficient inclusion A_n → A_{2n}, rather than an
+     unspecified map between two abstract coefficient groups. -/
+  canonical_embedding : Chapter06A n →+ Chapter06A (2 * n)
+  canonical_embedding_injective : Function.Injective canonical_embedding
+  canonical_embedding_eq :
+    canonical_embedding = chapter06CanonicalAEmbedding n
+  wangSpecial : Prop
+  /- The source alternative is stated for local characters whose orders have
+     least common multiple n.  The generic local interface has no intrinsic
+     order function, so that hypothesis is recorded explicitly here. -/
+  has_exact_local_order_n : (∀ v : S, HLocal v) → Prop
+  specialPlaces : Finset S
+  sign : ∀ v : S, HLocal v → ZMod 2
+  lambda_zero_iff :
+    ∀ z, duality.lambda z = 0 ↔
+      (¬ wangSpecial ∨
+        specialPlaces.sum (fun v => sign v (z v)) = 0)
+  /- The canonical coefficient map is also required to be compatible with
+     the local restrictions.  The target is A_{2n}, not merely another copy
+     of A_n, so the exceptional replacement is visible in the API. -/
+  canonical_lift :
+    Chapter06ContinuousACharacter G (Chapter06A n) →
+      Chapter06ContinuousACharacter G (Chapter06A (2 * n))
+  canonical_lift_formula :
+    ∀ c g, (canonical_lift c).toMul.1 g =
+      Multiplicative.ofAdd (canonical_embedding (c.toMul.1 g).toAdd)
+  lift_localization :
+    Chapter06ContinuousACharacter G (Chapter06A (2 * n)) →+
+      (∀ v : S, HLocal v)
+  canonical_lift_localization :
+    ∀ c, lift_localization (canonical_lift c) = duality.localization c
+  /- In the Wang-special, failed-sign case the same local data has an
+     A_{2n}-valued global lift.  The final field says that every such lift,
+     not just one selected witness, has exact order 2n. -/
+  obstructed_lift :
+    ∀ z, wangSpecial → has_exact_local_order_n z →
+      specialPlaces.sum (fun v => sign v (z v)) ≠ 0 →
+      ∃ c₂, lift_localization c₂ = z
+  obstructed_lift_exact_order :
+    ∀ z c₂, wangSpecial → has_exact_local_order_n z →
+      specialPlaces.sum (fun v => sign v (z v)) ≠ 0 →
+      lift_localization c₂ = z →
+      Nat.card (MonoidHom.range c₂.toMul.1) = 2 * n
+
+/- The sign form of the Grunwald--Wang alternative.  The hypothesis on
+   `lambda` is the explicit finite cyclotomic calculation; exactness then
+   turns it into the local-to-global statement. -/
+theorem chapter06_grunwald_wang_sign_alternative
+    {G : Type*} {ι : Type*} {HLocal : ι → Type*} {HMuGlobal : Type*}
+    [Group G] [TopologicalSpace G]
+    [∀ v, AddCommGroup (HLocal v)] [AddCommGroup HMuGlobal]
+    {n : ℕ}
+    [TopologicalSpace (Chapter06A n)]
+    [IsTopologicalAddGroup (Chapter06A n)]
+    [TopologicalSpace (Chapter06A (2 * n))]
+    [IsTopologicalAddGroup (Chapter06A (2 * n))]
+    {S : Finset ι}
+    {duality :
+      Chapter06FiniteSArithmeticDuality G (Chapter06A n) ι HLocal HMuGlobal S}
+    (W : Chapter06WangSignCalculation G ι HLocal HMuGlobal n S duality)
+    (z : ∀ v : S, HLocal v) :
+    W.has_exact_local_order_n z →
+    (∃ x, duality.localization x = z) ↔
+      (¬ W.wangSpecial ∨
+        W.specialPlaces.sum (fun v => W.sign v (z v)) = 0) := by
+  sorry
+
+/- The degree-2n replacement in the obstructed Wang-special case, including
+   the exact-order assertion for every compatible lift. -/
+theorem chapter06_grunwald_wang_obstructed_lift
+    {G : Type*} {ι : Type*} {HLocal : ι → Type*} {HMuGlobal : Type*}
+    [Group G] [TopologicalSpace G]
+    [∀ v, AddCommGroup (HLocal v)] [AddCommGroup HMuGlobal]
+    {n : ℕ}
+    [TopologicalSpace (Chapter06A n)]
+    [IsTopologicalAddGroup (Chapter06A n)]
+    [TopologicalSpace (Chapter06A (2 * n))]
+    [IsTopologicalAddGroup (Chapter06A (2 * n))]
+    {S : Finset ι}
+    {duality :
+      Chapter06FiniteSArithmeticDuality G (Chapter06A n) ι HLocal HMuGlobal S}
+    (W : Chapter06WangSignCalculation G ι HLocal HMuGlobal n S duality)
+    (z : ∀ v : S, HLocal v)
+    (hwang : W.wangSpecial)
+    (hz : W.has_exact_local_order_n z)
+    (hsign : W.specialPlaces.sum (fun v => W.sign v (z v)) ≠ 0) :
+    ∃ c₂,
+      W.lift_localization c₂ = z ∧
+        Nat.card (MonoidHom.range c₂.toMul.1) = 2 * n := by
+  rcases W.obstructed_lift z hwang hz hsign with ⟨c₂, hc₂⟩
+  exact ⟨c₂, hc₂, W.obstructed_lift_exact_order z c₂ hwang hz hsign hc₂⟩
+
 theorem chapter06_admissible_finite_place_set_exists
     {G A : Type*} {ι : Type*} {n : ℕ}
     {HLocal HMu HBr HTate : ι → Type*} {HMuGlobal : Type*}
@@ -340,7 +447,18 @@ theorem chapter06_admissible_finite_place_set_exists
       ι HLocal D.localData.unramified) :
     ∃ S : Finset ι,
       chapter06AdmissibleFinitePlaceSet D.localData c D.placesAboveN S := by
-  sorry
+  classical
+  have hS :=
+    (D.archimedean_finite.union D.placesAboveN_finite).union c.property
+  refine ⟨hS.toFinset, ?_⟩
+  constructor
+  · intro v hv
+    exact hS.mem_toFinset.mpr (Or.inl (Or.inl hv))
+  constructor
+  · intro v hv
+    exact hS.mem_toFinset.mpr (Or.inl (Or.inr hv))
+  · intro v hv
+    exact hS.mem_toFinset.mpr (Or.inr hv)
 
 /- The finite sum appearing in the global localization functional. -/
 def chapter06LocalGlobalLambdaValue
@@ -371,6 +489,53 @@ def chapter06LocalGlobalLambdaValue
     chapter06InvariantTargetInclusion n
       (D.localData.pairing v (c v) (D.kummerRestriction v a)))
 
+private theorem chapter06LocalGlobalLambdaValue_extend_to_finset
+    {G A : Type*} {ι : Type*} {n : ℕ}
+    {HLocal HMu HBr HTate : ι → Type*} {HMuGlobal : Type*}
+    [Group G] [AddCommGroup A]
+    [TopologicalSpace G] [TopologicalSpace A] [IsTopologicalAddGroup A]
+    [∀ v, AddCommGroup (HLocal v)]
+    [∀ v, AddCommGroup (HMu v)]
+    [∀ v, AddCommGroup (HBr v)]
+    [∀ v, AddCommGroup (HTate v)] [AddCommGroup HMuGlobal]
+    (D : Chapter06FiniteLocalGlobalCharacterData
+      G A ι n HLocal HMu HBr HTate HMuGlobal)
+    (c : Chapter06RestrictedProduct ι HLocal D.localData.unramified)
+    (a : HMuGlobal) (S : Finset ι)
+    (hS : ∀ v,
+      (c v ∉ D.localData.unramified v ∨
+        D.kummerRestriction v a ∉ D.localData.unramifiedDual v) → v ∈ S) :
+    chapter06LocalGlobalLambdaValue D c a =
+      ∑ v ∈ S, chapter06InvariantTargetInclusion n
+        (D.localData.pairing v (c v) (D.kummerRestriction v a)) := by
+  classical
+  let T : Set ι := {v |
+    c v ∉ D.localData.unramified v ∨
+      D.kummerRestriction v a ∉ D.localData.unramifiedDual v}
+  let hT : T.Finite := by
+    dsimp [T]
+    exact Set.Finite.union c.property (D.kummer_support_finite a)
+  have hsub : hT.toFinset ⊆ S := by
+    intro v hv
+    apply hS v
+    simpa [T] using hT.mem_toFinset.mp hv
+  change hT.toFinset.sum (fun v =>
+      chapter06InvariantTargetInclusion n
+        (D.localData.pairing v (c v) (D.kummerRestriction v a))) = _
+  apply Finset.sum_subset hsub
+  intro v hvS hvT
+  have hvT' : v ∉ T := by
+    intro hv
+    exact hvT (hT.mem_toFinset.mpr hv)
+  have hc : c v ∈ D.localData.unramified v := by
+    by_contra hc
+    exact hvT' (by simpa [T] using Or.inl hc)
+  have ha : D.kummerRestriction v a ∈ D.localData.unramifiedDual v := by
+    by_contra ha
+    exact hvT' (by simpa [T] using Or.inr ha)
+  simp [D.localData.unramified_pairing_zero v (c v) hc
+    (D.kummerRestriction v a) ha]
+
 /- The global dual localization functional. -/
 noncomputable def chapter06LocalGlobalLambda
     {G A : Type*} {ι : Type*} {n : ℕ}
@@ -387,15 +552,141 @@ noncomputable def chapter06LocalGlobalLambda
       (HMuGlobal →+ Chapter06QModZ) where
   toFun := fun c =>
     { toFun := chapter06LocalGlobalLambdaValue D c
-      map_zero' := by sorry
-      map_add' := by sorry }
+      map_zero' := by simp [chapter06LocalGlobalLambdaValue]
+      map_add' := by
+        intro a b
+        classical
+        let support : HMuGlobal → Set ι := fun a => {v |
+          c v ∉ D.localData.unramified v ∨
+            D.kummerRestriction v a ∉ D.localData.unramifiedDual v}
+        have hsupport : ∀ a, (support a).Finite := by
+          intro a
+          dsimp [support]
+          exact Set.Finite.union c.property (D.kummer_support_finite a)
+        let S : Finset ι :=
+          ((hsupport (a + b)).toFinset ∪ (hsupport a).toFinset) ∪
+            (hsupport b).toFinset
+        have h_ab : ∀ v,
+            (c v ∉ D.localData.unramified v ∨
+              D.kummerRestriction v (a + b) ∉
+                D.localData.unramifiedDual v) → v ∈ S := by
+          intro v hv
+          by_cases hcv : c v ∉ D.localData.unramified v
+          · apply Finset.mem_union.mpr
+            exact Or.inl (Finset.mem_union.mpr (Or.inl
+              ((hsupport (a + b)).mem_toFinset.mpr
+                (by simpa [support] using Or.inl hcv))))
+          · have hsum : D.kummerRestriction v (a + b) ∉
+                D.localData.unramifiedDual v := by
+              rcases hv with hcv' | hsum
+              · exact (hcv hcv').elim
+              · exact hsum
+            by_cases hav : D.kummerRestriction v a ∉
+                D.localData.unramifiedDual v
+            · apply Finset.mem_union.mpr
+              exact Or.inl (Finset.mem_union.mpr (Or.inr
+                ((hsupport a).mem_toFinset.mpr
+                  (by simpa [support] using Or.inr hav))))
+            by_cases hbv : D.kummerRestriction v b ∉
+                D.localData.unramifiedDual v
+            · apply Finset.mem_union.mpr
+              exact Or.inr ((hsupport b).mem_toFinset.mpr
+                (by simpa [support] using Or.inr hbv))
+            · exfalso
+              apply hsum
+              rw [map_add]
+              exact (D.localData.unramifiedDual v).add_mem
+                (not_not.mp hav) (not_not.mp hbv)
+        have h_a : ∀ v,
+            (c v ∉ D.localData.unramified v ∨
+              D.kummerRestriction v a ∉
+                D.localData.unramifiedDual v) → v ∈ S := by
+          intro v hv
+          apply Finset.mem_union.mpr
+          exact Or.inl (Finset.mem_union.mpr (Or.inr
+            ((hsupport a).mem_toFinset.mpr
+              (by simpa [support] using hv))))
+        have h_b : ∀ v,
+            (c v ∉ D.localData.unramified v ∨
+              D.kummerRestriction v b ∉
+                D.localData.unramifiedDual v) → v ∈ S := by
+          intro v hv
+          apply Finset.mem_union.mpr
+          exact Or.inr ((hsupport b).mem_toFinset.mpr
+            (by simpa [support] using hv))
+        rw [chapter06LocalGlobalLambdaValue_extend_to_finset D c (a + b) S h_ab,
+          chapter06LocalGlobalLambdaValue_extend_to_finset D c a S h_a,
+          chapter06LocalGlobalLambdaValue_extend_to_finset D c b S h_b]
+        rw [← Finset.sum_add_distrib]
+        apply Finset.sum_congr rfl
+        intro v hv
+        simp [map_add] }
   map_zero' := by
     ext a
-    sorry
+    simp [chapter06LocalGlobalLambdaValue]
   map_add' := by
     intro c₁ c₂
     ext a
-    sorry
+    classical
+    let support :
+        Chapter06RestrictedProduct ι HLocal D.localData.unramified → Set ι :=
+      fun c' => {v |
+        c' v ∉ D.localData.unramified v ∨
+          D.kummerRestriction v a ∉ D.localData.unramifiedDual v}
+    have hsupport : ∀ c', (support c').Finite := by
+      intro c'
+      dsimp [support]
+      exact Set.Finite.union c'.property (D.kummer_support_finite a)
+    let S : Finset ι :=
+      ((hsupport (c₁ + c₂)).toFinset ∪ (hsupport c₁).toFinset) ∪
+        (hsupport c₂).toFinset
+    have hsum : ∀ v,
+        ((c₁ + c₂) v ∉ D.localData.unramified v ∨
+          D.kummerRestriction v a ∉ D.localData.unramifiedDual v) → v ∈ S := by
+      intro v hv
+      rcases hv with hcv | hav
+      · by_cases h₁v : c₁ v ∉ D.localData.unramified v
+        · apply Finset.mem_union.mpr
+          exact Or.inl (Finset.mem_union.mpr (Or.inr
+            ((hsupport c₁).mem_toFinset.mpr
+              (by simpa [support] using Or.inl h₁v))))
+        by_cases h₂v : c₂ v ∉ D.localData.unramified v
+        · apply Finset.mem_union.mpr
+          exact Or.inr ((hsupport c₂).mem_toFinset.mpr
+            (by simpa [support] using Or.inl h₂v))
+        · exfalso
+          apply hcv
+          change c₁ v + c₂ v ∈ D.localData.unramified v
+          exact (D.localData.unramified v).add_mem
+            (not_not.mp h₁v) (not_not.mp h₂v)
+      · apply Finset.mem_union.mpr
+        exact Or.inl (Finset.mem_union.mpr (Or.inr
+          ((hsupport c₁).mem_toFinset.mpr
+            (by simpa [support] using Or.inr hav))))
+    have h₁ : ∀ v,
+        (c₁ v ∉ D.localData.unramified v ∨
+          D.kummerRestriction v a ∉ D.localData.unramifiedDual v) → v ∈ S := by
+      intro v hv
+      apply Finset.mem_union.mpr
+      exact Or.inl (Finset.mem_union.mpr (Or.inr
+        ((hsupport c₁).mem_toFinset.mpr (by simpa [support] using hv))))
+    have h₂ : ∀ v,
+        (c₂ v ∉ D.localData.unramified v ∨
+          D.kummerRestriction v a ∉ D.localData.unramifiedDual v) → v ∈ S := by
+      intro v hv
+      apply Finset.mem_union.mpr
+      exact Or.inr ((hsupport c₂).mem_toFinset.mpr
+        (by simpa [support] using hv))
+    change chapter06LocalGlobalLambdaValue D (c₁ + c₂) a =
+      chapter06LocalGlobalLambdaValue D c₁ a +
+        chapter06LocalGlobalLambdaValue D c₂ a
+    rw [chapter06LocalGlobalLambdaValue_extend_to_finset D (c₁ + c₂) a S hsum,
+      chapter06LocalGlobalLambdaValue_extend_to_finset D c₁ a S h₁,
+      chapter06LocalGlobalLambdaValue_extend_to_finset D c₂ a S h₂]
+    rw [← Finset.sum_add_distrib]
+    apply Finset.sum_congr rfl
+    intro v hv
+    simp [map_add]
 
 @[simp]
 theorem chapter06LocalGlobalLambda_apply
@@ -431,7 +722,92 @@ theorem chapter06_finite_local_global_duality
       G A ι n HLocal HMu HBr HTate HMuGlobal) :
     Chapter06ExactAtMiddle D.localization (chapter06LocalGlobalLambda D) ∧
       Function.Injective D.localization := by
-  sorry
+  classical
+  have h_range_subset :
+      Set.range D.localization ⊆
+        (chapter06LocalGlobalLambda D) ⁻¹'
+          ({0} : Set (HMuGlobal →+ Chapter06QModZ)) := by
+    intro c hc
+    change chapter06LocalGlobalLambda D c = 0
+    ext a
+    change chapter06LocalGlobalLambdaValue D c a = 0
+    rcases hc with ⟨x, hx⟩
+    obtain ⟨S₀, hS₀⟩ := chapter06_admissible_finite_place_set_exists D c
+    have hka : Set.Finite {v |
+        D.kummerRestriction v a ∉ D.localData.unramifiedDual v} :=
+      D.kummer_support_finite a
+    let S : Finset ι := S₀ ∪ hka.toFinset
+    have hS :
+        chapter06AdmissibleFinitePlaceSet D.localData c D.placesAboveN S := by
+      refine ⟨?_, ?_, ?_⟩
+      · intro v hv
+        change v ∈ S₀ ∪ hka.toFinset
+        exact Finset.mem_union.mpr (Or.inl (hS₀.1 v hv))
+      · intro v hv
+        change v ∈ S₀ ∪ hka.toFinset
+        exact Finset.mem_union.mpr (Or.inl (hS₀.2.1 v hv))
+      · intro v hv
+        change v ∈ S₀ ∪ hka.toFinset
+        exact Finset.mem_union.mpr (Or.inl (hS₀.2.2 v hv))
+    obtain ⟨F⟩ := D.finite_level_duality c S hS
+    have hloc : F.duality.localization x =
+        chapter06FiniteSRestriction c S := by
+      funext v
+      rw [F.localization_agrees x v, hx]
+      rfl
+    have hzeroF : F.duality.lambda (chapter06FiniteSRestriction c S) = 0 := by
+      have hrange : F.duality.localization x ∈ Set.range F.duality.localization :=
+        ⟨x, rfl⟩
+      rw [F.duality.exact_at_middle] at hrange
+      rw [← hloc]
+      exact hrange
+    have hvalue : chapter06LocalGlobalLambdaValue D c a =
+        ∑ v ∈ S, chapter06InvariantTargetInclusion n
+          (D.localData.pairing v (c v) (D.kummerRestriction v a)) :=
+      chapter06LocalGlobalLambdaValue_extend_to_finset D c a S (by
+        intro v hv
+        rcases hv with hcv | hav
+        · change v ∈ S₀ ∪ hka.toFinset
+          exact Finset.mem_union.mpr (Or.inl (hS₀.2.2 v hcv))
+        · change v ∈ S₀ ∪ hka.toFinset
+          exact Finset.mem_union.mpr (Or.inr (hka.mem_toFinset.mpr hav)))
+    rw [hvalue]
+    have hsum_coe :
+        (∑ v : S, chapter06InvariantTargetInclusion n
+          (D.localData.pairing v.1 (c v.1) (D.kummerRestriction v.1 a))) =
+          ∑ v ∈ S, chapter06InvariantTargetInclusion n
+            (D.localData.pairing v (c v) (D.kummerRestriction v a)) := by
+      exact Finset.sum_coe_sort S (fun v : ι =>
+        chapter06InvariantTargetInclusion n
+          (D.localData.pairing v (c v) (D.kummerRestriction v a)))
+    rw [← hsum_coe]
+    have hcond : ∀ v,
+        D.kummerRestriction v a ∉ D.localData.unramifiedDual v → v ∈ S := by
+      intro v hv
+      change v ∈ S₀ ∪ hka.toFinset
+      exact Finset.mem_union.mpr (Or.inr (hka.mem_toFinset.mpr hv))
+    have hagree := F.lambda_agrees (chapter06FiniteSRestriction c S) a hcond
+    have hfinitezero : F.duality.lambda (chapter06FiniteSRestriction c S) a = 0 := by
+      simpa using congrArg (fun f => f a) hzeroF
+    calc
+      (∑ v : S, chapter06InvariantTargetInclusion n
+        (D.localData.pairing v.1 (c v.1) (D.kummerRestriction v.1 a))) =
+          F.duality.lambda (chapter06FiniteSRestriction c S) a := by
+            symm
+            simpa [chapter06FiniteSRestriction] using hagree
+      _ = 0 := hfinitezero
+  have h_injective : Function.Injective D.localization := by
+    intro x y hxy
+    apply sub_eq_zero.mp
+    apply D.component_separation
+    intro v
+    rw [← D.localization_formula (x - y) v, map_sub, hxy]
+    simp
+  constructor
+  · apply Set.Subset.antisymm
+    · exact h_range_subset
+    · sorry
+  · exact h_injective
 
 theorem chapter06_globalization_iff_orthogonal
     {G A : Type*} {ι : Type*} {n : ℕ}
@@ -465,12 +841,10 @@ theorem chapter06_theorem_6_1
       Function.Injective D.localization :=
   chapter06_finite_local_global_duality D
 
-/- SOURCE_ISSUE: Section 6.2 says that the special 2-primary obstruction
-   discovered by Wang contains an extra nonzero global class, but it does not
-   specify the number field, the local conditions, or the exact class.  The
-   API therefore records the unconditional orthogonality theorem only for
-   idele-class characters; an explicit Wang obstruction should be added when
-   those missing hypotheses are supplied. -/
+/- The number-field-specific construction of the distinguished Wang class and
+   its degree-2n lift is intentionally separate from the abstract sign
+   calculation above; it requires the cyclotomic layer and local square-class
+   data that are not parameters of this generic finite-S interface. -/
 
 end
 

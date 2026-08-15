@@ -109,6 +109,15 @@ noncomputable def chapter03ProjectiveSpaceProjection (S : Scheme.{u}) (r : ℕ) 
     chapter03ProjectiveSpace S r ⟶ S :=
   (chapter03ProjectiveSpaceBundle S r).projection
 
+/-- Padding coordinates gives a closed immersion between standard projective spaces. -/
+theorem chapter03_projectiveSpace_rankPadding
+    (S : Scheme.{u}) (r n : ℕ) (hrn : r ≤ n) :
+    ∃ i : chapter03ProjectiveSpace S r ⟶ chapter03ProjectiveSpace S n,
+      IsClosedImmersion i ∧
+        i ≫ chapter03ProjectiveSpaceProjection S n =
+          chapter03ProjectiveSpaceProjection S r := by
+  sorry
+
 /-- The affine `r`-space over `S`. -/
 def chapter03AffineSpace (S : Scheme.{u}) (r : ℕ) : Scheme.{u} :=
   AlgebraicGeometry.AffineSpace (ULift.{u} (Fin r)) S
@@ -119,17 +128,23 @@ def chapter03AffineSpaceProjection (S : Scheme.{u}) (r : ℕ) :
   CategoryTheory.CanonicallyOverClass.Simps.over
     (AlgebraicGeometry.AffineSpace (ULift.{u} (Fin r)) S) S
 
-/-- The standard open immersion `𝔸^r_S = D_+(x₀) ↪ ℙ^r_S`. -/
-theorem chapter03_affineSpace_is_standard_open (S : Scheme.{u}) (r : ℕ) :
+/-- An open immersion of the chosen relative affine space into the chosen projective space.
+
+The stronger assertion that this is the named `D_+(x₀)` chart requires the polynomial/free
+relative-Proj comparison from Chapter 2 and is intentionally not encoded by this weaker bridge.
+-/
+theorem chapter03_affineSpace_openImmersion_into_projectiveSpace (S : Scheme.{u}) (r : ℕ) :
     ∃ i : chapter03AffineSpace S r ⟶ chapter03ProjectiveSpace S r,
       IsOpenImmersion i ∧
         i ≫ chapter03ProjectiveSpaceProjection S r = chapter03AffineSpaceProjection S r := by
-  sorry
+  exact chapter02_relative_bundle_standard_open_exists S r
+    (chapter03ProjectiveSpaceBundle S r).canonical
 
 /-- Affine space is quasi-projective over its base. -/
 theorem chapter03_affineSpace_quasiProjective (S : Scheme.{u}) (r : ℕ) :
     chapter03QuasiProjective (chapter03AffineSpaceProjection S r) := by
-  obtain ⟨i, hi, hbase⟩ := chapter03_affineSpace_is_standard_open S r
+  obtain ⟨i, hi, hbase⟩ :=
+    chapter03_affineSpace_openImmersion_into_projectiveSpace S r
   let : IsOpenImmersion i := hi
   have hp : chapter03Projective (chapter03ProjectiveSpaceProjection S r) := by
     apply chapter03_projective_of_presentation
@@ -149,7 +164,18 @@ theorem chapter03_affineSpace_quasiProjective (S : Scheme.{u}) (r : ℕ) :
 /-- Every closed immersion is projective. -/
 theorem chapter03_closedImmersion_projective (i : X ⟶ S) [IsClosedImmersion i] :
     chapter03Projective i := by
-  sorry
+  let M : Chapter02QuasiCoherentModule S := Chapter02FreeRankOneModule S
+  have hM : Chapter02FiniteLocallyFreeModule M := by
+    change Chapter02FiniteLocallyFreeModule (Chapter02FreeRankOneModule S)
+    change Chapter01.Chapter01FiniteLocallyFree
+      (SheafOfModules.free (R := S.ringCatSheaf) (ULift.{u} (Fin 1)))
+    exact (chapter03_trivialModule_finiteLocallyFree S 0)
+  obtain ⟨P⟩ := chapter02_finite_relative_projective_bundle_exists S M hM
+  obtain ⟨e, he⟩ := chapter02_free_rank_one_projective_bundle_is_base S P
+  obtain ⟨j, hj, hji⟩ :=
+    chapter02_closed_immersion_transport_to_identity_bundle i (by infer_instance) P e he
+  exact ⟨{ module := M, ambient := P, embedding := j,
+    isClosedImmersion := hj, overBase := hji }⟩
 
 /-- An open subscheme of a projective `S`-scheme is quasi-projective over `S`. -/
 theorem chapter03_openImmersion_quasiProjective (j : X ⟶ Y) (f : Y ⟶ S)

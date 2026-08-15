@@ -1,6 +1,9 @@
 import Mathlib.Data.Complex.Basic
+import Mathlib.Data.Int.WithZero
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.BigOperators.Finprod
+import Mathlib.Algebra.Group.Pi.Units
+import Mathlib.Algebra.Group.Prod
 import Mathlib.Analysis.Complex.Norm
 import Mathlib.MeasureTheory.Constructions.BorelSpace.Complex
 import Mathlib.Data.Real.Basic
@@ -16,13 +19,17 @@ import Mathlib.Topology.Algebra.Module.FiniteDimension
 import Mathlib.Topology.Instances.Real.Lemmas
 import Mathlib.MeasureTheory.Measure.Haar.DistribChar
 import Mathlib.Order.Filter.Cofinite
+import Mathlib.NumberTheory.NumberField.AdeleRing
+import Mathlib.NumberTheory.NumberField.ProductFormula
+import Mathlib.RingTheory.FractionalIdeal.Norm
+import Mathlib.Topology.Algebra.RestrictedProduct.Units
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter06
 
 noncomputable section
 
 open Set MeasureTheory Topology
-open scoped BigOperators ENNReal NNReal Pointwise
+open scoped BigOperators ENNReal NNReal Pointwise RestrictedProduct WithZero
 
 universe uK uO uInf uFin uHat uG uPlace uV uVA
 
@@ -363,7 +370,7 @@ def Chapter06LocalMeasureModule
     (F : Type*) [Field F] [MeasurableSpace F]
     (μ : Measure F) (size : F → ℝ≥0∞) : Prop :=
   ∀ a : F, a ≠ 0 →
-    Measure.map (fun x : F => a * x) μ = size a • μ
+    Measure.map (fun x : F => a * x) μ = (size a)⁻¹ • μ
 
 /-! ### Finite-adelic local factors and Haar scaling
 
@@ -503,6 +510,63 @@ def Chapter06ProductFormula
     (∀ v, v ∉ S → size v a = 1) ∧
       (adelicProduct a = ∏ v ∈ S, size v a) ∧
       adelicProduct a = 1
+
+/-! ### Standard number-field additive Haar factors
+
+The generic finite-tail interface above is useful for abstract restricted products, but the
+number-field application needs the actual Mathlib adele ring and both kinds of local factors.
+These definitions keep that normalized formula in an earlier shared module so later divisor and
+idele sections can consume it without rebuilding the product bookkeeping. -/
+
+/-- The standard full adele ring used by the number-field Haar-character interface. -/
+abbrev Chapter06StandardNumberFieldAdele (K : Type*) [Field K] [NumberField K] :=
+  NumberField.AdeleRing (NumberField.RingOfIntegers K) K
+
+/-- The totalized ideal-theoretic order on one finite completion.
+
+The zero branch is irrelevant for an idele coordinate, but makes the factor a total function and
+matches the local order convention used by the later divisor chapter. -/
+def chapter06StandardNumberFieldLocalOrder
+    {K : Type*} [Field K] [NumberField K]
+    (v : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K))
+    (x : v.adicCompletion K) : ℤ :=
+  if hx : (Valued.v x : ℤᵐ⁰) = 0 then
+    0
+  else
+    -((WithZero.unzero hx).toAdd)
+
+/-- The normalized archimedean contribution to the additive Haar character. -/
+noncomputable def chapter06StandardNumberFieldInfiniteHaarFactor
+    (K : Type*) [Field K] [NumberField K]
+    (x : (Chapter06StandardNumberFieldAdele K)ˣ) : ℝ≥0 :=
+  ∏ v : NumberField.InfinitePlace K,
+    ‖((MulEquiv.piUnits (MulEquiv.prodUnits x).1) v : v.Completion)‖₊ ^ v.mult
+
+/-- The normalized finite-place contribution to the additive Haar character. -/
+noncomputable def chapter06StandardNumberFieldFiniteHaarFactor
+    (K : Type*) [Field K] [NumberField K]
+    (x : (Chapter06StandardNumberFieldAdele K)ˣ) : ℝ≥0 :=
+  ∏ᶠ v : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K),
+    (Ideal.absNorm v.asIdeal : ℝ≥0) ^
+      (-chapter06StandardNumberFieldLocalOrder v
+        ((RestrictedProduct.unitsEquiv
+          (fun v : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K) =>
+            v.adicCompletion K) (MulEquiv.prodUnits x).2) v : v.adicCompletion K))
+
+/-! The substantive local-product calculation is intentionally exposed as one reusable theorem.
+Its proof is the standard product-measure/Haar-uniqueness argument; later sections only need the
+resulting canonical formula. -/
+
+theorem chapter06_standard_number_field_adele_unit_distrib_haar_char_apply
+    (K : Type*) [Field K] [NumberField K]
+    [LocallyCompactSpace (Chapter06StandardNumberFieldAdele K)]
+    (x : (Chapter06StandardNumberFieldAdele K)ˣ) :
+    MeasureTheory.distribHaarChar
+        (G := (Chapter06StandardNumberFieldAdele K)ˣ)
+        (A := Chapter06StandardNumberFieldAdele K) x =
+      chapter06StandardNumberFieldInfiniteHaarFactor K x *
+        chapter06StandardNumberFieldFiniteHaarFactor K x := by
+  sorry
 
 /-- Ordinary real/planar covolume in the Minkowski normalization. -/
 def chapter06OrdinaryCovolume (r₂ : ℕ) (dK : ℝ) : ℝ :=

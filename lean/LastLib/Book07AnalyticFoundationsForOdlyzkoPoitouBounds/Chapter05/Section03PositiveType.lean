@@ -13,7 +13,8 @@ namespace LastLib.Book07AnalyticFoundationsForOdlyzkoPoitouBounds.Chapter05
 noncomputable section
 
 open MeasureTheory
-open scoped Convolution FourierTransform ComplexConjugate RealInnerProductSpace
+open Filter
+open scoped Topology Convolution FourierTransform ComplexConjugate RealInnerProductSpace
 
 /-! ## 5.3. Positive type and autocorrelation -/
 
@@ -972,7 +973,688 @@ theorem chapter05_positive_type_mul
     (f g : ℝ → ℝ)
     (hf : Chapter05PositiveType f) (hg : Chapter05PositiveType g) :
     Chapter05PositiveType (fun x => f x * g x) := by
-  sorry
+  have htest : ∀ (c v : ℝ), 0 < c →
+      𝓕 (fun ξ : ℝ => Complex.exp
+        (-(c⁻¹ : ℂ) * (‖ξ‖ ^ 2 : ℂ) +
+          2 * (Real.pi : ℂ) * Complex.I * (⟪v, ξ⟫ : ℂ))) =
+        (fun x : ℝ =>
+          ((Real.pi : ℂ) / (c⁻¹ : ℂ)) ^ (Module.finrank ℝ ℝ / 2 : ℂ) *
+            Complex.exp (-((Real.pi : ℂ) ^ 2) * (‖v - x‖ ^ 2 : ℂ) /
+              (c⁻¹ : ℂ))) := by
+    intro c v hc
+    funext x
+    have h := fourier_gaussian_innerProductSpace'
+      (V := ℝ) (b := (c⁻¹ : ℂ)) (by simpa using (inv_pos.mpr hc)) v x
+    simpa only using h
+  have hbounded : ∀ (F : ℝ → ℝ) (hF : Chapter05PositiveType F),
+      ∃ C : ℝ, 0 ≤ C ∧ ∀ x : ℝ, ‖F x‖ ≤ C := by
+    intro F hF
+    let FC : ℝ → ℂ := fun x => (F x : ℂ)
+    have hFC : Integrable FC volume := by
+      change Integrable (fun x : ℝ => (F x : ℂ)) volume
+      exact hF.integrable.ofReal
+    have hFT_nonneg (ξ : ℝ) :
+        (𝓕 FC ξ).im = 0 ∧ 0 ≤ (𝓕 FC ξ).re := by
+      have hscale := hF.transformNonnegative (2 * Real.pi * ξ)
+      have hmath := chapter05_fourierTransform_eq_mathlib_angular F hF.integrable
+        (2 * Real.pi * ξ)
+      have heq : 𝓕 FC ξ = chapter05FourierTransform F (2 * Real.pi * ξ) := by
+        rw [hmath]
+        simp only [FC]
+        field_simp [Real.pi_ne_zero]
+      rw [heq]
+      exact hscale
+    let C₀ : ℝ := ∫ x : ℝ, ‖FC x‖ ∂volume
+    have hC₀ : 0 ≤ C₀ := by
+      dsimp [C₀]
+      exact integral_nonneg (fun x : ℝ => norm_nonneg (FC x))
+    have hFT_bound (ξ : ℝ) : ‖𝓕 FC ξ‖ ≤ C₀ := by
+      dsimp [C₀]
+      rw [Real.fourier_eq]
+      apply (norm_integral_le_integral_norm _).trans
+      simp_rw [Circle.norm_smul]
+      rfl
+    let q : ℝ → ℝ → ℝ → ℂ := fun c v ξ =>
+      Complex.exp (-(c⁻¹ : ℂ) * (‖ξ‖ ^ 2 : ℂ) +
+        2 * (Real.pi : ℂ) * Complex.I * (⟪v, ξ⟫ : ℂ))
+    let K : ℝ → ℝ → ℝ → ℂ := fun c v x =>
+      ((Real.pi : ℂ) / (c⁻¹ : ℂ)) ^ (Module.finrank ℝ ℝ / 2 : ℂ) *
+        Complex.exp (-((Real.pi : ℂ) ^ 2) * (‖v - x‖ ^ 2 : ℂ) /
+          (c⁻¹ : ℂ))
+    have hqFT (c v : ℝ) (hc : 0 < c) : 𝓕 (q c v) = K c v := by
+      simpa [q, K] using htest c v hc
+    have hqInt (c v : ℝ) (hc : 0 < c) : Integrable (q c v) volume := by
+      simpa [q] using
+        (GaussianFourier.integrable_cexp_neg_mul_sq_norm_add
+          (V := ℝ) (b := (c⁻¹ : ℂ))
+          (by simpa using (inv_pos.mpr hc)) (2 * Real.pi * Complex.I) v)
+    have hreg (c v : ℝ) (hc : 0 < c) :
+        (∫ x : ℝ, K c v x • FC x ∂volume) =
+          ∫ ξ : ℝ, q c v ξ • 𝓕 FC ξ ∂volume := by
+      have hswap := VectorFourier.integral_fourierIntegral_smul_eq_flip
+        (L := innerₗ ℝ) (e := 𝐞) (μ := volume) (ν := volume)
+        Real.continuous_fourierChar continuous_inner (hqInt c v hc) hFC
+      rw [← hqFT c v hc]
+      change
+        (∫ x : ℝ,
+            VectorFourier.fourierIntegral 𝐞 volume (innerₗ ℝ) (q c v) x • FC x) =
+          ∫ ξ : ℝ,
+            q c v ξ • VectorFourier.fourierIntegral 𝐞 volume (innerₗ ℝ) FC ξ
+      simpa using hswap
+    have hK_gaussian (c v x : ℝ) (hc : 0 < c) :
+        K c v x =
+          (Real.pi * c : ℂ) ^ (Module.finrank ℝ ℝ / 2 : ℂ) *
+            Complex.exp (-((Real.pi : ℂ) ^ 2) * (c : ℂ) *
+              (‖v - x‖ ^ 2 : ℂ)) := by
+      dsimp [K]
+      have hc0 : (c : ℂ) ≠ 0 := by exact_mod_cast (ne_of_gt hc)
+      have hpow : (Real.pi : ℂ) / (c⁻¹ : ℂ) = (Real.pi * c : ℂ) := by
+        field_simp
+      rw [hpow]
+      congr 2
+      field_simp
+    have hq_norm (c v ξ : ℝ) (hc : 0 < c) :
+        ‖q c v ξ‖ = Real.exp (-(c⁻¹) * ‖ξ‖ ^ 2) := by
+      dsimp [q]
+      rw [Complex.norm_exp]
+      norm_num [Complex.mul_re, sq_abs]
+      left
+      rw [← Complex.ofReal_pow]
+      simp only [Complex.ofReal_re]
+      exact sq_abs ξ
+    have hq_zero (c ξ : ℝ) :
+        q c 0 ξ = (Real.exp (-(c⁻¹) * ‖ξ‖ ^ 2) : ℂ) := by
+      dsimp [q]
+      rw [Complex.ofReal_exp]
+      congr 1
+      norm_num [Complex.mul_re, Complex.mul_im, sq_abs]
+      left
+      rw [← Complex.ofReal_pow]
+      norm_cast
+      exact sq_abs ξ
+    have hFC_cont : Continuous FC := by
+      exact Complex.continuous_ofReal.comp hF.continuous
+    have hFT_cont : Continuous (𝓕 FC) := by
+      change Continuous
+        (VectorFourier.fourierIntegral 𝐞 volume (innerₗ ℝ) FC)
+      exact VectorFourier.fourierIntegral_continuous
+        Real.continuous_fourierChar continuous_inner hFC
+    have hqFTInt (c v : ℝ) (hc : 0 < c) :
+        Integrable (fun ξ : ℝ => q c v ξ • 𝓕 FC ξ) volume := by
+      simpa only [smul_eq_mul] using
+        (hqInt c v hc).mul_bdd hFT_cont.aestronglyMeasurable
+          (Filter.Eventually.of_forall hFT_bound)
+    have hFT_real (ξ : ℝ) :
+        𝓕 FC ξ = ((𝓕 FC ξ).re : ℂ) := by
+      apply Complex.ext
+      · rfl
+      · simp [hFT_nonneg ξ |>.1]
+    have hnorm_FT (ξ : ℝ) :
+        ‖𝓕 FC ξ‖ = (𝓕 FC ξ).re := by
+      rw [hFT_real ξ]
+      simp [Real.norm_of_nonneg (hFT_nonneg ξ).2]
+    have hq_zero_mul (c ξ : ℝ) :
+        q c 0 ξ • 𝓕 FC ξ =
+          ((Real.exp (-(c⁻¹) * ‖ξ‖ ^ 2) * (𝓕 FC ξ).re : ℝ) : ℂ) := by
+      rw [hq_zero c ξ, hFT_real ξ]
+      simp [smul_eq_mul, Complex.ofReal_mul]
+    have hnorm_integrand (c v ξ : ℝ) (hc : 0 < c) :
+        ‖q c v ξ • 𝓕 FC ξ‖ = (q c 0 ξ • 𝓕 FC ξ).re := by
+      rw [norm_smul, hq_norm c v ξ hc, hnorm_FT ξ, hq_zero_mul]
+      simp only [Complex.ofReal_re]
+    let D : ℝ → ℝ := fun c =>
+      (∫ ξ : ℝ, q c 0 ξ • 𝓕 FC ξ ∂volume).re
+    have hD_eq (c : ℝ) (hc : 0 < c) :
+        D c = ∫ ξ : ℝ, (q c 0 ξ • 𝓕 FC ξ).re ∂volume := by
+      dsimp [D]
+      exact (integral_re (hqFTInt c 0 hc)).symm
+    have hD_nonneg (c : ℝ) (hc : 0 < c) : 0 ≤ D c := by
+      rw [hD_eq c hc]
+      apply integral_nonneg
+      change ∀ ξ : ℝ, 0 ≤ (q c 0 ξ • 𝓕 FC ξ).re
+      intro ξ
+      rw [hq_zero_mul]
+      exact mul_nonneg (Real.exp_pos _).le (hFT_nonneg ξ).2
+    have hnorm_integral (c v : ℝ) (hc : 0 < c) :
+        ∫ ξ : ℝ, ‖q c v ξ • 𝓕 FC ξ‖ ∂volume = D c := by
+      calc
+        (∫ ξ : ℝ, ‖q c v ξ • 𝓕 FC ξ‖ ∂volume) =
+            ∫ ξ : ℝ, (q c 0 ξ • 𝓕 FC ξ).re ∂volume := by
+          apply integral_congr_ae
+          exact Filter.Eventually.of_forall (fun ξ => hnorm_integrand c v ξ hc)
+        _ = D c := (hD_eq c hc).symm
+    have hleft_limit (v : ℝ) :
+        Tendsto (fun c : ℝ => ∫ x : ℝ, K c v x • FC x ∂volume)
+          atTop (𝓝 (FC v)) := by
+      have h := Real.tendsto_integral_gaussian_smul' hFC
+        (v := v) hFC_cont.continuousAt
+      apply h.congr'
+      filter_upwards [Ioi_mem_atTop (0 : ℝ)] with c hc
+      apply integral_congr_ae
+      exact Filter.Eventually.of_forall (fun x => by
+        change
+          ((Real.pi * c : ℂ) ^ (Module.finrank ℝ ℝ / 2 : ℂ) *
+            Complex.exp (-((Real.pi : ℂ) ^ 2) * (c : ℂ) *
+              (‖v - x‖ ^ 2 : ℂ))) • FC x = K c v x • FC x
+        rw [hK_gaussian c v x hc])
+    have hD_limit : Tendsto D atTop (𝓝 (FC 0).re) := by
+      have hleft0 := hleft_limit 0
+      have hleft0_re :
+          Tendsto (fun c : ℝ =>
+            (∫ x : ℝ, K c 0 x • FC x ∂volume).re) atTop
+            (𝓝 (FC 0).re) := by
+        exact (Complex.continuous_re.tendsto (FC 0)).comp hleft0
+      apply hleft0_re.congr'
+      filter_upwards [Ioi_mem_atTop (0 : ℝ)] with c hc
+      rw [hreg c 0 hc]
+    have hglobal (v : ℝ) : ‖FC v‖ ≤ (FC 0).re := by
+      have hleft := hleft_limit v
+      have hleft_norm :
+          Tendsto (fun c : ℝ => ‖∫ x : ℝ, K c v x • FC x ∂volume‖)
+            atTop (𝓝 ‖FC v‖) := by
+        exact (continuous_norm.tendsto (FC v)).comp hleft
+      apply le_of_tendsto_of_tendsto hleft_norm hD_limit
+      filter_upwards [Ioi_mem_atTop (0 : ℝ)] with c hc
+      calc
+        ‖∫ x : ℝ, K c v x • FC x ∂volume‖ =
+            ‖∫ ξ : ℝ, q c v ξ • 𝓕 FC ξ ∂volume‖ := by
+              rw [hreg c v hc]
+        _ ≤ ∫ ξ : ℝ, ‖q c v ξ • 𝓕 FC ξ‖ ∂volume :=
+          norm_integral_le_integral_norm _
+        _ = D c := hnorm_integral c v hc
+    refine ⟨(FC 0).re, ?_, ?_⟩
+    · exact (norm_nonneg (FC 0)).trans (hglobal 0)
+    intro x
+    simpa [FC] using hglobal x
+  obtain ⟨Cf, hCf, hfb⟩ := hbounded f hf
+  obtain ⟨Cg, hCg, hgb⟩ := hbounded g hg
+  have hfg_int : Integrable (fun x : ℝ => f x * g x) volume := by
+    exact hf.integrable.mul_bdd hg.continuous.aestronglyMeasurable
+      (Filter.Eventually.of_forall hgb)
+  have hfg_cont : Continuous (fun x : ℝ => f x * g x) :=
+    hf.continuous.mul hg.continuous
+  let FC : ℝ → ℂ := fun x => (f x : ℂ)
+  let GC : ℝ → ℂ := fun x => (g x : ℂ)
+  let HC : ℝ → ℂ := fun x => (f x * g x : ℂ)
+  have hFC : Integrable FC volume := by
+    change Integrable (fun x : ℝ => (f x : ℂ)) volume
+    exact hf.integrable.ofReal
+  have hGC : Integrable GC volume := by
+    change Integrable (fun x : ℝ => (g x : ℂ)) volume
+    exact hg.integrable.ofReal
+  have hHC : Integrable HC volume := by
+    dsimp [HC]
+    exact hFC.mul_bdd (Complex.continuous_ofReal.comp hg.continuous).aestronglyMeasurable
+      (Filter.Eventually.of_forall (fun x => by simpa [GC] using hgb x))
+  have hFC_cont : Continuous FC := Complex.continuous_ofReal.comp hf.continuous
+  have hGC_cont : Continuous GC := Complex.continuous_ofReal.comp hg.continuous
+  have hFT_F_nonneg (ξ : ℝ) :
+      (𝓕 FC ξ).im = 0 ∧ 0 ≤ (𝓕 FC ξ).re := by
+    have hscale := hf.transformNonnegative (2 * Real.pi * ξ)
+    have hmath := chapter05_fourierTransform_eq_mathlib_angular f hf.integrable
+      (2 * Real.pi * ξ)
+    have heq : 𝓕 FC ξ = chapter05FourierTransform f (2 * Real.pi * ξ) := by
+      rw [hmath]
+      simp only [FC]
+      field_simp [Real.pi_ne_zero]
+    rw [heq]
+    exact hscale
+  have hFT_G_nonneg (ξ : ℝ) :
+      (𝓕 GC ξ).im = 0 ∧ 0 ≤ (𝓕 GC ξ).re := by
+    have hscale := hg.transformNonnegative (2 * Real.pi * ξ)
+    have hmath := chapter05_fourierTransform_eq_mathlib_angular g hg.integrable
+      (2 * Real.pi * ξ)
+    have heq : 𝓕 GC ξ = chapter05FourierTransform g (2 * Real.pi * ξ) := by
+      rw [hmath]
+      simp only [GC]
+      field_simp [Real.pi_ne_zero]
+    rw [heq]
+    exact hscale
+  have hFT_F_cont : Continuous (𝓕 FC) := by
+    change Continuous
+      (VectorFourier.fourierIntegral 𝐞 volume (innerₗ ℝ) FC)
+    exact VectorFourier.fourierIntegral_continuous
+      Real.continuous_fourierChar continuous_inner hFC
+  have hFT_G_cont : Continuous (𝓕 GC) := by
+    change Continuous
+      (VectorFourier.fourierIntegral 𝐞 volume (innerₗ ℝ) GC)
+    exact VectorFourier.fourierIntegral_continuous
+      Real.continuous_fourierChar continuous_inner hGC
+  let q : ℝ → ℝ → ℝ → ℂ := fun c v ξ =>
+    Complex.exp (-(c⁻¹ : ℂ) * (‖ξ‖ ^ 2 : ℂ) +
+      2 * (Real.pi : ℂ) * Complex.I * (⟪v, ξ⟫ : ℂ))
+  let K : ℝ → ℝ → ℝ → ℂ := fun c v x =>
+    ((Real.pi : ℂ) / (c⁻¹ : ℂ)) ^ (Module.finrank ℝ ℝ / 2 : ℂ) *
+      Complex.exp (-((Real.pi : ℂ) ^ 2) * (‖v - x‖ ^ 2 : ℂ) /
+        (c⁻¹ : ℂ))
+  have htest : ∀ (c v : ℝ), 0 < c →
+      𝓕 (fun ξ : ℝ => Complex.exp
+        (-(c⁻¹ : ℂ) * (‖ξ‖ ^ 2 : ℂ) +
+          2 * (Real.pi : ℂ) * Complex.I * (⟪v, ξ⟫ : ℂ))) =
+        (fun x : ℝ =>
+          ((Real.pi : ℂ) / (c⁻¹ : ℂ)) ^ (Module.finrank ℝ ℝ / 2 : ℂ) *
+            Complex.exp (-((Real.pi : ℂ) ^ 2) * (‖v - x‖ ^ 2 : ℂ) /
+              (c⁻¹ : ℂ))) := by
+    intro c v hc
+    funext x
+    have h := fourier_gaussian_innerProductSpace'
+      (V := ℝ) (b := (c⁻¹ : ℂ)) (by simpa using (inv_pos.mpr hc)) v x
+    simpa only using h
+  have hqFT (c v : ℝ) (hc : 0 < c) : 𝓕 (q c v) = K c v := by
+    simpa [q, K] using htest c v hc
+  have hqInt (c v : ℝ) (hc : 0 < c) : Integrable (q c v) volume := by
+    simpa [q] using
+      (GaussianFourier.integrable_cexp_neg_mul_sq_norm_add
+        (V := ℝ) (b := (c⁻¹ : ℂ))
+        (by simpa using (inv_pos.mpr hc)) (2 * Real.pi * Complex.I) v)
+  have hreg_g (c v : ℝ) (hc : 0 < c) :
+      (∫ x : ℝ, K c v x • GC x ∂volume) =
+        ∫ ξ : ℝ, q c v ξ • 𝓕 GC ξ ∂volume := by
+    have hswap := VectorFourier.integral_fourierIntegral_smul_eq_flip
+      (L := innerₗ ℝ) (e := 𝐞) (μ := volume) (ν := volume)
+      Real.continuous_fourierChar continuous_inner (hqInt c v hc) hGC
+    rw [← hqFT c v hc]
+    change
+      (∫ x : ℝ,
+          VectorFourier.fourierIntegral 𝐞 volume (innerₗ ℝ) (q c v) x • GC x) =
+        ∫ ξ : ℝ,
+          q c v ξ • VectorFourier.fourierIntegral 𝐞 volume (innerₗ ℝ) GC ξ
+    simpa using hswap
+  have hK_gaussian (c v x : ℝ) (hc : 0 < c) :
+      K c v x =
+        (Real.pi * c : ℂ) ^ (Module.finrank ℝ ℝ / 2 : ℂ) *
+          Complex.exp (-((Real.pi : ℂ) ^ 2) * (c : ℂ) *
+            (‖v - x‖ ^ 2 : ℂ)) := by
+    dsimp [K]
+    have hc0 : (c : ℂ) ≠ 0 := by exact_mod_cast (ne_of_gt hc)
+    have hpow : (Real.pi : ℂ) / (c⁻¹ : ℂ) = (Real.pi * c : ℂ) := by
+      field_simp
+    rw [hpow]
+    congr 2
+    field_simp
+  have hleft_g_limit (v : ℝ) :
+      Tendsto (fun c : ℝ => ∫ x : ℝ, K c v x • GC x ∂volume)
+        atTop (𝓝 (GC v)) := by
+    have h := Real.tendsto_integral_gaussian_smul' hGC
+      (v := v) hGC_cont.continuousAt
+    apply h.congr'
+    filter_upwards [Ioi_mem_atTop (0 : ℝ)] with c hc
+    apply integral_congr_ae
+    exact Filter.Eventually.of_forall (fun x => by
+      change
+        ((Real.pi * c : ℂ) ^ (Module.finrank ℝ ℝ / 2 : ℂ) *
+          Complex.exp (-((Real.pi : ℂ) ^ 2) * (c : ℂ) *
+            (‖v - x‖ ^ 2 : ℂ))) • GC x = K c v x • GC x
+      rw [hK_gaussian c v x hc])
+  have hK_norm (c v x : ℝ) (hc : 0 < c) :
+      ‖K c v x‖ =
+        (Real.pi * c) ^ (1 / 2 : ℝ) *
+          Real.exp (-Real.pi ^ 2 * c * ‖v - x‖ ^ 2) := by
+    rw [hK_gaussian c v x hc, ← Complex.ofReal_mul, norm_mul]
+    rw [Complex.norm_cpow_eq_rpow_re_of_pos (by
+      positivity)]
+    rw [Complex.norm_exp]
+    norm_num
+    left
+    have hpi_re : ((Real.pi : ℂ) ^ 2).re = Real.pi ^ 2 := by
+      norm_num [pow_two, Complex.mul_re, Complex.mul_im]
+    have hpi_im : ((Real.pi : ℂ) ^ 2).im = 0 := by
+      norm_num [pow_two, Complex.mul_re, Complex.mul_im]
+    have hdiff_re : (((v : ℂ) - (x : ℂ)) ^ 2).re = (v - x) ^ 2 := by
+      norm_num [pow_two, Complex.mul_re, Complex.mul_im]
+    have hdiff_im : (((v : ℂ) - (x : ℂ)) ^ 2).im = 0 := by
+      norm_num [pow_two, Complex.mul_re, Complex.mul_im]
+    rw [hpi_im, hpi_re]
+    norm_num [pow_two, Complex.mul_re, Complex.mul_im, sq_abs]
+  have hK_integral (c v : ℝ) (hc : 0 < c) :
+      ∫ x : ℝ, ‖K c v x‖ = 1 := by
+    calc
+      ∫ x : ℝ, ‖K c v x‖ =
+          ∫ x : ℝ, (Real.pi * c) ^ (1 / 2 : ℝ) *
+            Real.exp (-Real.pi ^ 2 * c * ‖v - x‖ ^ 2) := by
+        apply integral_congr_ae
+        exact Filter.Eventually.of_forall (fun x => hK_norm c v x hc)
+      _ = (Real.pi * c) ^ (1 / 2 : ℝ) *
+          ∫ x : ℝ, Real.exp (-Real.pi ^ 2 * c * ‖v - x‖ ^ 2) := by
+        rw [integral_const_mul]
+      _ = (Real.pi * c) ^ (1 / 2 : ℝ) *
+          (Real.pi / (Real.pi ^ 2 * c)) ^ (1 / 2 : ℝ) := by
+        have hshift :
+            (∫ x : ℝ, Real.exp (-Real.pi ^ 2 * c * ‖v - x‖ ^ 2)) =
+              ∫ x : ℝ, Real.exp (-(Real.pi ^ 2 * c) * ‖x‖ ^ 2) := by
+          have hcomp :=
+            (Measure.measurePreserving_sub_left (volume : Measure ℝ) v).integral_comp
+              (MeasurableEquiv.subLeft v).measurableEmbedding
+              (fun x : ℝ => Real.exp (-(Real.pi ^ 2 * c) * ‖x‖ ^ 2))
+          simpa using hcomp
+        rw [hshift]
+        rw [GaussianFourier.integral_rexp_neg_mul_sq_norm (V := ℝ) (by
+          positivity)]
+        norm_num
+      _ = 1 := by
+        have hbase : (Real.pi * c) *
+            (Real.pi / (Real.pi ^ 2 * c)) = 1 := by
+          field_simp
+        rw [← Real.mul_rpow (le_of_lt (mul_pos Real.pi_pos hc))
+          (div_nonneg (le_of_lt Real.pi_pos)
+            (le_of_lt (mul_pos (sq_pos_of_pos Real.pi_pos) hc)))]
+        rw [hbase, Real.one_rpow]
+  let A : ℝ → ℝ → ℂ := fun c x =>
+    ∫ η : ℝ, q c x η • 𝓕 GC η
+  have hA_eq (c x : ℝ) (hc : 0 < c) :
+      A c x = ∫ y : ℝ, K c x y • GC y := by
+    dsimp [A]
+    exact (hreg_g c x hc).symm
+  have hA_bound (c x : ℝ) (hc : 0 < c) : ‖A c x‖ ≤ Cg := by
+    have hgauss0 : Integrable
+        (fun y : ℝ => Real.exp (-(Real.pi ^ 2 * c) * ‖y‖ ^ 2)) volume := by
+      convert (integrable_rpow_mul_exp_neg_mul_sq
+        (b := Real.pi ^ 2 * c) (s := (0 : ℝ)) (by positivity)
+        (by norm_num : (-1 : ℝ) < 0)) using 1;
+        simp [sq_abs]
+    have hgauss_shift : Integrable
+        (fun y : ℝ => Real.exp (-(Real.pi ^ 2 * c) * ‖x - y‖ ^ 2)) volume := by
+      have hcomp :=
+        (Measure.measurePreserving_sub_left (volume : Measure ℝ) x).integrable_comp_of_integrable
+          hgauss0
+      simpa [Function.comp_def] using hcomp
+    have hK_int : Integrable (fun y : ℝ => ‖K c x y‖) volume := by
+      have hmul := hgauss_shift.const_mul ((Real.pi * c) ^ (1 / 2 : ℝ))
+      apply hmul.congr
+      filter_upwards [] with y
+      rw [hK_norm c x y hc]
+      congr 2
+      ring
+    have hmajor : Integrable (fun y : ℝ => ‖K c x y‖ * Cg) volume :=
+      hK_int.mul_const Cg
+    rw [hA_eq c x hc]
+    calc
+      ‖∫ y : ℝ, K c x y • GC y‖ ≤
+          ∫ y : ℝ, ‖K c x y • GC y‖ := norm_integral_le_integral_norm _
+      _ = ∫ y : ℝ, ‖K c x y‖ * ‖GC y‖ := by
+        apply integral_congr_ae
+        exact Filter.Eventually.of_forall (fun y => norm_smul _ _)
+      _ ≤ ∫ y : ℝ, ‖K c x y‖ * Cg := by
+        refine integral_mono_of_nonneg
+          (f := fun y : ℝ => ‖K c x y‖ * ‖GC y‖)
+          (g := fun y : ℝ => ‖K c x y‖ * Cg)
+          (Filter.Eventually.of_forall (fun y =>
+            mul_nonneg (norm_nonneg _) (norm_nonneg _))) hmajor ?_
+        exact Filter.Eventually.of_forall (fun y =>
+          mul_le_mul_of_nonneg_left (by simpa [GC] using hgb y) (norm_nonneg _))
+      _ = Cg := by
+        rw [integral_mul_const, hK_integral c x hc]
+        simp
+  have hA_tendsto (x : ℝ) : Tendsto (fun c : ℝ => A c x) atTop (𝓝 (GC x)) := by
+    apply (hleft_g_limit x).congr'
+    filter_upwards [Ioi_mem_atTop (0 : ℝ)] with c hc
+    exact (hA_eq c x hc).symm
+  let C0g : ℝ := ∫ y : ℝ, ‖GC y‖
+  have hFT_G_bound (η : ℝ) : ‖𝓕 GC η‖ ≤ C0g := by
+    rw [Real.fourier_eq]
+    calc
+      ‖∫ y : ℝ, 𝐞 (-⟪y, η⟫) • GC y‖ ≤
+          ∫ y : ℝ, ‖𝐞 (-⟪y, η⟫) • GC y‖ := norm_integral_le_integral_norm _
+      _ = C0g := by
+        dsimp [C0g]
+        apply integral_congr_ae
+        exact Filter.Eventually.of_forall (fun y => by simp)
+  have hq_zero (c η : ℝ) :
+      q c 0 η = (Real.exp (-(c⁻¹) * ‖η‖ ^ 2) : ℂ) := by
+    dsimp [q]
+    rw [Complex.ofReal_exp]
+    apply congrArg Complex.exp
+    have hsq : ((↑|η| : ℂ) ^ 2) = (η : ℂ) ^ 2 := by
+      rw [← Complex.ofReal_pow, sq_abs, Complex.ofReal_pow]
+    rw [hsq, ← Complex.ofReal_inv]
+    simp [Complex.ofReal_neg, Complex.ofReal_mul]
+  have hq_phase (c x η : ℝ) :
+      q c x η = 𝐞 (x * η) * q c 0 η := by
+    rw [hq_zero c η]
+    dsimp [q]
+    rw [Real.fourierChar_apply, Complex.ofReal_exp]
+    rw [← Complex.exp_add]
+    apply congrArg Complex.exp
+    have hsq : ((↑|η| : ℂ) ^ 2) = (η : ℂ) ^ 2 := by
+      rw [← Complex.ofReal_pow, sq_abs, Complex.ofReal_pow]
+    rw [hsq, ← Complex.ofReal_inv]
+    simp [Complex.ofReal_neg, Complex.ofReal_mul]
+    ring
+  have hA_cont (c : ℝ) (hc : 0 < c) : Continuous (A c) := by
+    let Hc : ℝ → ℂ := fun η => q c 0 η • 𝓕 GC η
+    have hHc : Integrable Hc volume := by
+      dsimp [Hc]
+      exact (hqInt c 0 hc).mul_bdd hFT_G_cont.aestronglyMeasurable
+        (Filter.Eventually.of_forall hFT_G_bound)
+    have hA_inv (x : ℝ) :
+        A c x = ∫ η : ℝ, 𝐞 (⟪η, x⟫) • Hc η := by
+      dsimp [A, Hc]
+      apply integral_congr_ae
+      exact Filter.Eventually.of_forall (fun η => by
+        change q c x η * 𝓕 GC η =
+          𝐞 (x * (starRingEnd ℝ) η) • (q c 0 η * 𝓕 GC η)
+        rw [hq_phase c x η]
+        simp [Circle.smul_def, mul_assoc, mul_comm]
+        ring)
+    have hcont : Continuous
+        (VectorFourier.fourierIntegral 𝐞 volume (-innerₗ ℝ) Hc) := by
+      apply VectorFourier.fourierIntegral_continuous
+        Real.continuous_fourierChar
+      · fun_prop
+      · exact hHc
+    have heq : A c = fun x : ℝ => ∫ η : ℝ, 𝐞 (⟪η, x⟫) • Hc η := by
+      funext x
+      exact hA_inv x
+    rw [heq]
+    apply hcont.congr
+    intro x
+    simp [VectorFourier.fourierIntegral, Hc, smul_eq_mul]
+  let C0f : ℝ := ∫ y : ℝ, ‖FC y‖
+  have hFT_F_bound (η : ℝ) : ‖𝓕 FC η‖ ≤ C0f := by
+    rw [Real.fourier_eq]
+    calc
+      ‖∫ y : ℝ, 𝐞 (-⟪y, η⟫) • FC y‖ ≤
+          ∫ y : ℝ, ‖𝐞 (-⟪y, η⟫) • FC y‖ := norm_integral_le_integral_norm _
+      _ = C0f := by
+        dsimp [C0f]
+        apply integral_congr_ae
+        exact Filter.Eventually.of_forall (fun y => by simp)
+  have hR_int (c : ℝ) (hc : 0 < c) :
+      Integrable (fun x : ℝ => FC x * A c x) volume := by
+    exact hFC.mul_bdd (hA_cont c hc).aestronglyMeasurable
+      (Filter.Eventually.of_forall (fun x => hA_bound c x hc))
+  have hprod_fourier (c : ℝ) (hc : 0 < c) (τ : ℝ) :
+      𝓕 (fun x : ℝ => FC x * A c x) τ =
+        ∫ η : ℝ, (q c 0 η • 𝓕 GC η) * 𝓕 FC (τ - η) := by
+    let Hc : ℝ → ℂ := fun η => q c 0 η • 𝓕 GC η
+    let B : ℝ → ℂ := fun x => 𝐞 (-⟪x, τ⟫) • FC x
+    have hHc : Integrable Hc volume := by
+      dsimp [Hc]
+      exact (hqInt c 0 hc).mul_bdd hFT_G_cont.aestronglyMeasurable
+        (Filter.Eventually.of_forall hFT_G_bound)
+    have hB : Integrable B volume := by
+      dsimp [B]
+      exact (VectorFourier.fourierIntegral_convergent_iff
+        (V := ℝ) (W := ℝ) (E := ℂ) (μ := volume) (L := innerₗ ℝ)
+        Real.continuous_fourierChar continuous_inner τ).2 hFC
+    have hA_inv (x : ℝ) :
+        A c x = VectorFourier.fourierIntegral 𝐞 volume (-innerₗ ℝ) Hc x := by
+      have hpoint : A c x = ∫ η : ℝ, 𝐞 (⟪η, x⟫) • Hc η := by
+        dsimp [A, Hc]
+        apply integral_congr_ae
+        exact Filter.Eventually.of_forall (fun η => by
+          change q c x η * 𝓕 GC η =
+            𝐞 (x * (starRingEnd ℝ) η) • (q c 0 η * 𝓕 GC η)
+          rw [hq_phase c x η]
+          simp [Circle.smul_def, mul_assoc, mul_comm]
+          ring)
+      rw [hpoint]
+      apply integral_congr_ae
+      exact Filter.Eventually.of_forall (fun η => by
+        simp [Hc, smul_eq_mul])
+    have hswap := VectorFourier.integral_fourierIntegral_smul_eq_flip
+      (L := -innerₗ ℝ) (e := 𝐞) (μ := volume) (ν := volume)
+      Real.continuous_fourierChar (by fun_prop) hHc hB
+    rw [Real.fourier_eq]
+    dsimp [B]
+    calc
+      (∫ x : ℝ, 𝐞 (-⟪x, τ⟫) • (FC x * A c x)) =
+          ∫ x : ℝ, VectorFourier.fourierIntegral 𝐞 volume (-innerₗ ℝ) Hc x • B x := by
+        apply integral_congr_ae
+        exact Filter.Eventually.of_forall (fun x => by
+          change 𝐞 (-⟪x, τ⟫) • (FC x * A c x) =
+            VectorFourier.fourierIntegral 𝐞 volume (-innerₗ ℝ) Hc x • B x
+          rw [hA_inv x]
+          simp [B, Circle.smul_def, mul_assoc, mul_comm, mul_left_comm])
+      _ = ∫ η : ℝ, Hc η •
+          VectorFourier.fourierIntegral 𝐞 volume (-innerₗ ℝ).flip B η := hswap
+      _ = ∫ η : ℝ, (q c 0 η • 𝓕 GC η) * 𝓕 FC (τ - η) := by
+        have hfourier (η : ℝ) :
+            VectorFourier.fourierIntegral 𝐞 volume (-innerₗ ℝ).flip B η =
+              𝓕 FC (τ - η) := by
+          rw [Real.fourier_eq]
+          apply integral_congr_ae
+          exact Filter.Eventually.of_forall (fun x => by
+            change 𝐞 (-((-innerₗ ℝ).flip x) η) • B x =
+              𝐞 (-⟪x, τ - η⟫) • FC x
+            simp [B, Circle.smul_def, Real.fourierChar_apply]
+            rw [← mul_assoc, ← Complex.exp_add]
+            congr 1
+            ring_nf)
+        apply integral_congr_ae
+        exact Filter.Eventually.of_forall (fun η => by
+          change Hc η •
+              VectorFourier.fourierIntegral 𝐞 volume (-innerₗ ℝ).flip B η =
+            (q c 0 η • 𝓕 GC η) * 𝓕 FC (τ - η)
+          rw [hfourier η]
+          simp [Hc])
+  have hT_int (c : ℝ) (hc : 0 < c) (τ : ℝ) :
+      Integrable
+        (fun η : ℝ => (q c 0 η • 𝓕 GC η) * 𝓕 FC (τ - η)) volume := by
+    let Hc : ℝ → ℂ := fun η => q c 0 η • 𝓕 GC η
+    have hHc : Integrable Hc volume := by
+      dsimp [Hc]
+      exact (hqInt c 0 hc).mul_bdd hFT_G_cont.aestronglyMeasurable
+        (Filter.Eventually.of_forall hFT_G_bound)
+    have hshift : Continuous (fun η : ℝ => 𝓕 FC (τ - η)) := by
+      exact hFT_F_cont.comp (continuous_const.sub continuous_id)
+    dsimp [Hc]
+    exact hHc.mul_bdd hshift.aestronglyMeasurable
+      (Filter.Eventually.of_forall (fun η => hFT_F_bound (τ - η)))
+  have hq_real (c η : ℝ) :
+      (q c 0 η).im = 0 ∧ 0 ≤ (q c 0 η).re := by
+    rw [hq_zero c η]
+    have him : ((η : ℂ) ^ 2).im = 0 := by
+      norm_num [pow_two, Complex.mul_re, Complex.mul_im]
+    have hre : ((η : ℂ) ^ 2).re = η ^ 2 := by
+      norm_num [pow_two, Complex.mul_re, Complex.mul_im]
+    norm_num [Complex.exp_re, Complex.exp_im, Complex.mul_re, Complex.mul_im,
+      Complex.ofReal_pow, sq_abs, him, hre]
+    positivity
+  have hT_nonneg (c : ℝ) (hc : 0 < c) (τ η : ℝ) :
+      ((q c 0 η • 𝓕 GC η) * 𝓕 FC (τ - η)).im = 0 ∧
+        0 ≤ ((q c 0 η • 𝓕 GC η) * 𝓕 FC (τ - η)).re := by
+    have hq := hq_real c η
+    have hG := hFT_G_nonneg η
+    have hF := hFT_F_nonneg (τ - η)
+    simp only [smul_eq_mul]
+    constructor
+    · simp [Complex.mul_im, hq.1, hG.1, hF.1]
+    · simp [Complex.mul_re, hq.1, hG.1, hF.1]
+      exact mul_nonneg (mul_nonneg hq.2 hG.2) hF.2
+  have hR_tendsto (τ : ℝ) :
+      Tendsto
+          (fun c : ℝ => 𝓕 (fun x : ℝ => FC x * A c x) τ) atTop
+        (𝓝 (𝓕 HC τ)) := by
+    let R : ℝ → ℝ → ℂ := fun c x =>
+      𝐞 (-⟪x, τ⟫) • (FC x * A c x)
+    let Rlim : ℝ → ℂ := fun x => 𝐞 (-⟪x, τ⟫) • HC x
+    have hphase : Continuous (fun x : ℝ => 𝐞 (-⟪x, τ⟫)) := by
+      fun_prop
+    have hmeas : ∀ᶠ c : ℝ in atTop, AEStronglyMeasurable (R c) volume := by
+      filter_upwards [Ioi_mem_atTop (0 : ℝ)] with c hc
+      dsimp [R]
+      exact hphase.aestronglyMeasurable.smul
+        (hR_int c hc).aestronglyMeasurable
+    have hbound : ∀ᶠ c : ℝ in atTop,
+        ∀ᵐ x : ℝ ∂volume, ‖R c x‖ ≤ Cg * ‖FC x‖ := by
+      filter_upwards [Ioi_mem_atTop (0 : ℝ)] with c hc
+      filter_upwards [] with x
+      dsimp [R]
+      rw [Circle.norm_smul]
+      rw [norm_mul]
+      simpa [mul_comm] using
+        (mul_le_mul_of_nonneg_left (hA_bound c x hc) (norm_nonneg (FC x)))
+    have hbound_int : Integrable (fun x : ℝ => Cg * ‖FC x‖) volume := by
+      simpa only [smul_eq_mul] using hFC.norm.const_mul Cg
+    have hlim : ∀ᵐ x : ℝ ∂volume,
+        Tendsto (fun c : ℝ => R c x) atTop (𝓝 (Rlim x)) := by
+      exact Filter.Eventually.of_forall (fun x => by
+        have hmul : Tendsto (fun c : ℝ => FC x * A c x) atTop
+            (𝓝 (FC x * GC x)) :=
+          tendsto_const_nhds.mul (hA_tendsto x)
+        have hsmul := (tendsto_const_nhds :
+          Tendsto (fun _ : ℝ => 𝐞 (-⟪x, τ⟫)) atTop
+            (𝓝 (𝐞 (-⟪x, τ⟫)))).smul hmul
+        simpa [R, Rlim, HC, FC, GC] using hsmul)
+    have hD := MeasureTheory.tendsto_integral_filter_of_dominated_convergence
+      (μ := volume) (F := R) (f := Rlim) (fun x : ℝ => Cg * ‖FC x‖)
+      hmeas hbound hbound_int hlim
+    change Tendsto
+      (fun c : ℝ => ∫ x : ℝ, 𝐞 (-⟪x, τ⟫) • (FC x * A c x)) atTop
+      (𝓝 (∫ x : ℝ, 𝐞 (-⟪x, τ⟫) • HC x))
+    simpa only [R, Rlim] using hD
+  have hregular_nonneg (c : ℝ) (hc : 0 < c) (τ : ℝ) :
+      (𝓕 (fun x : ℝ => FC x * A c x) τ).im = 0 ∧
+        0 ≤ (𝓕 (fun x : ℝ => FC x * A c x) τ).re := by
+    rw [hprod_fourier c hc τ]
+    constructor
+    · calc
+        (∫ η : ℝ, (q c 0 η • 𝓕 GC η) * 𝓕 FC (τ - η)).im =
+            ∫ η : ℝ, ((q c 0 η • 𝓕 GC η) * 𝓕 FC (τ - η)).im :=
+          (integral_im (hT_int c hc τ)).symm
+        _ = 0 := integral_eq_zero_of_ae
+          (Filter.Eventually.of_forall (fun η => (hT_nonneg c hc τ η).1))
+    · calc
+        0 ≤ ∫ η : ℝ, ((q c 0 η • 𝓕 GC η) * 𝓕 FC (τ - η)).re :=
+          integral_nonneg_of_ae
+            (Filter.Eventually.of_forall (fun η => (hT_nonneg c hc τ η).2))
+        _ = (∫ η : ℝ, (q c 0 η • 𝓕 GC η) * 𝓕 FC (τ - η)).re :=
+          integral_re (hT_int c hc τ)
+  have hHC_nonneg (τ : ℝ) :
+      (𝓕 HC τ).im = 0 ∧ 0 ≤ (𝓕 HC τ).re := by
+    have him : Tendsto
+        (fun c : ℝ => (𝓕 (fun x : ℝ => FC x * A c x) τ).im) atTop
+          (𝓝 (𝓕 HC τ).im) := by
+      simpa only [Function.comp_def] using
+        (Complex.continuous_im.tendsto (𝓕 HC τ)).comp (hR_tendsto τ)
+    have hre : Tendsto
+        (fun c : ℝ => (𝓕 (fun x : ℝ => FC x * A c x) τ).re) atTop
+          (𝓝 (𝓕 HC τ).re) := by
+      simpa only [Function.comp_def] using
+        (Complex.continuous_re.tendsto (𝓕 HC τ)).comp (hR_tendsto τ)
+    have him_zero : Tendsto
+        (fun c : ℝ => (𝓕 (fun x : ℝ => FC x * A c x) τ).im) atTop (𝓝 0) := by
+      apply Tendsto.congr'
+      filter_upwards [Ioi_mem_atTop (0 : ℝ)] with c hc
+      exact (hregular_nonneg c hc τ).1.symm
+      exact (tendsto_const_nhds :
+        Tendsto (fun _ : ℝ => (0 : ℝ)) atTop (𝓝 0))
+    have him_eq : (𝓕 HC τ).im = 0 :=
+      (tendsto_nhds_unique him_zero him).symm
+    have hre_nonneg : ∀ᶠ c : ℝ in atTop,
+        0 ≤ (𝓕 (fun x : ℝ => FC x * A c x) τ).re := by
+      filter_upwards [Ioi_mem_atTop (0 : ℝ)] with c hc
+      exact (hregular_nonneg c hc τ).2
+    refine ⟨him_eq, ?_⟩
+    exact le_of_tendsto_of_tendsto
+      (tendsto_const_nhds : Tendsto (fun _ : ℝ => (0 : ℝ)) atTop (𝓝 0)) hre
+      hre_nonneg
+  refine ⟨hfg_cont, hfg_int, ?_⟩
+  intro τ
+  rw [chapter05_fourierTransform_eq_mathlib_angular
+    (fun x : ℝ => f x * g x) hfg_int τ]
+  simpa [HC] using hHC_nonneg (τ / (2 * Real.pi))
 
 theorem chapter05_pair_kernel_positive_type_strict
     (G : ℝ → ℝ) (a : ℝ)

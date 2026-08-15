@@ -334,6 +334,40 @@ theorem chapter02_fraction_field_extension
       _ = w z := by
         rw [← hz, AddValuation.map_div, hmap a, hmap b]
 
+theorem chapter02_valuation_on_support_quotient_extends_to_fraction_field
+    {R Γ : Type*} [CommRing R] [AddCommGroup Γ] [LinearOrder Γ]
+    [IsOrderedAddMonoid Γ] [Nontrivial Γ]
+    (v : AddValuation R (WithTop Γ)) :
+    let A := R ⧸ Chapter02Support v
+    letI : IsDomain A := by
+      dsimp [A]
+      exact chapter02_support_quotient_is_a_domain v
+    let vq : AddValuation A (WithTop Γ) := Chapter02SupportQuotientValuation v
+    ∃! w : AddValuation (FractionRing A) (WithTop Γ),
+      (∀ a : A, w (algebraMap A (FractionRing A) a) = vq a) ∧
+      (∀ (a b : A) (_hb : b ≠ 0),
+        w (algebraMap A (FractionRing A) a /
+            algebraMap A (FractionRing A) b) = vq a - vq b) := by
+  dsimp
+  have hsupport : Chapter02Support v = AddValuation.supp v := by
+    rfl
+  let hdomain : IsDomain (R ⧸ Chapter02Support v) :=
+    chapter02_support_quotient_is_a_domain v
+  exact @chapter02_fraction_field_extension
+    (R ⧸ Chapter02Support v) Γ _ hdomain _ _ _
+    (Chapter02SupportQuotientValuation v)
+    (by
+      have hJ : Chapter02Support v ≤ AddValuation.supp v := by
+        rw [hsupport]
+      have hval : Chapter02SupportQuotientValuation v =
+          AddValuation.onQuot v hJ := by
+        apply AddValuation.ext
+        intro x
+        rfl
+      rw [hval]
+      rw [AddValuation.supp_quot (v := v) hJ, hsupport]
+      simpa only using (Ideal.map_quotient_self (AddValuation.supp v)))
+
 def Chapter02SurjectiveValuation
     {K Γ : Type*} [Field K] [AddCommGroup Γ] [LinearOrder Γ]
     [IsOrderedAddMonoid Γ]

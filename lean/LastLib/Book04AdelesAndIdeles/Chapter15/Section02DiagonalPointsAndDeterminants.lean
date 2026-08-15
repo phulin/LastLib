@@ -1,5 +1,7 @@
 import LastLib.Book04AdelesAndIdeles.Chapter15.Section01MatricesOverTheAdeles
 import LastLib.Book04AdelesAndIdeles.Chapter09.Section01TheGlobalModuleAndDegree
+import LastLib.Book04AdelesAndIdeles.Chapter05.Section01TheDiagonalEmbedding
+import LastLib.Book04AdelesAndIdeles.Chapter05.Section03DiscretenessInTheFullAdeles
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter15
 
@@ -99,10 +101,205 @@ theorem chapter15_principal_matrix_injective
   apply (FaithfulSMul.algebraMap_injective K (v.Completion))
   exact congrArg (fun z : Chapter15GLnAdeles n R K => (z.1 v) i j) hgh
 
+private theorem chapter15_matrix_identity_neighborhood
+    (n : ℕ) {L : Type*} [Field L] [NumberField L] :
+    ∃ W : Set (Chapter15GLnAdeles n (𝓞 L) L),
+      IsOpen W ∧ (1 : Chapter15GLnAdeles n (𝓞 L) L) ∈ W ∧
+        W ∩ Set.range (chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n) = {1} := by
+  classical
+  obtain ⟨Uinf, hUinfOpen, hUinfNhds, hUinf⟩ :=
+    LastLib.Book04AdelesAndIdeles.Chapter05.chapter05_exists_small_archimedean_neighborhood L
+  let U : Set (LastLib.Book04AdelesAndIdeles.Chapter05.Chapter05AdeleRing L) :=
+    LastLib.Book04AdelesAndIdeles.Chapter05.chapter05FullZeroNeighborhood L Uinf
+  have hUopen : IsOpen U := by
+    exact LastLib.Book04AdelesAndIdeles.Chapter05.chapter05_full_zero_neighborhood_is_open
+      L Uinf hUinfOpen
+  have hUinter : U ∩ Set.range
+      (LastLib.Book04AdelesAndIdeles.Chapter05.chapter05Diagonal L) = {0} := by
+    exact LastLib.Book04AdelesAndIdeles.Chapter05.chapter05_full_zero_neighborhood_meets_diagonal_only_at_zero
+      L Uinf hUinf
+  have hUzero : (0 : LastLib.Book04AdelesAndIdeles.Chapter05.Chapter05AdeleRing L) ∈ U := by
+    have hUnhds : U ∈ nhds
+        (0 : LastLib.Book04AdelesAndIdeles.Chapter05.Chapter05AdeleRing L) := by
+      exact LastLib.Book04AdelesAndIdeles.Chapter05.chapter05_full_zero_neighborhood_is_nhds
+        L Uinf hUinfNhds
+    exact mem_of_mem_nhds hUnhds
+  let finiteEntry (i j : Fin n) :
+      Chapter15FiniteMatrixGroup n (𝓞 L) L →
+        IsDedekindDomain.FiniteAdeleRing (𝓞 L) L :=
+    RestrictedProduct.mapAlong
+      (R₁ := fun v : Chapter15FinitePlace (𝓞 L) =>
+        Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion L))
+      (R₂ := fun v : Chapter15FinitePlace (𝓞 L) => v.adicCompletion L)
+      (A₁ := fun v =>
+        (chapter15FiniteMatrixIntegralSubgroup (R := 𝓞 L) (K := L) n v :
+          Set (Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion L))))
+      (A₂ := fun v => (v.adicCompletionIntegers L : Set (v.adicCompletion L)))
+      (f := fun v => v) Filter.tendsto_id
+      (fun _ g => g i j)
+      (Filter.Eventually.of_forall (fun v g hg =>
+        ((chapter15_finite_integral_matrix_mem_entries_and_inverse_iff
+          (R := 𝓞 L) (K := L) n v g).mp hg i j).1))
+  have hfiniteEntry_cont (i j : Fin n) : Continuous (finiteEntry i j) := by
+    exact RestrictedProduct.mapAlong_continuous
+      (R₁ := fun v : Chapter15FinitePlace (𝓞 L) =>
+        Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion L))
+      (R₂ := fun v : Chapter15FinitePlace (𝓞 L) => v.adicCompletion L)
+      (A₁ := fun v =>
+        (chapter15FiniteMatrixIntegralSubgroup (R := 𝓞 L) (K := L) n v :
+          Set (Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion L))))
+      (A₂ := fun v => (v.adicCompletionIntegers L : Set (v.adicCompletion L)))
+      (f := fun v => v) Filter.tendsto_id
+      (fun _ g => g i j)
+      (Filter.Eventually.of_forall (fun v g hg =>
+        ((chapter15_finite_integral_matrix_mem_entries_and_inverse_iff
+          (R := 𝓞 L) (K := L) n v g).mp hg i j).1))
+      (fun v =>
+        (continuous_apply j).comp
+          (Matrix.GeneralLinearGroup.continuous_apply
+            (fun g : Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion L) => g)
+            continuous_id i))
+  let entry : Chapter15GLnAdeles n (𝓞 L) L → Fin n → Fin n →
+      LastLib.Book04AdelesAndIdeles.Chapter05.Chapter05AdeleRing L := fun x i j =>
+    (fun v => (x.1 v) i j, finiteEntry i j x.2)
+  have hentry_cont (i j : Fin n) :
+      Continuous (fun x : Chapter15GLnAdeles n (𝓞 L) L => entry x i j) := by
+    change Continuous (fun x :
+        Chapter15ArchimedeanMatrixGroup n L × Chapter15FiniteMatrixGroup n (𝓞 L) L =>
+      (fun v => (x.1 v) i j, finiteEntry i j x.2))
+    have harch : Continuous (fun x :
+        Chapter15ArchimedeanMatrixGroup n L × Chapter15FiniteMatrixGroup n (𝓞 L) L =>
+        fun v => (x.1 v) i j) := by
+      apply continuous_pi
+      intro v
+      have hv : Continuous (fun x : Chapter15ArchimedeanMatrixGroup n L => x v) :=
+        continuous_apply v
+      have hv' : Continuous (fun x :
+          Chapter15ArchimedeanMatrixGroup n L × Chapter15FiniteMatrixGroup n (𝓞 L) L =>
+          x.1 v) :=
+        hv.comp (continuous_fst : Continuous (fun x :
+          Chapter15ArchimedeanMatrixGroup n L × Chapter15FiniteMatrixGroup n (𝓞 L) L => x.1))
+      exact (continuous_apply j).comp
+        (Matrix.GeneralLinearGroup.continuous_apply
+          (fun x : Chapter15ArchimedeanMatrixGroup n L ×
+            Chapter15FiniteMatrixGroup n (𝓞 L) L => x.1 v)
+          hv' i)
+    exact harch.prodMk (hfiniteEntry_cont i j |>.comp continuous_snd)
+  have hentry_principal (g : Matrix.GeneralLinearGroup (Fin n) L) (i j : Fin n) :
+      entry (chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n g) i j =
+        LastLib.Book04AdelesAndIdeles.Chapter05.chapter05Diagonal L (g i j) := by
+    apply Prod.ext
+    · funext v
+      rfl
+    · apply Subtype.ext
+      funext v
+      rfl
+  let W : Set (Chapter15GLnAdeles n (𝓞 L) L) :=
+    ⋂ i : Fin n, ⋂ j : Fin n,
+      (fun x => entry x i j -
+        LastLib.Book04AdelesAndIdeles.Chapter05.chapter05Diagonal L
+          (if i = j then 1 else 0)) ⁻¹' U
+  have hWopen : IsOpen W := by
+    apply isOpen_iInter_of_finite
+    intro i
+    apply isOpen_iInter_of_finite
+    intro j
+    exact hUopen.preimage ((hentry_cont i j).sub continuous_const)
+  have hWone : (1 : Chapter15GLnAdeles n (𝓞 L) L) ∈ W := by
+    simp only [W, Set.mem_iInter, Set.mem_preimage]
+    intro i j
+    rw [show (1 : Chapter15GLnAdeles n (𝓞 L) L) =
+      chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n
+        (1 : Matrix.GeneralLinearGroup (Fin n) L) by simp, hentry_principal]
+    by_cases hij : i = j
+    · simpa [Matrix.one_apply, hij] using hUzero
+    · simpa [Matrix.one_apply, hij] using hUzero
+  have hWinter : W ∩ Set.range
+      (chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n) = {1} := by
+    ext x
+    constructor
+    · intro hx
+      rcases hx.2 with ⟨g, rfl⟩
+      have hWx : ∀ i : Fin n, ∀ j : Fin n,
+          entry (chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n g) i j -
+              LastLib.Book04AdelesAndIdeles.Chapter05.chapter05Diagonal L
+                (if i = j then 1 else 0) ∈ U := by
+        simpa only [W, Set.mem_iInter, Set.mem_preimage] using hx.1
+      have hscalar : ∀ i : Fin n, ∀ j : Fin n,
+          g i j = if i = j then 1 else 0 := by
+        intro i j
+        have hz : LastLib.Book04AdelesAndIdeles.Chapter05.chapter05Diagonal L
+              (g i j - (if i = j then 1 else 0)) ∈ U := by
+          have hw := hWx i j
+          rw [hentry_principal] at hw
+          simpa only [map_sub] using hw
+        have hz' : LastLib.Book04AdelesAndIdeles.Chapter05.chapter05Diagonal L
+              (g i j - (if i = j then 1 else 0)) ∈
+            U ∩ Set.range
+              (LastLib.Book04AdelesAndIdeles.Chapter05.chapter05Diagonal L) := by
+          exact ⟨hz, ⟨_, rfl⟩⟩
+        rw [hUinter] at hz'
+        have hz'' : LastLib.Book04AdelesAndIdeles.Chapter05.chapter05Diagonal L
+              (g i j - (if i = j then 1 else 0)) = 0 :=
+          Set.mem_singleton_iff.mp hz'
+        apply sub_eq_zero.mp
+        apply (LastLib.Book04AdelesAndIdeles.Chapter05.chapter05_diagonal_injective L)
+        simpa using hz''
+      have hg : g = 1 := by
+        apply Matrix.GeneralLinearGroup.ext
+        intro i j
+        change g i j = if i = j then 1 else 0
+        exact hscalar i j
+      rw [hg]
+      simp
+    · intro hx
+      have hx' : x = 1 := Set.mem_singleton_iff.mp hx
+      subst x
+      exact ⟨hWone, ⟨1, by simp⟩⟩
+  exact ⟨W, hWopen, hWone, hWinter⟩
+
 theorem chapter15_principal_matrix_range_is_discrete
     (n : ℕ) {L : Type*} [Field L] [NumberField L] :
     IsDiscrete (Set.range (chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n)) := by
-  sorry
+  letI : Fact (∀ v : Chapter15FinitePlace (𝓞 L),
+      IsOpen (chapter15FiniteMatrixIntegralSubgroup (R := 𝓞 L) (K := L) n v :
+        Set (Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion L)))) :=
+    ⟨fun v => chapter15_finite_integral_matrix_group_is_open n v⟩
+  obtain ⟨W, hWopen, hWone, hWinter⟩ :=
+    chapter15_matrix_identity_neighborhood (L := L) n
+  refine isDiscrete_iff_forall_mem_exists_isOpen.mpr ?_
+  intro x hx
+  rcases hx with ⟨g, rfl⟩
+  let h : Chapter15GLnAdeles n (𝓞 L) L :=
+    chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n g
+  refine ⟨(fun y : Chapter15GLnAdeles n (𝓞 L) L => y * h⁻¹) ⁻¹' W,
+    hWopen.preimage (continuous_mul_const _), ?_⟩
+  ext y
+  constructor
+  · rintro ⟨hyW, hyRange⟩
+    have hyRange' : y * h⁻¹ ∈
+        Set.range (chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n) := by
+      rcases hyRange with ⟨k, rfl⟩
+      exact ⟨k * g⁻¹, by
+        change chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n (k * g⁻¹) =
+          chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n k * h⁻¹
+        simp [h]⟩
+    have hyone : y * h⁻¹ = 1 := by
+      apply Set.mem_singleton_iff.mp
+      rw [← hWinter]
+      exact ⟨hyW, hyRange'⟩
+    have hy : y = h := by
+      have := congrArg (fun z => z * h) hyone
+      simpa [mul_assoc] using this
+    change y = chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n g
+    exact hy
+  · intro hy
+    have hy' : y = h := by
+      simpa [h] using hy
+    subst y
+    refine ⟨?_, ⟨g, rfl⟩⟩
+    change h * h⁻¹ ∈ W
+    simpa using hWone
 
 /-- The diagonal map into the infinite multiplicative factors. -/
 def chapter15ArchimedeanPrincipalIdele :
@@ -219,7 +416,59 @@ def chapter15CanonicalIdeleModuleData
     rw [chapter15_idele_group_equiv_full_adele_units_principal]
     exact LastLib.Book04AdelesAndIdeles.Chapter09.chapter09PrincipalIdele_module_eq_one x
   continuous_toMonoidHom := by
-    sorry
+    have hfinite : ∀ᶠ v : Chapter15FinitePlace (𝓞 K) in Filter.cofinite,
+        MapsTo (fun u : (v.adicCompletion K)ˣ =>
+          (u : v.adicCompletion K))
+          (chapter15FiniteUnitIntegralSubgroup (R := 𝓞 K) (K := K) v :
+            Set ((v.adicCompletion K)ˣ))
+          (v.adicCompletionIntegers K : Set (v.adicCompletion K)) := by
+      filter_upwards [] with v u hu
+      rcases hu with ⟨w, rfl⟩
+      exact w.1.2
+    let finiteValue : Chapter15FiniteIdeleGroup (𝓞 K) K →
+        IsDedekindDomain.FiniteAdeleRing (𝓞 K) K :=
+      RestrictedProduct.mapAlong
+        (R₁ := fun v : Chapter15FinitePlace (𝓞 K) => (v.adicCompletion K)ˣ)
+        (R₂ := fun v : Chapter15FinitePlace (𝓞 K) => v.adicCompletion K)
+        (A₁ := fun v =>
+          (chapter15FiniteUnitIntegralSubgroup (R := 𝓞 K) (K := K) v :
+            Set ((v.adicCompletion K)ˣ)))
+        (A₂ := fun v => (v.adicCompletionIntegers K : Set (v.adicCompletion K)))
+        (f := fun v => v) Filter.tendsto_id
+          (fun v (u : (v.adicCompletion K)ˣ) => (u : v.adicCompletion K)) hfinite
+    have hfinite_cont : Continuous finiteValue := by
+      exact RestrictedProduct.mapAlong_continuous
+        (R₁ := fun v : Chapter15FinitePlace (𝓞 K) => (v.adicCompletion K)ˣ)
+        (R₂ := fun v : Chapter15FinitePlace (𝓞 K) => v.adicCompletion K)
+        (A₁ := fun v =>
+          (chapter15FiniteUnitIntegralSubgroup (R := 𝓞 K) (K := K) v :
+            Set ((v.adicCompletion K)ˣ)))
+        (A₂ := fun v => (v.adicCompletionIntegers K : Set (v.adicCompletion K)))
+        (f := fun v => v) Filter.tendsto_id
+          (fun v (u : (v.adicCompletion K)ˣ) => (u : v.adicCompletion K)) hfinite
+        (fun _ => Units.continuous_val)
+    have hvalue : Continuous (fun x : Chapter15IdeleGroup (𝓞 K) K =>
+        ((chapter15_idele_group_equiv_full_adele_units (R := 𝓞 K) (K := K) x :
+          Chapter15AdeleUnitGroup (𝓞 K) K) : Chapter15AdeleRing (𝓞 K) K)) := by
+      change Continuous (fun x :
+          Chapter15ArchimedeanIdeleGroup K × Chapter15FiniteIdeleGroup (𝓞 K) K =>
+        ((fun v : NumberField.InfinitePlace K => (x.1 v : v.Completion)),
+          finiteValue x.2))
+      have harch : Continuous (fun x :
+          Chapter15ArchimedeanIdeleGroup K × Chapter15FiniteIdeleGroup (𝓞 K) K =>
+          fun v : NumberField.InfinitePlace K => (x.1 v : v.Completion)) := by
+        apply continuous_pi
+        intro v
+        exact Units.continuous_val.comp (continuous_apply v |>.comp continuous_fst)
+      exact harch.prodMk (hfinite_cont.comp continuous_snd)
+    have he : Continuous
+        (chapter15_idele_group_equiv_full_adele_units (R := 𝓞 K) (K := K)).toMonoidHom := by
+      apply Continuous.of_coeHom_comp
+      change Continuous (fun x : Chapter15IdeleGroup (𝓞 K) K =>
+        ((chapter15_idele_group_equiv_full_adele_units (R := 𝓞 K) (K := K) x :
+          Chapter15AdeleUnitGroup (𝓞 K) K) : Chapter15AdeleRing (𝓞 K) K))
+      exact hvalue
+    exact (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModule_continuous K).comp he
 
 /- LOCAL_DEPENDENCY_GUESS: the preceding ideles chapters provide the product
 formula construction of the normalized idele module.  This existence bridge
@@ -256,7 +505,10 @@ def chapter15FiniteMatrixDeterminant (n : ℕ) :
     (f := id) (hf := Filter.tendsto_id)
     (φ := fun _ => Matrix.GeneralLinearGroup.det)
     (hφ := by
-      sorry)
+      filter_upwards [] with v
+      rintro g ⟨h, rfl⟩
+      exact ⟨Matrix.GeneralLinearGroup.det h,
+        (Matrix.GeneralLinearGroup.map_det (v.adicCompletionIntegers K).subtype h).symm⟩)
 
 /-- The global determinant `GLₙ(𝔸_K) → 𝔸_Kˣ`. -/
 def chapter15AdelicDeterminant (n : ℕ) :
@@ -288,15 +540,53 @@ theorem chapter15_adelic_determinant_apply_finite
 theorem chapter15_adelic_determinant_continuous
     (n : ℕ) [NumberField K] :
     Continuous (chapter15AdelicDeterminant (R := R) (K := K) n) := by
-  sorry
+  have hφ : ∀ᶠ v : Chapter15FinitePlace R in Filter.cofinite,
+      MapsTo (Matrix.GeneralLinearGroup.det :
+        Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion K) → (v.adicCompletion K)ˣ)
+        (chapter15FiniteMatrixIntegralSubgroup (R := R) (K := K) n v : Set _)
+        (chapter15FiniteUnitIntegralSubgroup (R := R) (K := K) v : Set _) := by
+    filter_upwards [] with v
+    rintro g ⟨h, rfl⟩
+    exact ⟨Matrix.GeneralLinearGroup.det h,
+      (Matrix.GeneralLinearGroup.map_det (v.adicCompletionIntegers K).subtype h).symm⟩
+  have hfin : Continuous (chapter15FiniteMatrixDeterminant (R := R) (K := K) n) := by
+    simpa [chapter15FiniteMatrixDeterminant, RestrictedProduct.mapAlongMonoidHom] using
+      (RestrictedProduct.mapAlong_continuous
+        (R₁ := fun v : Chapter15FinitePlace R =>
+          Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion K))
+        (R₂ := fun v : Chapter15FinitePlace R => (v.adicCompletion K)ˣ)
+        (A₁ := fun v =>
+          (chapter15FiniteMatrixIntegralSubgroup (R := R) (K := K) n v : Set _))
+        (A₂ := fun v =>
+          (chapter15FiniteUnitIntegralSubgroup (R := R) (K := K) v : Set _))
+        (f := id) Filter.tendsto_id (fun v => Matrix.GeneralLinearGroup.det) hφ
+        (fun v => Matrix.GeneralLinearGroup.continuous_det))
+  apply Continuous.prodMk
+  · exact continuous_pi fun v =>
+      Matrix.GeneralLinearGroup.continuous_det.comp
+        (continuous_apply v |>.comp continuous_fst)
+  · exact hfin.comp continuous_snd
 
 theorem chapter15_adelic_determinant_principal
     (n : ℕ) (g : Matrix.GeneralLinearGroup (Fin n) K) :
     chapter15AdelicDeterminant (R := R) (K := K) n
         (chapter15PrincipalMatrix (R := R) (K := K) n g) =
-      chapter15PrincipalIdele (R := R) (K := K)
+    chapter15PrincipalIdele (R := R) (K := K)
         (Matrix.GeneralLinearGroup.det g) := by
-  sorry
+  apply Prod.ext
+  · funext v
+    change Matrix.GeneralLinearGroup.det
+        (Matrix.GeneralLinearGroup.map (algebraMap K v.Completion) g) =
+      Units.map (algebraMap K v.Completion).toMonoidHom
+        (Matrix.GeneralLinearGroup.det g)
+    exact Matrix.GeneralLinearGroup.map_det (algebraMap K v.Completion) g
+  · apply Subtype.ext
+    funext v
+    change Matrix.GeneralLinearGroup.det
+        (Matrix.GeneralLinearGroup.map (algebraMap K (v.adicCompletion K)) g) =
+      Units.map (algebraMap K (v.adicCompletion K)).toMonoidHom
+        (Matrix.GeneralLinearGroup.det g)
+    exact Matrix.GeneralLinearGroup.map_det (algebraMap K (v.adicCompletion K)) g
 
 /-! ### The determinant module and the norm-one subgroup -/
 
@@ -316,13 +606,80 @@ theorem chapter15_adelic_determinant_module_continuous
     (n : ℕ) [NumberField K]
     (M : Chapter15IdeleModuleData (R := R) (K := K)) :
     Continuous (chapter15AdelicDeterminantModule (R := R) (K := K) n M) := by
-  sorry
+  change Continuous (M.toMonoidHom.comp (chapter15AdelicDeterminant n))
+  exact (M.continuous_toMonoidHom).comp
+    (chapter15_adelic_determinant_continuous (R := R) (K := K) n)
+
+private def chapter15DiagonalUnit (n : ℕ) (i0 : Fin n)
+    {A : Type*} [CommRing A] (u : Aˣ) :
+    Matrix.GeneralLinearGroup (Fin n) A :=
+  ⟨Matrix.diagonal (fun j => if j = i0 then u else 1),
+    Matrix.diagonal (fun j => if j = i0 then (u⁻¹ : Aˣ) else 1),
+    by
+      simp only [Matrix.diagonal_mul_diagonal, mul_ite, ite_mul,
+        Units.mul_inv, one_mul, mul_one, Matrix.diagonal_eq_one]
+      funext j
+      split_ifs <;> simp,
+    by
+      simp only [Matrix.diagonal_mul_diagonal, mul_ite, ite_mul,
+        Units.mul_inv, one_mul, mul_one, Matrix.diagonal_eq_one]
+      funext j
+      split_ifs <;> simp⟩
 
 theorem chapter15_adelic_determinant_module_surjective
     (n : ℕ) (hn : 0 < n)
     (M : Chapter15IdeleModuleData (R := R) (K := K)) :
     Function.Surjective (chapter15AdelicDeterminantModule (R := R) (K := K) n M) := by
-  sorry
+  intro y
+  obtain ⟨x, hx⟩ := M.surjective_toMonoidHom y
+  let i0 : Fin n := ⟨0, hn⟩
+  have hfinite : ∀ v : Chapter15FinitePlace R,
+      MapsTo (fun u : (v.adicCompletion K)ˣ =>
+        chapter15DiagonalUnit n i0 u)
+        (chapter15FiniteUnitIntegralSubgroup (R := R) (K := K) v :
+          Set ((v.adicCompletion K)ˣ))
+        (chapter15FiniteMatrixIntegralSubgroup (R := R) (K := K) n v :
+          Set (Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion K))) := by
+    intro v u hu
+    rcases hu with ⟨w, rfl⟩
+    apply (chapter15_finite_integral_matrix_mem_iff
+      (R := R) (K := K) n hn v (chapter15DiagonalUnit n i0
+        (Units.map (v.adicCompletionIntegers K).subtype.toMonoidHom w))).2
+    constructor
+    · intro i j
+      by_cases hij : i = j
+      · subst j
+        by_cases hi0 : i = i0 <;>
+          simp [chapter15DiagonalUnit, Matrix.diagonal_apply, hi0, i0,
+            (w : v.adicCompletionIntegers K).property]
+      · simp [chapter15DiagonalUnit, Matrix.diagonal_apply, hij, i0]
+    · refine ⟨w, ?_⟩
+      apply Units.ext
+      simp [chapter15DiagonalUnit, Matrix.GeneralLinearGroup.det,
+        Matrix.det_diagonal, i0, Finset.prod_ite_eq]
+  let finiteScalar : Chapter15FiniteIdeleGroup R K →
+      Chapter15FiniteMatrixGroup n R K :=
+    RestrictedProduct.map
+      (φ := fun v u => chapter15DiagonalUnit n i0 u)
+      (Filter.Eventually.of_forall hfinite)
+  let g : Chapter15GLnAdeles n R K :=
+    (fun v => chapter15DiagonalUnit n i0 (x.1 v), finiteScalar x.2)
+  have hdet : chapter15AdelicDeterminant (R := R) (K := K) n g = x := by
+    apply Prod.ext
+    · funext v
+      change Matrix.GeneralLinearGroup.det
+          (chapter15DiagonalUnit n i0 (x.1 v)) = x.1 v
+      simp [chapter15DiagonalUnit, Matrix.GeneralLinearGroup.det,
+        Matrix.det_diagonal, i0]
+    · apply Subtype.ext
+      funext v
+      change Matrix.GeneralLinearGroup.det
+          (chapter15DiagonalUnit n i0 (x.2 v)) = x.2 v
+      simp [g, finiteScalar, chapter15DiagonalUnit, Matrix.GeneralLinearGroup.det,
+        Matrix.det_diagonal, i0]
+  refine ⟨g, ?_⟩
+  change M.toMonoidHom (chapter15AdelicDeterminant (R := R) (K := K) n g) = y
+  rw [hdet, hx]
 
 theorem chapter15_adelic_determinant_module_principal
     (n : ℕ) (M : Chapter15IdeleModuleData (R := R) (K := K))

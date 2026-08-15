@@ -274,19 +274,43 @@ def chapter04WangDefectSubgroup
 def chapter04WangUnitIsSquare {F : Type*} [Field F] (x : Fˣ) : Prop :=
   ∃ y : Fˣ, y ^ 2 = x
 
+/- A compatible tower of finite cyclotomic layers.  The primitive roots, their
+transition maps, and the maximality condition are part of the data; an
+arbitrary element called `eta_s` is not enough to justify the Wang defect. -/
+structure Chapter04CompatibleCyclotomicLayers
+    (F : Type u) [Field F] [NumberField F] where
+  s : ℕ
+  s_ge_two : 2 ≤ s
+  layer : ℕ → Type u
+  [layerField : ∀ r, Field (layer r)]
+  [layerAlgebra : ∀ r, Algebra F (layer r)]
+  [layerFiniteDimensional : ∀ r, FiniteDimensional F (layer r)]
+  zeta : ∀ r, layer r
+  primitive : ∀ r, IsPrimitiveRoot (zeta r) (2 ^ r)
+  transition : ∀ r, layer r →ₐ[F] layer (r + 1)
+  transition_zeta : ∀ r,
+    transition r (zeta r) = (zeta (r + 1)) ^ 2
+  eta_s : F
+  eta_s_spec :
+    algebraMap F (layer s) eta_s = zeta s + (zeta s)⁻¹
+  eta_maximal : ∀ r, s < r → ∀ x : F,
+    algebraMap F (layer r) x ≠ zeta r + (zeta r)⁻¹
+
+attribute [instance] Chapter04CompatibleCyclotomicLayers.layerField
+  Chapter04CompatibleCyclotomicLayers.layerAlgebra
+  Chapter04CompatibleCyclotomicLayers.layerFiniteDimensional
+
 structure Chapter04WangCyclotomicData
-    (F : Type*) [Field F] [NumberField F] where
+    (F : Type u) [Field F] [NumberField F] where
   n : ℕ
   ν : ℕ
   m : ℕ
-  s : ℕ
   positive_n : 0 < n
   factorization : n = 2 ^ ν * m
   odd_part : Odd m
-  s_ge_two : 2 ≤ s
+  cyclotomic : Chapter04CompatibleCyclotomicLayers F
   bK : Fˣ
-  eta_s : F
-  bK_formula : (bK : F) = 2 + eta_s
+  bK_formula : (bK : F) = 2 + cyclotomic.eta_s
   S : Finset (BookPlace F)
   S₀ : Finset (BookPlace F)
   localSquare : BookPlace F → Fˣ → Prop
@@ -302,7 +326,7 @@ structure Chapter04WangCyclotomicData
 def chapter04WangSpecial
     {F : Type*} [Field F] [NumberField F]
     (D : Chapter04WangCyclotomicData F) : Prop :=
-  D.s + 1 ≤ D.ν ∧
+  D.cyclotomic.s + 1 ≤ D.ν ∧
     ¬ chapter04WangUnitIsSquare (F := F) (-1 : Fˣ) ∧
     ¬ chapter04WangUnitIsSquare D.bK ∧
     ¬ chapter04WangUnitIsSquare (-D.bK) ∧
@@ -349,60 +373,6 @@ theorem chapter04_wang_defect_group_two_case
     (¬ chapter04WangSpecial D →
       chapter04WangDefectSubgroup F D.n D.S = (⊥ : AddSubgroup
         (CartierKummerClassGroup F D.n))) := by
-  sorry
-
-/- The degree alternative is stated against the exact finite local--global
- rows, rather than against an unrestricted Grunwald assertion.  The first row
- is the exponent-`n` problem; the second is the canonical exponent-`2n`
- replacement.  The obstruction is evaluated on the explicit Wang class, and
- `liftLocal` records that the second row has the same prescribed local data
- after the canonical level-raising map. -/
-structure Chapter04WangDegreeAlternativeData
-    {F : Type*} [Field F] [NumberField F]
-    (W : Chapter04WangCyclotomicData F) where
-  globalN : Type u
-  [globalNGroup : AddCommGroup globalN]
-  localN : Type u
-  [localNGroup : AddCommGroup localN]
-  localizationN : globalN →+ localN
-  obstructionN : localN →+ chapter04QModZ
-  exactN : Function.Exact localizationN obstructionN
-  prescribedN : localN
-  localCup : localN →+ (CartierKummerClassGroup F W.n →+ chapter04QModZ)
-  obstruction_formula :
-    obstructionN prescribedN =
-      localCup prescribedN (chapter04WangSpecialClass W)
-  globalTwoN : Type u
-  [globalTwoNGroup : AddCommGroup globalTwoN]
-  localTwoN : Type u
-  [localTwoNGroup : AddCommGroup localTwoN]
-  localizationTwoN : globalTwoN →+ localTwoN
-  obstructionTwoN : localTwoN →+ chapter04QModZ
-  exactTwoN : Function.Exact localizationTwoN obstructionTwoN
-  liftLocal : localN →+ localTwoN
-  prescribedTwoN : localTwoN
-  liftLocal_prescribed : liftLocal prescribedN = prescribedTwoN
-  lifted_obstruction_zero : obstructionTwoN prescribedTwoN = 0
-
-attribute [instance] Chapter04WangDegreeAlternativeData.globalNGroup
-  Chapter04WangDegreeAlternativeData.localNGroup
-  Chapter04WangDegreeAlternativeData.globalTwoNGroup
-  Chapter04WangDegreeAlternativeData.localTwoNGroup
-
-def chapter04WangSign
-    {F : Type*} [Field F] [NumberField F]
-    {W : Chapter04WangCyclotomicData F}
-    (D : Chapter04WangDegreeAlternativeData W) : chapter04QModZ :=
-  D.localCup D.prescribedN (chapter04WangSpecialClass W)
-
-theorem chapter04_wang_degree_n_or_two_n
-    {F : Type*} [Field F] [NumberField F]
-    (W : Chapter04WangCyclotomicData F)
-    (D : Chapter04WangDegreeAlternativeData W) :
-    (chapter04WangSign D = 0 →
-        ∃ c : D.globalN, D.localizationN c = D.prescribedN) ∧
-      (chapter04WangSign D ≠ 0 →
-        ∃ c : D.globalTwoN, D.localizationTwoN c = D.prescribedTwoN) := by
   sorry
 
 /-- The perfect finite-level pairing (4.1), with the compact-support degree shift visible. -/
@@ -453,35 +423,22 @@ theorem chapter04_finite_level_diagonal_orthogonality
 
 /-! ### The degree-two row and the invariant map -/
 
-/-- The compact-support long exact row in degree two and zero. -/
+/-- The degree-two row attached to a concrete cone and Brauer context. -/
 structure Chapter04DegreeTwoRowData
-    {G : Type u} [Group G]
-    (C : Chapter04CompactSupportAPI.{u, v} G)
-    (P : Chapter04DualCoefficientPair.{u, v} G) where
-  localH₂ : Type v
-  [localH₂Group : AddCommGroup localH₂]
-  targetH₀ : Type v
-  [targetH₀Group : AddCommGroup targetH₀]
-  /-- The cokernel target is the dual of global degree-zero `Aₙ`-cohomology. -/
+    {F : Type u} [Field F] [NumberField F]
+    (D : Chapter04CompactSupportDegreeTwoContext.{u, v} F) where
   target_identification :
-    targetH₀ ≃+ (chapter04GlobalH C P.M 0 →+ chapter04QModZ)
-  /-- The degree-two localization is taken on the dual coefficient module.  In
-  the special `Aₙ`--`μₙ` instance this is the `μₙ` row of (4.3); keeping the
-  field generic does not identify the evaluation target `P.μn` with `P.Mdual`.
-  -/
-  localization : chapter04GlobalH C P.Mdual 2 →+ localH₂
-  totalInvariant : localH₂ →+ targetH₀
-  exactness : Function.Exact localization totalInvariant
-  surjective : Function.Surjective totalInvariant
+    D.targetH₀ ≃+ (ZMod D.n →+ chapter04QModZ)
+  exactness : Function.Exact D.localization D.totalInvariant
+  surjective : Function.Surjective D.totalInvariant
 
-attribute [instance] Chapter04DegreeTwoRowData.localH₂Group
-  Chapter04DegreeTwoRowData.targetH₀Group
-
+/-- The compact-support/Brauer calculation supplies the exact row only after
+the global cone, coefficient identifications, and invariant compatibilities
+have been fixed. -/
 theorem chapter04_compact_support_degree_two_row
-    {G : Type u} [Group G]
-    (C : Chapter04CompactSupportAPI.{u, v} G)
-    (P : Chapter04DualCoefficientPair.{u, v} G) :
-    Nonempty (Chapter04DegreeTwoRowData C P) := by
+    {F : Type u} [Field F] [NumberField F]
+    (D : Chapter04CompactSupportDegreeTwoContext.{u, v} F) :
+    Nonempty (Chapter04DegreeTwoRowData D) := by
   sorry
 
 /-- Hilbert 90 and Kummer identify the degree-two coefficient groups with Brauer torsion. -/
