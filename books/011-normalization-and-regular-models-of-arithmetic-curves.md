@@ -315,6 +315,62 @@ give, at a prime minimal over their sum, depth at most one but dimension at leas
 dimension at most one $(R_1)$ makes the localization a domain. Thus the argument applies at every
 localization and proves the ring statement. $\square$
 
+The later surface arguments need the following consequences now, rather than by a forward
+reference to the final algebra chapter.
+
+**Proposition 4.1A (chronological local-algebra package).** The following hold.
+
+1. If $(P,\mathfrak n)$ is regular local of dimension $n$, every minimal generating sequence of
+   $\mathfrak n$ is regular, the Koszul complex on it resolves the residue field, and every finite
+   $P$-module has projective dimension at most $n$.
+2. A quotient of a Cohen--Macaulay local ring by a regular sequence is Cohen--Macaulay of the
+   expected dimension. In particular a hypersurface in a regular local ring is
+   Cohen--Macaulay.
+3. A two-dimensional normal local domain is Cohen--Macaulay. A finite module of depth two over a
+   two-dimensional regular local ring is free. Consequently a finite normal local domain of
+   dimension two over a two-dimensional regular local ring is free as a module.
+4. Completion preserves dimension, depth, regularity, and Cohen--Macaulayness.
+
+**Proof.** We include the homological steps used below. Induct on $n$ to see that a regular local
+ring is a domain and that a parameter $x\in\mathfrak n\setminus\mathfrak n^2$ is a
+nonzerodivisor with regular quotient of dimension $n-1$. Indeed the quotient is regular by the
+dimension and cotangent-space count; by induction it is a domain. A minimal prime below $(x)$
+then satisfies $\mathfrak p=x\mathfrak p$, hence is zero by Nakayama. Iteration makes a minimal
+parameter sequence regular, and its Koszul complex resolves the residue field $k$.
+
+For a finite $P$-module $M$, take a minimal free resolution. Its differentials vanish after
+tensoring with $k$, so its module in degree $i$ is nonzero precisely when
+$\operatorname{Tor}^P_i(k,M)$ is nonzero. The Koszul resolution of $k$, used in the other
+variable, has length $n$; hence these Tor groups vanish for $i>n$, proving (1).
+
+If $x$ is a nonzerodivisor on a finite local module $M$, the long exact Ext sequence associated
+to $0\to M\xrightarrow{x}M\to M/xM\to0$ shows
+
+$$
+\operatorname{depth}(M/xM)=\operatorname{depth}(M)-1.       \tag{4.1a}
+$$
+
+The principal ideal theorem gives the identical drop in dimension. Iteration proves (2), since
+(1) says a regular local ring has depth equal to its dimension.
+
+Theorem 4.1 says that a normal local domain satisfies $(S_2)$, so in dimension two it has depth
+two. Now let $M$ have depth two over a two-dimensional regular local ring $P$. Choose
+$x\in\mathfrak n\setminus\mathfrak n^2$ avoiding the associated primes of $M$. Formula (4.1a)
+makes $M/xM$ a depth-one module over the discrete valuation ring $P/(x)$, hence torsion-free and
+free. Lift a basis to a map $P^r\to M$. Nakayama makes it surjective, and the Tor sequence for
+$P/(x)$ says that its kernel $N$ has $N/xN=0$; Nakayama gives $N=0$. Thus $M$ is free.
+
+If $P\to B$ is finite local with $B$ a normal domain of dimension two, a parameter pair of $P$
+is a system of parameters of the Cohen--Macaulay ring $B$ and hence a $B$-regular sequence
+(successively avoid the associated primes, which in a Cohen--Macaulay local ring have the
+expected dimension). Thus $B$ has depth two as a $P$-module and is free by the preceding
+paragraph.
+
+Finally $P\to\widehat P$ is faithfully flat, has the same residue field and cotangent space, and
+the completed Koszul complexes compute the same first nonzero Ext degree. Hence depth and
+embedding dimension are unchanged; faithful flatness and the dimension theorem for completion
+give the assertions in (4). $\square$
+
 This criterion explains a major feature of normal surfaces: their nonregular locus has codimension at least two and therefore consists of closed points locally. If the surface is of finite type over a Dedekind scheme, the singular locus is closed by excellence; on a quasi-compact surface it is a finite set whenever it contains no curve.
 
 ### 4.2 The dimension-one coincidence
@@ -337,7 +393,11 @@ $$
 A=k[x,y,z]/(xy-z^2).
 $$
 
-This two-dimensional domain is singular at the origin because its maximal ideal needs three generators. Yet it is normal. Indeed, it is a hypersurface and hence Cohen–Macaulay, so it satisfies $(S_2)$; its only singular point has codimension two, so $(R_1)$ holds. Serre's criterion applies. Every step of this verification, including the Cohen–Macaulay property of a hypersurface and the location of the singular locus, is carried out in Section 14.4.
+This two-dimensional domain is singular at the origin because its maximal ideal needs three
+generators. Yet it is normal. Indeed, Proposition 4.1A makes it Cohen--Macaulay because it is a
+hypersurface, so it satisfies $(S_2)$. Outside the origin, inverting $x$ or $y$ identifies the
+ring with a localization of $k[x,x^{-1},z]$ or $k[y,y^{-1},z]$; hence its only singular point has
+codimension two and $(R_1)$ holds. Theorem 4.1 applies.
 
 This quadratic cone is the model warning. Normalization does nothing to it. Blowing up its singular point replaces the vertex by a projective line and yields a regular surface. On an arithmetic surface the same distinction appears at isolated points of bad fibers.
 
@@ -1181,8 +1241,8 @@ $$
 D_A=R\operatorname{Hom}_Q(A,Q[N]).
 $$
 
-The regular ring $Q$ has finite global dimension. The depth calculation for a
-two-dimensional normal ring therefore concentrates this complex in one degree:
+Proposition 4.1A gives finite global dimension for the regular ring $Q$ and depth two for the
+normal surface ring $A$. The resulting depth calculation therefore concentrates this complex in one degree:
 $D_A=\omega_A[2]$, where $\omega_A=\operatorname{Ext}^{N-2}_Q(A,Q)$ is a finite maximal
 Cohen--Macaulay module. Applying the $\mathfrak m$-torsion functor to an injective resolution of
 $D_A$ leaves the injective hull $E_A(k)$ in degree zero. Consequently, for every finite-length
@@ -1221,8 +1281,8 @@ D_X=R\mathcal Hom_P
    (\mathcal O_X,\omega_{P/Q}[N+n]).
 $$
 
-Normality makes the pure two-dimensional scheme $X$ Cohen--Macaulay. The same depth and finite
-resolution calculation as for $A$ therefore gives $D_X=\omega_X[2]$ for a maximal
+Proposition 4.1A makes the pure two-dimensional normal scheme $X$ Cohen--Macaulay. The same depth
+and finite-resolution calculation as for $A$ therefore gives $D_X=\omega_X[2]$ for a maximal
 Cohen--Macaulay sheaf $\omega_X$. Notice that the resolution is taken over the regular scheme
 $P$, not over $\mathbf P^n_A$, whose local rings need not be regular and over which
 $\mathcal O_X$ need not have finite projective dimension.
@@ -1644,9 +1704,14 @@ $$
 H^1(X,\omega_X(n))=0\qquad(n\ge0).
 $$
 
-The base-point form of the same curve-duality calculation says that $\omega_E(1)$ is generated:
-for a closed point $z$ and its length-one quotient, the obstruction to surjectivity at $z$ is
-dual to a section of $\mathcal O_E(-1)$ supported at no component, hence is zero. The case $n=0$
+The base-point form of the same curve-duality calculation says that $\omega_E(1)$ is generated.
+This may be checked after a faithfully flat extension to an algebraic closure. For a geometric
+point $z$, the obstruction to evaluation there is
+$H^1(E,\omega_E(1)(-z))$, dual to
+$H^0(E,\mathcal O_E(-1)(z))$. Since $A$ is nonregular at every center retained below,
+$\deg\mathcal O_E(1)=\dim_k\mathfrak m/\mathfrak m^2-1\ge2$, whereas $z$ has degree one; the
+last line bundle has negative degree and no section. Faithfully flat descent gives generation
+over $k$. The case $n=0$
 of (8.10a), together with $H^1(X,\omega_X(1))=0$, lifts these generating sections to
 $H^0(X,\omega_X)=\omega_A$. Therefore the evaluation map
 $f^*\omega_A\to\omega_X$ is surjective along $E$, in particular at every singular point.
@@ -1690,8 +1755,8 @@ $J_n=\ker(\mathcal O_{X_0,x_0}\to\mathcal O_{X_n,x_n}/\mathfrak m_{x_n}^{n+1})$.
 Writing every other generator after one blowup as $t$ times a new generator gives, by induction,
 
 $$
-\mathfrak m_{x_0}^{,2n+1}\subseteq J_n\subseteq
- (t^n)+\mathfrak m_{x_0}^{,n+1},
+\mathfrak m_{x_0}^{2n+1}\subseteq J_n\subseteq
+ (t^n)+\mathfrak m_{x_0}^{n+1},
 \qquad
 J_n/J_{n+1}\simeq k,\qquad t^n\notin J_{n+1}.                \tag{8.10b}
 $$
@@ -2074,7 +2139,12 @@ $$
 sy=\pi^{n-1}.
 $$
 
-Thus the only unresolved chart has the same form with exponent smaller by one. Induction ends at $xy=\pi$, which is regular. Each member is a hypersurface, hence Cohen--Macaulay; its Jacobian singular locus is the closed point and therefore has codimension two, so $(R_1)$ and Theorem 4.1 give normality. Normalization cannot simplify $X_n$, and blowing up is the required repair. Globally the exceptional locus is a chain of rational curves. The exact number and self-intersections belong to the intersection theory of the next book; here the important point is finite reduction of the exponent.
+Thus the only unresolved chart has the same form with exponent smaller by one. Induction ends at
+$xy=\pi$, which is regular. Proposition 4.1A makes each member Cohen--Macaulay because it is a
+hypersurface; its Jacobian singular locus is the closed point and therefore has codimension two,
+so $(R_1)$ and Theorem 4.1 give normality. Normalization cannot simplify $X_n$, and blowing up is
+the required repair. Globally the exceptional locus is a chain of rational curves. Its numerical
+intersection data is not needed for termination of this local exponent reduction.
 
 For the cone $xy=z^2$, blowing up $(x,y,z)$ gives on the $x$-chart
 
@@ -2670,24 +2740,30 @@ For a marked curve $(C;P_1,\ldots,P_n)$ one resolves the boundary as well as the
 finitely many regular marked branches becomes a normal-crossings divisor with disjoint marked
 branches after finitely many closed-point blowups.
 
-**Proof.** For the reduced divisor $D$, let
-$\delta_x=\ell(\overline{\mathcal O}_{D,x}/\mathcal O_{D,x})$. If $m_x$ is its multiplicity,
-the two affine blowup charts and the normalization exact sequence give
+**Proof.** Apply the branch-resolution part of Lemma 8.8 to the union of the reduced curve and
+the labeled marked branches. We recall the two decreasing formulas because their residue weights
+are essential over a nonclosed field. If
+$\delta_x=\ell_{\mathcal O_{D,x}}(\overline{\mathcal O}_{D,x}/\mathcal O_{D,x})$ and $m_x$ is
+the multiplicity, the two affine blowup charts and the normalization exact sequence give
 
 $$
-\delta_x=\sum_{y\mapsto x}\delta_y+\binom{m_x}{2}.
+\delta_x=\binom{m_x}{2}+
+ \sum_{y\mapsto x}[\kappa(y):\kappa(x)]\delta_y.             \tag{11.4a}
 $$
 
-Thus blowing up a point with a singular branch strictly lowers the sum of the branch delta
-invariants; finiteness of normalization makes the initial sum finite. After every branch is
-regular, the same chart calculation gives
+Thus blowing up a point with a singular branch strictly lowers the residue-weighted sum of the
+remaining branch delta invariants; finiteness of normalization makes the initial sum finite.
+After every branch is regular, the same chart calculation gives
 
 $$
-I_x(D_1,D_2)=m_1m_2+\sum_{y\mapsto x}I_y(\widetilde D_1,\widetilde D_2).
+I_x(D_1,D_2)=m_1m_2+
+ \sum_{y\mapsto x}[\kappa(y):\kappa(x)]
+ I_y(\widetilde D_1,\widetilde D_2).                         \tag{11.4b}
 $$
 
 Here $m_i$ is the branch multiplicity, hence one. Consequently blowing up a tangency strictly
-lowers the sum of the excesses $I_x(D_i,D_j)-1$ while preserving regularity of the branches.
+lowers the residue-weighted sum of the excess contacts while preserving regularity of the
+branches.
 When every pair is transverse, blowing up a point through three or more branches lowers the number
 of multiple incidences and creates only distinct transverse points on the exceptional line. Treat
 marked branches as additional labeled branches and blow up any coincidence between two markings
