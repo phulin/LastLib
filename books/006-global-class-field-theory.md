@@ -185,9 +185,9 @@ For a finite abelian extension, the second inequality and principal reciprocity
 first identify the norm quotient, without a global fundamental class. Finite
 duality then proves character existence, and character compatibility proves
 norm limitation for an arbitrary finite Galois extension. Section 4.3 realizes
-the fundamental class as the exact kernel of restriction on absolute
-idèle-class cohomology, and represents its unique Ext class by projective and
-complete bar resolutions. Tate's canonical
+the fundamental class by a free presentation and its relation module, forms
+the relative Weil extension explicitly, and fixes its Schreier--Mackey chain
+maps. Tate's canonical
 $S$-unit sequence is subsequently constructed as a representative of that
 already normalized class. Section 6 packages character existence into the
 inclusion-reversing classification of all open finite-index subgroups of
@@ -387,8 +387,8 @@ $$
 A class $u_{L/K}\in H^2(G,C_L)$ connects them by cap product. Section 4.2
 first proves the cyclic calculation, the general second inequality, the Brauer
 invariant sequence, and finite duality without such a class. Section 4.3 then
-constructs and normalizes the class from the absolute idèle-class cohomology
-kernel, realizes its Ext class on complete bar resolutions, and then represents
+constructs and normalizes the class from the compatible reciprocity maps by
+the relation-module Hom--Ext sequence, and then represents
 it by Tate's canonical sequence.
 
 ### 4.2 The Brauer--idele exact sequence
@@ -1080,8 +1080,7 @@ the Brauer invariant sequence. The all-degree idèle-class formation is not
 obtained by contracting the induced local summands: for a noncyclic group the
 Mackey cross-orbits retain a genuine obstruction. We first prove abelian
 reciprocity, character existence, and norm limitation, and only then construct
-the global class from the finite-duality endpoint and the absolute cohomology
-kernel.
+the global class from a free presentation and the compatible norm quotients.
 
 **Theorem 4.1 (Brauer invariant sequence).** For a number field $F$, localization and local invariant maps form an exact sequence
 
@@ -1330,7 +1329,7 @@ available.
    \tag{4.1}
    $$
 
-   for $-1\leq i\leq3$, together with the pairings obtained by interchanging $A_n$ and
+   for $i=2,3$, together with the pairings obtained by interchanging $A_n$ and
    $\mu_n$. More precisely, these pairings are induced by cochain maps
 
    $$
@@ -1339,9 +1338,11 @@ available.
    $$
 
    and its swapped analogue. These maps induce isomorphisms on cohomology in
-   the displayed range. Thus the finite window includes compact-support
-   degrees $-1,0$ paired with global degrees $4,3$; those four groups are not
-   removed by a good truncation.
+   precisely the displayed two degrees. Degree $2$, paired with global degree
+   $1$, is the character-globalization statement used below. Degree $3$,
+   paired with global degree $0$, is retained because it is the one adjacent
+   endpoint needed for integral cyclotomic descent. No assertion is made here
+   about compact degrees below $2$ or global degrees above $1$.
 2. All groups in these pairings are finite, and each pairing identifies either factor with
    the full Pontryagin dual of the other. The identification is compatible with the long
    exact localization sequences, connecting maps, cup products, and the transition maps as
@@ -1509,86 +1510,35 @@ relation vectors gives a finite presentation of the actual extension
 be realized by an actual cochain map. We use the following elementary
 cellular lemma.
 
-We must also retain the two global degrees above the divisor--Brauer model.
-The following is the finite real-tail calculation used here and nowhere
-outside the indicated window.
+Only a low cohomological window is needed. We use the following truncated
+comparison in that window; importantly, it has no invented cells above the
+last arithmetic group in (4.F4j').
 
-**Finite real-tail lemma.** For $M=A_n$ or $\mu_n$, restriction is an
-isomorphism
+**Low-window cellular lemma.** Suppose that finite presentations of
+$H^a(C),\ldots,H^b(C)$ have been given together with cocycle representatives
+of their generators and boundary lifts of their relations. Successively
+adjoin finite free relation modules, starting in degree $b$ and moving
+downwards, until the last unresolved syzygy lies in degree $a-1$. The
+result is a finite free complex $P^\bullet$, zero above degree $b$, and a
+cochain map $P\to C$ whose cone is acyclic in degrees $a,\ldots,b$.
 
-$$
-H^q(G_{F,S},M)\xrightarrow{\ \sim\ }
- \bigoplus_{v\text{ real}}\widehat H^q(F_v,M),
-\qquad q=3,4.                                            \tag{4.F4j''}
-$$
-
-Moreover (4.F4j'') is represented by a map of $R_n$-cochain complexes in
-degrees $2,3,4,5$, and its inverse is represented there up to a specified
-homotopy. The construction commutes with restriction, transfer, and
-enlargement of $S$.
-
-To prove this finite statement, put $F'=F(i)$, omitting the extension when
-$F$ is already totally imaginary, and use the normalized bar resolution for
-$1\to G_{F',S'}\to G_{F,S}\to\Delta\to1$. The divisor complex
-(4.F4), the class-relation cells, and the Brauer row (4.F4j') give a free
-$R_n$-resolution of the $G_{F',S'}$-cochains through degree $4$; the two
-successive syzygies are retained rather than declared zero. In the bar
-double complex they contract above total degree $2$ by their chosen boundary
-primitives. Replace the $\Delta$-bar direction by the complete bar
-resolution only in the finite strip of total degrees $2,\ldots,5$. The
-comparison cone decomposes, by the coset formula, into summands indexed by
-archimedean decomposition groups. A complex-place orbit is a free
-$\Delta$-orbit and is contracted by insertion of its chosen coset. A
-real-place orbit has stabilizer $\langle c\rangle$ and leaves exactly
+Indeed, if $p$ is a relation cell and $s(dp)$ is its already constructed
+image, the assertion that the relation is zero in cohomology gives a chosen
+lift $h(p)$ satisfying the literal identity
 
 $$
-\cdots\xrightarrow{1-c}M\xrightarrow{1+c}M
- \xrightarrow{1-c}M\xrightarrow{1+c}M\xrightarrow{1-c}\cdots .         \tag{4.F4j''a}
+d h(p)=s(dp).                                            \tag{4.F4m}
 $$
 
-Alexander--Whitney collection of the $G_{F',S'}$ entries and the shuffle
-map in the other direction are inverse up to the adjacent-transposition
-prism. In the four required total degrees those are finite sums, so this
-gives the asserted maps and homotopy without a convergence argument. The
-same formulas on right cosets give transfer; grouping cosets proves
-transitivity. This proves exactly $q=3,4$. It assumes neither an infinite
-virtual-cohomological-dimension tail nor vanishing in an unlisted degree.
-
-In the compact-support cone, degrees $-1$ and $0$ contain respectively the
-degree $-2$ and degree $-1$ terms of (4.F4j''a). Under evaluation, $1-c$
-is adjoint to $1-c^{-1}$ and $1+c$ to $1+c^{-1}$; since $c^{-1}=c$, the
-complete real block is identified, with the Koszul sign, with its
-$\mathbb D_n$-dual shifted by $2$. Thus (4.F4j'') simultaneously supplies
-the compact $-1,0$ and global $4,3$ endpoint blocks.
-
-**Finite-window cellular realization lemma.** Let $C^\bullet$ be a complex
-of $R_n$-modules and suppose that $H^q(C)$ is finite for $a\le q\le b$.
-There is a complex $P^\bullet$ of finite free $R_n$-modules in the finite
-range $a-2\le q\le b+2$, a cochain map $P\to C$, and specified boundary
-lifts, such that its cone is acyclic in degrees $a\le q\le b$. At the two
-ends this means the usual good-truncation conditions: surjectivity on the
-incoming cycles and injectivity on the outgoing quotient. No assertion of
-finite projective dimension over $R_n$ is made.
-
-Here is the construction. Choose finite free modules mapping onto the
-finitely many cycle classes in degrees $a,\ldots,b$ and lift their bases to
-actual cycles. The kernels are finitely generated because $R_n$ is
-noetherian. Choose finite free modules mapping onto those kernels and lift
-their images through $d:C^{q-1}\twoheadrightarrow B^q(C)$. Continue with
-the new syzygies, alternately killing the kernel and the cokernel, until two
-cells past each end of the window. If $p$ is a relation cell, its chosen
-lift $h(p)$ satisfies the literal cochain identity
-
-$$
-d h(p)=s(dp),                                            \tag{4.F4m}
-$$
-
-so the resulting map is defined on cochains. A degree-by-degree
-cycle--boundary chase, starting at $a$ and ending at $b$, proves that the
-cone is acyclic in the stated window. This is the truncated comparison
-theorem for free resolutions, with the lifts retained. It neither splits a
-finite module into cyclic cohomology groups nor infers a cochain map from a
-list of cohomology groups.
+The new kernel is finitely generated because $R_n$ is noetherian, so the
+next relation module is finite free. At degree $q$, surjectivity on cycles
+comes from the chosen generators and injectivity follows after adjoining
+the relation module one degree lower. Descending from $b$ to $a$ proves,
+by this two-line kernel--boundary chase, that the cone has zero cohomology
+in the stated window. The unresolved kernel in degree $a-1$ cannot affect
+that conclusion. This is the finite part of the usual comparison theorem;
+it neither asserts finite projective dimension over $R_n$ nor replaces a
+cochain identity by an equality of cohomology classes.
 
 We shall apply the lemma only after putting an actual filtration on the
 cochain model. Applying it separately to the two sides and then choosing
@@ -1687,13 +1637,11 @@ where an $n$th root lies in a shallower unit group.
 
 We now construct one filtered localization cone; we do not choose an
 unrelated cellular model for its dual. Since $\mu_n\subset F$, fix a
-primitive $n$-th root and identify $A_n$ with $\mu_n$. Apply the
-finite-window cellular lemma over $R_n$ to the divisor--Kummer cells, the
-actual extension (4.F4j'), and the real-tail cells (4.F4j''), retaining two
-syzygies at both ends. This gives finite free terms in degrees
-$-2,\ldots,6$, which is all that can affect compact degrees
-$-1,\ldots,3$ and global degrees $0,\ldots,4$. Give the resulting complex
-the increasing filtration
+primitive $n$-th root and identify $A_n$ with $\mu_n$. Apply the low-window
+cellular lemma over $R_n$ to the divisor--Kummer cells and the actual
+extension (4.F4j'). The model has no term above degree $2$; only the
+finite relation modules required for correctness in degrees $0,1,2$ are
+retained below. Give the resulting complex the increasing filtration
 
 $$
 \text{roots of unity}\subset\text{$S$-units}\subset
@@ -1706,7 +1654,7 @@ local Brauer family representing each generator of $B_{S,n}$, lift its
 relations to the class-group cells, and use the bar cocycles supplied by the
 Kummer connecting map. On a unit generator $b$, choose $\beta^n=b$ and use
 $\sigma\mapsto\sigma(\beta)/\beta$; on a relation use the corresponding
-zero-cochain $\beta$. Thus the finite-window cellular realization lemma, applied in this
+zero-cochain $\beta$. Thus the low-window cellular lemma, applied in this
 stated order, gives a filtered finite free complex
 $\mathcal P_{S,T}$ and a filtered map
 
@@ -1716,9 +1664,8 @@ C^\bullet(G_{F,S},\mu_n)                               \tag{4.F4o}
 $$
 
 whose associated-graded maps are, respectively, inclusion of roots,
-localization of units, the valuation map, the class-relation map, the
-local Brauer cocycles, and the real-tail comparison (4.F4j''). The cone is
-acyclic in degrees $0,\ldots,4$. The equality on a relation is an equality of bar
+localization of units, the valuation map, the class-relation map, and the
+local Brauer cocycles. The cone is acyclic in degrees $0,1,2$. The equality on a relation is an equality of bar
 cochains, because its chosen boundary primitive is attached as a cell; it is
 not merely equality in cohomology. Only finitely many cocycles and primitives
 occur, so after enlarging $T$ they factor through one finite quotient. This
@@ -1756,8 +1703,25 @@ $$
 \mathcal P^c_{S,T}=\operatorname {Cone}(\lambda_{S,T})[-1]               \tag{4.F4r}
 $$
 
-maps to $C_{S,c}^\bullet(A_n)$ with cone acyclic in degrees
-$-1,\ldots,3$. Replacing $c_v$ by a larger cutoff adjoins on both
+maps to $C_{S,c}^\bullet(A_n)$ and is an isomorphism in compact degrees
+$2$ and $3$. Here is the endpoint check. Put the long exact cohomology rows
+of the two localization cones one above the other, beginning with
+
+$$
+H^1(F,A_n)\longrightarrow\bigoplus_{v\in S}H^1(F_v,A_n)
+\longrightarrow H^2_c(F,A_n)\longrightarrow H^2(F,A_n)
+\longrightarrow\bigoplus_{v\in S}H^2(F_v,A_n).          \tag{4.F4r'}
+$$
+
+The four outside vertical arrows are the isomorphisms supplied by the
+degree-$0,1,2$ global and local cells, so the kernel--cokernel lemma gives
+the middle isomorphism. At the next spot, the cokernel of the last arrow is
+represented by the invariant-sum cell (4.F4u); exactness of (4.I9h)
+identifies it with $D_n$. At a real place the two adjacent maps are
+literally $1-c$ and $1+c$ in (4.F4p), which are adjoint and retain the sign
+quotient. The same kernel--cokernel chase gives compact degree $3$. No
+global degree-$3$ or degree-$4$ cocycle, boundary primitive, or vanishing
+claim enters this argument. Replacing $c_v$ by a larger cutoff adjoins on both
 sides the two-term identity complex on the added unit quotient, contracted
 by $s(0,x)=(x,0)$, so the construction is independent of the cutoff.
 
@@ -1819,8 +1783,9 @@ graded pieces of the cone of a filtered map are acyclic in a fixed finite
 window, then the cone is acyclic in that window. Lift a cycle to the least
 filtration piece where it occurs, kill its graded class by a graded
 boundary, and repeat; the filtration length is finite. Apply this to
-(4.F4s). The preceding graded calculations, including the two endpoint
-real blocks, make its cone acyclic in degrees $-1,\ldots,3$.
+(4.F4s). The preceding graded calculations, including the invariant-sum
+endpoint and the complete real block, make its cone acyclic in degrees
+$2,3$.
 Injectivity in (4.D0) shows directly that $\mathbb D_n$ carries the cone of
 (4.F4o) to an acyclic complex in the dual window. Two-out-of-three
 therefore proves that (4.C4) induces isomorphisms in precisely the stated
@@ -1831,12 +1796,12 @@ C_{S,c}^\bullet(A_n)\longrightarrow
 \mathbb D_n\!\left(C^\bullet(G_{F,S},\mu_n)\right)[-3].   \tag{4.F5}
 $$
 
-The induced maps are isomorphisms for $-1\le q\le3$. This conclusion
+The induced maps are isomorphisms for $q=2,3$. This conclusion
 comes from the comparison cone, not from the number of elements in its
 cohomology.
 
-Degree two is (4.I9h) on $n$-torsion. In degree one, the comparison is the
-following statement about Galois characters. By the definition of continuous
+The compact degree-$3$ endpoint is (4.I9h) on $n$-torsion. Compact degree
+$2$ is the following statement about Galois characters. By the definition of continuous
 cohomology for the trivial module,
 
 $$
@@ -1858,66 +1823,61 @@ commute for $T\subset T'\subset T''$, proving compatibility with the directed
 limit. The same quotient calculation when $S$ grows proves compatibility in
 $S$ and accounts for the class-group terms.
 
-It remains to remove the assumption $\mu_n\subset F$. Put $F'=F(\mu_n)$ and
-$\Delta=\operatorname {Gal}(F'/F)$. Let
-$P_{n,\bullet}=R_n\otimes_{\mathbf Z}P_\bullet(\Delta)\to R_n$ be the
-free normalized $R_n[\Delta]$-bar resolution. Apply
-$\operatorname {Hom}_{R_n[\Delta]}(P_{n,\bullet},-)$ to the two complexes over $F'$ and
-totalize. We describe the comparison, rather than citing a change-of-field
-isomorphism. For the exact sequence
+It remains to remove the assumption $\mu_n\subset F$. For $n=1,2$ there
+is nothing to do. Otherwise put $F'=F(\mu_n)$ and
+$\Delta=\operatorname {Gal}(F'/F)$; then $F'$ is totally imaginary. Let
+$\widehat P_\bullet(\Delta)$ be the complete integral bar resolution and
+put $\widehat P_{n,\bullet}=R_n\otimes\widehat P_\bullet(\Delta)$. The
+ordinary nonnegative half computes global Hochschild--Serre cohomology. Its
+integral dual, including the norm splice, computes the modified
+compact-support descent. Thus ordinary bar degree $p$ pairs with complete
+bar degree $-p$, not with a second copy of degree $p$.
 
-$$
-1\to G_{F',S'}\to G_{F,S}\to\Delta\to1
-$$
-
-choose a set-theoretic section $\Delta\to G_{F,S}$. Substitution of this section
-in an inhomogeneous cochain gives the Alexander--Whitney map from
-$C^\bullet(G_{F,S},-)$ to the bar total complex. The shuffle sum gives the
-inverse map. Pairing shuffles which differ by one adjacent transposition gives
-the usual prism homotopy, so the two composites are homotopic to the identity.
-At local places, decompose the places of $F'$ into $\Delta$-orbits and apply the
-same formulas with Shapiro's coset representatives. These local homotopies
-commute with restriction, hence pass to localization cones. This constructs the
-Hochschild--Serre quasi-isomorphism, including its compact-support version.
-
-If $f$ has bar degree $r$ and $g$ has bar degree $s$, the pairing on the
-total complexes is the typed $R_n$-linear formula
+Choose a section in
+$1\to G_{F',S'}\to G_{F,S}\to\Delta\to1$. Alexander--Whitney collection
+and the shuffle map compare the global cochains with the ordinary bar total
+complex. On local cochains use the same formulas after decomposing the
+places of $F'$ into $\Delta$-orbits. Adjacent transpositions give the prism
+homotopies and commute with localization. If $f$ and $g$ have ordinary bar
+degrees $r$ and $s$, the product is
 
 $$
 (f\smile g)(\delta_1,\ldots,\delta_{r+s})=
 f(\delta_1,\ldots,\delta_r)\smile
 \delta_1\cdots\delta_r
-g(\delta_{r+1},\ldots,\delta_{r+s}),                      \tag{4.F6}
+g(\delta_{r+1},\ldots,\delta_{r+s}),                    \tag{4.F6}
 $$
 
-followed by the local invariant/corestriction sum. The Alexander--Whitney
-identity gives its Leibniz rule. On a place orbit, Shapiro evaluation at the
-chosen coset and the finite coset sum are respectively restriction and
-corestriction; changing representatives is the adjacent-face prism homotopy.
+followed by the local invariant/corestriction sum. Dualizing this formula
+gives the corresponding map on the negative half of $\widehat P$.
 
-Before filtering, use the finite-window models already constructed: degrees
-$-1,\ldots,3$ on the compact side, degrees $0,\ldots,4$ on the global side,
-and the two endpoint syzygies supplied by the cellular lemma. In a fixed
-total degree in these windows, the nonnegative bar degree then has only
-finitely many values. Thus the bar-degree filtration is finite, not merely
-exhaustive. Every associated-graded comparison is a finite direct sum of
-$\Delta$-translates of (4.F5), including its compact $-1,0$/global $4,3$
-blocks. The finite-filtration cycle chase proves that the total comparison
-has acyclic cone in the same window. No assertion about an unbounded
-bar-degree tail is used.
+Only a two-column calculation is required. Global total degree $1$ has the
+bidegrees $(p,q)=(0,1),(1,0)$. Under the dual complete resolution they pair
+respectively with compact bidegrees
 
-No averaging idempotent and no division by $|\Delta|$ occurs; this is why the
-proof remains valid when $|\Delta|$ and $n$ have a common factor. The explicit
-bar restriction and transfer formulas, grouped by cosets, give
-$\operatorname {cor}(x\smile\operatorname {res}y)
-=\operatorname {cor}(x)\smile y$ term by term and prove adjointness.
-If $H\subseteq H'\subseteq\Delta$, choosing the $H$-coset representatives
-inside the $H'$-representatives makes the two transfer cochain maps equal;
-for arbitrary choices the two adjacent-face prisms concatenate. This is
-the required transitive chain homotopy, including the complete real blocks.
-Mapping-cone functoriality proves compatibility with localization and connecting maps.
-The complete resolution at real places was retained throughout, so the $2$-primary norm
-quotient is present rather than silently discarded. This proves all four clauses. $\square$
+$$
+(-p,3-q)=(0,2),(-1,3).                                  \tag{4.F6a}
+$$
+
+These are exactly the two upstairs compact degrees already proved. The
+differential between the two columns in (4.F6a) is the dual of the ordinary
+bar differential; at the splice it is the norm. At a real orbit the same
+coset calculation leaves the alternating $1-c,1+c$ block (4.F4p). Placing
+the two upstairs perfect pairings in this two-column diagram, the
+kernel--cokernel lemma proves the downstairs compact-degree-$2$/global-
+degree-$1$ perfect pairing. For compact degree $3$, global degree $0$ has
+only bar degree $0$, and the invariant-sum endpoint proves perfectness
+directly. No bar degree outside $-1,0,1$ and no global cohomological degree
+above $2$ occurs. This is the required finite low-degree five-lemma, rather
+than an assertion about an unbounded Hochschild--Serre tail.
+
+No averaging idempotent and no division by $|\Delta|$ occurs, so the proof
+remains valid when $|\Delta|$ and $n$ have a common factor. Shapiro
+evaluation and the finite coset sum are restriction and corestriction;
+grouping cosets proves transitivity, and the prism homotopies handle a
+change of representatives. Mapping-cone functoriality gives compatibility
+with localization and connecting maps. The complete real block retains the
+$2$-primary norm quotient. This proves all four clauses. $\square$
 
 The proof used only the finite norm quotients established by the independent
 idele inequalities. It has not used existence or ray class fields.
@@ -2320,190 +2280,168 @@ global existence theorem.
 
 For $L/K$ finite Galois, the local fundamental classes do not simply form a direct sum and descend. When $G$ is noncyclic, their denominators can have least common multiple smaller than $|G|$. The missing information lies one degree farther along the cohomology sequence. A correct construction must retain both local invariants and the global divisor relation.
 
-We construct the class from the absolute idèle-class cohomology kernel. The
-endpoint degrees in Theorem 4.2 are exactly what makes the construction
-finite and noncircular.
+We instead use the reciprocity and norm theorems already proved. This is a
+finite relation-module construction; no absolute degree-three group or
+unbounded cohomological tail occurs.
 
-For a number field $F$ in a fixed algebraic closure $\overline F$, put
-
-$$
-H^3(F,\overline F^{\times})=\varinjlim_{E/F}
- H^3(\operatorname {Gal}(E/F),E^\times),                 \tag{4.G0}
-$$
-
-where the transition map is inflation followed by the coefficient
-inclusion.
-
-**Absolute degree-three lemma.** One has
+For $H\subseteq G$ put $E=L^H$ and $M=L^{[H,H]}$. Norm limitation and
+pre-class-formation reciprocity give
 
 $$
-H^3(F,\overline F^{\times})=0.                           \tag{4.G1}
+\theta_H:H^{\rm ab}=\operatorname {Gal}(M/E)
+ \xrightarrow{\ \operatorname {Art}_{M/E}^{-1}\ }
+ C_E/N_{M/E}C_M=C_E/N_{L/E}C_L.                         \tag{4.G1}
 $$
 
-**Proof.** A finite-group class is torsion. If $n$ kills a representative,
-the Kummer long exact sequence lifts it to $H^3(F,\mu_n)$ after one finite
-enlargement. The finite real-tail comparison (4.F4j'') gives, naturally in
-the coefficient map,
+For $H\subseteq J$, restriction on negative Tate degree $-2$ is the
+group-theoretic transfer $J^{\rm ab}\to H^{\rm ab}$, while corestriction is
+induced by $H\hookrightarrow J$. On the right of (4.G1) the corresponding
+maps are scalar inclusion and norm. The local norm--restriction square,
+multiplied over all places, proves that the $\theta_H$ commute with these
+maps, with conjugation, and with chains of subgroups.
+
+We record the finite lifting which turns this Mackey family into an actual
+extension.
+
+**Relation-module lifting lemma.** Let $C$ be a $G$-module such that
+$H^1(H,C)=0$ for every $H\subseteq G$. Suppose isomorphisms
 
 $$
-H^3(F,\mu_n)\xrightarrow{\ \sim\ }
- \bigoplus_{v\text{ real}}\widehat H^3(F_v,\mu_n).        \tag{4.G2}
+\theta_H:H^{\rm ab}\xrightarrow{\sim}C^H/N_HC            \tag{4.G2}
 $$
 
-This uses only global degree $3$ and the adjacent degree $4$ which controls
-its outgoing boundary; it does not invoke an unbounded vcd tail. At a real
-place the map induced by $\mu_n\hookrightarrow\mathbf C^\times$ lands in
+are compatible with restriction, transfer, and conjugation as above. Let
+$\pi:F\twoheadrightarrow G$ be the free group on letters $x_g$,
+$g\in G\setminus\{1\}$, with $\pi(x_g)=g$, put $R=\ker\pi$, and give
+$R_{\rm ab}=R/[R,R]$ its conjugation $G$-action. There is a genuine
+$G$-homomorphism
 
 $$
-\widehat H^3(\langle c\rangle,\mathbf C^\times)
-=\widehat H^1(\langle c\rangle,\mathbf C^\times)=0       \tag{4.G3}
+\varphi:R_{\rm ab}\longrightarrow C                    \tag{4.G2a}
 $$
 
-by the complete two-periodic resolution and Hilbert 90. Naturality of the
-cochain maps in (4.F4j'') therefore kills the original class in the filtered
-colimit. $\square$
-
-Define
+whose cyclic power-word value, for $H=\langle h\rangle$ and $|H|=m$, is
 
 $$
-\mathcal B_C(F)=\varinjlim_{E/F}
-H^2(\operatorname {Gal}(E/F),C_E).                       \tag{4.G4}
+\varphi(\overline{x_h^m})\equiv\theta_H([h])\pmod {N_HC}.               \tag{4.G2b}
 $$
 
-The transition maps are injective. If $E'/E/F$ is finite Galois and
-$N=\operatorname {Gal}(E'/E)$, invariants in
-$1\to E'^\times\to I_{E'}\to C_{E'}\to1$, together with Hilbert 90, give
-$C_{E'}^N=C_E$. The five-term inflation--restriction sequence and
-$H^1(N,C_{E'})=0$ from (4.I9s) then give injectivity.
+It is unique modulo a homomorphism extending to the free module in the
+relation sequence.
 
-At a finite level the long exact sequence contains the typed row
+**Proof.** Fox differentiation gives the exact relation sequence
 
 $$
-H^2(G_E,E^\times)\longrightarrow H^2(G_E,I_E)
- \longrightarrow H^2(G_E,C_E)\longrightarrow H^3(G_E,E^\times),       \tag{4.G5}
+0\longrightarrow R_{\rm ab}\xrightarrow{d_R}
+P_1=\bigoplus_{g\ne1}\mathbf Z[G]e_g
+\xrightarrow{e_g\mapsto g-1}I_G\longrightarrow0.        \tag{4.G3}
 $$
 
-where $G_E=\operatorname {Gal}(E/F)$. Filtered colimits are exact. The
-first colimit is $\operatorname {Br}(F)$, the second is
-$\bigoplus_v\operatorname {Br}(F_v)$ by Shapiro and (4.I2), and the last is
-zero by (4.G1). Surjectivity onto the whole direct sum is literal: for a
-finitely supported family, (4.I9c) supplies one finite Galois level whose
-local degrees kill all denominators. Hence (4.I9h) induces
+Under $e_g\leftrightarrow[g]$, the word
+$r(g,h)=x_gx_hx_{gh}^{-1}$ maps to
+$e_g+g e_h-e_{gh}=d[g|h]$. The relations among these generators are the
+bar boundaries
 
 $$
-\operatorname {Inv}_F:\mathcal B_C(F)\xrightarrow{\ \sim\ }
-\operatorname {coker}\!\left(\operatorname {Br}(F)\to
- \bigoplus_v\operatorname {Br}(F_v)\right)
-\xrightarrow{\ \sum\operatorname {inv}_v\ }\mathbf Q/\mathbf Z.       \tag{4.G6}
+g[h|k]-[gh|k]+[g|hk]-[g|h]=d[g|h|k].                   \tag{4.G3a}
 $$
 
-This is represented on normalized bar cochains. The first two arrows in
-(4.G5) are coefficient inclusion and the sum of coordinate maps; (4.C0b)
-is the specified cochain nullhomotopy of the composite invariant. Given a
-local two-cocycle, (4.G1) supplies, after a finite enlargement, an actual
-$C_E$-valued two-cocycle lifting it. Thus (4.G6) is an exact cochain
-construction, not a conclusion from group orders.
+Choose right transversals for the subgroups, compatibly down chains, and
+rewrite words by the Reidemeister--Schreier algorithm. On a cyclic orbit
+start with a representative of (4.G2b). When a new Schreier generator is
+adjoined, the two possible rewrites differ by a one-cocycle of its
+stabilizer with values in $C$; it is a coboundary because $H^1(H,C)=0$.
+Changing by that coboundary makes the two values equal. For a power word,
+the remaining ambiguity is an $H$-norm, exactly the quotient in (4.G2b).
+For (4.G3a), the four faces are restriction, conjugation, transfer, and
+their composite, so their images cancel by the assumed Mackey identities.
+Induction over the finite list of Schreier orbits therefore defines a
+homomorphism on $R/[R,R]$, not merely values on selected relation words;
+the conjugation rewrite makes it $G$-equivariant.
 
-Restriction and corestriction on the normalized bar complexes give
-
-$$
-\operatorname {Inv}_L(\operatorname {res}_{L/F}x)
- =[L:F]\operatorname {Inv}_F(x),\qquad
-\operatorname {Inv}_F(\operatorname {cor}_{L/F}y)
- =\operatorname {Inv}_L(y).                              \tag{4.G7}
-$$
-
-For a family supported at $v$, the first formula is
-$\sum_{w\mid v}[L_w:F_v]\operatorname {inv}_v$ and the second is the local
-corestriction formula. These computations include the real factors.
-
-Let $L/F$ be finite Galois of degree $n$ and group $G$. Inflation and
-coefficient inclusion give an exact sequence
+Applying $\operatorname {Hom}_G(-,C)$ to (4.G3) gives the exact row
 
 $$
-0\longrightarrow H^2(G,C_L)\longrightarrow\mathcal B_C(F)
- \xrightarrow{\operatorname {res}_{L/F}}\mathcal B_C(L).               \tag{4.G8}
+\operatorname {Hom}_G(P_1,C)\longrightarrow
+\operatorname {Hom}_G(R_{\rm ab},C)\xrightarrow{\partial}
+\operatorname {Ext}^1_G(I_G,C)\longrightarrow0.          \tag{4.G4}
 $$
 
-Indeed, represent a kernel class at a Galois level $M/F$ containing $L$,
-enlarge until its restriction is a boundary, and use the normalized
-inflation--restriction double complex for
-$1\to\operatorname {Gal}(M/L)\to\operatorname {Gal}(M/F)\to G\to1$.
-The obstruction and ambiguity are respectively in $H^2$ and $H^1$ of the
-kernel; the chosen boundary removes the former and (4.I9s) kills the latter.
-Alexander--Whitney collection and shuffle give the descended cocycle and
-its inverse up to the usual finite prism homotopy. This proves both
-existence and uniqueness in (4.G8) on cochains.
+Thus (4.G3a) says precisely that every syzygy has been killed, and
+exactness says precisely that two choices differ by a map from $P_1$.
+Splicing with $0\to I_G\to\mathbf Z[G]\to\mathbf Z\to0$ identifies the
+last group with $H^2(G,C)$ and proves the uniqueness assertion. $\square$
 
-Equations (4.G6)--(4.G8) identify the kernel with the kernel of multiplication
-by $n$ on $\mathbf Q/\mathbf Z$:
+Apply the lemma to $C=C_L$; the required $H^1$-vanishing is (4.I9s). Use
+multiplicative notation for $C_L$. The graph
 
 $$
-\operatorname {inv}_{L/F}:H^2(G,C_L)
- \xrightarrow{\ \sim\ }\tfrac1n\mathbf Z/\mathbf Z.     \tag{4.G10}
+\widetilde R=\{(\varphi(\bar r)^{-1},r):r\in R\}
+ \subset C_L\rtimes F
 $$
 
-Define the global fundamental class by
+is normal: $R$ acts trivially on $C_L$, and conjugation by $f\in F$ is
+exactly the $\pi(f)$-equivariance of $\varphi$. Hence
 
 $$
-u_{L/F}=\operatorname {inv}_{L/F}^{-1}(1/n).             \tag{4.G11}
+1\longrightarrow C_L\longrightarrow
+W_{L/F}=(C_L\rtimes F)/\widetilde R
+\longrightarrow G\longrightarrow1                     \tag{4.G5}
 $$
 
-Before comparing it locally, we fix its Ext and Mackey realizations. Let
-$P_\bullet(G)\to\mathbf Z$ be the normalized projective bar resolution and
-let $\widehat P_\bullet(G)$ be the complete resolution obtained by splicing
-it to its integral dual as in Book 5. Choose
+is exact. Its kernel is $C_L$, since the graph $\widetilde R$ meets $C_L$
+trivially. With the section $s(g)$ represented by $(1,x_g)$, the normalized
+factor set is
 
 $$
-z_{L/F}\in Z^2\operatorname {Hom}_{\mathbf Z[G]}
- (P_\bullet(G),C_L),\qquad [z_{L/F}]=u_{L/F}.             \tag{4.G11a}
+z_{L/F}(g,h)=\varphi(\overline{x_gx_hx_{gh}^{-1}}).      \tag{4.G6}
 $$
 
-This cocycle gives the promised two-extension without a relation-word
-choice. Put $\Omega_2=\ker(P_1\to P_0)=\operatorname {im}(P_2\to P_1)$.
-The equality $z_{L/F}d_3=0$ makes $z_{L/F}$ descend to
-$\phi_z:\Omega_2\to C_L$. Its pushout is
+Equation (4.G3a) is its literal cocycle identity. The image of $\varphi$
+under (4.G4), followed by dimension shifting, is therefore
 
 $$
-0\to C_L\to
-(C_L\oplus P_1)/\langle(\phi_z(x),-x):x\in\Omega_2\rangle
-\to P_0\to\mathbf Z\to0.                               \tag{4.G11b}
+u_{L/F}=[z_{L/F}]\in H^2(G,C_L).                         \tag{4.G11}
 $$
 
-If $z$ is changed by $da$, the map
-$[c,p]\mapsto[c+a(p),p]$ is an isomorphism of two-extensions; conversely an
-equivalence of (4.G11b) yields exactly such a one-cochain. Thus
+The pushout of (4.G3) along $\varphi$, spliced with the augmentation
+sequence, is a two-extension representing the same class. Its degree-$-2$
+connecting map over $H$ is computed by $x_h^{|H|}$ and is $\theta_H$. Its
+degree-$-1$ connecting map has zero source and target, since
+$\widehat H^{-1}(H,\mathbf Z)=0$ and $H^1(H,C_L)=0$. The two consecutive
+vanishings and Book 5's criterion (5.5) make the pushout middle module
+cohomologically trivial on every subgroup. Consequently
 
 $$
-\operatorname {Ext}^2_{\mathbf Z[G]}(\mathbf Z,C_L)
-=H^2\operatorname {Hom}_{\mathbf Z[G]}(P_\bullet(G),C_L)                \tag{4.G11c}
+\widehat H^{r-2}(H,\mathbf Z)\xrightarrow{\ \frown\operatorname {res}u_{L/F}\ }
+\widehat H^r(H,C_L)                                      \tag{4.G16}
 $$
 
-with the displayed existence and uniqueness, not merely an equality of
-cardinalities. Extending Alexander--Whitney across the negative half of
-$\widehat P$ by projectivity makes the two connecting maps of (4.G11b)
-literal cap product with $z_{L/F}$.
+is an isomorphism for every $r$. In degree zero this defines
 
-For $H\subseteq G$, restriction is precomposition with a bar comparison
-$r_H:P(H)\to\operatorname {Res}^G_HP(G)$ and corestriction is the finite
-right-coset sum. If $K,H\subseteq G$, rewriting a bar word successively by
-the double cosets $K\backslash G/H$ gives the chain homotopy
+$$
+\operatorname {inv}_{L/E}:H^2(H,C_L)
+ \xrightarrow{\sim}\tfrac1{|H|}\mathbf Z/\mathbf Z,
+\qquad\operatorname {inv}_{L/E}(\operatorname {res}u_{L/F})=1/|H|.
+                                                               \tag{4.G10}
+$$
+
+We fix the chain maps as well. Schreier rewriting gives a restriction map
+$r_H:P_\bullet(H)\to\operatorname {Res}^G_HP_\bullet(G)$ on normalized
+bars, and corestriction is the finite right-coset sum. For
+$K,H\subseteq G$, sorting by $K\backslash G/H$ and inserting one adjacent
+face whenever a representative changes gives
 
 $$
 \operatorname {res}^G_K\operatorname {cor}^G_H\simeq
 \sum_{x\in K\backslash G/H}
-\operatorname {cor}^{K}_{K\cap xHx^{-1}}\,c_x\,
+\operatorname {cor}^{K}_{K\cap xHx^{-1}}c_x
 \operatorname {res}^{H}_{H\cap x^{-1}Kx}.               \tag{4.G11d}
 $$
 
-The homotopy is the finite adjacent-face prism; on the complete negative
-half use its integral dual, and at the norm splice the two formulas agree
-because both send $1$ to the same coset norm. Grouping right cosets proves
-transitivity in a subgroup tower. These Mackey maps and homotopies have
-therefore been fixed before any local comparison.
-
-Formula (4.G7) now gives, as identities of Ext classes represented by these
-maps,
+This is the finite bar prism. Its integral dual defines the negative half,
+and both halves agree at the norm splice. Grouping cosets inside cosets
+proves transitivity. The uniqueness clause of the lifting lemma gives
 
 $$
 \operatorname {res}^G_Hu_{L/F}=u_{L/L^H},\qquad
@@ -2516,9 +2454,6 @@ $$
 \operatorname {inf}_{L/F}^{M/F}u_{L/F}=[M:L]u_{M/F}.     \tag{4.G13}
 $$
 
-The prism homotopies above make all three identities transitive at chain
-level.
-
 Finally the construction has the required local normalization. Let $w$ be
 a place of $L$, $v=w|_F$, and $D_w\subseteq G$. The coordinate map
 
@@ -2526,11 +2461,12 @@ $$
 j_w:L_w^\times\longrightarrow I_L\longrightarrow C_L                  \tag{4.G14}
 $$
 
-is $D_w$-equivariant. The image $(j_w)_*(u_{L_w/F_v})$ maps under
-(4.G6) to the local Brauer family supported at $v$ with invariant
-$1/|D_w|$. Formula (4.G7) gives the same invariant for
-$\operatorname {res}^G_{D_w}u_{L/F}$. Injectivity in (4.G10), proved
-through the exact cochain row (4.G8), therefore gives
+is $D_w$-equivariant. The degree-$-2$ connecting map of
+$(j_w)_*(u_{L_w/F_v})$ is local reciprocity followed by the $w$-coordinate
+map. The connecting map of $\operatorname {res}^G_{D_w}u_{L/F}$ is
+$\theta_{D_w}$, and these agree because (4.I14) was proved as the product
+of the local Artin maps. The uniqueness clause of the relation-module
+lifting lemma therefore gives
 
 $$
 \operatorname {res}^G_{D_w}u_{L/F}
@@ -2548,7 +2484,7 @@ h_w\in\operatorname {Hom}_{\mathbf Z[D_w]}(P_1(D_w),C_L),
 $$
 
 Fix one $h_w$ for every place-orbit. If either cocycle representative
-changes, (4.G11c) changes $h_w$ by the corresponding prism plus a
+changes, exactness of (4.G4) changes $h_w$ by the corresponding prism plus a
 one-cocycle; the latter is a boundary by (4.I9s). Mackey homotopy (4.G11d)
 transports (4.G15a) to every subgroup and every double-coset branch. An
 admissible $S$ uses only their finite direct sum. These are the localization
@@ -2557,19 +2493,9 @@ the sums compatible when $S$ grows. Notice that (4.G15) is an
 equality after passage to $C_L$; it does not assert the false equality of a
 diagonal induced-local extension with a finite-support extension in $I_L$.
 
-Together, (4.I9s), (4.G10), and (4.G12) verify the three hypotheses of the
-Tate--Nakayama induction lemma of Book 5 for every subgroup of $G$.
-Consequently, before any canonical sequence is chosen, cap product gives
-
-$$
-\widehat H^{r-2}(H,\mathbf Z)\xrightarrow{\sim}
-\widehat H^r(H,C_L),\qquad x\longmapsto
-x\mathbin\frown\operatorname {res}^G_Hu_{L/F},          \tag{4.G16}
-$$
-
-for every $H\subseteq G$ and every integer $r$. This is the all-degree
-global class formation. The canonical sequence below represents these
-already constructed connecting maps; it is not used to prove (4.G16).
+Thus (4.G16) and its local normalization are established before any
+canonical sequence is chosen. The canonical sequence below represents
+these already constructed connecting maps; it is not used to prove them.
 
 Choose a finite $G$-stable set $S_L$ of places of $L$ containing the archimedean places, all places ramified over $K$, and finite primes whose classes generate $\operatorname{Cl}(L)$. Such primes can be obtained without a prime-distribution theorem: choose finitely many integral ideals generating the class group and include all their prime divisors. Also require that the decomposition groups of the places in $S_L$ generate $G$. This is possible because the subgroup generated by all decomposition groups has a fixed field that splits at every completion of $K$; the separation argument of Section 4.2 makes that fixed field equal to $K$, and finiteness of $G$ leaves a finite generating set of places. The ideal-class condition makes the ring of $S_L$-integers have trivial class group. Put
 
@@ -2829,7 +2755,7 @@ discarded or required to cancel.
 
 Here is the cochain realization of (4.T2b). Use the just-defined $P_Y$, put
 $P_Z=P_\bullet(G)$, and choose a comparison map $e:P_Y\to P_Z$ lifting
-$\varepsilon$. Use the fixed global cocycle $F_Z=z_{L/K}$ from (4.G11a).
+$\varepsilon$. Use the fixed global cocycle $F_Z=z_{L/K}$ from (4.G6).
 The two maps are
 
 $$
@@ -4574,9 +4500,23 @@ $$
  +\frac1{e(L_s/\mathbf Q_\ell)}\right\}\le c_{L,m}<\infty. \tag{11.HT3c}
 $$
 
-The tame first layer merely changes $c_{L,m}$. The same computation in a
-closed $\mathbf Z_\ell$-direction replaces $q^j$ by $\ell^j$ and has
-the identical conclusion.
+The tame first layer merely changes $c_{L,m}$. For later use in one closed
+$\mathbf Z_\ell$-direction, choose the generators only after applying
+$\log:1+\pi^m\mathcal O_L\simeq\pi^m\mathcal O_L$. If $a_i$ is a
+$\mathbf Z_\ell$-basis vector, the $r$th power step is represented by
+$\ell^ra_i$ and therefore lies in the Lubin--Tate unit level
+
+$$
+m_i+r,e(L/\mathbf Q_\ell),qquad m_i=v_L(a_i).          \tag{11.HT3c'}
+$$
+
+Thus its order is $\ell^r$ and its conductor levels are the explicit
+arithmetic progression (11.HT3c'), not an assumed copy of the full
+$q$-power tower. Substituting this list in the conductor--different sum
+(11.HT3b) gives the same bounded expression (11.HT3c), with a constant
+depending on the chosen basis. Passing farther out in a transverse
+direction multiplies every absolute ramification index and can only improve
+the bound.
 
 For $r\ge s$ set
 $$
@@ -4739,113 +4679,84 @@ This is the multivariable Tate--Sen contraction used below. Formula
 (11.HT3h) is applied only on $\ker P_i$, where it is an actual inverse;
 the other directions are retained by the Koszul complex.
 
-We also need descent through $H$. We use the following consequence of the
-same ramification calculation. There is $c_L$ such that, for every finite
-Galois $M/L$, every subgroup $J$, and every $x\in M$, one can find
-$y\in M^J$ with
-$$
- v_\ell(x-y)\ge\min_{\sigma\in J}v_\ell(\sigma x-x)-c_L.  \tag{11.HT3j}
-$$
+We also need descent through $H$. The preceding directional estimate must
+not be applied to an arbitrary wild subextension: its conductor list was
+proved only inside the Lubin--Tate tower. We use the general Ax--Sen
+estimate instead.
 
-Here is the correction argument, including the iteration estimate. Intersect
-the lower ramification filtration of $\operatorname {Gal}(M/L)$ with $J$.
-The unramified quotient is removed without dividing by its order. Indeed,
-for an unramified Galois extension $M_0/L_0$, the integral normal-basis theorem
-makes $\mathcal O_{M_0}$ induced. Hence taking invariants in
+**Finite Ax--Sen estimate.** Put
+$c_{\rm Ax}=\ell/(\ell-1)^2$. For a finite Galois extension $M/K$ of
+$\ell$-adic fields, a subgroup $J$, and $x\in M$, there is $y\in M^J$ with
 
 $$
-0\longrightarrow\mathfrak m_{M_0}^r\longrightarrow
-\mathcal O_{M_0}\longrightarrow
-\mathcal O_{M_0}/\mathfrak m_{M_0}^r\longrightarrow0
+v_\ell(x-y)\ge\min_{\sigma\in J}v_\ell(\sigma x-x)-c_{\rm Ax}.          \tag{11.HT3j}
 $$
 
-shows that every invariant residue class modulo $\mathfrak m_{M_0}^r$ lifts
-from $\mathcal O_{L_0}$. Thus this step loses no precision. The
-prime-to-$\ell$ tame quotient is removed by its integral Reynolds operator
-and also loses none.
-
-For the wild part choose a normal series
+The affine version is uniform as well. If $f:J\to M$ is an additive
+one-cocycle, then, after changing $f$ by an error of valuation at least
+$N$, there is $a\in M$ such that
 
 $$
-1=J_m\triangleleft J_{m-1}\triangleleft\cdots
- \triangleleft J_0=J_w,
-\qquad J_r/J_{r+1}\simeq\mathbf Z/\ell.                 \tag{11.HT3j0}
+\inf_{\sigma\in J}v_\ell
+ \bigl(f(\sigma)-(\sigma a-a)\bigr)\ge N,\qquad
+v_\ell(a)\ge\inf_\sigma v_\ell(f(\sigma))-c_{\rm Ax}.                   \tag{11.HT3j'}
 $$
 
-Starting with $x_m=x$, suppose $x_{r+1}\in M^{J_{r+1}}$. If $\sigma_r$
-generates $J_r/J_{r+1}$ and $c_r=\sigma_rx_{r+1}-x_{r+1}$, put
+Here is the finite calculation. Separate the unramified quotient by an
+integral normal basis and the prime-to-$\ell$ tame quotient by its integral
+Reynolds operator. Cluster the remaining conjugates according to the lower
+ramification breaks. At an order-$\ell$ cluster generated by $\sigma$, use
 
 $$
- b_r=\ell^{-1}\sum_{a=0}^{\ell-1}a\sigma_r^ac_r,
- \qquad x_r=x_{r+1}-b_r.                                \tag{11.HT3j'}
+B_\sigma(c)=\ell^{-1}\sum_{a=0}^{\ell-1}a\sigma^ac,
+\qquad c=(\sigma-1)x.                                   \tag{11.HT3j0}
 $$
 
-The group-ring identity (11.HT3h), together with
-$\sum_a\sigma_r^ac_r=0$, gives $(\sigma_r-1)b_r=c_r$.
-Every term lies in $M^{J_{r+1}}$, so $x_r\in M^{J_r}$; normality in
-(11.HT3j0) is what makes the iteration typed.
-
-Apply the order-$\ell$ estimate (11.HT3h''') in the fixed field
-$M^{J_{r+1}}/M^{J_r}$. If $e_r$ is the absolute ramification index of the
-lower fixed field, then
-$$
- v_\ell(b_r)\ge
- \min_{\sigma\in J_r}v_\ell(\sigma x_{r+1}-x_{r+1})
- -\frac{\ell}{e_r(\ell-1)}.                             \tag{11.HT3j''}
-$$
-
-When $x_{r+1}$ is replaced by $x_r$, its defect under the remaining quotient
-changes by at worst the valuation of $b_r$; hence induction and the
-nonarchimedean triangle inequality subtract the displayed losses. The wild
-steps are totally ramified and their absolute ramification indices, read in
-the reverse order of (11.HT3j0), form $e_0,\ell e_0,\ldots$. Consequently
+The identities $(\sigma-1)B_\sigma(c)=c$ and
+$\sum_a\sigma^ac=0$ are exact. The inverse-different formula (11.HT3),
+applied to the ideal generated by the conjugate differences, shows that the
+loss for the $r$th nested cluster is at most
 
 $$
-\sum_r\frac{\ell}{e_r(\ell-1)}
- \le\frac{\ell^2}{e_0(\ell-1)^2}.                       \tag{11.HT3j1}
+\frac1{\ell^{r-1}(\ell-1)}.                             \tag{11.HT3j1}
 $$
 
-The finitely many initial, unramified, and tame layers contribute a constant
-depending only on $L$. This proves (11.HT3j). Notice that every use of the
-different is on the trace-zero element $c_r$.
+Indeed the different exponent is the sum of the cardinalities of the lower
+ramification groups minus one; subtracting the division by $\ell$ leaves
+one rounding layer divided by the absolute ramification index. Passing to
+the next cluster multiplies that index by $\ell$. The nonarchimedean
+triangle inequality and
+
+$$
+\sum_{r\ge1}\frac1{\ell^{r-1}(\ell-1)}
+=\frac{\ell}{(\ell-1)^2}
+$$
+
+prove (11.HT3j). This grouping by ramification breaks, rather than an
+arbitrary composition series, is what makes the bound uniform. Apply the
+same weighted averages to the affine action
+$\sigma*z=\sigma z-f(\sigma)$. The cocycle identity says this is an action,
+so the identical cluster calculation produces an approximate fixed point
+and proves (11.HT3j').
 
 Now let $x\in\mathbf C_\ell^H$ and choose algebraic $x_N\in M_N$ with
-$v_\ell(x-x_N)\ge N$. Let $J_N$ be the image of $H$ in
-$\operatorname {Gal}(M_N/L)$. Its elements move $x_N$ by valuation at
-least $N$, so (11.HT3j) supplies
+$v_\ell(x-x_N)\ge N$. If $J_N$ is the image of $H$ in
+$\operatorname {Gal}(M_N/L)$, (11.HT3j) supplies
 $y_N\in M_N^{J_N}=M_N\cap L_\infty$ with
-$v_\ell(x_N-y_N)\ge N-c_L$. Hence $y_N\to x$ in $A$. The reverse
-inclusion is immediate, and therefore
+$v_\ell(x_N-y_N)\ge N-c_{\rm Ax}$. Hence $y_N\to x$ in $A$, and
+
 $$
  \mathbf C_\ell^H=A.                                     \tag{11.HT3k}
 $$
 
-We also record the cocycle version of the correction, since convergence is
-not automatic from (11.HT3j). The same normal series and the operators
-(11.HT3j') give the following finite-precision statement: for a continuous
-additive one-cocycle $f:H\to\mathbf C_\ell$ and every integer $N$, there is
-$a_N\in\mathbf C_\ell$ such that
+For a continuous cocycle $f:H\to\mathbf C_\ell$, compactness makes
+$\inf_hv_\ell(f(h))$ finite. Approximate its values on finitely many cosets
+in one finite Galois extension and apply the affine estimate with precision
+$N$. Apply it successively to the residual cocycle with precisions
+$N,N+1,\ldots$. The corrections $b_N$ satisfy
+$v_\ell(b_N)\ge N-c_{\rm Ax}$, so their sum converges and kills the
+cocycle uniformly. Therefore
 
-$$
-\inf_{h\in H}v_\ell\bigl(f(h)-(h(a_N)-a_N)\bigr)\ge N,
-\qquad
-v_\ell(a_N)\ge\inf_hv_\ell(f(h))-c_L.                  \tag{11.HT3k'}
-$$
-
-Indeed, continuity reduces modulo $\mathfrak m^N$ to finitely many cosets;
-approximate their finitely many values in one finite Galois extension and
-apply (11.HT3j') along (11.HT3j0). The cocycle equation is exactly the
-compatibility needed when a coset representative is changed, and
-(11.HT3j1) gives the second inequality. The algebraic approximation error
-is chosen one valuation layer beyond $N+c_L$, so it does not alter either
-displayed bound.
-
-Choose $a_0$ with precision $0$. Inductively, if $a_N$ has precision $N$,
-apply (11.HT3k') to its residual cocycle with requested precision $N+1$;
-write the correction as $b_N$ and set $a_{N+1}=a_N+b_N$. The second
-inequality gives
-$v_\ell(b_N)\ge N-c_L$. Thus $a_N$ is Cauchy and its limit $a$ satisfies
-$f(h)=h(a)-a$ uniformly in $h$. Therefore
 $$
  H^1(H,\mathbf C_\ell)=0.                                 \tag{11.HT3l}
 $$
@@ -4853,7 +4764,7 @@ $$
 We apply this with attention to the exponential radius. Let $v$ be a basis
 of the line $V$. Shrink to an open normal subgroup $H_0\subset H$ so that
 $$
- v_\ell(\log\xi(h))>c_L+\frac1{\ell-1}\quad(h\in H_0).     \tag{11.HT3m}
+ v_\ell(\log\xi(h))>c_{\rm Ax}+\frac1{\ell-1}\quad(h\in H_0). \tag{11.HT3m}
 $$
 
 The construction proving (11.HT3l), begun with this cocycle, gives
