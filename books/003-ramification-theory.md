@@ -1086,7 +1086,7 @@ $$
 $$
 
 Wild inertia acts trivially on the associated graded of $E$, so
-$v_E(\tau(alpha)-\alpha)>v_E(\alpha)=d$. Hence the $p$ summands have the same leading
+$v_E(\tau(\alpha)-\alpha)>v_E(\alpha)=d$. Hence the $p$ summands have the same leading
 term and $v_E(\beta)>d$. Telescoping and (5.3d) give
 
 $$
