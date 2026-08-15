@@ -6,6 +6,7 @@
    - [Objects, families, and symmetry](#11-objects-families-and-symmetry)
    - [Five levels of representability](#12-five-levels-of-representability)
    - [The base site and conventions](#13-the-base-site-and-conventions)
+   - [Assumed inputs](#14-assumed-inputs)
 2. [Categories fibered in groupoids](#2-categories-fibered-in-groupoids)
    - [Cartesian arrows](#21-cartesian-arrows)
    - [Pullback and coherence](#22-pullback-and-coherence)
@@ -105,6 +106,80 @@ A fiber product of stacks is always a two-fiber product: an object over $T$ incl
 
 We use “finite” for finite morphisms and “finite locally free” when flatness and constant local rank are intended. These differ at bad residue characteristics. A level structure of order $N$ is never called etale unless $N$ is invertible on the base.
 
+### 1.4 Assumed inputs
+
+This is a book about stacks. The geometry of abelian schemes, of finite flat group schemes, and of
+projective parameter spaces enters as an input rather than as a subject. The following results are
+quoted from earlier books, with the sections named, and are used below without reproof.
+
+- Effective faithfully flat descent for schemes, morphisms, quasi-coherent sheaves, vector
+  bundles, group objects, actions, and torsors, together with the tables of properties that are
+  fpqc local on the base: Book 10, Chapters 5–16. Descent of smoothness along a faithfully flat
+  cover of the **source**, which is a different statement and is what the quotient atlas of
+  Section 6.2 requires, is Book 10 §10.5.
+- Relatively ample bundles, Hilbert polynomials, Hilbert and graph parameter schemes, and fpqc
+  descent of ampleness: Book 8.
+- Finite locally free algebras and morphisms, their ranks, and their norms and traces: Book 26
+  §§6, 10.
+- Affine group schemes, closed subgroup schemes, actions and invariants, and the theorem that the
+  quotient of an affine group scheme by a finite locally free closed subgroup is an affine scheme
+  for which the projection is a finite locally free torsor: Book 27 §§5, 8, 9.4.
+- Finite flat commutative group schemes, multiplication kernels, and etaleness of the kernel when
+  the order is invertible: Book 28 §§4, 5.
+- Cartier duality, perfect pairings of finite locally free group schemes, the group-scheme Weil
+  pairing on the torsion of an abelian scheme, and its elliptic form
+  $e_n:E[n]\times E[n]\to\mu_n$: Book 34 §§8, 14.2–14.5.
+- Abelian schemes: the rigidity lemma and the homomorphism lemma, Book 35 §1.3; unramifiedness
+  and separatedness of the homomorphism sheaf, so that a homomorphism is determined by any
+  schematically dense restriction, Book 35 §4.1; the theorems of the square and the cube, Book 35
+  §§2.2–2.3; the dual abelian scheme, the Poincare bundle, the dual homomorphism $f^\vee$, and
+  biduality, Book 35 §§3.1–3.4; torsion $A[n]$ finite locally free of order $n^{2g}$ and etale
+  when $n$ is invertible, Book 35 §4.3; quotients by finite locally free subgroup schemes, Book
+  35 §5; Weil pairings and their perfectness in every characteristic, Book 35 §§7.1–7.3;
+  polarizations, their symmetry, type and degree, and the induced alternating pairing
+  $e_n^\lambda$ with its perfectness criterion, Book 35 §§8.1–8.5; the theta group
+  $\mathcal G(L)$ of a rigidified ample bundle as a central extension of $K(L)=\ker\lambda_L$ by
+  $\mathbf G_m$, and its commutator pairing, Book 35 §9.2.
+
+Four further inputs are used below and are **not** available in any earlier book of this
+collection. We state them here as standing hypotheses rather than attaching a citation to them.
+Each is standard; none is proved here, and every conclusion whose proof invokes one of them is
+conditional on it.
+
+**(H1) Heisenberg normal form and its representation.** Let $\mathcal L^n$ be a symmetric ample
+rigidified bundle on an abelian scheme with fixed integral polarization type. We assume that after
+an fppf cover of the base the theta group of Book 35 §9.2 is isomorphic to a standard Heisenberg
+extension attached to that type, respecting the central $\mathbf G_m$; that the sheaf of such
+isomorphisms, the theta frames, is a torsor under the finite locally free automorphism group of
+the standard extension; and that the standard extension has, after a choice of Lagrangian
+splitting, an irreducible representation on the functions on that finite Lagrangian, unique up to
+the central scalar, which supplies a basis of the pushforward of $\mathcal L^n$ compatibly with
+base change. Book 35 §9.2 supplies the extension and its commutator pairing, but no normal form
+and no representation theory.
+
+**(H2) Theta groups and pairings on the boundary.** We assume the same package for the
+symmetrization of an ample level divisor on a generalized elliptic curve whose geometric fibers
+may be Neron polygons, and likewise that the Weil pairing on $E^{\mathrm{sm}}[N]$ extends the
+elliptic pairing of Book 34 §14.5 across such fibers, alternating and compatible with base change.
+Book 34 and Book 35 treat abelian schemes and elliptic schemes, so neither covers the polygonal
+fibers appearing in Sections 9.2 and 9.3.
+
+**(H3) The Serre tensor construction.** For a finite projective module $M$ over a ring $\mathcal O$
+acting on an abelian scheme $A$, we assume that the fppf sheaf $T\mapsto A(T)\otimes_{\mathcal O}M$
+is represented by an abelian scheme $A\otimes_{\mathcal O}M$, that its formation commutes with
+base change, and that the construction is functorial in $M$ and compatible with duality. Section
+11.1 uses this to give meaning to $A\otimes_{\mathcal O_F}\mathfrak c\to A^\vee$.
+
+**(H4) Prime-adic Tate modules of elliptic curves.** For an elliptic curve over an algebraically
+closed field of characteristic prime to $\ell$, we assume that
+$T_\ell E=\varprojlim_mE[\ell^m]$ is free of rank two over $\mathbf Z_\ell$, so that an
+automorphism acts through $\operatorname{GL}_2(\mathbf Z_\ell)$. Book 35 §4.3 supplies the finite
+levels $E[\ell^m]$, their orders, and their etaleness; the prime-adic limit belongs to a later
+book. Section 9.3 uses only the limit formalism, and its argument may equally be read at one
+sufficiently large finite level.
+
+Each use site below names the hypothesis it invokes.
+
 ## 2. Categories fibered in groupoids
 
 ### 2.1 Cartesian arrows
@@ -191,7 +266,7 @@ A **stack** is a prestack for which every descent datum is effective: there is $
 
 The proof pattern for geometric objects is rigid. Descend the underlying schemes first. Descend line bundles and finite locally free modules. Descend all structure morphisms by full faithfulness. Check identities after pulling back to the cover. Finally descend geometric properties such as properness, smoothness, or finite local freeness. This is precisely the order established in Book 10.
 
-For a family of abelian varieties, connectedness of geometric fibers is checked after residue-field extension. For a generalized elliptic curve, the polygonal fiber condition and the action on components are likewise geometric and fpqc local. Hence neither application requires a new general effectivity theorem.
+For a family of abelian varieties, connectedness of geometric fibers is checked after residue-field extension; Book 35 §1.4 records that smoothness, properness, finite presentation, the group law, and geometric connectedness all survive base change and may be tested after a faithfully flat quasi-compact one. For a generalized elliptic curve, the polygonal fiber condition and the action on components are likewise geometric and fpqc local. Hence neither application requires a new general effectivity theorem.
 
 ### 3.3 Why stackification is sometimes necessary
 
@@ -285,7 +360,7 @@ The inertia is not usually the constant group $G$ over the quotient; it is the q
 
 An algebraic stack is called separated when its diagonal is proper, and it has finite diagonal when the diagonal is finite. A Deligne--Mumford stack is an algebraic stack whose diagonal is unramified; equivalently, it admits an etale atlas. We use the term only under these hypotheses.
 
-Finite inertia alone does not imply a finite diagonal without quasi-compactness and separation of the isomorphism spaces. Conversely, a finite diagonal makes every stabilizer finite but does not make it trivial. For polarized abelian schemes the polarization forces the automorphism group to be finite. Rigidity for homomorphisms of abelian schemes shows that the homomorphism functor has no infinitesimal deformation once its value at the identity is fixed. A high power of an inducing ample bundle embeds the abelian scheme, making the polarization-preserving automorphism scheme affine and of finite presentation. The valuative criterion extends a generic such automorphism: take the closure of its graph, use properness of the abelian schemes, and use rigidity to extend the group identities and the inverse. The automorphism scheme is therefore proper as well as affine, hence finite. At a bad prime finite must still not be silently replaced by etale; the relevant unramifiedness assertion has to be checked in the chosen integral problem.
+Finite inertia alone does not imply a finite diagonal without quasi-compactness and separation of the isomorphism spaces. Conversely, a finite diagonal makes every stabilizer finite but does not make it trivial. For polarized abelian schemes the polarization forces the automorphism group to be finite. Rigidity for homomorphisms of abelian schemes shows that the homomorphism functor has no infinitesimal deformation once its value at the identity is fixed; this is Book 35 §4.1, where $\underline{\operatorname{Hom}}_S(A,B)$ is proved unramified and separated, together with the rigidity lemma and the homomorphism lemma of Book 35 §1.3. A high power of an inducing ample bundle embeds the abelian scheme, making the polarization-preserving automorphism scheme affine and of finite presentation. The valuative criterion extends a generic such automorphism: take the closure of its graph, use properness of the abelian schemes, and use the same rigidity, in the form that a homomorphism is determined by a schematically dense restriction, to extend the group identities and the inverse. The automorphism scheme is therefore proper as well as affine, hence finite. At a bad prime finite must still not be silently replaced by etale; the relevant unramifiedness assertion has to be checked in the chosen integral problem.
 
 ## 5. Algebraic stacks and atlases
 
@@ -381,7 +456,8 @@ Since $P\to T$ is an fppf $G$-torsor, $q$ is flat, locally of finite presentatio
 
 **Quotient-atlas theorem.** If $G$ is smooth and finitely presented, $X\to[X/G]$ is a smooth atlas. If $G$ is finite locally free, it is a finite flat presentation. Under the locally noetherian, finite-presentation, and quasi-projective hypotheses used in this book, $[X/G]$ also admits a smooth scheme atlas.
 
-For the last assertion, the regular representation gives a closed immersion
+For the last assertion, the regular representation on the rank-$r$ coordinate algebra of $G$, in
+the matrix-coefficient form of Book 27 §19.2, is faithful and gives a closed immersion
 $G\hookrightarrow\operatorname{GL}_r$. Give $X\times\operatorname{GL}_r$ the action
 
 $$
@@ -397,9 +473,15 @@ $$
 the invariant-affine proof of Section 7.2 applies and uses no assertion about quotient stacks.
 The induced map $U\to[X/G]$ is representable, and after pulling back to the finite flat
 presentation $X\to[X/G]$ it becomes
-$X\times(\operatorname{GL}_r/G)\to X$. The scheme
-$\operatorname{GL}_r/G$ is smooth: its finite flat cover by $\operatorname{GL}_r$ is smooth over
-the base, and smoothness descends faithfully flatly by Book 10. Hence $U\to[X/G]$ is smooth and
+$X\times(\operatorname{GL}_r/G)\to X$. The homogeneous space $\operatorname{GL}_r/G$ exists as an
+affine scheme, and $\operatorname{GL}_r\to\operatorname{GL}_r/G$ is a finite locally free
+$G$-torsor, by Book 27 §9.4. It is moreover smooth over the base, and that point needs care: it is
+not an instance of the tables of Book 10 §§10.3–10.4, which descend a property of a morphism along
+a faithfully flat cover of its **base**, whereas here $\operatorname{GL}_r$ is a faithfully flat
+cover of the **source** $\operatorname{GL}_r/G$. The statement actually used is the source-descent
+lemma of Book 10 §10.5, in its smooth-quotient form: over a locally noetherian base, a quotient of
+a smooth group scheme by a finite locally free closed subgroup is smooth, the homogeneity
+hypothesis of that lemma being supplied by left translation. Hence $U\to[X/G]$ is smooth and
 surjective. This is the required smooth atlas even when $G$ itself is non-smooth.
 
 The identification $T\times_{[X/G]}X\simeq P$, and hence the canonical presentation, is fully
@@ -678,7 +760,11 @@ for which the sum of the $N^2$ image sections equals the Cartier divisor
 $E^{\mathrm{sm}}[N]$ and is ample on $E$. In particular, the equality itself forces
 $E^{\mathrm{sm}}[N]$ to have rank $N^2$ on this locus. If a primitive $N$th root and a
 symplectic convention are fixed, one may additionally require the Weil pairing of $P,Q$ to equal
-that root.
+that root. Over the elliptic locus this is the perfect alternating pairing
+$e_N:E[N]\times E[N]\to\mu_N$ of Book 34 §14.5, equivalently the Weil pairing of Book 35 §§7.1–7.3
+composed with the canonical principal polarization; across a polygonal fiber the pairing is the
+corresponding pairing on the smooth group, which is part of the theta-group package assumed in
+(H2).
 
 A $\Gamma_1(N)$-structure is a Drinfeld homomorphism $\mathbf Z/N\mathbf Z\to E^{\mathrm{sm}}[N]$, written $1\mapsto P$, with ample divisor $\sum_a[aP]$. A $\Gamma_0(N)$-structure is a finite locally free cyclic subgroup $C\subset E^{\mathrm{sm}}$ of rank $N$, locally generated by a Drinfeld point, whose Cartier subgroup divisor $C\subset E$ is ample.
 
@@ -688,7 +774,7 @@ These definitions are stable under pullback and have effective descent. The divi
 
 ### 9.3 When level produces a fine scheme
 
-An automorphism of a generalized elliptic curve preserving a full level basis acts trivially on the level divisor and on the component group it meets. For $N\geq3$, with $N$ invertible, it is the identity. On a smooth fiber its action on every prime-adic Tate module is faithful by rigidity. If an odd prime $\ell$ divides $N$, the action lies in $1+\ell M_2(\mathbf Z_\ell)$; if $N$ has no odd divisor, then $4\mid N$ and it lies in $1+4M_2(\mathbf Z_2)$. These two congruence groups are torsion-free. Indeed, for an element $1+\ell^aB$ of prime order, the first nonzero term in its binomial expansion has valuation $a+1$ for odd $\ell$, and at least $a+1$ for $\ell=2$ with $a\geq2$, whereas all later terms have larger valuation. Reduction to a prime divisor of the order proves the claim. On a polygon, the ample basis meets and labels every component and determines the automorphism on the dense smooth locus; equality there extends to the proper curve.
+An automorphism of a generalized elliptic curve preserving a full level basis acts trivially on the level divisor and on the component group it meets. For $N\geq3$, with $N$ invertible, it is the identity. On a smooth fiber its action on every prime-adic Tate module is faithful: the torsion subgroups $E[\ell^m]$ are finite locally free of order $\ell^{2m}$ and etale for $\ell$ invertible by Book 35 §4.3, their union is schematically dense, and a homomorphism of abelian schemes is determined by a schematically dense restriction by Book 35 §4.1. The rank-two freeness of $T_\ell E$ over $\mathbf Z_\ell$, which turns that action into a matrix, is the standing hypothesis (H4). If an odd prime $\ell$ divides $N$, the action lies in $1+\ell M_2(\mathbf Z_\ell)$; if $N$ has no odd divisor, then $4\mid N$ and it lies in $1+4M_2(\mathbf Z_2)$. These two congruence groups are torsion-free. Indeed, for an element $1+\ell^aB$ of prime order, the first nonzero term in its binomial expansion has valuation $a+1$ for odd $\ell$, and at least $a+1$ for $\ell=2$ with $a\geq2$, whereas all later terms have larger valuation. Reduction to a prime divisor of the order proves the claim. On a polygon, the ample basis meets and labels every component and determines the automorphism on the dense smooth locus; equality there extends to the proper curve.
 
 Thus full level $N\geq3$ kills inertia over $\mathbf Z[1/N]$. The stack is then a sheaf. For
 completeness, scheme representability does not follow from trivial inertia alone. Symmetrize the
@@ -698,9 +784,13 @@ $$
 \mathcal L=\mathcal O_E(D+[-1]^*D).
 $$
 
-A high power has a theta group whose quotient by its central $\mathbf G_m$ is finite. After a finite etale cover, a theta frame identifies that
+A high power has a theta group whose quotient by its central $\mathbf G_m$ is finite. For an
+abelian scheme this extension and its commutator pairing are constructed in Book 35 §9.2; here the
+curve may degenerate to a polygon, so the construction is the one assumed in (H2). After a finite
+etale cover, a theta frame identifies that
 central extension with the standard Heisenberg extension and gives its standard projective frame on
-$H^0(E,\mathcal L^n)$. Theta-framed level curves are therefore a locally closed Hilbert parameter
+$H^0(E,\mathcal L^n)$; this normal form, and the representation theory used in the next sentence,
+are the standing hypotheses (H1) and (H2). Theta-framed level curves are therefore a locally closed Hilbert parameter
 scheme. The choices of theta frame form a torsor under the finite automorphism group of the
 standard Heisenberg group: after choosing a Lagrangian splitting, the representation is explicitly
 the space of functions on that finite Lagrangian, with translations and characters giving the
@@ -708,7 +798,8 @@ Heisenberg action. Forgetting the theta frame is consequently a finite-group quo
 constructs that quotient as a scheme, and the ample Hilbert bundle makes it quasi-projective.
 Because inertia has already vanished, the quotient represents the level sheaf rather than only
 its coarse orbit functor. It is a fine moduli scheme and carries the universal generalized
-elliptic curve.
+elliptic curve. The vanishing of inertia is unconditional; the theta-framed construction of the
+representing scheme is conditional on (H1) and (H2).
 
 Smaller or weaker levels require a stabilizer check. Full level $2$ is preserved by $[-1]$ because $-P=P$ on $2$-torsion. A $\Gamma_1(N)$ point may leave special automorphisms at small $N$, and a cyclic subgroup is preserved by $[-1]$ for every $N$. Hence a $\Gamma_0(N)$ problem is normally a stack even for large $N$ unless an auxiliary rigid level is added.
 
@@ -808,15 +899,16 @@ $$
 \qquad(b\in\mathcal O).
 $$
 
-It says that the adjoint involution induced by the polarization restricts to the prescribed involution on $B$. It is an equality of homomorphisms and therefore descends.
+It says that the adjoint involution induced by the polarization restricts to the prescribed involution on $B$. It is an equality of homomorphisms and therefore descends. The dual abelian scheme $A^\vee$, the dual homomorphism $b\mapsto\iota(b)^\vee$, and biduality are those of Book 35 §§3.1–3.4; that $\lambda$ is a symmetric isogeny induced by an ample bundle, with finite kernel of prescribed type, is Book 35 §§8.1–8.3.
 
-For integral descent, a polarization may be encoded either by the homomorphism together with the condition of being induced by a relatively ample rigidified line bundle, or by such a line bundle itself. Positivity is never defined merely fiberwise by a sign. The fixed kernel type is a finite locally free subgroup condition and includes separability only when its rank is invertible.
+For integral descent, a polarization may be encoded either by the homomorphism together with the condition of being induced by a relatively ample rigidified line bundle, or by such a line bundle itself. Positivity is never defined merely fiberwise by a sign. The fixed kernel type is a finite locally free subgroup condition, in the sense of Book 35 §8.3, and includes separability only when its rank is invertible.
 
 For the parameter arguments in this book we use the line-bundle presentation: an inducing
 rigidified symmetric ample bundle is part of the object and its genuine cocycle is part of every
 descent datum. We record why this differs only by finite data from the homomorphism presentation.
 
-**Polarization-line lemma.** For a rigidified line bundle $\mathcal L$ on an abelian scheme, the
+**Polarization-line lemma** (Book 35 §§2.2–2.3, 8.1–8.2). For a rigidified line bundle
+$\mathcal L$ on an abelian scheme, the
 rule
 
 $$
@@ -827,7 +919,8 @@ is a homomorphism $\lambda_{\mathcal L}:A\to A^\vee$. If $\mathcal L$ is ample, 
 finite. Two rigidified symmetric ample bundles inducing the same homomorphism differ by a
 two-torsion point of $A^\vee$.
 
-**Proof.** On $A^3$, compare the four pullbacks of $\mathcal L$ by sums of one or three variables
+**Proof.** This is the theorem of the cube together with the square theorem, and we recall the
+argument in the form used here; the rigidity input is Book 35 §1.3. On $A^3$, compare the four pullbacks of $\mathcal L$ by sums of one or three variables
 with the three pullbacks by sums of two variables. Their quotient is trivial whenever one
 variable is the identity. Rigidity for a line bundle on a proper family with geometrically
 connected fibers then makes the quotient trivial everywhere: trivialize along one coordinate,
@@ -886,7 +979,10 @@ $$
 \eta_N:\Lambda/N\Lambda\xrightarrow{\sim}A[N]
 $$
 
-carrying $\psi$ to the Weil pairing up to the prescribed multiplier. More generally, a $K$-level structure is a $K$-orbit of compatible prime-to-bad-prime trivializations. The orbit formulation prevents a basis choice from being mistaken for intrinsic structure.
+carrying $\psi$ to the Weil pairing up to the prescribed multiplier. The pairing meant here is the
+alternating pairing $e_N^\lambda(x,y)=e_N(x,\lambda y)$ induced by the polarization on $A[N]$,
+constructed in Book 35 §8.5 from the Weil pairing of Book 35 §§7.1–7.3, and perfect exactly when
+$\lambda[N]$ is an isomorphism. More generally, a $K$-level structure is a $K$-orbit of compatible prime-to-bad-prime trivializations. The orbit formulation prevents a basis choice from being mistaken for intrinsic structure.
 
 This adelic notation is still finite-presentation data. After fixing the lattice, every compact
 open $K$ contains a principal congruence subgroup of some level $N$. A $K$-orbit is therefore the
@@ -902,21 +998,26 @@ A level is **neat** if no nontrivial finite-order automorphism compatible with t
 
 We first isolate the final representability step.
 
-**Rigid-level scheme lemma.** On a locally noetherian base, polarized abelian schemes of fixed
+**Rigid-level scheme lemma** (conditional on the standing hypothesis (H1)). On a locally
+noetherian base, polarized abelian schemes of fixed
 dimension and integral polarization type with neat prime-to-base level form a quasi-projective
 scheme.
 
 **Proof.** Choose a symmetric high power $\mathcal L^n$ of the inducing rigidified ample bundle.
 Its theta group is the central extension of the finite locally free
 kernel of the associated polarization by $\mathbf G_m$, obtained from pairs
-$(x,\phi)$ with $\phi:t_x^*\mathcal L^n\simeq\mathcal L^n$. The polarization-line lemma gives its
-multiplication and commutator pairing. After an fppf cover the fixed integral polarization type
+$(x,\phi)$ with $\phi:t_x^*\mathcal L^n\simeq\mathcal L^n$. This extension, its multiplication,
+and its commutator pairing on $K(\mathcal L^n)=\ker\lambda_{\mathcal L^n}$ are constructed in
+Book 35 §9.2; the polarization-line lemma above identifies the kernel with the one attached to the
+polarization. After an fppf cover the fixed integral polarization type
 identifies this finite kernel and pairing with the standard ones. A theta frame is an isomorphism with the standard
 Heisenberg extension, respecting the central $\mathbf G_m$.
 
 Theta frames form a torsor under the finite locally free automorphism group of that standard extension. The
 standard irreducible representation of the Heisenberg group supplies, up to the central scalar,
-a basis of $a_*\mathcal L^n$ compatible with base change. Hence a theta-framed object is a
+a basis of $a_*\mathcal L^n$ compatible with base change. The normal form, the frame torsor, and
+this representation are the standing hypothesis (H1); Book 35 §9.2 supplies the extension and its
+commutator pairing but neither the normal form nor the representation. Hence a theta-framed object is a
 locally closed point of the Hilbert parameter scheme: the group law, level sections,
 endomorphisms, and polarization pairing are imposed by the graph and tensor equations already
 constructed. It is therefore represented by a quasi-projective scheme. Forgetting the theta
@@ -927,7 +1028,7 @@ fixes the level, so this quotient represents the original sheaf and carries its 
 abelian scheme. Different auxiliary $n$ and local choices give canonically isomorphic schemes by
 the representing property, and these glue over the base. $\square$
 
-**PEL stack theorem.** For fixed integral PEL data, fixed polarization type, determinant condition, and finite-presentation integral level or local-model condition, PEL objects form an fpqc stack. Its diagonal is representable, separated, and finite, and it is an algebraic stack of finite presentation. After adding neat prime-to-base level, its inertia is trivial and it is represented by a quasi-projective scheme.
+**PEL stack theorem.** For fixed integral PEL data, fixed polarization type, determinant condition, and finite-presentation integral level or local-model condition, PEL objects form an fpqc stack. Its diagonal is representable, separated, and finite, and it is an algebraic stack of finite presentation. After adding neat prime-to-base level, its inertia is trivial and it is represented by a quasi-projective scheme; this last clause is conditional on (H1), through the rigid-level scheme lemma.
 
 **Proof.** Book 10 descends the abelian scheme, group law, endomorphisms, rigidified polarization, and finite level data. The determinant and Rosati conditions descend as equations; ampleness descends by Book 8. This proves the stack assertion.
 
@@ -957,7 +1058,10 @@ $$
 \operatorname{Hom}_{\mathcal O_F}^{\mathrm{sym}}(A,A^\vee),
 $$
 
-with its positive cone of polarizations. It is not assumed in advance to be invertible;
+where symmetry means self-duality under the identification of Book 35 §3.4 and the sheaf is the
+homomorphism sheaf of Book 35 §4.1, cut out by the $\mathcal O_F$-linearity and symmetry
+equations,
+with its positive cone of polarizations in the sense of Book 35 §8.2. It is not assumed in advance to be invertible;
 invertibility is part of the condition below. Fix a fractional ideal $\mathfrak c$ and its totally positive cone $\mathfrak c^+$. A **$\mathfrak c$-polarization** is an isomorphism of ordered invertible $\mathcal O_F$-module sheaves
 
 $$
@@ -970,7 +1074,12 @@ $$
 A\otimes_{\mathcal O_F}\mathfrak c\longrightarrow A^\vee
 $$
 
-has the prescribed isomorphism or finite-kernel type. The tensor product is the abelian scheme obtained by the finite-projective Serre tensor construction.
+has the prescribed isomorphism or finite-kernel type. The tensor product is the abelian scheme
+obtained by the finite-projective Serre tensor construction. That construction is not available in
+any earlier book of this collection: it is the standing hypothesis (H3), which also supplies its
+compatibility with base change and with duality. Everything else in this chapter is independent of
+it, and a reader who prefers to fix one $c\in\mathfrak c^+$ may read the polarization condition at
+that single $c$ using only Book 35 §§8.1–8.3.
 
 This formulation records all compatible polarizations at once and makes ideal-class changes functorial. Choosing one $c\in\mathfrak c^+$ recovers a polarization $\lambda(c)$, but the choice of $c$ is auxiliary and should not enter the moduli problem.
 
@@ -1044,7 +1153,7 @@ $$
 
 where $P_b$ is formed from the reduced characteristic polynomial of $b$ with multiplicities determined by the selected real embeddings. Writing merely a power of the reduced norm without those multiplicities can define the wrong dimension, so $P_b$ belongs to the fixed PEL datum.
 
-The determinant condition is closed. The condition that the alternating form induced by the polarization be perfect on the chosen prime-to-bad-prime Tate module is open-and-closed once its finite kernel type is fixed. At a ramified prime, the correct integral model may additionally impose a lattice-chain, wedge, or local-model condition. These are finite-presentation tensor or rank conditions, so they preserve the stack proof, but smoothness must be decided for that particular local model.
+The determinant condition is closed. The condition that the alternating form induced by the polarization be perfect on the chosen prime-to-bad-prime Tate module is open-and-closed once its finite kernel type is fixed; at each finite level this is the perfectness criterion of Book 35 §8.5, namely that $\lambda[N]:A[N]\to A^\vee[N]$ be an isomorphism, and only that finite-level form is used. At a ramified prime, the correct integral model may additionally impose a lattice-chain, wedge, or local-model condition. These are finite-presentation tensor or rank conditions, so they preserve the stack proof, but smoothness must be decided for that particular local model.
 
 ### 12.3 The resulting stack and its quotients
 
@@ -1108,11 +1217,19 @@ The constructions of this book yield the following precise results for later mod
 - Two-fiber products retain the comparison isomorphism. The diagonal represents isomorphisms, and inertia represents automorphisms.
 - A representable morphism may be tested after every scheme base change. Finite, smooth, etale, and proper have this meaning for stack morphisms.
 - A stack with representable diagonal and a smooth surjective scheme atlas is algebraic. Framing a sufficiently positive projective embedding produces the atlases needed here from the parameter spaces of Book 8.
-- For a smooth affine finitely presented group acting on a separated scheme, the quotient stack has its canonical smooth atlas and representable diagonal. For a finite locally free group, the canonical map is a finite flat presentation; in the quasi-projective finite-presentation cases used here, induction through a general linear group supplies a genuine smooth scheme atlas.
+- For a smooth affine finitely presented group acting on a separated scheme, the quotient stack has its canonical smooth atlas and representable diagonal. For a finite locally free group, the canonical map is a finite flat presentation; in the quasi-projective finite-presentation cases used here, induction through a general linear group supplies a genuine smooth scheme atlas. The smoothness of $\operatorname{GL}_r/G$ that this induction needs is source-descent of smoothness, Book 10 §10.5, and not the base-locality tables of Book 10 §§10.3–10.4.
 - A compatible central flat subgroup of inertia can be rigidified; locally $[X/G]\sslash H=[X/(G/H)]$ when $H$ acts trivially.
 - Over a locally noetherian base, a finite locally free group acting on a finitely presented quasi-projective scheme has a finite scheme quotient. The quotient-stack map to that scheme is coarse. Flat base change is safe; arbitrary base change and descent of finite locally free sheaves with trivial stabilizer action require linear reductivity.
 - Generalized elliptic curves with bounded polygonal boundary form algebraic stacks with separated quasi-finite diagonal; the unlevelled diagonal need not be proper. Ample Drinfeld level bounds the boundary and makes the modular-stack diagonal finite. Full invertible level $N\geq3$ kills inertia and yields a fine scheme.
 - Hilbert and quaternionic PEL objects are defined by an exact order action, Rosati-compatible polarization, determinant or stated integral local-model condition, and level orbit. Their stacks have finite diagonal and explicit framed atlases. Neat level produces fine quasi-projective schemes; removing it gives finite quotient stacks and coarse spaces.
+
+Two of these conclusions are conditional, and the conditions are named rather than hidden. The
+theta-framed fine schemes of Sections 9.3 and 10.5 rest on the Heisenberg normal form and
+representation of (H1), and on its polygonal counterpart (H2); the polarization-module formulation
+of Section 11.1 rests on the Serre tensor construction of (H3); the matrix form of the prime-adic
+argument of Section 9.3 rests on (H4). Everything else — the stack assertions, the diagonals, the
+algebraicity statements, the quotient and coarse-space theorems — uses only Books 8, 10, 26, 27,
+28, 34, and 35 as cited at the use sites.
 
 Every conclusion retains its hypothesis. Smoothness of a frame atlas is not confused with
 smoothness of the structural morphism at a ramified local model. A determinant condition is not

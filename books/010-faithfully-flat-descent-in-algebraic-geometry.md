@@ -52,11 +52,12 @@
     - [The diagonal method](#102-the-diagonal-method)
     - [A table of descending properties](#103-a-table-of-descending-properties)
     - [Proofs of the principal cases](#104-proofs-of-the-principal-cases)
-11. [Effective descent for schemes](#11-effective-descent-for-schemes)
-    - [The theorem and its hypotheses](#111-the-theorem-and-its-hypotheses)
-    - [Descending affine opens](#112-descending-affine-opens)
-    - [Gluing the quotient](#113-gluing-the-quotient)
-    - [Separatedness and quasi-compactness issues](#114-separatedness-and-quasi-compactness-issues)
+    - [Descent along a cover of the source](#105-descent-along-a-cover-of-the-source)
+11. [Effective descent and the scheme boundary](#11-effective-descent-and-the-scheme-boundary)
+    - [The unrestricted algebraic-space theorem](#111-the-unrestricted-algebraic-space-theorem)
+    - [Why the scheme assertion fails](#112-why-the-scheme-assertion-fails)
+    - [The invariant-affine criterion](#113-the-invariant-affine-criterion)
+    - [The scheme cases available in this book](#114-the-scheme-cases-available-in-this-book)
 12. [Finite-flat group objects and actions](#12-finite-flat-group-objects-and-actions)
     - [Group laws descend](#121-group-laws-descend)
     - [Hopf-algebra form](#122-hopf-algebra-form)
@@ -102,14 +103,24 @@ $$
 
 The tensor product remembers the two ways a scalar can be viewed after base change. Equality between those two views is the algebraic form of being defined over $K$.
 
-This book develops that observation from modules to schemes and then to the geometric objects needed in moduli problems. The guiding sequence is
+This book develops that observation from modules to geometric objects and then to the scheme-effectivity criteria needed in moduli problems. The guiding sequence is
 
 $$
 \text{faithful exactness}
 \Longrightarrow \text{effective module descent}
 \Longrightarrow \text{affine descent}
-\Longrightarrow \text{scheme descent}.
+\Longrightarrow
+\begin{cases}
+\text{unrestricted descent as an algebraic space},\\
+\text{descent as a scheme under a proved criterion}.
+\end{cases}
 $$
+
+The last distinction is essential. Schemes do not form an effective fpqc descent category in
+complete generality. The unrestricted quotient exists as an algebraic space; it is a scheme in
+the affine, finite, quasi-affine, and compatibly polarized situations proved below. Thus the book
+uses algebraic spaces only to mark the correct general boundary, while all later scheme-valued
+applications must exhibit one of the stated scheme criteria.
 
 At every stage there are two distinct assertions. Full faithfulness says that maps downstairs can be recognized upstairs. Effectivity says that every compatible object upstairs actually comes from downstairs. Confusing them is a common source of incomplete descent arguments.
 
@@ -763,7 +774,7 @@ For properness, finite type and separatedness have already descended. It remains
 
 For smoothness and étaleness, first descend local finite presentation and flatness. Smoothness may be characterized, for a finitely presented flat morphism, by geometrically regular fibers. A point of $S$ lifts after the cover, and geometric regularity of the fiber can be checked after a faithfully flat field extension. Étaleness is smoothness of relative dimension zero, or equivalently flatness plus unramifiedness. For unramifiedness by itself, local finite type descends and the diagonal is an open immersion exactly when its base change is. This proves the table without assuming the base is noetherian or a field.
 
-Some properties are only local on the source, others only on the target, and some on both. The phrase “fpqc local on the base” means exactly
+Some properties are local on the source, others on the target, and some on both. The phrase “fpqc local on the base” means exactly
 
 $$
 f\text{ has }P
@@ -771,7 +782,184 @@ f\text{ has }P
 f_T\text{ has }P
 $$
 
-for every fpqc cover $T\to S$, with ascent supplied by base-change stability and descent by the arguments above.
+for every fpqc cover $T\to S$, with ascent supplied by base-change stability and descent by the arguments above. Nothing proved so far applies to a cover of the source, because such a cover is not a base change of the morphism being studied. The next section isolates and proves the one source-local statement that later books consume.
+
+### 10.5 Descent along a cover of the source
+
+Quotient constructions raise the opposite question to the one settled above. There one knows a
+property of $X\to S$ and wants it for $Y\to S$, where $g:X\to Y$ is a faithfully flat cover of the
+**source**. The archetype is a quotient $H/G$ of a smooth group scheme by a finite locally free
+subgroup scheme: the quotient receives a finite locally free surjection from the smooth $H$, and
+smoothness of the quotient is what an atlas argument needs. No entry of the table in Section 10.3
+applies, since $g$ is not the base change of $Y\to S$ along anything, and no descent datum for
+$Y$ is given.
+
+Three statements are involved, and it is worth separating them before proving anything.
+
+| Property of $f:Y\to S$ | Hypothesis on $g:X\to Y$ | Main reason |
+|---|---|---|
+| flat | faithfully flat | faithfully flat local rings reflect injectivity |
+| locally of finite presentation | finite locally free surjective, $S$ locally noetherian | Artin--Tate for the invariant subalgebra |
+| reduced geometric fibers | faithfully flat | $\mathcal O_{Y_{\bar s}}$ injects into $g_{\bar s*}\mathcal O_{X_{\bar s}}$ |
+| smooth | the three rows above, plus geometric fibers homogeneous under a group action | generic smoothness together with homogeneity |
+
+Throughout, $f:Y\to S$, $g:X\to Y$, and $h=f\circ g:X\to S$.
+
+**Flatness along the source.** If $g$ is faithfully flat and $h$ is flat, then $f$ is flat.
+
+**Proof.** Flatness is a condition on local rings. Let $y\in Y$, let $s=f(y)$, and use
+surjectivity of $g$ to choose $x\in X$ with $g(x)=y$. The induced local homomorphism
+$\mathcal O_{Y,y}\to\mathcal O_{X,x}$ is flat, and it is faithfully flat: every proper ideal of
+$\mathcal O_{Y,y}$ lies in the maximal ideal, whose extension lies in the maximal ideal of
+$\mathcal O_{X,x}$ and is therefore proper, which is the criterion of Section 1.2. Let
+$M'\to M$ be an injection of $\mathcal O_{S,s}$-modules. Since $h$ is flat, the map
+
+$$
+M'\otimes_{\mathcal O_{S,s}}\mathcal O_{X,x}
+\longrightarrow
+M\otimes_{\mathcal O_{S,s}}\mathcal O_{X,x}
+$$
+
+is injective. It is obtained from
+$M'\otimes_{\mathcal O_{S,s}}\mathcal O_{Y,y}\to M\otimes_{\mathcal O_{S,s}}\mathcal O_{Y,y}$
+by applying $-\otimes_{\mathcal O_{Y,y}}\mathcal O_{X,x}$, and a faithfully flat extension
+reflects injectivity by Section 3.1. Hence $\mathcal O_{Y,y}$ is flat over
+$\mathcal O_{S,s}$. $\square$
+
+Nothing here needs finite presentation, and the argument is the exact mirror of Section 6.2:
+there faithful flatness of a base change reflected flatness of a module, here faithful flatness
+of a cover of the source reflects flatness of the target.
+
+**Finite presentation along the source.** Suppose $g$ is finite locally free and surjective, $S$
+is locally noetherian, and $h$ is locally of finite type. Then $f$ is locally of finite
+presentation.
+
+**Proof.** The assertion is local, so choose an affine open $\operatorname{Spec}R\subseteq S$ and
+an affine open $V=\operatorname{Spec}A\subseteq Y$ lying over it. Since $g$ is finite it is
+affine, so $g^{-1}(V)=\operatorname{Spec}B$ with $B$ a finite locally free faithfully flat
+$A$-algebra; in particular $A\to B$ is injective. The scheme $\operatorname{Spec}B$ is a
+quasi-compact open of $X$, so $B$ is a finite-type $R$-algebra.
+
+Now run the Artin--Tate argument. Choose $b_1,\ldots,b_n$ generating $B$ as an $R$-algebra and
+$y_1,\ldots,y_m$ generating $B$ as an $A$-module, with $y_1=1$. Write
+
+$$
+b_i=\sum_j a_{ij}y_j,
+\qquad
+y_iy_j=\sum_k a_{ijk}y_k,
+\qquad a_{ij},a_{ijk}\in A,
+$$
+
+and let $A_0\subseteq A$ be the $R$-subalgebra generated by the finitely many $a_{ij}$ and
+$a_{ijk}$. Then $A_0$ is a finite-type algebra over the noetherian ring $R$, hence noetherian.
+Every monomial in the $b_i$ is an $A_0$-linear combination of the $y_k$, by induction on its
+degree using the two displayed families of coefficients; therefore $B$ is generated as an
+$A_0$-module by $y_1,\ldots,y_m$. A finite module over a noetherian ring is a noetherian module,
+so its $A_0$-submodule $A$ is a finite $A_0$-module. Consequently $A$ is a finite-type
+$R$-algebra, and finite type over a noetherian ring is finite presentation. $\square$
+
+The noetherian hypothesis is used only here. Without it the same conclusion is true but requires
+a limit argument that this book does not develop; every consumer below works over a locally
+noetherian base.
+
+**Reducedness of the geometric fibers.** If $g$ is faithfully flat and $X$ has reduced geometric
+fibers over $S$, then so does $Y$.
+
+**Proof.** Fix a geometric point $\bar s\to S$. The base change
+$g_{\bar s}:X_{\bar s}\to Y_{\bar s}$ is again flat and surjective, hence faithfully flat. On an
+affine open $\operatorname{Spec}A\subseteq Y_{\bar s}$ with faithfully flat $A\to B$ over an
+affine open of $X_{\bar s}$ dominating it, the map $A\to B$ is injective. A subring of a reduced
+ring is reduced, and reducedness is affine-local. $\square$
+
+Note that only injectivity of $\mathcal O_{Y_{\bar s}}\to g_{\bar s*}\mathcal O_{X_{\bar s}}$ is
+used, and that this injectivity is exactly what faithful flatness supplies; a merely surjective
+$g$ would not give it, as the reduction map of a nonreduced scheme shows.
+
+**Source-descent lemma for smoothness.** Let $g:X\to Y$ be a faithfully flat morphism of
+$S$-schemes which is locally of finite presentation, and assume:
+
+1. $h=f\circ g:X\to S$ is smooth;
+2. either $f:Y\to S$ is locally of finite presentation, or $g$ is finite locally free and $S$ is
+   locally noetherian;
+3. there is an $S$-group scheme $P$ acting on $Y$ over $S$ such that for every geometric
+   point $\bar s\to S$, with algebraically closed residue field $k$, the group $P(k)$ acts
+   transitively on the closed points of $Y_{\bar s}$.
+
+Then $f:Y\to S$ is smooth.
+
+**Proof.** Flatness of $f$ is the first lemma. Local finite presentation of $f$ is either
+assumed or supplied by the second lemma, since a smooth $h$ is locally of finite type. By the
+fiber criterion recalled in Section 10.4 it now suffices to prove that every fiber $Y_s$ is
+smooth over $\kappa(s)$, and by the entry for smoothness in the table of Section 10.3, applied to
+the faithfully flat field extension $\kappa(s)\to k$, it suffices to prove that the geometric
+fiber $Y_{\bar s}$ is smooth over $k$.
+
+Fix such an $\bar s$. Then $Y_{\bar s}$ is locally of finite type over $k$, the base change
+$g_{\bar s}$ is faithfully flat, and $X_{\bar s}$ is smooth over $k$, hence regular and in
+particular reduced. By the third lemma $Y_{\bar s}$ is reduced.
+
+Let $U\subseteq Y_{\bar s}$ be the smooth locus over $k$; it is open, smoothness being an open
+condition on a morphism locally of finite presentation. We claim it is dense. Let
+$\eta$ be the generic point of an irreducible component of dimension $d$, and let $K=\kappa(\eta)$
+be the corresponding function field, a finitely generated extension of $k$. Because $k$ is
+algebraically closed, hence perfect, $K$ is separably generated over $k$, so
+
+$$
+\dim_K\Omega^1_{K/k}=\operatorname{trdeg}_kK=d.
+$$
+
+Since $Y_{\bar s}$ is reduced, $\mathcal O_{Y_{\bar s},\eta}=K$, so the stalk of
+$\Omega^1_{Y_{\bar s}/k}$ at $\eta$ is $\Omega^1_{K/k}$ and its fiber there has dimension $d$.
+The sheaf $\Omega^1_{Y_{\bar s}/k}$ is quasi-coherent of finite type, so by Nakayama its fiber
+dimension is at most $d$ on a nonempty open neighbourhood $W$ of $\eta$, which we shrink to be
+disjoint from the other irreducible components. Let $w\in W$ be a closed point. Its residue field is $k$, so
+the conormal sequence of the closed immersion $\{w\}\hookrightarrow Y_{\bar s}$ identifies
+$\Omega^1_{Y_{\bar s}/k}\otimes\kappa(w)$ with the cotangent space
+$\mathfrak m_w/\mathfrak m_w^2$. Hence that cotangent space has dimension at most $d$, while
+$\dim\mathcal O_{Y_{\bar s},w}=d$ because $w$ is a closed point of a $d$-dimensional component
+and lies on no other. The local ring is therefore regular, and a finite-type scheme over an
+algebraically closed field is smooth exactly at the closed points where its local ring is
+regular. Thus $w\in U$. Closed points are dense in $W$, so $U$ meets every irreducible component
+and is dense.
+
+Now use homogeneity. Each $p\in P(k)$ acts on $Y_{\bar s}$ as a $k$-automorphism, so it carries
+$U$ onto $U$. Choose a closed point $u\in U$. By hypothesis every closed point of $Y_{\bar s}$ is
+$p\cdot u$ for some $p\in P(k)$, hence lies in $U$. The complement of $U$ is a closed subset of a
+scheme locally of finite type over a field containing no closed point, hence is empty. Therefore
+$Y_{\bar s}=U$ is smooth over $k$, which completes the proof. $\square$
+
+**Smooth-quotient corollary.** Let $S$ be locally noetherian, let $H\to S$ be a smooth $S$-group
+scheme, and let $G\subseteq H$ be a closed subgroup scheme that is finite locally free over $S$.
+Suppose the quotient sheaf $Y=H/G$ is represented by a scheme with $q:H\to Y$ finite locally free
+and surjective, that is, a $G$-torsor. Then $Y\to S$ is smooth.
+
+**Proof.** Existence of the quotient is a hypothesis here, not a conclusion: it is supplied by the
+invariant-affine construction of Section 12.4 whenever that applies, and for affine $H$ by the
+finite locally free quotient theorem for affine group schemes. All that is used below is the
+stated conclusion about $q$. Apply the source-descent lemma with $X=H$ and $g=q$: hypothesis (1)
+holds because $H$ is smooth over $S$, and hypothesis (2) holds because $q$ is finite locally free
+and $S$ is locally noetherian. For hypothesis (3), let $P=H$ act on $Y$ by left translation, which is legitimate
+because $q$ is equivariant for left translation on both sides. Fix a geometric point with
+algebraically closed residue field $k$. A closed point $y$ of $Y_{\bar s}$ has nonempty finite
+preimage under the finite surjective $q_{\bar s}$, and a closed point of that preimage is a
+closed point of $H_{\bar s}$, hence an element of $H(k)$ by the Nullstellensatz. If
+$y_i=q(h_i)$ for $i=1,2$, then $h_2h_1^{-1}\in H(k)$ carries $y_1$ to $y_2$. The action is
+therefore transitive on closed points of every geometric fiber. $\square$
+
+In particular, for a finite locally free closed subgroup $G\subseteq\operatorname{GL}_{r,S}$ over
+a locally noetherian base, the homogeneous space $\operatorname{GL}_r/G$ is smooth over $S$. This
+is the form in which later books use the statement when they build a smooth atlas of a quotient
+stack by a non-smooth finite flat group.
+
+Three hypotheses are genuinely needed. Flatness of $g$ cannot be dropped: the normalization
+$\mathbf A^1\to\{y^2=x^3\}$ is finite, surjective, and birational with smooth source, while its
+target is not smooth, and it is not flat. Surjectivity cannot be dropped, since $Y$ is
+unconstrained away from the image of $g$. The homogeneity hypothesis is used only in the last
+paragraph of the proof, to spread smoothness from a dense open of a geometric fiber to the whole
+fiber. The lemma remains true without it, but the fiber step then requires descending regularity
+of local rings along a faithfully flat map, which rests on the homological characterization of
+regular local rings; that characterization is not developed in this collection, and every
+consumer here is a homogeneous space, so nothing is lost by keeping the hypothesis explicit.
 
 ## 11. Effective descent for schemes
 
