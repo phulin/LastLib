@@ -1656,33 +1656,67 @@ $$
 
 which is an isomorphism on $X\setminus E$, maps $E$ to a closed regular point $y\in Y$, and identifies $X$ with $\operatorname{Bl}_y(Y)$. The same assertion holds over the localization of $S$ at the image of $E$, and the local contraction glues with the identity away from that fiber.
 
-**Proof.** Localize $S$ at the image of $E$ and choose a relatively ample $H$. If
-$h=\deg(H|_E)$, set $L=H\otimes\mathcal O_X(hE)$. Then $L|_E\simeq\mathcal O_E$ and $L$ has
-positive degree on every other component of the closed fiber.
+**Proof.** Localize $S$ at the image of $E$, so the base is the spectrum of a DVR. We first
+justify the polarization. On each irreducible component of the closed fiber choose a closed
+regular point away from the other components. At such a point a parameter transverse to that
+component cuts out a horizontal prime divisor. Its closure is finite over the DVR by properness
+and is Cartier because $X$ is regular. The sum of these closures has positive degree on every
+fiber component, so the fiberwise ampleness criterion for proper curves makes its associated
+line bundle relatively ample. Choose such a relatively ample $H$.
 
-We first prove relative generation. On a proper curve, a line bundle positive on every component
-except one rational component where it is trivial has, in high degree, vanishing first
-cohomology, is generated, and separates points and tangent vectors away from that rational
-component. Normalize the curve and prove this one component at a time: after prescribing common
-values at the finitely many preimages of nodes, the assertion is the usual
-$H^1(\mathbf P^1,\mathcal O(d-r))=0$ and Riemann--Roch on each positive-degree component.
-The same argument with the ideal of a length-two subscheme proves tangent-vector separation.
-Choose one exponent for the finite list of generation and separation conditions. The obstruction
-to lifting a section through successive infinitesimal neighborhoods lies in the first cohomology
-of the preceding power; the exact sequences
+Let $h=\deg(H|_E)$, with degree taken over
+$k(E)=H^0(E,\mathcal O_E)$. Since
+$\mathcal O_E(E)=\mathcal O_{\mathbf P^1_{k(E)}}(-1)$, the line bundle
 
 $$
-0\to\mathcal O_E(n)\to
-\mathcal O_{(n+1)E}\to\mathcal O_{nE}\to0
+L=H\otimes\mathcal O_X(hE)
 $$
 
-and $H^1(E,\mathcal O_E(n))=0$ for $n\ge-1$ make these obstructions vanish. Cohomology and base
-change plus Nakayama lift the chosen sections over a neighborhood of the closed fiber. To include
-the other components, filter every infinitesimal fiber by its component ideals; on them a high
-power of $L$ has positive degree and the same normalization--Riemann--Roch calculation kills the
-corresponding first cohomology. On the
-generic fiber a further common multiple is very ample. Thus some $L^N$ is generated, constant on
-$E$, and separates points and tangent vectors off $E$. Let $V=H^0(X,L^N)$ and let $B$ be the image
+restricts trivially to $E$ and has positive degree on every other component of the closed fiber.
+
+We prove the required generation without assuming that this fiber is reduced or nodal. Write it
+as $F=\sum m_iC_i$, with $E=C_0$. If $D$ is an effective subdivisor of $F$ and $C_i\leq D$, then
+
+$$
+0\longrightarrow\mathcal O_{D-C_i}(-C_i)
+ \longrightarrow\mathcal O_D\longrightarrow\mathcal O_{C_i}\longrightarrow0. \tag{11.a}
+$$
+
+Starting with $D=F$, repeatedly use (11.a) to remove all copies of the components
+$C_i\ne E$. Every quotient is a fixed coherent rank-one sheaf on such a component, tensored by
+$L^n$; its degree tends to infinity with $n$. To see directly that its first cohomology then
+vanishes, discard its zero-dimensional torsion, pull the remaining torsion-free rank-one sheaf to
+the normalization of the reduced component, and use the conductor exact sequence. The only
+cokernel is zero-dimensional, while on the normal proper curve Riemann--Roch gives vanishing once
+the degree exceeds $2p_a-2$. After the other components have been removed, filter $m_0E$ by
+
+$$
+0\longrightarrow\mathcal O_E(j)\longrightarrow
+ \mathcal O_{(j+1)E}\longrightarrow\mathcal O_{jE}\longrightarrow0
+\qquad(0\leq j<m_0);
+$$
+
+these layers have zero first cohomology. The same filtration remains valid after tensoring by
+the ideal of any subscheme of length at most two supported away from $E$: only fixed divisors of
+degree at most two are added on the positive-degree components. It also remains valid for the
+ideal of $E$ together with such a subscheme. Consequently one integer $n_0$ works simultaneously
+for
+
+$$
+H^1(F,L^n\otimes\mathcal I_Z)=0\qquad(n\geq n_0),           \tag{11.b}
+$$
+
+where $Z$ is empty, is a length-one or length-two subscheme disjoint from $E$, or is the union of
+$E$ with one such subscheme.
+
+The evaluation exact sequences and (11.b) show that $L^n|_F$ is generated, that its sections
+separate every length-two subscheme away from $E$, and that they separate every point away from
+$E$ from the constant value on $E$. Every section restricts constantly to $E$ because
+$L|_E\simeq\mathcal O_E$. Proper cohomology and base change, proved by the finite Cech complexes
+of Book 9, carries the same surjections through all infinitesimal fibers; Nakayama makes the
+evaluation map surjective over the DVR. On the generic fiber $L=H$, so a further common multiple
+is very ample. Thus some $L^N$ is generated, constant on $E$, and separates points and tangent
+vectors off $E$. Let $V=H^0(X,L^N)$ and let $B$ be the image
 of $\operatorname{Sym}_R(V)$ in $\bigoplus_qH^0(X,L^{qN})$. Then
 $Y=\operatorname{Proj}_RB$ is algebraic and projective, and the induced $c:X\to Y$ contracts
 exactly $E$ and is an isomorphism elsewhere by the separation criterion.
