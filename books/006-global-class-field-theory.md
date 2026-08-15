@@ -1986,8 +1986,11 @@ $2$-primary norm quotient. This proves all four clauses. $\square$
 The proof used only the finite norm quotients established by the independent
 idele inequalities. It has not used existence or ray class fields.
 
-The degree-one row now gives the existence input needed for the construction
-of the global Weil class, still without using class formation.
+The degree-one row now gives character existence and norm limitation before
+the construction of the global Weil class, still without using class
+formation. Tate's regular-class construction below uses the independently
+proved Brauer sequence and second inequality; it does not feed these existence
+results back into degree two.
 
 **Pre-class-formation character-existence theorem.** Every continuous
 finite-order character
