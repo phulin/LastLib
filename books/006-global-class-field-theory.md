@@ -2829,8 +2829,9 @@ compatibilities are available.
 
 **Proof.** We first record the envelope lemma that supplies the middle modules.
 
-**Envelope lemma.** Let $U$ and $X$ be finitely generated $G$-modules, with $X$
-$\mathbf Z$-free, and let $\alpha\in\operatorname {Ext}^2_{\mathbf Z[G]}(X,U)$.
+**Envelope lemma.** Let $U$ be a $G$-module and let $X$ be a finitely generated
+$G$-module which is $\mathbf Z$-free. Let
+$\alpha\in\operatorname {Ext}^2_{\mathbf Z[G]}(X,U)$.
 Suppose that for every $H\subseteq G$ cap product with
 $\operatorname {res}\alpha$ is an isomorphism in every Tate degree. Then
 $\alpha$ has a representative
