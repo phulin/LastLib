@@ -162,9 +162,9 @@ These conclusions require strict bookkeeping. If arithmetic gives $\operatorname
 
 ### 1.4 Scope and standing conventions
 
-Only discriminant bounds are developed here. No distribution theorem for Frobenius classes enters any proof. The foundational tools are real and complex integration, including Tonelli's theorem, Fubini's theorem, and dominated convergence; Fourier inversion and Poisson summation for rapidly decreasing functions; the residue theorem; standard gamma-function identities and Stirling estimates; geometry of numbers; unique factorization of ideals; Dirichlet's unit theorem; and the elementary arithmetic of number-field discriminants. Finiteness of the ideal class group also follows from Theorem 2.1, because only finitely many integral ideals have bounded norm.
+Only discriminant bounds are developed here. No distribution theorem for Frobenius classes enters any proof. The foundational tools are real and complex integration, including Tonelli's theorem, Fubini's theorem, and dominated convergence; Fourier inversion and Poisson summation for rapidly decreasing functions; the residue theorem, Jensen's formula, Borel--Carathéodory, Cauchy's derivative estimates, and the Phragmén--Lindelöf principle on a strip; the defining gamma integral and its functional identities; geometry of numbers; unique factorization of ideals; Dirichlet's unit theorem; and the elementary arithmetic of number-field discriminants. Finiteness of the ideal class group also follows from Theorem 2.1, because only finitely many integral ideals have bounded norm.
 
-One theorem-sized complex-analytic input must be distinguished from that baseline list. We use the Hadamard factorization theorem for an entire function of order at most one, Jensen's formula, and the Phragmén--Lindelöf principle on a vertical strip of bounded width. Section 4.4 states the exact specialization needed here, derives the required growth bound from the theta integral, and explains how these results give the logarithmic derivative and zero count. Nothing stronger, such as a zero-free region or a prime-number theorem, is being assumed. Within this book, Theorem 6.1 and all later discriminant bounds are relative to these declared classical analytic foundations, not to any unmentioned arithmetic theorem.
+No factorization theorem for entire functions and no Stirling asymptotic is assumed. Section 4.4 derives the only growth estimates required here, constructs the genus-one product directly from the zeros, and proves that the remaining zero-free factor is exponential-linear. The same section obtains the fixed-height gamma bounds from Euler's logarithmic-derivative series. Thus the later explicit formula rests on the displayed construction rather than on an unnamed theorem of entire-function theory. Nothing stronger, such as a zero-free region or a prime-number theorem, is used.
 
 Fourier transforms use angular frequency:
 
@@ -298,14 +298,17 @@ $$
 
 The required comparison follows, and therefore $M_{n+1}\geq M_n$.
 
-Stirling's formula, with its usual two-sided remainder, gives
+The limit needs no factorial asymptotic. Monotonicity of $\log x$ also gives the reverse
+integral comparison
 
 $$
-\log M_n
-=2-\frac{\log(2\pi n)}n-\frac1{6n^2}+O(n^{-4}).
+\log(n!)\leq\int_1^n\log x\,dx+\log n
+=n\log n-n+1+\log n.
 $$
 
-Consequently
+Together with the lower bound already proved, this says
+$\log(n!)=n\log n-n+O(\log n)$. Hence
+$\log M_n=2+O(\log n/n)$ and consequently
 
 $$
 M_n\longrightarrow e^2,
@@ -647,16 +650,25 @@ $$
 $$
 
 The same estimate applies to the dual integral in (4.3), and multiplication by $s(s-1)$
-removes its rational term. Stirling's estimate now gives
+removes its rational term. We need only a crude real gamma bound, which follows directly from
+the defining integral. For $x\geq1$, split
+
+$$
+\Gamma(x+1)=\int_0^{2x}e^{-t}t^x\,dt+\int_{2x}^{\infty}e^{-t}t^x\,dt.
+$$
+
+The first term is at most $2x(2x)^x$. In the second write $e^{-t}=e^{-t/2}e^{-t/2}$;
+the function $t^xe^{-t/2}$ is decreasing for $t\geq2x$, so that term is at most
+$2(2x)^xe^{-x}$. Consequently $\log\Gamma(x+1)=O(x\log(x+2))$. Applied with
+$x=nR/2$, this gives
 
 $$
 \log\max_{|s|\leq R}|\xi_K(s)|=O_K(R\log(R+3)).
 \tag{4.4a}
 $$
 
-Thus $\xi_K$ has order at most one. It actually has order one: on the positive real axis,
-$\zeta_K(\sigma)\to1$, and Stirling applied to the gamma factors gives the matching lower order.
-Only the upper bound is needed below. The symmetries are
+This is the growth bound needed below; no matching lower-order assertion is required. The
+symmetries are
 
 $$
 \xi_K(s)=\xi_K(1-s),
@@ -688,23 +700,86 @@ $$
 with zeros repeated according to multiplicity and the sum taken in symmetric expanding discs.
 It converges normally on compact sets avoiding the zeros.
 
-**Proof.** This is the exact point at which the entire-function input declared in §1.4 enters.
-The growth estimate (4.4a) and Jensen's formula imply that the number of zeros in a disc of
-radius $R$ is $O_K(R\log(R+3))$ and that the exponent of convergence is at most one. Hadamard
-factorization therefore gives
+**Proof.** We first prove the factorization rather than import it. Jensen's formula and (4.4a)
+give
 
 $$
-\xi_K(s)=e^{a_K+b_Ks}\prod_\rho
+\#\{\rho:|\rho|\leq R\}=O_K(R\log(R+3)).
+\tag{4.4c}
+$$
+
+Summation over dyadic annuli therefore shows $\sum_{\rho\ne0}|\rho|^{-2}<\infty$.
+Hence the products of the elementary factors
+
+$$
+E_1(z/\rho)=\left(1-\frac z\rho\right)e^{z/\rho}
+$$
+
+converge uniformly on every compact set: outside a fixed finite set of zeros,
+$|\log E_1(z/\rho)|\leq C|z/\rho|^2$. Their limit $P(z)$ is entire and has exactly the
+nonzero zeros of $\xi_K$, with multiplicity. Factor off the zero at the origin, if present, and
+put $h=\xi_K/(z^mP)$. Removable-singularity division makes $h$ entire and zero-free.
+
+Because the plane is simply connected, integrating $h'/h$ from $0$ to $z$ gives an entire
+function $g$ with $h=e^g$. We claim that $g$ is affine. Estimate the canonical product by splitting
+its zeros at $2R$ and using (4.4c) on dyadic annuli; for every $\varepsilon>0$ this gives
+
+$$
+\log\max_{|z|\leq R}|P(z)|=O_{K,\varepsilon}(R^{1+\varepsilon}).
+$$
+
+Here is the minimum-modulus step needed for the quotient. In the interval $[2R,3R]$, remove an
+interval of radius $R^{-2}$ about the modulus of every zero in $|\rho|\leq4R$. By (4.4c) the
+total removed length is $O_K(\log R/R)$, so some radius $r_R\in[2R,3R]$ remains. On
+$|z|=r_R$ every nearby elementary factor is at least polynomially far from zero. Splitting again
+into dyadic annuli and using $|\log E_1(w)|\ll|w|^2$ for $|w|\leq1/2$ gives the two-sided estimate
+
+$$
+|\log|P(z)||=O_{K,\varepsilon}(R^{1+\varepsilon})
+\qquad(|z|=r_R).
+$$
+
+Together with (4.4a), this bounds $\Re g=\log|\xi_K|-m\log|z|-\log|P|$ from above on that
+circle. The maximum principle for the harmonic function $\Re g$ then gives
+$\max_{|z|\leq R}\Re g(z)=O_{K,\varepsilon}(R^{1+\varepsilon})$. Borel--Carathéodory on the
+concentric discs of radii $R$ and $2R$ turns this into
+$\max_{|z|\leq R}|g(z)-g(0)|=O_{K,\varepsilon}(R^{1+\varepsilon})$. Cauchy's estimate for the
+second derivative at any fixed center is then
+
+$$
+|g''(z_0)|\ll_{z_0,K,\varepsilon}R^{-1+\varepsilon}.
+$$
+
+Taking $0<\varepsilon<1$ and letting $R\to\infty$ gives $g''=0$. Thus $g(z)=a_K+b_Kz$ and we
+have proved, internally,
+
+$$
+\xi_K(s)=s^m e^{a_K+b_Ks}\prod_{\rho\ne0}
 \left(1-\frac{s}{\rho}\right)e^{s/\rho}.
 $$
 
-If the chosen origin is a zero, its power is first factored off. Logarithmic differentiation on
-compacta gives (4.4b), with the corresponding elementary term included.
+Logarithmic differentiation of the normally convergent product on compacta gives (4.4b), with
+$m/s$ included when $m>0$.
 
-For the sharper fixed-height count, center Jensen's formula at $2+iT$. On a fixed-radius outer
-circle, the Euler-product bound on the portion $\Re(s)>1$, the functional equation on the
-reflected portion, Phragmén--Lindelöf on the intervening strips of bounded width, and Stirling's
-estimates on the gamma factors give
+For the sharper fixed-height count, center Jensen's formula at $2+iT$. The gamma comparison on a
+fixed-radius circle needs no asymptotic formula. Euler's product for $\Gamma$ gives, away from its
+poles,
+
+$$
+\frac{\Gamma'}{\Gamma}(z)
+=-\gamma+\sum_{k\geq0}
+\left(\frac1{k+1}-\frac1{k+z}\right).
+\tag{4.4d}
+$$
+
+After using $\Gamma(z+1)=z\Gamma(z)$ a fixed number of times, all arguments on the circle have
+real part at least one. Split the series at $k\leq2(|\Im z|+3)$. The initial part is
+$O(\log(|\Im z|+3))$ by comparison with the harmonic series, and pairing the two fractions makes
+the tail $O(1)$. Integrating (4.4d) along a path of bounded length shows that the logarithm of the
+ratio of any two gamma values occurring on that circle is $O(\log(T+3))$.
+
+Therefore the Euler-product bound on the portion $\Re(s)>1$, the functional equation on the
+reflected portion, and Phragmén--Lindelöf on the intervening strips of bounded width give
 $O(\log D_K+n\log(T+3))$ for the logarithmic maximum relative to the center. The Euler product
 also supplies the needed lower bound at the center: at $\sigma=2$,
 
@@ -718,9 +793,9 @@ The inner disc may be chosen to contain the whole rectangle
 $0\leq\Re(s)\leq1$, $T\leq\Im(s)\leq T+1$. Jensen's formula consequently gives (4.4) for
 positive ordinates; conjugation gives the negative ordinates. This proves the lemma. $\square$
 
-This lemma is enough to justify every symmetric zero limit below. It also makes the logical
-boundary explicit: Hadamard factorization and Jensen's formula are classical complex-analysis
-inputs, whereas no arithmetic statement about prime distribution or zero location is used.
+This lemma is enough to justify every symmetric zero limit below. Its proof used only the analytic
+tools listed in §1.4 and the displayed canonical-product construction; no arithmetic statement
+about prime distribution or zero location was inserted.
 
 ### 4.5 Discriminant and analytic conductor
 
