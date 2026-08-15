@@ -1216,19 +1216,102 @@ Formula (4.F4a), together with this attached Brauer block, therefore gives the
 full $S$-unit, $S$-class, and degree-two terms without first killing the class
 group.
 
-For each $v\in S$, choose $c_v$ so deep that
-$U_v^{c_v}\subset F_v^{\times n}$. Replace $F_v^\times$ in the local Kummer
-cone by
+The local truncation must be made simultaneously on a module and on its
+dual. An unspecified ``sufficiently deep'' integer does not do this: the
+Hilbert pairing does not in general send the $r$th unit layer to the
+$(c-r)$th layer for an arbitrary $c$.
+
+Here is the finite local model we use. Put
 
 $$
-\pi_v^{\mathbf Z}/\pi_v^{n\mathbf Z}\ \oplus\
-\mathcal O_v^\times/U_v^{c_v};
+P_v=F_v^\times/F_v^{\times n},\qquad
+P_v^\vee=\operatorname {Hom}
+   (P_v,\tfrac1n\mathbf Z/\mathbf Z).                    \tag{4.F4e}
 $$
 
-this is a quasi-isomorphism. At a real place retain the two terms of the
-complete Tate resolution which meet degrees $0,\ldots ,3$; at a complex place
-use zero. Taking the localization cone gives a finite complex
-$\mathcal C_{S,T,c}$. Increasing $c_v$ gives a homotopy-equivalent complex, and
+Local reciprocity identifies $P_v^\vee$ with
+$H^1(F_v,A_n)$, and Kummer theory identifies $P_v$ with
+$H^1(F_v,\mu_n)$. Under these identifications the local cup product is
+literally evaluation. Thus these are finite modules with a specified perfect
+pairing, not merely two groups having the same order.
+
+We record the filtration, including its endpoints. Write
+$\overline U_v^r$ for the image of $U_v^r$ in $P_v$ and set
+
+$$
+X_v^{\le r}=\{\lambda\in P_v^\vee:
+                    \lambda(\overline U_v^r)=0\}.
+$$
+
+Then $X_v^{\le0}$ consists of the unramified characters and, for every
+$r\ge0$, evaluation induces the perfect pairing
+
+$$
+\frac{\overline U_v^r}{\overline U_v^{r+1}}
+ \;\times\;
+\frac{X_v^{\le r+1}}{X_v^{\le r}}
+\longrightarrow\tfrac1n\mathbf Z/\mathbf Z.             \tag{4.F4f}
+$$
+
+This follows directly from the elementary identity
+$(Q/R)^\vee=R^\perp/Q^\perp$ for subgroups $R\subset Q$ of a finite abelian
+group. It also displays the two boundary blocks which a reflected-index
+formula misses: the valuation quotient is paired with the unramified
+characters, while the residue-unit quotient is paired with the tamely
+ramified characters.
+
+For completeness, the wild cutoff and the different occurring in a coordinate
+description are as follows. Let $p$ be the residue characteristic, write
+$n=p^a n'$ with $(n',p)=1$, put $e_v=v_v(p)$, and choose the _specified_
+integer
+
+$$
+b_v=1+\left\lfloor\frac {e_v}{p-1}\right\rfloor,
+\qquad c_v=b_v+a e_v.                                   \tag{4.F4g}
+$$
+
+(For $p=2$ the same strict inequality in the definition of $b_v$ is the
+needed convergence condition.) Logarithm and exponential are inverse on
+$U_v^{b_v}$ and $\mathfrak m_v^{b_v}$, and multiplication by $n'$ is an
+automorphism there. Hence
+
+$$
+(U_v^{b_v})^n=U_v^{b_v+a e_v}=U_v^{c_v},
+\qquad U_v^{c_v}\subset F_v^{\times n}.                 \tag{4.F4h}
+$$
+
+This proves finiteness with an actual cutoff. It does not assert that
+$U_v^{c_v-r}$ is the annihilator of $U_v^r$.
+
+The precise additive duality used on a logarithmic block also fixes the
+different offset. If $d_v=v_v(\mathfrak D_{F_v/\mathbf Q_p})$ and
+$\psi_v=\psi_{\mathbf Q_p}\circ\operatorname {Tr}_{F_v/\mathbf Q_p}$,
+where $\psi_{\mathbf Q_p}$ has kernel $\mathbf Z_p$, then the annihilator of
+$\mathfrak m_v^r$ under $(x,y)\mapsto\psi_v(xy)$ is
+$\mathfrak m_v^{-d_v-r}$. Consequently
+
+$$
+\left(\mathfrak m_v^r/p^a\mathfrak m_v^r\right)^\vee
+ \cong
+\frac{p^{-a}\mathfrak m_v^{-d_v-r}}
+     {\mathfrak m_v^{-d_v-r}},                           \tag{4.F4i}
+$$
+
+by $y\mapsto(x\mapsto\psi_v(xy))$. Indeed the numerator is exactly the
+annihilator of $p^a\mathfrak m_v^r$, and the denominator is exactly the
+kernel of the resulting character on $\mathfrak m_v^r$. Formula (4.F4i),
+not $r\leftrightarrow c_v-r$, is the trace pairing on the wild logarithmic
+layers. Passing from the raw logarithmic quotient to its image in $P_v$
+and applying $(Q/R)^\vee=R^\perp/Q^\perp$ gives (4.F4f), including layers
+where an $n$th root lies in a shallower unit group.
+
+Use $P_v$ and $P_v^\vee$, with their valuation, residue, and unit
+filtrations above, in the two local Kummer complexes. At a real place retain
+the two terms of the complete Tate resolution which meet degrees
+$0,\ldots ,3$; at a complex place use zero. Taking the localization cone
+gives a finite complex $\mathcal C_{S,T,c}$. Replacing $c_v$ by a larger
+cutoff factors through the same finite group $P_v$ and gives a canonical
+homotopy equivalence, and
 
 $$
 \varinjlim_T\mathcal C_{S,T,c}\simeq
@@ -1239,25 +1322,18 @@ Construct the analogous finite complex for $A_n$. Cup product followed by the
 sum of local invariants is a cochain map because (4.F2) says exactly that its
 two global-to-local differentials are adjoint.
 
-Filter the finite local multiplicative groups by valuation and principal
-units. Local duality from Book 5 pairs the valuation quotient with the roots
-of unity and pairs every positive unit layer
-
-$$
-U_v^r/U_v^{r+1}
-\quad\text{with}\quad
-U_v^{c_v-r}/U_v^{c_v-r+1}                                 \tag{4.F4c}
-$$
-
-by the residue trace. These pairings are perfect. At a real place the complete
-resolution gives the perfect sign pairing, and at a complex place both
-modified complexes vanish.
+Filter the finite local modules by
+$\overline U_v^r$ and $X_v^{\le r}$. The successive pairings are (4.F4f);
+on logarithmic coordinates their different shift is (4.F4i). The valuation
+and residue boundary blocks are the two blocks described immediately after
+(4.F4f). At a real place the complete resolution gives the perfect sign
+pairing, and at a complex place both modified complexes vanish.
 
 Now choose bases of the free parts of the finitely generated group
 $F_{S,T}^{\times}$ and the finite free group $D_{S,T}$ and put the divisor
 matrix in Smith normal form. The dual complex has the transpose matrix. The
 torsion-unit block pairs with roots of unity, the free-unit block with the
-archimedean block, and (4.F4c) pairs the remaining local-unit blocks. The
+archimedean block, and (4.F4f) pairs the remaining local-unit blocks. The
 attached group $B_{S,n}$ pairs with the cokernel of the invariant sum; its
 perfectness is the $n$-torsion exact sequence (4.I12). Order the filtration by
 divisor degree, unit depth, archimedean degree, and finally this Brauer block.
