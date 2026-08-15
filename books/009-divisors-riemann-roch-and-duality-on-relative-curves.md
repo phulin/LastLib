@@ -1133,10 +1133,11 @@ We prove by noetherian induction on a closed support $T\subseteq Z$ that the coh
 coherent sheaf supported on $T$ is finite over $A$. Apply the Chow construction to the reduced
 closed scheme $T$ itself, so its projective modification is an isomorphism over an open meeting
 every generic point of $T$. On the projective modification finiteness is the graded-resolution
-theorem of Book 8. For a coherent $G$ supported on $T$, extension of coherent modules across a
-quasi-compact open supplies a coherent $G'$ upstairs together with a map $G\to p_*G'$ which is
-the identity on that open (take the coherent closure of the graph of the identity). The kernel,
-cokernel, and $R^jp_*G'$ for $j>0$ are coherent and supported on a proper closed subset of $T$.
+theorem of Book 8. Regard a coherent $G$ supported on $T$ as a sheaf on $T$ and put
+$G'=p^*G$. This is coherent, and the adjunction map
+$G\to p_*p^*G$ is the identity on the open where $p$ is an isomorphism. Its kernel and cokernel,
+and the coherent sheaves $R^jp_*G'$ for $j>0$, are therefore supported on a proper closed subset
+of $T$.
 A coherent sheaf supported there is killed by a power of its ideal and therefore has a finite
 filtration by pushforwards of coherent sheaves on the reduced closed subset. The two long exact
 sequences and the Leray spectral sequence reduce finiteness to strictly smaller supports. This
