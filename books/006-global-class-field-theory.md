@@ -1048,6 +1048,54 @@ C^\bullet(G_{F,S},A)\longrightarrow
 \right)[-1].
 $$
 
+The invariant must be lifted to cochains before it can be used in a cone
+pairing. We make that lift now. For a local complex
+$C_v^\bullet=C^\bullet(F_v,\mu_n)$, put
+$B_v^2=dC_v^1$ and $Z_v^2=\ker(d:C_v^2\to C_v^3)$. The local invariant is a
+homomorphism
+
+$$
+Z_v^2/B_v^2\longrightarrow\tfrac1n\mathbf Z/\mathbf Z.
+$$
+
+Because $\mathbf Q/\mathbf Z$ is an injective abelian group, it extends
+along $Z_v^2/B_v^2\subset C_v^2/B_v^2$. Fix one such extension and denote
+the resulting homomorphism by
+
+$$
+t_v:C_v^2\longrightarrow\tfrac1n\mathbf Z/\mathbf Z,
+\qquad t_v(B_v^2)=0.                                    \tag{4.C0}
+$$
+
+At real places use the complete Tate complex and at complex places use zero,
+as below. Put $t_S=\sum_{v\in S}t_v$. On a global two-cocycle $z$, (4.I12)
+gives $t_S(\lambda z)=0$. Hence
+
+$$
+dC^2(G_{F,S},\mu_n)\longrightarrow\tfrac1n\mathbf Z/\mathbf Z,
+\qquad dz\longmapsto t_S(\lambda z)                     \tag{4.C0a}
+$$
+
+is well defined. Extend it, again by injectivity, to a homomorphism
+
+$$
+\kappa_S:C^3(G_{F,S},\mu_n)\longrightarrow
+\tfrac1n\mathbf Z/\mathbf Z.
+$$
+
+By construction
+
+$$
+t_S\lambda=\kappa_Sd\quad\text{on }C^2(G_{F,S},\mu_n).  \tag{4.C0b}
+$$
+
+Thus $\kappa_S$ is the specified nullhomotopy of the total local invariant
+on global cochains. Different choices in (4.C0) differ by a functional
+vanishing on $Z_v^2$, hence factor through $d:C_v^2\to B_v^3$; extending
+that factor to $C_v^3$ changes $\kappa_S$ by the corresponding cochain
+homotopy. The induced compact-support trace is therefore independent of the
+extensions.
+
 We use the following signs throughout. If
 $\lambda:C^\bullet(G_{F,S},A)\to L_S^\bullet(A)$ is localization, where
 $L_S^\bullet(A)=\bigoplus_{v\in S}C^\bullet(F_v,A)$ with the modified
@@ -1076,24 +1124,26 @@ $y\in C^{3-q}(G_{F,S},\mu_n)$, the cochain-level pairing is
 
 $$
  \langle(a,b),y\rangle
- =\sum_{v\in S}\operatorname {inv}_v
-       \bigl(b_v\smile\lambda_v(y)\bigr).                \tag{4.C4}
+ =\sum_{v\in S}t_v
+       \bigl(b_v\smile\lambda_v(y)\bigr)
+   -\kappa_S(a\smile y).                                 \tag{4.C4}
 $$
 
-The right side has local degree two. With the differential
+The first term has local degree two and the second has global degree three,
+so both are now defined on arbitrary cochains. With the differential
 $d\phi(x)=(-1)^{q+1}\phi(dx)$ on the degree-$q$ part of the dual complex,
-(4.C2)--(4.C3) show that its two local boundary terms cancel. The term left
-over is the sum of the invariants of the localization of the global cocycle
-$a\smile y$, hence is zero by (4.I12). Consequently (4.C4) is a cochain
-map. In degree three the same formula, with $y=1$, is
+(4.C2)--(4.C3) and (4.C0b) show directly that the local boundary term and
+the nullhomotopy term cancel. Consequently (4.C4) is a cochain map. In
+degree three the same formula, with $y=1$, is
 
 $$
  \operatorname {tr}_{F,S}[(a,b)]
-   =\sum_{v\in S}\operatorname {inv}_v[b_v].             \tag{4.C5}
+   =\sum_{v\in S}t_v(b_v)-\kappa_S(a).                   \tag{4.C5}
 $$
 
-Formula (4.C1) and global reciprocity for Brauer invariants prove directly
-that (4.C5) is independent of the representative.
+Formula (4.C0b) proves directly that (4.C5) kills boundaries. On cocycles it
+reduces to the sum of the normalized local invariants, modulo the global
+relation, so it has the required normalization.
 
 **Theorem 4.2 (finite Artin--Verdier duality for $A_n$ and $\mu_n$).** For every number
 field $F$, every $n\geq1$, and every such $S$, the following data and assertions are
