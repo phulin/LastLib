@@ -787,15 +787,18 @@ blowups from completions. Only after those steps will Theorem 8.1 be discharged.
 #### 8.5.1 Local duality in dimension two
 
 From this subsection through Proposition 8.21, $A$ is complete. Choose a surjection
-$Q\twoheadrightarrow A$ from a complete regular local ring and set
-$D_A=R\operatorname{Hom}_Q(A,Q)[\dim Q]$. Finite free resolutions and the Koszul resolution of
-the diagonal prove biduality and independence of $Q$. No dualizing complex is asserted for an
-arbitrary excellent local ring: Theorem 8.1 uses this chain only after completion and returns by
-Lemma 8.20.
-Normality gives depth two, so $D_A=\omega_A[2]$ for a finite maximal
-Cohen--Macaulay module $\omega_A$. Choose an injective resolution of this complex and apply the
-$\mathfrak m$-torsion functor. The only surviving indecomposable injective at the closed point is
-the injective hull $E_A(k)$ in degree zero. Consequently, for every finite-length module $M$,
+$Q\twoheadrightarrow A$ from a complete regular local ring of dimension $N$ and set
+
+$$
+D_A=R\operatorname{Hom}_Q(A,Q[N]).
+$$
+
+The regular ring $Q$ has finite global dimension. The depth calculation for a
+two-dimensional normal ring therefore concentrates this complex in one degree:
+$D_A=\omega_A[2]$, where $\omega_A=\operatorname{Ext}^{N-2}_Q(A,Q)$ is a finite maximal
+Cohen--Macaulay module. Applying the $\mathfrak m$-torsion functor to an injective resolution of
+$D_A$ leaves the injective hull $E_A(k)$ in degree zero. Consequently, for every finite-length
+module $M$,
 
 $$
 \operatorname{Ext}^i_A(M,\omega_A)=0\ (i\ne2),
@@ -804,21 +807,40 @@ $$
 \tag{8.7}
 $$
 
-The last functor is an exact length-preserving duality on finite-length modules: induction on a
-composition series reduces this to $\operatorname{Hom}_A(k,E_A(k))=k$.
-
-For a proper modification $f:X\to\operatorname{Spec}A$, define
-$\omega_X[2]=f^!(\omega_A[2])$. The functor $f^!$ is constructed on a projective factorization
-$X\hookrightarrow\mathbf P^n_A$ by a finite locally free resolution and the formula
+The last functor, denoted $M^\vee$, is an exact length-preserving duality on finite-length
+modules: induction on a composition series reduces this to
+$\operatorname{Hom}_A(k,E_A(k))=k$. The same injective-resolution calculation, or equivalently
+the Cech complex on generators of $\mathfrak m$, gives
 
 $$
-f^!K=R\mathcal Hom_{\mathbf P^n_A}
-(\mathcal O_X,K\otimes\omega_{\mathbf P^n_A/A}[n])[-n].
+H^2_{\mathfrak m}(A)^\vee\simeq\omega_A.                 \tag{8.7a}
 $$
 
-Changing the embedding gives the same object: tensor the two resolutions, use the Koszul
-resolution of the diagonal, and cancel the two projective-space canonical bundles. The same
-calculation gives the adjunction identity
+The right side of (8.7a) is intrinsic. We henceforth use (8.7a) to identify $\omega_A$; in
+particular the module and the complex $D_A=\omega_A[2]$ do not depend on the chosen regular
+presentation $Q\twoheadrightarrow A$.
+
+We need proper duality below only for **projective** modifications, and construct precisely that
+case. If $f:X\to\operatorname{Spec}A$ is projective, choose
+$X\hookrightarrow\mathbf P^n_A$ and compose with the closed immersion
+$\mathbf P^n_A\hookrightarrow P=\mathbf P^n_Q$. The ambient scheme $P$ is regular of dimension
+$N+n$. Hence $\mathcal O_X$, viewed on $P$, has a finite locally free resolution: resolve by
+sums of twists, and after $N+n$ steps the local syzygies are projective because every local ring
+of $P$ has global dimension at most $N+n$. Define
+
+$$
+D_X=R\mathcal Hom_P
+   (\mathcal O_X,\omega_{P/Q}[N+n]).
+$$
+
+Normality makes the pure two-dimensional scheme $X$ Cohen--Macaulay. The same depth and finite
+resolution calculation as for $A$ therefore gives $D_X=\omega_X[2]$ for a maximal
+Cohen--Macaulay sheaf $\omega_X$. Notice that the resolution is taken over the regular scheme
+$P$, not over $\mathbf P^n_A$, whose local rings need not be regular and over which
+$\mathcal O_X$ need not have finite projective dimension.
+
+For a bounded coherent complex $F$ on $X$, projective-space duality over $Q$, followed by the
+derived adjunction for $Q\twoheadrightarrow A$, gives
 
 $$
 R\operatorname{Hom}_A(Rf_*F,\omega_A[2])
@@ -826,8 +848,16 @@ R\operatorname{Hom}_A(Rf_*F,\omega_A[2])
 \tag{8.8}
 $$
 
-Thus no duality statement beyond finite locally free resolutions, Cech cohomology on projective
-space, and the displayed diagonal calculation is being assumed here.
+Here is the independence check that prevents the construction from depending on its ambient
+space. A second embedding gives a second complex and a second instance of (8.8). Both represent,
+functorially in every bounded coherent $F$, the same functor
+$R\operatorname{Hom}_A(Rf_*F,D_A)$. Yoneda therefore gives a unique isomorphism between the two
+complexes compatible with (8.8). For three embeddings uniqueness gives the cocycle identity.
+Equivalently, on the product embedding this is the total finite resolution obtained by tensoring
+the two ambient resolutions with the Koszul resolution of the diagonal; the two top Cech
+coefficient maps agree. Thus (8.8), biduality, and $\omega_X$ are independent of $Q$, the
+embedding, and the chosen resolutions. No projective factorization is asserted for an arbitrary
+proper modification.
 
 #### 8.5.2 Vanishing on a normal modification
 
@@ -871,43 +901,51 @@ gives
 $\mathcal I_Z/\mathcal I_Z^2\simeq\mathcal O_Z$, because the conormal of $\sigma(X)$ in $P$ is
 trivial. This contradicts Lemma 8.10. Hence the restriction map is injective. $\square$
 
-**Proposition 8.12 (surface vanishing).** For a normal modification as above,
+**Proposition 8.12 (surface vanishing).** For a projective normal modification as above,
 $R^1f_*\omega_X=0$.
 
-**Proof.** We first show
-$\operatorname{Hom}_{D(A)}(k[-1],Rf_*\mathcal O_X)=0$. Adjunction identifies such a map with
-$Lf^*k[-1]\to\mathcal O_X$. The hyper-Ext spectral sequence has only one possible term: it is
-$\operatorname{Ext}^1_X(\mathcal O_{X_s},\mathcal O_X)$, because
-$H^1(Lf^*k[-1])=\mathcal O_{X_s}$ and every lower cohomology sheaf is torsion whereas
-$\mathcal O_X$ is torsion-free. Thus the map is represented by
+**Proof.** Put $U=\operatorname{Spec}A\setminus\{\mathfrak m\}$ and
+$M=H^1(X,\mathcal O_X)$. The target is normal and $f$ is a modification, so
+$f_*\mathcal O_X=A$; its fibers have dimension at most one, so there is a truncation triangle
 
 $$
-0\longrightarrow\mathcal O_X\longrightarrow\mathcal E
- \longrightarrow\mathcal O_{X_s}\longrightarrow0.             \tag{8.8a}
+A\longrightarrow Rf_*\mathcal O_X\longrightarrow M[-1]
+ \xrightarrow{\delta}A[1].                                  \tag{8.8a}
 $$
 
-Pull (8.8a) back along $\mathcal O_X\to\mathcal O_{X_s}$. Its class is split on the punctured
-surface, hence is zero by Lemma 8.11. Lift $1\in\mathcal O_{X_s}$ to $s\in\mathcal E$. If
-$\mathcal I$ is the fiber ideal, multiplication by $s$ gives
-$c_s:\mathcal I\to\mathcal O_X$. Pushforward gives an $A$-linear map
-$\mathfrak m\to A$. On the punctured spectrum this is multiplication by an element of the
-fraction field; normality, $A=\bigcap_{\operatorname{ht}\mathfrak p=1}A_\mathfrak p$, puts that
-element in $A$. Subtracting it from $s$ makes $s$ annihilated by $\mathcal I$, so (8.8a) splits.
-
-Now suppose $R^1f_*\omega_X\ne0$ and choose a nonzero quotient to $k$. Since
-$\omega_X^\bullet=\omega_X[2]$, this is a nonzero derived map
-$Rf_*\omega_X^\bullet\to k[1]$. Apply
-$R\operatorname{Hom}_A(-,\omega_A[2])$. Formula (8.7) gives
-$R\operatorname{Hom}_A(k[1],\omega_A[2])=k[-1]$, while (8.8) and biduality give
+The module $M$ has finite length. Under the identification
+$X\setminus X_s\simeq U$, the map on cohomology induced by $\delta$ is the restriction map
 
 $$
-R\operatorname{Hom}_A(Rf_*\omega_X^\bullet,\omega_A[2])
- \simeq Rf_*R\mathcal Hom_X(\omega_X^\bullet,\omega_X^\bullet)
- \simeq Rf_*\mathcal O_X.
+M=H^1(X,\mathcal O_X)\longrightarrow H^1(U,\mathcal O_U).
 $$
 
-The dual map is nonzero because Matlis duality is faithful on the finite-length image. It
-contradicts the first paragraph. $\square$
+Indeed both maps are the boundary obtained by comparing the Cech complex of an affine cover of
+$X$ with its restriction away from the closed fiber. Since $A$ has depth two, the local
+cohomology sequence identifies $H^1(U,\mathcal O_U)$ with $H^2_{\mathfrak m}(A)$. Lemma 8.11
+therefore makes
+
+$$
+M\lhook\joinrel\longrightarrow H^2_{\mathfrak m}(A)          \tag{8.8b}
+$$
+
+injective. Matlis duality and (8.7a) turn (8.8b) into a surjection
+$\omega_A\twoheadrightarrow M^\vee$.
+
+Apply $R\operatorname{Hom}_A(-,\omega_A[2])$ to (8.8a). By (8.7),
+$R\operatorname{Hom}_A(M,\omega_A[2])=M^\vee$ in degree zero. The cohomology row in degrees
+$-2,-1$ is consequently
+
+$$
+0\longrightarrow H^0(X,\omega_X)\longrightarrow\omega_A
+ \longrightarrow M^\vee\longrightarrow H^1(X,\omega_X)
+ \longrightarrow0,                                          \tag{8.8c}
+$$
+
+where (8.8) identifies the middle derived complex with $Rf_*\omega_X[2]$. The middle arrow is
+the Matlis dual of (8.8b), hence is surjective. Thus
+$H^1(X,\omega_X)=0$. Since the base is affine this is exactly
+$R^1f_*\omega_X=0$. $\square$
 
 #### 8.5.3 Boundedness and reduction to rational singularities
 
@@ -922,6 +960,14 @@ $$
 
 The last sheaf has zero-dimensional support because a birational map of surfaces has only
 finitely many positive-dimensional fibers.
+
+For boundedness it is enough to range over projective normal modifications. Indeed Chow's lemma,
+followed by normalization, gives a projective normal modification dominating any given normal
+modification, and the first arrow of (8.9) injects the latter's $H^1$ into the former's. The same
+observation shows that vanishing tested on projective normal modifications implies vanishing for
+all normal modifications. Thus every use of (8.8) and Proposition 8.12 below may, and will, be
+made on a projective comparison without changing either bound or the definition of a rational
+singularity.
 
 **Lemma 8.13 (annihilator bound).** Fix $0\ne a\in A$. The lengths of
 $H^1(X,\mathcal O_X)[a]$ are bounded independently of the normal modification $X$.
