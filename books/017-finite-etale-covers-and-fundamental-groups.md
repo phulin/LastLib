@@ -863,7 +863,7 @@ $$
 G_K/N_X,
 $$
 
-where $N_X$ is the intersection of the open normal subgroups corresponding to all finite extensions that extend étale over $X$. This formulation is valid without pretending that codimension-one valuations always detect every branch phenomenon. Finiteness of normalization, when not automatic, must be assumed or supplied by the usual finiteness hypotheses on $X$.
+where $N_X$ is the intersection of the open normal subgroups corresponding to all finite extensions that extend étale over $X$. This formulation is valid without pretending that codimension-one valuations always detect every branch phenomenon. Finiteness of normalization is not automatic for a general noetherian scheme, and the source used for it throughout this book is Book 11, Chapter 3. Theorem 3.1 there proves that for a reduced noetherian Nagata scheme the normalization is finite, and more generally that the normalization of an irreducible component in a finite extension of its function field is finite; Theorem 3.2 proves that excellent rings are Nagata and that localizations and finite-type algebras over an excellent ring are again excellent, so that complete noetherian local rings, fields, and the usual arithmetic Dedekind bases all qualify; and Theorem 3.3 records the case invoked below, namely that a reduced scheme of finite type over an excellent Dedekind scheme has finite normalization, with properness and projectivity preserved. The identification of $Y$ with the normalization of $X$ in $L$ is a statement about a finite morphism exactly when $X$ falls under those hypotheses; for an $X$ outside them, finiteness must be assumed.
 
 For a connected regular Dedekind scheme $S$ the quotient becomes concrete. For each closed point $v$, choose an extension of its discrete valuation to $K^s$. Let $D_v\subset G_K$ be the decomposition group and
 
@@ -928,8 +928,93 @@ is trivial because every cover pulled back from $k$ becomes constant over $k^s$.
 geometric image lies in the kernel. There is no reverse “restriction” map from the kernel at this
 stage; constructing one would already assume the desired exactness.
 
-To see that this is an isomorphism, work at a finite level. Any finite étale cover $Z$ of
-$X_{k^s}$, together with a chosen point and its finitely many structural equations, descends to
+To see that this is an isomorphism, work at a finite level. The passage to a finite level is used
+three times in this book — here, in §13.4, and in §14.3 — always in the same filtered-colimit
+situation, so we prove it once.
+
+**Limit descent lemma for covers.** Let $A_0$ be a ring, let $(A_i)_{i\in I}$ be a filtered
+direct system of $A_0$-algebras with colimit $A=\varinjlim_iA_i$, and let $X_0$ be a
+quasi-compact and quasi-separated $A_0$-scheme. Write $X_i=X_0\times_{A_0}A_i$ and
+$X=X_0\times_{A_0}A$. Then pullback induces an equivalence
+
+$$
+\varinjlim_i\operatorname{FEt}(X_i)
+\xrightarrow{\ \sim\ }
+\operatorname{FEt}(X).
+$$
+
+Explicitly: every finite étale cover of $X$ is the pullback of a finite étale cover of some
+$X_i$; for covers $Z_i,Z_i'$ of $X_i$ with pullbacks $Z,Z'$ to $X$, the natural map
+
+$$
+\varinjlim_{j\geq i}\operatorname{Hom}_{X_j}(Z_j,Z_j')
+\longrightarrow\operatorname{Hom}_X(Z,Z')
+$$
+
+is bijective; and an action of a fixed finite group $G$ on a cover of $X$ by $X$-automorphisms
+descends, with all of its composition relations, to some stage.
+
+**Proof.** Two facts about a filtered colimit of rings $\varinjlim_iR_i$ are used throughout:
+finitely many elements of the colimit all come from one index, and finitely many equations that
+hold in the colimit already hold at one common larger index. Both follow from filteredness.
+
+Choose a finite affine open cover $X_0=\bigcup_{a=1}^mU_a$. Quasi-separatedness makes each
+$U_a\cap U_b$ quasi-compact, hence a finite union of affine opens, and the same for triple
+intersections; fix such finite affine covers once and for all. The morphisms
+$X_i\to X_0$ and $X\to X_0$ are affine, so these opens base change to compatible finite affine
+covers of every $X_i$ and of $X$. For each affine $U$ in the resulting finite list,
+$\mathcal O(U\times_{A_0}A_i)=\mathcal O(U)\otimes_{A_0}A_i$, and tensor products commute with
+filtered colimits, so
+
+$$
+\mathcal O(U\times_{A_0}A)=\varinjlim_i\mathcal O(U\times_{A_0}A_i).
+$$
+
+Let $Z\to X$ be finite étale. It is affine, so $Z=\operatorname{Spec}_X\mathcal B$ for a finite
+locally free $\mathcal O_X$-algebra $\mathcal B$. Refine the cover so that $\mathcal B$ is free on
+each piece: over an affine open of $X$ a finite locally free sheaf is free on each member of a
+covering by distinguished opens, and quasi-compactness selects finitely many of them. Each such
+distinguished open is $D(g)$ for a single element $g$ of the corresponding ring, and those
+finitely many elements come from one index $i_0$. Replacing $I$ by the cofinal subset
+$\{i\geq i_0\}$ and $X_0$ by $X_{i_0}$ — which changes neither $A$ nor $X$ — we may assume that
+the refined cover is already the base change of a finite affine cover of $X_0$, with finite
+affine covers of its double and triple intersections.
+
+Write $R_a=\mathcal O(U_a\times_{A_0}A)$ for the pieces of the refined cover. On $U_a$ the algebra
+$\mathcal B$ is free with basis $b_{a,1},\ldots,b_{a,n_a}$, and its multiplication is recorded by
+structure constants $c^{\,l}_{a;jk}\in R_a$ with $b_{a,j}b_{a,k}=\sum_lc^{\,l}_{a;jk}b_{a,l}$,
+together with the coordinates of the unit. Commutativity, associativity and the unit axioms are
+finitely many polynomial identities among these finitely many elements. Étaleness is, by §3.4,
+invertibility of the determinant
+$\delta_a=\det\bigl(\operatorname{Tr}(b_{a,j}b_{a,k})\bigr)_{j,k}\in R_a$, which is the single
+equation $\delta_au_a=1$ for one further element $u_a$. On each of the finitely many affine opens
+covering $U_a\cap U_b$ the two restrictions of $\mathcal B$ are identified by an invertible matrix
+over the corresponding ring; that this matrix is an algebra isomorphism, that it has an inverse,
+and that the cocycle identity holds on the finitely many affine opens covering the triple
+intersections, are again finitely many polynomial identities among finitely many elements.
+
+Choose one index $i$ at which all of these finitely many elements are defined and all of these
+finitely many identities hold. Over $X_i$ they define a free algebra of rank $n_a$ on each piece
+of the cover, with invertible trace determinant, together with a cocycle of algebra isomorphisms
+on the overlaps. Relative spectra of quasi-coherent algebras glue along a Zariski cover, so this
+produces a finite $X_i$-scheme $Z_i$, and §3.4 makes it étale. By construction the pullback of
+$Z_i$ to $X$ has the same basis, the same structure constants and the same gluing matrices as
+$Z$, so $Z_i\times_{X_i}X\simeq Z$.
+
+Morphisms are handled identically. After passing to a common refinement of the two covers, a
+morphism $Z\to Z'$ over $X$ is on each piece an algebra homomorphism between free modules, that
+is, a matrix of elements of the relevant ring subject to finitely many identities; it therefore
+comes from some stage and defines a morphism there. Two morphisms defined over $X_i$ whose
+pullbacks to $X$ agree have matrices with equal images in the colimits, hence agree over some
+$X_j$ with $j\geq i$. This is the asserted bijection on Hom sets, and applying it to isomorphisms
+and their inverses descends isomorphisms. Finally, an action of a finite group $G$ is a finite
+family $(\rho_\sigma)_{\sigma\in G}$ of automorphisms subject to the finitely many identities
+$\rho_\sigma\rho_\tau=\rho_{\sigma\tau}$ and $\rho_1=\operatorname{id}$, so it descends together
+with them. $\square$
+
+Now apply the lemma. The scheme $X$ is of finite type over a field, hence noetherian and in
+particular quasi-compact and quasi-separated, and $k^s$ is the filtered colimit of the finite
+separable subextensions $k'/k$. Any finite étale cover $Z$ of $X_{k^s}$ therefore descends to
 $Z'/X_{k'}$ for some finite separable $k'/k$. Enlarge $k'$ to a finite Galois extension. Form over
 $X_{k'}$ the fiber product of the finitely many conjugates $\sigma Z'$. Permuting the factors
 gives canonical descent data to $X$; effective descent produces a finite étale cover $W/X$.
@@ -1155,9 +1240,13 @@ The point is not merely that a cover over $K$ uses finitely many coefficients an
 
 First replace $X$ by $X_{\mathrm{red}}$; finite étale covers are unchanged by a nilpotent
 thickening. Since $k$ is algebraically closed, it is perfect, so this reduced finite-type scheme
-is geometrically reduced. A cover $Y_K/X_K$ and all its structure maps spread to a finite étale
-cover $Y_S\to X\times_kS$ over some nonempty connected affine $k$-scheme $S$ of finite type with
-function field embedded in $K$. Shrinking $S$ preserves finiteness and étaleness. The projection
+is geometrically reduced. The field $K$ is the filtered union of its finitely generated
+$k$-subalgebras $A_i$, all of them domains, and $X$ is noetherian, hence quasi-compact and
+quasi-separated. The limit descent lemma of §12.2, applied with $A_0=k$, $X_0=X$ and the system
+$(A_i)$, therefore spreads a cover $Y_K/X_K$ and all its structure maps to a finite étale
+cover $Y_S\to X\times_kS$ with $S=\operatorname{Spec}A_i$ for some $i$; such an $S$ is a nonempty
+integral, hence connected, affine $k$-scheme of finite type whose function field is embedded in
+$K$. Shrinking $S$ preserves finiteness and étaleness. The projection
 $X\times_kS\to S$ is proper and flat with geometrically connected, geometrically reduced fibers,
 so its relative component scheme is finite étale by the argument of §12.4.
 
@@ -1245,10 +1334,20 @@ covers $Z_n/V_n$; it also lifts every morphism uniquely. Write
 $\mathcal A_n=(Z_n)_*\mathcal O_{Z_n}$. These are compatible finite locally free
 $\mathcal O_{V_n}$-algebras. We now establish the only effectivity point needed here. A compatible
 system of finite locally free sheaves on the thickenings of a proper $A$-scheme comes from a
-unique coherent sheaf on $V$. In the projective case, embed $V$ in projective space. A finite
-set of twists generates the special-fiber sheaf. Serre vanishing, the exact sequences for
-successive thickenings, and Nakayama show that one bound works on every $V_n$ and that the
-corresponding spaces of sections form compatible finite $A/I^{n+1}$-modules. Their inverse limits
+unique coherent sheaf on $V$. In the projective case, embed $V$ in some $\mathbf P^r_A$, so that
+every $V_n$ is a closed subscheme of $\mathbf P^r_{A/I^{n+1}}$. The vanishing input is Serre's
+theorem in the form proved in Book 8, §6.2: for $A$ noetherian and $\mathcal F$ coherent on
+$\mathbf P^r_A$ there is an $n_0$ with $H^i(\mathbf P^r_A,\mathcal F(n))=0$ for all $i>0$ and
+$n\geq n_0$, and with $\mathcal F(n)$ globally generated in that range; the same statement then
+holds on every projective noetherian $A$-scheme, in particular on each $V_n$, and the
+line-bundle calculation behind it is the one of Book 15, §2.2. A finite set of twists therefore
+generates the special-fiber sheaf. The kernel of $\mathcal A_n\to\mathcal A_{n-1}$ is
+$\mathcal A_0\otimes_{\mathcal O_{V_0}}(I^n\mathcal O_V/I^{n+1}\mathcal O_V)$, so the graded
+object assembled from these kernels is a finitely generated graded module over the finitely
+generated graded $\mathcal O_{V_0}$-algebra $\operatorname{gr}_I\mathcal O_V$; applying the
+vanishing theorem to the finitely many coherent sheaves generating it gives one bound valid for
+every $n$, and the exact sequences for successive thickenings together with Nakayama then show
+that the corresponding spaces of sections form compatible finite $A/I^{n+1}$-modules. Their inverse limits
 are finite $A$-modules. The direct sum over the twists is a finitely generated graded module over
 the homogeneous coordinate ring; finite generation follows from the multiplication maps in all
 sufficiently large degrees. Sheafification gives the desired coherent sheaf, and reduction of its
@@ -1256,8 +1355,17 @@ graded sections recovers every member of the system. Applying the same construct
 Hom identifies morphisms with inverse limits of their reductions.
 
 For a proper $V$, the reduction to that projective calculation is a noetherian induction, which
-we spell out. Chow's blowup construction gives a projective scheme $V'\to V$ that is an
-isomorphism over a dense open of each component. Proper direct image commutes with the adic
+we spell out. The modification it uses is Chow's lemma in the form proved in Book 15, §2.4 and
+listed in that book's reusable package in §15.2. Its hypotheses hold here without further
+comment. The base $S=\operatorname{Spec}A$ is noetherian and affine; $V\to S$ is proper, hence
+separated and of finite type; and over an affine noetherian base every affine open of a
+finite-type scheme is quasi-projective, which is precisely the covering hypothesis that Book 15
+singles out as automatic for affine $S$. The lemma therefore yields an $S$-morphism
+$p\colon V'\to V$ that is projective and surjective, together with a dense open
+$V^\circ\subseteq V$ containing every generic point of $V$ over which $p$ is an isomorphism; and
+since $V$ is proper over $S$, the scheme $V'$ is projective over $S$. The same clause applies at
+every later stage of the induction, because the error terms below are supported on closed
+subschemes of $V$, which are again proper over the same affine noetherian base. Proper direct image commutes with the adic
 inverse limit: on a finite affine cover this is the assertion that completion commutes with the
 cohomology of the finite Čech complex, proved by applying the Artin–Rees lemma to its images and
 kernels. Algebraize the pulled-back system on $V'$ by the projective calculation and push it
@@ -1300,7 +1408,7 @@ henselian complete DVR is finite étale. Its special fiber is a singleton, so th
 is the base itself; consequently its geometric generic fiber is connected. The connected-cover
 criterion of §8.3 says exactly that $\operatorname{sp}$ is surjective.
 
-Full injectivity is subtler. If the residue characteristic is $p>0$, new $p$-primary covers may exist generically and disappear upon specialization. What is invariant without further assumptions is the prime-to-$p$ quotient:
+Full injectivity is subtler. If the residue characteristic is $p>0$, new $p$-primary covers may exist generically and disappear upon specialization. What is invariant is the prime-to-$p$ quotient:
 
 $$
 \operatorname{sp}^{(p')}\colon
@@ -1309,35 +1417,163 @@ $$
 \pi_1(X_{\bar s})^{(p')}.
 $$
 
-Here the superscript denotes the maximal profinite quotient detected by finite groups of order prime to $p$. If the residue characteristic is $0$, the full specialization map is an isomorphism. These are the forms safe for smooth proper curves and abelian schemes in arithmetic applications.
+Here the superscript denotes the maximal profinite quotient detected by finite groups of order
+prime to $p$; when the residue characteristic is $0$ every finite group qualifies and the
+displayed map is the full specialization map.
 
-We prove injectivity on this quotient at finite level. We need the following local fact.
+We prove this for a family of **relative dimension at most one**, and we say at once why the
+restriction is stated rather than suppressed. The proof consumes a purity statement on the total
+space of the family, whose dimension exceeds the relative dimension by one. Over a discrete
+valuation ring a relative curve gives a surface, and purity on a regular surface is a theorem we
+can prove outright from the depth theory of Book 11, Chapter 14. In higher relative dimension the
+argument below goes through word for word, but only granting the Zariski–Nagata purity theorem in
+dimension greater than two, which this book does not prove; that dependence is isolated as a
+named hypothesis at the end of the section instead of being absorbed into a sketch. Nothing is
+lost for the uses made here: §14.5 and §15.6 apply the theorem to smooth proper relative curves,
+and no consumer in this book needs a larger relative dimension.
 
-**Purity lemma.** If $V$ is regular and noetherian and $W\to V$ is finite, with $W$ normal and
-the map étale over an open containing every codimension-one point of $V$, then it is étale.
-Indeed, localize at a minimal point of the non-étale locus and pass faithfully flatly to the
-strict henselization. If its codimension were at least two, successive general members of a
-regular system of parameters reduce to a regular local surface while preserving the isolated
-failure of étaleness; this follows by choosing each parameter outside the finitely many associated
-primes of the relevant Fitting ideals. On a regular local surface, the normalization is reflexive:
-normality gives depth two, and the Auslander–Buchsbaum formula over the regular local ring makes
-the finite module free. The determinant of its trace pairing is a unit at every height-one prime.
-A regular local ring is factorial, so a nonunit determinant would lie in a height-one prime.
-The determinant is therefore a unit, and the trace criterion of §3.4 makes the map étale at the
-closed point, a contradiction. Lifting back through the chosen regular parameters gives the same
-contradiction at the original minimal point. Hence every minimal branch point has codimension one,
-which proves the lemma.
+So assume from now on that $X\to\operatorname{Spec}R$ is proper and smooth of relative dimension
+at most one with geometrically connected fibers. The local input is the following.
 
-Now let a connected Galois cover of $X_{\bar\eta}$ have group $G$ of order prime to $p$. It and
-its action descend to a finite extension of the completed fraction field. Normalize the
-corresponding base change of $X$ in the cover; finiteness holds because a scheme smooth of finite
-type over a complete DVR is excellent. The purity lemma says that any branch locus is a divisor.
-There is none on the generic fiber, so it is supported on the special fiber. At its generic
-points the inertia groups have order dividing $|G|$ and are therefore tame. After a finite tamely ramified extension
-of the DVR whose ramification index is divisible by all those inertia orders, the local equation
-$u^e=t$ and Abhyankar's elementary cancellation $t=v^e$ remove the vertical inertia. Purity then
-makes the normalization finite étale everywhere. Its special fiber is a finite étale cover whose
-geometric generic fiber contains the original cover as the chosen connected component.
+**Purity lemma for surfaces.** Let $V$ be a connected regular noetherian scheme all of whose
+local rings have dimension at most two, and let $\pi\colon W\to V$ be a finite morphism with $W$
+normal such that every irreducible component of $W$ dominates $V$. If $\pi$ is étale over every
+point of $V$ of codimension at most one, then $\pi$ is étale.
+
+**Proof.** A regular scheme is normal, and a connected normal noetherian scheme is integral, so
+$V$ is integral; write $K$ for its function field. Likewise $W$ is normal and noetherian, hence a
+finite disjoint union of integral normal schemes, so every local ring $\mathcal O_{W,w}$ is a
+normal noetherian local domain. Étaleness may be tested pointwise on $V$. Let $v\in V$. If
+$\pi^{-1}(v)=\varnothing$ there is nothing to prove, and if $v$ has codimension at most one the
+hypothesis applies directly; so assume $\dim\mathcal O_{V,v}=2$ and $\pi^{-1}(v)\neq\varnothing$.
+Put $A=\mathcal O_{V,v}$, a two-dimensional regular local ring, and
+$B=(\pi_*\mathcal O_W)_v=\prod_{w\mapsto v}\mathcal O_{W,w}$, a finite $A$-algebra because $\pi$
+is finite.
+
+Fix $w$ above $v$. Then $\mathcal O_{W,w}$ is a local $A$-algebra, module-finite over $A$ as a
+direct factor of $B$, and a normal domain. The generic point $\zeta$ of the component of $W$
+through $w$ maps to the generic point of $V$ by hypothesis, so the composite
+$A\hookrightarrow K\to\kappa(\zeta)$ is injective and hence $A\to\mathcal O_{W,w}$ is injective.
+By the remark following Book 11, Theorem 14.30, injectivity forces
+$\dim\mathcal O_{W,w}=\dim A=2$, so that theorem applies exactly as stated: a module-finite local
+algebra over a two-dimensional regular local ring which is a normal domain of dimension two is
+free. Thus each $\mathcal O_{W,w}$, and therefore $B$, is a free $A$-module; write $n$ for its
+rank. Equivalently, one may read the same conclusion through depth: Book 11, Theorem 14.23 gives
+$\operatorname{depth}\mathcal O_{W,w}\geq2$ because it is a normal local domain of dimension two,
+depth is insensitive to whether it is computed over $A$ or over $\mathcal O_{W,w}$, and Book 11,
+Theorem 14.27 makes a finite module of depth two over a two-dimensional regular local ring free.
+
+Choose an $A$-basis of $B$ and let $\delta\in A$ be the determinant of the trace pairing
+$(x,y)\mapsto\operatorname{Tr}_{B/A}(xy)$ in that basis; a change of basis multiplies $\delta$ by
+the square of a unit, so both the vanishing and the invertibility of $\delta$ are intrinsic. The
+generic point of $V$ has codimension zero, so $\pi$ is étale there and $B\otimes_AK$ is a finite
+étale $K$-algebra; by §3.4 its trace pairing is perfect and $\delta\neq0$. Suppose $\delta$ were
+not a unit. A prime of $A$ minimal over $\delta A$ has height at most one by Krull's principal
+ideal theorem and height at least one because $\delta\neq0$ in the domain $A$; so some height-one
+prime $\mathfrak p$ contains $\delta$. It corresponds to a point of $V$ of codimension one, over
+which $\pi$ is étale by hypothesis, so $B_{\mathfrak p}$ is finite étale over $A_{\mathfrak p}$
+and §3.4 makes $\delta$ invertible in $A_{\mathfrak p}$ — contradicting
+$\delta\in\mathfrak pA_{\mathfrak p}$. Hence $\delta\in A^\times$, the trace pairing of $B$ over
+$A$ is perfect, and §3.4 makes $B$ finite étale over $A$. Since $\pi$ is finite over the
+noetherian $V$, hence of finite presentation, and since flatness and unramifiedness at $w$ are
+conditions on $\mathcal O_{W,w}$ over $\mathcal O_{V,v}$, this says precisely that $\pi$ is étale
+at every point above $v$. As $v$ was arbitrary, $\pi$ is étale. $\square$
+
+Note what the hypotheses do. Normality of $W$ is what produces depth two and hence freeness; it
+is not a side condition, and no version of the lemma survives its removal. Dominance of the
+components is what makes the generic trace determinant nonzero.
+
+Now let $Y_{\bar\eta}\to X_{\bar\eta}$ be a connected Galois cover with group $G$ of order prime
+to $p$; its degree is $|G|$. Write $R'=\widehat R^{\mathrm{sh}}$, $K'=\operatorname{Frac}R'$, and
+$\bar\eta=\operatorname{Spec}\overline{K'}$. If the relative dimension is zero, then $X$ is
+$\operatorname{Spec}R$ itself and both groups are trivial, so assume the relative dimension is
+one.
+
+Since $\overline{K'}$ is the filtered union of its finite subextensions $L/K'$ and $X_{K'}$ is
+noetherian, the limit descent lemma of §12.2 descends the cover together with its $G$-action to a
+finite étale $Y_L\to X_L$ carrying a $G$-action by $X_L$-automorphisms, for some finite $L/K'$.
+The scheme $Y_L$ is connected because its base change $Y_{\bar\eta}$ is, and simple transitivity
+of $G$ on a geometric fiber may be checked after base change, so $Y_L\to X_L$ is Galois with
+group $G$ and of degree $|G|$.
+
+Let $R_L$ be the integral closure of $R'$ in $L$. It is a complete discrete valuation ring: $R'$
+is a complete noetherian local ring, hence excellent and therefore Nagata by Book 11, Theorem
+3.2, so $R_L$ is finite over $R'$ by Book 11, Theorem 3.1; a one-dimensional normal noetherian
+local domain is a discrete valuation ring, and $R_L$ is local because $R'$ is henselian. Put
+$\mathcal X=X\times_{R'}\operatorname{Spec}R_L$. It is smooth and proper over the regular base
+$R_L$, hence regular, of dimension two, with generic fiber $X_L$ and with integral special fiber,
+since a smooth geometrically connected fiber is geometrically integral; it is connected because
+it is proper over a local ring with connected special fiber, hence integral. Being of finite type
+over the complete, therefore excellent, ring $R_L$, it is excellent and in particular Nagata, so
+its normalization $\mathcal Y$ in the finite étale $X_L$-scheme $Y_L$ is finite over $\mathcal X$
+by Book 11, Theorems 3.1 and 3.2. Functoriality of normalization extends the $G$-action to
+$\mathcal Y$ over $\mathcal X$, and by construction every component of $\mathcal Y$ dominates
+$\mathcal X$.
+
+The codimension-one points of $\mathcal X$ are the codimension-one points of the generic fiber
+$X_L$, over which $\mathcal Y\to\mathcal X$ is étale because $Y_L\to X_L$ is, together with the
+single generic point $\xi$ of the special fiber. Since $\mathcal X$ is smooth over $R_L$, the
+special fiber is the integral divisor cut out by a uniformizer $t$ of $R_L$, so
+$\mathcal O_{\mathcal X,\xi}$ is a discrete valuation ring with uniformizer $t$. Let
+$\mathcal O'$ be the semilocal ring of $\mathcal Y$ at the finitely many points above $\xi$: it is
+the integral closure of $\mathcal O_{\mathcal X,\xi}$ in an étale algebra of degree $|G|$ over the
+fraction field, hence finite and torsion free, hence free of rank $|G|$, and it is a product of
+discrete valuation rings permuted transitively by $G$. All ramification indices are therefore one
+integer $e$, all residue degrees one integer $f$, and counting ranks modulo the uniformizer gives
+$efg=|G|$ with $g$ the number of factors. Both $e$ and $f$ divide $|G|$ and are prime to $p$. A
+field extension of degree prime to $p$ has trivial inseparable degree, so the residue extensions
+are separable and the extension at $\xi$ is tamely ramified of index $e$ prime to $p$.
+
+Adjoin an $e$-th root of $t$. Let $M=L(t^{1/e})$, let $R_M$ be the integral closure of $R_L$ in
+$M$ — again a complete discrete valuation ring, totally and tamely ramified of degree $e$ over
+$R_L$ with unchanged residue field — put $\mathcal X_M=\mathcal X\times_{R_L}R_M$, and let
+$\mathcal Y_M$ be the normalization of $\mathcal X_M$ in the finite étale cover
+$Y_M=Y_L\times_LM$ of its generic fiber, finite again by Book 11, Theorems 3.1 and 3.2. The
+scheme $\mathcal X_M$ is smooth over the discrete valuation ring $R_M$, hence regular, connected
+and of dimension two, with the same integral special fiber; write $\xi_M$ for its generic point,
+so that $\mathcal O_{\mathcal X_M,\xi_M}$ is a discrete valuation ring with uniformizer
+$s=t^{1/e}$.
+
+That this base change removes the vertical ramification is Abhyankar's lemma in the only case
+needed, and in that case it is a short computation. Let $\mathcal O^{\mathrm{sh}}$ be a strict
+henselization of $\mathcal O=\mathcal O_{\mathcal X,\xi}$, with fraction field $F^{\mathrm{sh}}$.
+It is faithfully flat over $\mathcal O$, so étaleness may be tested after it; it preserves
+ramification indices and residue separability; and since $\mathcal O$ is excellent, forming
+integral closures commutes with it. Each local factor of
+$\mathcal O'\otimes_{\mathcal O}\mathcal O^{\mathrm{sh}}$ is a discrete valuation ring, ramified
+of index $e$ over $\mathcal O^{\mathrm{sh}}$ with separable — hence, the residue field of
+$\mathcal O^{\mathrm{sh}}$ being separably closed, trivial — residue extension; so its fraction
+field $F'$ has degree $e$ over $F^{\mathrm{sh}}$. Choose a uniformizer $\varpi$ of that factor and
+write $\varpi^{\,e}=tu$ with $u$ a unit. The polynomial $X^e-\bar u$ is separable because
+$p\nmid e$, so it has a root in the separably closed residue field, and Hensel's lemma lifts that
+root: $u=w^e$ for a unit $w$. Then $(\varpi/w)^e=t$, so $F'$ contains an $e$-th root of $t$, whose
+valuation is $1/e$ times that of $t$ and which therefore generates a subextension of degree $e$;
+comparing degrees gives $F'=F^{\mathrm{sh}}(t^{1/e})$. Because $e$ is invertible and the residue
+field is separably closed, $\mu_e\subset\mathcal O^{\mathrm{sh}}$, so $F'/F^{\mathrm{sh}}$ is
+cyclic of degree $e$ and $F'\otimes_{F^{\mathrm{sh}}}F^{\mathrm{sh}}(s)$ is a product of $e$
+copies of $F^{\mathrm{sh}}(s)$. The base change of $\mathcal O_{\mathcal X_M,\xi_M}$ along
+$\mathcal O\to\mathcal O^{\mathrm{sh}}$ is $\mathcal O^{\mathrm{sh}}[s]/(s^e-t)$, a strictly
+henselian discrete valuation ring with uniformizer $s$, and the integral closure of that ring in
+the displayed split algebra is the corresponding product of copies of itself, which is étale over
+it. Hence $\mathcal Y_M\to\mathcal X_M$ is étale at $\xi_M$.
+
+So $\mathcal Y_M\to\mathcal X_M$ is finite with $\mathcal Y_M$ normal, every component dominates
+the connected regular two-dimensional $\mathcal X_M$, and the map is étale over every
+codimension-one point: over the generic fiber because $Y_M\to X_M$ is étale, and at $\xi_M$ by
+the previous paragraph. The purity lemma for surfaces makes $\mathcal Y_M\to\mathcal X_M$ finite
+étale.
+
+Its special fiber is a finite étale cover of $X_s\times_{k^{\mathrm{s}}}\kappa$, where
+$k^{\mathrm{s}}$ is the separably closed residue field of $R'$ and $\kappa$ is the residue field
+of $R_M$, equal to that of $R_L$ and hence a finite, therefore purely inseparable, extension of
+$k^{\mathrm{s}}$. By §13.3 such an extension is invisible to finite étale
+covers, so the special fiber of $\mathcal Y_M$ comes from a finite étale cover $Z_{\bar s}$ of
+$X_{\bar s}$. Extend $Z_{\bar s}$ over $X_{R'}$ by the finite étale existence lemma and call the
+result $\mathcal Z$. Its base change to $R_M$ is finite étale over $\mathcal X_M$ with the same
+special fiber as $\mathcal Y_M$, so the uniqueness clause of the existence lemma, applied over
+the complete local ring $R_M$, identifies it with $\mathcal Y_M$. Restricting to $\overline{K'}$
+therefore returns $Y_{\bar\eta}$. In other words, the specialization functor carries $Z_{\bar s}$
+to the given generic cover.
 
 Thus every finite quotient of order prime to $p$ of the generic group is detected by a special
 cover. The injectivity criterion of §8.3 makes $\operatorname{sp}^{(p')}$ injective; surjectivity
@@ -1346,7 +1582,19 @@ the same argument applies to every finite quotient, giving the full isomorphism.
 explains both qualifications: purity uses smoothness, and algebraization plus the fact that a
 closed subset of a proper family meets the closed fiber uses properness.
 
-The statement can be tested on an abelian scheme $A/R$. For $n$ invertible in $R$, multiplication by $n$ is finite étale on the whole family, and its kernel has rank $n^{2g}$ in relative dimension $g$. The same cover appears on generic and special fibers, so all prime-to-$p$ torsion monodromy is transported unchanged. Multiplication by $p$ in residue characteristic $p$ is not étale on the special fiber and lies outside this argument.
+**The one hypothesis not proved here.** For relative dimension $d\geq2$ every step above is
+unchanged except the last: $\mathcal X_M$ is then regular of dimension $d+1$, and concluding
+étaleness from étaleness in codimension one requires
+
+> **(ZN)** *Zariski–Nagata purity.* If $V$ is regular and noetherian, $\pi\colon W\to V$ is
+> finite with $W$ normal and every component of $W$ dominating $V$, and $\pi$ is étale over every
+> point of $V$ of codimension at most one, then $\pi$ is étale.
+
+This book proves (ZN) only for $\dim V\leq2$, which is the purity lemma for surfaces above. Any
+assertion of $\operatorname{sp}^{(p')}$ in relative dimension at least two is therefore
+conditional on (ZN) and is flagged as such; no later result in this book rests on it.
+
+The statement can be tested on an abelian scheme $A/R$. For $n$ invertible in $R$, multiplication by $n$ is finite étale on the whole family, and its kernel has rank $n^{2g}$ in relative dimension $g$. The same cover appears on generic and special fibers, so all prime-to-$p$ torsion monodromy is transported unchanged. This is a direct verification on explicit covers, not an application of the theorem just proved: it needs no purity input, and in particular it is unconditional in every relative dimension $g$. Multiplication by $p$ in residue characteristic $p$ is not étale on the special fiber and lies outside this argument.
 
 At the arithmetic level, the two fibers map to $G_K$ and $G_k$. Relating those quotients requires decomposition data connecting a geometric generic point to a geometric special point and introduces inertia. This is why the clean specialization theorem is stated for geometric fundamental groups; an arithmetic formulation must record those additional choices.
 
@@ -1374,6 +1622,8 @@ $$
 
 Since every group of order prime to $p$ has only prime-to-$p$ inertia, the superscript may equally be read as the prime-to-$p$ fundamental group of the open curve. The proof uses Kummer charts at the boundary. After a strict henselian localization and a parameter $t$ for a boundary section, a tamely ramified cover is dominated by one obtained from $u^n=t$ with $(n,p)=1$ and an unramified cover. The derivative $nu^{n-1}$ is invertible away from the divisor, and the exponent $n$ is unchanged under specialization. These local extensions glue because their descent data are finite; properness of $\overline X$ controls the complement. Applying the proper smooth prime-to-$p$ theorem to the unramified pieces yields the isomorphism.
 
+Two steps of that sketch are no longer sketches. The passage from a cover of $X_{\bar\eta}$ to a cover defined over a finite extension of the fraction field, carrying its group action with it, is the limit descent lemma of §12.2. The passage from the resulting finite normal model to a finite étale one is the purity lemma for surfaces of §14.3, whose hypotheses are met precisely because $\overline X$ has relative dimension one over $R$: every model occurring here is regular of dimension two, so the unproved higher-dimensional purity statement (ZN) of §14.3 is never invoked. The remaining boundary bookkeeping is the sketch it is announced to be.
+
 No full tame isomorphism is asserted in residue characteristic $p$. A $p$-group cover unramified at the boundary is tame there but can still vary, just as the étale $p$-power torsion of a proper elliptic curve varies between ordinary and supersingular fibers. “Tame at infinity” excludes wild boundary inertia; it does not turn every finite group into one of order prime to $p$.
 
 Semistable reduction lies on another boundary. If $\overline X/R$ has a nodal special fiber rather than a smooth one, vanishing cycles at the nodes change the geometric fundamental group. There is still a specialization theory for suitable tame quotients, described through the normalization of the special fiber, its marked preimages of nodes, and its dual graph, but it is not the smooth-proper isomorphism above. In particular, one must not conclude that the full or prime-to-$p$ group of a smooth generic curve equals that of the singular special curve. A loop pinched to a node can enter the specialization kernel.
@@ -1390,6 +1640,8 @@ $$
 \text{semistable or singular special fiber} & \text{use a separate tame/vanishing-cycle analysis.}
 \end{array}
 $$
+
+The first two rows are proved here for relative dimension at most one, which is what the last three rows and Chapter 15 use; in larger relative dimension they carry the purity hypothesis (ZN) recorded at the end of §14.3.
 
 The hypotheses record actual geometry: properness controls escape, smoothness prevents nodes and collisions, tame conditions control the boundary, and the prime-to-$p$ restriction removes the covers most sensitive to characteristic $p$.
 
