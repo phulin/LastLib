@@ -689,6 +689,10 @@ $$
 \tag{4.4a}
 $$
 
+The rational term in (4.3) has nonzero residues, so the poles of $\Lambda_K$ at $0$ and $1$ are
+genuinely simple. It follows directly that $\xi_K(0)\ne0$ and $\xi_K(1)\ne0$; in particular, the
+origin will never require a separate factor in the canonical product below.
+
 This is the growth bound needed below; no matching lower-order assertion is required. The
 symmetries are
 
@@ -738,9 +742,9 @@ E_1(z/\rho)=\left(1-\frac z\rho\right)e^{z/\rho}
 $$
 
 converge uniformly on every compact set: outside a fixed finite set of zeros,
-$|\log E_1(z/\rho)|\leq C|z/\rho|^2$. Their limit $P(z)$ is entire and has exactly the
-nonzero zeros of $\xi_K$, with multiplicity. Factor off the zero at the origin, if present, and
-put $h=\xi_K/(z^mP)$. Removable-singularity division makes $h$ entire and zero-free.
+$|\log E_1(z/\rho)|\leq C|z/\rho|^2$. Their limit $P(z)$ is entire and has exactly the zeros of
+$\xi_K$, with multiplicity; none is at the origin by the preceding paragraph. Put
+$h=\xi_K/P$. Removable-singularity division makes $h$ entire and zero-free.
 
 Because the plane is simply connected, integrating $h'/h$ from $0$ to $z$ gives an entire
 function $g$ with $h=e^g$. We claim that $g$ is affine. Estimate the canonical product by splitting
@@ -761,7 +765,7 @@ $$
 \qquad(|z|=r_R).
 $$
 
-Together with (4.4a), this bounds $\Re g=\log|\xi_K|-m\log|z|-\log|P|$ from above on that
+Together with (4.4a), this bounds $\Re g=\log|\xi_K|-\log|P|$ from above on that
 circle. The maximum principle for the harmonic function $\Re g$ then gives
 $\max_{|z|\leq R}\Re g(z)=O_{K,\varepsilon}(R^{1+\varepsilon})$. Borel--Carathéodory on the
 concentric discs of radii $R$ and $2R$ turns this into
@@ -776,12 +780,11 @@ Taking $0<\varepsilon<1$ and letting $R\to\infty$ gives $g''=0$. Thus $g(z)=a_K+
 have proved, internally,
 
 $$
-\xi_K(s)=s^m e^{a_K+b_Ks}\prod_{\rho\ne0}
+\xi_K(s)=e^{a_K+b_Ks}\prod_\rho
 \left(1-\frac{s}{\rho}\right)e^{s/\rho}.
 $$
 
-Logarithmic differentiation of the normally convergent product on compacta gives (4.4b), with
-$m/s$ included when $m>0$.
+Logarithmic differentiation of the normally convergent product on compacta gives (4.4b).
 
 For the sharper fixed-height count, first take $T\geq6$ and center Jensen's formula at
 $s_T=2+iT$. We record the strip bound that will control a fixed disc about this point. The gamma
