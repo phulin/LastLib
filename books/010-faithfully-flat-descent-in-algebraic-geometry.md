@@ -1244,7 +1244,7 @@ Descent does not by itself prove that a moduli functor is represented. It suppli
 
 On overlaps, changing the trivialization produces canonical isomorphisms between the parameter spaces and universal objects. The triple identity follows from composition of changes of basis. Effective descent glues the universal families and morphisms. Full faithfulness guarantees that the glued object represents the original functor rather than only its objects after a cover.
 
-Automorphisms remain. If an object has nontrivial automorphisms, descent naturally produces a groupoid-valued moduli problem rather than a set-valued one. The present book proves the object and morphism descent needed for that groupoid. The systematic language of stacks, inertia, rigidification, and coarse spaces belongs to Book 13.
+Automorphisms remain. If an object has nontrivial automorphisms, descent naturally produces a groupoid-valued moduli problem rather than a set-valued one. The present book proves the object and morphism descent needed for that groupoid. The systematic language of stacks, inertia, rigidification, and coarse spaces belongs to Book 35a.
 
 ### 16.4 A practical descent protocol
 

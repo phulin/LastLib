@@ -42,7 +42,6 @@ flowchart LR
 | 10 | Faithfully Flat Descent in Algebraic Geometry | 8, MATHLIB |
 | 11 | Normalization and Regular Models of Arithmetic Curves | 1, 8, 10 |
 | 12 | Blowups and Intersection Theory on Arithmetic Surfaces | 9, 11 |
-| 13 | Moduli Stacks for Modular and PEL Problems | 8, 10, MATHLIB |
 | 14 | Arithmetic Spectral Sequences and Derived Cohomology | MATHLIB |
 | 15 | Coherent Cohomology in Proper Families | 8, 14, MATHLIB |
 | 16 | Semistable Curves, Dual Graphs, and Component Groups | 9, 11, 12, 10, 15 |
@@ -65,12 +64,13 @@ flowchart LR
 | 33 | Poitou–Tate Duality | 6, 31, 32 |
 | 34 | Cartier Duality | 27, 28 |
 | 35 | Abelian Schemes, Isogenies, and Polarizations | 26, 28, 34, 8, 10, 15 |
+| 35a | Moduli Stacks for Modular and PEL Problems | 8, 10, MATHLIB |
 | 36 | Jacobians and $H^1$ of Curves | 21, 25, 35 |
 | 37 | Weights and Weil Bounds for Curves and Abelian Varieties | 8, 20, 21, 23, 36 |
 | 38 | Néron Models and Component Groups | 11, 16, 25, 35 |
 | 39 | Integral Correspondences on Curves and Jacobians | 12, 16, 38, 36 |
 | 40 | Descent and Weak Mordell--Weil for Abelian Varieties | 29, 35, 30, 32 |
-| 41 | Heights, Mordell--Weil, and the Faltings--Tate Reduction | 2, 4, 8, 10, 11, 12, 13, 15, 25, 35, 36, 38, 40 |
+| 41 | Heights, Mordell--Weil, and the Faltings--Tate Reduction | 2, 4, 8, 10, 11, 12, 35a, 15, 25, 35, 36, 38, 40 |
 | 42 | Finite-Flat Galois Representations | 2, 28, 34, 17 |
 | 43 | Elliptic Curves over DVRs | 1, 2, 11 |
 | 44 | Tate Curves and Multiplicative Reduction | 2, 43 |
@@ -139,19 +139,19 @@ flowchart LR
 | 107 | Twisted Orbital Matching and the Cyclic Fundamental Lemma | 81, 102, 105 |
 | 108 | Cyclic Base Change for $\mathrm{GL}_2$ | 80, 81, 95, 96, 102, 103, 105, 106, 107 |
 | 109 | Solvable Base Change and Descent | 2, 3, 5, 6, 24, 77, 81, 95, 98, 104, 108 |
-| 110 | Generalized Elliptic Curves and Level Structures | 43, 44, 45, 8, 13 |
-| 111 | Compactified Modular Stacks and Coarse Modular Curves | 8, 11, 13, 110 |
+| 110 | Generalized Elliptic Curves and Level Structures | 43, 44, 45, 8, 35a |
+| 111 | Compactified Modular Stacks and Coarse Modular Curves | 8, 11, 35a, 110 |
 | 112 | Deligne--Rapoport Integral Models of Modular Curves | 11, 12, 16, 51, 110, 111 |
 | 113 | Integral Modular Forms and q-Expansion | 9, 15, 110, 111 |
 | 114 | Modular Jacobians, Néron Models, and Hecke Correspondences | 25, 38, 39, 112, 113 |
 | 115 | Reductive Groups, Inner Forms, and Corestriction in Rank Two | 77 |
 | 116 | CM Abelian Varieties, Types, and Reflex Norms | 1, 6, 35 |
-| 117 | Complex Multiplication, Reciprocity, and Reduction | 5, 6, 10, 13, 61, 52, 116 |
+| 117 | Complex Multiplication, Reciprocity, and Reduction | 5, 6, 10, 35a, 61, 52, 116 |
 | 118 | Shimura Data and Canonical Models in the FLT Cases | 4, 115, 116, 117 |
-| 119 | Quaternionic PEL Functors and Representability | 10, 13, 65, 35, 115, 118 |
+| 119 | Quaternionic PEL Functors and Representability | 10, 35a, 65, 35, 115, 118 |
 | 120 | Uniformization, Components, and Hecke Descent for Shimura Curves | 58, 39, 118, 119 |
 | 121 | Good Integral Models of Quaternionic Shimura Curves | 15, 58, 19, 35, 36, 61, 55, 118, 119 |
-| 122 | Semistable Models and Monodromy of Quaternionic Shimura Curves | 6, 10, 11, 12, 13, 16, 17, 20, 22, 35, 37, 58, 70, 76, 118, 119, 120, 121 |
+| 122 | Semistable Models and Monodromy of Quaternionic Shimura Curves | 6, 10, 11, 12, 35a, 16, 17, 20, 22, 35, 37, 58, 70, 76, 118, 119, 120, 121 |
 | 123 | Modular and Shimura Curves | 110, 111, 112, 114, 115, 116, 118, 119, 121, 122, 120 |
 | 124 | Hecke Correspondences on Curves and Jacobians | 39, 83, 84, 114, 120, 123 |
 | 125 | Automorphic Decomposition of Shimura-Curve $H^1$ | 21, 47, 36, 96, 104, 87, 124, 118, 119, 120 |
@@ -185,7 +185,7 @@ flowchart LR
 | 153 | Hilbert Irreducibility and Arithmetic Approximation | 2, 17, 37 |
 | 154 | Moret–Bailly’s Theorem | 8, 9, 10, 153 |
 | 155 | Galois and Solvable Refinements of Arithmetic Approximation | 2, 6, 142, 153, 154 |
-| 156 | Hilbert--Blumenthal Moduli and Two-Prime Level Covers | 17, 10, 13, 35, 55, 115, 116 |
+| 156 | Hilbert--Blumenthal Moduli and Two-Prime Level Covers | 17, 10, 35a, 35, 55, 115, 116 |
 | 157 | Local Geometry of Hilbert--Blumenthal Moduli | 2, 8, 10, 37, 43, 44, 45, 51, 52, 54, 55, 58, 60, 117, 154, 155, 156 |
 | 158 | Moduli Constructions for Potential Modularity | 153, 154, 155, 156, 157 |
 | 159 | Discriminants of Galois Representations | 3, 56 |

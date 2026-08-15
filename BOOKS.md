@@ -80,8 +80,6 @@ manuscript and distinguishes it from optional stronger conclusions.
    projection formulas, adjunction, and component pairings. The scope is regular arithmetic surfaces,
    not general higher-dimensional intersection theory.
 
-13. **Moduli Stacks for Modular and PEL Problems** — Develop stacks, quotient atlases, rigidification, finite quotients, and coarse descent for the modular, Hilbert, and quaternionic PEL problems actually used later. The volume proves only the bounded representability and descent interfaces stated in its reusable theorem package; it supplies no unitary-surface realization.
-
 14. **Arithmetic Spectral Sequences and Derived Cohomology** — Starting from the general
    theory of derived categories and spectral objects, construct derived global sections, derived
    tensor and Hom, filtered complexes, and exact couples in the categories of arithmetic sheaves.
@@ -181,6 +179,8 @@ manuscript and distinguishes it from optional stronger conclusions.
    flat kernels, quotients by finite subgroup schemes, Weil pairings, polarizations, and extension
    over normal bases. Include the odd-isogeny preservation of full two-torsion needed by the Frey
    argument.
+
+35a. **Moduli Stacks for Modular and PEL Problems** — Develop stacks, quotient atlases, rigidification, finite quotients, and coarse descent for the modular, Hilbert, and quaternionic PEL problems actually used later. The volume proves only the bounded representability and descent interfaces stated in its reusable theorem package; it supplies no unitary-surface realization.
 
 36. **Jacobians and $H^1$ of Curves** — Study the Jacobian and Picard variety of a smooth proper curve, with emphasis on modular and
    Shimura curves. Relate torsion and Tate modules of the Jacobian to étale (H^1), develop

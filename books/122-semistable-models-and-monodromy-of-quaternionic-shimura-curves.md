@@ -173,7 +173,7 @@ All generic curves and all coefficient fields in the packet theorem have charact
 
 The construction rests first on the geometry needed to pass from a generic parahoric diagram
 to a regular arithmetic surface. Books 10--12 provide effective finite descent,
-normalization, blowups, and regular models, Book 13 gives the divisor definition of a
+normalization, blowups, and regular models, Book 35a gives the divisor definition of a
 bad-characteristic Drinfeld basis, and Book 17 gives a finite-etale common refinement and an
 effective Galois closure of the generic diagram. Once the surface has been constructed, Book
 16 turns its dual graph into component-group algebra. The cohomological passage uses Book

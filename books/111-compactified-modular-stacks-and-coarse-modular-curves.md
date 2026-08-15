@@ -111,7 +111,7 @@ for point and cyclic level, with the evident modification for $N=1$. Full symple
 
 All stacks are fppf stacks. Algebraic stacks are locally of finite presentation over their stated base and have representable diagonal. A coarse space is characterized by its geometric-orbit and categorical universal properties. We use the phrase **coarse modular curve** for the proper one-dimensional coarse scheme over $B_\Gamma$ attached to a modular stack. The phrase does not by itself assert a model at primes removed from $B_\Gamma$; extending across those primes and proving regular or semistable local equations require the later integral-model analysis.
 
-The direct prerequisites are used in precise places. Book 8 supplies ample line bundles, relative Proj, Hilbert parameter spaces, and finite quotients of quasi-projective schemes. Book 11 supplies normalization and the rule that ramified base change may require renormalization. Book 13 supplies algebraic stacks, rigidification, finite quotient stacks, and coarse-space descent. Book 110 supplies every generalized-elliptic and cusp calculation used here.
+The direct prerequisites are used in precise places. Book 8 supplies ample line bundles, relative Proj, Hilbert parameter spaces, and finite quotients of quasi-projective schemes. Book 11 supplies normalization and the rule that ramified base change may require renormalization. Book 35a supplies algebraic stacks, rigidification, finite quotient stacks, and coarse-space descent. Book 110 supplies every generalized-elliptic and cusp calculation used here.
 
 ### 1.3 Stacks, fine covers, and coarse curves
 
@@ -440,9 +440,9 @@ $$
 E'\longrightarrow E. \tag{5.1a}
 $$
 
-Book 13 constructs this finite decontraction datum, and Book 110 identifies it in the Tate charts. Thus a boundary point of the auxiliary compactification is not merely an unlabeled branch of a function field: it is a decontracted generalized elliptic curve with rigid full level and its contraction to the original $\Gamma$-object. Forgetting (5.1a) would leave room for special-fiber automorphisms that do not extend to the generic auxiliary basis.
+Book 35a constructs this finite decontraction datum, and Book 110 identifies it in the Tate charts. Thus a boundary point of the auxiliary compactification is not merely an unlabeled branch of a function field: it is a decontracted generalized elliptic curve with rigid full level and its contraction to the original $\Gamma$-object. Forgetting (5.1a) would leave room for special-fiber automorphisms that do not extend to the generic auxiliary basis.
 
-Book 13's finite decontraction construction represents these data by a fine quasi-projective scheme $Y_M$ and gives a representable finite surjective map
+Book 35a's finite decontraction construction represents these data by a fine quasi-projective scheme $Y_M$ and gives a representable finite surjective map
 
 $$
 f_M:Y_M\longrightarrow\overline{\mathcal M}(\Gamma). \tag{5.2}
@@ -508,7 +508,7 @@ $$
 \overline{\mathcal M}(\Gamma)\simeq[Y_M/G_M]. \tag{6.1}
 $$
 
-Over the smooth locus this is the usual torsor proof: the sheaf of auxiliary bases is a $G_M$-torsor, and equivariant descent forgets that basis. At the boundary, a quotient-stack object consists fppf-locally of the decontraction (5.1a), its full $M$-basis, and its contraction to the original $\Gamma$-curve. Changing the basis permutes exactly these finite choices. Descent of the contraction therefore returns a $\Gamma$-object. Conversely, Book 13's finite decontraction construction gives such data fppf-locally on every $\Gamma$-object, and two choices differ by a unique element of $G_M$. The overlap elements satisfy the torsor cocycle. These two constructions are inverse, proving (6.1) as an equivalence of groupoids rather than merely a bijection on geometric points. The Tate branch rings $A'[[s]]/A[[q]]$ computed in Section 5.1 verify the same statement on completed boundary charts.
+Over the smooth locus this is the usual torsor proof: the sheaf of auxiliary bases is a $G_M$-torsor, and equivariant descent forgets that basis. At the boundary, a quotient-stack object consists fppf-locally of the decontraction (5.1a), its full $M$-basis, and its contraction to the original $\Gamma$-curve. Changing the basis permutes exactly these finite choices. Descent of the contraction therefore returns a $\Gamma$-object. Conversely, Book 35a's finite decontraction construction gives such data fppf-locally on every $\Gamma$-object, and two choices differ by a unique element of $G_M$. The overlap elements satisfy the torsor cocycle. These two constructions are inverse, proving (6.1) as an equivalence of groupoids rather than merely a bijection on geometric points. The Tate branch rings $A'[[s]]/A[[q]]$ computed in Section 5.1 verify the same statement on completed boundary charts.
 
 At a point $y\in Y_M$, the stabilizer in $G_M$ is naturally the automorphism group of the underlying $\Gamma$-object together with its action on the chosen branch. Thus (6.1) retains exactly the inertia that auxiliary level removed.
 
@@ -1121,7 +1121,7 @@ This ledger is part of the theorem package: removing one hypothesis changes the 
 
 ### 13.4 Dependency closure
 
-No compactification conclusion has been imported from a later book. The projective parameter and finite quotient arguments are exactly the results of Book 8. The normalization statements and ramified-base-change warning are exactly the results of Book 11. The quotient-stack, rigidification, finite auxiliary decontraction, coarse universal property, and tame descent criteria are exactly the results of Book 13. The polygon arithmetic, Drinfeld level, contraction, boundary quotient, Tate deformation, and cusp formulas are exactly the results of Book 110.
+No compactification conclusion has been imported from a later book. The projective parameter and finite quotient arguments are exactly the results of Book 8. The normalization statements and ramified-base-change warning are exactly the results of Book 11. The quotient-stack, rigidification, finite auxiliary decontraction, coarse universal property, and tame descent criteria are exactly the results of Book 35a. The polygon arithmetic, Drinfeld level, contraction, boundary quotient, Tate deformation, and cusp formulas are exactly the results of Book 110.
 
 The only ordinary background beyond those books is the valuative criterion for proper algebraic stacks and the elementary algebra of generalized Weierstrass coordinate changes. Lemma 4.0 proves potential semistability from that coefficient algebra and the Tate inverse series, including the weighted reconstruction step in residue characteristics $2$ and $3$. The finite-group invariant calculations needed at issue were also proved explicitly here. No regularity or special-fiber theorem from a later stage has been used.
 
