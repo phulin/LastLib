@@ -3913,41 +3913,87 @@ It commutes with every element of $\Gamma$. In particular
 $A=L_s\oplus X_s$, where $X_s=\ker R_s$, as a topological
 $L_s$-space.
 
-We next invert $\gamma-1$ on $X_s$. Choose a procyclic
-$\mathbf Z_\ell$-direction of $\Gamma$, a generator $\gamma$ at level
-$s$, and, on a quotient of order $N=\ell^a$, put
+For more than one Lubin--Tate direction, $\gamma-1$ is not invertible on
+$X_s$: the other directions supply fixed vectors. We use the simultaneous
+Koszul decomposition instead.
+
+After increasing $s$, choose a topological decomposition
+
 $$
- T_{s,a}=N^{-1}\sum_{j=0}^{N-1}j\gamma^j.                 \tag{11.HT3f}
+\Gamma_s=\Gamma_1\oplus\cdots\oplus\Gamma_d,
+\qquad \Gamma_i=\mathbf Z_\ell\gamma_i,
+\qquad d=[L:\mathbf Q_\ell].                             \tag{11.HT3f}
 $$
 
-Moving the last summand to the front gives the exact identities
+For an algebraic vector fixed by $\gamma_i^{\ell^a}$ define the directional
+average and weighted average
+
 $$
- (\gamma-1)T_{s,a}=1-R_{s,a},\qquad
- R_{s,a}(\gamma-1)=0,                                    \tag{11.HT3g}
+ P_{i,a}=\ell^{-a}\sum_{j=0}^{\ell^a-1}\gamma_i^j,
+\qquad
+ T_{i,a}=\ell^{-a}\sum_{j=0}^{\ell^a-1}j\gamma_i^j.       \tag{11.HT3g}
 $$
 
-where $R_{s,a}=N^{-1}\sum_{j=0}^{N-1}\gamma^j$.
-To bound $T_{s,a}$, split the weighted sum into successive blocks of sizes
-$1,\ell,\ldots,\ell^a$. On the $j$-th block summation by parts replaces
-the division by $\ell^j$ by the normalized trace from that block. Applying
-(11.HT3a) to each block, the conductor sum (11.HT3b) telescopes; only the
-first-layer endpoint remains. Hence there is $b_{L,m}$, independent of
-$a$, such that
+They satisfy
+
 $$
- v_\ell(T_{s,a}x)\ge v_\ell(x)-b_{L,m}
- \quad\text{if }R_{s,a}x=0.                              \tag{11.HT3h}
+(\gamma_i-1)T_{i,a}=T_{i,a}(\gamma_i-1)=1-P_{i,a}.        \tag{11.HT3h}
 $$
 
-Compatibility with normalized traces lets $T_{s,a}$ pass to the limit.
-We obtain a continuous operator $T_s:X_s\to X_s$ satisfying
+We record why these directional operators are bounded uniformly in the
+other coordinates. Refine the chosen cyclic direction into its order-$\ell$
+steps. Deep in the Lubin--Tate unit filtration every such step is totally
+ramified. At a step whose fixed field has absolute ramification index $e_j$,
+the inverse-different estimate (11.HT3a), applied to the trace-zero
+difference, loses at most $\ell/(e_j(\ell-1))$. Since
+$e_{j+1}=\ell e_j$, these losses form a convergent geometric series. Passing
+farther out in any transverse direction only increases the initial $e_j$ and
+therefore improves the bound. Split the weighted sum into its successive
+$\ell$-power blocks and apply this estimate block by block. Together with
+the ordinary normalized-trace estimate (11.HT3d), this gives constants
+$b_i$, independent of the transverse level and of $a$, such that
+
 $$
- (\gamma-1)T_s=T_s(\gamma-1)=1,\qquad
- v_\ell(T_sx)\ge v_\ell(x)-b_{L,m}.                       \tag{11.HT3i}
+ v_\ell(P_{i,a}x),\ v_\ell(T_{i,a}x)
+ \ge v_\ell(x)-b_i
+ \quad\text{when }P_{i,a}x=0\text{ in the second estimate}.              \tag{11.HT3i}
 $$
 
-For $\gamma^{\ell^k}$ the same proof gives loss at most $b_{L,m}+k$.
-This is the Tate--Sen inverse. The finite averages are used only on the
-trace-zero summand on which (11.HT3g) proves that an inverse can exist.
+Consequently the $P_{i,a}$ extend to commuting bounded idempotents $P_i$ on
+$A$, with image $A^{\Gamma_i}$, and the $T_{i,a}$ extend to an inverse
+$T_i$ for $\gamma_i-1$ on $\ker P_i$. Their joint projector is
+
+$$
+P_1\cdots P_d=R_s,
+\qquad \bigcap_i A^{\Gamma_i}=L_s.                       \tag{11.HT3i'}
+$$
+
+Here no individual inverse is asserted on $\ker R_s$. Instead decompose
+
+$$
+A=\bigoplus_{J\subseteq\{1,\ldots,d\}}A_J,
+\qquad
+A_J=\left(\prod_{i\in J}(1-P_i)\right)
+    \left(\prod_{i\notin J}P_i\right)A.                 \tag{11.HT3i''}
+$$
+
+On the Koszul complex for
+$\Delta_i=\gamma_i-1$, the summand indexed by a nonempty $J$ is contracted
+by $T_i$ in the least direction $i\in J$, with the usual Koszul sign. The
+commutativity of the $P_i,T_i$, and $\Delta_j$ gives
+$dh+hd=1$ on that summand. The $J=\varnothing$ summand is the Koszul complex
+of $L_s$ with zero operators. Thus the inclusion of this joint-invariant
+summand is a bounded quasi-isomorphism
+
+$$
+K^\bullet(\Delta_1,\ldots,\Delta_d;L_s)
+\xrightarrow{\ \sim\ }
+K^\bullet(\Delta_1,\ldots,\Delta_d;A).                  \tag{11.HT3i'''}
+$$
+
+This is the multivariable Tate--Sen contraction used below. Formula
+(11.HT3h) is applied only on $\ker P_i$, where it is an actual inverse;
+the other directions are retained by the Koszul complex.
 
 We also need descent through $H$. We use the following consequence of the
 same ramification calculation. There is $c_L$ such that, for every finite
@@ -3958,15 +4004,17 @@ $$
 $$
 
 Here is the correction argument. Intersect the lower ramification filtration
-of $\operatorname {Gal}(M/L)$ with $J$. The tame quotient is removed by
-its integral Reynolds operator. Refine each wild quotient to cyclic quotients
-of order $\ell$. If $\sigma$ generates one of them and
+of $\operatorname {Gal}(M/L)$ with $J$. Remove the unramified quotient by
+the trace splitting furnished by an integral normal basis; this has no
+valuation loss. Remove the prime-to-$\ell$ tame inertia by its integral
+Reynolds operator. The remaining quotients lie in wild inertia. Refine them
+to cyclic quotients of order $\ell$. If $\sigma$ generates one of them and
 $c=\sigma x-x$, put
 $$
  b=\ell^{-1}\sum_{a=0}^{\ell-1}a\sigma^ac.              \tag{11.HT3j'}
 $$
 
-The group-ring identity (11.HT3g), together with
+The group-ring identity (11.HT3h), together with
 $\sum_a\sigma^ac=\sigma^\ell x-x=0$, gives
 $(\sigma-1)b=c$ exactly. Thus $x-b$ descends through this quotient. To
 bound the correction, apply (11.HT3) to the valuation ideal generated by the
@@ -3978,8 +4026,8 @@ $$
 
 This is the different cancellation: the $1$ lost by division by
 $\ell$ is cancelled by the $d/e$ term in (11.HT3a), leaving only the
-rounding of one valuation layer. Along successive wild quotients
-$e_{i+1}\ge\ell e_i$, so the sum of (11.HT3j'') is at most
+rounding of one valuation layer. These remaining order-$\ell$ steps are
+totally ramified, so $e_{i+1}=\ell e_i$; the sum of (11.HT3j'') is at most
 $\ell^2/(e_L(\ell-1)^2)$. Adding the finitely many tame and initial layers
 gives $c_L$. Successively applying (11.HT3j') therefore produces a
 $J$-fixed $y$ and proves (11.HT3j). Notice that the estimate was applied
@@ -4023,37 +4071,33 @@ $$
 This proves semilinear rank-one descent and records why exponentiation is
 legitimate.
 
-It remains to decomplete the $\Gamma$-action. Choose a
-$\mathbf Z_\ell$-basis $e_1,\ldots,e_d$ of $\mathcal O_L$, and let
-$\gamma_i$ correspond to $\exp(\pi^me_i)$. For
-$d_0=b\otimes v$, shrink $m$ until
+It remains to decomplete the $\Gamma$-action. Use the generators in
+(11.HT3f) and put $d_0=b\otimes v$. Shrink the group until
 $$
  u_i=\log(\gamma_i(d_0)/d_0)
 $$
 
-converges and has valuation greater than
-$2\max(c_{L,m},b_{L,m})+1/(\ell-1)$. Commutativity gives
+converges and lies inside the exponential radius after every bounded
+operator in the Koszul homotopy. Commutativity gives
 $$
  (\gamma_i-1)u_j=(\gamma_j-1)u_i.                         \tag{11.HT3p}
 $$
 
-Write $u_i=R_su_i+(1-R_s)u_i$. Use $T_s$ in the $i$-th procyclic
-direction to remove $(1-R_s)u_i$. Equation (11.HT3p) says that the
-corrections already made in the earlier directions remain fixed in those
-directions. Repeat for $i=1,\ldots,d$, and then at levels
-$s+1,s+2,\ldots$. At the $r$-th circuit the new residual has valuation at
-least the preceding residual plus $r$, while (11.HT3h) loses at most
-$b_{L,m}$. Hence the corrections $a_r$ satisfy
+Thus $(u_i)_i$ is a closed degree-one element of the Koszul complex in
+(11.HT3i'''). Apply its bounded homotopy to the sum of the nonempty-$J$
+components. It gives $a\in A\otimes_{\mathbf Q_\ell}E$ and
+$u_i^{(0)}\in L_s\otimes_{\mathbf Q_\ell}E$ with
 $$
- v_\ell(a_r)\longrightarrow\infty,\qquad
- v_\ell(a_0)>1/(\ell-1).                                  \tag{11.HT3q}
+u_i=u_i^{(0)}+(\gamma_i-1)a.                              \tag{11.HT3q}
 $$
 
-The product $f=\prod_r\exp(-a_r)$ therefore converges in $A^\times$.
-For $d=fd_0$, the cocycle $\gamma(d)/d$ is defined over a finite layer and
-is locally analytic. This is the rank-one Tate--Sen decompletion; every
-correction was obtained from the actual inverse (11.HT3i), and (11.HT3q)
-is its convergence estimate.
+The initial shrinking makes $\exp(-a)$ converge. For
+$d=\exp(-a)d_0$, equation (11.HT3q) says
+$\log(\gamma_i(d)/d)=u_i^{(0)}$. The cocycle relations extend this from the
+chosen generators to $\Gamma_s$, so the scalar cocycle of $d$ is defined
+over $L_s\otimes E$ and is locally analytic. This is rank-one decompletion.
+It used the simultaneous Koszul homotopy; no generator was inverted on the
+trace-zero space of the other directions.
 
 Take $s$ so that this finite layer is $L_s$, and restrict to
 $\Gamma_s$, which fixes $L_s$. Differentiating its scalar action on
@@ -4070,39 +4114,33 @@ $$
  \quad(x\in\pi^s\mathcal O_L).                            \tag{11.HT3r}
 $$
 
-Changing the decompleted basis adds a locally analytic coboundary. Its
-differential is $(\gamma-1)a$, whose $R_s$-projection is zero; hence it
-does not alter the $\Theta_\tau$. For the original basis, (11.HT3r) is
+Changing the decompleted basis adds a locally analytic coboundary. The joint
+projector in (11.HT3i') kills its nonconstant Koszul components, so it does
+not alter the $\Theta_\tau$. For the original basis, (11.HT3r) is
 exactly (11.HT2), so $\Theta_\tau=c_\tau$. These scalars are the labeled
 rank-one Sen operator.
 
-Finally fix a label $\tau$ and twist degree $r\in\mathbf Z$. An invariant
-in that labeled component satisfies, on a sufficiently small direction,
+Finally fix a label $\tau$ and twist degree $r\in\mathbf Z$. On the
+$\tau$-factor the Koszul operators are perturbed from $\Delta_i$ by the
+scalars
+
 $$
- (\gamma_x-1)z=
- \left(\exp((r-\Theta_\tau)\tau(x))-1\right)z.             \tag{11.HT3s}
+q_i=\exp\bigl((r-\Theta_\tau)\tau(\log\chi_{\rm LT}(\gamma_i))\bigr)-1.
+                                                               \tag{11.HT3s}
 $$
 
-If $r\ne\Theta_\tau$, take $x=\ell^kx_0$ with $x_0$ initially so deep
-that
-$$
- v_\ell(\exp((r-\Theta_\tau)\tau(x))-1)>b_{L,m}+k.
-$$
-
-Applying $R_s$ to (11.HT3s) gives $R_sz=0$. Applying the inverse for
-$\gamma^{\ell^k}-1$ gives
-$$
- z=T_{s,k}\left(\exp((r-\Theta_\tau)\tau(x))-1\right)z,
-$$
-
-whose right side has valuation strictly larger than $v_\ell(z)$, a
-contradiction unless $z=0$. If $r=\Theta_\tau$, the right side of
-(11.HT3s) is zero (equivalently, the multiplicative scalar is one); the
-decompleted basis is fixed on an open subgroup, and
-the normal-basis resolvent over the remaining finite quotient supplies a
-nonzero invariant. In the $\tau$-factor the quotient of two invariants lies
-in the corresponding factor of $L\otimes_{\mathbf Q_\ell}E$, namely $E$;
-therefore this invariant space is one-dimensional over $E$.
+Shrink $\Gamma_s$ once more. The $q_i$ are then small enough that the
+bounded homotopy on every nonempty-$J$ summand survives by the convergent
+Neumann series in the homological perturbation lemma. Hence the twisted
+Koszul complex is quasi-isomorphic to its joint-invariant finite-dimensional
+complex over $L_s\otimes E$, where its differentials are multiplication by
+the $q_i$. If $r\ne\Theta_\tau$, at least one $q_i$ is nonzero, so this
+scalar Koszul complex has no degree-zero cohomology. If
+$r=\Theta_\tau$, every $q_i$ is zero; the decompleted basis is fixed on an
+open subgroup, and the normal-basis resolvent over the remaining finite
+quotient supplies a nonzero invariant. In the $\tau$-factor the quotient of
+two invariants is in $E$, so the invariant space is one-dimensional over
+$E$.
 
 Thus the $\tau$-labeled degree-$r$ piece is one-dimensional exactly when
 $\Theta_\tau=r$, and is zero otherwise. The canonical Hodge--Tate map
