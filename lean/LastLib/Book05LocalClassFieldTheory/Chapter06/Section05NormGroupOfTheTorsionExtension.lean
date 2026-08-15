@@ -232,18 +232,25 @@ theorem chapter06_torsion_norm_of_primitive_point_regular_case
     (n : ℕ) (hn : 0 < n)
     (ω : Chapter06PrimitiveTorsionPoint D n hn)
     [FiniteDimensional K (chapter06TorsionField D n ω.point)]
-    (hregular : chapter06ResidueCardinality D ≠ 2 ∨ n ≠ 1) :
+    (hdegree : Even
+      (chapter06ResidueCardinality D ^ (n - 1) *
+        (chapter06ResidueCardinality D - 1))) :
     Algebra.norm K (chapter06PrimitivePointInField D n hn ω) =
       (chapter06UniformizerUnit D : K) := by
   sorry
 
+/-- At level one with even residue cardinality, the primitive division
+polynomial has odd degree, so the primitive point has norm `-π`. -/
 theorem chapter06_torsion_norm_of_primitive_point_exceptional_case
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K)
     (ω : Chapter06PrimitiveTorsionPoint D 1 (by decide))
     [FiniteDimensional K (chapter06TorsionField D 1 ω.point)]
-    (hq : chapter06ResidueCardinality D = 2) :
+    (hq_even : Even (chapter06ResidueCardinality D)) :
     Algebra.norm K (chapter06PrimitivePointInField D 1 (by decide) ω) =
-      -(chapter06UniformizerUnit D : K) := by
+        -(chapter06UniformizerUnit D : K) ∧
+      Algebra.norm K
+          (-chapter06PrimitivePointInField D 1 (by decide) ω) =
+        (chapter06UniformizerUnit D : K) := by
   sorry
 
 theorem chapter06_torsion_uniformizer_norm_witness

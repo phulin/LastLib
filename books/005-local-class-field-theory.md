@@ -1675,13 +1675,33 @@ $$
 N_{K_n/K}(K_n^\times)=\pi^{\mathbf Z}U^n.
 $$
 
-We give the mechanism rather than infer it from the desired classification. For the existence proof we take $f(T)=\pi T+T^q$ as above. The monic primitive division polynomial $Q_n$ has constant term $\pi$ and degree $(q-1)q^{n-1}$. That degree is even except in the trivial case $q=2,n=1$. Outside that case, the product of its roots therefore shows
+We give the mechanism rather than infer it from the desired classification. For the existence proof we take $f(T)=\pi T+T^q$ as above. The monic primitive division polynomial $Q_n$ has constant term $\pi$ and degree
 
 $$
-N_{K_n/K}(\omega_n)=\pi;
+d=(q-1)q^{n-1}.
 $$
 
-In the exceptional case $K_1=K$, the element $\pi$ is still trivially a norm, although $N_{K/K}(\omega_1)=\omega_1=-\pi$. Thus $\pi^{\mathbf Z}$ lies in the norm group. This is stronger than mere surjectivity of norm valuations: it identifies the chosen uniformizer itself as a norm.
+The constant-term formula for the minimal polynomial gives
+
+$$
+N_{K_n/K}(\omega_n)=(-1)^d\pi.
+$$
+
+The degree $d$ is even unless $q$ is even and $n=1$. In the even-degree cases this gives
+
+$$
+N_{K_n/K}(\omega_n)=\pi.
+$$
+
+If $q$ is even and $n=1$, then $d=q-1$ is odd, so
+
+$$
+N_{K_1/K}(\omega_1)=-\pi,
+\qquad
+N_{K_1/K}(-\omega_1)=\pi.
+$$
+
+This includes the case $q=2$, when $K_1=K$ and $\omega_1=-\pi$. Thus in every case $\pi^{\mathbf Z}$ lies in the norm group. This is stronger than mere surjectivity of norm valuations: it identifies the chosen uniformizer itself as a norm.
 
 The needed unit calculation is a special case of the following valuation lemma. We state it here because it is also the engine behind the full unit–ramification theorem.
 
