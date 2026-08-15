@@ -6,7 +6,7 @@
    - [The purpose and boundary of the theorem](#11-the-purpose-and-boundary-of-the-theorem)
    - [The exact input](#12-the-exact-input)
    - [The reusable theorem](#13-the-reusable-theorem)
-   - [What is conditional upstream](#14-what-is-conditional-upstream)
+   - [Closure of the arithmetic input](#14-closure-of-the-arithmetic-input)
    - [The minimal final chain and the blueprint](#15-the-minimal-final-chain-and-the-blueprint)
 2. [The local signed-special calculation](#2-the-local-signed-special-calculation)
    - [Nonzero monodromy and the intrinsic line](#21-nonzero-monodromy-and-the-intrinsic-line)
@@ -48,21 +48,21 @@
    - [One certified good prime](#91-one-certified-good-prime)
    - [Transport to the algebraic coefficient field](#92-transport-to-the-algebraic-coefficient-field)
    - [Purity](#93-purity)
-   - [The Frey endpoint](#94-the-frey-endpoint)
+   - [The Frey application](#94-the-frey-application)
 10. [Dependencies and final scope](#10-dependencies-and-final-scope)
     - [Direct dependencies](#101-direct-dependencies)
-    - [Exact upstream status](#102-exact-upstream-status)
-    - [Hostile audit](#103-hostile-audit)
+    - [Closure of the selected-three inputs](#102-closure-of-the-selected-three-inputs)
+    - [Why the hypotheses are sharp](#103-why-the-hypotheses-are-sharp)
     - [Conclusion](#104-conclusion)
 
 ## 1. The signed-special endgame
 
 ### 1.1 The purpose and boundary of the theorem
 
-The final three-adic step in the Frey argument starts after the compatible family and its
-integral lattice have been constructed. It must not reconstruct either object. Its task is to
-consume one precise all-level tower and show that the corresponding characteristic-zero
-representation is reducible.
+The final three-adic step in the Frey argument starts after the selected rational member and its
+integral lattice have been constructed. Its task is to use the resulting all-level tower and
+show that the corresponding characteristic-zero representation is reducible. No member at a
+second coefficient place is needed.
 
 The dyadic member is on the signed-special, or **SP**, branch. Its Weil--Deligne monodromy
 operator is nonzero of rank one. The associated adic representation has a unique inertia-fixed
@@ -238,7 +238,7 @@ The theorem is reusable because its conclusion uses neither the provenance of th
 preferred lattice construction. It needs the actual tower (1.6), the exact determinant, and the
 SP local record. It does not need a residual nonzero-monodromy assertion for the chosen lattice.
 
-### 1.4 What is conditional upstream
+### 1.4 Closure of the arithmetic input
 
 The selected conclusion of Book 185, Theorem 9.1 supplies the actual member at $\nu\mid3$,
 the cyclotomic determinant, the pure polynomials outside a finite set, clean support, and the
@@ -250,16 +250,17 @@ uses no coefficient place above two. Consequently Book 184's $(\mathrm{AI}_2)$ i
 the coefficient-three antecedent in this book; it is needed only for the stronger all-finite-
 coefficient-place form of Book 185.
 
-Book 187, Theorem 10.2, conditionally supplies (1.6)--(1.7). Its hypotheses include both the
+Book 187, Theorem 10.2 supplies (1.6)--(1.7). Its hypotheses include both the
 coefficient-prime certificate $(\mathrm C_3)$ and the clean-support certificate $(\mathrm U)$.
-This book consumes that theorem exactly as stated.  In its reusable abstract form those two
+This book uses that theorem exactly as stated. In the reusable abstract form those two
 certificates are hypotheses; in the controlled-top application Book 187, Theorem 2.3 and
 Proposition 2.1 prove $(\mathrm C_3)$, while Book 185, Proposition 8.3 proves
-$(\mathrm U)$.  They are therefore not additional blockers on the preferred selected-three
-chain.
+$(\mathrm U)$. Thus both conditions are already proved on the preferred selected-three chain.
 
-Thus Theorem 1.1 is a complete conditional implication. The unconditional FLT chain remains
-blocked upstream of its antecedent. The distinction will be recorded again in Section 10.2.
+Thus Theorem 1.1 remains a reusable implication from a Schoof-ready package, while the
+controlled-top application supplies every premise of that package. Relative to the selected
+data of Books 178--187, the coefficient-three chain is therefore dependency-closed. Optional
+all-coefficient extensions remain outside the scope needed for the main theorem.
 
 ### 1.5 The minimal final chain and the blueprint
 
@@ -853,12 +854,12 @@ $$
 contrary to (1.15). The determinant identity $\alpha_q\beta_q=q$ would not prove (9.7);
 purity is a separate and indispensable compatible-family input.
 
-### 9.4 The Frey endpoint
+### 9.4 The Frey application
 
-Book 164 supplies the residual signed-SP Frey datum and states the downstream contract. The
-restricted Book 185 conclusion conditionally supplies an absolutely irreducible member at
-$\nu\mid3$ with the rational SP record and pure good polynomials. Book 187 conditionally
-supplies the all-level tower. Once those antecedents exist, Theorem 1.1 gives two
+Book 164 supplies the residual signed-SP Frey datum to which the result is applied. The
+restricted Book 185 conclusion supplies an absolutely irreducible member at $\nu\mid3$ with
+the rational SP record and pure good polynomials, and Book 187 supplies the all-level tower.
+Theorem 1.1 then gives two
 available endpoints:
 
 1. the line in (8.8) contradicts absolute irreducibility; and
@@ -879,17 +880,17 @@ The proof uses the following mathematical sources directly.
 |---|---|---|
 | Book 161, Theorems 6.2, 9.1--9.2, and 10.1 | the Schoof category, simple objects, Ext asymmetry, canonical multiplicative--constant filtration, and finite-level cross and trace identities | Chapters 3--7 and the input to the $\mathcal O$-adic passage |
 | restricted conclusion of Book 185, Theorem 9.1 | absolute irreducibility, determinant, the rational SP pair, and, for the optional fallback, cofinite common good polynomials and purity at the selected place above three | the preferred contradiction and rational local record; Section 9 is optional, and no coefficient-two member is used |
-| Book 187, Theorem 10.2 | the conditional clean-support, coefficient-linear all-level tower over $\mathbf Z[1/2]$ | the sole integral input at and away from $3$ |
+| Book 187, Theorem 10.2 | the clean-support, coefficient-linear all-level tower over $\mathbf Z[1/2]$ | the sole integral input at and away from $3$ |
 
 Books 2--6, 17, 28--29, 34, 42, 51, and 159--160 enter transitively through Book 161's proved
 classification package. Book 188 does not reopen their local discriminant, ray-class, Hopf-order,
 or extension calculations.
 
-Book 164 is the Frey provenance and downstream consumer contract, not a proof input to the
+Book 164 explains the Frey provenance and later application, but it is not a proof input to the
 bounded representation-theoretic theorem. Books 40--41 concern descent and heights and are not
 used here. Book 161 is the actual classification source, not comparative background.
 
-The recommended direct dependency row is
+Thus the direct dependency row is
 
 $$
 \boxed{
@@ -899,116 +900,99 @@ $$
 \tag{10.1}
 $$
 
-### 10.2 Exact upstream status
+### 10.2 Closure of the selected-three inputs
 
-The bounded implication of Theorem 1.1 is complete. Relative to the controlled rational family,
-Book 187 produces its remaining integral antecedent; the positive-carrier and clean-support
-interfaces are closed. The preferred selected-three spine is dependency-closed.
+The bounded implication of Theorem 1.1 is complete, and Book 187 supplies the remaining
+integral input for the controlled rational family. The preferred selected-three spine is
+therefore dependency-closed. The closure begins with Book 178, Theorem 12.2, which proves the
+restricted signed-special finite fibre and retains support for every later minimal point. Book
+182, Proposition 7.1 and Theorem 9.1 then supply the selected packet array, its place
+$\nu\mid3$, ordinary attachment, the targetwise SP comparison, and the unramified algebraic
+pairs away from two. Books 183--185 use precisely this selected output. A uniform
+all-coefficient packet is a stronger result outside the scope needed for the main theorem.
 
-1. **Controlled SP top.** Book 178, Theorem 12.2 proves the restricted signed-special finite
-   fibre and retains support for every later minimal point. Book 182, Proposition 7.1 and
-   Theorem 9.1 then supply the selected packet array, its place $\nu\mid3$, ordinary
-   attachment, the targetwise SP comparison, and the unramified algebraic pairs away from two.
-   Books 183--185 use precisely this selected output. A uniform all-coefficient packet is a
-   stronger statement outside this chain and is unnecessary.
-2. **Closed positive good carriers $(\mathrm{AVCar}_{3,\ell}^+)$.** Book 187 constructs these
-   for every positive corrected packet.  Its sufficient $(\mathrm{Car}_3^+)$ uses the exact
-   CM-unitary common-multiplier PEL datum, not the obstructed direct trace group.  The basic
-   packet has trivial central character, so its level is first saturated by the central signs;
-   Book 118 then identifies a common-adjoint component with a preliminary unitary component,
-   rigidifies it at a fine level away from $3\ell$, and maps it finitely to the routed basic
-   component over a field unramified at $3\ell$.  Book 121 gives the good model and Book 187,
-   Proposition 2.2 transports the raw plane by rational pullback.  Theorem 2.3 constructs
-   $(\mathrm{IC}_3)$ without an integral projector or an additional compatible-family
-   arithmetic theorem.  Thus neither the positive carrier nor $(\mathrm{IC}_3)$ remains an
-   independent blocker.  Ambient Tate-module semisimplicity is not needed for this fixed-three
-   step, because Book 129 transfers the raw finite-flat tower to the semisimplification.
-3. **Closed finite auxiliary comparison $(\mathrm{AUX}_\nu)$.** Book 185, Proposition 8.2 reduces
-   clean support $(\mathrm U)$ to comparisons at the finite auxiliary set, using the
-   distinguished unramified member away from $\ell$ and the spherical prime-to-$\ell$
-   calculation at $q=\ell$.  The minimal certificate
-   $(\mathrm{AVCar}_{3,\ell}^+)$ directly removes $q=\ell$ for the selected member by its
-   good positive display; under the sufficient $(\mathrm{Car}_3^+)$ version, Book 187,
-   Proposition 2.2 constructs that display. Under the optional uniform hypotheses, the
-   family-wide form $(\mathrm{AUX}_{\mathrm{all}})$ also proves $(\mathrm{Cond}_2)$.
-   Weak compatibility alone would not remove auxiliary
-   inertia, but the proved algebraic Galois pairs and actual direct-sum cancellation do.
-   Stronger principal or dihedral automorphic types are outside this support argument and
-   unnecessary. Without $(\mathrm U)$, the local tower at $3$ could not be glued over
-   $\mathbf Z[1/2]$.
+Book 187 constructs the positive good carriers
+$(\mathrm{AVCar}_{3,\ell}^+)$ for every corrected positive packet. Its sufficient condition
+$(\mathrm{Car}_3^+)$ uses the CM-unitary common-multiplier PEL datum rather than the obstructed
+direct trace group. Because the basic packet has trivial central character, its level is first
+saturated by the central signs. Book 118 then identifies a common-adjoint component with a
+preliminary unitary component, rigidifies it at a
+fine level away from $3\ell$, and maps it finitely to the routed basic component over a field
+unramified at $3\ell$. Book 121 gives the good model, and Book 187, Proposition 2.2 transports
+the raw plane by rational pullback. Theorem 2.3 constructs $(\mathrm{IC}_3)$ without an
+integral projector or an additional compatible-family theorem. Ambient Tate-module
+semisimplicity is not needed here because Book 129 transfers the raw finite-flat tower to the
+semisimplification. This closes both the positive-carrier and $(\mathrm{IC}_3)$ inputs.
 
-The omitted all-place hypothesis $(\mathrm{AI}_2)$ is deliberately not on this list: every
-object used in Books 186--188 has coefficient characteristic three.
+Clean support is closed by a separate finite comparison. Book 185, Proposition 8.2 reduces
+$(\mathrm U)$ to the auxiliary set, using the distinguished unramified member away from
+$\ell$ and the spherical prime-to-$\ell$ calculation at $q=\ell$. The certificate
+$(\mathrm{AVCar}_{3,\ell}^+)$ removes $q=\ell$ for the selected member through its good
+positive display; under $(\mathrm{Car}_3^+)$, Book 187, Proposition 2.2 constructs that
+display. Weak compatibility alone would not remove auxiliary inertia, whereas the proved
+algebraic Galois pairs and actual direct-sum cancellation do. Stronger principal or dihedral
+automorphic types are outside the scope needed for the main theorem. Under the optional
+uniform hypotheses, the family-wide statement $(\mathrm{AUX}_{\mathrm{all}})$ also proves
+$(\mathrm{Cond}_2)$, but that stronger conclusion is not used here. The selected clean-support
+statement is exactly what permits the local tower at $3$ to glue over $\mathbf Z[1/2]$.
 
-No additional blocker occurs inside Book 188 once Book 187, Theorem 10.2, and the selected
-member's absolute irreducibility are supplied. One prime from Book 185's certified cofinite
-good set is needed only for the optional Section 9 fallback.
+The all-place hypothesis $(\mathrm{AI}_2)$ is not a premise here: every object used in Books
+186--188 has coefficient characteristic three.
 
-### 10.3 Hostile audit
+Book 187, Theorem 10.2 and the selected member's absolute irreducibility thus provide every
+premise used in Book 188. One prime from Book 185's certified cofinite good set is needed only
+for the optional Section 9 fallback.
 
-**SP type.** The dyadic object has $N_2\ne0$ of rank one, the intrinsic line
-$\ker N_2=\operatorname{im}N_2$, the sign $\varepsilon_2$, and conductor exponent one. No
-monodromy-zero or conductor-two language occurs.
+### 10.3 Why the hypotheses are sharp
 
-**Integral thickness.** Rational nonzero monodromy does not imply nonzero residual monodromy for
-an arbitrary global lattice. The proof uses only the saturated filtration and square-zero action;
-it allows the first residual inertia image to be trivial.
+The dyadic hypothesis is the full signed-special object: $N_2\ne0$ has rank one,
+$\ker N_2=\operatorname{im}N_2$ is its intrinsic line, $\varepsilon_2$ is its sign, and the
+conductor exponent is one. Its rational monodromy need not remain nonzero on the first residual
+level. For example, a nonzero integral matrix of the form $N=\varpi N_0$ becomes zero modulo
+$\varpi$ even though it is nonzero over $K$. The proof therefore uses the saturated filtration
+and square-zero action, allowing the first residual inertia image to be trivial. At higher
+levels the inertia image on $T_n$ can have order $3^r$ with $r>1$; an order-three bound is used
+only after passage to a subquotient killed by $3$.
 
-**Higher dyadic inertia.** The image on $T_n$ can have order $3^r$ with $r>1$. The order-three
-bound is used only after passing to a subquotient killed by $3$.
+At the coefficient prime, crystallinity is not treated as finite flatness of an arbitrary
+lattice. The input is the actual tower supplied by Book 187, Theorem 10.2, at every
+$\varpi^n$-level. The finite-level theorem works over
+$A_n=\mathcal O/\varpi^n$ even when $K/\mathbf Q_3$ is ramified, and Section 7.4 determines the
+residual orientation over the actual residue field $k$. Neither $K=\mathbf Q_3$ nor
+$k=\mathbf F_3$ is assumed. Compactness by itself would give only a stable lattice, not the
+compatible finite-flat models; Book 187 constructs the particular lattice and tower needed
+here, with no residual irreducibility or uniqueness-up-to-homothety hypothesis.
 
-**Coefficient prime.** Crystallinity is not treated as finite flatness of an arbitrary lattice.
-The only coefficient-prime input is the actual tower exported conditionally by Book 187,
-Theorem 10.2. Every level is $\varpi^n$, not merely $3^n$.
+No coefficient place above two occurs. The rational base place $2$ is compared with the
+selected three-adic member and hence lies in the prime-to-coefficient range; the all-place
+hypothesis $(\mathrm{AI}_2)$ cannot affect the argument. A global model over
+$\mathbf Z[1/2]$ is used only after Book 187 proves clean support, never by removing auxiliary
+primes from equality of almost all Frobenius traces. Book 161 uses the global finite-flat model,
+cyclotomic determinant, and odd-tame dyadic inertia. The equality $a_2(V)=1$ is derived from the
+SP pair and records its Frey provenance; residual conductor one and primitive residual
+monodromy are not classification hypotheses.
 
-**Coefficient field.** The finite-level theorem applies to $A_n=\mathcal O/\varpi^n$ even
-when $K/\mathbf Q_3$ is ramified. Section 7.4 proves the residual orientation over the actual
-residue field $k$. Neither $K=\mathbf Q_3$ nor $k=\mathbf F_3$ is assumed.
+The discriminant bounds retain their distinct normalizations: at $3$, $1/2$ is an upper-break
+cutoff and $3/2$ a normalized different bound, while at $2$ the exact tame exponent is $2/3$.
+The global ceiling counts each factor once and applies only to exponent-three modeled objects.
+The logarithmic lower bound at degree $21$ is strictly larger than the logarithm of that
+ceiling, so monotonicity gives $[L:\mathbf Q]\le20$ without a conditional GRH table. This
+degree bound alone does not imply reducibility; the conclusion also uses the abelian-subfield
+calculation, the $\lambda$-ray groups of $\mathbf Q(\zeta_3)$, solvability, and the
+normal-$3$-group fixed-vector argument.
 
-**Stable lattice.** Compactness gives a stable lattice but not the required finite-flat tower.
-Book 187 constructs one lattice with compatible models at every level. No residual
-irreducibility or uniqueness-up-to-homothety statement is used.
+The direction of extensions is also essential. The $2$-Kummer class survives in
+$\operatorname{Ext}^1(C,M)$; only $\operatorname{Ext}^1(M,C)$ vanishes, so the final integral
+sequence is not declared split. The $A_n$-action is retained on every finite-flat model, making
+Cayley--Hamilton a rank-two identity over $A_n$ and producing (7.6) even for ramified
+coefficient fields. In passing to the limit, the proof does not lift a chosen residual vector.
+It carries the cross relation through all separated coefficient levels, forms the algebraic
+augmentation submodule, and saturates its rank-one $K$-span.
 
-**Coefficient two.** No member at a coefficient place above two occurs. The rational base place
-$2$ is compared with the selected three-adic member, so it lies in the prime-to-coefficient
-range. The all-place hypothesis $(\mathrm{AI}_2)$ cannot affect this argument.
-
-**Support.** A global model over $\mathbf Z[1/2]$ is used only under Book 187's clean-support
-certificate. No auxiliary prime is removed from equality of almost all Frobenius traces.
-
-**Conductor.** Book 161 consumes the global finite-flat model, cyclotomic determinant, and
-odd-tame dyadic inertia. The integer $a_2(V)=1$ is derived from the SP pair and records its
-Frey provenance; it is not an extra input to the classification. Residual conductor one and
-primitive residual monodromy are not assumed.
-
-**Discriminant normalization.** At $3$, $1/2$ is an upper-break cutoff and $3/2$ is a normalized
-different bound. At $2$, the exact tame exponent is $2/3$. The global ceiling pays each factor
-once and is applied only to exponent-three modeled objects.
-
-**Numerics.** The logarithmic lower bound at degree $21$ is strictly larger than the logarithm
-of the arithmetic ceiling. Monotonicity in the degree gives $[L:\mathbf Q]\le20$. No conditional
-GRH table enters.
-
-**Finite image.** Degree at most twenty does not imply reducibility. The proof separately uses
-the abelian subfield calculation, the $\lambda$-ray groups of $\mathbf Q(\zeta_3)$, solvability,
-and the normal-$3$-group fixed-vector argument.
-
-**Extensions.** The $2$-Kummer extension survives in $\operatorname{Ext}^1(C,M)$. Only the
-reverse group $\operatorname{Ext}^1(M,C)$ vanishes. Therefore the final integral sequence is not
-declared split.
-
-**Coefficient action.** The $A_n$-action is retained on every finite-flat model. It is what makes
-Cayley--Hamilton a rank-two identity over $A_n$ and produces (7.6) for ramified coefficient
-fields as well.
-
-**Limit.** The proof does not lift a chosen residual vector. It passes the cross relation through
-all separated coefficient levels, forms the algebraic augmentation submodule, and saturates its
-rank-one $K$-span.
-
-**Optional good prime.** The Section 9 prime lies in the restricted Book 185 conclusion's certified cofinite
-good set. The argument does not assume that $5$ is outside the exceptional set. The inequality
-is valid for every certified prime $q>1$. In particular, Book 164's illustrative downstream
-choice of $5$ is not imported as an unproved local certificate.
+For the optional argument of Section 9, the chosen prime lies in the certified cofinite good set
+of the restricted Book 185 conclusion. The proof does not assume that $5$ is outside the
+exceptional set: its inequality is valid for every certified prime $q>1$. Thus an illustrative
+choice of $5$ made elsewhere is not used as an unproved local certificate.
 
 ### 10.4 Conclusion
 
