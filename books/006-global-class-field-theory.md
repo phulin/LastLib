@@ -1117,6 +1117,32 @@ $E/K$ are the quotients of those for $L/K$, so $\chi$ kills the product in
 (4.I13). Characters separate points of $G$, proving the assertion. Thus the
 idèle-level map of Section 2.3 now factors uniquely through $C_K$. $\square$
 
+We can already prove the abelian reciprocity theorem needed for existence;
+no global fundamental class is used.
+
+**Pre-class-formation reciprocity theorem.** If $L/K$ is finite abelian, the
+product of the local Artin maps induces an isomorphism
+
+$$
+ C_K/N_{L/K}C_L\xrightarrow{\sim}\operatorname {Gal}(L/K).              \tag{4.I14}
+$$
+
+**Proof.** Principal-idèle reciprocity makes the product a map from $C_K$.
+Local reciprocity kills every local norm, so it kills $N_{L/K}C_L$.
+The unramified Frobenius elements outside the ramification set generate
+$\operatorname {Gal}(L/K)$ by the splitting-separation lemma; hence the
+induced map in (4.I14) is surjective. The general second-inequality lemma
+(4.I9s) gives
+
+$$
+ [C_K:N_{L/K}C_L]\mid[L:K].                              \tag{4.I15}
+$$
+
+The surjection onto the group of order $[L:K]$ gives the reverse inequality.
+Thus the two finite orders are equal and the surjection is an isomorphism.
+Every ingredient precedes finite duality, existence, and the global
+fundamental class. $\square$
+
 The proof is (4.I9h). The degree-one local--global sequence below is the
 finite-complex calculation that follows. We retain the complexes: an order
 count alone would not identify annihilators or handle the real-place correction.
