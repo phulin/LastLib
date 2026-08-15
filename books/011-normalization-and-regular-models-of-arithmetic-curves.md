@@ -1285,6 +1285,79 @@ fibers at each stage over $A$ and $\widehat A$ are identical, so the next closed
 the ordinary blowups agree by flat base change, and the first part applies because they are
 already normal away from the closed fiber. Normalizing completes the induction. $\square$
 
+**Lemma 8.20A (realizing a resolution by normalized blowups).** Let $A$ be a complete
+two-dimensional normal noetherian local domain and let
+$X\to\operatorname{Spec}A$ be a resolution. There is a regular $X'$ and a factorization
+
+$$
+X'\longrightarrow X\longrightarrow\operatorname{Spec}A
+$$
+
+such that $X'\to\operatorname{Spec}A$ is a finite sequence of normalized blowups in ideals
+supported at closed points.
+
+**Proof.** We first record two rationality facts used in the conversion. A complete regular
+two-dimensional local ring $R$ is rational. Indeed, given a normal modification $W\to
+\operatorname{Spec}R$, Chow's lemma supplies a projective modification dominating it, and
+Lemma 8.8 dominates that projective modification by a sequence $T_r\to\cdots\to T_0$ of point
+blowups of the regular surface. Lemma 8.7 and Leray give
+$H^1(T_r,\mathcal O_{T_r})=0$, while (8.9) injects
+$H^1(W,\mathcal O_W)$ into this group.
+
+Rationality also passes to a normal two-dimensional local ring $B$ essentially of finite type and
+birational over $R$. To see this without a locality assumption on rationality, choose a normal
+projective modification $P\to\operatorname{Spec}R$ having a closed point $b$ with
+$\mathcal O_{P,b}=B$: take a projective closure of the finite-type birational model containing
+$\operatorname{Spec}B$, then normalize it. Let
+$V\to\operatorname{Spec}B$ be a normal modification. After replacing $P$ by an open
+neighborhood of $b$, finitely many affine equations and denominators defining $V$ spread it to a
+modification of that neighborhood. Taking its graph closure over $P$ and normalizing gives
+$g:P'\to P$ whose base change at $b$ dominates $V$. Both $P$ and $P'$ are normal modifications
+of $R$, so the first paragraph gives
+
+$$
+H^1(P,\mathcal O_P)=H^1(P',\mathcal O_{P'})=0.
+$$
+
+The fibers of $P$ and $P'$ over the affine surface $\operatorname{Spec}R$ have dimension at most
+one, so their second coherent cohomology vanishes. Leray for $g$ therefore gives the exact row
+
+$$
+0\longrightarrow H^1(P,\mathcal O_P)\longrightarrow
+H^1(P',\mathcal O_{P'})\longrightarrow
+H^0(P,R^1g_*\mathcal O_{P'})\longrightarrow0.
+$$
+
+Thus $R^1g_*\mathcal O_{P'}=0$: it is supported at the finitely many closed points where $g$ is
+not an isomorphism, and a nonzero coherent module with zero-dimensional support has a nonzero
+global section. Its stalk at $b$ is the $H^1$ of the localized modification; applying (8.9) to
+the domination of $V$ injects $H^1(V,\mathcal O_V)$ into that zero stalk. Hence $B$ is rational.
+
+Now let $X\to\operatorname{Spec}A$ be a regular resolution. Lemma 8.9 supplies a sequence of
+normalized blowups
+
+$$
+Y_n\longrightarrow\cdots\longrightarrow Y_0=\operatorname{Spec}A
+$$
+
+and a morphism $Y_n\to X$. Chow's lemma gives a projective modification of $X$ dominating
+$Y_n$, and Lemma 8.8, applied over the regular $X$, gives a sequence of point blowups of $X$
+dominating $Y_n$. (Equivalently, $Y_n\to X$ itself is projective: $Y_n$ is projective over
+$A$, and its graph is closed because $X$ is separated over $A$.) Hence $Y_n$ has a resolution
+and only finitely many singular closed points. If $y\in Y_n$ is one of them and
+$x\in X$ is its image, the local map
+$\mathcal O_{X,x}\to\mathcal O_{Y_n,y}$ is birational and essentially of finite type. The two
+rationality facts show that $\mathcal O_{Y_n,y}$ is a rational singularity.
+
+Apply Lemma 8.16 at the finitely many $y$. The local point-blowup sequences globalize because
+their centers are disjoint closed points; Lemma 8.15 says every stage is normal and rational.
+After finitely many stages all remaining singular local rings are Gorenstein, hence rational
+double points. Lemma 8.18D resolves each of those by finitely many further singular-point
+blowups. Again Lemma 8.15 makes every ordinary blowup normal, so each is already its normalized
+blowup. Appending these stages to $Y_n\to\cdots\to Y_0$ produces a sequence of normalized
+blowups whose final surface is regular. Every appended stage maps to $Y_n$, and the original
+map $Y_n\to X$ therefore makes the final resolution dominate the prescribed $X$. $\square$
+
 **Proposition 8.21 (complete local resolution).** A complete two-dimensional normal noetherian
 local domain admits a resolution by normalized blowups.
 
@@ -1300,24 +1373,28 @@ $x$ so that $(p,x)$ is a parameter ideal and use $A_0=C[[x]]$. The identical red
 that $A_0\to A$ is finite and injective. Thus in both cases $A_0$ is a complete regular local
 domain and $K/K_0=\operatorname{Frac}(A)/\operatorname{Frac}(A_0)$ is finite.
 
-Induct on $[K:K_0]$. Degree one gives $A=A_0$. If
+The first paragraph of Lemma 8.20A proves more than regularity of $A_0$: every normal modification
+of $A_0$ has zero $H^1$. Thus $A_0$ is bounded, with bound zero, which is the base hypothesis
+needed in Lemma 8.14.
+
+Induct on $[K:K_0]$ to construct some resolution. Degree one gives $A=A_0$. If
 $K_0\subsetneq L\subsetneq K$, let $B$ be the integral closure of $A_0$ in $L$; it is finite and
 semilocal, and the factor selected by $A$ is complete. By induction resolve that factor, obtaining
 $Y\to\operatorname{Spec}B$. Normalize $Y\times_BA$ and examine its finitely many singular closed
 points. Their completed local rings are complete normal surface rings, finite over the completed
 regular local rings of $Y$. The remaining field degree is smaller, so induction resolves each;
-Lemma 8.20 and the local-to-global construction lift and glue these resolutions. It therefore
-suffices to treat an extension with no intermediate field.
+Lemma 8.20 and the local-to-global construction lift and glue these resolutions. Lemma 8.20A
+then converts the resulting resolution to normalized blowups. We may therefore assume there is no
+intermediate field.
 
 Such an extension is either separable, or has characteristic $p$ and is purely inseparable of
 degree $p$. In mixed characteristic only the first case occurs. Lemma 8.14 gives boundedness in
 the separable case and, since the base is the regular complete ring $A_0$, in the inseparable
 degree-$p$ case. Choose a normal modification on which $g$ is maximal. Equation (8.9) then makes
 every singular local ring rational. Lemma 8.16 replaces it by a normal modification whose
-singular local rings are rational double points, and the double-point calculation following
-Lemma 8.18 resolves those by finitely many point blowups. Finally Lemma 8.9 dominates the finite
-composite by normalized blowups; deleting redundant terminal stages leaves a resolution by
-normalized blowups itself. $\square$
+singular local rings are rational double points, and Lemma 8.18D resolves those by finitely many
+point blowups. This produces a resolution, and
+Lemma 8.20A realizes it as a finite sequence of normalized blowups. $\square$
 
 ### 8.6 Why a three-entry local invariant is insufficient
 
