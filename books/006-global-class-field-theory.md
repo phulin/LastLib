@@ -181,7 +181,27 @@ $$
 
 forces the product of the local actions of a principal element to be one. The sum, rather than any individual invariant, is the global mechanism.
 
-For a finite Galois extension, the same invariant sequence supplies a fundamental class in $H^2(G,C_L)$. Capping with it identifies $G^{\mathrm{ab}}$ with $C_K/N C_L$. Finally, the existence argument proves that the norm subgroups obtained this way exhaust all open finite-index subgroups of $C_K$. This last step uses the finite local--global duality sequence for the Cartier-dual pair $\mathbf Z/n\mathbf Z$ and $\mu_n$; it cannot be replaced by merely counting extensions already known to exist.
+For a finite Galois extension, passing from the local invariant sequence to a
+fundamental class in $H^2(G,C_L)$ requires Tate's canonical $S$-unit sequence.
+That sequence is not constructed in the preceding books or in this one; Section
+4.3 isolates its exact content as Hypothesis TS. Conditional on TS, capping with
+the resulting class identifies $G^{\mathrm{ab}}$ with $C_K/N C_L$. Finally, the
+existence argument proves that the norm subgroups obtained this way exhaust all
+open finite-index subgroups of $C_K$. This last step also uses the finite
+local--global duality sequence for the Cartier-dual pair $\mathbf Z/n\mathbf Z$
+and $\mu_n$; it cannot be replaced by merely counting extensions already known
+to exist.
+
+There is a second, independent global-cohomological boundary. Books 1--5 supply
+local reciprocity, local Brauer invariants, Kummer theory, ideles, units,
+divisors, and ideal classes, but they do not construct compactly supported
+global Galois cohomology or prove its perfect duality theorem. Section 4.2
+therefore isolates the exact finite Artin--Verdier input as **Hypothesis FD**.
+A result marked **[FD]** is conditional on that input; a label such as
+**[FD,TC,TS]** records the other independent inputs as well. Hypothesis FD is
+not obtained from the later Poitou--Tate volume, which would violate the reading
+order. The labels below keep the unresolved input visible instead of disguising
+a global duality theorem as an elementary units-and-divisors count.
 
 ## 2. Local symbols and the global Artin map
 
@@ -256,7 +276,7 @@ If $v$ splits completely, then $D_w=1$, so the entire factor $K_v^\times$ is kil
 
 The decisive global statement is the **product formula for local norm-residue symbols**:
 
-**Theorem 2.1.** If $L/K$ is finite abelian and $a\in K^\times$, then
+**Theorem 2.1 [FD].** If $L/K$ is finite abelian and $a\in K^\times$, then
 
 $$
 \prod_v\operatorname{Art}_{L/K,v}(a)=1.
@@ -273,7 +293,7 @@ $$
 =\chi\bigl(\operatorname{Art}_{E/K,v}(a)\bigr).
 $$
 
-At split factors both sides are zero. The global Brauer invariant sequence gives
+At split factors both sides are zero. The degree-two localization row in FD gives
 
 $$
 0=\sum_v\operatorname{inv}_v(A_v)
@@ -340,13 +360,17 @@ $$
 N_{L/K}C_L\subseteq\ker(\operatorname{Art}_{L/K}).
 $$
 
-The reverse inclusion is the global norm theorem and will emerge from the class-formation proof. It is not obtained by checking one coordinate at a time: an idele class in the kernel may have non-norm components whose combined global obstruction cancels after multiplication by a principal idele.
+Under [FD,TS,TC], the reverse inclusion is the global norm theorem and emerges
+from the class-formation deduction. It is not obtained by checking one coordinate
+at a time: an idele class in the kernel may have non-norm components whose
+combined global obstruction cancels after multiplication by a principal idele.
 
 For a principal element $a$, being an idele norm is coordinatewise local. By contrast, its class in $C_K$ is always the identity and hence always a class norm. This extreme example shows why a class-norm assertion cannot be read as an element-norm assertion.
 
 ### 3.4 An index preview
 
-If $L/K$ is finite abelian, the main finite theorem will prove the exact equality
+If $L/K$ is finite abelian, the main finite theorem will, under [FD,TS,TC],
+prove the exact equality
 
 $$
 [C_K:N_{L/K}C_L]=[L:K]
@@ -378,13 +402,15 @@ $$
 \widehat H^{-2}(G,\mathbf Z)=G^{\mathrm{ab}}.
 $$
 
-A class $u_{L/K}\in H^2(G,C_L)$ will connect them by cap product. The central theorem is that $u_{L/K}$ behaves as a fundamental class not merely for $G$ but after restriction to every subgroup.
+A class $u_{L/K}\in H^2(G,C_L)$ would connect them by cap product. Producing it
+with the required behavior after restriction to every subgroup is precisely the
+global input isolated as Hypothesis TS in Section 4.3.
 
 ### 4.2 The Brauer--idele exact sequence
 
 We first isolate the global input.
 
-**Theorem 4.1 (Brauer invariant sequence).** For a number field $F$, localization and local invariant maps form an exact sequence
+**Theorem 4.1 (Brauer invariant sequence) [FD].** For a number field $F$, localization and local invariant maps form an exact sequence
 
 $$
 0\longrightarrow\operatorname{Br}(F)
@@ -395,78 +421,137 @@ $$
 
 Here $\operatorname{Br}(\mathbf C)=0$, $\operatorname{Br}(\mathbf R)=\frac12\mathbf Z/\mathbf Z$, and $\operatorname{Br}(F_u)\cong\mathbf Q/\mathbf Z$ at a finite place. Only finitely many localizations of a global class are nonzero.
 
-**Proof strategy.** We first prove the finite arithmetic-duality calculation from which the invariant sequence is the degree-two row. This avoids hiding a cyclic local-prescription theorem inside the proof; such a theorem, stated without its $2$-primary obstruction, would be false.
+The proof of this theorem and of the degree-one local--global sequence below requires a
+finite global duality theorem which is not available in Books 1--5. We state the precise
+input rather than replacing it by an order count on units and ideal classes. Such an order
+count does not construct the relevant filtered complexes, prove compatibility of their
+pairings, or justify descent through $F(\mu_n)/F$ when its degree is not invertible modulo
+$n$.
 
-We will use one elementary separation fact. For every number field $F$, its Dedekind zeta function has a simple pole at $s=1$. Indeed, choose by Minkowski's bound an integral ideal $\mathfrak a_c$ in the inverse of each ideal class $c$. An integral ideal $\mathfrak b$ in $c$ is characterized by
+We retain one independent elementary separation fact used later. A finite extension
+$E/F$ which splits at all but finitely many completions is trivial. Indeed, Minkowski's
+bound and the unit
+lattice give
 
 $$
-\mathfrak b\mathfrak a_c=(\alpha),
-\qquad
-\alpha\in\mathfrak a_c,
-$$
-
-with $\alpha$ determined up to a unit. The image of $\mathfrak a_c$ in Minkowski space is a lattice. Quotient the logarithms of the archimedean absolute values by a fundamental parallelepiped for the unit lattice. Lattice-point counting in the resulting expanding norm region, summed over the finitely many classes, gives
-
-$$
-A_F(X)=\#\{\mathfrak a\subseteq\mathcal O_F:
-N\mathfrak a\leq X\}
+A_F(X)=\#\{\mathfrak a\subseteq\mathcal O_F:N\mathfrak a\leq X\}
 =\kappa_FX+O_F(X^{1-1/[F:\mathbf Q]})
 $$
 
-for a constant $\kappa_F>0$, with $O_F(1)$ in degree one. Partial summation gives
+for some $\kappa_F>0$ (with a bounded error in degree one). Partial summation shows that
+$\zeta_F(s)$ has a simple pole at $s=1$. If a degree-$d$ extension split at every
+completion, then outside finitely many Euler factors one would have
+$\zeta_E(s)=\zeta_F(s)^d$; the two sides have poles of orders one and $d$. Hence $d=1$.
+This argument uses no global reciprocity or global duality.
+
+Fix $n\geq1$ and a finite set $S$ containing the archimedean places and the places above
+$n$. Let $G_{F,S}$ be the Galois group of the maximal extension of $F$ unramified outside
+$S$, and put
 
 $$
-\zeta_F(s)
-=s\int_1^\infty A_F(X)X^{-s-1}\,dX
-=\frac{\kappa_F}{s-1}+h_F(s),
+A_n=\mathbf Z/n\mathbf Z,
+\qquad A_n^D=\mu_n.
 $$
 
-where $h_F$ is bounded as $s\to1^+$. Thus the pole is simple. Consequently, a nontrivial finite extension cannot split at every completion: if $E/F$ of degree $d$ did so, then away from finitely many factors $\zeta_E(s)$ would equal $\zeta_F(s)^d$, whose pole has order $d$ rather than one.
-
-Fix $n\geq1$ and a finite set $S$ containing the archimedean places and the places above $n$. Let $G_{F,S}$ be the Galois group of the maximal extension of $F$ unramified outside $S$. Put $A_n=\mathbf Z/n\mathbf Z$ and $A_n^\vee=\mu_n$. For either member $A$ of this dual pair, define the compact-support cochain complex
+At a nonarchimedean place use the continuous local cochain complex. At a real place use the
+complete Tate cochain complex, including its degree-zero norm quotient; this is the
+modification that retains the $2$-primary sign term. At a complex place use the zero
+modified complex, equivalently the Tate complex of the trivial decomposition group. With
+these conventions set
 
 $$
 C_{S,c}^\bullet(A)=
 \operatorname{Cone}\left(
 C^\bullet(G_{F,S},A)\longrightarrow
-\bigoplus_{u\in S}C^\bullet(G_{F_u},A)
-\right)[-1],
+\bigoplus_{u\in S}C^\bullet(F_u,A)
+\right)[-1].
 $$
 
-using Tate cochains at real places. Cup product, followed locally by the invariant, gives
+**Hypothesis FD (finite Artin--Verdier duality for $A_n$ and $\mu_n$).** For every number
+field $F$, every $n\geq1$, and every such $S$, the following data and assertions are
+available.
 
-$$
-H^i(C_{S,c}^\bullet(A_n))\times
-H^{3-i}(G_{F,S},\mu_n)
-\longrightarrow \tfrac1n\mathbf Z/\mathbf Z.
-\tag{4.1}
-$$
+1. Continuous cup products and the sum of the normalized local invariant maps define a
+   trace
 
-This pairing is perfect. We prove that assertion at finite level. First, the diagonal global classes annihilate one another. On cocycles this is the norm-residue product calculation: the explicit local cup-product formula obtained from cyclic algebras and local reciprocity is bilinear in unit and valuation classes, the valuation terms cancel by the principal-divisor relation, and the unit terms cancel by the finite-residue-field norm relation. The real terms are the signs left by the same calculation. Only finitely many terms occur. One may compute after a finite Galois extension containing $\mu_n$; the calculation is equivariant under its Galois group, so the cocycle identity descends without dividing by the degree. Thus no roots-of-unity hypothesis is being inserted.
+   $$
+   \operatorname{tr}_{F,S}:H^3(C_{S,c}^\bullet(\mu_n))
+   \xrightarrow{\sim}\tfrac1n\mathbf Z/\mathbf Z
+   $$
 
-The Kummer sequence and the valuation sequence give
+   and pairings
+
+   $$
+   H^i(C_{S,c}^\bullet(A_n))\times
+   H^{3-i}(G_{F,S},\mu_n)
+   \longrightarrow\tfrac1n\mathbf Z/\mathbf Z
+   \tag{4.1}
+   $$
+
+   for $0\leq i\leq3$, together with the pairings obtained by interchanging $A_n$ and
+   $\mu_n$. More precisely, these pairings are induced by cochain maps
+
+   $$
+   C_{S,c}^\bullet(A_n)\longrightarrow
+   \operatorname{Hom}\!\left(
+   C^{3-\bullet}(G_{F,S},\mu_n),
+   \tfrac1n\mathbf Z/\mathbf Z
+   \right)
+   $$
+
+   and its swapped analogue, with the standard dual-complex differential, and FD asserts
+   that these maps are quasi-isomorphisms in the displayed degree range.
+2. All groups in these pairings are finite, and each pairing identifies either factor with
+   the full Pontryagin dual of the other. The identification is compatible with the long
+   exact localization sequences, connecting maps, cup products, and the transition maps as
+   $S$ grows.
+3. Restriction and corestriction are adjoint, including at real places. Descent through any
+   finite extension, in particular through $F(\mu_n)/F$, is integral: it is induced on the
+   relevant Hochschild--Serre total complexes and does not divide by the extension degree.
+   Thus the assertion includes the case in which $[F(\mu_n):F]$ and $n$ have a common
+   factor.
+4. The degree-two localization row is
+
+   $$
+   0\longrightarrow H^2(F,\mu_n)
+   \longrightarrow\bigoplus_u H^2(F_u,\mu_n)
+   \longrightarrow
+   \operatorname{Hom}(H^0(F,A_n),\mathbf Q/\mathbf Z)
+   \longrightarrow0,
+   $$
+
+   where the middle arrow is the sum of local invariants. For a finite $S$, the
+   degree-one row identifies the cokernel of
+
+   $$
+   H^1(F,A_n)\longrightarrow\prod_{u\in S}H^1(F_u,A_n)
+   $$
+
+   with the dual of the subgroup of $H^1(F,\mu_n)$ whose localization vanishes outside
+   $S$, under the sum of local cup-product invariants.
+
+This is the exact bounded finite Poitou--Tate, or finite Artin--Verdier, input used in this
+book. It asserts no global Artin map, no global existence theorem, and no ray class field.
+Conversely, the elementary exact sequence
 
 $$
 0\longrightarrow
 \mathcal O_{F,S}^\times/\mathcal O_{F,S}^{\times n}
 \longrightarrow H^1(G_{F,S},\mu_n)
 \longrightarrow \operatorname{Cl}(\mathcal O_{F,S})[n]
-\longrightarrow0,
+\longrightarrow0
 \tag{4.2}
 $$
 
-and the analogous local sequences. Weak approximation realizes any prescribed finite collection of local unit classes. Prescribed valuations define an $S$-ideal divisor; its only further obstruction to coming from a global element is its class in $\operatorname{Cl}(\mathcal O_{F,S})$, which is exactly the last term of (4.2).
+and its local analogues do not prove FD: they describe some groups but do not supply the
+dual complexes, annihilator equalities, or integral Hochschild--Serre descent. We therefore
+use FD as an explicit unresolved hypothesis, not as a theorem proved by the preceding
+paragraphs and not by circular reference to a later volume.
 
-We next check nondegeneracy. For $\mu_n$, a global class trivial everywhere becomes, after adjoining $\mu_n$, a Kummer extension split at every completion. For $A_n$, the same is true of the cyclic extension cut out by the character. The separation fact just proved makes either extension trivial. Thus both global localization maps have trivial kernel.
-
-It remains only to compare finite orders. Suppose first that $\mu_n\subset F$ and choose a primitive root to identify $A_n$ with $\mu_n$. Filter the global and local cochain groups by units, valuation divisors, and ideal classes as in (4.2). On the free unit part, the one relation among normalized finite and archimedean valuations is the ordinary product formula, and its kernel has the rank supplied by the unit theorem. On torsion units, ordinary finite character duality pairs roots of unity modulo $n$ with their cyclic characters. On the ideal part, evaluation pairs $\operatorname{Cl}(\mathcal O_{F,S})/n$ perfectly with the $n$-torsion of its character group. The local factors have matching orders because local reciprocity identifies $H^1(F_u,A_n)$ with the character group of $F_u^\times/F_u^{\times n}$, while Kummer theory identifies that quotient with $H^1(F_u,\mu_n)$. Multiplying the orders on the associated graded groups, the class-group factors cancel and the remaining equality is precisely the unit-rank formula. Hence each annihilator has the same order as the corresponding image. The already proved inclusion and nondegeneracy give equality, and the five lemma lifts perfectness from the associated graded groups to the cohomology groups.
-
-For general $F$, pass to $F'=F(\mu_n)$. The Hochschild--Serre complexes for $F'/F$ on $A_n$ and $\mu_n$ are dual: restriction and corestriction are adjoint under the local pairings. Choose a complete resolution of $\operatorname{Gal}(F'/F)$, apply the roots-of-unity calculation in every row, and use the five lemma successively on the filtration by total degree. This descends perfectness without dividing by $[F':F]$, even when that degree shares a factor with $n$. At real places the complete resolution is the Tate resolution; retaining its degree-zero term is exactly what preserves the exceptional $2$-primary condition. Degrees zero and three are the ordinary product formula and its finite dual. This proves (4.1) without global reciprocity, a prime-distribution theorem, or an exact-degree Grunwald assertion.
-
-The same argument applies with $A_n$ and $\mu_n$ interchanged. The long exact sequence of that cone, followed by the directed limit as $S$ grows, contains the exact row
+**Proof of Theorem 4.1, conditional on FD.** The degree-two row of FD is
 
 $$
-H^2(F,\mu_n)\longrightarrow
+0\longrightarrow H^2(F,\mu_n)\longrightarrow
 \bigoplus_u H^2(F_u,\mu_n)\longrightarrow
 \operatorname{Hom}(H^0(F,A_n),\mathbf Q/\mathbf Z)
 \longrightarrow0.
@@ -481,7 +566,11 @@ H^2(F,\mu_n)=\operatorname{Br}(F)[n],
 H^2(F_u,\mu_n)=\operatorname{Br}(F_u)[n].
 $$
 
-Since $H^0(F,A_n)=A_n$, the middle arrow in (4.3) is exactly the sum of the local invariants. Perfectness also says that its left kernel is zero. We have therefore proved the theorem on $n$-torsion. Every Brauer class and every finitely supported family of local invariants has finite exponent, so taking the directed union over $n$ proves exactness of the displayed sequence. Finally, two finite places carrying $r$ and $-r$ show directly that the sum map is onto. $\square$
+Since $H^0(F,A_n)=A_n$, the last term is canonically
+$\frac1n\mathbf Z/\mathbf Z$, and the middle arrow is exactly the sum of the local
+invariants. Thus (4.3) is the Brauer invariant sequence on $n$-torsion. Every Brauer class
+and every finitely supported family of local invariants has finite exponent, so taking the
+directed union over $n$ proves the theorem. $\square$
 
 We record the degree-one consequence in the form needed later. This also makes precise
 where the Grunwald--Wang condition lives. Let $S$ be a finite set of places, use Tate
@@ -509,8 +598,8 @@ $$
 \tag{4.W2}
 $$
 
-The value is independent of the representative of $[a]$. The degree-one row of the
-compact-support duality calculation is the exact sequence
+The value is independent of the representative of $[a]$. Assuming FD, the degree-one
+localization row is the exact sequence
 
 $$
 H^1(K,A_n)\longrightarrow\mathcal L_{n,S}
@@ -718,11 +807,12 @@ is Klein four, namely at the places in $S_0(K)$. It therefore survives localizat
 away from $S$ exactly when $S_0(K)\subseteq S$. This proves (4.W8), including all
 nonexceptional alternatives.
 
-Finally, (4.W3) follows directly from the degree-one perfect pairing: the annihilator
+Finally, conditional on FD, (4.W3) follows directly from the degree-one perfect pairing:
+the annihilator
 of the global image in the finite local product is the localization of $D_{n,S}$,
 and finite perfect duality identifies the cokernel with its character group. This
-derivation uses local reciprocity, Kummer theory, and the already proved finite
-duality calculation, but not the global existence theorem.
+derivation uses local reciprocity, Kummer theory, and Hypothesis FD, but not the
+global existence theorem.
 
 ### 4.3 Construction of the fundamental class
 
@@ -746,56 +836,142 @@ $$
 
 The surjectivity is precisely why we enlarged $S_L$ until the $S_L$-class group vanished.
 
-We need one finite-level form of the Tate sequence.
+The local two-extensions, the valuation sequence, and the Brauer relation indicate
+what the desired object must be, but they do not by themselves construct its
+middle modules or prove their cohomological triviality. In particular, the phrase
+"take the mapping cone" is not a proof unless the complexes, comparison maps,
+and subgroup restrictions are supplied. We therefore make the missing global
+input explicit.
 
-**Lemma 4.2 (the canonical $S$-unit sequence).** There are cohomologically trivial $G$-modules $A_S$ and $B_S$ and an exact sequence
+**Hypothesis TS (Tate's canonical $S$-unit sequence).** For every finite Galois
+extension $L/K$ with group $G$, and every $S_L$ as above, the following data and
+compatibilities are available.
 
-$$
-0\longrightarrow U_{L,S}\longrightarrow A_S
-\longrightarrow B_S\longrightarrow X_S\longrightarrow0.
-$$
+1. There are specified $G$-homomorphisms in an exact sequence
 
-Its two-extension class is characterized by the following local condition: after restriction to a decomposition group $D_w$ and projection to the summand generated by $w$, it is the local fundamental class of $L_w/K_v$. Enlarging $S_L$ carries this sequence to the corresponding sequence for the larger set.
+   $$
+   0\longrightarrow U_{L,S}\xrightarrow{i_S}A_S
+   \xrightarrow{d_S}B_S\xrightarrow{p_S}X_S\longrightarrow0.
+   \tag{TS1}
+   $$
 
-**Proof.** For each $v\in S_K$, choose $w\mid v$ and represent the local fundamental class by a two-extension with cohomologically trivial middle terms. Induce it from $D_w$ to $G$ and sum over $v$. The terminal modules sum to
+   Thus $i_S$ is injective, $p_S$ is surjective, and
+   $\ker d_S=\operatorname{im}i_S$ and
+   $\ker p_S=\operatorname{im}d_S$. For every subgroup $H\subseteq G$ and
+   every $r\in\mathbf Z$,
 
-$$
-\bigoplus_{v\in S_K}\operatorname{Ind}_{D_w}^G\mathbf Z
-=\mathbf Z[S_L]=Y_S.
-$$
+   $$
+   \widehat H^r(H,A_S)=\widehat H^r(H,B_S)=0.
+   \tag{TS2}
+   $$
 
-Pull back along $X_S\hookrightarrow Y_S$. At the left end, take the mapping cone of the diagonal localization of $L^\times$ and the valuation map outside $S_L$. The exact valuation sequence above shows that its only homology is $U_{L,S}$; this is exactly where vanishing of the $S_L$-class group is used. Hilbert 90 kills degree one in every decomposition group, while the local invariant identifies degree two with the cyclic group generated by $1/|D_w|$. The augmentation $Y_S\to\mathbf Z$ asks that these local generators have total invariant zero, and Theorem 4.1 says this is their only relation. The pullback cone is therefore the asserted two-extension of $X_S$ by $U_{L,S}$.
+   Cohomological triviality in (TS2) is part of the input; it is not inferred
+   merely from an unspecified kernel between induced modules.
 
-The middle terms are built from induced modules and kernels between two consecutive induced resolutions. Shapiro's lemma makes their Tate cohomology vanish for every subgroup, so they are cohomologically trivial. If another sequence has the same local classes, their Baer difference has zero localization everywhere; injectivity in Theorem 4.1 makes that difference split. This proves uniqueness. Adding a place adds an induced acyclic summand, which proves compatibility as $S_L$ grows. $\square$
+2. The Yoneda class
 
-Splice this $S$-unit sequence with the valuation sequence outside $S_L$ and the quotient $\mathbf I_L/L^\times=C_L$. The induced local summands cancel, and the remaining two-extension has the form
+   $$
+   \tau_{L/K,S}=[\text{(TS1)}]
+   \in\operatorname{Ext}^2_{\mathbf Z[G]}(X_S,U_{L,S})
+   \tag{TS3}
+   $$
 
-$$
-0\longrightarrow C_L\longrightarrow A\longrightarrow B
-\longrightarrow\mathbf Z\longrightarrow0,
-$$
+   comes with comparison maps to the valuation sequence outside $S_L$ and to
+   the induced local fundamental two-extensions. For each $w\in S_L$, with
+   $v=w|_K$, restriction to $D_w$ followed by the $w$-coordinate comparison is
+   the local fundamental class
 
-with $A$ and $B$ cohomologically trivial. Its extension class is the **global fundamental class**
+   $$
+   u_{L_w/K_v}\in H^2(D_w,L_w^\times),
+   \qquad
+   \operatorname{inv}_v(u_{L_w/K_v})=\frac1{|D_w|}.
+   \tag{TS4}
+   $$
 
-$$
-u_{L/K}\in H^2(G,C_L).
-$$
+   This clause includes the commutativity of the localization, valuation, and
+   augmentation diagrams; equality only of unnamed extension classes is not
+   sufficient. A place outside the chosen $S_L$ is handled by first enlarging
+   $S_L$ to contain its $G$-orbit and then using the transition identity below.
 
-Compatibility of the canonical $S$-unit sequences shows that this class is independent of $S_L$. This construction makes canonicity visible: no choice of place, uniformizer, or cyclic generator remains. It also explains why the class lives in idele **classes** rather than ideles. The divisor augmentation and the principal-divisor relation have both been built into the extension.
+3. If $S_L\subseteq S'_L$ are admissible sets, write $j_U:U_{L,S}\to
+   U_{L,S'}$ and $j_X:X_S\to X_{S'}$ for the natural maps. The extension
+   classes satisfy the precisely typed transition identity
 
-Write $\operatorname{inv}_E$ for the identification of $H^2(H,C_L)$ with $\frac1{|H|}\mathbf Z/\mathbf Z$ furnished by the restricted canonical sequence. Its normalization is stable under passage to intermediate fields. For every subgroup $H\subseteq G$, with fixed field $E=L^H$, restriction satisfies
+   $$
+   (j_U)_*\tau_{L/K,S}=(j_X)^*\tau_{L/K,S'}
+   \quad\text{in}\quad
+   \operatorname{Ext}^2_{\mathbf Z[G]}(X_S,U_{L,S'}).
+   \tag{TS4a}
+   $$
 
-$$
-\operatorname{inv}_E(\operatorname{res}^G_Hu_{L/K})=\frac1{|H|}.
-$$
+   After adding split two-extensions with induced middle modules when needed,
+   this equality is represented by a morphism of the exact sequences (TS1).
+   The comparison morphisms can be chosen transitively for
+   $S_L\subseteq S'_L\subseteq S''_L$ and compatibly with every local
+   comparison in (TS4). Consequently all admissible $S_L$ give the same
+   spliced class below.
 
-To see the factor, restrict the $S$-unit sequence to $H$ and regroup its induced summands into $H$-orbits. Local restriction multiplies a Brauer invariant by the local degree, while the number of orbit representatives supplies the complementary factor. Orbit--stabilizer makes the total multiplier $[E:K]$, changing $1/|G|$ into $1/|H|$. This is the global counterpart of tower compatibility of local fundamental classes and is the reason the ensuing reciprocity maps commute in every tower.
+4. Splicing (TS1), through the comparison maps in clause 2, with the valuation
+   sequence outside $S_L$ and
+   $1\to L^\times\to\mathbf I_L\to C_L\to1$ gives a specified exact
+   two-extension
+
+   $$
+   0\longrightarrow C_L\longrightarrow A_{L/K}
+   \longrightarrow B_{L/K}\longrightarrow\mathbf Z\longrightarrow0,
+   \tag{TS5}
+   $$
+
+   whose two middle modules remain cohomologically trivial after restriction to
+   every subgroup of $G$. Its class
+
+   $$
+   u_{L/K}\in H^2(G,C_L)
+   \tag{TS6}
+   $$
+
+   is independent of $S_L$ and of the choices of places above $S_K$. If
+   $H\subseteq G$ and $E=L^H$, then restriction of (TS5) represents the
+   canonical sequence for $L/E$ and
+
+   $$
+   \operatorname{inv}_E\bigl(\operatorname{res}^G_Hu_{L/K}\bigr)
+   =\frac1{|H|}.
+   \tag{TS7}
+   $$
+
+   These identifications are transitive in chains of subgroups and are
+   compatible with the local restriction and corestriction formulas of Section
+   4.5.
+
+TS is the exact global canonical-sequence theorem needed here. Books 1--5 provide
+the valuation sequences, local fundamental classes, and local invariant
+normalizations, but not TS. The global localization compatibility required in
+clauses 2--4 uses the input [FD] isolated in Section 4.2; complete Tate
+cohomology, Yoneda extensions, cap products, and dimension shifting are the
+input [TC] isolated in Book 5. Neither [FD] nor [TC] constructs (TS1)--(TS5),
+so TS is an independent prerequisite rather than a consequence of their
+conjunction.
+
+The discarded mapping-cone outline still explains the shape of TS: inducing the
+local classes accounts for $Y_S$, pulling back along $X_S\hookrightarrow Y_S$
+imposes total degree zero, and the valuation sequence accounts for $U_{L,S}$.
+What it did not establish are exactly the data and compatibilities now listed in
+(TS1)--(TS7).
+
+Conditional on TS, (TS6) is the **global fundamental class**. The dependency
+persists in the degree-two part of Lemma 4.3, Lemma 4.4, Theorem 5.1 and all of
+its norm-kernel and tower consequences, the norm-subgroup clause of Lemma 6.2,
+Theorem 6.3 as stated, formula (9.1), Theorem 10.1 as derived here, and the
+finite-reciprocity assertions in the closing dictionaries. Results using only
+local invariants or [FD], such as Theorem 6.1 and the cyclic-algebra proof of
+Theorem 9.1, do not depend on TS.
 
 ### 4.4 The two class-formation lemmas
 
 The cap-product argument needs two inputs: degree-one vanishing and a normalized cyclic group in degree two.
 
-**Lemma 4.3.** For every subgroup $H\subseteq G$,
+**Lemma 4.3 [FD,TS].** For every subgroup $H\subseteq G$,
 
 $$
 H^1(H,C_L)=0,
@@ -813,7 +989,9 @@ $$
 
 and Hilbert 90, the relevant connecting map embeds $H^1(H,C_L)$ into $H^2(H,L^\times)$. Under localization, $H^2(H,L^\times)$ is the relative Brauer group $\operatorname{Br}(L/E)$, while $H^2(H,\mathbf I_L)$ is the direct sum of the relative local Brauer groups, by Shapiro. The Brauer invariant sequence says that a global class whose localizations vanish is zero. Thus $H^1(H,C_L)=0$.
 
-For degree two, restrict the canonical two-extension of Section 4.3 to $H$. Its middle terms remain cohomologically trivial. The connecting map therefore identifies
+For degree two, restrict (TS5) to $H$. By (TS2) and clause 4 of TS, its
+middle terms remain cohomologically trivial. The connecting map therefore
+identifies
 
 $$
 \widehat H^0(H,\mathbf Z)=\mathbf Z/|H|\mathbf Z
@@ -823,7 +1001,8 @@ with $H^2(H,C_L)$. It sends $1$ to $\operatorname{res}^G_Hu_{L/K}$, so the latte
 
 This calculation retains the real summands $\frac12\mathbf Z/\mathbf Z$ when a real place complexifies. Dropping them changes the total-invariant cokernel and gives a false power of two.
 
-**Lemma 4.4 (class-formation lemma).** Cap product with $u_{L/K}$ induces isomorphisms
+**Lemma 4.4 (class-formation lemma) [FD,TS,TC].** Cap product with
+$u_{L/K}$ induces isomorphisms
 
 $$
 \widehat H^{r-2}(H,\mathbf Z)
@@ -839,13 +1018,28 @@ $$
 0\to C_L\to A_1\to A_0\to\mathbf Z\to0
 $$
 
-with $A_0,A_1$ the cohomologically trivial modules just constructed. The connecting map sends $1\bmod |H|$ in $\widehat H^0(H,\mathbf Z)$ to the restricted fundamental class, a generator of $H^2(H,C_L)$ by Lemma 4.3. It is therefore an isomorphism in degree two. The neighboring map is an isomorphism because $H^1(H,C_L)=0$. Dimension shifting through the two-extension now propagates the two consecutive isomorphisms in both directions: the Tate cohomology of each middle module is zero, so every connecting map shifts degree by one. These connecting maps are cap products with $u_{L/K}$. $\square$
+with $A_0,A_1$ the cohomologically trivial modules supplied by (TS5). The
+connecting map sends $1\bmod |H|$ in
+$\widehat H^0(H,\mathbf Z)$ to the restricted fundamental class, a generator of
+$H^2(H,C_L)$ by Lemma 4.3. It is therefore an isomorphism in degree two. The
+neighboring map is an isomorphism because $H^1(H,C_L)=0$. Dimension shifting
+through the two-extension now propagates the two consecutive isomorphisms in both
+directions: the Tate cohomology of each middle module is zero, so every connecting
+map shifts degree by one. By [TC], these connecting maps are cap products with
+$u_{L/K}$. $\square$
 
-This is a proof, not an invocation of “class formation” as an unexplained black box: the content is precisely the Brauer localization sequence, the two cohomological calculations, and dimension shifting.
+Thus Lemma 4.4 is a formal deduction from TS, [FD], and [TC], not a construction
+of the canonical sequence. This distinction prevents the dimension-shifting
+argument from being read circularly as a proof of its own cohomologically trivial
+resolution.
 
 ### 4.5 Restriction, corestriction, and invariant normalizations
 
-The preceding construction used Brauer invariants to produce the fundamental class. Duality arguments use the same invariants in a second role: they are the trace maps that turn cup products into numbers. That use is unforgiving about degrees. We therefore record the normalization, including archimedean places and products of local fields, before proceeding to reciprocity.
+Hypothesis TS requires Brauer invariants to normalize the fundamental class.
+Duality arguments use the same invariants in a second role: they are the trace
+maps that turn cup products into numbers. That use is unforgiving about degrees.
+We therefore record the normalization, including archimedean places and products
+of local fields, before proceeding to reciprocity.
 
 For every place $v$ of a number field $F$, write
 
@@ -1085,7 +1279,7 @@ H^r(C_{S,c}^\bullet(M))
 \tag{4.15}
 $$
 
-This is the trace-and-pairing layer used in Poitou--Tate arguments. The assertion that (4.15) is perfect for every finite module is a further global duality theorem; it is not needed to prove reciprocity here. For the pair $A_n,\mu_n$ used in Theorems 4.1 and 6.1, the finite units--divisors--ideal-classes calculation in Section 4.2 proves the required perfectness. Separating the trace construction from the perfectness theorem prevents global reciprocity and global duality from being used to prove one another.
+This is the trace-and-pairing layer used in Poitou--Tate arguments. The assertion that (4.15) is perfect for every finite module is a further global duality theorem; it is not needed to prove reciprocity here. For the pair $A_n,\mu_n$ used in Theorems 4.1 and 6.1, the required perfectness is exactly Hypothesis FD; the units--divisors--ideal-classes sequence (4.2) alone does not prove it. Separating the trace construction from the perfectness input prevents global reciprocity and global duality from being used to prove one another.
 
 Restriction and corestriction preserve the global trace with no hidden degree. If $E/F$ is finite and $(z_w)_w$ is a family of local degree-two classes over $E$, then (4.6) gives
 
@@ -1156,11 +1350,18 @@ The degree factors have now all been located: restriction of a local Brauer clas
 
 ## 5. Finite global reciprocity
 
+Every assertion in this chapter that identifies an Artin kernel with an
+idele-class norm group, or derives tower compatibility from the global
+fundamental class, is under [FD,TS,TC]. The local Artin maps and their product
+from Chapter 2 are defined independently of TS.
+
 ### 5.1 The reciprocity isomorphism
 
 We can now identify the norm quotient without guessing its order.
 
-**Theorem 5.1 (finite global reciprocity).** Let $L/K$ be finite Galois with group $G$. Cap product with the fundamental class gives a canonical isomorphism
+**Theorem 5.1 (finite global reciprocity) [FD,TS,TC].** Let $L/K$ be
+finite Galois with group $G$. Cap product with the fundamental class gives a
+canonical isomorphism
 
 $$
 G^{\mathrm{ab}}\xrightarrow{\sim}C_K/N_{L/K}C_L.
@@ -1173,7 +1374,7 @@ $$
 \xrightarrow{\sim}\operatorname{Gal}(L/K).
 $$
 
-**Proof.** Apply Lemma 4.4 with $H=G$ and $r=0$. The source is
+**Proof.** Apply the conditional Lemma 4.4 with $H=G$ and $r=0$. The source is
 
 $$
 \widehat H^{-2}(G,\mathbf Z)=H_1(G,\mathbf Z)=G^{\mathrm{ab}},
@@ -1337,7 +1538,7 @@ $$
 
 for the restricted product with respect to them.
 
-**Theorem 6.1 (finite local--global duality).** The sequence
+**Theorem 6.1 (finite local--global duality) [FD].** The sequence
 
 $$
 H^1(K,A_n)
@@ -1356,7 +1557,7 @@ $$
 
 The sum is finite. The localization map on the left is injective.
 
-**Proof.** Choose a finite set $S$ containing the archimedean places, the places above $n$, and the ramified places of the local family under consideration. Apply the finite arithmetic-duality calculation (4.1) to the degree-one portion of the long exact compact-support sequence. Perfectness says that the annihilator of the image of the global group is exactly the kernel of the dual localization functional. Written out, this is
+**Proof, conditional on FD.** Choose a finite set $S$ containing the archimedean places, the places above $n$, and the ramified places of the local family under consideration. Apply the pairing and localization compatibility asserted by FD to the degree-one portion of the long exact compact-support sequence. Perfectness says that the annihilator of the image of the global group is exactly the kernel of the dual localization functional. Written out, this is
 
 $$
 \operatorname{im}\left(
@@ -1507,7 +1708,7 @@ $$
 \chi=\chi^{\mathrm{Gal}}\circ\operatorname{Art}_{L/K}.
 $$
 
-Finite reciprocity for the constructed field gives
+Assuming TS, finite reciprocity for the constructed field gives
 
 $$
 \ker\chi=N_{L/K}C_L.
@@ -1515,13 +1716,20 @@ $$
 
 We have proved the needed character form of existence:
 
-**Lemma 6.2 (character existence).** Every continuous finite-order character of $C_K$ comes from a unique intrinsic complex-valued finite-image character of $G_K$. The auxiliary integer $n$, the embedding $\jmath_n$, and the corresponding $A_n$-coordinate are choices in the construction; uniqueness of that coordinate is asserted only after they are fixed. Its fixed field is cyclic of degree equal to the order of its image, and its kernel is the idele-class norm subgroup of that field.
+**Lemma 6.2 (character existence) [FD,TS,TC].** Every continuous finite-order character of
+$C_K$ comes from a unique intrinsic complex-valued finite-image character of
+$G_K$. The auxiliary integer $n$, the embedding $\jmath_n$, and the corresponding
+$A_n$-coordinate are choices in the construction; uniqueness of that coordinate
+is asserted only after they are fixed. Its fixed field is cyclic of degree equal
+to the order of its image. Assuming TS, its kernel is the idele-class norm
+subgroup of that field.
 
 When $\mu_n\subset K$, the dual sequence is self-dual after choosing a primitive $n$th root of unity. The construction then reduces to the familiar product of local Hilbert symbols and produces Kummer fields $K(\sqrt[n]{a})$. Without roots of unity, the dual module is genuinely $\mu_n$ and the cyclic field need not admit one radical equation over $K$. The formulation above retains the twisting automatically rather than hiding it in an informal descent.
 
 ### 6.4 Classification by open subgroups
 
-**Theorem 6.3 (global existence).** The assignments
+**Theorem 6.3 (global existence in norm-subgroup form) [FD,TS,TC].** The
+assignments
 
 $$
 L\longmapsto N_{L/K}C_L,
@@ -1543,9 +1751,21 @@ $$
 \bigcap_{\chi\in X}\ker\chi=H.
 $$
 
-Finite reciprocity now says $N_{L_H/K}C_{L_H}=H$. Conversely, an abelian extension is recovered from its norm subgroup because the reciprocity quotient recovers every automorphism, and the fixed field of its kernel is the original field. Inclusion reversal and the index formula follow at once. $\square$
+Conditional finite reciprocity now says $N_{L_H/K}C_{L_H}=H$. Conversely, an
+abelian extension is recovered from its norm subgroup because the reciprocity
+quotient recovers every automorphism, and the fixed field of its kernel is the
+original field. Inclusion reversal and the index formula follow at once.
+$\square$
 
 The theorem is topological. Abstract finite-index subgroups that are not open are not classified. In the locally compact group $C_K$, the kernels of continuous finite quotients are exactly the open finite-index subgroups relevant to finite extensions.
+
+For the remainder of the book, **[FD,TS,TC]** is understood on every assertion that uses
+finite reciprocity or global existence: this includes the existence and maximality of ray
+class fields, the Hilbert and cyclotomic class-field identifications, the inverse-limit Artin
+isomorphism, and the passage between finite-order Hecke characters and finite-image Galois
+characters. Statements that concern an already given extension and use only local
+ramification or character algebra, such as Theorem 7.1, do not acquire this label merely by
+appearing later.
 
 ## 7. Moduli and ray class fields
 
@@ -1855,7 +2075,7 @@ The position of $K^\times$ has changed from an intersection in the numerator to 
 
 ### 9.2 The Hasse norm theorem for cyclic extensions
 
-**Theorem 9.1 (Hasse norm theorem).** If $L/K$ is a cyclic extension of number fields and $a\in K^\times$, then
+**Theorem 9.1 (Hasse norm theorem) [FD].** If $L/K$ is a cyclic extension of number fields and $a\in K^\times$, then
 
 $$
 a\in N_{L/K}L^\times
@@ -1882,7 +2102,7 @@ The proof includes ramified places, infinite places, and arbitrary cyclic degree
 
 ### 9.3 Why cyclicity cannot be dropped
 
-For a general Galois extension, there is no single cyclic algebra whose splitting is equivalent to being a norm. The obstruction group $\mathfrak K(L/K)$ can be nontrivial; already biquadratic extensions furnish examples. The precise cohomological relation, for $G=\operatorname{Gal}(L/K)$, is Pontryagin duality
+For a general Galois extension, there is no single cyclic algebra whose splitting is equivalent to being a norm. The obstruction group $\mathfrak K(L/K)$ can be nontrivial; already biquadratic extensions furnish examples. Under [FD,TS,TC], the precise cohomological relation, for $G=\operatorname{Gal}(L/K)$, is Pontryagin duality
 
 $$
 \mathfrak K(L/K)^\vee
@@ -1923,7 +2143,8 @@ Thus cyclicity in Theorem 9.1 is essential. Even “finite abelian” is not eno
 
 There are three safe limitation statements.
 
-First, for a finite Galois extension $L/K$ with maximal abelian subextension $M/K$,
+Under [FD,TS,TC], the first two limitation statements are available. For a finite
+Galois extension $L/K$ with maximal abelian subextension $M/K$,
 
 $$
 N_{L/K}C_L=N_{M/K}C_M.
@@ -1935,7 +2156,7 @@ $$
 [C_K:N_{L/K}C_L]=[M:K]=|\operatorname{Gal}(L/K)^{\mathrm{ab}}|.
 $$
 
-Third, at each completion, local norm limitation gives
+Independently of TS, at each completion local norm limitation gives
 
 $$
 N_{L_w/K_v}L_w^\times
@@ -1967,14 +2188,16 @@ $$
 
 where $H$ runs over open finite-index subgroups. Finite reciprocity and existence identify the same inverse system with the finite Galois quotients of $K^{\mathrm{ab}}/K$.
 
-**Theorem 10.1 (infinite reciprocity).** Global Artin reciprocity induces an isomorphism
+**Theorem 10.1 (infinite reciprocity) [FD,TS,TC].** Global Artin reciprocity induces an isomorphism
 
 $$
 \widehat{C_K}\xrightarrow{\sim}
 \operatorname{Gal}(K^{\mathrm{ab}}/K).
 $$
 
-This follows directly by taking inverse limits of the finite isomorphisms. Unlike a bare inverse-limit assertion, it also records which topology is being completed.
+This follows directly by taking inverse limits of the conditional finite
+isomorphisms. Unlike a bare inverse-limit assertion, it also records which
+topology is being completed.
 
 ### 10.2 The connected component of the idele class group
 
@@ -2180,10 +2403,11 @@ Dirichlet's unit theorem translates these equations into linear relations among 
 
 ### 11.5 The ell-adic avatar
 
-Before passing from a global Hecke character to Galois, we need one local fact which is often
-hidden inside the phrase “geometric character.” Let $L/\mathbf Q_\ell$ and
-$E/\mathbf Q_\ell$ be finite extensions, enlarging $E$ so that it contains the images of all
-embeddings $\tau:L\hookrightarrow\overline{\mathbf Q}_\ell$. A continuous character
+Before passing from a global Hecke character to Galois, we must separate an elementary
+local-algebraicity condition from its $\ell$-adic Hodge-theoretic interpretation. Let
+$L/\mathbf Q_\ell$ and $E/\mathbf Q_\ell$ be finite extensions, enlarging $E$ so that it
+contains the images of all embeddings
+$\tau:L\hookrightarrow\overline{\mathbf Q}_\ell$. A continuous character
 
 $$
 \xi:G_L\longrightarrow E^\times
@@ -2201,65 +2425,70 @@ Changing arithmetic to geometric reciprocity changes every $n_\tau$ by a sign; i
 change the condition. A finite-order or unramified factor is invisible on a sufficiently small
 $U$ and is therefore allowed.
 
-The local bridge is exact in rank one.
+Books 1--5 construct local reciprocity and the Lubin--Tate torsion extensions, but they do
+not construct the completed period field $\mathbf C_\ell$, Hodge--Tate decompositions,
+labeled Sen operators, or the Hodge--Tate periods of conjugate Lubin--Tate characters. The
+formal-group construction of a torsion tower does not by itself supply those periods. We
+therefore isolate exactly the local input used to interpret the preceding elementary
+condition. Here “Hodge--Tate” retains its period-theoretic meaning; it is not being defined
+to mean “locally algebraic.” Construction of the comparison functor and its labeled
+decomposition is part of the following input.
 
-**Rank-one Hodge--Tate criterion.** A continuous one-dimensional $E$-linear representation
+**Hypothesis RHT (rank-one Tate--Sen and Lubin--Tate comparison).** For every pair $L,E$ as
+above and every continuous character $\xi:G_L\to E^\times$, the following assertions hold.
+
+1. On a sufficiently deep principal-unit group, the convergent logarithm has a unique
+   expansion
+
+   $$
+   \log\bigl(\xi(\operatorname{rec}_L(\exp x))\bigr)
+   =\sum_{\tau:L\hookrightarrow E}c_\tau\tau(x).
+   $$
+
+   With the fixed arithmetic reciprocity convention, the scalars $c_\tau$, up to the one
+   common sign determined by the convention for Hodge--Tate twists, are the labeled
+   rank-one Sen eigenvalues.
+2. With the present arithmetic reciprocity convention, the character corresponding on
+   principal units to $u\mapsto\tau(u)$ is, up to an unramified factor, the dual of the
+   $\tau$-conjugate Lubin--Tate character; inversion of reciprocity removes this dual. It is
+   Hodge--Tate with labeled weight $1$ at $\tau$ and weight $0$ at every other embedding,
+   subject to the same convention-dependent sign. Finite-image and unramified rank-one
+   characters are Hodge--Tate of weight zero, and Hodge--Tate representations are stable
+   under tensor products, duals, and finite extension of coefficients.
+3. A rank-one character is Hodge--Tate precisely when the eigenvalues in the displayed
+   logarithmic expansion are integers. In that case division by the corresponding product
+   of conjugate Lubin--Tate characters leaves a character trivial on an open subgroup of
+   inertia.
+
+This is a bounded local $\ell$-adic Hodge-theoretic prerequisite. It asserts no global
+reciprocity theorem and no correspondence with Hecke characters. It is not proved in this
+book, and it is not imported from a later volume, which would reverse the chronological
+dependency order. Results marked **[RHT]** are conditional on this input.
+
+The local bridge is then exact in rank one.
+
+**Rank-one Hodge--Tate criterion [RHT].** A continuous one-dimensional $E$-linear representation
 $\xi$ of $G_L$ is Hodge--Tate if and only if it is locally algebraic. More precisely, the
 integers in the displayed local-algebraicity formula, with the sign dictated by reciprocity
 and twist conventions, are its
 labeled Hodge--Tate weights.
 
-**Proof.** We recall the rank-one Tate--Sen calculation rather than treating the criterion as a
-definition. Pass to a sufficiently deep principal-unit group $U^r$. Both the $\ell$-adic
-logarithm on $U^r$ and the logarithm on the image of the corresponding character converge. The
-map
-
-$$
-x\longmapsto
-\log\bigl(\xi(\operatorname{rec}_L(\exp x))\bigr),
-\qquad x\in\mathfrak m_L^r,
-$$
-
-is continuous and additive, hence $\mathbf Q_\ell$-linear. Separability of
-$L/\mathbf Q_\ell$ gives a unique expansion after enlarging $E$,
-
-$$
-\log\bigl(\xi(\operatorname{rec}_L(\exp x))\bigr)
-=\sum_\tau c_\tau\tau(x),
-\qquad c_\tau\in E.
-$$
-
-The labeled rank-one Sen operator has eigenvalue $c_\tau$ in the $\tau$-direction, up to the
-single reciprocity sign just noted. Here is the calculation behind that assertion. For each
-$\tau$, on principal units local reciprocity carries the character $u\mapsto\tau(u)$ to the
-$\tau$-conjugate of the Lubin--Tate character, up to an unramified factor. The invariant
-differential of the Lubin--Tate formal group and a
-compatible torsion tower give its Hodge--Tate period; Galois acts on that period by the
-Lubin--Tate character, and its cotangent line lies in the $\tau$-summand. Thus this basis
-character has labeled Sen eigenvalue $1$ at $\tau$ and $0$ at every other embedding. The
-normalized-trace definition of the Sen operator turns products of rank-one characters into
-sums of operators. Applying it to this logarithmic expansion therefore gives the asserted
-eigenvalues $c_\tau$.
-A character with all $c_\tau=0$ is trivial on a deep principal-unit group by injectivity of
-the logarithm, so it contributes only a locally constant inertia factor and has weight zero.
-This also shows that no nonlinear continuous unit character has been omitted.
-
-If $\xi$ is Hodge--Tate, its labeled Sen operator is semisimple with integral eigenvalues, so
-$c_\tau=n_\tau\in\mathbf Z$. Subtract the algebraic character in the first display. The
-logarithmic expansion says that the quotient has zero logarithm on a possibly smaller
-principal-unit group; shrinking
-once more puts its values in the logarithm's injectivity domain, so the quotient is trivial.
-This proves local algebraicity. Conversely, each factor $\tau(u)^{n_\tau}$ is a tensor power
-or dual of the corresponding conjugate Lubin--Tate character and is Hodge--Tate of the stated
-labeled weight. The remaining character is locally constant on inertia, hence potentially
-unramified and Hodge--Tate of weight zero. Their product is Hodge--Tate. $\square$
+**Proof, conditional on RHT.** Apply the displayed logarithmic expansion. If $\xi$ is
+Hodge--Tate, RHT makes every
+$c_\tau$ an integer $n_\tau$. Dividing by the corresponding product of conjugate
+Lubin--Tate characters leaves a character trivial on an open subgroup of inertia, so $\xi$
+is locally algebraic. Conversely, a locally algebraic character is, on an open subgroup of
+inertia, a product of integral tensor powers and duals of the conjugate Lubin--Tate
+characters. The quotient has finite inertia and is Hodge--Tate of weight zero by RHT;
+stability under tensor products and duals proves the converse. $\square$
 
 Coefficient extension causes no ambiguity. If $E$ initially omits some embeddings, test the
 criterion after one finite extension containing them. Local algebraicity then descends as a
 statement about the original $\overline{\mathbf Q}_\ell$-valued character, and the multiset of
-labeled weights is independent of the chosen enlargement. In particular, once a
+labeled weights is independent of the chosen enlargement. Conditional on RHT, once a
 one-dimensional constituent of a geometric representation is known to be Hodge--Tate, no
-second global theorem is needed to make it locally algebraic.
+second global theorem is needed to make it locally algebraic. Without RHT, the remainder of
+this chapter uses local algebraicity directly and makes no Hodge--Tate inference.
 
 Choose an isomorphism $\iota:\overline{\mathbf Q}\hookrightarrow\overline{\mathbf Q}_\ell$. An algebraic Hecke character whose finite values are algebraic has an $\ell$-adic avatar. On finite ideles, transport its algebraic values through $\iota$ and correct at the places above $\ell$ by the algebraic infinity type. Explicitly, for $x_f\in\mathbf A_{K,f}^\times$, put
 
@@ -2643,6 +2872,11 @@ is initially a virtual character. Global reciprocity supplies every one-dimensio
 
 ## 12. The global reciprocity dictionary
 
+The entries in this dictionary that use finite or infinite global reciprocity,
+norm-subgroup classification, or global Galois avatars are under [FD,TS,TC], as
+declared after Theorem 6.3. Purely local entries retain only their earlier local
+prerequisites.
+
 ### 12.1 Fields, subgroups, and quotients
 
 The classification may be read in either direction:
@@ -2702,7 +2936,7 @@ a=N_{L/K}(y)
 a\text{ is a norm in every }K_v,
 $$
 
-and, when $L/K$ is cyclic, the converse. For arbitrary abelian or Galois extensions the converse can fail. The unconditional reciprocity statement is instead
+and, when $L/K$ is cyclic, the converse. For arbitrary abelian or Galois extensions the converse can fail. Under [FD,TS,TC], the idele-class reciprocity statement is instead
 
 $$
 \ker(C_K\to\operatorname{Gal}(L/K))=N_{L/K}C_L
@@ -2720,10 +2954,27 @@ Algebraic Hecke characters have integral infinity types. After choosing a comple
 
 ### 12.6 Conclusion
 
-Global class field theory begins with local actions that appear independent. A unit at one prime detects inertia, a uniformizer detects Frobenius, a real sign detects complex conjugation, and an archimedean magnitude seems unrelated to all three. The idele class group assembles them, while the diagonal copy of $K^\times$ imposes the one global relation. The Brauer invariant sequence proves that this relation is exactly right: local symbols of a principal element multiply to one, and no further finite abelian obstruction survives beyond a norm subgroup.
+Global class field theory begins with local actions that appear independent. A unit at one prime detects inertia, a uniformizer detects Frobenius, a real sign detects complex conjugation, and an archimedean magnitude seems unrelated to all three. The idele class group assembles them, while the diagonal copy of $K^\times$ imposes the one global relation. Under FD, the Brauer invariant sequence proves that local symbols of a principal element multiply to one; under TS and TC, no further finite abelian obstruction survives beyond a norm subgroup.
 
-The resulting correspondence is exact at every finite level. Finite abelian extensions are open finite-index subgroups of $C_K$; Galois groups are norm quotients; ramification is unit depth; conductors are moduli; and Frobenius turns prime ideals into congruence classes. The Hilbert class field converts ideal classes into automorphisms, while ray class fields organize every bounded-ramification abelian extension. Cyclic norm equations satisfy a local--global principle because a single Brauer class controls them, and the failure beyond cyclic extensions identifies precisely where global arithmetic contains more than its separate completions.
+Under [FD,TS,TC], the resulting correspondence is exact at every finite level.
+Finite abelian extensions are open finite-index subgroups of $C_K$; Galois groups
+are norm quotients; ramification is unit depth; conductors are moduli; and
+Frobenius turns prime ideals into congruence classes. The Hilbert class field
+converts ideal classes into automorphisms, while ray class fields organize every
+bounded-ramification abelian extension. Independently, the [FD]-conditional
+cyclic-algebra argument shows that cyclic norm equations satisfy a local--global
+principle, and the failure beyond cyclic extensions identifies precisely where
+global arithmetic contains more than its separate completions.
 
-The invariant formalism retains the same coherence in cohomological degree two. Restriction multiplies local invariants by degree, corestriction preserves them and sums over branches, and the sum of all local invariants of a global class is zero. That single normalization produces the compact-support trace in degree three and the global pairing used in Tate and Poitou--Tate duality without importing duality into the proof of reciprocity.
+The invariant formalism retains the same coherence in cohomological degree two. Restriction multiplies local invariants by degree, corestriction preserves them and sums over branches, and the sum of all local invariants of a global class is zero. Hypothesis FD packages the unresolved step from these normalizations to the compact-support trace and perfect pairing; the manuscript no longer treats that passage as an elementary consequence of units, divisors, and ideal classes.
 
-Passing to all levels removes only the connected component of the idele class group and yields $G_K^{\mathrm{ab}}$. Passing to characters translates the same theorem into a language suited to representation theory: finite-order characters are Galois characters, algebraic infinity types produce locally algebraic $\ell$-adic characters, norm pullback becomes Galois restriction, and induction is controlled by transfer, discriminants, and Frobenius cycles. Global reciprocity therefore does more than enumerate abelian fields. It makes the abelianized Galois action of a number field readable in its ideals, congruences, local units, signs, Brauer invariants, and adelic characters as parts of one coherent arithmetic object.
+Under the same hypotheses, passing to all levels removes only the connected
+component of the idele class group and yields $G_K^{\mathrm{ab}}$. Passing to
+characters translates the same theorem into a language suited to representation
+theory: finite-order characters are Galois characters, algebraic infinity types
+produce locally algebraic $\ell$-adic characters, norm pullback becomes Galois
+restriction, and induction is controlled by transfer, discriminants, and
+Frobenius cycles. Conditional global reciprocity therefore does more than
+enumerate abelian fields. It makes the abelianized Galois action of a number field
+readable in its ideals, congruences, local units, signs, Brauer invariants, and
+adelic characters as parts of one coherent arithmetic object.
