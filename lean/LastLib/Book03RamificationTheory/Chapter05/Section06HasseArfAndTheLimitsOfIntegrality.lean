@@ -1327,6 +1327,7 @@ theorem chapter05_character_kernel_cyclic_hasse_arf
     (htotally_ramified : R.quotient_local.profile.lowerGroup 0 = ⊤) :
     ∃ z : ℤ,
       (z : ℚ) = chapter05CyclicHasseArfSum R.quotient_local.profile b := by
+  letI := R.quotient_residue_perfect
   exact chapter05_cyclic_hasse_arf_lemma R.quotient_local
     R.quotient_cyclic (b := b) hlast hbreak htotally_ramified
 
