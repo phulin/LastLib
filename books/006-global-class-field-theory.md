@@ -5072,7 +5072,8 @@ There are equally explicit unramified Euler factors. Assume that $\rho$ is unram
 for an algebraic character of nonfinite order, assume in particular that $v\nmid\ell$. If
 $v=ww^s$ splits and neither local character is ramified, then
 
-# $$\det\!\left(X-\rho(\operatorname{Frob}_v^{\mathrm{arith}})\right)
+$$
+\det\!\left(X-\rho(\operatorname{Frob}_v^{\mathrm{arith}})\right)=
 
 \bigl(X-\theta_\ell(\operatorname{Frob}_w^{\mathrm{arith}})\bigr)
 \bigl(X-\theta_\ell(\operatorname{Frob}_{w^s}^{\mathrm{arith}})\bigr).
