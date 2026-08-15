@@ -267,37 +267,23 @@ The map is continuous. Its restriction to each local factor is continuous, and i
 
 If $v$ splits completely, then $D_w=1$, so the entire factor $K_v^\times$ is killed. Conversely, for a Galois extension, triviality of $D_w$ is equivalent to complete splitting. This turns splitting into a kernel condition.
 
-### 2.4 Why principal ideles act trivially
+### 2.4 The principal-idèle obstruction
 
-The decisive global statement is the **product formula for local norm-residue symbols**:
-
-**Theorem 2.1.** If $L/K$ is finite abelian and $a\in K^\times$, then
-
-$$
-\prod_v\operatorname{Art}_{L/K,v}(a)=1.
-$$
-
-**Proof strategy.** Reduce to cyclic quotients and express each local symbol by a cyclic algebra. A principal element gives localizations of one global Brauer class. The sum of its local invariants is zero, and a character of the cyclic Galois group reads that sum as the product of symbols.
-
-**Proof.** It is enough to prove that every character $\chi:G\to\mathbf Q/\mathbf Z$ vanishes on the displayed product. Let $E$ be the fixed field of $\ker\chi$; then $E/K$ is cyclic, say of degree $n$, and $\chi$ identifies its Galois group with a subgroup of $\frac1n\mathbf Z/\mathbf Z$. Choose a generator $\sigma$ compatible with this identification.
-
-Form the cyclic algebra $A=(E/K,\sigma,a)$. Its localization at $v$ is the product of the cyclic algebras attached to the completions $E_w/K_v$. Local cyclic reciprocity, with the arithmetic normalization, gives
+The product in Section 2.3 is, at this stage, a map on $\mathbf I_K$. To descend
+it to $C_K$ one must still prove
 
 $$
-\operatorname{inv}_v(A_v)
-=\chi\bigl(\operatorname{Art}_{E/K,v}(a)\bigr).
+\prod_v\operatorname{Art}_{L/K,v}(a)=1
+\qquad(a\in K^\times).                                  \tag{2.1}
 $$
 
-At split factors both sides are zero. The degree-two localization row of Theorem 4.2 gives
-
-$$
-0=\sum_v\operatorname{inv}_v(A_v)
-=\chi\left(\prod_v\operatorname{Art}_{E/K,v}(a)\right).
-$$
-
-The local maps for $E/K$ are the quotients of those for $L/K$. Thus every character of $G$ kills the product. Characters separate points of a finite abelian group, so the product is $1$. $\square$
-
-Therefore $\operatorname{Art}_{L/K}$ factors uniquely through $C_K$. This is the global explanation for the quotient by principal ideles. It is not a formal consequence of the ordinary product formula $\prod_v|a|_v=1$, though both statements share the same local-to-global shape.
+This is not a formal consequence of the ordinary product formula
+$\prod_v|a|_v=1$. Its proof requires the global Brauer invariant sequence,
+which has not yet been established. We therefore retain the idèle-level map
+for now. After proving that sequence from the independent idelic calculation,
+Section 4.2 proves (2.1) as the principal-idèle reciprocity corollary. Only
+from that point onward do we regard $\operatorname{Art}_{L/K}$ as a map on
+$C_K$.
 
 ## 3. Norms of ideles and classes
 
@@ -349,7 +335,7 @@ $$
 \qquad(y\in\mathbf I_L)
 $$
 
-when $L/K$ is abelian. At a place $v$, the $v$-component is a product of local norms, each killed by local reciprocity; conjugate places cause no ambiguity because the target is abelian. Thus
+when $L/K$ is abelian. At a place $v$, the $v$-component is a product of local norms, each killed by local reciprocity; conjugate places cause no ambiguity because the target is abelian. Once the principal-idèle relation has been established and the map has descended to $C_K$, this gives
 
 $$
 N_{L/K}C_L\subseteq\ker(\operatorname{Art}_{L/K}).
@@ -1010,6 +996,31 @@ $$
 
 Here $\operatorname{Br}(\mathbf C)=0$, $\operatorname{Br}(\mathbf R)=\frac12\mathbf Z/\mathbf Z$, and $\operatorname{Br}(F_u)\cong\mathbf Q/\mathbf Z$ at a finite place. Only finitely many localizations of a global class are nonzero.
 
+**Principal-idèle reciprocity corollary.** If $L/K$ is finite abelian and
+$a\in K^\times$, then
+
+$$
+\prod_v\operatorname {Art}_{L/K,v}(a)=1.                \tag{4.I13}
+$$
+
+**Proof.** Let $G=\operatorname {Gal}(L/K)$. It is enough to apply every
+character $\chi:G\to\mathbf Q/\mathbf Z$. Put $E=L^{\ker\chi}$ and identify
+the cyclic group $\operatorname {Gal}(E/K)$ with the image of $\chi$. If
+$\sigma$ is the generator sent to $1/[E:K]$, form the cyclic algebra
+$A=(E/K,\sigma,a)$. Its localization at $v$ is the product of the cyclic
+algebras for the factors of $E\otimes_KK_v$. The local norm-residue
+normalization from Book 5 and the corestriction sum over these factors give
+
+$$
+\operatorname {inv}_v(A_v)
+=\chi\bigl(\operatorname {Art}_{E/K,v}(a)\bigr).
+$$
+
+Theorem 4.1 gives $\sum_v\operatorname {inv}_v(A_v)=0$. The local maps for
+$E/K$ are the quotients of those for $L/K$, so $\chi$ kills the product in
+(4.I13). Characters separate points of $G$, proving the assertion. Thus the
+idèle-level map of Section 2.3 now factors uniquely through $C_K$. $\square$
+
 The proof is (4.I12). The degree-one local--global sequence below is the
 finite-complex calculation that follows. We retain the complexes: an order
 count alone would not identify annihilators or handle the real-place correction.
@@ -1138,7 +1149,17 @@ available.
    $$
 
    where the middle arrow is the sum of local invariants. For a finite $S$, the
-   degree-one row identifies the cokernel of
+   degree-one compact-support row is exact at the local term:
+
+   $$
+   H^1(G_{F,S},A_n)\longrightarrow
+   \prod_{u\in S}H^1(F_u,A_n)\longrightarrow
+   \operatorname {Hom}\bigl(H^1(G_{F,S},\mu_n),\mathbf Q/\mathbf Z\bigr),
+   \tag{4.1a}
+   $$
+
+   where the second arrow is the sum of the local cup-product invariants.
+   The unrestricted degree-one row identifies the cokernel of
 
    $$
    H^1(F,A_n)\longrightarrow\prod_{u\in S}H^1(F_u,A_n)
@@ -2880,7 +2901,41 @@ $$
 
 The sum is finite. The localization map on the left is injective.
 
-**Proof.** Choose a finite set $S$ containing the archimedean places, the places above $n$, and the ramified places of the local family under consideration. Apply the pairing and localization compatibility of Theorem 4.2 to the degree-one portion of the long exact compact-support sequence. Perfectness says that the annihilator of the image of the global group is exactly the kernel of the dual localization functional. Written out, this is
+**Proof.** Let $(c_v)$ lie in the kernel of $\lambda$. Choose a finite set
+$S_0$ containing the archimedean places, the places above $n$, and every
+place where $c_v$ is ramified. Choose finite primes
+$\mathfrak q_1,\ldots,\mathfrak q_h$ outside $S_0$ whose ideal classes
+generate $\operatorname {Cl}(K)$, and put
+$S=S_0\cup\{\mathfrak q_1,\ldots,\mathfrak q_h\}$. We first globalize the
+components in this finite set while forbidding ramification outside it.
+
+If $a\in H^1(G_{K,S},\mu_n)$, then both $a_v$ and $c_v$ are unramified at
+$v\notin S$. Since $v\nmid n$, their cup product inflates from the procyclic
+unramified quotient, whose cohomological dimension is one; hence
+$c_v\smile a_v=0$. The hypothesis $\lambda((c_v))=0$ therefore gives
+
+$$
+\sum_{v\in S}\operatorname {inv}_v(c_v\smile a_v)=0
+\qquad\bigl(a\in H^1(G_{K,S},\mu_n)\bigr).                \tag{6.1a}
+$$
+
+Apply the finite-$S$ row (4.1a) of Theorem 4.2. Equation (6.1a) supplies
+$c\in H^1(G_{K,S},A_n)$ whose localization agrees with $c_v$ for every
+$v\in S$.
+
+It remains to check the unramified tail; this is the step that a bare
+direct-limit argument misses. Let $d_v=c_v-\operatorname {loc}_v(c)$. It is
+zero for $v\in S$ and unramified for $v\notin S$. Via local reciprocity the
+$d_v$ define a continuous character of $\mathbf I_K$, trivial on local units
+at every finite place. It is trivial on $K^\times$: the original family is
+trivial there because it lies in $\ker\lambda$, by (4.11), while the family
+coming from the global Galois character is trivial there by the
+principal-idèle reciprocity corollary. Thus $(d_v)$ factors through the ideal
+class group. Its value on each chosen generator $[\mathfrak q_i]$ is zero,
+because $\mathfrak q_i\in S$. Hence this class-group character is zero, so
+$d_v=0$ for every $v$. This proves exactness at the restricted product.
+
+For reference, the finite-stage equality used above is
 
 $$
 \operatorname{im}\left(
@@ -2889,8 +2944,6 @@ H^1(G_{K,S},A_n)\longrightarrow
 \right)
 =\ker\lambda_S.
 $$
-
-Enlarging $S$ adds the unramified local terms on both sides. Passing to the directed limit gives the displayed restricted-product sequence. This step is why the target is a restricted product rather than an unrestricted product.
 
 It remains to prove injectivity on the left. If a global character is trivial in every completion, the cyclic extension $E/K$ that it cuts out has every decomposition group trivial. The split-everywhere separation fact proved in Section 4.2 gives $E=K$. Hence the character is trivial and localization is injective. $\square$
 
