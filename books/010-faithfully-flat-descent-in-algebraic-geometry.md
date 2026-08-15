@@ -996,8 +996,9 @@ $U\to U/R$ is étale and surjective after the base change by itself.
 
 We need one presentation lemma. Its point is that the charts themselves need not be invariant.
 
-**Presentation descent lemma.** Algebraic spaces, representable morphisms between them, and
-étale presentations satisfy effective fpqc descent.
+**Presentation descent lemma.** An algebraic-space descent datum together with an étale
+presentation descends to an étale equivalence relation in schemes whose quotient pulls back to
+the original algebraic space.
 
 **Proof.** We give the presentation construction. Let $T^\bullet/S$ be the Čech nerve of the
 cover. Choose an étale presentation $U_0\to Z_T$. Over $T^1$ compare its two pullbacks by the
@@ -1029,11 +1030,13 @@ quotient has pullback $Z_T$: after base change, (11.P2) has the common refinemen
 the original presentation, and two étale presentations with a common refinement have the same
 sheaf quotient. This also proves independence of all refinements.
 
-For a representable morphism, perform the same construction after base change to each affine
-chart of the descended target; the degree-one relation makes the resulting schemes agree on
-overlaps. Applying it to the diagonal proves that the quotient of (11.P2) has representable
-diagonal. Applying it to two different choices of presentation gives a common refinement and
-hence a unique comparison. This proves effectivity and full faithfulness. $\square$
+The sheaf quotient of the étale equivalence relation (11.P2) has representable diagonal by the
+fiber-product calculation preceding the lemma, and $U$ is its étale surjective atlas. Applying
+the construction to two choices of presentation and taking their fiber-product refinement gives
+a unique comparison. This proves the claimed presentation descent. Notice that we have not
+claimed that a morphism representable by schemes remains representable after unrestricted fpqc
+descent; that assertion would imply the false unrestricted scheme-effectivity statement.
+$\square$
 
 Let $T\to S$ be fpqc and let $X_T$ be an algebraic space over $T$ with descent isomorphism
 $\theta:p_1^*X_T\to p_2^*X_T$. Define a sheaf on $S$-schemes by
