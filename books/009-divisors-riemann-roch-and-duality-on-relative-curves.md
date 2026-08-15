@@ -848,11 +848,12 @@ $H^1(X,\omega_X)\to k$ for which (9.6) is functorial and perfect for every bound
 complex. The trace-compatible pair is independent of every projective embedding. Finite maps
 of such curves have the transitive trace (9.8).
 
-**Proof.** We reduce the theorem to an explicit calculation on projective
-space. We use bounded complexes only in the following elementary sense: replace a coherent
-sheaf by a finite complex of vector bundles, apply $\mathcal Hom$ term by term, and identify
-complexes which differ by an exact complex. The comparison theorem for projective resolutions
-shows that the result is independent of the chosen resolution.
+**Proof.** We reduce the theorem to an explicit calculation on projective space.  On the
+regular ambient projective space a coherent sheaf has a finite vector-bundle resolution, so
+there we apply $\mathcal Hom$ term by term and identify homotopy-equivalent resolutions.  On
+the possibly singular curve we do not make that assertion: the change-of-rings construction
+below uses a bounded-above local free resolution and the finite ambient resolution, and its
+one-row collapse supplies the required bounded dual.
 
 First consider $P=\mathbf P^N_k$. The standard affine cover gives the homogeneous Čech complex.
 For a twist $\mathcal O_P(a)$ its top Čech term consists of Laurent monomials of total degree
@@ -932,9 +933,29 @@ $$
 The same local computation shows that $\omega_X$ has depth one at every closed point, hence is
 maximal Cohen--Macaulay.
 
-For a coherent $\mathcal F$ on $X$, resolve $i_*\mathcal F$ on $P$ and compare it with the
-tensor product of $E^\bullet$ and a presentation of $\mathcal F$. Evaluation of the two Hom
-complexes gives the change-of-rings quasi-isomorphism
+For a coherent $\mathcal F$ on $X$, we now construct the change-of-rings map; Ext
+concentration alone would not construct it.  This is a sheaf-local calculation on $X$.  On an
+affine open choose a bounded-above resolution $Q^\bullet\to\mathcal F$ by finite free modules;
+it need not terminate when $X$ is singular.  There each
+$i_*Q^a$ is a finite sum of copies of $i_*\mathcal O_X$ and is resolved by the corresponding
+sum of copies of $E^\bullet$.  Lift the differentials of $Q^\bullet$ to chain maps between
+these resolutions.  The comparison theorem makes successive composites null-homotopic, and
+adjoining the homotopies gives a Cartan--Eilenberg double resolution of $i_*\mathcal F$.
+Different lifts give homotopy-equivalent total complexes, so the local constructions agree on
+overlaps and glue.
+
+Apply $\mathcal Hom_P(-,\omega_P)$ vertically.  Its vertical cohomology is
+
+$$
+\mathcal Hom_X\!\left(Q^a,
+  \mathcal Ext^q_P(i_*\mathcal O_X,\omega_P)\right).
+$$
+
+It vanishes unless $q=c$, and in that row it is
+$\mathcal Hom_X(Q^a,\omega_X)$.  Because the vertical resolution has the fixed finite length
+$c$, only finitely many terms contribute to any total degree, so the unbounded left tail of
+$Q^\bullet$ causes no product-totalization ambiguity.  The edge map of this collapsed double
+complex is the functorial change-of-rings quasi-isomorphism
 
 $$
 R\mathcal Hom_P(i_*\mathcal F,\omega_P[N])
@@ -942,11 +963,9 @@ R\mathcal Hom_P(i_*\mathcal F,\omega_P[N])
 i_*R\mathcal Hom_X(\mathcal F,\omega_X[1]). \tag{9.5}
 $$
 
-To see that no Ext term is hidden, filter the double Hom complex by the $E$-degree. Its first
-cohomology page is
-$\mathcal Ext^q_P(i_*\mathcal O_X,\omega_P)$, which vanishes for $q\ne c$ by (9.3); the sole
-row is $\mathcal Hom_X(-,\omega_X)$ and the filtration therefore collapses. Combining (9.2)
-and (9.5) proves, functorially,
+The construction also proves naturality: a map of coherent sheaves lifts to a map of free
+resolutions, unique up to homotopy, and hence gives the same edge map. Combining (9.2) and
+(9.5) proves, functorially,
 
 $$
 R\operatorname{Hom}_k(R\Gamma(X,\mathcal F),k)
@@ -1010,27 +1029,155 @@ A curve is **Gorenstein** if its dualizing sheaf is invertible. Smooth curves, l
 
 ### 9.3 The relative dualizing sheaf
 
-We first remove a possible projectivity ambiguity. If a proper flat finitely presented family of
-curves has geometrically reduced fibers, then it is projective fpqc-locally on the base. Indeed,
-after an étale extension around a chosen geometric fiber, choose sections through smooth points on
-every irreducible component of that fiber. Their sum is a relative effective Cartier divisor
-$D$. Its restriction has positive degree on every component, hence $\mathcal O(D)$ is ample on
-that fiber. The curve criterion used here is elementary: on a proper reduced curve, positivity
-on every component is equivalent to ampleness; it follows by passing to the finite normalization
-and applying the affine-nonvanishing criterion componentwise. A finite set of affine
-nonvanishing witnesses persists after shrinking the base, so $\mathcal O(D)$ is relatively ample
-there. Book 8 then supplies a projective embedding. This applies in particular to smooth and
-nodal families and does not use Riemann--Roch.
+We first remove a possible projectivity ambiguity.
 
-The same local projectivity conclusion holds for Cohen--Macaulay fibers which are not reduced.
-Choose closed points away from the finite set of associated points on each component and use
-prime avoidance to obtain a finite relative Cartier multisection after a faithfully flat
-finite-presentation extension of the base. Its degree on every reduced component is positive.
-The complement is affine: on the reduction this is the affine-nonvanishing criterion, and a
-nilpotent thickening of an affine scheme is affine because its structure sheaf is obtained by a
-finite filtration of quasi-coherent ideals. Hence the associated Cartier line bundle is ample.
-Taking finitely many powers separates the multisection and its affine complement, giving the
-projective embedding. All choices are needed only on a cover of the base.
+**Lemma 9.2A (fpqc-local projectivity of a Cohen--Macaulay curve).**  A proper flat finitely
+presented morphism with pure one-dimensional Cohen--Macaulay fibers is projective after a
+faithfully flat base change of finite presentation around any point of the base.
+
+**Proof.** Work around a geometric point $\bar s$.  On the fiber choose, on every irreducible
+component, a closed point outside all other components and outside the finite set of associated
+points.  At each chosen point prime avoidance gives a parameter $h$: its image in the fiber
+ring is a non-zero-divisor and its zero scheme is zero-dimensional near that point.  After a
+finite residue-field extension, the parameters and the chosen affine neighborhoods descend.
+
+We record the spreading argument, since it is what prevents projectivity from being smuggled
+into the proof.  Shrink each affine neighborhood so that the fiberwise zero set of $h$ is the
+chosen finite set and $h$ is a unit along its boundary.  After shrinking the base, the same is
+true in the total space.  The equation $h$ then glues with the unit equation on the complement
+to an effective Cartier divisor $D\subset X$: on the overlap the quotient is a unit.  The
+local flatness criterion applied to
+
+$$
+0\longrightarrow\mathcal O_X\xrightarrow{h}\mathcal O_X
+\longrightarrow\mathcal O_D\longrightarrow0
+$$
+
+shows that $D$ is flat over the base, because $X$ is base-flat and $h$ remains a
+non-zero-divisor on the fiber.  It is quasi-finite after a further shrinking, and it is proper
+as a closed subscheme of $X$; hence it is finite, and finite flat finite presentation makes it
+finite locally free.  Repeating points if necessary makes $D_{\bar s}$ have positive degree on
+every reduced component.
+
+The line $\mathcal O_X(D)$ is ample on the fiber.  Indeed its pullback to the finite
+normalization of the reduced fiber has positive degree on every component, so powers have
+affine nonvanishing loci covering that normalization; finiteness descends affineness.  A
+nilpotent thickening of an affine scheme is affine by its finite filtration by quasi-coherent
+ideals, so the same criterion applies to the possibly nonreduced fiber.
+
+It remains to prove that this fiberwise ample line spreads; we do not assume openness of
+ampleness.  The input is the following proper-curve complex lemma.
+
+> If $g:Z\to\operatorname{Spec}A$ is proper, flat, and finitely presented with fibers of
+> dimension at most one over a noetherian ring, and $\mathcal F$ is finitely presented and
+> $A$-flat, then locally on $\operatorname{Spec}A$ there is a bounded complex of finite
+> projective $A$-modules which computes $R\Gamma(Z_B,\mathcal F_B)$ after every base change
+> $A\to B$.
+
+We include the proof without assuming $Z$ projective.  There are three steps.
+
+First, relative Chow's lemma is available by an explicit graph-and-blowup construction.  Choose
+a finite affine cover, clear the finitely many coordinate functions on its overlaps, and blow
+up the product of the resulting boundary ideals.  On the strict transform the cleared
+coordinates define an immersion into a product of projective spaces, while the exceptional
+ideal is invertible.  Concretely the blowup used here is
+$\operatorname{Proj}_Z\bigoplus_{n\geq0}\mathcal I^n$; for
+$I=(f_0,\ldots,f_r)$ its standard charts are
+$A[I/f_i]\subset A_{f_i}$, so it is projective and is an isomorphism where $I$ is invertible.
+The strict transform is closed in this blowup.  Thus one obtains $p:Z'\to Z$ which is
+projective, is an isomorphism over a schematically dense open $U$, and has $Z'$ quasi-projective
+over $A$.  Since $Z$ is proper over $A$, so is $Z'$; a proper quasi-projective morphism is
+projective, because the quasi-projective immersion into projective space is proper and hence
+closed.  Therefore $Z'$ is genuinely projective over the original base $A$, not merely over
+$Z$. This proof uses neither a Hilbert scheme nor duality.
+
+Second, noetherian induction on the complement of $U$ proves the **proper finiteness and
+derived-base-change lemma**: for every bounded-above coherent complex $G$ on a proper
+finitely presented $A$-scheme, $R\Gamma(G)$ is pseudo-coherent over $A$, and
+
+$$
+B\otimes_A^LR\Gamma(Z,G)
+\longrightarrow R\Gamma(Z_B,Lg'^*G) \tag{9.8a}
+$$
+
+is an isomorphism whenever $G$ has finite Tor-amplitude over $A$.  Here are the induction
+maps.  On $Z'$ the assertion follows from the graded free resolutions and monomial Čech
+complexes of Book 8.  Choose a coherent $G'$ on $Z'$ agreeing with $p^*G$ over $U$.  The
+kernel and cokernel of $G\to p_*G'$ and every $R^qp_*G'$ for $q>0$ are supported on
+$Z\setminus U$.  Filter these coherent sheaves by pushforwards from their irreducible supports.
+The Leray spectral sequence and the two kernel--cokernel exact sequences reduce both finiteness
+and (9.8a) to those smaller supports.  Repeating Chow's construction there terminates by
+noetherian induction.  All pullbacks in this argument are derived; consequently tensoring the
+graded resolutions term by term proves the base-change maps before any flatness is imposed.
+When the original $G$ has finite Tor-amplitude, its derived pullback is the desired one and the
+inductively assembled map is (9.8a).
+
+The same induction proves the theorem on formal functions: for a noetherian adic quotient
+$A/I^n$, the completion of each coherent $R^qg_*G$ is the inverse limit of
+$H^q(Z_{A/I^n},G_{A/I^n})$.  In the projective case this is termwise $I$-adic completion of
+the finite Čech complex; kernels and cokernels supported on $Z\setminus U$ pass through the
+inverse limit because their transition maps are surjective, and induction gives the general
+case.
+
+Third, take $G=\mathcal F$.  It has Tor-amplitude zero over $A$.  The projection formula,
+proved on the same projective Čech complexes and then by the preceding induction, gives first
+for every finite $A$-module $M$
+
+$$
+R\Gamma(Z,\mathcal F)\otimes_A^LM
+\simeq R\Gamma(Z,\mathcal F\otimes_A M). \tag{9.8b}
+$$
+
+A proper morphism with fibers of dimension at most one has quasi-coherent cohomological
+dimension at most one.  Here is a proof which does not assume that either $Z$ or the Chow
+modification has one-dimensional fibers.  Localize $A$ at a point and complete it.  Formal
+functions identifies the completion of $R^qg_*G$ with the inverse limit of the cohomology on
+the infinitesimal fibers.  Each infinitesimal fiber has the same one-dimensional underlying
+noetherian topological space as the closed fiber.  Cohomology of a quasi-coherent sheaf on such
+a space vanishes above degree one: remove an affine dense open from each one-dimensional
+component, use the affine-cover sequence, and note that the complement is zero-dimensional
+and affine.  Thus every term of the inverse limit is zero for $q>1$.  Coherence and faithful
+flatness of completion give $R^qg_*G=0$.  Hence the right side of (9.8b) has cohomology only in
+degrees $0,1$.  Thus the pseudo-coherent complex
+$R\Gamma(Z,\mathcal F)$ has Tor-amplitude $[0,1]$.  A pseudo-coherent complex of finite
+Tor-amplitude is perfect: truncate a finite free resolution below the amplitude and use the
+fiberwise projectivity criterion to make the final syzygy finite projective.  It is therefore
+represented locally by a two-term finite projective complex, and (9.8a) says that this complex
+computes every base change.  Tensor product and quasi-coherent cohomology commute with filtered
+colimits, so (9.8b), and hence the amplitude bound, extends from finite modules to arbitrary
+$A$-modules.  This proves the proper-curve complex lemma.
+
+Choose $n$ so that $L_{\bar s}=\mathcal O_{X_{\bar s}}(nD)$ is very ample and
+$H^1(X_{\bar s},L_{\bar s})=0$.  Apply the proper-curve complex lemma to
+$L=\mathcal O_X(nD)$, which is base-flat.  Shortening its complex at $\bar s$ shows, after
+shrinking, that $f_*L$ is finite locally free, commutes with base change, and that the
+restriction map
+
+$$
+f_*L\otimes\kappa(\bar s)\longrightarrow H^0(X_{\bar s},L_{\bar s})
+$$
+
+is onto.  The evaluation $f^*f_*L\to L$ is onto on the chosen fiber.  Its cokernel has closed
+support, whose image under the proper map $f$ is closed; shrinking removes that image.  Hence
+evaluation is onto and defines a proper morphism
+$\phi:X\to\mathbf P_S(f_*L)$ in the quotient convention of Book 8.
+
+The fiber $\phi_{\bar s}$ is a closed immersion.  This property spreads without a hidden
+section-lifting assertion.  Upper semicontinuity of fiber dimension makes $\phi$ quasi-finite
+on a neighborhood of $X_{\bar s}$; the complementary closed locus has proper image on the
+base, so shrinking makes $\phi$ quasi-finite everywhere.  Being proper, it is then finite.
+For a finite morphism, closed immersion is the surjectivity of
+$\mathcal O_{\mathbf P}\to\phi_*\mathcal O_X$.  Its cokernel is finite and has zero special
+fiber because $\phi_{\bar s}$ is a closed immersion.  Nakayama and properness of projective
+space remove its support after one more shrinking.  Thus the algebra map is surjective and
+$\phi$ is a closed immersion.  We have produced the projective embedding directly.  The
+residue-field extension and the shrinking form the required faithfully flat
+finite-presentation neighborhood.
+$\square$
+
+For geometrically reduced fibers one may choose the points in the smooth locus, so after an
+étale extension the divisor is simply a sum of sections.  The longer argument above is needed
+for nonreduced Cohen--Macaulay fibers, whose smooth locus may be empty.
 
 **Theorem 9.2 (relative curve duality).** Let $f:X\to S$ be a proper flat finitely presented
 Cohen--Macaulay morphism of pure relative dimension one, with $S$ locally noetherian. There is
@@ -1050,31 +1197,75 @@ pair perfectly. Consequently projective-space duality holds over $A$ and commute
 base change.
 
 Next, $i_*\mathcal O_X$ has a finite locally free resolution on $P$ which remains a resolution
-after every base change. Construct it by successive surjections from finite sums of twists. In
-a sequence $0\to K\to F\to M\to0$ with $F$ locally free and $M$ flat over $S$, the kernel is
-$S$-flat. On every geometric fiber, the depth calculation (9.3) says that after $c$ steps the
-kernel is locally free. The fiberwise local-freeness criterion for a finitely presented flat
-module then makes that kernel locally free before base change. Exactness after arbitrary base
-change follows because every successive cokernel is $S$-flat. Denote the resulting resolution
-by $E^\bullet$.
+after every base change.  We spell out the relative syzygy lemma which makes this true even
+when the base is singular.
 
-The criterion just used is elementary. Lift a basis of a fiber to obtain a map from a finite
-free module. Nakayama makes it surjective near the point. Its kernel remains flat over the base
-by the Tor sequence, and its fiber is zero; Nakayama again makes the kernel zero after shrinking.
-The same Tor sequence shows that a short exact sequence whose quotient is base-flat remains
-exact after every base change.
+**Relative syzygy lemma.**  Let $A\to R$ be a flat finitely presented algebra, let $M$ be a
+finitely presented $R$-module flat over $A$, and suppose that for every geometric point
+$\bar s\to\operatorname{Spec}A$ the $R_{\bar s}$-module $M_{\bar s}$ has projective dimension
+at most $c$.  Then, locally on $\operatorname{Spec}R$, $M$ has a length-$c$ resolution by
+finite free $R$-modules, all of whose syzygies are $A$-flat.  The resolution stays exact after
+every $A$-algebra extension.
 
-Dualize $E^\bullet$ against $\omega_{P/S}$. On every geometric fiber its cohomology is
-concentrated in degree $c$. The kernels and images in the dual complex are $S$-flat, by the
-same local flatness criterion applied successively from its two ends. Hence fiberwise exactness
-lifts to exactness on $P$, and tensoring with an arbitrary $S'$ preserves it. Define
+Choose successive finite-free surjections $F_j\twoheadrightarrow K_j$, beginning with
+$K_0=M$.  If $K_j$ is $A$-flat, the kernel $K_{j+1}$ is $A$-flat by the Tor sequence.  On each
+geometric fiber the $c$th syzygy is projective.  The fiberwise flatness criterion now makes
+$K_c$ flat over $R$: for a local map $A\to R$ and a finite $R$-module $N$, flatness of $N$
+over $A$ together with flatness of $N\otimes_A\kappa(\mathfrak p)$ over
+$R\otimes_A\kappa(\mathfrak p)$ implies $R$-flatness.  To prove the criterion, apply the two
+Tor spectral sequences for
+$(-)\otimes_RN$ and reduction modulo a finitely generated ideal of $R$; the base-flatness
+kills the rows with positive $A$-Tor, and fiber-flatness kills the remaining positive row.
+The equational criterion then gives $R$-flatness.  Finite presentation turns flatness into
+local projectivity, and shrinking makes $K_c$ free.  Finally, each short exact sequence remains
+exact after arbitrary base change because its quotient $K_j$ is $A$-flat.  This proves the
+lemma.
+
+Apply it on affine charts of $P$.  On a geometric fiber $P_{\bar s}$ is regular and
+$X_{\bar s}$ is Cohen--Macaulay of codimension $c$; the depth calculation (9.3) gives projective
+dimension exactly $c$.  Globalizing the successive surjections by sufficiently positive sums
+of twists yields a universally exact resolution $E^\bullet\to i_*\mathcal O_X$.
+
+We also need the dual form of the lemma.
+
+**Fiberwise acyclicity lemma.** Let $A\to R$ be flat and finitely presented, and let
+$C^\bullet$ be a bounded complex of finitely presented $R$-modules which are flat over $A$.
+If $H^j(C^\bullet\otimes_A\overline{\kappa(s)})=0$ for every geometric fiber and every
+$j\ne c$, then $H^j(C^\bullet)=0$ for $j\ne c$, the $R$-module $H^c$ is flat over $A$, and
+these conclusions commute with every $A$-algebra extension.
+
+Here is the local proof. At the left endpoint the fiber differential is injective. The local
+flatness criterion for a cokernel says that a map between flat modules is universally
+injective with flat cokernel exactly when it is injective on every residue-field fiber. For a
+finitely generated ideal $J\subset A$, this follows from
+
+$$
+0\to\operatorname{Tor}_1^A(Q,A/J)\to C^a\otimes_AA/J
+\to C^{a+1}\otimes_AA/J,
+$$
+
+followed by the equational criterion for flatness.  This is checked locally at a prime of $R$:
+reduce modulo the corresponding prime of $A$, use fiberwise injectivity, and apply Nakayama to
+the finitely generated $R$-kernels.  Thus the cokernel is a finitely presented $R$-module flat
+over $A$. Replace the first two terms by it and repeat until degree $c$. From the right,
+fiberwise surjectivity and Nakayama give an actual surjection; its kernel is $A$-flat because
+its quotient is. Repetition leaves in degree $c$ an extension of $A$-flat modules, hence an
+$A$-flat module. Every short exact sequence constructed is universally exact, so tensoring by
+an arbitrary $A$-algebra repeats the argument verbatim and proves base change. Notice that no
+module is required to be finite over $A$; finite presentation over $R$ is exactly what the
+local Nakayama argument uses.
+
+Apply this lemma to the dual of $E^\bullet$ against $\omega_{P/S}$, whose terms are locally
+free over the $S$-flat scheme $P$. Fiberwise Ext concentration shows that its cohomology is
+concentrated in degree $c$, is $S$-flat there, and retains this description after arbitrary
+base change. Define
 
 $$
 i_*\omega_{X/S}=
 \mathcal Ext^c_P(i_*\mathcal O_X,\omega_{P/S}). \tag{9.9}
 $$
 
-This sheaf is $S$-flat. The dual resolution also proves, without a Tor spectral sequence, that
+This sheaf is $S$-flat. The universally exact dual resolution also proves that
 for every $g:S'\to S$,
 
 $$
@@ -1082,8 +1273,13 @@ Lg'^*\omega_{X/S}=g'^*\omega_{X/S}
 \xrightarrow{\sim}\omega_{X_{S'}/S'}. \tag{9.10}
 $$
 
-For a vector bundle $\mathcal E$ on $X$, the same construction resolves $i_*\mathcal E$.
-Relative projective-space duality and the one-row change-of-rings calculation (9.5) give
+For a vector bundle $\mathcal E$ on $X$, the same relative syzygy construction resolves
+$i_*\mathcal E$: it is base-flat and its geometric fibers remain Cohen--Macaulay modules of
+codimension $c$.
+The Cartan--Eilenberg construction used for (9.5), now made with the universally exact relative
+resolutions, gives a base-change-compatible change-of-rings map.  The fiberwise acyclicity
+lemma makes every row but $c$ vanish before and after arbitrary tensor product, so its edge map
+is a quasi-isomorphism over the base.  Relative projective-space duality then gives
 
 $$
 R f_*(\mathcal E^\vee\otimes\omega_{X/S})[1]
@@ -1103,27 +1299,64 @@ $$
 $$
 
 The tensor compatibility of the Čech pairing shows directly that (9.10), the trace, and (9.11)
-commute with arbitrary base change. They are transitive because tensor product is associative.
+commute with arbitrary base change.
 
-It remains to remove the embedding. Exactly as over a field, $(\omega_{X/S}[1],\operatorname{tr}_f)$
-represents the functor
+It remains to prove, rather than infer from an undersized test category, independence of the
+embedding.  Suppose $i_a:X\hookrightarrow P_a$ are two projective embeddings.  The product
+embedding $i=(i_1,i_2):X\hookrightarrow P_1\times_SP_2$ is a common refinement.  To compare
+it with $i_1$, first base-change a resolution of $X\subset P_1$ to obtain a resolution of
+$X\times_SP_2\subset P_1\times_SP_2$.  The graph of $i_2$ is a section
+$X\hookrightarrow X\times_SP_2$ of the smooth projection and is therefore a regular immersion
+of codimension $\dim(P_2/S)$.  Its Koszul complex resolves the graph.  Totalizing the
+base-changed resolution with this Koszul complex resolves the product embedding.  On duals,
+the canonical identification is the currying map
 
 $$
-\mathcal E\longmapsto
-R\mathcal Hom_S(Rf_*\mathcal E,\mathcal O_S)
+\operatorname{Hom}(E_1\otimes E_2,\omega_{P_1/S}\otimes\omega_{P_2/S})
+\simeq
+\operatorname{Hom}\!\left(E_1,
+  \operatorname{Hom}(E_2,\omega_{P_1/S}\otimes\omega_{P_2/S})\right). \tag{9.12a}
 $$
 
-on vector bundles, and finite presentations extend the representation to bounded coherent
-complexes which are perfect over $S$. Two embeddings therefore yield a unique trace-compatible
-isomorphism. Uniqueness gives the cocycle condition on triple overlaps, so the local sheaves and
-traces descend. The descent used here is the elementary module equalizer: for a faithfully flat
-$A\to B$ and a $B$-module with a cocycle, take the equalizer of its two pullbacks to
-$B\otimes_A B$. After tensoring with $B$, the first three terms of the Amitsur complex are
-contracted by multiplication in the extra tensor factor, so faithful flatness proves that the
-equalizer pulls back to the original module. Apply this on affine opens and glue. Finite
-presentation, flatness, and the displayed maps descend because they can be checked after the
-faithfully flat pullback. It also makes the base-change isomorphisms independent of every
-resolution and embedding. This proves relative duality, trace, embedding independence, and
+The two Čech coefficient functionals are compatible with this map because extracting the top
+coefficient first in the $P_2$ variables and then in the $P_1$ variables is the same as
+extracting the coefficient of the product monomial.  Thus the common refinement gives a
+canonical trace-compatible isomorphism between the two Ext sheaves.  A triple product shows
+the cocycle identity: both composites are the associativity isomorphism for a threefold tensor
+product.  This proves embedding independence without claiming that vector bundles alone detect
+all coherent objects on a singular $X$.
+
+The same calculation proves the transitivity needed later.  If $j:Z\hookrightarrow X$ is a
+regular immersion of codimension $d$ and $Z/S$ is Cohen--Macaulay of pure relative dimension
+$1-d$, its Koszul complex gives
+
+$$
+\omega_{Z/S}\simeq
+j^*\omega_{X/S}\otimes
+\det(\mathcal I/\mathcal I^2)^\vee. \tag{9.12b}
+$$
+
+For two regular immersions, the conormal exact sequence identifies the determinant on the
+composite with the tensor product of the two determinants.  Under (9.12a), evaluation of the
+two Koszul complexes in succession equals evaluation of their total complex.  Hence adjunction
+and trace are associative for a composite.  If $Z$ is not flat over $S$, the identical
+statement holds for dualizing complexes, with the Koszul shift $[-d]$ retained.  In particular,
+when $Z$ factors through a regular closed subscheme $T\hookrightarrow S$, composing the two
+Koszul complexes gives the absolute dualizing sheaf over $T$ together with the determinant of
+the conormal bundle of $T/S$.  For projective morphisms the same statement is the Fubini
+identity for the two coefficient traces.  This supplies the vertical and relative
+Cartier-immersion transitivity and the proper trace transitivity used in subsequent chapters.
+
+Finally descend from the fpqc projectivity cover of Lemma 9.2A.  The canonical common-refinement
+isomorphisms just constructed provide descent data and satisfy the cocycle condition.  The
+descent itself is the elementary module equalizer: for a faithfully flat $A\to B$ and a
+$B$-module with a cocycle, take the equalizer of its two pullbacks to $B\otimes_A B$. After
+tensoring with $B$, the first three terms of the Amitsur complex are contracted by multiplication
+in the extra tensor factor, so faithful flatness proves that the equalizer pulls back to the
+original module. Apply this on affine opens and glue. Finite presentation, flatness, the trace,
+and the displayed maps descend because they can be checked after faithfully flat pullback.
+The base-change isomorphisms descend as well and are independent of every resolution and
+embedding. This proves relative duality, trace, embedding independence, transitivity, and
 arbitrary base change in the stated Cohen--Macaulay relative-curve setting.
 $\square$
 
@@ -1805,25 +2038,25 @@ $$
 
 is an isomorphism for every base change $g:S'\to S$.
 
-**Proof.** The assertion is fpqc-local on $S$. After a faithfully flat finite-presentation extension around
-a chosen fiber, prime avoidance supplies a relative effective Cartier multisection meeting every
-one-dimensional associated component. A sufficiently large positive multiple has positive degree
-on every component and is relatively ample by the curve criterion of Section 9.3. We may
-therefore work over $U=\operatorname{Spec}A$ and embed $X$ in $\mathbf P^N_A$. The relative resolution
-argument of Section 9.3, applied to $i_*\mathcal E$, gives a finite complex of sums of twists
-which stays exact after every $A$-algebra extension. The monomial Čech calculation for
-$\mathbf P^N_A$ replaces the pushforward of each twist by a bounded complex of finite free
-$A$-modules and commutes term by term with tensor product. Totalizing gives a bounded finite
-free complex $K^\bullet$ representing $Rf_*\mathcal E$, and
-$K^\bullet\otimes_A B$ represents the cohomology after every $A\to B$.
+**Proof.** Work over an affine neighborhood $U=\operatorname{Spec}A$.  The proper-curve
+complex lemma proved inside Lemma 9.2A applies directly to the base-flat sheaf $\mathcal E$.
+It gives a bounded finite projective complex $K^\bullet$ representing $Rf_*\mathcal E$ such
+that $K^\bullet\otimes_A B$ represents the derived pushforward after every $A\to B$.  This
+use is independent of the projective embedding subsequently constructed in Lemma 9.2A; in
+particular Theorem 13.1 is not being used circularly to prove that embedding.
 
 Every fiber has coherent cohomology only in degrees $0$ and $1$. We now shorten
 $K^\bullet$ without losing base-change compatibility. Starting at its left end, fiberwise
-vanishing says that the first differential has locally constant maximal rank; a nonvanishing
-minor splits off the corresponding two-term identity complex. Repeat from the right end. After
-shrinking $U$, all terms outside degrees $0,1$ have been eliminated. Equivalently, the last
-remaining kernel is finite projective by the fiberwise projectivity criterion. Shrinking once
-more makes the two remaining modules free. Thus there are finite free $A$-modules $K^0,K^1$
+vanishing says that the endpoint differential is injective on every residue-field fiber.
+The cokernel is base-flat by the Tor criterion in the relative syzygy lemma, and the injection
+is therefore universally injective.  Here both adjacent terms are finite projective
+$A$-modules, so the cokernel is finitely presented as well as flat, hence finite projective.
+The resulting short exact sequence consequently splits locally (equivalently, a suitable
+maximal minor becomes a unit).  Replace the adjacent term by this projective cokernel and
+repeat.  At the right end use the dual argument for a fiberwise
+surjection.  After shrinking $U$, all terms outside degrees $0,1$ have been eliminated without
+changing any derived base change. Shrinking once more makes the two remaining finite projective
+modules free. Thus there are finite free $A$-modules $K^0,K^1$
 and a map
 
 $$
