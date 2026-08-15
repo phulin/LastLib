@@ -888,8 +888,8 @@ of such curves have the transitive trace (9.8).
 regular ambient projective space a coherent sheaf has a finite vector-bundle resolution, so
 there we apply $\mathcal Hom$ term by term and identify homotopy-equivalent resolutions. On
 the possibly singular curve we do not make that assertion: the change-of-rings construction
-below uses a functorial semi-free dg resolution and the finite ambient resolution. Strict dg
-currying supplies the comparison, and Ext concentration supplies the required bounded dual.
+below uses $K$-injective coinduction and the finite ambient resolution. Strict dg currying
+supplies the comparison, and Ext concentration supplies the required bounded dual.
 
 First consider $P=\mathbf P^N_k$. The standard affine cover gives the homogeneous Čech complex.
 For a twist $\mathcal O_P(a)$ its top Čech term consists of Laurent monomials of total degree
