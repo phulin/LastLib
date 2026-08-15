@@ -92,7 +92,15 @@ The slogan is useful only after its terms are made precise. A section may exist 
 
 The fppf topology is the natural setting when finite group schemes need not be etale. For example, if the characteristic divides $n$, the roots-of-unity group scheme $\mu_n$ is nonreduced, but taking an $n$th root of a unit still becomes possible after a finite faithfully flat extension. Kummer theory therefore remains exact in the fppf topology without any invertibility hypothesis on $n$. That coefficient-uniform fact is the organizing result of this book.
 
-The substantial geometric inputs are precise. Book 10 supplies effective faithfully flat descent for schemes, quasi-coherent sheaves, line bundles, group schemes, and finite locally free torsors. Book 28 supplies represented quotients and exact sequences of finite locally free commutative group schemes, together with the theorem that multiplication by $n$ on an abelian scheme of relative dimension $g$ is finite locally free and faithfully flat of degree $n^{2g}$. Neither source uses the cohomological conclusions proved here: their torsor and root-cover calculations are obtained directly from descent and finite projective Hopf algebras. We recall the parts needed to build the cohomological argument and use no later Galois-cohomology or duality theorem.
+The substantial geometric inputs are precise. Book 10 supplies effective faithfully flat descent
+for affine and finite schemes, quasi-coherent sheaves, line bundles, affine group schemes, and
+finite locally free torsors; these are the scheme-effectivity cases used below. Book 28 supplies
+represented quotients and exact sequences of finite locally free commutative group schemes,
+together with the theorem that multiplication by $n$ on an abelian scheme of relative dimension
+$g$ is finite locally free and faithfully flat of degree $n^{2g}$. Neither source uses the
+cohomological conclusions proved here: their torsor and root-cover calculations are obtained
+directly from descent and finite projective Hopf algebras. We recall the parts needed to build the
+cohomological argument and use no later Galois-cohomology or duality theorem.
 
 ### 1.2 The fppf site
 

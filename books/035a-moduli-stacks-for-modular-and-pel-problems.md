@@ -100,7 +100,12 @@ For example, over a field of characteristic different from $2$ and $3$, the para
 
 ### 1.3 The base site and conventions
 
-Fix a base scheme $S_0$. Unless stated otherwise, all test schemes are $S_0$-schemes and coverings are fppf coverings. The fpqc topology gives the same stack assertions for the objects considered here because Book 10 proves effective fpqc descent for their underlying schemes, morphisms, line bundles, and group structures. We use fppf atlases because finite presentation is essential in the geometric applications.
+Fix a base scheme $S_0$. Unless stated otherwise, all test schemes are $S_0$-schemes and coverings
+are fppf coverings. The fpqc topology gives the same stack assertions for the objects considered
+here because their presentations retain one of Book 10's scheme-effectivity criteria: affine or
+finite structure, quasi-affineness, or compatible relatively ample data. Morphisms, line bundles,
+and group structures then descend by full faithfulness. We use fppf atlases because finite
+presentation is essential in the geometric applications.
 
 A fiber product of stacks is always a two-fiber product: an object over $T$ includes objects on the two sides and an isomorphism between their images. Equality of objects is never substituted for an isomorphism. A property of a morphism from a stack is called representable when every pullback along a scheme is represented by an algebraic space; in the explicit cases below it will in fact be a scheme.
 
@@ -112,9 +117,10 @@ This is a book about stacks. The geometry of abelian schemes, of finite flat gro
 projective parameter spaces enters as an input rather than as a subject. The following results are
 quoted from earlier books, with the sections named, and are used below without reproof.
 
-- Effective faithfully flat descent for schemes, morphisms, quasi-coherent sheaves, vector
-  bundles, group objects, actions, and torsors, together with the tables of properties that are
-  fpqc local on the base: Book 10, Chapters 5–16. Descent of smoothness along a faithfully flat
+- Effective faithfully flat descent for affine, finite, quasi-affine, and compatibly polarized
+  schemes, together with morphisms, quasi-coherent sheaves, vector bundles, affine or finite group
+  objects, actions, and torsors in those cases, and the tables of properties that are fpqc local
+  on the base: Book 10, Chapters 5–16. Descent of smoothness along a faithfully flat
   cover of the **source**, which is a different statement and is what the quotient atlas of
   Section 6.2 requires, is Book 10 §10.5.
 - Relatively ample bundles, Hilbert polynomials, Hilbert and graph parameter schemes, and fpqc
@@ -264,7 +270,12 @@ $$
 
 A **stack** is a prestack for which every descent datum is effective: there is $x\in\mathcal X(S)$ and compatible isomorphisms $x|_{S_i}\simeq x_i$. The descended object is unique up to a unique isomorphism once the comparison maps are fixed.
 
-The proof pattern for geometric objects is rigid. Descend the underlying schemes first. Descend line bundles and finite locally free modules. Descend all structure morphisms by full faithfulness. Check identities after pulling back to the cover. Finally descend geometric properties such as properness, smoothness, or finite local freeness. This is precisely the order established in Book 10.
+The proof pattern for geometric objects is rigid. First verify an affine, finite, quasi-affine, or
+compatible-polarization criterion and descend the underlying algebraic-space datum to a scheme.
+Then descend line bundles and finite locally free modules. Descend all structure morphisms by full
+faithfulness, check identities after pulling back to the cover, and finally descend geometric
+properties such as properness, smoothness, or finite local freeness. This is precisely the order
+established in Book 10.
 
 For a family of abelian varieties, connectedness of geometric fibers is checked after residue-field extension; Book 35 §1.4 records that smoothness, properness, finite presentation, the group law, and geometric connectedness all survive base change and may be tested after a faithfully flat quasi-compact one. For a generalized elliptic curve, the polygonal fiber condition and the action on components are likewise geometric and fpqc local. Hence neither application requires a new general effectivity theorem.
 
@@ -280,7 +291,13 @@ By contrast, taking the sheafification of orbit sets loses stabilizers first and
 
 **Structured-family stack theorem.** Let objects over $S$ be schemes of finite presentation equipped with a finite list of the following data: morphisms, sections, finite locally free group objects, actions, line bundles with rigidifications, finite locally free tensors and perfect pairings. Impose conditions that are equalities of maps or properties fpqc local on the base. If the underlying class of schemes has effective fpqc descent, then the resulting fibered category is an fpqc stack.
 
-**Proof strategy.** Separate construction from properties. Book 10 supplies effectivity for the underlying schemes, sheaves, and group objects. It also supplies full faithfulness for every structure map. Thus all data descend and their equations can be checked upstairs. The remaining adjectives descend by their stated locality. For an ample polarization, use the descended rigidified line bundle and fpqc descent of ampleness from Book 8. This constructs an effective object. Uniqueness follows from descent of isomorphisms. $\square$
+**Proof strategy.** Separate construction from properties. The theorem's hypothesis on the
+underlying class, verified in applications by one of Book 10's explicit criteria, supplies scheme
+effectivity; Book 10 also supplies descent for the sheaves and group objects and full faithfulness
+for every structure map. Thus all data descend and their equations can be checked upstairs. The
+remaining adjectives descend by their stated locality. For an ample polarization, use the
+descended rigidified line bundle and fpqc descent of ampleness from Book 8. This constructs an
+effective object. Uniqueness follows from descent of isomorphisms. $\square$
 
 The theorem deliberately requires a finite list of fixed structures. An action by an order is still finite data because the order is finitely generated and its relations can be imposed on finitely many generators. A determinant condition is equality of finitely many coefficients in characteristic polynomials on a finite locally free Lie bundle.
 
@@ -641,7 +658,14 @@ The action is part of the definition. A cycle of projective lines with a marked 
 
 ### 8.2 The stack property and diagonal
 
-Generalized elliptic curves form an fpqc stack. Descend the proper flat curve, the section, the smooth open, the group law, and the action as in Book 10. Group identities are equalities of maps. Smoothness of the indicated open and the geometric polygon condition are reflected after faithfully flat field extension. The transitive action on components can be checked on geometric fibers. This proves effectivity; descent of isomorphisms proves the prestack condition.
+Generalized elliptic curves form an fpqc stack in the polarized presentations used here. Retain a
+compatible finite effective divisor in the smooth locus meeting every geometric component; as in
+Book 10 §16.1, a positive multiple is relatively ample and supplies scheme effectivity. Then
+descend the proper flat curve, the section, the smooth open, the group law, and the action. Group
+identities are equalities of maps. Smoothness of the indicated open and the geometric polygon
+condition are reflected after faithfully flat field extension. The transitive action on
+components can be checked on geometric fibers. This proves effectivity; descent of isomorphisms
+proves the prestack condition.
 
 The diagonal is representable and separated. Given $E,E'$ over $T$, pass fppf-locally on $T$ and
 choose finite effective Cartier divisors $D\subset E^{\mathrm{sm}}$ and

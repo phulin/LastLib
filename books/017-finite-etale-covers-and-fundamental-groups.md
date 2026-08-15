@@ -523,7 +523,14 @@ This is a **descent datum**. The cocycle condition says that comparing the first
 
 ### 6.2 Affine faithfully flat descent
 
-Book 10 established effective faithfully flat descent for modules, finite projective algebras, affine schemes, general schemes, and their morphisms. The finite étale case is a particularly clean application, but it is worth displaying the equalizer because the same formula later becomes finite-set invariance. Write $S=\operatorname{Spec}A$, $S'=\operatorname{Spec}A'$, with $A\to A'$ faithfully flat, and $Y'=\operatorname{Spec}B'$. Put $A''=A'\otimes_AA'$. A descent datum is an isomorphism between the two $A''$-algebras obtained from $B'$ through the two maps $A'\rightrightarrows A''$, satisfying the cocycle equation.
+Book 10 established effective faithfully flat descent for modules, finite projective algebras,
+affine schemes, and their morphisms. That is exactly the applicable scheme-effectivity criterion
+here: a finite étale morphism is affine. The finite étale case is a particularly clean
+application, but it is worth displaying the equalizer because the same formula later becomes
+finite-set invariance. Write $S=\operatorname{Spec}A$, $S'=\operatorname{Spec}A'$, with
+$A\to A'$ faithfully flat, and $Y'=\operatorname{Spec}B'$. Put
+$A''=A'\otimes_AA'$. A descent datum is an isomorphism between the two $A''$-algebras obtained
+from $B'$ through the two maps $A'\rightrightarrows A''$, satisfying the cocycle equation.
 
 The strategy is to recover the elements that agree under the two comparisons. Use the descent isomorphism to identify the two pullback algebras, and let $d_0,d_1$ be the resulting maps from $B'$ to that common algebra. Set
 
