@@ -1790,28 +1790,41 @@ layers. Passing from the raw logarithmic quotient to its image in $P_v$
 and applying $(Q/R)^\vee=R^\perp/Q^\perp$ gives (4.F4f), including layers
 where an $n$th root lies in a shallower unit group.
 
-We now define the finite localization cone that will be compared with
-$\mathcal P_{S,T}(\mu_n)$. Enlarge $Q_T$ so that the finitely many cellular
-cocycles and boundary primitives used in (4.F4n), together with their local
-restrictions, all factor through it. For $q\geq0$ put
+We now construct the finite comparison cone without replacing continuous
+cohomology by the cohomology of one finite quotient. Since $\mu_n\subset F$,
+a choice of primitive $n$-th root identifies $A_n$ and $\mu_n$ as
+$G_{F,S}$-modules. The arithmetic descriptions above, local finiteness, and
+the localization long exact sequence show that the cohomology of
+$C_{S,c}^\bullet(A_n)$ is finite in degrees $0,\ldots,3$. Apply the
+cellular realization lemma to its good truncation and write
 
 $$
-C_T^q(M)=\operatorname {Map}(Q_T^q,M),qquad
-L_T^q(M)=\bigoplus_{v\in S}\operatorname {Map}(Q_{T,v}^q,M),              \tag{4.F4o}
+\mathcal P^c_{S,T}(A_n)\longrightarrow
+\tau_{[0,3]}C_{S,c}^\bullet(A_n)                     \tag{4.F4o}
 $$
 
-where $Q_{T,v}$ is the image of a decomposition group in $Q_T$. The
-differential is (4.C2), restriction is literal restriction of functions,
-and
+for the resulting quasi-isomorphism. Choose the free presentations
+successively along the finite unit, divisor, local-unit, real-sign, and
+Brauer filtrations. This is possible by lifting generators of each successive
+subgroup and adjoining its relation module; the proof of the cellular lemma
+then supplies compatible cocycles and boundary primitives.
+
+The cochain map (4.C4), followed by restriction along (4.F4n), now gives the
+specified finite comparison
 
 $$
-\mathcal C_{S,T}^q(M)=C_T^q(M)\oplus L_T^{q-1}(M),\qquad
-d(a,b)=(da,\operatorname {res}a-db).                     \tag{4.F4p}
+\Phi_{S,T}:\mathcal P^c_{S,T}(A_n)\longrightarrow
+\operatorname {Hom}\left(
+\mathcal P_{S,T}^{3-\bullet}(\mu_n),
+\tfrac1n\mathbf Z/\mathbf Z\right).                    \tag{4.F4p}
 $$
 
-These are finite groups and every arrow has now been specified. At a real
-place replace $\operatorname {Map}(Q_{T,v}^q,M)$ by the two-periodic complete
-resolution
+This is an actual composite of cochain maps. Only finitely many cellular
+cocycles, primitives, and their local restrictions occur, so all of them
+factor through one finite quotient $Q_T$ of $G_{F,S}$. That observation
+makes every matrix in (4.F4p) finite; it is not used to assert that
+$H^\bullet(Q_T,-)$ already equals continuous cohomology. At a real place
+the local part is taken from the two-periodic complete resolution
 
 $$
 \cdots\xrightarrow{1-c}M\xrightarrow{1+c}M
@@ -1819,25 +1832,14 @@ $$
 $$
 
 with the copy meeting degree zero chosen so that $d^{-1}=1+c$; at a complex
-place put zero. Thus the real norm quotient, and not ordinary degree-zero
-cohomology, occurs in (4.F4p).
-
-Kummer theory and local reciprocity identify the degree-one cohomology of
-the local columns with $P_v$ and $P_v^\vee$. Use their valuation, residue,
-and unit filtrations above on these columns, pulling the filtration back to
-cocycles and adjoining boundaries at every step. Replacing $c_v$ by a larger
-cutoff adds the two-term identity complex on
-$\overline U_v^{c_v}/\overline U_v^{c'_v}$; its contraction is
-$s(0,x)=(x,0)$. Hence it is a canonical homotopy equivalence, and
-
-$$
-\varinjlim_T\mathcal C_{S,T,c}\simeq
-C_{S,c}^{\bullet}(\mu_n).                                 \tag{4.F4b}
-$$
-
-Construct the analogous finite complex for $A_n$. On its terms the comparison
-map is exactly (4.C4), using (4.C3); its being a cochain map was checked after
-(4.C4), not inferred from an order equality.
+place it is zero. Pull the valuation, residue, and unit filtrations back to
+the cellular presentations. Replacing a local cutoff $c_v$ by a larger one
+adjoins the two-term identity complex on
+$\overline U_v^{c_v}/\overline U_v^{c'_v}$, contracted by
+$s(0,x)=(x,0)$. Thus cutoff changes are genuine homotopy equivalences.
+On the terms of (4.F4p) the comparison is exactly (4.C4), using (4.C3);
+its being a cochain map was checked after (4.C4), not inferred from an order
+equality.
 
 Filter the finite local modules by
 $\overline U_v^r$ and $X_v^{\le r}$. The successive pairings are (4.F4f);
@@ -1875,32 +1877,34 @@ kernel/cokernel property as (4.F4r). Filter the comparison cone in the order
 divisor blocks, valuation, residue, increasing unit depth, real sign, and
 Brauer presentation. Each associated quotient is the cone of one of the
 displayed isomorphisms. If $s_{r-1}$ contracts the preceding filtered piece
-and $t_r$ contracts the quotient, lift $t_r$ arbitrarily and replace it by
+and $t_r$ contracts the quotient, use the direct-sum splitting supplied by
+the cellular Smith presentations to lift $t_r$ so that it vanishes on the
+preceding piece, and put
 
 $$
-s_r=s_{r-1}+t_r-s_{r-1}(dt_r+t_rd-1).                    \tag{4.F4s}
+s_r=t_r-s_{r-1}(dt_r+t_rd-1).                            \tag{4.F4s}
 $$
 
-A direct multiplication gives $ds_r+s_rd=1$ on the next piece. Induction
+Indeed $e_r=dt_r+t_rd-1$ is a chain map with image in the preceding piece,
+and $(ds_{r-1}+s_{r-1}d)e_r=e_r$. Hence a direct multiplication gives
+$ds_r+s_rd=1$ on the next piece. Induction
 therefore contracts the entire comparison cone. This proves finite-level
 perfectness and, more strongly, identifies both annihilators in every exact
 localization diagram.
-
-On the Kummer side filtered colimits are exact. On the dual side,
-$\operatorname {Hom}(\varinjlim K_T,\mathbf Q/\mathbf Z)
-=\varprojlim\operatorname {Hom}(K_T,\mathbf Q/\mathbf Z)$. The cohomology
-groups in degrees $0,\ldots,3$ are finite, and once $T$ contains supports for
-a finite set of generators and relations their images stabilize. Hence the
-inverse system is Mittag--Leffler and has vanishing $\varprojlim^1$. Passing
-to the limit in the finite-level quasi-isomorphisms therefore gives
+Both vertical maps from the cellular complexes to the good truncations are
+quasi-isomorphisms. Since $\tfrac1n\mathbf Z/\mathbf Z$ is injective,
+$\operatorname {Hom}(-,\tfrac1n\mathbf Z/\mathbf Z)$ carries the
+global cellular quasi-isomorphism to a quasi-isomorphism in the opposite
+direction. The contraction of the cone of $\Phi_{S,T}$ and the two-out-of-three
+property therefore prove that the original cochain map (4.C4) is a
+quasi-isomorphism on the good truncations:
 
 $$
 C_{S,c}^\bullet(A_n)\longrightarrow
-\operatorname {Hom}\!\left(C^{3-\bullet}(G_{F,S},\mu_n),
+\operatorname {Hom}\left(C^{3-\bullet}(G_{F,S},\mu_n),
 \tfrac1n\mathbf Z/\mathbf Z\right).                        \tag{4.F5}
 $$
 
-The endpoints admit independent checks which do not identify idelic characters
 with Galois characters. Degree two is (4.I9h) on $n$-torsion. In degree one,
 by the definition of continuous cohomology for the trivial module,
 
