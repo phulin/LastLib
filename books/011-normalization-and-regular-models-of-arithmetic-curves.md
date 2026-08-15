@@ -546,100 +546,93 @@ For arithmetic surfaces, every chosen center will be vertical and disjoint from 
 
 ### 8.1 The resolution theorem in the required setting
 
-The central low-dimensional theorem is the following.
+The central low-dimensional theorem is not a formal consequence of normalization, excellence, or
+the elementary blowup calculations above. We therefore isolate exactly the additional result used
+from this point onward.
 
-**Theorem 8.1 (resolution of excellent surfaces).** Let $X$ be a reduced excellent noetherian scheme of dimension at most two. There is a proper birational morphism
+**Prerequisite 8.1 (surface resolution, SR2).** Let $X$ be a reduced excellent noetherian scheme of
+dimension at most two, and let $U\subseteq X$ be a regular open subscheme. There exists a projective
+birational morphism
 
 $$
 r:X'\longrightarrow X
 $$
 
-with $X'$ regular. It may be chosen as a finite composite of blowups at nowhere-dense closed centers followed at intermediate stages by normalization. If $X$ is quasi-projective over a noetherian base, $r$ may be chosen projective. If $U\subset X$ is regular, every center can be chosen in $X\setminus U$, so $r$ is an isomorphism over $U$.
+such that $X'$ is regular and $r$ is an isomorphism over $U$.
 
-For an arithmetic surface, $X$ is already normal after Chapter 6. Its singular locus is then a locally finite set of closed points. On a quasi-compact model it is finite, and the centers can be taken successively above those points.
+This is the precise relative form needed in this book: projectivity keeps projective models
+projective, and the clause involving $U$ preserves the generic fiber and every prescribed good
+open. SR2 is a substantial theorem on excellent surfaces. It is not proved in Books 1--10, and it
+is not proved in this volume. Thus the phrase **assuming SR2** is a genuine mathematical
+hypothesis, not an abbreviation for the paragraphs below.
 
-The proof occupies the next three sections. Its scope matters. It proves resolution in dimension two using excellence; it does not assert resolution in arbitrary dimension or over arbitrary nonexcellent schemes.
+For an arithmetic surface normalized as in Chapter 6, the singular locus is a finite set of
+closed points. In that special situation SR2 says that the exceptional locus may be kept above
+those points. It still contains the hard local assertion that every singularity lying above them
+is eliminated by one projective modification.
 
 ### 8.2 Preparing the singular locus
 
-We first reduce the theorem to a local statement.
+We first record the elementary reduction that any proof of SR2 must use.
 
-**Lemma 8.2 (surface preparation).** Let $X$ be as in Theorem 8.1 and let $U$ be its regular locus. After one finite normalization, the complement of $U$ is a closed subset of codimension two. On every quasi-compact open it is finite.
+**Lemma 8.2 (surface preparation).** Let $X$ be a reduced excellent noetherian scheme of dimension at most two, let $U=X_{\mathrm{reg}}$, and let $\nu:X^{\nu}\to X$ be its componentwise normalization. Then $\nu$ is finite and is an isomorphism over $U$. The singular locus of $X^{\nu}$ is a closed subset of codimension at least two, and hence is finite.
 
 **Proof.** Reduce $X$, separate its irreducible components by normalization, and use finiteness from the Nagata property. A normal noetherian surface satisfies $(R_1)$, so every codimension-zero or codimension-one point is regular. Excellence makes the regular locus open. Hence the singular locus is closed and consists of dimension-zero points. A noetherian zero-dimensional closed space has finitely many points. $\square$
 
-It therefore suffices to resolve $\operatorname{Spec}A$ for a two-dimensional excellent normal local domain $(A,\mathfrak m)$. A modification supported at $\mathfrak m$ glues to the identity away from that point. Resolutions of the finitely many prepared points can be composed: resolving one point does not disturb the regular open, and any new singularities lie above its center.
+Thus the new input needed for SR2 is local at the finitely many singular points: one must resolve $\operatorname{Spec}A$ for a two-dimensional excellent normal local domain $(A,\mathfrak m)$. A modification supported at $\mathfrak m$ glues to the identity away from that point. If the required local modifications exist and terminate, those over the finitely many prepared points can be composed without disturbing the regular open.
 
-Completion is a powerful diagnostic but must be used with care. Excellence gives that $A\to\widehat A$ is regular and faithfully flat. Thus $A$ is regular if and only if $\widehat A$ is, and the singular points on normalized blowups can be detected after completion. Coherent ideals in a completion that arise from a sufficiently high finite neighborhood can be approximated by ideals in $A$; openness of regularity then descends the achieved regularity. This is where arbitrary noetherian local rings are inadequate.
+Completion is a powerful diagnostic but must be used with care. Excellence gives that
+$A\to\widehat A$ is a regular faithfully flat map, so $A$ is regular if and only if $\widehat A$
+is. It does not follow merely from excellence that a center constructed in $\widehat A$ descends to
+$A$, nor that numerical inequalities proved after completion survive an approximation. Those are
+parts of a proof of SR2, not consequences of the preparation lemma.
 
 ### 8.3 A decreasing local invariant
 
-For a two-dimensional noetherian local ring $(A,\mathfrak m)$, the Hilbert–Samuel function is eventually a quadratic polynomial:
+After Lemma 8.2, the missing local assertion can be stated without global language. For every
+singular excellent normal two-dimensional local domain $(A,\mathfrak m)$, one must construct a
+projective birational modification supported at $\mathfrak m$ whose local rings are all regular.
+Doing this compatibly with the regular punctured spectrum, and then showing that the construction
+terminates after finitely many stages, is the local core of SR2.
 
-$$
-\ell_A(A/\mathfrak m^{n+1})
-=\frac{e(A)}2n^2+O(n).
-$$
+Hilbert--Samuel multiplicity, the tangent cone and its directrix, coefficient ideals, and conductor
+lengths of suitable curve sections are useful ingredients in proofs of this local theorem. They do
+not yield a proof merely by being placed in a lexicographically ordered tuple. Such an argument must
+establish all of the following points:
 
-The positive integer $e(A)$ is the multiplicity. A regular local ring has $e(A)=1$; for an unmixed local ring, the converse holds. Multiplicity alone may remain constant under a blowup, so it is refined by the directrix of the tangent cone.
+1. the coefficient ideal is intrinsically defined enough to transform under the chosen blowup;
+2. a suitable hypersurface section exists over the actual residue field, including when that field
+   is finite, and the invariant is independent of every auxiliary extension used to choose it;
+3. equality of multiplicities forces the asserted directrix drop on every relevant chart;
+4. in the remaining case, conductor length strictly decreases on every unresolved branch;
+5. the inequalities hold simultaneously at every nonregular point of the normalized blowup; and
+6. passage to completion and approximation back to $A$ preserve the center, its transform, and all
+   strict inequalities.
 
-Let
-
-$$
-\operatorname{gr}_{\mathfrak m}A
-=\bigoplus_{n\geq0}\mathfrak m^n/\mathfrak m^{n+1}.
-$$
-
-After passing to a residue-field extension when necessary, the **directrix dimension** $d(A)$ is the largest dimension of a vector subspace of the Zariski tangent space whose translations preserve the tangent cone. Define
-
-$$
-\iota(A)=\bigl(e(A),2-d(A),c(A)\bigr)
-$$
-
-with lexicographic order, where $c(A)$ is the conductor colength on a generic one-dimensional hypersurface section. More intrinsically, choose a sufficiently general parameter $h$ avoiding the finitely many tangent directions; normalize $A/(h)$, and let
-
-$$
-c(A)=\ell_A\left(\widetilde{A/(h)}/(A/(h))\right).
-$$
-
-The value is independent of a general choice for purposes of comparison; over a finite residue field one first uses a finite unramified extension to find a direction and descends the resulting center. The ordered triple lies in $\mathbf N^3$.
-
-The hard local calculation is the following surface decrease lemma.
-
-**Lemma 8.3 (surface decrease).** Let $A$ be an excellent normal two-dimensional local domain that is not regular. There is an $\mathfrak m$-primary ideal $I$, generated by elements of maximal order, such that every nonregular local ring $B$ on the normalized blowup of $I$ satisfies
-
-$$
-\iota(B)<\iota(A).
-$$
-
-The ideal may be chosen compatibly with a prescribed regular punctured spectrum.
-
-**Proof.** We give the decisive local argument. Complete $A$; regularity and multiplicity are unchanged. A coefficient ring and two parameters give a finite presentation of the completion over a regular two-dimensional complete local ring. Choose elements whose initial forms cut the largest translation-invariant subspace of the tangent cone, and let $I$ be the coefficient ideal obtained by collecting, with their orders, the coefficients of the finite equations.
-
-On a blowup chart one divides each equation by the largest exceptional power common to its terms. The initial form then transforms by dehomogenizing the tangent cone. Upper semicontinuity of Hilbert–Samuel multiplicity gives $e(B)\leq e(A)$. If strict inequality occurs, the first coordinate drops. If equality occurs, equality in the multiplicity comparison forces the center to lie in the directrix and the transformed tangent cone loses a transverse direction; the second coordinate drops unless the tangent cone is already a cylinder in that direction.
-
-In the remaining cylindrical case, take a general hypersurface section transverse to the directrix. Its transform is the blowup of a one-dimensional reduced local ring at its maximal ideal. Write its normalization as a finite product of discrete valuation rings $V_j$. If $J$ is its conductor, then
-
-$$
-\ell(\widetilde B/B)
-=\sum_j\ell_{V_j}(V_j/JV_j)-\ell_B(B/J).
-$$
-
-The transform removes at least one lowest nonintegral value from the value semigroup of every unresolved branch. Therefore the conductor colength strictly decreases. Equality would say that the one-dimensional section was already normal, hence regular, contradicting persistence of the cylindrical singularity. Finiteness of the normalization makes all lengths finite. Approximation carries the coefficient ideal back from the completion, and openness of the regular locus shows that the same inequalities hold before completion. $\square$
-
-The lemma packages the classical quadratic-transform proof in a form suited to arithmetic surfaces. The first coordinate detects coarse multiplicity, the second prevents an endless equimultiple tangent cone, and the conductor resolves the final one-dimensional branch obstruction. All three pieces are necessary: a node and a cusp can have the same multiplicity but behave differently after blowup.
+None of these assertions is supplied by upper semicontinuity alone. In particular, independently
+choosing a general section after passing to an unramified residue-field extension does not produce
+a descended center, and decreasing the value semigroup on one branch does not control all points of
+a normalized blowup. Accordingly this volume does not assert the former ``surface decrease lemma'':
+that lemma was the unresolved theorem rather than a proof of it. SR2 is the exact replacement.
 
 ### 8.4 Termination
 
-Start with a prepared normal surface $X_0$. At each singular point choose the ideal from Lemma 8.3, blow it up, and normalize. Let $X_{n+1}\to X_n$ be the composite modifications over all points where the maximal value of $\iota$ occurs.
+Assume SR2, and let $X$ be a normal arithmetic surface produced by Chapter 6. Lemma 8.2 shows that
+its singular locus is a finite set of closed points, but does not construct a modification. Apply
+SR2 directly, taking for $U$ the regular locus or any smaller regular open that contains the generic
+fiber and every prescribed good fiber. It gives a projective birational morphism $X'\to X$ with
+$X'$ regular and with no change over $U$. Projectivity is part of the prerequisite because it is
+required to preserve projective models downstream.
 
-**Proof of Theorem 8.1.** Each stage is finite over a projective blowup and hence projective. It is an isomorphism over the regular locus. On every nonregular point above a chosen center, the lexicographic invariant strictly decreases. There is no infinite strictly decreasing sequence in $\mathbf N^3$.
-
-One further finiteness point is required: a stage cannot produce infinitely many points having the same positive invariant. Its singular locus is a zero-dimensional closed subset of a noetherian quasi-compact scheme, hence finite. We can therefore clear the maximal invariant at finitely many points. Induction on the well-ordered set of possible triples terminates with a regular scheme. The componentwise reduction and gluing of Section 8.2 finish the proof. $\square$
-
-This argument also proves the relative assertion. If $U$ is regular, all coefficient ideals are supported in the closed singular locus, so each modification is the identity over $U$. For an arithmetic surface, take $U$ to contain the generic fiber and every chosen good fiber.
+This is a deduction *from* SR2, not a proof of SR2. In particular, no termination argument remains
+to be supplied by well-ordering a proposed invariant: termination is part of the prerequisite.
+Every later instruction to ``resolve'' a surface means precisely this conditional application of
+SR2.
 
 ### 8.5 Examples of the local procedure
+
+The following calculations verify particular resolutions directly. They illustrate why blowups are
+the right modifications, but they do not prove SR2 for an arbitrary excellent surface singularity.
 
 Consider
 
@@ -669,17 +662,18 @@ $$
 
 Removing the exceptional factor leaves $y_1=z_1^2$, a smooth chart. The other charts are similar. One blowup resolves the vertex.
 
-A cusp requires more than branch separation. Normalizing $k[t^2,t^3]$ resolves the one-dimensional cusp immediately, but the arithmetic surface equation $y^2=x^3+\pi^m$ can remain a normal surface singularity. Blowups change both the plane-curve singularity and the vertical exponent. The decreasing triple, rather than multiplicity alone, guarantees that alternating phenomena cannot continue indefinitely.
+A cusp requires more than branch separation. Normalizing $k[t^2,t^3]$ resolves the one-dimensional cusp immediately, but the arithmetic surface equation $y^2=x^3+\pi^m$ can remain a normal surface singularity. Blowups change both the plane-curve singularity and the vertical exponent. Proving that the alternating phenomena terminate in arbitrary excellent surface singularities is part of SR2; the preceding examples do not supply that proof.
 
 ## 9. Regular proper models
 
 ### 9.1 Existence over excellent Dedekind bases
 
-Combining closure, normalization, and resolution gives the main existence theorem.
+Combining the proved closure and normalization constructions with SR2 gives the main conditional
+existence theorem.
 
-**Theorem 9.1 (regular model theorem).** Let $S$ be an excellent Dedekind scheme with function field $K$, and let $C/K$ be a smooth projective geometrically connected curve. Then there exists a regular flat projective $S$-scheme $\mathcal X$ with generic fiber $C$. If a regular projective model is prescribed over a nonempty open $U\subset S$, $\mathcal X$ may be chosen to restrict to it.
+**Theorem 9.1 (regular model theorem, conditional on SR2).** Assume SR2. Let $S$ be an excellent Dedekind scheme with function field $K$, and let $C/K$ be a smooth projective geometrically connected curve. Then there exists a regular flat projective $S$-scheme $\mathcal X$ with generic fiber $C$. If a regular projective model is prescribed over a nonempty open $U\subset S$, $\mathcal X$ may be chosen to restrict to it.
 
-**Proof.** If no model over $U$ is prescribed, embed $C$ in projective space and take its schematic closure. In the relative case, use the compatible embedding and closure constructed in Theorem 6.2. Normalize the closure to obtain a normal flat projective model $X_1$ which is unchanged over $U$. Its generic fiber, and its restriction to $U$ in the relative case, are regular. Resolve $X_1$ with centers in its singular locus, which is disjoint from $X_{1,U}$. The result is regular and projective and has unchanged generic fiber and unchanged restriction over $U$. It remains flat because it is integral and dominates the Dedekind base. $\square$
+**Proof.** If no model over $U$ is prescribed, embed $C$ in projective space and take its schematic closure. In the relative case, use the compatible embedding and closure constructed in Theorem 6.2. Normalize the closure to obtain a normal flat projective model $X_1$ which is unchanged over $U$. Its generic fiber, and its restriction to $U$ in the relative case, are regular. Apply SR2 to $X_1$ with the regular open consisting of its generic fiber together with $X_{1,U}$. The result is regular and projective and has unchanged generic fiber and unchanged restriction over $U$. It remains flat because it is integral and dominates the Dedekind base. $\square$
 
 If $C$ is merely proper, it is projective because every smooth proper curve over a field possesses a divisor of positive degree and a sufficiently large multiple is very ample. Thus no separate proper-only case is needed for smooth curves.
 
@@ -693,9 +687,9 @@ The bad set $S\setminus U$ is finite when $S$ is the spectrum of a Dedekind doma
 
 ### 9.3 Dominating finitely many models
 
-**Theorem 9.2.** Any finite collection of projective $S$-models of the same smooth curve is dominated by a regular projective model, provided $S$ is excellent.
+**Theorem 9.2 (conditional on SR2).** Assume SR2. Any finite collection of projective $S$-models of the same smooth curve is dominated by a regular projective model, provided $S$ is excellent.
 
-**Proof.** The fiber product of finitely many projective $S$-schemes is projective. Take in that product the schematic closure $Z$ of the diagonally embedded generic curve. It is integral, flat, and projective by Proposition 6.1, and every projection $Z\to X_i$ is proper and induces the identity on the generic fiber. Normalize $Z$ and resolve the resulting normal surface. Both operations are projective and preserve the generic fiber. The final regular projective model maps to every $X_i$ and induces the identity on $C$. $\square$
+**Proof.** The fiber product of finitely many projective $S$-schemes is projective. Take in that product the schematic closure $Z$ of the diagonally embedded generic curve. It is integral, flat, and projective by Proposition 6.1, and every projection $Z\to X_i$ is proper and induces the identity on the generic fiber. Normalize $Z$ and apply SR2 to the resulting normal surface. Both operations are projective and preserve the generic fiber. The final regular projective model maps to every $X_i$ and induces the identity on $C$. $\square$
 
 This is the correct way to compare equations, moduli compactifications, and models adapted to correspondences. One does not identify them prematurely; one moves to a common regular domination.
 
@@ -743,7 +737,7 @@ $$
 X'=\operatorname{Nor}\bigl((X\times_SS')_{\mathrm{red}}\bigr),
 $$
 
-taking the component or components with the desired generic fiber. Since $S'$ is excellent, $X'\to X\times_SS'$ is finite. If $X$ was proper or projective, so is $X'$. Resolve $X'$ if a regular model is required.
+taking the component or components with the desired generic fiber. Since $S'$ is excellent, $X'\to X\times_SS'$ is finite. If $X$ was proper or projective, so is $X'$. Assuming SR2, resolve $X'$ if a regular model is required.
 
 There is a canonical comparison from the normalization after base change to the base change of the original normalization whenever the latter is interpreted componentwise and is dominated by the former. It is an isomorphism under smooth base change, and also under separable field extension when geometric normality supplies normality of the base-changed space. Without such a hypothesis, it need not be.
 
@@ -819,7 +813,7 @@ A regular proper model is **relatively minimal** if none of its fibers contains 
 
 ### 11.2 Existence in positive genus
 
-**Theorem 11.2 (minimal regular model).** Let $R$ be an excellent discrete valuation ring with fraction field $K$, and let $C/K$ be a smooth projective geometrically connected curve of positive genus. Then $C$ has a relatively minimal regular proper model $X_{\min}/R$. Every regular proper model of $C$ admits a unique morphism to $X_{\min}$ inducing the identity on $C$.
+**Theorem 11.2 (minimal regular model, conditional on SR2).** Assume SR2. Let $R$ be an excellent discrete valuation ring with fraction field $K$, and let $C/K$ be a smooth projective geometrically connected curve of positive genus. Then $C$ has a relatively minimal regular proper model $X_{\min}/R$. Every regular proper model of $C$ admits a unique morphism to $X_{\min}$ inducing the identity on $C$.
 
 **Proof.** Begin with Theorem 9.1 and contract vertical exceptional curves until none remains. Termination follows from the strictly decreasing number of fiber components. To compare a second regular model $Y$, resolve the indeterminacy of the birational map $Y\dashrightarrow X_{\min}$ by point blowups, obtaining $Z$ with morphisms to both.
 
@@ -839,7 +833,7 @@ Uniqueness is relative to the fixed identification of the generic fiber. If gene
 
 ### 11.4 Marked and semistable variants
 
-For a marked curve $(C;P_1,\ldots,P_n)$, resolve not only the surface but also the boundary formed by the special fiber and the closures of the marked points. Blow up until the marked sections lie in the smooth locus, are disjoint, and meet the reduced special fiber transversely. Each defect is supported at a closed point, and the same surface invariant with the number of boundary tangencies as a final coordinate proves termination.
+For a marked curve $(C;P_1,\ldots,P_n)$, one would like to resolve not only the surface but also the boundary formed by the special fiber and the closures of the marked points. SR2 supplies the regular total space, but its statement alone does not prove embedded resolution of that boundary. Thus the further assertion that finitely many point blowups make the marked sections disjoint and transverse to a normal-crossings boundary is a separate embedded-resolution input; no termination claim for it is made here.
 
 A regular **semistable model** has reduced special fibers whose only singularities are ordinary double points and whose components meet transversely. Étale-locally at a node it has equation
 
@@ -847,24 +841,25 @@ $$
 xy=\pi.
 $$
 
-Resolution alone does not guarantee semistability. Semistable reduction is the additional theorem that after a suitable finite separable extension of $K$, a smooth proper curve has a semistable model. Once that extension and a normal proper candidate are supplied, the constructions of this book normalize, resolve, and remove exceptional components while preserving the nodal open. The stable model may have nodal total fibers and contracts unstable rational components; its total space need not be regular after ramified base change, so stable and minimal regular models serve different purposes.
+Resolution alone does not guarantee semistability. Semistable reduction is the additional theorem that after a suitable finite separable extension of $K$, a smooth proper curve has a semistable model. Once that extension and a normal proper candidate are supplied, this book normalizes it and, assuming SR2, resolves away from the nodal open before removing exceptional components. The stable model may have nodal total fibers and contracts unstable rational components; its total space need not be regular after ramified base change, so stable and minimal regular models serve different purposes.
 
 ## 12. Models for modular, Shimura, and semistable problems
 
 ### 12.1 The exact reusable model theorem
 
-The preceding results can be collected in the form actually needed later.
+The preceding results can be collected in the form actually needed later, with the unresolved
+surface input displayed rather than hidden.
 
-**Theorem 12.1 (arithmetic curve model package).** Let $S$ be an excellent Dedekind scheme, $U\subset S$ a nonempty open, and $C/K(S)$ a smooth projective geometrically connected curve. Suppose a smooth projective model $\mathcal C_U/U$ is given. Then:
+**Theorem 12.1 (arithmetic curve model package, conditional on SR2).** Assume SR2. Let $S$ be an excellent Dedekind scheme, $U\subset S$ a nonempty open, and $C/K(S)$ a smooth projective geometrically connected curve. Suppose a smooth projective model $\mathcal C_U/U$ is given. Then:
 
 1. there is a normal flat projective model $X/S$ extending $\mathcal C_U$;
 2. there is a regular flat projective model $\mathcal X/S$ and a projective birational map $\mathcal X\to X$, identical over $U$;
 3. any finite collection of projective models, rational maps, and finite generic correspondences is dominated by such a regular model on which their graph closures are defined as proper correspondences;
 4. after a finite extension $K'/K(S)$, with $S'$ the normalized base, normalization of the reduced base change followed by resolution gives a regular projective $S'$-model;
-5. if the supplied model over an open of $S'$ is semistable, all centers can be kept outside that open;
+5. if the supplied model over an open of $S'$ is semistable, the resolution is an isomorphism over that open;
 6. if $g(C)>0$, contracting vertical exceptional curves produces the unique minimal regular proper model.
 
-Every adjective has a source. Excellence of $S$ gives finite normalization and terminating surface resolution. Smoothness of $C$ makes the generic fiber normal and regular. Projectivity of $C$ starts the closure and ensures the final model is projective. Flatness follows from integrality over a Dedekind base. Properness alone is preserved throughout but does not by itself choose an embedding. Geometric connectedness prevents an unintended product of generic components.
+Every adjective has a source. Excellence of $S$ gives finite normalization and supplies the ring-theoretic hypothesis in SR2; termination and regularity come from SR2 itself. Smoothness of $C$ makes the generic fiber normal and regular. Projectivity of $C$ starts the closure and ensures the final model is projective. Flatness follows from integrality over a Dedekind base. Properness alone is preserved throughout but does not by itself choose an embedding. Geometric connectedness prevents an unintended product of generic components.
 
 ### 12.2 Modular curves
 
@@ -875,33 +870,33 @@ To obtain the exact surface used in arithmetic arguments, proceed as follows.
 1. Take the smooth projective generic modular curve, including its cusps.
 2. Extend the chosen good integral compactification over $U$, typically the complement of primes dividing the level.
 3. Close it projectively over $S$ and normalize. Normalization retains the moduli model over $U$ and repairs branch identifications at bad primes.
-4. Resolve only the finitely many closed surface singularities above bad primes.
-5. Blow up, if necessary, so cusp closures are disjoint regular horizontal divisors meeting the fiber transversely.
+4. Assuming SR2, resolve only the finitely many closed surface singularities above bad primes.
+5. If the separate embedded-resolution input of Section 11.4 is also assumed, blow up so cusp closures are disjoint regular horizontal divisors meeting the fiber transversely.
 
-The resulting object is a regular proper, indeed projective, arithmetic surface carrying the same generic modular curve and the prescribed smooth model over $U$. It is enough for extending rational functions, maps to Jacobians, degeneracy maps after graph resolution, and special-fiber calculations. One must not claim that normalization alone makes it regular, or that regularity makes every bad fiber smooth.
+Assuming SR2, the resulting object is a regular proper, indeed projective, arithmetic surface carrying the same generic modular curve and the prescribed smooth model over $U$. It is enough for extending rational functions, maps to Jacobians, degeneracy maps after graph resolution, and special-fiber calculations. Without SR2 the construction stops at the normal projective model. One must not claim that normalization alone makes it regular, or that regularity makes every bad fiber smooth.
 
-Fine level structures may exist only after a faithfully flat extension of the base. Construct the polarized model there, retain the descent datum through normalization where geometric normality permits, and descend using Book 10. At primes where the group action has fixed points, the coarse quotient can be normal but singular. Resolve the quotient surface after descent; regularity upstairs does not eliminate quotient singularities downstairs.
+Fine level structures may exist only after a faithfully flat extension of the base. Construct the polarized model there, retain the descent datum through normalization where geometric normality permits, and descend using Book 10. At primes where the group action has fixed points, the coarse quotient can be normal but singular. Assuming SR2, resolve the quotient surface after descent; regularity upstairs does not eliminate quotient singularities downstairs.
 
 ### 12.3 Shimura curves
 
-Compact Shimura curves have no cusps, so no boundary divisor must be added. Their integral models nevertheless acquire bad fibers at primes connected with the discriminant or level. Over the good open, the moduli construction is smooth and proper. Theorem 12.1 extends it to a regular projective arithmetic surface without changing that open.
+Compact Shimura curves have no cusps, so no boundary divisor must be added. Their integral models nevertheless acquire bad fibers at primes connected with the discriminant or level. Over the good open, the moduli construction is smooth and proper. Conditional Theorem 12.1 extends it to a regular projective arithmetic surface without changing that open.
 
-The distinction between a fine moduli cover and its coarse quotient is again essential. A finite group acting on a regular surface can have isolated fixed points; the quotient is finite and normal under the standard tame hypotheses but can fail to be regular. Its singularities are two-dimensional quotient singularities and are resolved by the normalized blowup procedure.
+The distinction between a fine moduli cover and its coarse quotient is again essential. A finite group acting on a regular surface can have isolated fixed points; the quotient is finite and normal under the standard tame hypotheses but can fail to be regular. Assuming SR2, its two-dimensional quotient singularities admit a projective resolution. The elementary normalized-blowup discussion alone does not prove that the procedure terminates.
 
-For quaternionic or PEL constructions defined after a finite extension of the reflex field, use the normalized Dedekind base. A descent datum plus a polarization descends the projective model. If ramification has introduced singularities, normalize and resolve after the descent or on a common equivariant domination. The output required for curve-level arguments is a regular proper curve model, not a smooth integral moduli space at every bad prime.
+For quaternionic or PEL constructions defined after a finite extension of the reflex field, use the normalized Dedekind base. A descent datum plus a polarization descends the projective model. If ramification has introduced singularities, normalize and, assuming SR2, resolve after the descent or on a common equivariant domination. The output required for curve-level arguments is a regular proper curve model, not a smooth integral moduli space at every bad prime.
 
 ### 12.4 Semistable reduction input
 
-Suppose a finite separable extension $K'/K$ has been chosen and a projective semistable model has been supplied over an open $V\subseteq S'$, where $S'$ is the normalization of $S$ in $K'$. The model can be extended without changing its semistable locus as follows.
+Suppose a finite separable extension $K'/K$ has been chosen and a projective semistable model has been supplied over an open $V\subseteq S'$, where $S'$ is the normalization of $S$ in $K'$. Assuming SR2, the model can be extended without changing its semistable locus as follows.
 
-Apply Theorem 12.1 with the supplied model over $V$, and resolve only outside $V$. At every node the completed local equation is
+Apply the conditional Theorem 12.1 with the supplied model over $V$, and use SR2 only outside $V$. At every node the completed local equation is
 
 $$
 \widehat{\mathcal O}_{\mathcal X,x}
 \simeq \widehat R'[[x,y]]/(xy-\pi'),
 $$
 
-possibly after an étale extension. This ring is regular, so resolution does not alter it. Marked sections can be separated from the nodes by point blowups. Contract rational components that meet the remainder and markings in too few points if a stable rather than a regular semistable model is desired.
+possibly after an étale extension. This ring is regular, so SR2 leaves it unchanged. Separating marked sections from the nodes and making the boundary transverse requires the embedded-resolution input isolated in Section 11.4. Contract rational components that meet the remainder and markings in too few points if a stable rather than a regular semistable model is desired.
 
 This statement deliberately starts from an algebraic model over an open subscheme. A model known only over completed local rings does not automatically algebraize or glue: compatible algebraic descent data, or a separate approximation and algebraization theorem, must first supply the model over an open of $S'$. Common domination compares algebraic models once they exist; it is not a substitute for that algebraization step.
 
@@ -913,11 +908,11 @@ $$
 \Gamma_f\subset X\times_SY
 $$
 
-is proper over both factors. Normalize the graph and resolve it to obtain a regular surface $Z$ with morphisms to both models.
+is proper over both factors. Normalize the graph and, assuming SR2, resolve it to obtain a regular surface $Z$ with morphisms to both models.
 
-The universal property of normalization factors a morphism from a normal source through a normalization once that morphism already exists. It does not remove codimension-two indeterminacy of a rational map: for example, the rational map $\mathbf A^2\dashrightarrow\mathbf P^1$ given by $[x:y]$ is undefined at the origin although the source is normal. Thus the graph construction is essential. After resolving the normalized graph, the two projections are honest proper morphisms. Finiteness on the generic fiber still does not imply that either projection is finite, because it may contract vertical curves. Passing to the Stein factor—the spectrum of the direct image of the structure sheaf—separates a connected-fiber contraction from a finite map.
+The universal property of normalization factors a morphism from a normal source through a normalization once that morphism already exists. It does not remove codimension-two indeterminacy of a rational map: for example, the rational map $\mathbf A^2\dashrightarrow\mathbf P^1$ given by $[x:y]$ is undefined at the origin although the source is normal. Thus the graph construction is essential. Assuming SR2, resolving the normalized graph makes the two projections honest proper morphisms. Without SR2, normalization alone leaves this regular-domination claim unproved. Finiteness on the generic fiber still does not imply that either projection is finite, because it may contract vertical curves. Passing to the Stein factor—the spectrum of the direct image of the structure sheaf—separates a connected-fiber contraction from a finite map.
 
-For a correspondence, keep both projections from the normalized graph. A common regular domination makes their compositions honest. Later intersection and cohomological theories may act with the correspondence even if neither projection is a morphism between preselected minimal models. This is why domination, rather than forced functoriality of minimal models, is the robust construction.
+For a correspondence, keep both projections from the normalized graph. Conditional on SR2, a common regular domination makes their compositions honest. Later intersection and cohomological theories may act with the correspondence even if neither projection is a morphism between preselected minimal models. This is why domination, rather than forced functoriality of minimal models, is the robust construction.
 
 ## 13. Synthesis
 
@@ -933,7 +928,7 @@ The main properties and their exact uses can now be read without ambiguity.
 | smooth over $S$ | flatness and geometrically regular fibers | properness |
 | Japanese domain | finite integral closure in finite field extensions | stability for all prime quotients |
 | Nagata scheme | finite normalization for finite-type schemes | surface resolution by itself |
-| excellent scheme | Nagata finiteness, good formal fibers, open regular locus, surface resolution | smooth reduction |
+| excellent scheme | Nagata finiteness, good formal fibers, open regular locus, the hypotheses required by SR2 | a proof of SR2 or smooth reduction |
 | proper morphism | valuative extension and universal closedness | a chosen projective embedding |
 | projective morphism | properness plus an ample polarization | regularity or normality |
 | flat over a Dedekind base | no vertical torsion and well-behaved fibers | reduced special fibers |
@@ -954,7 +949,7 @@ is regular but not smooth at the node of its special fiber; and a purely insepar
 
 ### 13.2 The construction pipeline
 
-Starting with $C/K$, the reusable sequence is
+Starting with $C/K$, the reusable sequence, conditional at its final arrow, is
 
 $$
 \begin{array}{ccccc}
@@ -963,27 +958,27 @@ C&\subset&\mathbf P^N_K&&\\
 &&X_0&\text{projective closure}&\\
 &&\uparrow\ \text{finite}&&\\
 &&X_1&\text{normalization}&\\
-&&\uparrow\ \text{projective birational}&&\\
-&&\mathcal X&\text{regular model}.&
+&&\uparrow\ \text{projective birational (SR2)}&&\\
+&&\mathcal X&\text{regular model, conditional on SR2}.&
 \end{array}
 $$
 
-The arrows point from the improved model to the previous one. If a finite extension $K'/K$ is made, repeat normalization and resolution after base change. If positive genus calls for a canonical endpoint, contract all vertical exceptional curves to obtain $\mathcal X_{\min}$. If semistability is desired, a separate semistable-reduction input supplies the field extension and nodal model; the present machinery then gives its regular and minimal incarnations.
+The arrows point from the improved model to the previous one. If a finite extension $K'/K$ is made, repeat normalization and, assuming SR2, resolution after base change. If positive genus calls for a canonical endpoint, the conditional regular model is the starting point for contracting vertical exceptional curves to obtain $\mathcal X_{\min}$. If semistability is desired, a separate semistable-reduction input supplies the field extension and nodal model; SR2 then supplies its regular incarnation.
 
 At every stage there is a simple diagnostic question.
 
 1. Are unwanted vertical components present? Take schematic closure or remove base torsion.
 2. Are integral functions missing or branches glued? Normalize.
-3. Are closed surface points still singular? Resolve by normalized blowups.
-4. Has ramified base change spoiled normality or regularity? Normalize and resolve again.
+3. Are closed surface points still singular? Invoke SR2; normalized blowups alone do not prove termination.
+4. Has ramified base change spoiled normality or regularity? Normalize and, conditional on SR2, resolve again.
 5. Are there superfluous exceptional curves? Contract them when positive-genus minimality warrants it.
 
 Confusing these repairs is the source of many false shortcuts. Each answers a different defect.
 
 ### 13.3 Conclusion
 
-An arithmetic curve has two lives. Generically it is a smooth projective one-dimensional variety; integrally it is a two-dimensional space whose vertical geometry records reduction. Projective closure connects the two lives but introduces defects. Normalization repairs the integral structure finitely because the bases in arithmetic geometry are excellent. Surface resolution replaces isolated normal singularities by controlled vertical curves and terminates because multiplicity, tangent data, and conductor complexity cannot decrease forever.
+An arithmetic curve has two lives. Generically it is a smooth projective one-dimensional variety; integrally it is a two-dimensional space whose vertical geometry records reduction. Projective closure connects the two lives but introduces defects. Normalization repairs the integral structure finitely because the bases in arithmetic geometry are excellent. Passing from the resulting normal surface to a regular one requires SR2; the multiplicity, tangent-cone, and conductor ideas mentioned in Chapter 8 motivate proofs of that theorem but do not establish it here.
 
-The result is the precise geometric platform used later: regular proper models preserving prescribed good loci, compatible common dominations for maps and correspondences, controlled behavior under finite extension, and minimal regular models in positive genus. Horizontal divisors retain generic points and markings; vertical components encode extensions of valuations and bad reduction. Regularity of the total surface and singularity of the fiber coexist without contradiction, while smoothness and semistability remain appropriately stronger relative conditions.
+Unconditionally, this volume supplies finite normalization and normal projective models with controlled behavior under finite extension. Conditional on SR2, it also supplies regular proper models preserving prescribed good loci and compatible regular dominations for maps and correspondences; the later minimal-model conclusions begin from those conditional regular models. Horizontal divisors retain generic points and markings; vertical components encode extensions of valuations and bad reduction. Regularity of the total surface and singularity of the fiber coexist without contradiction, while smoothness and semistability remain appropriately stronger relative conditions.
 
 This separation of roles is the durable lesson. Normal, regular, smooth, excellent, Nagata, proper, and projective are not competing descriptions of one good object. They are distinct tools, and arithmetic curves become manageable only when each is invoked for exactly the work it performs.
