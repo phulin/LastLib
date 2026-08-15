@@ -1975,20 +1975,93 @@ $$
 
 in which $A$ and $B$ are cohomologically trivial for every subgroup.
 
-Choose a finite free $\mathbf Z[G]$-module $B$ surjecting onto $X$ and write $K$ for
-its kernel. Represent $\alpha$ by $0\to U\to A\to K\to0$. The long exact Tate
+Choose a $\mathbf Z$-basis $x_1,\ldots,x_m$ of $X$ and set
+
+$$
+P_0(X)=\bigoplus_{i=1}^m\mathbf Z[G]e_i,qquad
+\epsilon_X(ge_i)=gx_i,qquad K_1=\ker\epsilon_X.          \tag{4.T1a}
+$$
+
+Choose a finite $\mathbf Z[G]$-free module $P_1(X)$ mapping onto $K_1$, write
+$d_1:P_1(X)\to P_0(X)$ and $K_2=\ker d_1$. A representative of $\alpha$ is a
+$G$-map $\phi:K_2\to U$, modulo maps extending to $P_1(X)$. Define
+
+$$
+A_\phi=(U\oplus P_1(X))/
+ \langle(\phi(z),-z):z\in K_2\rangle,qquad B=P_0(X),     \tag{4.T1b}
+$$
+
+with $U\to A_\phi$, $u\mapsto[u,0]$, and
+$A_\phi\to B$, $[u,p]\mapsto d_1p$. The relation in (4.T1b) lies in the
+kernel of this last map, so the arrows compose to zero. Conversely
+$d_1p=0$ means $p=z\in K_2$ and $[u,z]=[u+\phi(z),0]$;
+this proves exactness at $A_\phi$. Exactness at $B$ is
+$\operatorname {im}d_1=K_1=\ker\epsilon_X$, and the first map is injective
+because $P_1(X)$ is free as an abelian group. Thus (4.T1b), followed by
+$\epsilon_X$, is an explicit representative of (4.T1), rather than an
+appeal to an unspecified envelope.
+
+The long exact Tate
 sequences identify the twofold connecting map
 $\widehat H^r(H,X)\to\widehat H^{r+2}(H,U)$ with cap product by
 $\alpha$. For each $r$, exactness on both sides of this isomorphism gives
-$\widehat H^{r+1}(H,A)=0$. Thus $A$ is cohomologically trivial in every
-degree and for every subgroup; $B$ is free and has the same property. This
+$\widehat H^{r+1}(H,A_\phi)=0$. Thus $A_\phi$ is cohomologically trivial in every
+degree and for every subgroup; $B$ is free and has the same property. On a
+free summand $\mathbf Z[H]$, the augmented homogeneous bar complex is
+contracted by insertion of $1$,
+
+$$
+s[h_0|\cdots|h_q]=[1|h_0|\cdots|h_q],\qquad
+\partial s+s\partial=1.                                  \tag{4.T1c}
+$$
+
+After choosing left-coset representatives, restriction of $\mathbf Z[G]$ to
+$H$ is a direct sum of such summands, so (4.T1c) is the promised explicit
+contraction for $B$. This
 proves the lemma. Notice the indexing: two isolated connecting isomorphisms
 would kill only the intervening Tate groups. We use the all-degree
 class-formation isomorphism (4.I5), so no two-degree shortcut is needed.
 
+We now construct the class to which the envelope lemma is applied. Let
+$P_q(G)=\mathbf Z[G^{q+1}]$ be the homogeneous bar module, with
+
+$$
+\partial[g_0|\cdots|g_q]
+=\sum_{i=0}^q(-1)^i[g_0|\cdots|\widehat g_i|\cdots|g_q]. \tag{4.T2bar}
+$$
+
+Splice this augmented resolution to its $\mathbf Z$-dual to obtain the
+complete bar resolution $\widehat P_\bullet(G)$. At the splice the maps are
+augmentation and norm; (4.T2bar) and the dual formula make two consecutive
+maps compose to zero. For a $G$-module $M$ write
+$\widehat C^q(G,M)=\operatorname {Hom}_G(\widehat P_q(G),M)$.
+Restriction is substitution of $H$-bar generators. If $G=\coprod_{t\in T}Ht$
+and $tg=h(t,g)t(t,g)$, corestriction is
+
+$$
+(\operatorname {cor}f)[g_0|\cdots|g_q]
+=\sum_{t\in T}t^{-1}f[h(t,g_0)|\cdots|h(tg_0\cdots g_{q-1},g_q)].          \tag{4.T2tr}
+$$
+
+Regrouping the sum for two nested coset decompositions proves transitivity;
+applying (4.T2bar) proves $d\operatorname {cor}=\operatorname {cor}d$ term
+by term. These are the restriction and transfer maps used below.
+
 For each $G$-orbit in $S_L$, choose $w$ and the normalized local fundamental
 two-extension for $L_w/K_v$. Induce it from $D_w$ to $G$ and sum over the
-orbits. Choose the normalized bar representative $f_w$ of each local class and
+orbits. More explicitly, represent the local class by a
+$D_w$-map $\phi_w:K_2(\mathbf Z)\to L_w^\times$ in the construction
+(4.T1a)--(4.T1b), and induce every displayed module and arrow. Thus the local
+middle modules are
+
+$$
+\operatorname {Ind}_{D_w}^G A_{\phi_w},\qquad
+\operatorname {Ind}_{D_w}^G P_0(\mathbf Z),              \tag{4.T2loc}
+$$
+
+and their differentials are respectively
+$[a,p]\mapsto d_1p$ and augmentation. Choose the corresponding normalized
+bar representative $f_w$ and
 write
 
 $$
@@ -2006,52 +2079,116 @@ $$
 \in\bigoplus_{v\in S_K}H^2(D_w,L_w^\times).              \tag{4.T2}
 $$
 
-We make the gluing cochain explicit. Let $f_{\rm glob}$ be the normalized bar
-cocycle representing the class (4.I3), let
+We make the gluing cochain explicit. Under (4.I2), choose the normalized bar
+cocycle $f_{\rm id}\in Z^2(G,I_L)$ whose $v$-coordinate is the induced local
+fundamental cocycle for $v\in S_K$ and zero off $S_K$; this is a finite sum.
+Let
 $\iota:J_S\to I_L$ be coordinate inclusion, and let
 $\varepsilon:Y_S\to\mathbf Z$ be augmentation. Under the bar comparison maps,
 (4.I10) says
 
 $$
-[\iota f_S]=[f_{\rm glob}\varepsilon].
+[\iota f_S]=[f_{\rm id}\varepsilon].
 $$
 
 Therefore their difference is a coboundary. Choose a bar one-cochain $h_S$
 with
 
 $$
-d h_S=\iota f_S-f_{\rm glob}\varepsilon.                  \tag{4.T2b}
+d h_S=\iota f_S-f_{\rm id}\varepsilon.                    \tag{4.T2b}
 $$
 
 No existence theorem is hidden here: equality is precisely the
-restriction/corestriction normalization proved in (4.I10). Form the double
-mapping cone of (4.T2a), the valuation sequence
+restriction/corestriction normalization proved in (4.I10). We spell out the
+double-cone convention before using it. For cochain maps
+$C\xrightarrow{f}D\xrightarrow{g}E$ and a degree $-1$ map $h:C\to E$ satisfying
+
+$$
+d_Eh+hd_C=-gf,                                           \tag{4.T2c0}
+$$
+
+put
+
+$$
+\operatorname {DC}(f,g,h)^q=E^q\oplus D^{q+1}\oplus C^{q+2},
+$$
+
+with
+
+$$
+\delta(e,d,c)=(d_Ee+gd+hc,-d_Dd+fc,d_Cc).               \tag{4.T2c}
+$$
+
+All three coordinates in (4.T2c) now have specified source and target.
+Direct substitution gives
+
+$$
+\delta^2(e,d,c)=((d_Eh+hd_C+gf)c,0,0)=0.                \tag{4.T2c'}
+$$
+
+Changing $h$ to $-h_S$ turns (4.T2b) into (4.T2c0). Apply this construction
+first to the bar complexes of the induced local extension (4.T2a) and the
+idelic extension, with endpoint maps $\iota$ and $\varepsilon$. Apply it a
+second time to the valuation complex
 
 $$
 0\to U_{L,S}\to L^\times\to
 \bigoplus_{w\notin S_L}\mathbf Z[w]\to0,
 $$
 
-and $1\to L^\times\to I_L\to C_L\to1$. Its differential has the standard
-matrix
+and $1\to L^\times\to I_L\to C_L\to1$. Concretely, every module in the
+resulting total complex is a direct sum of terms of the following list:
 
 $$
-d_{\rm cone}(x,y,z)=
-\bigl(d x,\ \iota x-dy,\ h_Sx+f_{\rm glob}z+dz\bigr),     \tag{4.T2c}
+\widehat C^r(G,J_S),\ \widehat C^r(G,E_{S,1}),\
+\widehat C^r(G,E_{S,0}),\ \widehat C^r(G,Y_S),\
+\widehat C^r(G,L^\times),\
+\widehat C^r\!\left(G,\bigoplus_{w\notin S_L}\mathbf Z[w]\right),\
+\widehat C^r(G,I_L),\ \widehat C^r(G,C_L),\
+\widehat C^r(G,\mathbf Z),                              \tag{4.T2d}
 $$
 
-with the signs changed simultaneously if homological grading is used.
-Equation (4.T2b) is exactly the assertion $d_{\rm cone}^2=0$. The kernel at
-the left endpoint is $U_{L,S}$ and the cokernel at the right endpoint is
-$X_S=\ker(Y_S\to\mathbf Z)$; the two middle homology groups vanish by the
-valuation and idele rows. Thus truncating the double cone gives a two-extension
+and its differential is the diagonal bar differential (4.T2bar), the
+horizontal maps displayed in the three exact rows, and the off-diagonal maps
+$\iota,\varepsilon,-h_S$, with precisely the signs in (4.T2c). Thus (4.T2d)
+is a typed description of every module and differential of the double cone.
+
+We also verify its endpoints rather than appeal to a picture. In the
+valuation row, a vector outside $S_L$ has a principal preimage because the
+$S_L$-class group is zero, so its only left homology is
+$\ker(L^\times\to\bigoplus_{w\notin S_L}\mathbf Z[w])=U_{L,S}$.
+In $Y_S\xrightarrow\varepsilon\mathbf Z$, the only left homology is
+$\ker\varepsilon=X_S$. The idelic row is exact by the definition of $C_L$,
+and (4.T2a) is exact by (4.T1b) and induction. Filter the double cone by its
+three columns. The associated quotients are these four exact rows, except for
+the two endpoint kernels just computed; hence the two middle homology groups
+vanish and the endpoints are exactly $U_{L,S}$ and $X_S$. Truncating gives a
+two-extension
 and hence a class
 
 $$
 \tau_{L/K,S}\in\operatorname {Ext}^2_{\mathbf Z[G]}(X_S,U_{L,S})             \tag{4.T3}
 $$
 
-mapping to the local classes and the valuation extension.
+mapping to the local classes and the valuation extension. To obtain the
+modules promised in (TS1), lift the right-end projection of this truncation
+through $P_0(X_S)$ and $P_1(X_S)$ of (4.T1a). The equation $\delta^2=0$
+gives a $G$-map
+
+$$
+\phi_S:K_2(X_S)\longrightarrow U_{L,S}.                 \tag{4.T3a}
+$$
+
+Then, without a further extension choice,
+
+$$
+A_S=(U_{L,S}\oplus P_1(X_S))/
+ \langle(\phi_S(z),-z):z\in K_2(X_S)\rangle,
+\qquad B_S=P_0(X_S),                                    \tag{4.T3b}
+$$
+
+and $i_S(u)=[u,0]$, $d_S[u,p]=d_1p$, $p_S=\epsilon_{X_S}$.
+The calculation after (4.T1b) proves all four exactness assertions in (TS1).
 
 The choice of $h_S$ does not create an ambiguity. If $h'_S$ is another choice,
 $h'_S-h_S$ is a one-cocycle in the Hom total complex. Its class is the
@@ -2060,6 +2197,15 @@ in $H^1(G,C_L)$, which is zero by (4.I4); subtracting the resulting
 zero-cochain gives an isomorphism of the two mapping cones. The same argument
 shows uniqueness of the lift. Thus “base-place normalization” has been
 replaced by an actual kernel computation.
+
+Explicitly, after writing $h'_S-h_S=d_Ek+kd_C$, the map
+
+$$
+(e,d,c)\longmapsto(e-kc,d,c)                             \tag{4.T3c}
+$$
+
+intertwines the two differentials (4.T2c); its inverse uses $+kc$. This is
+the comparison homotopy used below.
 
 We verify the hypothesis of the envelope lemma. Restrict to $H\subseteq G$ and
 put $E=L^H$. Mackey decomposition changes the induced local modules into the
@@ -2079,7 +2225,8 @@ isomorphism in every degree by (4.I5). Apply the long exact Tate sequences to
 five-term diagram are isomorphisms, so the kernel--cokernel chase makes the
 middle vertical map an isomorphism. These middle maps are precisely cap
 product with $\operatorname {res}^G_H\tau_{L/K,S}$. Since this holds for all
-$r$, the envelope lemma produces (TS1) and proves (TS2).
+$r$, the envelope lemma applied to the already specified (4.T3b) proves
+(TS2).
 
 Projection to a local summand in (4.T2) is a morphism of the bar two-extensions,
 so (TS4) holds as a diagram, not merely as equality of classes. If
@@ -2093,13 +2240,22 @@ of those for $S'_L/S_L$ and $S''_L/S'_L$. The comparison maps are therefore
 strictly transitive up to the displayed homotopy, and they commute with every
 local projection.
 
-Finally retain the other truncation of the same double cone (4.T2c): quotient
-its left endpoint by $L^\times$, so it becomes $C_L$, and push its right
-endpoint through $Y_S\to\mathbf Z$. The kernel--image calculation in each
-column gives (TS5); this is the explicit three-by-three diagram to which the
-nine lemma applies. Its middle terms are extensions of the envelope modules
-and the induced terms in (4.T2a), hence are cohomologically trivial by their
-long exact Tate sequences.
+For the other truncation, the same total complex gives a representative
+$\phi_{L/K}:K_2(\mathbf Z)\to C_L$ of the spliced class. Define
+
+$$
+A_{L/K}=(C_L\oplus P_1(\mathbf Z))/
+ \langle(\phi_{L/K}(z),-z):z\in K_2(\mathbf Z)\rangle,
+\qquad B_{L/K}=P_0(\mathbf Z),                            \tag{4.T5a}
+$$
+
+with arrows $c\mapsto[c,0]$, $[c,p]\mapsto d_1p$, and augmentation
+$P_0(\mathbf Z)\to\mathbf Z$. The calculation following (4.T1b) proves
+exactness of (TS5), including both endpoints. Cap product with its class is
+(4.I5), so the envelope lemma proves that $A_{L/K}$ is cohomologically
+trivial on every subgroup; $B_{L/K}$ is contracted after restriction by
+(4.T1c). Thus cohomological triviality of the specified middle terms is
+proved directly.
 
 Restriction to $H$ replaces every induced module, by the Mackey formula, with
 the direct sum over the places of $E=L^H$. Restricting (4.T2b) gives the
@@ -2110,6 +2266,23 @@ branches is the complementary index; grouping the double cosets gives
 $$
 \operatorname {inv}_E(\operatorname {res}^G_Hu_{L/K})=1/|H|.
 $$
+
+At chain level this uses substitution for restriction and (4.T2tr) for
+corestriction. If $H\subseteq H'\subseteq G$, grouping the $H$-cosets inside
+the $H'$-cosets gives
+
+$$
+\operatorname {cor}_{H'}^G\operatorname {cor}_H^{H'}
+=\operatorname {cor}_H^G,
+\qquad
+\operatorname {cor}_H^G(x\smile\operatorname {res}_H^Gy)
+=\operatorname {cor}_H^G(x)\smile y.                    \tag{4.T5b}
+$$
+
+The first equality is literal equality of the sums (4.T2tr); the second
+follows by moving $y$ through each summand using (4.C3). Thus the restricted
+and transferred representatives compare by (4.T3c), transitively in subgroup
+towers.
 
 This proves (TS7), independence of $S_L$, and compatibility in subgroup towers.
 $\square$
