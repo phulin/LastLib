@@ -32,10 +32,11 @@ manuscript and distinguishes it from optional stronger conclusions.
 
 3. **Ramification Theory** — Build the finer structure of ramified extensions needed for Galois
    representations. Cover tame and wild ramification, lower and upper filtrations, Herbrand
-   functions, the different, discriminant exponents, and ramification of towers. Isolate the local
-   Dold congruence and integral Brauer-induction theorem as explicit prerequisites; the Hasse--Arf,
-   integral Artin/Swan conductor, and conductor--discriminant conclusions that use them are
-   conditional. The rational fixed-space and ramification formulas remain unconditional.
+   functions, the different, discriminant exponents, and ramification of towers. The cyclic
+   ramification-number congruence and the integral Brauer-induction theorem are proved in the
+   manuscript, so the Hasse--Arf theorem, integral Artin/Swan conductors, and the
+   conductor--discriminant identities are unconditional under the explicit residue-separability
+   and perfectness hypotheses the book tracks chapter by chapter.
 
 4. **Adeles and Ideles** — Develop finite and full adeles and ideles as restricted products over the places of a number
    field. Study their topologies, diagonal embeddings, compactness theorems, idele class groups,
@@ -43,18 +44,18 @@ manuscript and distinguishes it from optional stronger conclusions.
    supports both global reciprocity and automorphic forms.
 
 5. **Local Class Field Theory** — Give a systematic account of reciprocity for nonarchimedean local fields. Construct the
-   local invariant and cyclic norm-index calculation. Conditional on the explicitly isolated
-   finite-group Tate-cohomology and exact Herbrand norm-filtration inputs, construct the local
-   Artin map, calculate it on uniformizers and units, prove functoriality, characterize norm
-   subgroups, establish the existence theorem, and classify continuous one-dimensional characters.
+   local invariant and cyclic norm-index calculation. The finite-group Tate-cohomology machinery
+   and the exact Herbrand norm-filtration comparison are developed inside the manuscript, so the
+   book unconditionally constructs the local Artin map, calculates it on uniformizers and units,
+   proves functoriality, characterizes norm subgroups, establishes the existence theorem, and
+   classifies continuous one-dimensional characters.
 
 6. **Global Class Field Theory** — Develop the idelic architecture of global reciprocity and its
-   compatibility with local reciprocity. Finite reciprocity and existence are conditional on the
-   explicitly isolated finite Artin--Verdier duality and canonical $S$-unit-sequence inputs (as
-   well as the marked inherited local inputs). Treat ray groups, Frobenius, and Hecke characters;
-   the rank-one Hodge--Tate criterion is separately conditional on the stated Tate--Sen and
-   Lubin--Tate comparison package. Develop the normalized Brauer-invariant formalism used by these
-   conditional deductions.
+   compatibility with local reciprocity. The finite Artin--Verdier duality theorem, the canonical
+   $S$-unit sequence, and the rank-one Tate--Sen/Lubin--Tate comparison are proved in the
+   manuscript, so finite reciprocity, the existence theorem, and the rank-one Hodge--Tate
+   criterion are unconditional. Treat ray groups, Frobenius, and Hecke characters, and develop
+   the normalized Brauer-invariant formalism these deductions use.
 
 7. **Analytic Foundations for Odlyzko--Poitou Bounds** — Develop completed Dedekind zeta
    functions, explicit formulas with admissible test functions, archimedean gamma estimates, and
@@ -65,35 +66,40 @@ manuscript and distinguishes it from optional stronger conclusions.
 8. **Ample Line Bundles, Hilbert Polynomials, and Symmetric Powers** — Starting from relative
    Proj and the elementary theory of projective morphisms, develop ample and very ample line
    bundles, descent of very ampleness, Hilbert polynomials, and projective embeddings for curves and
-   abelian schemes. Isolate projective flattening stratification and the bounded
-   Macaulay--Gotzmann package as prerequisites for the corresponding conditional results. Prove
-   symmetric-power representability for smooth curves by the independent divisor construction;
-   general fixed-polynomial Hilbert representability is conditional on the bounded package.
+   abelian schemes. Projective flattening stratification and the bounded Macaulay--Gotzmann
+   package are proved in the manuscript, so fixed-polynomial Hilbert representability and
+   symmetric-power representability for smooth curves are unconditional given the book's
+   cohomological background; the quasi-coherent sheaf-cohomology formalism its cohomological
+   chapters consume is currently assumed background not yet developed in an earlier volume.
 
 9. **Divisors, Riemann--Roch, and Duality on Relative Curves** — Develop Cartier and Weil
    divisors, line bundles, degrees in families, residues, and the Euler-characteristic form of
-   Riemann--Roch for smooth and nodal curves. The dualizing-sheaf, perfect Serre-duality, relative
-   duality, and arbitrary-base-change conclusions are conditional on the explicitly stated
-   curve-duality and perfect-pushforward packages. Conclude with the resulting conditional divisor
-   and differential interfaces used later.
+   Riemann--Roch for smooth and nodal curves. The dualizing sheaf, perfect Serre duality,
+   relative duality, and arbitrary-base-change theorems are proved in the manuscript; the
+   étale-local nodal normal form and simultaneous normalization are stated only as flagged
+   external interfaces and are verifiably unused by the book's results. Conclude with the
+   divisor and differential interfaces used later.
 
 10. **Faithfully Flat Descent in Algebraic Geometry** — Prove effective fpqc descent for
    modules, algebras, finite projective objects, affine and finite schemes, quasi-coherent sheaves,
-   line bundles, and finite-flat group objects. Isolate unrestricted algebraic-space descent as an
-   explicit prerequisite, and recover schemes only under the proved affine, finite, quasi-affine,
-   or compatible-polarization criteria needed by the moduli constructions.
+   line bundles, and finite-flat group objects. Recover schemes under the proved affine, finite,
+   quasi-affine, separated locally-quasi-finite, and compatible-polarization criteria needed by
+   the moduli constructions, and show why unrestricted scheme-level effectivity is deliberately
+   not asserted; no descent statement beyond the proved cases is assumed.
 
 11. **Normalization and Regular Models of Arithmetic Curves** — Prove the required finiteness
    of normalization and construct normal projective models of curves over excellent Dedekind
-   schemes. The regular-model package is conditional on the stated resolution theorem for
-   excellent surfaces; contraction and minimal-model conclusions use their separately identified
-   surface-theoretic inputs. Blowups are asserted to commute with flat, not arbitrary, base change.
+   schemes. Two-dimensional resolution of singularities for excellent surfaces is proved in the
+   manuscript by the Lipman-style argument, and the contraction, minimal-model, and factorization
+   theorems are unconditional; only the semistable-reduction input of the procedural applications
+   chapter remains a declared external interface. Blowups are asserted to commute with flat, not
+   arbitrary, base change.
 
 12. **Blowups and Intersection Theory on Arithmetic Surfaces** — Develop blowups, strict
    transforms, local intersection multiplicities, projection formulas, fiber intersection
    matrices, and component pairings on regular arithmetic surfaces. The adjunction and canonical
-   divisor package is conditional on Book 9's curve-duality input, while the resolution package is
-   conditional on Book 11's surface-resolution input. The scope is not general
+   divisor package rests on Book 9's proved duality theorems, and the resolution package on
+   Book 11's proved surface resolution, so neither is conditional. The scope is not general
    higher-dimensional intersection theory.
 
 14. **Arithmetic Spectral Sequences and Derived Cohomology** — Starting from the general

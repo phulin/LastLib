@@ -15,13 +15,22 @@ collection are not represented by invented book nodes; their relationship to the
 theorem is explained after the table.
 
 An edge records where a manuscript result is routed; it does not erase an unresolved hypothesis
-that the source manuscript itself labels. In particular, Book 3 retains its local-Dold and
-integral-Brauer-induction inputs; Books 5--6 retain their marked Tate-cohomology, norm-filtration,
-finite-duality, canonical-$S$-unit, and rank-one Tate--Sen/Lubin--Tate inputs; Book 8 retains its
-projective-flattening and bounded Macaulay--Gotzmann inputs; Book 9 retains its curve-duality and
-perfect-pushforward inputs; and Books 11--12 retain the stated surface-resolution, contraction,
-and inherited duality inputs. These interfaces are not silently assigned to `MATHLIB`, and the
-chronological rows below do not turn their conditional conclusions into unconditional ones.
+that the source manuscript itself labels. The conditional interfaces formerly labeled in Books 3,
+5--6, 8, 9, 11, and 12 (local-Dold congruence and integral Brauer induction; Tate-cohomology,
+norm-filtration, finite Artin--Verdier duality, canonical-$S$-unit, and rank-one
+Tate--Sen/Lubin--Tate inputs; projective flattening and bounded Macaulay--Gotzmann; curve duality
+and perfect pushforward; surface resolution and contraction) have all since been discharged by
+in-manuscript proofs and are no longer conditional.
+
+The known background that remains undischarged in Books 8--12 — assumed in proofs but proved in
+no earlier book and absent from the local Mathlib checkout — is: the quasi-coherent
+sheaf-cohomology formalism assumed by Books 8 and 9 (developed only in the later Books 14--15);
+Hilbert's syzygy theorem and generic freeness in Book 8; Book 8's out-of-order use of effective
+descent of Cartier divisors (Book 10 material) in its universal-divisor construction; the Cohen
+coefficient-ring theorem and finite-type stability of excellence in Book 11; and the
+connected-fiber part of Stein factorization together with factoriality of regular local rings in
+Book 12. These interfaces are not silently assigned to `MATHLIB`, and the chronological rows
+below do not turn conclusions resting on them into unconditional ones.
 
 ## Preferred selected-three proof spine
 
@@ -42,14 +51,14 @@ flowchart LR
 |    1 | Valuations, DVRs, and Completions                                              | MATHLIB                                                                                                                                                           |
 |    2 | Finite Extensions of Local Fields                                              | 1                                                                                                                                                                 |
 |    3 | Ramification Theory                                                            | 2                                                                                                                                                                 |
-|    4 | Adeles and Ideles                                                              | MATHLIB                                                                                                                                                           |
+|    4 | Adeles and Ideles                                                              | 1, 2, 3, MATHLIB                                                                                                                                                  |
 |    5 | Local Class Field Theory                                                       | 1, 2                                                                                                                                                              |
-|    6 | Global Class Field Theory                                                      | 4, 5                                                                                                                                                              |
-|    7 | Analytic Foundations for Odlyzko--Poitou Bounds                                | MATHLIB                                                                                                                                                           |
+|    6 | Global Class Field Theory                                                      | 3, 4, 5                                                                                                                                                           |
+|    7 | Analytic Foundations for Odlyzko--Poitou Bounds                                | 3, MATHLIB                                                                                                                                                        |
 |    8 | Ample Line Bundles, Hilbert Polynomials, and Symmetric Powers                  | MATHLIB                                                                                                                                                           |
 |    9 | Divisors, Riemann--Roch, and Duality on Relative Curves                        | 1, 8, MATHLIB                                                                                                                                                     |
 |   10 | Faithfully Flat Descent in Algebraic Geometry                                  | 8, MATHLIB                                                                                                                                                        |
-|   11 | Normalization and Regular Models of Arithmetic Curves                          | 1, 8, 10                                                                                                                                                          |
+|   11 | Normalization and Regular Models of Arithmetic Curves                          | 1, 8, 9, 10                                                                                                                                                       |
 |   12 | Blowups and Intersection Theory on Arithmetic Surfaces                         | 9, 11                                                                                                                                                             |
 |   14 | Arithmetic Spectral Sequences and Derived Cohomology                           | MATHLIB                                                                                                                                                           |
 |   15 | Coherent Cohomology in Proper Families                                         | 8, 10, 14, MATHLIB                                                                                                                                                |
