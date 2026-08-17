@@ -261,6 +261,28 @@ def padicSevenInitialApproximation : ℤ_[7] :=
 def padicSevenFirstNewtonApproximation : ℤ_[7] :=
   3 - (7 : ℤ_[7]) * Ring.inverse (6 : ℤ_[7])
 
+/-- The initial residue `3` is a root of `X²-2` modulo `7`. -/
+theorem padicSeven_initial_residue_root :
+    (PadicInt.toZMod padicSevenInitialApproximation) ^ 2 =
+      PadicInt.toZMod (2 : ℤ_[7]) := by
+  change PadicInt.toZMod ((3 : ℕ) : ℤ_[7]) ^ 2 =
+    PadicInt.toZMod ((2 : ℕ) : ℤ_[7])
+  rw [map_natCast, map_natCast]
+  decide
+
+/-- The derivative at the initial approximation is the unit `6`. -/
+theorem padicSeven_initial_derivative_is_unit :
+    IsUnit (padicSevenPolynomial.derivative.eval padicSevenInitialApproximation) := by
+  have h6 : IsUnit (6 : ℤ_[7]) := by
+    apply PadicInt.isUnit_iff.mpr
+    exact PadicInt.norm_natCast_eq_one_iff.mpr (by decide)
+  have heval : padicSevenPolynomial.derivative.eval
+      padicSevenInitialApproximation = (6 : ℤ_[7]) := by
+    simp [padicSevenPolynomial, padicSevenInitialApproximation, quadraticPolynomial]
+    norm_num
+  rw [heval]
+  exact h6
+
 /-- The first Newton approximation agrees with `3-7/6`. -/
 theorem padicSeven_first_newton_formula :
     padicSevenFirstNewtonApproximation =
