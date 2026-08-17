@@ -319,6 +319,20 @@ theorem chapter10_finite_extension_is_complete
     CompleteSpace L := by
   exact FiniteDimensional.complete K L
 
+/-- The extended finite-extension norm is complete in the unbundled norm
+interface used by this chapter.  This is the source-facing bridge from the
+coordinate completion argument to the unique algebraic extension norm. -/
+theorem chapter10_finite_extension_extended_norm_complete
+    {K L ι : Type*} [NontriviallyNormedField K] [CompleteSpace K]
+    [Field L] [Algebra K L] [Fintype ι] [Nonempty ι]
+    [FiniteDimensional K L]
+    (b : Module.Basis ι K L) (N : AlgebraNorm K L)
+    (hN : Chapter10UniqueExtensionNormProperty N) :
+    ∀ s : ℕ → L,
+      Chapter10CauchyInNorm (N : L → ℝ) s →
+        ∃ x : L, Chapter10TendsToInNorm (N : L → ℝ) s x := by
+  sorry
+
 /--
 Uniqueness over an arbitrary algebraic extension.  The values are compared
 as real absolute values, so this statement does not silently fix a value
