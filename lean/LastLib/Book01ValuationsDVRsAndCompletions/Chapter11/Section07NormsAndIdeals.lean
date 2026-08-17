@@ -2365,11 +2365,13 @@ single chosen extension rather than the full normalization.  The explicit
 unique-extension and degree hypotheses are the numerical form of the
 branch-correspondence and defectlessness assumptions used above. -/
 
-/-- The norm valuation formula for a single normalized branch.
+/-- The norm valuation formula for a single discrete branch.
 
 The restriction factor `e`, residue degree `f`, uniqueness of the branch,
-and the degree equality are stated explicitly so this theorem can be used
-without reconstructing the finite normalization in every later chapter. -/
+and the degree equality are stated explicitly.  This standalone interface
+does not require the normalized branch-family and finite-normalization data
+used by the general formula, so later chapters can use it without
+reconstructing that data. -/
 theorem chapter11_single_branch_norm_valuation_formula
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] {vK : AddValuation K (WithTop ℤ)}
