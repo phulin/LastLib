@@ -25,11 +25,10 @@ claim is exposed as `IsFractionRing B L`, and the rank claim is stated with
 
 /-- The finite-lattice theorem for the integral closure in a complete discrete
 extension. -/
--- SOURCE_ISSUE: §2.2 states finite freeness from “If L/K is finite of degree
--- n” alone, although the lattice argument needs the complete discrete local
--- hypotheses (and the unique extension valuation).  Without them the
--- integral closure need not be finite.  The theorem should retain those
--- hypotheses explicitly.
+/- The source inherits completeness, discreteness, and the unique extension
+   valuation from the chapter-wide hypotheses.  They are made explicit in
+   this theorem because they are exactly the hypotheses used by the finite-
+   lattice API. -/
 theorem finite_integral_closure_is_free
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]

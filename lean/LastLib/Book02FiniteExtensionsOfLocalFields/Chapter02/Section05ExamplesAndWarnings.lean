@@ -27,7 +27,7 @@ def chapter2PowerRootPolynomial
     {A : Type*} [CommRing A] (π : A) (n : ℕ) : A[X] :=
   X ^ n - C π
 
-/-- A finite valued extension has a defect precisely when its degree is not `e f`. -/
+/-- The numerical defect condition for a single chosen valuation branch. -/
 def chapter2HasDefect (degree e f : ℕ) : Prop :=
   degree ≠ e * f
 

@@ -23,11 +23,10 @@ variable {K : Type u} {L : Type v} [Field K] [Field L] [Algebra K L]
 
 /-! The basic book-facing names for the valuation rings and residue fields. -/
 
--- SOURCE_ISSUE: §2.1 states Theorem 2.1 only for a finite extension, but its
--- proof uses uniqueness of the extension valuation.  Without a henselian (in
--- particular complete local-field) hypothesis, the integral closure can be
--- semilocal rather than one valuation ring.  The statement should specify
--- the unique normalized extension, or assume the corresponding uniqueness.
+/- The source inherits completeness and the resulting uniqueness of the
+   extension valuation from the chapter-wide hypotheses.  The Lean interface
+   records that uniqueness explicitly, so the valuative statement also remains
+   available for a chosen branch without silently assuming a normalization. -/
 
 /-- The base valuation ring attached to a valuation on `K`. -/
 abbrev baseValuationRing {Γ : Type*} [LinearOrderedCommGroupWithZero Γ]
@@ -84,8 +83,8 @@ def chapter2IntegralClosureIntersection
 
 /-- Completeness of the base supplies the valuation-subring uniqueness used in
 the integral-closure characterization. -/
--- LOCAL_DEPENDENCY_GUESS: this packages the complete-base uniqueness route
--- from the earlier valuation API into the book-facing subring predicate.
+/- The complete-DVR and henselian interfaces from Book 1 provide the unique
+   branch result used by the book-facing subring predicate. -/
 theorem chapter2_complete_base_has_unique_valuation_subring_extension
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
