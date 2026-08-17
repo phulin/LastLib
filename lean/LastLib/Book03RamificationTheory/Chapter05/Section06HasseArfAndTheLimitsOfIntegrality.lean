@@ -1289,48 +1289,6 @@ theorem chapter05_perfect_residue_p_squared_two_break_second_upper_integral
     T.twoBreak.p T.twoBreak.a T.twoBreak.b T.twoBreak.p_prime.pos
     T.twoBreak.a_lt_b hintegral
 
-/- The source's cyclic lemma is exposed separately so the abelian theorem can
-   reduce to cyclic quotients.  Its local Dold input is an explicit instance
-   parameter: the interface does not hide the imported congruence in the
-   conclusion. -/
-theorem chapter05_cyclic_hasse_arf_lemma
-    {K L : Type*} [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
-    (D : Chapter05LocalGaloisUpperData K L)
-    (hcyclic : IsCyclic (Gal(L / K)))
-    [Chapter05LocalDoldCongruenceInput]
-    [PerfectField (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)]
-    {b : ℕ}
-    (hlast : ∀ n : ℕ, b < n →
-      D.profile.lowerGroup (n : ℝ) = ⊥)
-    (hbreak : b = 0 ∨
-      D.profile.lowerGroup (b : ℝ) ≠
-        D.profile.lowerGroup (b + 1 : ℕ))
-    (htotally_ramified : D.profile.lowerGroup 0 = ⊤) :
-    ∃ z : ℤ, (z : ℚ) = chapter05CyclicHasseArfSum D.profile b := by
-  sorry
-
-/-- The fixed-field transfer supplies the local quotient input for the cyclic
- Hasse--Arf lemma on a character-kernel quotient. -/
-theorem chapter05_character_kernel_cyclic_hasse_arf
-    {K L C : Type*} [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
-    [Group C] [Finite C] [Chapter05LocalDoldCongruenceInput]
-    (χ : Gal(L / K) →* C)
-    (R : Chapter05CharacterKernelHasseArfData χ)
-    {b : ℕ}
-    (hlast : ∀ n : ℕ, b < n →
-      R.quotient_local.profile.lowerGroup (n : ℝ) = ⊥)
-    (hbreak : b = 0 ∨
-      R.quotient_local.profile.lowerGroup (b : ℝ) ≠
-        R.quotient_local.profile.lowerGroup (b + 1 : ℕ))
-    (htotally_ramified : R.quotient_local.profile.lowerGroup 0 = ⊤) :
-    ∃ z : ℤ,
-      (z : ℚ) = chapter05CyclicHasseArfSum R.quotient_local.profile b := by
-  letI := R.quotient_residue_perfect
-  exact chapter05_cyclic_hasse_arf_lemma R.quotient_local
-    R.quotient_cyclic (b := b) hlast hbreak htotally_ramified
-
 /-- The Hasse--Arf theorem in the local field interface of this chapter,
 conditional on the explicit local Dold congruence input. -/
 theorem chapter05_hasse_arf
@@ -1349,7 +1307,9 @@ theorem chapter05_hasse_arf
       exact chapter05_abelian_break_detection D habelian hvpos hv
     rcases hB with ⟨B⟩
     exact @chapter05_character_kernel_upper_break_integer
-      _ _ B.C _ _ _ _ _ _ B.group_C B.finite_C
+      _ _ B.C
+      inferInstance inferInstance inferInstance inferInstance inferInstance
+      inferInstance B.group_C B.finite_C inferInstance
       B.reduced_character B.reduced_package v B.selected_break
   · classical
     rcases (chapter05_upper_break_iff_herbrand_image_of_lower_break
