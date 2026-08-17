@@ -143,12 +143,10 @@ theorem chapter02_complex_unweighted_and_squared_conventions_differ
 theorem chapter02_mixing_squared_and_unsquared_complex_conventions_changes_the_product
     {K : Type*} [Field K] [NumberField K]
     (w : Chapter02InfinitePlace K) (hw : w.IsComplex) :
-    (∀ x : K, Chapter02InfiniteNormalizedValue w x =
-        Chapter02UnweightedInfiniteValue w x) ↔
-      ∀ x : K, Chapter02UnweightedInfiniteValue w x ^ 2 =
-        Chapter02UnweightedInfiniteValue w x := by
-  simp [Chapter02InfiniteNormalizedValue, Chapter02UnweightedInfiniteValue,
-    hw.mult_eq_two]
+    ¬(∀ x : K, Chapter02InfiniteNormalizedValue w x =
+        Chapter02UnweightedInfiniteValue w x) := by
+  obtain ⟨x, hx⟩ := chapter02_complex_unweighted_and_squared_conventions_differ w hw
+  exact fun h => hx (h x)
 
 end
 

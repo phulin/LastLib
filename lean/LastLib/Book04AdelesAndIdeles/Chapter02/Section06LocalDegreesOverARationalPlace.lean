@@ -138,7 +138,9 @@ theorem chapter02_local_completion_degree_formula
     (p : Chapter02RationalPrime) (q : Chapter02PrimeAbove K p)
     [Algebra (@Padic p.1 ⟨p.2⟩) (Chapter02LocalField q.1)]
     [FiniteDimensional (@Padic p.1 ⟨p.2⟩) (Chapter02LocalField q.1)]
-    [IsScalarTower ℚ (@Padic p.1 ⟨p.2⟩) (Chapter02LocalField q.1)] :
+    [IsScalarTower ℚ (@Padic p.1 ⟨p.2⟩) (Chapter02LocalField q.1)]
+    (hcontinuous :
+      Continuous (algebraMap (@Padic p.1 ⟨p.2⟩) (Chapter02LocalField q.1))) :
     Module.finrank (@Padic p.1 ⟨p.2⟩) (Chapter02LocalField q.1) =
       Chapter02LocalDegree q := by
   sorry
@@ -248,7 +250,7 @@ theorem chapter02_product_over_infinite_places_above_a_rational_place
   sorry
 
 /-- Every rational scalar sees total local degree `n=[K:ℚ]`. -/
-theorem chapter02_rational_scalar_product_over_all_finite_places
+theorem chapter02_rational_scalar_product_over_all_places
     {K : Type*} [Field K] [NumberField K]
     {a : ℚ} (ha : a ≠ 0) :
     Chapter02GlobalProduct (algebraMap ℚ K a) =

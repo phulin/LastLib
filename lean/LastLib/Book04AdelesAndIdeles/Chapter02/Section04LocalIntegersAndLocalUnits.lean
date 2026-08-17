@@ -80,6 +80,15 @@ theorem chapter02_local_maximal_ideal_mem_iff
     x ∈ Chapter02LocalMaximalIdealSet v ↔ Valued.v x < 1 := by
   rfl
 
+theorem chapter02_local_maximal_ideal_set_eq_coe_image
+    {K : Type*} [Field K] [NumberField K]
+    (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) :
+    Chapter02LocalMaximalIdealSet v =
+      (fun y : Chapter02LocalIntegerRing v =>
+        (y : Chapter02LocalField v)) ''
+        (Chapter02LocalMaximalIdeal v : Set (Chapter02LocalIntegerRing v)) := by
+  sorry
+
 theorem chapter02_local_unit_mem_iff
     {K : Type*} [Field K] [NumberField K]
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) (x : Chapter02LocalField v) :
@@ -455,6 +464,12 @@ def Chapter02HigherPrincipalUnitGroup
           _ = 1 + ((-uinvA * y : Chapter02LocalIntegerRing v) : Chapter02LocalField v) := by
             simp [uinvA, sub_eq_add_neg]
     }
+
+theorem chapter02_higher_principal_units_are_local_units
+    {K : Type*} [Field K] [NumberField K]
+    (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) (m : ℕ) :
+    Chapter02HigherPrincipalUnitGroup v m ≤ Chapter02LocalUnitGroup v := by
+  sorry
 
 theorem chapter02_higher_principal_units_are_open
     {K : Type*} [Field K] [NumberField K]

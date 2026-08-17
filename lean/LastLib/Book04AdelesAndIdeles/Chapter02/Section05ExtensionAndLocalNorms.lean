@@ -1,4 +1,5 @@
 import LastLib.Book04AdelesAndIdeles.Chapter02.Core
+import Mathlib.RingTheory.Complex
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter02
 
@@ -208,6 +209,13 @@ theorem chapter02_normalized_local_norm_identity_on_nonzero_elements
     D.abvK (Algebra.norm K y) = D.abvL y := by
   exact chapter02_normalized_local_norm_identity D y
 
+theorem chapter02_complex_over_real_normalized_local_norm_identity (z : ℂ) :
+    |Algebra.norm ℝ z| = ‖z‖ ^ 2 := by
+  calc
+    |Algebra.norm ℝ z| = |Complex.normSq z| := by rw [Algebra.norm_complex_apply]
+    _ = Complex.normSq z := abs_of_nonneg (Complex.normSq_nonneg z)
+    _ = ‖z‖ ^ 2 := Complex.normSq_eq_norm_sq z
+
 theorem chapter02_normalized_local_scalar_restriction
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L]
@@ -270,16 +278,6 @@ theorem chapter02_product_algebra_norm_absolute_value_is_componentwise
     abvK (Chapter02ProductAlgebraNorm K Lω x) = ∏ i, abvω i (x i) := by
   rw [Chapter02ProductAlgebraNorm, map_prod]
   exact Finset.prod_congr rfl (fun i _ => hω i (x i))
-
-theorem chapter02_local_norms_are_compatible_with_the_product_formula
-    (K : Type*) [Field K] {ι : Type*} [Fintype ι]
-    (Lω : ι → Type*) [∀ i, Field (Lω i)]
-    [∀ i, Algebra K (Lω i)] [∀ i, Module.Finite K (Lω i)]
-    (abvK : AbsoluteValue K ℝ) (abvω : ∀ i, AbsoluteValue (Lω i) ℝ)
-    (hω : ∀ i y, abvK (Algebra.norm K y) = abvω i y) (x : ∀ i, Lω i) :
-    abvK (Chapter02ProductAlgebraNorm K Lω x) = ∏ i, abvω i (x i) := by
-  exact chapter02_product_algebra_norm_absolute_value_is_componentwise
-    K Lω abvK abvω hω x
 
 end
 

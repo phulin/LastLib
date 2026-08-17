@@ -1,5 +1,4 @@
 import LastLib.Book04AdelesAndIdeles.Chapter02.Core
-import Mathlib.NumberTheory.Padics.HeightOneSpectrum
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter02
 
