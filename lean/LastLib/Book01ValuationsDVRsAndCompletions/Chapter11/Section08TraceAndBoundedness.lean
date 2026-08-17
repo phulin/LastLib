@@ -102,7 +102,9 @@ theorem chapter11_separable_trace_pairing_nondegenerate
       simpa only [Algebra.traceForm_apply] using hz y)
   exact sub_eq_zero.mp hzero
 
-/-- A common denominator embeds the integral trace pairing into the A-dual. -/
+/-- A common denominator embeds the trace pairing on a finite lattice into the
+A-dual.  The lattice is explicit so this statement does not assume that the
+whole normalization is already finite. -/
 theorem chapter11_trace_pairing_has_common_denominator
     (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
     [Field K] [Field L]
@@ -110,17 +112,19 @@ theorem chapter11_trace_pairing_has_common_denominator
     [IsScalarTower A B L] [IsScalarTower A K L] [IsFractionRing A K]
     [IsFractionRing B L] [IsIntegralClosure B A L]
     [Algebra.IsIntegral A B] [Module.IsTorsionFree A B]
-    [FiniteDimensional K L] [Algebra.IsSeparable K L] [Module.Finite A B] (x : B) :
+    [FiniteDimensional K L] [Algebra.IsSeparable K L]
+    (M : Submodule A B) [Module.Finite A M] (x : B) :
     ∃ d : A, d ≠ 0 ∧
-      ∃ φ : B →ₗ[A] A, ∀ y : B,
+      ∃ φ : M →ₗ[A] A, ∀ y : M,
         algebraMap A K (φ y) =
         algebraMap A K d *
-            Algebra.trace K L (algebraMap B L x * algebraMap B L y) := by
-  let hB : B →ₗ[A] L :=
-    (IsScalarTower.toAlgHom A B L).toLinearMap.comp (LinearMap.mulLeft A x)
-  let h : B →ₗ[A] K :=
-    (Algebra.trace K L).restrictScalars A |>.comp hB
-  obtain ⟨n, s, hs⟩ := Module.Finite.exists_fin (R := A) (M := B)
+            Algebra.trace K L (algebraMap B L x * algebraMap B L (y : B)) := by
+  let hM : M →ₗ[A] L :=
+    (IsScalarTower.toAlgHom A B L).toLinearMap.comp
+      ((LinearMap.mulLeft A x).comp M.subtype)
+  let h : M →ₗ[A] K :=
+    (Algebra.trace K L).restrictScalars A |>.comp hM
+  obtain ⟨n, s, hs⟩ := Module.Finite.exists_fin (R := A) (M := M)
   obtain ⟨d, hd⟩ := IsLocalization.exist_integer_multiples_of_finite (M := A⁰)
     (fun i : Fin n => h (s i))
   have hgen : ∀ i : Fin n, h (s i) * algebraMap A K (d : A) ∈
@@ -129,11 +133,11 @@ theorem chapter11_trace_pairing_has_common_denominator
     rcases hd i with ⟨a, ha⟩
     refine ⟨a, ?_⟩
     simpa [Algebra.smul_def, mul_comm] using ha
-  let hscl : B →ₗ[A] K := (d : A) • h
+  let hscl : M →ₗ[A] K := (d : A) • h
   have hscl_gen : ∀ i : Fin n, hscl (s i) ∈ LinearMap.range (Algebra.linearMap A K) := by
     intro i
     simpa [hscl, LinearMap.smul_apply, Algebra.smul_def, mul_comm] using hgen i
-  let q : Submodule A B :=
+  let q : Submodule A M :=
     (LinearMap.range (Algebra.linearMap A K)).comap hscl
   have hqgen : ∀ i : Fin n, s i ∈ q := by
     intro i
@@ -144,7 +148,7 @@ theorem chapter11_trace_pairing_has_common_denominator
     exact Submodule.span_le.2 (fun z hz => by
       rcases hz with ⟨i, rfl⟩
       exact hqgen i)
-  have hmem : ∀ y : B, hscl y ∈ LinearMap.range (Algebra.linearMap A K) := by
+  have hmem : ∀ y : M, hscl y ∈ LinearMap.range (Algebra.linearMap A K) := by
     intro y
     have : y ∈ q := by rw [hqtop]; exact Submodule.mem_top
     exact this
@@ -153,9 +157,9 @@ theorem chapter11_trace_pairing_has_common_denominator
       ⟨(Algebra.linearMap A K).injective_rangeRestrict_iff.mpr
           (IsFractionRing.injective A K),
         (Algebra.linearMap A K).surjective_rangeRestrict⟩
-  let φ : B →ₗ[A] A :=
+  let φ : M →ₗ[A] A :=
     e.symm.toLinearMap.comp (hscl.codRestrict _ hmem)
-  have hφ (y : B) : algebraMap A K (φ y) = hscl y := by
+  have hφ (y : M) : algebraMap A K (φ y) = hscl y := by
     rw [show algebraMap A K (φ y) = (e (φ y) : K) by rfl]
     simp [φ, e]
   have hdne : (d : A) ≠ 0 := by
@@ -166,7 +170,7 @@ theorem chapter11_trace_pairing_has_common_denominator
   change (d : A) • h y = _
   simp only [Algebra.smul_def]
   change algebraMap A K (d : A) *
-      Algebra.trace K L (algebraMap B L (x * y)) = _
+      Algebra.trace K L (algebraMap B L (x * (y : B))) = _
   rw [map_mul]
 
 /-- Mathlib's different ideal is the inverse of the trace dual. -/

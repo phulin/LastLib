@@ -1564,6 +1564,7 @@ theorem chapter11_single_branch_norm_valuation_formula
     [Valuation.IsRankOneDiscrete vK.toValuation]
     [Valuation.IsRankOneDiscrete vL.toValuation]
     (hext : vK.IsEquiv (AddValuation.comap (algebraMap K L) vL))
+    (he : 0 < e)
     (hrestrict : ∀ y : K,
       vL (algebraMap K L y) = (e : WithTop ℤ) * vK y)
     (hf : f = chapter11AdditiveResidueDegree vK vL hext)
