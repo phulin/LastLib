@@ -1369,7 +1369,7 @@ $$
 0\longrightarrow G'\longrightarrow G\longrightarrow G''\longrightarrow0,
 $$
 
-the meaning of exactness is sheaf-theoretic for the fppf topology: the first map identifies $G'$ with the kernel and the second is an fppf epimorphism with that kernel. Kernels are fiber products and commute with base change. Being a closed immersion and being faithfully flat locally of finite presentation descend. Thus exactness can be checked fpqc-locally, provided the asserted quotient map has the stated finiteness and flatness.
+the meaning of exactness is sheaf-theoretic for the fppf topology: the first map identifies $G'$ with the kernel and the second is an fppf epimorphism with that kernel. Kernels are fiber products and commute with base change. Being a closed immersion and being faithfully flat locally of finite presentation descend. Thus exactness can be checked fpqc-locally, provided the asserted quotient map has the stated finiteness and flatness. Section 12.4 constructs that quotient map, with exactly those properties, whenever the kernel is a finite locally free closed subgroup of a group scheme affine over the base.
 
 ### 12.4 Actions and quotients in the finite case
 
@@ -1387,13 +1387,503 @@ $$
 
 This is an equalizer and commutes with flat base change because flat tensor product preserves
 equalizers; finite local freeness of $G$ ensures that the coaction is represented by the finite
-projective Hopf algebra. If the action is free in the torsor sense,
-$X\to\operatorname{Spec}(R^G)$ is finite locally free and the expected orbit relation is
-effective.
+projective Hopf algebra.
 
-For nonaffine $X$, representability of either a quotient or a fixed-point functor may require
-invariant affine neighborhoods or a separate theorem. Descent preserves such an object once it
-has been constructed; it must not be cited as constructing every group quotient.
+By itself this construction proves nothing. An invariant ring always exists, and
+$\operatorname{Spec}(R^G)$ always receives a map from $X$; but without a hypothesis on the action
+the invariant ring can be far too small to see orbits, and $X\to\operatorname{Spec}(R^G)$ need be
+neither flat nor finite. The whole content of the finite-flat quotient theory is that one
+hypothesis — freeness — converts the naive invariant construction into a genuine torsor. This
+subsection proves that statement in full. It is the one place in this chapter where a
+representability assertion is made about an object that was not handed to us by descent, so it
+deserves a complete argument rather than a citation.
+
+In the preparatory lemmas we work over an affine base; the theorem itself is stated over an
+arbitrary base and reduced to this case at the start of its proof. So throughout the lemmas,
+$S=\operatorname{Spec}A$ is affine, $G=\operatorname{Spec}H$ is a finite locally free
+$S$-group scheme with Hopf algebra $H$, and $X=\operatorname{Spec}R$ is an affine $S$-scheme
+carrying a left action $a:G\times_SX\to X$. Write
+
+$$
+V=G\times_SX,\qquad D=\mathcal O(V)=H\otimes_AR,
+$$
+
+and let
+
+$$
+q:V\to X,\qquad a:V\to X
+$$
+
+be the projection and the action. Thus $q^*(r)=1\otimes r$ and $a^*$ is the coaction, and
+$B:=R^G$ is the equalizer of $q^*$ and $a^*$. We always regard $D$ as an $R$-module _through
+$q^*$_; when $H$ is free of rank $n$ over $A$, which we may arrange by localizing $A$, this
+$R$-module is free of rank $n$, and a basis $v_1,\dots,v_n$ of $H$ over $A$ gives the basis
+$v_k\otimes1$. The unit section supplies $e_X:X\to V$, $x\mapsto(e,x)$, with
+
+$$
+q\circ e_X=\operatorname{id}_X,\qquad a\circ e_X=\operatorname{id}_X. \tag{12.1}
+$$
+
+The rank $n$ is positive whenever $A\neq0$, since the counit $H\to A$ is surjective.
+
+It is convenient, and completely rigorous, to name points: a morphism into a product will be
+written on symbols $(h,g,x)$ standing for the coordinates of the factors, and an identity between
+such morphisms is an identity of the corresponding algebra maps. In this notation $q^*(r)$ is the
+function $(g,x)\mapsto r(x)$ on $V$ and $a^*(r)$ is $(g,x)\mapsto r(gx)$. For $r\in R$ we write
+$X_r\subseteq X$ for the principal open where $r$ is invertible.
+
+**Freeness.** The action is **free** when
+
+$$
+\Psi=(a,q):G\times_SX\longrightarrow X\times_SX,\qquad (g,x)\longmapsto(gx,x),
+$$
+
+is a closed immersion; equivalently, when the algebra map
+
+$$
+\psi:R\otimes_AR\longrightarrow D,\qquad r\otimes r'\longmapsto a^*(r)\,q^*(r'),
+$$
+
+is surjective. This is the hypothesis called _free in the torsor sense_: it says that a group
+element is determined by its effect on a point, and it is exactly the conclusion one wants
+after the quotient has been built, transported to a hypothesis before it exists.
+
+The more familiar pointwise formulation is that all stabilizers are trivial, that is, that $\Psi$
+is a monomorphism. For finite locally free $G$ the two formulations agree, and the following
+lemma is the reason. It is stated separately because it will also be used to recognize freeness
+in practice.
+
+**Finite monomorphism lemma.** A finite monomorphism of schemes is a closed immersion.
+
+**Proof.** The assertion is local on the target, so let $f:\operatorname{Spec}E\to
+\operatorname{Spec}C$ correspond to $C\to E$ with $E$ a finite $C$-module. Being a monomorphism
+means that the diagonal $\operatorname{Spec}E\to\operatorname{Spec}E\times_{\operatorname{Spec}
+C}\operatorname{Spec}E$ is an isomorphism, that is, that the multiplication map
+
+$$
+E\otimes_CE\longrightarrow E
+$$
+
+is an isomorphism. Let $\Lambda=\operatorname{coker}(C\to E)$, a finite $C$-module. Tensoring
+$C\to E\to \Lambda\to0$ with $E$ over $C$ gives an exact sequence
+$E\to E\otimes_CE\to \Lambda\otimes_CE\to0$ in which the first map is $d\mapsto d\otimes1$. Composed
+with multiplication that map is the identity, and multiplication is an isomorphism, so
+$d\mapsto d\otimes1$ is surjective and $\Lambda\otimes_CE=0$.
+
+Suppose $\Lambda\neq0$ and choose a prime $\mathfrak p$ of $C$ with $\Lambda_\mathfrak p\neq0$. Nakayama gives
+$\Lambda\otimes_C\kappa(\mathfrak p)\neq0$. Since
+$(\Lambda\otimes_C\kappa(\mathfrak p))\otimes_{\kappa(\mathfrak p)}(E\otimes_C\kappa(\mathfrak p))
+=(\Lambda\otimes_CE)\otimes_C\kappa(\mathfrak p)=0$ and a tensor product of nonzero vector spaces is
+nonzero, $E\otimes_C\kappa(\mathfrak p)=0$. Nakayama again, applied to the finite
+$C_\mathfrak p$-module $E_\mathfrak p$, gives $E_\mathfrak p=0$, whence
+$\Lambda_\mathfrak p=\operatorname{coker}(C_\mathfrak p\to0)=0$, a contradiction. So $\Lambda=0$ and
+$C\to E$ is surjective. $\square$
+
+In our situation $\Psi$ is always finite: $D$ is a finite $R$-module through $q^*$, and $q^*$
+equals the composite of $r\mapsto1\otimes r$ with $\psi$, so $D$ is a finite $(R\otimes_AR)$-module
+through $\psi$. Hence the action is free precisely when it has trivial stabilizers in the
+functorial sense, and freeness may be checked on points valued in arbitrary $S$-schemes.
+
+The engine of the proof is a single geometric observation: the fibers of $q:V\to X$ over a point
+$x$ and over a translated point $hx$ are canonically identified by right translation on $G$, and
+this identification carries the function $g\mapsto r(gx)$ to $g\mapsto r(ghx)$. Everything
+invariant that we shall need — characteristic polynomials, norms, transition coefficients — comes
+from that one identification. We record it once.
+
+**Translation lemma.** Put $W=G\times_SG\times_SX$ with coordinates $(h,g,x)$ and let
+
+$$
+p(h,g,x)=(h,x),\qquad \pi_1(h,g,x)=(g,x),\qquad\pi_2(h,g,x)=(g,hx)
+$$
+
+be three morphisms $W\to V$. Then:
+
+1. The pairs $(p,\pi_1)$ and $(p,\pi_2)$ identify $W$ with the fiber products
+   $V\times_{q,X,q}V$ and $V\times_{a,X,q}V$ respectively. Consequently, writing $M$ for the
+   $R$-module $D$ taken through $q^*$, the $D$-module $\mathcal O(W)$ obtained through $p^*$ is
+   the base change of $M$ along $q^*:R\to D$ in the first description and along $a^*:R\to D$ in
+   the second; the canonical maps $M\to\mathcal O(W)$ are $\pi_1^*$ and $\pi_2^*$. In particular
+   $\mathcal O(W)$ is free of rank $n$ over $D$ through $p^*$, with bases $\beta_1=\pi_1^*(v_k
+   \otimes1)$ and $\beta_2=\pi_2^*(v_k\otimes1)$.
+2. The map $\Theta(h,g,x)=(h,gh,x)$ is an automorphism of $W$ satisfying $p\circ\Theta=p$ and
+   $a\circ\pi_1\circ\Theta=a\circ\pi_2$. Hence $\Theta^*$ is a $D$-algebra automorphism of
+   $\mathcal O(W)$ with $\Theta^*\bigl(\pi_1^*a^*(r)\bigr)=\pi_2^*a^*(r)$ for all $r\in R$.
+3. $p^*$ is injective.
+
+**Proof.** For 1, the fiber product $V\times_{q,X,q}V$ consists of pairs $((h,x),(g,x'))$ with
+$x=x'$, and $(h,g,x)\mapsto((h,x),(g,x))$ is an isomorphism from $W$ onto it; the fiber product
+$V\times_{a,X,q}V$ consists of pairs $((h,x),(g,y))$ with $hx=y$, and $(h,g,x)\mapsto((h,x),
+(g,hx))$ is an isomorphism from $W$ onto it, the inverse sending $((h,x),(g,y))$ to $(h,g,x)$. On
+coordinate rings these are the identifications
+
+$$
+\mathcal O(W)\;\cong\;D\otimes_{q^*,R}M
+\qquad\text{and}\qquad
+\mathcal O(W)\;\cong\;D\otimes_{a^*,R}M,
+$$
+
+in which the left factor is $\mathcal O(V)=D$ acting through $p^*$, the subscript records which
+ring map is used to form the tensor product, and $M$ is the $R$-module $D$ taken through $q^*$.
+Base change preserves free bases, so $\mathcal O(W)$ is free of rank $n$ over $D$ with the stated
+bases.
+
+For 2, $\Theta=(\operatorname{pr}_1,m\circ(\operatorname{pr}_2,\operatorname{pr}_1),
+\operatorname{pr}_3)$ is a morphism, and $(h,g,x)\mapsto(h,g\,h^{-1},x)$, formed with the inverse
+of $G$, is a two-sided inverse; this is the only place where inversion in $G$ is used.
+Clearly $p\circ\Theta=p$. Both $a\circ\pi_1\circ\Theta$ and $a\circ\pi_2$ send $(h,g,x)$ to
+$(gh)x=g(hx)$, and these agree by associativity of the action. The displayed identity of functions
+is the resulting equality of pullbacks.
+
+For 3, the morphism $(h,x)\mapsto(h,e,x)$ is a section of $p$, so $p^*$ is a split injection.
+$\square$
+
+We now convert the lemma into invariants. The characteristic polynomial of multiplication by
+$a^*(r)$ on $D$ is the algebraic form of the classical expression $\prod_{g\in G}\bigl(Z-r(gx)
+\bigr)$, and translation invariance of the orbit is what makes its coefficients functions on the
+quotient.
+
+**Invariant norm lemma.** For $r\in R$ let
+
+$$
+P_r(Z)=\det\bigl(Z\cdot\operatorname{id}-\mu_{a^*(r)}\mid D\bigr)\in R[Z]
+$$
+
+be the characteristic polynomial of $\mu_{a^*(r)}$, multiplication by $a^*(r)$, on the free
+rank-$n$ $R$-module $D$, and let $N(r)=\det\bigl(\mu_{a^*(r)}\mid D\bigr)$. Then:
+
+1. All coefficients of $P_r$ lie in $B$, and $P_r(r)=0$. Hence $R$ is integral over $B$, and since
+   $B\subseteq R$ the map $\operatorname{Spec}R\to\operatorname{Spec}B$ is surjective.
+2. $N$ is multiplicative and takes values in $B$. For a prime $\mathfrak p\subset R$ one has
+   $N(r)\notin\mathfrak p$ if and only if $q^{-1}(\mathfrak p)\subseteq a^{-1}(X_r)$. In
+   particular, if $a^{-1}(X_r)=q^{-1}(X_r)$, then $X_{N(r)}=X_r$.
+
+**Proof.** Characteristic polynomials of endomorphisms of finite free modules commute with base
+change and are invariant under conjugation by module isomorphisms. Apply this in the two
+descriptions of the translation lemma. Base changing $(M,\mu_{a^*(r)})$ along $q^*$ gives the
+$D$-module $\mathcal O(W)$ with the operator multiplication by $\pi_1^*a^*(r)$, and its
+characteristic polynomial is $q^*P_r$. Base changing along $a^*$ gives $\mathcal O(W)$ with the
+operator multiplication by $\pi_2^*a^*(r)$, and characteristic polynomial $a^*P_r$. By part 2 of
+the translation lemma, $\Theta^*$ is a $D$-linear automorphism conjugating the first operator into
+the second. Therefore $q^*P_r=a^*P_r$, which says coefficientwise that every coefficient of $P_r$
+lies in $B$.
+
+For the Cayley–Hamilton half, the identity $P_r(\mu_{a^*(r)})=0$ evaluated at $1\in D$ reads
+
+$$
+\sum_i q^*(p_i)\,a^*(r)^i=0\quad\text{in }D,
+\qquad P_r(Z)=\sum_ip_iZ^i .
+$$
+
+Apply $e_X^*$ and use (12.1): both $q^*$ and $a^*$ become the identity, and one gets
+$\sum_ip_ir^i=P_r(r)=0$ in $R$. Since $P_r$ is monic of degree $n$ with coefficients in $B$, every
+element of $R$ is integral over $B$; lying over for the injective integral extension $B\subseteq
+R$ gives surjectivity of $\operatorname{Spec}R\to\operatorname{Spec}B$.
+
+For 2, multiplicativity is multiplicativity of determinants together with $a^*(rr')=a^*(r)a^*(r')$,
+and $N(r)=(-1)^nP_r(0)$ lies in $B$ by part 1. Fix $\mathfrak p$ and pass to the fiber: the base
+change of $(M,\mu_{a^*(r)})$ along $R\to\kappa(\mathfrak p)$ is the finite $\kappa(\mathfrak p)$-
+algebra $\mathcal O\bigl(q^{-1}(\mathfrak p)\bigr)=H\otimes_A\kappa(\mathfrak p)$ with
+multiplication by the image of $a^*(r)$, and $N(r)\bmod\mathfrak p$ is the determinant of that
+multiplication. A multiplication operator on a finite-dimensional algebra over a field is
+bijective exactly when the element is a unit, and an element of such an algebra is a unit exactly
+when it lies in no maximal ideal, that is, when it vanishes at no point of the spectrum. The
+points of the spectrum of $H\otimes_A\kappa(\mathfrak p)$ are the points of $q^{-1}(\mathfrak p)$,
+and $a^*(r)$ is invertible at such a point exactly when the point lies in $a^{-1}(X_r)$. This
+is the stated criterion. If moreover $a^{-1}(X_r)=q^{-1}(X_r)$, the criterion becomes
+$q^{-1}(\mathfrak p)\subseteq q^{-1}(X_r)$, and since $q$ is surjective — it has the
+section $e_X$ — this holds exactly when $\mathfrak p\in X_r$. $\square$
+
+Freeness has not yet been used. Its role is to produce enough elements of the form $a^*(r)$ inside
+$D$: it says that $D$ is generated over $R$ by the coaction of $R$ itself. Maximal minors of such
+a generating family cut out principal opens which, by the translation lemma, are automatically
+stable, and the norm lemma then replaces those minors by honest invariants.
+
+**Stable minor lemma.** Assume the action free. Choose $r_1,\dots,r_N\in R$ such that the elements
+$u_i=a^*(r_i)$ generate $D$ as an $R$-module; this is possible because $\psi$ is surjective and
+$D$ is a finite $R$-module. For an $n$-element subset $\nu\subseteq\{1,\dots,N\}$ let $d_\nu\in R$
+be the determinant of the family $(u_i)_{i\in\nu}$ with respect to the basis
+$(v_k\otimes1)_{k}$, and set $b_\nu=N(d_\nu)$. Then
+
+1. the $d_\nu$ generate the unit ideal of $R$;
+2. $a^*(d_\nu)$ and $q^*(d_\nu)$ differ by a unit of $D$, so $a^{-1}(X_{d_\nu})=q^{-1}(X_{d_\nu})$;
+3. $b_\nu\in B$ and $X_{b_\nu}=X_{d_\nu}$; in particular $d_\nu$ is invertible in $R_{b_\nu}$;
+4. the $b_\nu$ generate the unit ideal of $B$.
+
+**Proof.** The image of $\psi$ is the $R$-submodule of $D$ generated by $a^*(R)$, so freeness says
+that $a^*(R)$ generates $D$; since $D$ is finite over $R$, finitely many elements $r_i$ suffice.
+
+For 1, let $\mathfrak p$ be a prime of $R$. The images of the $u_i$ span the $n$-dimensional
+$\kappa(\mathfrak p)$-vector space $D\otimes_R\kappa(\mathfrak p)$, so $n$ of them form a basis;
+for the corresponding $\nu$ the determinant $d_\nu$ is nonzero in $\kappa(\mathfrak p)$, that is,
+$d_\nu\notin\mathfrak p$. Thus the $d_\nu$ lie in no prime and generate the unit ideal.
+
+For 2, use the two descriptions of $\mathcal O(W)$ in the translation lemma. The family
+$(\pi_1^*u_i)_{i\in\nu}$ is the base change of $(u_i)_{i\in\nu}$ along $q^*$, so its determinant
+with respect to $\beta_1$ is $q^*(d_\nu)$; likewise the determinant of $(\pi_2^*u_i)_{i\in\nu}$
+with respect to $\beta_2$ is $a^*(d_\nu)$. The automorphism $\Theta^*$ is $D$-linear and carries
+$\pi_1^*u_i$ to $\pi_2^*u_i$, so
+
+$$
+\det\nolimits_{\beta_1}\bigl((\pi_2^*u_i)_{i\in\nu}\bigr)
+=\det\nolimits_{\beta_1}(\Theta^*)\cdot q^*(d_\nu),
+$$
+
+while comparing the two bases $\beta_1,\beta_2$ of the same free $D$-module multiplies
+determinants by a unit. Hence $a^*(d_\nu)=w\,q^*(d_\nu)$ with $w\in D^\times$, so the two elements
+are invertible on the same open subset of $V$; that statement is exactly
+$a^{-1}(X_{d_\nu})=q^{-1}(X_{d_\nu})$.
+
+Part 3 is now part 2 of the invariant norm lemma applied to $r=d_\nu$. For 4, let $\mathfrak q$ be
+a prime of $B$ and choose, by the surjectivity in part 1 of the invariant norm lemma, a prime
+$\mathfrak p$ of $R$ over it. Some $d_\nu$ avoids $\mathfrak p$, hence $b_\nu$ avoids
+$\mathfrak p$ and therefore $\mathfrak q$. So the $b_\nu$ lie in no prime of $B$. $\square$
+
+We can now state and prove the theorem this subsection exists for.
+
+**Free-action quotient theorem.** Let $G$ be a finite locally free group scheme over a scheme $S$,
+acting on an $S$-scheme $f:X\to S$ that is affine over $S$, and assume the action free, that is,
+$(a,q):G\times_SX\to X\times_SX$ a closed immersion. Then the invariant subalgebra
+$(f_*\mathcal O_X)^G\subseteq f_*\mathcal O_X$ is a quasi-coherent $\mathcal O_S$-algebra, and the
+affine $S$-scheme $Y=X/G$ it defines has the following properties.
+
+1. The canonical morphism $\pi:X\to Y$ is finite locally free, of the same rank as $G\to S$, and
+   faithfully flat. Over an affine base with $X=\operatorname{Spec}R$ one has
+   $Y=\operatorname{Spec}(R^G)$.
+2. The canonical morphism
+
+   $$
+   \Psi_Y:G\times_SX\longrightarrow X\times_YX,\qquad(g,x)\longmapsto(gx,x),
+   \tag{12.2}
+   $$
+
+   is an isomorphism. Thus $\pi$ is an fppf $G$-torsor over $Y$, trivialized by $\pi$ itself.
+3. $Y$ represents the quotient of $X$ by $G$ as a sheaf for the fppf topology on $S$.
+4. Formation of $Y$ commutes with arbitrary base change $S'\to S$: the induced action of
+   $G_{S'}$ on $X_{S'}$ is free and $(X\times_SS')/G_{S'}=Y\times_SS'$.
+
+**Proof.** The invariant subalgebra is the equalizer of two maps of quasi-coherent
+$\mathcal O_S$-algebras, hence quasi-coherent, and its formation commutes with localization on $S$
+because localization is exact; this is also why all four assertions are local on $S$. We may
+therefore assume $S=\operatorname{Spec}A$, $X=\operatorname{Spec}R$,
+and $H$ free of rank $n$ over $A$, and use the notation fixed above; we may also assume $A\neq0$,
+so $n\geq1$. Write $B=R^G$ and $Y=\operatorname{Spec}B$.
+
+_Step 1: reduction to a stable principal open._ Retain $r_1,\dots,r_N$, the minors $d_\nu$, and
+the invariants $b_\nu$ of the stable minor lemma. Parts 1 and 2 are local on $Y$, and the $b_\nu$
+generate the unit ideal of $B$; so for them it suffices to argue after
+replacing $B$ by $B'=B_{b}$ and $R$ by $R'=R_{b}$ for a single $b=b_\nu$. Parts 3 and 4 will then
+be deduced globally from parts 1 and 2. Localization at $b\in B$
+is exact and turns the equalizer defining $B$ into the equalizer defining the invariants of the
+localized coaction, so $B'=(R')^G$; also $D'=H\otimes_AR'$ and the localized action is again free.
+By part 3 of the stable minor lemma the minor $d_\nu$ is a unit in $R'$, so, fixing an enumeration
+$\nu=\{i_1<\dots<i_n\}$ and writing $u_j=a^*(r_{i_j})$, the family $u_1,\dots,u_n$ is an
+$R'$-basis of $D'$.
+
+_Step 2: the transition coefficients are invariant._ Let $r\in R'$ and write
+
+$$
+a^*(r)=\sum_{j=1}^nq^*(c_j)\,u_j,\qquad c_j\in R',
+\tag{12.3}
+$$
+
+which is possible in exactly one way. We claim each $c_j$ lies in $B'$. Form $W$, $p$, $\pi_1$,
+$\pi_2$, and $\Theta$ of the translation lemma for the localized data, and apply $\Theta^*$ to the
+$\pi_1$-pullback of (12.3). By part 2 of the translation lemma, $\Theta^*\pi_1^*a^*(s)=\pi_2^*
+a^*(s)$ for every $s$, while $q\circ\pi_1\circ\Theta=q\circ p$ gives $\Theta^*\pi_1^*q^*(c_j)=
+p^*q^*(c_j)$. Hence
+
+$$
+\pi_2^*a^*(r)=\sum_jp^*q^*(c_j)\,\pi_2^*(u_j).
+$$
+
+On the other hand the $\pi_2$-pullback of (12.3) itself, together with $q\circ\pi_2=a\circ p$,
+gives
+
+$$
+\pi_2^*a^*(r)=\sum_jp^*a^*(c_j)\,\pi_2^*(u_j).
+$$
+
+By part 1 of the translation lemma the elements $\pi_2^*(u_j)$ form a basis of $\mathcal O(W)$
+over $D'$, being the base change along $a^*$ of the basis $u_j$. Comparing coefficients,
+$p^*\bigl(a^*(c_j)-q^*(c_j)\bigr)=0$, and $p^*$ is injective, so $a^*(c_j)=q^*(c_j)$ and
+$c_j\in B'$.
+
+Applying $e_X^*$ to (12.3) and using (12.1) turns it into $r=\sum_jc_jr_{i_j}$. Therefore
+
+$$
+R'=\sum_{j=1}^nB'\,r_{i_j},
+$$
+
+so $R'$ is generated by $n$ elements as a $B'$-module. This is the first point at which the
+quotient is seen to be finite, and it is a direct consequence of freeness: without a basis of $D'$
+of the form $a^*(r_{i_j})$ there is no reason for the coefficients of a coaction to be invariant.
+
+_Step 3: freeness of $R'$ over $B'$ and the torsor identity._ Because $a^*$ and $q^*$ agree on
+$B'$, the map $\psi$ descends to a $B'$-balanced map
+
+$$
+\Phi:R'\otimes_{B'}R'\longrightarrow D',\qquad r\otimes r'\longmapsto a^*(r)\,q^*(r'),
+$$
+
+which is surjective by freeness and is $R'$-linear for the $R'$-structures given by the right
+tensor factor and by $q^*$. It sends $r_{i_j}\otimes1$ to $u_j$. Now $R'=\sum_jB'r_{i_j}$ implies
+that the $n$ elements $r_{i_j}\otimes1$ generate $R'\otimes_{B'}R'$ over $R'$, since
+$r\otimes r'=\sum_jr_{i_j}\otimes c_jr'$ whenever $r=\sum_jc_jr_{i_j}$ with $c_j\in B'$. Thus the
+composite
+
+$$
+(R')^n\longrightarrow R'\otimes_{B'}R'\xrightarrow{\ \Phi\ }D',
+\qquad e_j\longmapsto r_{i_j}\otimes1\longmapsto u_j,
+$$
+
+carries a basis to a basis and is an isomorphism. The first arrow is therefore injective as well as
+surjective, so both arrows are isomorphisms: $\Phi$ is an isomorphism and $\{r_{i_j}\otimes1\}$ is
+an $R'$-basis of $R'\otimes_{B'}R'$.
+
+Freeness of $R'$ over $B'$ now follows without any descent theorem. Let
+$\sigma:(B')^n\to R'$ send $e_j$ to $r_{i_j}$; it is surjective, with kernel $K$. Tensoring the
+exact sequence $K\to(B')^n\to R'\to0$ with $R'$ over $B'$ gives an exact sequence
+
+$$
+K\otimes_{B'}R'\longrightarrow(R')^n\longrightarrow R'\otimes_{B'}R'\longrightarrow0,
+$$
+
+whose second arrow sends $e_j$ to $r_{i_j}\otimes1$ and is therefore an isomorphism. Hence the
+image of $K\otimes_{B'}R'$ in $(R')^n$ vanishes. That image contains the image of $K$ under
+$(B')^n\to(R')^n$, which is injective because $B'\subseteq R'$. So $K=0$, and $R'$ is free of
+rank $n$ over $B'$ with basis $r_{i_1},\dots,r_{i_n}$.
+
+_Step 4: assembling the global statement._ The elements $b_\nu$ generate the unit ideal of $B$, and
+Steps 1–3 show that $R_{b_\nu}$ is free of rank $n$ over $B_{b_\nu}$ and that
+$\Phi_{b_\nu}$ is an isomorphism. Since $\Phi$ is a map of $B$-modules whose localizations at a
+family of elements generating the unit ideal are isomorphisms, $\Phi$ itself is an isomorphism,
+and $R$ is finite locally free of rank $n$ over $B$. As $n\geq1$, $R$ is faithfully flat over $B$;
+this also reproves surjectivity of $\pi$. Undoing the localization on $S$ made at the start, the
+rank equals the rank of $G\to S$, which is locally constant. The isomorphism $\Phi$ is precisely
+the assertion that (12.2) is an isomorphism, since $\Phi$ is the algebra map corresponding to
+$\Psi_Y$. This proves 1 and 2.
+
+_Step 5: the quotient sheaf._ Since $\pi$ is finite locally free and surjective, it is an fppf
+covering. Let $T$ be any $S$-scheme. A morphism $f:X\to T$ satisfies $f\circ a=f\circ q$ exactly
+when it coequalizes the two projections $X\times_YX\rightrightarrows X$, by 2. Morphisms of
+schemes satisfy fppf descent by Section 10.1, so such an $f$ factors uniquely through $\pi$.
+Hence $Y$ is the coequalizer of $G\times_SX\rightrightarrows X$ in $S$-schemes. More strongly,
+$h_X\to h_Y$ is an epimorphism of fppf sheaves whose kernel pair is $h_{X\times_YX}=
+h_{G\times_SX}$; an epimorphism of sheaves is the coequalizer of its kernel pair, so $h_Y$ is the
+fppf sheaf quotient $X/G$. This proves 3.
+
+_Step 6: base change._ Under $\Phi$ the two maps $q^*,a^*:R\to D$ become $r\mapsto1\otimes r$ and
+$r\mapsto r\otimes1$, so the defining equalizer of $B$ is the beginning of the Amitsur complex of
+the faithfully flat map $B\to R$:
+
+$$
+0\longrightarrow B\longrightarrow R\rightrightarrows R\otimes_BR.
+$$
+
+By Section 3.2 this complex stays exact after tensoring over $B$ with an arbitrary $B$-module,
+because it becomes split exact after the faithfully flat base change $B\to R$. Now let
+$S'=\operatorname{Spec}A'$ be affine over $S$. Since $R\otimes_AA'=R\otimes_B(B\otimes_AA')$ and
+$D\otimes_AA'=D\otimes_B(B\otimes_AA')$, applying $-\otimes_B(B\otimes_AA')$ to the equalizer
+gives
+
+$$
+(R\otimes_AA')^{G_{A'}}=B\otimes_AA'.
+$$
+
+Freeness of the base-changed action holds because closed immersions are stable under base change.
+This proves 4 for affine $S'$, and the general case follows by locality on $S'$. $\square$
+
+Two remarks fix the relation of this theorem to the surrounding chapters. First, invariants were
+formed as a bare equalizer, and in general such an equalizer commutes only with flat base change;
+part 4 is stronger, and its proof shows why: after the theorem is known, the equalizer is an
+Amitsur complex of a faithfully flat map and is therefore universally exact. One should not try to
+prove part 4 by commuting a raw invariant equalizer past a nonflat tensor product. Second, the
+action here is a left action, while Section 13.1 states the torsor identity for a right action of
+a group over the base of the torsor. Both discrepancies are notational: replacing $a$ by
+$a\circ(i\times\operatorname{id}_X)$ converts a left action into a right one, and the group over
+$Y$ is $G\times_SY$, for which $X\times_Y(G\times_SY)=X\times_SG$. Under these identifications
+(12.2) becomes the map $X\times_Y(G\times_SY)\to X\times_YX$ of Section 13.1, and $\pi$ is an
+fppf covering, so $X$ is a $G$-torsor over $Y$ in the sense used there, trivialized by $\pi$
+itself.
+
+For nonaffine $X$ the theorem applies on any $G$-stable affine open, and the local quotients glue
+because each of them is a quotient sheaf.
+
+**Stable-affine quotient corollary.** Let $G$ be a finite locally free $S$-group scheme acting
+freely on an $S$-scheme $X$, and suppose $X$ is covered by $G$-stable open subschemes that are
+affine over $S$. Then the fppf sheaf quotient $X/G$ is represented by an $S$-scheme $Y$, the
+morphism $\pi:X\to Y$ is finite locally free of the rank of $G$ and faithfully flat, and (12.2) is
+an isomorphism.
+
+**Proof.** Let $U\subseteq X$ be a $G$-stable open which is affine over $S$; here stability means
+$a^{-1}(U)=q^{-1}(U)$ inside $G\times_SX$. The restricted action is free, so the theorem gives
+$\pi_U:U\to Y_U=U/G$ with all the stated properties.
+
+Let $U'$ be a second such open. Then $U\cap U'$ is again $G$-stable, since preimages under $a$ and
+$q$ commute with intersections. Two points of $U$ with the same image in $Y_U$ lie in one orbit:
+by (12.2) the map $G\times_SU\to U\times_{Y_U}U$ is surjective, so if $\pi_U(z)=\pi_U(w)$ there is
+a point $\xi$ of $G\times_SU$ with $q(\xi)=w$ and $a(\xi)=z$. Consequently, if $w$ lies in the
+stable subset $U\cap U'$, then $\xi\in q^{-1}(U\cap U')=a^{-1}(U\cap U')$ and $z\in U\cap U'$ as
+well. Writing $Z=U\setminus(U\cap U')$, this says that $\pi_U(Z)$ and $\pi_U(U\cap U')$ are
+disjoint; they cover $Y_U$ because $\pi_U$ is surjective, and $\pi_U(Z)$ is closed because a finite
+morphism is closed. Hence
+
+$$
+Y_0:=\pi_U(U\cap U')\subseteq Y_U
+$$
+
+is open with $\pi_U^{-1}(Y_0)=U\cap U'$. Restricting $\pi_U$ over the open $Y_0$ leaves a finite
+locally free surjection $U\cap U'\to Y_0$ of the rank of $G$ for which (12.2) is an isomorphism,
+these being conditions local on the target; Step 5 of the theorem, which used only these
+properties, shows that $Y_0$ represents $(U\cap U')/G$.
+
+The same construction inside $U'$ produces an open of $Y_{U'}$ representing the same sheaf, so the
+two are canonically isomorphic, and on triple overlaps the identifications agree because an object
+representing a given sheaf is unique up to unique isomorphism. Gluing the $Y_U$ along these
+identifications gives a scheme $Y$ with a morphism $\pi:X\to Y$ restricting to each $\pi_U$. Being
+finite locally free of the rank of $G$ and the isomorphy of (12.2) are local on $Y$, so they hold
+for $\pi$; and $Y$ represents $X/G$ by Step 5 again, applied to $\pi$. $\square$
+
+The case used most often is a subgroup acting by translation, where freeness is automatic.
+
+**Subgroup quotient corollary.** Let $G$ be an $S$-group scheme affine over $S$ and let
+$G'\subseteq G$ be a closed subgroup that is finite locally free over $S$. Then the translation
+action of $G'$ on $G$ is free, the quotient $Q=G'\backslash G$, that is, the quotient of the
+theorem applied to $X=G$, exists as an affine $S$-scheme, the
+map $\pi:G\to Q$ is finite locally free of the rank of $G'$ and faithfully flat, and $G$ is a
+$G'$-torsor over $Q$. If $G'$ is normal in $G$, then $Q$ carries a unique $S$-group structure
+making $\pi$ a homomorphism.
+
+**Proof.** For the action $a(h,g)=hg$ of $G'$ on $G$ the map $\Psi=(a,q)$ is the composite of the
+closed immersion $G'\times_SG\hookrightarrow G\times_SG$ with the automorphism
+$(u,g)\mapsto(ug,g)$ of $G\times_SG$, hence is a closed immersion; so the action is free and the
+free-action quotient theorem applies to the $S$-affine scheme $G$.
+
+Assume $G'$ normal. Then $\pi\circ m:G\times_SG\to Q$ is invariant for the componentwise action of
+$G'\times_SG'$: on points, $(h_1g_1)(h_2g_2)=h_1\bigl(g_1h_2g_1^{-1}\bigr)g_1g_2$ lies in
+$G'g_1g_2$. Since $\pi$ is an fppf covering, so is $\pi\times\pi:G\times_SG\to Q\times_SQ$, and by
+(12.2) its kernel pair is $(G'\times_SG')\times_S(G\times_SG)$ acting componentwise. The displayed
+invariance says exactly that the two pullbacks of $\pi\circ m$ to that kernel pair agree, so by
+descent of morphisms (Section 10.1) $\pi\circ m$ factors uniquely through a morphism
+$Q\times_SQ\to Q$. The same argument applied to inversion,
+using $(hg)^{-1}=\bigl(g^{-1}h^{-1}g\bigr)g^{-1}\in G'g^{-1}$, produces the inverse map, and
+$\pi\circ e$ is the identity section. The group axioms are equalities of morphisms out of powers
+of $Q$; they hold after the fppf covering $\pi$ and its powers, hence hold, again by Section 10.1.
+Uniqueness is clear since $\pi$ is an epimorphism of fppf sheaves. $\square$
+
+The hypothesis of the stable-affine corollary is genuinely a hypothesis, not a formality: for a
+general free action on a general scheme there need be no stable affine neighborhood of a point,
+and this is the same obstruction that Section 11.2 identified for scheme descent. In applications
+the stable
+affines are produced by a supplementary construction, for instance from an ample line bundle
+carrying a compatible action, and the verification belongs to the application.
+
+Outside the cases just proved — a free action on a scheme affine over $S$, and a free action
+admitting a stable affine cover — representability of a quotient, and likewise of a fixed-point
+functor, may require a separate theorem. Descent preserves such an object once it has been
+constructed; it must not be cited as constructing every group quotient. Freeness is equally
+essential: for a nonfree action the invariant ring still exists, but nothing above survives, and
+$X\to\operatorname{Spec}(R^G)$ need be neither flat nor finite.
 
 ## 13. Torsors
 
@@ -1925,6 +2415,14 @@ The results established in this book may be used in the following precise form.
 - Line bundles, vector bundles, tensors, pairings, sections, and effective Cartier divisors descend
   on a descended scheme, and finite locally free group schemes and their affine torsors satisfy
   effective scheme descent.
+- A finite locally free group scheme acting freely on a scheme affine over the base has a quotient
+  represented by the invariant algebra; the quotient map is finite locally free and faithfully
+  flat of the rank of the group, the orbit map onto the fiber product is an isomorphism, the
+  quotient represents the fppf sheaf quotient, and its formation commutes with arbitrary base
+  change. The same holds for a free action admitting a cover by stable opens affine over the base.
+  In particular a group scheme affine over the base has a quotient by any finite locally free
+  closed subgroup, and the quotient is a group scheme when the subgroup is normal. Freeness and
+  the stable affine cover are hypotheses, not consequences.
 - General group objects, torsors, contracted products, and twists descend as fpqc sheaves along
   arbitrary fpqc covers and as algebraic spaces along surjective étale covers.
   They are schemes under the affine, finite, quasi-affine, or compatible-polarization criteria

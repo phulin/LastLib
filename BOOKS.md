@@ -91,7 +91,9 @@ nearby-cycle spectral sequences.
     line bundles, and finite-flat group objects. Recover schemes under the proved affine, finite,
     quasi-affine, separated locally-quasi-finite, and compatible-polarization criteria needed by
     the moduli constructions, and show why unrestricted scheme-level effectivity is deliberately
-    not asserted; no descent statement beyond the proved cases is assumed.
+    not asserted; no descent statement beyond the proved cases is assumed. Construct quotients by
+    free actions of finite locally free group schemes with the full torsor identity, fppf sheaf
+    quotient, and base-change properties, including stable-affine covers and subgroup quotients.
 
 11. **Normalization and Regular Models of Arithmetic Curves** — Prove the required finiteness
     of normalization and construct normal projective models of curves over excellent Dedekind
