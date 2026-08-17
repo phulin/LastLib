@@ -892,7 +892,7 @@ theorem chapter10_integral_element_characteristic_data
   let Ω := AlgebraicClosure K
   let p : A[X] := minpoly A x
   let pK : K[X] := p.map (algebraMap A K)
-  let pΩ : Ω[X] := pK.map (algebraMap K Ω)
+  let pΩ : Polynomial Ω := pK.map (algebraMap K Ω)
   have hpK : Polynomial.aeval x pK = 0 := by
     dsimp [pK]
     rw [Polynomial.aeval_map_algebraMap]
@@ -917,7 +917,7 @@ theorem chapter10_integral_element_characteristic_data
     simp
   have hcoeff : ∀ i, IsIntegral A ((LinearMap.charpoly f).coeff i) := by
     intro i
-    let q : Ω[X] := (LinearMap.charpoly f).map (algebraMap K Ω)
+    let q : Polynomial Ω := (LinearMap.charpoly f).map (algebraMap K Ω)
     have hqmonic : q.Monic := by
       exact (LinearMap.charpoly_monic f).map _
     have hqsplits : q.Splits := IsAlgClosed.splits q
