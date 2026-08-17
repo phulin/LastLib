@@ -23,19 +23,20 @@ and perfect pushforward; surface resolution and contraction) have all since been
 in-manuscript proofs and are no longer conditional.
 
 The known background that remains undischarged in Books 8--12 — assumed in proofs but proved in
-no earlier book and absent from the local Mathlib checkout — is: the quasi-coherent
-sheaf-cohomology formalism assumed by Book 9 (Book 8's cohomological background, syzygy theorem,
-and generic freeness are now cited from Books 7a and 7b, and its former out-of-order use of
-Cartier-divisor descent is replaced by an inline finite-locally-free descent section; what
-remains in Book 8 is the fppf sheaf property of Hom in its universal-divisor construction); the full
+no earlier book and absent from the local Mathlib checkout — has largely been discharged: Books
+8 and 9 now cite their sheaf-cohomology formalism from Books 7a and 7b, Book 8's former
+out-of-order use of Cartier-divisor descent is replaced by an inline finite-locally-free descent
+section, Book 9 constructs its residue pairing and proves Stein factorization (discharging Book
+12's connected-fiber background), factoriality of regular local rings is proved as Book 11's
+Auslander--Buchsbaum theorem (with the dimension-at-most-two case Book 9 needs proved earlier,
+in Book 9 itself), and Book 11's Cohen-theory citations are routed to Book 1, Chapter 13. What
+remains: the fppf sheaf property of Hom in Book 8's universal-divisor construction; the full
 finite-type permanence of excellence in Book 11, which is proved there only for the base cases
 the manuscript uses (perfect fields, characteristic-zero Dedekind domains, complete local rings)
-and is otherwise carried as an explicit universally-excellent hypothesis; and the connected-fiber
-part of Stein factorization in Book 12 (factoriality of regular local rings, formerly on this
-list, is now proved as Book 11's Auslander--Buchsbaum theorem, and Book 11's Cohen-theory
-citations are now routed to Book 1, Chapter 13). These interfaces are not silently assigned to
-`MATHLIB`, and the chronological rows below do not turn conclusions resting on them into
-unconditional ones.
+and is otherwise carried as an explicit universally-excellent hypothesis; and Book 9's flagged
+(and verifiably unused) étale-local nodal normal form. These interfaces are not silently
+assigned to `MATHLIB`, and the chronological rows below do not turn conclusions resting on them
+into unconditional ones.
 
 ## Preferred selected-three proof spine
 
@@ -63,7 +64,7 @@ flowchart LR
 |   7a | Arithmetic Spectral Sequences and Derived Cohomology                           | MATHLIB                                                                                                                                                           |
 |   7b | Quasi-coherent Cohomology on Schemes                                           | 7a, MATHLIB                                                                                                                                                       |
 |    8 | Ample Line Bundles, Hilbert Polynomials, and Symmetric Powers                  | 7a, 7b, MATHLIB                                                                                                                                                   |
-|    9 | Divisors, Riemann--Roch, and Duality on Relative Curves                        | 1, 8, MATHLIB                                                                                                                                                     |
+|    9 | Divisors, Riemann--Roch, and Duality on Relative Curves                        | 1, 7a, 7b, 8, MATHLIB                                                                                                                                             |
 |   10 | Faithfully Flat Descent in Algebraic Geometry                                  | 8, MATHLIB                                                                                                                                                        |
 |   11 | Normalization and Regular Models of Arithmetic Curves                          | 1, 8, 9, 10                                                                                                                                                       |
 |   12 | Blowups and Intersection Theory on Arithmetic Surfaces                         | 9, 11                                                                                                                                                             |

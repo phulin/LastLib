@@ -36,15 +36,18 @@
    - [Canonical divisors on smooth curves](#72-canonical-divisors-on-smooth-curves)
    - [Differentials at singular points](#73-differentials-at-singular-points)
 8. [Residues](#8-residues)
-   - [The local residue](#81-the-local-residue)
-   - [Independence of parameter](#82-independence-of-parameter)
-   - [The global residue theorem](#83-the-global-residue-theorem)
-   - [Finite maps and trace](#84-finite-maps-and-trace)
+   - [What a residue must be, and why the obvious definition fails](#81-what-a-residue-must-be-and-why-the-obvious-definition-fails)
+   - [Residues on the affine line](#82-residues-on-the-affine-line)
+   - [The local residue on a smooth curve](#83-the-local-residue-on-a-smooth-curve)
+   - [The principal-part pairing](#84-the-principal-part-pairing)
+   - [The global residue theorem](#85-the-global-residue-theorem)
+   - [Finite maps and trace](#86-finite-maps-and-trace)
 9. [Dualizing sheaves](#9-dualizing-sheaves)
    - [Why ordinary differentials are not enough](#91-why-ordinary-differentials-are-not-enough)
    - [Dualizing sheaves on proper curves](#92-dualizing-sheaves-on-proper-curves)
    - [The relative dualizing sheaf](#93-the-relative-dualizing-sheaf)
    - [Smooth and Gorenstein families](#94-smooth-and-gorenstein-families)
+   - [Proper pushforward, Stein factorization, and connected fibers](#95-proper-pushforward-stein-factorization-and-connected-fibers)
 10. [Nodes, normalization, and opposite residues](#10-nodes-normalization-and-opposite-residues)
     - [The local node](#101-the-local-node)
     - [Functions under normalization](#102-functions-under-normalization)
@@ -138,13 +141,51 @@ $$
 
 No algebraic closure is silently assumed. Degrees of closed points always include residue-field degrees.
 
-We use the elementary noetherian facts that a one-dimensional normal local domain is a discrete
-valuation ring, that a regular local ring is factorial, and that coherent cohomology on a proper
-curve is finite-dimensional and vanishes above degree one. Valuations are normalized by
-$\operatorname{ord}_x(t)=1$, and finite local lengths are module lengths. The substantial
-projective inputs are the results of Book 8: Serre vanishing, polynomiality and constancy of Euler
-characteristics in flat projective families, and the universal-divisor description of symmetric
-powers of smooth relative curves.
+We use the elementary noetherian fact that a one-dimensional normal local domain is a discrete
+valuation ring. Valuations are normalized by $\operatorname{ord}_x(t)=1$, and finite local lengths
+are module lengths. Factoriality of regular local rings is **not** assumed anywhere. The only
+consequence of it that this book uses is that a height-one prime of a regular local ring of
+dimension at most two is principal, and that statement is proved from scratch in Proposition 3.1
+below; every scheme to which we apply it has regular local rings of dimension at most two.
+
+The cohomological background is the quasi-coherent formalism of Books 7a and 7b, used as a fixed
+interface rather than reconstructed. From Book 7b we take: the affine dictionary
+(Corollaries 2.4--2.6); permanence of quasi-coherence under kernels, cokernels, extensions,
+colimits, tensor products, pullback, and quasi-compact quasi-separated pushforward
+(Theorems 2.7, 2.8, 2.10); coherent exhaustion of a quasi-coherent sheaf on a noetherian scheme
+(Theorem 2.11); Serre's affine vanishing theorem (Theorem 3.9), acyclicity of affine opens
+(Corollary 3.10), and cohomological invisibility of affine morphisms (Corollary 3.11); the finite
+alternating Čech model on a quasi-compact separated scheme (Theorem 4.2) with its long exact
+sequences (Corollary 4.4) and Mayer--Vietoris (Theorem 4.3); quasi-coherence of higher direct
+images (Theorem 4.7); the cohomological-dimension bound supplied by a finite affine cover
+(Corollary 4.8); the Leray spectral sequence for quasi-coherent sheaves and its degeneration over
+an affine base (Corollary 4.9); derived coefficient change and derived base change for a base-flat
+quasi-coherent sheaf (Lemma 5.1, Theorem 5.2), together with the underived flat-base-change
+statements (Theorem 5.3, Corollary 5.4); commutation of cohomology with filtered colimits
+(Propositions 5.5 and 5.6, Corollary 5.7); Grothendieck's vanishing theorem on a noetherian space
+of finite dimension (Theorem 5.8, Corollary 5.9); the complete computation of the cohomology of
+the twisting sheaves on projective space, its freeness and base-change behaviour, and its perfect
+top pairing (Theorem 6.5, Corollary 6.6, Theorem 6.7); and the graded syzygy theorem with its
+stability under field extension (Theorem 7.4, Corollary 7.5). From Book 7a we take the derived
+category and its replacement theory: K-injective and K-flat complexes, their existence, and the
+internal refinement needed for sheaf-valued Hom (Sections 3.2--3.6, summarized in the checklist of
+Section 3.8); derived global sections, derived tensor product, derived internal Hom, and the
+tensor--Hom and projection formulas (Sections 4.1--4.4); change of rings (Section 4.5); strong
+convergence and edge maps for first-quadrant spectral sequences (Sections 6.1, 6.3); and the Leray
+spectral sequence with its functoriality (Sections 8.1, 8.2).
+
+Two immediate consequences of that interface are used constantly and are worth isolating. First, a
+proper curve over a field is a noetherian scheme of dimension one, so Corollary 5.9 of Book 7b
+gives $H^p(X,\mathcal F)=0$ for $p\geq2$ and every quasi-coherent $\mathcal F$; the same conclusion
+follows from Corollary 4.8(1) of Book 7b once a two-element affine cover is available. Second, a
+zero-dimensional noetherian scheme is affine, so Theorem 3.9 of Book 7b makes its higher cohomology
+vanish; this is what allows the quotient terms of the divisor sequences below to be counted by
+lengths alone. Finite-dimensionality of coherent cohomology is supplied by Book 8 in the projective
+case and is proved for arbitrary proper curves in Section 9.3.
+
+The substantial projective inputs are the results of Book 8: Serre vanishing, polynomiality and
+constancy of Euler characteristics in flat projective families, and the universal-divisor
+description of symmetric powers of smooth relative curves.
 Whenever a relative statement needs projectivity rather than properness alone, that hypothesis is
 stated in the theorem.
 
@@ -281,7 +322,90 @@ $$
 
 for every open $U$: a rational function with no codimension-one zero or pole is a unit after applying the statement to it and its inverse. Normality is doing real work here; codimension-two defects would otherwise be invisible to valuations.
 
-Surjectivity is equivalent to local factoriality. A prime divisor is Cartier exactly when its height-one prime ideal becomes principal locally. Regular noetherian local rings are factorial, so on a regular noetherian integral scheme every Weil divisor is Cartier. The inverse is constructed by choosing a local generator for each height-one prime and multiplying powers.
+Surjectivity is equivalent to local principality of height-one primes. A prime divisor is Cartier
+exactly when its height-one prime ideal becomes principal in every local ring. The general
+statement that this holds in every regular noetherian local ring is a genuine theorem, and it is
+not available here; it is proved later in this collection, and citing it now would be circular.
+What we need is only the case of dimension at most two, and that case has a short direct proof
+which we give in full.
+
+**Proposition 3.1 (height-one primes in low-dimensional regular local rings).** Let $R$ be a
+regular noetherian local ring with $\dim R\leq2$ and let $\mathfrak p\subset R$ be a prime of
+height one. Then $\mathfrak p$ is principal.
+
+**Proof.** A regular local ring is a domain, and in dimension zero it is a field, which has no
+height-one prime. If $\dim R=1$ then $R$ is a regular local domain of dimension one, hence a
+discrete valuation ring, and $\mathfrak p=\mathfrak m$ is generated by a uniformizer. So assume
+$\dim R=2$, with maximal ideal $\mathfrak m$ and residue field $\ell$.
+
+_Step 1: every finite $R$-module has projective dimension at most two._ Choose a regular system
+of parameters $x_1,x_2$, so that $\mathfrak m=(x_1,x_2)$ and $\dim_\ell\mathfrak m/\mathfrak m^2=2$.
+The sequence $x_1,x_2$ is regular: $R$ is a domain so $x_1$ is a non-zero-divisor, and $R/x_1R$ is
+a regular local ring of dimension one, hence a discrete valuation ring and in particular a domain,
+so the image of $x_2$ is a non-zero-divisor there. Consequently the Koszul complex
+$K_\bullet(x_1,x_2)$, the tensor product of the two-term complexes
+$R\xrightarrow{x_i}R$, is a free resolution of $\ell$ of length two: exactness follows by tensoring
+the two-term complexes successively, using at each stage that the next element is a
+non-zero-divisor on the quotient. Now let $M$ be a finite $R$-module and choose a minimal free
+resolution $F_\bullet\to M$, obtained by lifting at each stage a basis of
+$K/\mathfrak mK$ for the current kernel $K$; minimality means that every differential of
+$F_\bullet$ has entries in $\mathfrak m$, so $F_\bullet\otimes_R\ell$ has zero differentials and
+$\operatorname{Tor}^R_j(M,\ell)=F_j\otimes_R\ell$. Computing the same Tor modules with the Koszul
+resolution of $\ell$ gives $\operatorname{Tor}^R_j(M,\ell)=0$ for $j>2$. Nakayama therefore forces
+$F_j=0$ for $j>2$, which is the assertion.
+
+_Step 2: $\operatorname{Ext}^2_R(R/\mathfrak p,R)=0$._ Choose $t\in\mathfrak m$ with
+$t\notin\mathfrak p$; this is possible because $\mathfrak p$ has height one and $\mathfrak m$ has
+height two, so $\mathfrak p\neq\mathfrak m$. Multiplication by $t$ is injective on the domain
+$R/\mathfrak p$, giving
+
+$$
+0\longrightarrow R/\mathfrak p\xrightarrow{\ t\ }R/\mathfrak p
+\longrightarrow R/(\mathfrak p+tR)\longrightarrow0 .
+$$
+
+The long exact sequence of $\operatorname{Ext}_R(-,R)$ contains
+
+$$
+\operatorname{Ext}^2_R(R/\mathfrak p,R)\xrightarrow{\ t\ }
+\operatorname{Ext}^2_R(R/\mathfrak p,R)\longrightarrow
+\operatorname{Ext}^3_R\bigl(R/(\mathfrak p+tR),R\bigr)=0,
+$$
+
+the last group vanishing by Step 1. So multiplication by the element $t\in\mathfrak m$ is
+surjective on the finite $R$-module $\operatorname{Ext}^2_R(R/\mathfrak p,R)$, and Nakayama makes
+that module zero.
+
+_Step 3: $\mathfrak p$ is free._ The sequence
+$0\to\mathfrak p\to R\to R/\mathfrak p\to0$ gives
+
+$$
+\operatorname{Ext}^1_R(R,R)=0\longrightarrow\operatorname{Ext}^1_R(\mathfrak p,R)
+\longrightarrow\operatorname{Ext}^2_R(R/\mathfrak p,R)=0,
+$$
+
+so $\operatorname{Ext}^1_R(\mathfrak p,R)=0$. Take a minimal free resolution of $\mathfrak p$; by
+Step 1 applied to $R/\mathfrak p$ it has the form
+$0\to F_2\xrightarrow{\,A\,}F_1\to\mathfrak p\to0$ with the entries of $A$ in $\mathfrak m$.
+Applying $\operatorname{Hom}_R(-,R)$ gives the exact sequence
+
+$$
+F_1^\vee\xrightarrow{\ A^{\mathsf T}\ }F_2^\vee
+\longrightarrow\operatorname{Ext}^1_R(\mathfrak p,R)=0 ,
+$$
+
+so $A^{\mathsf T}$ is surjective. Its entries lie in $\mathfrak m$, so
+$A^{\mathsf T}\otimes_R\ell=0$ and Nakayama gives $F_2^\vee=0$, hence $F_2=0$. Thus
+$\mathfrak p\simeq F_1$ is free. Finally $\mathfrak p\otimes_R\operatorname{Frac}(R)$ is a nonzero
+ideal of the fraction field, hence one-dimensional, so $F_1$ has rank one and $\mathfrak p$ is
+principal. $\square$
+
+Consequently, on a regular noetherian integral scheme all of whose local rings have dimension at
+most two, every Weil divisor is Cartier: the inverse map is constructed by choosing a local
+generator for each height-one prime and multiplying the corresponding powers. This covers every
+situation in this book. Curves are the case $\dim\leq1$, and the total space of a relative curve
+over a Dedekind base is at most two-dimensional. Nothing below uses the Cartier--Weil dictionary
+on a regular scheme of dimension three or more.
 
 ### 3.3 Normal curves and regular models
 
@@ -291,7 +415,7 @@ $$
 \operatorname{CaDiv}(X)\simeq\operatorname{Div}(X).
 $$
 
-This is the cleanest divisor dictionary in the book. It applies to smooth curves over any field, because smoothness implies regularity. It also applies to regular total spaces of relative curves, even when the total space is a surface or higher-dimensional: regularity makes every codimension-one cycle Cartier.
+This is the cleanest divisor dictionary in the book. It applies to smooth curves over any field, because smoothness implies regularity. By Proposition 3.1 it also applies to the regular total space of a relative curve over a Dedekind base, a two-dimensional situation: there too regularity makes every codimension-one cycle Cartier.
 
 There is a particularly useful picture over a Dedekind scheme. Let $S$ be integral, regular, noetherian, and one-dimensional, and let $X\to S$ be an integral normal proper flat relative curve. Every prime divisor on the surface $X$ is of one of two kinds. A **horizontal** prime dominates $S$; it is the closure of a closed point of the generic fiber. It is proper and quasi-finite over $S$, hence finite, and its integral coordinate algebra is torsion-free over the Dedekind base, hence flat. Its finite-flat rank is its degree over the generic fiber. A **vertical** prime is an irreducible component of a closed fiber. Normality supplies an order valuation at either kind of prime, so rational functions have horizontal and vertical orders simultaneously.
 
@@ -432,7 +556,12 @@ $$
 \longrightarrow0. \tag{5.3}
 $$
 
-Since $D$ is zero-dimensional, it has no $H^1$, and its Euler characteristic is the $k$-dimension
+Since $D$ is zero-dimensional it is a finite, hence affine, noetherian scheme, so Serre's affine
+vanishing theorem (Book 7b, Theorem 3.9) gives $H^1(D,\mathcal F)=0$ for every quasi-coherent
+$\mathcal F$; alternatively this is Grothendieck vanishing in dimension zero (Book 7b,
+Corollary 5.9). Because the sheaf $\mathcal O_D(D)$ is pushed forward from $D$ along a finite,
+hence affine, morphism, Corollary 3.11 of Book 7b identifies its cohomology on $X$ with its
+cohomology on $D$. Its Euler characteristic is therefore the $k$-dimension
 of its global sections. On a regular integral curve the local equation has order $n_x$ and the
 quotient has length $n_x$, so
 
@@ -675,150 +804,619 @@ $\Omega^1$ is not; the later duality construction will identify the two without 
 
 ## 8. Residues
 
-### 8.1 The local residue
+### 8.1 What a residue must be, and why the obvious definition fails
 
-Let $X$ be a smooth integral curve over $k$ and let $x$ be a closed point. A subtlety matters over an
-imperfect field: although $X/k$ is smooth, the finite extension $\kappa(x)/k$ need not be
-separable. The residue must therefore be defined before invoking a field trace.
+Let $X$ be a smooth integral curve over $k$ and let $x$ be a closed point. We want a canonical
+$k$-linear functional
 
-The point $x$ is an effective Cartier divisor. For every $n\geq1$, adjunction for the finite
-Cartier subscheme $nx$ identifies the principal-part quotient with its finite dualizing module:
+$$
+\operatorname{Res}_x:\Omega^1_{k(X)/k}\longrightarrow k
+$$
+
+which vanishes on the regular differentials $\Omega^1_{X,x}$, which kills exact differentials, whose
+associated pairing against the finite algebras $\mathcal O_{nx}$ is perfect, and whose values sum to
+zero over a proper curve. Over an algebraically closed field all of this is familiar: the completed
+local ring is a power series ring $\kappa[[t]]$, a differential is $\bigl(\sum a_nt^n\bigr)dt$, and
+the residue is $a_{-1}$. The whole difficulty of this section is that over a general field none of
+that description survives.
+
+The obstruction is not the failure of $\kappa(x)$ to equal $k$; it is the possible inseparability of
+$\kappa(x)/k$. One example exhibits all three symptoms at once. Let $p$ be a prime, let
+$k=\mathbf F_p(a)$, let $X=\mathbf A^1_k=\operatorname{Spec}k[z]$, and let $x$ be the closed point
+cut out by the irreducible polynomial $P=z^p-a$, so that
+
+$$
+\kappa(x)=k[z]/(z^p-a)=k\bigl(a^{1/p}\bigr)
+$$
+
+is purely inseparable of degree $p$ over $k$, and $t:=P(z)$ is a uniformizer at $x$.
+
+_The field trace is useless._ For a purely inseparable extension of degree $p>1$ the trace form is
+identically zero, so $\operatorname{Tr}_{\kappa(x)/k}=0$ and no formula of the shape
+$\operatorname{Tr}_{\kappa(x)/k}(a_{-1})$ can define a nonzero functional.
+
+_The residue field does not sit inside the completion._ Suppose $K\subseteq\widehat{\mathcal
+O}_{X,x}$ were a subfield containing $k$ and mapping isomorphically onto $\kappa(x)$. Then $K$ would
+contain an element $w$ with $w^p=a$. Since $z^p=a+t$ we would get
+$(w-z)^p=w^p-z^p=-t$, so the uniformizer $t$ would have a $p$-th root in the completed local ring.
+That is impossible, because the normalized valuation of a $p$-th power is divisible by $p$ while
+$v_x(t)=1$. So there is no coefficient field containing $k$, and the expansion of an element of
+$\widehat{\mathcal O}_{X,x}$ as a power series with coefficients in $\kappa(x)$ is not available over
+$k$. Book 1, Theorem 13.15, does supply a coefficient field for any complete local ring containing a
+field; the computation just made shows that in equal characteristic $p$ it cannot always be chosen
+to contain a prescribed base field, and this is exactly the phenomenon that makes the naive
+definition of the residue unavailable.
+
+_A uniformizer is not a coordinate._ In this example $dt=d(z^p-a)=pz^{p-1}dz=0$, while
+$\Omega^1_{X/k}=k[z]\,dz$ is free of rank one on $dz$. So $\eta=h\,dt$ is not even a legitimate way
+to write a differential: the differential of a uniformizer may vanish identically.
+
+What survives is the invertibility of $\Omega^1_{X/k}$ itself. Because $X/k$ is smooth of relative
+dimension one, $\Omega^1_{X/k}$ is a line bundle and $\Omega^1_{k(X)/k}$ is a one-dimensional
+$k(X)$-vector space. Call $z\in k(X)$ a **separating element** if $dz\neq0$ in $\Omega^1_{k(X)/k}$,
+and call it an **étale coordinate at $x$** if moreover $z\in\mathcal O_{X,x}$ and $dz$ generates the
+stalk $\Omega^1_{X,x}$. Two remarks are needed.
+
+First, a separating element deserves its name: if $dz\neq0$ then $\Omega^1_{k(X)/k}=k(X)\,dz$ by
+dimension count, hence $\Omega^1_{k(X)/k(z)}=0$, so $k(X)/k(z)$ is separably algebraic; and $z$ is
+transcendental over $k$, since otherwise $k(X)$ would be algebraic over $k$, contradicting the fact
+that a one-dimensional $\Omega^1$ forces transcendence degree one.
+
+Second, étale coordinates exist at every closed point: $\Omega^1_{X,x}$ is generated by the
+differentials $da$ with $a\in\mathcal O_{X,x}$, so by Nakayama one of them generates. For such a $z$
+the induced morphism $\pi_z:U\to\mathbf A^1_k$ on a neighbourhood $U$ of $x$ is unramified, because
+$\Omega^1_{U/\mathbf A^1}=\Omega^1_{U/k}/\mathcal O_U\,dz=0$ after shrinking; and it is flat, because
+$\mathcal O_{X,x}$ is a one-dimensional regular local domain, hence torsion free over the discrete
+valuation ring $\mathcal O_{\mathbf A^1,y}$ below it, where $y=\pi_z(x)$. So $\pi_z$ is étale at $x$.
+
+The construction now proceeds in three steps. Section 8.2 defines residues on the affine line by an
+elementary partial-fraction recipe, which is manifestly $k$-linear and compatible with extension of
+the base field. Section 8.3 transports them to $X$ along an étale coordinate, using the local traces
+of a finite separable extension of complete discretely valued fields, and proves that the result is
+independent of every choice by descending the question to an algebraic closure, where all the
+classical formulas are available. Section 8.4 records the resulting principal-part duality.
+
+### 8.2 Residues on the affine line
+
+Write $\mathbf A^1_k=\operatorname{Spec}k[z]$ and $\mathbf P^1_k=\mathbf A^1_k\cup\{\infty\}$. Closed
+points $y$ of $\mathbf A^1_k$ correspond to monic irreducible polynomials $P_y\in k[z]$, and
+$\mathcal O_{\mathbf A^1,y}=k[z]_{(P_y)}$ is a discrete valuation ring with uniformizer $P_y$ and
+residue field $\kappa(y)=k[z]/(P_y)$.
+
+Every nonzero polynomial has invertible leading term in the field $k((z^{-1}))$ of Laurent series in
+$z^{-1}$, so there is a canonical embedding $k(z)\subseteq k((z^{-1}))$, the **expansion at
+infinity**. Let
+
+$$
+\lambda_\infty:k((z^{-1}))\longrightarrow k
+$$
+
+be the $k$-linear map extracting the coefficient of $z^{-1}$.
+
+**Lemma 8.1 (partial fractions).** Every $h\in k(z)$ has a unique expression
+
+$$
+h=h_0+\sum_{y}h_y,
+\qquad h_0\in k[z],
+\qquad h_y=\frac{g_y}{P_y^{\,n_y}},\quad \deg g_y<n_y\deg P_y,
+$$
+
+with only finitely many $h_y$ nonzero. Moreover $h_y=0$ if and only if $h\in\mathcal O_{\mathbf
+A^1,y}$, and $h_y$ depends only on the class of $h$ in $k(z)/\mathcal O_{\mathbf A^1,y}$.
+
+**Proof.** Write $h=g/f$ with $f=\prod_yP_y^{n_y}$ its factorization into monic irreducibles. The
+ideals $(P_y^{n_y})$ are pairwise comaximal, so repeated use of Bézout gives
+$1/f=\sum_yu_y/P_y^{\,n_y}$ with $u_y\in k[z]$, whence $h=\sum_ygu_y/P_y^{\,n_y}$; Euclidean division
+of each numerator by $P_y^{\,n_y}$ moves a polynomial into $h_0$ and leaves a numerator of degree
+less than $n_y\deg P_y$. For uniqueness, a difference of two such expressions is a rational function
+with no poles, hence a polynomial, whose non-polynomial parts $\sum_y(h_y-h'_y)$ lie in
+$z^{-1}k[[z^{-1}]]$ and therefore vanish; comparing poles at each $y$ separates the terms. If
+$h\in\mathcal O_{\mathbf A^1,y}$ then subtracting the terms at the other points shows that $h_y$ is
+regular at $y$ and lies in $z^{-1}k[[z^{-1}]]$ with denominator a power of $P_y$, so $h_y=0$. The
+last clause follows, since $h\mapsto h_y$ is $k$-linear by uniqueness and kills $\mathcal O_{\mathbf
+A^1,y}$. $\square$
+
+**Definition.** For $h\in k(z)$ and a closed point $y$ of $\mathbf A^1_k$ set
+
+$$
+\operatorname{res}_y(h\,dz):=\lambda_\infty(h_y),
+\qquad
+\operatorname{res}_\infty(h\,dz):=-\lambda_\infty(h).
+$$
+
+Since $h_y$ lies in $z^{-1}k[[z^{-1}]]$ the first expression is the coefficient of $z^{-1}$ in the
+expansion of $h_y$ at infinity.
+
+**Proposition 8.2 (basic properties on the line).** Fix a closed point $y$ of $\mathbf A^1_k$.
+
+1. $\operatorname{res}_y(-\,dz)$ is $k$-linear and vanishes on $\mathcal O_{\mathbf A^1,y}\,dz$;
+   it factors through $k(z)/\mathcal O_{\mathbf A^1,y}$.
+2. It extends uniquely to a $k$-linear functional on $\widehat K_y\,dz$ vanishing on
+   $\widehat{\mathcal O}_y\,dz$, where $\widehat{\mathcal O}_y$ is the completion and $\widehat K_y$
+   its fraction field.
+3. For every $h\in k(z)$ one has
+   $\sum_{y\in\mathbf A^1}\operatorname{res}_y(h\,dz)+\operatorname{res}_\infty(h\,dz)=0$.
+4. If $\kappa(y)=k$, say $P_y=z-b$, then $\operatorname{res}_y(h\,dz)$ is the coefficient of
+   $(z-b)^{-1}$ in the Laurent expansion of $h$ at $b$.
+5. For every field extension $k'/k$ and every $h\in k(z)$,
+   $\operatorname{res}_y(h\,dz)=\sum_{y'\mapsto y}\operatorname{res}_{y'}(h\,dz)$ inside $k'$, the
+   sum being over the closed points of $\mathbf A^1_{k'}$ lying over $y$.
+
+**Proof.** (1) is Lemma 8.1. For (2), the transition maps identify
+$\mathcal O_{\mathbf A^1,y}/P_y^{\,n}=\widehat{\mathcal O}_y/P_y^{\,n}$, so
+$k(z)/\mathcal O_{\mathbf A^1,y}=\varinjlim_n P_y^{-n}\mathcal O_{\mathbf A^1,y}/\mathcal
+O_{\mathbf A^1,y}=\widehat K_y/\widehat{\mathcal O}_y$, and a functional on the left is the same
+thing as one on the right. (3) is immediate from Lemma 8.1: $\lambda_\infty$ is $k$-linear and kills
+polynomials, so $\lambda_\infty(h)=\sum_y\lambda_\infty(h_y)$. For (4), the expansion of
+$(z-b)^{-m}$ at infinity is $z^{-m}(1-b/z)^{-m}$, whose $z^{-1}$ coefficient is $1$ for $m=1$ and
+$0$ for $m\geq2$; since $h_y$ is a $k$-linear combination of the $(z-b)^{-m}$ with $m\geq1$, and
+those are exactly the terms of the Laurent expansion with negative index, the two prescriptions
+agree. For (5), the identity $h=h_0+\sum_yh_y$ persists in $k'(z)$. The summand $h_y$ has poles only
+at the points of $\mathbf A^1_{k'}$ above $y$ and lies in $z^{-1}k'[[z^{-1}]]$, so its own
+partial-fraction expression over $k'$ has zero polynomial part and components exactly at those
+points; and $h-h_y$ is regular at each of them, so those components are the components of $h$.
+Applying $\lambda_\infty$, which is compatible with the inclusion $k((z^{-1}))\subseteq
+k'((z^{-1}))$, gives $\operatorname{res}_y(h\,dz)=\lambda_\infty(h_y)=\sum_{y'\mapsto
+y}\operatorname{res}_{y'}(h\,dz)$. $\square$
+
+Part (3) is the residue theorem on $\mathbf P^1_k$, proved without any duality or trace. Part (4)
+says that over a field where the point is rational the definition is the classical one, and part (5)
+is the mechanism by which every later statement will be reduced to that classical case.
+
+### 8.3 The local residue on a smooth curve
+
+Let $X$ be a smooth integral curve over $k$, let $x$ be a closed point, and let $z$ be an étale
+coordinate at $x$ in the sense of Section 8.1. Write $y$ for the closed point of $\mathbf A^1_k$
+below $x$, that is, the centre on $\mathbf A^1_k$ of the discrete valuation $v_x$. Completing,
+Book 1, Section 12, gives an inclusion $\widehat{\mathcal O}_y\subseteq\widehat{\mathcal O}_{X,x}$
+of complete discrete valuation rings, and the completed product theorem of Book 1, Section 12.2,
+identifies
+
+$$
+k(X)\otimes_{k(z)}\widehat K_y\;\simeq\;\prod_{x'\mapsto y}\widehat K_{x'},
+\qquad
+\operatorname{Tr}_{k(X)/k(z)}=\sum_{x'\mapsto y}\operatorname{Tr}_{\widehat K_{x'}/\widehat K_y},
+\tag{8.1a}
+$$
+
+the product being over the closed points of $X$ above $y$. All the field extensions occurring here
+are separable, since $k(X)/k(z)$ is, so all these traces are the traces of separable field
+extensions and are nonzero.
+
+**Definition.** For $\eta\in\Omega^1_{k(X)/k}$ write $\eta=h\,dz$ with $h\in k(X)$ and set
+
+$$
+\operatorname{Res}^{\,z}_x(\eta)
+:=\operatorname{res}_y\!\bigl(\operatorname{Tr}_{\widehat K_x/\widehat K_y}(h)\,dz\bigr), \tag{8.1b}
+$$
+
+using the extension of $\operatorname{res}_y$ to $\widehat K_y$ furnished by Proposition 8.2(2).
+
+Because $z$ is an étale coordinate at $x$, the stalk $\Omega^1_{X,x}$ equals $\mathcal
+O_{X,x}\,dz$, so $\eta$ is regular at $x$ exactly when $h\in\mathcal O_{X,x}$. In that case
+$\operatorname{Tr}(h)\in\widehat{\mathcal O}_y$, because the trace of a finite extension of discrete
+valuation rings carries integers to integers (Book 1, Section 11.8), and therefore
+$\operatorname{Res}^{\,z}_x(\eta)=0$. Thus (8.1b) already kills regular differentials, and it
+factors through $\Omega^1_{k(X)/k}/\Omega^1_{X,x}$.
+
+Two reductions make everything else routine. The first isolates one point of a fibre.
+
+**Lemma 8.3 (separating the points of a fibre).** Let $S$ be the set of closed points of $X$ above
+$y$ and let $\eta\in\Omega^1_{k(X)/k}$. There is $\tilde\eta\in\Omega^1_{k(X)/k}$ with
+$\tilde\eta-\eta$ regular at $x$ and $\tilde\eta$ regular at every point of $S\setminus\{x\}$.
+
+**Proof.** The semilocal ring $\mathcal O_{X,S}$ is a principal ideal domain, being a semilocal
+Dedekind domain, so its invertible modules are free; choose a generator $\omega$ of
+$\Omega^1_{X,S}$ and write $\eta=f\omega$ with $f\in k(X)$. Approximation in a semilocal Dedekind
+domain provides $\tilde f\in k(X)$ congruent to $f$ modulo $\mathcal O_{X,x}$ and regular at the
+other points of $S$: take $\tilde f$ to be the part of a partial-fraction decomposition of $f$ in
+$\mathcal O_{X,S}$ supported at $x$, which exists because the localizations at the finitely many
+maximal ideals are comaximal. Put $\tilde\eta=\tilde f\omega$. $\square$
+
+The second reduction is base change. Let $k'/k$ be a field extension. Since $X/k$ is smooth,
+$X_{k'}$ is a smooth $k'$-curve, hence regular, hence a disjoint union of integral curves; and
+$k(X)\otimes_kk'$ is the product of their function fields, because $k(X)/k$ is separably generated
+and so $k(X)\otimes_kk'$ is reduced. An étale coordinate $z$ at $x$ remains an étale coordinate at
+every point $x'$ of $X_{k'}$ above $x$, because $\Omega^1_{X_{k'}/k'}=\Omega^1_{X/k}\otimes_kk'$.
+
+**Proposition 8.4 (base change).** With this notation, for every $\eta\in\Omega^1_{k(X)/k}$,
+
+$$
+\operatorname{Res}^{\,z}_x(\eta)=\sum_{x'\mapsto x}\operatorname{Res}^{\,z}_{x'}(\eta)
+\qquad\text{in }k' . \tag{8.1c}
+$$
+
+**Proof.** Replace $\eta$ by the $\tilde\eta$ of Lemma 8.3; this changes neither side, since
+$\tilde\eta-\eta$ is regular at $x$ and hence at every $x'$ above $x$, and since both sides kill
+differentials regular at the relevant points. Write $\tilde\eta=\tilde h\,dz$. Summing (8.1b) over
+the fibre and using (8.1a) both over $k$ and over $k'$,
+
+$$
+\sum_{x''\mapsto y}\operatorname{Res}^{\,z}_{x''}(\tilde\eta)
+=\operatorname{res}_y\!\bigl(\operatorname{Tr}_{k(X)/k(z)}(\tilde h)\,dz\bigr),
+$$
+
+and likewise over $k'$ for each point $y'$ of $\mathbf A^1_{k'}$ above $y$, with
+$\operatorname{Tr}_{k(X)/k(z)}(\tilde h)$ unchanged because the trace of a finite separable
+extension commutes with extension of the base field. Proposition 8.2(5) now gives
+
+$$
+\sum_{y'\mapsto y}\ \sum_{x'\mapsto y'}\operatorname{Res}^{\,z}_{x'}(\tilde\eta)
+=\operatorname{res}_y\!\bigl(\operatorname{Tr}_{k(X)/k(z)}(\tilde h)\,dz\bigr)
+=\sum_{x''\mapsto y}\operatorname{Res}^{\,z}_{x''}(\tilde\eta).
+$$
+
+On the left the points $x'$ occurring are exactly the points of $X_{k'}$ above the points $x''$ of
+$S$; on both sides every term with $x''\neq x$ vanishes, because $\tilde\eta$ is regular there and
+hence at every point above. What remains is (8.1c). $\square$
+
+**Theorem 8.5 (the residue is canonical).** The functional (8.1b) does not depend on the choice of
+the étale coordinate $z$ at $x$. Writing $\operatorname{Res}_x$ for the common value, the map
+
+$$
+\operatorname{Res}_x:\Omega^1_{k(X)/k}\longrightarrow k \tag{8.2}
+$$
+
+is $k$-linear, vanishes on $\Omega^1_{X,x}$, and vanishes on exact differentials $df$ with
+$f\in k(X)$.
+
+**Proof.** Apply Proposition 8.4 with $k'=\overline k$ an algebraic closure. Since $k\to\overline k$
+is injective, it suffices to prove that for each closed point $\bar x$ of $X_{\overline k}$ above
+$x$ the functional $\operatorname{Res}^{\,z}_{\bar x}$ is independent of $z$ and kills exact
+differentials.
+
+So assume $k=\overline k$ and $\kappa(x)=k$. Let $z$ be an étale coordinate at $x$ and $y$ its image
+in $\mathbf A^1_k$; then $\kappa(y)=k$ as well. The extension $\widehat{\mathcal
+O}_y\subseteq\widehat{\mathcal O}_{X,x}$ is unramified, because $\pi_z$ is étale at $x$, and its
+residue extension is $k=k$; so its ramification index and residue degree are both one and the
+inclusion is an isomorphism. Hence $\operatorname{Tr}_{\widehat K_x/\widehat K_y}$ is the identity
+and, by Proposition 8.2(4), $\operatorname{Res}^{\,z}_x(h\,dz)$ is the coefficient of $u^{-1}$ in
+the expansion of $h$ in the parameter $u=z-z(x)$, which is a uniformizer at $x$. By Book 1,
+Corollary 13.17, $\widehat{\mathcal O}_{X,x}=k[[u]]$, and the assertion becomes the classical
+statement that the coefficient of $u^{-1}\,du$ in a Laurent series is unchanged by a change of
+parameter. That statement is the computation already familiar from the affine line: if $u'$ is
+another uniformizer, then $u'=uv$ with $v$ a unit and $du'/u'=du/u+dv/v$ with $dv/v$ regular, while
+termwise differentiation gives
+
+$$
+d\Bigl(\sum a_nu^n\Bigr)=\sum na_nu^{n-1}du ,
+$$
+
+whose $u^{-1}du$ coefficient is zero because it could only arise from $n=0$. This is valid in every
+characteristic, and it simultaneously proves that exact differentials have zero residue: every
+change of parameter is a unit multiplication followed by a formal substitution, and the chain rule
+transports the coefficient extraction. $\square$
+
+The reduction in the proof is worth restating, because every later local assertion about residues
+uses it. A $k$-linear identity among residues at a point of a smooth $k$-curve may be verified after
+extending scalars to an algebraic closure, where residues are the classical Laurent coefficients.
+
+**Corollary 8.6 (separable residue fields).** Suppose $\kappa(x)/k$ is separable. Then
+$\widehat{\mathcal O}_{X,x}$ has a coefficient field containing $k$: writing $\kappa(x)=k(\theta)$
+by the primitive element theorem, Book 1, Lemma 13.6, applied to the subfield $k$ and the separable
+residue element $\theta$ produces one. Choose such a field and a uniformizer $t$; then by Book 1,
+Corollary 13.17, $\widehat{\mathcal O}_{X,x}=\kappa(x)[[t]]$ and every
+differential is $\eta=\bigl(\sum_{n\gg-\infty}a_nt^n\bigr)dt$ with $a_n\in\kappa(x)$. In this case
+
+$$
+\operatorname{Res}_x(\eta)=\operatorname{Tr}_{\kappa(x)/k}(a_{-1}). \tag{8.3}
+$$
+
+**Proof.** Both sides are $k$-linear in $\eta$ and vanish for $\eta$ regular, so it suffices to
+treat $\eta=at^{-m}dt$ with $a\in\kappa(x)$ and $m\geq1$. Extend scalars to $\overline k$. Since
+$\kappa(x)/k$ is separable, $\kappa(x)\otimes_k\overline k=\prod_{\sigma}\overline k$ over the
+$[\kappa(x):k]$ distinct $k$-embeddings $\sigma:\kappa(x)\to\overline k$, and correspondingly $x$
+splits into that many points $\bar x_\sigma$, each with $t$ a uniformizer and with $a$ specializing
+to $\sigma(a)$. By Proposition 8.4 and the classical description of residues at rational points,
+$\operatorname{Res}_x(\eta)=\sum_\sigma\sigma(a)\,[m=1]$, and $\sum_\sigma\sigma(a)$ is
+$\operatorname{Tr}_{\kappa(x)/k}(a)$ for a separable extension. $\square$
+
+When $\kappa(x)/k$ is inseparable this formula degenerates and (8.1b), not the field trace, is the
+definition; the example of Section 8.1 shows that no substitute involving
+$\operatorname{Tr}_{\kappa(x)/k}$ can exist.
+
+### 8.4 The principal-part pairing
+
+The residue is not merely a functional: it trivializes the dualizing module of every finite Cartier
+subscheme concentrated at $x$. This is the statement that the rest of the book consumes.
+
+**Theorem 8.7 (principal-part duality).** Let $X$ be a smooth integral curve over $k$, let $x$ be a
+closed point and $n\geq1$. Then
 
 $$
 \Omega^1_{X/k}(nx)/\Omega^1_{X/k}
-\simeq \omega_{nx/k}
-=\operatorname{Hom}_k(\mathcal O_{nx},k). \tag{8.1}
+\;\xrightarrow{\ \sim\ }\;
+\operatorname{Hom}_k(\mathcal O_{nx},k),
+\qquad
+\eta\longmapsto\bigl(f\mapsto\operatorname{Res}_x(f\eta)\bigr), \tag{8.1}
 $$
 
-Here the sheaves are supported at $x$, and the last Hom is understood on global sections of the
-finite scheme. The isomorphism is the one-equation Koszul calculation: dualize
-$0\to\mathcal O_X(-nx)\to\mathcal O_X\to\mathcal O_{nx}\to0$ against
-$\Omega^1_{X/k}$ and use the conormal determinant to identify the resulting Ext module with the
-$k$-linear dual of $\mathcal O_{nx}$. This is local algebra and does not use global duality.
-Under the inclusions for increasing $n$, the right side
-restricts along $\mathcal O_{(n+1)x}\twoheadrightarrow\mathcal O_{nx}$. Evaluation at $1$ is
-therefore compatible. Passing to the direct limit defines the canonical $k$-linear residue
+is an isomorphism of $\mathcal O_{nx}$-modules. In particular the pairing
+$(\eta,f)\mapsto\operatorname{Res}_x(f\eta)$ is a perfect pairing of finite-dimensional
+$k$-vector spaces, and $\operatorname{Hom}_k(\mathcal O_{nx},k)$ is free of rank one over
+$\mathcal O_{nx}$ with the class of any $\eta$ having a pole of exact order $n$ as generator. These
+isomorphisms are compatible as $n$ grows, since restriction along $\mathcal
+O_{(n+1)x}\twoheadrightarrow\mathcal O_{nx}$ matches the inclusion of principal-part spaces.
+
+**Proof.** The map is well defined: $f\eta$ has poles of order at most $n$ at $x$ and none
+elsewhere, and $\operatorname{Res}_x$ kills regular differentials, so the value depends only on the
+class of $\eta$. It is $\mathcal O_{nx}$-linear by construction. Both sides have the same
+$k$-dimension $n[\kappa(x):k]$: the left side is $\Omega^1_{X/k}\otimes\mathcal O_{nx}$, an
+invertible $\mathcal O_{nx}$-module, and the right side is the $k$-dual of $\mathcal O_{nx}$. So it
+suffices to prove injectivity, and for that we may extend scalars to $\overline k$: the exact
+sequence $0\to\Omega^1_{X/k}\to\Omega^1_{X/k}(nx)\to\Omega^1_{X/k}\otimes\mathcal O_{nx}\to0$ and
+the algebra $\mathcal O_{nx}$ both base-change, and by Proposition 8.4 the pairing base-changes to
+the corresponding pairing on $X_{\overline k}$ against the divisor $n\,x_{\overline k}$, where
+$x_{\overline k}=\sum_{\bar x\mapsto x}e_{\bar x}\bar x$ is the pullback of $x$. That pairing is the
+orthogonal direct sum over the points $\bar x$ of the pairings
 
 $$
-\operatorname{Res}_x:
-\Omega^1_{k(X)/k}\longrightarrow k, \tag{8.2}
+\bigl(u^{-i}du\bigr)_{1\le i\le ne_{\bar x}}\times\bigl(u^{\,j}\bigr)_{0\le j<ne_{\bar x}}
+\longrightarrow\overline k,
+\qquad
+(u^{-i}du,\,u^{\,j})\longmapsto[\,i=j+1\,],
 $$
 
-which kills regular differentials. The parameter calculation below shows directly that it also
-kills exact differentials.
+in a uniformizer $u$ at $\bar x$, by Theorem 8.5. Its matrix is antidiagonal with entries $1$, hence
+invertible. So the base-changed pairing is perfect, and therefore so was the original. $\square$
 
-When $\kappa(x)/k$ is separable, choose a coefficient field in the completion and a uniformizer
-$t$. Then
+Passing to the limit over $n$, Theorem 8.7 says that $\operatorname{Res}_x$ identifies the space of
+principal parts $\Omega^1_{k(X)/k}/\Omega^1_{X,x}$ with the continuous $k$-dual of
+$\widehat{\mathcal O}_{X,x}$. This is the local half of Serre duality, and it has been obtained
+without any global input.
 
-$$
-\eta=\left(\sum_{n\gg-\infty}a_nt^n\right)dt,
-\qquad a_n\in\kappa(x),
-$$
+### 8.5 The global residue theorem
 
-and (8.1) identifies $a\,dt/t$ with the functional
-$b\mapsto\operatorname{Tr}_{\kappa(x)/k}(ab)$. Hence in this case
-
-$$
-\operatorname{Res}_x(\eta)
-=\operatorname{Tr}_{\kappa(x)/k}(a_{-1}). \tag{8.3}
-$$
-
-For an inseparable residue extension, (8.1)--(8.2), not the possibly zero field trace, is the
-definition.
-
-### 8.2 Independence of parameter
-
-The adjunction definition (8.1) is parameter-free. In the separable coefficient-field
-description, its independence is also visible directly. If $u$ is another parameter, write
-$u=tv$ with $v$ a unit. Then
-
-$$
-\frac{du}{u}=\frac{dt}{t}+\frac{dv}{v},
-$$
-
-and $dv/v$ is regular. More generally, termwise differentiation of a Laurent series gives
-
-$$
-d\!\left(\sum a_nt^n\right)=\sum n a_nt^{n-1}dt,
-$$
-
-whose $t^{-1}dt$ coefficient is zero: it could only come from $n=0$. This calculation is valid
-in every characteristic. Any change of parameter is a composition of multiplication by a unit
-and formal substitution, and the chain rule now shows that the residue is unchanged.
-
-Thus coefficient extraction gives the same $k$-valued functional in every parameter. Termwise
-differentiation proves $\operatorname{Res}_x(db)=0$ in the separable coefficient-field case. In
-general the same identity is the elementary Koszul calculation behind (8.1): the functional
-corresponding to $db$ evaluates to zero on $1$.
-
-### 8.3 The global residue theorem
-
-If $X$ is a smooth proper geometrically connected curve over $k$ and $\eta$ a rational differential, then
+**Theorem 8.8 (residue theorem).** If $X$ is a smooth proper geometrically connected curve over $k$
+and $\eta$ is a rational differential, then
 
 $$
 \sum_{x\in X^{(1)}}\operatorname{Res}_x(\eta)=0. \tag{8.4}
 $$
 
-Only finitely many terms are nonzero. Properness is essential: $dt/t$ on $\mathbf G_m$ has residues visible at the omitted points $0$ and $\infty$, and discarding either boundary destroys the cancellation.
+Only finitely many terms are nonzero. Properness is essential: $dt/t$ on $\mathbf G_m$ has residues
+visible at the omitted points $0$ and $\infty$, and discarding either boundary destroys the
+cancellation.
 
-A proof first treats $\mathbf P^1$. Write the differential as $h(T)dT$ and perform partial
-fractions over $k[T]$, without splitting the irreducible denominators. For a power $P(T)^n$, the
-adjunction isomorphism (8.1) identifies its principal part with the $k$-dual of
-$k[T]/(P^n)$; evaluation at $1$ is exactly the coefficient contributed by that partial fraction.
-Euclidean division shows that the sum of these finite evaluations is the negative of the
-$T^{-1}dT$ coefficient after putting $T=U^{-1}$ at infinity. This proves the formula over an
-arbitrary field, including inseparable closed points.
+For $X=\mathbf P^1_k$ this was proved in Proposition 8.2(3) by partial fractions, with no duality
+and no trace, and with no assumption on the residue fields. That elementary case is what fixes the
+normalization of the whole theory.
 
-For a general $X$, smoothness makes $k(X)/k$ a separably generated function field of
-transcendence degree one. A separating element $z\in k(X)$ therefore gives a finite generically
-separable morphism $\pi:X\to\mathbf P^1_k$. We need only the following local algebra, which is
-proved here rather than imported from the next subsection. If $A\to B$ is the finite extension
-of completed discrete-valuation rings obtained over a closed point, then finite duality identifies
-the polar-part dual of $B/(t^n)$ with
-$\operatorname{Hom}_A(B/(t^n),\omega_{A/k})$; evaluation at $1\in B$ is the sum of evaluation at
-$1$ on the local factors of $B$. Under the one-equation identifications (8.1), this says
+For a general $X$ the statement is the global counterpart of Theorem 8.7, and we deduce it from the
+absolute duality theorem of Section 9.2 together with the local computation just performed. This
+is legitimate and not circular: Section 9 is developed from the projective-space Čech pairing of
+Book 7b and the Ext calculus of Book 7a, and at no point uses Section 8. The reader who prefers a
+strictly linear reading may take Sections 8.1--8.4 first, then Section 9, and return here.
+
+**Proof of Theorem 8.8.** Let $\underline{\Omega}$ denote the constant sheaf on $X$ with value
+$\Omega^1_{k(X)/k}$. Since $X$ is integral, every nonempty open is dense and irreducible, so
+$\underline{\Omega}(U)=\Omega^1_{k(X)/k}$ for every nonempty open $U$ and all restriction maps are
+the identity; thus $\underline{\Omega}$ is flasque and hence acyclic by Proposition 3.2(1) of
+Book 7b. There is an exact sequence of sheaves
 
 $$
-\operatorname{Res}_x(\operatorname{Tr}_\pi\eta)
-=\sum_{y\mapsto x}\operatorname{Res}_y(\eta). \tag{8.5}
+0\longrightarrow\Omega^1_{X/k}\longrightarrow\underline{\Omega}
+\longrightarrow\bigoplus_{x\in X^{(1)}}i_{x*}\bigl(\Omega^1_{k(X)/k}/\Omega^1_{X,x}\bigr)
+\longrightarrow0,
 $$
 
-The assertion is compatible as $n$ increases, so it applies to every rational differential.
-Summing first over points above each point of $\mathbf P^1$ gives the residue sum of
-$\operatorname{Tr}_{k(X)/k(z)}\eta$ on $\mathbf P^1$, hence zero. This proves (8.4) without using
-Riemann--Roch, global duality, or a later subsection.
+whose exactness is checked on stalks: at a closed point $x$ the sequence is
+$\Omega^1_{X,x}\to\Omega^1_{k(X)/k}\to\Omega^1_{k(X)/k}/\Omega^1_{X,x}$, while at the generic point
+the third term has zero stalk, a section of the direct sum being supported at finitely many closed
+points and hence dying on a smaller open. The last sheaf is flasque as well: each summand is the
+direct image of a sheaf on a point, hence flasque by Lemma 3.1(4) of Book 7b; finite direct sums of
+flasque sheaves are flasque by the same lemma; and on the noetherian space $X$ a filtered colimit of
+flasque sheaves is flasque by Proposition 5.6(3) of Book 7b. Both outer-flanking sheaves being
+acyclic, taking cohomology therefore identifies
+
+$$
+H^1(X,\Omega^1_{X/k})
+=\operatorname{coker}\Bigl(\Omega^1_{k(X)/k}\longrightarrow
+\bigoplus_{x}\Omega^1_{k(X)/k}/\Omega^1_{X,x}\Bigr), \tag{8.4a}
+$$
+
+so that a class in $H^1$ is a finite collection of principal parts modulo global ones.
+
+By Section 9.4 the dualizing sheaf of the smooth curve $X$ is $\omega_X=\Omega^1_{X/k}$, and
+Theorem 9.1 supplies the trace $\operatorname{tr}:H^1(X,\omega_X)\to k$. Composing
+$\operatorname{tr}$ with (8.4a) and with the inclusion of the summand at $x$ gives $k$-linear
+functionals
+
+$$
+R_x:\Omega^1_{k(X)/k}/\Omega^1_{X,x}\longrightarrow k,
+\qquad\text{with}\qquad
+\sum_xR_x(\eta)=0\ \text{ for every }\eta\in\Omega^1_{k(X)/k}
+$$
+
+by exactness of (8.4a). So it suffices to prove that $R_x$ is a nonzero constant multiple of
+$\operatorname{Res}_x$, by one and the same constant $c\in k^\times$ for all $x$ and all smooth
+proper curves: the displayed vanishing then gives $c\sum_x\operatorname{Res}_x(\eta)=0$ and hence
+(8.4).
+
+Both are $k$-linear functionals killing $\Omega^1_{X,x}$, and both are compatible with the
+$\mathcal O_X$-module structure in the sense that $\eta\mapsto R_x(f\eta)$ and
+$\eta\mapsto\operatorname{Res}_x(f\eta)$ describe the induced maps to
+$\operatorname{Hom}_k(\mathcal O_{nx},k)$. For $R_x$ this is exactly the zero-dimensional case (9.7)
+of Theorem 9.1: applied to the skyscraper $\mathcal T=\mathcal O_{nx}$ it gives
+$\operatorname{Ext}^1_X(\mathcal O_{nx},\omega_X)\simeq H^0(X,\mathcal O_{nx})^\vee$, and the
+connecting map of $0\to\mathcal O_X(-nx)\to\mathcal O_X\to\mathcal O_{nx}\to0$ tensored with
+$\omega_X$ identifies $\operatorname{Ext}^1_X(\mathcal O_{nx},\omega_X)$ with the principal-part
+space $\Omega^1_{X/k}(nx)/\Omega^1_{X/k}$; under these identifications $R_x$ is evaluation at $1$.
+Hence $R_x$ also induces an isomorphism
+$\Omega^1_{X/k}(nx)/\Omega^1_{X/k}\to\operatorname{Hom}_k(\mathcal O_{nx},k)$ of
+$\mathcal O_{nx}$-modules, as does $\operatorname{Res}_x$ by Theorem 8.7. Two such isomorphisms
+differ by an $\mathcal O_{nx}$-module automorphism of an invertible module, that is, by
+multiplication by a unit $c_n\in\mathcal O_{nx}^\times$; and the compatibility of both families with
+the surjections $\mathcal O_{(n+1)x}\to\mathcal O_{nx}$ makes the $c_n$ compatible, so they define a
+single unit $c\in\widehat{\mathcal O}_{X,x}^\times$ with
+$R_x(\eta)=\operatorname{Res}_x(c\,\eta)$.
+
+It remains to see that $c$ is a scalar in $k^\times$ and is the same at every point; this is where
+the elementary case does the work. Take $X=\mathbf P^1_k$ first, with coordinate $z$, and let
+$x_0=\infty$, at which the local parameter is $u=1/z$ and $\widehat{\mathcal
+O}_{x_0}=k[[u]]$. Write $c_0=\sum_{j\geq0}\gamma_ju^j\in k[[u]]^\times$ for the unit with
+$R_{x_0}=\operatorname{Res}_{x_0}(c_0\,\cdot\,)$. For every integer $m\geq0$ the differential
+$\eta_m=z^m\,dz$ is regular on $\mathbf A^1_k$, so its only pole is at $x_0$; the vanishing of both
+total sums therefore gives $R_{x_0}(\eta_m)=0$ and $\operatorname{Res}_{x_0}(\eta_m)=0$. In the
+parameter $u$ one has $\eta_m=-u^{-m-2}du$, and
+$\operatorname{Res}_{x_0}(c_0u^{-n}du)=\gamma_{n-1}$ for $n\geq1$ by Proposition 8.2(4). Hence
+$0=R_{x_0}(\eta_m)=-\gamma_{m+1}$ for every $m\geq0$, so $\gamma_j=0$ for $j\geq1$ and
+$c_0=\gamma_0=:c$ lies in $k^\times$.
+
+Now let $x\in\mathbf A^1_k$ be any closed point and $\xi$ a class in $\Omega^1(nx)/\Omega^1$. By
+Lemma 8.1 the partial-fraction component $h_x$ realizes $\xi$ by a rational differential
+$\eta=h_x\,dz$ regular on $\mathbf A^1\setminus\{x\}$, so its only other pole is at $x_0=\infty$.
+Then $R_x(\xi)+R_{x_0}(\eta)=0$ and $\operatorname{Res}_x(\xi)+\operatorname{Res}_{x_0}(\eta)=0$, and
+$R_{x_0}=c\operatorname{Res}_{x_0}$ gives $R_x(\xi)=c\operatorname{Res}_x(\xi)$. So
+$R=c\operatorname{Res}$ throughout $\mathbf P^1_k$, with one scalar constant.
+
+Now take a general $X$ and a separating element $z\in k(X)$, with resulting finite separable
+morphism $\pi=\pi_z:X\to\mathbf P^1_k$. By Section 9.4 both dualizing sheaves are the sheaves of
+differentials, and by (9.8) the finite morphism $\pi$ carries a trace of sheaves
+$\operatorname{Tr}_\pi:\pi_*\Omega^1_{X/k}\to\Omega^1_{\mathbf P^1/k}$, compatible with the global
+traces in the sense that
+$\operatorname{tr}_{\mathbf P^1}\circ H^1(\operatorname{Tr}_\pi)=\operatorname{tr}_X$; here we use
+that $\pi$ is finite, hence affine, so $H^1(\mathbf P^1,\pi_*\mathcal F)=H^1(X,\mathcal F)$ by
+Corollary 3.11 of Book 7b. Because $\operatorname{Tr}_\pi$ is a morphism of sheaves it induces, for
+each closed point $x$ with image $w$, a map of principal-part spaces
+$T_x:\Omega^1_{k(X)/k}/\Omega^1_{X,x}\to\Omega^1_{k(z)/k}/\Omega^1_{\mathbf P^1,w}$, and the
+flasque resolution of (8.4a) is functorial, so the class maps satisfy
+$q_{\mathbf P^1}\circ\bigoplus_xT_x=H^1(\operatorname{Tr}_\pi)\circ q_X$. Composing with the traces
+gives an equality of $k$-linear maps on the direct sum
+$\bigoplus_x\Omega^1_{k(X)/k}/\Omega^1_{X,x}$, and evaluating on a family concentrated at a single
+$x$ isolates one summand:
+
+$$
+R_x=R^{\mathbf P^1}_{w}\circ T_x=c\cdot\operatorname{res}_{w}\circ T_x . \tag{8.4b}
+$$
+
+Let $T:\Omega^1_{k(X)/k}\to\Omega^1_{k(z)/k}$ be the map induced by $\operatorname{Tr}_\pi$ on
+generic stalks. It is $k(z)$-linear and nonzero, and
+$\operatorname{Hom}_{k(z)}(k(X),k(z))$ is one-dimensional over $k(X)$ because $k(X)/k(z)$ is
+separable; so $T=\operatorname{Tr}_{k(X)/k(z)}(\theta\,\cdot\,)$ for a unique $\theta\in k(X)^\times$.
+Completing at $x$ and using (8.1a), the map $T_x$ is induced by
+$\operatorname{Tr}_{\widehat K_x/\widehat K_w}(\theta\,\cdot\,)$. Hence, if $z$ happens to be an
+étale coordinate at $x$, comparison of (8.4b) with the definition (8.1b) and Theorem 8.5 gives
+
+$$
+R_x(\eta)=c\,\operatorname{Res}_x(\theta\eta)\qquad\text{for all }\eta . \tag{8.4c}
+$$
+
+Finally, every closed point of $X$ admits an étale coordinate, the locus where a given $z$ is an
+étale coordinate is open, and $X$ is quasi-compact; so finitely many separating elements
+$z_1,\ldots,z_r$ have étale loci covering $X$. Each $z_i$ produces a $\theta_i\in k(X)^\times$
+satisfying (8.4c) on its étale locus. If $x$ lies in the étale loci of both $z_i$ and $z_j$, then
+$\operatorname{Res}_x(\theta_i\eta)=\operatorname{Res}_x(\theta_j\eta)$ for all $\eta$, so
+$\theta_i=\theta_j$ in $\widehat{\mathcal O}_{X,x}$ by Theorem 8.7 and hence in $k(X)$. As the
+étale loci are dense open sets in an irreducible space, any two of them meet, and all the
+$\theta_i$ coincide with a single $\theta\in k(X)^\times$ for which (8.4c) holds at **every** closed
+point. In particular $\theta$ is a unit at every closed point, because $R_x$ and
+$\operatorname{Res}_x$ are both generators of the same invertible module by Theorem 8.7 and the
+paragraph above; so $\operatorname{div}(\theta)=0$ and $\theta$ is a global regular unit, hence
+$\theta\in k^\times$ since $X$ is proper, geometrically connected, and reduced.
+
+Therefore $R_x=(c\theta)\operatorname{Res}_x$ for every $x$, with one nonzero constant $c\theta$,
+and $\sum_xR_x=0$ yields (8.4). $\square$
+
+The constant $c\theta$ is a normalization of the trace of Theorem 9.1, not a feature of residues:
+the pair $(\omega_X,\operatorname{tr})$ is determined only up to rescaling $\operatorname{tr}$ by a
+unit of $k$, and the proof shows that exactly one rescaling makes the trace agree with the sum of
+residues. From now on we fix that normalization, so that for a smooth proper curve
+
+$$
+\operatorname{tr}\Bigl(\text{class of }(\xi_x)_x\text{ in }H^1(X,\Omega^1_{X/k})\Bigr)
+=\sum_x\operatorname{Res}_x(\xi_x). \tag{8.4d}
+$$
+
+Normalizing the traces of $\mathbf P^1_k$ and of $X$ in this way makes $c=1$ and $c\theta=1$, hence
+$\theta=1$; so (8.4c) also shows that the generic-stalk map $T$ of $\operatorname{Tr}_\pi$ is exactly
+the field trace $\operatorname{Tr}_{k(X)/k(z)}$, and that $\operatorname{Tr}_\pi$ carries regular
+differentials on $X$ to regular differentials on $\mathbf P^1_k$.
 
 The conceptual consequence is more important than the chosen proof. A collection of local polar parts can be the polar part of a global rational differential only if its total residue is zero; duality will show that this is the only obstruction when the allowed poles are sufficiently specified.
 
-### 8.4 Finite maps and trace
+### 8.6 Finite maps and trace
 
-Let $\pi:Y\to X$ be a finite generically separable morphism of smooth proper integral curves. The field trace induces a trace on rational differentials
+Let $\pi:Y\to X$ be a finite separable morphism of smooth proper integral curves over $k$. Since
+$\Omega^1_{k(Y)/k}=k(Y)\otimes_{k(X)}\Omega^1_{k(X)/k}$ for a separable extension, the field trace
+induces an intrinsic trace on rational differentials,
 
 $$
 \operatorname{Tr}_{k(Y)/k(X)}:
-\Omega^1_{k(Y)/k}\longrightarrow\Omega^1_{k(X)/k}.
+\Omega^1_{k(Y)/k}\longrightarrow\Omega^1_{k(X)/k},
+\qquad h\,dz\longmapsto\operatorname{Tr}_{k(Y)/k(X)}(h)\,dz,
 $$
 
-For every closed point $x\in X$, the local trace formula (8.5) holds. It remains valid when
-residue extensions are inseparable. To recall why,
-complete at $x$ and decompose the finite algebra into the branches at the points $y$. For finite
-Cartier thickenings of those branches, finite duality is the elementary identity
+independent of the chosen separating element $z\in k(X)$.
+
+**Theorem 8.9 (local trace formula).** For every closed point $x\in X$ and every
+$\eta\in\Omega^1_{k(Y)/k}$,
 
 $$
-\omega_{B/A}=\operatorname{Hom}_A(B,\omega_A),
+\operatorname{Res}_x\bigl(\operatorname{Tr}_{k(Y)/k(X)}\eta\bigr)
+=\sum_{y\mapsto x}\operatorname{Res}_y(\eta). \tag{8.5}
 $$
 
-and trace is evaluation at $1\in B$. Under the adjunction identifications (8.1), evaluation at
-$1$ on the product algebra is the sum of evaluation at $1$ on its factors. Passing through the
-compatible thickenings proves (8.5). When the function-field extension is separable, this finite
-duality trace is the usual trace on rational differentials. If the residue extensions are also
-separable, (8.3) rewrites (8.5) as the familiar formula with residue-field traces of Laurent
-coefficients.
+**Proof.** The argument is the one already used inside the proof of Theorem 8.8, now applied to
+$\pi$ instead of to a map to the projective line.
 
-For a purely inseparable map, ordinary field trace can be zero and does not define the required
-map on Kähler differentials. The elementary finite-module trace on the local dualizing modules
-remains meaningful. This subsection makes no global functoriality claim for singular curves;
-that claim will be constructed from dualizing sheaves only after absolute duality is available.
+By Section 9.4 both dualizing sheaves are the sheaves of differentials, and by (9.8) the finite
+morphism $\pi$ carries a trace of sheaves
+$\operatorname{Tr}_\pi:\pi_*\Omega^1_{Y/k}\to\Omega^1_{X/k}$,
+compatible with the global traces in the sense that
+$\operatorname{tr}_X\circ H^1(\operatorname{Tr}_\pi)=\operatorname{tr}_Y$; here we use that
+$\pi$ is finite, hence affine, so $H^1(X,\pi_*\mathcal F)=H^1(Y,\mathcal F)$ by Corollary 3.11 of
+Book 7b. Because $\operatorname{Tr}_\pi$ is a morphism of sheaves it induces, for each closed point
+$x$, a map on principal parts
+
+$$
+T_x:\bigoplus_{y\mapsto x}\Omega^1_{k(Y)/k}\big/\Omega^1_{Y,y}
+\longrightarrow\Omega^1_{k(X)/k}\big/\Omega^1_{X,x},
+$$
+
+and the flasque resolution used in (8.4a) is functorial, so the class maps satisfy
+$q_X\circ\bigoplus_xT_x=H^1(\operatorname{Tr}_\pi)\circ q_Y$. Composing with the traces and using
+the normalization (8.4d) on both curves gives an equality of $k$-linear maps defined on the whole
+direct sum $\bigoplus_y\Omega^1_{k(Y)/k}/\Omega^1_{Y,y}$:
+
+$$
+\sum_x\operatorname{Res}_x\circ T_x=\sum_y\operatorname{Res}_y .
+$$
+
+Evaluating on a family concentrated at the points above a single $x$ isolates one summand and gives
+
+$$
+\operatorname{Res}_x(T\eta)=\sum_{y\mapsto x}\operatorname{Res}_y(\eta) \tag{8.5a}
+$$
+
+for every $x$ and every $\eta$, where $T$ denotes the map induced by $\operatorname{Tr}_\pi$ on
+generic stalks.
+
+It remains to identify $T$ with the field trace, and this is the last paragraph of the proof of
+Theorem 8.8 read for $\pi$. Both maps are nonzero and $k(X)$-linear, and
+$\operatorname{Hom}_{k(X)}(k(Y),k(X))$ is one-dimensional over $k(Y)$ by separability, so
+$T=\operatorname{Tr}_{k(Y)/k(X)}(\theta\,\cdot\,)$ for a unique $\theta\in k(Y)^\times$. Choose a
+separating element $z\in k(X)$ which is simultaneously an étale coordinate at a given
+$y\in Y$ and at its image $x$; this is possible because $\Omega^1_{Y,y}$ and $\Omega^1_{X,x}$ are
+free of rank one and $\pi$ is unramified at all but finitely many points, so a $z$ whose
+differential generates $\Omega^1_{X,x}$ also has $dz$ generating $\Omega^1_{Y,y}$ whenever $\pi$ is
+unramified at $y$. Transitivity of the local traces through $\widehat K_x$, together with the
+definition (8.1b) applied on $Y$ and on $X$ with this common $z$, turns (8.5a) into
+$\operatorname{Res}_x(\operatorname{Tr}_{k(Y)/k(X)}(\theta\eta))=
+\operatorname{Res}_x(\operatorname{Tr}_{k(Y)/k(X)}(\eta))$ for all $\eta$, and Theorem 8.7 with the
+nondegeneracy of the trace pairing forces $\theta$ to be a unit at $y$ equal to $1$ there. As the
+unramified locus is dense, $\theta=1$. Substituting into (8.5a) gives (8.5). $\square$
+
+Two special cases are worth recording. If the residue extensions are separable, Corollary 8.6
+rewrites (8.5) as the familiar formula with residue-field traces of Laurent coefficients. And
+combining (8.5) with the residue theorem on $X$ reproves the residue theorem on $Y$, so (8.5) is the
+precise sense in which residues are functorial for finite separable maps.
+
+For a purely inseparable map the ordinary field trace can be zero and does not define a map on
+Kähler differentials at all; there the correct statement is the trace (9.8) on dualizing sheaves,
+which is evaluation at $1$ in a Hom module and is available for every finite morphism. That
+construction, and with it the extension of residue functoriality to singular curves, is carried out
+in Section 9 and used in Section 12.4.
 
 ## 9. Dualizing sheaves
 
@@ -841,6 +1439,14 @@ H^i(X,\mathcal F)\times
 $$
 
 a perfect pairing for coherent $\mathcal F$. For a vector bundle $\mathcal E$, the second factor becomes the cohomology of $\mathcal E^\vee\otimes\omega_X$. This property determines $\omega_X$ uniquely up to unique isomorphism compatible with trace.
+
+A word on the logical order. The whole of this chapter is built from the projective-space Čech
+computation of Book 7b, the Ext calculus and replacement theory of Book 7a, and the projective
+results of Book 8. It uses nothing from Chapter 8: no residue, no principal-part pairing, and no
+residue theorem enters any argument below. This is what allows Chapter 8 to borrow the global trace
+constructed here in order to prove the residue theorem, without circularity. The comparison between
+the trace of this chapter and the residues of Chapter 8 is carried out in Section 8.5 and refined in
+Section 12.2.
 
 ### 9.2 Dualizing sheaves on proper curves
 
@@ -891,8 +1497,14 @@ the possibly singular curve we do not make that assertion: the change-of-rings c
 below uses injective coinduction and the finite ambient resolution. Strict dg currying
 supplies the comparison, and Ext concentration supplies the required bounded dual.
 
-First consider $P=\mathbf P^N_k$. The standard affine cover gives the homogeneous Čech complex.
-For a twist $\mathcal O_P(a)$ its top Čech term consists of Laurent monomials of total degree
+First consider $P=\mathbf P^N_k$. It is separated and covered by the $N+1$ standard affine charts
+(Book 7b, Proposition 6.1), so by the Čech model theorem (Book 7b, Theorem 4.2) the alternating
+Čech complex of that cover, which has length $N$, represents $R\Gamma(P,\mathcal F)$ for every
+quasi-coherent $\mathcal F$. For a twist $\mathcal O_P(a)$ this is the homogeneous Čech complex,
+whose terms are the graded pieces $(S_{X_I})_a$ of localized polynomial rings (Book 7b,
+Lemma 6.2); its cohomology is computed in Book 7b, Theorem 6.5, and Corollary 6.6 records that
+all the resulting modules are free with formation commuting with every ring map. Its top Čech term
+consists of Laurent monomials of total degree
 $a$ in which every $X_i$ may be inverted. Multiplication followed by extraction of the
 coefficient of
 
@@ -925,19 +1537,11 @@ R\Gamma\!\left(P,
 \qquad \omega_P=\mathcal O_P(-N-1). \tag{9.2}
 $$
 
-Here a vector bundle is resolved by sums of twists: twist until it is generated by global
-sections, take the kernel, and repeat. Termination is local algebra. The homogeneous coordinate
-ring is the polynomial ring $R=k[X_0,\ldots,X_N]$. Here is the syzygy argument. A finitely
-generated graded module has a minimal graded free resolution: at each stage choose homogeneous
-lifts of a basis of the kernel modulo the irrelevant ideal. Every matrix in that resolution
-has entries in the irrelevant ideal, so tensoring with $k=R/(X_0,\ldots,X_N)$ kills all
-differentials. The Koszul complex on $X_0,\ldots,X_N$ is a free resolution of $k$ of length
-$N+1$; its exactness follows by tensoring the two-term complexes for the regular sequence
-$X_0,\ldots,X_N$, since $X_i$ is a non-zero-divisor modulo its predecessors.
-Computing Tor with this Koszul resolution gives
-$\operatorname{Tor}^R_j(k,M)=0$ for $j>N+1$. Computing it with the minimal resolution identifies
-the same group with its $j$th free module tensored with $k$. Graded Nakayama therefore makes
-every term above $N+1$ zero. Sheafifying gives a finite resolution by sums of twists; irrelevant
+Here a vector bundle is resolved by sums of twists. This is Hilbert's syzygy theorem, proved in
+Book 7b, Theorem 7.4: over the homogeneous coordinate ring $R=k[X_0,\ldots,X_N]$ every finite
+graded module has a graded free resolution of length at most $N+1$ by finite sums of shifts, and
+by Corollary 7.5 of the same book such a resolution stays exact under extension of the base field.
+Sheafifying gives a finite resolution by sums of twists; irrelevant
 torsion sheafifies to zero. The same argument resolves every coherent sheaf on $P$.
 
 Let now $i:X\hookrightarrow P$ be a projective embedding supplied by Lemma 9.1A and
@@ -973,9 +1577,11 @@ maximal Cohen--Macaulay.
 For a coherent $\mathcal F$ on $X$, Ext concentration alone is not enough: one needs a
 functorial change-of-rings map. We construct it by a genuine dg adjunction, avoiding the invalid
 procedure of lifting differentials one at a time. Let $I^\bullet$ be a bounded-below injective
-resolution of the ambient dualizing line. Such a complex is $K$-injective: for an acyclic source,
-one solves a null-homotopy degree by degree starting at the lowest nonzero target term, using
-exactness of the source to define the map on cycles and injectivity to extend it. Put
+resolution of the ambient dualizing line; it exists by the bounded-below replacement theorem of
+Book 7a, Section 3.4, applied in the Grothendieck abelian category of $\mathcal O_P$-modules.
+Such a complex is $K$-injective by the bounded-below criterion of Book 7a, Section 3.2, and it is
+moreover internally $K$-injective in the sense of Book 7a, Section 3.4, so that by Section 4.3 of
+that book it computes the sheaf-valued $R\mathcal Hom$ in the second variable. Put
 
 $$
 i^bI^\bullet=
@@ -1124,7 +1730,11 @@ ampleness. The input is the following proper-curve complex lemma.
 > $A\to B$.
 
 We include the proof without assuming $Z$ projective. Four ingredients are separated so that
-neither formal functions nor nonflat base change is hidden in a kernel--cokernel induction.
+neither formal functions nor nonflat base change is hidden in a kernel--cokernel induction. It is
+worth recording at the outset that the first two ingredients are proved for an arbitrary proper
+morphism $g:Z\to\operatorname{Spec}A$ with $A$ noetherian and an arbitrary coherent sheaf: neither
+the flatness of $g$ nor the bound on the fiber dimension is used in (i) or (ii). Only (iii) and (iv)
+consume those hypotheses. Section 9.5 uses (i) and (ii) in that greater generality.
 
 **(i) Proper finiteness.** We first prove the precise relative Chow lemma needed here.
 
@@ -1255,22 +1865,27 @@ K=\ker\alpha,
 \qquad R^bp_*G'\ (b>0)
 $$
 
-are coherent and supported on the proper closed subset $W=T\setminus U$. Coherence of the higher
-direct images follows from the projective graded-resolution theorem of Book 8 applied to
+are coherent and supported on the proper closed subset $W=T\setminus U$. Quasi-coherence of the
+higher direct images is Theorem 4.7 of Book 7b, which also identifies them over an affine open
+$V\subseteq T$ with $\widetilde{H^b(p^{-1}V,G')}$; their coherence follows from the projective
+graded-resolution theorem of Book 8 applied to
 $p:T'\to T$. A coherent sheaf supported on $W$ is killed by a power of the ideal of $W$ and has
 a finite filtration whose quotients are pushforwards of coherent sheaves on $W_{\mathrm{red}}$.
 The induction hypothesis therefore makes the cohomology of $K,C$, and every $R^bp_*G'$ for
 $b>0$ finite over $A$.
 
-The cohomology of $G'$ on the projective $A$-scheme $T'$ is finite by Book 8. In the bounded
-Leray spectral sequence
+The cohomology of $G'$ on the projective $A$-scheme $T'$ is finite by Book 8. Now use the Leray
+spectral sequence for quasi-coherent sheaves, Corollary 4.9 of Book 7b, whose construction and
+strong first-quadrant convergence are those of Book 7a, Sections 8.1 and 6.1:
 
 $$
 E_2^{a,b}=H^a(T,R^bp_*G')
-\Longrightarrow H^{a+b}(T',G'),
+\Longrightarrow H^{a+b}(T',G').
 $$
 
-all rows $b>0$ are finite by induction. The bottom row is finite as well: $E_\infty^{a,0}$ is a
+It is bounded because $T$ and $T'$ are noetherian of finite dimension, so Corollary 5.9 of Book 7b
+makes all but finitely many rows and columns vanish. All rows $b>0$ are finite by induction. The
+bottom row is finite as well: $E_\infty^{a,0}$ is a
 subquotient of the finite abutment, and, page by page backwards, the only incoming differential
 comes from a finite higher row while every outgoing differential from $b=0$ is zero. Thus
 $H^a(T,p_*G')$ is finite. If $I=\operatorname{im}\alpha$, the two exact sequences
@@ -1295,8 +1910,11 @@ $A$-algebra. The graded Rees module $\bigoplus_nG_n$ is finite over the pullback
 $\mathcal R$ to $Z$, so it corresponds to a coherent sheaf $\mathcal H$ on
 $Z_{\mathcal R}=Z\times_A\operatorname{Spec}\mathcal R$. The latter is proper over the
 noetherian ring $\mathcal R$, and part (i), now applied with base $\mathcal R$, makes
-$H^q(Z_{\mathcal R},\mathcal H)$ finite over $\mathcal R$. The affine projection to $Z$ and
-commutation of cohomology with direct sums identify this module with
+$H^q(Z_{\mathcal R},\mathcal H)$ finite over $\mathcal R$. The projection
+$Z_{\mathcal R}\to Z$ is affine, so it does not change cohomology (Book 7b, Corollary 3.11), and
+its pushforward of $\mathcal H$ is the direct sum $\bigoplus_nG_n$; cohomology on the
+quasi-compact separated $Z$ commutes with that filtered colimit of finite partial sums by
+Proposition 5.5 of Book 7b. These two facts identify the module with
 
 $$
 \bigoplus_{n\geq0}H^q(Z,G_n)
@@ -1348,48 +1966,42 @@ This is the theorem on formal functions in exactly the form used below.
 
 **(iii) Cohomological dimension one.** Localize $A$ at a point and complete it. Every
 infinitesimal fiber has the same noetherian topological space as the closed fiber, of dimension at
-most one. Grothendieck vanishing on a noetherian topological space says that a sheaf has no
-cohomology above the dimension. In the dimension-one case used here, its topological proof is as
-follows. Dévissage by the finitely many irreducible components reduces to an irreducible space.
-Constant sheaves there are flasque. Every sheaf is the filtered union of subsheaves generated by
-finitely many sections over quasi-compact opens; filtering such a subsheaf by its generators and
-using
-
-$$
-0\longrightarrow j_!\mathbf Z_U\longrightarrow\mathbf Z_X
-\longrightarrow i_*\mathbf Z_{X\setminus U}\longrightarrow0
-$$
-
-reduces degree greater than one to higher cohomology on the zero-dimensional closed complement,
-where the same argument has no positive degree. Cohomology commutes with these filtered unions on
-a noetherian space, which proves the claim for every sheaf, in particular for the coherent sheaves
-on the infinitesimal fibers. Formula (9.8b) therefore makes the completion of
+most one. Grothendieck's vanishing theorem on a noetherian topological space of finite dimension
+(Book 7b, Theorem 5.8) says that every sheaf of abelian groups has no cohomology above the
+dimension; here the dimension is at most one, so all the coherent sheaves on the infinitesimal
+fibers have vanishing cohomology in degrees $q>1$. Formula (9.8b) therefore makes the completion of
 $R^qg_*G$ zero for $q>1$. Proper finiteness and faithful flatness of completion imply
-$R^qg_*G=0$. Every quasi-coherent sheaf on the noetherian $Z$ is a filtered union of coherent
-subsheaves, and cohomology for a quasi-compact separated scheme commutes with filtered colimits
-by a finite affine Čech complex. Thus $g$ has quasi-coherent cohomological dimension at most
-one, not just coherent cohomological dimension at closed fibers.
+$R^qg_*G=0$ for coherent $G$. For an arbitrary quasi-coherent $\mathcal G$ on the noetherian $Z$,
+coherent exhaustion (Book 7b, Theorem 2.11) writes $\mathcal G$ as the filtered union of its
+coherent subsheaves and Corollary 5.7 of the same book computes $H^q(Z,\mathcal G)$ as the colimit
+of the $H^q$ of those subsheaves. Thus $g$ has quasi-coherent cohomological dimension at most
+one, not just coherent cohomological dimension at closed fibers. (Corollary 5.9 of Book 7b gives
+the same bound directly whenever $Z$ itself has dimension at most one, which is the case in the
+applications below; the argument through formal functions is what covers a $Z$ whose total space
+is of larger dimension than its fibers.)
 
-**(iv) Derived base change and perfectness.** Choose a finite affine cover of $Z$. Because $Z$
-is separated, all finite intersections are affine. Its alternating Čech complex
-$C^\bullet(\mathcal F)$ computes $R\Gamma(Z,\mathcal F)$. Each term is $A$-flat: on an affine
-intersection it is the module corresponding to the $A$-flat sheaf $\mathcal F$. Hence for every
-$A$-algebra $B$ there is an equality of complexes
-
-$$
-C^\bullet(\mathcal F)\otimes_A B
-=C^\bullet(\mathcal F_B),
-$$
-
-and consequently the canonical map
+**(iv) Derived base change and perfectness.** This is Book 7b, Theorem 5.2, applied to the
+quasi-compact separated morphism $g:Z\to\operatorname{Spec}A$ and the $A$-flat quasi-coherent sheaf
+$\mathcal F$. We recall what that theorem provides, since the shape of the complex, not merely the
+existence of the isomorphism, is used below. Choose a finite affine cover of $Z$; because $Z$ is
+separated, all its finite intersections are affine, so by the Čech model theorem (Book 7b,
+Theorem 4.2) the alternating Čech complex $C^\bullet(\mathcal F)$ of that cover is a bounded
+complex representing $R\Gamma(Z,\mathcal F)$. Lemma 5.1 of Book 7b records the two properties that
+matter: each term is $A$-flat, being the module of sections of the $A$-flat sheaf $\mathcal F$ over
+an affine intersection, so the complex is $K$-flat in the sense of Book 7a, Section 3.3; and its
+formation commutes with scalar extension on the nose, $C^\bullet(\mathcal F)\otimes_AB
+=C^\bullet(\mathcal F_B)$. Theorem 5.2 of Book 7b concludes that for every $A$-algebra $B$ the
+canonical map
 
 $$
 B\otimes_A^LR\Gamma(Z,\mathcal F)
 \xrightarrow{\sim}R\Gamma(Z_B,\mathcal F_B) \tag{9.8c}
 $$
 
-is an isomorphism. More generally, tensoring the Čech complex by an arbitrary $A$-module $M$
-computes $R\Gamma(Z,\mathcal F\otimes_A M)$. Part (iii) places its cohomology in degrees
+is an isomorphism, and that more generally, for every $A$-module $M$,
+$C^\bullet(\mathcal F)\otimes_AM$ computes $R\Gamma(Z,\mathcal F\otimes_AM)$ and
+$R\Gamma(Z,\mathcal F)\otimes^L_AM\simeq R\Gamma(Z,\mathcal F\otimes_AM)$. Part (iii) places its
+cohomology in degrees
 $0,1$. Thus the pseudo-coherent complex $R\Gamma(Z,\mathcal F)$ has Tor-amplitude $[0,1]$.
 Truncating a finite free resolution below that interval makes the last syzygy finitely presented
 and flat, hence finite projective; the complex is perfect and is locally represented by two
@@ -1733,6 +2345,133 @@ Unlike $\Omega^1_{X/S}$, the right side stays invertible when a smooth fiber acq
 Formula (9.13) is the practical construction of invariant differentials on many modular and
 plane-curve families.
 
+### 9.5 Proper pushforward, Stein factorization, and connected fibers
+
+The proof of Lemma 9.2A established two facts about a proper morphism which are of independent
+importance and are used repeatedly later: coherence of the higher direct images, part (i) of the
+proper-curve complex lemma, and the theorem on formal functions (9.8b), part (ii). Neither of those
+two parts used flatness or the one-dimensionality of the fibers; both were proved for an arbitrary
+proper morphism to the spectrum of a noetherian ring, by Chow's lemma and noetherian induction on a
+closed support in (i) and by the Rees construction in (ii). Flatness and the fiber dimension entered
+only in parts (iii) and (iv). We now draw the standard consequence, which is the statement that a
+proper morphism
+factors canonically into a morphism with connected fibers followed by a finite morphism. This is the
+tool that converts the vanishing $f_*\mathcal O_X=\mathcal O_Y$ into geometric connectedness of
+fibers, and it is used in the surface theory of later volumes exactly in that form.
+
+Throughout, $Y$ is a locally noetherian scheme and $f:X\to Y$ is proper.
+
+**Theorem 9.3 (Stein factorization).** Let $f:X\to Y$ be a proper morphism with $Y$ locally
+noetherian. Put
+
+$$
+\mathcal A=f_*\mathcal O_X,
+\qquad
+Y'=\operatorname{\mathbf{Spec}}_Y(\mathcal A),
+$$
+
+and let $f=p\circ g$ be the induced factorization, with $g:X\to Y'$ and $p:Y'\to Y$. Then:
+
+1. $\mathcal A$ is a coherent $\mathcal O_Y$-algebra, so $p$ is a finite morphism and $Y'$ is
+   locally noetherian;
+2. $g$ is proper, surjective, and satisfies $g_*\mathcal O_X=\mathcal O_{Y'}$;
+3. every fiber of $g$ is connected and nonempty;
+4. if in addition $f_*\mathcal O_X=\mathcal O_Y$, then $p$ is an isomorphism, so $f$ itself has
+   connected nonempty fibers;
+5. if $X$ is reduced, respectively integral, respectively normal, then so is $Y'$.
+
+**Proof.** (1) The question is local on $Y$, so let $Y=\operatorname{Spec}A$ with $A$ noetherian.
+The sheaf $f_*\mathcal O_X$ is quasi-coherent by Theorem 2.10 of Book 7b, and by Theorem 4.7 of that
+book it is the sheaf associated with the $A$-module $H^0(X,\mathcal O_X)$. Part (i) of the
+proper-curve complex lemma, proved inside Lemma 9.2A for an arbitrary proper morphism to the
+spectrum of a noetherian ring, makes that module finite over $A$. Hence $\mathcal A$ is a coherent
+$\mathcal O_Y$-algebra, its relative spectrum $p:Y'\to Y$ is finite, and $Y'$ is locally noetherian.
+
+(2) The morphism $p$ is separated, being affine, so $g$ is proper because $f=p\circ g$ is proper and
+$p$ is separated. For the pushforward, $p$ is affine, so $p_*$ is exact and reflects isomorphisms of
+quasi-coherent sheaves (Book 7b, Lemma 2.9 and Corollary 3.11); since
+$p_*g_*\mathcal O_X=f_*\mathcal O_X=\mathcal A=p_*\mathcal O_{Y'}$ and the identification is the
+canonical map, we get $g_*\mathcal O_X=\mathcal O_{Y'}$.
+
+For surjectivity, note that a proper morphism is closed, so the image of $g$ is a closed subset of
+$Y'$. The ideal sheaf of the scheme-theoretic image of $g$ is
+$\ker(\mathcal O_{Y'}\to g_*\mathcal O_X)$, which is zero by the previous paragraph; so the
+scheme-theoretic image is all of $Y'$, and since $g$ is closed its set-theoretic image is the
+underlying space of the scheme-theoretic image. Hence $g$ is surjective.
+
+(3) Fix a point $y'\in Y'$ and let $A=\mathcal O_{Y',y'}$, a noetherian local ring with maximal ideal
+$\mathfrak m$ and residue field $\kappa$. Base change along the flat morphism
+$\operatorname{Spec}A\to Y'$ preserves properness and, by flat base change for quasi-coherent
+cohomology (Book 7b, Theorem 5.3 and Corollary 5.4), preserves the identity $g_*\mathcal
+O_X=\mathcal O_{Y'}$; so we may assume $Y'=\operatorname{Spec}A$ with $A$ noetherian local, and then
+$H^0(X,\mathcal O_X)=A$.
+
+Write $X_n$ for the closed subscheme of $X$ defined by $\mathfrak m^{n+1}\mathcal O_X$. All the
+$X_n$ have the same underlying topological space, namely the fiber $g^{-1}(y')$, which is nonempty
+by (2). The theorem on formal functions (9.8b), applied with $I=\mathfrak m$ and $q=0$, gives
+
+$$
+\widehat A\;=\;H^0(X,\mathcal O_X)^{\wedge}_{\mathfrak m}
+\;\simeq\;\varprojlim_n H^0(X_n,\mathcal O_{X_n}). \tag{9.14}
+$$
+
+Suppose the fiber $g^{-1}(y')$ were disconnected. Then its structure sheaf on $X_0$ has a global
+idempotent $e_0\in H^0(X_0,\mathcal O_{X_0})$ with $e_0\neq0$ and $e_0\neq1$, namely the
+characteristic function of one of the two pieces of a decomposition into disjoint nonempty opens.
+The kernel of $\mathcal O_{X_{n+1}}\to\mathcal O_{X_n}$ is the ideal
+$\mathfrak m^{n+1}\mathcal O_X/\mathfrak m^{n+2}\mathcal O_X$, whose square is zero; hence the
+kernel of $H^0(X_{n+1},\mathcal O_{X_{n+1}})\to H^0(X_n,\mathcal O_{X_n})$ is a square-zero ideal.
+Idempotents lift uniquely along a square-zero ideal: if $\tilde e$ lifts $e$ and $\varepsilon
+=\tilde e^2-\tilde e$ lies in the square-zero kernel, then $\tilde e-(2\tilde e-1)\varepsilon$ is
+idempotent and reduces to $e$, and two idempotent lifts differ by an element of the kernel that is
+both idempotent and square-zero, hence zero. Inductively we obtain a compatible family
+$e_n\in H^0(X_n,\mathcal O_{X_n})$ of idempotents lifting $e_0$, and hence by (9.14) an idempotent
+$e\in\widehat A$ reducing to $e_0$. Now $\widehat A$ is a local ring, so its only idempotents are
+$0$ and $1$; and $e$ reduces to $e_0\notin\{0,1\}$ in $H^0(X_0,\mathcal O_{X_0})$, whereas the images
+of $0$ and $1$ are $0$ and $1$. This contradiction shows that every fiber of $g$ is connected.
+
+(4) If $f_*\mathcal O_X=\mathcal O_Y$ then $\mathcal A=\mathcal O_Y$, so $p$ is an isomorphism and
+$g=f$ up to that identification. Then (3) applies to $f$.
+
+(5) By (2), for every affine open $V\subseteq Y'$ we have
+$\mathcal O_{Y'}(V)=\mathcal O_X(g^{-1}V)$, and $g^{-1}V$ is a nonempty open subscheme of $X$ by
+surjectivity. If $X$ is reduced then so is each such ring of sections, hence $Y'$ is reduced. If $X$
+is integral then each such ring is a subring of $k(X)$, hence a domain, and $Y'$ is connected
+because $X$ is and $g$ is surjective; a connected scheme all of whose local rings are domains and
+which is covered by affines with domain coordinate rings is integral. If $X$ is normal then
+$\mathcal O_X(g^{-1}V)$ is integrally closed in $k(X)$, being the intersection of the integrally
+closed local rings $\mathcal O_{X,\xi}$ over the points $\xi$ of $g^{-1}V$; an element of the
+fraction field of $\mathcal O_{Y'}(V)$, which lies in $k(X)$, and is integral over
+$\mathcal O_{Y'}(V)=\mathcal O_X(g^{-1}V)$, therefore already lies in it. So $Y'$ is normal.
+$\square$
+
+Three comments delimit the theorem. First, no flatness and no hypothesis on the fibers is needed;
+the only inputs are properness, local noetherianity of the base, coherence of $f_*$, and formal
+functions. Second, the connectedness produced in (3) is connectedness of the fiber as a topological
+space; geometric connectedness of fibers is a strictly stronger statement, requiring a separate
+argument after base change to an algebraic closure of the residue field, and is not asserted here.
+Third, part (4) is the form in which the theorem is normally applied: one checks
+$f_*\mathcal O_X=\mathcal O_Y$, for instance because $Y$ is normal and $f$ is proper birational, and
+concludes that all fibers are connected.
+
+**Corollary 9.4 (proper birational morphisms to a normal base).** Let $f:X\to Y$ be a proper
+surjective morphism of integral locally noetherian schemes with $Y$ normal and with
+$k(X)/k(Y)$ an isomorphism of function fields, that is, $f$ birational. Then
+$f_*\mathcal O_X=\mathcal O_Y$ and every fiber of $f$ is connected.
+
+**Proof.** By Theorem 9.3(1) the algebra $\mathcal A=f_*\mathcal O_X$ is a coherent sheaf of
+$\mathcal O_Y$-algebras, and it is a sheaf of domains contained in the constant sheaf $k(X)=k(Y)$
+because $X$ is integral and $f$ dominant. So over an affine open $V=\operatorname{Spec}B\subseteq Y$
+the ring $\mathcal A(V)$ is a finite $B$-algebra contained in the fraction field of $B$, hence
+consists of elements integral over $B$; normality of $B$ forces $\mathcal A(V)=B$. Thus
+$f_*\mathcal O_X=\mathcal O_Y$, and Theorem 9.3(4) gives connected fibers. $\square$
+
+Corollary 9.4 is the statement invoked whenever a blowup or a resolution is compared with its base:
+the exceptional fiber over a point is connected, so the exceptional divisor of a birational proper
+morphism from a normal surface cannot be split into two pieces meeting no common point. The
+intersection-theoretic consequences of that connectedness belong to the surface theory of the next
+volumes; what is proved here is precisely the input those arguments require.
+
 ## 10. Nodes, normalization, and opposite residues
 
 ### 10.1 The local node
@@ -1840,7 +2579,7 @@ $$
 $$
 
 When the nodes and branches are rational, the residues in (10.4) are the literal Laurent
-coefficients of Section 8. In general, (10.4) means the same condition after a field extension
+coefficients of Section 8.3, by Theorem 8.5. In general, (10.4) means the same condition after a field extension
 that splits the branches; it is invariant under descent. Intrinsically it says
 
 $$
@@ -1904,6 +2643,11 @@ $$
 \mathcal Hom_k(\mathcal O_{D_{\mathfrak c}},k).
 $$
 
+This is the zero-dimensional case (9.7) of Theorem 9.1 applied to the proper curve $\widetilde C$
+and the skyscraper $\mathcal O_{D_{\mathfrak c}}$, combined with the connecting map of
+$0\to\mathcal O(-D_{\mathfrak c})\to\mathcal O\to\mathcal O_{D_{\mathfrak c}}\to0$ tensored with
+$\omega_{\widetilde C/k}$; when $\widetilde C$ is smooth over $k$ it is Theorem 8.7 and the
+functional below is $\operatorname{Res}$ itself.
 Evaluation at $1$ defines the local residue even when the residue fields are inseparable. The
 precise Rosenlicht formula is
 
@@ -2006,13 +2750,15 @@ The proof of the theorem occupies the rest of the section. It has three ingredie
 
 **Lemma (ideal-adic completeness).** Let $C$ be a noetherian local ring, complete for its maximal ideal $\mathfrak n$, and let $J\subseteq\mathfrak n$ be any ideal. Then the natural map $C\to\varprojlim_nC/J^n$ is an isomorphism.
 
-_Proof._ Injectivity holds because $\bigcap_nJ^n\subseteq\bigcap_n\mathfrak n^n=0$ by the
-Krull intersection theorem, which follows from Artin--Rees and is part of the complete local
-algebra of Book 1. For surjectivity, take a compatible system and lift it to a sequence $(c_N)$
+_Proof._ Injectivity holds because $\bigcap_nJ^n\subseteq\bigcap_n\mathfrak n^n=0$: applied to the
+finite module $M=C$ over the complete noetherian local ring $C$, Lemma 13.1(1) of Book 1 gives
+$\bigcap_n\mathfrak n^n=0$ and the completeness of $C$ for the $\mathfrak n$-adic topology.
+For surjectivity, take a compatible system and lift it to a sequence $(c_N)$
 in $C$ with $c_{M}-c_{N}\in J^{N}$ for $M\geq N$. Since
 $J^N\subseteq\mathfrak n^N$, the sequence is Cauchy for the $\mathfrak n$-adic topology and
-converges to some $c\in C$. Each ideal $J^N$ is closed in that topology: applying Krull's
-intersection theorem in the noetherian local ring $C/J^N$ gives
+converges to some $c\in C$. Each ideal $J^N$ is closed in that topology: the quotient $C/J^N$ is
+again a complete noetherian local ring by Lemma 13.2 of Book 1, so Lemma 13.1(1) of Book 1 applied
+to it gives $\bigcap_m\bigl(\mathfrak n^m(C/J^N)\bigr)=0$, that is
 $\bigcap_m(J^N+\mathfrak n^m)=J^N$. As $c-c_N\in J^N+\mathfrak n^m$ for every $m$, we get
 $c-c_N\in J^N$, so $c$ maps to the given system. $\square$
 
@@ -2335,7 +3081,7 @@ $$
 =\sum_{x\in X\setminus V}\operatorname{Res}_x(g\eta). \tag{12.1}
 $$
 
-Changing $g$ by a function regular on $U$ contributes residues of a regular differential. Changing it by a function on $V$ changes the chosen partial sum by the negative of its complement; the global residue theorem makes the total zero. Thus (12.1) is well defined. In sheaf language it is cup product followed by trace:
+Changing $g$ by a function regular on $U$ contributes residues of a regular differential. Changing it by a function on $V$ changes the chosen partial sum by the negative of its complement; the residue theorem (Theorem 8.8) makes the total zero. Thus (12.1) is well defined. In sheaf language it is cup product followed by trace:
 
 $$
 H^1(X,\mathcal O_X(D))
@@ -2354,11 +3100,12 @@ H^1(X,\mathcal O_X(D))^\vee
 $$
 
 This is the degree-zero consequence of the proved isomorphism (9.6), not a dimension count.
-Under the identification $\omega_X\simeq\Omega^1_{X/k}$ for a smooth curve, local
-duality for a skyscraper sheaf sends the class of $t^{-1}$ paired with $dt$ to $1$.
-Consequently the trace furnished by (9.6) agrees with the residue trace of (12.2): compatibility
-with restriction and connecting maps reduces the comparison to these local generators. Formula
-(9.6), applied to $\mathcal F=\mathcal O_X(D)$, is therefore precisely (12.3).
+That the trace furnished by (9.6) agrees with the residue trace of (12.2) is not an extra
+assumption: it was proved in Theorem 8.8, where the functionals $R_x$ obtained by composing
+$\operatorname{tr}$ with the principal-part description (8.4a) of $H^1(X,\Omega^1_{X/k})$ were
+identified with the canonical residues $\operatorname{Res}_x$ of Section 8.3. Formula
+(9.6), applied to $\mathcal F=\mathcal O_X(D)$, is therefore precisely (12.3), and the pairing it
+induces is (12.1).
 
 The usual divisor devissage makes the mechanism explicit. For a closed point $p$, compare
 
@@ -2846,7 +3593,7 @@ used to turn equality of Abel images into equality in a formal neighborhood.
 
 ### 15.4 A reusable theorem package
 
-**Divisors.** On a regular noetherian integral scheme, Cartier and Weil divisors agree. On a proper regular integral curve, divisor classes equal line-bundle classes, principal divisors have degree zero, and
+**Divisors.** On a regular noetherian integral scheme whose local rings have dimension at most two -- in particular on a regular curve and on the regular total space of a relative curve over a Dedekind base -- Cartier and Weil divisors agree, by Proposition 3.1. On a proper regular integral curve, divisor classes equal line-bundle classes, principal divisors have degree zero, and
 
 $$
 \deg D=\sum_x n_x[\kappa(x):k]
@@ -2871,6 +3618,23 @@ $$
 with perfect fiberwise Serre duality.
 
 **Nodes in families.** Over a noetherian complete local base $\Lambda$ with separably closed residue field, a flat family of finite type with a split ordinary node in its closed fiber has completed local ring $\Lambda[[u,v]]/(uv-a)$ with $a$ in the maximal ideal, and the ideal $a\Lambda$ is intrinsic, being the ideal defining the image of the non-smooth locus. Over a complete discrete valuation ring this makes $v(a)$ an invariant of the family at the node. The étale-local refinement of the normal form is not proved here.
+
+**Residues.** On a smooth integral curve over any field, including one with inseparable residue
+extensions at closed points, there is a canonical $k$-linear residue $\operatorname{Res}_x$
+(Theorem 8.5) which kills regular and exact differentials, which identifies
+$\Omega^1_{X/k}(nx)/\Omega^1_{X/k}$ with $\operatorname{Hom}_k(\mathcal O_{nx},k)$ perfectly
+(Theorem 8.7), which sums to zero on a proper curve (Theorem 8.8), and which satisfies the local
+trace formula (8.5) for a finite separable map (Theorem 8.9). Residues commute with extension of the
+base field in the form (8.1c).
+
+**Proper pushforward and Stein factorization.** For a proper morphism $f:X\to Y$ with $Y$ locally
+noetherian, $f_*\mathcal O_X$ is a coherent $\mathcal O_Y$-algebra and the factorization
+$X\to\operatorname{\mathbf{Spec}}_Y(f_*\mathcal O_X)\to Y$ has a proper surjective first factor with
+connected nonempty fibers and $\mathcal O$-trivial pushforward, and a finite second factor
+(Theorem 9.3). If $f_*\mathcal O_X=\mathcal O_Y$, every fiber of $f$ is connected; if $X$ is
+reduced, integral, or normal, so is the intermediate scheme. A proper birational morphism onto a
+normal integral base satisfies $f_*\mathcal O_X=\mathcal O_Y$ and therefore has connected fibers
+(Corollary 9.4).
 
 **Cohomology and infinitesimals.** By Section 13.1,
 cohomology is locally a two-term finite free model, fiber dimensions are upper semicontinuous,

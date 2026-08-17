@@ -91,10 +91,13 @@ Hilbert's syzygy theorem and generic freeness in the forms the projective volume
 9. **Divisors, Riemann--Roch, and Duality on Relative Curves** — Develop Cartier and Weil
    divisors, line bundles, degrees in families, residues, and the Euler-characteristic form of
    Riemann--Roch for smooth and nodal curves. The dualizing sheaf, perfect Serre duality,
-   relative duality, and arbitrary-base-change theorems are proved in the manuscript; the
-   étale-local nodal normal form and simultaneous normalization are stated only as flagged
-   external interfaces and are verifiably unused by the book's results. Conclude with the
-   divisor and differential interfaces used later.
+   relative duality, and arbitrary-base-change theorems are proved in the manuscript, with the
+   residue pairing constructed in full (valid over imperfect residue fields) and the cohomology
+   formalism cited from Books 7a and 7b; a Stein factorization section proves connectedness of
+   fibers for later volumes, and factoriality of regular local rings is proved in the
+   dimension-at-most-two case the book uses. The étale-local nodal normal form and simultaneous
+   normalization are stated only as flagged external interfaces and are verifiably unused by the
+   book's results. Conclude with the divisor and differential interfaces used later.
 
 10. **Faithfully Flat Descent in Algebraic Geometry** — Prove effective fpqc descent for
     modules, algebras, finite projective objects, affine and finite schemes, quasi-coherent sheaves,
