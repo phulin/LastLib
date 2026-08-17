@@ -220,7 +220,7 @@ theorem chapter13_finite_module_adic_series
         Chapter13AdicConvergesSeries (IsLocalRing.maximalIdeal A) (z ∘ e) x := by
   classical
   let I : Ideal A := IsLocalRing.maximalIdeal A
-  letI : IsAdicComplete I M :=
+  let instComplete : IsAdicComplete I M :=
     (chapter13_finite_module_krull_intersection (A := A) (M := M) hA).2
   have hCauchy : ∀ {m n : ℕ}, m ≤ n →
       Finset.sum (Finset.range m) z ≡ Finset.sum (Finset.range n) z

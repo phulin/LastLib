@@ -119,7 +119,91 @@ theorem chapter13_separable_residue_lift
     (b : k) (hb : IsSeparable K b) :
     ∃! a : A,
       Polynomial.eval₂RingHom σ a (minpoly K b) = 0 ∧ ρ a = b := by
-  sorry
+  obtain ⟨a₀, ha₀⟩ := hρsurj b
+  let e : Chapter13ResidueRing A ≃+* k :=
+    (Ideal.quotEquivOfEq hρ.symm).trans
+      (RingHom.quotientKerEquivOfSurjective hρsurj)
+  let f : Polynomial A := (minpoly K b).map σ
+  have hf : f.Monic := (minpoly.monic hb.isIntegral).map σ
+  have he : e.toRingHom.comp (Chapter09.residueMap A) = ρ := by
+    ext y
+    simp [e, Chapter09.residueMap,
+      Ideal.quotEquivOfEq_mk,
+      RingHom.quotientKerEquivOfSurjective_apply_mk]
+  have heσ : (e.toRingHom.comp (Chapter09.residueMap A)).comp σ =
+      algebraMap K k := by
+    rw [he, hσ]
+  have heσ' : e.toRingHom.comp ((Chapter09.residueMap A).comp σ) =
+      algebraMap K k := by
+    simpa only [RingHom.comp_assoc] using heσ
+  have heclass : e (Chapter09.residueClass a₀) = b := by
+    change (e.toRingHom.comp (Chapter09.residueMap A)) a₀ = b
+    rw [he]
+    exact ha₀
+  have heclass' : e.toRingHom (Chapter09.residueClass a₀) = b := by
+    simpa using heclass
+  have hroot : (Chapter09.residuePolynomial f).eval (Chapter09.residueClass a₀) = 0 := by
+    apply e.injective
+    simp only [map_zero]
+    change e.toRingHom ((Chapter09.residuePolynomial f).eval
+      (Chapter09.residueClass a₀)) = 0
+    rw [← Polynomial.eval_map_apply (p := Chapter09.residuePolynomial f)
+      (f := e.toRingHom)]
+    simp only [Chapter09.residuePolynomial, f, Polynomial.map_map]
+    rw [Polynomial.eval_map]
+    rw [heσ', heclass']
+    exact minpoly.aeval K b
+  have hsimple : IsUnit ((Chapter09.residuePolynomial f).derivative.eval
+      (Chapter09.residueClass a₀)) := by
+    apply isUnit_iff_ne_zero.mpr
+    intro hz
+    have hz' := congrArg e hz
+    change e.toRingHom ((Chapter09.residuePolynomial f).derivative.eval
+      (Chapter09.residueClass a₀)) = e.toRingHom 0 at hz'
+    rw [← Polynomial.eval_map_apply (p := (Chapter09.residuePolynomial f).derivative)
+      (f := e.toRingHom)] at hz'
+    simp only [Chapter09.residuePolynomial, f, Polynomial.map_map,
+      Polynomial.derivative_map] at hz'
+    rw [Polynomial.eval_map] at hz'
+    apply (hb.eval₂_derivative_ne_zero (algebraMap K k)
+      (minpoly.aeval K b))
+    rw [heσ', heclass'] at hz'
+    simpa using hz'
+  obtain ⟨a, ha, hres⟩ := hA f (Chapter09.residueClass a₀) hf hroot hsimple
+  have hρa : ρ a = b := by
+    calc
+      ρ a = e (Chapter09.residueClass a) := by
+        symm
+        simp [e, Chapter09.residueClass, Chapter09.residueMap,
+          Ideal.quotEquivOfEq_mk,
+          RingHom.quotientKerEquivOfSurjective_apply_mk]
+      _ = e (Chapter09.residueClass a₀) := by rw [ha.2]
+      _ = ρ a₀ := by
+        simp [e, Chapter09.residueClass, Chapter09.residueMap,
+          Ideal.quotEquivOfEq_mk,
+          RingHom.quotientKerEquivOfSurjective_apply_mk]
+      _ = b := ha₀
+  refine ⟨a, ?_, ?_⟩
+  · constructor
+    · simpa [f, Polynomial.eval_map] using ha.1
+    · exact hρa
+  · intro a' ha'
+    refine (hA f (Chapter09.residueClass a₀) hf hroot hsimple).unique ?_ ha
+    constructor
+    · simpa [f, Polynomial.eval_map] using ha'.1
+    · apply e.injective
+      calc
+        e (Chapter09.residueClass a') = ρ a' := by
+          simp [e, Chapter09.residueClass, Chapter09.residueMap,
+            Ideal.quotEquivOfEq_mk,
+            RingHom.quotientKerEquivOfSurjective_apply_mk]
+        _ = b := ha'.2
+        _ = ρ a₀ := ha₀.symm
+        _ = e (Chapter09.residueClass a₀) := by
+          symm
+          simp [e, Chapter09.residueClass, Chapter09.residueMap,
+            Ideal.quotEquivOfEq_mk,
+            RingHom.quotientKerEquivOfSurjective_apply_mk]
 
 /-- A separable algebraic residue extension is already a field after adjoining one element. -/
 theorem chapter13_separable_adjoin_is_field

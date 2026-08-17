@@ -101,7 +101,61 @@ theorem chapter13_prime_square_has_no_coefficient_field
       ¬Chapter13ContainsField (Chapter13PrimeSquareRing p) ∧
       Chapter13IsCohenRing (PadicInt p) (ZMod p) p ∧
       Function.Surjective (@PadicInt.toZModPow p _ 2) := by
-  sorry
+  let A := Chapter13PrimeSquareRing p
+  have hp : Nat.Prime p := Fact.out
+  have hp2 : 1 < p ^ 2 := by
+    calc
+      1 < 2 * 2 := by decide
+      _ ≤ p * p := Nat.mul_le_mul hp.two_le hp.two_le
+      _ = p ^ 2 := by simp [pow_two]
+  have hdiv : p ∣ p ^ 2 := by
+    refine ⟨p, ?_⟩
+    simp [pow_two]
+  let q : A →+* ZMod p := ZMod.castHom hdiv (ZMod p)
+  have hqsurj : Function.Surjective q := by
+    simpa [q] using (ZMod.castHom_surjective hdiv)
+  have hker : RingHom.ker q = IsLocalRing.maximalIdeal A :=
+    IsLocalRing.ker_eq_maximalIdeal q hqsurj
+  let e : Chapter13ResidueRing A ≃+* ZMod p :=
+    (Ideal.quotEquivOfEq hker.symm).trans
+      (RingHom.quotientKerEquivOfSurjective hqsurj)
+  have hres : CharP (Chapter13ResidueRing A) p := by
+    exact (e.symm.toRingHom.charP_iff_charP p).mp (ZMod.charP p)
+  have hnonzero : (p : A) ≠ 0 := by
+    intro h
+    rw [ZMod.natCast_eq_zero_iff] at h
+    have hlt : p < p ^ 2 := by
+      rw [pow_two]
+      simpa using Nat.mul_lt_mul_of_pos_left hp.one_lt
+        (Nat.zero_lt_of_lt hp.two_le)
+    exact (Nat.not_dvd_of_pos_of_lt (Nat.zero_lt_of_lt hp.two_le) hlt) h
+  have hnonunit : ¬IsUnit (p : A) := by
+    intro hu
+    have hq : IsUnit (q (p : A)) := IsUnit.map q hu
+    have hqp : q (p : A) = 0 := by
+      change ZMod.castHom hdiv (ZMod p) (p : ZMod (p ^ 2)) = 0
+      rw [map_natCast]
+      simp
+    exact hq.ne_zero hqp
+  have hnotchar : ¬CharP A p := by
+    intro hchar
+    exact hnonzero (@CharP.cast_eq_zero A _ p hchar)
+  have hcontains : ¬Chapter13ContainsField A := by
+    rintro ⟨K⟩
+    have hpK : (p : K.carrier) ≠ 0 := by
+      intro hpK
+      apply hnonzero
+      exact congrArg K.carrier.subtype hpK
+    have huK : IsUnit (p : K.carrier) :=
+      (@isUnit_iff_ne_zero K.carrier
+        (@Field.toSemifield K.carrier K.field_carrier.toField).toCommGroupWithZero.toGroupWithZero).mpr hpK
+    have huA : IsUnit (p : A) := by
+      simpa using IsUnit.map K.carrier.subtype huK
+    exact hnonunit huA
+  refine ⟨?_, ⟨hp, hres, hnotchar⟩, hcontains, ?_, ?_⟩
+  · exact ⟨inferInstance, inferInstance⟩
+  · exact chapter13_padic_integers_are_cohen p
+  · exact ZMod.ringHom_surjective _
 
 theorem chapter13_padic_integers_have_no_subfield
     (p : ℕ) [Fact (Nat.Prime p)] :

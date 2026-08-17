@@ -1,4 +1,5 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter13.Section03PBasesAndDerivations
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Section02InfiniteDigits
 import Mathlib.RingTheory.PowerSeries.Inverse
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter13
@@ -132,7 +133,67 @@ theorem chapter13_equicharacteristic_complete_dvr_power_series
     (hu : IsLocalHom u ∧
       Function.Bijective ((Chapter13ResidueMap A).comp u)) :
     Nonempty (Chapter13PowerSeriesDVRModel A K π u) := by
-  sorry
+  let I : Ideal A := IsLocalRing.maximalIdeal A
+  let rbar : Chapter13ResidueRing A ≃+* K :=
+    (RingEquiv.ofBijective ((Chapter13ResidueMap A).comp u) hu.2).symm
+  let r : A →+* K := rbar.toRingHom.comp (Chapter13ResidueMap A)
+  let sectionData : LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Chapter08CoefficientFieldSection
+      A K I :=
+    { lift := u
+      residue := r
+      residue_lift := by
+        ext c
+        change rbar ((Chapter13ResidueMap A) (u c)) = c
+        change (RingEquiv.ofBijective ((Chapter13ResidueMap A).comp u) hu.2).symm
+          ((Chapter13ResidueMap A).comp u c) = c
+        exact (RingEquiv.ofBijective ((Chapter13ResidueMap A).comp u) hu.2).symm_apply_apply c
+      kernel_residue := by
+        ext a
+        constructor
+        · intro ha
+          change r a = 0 at ha
+          have ha' : Chapter13ResidueMap A a = 0 := by
+            apply rbar.injective
+            simpa [r] using ha
+          have hker : a ∈ RingHom.ker (Chapter13ResidueMap A) :=
+            RingHom.mem_ker.mpr ha'
+          simpa [I, Chapter13ResidueMap] using hker
+        · intro ha
+          change r a = 0
+          have ha' : Chapter13ResidueMap A a = 0 := by
+            apply RingHom.mem_ker.mp
+            simpa [I, Chapter13ResidueMap] using ha
+          change rbar (Chapter13ResidueMap A a) = 0
+          rw [ha']
+          exact map_zero rbar
+      }
+  let hcomplete : IsAdicComplete I A := by simpa [I] using hA
+  obtain ⟨model⟩ :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.chapter08_equal_characteristic_formal_series_model
+      (hcomplete := hcomplete) I π hπ sectionData
+  let eA : A ≃+* AdicCompletion I A :=
+    (AdicCompletion.ofAlgEquiv I).toRingEquiv
+  let e : PowerSeries K ≃+* A := model.equiv.symm.trans eA.symm
+  have heC : ∀ c : K, e (PowerSeries.C c) = u c := by
+    intro c
+    apply eA.injective
+    simpa [e, eA, AdicCompletion.ofAlgEquiv_apply,
+      AdicCompletion.algebraMap_apply] using
+      congrArg model.equiv.symm (model.maps_section c).symm
+  have heX : e PowerSeries.X = π := by
+    apply eA.injective
+    simpa [e, eA, AdicCompletion.ofAlgEquiv_apply,
+      AdicCompletion.algebraMap_apply] using
+      congrArg model.equiv.symm model.maps_uniformizer.symm
+  refine ⟨{
+    equiv := e
+    maps_constants := by
+      ext c
+      exact heC c
+    maps_uniformizer := heX
+    maps_maximal_ideal := by
+      rw [Ideal.map_span]
+      simp [heX, hπ] }⟩
 
 /-- The coefficient expansion of a complete equicharacteristic DVR is the Cauchy expansion. -/
 theorem chapter13_equicharacteristic_dvr_cauchy_expansion
@@ -145,7 +206,9 @@ theorem chapter13_equicharacteristic_dvr_cauchy_expansion
     ∃ e : PowerSeries K ≃+* A,
       e.toRingHom.comp (PowerSeries.C : K →+* PowerSeries K) = u ∧
         e PowerSeries.X = π := by
-  sorry
+  obtain ⟨model⟩ := chapter13_equicharacteristic_complete_dvr_power_series
+    hA π hπ u hu
+  exact ⟨model.equiv, model.maps_constants, model.maps_uniformizer⟩
 
 end
 
