@@ -50,12 +50,6 @@ abbrev chapterAssociatedGradedObject : Type _ :=
 abbrev chapterAssociatedGradedRing : Type _ :=
   Polynomial (IsLocalRing.ResidueField A)
 
-/-- The polynomial realization carries its usual commutative-ring structure. -/
-noncomputable instance chapterAssociatedGradedRing.commRing :
-    CommRing (chapterAssociatedGradedRing (A := A)) := by
-  dsimp [chapterAssociatedGradedRing]
-  infer_instance
-
 noncomputable instance chapterAssociatedGradedRing.module :
     Module A (chapterAssociatedGradedRing (A := A)) := by
   let f : A →+* chapterAssociatedGradedRing (A := A) :=
