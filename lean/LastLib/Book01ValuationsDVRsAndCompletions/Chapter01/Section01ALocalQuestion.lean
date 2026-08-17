@@ -127,6 +127,21 @@ theorem ordZeroPolynomial_mul {f g : k[X]} (hf : f ≠ 0) (hg : g ≠ 0) :
   rw [multiplicity_mul Polynomial.prime_X
     (FiniteMultiplicity.of_prime_left Polynomial.prime_X (mul_ne_zero hf hg))]
 
+/-! The zero-aware version records the convention `ord₀(0) = ∞`. -/
+theorem ordZeroPolynomialWithTop_mul {f g : k[X]} :
+    ordZeroPolynomialWithTop (f * g) =
+      ordZeroPolynomialWithTop f + ordZeroPolynomialWithTop g := by
+  classical
+  by_cases hf : f = 0
+  · subst f
+    simp [ordZeroPolynomialWithTop]
+  by_cases hg : g = 0
+  · subst g
+    simp [ordZeroPolynomialWithTop]
+  have hfg : f * g ≠ 0 := mul_ne_zero hf hg
+  simpa [ordZeroPolynomialWithTop, hf, hg, hfg] using
+    congrArg (fun z : ℕ => (z : WithTop ℕ)) (ordZeroPolynomial_mul hf hg)
+
 /-- The polynomial order satisfies the additive valuation inequality when the
 sum is nonzero. -/
 theorem ordZeroPolynomial_add_lower {f g : k[X]} (hf : f ≠ 0) (hg : g ≠ 0)
@@ -195,6 +210,22 @@ theorem ordZeroPolynomial_add_of_ne {f g : k[X]} (hf : f ≠ 0) (hg : g ≠ 0)
       multiplicity (Polynomial.X : k[X]) g := by
     simpa [ordZeroPolynomial] using hne
   simpa [ordZeroPolynomial] using (multiplicity_add_eq_min hff hgg hne')
+
+theorem ordZeroPolynomialWithTop_add {f g : k[X]} :
+    min (ordZeroPolynomialWithTop f) (ordZeroPolynomialWithTop g) ≤
+      ordZeroPolynomialWithTop (f + g) := by
+  classical
+  by_cases hf : f = 0
+  · subst f
+    simp [ordZeroPolynomialWithTop]
+  by_cases hg : g = 0
+  · subst g
+    simp [ordZeroPolynomialWithTop]
+  by_cases hfg : f + g = 0
+  · simp [ordZeroPolynomialWithTop, hf, hg, hfg]
+  have h := ordZeroPolynomial_add_lower hf hg hfg
+  simpa [ordZeroPolynomialWithTop, hf, hg, hfg] using
+    (WithTop.coe_le_coe.mpr h)
 
 /-- The regular factors at the origin, i.e. the candidates for local units. -/
 def IsRegularAtZero (u : k[X]) : Prop :=
