@@ -146,7 +146,7 @@ theorem chapter07_unramified_quotients_are_free
     (hf : U.profile.residueDegree = f) :
     ∀ n : ℕ, 0 < n →
       Chapter07FinitePrecisionFreeOfRank A B π f n := by
-  letI : Algebra.Etale A B := U.integralModel_etale
+  let : Algebra.Etale A B := U.integralModel_etale
   intro n hn
   classical
   let b : Module.Basis (Module.Free.ChooseBasisIndex A B) A B :=
@@ -214,7 +214,7 @@ theorem chapter07_unramified_precision_tower_exists
     (hresidueDegree : Module.finrank k l = f) :
     Nonempty (Chapter07FinitePrecisionTower A B π f k l) := by
   classical
-  letI : Algebra.Etale A B := U.integralModel_etale
+  let : Algebra.Etale A B := U.integralModel_etale
   have hbase_le : ∀ n : ℕ,
       Chapter07BasePrecisionIdeal A π (n + 1) ≤
         Chapter07BasePrecisionIdeal A π n := by
