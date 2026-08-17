@@ -406,7 +406,8 @@ theorem chapter02_local_ideal_powers_are_compact_and_open
   · exact
       (Homeomorph.mulLeft₀ (π ^ m) (pow_ne_zero m hπ0)).isOpenMap _ hA.2
 
-/-- The principal units `1 + pᵐ` as a subgroup of the local multiplicative group. -/
+/-- The principal units `1 + pᵐ` for `m ≥ 1`, as a subgroup of the local
+multiplicative group; at `m = 0` this API uses the full local unit group. -/
 def Chapter02HigherPrincipalUnitGroup
     {K : Type*} [Field K] [NumberField K]
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) (m : ℕ) :
