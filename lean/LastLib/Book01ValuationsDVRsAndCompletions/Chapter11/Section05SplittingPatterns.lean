@@ -3,10 +3,21 @@ import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section07ConcreteFin
 import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
 import Mathlib.Algebra.Polynomial.FieldDivision
 import Mathlib.NumberTheory.LegendreSymbol.Basic
+import Mathlib.NumberTheory.Padics.Hensel
+import Mathlib.NumberTheory.Padics.PadicIntegers
+import Mathlib.NumberTheory.Padics.PadicNorm
+import Mathlib.NumberTheory.Padics.PadicNumbers
+import Mathlib.NumberTheory.Padics.RingHoms
 import Mathlib.NumberTheory.Zsqrtd.GaussianInt
 import Mathlib.NumberTheory.KummerDedekind
 import Mathlib.RingTheory.Conductor
 import Mathlib.RingTheory.UniqueFactorizationDomain.NormalizedFactors
+import Mathlib.Tactic.IntervalCases
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.LinearCombination
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Order
+import Mathlib.Tactic.Ring
 
 universe u v
 
@@ -324,13 +335,6 @@ theorem chapter11_irreducible_residue_quadratic_gives_inert_pattern
       _ = f.natDegree := AdjoinRoot.powerBasis_dim hirr.ne_zero
       _ = 2 := hdeg
   · simp [chapter11InertPattern]
-
-/-- A repeated quadratic residue factor is the ramified/bad-generator warning sign. -/
-theorem chapter11_repeated_residue_factor_requires_integral_closure_check
-    (k : Type*) [Field k] (f : k[X])
-    (h : chapter11RepeatedResidueFactor k f) :
-    ∃ g : k[X], Irreducible g ∧ g ^ 2 ∣ f := by
-  exact h.2.2
 
 /-- The Gaussian quadratic polynomial used in the examples. -/
 def chapter11GaussianPolynomial (R : Type*) [CommRing R] : R[X] :=

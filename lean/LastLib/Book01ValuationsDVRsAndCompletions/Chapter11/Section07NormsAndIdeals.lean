@@ -4,7 +4,6 @@ import Mathlib.Data.ENat.BigOperators
 import Mathlib.LinearAlgebra.Dimension.Constructions
 import Mathlib.LinearAlgebra.FreeModule.Norm
 import Mathlib.RingTheory.Ideal.Norm.RelNorm
-import Mathlib.RingTheory.Ideal.IsPrincipalPowQuotient
 import Mathlib.RingTheory.Trace.Quotient
 
 universe u v

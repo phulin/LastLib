@@ -1,4 +1,7 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section01FromOneLocalRingToSeveral
+import Mathlib.Algebra.Module.PID
+import Mathlib.LinearAlgebra.Dimension.Finite
+import Mathlib.RingTheory.TensorProduct.Basic
 
 universe u v
 

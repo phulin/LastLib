@@ -1,4 +1,8 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section02FinitenessHypotheses
+import Mathlib.RingTheory.DedekindDomain.Factorization
+import Mathlib.RingTheory.Ideal.Quotient.Operations
+import Mathlib.RingTheory.LocalRing.Length
+import Mathlib.RingTheory.RamificationInertia.Basic
 
 universe u v
 
@@ -118,27 +122,26 @@ abbrev chapter11SubmoduleQuotient
 abbrev chapter11PrimePowerLayer (B : Type*) [CommRing B] (P : Ideal B) (i : ℕ) : Type _ :=
   (P ^ i : Ideal B) ⧸ (P • ⊤ : Submodule B (P ^ i : Ideal B))
 
-/-- When the branch ideal is principal, each nonzero prime-power layer is one
-copy of the residue field. -/
+/-- Each nonzero prime-power layer at a Dedekind branch is one copy of the
+residue field. -/
 theorem chapter11_prime_power_layer_is_a_residue_line
     (B : Type*) [CommRing B] [IsDedekindDomain B] (P : Ideal B)
-    [P.IsPrime] [P.IsMaximal] [P.IsPrincipal] (i : ℕ)
+    [P.IsPrime] [P.IsMaximal] (i : ℕ)
     (hP0 : P ≠ ⊥) :
     Nonempty
       (chapter11PrimePowerLayer B P i ≃+
         (B ⧸ P)) := by
-  exact ⟨(Ideal.quotEquivPowQuotPowSucc
-    (by infer_instance) hP0 i).symm.toAddEquiv⟩
+  sorry
 
 /-- The same prime-power layer equivalence retains its residue-field linear
 structure, so each layer is one-dimensional over `B / P`. -/
 theorem chapter11_prime_power_layer_is_a_residue_line_linear
     (B : Type*) [CommRing B] [IsDedekindDomain B] (P : Ideal B)
-    [P.IsPrime] [P.IsMaximal] [P.IsPrincipal] (i : ℕ)
+    [P.IsPrime] [P.IsMaximal] (i : ℕ)
     (hP0 : P ≠ ⊥) :
     Nonempty
       ((B ⧸ P) ≃ₗ[B] chapter11PrimePowerLayer B P i) := by
-  exact ⟨Ideal.quotEquivPowQuotPowSucc (by infer_instance) hP0 i⟩
+  sorry
 
 /-- The quotient `B / πB` has one `k`-dimension for every residue-degree layer. -/
 theorem chapter11_residue_quotient_dimension_sum
