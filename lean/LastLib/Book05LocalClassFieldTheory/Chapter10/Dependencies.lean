@@ -209,6 +209,22 @@ structure Chapter10FiniteArtinMap
   kernel_eq_norm : reciprocity.ker = chapter10NormSubgroup K L
   surjective : Function.Surjective reciprocity
 
+/- The norm kernel alone does not fix the finite Artin labeling: it can still
+   be postcomposed with an automorphism of the finite abelian Galois group.
+   This bridge records that the map used in a comparison theorem is the
+   Chapter 5 map attached to the chosen fundamental-class data. -/
+structure Chapter10NormalizedFiniteArtinMap
+    (K L : Type) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    [Fintype (Gal(L / K))] where
+  artin : Chapter10FiniteArtinMap K L
+  classFormation :
+    LastLib.Book05LocalClassFieldTheory.Chapter05.Chapter05LocalClassFormationData K L
+  artin_eq_finite_reciprocity :
+    artin.reciprocity =
+      LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05FiniteReciprocityMap
+        classFormation
+
 noncomputable def chapter10ArtinQuotientEquiv
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L]
@@ -292,6 +308,7 @@ structure Chapter10FormalTorsionSystem
     Chapter10UnitQuotient D.valuation n →* Gal(torsionField n / K)
   torsionLabel_apply : ∀ n a,
     torsionLabel n a = formalAction n a
+  formalAction_injective : ∀ n, Function.Injective (formalAction n)
 
 /- The finite ambient extension used in the congruence construction. -/
 structure Chapter10ExplicitAmbientExtension

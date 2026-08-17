@@ -62,9 +62,31 @@ theorem chapter10_square_class_group_decomposition
     Nonempty
       ((Kˣ ⧸ chapter10PowerSubgroup (G := Kˣ) 2) ≃*
         (Multiplicative (ZMod 2) ×
-          ((Chapter10ResidueField D.valuation)ˣ ⧸
+        ((Chapter10ResidueField D.valuation)ˣ ⧸
             chapter10PowerSubgroup
               (G := (Chapter10ResidueField D.valuation)ˣ) 2))) := by
+  sorry
+
+/- For an odd finite residue field, its multiplicative square-class quotient
+   is the remaining one-dimensional factor in the displayed decomposition. -/
+theorem chapter10_residue_square_class_group_equiv_zmod_two
+    {K : Type*} [Field K] (D : Chapter10LocalFieldProfile K)
+    [Fintype (Chapter10ResidueField D.valuation)]
+    (hodd : D.residueCharacteristic ≠ 2) :
+    Nonempty
+      (((Chapter10ResidueField D.valuation)ˣ ⧸
+          chapter10PowerSubgroup
+            (G := (Chapter10ResidueField D.valuation)ˣ) 2) ≃*
+        Multiplicative (ZMod 2)) := by
+  sorry
+
+theorem chapter10_square_class_group_is_two_dimensional
+    {K : Type*} [Field K] (D : Chapter10LocalFieldProfile K)
+    [Fintype (Chapter10ResidueField D.valuation)]
+    (hodd : D.residueCharacteristic ≠ 2) :
+    Nonempty
+      ((Kˣ ⧸ chapter10PowerSubgroup (G := Kˣ) 2) ≃*
+        (Multiplicative (ZMod 2) × Multiplicative (ZMod 2))) := by
   sorry
 
 theorem chapter10_unramified_quadratic_norm_subgroup

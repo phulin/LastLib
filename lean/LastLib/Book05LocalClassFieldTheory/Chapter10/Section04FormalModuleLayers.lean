@@ -126,13 +126,15 @@ theorem chapter10_formal_torsion_layers_are_totally_ramified
 /- Proposition 10.1: arithmetic reciprocity acts by the inverse formal-unit
    label, with the inverse reduced in the finite quotient `Oˣ/Uⁿ`. -/
 theorem chapter10_artin_action_on_formal_torsion
-    {K : Type*} [Field K] (D : Chapter10LocalFieldProfile K)
-    {Ω : Type*} [Field Ω] [Algebra K Ω]
+    {K : Type} [Field K] (D : Chapter10LocalFieldProfile K)
+    {Ω : Type} [Field Ω] [Algebra K Ω]
     (T : Chapter10FormalTorsionSystem D Ω) (n : ℕ) (hn : 1 ≤ n)
     [FiniteDimensional K (T.torsionField n)]
-    (A : Chapter10FiniteArtinMap K (T.torsionField n))
+    [IsAbelianGalois K (T.torsionField n)]
+    [Fintype (Gal(T.torsionField n / K))]
+    (A : Chapter10NormalizedFiniteArtinMap K (T.torsionField n))
     (u : Chapter10RingUnitGroup D.valuation) :
-    A.reciprocity (chapter10RingUnitInField D.valuation u)
+    A.artin.reciprocity (chapter10RingUnitInField D.valuation u)
         (T.primitivePoint n) =
       T.formalAction n
         (QuotientGroup.mk'
@@ -141,25 +143,58 @@ theorem chapter10_artin_action_on_formal_torsion
   sorry
 
 theorem chapter10_artin_and_torsion_labelings_differ_by_inversion
-    {K : Type*} [Field K] (D : Chapter10LocalFieldProfile K)
-    {Ω : Type*} [Field Ω] [Algebra K Ω]
+    {K : Type} [Field K] (D : Chapter10LocalFieldProfile K)
+    {Ω : Type} [Field Ω] [Algebra K Ω]
     (T : Chapter10FormalTorsionSystem D Ω) (n : ℕ) (hn : 1 ≤ n)
     [FiniteDimensional K (T.torsionField n)]
-    (A : Chapter10FiniteArtinMap K (T.torsionField n)) :
+    [IsAbelianGalois K (T.torsionField n)]
+    [Fintype (Gal(T.torsionField n / K))]
+    (A : Chapter10NormalizedFiniteArtinMap K (T.torsionField n)) :
     ∀ u : Chapter10RingUnitGroup D.valuation,
-      A.reciprocity (chapter10RingUnitInField D.valuation u) =
+      A.artin.reciprocity (chapter10RingUnitInField D.valuation u) =
         T.torsionLabel n
           (QuotientGroup.mk'
             (Chapter10UnitFiltration D.valuation n) u⁻¹) := by
   sorry
 
 theorem chapter10_artin_of_uniformizer_on_formal_torsion
-    {K : Type*} [Field K] (D : Chapter10LocalFieldProfile K)
-    {Ω : Type*} [Field Ω] [Algebra K Ω]
+    {K : Type} [Field K] (D : Chapter10LocalFieldProfile K)
+    {Ω : Type} [Field Ω] [Algebra K Ω]
     (T : Chapter10FormalTorsionSystem D Ω) (n : ℕ) (hn : 1 ≤ n)
     [FiniteDimensional K (T.torsionField n)]
-    (A : Chapter10FiniteArtinMap K (T.torsionField n)) :
-    A.reciprocity D.uniformizer = 1 := by
+    [IsAbelianGalois K (T.torsionField n)]
+    [Fintype (Gal(T.torsionField n / K))]
+    (A : Chapter10NormalizedFiniteArtinMap K (T.torsionField n)) :
+    A.artin.reciprocity D.uniformizer = 1 := by
+  sorry
+
+/- The source's `\mathbb Q_p` specialization uses the multiplicative formal
+   group and writes the inverse unit in the exponent modulo `p^n`.  This
+   predicate records that reduction without choosing a representative of the
+   finite quotient. -/
+def chapter10PadicUnitExponentRepresentative
+    (p n : ℕ) [Fact p.Prime] (u : (ℤ_[p])ˣ) (r : ℕ) : Prop :=
+  ∃ z : ℤ_[p],
+    ((u⁻¹ : (ℤ_[p])ˣ) : ℤ_[p]) - (r : ℤ_[p]) =
+      (p : ℤ_[p]) ^ n * z
+
+/- The cyclotomic example is stated at the same finite-reciprocity level as
+   Proposition 10.1.  The primitive-root and generation hypotheses identify
+   the chosen cyclotomic level, while the representative predicate makes the
+   exponent convention explicit. -/
+theorem chapter10_padic_cyclotomic_reciprocity_action
+    {p n : ℕ} [Fact p.Prime] {L : Type} [Field L]
+    [Algebra (ℚ_[p]) L] [FiniteDimensional (ℚ_[p]) L]
+    [IsAbelianGalois (ℚ_[p]) L] [Fintype (Gal(L / ℚ_[p]))]
+    (A : Chapter10NormalizedFiniteArtinMap (ℚ_[p]) L)
+    (ζ : L) (hn : 0 < n)
+    (hprimitive : IsPrimitiveRoot ζ (p ^ n))
+    (hgenerates : Algebra.adjoin (ℚ_[p]) ({ζ} : Set L) = ⊤) :
+    ∀ u : (ℤ_[p])ˣ, ∃ r : ℕ,
+      chapter10PadicUnitExponentRepresentative p n u r ∧
+        A.artin.reciprocity
+            (Units.map (algebraMap (ℤ_[p]) (ℚ_[p])).toMonoidHom u) ζ =
+          ζ ^ r := by
   sorry
 
 end
