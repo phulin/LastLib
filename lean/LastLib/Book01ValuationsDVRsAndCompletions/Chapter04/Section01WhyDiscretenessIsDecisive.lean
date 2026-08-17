@@ -1,35 +1,13 @@
-import Mathlib.Algebra.Order.Ring.Archimedean
-import Mathlib.RingTheory.DedekindDomain.Dvr
-import Mathlib.RingTheory.DedekindDomain.AdicValuation
+import Mathlib.Algebra.GroupWithZero.WithZero
 import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.RingTheory.DiscreteValuationRing.TFAE
 import Mathlib.RingTheory.Valuation.Basic
 import Mathlib.RingTheory.Valuation.ValuationRing
 import Mathlib.RingTheory.Valuation.Discrete.Basic
-import Mathlib.RingTheory.Valuation.Discrete.IsDiscreteValuationRing
 import Mathlib.RingTheory.Valuation.Discrete.RankOne
-import Mathlib.RingTheory.FractionalIdeal.Basic
-import Mathlib.RingTheory.Localization.Basic
-import Mathlib.RingTheory.LaurentSeries
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.RingTheory.PowerSeries.Ideal
-import Mathlib.RingTheory.KrullDimension.LocalRing
-import Mathlib.Algebra.MvPolynomial.Division
-import Mathlib.RingTheory.RegularLocalRing.Polynomial
-import Mathlib.RingTheory.KrullDimension.Polynomial
-import Mathlib.RingTheory.Ideal.Height
-import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Push
-import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter04
 
-open scoped BigOperators Multiplicative PowerSeries WithZero
+open scoped BigOperators Multiplicative WithZero
 open Ideal IsLocalRing LinearOrderedCommGroup
 
 noncomputable section

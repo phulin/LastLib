@@ -1,8 +1,15 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.Section01WhyDiscretenessIsDecisive
+import Mathlib.RingTheory.DiscreteValuationRing.TFAE
+import Mathlib.RingTheory.Valuation.Discrete.IsDiscreteValuationRing
+import Mathlib.RingTheory.KrullDimension.LocalRing
+import Mathlib.RingTheory.Ideal.Height
+import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
+import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+import Mathlib.Tactic.Push
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter04
 
-open scoped BigOperators Multiplicative PowerSeries WithZero
+open scoped BigOperators Multiplicative WithZero
 open Ideal IsLocalRing LinearOrderedCommGroup
 
 noncomputable section
