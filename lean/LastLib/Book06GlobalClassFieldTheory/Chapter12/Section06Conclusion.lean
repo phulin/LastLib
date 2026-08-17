@@ -50,14 +50,14 @@ theorem chapter12_global_brauer_invariant_row_is_exact
     (D : Chapter04BrauerContext F)
     (B : Chapter04BrauerInvariantSequenceData D) :
     chapter04BrauerInvariantExact D := by
-  sorry
+  exact chapter04_global_invariant_sequence D B
 
 theorem chapter12_global_brauer_class_has_zero_total_invariant
     {F : Type*} [Field F] [NumberField F]
     (D : Chapter04BrauerContext F)
-    (B : Chapter04LocalBrauerBehavior D) (x : D.Br) :
+    (B : Chapter04BrauerInvariantSequenceData D) (x : D.Br) :
     chapter04BrauerInvariantSum D (D.localization x) = 0 := by
-  sorry
+  exact (B.exact_sequence.2.1 _).mpr ⟨x, rfl⟩
 
 def chapter12DegreeThreeCompactSupportTrace
     {G : Type*} [Group G]

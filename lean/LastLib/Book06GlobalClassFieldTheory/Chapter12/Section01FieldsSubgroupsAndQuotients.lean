@@ -102,7 +102,8 @@ theorem chapter12_field_inclusion_iff_norm_subgroup_reverse
     [IsTopologicalGroup C] (D : Chapter12FieldSubgroupLattice E C)
     (A B : E) :
     D.fieldLe A B ↔ D.normSubgroup B ≤ D.normSubgroup A := by
-  exact D.fieldLe_iff_norm_reverse A B
+  exact LastLib.Book06GlobalClassFieldTheory.Chapter05.chapter05_norm_subgroups_reverse_inclusion_iff
+    D A B
 
 theorem chapter12_compositum_is_norm_subgroup_intersection
     {E C : Type*} [CommGroup C] [TopologicalSpace C]
@@ -135,6 +136,14 @@ theorem chapter12_nonabelian_norm_limitation
     [CommGroup C] (D : Chapter12NonabelianLevel K L C) :
     D.normSubgroupL = D.normSubgroupM := by
   exact D.class_norm_limitation
+
+theorem chapter12_nonabelian_maximal_abelian_subextension_is_fixed_commutator
+    {K L C : Type*} [Field K] [Field L] [Algebra K L]
+    [NumberField K] [NumberField L]
+    [FiniteDimensional K L] [IsGalois K L] [Fintype (Gal(L / K))]
+    [CommGroup C] (D : Chapter12NonabelianLevel K L C) :
+    D.maximalAbelian = IntermediateField.fixedField (commutator (Gal(L / K))) := by
+  exact D.maximalAbelian_eq_fixed_commutator
 
 theorem chapter12_nonabelian_class_norm_index_is_abelianization_order
     {K L C : Type*} [Field K] [Field L] [Algebra K L]

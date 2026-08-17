@@ -105,27 +105,13 @@ theorem chapter12GlobalMaximalAbelianSubextension_eq_fixed_commutator
       IntermediateField.fixedField (commutator (Gal(L / K))) :=
   rfl
 
-/- API_CONFLICT: Chapter 05 exposes an equivalent lattice interface under the
-legacy TopologicalGroup assumption, while the pinned Mathlib API uses the
-modern [TopologicalSpace C] [IsTopologicalGroup C] pair.  This local bridge
-keeps the Chapter 12 statements on the modern assumptions until that earlier
-interface is reconciled.
--/
-structure Chapter12FieldSubgroupLattice
+/- Chapter 05 already provides the canonical finite abelian field/norm lattice.
+The Chapter 12 name is only a book-facing alias, so the dictionary consumes the
+earlier interface directly rather than introducing a parallel record. -/
+abbrev Chapter12FieldSubgroupLattice
     (E C : Type*) [CommGroup C] [TopologicalSpace C]
-    [IsTopologicalGroup C] where
-  fieldLe : E → E → Prop
-  normSubgroup : E → Subgroup C
-  normSubgroup_open : ∀ A, IsOpen (normSubgroup A : Set C)
-  fieldLe_iff_norm_reverse :
-    ∀ A B, fieldLe A B ↔ normSubgroup B ≤ normSubgroup A
-  compositum : E → E → E
-  intersection : E → E → E
-  compositum_norm_intersection :
-    ∀ A B, normSubgroup (compositum A B) = normSubgroup A ⊓ normSubgroup B
-  intersection_norm_product :
-    ∀ A B, (normSubgroup (intersection A B) : Set C) =
-      (normSubgroup A : Set C) * (normSubgroup B : Set C)
+    [IsTopologicalGroup C] :=
+  Chapter05AbelianExtensionNormLattice E C
 
 /- The product of an infinite family is read as the smallest closed subgroup
 containing all members.  This definition makes the closure convention
@@ -355,6 +341,8 @@ structure Chapter12LadicAvatarData
   avatar_factorization : avatar.comp artin = correctedHeckeCharacter
   unramified_outside_finite_set : Prop
   locally_algebraic_above_l : Prop
+  unramified_outside_finite_set_holds : unramified_outside_finite_set
+  locally_algebraic_above_l_holds : locally_algebraic_above_l
   frobenius_formula : Prop
 
 /-! ### Virtual induction and the conclusion's extra effectivity condition -/

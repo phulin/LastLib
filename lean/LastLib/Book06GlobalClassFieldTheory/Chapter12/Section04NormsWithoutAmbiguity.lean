@@ -88,10 +88,10 @@ theorem chapter12_cyclic_element_norm_has_local_global_iff
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [NumberField K] [NumberField L] [FiniteDimensional K L]
     [IsGalois K L] [IsCyclic (Gal(L / K))]
-    (P : Chapter09CyclicNormData K L) (a : Kˣ) :
-    a ∈ chapter09FieldNormSubgroup K L ↔
-      chapter09CyclicEverywhereLocalNorm P a := by
-  exact chapter09_hasse_norm_theorem P a
+    (a : K) (ha : a ≠ 0) :
+    LastLib.Book06GlobalClassFieldTheory.Chapter01.IsElementNorm K L a ↔
+      LastLib.Book06GlobalClassFieldTheory.Chapter01.IsLocalElementNorm K L a := by
+  exact chapter09_hasse_norm_theorem_unconditional ha
 
 /- The following is the precise noncyclic warning: the class-norm theorem
 does not identify the principal-norm intersection with field norms. -/
@@ -101,14 +101,13 @@ theorem chapter12_biquadratic_local_norm_need_not_be_global
     [CommGroup I_K] [CommGroup I_L]
     {K_v A_v : V → Type*}
     [∀ v, Monoid (K_v v)] [∀ v, Monoid (A_v v)]
-    (E : Chapter09BiquadraticPresentation L)
     (R : Chapter09NormRealizationData ℚ L I_K I_L V K_v A_v)
     [Finite (chapter09KnotGroup R.idele)]
     (hknot : Nat.card (chapter09KnotGroup R.idele) = 2) :
     ∃ a : ℚˣ,
       chapter09EverywhereLocalNorm R.localNormData a ∧
         a ∉ chapter09FieldNormSubgroup ℚ L := by
-  sorry
+  exact chapter09_biquadratic_exists_local_not_global_norm R hknot
 
 theorem chapter12_finite_abelian_class_norm_is_artin_kernel
     {K L I_K I_L C_K C_L : Type*}
@@ -164,14 +163,14 @@ theorem chapter12_brauer_restriction_multiplies_local_invariant
     (D : Chapter04LocalBrauerMapData B₀ B₁)
     (L : Chapter04LocalBrauerMapLaws D) (α : B₀) :
     D.inv₁ (D.res α) = D.degree • D.inv₀ α := by
-  sorry
+  exact chapter04_local_invariant_restriction_formula D L α
 
 theorem chapter12_brauer_corestriction_preserves_local_invariant
     {B₀ B₁ : Type*} [AddCommGroup B₀] [AddCommGroup B₁]
     (D : Chapter04LocalBrauerMapData B₀ B₁)
     (L : Chapter04LocalBrauerMapLaws D) (β : B₁) :
     D.inv₀ (D.cor β) = D.inv₁ β := by
-  sorry
+  exact chapter04_local_invariant_corestriction_formula D L β
 
 theorem chapter12_brauer_corestriction_sums_over_places
     {I : Type*} [Fintype I]

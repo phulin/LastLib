@@ -6,6 +6,12 @@ noncomputable section
 
 /-! ## 12.2. Local multiplicative data and global Galois data -/
 
+theorem chapter12_local_decomposition_group_is_artin_range
+    {K_v G : Type*} [Field K_v] [CommGroup G] [Finite G]
+    (D : Chapter12FinitePlaceLocalData K_v G) :
+    Subgroup.map D.localArtin ⊤ = D.decomposition := by
+  exact D.decomposition_range
+
 theorem chapter12_local_units_map_to_inertia
     {K_v G : Type*} [Field K_v] [CommGroup G] [Finite G]
     (D : Chapter12FinitePlaceLocalData K_v G) :
@@ -40,6 +46,12 @@ theorem chapter12_unramified_units_are_trivial
     D.localArtin u = 1 := by
   exact D.units_trivial u hu
 
+theorem chapter12_unramified_inertia_is_trivial
+    {K_v G : Type*} [Field K_v] [CommGroup G] [Finite G]
+    (D : Chapter12UnramifiedLocalData K_v G) :
+    Subgroup.map D.localArtin D.integralUnits = ⊥ := by
+  exact D.inertia_trivial
+
 theorem chapter12_unramified_uniformizer_is_canonical_arithmetic_frobenius
     {K_v G : Type*} [Field K_v] [CommGroup G] [Finite G]
     (D : Chapter12UnramifiedLocalData K_v G) :
@@ -56,7 +68,20 @@ theorem chapter12_ramified_uniformizer_change_is_inertia
     QuotientGroup.mk' D.inertia
         (D.localArtin (u * D.uniformizer)) =
       QuotientGroup.mk' D.inertia (D.localArtin D.uniformizer) := by
-  sorry
+  have hu' : D.localArtin u ∈ D.inertia := by
+    rw [← D.inertia_range]
+    exact Subgroup.mem_map_of_mem D.localArtin hu
+  have hq : QuotientGroup.mk' D.inertia (D.localArtin u) = 1 :=
+    (QuotientGroup.eq_one_iff (N := D.inertia) (D.localArtin u)).2 hu'
+  calc
+    QuotientGroup.mk' D.inertia (D.localArtin (u * D.uniformizer)) =
+        QuotientGroup.mk' D.inertia
+          (D.localArtin u * D.localArtin D.uniformizer) := by rw [map_mul]
+    _ = QuotientGroup.mk' D.inertia (D.localArtin u) *
+        QuotientGroup.mk' D.inertia (D.localArtin D.uniformizer) := by
+      rw [map_mul]
+    _ = QuotientGroup.mk' D.inertia (D.localArtin D.uniformizer) := by
+      rw [hq, one_mul]
 
 theorem chapter12_real_positive_component_is_trivial
     {G : Type*} [CommGroup G] [Finite G]

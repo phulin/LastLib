@@ -67,7 +67,9 @@ theorem chapter12_unramified_parameter_independent_of_uniformizer
     (hπ : π' * π⁻¹ ∈ units) :
     chapter12UnramifiedLocalParameter χ units π' =
       chapter12UnramifiedLocalParameter χ units π := by
-  sorry
+  change χ π' = χ π
+  apply eq_of_mul_inv_eq_one
+  simpa [map_mul, map_inv] using hχ (π' * π⁻¹) hπ
 
 structure Chapter12UnramifiedFrobeniusValueData (G : Type*)
     [Group G] where
@@ -168,7 +170,8 @@ theorem chapter12_book05_nonfinite_unramified_parameter_is_not_a_galois_characte
     (D : Chapter11LocalFieldData K) (α : ℂˣ)
     (hα : ¬ IsOfFinOrder α) :
     ¬ chapter11FiniteImage (chapter11ComplexUnramifiedQuasicharacter D α) := by
-  sorry
+  exact (chapter11_complex_quasicharacter_with_nonfinite_parameter_is_not_galois
+    D α hα).2
 
 structure Chapter12UnitaryModuleDecomposition
     (C : Type*) [CommGroup C] [TopologicalSpace C]
@@ -400,6 +403,8 @@ structure Chapter12InductionCompatibility
         Polynomial.C (thetaFrobeniusValue v w))
   induction_transitive : Prop
   norm_transitive : Prop
+  induction_transitive_holds : induction_transitive
+  norm_transitive_holds : norm_transitive
 
 theorem chapter12_induction_determinant_uses_diagonal_transfer
     {C_K C_M G_K G_M R V W : Type*}

@@ -210,7 +210,7 @@ theorem chapter12_cyclotomic_complete_splitting_is_congruence_one
     (hpm : ¬p ∣ m) :
     chapter08SplitsCompletely ℚ F (Ideal.span {(p : 𝓞 ℚ)}) ↔
       p ≡ 1 [MOD m] := by
-  sorry
+  exact chapter08_cyclotomic_prime_splits_completely_iff_congruent_one hm hpm
 
 theorem chapter12_complex_places_add_no_modulus_condition
     {K : Type*} [Field K] [NumberField K] (m : Modulus K) :
