@@ -2965,7 +2965,7 @@ $$
 \tag{8.14f}
 $$
 
-This is the coefficient-change sequence of Book 14, Section 11.3. When the common face base is
+This is the coefficient-change sequence of Book 7a, Section 11.3. When the common face base is
 $\mathcal O$, it describes the residual mixed groups. For a
 larger local face algebra $A$, however, the groups used in (8.14a) are
 $H^i(C_P\otimes_A^Lk)$ and are governed by the full hyper-Tor spectral sequence over $A$;
@@ -3278,7 +3278,7 @@ higher permutohedral boundaries. Equality of the composites in the derived categ
 choose those fillers.
 
 The complete two-face, braid, and higher-filler system is the iterated-switch
-Beck--Chevalley datum $({\rm IBC}_P)$ used below. Book 14, Sections 11.1 and 12.3 proves
+Beck--Chevalley datum $({\rm IBC}_P)$ used below. Book 7a, Sections 11.1 and 12.3 proves
 functoriality under pasting and the formal derived comparison once the cartesian squares and
 their higher base-change maps have been supplied. Books 22 and 122 give the individual
 coordinate objects, and Book 140 gives conditional coordinate switches. The application

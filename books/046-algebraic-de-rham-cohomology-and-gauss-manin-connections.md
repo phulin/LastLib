@@ -140,7 +140,7 @@ explicitly stated. Smoothness of $g$ ensures that base differentials are locally
 cotangent sequence used in the construction is exact on the left. A field is never silently
 assumed algebraically closed or perfect.
 
-Books 9 and 15 supply relative duality and coherent base change for curves. Book 14 supplies
+Books 9 and 15 supply relative duality and coherent base change for curves. Book 7a supplies
 hypercohomology, filtered complexes, products, and convergence. Book 35 supplies dual abelian
 schemes, the Poincare bundle, polarizations, and isogenies. We recall each interface when it enters
 and prove the specifically de Rham assertions here.
@@ -332,7 +332,7 @@ connections because it respects the filtration (2.7).
 
 Taking only global closed forms misses gluing classes, while taking coherent cohomology term by
 term misses the differential joining the terms. Hypercohomology retains both. This chapter makes
-that assertion concrete and imports only the derived machinery established in Book 14.
+that assertion concrete and imports only the derived machinery established in Book 7a.
 
 ### 3.1 Why hypercohomology is necessary
 
