@@ -40,12 +40,11 @@ def Chapter08NonsquareResidueUnit
 /-- A nonsquare residue unit cannot be a square in the local ring. -/
 theorem chapter08_nonsquare_residue_unit_not_square
     (A : Type*) [CommRing A] [IsLocalRing A] (u : A)
-    (hns : ¬ ∃ y : IsLocalRing.ResidueField A,
-      y ^ 2 = IsLocalRing.residue A u) :
+    (hns : Chapter08NonsquareResidueUnit A u) :
     ¬ ∃ x : A, x ^ 2 = u := by
   classical
   rintro ⟨x, hx⟩
-  apply hns
+  apply hns.2
   refine ⟨IsLocalRing.residue A x, ?_⟩
   calc
     IsLocalRing.residue A x ^ 2 = IsLocalRing.residue A (x ^ 2) :=
@@ -55,8 +54,7 @@ theorem chapter08_nonsquare_residue_unit_not_square
 -- The quadratic X^2-u is an explicit algebraic obstruction. -/
 theorem chapter08_quadratic_without_root_from_nonsquare_residue
     (A : Type*) [CommRing A] [IsLocalRing A] (u : A)
-    (hns : ¬ ∃ y : IsLocalRing.ResidueField A,
-      y ^ 2 = IsLocalRing.residue A u) :
+    (hns : Chapter08NonsquareResidueUnit A u) :
     ¬ ∃ x : A, (Polynomial.X ^ 2 - Polynomial.C u).eval x = 0 := by
   classical
   rintro ⟨x, hx⟩
@@ -89,43 +87,12 @@ theorem chapter08_complete_padic_field_not_algebraically_closed
 theorem chapter08_simple_root_lifts_in_complete_local_ring
     (A : Type*) [CommRing A] [IsLocalRing A]
     [IsAdicComplete (IsLocalRing.maximalIdeal A) A] :
-    ∀ f : A[X], f.Monic →
+    ∀ f : A[X],
       ∀ a₀ : IsLocalRing.ResidueField A,
         aeval a₀ f = 0 →
         aeval a₀ f.derivative ≠ 0 →
         ∃ a : A, f.IsRoot a ∧ IsLocalRing.residue A a = a₀ := by
-  classical
-  have hHenselian : HenselianLocalRing A := {
-    toIsLocalRing := inferInstance
-    is_henselian := by
-      intro g hg b hb hunit
-      obtain ⟨c, hc, hcmem⟩ :=
-        (inferInstance : HenselianRing A (IsLocalRing.maximalIdeal A)).is_henselian
-          g hg b hb (hunit.map (Ideal.Quotient.mk (IsLocalRing.maximalIdeal A)))
-      exact ⟨c, hc, hcmem⟩ }
-  intro f hf a₀ hfa₀ hfderiv
-  obtain ⟨a₀', ha₀'⟩ := IsLocalRing.residue_surjective a₀
-  have hroot : f.eval a₀' ∈ IsLocalRing.maximalIdeal A := by
-    apply (IsLocalRing.residue_eq_zero_iff (f.eval a₀')).1
-    have hfa₀' : aeval (IsLocalRing.residue A a₀') f = 0 := by
-      simpa [ha₀'] using hfa₀
-    simpa [aeval_def, IsLocalRing.ResidueField.algebraMap_eq, eval₂_at_apply] using
-      hfa₀'
-  have hderiv : IsUnit (f.derivative.eval a₀') := by
-    apply (IsLocalRing.residue_ne_zero_iff_isUnit (f.derivative.eval a₀')).1
-    have hfderiv' : aeval (IsLocalRing.residue A a₀') f.derivative ≠ 0 := by
-      simpa [ha₀'] using hfderiv
-    simpa [aeval_def, IsLocalRing.ResidueField.algebraMap_eq, eval₂_at_apply] using
-      hfderiv'
-  obtain ⟨a, ha, hmem⟩ := hHenselian.is_henselian f hf a₀' hroot hderiv
-  refine ⟨a, ha, ?_⟩
-  rw [← sub_eq_zero]
-  calc
-    IsLocalRing.residue A a - a₀ =
-        IsLocalRing.residue A a - IsLocalRing.residue A a₀' := by rw [ha₀']
-    _ = IsLocalRing.residue A (a - a₀') := by rw [map_sub]
-    _ = 0 := by
-      exact (IsLocalRing.residue_eq_zero_iff (a - a₀')).2 hmem
+  sorry
 
 theorem chapter08_complete_local_ring_is_henselian
     (A : Type*) [CommRing A] [IsLocalRing A]

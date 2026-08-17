@@ -270,12 +270,14 @@ def Chapter08PrincipalUnitPartialProduct
 def Chapter08PrincipalUnitProductConverges
     {A : Type*} [CommRing A] (I : Ideal A) (a : ℕ → A)
     (x : AdicCompletion I A) : Prop :=
-  Chapter08AdicConverges I (Chapter08PrincipalUnitPartialProduct I a) x
+  (∀ i : ℕ, a i ∈ I) ∧
+    Chapter08AdicConverges I (Chapter08PrincipalUnitPartialProduct I a) x
 
 -- Infinite products of principal units converge when a_n tends to zero adically. -/
 theorem chapter08_infinite_principal_unit_product_converges
     {A : Type*} [CommRing A]
     (I : Ideal A) (a : ℕ → A)
+    (hprincipal : ∀ i : ℕ, a i ∈ I)
     (htends : Chapter08AdicTendsToZero I a) :
     ∃ x : AdicCompletion I A, Chapter08PrincipalUnitProductConverges I a x := by
   classical
@@ -324,7 +326,7 @@ theorem chapter08_infinite_principal_unit_product_converges
   let c : AdicCompletion.AdicCauchySequence I A :=
     AdicCompletion.AdicCauchySequence.mk I A s hs
   let x : AdicCompletion I A := AdicCompletion.mk I A c
-  refine ⟨x, ?_⟩
+  refine ⟨x, hprincipal, ?_⟩
   intro n
   refine ⟨N n, fun m hm => ?_⟩
   have hquot : Ideal.Quotient.mk (I ^ n) (P m) =
