@@ -1,3 +1,4 @@
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section07UnramifiedAndTotallyRamifiedEndpoints
 import Mathlib.NumberTheory.RamificationInertia.HilbertTheory
 import Mathlib.Algebra.Ring.Action.Subobjects
 
@@ -24,19 +25,21 @@ structure Chapter05LocalEFProfile
   e_eq : e = P.ramificationIdx A
   f_eq : f = P.inertiaDeg A
 
-/-- The foundational unramified predicate used for an `e = 1` layer. -/
+/-- The unramified predicate specialized to the chosen branch ideal. -/
 def chapter05Unramified
     (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
     (P : Ideal B) [P.IsPrime] [P.IsMaximal]
     [Algebra (P.under A).ResidueField P.ResidueField] : Prop :=
-  P.ramificationIdx A = 1 ∧
-    Algebra.IsSeparable (P.under A).ResidueField P.ResidueField
+  LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.foundationalUnramified
+    (P.ramificationIdx A)
+    (Algebra.IsSeparable (P.under A).ResidueField P.ResidueField)
 
-/-- Total ramification is the actual residue-degree-one condition. -/
+/-- The totally ramified predicate specialized to the chosen branch ideal. -/
 def chapter05TotallyRamified
     (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
     (P : Ideal B) [P.IsPrime] [P.IsMaximal] : Prop :=
-  P.inertiaDeg A = 1
+  LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.foundationalTotallyRamified
+    (P.inertiaDeg A)
 
 /-- The kernel of a residue action is a normal subgroup. -/
 theorem inertia_kernel_is_normal

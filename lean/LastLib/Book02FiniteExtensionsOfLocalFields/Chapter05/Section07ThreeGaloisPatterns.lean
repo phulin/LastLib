@@ -90,7 +90,7 @@ theorem integral_fixing_implies_residue_invisibility
 
 /-- A mixed pattern records nontrivial ramification and residue factors. -/
 def chapter05MixedGaloisPattern
-    {G Q : Type*} [Group G] [Group Q]
+    {G Q : Type*} [Group G] [Group Q] [Finite G] [Finite Q]
     (ρ : G →* Q) (e f : ℕ) : Prop :=
   Function.Surjective ρ ∧
     Nat.card (MonoidHom.ker ρ) = e ∧

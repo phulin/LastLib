@@ -12,10 +12,6 @@ open scoped BigOperators
 
 /-! ## 5.3. The residue action and inertia -/
 
-/-- The residue field attached to a valuation subring. -/
-abbrev chapter05ResidueField {E : Type*} [Field E] (A : ValuationSubring E) : Type _ :=
-  IsLocalRing.ResidueField A
-
 /-- The action of the decomposition group on the valuation ring. -/
 noncomputable def chapter05ValuationRingAction
     (F : Type*) {E : Type*} [Field F] [Field E] [Algebra F E]

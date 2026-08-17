@@ -180,12 +180,6 @@ theorem branch_count_eq_decomposition_index
   rw [Nat.card_coe_set_eq, ← horbit]
   exact (MulAction.index_stabilizer (Gal(E / F)) A).symm
 
-/-- A completion of a valued field, using Mathlib's valuation completion. -/
-abbrev chapter05ValuationCompletion
-    {F Γ : Type*} [Field F] [LinearOrderedCommGroupWithZero Γ]
-    (v : Valuation F Γ) : Type _ :=
-  v.Completion
-
 /--
  The global decomposition group becomes the Galois group of the selected
  completed branch.  The `IsGaloisGroup` hypothesis is the explicit interface
