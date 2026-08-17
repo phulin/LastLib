@@ -200,16 +200,11 @@ theorem chapter10_coordinate_norm_multiplication_bound
     {K L ι : Type*} [NormedField K] [IsUltrametricDist K]
     [Field L] [Algebra K L]
     [Fintype ι] [Nonempty ι] [FiniteDimensional K L]
-    (b : Module.Basis ι K L) (i : ι) (hBi : b i = (1 : L)) :
+    (b : Module.Basis ι K L) :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ x y : L,
       Chapter10CoordinateNorm b (x * y) ≤
         C * Chapter10CoordinateNorm b x * Chapter10CoordinateNorm b y := by
-  obtain ⟨C, hC, hmul⟩ :=
-    Module.Basis.norm_mul_le_const_mul_norm (B := b) hBi
-      IsUltrametricDist.isNonarchimedean_norm
-  refine ⟨C, le_of_lt hC, ?_⟩
-  intro x y
-  simpa [Chapter10CoordinateNorm, Module.Basis.norm] using hmul x y
+  sorry
 
 /-- Nonarchimedean triangle inequality for a real-valued norm. -/
 def Chapter10NonarchimedeanNorm {L : Type*} [Add L] (N : L → ℝ) : Prop :=

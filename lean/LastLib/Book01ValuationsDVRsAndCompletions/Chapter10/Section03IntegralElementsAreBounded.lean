@@ -6,9 +6,7 @@ import Mathlib.LinearAlgebra.Complex.FiniteDimensional
 import Mathlib.RingTheory.Polynomial.IsIntegral
 import Mathlib.RingTheory.Ideal.GoingUp
 import Mathlib.RingTheory.Complex
-import Mathlib.RingTheory.Polynomial.RationalRoot
 import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.RingTheory.Valuation.RamificationGroup
 import Mathlib.RingTheory.QuasiFinite.Basic
 import Mathlib.Tactic.NormNum
 
