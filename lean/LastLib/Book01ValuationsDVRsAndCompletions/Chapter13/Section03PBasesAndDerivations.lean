@@ -79,9 +79,12 @@ theorem chapter13_p_independence_three_forms
     (Chapter13PIndependent (Chapter13PthPowerSubfield k p) B p ↔
       (∀ (r : ℕ) (b : Fin r → k), Set.range b ⊆ B → Function.Injective b →
         Module.finrank (Chapter13PthPowerSubfield k p)
-          (Algebra.adjoin (Chapter13PthPowerSubfield k p) (Set.range b)) = p ^ r)) ↔
-      (∀ b : k, b ∈ B →
-        b ∉ Algebra.adjoin (Chapter13PthPowerSubfield k p) (B \ {b})) := by
+          (Algebra.adjoin (Chapter13PthPowerSubfield k p) (Set.range b)) = p ^ r)) ∧
+      ((∀ (r : ℕ) (b : Fin r → k), Set.range b ⊆ B → Function.Injective b →
+          Module.finrank (Chapter13PthPowerSubfield k p)
+            (Algebra.adjoin (Chapter13PthPowerSubfield k p) (Set.range b)) = p ^ r) ↔
+        (∀ b : k, b ∈ B →
+          b ∉ Algebra.adjoin (Chapter13PthPowerSubfield k p) (B \ {b}))) := by
   sorry
 
 /-- Existence, maximality, and the perfect-field criterion for `p`-bases. -/

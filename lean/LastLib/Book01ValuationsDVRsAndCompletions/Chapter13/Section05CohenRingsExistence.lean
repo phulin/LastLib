@@ -1,4 +1,5 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter13.Section04CoefficientFieldsInEqualCharacteristicPrime
+import Mathlib.Algebra.Field.ZMod
 import Mathlib.NumberTheory.Padics.PadicIntegers
 import Mathlib.RingTheory.AdicCompletion.LocalRing
 import Mathlib.RingTheory.DiscreteValuationRing.Basic
@@ -166,7 +167,6 @@ theorem chapter13_padic_integers_are_cohen
 theorem chapter13_ramified_dvr_is_not_cohen
     {C : Type u} [CommRing C] [IsLocalRing C]
     {k : Type v} [Field k] (p : ℕ) [Fact (Nat.Prime p)] [CharP k p]
-    (hC : Chapter13IsPLift C k p)
     (hramified : IsLocalRing.maximalIdeal C ≠ Ideal.span {(p : C)}) :
     ¬Chapter13IsCohenRing C k p := by
   sorry

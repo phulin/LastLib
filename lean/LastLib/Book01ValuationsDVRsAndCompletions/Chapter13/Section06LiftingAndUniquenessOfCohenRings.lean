@@ -69,8 +69,7 @@ theorem chapter13_cohen_smooth_presentation_quotients
     Nonempty
       (Chapter13CohenSmoothPresentation k p ⧸
           Ideal.span {((p : Chapter13CohenSmoothPresentation k p) ^ n)} ≃+*
-        MvPolynomial k (ZMod (p ^ n))) ∧
-      ∃ M : ℕ, (p : Chapter13CohenSmoothPresentation k p) ^ M = 0 := by
+        MvPolynomial k (ZMod (p ^ n))) := by
   sorry
 
 /-- Homomorphisms out of the smooth presentation are arbitrary on its variables. -/
