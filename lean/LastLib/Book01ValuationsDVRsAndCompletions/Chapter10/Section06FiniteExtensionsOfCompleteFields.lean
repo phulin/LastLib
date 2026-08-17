@@ -204,7 +204,129 @@ theorem chapter10_coordinate_norm_multiplication_bound
     ∃ C : ℝ, 0 ≤ C ∧ ∀ x y : L,
       Chapter10CoordinateNorm b (x * y) ≤
         C * Chapter10CoordinateNorm b x * Chapter10CoordinateNorm b y := by
-  sorry
+  have hsum_prod (f : (ι × ι) → L) :
+      Chapter10CoordinateNorm b (∑ p : ι × ι, f p) ≤
+        ∑ p : ι × ι, Chapter10CoordinateNorm b (f p) := by
+    calc
+      Chapter10CoordinateNorm b (∑ p : ι × ι, f p) =
+          ‖b.equivFun (∑ p : ι × ι, f p)‖ :=
+        chapter10_coordinate_norm_eq_pi_norm _ _
+      _ = ‖∑ p : ι × ι, b.equivFun (f p)‖ := by rw [map_sum]
+      _ ≤ ∑ p : ι × ι, ‖b.equivFun (f p)‖ := norm_sum_le _ _
+      _ = ∑ p : ι × ι, Chapter10CoordinateNorm b (f p) := by
+        apply Finset.sum_congr rfl
+        intro p hp
+        exact (chapter10_coordinate_norm_eq_pi_norm b (f p)).symm
+  have hsmul (a : K) (z : L) :
+      Chapter10CoordinateNorm b (a • z) = ‖a‖ * Chapter10CoordinateNorm b z := by
+    calc
+      Chapter10CoordinateNorm b (a • z) = ‖b.equivFun (a • z)‖ :=
+        chapter10_coordinate_norm_eq_pi_norm _ _
+      _ = ‖a • b.equivFun z‖ := by simp
+      _ = ‖a‖ * ‖b.equivFun z‖ := norm_smul _ _
+      _ = ‖a‖ * Chapter10CoordinateNorm b z := by
+        rw [chapter10_coordinate_norm_eq_pi_norm]
+  have hterm (a c : K) (z : L) :
+      Chapter10CoordinateNorm b ((a * c) • z) =
+        (‖a‖ * ‖c‖) * Chapter10CoordinateNorm b z := by
+    calc
+      Chapter10CoordinateNorm b ((a * c) • z) =
+          ‖a * c‖ * Chapter10CoordinateNorm b z := hsmul (a * c) z
+      _ = (‖a‖ * ‖c‖) * Chapter10CoordinateNorm b z := by rw [norm_mul]
+  have hsumterm (x y : L) :
+      (∑ p : ι × ι,
+        Chapter10CoordinateNorm b
+          (((b.repr x p.1) * (b.repr y p.2)) • (b p.1 * b p.2))) =
+      ∑ p : ι × ι,
+        (‖b.repr x p.1‖ * ‖b.repr y p.2‖) *
+          Chapter10CoordinateNorm b (b p.1 * b p.2) := by
+    apply Finset.sum_congr rfl
+    intro p hp
+    exact hterm (b.repr x p.1) (b.repr y p.2) (b p.1 * b p.2)
+  have hcoord_nonneg (z : L) : 0 ≤ Chapter10CoordinateNorm b z := by
+    rw [chapter10_coordinate_norm_eq_pi_norm]
+    exact norm_nonneg _
+  have hcoeff (z : L) (i : ι) :
+      ‖b.repr z i‖ ≤ Chapter10CoordinateNorm b z := by
+    rw [chapter10_coordinate_norm_eq_pi_norm]
+    change ‖b.repr z i‖ ≤ ‖b.equivFun z‖
+    simp only [Pi.norm_def, Module.Basis.equivFun_apply]
+    have h := Finset.le_sup' (fun j : ι => ‖b.repr z j‖₊) (Finset.mem_univ i)
+    rw [Finset.sup'_eq_sup Finset.univ_nonempty] at h
+    simpa only [coe_nnnorm] using (NNReal.coe_le_coe.mpr h)
+  have hprod (x y : L) (i j : ι) :
+      ‖b.repr x i‖ * ‖b.repr y j‖ ≤
+        Chapter10CoordinateNorm b x * Chapter10CoordinateNorm b y := by
+    exact le_trans
+      (mul_le_mul_of_nonneg_right (hcoeff x i) (norm_nonneg _))
+      (mul_le_mul_of_nonneg_left (hcoeff y j) (hcoord_nonneg x))
+  have hscaled (x y : L) (i j : ι) :
+      (‖b.repr x i‖ * ‖b.repr y j‖) *
+          Chapter10CoordinateNorm b (b i * b j) ≤
+        (Chapter10CoordinateNorm b x * Chapter10CoordinateNorm b y) *
+          Chapter10CoordinateNorm b (b i * b j) := by
+    exact mul_le_mul_of_nonneg_right (hprod x y i j)
+      (hcoord_nonneg (b i * b j))
+  have hsumineq (x y : L) :
+      (∑ p : ι × ι,
+        (‖b.repr x p.1‖ * ‖b.repr y p.2‖) *
+          Chapter10CoordinateNorm b (b p.1 * b p.2)) ≤
+      ∑ p : ι × ι,
+        (Chapter10CoordinateNorm b x * Chapter10CoordinateNorm b y) *
+          Chapter10CoordinateNorm b (b p.1 * b p.2) := by
+    apply Finset.sum_le_sum
+    intro p hp
+    exact hscaled x y p.1 p.2
+  have hxy (x y : L) :
+      x * y = ∑ p : ι × ι,
+        ((b.repr x p.1) * (b.repr y p.2)) • (b p.1 * b p.2) := by
+    have hx : x = ∑ i, b.repr x i • b i := (b.sum_repr x).symm
+    have hy : y = ∑ i, b.repr y i • b i := (b.sum_repr y).symm
+    calc
+      x * y = (∑ i, b.repr x i • b i) * (∑ i, b.repr y i • b i) :=
+        congrArg₂ (fun a b => a * b) hx hy
+      _ = ∑ p : ι × ι,
+          (b.repr x p.1 • b p.1) * (b.repr y p.2 • b p.2) := by
+        rw [Finset.sum_mul_sum, ← Finset.sum_product']
+        simp only [Finset.univ_product_univ]
+      _ = ∑ p : ι × ι,
+          ((b.repr x p.1) * (b.repr y p.2)) • (b p.1 * b p.2) := by
+        apply Finset.sum_congr rfl
+        intro p hp
+        simp only [Algebra.smul_mul_assoc, Algebra.mul_smul_comm]
+        simp [smul_smul, mul_comm]
+  let C : ℝ := ∑ p : ι × ι, Chapter10CoordinateNorm b (b p.1 * b p.2)
+  have hmul (x y : L) :
+      (Chapter10CoordinateNorm b x * Chapter10CoordinateNorm b y) *
+          ∑ p : ι × ι, Chapter10CoordinateNorm b (b p.1 * b p.2) =
+        ∑ p : ι × ι,
+          (Chapter10CoordinateNorm b x * Chapter10CoordinateNorm b y) *
+            Chapter10CoordinateNorm b (b p.1 * b p.2) := by
+    rw [Finset.mul_sum]
+  refine ⟨C, ?_, ?_⟩
+  · dsimp [C]
+    exact Finset.sum_nonneg (fun p hp => hcoord_nonneg _)
+  · intro x y
+    calc
+      Chapter10CoordinateNorm b (x * y) =
+          Chapter10CoordinateNorm b (∑ p : ι × ι,
+            ((b.repr x p.1) * (b.repr y p.2)) • (b p.1 * b p.2)) := by rw [hxy]
+      _ ≤ ∑ p : ι × ι,
+          Chapter10CoordinateNorm b
+            (((b.repr x p.1) * (b.repr y p.2)) • (b p.1 * b p.2)) :=
+        hsum_prod _
+      _ = ∑ p : ι × ι,
+          (‖b.repr x p.1‖ * ‖b.repr y p.2‖) *
+            Chapter10CoordinateNorm b (b p.1 * b p.2) := hsumterm x y
+      _ ≤ ∑ p : ι × ι,
+          (Chapter10CoordinateNorm b x * Chapter10CoordinateNorm b y) *
+            Chapter10CoordinateNorm b (b p.1 * b p.2) := hsumineq x y
+      _ = (Chapter10CoordinateNorm b x * Chapter10CoordinateNorm b y) *
+            ∑ p : ι × ι, Chapter10CoordinateNorm b (b p.1 * b p.2) := by
+        exact (hmul x y).symm
+      _ = C * Chapter10CoordinateNorm b x * Chapter10CoordinateNorm b y := by
+        dsimp [C]
+        ring
 
 /-- Nonarchimedean triangle inequality for a real-valued norm. -/
 def Chapter10NonarchimedeanNorm {L : Type*} [Add L] (N : L → ℝ) : Prop :=
@@ -331,7 +453,28 @@ theorem chapter10_finite_extension_extended_norm_complete
     ∀ s : ℕ → L,
       Chapter10CauchyInNorm (N : L → ℝ) s →
         ∃ x : L, Chapter10TendsToInNorm (N : L → ℝ) s x := by
-  sorry
+  intro s hs
+  rcases chapter10_nonarchimedean_norm_equivalent_to_coordinate_norm b N hN.1 with
+    ⟨c, d, hc, hd, hNc, hcoord⟩
+  have hscoord : Chapter10CauchyInNorm (Chapter10CoordinateNorm b) s := by
+    intro ε hε
+    obtain ⟨N₀, hN₀⟩ := hs (ε / d) (div_pos hε hd)
+    refine ⟨N₀, fun m n hm hn => ?_⟩
+    calc
+      Chapter10CoordinateNorm b (s m - s n) ≤ d * N (s m - s n) := hcoord _
+      _ < d * (ε / d) := mul_lt_mul_of_pos_left (hN₀ m n hm hn) hd
+      _ = ε := by
+        field_simp [ne_of_gt hd]
+  obtain ⟨x, hx⟩ := chapter10_coordinate_norm_complete b s hscoord
+  refine ⟨x, ?_⟩
+  intro ε hε
+  obtain ⟨N₀, hN₀⟩ := hx (ε / c) (div_pos hε hc)
+  refine ⟨N₀, fun n hn => ?_⟩
+  calc
+    N (s n - x) ≤ c * Chapter10CoordinateNorm b (s n - x) := hNc _
+    _ < c * (ε / c) := mul_lt_mul_of_pos_left (hN₀ n hn) hc
+    _ = ε := by
+      field_simp [ne_of_gt hc]
 
 /--
 Uniqueness over an arbitrary algebraic extension.  The values are compared

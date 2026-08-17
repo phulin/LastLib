@@ -834,7 +834,107 @@ theorem chapter10_constant_field_extension_numerical_profile
     apply Algebra.finrank_eq_of_equiv_equiv
       (Chapter10LaurentSeriesResidueRingEquiv k)
       (Chapter10LaurentSeriesResidueRingEquiv k')
-    sorry
+    ext a
+    let zK : (Chapter10LaurentSeriesValuation k).valuationSubring :=
+      Chapter03.laurentSeriesValuationRingEquiv k (PowerSeries.C a)
+    let zK' : (Chapter10LaurentSeriesValuation k').valuationSubring :=
+      Chapter03.laurentSeriesValuationRingEquiv k'
+        (PowerSeries.C (algebraMap k k' a))
+    have hreprK :
+        Chapter10LaurentSeriesResidueRingEquiv k a =
+          IsLocalRing.residue _ zK := by
+      change
+        ((IsLocalRing.ResidueField.mapEquiv
+          (Chapter03.laurentSeriesValuationRingEquiv k))
+          ((PowerSeries.residueFieldOfPowerSeries (k := k)).symm a)) =
+          IsLocalRing.residue _ zK
+      rw [show (PowerSeries.residueFieldOfPowerSeries (k := k)).symm a =
+          IsLocalRing.residue k⟦X⟧ (PowerSeries.C a) by
+        rw [IsLocalRing.residue_def]
+        change
+          (Ideal.quotEquivOfEq
+            (PowerSeries.ker_coeff_eq_max_ideal (k := k)).symm).symm
+              ((RingHom.quotientKerEquivOfSurjective
+                (PowerSeries.constantCoeff_surj (R := k))).symm a) =
+            Ideal.Quotient.mk _ (PowerSeries.C a)
+        rw [← PowerSeries.constantCoeff_C a,
+          RingHom.quotientKerEquivOfSurjective_symm_apply]
+        simp]
+      exact IsLocalRing.ResidueField.map_residue _ _
+    have hreprK' :
+        Chapter10LaurentSeriesResidueRingEquiv k'
+            (algebraMap k k' a) =
+          IsLocalRing.residue _ zK' := by
+      change
+        ((IsLocalRing.ResidueField.mapEquiv
+          (Chapter03.laurentSeriesValuationRingEquiv k'))
+          ((PowerSeries.residueFieldOfPowerSeries (k := k')).symm
+            (algebraMap k k' a))) =
+          IsLocalRing.residue _ zK'
+      rw [show (PowerSeries.residueFieldOfPowerSeries (k := k')).symm
+            (algebraMap k k' a) =
+          IsLocalRing.residue k'⟦X⟧
+            (PowerSeries.C (algebraMap k k' a)) by
+        rw [IsLocalRing.residue_def]
+        change
+          (Ideal.quotEquivOfEq
+            (PowerSeries.ker_coeff_eq_max_ideal (k := k')).symm).symm
+              ((RingHom.quotientKerEquivOfSurjective
+                (PowerSeries.constantCoeff_surj (R := k'))).symm
+                  (algebraMap k k' a)) =
+            Ideal.Quotient.mk _
+              (PowerSeries.C (algebraMap k k' a))
+        rw [← PowerSeries.constantCoeff_C (algebraMap k k' a),
+          RingHom.quotientKerEquivOfSurjective_symm_apply]
+        simp]
+      exact IsLocalRing.ResidueField.map_residue _ _
+    change
+      algebraMap (Chapter10ResidueField (Chapter10LaurentSeriesValuation k))
+          (Chapter10ResidueField (Chapter10LaurentSeriesValuation k'))
+          (Chapter10LaurentSeriesResidueRingEquiv k a) =
+        Chapter10LaurentSeriesResidueRingEquiv k' (algebraMap k k' a)
+    rw [hreprK, hreprK']
+    rw [Valuation.HasExtension.algebraMap_residue_eq_residue_algebraMap
+      (Chapter10LaurentSeriesValuation k)
+      (Chapter10LaurentSeriesValuation k') zK]
+    congr 1
+    apply Subtype.ext
+    change
+      algebraMap (LaurentSeries k) (LaurentSeries k')
+          (algebraMap k (LaurentSeries k) a) =
+        algebraMap k' (LaurentSeries k') (algebraMap k k' a)
+    have htower : IsScalarTower k k' (LaurentSeries k') := inferInstance
+    have hbase :
+        (algebraMap k k' a) • (1 : LaurentSeries k') =
+          HahnSeries.C (algebraMap k k' a) := by
+      rw [← HahnSeries.C_mul_eq_smul]
+      simp
+    have htower_smul :
+        (algebraMap k k' a) • (1 : LaurentSeries k') =
+          a • (1 : LaurentSeries k') :=
+      IsScalarTower.algebraMap_smul (A := k') a (1 : LaurentSeries k')
+    calc
+      algebraMap (LaurentSeries k) (LaurentSeries k')
+          (algebraMap k (LaurentSeries k) a) =
+          (algebraMap k (LaurentSeries k) a) •
+            (1 : LaurentSeries k') := by
+              rw [Algebra.algebraMap_eq_smul_one]
+      _ = (a • (1 : LaurentSeries k)) •
+            (1 : LaurentSeries k') := by
+              rw [Algebra.algebraMap_eq_smul_one]
+      _ = a • (1 : LaurentSeries k') := by
+        exact (smul_assoc a (1 : LaurentSeries k)
+          (1 : LaurentSeries k')).trans
+          (congrArg (fun z : LaurentSeries k' => a • z)
+            (one_smul (LaurentSeries k) (1 : LaurentSeries k')))
+      _ = HahnSeries.C (algebraMap k k' a) := by
+        exact htower_smul.symm.trans hbase
+      _ = algebraMap k' (LaurentSeries k')
+            (algebraMap k k' a) := by
+        rw [HahnSeries.algebraMap_apply' ℤ]
+        rw [PowerSeries.algebraMap_apply]
+        rw [HahnSeries.ofPowerSeries_C]
+        simp
   have hvalue_range : d.valueGroupMap.range = ⊤ := by
     apply top_unique
     intro u hu
@@ -875,10 +975,147 @@ theorem chapter10_constant_field_extension_profile
         Chapter10ProfileRealizedByData d p ∧
           p.degree = Module.finrank k k' ∧ p.ramificationIndex = 1 ∧
           p.residueDegree = Module.finrank k k' ∧ Chapter10Unramified p ∧
-          Chapter10UnramifiedBranch
+      Chapter10UnramifiedBranch
             (Chapter10LaurentSeriesValuation k)
             (Chapter10LaurentSeriesValuation k') h d := by
-  sorry
+  obtain ⟨d, p, hprof, hdegree, hram, hresdegree, hunram⟩ :=
+    chapter10_constant_field_extension_numerical_profile hparameter h
+  let : Valuation.HasExtension (Chapter10LaurentSeriesValuation k)
+      (Chapter10LaurentSeriesValuation k') := ⟨h⟩
+  have he :
+      RingHom.comp
+          (algebraMap (Chapter10ResidueField (Chapter10LaurentSeriesValuation k))
+            (Chapter10ResidueField (Chapter10LaurentSeriesValuation k')))
+          (Chapter10LaurentSeriesResidueRingEquiv k : k →+*
+            Chapter10ResidueField (Chapter10LaurentSeriesValuation k)) =
+        RingHom.comp
+          (Chapter10LaurentSeriesResidueRingEquiv k' : k' →+*
+            Chapter10ResidueField (Chapter10LaurentSeriesValuation k'))
+          (algebraMap k k') := by
+    ext a
+    let zK : (Chapter10LaurentSeriesValuation k).valuationSubring :=
+      Chapter03.laurentSeriesValuationRingEquiv k (PowerSeries.C a)
+    let zK' : (Chapter10LaurentSeriesValuation k').valuationSubring :=
+      Chapter03.laurentSeriesValuationRingEquiv k'
+        (PowerSeries.C (algebraMap k k' a))
+    have hreprK :
+        Chapter10LaurentSeriesResidueRingEquiv k a =
+          IsLocalRing.residue _ zK := by
+      change
+        ((IsLocalRing.ResidueField.mapEquiv
+          (Chapter03.laurentSeriesValuationRingEquiv k))
+          ((PowerSeries.residueFieldOfPowerSeries (k := k)).symm a)) =
+          IsLocalRing.residue _ zK
+      rw [show (PowerSeries.residueFieldOfPowerSeries (k := k)).symm a =
+          IsLocalRing.residue k⟦X⟧ (PowerSeries.C a) by
+        rw [IsLocalRing.residue_def]
+        change
+          (Ideal.quotEquivOfEq
+            (PowerSeries.ker_coeff_eq_max_ideal (k := k)).symm).symm
+              ((RingHom.quotientKerEquivOfSurjective
+                (PowerSeries.constantCoeff_surj (R := k))).symm a) =
+            Ideal.Quotient.mk _ (PowerSeries.C a)
+        rw [← PowerSeries.constantCoeff_C a,
+          RingHom.quotientKerEquivOfSurjective_symm_apply]
+        simp]
+      exact IsLocalRing.ResidueField.map_residue _ _
+    have hreprK' :
+        Chapter10LaurentSeriesResidueRingEquiv k'
+            (algebraMap k k' a) =
+          IsLocalRing.residue _ zK' := by
+      change
+        ((IsLocalRing.ResidueField.mapEquiv
+          (Chapter03.laurentSeriesValuationRingEquiv k'))
+          ((PowerSeries.residueFieldOfPowerSeries (k := k')).symm
+            (algebraMap k k' a))) =
+          IsLocalRing.residue _ zK'
+      rw [show (PowerSeries.residueFieldOfPowerSeries (k := k')).symm
+            (algebraMap k k' a) =
+          IsLocalRing.residue k'⟦X⟧
+            (PowerSeries.C (algebraMap k k' a)) by
+        rw [IsLocalRing.residue_def]
+        change
+          (Ideal.quotEquivOfEq
+            (PowerSeries.ker_coeff_eq_max_ideal (k := k')).symm).symm
+              ((RingHom.quotientKerEquivOfSurjective
+                (PowerSeries.constantCoeff_surj (R := k'))).symm
+                  (algebraMap k k' a)) =
+            Ideal.Quotient.mk _
+              (PowerSeries.C (algebraMap k k' a))
+        rw [← PowerSeries.constantCoeff_C (algebraMap k k' a),
+          RingHom.quotientKerEquivOfSurjective_symm_apply]
+        simp]
+      exact IsLocalRing.ResidueField.map_residue _ _
+    change
+      algebraMap (Chapter10ResidueField (Chapter10LaurentSeriesValuation k))
+          (Chapter10ResidueField (Chapter10LaurentSeriesValuation k'))
+          (Chapter10LaurentSeriesResidueRingEquiv k a) =
+        Chapter10LaurentSeriesResidueRingEquiv k' (algebraMap k k' a)
+    rw [hreprK, hreprK']
+    rw [Valuation.HasExtension.algebraMap_residue_eq_residue_algebraMap
+      (Chapter10LaurentSeriesValuation k)
+      (Chapter10LaurentSeriesValuation k') zK]
+    congr 1
+    apply Subtype.ext
+    change
+      algebraMap (LaurentSeries k) (LaurentSeries k')
+          (algebraMap k (LaurentSeries k) a) =
+        algebraMap k' (LaurentSeries k') (algebraMap k k' a)
+    have htower : IsScalarTower k k' (LaurentSeries k') := inferInstance
+    have hbase :
+        (algebraMap k k' a) • (1 : LaurentSeries k') =
+          HahnSeries.C (algebraMap k k' a) := by
+      rw [← HahnSeries.C_mul_eq_smul]
+      simp
+    have htower_smul :
+        (algebraMap k k' a) • (1 : LaurentSeries k') =
+          a • (1 : LaurentSeries k') :=
+      IsScalarTower.algebraMap_smul (A := k') a (1 : LaurentSeries k')
+    calc
+      algebraMap (LaurentSeries k) (LaurentSeries k')
+          (algebraMap k (LaurentSeries k) a) =
+          (algebraMap k (LaurentSeries k) a) •
+            (1 : LaurentSeries k') := by
+              rw [Algebra.algebraMap_eq_smul_one]
+      _ = (a • (1 : LaurentSeries k)) •
+            (1 : LaurentSeries k') := by
+        rw [Algebra.algebraMap_eq_smul_one]
+      _ = a • (1 : LaurentSeries k') := by
+        exact (smul_assoc a (1 : LaurentSeries k)
+          (1 : LaurentSeries k')).trans
+          (congrArg (fun z : LaurentSeries k' => a • z)
+            (one_smul (LaurentSeries k) (1 : LaurentSeries k')))
+      _ = HahnSeries.C (algebraMap k k' a) := by
+        exact htower_smul.symm.trans hbase
+      _ = algebraMap k' (LaurentSeries k')
+            (algebraMap k k' a) := by
+        rw [HahnSeries.algebraMap_apply' ℤ]
+        rw [PowerSeries.algebraMap_apply]
+        rw [HahnSeries.ofPowerSeries_C]
+        simp
+  have hsep_res :
+      Algebra.IsSeparable
+        (Chapter10ResidueField (Chapter10LaurentSeriesValuation k))
+        (Chapter10ResidueField (Chapter10LaurentSeriesValuation k')) := by
+    letI : Algebra.IsSeparable k k' := hseparable
+    exact Algebra.IsSeparable.of_equiv_equiv
+      (Chapter10LaurentSeriesResidueRingEquiv k)
+      (Chapter10LaurentSeriesResidueRingEquiv k') he
+  have hbranch :
+      Chapter10UnramifiedBranch
+        (Chapter10LaurentSeriesValuation k)
+        (Chapter10LaurentSeriesValuation k') h d := by
+    change d.ramificationIndex = 1 ∧
+      Chapter10ResidueExtensionIsSeparable
+        (Chapter10LaurentSeriesValuation k)
+        (Chapter10LaurentSeriesValuation k')
+    refine ⟨hprof.2.1.symm.trans hram, ?_⟩
+    letI : Algebra.IsSeparable
+        (Chapter10ResidueField (Chapter10LaurentSeriesValuation k))
+        (Chapter10ResidueField (Chapter10LaurentSeriesValuation k')) := hsep_res
+    intro x
+    exact Algebra.IsSeparable.isSeparable _ x
+  exact ⟨d, p, hprof, hdegree, hram, hresdegree, hunram, hbranch⟩
 
 /-- Combining a constant extension and a totally ramified extension gives ef. -/
 theorem chapter10_combined_equal_characteristic_profile
