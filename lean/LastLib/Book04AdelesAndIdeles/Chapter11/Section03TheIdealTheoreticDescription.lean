@@ -911,10 +911,36 @@ theorem chapter11_idele_ray_quotient_equiv_ideal_ray_quotient
           apply Units.ext
           change LastLib.Book04AdelesAndIdeles.Chapter08.chapter08FiniteIdeleComponent y v = 1
           exact hynorm v hv
-        rw [hunitcomp]
-        exact (chapter11FiniteLocalUnitGroup K v (m.finiteExponent v)).one_mem
+        simpa only [map_mul, map_one, one_mul, hunitcomp] using
+          (chapter11FiniteLocalUnitGroup K v (m.finiteExponent v)).one_mem
       · intro v hv
-        simp [z]
+        have hsignz :
+            chapter11RealSignComponent K v (m.infinitePart_isReal v hv) z = 1 := by
+          apply Units.ext
+          change SignType.sign
+            (NumberField.InfinitePlace.Completion.extensionEmbeddingOfIsReal
+              (m.infinitePart_isReal v hv)
+              (((z : Chapter11AdeleRing K).1) v)) = 1
+          have hzdecomp :
+              LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K z =
+                (1, y) := by
+            exact
+              (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K).apply_symm_apply _
+          have hzinf :
+              (z : Chapter11AdeleRing K).1 =
+                (1 : LastLib.Book04AdelesAndIdeles.Chapter09.Chapter09InfiniteAdele K) := by
+            exact congrArg
+              (fun w =>
+                (w.1 : LastLib.Book04AdelesAndIdeles.Chapter09.Chapter09InfiniteAdele K))
+              hzdecomp
+          have hzinfv :
+              ((z : Chapter11AdeleRing K).1) v = (1 : v.Completion) := by
+            exact congrArg
+              (fun w : LastLib.Book04AdelesAndIdeles.Chapter09.Chapter09InfiniteAdele K => w v)
+              hzinf
+          rw [hzinfv]
+          simp
+        simpa only [map_mul, map_one, one_mul] using hsignz
     have hzideal :
         (chapter11CanonicalIdeleIdealMap K).toIdeal z =
           (I : Chapter11FractionalIdealUnitGroup K) := by
@@ -929,10 +955,6 @@ theorem chapter11_idele_ray_quotient_equiv_ideal_ray_quotient
       apply Subtype.ext
       apply Units.ext
       dsimp [idealOfNormalizer]
-      change ((chapter11CanonicalIdeleIdealMap K).toIdeal
-          (chapter11PrincipalIdeleHom (K := K) 1 * z) :
-          FractionalIdeal (𝓞 K)⁰ K) =
-        ((I : Chapter11FractionalIdealUnitGroup K) : FractionalIdeal (𝓞 K)⁰ K)
       rw [map_mul, (chapter11CanonicalIdeleIdealMap K).map_principal, hzideal]
       simp
     have hΦz : Φhom z = QuotientGroup.mk' Q I := by

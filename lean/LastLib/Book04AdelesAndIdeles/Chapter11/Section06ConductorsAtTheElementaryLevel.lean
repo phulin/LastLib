@@ -1,4 +1,5 @@
 import LastLib.Book04AdelesAndIdeles.Chapter11.Dependencies
+import LastLib.Book04AdelesAndIdeles.Chapter11.Section02LocalCongruenceGroups
 import LastLib.Book04AdelesAndIdeles.Chapter11.Section04FinitenessOfRayClassGroups
 import LastLib.Book04AdelesAndIdeles.Chapter02.Section04LocalIntegersAndLocalUnits
 import Mathlib.Analysis.Complex.Convex
@@ -93,11 +94,51 @@ theorem chapter11_complex_finite_order_character_is_trivial
     ∀ x : ℂˣ, ψ x = 1 := by
   sorry
 
-def chapter11RealSignClassHom (K : Type*) [Field K] [NumberField K]
+noncomputable def chapter11RealSignClassHom (K : Type*) [Field K] [NumberField K]
     (v : NumberField.InfinitePlace K)
     (hv : NumberField.InfinitePlace.IsReal v) :
     SignTypeˣ →* Chapter11IdeleClassGroup K := by
-  sorry
+  classical
+  let signToReal : SignTypeˣ →* ℝˣ :=
+    Units.map (SignType.castHom : SignType →*₀ ℝ).toMonoidHom
+  let coordinate : SignTypeˣ →*
+      (∀ w : NumberField.InfinitePlace K, w.Completionˣ) :=
+    { toFun := fun s w =>
+        if h : w = v then
+          let hw : w.IsReal := h.symm ▸ hv
+          Units.map
+            (NumberField.InfinitePlace.Completion.ringEquivRealOfIsReal hw).symm.toMonoidHom
+            (signToReal s)
+        else 1
+      map_one' := by
+        funext w
+        by_cases h : w = v
+        · simp [h, signToReal]
+        · simp [h]
+      map_mul' := by
+        intro s t
+        funext w
+        by_cases h : w = v
+        · simp [h, signToReal]
+        · simp [h] }
+  let piUnits :
+      (LastLib.Book04AdelesAndIdeles.Chapter09.Chapter09InfiniteAdele K)ˣ ≃*
+        (∀ w : NumberField.InfinitePlace K, w.Completionˣ) :=
+    MulEquiv.piUnits
+  let hinf : SignTypeˣ →*
+      (LastLib.Book04AdelesAndIdeles.Chapter09.Chapter09InfiniteAdele K)ˣ :=
+    piUnits.symm.toMonoidHom.comp coordinate
+  let hpair : SignTypeˣ →*
+      ((LastLib.Book04AdelesAndIdeles.Chapter09.Chapter09InfiniteAdele K)ˣ ×
+        (LastLib.Book04AdelesAndIdeles.Chapter09.Chapter09FiniteAdele K)ˣ) :=
+    { toFun := fun s => (hinf s, 1)
+      map_one' := by simp [hinf]
+      map_mul' := by
+        intro s t
+        simp [hinf] }
+  exact (chapter11IdeleClassProjection (K := K)).comp
+    ((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K).symm.toMonoidHom.comp
+      hpair)
 
 def chapter11CharacterDetectsRealSign
     (χ : Chapter11FiniteOrderIdeleClassCharacter K)
@@ -137,9 +178,35 @@ def chapter11CharacterOfRayClassHom (m : RayModulus K)
     Chapter11FiniteOrderIdeleClassCharacter K where
   toMonoidHom := ψ.comp (chapter11IdeleClassToRayClass m)
   continuous_toMonoidHom := by
-    sorry
+    let S := chapter11PrincipalIdeleSubgroup (K := K) ⊔
+      chapter11RayUnitSubgroup m
+    have hS : IsOpen (S : Set (Chapter11IdeleGroup K)) := by
+      exact Subgroup.isOpen_mono le_sup_right
+        (chapter11_ray_unit_subgroup_is_open m)
+    have hdiscrete : DiscreteTopology (chapter11RayClassGroup m) :=
+      QuotientGroup.discreteTopology hS
+    have hq : Continuous (chapter11IdeleClassToRayClass m) := by
+      apply (QuotientGroup.isQuotientMap_mk
+        (chapter11PrincipalIdeleSubgroup (K := K))).continuous_iff.mpr
+      change Continuous (chapter11RayClassProjection m)
+      exact QuotientGroup.continuous_mk
+    have hψ : Continuous ψ := by
+      exact @continuous_of_discreteTopology
+        (chapter11RayClassGroup m) _ hdiscrete ℂˣ _ ψ
+    exact hψ.comp hq
   finite_order := by
-    sorry
+    refine ⟨Fintype.card (chapter11RayClassGroup m), Fintype.card_pos, ?_⟩
+    intro x
+    calc
+      (ψ.comp (chapter11IdeleClassToRayClass m)) x ^
+          Fintype.card (chapter11RayClassGroup m) =
+          ψ ((chapter11IdeleClassToRayClass m x) ^
+            Fintype.card (chapter11RayClassGroup m)) := by
+            change ψ (chapter11IdeleClassToRayClass m x) ^
+              Fintype.card (chapter11RayClassGroup m) = _
+            exact (map_pow ψ (chapter11IdeleClassToRayClass m x) _).symm
+      _ = ψ 1 := by rw [pow_card_eq_one]
+      _ = 1 := ψ.map_one
 
 theorem chapter11_ray_class_character_has_conductor_dividing_modulus
     (m : RayModulus K) (ψ : chapter11RayClassGroup m →* ℂˣ) :

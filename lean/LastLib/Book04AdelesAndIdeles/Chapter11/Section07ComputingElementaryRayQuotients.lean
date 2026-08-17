@@ -2,6 +2,7 @@ import LastLib.Book04AdelesAndIdeles.Chapter11.Section06ConductorsAtTheElementar
 import LastLib.Book04AdelesAndIdeles.Chapter11.Section04FinitenessOfRayClassGroups
 import LastLib.Book04AdelesAndIdeles.Chapter11.Section05OpenCompactSubgroups
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.Section01SuccessivePrecision
+import Mathlib.NumberTheory.LegendreSymbol.QuadraticChar.Basic
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter11
 
@@ -62,8 +63,11 @@ theorem chapter11_rational_infinite_ray_class_group_equiv_residue_units
       (chapter11RationalRayClassGroup N hN .included ≃* (ZMod N)ˣ) := by
   sorry
 
-def chapter11ModFiveRepresentative (i : Fin 4) : (ZMod 5)ˣ :=
-  by sorry
+def chapter11ModFiveRepresentative (i : Fin 4) : (ZMod 5)ˣ := by
+  refine ZMod.unitOfCoprime (i.val + 1) ?_
+  have hi : i.val = 0 ∨ i.val = 1 ∨ i.val = 2 ∨ i.val = 3 := by
+    omega
+  rcases hi with hi | hi | hi | hi <;> simp [hi] <;> decide
 
 theorem chapter11_mod_five_representatives_are_all_residue_units :
     Function.Bijective chapter11ModFiveRepresentative := by
@@ -73,7 +77,15 @@ def chapter11QuadraticResidueModFive (a : (ZMod 5)ˣ) : Prop :=
   ∃ x : (ZMod 5)ˣ, x * x = a
 
 def chapter11QuadraticCharacterModFive : (ZMod 5)ˣ →* SignTypeˣ := by
-  sorry
+  letI : Fact (Nat.Prime 5) := ⟨by norm_num⟩
+  let intSign : ℤ →* SignType :=
+    { toFun := SignType.sign
+      map_one' := by simp
+      map_mul' := by
+        intro a b
+        exact sign_mul a b }
+  exact (Units.map intSign).comp
+    (MulChar.toUnitHom (quadraticChar (ZMod 5)))
 
 theorem chapter11_mod_five_quadratic_character_values :
     (∀ a, chapter11QuadraticResidueModFive a →

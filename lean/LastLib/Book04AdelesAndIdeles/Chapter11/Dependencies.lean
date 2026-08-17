@@ -732,10 +732,6 @@ def chapter11GlobalUnitResidueSignHom (m : RayModulus K) :
     · exact r.map_mul x y
     · exact s.map_mul x y
 
-def chapter11ResidueSignToRayClassHom (m : RayModulus K) :
-    chapter11RayResidueSignGroup m →* chapter11RayClassGroup m := by
-  sorry
-
 def chapter11RayClassToOrdinaryClassHom (m : RayModulus K) :
     chapter11RayClassGroup m →* Chapter11OrdinaryClassGroup K := by
   let f : Chapter11IdeleGroup K →* Chapter11OrdinaryClassGroup K :=

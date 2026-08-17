@@ -21,9 +21,14 @@ def chapter11FiniteRayUnitSubgroup (m : RayModulus K) :
     simpa only [map_one] using
       (chapter11FiniteLocalUnitGroup K v (m.finiteExponent v)).one_mem
   mul_mem' := by
-    sorry
+    intro x y hx hy v
+    simpa only [map_mul] using
+      (chapter11FiniteLocalUnitGroup K v (m.finiteExponent v)).mul_mem
+        (hx v) (hy v)
   inv_mem' := by
-    sorry
+    intro x hx v
+    simpa only [map_inv] using
+      (chapter11FiniteLocalUnitGroup K v (m.finiteExponent v)).inv_mem (hx v)
 
 theorem chapter11_finite_ray_unit_subgroup_mem_iff (m : RayModulus K)
     (x : Chapter11FiniteIdeleGroup K) :
