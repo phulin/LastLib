@@ -7,8 +7,17 @@ namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03
 noncomputable section
 
 open Ideal
-open scoped BigOperators WithZero
+open scoped BigOperators TensorProduct WithZero
 open LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
+
+/- The tensor product has two natural scalar actions.  The right action is the
+   one used for the base-change algebras in this chapter, and Mathlib keeps it
+   as an explicit construction rather than a global instance. -/
+noncomputable instance chapter03TensorProductRightAlgebra
+    (R A B : Type*) [CommRing R] [CommRing A] [CommRing B]
+    [Algebra R A] [Algebra R B] :
+    Algebra B (A ⊗[R] B) :=
+  Algebra.TensorProduct.rightAlgebra
 
 /-! ## 3.1. Why tower formulas matter -/
 
@@ -39,24 +48,6 @@ structure Chapter03NormalizedValuedTower
   restrict_M_to_K : chapter03ValuationRestrictionScale vK vM eMK
   restrict_L_to_M : chapter03ValuationRestrictionScale vM vL eLM
 
-/-- The intrinsic ramification index for two chosen valuation rings. -/
-def chapter03RamificationIndex
-    {K L Γ : Type*} [Field K] [Field L] [Algebra K L]
-    [LinearOrderedCommGroupWithZero Γ]
-    (vK : Valuation K Γ) (vL : Valuation L Γ)
-    [vK.HasExtension vL] : ℕ :=
-  chapterRamificationIndex vK.valuationSubring vL.valuationSubring
-    (IsLocalRing.maximalIdeal vL.valuationSubring)
-
-/-- The intrinsic residue degree for two chosen valuation rings. -/
-def chapter03ResidueDegree
-    {K L Γ : Type*} [Field K] [Field L] [Algebra K L]
-    [LinearOrderedCommGroupWithZero Γ]
-    (vK : Valuation K Γ) (vL : Valuation L Γ)
-    [vK.HasExtension vL] : ℕ :=
-  chapterResidueDegree vK.valuationSubring vL.valuationSubring
-    (IsLocalRing.maximalIdeal vL.valuationSubring)
-
 /-- Book-facing data recording the two local factors and their degree product. -/
 structure Chapter03FiniteLocalExtensionData
     (K L Γ : Type*) [Field K] [Field L] [Algebra K L]
@@ -65,8 +56,10 @@ structure Chapter03FiniteLocalExtensionData
     [vK.HasExtension vL] where
   e : ℕ
   f : ℕ
-  e_eq : chapter03RamificationIndex vK vL = e
-  f_eq : chapter03ResidueDegree vK vL = f
+  e_eq : chapterRamificationIndex vK.valuationSubring vL.valuationSubring
+    (IsLocalRing.maximalIdeal vL.valuationSubring) = e
+  f_eq : chapterResidueDegree vK.valuationSubring vL.valuationSubring
+    (IsLocalRing.maximalIdeal vL.valuationSubring) = f
   degree_eq : Module.finrank K L = e * f
 
 /-- The field-level form of the fundamental equality. -/
@@ -76,7 +69,10 @@ def chapter03FundamentalEquality
     (vK : Valuation K Γ) (vL : Valuation L Γ)
     [vK.HasExtension vL] : Prop :=
   Module.finrank K L =
-    chapter03RamificationIndex vK vL * chapter03ResidueDegree vK vL
+    chapterRamificationIndex vK.valuationSubring vL.valuationSubring
+      (IsLocalRing.maximalIdeal vL.valuationSubring) *
+      chapterResidueDegree vK.valuationSubring vL.valuationSubring
+        (IsLocalRing.maximalIdeal vL.valuationSubring)
 
 theorem chapter03_fundamental_equality_iff_extension_data
     {K L Γ : Type*} [Field K] [Field L] [Algebra K L]

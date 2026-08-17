@@ -7,6 +7,8 @@ noncomputable section
 
 open scoped BigOperators TensorProduct
 
+open LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
+
 /-! ## 3.2. Intersections and composita -/
 
 /-- The compositum and intersection inside a fixed overfield. -/
@@ -41,15 +43,16 @@ theorem chapter03_compositum_intersection_degree_inequality
       Module.finrank K L₁ * Module.finrank K L₂ := by
   sorry
 
-/- The numerical profiles below are deliberately parameters: the preceding
-chapter supplies the canonical ramification and residue functions, while this
-section records the closure and tower interfaces used by the intersection
-argument. -/
+/- The intermediate-field lattice has no canonical valuation-ring data of its
+   own, so the numerical arguments below are paired with an explicit residue
+   separability predicate.  This records the full unramified condition while
+   leaving the field-theoretic tower input explicit. -/
 def chapter03UnramifiedNumerical
     {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
     (e : IntermediateField K Ω → IntermediateField K Ω → ℕ)
+    (residueSeparable : IntermediateField K Ω → IntermediateField K Ω → Prop)
     (L B : IntermediateField K Ω) : Prop :=
-  e L B = 1
+  e L B = 1 ∧ residueSeparable L B
 
 def chapter03TotallyRamifiedNumerical
     {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
@@ -60,8 +63,10 @@ def chapter03TotallyRamifiedNumerical
 @[simp] theorem chapter03UnramifiedNumerical_iff
     {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
     (e : IntermediateField K Ω → IntermediateField K Ω → ℕ)
+    (residueSeparable : IntermediateField K Ω → IntermediateField K Ω → Prop)
     (L B : IntermediateField K Ω) :
-    chapter03UnramifiedNumerical e L B ↔ e L B = 1 := Iff.rfl
+    chapter03UnramifiedNumerical e residueSeparable L B ↔
+      e L B = 1 ∧ residueSeparable L B := Iff.rfl
 
 @[simp] theorem chapter03TotallyRamifiedNumerical_iff
     {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
@@ -75,7 +80,8 @@ theorem chapter03_unramified_totally_ramified_intersection
     {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
     (Lᵤ Lₜ : IntermediateField K Ω)
     (e f : IntermediateField K Ω → IntermediateField K Ω → ℕ)
-    (hLᵤ : chapter03UnramifiedNumerical e Lᵤ ⊥)
+    (residueSeparable : IntermediateField K Ω → IntermediateField K Ω → Prop)
+    (hLᵤ : chapter03UnramifiedNumerical e residueSeparable Lᵤ ⊥)
     (hLₜ : chapter03TotallyRamifiedNumerical f Lₜ ⊥)
     (htowerᵤ : ∀ F : IntermediateField K Ω, F ≤ Lᵤ →
       e Lᵤ ⊥ = e Lᵤ F * e F ⊥)
@@ -95,10 +101,12 @@ theorem chapter03_intermediate_of_unramified_is_unramified
     {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
     (L : IntermediateField K Ω)
     (e : IntermediateField K Ω → IntermediateField K Ω → ℕ)
-    (hL : chapter03UnramifiedNumerical e L ⊥)
+    (residueSeparable : IntermediateField K Ω → IntermediateField K Ω → Prop)
+    (hL : chapter03UnramifiedNumerical e residueSeparable L ⊥)
     (F : IntermediateField K Ω) (hF : F ≤ L) :
+    (hresidue : residueSeparable L ⊥ → residueSeparable F ⊥) →
     0 < e L F → e L ⊥ = e L F * e F ⊥ →
-    chapter03UnramifiedNumerical e F ⊥ := by
+    chapter03UnramifiedNumerical e residueSeparable F ⊥ := by
   sorry
 
 /-- Intermediate fields inherit the totally ramified profile. -/
@@ -124,7 +132,7 @@ theorem chapter03_intermediate_e_one_f_one_is_base
   sorry
 
 /-- A Galois extension with trivial intersection is linearly disjoint. -/
-theorem chapter03_unramified_galois_extensions_are_linearly_disjoint
+theorem chapter03_galois_extensions_are_linearly_disjoint_of_trivial_intersection
     {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
     (L₁ L₂ : IntermediateField K Ω)
     [FiniteDimensional K L₁] [FiniteDimensional K L₂]
@@ -161,7 +169,7 @@ abbrev chapter03SelfScalarExtension
 
 def chapter03SelfScalarExtensionSplits
     (K L : Type*) [CommRing K] [CommRing L] [Algebra K L] (n : ℕ) : Prop :=
-  Nonempty (chapter03SelfScalarExtension K L ≃+* (Fin n → L))
+  Nonempty (chapter03SelfScalarExtension K L ≃ₐ[L] (Fin n → L))
 
 /-- A field factor of the self-base-change algebra, viewed over the right
 `L`-scalar structure.  A surjective `L`-algebra map records a quotient factor
@@ -169,8 +177,6 @@ without incorrectly identifying the whole product with one field. -/
 def chapter03SelfScalarExtensionFieldFactor
     (K L F : Type*) [CommRing K] [CommRing L] [Field F]
     [Algebra K L] [Algebra L F] : Prop :=
-  letI : Algebra L (chapter03SelfScalarExtension K L) :=
-    Algebra.TensorProduct.rightAlgebra
   ∃ φ : chapter03SelfScalarExtension K L →ₐ[L] F, Function.Surjective φ
 
 /-- A finite Galois self-base-change splits into copies of `L`. -/
@@ -180,13 +186,6 @@ theorem chapter03_galois_self_scalar_extension_splits
     ∃ n : ℕ, n = Module.finrank K L ∧
       chapter03SelfScalarExtensionSplits K L n := by
   sorry
-
-def chapter03SelfBaseChangeRamificationIndex
-    {L F Γ : Type*} [Field L] [Field F] [Algebra L F]
-    [LinearOrderedCommGroupWithZero Γ]
-    (vL : Valuation L Γ) (vF : Valuation F Γ)
-    [vL.HasExtension vF] : ℕ :=
-  chapter03RamificationIndex vL vF
 
 /-- Each field factor of the separable self-base change is unramified over
 the new base. -/
@@ -201,7 +200,8 @@ theorem chapter03_self_scalar_extension_factors_have_e_one
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vL.valuationSubring) vL.valuationSubring)
     (hfactor : chapter03SelfScalarExtensionFieldFactor K L F) :
-    chapter03SelfBaseChangeRamificationIndex vL vF = 1 := by
+    chapterRamificationIndex vL.valuationSubring vF.valuationSubring
+      (IsLocalRing.maximalIdeal vF.valuationSubring) = 1 := by
   sorry
 
 end

@@ -39,11 +39,6 @@ def chapter03QuadraticReductionCondition
   Function.Surjective ρ ∧ f.map ρ = fbar ∧
     Irreducible fbar ∧ fbar.Separable
 
-/-- A unit which is not a square in the ring. -/
-def chapter03UnitNonsquare
-    (A : Type*) [CommRing A] (u : Aˣ) : Prop :=
-  ¬ ∃ x : A, x ^ 2 = (u : A)
-
 /-- A unit whose residue class is not a square. -/
 def chapter03ResidueUnitNonsquare
     (A k : Type*) [CommRing A] [Field k]
@@ -241,7 +236,7 @@ theorem chapter03_ramified_quadratics_become_isomorphic_after_unramified_base_ch
     (u π : K) (hu : IsUnit u) (hπ : π ≠ 0)
     (s : Kᵤ) (hsquare : s ^ 2 = algebraMap K Kᵤ u) :
     Nonempty
-      ((chapter03QuadraticRootAlgebra K π ⊗[K] Kᵤ) ≃+*
+      ((chapter03QuadraticRootAlgebra K π ⊗[K] Kᵤ) ≃ₐ[Kᵤ]
         (chapter03QuadraticRootAlgebra K (u * π) ⊗[K] Kᵤ)) := by
   sorry
 

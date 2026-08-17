@@ -10,6 +10,8 @@ noncomputable section
 
 open scoped TensorProduct
 
+open LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
+
 /-! ## 3.4. Scalar extension of a local field -/
 
 /-- The scalar-extension algebra whose factors are studied below. -/
@@ -17,14 +19,6 @@ abbrev chapter03ScalarExtension
     (K L K' : Type*) [CommRing K] [CommRing L] [CommRing K']
     [Algebra K L] [Algebra K K'] : Type _ :=
   L ⊗[K] K'
-
-/- The right tensor-factor algebra is not a global Mathlib instance because
-the self-tensor product has two possible scalar actions. -/
-noncomputable instance chapter03ScalarExtensionRightAlgebra
-    (K L K' : Type*) [CommRing K] [CommRing L] [CommRing K']
-    [Algebra K L] [Algebra K K'] :
-    Algebra K' (chapter03ScalarExtension K L K') :=
-  Algebra.TensorProduct.rightAlgebra
 
 /-- The finite reduced/étale profile of a scalar extension. -/
 def chapter03FiniteReducedScalarExtension
@@ -61,8 +55,6 @@ base happens to be `L`. -/
 def chapter03ScalarExtensionFieldFactor
     (K L K' F : Type*) [CommRing K] [CommRing L] [CommRing K'] [Field F]
     [Algebra K L] [Algebra K K'] [Algebra K' F] : Prop :=
-  letI : Algebra K' (chapter03ScalarExtension K L K') :=
-    Algebra.TensorProduct.rightAlgebra
   ∃ φ : chapter03ScalarExtension K L K' →ₐ[K'] F, Function.Surjective φ
 
 /- The residue-field etale factorization lifts to the local statement: after
@@ -84,11 +76,13 @@ theorem chapter03_unramified_scalar_extension_field_factor_is_unramified
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
     (hunramified :
-      chapter03RamificationIndex vK vL = 1 ∧
+      chapterRamificationIndex vK.valuationSubring vL.valuationSubring
+          (IsLocalRing.maximalIdeal vL.valuationSubring) = 1 ∧
         LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ResidueExtensionIsSeparable
           vK vL)
     (hfactor : chapter03ScalarExtensionFieldFactor K L K' F) :
-    chapter03RamificationIndex vK' vF = 1 ∧
+    chapterRamificationIndex vK'.valuationSubring vF.valuationSubring
+        (IsLocalRing.maximalIdeal vF.valuationSubring) = 1 ∧
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ResidueExtensionIsSeparable
         vK' vF := by
   sorry
@@ -161,7 +155,7 @@ theorem chapter03_totally_ramified_extension_after_unramified_base_change
     {K Ω Γ : Type*} [Field K] [Field Ω]
     [LinearOrderedCommGroupWithZero Γ] [Algebra K Ω]
     (L K' : IntermediateField K Ω)
-    [FiniteDimensional K L] [FiniteDimensional K K']
+    [FiniteDimensional K L] [FiniteDimensional K K'] [IsGalois K K']
     (vK : Valuation K Γ)
     (vL : Valuation (↥L) Γ)
     (vK' : Valuation (↥K') Γ)
@@ -179,15 +173,20 @@ theorem chapter03_totally_ramified_extension_after_unramified_base_change
     [FiniteDimensional (↥K') (↥(chapter03BaseChangeCompositum L K'))]
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
-    (hL_total : chapter03ResidueDegree vK vL = 1)
+    (hL_total :
+      chapterResidueDegree vK.valuationSubring vL.valuationSubring
+        (IsLocalRing.maximalIdeal vL.valuationSubring) = 1)
     (hK'_unramified :
-      chapter03RamificationIndex vK vK' = 1 ∧
+      chapterRamificationIndex vK.valuationSubring vK'.valuationSubring
+          (IsLocalRing.maximalIdeal vK'.valuationSubring) = 1 ∧
         LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ResidueExtensionIsSeparable
           vK vK') :
     (L ⊓ K' = ⊥) ∧
       L.LinearDisjoint K' ∧
-      chapter03ResidueDegree vK' vC = 1 ∧
-      (chapter03RamificationIndex vL vC = 1 ∧
+      chapterResidueDegree vK'.valuationSubring vC.valuationSubring
+          (IsLocalRing.maximalIdeal vC.valuationSubring) = 1 ∧
+      (chapterRamificationIndex vL.valuationSubring vC.valuationSubring
+          (IsLocalRing.maximalIdeal vC.valuationSubring) = 1 ∧
         LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ResidueExtensionIsSeparable
           vL vC) := by
   sorry

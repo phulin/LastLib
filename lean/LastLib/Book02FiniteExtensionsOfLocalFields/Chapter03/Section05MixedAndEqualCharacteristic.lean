@@ -9,6 +9,8 @@ noncomputable section
 open Polynomial
 open scoped WithZero
 
+open LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
+
 /-! ## 3.5. Mixed and equal characteristic -/
 
 /-- The normalized mixed-characteristic profile over `ℚ_[p]`. -/
@@ -37,12 +39,14 @@ theorem chapter03_mixed_characteristic_degree_and_prime_value
       (AddValuation.toValuation vK)]
     [Valuation.IsRankOneDiscrete (AddValuation.toValuation vK)]
     (e f : ℕ)
-    (he : chapter03RamificationIndex
-      (AddValuation.toValuation (Padic.addValuation (p := p)))
-      (AddValuation.toValuation vK) = e)
-    (hf : chapter03ResidueDegree
-      (AddValuation.toValuation (Padic.addValuation (p := p)))
-      (AddValuation.toValuation vK) = f)
+    (he : chapterRamificationIndex
+      (AddValuation.toValuation (Padic.addValuation (p := p))).valuationSubring
+      (AddValuation.toValuation vK).valuationSubring
+      (IsLocalRing.maximalIdeal (AddValuation.toValuation vK).valuationSubring) = e)
+    (hf : chapterResidueDegree
+      (AddValuation.toValuation (Padic.addValuation (p := p))).valuationSubring
+      (AddValuation.toValuation vK).valuationSubring
+      (IsLocalRing.maximalIdeal (AddValuation.toValuation vK).valuationSubring) = f)
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal (Padic.addValuation (p := p)).valuationSubring)
       (Padic.addValuation (p := p)).valuationSubring)

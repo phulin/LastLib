@@ -56,10 +56,14 @@ theorem chapter03_completion_tensor_product_decomposition
     [Valuation.IsRankOneDiscrete v]
     [FiniteDimensional K₀ E] [Algebra.IsSeparable K₀ E]
     (D : Chapter03CompletionBranchData K₀ E Γ v)
-    (hne : Nonempty D.index) :
-    Nonempty
-      (E ⊗[K₀] Valuation.Completion v ≃+*
-        (∀ i, chapter03CompletedBranch (D.branch i).valuation)) := by
+    (hne : Nonempty D.index)
+    [Algebra (Valuation.Completion v)
+      (E ⊗[K₀] Valuation.Completion v)]
+    [∀ i, Algebra (Valuation.Completion v)
+      (chapter03CompletedBranch (D.branch i).valuation)] :
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.hasCompletedAlgebraProduct
+      K₀ E (Valuation.Completion v)
+      (fun i => chapter03CompletedBranch (D.branch i).valuation) := by
   sorry
 
 /-- The degree of one completed branch is its ramification factor times its
@@ -79,8 +83,10 @@ theorem chapter03_completed_branch_degree
       (IsLocalRing.maximalIdeal vComp.valuationSubring) vComp.valuationSubring)
     (e f : ℕ)
     (hbranch : v.IsEquiv (w.comap (algebraMap K₀ E)))
-    (he : chapter03RamificationIndex vComp wComp = e)
-    (hf : chapter03ResidueDegree vComp wComp = f) :
+    (he : chapterRamificationIndex vComp.valuationSubring wComp.valuationSubring
+      (IsLocalRing.maximalIdeal wComp.valuationSubring) = e)
+    (hf : chapterResidueDegree vComp.valuationSubring wComp.valuationSubring
+      (IsLocalRing.maximalIdeal wComp.valuationSubring) = f) :
     Module.finrank (Valuation.Completion v) (Valuation.Completion w) = e * f := by
   sorry
 
@@ -107,8 +113,7 @@ theorem chapter03_complete_base_has_one_completion_branch
     [Algebra.IsAlgebraic K₀ E]
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal v.valuationSubring) v.valuationSubring)
-    (D : Chapter03CompletionBranchData K₀ E Γ v)
-    (hne : Nonempty D.index) :
+    (D : Chapter03CompletionBranchData K₀ E Γ v) :
     Nonempty D.index ∧ Subsingleton D.index := by
   sorry
 
@@ -125,10 +130,13 @@ theorem chapter03_complete_base_tensor_product_is_one_completion
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal v.valuationSubring) v.valuationSubring)
     (D : Chapter03CompletionBranchData K₀ E Γ v)
-    (hne : Nonempty D.index) :
+    [Algebra (Valuation.Completion v)
+      (E ⊗[K₀] Valuation.Completion v)]
+    [∀ i, Algebra (Valuation.Completion v)
+      (chapter03CompletedBranch (D.branch i).valuation)] :
     ∃ i : D.index,
       Nonempty
-        (E ⊗[K₀] Valuation.Completion v ≃+*
+        (E ⊗[K₀] Valuation.Completion v ≃ₐ[Valuation.Completion v]
           chapter03CompletedBranch (D.branch i).valuation) := by
   sorry
 

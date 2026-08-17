@@ -39,7 +39,6 @@ structure Chapter03ValuedEmbeddingData
     [LinearOrderedCommGroupWithZero Γ] [Algebra K L] [Algebra K Ω]
     (vK : Valuation K Γ) (vL : Valuation L Γ) (vΩ : Valuation Ω Γ)
     (σ : L →ₐ[K] Ω) where
-  injective : Function.Injective σ
   pullback : Valuation L Γ
   pullback_extends : chapter03ValuationExtendsExactly vK pullback
   ambient_compatibility : ∀ x : L, vΩ (σ x) = pullback x
@@ -69,7 +68,7 @@ theorem chapter03_embedding_preserves_normalized_valuation_of_base_extension
 /-- The value of a normalized additive valuation after dividing by its scale. -/
 def chapter03NormalizedValuationValue
     {K : Type*} [Field K]
-    (v : AddValuation K (WithTop ℤ)) (e : ℕ) : K → ℝ :=
+    (v : AddValuation K (WithTop ℤ)) (e : ℕ) (_he : 0 < e) : K → ℝ :=
   by
     classical
     exact fun x => if x = 0 then 0 else
@@ -87,17 +86,20 @@ theorem chapter03_embedding_preserves_normalized_valuation_ratio
     (σ : L →ₐ[K] Ω)
     (hscale : ∀ x : L, x ≠ 0 → vΩ (σ x) = eΩL • vL x) :
     ∀ x : L,
-      chapter03NormalizedValuationValue vΩ eΩK (σ x) =
-        chapter03NormalizedValuationValue vL eLK x := by
+      chapter03NormalizedValuationValue vΩ eΩK (by
+        rw [heΩK]
+        exact Nat.mul_pos heΩL heLK) (σ x) =
+        chapter03NormalizedValuationValue vL eLK heLK x := by
   sorry
 
 /-- The equivalent absolute-value restriction statement. -/
 theorem chapter03_embedding_preserves_base_compatible_absolute_value
     {K L Ω : Type*} [Field K] [Field L] [Field Ω]
-    [Algebra K L] [Algebra K Ω] [Algebra L Ω]
+    [Algebra K L] [Algebra K Ω]
     (c : ℝ) (hc : 0 < c ∧ c < 1)
     (vL : AddValuation L (WithTop ℤ))
     (vΩ : AddValuation Ω (WithTop ℤ)) (e : ℕ) (he : 0 < e)
+    [Algebra L Ω]
     (σ : L →ₐ[K] Ω)
     (hscale : ∀ x : L, x ≠ 0 → vΩ (σ x) = e • vL x) :
     ∀ x : L,
