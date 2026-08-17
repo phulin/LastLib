@@ -443,7 +443,8 @@ theorem chapter10_unit_quotient_has_coordinates
           change Units.map A.subtype.toMonoidHom u ∈
             (chapter10UnitFiltration A 0).map (Units.map A.subtype.toMonoidHom)
           refine ⟨u, ?_, rfl⟩
-          simp [chapter10UnitFiltration, chapter10IdealUnitFiltration]⟩
+          simp [chapter10UnitFiltration,
+            LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Chapter08UnitLayer]⟩
       map_one' := by
         apply Subtype.ext
         simp
@@ -498,7 +499,8 @@ theorem chapter10_unit_quotient_has_coordinates
     dsimp [V]
     have hU0 : chapter10UnitFiltration A 0 = (⊤ : Subgroup Aˣ) := by
       ext u
-      simp [chapter10UnitFiltration, chapter10IdealUnitFiltration]
+      simp [chapter10UnitFiltration,
+        LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Chapter08UnitLayer]
     rw [chapter10FieldUnitFiltration, hU0]
     ext x
     constructor
@@ -538,7 +540,8 @@ theorem chapter10_field_unit_quotient_by_ring_units
   let _ : IsDiscreteValuationRing A := hDVR
   let hU0 : chapter10UnitFiltration A 0 = (⊤ : Subgroup Aˣ) := by
     ext u
-    simp [chapter10UnitFiltration, chapter10IdealUnitFiltration]
+    simp [chapter10UnitFiltration,
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Chapter08UnitLayer]
   have hfil : chapter10FieldUnitFiltration A 0 =
       (Units.map A.subtype.toMonoidHom).range := by
     rw [chapter10FieldUnitFiltration, hU0]

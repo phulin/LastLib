@@ -1,5 +1,6 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.Section01SuccessivePrecision
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Section04FormalPowerSeries
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Section05UnitsAndPrincipalUnits
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section07UnramifiedAndTotallyRamifiedEndpoints
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10
@@ -22,37 +23,19 @@ abbrev Chapter10ResidueField (A : Type*) [CommRing A] [IsLocalRing A] : Type _ :
 /-- A finite-precision quotient of a local ring. -/
 abbrev Chapter10PrecisionQuotient
     (A : Type*) [CommRing A] [IsLocalRing A] (n : ℕ) : Type _ :=
-  A ⧸ (IsLocalRing.maximalIdeal A) ^ n
+  LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Chapter08Truncation
+    A (IsLocalRing.maximalIdeal A) n
 
 /-- The subgroup of units congruent to `1` modulo a power of an ideal. -/
-def chapter10IdealUnitFiltration
-    (R : Type*) [CommRing R] (I : Ideal R) (n : ℕ) : Subgroup Rˣ where
-  carrier := {u | (u : R) - 1 ∈ I ^ n}
-  one_mem' := by simp
-  mul_mem' := by
-    intro u v hu hv
-    change ((u * v : Rˣ) : R) - 1 ∈ I ^ n at *
-    rw [Units.val_mul]
-    rw [show (u : R) * (v : R) - 1 =
-        ((u : R) - 1) + (u : R) * ((v : R) - 1) by ring]
-    exact add_mem hu (Ideal.mul_mem_left _ _ hv)
-  inv_mem' := by
-    intro u hu
-    change ((↑u⁻¹ : Rˣ) : R) - 1 ∈ I ^ n at *
-    have hinv : ((↑u⁻¹ : Rˣ) : R) * (u : R) = 1 := by
-      simp
-    rw [show ((↑u⁻¹ : Rˣ) : R) - 1 =
-        -((↑u⁻¹ : Rˣ) : R) * ((u : R) - 1) by
-          rw [neg_mul, mul_sub, hinv]
-          ring]
-    simpa [neg_mul] using
-      (I ^ n).neg_mem
-        (Ideal.mul_mem_left (I ^ n) ((↑u⁻¹ : Rˣ) : R) hu)
+abbrev chapter10IdealUnitFiltration
+    (R : Type*) [CommRing R] (I : Ideal R) (n : ℕ) : Subgroup Rˣ :=
+  LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Chapter08UnitLayer R I n
 
 /-- The unit filtration on a local ring `A`: `Uⁿ = 1 + 𝔪ⁿ`. -/
-def chapter10UnitFiltration
+abbrev chapter10UnitFiltration
     (A : Type*) [CommRing A] [IsLocalRing A] (n : ℕ) : Subgroup Aˣ :=
-  chapter10IdealUnitFiltration A (IsLocalRing.maximalIdeal A) n
+  LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Chapter08UnitLayer
+    A (IsLocalRing.maximalIdeal A) n
 
 /-- The same filtration transported to the unit group of the fraction field. -/
 def chapter10FieldUnitFiltration {L : Type*} [Field L]
@@ -70,9 +53,9 @@ abbrev Chapter10FieldUnitQuotient {L : Type*} [Field L]
   Lˣ ⧸ chapter10FieldUnitFiltration A n
 
 /-- Reduction of ring-of-integers units to residue-field units. -/
-def chapter10UnitReduction {L : Type*} [Field L]
+abbrev chapter10UnitReduction {L : Type*} [Field L]
     (A : ValuationSubring L) : Aˣ →* (Chapter10ResidueField A)ˣ :=
-  Units.map (IsLocalRing.residue A).toMonoidHom
+  LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Chapter08UnitReduction A
 
 /-- The additive quotient of the `n`th and `(n+1)`st ideal layers. -/
 def chapter10IdealLayerDenominator

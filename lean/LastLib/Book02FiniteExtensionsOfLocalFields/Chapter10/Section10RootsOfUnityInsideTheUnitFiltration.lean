@@ -1,5 +1,6 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Section02TheFirstQuotient
 import Mathlib.Data.Nat.Factorization.Basic
+import Mathlib.GroupTheory.OrderOfElement
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10
 
@@ -15,9 +16,9 @@ def Chapter10PowerTorsion
   ∃ r : ℕ, u ^ (p ^ r) = 1
 
 /-- Finite-order torsion in a unit group. -/
-def Chapter10FiniteOrderTorsion
+abbrev Chapter10FiniteOrderTorsion
     {G : Type*} [Group G] (u : G) : Prop :=
-  ∃ m : ℕ, 0 < m ∧ u ^ m = 1
+  IsOfFinOrder u
 
 /-- A root of unity in the fraction field has valuation zero. -/
 theorem chapter10_field_root_of_unity_is_ring_unit
@@ -216,7 +217,7 @@ theorem chapter10_finite_order_unit_torsion_decomposes
     have hxs := hsuniq (chapter10UnitReduction A x) x rfl hx
     rw [hred] at hxs
     simpa using hxs
-  obtain ⟨m, hmpos, hum⟩ := hu
+  obtain ⟨m, hmpos, hum⟩ := (isOfFinOrder_iff_pow_eq_one.mp hu)
   obtain ⟨r, d, hd, hmd⟩ :=
     Nat.exists_eq_pow_mul_and_not_dvd (Nat.ne_of_gt hmpos) p
       (Fact.out : Nat.Prime p).ne_one

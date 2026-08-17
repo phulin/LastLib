@@ -161,7 +161,8 @@ theorem chapter10_unit_filtration_zero
     {L : Type*} [Field L] (A : ValuationSubring L) :
     chapter10UnitFiltration A 0 = ⊤ := by
   ext u
-  simp [chapter10UnitFiltration, chapter10IdealUnitFiltration]
+  simp [chapter10UnitFiltration,
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Chapter08UnitLayer]
 
 /-- The product calculation behind closure of `1 + 𝔪ⁿ`. -/
 theorem chapter10_unit_product_formula
@@ -261,6 +262,19 @@ theorem chapter10_unit_filtration_separated
     refine (Subgroup.mem_iInf).2 ?_
     intro n
     exact (chapter10UnitFiltration A n).one_mem
+
+/-- A discrete valuation ring has separated congruence-unit filtration. -/
+theorem chapter10_unit_filtration_separated_of_dvr
+    {L : Type*} [Field L] (A : ValuationSubring L)
+    [IsDiscreteValuationRing A] :
+    ⨅ n : ℕ, chapter10UnitFiltration A n = ⊥ := by
+  apply chapter10_unit_filtration_separated A
+  intro x hx
+  have hx' : x ∈ ⨅ n : ℕ, (IsLocalRing.maximalIdeal A) ^ n :=
+    (Ideal.mem_iInf).2 hx
+  rw [LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.chapter_maximalIdeal_pow_iInf_eq_bot A]
+    at hx'
+  simpa using hx'
 
 end
 

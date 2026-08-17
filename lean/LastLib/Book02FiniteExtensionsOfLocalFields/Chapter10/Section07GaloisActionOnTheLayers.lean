@@ -339,7 +339,8 @@ theorem chapter10_galois_higher_layer_coordinate_formula
     Submodule.Quotient.mk
       (p := chapter10IdealLayerDenominator A (IsLocalRing.maximalIdeal A) n)
       (⟨((u : Aˣ) : A) - 1, by
-        simpa [chapter10UnitFiltration, chapter10IdealUnitFiltration]
+        simpa [chapter10UnitFiltration,
+          LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Chapter08UnitLayer]
           using u.property⟩ :
         (IsLocalRing.maximalIdeal A ^ n : Ideal A))
   have hrep :
@@ -386,7 +387,8 @@ theorem chapter10_galois_higher_layer_coordinate_formula
           Chapter10ResidueField A) ^ n) =
       IsLocalRing.residue A xσ
     rw [hcompat r]
-    dsimp [xσ, chapter10UnitReduction]
+    dsimp [xσ, chapter10UnitReduction,
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Chapter08UnitReduction]
     rw [map_mul, map_pow]
   dsimp [chapter10GaloisLayerCoordinateAction] at hcoord_res
   rw [hcoord_res]
@@ -402,7 +404,8 @@ theorem chapter10_galois_higher_layer_coordinate_formula
     Submodule.Quotient.mk
       (p := chapter10IdealLayerDenominator A (IsLocalRing.maximalIdeal A) n)
       (⟨((uσ : Aˣ) : A) - 1, by
-        simpa [chapter10UnitFiltration, chapter10IdealUnitFiltration]
+        simpa [chapter10UnitFiltration,
+          LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Chapter08UnitLayer]
           using uσ.property⟩ :
         (IsLocalRing.maximalIdeal A ^ n : Ideal A))
   have hrepσ :

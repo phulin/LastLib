@@ -197,7 +197,9 @@ theorem chapter10_units_have_coordinatewise_successive_correction_expansions
       rw [map_mul, map_inv, hred]
       simp
     have hval := congrArg Units.val hunit
-    simpa [chapter10UnitReduction, map_sub] using sub_eq_zero.mpr hval
+    simpa [Chapter10ResidueField, chapter10UnitReduction, map_sub,
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Chapter08UnitReduction]
+      using sub_eq_zero.mpr hval
   have hstep (n : ℕ) (z : {r : Aˣ // r ∈ U (n + 1)}) :
       ∃ a : Chapter10ResidueField A, ∃ c : Aˣ,
         (c : A) = 1 + choice.representatives a * choice.uniformizer ^ (n + 1) ∧

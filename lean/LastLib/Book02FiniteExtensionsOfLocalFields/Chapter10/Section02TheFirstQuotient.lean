@@ -1,6 +1,7 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Dependencies
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section01CorrectingAnApproximateRoot
 import Mathlib.NumberTheory.Padics.PadicNumbers
+import Mathlib.RingTheory.RootsOfUnity.Basic
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10
 
@@ -23,30 +24,7 @@ theorem chapter10_unit_reduction_surjective
 theorem chapter10_unit_reduction_kernel
     {L : Type*} [Field L] (A : ValuationSubring L) :
     (chapter10UnitReduction A).ker = chapter10UnitFiltration A 1 := by
-  classical
-  ext u
-  constructor
-  · intro hu
-    change chapter10UnitReduction A u = 1 at hu
-    have hval : IsLocalRing.residue A (u : A) = 1 := by
-      have h := congrArg Units.val hu
-      simpa [chapter10UnitReduction] using h
-    change (u : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ 1
-    rw [pow_one]
-    rw [← IsLocalRing.residue_eq_zero_iff]
-    simpa [map_sub] using sub_eq_zero.mpr hval
-  · intro hu
-    change (u : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ 1 at hu
-    rw [pow_one] at hu
-    have hzero : IsLocalRing.residue A (u : A) - 1 = 0 := by
-      have hz : IsLocalRing.residue A ((u : A) - 1) = 0 :=
-        (IsLocalRing.residue_eq_zero_iff _).2 hu
-      simpa [map_sub] using hz
-    have hval : IsLocalRing.residue A (u : A) = 1 := sub_eq_zero.mp hzero
-    apply MonoidHom.mem_ker.mpr
-    apply Units.ext
-    change IsLocalRing.residue A (u : A) = 1
-    exact hval
+  exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.chapter08_unit_reduction_kernel A
 
 /-- The first unit quotient is the multiplicative group of the residue field. -/
 theorem chapter10_first_unit_quotient_equiv_residue_units
@@ -54,26 +32,12 @@ theorem chapter10_first_unit_quotient_equiv_residue_units
     Nonempty
       ((Chapter10UnitRingQuotient A 1) ≃*
         (Chapter10ResidueField A)ˣ) := by
-  change Nonempty
-    ((Aˣ ⧸ chapter10UnitFiltration A 1) ≃* (Chapter10ResidueField A)ˣ)
-  rw [← chapter10_unit_reduction_kernel A]
-  exact ⟨QuotientGroup.quotientKerEquivOfSurjective
-    (chapter10UnitReduction A) (chapter10_unit_reduction_surjective A)⟩
+  exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.chapter08_units_mod_principal_units A
 
 /-- Units whose order divides a specified exponent. -/
-def chapter10RootOfUnitySubgroup
-    {L : Type*} [Field L] (A : ValuationSubring L) (m : ℕ) : Subgroup Aˣ where
-  carrier := {u | u ^ m = 1}
-  one_mem' := by simp
-  mul_mem' := by
-    intro u v hu hv
-    change (u * v) ^ m = 1 at *
-    rw [mul_pow, hu, hv, one_mul]
-  inv_mem' := by
-    intro u hu
-    change (u⁻¹) ^ m = 1 at *
-    rw [inv_pow, hu]
-    simp
+abbrev chapter10RootOfUnitySubgroup
+    {L : Type*} [Field L] (A : ValuationSubring L) (m : ℕ) : Subgroup Aˣ :=
+  rootsOfUnity m A
 
 /-- In a finite residue field, every nonzero root of the Teichmüller
 polynomial is simple. -/
@@ -200,7 +164,8 @@ theorem chapter10_teichmuller_section_exists_unique
   have rootUnit_residue (a : (Chapter10ResidueField A)ˣ) :
       IsLocalRing.residue A ((rootUnit a : Aˣ) : A) = a := by
     have h := congrArg Units.val (rootUnit_red a)
-    simpa [chapter10UnitReduction] using h
+    simpa [Chapter10ResidueField, chapter10UnitReduction,
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Chapter08UnitReduction] using h
   let s : (Chapter10ResidueField A)ˣ →* Aˣ :=
     { toFun := rootUnit
       map_one' := by
@@ -235,7 +200,8 @@ theorem chapter10_teichmuller_section_exists_unique
       apply huniq a (u : A)
       · exact Units.ext_iff.mp hup
       · have h := congrArg Units.val hua
-        simpa [chapter10UnitReduction] using h
+        simpa [Chapter10ResidueField, chapter10UnitReduction,
+          LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Chapter08UnitReduction] using h
   · intro t ht
     apply MonoidHom.ext
     intro a
@@ -245,7 +211,8 @@ theorem chapter10_teichmuller_section_exists_unique
       exact Units.ext_iff.mp (ht.2.1 a)
     have htr : IsLocalRing.residue A (t a : A) = a := by
       have h := congrArg Units.val (ht.1 a)
-      simpa [chapter10UnitReduction] using h
+      simpa [Chapter10ResidueField, chapter10UnitReduction,
+        LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Chapter08UnitReduction] using h
     exact huniq a (t a : A) htu htr
 
 /-- The Teichmüller lift extends by the convention `[0] = 0`. -/
@@ -266,7 +233,8 @@ theorem chapter10_teichmuller_zero_extension
     simp [t, Units.ne_zero a]
   · intro a ha
     simp only [t, dif_neg ha]
-    simpa [chapter10UnitReduction] using
+    simpa [Chapter10ResidueField, chapter10UnitReduction,
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Chapter08UnitReduction] using
       congrArg Units.val (hs (Units.mk0 a ha))
 
 /-- The finite-residue-field splitting of the unit group. -/
@@ -504,7 +472,8 @@ theorem chapter10_arbitrary_residue_fields_need_not_split_canonically :
   have hred_sa : IsLocalRing.residue A ((s a : Aˣ) : A) =
       (a : Chapter10ResidueField A) := by
     have h := congrArg Units.val (hs a)
-    simpa [chapter10UnitReduction] using h
+    simpa [Chapter10ResidueField, chapter10UnitReduction,
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Chapter08UnitReduction] using h
   rcases hxpm with hx | hx
   · have hsa_one : ((s a : Aˣ) : A) = 1 := by
       apply Subtype.ext

@@ -906,7 +906,8 @@ theorem chapter10_finite_residue_local_compactness
           change Units.map A.subtype.toMonoidHom u ∈
             (U 0).map (Units.map A.subtype.toMonoidHom)
           refine ⟨u, ?_, rfl⟩
-          simp [U, chapter10UnitFiltration, chapter10IdealUnitFiltration]⟩
+          simp [U,
+            LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Chapter08UnitLayer]⟩
       map_one' := by
         apply Subtype.ext
         simp
