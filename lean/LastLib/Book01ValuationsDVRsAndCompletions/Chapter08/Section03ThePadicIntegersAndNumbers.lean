@@ -694,6 +694,23 @@ theorem chapter08_padic_valuation_is_first_nonzero_digit
       simpa [lead, term, j] using
         (chapter08_padic_leading_term_valuation p x N a ha hnonzero)
 
+/-- The all-zero Laurent digit expansion represents zero, whose valuation is `+∞`. -/
+theorem chapter08_padic_zero_digit_expansion_has_infinite_valuation
+    (p : ℕ) [Fact p.Prime] (x : Chapter08PadicNumbers p)
+    (N : ℤ) (a : ℕ → ℕ)
+    (ha : Chapter08PadicLaurentExpansion p x N a)
+    (hzero : ∀ i : ℕ, a i = 0) :
+    Padic.addValuation x = ⊤ := by
+  have hpartial : Chapter08PadicFieldPartialSum p N a =
+      (fun _ : ℕ => (0 : Chapter08PadicNumbers p)) := by
+    funext n
+    simp [Chapter08PadicFieldPartialSum, hzero]
+  have hlim : Tendsto (fun _ : ℕ => (0 : Chapter08PadicNumbers p))
+      atTop (𝓝 x) := hpartial ▸ ha.2
+  have hx : x = 0 := by
+    exact tendsto_nhds_unique hlim tendsto_const_nhds
+  simp [hx]
+
 theorem chapter08_rationals_are_dense_in_Qp
     (p : ℕ) [Fact p.Prime] :
     DenseRange (fun q : ℚ => (q : Chapter08PadicNumbers p)) := by
