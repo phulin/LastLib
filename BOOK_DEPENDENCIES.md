@@ -24,10 +24,10 @@ in-manuscript proofs and are no longer conditional.
 
 The known background that remains undischarged in Books 8--12 — assumed in proofs but proved in
 no earlier book and absent from the local Mathlib checkout — is: the quasi-coherent
-sheaf-cohomology formalism assumed by Books 8 and 9 (its derived half now sits in the earlier
-Book 7a, but the coherent proper-family half is developed only in the later Book 15);
-Hilbert's syzygy theorem and generic freeness in Book 8; Book 8's out-of-order use of effective
-descent of Cartier divisors (Book 10 material) in its universal-divisor construction; the full
+sheaf-cohomology formalism assumed by Book 9 (Book 8's cohomological background, syzygy theorem,
+and generic freeness are now cited from Books 7a and 7b, and its former out-of-order use of
+Cartier-divisor descent is replaced by an inline finite-locally-free descent section; what
+remains in Book 8 is the fppf sheaf property of Hom in its universal-divisor construction); the full
 finite-type permanence of excellence in Book 11, which is proved there only for the base cases
 the manuscript uses (perfect fields, characteristic-zero Dedekind domains, complete local rings)
 and is otherwise carried as an explicit universally-excellent hypothesis; and the connected-fiber
@@ -62,7 +62,7 @@ flowchart LR
 |    7 | Analytic Foundations for Odlyzko--Poitou Bounds                                | 3, MATHLIB                                                                                                                                                        |
 |   7a | Arithmetic Spectral Sequences and Derived Cohomology                           | MATHLIB                                                                                                                                                           |
 |   7b | Quasi-coherent Cohomology on Schemes                                           | 7a, MATHLIB                                                                                                                                                       |
-|    8 | Ample Line Bundles, Hilbert Polynomials, and Symmetric Powers                  | MATHLIB                                                                                                                                                           |
+|    8 | Ample Line Bundles, Hilbert Polynomials, and Symmetric Powers                  | 7a, 7b, MATHLIB                                                                                                                                                   |
 |    9 | Divisors, Riemann--Roch, and Duality on Relative Curves                        | 1, 8, MATHLIB                                                                                                                                                     |
 |   10 | Faithfully Flat Descent in Algebraic Geometry                                  | 8, MATHLIB                                                                                                                                                        |
 |   11 | Normalization and Regular Models of Arithmetic Curves                          | 1, 8, 9, 10                                                                                                                                                       |

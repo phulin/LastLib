@@ -81,9 +81,12 @@ Hilbert's syzygy theorem and generic freeness in the forms the projective volume
    bundles, descent of very ampleness, Hilbert polynomials, and projective embeddings for curves and
    abelian schemes. Projective flattening stratification and the bounded Macaulay--Gotzmann
    package are proved in the manuscript, so fixed-polynomial Hilbert representability and
-   symmetric-power representability for smooth curves are unconditional given the book's
-   cohomological background; the quasi-coherent sheaf-cohomology formalism its cohomological
-   chapters consume is currently assumed background not yet developed in an earlier volume.
+   symmetric-power representability for smooth curves are unconditional; the quasi-coherent
+   sheaf-cohomology formalism, projective-space cohomology, syzygy theorem, and generic freeness
+   its cohomological chapters consume are now cited from Books 7a and 7b, and descent along
+   finite locally free covers is proved inline (so no forward use of Book 10 remains). The fppf
+   sheaf property of Hom used by the universal-divisor construction (descent of morphisms)
+   remains assumed background.
 
 9. **Divisors, Riemann--Roch, and Duality on Relative Curves** — Develop Cartier and Weil
    divisors, line bundles, degrees in families, residues, and the Euler-characteristic form of
