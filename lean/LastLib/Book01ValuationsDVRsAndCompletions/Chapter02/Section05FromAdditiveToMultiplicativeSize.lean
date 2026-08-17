@@ -1,7 +1,6 @@
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Analysis.Normed.Field.Ultra
-import Mathlib.Data.Real.Embedding
 import Mathlib.NumberTheory.Padics.PadicNumbers
 import Mathlib.NumberTheory.Ostrowski
 import Mathlib.Analysis.AbsoluteValue.Equivalence
@@ -23,10 +22,6 @@ chapter-local names for the constructions that are specific to the exposition.
 -/
 
 noncomputable section
-
-open Set Function
-open scoped BigOperators
-open Polynomial
 
 /-! # Book 1, Chapter 2, Section 2.5: From Additive to Multiplicative Size
 -/
@@ -375,19 +370,15 @@ theorem chapter02_real_size_from_valuation_is_an_absolute_value
           (max_le_add_of_nonneg (hnonneg x) (hnonneg y)) }
   exact ⟨f, fun x => rfl⟩
 
-def Chapter02EquivalentAbsoluteValues
-    {K : Type*} [Field K] (f g : AbsoluteValue K ℝ) : Prop :=
-  f.IsEquiv g
-
 theorem chapter02_absolute_value_equivalence_iff_positive_power
     {K : Type*} [Field K] (f g : AbsoluteValue K ℝ) :
-    Chapter02EquivalentAbsoluteValues f g ↔
+    f.IsEquiv g ↔
       ∃ r : ℝ, 0 < r ∧ (f · ^ r) = g := by
   exact AbsoluteValue.isEquiv_iff_exists_rpow_eq
 
 theorem chapter02_absolute_value_equivalence_iff_same_topology
     {K : Type*} [Field K] (f g : AbsoluteValue K ℝ) :
-    Chapter02EquivalentAbsoluteValues f g ↔
+    f.IsEquiv g ↔
       IsHomeomorph (WithAbs.congr f g (.refl K)) := by
   exact AbsoluteValue.isEquiv_iff_isHomeomorph f g
 

@@ -10,9 +10,7 @@ import Mathlib.RingTheory.Valuation.Basic
 import Mathlib.RingTheory.Valuation.Integers
 import Mathlib.RingTheory.Valuation.ValuationRing
 import Mathlib.Tactic.Abel
-import Mathlib.Tactic.Order
 import Mathlib.Tactic.Push
-import Mathlib.Tactic.Ring
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section02AdditiveValuations
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section01WhyTheValuesFormAGroup
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section03TheDecisiveEquality
@@ -30,8 +28,6 @@ chapter-local names for the constructions that are specific to the exposition.
 
 noncomputable section
 
-open Set Function
-open scoped BigOperators LaurentSeries
 open HahnSeries Polynomial
 
 /-! # Book 1, Chapter 2, Section 2.7: Gauss Valuations and Two-Stage Measurement
@@ -714,7 +710,7 @@ theorem chapter02_gauss_valuation_on_quotients
       _ = 0 := by simp [hg']
   have hc0 : c ≠ 0 := by
     dsimp [c]
-    exact C_ne_zero.mpr (inv_ne_zero (Polynomial.leadingCoeff_ne_zero.mpr hg'0))
+    exact Polynomial.C_ne_zero.mpr (inv_ne_zero (Polynomial.leadingCoeff_ne_zero.mpr hg'0))
   have hGc : G c ≠ ⊤ := hG_ne_top hc0
   have hGd : G d ≠ ⊤ := hG_ne_top hd0
   have hmul (p q : Polynomial K) :
@@ -915,24 +911,18 @@ theorem chapter02_gauss_minimum_is_attained
   exact ⟨hi, by
     simpa [Chapter02GaussValuationFunction, hf] using hi_eq.symm⟩
 
-abbrev Chapter02ValuationSubring
-    {K Γ : Type*} [Field K] [AddCommGroup Γ] [LinearOrder Γ]
-    [IsOrderedAddMonoid Γ]
-    (v : AddValuation K (WithTop Γ)) : Subring K :=
-  (AddValuation.toValuation v).integer
-
 def Chapter02ValuationMaximalIdeal
     {K Γ : Type*} [Field K] [AddCommGroup Γ] [LinearOrder Γ]
     [IsOrderedAddMonoid Γ]
     (v : AddValuation K (WithTop Γ)) :
-    Ideal (Chapter02ValuationSubring v) :=
-  IsLocalRing.maximalIdeal (Chapter02ValuationSubring v)
+    Ideal ((AddValuation.toValuation v).integer) :=
+  IsLocalRing.maximalIdeal (AddValuation.toValuation v).integer
 
 abbrev Chapter02ResidueField
     {K Γ : Type*} [Field K] [AddCommGroup Γ] [LinearOrder Γ]
     [IsOrderedAddMonoid Γ]
     (v : AddValuation K (WithTop Γ)) :=
-  (Chapter02ValuationSubring v) ⧸ Chapter02ValuationMaximalIdeal v
+  (AddValuation.toValuation v).integer ⧸ Chapter02ValuationMaximalIdeal v
 
 noncomputable def Chapter02ResidueOfIntegral
     {K Γ : Type*} [Field K] [AddCommGroup Γ] [LinearOrder Γ]
@@ -1051,7 +1041,7 @@ theorem chapter02_gauss_residue_remembers_scaled_polynomial
         (1 : Chapter02ResidueField v) := by
       change Ideal.Quotient.mk _ ⟨(1 : K), _⟩ = (1 : Chapter02ResidueField v)
       have hone : (⟨(1 : K), (by simp : 0 ≤ v (1 : K))⟩ :
-          Chapter02ValuationSubring v) = 1 := by
+          (AddValuation.toValuation v).integer) = 1 := by
         ext
         simp
       rw [hone]

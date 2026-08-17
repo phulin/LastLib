@@ -1,5 +1,4 @@
 import Mathlib.Algebra.Order.GroupWithZero.Basic
-import Mathlib.FieldTheory.RatFunc.Basic
 import Mathlib.RingTheory.Ideal.Quotient.Operations
 import Mathlib.RingTheory.Localization.FractionRing
 import Mathlib.RingTheory.Valuation.Basic
@@ -20,18 +19,10 @@ chapter-local names for the constructions that are specific to the exposition.
 
 noncomputable section
 
-open Set Function
-open scoped BigOperators
-open Polynomial
-
 /-! # Book 1, Chapter 2, Section 2.2: Additive Valuations
 -/
 
 /-! ## 2.2. Additive valuations -/
-
-/-- Chapter 2's additive valuation interface, using Mathlib's definition. -/
-abbrev Chapter02AdditiveValuation (R Γ : Type*) [CommRing R]
-    [LinearOrderedAddCommMonoidWithTop Γ] := AddValuation R Γ
 
 theorem chapter02_additive_valuation_axioms
     {R Γ : Type*} [CommRing R] [LinearOrderedAddCommMonoidWithTop Γ]
@@ -52,38 +43,34 @@ theorem chapter02_additive_valuation_one_is_zero
     (v : AddValuation R Γ) : v 1 = 0 := by
   exact v.map_one
 
-def Chapter02Support {R Γ : Type*} [CommRing R]
-    [LinearOrderedAddCommMonoidWithTop Γ] (v : AddValuation R Γ) : Ideal R :=
-  AddValuation.supp v
-
 theorem chapter02_support_characterization
     {R Γ : Type*} [CommRing R] [LinearOrderedAddCommMonoidWithTop Γ]
     (v : AddValuation R Γ) (x : R) :
-    x ∈ Chapter02Support v ↔ v x = (⊤ : Γ) := by
+    x ∈ AddValuation.supp v ↔ v x = (⊤ : Γ) := by
   exact AddValuation.mem_supp_iff v x
 
 theorem chapter02_support_closed_under_addition
     {R Γ : Type*} [CommRing R] [LinearOrderedAddCommMonoidWithTop Γ]
     (v : AddValuation R Γ) {x y : R}
-    (hx : x ∈ Chapter02Support v) (hy : y ∈ Chapter02Support v) :
-    x + y ∈ Chapter02Support v := by
-  exact (Chapter02Support v).add_mem hx hy
+    (hx : x ∈ AddValuation.supp v) (hy : y ∈ AddValuation.supp v) :
+    x + y ∈ AddValuation.supp v := by
+  exact (AddValuation.supp v).add_mem hx hy
 
 theorem chapter02_support_absorbs_multiplication
     {R Γ : Type*} [CommRing R] [LinearOrderedAddCommMonoidWithTop Γ]
     (v : AddValuation R Γ) {x y : R}
-    (hx : x ∈ Chapter02Support v) :
-    x * y ∈ Chapter02Support v := by
+    (hx : x ∈ AddValuation.supp v) :
+    x * y ∈ AddValuation.supp v := by
   apply (chapter02_support_characterization v (x * y)).2
   rw [v.map_mul, (chapter02_support_characterization v x).1 hx]
   simp
 
 theorem chapter02_support_product_characterization
     {R Γ : Type*} [CommRing R] [LinearOrderedAddCommMonoidWithTop Γ]
-    [Nontrivial (Multiplicative Γᵒᵈ)]
+    [Nontrivial Γ]
     (v : AddValuation R Γ) (x y : R) :
-    x * y ∈ Chapter02Support v ↔
-      x ∈ Chapter02Support v ∨ y ∈ Chapter02Support v := by
+    x * y ∈ AddValuation.supp v ↔
+      x ∈ AddValuation.supp v ∨ y ∈ AddValuation.supp v := by
   rw [chapter02_support_characterization, chapter02_support_characterization,
     chapter02_support_characterization, v.map_mul]
   constructor
@@ -102,36 +89,35 @@ theorem chapter02_support_product_characterization
 
 theorem chapter02_support_is_prime
     {R Γ : Type*} [CommRing R] [LinearOrderedAddCommMonoidWithTop Γ]
-    [Nontrivial (Multiplicative Γᵒᵈ)]
+    [Nontrivial Γ]
     (v : AddValuation R Γ) :
-    (Chapter02Support v).IsPrime := by
-  let _ : Nontrivial Γ := ‹Nontrivial (Multiplicative Γᵒᵈ)›
+    (AddValuation.supp v).IsPrime := by
   have hzeroTop : (0 : Γ) ≠ ⊤ := by
     intro hzero
-    obtain ⟨a, b, hab⟩ := exists_pair_ne Γ
-    apply hab
-    calc
-      a = 0 + a := (zero_add a).symm
-      _ = ⊤ + a := by rw [hzero]
-      _ = ⊤ := top_add _
-      _ = ⊤ + b := (top_add _).symm
-      _ = 0 + b := by rw [hzero]
-      _ = b := zero_add b
+    have h_all : ∀ x : Γ, x = 0 := by
+      intro x
+      calc
+        x = 0 + x := (zero_add x).symm
+        _ = ⊤ + x := by rw [hzero]
+        _ = ⊤ := top_add x
+        _ = 0 := hzero.symm
+    exact not_subsingleton Γ ⟨fun x y => (h_all x).trans (h_all y).symm⟩
   refine ⟨?_, ?_⟩
   · intro htop
-    have h1 : (1 : R) ∈ Chapter02Support v := by
+    have h1 : (1 : R) ∈ AddValuation.supp v := by
       rw [htop]
       trivial
     have hv1 := (chapter02_support_characterization v 1).1 h1
-    exact hzeroTop (by simpa using hv1)
+    have hv1' : (0 : Γ) = ⊤ :=
+      (AddValuation.map_one v).symm.trans hv1
+    exact hzeroTop hv1'
   · intro x y hxy
     exact (chapter02_support_product_characterization v x y).1 hxy
 
 theorem chapter02_field_support_is_zero
     {K Γ : Type*} [Field K] [LinearOrderedAddCommMonoidWithTop Γ]
-    [Nontrivial (Multiplicative Γᵒᵈ)]
-    (v : AddValuation K Γ) : Chapter02Support v = ⊥ := by
-  let _ : Nontrivial Γ := ‹Nontrivial (Multiplicative Γᵒᵈ)›
+    [Nontrivial Γ]
+    (v : AddValuation K Γ) : AddValuation.supp v = ⊥ := by
   ext x
   constructor
   · intro hx
@@ -142,7 +128,7 @@ theorem chapter02_field_support_is_zero
         ((chapter02_support_characterization v x).1 hx)
   · intro hx0
     subst x
-    exact (Chapter02Support v).zero_mem
+    exact (AddValuation.supp v).zero_mem
 
 /-- The finite value read from a nonzero element of a valued field. -/
 def Chapter02FiniteValueOfNonzero
@@ -262,15 +248,14 @@ theorem chapter02_field_valuation_is_a_group_hom_on_nonzero_elements
 def Chapter02SupportQuotientValuation
     {R Γ : Type*} [CommRing R] [LinearOrderedAddCommMonoidWithTop Γ]
     (v : AddValuation R Γ) :
-    AddValuation (R ⧸ Chapter02Support v) Γ := by
-  exact AddValuation.onQuot v (by
-    simp [Chapter02Support])
+    AddValuation (R ⧸ AddValuation.supp v) Γ := by
+  exact AddValuation.onQuot v (by simp)
 
 theorem chapter02_support_quotient_is_a_domain
     {R Γ : Type*} [CommRing R] [LinearOrderedAddCommMonoidWithTop Γ]
-    [Nontrivial (Multiplicative Γᵒᵈ)]
+    [Nontrivial Γ]
     (v : AddValuation R Γ) :
-    IsDomain (R ⧸ Chapter02Support v) := by
+    IsDomain (R ⧸ AddValuation.supp v) := by
   rw [Ideal.Quotient.isDomain_iff_prime]
   exact chapter02_support_is_prime v
 
@@ -281,8 +266,8 @@ theorem chapter02_valuation_factors_through_support
   intro x
   have hcomp :
       (Chapter02SupportQuotientValuation v).comap
-          (Ideal.Quotient.mk (Chapter02Support v)) = v := by
-    exact AddValuation.onQuot_comap_eq v (by simp [Chapter02Support])
+          (Ideal.Quotient.mk (AddValuation.supp v)) = v := by
+    exact AddValuation.onQuot_comap_eq v (by simp)
   have hx := congrArg (fun z => z x) hcomp
   exact hx.symm
 
@@ -338,7 +323,7 @@ theorem chapter02_valuation_on_support_quotient_extends_to_fraction_field
     {R Γ : Type*} [CommRing R] [AddCommGroup Γ] [LinearOrder Γ]
     [IsOrderedAddMonoid Γ] [Nontrivial Γ]
     (v : AddValuation R (WithTop Γ)) :
-    let A := R ⧸ Chapter02Support v
+    let A := R ⧸ AddValuation.supp v
     letI : IsDomain A := by
       dsimp [A]
       exact chapter02_support_quotient_is_a_domain v
@@ -349,23 +334,19 @@ theorem chapter02_valuation_on_support_quotient_extends_to_fraction_field
         w (algebraMap A (FractionRing A) a /
             algebraMap A (FractionRing A) b) = vq a - vq b) := by
   dsimp
-  have hsupport : Chapter02Support v = AddValuation.supp v := by
-    rfl
-  let hdomain : IsDomain (R ⧸ Chapter02Support v) :=
-    chapter02_support_quotient_is_a_domain v
+  let hdomain : IsDomain (R ⧸ AddValuation.supp v) :=
+      chapter02_support_quotient_is_a_domain v
   exact @chapter02_fraction_field_extension
-    (R ⧸ Chapter02Support v) Γ _ hdomain _ _ _
+    (R ⧸ AddValuation.supp v) Γ _ hdomain _ _ _
     (Chapter02SupportQuotientValuation v)
     (by
-      have hJ : Chapter02Support v ≤ AddValuation.supp v := by
-        rw [hsupport]
       have hval : Chapter02SupportQuotientValuation v =
-          AddValuation.onQuot v hJ := by
+          AddValuation.onQuot v (le_refl _) := by
         apply AddValuation.ext
         intro x
         rfl
       rw [hval]
-      rw [AddValuation.supp_quot (v := v) hJ, hsupport]
+      rw [AddValuation.supp_quot (v := v) (le_refl _)]
       simpa only using (Ideal.map_quotient_self (AddValuation.supp v)))
 
 def Chapter02SurjectiveValuation

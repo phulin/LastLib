@@ -19,10 +19,6 @@ chapter-local names for the constructions that are specific to the exposition.
 
 noncomputable section
 
-open Set Function
-open scoped BigOperators LaurentSeries
-open HahnSeries Polynomial
-
 /-! # Book 1, Chapter 2, Section 2.6: The Trivial Valuation and Failure Modes
 -/
 
@@ -46,8 +42,8 @@ def Chapter02TrivialAdditiveValuation {K : Type*} [Field K] :
 
 theorem chapter02_trivial_valuation_ring_is_the_whole_field
     {K : Type*} [Field K] :
-    Chapter02ValuationRing (Chapter02TrivialAdditiveValuation :
-      AddValuation K (WithTop ℤ)) = (⊤ : Subring K) := by
+    (Chapter02ValuationRing (Chapter02TrivialAdditiveValuation :
+      AddValuation K (WithTop ℤ))).toSubring = (⊤ : Subring K) := by
   ext x
   by_cases hx : x = 0 <;>
     simp [Chapter02ValuationRing, Chapter02TrivialAdditiveValuation, hx]

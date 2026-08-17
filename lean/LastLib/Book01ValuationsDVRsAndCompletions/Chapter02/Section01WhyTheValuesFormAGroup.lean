@@ -1,22 +1,11 @@
 import Mathlib.Algebra.Order.Ring.Archimedean
 import Mathlib.Algebra.Order.GroupWithZero.Basic
+import Mathlib.Algebra.Group.Subgroup.Order
+import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Data.Real.Embedding
-import Mathlib.FieldTheory.RatFunc.Basic
-import Mathlib.RingTheory.HahnSeries.Basic
-import Mathlib.RingTheory.HahnSeries.Lex
-import Mathlib.RingTheory.HahnSeries.Valuation
-import Mathlib.RingTheory.LaurentSeries
-import Mathlib.RingTheory.Valuation.Basic
-import Mathlib.RingTheory.Valuation.Quotient
-import Mathlib.RingTheory.Valuation.RankOne
-import Mathlib.Topology.UniformSpace.CompareReals
-import Mathlib.NumberTheory.Padics.PadicNumbers
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Order
-import Mathlib.Tactic.Push
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter01.Section05MeasurementsThatAreNotDiscrete
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter02
 
@@ -31,20 +20,10 @@ chapter-local names for the constructions that are specific to the exposition.
 
 noncomputable section
 
-open Set Function
-open scoped BigOperators LaurentSeries
-open HahnSeries Polynomial
-
 /-! # Book 1, Chapter 2, Section 2.1: Why the Values Form a Group
 -/
 
 /-! ## 2.1. Why values form a group -/
-
-/-- The finite part of an extended value group. -/
-abbrev Chapter02FiniteValueGroup (Γ : Type*) := Γ
-
-/-- Adjoin the value `⊤`, representing zero, to a finite value group. -/
-abbrev Chapter02ExtendedValueGroup (Γ : Type*) := WithTop Γ
 
 /- The top element is absorbing for addition in the extended group. -/
 theorem chapter02_top_add_value
@@ -67,32 +46,27 @@ theorem chapter02_every_finite_value_is_below_infinity
     {Γ : Type*} [LinearOrder Γ] (γ : Γ) : (γ : WithTop Γ) < ⊤ := by
   exact WithTop.coe_lt_top γ
 
-def Chapter02ArchimedeanValueGroup (Γ : Type*)
-    [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ] : Prop :=
-  ∀ α β : Γ, 0 < α → 0 < β → ∃ n : ℕ, 1 ≤ n ∧ β ≤ n • α
-
 theorem chapter02_archimedean_value_group_iff
     {Γ : Type*} [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ] :
-    Chapter02ArchimedeanValueGroup Γ ↔ Archimedean Γ := by
+    Chapter01.IsChapterRankOneOrderedGroup Γ ↔ Archimedean Γ := by
   constructor
   · intro h
-    exact ⟨fun x {y} hy => by
-      by_cases hx : x ≤ 0
-      · exact ⟨0, by simpa using hx⟩
-      · obtain ⟨n, hn, hxy⟩ := h y x hy (lt_of_not_ge hx)
-        exact ⟨n, hxy⟩⟩
+    refine ⟨fun x {y} hy => ?_⟩
+    by_cases hx : x ≤ 0
+    · exact ⟨0, by simpa using hx⟩
+    · obtain ⟨n, hn, hxy⟩ := h x y (lt_of_not_ge hx) hy
+      exact ⟨n, hxy⟩
   · intro h α β hα hβ
-    obtain ⟨n, hn⟩ := h.arch β hα
+    obtain ⟨n, hn⟩ := h.arch α hβ
     refine ⟨n, ?_, hn⟩
     by_contra hnot
     have hn0 : n = 0 := by omega
     subst n
-    have hn' : β ≤ (0 : Γ) := by simpa using hn
-    exact (not_le_of_gt hβ) hn'
+    exact (not_le_of_gt hα) (by simpa using hn)
 
 theorem chapter02_archimedean_values_embed_in_reals
     {Γ : Type*} [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
-    (hΓ : Chapter02ArchimedeanValueGroup Γ) :
+    (hΓ : Chapter01.IsChapterRankOneOrderedGroup Γ) :
     ∃ f : Γ →+o ℝ, Function.Injective f := by
   let _ : Archimedean Γ := (chapter02_archimedean_value_group_iff).1 hΓ
   exact Archimedean.exists_orderAddMonoidHom_real_injective Γ
@@ -127,12 +101,12 @@ theorem chapter02_lex_second_coordinate_refines_first (n : ℤ) :
   exact (chapter02_lexicographic_order_formula 0 1 1 n).2 (Or.inl (by omega))
 
 theorem chapter02_lexicographic_integers_nonarchimedean :
-    ¬ Chapter02ArchimedeanValueGroup Chapter02LexicographicIntegers := by
+    ¬ Chapter01.IsChapterRankOneOrderedGroup Chapter02LexicographicIntegers := by
   intro h
-  obtain ⟨n, hn, hle⟩ := h (toLex ((0 : ℤ), 1)) (toLex (1, 0))
-    (by change toLex ((0 : ℤ), 0) < toLex ((0 : ℤ), 1)
-        rw [Prod.Lex.toLex_lt_toLex]; omega)
+  obtain ⟨n, hn, hle⟩ := h (toLex ((1 : ℤ), 0)) (toLex ((0 : ℤ), 1))
     (by change toLex ((0 : ℤ), 0) < toLex ((1 : ℤ), 0)
+        rw [Prod.Lex.toLex_lt_toLex]; omega)
+    (by change toLex ((0 : ℤ), 0) < toLex ((0 : ℤ), 1)
         rw [Prod.Lex.toLex_lt_toLex]; omega)
   have hsmul : n • toLex ((0 : ℤ), 1) = toLex ((0 : ℤ), (n : ℤ)) := by
     change toLex (n • ((0 : ℤ), (1 : ℤ))) =
@@ -165,18 +139,18 @@ def Chapter02SqrtTwoIntegerSubgroup : AddSubgroup ℝ :=
   AddSubgroup.closure ({(1 : ℝ), Real.sqrt 2} : Set ℝ)
 
 theorem chapter02_sqrt_two_integer_subgroup_is_archimedean :
-    Chapter02ArchimedeanValueGroup (↥Chapter02SqrtTwoIntegerSubgroup) := by
+    Chapter01.IsChapterRankOneOrderedGroup (↥Chapter02SqrtTwoIntegerSubgroup) := by
   intro α β hα hβ
-  obtain ⟨n, hn⟩ := Archimedean.arch (β : ℝ) (show 0 < (α : ℝ) from hα)
+  obtain ⟨n, hn⟩ := Archimedean.arch (α : ℝ) (show 0 < (β : ℝ) from hβ)
   refine ⟨n, ?_, ?_⟩
   · by_contra hnot
     have hn0 : n = 0 := by omega
     subst n
-    simpa using (not_le_of_gt (show 0 < (β : ℝ) from hβ) hn)
+    simpa using (not_le_of_gt (show 0 < (α : ℝ) from hα) hn)
   · exact hn
 
 theorem chapter02_rank_one_need_not_be_discrete :
-    Chapter02ArchimedeanValueGroup ℚ ∧
+    Chapter01.IsChapterRankOneOrderedGroup ℚ ∧
       DenselyOrdered ℚ ∧
       ¬ ∃ d : ℚ, 0 < d ∧ ∀ x : ℚ, 0 < x → d ≤ x := by
   refine ⟨?_, inferInstance, ?_⟩

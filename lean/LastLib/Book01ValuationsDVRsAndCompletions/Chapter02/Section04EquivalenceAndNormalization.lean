@@ -1,8 +1,9 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section01WhyTheValuesFormAGroup
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section02AdditiveValuations
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter01.Section05MeasurementsThatAreNotDiscrete
+import Mathlib.RingTheory.Valuation.ValuationSubring
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Order
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter02
 
@@ -17,28 +18,17 @@ chapter-local names for the constructions that are specific to the exposition.
 
 noncomputable section
 
-open Set Function
-open scoped BigOperators LaurentSeries
-open HahnSeries Polynomial
-
 /-! # Book 1, Chapter 2, Section 2.4: Equivalence and Normalization
 -/
 
 /-! ## 2.4. Equivalence and normalization -/
-
-def Chapter02EquivalentValuations
-    {K Γ Δ : Type*} [Field K]
-    [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
-    [AddCommGroup Δ] [LinearOrder Δ] [IsOrderedAddMonoid Δ]
-    (v : AddValuation K (WithTop Γ)) (w : AddValuation K (WithTop Δ)) : Prop :=
-  AddValuation.IsEquiv v w
 
 theorem chapter02_equivalent_iff_same_comparisons
     {K Γ Δ : Type*} [Field K]
     [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
     [AddCommGroup Δ] [LinearOrder Δ] [IsOrderedAddMonoid Δ]
     (v : AddValuation K (WithTop Γ)) (w : AddValuation K (WithTop Δ)) :
-    Chapter02EquivalentValuations v w ↔
+    AddValuation.IsEquiv v w ↔
       ∀ x y : K, v x ≤ v y ↔ w x ≤ w y := by
   change (∀ x y : K, v y ≤ v x ↔ w y ≤ w x) ↔
     ∀ x y : K, v x ≤ v y ↔ w x ≤ w y
@@ -66,7 +56,7 @@ theorem chapter02_order_relabeling_implies_equivalence
     [AddCommGroup Δ] [LinearOrder Δ] [IsOrderedAddMonoid Δ]
     {v : AddValuation K (WithTop Γ)} {w : AddValuation K (WithTop Δ)}
     (h : Chapter02EquivalentByOrderedRelabeling v w) :
-    Chapter02EquivalentValuations v w := by
+    AddValuation.IsEquiv v w := by
   rcases h with ⟨e, he⟩
   apply (chapter02_equivalent_iff_same_comparisons v w).2
   intro x y
@@ -94,7 +84,7 @@ theorem chapter02_equivalence_and_surjectivity_give_order_relabeling
     {v : AddValuation K (WithTop Γ)} {w : AddValuation K (WithTop Δ)}
     (hv : Chapter02SurjectiveValuation v)
     (hw : Chapter02SurjectiveValuation w)
-    (he : Chapter02EquivalentValuations v w) :
+    (he : AddValuation.IsEquiv v w) :
     Chapter02EquivalentByOrderedRelabeling v w := by
   classical
   have hcomp (a b : K) : v a ≤ v b ↔ w a ≤ w b :=
@@ -181,32 +171,20 @@ theorem chapter02_equivalence_and_surjectivity_give_order_relabeling
       _ = v (xv ((v x).untop hvx)) := ((hxv _).2).symm
   simpa [Chapter02OrderRelabelValue, hvx, e, WithTop.coe_untop] using hval
 
-def Chapter02DiscreteValueGroup (Γ : Type*)
-    [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ] : Prop :=
-  Nonempty (Γ ≃+o ℤ)
-
 theorem chapter02_discrete_value_group_has_unique_smallest_positive
     {Γ : Type*} [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
-    (hΓ : Chapter02DiscreteValueGroup Γ) :
+    (hΓ : Chapter01.IsChapterDiscreteOrderedGroup Γ) :
     ∃! π : Γ, 0 < π ∧ ∀ γ : Γ, 0 < γ → π ≤ γ := by
-  rcases hΓ with ⟨e⟩
-  let π : Γ := e.symm 1
-  have hπ : 0 < π := by
-    dsimp [π]
-    rw [← e.symm.map_zero]
-    exact (map_lt_map_iff e.symm).2 (by omega)
-  have hleast : ∀ γ : Γ, 0 < γ → π ≤ γ := by
-    intro γ hγ
-    apply (map_le_map_iff e).1
-    have heπ : e π = 1 := by simp [π]
-    have hpos : 0 < e γ := by
-      rw [← e.map_zero]
-      exact (map_lt_map_iff e).2 hγ
-    rw [heπ]
-    omega
+  rcases hΓ with ⟨π, hπ, hleast⟩
   refine ⟨π, ⟨hπ, hleast⟩, ?_⟩
   intro π' hπ'
   exact le_antisymm (hπ'.2 π hπ) (hleast π' hπ'.1)
+
+theorem chapter02_discrete_value_group_equiv_int
+    {Γ : Type*} [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
+    (hΓ : Chapter01.IsChapterDiscreteOrderedGroup Γ) :
+    Nonempty (Γ ≃+o ℤ) := by
+  sorry
 
 noncomputable def Chapter02NormalizedValuation
     {K Γ : Type*} [Field K]
@@ -270,20 +248,8 @@ theorem chapter02_twice_valuation_formula
 def Chapter02ValuationRing
     {K Γ : Type*} [Field K] [AddCommGroup Γ] [LinearOrder Γ]
     [IsOrderedAddMonoid Γ]
-    (v : AddValuation K (WithTop Γ)) : Subring K :=
-  { carrier := {x | 0 ≤ v x}
-    zero_mem' := by simp
-    one_mem' := by simp
-    add_mem' := by
-      intro x y hx hy
-      exact le_trans (le_min hx hy) (v.map_add x y)
-    mul_mem' := by
-      intro x y hx hy
-      simpa [v.map_mul] using add_nonneg hx hy
-    neg_mem' := by
-      intro x hx
-      simpa using hx
-  }
+    (v : AddValuation K (WithTop Γ)) : ValuationSubring K :=
+  v.toValuation.valuationSubring
 
 theorem chapter02_equivalent_scalings_have_same_valuation_ring
     {K : Type*} [Field K] (v : AddValuation K (WithTop ℤ)) :
@@ -323,7 +289,8 @@ def Chapter02ConvexQuotientInterface
     {Γ Λ : Type*} [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
     [AddCommGroup Λ] [LinearOrder Λ] [IsOrderedAddMonoid Λ]
     (H : AddSubgroup Γ) (q : Γ →+o Λ) : Prop :=
-  Function.Surjective q ∧
+  Chapter02ConvexAddSubgroup H ∧
+    Function.Surjective q ∧
     (∀ γ : Γ, q γ = 0 ↔ γ ∈ H) ∧
     (∀ a b : Γ, q a ≤ q b ↔
       ∃ h : H, a ≤ b + (h : Γ)) ∧
@@ -344,13 +311,13 @@ def Chapter02CoarsenedValuation
 theorem chapter02_convex_subgroup_gives_ordered_quotient
     {Γ Λ : Type*} [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
     [AddCommGroup Λ] [LinearOrder Λ] [IsOrderedAddMonoid Λ]
-    (H : AddSubgroup Γ)
+    (H : AddSubgroup Γ) (hH : Chapter02ConvexAddSubgroup H)
     (q : Γ →+o Λ) (hq : Function.Surjective q)
     (hker : ∀ γ : Γ, q γ = 0 ↔ γ ∈ H)
     (horder : ∀ a b : Γ, q a ≤ q b ↔
       ∃ h : H, a ≤ b + (h : Γ)) :
     Chapter02ConvexQuotientInterface H q := by
-  refine ⟨hq, hker, horder, ?_⟩
+  refine ⟨hH, hq, hker, horder, ?_⟩
   intro Ω _ _ _ f hfH
   have hwell : ∀ {a b : Γ}, q a = q b → f a = f b := by
     intro a b hab
@@ -469,6 +436,7 @@ theorem chapter02_lex_quotient_is_an_ordered_convex_quotient :
       Chapter02LexFirstCoordinate := by
   apply chapter02_convex_subgroup_gives_ordered_quotient
     Chapter02LexSecondCoordinateSubgroup
+    chapter02_lex_second_coordinate_is_convex
     Chapter02LexFirstCoordinate
     (chapter02_lex_quotient_remembers_first_coordinate).1
     (chapter02_lex_quotient_remembers_first_coordinate).2
@@ -500,9 +468,9 @@ theorem chapter02_lex_quotient_is_an_ordered_convex_quotient :
 
 theorem chapter02_discrete_rank_one_has_no_proper_coarsening
     {Γ : Type*} [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
-    (hΓ : Chapter02DiscreteValueGroup Γ) (H : AddSubgroup Γ)
+    (hΓ : Chapter01.IsChapterDiscreteOrderedGroup Γ) (H : AddSubgroup Γ)
     (hH : Chapter02ConvexAddSubgroup H) : H = ⊥ ∨ H = ⊤ := by
-  rcases hΓ with ⟨e⟩
+  rcases chapter02_discrete_value_group_equiv_int hΓ with ⟨e⟩
   by_cases hp : ∃ h : Γ, h ∈ H ∧ 0 < h
   · right
     rcases hp with ⟨h, hh, hpos⟩
