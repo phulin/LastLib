@@ -13,7 +13,7 @@ open scoped BigOperators Polynomial
 /-- First-order power congruence, including the integer-power formulation. -/
 theorem chapter10_unit_power_first_order_congruence
     {L : Type*} [Field L] (A : ValuationSubring L) (m : ℤ) (n : ℕ)
-    (_hn : 0 < n) (x : A) (hx : x ∈ (IsLocalRing.maximalIdeal A) ^ n)
+    (x : A) (hx : x ∈ (IsLocalRing.maximalIdeal A) ^ n)
     (u : Aˣ) (hu : (u : A) = 1 + x) :
     ((u ^ m : Aˣ) : A) - (1 + (m : A) * x) ∈
       (IsLocalRing.maximalIdeal A) ^ (2 * n) := by
@@ -124,7 +124,7 @@ theorem chapter10_unit_layer_power_is_residue_scalar
       ∀ z : Chapter10IdealLayer A (IsLocalRing.maximalIdeal A) n,
         e (Multiplicative.ofAdd (chapter10IdealLayerScalarMap A m n z)) =
           chapter10UnitLayerPowerMap A m n (e (Multiplicative.ofAdd z)) := by
-  let e := Classical.choice (chapter10_higher_unit_layer_is_additive A n hn)
+  let e := Classical.choose (chapter10_higher_unit_layer_is_additive A n hn)
   refine ⟨e, ?_⟩
   intro z
   change e (Multiplicative.ofAdd ((m : A) • z)) =

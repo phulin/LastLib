@@ -22,7 +22,6 @@ def chapter10MixedCharacteristicDepth (e p n : ℕ) : ℕ :=
 theorem chapter10_mixed_characteristic_term_bounds
     {L : Type*} [Field L]
     (v : AddValuation L (WithTop ℤ)) (p e n : ℕ)
-    (_hp0 : (p : L) ≠ 0)
     (he : v (p : L) = (e : WithTop ℤ))
     (x : L) (hx : v x ≥ (n : WithTop ℤ)) :
     v ((p : L) * x) ≥ (e + n : ℕ) ∧

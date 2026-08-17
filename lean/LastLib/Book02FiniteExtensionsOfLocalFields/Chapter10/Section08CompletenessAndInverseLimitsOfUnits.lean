@@ -195,8 +195,7 @@ private noncomputable def chapter10CompatibleRingUnitUnmap
 /-- Completeness identifies ring units with the inverse limit of their reductions. -/
 theorem chapter10_complete_units_inverse_limit
     {L : Type*} [Field L] (A : ValuationSubring L)
-    (hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A)
-    (hDVR : IsDiscreteValuationRing A) :
+    (hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A) :
     ∃ e : Aˣ ≃* Chapter10AdicUnitInverseLimit A,
       ∀ u, e u = chapter10UnitToAdicInverseLimit A u := by
   classical
@@ -450,8 +449,7 @@ noncomputable def chapter10PrincipalUnitToAdicInverseLimit
 /-- Completeness identifies principal units with their compatible finite layers. -/
 theorem chapter10_complete_principal_units_inverse_limit
     {L : Type*} [Field L] (A : ValuationSubring L)
-    (hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A)
-    (hDVR : IsDiscreteValuationRing A) :
+    (hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A) :
     ∃ e : chapter10UnitFiltration A 1 ≃*
         Chapter10PrincipalUnitInverseLimit A,
       ∀ u, e u = chapter10PrincipalUnitToAdicInverseLimit A u := by
@@ -530,7 +528,7 @@ theorem chapter10_complete_principal_units_inverse_limit
         funext n
         exact (rbar n).map_mul _ _ }
   obtain ⟨efull, hef⟩ :=
-    chapter10_complete_units_inverse_limit A hcomplete hDVR
+    chapter10_complete_units_inverse_limit A hcomplete
   let y : Chapter10PrincipalUnitInverseLimit A → Aˣ := fun x =>
     efull.symm (toFull x)
   have hx0 (x : Chapter10PrincipalUnitInverseLimit A) : x.1 0 = 1 := by
@@ -785,7 +783,7 @@ theorem chapter10_finite_residue_unit_group_compact
           (red (n + 1) (a (n + 1))) = red n (a n)
       exact (hfactor n (a (n + 1))).trans (hselected n)⟩
   obtain ⟨efull, hef⟩ :=
-    chapter10_complete_units_inverse_limit A hcomplete hDVR
+    chapter10_complete_units_inverse_limit A hcomplete
   let u : Aˣ := efull.symm fam
   have hu_red (n : ℕ) : red n u = red n (a n) := by
     have hcan : chapter10UnitToAdicInverseLimit A u = fam := by
@@ -1124,7 +1122,7 @@ theorem chapter10_finite_residue_local_compactness
           rw [chapter10PrecisionRingTransition, Ideal.Quotient.factor_mk]
         exact (hfactor n (b (n + 1))).trans (hselected n)⟩
     obtain ⟨efull, hef⟩ :=
-      chapter10_complete_units_inverse_limit A hcomplete hDVR
+      chapter10_complete_units_inverse_limit A hcomplete
     let u : Aˣ := efull.symm fam
     have hu_red (n : ℕ) : red n u = red n (b n) := by
       have hcan : chapter10UnitToAdicInverseLimit A u = fam := by

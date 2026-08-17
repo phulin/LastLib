@@ -142,9 +142,7 @@ theorem chapter10_residue_characteristic_power_roots_are_principal
 theorem chapter10_padic_prime_to_p_roots_are_cyclic
     {L : Type*} [Field L] (A : ValuationSubring L) (p : ℕ)
     [Fact p.Prime] [Fintype (Chapter10ResidueField A)]
-    [CharP (Chapter10ResidueField A) p] [CharZero A]
-    (_hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A)
-    (_hDVR : IsDiscreteValuationRing A) :
+    [CharP (Chapter10ResidueField A) p] :
     IsCyclic
       (chapter10RootOfUnitySubgroup A
         (Fintype.card (Chapter10ResidueField A) - 1)) := by
@@ -320,7 +318,8 @@ theorem chapter10_mixed_characteristic_cyclotomic_roots_are_principal
 /-- The filtration records torsion information not determined by the pair `(e,f)`. -/
 def Chapter10UnitTorsionProfile
     {L : Type*} [Field L] (A : ValuationSubring L) (p : ℕ) : Prop :=
-  ∃ u : chapter10UnitFiltration A 1, Chapter10PowerTorsion p (u : Aˣ)
+  ∃ u : chapter10UnitFiltration A 1,
+    (u : Aˣ) ≠ 1 ∧ Chapter10PowerTorsion p (u : Aˣ)
 
 end
 

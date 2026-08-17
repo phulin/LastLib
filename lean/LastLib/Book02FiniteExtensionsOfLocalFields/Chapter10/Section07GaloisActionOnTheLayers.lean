@@ -1,171 +1,10 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Dependencies
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Section03HigherQuotientsAreAdditiveResidueFields
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10
 
 noncomputable section
 
 open Ideal IsLocalRing
-
-private noncomputable def chapter10CanonicalHigherUnitLayerQuotientEquiv
-    {L : Type*} [Field L] (A : ValuationSubring L) (n : ℕ) (hn : 0 < n) :
-    Chapter10UnitLayerQuotient A n ≃*
-      Multiplicative (Chapter10IdealLayer A (IsLocalRing.maximalIdeal A) n) := by
-  classical
-  let φ : Additive (chapter10UnitFiltration A n) →+
-      Chapter10IdealLayer A (IsLocalRing.maximalIdeal A) n :=
-    { toFun := fun u =>
-        Submodule.Quotient.mk
-          (p := chapter10IdealLayerDenominator A (IsLocalRing.maximalIdeal A) n)
-          (⟨(((Additive.toMul u : chapter10UnitFiltration A n) : Aˣ) : A) - 1,
-            (Additive.toMul u).property⟩ :
-            (IsLocalRing.maximalIdeal A ^ n : Ideal A))
-      map_zero' := by
-        apply (Submodule.Quotient.mk_eq_zero _).2
-        simp [chapter10IdealLayerDenominator]
-      map_add' := by
-        intro u v
-        apply (Submodule.Quotient.eq _).2
-        change _ ∈ (IsLocalRing.maximalIdeal A) ^ (n + 1)
-        simp only [Submodule.coe_sub, Submodule.coe_add, Submodule.subtype_apply]
-        rw [toMul_add]
-        have huv :
-            (((Additive.toMul u * Additive.toMul v : chapter10UnitFiltration A n) : Aˣ) : A) =
-              (((Additive.toMul u : chapter10UnitFiltration A n) : Aˣ) : A) *
-                (((Additive.toMul v : chapter10UnitFiltration A n) : Aˣ) : A) := by
-          rfl
-        rw [huv]
-        have hpow : (IsLocalRing.maximalIdeal A) ^ n *
-            (IsLocalRing.maximalIdeal A) ^ n ≤
-            (IsLocalRing.maximalIdeal A) ^ (n + 1) := by
-          calc
-            (IsLocalRing.maximalIdeal A) ^ n *
-                (IsLocalRing.maximalIdeal A) ^ n =
-              (IsLocalRing.maximalIdeal A) ^ (n + n) :=
-                (Ideal.IsTwoSided.pow_add
-                  (I := IsLocalRing.maximalIdeal A) n n).symm
-            _ ≤ (IsLocalRing.maximalIdeal A) ^ (n + 1) :=
-              Ideal.pow_le_pow_right (by omega)
-        have hprod :
-            ((((Additive.toMul u : chapter10UnitFiltration A n) : Aˣ) : A) - 1) *
-                ((((Additive.toMul v : chapter10UnitFiltration A n) : Aˣ) : A) - 1) ∈
-              (IsLocalRing.maximalIdeal A) ^ (n + 1) := by
-          exact hpow (Ideal.mul_mem_mul (Additive.toMul u).property
-            (Additive.toMul v).property)
-        (convert hprod using 1; ring) }
-  let ψ : chapter10UnitFiltration A n →*
-      Multiplicative (Chapter10IdealLayer A (IsLocalRing.maximalIdeal A) n) :=
-    AddMonoidHom.toMultiplicativeRight φ
-  have hker : ψ.ker =
-      (chapter10UnitFiltration A (n + 1)).subgroupOf
-        (chapter10UnitFiltration A n) := by
-    ext u
-    constructor
-    · intro hu
-      have hu' : φ (Additive.ofMul u) = 0 := by
-        simpa [ψ] using hu
-      change ((u : Aˣ) : A) - 1 ∈
-        (IsLocalRing.maximalIdeal A) ^ (n + 1)
-      have hu'' :
-          Submodule.Quotient.mk
-              (p := chapter10IdealLayerDenominator A
-                (IsLocalRing.maximalIdeal A) n)
-              (⟨((u : Aˣ) : A) - 1, u.property⟩ :
-                (IsLocalRing.maximalIdeal A ^ n : Ideal A)) = 0 := by
-        change Submodule.Quotient.mk
-            (p := chapter10IdealLayerDenominator A
-              (IsLocalRing.maximalIdeal A) n)
-            (⟨((u : Aˣ) : A) - 1, u.property⟩ :
-              (IsLocalRing.maximalIdeal A ^ n : Ideal A)) = 0 at hu'
-        exact hu'
-      have hmem := (Submodule.Quotient.mk_eq_zero _).mp hu''
-      change ((u : Aˣ) : A) - 1 ∈
-        (IsLocalRing.maximalIdeal A) ^ (n + 1) at hmem
-      exact hmem
-    · intro hu
-      change ((u : Aˣ) : A) - 1 ∈
-        (IsLocalRing.maximalIdeal A) ^ (n + 1) at hu
-      apply MonoidHom.mem_ker.mpr
-      change φ (Additive.ofMul u) = 0
-      change Submodule.Quotient.mk
-          (p := chapter10IdealLayerDenominator A
-            (IsLocalRing.maximalIdeal A) n)
-          (⟨((u : Aˣ) : A) - 1, u.property⟩ :
-            (IsLocalRing.maximalIdeal A ^ n : Ideal A)) = 0
-      apply (Submodule.Quotient.mk_eq_zero _).2
-      simpa [chapter10IdealLayerDenominator] using hu
-  have hsurj : Function.Surjective ψ := by
-    intro z
-    let q : Chapter10IdealLayer A (IsLocalRing.maximalIdeal A) n :=
-      Multiplicative.toAdd z
-    obtain ⟨r, hrq⟩ := Submodule.Quotient.mk_surjective _ q
-    have hp : (IsLocalRing.maximalIdeal A) ^ n ≤
-        IsLocalRing.maximalIdeal A := by
-      simpa [pow_one] using
-        (Ideal.pow_le_pow_right (I := IsLocalRing.maximalIdeal A) hn)
-    have hrmax : (r : A) ∈ IsLocalRing.maximalIdeal A := hp r.property
-    have hnegmax : -(r : A) ∈ IsLocalRing.maximalIdeal A :=
-      (IsLocalRing.maximalIdeal A).neg_mem hrmax
-    have hneg : -(r : A) ∈ nonunits A :=
-      (IsLocalRing.mem_maximalIdeal (-(r : A))).1 hnegmax
-    have hu : IsUnit (1 + (r : A)) := by
-      have h := IsLocalRing.isUnit_one_sub_self_of_mem_nonunits
-        (-(r : A)) hneg
-      (convert h using 1; ring)
-    let w : Aˣ := hu.unit
-    have hw : (w : A) - 1 = (r : A) := by
-      dsimp [w]
-      ring
-    have hwmem : (w : A) - 1 ∈
-        (IsLocalRing.maximalIdeal A) ^ n := by
-      rw [hw]
-      exact r.property
-    let u : chapter10UnitFiltration A n := ⟨w, hwmem⟩
-    refine ⟨u, ?_⟩
-    have hφq : φ (Additive.ofMul u) = q := by
-      rw [← hrq]
-      change Submodule.Quotient.mk
-          (⟨((u : Aˣ) : A) - 1, u.property⟩ :
-            (IsLocalRing.maximalIdeal A ^ n : Ideal A)) =
-        Submodule.Quotient.mk r
-      apply (Submodule.Quotient.eq _).2
-      change ((u : Aˣ) : A) - 1 - (r : A) ∈
-        (IsLocalRing.maximalIdeal A) ^ (n + 1)
-      rw [show (u : Aˣ) = w by rfl, hw]
-      simp
-    change φ (Additive.ofMul u) = q
-    exact hφq
-  let eMul := QuotientGroup.liftEquiv
-    ((chapter10UnitFiltration A (n + 1)).subgroupOf
-      (chapter10UnitFiltration A n)) hsurj hker.symm
-  exact eMul
-
-private noncomputable def chapter10CanonicalHigherUnitLayerEquiv
-    {L : Type*} [Field L] (A : ValuationSubring L) (n : ℕ) (hn : 0 < n) :
-    Multiplicative (Chapter10IdealLayer A (IsLocalRing.maximalIdeal A) n) ≃*
-      Chapter10UnitLayerQuotient A n :=
-  (chapter10CanonicalHigherUnitLayerQuotientEquiv A n hn).symm
-
-private theorem chapter10CanonicalHigherUnitLayerEquiv_apply
-    {L : Type*} [Field L] (A : ValuationSubring L) (n : ℕ) (hn : 0 < n)
-    (u : chapter10UnitFiltration A n) :
-    chapter10CanonicalHigherUnitLayerEquiv A n hn
-        (Multiplicative.ofAdd
-          (Submodule.Quotient.mk
-            (p := chapter10IdealLayerDenominator A
-              (IsLocalRing.maximalIdeal A) n)
-            (⟨((u : Aˣ) : A) - 1, by
-              simpa [chapter10UnitFiltration, chapter10IdealUnitFiltration]
-                using u.property⟩ :
-              (IsLocalRing.maximalIdeal A ^ n : Ideal A)))) =
-      QuotientGroup.mk'
-        ((chapter10UnitFiltration A (n + 1)).subgroupOf
-          (chapter10UnitFiltration A n)) u := by
-  change (chapter10CanonicalHigherUnitLayerQuotientEquiv A n hn).symm _ = _
-  apply (chapter10CanonicalHigherUnitLayerQuotientEquiv A n hn).injective
-  rw [(chapter10CanonicalHigherUnitLayerQuotientEquiv A n hn).apply_symm_apply]
-  unfold chapter10CanonicalHigherUnitLayerQuotientEquiv
-  simp
-  rfl
 
 /-! ## 10.7. Galois action on the layers -/
 
@@ -412,7 +251,8 @@ theorem chapter10_galois_higher_layer_coordinate_formula
             (chapter10GaloisLayerCoordinateAction A σbar c n a)) := by
   intro hn hmax hcompat hσπ
   classical
-  let eLayer := chapter10CanonicalHigherUnitLayerEquiv A n hn
+  obtain ⟨eLayer, heLayer⟩ :=
+    chapter10_higher_unit_layer_is_additive A n hn
   let hπ' : Irreducible π :=
     (IsDiscreteValuationRing.irreducible_iff_uniformizer (R := A) π).2 hπ.2
   let g :=
@@ -515,7 +355,7 @@ theorem chapter10_galois_higher_layer_coordinate_formula
       QuotientGroup.mk'
         ((chapter10UnitFiltration A (n + 1)).subgroupOf
           (chapter10UnitFiltration A n)) u := by
-    exact chapter10CanonicalHigherUnitLayerEquiv_apply A n hn u
+    exact heLayer u
   rw [hrep, he_u]
   dsimp [chapter10GaloisUnitLayerAction]
   let uσ : chapter10UnitFiltration A n :=
@@ -578,7 +418,7 @@ theorem chapter10_galois_higher_layer_coordinate_formula
       QuotientGroup.mk'
         ((chapter10UnitFiltration A (n + 1)).subgroupOf
           (chapter10UnitFiltration A n)) uσ := by
-    exact chapter10CanonicalHigherUnitLayerEquiv_apply A n hn uσ
+    exact heLayer uσ
   rw [hrepσ, he_uσ]
 
 /-- The inertia character on a higher layer may be nontrivial. -/

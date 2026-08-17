@@ -14,9 +14,19 @@ open Ideal IsLocalRing
 /-- The canonical higher layer is an additive group viewed multiplicatively. -/
 theorem chapter10_higher_unit_layer_is_additive
     {L : Type*} [Field L] (A : ValuationSubring L) (n : ℕ) (hn : 0 < n) :
-    Nonempty
-      (Multiplicative (Chapter10IdealLayer A (IsLocalRing.maximalIdeal A) n) ≃*
-        Chapter10UnitLayerQuotient A n) := by
+    ∃ e : Multiplicative
+        (Chapter10IdealLayer A (IsLocalRing.maximalIdeal A) n) ≃*
+        Chapter10UnitLayerQuotient A n,
+      ∀ u : chapter10UnitFiltration A n,
+        e (Multiplicative.ofAdd
+          (Submodule.Quotient.mk
+            (p := chapter10IdealLayerDenominator A
+              (IsLocalRing.maximalIdeal A) n)
+            (⟨((u : Aˣ) : A) - 1, u.property⟩ :
+              (IsLocalRing.maximalIdeal A ^ n : Ideal A)))) =
+          QuotientGroup.mk'
+            ((chapter10UnitFiltration A (n + 1)).subgroupOf
+              (chapter10UnitFiltration A n)) u := by
   classical
   let φ : Additive (chapter10UnitFiltration A n) →+
       Chapter10IdealLayer A (IsLocalRing.maximalIdeal A) n :=
@@ -144,7 +154,13 @@ theorem chapter10_higher_unit_layer_is_additive
   let eMul := QuotientGroup.liftEquiv
     ((chapter10UnitFiltration A (n + 1)).subgroupOf
       (chapter10UnitFiltration A n)) hsurj hker.symm
-  exact ⟨eMul.symm⟩
+  refine ⟨eMul.symm, ?_⟩
+  intro u
+  apply eMul.injective
+  rw [eMul.apply_symm_apply]
+  unfold eMul
+  simp [ψ, φ]
+  rfl
 
 /-- The error in multiplying `1+x` and `1+y` is one layer deeper. -/
 theorem chapter10_higher_layer_multiplication_linearizes
@@ -205,7 +221,7 @@ noncomputable def chapter10UniformizerLayerCoordinate
   let e : Multiplicative
       (Chapter10IdealLayer A (IsLocalRing.maximalIdeal A) n) ≃*
         Chapter10UnitLayerQuotient A n :=
-    Classical.choice (chapter10_higher_unit_layer_is_additive A n hn)
+    Classical.choose (chapter10_higher_unit_layer_is_additive A n hn)
   let g :=
     (LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.chapterLayerMultiplicationMap
       (A := A) π hπ' n)
@@ -227,7 +243,7 @@ theorem chapter10_uniformizer_layer_coordinate_bijective
   classical
   dsimp [chapter10UniformizerLayerCoordinate]
   apply Function.Bijective.comp
-  · exact (Classical.choice (chapter10_higher_unit_layer_is_additive A n hn)).bijective
+  · exact (Classical.choose (chapter10_higher_unit_layer_is_additive A n hn)).bijective
   · let g :=
       (LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.chapterLayerMultiplicationMap
         (A := A) π
@@ -293,7 +309,6 @@ theorem chapter10_uniformizer_change_rescales_layer
 private theorem chapter10_unit_quotient_cardinality_aux
     {L : Type*} [Field L] (A : ValuationSubring L) (n : ℕ) (hn : 0 < n)
     [Fintype (Chapter10ResidueField A)]
-    (_hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A)
     (hDVR : IsDiscreteValuationRing A) :
     Nat.card (Chapter10UnitRingQuotient A n) =
       (Fintype.card (Chapter10ResidueField A) - 1) *
@@ -369,7 +384,6 @@ theorem chapter10_unit_quotient_has_coordinates
     {L : Type*} [Field L] (A : ValuationSubring L) (n : ℕ) (hn : 0 < n)
     [Fintype (Chapter10ResidueField A)]
     [Valuation.IsRankOneDiscrete A.valuation]
-    (hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A)
     (hDVR : IsDiscreteValuationRing A)
     (π : A) (hπ : Chapter10Uniformizer A π) :
     Nonempty (Chapter10UnitQuotientCoordinateProfile A n) := by
@@ -387,7 +401,7 @@ theorem chapter10_unit_quotient_has_coordinates
   let _ : Finite (Aˣ ⧸ U n) := by
     apply Nat.finite_of_card_ne_zero
     change Nat.card (Chapter10UnitRingQuotient A n) ≠ 0
-    rw [chapter10_unit_quotient_cardinality_aux A n hn hcomplete hDVR]
+    rw [chapter10_unit_quotient_cardinality_aux A n hn hDVR]
     exact Nat.mul_ne_zero (Nat.ne_of_gt hq1pos)
       (pow_ne_zero _ (Nat.ne_of_gt hqpos))
   let _ : Fintype (Aˣ ⧸ U n) := Fintype.ofFinite _
@@ -402,7 +416,7 @@ theorem chapter10_unit_quotient_has_coordinates
       _ = (Fintype.card (Chapter10ResidueField A) - 1) *
           Fintype.card (Chapter10ResidueField A) ^ (n - 1) := by
         simpa [U] using
-          chapter10_unit_quotient_cardinality_aux A n hn hcomplete hDVR
+          chapter10_unit_quotient_cardinality_aux A n hn hDVR
       _ = Fintype.card
           ((Chapter10ResidueField A)ˣ ×
             (Fin (n - 1) → Multiplicative (Chapter10ResidueField A))) := by
@@ -547,12 +561,11 @@ theorem chapter10_field_unit_quotient_by_ring_units
 theorem chapter10_unit_quotient_cardinality
     {L : Type*} [Field L] (A : ValuationSubring L) (n : ℕ) (hn : 0 < n)
     [Fintype (Chapter10ResidueField A)]
-    (hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A)
     (hDVR : IsDiscreteValuationRing A) :
     Nat.card (Chapter10UnitRingQuotient A n) =
       (Fintype.card (Chapter10ResidueField A) - 1) *
         Fintype.card (Chapter10ResidueField A) ^ (n - 1) := by
-  exact chapter10_unit_quotient_cardinality_aux A n hn hcomplete hDVR
+  exact chapter10_unit_quotient_cardinality_aux A n hn hDVR
 
 end
 

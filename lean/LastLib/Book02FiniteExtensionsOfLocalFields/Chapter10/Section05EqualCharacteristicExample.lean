@@ -9,9 +9,18 @@ open Ideal IsLocalRing
 /-! ## 10.5. Equal-characteristic example -/
 
 /-- The equal-characteristic local ring and its Laurent-series fraction field. -/
-abbrev Chapter10EqualCharacteristicRing (k : Type*) [Field k] := PowerSeries k
+abbrev Chapter10EqualCharacteristicRing (k : Type*) [Field k] :=
+  LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Chapter08FormalPowerSeries k
 
-abbrev Chapter10EqualCharacteristicField (k : Type*) [Field k] := LaurentSeries k
+abbrev Chapter10EqualCharacteristicField (k : Type*) [Field k] :=
+  LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Chapter08FormalLaurentSeries k
+
+/-- The equal-characteristic field is the fraction field of its power-series ring. -/
+theorem chapter10_equal_characteristic_fraction_field
+    (k : Type*) [Field k] :
+    IsFractionRing (Chapter10EqualCharacteristicRing k)
+      (Chapter10EqualCharacteristicField k) := by
+  exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.chapter08_power_series_is_fraction_field_of_power_series k
 
 /-- The `t`-adic filtration on `k[[t]]ˣ`. -/
 def chapter10PowerSeriesUnitFiltration
@@ -109,6 +118,15 @@ theorem chapter10_equal_characteristic_layer_records_coefficient
       PowerSeries.coeff (n + 1) (u : PowerSeries k) /
         PowerSeries.constantCoeff (u : PowerSeries k) := by
   rfl
+
+/-- On a principal-unit layer, the normalized coefficient is the raw next digit. -/
+theorem chapter10_equal_characteristic_principal_layer_coefficient
+    {k : Type*} [Field k] (u : (PowerSeries k)ˣ) (n : ℕ)
+    (hu : u ∈ chapter10PowerSeriesUnitFiltration k (n + 1)) :
+    PowerSeries.constantCoeff (u : PowerSeries k) = 1 ∧
+      chapter10PowerSeriesLayerCoefficient u n =
+        PowerSeries.coeff (n + 1) (u : PowerSeries k) := by
+  sorry
 
 end
 
