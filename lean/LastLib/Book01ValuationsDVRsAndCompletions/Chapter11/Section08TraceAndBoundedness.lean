@@ -3,6 +3,7 @@ import Mathlib.LinearAlgebra.Charpoly.ToMatrix
 import Mathlib.RingTheory.DedekindDomain.Different
 import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
 import Mathlib.RingTheory.Localization.FractionRing
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section03IntegralElementsAreBounded
 
 universe u v
 
@@ -65,6 +66,28 @@ theorem chapter11_integral_trace_and_norm_stay_integral
   · refine ⟨Algebra.intNorm A B x, ?_⟩
     exact Algebra.algebraMap_intNorm (L := L) x
 
+/-! The same argument controls every characteristic coefficient, not only the
+trace and norm. -/
+theorem chapter11_integral_characteristic_data_stay_integral_without_finite_normalization
+    (A K L : Type*) [CommRing A] [IsDomain A]
+    [Field K] [Field L] [Algebra A K] [Algebra K L] [Algebra A L]
+    [IsScalarTower A K L] [IsFractionRing A K] [FiniteDimensional K L]
+    [IsIntegrallyClosed A] (x : L) (hx : IsIntegral A x) :
+    (∀ i, (LinearMap.charpoly (Algebra.lmul K L x)).coeff i ∈
+      Set.range (algebraMap A K)) ∧
+      Algebra.trace K L x ∈ Set.range (algebraMap A K) ∧
+      Algebra.norm K x ∈ Set.range (algebraMap A K) := by
+  let R : Subring K := (algebraMap A K).range
+  have hAtoR : ∀ z : K, IsIntegral A z → z ∈ R := by
+    intro z hz
+    exact IsIntegrallyClosed.algebraMap_eq_of_integral hz
+  have hdata :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_integral_element_characteristic_data
+      (K := K) (L := L) (A := A) R hx hAtoR
+  refine ⟨?_, hdata.2.1, hdata.2.2⟩
+  intro i
+  exact hdata.1 i
+
 /-! The boundedness statement used before finite normalization is known.  An
 integral element of a finite field extension has integral trace and norm, so
 an integrally closed base ring contains both values even when the full
@@ -76,7 +99,8 @@ theorem chapter11_integral_trace_and_norm_stay_integral_without_finite_normaliza
     [IsIntegrallyClosed A] (x : L) (hx : IsIntegral A x) :
     Algebra.trace K L x ∈ Set.range (algebraMap A K) ∧
       Algebra.norm K x ∈ Set.range (algebraMap A K) := by
-  sorry
+  exact (chapter11_integral_characteristic_data_stay_integral_without_finite_normalization
+    A K L x hx).2
 
 /-- The trace pairing on the field extension. -/
 def chapter11TracePairing (K L : Type*) [Field K] [Field L] [Algebra K L]

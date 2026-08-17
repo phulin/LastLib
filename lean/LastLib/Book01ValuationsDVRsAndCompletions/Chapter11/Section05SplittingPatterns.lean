@@ -130,7 +130,32 @@ theorem chapter11_equal_characteristic_power_cover_profile
     hparameter hirreducible hdegree vK vL hvK hvL hext ht hu
 
 /-- A constant residue-field extension has `e = 1` and residue degree equal to
-the field degree in the completed Laurent-series model. -/
+the field degree in the completed Laurent-series model.  No separability is
+needed for this numerical assertion. -/
+theorem chapter11_constant_residue_extension_numerical_profile
+    {k k' : Type*} [Field k] [Field k'] [Algebra k k']
+    [FiniteDimensional k k']
+    [Algebra (LaurentSeries k) (LaurentSeries k')]
+    [FiniteDimensional (LaurentSeries k) (LaurentSeries k')]
+    [IsScalarTower k (LaurentSeries k) (LaurentSeries k')]
+    (hparameter :
+      algebraMap (LaurentSeries k) (LaurentSeries k')
+          (((PowerSeries.X : PowerSeries k) : LaurentSeries k)) =
+        ((PowerSeries.X : PowerSeries k') : LaurentSeries k'))
+    (h : (Chapter10LaurentSeriesValuation k).IsEquiv
+      ((Chapter10LaurentSeriesValuation k').comap
+        (algebraMap (LaurentSeries k) (LaurentSeries k')))) :
+    ∃ d : Chapter10HeterogeneousExtensionData
+        (Chapter10LaurentSeriesValuation k)
+        (Chapter10LaurentSeriesValuation k') h,
+      ∃ p : Chapter10FiniteExtensionProfile,
+        Chapter10ProfileRealizedByData d p ∧
+          p.degree = Module.finrank k k' ∧ p.ramificationIndex = 1 ∧
+          p.residueDegree = Module.finrank k k' ∧ Chapter10Unramified p := by
+  exact chapter10_constant_field_extension_numerical_profile hparameter h
+
+/-- The separable refinement also identifies the branch as intrinsically
+unramified. -/
 theorem chapter11_constant_residue_extension_profile
     {k k' : Type*} [Field k] [Field k'] [Algebra k k']
     [FiniteDimensional k k']
