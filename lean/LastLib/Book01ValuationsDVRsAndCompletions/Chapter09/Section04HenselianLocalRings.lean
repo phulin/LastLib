@@ -4,6 +4,8 @@ import Mathlib.RingTheory.Algebraic.Defs
 import Mathlib.RingTheory.Valuation.ValuationRing
 import Mathlib.RingTheory.Valuation.ValuationSubring
 import Mathlib.RingTheory.Polynomial.Resultant.Basic
+import Mathlib.RingTheory.Polynomial.UniversalFactorizationRing
+import Mathlib.RingTheory.Unramified.LocalStructure
 import Mathlib.Topology.Algebra.WithZeroTopology
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.NormNum.Prime
@@ -428,13 +430,343 @@ theorem factorization_henselian_implies_mathlib_henselian
   (mathlib_henselian_iff_simple_residue_root_lifting (A := A)).mpr
     (simple_root_lifting_by_linear_factorization hfactor)
 
+private theorem henselian_standard_etale_lift
+    {A S : Type*} [CommRing A] [HenselianLocalRing A]
+    [CommRing S] [Algebra A S]
+    (P : StandardEtalePresentation A S)
+    (φ : S →ₐ[A] ResidueRing A) :
+    ∃! ψ : S →ₐ[A] A,
+      (Ideal.Quotient.mkₐ A (IsLocalRing.maximalIdeal A)).comp ψ = φ := by
+  classical
+  let ρ : A →ₐ[A] ResidueRing A :=
+    Ideal.Quotient.mkₐ A (IsLocalRing.maximalIdeal A)
+  let _ : Field (ResidueRing A) :=
+    Ideal.Quotient.field (IsLocalRing.maximalIdeal A)
+  have halg : (algebraMap A (ResidueRing A) : A →+* ResidueRing A) =
+      residueMap A := by
+    ext x
+    rfl
+  have hquot : residueMap A =
+      Ideal.Quotient.mk (IsLocalRing.maximalIdeal A) := by
+    rfl
+  let x₀ : ResidueRing A := φ P.x
+  have hP : P.P.HasMap x₀ := by
+    simpa [x₀] using P.hasMap.map φ
+  obtain ⟨a₀, ha₀⟩ := Ideal.Quotient.mk_surjective x₀
+  have hroot : P.P.f.eval a₀ ∈ IsLocalRing.maximalIdeal A := by
+    rw [← Ideal.Quotient.eq_zero_iff_mem]
+    change (Ideal.Quotient.mk (IsLocalRing.maximalIdeal A)) (P.P.f.eval a₀) = 0
+    have hroot' := hP.1
+    rw [← ha₀] at hroot'
+    rw [aeval_def, eval₂_eq_eval_map, halg, ← hquot,
+      Polynomial.eval_map_apply] at hroot'
+    rw [← hquot]
+    exact hroot'
+  have hunit : IsUnit (P.P.f.derivative.eval a₀) := by
+    apply (IsLocalRing.residue_ne_zero_iff_isUnit _).mp
+    change (Ideal.Quotient.mk (IsLocalRing.maximalIdeal A))
+        (P.P.f.derivative.eval a₀) ≠ 0
+    have hsimple' := (hP.isUnit_derivative_f).ne_zero
+    rw [← ha₀] at hsimple'
+    rw [aeval_def, eval₂_eq_eval_map, halg, ← hquot,
+      Polynomial.eval_map_apply] at hsimple'
+    rw [← hquot]
+    exact hsimple'
+  obtain ⟨a, ha, hres⟩ :=
+    HenselianLocalRing.is_henselian P.P.f P.P.monic_f a₀ hroot hunit
+  have hca : CongruentModIdeal (IsLocalRing.maximalIdeal A) a a₀ := hres
+  have hares : residueMap A a = x₀ := by
+    calc
+      residueMap A a = residueMap A a₀ := by
+        have hz := Ideal.Quotient.eq_zero_iff_mem.mpr hres
+        exact sub_eq_zero.mp (by simpa [residueMap] using hz)
+      _ = x₀ := ha₀
+  have hga : IsUnit (P.P.g.eval a) := by
+    apply (IsLocalRing.residue_ne_zero_iff_isUnit _).mp
+    change (Ideal.Quotient.mk (IsLocalRing.maximalIdeal A)) (P.P.g.eval a) ≠ 0
+    rw [← Polynomial.eval_map_apply, ← hquot, hares]
+    have hg' := hP.2.ne_zero
+    rw [aeval_def, eval₂_eq_eval_map, halg] at hg'
+    exact hg'
+  let ℓ : P.P.Ring →ₐ[A] A := P.P.lift a ⟨by simpa using ha, by simpa using hga⟩
+  let ψ : S →ₐ[A] A := ℓ.comp P.equivRing.toAlgHom
+  have hψ : ρ.comp ψ = φ := by
+    apply P.hom_ext
+    calc
+      (ρ.comp ψ) P.x = ρ (ℓ (P.equivRing P.x)) := rfl
+      _ = ρ (ℓ P.X) := by rw [P.equivRing_x]
+      _ = ρ a := by
+        rw [show ℓ P.X = a by
+          change P.P.lift a _ P.P.X = a
+          exact P.P.lift_X a _]
+      _ = x₀ := hares
+      _ = φ P.x := rfl
+  refine ⟨ψ, ?_, ?_⟩
+  · simpa [ρ] using hψ
+  · intro ψ' hψ'
+    apply P.hom_ext
+    let a' : A := ψ' P.x
+    have hP' : P.P.HasMap a' := by
+      have hP' := P.P.hasMap_X.map (ψ'.comp P.equivRing.symm.toAlgHom)
+      simpa [a', P.equivRing_symm_X] using hP'
+    have hca' : CongruentModIdeal (IsLocalRing.maximalIdeal A) a' a₀ := by
+      unfold CongruentModIdeal
+      rw [← Ideal.Quotient.eq_zero_iff_mem]
+      change (Ideal.Quotient.mk (IsLocalRing.maximalIdeal A)) (a' - a₀) = 0
+      have hres' : (Ideal.Quotient.mk (IsLocalRing.maximalIdeal A)) a' = x₀ := by
+        have h := congrArg (fun F : S →ₐ[A] ResidueRing A => F P.x) hψ'
+        simpa [a', x₀, ρ] using h
+      rw [map_sub, hres', ha₀]
+      simp
+    have hunit_a : IsUnit (P.P.f.derivative.eval a) :=
+      derivative_unit_on_residue_class P.P.f hca hunit
+    have habmem : a - a' ∈ IsLocalRing.maximalIdeal A := by
+      unfold CongruentModIdeal at hca hca'
+      have h := (IsLocalRing.maximalIdeal A).sub_mem hca hca'
+      simpa [sub_eq_add_neg, add_assoc] using h
+    have habunit : ¬ IsUnit (a - a') := by
+      intro hab
+      exact (notMem_maximalIdeal.mpr hab) habmem
+    have haa' := IsLocalRing.eq_of_eval_eq_zero_of_not_isUnit_sub
+      (f := P.P.f) (a := a) (b := a') (by simpa using ha) (by simpa using hP'.1)
+      habunit hunit_a
+    calc
+      ψ' P.x = a' := rfl
+      _ = a := haa'.symm
+      _ = ℓ P.X := by
+        change a = P.P.lift a _ P.P.X
+        exact (P.P.lift_X a _).symm
+      _ = ℓ (P.equivRing P.x) := by rw [P.equivRing_x]
+      _ = ψ P.x := rfl
+
+private theorem henselian_etale_lift
+    {A S : Type*} [CommRing A] [HenselianLocalRing A]
+    [CommRing S] [Algebra A S] [Algebra.Etale A S]
+    (φ : S →ₐ[A] ResidueRing A) :
+    ∃! ψ : S →ₐ[A] A,
+      (Ideal.Quotient.mkₐ A (IsLocalRing.maximalIdeal A)).comp ψ = φ := by
+  classical
+  let ρ : A →ₐ[A] ResidueRing A :=
+    Ideal.Quotient.mkₐ A (IsLocalRing.maximalIdeal A)
+  let _ : Field (ResidueRing A) :=
+    Ideal.Quotient.field (IsLocalRing.maximalIdeal A)
+  let Q : Ideal S := RingHom.ker φ.toRingHom
+  let _ : Q.IsPrime := RingHom.ker_isPrime φ.toRingHom
+  let _ : Algebra.FormallyEtale A (Localization.AtPrime Q) := inferInstance
+  obtain ⟨s, hsQ, hs⟩ :=
+    Algebra.IsEtaleAt.exists_isStandardEtale (R := A) Q
+  let T := Localization.Away s
+  let _ : Algebra.IsStandardEtale A T := hs
+  have hsφ : IsUnit (φ s) := by
+    apply (isUnit_iff_ne_zero).mpr
+    intro hsφ0
+    apply hsQ
+    change φ s = 0
+    exact hsφ0
+  let φT : T →ₐ[A] ResidueRing A :=
+    IsLocalization.Away.liftAlgHom s (f := φ) hsφ
+  let P : StandardEtalePresentation A T :=
+    Algebra.IsStandardEtale.nonempty_standardEtalePresentation.some
+  obtain ⟨ψT, hψT, hψTuniq⟩ :=
+    henselian_standard_etale_lift P φT
+  let ι : S →ₐ[A] T := IsScalarTower.toAlgHom A S T
+  let ψ : S →ₐ[A] A := ψT.comp ι
+  have hψ : ρ.comp ψ = φ := by
+    ext x
+    change ρ (ψT (ι x)) = φ x
+    have h := congrArg (fun F : T →ₐ[A] ResidueRing A =>
+      F (algebraMap S T x)) hψT
+    calc
+      ρ (ψT (ι x)) = φT (algebraMap S T x) := by simpa [ρ, ι] using h
+      _ = φ x := by simp [φT]
+  refine ⟨ψ, ?_, ?_⟩
+  · simpa [ρ] using hψ
+  · intro ψ' hψ'
+    have hsψ' : IsUnit (ψ' s) := by
+      apply (IsLocalRing.residue_ne_zero_iff_isUnit _).mp
+      change residueMap A (ψ' s) ≠ 0
+      intro hzero
+      have hφs0 : φ s = 0 := by
+        calc
+          φ s = (Ideal.Quotient.mk (IsLocalRing.maximalIdeal A)) (ψ' s) := by
+            have h := congrArg (fun F : S →ₐ[A] ResidueRing A => F s) hψ'
+            exact h.symm
+          _ = 0 := by simpa [residueMap] using hzero
+      exact hsφ.ne_zero hφs0
+    let ψ'T : T →ₐ[A] A := IsLocalization.Away.liftAlgHom s (f := ψ') hsψ'
+    have hψ'T : ρ.comp ψ'T = φT := by
+      apply IsLocalization.algHom_ext (.powers s)
+      ext x
+      have h := congrArg (fun F : S →ₐ[A] ResidueRing A => F x) hψ'
+      calc
+        ρ (ψ'T (algebraMap S T x)) =
+            (Ideal.Quotient.mk (IsLocalRing.maximalIdeal A)) (ψ' x) := by
+          simp [ψ'T, ρ]
+        _ = φ x := h
+        _ = φT (algebraMap S T x) := by simp [φT]
+    have hT : ψ'T = ψT := hψTuniq ψ'T (by simpa [ρ] using hψ'T)
+    have hS := congrArg (fun F : T →ₐ[A] A => F.comp ι) hT
+    have hrestrict : ψ'T.comp ι = ψ' := by
+      ext x
+      simp [ψ'T, ι]
+    calc
+      ψ' = ψ'T.comp ι := hrestrict.symm
+      _ = ψT.comp ι := hS
+      _ = ψ := rfl
+
 /-- Mathlib's simple-root henselianity implies the coprime factorization
 lifting property used by this chapter. -/
 theorem mathlib_henselian_implies_factorization
     {A : Type*} [CommRing A]
     [HenselianLocalRing A] :
     HenselianFactorizationProperty A := by
-  sorry
+  classical
+  let _ : Field (ResidueRing A) :=
+    Ideal.Quotient.field (IsLocalRing.maximalIdeal A)
+  let ρ : A →ₐ[A] ResidueRing A :=
+    Ideal.Quotient.mkₐ A (IsLocalRing.maximalIdeal A)
+  intro f g₀ h₀ hf hg₀ hh₀ hcop hred
+  have hdeg : f.natDegree = g₀.natDegree + h₀.natDegree := by
+    calc
+      f.natDegree = (residuePolynomial f).natDegree :=
+        (hf.natDegree_map (residueMap A)).symm
+      _ = (g₀ * h₀).natDegree := congrArg Polynomial.natDegree hred
+      _ = g₀.natDegree + h₀.natDegree := by
+        rw [hg₀.natDegree_mul hh₀]
+  let m : ℕ := g₀.natDegree
+  let k : ℕ := h₀.natDegree
+  have hn : f.natDegree = m + k := by simpa [m, k] using hdeg
+  let p : MonicDegreeEq A f.natDegree := MonicDegreeEq.mk f hf rfl
+  let gbar : MonicDegreeEq (ResidueRing A) m := MonicDegreeEq.mk g₀ hg₀ (by rfl)
+  let hbar : MonicDegreeEq (ResidueRing A) k := MonicDegreeEq.mk h₀ hh₀ (by rfl)
+  have hbarprod : gbar.1 * hbar.1 = p.1.map (residueMap A) := by
+    change g₀ * h₀ = residuePolynomial f
+    exact hred.symm
+  let U := Polynomial.UniversalCoprimeFactorizationRing m k hn p
+  let φ : U →ₐ[A] ResidueRing A :=
+    (Polynomial.UniversalCoprimeFactorizationRing.homEquiv
+      (R := A) (S := ResidueRing A) m k hn p).symm
+      ⟨(gbar, hbar), hbarprod, hcop⟩
+  let _ : Algebra.Etale A U := inferInstance
+  obtain ⟨ψ, hψ, hψuniq⟩ := henselian_etale_lift (A := A) φ
+  let q := Polynomial.UniversalCoprimeFactorizationRing.homEquiv
+    (R := A) (S := A) m k hn p ψ
+  have hqg : q.1.1.1.Monic := (MonicDegreeEq.monic q.1.1)
+  have hqh : q.1.2.1.Monic := (MonicDegreeEq.monic q.1.2)
+  have hqgdeg : q.1.1.1.natDegree = g₀.natDegree := by
+    change q.1.1.1.natDegree = m
+    exact MonicDegreeEq.natDegree q.1.1
+  have hqhdeg : q.1.2.1.natDegree = h₀.natDegree := by
+    change q.1.2.1.natDegree = k
+    exact MonicDegreeEq.natDegree q.1.2
+  have hρ : ρ.toRingHom = residueMap A := by
+    rfl
+  have hφ' :
+      (Polynomial.UniversalCoprimeFactorizationRing.homEquiv
+        (R := A) (S := ResidueRing A) m k hn p) φ =
+        ⟨(gbar, hbar), hbarprod, hcop⟩ := by
+    dsimp [φ]
+    exact Equiv.apply_symm_apply _ _
+  have hqredg : residuePolynomial q.1.1.1 = g₀ := by
+    have hc := Polynomial.UniversalCoprimeFactorizationRing.homEquiv_comp_fst
+      (R := A) (S := A) (T := ResidueRing A) m k hn p ψ ρ
+    rw [hψ] at hc
+    have hc' := congrArg
+      (fun z : MonicDegreeEq (ResidueRing A) m => z.1) hc.symm
+    change Polynomial.map ρ.toRingHom _ = _ at hc'
+    rw [hρ, hφ'] at hc'
+    change Polynomial.map (residueMap A) q.1.1.1 = g₀
+    simpa [q, gbar] using hc'
+  have hqredh : residuePolynomial q.1.2.1 = h₀ := by
+    have hc := Polynomial.UniversalCoprimeFactorizationRing.homEquiv_comp_snd
+      (R := A) (S := A) (T := ResidueRing A) m k hn p ψ ρ
+    rw [hψ] at hc
+    have hc' := congrArg
+      (fun z : MonicDegreeEq (ResidueRing A) k => z.1) hc.symm
+    change Polynomial.map ρ.toRingHom _ = _ at hc'
+    rw [hρ, hφ'] at hc'
+    change Polynomial.map (residueMap A) q.1.2.1 = h₀
+    simpa [q, hbar] using hc'
+  refine ⟨(q.1.1.1, q.1.2.1), ?_, ?_⟩
+  · exact ⟨hqg, hqh, hqgdeg, hqhdeg, hqredg, hqredh, by
+      simpa [p] using q.2.1.symm⟩
+  · intro gh hgh
+    rcases hgh with ⟨hg, hh, hgd, hhd, hrg, hrh, hfac⟩
+    let gm : MonicDegreeEq A m :=
+      MonicDegreeEq.mk gh.1 hg (by simpa [m] using hgd)
+    let hm : MonicDegreeEq A k :=
+      MonicDegreeEq.mk gh.2 hh (by simpa [k] using hhd)
+    have hcopgh : IsCoprime gh.1 gh.2 :=
+      coprime_lifts_are_coprime hg hh hrg hrh hcop
+    have hcopgm : IsCoprime gm.1 hm.1 := by
+      simpa [gm, hm] using hcopgh
+    have hprodgh : gm.1 * hm.1 = p.1.map (algebraMap A A) := by
+      calc
+        gm.1 * hm.1 = gh.1 * gh.2 := by rfl
+        _ = f := hfac.symm
+        _ = p.1.map (algebraMap A A) := by simp [p]
+    let ψgh : U →ₐ[A] A :=
+      (Polynomial.UniversalCoprimeFactorizationRing.homEquiv
+        (R := A) (S := A) m k hn p).symm
+        ⟨(gm, hm), hprodgh, hcopgm⟩
+    have hψgh : ρ.comp ψgh = φ := by
+      apply (Polynomial.UniversalCoprimeFactorizationRing.homEquiv
+        (R := A) (S := ResidueRing A) m k hn p).injective
+      apply Subtype.ext
+      apply Prod.ext
+      · apply Subtype.ext
+        have hc :=
+          Polynomial.UniversalCoprimeFactorizationRing.homEquiv_comp_fst
+            (R := A) (S := A) (T := ResidueRing A) m k hn p ψgh ρ
+        have hE :
+            (Polynomial.UniversalCoprimeFactorizationRing.homEquiv
+              (R := A) (S := A) m k hn p) ψgh =
+              ⟨(gm, hm), hprodgh, hcopgm⟩ := by
+          dsimp [ψgh]
+          exact Equiv.apply_symm_apply _ _
+        rw [hE] at hc
+        have hc' := congrArg
+          (fun z : MonicDegreeEq (ResidueRing A) m => z.1) hc
+        change _ = Polynomial.map ρ.toRingHom gm.1 at hc'
+        rw [hρ] at hc'
+        have hgmred : Polynomial.map (residueMap A) gm.1 = g₀ := by
+          simpa [gm, MonicDegreeEq.mk, residuePolynomial] using hrg
+        rw [hgmred] at hc'
+        simpa [hφ', hρ, gm, gbar] using hc'
+      · apply Subtype.ext
+        have hc :=
+          Polynomial.UniversalCoprimeFactorizationRing.homEquiv_comp_snd
+            (R := A) (S := A) (T := ResidueRing A) m k hn p ψgh ρ
+        have hE :
+            (Polynomial.UniversalCoprimeFactorizationRing.homEquiv
+              (R := A) (S := A) m k hn p) ψgh =
+              ⟨(gm, hm), hprodgh, hcopgm⟩ := by
+          dsimp [ψgh]
+          exact Equiv.apply_symm_apply _ _
+        rw [hE] at hc
+        have hc' := congrArg
+          (fun z : MonicDegreeEq (ResidueRing A) k => z.1) hc
+        change _ = Polynomial.map ρ.toRingHom hm.1 at hc'
+        rw [hρ] at hc'
+        have hhmred : Polynomial.map (residueMap A) hm.1 = h₀ := by
+          simpa [hm, MonicDegreeEq.mk, residuePolynomial] using hrh
+        rw [hhmred] at hc'
+        simpa [hφ', hρ, hm, hbar] using hc'
+    have hmap : ψgh = ψ := hψuniq ψgh (by simpa [ρ] using hψgh)
+    have hpair : (gm, hm) = q.1 := by
+      have hpair' := congrArg
+        (fun F : U →ₐ[A] A =>
+          (Polynomial.UniversalCoprimeFactorizationRing.homEquiv
+            (R := A) (S := A) m k hn p) F) hmap
+      have hpair'' := congrArg Subtype.val hpair'
+      simpa [ψgh, q] using hpair''
+    apply Prod.ext
+    · have hfirst := congrArg
+        (fun z : MonicDegreeEq A m => z.1) (congrArg Prod.fst hpair)
+      simpa [gm, MonicDegreeEq.mk] using hfirst
+    · have hsecond := congrArg
+        (fun z : MonicDegreeEq A k => z.1) (congrArg Prod.snd hpair)
+      simpa [hm, MonicDegreeEq.mk] using hsecond
 
 /-- The Mathlib-to-Chapter-9 bridge for the valuation subring attached to a
 valuation ring and its fraction field. -/
