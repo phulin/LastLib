@@ -709,7 +709,122 @@ theorem henselian_local_ring_integral_closure_is_local
     [IsScalarTower A K L] [HenselianLocalRing A]
     (hfinite : Module.Finite A (integralClosure A L)) :
     IsLocalRing (integralClosure A L) := by
-  sorry
+  let vA := ValuationRing.valuation A K
+  let hA : vA.Integers A :=
+    { hom_inj := IsFractionRing.injective A K
+      map_le_one := by
+        intro a
+        rw [← Valuation.mem_integer_iff, ValuationRing.range_algebraMap_eq]
+        exact ⟨a, rfl⟩
+      exists_of_le_one := by
+        intro x hx
+        rw [← Valuation.mem_integer_iff, ValuationRing.range_algebraMap_eq] at hx
+        rcases hx with ⟨a, ha⟩
+        exact ⟨a, ha⟩ }
+  letI : IsIntegrallyClosed A := hA.isIntegrallyClosed
+  let alg : A →+* vA.valuationSubring :=
+    (algebraMap A K).codRestrict vA.valuationSubring
+      (fun a => hA.map_le_one a)
+  have halg_bij : Function.Bijective alg := by
+    constructor
+    · intro a b hab
+      apply hA.hom_inj
+      exact congrArg Subtype.val hab
+    · intro x
+      obtain ⟨a, ha⟩ := hA.exists_of_le_one x.property
+      refine ⟨a, Subtype.ext ?_⟩
+      exact ha
+  let e : A ≃+* vA.valuationSubring := RingEquiv.ofBijective alg halg_bij
+  letI : IsLocalRing vA.valuationSubring := e.isLocalRing
+  have hmaxmap :
+      (IsLocalRing.maximalIdeal A).map e.toRingHom =
+        IsLocalRing.maximalIdeal vA.valuationSubring :=
+    IsLocalRing.map_ringEquiv_maximalIdeal e
+  have hmaxmap_symm :
+      (IsLocalRing.maximalIdeal vA.valuationSubring).map e.symm.toRingHom =
+        IsLocalRing.maximalIdeal A :=
+    IsLocalRing.map_ringEquiv_maximalIdeal e.symm
+  letI : HenselianLocalRing vA.valuationSubring := by
+    refine { toIsLocalRing := inferInstance, is_henselian := ?_ }
+    intro f hf a₀ hfa hunit
+    let fA := f.map e.symm.toRingHom
+    have hfA : fA.Monic := hf.map e.symm.toRingHom
+    have hmap_eval' :
+        fA.eval (e.symm a₀) = e.symm (f.eval a₀) := by
+      simpa [fA] using
+        (Polynomial.eval_map_apply (p := f) e.symm.toRingHom a₀)
+    have hmap_eval : e (fA.eval (e.symm a₀)) = f.eval a₀ := by
+      rw [hmap_eval']
+      simp
+    have hfaA : fA.eval (e.symm a₀) ∈ IsLocalRing.maximalIdeal A := by
+      have hfa' := Ideal.mem_map_of_mem e.symm.toRingHom hfa
+      rw [hmaxmap_symm] at hfa'
+      have hfa'' : e.symm (f.eval a₀) ∈ IsLocalRing.maximalIdeal A := by
+        simpa using hfa'
+      rw [← hmap_eval] at hfa''
+      simpa using hfa''
+    have hunitA : IsUnit (fA.derivative.eval (e.symm a₀)) := by
+      have hder' :
+          fA.derivative.eval (e.symm a₀) =
+            e.symm (f.derivative.eval a₀) := by
+        dsimp [fA]
+        rw [Polynomial.derivative_map]
+        exact Polynomial.eval_map_apply (p := f.derivative) e.symm.toRingHom a₀
+      have hunit' := hunit.map e.symm.toRingHom
+      change IsUnit (e.symm (f.derivative.eval a₀)) at hunit'
+      rw [← hder'] at hunit'
+      exact hunit'
+    obtain ⟨aA, haA, hdiffA⟩ :=
+      HenselianLocalRing.is_henselian fA hfA (e.symm a₀) hfaA hunitA
+    refine ⟨e aA, ?_, ?_⟩
+    · have hrootmap : e (fA.eval aA) = f.eval (e aA) := by
+        have hroot' :
+            fA.eval aA = e.symm (f.eval (e aA)) := by
+          simpa [fA] using
+            (Polynomial.eval_map_apply (p := f) e.symm.toRingHom (e aA))
+        rw [hroot']
+        simp
+      change f.eval (e aA) = 0
+      rw [← hrootmap, haA]
+      simp
+    · have hdiff' := Ideal.mem_map_of_mem e.toRingHom hdiffA
+      rw [hmaxmap] at hdiff'
+      simpa [map_sub] using hdiff'
+  have hH : Chapter10.Chapter10IsHenselianValuedField vA := by
+    exact Chapter09.mathlib_henselian_valuation_ring_implies_factorization
+      (A := A) (K := K)
+  let C := integralClosure A L
+  have hunique : Chapter10.Chapter10HasUniquePrimeAbove (A := A) (B := C) := by
+    exact Chapter10.chapter10_henselian_valuation_ring_has_unique_prime_above
+      (A := A) (B := C) (K := K) (L := L) vA hA hH
+  have hmap_inj : Function.Injective (algebraMap A C) := by
+    intro a b hab
+    apply hA.hom_inj
+    apply FaithfulSMul.algebraMap_injective K L
+    rw [← IsScalarTower.algebraMap_apply A K L,
+      ← IsScalarTower.algebraMap_apply A K L]
+    have habL := congrArg (fun x : C => (x : L)) hab
+    change algebraMap C L (algebraMap A C a) =
+        algebraMap C L (algebraMap A C b) at habL
+    rw [← IsScalarTower.algebraMap_apply A C L,
+      ← IsScalarTower.algebraMap_apply A C L] at habL
+    exact habL
+  letI : FaithfulSMul A C :=
+    (faithfulSMul_iff_algebraMap_injective A C).mpr hmap_inj
+  obtain ⟨P, hPmax, hPover⟩ :=
+    Ideal.exists_maximal_ideal_liesOver_of_isIntegral
+      (R := A) (S := C) (IsLocalRing.maximalIdeal A)
+  have hPabove : Chapter10.Chapter10PrimeAboveMaximal (A := A) (B := C) P :=
+    ⟨hPmax.isPrime, hPover.over.symm⟩
+  refine IsLocalRing.of_unique_max_ideal ⟨P, hPmax, ?_⟩
+  intro Q hQmax
+  have hQcomapmax :=
+    Ideal.isMaximal_comap_of_isIntegral_of_isMaximal
+      (R := A) (S := C) Q
+  have hQabove : Chapter10.Chapter10PrimeAboveMaximal (A := A) (B := C) Q :=
+    ⟨hQmax.isPrime, IsLocalRing.eq_maximalIdeal hQcomapmax⟩
+  obtain ⟨P₀, hP₀, hPuniq⟩ := hunique
+  exact (hPuniq Q hQabove).trans (hPuniq P hPabove).symm
 
 /-- Completeness supplies the henselian property for a complete valued field. -/
 theorem complete_nonarchimedean_field_is_henselian
