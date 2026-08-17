@@ -155,7 +155,6 @@ theorem extension_precision_cardinality_exponent
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
     [Valuation.IsRankOneDiscrete vL] [FiniteDimensional K L]
     [Module.Finite vK.valuationSubring vL.valuationSubring]
-    [Module.Free vK.valuationSubring vL.valuationSubring]
     [Fintype (IsLocalRing.ResidueField vK.valuationSubring)]
     [Fintype (IsLocalRing.ResidueField vL.valuationSubring)]
     (q f n : ℕ)
@@ -212,13 +211,12 @@ theorem base_precision_cardinality_formula
     [Fintype (IsLocalRing.ResidueField vL.valuationSubring)]
     (q e f r : ℕ)
     (hq : Fintype.card (IsLocalRing.ResidueField vK.valuationSubring) = q)
-    (_he : chapterRamificationIndex vK.valuationSubring vL.valuationSubring
+    (he : chapterRamificationIndex vK.valuationSubring vL.valuationSubring
       (IsLocalRing.maximalIdeal vL.valuationSubring) = e)
-    (_hf : chapterResidueDegree vK.valuationSubring vL.valuationSubring
+    (hf : chapterResidueDegree vK.valuationSubring vL.valuationSubring
       (IsLocalRing.maximalIdeal vL.valuationSubring) = f)
     (hrank : Cardinal.toNat
       (Module.rank vK.valuationSubring vL.valuationSubring) = Module.finrank K L)
-    (hdegree : Module.finrank K L = e * f)
     [Fintype (vL.valuationSubring ⧸
       ((IsLocalRing.maximalIdeal vK.valuationSubring).map
         (algebraMap vK.valuationSubring vL.valuationSubring)) ^ r)] :
@@ -235,6 +233,8 @@ theorem base_precision_cardinality_formula
       (complete_extension_unit_ball_is_torsion_free vK vL)
   let : IsPrincipalIdealRing vK.valuationSubring := inferInstance
   let : IsDedekindDomain vK.valuationSubring := inferInstance
+  let : IsPrincipalIdealRing vL.valuationSubring := inferInstance
+  let : IsDedekindDomain vL.valuationSubring := inferInstance
   let : Finite (vK.valuationSubring ⧸
       IsLocalRing.maximalIdeal vK.valuationSubring) := by
     change Finite (IsLocalRing.ResidueField vK.valuationSubring)
@@ -250,6 +250,9 @@ theorem base_precision_cardinality_formula
   let : Fintype (vK.valuationSubring ⧸
       IsLocalRing.maximalIdeal vK.valuationSubring ^ r) :=
     Fintype.ofFinite _
+  have hdegree : Module.finrank K L = e * f := by
+    exact (first_precision_length_is_field_degree vK vL hrank).symm.trans
+      (first_precision_length_is_ramification_times_residue vK vL e f hrank he hf)
   have hbase : Fintype.card (vK.valuationSubring ⧸
       IsLocalRing.maximalIdeal vK.valuationSubring ^ r) = q ^ r := by
     have hP0 : IsLocalRing.maximalIdeal vK.valuationSubring ≠ ⊥ :=

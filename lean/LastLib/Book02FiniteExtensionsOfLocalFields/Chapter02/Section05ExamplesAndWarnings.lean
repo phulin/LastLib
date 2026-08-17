@@ -37,7 +37,8 @@ def chapter2HasSeveralValuationExtensions
     (vK : Valuation K ℤᵐ⁰) : Prop :=
   ∃ W₁ W₂ : ValuationSubring L,
     chapter2ValuationSubringExtends vK W₁ ∧
-      chapter2ValuationSubringExtends vK W₂ ∧ W₁ ≠ W₂
+      chapter2ValuationSubringExtends vK W₂ ∧
+        (W₁ : Set L) ≠ (W₂ : Set L)
 
 /-- In an unramified extension the whole degree is residue degree. -/
 theorem unramified_extension_degree_is_residue_degree
