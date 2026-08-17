@@ -29,7 +29,7 @@ usable independently of the other generated chapters.
 /-! # Book 1, Chapter 10, Section 10.5: Several Extensions and the Fundamental Equality
 -/
 
-/-! ## 10.5. Several extensions and the fundamental inequality -/
+/-! ## 10.5. Several extensions and the fundamental equality -/
 
 /-- The numerical data attached to one branch.  `degree` is the local `e f`
 contribution, not the degree of the whole extension. -/
@@ -544,8 +544,7 @@ theorem chapter10_finite_dvr_normalization_fundamental_equality
     (v : Valuation K ΓK) (hA : v.Integers A)
     (hfinite : Module.Finite A (integralClosure A L))
     (S : Finset (Chapter10ValuationBranch (K := K) (L := L) v))
-    (hcomplete : Chapter10CompleteBranchFamily v S)
-    (hprofile : ∀ b ∈ S, Chapter10BranchProfileCorrect v b) :
+    (hcomplete : Chapter10CompleteBranchFamily v S) :
     Finset.sum S (fun b => Chapter10BranchContribution b.profile) = Module.finrank K L := by
   sorry
 
@@ -575,14 +574,13 @@ theorem chapter10_finite_normalization_defectless
     (hfinite : Module.Finite v.valuationSubring
       (integralClosure v.valuationSubring L))
     (S : Finset (Chapter10ValuationBranch (K := K) (L := L) v))
-    (hcomplete : Chapter10CompleteBranchFamily v S)
-    (hprofile : ∀ b ∈ S, Chapter10BranchProfileCorrect v b) :
+    (hcomplete : Chapter10CompleteBranchFamily v S) :
     Finset.sum S (fun b => Chapter10BranchContribution b.profile) = Module.finrank K L := by
   let : IsFractionRing v.valuationSubring K :=
     (Valuation.valuationSubring.integers v).isFractionRing
   exact chapter10_finite_dvr_normalization_fundamental_equality
     (A := v.valuationSubring) (K := K) (L := L) v
-    (Valuation.valuationSubring.integers v) hfinite S hcomplete hprofile
+    (Valuation.valuationSubring.integers v) hfinite S hcomplete
 
 end
 
