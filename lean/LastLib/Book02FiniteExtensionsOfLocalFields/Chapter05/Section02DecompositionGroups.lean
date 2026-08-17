@@ -150,14 +150,11 @@ theorem branch_count_eq_decomposition_index
     [LinearOrderedCommGroupWithZero Γ] [FiniteDimensional F E] [IsGalois F E]
     (v : Valuation F Γ) (A : ValuationSubring E)
     (hA : A ∈ chapter05ValuationsAbove v)
-    (hbranches : (chapter05ValuationsAbove (E := E) v).Finite)
-    (htrans :
-      ∀ ⦃A₁ A₂ : ValuationSubring E⦄,
-        A₁ ∈ chapter05ValuationsAbove v → A₂ ∈ chapter05ValuationsAbove v →
-          ∃ σ : Gal(E / F), σ • A₁ = A₂) :
+    (hbranches : (chapter05ValuationsAbove (E := E) v).Finite) :
     chapter05BranchCount (E := E) v =
       (chapter05DecompositionGroup F A).index := by
   have _hbranches := hbranches
+  have htrans := galois_group_transitive_on_valuations_above (E := E) v
   have hA' : A.comap (algebraMap F E) = v.valuationSubring := hA
   have hsmul : ∀ σ : Gal(E / F),
       σ • A ∈ chapter05ValuationsAbove v := by

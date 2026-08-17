@@ -163,8 +163,6 @@ theorem fixed_field_inertia_has_unramified_and_totally_ramified_layers
     [IsInertiaField K L P E]
     (hp : p ≠ ⊥)
     (hbranches : (p.primesOver B).ncard = 1)
-    (hinertia :
-      Ideal.inertia (Ideal.inertia (Gal(L / K)) P) P = ⊤)
     (e f : ℕ)
     (he : p.ramificationIdxIn B = e)
     (hf : p.inertiaDegIn B = f)
@@ -189,6 +187,12 @@ theorem fixed_field_inertia_has_unramified_and_totally_ramified_layers
       Module.finrank E L = p.ramificationIdxIn B :=
         IsInertiaField.rank_left A K L P E hp
       _ = e := he
+  have hinertia :
+      Ideal.inertia (Ideal.inertia (Gal(L / K)) P) P = ⊤ := by
+    apply le_antisymm le_top
+    intro σ _
+    change ∀ x : B, (σ : Gal(L / K)) • x - x ∈ P
+    exact σ.property
   have hunder : pE.under A = p := (pE.over_def p).symm
   let _ : Algebra.IsSeparable (pE.under A).ResidueField pE.ResidueField :=
     hresidueSeparable

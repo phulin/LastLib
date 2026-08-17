@@ -20,11 +20,7 @@ theorem galois_group_order_eq_branch_count_mul_decomposition_order
     [LinearOrderedCommGroupWithZero Γ] [FiniteDimensional F E] [IsGalois F E]
     (v : Valuation F Γ) (A : ValuationSubring E)
     (hA : A ∈ chapter05ValuationsAbove v)
-    (hbranches : (chapter05ValuationsAbove (E := E) v).Finite)
-    (htrans :
-      ∀ ⦃A₁ A₂ : ValuationSubring E⦄,
-        A₁ ∈ chapter05ValuationsAbove v → A₂ ∈ chapter05ValuationsAbove v →
-          ∃ σ : Gal(E / F), σ • A₁ = A₂) :
+    (hbranches : (chapter05ValuationsAbove (E := E) v).Finite) :
     Nat.card (Gal(E / F)) =
       chapter05BranchCount (E := E) v *
         Nat.card (chapter05DecompositionGroup F A) := by
@@ -35,7 +31,7 @@ theorem galois_group_order_eq_branch_count_mul_decomposition_order
       (Subgroup.index_mul_card (chapter05DecompositionGroup F A)).symm
     _ = chapter05BranchCount (E := E) v *
           Nat.card (chapter05DecompositionGroup F A) := by
-      rw [branch_count_eq_decomposition_index v A hA hbranches htrans]
+      rw [branch_count_eq_decomposition_index v A hA hbranches]
 
 /-- The selected completed branch has the order of its decomposition group as degree. -/
 theorem selected_completion_galois_order_eq_degree
@@ -63,10 +59,6 @@ theorem finite_galois_degree_eq_branch_count_mul_selected_completion_degree
     (v : Valuation F Γ) (w : Valuation E Γ)
     (hw : w.valuationSubring ∈ chapter05ValuationsAbove v)
     (hbranches : (chapter05ValuationsAbove (E := E) v).Finite)
-    (htrans :
-      ∀ ⦃A₁ A₂ : ValuationSubring E⦄,
-        A₁ ∈ chapter05ValuationsAbove v → A₂ ∈ chapter05ValuationsAbove v →
-          ∃ σ : Gal(E / F), σ • A₁ = A₂)
     [Algebra (v.Completion) (w.Completion)]
     [FiniteDimensional (v.Completion) (w.Completion)]
     [MulSemiringAction (chapter05DecompositionGroup F w.valuationSubring)
@@ -82,7 +74,7 @@ theorem finite_galois_degree_eq_branch_count_mul_selected_completion_degree
     _ = chapter05BranchCount (E := E) v *
           Nat.card (chapter05DecompositionGroup F w.valuationSubring) :=
       galois_group_order_eq_branch_count_mul_decomposition_order v
-        w.valuationSubring hw hbranches htrans
+        w.valuationSubring hw hbranches
     _ = chapter05BranchCount (E := E) v *
           Module.finrank (v.Completion) (w.Completion) := by
       rw [selected_completion_galois_order_eq_degree v w hw hD]
@@ -129,10 +121,6 @@ theorem finite_galois_degree_eq_branch_count_mul_ef
     (v : Valuation F Γ) (w : Valuation E Γ)
     (hw : w.valuationSubring ∈ chapter05ValuationsAbove v)
     (hbranches : (chapter05ValuationsAbove (E := E) v).Finite)
-    (htrans :
-      ∀ ⦃A₁ A₂ : ValuationSubring E⦄,
-        A₁ ∈ chapter05ValuationsAbove v → A₂ ∈ chapter05ValuationsAbove v →
-          ∃ σ : Gal(E / F), σ • A₁ = A₂)
     {Q : Type*} [Group Q] [Finite Q]
     (ρ : chapter05DecompositionGroup F w.valuationSubring →* Q)
     (hρ : Function.Surjective ρ)
@@ -148,7 +136,7 @@ theorem finite_galois_degree_eq_branch_count_mul_ef
     _ = chapter05BranchCount (E := E) v *
           Nat.card (chapter05DecompositionGroup F w.valuationSubring) :=
       galois_group_order_eq_branch_count_mul_decomposition_order v
-        w.valuationSubring hw hbranches htrans
+        w.valuationSubring hw hbranches
     _ = chapter05BranchCount (E := E) v * (e * f) := by rw [hD]
     _ = chapter05BranchCount (E := E) v * e * f := by rw [Nat.mul_assoc]
 
