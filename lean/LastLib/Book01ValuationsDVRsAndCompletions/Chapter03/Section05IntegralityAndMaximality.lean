@@ -73,11 +73,15 @@ theorem monic_relation_divide_by_top_power
 
 theorem monic_relation_divided_tail_is_infinitesimal
     (v : Valuation K Γ) (p : Polynomial (valuationRingOf v)) {x : K}
-    (hx : x ≠ 0) (hxV : x ∉ valuationRingOf v) :
+    (hxV : x ∉ valuationRingOf v) :
     ∀ i ∈ Finset.range p.natDegree,
       (algebraMap (valuationRingOf v) K (p.coeff i) * x ^ i) / x ^ p.natDegree ∈
         maximalIdealImageOf v := by
   intro i hi
+  have hx0 : x ≠ 0 := by
+    intro hx
+    apply hxV
+    simp [hx]
   let z : K :=
     (algebraMap (valuationRingOf v) K (p.coeff i) * x ^ i) / x ^ p.natDegree
   have hcoeff : v (algebraMap (valuationRingOf v) K (p.coeff i)) ≤ 1 :=
@@ -89,7 +93,7 @@ theorem monic_relation_divided_tail_is_infinitesimal
   have hz : v z < 1 := by
     dsimp [z]
     rw [v.map_div]
-    apply (div_lt_one₀ (v.pos_iff.mpr (pow_ne_zero _ hx))).2
+    apply (div_lt_one₀ (v.pos_iff.mpr (pow_ne_zero _ hx0))).2
     rw [v.map_mul, v.map_pow, v.map_pow]
     exact mul_lt_of_le_one_of_lt hcoeff hpow
   have hzV : z ∈ valuationRingOf v := (mem_valuationRingOf_iff v z).2 hz.le

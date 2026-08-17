@@ -143,9 +143,7 @@ structure AdditiveValueCut (A : Type*) [AddCommGroup A] [LinearOrder A]
   add_nonnegative : ∀ {γ δ}, γ ∈ carrier → 0 ≤ δ → γ + δ ∈ carrier
 
 noncomputable def idealOfValueCut (v : AddValuation K (WithTop A))
-    (S : AdditiveValueCut A)
-    (_hreal : ∀ {γ}, γ ∈ S.carrier → ∃ x : K, x ≠ 0 ∧
-      v x = (γ : WithTop A)) : Ideal (additiveValuationRingOf v) :=
+    (S : AdditiveValueCut A) : Ideal (additiveValuationRingOf v) :=
   { carrier := {x : additiveValuationRingOf v | x = 0 ∨
         ∃ γ, γ ∈ S.carrier ∧ v (x : K) = (γ : WithTop A)}
     zero_mem' := by
@@ -205,9 +203,8 @@ noncomputable def idealOfValueCut (v : AddValuation K (WithTop A))
 
 theorem idealOfValueCut_mem_iff (v : AddValuation K (WithTop A))
     (S : AdditiveValueCut A)
-    (hreal : ∀ {γ}, γ ∈ S.carrier → ∃ x : K, x ≠ 0 ∧
-      v x = (γ : WithTop A)) (x : additiveValuationRingOf v) :
-    x ∈ idealOfValueCut v S hreal ↔
+    (x : additiveValuationRingOf v) :
+    x ∈ idealOfValueCut v S ↔
       x = 0 ∨ ∃ γ, γ ∈ S.carrier ∧ v (x : K) = (γ : WithTop A) := by
   rfl
 
@@ -215,12 +212,12 @@ theorem idealOfValueCut_valueSet (v : AddValuation K (WithTop A))
     (S : AdditiveValueCut A)
     (hreal : ∀ {γ}, γ ∈ S.carrier → ∃ x : K, x ≠ 0 ∧
       v x = (γ : WithTop A)) :
-    additiveValueSet v (idealOfValueCut v S hreal) = S.carrier := by
+    additiveValueSet v (idealOfValueCut v S) = S.carrier := by
   classical
   ext γ
   constructor
   · rintro ⟨x, hxI, hx0, hxv⟩
-    rcases (idealOfValueCut_mem_iff v S hreal x).1 hxI with hzero | ⟨δ, hδ, hxδ⟩
+    rcases (idealOfValueCut_mem_iff v S x).1 hxI with hzero | ⟨δ, hδ, hxδ⟩
     · exact False.elim (hx0 hzero)
     · have hγδ : γ = δ := WithTop.coe_eq_coe.mp (hxv.symm.trans hxδ)
       simpa [hγδ] using hδ
@@ -231,7 +228,7 @@ theorem idealOfValueCut_valueSet (v : AddValuation K (WithTop A))
       exact WithTop.coe_nonneg.mpr (S.nonnegative hγ)
     let x : additiveValuationRingOf v := ⟨z, hzV⟩
     refine ⟨x, ?_, ?_, hzv⟩
-    · exact (idealOfValueCut_mem_iff v S hreal x).2
+    · exact (idealOfValueCut_mem_iff v S x).2
         (Or.inr ⟨γ, hγ, hzv⟩)
     · intro hx
       apply hz0
@@ -268,14 +265,14 @@ theorem valueCut_without_least_gives_nonprincipal_ideal
     (hreal : ∀ {γ}, γ ∈ S.carrier → ∃ x : K, x ≠ 0 ∧
       v x = (γ : WithTop A)) (hne : S.carrier.Nonempty)
     (hleast : ¬ hasLeastValue S.carrier) :
-    ¬ (idealOfValueCut v S hreal).IsPrincipal := by
+    ¬ (idealOfValueCut v S).IsPrincipal := by
   classical
   intro hP
   rcases hP with ⟨x, hxI⟩
   have hx0 : x ≠ 0 := by
     intro hx
     obtain ⟨γ, hγ⟩ := hne
-    have hγ' : γ ∈ additiveValueSet v (idealOfValueCut v S hreal) := by
+    have hγ' : γ ∈ additiveValueSet v (idealOfValueCut v S) := by
       rw [idealOfValueCut_valueSet v S hreal]
       exact hγ
     rcases hγ' with ⟨z, hzI, hz0, _⟩
@@ -290,7 +287,7 @@ theorem valueCut_without_least_gives_nonprincipal_ideal
     exact hγ
   · intro δ hδ
     apply hγleast
-    have hδI : δ ∈ additiveValueSet v (idealOfValueCut v S hreal) := by
+    have hδI : δ ∈ additiveValueSet v (idealOfValueCut v S) := by
       rw [idealOfValueCut_valueSet v S hreal]
       exact hδ
     simpa only [hxI] using hδI
@@ -391,11 +388,12 @@ theorem dense_strict_cut_has_no_least {A : Type*} [LinearOrder A] [DenselyOrdere
 
 theorem strictUpperRationalValueCut_is_nonprincipal
     (v : AddValuation K (WithTop ℚ)) (α : ℚ) (hα : 0 ≤ α)
-    (hne : ({γ : ℚ | α < γ}).Nonempty)
     (hreal : ∀ {γ}, γ ∈ (strictUpperValueCut α hα).carrier → ∃ x : K, x ≠ 0 ∧
       v x = (γ : WithTop ℚ)) :
-    ¬ (idealOfValueCut v (strictUpperValueCut α hα) hreal).IsPrincipal := by
+    ¬ (idealOfValueCut v (strictUpperValueCut α hα)).IsPrincipal := by
   classical
+  have hne : ({γ : ℚ | α < γ}).Nonempty := by
+    exact ⟨α + 1, by simp⟩
   apply valueCut_without_least_gives_nonprincipal_ideal v
     (strictUpperValueCut α hα) hreal hne
   exact dense_strict_cut_has_no_least α
@@ -404,7 +402,7 @@ theorem rational_dense_value_cut_is_nonprincipal
     (hreal : ∀ {γ}, γ ∈ S.carrier → ∃ x : K, x ≠ 0 ∧
       v x = (γ : WithTop ℚ)) (hne : S.carrier.Nonempty)
     (hleast : ¬ hasLeastValue S.carrier) :
-    ¬ (idealOfValueCut v S hreal).IsPrincipal := by
+    ¬ (idealOfValueCut v S).IsPrincipal := by
   classical
   exact valueCut_without_least_gives_nonprincipal_ideal v S hreal hne hleast
 

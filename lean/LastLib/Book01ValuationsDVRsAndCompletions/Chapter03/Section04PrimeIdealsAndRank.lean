@@ -1,4 +1,5 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter03.Section03IdealsAreOrdered
+import Mathlib.RingTheory.KrullDimension.LocalRing
 import Mathlib.RingTheory.Valuation.RankOne
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter03
@@ -24,24 +25,6 @@ section PrimeIdealsAndRank
 variable {K : Type*} [Field K]
 
 /-! ### 3.4. Prime ideals and rank -/
-
-/-- A chapter-local interface for a convex additive subgroup of an ordered group. -/
-structure ChapterConvexAddSubgroup (G : Type*) [AddCommGroup G] [LinearOrder G]
-    [IsOrderedAddMonoid G] where
-  carrier : AddSubgroup G
-  convex : ∀ {a b c : G}, a ≤ b → b ≤ c → a ∈ carrier → c ∈ carrier → b ∈ carrier
-
-noncomputable def valuationPrimeSpectrum_orderEquiv (A : ValuationSubring K) :
-    (PrimeSpectrum A)ᵒᵈ ≃o {S : ValuationSubring K // A ≤ S} :=
-  ValuationSubring.primeSpectrumOrderEquiv A
-
-noncomputable def valuationPrimeSpectrum_equiv_coarsenings (A : ValuationSubring K) :
-    PrimeSpectrum A ≃ {S : ValuationSubring K // A ≤ S} :=
-  ValuationSubring.primeSpectrumEquiv A
-
-noncomputable def coarsenings_correspond_to_prime_ideals (A : ValuationSubring K) :
-    (PrimeSpectrum A)ᵒᵈ ≃o {S : ValuationSubring K // A ≤ S} :=
-  valuationPrimeSpectrum_orderEquiv A
 
 /- Rank one is the nontrivial Archimedean case. -/
 

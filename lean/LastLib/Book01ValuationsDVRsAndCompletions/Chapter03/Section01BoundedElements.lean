@@ -1,22 +1,16 @@
-import Mathlib.Algebra.Order.Ring.Archimedean
+import Mathlib.Algebra.CharP.Defs
 import Mathlib.RingTheory.HahnSeries.Basic
-import Mathlib.RingTheory.HahnSeries.Lex
 import Mathlib.RingTheory.HahnSeries.Valuation
 import Mathlib.RingTheory.LaurentSeries
 import Mathlib.RingTheory.PowerSeries.Basic
 import Mathlib.RingTheory.Valuation.Basic
 import Mathlib.RingTheory.Valuation.ValuationRing
 import Mathlib.RingTheory.Valuation.Integers
-import Mathlib.RingTheory.Valuation.Discrete.Basic
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.RingTheory.KrullDimension.LocalRing
 import Mathlib.NumberTheory.Padics.PadicNumbers
 import Mathlib.Data.ZMod.QuotientRing
 import Mathlib.RingTheory.Ideal.Int
-import Mathlib.Tactic.Abel
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter03
 
@@ -57,6 +51,58 @@ abbrev residueFieldOf (v : Valuation K Γ) :=
 /-- The reduction map to the residue field. -/
 def residueMapOf (v : Valuation K Γ) : valuationRingOf v →+* residueFieldOf v :=
   IsLocalRing.residue _
+
+/-- The characteristic of the residue field of a valuation. -/
+noncomputable abbrev residueCharacteristic (v : Valuation K Γ) : ℕ :=
+  ringChar (residueFieldOf v)
+
+/-- The valued field has equal characteristic when its field and residue field
+    have the same characteristic. -/
+def IsEqualCharacteristic (v : Valuation K Γ) : Prop :=
+  ringChar K = residueCharacteristic v
+
+/-- The valued field has mixed characteristic `(0, p)`. -/
+def IsMixedCharacteristic (v : Valuation K Γ) (p : ℕ) : Prop :=
+  ringChar K = 0 ∧ residueCharacteristic v = p ∧ p.Prime
+
+theorem residueCharacteristic_isPrime_or_zero (v : Valuation K Γ) :
+    Nat.Prime (residueCharacteristic v) ∨ residueCharacteristic v = 0 := by
+  exact CharP.char_is_prime_or_zero (residueFieldOf v)
+    (ringChar (residueFieldOf v))
+
+theorem equal_or_mixed_characteristic (v : Valuation K Γ) :
+    IsEqualCharacteristic v ∨ ∃ p, IsMixedCharacteristic v p := by
+  by_cases h : ringChar K = residueCharacteristic v
+  · exact Or.inl h
+  · have hK : ringChar K = 0 := by
+      rcases CharP.char_is_prime_or_zero K (ringChar K) with hprime | hzero
+      · have hcastK : (ringChar K : K) = 0 := ringChar.Nat.cast_ringChar
+        have hcastV : (ringChar K : valuationRingOf v) = 0 := by
+          apply Subtype.ext
+          exact hcastK
+        have hcastResidue : (ringChar K : residueFieldOf v) = 0 := by
+          calc
+            (ringChar K : residueFieldOf v) =
+                residueMapOf v (ringChar K : valuationRingOf v) := by
+                  rw [map_natCast]
+            _ = residueMapOf v 0 := by rw [hcastV]
+            _ = 0 := map_zero _
+        have hdiv : residueCharacteristic v ∣ ringChar K :=
+          ringChar.dvd hcastResidue
+        have hres_ne_one : residueCharacteristic v ≠ 1 := by
+          exact CharP.ringChar_ne_one (R := residueFieldOf v)
+        have hres_eq : residueCharacteristic v = ringChar K :=
+          (Nat.dvd_prime hprime).mp hdiv |>.resolve_left hres_ne_one
+        exact False.elim (h hres_eq.symm)
+      · exact hzero
+    have hres_ne_zero : residueCharacteristic v ≠ 0 := by
+      intro hzero
+      apply h
+      exact hK.trans hzero.symm
+    have hres_prime : (residueCharacteristic v).Prime :=
+      CharP.char_prime_of_ne_zero (R := residueFieldOf v) hres_ne_zero
+    refine Or.inr ⟨residueCharacteristic v, ?_⟩
+    exact ⟨hK, rfl, hres_prime⟩
 
 /-- The maximal ideal viewed as a subset of the ambient field. -/
 def maximalIdealImageOf (v : Valuation K Γ) : Set K :=

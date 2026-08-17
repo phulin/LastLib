@@ -211,13 +211,12 @@ noncomputable def criterionValueGroup_is_quotient_by_units (V : Subring K)
   let e := QuotientGroup.quotientKerEquivOfSurjective φ hφ
   exact e.symm.trans (QuotientGroup.quotientMulEquivOfEq hker)
 
-def criterionComparison (V : Subring K) (_hV : HasValuationSubringCriterion V)
-    (x y : K) : Prop :=
+def criterionComparison (V : Subring K) (x y : K) : Prop :=
   x / y ∈ V
 
 theorem criterionComparison_iff_reconstructedValuation_le
     (V : Subring K) (hV : HasValuationSubringCriterion V) {x y : K} (hy : y ≠ 0) :
-    criterionComparison V hV x y ↔
+    criterionComparison V x y ↔
       criterionReconstructedValuation V hV x ≤ criterionReconstructedValuation V hV y := by
   change x / y ∈ V ↔ _
   change x / y ∈ criterionValuationSubring V hV ↔ _
@@ -239,10 +238,10 @@ theorem criterionComparison_iff_reconstructedValuation_le
     exact h
 
 theorem criterionComparison_unit_invariant (V : Subring K)
-    (hV : HasValuationSubringCriterion V) (x y : K) (a b : Vˣ) :
-    criterionComparison V hV
+    (x y : K) (a b : Vˣ) :
+    criterionComparison V
         (((a : V) : K) * x) (((b : V) : K) * y) ↔
-      criterionComparison V hV x y := by
+      criterionComparison V x y := by
   classical
   change (((a : V) : K) * x) / (((b : V) : K) * y) ∈ V ↔ x / y ∈ V
   have ha0 : ((a : V) : K) ≠ 0 := by
@@ -285,7 +284,7 @@ theorem criterionComparison_unit_invariant (V : Subring K)
 
 theorem criterionComparison_total (V : Subring K)
     (hV : HasValuationSubringCriterion V) (x y : K) :
-    criterionComparison V hV x y ∨ criterionComparison V hV y x := by
+    criterionComparison V x y ∨ criterionComparison V y x := by
   change x / y ∈ V ∨ y / x ∈ V
   rcases hV (x / y) with h | h
   · exact Or.inl h

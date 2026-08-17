@@ -527,7 +527,7 @@ noncomputable def padicResidueEquiv (p : ℕ) [Fact p.Prime] :
     (q.symm.trans (Int.quotientSpanNatEquivZMod p))
 
 theorem padic_angularComponent_formula (p : ℕ) [Fact p.Prime]
-    (n : ℤ) (a b : ℤ) (ha : a ≠ 0) (hb : b ≠ 0)
+    (n : ℤ) (a b : ℤ)
     (hpa : ¬ (p : ℤ) ∣ a) (hpb : ¬ (p : ℤ) ∣ b) :
     padicResidueEquiv p
         (angularComponent (pValuation p) (p : ℚ) (pValuation_isUniformizer p)
@@ -535,6 +535,14 @@ theorem padic_angularComponent_formula (p : ℕ) [Fact p.Prime]
       (a : ZMod p) * (b : ZMod p)⁻¹ := by
   classical
   let hp := pValuation_isUniformizer p
+  have ha : a ≠ 0 := by
+    intro ha
+    apply hpa
+    simp [ha]
+  have hb : b ≠ 0 := by
+    intro hb
+    apply hpb
+    simp [hb]
   let : IsLocalRing (pValuationRing p) := valuationRingOf_isLocal (pValuation p)
   let : (pPrimeIdeal p).IsMaximal := by
     change (Ideal.span ({(p : ℤ)} : Set ℤ)).IsMaximal
