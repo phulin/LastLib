@@ -42,6 +42,7 @@ structure Chapter07FiniteResidueUnramifiedModel
   [carrierAAlgebra : Algebra A carrier]
   [carrierTower : IsScalarTower A K carrier]
   [carrierFinite : FiniteDimensional K carrier]
+  [carrierGalois : IsGalois K carrier]
   residue : Type uModel
   [residueField : Field residue]
   [residueAlgebra : Algebra k residue]
@@ -56,8 +57,10 @@ structure Chapter07FiniteResidueUnramifiedModel
   residue_card : Fintype.card residue = (Fintype.card k) ^ degree
   residueDegree : ℕ
   residueDegree_eq : residueDegree = Module.finrank k residue
+  profile_residueDegree : profile.residueDegree = residueDegree
   ramificationIndex : ℕ
   ramificationIndex_eq_one : ramificationIndex = 1
+  profile_ramificationIndex : profile.ramificationIndex = ramificationIndex
   residue_separable : ∀ x : residue, IsSeparable k x
   integralModel : Subalgebra A carrier
   integralModel_finite : Module.Finite A integralModel
@@ -76,6 +79,8 @@ structure Chapter07FiniteResidueUnramifiedModel
   residueMap_kernel : RingHom.ker residueMap = residueIdeal
   residueIdeal_maximal : residueIdeal.IsMaximal
   frobenius : carrier ≃ₐ[K] carrier
+  frobenius_order : orderOf frobenius = degree
+  frobenius_generates : ∀ σ : carrier ≃ₐ[K] carrier, ∃ n : ℤ, frobenius ^ n = σ
   frobeniusOnModel : integralModel ≃+* integralModel
   frobeniusOnModel_compatible : ∀ x : integralModel,
     (frobeniusOnModel x : carrier) = frobenius x

@@ -124,7 +124,7 @@ theorem chapter07_purely_inseparable_residue_profile
         { degree := Module.finrank K L
           ramificationIndex := E.ramificationIndex
           residueDegree := E.residueDegree } ∧
-      Chapter07FiercelyRamifiedExtension E ∧
+      Chapter07EOneInseparableResidueExtension E ∧
       ¬Chapter07UnramifiedExtension E := by
   have hres : E.residueDegree = d.residueDegree := by
     apply Nat.mul_right_cancel hinsep.1
@@ -141,7 +141,7 @@ theorem chapter07_purely_inseparable_residue_profile
     obtain ⟨n, y, hy⟩ := hinsep.2 x
     exact ⟨n, ⟨y, hy.symm⟩⟩
   exact And.intro hprofile
-    (And.intro ⟨he, hpure, hinsep_nontrivial⟩ (by
+    (And.intro ⟨he, hinsep_nontrivial⟩ (by
       intro h
       exact hinsep_nontrivial h.2))
 

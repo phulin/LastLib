@@ -358,26 +358,39 @@ structure Chapter07CanonicalUnramifiedClassification
   reduction :
     Chapter07CanonicalFiniteUnramifiedIntermediate K Ω k κ ≃
       Chapter07CanonicalFiniteSeparableResidueIntermediate k κ
+  extension_finite : ∀ E :
+    Chapter07CanonicalFiniteUnramifiedIntermediate K Ω k κ,
+    FiniteDimensional K E.1
+  residue_finite : ∀ S :
+    Chapter07CanonicalFiniteSeparableResidueIntermediate k κ,
+    FiniteDimensional k S.1
   reduction_realized :
-    ∀ E, chapter07CanonicalUnramifiedResidueRealization E (reduction E)
+    ∀ E : Chapter07CanonicalFiniteUnramifiedIntermediate K Ω k κ,
+      chapter07CanonicalUnramifiedResidueRealization E (reduction E)
   degree_preserved :
-    ∀ E, Module.finrank K E.1 = Module.finrank k (reduction E).1
+    ∀ E : Chapter07CanonicalFiniteUnramifiedIntermediate K Ω k κ,
+      letI := extension_finite E
+      letI := residue_finite (reduction E)
+      Module.finrank K E.1 = Module.finrank k (reduction E).1
   inclusion_preserved :
-    ∀ E F,
+    ∀ (E F : Chapter07CanonicalFiniteUnramifiedIntermediate K Ω k κ),
       chapter07CanonicalUnramifiedInclusion E F ↔
         chapter07CanonicalResidueInclusion (reduction E) (reduction F)
   compositum_preserved :
-    ∀ E F, ∃ G,
+    ∀ (E F : Chapter07CanonicalFiniteUnramifiedIntermediate K Ω k κ), ∃ G,
       G.1 = chapter07CanonicalUnramifiedCompositum E F ∧
         (reduction G).1 =
           chapter07CanonicalResidueCompositum (reduction E) (reduction F)
   intersection_preserved :
-    ∀ E F, ∃ G,
+    ∀ (E F : Chapter07CanonicalFiniteUnramifiedIntermediate K Ω k κ), ∃ G,
       G.1 = chapter07CanonicalUnramifiedIntersection E F ∧
         (reduction G).1 =
           chapter07CanonicalResidueIntersection (reduction E) (reduction F)
+  galois_preserved :
+    ∀ E : Chapter07CanonicalFiniteUnramifiedIntermediate K Ω k κ,
+      IsGalois K E.1 ↔ IsGalois k (reduction E).1
   galois_group_preserved :
-    ∀ E,
+    ∀ E : Chapter07CanonicalFiniteUnramifiedIntermediate K Ω k κ,
       Nonempty
         (Chapter07CanonicalUnramifiedGaloisGroup E ≃*
           Chapter07CanonicalResidueGaloisGroup (reduction E))
@@ -394,7 +407,10 @@ theorem chapter07_canonical_unramified_classification
       Chapter07CanonicalFiniteUnramifiedIntermediate K Ω k κ ≃
         Chapter07CanonicalFiniteSeparableResidueIntermediate k κ,
       (∀ E, chapter07CanonicalUnramifiedResidueRealization E (reduction E)) ∧
-      (∀ E, Module.finrank K E.1 = Module.finrank k (reduction E).1) ∧
+      (∀ E,
+        letI := C.extension_finite E
+        letI := C.residue_finite (C.reduction E)
+        Module.finrank K E.1 = Module.finrank k (reduction E).1) ∧
       (∀ E F,
         chapter07CanonicalUnramifiedInclusion E F ↔
           chapter07CanonicalResidueInclusion (reduction E) (reduction F)) ∧
@@ -404,15 +420,17 @@ theorem chapter07_canonical_unramified_classification
             chapter07CanonicalResidueCompositum (reduction E) (reduction F)) ∧
       (∀ E F, ∃ G,
         G.1 = chapter07CanonicalUnramifiedIntersection E F ∧
-          (reduction G).1 =
-            chapter07CanonicalResidueIntersection (reduction E) (reduction F)) ∧
+        (reduction G).1 =
+          chapter07CanonicalResidueIntersection (reduction E) (reduction F)) ∧
+      (∀ E, IsGalois K E.1 ↔ IsGalois k (reduction E).1) ∧
       (∀ E,
         Nonempty
           (Chapter07CanonicalUnramifiedGaloisGroup E ≃*
             Chapter07CanonicalResidueGaloisGroup (reduction E))) := by
   exact ⟨C.reduction, C.reduction_realized, C.degree_preserved,
     C.inclusion_preserved, C.compositum_preserved,
-    C.intersection_preserved, C.galois_group_preserved⟩
+    C.intersection_preserved, C.galois_preserved,
+    C.galois_group_preserved⟩
 
 /-- Package an explicitly constructed §7.3 classification.  Existence of the
 package itself requires compatible ambient valuation/residue choices (or an
@@ -422,8 +440,25 @@ theorem chapter07_canonical_unramified_classification_data
     {K Ω k κ : Type*} [Field K] [Field Ω] [Field k] [Field κ]
     [Algebra K Ω] [Algebra k κ]
     (C : Chapter07CanonicalUnramifiedClassification K Ω k κ) :
-    Nonempty (Chapter07CanonicalUnramifiedClassification K Ω k κ) :=
+  Nonempty (Chapter07CanonicalUnramifiedClassification K Ω k κ) :=
   ⟨C⟩
+
+/- The fixed-closure classification is an existence theorem under the local
+valuation and algebraic-closure hypotheses.  The structure above records the
+actual reduction equivalence and its consequences; it is not itself a
+substitute for this theorem. -/
+theorem chapter07_canonical_unramified_classification_exists
+    {K Ω k κ : Type*} [Field K] [Field Ω] [Field k] [Field κ]
+    [Algebra K Ω] [Algebra k κ]
+    [IsAlgClosed Ω] [Algebra.IsAlgebraic K Ω]
+    [IsAlgClosed κ] [Algebra.IsAlgebraic k κ]
+    (vK : Valuation K ℤᵐ⁰) [Valuation.IsRankOneDiscrete vK]
+    (hcomplete : IsAdicComplete
+      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
+    (residueIdentification : Nonempty
+      (Chapter10ResidueField vK ≃+* k)) :
+    Nonempty (Chapter07CanonicalUnramifiedClassification K Ω k κ) := by
+  sorry
 
 /-- The lift construction with the integral model and its actual residue map
 made explicit. -/
@@ -520,6 +555,7 @@ structure Chapter07ActualUnramifiedClassificationInterface
   /-- The residue-field index attached to each displayed extension.  The
   classification theorem must prove that this map is an equivalence. -/
   reduction : U → S
+  reduction_bijective : Function.Bijective reduction
   extension_finite : ∀ u, FiniteDimensional K (extension u)
   residue_finite : ∀ s, FiniteDimensional k (residueExtension s)
   profile : ∀ u,
@@ -620,7 +656,7 @@ theorem chapter07_unramified_extensions_classified_by_residue_extensions
 /-- The profile consequences for the actual intermediate-field interface.
 The reduction map is an explicit field of that interface; proving that it is an
 equivalence is a separate classification result. -/
-theorem chapter07_actual_unramified_extensions_classified_by_residue_extensions
+theorem chapter07_actual_unramified_degree_matches_residue_degree
     {K Ω k κ U S : Type*} [Field K] [Field Ω] [Field k] [Field κ]
     [Algebra K Ω] [Algebra k κ]
     [IsAlgClosed Ω] [Algebra.IsAlgebraic K Ω]

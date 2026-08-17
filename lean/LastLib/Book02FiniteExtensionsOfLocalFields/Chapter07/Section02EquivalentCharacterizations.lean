@@ -94,11 +94,13 @@ theorem chapter07_unramified_criteria
       P.ramificationIdx A)
     (hf : E.residueDegree =
       P.inertiaDeg A) :
-    Chapter07UnramifiedExtension E ↔
+    (Chapter07UnramifiedExtension E ↔
       (Chapter07MaximalIdealExtension A B m P ∧
-          Chapter07ResidueExtensionIsSeparable k l) ∧
-        Nonempty (Chapter07MonogenicResiduePresentation A B K L k l P res) ∧
-        Chapter07FiniteEtaleExtension A B := by
+        Chapter07ResidueExtensionIsSeparable k l)) ∧
+      (Chapter07UnramifiedExtension E ↔
+        Nonempty (Chapter07MonogenicResiduePresentation A B K L k l P res)) ∧
+      (Chapter07UnramifiedExtension E ↔
+        Chapter07FiniteEtaleExtension A B) := by
   sorry
 
 /-- The monogenic criterion retains the unit-derivative clause explicitly. -/

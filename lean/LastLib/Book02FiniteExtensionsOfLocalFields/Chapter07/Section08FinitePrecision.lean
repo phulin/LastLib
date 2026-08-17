@@ -462,8 +462,10 @@ theorem chapter07_compatible_roots_have_adic_limit
 unramified ring with a literal power-series ring. -/
 def Chapter07CoefficientwisePowerSeriesExpansion
     (B k' : Type*) [CommRing B] [Field k'] : Prop :=
-  ∃ (sectionMap : k' →+* B) (equiv : B ≃+* PowerSeries k'),
-    equiv.toRingHom.comp sectionMap = PowerSeries.C
+  ∃ (sectionMap : k' →+* B) (equiv : B ≃+* PowerSeries k')
+      (parameter : B),
+    equiv.toRingHom.comp sectionMap = PowerSeries.C ∧
+      equiv parameter = PowerSeries.X
 
 /-- In mixed characteristic there is no coefficient-field embedding of a
 positive-characteristic residue field into a characteristic-zero ring. -/

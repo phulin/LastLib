@@ -24,29 +24,6 @@ attribute [local instance] Algebra.TensorProduct.rightAlgebra
 
 /-! # Book 2, Chapter 7, §7.6: unramified factorization and base change -/
 
-/-- The compositum and intersection operations in a fixed common field. -/
-def chapter07IntermediateCompositum
-    {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
-    (K₁ K₂ : IntermediateField K Ω) : IntermediateField K Ω :=
-  K₁ ⊔ K₂
-
-def chapter07IntermediateIntersection
-    {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
-    (K₁ K₂ : IntermediateField K Ω) : IntermediateField K Ω :=
-  K₁ ⊓ K₂
-
-/-- Tensor-product injectivity is the standard field-theoretic meaning of
-linear disjointness over the intersection field. -/
-def Chapter07LinearlyDisjointOver
-    (K₀ K₁ K₂ Ω : Type*) [Field K₀] [Field K₁] [Field K₂] [Field Ω]
-    [Algebra K₀ K₁] [Algebra K₀ K₂] [Algebra K₁ Ω] [Algebra K₂ Ω]
-    [Algebra K₀ Ω] [IsScalarTower K₀ K₁ Ω] [IsScalarTower K₀ K₂ Ω] : Prop :=
-  Function.Injective
-    (Algebra.TensorProduct.lift
-      (IsScalarTower.toAlgHom K₀ K₁ Ω)
-      (IsScalarTower.toAlgHom K₀ K₂ Ω)
-      (fun _ _ => Commute.all _ _))
-
 /-- A finite family of distinct monic irreducible residue factors. -/
 structure Chapter07SeparableResidueFactorization
     (k : Type*) [Field k] (r : ℕ) where
@@ -210,13 +187,8 @@ theorem chapter07_residue_tensor_product_is_separable_product
     {k k' l : Type*} [Field k] [Field k'] [Field l]
     [Algebra k k'] [Algebra k l] [FiniteDimensional k l]
     [Algebra.IsSeparable k l] :
-    Algebra.Etale k' (l ⊗[k] k') := by
-  let _ : Module.FinitePresentation k l :=
-    Module.finitePresentation_of_finite k l
-  let _ : Algebra.Etale k l :=
-    { formallyEtale := Algebra.FormallyEtale.of_isSeparable k l
-      finitePresentation := inferInstance }
-  exact Algebra.Etale.of_equiv (Algebra.TensorProduct.commRight k k' l)
+    Chapter07FiniteEtaleExtension k' (l ⊗[k] k') := by
+  sorry
 
 /-- A finite product of unramified factors after scalar extension. -/
 structure Chapter07UnramifiedScalarExtensionProduct
@@ -270,7 +242,7 @@ theorem chapter07_unramified_scalar_extension_is_product
     [Algebra.IsSeparable k l]
     (E : Chapter07FiniteLocalExtensionData K L k l)
     (hE : Chapter07UnramifiedExtension E)
-    (hLseparable : Chapter07FiniteExtensionIsSeparable K L)
+    (hLseparable : Algebra.IsSeparable K L)
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     (hext : vK.IsEquiv (vL.comap (algebraMap K L)))
     (baseResidueIdentification : Chapter10ResidueField vK ≃+* k)
@@ -293,53 +265,18 @@ theorem chapter07_unramified_scalar_extension_is_product
         baseChangeResidueIdentification) := by
   sorry
 
-theorem chapter07_finite_galois_residue_extensions_linearly_disjoint
+theorem chapter07_galois_over_intersection_linearly_disjoint
     {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
     (K₁ K₂ : IntermediateField K Ω)
     [FiniteDimensional K K₁] [FiniteDimensional K K₂]
-    [IsGalois K K₁] [IsGalois K K₂] :
-      Chapter07LinearlyDisjointOver
-        (↥(K₁ ⊓ K₂))
-        (↥(IntermediateField.extendScalars
-          (F := K₁ ⊓ K₂) (E := K₁) inf_le_left))
-        (↥(IntermediateField.extendScalars
-          (F := K₁ ⊓ K₂) (E := K₂) inf_le_right)) Ω := by
-  let _ : IsGalois K
-      (↥(IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₁) inf_le_left)) := by
-    change IsGalois K K₁
-    infer_instance
-  let _ : FiniteDimensional K
-      (↥(IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₁) inf_le_left)) := by
-    change FiniteDimensional K K₁
-    infer_instance
-  let _ : FiniteDimensional K
-      (↥(IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₂) inf_le_right)) := by
-    change FiniteDimensional K K₂
-    infer_instance
-  let _ : IsGalois (↥(K₁ ⊓ K₂))
-      (↥(IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₁) inf_le_left)) :=
-    IsGalois.tower_top_of_isGalois K (↥(K₁ ⊓ K₂))
-      (↥(IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₁) inf_le_left))
-  let _ : FiniteDimensional (↥(K₁ ⊓ K₂))
-      (↥(IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₁) inf_le_left)) :=
-    Module.Finite.of_restrictScalars_finite K (↥(K₁ ⊓ K₂))
-      (↥(IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₁) inf_le_left))
-  let _ : FiniteDimensional (↥(K₁ ⊓ K₂))
-      (↥(IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₂) inf_le_right)) :=
-    Module.Finite.of_restrictScalars_finite K (↥(K₁ ⊓ K₂))
-      (↥(IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₂) inf_le_right))
-  have hLD :
-      (IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₁) inf_le_left).LinearDisjoint
-        (IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₂) inf_le_right) :=
-    IntermediateField.LinearDisjoint.of_inf_eq_bot
-      (A := IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₁) inf_le_left)
-      (B := IntermediateField.extendScalars (F := K₁ ⊓ K₂) (E := K₂) inf_le_right)
-      (by
-        rw [IntermediateField.extendScalars_inf, IntermediateField.extendScalars_self])
-  have hLD' :=
-    (IntermediateField.linearDisjoint_iff').mp hLD
-  unfold Chapter07LinearlyDisjointOver
-  exact hLD'.injective
+    [IsGalois (↥(K₁ ⊓ K₂))
+      (↥(IntermediateField.extendScalars
+        (F := K₁ ⊓ K₂) (E := K₁) inf_le_left))] :
+    (IntermediateField.extendScalars
+      (F := K₁ ⊓ K₂) (E := K₁) inf_le_left).LinearDisjoint
+      (IntermediateField.extendScalars
+        (F := K₁ ⊓ K₂) (E := K₂) inf_le_right) := by
+  sorry
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07
