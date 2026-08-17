@@ -218,7 +218,91 @@ theorem chapter13_finite_module_adic_series
     ∃ x : M, Chapter13AdicConvergesSeries (IsLocalRing.maximalIdeal A) z x ∧
       ∀ e : Equiv.Perm ℕ,
         Chapter13AdicConvergesSeries (IsLocalRing.maximalIdeal A) (z ∘ e) x := by
-  sorry
+  classical
+  let I : Ideal A := IsLocalRing.maximalIdeal A
+  letI : IsAdicComplete I M :=
+    (chapter13_finite_module_krull_intersection (A := A) (M := M) hA).2
+  have hCauchy : ∀ {m n : ℕ}, m ≤ n →
+      Finset.sum (Finset.range m) z ≡ Finset.sum (Finset.range n) z
+        [SMOD (I ^ m • (⊤ : Submodule A M))] := by
+    intro m n hmn
+    induction n, hmn using Nat.le_induction with
+    | base => exact SModEq.rfl
+    | succ n hmn ih =>
+        have hpow : I ^ n ≤ I ^ m := Ideal.pow_le_pow_right hmn
+        have hsub : I ^ n • (⊤ : Submodule A M) ≤ I ^ m • (⊤ : Submodule A M) :=
+          Submodule.smul_mono hpow le_rfl
+        have hzn : z n ∈ I ^ m • (⊤ : Submodule A M) := hsub (hz n)
+        have hzero : (0 : M) ≡ z n [SMOD (I ^ m • (⊤ : Submodule A M))] := by
+          rw [SModEq.sub_mem]
+          simpa using (Submodule.neg_mem _ hzn)
+        simpa [Finset.sum_range_succ] using ih.add hzero
+  obtain ⟨x, hx⟩ := IsPrecomplete.prec (I := I) (M := M)
+    (inferInstance : IsPrecomplete I M)
+    (f := fun m => Finset.sum (Finset.range m) z) (by
+    intro m n hmn
+    exact hCauchy hmn)
+  refine ⟨x, ?_, ?_⟩
+  · intro n
+    filter_upwards [eventually_ge_atTop n] with m hm
+    have hxm := hx m
+    have hmn : I ^ m • (⊤ : Submodule A M) ≤ I ^ n • (⊤ : Submodule A M) :=
+      Submodule.smul_mono (Ideal.pow_le_pow_right hm) (by rfl)
+    exact hmn (SModEq.sub_mem.mp hxm)
+  · intro e n
+    obtain ⟨N, hN⟩ : ∃ N : ℕ, ∀ j < n, e.symm j < N := by
+      induction n with
+      | zero => exact ⟨0, by simp⟩
+      | succ n ih =>
+          obtain ⟨N, hN⟩ := ih
+          refine ⟨max N (e.symm n + 1), ?_⟩
+          intro j hj
+          by_cases hje : j = n
+          · subst j
+            exact lt_of_lt_of_le (Nat.lt_succ_self _) (Nat.le_max_right _ _)
+          · have hjn : j < n := by omega
+            exact lt_of_lt_of_le (hN j hjn) (Nat.le_max_left _ _)
+    filter_upwards [eventually_ge_atTop N] with m hm
+    have hfilter :
+        (Finset.filter (fun i : ℕ => e i < n) (Finset.range m)).sum (z ∘ e) =
+          (Finset.range n).sum z := by
+      apply Finset.sum_nbij' (fun i => e i) (fun j => e.symm j)
+      · intro i hi
+        exact Finset.mem_range.mpr (Finset.mem_filter.mp hi).2
+      · intro j hj
+        refine Finset.mem_filter.mpr ⟨?_, ?_⟩
+        · exact Finset.mem_range.mpr ((hN j (Finset.mem_range.mp hj)).trans_le hm)
+        · simpa using Finset.mem_range.mp hj
+      · intro i hi
+        simp
+      · intro j hj
+        simp
+      · intro i hi
+        rfl
+    have htail :
+        (Finset.filter (fun i : ℕ => ¬ e i < n) (Finset.range m)).sum (z ∘ e) ∈
+          I ^ n • (⊤ : Submodule A M) := by
+      apply Submodule.sum_mem
+      intro i hi
+      have hi' : n ≤ e i := Nat.le_of_not_gt (Finset.mem_filter.mp hi).2
+      have hpow : I ^ (e i) ≤ I ^ n := Ideal.pow_le_pow_right hi'
+      exact (Submodule.smul_mono hpow le_rfl) (hz (e i))
+    have htailrel :
+        (Finset.filter (fun i : ℕ => ¬ e i < n) (Finset.range m)).sum (z ∘ e) ≡ 0
+          [SMOD (I ^ n • (⊤ : Submodule A M))] :=
+      SModEq.sub_mem.mpr (by simpa using htail)
+    have hperm :
+        (Finset.range m).sum (z ∘ e) ≡ (Finset.range n).sum z
+          [SMOD (I ^ n • (⊤ : Submodule A M))] := by
+      rw [← hfilter]
+      rw [← Finset.sum_filter_add_sum_filter_not
+        (Finset.range m) (fun i : ℕ => e i < n)]
+      simpa [add_comm] using
+        (SModEq.add (SModEq.rfl :
+          (Finset.filter (fun i : ℕ => e i < n) (Finset.range m)).sum (z ∘ e) ≡
+            (Finset.filter (fun i : ℕ => e i < n) (Finset.range m)).sum (z ∘ e)
+              [SMOD (I ^ n • (⊤ : Submodule A M))]) htailrel)
+    exact SModEq.sub_mem.mp (hperm.trans (hx n))
 
 theorem chapter13_quotient_complete_noetherian_local
     {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
