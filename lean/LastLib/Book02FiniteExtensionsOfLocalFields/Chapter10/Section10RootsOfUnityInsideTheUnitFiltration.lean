@@ -1,6 +1,7 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Section02TheFirstQuotient
 import Mathlib.Data.Nat.Factorization.Basic
 import Mathlib.GroupTheory.OrderOfElement
+import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10
 

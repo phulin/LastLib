@@ -1,7 +1,6 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.Section01SuccessivePrecision
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.Section01WhyDiscretenessIsDecisive
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Section04FormalPowerSeries
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Section05UnitsAndPrincipalUnits
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section07UnramifiedAndTotallyRamifiedEndpoints
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10
 
@@ -77,7 +76,7 @@ abbrev Chapter10UnitLayerQuotient {L : Type*} [Field L]
 /-- A normalized uniformizer in the valuation ring, reusing Book 1's interface. -/
 abbrev Chapter10Uniformizer {L : Type*} [Field L]
     (A : ValuationSubring L) (π : A) : Prop :=
-  LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.isUniformizerElement A π
+  LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.Chapter04Uniformizer A π
 
 /-- A topology in which the congruence subgroups form a neighborhood basis at `1`. -/
 def Chapter10UnitFiltrationNeighborhoodBasis

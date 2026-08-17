@@ -1,5 +1,6 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Dependencies
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Section02TheFirstQuotient
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.Section01SuccessivePrecision
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.Section03FractionalIdealsAndPrecision
 import Mathlib.GroupTheory.Index
 
@@ -319,9 +320,7 @@ private theorem chapter10_unit_quotient_cardinality_aux
   let U : ℕ → Subgroup Aˣ := chapter10UnitFiltration A
   obtain ⟨π, hπirr⟩ := IsDiscreteValuationRing.exists_irreducible A
   have hπ : Chapter10Uniformizer A π := by
-    refine ⟨?_, hπirr.maximalIdeal_eq⟩
-    rw [hπirr.maximalIdeal_eq]
-    exact Ideal.mem_span_singleton_self π
+    exact ⟨hπirr.ne_zero, hπirr.maximalIdeal_eq⟩
   have hdesc : ∀ {a b : ℕ}, a ≤ b → U b ≤ U a := by
     intro a b hab v hv
     change ((v : A) - 1) ∈ (IsLocalRing.maximalIdeal A) ^ b at hv

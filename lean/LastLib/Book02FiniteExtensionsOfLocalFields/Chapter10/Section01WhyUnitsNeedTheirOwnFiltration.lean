@@ -1,5 +1,6 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Dependencies
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.Section02EquivalentCharacterizations
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.Section01SuccessivePrecision
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10
 

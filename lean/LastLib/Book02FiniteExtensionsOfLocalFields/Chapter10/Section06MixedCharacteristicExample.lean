@@ -1,4 +1,9 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Dependencies
+import Mathlib.Algebra.CharP.Lemmas
+import Mathlib.RingTheory.Valuation.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.Order
+import Mathlib.Tactic.Ring
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10
 
