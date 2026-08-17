@@ -1,4 +1,5 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Section03HigherQuotientsAreAdditiveResidueFields
+import Mathlib.FieldTheory.Galois.Basic
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10
 
@@ -8,10 +9,10 @@ open Ideal IsLocalRing
 
 /-! ## 10.7. Galois action on the layers -/
 
-/-- The automorphism group of an algebraic extension over its base field. -/
+/-- The Galois automorphism group of a field extension. -/
 abbrev Chapter10GaloisAutomorphism
-    (K L : Type*) [Field K] [Field L] [Algebra K L] :=
-  L ≃ₐ[K] L
+    (K L : Type*) [Field K] [Field L] [Algebra K L] [IsGalois K L] :=
+  Gal(L / K)
 
 /-- The induced action of a ring automorphism on units. -/
 def chapter10GaloisUnitAction

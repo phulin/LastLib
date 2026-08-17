@@ -217,7 +217,7 @@ theorem chapter10_teichmuller_section_exists_unique
 
 /-- The Teichmüller lift extends by the convention `[0] = 0`. -/
 theorem chapter10_teichmuller_zero_extension
-    {L : Type*} [Field L] (A : ValuationSubring L) (_q : ℕ)
+    {L : Type*} [Field L] (A : ValuationSubring L)
     (s : (Chapter10ResidueField A)ˣ →* Aˣ)
     (hs : ∀ a, chapter10UnitReduction A (s a) = a) :
     ∃ t : Chapter10ResidueField A → A,
@@ -338,7 +338,7 @@ theorem chapter10_teichmuller_unit_splitting
         · exact w.map_mul u v }
   exact ⟨e⟩
 
-/-- A canonical multiplicative residue section is an additional structure. -/
+/-- A multiplicative residue section is additional choice data. -/
 def Chapter10ResidueUnitSection
     {L : Type*} [Field L] (A : ValuationSubring L) : Prop :=
   ∃ s : (Chapter10ResidueField A)ˣ →* Aˣ,

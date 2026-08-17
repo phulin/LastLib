@@ -21,11 +21,15 @@ abbrev Chapter10FiniteOrderTorsion
     {G : Type*} [Group G] (u : G) : Prop :=
   IsOfFinOrder u
 
-/-- A root of unity in the fraction field has valuation zero. -/
+/-- A root of unity in the fraction field is a unit of the valuation ring. -/
 theorem chapter10_field_root_of_unity_is_ring_unit
     {L : Type*} [Field L] (A : ValuationSubring L) (m : ℕ) (hm : 0 < m)
-    (ζ : Lˣ) (hζ : (ζ : L) ^ m = 1) :
-    ∃ u : Aˣ, Units.map A.subtype.toMonoidHom u = ζ := by
+    (ζ : L) (hζ : ζ ^ m = 1) :
+    ∃ u : Aˣ, ((Units.map A.subtype.toMonoidHom u : Lˣ) : L) = ζ := by
+  have hζ0 : ζ ≠ 0 := by
+    intro hζ0
+    subst ζ
+    simp [hm.ne'] at hζ
   have hinv_mem_of_mem (x : L) (hx : x ∈ A) (hxm : x ^ m = 1) :
       x⁻¹ ∈ A := by
     have hx0 : x ≠ 0 := by
@@ -40,29 +44,29 @@ theorem chapter10_field_root_of_unity_is_ring_unit
       exact hpow.symm
     rw [hinv]
     exact A.pow_mem hx _
-  have hζA : (ζ : L) ∈ A := by
-    rcases ValuationSubring.mem_or_inv_mem A (ζ : L) with h | h
+  have hζA : ζ ∈ A := by
+    rcases ValuationSubring.mem_or_inv_mem A ζ with h | h
     · exact h
     · have hpow : ((ζ : L)⁻¹) ^ m = 1 := by
         rw [inv_pow, hζ, inv_one]
-      have h := hinv_mem_of_mem ((ζ : L)⁻¹) h hpow
+      have h := hinv_mem_of_mem ζ⁻¹ h hpow
       simpa using h
-  have hζinvA : (ζ : L)⁻¹ ∈ A := hinv_mem_of_mem (ζ : L) hζA hζ
-  let a : A := ⟨(ζ : L), hζA⟩
-  let b : A := ⟨(ζ : L)⁻¹, hζinvA⟩
+  have hζinvA : ζ⁻¹ ∈ A := hinv_mem_of_mem ζ hζA hζ
+  let a : A := ⟨ζ, hζA⟩
+  let b : A := ⟨ζ⁻¹, hζinvA⟩
   let u : Aˣ :=
     { val := a
       inv := b
       val_inv := by
         apply Subtype.ext
-        change (ζ : L) * (ζ : L)⁻¹ = 1
-        exact mul_inv_cancel₀ ζ.ne_zero
+        change ζ * ζ⁻¹ = 1
+        exact mul_inv_cancel₀ hζ0
       inv_val := by
         apply Subtype.ext
-        change (ζ : L)⁻¹ * (ζ : L) = 1
-        exact inv_mul_cancel₀ ζ.ne_zero }
+        change ζ⁻¹ * ζ = 1
+        exact inv_mul_cancel₀ hζ0 }
   refine ⟨u, ?_⟩
-  apply Units.ext
+  change ζ = ζ
   rfl
 
 /-- The characteristic-`p` identity used to detect principal-unit torsion. -/
@@ -173,7 +177,7 @@ theorem chapter10_padic_prime_to_p_roots_are_cyclic
 theorem chapter10_finite_order_unit_torsion_decomposes
     {L : Type*} [Field L] (A : ValuationSubring L) (p : ℕ)
     [Fact p.Prime] [Fintype (Chapter10ResidueField A)]
-    [CharP (Chapter10ResidueField A) p] [CharZero A]
+    [CharP (Chapter10ResidueField A) p]
     (hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A)
     (hDVR : IsDiscreteValuationRing A)
     (u : Aˣ) (hu : Chapter10FiniteOrderTorsion u) :
