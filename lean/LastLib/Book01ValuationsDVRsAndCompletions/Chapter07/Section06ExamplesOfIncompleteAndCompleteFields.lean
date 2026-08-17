@@ -30,10 +30,6 @@ abbrev chapter07PAdicField (p : ℕ) [Fact p.Prime] : Type _ :=
 abbrev chapter07PAdicIntegerRing (p : ℕ) [Fact p.Prime] : Type _ :=
   ℤ_[p]
 
--- The absolute value underlying the p-adic uniformity on ℚ.
-def chapter07PAdicAbsoluteValue (p : ℕ) [Fact p.Prime] : AbsoluteValue ℚ ℚ :=
-  IsAbsoluteValue.toAbsoluteValue (padicNorm p)
-
 -- The uniform structure used for the p-adic completion of ℚ.  Pulling back the
 -- normed-field uniformity along the canonical map into ℚ_[p] makes the
 -- comparison with Mathlib's concrete completion explicit.
@@ -909,9 +905,9 @@ theorem chapter07_rationals_have_padic_completion
           (q : chapter07PAdicField p) := by
   exact chapter07_padic_field_is_the_padic_completion p
 
--- Completion magnifies one chosen notion of nearness and does not canonically retain
--- completions for other uniformities.
-theorem chapter07_completion_is_local_to_the_chosen_valuation
+-- Each chosen uniformity on an abstract field has its own standard completion;
+-- the completion is complete and contains the original space densely.
+theorem chapter07_completion_for_chosen_uniformity_is_complete_and_dense
     (K : Type*) (u : UniformSpace K) :
     DenseRange (@UniformSpace.Completion.coe' K u) ∧
       @CompleteSpace (@UniformSpace.Completion K u)

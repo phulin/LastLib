@@ -210,6 +210,13 @@ noncomputable def chapter07CompletionValuation
     Valuation (UniformSpace.Completion K) Γ₀ :=
   Valued.extensionValuation
 
+-- The standard valued-field completion already carries Mathlib's field structure.
+theorem chapter07_standard_completion_nonzero_has_two_sided_inverse
+    {K Γ₀ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ₀]
+    [Valued K Γ₀] (x : UniformSpace.Completion K) (hx : x ≠ 0) :
+    x * x⁻¹ = 1 ∧ x⁻¹ * x = 1 := by
+  exact ⟨mul_inv_cancel₀ hx, inv_mul_cancel₀ hx⟩
+
 -- Section 7.2: the extended valuation agrees with the original on the dense subfield.
 theorem chapter07_completion_valuation_apply_coe
     {K Γ₀ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ₀]

@@ -829,24 +829,6 @@ class Chapter07NonarchimedeanCompatibility
   compatible : Continuous (abv : K → ℝ)
   uniformSpace_eq : (inferInstance : UniformSpace K) = abv.uniformSpace
 
-/- A discrete nonarchimedean absolute value compatible with the given uniformity. -/
-class Chapter07NonarchimedeanStationarity
-    (K : Type*) [Field K] [UniformSpace K] [IsUniformAddGroup K]
-    (abv : AbsoluteValue K ℝ) : Prop where
-  nonarchimedean : ∀ x y : K, abv (x + y) ≤ max (abv x) (abv y)
-  discrete : ∃ q : ℝ, 0 < q ∧ q < 1 ∧
-    ∀ {x : K}, x ≠ 0 → ∃ z : ℤ, abv x = q ^ z
-  compatible : Continuous (abv : K → ℝ)
-  uniformSpace_eq : (inferInstance : UniformSpace K) = abv.uniformSpace
-
-instance chapter07NonarchimedeanStationarity.compatibility
-    (K : Type*) [Field K] [UniformSpace K] [IsUniformAddGroup K]
-    (abv : AbsoluteValue K ℝ) [h : Chapter07NonarchimedeanStationarity K abv] :
-    Chapter07NonarchimedeanCompatibility K abv where
-  nonarchimedean := h.nonarchimedean
-  compatible := h.compatible
-  uniformSpace_eq := h.uniformSpace_eq
-
 lemma chapter07_absolute_value_uniformContinuous
     {K : Type*} [Field K] [UniformSpace K] [IsUniformAddGroup K]
     (abv : AbsoluteValue K ℝ)
@@ -1208,15 +1190,6 @@ theorem chapter07_cauchy_quotient_complete
   apply (heui.uniformContinuous_iff).2
   simpa using (uniformContinuous_id :
     UniformContinuous (id : UniformSpace.Completion K → UniformSpace.Completion K))
-
--- The diagonal representative assertion used to prove completeness.
-theorem chapter07_cauchy_diagonal_representative
-    {K : Type*} [Field K] [UniformSpace K] [IsUniformAddGroup K]
-    (x : chapter07CauchyCompletion K) :
-    ∃ u : chapter07CauchySequence K,
-      x = chapter07CauchyClass u := by
-  obtain ⟨u, rfl⟩ := Quotient.exists_rep x
-  exact ⟨u, rfl⟩
 
 end
 end LastLib.Book01ValuationsDVRsAndCompletions.Chapter07
