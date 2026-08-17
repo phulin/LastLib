@@ -1,6 +1,4 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter01.Section04LocalizationsOfDedekindDomains
-import Mathlib.Algebra.Module.DedekindDomain
-import Mathlib.Algebra.Module.PID
 import Mathlib.RingTheory.DedekindDomain.AdicValuation
 import Mathlib.RingTheory.DedekindDomain.Dvr
 import Mathlib.RingTheory.DedekindDomain.Factorization
@@ -16,8 +14,6 @@ import Mathlib.RingTheory.RamificationInertia.Ramification
 import Mathlib.RingTheory.Valuation.Basic
 import Mathlib.RingTheory.Valuation.ValuationRing
 import Mathlib.RingTheory.Valuation.Discrete.Basic
-import Mathlib.RingTheory.Valuation.Discrete.IsDiscreteValuationRing
-import Mathlib.RingTheory.Valuation.Discrete.RankOne
 import Mathlib.Tactic.Order
 import Mathlib.Tactic.Ring
 

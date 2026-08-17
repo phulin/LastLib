@@ -1,21 +1,17 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.Section01SuccessivePrecision
-import Mathlib.Algebra.Module.PID
-import Mathlib.LinearAlgebra.Dimension.Finite
 import Mathlib.RingTheory.AdicCompletion.Basic
 import Mathlib.RingTheory.AdicCompletion.Completeness
 import Mathlib.RingTheory.DiscreteValuationRing.Basic
 import Mathlib.RingTheory.Filtration
+import Mathlib.RingTheory.Ideal.Int
+import Mathlib.RingTheory.Ideal.Norm.AbsNorm
 import Mathlib.RingTheory.Localization.AtPrime.Basic
-import Mathlib.RingTheory.Localization.AtPrime.Extension
 import Mathlib.RingTheory.Polynomial.Basic
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter05
 
-open IsLocalRing
-open IsDedekindDomain
-open IsDedekindDomain.HeightOneSpectrum
 open scoped BigOperators DirectSum nonZeroDivisors WithZero
 
 noncomputable section
