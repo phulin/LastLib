@@ -1,11 +1,20 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section02TheValuationForm
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section04HenselianLocalRings
 import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+import Mathlib.RingTheory.Henselian
+import Mathlib.NumberTheory.Padics.PadicIntegers
+import Mathlib.NumberTheory.Padics.PadicNumbers
 import Mathlib.RingTheory.Polynomial.IsIntegral
 import Mathlib.RingTheory.Valuation.Integers
+import Mathlib.RingTheory.Valuation.RankOne
+import Mathlib.Topology.Algebra.Valued.ValuedField
 import Mathlib.Topology.Algebra.Valued.WithVal
+import Mathlib.Topology.Algebra.WithZeroTopology
 import Mathlib.Algebra.Polynomial.Eval.Irreducible
 import Mathlib.RingTheory.Polynomial.Resultant.Basic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions
 namespace Chapter09
@@ -42,9 +51,9 @@ def PolynomialCoefficientsIntegralOver {A K : Type*} [CommRing A] [CommRing K]
     [Algebra A K] (f : K[X]) : Prop :=
   ∀ n : ℕ, IsIntegral A (f.coeff n)
 
-/-- A monic factor of a monic polynomial over a fraction field has integral coefficients. -/
-theorem monic_factor_coefficients_are_integral {A K : Type*} [CommRing A] [IsDomain A]
-    [IsIntegrallyClosed A] [Field K] [Algebra A K] [IsFractionRing A K]
+/-- A monic factor of a monic polynomial over a field extension has integral coefficients. -/
+theorem monic_factor_coefficients_are_integral {A K : Type*} [CommRing A]
+    [Field K] [Algebra A K]
     (f : A[X]) (g h : K[X]) (hf : f.Monic) (hg : g.Monic) (hh : h.Monic)
     (hfac : Polynomial.map (algebraMap A K) f = g * h) :
     PolynomialCoefficientsIntegralOver (A := A) (K := K) g ∧ PolynomialCoefficientsIntegralOver (A := A) (K := K) h := by

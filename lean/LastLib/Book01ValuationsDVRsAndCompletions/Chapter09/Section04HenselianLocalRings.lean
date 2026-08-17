@@ -1,6 +1,14 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section03LiftingFactorizations
+import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Algebraic.Defs
+import Mathlib.RingTheory.Valuation.ValuationRing
+import Mathlib.RingTheory.Valuation.ValuationSubring
 import Mathlib.RingTheory.Polynomial.Resultant.Basic
+import Mathlib.Topology.Algebra.WithZeroTopology
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions
 namespace Chapter09

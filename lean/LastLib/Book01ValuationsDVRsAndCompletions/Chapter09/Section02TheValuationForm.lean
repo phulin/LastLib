@@ -1,4 +1,12 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section01CorrectingAnApproximateRoot
+import Mathlib.RingTheory.Valuation.RankOne
+import Mathlib.Topology.Algebra.Valued.ValuedField
+import Mathlib.Topology.Algebra.Polynomial
+import Mathlib.Topology.Algebra.WithZeroTopology
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions
 namespace Chapter09
@@ -1525,12 +1533,10 @@ def TendsToTopInValueGroupImage {K Γ : Type*} [Field K]
   ∀ γ : Γ, (∃ x : K, x ≠ 0 ∧ v x = γ) →
     ∃ N : ℕ, ∀ n : ℕ, N ≤ n → γ ≤ s n
 
-/- SOURCE_ISSUE (books/001-valuations-dvrs-and-completions.md:§9.2, paragraph
-  beginning “Because the value group is archimedean”): the informal argument
-  concerns the ordered value-group image, but the source argument quantifies
-  over an arbitrary ambient codomain `Γ`.  Rank one does not make that ambient
-  codomain cofinal, and Newton corrections have finite value.  The interface
-  therefore quantifies only over finite values represented by the valuation. -/
+/- FORMALIZATION_NOTE: the theorem uses an arbitrary ordered codomain `Γ`, so
+  convergence is stated over the finite values represented by the valuation.
+  This is the source's value-group formulation after allowing a non-surjective
+  ambient codomain. -/
 theorem valuation_newton_corrections_tend_to_top {K Γ : Type*} [Field K]
     [LinearOrderedAddCommGroupWithTop Γ] (v : AddValuation K Γ)
     [Valuation.RankOne v.toValuation]

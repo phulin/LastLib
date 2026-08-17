@@ -1,19 +1,13 @@
-import Mathlib.RingTheory.Henselian
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib.RingTheory.Valuation.Basic
-import Mathlib.RingTheory.Valuation.ValuationRing
-import Mathlib.RingTheory.Valuation.RankOne
-import Mathlib.Topology.Algebra.Valued.ValuedField
-import Mathlib.Topology.Algebra.WithZeroTopology
-import Mathlib.NumberTheory.Padics.RingHoms
-import Mathlib.NumberTheory.Padics.Hensel
+import Mathlib.Algebra.Polynomial.Div
 import Mathlib.Algebra.Polynomial.SpecificDegree
-import Mathlib.Algebra.Polynomial.PartialFractions
-import Mathlib.RingTheory.QuasiFinite.Basic
+import Mathlib.NumberTheory.Padics.PadicNumbers
+import Mathlib.RingTheory.DiscreteValuationRing.Basic
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.Valuation.Basic
+import Mathlib.Topology.Algebra.WithZeroTopology
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Positivity
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions
 namespace Chapter09
@@ -186,14 +180,12 @@ theorem derivative_unit_on_residue_class {A : Type*} [CommRing A] [IsLocalRing A
     simpa [sub_eq_add_neg, add_assoc] using hdiff
   exact (notMem_maximalIdeal.mpr ha₀) hfa0
 
-/-- In a complete DVR, the valuation of a Newton error at least doubles. -/
+/-- In a DVR, the valuation of a Newton error at least doubles. -/
 theorem newton_error_valuation_doubles {A : Type*} [CommRing A] [IsDomain A]
-    [CompleteDVR A] (f : A[X]) (a : A)
-    (hfa : f.eval a ∈ IsLocalRing.maximalIdeal A)
+    [IsDiscreteValuationRing A] (f : A[X]) (a : A)
     (hunit : IsUnit (f.derivative.eval a)) :
     chapterDvrValuation A (f.eval (newtonCorrection f a)) ≥
       chapterDvrValuation A (f.eval a) + chapterDvrValuation A (f.eval a) := by
-  have _hfa := hfa
   let v := chapterDvrValuation A
   obtain ⟨g, hg⟩ := taylor_second_order f a (newtonCorrection f a - a)
   have hcancel :
@@ -232,7 +224,7 @@ theorem newton_error_valuation_doubles {A : Type*} [CommRing A] [IsDomain A]
 
 /-- The correction has the same DVR valuation as the current error when the derivative is a unit. -/
 theorem newton_correction_valuation {A : Type*} [CommRing A] [IsDomain A]
-    [CompleteDVR A] (f : A[X]) (a : A)
+    [IsDiscreteValuationRing A] (f : A[X]) (a : A)
     (hunit : IsUnit (f.derivative.eval a)) :
     chapterDvrValuation A (newtonCorrection f a - a) =
       chapterDvrValuation A (f.eval a) := by
@@ -378,8 +370,8 @@ private theorem newton_iterates_error_and_cauchy
       simpa [sub_eq_add_neg] using (I ^ m).neg_mem hinc
 
 /-- Newton iterates form an adic Cauchy sequence under the simple-root hypotheses. -/
-theorem newton_iterates_adic_cauchy {A : Type*} [CommRing A] [IsDomain A]
-    [CompleteDVR A] (f : A[X]) (a₀ : A)
+theorem newton_iterates_adic_cauchy {A : Type*} [CommRing A] [IsLocalRing A]
+    (f : A[X]) (a₀ : A)
     (hfa : f.eval a₀ ∈ IsLocalRing.maximalIdeal A)
     (hunit : IsUnit (f.derivative.eval a₀)) :
     AdicCauchySeq (newtonIterate f a₀) := by
@@ -531,7 +523,7 @@ theorem divided_difference_congruent_derivative {A : Type*} [CommRing A] [IsLoca
 
 /-- Two roots in the simple-root residue class coincide by the divided-difference argument. -/
 theorem simple_root_residue_class_unique {A : Type*} [CommRing A] [IsDomain A]
-    [CompleteDVR A] (f : A[X]) (a₀ a b : A)
+    [IsLocalRing A] (f : A[X]) (a₀ a b : A)
     (ha : f.eval a = 0)
     (hb : f.eval b = 0)
     (ha₀ : IsUnit (f.derivative.eval a₀))
@@ -567,7 +559,7 @@ private theorem mem_maximalIdeal_pow_iff_dvrVal_ge
 
 /-- Once the error has valuation at least `r`, the next Newton error has valuation at least `2r`. -/
 theorem newton_precision_doubles {A : Type*} [CommRing A] [IsDomain A]
-    [CompleteDVR A] (f : A[X]) (a : A) (r : ℕ)
+    [IsDiscreteValuationRing A] (f : A[X]) (a : A) (r : ℕ)
     (hunit : IsUnit (f.derivative.eval a))
     (hprecision : f.eval a ∈ (IsLocalRing.maximalIdeal A) ^ r) :
     f.eval (newtonCorrection f a) ∈ (IsLocalRing.maximalIdeal A) ^ (2 * r) := by
@@ -576,7 +568,7 @@ theorem newton_precision_doubles {A : Type*} [CommRing A] [IsDomain A]
   have hfa : f.eval a ∈ IsLocalRing.maximalIdeal A := by
     simpa only [pow_one] using
       (Ideal.pow_le_pow_right (Nat.one_le_iff_ne_zero.mpr hr)) hprecision
-  have hdouble := newton_error_valuation_doubles f a hfa hunit
+  have hdouble := newton_error_valuation_doubles f a hunit
   have hval : (r : ℕ∞) ≤ chapterDvrValuation A (f.eval a) :=
     (mem_maximalIdeal_pow_iff_dvrVal_ge (f.eval a) r).mp hprecision
   have hval' : ((2 * r : ℕ) : ℕ∞) ≤

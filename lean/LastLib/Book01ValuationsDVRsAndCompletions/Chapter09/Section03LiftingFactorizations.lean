@@ -1,4 +1,10 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section01CorrectingAnApproximateRoot
+import Mathlib.Algebra.Polynomial.Lifts
+import Mathlib.Algebra.Polynomial.PartialFractions
+import Mathlib.Topology.Algebra.WithZeroTopology
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions
 namespace Chapter09

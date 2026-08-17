@@ -1,4 +1,12 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section01CorrectingAnApproximateRoot
+import Mathlib.NumberTheory.Padics.Hensel
+import Mathlib.NumberTheory.Padics.PadicIntegers
+import Mathlib.NumberTheory.Padics.PadicNumbers
+import Mathlib.NumberTheory.Padics.RingHoms
+import Mathlib.Topology.Algebra.WithZeroTopology
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions
 namespace Chapter09
@@ -270,14 +278,14 @@ theorem padicSeven_first_approximation_mod_49 :
     PadicInt.toZModPow 2 padicSevenFirstNewtonApproximation = (10 : ZMod (7 ^ 2)) := by
   have h6 : IsUnit (6 : ℤ_[7]) := by
     apply PadicInt.isUnit_iff.mpr
-    exact PadicInt.norm_natCast_eq_one_iff.mpr (by norm_num)
+    exact PadicInt.norm_natCast_eq_one_iff.mpr (by decide)
   have hmapinv :
       PadicInt.toZModPow 2 (Ring.inverse (6 : ℤ_[7])) *
           PadicInt.toZModPow 2 (6 : ℤ_[7]) = 1 := by
     rw [← map_mul, Ring.inverse_mul_cancel _ h6, map_one]
   have h6mod : IsUnit (6 : ZMod (7 ^ 2)) := by
     apply (ZMod.isUnit_iff_coprime 6 (7 ^ 2)).mpr
-    norm_num
+    decide
   have hinvmod :
       PadicInt.toZModPow 2 (Ring.inverse (6 : ℤ_[7])) = (41 : ZMod (7 ^ 2)) := by
     apply h6mod.mul_right_cancel
@@ -331,14 +339,14 @@ theorem padicSeven_second_newton_precision :
   }
   have h6 : IsUnit (6 : ℤ_[7]) := by
     apply PadicInt.isUnit_iff.mpr
-    exact PadicInt.norm_natCast_eq_one_iff.mpr (by norm_num)
+    exact PadicInt.norm_natCast_eq_one_iff.mpr (by decide)
   have hinv : ‖(Ring.inverse (6 : ℤ_[7]))‖ = 1 := by
     apply PadicInt.isUnit_iff.mp
     exact isUnit_iff_exists_inv.mpr
       ⟨(6 : ℤ_[7]), Ring.inverse_mul_cancel 6 h6⟩
   have hcorr : ‖((7 : ℤ_[7]) * Ring.inverse (6 : ℤ_[7]))‖ < 1 := by
     rw [norm_mul, hinv, mul_one]
-    exact PadicInt.norm_natCast_lt_one_iff.mpr (by norm_num)
+    exact PadicInt.norm_natCast_lt_one_iff.mpr (by decide)
   have ha₁unit : IsUnit padicSevenFirstNewtonApproximation := by
     apply PadicInt.isUnit_iff.mpr
     have hnorm :
@@ -355,12 +363,12 @@ theorem padicSeven_second_newton_precision :
         ‖(3 : ℚ_[7])‖
       rw [norm_neg]
       have h3 : ‖(3 : ℚ_[7])‖ = 1 := by
-        exact Padic.norm_natCast_eq_one_iff.mpr (by norm_num)
+        exact Padic.norm_natCast_eq_one_iff.mpr (by decide)
       exact lt_of_lt_of_le hcorr h3.ge
     change ‖(padicSevenFirstNewtonApproximation : ℚ_[7])‖ = 1
     rw [hnorm]
     have h3 : ‖(3 : ℚ_[7])‖ = 1 := by
-      exact Padic.norm_natCast_eq_one_iff.mpr (by norm_num)
+      exact Padic.norm_natCast_eq_one_iff.mpr (by decide)
     exact h3
   have hderiv : IsUnit
       (padicSevenPolynomial.derivative.eval padicSevenFirstNewtonApproximation) := by
@@ -391,7 +399,8 @@ theorem padicSeven_second_newton_precision :
       rw [PadicInt.ker_toZModPow] at hmem
       simpa only [Nat.cast_ofNat] using hmem
     simpa [PadicInt.maximalIdeal_eq_span_p, Ideal.span_singleton_pow] using hroot₂'
-  have hroot₄ := @newton_precision_doubles ℤ_[7] _ _ hDVR padicSevenPolynomial
+  have hroot₄ := @newton_precision_doubles ℤ_[7] _ _
+    hDVR.toIsDiscreteValuationRing padicSevenPolynomial
     padicSevenFirstNewtonApproximation 2 hderiv hroot₂
   simpa [IsRootModuloPower, padicSevenSecondNewtonApproximation,
     PadicInt.maximalIdeal_eq_span_p, Ideal.span_singleton_pow] using hroot₄
