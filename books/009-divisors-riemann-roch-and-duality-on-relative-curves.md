@@ -2698,7 +2698,10 @@ with $a$ in the maximal ideal of the completed base. Once proved, that presentat
 useful completed frame $dx/x=-dy/y$ for the already constructed adjunction line. It is a
 consequence and a coordinate description, not an input to the assertion above. The stronger
 étale-local statement, that the family is étale locally cut out by $xy=a$ in a smooth relative
-surface, is not proved in this collection.
+surface, is not proved here and is nowhere used here. For the families in which it is first
+genuinely consumed, namely regular total spaces over a discrete valuation ring, where the
+smoothing parameter is forced to be the uniformizer, it is established later in the collection
+in Book 21, Theorem 19.2, by an elementary argument that needs no approximation theory.
 
 If sections mark smooth points $p_1,\ldots,p_n$, then
 
@@ -2925,12 +2928,24 @@ smooth relative surface, is _not_ proved here. Deducing it from (10.7) is an app
 problem: one has an isomorphism over the completion and wants to realize it over an étale
 neighborhood, which is the content of Artin approximation and requires excellence hypotheses on
 the base. Artin approximation is not developed in this collection. The completed form is used
-in place of it everywhere, and this suffices: the arguments that invoke the local model, in
+in place of it everywhere in this book, and this suffices: the arguments that invoke the local model, in
 the completed-frame discussion above and the later theory of nodal degenerations test freeness, length, and
 valuation, all of which are detected on completed stalks. Where the étale form would genuinely
 be needed is in producing an actual open or étale neighborhood with the displayed equation, for
 instance to construct global charts or to descend a formal isomorphism to a morphism of schemes;
-no argument in this collection does that.
+no argument in this book does that.
+
+Two cases should be kept apart. For a general flat family over a general complete local base, with
+$a$ an arbitrary element of $\mathfrak m$, the étale-local refinement remains unproved in this
+collection, and nothing anywhere relies on it. For the special case that the later semistable theory
+actually needs — the base a discrete valuation ring, the total space regular, so that the smoothing
+parameter has valuation one — the refinement is a theorem, proved in Book 21, Theorem 19.2. The
+proof there does not descend the formal isomorphism (10.7) at all, and so needs neither approximation
+nor excellence: regularity makes the local ring of the total space a two-dimensional regular local
+ring in which the uniformizer has a leading quadratic form with two independent linear factors, and
+splitting that form is the extraction of a simple root of a monic quadratic, hence a standard étale
+extension. The present remark is therefore a statement about the scope of this section, not a
+permanent limitation of the theory; nothing proved here uses anything from a later book.
 
 ## 11. Riemann--Roch over a field
 

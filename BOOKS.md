@@ -164,7 +164,10 @@ functoriality under finite maps and correspondences.
 
 21. **Étale Sheaves and Cohomology on Curves** — Give a unified account of étale cohomology for smooth proper and semistable curves. Study
     constructible and lisse sheaves, continuous ℓ-adic cohomology in low degrees, proper and smooth
-    base change, cup products, Frobenius, trace maps, and Poincaré duality. The culminating object is
+    base change, cup products, Frobenius, trace maps, and Poincaré duality. The étale-local model
+    $xy=\pi$ at a node of a regular semistable family, assumed in earlier drafts, is proved here
+    (Theorem 19.2) from Book 9's completed model by an elementary standard-étale argument. The
+    culminating object is
     (H^1_{\mathrm{\acute et}}), carrying both a continuous Galois action and functorial actions of
     algebraic correspondences.
 

@@ -34,10 +34,13 @@ in Book 9 itself), Book 11's Cohen-theory citations are routed to Book 1, Chapte
 of Hom its universal-divisor construction formerly assumed. Book 10a proves the excellence
 permanence theory (under one explicit standing hypothesis, residue fields of finite $p$-degree,
 satisfied by every base the collection uses), and Book 11's formerly explicit
-universally-excellent hypothesis is discharged against it. What remains: Book 9's flagged (and
-verifiably unused) étale-local nodal normal form. These interfaces are not silently assigned to
-`MATHLIB`, and the chronological rows below do not turn conclusions resting on them into
-unconditional ones.
+universally-excellent hypothesis is discharged against it. The last flagged interface — the
+étale-local nodal normal form, which Book 9 proves only after completion and which Book 21's
+semistable chapter consumes — is now proved as Book 21's Theorem 19.2 for the regular
+(thickness-one) families in which it is used, by an elementary standard-étale-algebra argument
+requiring no approximation theory. The stronger statement for an arbitrary flat family with
+arbitrary smoothing parameter remains unproved and is used nowhere; Book 9's remark marks it
+explicitly. No interface is silently assigned to `MATHLIB`.
 
 ## Preferred selected-three proof spine
 
@@ -77,7 +80,7 @@ flowchart LR
 |   18 | Derived Étale and $\ell$-adic Cohomology                                       | 5, 7a, 8, 9, 10, 11, 15, 16, 17, 17a, MATHLIB                                                                                                                     |
 |   19 | Proper and Smooth Base Change                                                  | 15, 18                                                                                                                                                            |
 |   20 | Étale Duality and Trace Maps for Curves                                        | 12, 17, 18, 19                                                                                                                                                    |
-|   21 | Étale Sheaves and Cohomology on Curves                                         | 16, 17, 18, 19, 20                                                                                                                                                |
+|   21 | Étale Sheaves and Cohomology on Curves                                         | 9, 10a, 11, 16, 17, 18, 19, 20                                                                                                                                    |
 |   22 | Nearby Cycles and Monodromy for Semistable Curves                              | 16, 18, 19, 20                                                                                                                                                    |
 |   23 | Lefschetz Trace Formulas for Curves                                            | 18, 19, 20                                                                                                                                                        |
 |   24 | Continuous Cohomology of Profinite Groups                                      | MATHLIB                                                                                                                                                           |
