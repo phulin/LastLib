@@ -147,22 +147,16 @@ theorem chapter03_separable_residue_extension_is_stable_under_base_change
     chapter03ResidueScalarExtensionIsFiniteEtale k l k' := by
   sorry
 
-/-- The compositum used for a base-change square. -/
-def chapter03BaseChangeCompositum
-    {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
-    (L K' : IntermediateField K Ω) : IntermediateField K Ω :=
-  L ⊔ K'
-
 noncomputable instance chapter03BaseChangeCompositumLeftAlgebra
     {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
     (L K' : IntermediateField K Ω) :
-    Algebra (↥L) (↥(chapter03BaseChangeCompositum L K')) :=
+    Algebra (↥L) (↥(L ⊔ K')) :=
   (IntermediateField.inclusion le_sup_left).toAlgebra
 
 noncomputable instance chapter03BaseChangeCompositumRightAlgebra
     {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
     (L K' : IntermediateField K Ω) :
-    Algebra (↥K') (↥(chapter03BaseChangeCompositum L K')) :=
+    Algebra (↥K') (↥(L ⊔ K')) :=
   (IntermediateField.inclusion le_sup_right).toAlgebra
 
 /- The source assertion is conditional on the two canonical directions of
@@ -176,18 +170,18 @@ theorem chapter03_totally_ramified_extension_after_unramified_base_change
     [PerfectField (IsLocalRing.ResidueField vK.valuationSubring)]
     (vL : Valuation (↥L) Γ)
     (vK' : Valuation (↥K') Γ)
-    (vC : Valuation (↥(chapter03BaseChangeCompositum L K')) Γ)
+    (vC : Valuation (↥(L ⊔ K')) Γ)
     [vK.HasExtension vL] [vK.HasExtension vK']
     [vK.HasExtension vC] [vL.HasExtension vC]
     [vK'.HasExtension vC]
-    [IsScalarTower K (↥L) (↥(chapter03BaseChangeCompositum L K'))]
-    [IsScalarTower K (↥K') (↥(chapter03BaseChangeCompositum L K'))]
+    [IsScalarTower K (↥L) (↥(L ⊔ K'))]
+    [IsScalarTower K (↥K') (↥(L ⊔ K'))]
     [Valuation.IsRankOneDiscrete vK]
     [Valuation.IsRankOneDiscrete vL]
     [Valuation.IsRankOneDiscrete vK']
     [Valuation.IsRankOneDiscrete vC]
-    [FiniteDimensional (↥L) (↥(chapter03BaseChangeCompositum L K'))]
-    [FiniteDimensional (↥K') (↥(chapter03BaseChangeCompositum L K'))]
+    [FiniteDimensional (↥L) (↥(L ⊔ K'))]
+    [FiniteDimensional (↥K') (↥(L ⊔ K'))]
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
     (hL_total :
