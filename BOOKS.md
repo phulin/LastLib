@@ -125,10 +125,10 @@ have finite $p$-degree, which holds for every base the collection uses.
     chapter remains a declared external interface. Blowups are asserted to commute with flat, not
     arbitrary, base change. Complete-local-ring structure theory is cited from Book 1, Chapter 13;
     the depth calculus culminates in Serre's homological characterization of regularity and the
-    Auslander--Buchsbaum theorem (regular local rings are factorial). Excellence is proved for the
-    base cases the manuscript actually uses (perfect fields, characteristic-zero Dedekind domains,
-    complete local rings); the full finite-type permanence of excellence is not proved and is
-    carried as an explicit universally-excellent hypothesis where needed.
+    Auslander--Buchsbaum theorem (regular local rings are factorial). Excellence is a theorem,
+    not a hypothesis: the permanence theory is cited from Book 10a, with the convention that
+    excellent rings have residue fields of finite $p$-degree (satisfied by every base the book
+    admits, and stated as a narrowing where it bites).
 
 12. **Blowups and Intersection Theory on Arithmetic Surfaces** — Develop blowups, strict
     transforms, local intersection multiplicities, projection formulas, fiber intersection

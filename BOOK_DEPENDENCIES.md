@@ -31,14 +31,13 @@ section, Book 9 constructs its residue pairing and proves Stein factorization (d
 Auslander--Buchsbaum theorem (with the dimension-at-most-two case Book 9 needs proved earlier,
 in Book 9 itself), Book 11's Cohen-theory citations are routed to Book 1, Chapter 13, and Book
 8 now proves descent of morphisms into quasi-projective targets, discharging the sheaf property
-of Hom its universal-divisor construction formerly assumed. What
-remains: the full
-finite-type permanence of excellence in Book 11, which is proved there only for the base cases
-the manuscript uses (perfect fields, characteristic-zero Dedekind domains, complete local rings)
-and is otherwise carried as an explicit universally-excellent hypothesis; and Book 9's flagged
-(and verifiably unused) étale-local nodal normal form. These interfaces are not silently
-assigned to `MATHLIB`, and the chronological rows below do not turn conclusions resting on them
-into unconditional ones.
+of Hom its universal-divisor construction formerly assumed. Book 10a proves the excellence
+permanence theory (under one explicit standing hypothesis, residue fields of finite $p$-degree,
+satisfied by every base the collection uses), and Book 11's formerly explicit
+universally-excellent hypothesis is discharged against it. What remains: Book 9's flagged (and
+verifiably unused) étale-local nodal normal form. These interfaces are not silently assigned to
+`MATHLIB`, and the chronological rows below do not turn conclusions resting on them into
+unconditional ones.
 
 ## Preferred selected-three proof spine
 
@@ -69,7 +68,7 @@ flowchart LR
 |    9 | Divisors, Riemann--Roch, and Duality on Relative Curves                        | 1, 7a, 7b, 8, MATHLIB                                                                                                                                             |
 |   10 | Faithfully Flat Descent in Algebraic Geometry                                  | 8, MATHLIB                                                                                                                                                        |
 |  10a | Excellent Rings and Formal Fibers                                              | 1, MATHLIB                                                                                                                                                        |
-|   11 | Normalization and Regular Models of Arithmetic Curves                          | 1, 8, 9, 10                                                                                                                                                       |
+|   11 | Normalization and Regular Models of Arithmetic Curves                          | 1, 8, 9, 10, 10a                                                                                                                                                  |
 |   12 | Blowups and Intersection Theory on Arithmetic Surfaces                         | 9, 11                                                                                                                                                             |
 |   15 | Coherent Cohomology in Proper Families                                         | 7a, 8, 10, MATHLIB                                                                                                                                                |
 |   16 | Semistable Curves, Dual Graphs, and Component Groups                           | 8, 9, 10, 11, 12, 15                                                                                                                                              |
