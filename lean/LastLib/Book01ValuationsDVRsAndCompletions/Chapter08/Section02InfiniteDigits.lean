@@ -599,8 +599,7 @@ def Chapter08CoefficientwiseAdditiveCoding
 private theorem chapter08_mixed_characteristic_no_additive_residue_section
     {A : Type*} [CommRing A] [IsDomain A] [IsLocalRing A] [CharZero A]
     (I : Ideal A) (p : ℕ) [Fact p.Prime]
-    (hI : I = Ideal.span {(p : A)})
-    (hImax : I = IsLocalRing.maximalIdeal A) :
+    (hpI : (p : A) ∈ I) (hIproper : I ≠ (⊤ : Ideal A)) :
     ¬ ∃ f : (A ⧸ I) →+ A, Function.Injective f := by
   classical
   rintro ⟨f, hf⟩
@@ -612,11 +611,7 @@ private theorem chapter08_mixed_characteristic_no_additive_residue_section
     have hq : p • (Ideal.Quotient.mk I a) = 0 := by
       rw [← map_nsmul]
       apply Ideal.Quotient.eq_zero_iff_mem.mpr
-      rw [hI]
-      have hpI : (p : A) ∈ Ideal.span {(p : A)} :=
-        Ideal.mem_span_singleton_self (p : A)
-      simpa [nsmul_eq_mul, mul_comm] using
-        (Ideal.span {(p : A)}).mul_mem_left a hpI
+      simpa [nsmul_eq_mul, mul_comm] using I.mul_mem_left a hpI
     have hpq' : p • f (Ideal.Quotient.mk I a) = 0 := by
       calc
         p • f (Ideal.Quotient.mk I a) =
@@ -625,21 +620,18 @@ private theorem chapter08_mixed_characteristic_no_additive_residue_section
     have hpq : (p : A) * f (Ideal.Quotient.mk I a) = 0 := by
       simpa [nsmul_eq_mul] using hpq'
     exact (mul_eq_zero.mp hpq).resolve_left hp
-  have hItop : I ≠ (⊤ : Ideal A) := by
-    rw [hImax]
-    exact (IsLocalRing.maximalIdeal.isMaximal A).ne_top
-  exact (Ideal.Quotient.zero_ne_one_iff.mpr hItop) (hf (by simp [hzero]))
+  exact (Ideal.Quotient.zero_ne_one_iff.mpr hIproper) (hf (by simp [hzero]))
 
 /-! In mixed characteristic, the absence of a coefficient-field embedding is the carry
 obstruction behind the preceding set-theoretic, rather than coefficientwise-ring, model. -/
 private theorem chapter08_mixed_characteristic_additive_section_obstruction
     {A : Type*} [CommRing A] [CharZero A] (I : Ideal A) (S : Set A)
-    (p : ℕ) [Fact p.Prime]
-    (_hI : I = Ideal.span {(p : A)})
+    (π : A) (p : ℕ) [Fact p.Prime]
+    (_hI : I = Ideal.span {π})
     (hS : Chapter08IsResidueRepresentativeSet A I S)
     (hnoembed : ¬ ∃ f : (A ⧸ I) →+ A, Function.Injective f)
     (e : AdicCompletion I A ≃ Chapter08DigitSequences A S)
-    (hdigits : ∀ x, Chapter08DigitExpansion I (p : A) S x (e x).1) :
+    (hdigits : ∀ x, Chapter08DigitExpansion I π S x (e x).1) :
     ¬ Chapter08CoefficientwiseAdditiveCoding I S e := by
   classical
   intro hadd
@@ -720,18 +712,22 @@ private theorem chapter08_mixed_characteristic_additive_section_obstruction
 
 theorem chapter08_mixed_characteristic_digit_carries_obstruct_coefficientwise_addition
     {A : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A] [CharZero A]
-    (I : Ideal A) (S : Set A)
+    (I : Ideal A) (S : Set A) (π : A)
     (p : ℕ) [Fact p.Prime]
-    (hI : I = Ideal.span {(p : A)})
+    (hI : I = Ideal.span {π})
     (hS : Chapter08IsResidueRepresentativeSet A I S)
     (hImax : I = IsLocalRing.maximalIdeal A)
+    (hpI : (p : A) ∈ I)
     (e : AdicCompletion I A ≃ Chapter08DigitSequences A S)
-    (hdigits : ∀ x, Chapter08DigitExpansion I (p : A) S x (e x).1) :
+    (hdigits : ∀ x, Chapter08DigitExpansion I π S x (e x).1) :
     ¬ Chapter08CoefficientwiseAdditiveCoding I S e := by
+  have hIproper : I ≠ (⊤ : Ideal A) := by
+    rw [hImax]
+    exact (IsLocalRing.maximalIdeal.isMaximal A).ne_top
   have hnoembed :=
-    chapter08_mixed_characteristic_no_additive_residue_section I p hI hImax
+    chapter08_mixed_characteristic_no_additive_residue_section I p hpI hIproper
   exact chapter08_mixed_characteristic_additive_section_obstruction
-    I S p hI hS hnoembed e hdigits
+    I S π p hI hS hnoembed e hdigits
 
 /-! Equal characteristic: a coefficient field gives literal formal-series coefficients. -/
 structure Chapter08CoefficientFieldSection
