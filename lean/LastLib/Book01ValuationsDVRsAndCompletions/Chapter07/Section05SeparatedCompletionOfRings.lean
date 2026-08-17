@@ -1,12 +1,14 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter07.Section04CompletionOfTheValuationRing
+import Mathlib.RingTheory.AdicCompletion.Noetherian
+import Mathlib.RingTheory.AdicCompletion.RingHom
+import Mathlib.RingTheory.Valuation.Discrete.IsDiscreteValuationRing
 import Mathlib.Topology.Algebra.IsUniformGroup.Constructions
 import Mathlib.Topology.Algebra.Ring.Basic
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter07
 
 open Filter Set Function MonoidWithZeroHom
-open scoped BigOperators Topology PowerSeries LaurentSeries RatFunc WithZero
-  WithZeroTopology Multiplicative
+open scoped BigOperators Topology WithZero
 
 noncomputable section
 

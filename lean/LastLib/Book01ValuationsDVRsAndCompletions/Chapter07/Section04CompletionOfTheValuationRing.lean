@@ -1,10 +1,13 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter07.Section02ExtendingInverses
+import Mathlib.RingTheory.AdicCompletion.Completeness
+import Mathlib.RingTheory.AdicCompletion.Topology
+import Mathlib.RingTheory.DiscreteValuationRing.Basic
+import Mathlib.RingTheory.Valuation.ValuationSubring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter07
 
 open Filter Set Function MonoidWithZeroHom
-open scoped BigOperators Topology PowerSeries LaurentSeries RatFunc WithZero
-  WithZeroTopology Multiplicative
+open scoped Topology WithZero
 
 noncomputable section
 

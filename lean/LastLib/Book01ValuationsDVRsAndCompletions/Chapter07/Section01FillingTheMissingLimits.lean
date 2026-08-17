@@ -1,34 +1,17 @@
 import Mathlib.Algebra.Order.Archimedean.Basic
-import Mathlib.Algebra.Module.PID
+import Mathlib.Data.Nat.Digits.Lemmas
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Data.ZMod.QuotientRing
-import Mathlib.FieldTheory.RatFunc.Basic
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib.NumberTheory.Padics.PadicNumbers
-import Mathlib.RingTheory.AdicCompletion.Basic
-import Mathlib.RingTheory.AdicCompletion.Completeness
-import Mathlib.RingTheory.AdicCompletion.Noetherian
-import Mathlib.RingTheory.AdicCompletion.Functoriality
-import Mathlib.RingTheory.AdicCompletion.RingHom
-import Mathlib.RingTheory.AdicCompletion.Topology
-import Mathlib.RingTheory.DedekindDomain.Dvr
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
+import Mathlib.Analysis.Normed.Group.Continuity
+import Mathlib.Analysis.Normed.Group.Real
 import Mathlib.RingTheory.Ideal.Int
-import Mathlib.RingTheory.LaurentSeries
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.RingTheory.PowerSeries.Trunc
-import Mathlib.RingTheory.Valuation.Discrete.RankOne
-import Mathlib.RingTheory.Valuation.Discrete.IsDiscreteValuationRing
-import Mathlib.RingTheory.Valuation.ValuationRing
-import Mathlib.Topology.Algebra.Module.FiniteDimension
-import Mathlib.Topology.Algebra.Valued.LocallyCompact
-import Mathlib.Topology.MetricSpace.Pseudo.Defs
+import Mathlib.RingTheory.Localization.AtPrime.Basic
+import Mathlib.Topology.Algebra.Valued.ValuedField
 import Mathlib.Topology.UniformSpace.AbsoluteValue
 import Mathlib.Topology.UniformSpace.Cauchy
 import Mathlib.Topology.UniformSpace.Completion
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
+import Mathlib.Topology.UniformSpace.Real
+import Mathlib.Tactic.NoncommRing
 import Mathlib.Tactic.Order
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
@@ -36,8 +19,7 @@ import Mathlib.Tactic.Ring
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter07
 
 open Filter Set Function MonoidWithZeroHom
-open scoped BigOperators Topology PowerSeries LaurentSeries RatFunc WithZero
-  WithZeroTopology Multiplicative
+open scoped BigOperators Topology
 
 noncomputable section
 

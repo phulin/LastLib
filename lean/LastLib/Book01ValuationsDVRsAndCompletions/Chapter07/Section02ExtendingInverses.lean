@@ -1,10 +1,10 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter07.Section01FillingTheMissingLimits
+import Mathlib.RingTheory.Valuation.Discrete.RankOne
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter07
 
 open Filter Set Function MonoidWithZeroHom
-open scoped BigOperators Topology PowerSeries LaurentSeries RatFunc WithZero
-  WithZeroTopology Multiplicative
+open scoped Topology WithZero
 
 noncomputable section
 
@@ -281,29 +281,67 @@ noncomputable def chapter07DiscreteValueGroupEquiv
     ValueGroup₀ (.ofClass v) ≃*o ℤᵐ⁰ :=
   Valuation.IsRankOneDiscrete.valueGroup₀_equiv_withZeroMulInt v
 
-/- Order-theoretic approximation of a completed value by values from the dense field. -/
+/- Approximation of a completed element by an element of the dense field. -/
 def Chapter07ValueApproximatedByOriginalValues
     {K Γ₀ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ₀]
     [Valued K Γ₀] (x : UniformSpace.Completion K) : Prop :=
-  ∀ γ : Γ₀, γ < chapter07CompletionValuation K Γ₀ x →
-    ∃ r : K, γ < Valued.v r
+  ∃ r : K,
+    chapter07CompletionValuation K Γ₀ (x - (r : UniformSpace.Completion K)) <
+      chapter07CompletionValuation K Γ₀ x ∧
+        chapter07CompletionValuation K Γ₀ (r : UniformSpace.Completion K) =
+          chapter07CompletionValuation K Γ₀ x
 
--- Nonzero values in the completed field are limits of values from the original field.
+-- A nonzero completed element has an original representative strictly closer than it is to zero.
 theorem chapter07_completion_nonzero_value_is_approximated
     {K Γ₀ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ₀]
     [Valued K Γ₀] (x : UniformSpace.Completion K) (hx : x ≠ 0) :
     Chapter07ValueApproximatedByOriginalValues x := by
-  intro γ hγ
-  obtain ⟨r, hr⟩ := Valued.exists_coe_eq_v x
-  have hr0 : r ≠ 0 := by
-    intro hr0
-    apply hx
-    have hzero : Valued.extensionValuation x = 0 := by
-      simpa [hr0] using hr
-    exact (Valuation.zero_iff _).mp hzero
-  refine ⟨r, ?_⟩
-  exact (fun _ : r ≠ 0 => by
-    simpa [chapter07CompletionValuation, hr] using hγ) hr0
+  let δ : MonoidWithZeroHom.ValueGroup₀
+      (.ofClass (Valued.v : Valuation (UniformSpace.Completion K) Γ₀)) :=
+    (Valued.v : Valuation (UniformSpace.Completion K) Γ₀).restrict x
+  have hδpos : 0 < δ := by
+    apply (Valuation.restrict_pos_iff
+      (v := (Valued.v : Valuation (UniformSpace.Completion K) Γ₀)) x).2
+    exact (Valuation.pos_iff (Valued.v : Valuation (UniformSpace.Completion K) Γ₀)).2 hx
+  let U : Set (UniformSpace.Completion K) :=
+    {z | (Valued.v : Valuation (UniformSpace.Completion K) Γ₀).restrict (z - x) < δ}
+  have hUopen : IsOpen U := by
+    have hball := Valued.isOpen_ball (UniformSpace.Completion K) δ
+    have htop : Valued.valuedCompletion.toTopologicalSpace =
+        (UniformSpace.Completion.uniformSpace K).toTopologicalSpace := by
+      rfl
+    rw [htop] at hball
+    simpa [U] using
+      hball.preimage (continuous_id.sub continuous_const)
+  have hUmem : U ∈ 𝓝 x := by
+    apply hUopen.mem_nhds
+    change (Valued.v : Valuation (UniformSpace.Completion K) Γ₀).restrict (x - x) < δ
+    rw [sub_self, map_zero]
+    exact hδpos
+  obtain ⟨r, hr⟩ :=
+    UniformSpace.Completion.denseRange_coe.mem_nhds hUmem
+  have hrestrict :
+      (Valued.v : Valuation (UniformSpace.Completion K) Γ₀).restrict
+          ((r : K) - x) < δ := by
+    exact hr
+  have hlt :
+      (Valued.v : Valuation (UniformSpace.Completion K) Γ₀) ((r : K) - x) <
+        (Valued.v : Valuation (UniformSpace.Completion K) Γ₀) x := by
+    have hlt' := (Valuation.restrict_lt_iff_lt_embedding
+      (v := (Valued.v : Valuation (UniformSpace.Completion K) Γ₀))).mp hrestrict
+    simpa [δ, Valuation.embedding_restrict] using hlt'
+  refine ⟨r, ?_, ?_⟩
+  · change (Valued.v : Valuation (UniformSpace.Completion K) Γ₀)
+        (x - (r : UniformSpace.Completion K)) <
+      (Valued.v : Valuation (UniformSpace.Completion K) Γ₀) x
+    rw [show x - (r : UniformSpace.Completion K) = -((r : K) - x) by ring,
+      (Valued.v : Valuation (UniformSpace.Completion K) Γ₀).map_neg]
+    exact hlt
+  · change (Valued.v : Valuation (UniformSpace.Completion K) Γ₀)
+        (r : UniformSpace.Completion K) =
+      (Valued.v : Valuation (UniformSpace.Completion K) Γ₀) x
+    exact Valuation.map_eq_of_sub_lt
+      (v := (Valued.v : Valuation (UniformSpace.Completion K) Γ₀)) hlt
 
 /- Order closure of the original value set at a completed nonzero value. -/
 def Chapter07ValueInOrderClosureOfOriginalValues

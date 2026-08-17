@@ -1,13 +1,16 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter07.Section05SeparatedCompletionOfRings
+import Mathlib.FieldTheory.RatFunc.Basic
 import Mathlib.NumberTheory.Padics.RingHoms
+import Mathlib.RingTheory.LaurentSeries
+import Mathlib.RingTheory.PowerSeries.Basic
+import Mathlib.RingTheory.PowerSeries.Trunc
 import Mathlib.SetTheory.Cardinal.Continuum
 import Mathlib.Topology.Algebra.Module.Cardinality
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter07
 
 open Filter Set Function MonoidWithZeroHom
-open scoped BigOperators Topology PowerSeries LaurentSeries RatFunc WithZero
-  WithZeroTopology Multiplicative
+open scoped Topology
 
 noncomputable section
 
@@ -869,17 +872,6 @@ theorem chapter07_laurent_series_have_rational_approximations
   exact LaurentSeries.coe_range_dense f
 
 /-! ### 7.6. The chosen valuation controls the completion -/
-
--- Completion as a construction parameterized by the chosen uniformity.
-def chapter07CompletionForUniformity
-    (K : Type*) (u : UniformSpace K) : Type _ :=
-  @UniformSpace.Completion K u
-
--- The completion construction remembers the chosen uniformity.
-theorem chapter07_completion_is_parameterized_by_uniformity
-    (K : Type*) (u : UniformSpace K) :
-    chapter07CompletionForUniformity K u = @UniformSpace.Completion K u := by
-  rfl
 
 abbrev chapter07ArchimedeanRationalCompletion : Type _ :=
   ℝ

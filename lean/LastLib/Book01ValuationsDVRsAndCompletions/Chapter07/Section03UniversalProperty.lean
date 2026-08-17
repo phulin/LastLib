@@ -3,8 +3,7 @@ import LastLib.Book01ValuationsDVRsAndCompletions.Chapter07.Section02ExtendingIn
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter07
 
 open Filter Set Function MonoidWithZeroHom
-open scoped BigOperators Topology PowerSeries LaurentSeries RatFunc WithZero
-  WithZeroTopology Multiplicative
+open scoped Topology
 
 noncomputable section
 
@@ -125,7 +124,7 @@ def chapter07ValuationCompatibleRingHom
 theorem chapter07_completion_extension_preserves_valuation
     {K F Γ₀ : Type*} [Field K] [Field F]
     [LinearOrderedCommGroupWithZero Γ₀] [Valued K Γ₀] [Valued F Γ₀]
-    [CompleteSpace F] [T0Space F] [T2Space Γ₀]
+    [CompleteSpace F] [T0Space F]
     (f : K →+* F) (hf : Continuous f)
     (hcompat : chapter07ValuationCompatibleRingHom
       (Valued.v (R := K)) (Valued.v (R := F)) f) :
