@@ -1,5 +1,12 @@
 import LastLib.Book04AdelesAndIdeles.Chapter02.Core
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section01SeparatingBranchesByCompletion
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section02TheCompletedProductTheorem
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.Section04TheValuationOfANorm
+import Mathlib.NumberTheory.NumberField.Norm
 import Mathlib.RingTheory.Complex
+import Mathlib.RingTheory.TensorProduct.Basic
+import Mathlib.RingTheory.TensorProduct.Finite
+import Mathlib.RingTheory.Valuation.ValuationSubring
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter02
 
@@ -14,9 +21,11 @@ open scoped BigOperators TensorProduct WithTop
 def Chapter02TensorCompletionBranchDecomposition
     (K L Kᵥ : Type*) [CommRing K] [CommRing L] [CommRing Kᵥ]
     [Algebra K L] [Algebra K Kᵥ]
+    [Algebra Kᵥ (L ⊗[K] Kᵥ)]
     {ι : Type*} [Fintype ι] (Lω : ι → Type*)
-    [∀ i, CommRing (Lω i)] : Prop :=
-  Nonempty (L ⊗[K] Kᵥ ≃+* (∀ i, Lω i))
+    [∀ i, CommRing (Lω i)] [∀ i, Algebra Kᵥ (Lω i)] : Prop :=
+  LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.hasCompletedAlgebraProduct
+    K L Kᵥ Lω
 
 /- The same branch-indexing interface is needed at archimedean places; the
 finite version below is not a substitute because the completions and the
@@ -30,8 +39,10 @@ structure Chapter02InfiniteLocalBranchDecomposition
   distinct : Function.Injective w
   exhaustive : ∀ z : Chapter02InfinitePlace L,
     z.LiesOver v → ∃ i, w i = z
+  [tensorAlgebra : Algebra v.Completion (L ⊗[K] v.Completion)]
+  [branchAlgebra : ∀ i, Algebra v.Completion (w i).Completion]
   decomposition : Nonempty
-    (L ⊗[K] v.Completion ≃+*
+    (L ⊗[K] v.Completion ≃ₐ[v.Completion]
       (∀ i, (w i).Completion))
 
 /-- A finite branch lies over a base finite place when its restriction is in the
@@ -53,8 +64,12 @@ structure Chapter02FiniteLocalBranchDecomposition
   distinct : Function.Injective w
   exhaustive : ∀ z : Chapter02FinitePlace L,
     Chapter02FinitePlaceLiesOver v z → ∃ i, w i = z
+  [tensorAlgebra : Algebra (Chapter02FiniteCompletion v)
+      (L ⊗[K] Chapter02FiniteCompletion v)]
+  [branchAlgebra : ∀ i, Algebra (Chapter02FiniteCompletion v)
+      (Chapter02FiniteCompletion (w i))]
   decomposition : Nonempty
-    (L ⊗[K] Chapter02FiniteCompletion v ≃+*
+    (L ⊗[K] Chapter02FiniteCompletion v ≃ₐ[Chapter02FiniteCompletion v]
       (∀ i, Chapter02FiniteCompletion (w i)))
 
 /-- A packaged existential witness for the finite-place completed product. -/
@@ -101,8 +116,9 @@ isomorphism available to later chapters. -/
 structure Chapter02TensorCompletionBranchData
     (K L Kᵥ : Type*) [CommRing K] [CommRing L] [CommRing Kᵥ]
     [Algebra K L] [Algebra K Kᵥ]
+    [Algebra Kᵥ (L ⊗[K] Kᵥ)]
     {ι : Type*} [Fintype ι] (Lω : ι → Type*)
-    [∀ i, CommRing (Lω i)] where
+    [∀ i, CommRing (Lω i)] [∀ i, Algebra Kᵥ (Lω i)] where
   decomposition : Chapter02TensorCompletionBranchDecomposition K L Kᵥ Lω
 
 /-- The completed-product theorem imported from the earlier completion chapter,
@@ -257,7 +273,7 @@ def Chapter02ProductAlgebraNorm
     (Lω : ι → Type*) [∀ i, Field (Lω i)]
     [∀ i, Algebra K (Lω i)] [∀ i, Module.Finite K (Lω i)]
     (x : ∀ i, Lω i) : K :=
-  ∏ i, Algebra.norm K (x i)
+  Algebra.norm K x
 
 theorem chapter02_product_algebra_norm_is_componentwise
     (K : Type*) [Field K] {ι : Type*} [Fintype ι]
@@ -265,7 +281,7 @@ theorem chapter02_product_algebra_norm_is_componentwise
     [∀ i, Algebra K (Lω i)] [∀ i, Module.Finite K (Lω i)]
     (x : ∀ i, Lω i) :
     Chapter02ProductAlgebraNorm K Lω x = ∏ i, Algebra.norm K (x i) := by
-  rfl
+  sorry
 
 theorem chapter02_product_algebra_norm_absolute_value_is_componentwise
     (K : Type*) [Field K] {ι : Type*} [Fintype ι]
@@ -276,8 +292,7 @@ theorem chapter02_product_algebra_norm_absolute_value_is_componentwise
     (hω : ∀ i y, abvK (Algebra.norm K y) = abvω i y)
     (x : ∀ i, Lω i) :
     abvK (Chapter02ProductAlgebraNorm K Lω x) = ∏ i, abvω i (x i) := by
-  rw [Chapter02ProductAlgebraNorm, map_prod]
-  exact Finset.prod_congr rfl (fun i _ => hω i (x i))
+  sorry
 
 end
 

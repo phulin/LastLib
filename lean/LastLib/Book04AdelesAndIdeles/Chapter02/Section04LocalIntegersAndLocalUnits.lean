@@ -3,6 +3,10 @@ import LastLib.Book04AdelesAndIdeles.Chapter01.Section02NumberFieldsAndIntegers
 import Mathlib.Topology.Algebra.IsOpenUnits
 import Mathlib.Topology.Algebra.Ring.Compact
 import Mathlib.Topology.Algebra.Valued.WithZeroMulInt
+import Mathlib.Topology.Algebra.Valued.LocallyCompact
+import Mathlib.Topology.Algebra.Valued.ValuationTopology
+import Mathlib.RingTheory.Valuation.Discrete.RankOne
+import Mathlib.RingTheory.Valuation.ValuationSubring
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter02
 

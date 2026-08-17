@@ -1,5 +1,8 @@
 import LastLib.Book04AdelesAndIdeles.Chapter02.Core
+import Mathlib.Analysis.AbsoluteValue.Equivalence
 import Mathlib.NumberTheory.Padics.Hensel
+import Mathlib.NumberTheory.Padics.PadicNumbers
+import Mathlib.Tactic.NormNum.Prime
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter02
 

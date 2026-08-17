@@ -2,6 +2,10 @@ import LastLib.Book04AdelesAndIdeles.Chapter02.Section02TheGlobalNormalization
 import LastLib.Book04AdelesAndIdeles.Chapter02.Section03TheRationalModelForAllNormalizations
 import LastLib.Book04AdelesAndIdeles.Chapter02.Section04LocalIntegersAndLocalUnits
 import LastLib.Book04AdelesAndIdeles.Chapter02.Section05ExtensionAndLocalNorms
+import Mathlib.NumberTheory.NumberField.Completion.Ramification
+import Mathlib.NumberTheory.Padics.PadicNumbers
+import Mathlib.RingTheory.DedekindDomain.Factorization
+import Mathlib.RingTheory.RamificationInertia.Basic
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter02
 
@@ -165,7 +169,8 @@ noncomputable def Chapter02RationalPAdicOrder
 theorem chapter02_scalar_order_is_ramification_times_rational_order
     {K : Type*} [Field K] [NumberField K]
     (p : Chapter02RationalPrime) (q : Chapter02PrimeAbove K p) (a : ℚˣ) :
-    Chapter02FiniteOrder q.1 (Units.map (algebraMap ℚ K) a) =
+    LastLib.Book04AdelesAndIdeles.Chapter01.chapter01UnitOrder q.1
+        (Units.map (algebraMap ℚ K) a) =
       (Chapter02RamificationIndex q : ℤ) * Chapter02RationalPAdicOrder p a := by
   sorry
 

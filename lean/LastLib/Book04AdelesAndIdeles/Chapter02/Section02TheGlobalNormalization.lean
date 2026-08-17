@@ -1,4 +1,8 @@
 import LastLib.Book04AdelesAndIdeles.Chapter02.Core
+import LastLib.Book04AdelesAndIdeles.Chapter01.Dependencies
+import Mathlib.NumberTheory.NumberField.Norm
+import Mathlib.NumberTheory.NumberField.ProductFormula
+import Mathlib.RingTheory.Complex
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter02
 
@@ -16,19 +20,13 @@ def Chapter02FiniteNormalizedValue
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) (x : K) : ℝ :=
   NumberField.FinitePlace.mk v x
 
-/-- The integer-valued order of a nonzero element at a finite prime. -/
-noncomputable def Chapter02FiniteOrder
-    {K : Type*} [Field K] [NumberField K]
-    (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) (x : Kˣ) : ℤ :=
-  -((WithZero.unzero
-      ((v.valuation K).ne_zero_iff.mpr x.ne_zero)).toAdd)
-
 /-- The finite normalization is `N(v)^(-ord_v)` on `Kˣ`. -/
 theorem chapter02_finite_normalization_formula
     {K : Type*} [Field K] [NumberField K]
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) (x : Kˣ) :
     Chapter02FiniteNormalizedValue v (x : K) =
-      (v.asIdeal.absNorm : ℝ) ^ (-Chapter02FiniteOrder v x) := by
+      (v.asIdeal.absNorm : ℝ) ^
+        (-LastLib.Book04AdelesAndIdeles.Chapter01.chapter01UnitOrder v x) := by
   sorry
 
 /-- The real-place convention. -/
@@ -140,13 +138,31 @@ theorem chapter02_complex_unweighted_and_squared_conventions_differ
     hw.mult_eq_two, hw2]
   norm_num
 
-theorem chapter02_mixing_squared_and_unsquared_complex_conventions_changes_the_product
+theorem chapter02_mixing_squared_and_unsquared_complex_conventions_differ_at_the_place
     {K : Type*} [Field K] [NumberField K]
     (w : Chapter02InfinitePlace K) (hw : w.IsComplex) :
     ¬(∀ x : K, Chapter02InfiniteNormalizedValue w x =
         Chapter02UnweightedInfiniteValue w x) := by
   obtain ⟨x, hx⟩ := chapter02_complex_unweighted_and_squared_conventions_differ w hw
   exact fun h => hx (h x)
+
+/-- The global product obtained by replacing one complex normalized factor by
+the unsquared convention. -/
+noncomputable def Chapter02MixedComplexGlobalProduct
+    {K : Type*} [Field K] [NumberField K]
+    (w : Chapter02InfinitePlace K) (x : K) : ℝ := by
+  classical
+  exact
+    (∏ w' : Chapter02InfinitePlace K,
+      if w' = w then Chapter02UnweightedInfiniteValue w' x
+      else Chapter02InfiniteNormalizedValue w' x) *
+      ∏ᶠ w' : Chapter02FinitePlace K, w' x
+
+theorem chapter02_mixing_squared_and_unsquared_complex_conventions_changes_the_product
+    {K : Type*} [Field K] [NumberField K]
+    (w : Chapter02InfinitePlace K) (hw : w.IsComplex) :
+    ∃ x : K, Chapter02MixedComplexGlobalProduct w x ≠ 1 := by
+  sorry
 
 end
 

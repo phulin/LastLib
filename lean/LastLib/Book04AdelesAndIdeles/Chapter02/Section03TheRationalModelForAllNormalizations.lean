@@ -1,4 +1,7 @@
 import LastLib.Book04AdelesAndIdeles.Chapter02.Core
+import Mathlib.Analysis.AbsoluteValue.Equivalence
+import Mathlib.NumberTheory.Ostrowski
+import Mathlib.NumberTheory.Padics.PadicNumbers
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter02
 
@@ -233,7 +236,7 @@ theorem chapter02_restriction_to_Q_has_local_degree_weight
       Chapter02RestrictionHasDegreeExponent v u d := by
   sorry
 
-theorem chapter02_restriction_weights_are_local_degrees
+theorem chapter02_restriction_weight_is_positive
     {K : Type*} [Field K] [NumberField K]
     (v : Chapter02Place K) (u : Chapter02RationalNormalizedPlace) (d : ℕ)
     (h : Chapter02RestrictionHasDegreeExponent v u d) :
