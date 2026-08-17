@@ -707,7 +707,7 @@ theorem henselian_local_ring_integral_closure_is_local
     [Field K] [Field L] [Algebra A K] [IsFractionRing A K]
     [Algebra K L] [FiniteDimensional K L] [Algebra A L]
     [IsScalarTower A K L] [HenselianLocalRing A]
-    (hfinite : Module.Finite A (integralClosure A L)) :
+    (_hfinite : Module.Finite A (integralClosure A L)) :
     IsLocalRing (integralClosure A L) := by
   let vA := ValuationRing.valuation A K
   let hA : vA.Integers A :=
@@ -721,7 +721,7 @@ theorem henselian_local_ring_integral_closure_is_local
         rw [← Valuation.mem_integer_iff, ValuationRing.range_algebraMap_eq] at hx
         rcases hx with ⟨a, ha⟩
         exact ⟨a, ha⟩ }
-  letI : IsIntegrallyClosed A := hA.isIntegrallyClosed
+  let : IsIntegrallyClosed A := hA.isIntegrallyClosed
   let alg : A →+* vA.valuationSubring :=
     (algebraMap A K).codRestrict vA.valuationSubring
       (fun a => hA.map_le_one a)
@@ -735,7 +735,7 @@ theorem henselian_local_ring_integral_closure_is_local
       refine ⟨a, Subtype.ext ?_⟩
       exact ha
   let e : A ≃+* vA.valuationSubring := RingEquiv.ofBijective alg halg_bij
-  letI : IsLocalRing vA.valuationSubring := e.isLocalRing
+  let : IsLocalRing vA.valuationSubring := e.isLocalRing
   have hmaxmap :
       (IsLocalRing.maximalIdeal A).map e.toRingHom =
         IsLocalRing.maximalIdeal vA.valuationSubring :=
@@ -744,7 +744,7 @@ theorem henselian_local_ring_integral_closure_is_local
       (IsLocalRing.maximalIdeal vA.valuationSubring).map e.symm.toRingHom =
         IsLocalRing.maximalIdeal A :=
     IsLocalRing.map_ringEquiv_maximalIdeal e.symm
-  letI : HenselianLocalRing vA.valuationSubring := by
+  let : HenselianLocalRing vA.valuationSubring := by
     refine { toIsLocalRing := inferInstance, is_henselian := ?_ }
     intro f hf a₀ hfa hunit
     let fA := f.map e.symm.toRingHom
@@ -809,7 +809,7 @@ theorem henselian_local_ring_integral_closure_is_local
     rw [← IsScalarTower.algebraMap_apply A C L,
       ← IsScalarTower.algebraMap_apply A C L] at habL
     exact habL
-  letI : FaithfulSMul A C :=
+  let : FaithfulSMul A C :=
     (faithfulSMul_iff_algebraMap_injective A C).mpr hmap_inj
   obtain ⟨P, hPmax, hPover⟩ :=
     Ideal.exists_maximal_ideal_liesOver_of_isIntegral
