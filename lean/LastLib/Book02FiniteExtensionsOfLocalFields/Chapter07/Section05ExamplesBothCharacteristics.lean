@@ -125,6 +125,7 @@ theorem chapter07_purely_inseparable_residue_profile
           ramificationIndex := E.ramificationIndex
           residueDegree := E.residueDegree } ∧
       Chapter07EOneInseparableResidueExtension E ∧
+      Chapter07ResidueExtensionIsPurelyInseparable k k' ∧
       ¬Chapter07UnramifiedExtension E := by
   have hres : E.residueDegree = d.residueDegree := by
     apply Nat.mul_right_cancel hinsep.1
@@ -140,10 +141,9 @@ theorem chapter07_purely_inseparable_residue_profile
     intro x
     obtain ⟨n, y, hy⟩ := hinsep.2 x
     exact ⟨n, ⟨y, hy.symm⟩⟩
-  exact And.intro hprofile
-    (And.intro ⟨he, hinsep_nontrivial⟩ (by
-      intro h
-      exact hinsep_nontrivial h.2))
+  exact ⟨hprofile, ⟨⟨he, hinsep_nontrivial⟩, hpure, by
+    intro h
+    exact hinsep_nontrivial h.2⟩⟩
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07

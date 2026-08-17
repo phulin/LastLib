@@ -24,12 +24,6 @@ def Chapter07FiniteResidueField (k : Type*) [Field k] : Prop :=
 def Chapter07ResidueCardinality (k : Type*) [Field k] [Fintype k] : ℕ :=
   Fintype.card k
 
-/-- The arithmetic Frobenius polynomial map `x ↦ x^q`, before installing the
-field-specific ring-hom proof. -/
-def Chapter07ArithmeticFrobeniusMap
-    (q : ℕ) (k : Type*) [MonoidWithZero k] : k → k :=
-  fun x => x ^ q
-
 /-- An extension model that retains the field, residue-field, and Frobenius
 data as structure fields.  Instance fields are used because the carrier types
 are existential in the existence theorem below. -/
@@ -315,21 +309,6 @@ abbrev Chapter07MaximalUnramifiedAutomorphismGroup
   (↥(chapter07MaximalUnramifiedExtension K Ω k κ T)) ≃ₐ[K]
     (↥(chapter07MaximalUnramifiedExtension K Ω k κ T))
 
-/-- A chosen completion is the construction input for the maximal unramified
-union.  The field and topology hypotheses alone do not determine a proper
-completion or its algebraic-elements-in-range property. -/
-theorem chapter07_finite_residue_tower_completion_exists
-    {K : Type uK} {Ω : Type uΩ} {k κ : Type uModel}
-    [Field K] [Field Ω] [Field k] [Field κ]
-    [Fintype k] [UniformSpace Ω]
-    [Algebra K Ω] [Algebra k κ]
-    (T : Chapter07FiniteResidueTower K Ω k κ)
-    (C : Chapter07MaximalUnramifiedCompletionData.{uK, uΩ, uModel, uCompletion}
-      K Ω k κ T) :
-    Nonempty (Chapter07MaximalUnramifiedCompletionData.{uK, uΩ, uModel, uCompletion}
-      K Ω k κ T) := by
-  exact ⟨C⟩
-
 /-- In an algebraically closed algebraic ambient field, the finite-residue
 construction supplies the fixed-residue tower. -/
 theorem chapter07_finite_residue_tower_exists
@@ -346,24 +325,6 @@ theorem chapter07_finite_residue_tower_exists
         ≃+* k)) :
     Nonempty (Chapter07FiniteResidueTower K Ω k κ) := by
   sorry
-
-/-- A completion witness attached to a fixed finite-residue tower packages the
-corresponding completion data without pretending that it follows from an
-unrelated base valuation witness. -/
-theorem chapter07_finite_residue_completion_data_exists
-    {K : Type uK} {Ω : Type uΩ} {k κ : Type uModel}
-    [Field K] [Field Ω] [Field k] [Field κ]
-    [Fintype k] [UniformSpace Ω]
-    [Algebra K Ω] [Algebra k κ]
-    (T : Chapter07FiniteResidueTower K Ω k κ)
-    (hC : Nonempty
-      (Chapter07MaximalUnramifiedCompletionData.{uK, uΩ, uModel, uCompletion}
-        K Ω k κ T)) :
-    ∃ T' : Chapter07FiniteResidueTower K Ω k κ,
-      Nonempty
-        (Chapter07MaximalUnramifiedCompletionData.{uK, uΩ, uModel, uCompletion}
-          K Ω k κ T') :=
-  ⟨T, hC⟩
 
 theorem chapter07_maximal_unramified_extension_is_maximal
     {K : Type uK} {Ω : Type uΩ} [Field K] [Field Ω] [Algebra K Ω]

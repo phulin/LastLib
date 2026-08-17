@@ -229,6 +229,11 @@ structure Chapter07UnramifiedScalarExtensionProduct
     (profile i).ramificationIndex = (factorExtensionData i).ramificationIndex
   factorProfile_residueDegree : ∀ i,
     (profile i).residueDegree = (factorExtensionData i).residueDegree
+  /-- The residue tensor product has the same factor decomposition as the
+  scalar-extended field algebra.  This ties the displayed residue fields to
+  the residue-side algebra rather than leaving them as unrelated profiles. -/
+  residueProductEquiv : Nonempty
+    (l ⊗[k] k' ≃ₐ[k'] (∀ i, residue i))
   productEquiv : Nonempty
     (L ⊗[K] K' ≃ₐ[K'] (∀ i, factor i))
 

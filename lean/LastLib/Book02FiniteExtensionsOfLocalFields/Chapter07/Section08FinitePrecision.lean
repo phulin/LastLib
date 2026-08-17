@@ -138,7 +138,7 @@ theorem chapter07_unramified_quotients_are_free
     [IsFractionRing A K] [IsFractionRing B L]
     [FiniteDimensional K L] [FiniteDimensional k l]
     [IsIntegralClosure B A L] [HenselianLocalRing A]
-    [Module.Finite A B] [Module.Free A B]
+    [Module.Finite A B]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
     (π : A) (f : ℕ)
     (hπ : IsLocalRing.maximalIdeal A = Ideal.span ({π} : Set A))
@@ -146,6 +146,7 @@ theorem chapter07_unramified_quotients_are_free
     (hf : U.profile.residueDegree = f) :
     ∀ n : ℕ, 0 < n →
       Chapter07FinitePrecisionFreeOfRank A B π f n := by
+  letI : Algebra.Etale A B := U.integralModel_etale
   intro n hn
   classical
   let b : Module.Basis (Module.Free.ChooseBasisIndex A B) A B :=
@@ -204,7 +205,7 @@ theorem chapter07_unramified_precision_tower_exists
     [IsFractionRing A K] [IsFractionRing B L]
     [FiniteDimensional K L] [FiniteDimensional k l]
     [IsIntegralClosure B A L] [HenselianLocalRing A]
-    [Module.Finite A B] [Module.Free A B]
+    [Module.Finite A B]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
     (π : A) (f : ℕ)
     (hπ : IsLocalRing.maximalIdeal A = Ideal.span ({π} : Set A))
@@ -213,6 +214,7 @@ theorem chapter07_unramified_precision_tower_exists
     (hresidueDegree : Module.finrank k l = f) :
     Nonempty (Chapter07FinitePrecisionTower A B π f k l) := by
   classical
+  letI : Algebra.Etale A B := U.integralModel_etale
   have hbase_le : ∀ n : ℕ,
       Chapter07BasePrecisionIdeal A π (n + 1) ≤
         Chapter07BasePrecisionIdeal A π n := by
@@ -260,7 +262,6 @@ theorem chapter07_unramified_precision_tower_exists
       _ = algebraMap K L (algebraMap A K y) := IsScalarTower.algebraMap_apply A K L y
   have hFaithful : FaithfulSMul A B :=
     faithfulSMul_iff_algebraMap_injective A B |>.mpr hAB
-  have hEtale : Algebra.Etale A B := U.integralModel_etale
   have hmapmax :
       (IsLocalRing.maximalIdeal A).map (algebraMap A B) =
         IsLocalRing.maximalIdeal B :=
@@ -361,7 +362,8 @@ theorem chapter07_hensel_constructs_compatible_precision_roots
     (a : R ⧸ I)
     (hroot : eval₂ (Ideal.Quotient.mk I) a p = 0)
     (hderiv : IsUnit (eval₂ (Ideal.Quotient.mk I) a p.derivative)) :
-    Nonempty (Chapter07CompatibleRootApproximation R I p) := by
+    ∃ S : Chapter07CompatibleRootApproximation R I p,
+      S.root 1 = Ideal.Quotient.factor (show I ≤ I ^ 1 by simp) a := by
   have hcontext : gbar.Separable ∧ p.map (Ideal.Quotient.mk I) = gbar :=
     ⟨hseparable, hred⟩
   let ha : ∃ a₀ : R, Ideal.Quotient.mk I a₀ = a :=
@@ -388,6 +390,14 @@ theorem chapter07_hensel_constructs_compatible_precision_roots
   let hξdata := HenselianLocalRing.is_henselian p hmonic a₀ hfa hderiv'
   let ξ : R := Classical.choose hξdata
   have hξ : p.IsRoot ξ := (Classical.choose_spec hξdata).1
+  have hξres : Ideal.Quotient.mk I ξ = a := by
+    have hmem : ξ - a₀ ∈ I := by
+      rw [hI]
+      exact (Classical.choose_spec hξdata).2
+    have hzero : Ideal.Quotient.mk I (ξ - a₀) = 0 :=
+      (Ideal.Quotient.eq_zero_iff_mem).2 hmem
+    rw [map_sub, sub_eq_zero] at hzero
+    exact hzero.trans ha₀
   let S : Chapter07CompatibleRootApproximation R I p :=
     { root := fun n => Ideal.Quotient.mk (I ^ n) ξ
       transition := fun n => Ideal.Quotient.factorPow I (Nat.le_succ n)
@@ -400,7 +410,11 @@ theorem chapter07_hensel_constructs_compatible_precision_roots
         intro n
         exact Ideal.Quotient.factor_mk
           (Ideal.pow_le_pow_right (Nat.le_succ n)) ξ }
-  exact ⟨S⟩
+  refine ⟨S, ?_⟩
+  let hIone : I ≤ I ^ 1 := by simp
+  change Ideal.Quotient.mk (I ^ 1) ξ = Ideal.Quotient.factor hIone a
+  have h := congrArg (Ideal.Quotient.factor hIone) hξres
+  simpa only [Ideal.Quotient.factor_mk] using h
 
 /-- A compatible finite-precision root family has an inverse-limit lift in the
 adic completion, with its prescribed finite projections. -/

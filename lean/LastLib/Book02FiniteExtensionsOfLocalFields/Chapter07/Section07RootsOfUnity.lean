@@ -335,6 +335,7 @@ structure Chapter07PadicCyclotomicExtension (p m d : ℕ) where
   [fieldFinite : FiniteDimensional ℚ_[p] field]
   root : field
   root_primitive : IsPrimitiveRoot root m
+  order_prime_to_residue_characteristic : Nat.Coprime p m
   root_generates : Algebra.adjoin ℚ_[p] ({root} : Set field) = ⊤
   degree : Module.finrank ℚ_[p] field = d
   profile : Chapter10FiniteExtensionProfile

@@ -11,8 +11,6 @@ open scoped WithZero
 
 noncomputable section
 
-universe uG
-
 /-! # Book 2, Chapter 7, §7.3: constructing the unramified lift -/
 
 /-- A monic polynomial over `A` lifting a prescribed residue polynomial. -/
@@ -432,17 +430,6 @@ theorem chapter07_canonical_unramified_classification
     C.intersection_preserved, C.galois_preserved,
     C.galois_group_preserved⟩
 
-/-- Package an explicitly constructed §7.3 classification.  Existence of the
-package itself requires compatible ambient valuation/residue choices (or an
-equivalent witnessed construction), so it is not inferred from bare
-algebraic-closure hypotheses. -/
-theorem chapter07_canonical_unramified_classification_data
-    {K Ω k κ : Type*} [Field K] [Field Ω] [Field k] [Field κ]
-    [Algebra K Ω] [Algebra k κ]
-    (C : Chapter07CanonicalUnramifiedClassification K Ω k κ) :
-  Nonempty (Chapter07CanonicalUnramifiedClassification K Ω k κ) :=
-  ⟨C⟩
-
 /- The fixed-closure classification is an existence theorem under the local
 valuation and algebraic-closure hypotheses.  The structure above records the
 actual reduction equivalence and its consequences; it is not itself a
@@ -514,7 +501,9 @@ theorem chapter07_constructed_integral_model_is_finite
   exact AdjoinRoot.eval₂_root _
 
 /-- A common separable residue polynomial gives isomorphic lifted field
-extensions, independently of the chosen monic coefficient lift. -/
+extensions, independently of the chosen monic coefficient lift.  The
+corresponding root of the first lift in the second field is explicit, so the
+isomorphism records the root identification used by the construction. -/
 theorem chapter07_different_monic_lifts_are_isomorphic
     {A K k : Type*} [CommRing A] [IsDomain A] [Field K] [Field k]
     [Algebra A K] [IsFractionRing A K] [HenselianLocalRing A]
@@ -531,17 +520,18 @@ theorem chapter07_different_monic_lifts_are_isomorphic
     (θ₁ : L₁) (θ₂ : L₂)
     (hroot₁ : eval₂ (algebraMap K L₁) θ₁ (chapter07LiftedPolynomial g₁) = 0)
     (hroot₂ : eval₂ (algebraMap K L₂) θ₂ (chapter07LiftedPolynomial g₂) = 0)
+    (θ₂' : L₂)
+    (hroot₂' : eval₂ (algebraMap K L₂) θ₂'
+      (chapter07LiftedPolynomial g₁) = 0)
     (hgen₁ : Algebra.adjoin K ({θ₁} : Set L₁) = ⊤)
     (hgen₂ : Algebra.adjoin K ({θ₂} : Set L₂) = ⊤)
     (hdegree₁ : Module.finrank K L₁ = gbar.natDegree)
     (hdegree₂ : Module.finrank K L₂ = gbar.natDegree) :
-    Nonempty (L₁ ≃ₐ[K] L₂) := by
+    ∃ e : L₁ ≃ₐ[K] L₂, e θ₁ = θ₂' := by
   sorry
 
 /-! The classification data is exposed through an actual family of
-intermediate fields and residue fields.  The transport interface below is
-retained as a compatibility facade for earlier books; its equivalence field is
-input data, while the transport theorem records only its consequences. -/
+intermediate fields and residue fields. -/
 
 /-- Actual finite unramified extensions and their residue subfields in fixed
 ambient fields. -/
@@ -567,91 +557,6 @@ structure Chapter07ActualUnramifiedClassificationInterface
     Nonempty
       (Chapter07ActualUnramifiedIntermediateData K Ω k κ (extension u)
         (residueExtension (reduction u)) (profile u))
-
-/-- The assertion that two displayed Galois groups are preserved by a
-correspondence.  The structures are explicit because the carriers in the
-classification interface are dependent on the corresponding extension. -/
-def Chapter07GaloisGroupPreservation
-    (G H : Type*) (gG : Group G) (gH : Group H) : Prop :=
-  letI := gG
-  letI := gH
-  Nonempty (G ≃* H)
-
-/-- Book-facing data for the reduction/lift equivalence in Theorem 7.2. -/
-structure Chapter07UnramifiedClassificationInterface
-    (U S : Type*) where
-  reduction : U ≃ S
-  degreeU : U → ℕ
-  inclusionU : U → U → Prop
-  compositumU : U → U → U
-  intersectionU : U → U → U
-  galoisU : U → Type uG
-  galoisGroupU : ∀ u, Group (galoisU u)
-
-namespace Chapter07UnramifiedClassificationInterface
-
-/-- Residue-side degree, transported across the displayed equivalence. -/
-def degreeS {U S : Type*}
-    (C : Chapter07UnramifiedClassificationInterface U S) : S → ℕ :=
-  fun s => C.degreeU (C.reduction.symm s)
-
-/-- Residue-side inclusion, transported across the displayed equivalence. -/
-def inclusionS {U S : Type*}
-    (C : Chapter07UnramifiedClassificationInterface U S) : S → S → Prop :=
-  fun s t => C.inclusionU (C.reduction.symm s) (C.reduction.symm t)
-
-/-- Residue-side compositum, transported across the displayed equivalence. -/
-def compositumS {U S : Type*}
-    (C : Chapter07UnramifiedClassificationInterface U S) : S → S → S :=
-  fun s t => C.reduction (C.compositumU (C.reduction.symm s) (C.reduction.symm t))
-
-/-- Residue-side intersection, transported across the displayed equivalence. -/
-def intersectionS {U S : Type*}
-    (C : Chapter07UnramifiedClassificationInterface U S) : S → S → S :=
-  fun s t => C.reduction (C.intersectionU (C.reduction.symm s) (C.reduction.symm t))
-
-/-- Galois-group carriers on the residue side, transported across the
-displayed equivalence. -/
-def galoisS {U S : Type*}
-    (C : Chapter07UnramifiedClassificationInterface U S) : S → Type uG :=
-  fun s => C.galoisU (C.reduction.symm s)
-
-end Chapter07UnramifiedClassificationInterface
-
-/-- The functorial clauses obtained from a supplied classification equivalence.
-The existence of that equivalence belongs to the actual classification
-construction, not to this transport lemma. -/
-theorem chapter07_unramified_extensions_classified_by_residue_extensions
-    {U S : Type*} (C : Chapter07UnramifiedClassificationInterface U S) :
-    (∀ u, C.degreeU u = C.degreeS (C.reduction u)) ∧
-      (∀ u v, C.inclusionU u v ↔
-        C.inclusionS (C.reduction u) (C.reduction v)) ∧
-      (∀ u v, C.reduction (C.compositumU u v) =
-        C.compositumS (C.reduction u) (C.reduction v)) ∧
-      (∀ u v, C.reduction (C.intersectionU u v) =
-        C.intersectionS (C.reduction u) (C.reduction v)) ∧
-      (∀ u, Chapter07GaloisGroupPreservation (C.galoisU u)
-        (C.galoisS (C.reduction u))
-        (C.galoisGroupU u)
-        (C.galoisGroupU (C.reduction.symm (C.reduction u)))) := by
-  refine ⟨?_, ?_, ?_, ?_, ?_⟩
-  · simp [Chapter07UnramifiedClassificationInterface.degreeS]
-  · intro u v
-    simp [Chapter07UnramifiedClassificationInterface.inclusionS]
-  · intro u v
-    simp [Chapter07UnramifiedClassificationInterface.compositumS]
-  · intro u v
-    simp [Chapter07UnramifiedClassificationInterface.intersectionS]
-  · intro u
-    let u' : U := C.reduction.symm (C.reduction u)
-    have hu : u' = u := C.reduction.symm_apply_apply u
-    change Chapter07GaloisGroupPreservation (C.galoisU u)
-      (C.galoisU u') (C.galoisGroupU u) (C.galoisGroupU u')
-    let _ : Group (C.galoisU u) := C.galoisGroupU u
-    have hrefl : Nonempty (C.galoisU u ≃* C.galoisU u) :=
-      ⟨MulEquiv.refl _⟩
-    rw [hu]
-    exact hrefl
 
 /-- The profile consequences for the actual intermediate-field interface.
 The reduction map is an explicit field of that interface; proving that it is an
