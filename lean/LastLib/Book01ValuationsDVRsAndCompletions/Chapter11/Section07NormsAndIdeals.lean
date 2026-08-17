@@ -334,7 +334,7 @@ private theorem chapter11_quotient_scalar_tower
     letI : Algebra (A ⧸ m) (B ⧸ I) :=
       Ideal.Quotient.algebraQuotientOfLEComap h
     IsScalarTower A (A ⧸ m) (B ⧸ I) := by
-  letI : Algebra (A ⧸ m) (B ⧸ I) :=
+  let : Algebra (A ⧸ m) (B ⧸ I) :=
     Ideal.Quotient.algebraQuotientOfLEComap h
   apply IsScalarTower.of_algebraMap_eq'
   ext a
@@ -377,7 +377,7 @@ theorem chapter11_finite_dvr_residue_trace_and_norm
   have hmapL : m ≤ Ideal.comap (algebraMap A B) P := by
     rw [← Ideal.map_le_iff_le_comap, hfactor]
     exact Ideal.pow_le_self he0pos.ne'
-  letI : Field (A ⧸ m) := Ideal.Quotient.field m
+  let : Field (A ⧸ m) := Ideal.Quotient.field m
   let V : ℕ → Type _ := fun i => B ⧸ P ^ min i e0
   let : ∀ i : ℕ, Algebra (A ⧸ m) (V i) := fun i =>
     Ideal.Quotient.algebraQuotientOfLEComap (hmapPower i)
@@ -593,9 +593,9 @@ theorem chapter11_finite_dvr_residue_trace_and_norm
     have hmap_succ : m ≤
         Ideal.comap (algebraMap A B) (P ^ (i + 1)) := by
       simpa [hmin_succ] using hmapPower (i + 1)
-    letI : Algebra (A ⧸ m) (B ⧸ P ^ (i + 1)) :=
+    let : Algebra (A ⧸ m) (B ⧸ P ^ (i + 1)) :=
       Ideal.Quotient.algebraQuotientOfLEComap hmap_succ
-    letI : IsScalarTower A (A ⧸ m) (B ⧸ P ^ (i + 1)) :=
+    let : IsScalarTower A (A ⧸ m) (B ⧸ P ^ (i + 1)) :=
       chapter11_quotient_scalar_tower A B m (P ^ (i + 1)) hmap_succ
     have hdirect : ∃ qi : L ≃ₗ[A ⧸ m]
         (Ideal.map (Ideal.Quotient.mk (P ^ (i + 1))) (P ^ i)).restrictScalars (A ⧸ m),
@@ -829,9 +829,9 @@ theorem chapter11_finite_dvr_residue_trace_and_norm
           _ = (Ideal.Quotient.mk (P ^ min (i + 1) e0) t) *
               Ideal.Quotient.mk (P ^ min (i + 1) e0) (π ^ i * x) := by
                 rw [map_mul]
-  letI : ∀ i : ℕ, FiniteDimensional (A ⧸ m) (V i) := fun i => hVFinite i
-  letI : Module.Finite A L := hLFiniteA
-  letI : FiniteDimensional (A ⧸ m) L :=
+  let : ∀ i : ℕ, FiniteDimensional (A ⧸ m) (V i) := fun i => hVFinite i
+  let : Module.Finite A L := hLFiniteA
+  let : FiniteDimensional (A ⧸ m) L :=
     Module.Finite.of_restrictScalars_finite A (A ⧸ m) L
   have htrace := chapter11_trace_chain e0 V f g W
     (fun i hi => Classical.choose (hqexist i hi))
@@ -842,7 +842,7 @@ theorem chapter11_finite_dvr_residue_trace_and_norm
     (fun i hi => Classical.choose (hlayerA i hi))
     hstable hquot hlayer e0 (le_refl e0)
   have htrace0 : LinearMap.trace (A ⧸ m) (V 0) (f 0) = 0 := by
-    letI : Subsingleton (V 0) := by
+    let : Subsingleton (V 0) := by
       dsimp [V]
       rw [Nat.min_eq_left (Nat.zero_le e0), pow_zero]
       constructor
@@ -855,7 +855,7 @@ theorem chapter11_finite_dvr_residue_trace_and_norm
     rw [hf0]
     exact LinearMap.map_zero (LinearMap.trace (A ⧸ m) (V 0))
   have hdet0 : LinearMap.det (f 0) = 1 := by
-    letI : Subsingleton (V 0) := by
+    let : Subsingleton (V 0) := by
       dsimp [V]
       rw [Nat.min_eq_left (Nat.zero_le e0), pow_zero]
       constructor
@@ -1071,7 +1071,7 @@ theorem chapter11_finite_dvr_residue_trace_and_norm
     (fun i hi => Classical.choose (hlayerA i hi))
     hstable_n hquot_n hlayer_n e0 (le_refl e0)
   have hdet0_n : LinearMap.det (fn 0) = 1 := by
-    letI : Subsingleton (V 0) := by
+    let : Subsingleton (V 0) := by
       dsimp [V]
       rw [Nat.min_eq_left (Nat.zero_le e0), pow_zero]
       constructor
