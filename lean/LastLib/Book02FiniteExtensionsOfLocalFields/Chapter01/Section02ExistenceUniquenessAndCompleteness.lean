@@ -221,13 +221,10 @@ theorem chapter01_finite_extension_value_group_is_discrete
     {K L Γ : Type u} [Field K] [Field L] [Algebra K L]
     [Algebra.IsAlgebraic K L] [FiniteDimensional K L]
     [LinearOrderedCommGroupWithZero Γ]
-    (vK : Valuation K Γ) [Valuation.IsRankOneDiscrete vK]
-    (hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal vK.valuationSubring)
-      vK.valuationSubring) :
+    (vK : Valuation K Γ) [Valuation.IsRankOneDiscrete vK] :
     ∀ W : LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.HeterogeneousValuationExtension vK L,
       chapter01DiscreteHeterogeneousExtension vK W := by
   intro W
-  have _ := hcomplete
   let _ : LinearOrderedCommGroupWithZero W.valueGroup := W.orderedValueGroup
   change Nonempty
     (MonoidWithZeroHom.ValueGroup₀ (MonoidWithZeroHom.ofClass W.valuation) ≃*o ℤᵐ⁰)
@@ -327,7 +324,7 @@ theorem chapter01_theorem_1_1_finite
           vK L,
         chapter01DiscreteHeterogeneousExtension vK W := by
   exact ⟨chapter01_theorem_1_1 vK hcomplete,
-    chapter01_finite_extension_value_group_is_discrete vK hcomplete⟩
+    chapter01_finite_extension_value_group_is_discrete vK⟩
 
 /-! ### The canonical finite value-group quotient -/
 
@@ -474,7 +471,8 @@ theorem chapter01_henselian_integral_closure_is_local
     [IsScalarTower A K L] [HenselianLocalRing A]
     (hfinite : Module.Finite A (integralClosure A L)) :
     IsLocalRing (integralClosure A L) := by
-  sorry
+  exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.henselian_local_ring_integral_closure_is_local
+    (A := A) (K := K) (L := L) hfinite
 
 /-- Maximal ideals above the base maximal ideal are the finite-extension branches. -/
 theorem chapter01_henselian_branch_is_unique
