@@ -1,4 +1,5 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section06LocalizationAndResidues
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section04FactorizationOfTheMaximalIdeal
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter01.Section03WhatShouldCountAsIntegral
 import Mathlib.Data.ENat.BigOperators
 import Mathlib.LinearAlgebra.Dimension.Constructions
@@ -324,6 +325,19 @@ private def chapter11_ringEquiv_toLinearEquiv
         _ = algebraMap k S c * e.toFun x :=
           congrArg (fun z => z * e.toFun x) (he c) }
 
+private theorem chapter11_quotient_scalar_tower
+    (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
+    (m : Ideal A) (I : Ideal B)
+    (h : m ≤ Ideal.comap (algebraMap A B) I)
+    [Field (A ⧸ m)] :
+    letI : Algebra (A ⧸ m) (B ⧸ I) :=
+      Ideal.Quotient.algebraQuotientOfLEComap h
+    IsScalarTower A (A ⧸ m) (B ⧸ I) := by
+  apply IsScalarTower.of_algebraMap_eq'
+  ext a
+  rw [← Ideal.Quotient.mk_algebraMap]
+  rfl
+
 theorem chapter11_finite_dvr_residue_trace_and_norm
     (A B k l : Type*) [CommRing A] [IsDomain A]
     [IsDiscreteValuationRing A] [IsIntegrallyClosed A]
@@ -340,6 +354,155 @@ theorem chapter11_finite_dvr_residue_trace_and_norm
     (e : ℕ) (t n : B)
     (he : e = (IsLocalRing.maximalIdeal B).ramificationIdx A) :
     chapter11DvrResidueTraceNormStatement A B k l redA redB e t n := by
+  let m : Ideal A := IsLocalRing.maximalIdeal A
+  let P : Ideal B := IsLocalRing.maximalIdeal B
+  let e0 : ℕ := P.ramificationIdx A
+  have hm0 : m ≠ (⊥ : Ideal A) := IsDiscreteValuationRing.not_a_field A
+  have hP0 : P ≠ (⊥ : Ideal B) := IsDiscreteValuationRing.not_a_field B
+  have he0pos : 0 < e0 := by
+    dsimp [e0]
+    exact Ideal.ramificationIdx_pos P A
+  have hfactor : Ideal.map (algebraMap A B) m = P ^ e0 := by
+    dsimp [m, P, e0]
+    exact chapter11_dvr_maximalIdeal_map_eq_pow_ramificationIdx A B
+  have hmapPower : ∀ i : ℕ,
+      m ≤ Ideal.comap (algebraMap A B) (P ^ min i e0) := by
+    intro i
+    rw [← Ideal.map_le_iff_le_comap, hfactor]
+    exact Ideal.pow_le_pow_right (I := P) (Nat.min_le_right i e0)
+  have hmapL : m ≤ Ideal.comap (algebraMap A B) P := by
+    rw [← Ideal.map_le_iff_le_comap, hfactor]
+    exact Ideal.pow_le_self he0pos.ne'
+  letI : Field (A ⧸ m) := Ideal.Quotient.field m
+  let V : ℕ → Type _ := fun i => B ⧸ P ^ min i e0
+  have hVAlgebra : ∀ i : ℕ, Algebra (A ⧸ m) (V i) := by
+    intro i
+    letI : Algebra (A ⧸ m) (V i) :=
+      Ideal.Quotient.algebraQuotientOfLEComap (hmapPower i)
+    exact inferInstance
+  letI : ∀ i : ℕ, Algebra (A ⧸ m) (V i) := hVAlgebra
+  have hVTower : ∀ i : ℕ, IsScalarTower A (A ⧸ m) (V i) := by
+    intro i
+    letI : Algebra (A ⧸ m) (V i) := hVAlgebra i
+    apply IsScalarTower.of_algebraMap_eq'
+    ext a
+    rw [← Ideal.Quotient.mk_algebraMap]
+    rfl
+  letI : ∀ i : ℕ, IsScalarTower A (A ⧸ m) (V i) := hVTower
+  have hVFiniteA : ∀ i : ℕ, Module.Finite A (V i) := by
+    intro i
+    dsimp [V]
+    exact Module.Finite.quotient A _
+  have hVFinite : ∀ i : ℕ, Module.Finite (A ⧸ m) (V i) := by
+    intro i
+    exact Module.Finite.of_restrictScalars_finite A (A ⧸ m) (V i)
+  let L : Type _ := B ⧸ P
+  have hLAlgebra : Algebra (A ⧸ m) L := by
+    letI : Algebra (A ⧸ m) L :=
+      Ideal.Quotient.algebraQuotientOfLEComap hmapL
+    exact inferInstance
+  letI : Algebra (A ⧸ m) L := hLAlgebra
+  have hLTower : IsScalarTower A (A ⧸ m) L := by
+    apply IsScalarTower.of_algebraMap_eq'
+    ext a
+    rw [← Ideal.Quotient.mk_algebraMap]
+    rfl
+  letI : IsScalarTower A (A ⧸ m) L := hLTower
+  have hLFiniteA : Module.Finite A L := by
+    dsimp [L]
+    exact Module.Finite.quotient A _
+  let W : ∀ i : ℕ, i < e0 → Submodule (A ⧸ m) (V (i + 1)) :=
+    fun i hi => (Ideal.map
+      (Ideal.Quotient.mk (P ^ min (i + 1) e0)) (P ^ min i e0)).restrictScalars (A ⧸ m)
+  have hqexist : ∀ (i : ℕ) (hi : i < e0), ∃ qi :
+      (V (i + 1) ⧸ W i hi) ≃ₗ[A ⧸ m] V i,
+      ∀ x : B, qi (Submodule.Quotient.mk
+        (Ideal.Quotient.mk (P ^ min (i + 1) e0) x)) =
+        Ideal.Quotient.mk (P ^ min i e0) x := by
+    intro i hi
+    have hpowexp : min i e0 ≤ min (i + 1) e0 :=
+      min_le_min (Nat.le_succ i) le_rfl
+    have hpow : P ^ min (i + 1) e0 ≤ P ^ min i e0 :=
+      Ideal.pow_le_pow_right hpowexp
+    let er := DoubleQuot.quotQuotEquivQuotOfLE hpow
+    let el := Submodule.Quotient.restrictScalarsEquiv (A ⧸ m)
+      (Ideal.map (Ideal.Quotient.mk (P ^ min (i + 1) e0))
+        (P ^ min i e0))
+    have hel : ∀ c : A ⧸ m, er (algebraMap (A ⧸ m) _ c) =
+        algebraMap (A ⧸ m) _ c := by
+      rintro ⟨a⟩
+      rfl
+    let qi := el.trans (chapter11_ringEquiv_toLinearEquiv er hel)
+    refine ⟨qi, ?_⟩
+    intro x
+    simpa [qi, el, er, W, chapter11_ringEquiv_toLinearEquiv,
+      DoubleQuot.quotQuotMk] using
+      (DoubleQuot.quotQuotEquivQuotOfLE_quotQuotMk
+        (I := P ^ min (i + 1) e0) (J := P ^ min i e0) x
+        (Ideal.pow_le_pow_right
+          (min_le_min (Nat.le_succ i) le_rfl)))
+  let f : ∀ i : ℕ, V i →ₗ[A ⧸ m] V i :=
+    fun i => Algebra.lmul (A ⧸ m) (V i)
+      (Ideal.Quotient.mk (P ^ min i e0) t)
+  have hstable : ∀ (i : ℕ) (hi : i < e0),
+      W i hi ≤ (W i hi).comap (f (i + 1)) := by
+    intro i hi x hx
+    change (Ideal.Quotient.mk (P ^ min (i + 1) e0) t) * x ∈
+      Ideal.map (Ideal.Quotient.mk (P ^ min (i + 1) e0))
+        (P ^ min i e0)
+    exact (Ideal.map (Ideal.Quotient.mk (P ^ min (i + 1) e0))
+      (P ^ min i e0)).mul_mem_left _ hx
+  have hqmk : ∀ (i : ℕ) (hi : i < e0) (x : B),
+      (Classical.choose (hqexist i hi)) (Submodule.Quotient.mk
+        (Ideal.Quotient.mk (P ^ min (i + 1) e0) x)) =
+      Ideal.Quotient.mk (P ^ min i e0) x := by
+    intro i hi x
+    exact Classical.choose_spec (hqexist i hi) x
+  have hquot : ∀ (i : ℕ) (hi : i < e0),
+      (Classical.choose (hqexist i hi)).conj
+        ((W i hi).mapQ (W i hi) (f (i + 1)) (hstable i hi)) =
+        f i := by
+    intro i hi
+    generalize hqi : Classical.choose (hqexist i hi) = qi
+    have hqmk' : ∀ x : B, qi (Submodule.Quotient.mk
+        (Ideal.Quotient.mk (P ^ min (i + 1) e0) x)) =
+        Ideal.Quotient.mk (P ^ min i e0) x := by
+      intro x
+      rw [← hqi]
+      exact Classical.choose_spec (hqexist i hi) x
+    apply LinearMap.ext
+    intro x
+    obtain ⟨x, rfl⟩ := Ideal.Quotient.mk_surjective x
+    have hqsymm :
+        qi.symm (Ideal.Quotient.mk (P ^ min i e0) x) =
+          Submodule.Quotient.mk
+            (Ideal.Quotient.mk (P ^ min (i + 1) e0) x) := by
+      have h := congrArg qi.symm (hqmk' x)
+      simpa only [LinearEquiv.symm_apply_apply] using h.symm
+    calc
+      (qi.conj
+          ((W i hi).mapQ (W i hi) (f (i + 1)) (hstable i hi)))
+          (Ideal.Quotient.mk (P ^ min i e0) x) =
+        qi
+          ((W i hi).mapQ (W i hi) (f (i + 1)) (hstable i hi)
+            (qi.symm (Ideal.Quotient.mk (P ^ min i e0) x))) :=
+        LinearEquiv.conj_apply_apply _ _ _
+      _ = qi
+          ((W i hi).mapQ (W i hi) (f (i + 1)) (hstable i hi)
+            (Submodule.Quotient.mk
+              (Ideal.Quotient.mk (P ^ min (i + 1) e0) x))) := by
+        rw [hqsymm]
+      _ = qi
+          (Submodule.Quotient.mk
+            ((Ideal.Quotient.mk (P ^ min (i + 1) e0) t) *
+              (Ideal.Quotient.mk (P ^ min (i + 1) e0) x))) := by
+        rw [(W i hi).mapQ_apply]
+        simp only [f, Algebra.coe_lmul_eq_mul]
+      _ = Ideal.Quotient.mk (P ^ min i e0) (t * x) := by
+        exact hqmk' (t * x)
+      _ = (f i) (Ideal.Quotient.mk (P ^ min i e0) x) := by
+        simp only [f, Algebra.coe_lmul_eq_mul]
+        rfl
   sorry
 
 /-- The residue field attached to an additive valuation. -/

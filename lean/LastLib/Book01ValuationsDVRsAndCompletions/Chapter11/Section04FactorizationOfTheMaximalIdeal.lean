@@ -3,6 +3,7 @@ import Mathlib.RingTheory.DedekindDomain.Factorization
 import Mathlib.RingTheory.Ideal.Quotient.Operations
 import Mathlib.RingTheory.LocalRing.Length
 import Mathlib.RingTheory.RamificationInertia.Basic
+import Mathlib.RingTheory.Ideal.Norm.AbsNorm
 
 universe u v
 
@@ -122,6 +123,90 @@ abbrev chapter11SubmoduleQuotient
 abbrev chapter11PrimePowerLayer (B : Type*) [CommRing B] (P : Ideal B) (i : ℕ) : Type _ :=
   (P ^ i : Ideal B) ⧸ (P • ⊤ : Submodule B (P ^ i : Ideal B))
 
+private theorem chapter11_prime_power_layer_linear_equiv
+    (B : Type*) [CommRing B] [IsDedekindDomain B] (P : Ideal B)
+    [P.IsPrime] [P.IsMaximal] (i : ℕ)
+    (hP0 : P ≠ ⊥) :
+    Nonempty (chapter11PrimePowerLayer B P i ≃ₗ[B] B ⧸ P) := by
+  classical
+  obtain ⟨a, ha_mem, ha_notMem⟩ :=
+    Ideal.exists_mem_pow_notMem_pow_succ P hP0
+      (Ideal.IsPrime.ne_top (inferInstance : P.IsPrime)) i
+  choose f g hg hf using fun c (hc : c ∈ P ^ i) =>
+    Ideal.exists_mul_add_mem_pow_succ hP0 a c ha_mem ha_notMem hc
+  let F : (P ^ i : Ideal B) →ₗ[B] B ⧸ P :=
+    { toFun := fun c => Ideal.Quotient.mk P (f c c.property)
+      map_add' := by
+        intro c d
+        rw [← map_add, ← sub_eq_zero, ← map_sub]
+        apply Ideal.Quotient.eq_zero_iff_mem.mpr
+        apply Ideal.mul_add_mem_pow_succ_unique hP0 a
+          (f (c + d) _) (f c _ + f d _) (g (c + d) _) (g c _ + g d _)
+          ha_notMem (hg _ _) (Ideal.add_mem _ (hg _ _) (hg _ _))
+        convert (P ^ (i + 1)).zero_mem using 1
+        linear_combination
+          hf (↑c + ↑d) (c + d).property -
+            hf (↑c) c.property - hf (↑d) d.property
+      map_smul' := by
+        intro b c
+        change Ideal.Quotient.mk P (f (b • c) _) =
+          Ideal.Quotient.mk P (b * f c _)
+        rw [← sub_eq_zero, ← map_sub]
+        apply Ideal.Quotient.eq_zero_iff_mem.mpr
+        apply Ideal.mul_add_mem_pow_succ_unique hP0 a
+          (f (b • c) _) (b * f c _) (g (b • c) _) (b * g c _)
+          ha_notMem (hg _ _) ((P ^ (i + 1)).mul_mem_left b (hg _ _))
+        convert (P ^ (i + 1)).zero_mem using 1
+        linear_combination
+          hf (b • (↑c)) (b • c).property - hf (↑c) c.property * b
+      }
+  have hker : (P • (⊤ : Submodule B (P ^ i : Ideal B))) ≤ F.ker := by
+    apply Submodule.smul_le.mpr
+    intro p hp c hc
+    change F (p • c) = 0
+    rw [F.map_smul]
+    change Ideal.Quotient.mk P p * Ideal.Quotient.mk P (f (c : B) c.property) = 0
+    rw [Ideal.Quotient.eq_zero_iff_mem.mpr hp, zero_mul]
+  let G : chapter11PrimePowerLayer B P i →ₗ[B] B ⧸ P :=
+    (P • (⊤ : Submodule B (P ^ i : Ideal B))).liftQ F hker
+  have hinj : Function.Injective G := by
+    intro x y hxy
+    revert y
+    refine Submodule.Quotient.induction_on _ x ?_
+    intro c y hxy
+    revert hxy
+    refine Submodule.Quotient.induction_on _ y ?_
+    intro d hxy
+    change G (Submodule.Quotient.mk c) = G (Submodule.Quotient.mk d) at hxy
+    change F c = F d at hxy
+    have hfd : f (c : B) c.property - f (d : B) d.property ∈ P :=
+      (Ideal.Quotient.eq.mp hxy)
+    have hcd' :=
+      Ideal.mul_add_mem_pow_succ_inj P a
+        (f (c : B) c.property) (f (d : B) d.property)
+        (g (c : B) c.property) (g (d : B) d.property)
+        ha_mem (hg _ _) (hg _ _) hfd
+    have hcd : (c : B) - d ∈ P ^ (i + 1) := by
+      convert hcd' using 1; rw [hf, hf]
+    rw [Submodule.Quotient.eq]
+    simpa [Submodule.mem_smul_top_iff, pow_succ'] using hcd
+  have hsurj : Function.Surjective G := by
+    intro z
+    obtain ⟨d, rfl⟩ := Ideal.Quotient.mk_surjective z
+    let c : (P ^ i : Ideal B) :=
+      ⟨a * d, Ideal.mul_mem_right d _ ha_mem⟩
+    refine ⟨Submodule.Quotient.mk c, ?_⟩
+    change F c = Ideal.Quotient.mk P d
+    apply (Ideal.Quotient.eq).2
+    have hfd : f (c : B) c.property - d ∈ P := by
+      apply Ideal.mul_add_mem_pow_succ_unique hP0 a
+        (f (c : B) c.property) d (g (c : B) c.property) 0
+        ha_notMem (hg _ _) (P ^ (i + 1)).zero_mem
+      rw [hf]
+      simp [c]
+    exact hfd
+  exact ⟨LinearEquiv.ofBijective G ⟨hinj, hsurj⟩⟩
+
 /-- Each nonzero prime-power layer at a Dedekind branch is one copy of the
 residue field. -/
 theorem chapter11_prime_power_layer_is_a_residue_line
@@ -131,7 +216,8 @@ theorem chapter11_prime_power_layer_is_a_residue_line
     Nonempty
       (chapter11PrimePowerLayer B P i ≃+
         (B ⧸ P)) := by
-  sorry
+  obtain ⟨e⟩ := chapter11_prime_power_layer_linear_equiv B P i hP0
+  exact ⟨e.toAddEquiv⟩
 
 /-- The same prime-power layer equivalence retains its residue-field linear
 structure, so each layer is one-dimensional over `B / P`. -/
@@ -141,7 +227,8 @@ theorem chapter11_prime_power_layer_is_a_residue_line_linear
     (hP0 : P ≠ ⊥) :
     Nonempty
       ((B ⧸ P) ≃ₗ[B] chapter11PrimePowerLayer B P i) := by
-  sorry
+  obtain ⟨e⟩ := chapter11_prime_power_layer_linear_equiv B P i hP0
+  exact ⟨e.symm⟩
 
 /-- The quotient `B / πB` has one `k`-dimension for every residue-degree layer. -/
 theorem chapter11_residue_quotient_dimension_sum
