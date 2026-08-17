@@ -43,8 +43,14 @@ theorem chapter04_norm_valuation_formula
       vK.IsEquiv (AddValuation.comap (algebraMap K L) w) → vL.IsEquiv w)
     (hdegree : Module.finrank K L = e * f) (x : L) (hx : x ≠ 0) :
     vK (Algebra.norm K x) = (f : WithTop ℤ) * vL x := by
+  have he : 0 < e := by
+    by_contra h
+    have he0 : e = 0 := Nat.eq_zero_of_not_pos h
+    have hdim : Module.finrank K L = 0 := by
+      simpa [he0] using hdegree
+    exact (Module.finrank_pos.ne') hdim
   exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11_single_branch_norm_valuation_formula
-    K L e f hext hrestrict hf hunique hdegree x hx
+    K L e f hext he hrestrict hf hunique hdegree x hx
 
 /- A cross-multiplied form of `v_L(x)/e = v_K(Nx)/[L:K]` (§4.4). -/
 theorem chapter04_norm_valuation_cross_multiplication
