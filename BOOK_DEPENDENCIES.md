@@ -26,8 +26,9 @@ The known background that remains undischarged in Books 8--12 — assumed in pro
 no earlier book and absent from the local Mathlib checkout — is: the quasi-coherent
 sheaf-cohomology formalism assumed by Books 8 and 9 (developed only in the later Books 14--15);
 Hilbert's syzygy theorem and generic freeness in Book 8; Book 8's out-of-order use of effective
-descent of Cartier divisors (Book 10 material) in its universal-divisor construction; the Cohen
-coefficient-ring theorem and finite-type stability of excellence in Book 11; and the
+descent of Cartier divisors (Book 10 material) in its universal-divisor construction; finite-type
+stability of excellence in Book 11 (the Cohen coefficient-ring theorem Book 11 also invokes is
+now proved in Book 1, Chapter 13, and Book 11's one-line citations should be routed there); and the
 connected-fiber part of Stein factorization together with factoriality of regular local rings in
 Book 12. These interfaces are not silently assigned to `MATHLIB`, and the chronological rows
 below do not turn conclusions resting on them into unconditional ones.

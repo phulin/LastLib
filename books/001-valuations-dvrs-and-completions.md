@@ -88,6 +88,16 @@
     - [The valuation ring in a finite complete extension](#126-the-valuation-ring-in-a-finite-complete-extension)
     - [Unramified and totally ramified endpoints](#127-unramified-and-totally-ramified-endpoints)
     - [A final synthesis](#128-a-final-synthesis)
+13. [Structure of complete local rings](#13-structure-of-complete-local-rings)
+    - [Coordinates for a complete local ring](#131-coordinates-for-a-complete-local-ring)
+    - [Coefficient fields in equal characteristic zero](#132-coefficient-fields-in-equal-characteristic-zero)
+    - [p-bases and derivations](#133-p-bases-and-derivations)
+    - [Coefficient fields in equal characteristic p](#134-coefficient-fields-in-equal-characteristic-p)
+    - [Cohen rings: existence](#135-cohen-rings-existence)
+    - [The lifting property and uniqueness of Cohen rings](#136-the-lifting-property-and-uniqueness-of-cohen-rings)
+    - [The structure theorem](#137-the-structure-theorem)
+    - [Worked examples and counterexamples](#138-worked-examples-and-counterexamples)
+    - [Coordinates, and what they cost](#139-coordinates-and-what-they-cost)
 
 ## 1. Measuring vanishing
 
@@ -930,7 +940,7 @@ $$
 
 At stage $n$, the truncated digit lemma chooses the unique first $n$ digits matching $x$ modulo $\pi^n$. Compatibility preserves earlier digits. The partial sums differ from $x$ by an element of $(\pi^n)$, so they converge. Conversely every digit series converges because its terms tend to zero.
 
-Digit addition generally involves carries, so this is a bijection of sets, not usually a coefficientwise ring isomorphism. In equal characteristic, if $A$ contains a coefficient field mapping isomorphically onto $k$, one may take $S=k$ and multiplication becomes formal power-series multiplication. In mixed characteristic no embedding of $\mathbf F_p$ into a characteristic-zero ring exists, so carries are unavoidable.
+Digit addition generally involves carries, so this is a bijection of sets, not usually a coefficientwise ring isomorphism. Whether the carries can be removed depends on whether the digits can be chosen to form a subring. In equal characteristic they can: Theorem 13.15, proved in the final chapter and used here only as a signpost, shows that a complete local ring containing a field contains a **coefficient field**, a subfield $K$ mapping isomorphically onto $k$. Taking $S=K$ then makes the digits close under addition and multiplication, and Corollary 13.17 identifies $A$ with the power series ring $K[[t]]$, in which multiplication is the Cauchy product. In mixed characteristic no such choice is possible, since no embedding of $\mathbf F_p$ into a characteristic-zero ring exists, so carries are unavoidable; the coefficients then form a Cohen ring lying over $A$ rather than a field inside it, again as constructed in the final chapter. Nothing in the present chapter depends on those results.
 
 ### 8.3 The p-adic integers and numbers
 
@@ -2182,3 +2192,928 @@ $$
 $$
 
 Over a complete or merely henselian base, there is one branch. We may therefore move coherently among a valued field, its valuation ring, its residue field, finite-precision quotients, its completion, and the corresponding objects in finite extensions. That coherent local language is the foundation on which the finer arithmetic of ramification is built.
+
+One promise made along the way is still outstanding. Section 8.2 produced digit expansions for every complete DVR and announced, without proof, that in equal characteristic the digits may be chosen to form a subring isomorphic to the residue field, while Section 8.4 recorded that no such subring can exist in mixed characteristic. The final chapter settles both points, for complete local rings far more general than DVRs: it produces the promised copy of the residue field whenever one can exist, produces a substitute when one cannot, and thereby writes every complete Noetherian local ring in coordinates.
+
+## 13. Structure of complete local rings
+
+### 13.1 Coordinates for a complete local ring
+
+The theme of this book has been that completion trades exactness for coordinates. A complete DVR was described in Section 8.2 by digit strings; the coefficients of those strings lived in a chosen set $S$ of residue representatives, and the arithmetic of the strings was the arithmetic of $A$ only up to carries. Two examples showed the two extremes. In $k[[t]]$ one may take $S=k$, because $k$ genuinely sits inside $k[[t]]$ as the constant series; digits then multiply by the Cauchy product and the digit description _is_ the ring. In $\mathbf Z_p$ one may not: a ring containing $\mathbf F_p$ has characteristic $p$, whereas $\mathbf Z_p$ has characteristic zero, so the digits $\{0,\ldots,p-1\}$ can only be a set of representatives and carries are forced.
+
+This chapter shows that these two examples are not accidents but a complete classification, and that the classification holds far beyond DVRs. The results are due to Cohen, and they say the following. A complete Noetherian local ring that contains _some_ field contains a field mapping isomorphically onto its residue field — a **coefficient field** — so its arithmetic is that of a quotient of a formal power series ring over the residue field. A complete Noetherian local ring of mixed characteristic contains no field at all, but it does receive a map from a canonical-up-to-isomorphism complete DVR with residue field $k$ and uniformizer $p$ — a **Cohen ring** — which plays exactly the role $\mathbf Z_p$ plays for $\mathbf F_p$. In both cases the outcome is the same: every complete Noetherian local ring is a quotient of a formal power series ring over a ring of coefficients, and complete regular local rings are, up to the ramification of $p$, exactly such power series rings.
+
+The reason to prove this in a book on valuations and completions is that it is the statement which converts local algebra into local _analysis_ in the sense used throughout Chapters 5 to 9. It says that after completing, an abstract local ring acquires coordinates: a coefficient ring in which one may compute residues, and finitely many variables in which one may expand. Every later use of complete local rings — comparing a singular local ring with a regular one, resolving singularities on a two-dimensional model, testing normality after completion — begins by choosing those coordinates.
+
+Throughout this chapter $(A,\mathfrak m)$ denotes a Noetherian local ring with residue field $k=A/\mathfrak m$, and **complete** always means complete _and separated_ for the $\mathfrak m$-adic topology, that is,
+
+$$
+A\xrightarrow{\ \sim\ }\varprojlim_n A/\mathfrak m^n .
+$$
+
+This is the notion of Section 7.5, specialized to $I=\mathfrak m$; by Theorem 8.1 it agrees with metric completeness when $A$ is a DVR. A homomorphism $f:R\to A$ of local rings is **local** if $f(\mathfrak m_R)\subseteq\mathfrak m_A$; every ring homomorphism we write between local rings will be local.
+
+Beyond what this book has already developed, the arguments use only standard commutative algebra: Nakayama's lemma, the Artin–Rees lemma and the Krull intersection theorem it yields, the fact that a formal power series ring in finitely many variables over a Noetherian ring is Noetherian, tensor products, and Zorn's lemma. We record the three consequences of this background that get used continually.
+
+**Lemma 13.1 (finite modules over a complete local ring).** Let $(A,\mathfrak m)$ be a complete Noetherian local ring and $M$ a finitely generated $A$-module. Then:
+
+1. $\bigcap_n\mathfrak m^nM=0$, and $M$ is complete for its $\mathfrak m$-adic topology;
+2. if $m_1,\ldots,m_r\in M$ have images spanning the $k$-vector space $M/\mathfrak mM$, then they generate $M$;
+3. every series $\sum_{n\geq0}z_n$ with $z_n\in\mathfrak m^nM$ converges in $M$, and its value is unchanged by reordering.
+
+**Proof.** Part 1 is the Krull intersection theorem together with the standard fact that completion is exact on finitely generated modules over a Noetherian ring: writing $M$ as a quotient of $A^r$, the Artin–Rees lemma says that the submodule topology induced on the kernel $N\subseteq A^r$ agrees with its own $\mathfrak m$-adic topology, so $\varprojlim_n M/\mathfrak m^nM=A^r/N=M$ because $A^r$ is complete. Part 2 is Nakayama's lemma applied to the finitely generated module $M/\sum_iAm_i$, which satisfies $M'=\mathfrak mM'$. Part 3 holds because the partial sums are Cauchy for a filtration with zero intersection, and because rearranging changes a partial sum only by terms lying in arbitrarily high powers of $\mathfrak m$. $\square$
+
+**Lemma 13.2 (power series rings and quotients).** Let $(R,\mathfrak m_R)$ be a complete Noetherian local ring. Then every quotient $R/I$ is a complete Noetherian local ring, and $R[[X_1,\ldots,X_n]]$ is a complete Noetherian local ring with maximal ideal
+
+$$
+\mathfrak n=\mathfrak m_RR[[X_1,\ldots,X_n]]+(X_1,\ldots,X_n)
+$$
+
+and residue field $R/\mathfrak m_R$.
+
+**Proof.** For a quotient, the ideals $(\mathfrak m_R^n+I)/I$ are cofinal with the powers of the maximal ideal of $R/I$, and $\varprojlim_n R/(\mathfrak m_R^n+I)=R/I$ because $R$ is complete and $I$ is closed, being an intersection of the ideals $\mathfrak m_R^n+I$ by the Krull intersection theorem applied in $R/I$.
+
+For power series it suffices to treat $n=1$ and iterate. Noetherianity is the power series form of the Hilbert basis theorem. A series is a unit exactly when its constant term is a unit of $R$, since one may then solve for the inverse coefficients recursively; hence the non-units form the ideal $\mathfrak n$ and the ring is local with the stated residue field. For completeness, compare $\mathfrak n^m$ with
+
+$$
+I_m=\mathfrak m_R^mR[[X]]+X^mR[[X]].
+$$
+
+Expanding, $\mathfrak n^m=\sum_{i+j=m}\mathfrak m_R^iX^jR[[X]]$. Each such summand has $i\geq m/2$ or $j\geq m/2$, so $I_m\subseteq\mathfrak n^m\subseteq I_{\lceil m/2\rceil}$ and the two filtrations define the same topology. Now reducing coefficients modulo $\mathfrak m_R^m$ and truncating above degree $m$ identifies
+
+$$
+R[[X]]/I_m\cong (R/\mathfrak m_R^m)[X]/(X^m),
+$$
+
+since a series lies in $I_m$ exactly when its coefficients in degrees below $m$ lie in $\mathfrak m_R^m$. In the inverse limit over $m$, the coefficient of $X^j$ becomes a compatible family in $\varprojlim_m R/\mathfrak m_R^m=R$, and these coefficients are unconstrained; so $\varprojlim_mR[[X]]/I_m=R[[X]]$. $\square$
+
+The third preliminary is the mapping property that will actually produce the structure theorem. It says that a complete local ring is generated over a subring in the _topological_ sense as soon as it is generated modulo one power of the maximal ideal, and that power series in a chosen finite list of elements are exactly the available expressions.
+
+**Lemma 13.3 (evaluation of power series).** Let $R_0$ and $A$ be complete Noetherian local rings, let $\sigma:R_0\to A$ be a local homomorphism, and let $x_1,\ldots,x_n\in\mathfrak m_A$. Then there is a unique continuous $R_0$-algebra homomorphism
+
+$$
+\Sigma:R_0[[X_1,\ldots,X_n]]\longrightarrow A,
+\qquad
+\Sigma\Big(\sum_\alpha c_\alpha X^\alpha\Big)=\sum_\alpha \sigma(c_\alpha)x^\alpha ,
+$$
+
+and it is local. Writing $J=\sigma(\mathfrak m_{R_0})A+(x_1,\ldots,x_n)A$, the map $\Sigma$ is surjective if and only if $A=\sigma(R_0)+J$.
+
+**Proof roadmap.** Convergence of the defining sum is immediate because the monomials of total degree $d$ lie in $\mathfrak m_A^d$. For surjectivity, the hypothesis lets one write any element of $A$ as an image plus an error in $J$, then expand the coefficients of that error and repeat; the successive corrections lie in higher and higher powers of the maximal ideal of $R_0[[X]]$, so they sum to a power series.
+
+**Proof.** For each $d$ there are only finitely many monomials $X^\alpha$ of total degree $d$, and $x^\alpha\in\mathfrak m_A^d$ for such $\alpha$; so the displayed sum converges by Lemma 13.1.3 and $\Sigma$ is well defined. It respects sums visibly, and respects products because a product of two power series has each of its coefficients given by a finite sum, and because multiplication in $A$ is continuous. It carries $\mathfrak n$ into $\mathfrak m_A$, hence is local, and continuity plus the values on $R_0$ and on the $X_i$ determine it, since polynomials are dense.
+
+If $\Sigma$ is surjective, then since every power series is its constant term plus an element of $\mathfrak n$, and $\Sigma(\mathfrak n)\subseteq J$, we get $A=\sigma(R_0)+J$.
+
+Conversely assume $A=\sigma(R_0)+J$. Choose generators $u_1,\ldots,u_s$ of $\mathfrak m_{R_0}$, possible as $R_0$ is Noetherian, so that $J$ is generated by the $s+n$ elements $\sigma(u_1),\ldots,\sigma(u_s),x_1,\ldots,x_n$. Fix $a\in A$. We construct $F_m\in R_0[[X]]$ with
+
+$$
+a-\Sigma(F_m)\in J^m,
+\qquad
+F_{m+1}-F_m\in\mathfrak n^m .
+$$
+
+Take $F_0=0$. Given $F_m$, the ideal $J^m$ is generated by the images under $\Sigma$ of the degree-$m$ monomials $M$ in the letters $u_1,\ldots,u_s,X_1,\ldots,X_n$, and each such $M$ lies in $\mathfrak n^m$. Write
+
+$$
+a-\Sigma(F_m)=\sum_M c_M\,\Sigma(M),
+\qquad c_M\in A,
+$$
+
+a finite sum. By hypothesis $c_M=\sigma(r_M)+j_M$ with $r_M\in R_0$ and $j_M\in J$. Put $F_{m+1}=F_m+\sum_M r_MM$. Then $F_{m+1}-F_m\in\mathfrak n^m$ and
+
+$$
+a-\Sigma(F_{m+1})=\sum_M j_M\,\Sigma(M)\in J^{m+1},
+$$
+
+as required. Since $R_0[[X]]$ is complete by Lemma 13.2, the $F_m$ converge to some $F$, and continuity gives $\Sigma(F_m)\to\Sigma(F)$. But $J\subseteq\mathfrak m_A$, so $a-\Sigma(F_m)\in\mathfrak m_A^m$ tends to $0$. Hence $a=\Sigma(F)$. $\square$
+
+With the mechanics in place we can name the objects the chapter is about. Let $(A,\mathfrak m)$ be a complete Noetherian local ring with residue field $k$. A **coefficient field** of $A$ is a subfield $K\subseteq A$ such that the reduction map $K\to k$ is an isomorphism; equivalently, $K\subseteq A$ is a subfield with $K\cap\mathfrak m=0$ and $K+\mathfrak m=A$. More generally, a **coefficient ring** of $A$ is a complete Noetherian local subring $C\subseteq A$ whose maximal ideal is $\mathfrak m_C=\mathfrak m\cap C$, whose residue map $C/\mathfrak m_C\to k$ is an isomorphism, and which is either a field or a DVR with uniformizer $p$.
+
+Whether a coefficient field can exist is decided by characteristics alone. Let $p\geq0$ be the characteristic of $k$. Since $\mathfrak m$ is nilpotent modulo no power of itself but consists of non-units, the characteristic of $A$ is either $0$ or a power of $p$. Three cases occur:
+
+- **Equal characteristic zero:** $\operatorname{char}A=\operatorname{char}k=0$, equivalently $\mathbf Q\subseteq A$.
+- **Equal characteristic $p$:** $\operatorname{char}A=\operatorname{char}k=p>0$, equivalently $A$ contains $\mathbf F_p$.
+- **Mixed characteristic:** $\operatorname{char}k=p>0$ and $\operatorname{char}A=0$ or $p^e$ with $e\geq2$; equivalently $p\in\mathfrak m$ and $p\neq0$ in $A$.
+
+A ring containing a field is exactly one of equal characteristic, since a field inside $A$ maps injectively to $k$ and hence has the same characteristic as $k$; and conversely $\mathbf F_p\subseteq A$ or $\mathbf Q\subseteq A$ in the two equal-characteristic cases. Thus a coefficient field can exist only in equal characteristic, and Sections 13.2 and 13.4 will show that in equal characteristic it always does. In mixed characteristic the substitute is a Cohen ring, constructed in Section 13.5.
+
+Some orienting examples. The ring $k[[t]]$ has coefficient field the constants $k$. The ring $\mathbf Z_p$ is its own coefficient ring, a DVR with uniformizer $p$ and residue field $\mathbf F_p$; it contains no field, because a subfield would have to contain $\mathbf Z$ or $\mathbf F_p$, and $\mathbf Z\subseteq\mathbf Z_p$ generates the non-complete field $\mathbf Q\not\subseteq\mathbf Z_p$ while $\mathbf F_p$ cannot embed in a characteristic-zero ring. The ring $\mathbf Z_p[[t]]$, met in Section 4.3, is a two-dimensional complete regular local ring of mixed characteristic with coefficient ring $\mathbf Z_p$. The ring $\mathbf Z/p^2\mathbf Z$ is complete local of mixed characteristic $p^2$; it contains no field, and its coefficient ring cannot be a subring of itself in the naive sense — indeed the correct statement, proved in Section 13.7, is that it is a _quotient_ $\mathbf Z_p/p^2\mathbf Z_p$ of a Cohen ring rather than an extension of one. This last example is the reason the structure theorem is stated with surjections rather than with inclusions.
+
+### 13.2 Coefficient fields in equal characteristic zero
+
+A coefficient field is a subfield of $A$ as large as possible: one that already accounts for the entire residue field. The natural first attempt is therefore to take a subfield of $A$ that cannot be enlarged and hope that maximality forces surjectivity onto $k$. Zorn's lemma supplies such a maximal subfield with no effort. The content of the argument is the enlargement step: given a subfield $K\subseteq A$ whose residue image misses some $\overline b\in k$, one must produce a strictly larger subfield of $A$.
+
+There are two ways $\overline b$ can fail to lie in the image $\overline K$ of $K$, and each has its own enlargement mechanism. If $\overline b$ is transcendental over $\overline K$, then _any_ lift of it to $A$ works, because a nonzero polynomial expression in a transcendental element cannot reduce to zero and hence cannot lie in $\mathfrak m$. If $\overline b$ is algebraic over $\overline K$, an arbitrary lift is useless; one needs a lift satisfying the same algebraic equation, and that is precisely what Hensel's lemma provides — _provided the equation has $\overline b$ as a simple root_. In characteristic zero every minimal polynomial is separable, so the simple-root hypothesis is automatic and the two mechanisms exhaust the possibilities. This is why equal characteristic zero is the easy case. In characteristic $p$ a purely inseparable residue element is a multiple root of its minimal polynomial, Hensel's lemma says nothing, and the enlargement step genuinely fails; Section 13.8 exhibits a maximal subfield of $\mathbf F_p(u)[[t]]$ that is not a coefficient field.
+
+We begin with the three elementary facts that make the two mechanisms precise. Throughout, $(A,\mathfrak m)$ is a local ring that is complete and separated for its $\mathfrak m$-adic topology, with residue field $k$, and for a subfield $K\subseteq A$ we write $\overline K\subseteq k$ for its image under reduction.
+
+**Lemma 13.4 (subfields reduce injectively).** Every subfield $K\subseteq A$ satisfies $K\cap\mathfrak m=0$, so reduction restricts to an isomorphism $K\xrightarrow{\sim}\overline K$ of fields. Consequently $K$ is a coefficient field if and only if $\overline K=k$.
+
+**Proof.** A nonzero element of $K$ is invertible in $K$, hence a unit of $A$, hence not in $\mathfrak m$. So the kernel of $K\to k$ is zero, and a field homomorphism onto its image is an isomorphism. The last sentence restates the definition of a coefficient field. $\square$
+
+**Lemma 13.5 (adjoining a transcendental residue element).** Let $K\subseteq A$ be a subfield and let $\overline b\in k$ be transcendental over $\overline K$. Choose any $b\in A$ reducing to $\overline b$. Then every nonzero element of the subring $K[b]\subseteq A$ is a unit of $A$, so the elements $f(b)g(b)^{-1}$ with $f,g\in K[X]$ and $g\neq0$ form a subfield $K(b)\subseteq A$ containing $K$ properly, with residue image $\overline K(\overline b)$.
+
+**Proof.** Identify $K$ with $\overline K$ by Lemma 13.4 and let $f\in K[X]$ be nonzero, with reduced polynomial $\overline f\in\overline K[X]$, also nonzero. Reduction is a ring homomorphism, so $f(b)$ reduces to $\overline f(\overline b)$, which is nonzero because $\overline b$ is transcendental over $\overline K$. Hence $f(b)\notin\mathfrak m$, so $f(b)$ is a unit of the local ring $A$. In particular $K[b]$ is a domain and the indicated quotients are well defined elements of $A$; they are closed under the field operations, so they form a subfield. It contains $b\notin K$, since $\overline b\notin\overline K$. Its residue image consists of all $\overline f(\overline b)\overline g(\overline b)^{-1}$, which is $\overline K(\overline b)$. $\square$
+
+**Lemma 13.6 (adjoining a separable algebraic residue element).** Let $K\subseteq A$ be a subfield and let $\overline b\in k$ be algebraic and _separable_ over $\overline K$. Then there is a unique $b\in A$ reducing to $\overline b$ and annihilated by the polynomial $g\in K[X]$ corresponding, under the isomorphism $K\cong\overline K$, to the minimal polynomial of $\overline b$ over $\overline K$. For this $b$ the subring $K[b]\subseteq A$ is a subfield, isomorphic to $K[X]/(g)$, with residue image $\overline K(\overline b)$.
+
+**Proof.** Let $\overline g\in\overline K[X]$ be the minimal polynomial of $\overline b$ and let $g\in K[X]\subseteq A[X]$ be the corresponding monic polynomial; its reduction in $k[X]$ is $\overline g$ regarded inside $k[X]$. Separability means $\overline g'(\overline b)\neq0$, that is, $\overline b$ is a simple root, so over $k$ we may factor
+
+$$
+\overline g=(X-\overline b)\,\overline h,
+\qquad \overline h(\overline b)\neq0,
+$$
+
+with the two monic factors coprime in $k[X]$. By Theorem 9.4 the complete separated local ring $A$ is henselian, so this factorization lifts uniquely to a factorization $g=(X-b)h$ with $b\in A$ reducing to $\overline b$ and $h\in A[X]$ monic. Thus $g(b)=0$, and uniqueness of the henselian lift gives uniqueness of $b$ among roots of $g$ reducing to $\overline b$; any root of $g$ reducing to $\overline b$ produces such a factorization by division, so $b$ is unique as claimed.
+
+Now consider the evaluation map $K[X]\to A$, $X\mapsto b$. Its kernel contains $g$. Since $\overline g$ is irreducible over $\overline K$ and $K\cong\overline K$ carries $\overline g$ to $g$, the polynomial $g$ is irreducible over $K$, so $K[X]/(g)$ is a field and the induced map $K[X]/(g)\to A$ is a nonzero homomorphism from a field, hence injective. Its image is $K[b]$, a subfield of $A$. Reduction carries $K[b]$ onto $\overline K[\overline b]=\overline K(\overline b)$. $\square$
+
+We can now settle equal characteristic zero. Note that the proof uses completeness only through henselianity and does not use the Noetherian hypothesis at all.
+
+**Theorem 13.7 (coefficient fields in equal characteristic zero).** Let $(A,\mathfrak m)$ be a local ring that is complete and separated for its $\mathfrak m$-adic topology and whose residue field $k$ has characteristic zero. Suppose $A$ contains a field. Then $A$ has a coefficient field. Moreover, every maximal subfield of $A$ is a coefficient field, and every subfield of $A$ is contained in one.
+
+**Proof roadmap.** Subfields of $A$ form a nonempty poset closed under unions of chains, so Zorn's lemma produces maximal ones. If the residue image of a maximal subfield were not all of $k$, pick a residue element outside it: Lemma 13.5 or Lemma 13.6 enlarges the subfield, contradicting maximality. Characteristic zero guarantees that the algebraic alternative is always separable.
+
+**Proof.** First, $A$ has characteristic zero: a field $F\subseteq A$ reduces injectively into $k$ by Lemma 13.4, so $\operatorname{char}F=\operatorname{char}k=0$, and $F$ contains a copy of $\mathbf Q$. So the collection $\mathcal S$ of subfields of $A$ is nonempty. It is a set, being a collection of subsets of $A$, and it is partially ordered by inclusion. The union of a chain in $\mathcal S$ is again a subfield, since any two of its elements already lie in a common member of the chain. By Zorn's lemma, every member of $\mathcal S$ is contained in a maximal member.
+
+Let $K\in\mathcal S$ be maximal and suppose, for contradiction, that $\overline K\neq k$. Choose $\overline b\in k\setminus\overline K$. Since $\operatorname{char}k=0$, the extension $k/\overline K$ is separable, so $\overline b$ is either transcendental over $\overline K$ or separably algebraic over it. In the transcendental case, Lemma 13.5 produces a subfield $K(b)\subseteq A$ strictly containing $K$. In the algebraic case, Lemma 13.6 produces a subfield $K[b]\subseteq A$ whose residue image contains $\overline b\notin\overline K$, so again $K[b]\supsetneq K$. Either way maximality is contradicted. Hence $\overline K=k$, and Lemma 13.4 makes $K$ a coefficient field. $\square$
+
+Two remarks are worth recording before turning to characteristic $p$.
+
+First, the theorem gives _many_ coefficient fields, not a canonical one. Starting the Zorn process from different subfields generally produces different maximal ones. Section 13.8 makes this concrete in $\mathbf Q(u)[[t]]$, where $\mathbf Q(u)$ and $\mathbf Q(u+t)$ are two distinct coefficient fields; there is no way to choose one of them naturally, and the isomorphism $A\cong k[[t]]$ produced by a coefficient field is correspondingly non-canonical. This absence of canonicity is not a defect of the proof. It reflects the fact that the residue field of $A$ has no preferred lift, and it will reappear, with the same source, in the theory of Cohen rings.
+
+Second, the proof isolates exactly what characteristic zero was used for: it guaranteed that every algebraic residue element is a simple root of its minimal polynomial. In characteristic $p$ this holds for separable residue elements and fails for inseparable ones. If $\overline b^p=\overline c\in\overline K$ with $\overline b\notin\overline K$, the relevant equation is $X^p-c=0$ with $c\in K$ the element corresponding to $\overline c$; its derivative vanishes identically, so no lifting theorem of Hensel type applies, and indeed a solution in $A$ may simply not exist. Repairing this requires a different idea: rather than lifting residue elements one at a time by solving equations, one lifts a whole _coordinate system_ for the inseparability of $k$ — a $p$-basis — and builds the coefficient field from it by extracting $p$-th powers. That is the subject of the next two sections.
+
+### 13.3 $p$-bases and derivations
+
+Fix a field $k$ of characteristic $p>0$. The Frobenius map $x\mapsto x^p$ is an injective ring endomorphism of $k$, so its image
+
+$$
+k^p=\{x^p:x\in k\}
+$$
+
+is a subfield, and $k$ is a vector space over $k^p$. The field $k$ is **perfect** exactly when $k=k^p$. Imperfection is measured by how far $k$ is from $k^p$, and the previous section showed that this is precisely the obstruction to lifting residue elements by Hensel's lemma: an element $\overline b\in k\setminus k^p(\ldots)$ satisfies only the inseparable equation $X^p=\overline b^p$.
+
+The idea that resolves the difficulty is to stop treating residue elements one at a time. The extension $k/k^p$ is generated by elements each of degree $1$ or $p$, and it has a well-behaved notion of independent generators: a family $B$ such that $k$ is obtained from $k^p$ by adjoining the elements of $B$ with no relations beyond the forced ones $b^p\in k^p$. Such a family is a **$p$-basis**. Two facts make $p$-bases the right tool. First, they always exist, by a Zorn's lemma argument no harder than for transcendence bases. Second — and this is the decisive point — a $p$-basis presents $k$ by _explicit equations of a very special shape_, namely $X_b^p=c_b$ with $c_b\in k^p$. Whenever one must lift a homomorphism out of $k$ into some ring, one may therefore lift generator by generator, and the only obligation is to find $p$-th roots that were already available for free. This is why an obstruction that looked fatal for one element at a time evaporates when a whole $p$-basis is treated at once.
+
+This section develops $p$-bases from scratch, proves the derivation-extension theorem that expresses their universal role, and then proves the lifting theorem in the form used twice in the sequel. We begin with the elementary degree computation on which everything rests.
+
+**Lemma 13.8 (degrees over intermediate fields).** Let $F$ be a field with $k^p\subseteq F\subseteq k$, and let $b\in k$. Then $F(b)=F[b]$ and
+
+$$
+[F(b):F]=\begin{cases}1,&b\in F,\\ p,&b\notin F.\end{cases}
+$$
+
+**Proof.** We have $b^p\in k^p\subseteq F$, so $b$ is a root of $X^p-b^p=(X-b)^p\in F[X]$; in particular $b$ is algebraic over $F$ and $F[b]=F(b)$. The minimal polynomial of $b$ over $F$ divides $(X-b)^p$ in $k[X]$, hence equals $(X-b)^m$ for some $1\leq m\leq p$. Its coefficient of $X^{m-1}$ is $-mb$ and lies in $F$. If $1<m<p$, then $m$ is invertible in $k$, so $b\in F$ and the minimal polynomial would be $X-b$, contradicting $m>1$. Hence $m=1$, which happens exactly when $b\in F$, or $m=p$. $\square$
+
+A subset $B\subseteq k$ is called **$p$-independent** if for every finite set of distinct elements $b_1,\ldots,b_r\in B$ the $p^r$ **$p$-monomials**
+
+$$
+b_1^{e_1}b_2^{e_2}\cdots b_r^{e_r},
+\qquad 0\leq e_i<p,
+$$
+
+are linearly independent over $k^p$. It is a **$p$-basis** of $k$ if in addition $k=k^p(B)$. For a subset $S\subseteq k$ we write $k^p(S)$ for the subfield generated; by Lemma 13.8 and the fact that every element of $k^p(S)$ involves only finitely many elements of $S$, we have $k^p(S)=k^p[S]$, the subring generated.
+
+**Lemma 13.9 (three forms of $p$-independence).** For a subset $B\subseteq k$ the following are equivalent.
+
+1. $B$ is $p$-independent.
+2. $[k^p(b_1,\ldots,b_r):k^p]=p^r$ for all distinct $b_1,\ldots,b_r\in B$.
+3. $b\notin k^p(B\setminus\{b\})$ for every $b\in B$.
+
+**Proof.** The ring $k^p[b_1,\ldots,b_r]=k^p(b_1,\ldots,b_r)$ is spanned over $k^p$ by all monomials in the $b_i$, and since $b_i^p\in k^p$ every exponent may be reduced modulo $p$. So the $p^r$ $p$-monomials span, and they are independent exactly when the dimension equals $p^r$. This is the equivalence of 1 and 2.
+
+Assume 2 and suppose $b\in k^p(B\setminus\{b\})$ for some $b\in B$. Then $b\in k^p(b_1,\ldots,b_s)$ for finitely many distinct $b_i\in B\setminus\{b\}$, whence $k^p(b,b_1,\ldots,b_s)=k^p(b_1,\ldots,b_s)$ has degree $p^s$ over $k^p$, contradicting 2 applied to the $s+1$ distinct elements $b,b_1,\ldots,b_s$. So 2 implies 3.
+
+Assume 3 and let $b_1,\ldots,b_r\in B$ be distinct. Argue by induction on $r$, the case $r=0$ being trivial. Put $F=k^p(b_1,\ldots,b_{r-1})$, of degree $p^{r-1}$ by induction. Since $F\subseteq k^p(B\setminus\{b_r\})$ and $b_r\notin k^p(B\setminus\{b_r\})$, we get $b_r\notin F$, so $[F(b_r):F]=p$ by Lemma 13.8. Multiplying degrees in the tower gives $p^r$. $\square$
+
+**Lemma 13.10 (existence of $p$-bases).** Every $p$-independent subset of $k$ is contained in a $p$-basis; in particular $k$ has a $p$-basis. A subset is a $p$-basis if and only if it is a maximal $p$-independent subset. The field $k$ is perfect if and only if $\emptyset$ is a $p$-basis of $k$.
+
+**Proof.** $p$-independence is a condition on finite subsets, so the union of a chain of $p$-independent subsets is $p$-independent, and Zorn's lemma provides a maximal $p$-independent subset $B$ containing any given one. Suppose $k\neq k^p(B)$ and pick $x\in k\setminus k^p(B)$. We claim $B\cup\{x\}$ is $p$-independent, using criterion 3 of Lemma 13.9. For the element $x$ itself, $x\notin k^p(B)$ by choice. For $b\in B$, set $F=k^p(B\setminus\{b\})$ and suppose $b\in F(x)$. Since $b\notin F$ by $p$-independence of $B$, Lemma 13.8 gives $[F(b):F]=p$, while $[F(x):F]\leq p$; from $F\subseteq F(b)\subseteq F(x)$ we conclude $F(x)=F(b)$, so $x\in F(b)\subseteq k^p(B)$, a contradiction. Thus $B\cup\{x\}$ is $p$-independent and strictly larger, contradicting maximality. Hence $k=k^p(B)$ and $B$ is a $p$-basis.
+
+Conversely a $p$-basis $B$ is maximal: for $x\in k\setminus B$ we have $x\in k=k^p(B)$, so criterion 3 fails for $B\cup\{x\}$. Finally $\emptyset$ is always $p$-independent, and it is a $p$-basis exactly when $k=k^p$. $\square$
+
+**Lemma 13.11 (monomial basis and presentation).** Let $B$ be a $p$-basis of $k$. Then the $p$-monomials
+
+$$
+\prod_{b\in B}b^{e_b},
+\qquad 0\leq e_b<p,\ \ e_b=0\ \text{for all but finitely many}\ b,
+$$
+
+form a basis of $k$ as a $k^p$-vector space. Consequently, if $\{X_b\}_{b\in B}$ are indeterminates, the $k^p$-algebra homomorphism
+
+$$
+k^p[X_b:b\in B]\longrightarrow k,\qquad X_b\longmapsto b,
+$$
+
+is surjective with kernel generated by the polynomials $X_b^p-b^p$, so that
+
+$$
+k\cong k^p[X_b:b\in B]\big/\big(X_b^p-b^p:b\in B\big).
+$$
+
+If $B$ is finite with $n$ elements, then $[k:k^p]=p^n$.
+
+**Proof.** Linear independence is the definition of $p$-independence, since any linear relation involves finitely many monomials and hence finitely many elements of $B$. They span because $k=k^p(B)=k^p[B]$ and every monomial in elements of $B$ reduces, using $b^p\in k^p$, to a $k^p$-multiple of a $p$-monomial.
+
+For the presentation, surjectivity is $k=k^p[B]$, and the listed polynomials lie in the kernel. Let $Q$ denote the quotient of $k^p[X_b]$ by the ideal they generate. In $Q$ each $X_b^p$ equals the scalar $b^p\in k^p$, so $Q$ is spanned over $k^p$ by the images of the monomials $\prod X_b^{e_b}$ with all $e_b<p$. The induced surjection $Q\to k$ carries this spanning family bijectively onto the $p$-monomials, which are a $k^p$-basis of $k$. A surjection carrying a spanning family onto a basis is an isomorphism and the family is a basis. Hence $Q\cong k$. The degree formula is immediate from the basis. $\square$
+
+Lemma 13.11 already contains the whole point: _a $p$-basis presents $k$ over $k^p$ by the equations $X_b^p=b^p$, with no other relations._ Everything below is an application of that presentation. The first application explains the name "differential criterion" and shows that a $p$-basis is exactly a system of independent coordinates for differentiation.
+
+Recall that for a $k$-vector space $M$, a **derivation** $D:k\to M$ is an additive map satisfying the Leibniz rule $D(xy)=xD(y)+yD(x)$. Every derivation kills $1$, since $D(1)=D(1\cdot1)=2D(1)$, and kills $k^p$, since $D(x^p)=px^{p-1}D(x)=0$; hence every derivation is $k^p$-linear, because $D(x^py)=x^pD(y)+yD(x^p)=x^pD(y)$.
+
+**Theorem 13.12 (derivation extension).** Let $B$ be a $p$-basis of $k$ and $M$ a $k$-vector space. For every function $\delta:B\to M$ there is a unique derivation $D:k\to M$ with $D(b)=\delta(b)$ for all $b\in B$. Thus restriction to $B$ identifies the $k$-vector space of derivations $k\to M$ with the space of all functions $B\to M$.
+
+**Proof roadmap.** A derivation into $M$ is the same thing as a ring-theoretic splitting of the square-zero extension $k\oplus M\to k$. Splittings are constructed from the presentation of Lemma 13.11: one must choose, for each $b$, an element of $k\oplus M$ lifting $b$ whose $p$-th power is the prescribed $b^p$. Because $M$ has square zero and the characteristic is $p$, _every_ lift has this property, so the choices are free.
+
+**Proof.** Let $R=k\oplus M$ be the ring with $M$ an ideal of square zero and the given $k$-module structure, so $(x+m)(y+m')=xy+(xm'+ym)$. Let $\pi:R\to k$ be the projection. Giving a derivation $D:k\to M$ is the same as giving a ring homomorphism $\phi:k\to R$ with $\pi\circ\phi=\operatorname{id}$, via $\phi(x)=x+D(x)$: additivity of $\phi$ is additivity of $D$, and multiplicativity of $\phi$ is exactly the Leibniz rule.
+
+For $x\in k$ and $m\in M$ the binomial expansion in $R$ gives
+
+$$
+(x+m)^p=x^p+px^{p-1}m=x^p,
+$$
+
+because $m^2=0$ kills all terms of degree at least two in $m$, and $p=0$ in $k$. So every lift of $x$ to $R$ has $p$-th power equal to $x^p\in k\subseteq R$.
+
+Now let $\delta:B\to M$ be given and set $\beta_b=b+\delta(b)\in R$. By the previous paragraph $\beta_b^p=b^p$. Regard $R$ as a $k^p$-algebra through $k^p\subseteq k\subseteq R$. Then the $k^p$-algebra homomorphism $k^p[X_b]\to R$ sending $X_b\mapsto\beta_b$ kills every $X_b^p-b^p$, hence factors through the presentation of Lemma 13.11 and yields a ring homomorphism $\phi:k\to R$ with $\phi|_{k^p}$ the inclusion and $\phi(b)=\beta_b$. The composite $\pi\circ\phi:k\to k$ is a $k^p$-algebra homomorphism fixing every $b\in B$, hence fixes $k^p[B]=k$; so $\phi$ is a splitting and $D(x)=\phi(x)-x$ is a derivation with $D(b)=\delta(b)$.
+
+For uniqueness, let $D$ be any derivation with $D|_B=\delta$ and let $\phi$ be the corresponding splitting. Then $\phi$ is $k^p$-linear because $D$ is, so $\phi$ is a $k^p$-algebra homomorphism determined by its values on the generators $B$ of $k$ over $k^p$; these are prescribed. Hence $\phi$, and therefore $D$, is unique. $\square$
+
+The same presentation argument, run over an arbitrary base rather than over $k\oplus M$, gives the lifting theorem that will produce coefficient fields in characteristic $p$. It is the precise sense in which a field of characteristic $p$ is "formally smooth over $\mathbf F_p$": homomorphisms out of $k$ extend across nilpotent thickenings.
+
+**Theorem 13.13 (lifting a field of characteristic $p$ across a square-zero extension).** Let $R$ be a ring with $pR=0$, let $I\subseteq R$ be an ideal with $I^2=0$, and write $\pi:R\to R/I$ for the quotient map. Let $k$ be a field of characteristic $p$, let $B$ be a $p$-basis of $k$, and let $\psi:k\to R/I$ be a ring homomorphism. Then for every choice of elements $\beta_b\in R$ with $\pi(\beta_b)=\psi(b)$ there is a unique ring homomorphism $\phi:k\to R$ with
+
+$$
+\pi\circ\phi=\psi
+\qquad\text{and}\qquad
+\phi(b)=\beta_b\ \ (b\in B).
+$$
+
+In particular $\psi$ lifts to $R$, and the lifts are in bijection with the families of lifts of the $\psi(b)$.
+
+**Proof roadmap.** Since $R$ has characteristic $p$ and $I$ has square zero, the $p$-th power map on $R$ is insensitive to $I$ and therefore descends to a canonical ring homomorphism $R/I\to R$. Composing it with $\psi$ and the inverse of Frobenius produces the only possible lift of $\psi$ on $k^p$, with no choices at all. On the generators $B$ the presentation of Lemma 13.11 shows that the choices are unconstrained.
+
+**Proof.** For $x\in R$ and $i\in I$ we have, as in the previous proof, $(x+i)^p=x^p$, because $i^2=0$ and $p=0$ in $R$. Hence the map
+
+$$
+\theta:R/I\longrightarrow R,\qquad \theta(\overline x)=x^p\ \ \text{for any lift }x\in R,
+$$
+
+is well defined. It is a ring homomorphism: multiplicativity is clear, and additivity holds because $(x+y)^p=x^p+y^p$ in the characteristic-$p$ ring $R$. By construction $\pi\circ\theta$ is the $p$-th power map of $R/I$.
+
+Since Frobenius is a bijection from $k$ onto $k^p$, we may define $\phi_0:k^p\to R$ by $\phi_0(x^p)=\theta(\psi(x))$. It is a ring homomorphism, being the composite of the inverse Frobenius $k^p\to k$, then $\psi$, then $\theta$. It lifts $\psi|_{k^p}$, since
+
+$$
+\pi\big(\phi_0(x^p)\big)=\pi\theta\big(\psi(x)\big)=\psi(x)^p=\psi(x^p).
+$$
+
+Regard $R$ as a $k^p$-algebra via $\phi_0$. For $b\in B$ the chosen lift $\beta_b$ of $\psi(b)$ satisfies
+
+$$
+\beta_b^p=\theta\big(\pi(\beta_b)\big)=\theta\big(\psi(b)\big)=\phi_0(b^p),
+$$
+
+so the $k^p$-algebra homomorphism $k^p[X_b]\to R$ with $X_b\mapsto\beta_b$ kills every $X_b^p-b^p$. By Lemma 13.11 it factors through $k$, producing a ring homomorphism $\phi:k\to R$ extending $\phi_0$ with $\phi(b)=\beta_b$. Both $\pi\circ\phi$ and $\psi$ are ring homomorphisms $k\to R/I$ which agree on $k^p$ and on $B$, hence on $k^p[B]=k$; so $\pi\circ\phi=\psi$.
+
+For uniqueness, let $\phi$ be any lift of $\psi$ with $\phi(b)=\beta_b$. For $x\in k$ the element $\phi(x)$ lifts $\psi(x)$, so $\phi(x^p)=\phi(x)^p=\theta(\psi(x))=\phi_0(x^p)$. Thus $\phi$ agrees with $\phi_0$ on $k^p$, and it is prescribed on $B$; since $k=k^p[B]$, it is determined. $\square$
+
+Some examples fix the notions. A perfect field, such as any finite field, any algebraically closed field, or $\mathbf F_p((t))^{\mathrm{perf}}$, has empty $p$-basis; Theorem 13.13 then says that a homomorphism from a perfect field of characteristic $p$ lifts _uniquely_ across a square-zero extension in characteristic $p$, since there are no choices to make. The rational function field $k_0=\mathbf F_p(u)$ has $p$-basis $\{u\}$ and $[k_0:k_0^p]=p$; the field $\mathbf F_p(u_1,\ldots,u_n)$ has $p$-basis $\{u_1,\ldots,u_n\}$ and degree $p^n$ over its $p$-th powers. The field $\mathbf F_p(u_1,u_2,u_3,\ldots)$ in countably many variables has infinite $p$-basis $\{u_1,u_2,\ldots\}$, so $[k:k^p]$ is infinite; this is a perfectly ordinary field, and it shows that no finiteness of $p$-bases may be assumed. Finally, a separable algebraic extension $k'/k$ has the property that a $p$-basis of $k$ remains a $p$-basis of $k'$; we shall not need this, but it explains why the residue fields occurring in arithmetic — finitely generated fields and their separable extensions — always have finite $p$-bases even when they are far from perfect.
+
+### 13.4 Coefficient fields in equal characteristic $p$
+
+We can now construct coefficient fields in the remaining equal-characteristic case. Let $(A,\mathfrak m)$ be a local ring, complete and separated for its $\mathfrak m$-adic topology, with $pA=0$; equivalently, $A$ contains $\mathbf F_p$ and its residue field $k$ has characteristic $p$.
+
+The strategy is the one the previous section was built for. A coefficient field is the same thing as a ring homomorphism $\phi:k\to A$ splitting the reduction $A\to k$: given such a $\phi$, its image is a subfield mapping isomorphically onto $k$, and conversely a coefficient field $K$ yields $\phi$ as the inverse of $K\xrightarrow{\sim}k$. Since $A=\varprojlim_nA/\mathfrak m^n$, constructing $\phi$ amounts to constructing a compatible system of splittings
+
+$$
+\phi_n:k\longrightarrow A/\mathfrak m^n,
+\qquad n\geq1,
+$$
+
+of the reductions $A/\mathfrak m^n\to k$. The first one is forced: $A/\mathfrak m=k$ and $\phi_1=\operatorname{id}$. Passing from level $n$ to level $n+1$ means lifting a homomorphism across the surjection
+
+$$
+A/\mathfrak m^{n+1}\longrightarrow A/\mathfrak m^n,
+\qquad
+\text{kernel }\ \mathfrak m^n/\mathfrak m^{n+1},
+$$
+
+whose kernel has square zero because $\mathfrak m^{2n}\subseteq\mathfrak m^{n+1}$ for $n\geq1$. That is exactly the situation of Theorem 13.13, and its hypothesis $pR=0$ holds since $A/\mathfrak m^{n+1}$ is a quotient of $A$. So each step succeeds. Moreover Theorem 13.13 tells us precisely what the step depends on: a choice of lift, at level $n+1$, of the image of each element of a $p$-basis. Fixing lifts in $A$ once and for all makes the whole tower canonical, and this is what turns existence into a clean parametrization of _all_ coefficient fields.
+
+**Theorem 13.14 (coefficient fields in equal characteristic $p$).** Let $(A,\mathfrak m)$ be a local ring that is complete and separated for its $\mathfrak m$-adic topology, with $pA=0$, and let $B$ be a $p$-basis of its residue field $k$. Then for every family $(a_b)_{b\in B}$ of elements of $A$ with $a_b\equiv b\pmod{\mathfrak m}$ there is a _unique_ ring homomorphism
+
+$$
+\phi:k\longrightarrow A
+$$
+
+splitting the reduction $A\to k$ and satisfying $\phi(b)=a_b$ for all $b\in B$. Its image $K=\phi(k)$ is a coefficient field of $A$, and
+
+$$
+K\longmapsto\big(\text{the unique element of }K\text{ reducing to }b\big)_{b\in B}
+$$
+
+is a bijection from the set of coefficient fields of $A$ onto the set of such families. In particular $A$ has a coefficient field.
+
+**Proof roadmap.** Split the reduction one nilpotent layer at a time. Each layer is a square-zero extension of $\mathbf F_p$-algebras, so Theorem 13.13 lifts the splitting, uniquely once the images of the $p$-basis are pinned down; pinning them down by fixed elements of $A$ makes the levels compatible. The inverse limit of the levels is the desired homomorphism, and the same uniqueness read backwards shows that a coefficient field is recovered from the lifts it contains.
+
+**Proof.** Write $A_n=A/\mathfrak m^n$ and let $\rho_n:A\to A_n$ and $\pi_n:A_{n+1}\to A_n$ be the reductions; so $A_1=k$ and $A=\varprojlim_nA_n$.
+
+_Construction of the levels._ We define ring homomorphisms $\phi_n:k\to A_n$ with
+
+$$
+\pi_n\circ\phi_{n+1}=\phi_n,
+\qquad
+\phi_n(b)=\rho_n(a_b)\ \ (b\in B),
+$$
+
+and with $\phi_n$ splitting $A_n\to k$, by induction on $n$. For $n=1$ take $\phi_1=\operatorname{id}_k$; it splits the identity and satisfies $\phi_1(b)=b=\rho_1(a_b)$. Suppose $\phi_n$ has been constructed. Apply Theorem 13.13 with $R=A_{n+1}$, which satisfies $pR=0$, with $I=\ker\pi_n=\mathfrak m^n/\mathfrak m^{n+1}$, which satisfies $I^2=0$ because $\mathfrak m^{2n}\subseteq\mathfrak m^{n+1}$, with $\psi=\phi_n:k\to R/I=A_n$, and with the lifts $\beta_b=\rho_{n+1}(a_b)$, which indeed satisfy $\pi_n(\beta_b)=\rho_n(a_b)=\phi_n(b)=\psi(b)$. The theorem provides a unique ring homomorphism $\phi_{n+1}:k\to A_{n+1}$ with $\pi_n\circ\phi_{n+1}=\phi_n$ and $\phi_{n+1}(b)=\rho_{n+1}(a_b)$. Composing $\phi_{n+1}$ with $A_{n+1}\to k$ gives the composite of $\phi_n$ with $A_n\to k$, which is the identity by induction; so $\phi_{n+1}$ splits as required.
+
+_Passage to the limit._ The compatibility $\pi_n\circ\phi_{n+1}=\phi_n$ says that the $\phi_n$ assemble into a ring homomorphism
+
+$$
+\phi:k\longrightarrow\varprojlim_nA_n=A,
+$$
+
+with $\rho_n\circ\phi=\phi_n$. Since $\rho_1\circ\phi=\phi_1=\operatorname{id}$, the map $\phi$ splits $A\to k$. Since $\rho_n(\phi(b))=\rho_n(a_b)$ for every $n$ and $A$ is separated, $\phi(b)=a_b$. Being a homomorphism from a field into a nonzero ring, $\phi$ is injective, so $K=\phi(k)$ is a subfield of $A$ mapping isomorphically onto $k$: a coefficient field.
+
+_Uniqueness._ Let $\phi'$ be any splitting with $\phi'(b)=a_b$ for all $b$. Then $\rho_n\circ\phi'$ splits $A_n\to k$ and sends $b$ to $\rho_n(a_b)$. By induction on $n$ these maps coincide with the $\phi_n$: for $n=1$ both are the identity of $k$, and if $\rho_n\circ\phi'=\phi_n$ then $\rho_{n+1}\circ\phi'$ is a lift of $\phi_n$ across $\pi_n$ carrying $b$ to $\rho_{n+1}(a_b)$, hence equals $\phi_{n+1}$ by the uniqueness clause of Theorem 13.13. Therefore $\rho_n\circ\phi'=\rho_n\circ\phi$ for all $n$, and separatedness gives $\phi'=\phi$.
+
+_The bijection._ Given a coefficient field $K$, let $\phi_K:k\to A$ be the inverse of $K\xrightarrow{\sim}k$ followed by the inclusion; it is a splitting with image $K$, and it assigns to each $b\in B$ the unique element $\phi_K(b)$ of $K$ reducing to $b$. This is the map in the statement, and it lands in the set of admissible families. It is surjective by the construction above. It is injective because two coefficient fields $K,K'$ producing the same family give splittings $\phi_K,\phi_{K'}$ that agree on $B$, hence are equal by uniqueness, hence have the same image. $\square$
+
+Combining this with Theorem 13.7 disposes of both equal-characteristic cases at once. The following is the statement invoked whenever a complete local ring containing a field is put in coordinates.
+
+**Theorem 13.15 (existence of coefficient fields).** Let $(A,\mathfrak m)$ be a local ring that is complete and separated for its $\mathfrak m$-adic topology and that contains a field. Then $A$ has a coefficient field: a subfield $K\subseteq A$ mapping isomorphically onto the residue field $k$. Consequently $A=K\oplus\mathfrak m$ as $K$-vector spaces, and every element of $A$ has a unique expression as a residue coefficient plus an element of $\mathfrak m$.
+
+**Proof.** As noted in Section 13.1, a ring containing a field is of equal characteristic. If $\operatorname{char}k=0$ then Theorem 13.7 applies. If $\operatorname{char}k=p>0$ then $A$ contains $\mathbf F_p$, so $pA=0$, and Theorem 13.14 applies, using a $p$-basis of $k$ furnished by Lemma 13.10. In either case a coefficient field $K$ exists. The decomposition $A=K\oplus\mathfrak m$ holds because $K\to A/\mathfrak m$ is bijective: surjectivity gives $A=K+\mathfrak m$ and injectivity gives $K\cap\mathfrak m=0$. $\square$
+
+No Noetherian hypothesis was used; completeness and separatedness suffice. The Noetherian condition will enter only in Section 13.7, where finitely many variables are needed to present $A$.
+
+Theorem 13.14 also measures the failure of uniqueness exactly: coefficient fields correspond bijectively to families of lifts of a $p$-basis. Two consequences deserve to be recorded.
+
+**Corollary 13.16 (perfect residue field).** Let $(A,\mathfrak m)$ be complete and separated local with $pA=0$ and perfect residue field $k$. Then $A$ has exactly one coefficient field, namely
+
+$$
+K=\bigcap_{n\geq0}A^{p^n},
+\qquad
+A^{p^n}=\{x^{p^n}:x\in A\}.
+$$
+
+**Proof.** A perfect field has empty $p$-basis by Lemma 13.10, so there is exactly one admissible family in Theorem 13.14, namely the empty one, and hence exactly one coefficient field $K=\phi(k)$.
+
+For the description, note first that $K=\phi(k)=\phi(k^{p^n})=\phi(k)^{p^n}\subseteq A^{p^n}$ for every $n$, using perfection of $k$. Conversely let $x\in\bigcap_nA^{p^n}$ and let $\overline x\in k$ be its residue. Fix $n$ and write $x=y^{p^n}$ with $y\in A$. Then $\overline x=\overline y^{\,p^n}$, so $\phi(\overline x)=\phi(\overline y)^{p^n}$, and since $y-\phi(\overline y)\in\mathfrak m$ we get, using $pA=0$,
+
+$$
+x-\phi(\overline x)=y^{p^n}-\phi(\overline y)^{p^n}=\big(y-\phi(\overline y)\big)^{p^n}\in\mathfrak m^{p^n}.
+$$
+
+This holds for every $n$, and $\bigcap_n\mathfrak m^n=0$; hence $x=\phi(\overline x)\in K$. $\square$
+
+**Corollary 13.17 (equicharacteristic complete DVRs are power series rings).** Let $A$ be a complete DVR with uniformizer $\pi$ and residue field $k$, and suppose $A$ contains a field. Then any coefficient field $K\subseteq A$ gives an isomorphism of topological rings
+
+$$
+K[[X]]\xrightarrow{\ \sim\ }A,
+\qquad X\longmapsto\pi ,
+$$
+
+so that $A\cong k[[t]]$. Under this isomorphism the digit expansion of Section 8.2, taken with the residue representatives $S=K$, becomes the coefficient expansion of a power series, and digits multiply by the Cauchy product without carries.
+
+**Proof.** A complete DVR is a complete Noetherian local ring, so Lemma 13.3 applies with $R_0=K$, $\sigma$ the inclusion, and $x_1=\pi$. Here $\mathfrak m_K=0$, so $J=(\pi)A=\mathfrak m$, and $A=K+\mathfrak m$ by Theorem 13.15; hence the evaluation map $\Sigma:K[[X]]\to A$ is surjective. Its kernel is a proper ideal of the DVR $K[[X]]$, hence is $0$ or $(X^n)$ for some $n\geq1$ by Section 4.3; but $\Sigma(X^n)=\pi^n\neq0$, so the kernel is $0$ and $\Sigma$ is an isomorphism. It is continuous and carries the maximal ideal onto $\mathfrak m$, so it identifies the two adic topologies. The last sentence is a restatement: the unique expansion $x=\sum_ns_n\pi^n$ with $s_n\in K$ is the image of the power series $\sum_ns_nX^n$, and multiplication in $K[[X]]$ is the Cauchy product. $\square$
+
+This settles the point deferred in Section 8.2: in equal characteristic a coefficient field is not an accident of the examples but always available, so digit arithmetic really is power series arithmetic. In mixed characteristic no such field exists, and carries are genuinely unavoidable. The remedy there is to replace the coefficient field by a complete DVR of mixed characteristic whose residue field is $k$; constructing it is the subject of the next section.
+
+### 13.5 Cohen rings: existence
+
+In mixed characteristic a complete local ring $A$ contains no field, so no coefficient field can be sought. What is the right substitute? The example to imitate is $\mathbf Z_p\subseteq\mathbf Z_p[[t]]$. There the coefficients of a $t$-expansion do not form a field; they form the complete DVR $\mathbf Z_p$, in which $p$ is the uniformizer, and reducing modulo that uniformizer returns the residue field $\mathbf F_p$ of the big ring. The essential features are that the coefficient ring is _as unramified as possible_ — its maximal ideal is generated by $p$ itself, so it introduces no ramification of its own — and that it has the correct residue field.
+
+Accordingly, let $k$ be a field of characteristic $p>0$. A **Cohen ring** for $k$ is a complete DVR $C$ whose maximal ideal is $pC$, together with an identification of its residue field $C/pC$ with $k$. Equivalently, $C$ is a complete discrete valuation ring of mixed characteristic which is _absolutely unramified_: the normalized valuation of $p$ is $1$. Since $C$ is a domain in which $p\neq0$, a Cohen ring always has characteristic zero. For $k=\mathbf F_p$ the ring $\mathbf Z_p$ is a Cohen ring, by Section 8.3.
+
+It is convenient to allow incomplete approximations during the construction. Call a **$p$-lift** of $k$ a DVR $D$ whose maximal ideal is $pD$, together with an identification $D/pD\cong k$. A Cohen ring is exactly a complete $p$-lift, and completion costs nothing:
+
+**Lemma 13.18 (completing a $p$-lift).** If $D$ is a $p$-lift of $k$, then its $p$-adic completion $\widehat D=\varprojlim_nD/p^nD$ is a Cohen ring for $k$, and $D\to\widehat D$ is injective with $\widehat D/p^n\widehat D\cong D/p^nD$ for all $n$.
+
+**Proof.** This is Theorem 7.2 combined with Theorem 8.1: for a DVR with uniformizer $\pi=p$, the inverse limit of the quotients $D/(p^n)$ is the completion, it is a complete DVR with the same uniformizer and the same residue field, and $D/(p^n)\cong\widehat D/(p^n)$. Injectivity of $D\to\widehat D$ is separatedness of $D$, part of the definition of a DVR through the valuation. $\square$
+
+So it suffices to produce a $p$-lift. The strategy is to build $k$ up from $\mathbf F_p$ one element at a time and to carry a $p$-lift along at each step. Only two kinds of steps occur, and each has a completely explicit lift.
+
+If we adjoin a _transcendental_ element, the residue field grows from $k'$ to the rational function field $k'(x)$. On the lift side one adjoins a variable $X$ to $D$ and then localizes at the prime ideal $pD[X]$: modulo $p$ this localizes $k'[X]$ at its zero ideal, producing exactly $k'(X)$.
+
+If we adjoin an _algebraic_ element $x$ with minimal polynomial $\overline f\in k'[X]$, we lift $\overline f$ to a monic polynomial $f$ over $D$ and form $D[X]/(f)$. Modulo $p$ this is $k'[X]/(\overline f)=k'(x)$, a field. Notice that separability plays no role: irreducibility of $\overline f$ is all that is needed for the quotient to be a field, and irreducibility of $f$ over the fraction field of $D$ was proved in Section 9.6 for any monic polynomial with irreducible reduction. This is the point at which the mixed-characteristic theory is _easier_ than one might fear: existence of a Cohen ring requires no $p$-basis at all. The $p$-basis will be indispensable in the next section, where we must compare two Cohen rings and map them into other rings.
+
+**Lemma 13.19 (simple extensions of $p$-lifts).** Let $D$ be a $p$-lift of a field $k'$ of characteristic $p$, and let $k''=k'(x)$ be a simple extension of $k'$. Then there is a $p$-lift $D''$ of $k''$ containing $D$ as a subring, in such a way that $pD''\cap D=pD$ and the induced map $D/pD\to D''/pD''$ is the inclusion $k'\subseteq k''$.
+
+**Proof.** _Case 1: $x$ transcendental over $k'$._ The polynomial ring $D[X]$ is a domain, and $\bigcap_np^nD[X]=\big(\bigcap_np^nD\big)[X]=0$. Since $D[X]/pD[X]=k'[X]$ is a domain, $pD[X]$ is a prime ideal; let
+
+$$
+D''=D[X]_{pD[X]}
+$$
+
+be the localization at it, a subring of the fraction field of $D[X]$ containing $D$. It is a local domain with maximal ideal $pD''$. Reduction commutes with localization, so
+
+$$
+D''/pD''=\big(k'[X]\big)_{(0)}=k'(X)\cong k'' ,
+$$
+
+the isomorphism carrying $X$ to $x$. For every nonzero $f\in D[X]$ there is a largest $n$ with $f\in p^nD[X]$, and writing $f=p^ng$ we have $g\notin pD[X]$, so $g$ is a unit of $D''$. Hence every nonzero element of $D''$ is $p^n$ times a unit, so $D''$ is a DVR with uniformizer $p$ and $\bigcap_np^nD''=0$. Finally $pD''\cap D=pD$, because an element of $D$ of valuation $0$ in $D$ remains a unit in $D''$.
+
+_Case 2: $x$ algebraic over $k'$._ Let $\overline f\in k'[X]$ be the minimal polynomial of $x$, of degree $d$, and choose a monic $f\in D[X]$ of degree $d$ reducing to $\overline f$. Put $D''=D[X]/(f)$, a free $D$-module with basis $1,X,\ldots,X^{d-1}$. Reduction modulo $p$ gives
+
+$$
+D''/pD''=k'[X]/(\overline f)=k'(x)=k'',
+$$
+
+a field, so $pD''$ is a maximal ideal of $D''$. Freeness gives $\bigcap_np^nD''=0$, since a coordinate expression lies in $p^nD''$ exactly when all $d$ of its coordinates lie in $p^nD$.
+
+That $D''$ is a domain follows from Section 9.6: $D$ is a DVR with fraction field $K$, and the monic polynomial $f$ has irreducible reduction, hence is irreducible over $K$. Therefore $K[X]/(f)$ is a field, and $D''\to K[X]/(f)$ is injective because it carries the $D$-basis $1,\ldots,X^{d-1}$ to a $K$-basis.
+
+Next, every $w\in D''\setminus pD''$ is a unit. Indeed $w$ has nonzero residue in the field $k''=D''/pD''$, so $wD''+pD''=D''$; hence the $D$-module $M=D''/wD''$ satisfies $M=pM$. It is finitely generated over $D$, because $D''$ is, and $pD$ is the maximal ideal of the local ring $D$; Nakayama's lemma gives $M=0$, that is, $wD''=D''$.
+
+Finally, for nonzero $z\in D''$ let $n$ be the largest integer with $z\in p^nD''$, which exists because $\bigcap_np^nD''=0$; then $z=p^nw$ with $w\notin pD''$, so $w$ is a unit. Thus $D''$ is local with maximal ideal $pD''$, every nonzero element is $p^n$ times a unit, and $D''$ is a DVR with uniformizer $p$, that is, a $p$-lift of $k''$. It contains $D$ as a subring, and $pD''\cap D=pD$ because an element of $D$ that is a unit in $D$ is a unit in $D''$. $\square$
+
+**Lemma 13.20 (increasing unions of $p$-lifts).** Let $(D_\beta)_{\beta<\alpha}$ be a family of $p$-lifts of subfields $k_\beta\subseteq k$, indexed by an ordinal and increasing in the sense that $\beta\leq\gamma$ implies $D_\beta\subseteq D_\gamma$ with $pD_\gamma\cap D_\beta=pD_\beta$ and $k_\beta\subseteq k_\gamma$ compatibly. Then $D=\bigcup_\beta D_\beta$ is a $p$-lift of $k^\dagger=\bigcup_\beta k_\beta$.
+
+**Proof.** $D$ is a domain, being a union of subrings of a common domain in a compatible way — concretely, each $D_\beta$ is a subring of $D$ and any two elements lie in a common $D_\gamma$. The condition $pD_\gamma\cap D_\beta=pD_\beta$ says that the normalized valuation $v_\beta$ of $D_\beta$ is the restriction of $v_\gamma$: for $z\in D_\beta$ nonzero, $z=p^{v_\beta(z)}u$ with $u\in D_\beta^\times$, and $u$ remains a unit of $D_\gamma$, so $v_\gamma(z)=v_\beta(z)$. Hence there is a well-defined function $v$ on $D\setminus\{0\}$ with values in $\mathbf N$, and every nonzero $z\in D$ equals $p^{v(z)}$ times a unit of $D$. So $D$ is local with maximal ideal $pD$, and $\bigcap_np^nD=0$; thus $D$ is a DVR with uniformizer $p$. Finally $pD\cap D_\beta=pD_\beta$ by the same valuation comparison, so
+
+$$
+D/pD=\varinjlim_\beta D_\beta/pD_\beta=\varinjlim_\beta k_\beta=k^\dagger . \square
+$$
+
+**Theorem 13.21 (existence of Cohen rings).** Every field $k$ of characteristic $p>0$ admits a Cohen ring: a complete DVR $C$ with maximal ideal $pC$ and residue field $k$.
+
+**Proof roadmap.** Well-order $k$ and adjoin its elements one at a time, carrying a $p$-lift along by Lemma 13.19 at successor stages and by Lemma 13.20 at limit stages. The union at the end is a $p$-lift of $k$; complete it with Lemma 13.18.
+
+**Proof.** Write $k=\{x_\alpha:\alpha<\lambda\}$ for some ordinal $\lambda$, using a well-ordering. We construct by transfinite recursion an increasing family of subfields $k_\alpha\subseteq k$ and $p$-lifts $D_\alpha$ of $k_\alpha$, compatible in the sense of Lemma 13.20.
+
+Start with $k_0=\mathbf F_p$ and $D_0=\mathbf Z_{(p)}$, which is a DVR with maximal ideal $p\mathbf Z_{(p)}$ and residue field $\mathbf F_p$ by Section 4.3, hence a $p$-lift of $k_0$.
+
+At a successor stage, suppose $k_\alpha$ and $D_\alpha$ have been constructed. Set $k_{\alpha+1}=k_\alpha(x_\alpha)\subseteq k$, a simple extension, and let $D_{\alpha+1}$ be a $p$-lift of $k_{\alpha+1}$ containing $D_\alpha$ as provided by Lemma 13.19.
+
+At a limit stage $\alpha$, set $k_\alpha=\bigcup_{\beta<\alpha}k_\beta$ and $D_\alpha=\bigcup_{\beta<\alpha}D_\beta$, a $p$-lift by Lemma 13.20.
+
+Since $x_\alpha\in k_{\alpha+1}$ for every $\alpha<\lambda$, we have $k_\lambda=k$, and $D_\lambda$ is a $p$-lift of $k$. Its $p$-adic completion is a Cohen ring for $k$ by Lemma 13.18. $\square$
+
+Three examples make the construction concrete. For $k=\mathbf F_p$ the recursion never leaves $\mathbf Z_{(p)}$ and produces $\mathbf Z_p$. For a finite field $k=\mathbf F_{p^f}=\mathbf F_p(x)$ with $x$ algebraic, Case 2 of Lemma 13.19 gives $D=\mathbf Z_{(p)}[X]/(f)$ with $f$ a monic lift of the minimal polynomial, and the Cohen ring is $\mathbf Z_p[X]/(f)$; by Section 12.7 this is precisely the valuation ring of the unramified extension of $\mathbf Q_p$ of degree $f$, which is the expected answer. For $k=\mathbf F_p(u)$, Case 1 gives $D=\mathbf Z_{(p)}[X]_{(p)}$, whose $p$-adic completion
+
+$$
+C=\varprojlim_n\ \big(\mathbf Z/p^n\big)[X]_{(p)}
+$$
+
+is a Cohen ring for $\mathbf F_p(u)$. Its elements are the $p$-adically convergent series $\sum_{n\geq0}c_np^n$ with each $c_n$ chosen from a fixed set of representatives of $\mathbf F_p(u)$ in $C$; that these representatives cannot be chosen to form a subring is exactly the content of mixed characteristic.
+
+It is equally instructive to see what is _not_ a Cohen ring. The ring $\mathbf Z_p[\zeta_p]$ of Section 12.7, generated by a primitive $p$-th root of unity, is a complete DVR with residue field $\mathbf F_p$, but its uniformizer is $\zeta_p-1$ and $p$ has valuation $p-1$. It is ramified, and therefore not absolutely unramified; a Cohen ring is the _unramified_ coefficient ring, and the point of Section 13.7 will be that ramification of $p$ inside a complete local ring should be recorded by the presentation, not by the coefficient ring.
+
+Nothing so far shows that the Cohen ring is essentially unique, nor that it maps into an arbitrary complete local ring with residue field $k$. Both statements are needed before Cohen rings can serve as coefficient rings, and both require the $p$-basis technology of Section 13.3. That is the next section.
+
+### 13.6 The lifting property and uniqueness of Cohen rings
+
+A coefficient field was obtained in Section 13.4 by lifting a splitting one nilpotent layer at a time. In mixed characteristic the same plan will produce a homomorphism from a Cohen ring $C$ into a complete local ring $A$, provided we can solve the one-layer problem:
+
+> given a surjection $R\to\bar R$ whose kernel $I$ satisfies $I^2=0$, and a homomorphism $C\to\bar R$, lift it to $C\to R$.
+
+This property — lifting across square-zero thickenings — is what "formally smooth over $\mathbf Z_p$" means for $C$, and it is the mixed-characteristic analogue of Theorem 13.13. It is the technical heart of the chapter. Once it is available, everything else follows formally: the map $C\to A$, the uniqueness of Cohen rings, and the correct (weak) form of functoriality.
+
+Throughout this section, $k$ is a field of characteristic $p$, $C$ is a Cohen ring for $k$, $R\to\bar R=R/I$ is a surjective ring homomorphism with $I^2=0$, and $p$ is nilpotent in $R$, say $p^M=0$. The last hypothesis is harmless for us: in the application $R=A/\mathfrak m_A^{n}$ with $p\in\mathfrak m_A$, so $p$ is nilpotent. It is also necessary for the statement to have content, since it makes every homomorphism out of $C$ factor through $C/p^MC$.
+
+Recall that for a ring homomorphism $f:S\to T$ and a $T$-module $N$, a **derivation** $D:S\to N$ is an additive map with $D(ab)=f(a)D(b)+f(b)D(a)$; then $D(1)=0$ and $D(n)=0$ for every integer $n$. We suppress $f$ from the notation. Two facts about square-zero extensions are used repeatedly. First, if $w:S\to R$ is a ring homomorphism and $D:S\to I$ is a derivation, where $I$ carries the $S$-module structure coming from $w$, then $w+D$ is again a ring homomorphism, because the correction term $D(a)D(b)$ lies in $I^2=0$. Second, conversely, the difference of two ring homomorphisms $S\to R$ that agree modulo $I$ is a derivation $S\to I$.
+
+We begin with uniqueness, which is short and already explains the role of the $p$-basis.
+
+**Lemma 13.22 (rigidity of lifts).** Let $B$ be a $p$-basis of $k$ and let $\gamma_b\in C$ be lifts of the elements $b\in B$. Let $u,u':C\to R$ be ring homomorphisms with the same composite $C\to\bar R$ and with $u(\gamma_b)=u'(\gamma_b)$ for all $b\in B$. Then $u=u'$.
+
+**Proof roadmap.** The difference is a derivation into $I$. Because $C$ is generated, modulo any power of $p$, by the $\gamma_b$ together with $p$-th powers, and because a derivation multiplies $p$-th powers by $p$, the derivation takes values in $pI$, then in $p^2I$, and so on; the values die because $p$ is nilpotent.
+
+**Proof.** Put $\delta=u'-u$. Since $u,u'$ agree modulo $I$, $\delta$ takes values in $I$, and it is a derivation $C\to I$, the module structure being given by $u$ (equivalently by $u'$, since the two differ by $I$ and $I^2=0$).
+
+First we record a generation statement. Fix $N\geq1$ and let $S\subseteq C/p^NC$ be the subring generated by the images of the $\gamma_b$ together with all $p$-th powers $y^p$ ($y\in C/p^NC$). Modulo $p$ the image of $S$ contains $B$ and contains $k^p$, hence equals $k^p[B]=k$ by Lemma 13.11. Therefore $S+p(C/p^NC)=C/p^NC$. Substituting this equality into itself repeatedly gives $S+p^j(C/p^NC)=C/p^NC$ for every $j$, and taking $j=N$ yields $S=C/p^NC$.
+
+Now let $I_0\subseteq I$ be any $C$-submodule with $\delta(C)\subseteq I_0$. The set $T=\{c\in C:\delta(c)\in pI_0\}$ is a subring of $C$: it is closed under addition, and if $c,c'\in T$ then $\delta(cc')=u(c)\delta(c')+u(c')\delta(c)\in pI_0$. It contains every $\gamma_b$, because $\delta(\gamma_b)=0$. It contains every $p$-th power, because $\delta(y^p)=pu(y)^{p-1}\delta(y)\in pI_0$. Since $\delta$ kills $p^MC$ — indeed $\delta(p^Mc)=p^M\delta(c)$ and $p^MI=0$ — the containment $T\supseteq C$ may be checked modulo $p^M$, where the previous paragraph shows that the $\gamma_b$ and the $p$-th powers generate. Hence $T=C$, that is, $\delta(C)\subseteq pI_0$.
+
+Starting from $I_0=I$ and iterating gives $\delta(C)\subseteq p^jI$ for every $j$, hence $\delta=0$ because $p^MI=0$. $\square$
+
+For existence we present $C$ as a quotient of a ring for which lifting is trivial, and then measure the obstruction. The ring is a $p$-adically completed polynomial ring on a huge set of variables.
+
+**Lemma 13.23 (a smooth presentation of a Cohen ring).** Let $\Lambda$ be the $p$-adic completion of the polynomial ring $\mathbf Z[T_x:x\in k]$ on one variable for each element of $k$. Then:
+
+1. $\Lambda/p^n\Lambda\cong(\mathbf Z/p^n)[T_x:x\in k]$ for every $n\geq1$; in particular $\Lambda$ is $p$-torsion-free, $p$-adically complete and separated, and $\Lambda/p\Lambda=\mathbf F_p[T_x]$.
+2. If $R$ is a ring with $p^M=0$, then a ring homomorphism $\Lambda\to R$ is the same thing as an arbitrary family $(r_x)_{x\in k}$ of elements of $R$, via $T_x\mapsto r_x$; and if $N$ is an $R$-module with $p^MN=0$, then a derivation $\Lambda\to N$ is the same thing as an arbitrary family $(n_x)_{x\in k}$ in $N$, via $T_x\mapsto n_x$.
+3. Choosing for each $x\in k$ an element $c_x\in C$ reducing to $x$, the homomorphism $\pi:\Lambda\to C$ with $\pi(T_x)=c_x$ is surjective. Its kernel $J$ satisfies $J\cap p^n\Lambda=p^nJ$ for all $n$.
+
+**Proof.** 1. Write $P=\mathbf Z[T_x]$, so $\Lambda=\varprojlim_nP/p^nP$. The map $\Lambda\to P/p^nP$ is surjective by construction. Its kernel is $p^n\Lambda$: if $\lambda=(\lambda_m)_m$ has $\lambda_n=0$, choose for each $j$ a representative of $\lambda_{n+j}$ of the form $p^n\mu_j$ with $\mu_j\in P$, which is possible because $\lambda_{n+j}$ dies in $P/p^nP$; compatibility gives $p^n(\mu_{j+1}-\mu_j)\in p^{n+j}P$, and $P$ is $p$-torsion-free, so $\mu_{j+1}\equiv\mu_j$ modulo $p^jP$. The $\mu_j$ therefore define $\mu\in\Lambda$ with $p^n\mu=\lambda$. The same $p$-torsion-freeness of $P$ shows that $\Lambda$ is $p$-torsion-free, and completeness and separatedness follow from the identification $\Lambda/p^n\Lambda=P/p^nP$.
+
+2. A homomorphism $\Lambda\to R$ kills $p^M\Lambda$, hence factors through the polynomial ring $(\mathbf Z/p^M)[T_x]$, where it is determined by, and may be prescribed arbitrarily on, the variables. A derivation $D:\Lambda\to N$ satisfies $D(p^M\lambda)=p^MD(\lambda)=0$, so it too factors through $(\mathbf Z/p^M)[T_x]$; on a polynomial ring a derivation is $\sum_xn_x\,\partial/\partial T_x$, a finite sum on each element, with $n_x=D(T_x)$ arbitrary.
+
+3. Let $S=\pi(\Lambda)$. Since every $x\in k$ is hit modulo $p$, we have $S+pC=C$, hence $S+p^nC=C$ for every $n$ as in the proof of Lemma 13.22. Given $c\in C$ write $c=s_0+pc_1$, then $c_1=s_1+pc_2$, and so on, with $s_i\in S$; then $c=\sum_ip^is_i$ in the complete ring $C$. Choosing $\lambda_i\in\Lambda$ with $\pi(\lambda_i)=s_i$, the series $\sum_ip^i\lambda_i$ converges in the complete ring $\Lambda$ and maps to $c$. So $\pi$ is surjective. Finally, if $p\lambda\in J$ then $p\pi(\lambda)=0$ in $C$, and $C$ is $p$-torsion-free, so $\pi(\lambda)=0$, that is, $\lambda\in J$; thus $J\cap p\Lambda=pJ$, and the general case follows by induction. $\square$
+
+The presentation lets us convert the lifting problem into a question about the **conormal module** $J/J^2$, which is a module over $C=\Lambda/J$. A derivation $D:\Lambda\to I$ restricts to a $C$-linear map $J/J^2\to I$: indeed $D(\lambda j)=\lambda D(j)+jD(\lambda)$, and $j$ acts on $I$ through its image $0$ in $C$, so $D(\lambda j)=\lambda D(j)$, and likewise $D(J^2)=0$. By Lemma 13.23.2 the derivations into $I$ correspond to families $(i_x)$, so restriction to $J$ is the map
+
+$$
+\prod_{x\in k}I=\operatorname{Der}(\Lambda,I)\longrightarrow\operatorname{Hom}_C(J/J^2,I),
+$$
+
+which is $\operatorname{Hom}_C(-,I)$ applied to the $C$-linear map
+
+$$
+\alpha:J/J^2\longrightarrow\bigoplus_{x\in k}C\,dT_x,
+\qquad
+\alpha(j)=\sum_x\overline{\partial j/\partial T_x}\;dT_x .
+$$
+
+Working modulo $p^M$ makes $\alpha$ well defined, since modulo $p^M$ every element of $\Lambda$ is a polynomial and involves only finitely many variables. The lifting problem will be solved once we know that $\alpha$ is split injective after reduction modulo $p^M$. That is where the $p$-basis re-enters: modulo $p$, the splitting is exactly the formal smoothness of $k$ over $\mathbf F_p$ established in Theorem 13.13.
+
+**Theorem 13.24 (Cohen rings lift across square-zero extensions).** Let $C$ be a Cohen ring for $k$, let $R\to\bar R=R/I$ be a surjective ring homomorphism with $I^2=0$, and suppose $p^M=0$ in $R$ for some $M$. Then every ring homomorphism $v:C\to\bar R$ lifts to a ring homomorphism $u:C\to R$.
+
+**Proof roadmap.** Lift $v$ through the presentation to $w:\Lambda\to R$, which is free of charge. Then $w$ kills $J$ only up to an error in $I$, and this error is a $C$-linear map $J/J^2\to I$. Correcting $w$ by a derivation changes the error by an arbitrary element of the image of $\operatorname{Der}(\Lambda,I)$. So it suffices to prove that $\alpha$ becomes split injective modulo $p^M$. Modulo $p$ this splitting is produced by Theorem 13.13; a nilpotent-Neumann-series argument then lifts the splitting from level $1$ to level $M$.
+
+**Proof.** _Step 1: reduction to a splitting._ By Lemma 13.23.2 choose $w:\Lambda\to R$ with $w(T_x)$ any lift of $v(c_x)\in\bar R$; then $w$ reduces to $v\circ\pi$ modulo $I$. For $j\in J$ we get $w(j)\in I$, and as noted above $j\mapsto -w(j)$ defines a $C$-linear map $h:J/J^2\to I$. Suppose we find a derivation $D:\Lambda\to I$ with $D|_J=h$. Then $u'=w+D$ is a ring homomorphism reducing to $v\circ\pi$ and killing $J$, so it factors as $u\circ\pi$ for a ring homomorphism $u:C\to R$, which lifts $v$. Since $p^MI=0$, the desired $D$ exists for every $h$ as soon as
+
+$$
+\alpha_M:N:=(J/J^2)/p^M(J/J^2)\longrightarrow F:=\bigoplus_{x\in k}(C/p^MC)\,dT_x
+$$
+
+admits a $C$-linear retraction.
+
+_Step 2: the splitting modulo $p$._ Set $\Lambda_1=\Lambda/p\Lambda=\mathbf F_p[T_x]$ and let $\mathfrak q\subseteq\Lambda_1$ be the image of $J$. Since $\Lambda/(J+p\Lambda)=C/pC=k$, the ideal $\mathfrak q$ is the kernel of $\Lambda_1\to k$. Apply Theorem 13.13 to the square-zero extension $\Lambda_1/\mathfrak q^2\to\Lambda_1/\mathfrak q=k$ of $\mathbf F_p$-algebras, whose kernel $\mathfrak q/\mathfrak q^2$ has square zero: it yields a ring homomorphism $s:k\to\Lambda_1/\mathfrak q^2$ splitting the projection. Writing each $\lambda\in\Lambda_1/\mathfrak q^2$ as $s(\overline\lambda)+n_\lambda$ with $n_\lambda\in\mathfrak q/\mathfrak q^2$, the computation
+
+$$
+\lambda\mu=s(\overline\lambda)s(\overline\mu)+s(\overline\lambda)n_\mu+s(\overline\mu)n_\lambda
+=s(\overline{\lambda\mu})+\overline\lambda n_\mu+\overline\mu n_\lambda
+$$
+
+shows that $\partial(\lambda)=n_\lambda$ is a derivation $\Lambda_1\to\mathfrak q/\mathfrak q^2$, and $\partial$ restricts to the identity on $\mathfrak q/\mathfrak q^2$. Since $\Lambda_1$ is a polynomial ring, $\partial$ is $\sum_x\partial(T_x)\,\partial/\partial T_x$, so it factors as $\Lambda_1\to\bigoplus_xk\,dT_x\xrightarrow{\ \overline r\ }\mathfrak q/\mathfrak q^2$. Restricting to $\mathfrak q$, we obtain $\overline r\circ\overline\alpha=\operatorname{id}$, where $\overline\alpha:\mathfrak q/\mathfrak q^2\to\bigoplus_xk\,dT_x$ is induced by partial derivatives.
+
+_Step 3: identifying the conormal modules._ We claim the natural surjection
+
+$$
+\beta:(J/J^2)\otimes_Ck=J/(J^2+pJ)\longrightarrow\mathfrak q/\mathfrak q^2
+$$
+
+is an isomorphism. Indeed $\mathfrak q=(J+p\Lambda)/p\Lambda$ and $\mathfrak q^2=(J^2+p\Lambda)/p\Lambda$, so
+
+$$
+\mathfrak q/\mathfrak q^2=(J+p\Lambda)/(J^2+p\Lambda)=J/\big(J^2+(J\cap p\Lambda)\big)=J/(J^2+pJ),
+$$
+
+using $J\cap p\Lambda=pJ$ from Lemma 13.23.3. The composite $\overline\alpha\circ\beta$ is the reduction $\alpha_1$ of $\alpha$ modulo $p$, so $\alpha_1$ is split injective with retraction $\overline r\circ$ (the inverse of $\beta$).
+
+_Step 4: from level $1$ to level $M$._ The module $F$ is free over $C/p^MC$ on the basis $\{dT_x\}$, so the retraction of $\alpha_1$ lifts to a $C$-linear map $r_0:F\to N$ whose reduction modulo $p$ is that retraction. Set $\phi=r_0\circ\alpha_M:N\to N$ and $\psi=\operatorname{id}-\phi$. Modulo $p$ we have $\phi=\operatorname{id}$, so $\psi(N)\subseteq pN$; consequently $\psi^2(N)\subseteq\psi(pN)=p\psi(N)\subseteq p^2N$, and inductively $\psi^M(N)\subseteq p^MN=0$. Hence $\psi$ is nilpotent, $\phi=\operatorname{id}-\psi$ is invertible with inverse $\sum_{i<M}\psi^i$, and $r=\phi^{-1}\circ r_0$ is a retraction of $\alpha_M$. By Step 1 the lift $u$ exists. $\square$
+
+Combining Theorem 13.24 with Lemma 13.22: a lift exists, and it is uniquely determined once its values on lifts of a $p$-basis are prescribed. We turn this one-layer statement into the mapping property that the structure theorem consumes.
+
+**Theorem 13.25 (mapping property of Cohen rings).** Let $C$ be a Cohen ring for a field $k$ of characteristic $p$. Let $(A,\mathfrak m)$ be a local ring, complete and separated for its $\mathfrak m$-adic topology, whose residue field $\ell$ has characteristic $p$. Then for every field homomorphism $\varphi:k\to\ell$ there is a local homomorphism
+
+$$
+u:C\longrightarrow A
+$$
+
+inducing $\varphi$ on residue fields. Any two such homomorphisms that agree on lifts of a $p$-basis of $k$ coincide.
+
+**Proof roadmap.** Exactly as for coefficient fields in Section 13.4: construct compatible homomorphisms into the finite-precision quotients $A/\mathfrak m^n$, using Theorem 13.24 for each nilpotent layer, and pass to the limit. The hypothesis of Theorem 13.24 that $p$ be nilpotent is automatic because $p$ lies in $\mathfrak m$.
+
+**Proof.** Since $\ell$ has characteristic $p$, the element $p\cdot1_A$ reduces to $0$, so $p\in\mathfrak m$. Write $A_n=A/\mathfrak m^n$, so $A_1=\ell$ and $A=\varprojlim_nA_n$.
+
+We construct ring homomorphisms $u_n:C\to A_n$ with $u_{n+1}$ lifting $u_n$, by induction. Take $u_1$ to be $\varphi$ composed with the reduction $C\to C/pC=k$. Given $u_n$, apply Theorem 13.24 to the surjection $A_{n+1}\to A_n$, whose kernel $\mathfrak m^n/\mathfrak m^{n+1}$ has square zero because $\mathfrak m^{2n}\subseteq\mathfrak m^{n+1}$ for $n\geq1$, and in whose source $p^{n+1}=0$ because $p\in\mathfrak m$ and $\mathfrak m^{n+1}=0$ in $A_{n+1}$. This yields $u_{n+1}:C\to A_{n+1}$ lifting $u_n$.
+
+The compatible family defines a ring homomorphism $u:C\to\varprojlim_nA_n=A$. Its composite with $A\to\ell$ is $u_1$, that is, $\varphi$ on residues. It is local: an element of $C$ outside $pC$ has nonzero residue in $k$, hence its image has residue $\varphi$ of that, which is nonzero because $\varphi$ is injective; so units go to units and $u^{-1}(\mathfrak m)=pC$.
+
+For the last statement, let $u,u'$ be two such homomorphisms agreeing on lifts $\gamma_b$ of a $p$-basis. For each $n$ the induced maps $C\to A_n$ agree modulo $\mathfrak m^{n-1}/\mathfrak m^n$ by induction, and Lemma 13.22 applied to $A_n\to A_{n-1}$ upgrades this to equality; since $A$ is separated, $u=u'$. $\square$
+
+Two comments on how this theorem is used. First, $u$ need not be injective. The complete local ring $A=\mathbf Z/p^2\mathbf Z$ has residue field $\mathbf F_p$ and Cohen ring $\mathbf Z_p$, and the only local homomorphism $\mathbf Z_p\to\mathbf Z/p^2\mathbf Z$ is the reduction, with kernel $p^2\mathbf Z_p$. So in mixed characteristic the right structure is not a coefficient subring but a **coefficient-ring map**: a local homomorphism $u:C\to A$ from a Cohen ring for the residue field of $A$ inducing the identity on residue fields. When $u$ happens to be injective, its image is a coefficient ring in the sense of Section 13.1. Second, the theorem applies verbatim when $\varphi$ is an isomorphism, which is the case used to put $A$ in coordinates, and when $\varphi$ is an inclusion, which is the case used to compare two complete local rings with different residue fields.
+
+Taking $A$ to be another Cohen ring gives uniqueness.
+
+**Theorem 13.26 (uniqueness of Cohen rings).** Let $C$ and $C'$ be Cohen rings for the same field $k$ of characteristic $p$. Then:
+
+1. every local homomorphism $u:C\to C'$ inducing the identity on $k$ is an isomorphism;
+2. such a homomorphism exists.
+
+Hence $C$ is determined by $k$ up to isomorphism.
+
+**Proof.** 2 is Theorem 13.25 applied with $A=C'$, which is a complete local ring with residue field $k$, and $\varphi=\operatorname{id}_k$.
+
+For 1, note first that $u(p)=p$ and, since $u$ is local, $u(p^nC)\subseteq p^nC'$; so $u$ is continuous for the $p$-adic topologies. Surjectivity: because $u$ induces the identity on residue fields, $u(C)+pC'=C'$, and substituting repeatedly gives $u(C)+p^nC'=C'$ for every $n$. Given $c'\in C'$, write $c'=u(c_0)+pc_1'$, then $c_1'=u(c_1)+pc_2'$, and so on; the series $c=\sum_ip^ic_i$ converges in the complete ring $C$, and continuity gives
+
+$$
+u(c)=\sum_ip^iu(c_i)=c' .
+$$
+
+Injectivity: $\ker u$ is an ideal of the DVR $C$, hence is $0$ or contains $p^n$ for some $n$ by Section 4.3; but $u(p^n)=p^n\neq0$ in the domain $C'$, so $\ker u=0$. $\square$
+
+The word "hence" in the last line of Theorem 13.26 hides an important caveat: the isomorphism is _not_ canonical, and there is in general no way to choose one naturally. The following example, which is as simple as such an example can be, shows that already the identity of $k$ is induced by more than one endomorphism of $C$.
+
+**Example 13.27 (non-uniqueness of the isomorphism).** Let $k=\mathbf F_p(t)$ and let
+
+$$
+C=\text{the $p$-adic completion of }\ \mathbf Z_{(p)}[T]_{(p)} ,
+$$
+
+the Cohen ring for $k$ built in Section 13.5, with $T$ reducing to $t$. Consider the ring homomorphism $\mathbf Z_{(p)}[T]\to C$ sending $T$ to $T+p$. If $s\in\mathbf Z_{(p)}[T]$ does not lie in the prime ideal $(p)$, then $s(T+p)$ reduces to $\overline s(t)\neq0$ in $k$, hence is a unit of $C$; so the homomorphism extends to $\mathbf Z_{(p)}[T]_{(p)}\to C$, and then, being continuous for the $p$-adic topologies, to a local homomorphism
+
+$$
+\sigma:C\longrightarrow C,\qquad \sigma(T)=T+p .
+$$
+
+By construction $\sigma$ induces the identity on $k$, since $T$ and $T+p$ have the same residue. By Theorem 13.26 it is an automorphism. It is not the identity, because $\sigma(T)-T=p\neq0$.
+
+Thus $C$ has at least two automorphisms over $\operatorname{id}_k$, and Theorem 13.25 correspondingly produces many maps $C\to A$ realizing a given $\varphi$: composing one with $\sigma$ gives another. Lemma 13.22 says exactly how much freedom there is — the value on a lift of each $p$-basis element may be moved — and here the single $p$-basis element $t$ has been lifted to $T$ in one case and to $T+p$ in the other. Consequently the assignment $k\mapsto C(k)$ cannot be made into a functor by any canonical choice: a field homomorphism $k\to k'$ induces many maps of Cohen rings, and there is no rule for selecting one that is compatible with composition. This is the precise sense in which imperfect residue fields behave worse than perfect ones.
+
+**Corollary 13.28 (the perfect case).** Let $k$ be a perfect field of characteristic $p$ and $C$ a Cohen ring for $k$. Then:
+
+1. for every complete separated local ring $A$ with residue field $\ell$ of characteristic $p$ and every $\varphi:k\to\ell$, there is exactly one local homomorphism $C\to A$ inducing $\varphi$;
+2. $C$ is unique up to a unique isomorphism inducing $\operatorname{id}_k$, and $k\mapsto C$ is functorial: a field homomorphism $k\to k'$ of perfect fields induces a unique homomorphism of the corresponding Cohen rings, compatibly with composition;
+3. there is a multiplicative section $\tau:k\to C$ of the reduction, the **Teichmüller lift**, characterized by $\tau(x)\in\bigcap_nC^{p^n}$-type limits: explicitly $\tau(x)=\lim_ny_n^{p^n}$ where $y_n\in C$ is any lift of $x^{p^{-n}}$.
+
+**Proof.** 1. A perfect field has empty $p$-basis by Lemma 13.10, so the uniqueness clause of Theorem 13.25 has no hypotheses left: any two lifts agree. Existence is Theorem 13.25.
+
+2. Uniqueness of the isomorphism follows from 1 applied with $A=C'$. Functoriality follows because the composite of the unique maps is a map inducing the composite residue map, hence _is_ the unique such map.
+
+3. First, if $y\equiv y'\pmod{pC}$ then $y^p\equiv y'^p\pmod{p^2C}$: writing $y'=y+pz$ and expanding, the term $\binom p1y^{p-1}pz$ lies in $p^2C$ and every later term contains $p^2$. Inductively $y\equiv y'\pmod{pC}$ implies $y^{p^n}\equiv y'^{p^n}\pmod{p^{n+1}C}$, so $y_n^{p^n}$ depends only on $x$ modulo $p^{n+1}$. Since $y_{n+1}^p$ is a lift of $x^{p^{-n}}$, the same estimate gives $y_{n+1}^{p^{n+1}}\equiv y_n^{p^n}\pmod{p^{n+1}C}$, so the sequence is Cauchy and $\tau(x)=\lim_ny_n^{p^n}$ exists in the complete ring $C$. It reduces to $x$, because $y_0$ does. Multiplicativity is inherited from the products $y_n^{p^n}$ termwise, since a lift of $(xx')^{p^{-n}}$ may be taken to be the product of lifts. $\square$
+
+The Teichmüller lift is multiplicative but never additive when $k\neq\mathbf F_p$, since an additive multiplicative section would be a ring homomorphism $k\to C$ and $C$ has characteristic zero. The classical construction of the Cohen ring of a perfect field encodes an element by the sequence of Teichmüller coordinates of its $p$-adic digits; the resulting explicit addition and multiplication formulas are the Witt vector operations. For imperfect $k$ no such canonical set of representatives exists, and Example 13.27 shows that none can exist, which is why the general Cohen ring has been constructed here by lifting rather than by a formula.
+
+With existence, uniqueness, and the mapping property in hand, both kinds of coefficients are now available: a coefficient field in equal characteristic by Theorem 13.15, and a coefficient-ring map from a Cohen ring in mixed characteristic by Theorems 13.21 and 13.25. The structure theorem is now a short deduction.
+
+### 13.7 The structure theorem
+
+Everything is in place. A complete Noetherian local ring has a supply of coefficients — a coefficient field if it contains a field, a map from a Cohen ring otherwise — and its maximal ideal is finitely generated. Lemma 13.3 says that these two pieces of data are exactly what is needed to write the ring as a quotient of a formal power series ring: the coefficients supply the constants, and finitely many generators of the maximal ideal supply the variables. Every element then has a convergent expansion in those variables with coefficients from the coefficient ring, and the only thing left unspecified is which such expansions vanish.
+
+Recall the standard terminology. A Noetherian local ring $(R,\mathfrak m_R)$ with residue field $\kappa$ is **regular** if $\dim R=\dim_\kappa\mathfrak m_R/\mathfrak m_R^2$; equivalently, by Krull's height theorem, if $\mathfrak m_R$ can be generated by $\dim R$ elements. Such a generating family is a **regular system of parameters**. We use two standard facts of dimension theory: Krull's height theorem, which gives $\dim R\leq\dim_\kappa\mathfrak m_R/\mathfrak m_R^2$ for every Noetherian local ring, and the fact that a Noetherian local ring of dimension $d$ contains elements $x_1,\ldots,x_d$ of $\mathfrak m_R$ with $R/(x_1,\ldots,x_d)$ of finite length, a **system of parameters**.
+
+**Lemma 13.29 (power series rings over coefficients are regular).** Let $\kappa$ be a field and $C$ a Cohen ring. Then $\kappa[[X_1,\ldots,X_n]]$ is a complete regular local domain of dimension $n$, and $C[[X_1,\ldots,X_n]]$ is a complete regular local domain of dimension $n+1$.
+
+**Proof.** Both rings are complete Noetherian local by Lemma 13.2, with maximal ideals $\mathfrak n=(X_1,\ldots,X_n)$ and $\mathfrak n=(p,X_1,\ldots,X_n)$ respectively, and both are domains, a power series ring over a domain being a domain. In the first case $\mathfrak n$ is generated by $n$ elements, so $\dim\leq n$ by Krull's height theorem, while the chain of primes
+
+$$
+0\subsetneq(X_1)\subsetneq(X_1,X_2)\subsetneq\cdots\subsetneq(X_1,\ldots,X_n)
+$$
+
+has length $n$; each ideal in the chain is prime because the quotient is again a power series ring over $\kappa$, hence a domain. So $\dim=n$. The classes of $X_1,\ldots,X_n$ span $\mathfrak n/\mathfrak n^2$, so the ring is regular.
+
+In the second case $\mathfrak n$ is generated by $n+1$ elements and the chain $0\subsetneq(p)\subsetneq(p,X_1)\subsetneq\cdots\subsetneq(p,X_1,\ldots,X_n)$ has length $n+1$, its successive quotients being $k[[X_1,\ldots,X_n]]$, $k[[X_2,\ldots,X_n]]$, and so on, all domains. So $\dim=n+1$. For regularity we must see that $p,X_1,\ldots,X_n$ are linearly independent in $\mathfrak n/\mathfrak n^2$; since they span, it is enough to check that $\dim_k\mathfrak n/\mathfrak n^2\geq n+1$, and for this it suffices that $p\notin(p^2,pX_i,X_iX_j)=\mathfrak n^2$. If $p$ were of that form, comparing the terms of degree $0$ in the variables would give $p=p^2c$ in $C$ for some $c$, hence $1=pc$, impossible in the local ring $C$ with $p$ in its maximal ideal. $\square$
+
+**Theorem 13.30 (Cohen structure theorem).** Let $(A,\mathfrak m)$ be a complete Noetherian local ring with residue field $k$, and let $x_1,\ldots,x_n$ generate $\mathfrak m$.
+
+1. If $A$ contains a field, choose a coefficient field $K\subseteq A$, which exists by Theorem 13.15. Then the evaluation homomorphism
+   $$
+\Sigma:K[[X_1,\ldots,X_n]]\longrightarrow A,\qquad X_i\longmapsto x_i,
+$$
+   is surjective. In particular $A\cong k[[X_1,\ldots,X_n]]/I$ for some ideal $I$.
+2. Otherwise $A$ has mixed characteristic with residue characteristic $p$. Choose a Cohen ring $C$ for $k$, which exists by Theorem 13.21, and a local homomorphism $u:C\to A$ inducing the identity on $k$, which exists by Theorem 13.25. Then the evaluation homomorphism
+   $$
+\Sigma:C[[X_1,\ldots,X_n]]\longrightarrow A,\qquad X_i\longmapsto x_i,
+$$
+   extending $u$, is surjective. In particular $A\cong C[[X_1,\ldots,X_n]]/I$ for some ideal $I$.
+
+**Proof roadmap.** Both statements are Lemma 13.3, whose surjectivity criterion asks that the coefficients together with the chosen variables generate $A$ modulo nothing at all: one has to check that the ideal $J$ of that lemma is the whole maximal ideal and that the coefficients surject onto the residue field.
+
+**Proof.** In case 1, apply Lemma 13.3 with $R_0=K$ and $\sigma$ the inclusion $K\subseteq A$; the ring $K$ is a complete Noetherian local ring, being a field, and $A$ is one by hypothesis. Here $\mathfrak m_K=0$, so the ideal of the lemma is $J=(x_1,\ldots,x_n)A=\mathfrak m$, and $A=K+\mathfrak m$ by Theorem 13.15. The criterion $A=\sigma(R_0)+J$ holds, so $\Sigma$ is surjective. Since $K\cong k$, the source is isomorphic to $k[[X_1,\ldots,X_n]]$.
+
+In case 2, apply Lemma 13.3 with $R_0=C$, which is a complete Noetherian local ring by definition, and $\sigma=u$. Here $\mathfrak m_C=pC$, so
+
+$$
+J=u(pC)A+(x_1,\ldots,x_n)A=pA+\mathfrak m=\mathfrak m ,
+$$
+
+because $p\in\mathfrak m$. Moreover $u(C)+\mathfrak m=A$, since $u$ induces an isomorphism $C/pC\to k$ on residue fields. So the criterion holds and $\Sigma$ is surjective. $\square$
+
+The theorem should be read as saying that a complete Noetherian local ring is _nothing more_ than a system of convergent power series equations over a coefficient ring. Two immediate consequences are the statements most often used.
+
+**Corollary 13.31 (surjection from a complete regular local ring).** Every complete Noetherian local ring $A$ is a quotient of a complete regular local ring. One may take the regular ring to be $k[[X_1,\ldots,X_n]]$ if $A$ contains a field and $C[[X_1,\ldots,X_n]]$ otherwise, where $n$ is the minimal number of generators of $\mathfrak m$; its dimension is then $n$, respectively $n+1$.
+
+**Proof.** Combine Theorem 13.30 with Lemma 13.29. $\square$
+
+This is the form in which the structure theorem enters homological arguments: having a surjection $Q\twoheadrightarrow A$ from a complete regular local ring $Q$ lets one study $A$ through finite free resolutions over $Q$, which exist because a regular local ring has finite global dimension. Nothing about $A$ itself needs to be assumed beyond completeness and Noetherianity.
+
+The second consequence identifies the complete regular local rings themselves. In equal characteristic they are exactly power series rings.
+
+**Corollary 13.32 (complete regular local rings in equal characteristic).** Let $A$ be a complete regular local ring of dimension $d$ containing a field, with residue field $k$. Then
+
+$$
+A\cong k[[X_1,\ldots,X_d]] .
+$$
+
+**Proof.** Regularity gives a regular system of parameters $x_1,\ldots,x_d$ generating $\mathfrak m$. Theorem 13.30 provides a surjection $\Sigma:k[[X_1,\ldots,X_d]]\to A$; let $I$ be its kernel. Then $\dim k[[X]]/I=\dim A=d$, so there is a chain of $d+1$ distinct primes of $k[[X]]$ containing $I$, say $\mathfrak p_0\subsetneq\cdots\subsetneq\mathfrak p_d$. If $I\neq0$ then $\mathfrak p_0\neq0$, and prefixing the zero ideal — prime, since $k[[X]]$ is a domain — gives a chain of length $d+1$ in a ring of dimension $d$, which is impossible. Hence $I=0$ and $\Sigma$ is an isomorphism. $\square$
+
+In mixed characteristic the answer depends on how $p$ sits inside the maximal ideal. Call a regular local ring $A$ of mixed characteristic **unramified** if $p\notin\mathfrak m^2$; this is the condition that $p$ can be taken as one member of a regular system of parameters, and it says that $A$ introduces no ramification of $p$ beyond what the coefficient ring already carries.
+
+**Corollary 13.33 (complete regular local rings in mixed characteristic).** Let $A$ be a complete regular local ring of dimension $d$ and mixed characteristic, with residue field $k$, and let $C$ be a Cohen ring for $k$. Then $A$ is a quotient of $C[[X_1,\ldots,X_d]]$. If moreover $A$ is unramified, then
+
+$$
+A\cong C[[X_1,\ldots,X_{d-1}]] .
+$$
+
+**Proof.** The first assertion is Theorem 13.30 applied to a regular system of parameters $x_1,\ldots,x_d$.
+
+Suppose $p\notin\mathfrak m^2$. Then the class of $p$ is a nonzero element of the $d$-dimensional $k$-vector space $\mathfrak m/\mathfrak m^2$; extend it to a basis by classes of elements $x_2,\ldots,x_d\in\mathfrak m$. By Nakayama's lemma, $\mathfrak m=(p,x_2,\ldots,x_d)$. Apply Lemma 13.3 with $R_0=C$, with $u:C\to A$ from Theorem 13.25, and with the variables mapping to $x_2,\ldots,x_d$: the ideal of the lemma is
+
+$$
+J=u(pC)A+(x_2,\ldots,x_d)A=pA+(x_2,\ldots,x_d)A=\mathfrak m ,
+$$
+
+and $u(C)+\mathfrak m=A$, so the evaluation map
+
+$$
+\Sigma:C[[X_2,\ldots,X_d]]\longrightarrow A
+$$
+
+is surjective. By Lemma 13.29 the source is a complete regular local domain of dimension $1+(d-1)=d$. The dimension argument of Corollary 13.32 applies verbatim: the kernel is contained in a prime that begins a chain of length $d$, so it must be zero. Hence $\Sigma$ is an isomorphism, and relabelling the variables gives the stated form. $\square$
+
+The unramifiedness hypothesis cannot be dropped. The ring $A=\mathbf Z_p[\zeta_p]$ of Section 12.7 is a complete regular local ring — indeed a complete DVR — of dimension one and mixed characteristic, with residue field $\mathbf F_p$ and Cohen ring $\mathbf Z_p$. Here $p=(\zeta_p-1)^{p-1}\cdot(\text{unit})$ lies in $\mathfrak m^2$ as soon as $p>2$, so $A$ is ramified, and indeed $A$ is not isomorphic to $C[[X_1,\ldots,X_{d-1}]]=\mathbf Z_p$, which has a different fraction field. What Corollary 13.33 does give is a presentation $A\cong\mathbf Z_p[[X]]/(f)$ with $f$ the Eisenstein polynomial $\big((1+X)^p-1\big)/X$: the ramification has been pushed into the presenting equation, exactly where it belongs.
+
+The structure theorem presents $A$ as a quotient of a large regular ring, with as many variables as it takes to generate $\mathfrak m$. There is a complementary statement in which the number of variables is as small as possible — equal to the dimension — at the price of replacing "quotient" by "finite extension". This is the local analogue of Noether normalization, and it is the form in which the theorem is used whenever one wants to compare $A$ with a regular ring having the _same_ fraction field up to a finite extension: for instance to prove finiteness of normalization, or to run an induction on the degree of a finite extension of complete local domains.
+
+The mechanism is the same convergence argument that proved Lemma 13.3, with generators replaced by module generators. If the chosen parameters cut $A$ down to something of finite length, then finitely many elements of $A$ suffice to span that finite-length quotient, and everything else can be expanded in the parameters with coefficients from the coefficient ring.
+
+**Theorem 13.34 (finiteness over a power series subring).** Let $(A,\mathfrak m)$ be a complete Noetherian local ring with residue field $k$.
+
+1. Suppose $A$ contains a field and let $K\subseteq A$ be a coefficient field. Let $x_1,\ldots,x_s\in\mathfrak m$ be such that $A/(x_1,\ldots,x_s)A$ has finite length. Then the evaluation homomorphism
+   $$
+\Sigma:K[[X_1,\ldots,X_s]]\longrightarrow A,\qquad X_i\longmapsto x_i,
+$$
+   makes $A$ a finitely generated $K[[X_1,\ldots,X_s]]$-module.
+2. Suppose $A$ has mixed characteristic, let $C$ be a Cohen ring for $k$ and $u:C\to A$ a local homomorphism inducing the identity on $k$. Let $x_1,\ldots,x_s\in\mathfrak m$ be such that $A/(p,x_1,\ldots,x_s)A$ has finite length. Then the evaluation homomorphism
+   $$
+\Sigma:C[[X_1,\ldots,X_s]]\longrightarrow A,\qquad X_i\longmapsto x_i,
+$$
+   extending $u$, makes $A$ a finitely generated $C[[X_1,\ldots,X_s]]$-module.
+
+In both cases, if $A$ is a domain and the dimension of the power series ring equals $\dim A$, then $\Sigma$ is injective, so $A$ is a finite extension of a complete regular local domain of the same dimension.
+
+**Proof roadmap.** Write $P$ for the power series ring, $\mathfrak n$ for its maximal ideal, and $\mathfrak a=\Sigma(\mathfrak n)A$ for the ideal cut out by the parameters. The quotient $A/\mathfrak a$ is a finite-dimensional vector space over the residue field; lift a spanning family to elements $a_1,\ldots,a_r$ of $A$. Every element of $A$ is then a $P$-combination of the $a_i$ modulo $\mathfrak a$; the error can be expanded again, one power of $\mathfrak n$ deeper each time, and completeness of $P$ sums up the resulting coefficients into honest power series.
+
+**Proof.** Treat both cases at once. Let $P$ denote $K[[X_1,\ldots,X_s]]$ or $C[[X_1,\ldots,X_s]]$, let $\mathfrak n$ be its maximal ideal, let $R_0$ be $K$ or $C$, and let $\kappa=R_0/\mathfrak m_{R_0}$, which is $K\cong k$ in the first case and $C/pC\cong k$ in the second. Set
+
+$$
+\mathfrak a=\Sigma(\mathfrak n)A .
+$$
+
+Because $\mathfrak n$ is generated by $\mathfrak m_{R_0}$ together with $X_1,\ldots,X_s$, this ideal is $(x_1,\ldots,x_s)A$ in case 1 and $pA+(x_1,\ldots,x_s)A$ in case 2. In both cases the hypothesis says that $A/\mathfrak a$ has finite length as an $A$-module. Note $\mathfrak a\subseteq\mathfrak m$, so $\Sigma$ is local.
+
+_Step 1: a finite spanning family._ The homomorphism $R_0\to A\to A/\mathfrak a$ kills $\mathfrak m_{R_0}$, since $\Sigma(\mathfrak m_{R_0})\subseteq\mathfrak a$; so $A/\mathfrak a$ is a vector space over $\kappa\cong k$. Its $A$-module composition factors are all isomorphic to $A/\mathfrak m=k$, and the $k$-structure on each factor agrees with the one just described, so the $\kappa$-dimension of $A/\mathfrak a$ equals its length and is finite. Choose $a_1,\ldots,a_r\in A$ whose classes span $A/\mathfrak a$ over $\kappa$, and set
+
+$$
+M=\sum_{i=1}^r\Sigma(P)\,a_i\subseteq A,
+$$
+
+the $P$-submodule of $A$ they generate. We must show $M=A$.
+
+_Step 2: one layer._ Since $R_0\to\kappa$ is surjective, for any $a\in A$ there are $\lambda_i\in R_0$ with $a-\sum_i\Sigma(\lambda_i)a_i\in\mathfrak a$. Hence
+
+$$
+A=M+\mathfrak a .
+$$
+
+_Step 3: deeper layers._ Write $\mathfrak b_j=\Sigma(\mathfrak n^j)A$, so $\mathfrak b_0=A$ and $\mathfrak b_1=\mathfrak a$. Since $R_0$ is Noetherian, $\mathfrak n$ is generated by finitely many elements — generators of $\mathfrak m_{R_0}$ together with the $X_i$ — so $\mathfrak n^j$ is generated by the monomials of degree $j$ in them, and $\mathfrak b_j$ is generated as an ideal of $A$ by the images $\Sigma(\mu)$ of these monomials. For such a $\mu$, Step 2 gives
+
+$$
+\Sigma(\mu)A=\Sigma(\mu)M+\Sigma(\mu)\mathfrak a
+\subseteq\Sigma(\mathfrak n^j)M+\Sigma(\mathfrak n^{j+1})A ,
+$$
+
+using $\Sigma(\mathfrak n^j)\Sigma(\mathfrak n)\subseteq\Sigma(\mathfrak n^{j+1})$. Summing over $\mu$,
+
+$$
+\mathfrak b_j\subseteq\Sigma(\mathfrak n^j)M+\mathfrak b_{j+1}.
+$$
+
+Moreover $\Sigma(\mathfrak n^j)M=\sum_i\Sigma(\mathfrak n^j)a_i$, because $M$ is a module over $\Sigma(P)$ and $\mathfrak n^jP=\mathfrak n^j$.
+
+_Step 4: summation._ Let $a\in A$. Using Step 2 write $a=m_0+b_1$ with $m_0\in M$ and $b_1\in\mathfrak b_1$; note $m_0=\sum_i\Sigma(\rho_{0i})a_i$ for suitable $\rho_{0i}\in P$. Using Step 3 repeatedly, write
+
+$$
+b_j=m_j+b_{j+1},
+\qquad
+m_j=\sum_i\Sigma(\rho_{ji})a_i\ \text{ with }\ \rho_{ji}\in\mathfrak n^j,
+\qquad b_{j+1}\in\mathfrak b_{j+1}.
+$$
+
+For each $i$ the series $\rho_i=\sum_{j\geq0}\rho_{ji}$ converges in $P$, which is complete by Lemma 13.2. The map $\Sigma$ is continuous by Lemma 13.3, so
+
+$$
+\sum_i\Sigma(\rho_i)a_i=\sum_i\sum_j\Sigma(\rho_{ji})a_i=\sum_{j\geq0}m_j .
+$$
+
+On the other hand $a-\sum_{j<n}m_j=b_n\in\mathfrak b_n\subseteq\mathfrak m^n$ for every $n$, and $A$ is separated, so $a=\sum_{j\geq0}m_j$. Therefore $a=\sum_i\Sigma(\rho_i)a_i\in M$, and $M=A$. Thus $a_1,\ldots,a_r$ generate $A$ as a $P$-module.
+
+_Step 5: injectivity for domains._ Suppose $A$ is a domain and $\dim P=\dim A$. Since $A$ is a finite module over the subring $\Sigma(P)=P/\ker\Sigma$, it is integral over it, and dimension is preserved by an integral extension, as recalled in Section 10.5; hence $\dim P/\ker\Sigma=\dim A=\dim P$. If $\ker\Sigma$ were nonzero, then a chain of $\dim P+1$ distinct primes containing $\ker\Sigma$ could be prefixed with the prime ideal $0$ of the domain $P$, producing a chain of length $\dim P+1$ in $P$, which is impossible. So $\ker\Sigma=0$, and $P$ is a complete regular local domain of dimension $\dim A$ by Lemma 13.29. $\square$
+
+The dimension hypothesis in the last statement is met by the natural choices. In equal characteristic, take $x_1,\ldots,x_d$ to be a system of parameters, so $s=d=\dim A$ and $\dim K[[X_1,\ldots,X_d]]=d$. In mixed characteristic, suppose $A$ is a domain of dimension $d$; then $p\neq0$, and
+
+$$
+\dim A/pA=d-1 .
+$$
+
+Indeed $\dim A/pA\geq d-1$ by Krull's principal ideal theorem, while a chain of $d+1$ distinct primes of $A$ containing $p$ could be prefixed by the prime $0$ to give a chain of length $d+1$ in $A$, which is impossible; so $\dim A/pA\leq d-1$. Choosing $x_1,\ldots,x_{d-1}$ to be a system of parameters of $A/pA$ and lifting them to $A$ makes $A/(p,x_1,\ldots,x_{d-1})A$ of finite length, and $\dim C[[X_1,\ldots,X_{d-1}]]=d$ by Lemma 13.29. So a complete Noetherian local domain of dimension $d$ is always a finite extension of a complete regular local domain of dimension $d$: of $k[[X_1,\ldots,X_d]]$ in equal characteristic, and of $C[[X_1,\ldots,X_{d-1}]]$ in mixed characteristic.
+
+This is the precise sense in which the local rings of arithmetic geometry are governed by two model families. Up to a finite extension of local domains, a complete local domain of dimension $d$ is a power series ring in $d$ variables over a field, or a power series ring in $d-1$ variables over a Cohen ring. The finite extension carries the remaining information — ramification, singularities, inseparability — while the model ring supplies regularity, and hence finite free resolutions and a workable dimension theory, on which arguments about the extension can be based.
+
+### 13.8 Worked examples and counterexamples
+
+The theorems of this chapter all assert existence, never canonicity, and the examples below are chosen to show that this is not a defect of the proofs. We also compute a few structure-theorem presentations explicitly, since the content of Theorem 13.30 is easiest to appreciate when the ideal $I$ is written down.
+
+**Coefficient fields are far from unique.** Let $k$ be a field and $A=k[[t]]$, whose obvious coefficient field is the field of constants $K_1=k$. It is not the only one. Take $k=\mathbf Q(u)$ and put
+
+$$
+K_2=\mathbf Q(u+t)\subseteq A .
+$$
+
+To see that this is a subfield, apply Lemma 13.5 with the subfield $\mathbf Q\subseteq A$, the residue element $u$, which is transcendental over $\mathbf Q$, and the lift $u+t$: every nonzero $f\in\mathbf Q[Y]$ has $f(u+t)$ of residue $f(u)\neq0$, hence a unit of $A$. The residue image of $K_2$ is $\mathbf Q(u)=k$, so $K_2$ is a coefficient field, and $K_2\neq K_1$ because $u+t\notin k$. The two coefficient fields give two different isomorphisms $k[[T]]\to A$, sending $T$ to $t$ in both cases but sending the constant $u$ to $u$ in one and to $u+t$ in the other.
+
+In characteristic $p$ the ambiguity is measured exactly. Let $k=\mathbf F_p(u)$, whose $p$-basis is $\{u\}$ by Lemma 13.10, and again $A=k[[t]]$. By Theorem 13.14 the coefficient fields of $A$ are in bijection with the lifts of $u$, that is, with the elements
+
+$$
+u+g,\qquad g\in t\,k[[t]] .
+$$
+
+So there are as many coefficient fields as there are elements of the maximal ideal: uncountably many, with no distinguished one visible from the ring structure alone. The constants $k$ look distinguished only because we wrote $A$ as $k[[t]]$ to begin with; an abstract isomorphism of $A$ with itself can carry $k$ to any of the others.
+
+**A maximal subfield need not be a coefficient field.** In characteristic zero, Theorem 13.7 produced coefficient fields as maximal subfields. The following shows that this route is unavailable in characteristic $p$, and therefore that the $p$-basis argument of Section 13.4 is not merely a convenience.
+
+**Proposition 13.35.** Let $k=\mathbf F_p(u)$ and $A=k[[t]]$. Then $A$ has a maximal subfield that is not a coefficient field.
+
+**Proof.** Set $c=u^p+t\in A$, a lift of $u^p\in k$. Since $u^p$ is transcendental over $\mathbf F_p$, Lemma 13.5 applied with the prime subfield $\mathbf F_p\subseteq A$ shows that $\mathbf F_p(c)$ is a subfield of $A$, with residue image $\mathbf F_p(u^p)$.
+
+Now let $K\subseteq A$ be any subfield containing $c$, and suppose that some $b\in K$ has residue $u$. Write $b=u+\sum_{n\geq1}\beta_nt^n$ with $\beta_n\in k$. Frobenius on $k[[t]]$ raises each coefficient to the $p$-th power and each exponent by a factor $p$, so
+
+$$
+b^p=u^p+\sum_{n\geq1}\beta_n^pt^{np},
+$$
+
+and therefore
+
+$$
+b^p-c=-t+\sum_{n\geq1}\beta_n^pt^{np}.
+$$
+
+Every term of the sum has degree at least $p\geq2$, so $b^p-c$ has $t$-order exactly $1$. In particular $b^p-c$ is a nonzero element of the maximal ideal of $A$. But $b^p-c$ lies in the field $K$, all of whose nonzero elements are units of $A$ — a contradiction. Hence no element of $K$ has residue $u$, that is, $u\notin\overline K$.
+
+Finally, the subfields of $A$ form a poset in which every chain has an upper bound, namely its union, so Zorn's lemma provides a maximal subfield $K$ containing $\mathbf F_p(c)$. By the previous paragraph $\overline K\neq k$, so $K$ is not a coefficient field. $\square$
+
+Of course $A=\mathbf F_p(u)[[t]]$ does possess coefficient fields; Theorem 13.14 produces them. What fails is the characteristic-zero mechanism, and it fails precisely at the purely inseparable residue element $u$ over $\mathbf F_p(u^p)$, whose defining equation $X^p=c$ has no root in $A$: the $p$-th powers in $k[[t]]$ are the series $\sum a_n^pt^{np}$, and $u^p+t$ is not among them.
+
+**A singular curve: the cusp.** Let $k$ be a field and let
+
+$$
+A=k[[t^2,t^3]]\subseteq k[[t]],
+$$
+
+the ring of power series with no linear term, met already in Section 4.3. It is a complete Noetherian local domain of dimension one, with maximal ideal $\mathfrak m=(t^2,t^3)$; since $\mathfrak m^2=(t^4,t^5,t^6)$, the classes of $t^2$ and $t^3$ form a basis of $\mathfrak m/\mathfrak m^2$, so $A$ is not regular. It contains the field $k$, which is a coefficient field, so Theorem 13.30 gives a surjection
+
+$$
+\Sigma:k[[X,Y]]\longrightarrow A,
+\qquad X\longmapsto t^2,\quad Y\longmapsto t^3 .
+$$
+
+Its kernel contains $Y^2-X^3$. We claim it equals $(Y^2-X^3)$, so that
+
+$$
+k[[t^2,t^3]]\cong k[[X,Y]]/(Y^2-X^3).
+$$
+
+First, every $f\in k[[X,Y]]$ can be written $f=q\,(Y^2-X^3)+a(X)+b(X)Y$. Indeed, write $f=\sum_jf_j(X)Y^j$; modulo $Y^2-X^3$ one may replace $Y^j$ by $X^{3\lfloor j/2\rfloor}Y^{j\bmod2}$, and the resulting series
+
+$$
+a(X)=\sum_mf_{2m}(X)X^{3m},
+\qquad
+b(X)=\sum_mf_{2m+1}(X)X^{3m}
+$$
+
+converge in $k[[X]]$ because the $m$-th terms are divisible by $X^{3m}$. The difference $f-a-bY$ is the sum over $j$ of $f_j(X)\big(Y^j-X^{3\lfloor j/2\rfloor}Y^{j\bmod2}\big)$; each summand is divisible by $Y^2-X^3$, and the summands have order at least $j$ in the maximal ideal, so the quotients converge and $q$ exists.
+
+Now suppose $f\in\ker\Sigma$. Then $a(t^2)+b(t^2)t^3=0$ in $k[[t]]$. The first term involves only even powers of $t$ and the second only odd powers, so both vanish, forcing $a=b=0$ and $f\in(Y^2-X^3)$. This is the promised presentation, and it exhibits the cusp as the simplest failure of regularity: one variable too many for the dimension, with one equation to compensate.
+
+**Mixed characteristic without a coefficient subring.** Let $A=\mathbf Z/p^2\mathbf Z$. It is a complete local ring of dimension zero with residue field $\mathbf F_p$ and maximal ideal $\mathfrak m=pA$. It has mixed characteristic, since $p\neq0$ and $p^2=0$, and consequently contains no field: a subfield would have to contain either $\mathbf Q$, impossible in a finite ring, or $\mathbf F_p$, impossible because $p\neq0$ in $A$. Its Cohen ring is $\mathbf Z_p$, and the only local homomorphism $u:\mathbf Z_p\to A$ is the reduction, which is surjective with kernel $p^2\mathbf Z_p$. Since $\mathfrak m=u(p)A$, no variables are needed and Theorem 13.30 reads
+
+$$
+A\cong\mathbf Z_p/(p^2).
+$$
+
+This example is the reason Section 13.6 insisted on coefficient-ring _maps_: the Cohen ring sits over $A$, not inside it.
+
+**Two mixed-characteristic regular rings.** The ring $\mathbf Z_p[[t]]$ of Section 4.3 is a complete regular local ring of dimension two with residue field $\mathbf F_p$ and maximal ideal $(p,t)$. Since $\mathfrak m^2=(p^2,pt,t^2)$ does not contain $p$, it is unramified, and Corollary 13.33 returns the tautology $A\cong C[[X]]$ with $C=\mathbf Z_p$. By contrast $\mathbf Z_p[\zeta_p]$, discussed after Corollary 13.33, is a complete regular local ring of dimension one whose maximal ideal contains $p$ in its square when $p>2$; it is ramified, is not isomorphic to its Cohen ring $\mathbf Z_p$, and appears instead as $\mathbf Z_p[[X]]/(f)$ for an Eisenstein $f$. The contrast is exactly the one drawn in Section 12.7 between unramified and totally ramified extensions, now seen from the structural side.
+
+**Formal local coordinates.** A geometric reading is worth recording. If $R$ is a Noetherian local ring of dimension $d$ containing a field, with residue field $k$, and if $R$ is regular — the algebraic form of smoothness at the point — then its completion is regular of dimension $d$ and Corollary 13.32 gives
+
+$$
+\widehat R\cong k[[X_1,\ldots,X_d]].
+$$
+
+All regular points of the same dimension with the same residue field therefore look identical after completion, and the differences among them are invisible to the formal local ring. Singularities, by contrast, are detected: the cusp above has completion $k[[X,Y]]/(Y^2-X^3)$, which is not a power series ring because its maximal ideal needs two generators while its dimension is one. This is why formal-local methods classify singularities but not global geometry.
+
+### 13.9 Coordinates, and what they cost
+
+The book began by replacing an element with its order of vanishing, and the whole development has been an elaboration of what that replacement makes possible. A valuation separated magnitude from unit; its bounded elements formed a valuation ring; discreteness turned that ring into a DVR whose ideals are powers of one maximal ideal. Completion then supplied the limits that the filtration demanded, and Hensel's lemma converted the resulting analytic rigidity back into algebra by lifting factorizations. This chapter closed the circle by showing that the digit expansions of Chapter 8, which looked like an artefact of choosing residue representatives, are in fact the intrinsic coordinates of a complete local ring.
+
+The conclusion has two halves, corresponding to the two ways a complete local ring can relate to its residue characteristic. If the ring contains a field, it contains a copy of its whole residue field: a coefficient field, produced by lifting maximal subfields in characteristic zero and by lifting a $p$-basis through the layers $A/\mathfrak m^n$ in characteristic $p$. If it does not, there is no field inside at all, and the substitute is a map from outside — from a Cohen ring, the unique-up-to-isomorphism complete discrete valuation ring with uniformizer $p$ and the correct residue field. In both cases the coefficients, together with finitely many generators of the maximal ideal, present the ring:
+
+$$
+A\cong k[[X_1,\ldots,X_n]]/I
+\qquad\text{or}\qquad
+A\cong C[[X_1,\ldots,X_n]]/I .
+$$
+
+Every complete Noetherian local ring is therefore a quotient of a complete regular local ring, and, if it is a domain, a finite extension of one of the two model rings $k[[X_1,\ldots,X_d]]$ and $C[[X_1,\ldots,X_{d-1}]]$. Regularity is characterized inside the picture: in equal characteristic the complete regular local rings are exactly the power series rings over a field, and in mixed characteristic exactly the power series rings over a Cohen ring, once $p$ is unramified; when $p$ ramifies, the ramification appears as an Eisenstein equation in the presentation rather than as a defect of the coefficient ring.
+
+The cost of these coordinates is canonicity, and the chapter has been careful to say exactly how much. A coefficient field is a choice of lift for each element of a $p$-basis of the residue field, and Theorem 13.14 turns that sentence into a bijection; in characteristic zero the choices are hidden inside a maximal-subfield argument but are no less real. A Cohen ring is unique, but only up to an isomorphism that itself admits a nontrivial automorphism group over the identity of the residue field, as the map $T\mapsto T+p$ showed. Only when the residue field is perfect do the choices disappear: then the $p$-basis is empty, lifts are unique, Cohen rings are functorial in the residue field, and Teichmüller representatives give a canonical multiplicative section. Everything that arithmetic applications need, however, survives without perfection, because what they consume is the presentation and the finite extension, not a canonical choice of coefficients.
+
+The structure theory also explains, retroactively, why so much of this book could be proved by successive approximation. Completeness was used three times in essentially the same way: to correct an approximate root, to sum a digit expansion, and to lift a splitting one nilpotent layer at a time. The last of these is the most flexible, and it is what produced both the coefficient field and the Cohen ring. A complete local ring is, in the end, a ring in which one may always improve an approximation and then pass to the limit — and having coordinates is nothing but the systematic exploitation of that single fact.
