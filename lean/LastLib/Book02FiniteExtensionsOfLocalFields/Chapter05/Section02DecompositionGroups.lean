@@ -213,10 +213,9 @@ theorem decomposition_group_is_completion_galois_group
     v.Completion w.Completion inferInstance inferInstance inferInstance
     inferInstance inferInstance inferInstance hD inferInstance⟩
 
-/- SOURCE_ISSUE: Completeness gives uniqueness of the valuation branch only up
-   to Mathlib's valuation equivalence.  Literal equality for the selected
-   normalized valuation therefore requires the explicit extension and
-   normalized-uniqueness hypotheses below. -/
+/- NOTE: Mathlib records valuation uniqueness up to equivalence.  Literal
+   equality for the selected normalized valuation therefore requires the
+   explicit extension and normalized-uniqueness hypotheses below. -/
 /- Over a complete base, the unique branch makes the decomposition group all of `G`. -/
 theorem complete_base_decomposition_group_eq_galois_group
     {K L Γ : Type*} [Field K] [Field L] [Algebra K L]

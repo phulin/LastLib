@@ -121,7 +121,8 @@ theorem selected_decomposition_order_is_ef
       residue_exact_sequence_cardinality ρ hρ
     _ = e * f := by rw [he, hf]
 
-/-- The global degree is the product of branch count, ramification, and residue degree. -/
+/-- The global degree is the product of branch count, ramification, and residue degree
+once the selected branch supplies its finite residue exact sequence. -/
 theorem finite_galois_degree_eq_branch_count_mul_ef
     {F E Γ : Type*} [Field F] [Field E] [Algebra F E]
     [LinearOrderedCommGroupWithZero Γ] [FiniteDimensional F E] [IsGalois F E]
@@ -132,9 +133,15 @@ theorem finite_galois_degree_eq_branch_count_mul_ef
       ∀ ⦃A₁ A₂ : ValuationSubring E⦄,
         A₁ ∈ chapter05ValuationsAbove v → A₂ ∈ chapter05ValuationsAbove v →
           ∃ σ : Gal(E / F), σ • A₁ = A₂)
+    {Q : Type*} [Group Q] [Finite Q]
+    (ρ : chapter05DecompositionGroup F w.valuationSubring →* Q)
+    (hρ : Function.Surjective ρ)
     (e f : ℕ)
-    (hD : Nat.card (chapter05DecompositionGroup F w.valuationSubring) = e * f) :
+    (he : Nat.card (MonoidHom.ker ρ) = e)
+    (hf : Nat.card Q = f) :
     Module.finrank F E = chapter05BranchCount (E := E) v * e * f := by
+  have hD : Nat.card (chapter05DecompositionGroup F w.valuationSubring) = e * f :=
+    selected_decomposition_order_is_ef ρ hρ e f he hf
   calc
     Module.finrank F E = Nat.card (Gal(E / F)) :=
       (IsGalois.card_aut_eq_finrank F E).symm

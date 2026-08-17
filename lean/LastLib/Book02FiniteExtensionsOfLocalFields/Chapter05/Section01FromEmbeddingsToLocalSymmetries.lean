@@ -55,7 +55,7 @@ def chapter05UniqueValuationExtension
 theorem finite_extension_embeddings_at_most_degree
     {K L Ω : Type*} [Field K] [Field L] [Field Ω]
     [Algebra K L] [Algebra K Ω] [FiniteDimensional K L]
-    [IsAlgClosed Ω] [Algebra.IsAlgebraic K L] :
+    [IsAlgClosed Ω] :
     Nat.card (L →ₐ[K] Ω) ≤ Module.finrank K L := by
   exact card_algHom_le_finrank K L Ω
 

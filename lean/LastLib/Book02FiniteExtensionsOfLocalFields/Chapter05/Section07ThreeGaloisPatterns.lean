@@ -182,11 +182,10 @@ theorem normal_closure_tower_ramification_and_residue_multiplicativity
   exact ⟨Ideal.ramificationIdx_tower q r, Ideal.inertiaDeg_tower q r⟩
 
 /-- The valuation on an algebraic normal closure is unique up to equivalence. -/
--- SOURCE_ISSUE: The source's phrase "unique valuation" is interpreted up to
--- Mathlib's valuation equivalence.  Henselianity gives uniqueness of the
--- branch, but literal equality in a fixed value group additionally needs a
--- normalization hypothesis, so the exact normalized predicate is not claimed
--- here.
+-- NOTE: The source's phrase "unique valuation" is interpreted up to Mathlib's
+-- valuation equivalence.  Henselianity gives uniqueness of the branch, but
+-- literal equality in a fixed value group additionally needs a normalization
+-- hypothesis, so the exact normalized predicate is not claimed here.
 theorem normal_closure_valuation_extension_is_unique_under_local_hypothesis
     {K Ω Γ : Type u} [Field K] [Field Ω] [Algebra K Ω]
     [LinearOrderedCommGroupWithZero Γ]

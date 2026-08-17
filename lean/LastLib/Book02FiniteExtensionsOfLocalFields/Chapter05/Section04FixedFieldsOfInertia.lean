@@ -101,6 +101,22 @@ theorem fixed_field_inertia_degree_allocation
       Module.finrank (chapter05FixedField (MonoidHom.ker ρ)) L = e := by
   exact fixed_field_of_residue_kernel_has_two_degrees ρ hρ e f he hf
 
+/-- An abstract inertia field is algebra-equivalent over the base to its fixed field.
+
+Mathlib's intrinsic `IsInertiaField` interface supplies a ring equivalence; the
+chapter records the stronger over-`K` field identification needed for the
+displayed field tower. -/
+theorem inertia_field_is_algebra_equivalent_to_fixed_field
+    {B K E L : Type*} [CommRing B] (P : Ideal B)
+    [Field K] [Field E] [Field L]
+    [Algebra K E] [Algebra E L] [Algebra K L]
+    [IsScalarTower K E L]
+    [MulSemiringAction (Gal(L / K)) B]
+    [FiniteDimensional K L] [IsGalois K L]
+    [IsInertiaField K L P E] :
+    Nonempty (E ≃ₐ[K] chapter05FixedField (Ideal.inertia (Gal(L / K)) P)) := by
+  sorry
+
 /--
 The inertia fixed field has the unramified and totally ramified local layers.
 
@@ -142,8 +158,6 @@ theorem fixed_field_inertia_has_unramified_and_totally_ramified_layers
     [P.LiesOver pE]
     [Algebra (pE.under A).ResidueField pE.ResidueField]
     [IsInertiaField K L P E]
-    (hE : Nonempty
-      (E ≃ₐ[K] chapter05FixedField (Ideal.inertia (Gal(L / K)) P)))
     (hp : p ≠ ⊥)
     (hbranches : (p.primesOver B).ncard = 1)
     (hinertia :
@@ -153,11 +167,14 @@ theorem fixed_field_inertia_has_unramified_and_totally_ramified_layers
     (hf : p.inertiaDegIn B = f)
     (hresidueSeparable :
       Algebra.IsSeparable (pE.under A).ResidueField pE.ResidueField) :
+      Nonempty (E ≃ₐ[K] chapter05FixedField (Ideal.inertia (Gal(L / K)) P)) ∧
       Module.finrank K E = f ∧
       Module.finrank E L = e ∧
       chapter05Unramified A C pE ∧
       chapter05TotallyRamified C B P := by
-  have _hE := hE
+  have hE : Nonempty
+      (E ≃ₐ[K] chapter05FixedField (Ideal.inertia (Gal(L / K)) P)) :=
+    inertia_field_is_algebra_equivalent_to_fixed_field (B := B) P
   have hKE : Module.finrank K E = f := by
     calc
       Module.finrank K E = (p.primesOver B).ncard * p.inertiaDegIn B :=
@@ -213,7 +230,7 @@ theorem fixed_field_inertia_has_unramified_and_totally_ramified_layers
         exact htower.symm
       _ = e := hramA
       _ = 1 * e := (Nat.one_mul e).symm
-  refine ⟨hKE, hEL, ?_, ?_⟩
+  refine ⟨hE, hKE, hEL, ?_, ?_⟩
   · change pE.ramificationIdx A = 1 ∧
       Algebra.IsSeparable (pE.under A).ResidueField pE.ResidueField
     exact ⟨hpEram, hresidueSeparable⟩

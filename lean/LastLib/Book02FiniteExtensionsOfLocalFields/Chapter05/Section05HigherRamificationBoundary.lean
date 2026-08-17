@@ -1,11 +1,10 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.Section03ResidueActionAndInertia
-import Mathlib.RingTheory.LocalRing.Length
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05
 
 noncomputable section
 
-open scoped BigOperators WithTop
+open scoped BigOperators
 
 /-! ## 5.5. What inertia does not yet measure -/
 
@@ -103,137 +102,6 @@ theorem chapter05ZerothRamificationGroup_eq_top
   change chapter05HigherCongruence A 0 σ
   intro x
   simp
-
-/-!
-The cyclic Hasse--Arf argument uses two pieces of local algebra that are
-different from the congruence subgroups themselves.  First, an automorphism
-has a canonical fixed-point ideal, and its fixed-point multiplicity is the
-module length of the corresponding quotient.  Second, the ramification
-number of a nonidentity automorphism is the cutoff detected by the canonical
-congruence groups.  The structures below keep those two pieces explicit so
-that later chapters do not replace them by unrelated natural-number data.
--/
-
-/-- The ideal cutting out the fixed points of an iterate of a ring automorphism. -/
-def chapter05FixedPointIdeal
-    {A : Type*} [CommRing A] (u : A ≃+* A) (n : ℕ) : Ideal A :=
-  Ideal.span (Set.range (fun x : A => (u ^ n) x - x))
-
-/-- The local fixed-point multiplicity, allowed to be infinite before finiteness is assumed. -/
-def chapter05FixedPointMultiplicity
-    {A : Type*} [CommRing A] (u : A ≃+* A) (n : ℕ) : ℕ∞ :=
-  Module.length A (A ⧸ chapter05FixedPointIdeal u n)
-
-/-- A ramification-number cutoff for the canonical congruence filtration. -/
-structure Chapter05RamificationNumberProfile
-    (F E : Type*) [Field F] [Field E] [Algebra F E]
-    (A : ValuationSubring E) where
-  number : chapter05DecompositionGroup F A → ℕ∞
-  number_one : number 1 = ⊤
-  finite_of_ne_one : ∀ {σ : chapter05DecompositionGroup F A}, σ ≠ 1 →
-    number σ ≠ ⊤
-  mem_iff : ∀ (σ : chapter05DecompositionGroup F A) (n : ℕ),
-    σ ∈ chapter05RamificationGroup F A (n + 1) ↔
-      ((n + 1 : ℕ) : ℕ∞) ≤ number σ
-
-/-!
-This is the branch-level package used by the cyclic ramification-number
-argument.  `fixed_point_multiplicity` below is not an arbitrary count: it is
-the length of the explicitly defined fixed-point ideal.  The
-`primitive_period_count` fields expose the periodic-orbit divisibility input;
-the two equality fields tie it to the canonical lower filtration through the
-ramification-number profile and to the actual fixed-point lengths.
--/
-structure Chapter05CyclicRamificationFixedPointInterface
-    {F E : Type*} [Field F] [Field E] [Algebra F E]
-    [FiniteDimensional F E] [IsGalois F E]
-    (A : ValuationSubring E) [IsDiscreteValuationRing A]
-    (R : Chapter05RamificationNumberProfile F E A)
-    (σ : chapter05DecompositionGroup F A)
-    [Finite (chapter05DecompositionGroup F A)] where
-  complete : IsAdicComplete (IsLocalRing.maximalIdeal A) A
-  residue_perfect : PerfectField (IsLocalRing.ResidueField A)
-  p : ℕ
-  p_prime : Nat.Prime p
-  residue_characteristic : CharP (IsLocalRing.ResidueField A) p
-  σ_inertia : σ ∈ chapter05InertiaGroup F A
-  cyclic : IsCyclic (chapter05DecompositionGroup F A)
-  automorphism_order : ℕ
-  automorphism_order_pos : 0 < automorphism_order
-  automorphism_period : σ ^ automorphism_order = 1
-  automorphism_order_minimal :
-    ∀ {n : ℕ}, σ ^ n = 1 → automorphism_order ∣ n
-  wild_exponent : ℕ
-  wild_exponent_pos : 0 < wild_exponent
-  automorphism_order_eq : automorphism_order = p ^ wild_exponent
-  power_nontrivial :
-    ∀ {r : ℕ}, r < wild_exponent → σ ^ (p ^ r) ≠ 1
-  q : ℕ → ℕ
-  q_eq_ramification_number :
-    ∀ {r : ℕ}, r < wild_exponent →
-      q r + 1 = (R.number (σ ^ (p ^ r))).toNat
-  q_eq_fixed_point_multiplicity :
-    ∀ {r : ℕ}, r < wild_exponent →
-      q r + 1 =
-        (chapter05FixedPointMultiplicity
-          (chapter05ValuationRingAction F A σ) (p ^ r)).toNat
-  fixed_point_multiplicity_finite :
-    ∀ {n : ℕ}, σ ^ n ≠ 1 →
-      chapter05FixedPointMultiplicity
-        (chapter05ValuationRingAction F A σ) n ≠ ⊤
-  primitive_period_count : ℕ → ℕ
-  periodic_orbit_count : ℕ → ℕ
-  primitive_period_count_eq_periodic_orbits :
-    ∀ n : ℕ, primitive_period_count n = periodic_orbit_count n
-  periodic_orbit_count_divisible :
-    ∀ {n : ℕ}, 0 < n → n ∣ periodic_orbit_count n
-  prime_power_mobius_identity :
-    ∀ {r : ℕ}, 0 < r → r < wild_exponent →
-      primitive_period_count (p ^ r) =
-        (chapter05FixedPointMultiplicity
-          (chapter05ValuationRingAction F A σ) (p ^ r)).toNat -
-          (chapter05FixedPointMultiplicity
-            (chapter05ValuationRingAction F A σ) (p ^ (r - 1))).toNat
-  q_monotone :
-    ∀ {r : ℕ}, 0 < r → r < wild_exponent → q (r - 1) ≤ q r
-
-/-- The fixed-point multiplicity divisibility input for a prime-power iterate. -/
-theorem chapter05_cyclic_fixed_point_difference_divisibility
-    {F E : Type*} [Field F] [Field E] [Algebra F E]
-    [FiniteDimensional F E] [IsGalois F E]
-    (A : ValuationSubring E) [IsDiscreteValuationRing A]
-    (R : Chapter05RamificationNumberProfile F E A)
-    (σ : chapter05DecompositionGroup F A)
-    [Finite (chapter05DecompositionGroup F A)]
-    (P : Chapter05CyclicRamificationFixedPointInterface A R σ)
-    {r : ℕ} (hr : 0 < r) (hr_last : r < P.wild_exponent) :
-    P.p ^ r ∣
-      (chapter05FixedPointMultiplicity
-        (chapter05ValuationRingAction F A σ) (P.p ^ r)).toNat -
-        (chapter05FixedPointMultiplicity
-          (chapter05ValuationRingAction F A σ) (P.p ^ (r - 1))).toNat := by
-  rw [← P.prime_power_mobius_identity hr hr_last,
-    P.primitive_period_count_eq_periodic_orbits]
-  exact P.periodic_orbit_count_divisible (Nat.pow_pos P.p_prime.pos)
-
-/-- The cyclic ramification-number congruence used by the Hasse--Arf argument. -/
-theorem chapter05_cyclic_ramification_number_congruence
-    {F E : Type*} [Field F] [Field E] [Algebra F E]
-    [FiniteDimensional F E] [IsGalois F E]
-    (A : ValuationSubring E) [IsDiscreteValuationRing A]
-    (R : Chapter05RamificationNumberProfile F E A)
-    (σ : chapter05DecompositionGroup F A)
-    [Finite (chapter05DecompositionGroup F A)]
-    (P : Chapter05CyclicRamificationFixedPointInterface A R σ)
-    {r : ℕ} (hr : 0 < r) (hr_last : r < P.wild_exponent) :
-    P.p ^ r ∣ P.q r - P.q (r - 1) := by
-  have hprev : r - 1 < P.wild_exponent := by omega
-  have hdiv := chapter05_cyclic_fixed_point_difference_divisibility A R σ P hr hr_last
-  have hqr := P.q_eq_fixed_point_multiplicity (r := r) hr_last
-  have hqprev := P.q_eq_fixed_point_multiplicity (r := r - 1) hprev
-  rw [← hqr, ← hqprev] at hdiv
-  convert hdiv using 1
-  exact (Nat.add_sub_add_right (P.q r) 1 (P.q (r - 1))).symm
 
 /-- Prime-to-residue-characteristic ramification is the tame boundary.
 
