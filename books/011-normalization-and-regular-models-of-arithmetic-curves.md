@@ -80,7 +80,9 @@
     - [Cohen–Macaulay local rings](#144-cohenmacaulay-local-rings)
     - [Serre's conditions and the normality criterion](#145-serres-conditions-and-the-normality-criterion)
     - [Freeness in dimension two](#146-freeness-in-dimension-two)
-    - [What the criteria return to the models](#147-what-the-criteria-return-to-the-models)
+    - [Finite free resolutions and the homological criterion for regularity](#147-finite-free-resolutions-and-the-homological-criterion-for-regularity)
+    - [Regular local rings are factorial](#148-regular-local-rings-are-factorial)
+    - [What the criteria return to the models](#149-what-the-criteria-return-to-the-models)
 
 ## 1. The problem of integral models
 
@@ -115,7 +117,7 @@ $$
 
 A morphism is **smooth** if it is locally of finite presentation, flat, and has geometrically regular fibers. Thus regularity belongs to the total space, while smoothness belongs to a morphism. A regular arithmetic surface can have a singular special fiber: $xy=\pi$ has regular total space but a nodal fiber. Conversely, a smooth fiber says nothing about singularities elsewhere.
 
-A domain $A$ is **Japanese** if the integral closure of $A$ in every finite extension of its fraction field is a finite $A$-module. A noetherian ring is **Nagata** if each quotient by a prime is Japanese. This is the finiteness condition for normalization of finite-type schemes. An excellent ring is, in particular, universally catenary, has geometrically regular formal fibers, and satisfies a uniform openness condition for regular loci; every excellent ring is Nagata. Excellence supplies more than normalization finiteness: it permits completion and localization to reflect the regularity information used in surface resolution.
+A domain $A$ is **Japanese** if the integral closure of $A$ in every finite extension of its fraction field is a finite $A$-module. A noetherian ring is **Nagata** if each quotient by a prime is Japanese, and **universally Japanese** if in addition every finite-type algebra over it is Nagata. The latter is the finiteness condition for normalization of finite-type schemes. An excellent ring is, in particular, universally catenary, has geometrically regular formal fibers, and satisfies a uniform openness condition for regular loci; a ring all of whose finite-type algebras are excellent is universally Japanese. Excellence supplies more than normalization finiteness: it permits completion and localization to reflect the regularity information used in surface resolution.
 
 A morphism is **proper** if it is separated, of finite type, and universally closed. It is **projective** if it factors as a closed immersion into a projective space over the base. Projective implies proper. The converse holds in many curve situations after extra arguments, but it is not a definition and is not assumed silently.
 
@@ -128,7 +130,7 @@ $$
 $$
 \text{regular}\Longrightarrow\text{normal},
 \qquad
-\text{excellent}\Longrightarrow\text{Nagata}.
+\text{universally excellent}\Longrightarrow\text{universally Japanese}.
 $$
 
 None of the reverse implications is valid in this generality.
@@ -226,7 +228,7 @@ A domain $A$ is Japanese if for every finite field extension $L/\operatorname{Fr
 
 **Proof.** The assertion is affine-local on $X$. Write $X=\operatorname{Spec}B$. After quotienting $B$ by each of its finitely many minimal primes, the Japanese condition says exactly that the integral closure in the relevant finite field extension is module-finite. A finite product of these closures is finite over the reduced ring $B$. Hence the componentwise normalization is finite. $\square$
 
-To apply the criterion to a finite-type scheme over a base, one still needs a permanence theorem for the base condition. That permanence is supplied below in the excellent case actually used here: finite-type algebras over an excellent ring are excellent, and excellent rings are Nagata. Merely assuming that the base is Nagata would require the separate theorem that finite-type algebras over a Nagata ring remain Nagata.
+To apply the criterion to a finite-type scheme over a base, one still needs a permanence statement for the base condition: the Nagata property of a ring says nothing by itself about finite-type algebras over it. Call a noetherian ring **universally Japanese** if every finite-type algebra over it is Nagata. Section 3.2 proves this outright for perfect base fields, and derives it from the excellence package for the other bases in use; the notion of an excellent ring is designed precisely to make such permanence statements available, and Section 3.2 records exactly how much of the package is proved here.
 
 ### 3.2 Excellent rings
 
@@ -320,17 +322,29 @@ the last assertion. $\square$
    $A$ is a domain, it is $N$-$1$: its normalization in its own fraction field is finite.
 
 **Proof.** We begin with the complete case. Quotienting by a prime preserves completeness, so it
-is enough to treat a complete local domain $B$. The coefficient-ring theorem and a system of
-parameters give a finite injection
+is enough to treat a complete local domain $B$, say of dimension $d$ with residue field $k$. The
+structure theory of complete local rings developed in Book 1, Chapter 13, supplies a finite
+injection
 
 $$
-T\lhookjoinrel\longrightarrow B,                            \tag{3.1b}
+T\hookrightarrow B,                                         \tag{3.1b}
 $$
 
 where $T=k[[x_1,\ldots,x_d]]$ in equal characteristic and
-$T=C[[x_1,\ldots,x_{d-1}]]$ in mixed characteristic, with $C$ a complete discrete valuation
-coefficient ring. Corollary 3.2A' says that $T$ is $N$-$2$, with no perfectness hypothesis on
-$k$ and in both equal and mixed characteristic.
+$T=C[[x_1,\ldots,x_{d-1}]]$ in mixed characteristic, $C$ being a Cohen ring for $k$. Precisely:
+in equal characteristic $B$ contains a field, so it has a coefficient field $K\cong k$ by
+Book 1, Theorem 13.15; taking $x_1,\ldots,x_d$ to be a system of parameters, Book 1,
+Theorem 13.34(1) makes $B$ a finite module over $K[[x_1,\ldots,x_d]]$, and the final clause of
+that theorem — applicable because $B$ is a domain and $\dim K[[x_1,\ldots,x_d]]=d=\dim B$ by
+Book 1, Lemma 13.29 — makes the evaluation map injective. In mixed characteristic a Cohen ring
+$C$ for $k$ exists by Book 1, Theorem 13.21 and admits a local homomorphism $C\to B$ inducing
+the identity on residue fields by Book 1, Theorem 13.25; choosing $x_1,\ldots,x_{d-1}$ to lift a
+system of parameters of $B/pB$, Book 1, Theorem 13.34(2) makes $B$ a finite
+$C[[x_1,\ldots,x_{d-1}]]$-module, again injectively because
+$\dim C[[x_1,\ldots,x_{d-1}]]=d$ by Book 1, Lemma 13.29. Both cases, together with the
+verification that the dimension hypothesis is met, are recorded in the closing discussion of
+Book 1, Section 13.7. Corollary 3.2A' says that $T$ is $N$-$2$, with no perfectness hypothesis
+on $k$ and in both equal and mixed characteristic.
 
 Now let $L/K(B)$ be finite. Since $B$ is finite over $T$, the field $K(B)$ is finite over
 $K(T)$, and the integral closure of $T$ in $L$ is finite by the preceding paragraph. The integral
@@ -399,8 +413,9 @@ $L$, which is also the integral closure of $D$ in $L$, is finite over $D_0$ and 
 $D$. Thus every finite-type $A$-domain is Japanese. Taking quotients of $A$ by primes gives the
 Nagata assertion. $\square$
 
-We also record the complete-local excellence input, including the characteristic-$p$ argument
-which is lost if one merely invokes a coefficient ring.
+We also record the complete-local excellence input. The structure theory of Book 1, Chapter 13,
+supplies the coordinates; the characteristic-$p$ content of the lemma below is the derivation
+argument (3.1d), which those coordinates alone do not provide.
 
 **Lemma 3.2D (the complete-local excellence package).** Every complete noetherian local ring is
 universally catenary, is a $G$-ring, and is $J_2$.
@@ -413,8 +428,13 @@ $$
  D:B\longrightarrow B,\qquad D(f)\ne0.                     \tag{3.1d}
 $$
 
-To see this, replace the complete base, using a finite coefficient-ring injection, by
-$k[[x_1,\ldots,x_n]]$, and after generic freeness replace $B$ by a finite algebra over
+To see this, first replace the complete base by the image of the structure map, a quotient of a
+complete noetherian local ring and hence itself complete noetherian local by Book 1, Lemma 13.2;
+dividing further by a minimal prime, we may take it to be a complete local domain of
+characteristic $p$. Such a ring contains a field, so it has a coefficient field by Book 1,
+Theorem 13.15, and Book 1, Theorem 13.34(1) applied to a system of parameters exhibits it as a
+finite extension of the complete regular local domain $k[[x_1,\ldots,x_n]]$. Replace the base by
+that power-series ring; and after generic freeness replace $B$ by a finite algebra over
 $k[[x_1,\ldots,x_n]][y_1,\ldots,y_m]$; multiplying by a power of the element inverted in this
 replacement clears the final denominators. Since $f$ is not a $p$th power, $df\ne0$ in
 $\Omega_{K(B)/\mathbf F_p}$. Choose from a $p$-basis of $k$, together with the $x_i,y_j$, a
@@ -441,8 +461,11 @@ $$
  K(A/\mathfrak q).                                          \tag{3.1e}
 $$
 
-Thus replace $A$ by a complete local domain. Choose a finite injection from a regular complete
-coefficient ring $A_0$ into $A$. Formal-fiber regularity passes through a finite injection:
+Thus replace $A$ by a complete local domain. Choose a finite injection $A_0\hookrightarrow A$
+from a complete regular local domain: this is (3.1b), that is, Book 1, Theorem 13.34 together
+with Book 1, Theorem 13.15 in equal characteristic and Book 1, Theorems 13.21 and 13.25 in mixed
+characteristic, the source being regular by Book 1, Lemma 13.29. Formal-fiber regularity passes
+through a finite injection:
 completion of the finite algebra, localized at a chosen prime, is a direct factor of the base
 change of the completed base, so its fiber is a direct factor after a finite residue-field
 extension.
@@ -473,7 +496,7 @@ open. A finite algebra over a complete local ring is a finite
 product of complete local rings, so it remains to show that a complete local domain $A$ has a
 nonempty open regular locus.
 
-Again choose a finite regular complete subring $A_0\subset A$ and induct on
+Again choose, by (3.1b), a finite regular complete subring $A_0\subset A$ and induct on
 $[K(A):K(A_0)]$. A separable step is smooth after its nonzero discriminant is inverted, so it
 preserves a nonempty regular open. A minimal inseparable step has characteristic $p$ and, after
 passing to an intermediate finite algebra $B$ and clearing denominators, has the form
@@ -488,38 +511,241 @@ $D(b)\ne0$. At every prime over that open which avoids $D(b)$, the hypersurface 
 calculation above shows that $A$ is regular (one first inverts the conductor so that
 $B[z]=A$). This is a nonempty open, completing the induction and the $J_2$ proof.
 
-Finally, a regular complete coefficient ring is Cohen--Macaulay, and the dimension formula for
-a Cohen--Macaulay local ring shows that every saturated chain in every finite-type domain over
-it has the expected length; hence it is universally catenary. The coefficient-ring theorem also
-presents an arbitrary complete local ring as a quotient of such a regular complete local ring.
-The dimension formula, and therefore universal catenarity, passes to quotients. This proves all
-three assertions. $\square$
+Finally, universal catenarity. Book 1, Corollary 13.31 presents an arbitrary complete noetherian
+local ring $A$ as a quotient $Q\twoheadrightarrow A$ of a complete regular local ring $Q$: one
+takes $Q=k[[X_1,\ldots,X_n]]$ when $A$ contains a field and $Q=C[[X_1,\ldots,X_n]]$ otherwise,
+with $C$ a Cohen ring for the residue field, and Book 1, Lemma 13.29 says that these power-series
+rings are indeed complete regular local domains. A regular local ring is Cohen--Macaulay by
+Proposition 4.1A(1), and the dimension formula for a Cohen--Macaulay local ring shows that every
+saturated chain in every finite-type domain over $Q$ has the expected length; hence $Q$ is
+universally catenary. The dimension formula, and therefore universal catenarity, passes to
+quotients, so $A$ is universally catenary. This proves all three assertions. $\square$
 
-**Theorem 3.2.** Excellent rings are Nagata. Localizations and finite-type algebras over excellent rings are excellent. Complete noetherian local rings, fields, and Dedekind domains arising by localization from rings of integers of number fields are excellent.
+Lemma 3.2D covers every base that is complete and local, and by the definition of the $J_2$
+condition it covers all finite-type algebras over such a base as far as openness of regular loci
+is concerned. It does not cover finiteness of normalization for those finite-type algebras, and
+this is a genuinely separate matter. We prove it outright for the two families of bases in which
+the arithmetic applications live: perfect residue fields on one side, characteristic zero on the
+other.
 
-**Proof.** Let $D$ be a localization of a finite-type algebra over an excellent ring. Excellence
-is stable under these operations: $J_2$ is stable by its universal definition, universal
-catenarity is stable under finite type and localization, and the formal fibers remain
-geometrically regular by base change and the transitivity criterion for regular maps.
+**Lemma 3.2E (perfect base fields).** Let $k$ be a perfect field. Then
 
-For every local domain $D_{\mathfrak p}$, the completion map is regular. A regular map is flat
-with geometrically regular fibers, and therefore carries the reduced ring $D_{\mathfrak p}$ to a
-reduced completion: filter by a prime chain and use that a geometrically regular algebra over a
-field is reduced. Thus Lemma 3.2C applies and proves that the original excellent ring is Nagata,
-indeed universally Japanese.
+1. for every finite-type $k$-algebra domain $B$ and every finite extension $L$ of
+   $\operatorname{Frac}(B)$, the integral closure of $B$ in $L$ is a finite $B$-module;
+2. every finite-type $k$-algebra is Nagata;
+3. the regular locus of every finite-type $k$-algebra is open, so $k$ is $J_2$.
 
-Fields have trivial formal fibers and regular loci. The complete-local case is Lemma 3.2D.
-Finally $\mathbf Z$ is excellent by the discrete-valuation calculation at its
-nonzero primes and the characteristic-zero generic point. Rings of integers are finite over
-$\mathbf Z$, and their localizations inherit excellence by the permanence just proved. $\square$
+**Proof.** For (1), write $K=\operatorname{Frac}(B)$. We first reduce to $L=K$. Choose
+generators $\beta_1,\ldots,\beta_r$ of $L$ as a field over $K$ and multiply each by a suitable
+nonzero element of $B$ so that it becomes integral over $B$; this does not change the generated
+field. Then $B'=B[\beta_1,\ldots,\beta_r]$ is generated by finitely many integral elements,
+hence is a finite $B$-module by Lemma 2.1, is again a finite-type $k$-algebra domain, and has
+fraction field $L$. By transitivity of integrality the integral closure of $B$ in $L$ equals the
+integral closure of $B'$ in $L$, that is, the normalization of $B'$; and a module that is finite
+over $B'$ is finite over $B$. So it is enough to prove that the normalization of a finite-type
+$k$-algebra domain is finite.
 
-The proof displays the three functions of excellence: regular formal fibers cross from a local ring to its completion, openness spreads a finite calculation to a neighborhood, and noetherian induction crosses the remaining closed set. Thus excellence turns a generic finite field extension into a finite geometric normalization.
+Let $B$ be such a domain, of dimension $d$. Noether normalization provides a polynomial subring
+$P=k[y_1,\ldots,y_d]\subseteq B$ over which $B$ is a finite module. Since $B$ is integral over
+$P$, an element of $K$ is integral over $B$ if and only if it is integral over $P$; so the
+normalization of $B$ is the integral closure $\overline P$ of $P$ in $K$, and it suffices to
+prove that $\overline P$ is a finite $P$-module. Write $F=\operatorname{Frac}(P)=k(y_1,\ldots,y_d)$,
+so that $K/F$ is finite.
+
+If $K/F$ is separable — in particular whenever $k$, and hence $F$, has characteristic zero — the
+trace argument of Section 3.3, applied to the normal noetherian domain $P$, already gives
+finiteness. In characteristic $p$ let $K_s$ be the separable closure of $F$ in $K$, so that
+$K/K_s$ is purely inseparable; choose $e$ with $K^{p^e}\subseteq K_s$, which is possible because
+$K/K_s$ is finite and purely inseparable. Set $q=p^e$ and work inside a fixed algebraic closure.
+Then
+
+$$
+K\subseteq K_s^{1/q},\qquad
+P^{1/q}=k^{1/q}[y_1^{1/q},\ldots,y_d^{1/q}]=k[y_1^{1/q},\ldots,y_d^{1/q}],
+$$
+
+the last equality because $k$ is perfect. Thus $P^{1/q}$ is again a polynomial ring over $k$,
+hence a normal noetherian domain, and it is a free $P$-module of rank $q^{\,d}$ with basis the
+monomials $y_1^{a_1/q}\cdots y_d^{a_d/q}$, $0\le a_i<q$. Its fraction field is $F^{1/q}$, and
+$K_s^{1/q}/F^{1/q}$ is separable, being the image of the separable extension $K_s/F$ under the
+$q$-power Frobenius isomorphism. The trace argument applied to $P^{1/q}$ therefore makes the
+integral closure of $P^{1/q}$ in $K_s^{1/q}$ a finite $P^{1/q}$-module, hence a finite
+$P$-module. Now $\overline P$ consists of elements of $K\subseteq K_s^{1/q}$ integral over
+$P\subseteq P^{1/q}$, so $\overline P$ is a $P$-submodule of that finite module; since $P$ is
+noetherian, $\overline P$ is finite over $P$. This proves (1).
+
+For (2), let $A$ be a finite-type $k$-algebra and $\mathfrak p$ a prime. Then $A/\mathfrak p$ is
+again a finite-type $k$-algebra and is a domain, so it is Japanese by (1). Hence $A$ is Nagata.
+
+For (3), let $A$ be a finite-type $k$-algebra. Because $k$ is perfect, a finite-type $k$-algebra
+is regular at a prime exactly when it is smooth over $k$ there: regularity and geometric
+regularity agree over a perfect field, and smoothness is flatness together with geometric
+regularity of the fibre. The smooth locus is open, being cut out by the nonvanishing of the
+appropriate minors of a Jacobian matrix attached to a finite presentation, as recalled in
+Section 4.4. Finally a finite-type algebra over a finite-type $k$-algebra is a finite-type
+$k$-algebra, so this openness statement for all finite-type $k$-algebras is exactly the $J_2$
+condition for $k$. $\square$
+
+**Lemma 3.2F (characteristic-zero bases).** Let $A$ be a noetherian domain of characteristic
+zero.
+
+1. If $A$ is normal, it is $N$-$2$: its integral closure in every finite extension of its
+   fraction field is finite.
+2. If $A$ is a Dedekind domain, it is Nagata. In particular $\mathbf Z$, the ring of integers of
+   a number field, and every localization of such a ring is Nagata.
+3. If $A$ is a Dedekind domain, its formal fibres are geometrically regular and it is
+   universally catenary.
+
+**Proof.** (1) In characteristic zero every finite field extension is separable, so this is the
+trace argument of Section 3.3 applied to the normal noetherian domain $A$.
+
+(2) Let $\mathfrak p$ be a prime of the Dedekind domain $A$. If $\mathfrak p=0$ then
+$A/\mathfrak p=A$ is a normal noetherian domain of characteristic zero, hence $N$-$2$ by (1). If
+$\mathfrak p\neq0$ then $\dim A\le1$ forces $\mathfrak p$ to be maximal, so $A/\mathfrak p$ is a
+field, and a field is trivially Japanese: its integral closure in a finite field extension is
+that extension, a finite module. Hence $A$ is Nagata. A localization of a Dedekind domain is a
+Dedekind domain or a field, so the last assertion follows.
+
+(3) Let $\mathfrak p$ be a prime of $A$. If $\mathfrak p=0$ then $A_{\mathfrak p}$ is a field and
+equals its own completion, so the formal fibre is trivial. Otherwise $A_{\mathfrak p}$ is a
+discrete valuation ring of characteristic zero, and by Book 1, Theorem 7.2 its completion
+$\widehat{A_{\mathfrak p}}$ is a discrete valuation ring with the same residue field and the same
+uniformizer. There are exactly two primes in $\widehat{A_{\mathfrak p}}$, and the two formal
+fibres are the residue field $\kappa(\mathfrak p)$ and the field
+$\operatorname{Frac}(\widehat{A_{\mathfrak p}})$, the fibres over the closed and the generic
+point of $\operatorname{Spec}A_{\mathfrak p}$ respectively. Both are field extensions of the
+corresponding residue field, and both have characteristic zero. A finite extension $L$ of a
+characteristic-zero field $\kappa$ is separable, so for a field extension $E/\kappa$ the ring
+$E\otimes_{\kappa}L$ is étale over $E$, hence a finite product of fields and in particular
+regular; the formal fibres are therefore geometrically regular. For catenarity, $A$ is regular of
+dimension at most one, hence Cohen--Macaulay, and the dimension formula for finite-type domains
+over a Cohen--Macaulay ring gives saturated chains of the expected length; so $A$ is universally
+catenary. $\square$
+
+**Lemma 3.2G (permanence that is definitional).** Let $A$ be a noetherian ring.
+
+1. If $A$ is universally catenary, so is every finite-type $A$-algebra and every localization of
+   one; the same holds for the $J_2$ condition.
+2. If the formal fibres of $A$ are geometrically regular, the same holds for every localization
+   $S^{-1}A$.
+3. If $A$ is Nagata, so is every quotient of $A$ and every localization of $A$.
+
+**Proof.** (1) Universal catenarity of $A$ means by definition that every finite-type
+$A$-algebra is catenary, and a finite-type algebra over a finite-type $A$-algebra, or over a
+localization of one, is a localization of a finite-type $A$-algebra; catenarity passes to
+localizations because chains of primes in a localization are chains of primes in the ring. The
+same bookkeeping applies verbatim to $J_2$, whose definition also quantifies over all finite-type
+algebras.
+
+(2) The primes of $S^{-1}A$ are the primes of $A$ missing $S$, and the corresponding local rings
+coincide; so the formal fibres of $S^{-1}A$ are among those of $A$.
+
+(3) A quotient of a Nagata ring is Nagata, since its prime quotients are prime quotients of $A$.
+For a localization $S^{-1}A$, a prime quotient is $S^{-1}(A/\mathfrak p)$ for a prime
+$\mathfrak p$ of $A$ meeting $S$ trivially; by Proposition 2.2 the integral closure of
+$S^{-1}(A/\mathfrak p)$ in a finite extension $L$ of its fraction field is the localization of
+the integral closure of $A/\mathfrak p$ in $L$, hence finite. $\square$
+
+Assembling the lemmas gives the permanence statement in exactly the scope in which it is proved
+here. Call a noetherian ring **universally excellent** if every finite-type algebra over it is
+excellent, and a noetherian scheme universally excellent when its affine coordinate rings are.
+By Lemma 3.2G(1) the universal-catenarity and $J_2$ halves of universal excellence follow from
+the corresponding conditions on the base itself; only the formal-fibre condition for finite-type
+algebras is a genuinely new requirement.
+
+**Theorem 3.2 (what is proved here about excellence).**
+
+1. A universally excellent ring is universally Japanese; in particular it is Nagata, and so is
+   every finite-type algebra over it and every localization of one.
+2. Every complete noetherian local ring is excellent and Nagata. In particular every field and
+   every complete discrete valuation ring is excellent and Nagata.
+3. A perfect field is universally Japanese: every finite-type algebra over it is Nagata. Every
+   field, perfect or not, is $J_2$ and universally catenary, and so is every finite-type algebra
+   over it.
+4. Every Dedekind domain of characteristic zero — in particular $\mathbf Z$, the ring of
+   integers of a number field, and every localization of such a ring — is Nagata, universally
+   catenary, and has geometrically regular formal fibres.
+5. Universal catenarity, the $J_2$ condition, and the Nagata condition pass to finite-type
+   algebras and localizations to the extent recorded in Lemma 3.2G; excellence itself passes to
+   localizations.
+
+**Proof.** (1) Let $A$ be universally excellent and let $D$ be a finite-type $A$-domain. Then $D$
+is excellent, so for every prime $\mathfrak p$ the map $D_{\mathfrak p}\to\widehat{D_{\mathfrak p}}$
+is flat with geometrically regular fibres. Such a map carries a reduced ring to a reduced ring:
+filtering by a chain of primes reduces the claim to the statement that a geometrically regular
+algebra over a field is reduced. So localizations of finite-type $A$-domains have reduced
+completions. Moreover $A$ is $J_2$, being excellent. Lemma 3.2C therefore applies and shows that
+$A$ is universally Japanese; in particular every finite-type $A$-algebra is Nagata, and
+Lemma 3.2G(3) extends this to localizations.
+
+(2) Lemma 3.2D gives universal catenarity, the $G$-ring property, and $J_2$; Lemma 3.2B(1) gives
+the Nagata property. A field and a complete discrete valuation ring are complete noetherian local
+rings.
+
+(3) The Nagata assertion is Lemma 3.2E(2), the openness assertion is Lemma 3.2E(3), and a field
+is a complete noetherian local ring, so Lemma 3.2D gives $J_2$ and universal catenarity for every
+field; Lemma 3.2G(1) transports the last two properties to finite-type algebras.
+
+(4) This is Lemma 3.2F(2) and 3.2F(3).
+
+(5) Lemma 3.2G. For the final clause, a localization of an excellent ring is universally catenary
+and $J_2$ by Lemma 3.2G(1) and has geometrically regular formal fibres by Lemma 3.2G(2). $\square$
+
+**The hypothesis that is carried rather than proved.** The classical permanence statement
+_"a finite-type algebra over an excellent ring is excellent"_ is not established above, and we do
+not assert it. Instead, universal excellence is carried as an explicit hypothesis on the base
+wherever the later chapters need a property of a finite-type algebra over the base that
+Theorem 3.2 does not supply. It is worth being exact about which parts of the classical statement
+have been proved and which have not, because the gap is narrower than the bare word "excellent"
+suggests.
+
+_Proved unconditionally, for every finite-type algebra over the base:_
+
+- universal catenarity and openness of regular loci, whenever the base is a field or a complete
+  noetherian local ring (Theorem 3.2(2),(3) with Lemma 3.2G(1));
+- finiteness of normalization in every finite extension of the function field, whenever the base
+  is a perfect field (Theorem 3.2(3), from Lemma 3.2E).
+
+_Proved for the base itself, but not transported to its finite-type algebras:_
+
+- the Nagata property for complete noetherian local rings (Lemma 3.2B(1)) and for
+  characteristic-zero Dedekind domains such as $\mathbf Z$ and localized rings of integers
+  (Lemma 3.2F(2));
+- geometric regularity of formal fibres for complete noetherian local rings (Lemma 3.2D) and for
+  characteristic-zero Dedekind domains (Lemma 3.2F(3)).
+
+_Not proved here at all:_ that a finite-type algebra over an excellent base again has
+geometrically regular formal fibres, and, for bases other than a perfect field, that a
+finite-type algebra over a Nagata base is again Nagata. These two are precisely the content of
+universal excellence beyond what Theorem 3.2 gives, and they are what the hypothesis "universally
+excellent base" supplies. Universal excellence is used in the sequel exactly at the following
+places, and nowhere else:
+
+- finiteness of normalization for a scheme of finite type over the base — Theorem 3.3, and
+  through it the model constructions of Chapters 6, 7, 9, 10 and 12 — unless the base is a
+  perfect field, in which case Lemma 3.2E already suffices;
+- the passage from a two-dimensional normal local ring $A$ on a model to its completion
+  $\widehat A$ in Sections 8.5 and 8.7, where $\widehat A$ must be normal and must be regular
+  exactly when $A$ is; this is the regularity of $A\to\widehat A$ recorded after Lemma 8.2;
+- the hypothesis "excellent" in Theorem 8.1 and in those lemmas of Chapter 8 which apply
+  Theorem 8.1 or its local ingredients to the charts of a blowup, since those charts are again
+  finite-type algebras over the base.
+
+Openness of regular loci, by contrast, never needs the hypothesis: over any field and over any
+complete noetherian local base it is Lemma 3.2D together with Lemma 3.2G(1).
+
+**Naming convention for the rest of the book.** Every statement whose hypothesis is the
+excellence of a base ring or scheme — beginning with the definition of an arithmetic surface in
+Section 5.1 and with Theorems 3.3, 6.2, 8.1, 9.1, 11.1, 11.2 and 12.1 — says _universally
+excellent_ explicitly, so that no statement has to be read against a remembered convention. Where
+the running text says only "excellence", it is one of the three functions listed above that is
+meant, and the catalogue just given records whether that function is proved here or carried.
 
 ### 3.3 The one-dimensional proof
 
-The relevant one-dimensional finiteness can be seen more concretely. Let $A$ be an excellent one-dimensional noetherian domain and $L/K$ finite. Choose a $K$-basis of $L$ and clear denominators so that an $A$-subalgebra $B_0\subset L$, finite over $A$, has fraction field $L$. Its normalization $B$ is finite by the Nagata property. Localizing at a nonzero prime $\mathfrak p$ of $A$ gives a finite semilocal normal one-dimensional algebra.
+The relevant one-dimensional finiteness can be seen more concretely, and here the Nagata property alone is enough. Let $A$ be a Nagata one-dimensional noetherian domain and $L/K$ finite. Choose a $K$-basis of $L$ and clear denominators so that an $A$-subalgebra $B_0\subset L$, finite over $A$, has fraction field $L$. Its normalization $B$ is finite by the Nagata property. Localizing at a nonzero prime $\mathfrak p$ of $A$ gives a finite semilocal normal one-dimensional algebra.
 
-Every local factor $B_{\mathfrak q}$ is a noetherian normal local domain of dimension one, hence a discrete valuation ring. Therefore the integral closure of an excellent Dedekind domain in a finite separable extension is again Dedekind and finite over the original ring. This recovers, in the global form needed here, the local valuation picture of Book 1.
+Every local factor $B_{\mathfrak q}$ is a noetherian normal local domain of dimension one, hence a discrete valuation ring. Therefore the integral closure of a Nagata Dedekind domain in a finite extension is again Dedekind and finite over the original ring; by Lemma 3.2F(2) this covers every Dedekind domain of characteristic zero, and in the separable case the trace argument below covers every Dedekind domain whatsoever. This recovers, in the global form needed here, the local valuation picture of Book 1.
 
 There is also a useful trace argument when $L/K$ is separable. Choose a $K$-basis $e_1,\ldots,e_n$ of $L$ and multiply its elements by nonzero scalars of $A$ so that every $e_i$ is integral over $A$. If $e_1^*,\ldots,e_n^*$ is the trace-dual basis and $x$ is integral over $A$, then every product $xe_i$ is integral. Its field trace, being a coefficient of the characteristic polynomial of multiplication by $xe_i$, is integral over $A$ and lies in $K$; because $A$ is integrally closed, $\operatorname{Tr}_{L/K}(xe_i)\in A$. Hence
 
@@ -531,15 +757,13 @@ lies in the finite free fractional $A$-module $\sum_iAe_i^*$. The integral closu
 
 ### 3.4 The two-dimensional cases used here
 
-Let $R$ be an excellent Dedekind domain and $A$ a finite-type $R$-domain whose generic fiber has dimension one. Then $A$ has dimension at most two, and it has dimension two when $\operatorname{Spec}A$ dominates $\operatorname{Spec}R$. By stability of excellence under finite type, $A$ is excellent and hence Nagata. Its normalization in any finite extension of its fraction field is finite.
+Let $R$ be a Dedekind domain and $A$ a finite-type $R$-domain whose generic fiber has dimension one. Then $A$ has dimension at most two, and it has dimension two when $\operatorname{Spec}A$ dominates $\operatorname{Spec}R$. What we need of $A$ is exactly that it be Nagata, so that its normalization in any finite extension of its fraction field is finite. Theorem 3.2(1) delivers this when $R$ is universally excellent, and Theorem 3.2(3) delivers it unconditionally when $R$ is a perfect field. These are the two forms of the hypothesis under which the finiteness statement for arithmetic surfaces is available.
 
-This proves the central finiteness statement for arithmetic surfaces:
+**Theorem 3.3.** Let $S$ be a universally excellent Dedekind scheme, or more generally a noetherian scheme whose affine coordinate rings are universally Japanese. If $X$ is a reduced finite-type $S$-scheme, then $X^{\mathrm{nor}}\to X$ is finite. If $X\to S$ is proper, respectively projective, then its normalization is proper, respectively projective, over $S$.
 
-**Theorem 3.3.** If $X$ is a reduced finite-type scheme over an excellent Dedekind scheme $S$, then $X^{\mathrm{nor}}\to X$ is finite. If $X\to S$ is proper, respectively projective, then its normalization is proper, respectively projective, over $S$.
+**Proof.** Every affine coordinate ring of $X$ is a finite-type algebra over a universally Japanese ring, hence is Nagata: for a universally excellent base this is Theorem 3.2(1), and universal Japaneseness says it directly. Finiteness is now Theorem 3.1. A finite morphism is projective and proper. Composing it with a proper morphism gives a proper morphism. If $X\hookrightarrow\mathbf P^n_S$, a finite morphism $Y\to X$ is projective; composing projective morphisms proves projectivity of $Y/S$. $\square$
 
-**Proof.** Every affine coordinate ring of $X$ is a finite-type algebra over an excellent ring, hence is excellent and therefore Nagata by Theorem 3.2. Finiteness is now Theorem 3.1. A finite morphism is projective and proper. Composing it with a proper morphism gives a proper morphism. If $X\hookrightarrow\mathbf P^n_S$, a finite morphism $Y\to X$ is projective; composing projective morphisms proves projectivity of $Y/S$. $\square$
-
-The theorem remains valid for two-dimensional schemes of finite type over a field or over a complete noetherian local ring. These cases cover local surface charts and completed local calculations.
+The theorem applies unconditionally to schemes of finite type over a perfect field, by Lemma 3.2E; this is the case of the local surface charts in equal characteristic with perfect residue field. Over a complete noetherian local base, or over a characteristic-zero Dedekind base, it is the universal excellence of the base that supplies the hypothesis, in the sense catalogued at the end of Section 3.2.
 
 ### 3.5 What fails without finiteness hypotheses
 
@@ -638,7 +862,7 @@ the completed Koszul complexes compute the same first nonzero Ext degree. Hence 
 embedding dimension are unchanged; faithful flatness and the dimension theorem for completion
 give the assertions in (4). $\square$
 
-This criterion explains a major feature of normal surfaces: their nonregular locus has codimension at least two and therefore consists of closed points locally. If the surface is of finite type over a Dedekind scheme, the singular locus is closed by excellence; on a quasi-compact surface it is a finite set whenever it contains no curve.
+This criterion explains a major feature of normal surfaces: their nonregular locus has codimension at least two and therefore consists of closed points locally. If the surface is of finite type over a Dedekind scheme, the singular locus is closed by the $J_2$ property, which Theorem 3.2(2),(3) supplies unconditionally over a field or a complete noetherian local base and which is otherwise part of the excellence hypothesis on the base; on a quasi-compact surface it is a finite set whenever it contains no curve.
 
 ### 4.2 The dimension-one coincidence
 
@@ -648,7 +872,7 @@ This criterion explains a major feature of normal surfaces: their nonregular loc
 2. $A$ is a discrete valuation ring;
 3. $A$ is regular.
 
-**Proof.** Normality implies that every nonzero ideal has a factor of least valuation, giving a principal maximal ideal; this is the discrete valuation characterization. A one-dimensional local ring with principal maximal ideal has embedding dimension one and is regular. Conversely, a regular local ring is a unique factorization domain in codimension one and is integrally closed. $\square$
+**Proof.** Normality implies that every nonzero ideal has a factor of least valuation, giving a principal maximal ideal; this is the discrete valuation characterization. A one-dimensional local ring with principal maximal ideal has embedding dimension one and is regular. Conversely, a regular local ring is factorial by Theorem 14.43, and a factorial domain is integrally closed in its fraction field by Corollary 14.44; so a regular local ring is normal, in every dimension and in particular in dimension one. $\square$
 
 Consequently a normal curve over a perfect field is regular, and because its residue extensions are separable, it is smooth. Over an imperfect field, regular need not imply smooth: geometric regularity can fail after a purely inseparable field extension. This is the first reason to keep “regular” and “smooth” separate.
 
@@ -692,7 +916,7 @@ Let $f:X\to S$ be flat and locally of finite presentation, with $S$ regular. If 
 
 ### 5.1 Definitions and local dimensions
 
-Let $S$ be an excellent Dedekind scheme: a connected, normal, noetherian scheme of dimension one whose local rings at closed points are excellent discrete valuation rings. An **arithmetic surface over $S$** is an integral, normal, flat, finite-type $S$-scheme $X$ of relative dimension one. When $X$ is proper, it is a proper arithmetic surface.
+Let $S$ be a universally excellent Dedekind scheme: a connected, normal, noetherian scheme of dimension one whose local rings at closed points are discrete valuation rings and whose affine coordinate rings are universally excellent in the sense of Section 3.2. An **arithmetic surface over $S$** is an integral, normal, flat, finite-type $S$-scheme $X$ of relative dimension one. When $X$ is proper, it is a proper arithmetic surface.
 
 At the generic point of $X$, the local ring has dimension zero. At the generic point of a horizontal prime divisor, or at the generic point of a component of a special fiber, it has dimension one. At a closed point lying over a closed point of $S$, it has dimension two. Universal catenarity gives the expected dimension formula and prevents chains from changing length after localization.
 
@@ -782,7 +1006,7 @@ This operation is sometimes called saturation with respect to $R\setminus\{0\}$.
 
 ### 6.4 Normalization of the closure
 
-Let $X_0$ be the integral projective closure. Normalize it in $K(C)$. Since $S$ is excellent and $X_0$ is finite type over $S$, Theorem 3.3 makes
+Let $X_0$ be the integral projective closure. Normalize it in $K(C)$. Since $S$ is universally excellent and $X_0$ is finite type over $S$, Theorem 3.3 makes
 
 $$
 \nu:X_1\longrightarrow X_0
@@ -790,7 +1014,7 @@ $$
 
 finite. Therefore $X_1$ is projective over $S$. It is integral and normal by construction, and it remains flat because it dominates $S$. Its generic fiber is $C$: a smooth curve is normal, so normalization is an isomorphism there.
 
-**Theorem 6.2 (normal model theorem).** Every smooth projective geometrically connected curve over the function field of an excellent Dedekind scheme has a normal flat projective model. Given a smooth projective model over a nonempty open $U\subset S$, the normal model may be chosen to restrict to it.
+**Theorem 6.2 (normal model theorem).** Every smooth projective geometrically connected curve over the function field of a universally excellent Dedekind scheme has a normal flat projective model. Given a smooth projective model over a nonempty open $U\subset S$, the normal model may be chosen to restrict to it.
 
 For the relative clause, choose a relatively very ample bundle on the given projective $U$-model, embed it in $\mathbf P^N_U$, and extend its finitely many equations after shrinking the ambient trivializations only outside $U$. The schematic closure in $\mathbf P^N_S$ then restricts exactly to the given model. Since that model is normal, normalization changes nothing there. The word projective is necessary: the restriction of a projective $S$-model is projective, so an arbitrary nonprojective regular model over $U$ cannot be prescribed in this statement.
 
@@ -798,7 +1022,7 @@ For the relative clause, choose a relatively very ample bundle on the given proj
 
 A **modification** is a proper birational morphism. Normal models are not unique, but any two proper models of $C$ admit a common proper model dominating both.
 
-**Proposition 6.3.** Let $X$ and $Y$ be proper $S$-models of $C$. The closure $Z_0$ of the diagonal copy of $C$ in $X\times_SY$ is proper over $S$, and its two projections are modifications. If $S$ is excellent, the normalization $Z$ of $Z_0$ is finite and gives a normal proper common domination.
+**Proposition 6.3.** Let $X$ and $Y$ be proper $S$-models of $C$. The closure $Z_0$ of the diagonal copy of $C$ in $X\times_SY$ is proper over $S$, and its two projections are modifications. If $S$ is universally excellent, the normalization $Z$ of $Z_0$ is finite and gives a normal proper common domination.
 
 **Proof.** The product is proper. The closure of the diagonal generic fiber is closed and hence proper. Each projection restricts to the identity on $C$, so it is birational. Normalization preserves properness and the generic fiber. $\square$
 
@@ -871,7 +1095,7 @@ The failure can be drastic. If $A=k[x]$, $I=(x)$, and $B=A/(x)$, then $I\otimes_
 
 ### 7.3 Normalized blowups
 
-If $X$ is normal and $\operatorname{Bl}_{\mathcal I}X$ is not normal, define the **normalized blowup** as its normalization. Over an excellent scheme of finite type, this normalization is finite. Hence the normalized blowup remains projective and birational over $X$.
+If $X$ is normal and $\operatorname{Bl}_{\mathcal I}X$ is not normal, define the **normalized blowup** as its normalization. For a scheme of finite type over a universally excellent base, this normalization is finite by Theorem 3.3. Hence the normalized blowup remains projective and birational over $X$.
 
 The construction combines two corrections. Blowup changes the birational geometry so that an ideal becomes invertible; normalization then restores integrally closed local rings. For a surface, normalized blowups centered at closed singular points keep all codimension-one local rings under valuation control.
 
@@ -936,8 +1160,8 @@ The central low-dimensional theorem is not a formal consequence of normalization
 the elementary blowup calculations above. We therefore isolate exactly the additional result used
 from this point onward.
 
-**Theorem 8.1 (surface resolution).** Let $X$ be a reduced excellent noetherian scheme of
-dimension at most two, and let $U\subseteq X$ be a regular open subscheme. There exists a projective
+**Theorem 8.1 (surface resolution).** Let $X$ be a reduced universally excellent noetherian
+scheme of dimension at most two, and let $U\subseteq X$ be a regular open subscheme. There exists a projective
 birational morphism
 
 $$
@@ -953,11 +1177,11 @@ prescribed regular open. The proof occupies Sections 8.2--8.7.
 
 We first record the elementary reduction that any proof of Theorem 8.1 must use.
 
-**Lemma 8.2 (surface preparation).** Let $X$ be a reduced excellent noetherian scheme of dimension at most two, let $U=X_{\mathrm{reg}}$, and let $\nu:X^{\nu}\to X$ be its componentwise normalization. Then $\nu$ is finite and is an isomorphism over $U$. The singular locus of $X^{\nu}$ is a closed subset of codimension at least two, and hence is finite.
+**Lemma 8.2 (surface preparation).** Let $X$ be a reduced universally excellent noetherian scheme of dimension at most two, let $U=X_{\mathrm{reg}}$, and let $\nu:X^{\nu}\to X$ be its componentwise normalization. Then $\nu$ is finite and is an isomorphism over $U$. The singular locus of $X^{\nu}$ is a closed subset of codimension at least two, and hence is finite.
 
-**Proof.** Reduce $X$, separate its irreducible components by normalization, and use finiteness from the Nagata property. A normal noetherian surface satisfies $(R_1)$, so every codimension-zero or codimension-one point is regular. Excellence makes the regular locus open. Hence the singular locus is closed and consists of dimension-zero points. A noetherian zero-dimensional closed space has finitely many points. $\square$
+**Proof.** Reduce $X$, separate its irreducible components by normalization, and use finiteness from the Nagata property, available by Theorem 3.2(1). A normal noetherian surface satisfies $(R_1)$, so every codimension-zero or codimension-one point is regular. The $J_2$ half of excellence makes the regular locus open. Hence the singular locus is closed and consists of dimension-zero points. A noetherian zero-dimensional closed space has finitely many points. $\square$
 
-Thus the new input needed for Theorem 8.1 is local at the finitely many singular points: one must resolve $\operatorname{Spec}A$ for a two-dimensional excellent normal local domain $(A,\mathfrak m)$. A modification supported at $\mathfrak m$ glues to the identity away from that point. If the required local modifications exist and terminate, those over the finitely many prepared points can be composed without disturbing the regular open.
+Thus the new input needed for Theorem 8.1 is local at the finitely many singular points: one must resolve $\operatorname{Spec}A$ for a two-dimensional universally excellent normal local domain $(A,\mathfrak m)$. A modification supported at $\mathfrak m$ glues to the identity away from that point. If the required local modifications exist and terminate, those over the finitely many prepared points can be composed without disturbing the regular open.
 
 Completion is a powerful diagnostic but must be used with care. Excellence gives that
 $A\to\widehat A$ is a regular faithfully flat map, so $A$ is regular if and only if $\widehat A$
@@ -1071,12 +1295,16 @@ expected rank. Passing to a smaller coefficient field only adds the differential
 $p$-basis, so it preserves freeness and contradicts minimality of $Z(k_0)$. $\square$
 
 This construction is the equicharacteristic part of the finite regular-subring theorem used
-later. In equal characteristic a coefficient field and a parameter ideal give
-$k[[x,y]]\hookrightarrow A$ finite. In mixed characteristic Cohen lifting gives a complete
-discrete valuation coefficient ring $C$ and $C[[x]]\hookrightarrow A$ finite, with $(p,x)$ a
-parameter ideal. In either case injectivity follows from equality of dimensions and the fact that
-$A$ is a domain; finiteness follows by lifting a basis modulo the parameter ideal successively
-and applying completeness and Nakayama.
+later, which for a two-dimensional complete normal local domain $A$ is exactly Book 1,
+Theorem 13.34. In equal characteristic a coefficient field $K\cong k$ exists by Book 1,
+Theorem 13.15, and a parameter ideal $(x,y)$ makes $A/(x,y)$ of finite length, so Book 1,
+Theorem 13.34(1) gives $k[[x,y]]\hookrightarrow A$ finite. In mixed characteristic a Cohen ring
+$C$ for $k$ exists by Book 1, Theorem 13.21 and maps to $A$ inducing the identity on residue
+fields by Book 1, Theorem 13.25; choosing $x$ so that $(p,x)$ is a parameter ideal, Book 1,
+Theorem 13.34(2) gives $C[[x]]\hookrightarrow A$ finite. In either case the source is a complete
+regular local domain of dimension two by Book 1, Lemma 13.29, and injectivity is the closing
+clause of Book 1, Theorem 13.34: it follows from equality of dimensions and the fact that $A$ is
+a domain.
 
 #### 8.3.2 Exterior trace without a separability hypothesis
 
@@ -1223,7 +1451,7 @@ codimension-two complement give $A$. $\square$
 The next local theorem replaces every appeal to ``general members.'' It is valid over finite and
 imperfect residue fields because all sums are weighted by the actual residue degrees.
 
-**Lemma 8.8 (embedded principalization on a regular surface).** Let $T$ be an excellent regular
+**Lemma 8.8 (embedded principalization on a regular surface).** Let $T$ be a universally excellent regular
 integral surface and let $I\subset\mathcal O_T$ be a nonzero coherent ideal. There is a finite
 sequence of blowups at closed regular points
 
@@ -1314,7 +1542,7 @@ actual closed crossings and remain valid over $k$ without splitting any residue 
 All centers used above lie over the original noninvertible locus. Performing the constructions at
 the finitely many points proves the global assertion. $\square$
 
-**Corollary 8.8A (factorization through point blowups).** Let $T$ be an excellent regular
+**Corollary 8.8A (factorization through point blowups).** Let $T$ be a universally excellent regular
 integral surface and let $Z\to T$ be a projective birational morphism. There is a sequence of
 blowups at closed regular points $T_r\to\cdots\to T_0=T$ and a morphism $T_r\to Z$ over $T$.
 
@@ -1325,7 +1553,7 @@ relative-Proj presentation identifies $Z$ with the blowup of $I$, after multiply
 denominator. Lemma 8.8 makes $I\mathcal O_{T_r}$ invertible. The universal property of the blowup
 then gives $T_r\to Z$. $\square$
 
-**Lemma 8.8B (finite graph domination).** Let $R$ be an excellent regular local domain of
+**Lemma 8.8B (finite graph domination).** Let $R$ be a universally excellent regular local domain of
 dimension two with fraction field $K$, let $L/K$ be finite, and let $B$ be the integral closure of
 $R$ in $L$. Every proper normal modification $W\to\operatorname{Spec}B$ is dominated by the
 normalization in $L$ of an iterated closed-point blowup of $\operatorname{Spec}R$.
@@ -1357,7 +1585,7 @@ Apply this construction to $P=W$ viewed over $R$. By Lemma 8.8, an iterated poin
 $X\to\operatorname{Spec}R$ principalizes the product of the Fitting ideals and hence dominates
 the flattening blowup. The strict transform $W_X\to X$ is finite, has function field $L$, and maps
 to $W$. Its normalization is the integral closure of $X$ in $L$. Finiteness follows from
-excellence, and the universal property of normalization gives
+Theorem 3.3, and the universal property of normalization gives
 
 $$
 \operatorname{Nor}_L(X)\longrightarrow W_X\longrightarrow W.
@@ -1405,8 +1633,11 @@ blowups from completions. Only after those steps will Theorem 8.1 be discharged.
 
 #### 8.5.1 Local duality in dimension two
 
-From this subsection through Proposition 8.21, $A$ is complete. Choose a surjection
-$Q\twoheadrightarrow A$ from a complete regular local ring of dimension $N$ and set
+From this subsection through Proposition 8.21, $A$ is complete. Book 1, Corollary 13.31 supplies
+a surjection $Q\twoheadrightarrow A$ from a complete regular local ring: one may take
+$Q=k[[X_1,\ldots,X_n]]$ if $A$ contains a field and $Q=C[[X_1,\ldots,X_n]]$ otherwise, with $C$
+a Cohen ring for the residue field $k$ and $n$ the minimal number of generators of $\mathfrak m$;
+these are complete regular local domains by Book 1, Lemma 13.29. Write $N=\dim Q$ and set
 
 $$
 D_A=R\operatorname{Hom}_Q(A,Q[N]).
@@ -1545,7 +1776,7 @@ cohomology sequence identifies $H^1(U,\mathcal O_U)$ with $H^2_{\mathfrak m}(A)$
 therefore makes
 
 $$
-M\lhook\joinrel\longrightarrow H^2_{\mathfrak m}(A)          \tag{8.8b}
+M\hookrightarrow H^2_{\mathfrak m}(A)          \tag{8.8b}
 $$
 
 injective. Matlis duality and (8.7a) turn (8.8b) into a surjection
@@ -1722,13 +1953,13 @@ denominator to obtain $\eta\in Q^{r-1}(R/k_0)$ with
 $0\ne\theta=\eta\wedge df\in Q^r(R/k_0)=\omega_R$. Put
 
 $$
-\alpha_i=\eta\wedge g^{p-1-i}dg\in Q^r(B/k_0),qquad 0\le i<p.
+\alpha_i=\eta\wedge g^{p-1-i}dg\in Q^r(B/k_0),\qquad 0\le i<p.
 $$
 
 Formula (8.3a) gives
 
 $$
-\tau(g^j\alpha_i)=\delta_{ij}\thetaqquad(0\le i,j<p).       \tag{8.9b}
+\tau(g^j\alpha_i)=\delta_{ij}\,\theta\qquad(0\le i,j<p).       \tag{8.9b}
 $$
 
 Thus differential trace and finite duality define a generically surjective map
@@ -2004,7 +2235,7 @@ $y_{n,j}=a_{n,j}t$. Unchanged residue fields let us subtract a lift of the resid
 $a_{n,j}$; thus
 
 $$
-\mathfrak m_{x_n}=(t,z_{n,1},\ldots,z_{n,r_n}),qquad
+\mathfrak m_{x_n}=(t,z_{n,1},\ldots,z_{n,r_n}),\qquad
 z_{n,j}\in\mathfrak m_{x_{n+1}}^2.                          \tag{8.10c}
 $$
 
@@ -2078,7 +2309,7 @@ $E=V(q)\subset\mathbf P^2_k$ for a nonzero quadratic form $q$.
 $\omega_A\simeq A$, the trace isomorphism and the surjection in Lemma 8.16 give
 $\omega_X\simeq\mathcal O_X$ at every singular point; regular points are already Gorenstein.
 Completion preserves normality here: the blowup charts are essentially of finite type over the
-complete excellent ring $A$, their normal local rings remain normal after the regular completion
+complete, and hence universally excellent, ring $A$, their normal local rings remain normal after the regular completion
 map. Adjunction gives $\omega_E=\mathcal O_E(-1)$. With
 $k=H^0(E,\mathcal O_E)$ and $g=h^1(E,\mathcal O_E)$, curve duality and Riemann--Roch give
 
@@ -2243,8 +2474,8 @@ by powers of the corresponding prime gives identical inverse systems. Regularity
 to regularity of the completion, and proper schemes have all closed points over the closed point.
 $\square$
 
-**Lemma 8.20 (normalization and lifting normalized blowups).** Let $(A,\mathfrak m)$ be an
-excellent local ring and let $X$ be locally of finite type over $A$. Put
+**Lemma 8.20 (normalization and lifting normalized blowups).** Let $(A,\mathfrak m)$ be a
+universally excellent local ring and let $X$ be locally of finite type over $A$. Put
 $Y=X\times_A\widehat A$. Then finite normalization commutes with this base change:
 
 $$
@@ -2366,17 +2597,18 @@ map $Y_n\to X$ therefore makes the final resolution dominate the prescribed $X$.
 **Proposition 8.21 (complete local resolution).** A complete two-dimensional normal noetherian
 local domain admits a resolution by normalized blowups.
 
-**Proof.** We first construct the finite regular subring. In equal characteristic, Cohen's
-coefficient-field construction is obtained by successively lifting a $p$-basis (or, in
-characteristic zero, by averaging the correction to multiplication) through
-$A/\mathfrak m^n$. Choose a parameter ideal $(x,y)$. The resulting map
-$A_0=k[[x,y]]\to A$ is injective because $A$ is a domain of dimension two. The finitely many
-monomials lifting a basis of $A/(x,y)$ generate $A$ over $A_0$: successive reduction modulo
-$(x,y)^n$ gives topological generation and completeness plus Nakayama turns it into finite
-generation. In mixed characteristic the same construction gives a Cohen ring $C\to A$; choose
-$x$ so that $(p,x)$ is a parameter ideal and use $A_0=C[[x]]$. The identical reduction proves
-that $A_0\to A$ is finite and injective. Thus in both cases $A_0$ is a complete regular local
-domain and $K/K_0=\operatorname{Frac}(A)/\operatorname{Frac}(A_0)$ is finite.
+**Proof.** We first construct the finite regular subring; this is Book 1, Theorem 13.34, in the
+two-dimensional case. In equal characteristic $A$ contains a field, so Book 1, Theorem 13.15
+supplies a coefficient field $K_A\subseteq A$ mapping isomorphically onto $k$. Choose a
+parameter ideal $(x,y)$, so that $A/(x,y)$ has finite length. Book 1, Theorem 13.34(1) then makes
+$A$ a finite module over $A_0=K_A[[x,y]]\cong k[[x,y]]$, and its closing clause makes
+$A_0\to A$ injective, since $A$ is a domain and $\dim A_0=2=\dim A$ by Book 1, Lemma 13.29. In
+mixed characteristic Book 1, Theorem 13.21 supplies a Cohen ring $C$ for $k$ and Book 1,
+Theorem 13.25 a local homomorphism $C\to A$ inducing the identity on residue fields; choose $x$
+so that $(p,x)$ is a parameter ideal and put $A_0=C[[x]]$. Book 1, Theorem 13.34(2) makes $A$ a
+finite $A_0$-module, and again $\dim A_0=2=\dim A$ by Book 1, Lemma 13.29 forces injectivity.
+Thus in both cases $A_0$ is a complete regular local domain of dimension two, by Book 1,
+Lemma 13.29, and $K/K_0=\operatorname{Frac}(A)/\operatorname{Frac}(A_0)$ is finite.
 
 The first paragraph of Lemma 8.20A proves more than regularity of $A_0$: every normal modification
 of $A_0$ has zero $H^1$. Thus $A_0$ is rational. The finite extension
@@ -2404,7 +2636,7 @@ Lemma 8.20A realizes it as a finite sequence of normalized blowups. $\square$
 ### 8.6 Why a three-entry local invariant is insufficient
 
 The proof above avoids a tempting but invalid shortcut. For every
-singular excellent normal two-dimensional local domain $(A,\mathfrak m)$, one must construct a
+singular universally excellent normal two-dimensional local domain $(A,\mathfrak m)$, one must construct a
 projective birational modification supported at $\mathfrak m$ whose local rings are all regular.
 Doing this compatibly with the regular punctured spectrum, and then showing that the construction
 terminates after finitely many stages, is the local core of Theorem 8.1.
@@ -2485,7 +2717,7 @@ A cusp requires more than branch separation. Normalizing $k[t^2,t^3]$ resolves t
 Combining the proved closure and normalization constructions with Theorem 8.1 gives the main
 existence theorem.
 
-**Theorem 9.1 (regular model theorem).** Let $S$ be an excellent Dedekind scheme with function field $K$, and let $C/K$ be a smooth projective geometrically connected curve. Then there exists a regular flat projective $S$-scheme $\mathcal X$ with generic fiber $C$. If a regular projective model is prescribed over a nonempty open $U\subset S$, $\mathcal X$ may be chosen to restrict to it.
+**Theorem 9.1 (regular model theorem).** Let $S$ be a universally excellent Dedekind scheme with function field $K$, and let $C/K$ be a smooth projective geometrically connected curve. Then there exists a regular flat projective $S$-scheme $\mathcal X$ with generic fiber $C$. If a regular projective model is prescribed over a nonempty open $U\subset S$, $\mathcal X$ may be chosen to restrict to it.
 
 **Proof.** If no model over $U$ is prescribed, embed $C$ in projective space and take its schematic closure. In the relative case, use the compatible embedding and closure constructed in Theorem 6.2. Normalize the closure to obtain a normal flat projective model $X_1$ which is unchanged over $U$. Its generic fiber, and its restriction to $U$ in the relative case, are regular. Apply Theorem 8.1 to $X_1$ with the regular open consisting of its generic fiber together with $X_{1,U}$. The result is regular and projective and has unchanged generic fiber and unchanged restriction over $U$. It remains flat because it is integral and dominates the Dedekind base. $\square$
 
@@ -2501,7 +2733,7 @@ The bad set $S\setminus U$ is finite when $S$ is the spectrum of a Dedekind doma
 
 ### 9.3 Dominating finitely many models
 
-**Theorem 9.2.** Any finite collection of projective $S$-models of the same smooth curve is dominated by a regular projective model, provided $S$ is excellent.
+**Theorem 9.2.** Any finite collection of projective $S$-models of the same smooth curve is dominated by a regular projective model, provided $S$ is universally excellent.
 
 **Proof.** The fiber product of finitely many projective $S$-schemes is projective. Take in that product the schematic closure $Z$ of the diagonally embedded generic curve. It is integral, flat, and projective by Proposition 6.1, and every projection $Z\to X_i$ is proper and induces the identity on the generic fiber. Normalize $Z$ and apply Theorem 8.1 to the resulting normal surface. Both operations are projective and preserve the generic fiber. The final regular projective model maps to every $X_i$ and induces the identity on $C$. $\square$
 
@@ -2513,13 +2745,13 @@ Let $P\in C(K)$. Properness extends the map $\eta\to\mathcal X$ uniquely to a se
 
 More generally, for a closed point $P$ of $C$ with residue field $L$, let $S_L$ be the normalization of $S$ in $L$. It is finite over $S$. Properness extends the $L$-point to a section over $S_L$, and its image in $\mathcal X$ is the horizontal closure of $P$. That closure need not be regular before normalization; its normalization is $S_L$.
 
-A section of a regular arithmetic surface is a Cartier divisor. At a point of the section, the local ring has dimension two and the section is cut out by one parameter transverse to the base direction. This fact later makes marked points compatible with blowups and semistable models.
+A section of a regular arithmetic surface is a Cartier divisor. At a point of the section, the local ring has dimension two and the section is cut out by one parameter transverse to the base direction; that a single equation suffices is the factoriality of regular local rings, Theorem 14.43 combined with Theorem 14.38. This fact later makes marked points compatible with blowups and semistable models.
 
 ## 10. Finite extensions and base change
 
 ### 10.1 Integral closure of the base
 
-Let $K'/K$ be a finite field extension and let $S'$ be the normalization of $S$ in $K'$. When $S$ is excellent Dedekind, $S'\to S$ is finite and $S'$ is an excellent Dedekind scheme. More generally, normalizing in a finite reduced $K$-algebra gives the finite disjoint union belonging to its field factors. Locally at $s\in S$, the points of $S'$ correspond to extensions of the associated discrete valuation, exactly as in Book 1.
+Let $K'/K$ be a finite field extension and let $S'$ be the normalization of $S$ in $K'$. When $S$ is universally excellent Dedekind, $S'\to S$ is finite and $S'$ is again a universally excellent Dedekind scheme, being finite over $S$. More generally, normalizing in a finite reduced $K$-algebra gives the finite disjoint union belonging to its field factors. Locally at $s\in S$, the points of $S'$ correspond to extensions of the associated discrete valuation, exactly as in Book 1.
 
 Given a model $X/S$, form $X_{S'}=X\times_SS'$. It is proper or projective when $X$ is, and flat when $X$ is flat because flatness survives base change. It may fail to be integral, reduced, normal, or regular. The generic fiber is $C\times_KK'$, which can itself split unless $C$ is geometrically integral.
 
@@ -2551,11 +2783,122 @@ $$
 X'=\operatorname{Nor}\bigl((X\times_SS')_{\mathrm{red}}\bigr),
 $$
 
-taking the component or components with the desired generic fiber. Since $S'$ is excellent, $X'\to X\times_SS'$ is finite. If $X$ was proper or projective, so is $X'$. resolve $X'$ if a regular model is required.
+taking the component or components with the desired generic fiber. Since $S'$ is universally excellent, $X'\to X\times_SS'$ is finite. If $X$ was proper or projective, so is $X'$. One then resolves $X'$ if a regular model is required.
 
 There is a canonical comparison from the normalization after base change to the base change of the original normalization whenever the latter is interpreted componentwise and is dominated by the former. It is an isomorphism under smooth base change, and also under separable field extension when geometric normality supplies normality of the base-changed space. Without such a hypothesis, it need not be.
 
+Say that a finite-type $K$-scheme $X$ is **geometrically normal** if $X_{K_1}$ is normal for
+every finite extension $K_1/K$; by the argument below it is enough to test finite _purely
+inseparable_ extensions, and in characteristic zero the condition is just normality of $X$. The
+point of the definition is that this finite amount of testing already controls every extension,
+however large.
+
 **Proposition 10.1.** Let $X$ be a geometrically normal finite-type $K$-scheme and $K'/K$ a field extension. Then $X_{K'}$ is normal. If $X$ is a smooth curve, this applies automatically.
+
+**Proof.** The question is local, so let $X=\operatorname{Spec}A$ with $A$ a finite-type
+$K$-algebra; all the rings below are of finite type over a field and hence noetherian, so
+Serre's criterion, Theorem 14.26, is available: normality means $(R_1)$ and $(S_2)$. We use
+repeatedly the flat local dimension and depth formulas: for a flat local homomorphism
+$(R,\mathfrak m)\to(T,\mathfrak n)$ of noetherian local rings with closed fiber
+$\bar T=T/\mathfrak mT$,
+
+$$
+\dim T=\dim R+\dim\bar T,
+\qquad
+\operatorname{depth}T=\operatorname{depth}R+\operatorname{depth}\bar T.
+\tag{10.1a}
+$$
+
+_Step 1: descending along a larger field._ Let $\Omega$ be an algebraically closed field
+containing $K'$. We claim that normality of $D=A\otimes_K\Omega$ forces normality of
+$C=A\otimes_KK'$. The map $C\to D$ is faithfully flat, being obtained from $K'\to\Omega$ by base
+change. Let $\mathfrak q$ be a prime of $C$ and choose a prime $\mathfrak Q$ of $D$ minimal over
+$\mathfrak qD$; such a prime lies over $\mathfrak q$ by faithful flatness. The induced map
+$C_{\mathfrak q}\to D_{\mathfrak Q}$ is faithfully flat and local, and its closed fibre
+$D_{\mathfrak Q}/\mathfrak qD_{\mathfrak Q}$ is a local ring whose maximal ideal is nilpotent, so
+that fibre has dimension and depth zero. By (10.1a),
+
+$$
+\dim C_{\mathfrak q}=\dim D_{\mathfrak Q},
+\qquad
+\operatorname{depth}C_{\mathfrak q}=\operatorname{depth}D_{\mathfrak Q}.
+$$
+
+Hence $(S_2)$ for $D$ gives $(S_2)$ for $C$. For $(R_1)$, suppose $\dim C_{\mathfrak q}\le1$;
+then $\dim D_{\mathfrak Q}\le1$, so $D_{\mathfrak Q}$ is regular. Take a minimal free resolution
+$F_\bullet$ of the residue field $\kappa(\mathfrak q)$ over $C_{\mathfrak q}$. Flatness makes
+$F_\bullet\otimes_{C_{\mathfrak q}}D_{\mathfrak Q}$ a free resolution of
+$D_{\mathfrak Q}/\mathfrak qD_{\mathfrak Q}$, and its differentials still have entries in the
+maximal ideal, so it is a minimal free resolution and therefore has length
+$\operatorname{pd}_{D_{\mathfrak Q}}(D_{\mathfrak Q}/\mathfrak qD_{\mathfrak Q})$, which is
+finite by Theorem 14.34. So $F_\bullet$ is finite, $\operatorname{pd}_{C_{\mathfrak q}}\kappa(\mathfrak q)<\infty$,
+and $C_{\mathfrak q}$ is regular by Theorem 14.36. Thus we may assume $K'=\Omega$ is
+algebraically closed.
+
+_Step 2: the purely inseparable part._ Let $K^{\mathrm i}\subseteq\Omega$ be the purely
+inseparable closure of $K$, that is, $K$ itself in characteristic zero and
+$\{c\in\Omega:c^{p^n}\in K\text{ for some }n\}$ in characteristic $p$. It is a perfect field, it
+is the union of its finite subextensions $K_1/K$, and each such $K_1$ is purely inseparable over
+$K$. Put $B=A\otimes_KK^{\mathrm i}$ and $B_1=A\otimes_KK_1$, so that $B=\varinjlim B_1$ is a
+filtered colimit with faithfully flat transition maps, each $B_1$ normal by hypothesis, and $B$
+noetherian because it is of finite type over $K^{\mathrm i}$.
+
+We check that $B$ is normal. It is reduced, since a nilpotent element of $B$ already lies in
+some $B_1$. A reduced noetherian ring that is integrally closed in its total ring of fractions
+is normal: the total ring of fractions is the product of the residue fields at the minimal
+primes, its idempotents are integral over the ring, hence lie in it, and the ring is
+correspondingly a finite product of domains integrally closed in their fraction fields. So let
+$z$ lie in the total ring of fractions of $B$ and be integral over $B$, say $z=u/s$ with
+$u,s\in B$ and $s$ a nonzerodivisor, and let an integral equation for $z$ have coefficients
+$b_1,\ldots,b_n\in B$. Choose $K_1$ large enough that $u,s,b_1,\ldots,b_n$ all lie in $B_1$.
+Multiplication by $s$ is injective on $B$, and $B_1\to B$ is faithfully flat, so multiplication
+by $s$ is injective on $B_1$ as well; thus $z$ lies in the total ring of fractions of $B_1$ and
+is integral over $B_1$, whence $z\in B_1\subseteq B$. So $B$ is normal.
+
+_Step 3: extensions of a perfect field._ It remains to prove that
+$B\otimes_{K^{\mathrm i}}\Omega=A\otimes_K\Omega$ is normal, where $B$ is a normal finite-type algebra over the perfect field
+$F=K^{\mathrm i}$ and $\Omega\supseteq F$ is arbitrary. Write $C=B\otimes_F\Omega$, again
+noetherian. First, every fibre of $B\to C$ is regular. Indeed, for a prime $\mathfrak q$ of $B$
+the field $\kappa(\mathfrak q)$ is a finitely generated extension of the perfect field $F$,
+hence separably generated: there are $t_1,\ldots,t_d\in\kappa(\mathfrak q)$, algebraically
+independent over $F$, with $\kappa(\mathfrak q)$ finite separable over $F(t_1,\ldots,t_d)$. Now
+$F(t_1,\ldots,t_d)\otimes_F\Omega$ is a localization of the polynomial ring
+$\Omega[t_1,\ldots,t_d]$ and is therefore regular, and
+
+$$
+\kappa(\mathfrak q)\otimes_F\Omega
+=\kappa(\mathfrak q)\otimes_{F(t_1,\ldots,t_d)}
+ \bigl(F(t_1,\ldots,t_d)\otimes_F\Omega\bigr)
+$$
+
+is finite étale over it, hence regular as well.
+
+Let $\mathfrak Q$ be a prime of $C$ lying over $\mathfrak q$. The map
+$B_{\mathfrak q}\to C_{\mathfrak Q}$ is flat and local, and its closed fibre is a localization of
+$\kappa(\mathfrak q)\otimes_F\Omega$, hence regular; in particular that fibre is
+Cohen--Macaulay, so its depth equals its dimension $e$. If $\dim C_{\mathfrak Q}\le1$ then
+$\dim B_{\mathfrak q}\le1$ by (10.1a), so $B_{\mathfrak q}$ is regular; a regular system of
+parameters of $B_{\mathfrak q}$ together with elements of $C_{\mathfrak Q}$ inducing one of the
+fibre then generates the maximal ideal of $C_{\mathfrak Q}$, whose dimension is
+$\dim B_{\mathfrak q}+e$ by (10.1a), so $C_{\mathfrak Q}$ is regular. This is $(R_1)$. For
+$(S_2)$, (10.1a) gives
+
+$$
+\operatorname{depth}C_{\mathfrak Q}=\operatorname{depth}B_{\mathfrak q}+e,
+\qquad
+\dim C_{\mathfrak Q}=\dim B_{\mathfrak q}+e .
+$$
+
+If $\dim B_{\mathfrak q}\ge2$ then $\operatorname{depth}B_{\mathfrak q}\ge2$ and hence
+$\operatorname{depth}C_{\mathfrak Q}\ge2$; if $\dim B_{\mathfrak q}\le1$ then
+$\operatorname{depth}B_{\mathfrak q}=\dim B_{\mathfrak q}$ and hence
+$\operatorname{depth}C_{\mathfrak Q}=\dim C_{\mathfrak Q}$. Either way $C_{\mathfrak Q}$
+satisfies the required inequality, so $C$ is $(S_2)$, and $C$ is normal.
+
+Combining the three steps proves the proposition. Finally, if $X$ is smooth over $K$ then
+$X_{K'}$ is smooth over $K'$ for every $K'$, hence regular, hence normal by Corollary 14.44; so
+a smooth $K$-scheme, in particular a smooth curve, is geometrically normal and the conclusion is
+automatic. $\square$
 
 Thus the generic curve itself causes no trouble in our main setting. The trouble lies in the integral special fibers, where ramification and residue-field extension can create singularities.
 
@@ -2673,7 +3016,9 @@ proper arithmetic surface over a discrete valuation ring $R$ with residue field 
    negative definite on any collection of components which omits at least one component of the
    fiber.
 
-**Proof.** A vertical integral curve on the regular surface is an effective Cartier divisor.
+**Proof.** A vertical integral curve on the regular surface is an effective Cartier divisor: its
+generic point is a height-one prime of each local ring it meets, and such a prime is principal by
+Theorems 14.43 and 14.38.
 For a rational section of a line bundle on $C$, the degree of its divisor is the sum of the
 orders multiplied by $[\kappa(x):k_C]$. Apply this to the restriction of a local equation $f$
 of $D$. In the one-dimensional Cohen--Macaulay local ring $\mathcal O_{C,x}$, its order is
@@ -2718,7 +3063,7 @@ connected: otherwise the two unions of components would be disjoint open-and-clo
 the fiber. Thus equality holds precisely for multiples of $F$. A vector supported on a proper
 subset cannot be such a multiple, proving the last assertion. $\square$
 
-**Theorem 11.1 (relative Castelnuovo contraction).** Let $S$ be an excellent Dedekind scheme, let $X/S$ be a regular proper arithmetic surface, and let $E$ be a vertical exceptional curve of the first kind. There is a regular proper $S$-scheme $Y$ and a proper birational morphism
+**Theorem 11.1 (relative Castelnuovo contraction).** Let $S$ be a universally excellent Dedekind scheme, let $X/S$ be a regular proper arithmetic surface, and let $E$ be a vertical exceptional curve of the first kind. There is a regular proper $S$-scheme $Y$ and a proper birational morphism
 
 $$
 c:X\longrightarrow Y
@@ -2730,7 +3075,7 @@ which is an isomorphism on $X\setminus E$, maps $E$ to a closed regular point $y
 justify the polarization. On each irreducible component of the closed fiber choose a closed
 regular point away from the other components. At such a point a parameter transverse to that
 component cuts out a horizontal prime divisor. Its closure is finite over the DVR by properness
-and is Cartier because $X$ is regular. The sum of these closures has positive degree on every
+and is Cartier because $X$ is regular, hence factorial at every point by Theorem 14.43. The sum of these closures has positive degree on every
 fiber component, so the fiberwise ampleness criterion for proper curves makes its associated
 line bundle relatively ample. Choose such a relatively ample $H$.
 
@@ -2968,7 +3313,7 @@ gives a unique $f_1:X_1\to Y$ with $f=f_1c$. The map $f_1$ is again proper and b
 has one fewer exceptional curve. Induction ends with an isomorphism. Reversing the contractions,
 $f$ is a finite composite of blowups at closed regular points. $\square$
 
-**Theorem 11.2A (birational comparison for regular arithmetic surfaces).** Let $R$ be an excellent discrete valuation ring.
+**Theorem 11.2A (birational comparison for regular arithmetic surfaces).** Let $R$ be a universally excellent discrete valuation ring.
 
 1. A birational map between regular proper arithmetic surfaces which is the identity on the generic fiber admits a common regular resolution obtained by finitely many blowups at closed points.
 2. A proper birational morphism between regular arithmetic surfaces which is the identity on the generic fiber factors into finitely many blowups at closed points.
@@ -3038,12 +3383,12 @@ residue degree in both terms, gives $K_{Z/R}\cdot E=-[\kappa(E):k]$, a contradic
 $p$ is an isomorphism. Separatedness gives uniqueness; applying the result both ways proves the
 final assertion. $\square$
 
-**Theorem 11.2 (minimal regular model).** Let $R$ be an excellent discrete valuation ring with fraction field $K$, and let $C/K$ be a smooth projective geometrically connected curve of positive genus. Then $C$ has a relatively minimal regular proper model $X_{\min}/R$. Every regular proper model of $C$ admits a unique morphism to $X_{\min}$ inducing the identity on $C$.
+**Theorem 11.2 (minimal regular model).** Let $R$ be a universally excellent discrete valuation ring with fraction field $K$, and let $C/K$ be a smooth projective geometrically connected curve of positive genus. Then $C$ has a relatively minimal regular proper model $X_{\min}/R$. Every regular proper model of $C$ admits a unique morphism to $X_{\min}$ inducing the identity on $C$.
 
 **Proof.** Theorem 9.1 supplies a regular proper model. Apply Theorem 11.1 repeatedly; each step
 lowers the number of fiber components. Theorem 11.2A(3) gives the mapping property. $\square$
 
-The same construction works over a global excellent Dedekind scheme. Only finitely many fibers of a fixed proper model are non-smooth. Theorem 11.1 glues each local contraction with the identity elsewhere, and the local Theorem 11.2A mapping properties glue uniquely because they agree on the generic fiber.
+The same construction works over a global universally excellent Dedekind scheme. Only finitely many fibers of a fixed proper model are non-smooth. Theorem 11.1 glues each local contraction with the identity elsewhere, and the local Theorem 11.2A mapping properties glue uniquely because they agree on the generic fiber.
 
 A genus-one curve with a rational point has the regular geometric model associated with a minimal Weierstrass equation after resolving its surface singularities. The Weierstrass model itself is often normal but singular; the minimal regular model is its resolution, while relative minimality prohibits superfluous point blowups.
 
@@ -3059,7 +3404,7 @@ Uniqueness is relative to the fixed identification of the generic fiber. If gene
 
 For a marked curve $(C;P_1,\ldots,P_n)$ one resolves the boundary as well as the surface.
 
-**Embedded-resolution lemma.** On a regular excellent surface, a reduced curve together with
+**Embedded-resolution lemma.** On a regular universally excellent surface, a reduced curve together with
 finitely many pairwise distinct regular marked branches becomes a normal-crossings divisor with
 disjoint marked branches after finitely many closed-point blowups.
 
@@ -3108,7 +3453,7 @@ Resolution alone does not guarantee semistability. Semistable reduction is the a
 
 The preceding results can be collected in the form actually needed later.
 
-**Theorem 12.1 (arithmetic curve model package).** Let $S$ be an excellent Dedekind scheme, $U\subset S$ a nonempty open, and $C/K(S)$ a smooth projective geometrically connected curve. Suppose a smooth projective model $\mathcal C_U/U$ is given. Then:
+**Theorem 12.1 (arithmetic curve model package).** Let $S$ be a universally excellent Dedekind scheme, $U\subset S$ a nonempty open, and $C/K(S)$ a smooth projective geometrically connected curve. Suppose a smooth projective model $\mathcal C_U/U$ is given. Then:
 
 1. there is a normal flat projective model $X/S$ extending $\mathcal C_U$;
 2. there is a regular flat projective model $\mathcal X/S$ and a projective birational map $\mathcal X\to X$, identical over $U$;
@@ -3183,13 +3528,15 @@ The main properties and their exact uses can now be read without ambiguity.
 | regular                   | regular local rings on the total space                                                            | smooth or reduced fibers                                                            |
 | smooth over $S$           | flatness and geometrically regular fibers                                                         | properness                                                                          |
 | Japanese domain           | finite integral closure in finite field extensions                                                | stability for all prime quotients                                                   |
-| Nagata scheme             | finite normalization for finite-type schemes                                                      | surface resolution by itself                                                        |
-| excellent scheme          | Nagata finiteness, good formal fibers, open regular locus, the hypotheses required by Theorem 8.1 | a proof of Theorem 8.1, algebraization of a formal contraction, or smooth reduction |
+| Nagata scheme             | finite normalization of the scheme itself                                                         | finite normalization for finite-type schemes over it                                |
+| universally Japanese      | finite normalization for finite-type schemes                                                      | surface resolution by itself                                                        |
+| excellent scheme          | good formal fibers and open regular loci for the ring itself                                      | the same for finite-type algebras over it                                           |
+| universally excellent     | Nagata finiteness, good formal fibers, open regular locus, the hypotheses required by Theorem 8.1 | a proof of Theorem 8.1, algebraization of a formal contraction, or smooth reduction |
 | proper morphism           | valuative extension and universal closedness                                                      | a chosen projective embedding                                                       |
 | projective morphism       | properness plus an ample polarization                                                             | regularity or normality                                                             |
 | flat over a Dedekind base | no vertical torsion and well-behaved fibers                                                       | reduced special fibers                                                              |
 
-The surface inputs are independent entries in this ledger. Theorem 8.1 passes from a normal model to a regular one while preserving a chosen regular open. Theorem 11.1 contracts one specified exceptional curve inside the algebraic category. Theorem 11.2A resolves and factors birational comparisons and supplies the positive-genus minimal-target criterion. In particular, excellence is a hypothesis in all three settings but proves none of these theorems by itself.
+The surface inputs are independent entries in this ledger. Theorem 8.1 passes from a normal model to a regular one while preserving a chosen regular open. Theorem 11.1 contracts one specified exceptional curve inside the algebraic category. Theorem 11.2A resolves and factors birational comparisons and supplies the positive-genus minimal-target criterion. In particular, excellence is a hypothesis in all three settings but proves none of these theorems by itself. The ledger also records where excellence itself is a hypothesis rather than a theorem: Section 3.2 proves the Nagata property outright for finite-type algebras over a perfect field, and proves openness of regular loci and universal catenarity outright over any field and any complete noetherian local base, but the passage of geometrically regular formal fibres to finite-type algebras is carried as the hypothesis "universally excellent" rather than proved.
 
 Three counterexamples should remain in view:
 
@@ -3235,7 +3582,7 @@ Confusing these repairs is the source of many false shortcuts. Each answers a di
 
 ### 13.3 Conclusion
 
-An arithmetic curve has two lives. Generically it is a smooth projective one-dimensional variety; integrally it is a two-dimensional space whose vertical geometry records reduction. Projective closure connects the two lives but introduces defects. Normalization repairs the integral structure finitely because the bases in arithmetic geometry are excellent. Passing from the resulting normal surface to a regular one requires Theorem 8.1; the multiplicity, tangent-cone, and conductor ideas mentioned in Chapter 8 motivate proofs of that theorem but do not establish it here.
+An arithmetic curve has two lives. Generically it is a smooth projective one-dimensional variety; integrally it is a two-dimensional space whose vertical geometry records reduction. Projective closure connects the two lives but introduces defects. Normalization repairs the integral structure finitely because the bases in arithmetic geometry are universally Japanese — proved here for perfect base fields and carried as part of universal excellence otherwise. Passing from the resulting normal surface to a regular one requires Theorem 8.1; the multiplicity, tangent-cone, and conductor ideas mentioned in Chapter 8 motivate proofs of that theorem but do not establish it here.
 
 This volume supplies finite normalization and regular proper models preserving prescribed good loci and compatible regular dominations for maps and correspondences. It also gives the positive-genus model a relatively minimal endpoint with the stated universal property. Horizontal divisors retain generic points and markings; vertical components encode extensions of valuations and bad reduction. Regularity of the total surface and singularity of the fiber coexist without contradiction, while smoothness and semistability remain appropriately stronger relative conditions.
 
@@ -3243,7 +3590,7 @@ This separation of roles is the durable lesson. Normal, regular, smooth, excelle
 
 ## 14. Depth, Cohen–Macaulay rings, and Serre's criteria
 
-Three pieces of local algebra were used on credit in the preceding chapters. Section 4.1 stated Serre's criterion and the condition $(S_2)$ with a proof strategy rather than a proof. Section 4.3 called a hypersurface Cohen–Macaulay in order to conclude that the quadratic cone is normal. Sections 8.5 and 10.4 produced the surfaces $xy=\pi^n$ without deciding which of them are normal, and Section 11.4 used the regularity of $xy=\pi$ without locating it in a general framework. This chapter proves all of it.
+Several pieces of local algebra were used on credit in the preceding chapters. Section 4.1 stated Serre's criterion and the condition $(S_2)$ with a proof strategy rather than a proof. Section 4.3 called a hypersurface Cohen–Macaulay in order to conclude that the quadratic cone is normal. Sections 8.5 and 10.4 produced the surfaces $xy=\pi^n$ without deciding which of them are normal, and Section 11.4 used the regularity of $xy=\pi$ without locating it in a general framework. Finally, the divisor calculus of Chapters 5, 9, and 11 rests on the assertion that a regular local ring is factorial, so that prime divisors on a regular model are locally principal, and Section 4.2 used the same assertion in dimension one. This chapter proves all of it.
 
 The material is pure local algebra and depends on none of Chapters 5 to 13; a reader may insert it immediately after Chapter 4. It is placed last because it is also the form in which later books of the collection use these results: a freeness statement over two-dimensional regular local rings, and the two criteria of Serre.
 
@@ -3256,6 +3603,7 @@ The following standard facts about noetherian rings are used as proof sources an
 5. **Ext.** Long exact sequences in both variables, the identification $\operatorname{Ext}^0=\operatorname{Hom}$, compatibility with finite direct sums, and the fact that $\operatorname{Ext}^i_A(N,M)$ is killed by $\operatorname{Ann}N$, so that the map induced by multiplication by $a\in\operatorname{Ann}N$ on $M$ is zero.
 6. **Resolutions.** Schanuel's lemma, and the existence of minimal free resolutions of finite modules over a noetherian local ring.
 7. **Completion.** For a noetherian local ring $A$ the completion $\widehat A$ is flat over $A$, $\widehat M\simeq M\otimes_A\widehat A$ for finite $M$, $\widehat A/\mathfrak m\widehat A=A/\mathfrak m$, $\dim\widehat A=\dim A$, and $\mathfrak m/\mathfrak m^2\simeq\widehat{\mathfrak m}/\widehat{\mathfrak m}^2$.
+8. **Tor.** Long exact sequences in both variables, the identification $\operatorname{Tor}_0=\otimes$, computability of $\operatorname{Tor}^A_i(M,N)$ from a projective resolution of either argument, compatibility with finite direct sums, and compatibility with localization: $\operatorname{Tor}^A_i(M,N)_{\mathfrak p}\simeq\operatorname{Tor}^{A_{\mathfrak p}}_i(M_{\mathfrak p},N_{\mathfrak p})$, and likewise $\operatorname{Ext}^i_A(M,N)_{\mathfrak p}\simeq\operatorname{Ext}^i_{A_{\mathfrak p}}(M_{\mathfrak p},N_{\mathfrak p})$ when $M$ is finite and $A$ is noetherian.
 
 Throughout, $(A,\mathfrak m,k)$ denotes a noetherian local ring and modules are finite. The zero module is given depth $+\infty$; this convention only serves to make the exact-sequence formulas uniform, and every substantive statement below concerns nonzero modules.
 
@@ -3432,7 +3780,7 @@ $$
 
 contradicting injectivity of $\varphi$. Hence $p=0$ and $M$ is free. $\square$
 
-**Theorem 14.12 (Auslander–Buchsbaum).** Let $M\neq0$ be a finite module of finite projective dimension over the noetherian local ring $(A,\mathfrak m,k)$. Then
+**Theorem 14.12 (the Auslander–Buchsbaum formula).** Let $M\neq0$ be a finite module of finite projective dimension over the noetherian local ring $(A,\mathfrak m,k)$. Then
 $$
 \operatorname{pd}_AM+\operatorname{depth}M=\operatorname{depth}A .
 $$
@@ -3720,17 +4068,247 @@ which is $\min\{2,\operatorname{depth}A\}$. $\square$
 
 The dimension hypothesis on $B$ is automatic when $A\to B$ is injective, by the incomparability and going-up theorems for finite extensions; it is stated separately so that no such theorem is needed for the proof itself. Applied to the local ring at a closed point of a regular arithmetic surface, Theorem 14.30 says that a finite normal cover is locally free there, which is the algebraic content of purity statements about branched covers of surfaces: the direct image of the structure sheaf of the cover is locally free, so its rank is constant and can be computed generically.
 
-### 14.7 What the criteria return to the models
+### 14.7 Finite free resolutions and the homological criterion for regularity
+
+Every result so far has treated regularity as a numerical condition: the maximal ideal needs exactly $\dim A$ generators. That definition is easy to check on an explicit presentation, which is why Corollary 14.18 settles the family $xy=\pi^n$ at a stroke. It is, however, useless for two questions that the geometry of models keeps raising. First, if $A$ is regular local, is $A_{\mathfrak p}$ regular for every prime $\mathfrak p$? The definition compares two numbers attached to the closed point and says nothing at all about other points, and the standing convention that a _regular ring_ is one all of whose local rings are regular quietly presupposes an answer. Second, is a regular local ring factorial? Factoriality is a statement about height-one primes, that is, about localizations again.
+
+Serre's discovery is that regularity has an equivalent formulation in which both questions become trivial or nearly so: a noetherian local ring is regular exactly when its residue field admits a _finite_ free resolution. The virtue of this reformulation is that it is manifestly stable under localization, because localizing a finite free resolution produces a finite free resolution. The cost is that one must prove the equivalence, and this is where the Auslander–Buchsbaum formula of Section 14.3 earns its place: it converts the finiteness of a projective dimension into an exact numerical identity, and the identity is rigid enough to force the ring to be regular.
+
+Throughout this section $\operatorname{pd}$ denotes projective dimension as in Section 14.3, and we use the standard properties of $\operatorname{Tor}$ listed at the head of the chapter. The first step is to make projective dimension computable over a local ring.
+
+**Lemma 14.31.** Let $M\neq0$ be finite over $(A,\mathfrak m,k)$ and let
+$$
+\cdots\to F_2\to F_1\to F_0\to M\to0
+$$
+
+be a minimal free resolution: setting $N_0=M$ and $N_{i+1}=\ker(F_i\to N_i)$, each map $F_i\to N_i$ is a minimal cover by a finite free module. Then all differentials of $F_\bullet$ have image inside $\mathfrak mF_i$,
+$$
+\operatorname{Tor}^A_i(M,k)\simeq F_i\otimes_Ak\quad\text{for all }i\geq0,
+$$
+
+and
+$$
+\operatorname{pd}_AM=\sup\{i:\operatorname{Tor}^A_i(M,k)\neq0\}.
+$$
+
+**Proof.** Minimality of a cover $F\to N$ means that $F\otimes k\to N\otimes k$ is an isomorphism, so the kernel lies in $\mathfrak mF$; applied at each stage this is the first assertion. Computing $\operatorname{Tor}^A_\bullet(M,k)$ from $F_\bullet$, all differentials of $F_\bullet\otimes_Ak$ vanish, which gives the second assertion.
+
+Write $\ell\in\{0,1,\ldots,\infty\}$ for the supremum of the $i$ with $F_i\neq0$; once some $F_i$ vanishes the remaining syzygy is zero and all later terms vanish too, so $F_\bullet$ is a free resolution of length $\ell$ and $\operatorname{pd}_AM\leq\ell$. By Nakayama $F_i\neq0$ if and only if $F_i\otimes k\neq0$, so $\ell$ is exactly the displayed supremum. It remains to see $\ell\leq\operatorname{pd}_AM$, and for this we may assume $p:=\operatorname{pd}_AM<\infty$. As long as $\operatorname{pd}N_i\geq1$, Lemma 14.10 gives $\operatorname{pd}N_{i+1}=\operatorname{pd}N_i-1$; hence $\operatorname{pd}N_p=0$ and $N_p$ is free, say of rank $r$. Then $F_p\to N_p$ is a minimal cover of a free module, so $F_p$ also has rank $r$, and a surjection between free modules of the same finite rank over a commutative ring is an isomorphism. Therefore $N_{p+1}=0$, $F_{p+1}=0$, and $\ell\leq p$. $\square$
+
+**Corollary 14.32.** Let $(A,\mathfrak m,k)$ be noetherian local and let all modules be finite.
+
+1. If $0\to M'\to M\to M''\to0$ is exact, then $\operatorname{pd}M''\leq\max\{\operatorname{pd}M,\operatorname{pd}M'+1\}$.
+2. If $N$ is a direct summand of $M$, then $\operatorname{pd}N\leq\operatorname{pd}M$.
+3. If $\operatorname{pd}_Ak=n<\infty$, then $\operatorname{pd}_AM\leq n$ for every finite $M$.
+
+**Proof.** For (1), let $i>\max\{\operatorname{pd}M,\operatorname{pd}M'+1\}$. By Lemma 14.31 both $\operatorname{Tor}_i(M,k)$ and $\operatorname{Tor}_{i-1}(M',k)$ vanish, and the long exact sequence
+$$
+\operatorname{Tor}_i(M,k)\to\operatorname{Tor}_i(M'',k)\to\operatorname{Tor}_{i-1}(M',k)
+$$
+
+forces $\operatorname{Tor}_i(M'',k)=0$; Lemma 14.31 again gives the bound. For (2), $\operatorname{Tor}_i(N,k)$ is a direct summand of $\operatorname{Tor}_i(M,k)$. For (3), compute $\operatorname{Tor}^A_i(M,k)$ from a free resolution of the second argument $k$, which has length $n$: the groups vanish for $i>n$. $\square$
+
+The next lemma is the transfer of projective dimension across the quotient by a single regular element. Both directions are used: one to build finite resolutions over $A$ out of finite resolutions over $A/xA$, the other to push a finite resolution down.
+
+**Lemma 14.33.** Let $(A,\mathfrak m,k)$ be noetherian local, let $x\in\mathfrak m$ be a nonzerodivisor on $A$, and put $\bar A=A/xA$.
+
+1. If $M$ is a finite $A$-module on which $x$ is a nonzerodivisor, then $\operatorname{pd}_{\bar A}(M/xM)\leq\operatorname{pd}_AM$.
+2. If $M\neq0$ is a finite $\bar A$-module, then $\operatorname{pd}_AM\leq\operatorname{pd}_{\bar A}M+1$.
+
+**Proof.** The sequence $0\to A\xrightarrow{\ x\ }A\to\bar A\to0$ is a free resolution of $\bar A$ of length one, so $\operatorname{Tor}^A_i(M,\bar A)=0$ for $i\geq2$ and $\operatorname{Tor}^A_1(M,\bar A)=\{m\in M:xm=0\}$.
+
+For (1) we may assume $p=\operatorname{pd}_AM<\infty$ and take a free resolution $0\to F_p\to\cdots\to F_0\to M\to0$. Since $x$ is a nonzerodivisor on $M$, all $\operatorname{Tor}^A_i(M,\bar A)$ with $i\geq1$ vanish. Let $Z_0=M$ and $Z_{i+1}=\ker(F_i\to Z_i)$ be the syzygies, so that dimension shifting along the short exact sequences $0\to Z_{i+1}\to F_i\to Z_i\to0$ gives $\operatorname{Tor}^A_j(Z_i,\bar A)\simeq\operatorname{Tor}^A_{j+i}(M,\bar A)=0$ for all $j\geq1$. Consequently each of those short exact sequences remains exact after $-\otimes_A\bar A$, and splicing shows that $F_\bullet\otimes_A\bar A$ is a resolution of $M/xM$ by free $\bar A$-modules of length $p$.
+
+For (2) we may assume $q=\operatorname{pd}_{\bar A}M<\infty$ and induct on $q$. If $q=0$ then $M$ is a finite free $\bar A$-module, so $\operatorname{pd}_AM=\operatorname{pd}_A\bar A$, which is $1$: the displayed resolution has length one, and $\bar A$ is not $A$-free because $x\neq0$ annihilates it while $x A^r\neq0$ for $r\geq1$. If $q\geq1$, choose $0\to N\to\bar F\to M\to0$ with $\bar F$ finite free over $\bar A$ and $\operatorname{pd}_{\bar A}N=q-1$, which is possible by Lemma 14.10 applied over $\bar A$. By induction $\operatorname{pd}_AN\leq q$, while $\operatorname{pd}_A\bar F=1$, and Corollary 14.32(1) gives $\operatorname{pd}_AM\leq\max\{1,q+1\}=q+1$. $\square$
+
+**Theorem 14.34.** Let $A$ be a regular local ring of dimension $n$. Then $\operatorname{pd}_Ak\leq n$, and consequently every finite $A$-module has a free resolution of length at most $n$ by finite free modules.
+
+**Proof.** Induct on $n$. If $n=0$ then $\mathfrak m=0$, $A=k$, and $\operatorname{pd}_Ak=0$. Let $n\geq1$ and choose $x\in\mathfrak m\setminus\mathfrak m^2$, which is possible because $\mathfrak m\neq\mathfrak m^2$ by Nakayama. By Proposition 14.15 the ring $A$ is a domain, so $x$ is a nonzerodivisor, and by Lemma 14.14 the ring $\bar A=A/(x)$ is regular local of dimension $n-1$ with the same residue field $k$. By induction $\operatorname{pd}_{\bar A}k\leq n-1$, so Lemma 14.33(2) gives $\operatorname{pd}_Ak\leq n$. The last assertion is Corollary 14.32(3) together with Lemma 14.31, which produces the resolution by finite free modules. $\square$
+
+In fact the bound is an equality, and this is the first place where the Auslander–Buchsbaum formula is used for something other than bookkeeping: $k$ has depth $0$, since $\operatorname{Hom}_A(k,k)\neq0$, so Theorem 14.12 and Theorem 14.16 give
+$$
+\operatorname{pd}_Ak=\operatorname{depth}A-\operatorname{depth}k=n-0=n .
+$$
+
+The converse implication is the substantial half. Its engine is the following decomposition, which says that dividing the maximal ideal by a minimal generator splits off a copy of the residue field.
+
+**Lemma 14.35.** Let $(A,\mathfrak m,k)$ be noetherian local and let $x\in\mathfrak m\setminus\mathfrak m^2$ be a nonzerodivisor. Put $\bar A=A/xA$ and $\bar{\mathfrak m}=\mathfrak m/xA$. Then there is an isomorphism of $\bar A$-modules
+$$
+\mathfrak m/x\mathfrak m\simeq\bar{\mathfrak m}\oplus k .
+$$
+
+**Proof.** Because $x\notin\mathfrak m^2$, its residue is part of a basis of $\mathfrak m/\mathfrak m^2$, so by Nakayama there is a minimal generating set $x,y_2,\ldots,y_t$ of $\mathfrak m$. All three modules in the statement are killed by $x$ and hence are $\bar A$-modules. Inside $\mathfrak m/x\mathfrak m$ consider
+$$
+N=xA/x\mathfrak m,\qquad M'=\bigl((y_2,\ldots,y_t)+x\mathfrak m\bigr)/x\mathfrak m .
+$$
+
+Since $x$ is a nonzerodivisor, $a\mapsto ax$ identifies $A/\mathfrak m$ with $N$, so $N\simeq k$. Clearly $N+M'=\mathfrak m/x\mathfrak m$. Suppose an element of $N\cap M'$ is represented by $ax=\sum_{i\geq2}a_iy_i+xm$ with $m\in\mathfrak m$. Then $(a-m)x\in(y_2,\ldots,y_t)$. If $a$ were a unit, so would be $a-m$, and then $x\in(y_2,\ldots,y_t)$, making $y_2,\ldots,y_t$ generate $\mathfrak m$ and contradicting the minimality of the chosen generating set. Hence $a\in\mathfrak m$, so $ax\in x\mathfrak m$ and the element is zero. Thus $\mathfrak m/x\mathfrak m=N\oplus M'$, and $M'\simeq(\mathfrak m/x\mathfrak m)/N=\mathfrak m/xA=\bar{\mathfrak m}$. $\square$
+
+**Theorem 14.36 (Serre's homological characterization of regularity).** For a noetherian local ring $(A,\mathfrak m,k)$ of dimension $n$ the following are equivalent.
+
+1. $A$ is regular.
+2. $\operatorname{pd}_Ak<\infty$.
+3. $\operatorname{pd}_AM<\infty$ for every finite $A$-module $M$.
+
+When they hold, $\operatorname{pd}_Ak=n$ and every finite module has a resolution of length at most $n$ by finite free modules.
+
+**Proof.** (1) implies (3) is Theorem 14.34, and (3) implies (2) is trivial. Assume (2) and write $t=\dim_k\mathfrak m/\mathfrak m^2$ for the embedding dimension; we induct on $t$.
+
+Suppose first $\operatorname{depth}A=0$. Then Theorem 14.12, applied to $M=k$, which has finite projective dimension by hypothesis and depth $0$ because $\operatorname{Hom}_A(k,k)\neq0$ (Lemma 14.1 and Corollary 14.4), gives $\operatorname{pd}_Ak=\operatorname{depth}A-\operatorname{depth}k=0$. So $k$ is a finite free $A$-module, say $k\simeq A^r$ with $r\geq1$; but $\mathfrak m$ annihilates $k$, hence annihilates $A^r$, which forces $\mathfrak m=0$. Then $A=k$ is a field, regular of dimension zero. This case covers in particular $t=0$, since $t=0$ means $\mathfrak m=\mathfrak m^2$ and hence $\mathfrak m=0$ by Nakayama.
+
+Now let $t\geq1$ and $\operatorname{depth}A\geq1$. Every $\mathfrak p\in\operatorname{Ass}A$ is then a proper subset of $\mathfrak m$ by Lemma 14.1, and $\mathfrak m\neq\mathfrak m^2$, so prime avoidance in the version allowing one non-prime member produces
+$$
+x\in\mathfrak m\setminus\Bigl(\mathfrak m^2\cup\bigcup_{\mathfrak p\in\operatorname{Ass}A}\mathfrak p\Bigr),
+$$
+
+a nonzerodivisor outside $\mathfrak m^2$. Put $\bar A=A/xA$. Since $t\geq1$ the field $k$ is not free over $A$, so $\operatorname{pd}_Ak\geq1$, and applying Lemma 14.10 to the minimal cover $A\to k$ with kernel $\mathfrak m$ gives $\operatorname{pd}_A\mathfrak m=\operatorname{pd}_Ak-1<\infty$. As $\mathfrak m\subseteq A$ and $x$ is a nonzerodivisor on $A$, it is a nonzerodivisor on $\mathfrak m$, so Lemma 14.33(1) gives $\operatorname{pd}_{\bar A}(\mathfrak m/x\mathfrak m)<\infty$. By Lemma 14.35 the residue field $k$ is a direct summand of $\mathfrak m/x\mathfrak m$ over $\bar A$, so $\operatorname{pd}_{\bar A}k<\infty$ by Corollary 14.32(2).
+
+The embedding dimension of $\bar A$ is $\dim_k\mathfrak m/(\mathfrak m^2+xA)=t-1$, because $x\notin\mathfrak m^2$. By the inductive hypothesis $\bar A$ is regular, hence $\dim\bar A=t-1$. Lemma 14.2, applied to the module $A$ and the nonzerodivisor $x$, gives $\dim\bar A=\dim A-1$, so $\dim A=t=\dim_k\mathfrak m/\mathfrak m^2$ and $A$ is regular.
+
+The final assertions are the computation after Theorem 14.34 and Theorem 14.34 itself. $\square$
+
+**Corollary 14.37 (regularity localizes).** Let $A$ be a regular local ring of dimension $n$ and let $\mathfrak p$ be a prime of $A$. Then $A_{\mathfrak p}$ is a regular local ring of dimension $\operatorname{ht}\mathfrak p$, and $\operatorname{ht}\mathfrak p\leq n-1$ if $\mathfrak p\neq\mathfrak m$. In particular $\operatorname{Spec}A$ is a regular scheme, so a regular local ring is a regular ring in the sense of Section 1.2.
+
+**Proof.** By Theorem 14.36 the module $A/\mathfrak p$ has a resolution
+$$
+0\to F_r\to\cdots\to F_0\to A/\mathfrak p\to0
+$$
+
+by finite free $A$-modules with $r\leq n$. Localization at $\mathfrak p$ is exact and carries finite free modules to finite free modules, so the localized complex is a finite free resolution of $(A/\mathfrak p)_{\mathfrak p}$, which is the residue field of $A_{\mathfrak p}$. Hence that residue field has finite projective dimension over $A_{\mathfrak p}$, and Theorem 14.36 makes $A_{\mathfrak p}$ regular. Its dimension is $\operatorname{ht}\mathfrak p$ by definition of height. If $\mathfrak p\neq\mathfrak m$, any chain of primes of length $\operatorname{ht}\mathfrak p$ ending at $\mathfrak p$ extends by $\mathfrak m$, so $\operatorname{ht}\mathfrak p+1\leq\dim A$. $\square$
+
+This is the first genuinely new structural fact of the chapter: regularity, defined at one point, propagates to all points of the spectrum. It also removes a small circularity that the standing conventions of Section 1.2 would otherwise leave open, and it is the hypothesis-free version of the ad hoc verifications made in Theorem 14.20 and in the example of the quadratic cone, where regularity away from the singular point had to be checked by inverting a coordinate.
+
+### 14.8 Regular local rings are factorial
+
+A domain $A$ is **factorial**, or a **unique factorization domain**, if every nonzero nonunit is a product of irreducible elements and such a factorization is unique up to reordering and unit factors. Recall that $\pi\in A$ is _irreducible_ if it is a nonzero nonunit and $\pi=ab$ forces $a$ or $b$ to be a unit, and that $\pi$ is _prime_ if it is a nonzero nonunit and $(\pi)$ is a prime ideal. A prime element is irreducible; the content of factoriality is the converse.
+
+Factoriality is what makes divisor theory work. On an integral scheme a prime divisor is the closure of a height-one point, and it is a Cartier divisor near a point $x$ exactly when the corresponding height-one prime of $\mathcal O_{X,x}$ becomes principal. So the statement that every Weil divisor on a regular scheme is Cartier — the statement that lets one intersect divisors, pull them back, and compute degrees on the models built in Chapters 6 to 11 — is precisely the assertion that regular local rings are factorial. That is the theorem of this section.
+
+The proof has three movements. The first replaces factoriality by a statement about height-one primes, so that the problem becomes local and homological rather than combinatorial. The second is a descent principle: inverting a single prime element cannot destroy factoriality, so one is allowed to work on the complement of one hypersurface. The third is the homological input: a height-one prime of a regular local ring has a finite free resolution, and an ideal that has a finite free resolution and is principal at every localization must itself be principal. Only the last step uses Section 14.7.
+
+**Theorem 14.38 (Kaplansky's criterion).** A noetherian domain $A$ is factorial if and only if every prime ideal of height one is principal.
+
+**Proof.** Suppose $A$ is factorial and let $\mathfrak p$ have height one. Choose $0\neq a\in\mathfrak p$; it is a nonunit, so it factors into irreducibles, and since $\mathfrak p$ is prime one irreducible factor $\pi$ lies in $\mathfrak p$. In a factorial domain an irreducible element is prime: if $\pi\mid ab$, write $ab=\pi c$ and compare factorizations of both sides, so that $\pi$ agrees up to a unit with an irreducible factor of $a$ or of $b$. Hence $0\subsetneq(\pi)\subseteq\mathfrak p$ is a chain of primes, and $\operatorname{ht}\mathfrak p=1$ forces $(\pi)=\mathfrak p$.
+
+Conversely, assume every height-one prime is principal. First, every nonzero nonunit $a$ is a product of irreducibles. Otherwise the set of principal ideals $(a)$ with $a$ a nonzero nonunit admitting no such factorization is nonempty, and since $A$ is noetherian it has a maximal member $(a)$. Then $a$ is not irreducible, so $a=bc$ with $b,c$ nonunits, and both are nonzero; the inclusions $(a)\subseteq(b)$ and $(a)\subseteq(c)$ are strict because $c$, respectively $b$, is not a unit. By maximality $b$ and $c$ factor into irreducibles, hence so does $a$, a contradiction.
+
+Next, every irreducible $\pi$ is prime. Let $\mathfrak p$ be a prime minimal over $(\pi)$. Krull's height theorem gives $\operatorname{ht}\mathfrak p\leq1$, and $\operatorname{ht}\mathfrak p\geq1$ because $\pi\neq0$ and $A$ is a domain, so $\mathfrak p=(t)$ for some $t$ by hypothesis. Write $\pi=tu$. Since $\mathfrak p$ is a proper ideal, $t$ is not a unit, so irreducibility of $\pi$ makes $u$ a unit and $(\pi)=(t)=\mathfrak p$ prime.
+
+Finally, existence of factorizations together with primality of irreducibles gives uniqueness by the usual induction on the number of factors: if $\pi_1\cdots\pi_r=\rho_1\cdots\rho_s$ with all factors irreducible, then $\pi_1$ is prime and divides the right-hand side, so it divides some $\rho_j$, which being irreducible equals $\pi_1$ times a unit; cancel and repeat. $\square$
+
+The second movement is Nagata's descent principle. It is what allows an induction on dimension: in a regular local ring one can always find a prime element, and inverting it lands in rings of strictly smaller dimension.
+
+**Theorem 14.39 (Nagata's lemma).** Let $A$ be a noetherian domain and let $S\subseteq A$ be the multiplicative set generated by a family of prime elements of $A$ together with $1$. If $S^{-1}A$ is factorial, then $A$ is factorial.
+
+**Proof.** By Theorem 14.38 it suffices to prove that every height-one prime $\mathfrak q$ of $A$ is principal. Note first that $0\notin S$, since a product of nonzero elements of a domain is nonzero, so $S^{-1}A$ is again a noetherian domain with the same fraction field.
+
+Suppose $\mathfrak q\cap S\neq\emptyset$. An element of $S$ is a product $\pi_1\cdots\pi_r$ of prime elements, and if it lies in the prime $\mathfrak q$ then some $\pi_i\in\mathfrak q$. Then $0\subsetneq(\pi_i)\subseteq\mathfrak q$ is a chain of primes and $\operatorname{ht}\mathfrak q=1$ gives $\mathfrak q=(\pi_i)$, which is principal.
+
+Suppose instead $\mathfrak q\cap S=\emptyset$. Then $Q=S^{-1}\mathfrak q$ is a prime of $S^{-1}A$ with $(S^{-1}A)_Q=A_{\mathfrak q}$, so $\operatorname{ht}Q=\operatorname{ht}\mathfrak q=1$, and Theorem 14.38 applied to the factorial ring $S^{-1}A$ makes $Q$ principal. Clearing a denominator, $Q=\theta\,S^{-1}A$ for some $\theta\in\mathfrak q$: if $Q=\alpha S^{-1}A$ and $\alpha=\theta/s$ with $\theta\in A$ and $s\in S$, then $\theta=s\alpha$ still generates $Q$ because $s$ is a unit in $S^{-1}A$, and $\theta\in Q\cap A=\mathfrak q$, the last equality holding because $\mathfrak q$ is prime and disjoint from $S$. Among all such generators contained in $\mathfrak q$ choose one for which the ideal $\theta A$ is maximal, which is possible because $A$ is noetherian. We claim that no prime element $\pi$ occurring in the chosen family divides $\theta$. Indeed if $\theta=\pi\theta'$, then $\pi\notin\mathfrak q$ because $\mathfrak q\cap S=\emptyset$, so $\theta'\in\mathfrak q$ as $\mathfrak q$ is prime; moreover $\pi$ is a unit in $S^{-1}A$, so $\theta'$ still generates $Q$; and $\theta A\subsetneq\theta'A$ strictly, since $\pi$ is not a unit and $A$ is a domain. This contradicts maximality.
+
+Now let $a\in\mathfrak q$. Then $a/1\in Q=\theta S^{-1}A$, so $sa=\theta b$ for some $s\in S$ and $b\in A$. Write $s$ as a product of prime elements from the family. Each such factor $\pi$ divides $\theta b$ but not $\theta$, hence divides $b$ because $(\pi)$ is prime; cancelling $\pi$ from both sides of $sa=\theta b$ is legitimate in the domain $A$ and reduces the number of factors of $s$. After finitely many steps $a=\theta b'$ with $b'\in A$. Therefore $\mathfrak q\subseteq\theta A\subseteq\mathfrak q$, and $\mathfrak q$ is principal. $\square$
+
+The third movement supplies the local-to-global step. The situation to be handled is this: after inverting a prime element one is left with a noetherian ring $R$, no longer local, and a height-one prime $Q$ that is principal at every localization of $R$ and possesses a finite free resolution. Neither property alone makes $Q$ principal; together they do, and the mechanism is that a finite free resolution converts a locally free module first into a direct summand of a free module, then into a _stably_ free module, and finally a determinant computation removes the word "stably".
+
+**Lemma 14.40.** Let $R$ be a noetherian ring and $M$ a finite $R$-module such that $M_P$ is a free $R_P$-module for every prime $P$. Then $M$ is a direct summand of a finite free $R$-module.
+
+**Proof.** Choose a surjection $\varphi:F\to M$ with $F$ finite free and let $K=\ker\varphi$, a finite module since $R$ is noetherian. For every prime $P$ the module $M_P$ is free, hence projective, so $\operatorname{Ext}^1_{R_P}(M_P,K_P)=0$. Because $M$ is finite and $R$ noetherian, $\operatorname{Ext}^1_R(M,K)_P\simeq\operatorname{Ext}^1_{R_P}(M_P,K_P)$, so all localizations of $\operatorname{Ext}^1_R(M,K)$ vanish. A module with this property is zero: a nonzero element generates a nonzero submodule whose annihilator is proper, and localizing at a maximal ideal containing that annihilator keeps the element nonzero. The extension class of $0\to K\to F\to M\to0$ therefore vanishes, so the sequence splits. $\square$
+
+**Lemma 14.41.** Let $R$ be a ring and $M$ a direct summand of a finite free module which admits a resolution
+$$
+0\to F_p\to\cdots\to F_1\to F_0\to M\to0
+$$
+
+by finite free $R$-modules. Then $M$ is **stably free**: there are integers $a,b\geq0$ with $M\oplus R^a\simeq R^b$.
+
+**Proof.** Induct on $p$. If $p=0$ then $M\simeq F_0$ is free. If $p\geq1$, let $K=\ker(F_0\to M)$. Since $M$ is a direct summand of a free module, the surjection $F_0\to M$ splits, so $F_0\simeq M\oplus K$ and $K$ is itself a direct summand of a finite free module. Moreover $0\to F_p\to\cdots\to F_1\to K\to0$ is a resolution of $K$ by finite free modules of length $p-1$, so by induction $K\oplus R^a\simeq R^b$ for some $a,b$. Then
+$$
+M\oplus R^b\simeq M\oplus K\oplus R^a\simeq F_0\oplus R^a,
+$$
+
+and the right-hand side is finite free. $\square$
+
+**Lemma 14.42.** Let $R$ be a domain with fraction field $K$ and let $I\subseteq R$ be a nonzero ideal with $I\oplus R^m\simeq R^{m'}$ for integers $m,m'\geq0$. Then $m'=m+1$ and $I$ is principal.
+
+**Proof.** Localizing at the multiplicative set $R\setminus\{0\}$ turns the hypothesis into an isomorphism of $K$-vector spaces $K\oplus K^m\simeq K^{m'}$, because $I$ is a nonzero ideal of a domain and hence $I\otimes_RK=K$. Comparing dimensions gives $m'=m+1$.
+
+Regard $M=I\oplus R^m$ as an $R$-submodule of $K^{m+1}$ by way of $I\subseteq R\subseteq K$, and write $e_1,\ldots,e_{m+1}$ for the standard basis of $K^{m+1}$, so that $M$ is generated by the elements $ae_1$ with $a\in I$ together with $e_2,\ldots,e_{m+1}$. For an $R$-submodule $N\subseteq K^{m+1}$ let
+$$
+\Delta(N)\subseteq K
+$$
+
+be the $R$-submodule generated by all determinants $\det(v_1|\cdots|v_{m+1})$ of matrices whose columns $v_i$ lie in $N$. Since the determinant is $R$-multilinear in its columns, $\Delta(N)$ is already generated by the determinants formed from any generating set of $N$.
+
+Compute $\Delta(M)$ from the generators listed above. A tuple containing two elements of the form $ae_1,a'e_1$ has proportional columns and determinant zero; a tuple containing none of them repeats some $e_j$ and again has determinant zero; and a tuple consisting of one $ae_1$ and all of $e_2,\ldots,e_{m+1}$ has determinant $\pm a$. Hence $\Delta(M)=I$.
+
+On the other hand, let $u:R^{m+1}\to K^{m+1}$ be the composite of an isomorphism $R^{m+1}\simeq M$ with the inclusion, and let $U\in K^{(m+1)\times(m+1)}$ be its matrix in the standard bases. Every $(m+1)$-tuple of elements of $M=u(R^{m+1})$ is of the form $u(w_1),\ldots,u(w_{m+1})$ with $w_i\in R^{m+1}$, and the multiplicativity of determinants gives
+$$
+\det\bigl(u(w_1)|\cdots|u(w_{m+1})\bigr)=\det(U)\cdot\det(w_1|\cdots|w_{m+1}).
+$$
+
+As the $w_i$ range over $R^{m+1}$, the determinants $\det(w_1|\cdots|w_{m+1})$ range over a set generating $R$, the identity matrix contributing $1$. Therefore $\Delta(M)=\det(U)\,R$.
+
+Comparing the two computations gives $I=\det(U)R$. Since $I\subseteq R$ is nonzero, $\det(U)$ is a nonzero element of $R$ and $I=(\det U)$ is principal. $\square$
+
+We can now prove the theorem. The induction is on dimension; the prime element needed to feed Nagata's lemma is any element of $\mathfrak m\setminus\mathfrak m^2$, which is prime precisely because the quotient by it is again regular and therefore a domain.
+
+**Theorem 14.43 (the Auslander–Buchsbaum factoriality theorem).** Every regular local ring is a unique factorization domain.
+
+**Proof.** Let $A$ be regular local of dimension $n$, with maximal ideal $\mathfrak m$. It is a domain by Proposition 14.15. We induct on $n$, the statement being that all regular local rings of dimension $n$ are factorial.
+
+If $n=0$ then $A$ is a field and there is nothing to prove. If $n=1$ then $\mathfrak m$ is principal and is the only prime of height one, so Theorem 14.38 applies.
+
+Let $n\geq2$ and choose $x\in\mathfrak m\setminus\mathfrak m^2$, possible because $\mathfrak m\neq\mathfrak m^2$. By Lemma 14.14 the ring $A/(x)$ is regular local of dimension $n-1$, hence a domain by Proposition 14.15, so $x$ is a prime element of $A$. Let $S=\{1,x,x^2,\ldots\}$ and $R=S^{-1}A=A_x$, a noetherian domain. By Theorem 14.39 it suffices to prove that $R$ is factorial, and by Theorem 14.38 it suffices to prove that every height-one prime $Q$ of $R$ is principal.
+
+Such a $Q$ is $\mathfrak qR$ for a unique prime $\mathfrak q$ of $A$ with $x\notin\mathfrak q$ and $\operatorname{ht}\mathfrak q=\operatorname{ht}Q=1$. We verify the two hypotheses of the local-to-global step.
+
+_The module $Q$ has a finite free resolution._ By Theorem 14.36 the ideal $\mathfrak q$, a finite $A$-module, has a resolution $0\to F_r\to\cdots\to F_0\to\mathfrak q\to0$ by finite free $A$-modules with $r\leq n$. Localizing at $S$ is exact and preserves finite freeness, so $Q=S^{-1}\mathfrak q$ has such a resolution over $R$.
+
+_The module $Q$ is free at every localization._ A prime of $R$ is $P=\mathfrak pR$ with $\mathfrak p$ a prime of $A$ not containing $x$, and $R_P=A_{\mathfrak p}$, while $Q_P=\mathfrak qA_{\mathfrak p}$. Since $x\in\mathfrak m\setminus\mathfrak p$, we have $\mathfrak p\neq\mathfrak m$, so Corollary 14.37 makes $A_{\mathfrak p}$ a regular local ring of dimension $\operatorname{ht}\mathfrak p\leq n-1$. By the inductive hypothesis $A_{\mathfrak p}$ is factorial. If $\mathfrak q\not\subseteq\mathfrak p$ then $\mathfrak qA_{\mathfrak p}=A_{\mathfrak p}$ is free of rank one. If $\mathfrak q\subseteq\mathfrak p$ then $\mathfrak qA_{\mathfrak p}$ is a prime of $A_{\mathfrak p}$ of height one, hence principal by Theorem 14.38, say $\mathfrak qA_{\mathfrak p}=tA_{\mathfrak p}$ with $t\neq0$; multiplication by $t$ is injective on the domain $A_{\mathfrak p}$, so $\mathfrak qA_{\mathfrak p}$ is again free of rank one.
+
+By Lemma 14.40 the module $Q$ is a direct summand of a finite free $R$-module, by Lemma 14.41 it is stably free, and by Lemma 14.42 — applied to the nonzero ideal $Q\subseteq R$ of the domain $R$ — it is principal. Hence $R$ is factorial by Theorem 14.38, and $A$ is factorial by Theorem 14.39. $\square$
+
+Two remarks on the shape of the argument are worth recording. The induction is genuinely an induction on the dimension of _other_ rings: what is used about $A$ itself at dimension $n$ is only the existence of a prime element, whereas factoriality of the smaller-dimensional rings $A_{\mathfrak p}$ is what makes the height-one prime locally principal. This is why Corollary 14.37 is indispensable and why the homological characterization of regularity, rather than the numerical one, is the right tool. Second, the finite free resolution is used exactly once, to upgrade "locally principal" to "principal"; the local hypothesis alone would only say that the ideal is invertible, and invertible ideals need not be principal on a general noetherian domain.
+
+**Corollary 14.44.** A factorial domain is integrally closed in its fraction field. Consequently every regular local ring is a normal domain, and a regular noetherian ring is normal.
+
+**Proof.** Let $A$ be factorial with fraction field $K$ and let $z\in K$ be integral over $A$, satisfying
+$$
+z^d+c_{d-1}z^{d-1}+\cdots+c_0=0,\qquad c_i\in A .
+$$
+
+Write $z=a/b$ with $a,b\in A$, $b\neq0$, and cancel all common irreducible factors, which is possible by unique factorization; then no irreducible element divides both $a$ and $b$. Multiplying the equation by $b^d$ gives
+$$
+a^d=-b\,(c_{d-1}a^{d-1}+c_{d-2}a^{d-2}b+\cdots+c_0b^{d-1}).
+$$
+
+If $b$ were a nonunit, an irreducible factor $\pi$ of $b$ would be prime and would divide $a^d$, hence $a$, contradicting the choice of $a$ and $b$. So $b$ is a unit and $z\in A$.
+
+For the consequences, a regular local ring is factorial by Theorem 14.43, hence integrally closed; and if $A$ is a regular noetherian ring, each $A_{\mathfrak p}$ is regular local, hence an integrally closed domain, which is normality. $\square$
+
+Corollary 14.44 makes the two Serre conditions automatic for a regular ring in a way that does not pass through the depth calculus at all: such a ring is normal outright, and the conditions $(R_1)$ and $(S_2)$ then follow from Theorem 14.26. It also completes the picture of Section 4.2, where the equivalence of normality, regularity, and the discrete valuation property in dimension one was asserted with only a sketch: in dimension one, factoriality of a regular local ring gives integral closedness directly, and the reverse implication is the valuation-theoretic characterization of Book 1.
+
+The divisor-theoretic consequence is the one that later chapters and later books consume. On an integral noetherian scheme $X$, a prime divisor $Z$ with generic point $\eta$ corresponds at each point $x\in Z$ to the height-one prime $\mathfrak p_x\subseteq\mathcal O_{X,x}$ of functions vanishing on $Z$. If $X$ is regular, Theorem 14.43 and Theorem 14.38 make every such $\mathfrak p_x$ principal, so $Z$ is cut out near $x$ by a single equation. Thus on a regular integral noetherian scheme every Weil divisor is Cartier, and the group of Weil divisors, the group of Cartier divisors, and the group of invertible fractional ideal sheaves coincide. For a regular arithmetic surface this is the statement that both the horizontal divisors of Section 5.3 and the components of the special fibers are locally principal, which is what allows the intersection numbers of Section 11.1 to be defined by pulling back local equations.
+
+### 14.9 What the criteria return to the models
 
 The chapter closes by recording where each result is used.
 
 Section 4.1 proved Serre's criterion in the codimension-two form needed by the intervening
 chapters. Theorem 14.26 rederives the general ring statement from the expanded depth calculus:
 Theorem 14.23 supplies the forward implication, while Theorem 14.24 and Lemma 14.25 supply the
-converse. Thus this final chapter is an independent expansion and not a forward dependency of
-Sections 4--13.
+converse. In this respect the chapter is an expansion of Section 4.1 rather than a prerequisite for it.
 
-Section 4.2 identified normal, regular, and discrete valuation rings in dimension one. That identification is used inside Theorem 14.26 and is not reproved here; Book 1, Theorem 4.1 is the source for the valuation-theoretic half.
+Sections 14.7 and 14.8 are the exception, and deliberately so: Proposition 4.2 and the divisor
+calculus of Chapters 5, 9, and 11 use the factoriality of regular local rings, and Theorem 14.43 is
+where that is proved. No circularity arises, because the proof of Theorem 14.43 draws only on
+Sections 14.1 to 14.4 — depth, the Auslander–Buchsbaum formula, and the elementary properties of
+regular local rings — and never on Serre's normality criterion or on Proposition 4.2.
+
+Section 4.2 identified normal, regular, and discrete valuation rings in dimension one. Its
+valuation-theoretic half is Book 1, Theorem 4.1; the implication from regularity to normality is
+Theorem 14.43 together with Corollary 14.44, and the resulting statement is used inside Theorem
+14.26.
 
 Section 4.3 asserted that the quadratic cone is normal because it is a Cohen–Macaulay hypersurface with a codimension-two singularity. The example after Theorem 14.20 proves it, and the same three steps prove Theorem 14.20 itself for the arithmetic family $xy=\pi^n$.
 
@@ -3740,4 +4318,6 @@ Sections 8.5 and 10.4 blow up the singular members of that family. Theorem 14.20
 
 Section 11.4 and Section 12.4 use the semistable local equation $xy=\pi$ and its completion. Theorem 14.20(3) proves regularity of the algebraic local ring at the node, and regularity is unchanged by completion, because dimension and the cotangent space are both preserved; the same holds for the Cohen–Macaulay property by Proposition 14.9. Under the standard identification of the completion of $R[x,y]_{(\pi,x,y)}$ with $\widehat R[[x,y]]$, the completed ring is the one displayed in Section 12.4, so that ring is regular and no resolution acts on it.
 
-Finally, Theorems 14.27 and 14.30 and Corollary 14.29 are stated in the form that later books require: over a two-dimensional regular local ring, a finite module of depth two is free, and this applies to reflexive modules and to finite normal local domains. The hypothesis that cannot be dropped is depth, not torsion-freeness: a torsion-free module has depth at least one, which in dimension two is not enough, and the freeness statement genuinely uses the second regular parameter.
+Theorems 14.27 and 14.30 and Corollary 14.29 are stated in the form that later books require: over a two-dimensional regular local ring, a finite module of depth two is free, and this applies to reflexive modules and to finite normal local domains. The hypothesis that cannot be dropped is depth, not torsion-freeness: a torsion-free module has depth at least one, which in dimension two is not enough, and the freeness statement genuinely uses the second regular parameter.
+
+Sections 14.7 and 14.8 close the last two gaps in the treatment of regularity itself. Corollary 14.37 proves that regularity passes to localizations, which the standing terminology of Section 1.2 and the fiberwise arguments of Section 4.4 both presuppose, and which Theorem 14.20 and the quadratic-cone example verified by hand in their particular cases. Theorem 14.43 proves that a regular local ring is factorial, so that Proposition 4.2 is complete as stated, so that the normality of regular schemes recorded in Corollary 14.44 needs no separate verification, and above all so that on a regular arithmetic surface every prime divisor is locally cut out by one equation. That last statement is the standing hypothesis behind the divisor calculus of Chapters 5, 9, and 11: it is what identifies Weil divisors with Cartier divisors, hence what makes the intersection pairing of Section 11.1 well defined and computable from local equations. The chain of implications is worth naming once more, because each link was proved here: regular implies finite global dimension (Theorem 14.36), finite global dimension localizes (Corollary 14.37), locally free plus finite free resolution implies free (Lemmas 14.40 to 14.42), and factoriality follows by descent along one prime element (Theorem 14.39).
