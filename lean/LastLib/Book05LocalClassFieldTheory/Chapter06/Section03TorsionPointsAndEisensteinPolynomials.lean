@@ -51,6 +51,20 @@ def chapter06Qn
     Polynomial (Chapter06ValuationRing D) :=
   chapter06PrimitiveDivisionPolynomial D (n - 1)
 
+theorem chapter06_Qn_explicit
+    {K : Type*} [Field K] (D : Chapter06LocalFieldData K)
+    (n : ℕ) (_hn : 0 < n) :
+    chapter06Qn D n =
+      Polynomial.C D.uniformizer +
+        (chapter06Sn D (n - 1)) ^ (chapter06ResidueCardinality D - 1) := by
+  rfl
+
+theorem chapter06_Qn_factorization
+    {K : Type*} [Field K] (D : Chapter06LocalFieldData K)
+    (n : ℕ) (hn : 0 < n) :
+    chapter06Sn D n = chapter06Sn D (n - 1) * chapter06Qn D n := by
+  sorry
+
 theorem chapter06_torsion_polynomial_succ_factorization
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K) (n : ℕ) :
     chapter06Sn D (n + 1) =
@@ -245,6 +259,13 @@ abbrev Chapter06TorsionResidueRing
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K) (n : ℕ) :=
   Chapter06ValuationRing D ⧸
     (Ideal.span ({D.uniformizer} : Set (Chapter06ValuationRing D))) ^ n
+
+theorem chapter06_torsion_residue_unit_cardinality
+    {K : Type*} [Field K] (D : Chapter06LocalFieldData K) (n : ℕ) :
+    Nat.card (Chapter06TorsionResidueRing D n)ˣ =
+      chapter06ResidueCardinality D ^ (n - 1) *
+        (chapter06ResidueCardinality D - 1) := by
+  sorry
 
 /-- The canonical quotient-ring reduction from level `n+1` to level `n`. -/
 noncomputable def chapter06TorsionResidueRingTransition

@@ -49,6 +49,26 @@ theorem chapter06_torsion_action_gives_automorphism
           (chapter06PrimitivePointAsTorsion D n hn ω) := by
   sorry
 
+theorem chapter06_torsion_action_gives_unique_automorphism
+    {K : Type*} [Field K] [UniformSpace (AlgebraicClosure K)]
+    (D : Chapter06LocalFieldData K)
+    [UniformSpace (Chapter06ValuationRing D)]
+    (n : ℕ) (hn : 0 < n)
+    (f : Chapter06UnivariateSeries (Chapter06ValuationRing D))
+    (hf : chapter06LubinTateCondition D f)
+    (M : Chapter06FormalModuleData D f)
+    (A : Chapter06TorsionAction D f n hn M)
+    (ω : Chapter06PrimitiveTorsionPoint D n hn)
+    [FiniteDimensional K (chapter06TorsionField D n ω.point)]
+    [IsGalois K (chapter06TorsionField D n ω.point)]
+    (a : (Chapter06TorsionResidueRing D n)ˣ) :
+    ∃! σ : Gal(chapter06TorsionField D n ω.point / K),
+      ((σ (chapter06PrimitivePointInField D n hn ω) :
+        chapter06TorsionField D n ω.point) : AlgebraicClosure K) =
+        A.quotientAction (a : Chapter06TorsionResidueRing D n)
+          (chapter06PrimitivePointAsTorsion D n hn ω) := by
+  sorry
+
 /-- A choice of the automorphism `σₐ`. -/
 noncomputable def chapter06SigmaA
     {K : Type*} [Field K] [UniformSpace (AlgebraicClosure K)]
@@ -218,10 +238,6 @@ theorem chapter06_torsion_galois_group_commutative
       σ * τ = τ * σ := by
   sorry
 
-/- SOURCE_ISSUE (§6.4, immediately after Theorem 6.3): the source calls the
-   torsion labeling isomorphism canonical, but it depends on the chosen
-   primitive point (and on the compatible coordinate choices).  The API below
-   exposes existence of the equivalence and records the choice explicitly. -/
 theorem chapter06_theorem_6_3
     {K : Type*} [Field K] [UniformSpace (AlgebraicClosure K)]
     (D : Chapter06LocalFieldData K)

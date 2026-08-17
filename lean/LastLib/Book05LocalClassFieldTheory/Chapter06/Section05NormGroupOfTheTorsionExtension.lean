@@ -39,6 +39,45 @@ def chapter06NormFiltrationSubgroup
     (m : ℕ) : Subgroup Kˣ :=
   chapter06NormImageOfUnitSubgroup (extensionUnits 0) ⊔ baseUnits m
 
+/- The extension-side filtration is obtained from the valuation ring of the
+   actual finite extension.  This keeps the norm filtration tied to the
+   extension in the theorem, instead of taking two unrelated filtrations as
+   hypotheses. -/
+abbrev Chapter06ExtensionValuationRing
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
+    {D : Chapter06LocalFieldData K}
+    (V : Chapter06ValuedFiniteExtension D L) : ValuationSubring L :=
+  V.valuation.toValuation.valuationSubring
+
+def chapter06ExtensionUnitFiltration
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
+    {D : Chapter06LocalFieldData K}
+    (V : Chapter06ValuedFiniteExtension D L) (n : ℕ) : Subgroup Lˣ :=
+  LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10FieldUnitFiltration
+    (Chapter06ExtensionValuationRing V) n
+
+def chapter06LocalNormFiltrationSubgroup
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
+    {D : Chapter06LocalFieldData K}
+    (V : Chapter06ValuedFiniteExtension D L) (m : ℕ) : Subgroup Kˣ :=
+  chapter06NormFiltrationSubgroup
+    (fun n => Chapter06UnitFiltration D n)
+    (fun n => chapter06ExtensionUnitFiltration V n) m
+
+theorem chapter06_unramified_unit_norm_is_surjective
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
+    {D : Chapter06LocalFieldData K}
+    (V : Chapter06ValuedFiniteExtension D L)
+    (_hV : Chapter06UnramifiedValuedExtension D V) :
+    chapter06NormImageOfUnitSubgroup
+        (chapter06ExtensionUnitFiltration V 0) =
+      Chapter06UnitFiltration D 0 := by
+  sorry
+
 /-- The lower ramification displacement of an automorphism. -/
 def chapter06RamificationDisplacement
     {L : Type*} [Field L]
@@ -63,9 +102,8 @@ noncomputable def chapter06HerbrandPsi
 /-- The upper-numbered group attached to lower-numbered groups. -/
 def chapter06UpperRamificationGroup
     {G : Type*} [CommGroup G] [Fintype G]
-    (lower : ℝ → Subgroup G) (upper : ℝ → ℝ → Subgroup G)
-    (s : ℝ) : Subgroup G :=
-  upper s (chapter06HerbrandPsi lower s)
+    (lower : ℝ → Subgroup G) (s : ℝ) : Subgroup G :=
+  lower (chapter06HerbrandPsi lower s)
 
 /-- The precise Herbrand/Hasse--Arf package used in Lemma 6.4. -/
 structure Chapter06HerbrandData
@@ -83,63 +121,234 @@ structure Chapter06HerbrandData
   upper_breaks : Set ℝ
   upper_break_integer : ∀ s, s ∈ upper_breaks → ∃ z : ℤ, s = z
 
-/-- The exact Herbrand norm-filtration theorem exposed in the manuscript as
-Hypothesis NF. It is data here because the imported chapters do not prove the
-compatible one-step norm congruences needed for these consequences. -/
-structure Chapter06NormFiltrationInput
+/- The source defines the lower numbering from the minimum displacement on the
+   valuation ring.  The minimum is written as an `sInf`, which is the canonical
+   order-theoretic version of the finite minimum used for a finite extension. -/
+noncomputable def chapter06IntegralRamificationIndex
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
+    {D : Chapter06LocalFieldData K}
+    (V : Chapter06ValuedFiniteExtension D L)
+    (σ : Gal(L / K)) : WithTop ℤ :=
+  sInf {r : WithTop ℤ |
+    ∃ a : Chapter06ExtensionValuationRing V,
+      r = V.valuation (σ (a : L) - (a : L))}
+
+def chapter06LowerRamificationCondition
+    {G : Type*} (displacement : G → WithTop ℤ)
+    (t : ℝ) (σ : G) : Prop :=
+  ((Int.ceil t : ℤ) : WithTop ℤ) + 1 ≤ displacement σ
+
+theorem chapter06_integral_ramification_index_is_lower_bound
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
+    {D : Chapter06LocalFieldData K}
+    (V : Chapter06ValuedFiniteExtension D L) (σ : Gal(L / K))
+    (a : Chapter06ExtensionValuationRing V) :
+    chapter06IntegralRamificationIndex V σ ≤
+      V.valuation (σ (a : L) - (a : L)) := by
+  sorry
+
+/- This package records that the supplied Herbrand filtration is the actual
+   ramification filtration of the extension.  It prevents the norm theorem
+   from accepting an unrelated abstract subgroup-valued function. -/
+structure Chapter06ExtensionHerbrandData
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
     [Fintype (Gal(L / K))] [Chapter06FiniteAbelianExtension K L]
-    (baseUnits : ℕ → Subgroup Kˣ)
-    (extensionUnits : ℕ → Subgroup Lˣ)
-    (R : Chapter06HerbrandData (Gal(L / K))) : Prop where
-  index_formula : ∀ m : ℕ,
-    chapter06NormFiltrationSubgroup baseUnits extensionUnits m ≤ baseUnits 0 →
-    Nat.card (baseUnits 0 ⧸
-      (chapter06NormFiltrationSubgroup baseUnits extensionUnits m).comap
-        (baseUnits 0).subtype) =
-      Nat.card ((R.upper 0 : Type _) ⧸
-        ((R.upper 0 ⊓ R.upper m).comap (R.upper 0).subtype))
-  deep_units : ∀ m : ℕ, R.upper m = ⊥ →
-    baseUnits m ≤ chapter06NormImageOfUnitSubgroup (extensionUnits 0)
+    {D : Chapter06LocalFieldData K}
+    (V : Chapter06ValuedFiniteExtension D L) where
+  herbrand : Chapter06HerbrandData (Gal(L / K))
+  lower_mem_iff : ∀ (t : ℝ) (σ : Gal(L / K)),
+    σ ∈ herbrand.lower t ↔
+      chapter06LowerRamificationCondition
+        (chapter06IntegralRamificationIndex V) t σ
 
-/-- The norm-filtration equality in Lemma 6.4, conditional on Hypothesis NF. -/
+def chapter06UniformizerRealizesIntegralRamificationIndex
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
+    {D : Chapter06LocalFieldData K}
+    (V : Chapter06ValuedFiniteExtension D L)
+    (πL : Chapter06ExtensionValuationRing V)
+    (σ : Gal(L / K)) : Prop :=
+  ∀ a : Chapter06ExtensionValuationRing V,
+    V.valuation (σ (πL : L) - (πL : L)) ≤
+      V.valuation (σ (a : L) - (a : L))
+
+theorem chapter06_uniformizer_displacement_computes_integral_index
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
+    {D : Chapter06LocalFieldData K}
+    (V : Chapter06ValuedFiniteExtension D L)
+    (πL : Chapter06ExtensionValuationRing V) (σ : Gal(L / K))
+    (hπ : chapter06UniformizerRealizesIntegralRamificationIndex V πL σ) :
+    chapter06IntegralRamificationIndex V σ =
+      chapter06RamificationDisplacement V.valuation (πL : L) σ.toRingEquiv := by
+  sorry
+
+/- The three prime-degree cases in the proof and the source-depth function
+   used to compose their finite norm maps. -/
+inductive Chapter06PrimeDegreeNormCase where
+  | unramified
+  | tame (ell : ℕ)
+  | wild (p b : ℕ)
+
+def chapter06PrimeDegreeSourceDepth
+    (c : Chapter06PrimeDegreeNormCase) (m : ℕ) : ℕ :=
+  match c with
+  | .unramified => m
+  | .tame ell => ell * m
+  | .wild p b => if m ≤ b then m else b + p * (m - b)
+
+def chapter06WildTraceDepth (p b r : ℕ) : ℤ :=
+  (b : ℤ) + 1 + ((r : ℤ) - 1 - (b : ℤ)) / (p : ℤ)
+
+theorem chapter06_prime_norm_source_depth_unramified
+    (m : ℕ) :
+    chapter06PrimeDegreeSourceDepth .unramified m = m := by
+  rfl
+
+theorem chapter06_prime_norm_source_depth_tame
+    (ell m : ℕ) :
+    chapter06PrimeDegreeSourceDepth (.tame ell) m = ell * m := by
+  rfl
+
+theorem chapter06_prime_norm_source_depth_wild
+    (p b m : ℕ) :
+    chapter06PrimeDegreeSourceDepth (.wild p b) m =
+      if m ≤ b then m else b + p * (m - b) := by
+  rfl
+
+def chapter06NormExpansionStatement
+    {F L : Type*} [Field F] [Field L] [Algebra F L]
+    [FiniteDimensional F L]
+    (vL : AddValuation L (WithTop ℤ)) (x y : L) : Prop :=
+  Algebra.norm F (S := L) (1 + x) =
+      1 + Algebra.trace F L x + Algebra.norm F (S := L) x + Algebra.trace F L y ∧
+    vL y ≥ (2 : WithTop ℤ) * vL x
+
+theorem chapter06_wild_norm_expansion
+    {F L : Type*} [Field F] [Field L] [Algebra F L]
+    [FiniteDimensional F L] [IsGalois F L]
+    [Fintype (Gal(L / F))]
+    {p : ℕ} [Fact (Nat.Prime p)] [CharP F p]
+    (hdegree : Module.finrank F L = p)
+    (vL : AddValuation L (WithTop ℤ)) (x : L) :
+    ∃ y : L, chapter06NormExpansionStatement (F := F) vL x y := by
+  sorry
+
+def chapter06WildBeforeBreakLayerMap
+    {l : Type*} [Field l] (p : ℕ) : l → l :=
+  fun θ => θ ^ p
+
+def chapter06WildBreakLayerMap
+    {l : Type*} [Field l] (p : ℕ) (η : l) : l → l :=
+  fun θ => θ ^ p - η ^ (p - 1) * θ
+
+def chapter06WildAfterBreakLayerMap
+    {l : Type*} [Field l] (p : ℕ) (η : l) : l → l :=
+  fun θ => -η ^ (p - 1) * θ
+
+theorem chapter06_wild_before_break_layer_formula
+    {l : Type*} [Field l] (p : ℕ) (θ : l) :
+    chapter06WildBeforeBreakLayerMap p θ = θ ^ p := by
+  rfl
+
+theorem chapter06_wild_break_layer_formula
+    {l : Type*} [Field l] (p : ℕ) (η θ : l) :
+    chapter06WildBreakLayerMap p η θ =
+      θ ^ p - η ^ (p - 1) * θ := by
+  rfl
+
+theorem chapter06_wild_after_break_layer_formula
+    {l : Type*} [Field l] (p : ℕ) (η θ : l) :
+    chapter06WildAfterBreakLayerMap p η θ =
+      -η ^ (p - 1) * θ := by
+  rfl
+
+def chapter06WildTraceDepthInequalities
+    (p b : ℕ) : Prop :=
+  (∀ r : ℕ, 1 ≤ r → r < b →
+      chapter06WildTraceDepth p b r ≥ r + 1 ∧
+        chapter06WildTraceDepth p b (2 * r) ≥ r + 1) ∧
+    chapter06WildTraceDepth p b b = b ∧
+    chapter06WildTraceDepth p b (2 * b) ≥ b + 1 ∧
+    (∀ i : ℕ, 0 < i →
+      chapter06WildTraceDepth p b (b + p * i) = b + i ∧
+      chapter06WildTraceDepth p b (2 * (b + p * i)) ≥ b + i + 1 ∧
+      b + p * i ≥ b + i + 1)
+
+theorem chapter06_wild_trace_depth_inequalities
+    (p b : ℕ) (hp : Nat.Prime p) (hb : 0 < b) :
+    chapter06WildTraceDepthInequalities p b := by
+  sorry
+
+def chapter06GroupCokernel
+    {A B : Type*} [CommGroup A] [CommGroup B]
+    (f : A →* B) : Type _ := B ⧸ MonoidHom.range f
+
+def chapter06KernelImageIntersection
+    {A B C : Type*} [CommGroup A] [CommGroup B] [CommGroup C]
+    (u : A →* B) (v : B →* C) : Subgroup B :=
+  v.ker ⊓ Subgroup.map u (⊤ : Subgroup A)
+
+def chapter06UnitIntervalQuotient
+    {G : Type*} [CommGroup G] (filtration : ℕ → Subgroup G)
+    (a c : ℕ) : Type _ :=
+  (filtration a : Type _) ⧸
+    (filtration c).comap (filtration a).subtype
+
+def chapter06FiniteUnitExactRow
+    {A B C : Type*} [Group A] [Group B] [Group C]
+    (ι : A → B) (p : B → C) : Prop :=
+  Function.Injective ι ∧
+    (∀ b, p b = 1 ↔ ∃ a, ι a = b) ∧ Function.Surjective p
+
+theorem chapter06_cokernel_cardinality_composition
+    {A B C : Type*} [CommGroup A] [CommGroup B] [CommGroup C]
+    [Finite A] [Finite B] [Finite C]
+    (u : A →* B) (v : B →* C) :
+    (Nat.card (chapter06GroupCokernel (v.comp u)) : ℚ) * Nat.card v.ker =
+      (Nat.card (chapter06GroupCokernel v) : ℚ) *
+          Nat.card (chapter06GroupCokernel u) *
+        Nat.card (chapter06KernelImageIntersection u v : Type _) := by
+  sorry
+
+/-- The norm-filtration equality in Lemma 6.4.  The unit filtrations are the
+canonical filtrations attached to the base and extension valuation rings. -/
 theorem chapter06_norm_filtration_index_formula
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
     [Fintype (Gal(L / K))] [Chapter06FiniteAbelianExtension K L]
-    (baseUnits : ℕ → Subgroup Kˣ)
-    (extensionUnits : ℕ → Subgroup Lˣ)
-    (R : Chapter06HerbrandData (Gal(L / K)))
-    (H : Chapter06NormFiltrationInput baseUnits extensionUnits R)
-    (m : ℕ)
-    (hzero : chapter06NormFiltrationSubgroup baseUnits extensionUnits m ≤
-      baseUnits 0) :
-    Nat.card (baseUnits 0 ⧸
-      (chapter06NormFiltrationSubgroup baseUnits extensionUnits m).comap
-        (baseUnits 0).subtype) =
-      Nat.card ((R.upper 0 : Type _) ⧸
-        ((R.upper 0 ⊓ R.upper m).comap (R.upper 0).subtype)) :=
-  H.index_formula m hzero
+    (D : Chapter06LocalFieldData K)
+    (V : Chapter06ValuedFiniteExtension D L)
+    (R : Chapter06ExtensionHerbrandData V)
+    (m : ℕ) :
+    chapter06LocalNormFiltrationSubgroup V m ≤ Chapter06UnitFiltration D 0 ∧
+    Nat.card (Chapter06UnitFiltration D 0 ⧸
+      (chapter06LocalNormFiltrationSubgroup V m).comap
+        (Chapter06UnitFiltration D 0).subtype) =
+    Nat.card ((R.herbrand.upper 0 : Type _) ⧸
+        ((R.herbrand.upper 0 ⊓ R.herbrand.upper m).comap
+          (R.herbrand.upper 0).subtype)) := by
+  sorry
 
 /-- The usable, source-facing form of the preceding index identity. -/
 theorem chapter06_norm_filtration_index_formula_source_form
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
     [Fintype (Gal(L / K))] [Chapter06FiniteAbelianExtension K L]
-    (baseUnits : ℕ → Subgroup Kˣ)
-    (extensionUnits : ℕ → Subgroup Lˣ)
-    (R : Chapter06HerbrandData (Gal(L / K)))
-    (H : Chapter06NormFiltrationInput baseUnits extensionUnits R)
-    (m : ℕ)
-    (hzero : chapter06NormFiltrationSubgroup baseUnits extensionUnits m ≤
-      baseUnits 0) :
-    Nat.card (baseUnits 0 ⧸
-      (chapter06NormFiltrationSubgroup baseUnits extensionUnits m).comap
-        (baseUnits 0).subtype) =
-      Nat.card ((R.upper 0 : Type _) ⧸
-        ((R.upper 0 ⊓ R.upper m).comap (R.upper 0).subtype)) :=
-  chapter06_norm_filtration_index_formula baseUnits extensionUnits R H m hzero
+    (D : Chapter06LocalFieldData K)
+    (V : Chapter06ValuedFiniteExtension D L)
+    (R : Chapter06ExtensionHerbrandData V)
+    (m : ℕ) :
+    Nat.card (Chapter06UnitFiltration D 0 ⧸
+      (chapter06LocalNormFiltrationSubgroup V m).comap
+        (Chapter06UnitFiltration D 0).subtype) =
+      Nat.card ((R.herbrand.upper 0 : Type _) ⧸
+        ((R.herbrand.upper 0 ⊓ R.herbrand.upper m).comap
+          (R.herbrand.upper 0).subtype)) := by
+  exact (chapter06_norm_filtration_index_formula D V R m).2
 
 /-- At a positive lower break the ramification quotient has additive residue
 coordinates; at zero it has multiplicative residue coordinates. -/
@@ -176,19 +385,6 @@ structure Chapter06RamificationLayerCoordinates
   positive : ∀ b : ℕ,
     Chapter06AdditiveLayerMap (chapter06RamificationLayer ramification b) l
   positive_injective : ∀ b, Function.Injective (positive b)
-
-/-- Ramification-layer coordinates may be used when supplied.  The earlier
-unconditional existence declaration was too strong: its residue field was
-unrelated to the valued extension and could even be too small. -/
-theorem chapter06_ramification_layer_coordinates_available
-    {K L : Type*} [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsGalois K L]
-    [Fintype (Gal(L / K))] [Chapter06FiniteAbelianExtension K L]
-    (_vL : AddValuation L (WithTop ℤ)) (_πL : L)
-    (l : Type*) [Field l] [Finite l]
-    (C : Chapter06RamificationLayerCoordinates (Gal(L / K)) l) :
-    Nonempty (Chapter06RamificationLayerCoordinates (Gal(L / K)) l) := by
-  exact ⟨C⟩
 
 /-- The additive polynomial associated to a finite additive subgroup. -/
 def chapter06AdditiveLayerPolynomial
@@ -242,17 +438,26 @@ theorem chapter06_abelian_upper_breaks_are_integral
     ∀ s, s ∈ R.upper_breaks → ∃ z : ℤ, s = z := by
   exact R.upper_break_integer
 
+theorem chapter06_primitive_division_degree_parity
+    {K : Type*} [Field K] (D : Chapter06LocalFieldData K)
+    (n : ℕ) (_hn : 0 < n) :
+    Even (chapter06ResidueCardinality D ^ (n - 1) *
+      (chapter06ResidueCardinality D - 1)) ∨
+      (Even (chapter06ResidueCardinality D) ∧ n = 1) := by
+  sorry
+
 theorem chapter06_deep_units_are_norms
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
     [Fintype (Gal(L / K))] [Chapter06FiniteAbelianExtension K L]
-    (baseUnits : ℕ → Subgroup Kˣ)
-    (extensionUnits : ℕ → Subgroup Lˣ)
-    (R : Chapter06HerbrandData (Gal(L / K)))
-    (H : Chapter06NormFiltrationInput baseUnits extensionUnits R) (m : ℕ)
-    (htrivial : R.upper m = ⊥) :
-    baseUnits m ≤ chapter06NormImageOfUnitSubgroup (extensionUnits 0) := by
-  exact H.deep_units m htrivial
+    (D : Chapter06LocalFieldData K)
+    (V : Chapter06ValuedFiniteExtension D L)
+    (R : Chapter06ExtensionHerbrandData V)
+    (m : ℕ)
+    (htrivial : R.herbrand.upper m = ⊥) :
+    Chapter06UnitFiltration D m ≤
+      chapter06NormImageOfUnitSubgroup (chapter06ExtensionUnitFiltration V 0) := by
+  sorry
 
 theorem chapter06_torsion_norm_of_primitive_point_regular_case
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K)
@@ -293,25 +498,26 @@ theorem chapter06_lemma_6_4
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
     [Fintype (Gal(L / K))] [Chapter06FiniteAbelianExtension K L]
-    (baseUnits : ℕ → Subgroup Kˣ)
-    (extensionUnits : ℕ → Subgroup Lˣ)
-    (R : Chapter06HerbrandData (Gal(L / K)))
-    (H : Chapter06NormFiltrationInput baseUnits extensionUnits R)
-    (m : ℕ)
-    (hzero : chapter06NormFiltrationSubgroup baseUnits extensionUnits m ≤
-      baseUnits 0) :
-    Nat.card (baseUnits 0 ⧸
-      (chapter06NormFiltrationSubgroup baseUnits extensionUnits m).comap
-        (baseUnits 0).subtype) =
-        Nat.card ((R.upper 0 : Type _) ⧸
-          ((R.upper 0 ⊓ R.upper m).comap (R.upper 0).subtype)) ∧
-      (∀ s, s ∈ R.upper_breaks → ∃ z : ℤ, s = z) ∧
-      (∀ j : ℕ, R.upper j = ⊥ →
-        baseUnits j ≤ chapter06NormImageOfUnitSubgroup (extensionUnits 0)) := by
-  refine ⟨chapter06_norm_filtration_index_formula baseUnits extensionUnits R H m hzero,
-    chapter06_abelian_upper_breaks_are_integral R, ?_⟩
+    (D : Chapter06LocalFieldData K)
+    (V : Chapter06ValuedFiniteExtension D L)
+    (R : Chapter06ExtensionHerbrandData V)
+    (m : ℕ) :
+    chapter06LocalNormFiltrationSubgroup V m ≤ Chapter06UnitFiltration D 0 ∧
+      Nat.card (Chapter06UnitFiltration D 0 ⧸
+        (chapter06LocalNormFiltrationSubgroup V m).comap
+          (Chapter06UnitFiltration D 0).subtype) =
+          Nat.card ((R.herbrand.upper 0 : Type _) ⧸
+            ((R.herbrand.upper 0 ⊓ R.herbrand.upper m).comap
+              (R.herbrand.upper 0).subtype)) ∧
+      (∀ s, s ∈ R.herbrand.upper_breaks → ∃ z : ℤ, s = z) ∧
+      (∀ j : ℕ, R.herbrand.upper j = ⊥ →
+        Chapter06UnitFiltration D j ≤
+          chapter06NormImageOfUnitSubgroup (chapter06ExtensionUnitFiltration V 0)) := by
+  refine ⟨(chapter06_norm_filtration_index_formula D V R m).1,
+    (chapter06_norm_filtration_index_formula D V R m).2,
+    chapter06_abelian_upper_breaks_are_integral R.herbrand, ?_⟩
   intro j hj
-  exact chapter06_deep_units_are_norms baseUnits extensionUnits R H j hj
+  exact chapter06_deep_units_are_norms D V R j hj
 
 /-- The lower breaks predicted by the explicit torsion calculation. -/
 def chapter06TorsionLowerBreak
@@ -395,6 +601,20 @@ structure Chapter06TorsionRamificationProfile
         herbrand.upper r)
   terminal : herbrand.upper level = ⊥
 
+theorem chapter06_torsion_upper_group_principal_identification
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L]
+    [Fintype (Gal(L / K))]
+    [Chapter06FiniteAbelianExtension K L]
+    (P : Chapter06TorsionRamificationProfile (K := K) (L := L))
+    (r : ℕ) (hr : r ≤ P.level) :
+    Nonempty
+      (((Chapter06UnitFiltration P.base r : Type _) ⧸
+          (Chapter06UnitFiltration P.base P.level).comap
+            (Chapter06UnitFiltration P.base r).subtype) ≃*
+        P.herbrand.upper r) := by
+  exact P.upper_principal r hr
+
 theorem chapter06_torsion_deep_units_are_norms
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K)
     (n : ℕ) (hn : 0 < n)
@@ -402,12 +622,10 @@ theorem chapter06_torsion_deep_units_are_norms
     [FiniteDimensional K (chapter06TorsionField D n ω.point)]
     [IsGalois K (chapter06TorsionField D n ω.point)]
     [Fintype (Gal(chapter06TorsionField D n ω.point / K))]
-    [Chapter06FiniteAbelianExtension K (chapter06TorsionField D n ω.point)]
-    (hNF : Chapter06UnitFiltration D n ≤
-      chapter06NormSubgroup K (chapter06TorsionField D n ω.point)) :
+    [Chapter06FiniteAbelianExtension K (chapter06TorsionField D n ω.point)] :
     Chapter06UnitFiltration D n ≤
       chapter06NormSubgroup K (chapter06TorsionField D n ω.point) := by
-  exact hNF
+  sorry
 
 theorem chapter06_torsion_uniformizer_is_norm
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K)
@@ -471,13 +689,11 @@ theorem chapter06_torsion_norm_group_exact
     [Finite (Kˣ ⧸ chapter06NormSubgroup K
       (chapter06TorsionField D n ω.point))]
     [Chapter06FiniteAbelianExtension K
-      (chapter06TorsionField D n ω.point)]
-    (hNF : Chapter06UnitFiltration D n ≤
-      chapter06NormSubgroup K (chapter06TorsionField D n ω.point)) :
+      (chapter06TorsionField D n ω.point)] :
     chapter06NormSubgroup K (chapter06TorsionField D n ω.point) =
       chapter06PrecisionSubgroup D 1 n := by
   exact chapter06_torsion_norm_group D n hn ω
-    (chapter06_torsion_deep_units_are_norms D n hn ω hNF)
+    (chapter06_torsion_deep_units_are_norms D n hn ω)
     (chapter06_torsion_uniformizer_is_norm D n hn ω)
 
 end

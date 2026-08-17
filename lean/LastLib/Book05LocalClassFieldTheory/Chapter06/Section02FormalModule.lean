@@ -1,4 +1,5 @@
 import LastLib.Book05LocalClassFieldTheory.Chapter06.Section01WhyASeparateExistenceConstructionIsNecessary
+import Mathlib.RingTheory.FormalGroup.Basic
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter06
 
@@ -110,41 +111,72 @@ def chapter06BivariateIntertwines
         else chapter06BivariateSeriesInSecondCoordinate f) H =
     chapter06FormalSubstitute (fun _ : Unit => H) f
 
-/-- A commutative formal group law written in the substitution API. -/
+/-- The source-facing formal-group package.
+
+The formal-group law itself is Mathlib's canonical `FormalGroup`.  The
+chapter adds the inverse series because the current Mathlib API exposes the
+formal addition monoid but does not bundle a chosen inverse power series. -/
 structure Chapter06FormalGroupLaw (O : Type*) [CommRing O] where
-  series : Chapter06BivariateSeries O
-  linear_part : chapter06HasLinearPart series 1 1
-  zero_left :
-    ∀ x : Chapter06UnivariateSeries O,
-      MvPowerSeries.constantCoeff x = 0 →
-        chapter06FormalGroupOperation series 0 x = x
-  zero_right :
-    ∀ x : Chapter06UnivariateSeries O,
-      MvPowerSeries.constantCoeff x = 0 →
-        chapter06FormalGroupOperation series x 0 = x
-  commutative :
-    ∀ x y : Chapter06UnivariateSeries O,
-      MvPowerSeries.constantCoeff x = 0 →
-      MvPowerSeries.constantCoeff y = 0 →
-        chapter06FormalGroupOperation series x y =
-          chapter06FormalGroupOperation series y x
-  associative :
-    ∀ x y z : Chapter06UnivariateSeries O,
-      MvPowerSeries.constantCoeff x = 0 →
-      MvPowerSeries.constantCoeff y = 0 →
-      MvPowerSeries.constantCoeff z = 0 →
-        chapter06FormalGroupOperation series
-            (chapter06FormalGroupOperation series x y) z =
-          chapter06FormalGroupOperation series x
-            (chapter06FormalGroupOperation series y z)
+  formalGroup : FormalGroup O
+  commutative : FormalGroup.IsComm formalGroup
   inverse : Chapter06UnivariateSeries O
   inverse_const : MvPowerSeries.constantCoeff inverse = 0
   inverse_left : ∀ x : Chapter06UnivariateSeries O,
     MvPowerSeries.constantCoeff x = 0 →
-      chapter06FormalGroupOperation series inverse x = 0
+      chapter06FormalGroupOperation formalGroup.toPowerSeries inverse x = 0
   inverse_right : ∀ x : Chapter06UnivariateSeries O,
     MvPowerSeries.constantCoeff x = 0 →
-      chapter06FormalGroupOperation series x inverse = 0
+      chapter06FormalGroupOperation formalGroup.toPowerSeries x inverse = 0
+
+/-- The underlying two-variable series in the notation used by Chapter 6. -/
+def Chapter06FormalGroupLaw.series
+    {O : Type*} [CommRing O] (F : Chapter06FormalGroupLaw O) :
+    Chapter06BivariateSeries O :=
+  F.formalGroup.toPowerSeries
+
+instance Chapter06FormalGroupLaw.formalGroupIsComm
+    {O : Type*} [CommRing O] (F : Chapter06FormalGroupLaw O) :
+    FormalGroup.IsComm F.formalGroup := F.commutative
+
+theorem chapter06FormalGroupLaw_hasLinearPart
+    {O : Type*} [CommRing O] (F : Chapter06FormalGroupLaw O) :
+    chapter06HasLinearPart F.series 1 1 := by
+  sorry
+
+theorem chapter06FormalGroupLaw_zero_left
+    {O : Type*} [CommRing O] (F : Chapter06FormalGroupLaw O)
+    (x : Chapter06UnivariateSeries O)
+    (hx : MvPowerSeries.constantCoeff x = 0) :
+    chapter06FormalGroupOperation F.series 0 x = x := by
+  sorry
+
+theorem chapter06FormalGroupLaw_zero_right
+    {O : Type*} [CommRing O] (F : Chapter06FormalGroupLaw O)
+    (x : Chapter06UnivariateSeries O)
+    (hx : MvPowerSeries.constantCoeff x = 0) :
+    chapter06FormalGroupOperation F.series x 0 = x := by
+  sorry
+
+theorem chapter06FormalGroupLaw_associative
+    {O : Type*} [CommRing O] (F : Chapter06FormalGroupLaw O)
+    (x y z : Chapter06UnivariateSeries O)
+    (hx : MvPowerSeries.constantCoeff x = 0)
+    (hy : MvPowerSeries.constantCoeff y = 0)
+    (hz : MvPowerSeries.constantCoeff z = 0) :
+    chapter06FormalGroupOperation F.series
+        (chapter06FormalGroupOperation F.series x y) z =
+      chapter06FormalGroupOperation F.series x
+        (chapter06FormalGroupOperation F.series y z) := by
+  sorry
+
+theorem chapter06FormalGroupLaw_commutative
+    {O : Type*} [CommRing O] (F : Chapter06FormalGroupLaw O)
+    (x y : Chapter06UnivariateSeries O)
+    (hx : MvPowerSeries.constantCoeff x = 0)
+    (hy : MvPowerSeries.constantCoeff y = 0) :
+    chapter06FormalGroupOperation F.series x y =
+      chapter06FormalGroupOperation F.series y x := by
+  sorry
 
 /-- The property that a series is an endomorphism of a formal group law. -/
 def chapter06IsFormalEndomorphism
@@ -385,6 +417,17 @@ noncomputable def chapter06EvaluatedFormalGroupOperation
   MvPowerSeries.eval₂ (algebraMap (Chapter06ValuationRing D) E)
     (fun i : Fin 2 => if i = (0 : Fin 2) then x else y) F.series
 
+noncomputable def chapter06EvaluatedFormalGroupInverse
+    {K E : Type*} [Field K] [Field E] [Algebra K E]
+    [UniformSpace E]
+    [FiniteDimensional K E]
+    [CompleteSpace E]
+    [IsTopologicalRing E] [IsLinearTopology E E]
+    {D : Chapter06LocalFieldData K}
+    [UniformSpace (Chapter06ValuationRing D)]
+    (F : Chapter06FormalGroupLaw (Chapter06ValuationRing D)) (x : E) : E :=
+  PowerSeries.eval₂ (algebraMap (Chapter06ValuationRing D) E) x F.inverse
+
 theorem chapter06_formal_group_points_closed
     {K E : Type*} [Field K] [Field E] [Algebra K E]
     [UniformSpace E]
@@ -400,6 +443,72 @@ theorem chapter06_formal_group_points_closed
     chapter06PositiveValuationPoint V
       (chapter06EvaluatedFormalGroupOperation F x y) := by
   sorry
+
+theorem chapter06_formal_group_inverse_closed
+    {K E : Type*} [Field K] [Field E] [Algebra K E]
+    [UniformSpace E]
+    [FiniteDimensional K E]
+    [CompleteSpace E]
+    [IsTopologicalRing E] [IsLinearTopology E E]
+    (D : Chapter06LocalFieldData K)
+    [UniformSpace (Chapter06ValuationRing D)]
+    (V : Chapter06ValuedFiniteExtension D E)
+    (F : Chapter06FormalGroupLaw (Chapter06ValuationRing D)) (x : E)
+    (hx : chapter06PositiveValuationPoint V x) :
+    chapter06PositiveValuationPoint V
+      (chapter06EvaluatedFormalGroupInverse F x) := by
+  sorry
+
+abbrev Chapter06FormalGroupPoint
+    {K E : Type*} [Field K] [Field E] [Algebra K E]
+    [FiniteDimensional K E]
+    {D : Chapter06LocalFieldData K}
+    (V : Chapter06ValuedFiniteExtension D E)
+    (_F : Chapter06FormalGroupLaw (Chapter06ValuationRing D)) : Type _ :=
+  {x : E // chapter06PositiveValuationPoint V x}
+
+/-- Positive-valuation points form the additive group supplied by the formal
+group law.  The operation and inverse are the evaluated series above; the
+group laws are the corresponding formal identities. -/
+noncomputable instance chapter06FormalGroupPointAddCommGroup
+    {K E : Type*} [Field K] [Field E] [Algebra K E]
+    [UniformSpace E]
+    [FiniteDimensional K E]
+    [CompleteSpace E]
+    [IsTopologicalRing E] [IsLinearTopology E E]
+    (D : Chapter06LocalFieldData K)
+    [UniformSpace (Chapter06ValuationRing D)]
+    (V : Chapter06ValuedFiniteExtension D E)
+    (F : Chapter06FormalGroupLaw (Chapter06ValuationRing D)) :
+    AddCommGroup (Chapter06FormalGroupPoint V F) := by
+  let add : Chapter06FormalGroupPoint V F →
+      Chapter06FormalGroupPoint V F → Chapter06FormalGroupPoint V F := fun x y =>
+    ⟨chapter06EvaluatedFormalGroupOperation F x.1 y.1,
+      chapter06_formal_group_points_closed D V F x.1 y.1 x.2 y.2⟩
+  let zero : Chapter06FormalGroupPoint V F := ⟨0, by sorry⟩
+  let neg : Chapter06FormalGroupPoint V F → Chapter06FormalGroupPoint V F := fun x =>
+    ⟨chapter06EvaluatedFormalGroupInverse F x.1,
+      chapter06_formal_group_inverse_closed D V F x.1 x.2⟩
+  letI : Zero (Chapter06FormalGroupPoint V F) := ⟨zero⟩
+  letI : Add (Chapter06FormalGroupPoint V F) := ⟨add⟩
+  letI : Neg (Chapter06FormalGroupPoint V F) := ⟨neg⟩
+  refine
+    { add := add
+      zero := zero
+      neg := neg
+      add_assoc := by sorry
+      zero_add := by sorry
+      add_zero := by sorry
+      neg_add_cancel := by sorry
+      add_comm := by sorry
+      nsmul := nsmulRec
+      zsmul := zsmulRec
+      nsmul_zero := by sorry
+      nsmul_succ := by sorry
+      sub_eq_add_neg := by sorry
+      zsmul_zero' := by sorry
+      zsmul_succ' := by sorry
+      zsmul_neg' := by sorry }
 
 /-- Changing the Lubin--Tate series gives an integral formal-module
 isomorphism, not a literal equality of coordinates. -/

@@ -1,4 +1,5 @@
 import Mathlib.Data.ZMod.Basic
+import LastLib.Book05LocalClassFieldTheory.Chapter06.Section01WhyASeparateExistenceConstructionIsNecessary
 import LastLib.Book05LocalClassFieldTheory.Chapter06.Section05NormGroupOfTheTorsionExtension
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter06
@@ -27,9 +28,8 @@ structure Chapter06UnramifiedSubextension
   degree_eq : Module.finrank K field = m
   unramified : Chapter06UnramifiedValuedExtension D valued
 
-/- LOCAL_DEPENDENCY_GUESS: the finite unramified-level construction from the
-   earlier local-field chapters supplies a representative in the chosen
-   algebraic closure, with the displayed degree and valuation data. -/
+/-- The earlier local-field chapters supply the finite unramified-level
+    construction represented by this chosen-subextension interface. -/
 theorem chapter06_unramified_subextension_exists
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K) (m : ℕ)
     (hm : 0 < m) :
@@ -199,8 +199,6 @@ theorem chapter06_torsion_unramified_compositum_norm_group
     [IsGalois K (chapter06TorsionField D n ω.point)]
     [Fintype (Gal(chapter06TorsionField D n ω.point / K))]
     [Chapter06FiniteAbelianExtension K (chapter06TorsionField D n ω.point)]
-    (hT : chapter06NormSubgroup K (chapter06TorsionField D n ω.point) =
-      chapter06PrecisionSubgroup D 1 n)
     (m : ℕ) (hm : 0 < m)
     (U : Chapter06UnramifiedSubextension D m)
     [FiniteDimensional K
@@ -258,8 +256,6 @@ theorem chapter06_precision_subgroups_are_compositum_norms
     [IsGalois K (chapter06TorsionField D n ω.point)]
     [Fintype (Gal(chapter06TorsionField D n ω.point / K))]
     [Chapter06FiniteAbelianExtension K (chapter06TorsionField D n ω.point)]
-    (hT : chapter06NormSubgroup K (chapter06TorsionField D n ω.point) =
-      chapter06PrecisionSubgroup D 1 n)
     (m : ℕ) (hm : 0 < m)
     (U : Chapter06UnramifiedSubextension D m)
     [FiniteDimensional K
@@ -274,7 +270,16 @@ theorem chapter06_precision_subgroups_are_compositum_norms
         (chapter06TorsionUnramifiedCompositum D n hn ω m hm U) =
       chapter06PrecisionSubgroup D m n := by
   exact chapter06_torsion_unramified_compositum_norm_group
-    D n hn ω hT m hm U
+    D n hn ω m hm U
+
+theorem chapter06_precision_family_is_neighborhood_basis
+    {K : Type*} [Field K] (D : Chapter06LocalFieldData K)
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
+    (htop : Chapter06UnitFiltrationNeighborhoodBasis D) :
+    ∀ H : Subgroup Kˣ, IsOpen (H : Set Kˣ) → H.FiniteIndex →
+      ∃ m n : ℕ, 0 < m ∧ 0 < n ∧
+        chapter06PrecisionSubgroup D m n ≤ H := by
+  exact chapter06_open_finite_index_contains_precision D htop
 
 end
 
