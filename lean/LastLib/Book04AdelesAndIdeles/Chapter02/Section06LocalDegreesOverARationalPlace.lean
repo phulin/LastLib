@@ -143,6 +143,11 @@ theorem chapter02_local_completion_degree_formula
     [Algebra (@Padic p.1 ⟨p.2⟩) (Chapter02LocalField q.1)]
     [FiniteDimensional (@Padic p.1 ⟨p.2⟩) (Chapter02LocalField q.1)]
     [IsScalarTower ℚ (@Padic p.1 ⟨p.2⟩) (Chapter02LocalField q.1)]
+    (hcompatible :
+      ∀ a : ℚ,
+        algebraMap (@Padic p.1 ⟨p.2⟩) (Chapter02LocalField q.1)
+            (algebraMap ℚ (@Padic p.1 ⟨p.2⟩) a) =
+          algebraMap K (Chapter02LocalField q.1) (algebraMap ℚ K a))
     (hcontinuous :
       Continuous (algebraMap (@Padic p.1 ⟨p.2⟩) (Chapter02LocalField q.1))) :
     Module.finrank (@Padic p.1 ⟨p.2⟩) (Chapter02LocalField q.1) =
