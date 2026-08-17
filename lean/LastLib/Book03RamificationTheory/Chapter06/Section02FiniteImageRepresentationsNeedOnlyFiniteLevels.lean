@@ -781,8 +781,7 @@ theorem chapter06_representation_fixed_space_chain_exists
   have hpositiveBreaks_spec : ∀ r, r ∈ positiveBreaks ↔
       0 < r ∧ chapter06RepresentationUpperBreak D ρ r := by
     intro r
-    simp [positiveBreaks, chapter06RepresentationUpperBreakSet,
-      (chapter06RepresentationUpperBreakSet_finite D hbij ρ).mem_toFinset]
+    simp [positiveBreaks, chapter06RepresentationUpperBreakSet]
     exact and_comm
   have hlocal : ∀ {u w : ℝ}, 0 < u → u ≤ w →
       (∀ r ∈ positiveBreaks, ¬(u ≤ r ∧ r < w)) → F u = F w := by
@@ -895,7 +894,7 @@ theorem chapter06_representation_fixed_space_chain_exists
         rcases lt_or_eq_of_le hle with hlt | heq
         · exact ((chapter05_herbrand_function_is_continuous_increasing_piecewise_linear D).2.1
             hinv_dom hb_dom hlt).le
-        · simpa [heq]
+        · simp [heq]
       linarith
     have hUbot : chapter05UpperRamificationGroup D u = ⊥ := by
       rw [chapter05UpperRamificationGroup, if_pos (by linarith : (-1 : ℝ) ≤ u)]
@@ -905,7 +904,6 @@ theorem chapter06_representation_fixed_space_chain_exists
       · exact bot_le
     change chapter06FixedSpace ρ (chapter05UpperRamificationGroup D u) = ⊤
     rw [hUbot]
-    change chapter06FixedSpace ρ (⊥ : Subgroup G) = ⊤
     apply le_antisymm le_top
     intro v hv
     rw [chapter06FixedSpace.mem_iff]
@@ -922,12 +920,11 @@ theorem chapter06_representation_fixed_space_chain_exists
       (positiveBreaks.orderEmbOfFin (by rfl)).strictMono
   have hlabels_mem : ∀ i : Fin n, labels i ∈ positiveBreaks := by
     intro i
-    simpa [labels] using
-      positiveBreaks.orderEmbOfFin_mem (by rfl) i
+    simp [labels]
   have hlabels_surj : ∀ r, r ∈ positiveBreaks → ∃ i : Fin n, labels i = r := by
     intro r hr
     have hrange : Set.range labels = (positiveBreaks : Set ℝ) := by
-      simpa [labels] using positiveBreaks.range_orderEmbOfFin (by rfl)
+      simp [labels]
     have hrange_mem : r ∈ Set.range labels := by
       rw [hrange]
       exact hr
@@ -983,7 +980,7 @@ theorem chapter06_representation_fixed_space_chain_exists
       have hno : ∀ r ∈ positiveBreaks, ¬(t ≤ r ∧ r < W) := by
         intro r hr
         rw [hempty] at hr
-        exact False.elim (by simpa using hr)
+        exact False.elim (by simp at hr)
       have htw : F t = F W := hlocal ht htW hno
       have hFt : F t = R 0 := by
         dsimp [F, R]

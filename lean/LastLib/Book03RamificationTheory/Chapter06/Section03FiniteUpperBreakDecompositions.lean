@@ -1495,6 +1495,7 @@ bridges state the source's perfect-residue specialization explicitly.
 theorem chapter06_local_group_upper_breaks_integral
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    [Chapter05LocalDoldCongruenceInput]
     (D : Chapter05LocalGaloisUpperData K L)
     (habelian : ∀ σ τ : Gal(L / K), σ * τ = τ * σ)
     [PerfectField (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)] :
@@ -1506,6 +1507,7 @@ theorem chapter06_local_abelian_representation_breaks_integral
     {K L F V : Type*}
     [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    [Chapter05LocalDoldCongruenceInput]
     [Field F] [CharZero F] [AddCommGroup V] [Module F V]
     [FiniteDimensional F V]
     (D : Chapter05LocalGaloisUpperData K L)
