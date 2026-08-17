@@ -694,7 +694,210 @@ theorem henselian_uniqueness_criterion
        hasUniqueExtensionToEveryAlgebraicField v,
        hasUniqueExtensionToAlgebraicClosure v,
        allFiniteIntegralClosuresAreLocal v] := by
-  sorry
+  tfae_have 1 → 4 := by
+    intro hH
+    unfold allFiniteIntegralClosuresAreLocal
+    intro E _ _ _ _ _
+    let A := v.valuationSubring
+    let C := integralClosure A E
+    let hA : v.Integers A := Valuation.valuationSubring.integers v
+    let : IsIntegrallyClosed A := hA.isIntegrallyClosed
+    have hunique : Chapter10.Chapter10HasUniquePrimeAbove (A := A) (B := C) := by
+      exact Chapter10.chapter10_henselian_valuation_ring_has_unique_prime_above
+        (A := A) (B := C) (K := K) (L := E) v hA hH
+    obtain ⟨P, hP, hPuniq⟩ := hunique
+    have hPmax : P.IsMaximal := by
+      exact @Ideal.isMaximal_of_isIntegral_of_isMaximal_comap _ _ _ _ _ _ P hP.1
+        (hP.2.symm ▸ IsLocalRing.maximalIdeal.isMaximal _)
+    apply IsLocalRing.of_unique_max_ideal
+    refine ⟨P, hPmax, ?_⟩
+    intro Q hQmax
+    have hQcomapmax :=
+      Ideal.isMaximal_comap_of_isIntegral_of_isMaximal
+        (R := A) (S := C) Q
+    have hQabove : Chapter10.Chapter10PrimeAboveMaximal (A := A) (B := C) Q :=
+      ⟨hQmax.isPrime, IsLocalRing.eq_maximalIdeal hQcomapmax⟩
+    exact hPuniq Q hQabove
+
+  tfae_have 1 → 2 := by
+    intro hH E _ _ _
+    refine ⟨Chapter10.chapter10_valuation_extension_exists_as_heterogeneous (v := v), ?_⟩
+    intro W₁ W₂
+    exact Chapter10.chapter10_henselian_valuation_has_unique_branch v hH
+      W₁.valuation W₂.valuation W₁.isExtension W₂.isExtension
+
+  tfae_have 2 → 3 := by
+    intro hEvery
+    exact hEvery (AlgebraicClosure K)
+
+  tfae_have 3 → 2 := by
+    intro hClosure E _ _ _
+    let ι : E →ₐ[K] AlgebraicClosure K := IsAlgClosed.lift
+    let : Algebra E (AlgebraicClosure K) := ι.toRingHom.toAlgebra
+    let : IsScalarTower K E (AlgebraicClosure K) := by
+      apply IsScalarTower.of_algebraMap_eq'
+      ext x
+      change algebraMap K (AlgebraicClosure K) x = ι (algebraMap K E x)
+      exact (ι.commutes x).symm
+    refine ⟨Chapter10.chapter10_valuation_extension_exists_as_heterogeneous (v := v), ?_⟩
+    intro W₁ W₂
+    obtain ⟨U₁⟩ :=
+      Chapter10.chapter10_valuation_extension_exists_as_heterogeneous
+        (L := AlgebraicClosure K) W₁.valuation
+    obtain ⟨U₂⟩ :=
+      Chapter10.chapter10_valuation_extension_exists_as_heterogeneous
+        (L := AlgebraicClosure K) W₂.valuation
+    have hcomp₁ :
+        U₁.valuation.comap (algebraMap K (AlgebraicClosure K)) =
+          (U₁.valuation.comap (algebraMap E (AlgebraicClosure K))).comap
+            (algebraMap K E) := by
+      ext x
+      change U₁.valuation (algebraMap K (AlgebraicClosure K) x) =
+        U₁.valuation (algebraMap E (AlgebraicClosure K) (algebraMap K E x))
+      rw [← IsScalarTower.algebraMap_apply K E (AlgebraicClosure K)]
+    have hcomp₂ :
+        U₂.valuation.comap (algebraMap K (AlgebraicClosure K)) =
+          (U₂.valuation.comap (algebraMap E (AlgebraicClosure K))).comap
+            (algebraMap K E) := by
+      ext x
+      change U₂.valuation (algebraMap K (AlgebraicClosure K) x) =
+        U₂.valuation (algebraMap E (AlgebraicClosure K) (algebraMap K E x))
+      rw [← IsScalarTower.algebraMap_apply K E (AlgebraicClosure K)]
+    let W₁' : HeterogeneousValuationExtension v (AlgebraicClosure K) :=
+      { valueGroup := U₁.valueGroup
+        orderedValueGroup := U₁.orderedValueGroup
+        valuation := U₁.valuation
+        isExtension := by
+          rw [hcomp₁]
+          exact W₁.isExtension.trans
+            (U₁.isExtension.comap (algebraMap K E)) }
+    let W₂' : HeterogeneousValuationExtension v (AlgebraicClosure K) :=
+      { valueGroup := U₂.valueGroup
+        orderedValueGroup := U₂.orderedValueGroup
+        valuation := U₂.valuation
+        isExtension := by
+          rw [hcomp₂]
+          exact W₂.isExtension.trans
+            (U₂.isExtension.comap (algebraMap K E)) }
+    have h₁ :
+        W₁.valuation.IsEquiv
+          (U₁.valuation.comap (algebraMap E (AlgebraicClosure K))) :=
+      U₁.isExtension
+    have h₂ :
+        W₂.valuation.IsEquiv
+          (U₂.valuation.comap (algebraMap E (AlgebraicClosure K))) :=
+      U₂.isExtension
+    have hEq : W₁'.valuation.IsEquiv W₂'.valuation := hClosure.2 W₁' W₂'
+    have hEq' :
+        (U₁.valuation.comap (algebraMap E (AlgebraicClosure K))).IsEquiv
+          (U₂.valuation.comap (algebraMap E (AlgebraicClosure K))) :=
+      hEq.comap ι.toRingHom
+    exact h₁.trans (hEq'.trans h₂.symm)
+
+  tfae_have 4 → 2 := by
+    intro hLocal E _ _ _
+    refine ⟨Chapter10.chapter10_valuation_extension_exists_as_heterogeneous (v := v), ?_⟩
+    intro W₁ W₂
+    apply Valuation.isEquiv_of_val_le_one
+    intro x
+    obtain ⟨F, hxF, hF⟩ :=
+      Chapter10.chapter10_algebraic_element_in_finite_subextension
+        (K := K) (L := E) (Algebra.IsAlgebraic.isAlgebraic x)
+    let : FiniteDimensional K F := hF
+    let : Algebra v.valuationSubring F :=
+      (algebraMap K F).comp (algebraMap v.valuationSubring K) |>.toAlgebra
+    let : IsScalarTower v.valuationSubring K F := by
+      apply IsScalarTower.of_algebraMap_eq'
+      ext a
+      rfl
+    let : IsScalarTower v.valuationSubring F E := by
+      apply IsScalarTower.of_algebraMap_eq'
+      ext a
+      rw [IsScalarTower.algebraMap_apply v.valuationSubring K E]
+      change algebraMap K E (algebraMap v.valuationSubring K a) =
+        algebraMap F E (algebraMap K F (algebraMap v.valuationSubring K a))
+      rw [IsScalarTower.algebraMap_apply K F E]
+    have hLocalF : IsLocalRing (integralClosure v.valuationSubring F) :=
+      hLocal F
+    let w₁F : Valuation F W₁.valueGroup :=
+      W₁.valuation.comap (algebraMap F E)
+    let w₂F : Valuation F W₂.valueGroup :=
+      W₂.valuation.comap (algebraMap F E)
+    have h₁F : v.IsEquiv (w₁F.comap (algebraMap K F)) := by
+      apply Valuation.isEquiv_of_val_le_one
+      intro y
+      change v y ≤ 1 ↔
+        W₁.valuation (algebraMap F E (algebraMap K F y)) ≤ 1
+      rw [← IsScalarTower.algebraMap_apply K F E]
+      exact W₁.isExtension.le_one_iff_le_one
+    have h₂F : v.IsEquiv (w₂F.comap (algebraMap K F)) := by
+      apply Valuation.isEquiv_of_val_le_one
+      intro y
+      change v y ≤ 1 ↔
+        W₂.valuation (algebraMap F E (algebraMap K F y)) ≤ 1
+      rw [← IsScalarTower.algebraMap_apply K F E]
+      exact W₂.isExtension.le_one_iff_le_one
+    let W₁F : HeterogeneousValuationExtension v F :=
+      { valueGroup := W₁.valueGroup
+        orderedValueGroup := W₁.orderedValueGroup
+        valuation := w₁F
+        isExtension := h₁F }
+    let W₂F : HeterogeneousValuationExtension v F :=
+      { valueGroup := W₂.valueGroup
+        orderedValueGroup := W₂.orderedValueGroup
+        valuation := w₂F
+        isExtension := h₂F }
+    let C := integralClosure v.valuationSubring F
+    let : IsLocalRing C := hLocalF
+    have hcorr := integral_closure_extension_center_correspondence
+      (v := v) (E := F)
+    obtain ⟨P₁, hP₁max, _, hP₁center⟩ := hcorr.1 W₁F
+    obtain ⟨P₂, hP₂max, _, hP₂center⟩ := hcorr.1 W₂F
+    have hcenter : heterogeneousValuationCenter v W₁F =
+        heterogeneousValuationCenter v W₂F := by
+      calc
+        heterogeneousValuationCenter v W₁F = (P₁ : Set C) := hP₁center.symm
+        _ = (IsLocalRing.maximalIdeal C : Set C) := by
+          rw [IsLocalRing.eq_maximalIdeal hP₁max]
+        _ = (P₂ : Set C) := by
+          rw [IsLocalRing.eq_maximalIdeal hP₂max]
+        _ = heterogeneousValuationCenter v W₂F := hP₂center
+    have hFEquiv : w₁F.IsEquiv w₂F := hcorr.2.2 W₁F W₂F hcenter
+    have hpoint := hFEquiv (⟨x, hxF⟩ : F) (1 : F)
+    simpa [w₁F, w₂F] using hpoint
+
+  tfae_have 3 → 4 := by
+    intro hClosure
+    unfold allFiniteIntegralClosuresAreLocal
+    intro E _ _ _ _ _
+    let A := v.valuationSubring
+    let C := integralClosure A E
+    let hA : v.Integers A := Valuation.valuationSubring.integers v
+    let : IsIntegrallyClosed A := hA.isIntegrallyClosed
+    have hcor := Chapter10.chapter10_finite_extension_prime_valuation_correspondence
+      (A := A) (B := C) (K := K) (L := E) v hA
+    have huniqExt : hasUniqueValuationExtension v E := tfae_3_to_2 hClosure E
+    have hunique : Chapter10.Chapter10HasUniquePrimeAbove (A := A) (B := C) :=
+      (Chapter10.chapter10_unique_prime_iff_unique_valuation_extension v hA hcor).mpr
+        huniqExt
+    obtain ⟨P, hP, hPuniq⟩ := hunique
+    have hPmax : P.IsMaximal := by
+      exact @Ideal.isMaximal_of_isIntegral_of_isMaximal_comap _ _ _ _ _ _ P hP.1
+        (hP.2.symm ▸ IsLocalRing.maximalIdeal.isMaximal _)
+    apply IsLocalRing.of_unique_max_ideal
+    refine ⟨P, hPmax, ?_⟩
+    intro Q hQmax
+    have hQcomapmax :=
+      Ideal.isMaximal_comap_of_isIntegral_of_isMaximal
+        (R := A) (S := C) Q
+    have hQabove : Chapter10.Chapter10PrimeAboveMaximal (A := A) (B := C) Q :=
+      ⟨hQmax.isPrime, IsLocalRing.eq_maximalIdeal hQcomapmax⟩
+    exact hPuniq Q hQabove
+
+  tfae_have 4 → 1 := by
+    sorry
+
+  tfae_finish
 
 /-- The finite normalization locality interface in the standard Mathlib
     henselian-local-ring language.  This is the direct bridge used by later
