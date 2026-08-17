@@ -92,7 +92,8 @@ theorem chapter01_theorem_1_2
 theorem chapter01_padic_algebraic_closure_is_not_complete
     [Fact (Nat.Prime 5)] :
     ¬ CompleteSpace (PadicAlgCl 5) := by
-  sorry
+  exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_padic_algebraic_closure_is_not_complete
+    (p := 5)
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01
