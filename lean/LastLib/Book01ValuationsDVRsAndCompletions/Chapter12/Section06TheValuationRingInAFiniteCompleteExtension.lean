@@ -3,6 +3,7 @@ import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section03IntegralEle
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section01FromOneLocalRingToSeveral
 import Mathlib.Analysis.Normed.Module.FiniteDimension
 import Mathlib.Analysis.Normed.Operator.BoundedLinearMaps
+import Mathlib.RingTheory.DedekindDomain.Factorization
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
 
