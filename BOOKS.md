@@ -108,6 +108,15 @@ Hilbert's syzygy theorem and generic freeness in the forms the projective volume
     free actions of finite locally free group schemes with the full torsor identity, fppf sheaf
     quotient, and base-change properties, including stable-affine covers and subgroup quotients.
 
+10a. **Excellent Rings and Formal Fibers** — Prove the permanence theory of excellent rings:
+Serre's homological criterion for regularity, geometric regularity over fields, regular
+homomorphisms and $G$-rings, Cohen's separability theorem, the theorem that algebras essentially
+of finite type over complete local rings are $G$-rings, Grothendieck's finite-type permanence,
+openness of regular loci, and Nagata theory via Tate--Akizuki. Concludes that fields, $\mathbf
+Z$, characteristic-zero Dedekind domains, and complete local rings — and everything essentially
+of finite type over them — are excellent, under one explicit standing hypothesis: residue fields
+have finite $p$-degree, which holds for every base the collection uses.
+
 11. **Normalization and Regular Models of Arithmetic Curves** — Prove the required finiteness
     of normalization and construct normal projective models of curves over excellent Dedekind
     schemes. Two-dimensional resolution of singularities for excellent surfaces is proved in the
