@@ -1527,11 +1527,10 @@ def TendsToTopInValueGroupImage {K Γ : Type*} [Field K]
 
 /- SOURCE_ISSUE (books/001-valuations-dvrs-and-completions.md:§9.2, paragraph
   beginning “Because the value group is archimedean”): the informal argument
-  concerns the ordered value-group image, but the provisional statement below
-  quantified over an arbitrary ambient codomain `Γ`.  Rank one does not make
-  that ambient codomain cofinal, and Newton corrections have finite value.
-  The interface therefore quantifies only over finite values represented by
-  the valuation. -/
+  concerns the ordered value-group image, but the source argument quantifies
+  over an arbitrary ambient codomain `Γ`.  Rank one does not make that ambient
+  codomain cofinal, and Newton corrections have finite value.  The interface
+  therefore quantifies only over finite values represented by the valuation. -/
 theorem valuation_newton_corrections_tend_to_top {K Γ : Type*} [Field K]
     [LinearOrderedAddCommGroupWithTop Γ] (v : AddValuation K Γ)
     [Valuation.RankOne v.toValuation]

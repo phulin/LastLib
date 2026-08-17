@@ -525,9 +525,8 @@ theorem adic_factorization_correction_step
     ((IsLocalRing.maximalIdeal A) ^ (n + n)).neg_mem (hprod i)
 
 /-- Complete separated local rings satisfy the book's factorization form of
-Hensel's lemma.  Its eventual proof should run the coefficientwise correction
-argument in the adic topology; it must not be obtained from an assumed generic
-simple-root-to-factorization bridge. -/
+Hensel's lemma by the coefficientwise correction argument in the adic topology;
+this proof does not depend on a generic simple-root-to-factorization bridge. -/
 theorem complete_separated_local_ring_is_henselian
     {A : Type*} [CommRing A] [IsLocalRing A]
     (hA : IsMaximalIdealAdicallyCompleteSeparated A) :
