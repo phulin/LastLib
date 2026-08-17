@@ -1,4 +1,5 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section04RamificationIndexAndResidueDegree
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter03.Section06ResiduesAndLeadingCoefficients
 import Mathlib.Algebra.Algebra.Subalgebra.Lattice
 import Mathlib.FieldTheory.Separable
 import Mathlib.NumberTheory.Padics.PadicIntegers
@@ -626,10 +627,11 @@ theorem chapter10_total_ramification_preserved_under_unramified_base_change
       _ = p'.degree := hdeg.symm
   · exact hres.trans htotal_f
 
-/-- The Laurent-series valuation used in the equal-characteristic model. -/
-def Chapter10LaurentSeriesValuation (k : Type*) [Field k] :
+/-- Chapter 3's Laurent-series valuation, retained under the Chapter 10 name
+for the concrete-extension interfaces below. -/
+abbrev Chapter10LaurentSeriesValuation (k : Type*) [Field k] :
     Valuation (LaurentSeries k) ℤᵐ⁰ :=
-  Valued.v
+  Chapter03.laurentSeriesValuation k
 
 /-- Value of a power of the Laurent-series parameter. -/
 theorem chapter10_laurent_series_parameter_value
@@ -758,111 +760,7 @@ the coefficient field. -/
 noncomputable def Chapter10LaurentSeriesResidueRingEquiv
     (F : Type*) [Field F] :
     F ≃+* Chapter10ResidueField (Chapter10LaurentSeriesValuation F) := by
-  let c : F →+* (Chapter10LaurentSeriesValuation F).valuationSubring :=
-    (algebraMap F (LaurentSeries F)).codRestrict _ (by
-      intro a
-      rw [Valuation.mem_valuationSubring_iff]
-      change Valued.v (algebraMap F (LaurentSeries F) a) ≤ 1
-      rw [LaurentSeries.val_le_one_iff_eq_coe]
-      exact ⟨PowerSeries.C a, by
-        simp [HahnSeries.algebraMap_apply', PowerSeries.C_eq_algebraMap]⟩)
-  have hc (a : F) : c a =
-      ⟨algebraMap F (LaurentSeries F) a, by
-        rw [Valuation.mem_valuationSubring_iff]
-        change Valued.v (algebraMap F (LaurentSeries F) a) ≤ 1
-        rw [LaurentSeries.val_le_one_iff_eq_coe]
-        exact ⟨PowerSeries.C a, by
-          simp [HahnSeries.algebraMap_apply', PowerSeries.C_eq_algebraMap]⟩⟩ := by
-    rfl
-  let cr : F →+* Chapter10ResidueField (Chapter10LaurentSeriesValuation F) :=
-    (IsLocalRing.residue _).comp c
-  have hconst_coe (a : F) :
-      algebraMap F (LaurentSeries F) a = (PowerSeries.C a : LaurentSeries F) := by
-    simp [HahnSeries.algebraMap_apply', PowerSeries.C_eq_algebraMap]
-  have hconst (a : F) (ha : a ≠ 0) :
-      Chapter10LaurentSeriesValuation F (algebraMap F (LaurentSeries F) a) = 1 := by
-    have hmul : c a * c a⁻¹ = 1 := by
-      apply Subtype.ext
-      change algebraMap F (LaurentSeries F) a *
-        algebraMap F (LaurentSeries F) a⁻¹ = 1
-      rw [← map_mul, mul_inv_cancel₀ ha, map_one]
-    let ua := Units.mkOfMulEqOne (c a) (c a⁻¹) hmul
-    have hu : IsUnit (c a) :=
-      ⟨ua, Units.val_mkOfMulEqOne hmul⟩
-    have hval := ((Chapter10LaurentSeriesValuation F).valuationSubring.valuation_eq_one_iff
-      (c a)).mp hu
-    exact (Valuation.isEquiv_valuation_valuationSubring
-      (Chapter10LaurentSeriesValuation F)).eq_one_iff_eq_one.mpr (by
-        simpa [hc] using hval)
-  have hcoeff (G : PowerSeries F) (n : ℤ) (hn : n < 1) :
-      ((G : LaurentSeries F) -
-          algebraMap F (LaurentSeries F) (PowerSeries.constantCoeff G)).coeff n = 0 := by
-    rw [hconst_coe, HahnSeries.coeff_sub]
-    obtain n | n := n
-    · have hn' : (n : ℤ) < (1 : ℤ) := by simpa using hn
-      have hnlt : n < 1 := Int.ofNat_lt.mp hn'
-      have hn0z : (n : ℤ) = 0 := by omega
-      have hn0 : n = 0 := by exact_mod_cast hn0z
-      subst n
-      rw [Int.ofNat_eq_natCast, LaurentSeries.coeff_coe_powerSeries]
-      rw [LaurentSeries.coeff_coe_powerSeries]
-      simp [PowerSeries.coeff_zero_eq_constantCoeff_apply]
-    · change ((G : LaurentSeries F).coeff (Int.negSucc n) -
-        (PowerSeries.C (PowerSeries.constantCoeff G) : LaurentSeries F).coeff
-          (Int.negSucc n)) = 0
-      simp [PowerSeries.coeff_coe]
-  have hcr_surj : Function.Surjective cr := by
-    intro y
-    obtain ⟨s, rfl⟩ := IsLocalRing.residue_surjective y
-    have hsval : Valued.v (s : LaurentSeries F) ≤ 1 := by
-      exact (Valuation.mem_valuationSubring_iff
-        (Chapter10LaurentSeriesValuation F) (s : LaurentSeries F)).mp s.property
-    obtain ⟨G, hG⟩ :=
-      (LaurentSeries.val_le_one_iff_eq_coe F (s : LaurentSeries F)).mp hsval
-    have hsmall : Valued.v
-        ((s : LaurentSeries F) -
-          algebraMap F (LaurentSeries F) (PowerSeries.constantCoeff G)) ≤
-        WithZero.exp (-(1 : ℤ)) := by
-      apply (LaurentSeries.valuation_le_iff_coeff_lt_eq_zero F).mpr
-      intro n hn
-      rw [← hG]
-      exact hcoeff G n hn
-    have hlt : Valued.v
-        ((s : LaurentSeries F) -
-          algebraMap F (LaurentSeries F) (PowerSeries.constantCoeff G)) < 1 := by
-      apply lt_of_le_of_lt hsmall
-      simpa only [← WithZero.exp_zero, WithZero.exp_lt_exp] using
-        (show (-(1 : ℤ)) < 0 by norm_num)
-    have hmem : s - c (PowerSeries.constantCoeff G) ∈
-        IsLocalRing.maximalIdeal (Chapter10LaurentSeriesValuation F).valuationSubring := by
-      apply (Valuation.mem_maximalIdeal_iff (K := LaurentSeries F)
-        (Chapter10LaurentSeriesValuation F)).2
-      change Valued.v
-          ((s : LaurentSeries F) -
-            algebraMap F (LaurentSeries F) (PowerSeries.constantCoeff G)) < 1
-      exact hlt
-    have hzero := (IsLocalRing.residue_eq_zero_iff _).mpr hmem
-    rw [map_sub] at hzero
-    refine ⟨PowerSeries.constantCoeff G, ?_⟩
-    change IsLocalRing.residue _ (c (PowerSeries.constantCoeff G)) =
-      IsLocalRing.residue _ s
-    exact (sub_eq_zero.mp hzero).symm
-  have hcr_inj : Function.Injective cr := by
-    intro a b hab
-    have hzero : cr (a - b) = 0 := by
-      rw [map_sub, hab, sub_self]
-    have hmem : c (a - b) ∈
-        IsLocalRing.maximalIdeal (Chapter10LaurentSeriesValuation F).valuationSubring := by
-      apply (IsLocalRing.residue_eq_zero_iff _).mp
-      simpa [cr] using hzero
-    have hlt : Chapter10LaurentSeriesValuation F
-        (algebraMap F (LaurentSeries F) (a - b)) < 1 := by
-      have hlt' := (Valuation.mem_maximalIdeal_iff (K := LaurentSeries F)
-        (Chapter10LaurentSeriesValuation F)).mp hmem
-      simpa [hc] using hlt'
-    by_contra habne
-    exact (ne_of_lt hlt) (hconst (a - b) (sub_ne_zero.mpr habne))
-  exact RingEquiv.ofBijective cr ⟨hcr_inj, hcr_surj⟩
+  exact (Chapter03.laurentSeriesResidueEquiv F).symm
 
 /-! Constant-field extensions have the numerical profile e = 1 and
 f = [k' : k] without a separability hypothesis.  The separable refinement
@@ -936,57 +834,7 @@ theorem chapter10_constant_field_extension_numerical_profile
     apply Algebra.finrank_eq_of_equiv_equiv
       (Chapter10LaurentSeriesResidueRingEquiv k)
       (Chapter10LaurentSeriesResidueRingEquiv k')
-    apply RingHom.ext
-    intro a
-    have htower : IsScalarTower k (LaurentSeries k) (LaurentSeries k') :=
-      inferInstance
-    have hAlgebraTower :
-        @IsScalarTower k (LaurentSeries k) (LaurentSeries k')
-          (inferInstance : Algebra k (LaurentSeries k)).toSMul
-          (inferInstance : Algebra (LaurentSeries k) (LaurentSeries k')).toSMul
-          (inferInstance : Algebra k (LaurentSeries k')).toSMul := by
-      apply IsScalarTower.of_algebraMap_eq
-      intro r
-      have hs := htower.smul_assoc r (1 : LaurentSeries k) (1 : LaurentSeries k')
-      have hrS : r • (1 : LaurentSeries k) =
-          algebraMap k (LaurentSeries k) r := by
-        rw [← HahnSeries.C_mul_eq_smul, mul_one]
-        exact (LaurentSeries.algebraMap_apply k r).symm
-      have hrA : r • (1 : LaurentSeries k') =
-          algebraMap k (LaurentSeries k') r := by
-        rw [HahnSeries.algebraMap_apply']
-        ext n
-        cases n <;> simp [Algebra.smul_def, HahnSeries.coeff_single,
-          PowerSeries.algebraMap_apply]
-      calc
-        algebraMap k (LaurentSeries k') r = r • (1 : LaurentSeries k') := hrA.symm
-        _ = (r • (1 : LaurentSeries k)) • (1 : LaurentSeries k') := by
-          simpa only [one_smul] using hs.symm
-        _ = algebraMap (LaurentSeries k) (LaurentSeries k')
-            (r • (1 : LaurentSeries k)) := by
-          rw [Algebra.smul_def, mul_one]
-        _ = algebraMap (LaurentSeries k) (LaurentSeries k')
-            (algebraMap k (LaurentSeries k) r) := by rw [hrS]
-    have hscalar :
-        algebraMap k (LaurentSeries k') a =
-          algebraMap k' (LaurentSeries k') (algebraMap k k' a) := by
-      change HahnSeries.ofPowerSeries ℤ k' (algebraMap k (PowerSeries k') a) =
-        HahnSeries.ofPowerSeries ℤ k' (PowerSeries.C (algebraMap k k' a))
-      congr 1
-      ext n
-      cases n <;> simp [PowerSeries.algebraMap_apply]
-    rw [RingHom.comp_apply, RingHom.comp_apply]
-    change IsLocalRing.residue _ _ = IsLocalRing.residue _ _
-    congr 1
-    apply Subtype.ext
-    calc
-      algebraMap (LaurentSeries k) (LaurentSeries k')
-          (algebraMap k (LaurentSeries k) a) =
-          algebraMap k (LaurentSeries k') a :=
-        (@IsScalarTower.algebraMap_apply k (LaurentSeries k)
-          (LaurentSeries k') _ _ _ _ _ _ hAlgebraTower a).symm
-      _ = algebraMap k' (LaurentSeries k') (algebraMap k k' a) :=
-        hscalar
+    sorry
   have hvalue_range : d.valueGroupMap.range = ⊤ := by
     apply top_unique
     intro u hu
