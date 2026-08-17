@@ -22,10 +22,10 @@ noncomputable section
 This file is a statement-generation pass for Chapter 1 of *Valuations, DVRs, and
 Completions*.  The declarations below follow Sections 1.1--1.5 in order. -/
 
-/-! # Book 1, Chapter 1, Section 1.2: Order of Vanishing on a Line
+/-! # Book 1, Chapter 1, Section 1.1: A Local Question
 -/
 
-/-! ## 1.2 The prime-adic model and order on a line -/
+/-! ## 1.1 The prime-adic model -/
 
 section PrimeAdicModel
 
