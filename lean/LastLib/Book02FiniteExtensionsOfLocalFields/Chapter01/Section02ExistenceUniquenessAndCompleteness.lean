@@ -219,7 +219,7 @@ private theorem chapter01_finite_index_cyclic_ordered_group_is_cyclic
 /-- Finite algebraic extensions of a discrete field have discrete extension values. -/
 theorem chapter01_finite_extension_value_group_is_discrete
     {K L Γ : Type u} [Field K] [Field L] [Algebra K L]
-    [Algebra.IsAlgebraic K L] [FiniteDimensional K L]
+    [FiniteDimensional K L]
     [LinearOrderedCommGroupWithZero Γ]
     (vK : Valuation K Γ) [Valuation.IsRankOneDiscrete vK] :
     ∀ W : LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.HeterogeneousValuationExtension vK L,
@@ -346,14 +346,13 @@ theorem chapter01_heterogeneous_value_group_quotient_is_finite
       vK vL hext
   exact ⟨data, data.finite_quotient⟩
 
-/-- The value-group quotient in a finite extension is finite. -/
+/-- An inclusion of discrete value groups has finite quotient. -/
 theorem chapter01_finite_value_group_quotient_is_finite
     {K L Γ : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [LinearOrderedCommGroupWithZero Γ]
     (vK : Valuation K Γ) (vL : Valuation L Γ)
     [Valuation.IsRankOneDiscrete vK]
     [Valuation.IsRankOneDiscrete vL]
-    (hext : chapter01SamePlace vK vL)
     (hΓ : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ValueGroup vK ≤
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ValueGroup vL) :
     Finite
@@ -361,7 +360,6 @@ theorem chapter01_finite_value_group_quotient_is_finite
         (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ValueGroup vK).subgroupOf
           (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ValueGroup vL)) := by
   classical
-  have _ := hext
   let G :=
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ValueGroup vL
   let H : Subgroup G :=

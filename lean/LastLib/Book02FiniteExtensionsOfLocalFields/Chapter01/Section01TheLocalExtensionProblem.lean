@@ -82,7 +82,7 @@ theorem chapter01_henselian_discrete_field_unique_extension
     {K L Γ : Type u} [Field K] [Field L] [Algebra K L]
     [Algebra.IsAlgebraic K L]
     [LinearOrderedCommGroupWithZero Γ]
-    (vK : Valuation K Γ) [Valuation.IsRankOneDiscrete vK]
+    (vK : Valuation K Γ)
     (hH :
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.HenselianFactorizationProperty
         vK.valuationSubring) :
