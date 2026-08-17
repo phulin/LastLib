@@ -7,6 +7,7 @@ import Mathlib.RingTheory.Polynomial.IsIntegral
 import Mathlib.RingTheory.Ideal.GoingUp
 import Mathlib.RingTheory.Complex
 import Mathlib.FieldTheory.Galois.Basic
+import Mathlib.RingTheory.Invariant.Galois
 import Mathlib.RingTheory.QuasiFinite.Basic
 import Mathlib.Tactic.NormNum
 
