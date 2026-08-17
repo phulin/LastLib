@@ -60,9 +60,9 @@ theorem chapter13_eisenstein_degree_prime_to_residue_characteristic_is_separable
 
 /-- Unramified extensions are tame because their ramification index is one. -/
 theorem chapter13_unramified_ramification_index_is_tame
-    (k : Type*) [Ring k] :
+    (k : Type*) [Field k] :
     LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09.chapter09Tame k 1 := by
-  simp [LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09.chapter09Tame]
+  exact Nat.coprime_one_left _
 
 /-- A tame Eisenstein coefficient family therefore satisfies the separability
 hypothesis required by the Krasner local-constancy interface. -/
