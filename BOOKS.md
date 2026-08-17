@@ -84,9 +84,9 @@ Hilbert's syzygy theorem and generic freeness in the forms the projective volume
    symmetric-power representability for smooth curves are unconditional; the quasi-coherent
    sheaf-cohomology formalism, projective-space cohomology, syzygy theorem, and generic freeness
    its cohomological chapters consume are now cited from Books 7a and 7b, and descent along
-   finite locally free covers is proved inline (so no forward use of Book 10 remains). The fppf
-   sheaf property of Hom used by the universal-divisor construction (descent of morphisms)
-   remains assumed background.
+   finite locally free covers — including descent of morphisms into quasi-projective targets,
+   so the universal-divisor construction's sheaf arguments are fully proved — is developed
+   inline (no forward use of Book 10 remains).
 
 9. **Divisors, Riemann--Roch, and Duality on Relative Curves** — Develop Cartier and Weil
    divisors, line bundles, degrees in families, residues, and the Euler-characteristic form of
