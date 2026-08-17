@@ -1,5 +1,6 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter01.Section04LocalizationsOfDedekindDomains
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.Section02EquivalentCharacterizations
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.Section03ArithmeticAndExamples
 import Mathlib.RingTheory.DedekindDomain.AdicValuation
 import Mathlib.RingTheory.DedekindDomain.Dvr
 import Mathlib.RingTheory.DedekindDomain.Factorization
@@ -370,7 +371,71 @@ theorem chapter_fractional_filtration_shift
     chapterFractionalFiltration (A := A) (K := K) π n =
     chapterFractionalFiltration (A := A) (K := K) π
         (n + chapterValuationValue (A := A) (K := K) v x hx) := by
-  sorry
+  let hvA : v.valuation.Integers A :=
+    { hom_inj := IsFractionRing.injective A K
+      map_le_one := fun a => by
+        change algebraMap A K a ∈ v.valuation.valuationSubring.toSubring
+        rw [v.valuationSubring_eq_image]
+        exact Subring.mem_map.mpr ⟨a, by simp, rfl⟩
+      exists_of_le_one := fun {r} hr => by
+        change r ∈ v.valuation.valuationSubring.toSubring at hr
+        rw [v.valuationSubring_eq_image] at hr
+        obtain ⟨a, _, hax⟩ := Subring.mem_map.mp hr
+        exact ⟨a, hax⟩ }
+  have hπval : v.valuation (algebraMap A K π) = WithZero.exp (-1 : ℤ) := by
+    have hq0 : v.valuation (algebraMap A K π) ≠ 0 :=
+      v.valuation.ne_zero_iff.mpr (by simpa using hπ.ne_zero)
+    have hq_lt : v.valuation (algebraMap A K π) < 1 :=
+      hvA.valuation_irreducible_lt_one hπ
+    have hmax := hvA.maximalIdeal_eq_setOfPred_le_v_algebraMap hπ
+    obtain ⟨y, hy⟩ := v.surjective (WithZero.exp (-1 : ℤ))
+    obtain ⟨a, ha⟩ :=
+      hvA.exists_of_le_one (r := y) (by
+        rw [hy]
+        apply (WithZero.exp_le_exp).2
+        omega)
+    have ha_max : a ∈ IsLocalRing.maximalIdeal A := by
+      rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
+      intro hau
+      have hauv := hvA.one_of_isUnit hau
+      rw [ha, hy] at hauv
+      simp at hauv
+    have hle : WithZero.exp (-1 : ℤ) ≤
+        v.valuation (algebraMap A K π) := by
+      have hle' := (Set.ext_iff.mp hmax a).1 ha_max
+      simpa [ha, hy] using hle'
+    have hlog : WithZero.log (v.valuation (algebraMap A K π)) ≤ (-1 : ℤ) := by
+      have hlt : WithZero.log (v.valuation (algebraMap A K π)) < (0 : ℤ) := by
+        apply (WithZero.exp_lt_exp).mp
+        simpa [WithZero.exp_log hq0] using hq_lt
+      omega
+    apply le_antisymm
+    · rw [← WithZero.exp_log hq0]
+      exact (WithZero.exp_le_exp).2 hlog
+    · exact hle
+  have hπu : Chapter04Uniformizer A π :=
+    ⟨hπ.ne_zero, hπ.maximalIdeal_eq⟩
+  obtain ⟨k, u, hxrep, _⟩ :=
+    dvr_fraction_field_unique_normal_form A K hπu hx
+  have huval : v.valuation (algebraMap A K (u : A)) = 1 :=
+    hvA.one_of_isUnit u.isUnit
+  have hxval : v.valuation x = WithZero.exp (-k : ℤ) := by
+    rw [hxrep, Units.smul_def, Algebra.smul_def, map_mul, map_zpow₀,
+      huval, hπval]
+    rw [← WithZero.exp_zsmul]
+    simp
+  have hlevel : chapterValuationValue (A := A) (K := K) v x hx = k := by
+    simp [chapterValuationValue, hxval]
+  rw [chapterPrincipalFractionalIdeal, chapterFractionalFiltration,
+    FractionalIdeal.spanSingleton_mul_spanSingleton]
+  apply (FractionalIdeal.spanSingleton_eq_spanSingleton).2
+  refine ⟨u⁻¹, ?_⟩
+  simp only [hlevel]
+  rw [hxrep]
+  have hπK : algebraMap A K π ≠ 0 := by
+    simpa using hπ.ne_zero
+  simp [Units.smul_def, Algebra.smul_def, zpow_add₀ hπK,
+    mul_comm, mul_left_comm]
 
 /-- Book §5.3: units have value zero. -/
 theorem chapter_mapped_ring_unit_has_value_zero
@@ -378,7 +443,10 @@ theorem chapter_mapped_ring_unit_has_value_zero
     chapterValuationValue (A := A) (K := K) v
         (chapterMappedRingUnit (A := A) (K := K) u : K)
         (Units.ne_zero _) = 0 := by
-  sorry
+  have huval : v.valuation (algebraMap A K (u : A)) = 1 := by
+    exact (dvr_witness_mem_unit_iff_value_one A K v
+      (algebraMap A K (u : A))).1 ⟨u, rfl⟩
+  simp [chapterValuationValue, chapterMappedRingUnit, huval]
 
 /-- Book §5.3: multiplication by a unit preserves precision. -/
 theorem chapter_unit_preserves_precision
@@ -408,7 +476,22 @@ theorem chapter_maximalIdeal_element_gains_precision
         chapterFractionalFiltration (A := A) (K := K) π
           (n + chapterValuationValue (A := A) (K := K) v
             (algebraMap A K a) haK) := by
-  sorry
+  have hq0 : v.valuation (algebraMap A K a) ≠ 0 :=
+    v.valuation.ne_zero_iff.mpr (by simpa using haK)
+  have hq_lt : v.valuation (algebraMap A K a) < 1 :=
+    (dvr_witness_mem_maximal_ideal_iff_value_lt_one A K v a).1 ha
+  have hlog_lt : WithZero.log (v.valuation (algebraMap A K a)) < (0 : ℤ) := by
+    apply (WithZero.exp_lt_exp).mp
+    simpa [WithZero.exp_log hq0] using hq_lt
+  have hpositive :
+      0 < chapterValuationValue (A := A) (K := K) v
+          (algebraMap A K a) haK := by
+    simp [chapterValuationValue]
+    omega
+  refine ⟨hpositive, ?_, ?_⟩
+  · omega
+  · exact chapter_fractional_filtration_shift (A := A) (K := K) π hπ v
+      (algebraMap A K a) haK n
 
 include hπ in
 /-- Book §5.3: a negative-valued element loses digits. -/
@@ -421,7 +504,8 @@ theorem chapter_negative_valued_element_loses_precision
           chapterFractionalFiltration (A := A) (K := K) π n =
         chapterFractionalFiltration (A := A) (K := K) π
           (n + chapterValuationValue (A := A) (K := K) v x hx) := by
-  sorry
+  refine ⟨by omega, ?_⟩
+  exact chapter_fractional_filtration_shift (A := A) (K := K) π hπ v x hx n
 
 end FractionalIdealsAndPrecision
 
