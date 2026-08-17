@@ -3,6 +3,7 @@ import LastLib.Book04AdelesAndIdeles.Chapter15.Section03CompactOpenLevel
 import LastLib.Book04AdelesAndIdeles.Chapter11.Dependencies
 import Mathlib.MeasureTheory.Group.Measure
 import Mathlib.Topology.Algebra.Group.Quotient
+import Mathlib.Topology.Homeomorph.Quotient
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter15
 
@@ -55,7 +56,73 @@ def chapter15_rank_one_automorphic_quotient_formula
     (K : Type*) [Field K] [NumberField K] :
     Chapter15GL1NoLevelAutomorphicQuotient (R := 𝓞 K) (K := K) ≃ₜ
       Chapter15IdeleClassGroup (R := 𝓞 K) (K := K) := by
-  sorry
+  let e := chapter15_rank_one_recovers_ideles K
+  have hlevel_one (k : Chapter15GLnAdeles 1 (𝓞 K) K)
+      (hk : k ∈ chapter15GlobalLevelSubgroup 1
+        (⊥ : Subgroup (Chapter15FiniteMatrixGroup 1 (𝓞 K) K))) : k = 1 := by
+    change k.1 = 1 ∧ k.2 ∈ (⊥ : Subgroup (Chapter15FiniteMatrixGroup 1 (𝓞 K) K)) at hk
+    apply Prod.ext hk.1
+    apply Subtype.ext
+    exact congrArg Subtype.val hk.2
+  have hprincipal (γ : Matrix.GeneralLinearGroup (Fin 1) K) :
+      e (chapter15PrincipalMatrix (R := 𝓞 K) (K := K) 1 γ) ∈
+        (chapter15PrincipalIdele (R := 𝓞 K) (K := K)).range := by
+    refine ⟨chapter15_rank_one_local_gl_is_multiplicative_group K γ, ?_⟩
+    simpa [e] using
+      (chapter15_rank_one_recovers_ideles_principal K γ).symm
+  have hrel : ∀ x y : Chapter15GLnAdeles 1 (𝓞 K) K,
+      chapter15DoubleCosetRel
+          (chapter15PrincipalMatrix (R := 𝓞 K) (K := K) 1).range
+          (chapter15GlobalLevelSubgroup 1
+            (⊥ : Subgroup (Chapter15FiniteMatrixGroup 1 (𝓞 K) K))) x y ↔
+        (QuotientGroup.leftRel
+          (chapter15PrincipalIdele (R := 𝓞 K) (K := K)).range)
+          (e x) (e y) := by
+    intro x y
+    constructor
+    · rintro ⟨h, ⟨γ, rfl⟩, k, hk, heq⟩
+      have hk1 := hlevel_one k hk
+      rw [QuotientGroup.leftRel_apply]
+      have heq' := congrArg e heq
+      rw [hk1] at heq'
+      have heq'' : e y =
+          e (chapter15PrincipalMatrix (R := 𝓞 K) (K := K) 1 γ) * e x := by
+        simpa only [map_mul, map_one, mul_one] using heq'.symm
+      rw [heq'']
+      have hcancel :
+          (e x)⁻¹ *
+              (e (chapter15PrincipalMatrix (R := 𝓞 K) (K := K) 1 γ) * e x) =
+            e (chapter15PrincipalMatrix (R := 𝓞 K) (K := K) 1 γ) := by
+        rw [← mul_assoc,
+          mul_comm ((e x)⁻¹)
+            (e (chapter15PrincipalMatrix (R := 𝓞 K) (K := K) 1 γ)),
+          mul_assoc, inv_mul_cancel, mul_one]
+      rw [hcancel]
+      exact hprincipal γ
+    · intro hxy
+      rw [QuotientGroup.leftRel_apply] at hxy
+      rcases hxy with ⟨u, hu⟩
+      let eK := chapter15_rank_one_local_gl_is_multiplicative_group K
+      let γ : Matrix.GeneralLinearGroup (Fin 1) K := eK.symm u
+      have hγ : eK γ = u := eK.apply_symm_apply u
+      refine ⟨chapter15PrincipalMatrix (R := 𝓞 K) (K := K) 1 γ,
+        ⟨γ, rfl⟩, 1,
+        (chapter15GlobalLevelSubgroup 1
+          (⊥ : Subgroup (Chapter15FiniteMatrixGroup 1 (𝓞 K) K))).one_mem, ?_⟩
+      apply e.injective
+      calc
+        e (chapter15PrincipalMatrix (R := 𝓞 K) (K := K) 1 γ * x * 1) =
+            e (chapter15PrincipalMatrix (R := 𝓞 K) (K := K) 1 γ) * e x := by
+              simp [e]
+        _ = chapter15PrincipalIdele (R := 𝓞 K) (K := K) (eK γ) * e x := by
+          rw [chapter15_rank_one_recovers_ideles_principal K γ]
+        _ = chapter15PrincipalIdele (R := 𝓞 K) (K := K) u * e x := by
+          rw [hγ]
+        _ = ((e x)⁻¹ * e y) * e x := by rw [hu]
+        _ = e y := by
+          rw [mul_assoc, mul_comm (e y) (e x), ← mul_assoc,
+            inv_mul_cancel, one_mul]
+  exact Homeomorph.Quotient.congr e hrel
 
 /-! ### Hecke characters and one-dimensional automorphic representations -/
 
@@ -233,9 +300,9 @@ def chapter15ArchimedeanIdeleInclusion :
     Chapter15ArchimedeanIdeleGroup K →* Chapter15IdeleGroup R K where
   toFun x := (x, 1)
   map_one' := by
-    sorry
+    rfl
   map_mul' x y := by
-    sorry
+    simp
 
 /-- The archimedean component of a class-group character. -/
 def chapter15ArchimedeanHeckeComponent

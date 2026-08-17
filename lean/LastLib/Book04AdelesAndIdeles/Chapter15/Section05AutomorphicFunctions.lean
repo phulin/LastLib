@@ -68,13 +68,22 @@ def chapter15AutomorphicFunctionDescend
     (n : ℕ) (Kf : Subgroup (Chapter15FiniteMatrixGroup n R K))
     (F : Chapter15GLnAdeles n R K → ℂ)
     {S : Chapter15AutomorphicConditionSpec (R := R) (K := K) n}
-    (hconditions : Chapter15AutomorphicConditions n S F)
+    (_hconditions : Chapter15AutomorphicConditions n S F)
     (hleft : ∀ γ : Matrix.GeneralLinearGroup (Fin n) K, ∀ g,
       F (chapter15PrincipalMatrix n γ * g) = F g)
     (hright : ∀ g k, k ∈ chapter15GlobalLevelSubgroup n Kf →
       F (g * k) = F g) :
     Chapter15FunctionOnAutomorphicQuotient n Kf := by
-  sorry
+  refine Quotient.lift F ?_
+  intro x y hxy
+  rcases hxy with ⟨h, hh, k, hk, heq⟩
+  rcases hh with ⟨γ, rfl⟩
+  calc
+    F x = F (x * k) := (hright x k hk).symm
+    _ = F (chapter15PrincipalMatrix n γ * (x * k)) :=
+      (hleft γ (x * k)).symm
+    _ = F (chapter15PrincipalMatrix n γ * x * k) := by rw [mul_assoc]
+    _ = F y := by rw [heq]
 
 theorem chapter15AutomorphicFunctionDescend_pullback
     (n : ℕ) (Kf : Subgroup (Chapter15FiniteMatrixGroup n R K))

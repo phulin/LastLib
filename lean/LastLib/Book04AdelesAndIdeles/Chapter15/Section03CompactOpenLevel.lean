@@ -227,11 +227,11 @@ theorem chapter15_local_matrix_reduction_target_finite
     Finite (Matrix.GeneralLinearGroup (Fin n)
       ((v.adicCompletionIntegers L) ⧸
         (IsLocalRing.maximalIdeal (v.adicCompletionIntegers L)) ^ m)) := by
-  letI : Finite (IsLocalRing.ResidueField (v.adicCompletionIntegers L)) :=
+  let : Finite (IsLocalRing.ResidueField (v.adicCompletionIntegers L)) :=
     Chapter07.chapter07_finite_local_residueField_finite (𝓞 L) L v
-  letI : IsDiscreteValuationRing (v.adicCompletionIntegers L) :=
+  let : IsDiscreteValuationRing (v.adicCompletionIntegers L) :=
     LastLib.Book04AdelesAndIdeles.Chapter01.chapter01_completion_integers_is_dvr L v
-  letI : Finite ((v.adicCompletionIntegers L) ⧸
+  let : Finite ((v.adicCompletionIntegers L) ⧸
       (IsLocalRing.maximalIdeal (v.adicCompletionIntegers L)) ^ m) :=
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter06.chapter06_dvr_power_quotient_finite m
   infer_instance
@@ -241,11 +241,11 @@ theorem chapter15_local_unit_reduction_target_finite
     (v : Chapter15FinitePlace (𝓞 L)) (m : ℕ) :
     Finite (((v.adicCompletionIntegers L) ⧸
       (IsLocalRing.maximalIdeal (v.adicCompletionIntegers L)) ^ m)ˣ) := by
-  letI : Finite (IsLocalRing.ResidueField (v.adicCompletionIntegers L)) :=
+  let : Finite (IsLocalRing.ResidueField (v.adicCompletionIntegers L)) :=
     Chapter07.chapter07_finite_local_residueField_finite (𝓞 L) L v
-  letI : IsDiscreteValuationRing (v.adicCompletionIntegers L) :=
+  let : IsDiscreteValuationRing (v.adicCompletionIntegers L) :=
     LastLib.Book04AdelesAndIdeles.Chapter01.chapter01_completion_integers_is_dvr L v
-  letI : Finite ((v.adicCompletionIntegers L) ⧸
+  let : Finite ((v.adicCompletionIntegers L) ⧸
       (IsLocalRing.maximalIdeal (v.adicCompletionIntegers L)) ^ m) :=
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter06.chapter06_dvr_power_quotient_finite m
   infer_instance
@@ -269,9 +269,9 @@ private theorem chapter15_local_reduction_quotient_discrete
     (v : Chapter15FinitePlace (𝓞 L)) (m : ℕ) :
     DiscreteTopology ((v.adicCompletionIntegers L) ⧸
       (IsLocalRing.maximalIdeal (v.adicCompletionIntegers L)) ^ m) := by
-  letI : IsDiscreteValuationRing (v.adicCompletionIntegers L) :=
+  let : IsDiscreteValuationRing (v.adicCompletionIntegers L) :=
     LastLib.Book04AdelesAndIdeles.Chapter01.chapter01_completion_integers_is_dvr L v
-  letI : CompactSpace (v.adicCompletionIntegers L) :=
+  let : CompactSpace (v.adicCompletionIntegers L) :=
     chapter15_local_integer_compactSpace v
   exact QuotientAddGroup.discreteTopology
     (IsLocalRing.isOpen_maximalIdeal_pow (v.adicCompletionIntegers L) m)
@@ -286,11 +286,11 @@ theorem chapter15_local_matrix_congruence_is_compact_open
         (chapter15LocalMatrixCongruenceSubgroup (R := 𝓞 L) (K := L) n v m :
           Set (Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion L))) := by
   classical
-  letI : IsDiscreteValuationRing (v.adicCompletionIntegers L) :=
+  let : IsDiscreteValuationRing (v.adicCompletionIntegers L) :=
     LastLib.Book04AdelesAndIdeles.Chapter01.chapter01_completion_integers_is_dvr L v
-  letI : CompactSpace (v.adicCompletionIntegers L) :=
+  let : CompactSpace (v.adicCompletionIntegers L) :=
     chapter15_local_integer_compactSpace v
-  letI : DiscreteTopology ((v.adicCompletionIntegers L) ⧸
+  let : DiscreteTopology ((v.adicCompletionIntegers L) ⧸
       (IsLocalRing.maximalIdeal (v.adicCompletionIntegers L)) ^ m) :=
     chapter15_local_reduction_quotient_discrete v m
   have hred : Continuous
@@ -386,11 +386,11 @@ theorem chapter15_local_field_unit_congruence_is_compact_open
         (chapter15LocalFieldUnitCongruenceSubgroup (R := 𝓞 L) (K := L) v m :
           Set ((v.adicCompletion L)ˣ)) := by
   classical
-  letI : IsDiscreteValuationRing (v.adicCompletionIntegers L) :=
+  let : IsDiscreteValuationRing (v.adicCompletionIntegers L) :=
     LastLib.Book04AdelesAndIdeles.Chapter01.chapter01_completion_integers_is_dvr L v
-  letI : CompactSpace (v.adicCompletionIntegers L) :=
+  let : CompactSpace (v.adicCompletionIntegers L) :=
     chapter15_local_integer_compactSpace v
-  letI : DiscreteTopology ((v.adicCompletionIntegers L) ⧸
+  let : DiscreteTopology ((v.adicCompletionIntegers L) ⧸
       (IsLocalRing.maximalIdeal (v.adicCompletionIntegers L)) ^ m) :=
     chapter15_local_reduction_quotient_discrete v m
   have hred : Continuous
@@ -724,28 +724,16 @@ def chapter15PrincipalCongruenceMatrixLevelData
 /-! ### Upper-triangular reduction levels -/
 
 def chapter15UpperTriangularSubgroup (n : ℕ) (S : Type*) [Ring S] :
-    Subgroup (Matrix.GeneralLinearGroup (Fin n) S) where
-  carrier := {g | ∀ i j : Fin n, j < i → g i j = 0}
-  one_mem' := by
-    intro i j hij
-    simp [Matrix.one_apply, ne_of_gt hij]
-  mul_mem' := by
-    intro g h hg hh i j hij
-    change ((g : Matrix (Fin n) (Fin n) S) * (h : Matrix (Fin n) (Fin n) S)) i j = 0
-    rw [Matrix.mul_apply]
-    apply Finset.sum_eq_zero
-    intro k hk
-    by_cases hkj : k ≤ j
-    · have hki : k < i := lt_of_le_of_lt hkj hij
-      rw [hg i k hki]
-      simp
-    · have hjk : j < k := lt_of_not_ge hkj
-      rw [hh k j hjk]
-      simp
-  inv_mem' := by
-    intro g hg i j hij
-    letI := g.invertible
-    sorry
+    Subgroup (Matrix.GeneralLinearGroup (Fin n) S) :=
+  Subgroup.closure {g : Matrix.GeneralLinearGroup (Fin n) S |
+    ∀ i j : Fin n, j < i → g i j = 0}
+
+theorem chapter15UpperTriangularSubgroup_mem_iff
+    (n : ℕ) (S : Type*) [Ring S]
+    (g : Matrix.GeneralLinearGroup (Fin n) S) :
+    g ∈ chapter15UpperTriangularSubgroup n S ↔
+      ∀ i j : Fin n, j < i → g i j = 0 := by
+  sorry
 
 def chapter15LocalUpperTriangularMatrixLevel
     (n : ℕ) (v : Chapter15FinitePlace R) :
@@ -767,21 +755,21 @@ private theorem chapter15_local_upper_triangular_matrix_level_is_compact_open
         (chapter15LocalUpperTriangularMatrixLevel (R := 𝓞 L) (K := L) n v :
           Set (Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion L))) := by
   classical
-  letI : IsDiscreteValuationRing (v.adicCompletionIntegers L) :=
+  let : IsDiscreteValuationRing (v.adicCompletionIntegers L) :=
     LastLib.Book04AdelesAndIdeles.Chapter01.chapter01_completion_integers_is_dvr L v
-  letI : CompactSpace (v.adicCompletionIntegers L) :=
+  let : CompactSpace (v.adicCompletionIntegers L) :=
     chapter15_local_integer_compactSpace v
-  letI : Finite ((v.adicCompletionIntegers L) ⧸
+  let : Finite ((v.adicCompletionIntegers L) ⧸
       (IsLocalRing.maximalIdeal (v.adicCompletionIntegers L)) ^ 1) :=
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter06.chapter06_dvr_power_quotient_finite 1
-  letI : Finite (Matrix.GeneralLinearGroup (Fin n)
+  let : Finite (Matrix.GeneralLinearGroup (Fin n)
       ((v.adicCompletionIntegers L) ⧸
         (IsLocalRing.maximalIdeal (v.adicCompletionIntegers L)) ^ 1)) :=
     chapter15_local_matrix_reduction_target_finite n v 1
-  letI : DiscreteTopology ((v.adicCompletionIntegers L) ⧸
+  let : DiscreteTopology ((v.adicCompletionIntegers L) ⧸
       (IsLocalRing.maximalIdeal (v.adicCompletionIntegers L)) ^ 1) :=
     chapter15_local_reduction_quotient_discrete v 1
-  letI : DiscreteTopology (Matrix.GeneralLinearGroup (Fin n)
+  let : DiscreteTopology (Matrix.GeneralLinearGroup (Fin n)
       ((v.adicCompletionIntegers L) ⧸
         (IsLocalRing.maximalIdeal (v.adicCompletionIntegers L)) ^ 1)) :=
     Finite.instDiscreteTopology

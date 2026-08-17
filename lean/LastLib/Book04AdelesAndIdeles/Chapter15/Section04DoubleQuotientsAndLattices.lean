@@ -144,8 +144,7 @@ def chapter15FiniteMatrixLattice (n : ℕ) (g : Chapter15FiniteMatrixGroup n R K
       ext; simp [chapter15LocalizeVector]]
     simp
   add_mem' := by
-    intro x y hx hy
-    intro v i
+    intro x y hx hy v i
     have hloc : chapter15LocalizeVector n v (x + y) =
         chapter15LocalizeVector n v x + chapter15LocalizeVector n v y := by
       ext j
@@ -153,8 +152,7 @@ def chapter15FiniteMatrixLattice (n : ℕ) (g : Chapter15FiniteMatrixGroup n R K
     rw [hloc, Matrix.mulVec_add]
     exact (v.adicCompletionIntegers K).add_mem _ _ (hx v i) (hy v i)
   smul_mem' := by
-    intro r x hx
-    intro v i
+    intro r x hx v i
     have hloc : chapter15LocalizeVector n v (r • x) =
         (algebraMap R (v.adicCompletion K) r) •
           chapter15LocalizeVector n v x := by
@@ -317,7 +315,7 @@ theorem chapter15_finite_matrix_lattice_local_comparison
             mul_le_mul' (hentry_inv i j) (hy j)
           _ = 1 := by rw [← WithZero.exp_add]; simp
       · rw [Matrix.mulVec_mulVec]
-        simp [Matrix.GeneralLinearGroup.coe_inv]
+        simp
     · intro y hy
       rcases hy with ⟨z, hz, rfl⟩
       change ∀ i, Valued.v
@@ -415,8 +413,8 @@ theorem chapter15_vector_fractional_ideal_quotient_finite
 theorem chapter15_submodule_between_fractional_bounds_is_finite
     (n : ℕ) (I J : Chapter15FractionalIdeal R K)
     (L : Submodule R (Chapter15VectorSpace n K))
-    (hIJ : I ≤ J)
-    (hI : chapter15VectorFractionalIdealPower n I ≤ L)
+    (_hIJ : I ≤ J)
+    (_hI : chapter15VectorFractionalIdealPower n I ≤ L)
     (hJ : L ≤ chapter15VectorFractionalIdealPower n J) :
     Module.Finite R L := by
   have hpower : chapter15VectorFractionalIdealPower n J =
@@ -476,7 +474,7 @@ theorem chapter15_vector_fractional_ideal_power_spans
     have heq : Pi.single i (x i) =
         (x i) • (Pi.single i (1 : K)) := by
       ext j
-      by_cases hij : i = j <;> simp [Pi.single_apply, hij]
+      by_cases hij : i = j <;> simp [hij]
     rw [heq]
     exact hterm)
 
@@ -582,7 +580,7 @@ theorem chapter15_finite_matrix_lattice_left_rational_change
   have hxy : Matrix.mulVec (γ : Matrix (Fin n) (Fin n) K) y = x := by
     dsimp [y]
     rw [Matrix.mulVec_mulVec]
-    simp [Matrix.GeneralLinearGroup.coe_inv]
+    simp
   have hloc (v : Chapter15FinitePlace R) :
       chapter15LocalizeVector n v y =
         Matrix.mulVec
@@ -665,15 +663,13 @@ def chapter15FiniteIdeleLattice (g : Chapter15FiniteIdeleGroup R K) :
   carrier := chapter15FiniteIdeleLatticeCarrier g
   zero_mem' := by
     intro v
-    simp [chapter15FiniteIdeleLatticeCarrier]
+    simp
   add_mem' := by
-    intro x y hx hy
-    intro v
+    intro x y hx hy v
     rw [map_add, mul_add]
     exact (v.adicCompletionIntegers K).add_mem _ _ (hx v) (hy v)
   smul_mem' := by
-    intro r x hx
-    intro v
+    intro r x hx v
     have hcomm :
         ((g v : (v.adicCompletion K)ˣ) : v.adicCompletion K)⁻¹ *
             algebraMap K (v.adicCompletion K) (r • x) =
@@ -911,10 +907,18 @@ def chapter15FiniteIdeleClassDoubleQuotient :=
 /- LOCAL_DEPENDENCY_GUESS: the following is the canonical ideal-class
 identification used in the preceding ideles chapter; Mathlib supplies
 `ClassGroup R`, but not this idele double-coset presentation. -/
-def chapter15_finite_idele_double_quotient_is_class_group :
-    chapter15FiniteIdeleClassDoubleQuotient (R := R) (K := K) ≃
-      ClassGroup R := by
+theorem chapter15_finite_idele_double_quotient_is_class_group_exists :
+    Nonempty
+      (chapter15FiniteIdeleClassDoubleQuotient (R := R) (K := K) ≃
+        ClassGroup R) := by
   sorry
+
+noncomputable def chapter15_finite_idele_double_quotient_is_class_group :
+    chapter15FiniteIdeleClassDoubleQuotient (R := R) (K := K) ≃
+      ClassGroup R :=
+  Classical.choice
+    (chapter15_finite_idele_double_quotient_is_class_group_exists
+      (R := R) (K := K))
 
 end
 

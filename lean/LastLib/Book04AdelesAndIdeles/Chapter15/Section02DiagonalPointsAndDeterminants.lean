@@ -261,7 +261,7 @@ private theorem chapter15_matrix_identity_neighborhood
 theorem chapter15_principal_matrix_range_is_discrete
     (n : ℕ) {L : Type*} [Field L] [NumberField L] :
     IsDiscrete (Set.range (chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n)) := by
-  letI : Fact (∀ v : Chapter15FinitePlace (𝓞 L),
+  let : Fact (∀ v : Chapter15FinitePlace (𝓞 L),
       IsOpen (chapter15FiniteMatrixIntegralSubgroup (R := 𝓞 L) (K := L) n v :
         Set (Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion L)))) :=
     ⟨fun v => chapter15_finite_integral_matrix_group_is_open n v⟩
@@ -281,8 +281,6 @@ theorem chapter15_principal_matrix_range_is_discrete
         Set.range (chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n) := by
       rcases hyRange with ⟨k, rfl⟩
       exact ⟨k * g⁻¹, by
-        change chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n (k * g⁻¹) =
-          chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n k * h⁻¹
         simp [h]⟩
     have hyone : y * h⁻¹ = 1 := by
       apply Set.mem_singleton_iff.mp
@@ -617,12 +615,12 @@ private def chapter15DiagonalUnit (n : ℕ) (i0 : Fin n)
     Matrix.diagonal (fun j => if j = i0 then (u⁻¹ : Aˣ) else 1),
     by
       simp only [Matrix.diagonal_mul_diagonal, mul_ite, ite_mul,
-        Units.mul_inv, one_mul, mul_one, Matrix.diagonal_eq_one]
+        one_mul, mul_one, Matrix.diagonal_eq_one]
       funext j
       split_ifs <;> simp,
     by
       simp only [Matrix.diagonal_mul_diagonal, mul_ite, ite_mul,
-        Units.mul_inv, one_mul, mul_one, Matrix.diagonal_eq_one]
+        one_mul, mul_one, Matrix.diagonal_eq_one]
       funext j
       split_ifs <;> simp⟩
 
@@ -650,13 +648,13 @@ theorem chapter15_adelic_determinant_module_surjective
       by_cases hij : i = j
       · subst j
         by_cases hi0 : i = i0 <;>
-          simp [chapter15DiagonalUnit, Matrix.diagonal_apply, hi0, i0,
+          simp [chapter15DiagonalUnit, hi0, i0,
             (w : v.adicCompletionIntegers K).property]
-      · simp [chapter15DiagonalUnit, Matrix.diagonal_apply, hij, i0]
+      · simp [chapter15DiagonalUnit, hij, i0]
     · refine ⟨w, ?_⟩
       apply Units.ext
       simp [chapter15DiagonalUnit, Matrix.GeneralLinearGroup.det,
-        Matrix.det_diagonal, i0, Finset.prod_ite_eq]
+        Matrix.det_diagonal, i0]
   let finiteScalar : Chapter15FiniteIdeleGroup R K →
       Chapter15FiniteMatrixGroup n R K :=
     RestrictedProduct.map
@@ -675,7 +673,7 @@ theorem chapter15_adelic_determinant_module_surjective
       funext v
       change Matrix.GeneralLinearGroup.det
           (chapter15DiagonalUnit n i0 (x.2 v)) = x.2 v
-      simp [g, finiteScalar, chapter15DiagonalUnit, Matrix.GeneralLinearGroup.det,
+      simp [chapter15DiagonalUnit, Matrix.GeneralLinearGroup.det,
         Matrix.det_diagonal, i0]
   refine ⟨g, ?_⟩
   change M.toMonoidHom (chapter15AdelicDeterminant (R := R) (K := K) n g) = y
