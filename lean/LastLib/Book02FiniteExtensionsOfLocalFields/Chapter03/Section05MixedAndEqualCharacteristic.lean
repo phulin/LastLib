@@ -145,7 +145,9 @@ theorem chapter03_purely_inseparable_residue_root_has_e_one
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.toValuation.valuationSubring)
       vK.toValuation.valuationSubring)
-    (hrestriction : chapter03ValuationRestrictionScale vK vL 1) :
+    (hrestriction :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01ValuationRestrictionScale
+        vK vL 1) :
     ∃ data : Chapter03FiniteLocalExtensionData K L _
       vK.toValuation vL.toValuation,
       data.e = 1 ∧ data.f = p := by
@@ -171,7 +173,9 @@ theorem chapter03_purely_inseparable_uniformizer_root_has_e_p
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.toValuation.valuationSubring)
       vK.toValuation.valuationSubring)
-    (hrestriction : chapter03ValuationRestrictionScale vK vL p) :
+    (hrestriction :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01ValuationRestrictionScale
+        vK vL p) :
     ∃ data : Chapter03FiniteLocalExtensionData (LaurentSeries k) L _
       vK.toValuation vL.toValuation,
       data.e = p ∧ data.f = 1 := by

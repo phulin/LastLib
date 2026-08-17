@@ -99,13 +99,13 @@ theorem chapter03_embedding_preserves_base_compatible_absolute_value
     (c : ℝ) (hc : 0 < c ∧ c < 1)
     (vL : AddValuation L (WithTop ℤ))
     (vΩ : AddValuation Ω (WithTop ℤ)) (e : ℕ) (he : 0 < e)
-    [Algebra L Ω]
     (σ : L →ₐ[K] Ω)
     (hscale : ∀ x : L, x ≠ 0 → vΩ (σ x) = e • vL x) :
+    letI : Algebra L Ω := σ.toRingHom.toAlgebra
     ∀ x : L,
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01RelativeAbsoluteValue
-        (K := L) (L := Ω) c vΩ e (σ x) =
-      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01BaseAbsoluteValue c vL x := by
+          (K := L) (L := Ω) c vΩ e (σ x) =
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01BaseAbsoluteValue c vL x := by
   sorry
 
 /-- Norm equality is the metric form of an isometric embedding. -/

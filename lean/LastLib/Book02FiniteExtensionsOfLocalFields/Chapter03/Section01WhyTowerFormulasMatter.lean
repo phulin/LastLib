@@ -10,24 +10,7 @@ open Ideal
 open scoped BigOperators TensorProduct WithZero
 open LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
 
-/- The tensor product has two natural scalar actions.  The right action is the
-   one used for the base-change algebras in this chapter, and Mathlib keeps it
-   as an explicit construction rather than a global instance. -/
-noncomputable instance chapter03TensorProductRightAlgebra
-    (R A B : Type*) [CommRing R] [CommRing A] [CommRing B]
-    [Algebra R A] [Algebra R B] :
-    Algebra B (A ⊗[R] B) :=
-  Algebra.TensorProduct.rightAlgebra
-
 /-! ## 3.1. Why tower formulas matter -/
-
-/-- The normalized additive restriction relation for a finite local extension. -/
-abbrev chapter03ValuationRestrictionScale
-    {K L : Type*} [Field K] [Field L] [Algebra K L]
-    (vK : AddValuation K (WithTop ℤ))
-    (vL : AddValuation L (WithTop ℤ)) (e : ℕ) : Prop :=
-  LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01ValuationRestrictionScale
-    vK vL e
 
 /-- A tower with the normalized valuations and the two restriction factors. -/
 structure Chapter03NormalizedValuedTower
@@ -45,8 +28,12 @@ structure Chapter03NormalizedValuedTower
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vM
   vL_discrete :
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vL
-  restrict_M_to_K : chapter03ValuationRestrictionScale vK vM eMK
-  restrict_L_to_M : chapter03ValuationRestrictionScale vM vL eLM
+  restrict_M_to_K :
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01ValuationRestrictionScale
+      vK vM eMK
+  restrict_L_to_M :
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01ValuationRestrictionScale
+      vM vL eLM
 
 /-- Book-facing data recording the two local factors and their degree product. -/
 structure Chapter03FiniteLocalExtensionData

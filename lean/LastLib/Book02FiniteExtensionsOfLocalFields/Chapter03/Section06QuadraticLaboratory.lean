@@ -235,6 +235,10 @@ theorem chapter03_ramified_quadratics_become_isomorphic_after_unramified_base_ch
     (K Kᵤ : Type*) [Field K] [Field Kᵤ] [Algebra K Kᵤ]
     (u π : K) (hu : IsUnit u) (hπ : π ≠ 0)
     (s : Kᵤ) (hsquare : s ^ 2 = algebraMap K Kᵤ u) :
+    letI : Algebra Kᵤ (chapter03QuadraticRootAlgebra K π ⊗[K] Kᵤ) :=
+      Algebra.TensorProduct.rightAlgebra
+    letI : Algebra Kᵤ (chapter03QuadraticRootAlgebra K (u * π) ⊗[K] Kᵤ) :=
+      Algebra.TensorProduct.rightAlgebra
     Nonempty
       ((chapter03QuadraticRootAlgebra K π ⊗[K] Kᵤ) ≃ₐ[Kᵤ]
         (chapter03QuadraticRootAlgebra K (u * π) ⊗[K] Kᵤ)) := by

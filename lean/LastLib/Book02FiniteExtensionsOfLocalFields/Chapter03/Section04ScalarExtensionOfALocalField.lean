@@ -24,7 +24,10 @@ abbrev chapter03ScalarExtension
 def chapter03FiniteReducedScalarExtension
     (K L K' : Type*) [CommRing K] [CommRing L] [CommRing K']
     [Algebra K L] [Algebra K K'] : Prop :=
-  Algebra.Etale K' (chapter03ScalarExtension K L K')
+  letI : Algebra K' (chapter03ScalarExtension K L K') :=
+    Algebra.TensorProduct.rightAlgebra
+  Module.Finite K' (chapter03ScalarExtension K L K') ∧
+    Algebra.Etale K' (chapter03ScalarExtension K L K')
 
 /-- A finite separable field extension remains finite reduced after base
 change. -/
@@ -46,6 +49,8 @@ theorem chapter03_separable_scalar_extension_has_field_factors
       (_ : ∀ i, Field (F i))
       (_ : ∀ i, Algebra K' (F i))
       (_ : ∀ i, FiniteDimensional K' (F i)),
+      letI : Algebra K' (chapter03ScalarExtension K L K') :=
+        Algebra.TensorProduct.rightAlgebra
       Nonempty (chapter03ScalarExtension K L K' ≃ₐ[K'] (∀ i, F i)) := by
   sorry
 
@@ -55,6 +60,8 @@ base happens to be `L`. -/
 def chapter03ScalarExtensionFieldFactor
     (K L K' F : Type*) [CommRing K] [CommRing L] [CommRing K'] [Field F]
     [Algebra K L] [Algebra K K'] [Algebra K' F] : Prop :=
+  letI : Algebra K' (chapter03ScalarExtension K L K') :=
+    Algebra.TensorProduct.rightAlgebra
   ∃ φ : chapter03ScalarExtension K L K' →ₐ[K'] F, Function.Surjective φ
 
 /- The residue-field etale factorization lifts to the local statement: after
@@ -122,7 +129,8 @@ def chapter03ScalarExtensionIsAField
 def chapter03ResidueScalarExtensionIsFiniteEtale
     (k l k' : Type*) [Field k] [Field l] [Field k']
     [Algebra k l] [Algebra k k'] : Prop :=
-  Algebra.Etale k' (l ⊗[k] k')
+  letI : Algebra k' (l ⊗[k] k') := Algebra.TensorProduct.rightAlgebra
+  Module.Finite k' (l ⊗[k] k') ∧ Algebra.Etale k' (l ⊗[k] k')
 
 theorem chapter03_separable_residue_extension_is_stable_under_base_change
     (k l k' : Type*) [Field k] [Field l] [Field k']

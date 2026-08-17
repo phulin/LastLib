@@ -169,6 +169,8 @@ abbrev chapter03SelfScalarExtension
 
 def chapter03SelfScalarExtensionSplits
     (K L : Type*) [CommRing K] [CommRing L] [Algebra K L] (n : ℕ) : Prop :=
+  letI : Algebra L (chapter03SelfScalarExtension K L) :=
+    Algebra.TensorProduct.rightAlgebra
   Nonempty (chapter03SelfScalarExtension K L ≃ₐ[L] (Fin n → L))
 
 /-- A field factor of the self-base-change algebra, viewed over the right
@@ -177,6 +179,8 @@ without incorrectly identifying the whole product with one field. -/
 def chapter03SelfScalarExtensionFieldFactor
     (K L F : Type*) [CommRing K] [CommRing L] [Field F]
     [Algebra K L] [Algebra L F] : Prop :=
+  letI : Algebra L (chapter03SelfScalarExtension K L) :=
+    Algebra.TensorProduct.rightAlgebra
   ∃ φ : chapter03SelfScalarExtension K L →ₐ[L] F, Function.Surjective φ
 
 /-- A finite Galois self-base-change splits into copies of `L`. -/
