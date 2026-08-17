@@ -156,7 +156,7 @@ theorem chapter13_complete_local_ring_is_its_adic_limit
     Nonempty
       (A ≃+* AdicCompletion (IsLocalRing.maximalIdeal A) A) := by
   unfold Chapter13SuccessiveApproximationPrinciple at hA
-  letI : IsAdicComplete (IsLocalRing.maximalIdeal A) A := hA
+  let : IsAdicComplete (IsLocalRing.maximalIdeal A) A := hA
   exact ⟨(AdicCompletion.ofAlgEquiv
     (IsLocalRing.maximalIdeal A)).toRingEquiv⟩
 

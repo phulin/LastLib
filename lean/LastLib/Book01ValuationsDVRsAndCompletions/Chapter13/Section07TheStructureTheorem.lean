@@ -94,7 +94,7 @@ theorem chapter13_cohen_structure_mixed_characteristic
     {A C k : Type u} [CommRing A] [IsLocalRing A]
     [CommRing C] [IsLocalRing C] [Field k] (p n : ℕ)
     (hA : Chapter13CompleteNoetherianLocalRing A)
-    (hmixed : Chapter13MixedCharacteristic A p)
+    (_hmixed : Chapter13MixedCharacteristic A p)
     (hC : Chapter13IsCohenRing C k p)
     (eC : Chapter13ResidueRing C ≃+* k)
     (eA : Chapter13ResidueRing A ≃+* k)
@@ -141,9 +141,9 @@ theorem chapter13_cohen_structure_mixed_characteristic
 
 theorem chapter13_complete_local_quotient_of_regular_model
     {A Q : Type u} [CommRing A] [IsLocalRing A] [CommRing Q]
-    (hA : Chapter13CompleteNoetherianLocalRing A)
+    (_hA : Chapter13CompleteNoetherianLocalRing A)
     (I : Ideal Q) (d : ℕ)
-    (hQ : Chapter13CompleteRegularLocalDomain Q I d)
+    (_hQ : Chapter13CompleteRegularLocalDomain Q I d)
     (F : Q →+* A) (hF : Function.Surjective F) :
     Nonempty ((Q ⧸ RingHom.ker F) ≃+* A) := by
   exact ⟨RingHom.quotientKerEquivOfSurjective hF⟩

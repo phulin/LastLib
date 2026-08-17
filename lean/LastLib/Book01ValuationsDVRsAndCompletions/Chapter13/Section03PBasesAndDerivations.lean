@@ -122,7 +122,7 @@ theorem chapter13_simple_p_extension_degree
         Algebra.algebraMap_ofSubsemiring_apply F y
       rw [hmap]
       simp [y])
-  letI : IsPurelyInseparable F k := hchar
+  let : IsPurelyInseparable F k := hchar
   refine ⟨hsubmodule, hfinite, ?_⟩
   by_cases hbF : b ∈ F
   · left
@@ -295,7 +295,7 @@ theorem chapter13_perfect_field_empty_p_basis
   · intro r b hb hbi
     by_cases hr : r = 0
     · subst r
-      letI : Subsingleton (Chapter13PMonomialIndex (Fin 0) p) :=
+      let : Subsingleton (Chapter13PMonomialIndex (Fin 0) p) :=
         ⟨fun a b => by
           apply Subtype.ext
           apply Finsupp.ext

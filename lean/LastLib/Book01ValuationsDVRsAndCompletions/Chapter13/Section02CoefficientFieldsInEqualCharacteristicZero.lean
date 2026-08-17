@@ -26,7 +26,7 @@ theorem chapter13_subfield_reduction_injective
     {A : Type u} [CommRing A] [IsLocalRing A]
     (K : Chapter13Subfield A) :
     Function.Injective ((Chapter13ResidueMap A).comp K.carrier.subtype) := by
-  letI : Field K.carrier := K.field_carrier.toField
+  let : Field K.carrier := K.field_carrier.toField
   intro x y hxy
   have hz : Chapter13ResidueMap A (K.carrier.subtype x - K.carrier.subtype y) = 0 := by
     rw [map_sub, sub_eq_zero]
@@ -126,7 +126,7 @@ theorem chapter13_separable_adjoin_is_field
     {K k : Type u} [Field K] [Field k] [Algebra K k]
     (b : k) (hb : IsSeparable K b) :
     IsField (Algebra.adjoin K ({b} : Set k)) := by
-  letI : Algebra.IsIntegral K (Algebra.adjoin K ({b} : Set k)) :=
+  let : Algebra.IsIntegral K (Algebra.adjoin K ({b} : Set k)) :=
     Algebra.IsIntegral.adjoin (by
       intro x hx
       rw [Set.mem_singleton_iff.mp hx]

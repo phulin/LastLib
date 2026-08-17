@@ -143,7 +143,7 @@ theorem chapter13_finite_module_krull_intersection
     (∀ x : M, (∀ n : ℕ,
       x ∈ (IsLocalRing.maximalIdeal A) ^ n • (⊤ : Submodule A M)) → x = 0) ∧
       IsAdicComplete (IsLocalRing.maximalIdeal A) M := by
-  letI instNoetherian : IsNoetherianRing A := hA.1
+  let instNoetherian : IsNoetherianRing A := hA.1
   refine ⟨?_, ?_⟩
   · intro x hx
     have hx' : x ∈ (⨅ n : ℕ,
@@ -191,14 +191,14 @@ theorem chapter13_finite_module_krull_intersection
         _ = AdicCompletion.map I f y' := by rw [hx]
         _ = y := hy'
     have hhaus : IsHausdorff I M := inferInstance
-    letI : IsHausdorff I M := hhaus
-    letI : IsPrecomplete I M := AdicCompletion.of_surjective_iff.mp hof
+    let : IsHausdorff I M := hhaus
+    let : IsPrecomplete I M := AdicCompletion.of_surjective_iff.mp hof
     exact (show IsAdicComplete I M from IsAdicComplete.mk)
 
 theorem chapter13_finite_module_nakayama_generation
     {A M : Type*} [CommRing A] [IsLocalRing A]
     [AddCommGroup M] [Module A M] [Module.Finite A M]
-    (hA : Chapter13CompleteNoetherianLocalRing A) :
+    (_hA : Chapter13CompleteNoetherianLocalRing A) :
     ∀ (r : ℕ) (m : Fin r → M),
       Chapter13SpansModuloMaximalIdeal (A := A) r m →
         Submodule.span A (Set.range m) = ⊤ := by
@@ -229,7 +229,7 @@ theorem chapter13_quotient_complete_noetherian_local
         (Ideal.Quotient.nontrivial_iff.mpr hI) (Ideal.Quotient.mk I)
         Ideal.Quotient.mk_surjective) := by
   let S := R ⧸ I
-  letI : IsLocalRing S :=
+  let : IsLocalRing S :=
     @IsLocalRing.of_surjective' R S _ _ _
       (Ideal.Quotient.nontrivial_iff.mpr hI) (Ideal.Quotient.mk I)
       Ideal.Quotient.mk_surjective
@@ -325,6 +325,10 @@ structure Chapter13CoefficientRingSubring
       IsLocalRing.maximalIdeal carrier
   residue_equiv :
     (carrier ⧸ IsLocalRing.maximalIdeal carrier) ≃+* Chapter13ResidueRing A
+  residue_compatibility :
+    ∀ c : carrier,
+      residue_equiv (Ideal.Quotient.mk _ c) =
+        Chapter13ResidueMap A (carrier.subtype c)
   kind : Chapter13CoefficientRingKind carrier p
 
 /-- A coefficient ring is a coefficient-ring map with one of the two source kinds. -/
@@ -340,9 +344,9 @@ theorem chapter13_contains_field_iff_equal_characteristic
         ∃ p : ℕ, Chapter13EqualCharacteristicPrime A p := by
   constructor
   · rintro ⟨K⟩
-    letI : Field K.carrier := K.field_carrier.toField
+    let : Field K.carrier := K.field_carrier.toField
     obtain ⟨p, hp⟩ := CharP.exists K.carrier
-    letI : CharP K.carrier p := hp
+    let : CharP K.carrier p := hp
     rcases CharP.char_is_prime_or_zero K.carrier p with hpprime | hpzero
     · refine Or.inr ⟨p, hpprime, ?_, ?_⟩
       · exact (K.carrier.subtype.charP_iff_charP p).mp hp
@@ -355,7 +359,7 @@ theorem chapter13_contains_field_iff_equal_characteristic
   · rintro (hzero | ⟨p, hpprime, hpA, hpres⟩)
     · have hforall : ∀ I : Ideal A, I ≠ ⊤ →
           CharZero (A ⧸ I) := by
-        letI : CharP (Chapter13ResidueRing A) 0 := hzero.2
+        let : CharP (Chapter13ResidueRing A) 0 := hzero.2
         intro I hI
         let hIle : I ≤ IsLocalRing.maximalIdeal A :=
           IsLocalRing.le_maximalIdeal hI
@@ -376,7 +380,7 @@ theorem chapter13_contains_field_iff_equal_characteristic
         exact CharP.charP_to_charZero (A ⧸ I)
       obtain ⟨hQ⟩ : Nonempty (Algebra ℚ A) :=
         (EqualCharZero.nonempty_algebraRat_iff (R := A)).mpr hforall
-      letI : Algebra ℚ A := hQ
+      let : Algebra ℚ A := hQ
       let f : ℚ →+* A := algebraMap ℚ A
       let e : ℚ ≃+* f.range :=
         RingEquiv.ofBijective f.rangeRestrict
@@ -385,8 +389,8 @@ theorem chapter13_contains_field_iff_equal_characteristic
       have hfield : IsField f.range :=
         e.symm.toMulEquiv.isField (Field.toIsField ℚ)
       exact ⟨⟨f.range, hfield⟩⟩
-    · letI : CharP A p := hpA
-      letI : Fact (Nat.Prime p) := ⟨hpprime⟩
+    · let : CharP A p := hpA
+      let : Fact (Nat.Prime p) := ⟨hpprime⟩
       let f : ZMod p →+* A := ZMod.castHom (dvd_refl p) A
       let e : ZMod p ≃+* f.range :=
         RingEquiv.ofBijective f.rangeRestrict

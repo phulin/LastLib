@@ -90,7 +90,7 @@ instance chapter13PrimeSquareLocalRing
       1 < 2 * 2 := by decide
       _ ≤ p * p := Nat.mul_le_mul hp hp
       _ = p ^ 2 := by simp [pow_two]
-  letI : Fact (1 < p ^ 2) := ⟨hp2⟩
+  let : Fact (1 < p ^ 2) := ⟨hp2⟩
   exact @IsLocalRing.of_surjective' (PadicInt p) (ZMod (p ^ 2)) _ _ _
     inferInstance (PadicInt.toZModPow 2) (ZMod.ringHom_surjective _)
 
@@ -107,7 +107,7 @@ theorem chapter13_padic_integers_have_no_subfield
     (p : ℕ) [Fact (Nat.Prime p)] :
     ¬Chapter13ContainsField (PadicInt p) := by
   rintro ⟨K⟩
-  letI : Field K.carrier := K.field_carrier.toField
+  let : Field K.carrier := K.field_carrier.toField
   have hp0 : (p : K.carrier) ≠ 0 := by
     intro hp
     have hp' : (p : PadicInt p) = 0 := congrArg K.carrier.subtype hp
@@ -212,7 +212,7 @@ theorem chapter13_padic_power_series_is_unramified_regular
     exact (e.symm.toRingHom.charP_iff_charP p).mp (ZMod.charP p)
   have hcharA : ¬CharP A p := by
     intro h
-    letI : CharP A p := h
+    let : CharP A p := h
     have hz : (p : A) = 0 := CharP.cast_eq_zero A p
     have hz' : (p : PadicInt p) = 0 := by
       simpa only [map_natCast, map_zero] using
@@ -220,7 +220,7 @@ theorem chapter13_padic_power_series_is_unramified_regular
     exact hp0 hz'
   have hcontains : ¬Chapter13ContainsField A := by
     rintro ⟨K⟩
-    letI : Field K.carrier := K.field_carrier.toField
+    let : Field K.carrier := K.field_carrier.toField
     have hpa0 : (p : A) ≠ 0 := by
       intro h
       have h' := congrArg PowerSeries.constantCoeff h
