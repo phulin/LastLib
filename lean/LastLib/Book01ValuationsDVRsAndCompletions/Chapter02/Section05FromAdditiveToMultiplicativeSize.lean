@@ -205,15 +205,11 @@ theorem chapter02_padic_absolute_value_of_p_pow_times_prime_to_p
     padicValRat.self (show 1 < p from (Fact.out : Nat.Prime p).one_lt), hva, hvb]
   norm_num
 
-def Chapter02IsUltrametricAbsoluteValue {K : Type*} [Ring K]
-    (f : K → ℝ) : Prop :=
-  ∀ x y : K, f (x + y) ≤ max (f x) (f y)
-
 theorem chapter02_padic_absolute_value_is_an_ultrametric_absolute_value
     (p : ℕ) [Fact p.Prime] :
     ∃ f : AbsoluteValue ℚ ℝ,
       (∀ x : ℚ, f x = Chapter02PadicAbsoluteValue p x) ∧
-        Chapter02IsUltrametricAbsoluteValue (f : ℚ → ℝ) := by
+        IsNonarchimedean (f : ℚ → ℝ) := by
   refine ⟨Rat.AbsoluteValue.padic p, ?_, ?_⟩
   · intro x
     by_cases hx : x = 0
@@ -242,7 +238,7 @@ def Chapter02LogarithmicValueFromAbsoluteValue
 
 theorem chapter02_ultrametric_absolute_value_gives_additive_value
     {K : Type*} [Field K] (f : AbsoluteValue K ℝ)
-    (hf : Chapter02IsUltrametricAbsoluteValue (f : K → ℝ))
+    (hf : IsNonarchimedean (f : K → ℝ))
     {c : ℝ} (hc : 0 < c) (hc1 : c < 1) :
     ∃! v : AddValuation K (WithTop ℝ),
       ∀ x : K, v x =
@@ -384,7 +380,7 @@ theorem chapter02_absolute_value_equivalence_iff_same_topology
 
 theorem chapter02_absolute_value_is_ultrametric_iff_integer_bound
     {K : Type*} [Field K] (f : AbsoluteValue K ℝ) :
-    Chapter02IsUltrametricAbsoluteValue (f : K → ℝ) ↔
+    IsNonarchimedean (f : K → ℝ) ↔
       ∀ n : ℤ, f (n : K) ≤ 1 := by
   let _ := f.toNormedField
   change (∀ x y : K, ‖x + y‖ ≤ max ‖x‖ ‖y‖) ↔

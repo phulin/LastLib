@@ -19,6 +19,8 @@ chapter-local names for the constructions that are specific to the exposition.
 
 noncomputable section
 
+open scoped Classical
+
 /-! # Book 1, Chapter 2, Section 2.6: The Trivial Valuation and Failure Modes
 -/
 
@@ -48,37 +50,16 @@ theorem chapter02_trivial_valuation_ring_is_the_whole_field
   by_cases hx : x = 0 <;>
     simp [Chapter02ValuationRing, Chapter02TrivialAdditiveValuation, hx]
 
-def Chapter02TrivialAbsoluteValue {K : Type*} [Field K] (x : K) : ℝ := by
-  classical
-  exact if x = 0 then 0 else 1
-
 theorem chapter02_trivial_absolute_value_is_one_off_zero
     {K : Type*} [Field K] {x : K} (hx : x ≠ 0) :
-    Chapter02TrivialAbsoluteValue x = 1 := by
-  simp [Chapter02TrivialAbsoluteValue, hx]
+    (AbsoluteValue.trivial : AbsoluteValue K ℝ) x = 1 := by
+  exact AbsoluteValue.trivial_apply hx
 
 theorem chapter02_trivial_absolute_value_is_an_absolute_value
     {K : Type*} [Field K] :
     ∃ f : AbsoluteValue K ℝ,
-      ∀ x : K, f x = Chapter02TrivialAbsoluteValue x := by
-  let f : AbsoluteValue K ℝ :=
-    { toFun := Chapter02TrivialAbsoluteValue
-      map_mul' := by
-        intro x y
-        by_cases hx : x = 0 <;> by_cases hy : y = 0 <;>
-          simp [Chapter02TrivialAbsoluteValue, hx, hy]
-      nonneg' := by
-        intro x
-        by_cases hx : x = 0 <;> simp [Chapter02TrivialAbsoluteValue, hx]
-      eq_zero' := by
-        intro x
-        simp [Chapter02TrivialAbsoluteValue]
-      add_le' := by
-        intro x y
-        by_cases hx : x = 0 <;> by_cases hy : y = 0 <;>
-          by_cases hxy : x + y = 0 <;>
-            simp [Chapter02TrivialAbsoluteValue, hx, hy, hxy] }
-  exact ⟨f, fun x => rfl⟩
+      ∀ x : K, f x = (AbsoluteValue.trivial : AbsoluteValue K ℝ) x := by
+  exact ⟨AbsoluteValue.trivial, fun _ => rfl⟩
 
 def Chapter02TrivialDistance {K : Type*} [Field K] (x y : K) : ℝ := by
   classical
@@ -98,7 +79,7 @@ def Chapter02OrdinaryRationalAbsoluteValue (x : ℚ) : ℝ :=
   |(x : ℝ)|
 
 theorem chapter02_ordinary_absolute_value_fails_ultrametricity :
-    ¬ Chapter02IsUltrametricAbsoluteValue Chapter02OrdinaryRationalAbsoluteValue := by
+    ¬ IsNonarchimedean Chapter02OrdinaryRationalAbsoluteValue := by
   intro h
   have hh := h 1 1
   norm_num [Chapter02OrdinaryRationalAbsoluteValue] at hh
@@ -140,12 +121,12 @@ def Chapter02UltrametricDistance {K : Type*} [Ring K]
 
 theorem chapter02_ultrametric_longest_side
     {K : Type*} [Ring K] (f : K → ℝ)
-    (hf : Chapter02IsUltrametricAbsoluteValue f) (x y z : K) :
+    (hf : IsNonarchimedean f) (x y z : K) :
     Chapter02UltrametricDistance f x z ≤
       max (Chapter02UltrametricDistance f x y)
         (Chapter02UltrametricDistance f y z) := by
-  simpa [Chapter02UltrametricDistance, sub_eq_add_neg, add_assoc, add_comm,
-    add_left_comm] using hf (x - y) (y - z)
+  simpa [IsNonarchimedean, Chapter02UltrametricDistance, sub_eq_add_neg,
+    add_assoc, add_comm, add_left_comm] using hf (x - y) (y - z)
 
 theorem chapter02_ultrametric_series_criterion
     {K : Type*} [NormedAddCommGroup K] [CompleteSpace K]
