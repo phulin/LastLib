@@ -921,7 +921,10 @@ theorem chapter10_constant_field_extension_numerical_profile
               rw [Algebra.algebraMap_eq_smul_one]
       _ = (a • (1 : LaurentSeries k)) •
             (1 : LaurentSeries k') := by
-              rw [Algebra.algebraMap_eq_smul_one]
+              rw [← HahnSeries.C_mul_eq_smul]
+              rw [HahnSeries.algebraMap_apply' ℤ, PowerSeries.algebraMap_apply,
+                HahnSeries.ofPowerSeries_C]
+              simp
       _ = a • (1 : LaurentSeries k') := by
         exact (smul_assoc a (1 : LaurentSeries k)
           (1 : LaurentSeries k')).trans
@@ -1079,7 +1082,10 @@ theorem chapter10_constant_field_extension_profile
               rw [Algebra.algebraMap_eq_smul_one]
       _ = (a • (1 : LaurentSeries k)) •
             (1 : LaurentSeries k') := by
-        rw [Algebra.algebraMap_eq_smul_one]
+        rw [← HahnSeries.C_mul_eq_smul]
+        rw [HahnSeries.algebraMap_apply' ℤ, PowerSeries.algebraMap_apply,
+          HahnSeries.ofPowerSeries_C]
+        simp
       _ = a • (1 : LaurentSeries k') := by
         exact (smul_assoc a (1 : LaurentSeries k)
           (1 : LaurentSeries k')).trans
@@ -1097,7 +1103,7 @@ theorem chapter10_constant_field_extension_profile
       Algebra.IsSeparable
         (Chapter10ResidueField (Chapter10LaurentSeriesValuation k))
         (Chapter10ResidueField (Chapter10LaurentSeriesValuation k')) := by
-    letI : Algebra.IsSeparable k k' := hseparable
+    let : Algebra.IsSeparable k k' := hseparable
     exact Algebra.IsSeparable.of_equiv_equiv
       (Chapter10LaurentSeriesResidueRingEquiv k)
       (Chapter10LaurentSeriesResidueRingEquiv k') he
@@ -1110,7 +1116,7 @@ theorem chapter10_constant_field_extension_profile
         (Chapter10LaurentSeriesValuation k)
         (Chapter10LaurentSeriesValuation k')
     refine ⟨hprof.2.1.symm.trans hram, ?_⟩
-    letI : Algebra.IsSeparable
+    let : Algebra.IsSeparable
         (Chapter10ResidueField (Chapter10LaurentSeriesValuation k))
         (Chapter10ResidueField (Chapter10LaurentSeriesValuation k')) := hsep_res
     intro x
