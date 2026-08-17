@@ -102,6 +102,19 @@ class Chapter11CompleteDVR (A : Type u) [CommRing A] [IsDomain A]
     [IsDiscreteValuationRing A] : Prop where
   isAdicComplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A
 
+/-- Compatibility bridge to the canonical complete-DVR class from Chapter 9.
+
+The Chapter 11 wrapper is retained because later out-of-scope files construct
+it through its explicit `isAdicComplete` field; all Chapter 11 arguments that
+need the complete-DVR API are nevertheless discharged through the earlier
+class. -/
+instance chapter11CompleteDVR_to_completeDVR
+    (A : Type u) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
+    [hA : Chapter11CompleteDVR A] :
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.CompleteDVR A where
+  toIsDiscreteValuationRing := inferInstance
+  isAdicComplete' := hA.isAdicComplete
+
 /-- The interface used for the phrase “complete DVR” in the finiteness discussion. -/
 def chapter11IsCompleteDVR (A : Type*) [CommRing A] [IsDomain A]
     [IsDiscreteValuationRing A] : Prop :=
@@ -124,8 +137,13 @@ theorem chapter11_complete_dvr_valuation_ring_is_finite
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter07.chapter07DvrUniformSpace_isUniformAddGroup A
   let : IsTopologicalRing A :=
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter07.chapter07DvrUniformSpace_isTopologicalRing A
+  let hcanonical :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.CompleteDVR A :=
+    { toIsDiscreteValuationRing := inferInstance
+      isAdicComplete' := (show Chapter11CompleteDVR A from _hcomplete).isAdicComplete }
   let hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A :=
-    (show Chapter11CompleteDVR A from _hcomplete).isAdicComplete
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.CompleteDVR.isAdicComplete
+      (A := A) (hA := hcanonical)
   let : IsAdicComplete (IsLocalRing.maximalIdeal A) A := hcomplete
   obtain ⟨e, he⟩ :=
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter07.chapter07_dvr_metric_completion_agrees_with_adic_completion
