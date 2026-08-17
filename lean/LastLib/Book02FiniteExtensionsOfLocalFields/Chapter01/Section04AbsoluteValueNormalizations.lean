@@ -174,7 +174,7 @@ theorem chapter01_relative_absolute_value_norm_formula
       simpa [f] using hdegree
     have hnorm :=
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11_single_branch_norm_valuation_formula
-        K L e f hext hrestrict rfl hunique hdegree' y hy
+        K L e f hext hscale.1 hrestrict rfl hunique hdegree' y hy
     simp only [chapter01RelativeAbsoluteValue, chapter01BaseAbsoluteValue,
       if_neg hy, if_neg hnorm_ne]
     have hnorm' : (zK : WithTop ℤ) =
