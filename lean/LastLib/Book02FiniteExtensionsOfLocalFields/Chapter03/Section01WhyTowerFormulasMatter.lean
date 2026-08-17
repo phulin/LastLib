@@ -69,7 +69,15 @@ theorem chapter03_fundamental_equality_iff_extension_data
     [vK.HasExtension vL] :
     chapter03FundamentalEquality vK vL ↔
       Nonempty (Chapter03FiniteLocalExtensionData K L Γ vK vL) := by
-  sorry
+  constructor
+  · intro h
+    refine ⟨⟨_, _, ?_, ?_, h⟩⟩
+    · rfl
+    · rfl
+  · rintro ⟨d⟩
+    have hdegree := d.degree_eq
+    rw [← d.e_eq, ← d.f_eq] at hdegree
+    exact hdegree
 
 theorem chapter03_complete_fundamental_equality
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -80,7 +88,8 @@ theorem chapter03_complete_fundamental_equality
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
     chapter03FundamentalEquality vK vL := by
-  sorry
+  exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter02.fundamental_equality
+    vK vL hcomplete
 
 /-- Ramification indices and residue degrees multiply in a local tower. -/
 theorem chapter03_tower_ramification_and_residue_laws
@@ -91,7 +100,11 @@ theorem chapter03_tower_ramification_and_residue_laws
     [q.LiesOver p] [r.LiesOver q] [Module.Flat S T] :
     r.ramificationIdx R = q.ramificationIdx R * r.ramificationIdx S ∧
       r.inertiaDeg R = q.inertiaDeg R * r.inertiaDeg S := by
-  sorry
+  exact ⟨
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11_ramification_indices_multiply_in_towers
+      p q r,
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11_inertia_degrees_multiply_in_towers
+      p q r⟩
 
 /-- The vector-space degree identity in the same tower. -/
 theorem chapter03_tower_degree_formula
@@ -99,7 +112,7 @@ theorem chapter03_tower_degree_formula
     [Algebra K M] [Algebra M L] [Algebra K L] [IsScalarTower K M L]
     [FiniteDimensional K M] [FiniteDimensional M L] :
     Module.finrank K L = Module.finrank K M * Module.finrank M L := by
-  sorry
+  exact (Module.finrank_mul_finrank K M L).symm
 
 /-- The two normalized restriction factors compose along the tower. -/
 theorem chapter03_restriction_factors_compose
@@ -109,7 +122,18 @@ theorem chapter03_restriction_factors_compose
     [FiniteDimensional K M] [FiniteDimensional M L]
     (T : Chapter03NormalizedValuedTower K M L) (x : K) (hx : x ≠ 0) :
     T.vL (algebraMap K L x) = (T.eLM * T.eMK) • T.vK x := by
-  sorry
+  have hxm : algebraMap K M x ≠ 0 :=
+    (map_ne_zero_iff (algebraMap K M)
+      (FaithfulSMul.algebraMap_injective K M)).2 hx
+  have hMK :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01_restriction_scale_apply
+      T.vK T.vM T.eMK T.restrict_M_to_K hx
+  have hLM :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01_restriction_scale_apply
+      T.vM T.vL T.eLM T.restrict_L_to_M hxm
+  rw [IsScalarTower.algebraMap_apply K M L x]
+  rw [hLM, hMK]
+  simp [smul_smul]
 
 /-- The ideal-power form of the tower formula. -/
 def chapter03IdealPowerTowerFormula
@@ -122,6 +146,42 @@ def chapter03IdealPowerTowerFormula
     Ideal.map (algebraMap A C) p =
       (Ideal.map (algebraMap B C) q) ^ eAB ∧
     eAC = eBC * eAB
+
+private theorem chapter03_dvr_maximalIdeal_map_eq_pow_ramificationIdx
+    (A B : Type*) [CommRing A] [IsDomain A]
+    [IsDiscreteValuationRing A] [CommRing B] [IsDomain B]
+    [IsDiscreteValuationRing B] [Algebra A B]
+    [Algebra.IsIntegral A B] [Module.IsTorsionFree A B] [Module.Finite A B] :
+    Ideal.map (algebraMap A B) (IsLocalRing.maximalIdeal A) =
+      (IsLocalRing.maximalIdeal B) ^
+        (IsLocalRing.maximalIdeal B).ramificationIdx A := by
+  classical
+  let m : Ideal A := IsLocalRing.maximalIdeal A
+  let P : Ideal B := IsLocalRing.maximalIdeal B
+  have hm0 : m ≠ (⊥ : Ideal A) := by
+    exact IsDiscreteValuationRing.not_a_field A
+  have hmap0 : Ideal.map (algebraMap A B) m ≠ (⊥ : Ideal B) :=
+    Ideal.map_ne_bot_of_ne_bot hm0
+  obtain ⟨n, hPn⟩ :=
+    exists_maximalIdeal_pow_eq_of_principal B
+      (IsPrincipalIdealRing.principal P)
+      (Ideal.map (algebraMap A B) m) hmap0
+  have hram : P.ramificationIdx A = n := by
+    let _ : IsDiscreteValuationRing (Localization.AtPrime P) :=
+      IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain B
+        (IsDiscreteValuationRing.not_a_field B) (Localization.AtPrime P)
+    rw [Ideal.ramificationIdx_eq m P]
+    change (Module.length (Localization.AtPrime P)
+      (Localization.AtPrime P ⧸
+        Ideal.map (algebraMap A (Localization.AtPrime P)) m)).toNat = n
+    have hPn' := congrArg
+      (Ideal.map (algebraMap B (Localization.AtPrime P))) hPn
+    rw [Ideal.map_map, ← IsScalarTower.algebraMap_eq A B
+      (Localization.AtPrime P), Ideal.map_pow,
+      Localization.AtPrime.map_eq_maximalIdeal] at hPn'
+    rw [hPn', IsDiscreteValuationRing.length_quotient_pow_maximalIdeal]
+    rfl
+  simpa [m, P, hram] using hPn
 
 theorem chapter03_ideal_power_tower_formula
     {A B C : Type*} [CommRing A] [CommRing B] [CommRing C]
@@ -141,7 +201,30 @@ theorem chapter03_ideal_power_tower_formula
     (hr : r = IsLocalRing.maximalIdeal C) :
     chapter03IdealPowerTowerFormula p q r
       (r.ramificationIdx B) (q.ramificationIdx A) (r.ramificationIdx A) := by
-  sorry
+  let _ : Algebra.IsIntegral A C := Algebra.IsIntegral.trans B
+  let _ : Module.Finite A C := Module.Finite.trans B C
+  have hpC : Ideal.map (algebraMap A C) p =
+      r ^ r.ramificationIdx A := by
+    rw [hp, hr]
+    exact chapter03_dvr_maximalIdeal_map_eq_pow_ramificationIdx A C
+  have hqC : Ideal.map (algebraMap B C) q =
+      r ^ r.ramificationIdx B := by
+    rw [hq, hr]
+    exact chapter03_dvr_maximalIdeal_map_eq_pow_ramificationIdx B C
+  have htower : r.ramificationIdx A =
+      q.ramificationIdx A * r.ramificationIdx B :=
+    Ideal.ramificationIdx_tower q r
+  have htower' : r.ramificationIdx A =
+      r.ramificationIdx B * q.ramificationIdx A := by
+    simpa [Nat.mul_comm] using htower
+  refine ⟨hpC, hqC, ?_, htower'⟩
+  calc
+    Ideal.map (algebraMap A C) p = r ^ r.ramificationIdx A := hpC
+    _ = r ^ (q.ramificationIdx A * r.ramificationIdx B) := by rw [htower]
+    _ = (r ^ r.ramificationIdx B) ^ q.ramificationIdx A := by
+      simpa [Nat.mul_comm] using
+        (pow_mul r (r.ramificationIdx B) (q.ramificationIdx A))
+    _ = (Ideal.map (algebraMap B C) q) ^ q.ramificationIdx A := by rw [hqC]
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03
