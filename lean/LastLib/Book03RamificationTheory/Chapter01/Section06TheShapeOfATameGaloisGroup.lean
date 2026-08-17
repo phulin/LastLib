@@ -35,6 +35,34 @@ theorem chapter01_arithmetic_frobenius_conjugation
     D.frobenius * D.tameGenerator * D.frobenius⁻¹ =
       D.tameGenerator ^ q := D.conjugation
 
+/- The order relation in the presentation gives the displayed relation
+`τ^e = 1` from the source. -/
+theorem chapter01_tame_generator_pow_eq_one
+    {G : Type*} [Group G] [Finite G]
+    {I : Subgroup G} [I.Normal] (q e f : ℕ)
+    (D : Chapter01FiniteTameGroupPresentation G I q e f) :
+    D.tameGenerator ^ e = 1 := by
+  sorry
+
+/- The exponent in `F^f = τ^a` is unique modulo the tame order. -/
+theorem chapter01_frobenius_power_exponent_unique_mod
+    {G : Type*} [Group G] [Finite G]
+    {I : Subgroup G} [I.Normal] (q e f : ℕ)
+    (D : Chapter01FiniteTameGroupPresentation G I q e f)
+    {a b : ℕ}
+    (ha : D.frobenius ^ f = D.tameGenerator ^ a)
+    (hb : D.frobenius ^ f = D.tameGenerator ^ b) :
+    Nat.ModEq e a b := by
+  sorry
+
+/- Compatibility of Frobenius conjugation with `F^f ∈ I`. -/
+theorem chapter01_frobenius_power_compatibility
+    {G : Type*} [Group G] [Finite G]
+    {I : Subgroup G} [I.Normal] (q e f : ℕ)
+    (D : Chapter01FiniteTameGroupPresentation G I q e f) :
+    Nat.ModEq e (q ^ f) 1 := by
+  sorry
+
 /-- Geometric Frobenius reverses the conjugation convention. -/
 theorem chapter01_geometric_frobenius_conjugation
     {G : Type*} [Group G] [Finite G]

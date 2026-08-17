@@ -195,6 +195,7 @@ theorem chapter01_imperfect_residue_example_is_not_tame
     [Algebra.IsAlgebraic k l] [Module.Finite k l]
     (E : Chapter01PurelyInseparableResidueExample k l) :
     E.ramification_index = 1 ∧
+      IsPurelyInseparable k l ∧
       ¬Algebra.IsSeparable k l ∧
       ¬chapter01TameExtension k l E.ramification_index := by
   sorry
@@ -237,11 +238,13 @@ theorem chapter01_separable_fierce_profile_is_not_unramified
         E.data ∧
       ¬LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Chapter07UnramifiedExtension
         E.data := by
-  refine ⟨⟨E.ramification_index_eq_one, E.residue_not_separable⟩, ?_⟩
+  refine ⟨⟨E.ramification_index_eq_one, E.residue_purely_inseparable,
+    E.residue_not_separable⟩, ?_⟩
   exact
     LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.chapter07_fierce_is_not_unramified
       E.data
-      ⟨E.ramification_index_eq_one, E.residue_not_separable⟩
+      ⟨E.ramification_index_eq_one, E.residue_purely_inseparable,
+        E.residue_not_separable⟩
 
 end
 

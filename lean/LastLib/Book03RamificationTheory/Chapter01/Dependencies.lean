@@ -229,11 +229,9 @@ def chapter01ArithmeticFrobeniusCoset
       G H I) (φ : H) : Set G :=
   LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.chapter06ArithmeticFrobeniusCoset I D φ
 
-/-- A presentation records the unspecified Frobenius-order relation explicitly. -/
--- SOURCE_ISSUE: The source says only “the relation determining the order of
--- the chosen Frobenius lift” and does not state that relation.  The field
--- below uses the weakest useful correction: a finite cyclic ambiguity
--- `F^f = τ^a` for some exponent `a`.
+/-- A presentation records the cyclic ambiguity in the chosen Frobenius lift.
+The uniqueness of its residue class and the compatibility congruence are
+exposed by the Section 1.6 lemmas. -/
 structure Chapter01FiniteTameGroupPresentation
     (G : Type*) [Group G] [Finite G]
     (I : Subgroup G) [I.Normal] (q e f : ℕ) where
@@ -243,7 +241,10 @@ structure Chapter01FiniteTameGroupPresentation
   tameGenerator_order_positive : 0 < e
   tameGenerator_order : orderOf tameGenerator = e
   residue_degree_positive : 0 < f
+  residue_card_positive : 0 < q
   inertia_generated : Subgroup.zpowers tameGenerator = I
+  group_generated :
+    Subgroup.closure ({frobenius, tameGenerator} : Set G) = ⊤
   conjugation : frobenius * tameGenerator * frobenius⁻¹ = tameGenerator ^ q
   frobenius_power : ∃ a : ℕ, frobenius ^ f = tameGenerator ^ a
 
