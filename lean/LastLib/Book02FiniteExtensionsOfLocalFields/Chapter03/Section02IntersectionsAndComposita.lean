@@ -337,18 +337,6 @@ theorem chapter03_galois_self_scalar_extension_splits
     [FiniteDimensional K L] [IsGalois K L] :
     ∃ n : ℕ, n = Module.finrank K L ∧
       chapter03SelfScalarExtensionSplits K L n := by
-  classical
-  letI : Algebra L (chapter03SelfScalarExtension K L) :=
-    Algebra.TensorProduct.rightAlgebra
-  let G := Gal(L / K)
-  let φ : G → chapter03SelfScalarExtension K L →ₐ[L] L := fun σ =>
-    letI : Algebra L (L ⊗[K] L) := Algebra.TensorProduct.leftAlgebra
-    (Algebra.TensorProduct.liftEquivRight K L L L σ.toAlgHom).comp
-      (Algebra.TensorProduct.commRight K L L).symm.toAlgHom
-  let Φ : chapter03SelfScalarExtension K L →ₐ[L] (G → L) := AlgHom.pi φ
-  have hφ : ∀ (σ : G) (a b : L), Φ (a ⊗ₜ[K] b) σ = σ a * b := by
-    intro σ a b
-    simp [Φ, φ, Algebra.TensorProduct.commRight_symm_tmul, mul_comm]
   sorry
 
 /-- Each field factor of the separable self-base change is unramified over

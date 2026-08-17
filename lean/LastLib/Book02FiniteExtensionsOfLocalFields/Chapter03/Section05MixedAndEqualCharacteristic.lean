@@ -61,14 +61,14 @@ theorem chapter03_mixed_characteristic_degree_and_prime_value
 theorem chapter03_finite_residue_field_is_perfect
     (k : Type*) [Field k] [Fintype k] :
     PerfectField k := by
-  sorry
+  infer_instance
 
 /-- Every finite extension of a finite field is separable. -/
 theorem chapter03_finite_residue_extensions_are_separable
     (k l : Type*) [Field k] [Field l] [Algebra k l]
     [FiniteDimensional k l] [Fintype k] :
     Algebra.IsSeparable k l := by
-  sorry
+  infer_instance
 
 /-- The Laurent-series model for equal characteristic. -/
 abbrev chapter03EqualCharacteristicModel (k : Type*) [Field k] :=
@@ -94,7 +94,7 @@ def chapter03EqualCharacteristicUniformizer
 theorem chapter03_equal_characteristic_model_is_complete
     (k : Type*) [Field k] :
     CompleteSpace (chapter03EqualCharacteristicModel k) := by
-  sorry
+  infer_instance
 
 /-- The residue-case purely inseparable polynomial `X^p-a`. -/
 def chapter03PurelyInseparableResiduePolynomial
@@ -188,7 +188,21 @@ theorem chapter03_purely_inseparable_extension_is_not_separable
     [FiniteDimensional K L] [IsPurelyInseparable K L]
     (hdegree : Module.finrank K L ≠ 1) :
     ¬ Algebra.IsSeparable K L ∧ ¬ IsGalois K L := by
-  sorry
+  constructor
+  · intro hseparable
+    letI : Algebra.IsSeparable K L := hseparable
+    have hbij : Function.Bijective (algebraMap K L) :=
+      IsPurelyInseparable.bijective_algebraMap_of_isSeparable K L
+    apply hdegree
+    exact Algebra.finrank_eq_one_iff_bijective_algebraMap.mpr hbij
+  · intro hgalois
+    letI : IsGalois K L := hgalois
+    have hseparable : Algebra.IsSeparable K L := inferInstance
+    letI : Algebra.IsSeparable K L := hseparable
+    have hbij : Function.Bijective (algebraMap K L) :=
+      IsPurelyInseparable.bijective_algebraMap_of_isSeparable K L
+    apply hdegree
+    exact Algebra.finrank_eq_one_iff_bijective_algebraMap.mpr hbij
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03

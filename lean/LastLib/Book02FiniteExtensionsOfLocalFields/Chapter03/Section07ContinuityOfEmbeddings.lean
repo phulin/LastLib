@@ -51,7 +51,8 @@ theorem chapter03_embedding_preserves_normalized_valuation
     (hunique : chapter03UniqueNormalizedValuationExtension vK vL)
     (D : Chapter03ValuedEmbeddingData vK vL vΩ σ) :
     ∀ x : L, vΩ (σ x) = vL x := by
-  sorry
+  intro x
+  rw [D.ambient_compatibility x, hunique.2 D.pullback D.pullback_extends]
 
 /-- An ambient valuation extending the base valuation automatically pulls back
 to the unique normalized valuation on an embedded finite extension. -/
@@ -63,7 +64,13 @@ theorem chapter03_embedding_preserves_normalized_valuation_of_base_extension
     (hunique : chapter03UniqueNormalizedValuationExtension vK vL)
     (hΩ : chapter03ValuationExtendsExactly vK vΩ) :
     ∀ x : L, vΩ (σ x) = vL x := by
-  sorry
+  let w := vΩ.comap σ.toRingHom
+  have hw : chapter03ValuationExtendsExactly vK w := by
+    intro x
+    simpa [w, chapter03ValuationExtendsExactly] using hΩ x
+  have hw_eq : w = vL := hunique.2 w hw
+  intro x
+  simpa [w] using congrArg (fun z : Valuation L Γ => z x) hw_eq
 
 /-- The value of a normalized additive valuation after dividing by its scale. -/
 def chapter03NormalizedValuationValue
@@ -90,7 +97,33 @@ theorem chapter03_embedding_preserves_normalized_valuation_ratio
         rw [heΩK]
         exact Nat.mul_pos heΩL heLK) (σ x) =
         chapter03NormalizedValuationValue vL eLK heLK x := by
-  sorry
+  intro x
+  by_cases hx : x = 0
+  · simp [chapter03NormalizedValuationValue, hx]
+  · have hσ : σ x ≠ 0 := (map_ne_zero_iff σ σ.injective).2 hx
+    simp only [chapter03NormalizedValuationValue, if_neg hσ, if_neg hx]
+    have hvL : vL x ≠ ⊤ := (vL.ne_top_iff).2 hx
+    obtain ⟨z, hz⟩ := WithTop.ne_top_iff_exists.mp hvL
+    have hv := hscale x hx
+    rw [← hz] at hv
+    have hnsmul : ∀ n : ℕ, n • (z : WithTop ℤ) = (n * z : ℤ) := by
+      intro n
+      induction n with
+      | zero => simp
+      | succ n ih =>
+          rw [succ_nsmul, ih]
+          norm_cast
+          simp only [Nat.cast_add, Nat.cast_one]
+          ring
+    have hv' : vΩ (σ x) = (eΩL * z : ℤ) := by
+      simpa [hnsmul] using hv
+    rw [hv']
+    rw [← hz]
+    simp only [WithTop.untopD_coe, Int.cast_mul]
+    rw [heΩK]
+    field_simp
+    norm_num [Nat.cast_mul]
+    ring
 
 /-- The equivalent absolute-value restriction statement. -/
 theorem chapter03_embedding_preserves_base_compatible_absolute_value
@@ -105,8 +138,9 @@ theorem chapter03_embedding_preserves_base_compatible_absolute_value
     ∀ x : L,
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01RelativeAbsoluteValue
           (K := L) (L := Ω) c vΩ e (σ x) =
-        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01BaseAbsoluteValue c vL x := by
-  sorry
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01BaseAbsoluteValue c vL x := by
+  exact @LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01_relative_absolute_value_restricts
+    L Ω _ _ (σ.toRingHom.toAlgebra) c hc vL vΩ e ⟨he, hscale⟩
 
 /-- Norm equality is the metric form of an isometric embedding. -/
 def chapter03IsometricEmbedding
@@ -129,7 +163,7 @@ theorem chapter03_galois_action_is_continuous
     (σ : L ≃ₐ[K] L)
     (hnorm : ∀ x : L, ‖σ x‖ = ‖x‖) :
     Continuous σ := by
-  sorry
+  exact (AddMonoidHomClass.isometry_of_norm σ hnorm).continuous
 
 /-- Trace and norm are continuous finite algebraic operations. -/
 theorem chapter03_trace_and_norm_are_continuous
@@ -147,7 +181,9 @@ theorem chapter03_finite_sums_and_products_commute_with_limits
     (hlim : ∀ i, Tendsto (f i) atTop (𝓝 (x i))) :
     Tendsto (fun n => ∑ i, f i n) atTop (𝓝 (∑ i, x i)) ∧
       Tendsto (fun n => ∏ i, f i n) atTop (𝓝 (∏ i, x i)) := by
-  sorry
+  refine ⟨?_, ?_⟩
+  · simpa using (tendsto_finsetSum (Finset.univ : Finset ι) (fun i _ => hlim i))
+  · simpa using (tendsto_finsetProd (Finset.univ : Finset ι) (fun i _ => hlim i))
 
 /-- The product half of the preceding finite-limit interface. -/
 theorem chapter03_finite_embedding_products_preserve_limits
@@ -156,7 +192,7 @@ theorem chapter03_finite_embedding_products_preserve_limits
     (f : ι → ℕ → X) (x : ι → X)
     (hlim : ∀ i, Tendsto (f i) atTop (𝓝 (x i))) :
     Tendsto (fun n => ∏ i, f i n) atTop (𝓝 (∏ i, x i)) := by
-  sorry
+  exact (chapter03_finite_sums_and_products_commute_with_limits f x hlim).2
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03
