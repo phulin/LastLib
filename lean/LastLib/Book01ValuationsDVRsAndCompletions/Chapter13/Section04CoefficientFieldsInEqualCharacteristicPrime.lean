@@ -77,7 +77,38 @@ theorem chapter13_coefficient_decomposition_unique
     (K : Chapter13Subfield A) (hK : Chapter13IsCoefficientField K) :
     ∀ a : A, ∃! z : K.carrier × A,
       z.2 ∈ IsLocalRing.maximalIdeal A ∧ a = z.1.1 + z.2 := by
-  sorry
+  intro a
+  obtain ⟨k, hk⟩ := hK.2 (Chapter13ResidueMap A a)
+  have hzero : Chapter13ResidueMap A (a - K.carrier.subtype k) = 0 := by
+    rw [map_sub]
+    exact sub_eq_zero.mpr hk.symm
+  have hm : a - K.carrier.subtype k ∈ IsLocalRing.maximalIdeal A := by
+    change Ideal.Quotient.mk _ (a - K.carrier.subtype k) = 0 at hzero
+    exact (Ideal.Quotient.eq_zero_iff_mem).mp hzero
+  have ha : a = K.carrier.subtype k + (a - K.carrier.subtype k) := by
+    simp
+  refine ⟨(k, a - K.carrier.subtype k), ⟨hm, ?_⟩, ?_⟩
+  · exact ha
+  · rintro ⟨k', m'⟩ ⟨hm', ha'⟩
+    have hmzero : Chapter13ResidueMap A m' = 0 := by
+      change Ideal.Quotient.mk _ m' = 0
+      exact (Ideal.Quotient.eq_zero_iff_mem).mpr hm'
+    have hkeq :
+        (Chapter13ResidueMap A).comp K.carrier.subtype k =
+          (Chapter13ResidueMap A).comp K.carrier.subtype k' := by
+      have heq : K.carrier.subtype k + (a - K.carrier.subtype k) =
+          K.carrier.subtype k' + m' := ha.symm.trans ha'
+      apply_fun Chapter13ResidueMap A at heq
+      have hmapa : Chapter13ResidueMap A a =
+          Chapter13ResidueMap A (K.carrier.subtype k') := by
+        simpa [map_add, hzero, hmzero] using heq
+      exact hk.trans hmapa
+    have hkeq' : k = k' := hK.1 hkeq
+    have hmeq : a - K.carrier.subtype k = m' := by
+      have ha'': a = K.carrier.subtype k + m' := by
+        simpa [hkeq'] using ha'
+      exact add_left_cancel (ha.symm.trans ha'')
+    exact Prod.ext hkeq'.symm hmeq.symm
 
 /-- Powers of a perfect residue field give the canonical coefficient field. -/
 theorem chapter13_perfect_residue_unique_coefficient_field

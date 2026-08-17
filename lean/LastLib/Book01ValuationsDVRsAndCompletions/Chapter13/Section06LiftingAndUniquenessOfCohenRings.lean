@@ -198,7 +198,22 @@ theorem chapter13_perfect_cohen_mapping_unique
     (eA : Chapter13ResidueRing A ≃+* ℓ) (φ : k →+* ℓ) :
     ∃! u : C →+* A,
       IsLocalHom u ∧ Chapter13ResidueMapCompatibility eC eA φ u := by
-  sorry
+  obtain ⟨u, hu, hcompat⟩ := chapter13_cohen_ring_mapping_property
+    p hC hA eC eA φ
+  refine ⟨u, ⟨hu, hcompat⟩, ?_⟩
+  intro v hv
+  let B : Set k := ∅
+  have hB : Chapter13PBasis (Chapter13PthPowerSubfield k p) B p :=
+    chapter13_perfect_field_empty_p_basis p hperfect
+  symm
+  apply chapter13_cohen_ring_mapping_property_unique
+    p hC hA eC eA φ B hB (fun b => b.property.elim) u v
+  · intro b
+    exact b.property.elim
+  · exact ⟨hu, hcompat⟩
+  · exact hv
+  · intro b
+    exact b.property.elim
 
 /-- The multiplicative Teichmuller section in the perfect case. -/
 theorem chapter13_teichmuller_lift

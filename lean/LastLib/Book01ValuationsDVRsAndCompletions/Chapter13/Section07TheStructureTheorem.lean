@@ -70,7 +70,20 @@ theorem chapter13_cohen_structure_equal_characteristic
     (hgen : Chapter13MaximalIdealGenerators x) :
     ∃ F : MvPowerSeries (Fin n) k →+* A,
       Chapter13PowerSeriesEvaluationData n σ x F ∧ Function.Surjective F := by
-  sorry
+  obtain ⟨F, hF, _⟩ := chapter13_power_series_evaluation_exists_unique
+    n σ hσ x hx
+  refine ⟨F, hF, (chapter13_power_series_evaluation_surjective_iff
+    n σ x F hF).2 ?_⟩
+  intro a
+  obtain ⟨r, hr⟩ := hres.2 (Chapter13ResidueMap A a)
+  have hm : a - σ r ∈ IsLocalRing.maximalIdeal A := by
+    apply (Ideal.Quotient.eq_zero_iff_mem).mp
+    change Chapter13ResidueMap A (a - σ r) = 0
+    rw [map_sub]
+    exact sub_eq_zero.mpr hr.symm
+  rw [← hgen] at hm
+  refine ⟨r, a - σ r, Ideal.mem_sup_right hm, ?_⟩
+  simp
 
 theorem chapter13_cohen_structure_mixed_characteristic
     {A C k : Type u} [CommRing A] [IsLocalRing A]
@@ -87,7 +100,32 @@ theorem chapter13_cohen_structure_mixed_characteristic
     (hgen : Chapter13MaximalIdealGenerators x) :
     ∃ F : MvPowerSeries (Fin n) C →+* A,
       Chapter13PowerSeriesEvaluationData n u x F ∧ Function.Surjective F := by
-  sorry
+  have hsurj : Function.Surjective
+      ((Chapter13ResidueMap A).comp u) := by
+    intro y
+    let q : Chapter13ResidueRing C := eC.symm (eA y)
+    obtain ⟨c, hc⟩ := Ideal.Quotient.mk_surjective q
+    refine ⟨c, eA.injective ?_⟩
+    calc
+      eA (Chapter13ResidueMap A (u c)) = eC (Chapter13ResidueMap C c) := by
+        simpa using hres c
+      _ = eC q := by
+        simpa [Chapter13ResidueMap] using congrArg eC hc
+      _ = eA y := by simp [q]
+  obtain ⟨F, hF, _⟩ := chapter13_power_series_evaluation_exists_unique
+    n u hu x hx
+  refine ⟨F, hF, (chapter13_power_series_evaluation_surjective_iff
+    n u x F hF).2 ?_⟩
+  intro a
+  obtain ⟨r, hr⟩ := hsurj (Chapter13ResidueMap A a)
+  have hm : a - u r ∈ IsLocalRing.maximalIdeal A := by
+    apply (Ideal.Quotient.eq_zero_iff_mem).mp
+    change Chapter13ResidueMap A (a - u r) = 0
+    rw [map_sub]
+    exact sub_eq_zero.mpr hr.symm
+  rw [← hgen] at hm
+  refine ⟨r, a - u r, Ideal.mem_sup_right hm, ?_⟩
+  simp
 
 /-! ### Immediate quotient and regularity consequences -/
 
@@ -98,7 +136,7 @@ theorem chapter13_complete_local_quotient_of_regular_model
     (hQ : Chapter13CompleteRegularLocalDomain Q I d)
     (F : Q →+* A) (hF : Function.Surjective F) :
     Nonempty ((Q ⧸ RingHom.ker F) ≃+* A) := by
-  sorry
+  exact ⟨RingHom.quotientKerEquivOfSurjective hF⟩
 
 theorem chapter13_equal_characteristic_complete_regular_is_power_series
     {A k : Type u} [CommRing A] [IsLocalRing A] [Field k] (d : ℕ)

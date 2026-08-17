@@ -1,6 +1,9 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section04HenselianLocalRings
 import Mathlib.FieldTheory.Separable
+import Mathlib.Algebra.CharP.MixedCharZero
+import Mathlib.Algebra.Field.ZMod
 import Mathlib.RingTheory.AdicCompletion.Completeness
+import Mathlib.RingTheory.AdicCompletion.Noetherian
 import Mathlib.RingTheory.Derivation.Basic
 import Mathlib.RingTheory.FiniteLength
 import Mathlib.RingTheory.MvPowerSeries.Equiv
@@ -140,7 +143,57 @@ theorem chapter13_finite_module_krull_intersection
     (∀ x : M, (∀ n : ℕ,
       x ∈ (IsLocalRing.maximalIdeal A) ^ n • (⊤ : Submodule A M)) → x = 0) ∧
       IsAdicComplete (IsLocalRing.maximalIdeal A) M := by
-  sorry
+  letI instNoetherian : IsNoetherianRing A := hA.1
+  refine ⟨?_, ?_⟩
+  · intro x hx
+    have hx' : x ∈ (⨅ n : ℕ,
+        (IsLocalRing.maximalIdeal A) ^ n • (⊤ : Submodule A M)) :=
+      by exact (Submodule.mem_iInf _).mpr hx
+    rw [Ideal.iInf_pow_smul_eq_bot_of_isLocalRing
+      (I := IsLocalRing.maximalIdeal A) (M := M)
+      (IsLocalRing.maximalIdeal.isMaximal A).ne_top] at hx'
+    exact hx'
+  · obtain ⟨n, f, hf⟩ := Module.Finite.exists_fin' A M
+    let I : Ideal A := IsLocalRing.maximalIdeal A
+    have hOfA : Function.Bijective (AdicCompletion.of I A) :=
+      AdicCompletion.of_bijective_iff.mpr hA.2
+    have hFbij : Function.Bijective
+        (AdicCompletion.of I (Fin n → A)) := by
+      constructor
+      · intro x y hxy
+        funext i
+        apply hOfA.1
+        have hcoord := congrArg (fun z =>
+          (AdicCompletion.piEquivFin I n z) i) hxy
+        simpa only [AdicCompletion.piEquivFin_apply,
+          AdicCompletion.piEquivOfFintype_apply, AdicCompletion.pi,
+          LinearMap.pi_apply, AdicCompletion.map_of, LinearMap.proj_apply] using hcoord
+      · intro y
+        choose x hx using fun i : Fin n => hOfA.2 ((AdicCompletion.piEquivFin I n y) i)
+        refine ⟨fun i => x i, ?_⟩
+        apply (AdicCompletion.piEquivFin I n).injective
+        funext i
+        have hi := hx i
+        simpa only [AdicCompletion.piEquivFin_apply,
+          AdicCompletion.piEquivOfFintype_apply, AdicCompletion.pi,
+          LinearMap.pi_apply, AdicCompletion.map_of, LinearMap.proj_apply] using hi
+    have hmap : Function.Surjective
+        (AdicCompletion.map I f) := AdicCompletion.map_surjective I hf
+    have hof : Function.Surjective (AdicCompletion.of I M) := by
+      intro y
+      obtain ⟨y', hy'⟩ := hmap y
+      obtain ⟨x, hx⟩ := hFbij.2 y'
+      refine ⟨f x, ?_⟩
+      calc
+        AdicCompletion.of I M (f x) =
+            AdicCompletion.map I f (AdicCompletion.of I (Fin n → A) x) :=
+          (AdicCompletion.map_of I f x).symm
+        _ = AdicCompletion.map I f y' := by rw [hx]
+        _ = y := hy'
+    have hhaus : IsHausdorff I M := inferInstance
+    letI : IsHausdorff I M := hhaus
+    letI : IsPrecomplete I M := AdicCompletion.of_surjective_iff.mp hof
+    exact (show IsAdicComplete I M from IsAdicComplete.mk)
 
 theorem chapter13_finite_module_nakayama_generation
     {A M : Type*} [CommRing A] [IsLocalRing A]
@@ -149,7 +202,13 @@ theorem chapter13_finite_module_nakayama_generation
     ∀ (r : ℕ) (m : Fin r → M),
       Chapter13SpansModuloMaximalIdeal (A := A) r m →
         Submodule.span A (Set.range m) = ⊤ := by
-  sorry
+  exact fun r m hm => by
+    have hle : (⊤ : Submodule A M) ≤ Submodule.span A (Set.range m) := by
+      apply Submodule.le_of_le_smul_of_le_jacobson_bot
+      · exact Module.Finite.fg_top
+      · exact IsLocalRing.maximalIdeal_le_jacobson (⊥ : Ideal A)
+      · simpa [Chapter13SpansModuloMaximalIdeal, sup_comm] using hm
+    exact top_unique hle
 
 theorem chapter13_finite_module_adic_series
     {A M : Type*} [CommRing A] [IsLocalRing A]
@@ -169,7 +228,25 @@ theorem chapter13_quotient_complete_noetherian_local
       (@IsLocalRing.of_surjective' R (R ⧸ I) _ _ _
         (Ideal.Quotient.nontrivial_iff.mpr hI) (Ideal.Quotient.mk I)
         Ideal.Quotient.mk_surjective) := by
-  sorry
+  let S := R ⧸ I
+  letI : IsLocalRing S :=
+    @IsLocalRing.of_surjective' R S _ _ _
+      (Ideal.Quotient.nontrivial_iff.mpr hI) (Ideal.Quotient.mk I)
+      Ideal.Quotient.mk_surjective
+  have hS : IsAdicComplete (IsLocalRing.maximalIdeal R) S :=
+    (chapter13_finite_module_krull_intersection
+      (A := R) (M := S) ⟨inferInstance, hR⟩).2
+  have hmap : (IsLocalRing.maximalIdeal R).map (algebraMap R S) =
+      IsLocalRing.maximalIdeal S := by
+    simpa [S, Ideal.Quotient.algebraMap_eq] using
+      (IsLocalRing.map_maximalIdeal_of_surjective (Ideal.Quotient.mk I)
+        Ideal.Quotient.mk_surjective)
+  have hS' : IsAdicComplete
+      ((IsLocalRing.maximalIdeal R).map (algebraMap R S)) S :=
+    (IsAdicComplete.map_algebraMap_iff
+      (I := IsLocalRing.maximalIdeal R) (M := S)).mpr hS
+  rw [hmap] at hS'
+  exact ⟨inferInstance, hS'⟩
 
 theorem chapter13_power_series_complete_local
     (R : Type u) [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
@@ -257,7 +334,63 @@ theorem chapter13_contains_field_iff_equal_characteristic
     Chapter13ContainsField A ↔
       Chapter13EqualCharacteristicZero A ∨
         ∃ p : ℕ, Chapter13EqualCharacteristicPrime A p := by
-  sorry
+  constructor
+  · rintro ⟨K⟩
+    letI : Field K.carrier := K.field_carrier.toField
+    obtain ⟨p, hp⟩ := CharP.exists K.carrier
+    letI : CharP K.carrier p := hp
+    rcases CharP.char_is_prime_or_zero K.carrier p with hpprime | hpzero
+    · refine Or.inr ⟨p, hpprime, ?_, ?_⟩
+      · exact (K.carrier.subtype.charP_iff_charP p).mp hp
+      · exact ((Chapter13ResidueMap A).comp K.carrier.subtype
+          |>.charP_iff_charP p).mp hp
+    · subst p
+      refine Or.inl ⟨(K.carrier.subtype.charP_iff_charP 0).mp hp, ?_⟩
+      exact ((Chapter13ResidueMap A).comp K.carrier.subtype
+        |>.charP_iff_charP 0).mp hp
+  · rintro (hzero | ⟨p, hpprime, hpA, hpres⟩)
+    · have hforall : ∀ I : Ideal A, I ≠ ⊤ →
+          CharZero (A ⧸ I) := by
+        letI : CharP (Chapter13ResidueRing A) 0 := hzero.2
+        intro I hI
+        let hIle : I ≤ IsLocalRing.maximalIdeal A :=
+          IsLocalRing.le_maximalIdeal hI
+        have hchar : CharP (A ⧸ I) 0 := by
+          refine ⟨fun n => ?_⟩
+          constructor
+          · intro hn
+            have hmem : (n : A) ∈ I := by
+              exact (Ideal.Quotient.eq_zero_iff_mem.mp hn)
+            have hres : (n : Chapter13ResidueRing A) = 0 := by
+              exact (Ideal.Quotient.eq_zero_iff_mem.mpr (hIle hmem))
+            exact (CharP.cast_eq_zero_iff
+              (Chapter13ResidueRing A) 0 n).mp hres
+          · intro hn
+            have hn0 : n = 0 := (zero_dvd_iff.mp hn)
+            subst n
+            simp
+        exact CharP.charP_to_charZero (A ⧸ I)
+      obtain ⟨hQ⟩ : Nonempty (Algebra ℚ A) :=
+        (EqualCharZero.nonempty_algebraRat_iff (R := A)).mpr hforall
+      letI : Algebra ℚ A := hQ
+      let f : ℚ →+* A := algebraMap ℚ A
+      let e : ℚ ≃+* f.range :=
+        RingEquiv.ofBijective f.rangeRestrict
+          ⟨fun x y h => f.injective (congrArg Subtype.val h),
+            f.rangeRestrict_surjective⟩
+      have hfield : IsField f.range :=
+        e.symm.toMulEquiv.isField (Field.toIsField ℚ)
+      exact ⟨⟨f.range, hfield⟩⟩
+    · letI : CharP A p := hpA
+      letI : Fact (Nat.Prime p) := ⟨hpprime⟩
+      let f : ZMod p →+* A := ZMod.castHom (dvd_refl p) A
+      let e : ZMod p ≃+* f.range :=
+        RingEquiv.ofBijective f.rangeRestrict
+          ⟨fun x y h => f.injective (congrArg Subtype.val h),
+            f.rangeRestrict_surjective⟩
+      have hfield : IsField f.range :=
+        e.symm.toMulEquiv.isField (Field.toIsField (ZMod p))
+      exact ⟨⟨f.range, hfield⟩⟩
 
 /-- Constants give the coefficient-field map in a formal power-series ring. -/
 theorem chapter13_power_series_constants_are_coefficients
@@ -265,7 +398,28 @@ theorem chapter13_power_series_constants_are_coefficients
     Function.Bijective
       ((Chapter13ResidueMap (PowerSeries k)).comp
         (PowerSeries.C : k →+* PowerSeries k)) := by
-  sorry
+  let g : Chapter13ResidueRing (PowerSeries k) →+* k :=
+    Ideal.Quotient.lift (IsLocalRing.maximalIdeal (PowerSeries k)) PowerSeries.constantCoeff (by
+      intro a ha
+      rw [← PowerSeries.ker_coeff_eq_max_ideal] at ha
+      exact ha)
+  have hg (a : PowerSeries k) : g (Ideal.Quotient.mk _ a) = PowerSeries.constantCoeff a := by
+    apply Ideal.Quotient.lift_mk
+  have hC (a : k) : g ((Chapter13ResidueMap (PowerSeries k)).comp PowerSeries.C a) = a := by
+    change g (Ideal.Quotient.mk _ (PowerSeries.C a)) = a
+    rw [hg, PowerSeries.constantCoeff_C]
+  constructor
+  · intro a b h
+    have hh := congrArg g h
+    rw [hC, hC] at hh
+    exact hh
+  · intro y
+    refine Quotient.inductionOn y (fun a => ⟨PowerSeries.constantCoeff a, ?_⟩)
+    change Ideal.Quotient.mk _ (PowerSeries.C (PowerSeries.constantCoeff a)) =
+      Ideal.Quotient.mk _ a
+    rw [Ideal.Quotient.mk_eq_mk_iff_sub_mem]
+    rw [← PowerSeries.ker_coeff_eq_max_ideal]
+    simp
 
 end
 

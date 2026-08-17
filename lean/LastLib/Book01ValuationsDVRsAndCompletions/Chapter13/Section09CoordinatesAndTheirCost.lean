@@ -117,7 +117,7 @@ theorem chapter13_imperfect_coordinates_are_not_canonical
     Nonempty
       (Chapter13CoefficientFields A ≃
         {a : B → A // Chapter13AdmissiblePBaseLiftFamily B a}) := by
-  sorry
+  exact chapter13_equal_characteristic_p_coefficient_fields_bijection p B hB hA
 
 theorem chapter13_perfect_coordinates_are_canonical
     {A : Type u} [CommRing A] [IsLocalRing A]
@@ -128,7 +128,7 @@ theorem chapter13_perfect_coordinates_are_canonical
       Chapter13IsCoefficientField K ∧
         (K.carrier : Set A) =
           ⋂ n : ℕ, Set.range (fun x : A => x ^ (p ^ n)) := by
-  sorry
+  exact chapter13_perfect_residue_unique_coefficient_field p hA hperfect
 
 theorem chapter13_perfect_cohen_coordinates_are_functorial
     {C A : Type u} [CommRing C] [IsLocalRing C]
@@ -142,7 +142,7 @@ theorem chapter13_perfect_cohen_coordinates_are_functorial
     (eA : Chapter13ResidueRing A ≃+* ℓ) (φ : k →+* ℓ) :
     ∃! u : C →+* A,
       IsLocalHom u ∧ Chapter13ResidueMapCompatibility eC eA φ u := by
-  sorry
+  exact chapter13_perfect_cohen_mapping_unique p hC hperfect hA eC eA φ
 
 /-! ### Completeness as the common approximation mechanism -/
 
@@ -155,7 +155,10 @@ theorem chapter13_complete_local_ring_is_its_adic_limit
     (hA : Chapter13SuccessiveApproximationPrinciple A) :
     Nonempty
       (A ≃+* AdicCompletion (IsLocalRing.maximalIdeal A) A) := by
-  sorry
+  unfold Chapter13SuccessiveApproximationPrinciple at hA
+  letI : IsAdicComplete (IsLocalRing.maximalIdeal A) A := hA
+  exact ⟨(AdicCompletion.ofAlgEquiv
+    (IsLocalRing.maximalIdeal A)).toRingEquiv⟩
 
 theorem chapter13_complete_local_ring_sums_adic_approximations
     {A : Type u} [CommRing A] [IsLocalRing A]
@@ -167,7 +170,7 @@ theorem chapter13_complete_local_ring_sums_adic_approximations
         ∀ e : Equiv.Perm ℕ,
           Chapter13AdicConvergesSeries
             (IsLocalRing.maximalIdeal A) (z ∘ e) x := by
-  sorry
+  exact chapter13_finite_module_adic_series hA z hz
 
 end
 

@@ -84,7 +84,15 @@ abbrev Chapter13PrimeSquareRing (p : ℕ) := ZMod (p ^ 2)
 instance chapter13PrimeSquareLocalRing
     (p : ℕ) [Fact (Nat.Prime p)] :
     IsLocalRing (Chapter13PrimeSquareRing p) := by
-  sorry
+  have hp : 2 ≤ p := (Fact.out : Nat.Prime p).two_le
+  have hp2 : 1 < p ^ 2 := by
+    calc
+      1 < 2 * 2 := by decide
+      _ ≤ p * p := Nat.mul_le_mul hp hp
+      _ = p ^ 2 := by simp [pow_two]
+  letI : Fact (1 < p ^ 2) := ⟨hp2⟩
+  exact @IsLocalRing.of_surjective' (PadicInt p) (ZMod (p ^ 2)) _ _ _
+    inferInstance (PadicInt.toZModPow 2) (ZMod.ringHom_surjective _)
 
 theorem chapter13_prime_square_has_no_coefficient_field
     (p : ℕ) [Fact (Nat.Prime p)] :
@@ -98,7 +106,19 @@ theorem chapter13_prime_square_has_no_coefficient_field
 theorem chapter13_padic_integers_have_no_subfield
     (p : ℕ) [Fact (Nat.Prime p)] :
     ¬Chapter13ContainsField (PadicInt p) := by
-  sorry
+  rintro ⟨K⟩
+  letI : Field K.carrier := K.field_carrier.toField
+  have hp0 : (p : K.carrier) ≠ 0 := by
+    intro hp
+    have hp' : (p : PadicInt p) = 0 := congrArg K.carrier.subtype hp
+    have hpne : (p : PadicInt p) ≠ 0 := by
+      exact_mod_cast (Fact.out : Nat.Prime p).ne_zero
+    exact hpne hp'
+  have hu : IsUnit (p : K.carrier) := isUnit_iff_ne_zero.mpr hp0
+  have hu' : IsUnit (p : PadicInt p) := by
+    simpa using IsUnit.map K.carrier.subtype hu
+  apply (IsLocalRing.notMem_maximalIdeal.mpr hu')
+  exact (IsLocalRing.mem_maximalIdeal _).mpr PadicInt.p_nonunit
 
 abbrev Chapter13PadicPowerSeries (p : ℕ) [Fact (Nat.Prime p)] :=
   LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.chapter04PadicPowerSeries p
@@ -117,7 +137,107 @@ theorem chapter13_padic_power_series_is_unramified_regular
         (IsLocalRing.maximalIdeal (Chapter13PadicPowerSeries p)) ^ 2 ∧
       Chapter13MixedCharacteristic (Chapter13PadicPowerSeries p) p ∧
       ¬Chapter13ContainsField (Chapter13PadicPowerSeries p) := by
-  sorry
+  let A := Chapter13PadicPowerSeries p
+  let M := Chapter13PadicPowerSeriesMaximalIdeal p
+  have h04 :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.padic_power_series_is_complete_regular_local_two_dimensional p
+  have hM : M = Ideal.span
+      ({PowerSeries.C (p : PadicInt p), PowerSeries.X} : Set A) := by
+    rfl
+  have hp0 : (p : PadicInt p) ≠ 0 := by
+    exact_mod_cast (Fact.out : Nat.Prime p).ne_zero
+  have hnotpow : (p : PadicInt p) ∉
+      (Ideal.span {(p : PadicInt p)}) ^ 2 := by
+    rw [Ideal.span_singleton_pow, Ideal.mem_span_singleton]
+    rintro ⟨a, ha⟩
+    have hpa : (p : PadicInt p) * a = 1 := by
+      apply (mul_left_cancel₀ hp0)
+      simpa [pow_two, mul_assoc] using ha.symm
+    exact (mem_nonunits_iff.mp PadicInt.p_nonunit)
+      (IsUnit.of_mul_eq_one a hpa)
+  have hnotm : (p : A) ∉ M ^ 2 := by
+    intro hpM
+    let c : A →+* PadicInt p := PowerSeries.constantCoeff
+    have hc : Ideal.map c (M ^ 2) ≤
+        (Ideal.span {(p : PadicInt p)}) ^ 2 := by
+      rw [Ideal.map_pow]
+      apply Ideal.pow_right_mono
+      rw [hM, Ideal.map_span]
+      apply Ideal.span_le.2
+      intro y hy
+      rcases hy with ⟨z, hz, rfl⟩
+      rcases Set.mem_insert_iff.mp hz with hz | hz
+      · rw [Set.mem_singleton_iff.mp hz]
+        simp [c]
+      · rw [Set.mem_singleton_iff.mp hz]
+        rw [PowerSeries.constantCoeff_X]
+        exact Ideal.zero_mem _
+    apply hnotpow
+    apply hc
+    exact Ideal.mem_map_of_mem c hpM
+  have hker : RingHom.ker (PadicInt.toZMod.comp
+      (PowerSeries.constantCoeff : A →+* PadicInt p)) = M := by
+    apply le_antisymm
+    · intro f hf
+      change PadicInt.toZMod (PowerSeries.constantCoeff f) = 0 at hf
+      rw [← RingHom.mem_ker, PadicInt.ker_toZMod] at hf
+      rw [PadicInt.maximalIdeal_eq_span_p, Ideal.mem_span_singleton] at hf
+      obtain ⟨a, ha⟩ := hf
+      rw [hM, PowerSeries.eq_X_mul_shift_add_const f, ha]
+      apply Ideal.add_mem
+      · exact M.mul_mem_right _ (Ideal.subset_span (by simp))
+      · rw [map_mul]
+        exact M.mul_mem_right _ (Ideal.subset_span (by simp))
+    · rw [hM]
+      apply Ideal.span_le.2
+      intro y hy
+      rcases hy with rfl | rfl
+      · simp [RingHom.mem_ker]
+      · change PadicInt.toZMod (PowerSeries.constantCoeff PowerSeries.X) = 0
+        rw [PowerSeries.constantCoeff_X, map_zero]
+  have hsurj : Function.Surjective
+      (PadicInt.toZMod.comp
+        (PowerSeries.constantCoeff : A →+* PadicInt p)) := by
+    intro y
+    obtain ⟨z, hz⟩ := ZMod.ringHom_surjective (PadicInt.toZMod :
+      PadicInt p →+* ZMod p) y
+    refine ⟨PowerSeries.C z, ?_⟩
+    change PadicInt.toZMod z = y
+    exact hz
+  have hmax : IsLocalRing.maximalIdeal A = M := h04.2.2.2.1
+  let e : Chapter13ResidueRing A ≃+* ZMod p :=
+    (Ideal.quotEquivOfEq (hmax.trans hker.symm)).trans
+      (RingHom.quotientKerEquivOfSurjective hsurj)
+  have hreschar : CharP (Chapter13ResidueRing A) p := by
+    exact (e.symm.toRingHom.charP_iff_charP p).mp (ZMod.charP p)
+  have hcharA : ¬CharP A p := by
+    intro h
+    letI : CharP A p := h
+    have hz : (p : A) = 0 := CharP.cast_eq_zero A p
+    have hz' : (p : PadicInt p) = 0 := by
+      simpa only [map_natCast, map_zero] using
+        congrArg PowerSeries.constantCoeff hz
+    exact hp0 hz'
+  have hcontains : ¬Chapter13ContainsField A := by
+    rintro ⟨K⟩
+    letI : Field K.carrier := K.field_carrier.toField
+    have hpa0 : (p : A) ≠ 0 := by
+      intro h
+      have h' := congrArg PowerSeries.constantCoeff h
+      exact hp0 (by simpa only [map_natCast, map_zero] using h')
+    have hpK : (p : K.carrier) ≠ 0 := by
+      intro h
+      exact hpa0 (congrArg K.carrier.subtype h)
+    have hu : IsUnit (p : A) := by
+      simpa using IsUnit.map K.carrier.subtype
+        (isUnit_iff_ne_zero.mpr hpK)
+    exact (mem_nonunits_iff.mp PadicInt.p_nonunit)
+      (by simpa using PowerSeries.isUnit_iff_constantCoeff.mp hu)
+  have hnotmax : (p : A) ∉ (IsLocalRing.maximalIdeal A) ^ 2 := by
+    rw [hmax]
+    exact hnotm
+  refine ⟨h04.1, h04.2.1, h04.2.2.1, hnotmax,
+    ⟨(Fact.out : Nat.Prime p), hreschar, hcharA⟩, hcontains⟩
 
 /-- The Eisenstein polynomial obtained from `((1 + X)^p - 1) / X`. -/
 def Chapter13CyclotomicEisensteinPolynomial

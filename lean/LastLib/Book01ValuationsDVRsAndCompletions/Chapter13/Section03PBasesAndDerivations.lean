@@ -3,6 +3,9 @@ import Mathlib.Algebra.CharP.Frobenius
 import Mathlib.Algebra.MvPolynomial.Eval
 import Mathlib.LinearAlgebra.Basis.Basic
 import Mathlib.LinearAlgebra.Dimension.Finite
+import Mathlib.FieldTheory.PurelyInseparable.Exponent
+import Mathlib.RingTheory.Adjoin.PowerBasis
+import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
 import Mathlib.RingTheory.Derivation.ToSquareZero
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter13
@@ -70,7 +73,90 @@ theorem chapter13_simple_p_extension_degree
       FiniteDimensional F (Algebra.adjoin F ({b} : Set k)) ∧
       ((b ∈ F ∧ Module.finrank F (Algebra.adjoin F ({b} : Set k)) = 1) ∨
         (b ∉ F ∧ Module.finrank F (Algebra.adjoin F ({b} : Set k)) = p)) := by
-  sorry
+  classical
+  let bp : F := ⟨b ^ p,
+    hF (Subfield.subset_closure ⟨b, rfl⟩)⟩
+  have hp0 : p ≠ 0 := (Fact.out : Nat.Prime p).ne_zero
+  let f : Polynomial F := Polynomial.X ^ p - Polynomial.C bp
+  have hf : f.Monic := by
+    dsimp [f]
+    exact Polynomial.monic_X_pow_sub_C _ hp0
+  have hfx : Polynomial.aeval b f = 0 := by
+    have hmap : algebraMap F k bp = (bp : k) :=
+      Algebra.algebraMap_ofSubsemiring_apply F bp
+    simp [f, hmap, bp]
+  have hbint : IsIntegral F b := ⟨f, hf, hfx⟩
+  have hspan := Submodule.span_range_natDegree_eq_adjoin hf hfx
+  have hnat : f.natDegree = p := by
+    simp [f, hp0]
+  rw [hnat] at hspan
+  have himage :
+      (↑(Finset.image (fun i : ℕ => b ^ i) (Finset.range p)) : Set k) =
+        Set.range (fun i : Fin p => b ^ (i : ℕ)) := by
+    ext y
+    constructor
+    · intro hy
+      change y ∈ Finset.image (fun i : ℕ => b ^ i) (Finset.range p) at hy
+      rcases Finset.mem_image.mp hy with ⟨i, hi, rfl⟩
+      exact ⟨⟨i, Finset.mem_range.mp hi⟩, rfl⟩
+    · rintro ⟨i, rfl⟩
+      change b ^ (i : ℕ) ∈ Finset.image (fun i : ℕ => b ^ i) (Finset.range p)
+      exact Finset.mem_image.mpr
+        ⟨(i : ℕ), Finset.mem_range.mpr i.isLt, rfl⟩
+  have hsubmodule :
+      Subalgebra.toSubmodule (Algebra.adjoin F ({b} : Set k)) =
+        Submodule.span F (Set.range (fun i : Fin p => b ^ (i : ℕ))) := by
+    rw [← hspan, himage]
+  have hfinite : FiniteDimensional F (Algebra.adjoin F ({b} : Set k)) :=
+    (Algebra.adjoin.powerBasis hbint).finite
+  have hdegree : Module.finrank F (Algebra.adjoin F ({b} : Set k)) =
+      (minpoly F b).natDegree := by
+    simpa using (PowerBasis.finrank (Algebra.adjoin.powerBasis hbint))
+  have hchar : IsPurelyInseparable F k :=
+    (isPurelyInseparable_iff_pow_mem F p).mpr (by
+      intro x
+      let y : F := ⟨x ^ p,
+        hF (Subfield.subset_closure ⟨x, rfl⟩)⟩
+      refine ⟨1, ⟨y, ?_⟩⟩
+      have hmap : algebraMap F k y = (y : k) :=
+        Algebra.algebraMap_ofSubsemiring_apply F y
+      rw [hmap]
+      simp [y])
+  letI : IsPurelyInseparable F k := hchar
+  refine ⟨hsubmodule, hfinite, ?_⟩
+  by_cases hbF : b ∈ F
+  · left
+    have hbot : Algebra.adjoin F ({b} : Set k) = ⊥ := by
+      apply le_antisymm
+      · apply Algebra.adjoin_le
+        intro x hx
+        rw [Set.mem_singleton_iff.mp hx]
+        change ∃ y : F, algebraMap F k y = b
+        exact ⟨⟨b, hbF⟩, rfl⟩
+      · exact bot_le
+    exact ⟨hbF, by rw [hbot, Subalgebra.finrank_bot]⟩
+  · right
+    have hdegree_p : (minpoly F b).natDegree = p := by
+      have hbp_range : b ^ p ^ (1 : ℕ) ∈ (algebraMap F k).range := by
+        simpa using (show b ^ p ∈ (algebraMap F k).range from ⟨bp, rfl⟩)
+      have hle : IsPurelyInseparable.elemExponent F b ≤ 1 :=
+        IsPurelyInseparable.elemExponent_le_of_pow_mem' (K := F) p
+          (n := 1) hbp_range
+      have hne : IsPurelyInseparable.elemExponent F b ≠ 0 := by
+        intro he
+        have hdef := IsPurelyInseparable.elemExponent_def' (K := F) p b
+        rw [he] at hdef
+        have hbrange : b ∈ (algebraMap F k).range := by
+          simpa using hdef
+        obtain ⟨c, hc⟩ := hbrange
+        exact hbF (by simpa using hc.symm ▸ c.property)
+      have he : IsPurelyInseparable.elemExponent F b = 1 := by
+        rcases Nat.le_one_iff_eq_zero_or_eq_one.mp hle with h | h
+        · exact (hne h).elim
+        · exact h
+      rw [IsPurelyInseparable.minpoly_natDegree_eq' (K := F) p b, he]
+      simp
+    exact ⟨hbF, hdegree.trans hdegree_p⟩
 
 /-- Three equivalent formulations of `p`-independence. -/
 theorem chapter13_p_independence_three_forms
@@ -158,7 +244,27 @@ theorem chapter13_derivation_restriction_bijective
     (M : Type v) [AddCommGroup M] [Module k M] :
     Function.Bijective
       (Chapter13DerivationRestriction p B M) := by
-  sorry
+  constructor
+  · intro D₁ D₂ hD
+    obtain ⟨D, hD_values, hD_unique⟩ :=
+      chapter13_derivation_extension p B hB M
+        (Chapter13DerivationRestriction p B M D₁)
+    have h₁ : ∀ b : B, D₁ (b : k) =
+        Chapter13DerivationRestriction p B M D₁ b := by
+      intro b
+      rfl
+    have h₂ : ∀ b : B, D₂ (b : k) =
+        Chapter13DerivationRestriction p B M D₁ b := by
+      intro b
+      change D₂ (b : k) = D₁ (b : k)
+      exact (congrFun hD b).symm
+    exact (hD_unique D₁ h₁).trans (hD_unique D₂ h₂).symm
+  · intro δ
+    obtain ⟨D, hD, hD_unique⟩ :=
+      chapter13_derivation_extension p B hB M δ
+    refine ⟨D, ?_⟩
+    funext b
+    exact (hD b).trans rfl
 
 /-- Lifting a characteristic-`p` field map across a square-zero extension. -/
 theorem chapter13_char_p_square_zero_lift
@@ -180,7 +286,52 @@ theorem chapter13_perfect_field_empty_p_basis
     {k : Type u} [Field k] (p : ℕ) [Fact (Nat.Prime p)] [CharP k p]
     (hperfect : Chapter13PerfectAtPrime k p) :
     Chapter13PBasis (Chapter13PthPowerSubfield k p) (∅ : Set k) p := by
-  sorry
+  have hF : Chapter13PthPowerSubfield k p = ⊤ := by
+    apply top_unique
+    intro x hx
+    obtain ⟨y, hy⟩ := hperfect x
+    exact Subfield.subset_closure ⟨y, hy⟩
+  constructor
+  · intro r b hb hbi
+    by_cases hr : r = 0
+    · subst r
+      letI : Subsingleton (Chapter13PMonomialIndex (Fin 0) p) :=
+        ⟨fun a b => by
+          apply Subtype.ext
+          apply Finsupp.ext
+          intro i
+          exact i.elim0⟩
+      apply (linearIndependent_subsingleton_index_iff _).2
+      intro e
+      have hs : e.1.support = ∅ := by
+        apply Finset.eq_empty_iff_forall_notMem.mpr
+        intro i hi
+        exact i.elim0
+      simp [Chapter13PMonomial, hs]
+    · let i : Fin r := ⟨0, Nat.pos_of_ne_zero hr⟩
+      exact (hb ⟨i, rfl⟩).elim
+  · rw [hF]
+    apply top_unique
+    intro x hx
+    let e : Chapter13PMonomialIndex (∅ : Set k) p :=
+      ⟨0, by intro i; exact i.property.elim⟩
+    have he : Chapter13PMonomial (fun b : (∅ : Set k) => (b : k)) e = 1 := by
+      simp [Chapter13PMonomial, e]
+    have hgen : Chapter13PMonomial (fun b : (∅ : Set k) => (b : k)) e ∈
+        Submodule.span (⊤ : Subfield k)
+          (Set.range (fun e =>
+            Chapter13PMonomial (fun b : (∅ : Set k) => (b : k)) e)) :=
+      Submodule.subset_span ⟨e, rfl⟩
+    let x' : (⊤ : Subfield k) := ⟨x, trivial⟩
+    have hsmul := Submodule.smul_mem
+      (Submodule.span (⊤ : Subfield k)
+        (Set.range (fun e =>
+          Chapter13PMonomial (fun b : (∅ : Set k) => (b : k)) e))) x' hgen
+    have hmul : x' • (1 : k) = x := by
+      change x * 1 = x
+      simp
+    rw [he, hmul] at hsmul
+    exact hsmul
 
 /-- A separable algebraic extension preserves a chosen `p`-basis. -/
 theorem chapter13_separable_extension_preserves_p_basis

@@ -1,6 +1,7 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter13.Section04CoefficientFieldsInEqualCharacteristicPrime
 import Mathlib.Algebra.Field.ZMod
 import Mathlib.NumberTheory.Padics.PadicIntegers
+import Mathlib.NumberTheory.Padics.RingHoms
 import Mathlib.RingTheory.AdicCompletion.LocalRing
 import Mathlib.RingTheory.DiscreteValuationRing.Basic
 import Mathlib.RingTheory.Localization.AtPrime.Basic
@@ -161,7 +162,10 @@ theorem chapter13_cohen_ring_exists
 theorem chapter13_padic_integers_are_cohen
     (p : ℕ) [Fact (Nat.Prime p)] :
     Chapter13IsCohenRing (PadicInt p) (ZMod p) p := by
-  sorry
+  unfold Chapter13IsCohenRing Chapter13IsPLift
+  refine ⟨?_, inferInstance⟩
+  exact ⟨⟨inferInstance, inferInstance⟩, PadicInt.maximalIdeal_eq_span_p,
+    ⟨PadicInt.residueField⟩⟩
 
 /-- A ramified complete DVR is not a Cohen ring for its residue field. -/
 theorem chapter13_ramified_dvr_is_not_cohen
@@ -169,7 +173,8 @@ theorem chapter13_ramified_dvr_is_not_cohen
     {k : Type v} [Field k] (p : ℕ) [Fact (Nat.Prime p)] [CharP k p]
     (hramified : IsLocalRing.maximalIdeal C ≠ Ideal.span {(p : C)}) :
     ¬Chapter13IsCohenRing C k p := by
-  sorry
+  intro hC
+  exact hramified hC.1.2.1
 
 end
 
