@@ -1,6 +1,7 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section01WhyTheValuesFormAGroup
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section02AdditiveValuations
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter01.Section05MeasurementsThatAreNotDiscrete
+import Mathlib.GroupTheory.ArchimedeanDensely
 import Mathlib.RingTheory.Valuation.ValuationSubring
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
@@ -185,7 +186,10 @@ theorem chapter02_discrete_value_group_equiv_int
     (hΓ : Chapter01.IsChapterDiscreteOrderedGroup Γ)
     (hRank : Chapter01.IsChapterRankOneOrderedGroup Γ) :
     Nonempty (Γ ≃+o ℤ) := by
-  sorry
+  rcases hΓ with ⟨π, hπ, hleast⟩
+  let _ : Archimedean Γ := (chapter02_archimedean_value_group_iff).1 hRank
+  exact ⟨LinearOrderedAddCommGroup.int_orderAddMonoidIso_of_isLeast_pos
+    ⟨hπ, fun γ hγ => hleast γ hγ⟩⟩
 
 noncomputable def Chapter02NormalizedValuation
     {K Γ : Type*} [Field K]
