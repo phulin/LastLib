@@ -114,6 +114,7 @@ theorem chapter13_separable_residue_lift
     (hA : LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.SimpleResidueRootLiftingProperty A)
     (σ : K →+* A) (ρ : A →+* k)
     (hρ : RingHom.ker ρ = IsLocalRing.maximalIdeal A)
+    (hρsurj : Function.Surjective ρ)
     (hσ : ρ.comp σ = algebraMap K k)
     (b : k) (hb : IsSeparable K b) :
     ∃! a : A,

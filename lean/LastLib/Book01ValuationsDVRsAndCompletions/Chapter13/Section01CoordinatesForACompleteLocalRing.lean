@@ -274,6 +274,8 @@ def Chapter13PowerSeriesEvaluationData
 
 theorem chapter13_power_series_evaluation_exists_unique
     {R A : Type u} [CommRing R] [CommRing A] [IsLocalRing R] [IsLocalRing A]
+    (hR : Chapter13CompleteNoetherianLocalRing R)
+    (hA : Chapter13CompleteNoetherianLocalRing A)
     (n : ℕ) (σ : R →+* A) (hσ : Chapter13LocalHom σ) (x : Fin n → A)
     (hx : ∀ i : Fin n, x i ∈ IsLocalRing.maximalIdeal A) :
     ∃! F : MvPowerSeries (Fin n) R →+* A,
@@ -282,6 +284,8 @@ theorem chapter13_power_series_evaluation_exists_unique
 
 theorem chapter13_power_series_evaluation_surjective_iff
     {R A : Type u} [CommRing R] [CommRing A] [IsLocalRing R] [IsLocalRing A]
+    (hR : Chapter13CompleteNoetherianLocalRing R)
+    (hA : Chapter13CompleteNoetherianLocalRing A)
     (n : ℕ) (σ : R →+* A) (x : Fin n → A)
     (F : MvPowerSeries (Fin n) R →+* A)
     (hF : Chapter13PowerSeriesEvaluationData n σ x F) :

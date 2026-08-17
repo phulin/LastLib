@@ -70,10 +70,15 @@ theorem chapter13_cohen_structure_equal_characteristic
     (hgen : Chapter13MaximalIdealGenerators x) :
     ∃ F : MvPowerSeries (Fin n) k →+* A,
       Chapter13PowerSeriesEvaluationData n σ x F ∧ Function.Surjective F := by
+  have hk : Chapter13CompleteNoetherianLocalRing k := by
+    constructor
+    · infer_instance
+    · simpa [IsLocalRing.maximalIdeal_eq_bot] using
+        (inferInstance : IsAdicComplete (⊥ : Ideal k) k)
   obtain ⟨F, hF, _⟩ := chapter13_power_series_evaluation_exists_unique
-    n σ hσ x hx
+    hk hA n σ hσ x hx
   refine ⟨F, hF, (chapter13_power_series_evaluation_surjective_iff
-    n σ x F hF).2 ?_⟩
+    hk hA n σ x F hF).2 ?_⟩
   intro a
   obtain ⟨r, hr⟩ := hres.2 (Chapter13ResidueMap A a)
   have hm : a - σ r ∈ IsLocalRing.maximalIdeal A := by
@@ -100,6 +105,11 @@ theorem chapter13_cohen_structure_mixed_characteristic
     (hgen : Chapter13MaximalIdealGenerators x) :
     ∃ F : MvPowerSeries (Fin n) C →+* A,
       Chapter13PowerSeriesEvaluationData n u x F ∧ Function.Surjective F := by
+  obtain ⟨hdomC, hDvrC⟩ := hC.1.1
+  have hCnoeth : IsNoetherianRing C :=
+    ⟨fun I => hDvrC.toIsPrincipalIdealRing.principal I |>.fg⟩
+  have hCcomplete : Chapter13CompleteNoetherianLocalRing C :=
+    ⟨hCnoeth, hC.2⟩
   have hsurj : Function.Surjective
       ((Chapter13ResidueMap A).comp u) := by
     intro y
@@ -113,9 +123,9 @@ theorem chapter13_cohen_structure_mixed_characteristic
         simpa [Chapter13ResidueMap] using congrArg eC hc
       _ = eA y := by simp [q]
   obtain ⟨F, hF, _⟩ := chapter13_power_series_evaluation_exists_unique
-    n u hu x hx
+    hCcomplete hA n u hu x hx
   refine ⟨F, hF, (chapter13_power_series_evaluation_surjective_iff
-    n u x F hF).2 ?_⟩
+    hCcomplete hA n u x F hF).2 ?_⟩
   intro a
   obtain ⟨r, hr⟩ := hsurj (Chapter13ResidueMap A a)
   have hm : a - u r ∈ IsLocalRing.maximalIdeal A := by

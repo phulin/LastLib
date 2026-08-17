@@ -88,7 +88,7 @@ theorem chapter13_simple_p_extension_degree
   have hbint : IsIntegral F b := ⟨f, hf, hfx⟩
   have hspan := Submodule.span_range_natDegree_eq_adjoin hf hfx
   have hnat : f.natDegree = p := by
-    simp [f, hp0]
+    simp [f]
   rw [hnat] at hspan
   have himage :
       (↑(Finset.image (fun i : ℕ => b ^ i) (Finset.range p)) : Set k) =
