@@ -312,13 +312,13 @@ theorem chapter10_unique_extension_makes_integral_closure_valuation_ring
 These results belong here, after maximal domination and the valuative
 criterion.  They used to be forward declarations in Chapter 9. -/
 
-/-- The center of an extending valuation on a finite integral closure. -/
+/-- The center of an extending valuation on an integral closure. -/
 noncomputable def chapter10_extension_center
     {A B : Type*} {K : Type u10K} {L : Type u10L} {Γ : Type u10Γ}
     [CommRing A] [IsDomain A] [ValuationRing A]
     [IsIntegrallyClosed A]
     [Field K] [Algebra A K] [IsFractionRing A K]
-    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Field L] [Algebra K L]
     [Algebra A L] [IsScalarTower A K L]
     [CommRing B] [Algebra A B] [Algebra B L] [IsScalarTower A B L]
     [IsIntegralClosure B A L]
@@ -362,7 +362,7 @@ theorem chapter10_extension_center_is_prime_above
     [CommRing A] [IsDomain A] [ValuationRing A]
     [IsIntegrallyClosed A]
     [Field K] [Algebra A K] [IsFractionRing A K]
-    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Field L] [Algebra K L]
     [Algebra A L] [IsScalarTower A K L]
     [CommRing B] [Algebra A B] [Algebra B L] [IsScalarTower A B L]
     [IsIntegralClosure B A L]
@@ -405,7 +405,7 @@ theorem chapter10_extension_center_eq_of_equivalent
     [CommRing A] [IsDomain A] [ValuationRing A]
     [IsIntegrallyClosed A]
     [Field K] [Algebra A K] [IsFractionRing A K]
-    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Field L] [Algebra K L]
     [Algebra A L] [IsScalarTower A K L]
     [CommRing B] [Algebra A B] [Algebra B L] [IsScalarTower A B L]
     [IsIntegralClosure B A L]
@@ -428,7 +428,7 @@ noncomputable def chapter10_extension_center_map
     [CommRing A] [IsDomain A] [ValuationRing A]
     [IsIntegrallyClosed A]
     [Field K] [Algebra A K] [IsFractionRing A K]
-    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Field L] [Algebra K L]
     [Algebra A L] [IsScalarTower A K L]
     [CommRing B] [Algebra A B] [Algebra B L] [IsScalarTower A B L]
     [IsIntegralClosure B A L]
@@ -454,7 +454,7 @@ theorem chapter10_extension_center_map_surjective
     [CommRing A] [IsDomain A] [ValuationRing A]
     [IsIntegrallyClosed A]
     [Field K] [Algebra A K] [IsFractionRing A K]
-    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Field L] [Algebra K L]
     [Algebra A L] [IsScalarTower A K L]
     [CommRing B] [Algebra A B] [Algebra B L] [IsScalarTower A B L]
     [IsIntegralClosure B A L]
@@ -693,7 +693,7 @@ theorem chapter10_extension_center_map_injective
     [CommRing A] [IsDomain A] [ValuationRing A]
     [IsIntegrallyClosed A]
     [Field K] [Algebra A K] [IsFractionRing A K]
-    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Field L] [Algebra K L]
     [Algebra A L] [IsScalarTower A K L]
     [CommRing B] [Algebra A B] [Algebra B L] [IsScalarTower A B L]
     [IsIntegralClosure B A L]
