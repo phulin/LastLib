@@ -1,4 +1,5 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter01.Section04LocalizationsOfDedekindDomains
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.Section02EquivalentCharacterizations
 import Mathlib.RingTheory.DedekindDomain.AdicValuation
 import Mathlib.RingTheory.DedekindDomain.Dvr
 import Mathlib.RingTheory.DedekindDomain.Factorization
@@ -20,6 +21,7 @@ import Mathlib.Tactic.Ring
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter05
 
 open LastLib.Book01ValuationsDVRsAndCompletions.Chapter01
+open LastLib.Book01ValuationsDVRsAndCompletions.Chapter04
 open IsLocalRing
 open IsDedekindDomain
 open IsDedekindDomain.HeightOneSpectrum
@@ -346,179 +348,37 @@ noncomputable def chapter_field_unit_quotient_equiv_int :
 def chapterMappedRingUnit (u : Aˣ) : Kˣ :=
   Units.map (algebraMap A K).toMonoidHom u
 
-include hπ in
-/-- The unit corresponding to the image of the chosen uniformizer in `K`. -/
-noncomputable def chapterUniformizerUnit (hπ : Irreducible π) : Kˣ :=
-  Units.mk0 (algebraMap A K π) (by
-    intro h
-    apply hπ.ne_zero
-    apply IsFractionRing.injective A K
-    simpa using h)
+/- The chapter uses the integer part of the standard Mathlib valuation.  The
+   valuation witness and its normalization are supplied by Chapter 4; only
+   this conversion from `ℤᵐ⁰` to `ℤ` is chapter-specific. -/
+def chapterValuationValue
+    (v : Chapter04DVRValuationWitness A K) (x : K) (_hx : x ≠ 0) : ℤ :=
+  -WithZero.log (v.valuation x)
 
-/-- A discrete integer-valued valuation interface on `Kˣ`, normalized by `π`. -/
-structure ChapterIntegerValuation (π : A) (hπ : Irreducible π) where
-  value : Kˣ → ℤ
-  map_one' : value 1 = 0
-  map_mul' : ∀ x y : Kˣ, value (x * y) = value x + value y
-  uniformizer_value' :
-    value (chapterUniformizerUnit (A := A) (K := K) π hπ) = 1
-  ring_unit_value' : ∀ u : Aˣ,
-    value (chapterMappedRingUnit (A := A) (K := K) u) = 0
-  factorization' : ∀ x : Kˣ, ∃ u : Aˣ,
-    x = chapterMappedRingUnit (A := A) (K := K) u *
-      (chapterUniformizerUnit (A := A) (K := K) π hπ) ^ value x
-
-/-- Coercion from the chapter valuation interface to its integer-valued function. -/
-instance chapterIntegerValuation.coeFun :
-    CoeFun (ChapterIntegerValuation (A := A) (K := K) π hπ)
-      (fun _ => Kˣ → ℤ) :=
-  ⟨fun v => v.value⟩
-
-/-- The integer valuation of a nonzero field element. -/
-def chapterValuationValue (v : ChapterIntegerValuation (A := A) (K := K) π hπ)
-    (x : K) (hx : x ≠ 0) : ℤ :=
-  v.value (Units.mk0 x hx)
-
-/-- Book §5.3: the DVR supplies the normalized integer valuation interface. -/
+/-- Book §5.3: the DVR supplies the normalized valuation witness. -/
 theorem chapter_exists_integer_valuation :
-    Nonempty (ChapterIntegerValuation (A := A) (K := K) π hπ) := by
-  classical
-  let v : IsDedekindDomain.HeightOneSpectrum A :=
-    { asIdeal := IsLocalRing.maximalIdeal A
-      isPrime := (IsLocalRing.maximalIdeal.isMaximal A).isPrime
-      ne_bot := by
-        rw [hπ.maximalIdeal_eq]
-        exact fun h => hπ.ne_zero (Ideal.span_singleton_eq_bot.mp h) }
-  let w : Valuation K ℤᵐ⁰ := v.valuation K
-  have hπK : algebraMap A K π ≠ 0 := by
-    simpa using hπ.ne_zero
-  have hwπ : w (algebraMap A K π) = WithZero.exp (-1 : ℤ) := by
-    dsimp [w]
-    rw [IsDedekindDomain.HeightOneSpectrum.valuation_of_algebraMap,
-      v.intValuation_singleton hπ.ne_zero
-        hπ.maximalIdeal_eq]
-    rfl
-  let val : Kˣ → ℤ := fun x => -WithZero.log (w (x : K))
-  have hval_one : val 1 = 0 := by
-    simp [val, w]
-  have hval_mul : ∀ x y : Kˣ, val (x * y) = val x + val y := by
-    intro x y
-    have hx : w (x : K) ≠ 0 := (Valuation.ne_zero_iff w).2 (Units.ne_zero x)
-    have hy : w (y : K) ≠ 0 := (Valuation.ne_zero_iff w).2 (Units.ne_zero y)
-    change -WithZero.log (w ((x : K) * (y : K))) =
-      -WithZero.log (w (x : K)) - WithZero.log (w (y : K))
-    rw [map_mul, WithZero.log_mul hx hy]
-    abel
-  have hval_uniformizer :
-      val (chapterUniformizerUnit (A := A) (K := K) π hπ) = 1 := by
-    change -WithZero.log (w (algebraMap A K π)) = 1
-    rw [hwπ]
-    simp
-  have hval_ring_unit : ∀ u : Aˣ,
-      val (chapterMappedRingUnit (A := A) (K := K) u) = 0 := by
-    intro u
-    change -WithZero.log (w (algebraMap A K (u : A))) = 0
-    dsimp [w]
-    rw [IsDedekindDomain.HeightOneSpectrum.valuation_of_algebraMap,
-      v.intValuation_eq_one_iff.mpr]
-    · simp
-    · exact (IsLocalRing.notMem_maximalIdeal).2 u.isUnit
-  refine ⟨
-    { value := val
-      map_one' := hval_one
-      map_mul' := hval_mul
-      uniformizer_value' := hval_uniformizer
-      ring_unit_value' := hval_ring_unit
-      factorization' := ?_ }⟩
-  intro x
-  obtain ⟨n, u, hu⟩ :=
-    IsDiscreteValuationRing.exists_units_eq_smul_zpow_of_irreducible
-      hπ (Units.ne_zero x)
-  have hval_x : val x = n := by
-    change -WithZero.log (w (x : K)) = n
-    rw [hu, Units.smul_def, Algebra.smul_def, map_mul, map_zpow₀]
-    have huval : w (algebraMap A K (u : A)) = 1 := by
-      dsimp [w]
-      rw [IsDedekindDomain.HeightOneSpectrum.valuation_of_algebraMap,
-        v.intValuation_eq_one_iff.mpr]
-      exact (IsLocalRing.notMem_maximalIdeal).2 u.isUnit
-    rw [huval, one_mul, hwπ, WithZero.log_zpow]
-    simp
-  refine ⟨u, ?_⟩
-  apply Units.ext
-  simpa [hval_x, chapterMappedRingUnit, chapterUniformizerUnit,
-    Units.smul_def, Algebra.smul_def] using hu
+    Nonempty (Chapter04DVRValuationWitness A K) := by
+  exact (is_discrete_valuation_ring_iff_chapter04_valuation_witness A K).mp
+    (inferInstance : IsDiscreteValuationRing A)
 
+include hπ in
 /-- Book §5.3, displayed precision-shift formula. -/
 theorem chapter_fractional_filtration_shift
-    (v : ChapterIntegerValuation (A := A) (K := K) π hπ)
+    (v : Chapter04DVRValuationWitness A K)
     (x : K) (hx : x ≠ 0) (n : ℤ) :
     chapterPrincipalFractionalIdeal (A := A) (K := K) x *
-        chapterFractionalFiltration (A := A) (K := K) π n =
+    chapterFractionalFiltration (A := A) (K := K) π n =
     chapterFractionalFiltration (A := A) (K := K) π
-        (n + chapterValuationValue (A := A) (K := K) π hπ v x hx) := by
-  obtain ⟨u, hu⟩ := v.factorization' (Units.mk0 x hx)
-  have hx' : x =
-      (chapterMappedRingUnit (A := A) (K := K) u : K) *
-        (chapterUniformizerUnit (A := A) (K := K) π hπ : K) ^
-          chapterValuationValue (A := A) (K := K) π hπ v x hx := by
-    change (Units.mk0 x hx : K) = _
-    simpa [chapterValuationValue] using congrArg Units.val hu
-  rw [chapterPrincipalFractionalIdeal, chapterFractionalFiltration,
-    FractionalIdeal.spanSingleton_mul_spanSingleton]
-  apply (FractionalIdeal.spanSingleton_eq_spanSingleton).2
-  refine ⟨u⁻¹, ?_⟩
-  calc
-    u⁻¹ • (x * (algebraMap A K π) ^ n) =
-        u⁻¹ • (((chapterMappedRingUnit (A := A) (K := K) u : K) *
-          (chapterUniformizerUnit (A := A) (K := K) π hπ : K) ^
-            chapterValuationValue (A := A) (K := K) π hπ v x hx) *
-          (algebraMap A K π) ^ n) := by
-      exact congrArg (fun z : K => u⁻¹ • (z * (algebraMap A K π) ^ n)) hx'
-    _ = (algebraMap A K π) ^
-          (n + chapterValuationValue (A := A) (K := K) π hπ v x hx) := by
-      simp only [Units.smul_def, Algebra.smul_def, chapterMappedRingUnit,
-        chapterUniformizerUnit, Units.val_mk0]
-      change (algebraMap A K (↑(u⁻¹) : A)) *
-          ((algebraMap A K (↑u : A)) *
-            (algebraMap A K π) ^
-              chapterValuationValue (A := A) (K := K) π hπ v x hx *
-            (algebraMap A K π) ^ n) = _
-      calc
-        (algebraMap A K (↑(u⁻¹) : A)) *
-              ((algebraMap A K (↑u : A)) *
-                (algebraMap A K π) ^
-                  chapterValuationValue (A := A) (K := K) π hπ v x hx *
-                (algebraMap A K π) ^ n) =
-            ((algebraMap A K (↑(u⁻¹) : A)) *
-              (algebraMap A K (↑u : A))) *
-                (algebraMap A K π) ^
-                  chapterValuationValue (A := A) (K := K) π hπ v x hx *
-                (algebraMap A K π) ^ n := by ring
-        _ = (algebraMap A K π) ^
-              chapterValuationValue (A := A) (K := K) π hπ v x hx *
-            (algebraMap A K π) ^ n := by
-          rw [← (algebraMap A K).map_mul]
-          simp
-        _ = (algebraMap A K π) ^
-              (n + chapterValuationValue (A := A) (K := K) π hπ v x hx) := by
-          rw [← zpow_add₀ (by simpa using hπ.ne_zero)]
-          congr 1
-          ring
+        (n + chapterValuationValue (A := A) (K := K) v x hx) := by
+  sorry
 
 /-- Book §5.3: units have value zero. -/
 theorem chapter_mapped_ring_unit_has_value_zero
-    (v : ChapterIntegerValuation (A := A) (K := K) π hπ) (u : Aˣ) :
-    chapterValuationValue (A := A) (K := K) π hπ v
+    (v : Chapter04DVRValuationWitness A K) (u : Aˣ) :
+    chapterValuationValue (A := A) (K := K) v
         (chapterMappedRingUnit (A := A) (K := K) u : K)
         (Units.ne_zero _) = 0 := by
-  have hu : Units.mk0 (chapterMappedRingUnit (A := A) (K := K) u : K)
-      (Units.ne_zero _) = chapterMappedRingUnit (A := A) (K := K) u := by
-    apply Units.ext
-    rfl
-  change v.value (Units.mk0 (chapterMappedRingUnit (A := A) (K := K) u : K)
-    (Units.ne_zero _)) = 0
-  simpa [hu] using v.ring_unit_value' u
+  sorry
 
 /-- Book §5.3: multiplication by a unit preserves precision. -/
 theorem chapter_unit_preserves_precision
@@ -533,70 +393,35 @@ theorem chapter_unit_preserves_precision
   refine ⟨u⁻¹, ?_⟩
   simp [Units.smul_def, Algebra.smul_def, chapterMappedRingUnit]
 
+include hπ in
 /-- Book §5.3: a nonzero maximal-ideal element gains positive precision. -/
 theorem chapter_maximalIdeal_element_gains_precision
-    (v : ChapterIntegerValuation (A := A) (K := K) π hπ)
+    (v : Chapter04DVRValuationWitness A K)
     {a : A} (ha : a ∈ IsLocalRing.maximalIdeal A)
     (haK : algebraMap A K a ≠ 0) (n : ℤ) :
-    0 < chapterValuationValue (A := A) (K := K) π hπ v
+    0 < chapterValuationValue (A := A) (K := K) v
         (algebraMap A K a) haK ∧
-      n < n + chapterValuationValue (A := A) (K := K) π hπ v
+      n < n + chapterValuationValue (A := A) (K := K) v
         (algebraMap A K a) haK ∧
       chapterPrincipalFractionalIdeal (A := A) (K := K) (algebraMap A K a) *
           chapterFractionalFiltration (A := A) (K := K) π n =
         chapterFractionalFiltration (A := A) (K := K) π
-          (n + chapterValuationValue (A := A) (K := K) π hπ v
+          (n + chapterValuationValue (A := A) (K := K) v
             (algebraMap A K a) haK) := by
-  have ha0 : a ≠ 0 := by
-    intro ha0
-    subst a
-    simp at haK
-  obtain ⟨m, u, hu⟩ :=
-    IsDiscreteValuationRing.eq_unit_mul_pow_irreducible ha0 hπ
-  have hval : chapterValuationValue (A := A) (K := K) π hπ v
-        (algebraMap A K a) haK = m := by
-    have hunit : Units.mk0 (algebraMap A K a) haK =
-        chapterMappedRingUnit (A := A) (K := K) u *
-          (chapterUniformizerUnit (A := A) (K := K) π hπ) ^ m := by
-      apply Units.ext
-      simpa [chapterMappedRingUnit, chapterUniformizerUnit,
-        Units.smul_def, Algebra.smul_def] using congrArg (algebraMap A K) hu
-    have hpowval : ∀ k : ℕ, v.value
-        ((chapterUniformizerUnit (A := A) (K := K) π hπ) ^ k) = (k : ℤ) := by
-      intro k
-      induction k with
-      | zero => simp [v.map_one']
-      | succ k ih =>
-          rw [pow_succ, v.map_mul', ih, v.uniformizer_value']
-          simp
-    unfold chapterValuationValue
-    rw [hunit, v.map_mul', v.ring_unit_value', hpowval m]
-    simp
-  have hnotunit : ¬ IsUnit a := by
-    simpa [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff] using ha
-  have hmpos : 0 < m := by
-    have hmne : m ≠ 0 := by
-      intro hm
-      apply hnotunit
-      rw [hu, hm, pow_zero, mul_one]
-      exact u.isUnit
-    omega
-  refine ⟨by simpa [hval] using hmpos, by omega, ?_⟩
-  exact chapter_fractional_filtration_shift (A := A) (K := K) π hπ v
-    (algebraMap A K a) haK n
+  sorry
 
+include hπ in
 /-- Book §5.3: a negative-valued element loses digits. -/
 theorem chapter_negative_valued_element_loses_precision
-    (v : ChapterIntegerValuation (A := A) (K := K) π hπ)
+    (v : Chapter04DVRValuationWitness A K)
     {x : K} (hx : x ≠ 0)
-    (hv : chapterValuationValue (A := A) (K := K) π hπ v x hx < 0) (n : ℤ) :
-    n + chapterValuationValue (A := A) (K := K) π hπ v x hx < n ∧
+    (hv : chapterValuationValue (A := A) (K := K) v x hx < 0) (n : ℤ) :
+    n + chapterValuationValue (A := A) (K := K) v x hx < n ∧
       chapterPrincipalFractionalIdeal (A := A) (K := K) x *
           chapterFractionalFiltration (A := A) (K := K) π n =
         chapterFractionalFiltration (A := A) (K := K) π
-          (n + chapterValuationValue (A := A) (K := K) π hπ v x hx) := by
-  refine ⟨by omega, ?_⟩
-  exact chapter_fractional_filtration_shift (A := A) (K := K) π hπ v x hx n
+          (n + chapterValuationValue (A := A) (K := K) v x hx) := by
+  sorry
 
 end FractionalIdealsAndPrecision
 

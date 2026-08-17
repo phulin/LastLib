@@ -1,10 +1,10 @@
 import Mathlib.Algebra.Module.PID
+import Mathlib.Algebra.Module.Lattice
 import Mathlib.LinearAlgebra.Dimension.Torsion.Basic
 import Mathlib.LinearAlgebra.Dimension.Torsion.Finite
 import Mathlib.LinearAlgebra.Basis.Basic
 import Mathlib.LinearAlgebra.Basis.Submodule
 import Mathlib.LinearAlgebra.Determinant
-import Mathlib.LinearAlgebra.Dimension.Finite
 import Mathlib.LinearAlgebra.FreeModule.Finite.Quotient
 import Mathlib.LinearAlgebra.Finsupp.LinearCombination
 import Mathlib.RingTheory.DiscreteValuationRing.Basic
@@ -245,10 +245,6 @@ section Lattices
 variable {K E : Type*} [Field K] [Algebra A K] [IsFractionRing A K]
   [AddCommGroup E] [Module A E] [Module K E] [IsScalarTower A K E]
 
-/-- A finitely generated `A`-submodule spanning `E` over `K`. -/
-def chapterFullLattice (M : Submodule A E) : Prop :=
-  Module.Finite A M ∧ Submodule.span K (M : Set E) = ⊤
-
 /-- Scaling a lattice by a field element. -/
 def chapterLatticeScale (a : K) (M : Submodule A E) : Set E :=
   {x | ∃ y : E, y ∈ M ∧ a • y = x}
@@ -257,8 +253,8 @@ include hπ in
 /-- Any two full lattices differ by a bounded power of the uniformizer. -/
 theorem chapter_full_lattices_commensurable
     (M N : Submodule A E)
-    (hM : chapterFullLattice (A := A) (K := K) M)
-    (hN : chapterFullLattice (A := A) (K := K) N) :
+    (hM : Submodule.IsLattice K M)
+    (hN : Submodule.IsLattice K N) :
     ∃ r : ℕ,
       chapterLatticeScale (A := A) (K := K) (E := E)
           (algebraMap A K (π ^ r)) M ⊆ (N : Set E) ∧
@@ -266,6 +262,8 @@ theorem chapter_full_lattices_commensurable
           chapterLatticeScale (A := A) (K := K) (E := E)
             ((algebraMap A K (π ^ r))⁻¹) M := by
   classical
+  let _ : Submodule.IsLattice K M := hM
+  let _ : Submodule.IsLattice K N := hN
   have hclear (P Q : Submodule A E) [Module.Finite A P] [Module.Finite A Q]
       (hQ : Submodule.span K (Q : Set E) = ⊤) :
       ∃ r : ℕ, ∀ x : P,
@@ -369,8 +367,8 @@ theorem chapter_full_lattices_commensurable
         change (π ^ r) • (a • (x : E)) ∈ Q
         rw [smul_comm]
         exact Q.smul_mem a hxp'
-  obtain ⟨r₁, hr₁⟩ := @hclear M N hM.1 hN.1 hN.2
-  obtain ⟨r₂, hr₂⟩ := @hclear N M hN.1 hM.1 hM.2
+  obtain ⟨r₁, hr₁⟩ := hclear M N hN.span_eq_top
+  obtain ⟨r₂, hr₂⟩ := hclear N M hM.span_eq_top
   have hpow12 (x : E) :
       (algebraMap A K (π ^ (r₁ + r₂))) • x =
         (algebraMap A K (π ^ r₂)) •
@@ -645,12 +643,12 @@ variable {K E : Type*} [Field K] [Algebra A K] [IsFractionRing A K]
 the field norm as the determinant of its restriction to any full stable
 `A`-lattice. -/
 theorem chapter_lattice_multiplication_determinant_eq_norm
-    (M : Submodule A E) [Module.Free A M] [Module.Finite A M]
-    (hM : chapterFullLattice (A := A) (K := K) M) (x : E)
+    (M : Submodule A E) (hM : Submodule.IsLattice K M) (x : E)
     (T : M →ₗ[A] M)
     (hT : ∀ y : M, (T y : E) = x * (y : E)) :
     algebraMap A K (LinearMap.det T) = Algebra.norm K x := by
   classical
+  let _ : Submodule.IsLattice K M := hM
   let r := Module.finrank A M
   let b : Module.Basis (Fin r) A M := Module.finBasis A M
   have hbA : LinearIndependent A (fun i : Fin r => (b i : E)) := by
@@ -659,7 +657,7 @@ theorem chapter_lattice_multiplication_determinant_eq_norm
   have hbspanK :
       Submodule.span K (Set.range (fun i : Fin r => (b i : E))) = (⊤ : Submodule K E) := by
     apply top_unique
-    rw [← hM.2]
+    rw [← hM.span_eq_top]
     apply Submodule.span_le.2
     intro x hx
     have hx' : (⟨x, hx⟩ : M) ∈ Submodule.span A (Set.range b) := by
