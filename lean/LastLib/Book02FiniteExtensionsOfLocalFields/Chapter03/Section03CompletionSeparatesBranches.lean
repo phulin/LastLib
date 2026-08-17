@@ -2,6 +2,7 @@ import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section01WhyTowerFo
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.Section02ExistenceUniquenessAndCompleteness
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section05SeveralExtensionsAndTheFundamentalEquality
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section04FactorizationOfTheMaximalIdeal
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section02TheCompletedProductTheorem
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03
 
@@ -105,7 +106,6 @@ theorem chapter03_completed_branch_degree
     [vComp.HasExtension wComp]
     [Valuation.IsRankOneDiscrete vComp]
     [Valuation.IsRankOneDiscrete wComp]
-    [PerfectField (IsLocalRing.ResidueField vComp.valuationSubring)]
     [FiniteDimensional (Valuation.Completion v)
       (Valuation.Completion b.extension.valuation)]
     (hcomplete : IsAdicComplete

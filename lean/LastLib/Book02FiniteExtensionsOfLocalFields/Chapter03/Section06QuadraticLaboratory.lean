@@ -229,11 +229,11 @@ abbrev chapter03QuadraticSelfBaseChange
     (K L : Type*) [CommRing K] [CommRing L] [Algebra K L] :=
   L ⊗[K] L
 
-/-- The two ramified quadratic classes become isomorphic after the unramified
-square class becomes a square in the new base. -/
+/-- Quadratic classes differing by a unit square become isomorphic after scalar
+extension to a base in which that square root exists. -/
 theorem chapter03_ramified_quadratics_become_isomorphic_after_unramified_base_change
     (K Kᵤ : Type*) [Field K] [Field Kᵤ] [Algebra K Kᵤ]
-    (u π : K) (hu : IsUnit u) (hπ : π ≠ 0)
+    (u π : K) (hu : IsUnit u)
     (s : Kᵤ) (hsquare : s ^ 2 = algebraMap K Kᵤ u) :
     letI : Algebra Kᵤ (chapter03QuadraticRootAlgebra K π ⊗[K] Kᵤ) :=
       Algebra.TensorProduct.rightAlgebra

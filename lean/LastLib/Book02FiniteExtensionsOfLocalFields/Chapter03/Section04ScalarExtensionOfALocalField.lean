@@ -1,6 +1,7 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section01WhyTowerFormulasMatter
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section07ConcreteFiniteExtensions
 import Mathlib.FieldTheory.LinearDisjoint
+import Mathlib.RingTheory.Etale.Basic
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03
 

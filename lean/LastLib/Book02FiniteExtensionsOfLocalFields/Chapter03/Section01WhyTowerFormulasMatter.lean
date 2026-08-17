@@ -1,5 +1,6 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.Section01TheLocalExtensionProblem
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter02.Section04TheFundamentalEquality
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section04RamificationIndexAndResidueDegree
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section09Towers
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03
@@ -76,7 +77,6 @@ theorem chapter03_complete_fundamental_equality
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
     [Valuation.IsRankOneDiscrete vL]
-    [PerfectField (IsLocalRing.ResidueField vK.valuationSubring)]
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
     chapter03FundamentalEquality vK vL := by
