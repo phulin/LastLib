@@ -118,7 +118,23 @@ theorem inertia_field_is_algebra_equivalent_to_fixed_field
     [FiniteDimensional K L] [IsGalois K L]
     [IsInertiaField K L P E] :
     Nonempty (E ≃ₐ[K] chapter05FixedField (Ideal.inertia (Gal(L / K)) P)) := by
-  sorry
+  have hfixed : IsInertiaField K L P
+      (chapter05FixedField (Ideal.inertia (Gal(L / K)) P)) := by
+    exact {
+      toIsGaloisGroup :=
+        IsGaloisGroup.subgroup (Gal(L / K)) K L
+          (Ideal.inertia (Gal(L / K)) P) }
+  let e := @IsInertiaField.ringEquiv K L B _ _ _ _ P E _ _ _
+    (chapter05FixedField (Ideal.inertia (Gal(L / K)) P)) _ _ _ hfixed
+  refine ⟨AlgEquiv.ofRingEquiv (f := e) ?_⟩
+  intro x
+  apply FaithfulSMul.algebraMap_injective
+    (chapter05FixedField (Ideal.inertia (Gal(L / K)) P)) L
+  rw [@IsInertiaField.algebraMap_ringEquiv_apply K L B _ _ _ _ P E _ _ _
+    (chapter05FixedField (Ideal.inertia (Gal(L / K)) P)) _ _ _ hfixed]
+  rw [← IsScalarTower.algebraMap_apply K E L,
+    ← IsScalarTower.algebraMap_apply K
+      (chapter05FixedField (Ideal.inertia (Gal(L / K)) P)) L]
 
 /--
 The inertia fixed field has the unramified and totally ramified local layers.
