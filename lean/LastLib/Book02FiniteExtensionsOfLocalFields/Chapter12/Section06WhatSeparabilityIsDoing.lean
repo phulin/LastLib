@@ -36,23 +36,17 @@ theorem chapter12_pth_power_has_one_geometric_root
             K p a) = 0 → β = α := by
   sorry
 
-/-- Nontrivial normed fields have arbitrarily small nonzero coefficient
-perturbations, which is the metric ingredient in the inseparable warning. -/
-theorem chapter12_nontrivial_normed_field_has_small_nonzero_elements
-    {K : Type*} [NontriviallyNormedField K] :
-    ∀ ε : ℝ, 0 < ε → ∃ c : K, c ≠ 0 ∧ ‖c‖ < ε := by
-  sorry
-
-/- A nonzero linear coefficient can be made arbitrarily small, so the
-inseparable equation has arbitrarily close coefficient perturbations. -/
+/- A nonzero linear coefficient can be made arbitrarily small.  Adding it to
+the inseparable equation gives a separable nearby polynomial. -/
 theorem chapter12_pth_power_coefficients_can_be_perturbed
-    {K : Type*} [NontriviallyNormedField K] (p : ℕ) (a : K) :
+    {K : Type*} [NontriviallyNormedField K] (p : ℕ) (hp : Nat.Prime p)
+    [CharP K p] (a : K) :
     ∀ ε : ℝ, 0 < ε →
       ∃ c : K, c ≠ 0 ∧ ‖c‖ < ε ∧
-        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03PurelyInseparableResiduePolynomial
-            K p (a + c) ≠
-        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03PurelyInseparableResiduePolynomial
-            K p a := by
+        (X : K[X]) ^ p + C c * X - C a ≠
+          LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03PurelyInseparableResiduePolynomial
+            K p a ∧
+        ((X : K[X]) ^ p + C c * X - C a).Separable := by
   sorry
 
 /-- Every finite extension of a characteristic-zero field is separable. -/

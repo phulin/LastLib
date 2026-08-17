@@ -14,7 +14,7 @@ conjugates needed by the comparison live in the chosen normed overfield.
 theorem chapter12_krasner_membership
     {K L : Type*} [Field K] [NormedField L] [Algebra K L]
     [IsKrasner K L] {α β : L}
-    (hα : (minpoly K α).Separable)
+    (hα : IsSeparable K α)
     (hsplits : ((minpoly K α).map (algebraMap K L)).Splits)
     (hβ : IsIntegral K β)
     (hclose : chapter12KrasnerProximity (K := K) α β) :
@@ -27,7 +27,7 @@ theorem chapter12_krasner_membership
 theorem chapter12_krasner_lemma
     {K L : Type*} [Field K] [NormedField L] [Algebra K L]
     [IsKrasner K L] {α β : L}
-    (hα : (minpoly K α).Separable)
+    (hα : IsSeparable K α)
     (hsplits : ((minpoly K α).map (algebraMap K L)).Splits)
     (hβ : IsIntegral K β)
     (hclose : chapter12KrasnerProximity (K := K) α β) :
@@ -41,7 +41,7 @@ theorem chapter12_krasner_lemma_over_complete_base
     {K L : Type*} [NontriviallyNormedField K] [CompleteSpace K]
     [IsUltrametricDist K] [NormedField L] [NormedAlgebra K L]
     [Algebra.IsAlgebraic K L] {α β : L}
-    (hα : (minpoly K α).Separable)
+    (hα : IsSeparable K α)
     (hsplits : ((minpoly K α).map (algebraMap K L)).Splits)
     (hβ : IsIntegral K β)
     (hclose : chapter12KrasnerProximity (K := K) α β) :
@@ -54,15 +54,15 @@ finite conjugate set has been identified. -/
 theorem chapter12_krasner_lemma_of_radius
     {K L : Type*} [Field K] [NormedField L] [Algebra K L]
     [IsKrasner K L] {α β : L}
-    (hα : (minpoly K α).Separable)
+    (hα : IsSeparable K α)
     (hsplits : ((minpoly K α).map (algebraMap K L)).Splits)
     (hβ : IsIntegral K β)
-    (hfinite : Set.Finite (chapter12KrasnerDistanceSet (K := K) α))
     (hradius : ENNReal.ofReal ‖β - α‖ < chapter12KrasnerRadius (K := K) α) :
     IntermediateField.adjoin K ({α} : Set L) ≤
       IntermediateField.adjoin K ({β} : Set L) := by
   apply chapter12_krasner_lemma hα hsplits hβ
-  exact (chapter12_krasner_proximity_iff_radius α β hfinite).2 hradius
+  exact (chapter12_krasner_proximity_iff_radius α β hα.isIntegral
+    (chapter12_krasner_distance_set_finite α hα.isIntegral hsplits)).2 hradius
 
 end
 
