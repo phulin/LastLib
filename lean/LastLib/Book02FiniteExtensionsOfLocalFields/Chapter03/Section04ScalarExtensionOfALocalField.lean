@@ -20,14 +20,14 @@ abbrev chapter03ScalarExtension
     [Algebra K L] [Algebra K K'] : Type _ :=
   L ⊗[K] K'
 
-/-- The finite reduced/étale profile of a scalar extension. -/
+/-- The finite reduced profile of a scalar extension. -/
 def chapter03FiniteReducedScalarExtension
     (K L K' : Type*) [CommRing K] [CommRing L] [CommRing K']
     [Algebra K L] [Algebra K K'] : Prop :=
   letI : Algebra K' (chapter03ScalarExtension K L K') :=
     Algebra.TensorProduct.rightAlgebra
   Module.Finite K' (chapter03ScalarExtension K L K') ∧
-    Algebra.Etale K' (chapter03ScalarExtension K L K')
+    IsReduced (chapter03ScalarExtension K L K')
 
 /-- A finite separable field extension remains finite reduced after base
 change. -/
@@ -54,15 +54,21 @@ theorem chapter03_separable_scalar_extension_has_field_factors
       Nonempty (chapter03ScalarExtension K L K' ≃ₐ[K'] (∀ i, F i)) := by
   sorry
 
-/- A factor of a scalar extension is an algebra over the new base field.  This
-interface is kept separate from the self-base-change factor above, whose new
-base happens to be `L`. -/
+/- A factor of a scalar extension is an algebra over both the old left field
+and the new base.  The compatibility equation exposes the left-field map
+induced by the tensor factor, which is needed for valuation statements. -/
 def chapter03ScalarExtensionFieldFactor
     (K L K' F : Type*) [CommRing K] [CommRing L] [CommRing K'] [Field F]
-    [Algebra K L] [Algebra K K'] [Algebra K' F] : Prop :=
+    [Algebra K L] [Algebra K K'] [Algebra K' F] [Algebra K F] [Algebra L F]
+    [IsScalarTower K K' F] [IsScalarTower K L F] : Prop :=
   letI : Algebra K' (chapter03ScalarExtension K L K') :=
     Algebra.TensorProduct.rightAlgebra
-  ∃ φ : chapter03ScalarExtension K L K' →ₐ[K'] F, Function.Surjective φ
+  ∃ φ : chapter03ScalarExtension K L K' →ₐ[K'] F,
+    Function.Surjective φ ∧
+      (φ.restrictScalars K).comp
+          (Algebra.TensorProduct.includeLeft :
+            L →ₐ[K] chapter03ScalarExtension K L K') =
+        IsScalarTower.toAlgHom K L F
 
 /- The residue-field etale factorization lifts to the local statement: after
 an unramified extension, every field factor remains unramified. -/
@@ -70,7 +76,9 @@ theorem chapter03_unramified_scalar_extension_field_factor_is_unramified
     (K L K' F Γ : Type*) [Field K] [Field L] [Field K'] [Field F]
     [LinearOrderedCommGroupWithZero Γ]
     [Algebra K L] [Algebra K K'] [Algebra K' F] [Algebra K F]
+    [Algebra L F]
     [IsScalarTower K K' F]
+    [IsScalarTower K L F]
     [FiniteDimensional K L] [FiniteDimensional K K']
     [FiniteDimensional K' F]
     (vK : Valuation K Γ) (vL : Valuation L Γ)
@@ -163,8 +171,9 @@ theorem chapter03_totally_ramified_extension_after_unramified_base_change
     {K Ω Γ : Type*} [Field K] [Field Ω]
     [LinearOrderedCommGroupWithZero Γ] [Algebra K Ω]
     (L K' : IntermediateField K Ω)
-    [FiniteDimensional K L] [FiniteDimensional K K'] [IsGalois K K']
+    [FiniteDimensional K L] [FiniteDimensional K K']
     (vK : Valuation K Γ)
+    [PerfectField (IsLocalRing.ResidueField vK.valuationSubring)]
     (vL : Valuation (↥L) Γ)
     (vK' : Valuation (↥K') Γ)
     (vC : Valuation (↥(chapter03BaseChangeCompositum L K')) Γ)

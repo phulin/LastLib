@@ -5,6 +5,8 @@ import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section04Factorizati
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03
 
+universe uK₀ uE uΓ uΓE
+
 noncomputable section
 
 open scoped BigOperators TensorProduct
@@ -27,28 +29,47 @@ abbrev chapter03ValuationBranch
   LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ValuationBranch
     (K := K₀) (L := E) v
 
-/-- Representatives for all valuation branches, modulo equivalence. -/
+/- The indexed product view below is a bridge to Chapter 10's established
+   complete branch-family interface. -/
 structure Chapter03CompletionBranchData
-    (K₀ E Γ : Type*) [Field K₀] [Field E]
+    (K₀ : Type uK₀) (E : Type uE) (Γ : Type uΓ) [Field K₀] [Field E]
     [LinearOrderedCommGroupWithZero Γ]
     [Algebra K₀ E] [FiniteDimensional K₀ E] (v : Valuation K₀ Γ)
     where
-  index : Type*
-  index_finite : Fintype index
-  branch : index → chapter03ValuationBranch (K₀ := K₀) (E := E) (Γ := Γ) v
-  branch_exhaustive :
-    ∀ w : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10HeterogeneousValuationExtension E v,
-      ∃ i, (branch i).extension.valuation.IsEquiv w.valuation
-  branch_pairwise_inequivalent :
-    Pairwise (fun i j =>
-      ¬(branch i).extension.valuation.IsEquiv (branch j).extension.valuation)
+  family : Finset
+    (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ValuationBranch
+      (K := K₀) (L := E) v)
+  family_complete :
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10CompleteBranchFamily.{uK₀, uE, uΓ, uΓE} v family
 
-instance {K₀ E Γ : Type*} [Field K₀] [Field E]
+namespace Chapter03CompletionBranchData
+
+abbrev index
+    {K₀ E Γ : Type*} [Field K₀] [Field E]
     [LinearOrderedCommGroupWithZero Γ] [Algebra K₀ E]
     [FiniteDimensional K₀ E]
-    (v : Valuation K₀ Γ) (D : Chapter03CompletionBranchData K₀ E Γ v) :
-    Fintype D.index :=
-  D.index_finite
+    {v : Valuation K₀ Γ}
+    (D : Chapter03CompletionBranchData K₀ E Γ v) : Type _ :=
+  {b // b ∈ D.family}
+
+def branch
+    {K₀ E Γ : Type*} [Field K₀] [Field E]
+    [LinearOrderedCommGroupWithZero Γ] [Algebra K₀ E]
+    [FiniteDimensional K₀ E]
+    {v : Valuation K₀ Γ}
+    (D : Chapter03CompletionBranchData K₀ E Γ v) (i : D.index) :
+    chapter03ValuationBranch (K₀ := K₀) (E := E) (Γ := Γ) v :=
+  i.1
+
+instance
+    {K₀ E Γ : Type*} [Field K₀] [Field E]
+    [LinearOrderedCommGroupWithZero Γ] [Algebra K₀ E]
+    [FiniteDimensional K₀ E]
+    {v : Valuation K₀ Γ}
+    (D : Chapter03CompletionBranchData K₀ E Γ v) : Fintype D.index :=
+  Fintype.ofFinset D.family (fun _ => Iff.rfl)
+
+end Chapter03CompletionBranchData
 
 /-- The completed tensor product is the product of the completed branches. -/
 theorem chapter03_completion_tensor_product_decomposition
@@ -84,6 +105,7 @@ theorem chapter03_completed_branch_degree
     [vComp.HasExtension wComp]
     [Valuation.IsRankOneDiscrete vComp]
     [Valuation.IsRankOneDiscrete wComp]
+    [PerfectField (IsLocalRing.ResidueField vComp.valuationSubring)]
     [FiniteDimensional (Valuation.Completion v)
       (Valuation.Completion b.extension.valuation)]
     (hcomplete : IsAdicComplete

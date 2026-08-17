@@ -16,7 +16,7 @@ open LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
 structure Chapter03NormalizedValuedTower
     (K M L : Type*) [Field K] [Field M] [Field L]
     [Algebra K M] [Algebra M L] [Algebra K L]
-    [IsScalarTower K M L] where
+    [IsScalarTower K M L] [FiniteDimensional K M] [FiniteDimensional M L] where
   vK : AddValuation K (WithTop ℤ)
   vM : AddValuation M (WithTop ℤ)
   vL : AddValuation L (WithTop ℤ)
@@ -76,6 +76,7 @@ theorem chapter03_complete_fundamental_equality
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
     [Valuation.IsRankOneDiscrete vL]
+    [PerfectField (IsLocalRing.ResidueField vK.valuationSubring)]
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
     chapter03FundamentalEquality vK vL := by
@@ -105,6 +106,7 @@ theorem chapter03_restriction_factors_compose
     {K M L : Type*} [Field K] [Field M] [Field L]
     [Algebra K M] [Algebra M L] [Algebra K L]
     [IsScalarTower K M L]
+    [FiniteDimensional K M] [FiniteDimensional M L]
     (T : Chapter03NormalizedValuedTower K M L) (x : K) (hx : x ≠ 0) :
     T.vL (algebraMap K L x) = (T.eLM * T.eMK) • T.vK x := by
   sorry

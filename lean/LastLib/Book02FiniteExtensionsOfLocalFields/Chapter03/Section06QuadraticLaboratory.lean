@@ -278,7 +278,7 @@ def chapter03PrincipalUnitSquaringBijective
     (A : Type*) [CommRing A] (m : Ideal A) : Prop :=
   Function.Bijective (chapter03PrincipalUnitSquaringMap A m)
 
-/-- The dyadic case does not have the odd-residue square-class count. -/
+/-- The dyadic case does not have the odd-residue principal-unit behavior. -/
 -- The qualitative source warning is represented by a conditional cardinality
 -- theorem, so its local-DVR hypotheses are explicit here.
 theorem chapter03_residue_characteristic_two_needs_a_different_square_class_count
@@ -291,9 +291,9 @@ theorem chapter03_residue_characteristic_two_needs_a_different_square_class_coun
     (hfraction : Nonempty (FractionRing A ≃+* K))
     (hresidue : Nonempty
       (A ⧸ IsLocalRing.maximalIdeal A ≃+* k))
-    (hnot : ¬ chapter03PrincipalUnitSquaringBijective A
-      (IsLocalRing.maximalIdeal A)) :
-    4 < Fintype.card (chapter03SquareClassGroup K) := by
+    :
+    ¬ chapter03PrincipalUnitSquaringBijective A
+      (IsLocalRing.maximalIdeal A) := by
   sorry
 
 theorem chapter03_dyadic_square_classes_do_not_have_the_odd_count
