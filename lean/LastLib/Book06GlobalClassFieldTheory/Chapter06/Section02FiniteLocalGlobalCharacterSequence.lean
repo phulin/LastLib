@@ -1,4 +1,5 @@
 import LastLib.Book06GlobalClassFieldTheory.Chapter06.Dependencies
+import LastLib.Book06GlobalClassFieldTheory.Chapter04.Section02TheBrauerIdeleExactSequence
 
 /- The local dual subgroup and pointwise Kummer support keep the restricted
    product pairing finite without collapsing unramified valuation classes. -/
@@ -248,6 +249,63 @@ structure Chapter06FiniteLocalGlobalCharacterData
       Nonempty (Chapter06FiniteSLocalCalculation G A ι n HLocal HMu HBr HTate
         HMuGlobal localData placesAboveN kummerRestriction localization c S)
 
+/- The finite-stage equality used in the proof of Theorem 6.1.  This is the
+   source's displayed equality, exposed from the earlier exactness field
+   rather than reproved under a second name. -/
+theorem chapter06_finiteS_image_eq_kernel
+    {G A : Type*} {ι : Type*} {n : ℕ}
+    {HLocal HMu HBr HTate : ι → Type*} {HMuGlobal : Type*}
+    [Group G] [AddCommGroup A]
+    [TopologicalSpace G] [TopologicalSpace A] [IsTopologicalAddGroup A]
+    [∀ v, AddCommGroup (HLocal v)]
+    [∀ v, AddCommGroup (HMu v)]
+    [∀ v, AddCommGroup (HBr v)]
+    [∀ v, AddCommGroup (HTate v)] [AddCommGroup HMuGlobal]
+    (D : Chapter06FiniteLocalGlobalCharacterData
+      G A ι n HLocal HMu HBr HTate HMuGlobal)
+    (c : Chapter06RestrictedProduct ι HLocal D.localData.unramified)
+    (S : Finset ι)
+    (F : Chapter06FiniteSLocalCalculation G A ι n HLocal HMu HBr HTate
+      HMuGlobal D.localData D.placesAboveN D.kummerRestriction D.localization c S) :
+    Set.range F.duality.localization =
+      F.duality.lambda ⁻¹' ({0} : Set (HMuGlobal →+ Chapter06QModZ)) :=
+  F.duality.exact_at_middle
+
+/- The unramified tail in the proof is an idèle character which is trivial on
+   local units and principal idèles, hence descends to the ideal class group.
+   This algebraic package isolates the final generator check so a direct-limit
+   argument cannot silently discard the tail. -/
+structure Chapter06UnramifiedTailFactorization
+    (I Q A : Type*) [CommGroup I] [CommGroup Q] [AddCommGroup A] where
+  tail : I →* Multiplicative A
+  localUnits : Subgroup I
+  principalIdeles : Subgroup I
+  local_units_trivial : ∀ x, x ∈ localUnits → tail x = 1
+  principal_ideles_trivial : ∀ x, x ∈ principalIdeles → tail x = 1
+  classMap : I →* Q
+  classCharacter : Q →* Multiplicative A
+  factors_through_class_group :
+    tail = classCharacter.comp classMap
+  classGroupGenerators : Set Q
+  classGroup_generates :
+    ∀ q, q ∈ Subgroup.closure classGroupGenerators
+  generator_trivial :
+    ∀ q, q ∈ classGroupGenerators → classCharacter q = 1
+
+theorem chapter06_unramified_tail_character_zero
+    {I Q A : Type*} [CommGroup I] [CommGroup Q] [AddCommGroup A]
+    (T : Chapter06UnramifiedTailFactorization I Q A) :
+    T.tail = 1 := by
+  have hclosure : Subgroup.closure T.classGroupGenerators ≤ T.classCharacter.ker := by
+    refine (Subgroup.closure_le T.classCharacter.ker).2 ?_
+    intro q hq
+    exact (MonoidHom.mem_ker).2 (T.generator_trivial q hq)
+  apply MonoidHom.ext
+  intro x
+  rw [T.factors_through_class_group]
+  exact (MonoidHom.mem_ker).1
+    (hclosure (T.classGroup_generates (T.classMap x)))
+
 /- The finite-support Kummer subgroup occurring in the Grunwald--Wang
    calculation.  This uses the zero local class, rather than the larger
    unramified subgroup used for the restricted-product support. -/
@@ -290,6 +348,37 @@ theorem chapter06_mem_kummer_classes_trivial_outside_iff
     a ∈ chapter06KummerClassesTrivialOutside D S ↔
       ∀ v, v ∉ S → D.kummerRestriction v a = 0 :=
   Iff.rfl
+
+/- Chapter 4 already exposes the cyclotomic Wang data and its two-case defect
+   calculation.  These aliases make the references to (4.W6) and (4.W8)
+   source-faithful without defining a second cyclotomic object here. -/
+abbrev Chapter06CanonicalWangCyclotomicData
+    (F : Type*) [Field F] [NumberField F] :=
+  LastLib.Book06GlobalClassFieldTheory.Chapter04.Chapter04WangCyclotomicData F
+
+abbrev chapter06CanonicalWangSpecial
+    {F : Type*} [Field F] [NumberField F]
+    (D : Chapter06CanonicalWangCyclotomicData F) : Prop :=
+  LastLib.Book06GlobalClassFieldTheory.Chapter04.chapter04WangSpecial D
+
+noncomputable abbrev chapter06CanonicalWangClass
+    {F : Type*} [Field F] [NumberField F]
+    (D : Chapter06CanonicalWangCyclotomicData F) :
+    Chapter06CanonicalKummerClassGroup F D.n :=
+  LastLib.Book06GlobalClassFieldTheory.Chapter04.chapter04WangSpecialClass D
+
+theorem chapter06_canonical_wang_defect_two_case
+    {F : Type*} [Field F] [NumberField F]
+    (D : Chapter06CanonicalWangCyclotomicData F) :
+    (chapter06CanonicalWangSpecial D →
+      LastLib.Book06GlobalClassFieldTheory.Chapter04.chapter04WangDefectSubgroup
+        F D.n D.S =
+        AddSubgroup.zmultiples (chapter06CanonicalWangClass D)) ∧
+    (¬ chapter06CanonicalWangSpecial D →
+      LastLib.Book06GlobalClassFieldTheory.Chapter04.chapter04WangDefectSubgroup
+        F D.n D.S = (⊥ : AddSubgroup
+          (Chapter06CanonicalKummerClassGroup F D.n))) := by
+  exact LastLib.Book06GlobalClassFieldTheory.Chapter04.chapter04_wang_defect_group_two_case D
 
 /- The explicit cyclotomic descent in the source has one exceptional class.
    The abstract local data above do not expose a canonical cyclotomic layer,
@@ -385,6 +474,39 @@ structure Chapter06WangSignCalculation
       lift_localization c₂ = z →
       Nat.card (MonoidHom.range c₂.toMul.1) = 2 * n
 
+/- The two concrete descriptions of the Wang sign in (6.W1) and (6.W2).
+   `reciprocityValue` is the local-reciprocity evaluation
+   `c_v(rec_{K_v}(a_W(n)))`; keeping it as a named map records the exact
+   normalization while allowing the local reciprocity implementation to live
+   in the earlier local-class-field-theory interfaces. -/
+def chapter06WangSignValue
+    {n : ℕ}
+    (jmath : Multiplicative (Chapter06OneOverNModOne n) →* ℂˣ)
+    (x : Chapter06OneOverNModOne n) : ℂˣ :=
+  jmath (Multiplicative.ofAdd x)
+
+structure Chapter06WangSignFormula
+    (ι : Type*) (n : ℕ) (HLocal HMu : ι → Type*) (HMuGlobal : Type*)
+    [∀ v, AddCommGroup (HLocal v)] [∀ v, AddCommGroup (HMu v)]
+    [AddCommGroup HMuGlobal] (S : Finset ι) where
+  positive : 0 < n
+  jmath : Multiplicative (Chapter06OneOverNModOne n) →* ℂˣ
+  wangClass : HMuGlobal
+  localize : ∀ v, HMuGlobal →+ HMu v
+  pairing : ∀ v : S, HLocal v →+ HMu v →+ Chapter06OneOverNModOne n
+  reciprocityValue : ∀ v : S, HLocal v → Chapter06OneOverNModOne n
+  epsilon : ∀ v : S, HLocal v → ℂˣ
+  epsilon_eq_W1 : ∀ v c,
+    epsilon v c = chapter06WangSignValue jmath
+      (pairing v c (localize v wangClass))
+  epsilon_eq_W2 : ∀ v c,
+    epsilon v c = chapter06WangSignValue jmath (reciprocityValue v c)
+  epsilon_is_sign : ∀ v c, epsilon v c = 1 ∨ epsilon v c = -1
+  specialPlaces : Finset S
+  epsilon_one_outside_special : ∀ v, v ∉ specialPlaces → ∀ c,
+    epsilon v c = 1
+  wangClass_order_two : wangClass + wangClass = 0
+
 /- The sign form of the Grunwald--Wang alternative.  The hypothesis on
    `lambda` is the explicit finite cyclotomic calculation; exactness then
    turns it into the local-to-global statement. -/
@@ -403,10 +525,39 @@ theorem chapter06_grunwald_wang_sign_alternative
     (W : Chapter06WangSignCalculation G ι HLocal HMuGlobal n S duality)
     (z : ∀ v : S, HLocal v) :
     W.has_exact_local_order_n z →
-    (∃ x, duality.localization x = z) ↔
-      (¬ W.wangSpecial ∨
-        W.specialPlaces.sum (fun v => W.sign v (z v)) = 0) := by
+      ((∃ x, duality.localization x = z) ↔
+        (¬ W.wangSpecial ∨
+          W.specialPlaces.sum (fun v => W.sign v (z v)) = 0)) := by
   sorry
+
+/- The same alternative in the multiplicative form of (6.W3).  The parity
+   encoding in `W.sign` is retained as the finite coefficient-level API; this
+   bridge is what exposes the textbook's product of signs. -/
+theorem chapter06_grunwald_wang_sign_alternative_product
+    {G : Type*} {ι : Type*} {HLocal : ι → Type*} {HMuGlobal : Type*}
+    [Group G] [TopologicalSpace G]
+    [∀ v, AddCommGroup (HLocal v)] [AddCommGroup HMuGlobal]
+    {n : ℕ}
+    [TopologicalSpace (Chapter06A n)]
+    [IsTopologicalAddGroup (Chapter06A n)]
+    [TopologicalSpace (Chapter06A (2 * n))]
+    [IsTopologicalAddGroup (Chapter06A (2 * n))]
+    {S : Finset ι}
+    {duality :
+      Chapter06FiniteSArithmeticDuality G (Chapter06A n) ι HLocal HMuGlobal S}
+    (W : Chapter06WangSignCalculation G ι HLocal HMuGlobal n S duality)
+    (epsilon : ∀ v : S, HLocal v → ℂˣ)
+    (hproduct : ∀ z : ∀ v : S, HLocal v,
+      W.specialPlaces.prod (fun v => epsilon v (z v)) = 1 ↔
+        W.specialPlaces.sum (fun v => W.sign v (z v)) = 0)
+    (z : ∀ v : S, HLocal v) :
+    W.has_exact_local_order_n z →
+      ((∃ x, duality.localization x = z) ↔
+        (¬ W.wangSpecial ∨
+          W.specialPlaces.prod (fun v => epsilon v (z v)) = 1)) := by
+  intro hz
+  rw [hproduct z]
+  exact chapter06_grunwald_wang_sign_alternative W z hz
 
 /- The degree-2n replacement in the obstructed Wang-special case, including
    the exact-order assertion for every compatible lift. -/
@@ -705,6 +856,31 @@ theorem chapter06LocalGlobalLambda_apply
     chapter06LocalGlobalLambda D c a = chapter06LocalGlobalLambdaValue D c a :=
   rfl
 
+/- Equation (6.1a): orthogonality of a restricted-product family gives the
+   finite-S sum zero after the unramified tail has been removed. -/
+theorem chapter06_equation_6_1a
+    {G A : Type*} {ι : Type*} {n : ℕ}
+    {HLocal HMu HBr HTate : ι → Type*} {HMuGlobal : Type*}
+    [Group G] [AddCommGroup A]
+    [TopologicalSpace G] [TopologicalSpace A] [IsTopologicalAddGroup A]
+    [∀ v, AddCommGroup (HLocal v)]
+    [∀ v, AddCommGroup (HMu v)]
+    [∀ v, AddCommGroup (HBr v)]
+    [∀ v, AddCommGroup (HTate v)] [AddCommGroup HMuGlobal]
+    (D : Chapter06FiniteLocalGlobalCharacterData
+      G A ι n HLocal HMu HBr HTate HMuGlobal)
+    (c : Chapter06RestrictedProduct ι HLocal D.localData.unramified)
+    (S : Finset ι)
+    (F : Chapter06FiniteSLocalCalculation G A ι n HLocal HMu HBr HTate
+      HMuGlobal D.localData D.placesAboveN D.kummerRestriction D.localization c S)
+    (horth : chapter06LocalGlobalLambda D c = 0)
+    (a : HMuGlobal)
+    (hcond : ∀ v,
+      D.kummerRestriction v a ∉ D.localData.unramifiedDual v → v ∈ S) :
+    ∑ v : S, chapter06InvariantTargetInclusion n
+      (D.localData.pairing v.1 (c v.1) (D.kummerRestriction v.1 a)) = 0 := by
+  sorry
+
 /- The remaining finite-level arithmetic-duality calculation is supplied as
    data in `D.finite_level_duality`; its comparison with the global maps is
    recorded by `Chapter06FiniteSLocalCalculation`. -/
@@ -840,6 +1016,52 @@ theorem chapter06_theorem_6_1
     Chapter06ExactAtMiddle D.localization (chapter06LocalGlobalLambda D) ∧
       Function.Injective D.localization :=
   chapter06_finite_local_global_duality D
+
+/- The earlier Chapter 1 finite-Cartier statement is the canonical
+   number-field specialization of the abstract interface above. -/
+theorem chapter06_canonical_theorem_6_1
+    {K : Type*} [Field K] [NumberField K] {n : ℕ}
+    (D : Chapter06CanonicalFiniteDualityStatement K n) :
+    LastLib.Book06GlobalClassFieldTheory.Chapter01.ExactAtMiddle
+        D.localization D.obstruction ∧
+      Function.Injective D.localization :=
+  ⟨D.exact_at_middle, D.localization_injective⟩
+
+/- The exceptional Wang class is represented by `b_K^(n/2)`.  This is
+   the source's `a_W(n)` definition, with the quotient and power subgroup
+   inherited from the canonical Chapter 1 Kummer API. -/
+def chapter06WangExceptionalRepresentative
+    {F : Type*} [Field F] (n : ℕ) (bK : Fˣ) : Fˣ :=
+  bK ^ (n / 2)
+
+def chapter06WangExceptionalClass
+    {F : Type*} [Field F] (n : ℕ) (bK : Fˣ) :
+    Chapter06KummerClassGroup F n :=
+  chapter06KummerClassMk n (chapter06WangExceptionalRepresentative n bK)
+
+theorem chapter06_wang_exceptional_representative_double_level
+    {F : Type*} [Field F] (n : ℕ) (bK : Fˣ) :
+    chapter06WangExceptionalRepresentative (2 * n) bK = bK ^ n ∧
+      chapter06WangExceptionalRepresentative (2 * n) bK =
+        chapter06WangExceptionalRepresentative n bK ^ 2 := by
+  sorry
+
+theorem chapter06_wang_exceptional_class_at_double_level
+    {F : Type*} [Field F] (n : ℕ) (bK : Fˣ) :
+    chapter06WangExceptionalClass (2 * n) bK =
+      chapter06KummerClassMk (2 * n) (bK ^ n) := by
+  sorry
+
+noncomputable def chapter06RationalUnit (q : ℚ) (hq : q ≠ 0) : ℚˣ :=
+  Units.mk0 q hq
+
+/- The concrete `K = ℚ`, `n = 8` calculation from the source. -/
+theorem chapter06_wang_Q_8_exceptional_class :
+    chapter06WangExceptionalClass 8
+        (chapter06RationalUnit 2 (by norm_num)) =
+      chapter06KummerClassMk 8
+        (chapter06RationalUnit 16 (by norm_num)) := by
+  sorry
 
 /- The number-field-specific construction of the distinguished Wang class and
    its degree-2n lift is intentionally separate from the abstract sign

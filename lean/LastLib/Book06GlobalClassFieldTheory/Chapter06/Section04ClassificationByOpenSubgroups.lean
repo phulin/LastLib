@@ -15,6 +15,22 @@ inclusion-reversing order statement.  The field of an open subgroup is the
 compositum already defined in Dependencies.lean.
 -/
 
+/- The earlier finite-Cartier theorem is the canonical pre-class-formation
+   existence input mentioned at the start of this chapter. -/
+theorem chapter06_canonical_open_subgroup_norm_realization
+    {K : Type*} [Field K] [NumberField K]
+    (H : Subgroup (LastLib.Book06GlobalClassFieldTheory.Chapter01.C_K K))
+    (hopen : IsOpen (H : Set (LastLib.Book06GlobalClassFieldTheory.Chapter01.C_K K)))
+    (hindex : H.FiniteIndex)
+    (hduality :
+      LastLib.Book06GlobalClassFieldTheory.Chapter01.HasFiniteCartierDualityForAllLevels K) :
+    Nonempty
+      (LastLib.Book06GlobalClassFieldTheory.Chapter01.ClassFieldNormRealization K H) :=
+  by
+    exact
+      LastLib.Book06GlobalClassFieldTheory.Chapter01.finite_cartier_duality_realizes_open_finiteIndex_subgroup
+        H hopen hindex hduality
+
 /- The norm subgroup of a finite abelian extension, with its topological
    finiteness conditions supplied separately by the existence theorem. -/
 abbrev chapter06NormSubgroupOfExtension

@@ -17,6 +17,7 @@ import Mathlib.RepresentationTheory.Homological.TateCohomology.Basic
 import Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed
 import LastLib.Book06GlobalClassFieldTheory.Chapter01.Dependencies
 import LastLib.Book06GlobalClassFieldTheory.Chapter01.Section01OneGaloisActionSeenAtEveryPlace
+import LastLib.Book06GlobalClassFieldTheory.Chapter01.Section04ArchitectureOfTheProof
 import LastLib.Book06GlobalClassFieldTheory.Chapter05.Section01TheReciprocityIsomorphism
 
 namespace LastLib.Book06GlobalClassFieldTheory.Chapter06
@@ -40,6 +41,25 @@ statements.
 
 /- The finite coefficient module A_n = ZMod n, with its additive structure. -/
 abbrev Chapter06A (n : ℕ) : Type := ZMod n
+
+/- Canonical earlier-chapter interfaces for the same coefficient package.  The
+   Chapter 6 names below keep the source notation readable while these aliases
+   make the reuse of the Chapter 1 finite-Cartier API explicit. -/
+abbrev Chapter06CanonicalA (n : ℕ) : Type :=
+  LastLib.Book06GlobalClassFieldTheory.Chapter01.CartierConstantCoefficient n
+
+abbrev Chapter06CanonicalKummerClassGroup
+    (F : Type*) [Field F] (n : ℕ) :=
+  LastLib.Book06GlobalClassFieldTheory.Chapter01.CartierKummerClassGroup F n
+
+abbrev Chapter06CanonicalRestrictedProduct
+    (ι : Type*) (H : ι → Type*) [∀ i, AddCommGroup (H i)]
+    (U : ∀ i, AddSubgroup (H i)) :=
+  LastLib.Book06GlobalClassFieldTheory.Chapter01.CartierRestrictedProduct ι H U
+
+abbrev Chapter06CanonicalFiniteDualityStatement
+    (K : Type*) [Field K] [NumberField K] (n : ℕ) :=
+  LastLib.Book06GlobalClassFieldTheory.Chapter01.FiniteCartierDualityStatement K n
 
 /- The canonical coefficient inclusion used by the exceptional
    Grunwald--Wang lift.  It is the additive map induced by the integer map

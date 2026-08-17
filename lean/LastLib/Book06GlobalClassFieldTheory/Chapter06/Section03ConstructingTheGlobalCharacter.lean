@@ -543,6 +543,23 @@ theorem chapter06_character_image_orders_agree
       himage, hnorm⟩
   exact himage
 
+/- The fixed field in the correspondence has degree equal to the intrinsic
+   character image, as asserted in the construction before Lemma 6.2. -/
+theorem chapter06_galois_character_correspondence_degree
+    {K Ks : Type*} [Field K] [NumberField K] [Field Ks] [Algebra K Ks]
+    [IsGalois K Ks] [IsSepClosed Ks]
+    [Chapter06IdeleClassGroup K]
+    (χ : Chapter06IdeleClassCharacter K)
+    (ψ : Chapter06ContinuousFiniteImageCharacter
+      (Chapter06AbsoluteGaloisGroup K Ks) ℂˣ)
+    (h : chapter06GaloisCharacterCorresponds χ ψ) :
+    ∃ R : Chapter06FiniteReciprocityWitness K Ks (Chapter06C K),
+      chapter06GaloisDegree (K := K) (L := R.extension.field) =
+          Nat.card (MonoidHom.range χ.hom) ∧
+        chapter06GaloisDegree (K := K) (L := R.extension.field) =
+          Nat.card (MonoidHom.range ψ.hom) := by
+  sorry
+
 /- Lemma 6.2: every continuous finite-order idele-class character has a
    unique finite-image character of the absolute Galois group. -/
 theorem chapter06_lemma_6_2_character_existence
