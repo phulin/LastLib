@@ -182,7 +182,8 @@ theorem chapter02_discrete_value_group_has_unique_smallest_positive
 
 theorem chapter02_discrete_value_group_equiv_int
     {Γ : Type*} [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
-    (hΓ : Chapter01.IsChapterDiscreteOrderedGroup Γ) :
+    (hΓ : Chapter01.IsChapterDiscreteOrderedGroup Γ)
+    (hRank : Chapter01.IsChapterRankOneOrderedGroup Γ) :
     Nonempty (Γ ≃+o ℤ) := by
   sorry
 
@@ -468,9 +469,10 @@ theorem chapter02_lex_quotient_is_an_ordered_convex_quotient :
 
 theorem chapter02_discrete_rank_one_has_no_proper_coarsening
     {Γ : Type*} [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
-    (hΓ : Chapter01.IsChapterDiscreteOrderedGroup Γ) (H : AddSubgroup Γ)
+    (hΓ : Chapter01.IsChapterDiscreteOrderedGroup Γ)
+    (hRank : Chapter01.IsChapterRankOneOrderedGroup Γ) (H : AddSubgroup Γ)
     (hH : Chapter02ConvexAddSubgroup H) : H = ⊥ ∨ H = ⊤ := by
-  rcases chapter02_discrete_value_group_equiv_int hΓ with ⟨e⟩
+  rcases chapter02_discrete_value_group_equiv_int hΓ hRank with ⟨e⟩
   by_cases hp : ∃ h : Γ, h ∈ H ∧ 0 < h
   · right
     rcases hp with ⟨h, hh, hpos⟩
