@@ -437,6 +437,7 @@ theorem chapter_fractional_filtration_shift
   simp [Units.smul_def, Algebra.smul_def, zpow_add₀ hπK,
     mul_comm, mul_left_comm]
 
+omit [IsDiscreteValuationRing A] in
 /-- Book §5.3: units have value zero. -/
 theorem chapter_mapped_ring_unit_has_value_zero
     (v : Chapter04DVRValuationWitness A K) (u : Aˣ) :
