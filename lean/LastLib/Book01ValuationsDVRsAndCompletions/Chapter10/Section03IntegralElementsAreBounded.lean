@@ -9,13 +9,14 @@ import Mathlib.RingTheory.Complex
 import Mathlib.RingTheory.Polynomial.RationalRoot
 import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.RingTheory.Valuation.RamificationGroup
+import Mathlib.RingTheory.QuasiFinite.Basic
 import Mathlib.Tactic.NormNum
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
 
 universe u10K u10L u10Γ
 
-open scoped BigOperators Pointwise TensorProduct WithZero PowerSeries
+open scoped BigOperators Pointwise TensorProduct WithZero
 open Polynomial
 
 noncomputable section

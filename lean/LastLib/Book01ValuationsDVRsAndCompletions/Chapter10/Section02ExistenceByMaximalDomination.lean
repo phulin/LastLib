@@ -1,11 +1,11 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section01TheExtensionProblem
+import Mathlib.RingTheory.Valuation.LocalSubring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
 
 universe u10K u10L u10Γ
 
-open scoped BigOperators TensorProduct WithZero PowerSeries
-open Polynomial
+open scoped BigOperators
 
 noncomputable section
 
