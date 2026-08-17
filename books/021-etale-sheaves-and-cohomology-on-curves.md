@@ -92,10 +92,11 @@
     - [Sheaves and correspondences on a nodal curve](#185-sheaves-and-correspondences-on-a-nodal-curve)
 19. [Semistable reduction and local Galois action](#19-semistable-reduction-and-local-galois-action)
     - [The trait and its three fibers](#191-the-trait-and-its-three-fibers)
-    - [The local calculation at $xy=\pi$](#192-the-local-calculation-at-xypi)
-    - [Invariant cycles and monodromy](#193-invariant-cycles-and-monodromy)
-    - [Unramified and semistable representations](#194-unramified-and-semistable-representations)
-    - [Frobenius, monodromy, and correspondences](#195-frobenius-monodromy-and-correspondences)
+    - [The étale-local model at a node](#192-the-étale-local-model-at-a-node)
+    - [The local calculation at $xy=\pi$](#193-the-local-calculation-at-xypi)
+    - [Invariant cycles and monodromy](#194-invariant-cycles-and-monodromy)
+    - [Unramified and semistable representations](#195-unramified-and-semistable-representations)
+    - [Frobenius, monodromy, and correspondences](#196-frobenius-monodromy-and-correspondences)
 20. [The cohomological representation attached to a curve](#20-the-cohomological-representation-attached-to-a-curve)
     - [Construction and functoriality](#201-construction-and-functoriality)
     - [The commuting-action theorem](#202-the-commuting-action-theorem)
@@ -1598,11 +1599,13 @@ This chapter computes the static cohomology of a semistable fiber. The next chap
 
 ### 18.1 Nodes, normalization, and the dual graph
 
-Let $C$ be a connected proper curve over a separably closed field $k$. We call $C$ **semistable** if it is reduced and its only singularities are ordinary double points. Étale locally at such a point its completed local equation has the form
+Let $C$ be a connected proper curve over a separably closed field $k$. We call $C$ **semistable** if it is reduced and its only singularities are ordinary double points, meaning that at each singular point the completed local ring is
 
 $$
-xy=0.
+\widehat{\mathcal O}_{C,c}\simeq k[[x,y]]/(xy).
 $$
+
+This is the completed form of the equation $xy=0$; the corresponding statement over an étale neighborhood, for a node in a regular family over a discrete valuation ring, is proved in Section 19.2.
 
 Let
 
@@ -1803,13 +1806,17 @@ $$
 f:\mathcal C\longrightarrow\operatorname{Spec}R
 $$
 
-be proper and flat. Assume that $\mathcal C$ is regular, the geometric generic fiber $C_{\bar K}$ is smooth and connected, and the special fiber $C_0$ is reduced with ordinary double points. Étale locally at every node, the family has equation
+be proper and flat. Assume that $\mathcal C$ is regular, the geometric generic fiber $C_{\bar K}$ is smooth and connected, and the special fiber $C_0$ is reduced with ordinary double points. These four conditions — proper flat, regular total space, smooth connected geometric generic fiber, reduced nodal special fiber — are the **strict semistable hypotheses**, and nothing further is assumed.
+
+In particular no local normal form is assumed. It is a theorem, proved as Theorem 19.2 in the next section, that these hypotheses force the family to acquire, étale locally at every node, the equation
 
 $$
 xy=\pi. \tag{19.1}
 $$
 
-These are the strict semistable hypotheses. Let $\Gamma$ be the dual graph of $C_0$ and let $g_v$ be the genera of its normalized components. Flatness keeps the arithmetic genus constant, so if the generic genus is $g$, then
+Precisely: at each node there are an étale neighborhood of that node in $\mathcal C$ and an étale $R$-morphism from it to $\operatorname{Spec}R[x,y]/(xy-\pi)$ carrying the node to the origin of the closed fiber. Everything in this chapter that looks local is extracted from (19.1), so it is worth being explicit that (19.1) is a consequence of the hypotheses rather than one of them. The regularity of $\mathcal C$ is what pins the exponent of $\pi$ to one: a nonregular model produces $xy=\pi^n$ with $n\geq2$, and the graph-theoretic conclusions below change accordingly.
+
+Let $\Gamma$ be the dual graph of $C_0$ and let $g_v$ be the genera of its normalized components. Flatness keeps the arithmetic genus constant, so if the generic genus is $g$, then
 
 $$
 g=\sum_v g_v+b_1(\Gamma). \tag{19.2}
@@ -1836,9 +1843,255 @@ The direction is from special to generic: it is the generization map of the prop
 
 For a smooth model there are no nodes, $R^if_*\Lambda$ is lisse, and (19.3) is an isomorphism. Since the base is strictly henselian, this says that inertia acts trivially on generic cohomology. That is the good-reduction case. The semistable case replaces trivial inertia by a precisely controlled unipotent action.
 
-### 19.2 The local calculation at $xy=\pi$
+### 19.2 The étale-local model at a node
 
-The equation (19.1) contains the entire local mechanism. The punctured special fiber has two branches, $x=0$ and $y=0$. A section on the normalization descends exactly when its two values at the origin agree. This is the local source of the difference map in (18.1).
+Everything the rest of this chapter does at a node is done on an étale neighborhood: a Čech or hypercover computation needs honest schemes with honest equations, because it must compare sections over the generic and special fibers of one and the same object. It is therefore not enough to know the shape of the singularity after completion. Completed local rings detect lengths, multiplicities, valuations, and freeness, but they are not objects of the étale site, and no cohomology of a sheaf is computed on them directly.
+
+What is available from earlier work is exactly the completed statement. For a flat family of curves with a split node in the closed fiber over a complete local base $\Lambda$, Book 9, Theorem 10.5 produces an isomorphism $\widehat{\mathcal O}\simeq\Lambda[[x,y]]/(xy-a)$ with $a$ in the maximal ideal of $\Lambda$, and shows that the ideal $a\Lambda$ is intrinsic; Book 16, Sections 2.2 and 2.3 record this as the model $A_n=\Lambda[[x,y]]/(xy-\pi^n)$, define the thickness $n=v(a)$, and prove that the total space is regular at the node precisely when $n=1$. Upgrading a formal isomorphism to an isomorphism over an étale neighborhood is in general an approximation problem, and we shall not attempt it in that generality.
+
+The observation that removes the difficulty is that we do not need to descend an isomorphism at all. When the total space is regular, the local ring at the node is a two-dimensional regular local ring in which the uniformizer $\pi$ of the base lies in the square of the maximal ideal, and the nodal shape of the special fiber says exactly that the leading quadratic form of $\pi$ is a product of two independent linear forms. Producing the equation $xy=\pi$ then means factoring one element of one ring, and a factorization of a quadratic expression into two linear ones is a root-finding problem for a monic quadratic polynomial whose residual roots are distinct. Adjoining that root is a standard étale algebra, hence an étale neighborhood. No approximation, no completion of the total space, and no structure theory of unramified morphisms is used.
+
+We work in the following generality, which is more than the chapter needs and makes the role of each hypothesis visible.
+
+**Theorem 19.2 (étale-local model at a node).** Let $R$ be a discrete valuation ring with uniformizer $\pi$, residue field $k$, and fraction field $K$. Let
+
+$$
+f:\mathcal C\longrightarrow\operatorname{Spec}R
+$$
+
+be flat and locally of finite type, with $\mathcal C$ regular, and let $c$ be a point of the special fiber $C_0=\mathcal C\otimes_Rk$ such that
+
+$$
+\widehat{\mathcal O}_{C_0,c}\;\simeq\;k[[\xi,\eta]]/(\xi\eta)
+\qquad\text{as a }k\text{-algebra}. \tag{19.2a}
+$$
+
+Then there exist an étale neighborhood $(U,u)\to(\mathcal C,c)$ with $\kappa(u)=k$ and a morphism of $R$-schemes
+
+$$
+\Phi:U\longrightarrow P:=\operatorname{Spec}R[x,y]/(xy-\pi) \tag{19.2b}
+$$
+
+which is étale and carries $u$ to the origin $x=y=0$ of the closed fiber of $P$.
+
+Condition (19.2a) is the ordinary double point of Section 18.1, imposed over the residue field of the base; it forces $\kappa(c)=k$, since $k$ is the residue field of $k[[\xi,\eta]]/(\xi\eta)$, and it requires the two branches to be individually defined over $k$. Under the strict semistable hypotheses of Section 19.1 it is exactly the nodality assumption on $C_0$, because there $k$ is separably closed and $C_0$ is a curve over $k$ in the sense of Section 18.1. Over a residue field that is not separably closed one must additionally know that the node is split; the two branches always form a quadratic étale algebra over $\kappa(c)$, and separable closedness is what splits it. That verification, and the fact that a geometric node has $\kappa(c)$ separable over $k$, are carried out in Book 9, Section 10.5; separable closedness enters nowhere else in this section.
+
+Write $A=\mathcal O_{\mathcal C,c}$, let $\mathfrak m$ be its maximal ideal, and put $B=A/\pi A=\mathcal O_{C_0,c}$. The proof has four steps: a dimension count, an identification of the leading form of $\pi$, the factorization itself, and a verification that the resulting chart is étale.
+
+**Lemma (the local ring is a regular surface).** $A$ is a regular local ring of dimension two, $\pi$ is a nonzerodivisor in $A$, and $\pi\in\mathfrak m$.
+
+_Proof._ Flatness of $f$ makes $A$ a flat, hence torsion-free, module over the discrete valuation ring $R$, so multiplication by $\pi$ is injective on $A$; and $\pi\in\mathfrak m$ because $c$ lies in the special fiber. Completion preserves dimension (Book 11, Proposition 4.1A(4)), so (19.2a) gives $\dim B=\dim k[[\xi,\eta]]/(\xi\eta)=1$. By Book 11, Lemma 14.2 applied to the nonzerodivisor $\pi$ on $M=A$ we get $\dim A=\dim B+1=2$. Finally $A$ is regular because $\mathcal C$ is. $\square$
+
+Since $A$ is regular local of dimension two with residue field $k$, its associated graded ring is a polynomial ring,
+
+$$
+\operatorname{gr}_{\mathfrak m}(A)=\bigoplus_{n\geq0}\mathfrak m^n/\mathfrak m^{n+1}\;\simeq\;k[S,T],
+$$
+
+the isomorphism being determined by any choice of a minimal generating pair of $\mathfrak m$. For $0\neq z\in A$ we write $\operatorname{in}(z)$ for the image of $z$ in $\mathfrak m^n/\mathfrak m^{n+1}$, where $n$ is largest with $z\in\mathfrak m^n$; this is the leading form of $z$.
+
+**Lemma (the leading form of the uniformizer).** $\pi\in\mathfrak m^2\setminus\mathfrak m^3$, and its leading form is a product
+
+$$
+\operatorname{in}(\pi)=\lambda\,L_1L_2,
+\qquad
+\lambda\in k^\times, \tag{19.2c}
+$$
+
+of two linearly independent linear forms $L_1,L_2\in\mathfrak m/\mathfrak m^2$.
+
+_Proof._ The surjection $A\to B$ is local, so it induces a surjection of graded $k$-algebras $\operatorname{gr}_{\mathfrak m}(A)\to\operatorname{gr}_{\mathfrak m_B}(B)$ whose kernel $J$ is the homogeneous ideal of leading forms of elements of $\pi A$. Both sides have computable Hilbert functions. On the left, $\dim_k\mathfrak m^n/\mathfrak m^{n+1}=n+1$. On the right, $\operatorname{gr}(B)=\operatorname{gr}(\widehat B)$ because completion does not change the powers of the maximal ideal modulo one another, and from (19.2a),
+
+$$
+\mathfrak m_{\widehat B}^{\,n}=(\xi^n,\eta^n),
+\qquad
+\dim_k\mathfrak m_{\widehat B}^{\,n}/\mathfrak m_{\widehat B}^{\,n+1}=2
+\qquad(n\geq1),
+$$
+
+with the value $1$ at $n=0$. Hence $\dim_kJ_0=0$, and $\dim_kJ_n=(n+1)-2=n-1$ for $n\geq1$.
+
+From $\dim J_1=0$ we get that no element of $\pi A$ has leading form in degree one; in particular $\pi\in\mathfrak m^2$. From $\dim J_2=1$ we get $J_2\neq0$, so some element $\pi z$ of $\pi A$ has leading form of degree exactly two; since $\operatorname{in}(\pi z)$ has degree at least that of $\pi$, this forces $\pi\notin\mathfrak m^3$, and then $q:=\operatorname{in}(\pi)$ spans the line $J_2$. Now $(q)\subseteq J$, and $\operatorname{gr}(A)$ is a domain, so $\dim_k(q)_n=\dim_kk[S,T]_{n-2}=n-1=\dim_kJ_n$ for all $n$. Therefore $J=(q)$ and
+
+$$
+\operatorname{gr}_{\mathfrak m_B}(B)\;\simeq\;k[S,T]/(q).
+$$
+
+On the other hand (19.2a) computes the same graded ring as $k[\xi,\eta]/(\xi\eta)$, where $\xi$ and $\eta$ now denote the degree-one classes of the corresponding power-series variables. Fix a graded $k$-algebra isomorphism $\psi:k[S,T]/(q)\to k[\xi,\eta]/(\xi\eta)$. Since $q$ has degree two, the degree-one part of the source is all of $k[S,T]_1$, so $\psi$ restricts to a linear isomorphism in degree one; let $\Psi:k[S,T]\to k[\xi,\eta]$ be the graded algebra isomorphism it induces. Both $\psi$ composed with the quotient map and the quotient map composed with $\Psi$ are algebra maps $k[S,T]\to k[\xi,\eta]/(\xi\eta)$ agreeing in degree one, hence equal, because $k[S,T]$ is generated in degree one. Consequently $\Psi(q)$ lies in the degree-two part of $(\xi\eta)$, which is the line $k\cdot\xi\eta$, and $\Psi(q)\neq0$ because $\Psi$ is injective and $q\neq0$. Writing $\Psi(q)=\lambda\,\xi\eta$ with $\lambda\in k^\times$ and applying $\Psi^{-1}$ gives $q=\lambda\,L_1L_2$ with $L_1=\Psi^{-1}(\xi)$ and $L_2=\Psi^{-1}(\eta)$, which are linearly independent because $\Psi^{-1}$ is a linear isomorphism in degree one. $\square$
+
+The lemma is the precise sense in which a node is nondegenerate. The form $L_1L_2$ is the hyperbolic binary quadratic form; it has two distinct, hence coprime, linear factors in every characteristic, including characteristic two. No completion of a square occurs anywhere below, and none would be legitimate.
+
+Choose now $s,t\in\mathfrak m$ whose classes in $\mathfrak m/\mathfrak m^2$ are $L_1$ and $L_2$. They generate $\mathfrak m$ by Nakayama, so they are a regular system of parameters and $\operatorname{gr}(A)=k[S,T]$ with $S,T$ the classes of $s,t$. Because $\pi\in\mathfrak m^2=(s,t)^2$ there are $\alpha,\beta,\gamma\in A$ with
+
+$$
+\pi=\alpha s^2+\beta st+\gamma t^2 . \tag{19.2d}
+$$
+
+Reducing (19.2d) modulo $\mathfrak m^3$ and comparing with (19.2c) in the basis $S^2,ST,T^2$ of $\mathfrak m^2/\mathfrak m^3$ gives
+
+$$
+\alpha\in\mathfrak m,
+\qquad
+\gamma\in\mathfrak m,
+\qquad
+\beta\equiv\lambda\not\equiv0\ \ (\mathrm{mod}\ \mathfrak m),
+$$
+
+so $\beta$ is a unit of $A$. The coefficients $\alpha,\beta,\gamma$ are far from unique; only their residues matter, and only the residue of $\beta$ is nonzero.
+
+We now factor (19.2d). Suppose for a moment that we are allowed to introduce a unit $e$ and to write
+
+$$
+\alpha s^2+\beta st+\gamma t^2
+=e\bigl(s+\gamma e^{-1}t\bigr)\bigl(t+\alpha e^{-1}s\bigr).
+$$
+
+Expanding the right-hand side gives $\alpha s^2+(e+\alpha\gamma e^{-1})st+\gamma t^2$, so the identity holds exactly when
+
+$$
+e+\alpha\gamma e^{-1}=\beta,
+\qquad\text{that is}\qquad
+e^2-\beta e+\alpha\gamma=0. \tag{19.2e}
+$$
+
+The whole factorization problem has collapsed to one monic quadratic equation. Its reduction modulo $\mathfrak m$ is $e^2-\lambda e=e(e-\lambda)$, which has the two distinct roots $0$ and $\lambda$; the root $\lambda$ is simple precisely because the leading form of $\pi$ has two coprime linear factors. Adjoining a simple root is a standard étale operation, and this is the step that manufactures the étale neighborhood.
+
+**Lemma (splitting the quadratic).** There exist an affine étale neighborhood $(U,u)\to(\mathcal C,c)$ with $\kappa(u)=k$ and elements $x,y\in\mathcal O(U)$ such that
+
+$$
+xy=\pi
+\qquad\text{in }\mathcal O(U),
+\qquad
+\mathfrak m_u=(x,y)\mathcal O_{U,u}. \tag{19.2f}
+$$
+
+_Proof._ The data $s,t,\alpha,\beta,\gamma$ are germs at $c$, so there is an affine open $\mathcal C'=\operatorname{Spec}A_0\subseteq\mathcal C$ containing $c$ on which all five are regular functions, on which the relation (19.2d) holds, and on which $\beta$ is invertible; a germ relation holds on a small enough open, and invertibility of $\beta$ at $c$ persists on a smaller open. Put
+
+$$
+F(T)=T^2-\beta T+\alpha\gamma\in A_0[T],
+\qquad
+F'(T)=2T-\beta .
+$$
+
+The algebra $A_0[T]/(F)$ is finite free of rank two over $A_0$, and by the standard-étale criterion of Book 17, Section 2.3 its localization at $F'$ is étale over $A_0$. Let $U_1=\operatorname{Spec}\bigl(A_0[T]/(F)\bigr)[1/F']$, an étale $\mathcal C'$-scheme. Its fiber over $c$ is the spectrum of
+
+$$
+k[T]/(T^2-\lambda T)=k[T]/\bigl(T(T-\lambda)\bigr)\;\simeq\;k\times k,
+$$
+
+localized where $2T-\lambda$ is invertible, using $\alpha(c)=\gamma(c)=0$ and $\beta(c)=\lambda$. At the factor $T=\lambda$ one has $F'\mapsto2\lambda-\lambda=\lambda\neq0$, so that factor survives; let $u\in U_1$ be the corresponding point. It has $\kappa(u)=k$, and the fiber of $U_1\to\mathcal C'$ over $c$ is $\operatorname{Spec}k$ near $u$, so
+
+$$
+\mathfrak m_c\mathcal O_{U_1,u}=\mathfrak m_u . \tag{19.2g}
+$$
+
+Write $e$ for the image of $T$ in $\mathcal O(U_1)$; then (19.2e) holds identically on $U_1$, and $e(u)=\lambda\neq0$, so after replacing $U_1$ by the open locus where $e$ is invertible we may assume $e\in\mathcal O(U_1)^\times$. Call the result $U$. Set
+
+$$
+x=s+\gamma e^{-1}t,
+\qquad
+y=et+\alpha s .
+$$
+
+The computation preceding (19.2e) gives $xy=\alpha s^2+\beta st+\gamma t^2=\pi$, which is the first half of (19.2f). For the second, $\alpha$ and $\gamma$ lie in $\mathfrak m_c$, hence in $\mathfrak m_u$ by (19.2g), and $s,t\in\mathfrak m_u$; therefore
+
+$$
+x\equiv s,
+\qquad
+y\equiv\lambda t
+\qquad(\mathrm{mod}\ \mathfrak m_u^2),
+$$
+
+while $s,t$ generate $\mathfrak m_u$ by (19.2g) and Nakayama. Since $\lambda$ is a unit, $x$ and $y$ generate $\mathfrak m_u/\mathfrak m_u^2$, hence generate $\mathfrak m_u$. $\square$
+
+It remains to see that the resulting map to the model is étale. One elementary fact about completions does the work.
+
+**Lemma (completions along a local map).** Let $\varphi:(A,\mathfrak m,\kappa)\to(B,\mathfrak n,\kappa')$ be a local homomorphism of noetherian local rings with $\mathfrak mB=\mathfrak n$ and $\kappa\to\kappa'$ an isomorphism. Then the induced map $\widehat\varphi:\widehat A\to\widehat B$ is surjective, and it is an isomorphism if $\varphi$ is flat.
+
+_Proof._ Identify $\kappa'$ with $\kappa$; then $B=\varphi(A)+\mathfrak n$, and $\mathfrak m^nB=\mathfrak n^n$ for every $n$. We first check that
+
+$$
+A/\mathfrak m^n\longrightarrow B/\mathfrak n^n
+\qquad\text{is surjective for every }n\geq1. \tag{19.2h}
+$$
+
+For $n=1$ this is the residue-field isomorphism. Assume it for $n$. An element of $\mathfrak n^n=\mathfrak m^nB$ is a sum $\sum_im_ib_i$ with $m_i\in\mathfrak m^n$ and $b_i\in B$; writing $b_i=\varphi(c_i)+\nu_i$ with $c_i\in A$ and $\nu_i\in\mathfrak n$ gives $\sum_im_ib_i\equiv\sum_im_ic_i$ modulo $\mathfrak m^n\mathfrak nB=\mathfrak n^{n+1}$. So $\mathfrak n^n/\mathfrak n^{n+1}$ is hit by $\mathfrak m^n$, and the inductive hypothesis completes the step.
+
+Now let $b\in\widehat B$. We construct $a_n\in A$ with $b-a_n\in\mathfrak m^n\widehat B$ and $a_{n+1}-a_n\in\mathfrak m^n$. For $n=0$ take $a_0=0$. Given $a_n$, write $b-a_n=\sum_im_ib_i$ with $m_i\in\mathfrak m^n$ and $b_i\in\widehat B$, which is possible because $\mathfrak m^n\widehat B$ is generated by $\mathfrak m^n$. Each $b_i$ is congruent modulo $\mathfrak n\widehat B$ to some $c_i\in A$, since $A\to B/\mathfrak n=\kappa$ is surjective. Put $a_{n+1}=a_n+\sum_im_ic_i$. Then $a_{n+1}-a_n\in\mathfrak m^n$ and
+
+$$
+b-a_{n+1}=\sum_im_i(b_i-c_i)\in\mathfrak m^n\cdot\mathfrak n\widehat B=\mathfrak m^{n+1}\widehat B .
+$$
+
+The sequence $(a_n)$ is Cauchy in $\widehat A$; its limit $a$ satisfies $b-\widehat\varphi(a)\in\bigcap_n\mathfrak n^n\widehat B=0$. So $\widehat\varphi$ is surjective.
+
+Suppose finally that $\varphi$ is flat. Then $B/\mathfrak n^n=B\otimes_AA/\mathfrak m^n$ is flat over the noetherian local ring $A_n:=A/\mathfrak m^n$, and by (19.2h) it is a quotient $A_n/I$. Flatness gives $I/I^2=I\otimes_{A_n}A_n/I=0$, and $I$ is finitely generated and contained in the maximal ideal, so $I=0$ by Nakayama. Thus $A/\mathfrak m^n\to B/\mathfrak n^n$ is an isomorphism for every $n$, and passing to the inverse limit gives $\widehat A\simeq\widehat B$. $\square$
+
+**Proof of Theorem 19.2.** Take $U$, $u$, $x$, $y$ as in the splitting lemma. The relation $xy=\pi$ in $\mathcal O(U)$ makes
+
+$$
+\Phi=(x,y):U\longrightarrow P=\operatorname{Spec}R[x,y]/(xy-\pi)
+$$
+
+a morphism of $R$-schemes, and $x,y\in\mathfrak m_u$ shows that $\Phi(u)$ lies in the closed subscheme cut out by $x$ and $y$. In $P$ that subscheme is the single point $o$ with maximal ideal $\mathfrak m_o=(x,y)$, the origin of the closed fiber; note that $\pi=xy$ already lies in $(x,y)$, so no separate generator is needed. Thus $\Phi(u)=o$ and $\kappa(o)=k=\kappa(u)$.
+
+By Book 11, Theorem 14.20 with $n=1$, the local ring $\mathcal O_{P,o}$ is regular of dimension two. By the splitting lemma, $\mathfrak m_o\mathcal O_{U,u}=(x,y)\mathcal O_{U,u}=\mathfrak m_u$. Also $\mathcal O_{U,u}$ is regular of dimension two: the map $\mathcal O_{\mathcal C,c}\to\mathcal O_{U,u}$ is flat and local with closed fiber the field $k$ by (19.2g), so Book 10a, Lemma 2.12 and Proposition 2.15 transport dimension two and regularity from $A$.
+
+_Unramifiedness._ Base change of differentials gives
+
+$$
+\Omega^1_{\mathcal O_{U,u}/\mathcal O_{P,o}}\otimes_{\mathcal O_{U,u}}\kappa(u)
+=\Omega^1_{(\mathcal O_{U,u}/\mathfrak m_o\mathcal O_{U,u})/\kappa(o)}\otimes\kappa(u)
+=\Omega^1_{k/k}=0 ,
+$$
+
+because $\mathcal O_{U,u}/\mathfrak m_o\mathcal O_{U,u}=\mathcal O_{U,u}/\mathfrak m_u=k$. The module $\Omega^1_{U/P}$ is of finite type since $\Phi$ is of finite type, so by Nakayama it vanishes on a neighborhood of $u$.
+
+_Flatness._ The map $\mathcal O_{P,o}\to\mathcal O_{U,u}$ satisfies the hypotheses of the completion lemma, so $\widehat{\mathcal O}_{P,o}\to\widehat{\mathcal O}_{U,u}$ is surjective. Both completions are regular local of dimension two, because completion preserves dimension and regularity (Book 11, Proposition 4.1A(4)), hence both are domains (Book 11, Proposition 14.15). A surjection of noetherian local domains of the same finite dimension is injective: its kernel is a prime $\mathfrak p$ with $\dim\widehat{\mathcal O}_{P,o}/\mathfrak p=2=\dim\widehat{\mathcal O}_{P,o}$, and if $\mathfrak p$ were nonzero then a chain of primes of length two above $\mathfrak p$ could be prolonged by the zero ideal to a chain of length three, contradicting the dimension. Hence
+
+$$
+\widehat{\mathcal O}_{P,o}\;\xrightarrow{\ \sim\ }\;\widehat{\mathcal O}_{U,u}. \tag{19.2i}
+$$
+
+Consequently $\mathcal O_{P,o}\to\widehat{\mathcal O}_{U,u}$ is flat, being the composite of the flat completion map with an isomorphism. Now $\mathcal O_{U,u}\to\widehat{\mathcal O}_{U,u}$ is faithfully flat, and flatness descends along it: if $M'\hookrightarrow M$ is an injection of $\mathcal O_{P,o}$-modules, then $M'\otimes\mathcal O_{U,u}\to M\otimes\mathcal O_{U,u}$ becomes injective after the faithfully flat base change to $\widehat{\mathcal O}_{U,u}$, hence was injective. So $\mathcal O_{P,o}\to\mathcal O_{U,u}$ is flat.
+
+_Conclusion._ The morphism $\Phi$ is of finite type between noetherian schemes, hence of finite presentation; it is flat at $u$ and unramified at $u$, so it is étale at $u$ in the sense of Book 17, Section 2.1. By the local structure theorem of Book 17, Section 2.4, $\Phi$ becomes standard étale after localizing source and target away from $u$ and $o$; in particular it is étale on an open neighborhood of $u$. Replacing $U$ by that neighborhood proves the theorem. $\square$
+
+The chart produced by the theorem can be trimmed until it contains nothing but the one node, which is what a Čech computation needs. We record this, together with the two features of the chart that the next section consumes: its special fiber is a union of two smooth branches crossing at the node, and its generic fiber is a torus.
+
+**Proposition (the shape of the chart).** In Theorem 19.2 the neighborhood $U$ may be chosen so that, writing $o\in P$ for the origin of the closed fiber and $x,y$ also for their pullbacks to $U$:
+
+1. $\Phi^{-1}(o)=\{u\}$, with reduced structure $\operatorname{Spec}k$;
+2. the special fiber is $U_0=V(x)\cup V(y)$, the two pieces $V(x)$ and $V(y)$ are smooth of dimension one over $k$, and $V(x)\cap V(y)=\{u\}$;
+3. $u$ is the only point of $U$ at which the special fiber is not regular; in particular $U$ meets no node of $C_0$ other than $c$;
+4. $U$ is regular, and the generic fiber $U_K$ is étale over $\operatorname{Spec}K[x,x^{-1}]=\mathbf G_{m,K}$;
+5. $\widehat{\mathcal O}_{\mathcal C,c}\simeq\Lambda[[x,y]]/(xy-\pi)$ with $\Lambda=\widehat R$, and under this isomorphism the two minimal primes $(x)$ and $(y)$ of the special fiber are the two branches of $C_0$ at $c$, realized on $U$ by $V(x)$ and $V(y)$.
+
+_Proof._ The fiber $\Phi^{-1}(o)$ is étale over $\operatorname{Spec}\kappa(o)=\operatorname{Spec}k$, hence is a disjoint union of spectra of finite separable extensions of $k$; it is quasi-compact because $U$ is affine, so it is finite and discrete, and it is a closed subset of $U$ because $o$ is closed in $P$. Deleting the points other than $u$ gives (1), the residue field at $u$ being $k$.
+
+For (2), $\pi=xy$ on $U$, so $U_0=V(\pi)=V(xy)=V(x)\cup V(y)$, and $V(x)\cap V(y)=V(x,y)=\Phi^{-1}(o)=\{u\}$ by (1). Moreover $V(x)=\Phi^{-1}\bigl(V(x)_P\bigr)$, and in $P$ the vanishing of $x$ forces $\pi=xy=0$, so $V(x)_P=\operatorname{Spec}k[y]=\mathbf A^1_k$; hence $V(x)\to\mathbf A^1_k$ is étale and $V(x)$ is smooth of dimension one over $k$. The same applies to $V(y)$.
+
+For (3), the special fiber $U_0$ is étale over $P_0=\operatorname{Spec}k[x,y]/(xy)$, whose local rings are regular except at $o$: away from $o$ one of $x,y$ is invertible and the ring becomes a localization of $k[x,x^{-1}]$ or of $k[y,y^{-1}]$. If $u'\in U_0$ has image $p'\in P_0$, then $\mathcal O_{P_0,p'}\to\mathcal O_{U_0,u'}$ is flat and local with closed fiber a finite separable field extension of $\kappa(p')$, hence with regular closed fiber, so regularity transfers both ways (Book 10a, Proposition 2.15); thus a point of $U_0$ is regular exactly when its image is. Hence $u$ is the unique non-regular point of $U_0$. A node of $C_0$ meeting $U$ would pull back to a non-regular point of $U_0$, so no other node meets $U$.
+
+For (4), $U$ is regular because $\mathcal C$ is and $U\to\mathcal C$ is étale (Book 10a, Proposition 2.15 again). In $K[x,y]/(xy-\pi)$ the element $x$ is invertible with inverse $y/\pi$, so $y=\pi x^{-1}$ and the ring is $K[x,x^{-1}]$; therefore $P_K=\mathbf G_{m,K}$ and $U_K\to\mathbf G_{m,K}$ is étale.
+
+For (5), completion commutes with the quotient by a finitely generated ideal over a noetherian ring, and the completion of $R[x,y]$ at $(\pi,x,y)$ is $\Lambda[[x,y]]$; hence $\widehat{\mathcal O}_{P,o}=\Lambda[[x,y]]/(xy-\pi)$. The map $\mathcal O_{\mathcal C,c}\to\mathcal O_{U,u}$ is flat and local with $\mathfrak m_c\mathcal O_{U,u}=\mathfrak m_u$ and trivial residue extension, so the completion lemma gives $\widehat{\mathcal O}_{\mathcal C,c}\simeq\widehat{\mathcal O}_{U,u}$, and (19.2i) identifies the latter with $\widehat{\mathcal O}_{P,o}$. Reducing modulo $\pi$ turns this into $\widehat{\mathcal O}_{C_0,c}\simeq k[[x,y]]/(xy)$, whose minimal primes are $(x)$ and $(y)$; these are the two branches of the node in the sense of Book 16, Section 2.1, and they are the completed ideals of the two smooth pieces $V(x)$ and $V(y)$ of item (2). $\square$
+
+Two consequences deserve to be stated separately, because they are what the rest of the chapter cites.
+
+**Corollary (the strict semistable normal form).** Assume the strict semistable hypotheses of Section 19.1. Then every node $c$ of $C_0$ satisfies (19.2a), by the residue-field and splitting argument recorded after Theorem 19.2, so Theorem 19.2 applies at $c$ and the resulting chart satisfies the conclusions of the preceding proposition. This is the assertion (19.1).
+
+**Corollary (thickness one).** Under the same hypotheses the completed local ring of $\mathcal C$ at each node is the model $A_1=\Lambda[[x,y]]/(xy-\pi)$ of Book 16, Section 2.2, with $\Lambda=\widehat R$. In particular the smoothing parameter may be taken to be $\pi$ itself, and every edge of $\Gamma$ has thickness one.
+
+_Proof._ This is item (5) of the proposition, read against the definitions of Book 16, Section 2.2: the base $R$ is already strictly henselian and $\kappa(c)=k$, so the auxiliary ring used there is $\Lambda=\widehat R$, and the ideal generated by the smoothing parameter is intrinsic, so the thickness is $v(\pi)=1$. The regularity criterion (2.2) of Book 16, Section 2.3 predicts the same value from the regularity of $\mathcal C$, and the two agree. $\square$
+
+It is worth isolating where regularity of the total space entered, because the statement is false without it. Regularity was used exactly once, to know that $\mathcal O_{\mathcal C,c}$ is a two-dimensional regular local ring, so that its associated graded ring is a polynomial ring in two variables and $\pi$ has a leading form there. For a node of thickness $n\geq2$ the local ring is normal but singular, by Book 11, Theorem 14.20 and Book 16, (2.2); its maximal ideal needs three generators, there is no leading binary form to factor, and the argument has nothing to work with. Nothing above asserts an étale-local model $xy=\pi^n$ for $n\geq2$, and none is needed: the strict semistable hypotheses of Section 19.1 include regularity precisely so that every node has thickness one. A nonregular model is handled by first blowing up until every edge is subdivided into unit edges, as in Book 16, Section 2.3.
+
+The second point to isolate is the treatment of characteristic two. The only nondegeneracy used is that the leading form $L_1L_2$ of the uniformizer has two coprime linear factors, and this is a statement about a factorization, not about a symmetric bilinear form or a discriminant. The quadratic (19.2e) has residual roots $0$ and $\lambda$, which are distinct because $\lambda\neq0$, and its derivative at the chosen root is $2\lambda-\lambda=\lambda$, a unit in every characteristic. At no point is a square completed, and at no point is $2$ inverted. The hyperbolic form $xy$ is nondegenerate in all characteristics, and it is the reason the node, unlike a cusp or a tacnode, has a normal form with a single parameter.
+
+### 19.3 The local calculation at $xy=\pi$
+
+The equation (19.1), now available as Theorem 19.2 rather than as an assumption, contains the entire local mechanism. The punctured special fiber has two branches, $x=0$ and $y=0$. A section on the normalization descends exactly when its two values at the origin agree. This is the local source of the difference map in (18.1).
 
 The punctured generic fiber is an annulus. With prime-to-$p$ coefficients it has one degree-one Kummer class. One may represent it by extracting compatible $\ell^m$th roots of $x$; since $xy=\pi$, extracting roots of $y$ gives the negative class after the constant class of $\pi$ is accounted for. The boundary of this annular class is the difference of the two branch residues. Thus the local comparison is governed by the two-term complex
 
@@ -1848,7 +2101,7 @@ $$
 \Lambda^{\{\text{node}\}}. \tag{19.4}
 $$
 
-Here is the finite calculation that passes from one node to the whole curve. Fix $m$ and write $\Lambda_m=\mathbf Z/\ell^m\mathbf Z$. Choose an étale neighborhood $B_e$ with equation $xy=\pi$ around each node, small enough to contain no other node, and cover the remaining smooth locus by finitely many étale opens whose special-fiber pieces lie on single normalized components. Refine their intersections to a finite étale hypercover through degree two. The finite-presentation and boundary calculations of Books 18--19 compute its double complexes on the generic and special fibers. Nonproper terms are handled by smooth local acyclicity or by the explicit annulus calculation below; properness is used only when the total comparison is identified with the cohomology of $\mathcal C$ and $C_0$.
+Here is the finite calculation that passes from one node to the whole curve. Fix $m$ and write $\Lambda_m=\mathbf Z/\ell^m\mathbf Z$. Around each node take the étale neighborhood $B_e$ supplied by Theorem 19.2 and its accompanying proposition: it carries an étale $R$-map to $\operatorname{Spec}R[x,y]/(xy-\pi)$, its special fiber is the union of the two smooth branches $x=0$ and $y=0$ crossing at the node, its generic fiber is étale over $\mathbf G_{m,K}$, and it contains no other node. Cover the remaining smooth locus by finitely many étale opens whose special-fiber pieces lie on single normalized components. Refine their intersections to a finite étale hypercover through degree two. The finite-presentation and boundary calculations of Books 18--19 compute its double complexes on the generic and special fibers. Nonproper terms are handled by smooth local acyclicity or by the explicit annulus calculation below; properness is used only when the total comparison is identified with the cohomology of $\mathcal C$ and $C_0$.
 
 On a smooth piece, generic and special complexes agree by local acyclicity. On $B_e$, the special complex records two branch values and their difference, as in (19.4). Its generic overlap is an annulus, whose prime-to-$p$ cohomology is $\Lambda_m$ in degree zero and $\Lambda_m(-1)$ in degree one: the latter is the Kummer class of $x$. Consequently the degree-zero horizontal differential in the global Čech complex is the graph coboundary
 
@@ -1890,7 +2143,7 @@ $$
 
 The difference is $b_1(\Gamma)$, exactly the number of global annular classes. For a nodal cubic the special rank is one and the generic elliptic rank is two. For two smooth components joined by one node, the graph is a tree and no rank is lost.
 
-### 19.3 Invariant cycles and monodromy
+### 19.4 Invariant cycles and monodromy
 
 Fix $\ell\ne p$ and put
 
@@ -2006,7 +2259,7 @@ $$
 \operatorname{Gr}_0^W V(-1). \tag{19.9}
 $$
 
-For a strict semistable model the edge pairing identifies graph homology with the dual of graph cohomology and gives (19.9). If a nonregular model has equations $xy=\pi^{n_e}$, the edge lengths $n_e$ enter that pairing; rationally the same filtration remains, while integral saturation can change. This is why the clean theorem above assumes a regular total space and states the comparison first over $\mathbf Q_\ell$.
+For a strict semistable model the edge pairing identifies graph homology with the dual of graph cohomology and gives (19.9). If a nonregular model has completed equations $xy=\pi^{n_e}$ at its nodes, in the sense of Book 16, Section 2.2, the edge lengths $n_e$ enter that pairing; rationally the same filtration remains, while integral saturation can change. This is why the clean theorem above assumes a regular total space and states the comparison first over $\mathbf Q_\ell$.
 
 Poincaré duality on the generic curve is compatible with this filtration. In the untwisted form the alternating pairing is
 
@@ -2022,7 +2275,7 @@ $$
 
 with the evident twists. The graph pieces in degrees $0$ and $2$ pair with one another, and the component piece carries the direct sum of the smooth component pairings. This recovers, on the generic fiber, the dualizing-complex correction seen on the singular fiber.
 
-### 19.4 Unramified and semistable representations
+### 19.5 Unramified and semistable representations
 
 A continuous $\ell$-adic representation of $G_K$ is **unramified** if inertia acts trivially. It is **semistable in the curve-theoretic prime-to-$p$ sense** used here if inertia acts unipotently with square-zero logarithm as in (19.5). This terminology describes the representation produced by a semistable curve; it should not be confused with coefficient-prime theories used when $\ell=p$.
 
@@ -2049,7 +2302,7 @@ If a curve becomes semistable only after a finite extension $K'/K$, restriction 
 
 The coefficient restriction remains visible. None of these arguments applies to $\ell=p$: the tame character no longer captures the relevant local cohomology, wild inertia is not cohomologically negligible, and the inverse systems used here are not a substitute for a residue-characteristic comparison theory.
 
-### 19.5 Frobenius, monodromy, and correspondences
+### 19.6 Frobenius, monodromy, and correspondences
 
 Suppose now that $R$ is henselian with finite residue field $\mathbf F_q$; make the preceding construction after strict henselization. A lift of residue-field Frobenius acts on $V$, on the geometric special fiber, and on its dual graph. The filtration (19.7) is stable under this action.
 
