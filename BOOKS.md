@@ -69,6 +69,13 @@ tensor and Hom, filtered complexes, and exact couples in the categories of arith
 Prove convergence and comparison theorems for the Leray, Hochschild–Serre, hypercohomology, and
 nearby-cycle spectral sequences.
 
+7b. **Quasi-coherent Cohomology on Schemes** — Develop quasi-coherent sheaves and their
+cohomology from the affine dictionary up: Serre's affine vanishing over arbitrary rings, finite
+Čech models for separated schemes specializing Book 7a's abstract theorem, quasi-coherent higher
+direct images, derived base change and filtered colimits, Grothendieck vanishing, and the full
+computation of the cohomology of projective space with its perfect top pairing. Closes with
+Hilbert's syzygy theorem and generic freeness in the forms the projective volumes consume.
+
 8. **Ample Line Bundles, Hilbert Polynomials, and Symmetric Powers** — Starting from relative
    Proj and the elementary theory of projective morphisms, develop ample and very ample line
    bundles, descent of very ampleness, Hilbert polynomials, and projective embeddings for curves and
