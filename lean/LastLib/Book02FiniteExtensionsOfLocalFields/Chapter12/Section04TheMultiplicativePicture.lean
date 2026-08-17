@@ -1,186 +1,76 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter12.Section03TheGaloisPicture
+import Mathlib.Topology.Algebra.Polynomial
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter12
 
 noncomputable section
 
-open Ideal IsLocalRing
-open scoped BigOperators WithZero
+open Polynomial
+open scoped BigOperators
 
-universe u
+/-! ## 12.4. Stability of simple roots -/
 
-/-! ## 12.4. The multiplicative picture -/
+/-- The monic degree-`d` polynomial with coefficient vector `a`, where
+`a i` is the coefficient of `T^i`. -/
+def chapter12MonicPolynomial
+    {K : Type*} [Semiring K] (d : ℕ) (a : Fin d → K) : K[X] :=
+  (X : K[X]) ^ d + ∑ i : Fin d, C (a i) * X ^ (i : ℕ)
+
+/-- The lower-coefficient vector of a polynomial in the fixed degree-parameter
+space. -/
+def chapter12CoefficientVector
+    {K : Type*} [Semiring K] (d : ℕ) (f : K[X]) : Fin d → K :=
+  fun i => f.coeff (i : ℕ)
+
+/-- A monic polynomial of degree `d` is recovered from its lower
+coefficients. -/
+theorem chapter12_monic_polynomial_recovered_from_coefficients
+    {K : Type*} [Field K] (f : K[X]) (d : ℕ)
+    (hf_monic : f.Monic) (hf_degree : f.natDegree = d) :
+    chapter12MonicPolynomial d (chapter12CoefficientVector d f) = f := by
+  sorry
+
+/-- Separability is exactly the nonvanishing derivative condition at a root. -/
+theorem chapter12_simple_root_has_nonzero_derivative
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    (f : K[X]) (hf_separable : f.Separable) (z : L)
+    (hz : aeval z f = 0) :
+    aeval z f.derivative ≠ 0 := by
+  sorry
 
 /--
-The unit filtration on a local ring.  For a valuation ring this is
-`U^0 = O^×` and, for positive indices, `U^n = 1 + m^n`.
+Simultaneous stability of all simple roots.  `M` is a finite splitting field
+and the supplied root list records its distinct roots.  The conclusion keeps
+the coefficient neighborhood in `K^d`, returns one root in each prescribed
+ball, asserts uniqueness in that ball, and records that all roots factor in
+`M`.
 -/
-def unitFiltration
-    (A : Type u) [CommRing A] [IsLocalRing A] (n : ℕ) : Subgroup Aˣ where
-  carrier := {u | (u : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ n}
-  one_mem' := by simp
-  mul_mem' := by sorry
-  inv_mem' := by sorry
-
-/-- The successive quotient of two adjacent unit-filtration terms. -/
-abbrev unitFiltrationLayer
-    (A : Type u) [CommRing A] [IsLocalRing A] (n : ℕ) : Type u :=
-  (unitFiltration A n : Type u) ⧸
-    ((unitFiltration A (n + 1)).comap (unitFiltration A n).subtype)
-
-/-- Tame and wild alternatives, with `p = 0` covering residue characteristic zero. -/
-def tameRamification (e p : ℕ) : Prop :=
-  p = 0 ∨ Nat.Coprime e p
-
-def wildRamification (e p : ℕ) : Prop :=
-  p ≠ 0 ∧ ¬ Nat.Coprime e p
-
-/-- Book 2, §12.4: a uniformizer separates the value-group coordinate from units. -/
-theorem units_split_by_uniformizer
-    {L Γ : Type u} [Field L] [LinearOrderedCommGroupWithZero Γ]
-    (v : Valuation L Γ) [Valuation.IsRankOneDiscrete v] :
-    ∃ π : L, v.IsUniformizer π ∧
-      Nonempty (Lˣ ≃* Multiplicative ℤ × v.valuationSubring.unitGroup) := by
+theorem chapter12_simultaneous_stability_of_simple_roots
+    {K M : Type*} [NontriviallyNormedField K] [CompleteSpace K]
+    [IsUltrametricDist K] [NormedField M] [NormedAlgebra K M]
+    [FiniteDimensional K M]
+    (f : K[X]) (d : ℕ)
+    (hf_monic : f.Monic) (hf_degree : f.natDegree = d)
+    (hf_separable : f.Separable)
+    (hsplits : (f.map (algebraMap K M)).Splits)
+    (roots : Fin d → M)
+    (hroot : ∀ i, aeval (roots i) f = 0)
+    (hexhaustive : ∀ z : M, aeval z f = 0 → ∃ i, z = roots i)
+    (hinjective : Function.Injective roots)
+    (r : Fin d → ℝ) (hr : ∀ i, 0 < r i)
+    (hballs : ∀ i j, i ≠ j →
+      Disjoint (Metric.ball (roots i) (r i)) (Metric.ball (roots j) (r j))) :
+    ∃ U : Set (Fin d → K), IsOpen U ∧
+      chapter12CoefficientVector d f ∈ U ∧
+      ∀ b : Fin d → K, b ∈ U →
+        ∃ β : Fin d → M,
+          (∀ i, aeval (β i) (chapter12MonicPolynomial d b) = 0 ∧
+            β i ∈ Metric.ball (roots i) (r i)) ∧
+          (∀ (i : Fin d) (z : M), aeval z (chapter12MonicPolynomial d b) = 0 →
+            z ∈ Metric.ball (roots i) (r i) → z = β i) ∧
+          Polynomial.map (algebraMap K M) (chapter12MonicPolynomial d b) =
+            ∏ i : Fin d, ((X : M[X]) - C (β i)) := by
   sorry
-
-/-- Book 2, §12.4: the unit filtration is descending. -/
-theorem unit_filtration_is_nested
-    (A : Type u) [CommRing A] [IsLocalRing A] :
-    ∀ n : ℕ, unitFiltration A (n + 1) ≤ unitFiltration A n := by
-  intro n u hu
-  change (u : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ n
-  change (u : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ (n + 1) at hu
-  exact Ideal.pow_le_pow_right (Nat.le_add_right n 1) hu
-
-/-- Book 2, §12.4: the zeroth layer is the residue-field multiplicative group. -/
-theorem unit_zero_layer_is_residue_units
-    (A : Type u) [CommRing A]
-    [IsDomain A] [IsDiscreteValuationRing A] :
-    Nonempty
-    (unitFiltrationLayer A 0 ≃*
-        (IsLocalRing.ResidueField A)ˣ) := by sorry
-
-/-- Book 2, §12.4: every positive layer is the additive residue field. -/
-/-
-The quotient is a multiplicative group, so the additive residue group is
-represented by `Multiplicative (Additive k)`.  This is the standard Lean
-wrapper for the source's notation `k⁺`.
--/
-theorem positive_unit_layer_is_residue_additive
-    (A : Type u) [CommRing A]
-    [IsDomain A] [IsDiscreteValuationRing A] (n : ℕ) (hn : 0 < n) :
-    Nonempty
-      (unitFiltrationLayer A n ≃*
-        Multiplicative (Additive (IsLocalRing.ResidueField A))) := by
-  sorry
-
-/-- Book 2, §12.4: the valuation coordinate of a norm is multiplied by `f`. -/
--- SOURCE_ISSUE: The §12.4 norm-coordinate statement inherits the finite
--- defect obstruction from §12.1.  This wrapper therefore assumes a perfect
--- base residue field and completeness through the canonical structural norm
--- interface.
-theorem norm_valuation_coordinate
-    {K L : Type u} [Field K] [Field L] [Algebra K L]
-    (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰) (f : ℕ)
-    [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
-    [Valuation.IsRankOneDiscrete vL] [Module.Finite K L]
-    [Module.Finite vK.valuationSubring vL.valuationSubring]
-    [PerfectField (IsLocalRing.ResidueField vK.valuationSubring)]
-    (hcomplete : IsAdicComplete
-      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
-    (hf : LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterResidueDegree
-      vK.valuationSubring vL.valuationSubring
-        (IsLocalRing.maximalIdeal vL.valuationSubring) = f) (x : L) :
-    vK (Algebra.norm K x) = (vL x) ^ f := by
-  exact structural_norm_valuation_formula vK vL f hcomplete hf x
-
-/-- Book 2, §12.4: the residue-unit coordinate is the residue norm raised to `e`. -/
-theorem norm_residue_unit_coordinate
-    {A B k l : Type u} [CommRing A] [CommRing B] [Field k] [Field l]
-    [Algebra A B] [Algebra k l]
-    [IsDomain A] [IsDomain B]
-    [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
-    [Algebra.IsIntegral A B]
-    [Module.Finite A B] [Module.Free A B]
-    [Module.Finite k l] [Module.Free k l]
-    (d : Chapter12ResidueArithmeticShadow) (u : Bˣ) :
-    d.baseResidue (Algebra.norm A (u : B)) =
-      (Algebra.norm k ((Units.map d.extensionResidue.toMonoidHom u : lˣ) : l)) ^ d.e := by
-  exact residue_norm_shadow_formula d u
-
-/-- The congruence expressing the first-order principal-unit norm term. -/
-def normPrincipalUnitLinearization
-    {A B : Type u} [CommRing A] [CommRing B] [Algebra A B]
-    [Module.Finite A B] (mB : Ideal B) (n : ℕ) : Prop :=
-  ∀ x : B, x ∈ mB ^ n →
-    algebraMap A B (Algebra.norm A (1 + x)) - 1 -
-        algebraMap A B (Algebra.trace A B x) ∈ mB ^ (n + 1)
-
-/-- Book 2, §12.4: the norm on principal units is linearized by trace to first order. -/
-theorem norm_principal_units_are_trace_linearized
-    {A B : Type u} [CommRing A] [CommRing B] [Algebra A B]
-    [IsDomain A] [IsDomain B]
-    [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
-    [Algebra.IsIntegral A B]
-    [Module.Finite A B] [Module.Free A B]
-    (n : ℕ) (hn : 0 < n) :
-    normPrincipalUnitLinearization (A := A) (B := B)
-      (IsLocalRing.maximalIdeal B) n := by
-  sorry
-
-/-- Book 2, §12.4: in the unramified case the residue norm is not exponentiated. -/
-theorem unramified_residue_norm_coordinate
-    {A B k l : Type u} [CommRing A] [CommRing B] [Field k] [Field l]
-    [Algebra A B] [Algebra k l]
-    [IsDomain A] [IsDomain B]
-    [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
-    [Algebra.IsIntegral A B]
-    [Module.Finite A B] [Module.Free A B]
-    [Module.Finite k l] [Module.Free k l]
-    (d : Chapter12ResidueArithmeticShadow) (he : d.e = 1) (u : Bˣ) :
-    d.baseResidue (Algebra.norm A (u : B)) =
-      Algebra.norm k ((Units.map d.extensionResidue.toMonoidHom u : lˣ) : l) := by
-  simpa [he] using norm_residue_unit_coordinate d u
-
-/-- Book 2, §12.4: after identifying residue fields, total ramification gives the `e`-th power. -/
-theorem totally_ramified_residue_norm_is_eth_power
-    {A B k l : Type u} [CommRing A] [CommRing B] [Field k] [Field l]
-    [Algebra A B] [Algebra k l]
-    [IsDomain A] [IsDomain B]
-    [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
-    [Algebra.IsIntegral A B]
-    [Module.Finite A B] [Module.Free A B]
-    [Module.Finite k l] [Module.Free k l]
-    (d : Chapter12ResidueArithmeticShadow) (ι : l →+* k)
-    (hι : ∀ z : k, ι (algebraMap k l z) = z)
-    (hdegree : Module.finrank k l = 1) (u : Bˣ) :
-    d.baseResidue (Algebra.norm A (u : B)) =
-      (ι (d.extensionResidue (u : B))) ^ d.e := by
-  rw [residue_norm_shadow_formula d u]
-  obtain ⟨z, hz⟩ :=
-    (Module.Free.bijective_algebraMap_of_finrank_eq_one hdegree).2
-      (d.extensionResidue (u : B))
-  rw [show ((Units.map d.extensionResidue.toMonoidHom u : lˣ) : l) =
-      d.extensionResidue (u : B) by rfl, ← hz, Algebra.norm_algebraMap,
-    hdegree, pow_one, hι]
-
-/-- Book 2, §12.4: every ramification index is either tame or wild. -/
-theorem tame_or_wild_ramification (e p : ℕ) :
-    tameRamification e p ∨ wildRamification e p := by
-  by_cases hp : p = 0
-  · exact Or.inl (Or.inl hp)
-  by_cases hc : Nat.Coprime e p
-  · exact Or.inl (Or.inr hc)
-  · exact Or.inr ⟨hp, hc⟩
-
-/-- Book 2, §12.4: tame and wild alternatives are disjoint. -/
-theorem tame_and_wild_ramification_are_disjoint (e p : ℕ) :
-    ¬ (tameRamification e p ∧ wildRamification e p) := by
-  intro h
-  rcases h with ⟨ht, hw⟩
-  rcases ht with hp | hc
-  · exact hw.1 hp
-  · exact hw.2 hc
 
 end
 
