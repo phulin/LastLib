@@ -7,6 +7,8 @@ namespace LastLib.Book05LocalClassFieldTheory.Chapter09
 
 noncomputable section
 
+open CategoryTheory
+open LastLib.Book05LocalClassFieldTheory.Chapter05
 open scoped BigOperators
 
 /-!
@@ -208,6 +210,117 @@ theorem chapter09_inclusion_transfer_compatibility_apply
       chapter09GaloisTransfer K L Ks T (R.recK.reciprocity x) := by
   exact DFunLike.congr_fun
     (chapter09_inclusion_transfer_compatibility K L Ks T R) x
+
+/-!
+The finite-level proof uses restriction on degree zero and on complete
+resolutions.  The following record keeps the degree `-2` cap maps after the
+same top-subgroup identifications used in Section 9.2, and records the exact
+homology-transfer and cap-naturality identities from Section 5.2.
+-/
+
+structure Chapter09FiniteRestrictionTransferData
+    (G : Type) [Group G] [Fintype G]
+    (H : Subgroup G) [H.FiniteIndex] (A : Rep ℤ G) where
+  fundamentalClassG : chapter05GroupCohomology G A 2
+  fundamentalClassH :
+    chapter05GroupCohomology H (Rep.res H.subtype A) 2
+  capProductG :
+    chapter05TateCohomology G (Rep.trivial ℤ G ℤ) (-2) ⟶
+      chapter05TateCohomology G A 0
+  capProductH :
+    chapter05TateCohomology H (Rep.trivial ℤ H ℤ) (-2) ⟶
+      chapter05TateCohomology H (Rep.res H.subtype A) 0
+  restrictionMinusTwo :
+    chapter05TateCohomology G (Rep.trivial ℤ G ℤ) (-2) ⟶
+      chapter05TateCohomology H (Rep.trivial ℤ H ℤ) (-2)
+  restrictionZero :
+    chapter05TateCohomology G A 0 ⟶
+      chapter05TateCohomology H (Rep.res H.subtype A) 0
+  fundamentalClass_restriction :
+    chapter05RestrictTwoClass H fundamentalClassG = fundamentalClassH
+  restrictionMinusTwo_on_H1 :
+    ∀ z : chapter05GroupHomology G (Rep.trivial ℤ G ℤ) 1,
+      (chapter05H1AbelianizationIso H)
+          ((chapter05_tate_minus_two_is_homology H).hom
+            (restrictionMinusTwo
+              ((chapter05_tate_minus_two_is_homology G).inv z))) =
+        Additive.ofMul
+          (chapter09Transfer H
+            (Additive.toMul ((chapter05H1AbelianizationIso G) z)))
+  cap_naturality :
+    ∀ z : chapter05TateCohomology G (Rep.trivial ℤ G ℤ) (-2),
+      restrictionZero (capProductG z) =
+        capProductH (restrictionMinusTwo z)
+
+theorem chapter09_finite_restriction_fundamental_class
+    {G : Type} [Group G] [Fintype G]
+    {H : Subgroup G} [H.FiniteIndex] {A : Rep ℤ G}
+    (D : Chapter09FiniteRestrictionTransferData G H A) :
+    chapter05RestrictTwoClass H D.fundamentalClassG = D.fundamentalClassH :=
+  D.fundamentalClass_restriction
+
+theorem chapter09_finite_restriction_on_H1_is_transfer
+    {G : Type} [Group G] [Fintype G]
+    {H : Subgroup G} [H.FiniteIndex] {A : Rep ℤ G}
+    (D : Chapter09FiniteRestrictionTransferData G H A)
+    (z : chapter05GroupHomology G (Rep.trivial ℤ G ℤ) 1) :
+    (chapter05H1AbelianizationIso H)
+        ((chapter05_tate_minus_two_is_homology H).hom
+          (D.restrictionMinusTwo
+            ((chapter05_tate_minus_two_is_homology G).inv z))) =
+      Additive.ofMul
+        (chapter09Transfer H
+          (Additive.toMul ((chapter05H1AbelianizationIso G) z))) :=
+  D.restrictionMinusTwo_on_H1 z
+
+theorem chapter09_finite_restriction_cap_naturality
+    {G : Type} [Group G] [Fintype G]
+    {H : Subgroup G} [H.FiniteIndex] {A : Rep ℤ G}
+    (D : Chapter09FiniteRestrictionTransferData G H A)
+    (z : chapter05TateCohomology G (Rep.trivial ℤ G ℤ) (-2)) :
+    D.restrictionZero (D.capProductG z) =
+      D.capProductH (D.restrictionMinusTwo z) :=
+  D.cap_naturality z
+
+/- Restriction in degree zero is the field inclusion on multiplicative
+groups, so it is well defined on the norm quotients used by reciprocity. -/
+
+structure Chapter09FiniteDegreeZeroInclusionData
+    (K L : Type*) [Field K] [Field L] [Algebra K L] where
+  restriction : Kˣ →* Lˣ
+  restriction_is_inclusion : restriction = chapter09FieldInclusionHom K L
+
+theorem chapter09_finite_degree_zero_restriction_is_inclusion
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    (D : Chapter09FiniteDegreeZeroInclusionData K L) :
+    D.restriction = chapter09FieldInclusionHom K L :=
+  D.restriction_is_inclusion
+
+/- For an unramified extension, transfer sends the arithmetic Frobenius class
+downstairs, while inclusion identifies that class with the `d`th power of the
+base Frobenius. -/
+
+structure Chapter09UnramifiedTransferFrobeniusData
+    (G_K G_L : Type) [Group G_K] [Group G_L] where
+  degree : ℕ
+  transfer : Abelianization G_K →* Abelianization G_L
+  inclusion : G_L →* G_K
+  arithmeticFrobeniusK : G_K
+  arithmeticFrobeniusL : G_L
+  transfer_frobenius :
+    transfer (Abelianization.of arithmeticFrobeniusK) =
+      Abelianization.of arithmeticFrobeniusL
+  inclusion_frobenius_power :
+    inclusion arithmeticFrobeniusL = arithmeticFrobeniusK ^ degree
+
+theorem chapter09_unramified_transfer_frobenius
+    {G_K G_L : Type} [Group G_K] [Group G_L]
+    (D : Chapter09UnramifiedTransferFrobeniusData G_K G_L) :
+    D.transfer (Abelianization.of D.arithmeticFrobeniusK) =
+        Abelianization.of D.arithmeticFrobeniusL ∧
+      D.inclusion D.arithmeticFrobeniusL =
+        D.arithmeticFrobeniusK ^ D.degree :=
+  ⟨D.transfer_frobenius, D.inclusion_frobenius_power⟩
 
 end
 

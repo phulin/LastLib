@@ -105,8 +105,52 @@ theorem chapter09_transferAlong_transitive
     (hcomp : (f.comp g).range.FiniteIndex) :
     chapter09TransferAlong (f.comp g) (hf.comp hg) hcomp =
       (chapter09TransferAlong g hg hgg).comp
-        (chapter09TransferAlong f hf hfg) := by
+    (chapter09TransferAlong f hf hfg) := by
   sorry
+
+/- The two functoriality squares compose in a tower.  This generic form makes
+the word "stack" in the source precise without choosing a second reciprocity
+system for a three-level tower. -/
+
+theorem chapter09_norm_reciprocity_squares_stack
+    {C_K C_L C_M G_K G_L G_M : Type*}
+    [CommGroup C_K] [CommGroup C_L] [CommGroup C_M]
+    [CommGroup G_K] [CommGroup G_L] [CommGroup G_M]
+    (normLK : C_L →* C_K) (normML : C_M →* C_L)
+    (inclLK : G_L →* G_K) (inclML : G_M →* G_L)
+    (recK : C_K →* G_K) (recL : C_L →* G_L) (recM : C_M →* G_M)
+    (hLK : recK.comp normLK = inclLK.comp recL)
+    (hML : recL.comp normML = inclML.comp recM) :
+    recK.comp (normLK.comp normML) =
+      (inclLK.comp inclML).comp recM := by
+  apply MonoidHom.ext
+  intro x
+  change recK (normLK (normML x)) = inclLK (inclML (recM x))
+  calc
+    recK (normLK (normML x)) = inclLK (recL (normML x)) :=
+      DFunLike.congr_fun hLK (normML x)
+    _ = inclLK (inclML (recM x)) := by
+      exact congrArg inclLK (DFunLike.congr_fun hML x)
+
+theorem chapter09_transfer_reciprocity_squares_stack
+    {C_K C_L C_M G_K G_L G_M : Type*}
+    [CommGroup C_K] [CommGroup C_L] [CommGroup C_M]
+    [CommGroup G_K] [CommGroup G_L] [CommGroup G_M]
+    (inclKL : C_K →* C_L) (inclLM : C_L →* C_M)
+    (transferKL : G_K →* G_L) (transferLM : G_L →* G_M)
+    (recK : C_K →* G_K) (recL : C_L →* G_L) (recM : C_M →* G_M)
+    (hKL : recL.comp inclKL = transferKL.comp recK)
+    (hLM : recM.comp inclLM = transferLM.comp recL) :
+    recM.comp (inclLM.comp inclKL) =
+      (transferLM.comp transferKL).comp recK := by
+  apply MonoidHom.ext
+  intro x
+  change recM (inclLM (inclKL x)) = transferLM (transferKL (recK x))
+  calc
+    recM (inclLM (inclKL x)) = transferLM (recL (inclKL x)) :=
+      DFunLike.congr_fun hLM (inclKL x)
+    _ = transferLM (transferKL (recK x)) := by
+      exact congrArg transferLM (DFunLike.congr_fun hKL x)
 
 /-- The natural quotient map induced by an inclusion of normal subgroups. -/
 def chapter09QuotientMapOfLe
