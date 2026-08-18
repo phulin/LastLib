@@ -3,6 +3,7 @@ import Mathlib.Algebra.MvPolynomial.Eval
 import Mathlib.RingTheory.AdicCompletion.Algebra
 import Mathlib.RingTheory.AdicCompletion.Basic
 import Mathlib.RingTheory.Derivation.ToSquareZero
+import Mathlib.RingTheory.Teichmuller
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter13
 
@@ -230,7 +231,55 @@ theorem chapter13_teichmuller_lift
           Chapter13AdicSequenceConverges
             (IsLocalRing.maximalIdeal C)
             (fun n : ℕ => (y n) ^ (p ^ n)) (τ x)) := by
-  sorry
+  let I : Ideal C := IsLocalRing.maximalIdeal C
+  letI : CharP (C ⧸ I) p := by
+    apply (eC.symm.toRingHom.charP_iff_charP p).mp
+    infer_instance
+  letI : IsAdicComplete I C := by
+    simpa [I] using hC.2
+  letI : PerfectRing k p := PerfectRing.ofSurjective k p (by
+    unfold Chapter13PerfectAtPrime at hperfect
+    change Function.Surjective (fun x : k => x ^ p)
+    exact hperfect)
+  let lift : k →* Perfection (C ⧸ I) p :=
+    Perfection.liftMonoidHom p k (C ⧸ I) eC.symm.toMonoidHom
+  let τ : k →* C := (Perfection.teichmuller p I).comp lift
+  refine ⟨τ, ?_, ?_⟩
+  · intro x
+    change eC (Ideal.Quotient.mk I (τ x)) = x
+    rw [show τ x = Perfection.teichmuller p I (lift x) by rfl,
+      Perfection.mk_teichmuller]
+    change eC (Perfection.coeffMonoidHom (C ⧸ I) p 0 (lift x)) = x
+    simp [lift]
+  · intro x
+    let y : ℕ → C := fun n =>
+      (Ideal.Quotient.mk_surjective (I := I)
+        (Perfection.coeff (C ⧸ I) p n (lift x))).choose
+    have hy : ∀ n : ℕ,
+        Ideal.Quotient.mk I (y n) = Perfection.coeff (C ⧸ I) p n (lift x) := by
+      intro n
+      exact (Ideal.Quotient.mk_surjective (I := I)
+        (Perfection.coeff (C ⧸ I) p n (lift x))).choose_spec
+    refine ⟨y, ?_, ?_⟩
+    · intro n
+      change eC (Ideal.Quotient.mk I (y n)) ^ (p ^ n) = x
+      rw [hy n]
+      rw [← map_pow]
+      change eC ((Perfection.coeffMonoidHom (C ⧸ I) p n (lift x)) ^ (p ^ n)) = x
+      rw [Perfection.coeffMonoidHom_pow_p_pow_self]
+      change eC (Perfection.coeff (C ⧸ I) p 0 (lift x)) = x
+      change eC (Perfection.coeffMonoidHom (C ⧸ I) p 0 (lift x)) = x
+      rw [Perfection.coeffMonoidHom_zero_liftMonoidHom]
+      simpa using eC.apply_symm_apply x
+    · intro n
+      filter_upwards [eventually_ge_atTop n] with m hm
+      have hsm :
+          Perfection.teichmuller p I (lift x) ≡ (y m) ^ (p ^ m)
+            [SMOD I ^ (m + 1)] :=
+        Perfection.teichmuller_sModEq (hy m)
+      have hdiff : (y m) ^ (p ^ m) - τ x ∈ I ^ (m + 1) := by
+        exact SModEq.sub_mem.mp hsm.symm
+      exact (Ideal.pow_le_pow_right (Nat.le_trans hm (Nat.le_succ _))) hdiff
 
 end
 
