@@ -2,6 +2,7 @@ import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section01WhyTowerFo
 import Mathlib.FieldTheory.LinearDisjoint
 import Mathlib.RingTheory.Algebraic.Integral
 import Mathlib.FieldTheory.Galois.NormalBasis
+import Mathlib.RingTheory.TensorProduct.Maps
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03
 
@@ -337,7 +338,72 @@ theorem chapter03_galois_self_scalar_extension_splits
     [FiniteDimensional K L] [IsGalois K L] :
     ∃ n : ℕ, n = Module.finrank K L ∧
       chapter03SelfScalarExtensionSplits K L n := by
-  sorry
+  classical
+  let G := Gal(L / K)
+  let q : L →ₗ[K] (G → L) :=
+    LinearMap.pi (fun σ : G => σ.toAlgHom.toLinearMap)
+  have hli : LinearIndependent L (fun σ : G => fun x : L => σ x) := by
+    have hli' : LinearIndependent L (fun σ : G => σ.toAlgHom.toLinearMap) :=
+      (linearIndependent_algHom_toLinearMap K L L).comp
+        (fun σ : G => σ.toAlgHom) (algEquivEquivAlgHom K L).injective
+    have hker : LinearMap.ker (LinearMap.ltoFun K L L L) = ⊥ := by
+      rw [LinearMap.ker_eq_bot]
+      intro f g h
+      ext x
+      exact congr_fun h x
+    simpa [Function.comp_def] using hli'.map' (LinearMap.ltoFun K L L L) hker
+  have hqrange : (LinearMap.range q : Set (G → L)) = Set.range q := by
+    ext y
+    simp [LinearMap.mem_range]
+  have hsurj : Function.Surjective (q.liftBaseChange L) := by
+    rw [← LinearMap.range_eq_top, LinearMap.range_liftBaseChange]
+    rw [hqrange]
+    change Submodule.span L (Set.range (fun x : L => fun σ : G => σ x)) = ⊤
+    exact
+      (span_flip_eq_top_iff_linearIndependent
+        (f := fun σ : G => fun x : L => σ x)).2 hli
+  have hdim : Module.finrank L (L ⊗[K] L) = Module.finrank L (G → L) := by
+    rw [Module.finrank_tensorProduct, Module.finrank_self, one_mul,
+      Module.finrank_fintype_fun_eq_card, Fintype.card_eq_nat_card,
+      IsGalois.card_aut_eq_finrank]
+  have hbij : Function.Bijective (q.liftBaseChange L) := by
+    refine ⟨(LinearMap.injective_iff_surjective_of_finrank_eq_finrank hdim).mpr hsurj, hsurj⟩
+  let eLin : (L ⊗[K] L) ≃ₗ[L] (G → L) :=
+    LinearEquiv.ofBijective (q.liftBaseChange L) hbij
+  have hmul : ∀ (a₁ a₂ b₁ b₂ : L),
+      eLin ((a₁ * a₂) ⊗ₜ[K] (b₁ * b₂)) =
+        eLin (a₁ ⊗ₜ[K] b₁) * eLin (a₂ ⊗ₜ[K] b₂) := by
+    intro a₁ a₂ b₁ b₂
+    ext σ
+    simp [eLin, q, mul_assoc, mul_comm, mul_left_comm]
+  have hone : eLin ((1 : L) ⊗ₜ[K] (1 : L)) = 1 := by
+    ext σ
+    simp [eLin, q]
+  let eAlg : @AlgEquiv L (L ⊗[K] L) (G → L)
+      _ _ _ Algebra.TensorProduct.leftAlgebra _ :=
+    Algebra.TensorProduct.algEquivOfLinearEquivTensorProduct eLin hmul hone
+  refine ⟨Fintype.card G, ?_, ?_⟩
+  · rw [Fintype.card_eq_nat_card, IsGalois.card_aut_eq_finrank]
+  · let eFin : G ≃ Fin (Fintype.card G) := Fintype.equivFin G
+    let ePi : (G → L) ≃ₐ[L] (Fin (Fintype.card G) → L) :=
+      AlgEquiv.piCongrLeft' L (fun _ : G => L) eFin
+    let eComm0 :=
+      @AlgEquiv.symm L (L ⊗[K] L) (L ⊗[K] L) _ _ _
+        Algebra.TensorProduct.leftAlgebra Algebra.TensorProduct.rightAlgebra
+        (Algebra.TensorProduct.commRight K L L)
+    let eComm : @AlgEquiv L (L ⊗[K] L) (L ⊗[K] L)
+        _ _ _ Algebra.TensorProduct.rightAlgebra Algebra.TensorProduct.leftAlgebra :=
+      eComm0
+    let eMiddle := eAlg.trans ePi
+    let eFinal0 :=
+      @AlgEquiv.trans L (L ⊗[K] L) (L ⊗[K] L) (Fin (Fintype.card G) → L) _ _ _ _
+        Algebra.TensorProduct.rightAlgebra Algebra.TensorProduct.leftAlgebra _ eComm eMiddle
+    let eFinal :
+        @AlgEquiv L (L ⊗[K] L) (Fin (Fintype.card G) → L)
+          _ _ _ Algebra.TensorProduct.rightAlgebra _ :=
+      eFinal0
+    unfold chapter03SelfScalarExtensionSplits
+    exact ⟨eFinal⟩
 
 /-- Each field factor of the separable self-base change is unramified over
 the new base. -/
@@ -354,7 +420,116 @@ theorem chapter03_self_scalar_extension_factors_have_e_one
     (hfactor : chapter03SelfScalarExtensionFieldFactor K L F) :
     chapterRamificationIndex vL.valuationSubring vF.valuationSubring
       (IsLocalRing.maximalIdeal vF.valuationSubring) = 1 := by
-  sorry
+  classical
+  letI : Algebra L (L ⊗[K] L) := Algebra.TensorProduct.rightAlgebra
+  change ∃ φ : L ⊗[K] L →ₐ[L] F, Function.Surjective φ at hfactor
+  rcases hfactor with ⟨φ, hφ⟩
+  obtain ⟨n, hn, hsplit⟩ := chapter03_galois_self_scalar_extension_splits K L
+  change Nonempty (L ⊗[K] L ≃ₐ[L] (Fin n → L)) at hsplit
+  rcases hsplit with ⟨e⟩
+  let ψ : (Fin n → L) →ₐ[L] F := φ.comp e.symm
+  have hψ : Function.Surjective ψ := hφ.comp e.symm.surjective
+  have hAlgMap : Function.Surjective (algebraMap L F) := by
+    have hsum_one :
+        ∑ i : Fin n, Pi.single i (1 : L) = (1 : Fin n → L) := by
+      exact Finset.univ_sum_single 1
+    have hex : ∃ i : Fin n, ψ (Pi.single i (1 : L)) ≠ 0 := by
+      by_contra h
+      have hall : ∀ i : Fin n, ψ (Pi.single i (1 : L)) = 0 := by
+        intro i
+        by_contra hi
+        exact h ⟨i, hi⟩
+      have hsum := congrArg ψ hsum_one
+      have hzero : ∑ i : Fin n, ψ (Pi.single i (1 : L)) = 0 := by
+        apply Finset.sum_eq_zero
+        intro i hi
+        exact hall i
+      have : (0 : F) = 1 := by
+        simpa [map_sum, hzero] using hsum
+      exact zero_ne_one this
+    obtain ⟨i, hi⟩ := hex
+    have hid : IsIdempotentElem (ψ (Pi.single i (1 : L))) := by
+      rw [isIdempotentElem_iff]
+      calc
+        ψ (Pi.single i (1 : L)) * ψ (Pi.single i (1 : L)) =
+            ψ (Pi.single i (1 : L) * Pi.single i (1 : L)) :=
+          (map_mul ψ _ _).symm
+        _ = ψ (Pi.single i (1 : L)) := by simp [← Pi.single_mul]
+    have hei : ψ (Pi.single i (1 : L)) = 1 := by
+      rcases (IsIdempotentElem.iff_eq_zero_or_one.mp hid) with hz | hone
+      · exact (hi hz).elim
+      · exact hone
+    intro x
+    obtain ⟨y, rfl⟩ := hψ x
+    have hy : y = ∑ j : Fin n, Pi.single j (y j) := by
+      symm
+      rw [Finset.univ_sum_single]
+    refine ⟨y i, ?_⟩
+    have hterm : ∀ j : Fin n, ψ (Pi.single j (y j)) =
+        if j = i then algebraMap L F (y i) else 0 := by
+      intro j
+      by_cases hji : j = i
+      · subst j
+        have hsingle :
+            Pi.single i (y i) = (fun _ : Fin n => y i) * Pi.single i (1 : L) := by
+          ext k
+          by_cases hki : k = i <;> simp [hki]
+        rw [hsingle, map_mul, hei]
+        simp [Pi.algebraMap_def, ← ψ.commutes]
+      · have hsingle :
+            Pi.single j (y j) = (fun _ : Fin n => y j) * Pi.single j (1 : L) := by
+          ext k
+          by_cases hkj : k = j <;> simp [hkj]
+        rw [hsingle, map_mul]
+        have hconst : ψ (fun _ : Fin n => y j) = algebraMap L F (y j) := by
+          simpa [Pi.algebraMap_def] using ψ.commutes (y j)
+        have horth :
+            ψ (Pi.single j (1 : L)) * ψ (Pi.single i (1 : L)) = 0 := by
+          rw [← map_mul]
+          have hprodzero :
+              Pi.single (M := fun _ : Fin n => L) j (1 : L) *
+                  Pi.single (M := fun _ : Fin n => L) i (1 : L) = 0 := by
+            ext k
+            by_cases hkj : k = j <;> by_cases hki : k = i <;>
+              simp [hkj, hki, hji]
+          rw [hprodzero, map_zero]
+        have hzero : ψ (Pi.single j (1 : L)) = 0 := by
+          simpa [hei] using horth
+        rw [hconst, hzero, mul_zero]
+        simp [hji]
+    have hsum_y :
+        ψ y = ∑ j : Fin n, ψ (Pi.single j (y j)) := by
+      calc
+        ψ y = ψ (∑ j : Fin n, Pi.single j (y j)) := congrArg ψ hy
+        _ = ∑ j : Fin n, ψ (Pi.single j (y j)) := by simp
+    have hsum_i :
+        (∑ j : Fin n, ψ (Pi.single j (y j))) = ψ (Pi.single i (y i)) := by
+      rw [Finset.sum_eq_single i]
+      · intro j hj hne
+        exact (hterm j).trans (by simp [hne])
+      · intro hi'
+        exact (hi' (Finset.mem_univ i)).elim
+    have hsingle_i : algebraMap L F (y i) = ψ (Pi.single i (y i)) := by
+      simpa using (hterm i).symm
+    exact hsingle_i.trans (hsum_i.symm.trans hsum_y.symm)
+  have hfin : Module.finrank L F = 1 := by
+    apply finrank_eq_one (1 : F) one_ne_zero
+    intro w
+    obtain ⟨c, hc⟩ := hAlgMap w
+    refine ⟨c, ?_⟩
+    simpa [Algebra.smul_def] using hc
+  have hdegree :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.complete_extension_defectless_without_separability
+      vL vF hcomplete
+  have hprod :
+      1 = chapterRamificationIndex vL.valuationSubring vF.valuationSubring
+          (IsLocalRing.maximalIdeal vF.valuationSubring) *
+        chapterResidueDegree vL.valuationSubring vF.valuationSubring
+          (IsLocalRing.maximalIdeal vF.valuationSubring) := by
+    simpa [hfin] using hdegree
+  apply Nat.dvd_one.mp
+  refine ⟨chapterResidueDegree vL.valuationSubring vF.valuationSubring
+    (IsLocalRing.maximalIdeal vF.valuationSubring), hprod⟩
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03

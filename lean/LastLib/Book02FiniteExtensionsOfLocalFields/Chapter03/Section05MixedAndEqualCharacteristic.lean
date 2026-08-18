@@ -1,4 +1,5 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section01WhyTowerFormulasMatter
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section07ConcreteFiniteExtensions
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section07UnramifiedAndTotallyRamifiedEndpoints
 import Mathlib.NumberTheory.Padics.PadicNumbers
 import Mathlib.RingTheory.LaurentSeries
@@ -217,7 +218,8 @@ private theorem chapter03_additive_value_one_is_uniformizer
       (⟨π, (Valuation.mem_valuationSubring_iff v.toValuation π).mpr (by
         change Multiplicative.ofAdd (OrderDual.toDual (v π)) ≤ 1
         rw [hπ]
-        exact le_of_lt (by simp))⟩ : v.toValuation.valuationSubring) := by
+        change (0 : WithTop ℤ) ≤ 1
+        norm_num)⟩ : v.toValuation.valuationSubring) := by
   have hvg := chapter03_additive_value_group_eq_top v hdiscrete
   let γ : (Multiplicative (WithTop ℤ)ᵒᵈ)ˣ :=
     Units.mk0 (Multiplicative.ofAdd (OrderDual.toDual (1 : WithTop ℤ)))
@@ -287,19 +289,31 @@ private theorem chapter03_additive_value_one_is_uniformizer
     rw [hγpow]
     exact congrArg (fun z : WithTop ℤ =>
       Multiplicative.ofAdd (OrderDual.toDual z)) hn
+  have hγ_zpowers_v :
+      Subgroup.zpowers γ =
+        MonoidWithZeroHom.valueGroup (.ofClass v.toValuation) := by
+    rw [hvg]
+    exact hγ_zpowers
+  have hgen :
+      γ =
+        LinearOrderedCommGroup.Subgroup.genLTOne
+          (MonoidWithZeroHom.valueGroup (.ofClass v.toValuation)) := by
+    exact LinearOrderedCommGroup.Subgroup.genLTOne_unique
+      (MonoidWithZeroHom.valueGroup (.ofClass v.toValuation)) hγ_lt hγ_zpowers_v
   rw [Valuation.IsUniformizer.iff]
   change Multiplicative.ofAdd (OrderDual.toDual (v π)) = _
   rw [hπ]
   calc
-    Multiplicative.ofAdd (OrderDual.toDual (1 : WithTop ℤ)) = γ := by rfl
+    Multiplicative.ofAdd (OrderDual.toDual (1 : WithTop ℤ)) =
+        γ := by rfl
     _ = LinearOrderedCommGroup.Subgroup.genLTOne
-        (⊤ : Subgroup ((Multiplicative (WithTop ℤ)ᵒᵈ)ˣ)) :=
-      LinearOrderedCommGroup.Subgroup.genLTOne_unique hγ_lt hγ_zpowers
-    _ = LinearOrderedCommGroup.Subgroup.genLTOne
-        (MonoidWithZeroHom.valueGroup (.ofClass v.toValuation)) := by
-      rw [hvg]
+          (MonoidWithZeroHom.valueGroup (.ofClass v.toValuation)) :=
+      congrArg Units.val hgen
     _ = Valuation.IsRankOneDiscrete.generator v.toValuation :=
-      Valuation.IsRankOneDiscrete.valueGroup_genLTOne_eq_generator v.toValuation
+      by
+        exact congrArg Units.val
+          (Valuation.IsRankOneDiscrete.valueGroup_genLTOne_eq_generator
+            v.toValuation)
 
 /-- The normalized mixed-characteristic profile over `ℚ_[p]`. -/
 def chapter03MixedCharacteristicProfile
@@ -492,7 +506,245 @@ theorem chapter03_purely_inseparable_uniformizer_root_has_e_p
     ∃ data : Chapter03FiniteLocalExtensionData (LaurentSeries k) L _
       vK.toValuation vL.toValuation,
       data.e = p ∧ data.f = 1 := by
-  sorry
+  have hp_pos : 0 < p := by
+    rw [← hdegree]
+    exact Module.finrank_pos
+  have ht0 : chapter03EqualCharacteristicUniformizer k ≠ 0 := by
+    intro ht'
+    have hv := hvalue
+    rw [ht', vK.map_zero] at hv
+    exact (WithTop.coe_lt_top (1 : ℤ)).ne hv.symm
+  have hroot' :
+      α ^ p - algebraMap (LaurentSeries k) L
+        (chapter03EqualCharacteristicUniformizer k) = 0 := by
+    simpa [chapter03PurelyInseparableUniformizerPolynomial,
+      Polynomial.aeval_def] using hroot
+  have hparameter :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10PowerParameterRelation
+        (chapter03EqualCharacteristicUniformizer k) α p := by
+    unfold LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10PowerParameterRelation
+    exact (sub_eq_zero.mp hroot').symm
+  have hα0 : α ≠ 0 := by
+    intro hα
+    subst α
+    have hmapt0 :
+        (algebraMap (LaurentSeries k) L)
+          (chapter03EqualCharacteristicUniformizer k) ≠ 0 :=
+      (map_ne_zero_iff (algebraMap (LaurentSeries k) L)
+        (FaithfulSMul.algebraMap_injective (LaurentSeries k) L)).2 ht0
+    apply hmapt0
+    simpa [hp_pos.ne'] using hroot'
+  have hαtop : vL α ≠ ⊤ :=
+    (AddValuation.ne_top_iff vL).mpr hα0
+  have hpowval : vL (α ^ p) = (p : WithTop ℤ) := by
+    rw [← hparameter]
+    rw [hrestriction.2 _ ht0, hvalue]
+    simp
+  have hsmul : p • vL α = (p : WithTop ℤ) := by
+    simpa only [vL.map_pow] using hpowval
+  obtain ⟨z, hz⟩ := WithTop.ne_top_iff_exists.mp hαtop
+  have hsmul' : p • (z : WithTop ℤ) = (p : WithTop ℤ) := by
+    rw [← hz] at hsmul
+    exact hsmul
+  rw [← WithTop.coe_nsmul] at hsmul'
+  have hz' : (p : ℤ) * z = p := by
+    exact_mod_cast hsmul'
+  have hp_int : (0 : ℤ) < p := by
+    exact_mod_cast hp_pos
+  have hz1 : z = 1 := by
+    nlinarith [hz']
+  have hαvalue : vL α = 1 := by
+    calc
+      vL α = (z : WithTop ℤ) := hz.symm
+      _ = 1 := by rw [hz1]; norm_num
+  have htA_mem :
+      chapter03EqualCharacteristicUniformizer k ∈
+        vK.toValuation.valuationSubring := by
+    apply (Valuation.mem_valuationSubring_iff vK.toValuation _).mpr
+    change Multiplicative.ofAdd
+        (OrderDual.toDual (vK (chapter03EqualCharacteristicUniformizer k))) ≤ 1
+    rw [hvalue]
+    change (0 : WithTop ℤ) ≤ 1
+    norm_num
+  let tA : vK.toValuation.valuationSubring :=
+    ⟨chapter03EqualCharacteristicUniformizer k, htA_mem⟩
+  have hmem_pos (x : vK.toValuation.valuationSubring)
+      (hx : x ∈ IsLocalRing.maximalIdeal vK.toValuation.valuationSubring) :
+      (0 : WithTop ℤ) < vK (x : LaurentSeries k) := by
+    have hxlt :=
+      (Valuation.mem_maximalIdeal_iff
+        (K := LaurentSeries k) vK.toValuation).mp hx
+    change Multiplicative.ofAdd
+        (OrderDual.toDual (vK (x : LaurentSeries k))) <
+          Multiplicative.ofAdd (OrderDual.toDual (0 : WithTop ℤ)) at hxlt
+    rw [Multiplicative.ofAdd_lt, OrderDual.toDual_lt_toDual] at hxlt
+    exact hxlt
+  have hspan :
+      Ideal.span ({tA} : Set vK.toValuation.valuationSubring) =
+        IsLocalRing.maximalIdeal vK.toValuation.valuationSubring := by
+    apply le_antisymm
+    · apply Ideal.span_le.2
+      intro x hx
+      rw [Set.mem_singleton_iff] at hx
+      subst x
+      change tA ∈ IsLocalRing.maximalIdeal vK.toValuation.valuationSubring
+      rw [Valuation.mem_maximalIdeal_iff]
+      change Multiplicative.ofAdd
+          (OrderDual.toDual (vK (chapter03EqualCharacteristicUniformizer k))) <
+          Multiplicative.ofAdd (OrderDual.toDual (0 : WithTop ℤ))
+      rw [Multiplicative.ofAdd_lt, OrderDual.toDual_lt_toDual]
+      rw [hvalue]
+      norm_num
+    · intro x hx
+      by_cases hx0 : (x : LaurentSeries k) = 0
+      · have hxzero : x = 0 := Subtype.ext hx0
+        subst x
+        exact Ideal.zero_mem _
+      · have hxpos := hmem_pos x hx
+        have hxtop : vK (x : LaurentSeries k) ≠ ⊤ :=
+          (AddValuation.ne_top_iff vK).mpr hx0
+        obtain ⟨z, hz⟩ := WithTop.ne_top_iff_exists.mp hxtop
+        have hzpos : (0 : ℤ) < z := by
+          rw [← hz] at hxpos
+          exact_mod_cast hxpos
+        have hzge : (1 : ℤ) ≤ z := by omega
+        have hquot :
+            (0 : WithTop ℤ) ≤
+              vK ((x : LaurentSeries k) /
+                chapter03EqualCharacteristicUniformizer k) := by
+          rw [vK.map_div, ← hz, hvalue]
+          change (0 : WithTop ℤ) ≤ (↑(z - 1) : WithTop ℤ)
+          exact_mod_cast (sub_nonneg.mpr hzge)
+        have hy_mem :
+            (x : LaurentSeries k) /
+                chapter03EqualCharacteristicUniformizer k ∈
+              vK.toValuation.valuationSubring := by
+          apply (Valuation.mem_valuationSubring_iff vK.toValuation _).mpr
+          change Multiplicative.ofAdd
+              (OrderDual.toDual
+                (vK ((x : LaurentSeries k) /
+                  chapter03EqualCharacteristicUniformizer k))) ≤ 1
+          change (0 : WithTop ℤ) ≤
+            vK ((x : LaurentSeries k) /
+              chapter03EqualCharacteristicUniformizer k)
+          exact hquot
+        let y : vK.toValuation.valuationSubring :=
+          ⟨(x : LaurentSeries k) /
+              chapter03EqualCharacteristicUniformizer k, hy_mem⟩
+        apply Ideal.mem_span_singleton.mpr
+        refine ⟨y, ?_⟩
+        apply Subtype.ext
+        dsimp [y, tA]
+        field_simp [ht0]
+  let fA :
+      (vK.toValuation.valuationSubring)[X] :=
+    (Polynomial.X : (vK.toValuation.valuationSubring)[X]) ^ p -
+      Polynomial.C tA
+  have hfA :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.IsEisensteinAt tA fA := by
+    unfold LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.IsEisensteinAt
+    refine ⟨?_, ?_, ?_, ?_, hspan⟩
+    · simpa [fA] using
+        (Polynomial.monic_X_pow_sub_C tA hp_pos.ne')
+    · simp [fA, hp_pos]
+    · intro i hi
+      have hi' : i < p := by
+        simpa [fA, Polynomial.natDegree_X_pow_sub_C] using hi
+      by_cases hi0 : i = 0
+      · subst i
+        simp [fA, Polynomial.coeff_sub, Polynomial.coeff_X_pow,
+          hp_pos.ne', eq_comm]
+      · simp [fA, Polynomial.coeff_sub, Polynomial.coeff_X_pow,
+          Polynomial.coeff_C, Nat.ne_of_lt hi', hi0]
+    · have htA0 : tA ≠ 0 := by
+        intro hzero
+        have hbot :
+            IsLocalRing.maximalIdeal vK.toValuation.valuationSubring =
+              (⊥ : Ideal vK.toValuation.valuationSubring) := by
+          rw [← hspan, hzero]
+          simp
+        exact IsDiscreteValuationRing.not_a_field _ hbot
+      have hirr : Irreducible tA :=
+        IsDiscreteValuationRing.irreducible_of_span_eq_maximalIdeal
+          tA htA0 hspan.symm
+      intro hmem
+      have hmem' : -tA ∈
+          Ideal.span ({tA ^ 2} :
+            Set vK.toValuation.valuationSubring) := by
+        simpa [fA, Polynomial.coeff_zero_eq_eval_zero, Polynomial.eval_sub,
+          Polynomial.eval_pow, Polynomial.eval_X, Polynomial.eval_C,
+          hp_pos.ne'] using hmem
+      have hdiv : tA ^ 2 ∣ -tA :=
+        (Ideal.mem_span_singleton.mp hmem')
+      rcases hdiv with ⟨c, hc⟩
+      have hcancel : -1 = tA * c := by
+        apply (mul_left_cancel₀ htA0)
+        simpa [pow_two, mul_assoc] using hc
+      have hunit : IsUnit tA := by
+        apply isUnit_of_dvd_one
+        refine ⟨-c, ?_⟩
+        simpa [mul_neg] using congrArg Neg.neg hcancel
+      exact hirr.not_isUnit hunit
+  have hmap_tA :
+      algebraMap vK.toValuation.valuationSubring L tA =
+        algebraMap (LaurentSeries k) L
+          (chapter03EqualCharacteristicUniformizer k) := by
+    rw [IsScalarTower.algebraMap_apply vK.toValuation.valuationSubring
+      (LaurentSeries k) L]
+    rfl
+  have hrootA : aeval α fA = 0 := by
+    simpa [fA, Polynomial.aeval_def, hmap_tA] using hroot'
+  have hdegreeA : fA.natDegree = p := by
+    simp [fA]
+  have hbase :
+      (vK.toValuation.valuationSubring : Set (LaurentSeries k)) =
+        Set.range (algebraMap vK.toValuation.valuationSubring
+          (LaurentSeries k)) := by
+    ext x
+    constructor
+    · intro hx
+      exact ⟨⟨x, hx⟩, rfl⟩
+    · rintro ⟨a, rfl⟩
+      exact a.property
+  let _ : IsFractionRing vK.toValuation.valuationSubring
+      (LaurentSeries k) :=
+    (Valuation.valuationSubring.integers vK.toValuation).isFractionRing
+  have hbaseIntegers :
+      vK.toValuation.Integers vK.toValuation.valuationSubring := by
+    refine
+      { hom_inj := IsFractionRing.injective
+            vK.toValuation.valuationSubring (LaurentSeries k)
+        map_le_one := ?_
+        exists_of_le_one := ?_ }
+    · intro a
+      exact (Valuation.mem_valuationSubring_iff vK.toValuation
+        (a : LaurentSeries k)).mp a.property
+    · intro x hx
+      have hx' : x ∈ vK.toValuation.valuationSubring :=
+        (Valuation.mem_valuationSubring_iff vK.toValuation x).mpr hx
+      exact ⟨⟨x, hx'⟩, rfl⟩
+  have hstruct :=
+    finite_complete_extension_valuation_ring
+      vK.toValuation vL.toValuation hcomplete
+  have hupper :
+      (vL.toValuation.valuationSubring : Set L) =
+        (integralClosure vK.toValuation.valuationSubring L : Set L) :=
+    hstruct.2.2.2.2
+  have hend :=
+    eisenstein_root_is_uniformizer_and_totally_ramified
+      (A := vK.toValuation.valuationSubring)
+      (K := LaurentSeries k) (L := L)
+      (Γ := Multiplicative (WithTop ℤ)ᵒᵈ)
+      vK.toValuation vL.toValuation tA fA α hfA hrootA hdegreeA hgen
+      hbaseIntegers hbase hupper
+  rcases hend with ⟨_huniform, he, hf, _hequiv, hfin⟩
+  refine ⟨
+    { e := p
+      f := 1
+      e_eq := he
+      f_eq := hf
+      degree_eq := ?_ }, rfl, rfl⟩
+  simpa using hfin
 
 /-- A nontrivial finite purely inseparable extension is neither separable nor
 Galois. -/
