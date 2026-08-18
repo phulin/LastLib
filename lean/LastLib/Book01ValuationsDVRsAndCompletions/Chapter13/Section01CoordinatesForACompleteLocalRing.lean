@@ -4,6 +4,7 @@ import Mathlib.Algebra.CharP.MixedCharZero
 import Mathlib.Algebra.Field.ZMod
 import Mathlib.RingTheory.AdicCompletion.Completeness
 import Mathlib.RingTheory.AdicCompletion.Noetherian
+import Mathlib.RingTheory.AdicCompletion.RingHom
 import Mathlib.RingTheory.Derivation.Basic
 import Mathlib.RingTheory.FiniteLength
 import Mathlib.RingTheory.MvPowerSeries.Equiv
@@ -364,7 +365,328 @@ theorem chapter13_power_series_evaluation_exists_unique
     (hx : ∀ i : Fin n, x i ∈ IsLocalRing.maximalIdeal A) :
     ∃! F : MvPowerSeries (Fin n) R →+* A,
       Chapter13PowerSeriesEvaluationData n σ x F := by
-  sorry
+  classical
+  let I : Ideal A := IsLocalRing.maximalIdeal A
+  let instComplete : IsAdicComplete I A := hA.2
+  let pEval : MvPolynomial (Fin n) R →+* A :=
+    MvPolynomial.eval₂Hom σ x
+  have hvarspoly : Ideal.map pEval
+      (MvPolynomial.idealOfVars (Fin n) R) ≤ I := by
+    rw [MvPolynomial.idealOfVars, Ideal.map_span]
+    apply Ideal.span_le.2
+    rintro _ ⟨a, ⟨i, rfl⟩, rfl⟩
+    rw [MvPolynomial.eval₂Hom_X']
+    exact hx i
+  have hpow : ∀ j : ℕ,
+      Ideal.map pEval (MvPolynomial.idealOfVars (Fin n) R ^ j) ≤ I ^ j := by
+    intro j
+    rw [Ideal.map_pow]
+    exact Ideal.pow_right_mono hvarspoly j
+  let qeval : ∀ j : ℕ, MvPolynomial (Fin n) R →+* A ⧸ I ^ j := fun j =>
+    (Ideal.Quotient.mk (I ^ j)).comp pEval
+  have hkill : ∀ j (y : MvPolynomial (Fin n) R),
+      y ∈ MvPolynomial.idealOfVars (Fin n) R ^ j → qeval j y = 0 := by
+    intro j y hy
+    apply Ideal.Quotient.eq_zero_iff_mem.mpr
+    exact hpow j (Ideal.mem_map_of_mem pEval hy)
+  let qlift : ∀ j : ℕ,
+      (MvPolynomial (Fin n) R ⧸ MvPolynomial.idealOfVars (Fin n) R ^ j) →+*
+        A ⧸ I ^ j :=
+    fun j => Ideal.Quotient.lift _ (qeval j) (hkill j)
+  let f : ∀ j : ℕ, MvPowerSeries (Fin n) R →+* A ⧸ I ^ j :=
+    fun j => (qlift j).comp
+      (MvPowerSeries.truncTotalAlgHom (Fin n) R j).toRingHom
+  have hf : ∀ {m j : ℕ} (hmj : m ≤ j),
+      (Ideal.Quotient.factorPow I hmj).comp (f j) = f m := by
+    intro m j hmj
+    ext z
+    simp [f, qlift, qeval]
+    rw [Ideal.Quotient.mk_eq_mk_iff_sub_mem]
+    have hdiff :
+        pEval (MvPowerSeries.truncTotal j z) -
+          pEval (MvPowerSeries.truncTotal m z) ∈ I ^ m := by
+      rw [← map_sub]
+      exact hpow m (Ideal.mem_map_of_mem pEval
+        (MvPowerSeries.truncTotal_sub_truncTotal_mem_pow_idealOfVars
+          hmj (le_refl m) z))
+    exact hdiff
+  let F : MvPowerSeries (Fin n) R →+* A :=
+    @IsAdicComplete.liftRingHom (MvPowerSeries (Fin n) R) A _ _ I
+      instComplete f hf
+  have hmk : ∀ (j : ℕ) (z : MvPowerSeries (Fin n) R),
+      Ideal.Quotient.mk (I ^ j) (F z) = f j z := by
+    intro j z
+    exact @IsAdicComplete.mk_liftRingHom
+      (MvPowerSeries (Fin n) R) A _ _ I instComplete f hf j z
+  have htruncC : ∀ (j : ℕ) (r : R), j ≠ 0 →
+      MvPowerSeries.truncTotal (R := R) j
+        (MvPowerSeries.C r : MvPowerSeries (Fin n) R) =
+      MvPolynomial.C r := by
+    intro j r hj
+    ext d
+    by_cases hd : d = 0
+    · subst d
+      simp [MvPowerSeries.coeff_truncTotal_eq_ite,
+        MvPowerSeries.coeff_C, MvPolynomial.coeff_C, hj]
+    · have hd' : ¬ 0 = d := by simpa [eq_comm] using hd
+      simp [MvPowerSeries.coeff_truncTotal_eq_ite,
+        MvPowerSeries.coeff_C, MvPolynomial.coeff_C, hd, hd']
+  have hcoeff :
+      F.comp (MvPowerSeries.C : R →+* MvPowerSeries (Fin n) R) = σ := by
+    apply DFunLike.coe_injective
+    apply IsHausdorff.funext' I
+    intro j r
+    cases j with
+    | zero =>
+        rw [Ideal.Quotient.mk_eq_mk_iff_sub_mem]
+        simp
+    | succ j =>
+        simpa [f, qlift, qeval, pEval, htruncC] using
+          (hmk (j + 1) (MvPowerSeries.C r))
+  have htruncX : ∀ (j : ℕ) (i : Fin n), 1 < j →
+      MvPowerSeries.truncTotal (R := R) j
+          (MvPowerSeries.X i : MvPowerSeries (Fin n) R) =
+        (MvPolynomial.X i : MvPolynomial (Fin n) R) := by
+    intro j i hj
+    apply MvPolynomial.ext
+    intro d
+    rw [MvPowerSeries.coeff_truncTotal_eq_ite,
+      MvPowerSeries.coeff_X, MvPolynomial.coeff_X]
+    by_cases hd : d = (Finsupp.single i 1 : Fin n →₀ ℕ)
+    · subst d
+      simp [Finsupp.degree_single, hj]
+    · have hd' : ¬ (Finsupp.single i 1 : Fin n →₀ ℕ) = d := by
+        simpa [eq_comm] using hd
+      simp [hd, hd']
+  have htruncX_one : ∀ (i : Fin n),
+      MvPowerSeries.truncTotal (R := R) 1
+          (MvPowerSeries.X i : MvPowerSeries (Fin n) R) =
+        (0 : MvPolynomial (Fin n) R) := by
+    intro i
+    apply MvPolynomial.ext
+    intro d
+    rw [MvPowerSeries.coeff_truncTotal_eq_ite,
+      MvPowerSeries.coeff_X, MvPolynomial.coeff_zero]
+    by_cases hd : d = (Finsupp.single i 1 : Fin n →₀ ℕ)
+    · subst d
+      simp [Finsupp.degree_single]
+    · simp [hd]
+  have hquot : ∀ (j : ℕ) (i : Fin n),
+      (Ideal.Quotient.mk (I ^ j)) (F (MvPowerSeries.X i)) =
+        (Ideal.Quotient.mk (I ^ j)) (x i) := by
+    intro j i
+    cases j with
+    | zero =>
+        rw [Ideal.Quotient.mk_eq_mk_iff_sub_mem]
+        simp
+    | succ j =>
+        cases j with
+        | zero =>
+            have hfirst :
+                (Ideal.Quotient.mk (I ^ (0 + 1)))
+                    (F (MvPowerSeries.X i)) =
+                  (Ideal.Quotient.mk (I ^ (0 + 1))) 0 := by
+              simpa [f, qlift, qeval, pEval, htruncX_one i, pow_one] using
+                (hmk 1 (MvPowerSeries.X i))
+            calc
+              (Ideal.Quotient.mk (I ^ (0 + 1))) (F (MvPowerSeries.X i)) =
+                  (Ideal.Quotient.mk (I ^ (0 + 1))) 0 := hfirst
+              _ = (Ideal.Quotient.mk (I ^ (0 + 1))) (x i) := by
+                rw [Ideal.Quotient.mk_eq_mk_iff_sub_mem]
+                simpa [pow_one] using (Submodule.neg_mem I (hx i))
+        | succ k =>
+            have ht : MvPowerSeries.truncTotal (R := R) (k + 2)
+                (MvPowerSeries.X i) =
+              (MvPolynomial.X i : MvPolynomial (Fin n) R) :=
+              htruncX (k + 2) i (by omega)
+            simpa [f, qlift, qeval, pEval, ht] using
+              (hmk (k + 2) (MvPowerSeries.X i))
+  have hX : ∀ i : Fin n, F (MvPowerSeries.X i) = x i := by
+    intro i
+    rw [IsHausdorff.eq_iff_smodEq (I := I)]
+    intro j
+    rw [SModEq.sub_mem]
+    have hmem : F (MvPowerSeries.X i) - x i ∈ I ^ j := by
+      rw [← Ideal.Quotient.mk_eq_mk_iff_sub_mem]
+      exact hquot j i
+    simpa only [smul_eq_mul, Ideal.mul_top] using hmem
+  have hconst :
+      Ideal.map F
+          (Ideal.map (MvPowerSeries.C : R →+* MvPowerSeries (Fin n) R)
+            (IsLocalRing.maximalIdeal R)) ≤
+        IsLocalRing.maximalIdeal A := by
+    rw [Ideal.map_map, hcoeff]
+    rw [Ideal.map_le_iff_le_comap]
+    intro r hr
+    change σ r ∈ IsLocalRing.maximalIdeal A
+    rw [IsLocalRing.mem_maximalIdeal] at hr ⊢
+    exact fun hu => hr (hσ.map_nonunit r hu)
+  have hvars :
+      Ideal.map F
+          (Ideal.span (Set.range (MvPowerSeries.X : Fin n →
+            MvPowerSeries (Fin n) R))) ≤
+        IsLocalRing.maximalIdeal A := by
+    rw [Ideal.map_span]
+    apply Ideal.span_le.2
+    rintro _ ⟨a, ⟨i, rfl⟩, rfl⟩
+    simpa [hX i] using hx i
+  have hJ :
+      Ideal.map F
+          (Ideal.map (MvPowerSeries.C : R →+* MvPowerSeries (Fin n) R)
+            (IsLocalRing.maximalIdeal R) ⊔
+            Ideal.span (Set.range (MvPowerSeries.X : Fin n →
+              MvPowerSeries (Fin n) R))) ≤
+        IsLocalRing.maximalIdeal A := by
+    rw [Ideal.map_sup]
+    exact sup_le hconst hvars
+  let J : Ideal (MvPowerSeries (Fin n) R) :=
+    Ideal.map (MvPowerSeries.C : R →+* MvPowerSeries (Fin n) R)
+        (IsLocalRing.maximalIdeal R) ⊔
+      Ideal.span (Set.range (MvPowerSeries.X : Fin n →
+        MvPowerSeries (Fin n) R))
+  have hcont : Chapter13AdicContinuous J (IsLocalRing.maximalIdeal A) F := by
+    intro q
+    refine ⟨q, ?_⟩
+    intro z hz
+    have hz' : F z ∈ Ideal.map F (J ^ q) :=
+      Ideal.mem_map_of_mem F hz
+    rw [Ideal.map_pow] at hz'
+    exact (Ideal.pow_right_mono hJ q) hz'
+  have hdata : Chapter13PowerSeriesEvaluationData n σ x F := by
+    exact ⟨hcoeff, hX, hcont⟩
+  refine ⟨F, hdata, ?_⟩
+  intro G hG
+  rcases hG with ⟨hGcoeff, hGX, hGcont⟩
+  let ePoly : MvPolynomial (Fin n) R →+* A :=
+    F.comp MvPolynomial.coeToMvPowerSeries.ringHom
+  let gPoly : MvPolynomial (Fin n) R →+* A :=
+    G.comp MvPolynomial.coeToMvPowerSeries.ringHom
+  have hpoly : ePoly = gPoly := by
+    apply MvPolynomial.ringHom_ext'
+    · ext r
+      have hcr : F (MvPowerSeries.C r) = G (MvPowerSeries.C r) := by
+        calc
+          F (MvPowerSeries.C r) = σ r := by
+            simpa using DFunLike.congr_fun hcoeff r
+          _ = G (MvPowerSeries.C r) := by
+            simpa using (DFunLike.congr_fun hGcoeff r).symm
+      simpa [ePoly, gPoly] using hcr
+    · intro i
+      have hxi : F (MvPowerSeries.X i) = G (MvPowerSeries.X i) :=
+        (hX i).trans (hGX i).symm
+      simpa [ePoly, gPoly] using hxi
+  let P := MvPolynomial (Fin n) R
+  let K : Ideal P := MvPolynomial.idealOfVars (Fin n) R
+  let Kseries : Ideal (MvPowerSeries (Fin n) R) :=
+    Ideal.span (Set.range (MvPowerSeries.X : Fin n →
+      MvPowerSeries (Fin n) R))
+  let e : MvPowerSeries (Fin n) R ≃ₐ[P] AdicCompletion K P :=
+    MvPowerSeries.toAdicCompletionAlgEquiv (Fin n) R
+  have hKmap0 :
+      Ideal.map
+          (MvPowerSeries.toAdicCompletionAlgEquiv (Fin n) R).toRingEquiv.toRingHom
+          (Ideal.span (Set.range (MvPowerSeries.X : Fin n →
+            MvPowerSeries (Fin n) R))) =
+        (MvPolynomial.idealOfVars (Fin n) R).map
+          (algebraMap (MvPolynomial (Fin n) R)
+            (AdicCompletion (MvPolynomial.idealOfVars (Fin n) R)
+              (MvPolynomial (Fin n) R))) := by
+    simp_rw [Ideal.map_span, ← Set.range_comp]
+    congr 2
+    ext1
+    simp [AdicCompletion.algebraMap_apply, ← MvPolynomial.coe_X,
+      MvPowerSeries.toAdicCompletion_coe]
+  have hKmap : Ideal.map e.toRingEquiv.toRingHom Kseries =
+        K.map (algebraMap P (AdicCompletion K P)) := by
+    simpa [e, K, Kseries] using hKmap0
+  have heval : ∀ (m : ℕ) (z : MvPowerSeries (Fin n) R),
+      AdicCompletion.eval K P m
+          (e (z - (MvPowerSeries.truncTotal m z :
+            MvPowerSeries (Fin n) R))) = 0 := by
+    intro m z
+    simp only [map_sub, AdicCompletion.eval_apply]
+    dsimp [e, MvPowerSeries.toAdicCompletionAlgEquiv]
+    simp [MvPowerSeries.toAdicCompletion_apply_eq_mk_truncTotal,
+      MvPowerSeries.toAdicCompletion_coe]
+  have he_mem : ∀ (m : ℕ) (z : MvPowerSeries (Fin n) R),
+      e (z - (MvPowerSeries.truncTotal m z :
+        MvPowerSeries (Fin n) R)) ∈
+        K ^ m • (⊤ : Submodule P (AdicCompletion K P)) := by
+    intro m z
+    rw [AdicCompletion.pow_smul_top_eq_ker_eval
+      (MvPolynomial.idealOfVars_fg (Fin n) R)]
+    exact LinearMap.mem_ker.mpr (heval m z)
+  have he_mem' : ∀ (m : ℕ) (z : MvPowerSeries (Fin n) R),
+      e (z - (MvPowerSeries.truncTotal m z :
+        MvPowerSeries (Fin n) R)) ∈
+        (Ideal.map e.toRingEquiv.toRingHom Kseries) ^ m := by
+    intro m z
+    rw [hKmap, ← Ideal.map_pow]
+    have hm := he_mem m z
+    rw [Ideal.smul_top_eq_map] at hm
+    change e (z - (MvPowerSeries.truncTotal m z :
+        MvPowerSeries (Fin n) R)) ∈
+      Ideal.map (algebraMap P (AdicCompletion K P)) (K ^ m) at hm
+    exact hm
+  have htail : ∀ (m : ℕ) (z : MvPowerSeries (Fin n) R),
+      z - (MvPowerSeries.truncTotal m z :
+        MvPowerSeries (Fin n) R) ∈ Kseries ^ m := by
+    intro m z
+    have hz :
+        e (z - (MvPowerSeries.truncTotal m z :
+          MvPowerSeries (Fin n) R)) ∈
+        Ideal.map e.toRingEquiv.toRingHom (Kseries ^ m) := by
+      rw [Ideal.map_pow]
+      exact he_mem' m z
+    have hz' := Ideal.mem_map_of_mem
+      e.symm.toRingEquiv.toRingHom hz
+    have hcomp :
+        e.symm.toRingEquiv.toRingHom.comp e.toRingEquiv.toRingHom =
+          RingHom.id _ := by
+      ext y
+      simp
+    rw [Ideal.map_map, hcomp, Ideal.map_id] at hz'
+    simpa using hz'
+  have hpoly_eval : ∀ p : MvPolynomial (Fin n) R,
+      F (p : MvPowerSeries (Fin n) R) = G (p : MvPowerSeries (Fin n) R) := by
+    intro p
+    simpa [ePoly, gPoly] using DFunLike.congr_fun hpoly p
+  have hKleJ : Kseries ≤ J := by
+    exact le_sup_right
+  apply DFunLike.coe_injective
+  apply IsHausdorff.funext' I
+  intro q z
+  obtain ⟨mF, hmF⟩ := hcont q
+  obtain ⟨mG, hmG⟩ := hGcont q
+  let m := max mF mG
+  let t : MvPolynomial (Fin n) R := MvPowerSeries.truncTotal m z
+  have htailK : z - (t : MvPowerSeries (Fin n) R) ∈ Kseries ^ m := by
+    simpa [t] using htail m z
+  have htailJ : z - (t : MvPowerSeries (Fin n) R) ∈ J ^ m := by
+    exact (Ideal.pow_right_mono hKleJ m) htailK
+  have htailF : z - (t : MvPowerSeries (Fin n) R) ∈ J ^ mF := by
+    exact (Ideal.pow_le_pow_right (Nat.le_max_left mF mG)) htailJ
+  have htailG : z - (t : MvPowerSeries (Fin n) R) ∈ J ^ mG := by
+    exact (Ideal.pow_le_pow_right (Nat.le_max_right mF mG)) htailJ
+  have hFmem : F (z - (t : MvPowerSeries (Fin n) R)) ∈ I ^ q :=
+    hmF _ htailF
+  have hGmem : G (z - (t : MvPowerSeries (Fin n) R)) ∈ I ^ q :=
+    hmG _ htailG
+  have hdiff : G z - F z ∈ I ^ q := by
+    have htaildiff :
+        G (z - (t : MvPowerSeries (Fin n) R)) -
+          F (z - (t : MvPowerSeries (Fin n) R)) ∈ I ^ q :=
+      (I ^ q).sub_mem hGmem hFmem
+    have hrel :
+        G z - F z =
+          G (z - (t : MvPowerSeries (Fin n) R)) -
+            F (z - (t : MvPowerSeries (Fin n) R)) := by
+      rw [map_sub, map_sub, hpoly_eval t]
+      ring
+    rw [hrel]
+    exact htaildiff
+  rw [Ideal.Quotient.mk_eq_mk_iff_sub_mem]
+  exact hdiff
 
 theorem chapter13_power_series_evaluation_surjective_iff
     {R A : Type u} [CommRing R] [CommRing A] [IsLocalRing R] [IsLocalRing A]
