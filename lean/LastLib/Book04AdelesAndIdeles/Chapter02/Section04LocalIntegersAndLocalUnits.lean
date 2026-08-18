@@ -91,7 +91,20 @@ theorem chapter02_local_maximal_ideal_set_eq_coe_image
       (fun y : Chapter02LocalIntegerRing v =>
         (y : Chapter02LocalField v)) ''
         (Chapter02LocalMaximalIdeal v : Set (Chapter02LocalIntegerRing v)) := by
-  sorry
+  ext x
+  constructor
+  · intro hx
+    have hx_int : x ∈ Chapter02LocalIntegerSet v :=
+      (chapter02_local_integer_mem_iff v x).2 (le_of_lt hx)
+    let y : Chapter02LocalIntegerRing v := ⟨x, hx_int⟩
+    refine ⟨y, ?_, rfl⟩
+    change y ∈ IsLocalRing.maximalIdeal (Chapter02LocalIntegerRing v)
+    exact (Valuation.mem_maximalIdeal_iff (v :=
+      (Valued.v : Valuation (Chapter02LocalField v) ℤᵐ⁰))).2 hx
+  · rintro ⟨y, hy, rfl⟩
+    change Valued.v (y : Chapter02LocalField v) < 1
+    exact (Valuation.mem_maximalIdeal_iff (v :=
+      (Valued.v : Valuation (Chapter02LocalField v) ℤᵐ⁰))).1 hy
 
 theorem chapter02_local_unit_mem_iff
     {K : Type*} [Field K] [NumberField K]
@@ -474,7 +487,29 @@ theorem chapter02_higher_principal_units_are_local_units
     {K : Type*} [Field K] [NumberField K]
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) (m : ℕ) :
     Chapter02HigherPrincipalUnitGroup v m ≤ Chapter02LocalUnitGroup v := by
-  sorry
+  intro u hu
+  by_cases hm : m = 0
+  · rw [Chapter02HigherPrincipalUnitGroup, dif_pos hm] at hu
+    change u ∈ (v.adicCompletionIntegers K).unitGroup at hu ⊢
+    exact hu
+  · rw [Chapter02HigherPrincipalUnitGroup, dif_neg hm] at hu
+    change ∃ y : Chapter02LocalIntegerRing v,
+        y ∈ Chapter02LocalIdealPower v m ∧
+          (u : Chapter02LocalField v) = 1 + (y : Chapter02LocalField v) at hu
+    apply (chapter02_local_unit_group_mem_iff v u).2
+    change (u : Chapter02LocalField v) ≠ 0 ∧
+      Valued.v (u : Chapter02LocalField v) = 1
+    constructor
+    · exact Units.ne_zero u
+    · rcases hu with ⟨y, hy, huy⟩
+      have hymax : y ∈ Chapter02LocalMaximalIdeal v :=
+        (Ideal.pow_le_self hm) hy
+      have hylt : Valued.v (y : Chapter02LocalField v) < 1 :=
+        (Valuation.mem_maximalIdeal_iff (v :=
+          (Valued.v : Valuation (Chapter02LocalField v) ℤᵐ⁰))).1 hymax
+      have hval : Valued.v (1 + (y : Chapter02LocalField v)) = 1 :=
+        (Valued.v : Valuation (Chapter02LocalField v) ℤᵐ⁰).map_one_add_of_lt hylt
+      rw [huy, hval]
 
 theorem chapter02_higher_principal_units_are_open
     {K : Type*} [Field K] [NumberField K]

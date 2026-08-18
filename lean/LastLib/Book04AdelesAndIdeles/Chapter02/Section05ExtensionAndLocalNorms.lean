@@ -267,6 +267,109 @@ theorem chapter02_finite_branch_norm_formula_from_order_and_residue_degree
   push_cast
   ring
 
+private theorem chapter02_algebra_norm_prod
+    {K : Type u_1} {A : Type u_2} {B : Type u_3}
+    [Field K] [Ring A] [Ring B]
+    [Algebra K A] [Algebra K B]
+    [Module.Finite K A] [Module.Finite K B]
+    (a : A) (b : B) :
+    Algebra.norm K (a, b) = Algebra.norm K a * Algebra.norm K b := by
+  change LinearMap.det (Algebra.lmul K (A × B) (a, b)) =
+    Algebra.norm K a * Algebra.norm K b
+  rw [show Algebra.lmul K (A × B) (a, b) =
+      LinearMap.prodMap (Algebra.lmul K A a) (Algebra.lmul K B b) by
+    ext z <;> rfl]
+  rw [LinearMap.det_prodMap]
+  rfl
+
+private def chapter02_fin_succ_pi_algEquiv
+    {K : Type u_1} [Field K] {n : ℕ}
+    {M : Fin (n + 1) → Type u_2} [∀ i, Field (M i)]
+    [∀ i, Algebra K (M i)] :
+    (∀ i, M i) ≃ₐ[K] (M 0 × ∀ j : Fin n, M j.succ) := by
+  let f : (∀ i, M i) →ₐ[K] (M 0 × ∀ j : Fin n, M j.succ) :=
+    { toFun := fun x => (x 0, fun j => x j.succ)
+      map_one' := by
+        ext i <;> rfl
+      map_mul' := by
+        intro x y
+        ext i <;> rfl
+      map_zero' := by
+        ext i <;> rfl
+      map_add' := by
+        intro x y
+        ext i <;> rfl
+      commutes' := by
+        intro r
+        ext i <;> rfl }
+  apply AlgEquiv.ofBijective f
+  constructor
+  · intro x y hxy
+    funext i
+    refine Fin.cases ?_ (fun j => ?_) i
+    · exact congrArg Prod.fst hxy
+    · exact congrFun (congrArg Prod.snd hxy) j
+  · intro z
+    refine ⟨fun i => Fin.cases z.1 (fun j => z.2 j) i, ?_⟩
+    apply Prod.ext
+    · rfl
+    · funext j
+      rfl
+
+private theorem chapter02_product_algebra_norm_fin
+    {K : Type u_1} [Field K] (n : ℕ)
+    {M : Fin n → Type u_2} [∀ i, Field (M i)]
+    [∀ i, Algebra K (M i)] [∀ i, Module.Finite K (M i)]
+    (x : ∀ i, M i) :
+    Algebra.norm K x = ∏ i, Algebra.norm K (x i) := by
+  induction n with
+  | zero =>
+      have hx : x = 1 := Subsingleton.elim _ _
+      rw [hx]
+      simp
+  | succ n ih =>
+      let e := chapter02_fin_succ_pi_algEquiv (K := K) (M := M)
+      have he : Algebra.norm K (e x) = Algebra.norm K x :=
+        Algebra.norm_eq_of_algEquiv e x
+      rw [← he]
+      change Algebra.norm K (x 0, fun j : Fin n => x (Fin.succ j)) = _
+      have hprod := chapter02_algebra_norm_prod (K := K) (A := M 0)
+        (B := ∀ j : Fin n, M (Fin.succ j)) (x 0)
+        (fun j : Fin n => x (Fin.succ j))
+      rw [hprod]
+      rw [ih (M := fun j : Fin n => M (Fin.succ j))
+        (x := fun j : Fin n => x (Fin.succ j))]
+      simp [e, Fin.prod_univ_succ]
+
+private def chapter02_pi_reindex_algEquiv
+    {K : Type u_1} [Field K] {ι : Type u_2} {n : ℕ}
+    {M : ι → Type u_3} [∀ i, Field (M i)]
+    [∀ i, Algebra K (M i)] (e : ι ≃ Fin n) :
+    (∀ i, M i) ≃ₐ[K] (∀ j, M (e.symm j)) := by
+  let p : (∀ j : Fin n, M (e.symm j)) ≃ (∀ i : ι, M i) :=
+    Equiv.piCongr e.symm (fun j => Equiv.refl (M (e.symm j)))
+  let f : (∀ i, M i) →ₐ[K] (∀ j, M (e.symm j)) :=
+    { toFun := p.symm
+      map_one' := by
+        ext j
+        simp [p]
+      map_mul' := by
+        intro x y
+        ext j
+        simp [p]
+      map_zero' := by
+        ext j
+        simp [p]
+      map_add' := by
+        intro x y
+        ext j
+        simp [p]
+      commutes' := by
+        intro r
+        ext j
+        simp [p] }
+  exact AlgEquiv.ofBijective f p.symm.bijective
+
 /-- The norm on a finite product algebra is the product of the component norms. -/
 def Chapter02ProductAlgebraNorm
     (K : Type*) [Field K] {ι : Type*} [Fintype ι]
@@ -281,7 +384,24 @@ theorem chapter02_product_algebra_norm_is_componentwise
     [∀ i, Algebra K (Lω i)] [∀ i, Module.Finite K (Lω i)]
     (x : ∀ i, Lω i) :
     Chapter02ProductAlgebraNorm K Lω x = ∏ i, Algebra.norm K (x i) := by
-  sorry
+  classical
+  change Algebra.norm K x = _
+  let e : ι ≃ Fin (Fintype.card ι) := Fintype.equivFin ι
+  let E := chapter02_pi_reindex_algEquiv (K := K) (M := Lω) e
+  have he : Algebra.norm K (E x) = Algebra.norm K x :=
+    Algebra.norm_eq_of_algEquiv E x
+  have hfin : Algebra.norm K (E x) =
+      ∏ j : Fin (Fintype.card ι), Algebra.norm K ((E x) j) :=
+    chapter02_product_algebra_norm_fin (K := K) (n := Fintype.card ι)
+      (M := fun j => Lω (e.symm j)) (E x)
+  rw [← he, hfin]
+  have hprod :
+      (∏ j : Fin (Fintype.card ι), Algebra.norm K (x (e.symm j))) =
+        ∏ i : ι, Algebra.norm K (x i) := by
+    exact Fintype.prod_equiv e.symm
+      (fun j : Fin (Fintype.card ι) => Algebra.norm K (x (e.symm j)))
+      (fun i : ι => Algebra.norm K (x i)) (fun _ => rfl)
+  simpa [E, chapter02_pi_reindex_algEquiv] using hprod
 
 theorem chapter02_product_algebra_norm_absolute_value_is_componentwise
     (K : Type*) [Field K] {ι : Type*} [Fintype ι]
@@ -292,7 +412,8 @@ theorem chapter02_product_algebra_norm_absolute_value_is_componentwise
     (hω : ∀ i y, abvK (Algebra.norm K y) = abvω i y)
     (x : ∀ i, Lω i) :
     abvK (Chapter02ProductAlgebraNorm K Lω x) = ∏ i, abvω i (x i) := by
-  sorry
+  rw [chapter02_product_algebra_norm_is_componentwise]
+  simp_rw [map_prod, hω]
 
 end
 

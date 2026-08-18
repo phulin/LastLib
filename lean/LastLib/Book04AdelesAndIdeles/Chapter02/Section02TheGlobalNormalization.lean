@@ -27,7 +27,81 @@ theorem chapter02_finite_normalization_formula
     Chapter02FiniteNormalizedValue v (x : K) =
       (v.asIdeal.absNorm : ℝ) ^
         (-LastLib.Book04AdelesAndIdeles.Chapter01.chapter01UnitOrder v x) := by
-  sorry
+  classical
+  obtain ⟨r, s, hxs⟩ :=
+    IsLocalization.exists_mk'_eq (nonZeroDivisors (𝓞 K)) (x : K)
+  have hxs0 : (x : K) ≠ 0 := Units.ne_zero x
+  have hr : r ≠ 0 := by
+    intro hr
+    apply hxs0
+    rw [← hxs, hr, IsLocalization.mk'_zero]
+  have hs : (s : 𝓞 K) ≠ 0 := nonZeroDivisors.ne_zero s.property
+  have h_aJ :
+      FractionalIdeal.spanSingleton (nonZeroDivisors (𝓞 K)) (x : K) =
+        FractionalIdeal.spanSingleton (nonZeroDivisors (𝓞 K))
+            ((algebraMap (𝓞 K) K) (s : 𝓞 K))⁻¹ *
+          (Ideal.span ({r} : Set (𝓞 K)) :
+            FractionalIdeal (nonZeroDivisors (𝓞 K)) K) := by
+    rw [← hxs, IsFractionRing.mk'_eq_div,
+      ← FractionalIdeal.spanSingleton_div_spanSingleton,
+      FractionalIdeal.div_spanSingleton,
+      ← FractionalIdeal.coeIdeal_span_singleton]
+  have hI :
+      FractionalIdeal.spanSingleton (nonZeroDivisors (𝓞 K)) (x : K) ≠ 0 := by
+    simp [FractionalIdeal.spanSingleton_eq_zero_iff, hxs0]
+  have horder :
+      LastLib.Book04AdelesAndIdeles.Chapter01.chapter01UnitOrder v x =
+        ((Associates.mk v.asIdeal).count
+          (Associates.mk (Ideal.span {r} : Ideal (𝓞 K))).factors -
+         (Associates.mk v.asIdeal).count
+          (Associates.mk (Ideal.span {(s : 𝓞 K)} : Ideal (𝓞 K))).factors : ℤ) := by
+    change FractionalIdeal.count K v
+      (FractionalIdeal.spanSingleton (nonZeroDivisors (𝓞 K)) (x : K)) = _
+    exact FractionalIdeal.count_well_defined K v hI h_aJ
+  have hvr := v.intValuation_if_neg hr
+  have hvs := v.intValuation_if_neg hs
+  have hvr0 : v.intValuation r ≠ 0 := by
+    rw [hvr]
+    exact WithZero.exp_ne_zero
+  have hvs0 : v.intValuation (s : 𝓞 K) ≠ 0 := by
+    rw [hvs]
+    exact WithZero.exp_ne_zero
+  have hpowr :
+      (WithZero.unzero hvr0).toAdd =
+        -((Associates.mk v.asIdeal).count
+          (Associates.mk (Ideal.span {r} : Ideal (𝓞 K))).factors : ℤ) := by
+    rw [WithZero.toAdd_unzero_eq_log hvr0, hvr]
+    simp
+  have hpow_s :
+      (WithZero.unzero hvs0).toAdd =
+        -((Associates.mk v.asIdeal).count
+          (Associates.mk (Ideal.span {(s : 𝓞 K)} : Ideal (𝓞 K))).factors : ℤ) := by
+    rw [WithZero.toAdd_unzero_eq_log hvs0, hvs]
+    simp
+  rw [← hxs]
+  simp only [Chapter02FiniteNormalizedValue, NumberField.FinitePlace.mk_apply,
+    NumberField.FinitePlace.norm_embedding]
+  change v.adicAbv (NumberField.HeightOneSpectrum.one_lt_absNorm_nnreal v)
+      (IsLocalization.mk' K r s) =
+    (v.asIdeal.absNorm : ℝ) ^
+      (-LastLib.Book04AdelesAndIdeles.Chapter01.chapter01UnitOrder v x)
+  rw [v.adicAbv_of_mk']
+  simp [IsDedekindDomain.HeightOneSpectrum.intAdicAbv,
+    IsDedekindDomain.HeightOneSpectrum.intAdicAbvDef]
+  rw [WithZeroMulInt.toNNReal_neg_apply
+        (NumberField.HeightOneSpectrum.absNorm_ne_zero v) hvr0,
+    WithZeroMulInt.toNNReal_neg_apply
+        (NumberField.HeightOneSpectrum.absNorm_ne_zero v) hvs0,
+    hpowr, hpow_s, horder]
+  have hNnat : 0 < v.asIdeal.absNorm :=
+    lt_trans Nat.zero_lt_one (NumberField.HeightOneSpectrum.one_lt_absNorm v)
+  have hN : (v.asIdeal.absNorm : ℝ) ≠ 0 := by
+    exact_mod_cast hNnat.ne'
+  simp only [NNReal.coe_div, NNReal.coe_zpow, NNReal.coe_natCast]
+  rw [← zpow_sub₀ hN]
+  rw [← zpow_neg]
+  congr 1
+  ring
 
 /-- The real-place convention. -/
 def Chapter02RealNormalizedValue {K : Type*} [Field K]
@@ -162,7 +236,88 @@ theorem chapter02_mixing_squared_and_unsquared_complex_conventions_changes_the_p
     {K : Type*} [Field K] [NumberField K]
     (w : Chapter02InfinitePlace K) (hw : w.IsComplex) :
     ∃ x : K, Chapter02MixedComplexGlobalProduct w x ≠ 1 := by
-  sorry
+  classical
+  refine ⟨(2 : K), ?_⟩
+  have h2 : (2 : K) ≠ 0 := by norm_num
+  have hw2 : w (2 : K) = 2 := w.map_natCast 2
+  have hnormw : Chapter02InfiniteNormalizedValue w (2 : K) ≠ 0 := by
+    simp [Chapter02InfiniteNormalizedValue, hw2, hw.mult_eq_two]
+  have hpoint (w' : Chapter02InfinitePlace K) :
+      (if w' = w then Chapter02UnweightedInfiniteValue w' (2 : K)
+        else Chapter02InfiniteNormalizedValue w' (2 : K)) =
+        (if w' = w then
+            Chapter02UnweightedInfiniteValue w' (2 : K) /
+              Chapter02InfiniteNormalizedValue w' (2 : K)
+          else 1) * Chapter02InfiniteNormalizedValue w' (2 : K) := by
+    by_cases h : w' = w
+    · subst w'
+      simp only [ite_true]
+      exact (div_mul_cancel₀ _ hnormw).symm
+    · simp [h]
+  have hprod :
+      (∏ w' : Chapter02InfinitePlace K,
+        if w' = w then Chapter02UnweightedInfiniteValue w' (2 : K)
+        else Chapter02InfiniteNormalizedValue w' (2 : K)) =
+        (Chapter02UnweightedInfiniteValue w (2 : K) /
+          Chapter02InfiniteNormalizedValue w (2 : K)) *
+          (∏ w' : Chapter02InfinitePlace K,
+            Chapter02InfiniteNormalizedValue w' (2 : K)) := by
+    calc
+      (∏ w' : Chapter02InfinitePlace K,
+          if w' = w then Chapter02UnweightedInfiniteValue w' (2 : K)
+          else Chapter02InfiniteNormalizedValue w' (2 : K)) =
+          ∏ w' : Chapter02InfinitePlace K,
+            ((if w' = w then
+                Chapter02UnweightedInfiniteValue w' (2 : K) /
+                  Chapter02InfiniteNormalizedValue w' (2 : K)
+              else 1) * Chapter02InfiniteNormalizedValue w' (2 : K)) := by
+        apply Finset.prod_congr rfl
+        intro w' hw'
+        exact hpoint w'
+      _ = (∏ w' : Chapter02InfinitePlace K,
+            if w' = w then
+              Chapter02UnweightedInfiniteValue w' (2 : K) /
+                Chapter02InfiniteNormalizedValue w' (2 : K)
+            else 1) *
+            (∏ w' : Chapter02InfinitePlace K,
+              Chapter02InfiniteNormalizedValue w' (2 : K)) := by
+        rw [Finset.prod_mul_distrib]
+      _ = (Chapter02UnweightedInfiniteValue w (2 : K) /
+            Chapter02InfiniteNormalizedValue w (2 : K)) *
+            (∏ w' : Chapter02InfinitePlace K,
+              Chapter02InfiniteNormalizedValue w' (2 : K)) := by
+        rw [Finset.prod_ite_eq' (Finset.univ) w]
+        simp
+  have hglobal : Chapter02GlobalProduct (2 : K) = 1 :=
+    chapter02_product_formula h2
+  have hratio :
+      Chapter02UnweightedInfiniteValue w (2 : K) /
+        Chapter02InfiniteNormalizedValue w (2 : K) = (1 / 2 : ℝ) := by
+    simp [Chapter02UnweightedInfiniteValue, Chapter02InfiniteNormalizedValue,
+      hw2, hw.mult_eq_two]
+    norm_num
+  rw [Chapter02MixedComplexGlobalProduct, hprod, hratio]
+  have hglobal' :
+      (∏ w' : Chapter02InfinitePlace K,
+        Chapter02InfiniteNormalizedValue w' (2 : K)) *
+        ∏ᶠ w' : Chapter02FinitePlace K, w' (2 : K) = 1 := hglobal
+  have hmix :
+      ((1 / 2 : ℝ) *
+          (∏ w' : Chapter02InfinitePlace K,
+            Chapter02InfiniteNormalizedValue w' (2 : K))) *
+        ∏ᶠ w' : Chapter02FinitePlace K, w' (2 : K) = (1 / 2 : ℝ) := by
+    calc
+      ((1 / 2 : ℝ) *
+          (∏ w' : Chapter02InfinitePlace K,
+            Chapter02InfiniteNormalizedValue w' (2 : K))) *
+          ∏ᶠ w' : Chapter02FinitePlace K, w' (2 : K) =
+          (1 / 2 : ℝ) *
+            ((∏ w' : Chapter02InfinitePlace K,
+              Chapter02InfiniteNormalizedValue w' (2 : K)) *
+              ∏ᶠ w' : Chapter02FinitePlace K, w' (2 : K)) := by ring
+      _ = (1 / 2 : ℝ) := by rw [hglobal']; ring
+  rw [hmix]
+  norm_num
 
 end
 

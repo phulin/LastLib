@@ -186,7 +186,115 @@ theorem chapter02_rational_scalar_value_at_a_finite_place
     (p : Chapter02RationalPrime) (q : Chapter02PrimeAbove K p) (a : ℚ) :
     NumberField.FinitePlace.mk q.1 (algebraMap ℚ K a) =
       Chapter02RationalPadicValue p a ^ Chapter02LocalDegree q := by
-  sorry
+  let P : IsDedekindDomain.HeightOneSpectrum (𝓞 K) := q.1
+  have hp0 : P.asIdeal.under ℤ ≠ ⊥ := by
+    exact Ideal.under_ne_bot ℤ P.ne_bot
+  have hp0' : Prime (P.asIdeal.under ℤ) := by
+    exact Ideal.prime_of_isPrime hp0 (by infer_instance)
+  let V : IsDedekindDomain.HeightOneSpectrum ℤ := .ofPrime hp0'
+  have hV : V.asIdeal = P.asIdeal.under ℤ := by
+    simp [V]
+  have hp0span : Ideal.span {(p.1 : ℤ)} = P.asIdeal.under ℤ := by
+    exact q.2.over
+  letI : P.asIdeal.LiesOver (Ideal.span {(p.1 : ℤ)}) := q.2
+  have hVP : P.asIdeal.LiesOver V.asIdeal := by
+    rw [hV]
+    rw [← hp0span]
+    exact q.2
+  letI : P.asIdeal.LiesOver V.asIdeal := hVP
+  letI : Fact p.1.Prime := ⟨p.2⟩
+  have hVint {z : ℤ} (hz : z ≠ 0) :
+      V.intValuation z = WithZero.exp (-(padicValInt p.1 z : ℤ)) := by
+    rw [V.intValuation_if_neg hz]
+    rw [hV]
+    have hcount : (Associates.mk (P.asIdeal.under ℤ)).count
+        (Associates.mk (Ideal.span {z} : Ideal ℤ)).factors =
+        padicValNat p.1 z.natAbs := by
+      rw [← hp0span]
+      let n : ℕ := padicValNat p.1 z.natAbs
+      have hle : (p.1 : ℤ) ^ n ∣ z := by
+        rw [← Nat.cast_pow, Int.natCast_dvd]
+        exact (Nat.pow_dvd_iff_le_padicValNat p.2.ne_one
+          (Int.natAbs_ne_zero.mpr hz)).2 (le_rfl)
+      have hlt : ¬(p.1 : ℤ) ^ (n + 1) ∣ z := by
+        intro hdiv
+        rw [← Nat.cast_pow, Int.natCast_dvd] at hdiv
+        have hle' := (Nat.pow_dvd_iff_le_padicValNat p.2.ne_one
+          (Int.natAbs_ne_zero.mpr hz)).1 hdiv
+        exact (Nat.not_succ_le_self n) (by simpa [n] using hle')
+      have hpz : Prime (p.1 : ℤ) := Nat.prime_iff_prime_int.mp p.2
+      simpa [hp0span] using
+        (Ideal.count_associates_eq' (R := ℤ) (x := (p.1 : ℤ)) (a := z)
+          hpz hle hlt)
+    rw [hcount]
+    simp [padicValInt]
+  have hVval : ∀ b : ℚ, V.valuation ℚ b = Rat.padicValuation p.1 b := by
+    intro b
+    obtain ⟨r, s, h⟩ := IsLocalization.exists_mk'_eq (nonZeroDivisors ℤ) b
+    rw [← h, IsDedekindDomain.HeightOneSpectrum.valuation_of_mk']
+    by_cases hr : r = 0
+    · simp [hr]
+    · have hs : (s : ℤ) ≠ 0 := nonZeroDivisors.ne_zero s.property
+      rw [hVint hr, hVint hs]
+      simp [Rat.padicValuation, padicValRat, padicValInt, hr]
+  have hram : V.asIdeal.ramificationIdx' P.asIdeal =
+      P.asIdeal.ramificationIdx ℤ := by
+    apply Ideal.ramificationIdx'_eq_ramificationIdx
+    exact V.ne_bot
+  have hval : ∀ b : ℚ, V.valuation ℚ b ^ P.asIdeal.ramificationIdx ℤ =
+      P.valuation K (algebraMap ℚ K b) := by
+    intro b
+    rw [← hram]
+    exact IsDedekindDomain.HeightOneSpectrum.valuation_liesOver
+      (L := K) (v := V) (w := P) b
+  let d : ℕ := P.asIdeal.ramificationIdx ℤ * P.asIdeal.inertiaDeg ℤ
+  have hnorm : p.1 ^ P.asIdeal.inertiaDeg ℤ = P.asIdeal.absNorm :=
+    Ideal.pow_inertiaDeg p.1 P.asIdeal
+  have he : P.asIdeal.ramificationIdx ℤ ≠ 0 :=
+    (P.asIdeal.ramificationIdx_pos ℤ).ne'
+  have hf : P.asIdeal.inertiaDeg ℤ ≠ 0 :=
+    (P.asIdeal.inertiaDeg_pos ℤ).ne'
+  have hd : d ≠ 0 := by
+    simp [d, he, hf]
+  by_cases ha : a = 0
+  · simp [ha, Chapter02RationalPadicValue,
+      (chapter02_local_degree_pos q).ne']
+  · have hpa : Rat.padicValuation p.1 a ≠ 0 :=
+      (Rat.padicValuation p.1).ne_zero_iff.mpr ha
+    have hwval : NumberField.FinitePlace.mk q.1 (algebraMap ℚ K a) =
+        (WithZeroMulInt.toNNReal (NumberField.HeightOneSpectrum.absNorm_ne_zero P)
+          (P.valuation K (algebraMap ℚ K a)) : ℝ) := by
+      calc
+        NumberField.FinitePlace.mk q.1 (algebraMap ℚ K a) =
+            ‖NumberField.FinitePlace.embedding P (algebraMap ℚ K a)‖ := by
+              simpa [P] using
+                (NumberField.FinitePlace.norm_embedding_eq
+                  (NumberField.FinitePlace.mk q.1) (algebraMap ℚ K a)).symm
+        _ = _ := NumberField.FinitePlace.norm_embedding' (v := P)
+          (algebraMap ℚ K a)
+    rw [hwval, ← hval a]
+    simp only [map_pow]
+    simp only [← hnorm, hVval a]
+    change _ = (padicNorm p.1 a : ℝ) ^ d
+    rw [WithZeroMulInt.toNNReal_neg_apply _ hpa]
+    have htoAdd : (WithZero.unzero hpa).toAdd = -padicValRat p.1 a := by
+      rw [WithZero.toAdd_unzero_eq_iff]
+      simp [Rat.padicValuation, ha, WithZero.exp_eq_coe_ofAdd]
+    rw [htoAdd]
+    rw [padicNorm.eq_zpow_of_nonzero ha, Rat.cast_zpow, Rat.cast_natCast]
+    simp only [NNReal.coe_pow, NNReal.coe_zpow, NNReal.coe_natCast]
+    simp only [Nat.cast_pow]
+    norm_cast
+    push_cast
+    change (((p.1 : ℝ) ^ P.asIdeal.inertiaDeg ℤ) ^
+        (-padicValRat p.1 a)) ^ P.asIdeal.ramificationIdx ℤ =
+      ((p.1 : ℝ) ^ (-padicValRat p.1 a)) ^ d
+    rw [← zpow_natCast, ← zpow_mul]
+    rw [← zpow_natCast, ← zpow_mul]
+    rw [← zpow_natCast, ← zpow_mul]
+    congr 1
+    simp [d]
+    ring
 
 theorem chapter02_finite_place_restriction_exponent_is_local_degree
     {K : Type*} [Field K] [NumberField K]
@@ -278,7 +386,8 @@ theorem chapter02_global_degree_is_multiplicative_in_a_tower
     [NumberField K] [NumberField L] [Algebra K L]
     [Module.Finite K L] [IsScalarTower ℚ K L] :
     Chapter02GlobalDegree L = Chapter02GlobalDegree K * Module.finrank K L := by
-  sorry
+  simpa [Chapter02GlobalDegree] using
+    (Module.finrank_mul_finrank ℚ K L).symm
 
 /-- The local norm map is normalized without inserting an additional local-degree
 power; the degree appears in scalar restriction instead. -/
