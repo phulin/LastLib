@@ -302,7 +302,8 @@ theorem chapter02_finite_place_restriction_exponent_is_local_degree
     Chapter02RestrictionHasDegreeExponent
       (Sum.inl (NumberField.FinitePlace.mk q.1) : Chapter02Place K)
       (Chapter02RationalNormalizedPlace.finite p) (Chapter02LocalDegree q) := by
-  sorry
+  intro a
+  exact chapter02_rational_scalar_value_at_a_finite_place p q a
 
 theorem chapter02_product_over_places_above_a_rational_prime
     {K : Type*} [Field K] [NumberField K]
@@ -310,7 +311,23 @@ theorem chapter02_product_over_places_above_a_rational_prime
     (∏ q : Chapter02PrimeAbove K p,
       NumberField.FinitePlace.mk q.1 (algebraMap ℚ K a)) =
       Chapter02RationalPadicValue p a ^ Chapter02GlobalDegree K := by
-  sorry
+  classical
+  calc
+    (∏ q : Chapter02PrimeAbove K p,
+      NumberField.FinitePlace.mk q.1 (algebraMap ℚ K a)) =
+        ∏ q : Chapter02PrimeAbove K p,
+          Chapter02RationalPadicValue p a ^ Chapter02LocalDegree q := by
+      apply Finset.prod_congr rfl
+      intro q hq
+      exact chapter02_rational_scalar_value_at_a_finite_place p q a
+    _ = Chapter02RationalPadicValue p a ^
+        (∑ q : Chapter02PrimeAbove K p, Chapter02LocalDegree q) := by
+      simpa using
+        (Finset.prod_pow_eq_pow_sum (s := Finset.univ)
+          (f := Chapter02LocalDegree (p := p))
+          (a := Chapter02RationalPadicValue p a))
+    _ = Chapter02RationalPadicValue p a ^ Chapter02GlobalDegree K := by
+      rw [chapter02_sum_of_local_degrees_is_the_global_degree p]
 
 /-- The infinite-place local degree identity is Mathlib's `mult` formula. -/
 theorem chapter02_infinite_local_degree_formula
@@ -373,7 +390,11 @@ theorem chapter02_rational_scalar_product_over_all_places
     {a : ℚ} (ha : a ≠ 0) :
     Chapter02GlobalProduct (algebraMap ℚ K a) =
       Chapter02RationalGlobalProduct a ^ Chapter02GlobalDegree K := by
-  sorry
+  have hK : algebraMap ℚ K a ≠ 0 := by
+    exact (map_ne_zero_iff (algebraMap ℚ K)
+      (FaithfulSMul.algebraMap_injective ℚ K)).2 ha
+  rw [chapter02_product_formula hK, chapter02_rational_product_formula ha]
+  simp
 
 theorem chapter02_infinite_weights_sum_to_the_global_degree
     {K : Type*} [Field K] [NumberField K] :
