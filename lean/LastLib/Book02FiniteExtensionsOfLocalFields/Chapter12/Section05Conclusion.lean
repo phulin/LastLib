@@ -21,8 +21,9 @@ theorem chapter12_nearby_root_has_same_degree
     (hcontain : IntermediateField.adjoin K ({α} : Set L) ≤
       IntermediateField.adjoin K ({β} : Set L)) :
     Irreducible g ∧
-      IntermediateField.adjoin K ({α} : Set L) =
+        IntermediateField.adjoin K ({α} : Set L) =
         IntermediateField.adjoin K ({β} : Set L) := by
+  have _ := hf_separable
   have hαint : IsIntegral K α := ⟨f, hf_monic, hαroot⟩
   have hβint : IsIntegral K β := ⟨g, hg_monic, hβroot⟩
   have hminα : f = minpoly K α :=
@@ -32,7 +33,7 @@ theorem chapter12_nearby_root_has_same_degree
   have hdivβ : minpoly K β ∣ g := minpoly.dvd K β hβroot
   have hminβle : (minpoly K β).natDegree ≤ d := by
     simpa [hg_degree] using natDegree_le_of_dvd hdivβ hg_monic.ne_zero
-  letI : FiniteDimensional K (IntermediateField.adjoin K ({β} : Set L)) :=
+  let : FiniteDimensional K (IntermediateField.adjoin K ({β} : Set L)) :=
     IntermediateField.adjoin.finiteDimensional hβint
   have hdim_le : Module.finrank K (IntermediateField.adjoin K ({α} : Set L)) ≤
       Module.finrank K (IntermediateField.adjoin K ({β} : Set L)) :=

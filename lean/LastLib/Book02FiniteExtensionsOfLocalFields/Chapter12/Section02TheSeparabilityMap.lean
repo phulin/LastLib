@@ -44,6 +44,7 @@ private theorem chapter12_krasner_distance_set_finite_aux
     (α : L) (hα : IsIntegral K α)
     (hsplits : ((minpoly K α).map (algebraMap K L)).Splits) :
     Set.Finite (chapter12KrasnerDistanceSet (K := K) α) := by
+  have _ := hsplits
   let g : L → ENNReal := fun α' => ENNReal.ofReal ‖α' - α‖
   have hrootset : Set.Finite ((minpoly K α).rootSet L) :=
     Polynomial.rootSet_finite (minpoly K α) L
@@ -179,8 +180,7 @@ theorem chapter12_krasner_proximity_iff_radius
       have hmem : ENNReal.ofReal ‖α' - α‖ ∈
           chapter12KrasnerDistanceSet (K := K) α :=
         ⟨hα, α', hconj, hne, rfl⟩
-      have : False := by simpa [hempty] using hmem
-      exact this.elim
+      simp [hempty] at hmem
 
 /-- Replacing the norm by any positive real power does not change the
 strict proximity condition. -/
@@ -218,6 +218,9 @@ theorem chapter12_quadratic_conjugate_has_boundary_radius
     (hne : α ≠ β)
     (hroots : ∀ z : L, aeval z f = 0 → z = α ∨ z = β) :
     ENNReal.ofReal ‖β - α‖ = chapter12KrasnerRadius (K := K) α := by
+  have _ := hf_degree
+  have _ := hf_separable
+  have _ := hsplits
   have hα : IsIntegral K α := ⟨f, hf_monic, hαroot⟩
   have hmin : f = minpoly K α :=
     minpoly.eq_of_irreducible_of_monic hf_irreducible hαroot hf_monic

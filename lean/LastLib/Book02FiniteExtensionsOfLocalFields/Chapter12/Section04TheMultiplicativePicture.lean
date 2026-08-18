@@ -37,9 +37,6 @@ theorem chapter12_monic_polynomial_recovered_from_coefficients
   have hsum :
       (∑ i : Fin d, C (f.coeff (i : ℕ)) * X ^ (i : ℕ)) =
         ∑ i ∈ Finset.range d, C (f.coeff i) * X ^ i := by
-    change
-      (∑ i ∈ (Finset.univ : Finset (Fin d)),
-          C (f.coeff (i : ℕ)) * X ^ (i : ℕ)) = _
     apply Finset.sum_bij (s := (Finset.univ : Finset (Fin d)))
       (t := Finset.range d) (fun i _ => (i : ℕ))
     · intro i hi
@@ -62,7 +59,7 @@ theorem chapter12_simple_root_has_nonzero_derivative
   rcases hf_separable with ⟨u, v, huv⟩
   intro hzero
   have heval := congrArg (aeval z) huv
-  simpa [hz, hzero] using heval
+  simp [hz, hzero] at heval
 
 private theorem chapter12_monic_polynomial_coeff_of_lt
     {K : Type*} [Semiring K] (d : ℕ) (a : Fin d → K)
@@ -96,6 +93,7 @@ private theorem chapter12_monic_polynomial_monic
 private theorem chapter12_monic_polynomial_natDegree
     {K : Type*} [Semiring K] [Nontrivial K] (d : ℕ) (a : Fin d → K) (hd : 0 < d) :
     (chapter12MonicPolynomial d a).natDegree = d := by
+  have _ := hd
   change (X ^ d + ∑ i : Fin d, C (a i) * X ^ (i : ℕ)).natDegree = d
   have hdeg : (∑ i : Fin d, C (a i) * X ^ (i : ℕ)).degree <
       (X ^ d : K[X]).degree := by
@@ -116,7 +114,7 @@ private theorem chapter12_complete_norm_valuation
     rw [Valuation.isEquiv_iff_val_le_one]
     intro x
     rfl
-  letI : Valued M NNReal := NormedField.toValued
+  let : Valued M NNReal := NormedField.toValued
   have hcompleteM : @CompleteSpace M (Valued.mk' vM).toUniformSpace := by
     have hU : (Valued.mk' vM).toUniformSpace = (inferInstance : UniformSpace M) := by
       change @IsTopologicalAddGroup.rightUniformSpace M _ vM.subgroups_basis.topology _ = _
@@ -150,8 +148,10 @@ private theorem chapter12_hensel_root_of_norm
     (hderiv : p.derivative.eval a₀ ≠ 0)
     (hineq : ‖p.eval a₀‖ < ‖p.derivative.eval a₀‖ ^ 2) :
     ∃ a : M, p.eval a = 0 ∧ ‖a - a₀‖ < ‖p.derivative.eval a₀‖ := by
+  have _ := hp
+  have _ := hderiv
   let vM : Valuation M NNReal := NormedField.valuation
-  letI : Valuation.RankOne vM :=
+  let : Valuation.RankOne vM :=
     { hom' := MonoidWithZeroHom.ValueGroup₀.embedding
       strictMono' := MonoidWithZeroHom.ValueGroup₀.embedding_strictMono
       exists_val_nontrivial := by
@@ -170,7 +170,7 @@ private theorem chapter12_hensel_root_of_norm
             simpa using congrArg (fun t : NNReal => (t : ℝ)) h'
           exact (ne_of_gt hx) hreal }
   let v : AddValuation M (Additive NNReal)ᵒᵈ := Valuation.toAddValuation vM
-  letI : Valuation.RankOne v.toValuation := by
+  let : Valuation.RankOne v.toValuation := by
     let hv_equiv : vM.IsEquiv v.toValuation := by
       rw [Valuation.isEquiv_iff_val_le_one]
       intro x
@@ -230,7 +230,7 @@ private theorem chapter12_hensel_root_of_norm_exact
     ∃ a : M, p.eval a = 0 ∧
       ‖a - a₀‖ = ‖p.eval a₀‖ / ‖p.derivative.eval a₀‖ := by
   let vM : Valuation M NNReal := NormedField.valuation
-  letI : Valuation.RankOne vM :=
+  let : Valuation.RankOne vM :=
     { hom' := MonoidWithZeroHom.ValueGroup₀.embedding
       strictMono' := MonoidWithZeroHom.ValueGroup₀.embedding_strictMono
       exists_val_nontrivial := by
@@ -249,7 +249,7 @@ private theorem chapter12_hensel_root_of_norm_exact
             simpa using congrArg (fun t : NNReal => (t : ℝ)) h'
           exact (ne_of_gt hx) hreal }
   let v : AddValuation M (Additive NNReal)ᵒᵈ := Valuation.toAddValuation vM
-  letI : Valuation.RankOne v.toValuation := by
+  let : Valuation.RankOne v.toValuation := by
     let hv_equiv : vM.IsEquiv v.toValuation := by
       rw [Valuation.isEquiv_iff_val_le_one]
       intro x
@@ -407,7 +407,7 @@ private theorem chapter12_scaled_monic_polynomial_eq
       ((chapter12MonicPolynomial d b).map (algebraMap K M)).natDegree = d := by
     rw [natDegree_map_of_leadingCoeff_ne_zero]
     · exact hdegree
-    · simpa [hmonic.leadingCoeff]
+    · simp [hmonic.leadingCoeff]
   ext n
   by_cases hlt : n < d
   · rw [coeff_scaleRoots, hmapdegree, coeff_map,
@@ -416,7 +416,7 @@ private theorem chapter12_scaled_monic_polynomial_eq
     rw [finsetSum_coeff]
     rw [Finset.sum_eq_single ⟨n, hlt⟩]
     · rw [coeff_C_mul_X_pow]
-      simp [Nat.ne_of_lt hlt]
+      simp
     · intro i hi hne
       rw [coeff_C_mul_X_pow]
       have hni : n ≠ (i : ℕ) := by
@@ -430,7 +430,7 @@ private theorem chapter12_scaled_monic_polynomial_eq
     · subst n
       have hqcoeff : (chapter12MonicPolynomial d b).coeff d = 1 := by
         rw [← hmonic.leadingCoeff, leadingCoeff]
-        simpa [hdegree]
+        simp [hdegree]
       have hleft :
           (((chapter12MonicPolynomial d b).map (algebraMap K M)).scaleRoots c).coeff d =
             1 := by
@@ -486,7 +486,7 @@ private theorem chapter12_scaled_monic_polynomial_coeff_lt
   rw [coeff_add, coeff_X_pow, if_neg (Nat.ne_of_lt i.isLt), finsetSum_coeff]
   rw [Finset.sum_eq_single i]
   · rw [coeff_C_mul_X_pow]
-    simp [Nat.ne_of_lt i.isLt]
+    simp
   · intro j hj hne
     rw [coeff_C_mul_X_pow]
     have hji : (i : ℕ) ≠ (j : ℕ) := by
@@ -505,7 +505,7 @@ private theorem chapter12_continuous_scaled_derivative_eval
       (((chapter12MonicPolynomial d b).map (algebraMap K M)).scaleRoots c).derivative.eval z) := by
   simp_rw [chapter12_scaled_monic_polynomial_eq d hd c]
   simp only [derivative_add, derivative_X_pow, derivative_sum, derivative_C_mul,
-    eval_add, eval_finsetSum, eval_mul, eval_C, eval_X_pow, derivative_C]
+    eval_add, eval_finsetSum, eval_mul, eval_C, eval_X_pow]
   fun_prop
 
 private theorem chapter12_norm_eq_of_norm_sub_lt
@@ -513,14 +513,14 @@ private theorem chapter12_norm_eq_of_norm_sub_lt
     (x y : M) (h : ‖x - y‖ < ‖y‖) : ‖x‖ = ‖y‖ := by
   apply le_antisymm
   · calc
-      ‖x‖ = ‖(x - y) + y‖ := by congr 1 <;> ring
+      ‖x‖ = ‖(x - y) + y‖ := by congr 1; ring
       _ ≤ max ‖x - y‖ ‖y‖ := IsUltrametricDist.norm_add_le_max _ _
       _ = ‖y‖ := max_eq_right h.le
   · by_contra hnot
     have hyx : ‖x‖ < ‖y‖ := lt_of_not_ge hnot
     have hle : ‖y‖ ≤ max ‖y - x‖ ‖x‖ := by
       calc
-        ‖y‖ = ‖(y - x) + x‖ := by congr 1 <;> ring
+        ‖y‖ = ‖(y - x) + x‖ := by congr 1; ring
         _ ≤ max ‖y - x‖ ‖x‖ := IsUltrametricDist.norm_add_le_max _ _
     have hmax : max ‖y - x‖ ‖x‖ < ‖y‖ := by
       apply max_lt
@@ -571,7 +571,7 @@ theorem chapter12_simultaneous_stability_of_simple_roots
     · simp
     · simp [chapter12MonicPolynomial]
   · have hdpos : 0 < d := Nat.pos_of_ne_zero hd
-    letI : NontriviallyNormedField M :=
+    let : NontriviallyNormedField M :=
       NontriviallyNormedField.ofNormNeOne (by
         obtain ⟨x, hx⟩ := NormedField.exists_one_lt_norm K
         have hxM0 : algebraMap K M x ≠ 0 := by
@@ -583,8 +583,8 @@ theorem chapter12_simultaneous_stability_of_simple_roots
         refine ⟨algebraMap K M x, hxM0, ?_⟩
         rw [norm_algebraMap']
         exact ne_of_gt hx)
-    letI : IsUltrametricDist M := IsUltrametricDist.of_normedAlgebra K
-    letI : CompleteSpace M := FiniteDimensional.complete K M
+    let : IsUltrametricDist M := IsUltrametricDist.of_normedAlgebra K
+    let : CompleteSpace M := FiniteDimensional.complete K M
     let p : M[X] := f.map (algebraMap K M)
     have hp_monic : p.Monic := by
       dsimp [p]
@@ -593,7 +593,7 @@ theorem chapter12_simultaneous_stability_of_simple_roots
       dsimp [p]
       rw [natDegree_map_of_leadingCoeff_ne_zero]
       · exact hf_degree
-      · simpa [hf_monic.leadingCoeff]
+      · simp [hf_monic.leadingCoeff]
     have hp_separable : p.Separable := by
       dsimp [p]
       exact hf_separable.map
@@ -744,7 +744,7 @@ theorem chapter12_simultaneous_stability_of_simple_roots
       dsimp [G]
       rw [natDegree_scaleRoots, natDegree_map_of_leadingCoeff_ne_zero]
       · exact chapter12_monic_polynomial_natDegree d b hdpos
-      · simpa [chapter12_monic_polynomial_monic d b |>.leadingCoeff]
+      · simp [chapter12_monic_polynomial_monic d b |>.leadingCoeff]
     have hGb_coeff : ∀ n, ‖(G b).coeff n‖ ≤ 1 := by
       intro n
       by_cases hlt : n < d
@@ -841,7 +841,7 @@ theorem chapter12_simultaneous_stability_of_simple_roots
       dsimp [g₀]
       rw [natDegree_map_of_leadingCoeff_ne_zero]
       · exact chapter12_monic_polynomial_natDegree d b hdpos
-      · simpa [chapter12_monic_polynomial_monic d b |>.leadingCoeff]
+      · simp [chapter12_monic_polynomial_monic d b |>.leadingCoeff]
     have hβroot₀ : ∀ i, g₀.eval (β i) = 0 := by
       intro i
       dsimp [g₀]
@@ -897,7 +897,7 @@ theorem chapter12_simultaneous_stability_of_simple_roots
       subst z
       exact (Set.disjoint_left.1 (hballs i j (Ne.symm hne))) hzi (hβball j)
     subst z
-    simpa [hji]
+    simp [hji]
 
 end
 
