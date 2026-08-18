@@ -126,7 +126,22 @@ theorem chapter10_equal_characteristic_principal_layer_coefficient
     PowerSeries.constantCoeff (u : PowerSeries k) = 1 ∧
       chapter10PowerSeriesLayerCoefficient u n =
         PowerSeries.coeff (n + 1) (u : PowerSeries k) := by
-  sorry
+  change ((u : PowerSeries k) - 1) ∈
+    (Ideal.span ({PowerSeries.X} : Set (PowerSeries k))) ^ (n + 1) at hu
+  have hmem : ((u : PowerSeries k) - 1) ∈
+      Ideal.span ({PowerSeries.X} : Set (PowerSeries k)) := by
+    simpa only [pow_one] using
+      (Ideal.pow_le_pow_right (Nat.succ_le_succ (Nat.zero_le n))) hu
+  have hdiv : PowerSeries.X ∣ ((u : PowerSeries k) - 1) :=
+    (Ideal.mem_span_singleton).mp hmem
+  obtain ⟨q, hq⟩ := hdiv
+  have hconst : PowerSeries.constantCoeff ((u : PowerSeries k) - 1) = 0 := by
+    rw [hq]
+    simp
+  have hcoeff : PowerSeries.constantCoeff (u : PowerSeries k) = 1 := by
+    simpa only [map_sub, map_one, sub_eq_zero] using hconst
+  refine ⟨hcoeff, ?_⟩
+  simp [chapter10PowerSeriesLayerCoefficient, hcoeff]
 
 end
 
