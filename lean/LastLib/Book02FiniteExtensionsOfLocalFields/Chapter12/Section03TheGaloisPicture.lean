@@ -33,7 +33,11 @@ theorem chapter12_krasner_lemma
     (hclose : chapter12KrasnerProximity (K := K) α β) :
     IntermediateField.adjoin K ({α} : Set L) ≤
       IntermediateField.adjoin K ({β} : Set L) := by
-  sorry
+  apply IntermediateField.adjoin_le_iff.mpr
+  intro x hx
+  rw [Set.mem_singleton_iff] at hx
+  subst x
+  exact chapter12_krasner_membership hα hsplits hβ hclose
 
 /-- Completeness of the base supplies the `IsKrasner` instance used above;
 the algebraic extension need not itself be complete. -/
