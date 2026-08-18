@@ -475,10 +475,274 @@ theorem chapter07_construct_unramified_lift_with_residue_maps
     ∃ E : Chapter07UnramifiedLocalExtensionData A B K L k k',
       E.profile.ramificationIndex = 1 ∧
         E.profile.residueDegree = Module.finrank k k' ∧
-        (∃ e : L ≃ₐ[K]
+      (∃ e : L ≃ₐ[K]
           Chapter07LiftedPolynomialQuotient K (chapter07LiftedPolynomial g),
           e Lroot = chapter07LiftedRoot g) := by
-  sorry
+  letI : Algebra.IsIntegral A B := IsIntegralClosure.isIntegral_algebra A L
+  letI : FaithfulSMul A B := FaithfulSMul.of_field_isFractionRing A B K L
+  letI : Module.IsTorsionFree A B :=
+    (Module.isTorsionFree_iff_faithfulSMul).mpr inferInstance
+  have hres_kernel : RingHom.ker res = IsLocalRing.maximalIdeal A := by
+    ext a
+    constructor
+    · intro ha
+      have hz : resB (algebraMap A B a) = 0 := by
+        calc
+          resB (algebraMap A B a) = algebraMap k k' (res a) :=
+            DFunLike.congr_fun hresB_compatible a
+          _ = 0 := by rw [ha]; simp
+      have hmem : algebraMap A B a ∈ IsLocalRing.maximalIdeal B := by
+        rw [← hresB_kernel]
+        exact (RingHom.mem_ker).mpr hz
+      have hcomap : a ∈ (IsLocalRing.maximalIdeal B).comap
+          (algebraMap A B) := hmem
+      rw [IsLocalRing.maximalIdeal_comap] at hcomap
+      exact hcomap
+    · intro ha
+      have hmem : algebraMap A B a ∈ IsLocalRing.maximalIdeal B :=
+        map_nonunit (algebraMap A B) a ha
+      have hz : resB (algebraMap A B a) = 0 := by
+        apply (RingHom.mem_ker).mp
+        rw [hresB_kernel]
+        exact hmem
+      apply (RingHom.injective (algebraMap k k'))
+      simpa using (show algebraMap k k' (res a) = 0 by
+        calc
+          algebraMap k k' (res a) = resB (algebraMap A B a) :=
+            (DFunLike.congr_fun hresB_compatible a).symm
+          _ = 0 := hz)
+  let resbar : (A ⧸ IsLocalRing.maximalIdeal A) →+* k :=
+    Ideal.Quotient.lift (IsLocalRing.maximalIdeal A) res (by
+      intro a ha
+      exact (RingHom.mem_ker).mp (by rw [hres_kernel]; exact ha))
+  let resbar' : (A ⧸ IsLocalRing.maximalIdeal A) →+* k' :=
+    (algebraMap k k').comp resbar
+  letI : Algebra (A ⧸ IsLocalRing.maximalIdeal A) k' := resbar'.toAlgebra
+  let eB : (B ⧸ IsLocalRing.maximalIdeal B) ≃+* k' := by
+    exact
+      (Ideal.quotEquivOfEq hresB_kernel.symm).trans
+        (RingHom.quotientKerEquivOfSurjective hresB_surjective)
+  let eBAlg : (B ⧸ IsLocalRing.maximalIdeal B) ≃ₐ[A ⧸ IsLocalRing.maximalIdeal A] k' :=
+    AlgEquiv.ofRingEquiv (f := eB) (by
+      intro x
+      obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective x
+      change resB (algebraMap A B a) =
+        algebraMap k k' (resbar (Ideal.Quotient.mk (IsLocalRing.maximalIdeal A) a))
+      simpa [resbar] using DFunLike.congr_fun hresB_compatible a)
+  letI : (IsLocalRing.maximalIdeal A).IsMaximal :=
+    IsLocalRing.maximalIdeal.isMaximal A
+  letI : (IsLocalRing.maximalIdeal B).IsMaximal :=
+    IsLocalRing.maximalIdeal.isMaximal B
+  have hinertia :
+      (IsLocalRing.maximalIdeal B).inertiaDeg A =
+        Module.finrank (A ⧸ IsLocalRing.maximalIdeal A) k' := by
+    rw [Ideal.inertiaDeg_eq_of_isMaximal
+      (IsLocalRing.maximalIdeal A) (IsLocalRing.maximalIdeal B)]
+    exact eBAlg.toLinearEquiv.finrank_eq
+  letI : Algebra (A ⧸ IsLocalRing.maximalIdeal A) k := resbar.toAlgebra
+  have hresbar_inj : Function.Injective resbar := by
+    intro x y hxy
+    obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective x
+    obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective y
+    apply (Ideal.Quotient.mk_eq_mk_iff_sub_mem a b).2
+    have hab : res a = res b := by
+      simpa [resbar] using hxy
+    have hz : res (a - b) = 0 := by
+      rw [map_sub, hab, sub_self]
+    rw [← hres_kernel]
+    exact (RingHom.mem_ker).mpr hz
+  letI : FaithfulSMul (A ⧸ IsLocalRing.maximalIdeal A) k :=
+    (faithfulSMul_iff_algebraMap_injective _ _).mpr hresbar_inj
+  letI : IsScalarTower (A ⧸ IsLocalRing.maximalIdeal A) k k' :=
+    IsScalarTower.of_algebraMap_eq (by intro x; rfl)
+  have hresidue_degree_tower :
+      Module.finrank (A ⧸ IsLocalRing.maximalIdeal A) k' =
+        Module.finrank (A ⧸ IsLocalRing.maximalIdeal A) k *
+          Module.finrank k k' := by
+    exact (Module.finrank_mul_finrank' k').symm
+  have hfund :
+      (IsLocalRing.maximalIdeal B).ramificationIdx A *
+          (IsLocalRing.maximalIdeal B).inertiaDeg A =
+        Module.finrank K L := by
+    have hsum :=
+      Ideal.sum_ramification_inertia_eq_finrank
+        (p := IsLocalRing.maximalIdeal A) (S := B)
+    have hq_eq (q : (IsLocalRing.maximalIdeal A).primesOver B) :
+        q.1 = IsLocalRing.maximalIdeal B := by
+      exact IsLocalRing.eq_maximalIdeal
+        (q.2.1.isMaximal (Ideal.ne_bot_of_mem_primesOver
+          (IsDiscreteValuationRing.not_a_field A) q.2))
+    letI : Unique ((IsLocalRing.maximalIdeal A).primesOver B) :=
+      { default := Ideal.primesOver.mk
+          (IsLocalRing.maximalIdeal A) (IsLocalRing.maximalIdeal B)
+        uniq := fun q => Subtype.ext (hq_eq q) }
+    have hdefault :
+        (default : (IsLocalRing.maximalIdeal A).primesOver B).1 =
+          IsLocalRing.maximalIdeal B := hq_eq default
+    rw [Fintype.sum_unique,
+      (IsFractionRing.finrank_eq A K B L).symm] at hsum
+    simpa only [hdefault] using hsum
+  have hprod :
+      (IsLocalRing.maximalIdeal B).ramificationIdx A *
+          (Module.finrank (A ⧸ IsLocalRing.maximalIdeal A) k *
+            Module.finrank k k') = Module.finrank k k' := by
+    calc
+      (IsLocalRing.maximalIdeal B).ramificationIdx A *
+          (Module.finrank (A ⧸ IsLocalRing.maximalIdeal A) k *
+            Module.finrank k k') =
+          (IsLocalRing.maximalIdeal B).ramificationIdx A *
+            Module.finrank (A ⧸ IsLocalRing.maximalIdeal A) k' := by
+              rw [hresidue_degree_tower]
+      _ = (IsLocalRing.maximalIdeal B).ramificationIdx A *
+            (IsLocalRing.maximalIdeal B).inertiaDeg A := by
+              rw [hinertia]
+      _ = Module.finrank K L := hfund
+      _ = Module.finrank k k' := hdegree.trans hresdegree.symm
+  have hprod_one :
+      (IsLocalRing.maximalIdeal B).ramificationIdx A *
+          Module.finrank (A ⧸ IsLocalRing.maximalIdeal A) k = 1 := by
+    have hpos : 0 < Module.finrank k k' := Module.finrank_pos
+    apply Nat.mul_right_cancel hpos
+    calc
+      ((IsLocalRing.maximalIdeal B).ramificationIdx A *
+          Module.finrank (A ⧸ IsLocalRing.maximalIdeal A) k) *
+          Module.finrank k k' =
+        (IsLocalRing.maximalIdeal B).ramificationIdx A *
+          (Module.finrank (A ⧸ IsLocalRing.maximalIdeal A) k *
+            Module.finrank k k') := by rw [Nat.mul_assoc]
+      _ = Module.finrank k k' := hprod
+      _ = 1 * Module.finrank k k' := by simp
+  have hram : (IsLocalRing.maximalIdeal B).ramificationIdx A = 1 := by
+    exact Nat.eq_one_of_dvd_one ⟨
+      Module.finrank (A ⧸ IsLocalRing.maximalIdeal A) k,
+      hprod_one.symm⟩
+  have hbase_degree : Module.finrank (A ⧸ IsLocalRing.maximalIdeal A) k = 1 := by
+    exact Nat.eq_one_of_dvd_one ⟨
+      (IsLocalRing.maximalIdeal B).ramificationIdx A,
+      by simpa [Nat.mul_comm] using hprod_one.symm⟩
+  have hres_surjective : Function.Surjective res := by
+    let R := A ⧸ IsLocalRing.maximalIdeal A
+    have hdim : Module.finrank R R = Module.finrank R k := by
+      simp [R, hbase_degree]
+    have hinj : Function.Injective
+        (Algebra.linearMap R k) := by
+      intro x y hxy
+      apply hresbar_inj
+      change resbar x = resbar y at hxy
+      exact hxy
+    let f : R →ₗ[R] k := Algebra.linearMap R k
+    have hinj' : Function.Injective f := by
+      simpa [f] using hinj
+    have hsurj' : Function.Surjective f :=
+      (LinearMap.linearEquivOfInjective f hinj' hdim).surjective
+    have hsurj : Function.Surjective (Algebra.linearMap R k) := by
+      simpa [f] using hsurj'
+    simpa [resbar, RingHom.algebraMap_toAlgebra] using hsurj
+  have hrootA : eval₂ (algebraMap A L) Lroot g = 0 := by
+    simpa [chapter07LiftedPolynomial, Polynomial.eval₂_map,
+      IsScalarTower.algebraMap_eq A K L] using hroot
+  have hLroot_integral : IsIntegral A Lroot := by
+    exact ⟨g, hlift.1, by simpa [aeval_def] using hrootA⟩
+  obtain ⟨b, hb⟩ :=
+    (IsIntegralClosure.isIntegral_iff (R := A) (A := B) (B := L)).mp
+      hLroot_integral
+  have hrootB : eval₂ (algebraMap A B) b g = 0 := by
+    apply IsFractionRing.injective B L
+    rw [Polynomial.hom_eval₂, hb]
+    simpa [IsScalarTower.algebraMap_eq A B L] using hrootA
+  have hrootbar :
+      eval₂ (algebraMap k k') (resB b) gbar = 0 := by
+    have h := congrArg resB hrootB
+    rw [← hlift.2, Polynomial.eval₂_map]
+    simpa only [Polynomial.hom_eval₂, hresB_compatible, map_zero] using h
+  have hminbar : gbar = minpoly k (resB b) := by
+    exact minpoly.eq_of_irreducible_of_monic (A := k)
+      hbar.2.1 hrootbar hbar.1
+  have hb_integral : IsIntegral k (resB b) :=
+    IsIntegral.of_finite k (resB b)
+  have hres_adjoin_finrank :
+      Module.finrank k (IntermediateField.adjoin k ({resB b} : Set k')) =
+        gbar.natDegree := by
+    rw [IntermediateField.adjoin.finrank hb_integral, hminbar]
+  have hres_adjoin_top :
+      IntermediateField.adjoin k ({resB b} : Set k') = ⊤ := by
+    apply IntermediateField.eq_of_le_of_finrank_eq le_top
+    rw [hres_adjoin_finrank, IntermediateField.finrank_top']
+    exact hresdegree.symm
+  have hsep_residue_element : IsSeparable k (resB b) := by
+    change (minpoly k (resB b)).Separable
+    rw [← hminbar]
+    exact hbar.2.2
+  have hsep_residue_adjoin :
+      Algebra.IsSeparable k
+        (IntermediateField.adjoin k ({resB b} : Set k')) :=
+    (IntermediateField.isSeparable_adjoin_simple_iff_isSeparable k k').mpr
+      hsep_residue_element
+  let eres : IntermediateField.adjoin k ({resB b} : Set k') ≃ₐ[k] k' :=
+    (IntermediateField.equivOfEq hres_adjoin_top).trans
+      IntermediateField.topEquiv
+  have hsep_residue : Algebra.IsSeparable k k' := by
+    exact
+      (Algebra.IsSeparable.iff_of_equiv_equiv
+        (RingEquiv.refl k) eres.toRingEquiv (by ext; simp)).mp
+        hsep_residue_adjoin
+  have hinertia_k :
+      (IsLocalRing.maximalIdeal B).inertiaDeg A = Module.finrank k k' := by
+    calc
+      (IsLocalRing.maximalIdeal B).inertiaDeg A =
+          Module.finrank (A ⧸ IsLocalRing.maximalIdeal A) k' := hinertia
+      _ = Module.finrank (A ⧸ IsLocalRing.maximalIdeal A) k *
+          Module.finrank k k' := hresidue_degree_tower
+      _ = Module.finrank k k' := by rw [hbase_degree, Nat.one_mul]
+  let profile : Chapter07FiniteLocalExtensionData K L k k' :=
+    { ramificationIndex := 1
+      ramificationIndex_pos := Nat.zero_lt_one
+      residueDegree := Module.finrank k k'
+      residueDegree_pos := Module.finrank_pos
+      degree_eq_ramification_residue := by
+        rw [hdegree.trans hresdegree.symm]
+        simp
+      residueDegree_eq := rfl }
+  letI : Algebra.IsSeparable k k' := hsep_residue
+  have hprofile_unramified : Chapter07UnramifiedExtension profile := by
+    refine ⟨rfl, ?_⟩
+    intro x
+    exact Algebra.IsSeparable.isSeparable k x
+  have hcriteria :=
+    chapter07_unramified_criteria profile
+      (IsLocalRing.maximalIdeal A) (IsLocalRing.maximalIdeal B) res
+      rfl rfl hres_surjective hres_kernel resB hresB_surjective
+      hresB_kernel hresB_compatible (by
+        change 1 = (IsLocalRing.maximalIdeal B).ramificationIdx A
+        exact hram.symm) (by
+        change Module.finrank k k' =
+          (IsLocalRing.maximalIdeal B).inertiaDeg A
+        exact hinertia_k.symm)
+  have hfiniteEtale : Chapter07FiniteEtaleExtension A B :=
+    hcriteria.2.2.mp hprofile_unramified
+  have hEtale : Algebra.Etale A B := hfiniteEtale.2
+  let E : Chapter07UnramifiedLocalExtensionData A B K L k k' :=
+    { profile := profile
+      unramified := hprofile_unramified
+      integralModel_etale := hEtale
+      profile_ramificationIndex := by
+        change 1 = (IsLocalRing.maximalIdeal B).ramificationIdx A
+        exact hram.symm
+      profile_residueDegree := by
+        change Module.finrank k k' =
+          (IsLocalRing.maximalIdeal B).inertiaDeg A
+        exact hinertia_k.symm
+      baseResidueMap := res
+      baseResidueMap_surjective := hres_surjective
+      baseResidueMap_kernel := hres_kernel
+      extensionResidueMap := resB
+      extensionResidueMap_surjective := hresB_surjective
+      extensionResidueMap_kernel := hresB_kernel
+      residueMap_compatible := hresB_compatible }
+  obtain ⟨e, he⟩ :=
+    chapter07_construct_unramified_lift res gbar g hbar hlift
+      L Lroot hroot hgen hdegree hresdegree
+  exact ⟨E, rfl, rfl, ⟨e, he⟩⟩
 
 /-- The integral model generated by the lifted root is a finite
 `A`-algebra.  The source's `B=A[theta]` is represented by the generated
@@ -528,7 +792,116 @@ theorem chapter07_different_monic_lifts_are_isomorphic
     (hdegree₁ : Module.finrank K L₁ = gbar.natDegree)
     (hdegree₂ : Module.finrank K L₂ = gbar.natDegree) :
     ∃ e : L₁ ≃ₐ[K] L₂, e θ₁ = θ₂' := by
-  sorry
+  have hp₁ : Irreducible (chapter07LiftedPolynomial (K := K) g₁) :=
+    chapter07_monic_lift_irreducible res gbar g₁
+      ⟨hbar.1, hbar.2.1⟩ h₁
+  have hmonic₁ :
+      (chapter07LiftedPolynomial (K := K) g₁).Monic :=
+    h₁.1.map (algebraMap A K)
+  let _ : Fact (Irreducible (chapter07LiftedPolynomial (K := K) g₁)) := ⟨hp₁⟩
+  let φ₁ : AdjoinRoot (chapter07LiftedPolynomial (K := K) g₁) →ₐ[K] L₁ :=
+    AdjoinRoot.liftAlgHom (chapter07LiftedPolynomial (K := K) g₁)
+      (Algebra.ofId K L₁) θ₁ (by simpa using hroot₁)
+  have hφ₁surj : Function.Surjective φ₁ := by
+    apply (AlgHom.range_eq_top φ₁).mp
+    apply top_unique
+    rw [← hgen₁]
+    apply Algebra.adjoin_le
+    intro x hx
+    rw [Set.mem_singleton_iff.mp hx]
+    exact (AlgHom.mem_range φ₁).2
+      ⟨AdjoinRoot.root (chapter07LiftedPolynomial (K := K) g₁), by
+        simp [φ₁]⟩
+  let _ : Module.Finite K (AdjoinRoot (chapter07LiftedPolynomial (K := K) g₁)) :=
+    hmonic₁.finite_adjoinRoot
+  have hdim₁ :
+      Module.finrank K (AdjoinRoot (chapter07LiftedPolynomial (K := K) g₁)) =
+        Module.finrank K L₁ := by
+    calc
+      Module.finrank K (AdjoinRoot (chapter07LiftedPolynomial (K := K) g₁)) =
+          (chapter07LiftedPolynomial (K := K) g₁).natDegree :=
+        chapter07_lifted_polynomial_quotient_degree _ hmonic₁
+      _ = g₁.natDegree := h₁.1.natDegree_map (algebraMap A K)
+      _ = (g₁.map res).natDegree := (h₁.1.natDegree_map res).symm
+      _ = gbar.natDegree := by rw [h₁.2]
+      _ = Module.finrank K L₁ := hdegree₁.symm
+  have hφ₁surj_linear : Function.Surjective φ₁.toLinearMap := by
+    simpa only [AlgHom.coe_toLinearMap] using hφ₁surj
+  have hφ₁inj_linear : Function.Injective φ₁.toLinearMap :=
+    (LinearMap.injective_iff_surjective_of_finrank_eq_finrank hdim₁).mpr
+      hφ₁surj_linear
+  have hφ₁inj : Function.Injective φ₁ := by
+    intro x y hxy
+    exact hφ₁inj_linear hxy
+  let e₁ : AdjoinRoot (chapter07LiftedPolynomial (K := K) g₁) ≃ₐ[K] L₁ :=
+    AlgEquiv.ofBijective φ₁ ⟨hφ₁inj, hφ₁surj⟩
+  let φ₂ : AdjoinRoot (chapter07LiftedPolynomial (K := K) g₁) →ₐ[K] L₂ :=
+    AdjoinRoot.liftAlgHom (chapter07LiftedPolynomial (K := K) g₁)
+      (Algebra.ofId K L₂) θ₂' (by simpa using hroot₂')
+  have hθ₂'_integral : IsIntegral K θ₂' := by
+    exact ⟨chapter07LiftedPolynomial (K := K) g₁, hmonic₁, hroot₂'⟩
+  have hmin₂' : minpoly K θ₂' =
+      chapter07LiftedPolynomial (K := K) g₁ := by
+    exact (minpoly.eq_of_irreducible_of_monic hp₁ hroot₂' hmonic₁).symm
+  have hθ₂'_adjoin_finrank :
+      Module.finrank K (IntermediateField.adjoin K ({θ₂'} : Set L₂)) =
+        gbar.natDegree := by
+    rw [IntermediateField.adjoin.finrank hθ₂'_integral, hmin₂']
+    calc
+      (chapter07LiftedPolynomial (K := K) g₁).natDegree = g₁.natDegree :=
+        h₁.1.natDegree_map (algebraMap A K)
+      _ = (g₁.map res).natDegree := (h₁.1.natDegree_map res).symm
+      _ = gbar.natDegree := by rw [h₁.2]
+  have hθ₂'_adjoin : IntermediateField.adjoin K ({θ₂'} : Set L₂) = ⊤ := by
+    apply IntermediateField.eq_of_le_of_finrank_eq le_top
+    rw [hθ₂'_adjoin_finrank, IntermediateField.finrank_top']
+    exact hdegree₂.symm
+  have hθ₂'_adjoin_alg : Algebra.adjoin K ({θ₂'} : Set L₂) = ⊤ := by
+    rw [← IntermediateField.adjoin_simple_toSubalgebra_of_isAlgebraic
+      hθ₂'_integral.isAlgebraic, hθ₂'_adjoin,
+      IntermediateField.top_toSubalgebra]
+  have hφ₂surj : Function.Surjective φ₂ := by
+    apply (AlgHom.range_eq_top φ₂).mp
+    apply top_unique
+    rw [← hθ₂'_adjoin_alg]
+    apply Algebra.adjoin_le
+    intro x hx
+    rw [Set.mem_singleton_iff.mp hx]
+    exact (AlgHom.mem_range φ₂).2
+      ⟨AdjoinRoot.root (chapter07LiftedPolynomial (K := K) g₁), by
+        simp [φ₂]⟩
+  have hdim₂ :
+      Module.finrank K (AdjoinRoot (chapter07LiftedPolynomial (K := K) g₁)) =
+        Module.finrank K L₂ := by
+    calc
+      Module.finrank K (AdjoinRoot (chapter07LiftedPolynomial (K := K) g₁)) =
+          (chapter07LiftedPolynomial (K := K) g₁).natDegree :=
+        chapter07_lifted_polynomial_quotient_degree _ hmonic₁
+      _ = g₁.natDegree := h₁.1.natDegree_map (algebraMap A K)
+      _ = (g₁.map res).natDegree := (h₁.1.natDegree_map res).symm
+      _ = gbar.natDegree := by rw [h₁.2]
+      _ = Module.finrank K L₂ := hdegree₂.symm
+  have hφ₂surj_linear : Function.Surjective φ₂.toLinearMap := by
+    simpa only [AlgHom.coe_toLinearMap] using hφ₂surj
+  have hφ₂inj_linear : Function.Injective φ₂.toLinearMap :=
+    (LinearMap.injective_iff_surjective_of_finrank_eq_finrank hdim₂).mpr
+      hφ₂surj_linear
+  have hφ₂inj : Function.Injective φ₂ := by
+    intro x y hxy
+    exact hφ₂inj_linear hxy
+  let e₂ : AdjoinRoot (chapter07LiftedPolynomial (K := K) g₁) ≃ₐ[K] L₂ :=
+    AlgEquiv.ofBijective φ₂ ⟨hφ₂inj, hφ₂surj⟩
+  refine ⟨e₁.symm.trans e₂, ?_⟩
+  have he₁root : e₁ (AdjoinRoot.root (chapter07LiftedPolynomial (K := K) g₁)) = θ₁ := by
+    change φ₁ (AdjoinRoot.root (chapter07LiftedPolynomial (K := K) g₁)) = θ₁
+    simp [φ₁]
+  have he₁symm : e₁.symm θ₁ =
+      AdjoinRoot.root (chapter07LiftedPolynomial (K := K) g₁) := by
+    apply e₁.injective
+    rw [e₁.apply_symm_apply, he₁root]
+  rw [AlgEquiv.trans_apply, he₁symm]
+  change φ₂ (AdjoinRoot.root (chapter07LiftedPolynomial (K := K) g₁)) = θ₂'
+  simp [φ₂]
 
 /-! The classification data is exposed through an actual family of
 intermediate fields and residue fields. -/

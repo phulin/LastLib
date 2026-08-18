@@ -2,9 +2,12 @@ import Mathlib.GroupTheory.Index
 import Mathlib.FieldTheory.Perfect
 import Mathlib.FieldTheory.PurelyInseparable.Basic
 import Mathlib.LinearAlgebra.Dimension.Finite
+import Mathlib.RingTheory.Localization.Integral
+import Mathlib.RingTheory.Unramified.LocalRing
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section01TheExtensionProblem
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section05SeveralExtensionsAndTheFundamentalEquality
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section02TheCompletedProductTheorem
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section06TheValuationRingInAFiniteCompleteExtension
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07
 
@@ -149,7 +152,107 @@ theorem chapter07_unramified_is_separable
     (hresidue : ∀ x : IsLocalRing.ResidueField vL.valuationSubring,
       IsSeparable (IsLocalRing.ResidueField vK.valuationSubring) x) :
     Algebra.IsSeparable K L := by
-  sorry
+  let hfinite : Module.Finite vK.valuationSubring vL.valuationSubring :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.complete_extension_unit_ball_is_finite
+      vK vL hcomplete
+  letI : Module.Finite vK.valuationSubring vL.valuationSubring := hfinite
+  letI : Algebra.IsSeparable (IsLocalRing.ResidueField vK.valuationSubring)
+      (IsLocalRing.ResidueField vL.valuationSubring) := ⟨hresidue⟩
+  have hformulas :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.complete_extension_ideal_and_residue_formulas
+      vK vL 1 (Module.finrank (IsLocalRing.ResidueField vK.valuationSubring)
+        (IsLocalRing.ResidueField vL.valuationSubring)) he hresidueDegree hcomplete
+  have hmap :
+      (IsLocalRing.maximalIdeal vK.valuationSubring).map
+          (algebraMap vK.valuationSubring vL.valuationSubring) =
+        IsLocalRing.maximalIdeal vL.valuationSubring := by
+    simpa only [pow_one] using hformulas.1
+  letI : Algebra.FormallyUnramified vK.valuationSubring vL.valuationSubring :=
+    Algebra.FormallyUnramified.of_map_maximalIdeal hmap
+  let T :=
+    Localization (Algebra.algebraMapSubmonoid vL.valuationSubring
+      (nonZeroDivisors vK.valuationSubring))
+  have hinj : Function.Injective
+      (algebraMap vK.valuationSubring vL.valuationSubring) := by
+    exact Valuation.HasExtension.algebraMap_injective (vK := vK) (vA := vL)
+  have hbaseMap :
+      Algebra.algebraMapSubmonoid vL.valuationSubring
+          (nonZeroDivisors vK.valuationSubring) ≤
+        nonZeroDivisors vL.valuationSubring := by
+    exact map_le_nonZeroDivisors_of_injective _ hinj le_rfl
+  letI : Algebra K T :=
+    localizationAlgebra (nonZeroDivisors vK.valuationSubring)
+      vL.valuationSubring
+  letI : IsScalarTower vK.valuationSubring K T :=
+    isScalarTower_localizationAlgebra
+      (nonZeroDivisors vK.valuationSubring) vL.valuationSubring
+  letI : Module.Finite K T :=
+    Module.Finite.of_isLocalization vK.valuationSubring vL.valuationSubring
+      (nonZeroDivisors vK.valuationSubring)
+  letI : IsLocalization
+      ((nonZeroDivisors vK.valuationSubring).map
+        (algebraMap vK.valuationSubring vL.valuationSubring)) T :=
+    inferInstanceAs (IsLocalization
+      (Algebra.algebraMapSubmonoid vL.valuationSubring
+        (nonZeroDivisors vK.valuationSubring)) T)
+  letI : IsDomain T := IsLocalization.isDomain_localization hbaseMap
+  have hfieldT : IsField T :=
+    isField_of_isIntegral_of_isField' (R := K) (S := T) (Field.toIsField K)
+  letI : IsField T := hfieldT
+  letI : Field T := hfieldT.toField
+  have hformalT : Algebra.FormallyUnramified K T := by
+    exact Algebra.FormallyUnramified.localization_map
+      (R := vK.valuationSubring) (S := vL.valuationSubring)
+      (Rₘ := K) (Sₘ := T) (M := nonZeroDivisors vK.valuationSubring)
+  have hsepT : Algebra.IsSeparable K T :=
+    (Algebra.FormallyUnramified.iff_isSeparable K T).mp hformalT
+  letI : IsFractionRing vL.valuationSubring T :=
+    IsLocalization.of_le
+      (M := Algebra.algebraMapSubmonoid vL.valuationSubring
+        (nonZeroDivisors vK.valuationSubring))
+      (nonZeroDivisors vL.valuationSubring) hbaseMap (fun x hx => by
+        apply isUnit_iff_ne_zero.mpr
+        exact map_ne_zero_of_mem_nonZeroDivisors _
+          (IsLocalization.injective T hbaseMap) hx)
+  let eTL : T ≃ₐ[vL.valuationSubring] L :=
+    IsFractionRing.algEquivOfAlgEquiv
+      (R := vL.valuationSubring) (A := vL.valuationSubring)
+      (B := vL.valuationSubring) (K := T) (L := L)
+      (AlgEquiv.refl : (↥vL.valuationSubring) ≃ₐ[vL.valuationSubring]
+        (↥vL.valuationSubring))
+  apply Algebra.IsSeparable.of_equiv_equiv (RingEquiv.refl K) eTL.toRingEquiv
+  ext x
+  simp only [RingHom.comp_apply]
+  obtain ⟨a, b, hb, rfl⟩ := IsFractionRing.div_surjective vK.valuationSubring x
+  simp [map_div₀, ← IsScalarTower.algebraMap_apply vK.valuationSubring K T,
+    ← IsScalarTower.algebraMap_apply vK.valuationSubring vL.valuationSubring L]
+  congr 1
+  · have haK : (a : K) = algebraMap vK.valuationSubring K a := rfl
+    have haL : (algebraMap K L) (a : K) =
+        (algebraMap vL.valuationSubring L)
+          (algebraMap vK.valuationSubring vL.valuationSubring a) := by
+      rw [haK, ← IsScalarTower.algebraMap_apply vK.valuationSubring K L,
+        ← IsScalarTower.algebraMap_apply vK.valuationSubring vL.valuationSubring L]
+    have haT : (algebraMap K T) (a : K) =
+        (algebraMap vL.valuationSubring T)
+          (algebraMap vK.valuationSubring vL.valuationSubring a) := by
+      rw [haK, ← IsScalarTower.algebraMap_apply vK.valuationSubring K T,
+        ← IsScalarTower.algebraMap_apply vK.valuationSubring vL.valuationSubring T]
+    rw [haL, haT]
+    exact (eTL.commutes (algebraMap vK.valuationSubring vL.valuationSubring a)).symm
+  · have hbK : (b : K) = algebraMap vK.valuationSubring K b := rfl
+    have hbL : (algebraMap K L) (b : K) =
+        (algebraMap vL.valuationSubring L)
+          (algebraMap vK.valuationSubring vL.valuationSubring b) := by
+      rw [hbK, ← IsScalarTower.algebraMap_apply vK.valuationSubring K L,
+        ← IsScalarTower.algebraMap_apply vK.valuationSubring vL.valuationSubring L]
+    have hbT : (algebraMap K T) (b : K) =
+        (algebraMap vL.valuationSubring T)
+          (algebraMap vK.valuationSubring vL.valuationSubring b) := by
+      rw [hbK, ← IsScalarTower.algebraMap_apply vK.valuationSubring K T,
+        ← IsScalarTower.algebraMap_apply vK.valuationSubring vL.valuationSubring T]
+    rw [hbL, hbT]
+    exact (eTL.commutes (algebraMap vK.valuationSubring vL.valuationSubring b)).symm
 
 theorem chapter07_e_one_inseparable_residue_is_not_unramified
     {K L k l : Type*} [Field K] [Field L] [Field k] [Field l]

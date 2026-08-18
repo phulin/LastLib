@@ -138,7 +138,11 @@ theorem chapter07_finite_residue_unramified_exists_for_degree
     (hres_kernel : RingHom.ker res = IsLocalRing.maximalIdeal A) :
     ∃ M : Chapter07FiniteResidueUnramifiedModel A K k res,
       M.degree = f ∧ M.residueDegree = f ∧ M.ramificationIndex = 1 := by
-  sorry
+  obtain ⟨gbar, hgbar_monic, hgbar_irreducible, hgbar_separable,
+    hgbar_degree⟩ := chapter07_finite_field_irreducible_separable_polynomial_exists f hf
+  exact chapter07_finite_residue_unramified_exists res f hf
+    hres_surjective hres_kernel
+    ⟨gbar, hgbar_monic, hgbar_irreducible, hgbar_separable, hgbar_degree⟩
 
 /-- Any two models produced for the same finite residue degree are isomorphic
 over the base field. -/
@@ -448,7 +452,9 @@ theorem chapter07_finite_residue_galois_data_exists
       Nonempty
         (Chapter07MaximalUnramifiedGaloisData
           (Chapter07MaximalUnramifiedAutomorphismGroup K Ω k κ T)) := by
-  sorry
+  obtain ⟨T⟩ := chapter07_finite_residue_tower_exists vK hcomplete
+    residueIdentification
+  exact ⟨T, chapter07_finite_residue_tower_galois_data_exists T⟩
 
 /-- For a fixed finite-residue tower, an explicit completion witness is paired
 with the inverse-limit Galois data supplied by the tower construction. -/
@@ -465,7 +471,8 @@ theorem chapter07_finite_residue_tower_maximal_unramified_data_exists
     Nonempty
       (Chapter07FiniteResidueMaximalUnramifiedData.{uK, uΩ, uModel, uCompletion}
         K Ω k κ T) := by
-  sorry
+  obtain ⟨G⟩ := chapter07_finite_residue_tower_galois_data_exists T
+  exact ⟨⟨C, G⟩⟩
 
 /-- Attach explicitly supplied completion data to a fixed finite-residue tower;
 the inverse-limit Galois data are supplied by the tower construction. -/
@@ -483,7 +490,7 @@ theorem chapter07_finite_residue_maximal_unramified_data_exists
       Nonempty
         (Chapter07FiniteResidueMaximalUnramifiedData.{uK, uΩ, uModel, uCompletion}
           K Ω k κ T') := by
-  sorry
+  exact ⟨T, chapter07_finite_residue_tower_maximal_unramified_data_exists T C⟩
 
 theorem chapter07_maximal_unramified_galois_group_is_profinite_integer_completion
     (G : Type*) [Group G]

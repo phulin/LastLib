@@ -188,7 +188,7 @@ theorem chapter07_residue_tensor_product_is_separable_product
     [Algebra k k'] [Algebra k l] [FiniteDimensional k l]
     [Algebra.IsSeparable k l] :
     Chapter07FiniteEtaleExtension k' (l ⊗[k] k') := by
-  sorry
+  exact ⟨inferInstance, inferInstance⟩
 
 /-- A finite product of unramified factors after scalar extension. -/
 structure Chapter07UnramifiedScalarExtensionProduct
@@ -281,7 +281,33 @@ theorem chapter07_galois_over_intersection_linearly_disjoint
       (F := K₁ ⊓ K₂) (E := K₁) inf_le_left).LinearDisjoint
       (IntermediateField.extendScalars
         (F := K₁ ⊓ K₂) (E := K₂) inf_le_right) := by
-  sorry
+  let F := K₁ ⊓ K₂
+  let E₁ := IntermediateField.extendScalars
+    (F := F) (E := K₁) inf_le_left
+  let E₂ := IntermediateField.extendScalars
+    (F := F) (E := K₂) inf_le_right
+  letI : Algebra K E₁ := Algebra.compHom E₁ (algebraMap K F)
+  letI : Algebra K E₂ := Algebra.compHom E₂ (algebraMap K F)
+  letI : IsScalarTower K F E₁ := IsScalarTower.of_algebraMap_eq (by
+    intro x
+    rfl)
+  letI : IsScalarTower K F E₂ := IsScalarTower.of_algebraMap_eq (by
+    intro x
+    rfl)
+  letI : Module.Finite K E₁ := by
+    change Module.Finite K K₁
+    infer_instance
+  letI : Module.Finite K E₂ := by
+    change Module.Finite K K₂
+    infer_instance
+  letI : Module.Finite F E₁ :=
+    Module.Finite.of_restrictScalars_finite K F E₁
+  letI : Module.Finite F E₂ :=
+    Module.Finite.of_restrictScalars_finite K F E₂
+  change E₁.LinearDisjoint E₂
+  apply (IntermediateField.LinearDisjoint.iff_inf_eq_bot).2
+  rw [E₁, E₂, F, IntermediateField.extendScalars_inf,
+    IntermediateField.extendScalars_self]
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07
