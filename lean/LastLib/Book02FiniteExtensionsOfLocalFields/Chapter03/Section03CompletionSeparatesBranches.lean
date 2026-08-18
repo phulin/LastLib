@@ -117,7 +117,9 @@ theorem chapter03_completed_branch_degree
       (IsLocalRing.maximalIdeal wComp.valuationSubring) = f) :
     Module.finrank (Valuation.Completion v)
         (Valuation.Completion b.extension.valuation) = e * f := by
-  sorry
+  simpa only [he, hf] using
+    (LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.complete_extension_defectless_without_separability
+      vComp wComp hcomplete)
 
 /-- The sum over all prime branches recovers the finite degree. -/
 theorem chapter03_sum_of_branch_degrees
@@ -132,7 +134,10 @@ theorem chapter03_sum_of_branch_degrees
     (p : Ideal A) [p.IsPrime] [p.IsMaximal] :
     Module.finrank K L =
       ∑ q : p.primesOver B, q.1.ramificationIdx A * q.1.inertiaDeg A := by
-  sorry
+  calc
+    Module.finrank K L = Module.finrank A B := IsFractionRing.finrank_eq A K B L
+    _ = ∑ q : p.primesOver B, q.1.ramificationIdx A * q.1.inertiaDeg A :=
+      (Ideal.sum_ramification_inertia_eq_finrank p B).symm
 
 /-- A complete base has one valuation branch up to equivalence. -/
 theorem chapter03_complete_base_has_one_completion_branch

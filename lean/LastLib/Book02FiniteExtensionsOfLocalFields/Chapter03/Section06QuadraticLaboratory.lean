@@ -81,11 +81,13 @@ theorem chapter03_unit_quadratic_is_unramified
     [Valuation.IsRankOneDiscrete vL]
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
-    (hvaluationRing : (vK.valuationSubring : Set K) =
+      (hvaluationRing : (vK.valuationSubring : Set K) =
       Set.range (algebraMap A K)) :
     ∃ data : Chapter03FiniteLocalExtensionData K L ℤᵐ⁰ vK vL,
       data.e = 1 ∧ data.f = 2 := by
   classical
+  let _ := hodd
+  let _ := hnonsquare
   obtain ⟨eres, hresidue_comp⟩ := hresidue
   let f : A[X] := chapter03QuadraticPolynomial (u : A)
   let fbar : (A ⧸ IsLocalRing.maximalIdeal A)[X] :=
@@ -575,9 +577,9 @@ theorem chapter03_ramified_quadratics_become_isomorphic_after_unramified_base_ch
     Nonempty
       ((chapter03QuadraticRootAlgebra K π ⊗[K] Kᵤ) ≃ₐ[Kᵤ]
         (chapter03QuadraticRootAlgebra K (u * π) ⊗[K] Kᵤ)) := by
-  letI : Algebra Kᵤ (chapter03QuadraticRootAlgebra K π ⊗[K] Kᵤ) :=
+  let _ : Algebra Kᵤ (chapter03QuadraticRootAlgebra K π ⊗[K] Kᵤ) :=
     Algebra.TensorProduct.rightAlgebra
-  letI : Algebra Kᵤ (chapter03QuadraticRootAlgebra K (u * π) ⊗[K] Kᵤ) :=
+  let _ : Algebra Kᵤ (chapter03QuadraticRootAlgebra K (u * π) ⊗[K] Kᵤ) :=
     Algebra.TensorProduct.rightAlgebra
   let R := Kᵤ ⊗[K] K
   let p : K[X] := chapter03QuadraticPolynomial π
@@ -814,7 +816,73 @@ theorem chapter03_residue_characteristic_two_needs_a_different_square_class_coun
     :
     ¬ chapter03PrincipalUnitSquaringBijective A
       (IsLocalRing.maximalIdeal A) := by
-  sorry
+  classical
+  let _ := hcomplete
+  let _ := hfraction
+  intro hbij
+  obtain ⟨e⟩ := hresidue
+  have h2 : (2 : A) ∈ IsLocalRing.maximalIdeal A := by
+    rw [← Ideal.Quotient.eq_zero_iff_mem]
+    apply e.injective
+    change e (2 : A ⧸ IsLocalRing.maximalIdeal A) = e 0
+    calc
+      e (2 : A ⧸ IsLocalRing.maximalIdeal A) = (2 : k) := map_natCast e 2
+      _ = 0 := CharP.cast_eq_zero k 2
+      _ = e 0 := (map_zero e).symm
+  obtain ⟨π, hπ⟩ := IsDiscreteValuationRing.exists_irreducible A
+  have hπmem : π ∈ IsLocalRing.maximalIdeal A := by
+    rw [hπ.maximalIdeal_eq]
+    exact Ideal.mem_span_singleton_self π
+  have hπ_not_m2 : π ∉ (IsLocalRing.maximalIdeal A) ^ 2 := by
+    intro hπ2
+    rw [hπ.maximalIdeal_eq, Ideal.span_singleton_pow,
+      Ideal.mem_span_singleton] at hπ2
+    obtain ⟨c, hc⟩ := hπ2
+    have hmul : (1 : A) = π * c := by
+      apply (mul_left_cancel₀ hπ.ne_zero)
+      calc
+        π * 1 = π := mul_one π
+        _ = π ^ 2 * c := hc
+        _ = π * (π * c) := by ring
+    have hunit : IsUnit π :=
+      isUnit_iff_dvd_one.mpr ⟨c, hmul⟩
+    exact hπ.not_isUnit hunit
+  have hneg_nonunit : -π ∈ nonunits A := by
+    rw [← IsLocalRing.mem_maximalIdeal]
+    exact (IsLocalRing.maximalIdeal A).neg_mem hπmem
+  have hunit_one_add : IsUnit (1 + π) := by
+    have ht := IsLocalRing.isUnit_one_sub_self_of_mem_nonunits (-π) hneg_nonunit
+    simpa [sub_neg_eq_add] using ht
+  let u : Aˣ := hunit_one_add.unit
+  have huval : (u : A) = 1 + π := IsUnit.unit_spec hunit_one_add
+  have huprincipal : (u : A) - 1 ∈ IsLocalRing.maximalIdeal A := by
+    simpa [huval] using hπmem
+  let x : chapter03PrincipalUnit A (IsLocalRing.maximalIdeal A) :=
+    ⟨u, huprincipal⟩
+  rcases hbij.2 x with ⟨y, hy⟩
+  have hsq : (y.1 : A) ^ 2 = (u : A) := by
+    have h := congrArg
+      (fun z : chapter03PrincipalUnit A (IsLocalRing.maximalIdeal A) => (z.1 : A)) hy
+    simpa [chapter03PrincipalUnitSquaringMap] using h
+  let a : A := (y.1 : A) - 1
+  have ha : a ∈ IsLocalRing.maximalIdeal A := y.2
+  have hya : (y.1 : A) = 1 + a := by
+    simp [a]
+  have hrel : π = (2 : A) * a + a ^ 2 := by
+    calc
+      π = (y.1 : A) ^ 2 - 1 := by rw [hsq, huval]; ring
+      _ = (1 + a) ^ 2 - 1 := by rw [hya]
+      _ = (2 : A) * a + a ^ 2 := by ring
+  have h2a : (2 : A) * a ∈ (IsLocalRing.maximalIdeal A) ^ 2 := by
+    simpa [pow_two] using
+      (Ideal.mul_mem_mul h2 ha)
+  have haa : a ^ 2 ∈ (IsLocalRing.maximalIdeal A) ^ 2 := by
+    simpa [pow_two] using
+      (Ideal.mul_mem_mul ha ha)
+  have hπ2 : π ∈ (IsLocalRing.maximalIdeal A) ^ 2 := by
+    rw [hrel]
+    exact (IsLocalRing.maximalIdeal A) ^ 2 |>.add_mem h2a haa
+  exact hπ_not_m2 hπ2
 
 theorem chapter03_dyadic_square_classes_do_not_have_the_odd_count
     (K k : Type*) [Field K] [Field k] [Fintype k] [CharP k 2]
