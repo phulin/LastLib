@@ -140,7 +140,7 @@ This distinction is the organizing theme of the book. Algebraic generic fibers c
 
 The closed unit polydisc should admit exactly those power series that converge whenever every coordinate has absolute value at most one. For a multi-index $\nu=(\nu_1,\ldots,\nu_n)\in\mathbf N^n$, write $T^\nu=T_1^{\nu_1}\cdots T_n^{\nu_n}$. The **Tate algebra** is
 
-# $$K\langle T_1,\ldots,T_n\rangle
+$$K\langle T_1,\ldots,T_n\rangle
 
 \left\{\sum_{\nu\in\mathbf N^n}a_\nu T^\nu:
 |a_\nu|\longrightarrow0\text{ as }|\nu|\longrightarrow\infty\right\}.
