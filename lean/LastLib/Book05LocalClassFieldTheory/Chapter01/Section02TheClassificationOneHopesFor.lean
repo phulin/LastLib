@@ -51,7 +51,7 @@ theorem chapter01_norm_image_is_closed_of_compact_source
     (C : Set Lˣ) (hcompact : IsCompact C)
     (hcontinuous : Continuous (chapter01NormHom K L)) :
     IsClosed ((chapter01NormHom K L) '' C) := by
-  sorry
+  exact (hcompact.image hcontinuous).isClosed
 
 /-- The local norm-index formula. -/
 theorem chapter01_norm_index_formula
@@ -86,7 +86,8 @@ theorem chapter01_finite_artin_map_kernel
     [FiniteDimensional K L] [Group (Gal(L / K))]
     (e : Chapter01NormQuotient K L ≃* Gal(L / K)) :
     (chapter01FiniteArtinMap e).ker = chapter01NormSubgroup K L := by
-  sorry
+  ext x
+  simp [chapter01FiniteArtinMap]
 
 /-- The finite Artin map is onto. -/
 theorem chapter01_finite_artin_map_surjective
@@ -94,7 +95,7 @@ theorem chapter01_finite_artin_map_surjective
     [FiniteDimensional K L] [Group (Gal(L / K))]
     (e : Chapter01NormQuotient K L ≃* Gal(L / K)) :
     Function.Surjective (chapter01FiniteArtinMap e) := by
-  sorry
+  exact e.surjective.comp (QuotientGroup.mk'_surjective (chapter01NormSubgroup K L))
 
 /-- The finite reciprocity isomorphism for an abelian finite extension. -/
 theorem chapter01_finite_reciprocity
