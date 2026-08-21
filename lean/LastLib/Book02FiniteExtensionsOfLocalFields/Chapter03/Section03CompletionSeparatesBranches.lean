@@ -175,7 +175,7 @@ theorem chapter03_complete_base_tensor_product_is_one_completion
           chapter03CompletedBranch (D.branch i).extension.valuation) := by
   obtain ⟨hne, hsub⟩ :=
     chapter03_complete_base_has_one_completion_branch v hcomplete D
-  letI : Algebra (Valuation.Completion v)
+  let : Algebra (Valuation.Completion v)
       (E ⊗[K₀] Valuation.Completion v) :=
     Algebra.TensorProduct.rightAlgebra
   let i₀ : D.index := Classical.choice hne
