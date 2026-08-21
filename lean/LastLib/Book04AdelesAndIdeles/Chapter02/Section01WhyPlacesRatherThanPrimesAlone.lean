@@ -179,12 +179,15 @@ noncomputable def chapter02_complex_place_completion_isometric_to_complex
     Chapter02InfiniteCompletion w ≃ᵢ ℂ := by
   exact NumberField.InfinitePlace.Completion.isometryEquivComplexOfIsComplex hw
 
-/-- Exhaustiveness of the finite/infinite classification, stated at the
-absolute-value level so later users can choose their preferred representative. -/
+/-- Exhaustiveness of the finite/infinite classification, stated modulo the
+equivalence relation defining a place. -/
 theorem chapter02_finite_or_infinite_absolute_value
     {K : Type*} [Field K] [NumberField K]
     (v : AbsoluteValue K ℝ) (hv : v.IsNontrivial) :
-    NumberField.IsFinitePlace v ∨ NumberField.IsInfinitePlace v := by
+    (∃ w : Chapter02FinitePlace K,
+      Chapter02EquivalentAbsoluteValues v w.1) ∨
+      (∃ w : Chapter02InfinitePlace K,
+        Chapter02EquivalentAbsoluteValues v w.1) := by
   sorry
 
 theorem chapter02_restriction_of_a_nontrivial_place_to_Q_is_nontrivial
