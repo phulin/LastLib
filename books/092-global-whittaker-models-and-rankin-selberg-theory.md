@@ -1163,7 +1163,7 @@ for unramified representations. It also proves why the Schwartz scalar integral 
 For completeness, multiply the right side of (8.7) by its four denominator factors. The coefficient of $X^m$ for $m\geq2$ is the second-order difference, in each pair of variables, of $h_m(a,b)h_m(c,d)$. Since
 
 $$
-h_m(a,b)=(a+b)h_{m-1}(a,b)-ab,h_{m-2}(a,b),
+h_m(a,b)=(a+b)h_{m-1}(a,b)-ab\,h_{m-2}(a,b),
 $$
 
 all coefficients of degree at least three vanish. The constant coefficient is $1$, the coefficient of $X$ vanishes, and the coefficient of $X^2$ is $-abcd$. This proves (8.7), including repeated parameters, without dividing by $a-b$ or $c-d$.
