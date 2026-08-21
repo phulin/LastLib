@@ -98,7 +98,72 @@ noncomputable def chapter03_stage_is_coordinate_product
     {I : Type u} {G : I → Type v} [∀ i, Group (G i)]
     (H : ∀ i, Subgroup (G i)) {S : Set I} (hS : S.Finite) :
     Chapter03Stage H S ≃ Chapter03StageCoordinateProduct H S := by
-  sorry
+  classical
+  have hmem : ∀ i, i ∈ S → chapter03StageCoordinateType H S i = G i := by
+    intro i hi
+    simp [chapter03StageCoordinateType, hi]
+  have hnotmem : ∀ i, i ∉ S → chapter03StageCoordinateType H S i = H i := by
+    intro i hi
+    simp [chapter03StageCoordinateType, hi]
+  have cast_comp : ∀ {α β : Sort _} (h₁ h₂ : α = β) (x : β),
+      cast h₁ (cast h₂.symm x) = x := by
+    intro α β h₁ h₂ x
+    cases h₁
+    cases h₂
+    rfl
+  have cast_comp_symm : ∀ {α β : Sort _} (h₁ h₂ : α = β) (x : α),
+      cast h₁.symm (cast h₂ x) = x := by
+    intro α β h₁ h₂ x
+    cases h₁
+    cases h₂
+    rfl
+  let forward : Chapter03Stage H S → Chapter03StageCoordinateProduct H S :=
+    fun x i => by
+      by_cases hi : i ∈ S
+      · exact cast (hmem i hi).symm ((x : ∀ i, G i) i)
+      · exact cast (hnotmem i hi).symm
+          (⟨((x : ∀ i, G i) i), x.property i hi⟩ : H i)
+  let coordinateValue : ∀ i, chapter03StageCoordinateType H S i → G i :=
+    fun i z => by
+      by_cases hi : i ∈ S
+      · exact cast (hmem i hi) z
+      · exact ((cast (hnotmem i hi) z : H i) : G i)
+  have coordinateValue_mem : ∀ i, i ∉ S →
+      ∀ z : chapter03StageCoordinateType H S i, coordinateValue i z ∈ H i := by
+    intro i hi z
+    have hprop := (cast (hnotmem i hi) z : H i).property
+    simp [coordinateValue, hi] at hprop ⊢
+  let backward : Chapter03StageCoordinateProduct H S → Chapter03Stage H S :=
+    fun y =>
+      ⟨⟨fun i => coordinateValue i (y i)
+        , by
+          filter_upwards [hS.compl_mem_cofinite] with i hi
+          have hi' : i ∉ S := by simpa using hi
+          exact coordinateValue_mem i hi' (y i)⟩,
+        by
+          intro i hi
+          exact coordinateValue_mem i hi (y i)⟩
+  refine {
+    toFun := forward
+    invFun := backward
+    left_inv := ?_
+    right_inv := ?_ }
+  · intro x
+    apply Subtype.ext
+    apply Subtype.ext
+    funext i
+    by_cases hi : i ∈ S
+    · simp [forward, backward, coordinateValue, chapter03StageCoordinateType, hi]
+      exact cast_comp (hmem i hi) (hmem i hi) _
+    · simp [forward, backward, coordinateValue, chapter03StageCoordinateType, hi]
+      exact congrArg Subtype.val (cast_comp (hnotmem i hi) (hnotmem i hi) _)
+  · intro y
+    funext i
+    by_cases hi : i ∈ S
+    · simp [forward, backward, coordinateValue, chapter03StageCoordinateType, hi]
+      exact cast_comp_symm (hmem i hi) (hmem i hi) _
+    · simp [forward, backward, coordinateValue, chapter03StageCoordinateType, hi]
+      exact cast_comp_symm (hnotmem i hi) (hnotmem i hi) _
 
 /- Prior attempt after migrating `Chapter03RestrictedProduct` to Mathlib's
 canonical `RestrictedProduct` carrier:
