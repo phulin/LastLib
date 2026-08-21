@@ -256,6 +256,27 @@ structure Chapter07FiniteResidueTower
     f.1 = Nat.lcm m.1 n.1 ∧ level m ⊔ level n = level f
   intersection_gcd : ∀ m n, ∃ f,
     f.1 = Nat.gcd m.1 n.1 ∧ level m ⊓ level n = level f
+  /-- The arithmetic Frobenius at each finite level.  Choosing these as part
+  of the tower is essential: unrelated cyclic generators do not determine an
+  automorphism of the directed union. -/
+  level_frobenius : ∀ f, level f ≃ₐ[K] level f
+  /-- Arithmetic Frobenius commutes with every divisibility inclusion. -/
+  level_frobenius_compatible : ∀ (m n : Chapter07PositiveNat)
+    (h : m.1 ∣ n.1) (x : level m),
+      (level_frobenius n ⟨x.1, nested h x.2⟩ : level n).1 =
+        (level_frobenius m x).1
+  /-- Normalized cyclic coordinates on each finite Galois group. -/
+  level_galois_equiv : ∀ f,
+    (level f ≃ₐ[K] level f) ≃* Multiplicative (ZMod f.1)
+  level_frobenius_image : ∀ f,
+    level_galois_equiv f (level_frobenius f) =
+      Multiplicative.ofAdd (1 : ZMod f.1)
+  /-- Every automorphism of the actual directed union preserves each
+  canonical degree level, so restriction really lands in its finite Galois
+  group. -/
+  level_characteristic : ∀ (f : Chapter07PositiveNat)
+    (σ : (↥(⨆ n, level n)) ≃ₐ[K] (↥(⨆ n, level n))) (x : level f),
+      (σ ⟨x.1, (le_iSup (fun n => level n) f) x.2⟩).1 ∈ level f
 
 /-- The maximal unramified subextension inside a chosen separable closure is
 the union of all finite unramified levels. -/
@@ -441,12 +462,34 @@ subfields coherently.
    `canonicalResidueLevel f`; injectivity of `C.reduction` then gives
    `UE = U f`, and `congrArg Subtype.val` is the requested `E = level f`.
 
-7. Finally use `C.compositum_preserved (U m) (U n)` and
+7. Use `C.compositum_preserved (U m) (U n)` and
    `C.intersection_preserved (U m) (U n)`.  Their residue equalities, the two
    residue lattice laws, and injectivity of `C.reduction` identify the
    returned witnessed field with `U` at the lcm/gcd index.  Substitute the
    returned carrier equality to obtain exactly `compositum_lcm` and
-   `intersection_gcd`, then assemble all fields of
+   `intersection_gcd`.
+
+8. Supply the Galois fields added to the tower interface.  On
+   `canonicalResidueLevel f`, take the explicit `q`-power automorphism
+   `FiniteField.frobeniusAlgEquivOfAlgebraic k _`.  Its compatibility under
+   inclusions is pointwise from
+   `FiniteField.coe_frobeniusAlgEquivOfAlgebraic`; its order and generation
+   are `chapter06_arithmetic_frobenius_order` and
+   `chapter06_arithmetic_frobenius_generates` from
+   Chapter06/Section02FrobeniusInAnUnramifiedExtension.lean.  Lift it to
+   `level f` using the actual residue realization in
+   `C.reduction_realized (U f)` and the reduction identification represented
+   by `Chapter06UnramifiedGaloisReduction.reduction`.  Use
+   `chapter06_unramified_arithmetic_frobenius_unique` to prove the lifts at
+   divisible levels restrict to one another; this uniqueness step is why an
+   arbitrary result of `C.galois_group_preserved` is not sufficient by
+   itself.  Normalize the finite cyclic equivalence by sending this lift to
+   `1`; the order calculation and `IsGalois.card_aut_eq_finrank` show it is a
+   `MulEquiv` with `Multiplicative (ZMod f.1)`.  For
+   `level_characteristic`, restrict an automorphism of the union to the image
+   of `level f`; transport the finite unramified witness across that image,
+   apply `exhaustive`, and compare finranks using `level_degree` to identify
+   the image with `level f`.  Now assemble every field of
    `Chapter07FiniteResidueTower`.
 
 Do not start from `chapter07_finite_residue_unramified_exists_for_degree`:
@@ -562,6 +605,110 @@ structure Chapter07FiniteResidueMaximalUnramifiedData
 
 /-- The finite-residue construction supplies inverse-limit quotient data for
 the actual automorphism group of the maximal unramified union. -/
+/-
+Proof roadmap for `chapter07_finite_residue_tower_galois_data_exists`.
+
+The original tower interface stopped at `level_is_galois`; that is not enough
+to choose compatible cyclic generators.  The fields `level_frobenius`,
+`level_frobenius_compatible`, `level_galois_equiv`,
+`level_frobenius_image`, and `level_characteristic` above are the repaired
+finite-level interface.  In the following, abbreviate
+
+    U := chapter07MaximalUnramifiedExtension K Ω k κ T
+    G := Chapter07MaximalUnramifiedAutomorphismGroup K Ω k κ T.
+
+1. For each `f`, define the inclusion `ι f : T.level f →ₐ[K] U` by
+   `x ↦ ⟨x.1, (le_iSup (fun n => T.level n) f) x.2⟩`.  Define
+
+       restrict f : G →* (T.level f ≃ₐ[K] T.level f)
+
+   by restricting `σ` and `σ.symm` along `ι f`.  Both images land in the
+   level by `T.level_characteristic f σ` (and the same field applied to
+   `σ.symm`); prove the inverse laws by `Subtype.ext` and the inverse laws of
+   `σ`.  The defining equation to retain is
+
+       ι f (restrict f σ x) = σ (ι f x).
+
+2. First assemble a global arithmetic Frobenius `F : G`.  For `x : U`, use
+   directedness of the levels (a common level is supplied by
+   `T.compositum_lcm`) to choose `f` and `xf : T.level f` with `ι f xf = x`,
+   and set `F x := ι f (T.level_frobenius f xf)`.  Independence of this
+   choice follows by moving two representatives to the lcm level and applying
+   `T.level_frobenius_compatible` twice.  Prove preservation of `0`, `1`,
+   addition, multiplication, and the `K`-algebra map after moving all inputs
+   to one lcm level.  The identical construction with
+   `(T.level_frobenius f).symm` is the inverse (derive inverse compatibility
+   from forward compatibility and injectivity).  Package the two maps as an
+   `AlgEquiv`.  Record
+
+       restrict_frobenius : restrict f F = T.level_frobenius f.
+
+   `Submodule.mem_iSup_of_directed` from
+   `Mathlib/LinearAlgebra/Span/Defs.lean` is the useful membership lemma after
+   viewing the intermediate fields as submodules; alternatively the same
+   choice argument can be proved with `Algebra.iSup_induction` from
+   `Mathlib/Algebra/Algebra/Subalgebra/Lattice.lean`.
+
+3. Define the finite quotient by the literal composite
+
+       quotient f := (T.level_galois_equiv f).toMonoidHom.comp (restrict f).
+
+   For surjectivity, if `a : Multiplicative (ZMod f.1)`, take the natural
+   representative `a.toAdd.val` and use `F ^ a.toAdd.val`.  Apply
+   `T.level_galois_equiv f` to the desired restriction equality; its homomorphism
+   law, `restrict_frobenius`, and `T.level_frobenius_image` reduce it to the
+   corresponding equality in `ZMod f.1`.
+
+4. For compatibility when `h : m.1 ∣ n.1`, let
+   `a := (T.level_galois_equiv n (restrict n σ)).toAdd.val`.  Injectivity of
+   `T.level_galois_equiv n` expresses `restrict n σ` as the `a`-th power of
+   finite Frobenius.  Restrict this pointwise equality to `T.level m` and use
+   `T.level_frobenius_compatible`; applying `T.level_galois_equiv m` gives
+
+       ZMod.castHom h (ZMod m.1) ((quotient n σ).toAdd) =
+         (quotient m σ).toAdd.
+
+   Apply `Multiplicative.toAdd.injective`/`ofAdd` to obtain precisely the
+   `quotient_compatible` field.  This argument is important: arbitrary cyclic
+   equivalences need not commute with restriction; normalization at the
+   compatible Frobenius is what proves they do.
+
+5. For separation, equality of every quotient implies equality of every
+   `restrict f` by injectivity of `T.level_galois_equiv f`.  Every `x : U`
+   lies in a finite level by the directed-union membership argument from step
+   2, so the restriction equation and `Subtype.ext` give `σ x = τ x`; finish
+   with `AlgEquiv.ext`.
+
+6. For `x : Chapter07ProfiniteIntegerCompletion`, repeat the direct-union
+   construction of step 2 using, on level `f`,
+
+       (T.level_frobenius f) ^ (x.1 f).val.
+
+   If levels divide, `x.2 m n h` says that the two exponents have the same
+   image in `ZMod m.1`.  To prove equality of the corresponding powers, apply
+   the injective `T.level_galois_equiv m`, use its map-power law and
+   `T.level_frobenius_image`, and simplify in `ZMod`; no choice of integer
+   exponent is required.  Use the lcm level for unrelated representatives.
+   Addition of compatible residue families proves the multiplication law for
+   the constructed automorphisms, and the family `-x` supplies the inverse.
+   Call the resulting element `realize x : G`; its construction gives
+
+       quotient f (realize x) = Multiplicative.ofAdd (x.1 f),
+
+   which is `quotient_realizes`.
+
+7. Take `arithmeticFrobenius := F`.  Step 2 and
+   `T.level_frobenius_image` give every `arithmeticFrobenius_image`.  Assemble
+   `Chapter07MaximalUnramifiedGaloisData` with the quotient maps and the four
+   properties proved above.
+
+Do not try to obtain compatible generators from `T.level_is_galois` plus
+`chapter07_finite_residue_galois_group_is_cyclic`: that theorem returns an
+independent generator/equivalence at each invocation, and supplies no
+restriction compatibility.  Likewise, extending one finite automorphism at a
+time proves finite surjectivity but cannot realize an arbitrary compatible
+inverse-limit family.
+-/
 theorem chapter07_finite_residue_tower_galois_data_exists
     {K : Type uK} {Ω : Type uΩ} {k κ : Type uModel}
     [Field K] [Field Ω] [Field k] [Field κ]
