@@ -140,8 +140,8 @@ This distinction is the organizing theme of the book. Algebraic generic fibers c
 
 The closed unit polydisc should admit exactly those power series that converge whenever every coordinate has absolute value at most one. For a multi-index $\nu=(\nu_1,\ldots,\nu_n)\in\mathbf N^n$, write $T^\nu=T_1^{\nu_1}\cdots T_n^{\nu_n}$. The **Tate algebra** is
 
-$$K\langle T_1,\ldots,T_n\rangle
-
+$$
+K\langle T_1,\ldots,T_n\rangle =
 \left\{\sum_{\nu\in\mathbf N^n}a_\nu T^\nu:
 |a_\nu|\longrightarrow0\text{ as }|\nu|\longrightarrow\infty\right\}.
 $$
@@ -382,8 +382,8 @@ $$
 
 The unit-ideal condition prevents $f_0$ and all numerators from vanishing simultaneously. Its coordinate algebra is
 
-# $$A\left\langle\frac{f_1}{f_0},\ldots,\frac{f_m}{f_0}\right\rangle
-
+$$
+A\left\langle\frac{f_1}{f_0},\ldots,\frac{f_m}{f_0}\right\rangle =
 A\langle S_1,\ldots,S_m\rangle/
 (f_0S_1-f_1,\ldots,f_0S_m-f_m).
 $$
@@ -898,8 +898,8 @@ $$
 
 The isomorphism is canonical. The specialization maps are not preserved as maps to a fixed special fiber; instead they fit into
 
-# $$\operatorname{sp}_{\mathfrak X}
-
+$$
+\operatorname{sp}_{\mathfrak X} =
 (\mathfrak X'_s\to\mathfrak X_s)\circ\operatorname{sp}_{\mathfrak X'}.
 $$
 
@@ -1359,8 +1359,8 @@ by this statement: their total transform can acquire a multiple exceptional comp
 
 Let $\mathfrak C$ be semistable. The smooth locus of each irreducible component of $\mathfrak C_s$ has a tube built from residue discs. Every node contributes an open annulus. These pieces form an admissible covering after finitely many affinoid neighborhoods are grouped appropriately:
 
-# $$C^{\mathrm{an}}
-
+$$
+C^{\mathrm{an}} =
 \bigcup_v ]C_v^\circ[\;\cup\;
 \bigcup_e ]z_e[.
 $$
