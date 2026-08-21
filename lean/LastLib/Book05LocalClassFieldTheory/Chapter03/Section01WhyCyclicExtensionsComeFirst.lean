@@ -37,13 +37,17 @@ theorem chapter03_periodic_norm_after_difference_eq_zero
     {G : Type} [CommGroup G] [Fintype G] (A : Rep ℤ G) (σ : G) :
     letI : Module ℤ A.V := A.hV2
     (chapter03PeriodicNormMap A).comp (chapter03PeriodicDifferenceMap A σ) = 0 := by
-  sorry
+  have h := congrArg (fun f => f.hom)
+    ((Rep.FiniteCyclicGroup.subCompNormHom (k := ℤ) (G := G) A σ).zero)
+  simpa [chapter03PeriodicNormMap, chapter03PeriodicDifferenceMap] using h
 
 theorem chapter03_periodic_difference_after_norm_eq_zero
     {G : Type} [CommGroup G] [Fintype G] (A : Rep ℤ G) (σ : G) :
     letI : Module ℤ A.V := A.hV2
     (chapter03PeriodicDifferenceMap A σ).comp (chapter03PeriodicNormMap A) = 0 := by
-  sorry
+  have h := congrArg (fun f => f.hom)
+    ((Rep.FiniteCyclicGroup.normHomCompSub (k := ℤ) (G := G) A σ).zero)
+  simpa [chapter03PeriodicNormMap, chapter03PeriodicDifferenceMap] using h
 
 theorem chapter03_periodic_complex_has_alternating_differentials
     {G : Type} [CommGroup G] [Fintype G] (A : Rep ℤ G) (σ : G) :
