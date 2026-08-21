@@ -96,7 +96,10 @@ theorem chapter14_prime_reduction_exact_sequence
     [IsGalois p.asIdeal.ResidueField P.1.ResidueField]
     (R : Chapter14PrimeReduction F E p P D) :
     chapter14PrimeReductionExact R := by
-  sorry
+  change Function.MulExact (Subgroup.subtype R.inertia) R.reduction
+  apply MonoidHom.mulExact_iff.mpr
+  rw [R.kernel_eq_inertia]
+  exact (Subgroup.range_subtype (MonoidHom.ker R.reduction)).symm
 
 theorem chapter14_prime_reduction_is_exact
     {F E : Type*} [Field F] [NumberField F] [Field E] [NumberField E]
@@ -125,7 +128,10 @@ theorem chapter14_prime_reduction_quotient_is_residue_galois_group
     Nonempty
       ((D ⧸ R.inertia) ≃*
         Gal(P.1.ResidueField / p.asIdeal.ResidueField)) := by
-  sorry
+  refine ⟨?_⟩
+  exact
+    (QuotientGroup.quotientMulEquivOfEq R.kernel_eq_inertia).trans
+      (QuotientGroup.quotientKerEquivOfSurjective R.reduction R.surjective)
 
 theorem chapter14_unramified_reduction_is_injective
     {F E : Type*} [Field F] [NumberField F] [Field E] [NumberField E]
@@ -139,7 +145,9 @@ theorem chapter14_unramified_reduction_is_injective
     (R : Chapter14PrimeReduction F E p P D)
     (hR : chapter14UnramifiedAtPrime R) :
     Function.Injective R.reduction := by
-  sorry
+  apply (MonoidHom.ker_eq_bot_iff R.reduction).mp
+  change R.inertia = ⊥ at hR
+  rw [← R.kernel_eq_inertia, hR]
 
 theorem chapter14_unramified_frobenius_exists_unique
     {F E : Type*} [Field F] [NumberField F] [Field E] [NumberField E]
@@ -154,7 +162,15 @@ theorem chapter14_unramified_frobenius_exists_unique
     (R : Chapter14PrimeReduction F E p P D)
     (hR : chapter14UnramifiedAtPrime R) :
     ∃! σ : D, σ ∈ chapter14FrobeniusLiftSet R := by
-  sorry
+  change ∃! σ : D, R.reduction σ =
+    chapter14ArithmeticFrobeniusResidue
+      p.asIdeal.ResidueField P.1.ResidueField
+  obtain ⟨σ₀, hσ₀⟩ := R.surjective
+    (chapter14ArithmeticFrobeniusResidue
+      p.asIdeal.ResidueField P.1.ResidueField)
+  refine ⟨σ₀, hσ₀, ?_⟩
+  intro σ hσ
+  exact (chapter14_unramified_reduction_is_injective R hR) (hσ.trans hσ₀.symm)
 
 noncomputable def chapter14ArithmeticFrobeniusLift
     {F E : Type*} [Field F] [NumberField F] [Field E] [NumberField E]
@@ -198,7 +214,14 @@ theorem chapter14_arithmetic_frobenius_lift_reduces_to_power_map
     (hR : chapter14UnramifiedAtPrime R) (x : P.1.ResidueField) :
     R.reduction (chapter14ArithmeticFrobeniusLift R hR) x =
       x ^ chapter14PrimeNorm p := by
-  sorry
+  have hmem : chapter14ArithmeticFrobeniusLift R hR ∈ chapter14FrobeniusLiftSet R :=
+    (Classical.choose_spec (chapter14_unramified_frobenius_exists_unique R hR)).1
+  change R.reduction (chapter14ArithmeticFrobeniusLift R hR) =
+    chapter14ArithmeticFrobeniusResidue
+      p.asIdeal.ResidueField P.1.ResidueField at hmem
+  have hcard : chapter14PrimeNorm p = Fintype.card p.asIdeal.ResidueField := by
+    rw [chapter14_prime_norm_eq_residue_field_card, Nat.card_eq_fintype_card]
+  rw [hmem, chapter14_arithmetic_frobenius_residue_apply, ← hcard]
 
 theorem chapter14_geometric_frobenius_lift_is_inverse
     {F E : Type*} [Field F] [NumberField F] [Field E] [NumberField E]
@@ -278,7 +301,22 @@ theorem chapter14_frobenius_conjugacy
     (hR' : chapter14UnramifiedAtPrime R') :
     C.group_conjugation (chapter14ArithmeticFrobeniusLift R hR) =
       chapter14ArithmeticFrobeniusLift R' hR' := by
-  sorry
+  let hU := chapter14_unramified_frobenius_exists_unique R' hR'
+  have hconj : C.group_conjugation (chapter14ArithmeticFrobeniusLift R hR) ∈
+      chapter14FrobeniusLiftSet R' := by
+    change R'.reduction (C.group_conjugation (chapter14ArithmeticFrobeniusLift R hR)) =
+      chapter14ArithmeticFrobeniusResidue
+        p.asIdeal.ResidueField Q.1.ResidueField
+    rw [C.reduction_compatibility]
+    rw [show R.reduction (chapter14ArithmeticFrobeniusLift R hR) =
+      chapter14ArithmeticFrobeniusResidue
+          p.asIdeal.ResidueField P.1.ResidueField from
+      (Classical.choose_spec (chapter14_unramified_frobenius_exists_unique R hR)).1]
+    exact C.residue_frobenius_compatibility
+  have htarget : chapter14ArithmeticFrobeniusLift R' hR' ∈
+      chapter14FrobeniusLiftSet R' :=
+    (Classical.choose_spec hU).1
+  exact hU.unique hconj htarget
 
 theorem chapter14_frobenius_conjugacy_in_the_global_galois_group
     {F E : Type*} [Field F] [NumberField F] [Field E] [NumberField E]
