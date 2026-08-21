@@ -224,13 +224,14 @@ def chapter14PolynomialMapAt
     (NumberField.FinitePlace.embedding (R := 𝓞 F) (K := F) p)
 
 structure Chapter14KrasnerNeighborhoodData
-    (K L : Type*) [Field K] [TopologicalSpace K[X]] [NormedField L] [Algebra K L]
+    (K L : Type*) [NormedField K] [NormedField L] [Algebra K L]
     (g : K[X]) (α : L) where
   monic : g.Monic
-  neighborhood : Set (K[X])
+  neighborhood : Set (Fin g.natDegree → K)
   open_neighborhood : IsOpen neighborhood
-  contains_polynomial : g ∈ neighborhood
-  factor_field : ∀ h ∈ neighborhood,
+  contains_polynomial : (fun i => g.coeff i) ∈ neighborhood
+  factor_field : ∀ h, h.Monic → h.natDegree = g.natDegree →
+    (fun i => h.coeff i) ∈ neighborhood →
     ∃ q : K[X], q ∣ h ∧ q.Monic ∧
       Nonempty (AdjoinRoot q ≃ₐ[K] K⟮α⟯)
 

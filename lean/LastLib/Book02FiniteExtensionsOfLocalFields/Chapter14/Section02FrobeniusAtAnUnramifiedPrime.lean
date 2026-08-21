@@ -226,6 +226,8 @@ structure Chapter14FrobeniusConjugacy
     [FiniteDimensional p.asIdeal.ResidueField Q.1.ResidueField]
     [IsGalois p.asIdeal.ResidueField P.1.ResidueField]
     [IsGalois p.asIdeal.ResidueField Q.1.ResidueField]
+    [Fintype p.asIdeal.ResidueField] [Finite P.1.ResidueField]
+    [Finite Q.1.ResidueField]
     (R : Chapter14PrimeReduction F E p P D)
     (R' : Chapter14PrimeReduction F E p Q D')
     (σ : Gal(E / F)) where
@@ -240,6 +242,12 @@ structure Chapter14FrobeniusConjugacy
   reduction_compatibility : ∀ τ : D,
     R'.reduction (group_conjugation τ) =
       residue_conjugation (R.reduction τ)
+  residue_frobenius_compatibility :
+    residue_conjugation
+        (chapter14ArithmeticFrobeniusResidue
+          p.asIdeal.ResidueField P.1.ResidueField) =
+      chapter14ArithmeticFrobeniusResidue
+        p.asIdeal.ResidueField Q.1.ResidueField
 
 theorem chapter14_frobenius_conjugacy
     {F E : Type*} [Field F] [NumberField F] [Field E] [NumberField E]
@@ -287,10 +295,11 @@ theorem chapter14_frobenius_conjugacy_in_the_global_galois_group
     (R' : Chapter14PrimeReduction F E p Q D')
     (σ : Gal(E / F))
     (C : Chapter14FrobeniusConjugacy R R' σ)
-    (hR : chapter14UnramifiedAtPrime R) :
-    (C.group_conjugation (chapter14ArithmeticFrobeniusLift R hR) : Gal(E / F)) =
+    (hR : chapter14UnramifiedAtPrime R)
+    (hR' : chapter14UnramifiedAtPrime R') :
+    (chapter14ArithmeticFrobeniusLift R' hR' : Gal(E / F)) =
       σ * (chapter14ArithmeticFrobeniusLift R hR : Gal(E / F)) * σ⁻¹ := by
-  exact C.group_conjugation_apply _
+  sorry
 
 /- At a ramified prime the canonical object is a coset of lifts. -/
 def chapter14ArithmeticFrobeniusCoset

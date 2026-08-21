@@ -99,22 +99,22 @@ theorem chapter14_coefficient_polynomial_natDegree
 
 structure Chapter14SimultaneousPolynomialNeighborhood
     {F : Type u} [Field F] [NumberField F]
-    (S : Finset (Chapter14Prime F)) (n : ℕ)
-    [∀ p : S, TopologicalSpace ((chapter14BaseCompletion F p.1)[X])] where
+    (S : Finset (Chapter14Prime F)) (n : ℕ) where
   local_polynomial : ∀ p : S, (chapter14BaseCompletion F p.1)[X]
   monic : ∀ p, (local_polynomial p).Monic
   degree : ∀ p, (local_polynomial p).natDegree = n
-  neighborhood : ∀ p : S, Set ((chapter14BaseCompletion F p.1)[X])
+  neighborhood : ∀ p : S, Set (Fin n → chapter14BaseCompletion F p.1)
   open_neighborhood : ∀ p, IsOpen (neighborhood p)
-  contains : ∀ p, local_polynomial p ∈ neighborhood p
+  contains : ∀ p,
+    (fun i => (local_polynomial p).coeff i) ∈ neighborhood p
 
 theorem chapter14_simultaneous_monic_polynomial_approximation
     {F : Type u} [Field F] [NumberField F]
     (S : Finset (Chapter14Prime F)) (n : ℕ)
-    [∀ p : S, TopologicalSpace ((chapter14BaseCompletion F p.1)[X])]
     (N : Chapter14SimultaneousPolynomialNeighborhood S n) :
     ∃ g : F[X], g.Monic ∧ g.natDegree = n ∧
-      ∀ p, chapter14PolynomialMapAt p.1 g ∈ N.neighborhood p := by
+      ∀ p,
+        (fun i => (chapter14PolynomialMapAt p.1 g).coeff i) ∈ N.neighborhood p := by
   sorry
 
 /- Coefficient congruences are the nonarchimedean neighborhood basis used by
@@ -132,7 +132,7 @@ theorem chapter14_coefficient_congruent_comm
   sorry
 
 theorem chapter14_coefficient_congruence_is_open
-    {A : Type*} [CommRing A] [TopologicalSpace A]
+    {A : Type*} [CommRing A] [TopologicalSpace A] [IsTopologicalRing A]
     (n : ℕ) (m : Ideal A) (N : ℕ)
     (hmN : IsOpen ((m ^ N : Ideal A) : Set A)) (c : Fin n → A) :
     IsOpen {d : Fin n → A | chapter14CoefficientCongruent n m N c d} := by
@@ -173,7 +173,6 @@ theorem chapter14_monic_polynomial_approximation_over_a_dense_field
 theorem chapter14_separable_polynomial_has_krasner_neighborhood
     {K L : Type*} [NontriviallyNormedField K] [CompleteSpace K]
     [IsUltrametricDist K] [NormedField L]
-    [TopologicalSpace K[X]]
     [NormedAlgebra K L] [Algebra.IsAlgebraic K L] [IsKrasner K L]
     (g : K[X]) (α : L) (hgmonic : g.Monic) (hroot : aeval α g = 0)
     (hseparable : g.Separable) :
@@ -186,23 +185,27 @@ def chapter14PolynomialProductDecomposition
 
 theorem chapter14_distinct_factor_hensel_stability
     {K : Type*} [NontriviallyNormedField K] [CompleteSpace K]
-    [IsUltrametricDist K] [TopologicalSpace K[X]]
+    [IsUltrametricDist K]
     (n : ℕ) (H : Chapter14HenselProductData K n) :
-    ∃ U : Set K[X], IsOpen U ∧ H.local_polynomial ∈ U ∧
-      ∀ g ∈ U, ∃ G : Chapter14HenselProductData K n,
+    ∃ U : Set (Fin H.local_polynomial.natDegree → K), IsOpen U ∧
+      (fun i => H.local_polynomial.coeff i) ∈ U ∧
+      ∀ g, g.Monic → g.natDegree = H.local_polynomial.natDegree →
+        (fun i => g.coeff i) ∈ U →
+        ∃ G : Chapter14HenselProductData K n,
         G.local_polynomial = g ∧
           chapter14PolynomialProductDecomposition n g G.factors := by
   sorry
 
 def chapter14EisensteinNeighborhood
-    {A : Type*} [CommRing A] (m : Ideal A) (n : ℕ) : Set A[X] :=
-  {g | g.IsEisensteinAt m ∧ g.natDegree = n}
+    {A : Type*} [CommRing A] (m : Ideal A) (n : ℕ) : Set (Fin n → A) :=
+  {c | (chapter14CoefficientPolynomial n c).IsEisensteinAt m}
 
 theorem chapter14_eisenstein_condition_is_open
-    {A : Type*} [CommRing A] [TopologicalSpace A] [TopologicalSpace A[X]]
+    {A : Type*} [CommRing A] [TopologicalSpace A] [IsTopologicalRing A]
     (m : Ideal A) (n : ℕ)
     (hm : IsOpen (m : Set A))
-    (hm2 : IsOpen ((m ^ 2 : Ideal A) : Set A)) :
+    (hm2 : IsOpen ((m ^ 2 : Ideal A) : Set A))
+    (hm2_closed : IsClosed ((m ^ 2 : Ideal A) : Set A)) :
     IsOpen (chapter14EisensteinNeighborhood m n) := by
   sorry
 

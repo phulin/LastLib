@@ -90,10 +90,10 @@ theorem chapter14_theorem_14_1_only_provides_local_scope
 theorem chapter14_weak_approximation_targets_only_open_stability_neighborhoods
     {F : Type u} [Field F] [NumberField F]
     (S : Finset (Chapter14Prime F)) (n : ℕ)
-    [∀ p : S, TopologicalSpace ((chapter14BaseCompletion F p.1)[X])]
     (N : Chapter14SimultaneousPolynomialNeighborhood S n) :
     ∃ g : F[X], g.Monic ∧ g.natDegree = n ∧
-      ∀ p, chapter14PolynomialMapAt p.1 g ∈ N.neighborhood p := by
+      ∀ p,
+        (fun i => (chapter14PolynomialMapAt p.1 g).coeff i) ∈ N.neighborhood p := by
   exact chapter14_simultaneous_monic_polynomial_approximation S n N
 
 def chapter14KrasnerStrictInequality
@@ -119,8 +119,14 @@ theorem chapter14_global_to_local_and_local_to_global_interfaces
     {r : ℕ} (p : Fin r → Chapter14Prime F)
     (L : ∀ i, Chapter14PrescribedLocalExtension F (p i))
     (S : Chapter14ApproximationScope F p L) :
-    chapter14ModelDegree S.model = chapter14MaximumLocalDegree p L :=
-  S.degree_eq_max
+    chapter14ModelDegree S.model = chapter14MaximumLocalDegree p L ∧
+      ∀ i,
+        letI : Field (L i).carrier := (L i).field_carrier
+        Nonempty (Chapter14CompletionChoice S.model (p i) (L i).carrier) := by
+  refine ⟨S.degree_eq_max, ?_⟩
+  intro i
+  let _ : Field (L i).carrier := (L i).field_carrier
+  exact ⟨S.choice i⟩
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter14

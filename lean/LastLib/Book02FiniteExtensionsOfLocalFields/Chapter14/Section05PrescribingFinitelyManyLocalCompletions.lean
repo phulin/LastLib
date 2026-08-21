@@ -19,7 +19,7 @@ theorem chapter14_finite_local_extensions_over_characteristic_zero_are_separable
   sorry
 
 theorem chapter14_local_extension_has_a_primitive_polynomial
-    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    {K L : Type*} [Field K] [Field L] [CharZero K] [Algebra K L]
     [FiniteDimensional K L] [Algebra.IsSeparable K L] :
     ∃ α : L, Nonempty (L ≃ₐ[K] K⟮α⟯) ∧
       (minpoly K α).Monic ∧
@@ -35,6 +35,7 @@ theorem chapter14_fill_unused_degree_with_distinct_linear_factors
     (d n : ℕ) (hdegree : f.natDegree = d) (hle : d ≤ n) :
     ∃ q : K[X], q.Monic ∧ q.natDegree = n - d ∧
       (f * q).Separable ∧
+      q.Splits ∧
       ∀ x : K, q.eval x = 0 → f.eval x ≠ 0 := by
   sorry
 
@@ -75,10 +76,10 @@ theorem chapter14_exists_auxiliary_eisenstein_place
 
 theorem chapter14_eisenstein_at_place_is_open
     {F : Type u} [Field F] [NumberField F]
-    (v : Chapter14Prime F) (n : ℕ)
-    [TopologicalSpace ((chapter14BaseCompletion F v)[X])] :
-    IsOpen {g : (chapter14BaseCompletion F v)[X] |
-      chapter14EisensteinAtPlace v g ∧ g.natDegree = n} := by
+    (v : Chapter14Prime F) (n : ℕ) :
+    IsOpen {c : Fin n → chapter14BaseCompletion F v |
+      chapter14EisensteinAtPlace v
+        (chapter14CoefficientPolynomial n c)} := by
   sorry
 
 theorem chapter14_eisenstein_at_place_implies_irreducible
@@ -131,17 +132,23 @@ structure Chapter14LocalPolynomialFactorCondition
     {F : Type u} [Field F] [NumberField F]
     (p : Chapter14Prime F) (L : Type v) [Field L]
     [Algebra (chapter14BaseCompletion F p) L]
-    [TopologicalSpace ((chapter14BaseCompletion F p)[X])] where
+    (n : ℕ) where
   polynomial : (chapter14BaseCompletion F p)[X]
   monic : polynomial.Monic
+  degree : polynomial.natDegree = n
   separable : polynomial.Separable
-  neighborhood : Set ((chapter14BaseCompletion F p)[X])
+  neighborhood : Set (Fin n → chapter14BaseCompletion F p)
   neighborhood_open : IsOpen neighborhood
-  neighborhood_contains : polynomial ∈ neighborhood
+  neighborhood_contains : (fun i => polynomial.coeff i) ∈ neighborhood
   factor : (chapter14BaseCompletion F p)[X]
   factor_monic : factor.Monic
   factor_divides : factor ∣ polynomial
-  factor_generates : Nonempty (AdjoinRoot factor ≃+* L)
+  factor_generates : Nonempty
+    (AdjoinRoot factor ≃ₐ[chapter14BaseCompletion F p] L)
+  factor_stable : ∀ g, g.Monic → g.natDegree = n →
+    (fun i => g.coeff i) ∈ neighborhood →
+    ∃ q : (chapter14BaseCompletion F p)[X], q ∣ g ∧ q.Monic ∧
+      Nonempty (AdjoinRoot q ≃ₐ[chapter14BaseCompletion F p] L)
 
 theorem chapter14_theorem_14_1_prescribed_nonarchimedean_completions
     {F : Type u} [Field F] [NumberField F]

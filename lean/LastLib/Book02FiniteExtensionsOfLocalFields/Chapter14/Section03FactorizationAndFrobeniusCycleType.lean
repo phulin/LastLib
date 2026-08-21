@@ -45,7 +45,10 @@ structure Chapter14GoodReductionData
   generates : Algebra.adjoin F ({alpha} : Set E) = ⊤
   polynomial : (𝓞 F)[X]
   monic : polynomial.Monic
+  irreducible : Irreducible polynomial
   root : aeval alpha polynomial = 0
+  minimal :
+    polynomial.map (algebraMap (𝓞 F) F) = minpoly F alpha
   order_agrees :
     chapter14OrderAgreesWithIntegralClosureAtPrime
       (chapter14MonogenicOrder alpha) p
@@ -92,10 +95,10 @@ def chapter14PrimeUnramifiedAt
     [Algebra F E] [FiniteDimensional F E] (p : Chapter14Prime F) : Prop :=
   ∀ P : Chapter14PrimeAbove F E p, chapter14RamificationIndex E p P = 1
 
-/- A factor is retained as a bundled local field and residue profile so its
-   field and unramified-extension data survive existential statements. -/
+/- A factor is retained as a bundled local field, residue field, and residue
+   quotient so its unramified-extension data survive existential statements. -/
 structure Chapter14UnramifiedFactor
-    (K : Type uK) (k : Type uk) [Field K] [Field k] (f : ℕ) where
+    (K : Type uK) (k : Type uk) [Field K] [Field k] (factor : k[X]) where
   carrier : Type uL
   [field_carrier : Field carrier]
   [algebra : Algebra K carrier]
@@ -113,7 +116,8 @@ structure Chapter14UnramifiedFactor
     letI : Field carrier := field_carrier
     letI : Algebra K carrier := algebra
     letI : FiniteDimensional K carrier := finite_dimensional
-    Module.finrank K carrier = f
+    Module.finrank K carrier = factor.natDegree
+  factor_quotient_equiv : Nonempty (AdjoinRoot factor ≃ₐ[k] residue)
 
 theorem chapter14_good_reduction_gives_prime_factorization
     {F E : Type*} [Field F] [NumberField F] [Field E] [NumberField E]
@@ -134,8 +138,7 @@ theorem chapter14_good_reduction_completed_factorization
     (D : Chapter14GoodReductionData F E p) (g : ℕ)
     (H : Chapter14ReducedFactorization D g) :
     ∃ L : ∀ i, Chapter14UnramifiedFactor
-        (chapter14BaseCompletion F p) p.asIdeal.ResidueField
-        (H.factor i).natDegree,
+        (chapter14BaseCompletion F p) p.asIdeal.ResidueField (H.factor i),
       letI : ∀ i, Field (L i).carrier := fun i => (L i).field_carrier
       Nonempty
         (E ⊗[F] chapter14BaseCompletion F p ≃+*
@@ -169,6 +172,7 @@ structure Chapter14FrobeniusOrbitData
     [Algebra F Ω] [Algebra k κ] [Finite κ]
     (f : F[X]) (g : ℕ) (factor : Fin g → k[X]) where
   frobenius : Gal(Ω / F)
+  polynomial_separable : f.Separable
   factor_index : Chapter14RootSet F Ω f → Fin g
   orbit_iff_factor_index :
     ∀ x y, (∃ n : ℕ, (chapter14RootPermutation f (frobenius ^ n)) x = y) ↔
@@ -177,6 +181,7 @@ structure Chapter14FrobeniusOrbitData
   factor_irreducible : ∀ i, Irreducible (factor i)
   factor_splits : ∀ i,
     ((factor i).map (algebraMap k κ)).Splits
+  factor_separable : ∀ i, (factor i).Separable
   fiber_equivalence : ∀ i, Nonempty
     ({x : Chapter14RootSet F Ω f // factor_index x = i} ≃
       {x : κ // aeval x (factor i) = 0})
