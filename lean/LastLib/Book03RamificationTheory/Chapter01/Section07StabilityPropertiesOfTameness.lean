@@ -134,10 +134,15 @@ def chapter01WildPartKilled
     (W : Subgroup G) (π : G →* Q) : Prop :=
   W ≤ π.ker
 
-/-- Wildness of an upstairs finite group need not survive in a quotient. -/
+/-- Wildness of an upstairs finite group need not survive in a quotient.  The
+   subgroup being killed is required to be a nontrivial `p`-primary subgroup,
+   so the statement records an actual wild part rather than an arbitrary
+   subgroup that happens to lie in the kernel. -/
 theorem chapter01_wildness_can_disappear_after_quotient
     {G Q : Type*} [Group G] [Group Q] [Finite G] [Finite Q]
     (W : Subgroup G) (p : ℕ) (π : G →* Q)
+    (hW : chapter01PPrimaryOrder W p)
+    (hWnontrivial : W ≠ ⊥)
     (hwild_upstairs : ¬Nat.Coprime (Nat.card G) p)
     (htame_downstairs : Nat.Coprime (Nat.card Q) p)
     (hkills : chapter01WildPartKilled W π) :

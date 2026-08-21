@@ -8,8 +8,29 @@ open scoped BigOperators WithZero
 
 /-! ## 1.6. The shape of a tame Galois group -/
 
+/- The finite-field presentation needs the residue reduction and the tame
+   character to be attached to the same group.  Keeping these as input data
+   avoids treating an arbitrary normal subgroup of an unrelated finite group
+   as inertia. -/
+structure Chapter01FiniteTameGroupInput
+    (G k l : Type*) [Group G] [Finite G] [Field k] [Field l]
+    [Algebra k l] (I : Subgroup G) [I.Normal] where
+  residue_reduction : G →* Gal(l / k)
+  residue_reduction_surjective : Function.Surjective residue_reduction
+  kernel_eq_inertia : MonoidHom.ker residue_reduction = I
+  tame_character : I →* lˣ
+  tame_character_injective : Function.Injective tame_character
+  conjugation_compatibility :
+    ∀ g : G, ∀ i j : I,
+      (j : G) = g * (i : G) * g⁻¹ →
+        tame_character j =
+          Units.map (residue_reduction g).toRingEquiv.toMonoidHom
+            (tame_character i)
+
 /-- A tame finite residue field gives the displayed Frobenius/tame-inertia
-presentation, with the order relation left explicit. -/
+ presentation, with the order relation left explicit.  The input package
+ identifies the residue quotient and the tame character with the same
+ subgroup of the ambient Galois group. -/
 theorem chapter01_tame_group_presentation_exists
     {K L k l : Type*} [Field K] [Field L] [Field k] [Field l]
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
@@ -21,7 +42,9 @@ theorem chapter01_tame_group_presentation_exists
     (hf : Module.finrank k l = f)
     (hI : Nat.card I = e)
     (hresidue_separable : Algebra.IsSeparable k l)
-    (htame : Nat.Coprime e (chapter01CharacteristicExponent k)) :
+    (htame : Nat.Coprime e (chapter01CharacteristicExponent k))
+    (hdata : Chapter01FiniteTameGroupInput
+      (chapter01GaloisGroup K L) k l I) :
     Nonempty (Chapter01FiniteTameGroupPresentation
       (chapter01GaloisGroup K L) I q e f) := by
   sorry
@@ -105,6 +128,7 @@ structure Chapter01TameCharacterConjugationData
   inclusion : I →* G
   residueAction : G →* RingAut l
   inclusion_injective : Function.Injective inclusion
+  inclusion_range : inclusion.range = I'
   stable : ∀ g : G, ∀ i : I,
     g * inclusion i * g⁻¹ ∈ I'
   conjugateCharacter : I' →* lˣ

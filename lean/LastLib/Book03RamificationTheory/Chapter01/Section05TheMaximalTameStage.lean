@@ -40,6 +40,7 @@ structure Chapter01ThreeStageDecomposition
     (I W : Subgroup (chapter01GaloisGroup K L))
     [I.Normal] [W.Normal]
     (f p : ℕ) where
+  wild_le_inertia : W ≤ I
   unramifiedField : IntermediateField K L
   tameField : IntermediateField K L
   residue_degree_positive : 0 < f
@@ -69,7 +70,11 @@ theorem chapter01_maximal_tame_subextension_exists
     [Algebra K L] [Algebra k l] [FiniteDimensional K L]
     [IsGalois K L] [Finite (chapter01GaloisGroup K L)]
     [FiniteDimensional k l] [IsGalois k l]
+    (A : ValuationSubring L)
+    (hdecomposition : chapter01DecompositionGroup K A = ⊤)
     (I W : Subgroup (chapter01GaloisGroup K L)) [I.Normal] [W.Normal]
+    (hI : I = chapter01InertiaGroupInG K A)
+    (hW : W = chapter01WildInertiaGroupInG K A)
     (f p : ℕ)
     (hprofile : Chapter01TameWildProfile
       (chapter01GaloisGroup K L) I W p (Nat.card I))

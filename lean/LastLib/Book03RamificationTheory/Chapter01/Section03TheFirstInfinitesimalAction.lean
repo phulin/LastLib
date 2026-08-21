@@ -218,11 +218,14 @@ theorem chapter01_lower_ramification_group_succ_le
 /-- Under residue separability, the character kernel is wild inertia. -/
 theorem chapter01_tame_character_kernel_eq_wild_inertia
     {K L : Type*} [Field K] [Field L] [Algebra K L]
-    (k : Type*) [Field k]
+    (vK : Valuation K ℤᵐ⁰)
     (vL : Valuation L ℤᵐ⁰) [IsDiscreteValuationRing vL.valuationSubring]
-    [Algebra k (chapter01ResidueField vL)]
+    (hplace : chapter01SamePlace vK vL)
+    [Algebra (chapter01ResidueField vK) (chapter01ResidueField vL)]
     (π : vL.valuationSubring) (hπ : chapter01IsUniformizer vL π)
-    (hresidue_separable : Algebra.IsSeparable k (chapter01ResidueField vL)) :
+    (hresidue_separable :
+      Algebra.IsSeparable (chapter01ResidueField vK)
+        (chapter01ResidueField vL)) :
     (chapter01TameCharacter vL π hπ).ker =
       (chapter01WildInertiaGroup K vL.valuationSubring).comap
         (chapter01InertiaGroup K vL.valuationSubring).subtype := by
