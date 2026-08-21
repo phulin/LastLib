@@ -1,8 +1,14 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter13.Section02CoefficientFieldsInEqualCharacteristicZero
 import Mathlib.Algebra.CharP.Frobenius
 import Mathlib.Algebra.MvPolynomial.Eval
+import Mathlib.Data.Finsupp.Fintype
+import Mathlib.Data.Fintype.BigOperators
+import Mathlib.Data.Fintype.EquivFin
+import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
 import Mathlib.LinearAlgebra.Basis.Basic
 import Mathlib.LinearAlgebra.Dimension.Finite
+import Mathlib.LinearAlgebra.Dimension.Free
+import Mathlib.LinearAlgebra.Dimension.OrzechProperty
 import Mathlib.FieldTheory.PurelyInseparable.Exponent
 import Mathlib.RingTheory.Adjoin.PowerBasis
 import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
@@ -12,7 +18,7 @@ namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter13
 
 open Filter Ideal IsLocalRing
 open Module
-open scoped BigOperators Polynomial
+open scoped BigOperators Pointwise Polynomial
 
 noncomputable section
 
@@ -28,11 +34,32 @@ def Chapter13PthPowerSubfield (k : Type u) [Field k] (p : ℕ) : Subfield k :=
 def Chapter13PMonomialIndex (ι : Type u) (p : ℕ) :=
   {e : ι →₀ ℕ // ∀ i, e i < p}
 
+/-- Bounded finitely-supported exponent vectors on `Fin r` are functions into `Fin p`. -/
+def Chapter13PMonomialIndex.equivPiFin (r p : ℕ) :
+    Chapter13PMonomialIndex (Fin r) p ≃ (Fin r → Fin p) where
+  toFun x i := ⟨x.1 i, x.2 i⟩
+  invFun x := ⟨Finsupp.equivFunOnFinite.symm (fun i ↦ x i), fun i ↦ (x i).isLt⟩
+  left_inv x := by
+    apply Subtype.ext
+    ext i
+    rfl
+  right_inv x := by
+    funext i
+    apply Fin.ext
+    rfl
+
 /-- The `p`-monomial associated to an exponent vector. -/
 def Chapter13PMonomial
     {k : Type u} [CommSemiring k] {ι : Type v} {p : ℕ}
     (b : ι → k) (e : Chapter13PMonomialIndex ι p) : k :=
   Finset.prod e.1.support (fun i => b i ^ e.1 i)
+
+@[simp]
+theorem chapter13PMonomial_eq_prod
+    {k : Type u} [CommSemiring k] {ι : Type v} [Fintype ι] {p : ℕ}
+    (b : ι → k) (e : Chapter13PMonomialIndex ι p) :
+    Chapter13PMonomial b e = ∏ i, b i ^ e.1 i := by
+  exact e.1.prod_fintype (fun i n ↦ b i ^ n) fun _ ↦ pow_zero _
 
 /-- `p`-independence: all finite families of `p`-monomials are linearly independent. -/
 def Chapter13PIndependent
@@ -62,6 +89,58 @@ def Chapter13IsMaximalPIndependent
 /-- The field-theoretic version of being perfect in characteristic `p`. -/
 def Chapter13PerfectAtPrime (k : Type u) [Field k] (p : ℕ) : Prop :=
   Function.Surjective (fun x : k => x ^ p)
+
+/-- The number of bounded exponent vectors on an `r`-element family. -/
+theorem chapter13_card_pMonomialIndex (r p : ℕ) :
+    Nat.card (Chapter13PMonomialIndex (Fin r) p) = p ^ r := by
+  rw [Nat.card_congr (Chapter13PMonomialIndex.equivPiFin r p)]
+  simp
+
+/-- The extension over the field of `p`-th powers is purely inseparable. -/
+theorem chapter13_isPurelyInseparable_pthPowerSubfield
+    {k : Type u} [Field k] (p : ℕ) [Fact (Nat.Prime p)] [CharP k p] :
+    IsPurelyInseparable (Chapter13PthPowerSubfield k p) k := by
+  rw [isPurelyInseparable_iff_pow_mem (Chapter13PthPowerSubfield k p) p]
+  intro x
+  refine ⟨1, ⟨⟨x ^ p, Subfield.subset_closure ⟨x, rfl⟩⟩, ?_⟩⟩
+  simpa using Algebra.algebraMap_ofSubsemiring_apply (Chapter13PthPowerSubfield k p)
+    ⟨x ^ p, Subfield.subset_closure ⟨x, rfl⟩⟩
+
+/-- Splitting off the last bounded exponent splits the monomial range as a set product. -/
+theorem chapter13_pMonomial_range_succ
+    {k : Type u} [CommSemiring k] (p r : ℕ) (b : Fin (r + 1) → k) :
+    Set.range (fun e : Chapter13PMonomialIndex (Fin (r + 1)) p ↦
+        Chapter13PMonomial b e) =
+      Set.range (fun e : Chapter13PMonomialIndex (Fin r) p ↦
+          Chapter13PMonomial (fun i ↦ b i.castSucc) e) *
+        Set.range (fun j : Fin p ↦ b (Fin.last r) ^ (j : ℕ)) := by
+  classical
+  ext y
+  constructor
+  · rintro ⟨e, rfl⟩
+    let e₀ : Chapter13PMonomialIndex (Fin r) p :=
+      ⟨Finsupp.equivFunOnFinite.symm (fun i ↦ e.1 i.castSucc), fun i ↦ e.2 i.castSucc⟩
+    let j : Fin p := ⟨e.1 (Fin.last r), e.2 (Fin.last r)⟩
+    refine Set.mem_mul.mpr ⟨Chapter13PMonomial (fun i ↦ b i.castSucc) e₀,
+      ⟨e₀, rfl⟩, b (Fin.last r) ^ (j : ℕ), ⟨j, rfl⟩, ?_⟩
+    rw [chapter13PMonomial_eq_prod]
+    change (∏ i : Fin r, b i.castSucc ^ e.1 i.castSucc) *
+      b (Fin.last r) ^ e.1 (Fin.last r) = Chapter13PMonomial b e
+    rw [chapter13PMonomial_eq_prod, Fin.prod_univ_castSucc]
+  · rintro ⟨_, ⟨e, rfl⟩, _, ⟨j, rfl⟩, rfl⟩
+    let e' : Chapter13PMonomialIndex (Fin (r + 1)) p :=
+      ⟨Finsupp.equivFunOnFinite.symm (Fin.lastCases (j : ℕ) (fun i ↦ e.1 i)), by
+        intro i
+        change Fin.lastCases (j : ℕ) (fun i ↦ e.1 i) i < p
+        refine Fin.lastCases ?_ (fun i ↦ ?_) i
+        · simp [j.isLt]
+        · simp [e.2 i]⟩
+    refine ⟨e', ?_⟩
+    change Chapter13PMonomial b e' =
+      Chapter13PMonomial (fun i ↦ b i.castSucc) e * b (Fin.last r) ^ (j : ℕ)
+    rw [chapter13PMonomial_eq_prod, Fin.prod_univ_castSucc]
+    rw [chapter13PMonomial_eq_prod]
+    simp [e']
 
 /-- The degree-one-or-`p` calculation for an intermediate field. -/
 theorem chapter13_simple_p_extension_degree
@@ -157,6 +236,282 @@ theorem chapter13_simple_p_extension_degree
       rw [IsPurelyInseparable.minpoly_natDegree_eq' (K := F) p b, he]
       simp
     exact ⟨hbF, hdegree.trans hdegree_p⟩
+
+/-- Bounded `p`-monomials span the algebra generated by a finite family. -/
+theorem chapter13_pMonomials_span_adjoin
+    {k : Type u} [Field k] (p : ℕ) [Fact (Nat.Prime p)] [CharP k p]
+    (F : Subfield k) (hF : Chapter13PthPowerSubfield k p ≤ F) :
+    ∀ (r : ℕ) (b : Fin r → k),
+      Submodule.span F
+          (Set.range (fun e : Chapter13PMonomialIndex (Fin r) p ↦
+            Chapter13PMonomial b e)) =
+        Subalgebra.toSubmodule (Algebra.adjoin F (Set.range b)) := by
+  intro r
+  induction r with
+  | zero =>
+      intro b
+      have hrange :
+          Set.range (fun e : Chapter13PMonomialIndex (Fin 0) p ↦
+            Chapter13PMonomial b e) = {1} := by
+        ext x
+        constructor
+        · rintro ⟨e, rfl⟩
+          rw [Set.mem_singleton_iff]
+          change Chapter13PMonomial b e = 1
+          rw [chapter13PMonomial_eq_prod]
+          simp
+        · intro hx
+          rw [Set.mem_singleton_iff] at hx
+          subst x
+          let e : Chapter13PMonomialIndex (Fin 0) p :=
+            ⟨0, fun i ↦ Fin.elim0 i⟩
+          refine ⟨e, ?_⟩
+          change Chapter13PMonomial b e = 1
+          rw [chapter13PMonomial_eq_prod]
+          simp
+      have hbrange : Set.range b = ∅ := by
+        ext x
+        constructor
+        · rintro ⟨i, _⟩
+          exact Fin.elim0 i
+        · simp
+      rw [hrange, hbrange, Algebra.adjoin_empty, Algebra.toSubmodule_bot,
+        ← Submodule.one_eq_span]
+  | succ r ih =>
+      intro b
+      have hlast := (chapter13_simple_p_extension_degree p F hF (b (Fin.last r))).1
+      rw [chapter13_pMonomial_range_succ, ← Submodule.span_mul_span, ih,
+        ← hlast, ← Algebra.adjoin_union_coe_submodule]
+      congr 2
+      ext x
+      constructor
+      · rintro (⟨i, rfl⟩ | rfl)
+        · exact ⟨i.castSucc, rfl⟩
+        · exact ⟨Fin.last r, rfl⟩
+      · rintro ⟨i, rfl⟩
+        exact Fin.lastCases (Or.inr rfl) (fun j ↦ Or.inl ⟨j, rfl⟩) i
+
+/-- For a finite family, independence of the bounded monomials is the expected degree formula. -/
+theorem chapter13_linearIndependent_pMonomials_iff_finrank
+    {k : Type u} [Field k] (p : ℕ) [Fact (Nat.Prime p)] [CharP k p]
+    (F : Subfield k) (hF : Chapter13PthPowerSubfield k p ≤ F)
+    (r : ℕ) (b : Fin r → k) :
+    LinearIndependent F
+        (fun e : Chapter13PMonomialIndex (Fin r) p ↦ Chapter13PMonomial b e) ↔
+      Module.finrank F (Algebra.adjoin F (Set.range b)) = p ^ r := by
+  let _ : Fintype (Chapter13PMonomialIndex (Fin r) p) :=
+    Fintype.ofEquiv (Fin r → Fin p) (Chapter13PMonomialIndex.equivPiFin r p).symm
+  rw [linearIndependent_iff_card_eq_finrank_span, Fintype.card_eq_nat_card,
+    chapter13_card_pMonomialIndex, Set.finrank,
+    chapter13_pMonomials_span_adjoin p F hF, Subalgebra.finrank_toSubmodule, eq_comm]
+
+/-- The finite-family degree characterization of `p`-independence. -/
+theorem chapter13_pIndependent_iff_finrank
+    {k : Type u} [Field k] (p : ℕ) [Fact (Nat.Prime p)] [CharP k p]
+    (B : Set k) :
+    Chapter13PIndependent (Chapter13PthPowerSubfield k p) B p ↔
+      ∀ (r : ℕ) (b : Fin r → k), Set.range b ⊆ B → Function.Injective b →
+        Module.finrank (Chapter13PthPowerSubfield k p)
+          (Algebra.adjoin (Chapter13PthPowerSubfield k p) (Set.range b)) = p ^ r := by
+  constructor
+  · intro h r b hb hinj
+    exact (chapter13_linearIndependent_pMonomials_iff_finrank p
+      (Chapter13PthPowerSubfield k p) le_rfl r b).mp (h r b hb hinj)
+  · intro h r b hb hinj
+    exact (chapter13_linearIndependent_pMonomials_iff_finrank p
+      (Chapter13PthPowerSubfield k p) le_rfl r b).mpr (h r b hb hinj)
+
+/-- The expected finite-family degrees imply the one-element deletion criterion. -/
+theorem chapter13_finrank_implies_deletion
+    {k : Type u} [Field k] (p : ℕ) [Fact (Nat.Prime p)] [CharP k p]
+    (B : Set k)
+    (hdegree : ∀ (r : ℕ) (b : Fin r → k), Set.range b ⊆ B → Function.Injective b →
+      Module.finrank (Chapter13PthPowerSubfield k p)
+        (Algebra.adjoin (Chapter13PthPowerSubfield k p) (Set.range b)) = p ^ r) :
+    ∀ b : k, b ∈ B →
+      b ∉ Algebra.adjoin (Chapter13PthPowerSubfield k p) (B \ {b}) := by
+  classical
+  let F := Chapter13PthPowerSubfield k p
+  have hpi : IsPurelyInseparable F k := chapter13_isPurelyInseparable_pthPowerSubfield p
+  let _ : IsPurelyInseparable F k := hpi
+  have halg : Algebra.IsAlgebraic F k := IsPurelyInseparable.isAlgebraic F k
+  intro b hbB hb
+  have hadj_delete :
+      (IntermediateField.adjoin F (B \ {b})).toSubalgebra =
+        Algebra.adjoin F (B \ {b}) :=
+    IntermediateField.adjoin_toSubalgebra_of_isAlgebraic
+      (fun x _ ↦ halg.isAlgebraic x)
+  rw [← hadj_delete] at hb
+  obtain ⟨T, hTsub, hbT⟩ := IntermediateField.exists_finset_of_mem_adjoin hb
+  let f : Fin T.card → k := fun i ↦ ((T.equivFin.symm i : T) : k)
+  have hf_range : Set.range f = (T : Set k) := by
+    ext x
+    constructor
+    · rintro ⟨i, rfl⟩
+      exact (T.equivFin.symm i).property
+    · intro hx
+      exact ⟨T.equivFin ⟨x, hx⟩, by simp [f]⟩
+  have hf_inj : Function.Injective f := by
+    intro i j hij
+    apply T.equivFin.symm.injective
+    apply Subtype.ext
+    exact hij
+  have hb_not_T : b ∉ T := fun hbmem ↦ (hTsub hbmem).2 rfl
+  let g : Fin (T.card + 1) → k := Fin.cons b f
+  have hg_range : Set.range g = {b} ∪ (T : Set k) := by
+    ext x
+    constructor
+    · rintro ⟨i, rfl⟩
+      refine Fin.cases ?_ (fun j ↦ ?_) i
+      · simp [g]
+      · apply Or.inr
+        change f j ∈ (T : Set k)
+        rw [← hf_range]
+        exact ⟨j, rfl⟩
+    · rintro (rfl | hx)
+      · exact ⟨0, by simp [g]⟩
+      · rw [← hf_range] at hx
+        obtain ⟨i, rfl⟩ := hx
+        exact ⟨i.succ, by simp [g]⟩
+  have hb_not_range : b ∉ Set.range f := by
+    rw [hf_range]
+    exact hb_not_T
+  have hg_inj : Function.Injective g :=
+    Fin.cons_injective_of_injective hb_not_range hf_inj
+  have hfB : Set.range f ⊆ B := hf_range ▸ hTsub.trans Set.sdiff_subset
+  have hgB : Set.range g ⊆ B := by
+    rw [hg_range]
+    exact Set.union_subset (Set.singleton_subset_iff.mpr hbB) (hTsub.trans Set.sdiff_subset)
+  have hb_alg : b ∈ Algebra.adjoin F (T : Set k) := by
+    have hadj_T : (IntermediateField.adjoin F (T : Set k)).toSubalgebra =
+        Algebra.adjoin F (T : Set k) :=
+      IntermediateField.adjoin_toSubalgebra_of_isAlgebraic
+        (fun x _ ↦ halg.isAlgebraic x)
+    rw [← hadj_T]
+    exact hbT
+  have hadj_eq : Algebra.adjoin F (Set.range f) = Algebra.adjoin F (Set.range g) := by
+    rw [hf_range, hg_range, Set.union_comm]
+    apply le_antisymm
+    · exact Algebra.adjoin_mono Set.subset_union_left
+    · apply Algebra.adjoin_le
+      rintro x (hx | rfl)
+      · exact Algebra.subset_adjoin hx
+      · exact hb_alg
+  have heq : p ^ T.card = p ^ (T.card + 1) := by
+    rw [← hdegree T.card f hfB hf_inj, ← hdegree (T.card + 1) g hgB hg_inj,
+      hadj_eq]
+  exact (Nat.pow_lt_pow_right (Fact.out : Nat.Prime p).one_lt
+    (Nat.lt_succ_self T.card)).ne heq
+
+/-- The one-element deletion criterion implies all expected finite-family degrees. -/
+theorem chapter13_deletion_implies_finrank
+    {k : Type u} [Field k] (p : ℕ) [Fact (Nat.Prime p)] [CharP k p]
+    (B : Set k)
+    (hdelete : ∀ b : k, b ∈ B →
+      b ∉ Algebra.adjoin (Chapter13PthPowerSubfield k p) (B \ {b})) :
+    ∀ (r : ℕ) (b : Fin r → k), Set.range b ⊆ B → Function.Injective b →
+      Module.finrank (Chapter13PthPowerSubfield k p)
+        (Algebra.adjoin (Chapter13PthPowerSubfield k p) (Set.range b)) = p ^ r := by
+  classical
+  let F := Chapter13PthPowerSubfield k p
+  have hpi : IsPurelyInseparable F k := chapter13_isPurelyInseparable_pthPowerSubfield p
+  let _ : IsPurelyInseparable F k := hpi
+  have halg : Algebra.IsAlgebraic F k := IsPurelyInseparable.isAlgebraic F k
+  intro r
+  induction r with
+  | zero =>
+      intro b _ _
+      have hrange : Set.range b = ∅ := by
+        ext x
+        constructor
+        · rintro ⟨i, _⟩
+          exact Fin.elim0 i
+        · simp
+      simp [hrange, Algebra.adjoin_empty]
+  | succ r ih =>
+      intro b hbB hinj
+      let b₀ : Fin r → k := fun i ↦ b i.castSucc
+      let x : k := b (Fin.last r)
+      have hb₀B : Set.range b₀ ⊆ B := by
+        rintro y ⟨i, rfl⟩
+        exact hbB ⟨i.castSucc, rfl⟩
+      have hb₀inj : Function.Injective b₀ := fun _ _ h ↦
+        Fin.castSucc_inj.mp (hinj h)
+      have hxB : x ∈ B := hbB ⟨Fin.last r, rfl⟩
+      have hb₀diff : Set.range b₀ ⊆ B \ {x} := by
+        rintro y ⟨i, rfl⟩
+        refine ⟨hb₀B ⟨i, rfl⟩, ?_⟩
+        rw [Set.mem_singleton_iff]
+        intro heq
+        exact Fin.castSucc_ne_last i (hinj heq)
+      let E : IntermediateField F k := IntermediateField.adjoin F (Set.range b₀)
+      have hxE : x ∉ E := by
+        intro hx
+        have hx' : x ∈ IntermediateField.adjoin F (B \ {x}) :=
+          IntermediateField.adjoin.mono F (Set.range b₀) (B \ {x}) hb₀diff hx
+        have hadj_delete :
+            (IntermediateField.adjoin F (B \ {x})).toSubalgebra =
+              Algebra.adjoin F (B \ {x}) :=
+          IntermediateField.adjoin_toSubalgebra_of_isAlgebraic
+            (fun y _ ↦ halg.isAlgebraic y)
+        apply hdelete x hxB
+        rw [← hadj_delete]
+        exact hx'
+      have hFE : Chapter13PthPowerSubfield k p ≤ E.toSubfield := by
+        intro y hy
+        exact IntermediateField.adjoin.range_algebraMap_subset F (Set.range b₀) ⟨⟨y, hy⟩, rfl⟩
+      have hs := chapter13_simple_p_extension_degree p E.toSubfield hFE x
+      have hsfin : Module.finrank E (Algebra.adjoin E ({x} : Set k)) = p := by
+        rcases hs.2.2 with h | h
+        · exact (hxE h.1).elim
+        · exact h.2
+      have hEalg : E.toSubalgebra = Algebra.adjoin F (Set.range b₀) :=
+        IntermediateField.adjoin_toSubalgebra_of_isAlgebraic
+          (fun y _ ↦ halg.isAlgebraic y)
+      have hEfin : Module.finrank F E = p ^ r := by
+        change Module.finrank F E.toSubalgebra = p ^ r
+        rw [hEalg]
+        exact ih b₀ hb₀B hb₀inj
+      let L : Subalgebra E k := Algebra.adjoin E ({x} : Set k)
+      let iE : E ≃ₐ[F] E.toSubalgebra :=
+        { toFun := fun y ↦ ⟨y, y.property⟩
+          invFun := fun y ↦ ⟨y, y.property⟩
+          left_inv := fun _ ↦ rfl
+          right_inv := fun _ ↦ rfl
+          map_mul' := fun _ _ ↦ rfl
+          map_add' := fun _ _ ↦ rfl
+          commutes' := fun _ ↦ rfl }
+      have hiE : algebraMap E k = (algebraMap E.toSubalgebra k) ∘ iE := by
+        funext y
+        rfl
+      have hLres : L.restrictScalars F = Algebra.adjoin F (Set.range b) := by
+        change (Algebra.adjoin E ({x} : Set k)).restrictScalars F = _
+        rw [Algebra.restrictScalars_adjoin_of_algEquiv iE hiE]
+        rw [Algebra.restrictScalars_adjoin F E.toSubalgebra ({x} : Set k)]
+        apply le_antisymm
+        · apply Algebra.adjoin_le
+          rintro y (hy | rfl)
+          · rw [hEalg] at hy
+            exact Algebra.adjoin_mono (show Set.range b₀ ⊆ Set.range b by
+              rintro z ⟨i, rfl⟩
+              exact ⟨i.castSucc, rfl⟩) hy
+          · exact Algebra.subset_adjoin ⟨Fin.last r, rfl⟩
+        · apply Algebra.adjoin_le
+          rintro y ⟨i, rfl⟩
+          refine Fin.lastCases ?_ (fun j ↦ ?_) i
+          · exact Algebra.subset_adjoin (Or.inr rfl)
+          · apply Algebra.subset_adjoin
+            apply Or.inl
+            exact IntermediateField.subset_adjoin F (Set.range b₀) ⟨j, rfl⟩
+      calc
+        Module.finrank F (Algebra.adjoin F (Set.range b)) = Module.finrank F L := by
+          rw [← hLres]
+          change Module.finrank F L = Module.finrank F L
+          rfl
+        _ = Module.finrank F E * Module.finrank E L :=
+          (Module.finrank_mul_finrank F E L).symm
+        _ = p ^ r * p := by rw [hEfin, hsfin]
+        _ = p ^ (r + 1) := (pow_succ p r).symm
 
 /-!
 Proof roadmap for `chapter13_p_independence_three_forms`.
@@ -259,7 +614,10 @@ theorem chapter13_p_independence_three_forms
             (Algebra.adjoin (Chapter13PthPowerSubfield k p) (Set.range b)) = p ^ r) ↔
         (∀ b : k, b ∈ B →
           b ∉ Algebra.adjoin (Chapter13PthPowerSubfield k p) (B \ {b}))) := by
-  sorry
+  refine ⟨chapter13_pIndependent_iff_finrank p B, ?_⟩
+  constructor
+  · exact chapter13_finrank_implies_deletion p B
+  · exact chapter13_deletion_implies_finrank p B
 
 /-- Existence, maximality, and the perfect-field criterion for `p`-bases. -/
 theorem chapter13_p_basis_existence
