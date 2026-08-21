@@ -68,7 +68,23 @@ theorem chapter11_tame_total_norm_valuation_coordinate_surjective
     (πL : L) (hπ : chapter11IsUniformizer vL πL)
     (hnormπ : vK (Algebra.norm K πL) = (1 : WithTop ℤ)) (r : ℤ) :
     ∃ x : L, x ≠ 0 ∧ vK (Algebra.norm K x) = (r : WithTop ℤ) := by
-  sorry
+  have hnormπ0 : Algebra.norm K πL ≠ 0 := by
+    intro hzero
+    rw [hzero] at hnormπ
+    simp at hnormπ
+  refine ⟨πL ^ r, zpow_ne_zero r hπ.1, ?_⟩
+  rw [Algebra.norm_zpow]
+  have hpow (m : ℤ) : vK (Algebra.norm K πL ^ m) = (m : WithTop ℤ) := by
+    induction m using Int.induction_on with
+    | zero => simp
+    | succ m ih =>
+        rw [zpow_add_one₀ hnormπ0, AddValuation.map_mul, ih, hnormπ]
+        simp
+    | pred m ih =>
+        rw [zpow_sub_one₀ hnormπ0, AddValuation.map_mul, ih,
+          AddValuation.map_inv, hnormπ]
+        norm_cast
+  exact hpow r
 
 /- In the tame totally ramified situation, the valuation and residue-unit
    conditions together characterize the nonzero norm equations. -/
@@ -93,18 +109,142 @@ theorem chapter11_tame_total_norm_equation_iff
       Set.SurjOn (Algebra.norm K (S := L))
         (chapter11UnitFiltration vL 1) (chapter11UnitFiltration vK 1))
     (hdegree : Module.finrank K L = e)
-    (hfres :
+    (_hfres :
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
         vK vL hext = 1)
     (πK : K) (hπK : chapter11IsUniformizer vK πK)
     (πL : L) (hπL : chapter11IsUniformizer vL πL)
     (c : K) (hc : c ∈ chapter11UnitFiltration vK 0)
-    (hcdef : c = chapter11TameNormUniformizerFactor K L πK πL)
+    (_hcdef : c = chapter11TameNormUniformizerFactor K L πK πL)
     (hnormπ : Algebra.norm K πL = c * πK)
-    (a : K) (ha : a ≠ 0) :
+    (a : K) (_ha : a ≠ 0) :
     chapter11NormEquationSolution K L a ↔
       a ∈ chapter11TameNormEquationSet vK ρK πK c e := by
-  sorry
+  have hcunit : c ∈ chapter11UnitSet vK := by
+    rw [← chapter11_unit_filtration_zero vK]
+    exact hc
+  have hcval : vK c = 0 :=
+    (chapter11_mem_unit_set_iff_valuation_zero vK c).mp hcunit
+  have hc0 : c ≠ 0 := by
+    intro hzero
+    rw [hzero] at hcval
+    simp at hcval
+  have hpow_zero (b : K) (hb : b ≠ 0) (hbval : vK b = 0) (m : ℤ) :
+      vK (b ^ m) = 0 := by
+    induction m using Int.induction_on with
+    | zero => simp
+    | succ m ih =>
+        rw [zpow_add_one₀ hb, AddValuation.map_mul, ih, hbval]
+        simp
+    | pred m ih =>
+        rw [zpow_sub_one₀ hb, AddValuation.map_mul, ih,
+          AddValuation.map_inv, hbval]
+        simp
+  have hmul_zpow (m : ℤ) : (c * πK) ^ m = c ^ m * πK ^ m := by
+    have hcπ0 : c * πK ≠ 0 := mul_ne_zero hc0 hπK.1
+    induction m using Int.induction_on with
+    | zero => simp
+    | succ m ih =>
+        rw [zpow_add_one₀ hcπ0, zpow_add_one₀ hc0, zpow_add_one₀ hπK.1, ih]
+        ring
+    | pred m ih =>
+        rw [zpow_sub_one₀ hcπ0, zpow_sub_one₀ hc0, zpow_sub_one₀ hπK.1, ih]
+        ring
+  have hall :
+      chapter11NormImage K L vL 0 =
+        chapter11ResidueConditionSet vK ρK
+          (chapter11ResidueUnitPowerImage k e) :=
+    proposition_11_2_tame_totally_ramified_all_unit_norm_image K L k vK vL ρK ρL e p he
+      htame hext hscale hres hdegree hred hcompleteK hcompleteL N hnormunit hnormred hprincipal
+  constructor
+  · intro hsolution
+    rcases hsolution with ⟨x, hx, hxnorm⟩
+    have hdiv : chapter11ValuationValueDivisibleBy vL 1 x := by
+      unfold chapter11ValuationValueDivisibleBy
+      obtain ⟨z, hz⟩ := WithTop.ne_top_iff_exists.mp (vL.ne_top_iff.mpr hx)
+      refine ⟨z, ?_⟩
+      simpa using hz.symm
+    obtain ⟨r, w, hw, hxrep⟩ :=
+      chapter11_unramified_norm_equation_decomposition L vL 1 πL hπL x hx hdiv
+    have hwunit : w ∈ chapter11UnitSet vL := by
+      rw [← chapter11_unit_filtration_zero vL]
+      exact hw
+    rcases hwunit with ⟨uw, hwu⟩
+    have hnormwunit : Algebra.norm K w ∈ chapter11UnitSet vK := by
+      let uw' : (chapter11ValuationRing vL)ˣ :=
+        vL.toValuation.valuationSubring.unitGroupMulEquiv uw
+      refine ⟨vK.toValuation.valuationSubring.unitGroupMulEquiv.symm (N uw'), ?_⟩
+      change Algebra.norm K w = ((N uw' : chapter11ValuationRing vK) : K)
+      rw [hnormunit uw', hwu]
+      rfl
+    have hnormwval : vK (Algebra.norm K w) = 0 :=
+      (chapter11_mem_unit_set_iff_valuation_zero vK _).mp hnormwunit
+    have hnormwres :
+        Algebra.norm K w ∈
+          chapter11ResidueConditionSet vK ρK
+            (chapter11ResidueUnitPowerImage k e) := by
+      have hnormwimage : Algebra.norm K w ∈ chapter11NormImage K L vL 0 :=
+        ⟨w, hw, rfl⟩
+      rw [hall] at hnormwimage
+      exact hnormwimage
+    have hcancel :
+        (c ^ r * Algebra.norm K w) * c ^ (-r) = Algebra.norm K w := by
+      calc
+        (c ^ r * Algebra.norm K w) * c ^ (-r) =
+            Algebra.norm K w * (c ^ r * c ^ (-r)) := by ring
+        _ = Algebra.norm K w * c ^ (r + (-r)) := by
+          rw [← zpow_add₀ hc0]
+        _ = Algebra.norm K w := by simp
+    refine ⟨r, c ^ r * Algebra.norm K w, ?_, ?_, ?_⟩
+    · rw [chapter11_unit_filtration_zero]
+      apply (chapter11_mem_unit_set_iff_valuation_zero vK _).2
+      rw [AddValuation.map_mul, hpow_zero c hc0 hcval r, hnormwval]
+      simp
+    · rw [hcancel]
+      exact hnormwres
+    · have hxrep' : x = πL ^ r * w := by
+        simpa using hxrep
+      calc
+        a = Algebra.norm K x := hxnorm.symm
+        _ = Algebra.norm K (πL ^ r * w) := by rw [hxrep']
+        _ = Algebra.norm K (πL ^ r) * Algebra.norm K w := by
+          rw [(Algebra.norm K).map_mul]
+        _ = (c * πK) ^ r * Algebra.norm K w := by
+          rw [Algebra.norm_zpow, hnormπ]
+        _ = πK ^ r * (c ^ r * Algebra.norm K w) := by
+          rw [hmul_zpow]
+          ring
+  · intro hcandidate
+    rcases hcandidate with ⟨r, u, hu, hresidue, haeq⟩
+    rw [← hall] at hresidue
+    rcases hresidue with ⟨y, hy, hnormy⟩
+    have hyunit : y ∈ chapter11UnitSet vL := by
+      rw [← chapter11_unit_filtration_zero vL]
+      exact hy
+    have hy0 : y ≠ 0 := by
+      intro hyzero
+      rw [hyzero] at hyunit
+      have hyval := (chapter11_mem_unit_set_iff_valuation_zero vL 0).mp hyunit
+      simp at hyval
+    unfold chapter11NormEquationSolution
+    refine ⟨πL ^ r * y, mul_ne_zero (zpow_ne_zero r hπL.1) hy0, ?_⟩
+    have hnormpow : Algebra.norm K (πL ^ r) = (c * πK) ^ r := by
+      rw [Algebra.norm_zpow, hnormπ]
+    calc
+      Algebra.norm K (πL ^ r * y) =
+          Algebra.norm K (πL ^ r) * Algebra.norm K y := by
+        rw [(Algebra.norm K).map_mul]
+      _ = (c * πK) ^ r * (u * c ^ (-r)) := by
+        rw [hnormpow, hnormy]
+      _ = πK ^ r * u := by
+        rw [hmul_zpow]
+        calc
+          c ^ r * πK ^ r * (u * c ^ (-r)) =
+              πK ^ r * u * (c ^ r * c ^ (-r)) := by ring
+          _ = πK ^ r * u * c ^ (r + (-r)) := by
+            rw [← zpow_add₀ hc0]
+          _ = πK ^ r * u := by simp
+      _ = a := haeq.symm
 
 /- A Kummer polynomial records the example in which a totally ramified
    uniformizer is an `e`th root of the base uniformizer. -/
@@ -125,7 +265,43 @@ theorem chapter11_kummer_uniformizer_norm
     (hgenerates : Algebra.adjoin K ({root} : Set L) = ⊤)
     (hdegree : Module.finrank K L = e) :
     Algebra.norm K root = (-1 : K) ^ (e + 1) * π := by
-  sorry
+  have hxint : IsIntegral K root := IsIntegral.of_finite K root
+  have he : 0 < e := by
+    rw [← hdegree]
+    exact Module.finrank_pos
+  have he0 : 0 ≠ e := (Nat.ne_of_gt he).symm
+  have hgenIF : IntermediateField.adjoin K ({root} : Set L) = ⊤ :=
+    IntermediateField.adjoin_eq_top_of_algebra (F := K) (S := ({root} : Set L)) hgenerates
+  have hfinrank : Module.finrank (IntermediateField.adjoin K ({root} : Set L)) L = 1 := by
+    rw [hgenIF]
+    simp
+  have hdegpoly : (minpoly K root).natDegree = e := by
+    calc
+      (minpoly K root).natDegree =
+          Module.finrank K (IntermediateField.adjoin K ({root} : Set L)) :=
+        (IntermediateField.adjoin.finrank hxint).symm
+      _ = Module.finrank K L := by
+        have htower :=
+          Module.finrank_mul_finrank K (IntermediateField.adjoin K ({root} : Set L)) L
+        rw [hfinrank, mul_one] at htower
+        exact htower
+      _ = e := hdegree
+  have hnormeq :
+      Algebra.norm K root = Algebra.norm K (IntermediateField.AdjoinSimple.gen K root) := by
+    rw [Algebra.norm_eq_norm_adjoin K root, hfinrank, pow_one]
+  have hpb :=
+    Algebra.PowerBasis.norm_gen_eq_coeff_zero_minpoly
+      (IntermediateField.adjoin.powerBasis hxint)
+  rw [IntermediateField.adjoin.powerBasis_gen, IntermediateField.minpoly_gen] at hpb
+  have hpb' :
+      Algebra.norm K (IntermediateField.AdjoinSimple.gen K root) =
+        (-1) ^ (minpoly K root).natDegree * (minpoly K root).coeff 0 := by
+    exact hpb
+  calc
+    Algebra.norm K root = Algebra.norm K (IntermediateField.AdjoinSimple.gen K root) := hnormeq
+    _ = (-1) ^ (e + 1) * π := by
+      rw [hpb', hdegpoly, hminpoly, chapter11KummerPolynomial]
+      simp [he0, pow_succ]
 
 /- Norms of elements embedded from the base field are powers by the extension
    degree. -/
@@ -134,7 +310,7 @@ theorem chapter11_norm_of_base_unit
     [FiniteDimensional K L] (e : ℕ)
     (hdegree : Module.finrank K L = e) (u : K) :
     Algebra.norm K (algebraMap K L u) = u ^ e := by
-  sorry
+  rw [Algebra.norm_algebraMap, hdegree]
 
 /- The base-unit formula gives an inclusion in the full unit norm image; it
    does not identify that image with the base-field power image.  The source
@@ -147,7 +323,18 @@ theorem chapter11_base_unit_norm_image_subset
     (e : ℕ) (hscale : chapter11ValuationScaling vK vL e)
     (hdegree : Module.finrank K L = e) :
     chapter11BaseUnitNormImage K vK e ⊆ chapter11NormImage K L vL 0 := by
-  sorry
+  intro x hx
+  rcases hx with ⟨u, rfl⟩
+  rw [chapter11_mem_norm_image_iff]
+  refine ⟨algebraMap K L ((u : chapter11ValuationRing vK) : K), ?_, ?_⟩
+  · rw [chapter11_unit_filtration_zero]
+    apply (chapter11_mem_unit_set_iff_valuation_zero vL _).2
+    rw [hscale, (chapter11_mem_unit_set_iff_valuation_zero vK _).mp]
+    · simp
+    · refine ⟨vK.toValuation.valuationSubring.unitGroupMulEquiv.symm u, ?_⟩
+      rfl
+  · exact chapter11_norm_of_base_unit K L e hdegree
+      ((u : chapter11ValuationRing vK) : K)
 
 /- The finite-residue tame quotient is the residue-unit obstruction, with no
    additional valuation index because a norm of a uniformizer has valuation
@@ -156,7 +343,7 @@ theorem chapter11_tame_total_norm_unit_quotient_index
     (k : Type*) [Field k] [Fintype k] (e : ℕ) :
     Nat.card (kˣ ⧸ chapter11PowerSubgroup k e) =
       Nat.gcd e (Fintype.card k - 1) := by
-  sorry
+  exact chapter11_tame_residue_power_quotient_index k e
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11
