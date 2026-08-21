@@ -173,9 +173,9 @@ the range for which it was proved there.
 
 From commutative algebra we assume standard material: localization and its exactness, flat and
 faithfully flat modules, the local nature of exactness, Nakayama's lemma, the Hilbert basis
-theorem, prime filtrations of finite modules over noetherian rings, Noether normalization, and the
-elementary theory of graded rings and modules. Complexes are cohomological, with differentials
-raising degree, following the conventions of Book 7a, Section 1.3.
+theorem, Noether normalization, and the elementary theory of graded rings and modules. Complexes
+are cohomological, with differentials raising degree, following the conventions of Book 7a,
+Section 1.3.
 
 ### 1.3 The extended Čech complex of a unimodular family
 
@@ -1140,13 +1140,13 @@ It is worth being clear about what has and has not been proved. Theorem 3.9 says
 implies vanishing. The converse — Serre's criterion, that a quasi-compact scheme all of whose
 quasi-coherent sheaves have vanishing $H^1$ is affine — is true but is not needed anywhere in this
 book or in what follows it, and we do not prove it. Nor does Theorem 3.9 say anything about
-non-quasi-coherent sheaves on an affine scheme: the extension by zero $j_!\mathcal O_U$ of
-Section 2.2 has nonvanishing $H^1$ on the spectrum of a discrete valuation ring, since
-$\Gamma(X,j_!\mathcal O_U)=0$ while the sequence
-$0\to j_!\mathcal O_U\to\mathcal O_X\to i_*(R/\pi)\to0$ has
-$\Gamma(X,\mathcal O_X)=R\to R/\pi$ surjective — so $H^1(X,j_!\mathcal O_U)$ contains the cokernel
-of $0\to R/\pi$, which is nonzero. Quasi-coherence is not a technical convenience in Theorem 3.9;
-it is the hypothesis.
+non-quasi-coherent sheaves on an affine scheme. The extension by zero $j_!\mathcal O_U$ of
+Section 2.2 already shows that the affine module description fails outside the quasi-coherent
+subcategory: its global sections vanish although its restriction to $U$ is nonzero. It is not the
+kernel of $\mathcal O_X\to i_*(R/\pi)$; that kernel is the quasi-coherent ideal sheaf
+$\widetilde{\pi R}$. Thus no cohomological conclusion about $j_!\mathcal O_U$ follows from that
+sequence. Quasi-coherence is not a technical convenience in Theorem 3.9; it is the hypothesis that
+makes the principal-open Čech computation apply.
 
 Finally, the theorem supplies exactly the acyclicity input that the abstract Čech comparison of
 Book 7a, Section 7.4 requires. If $X$ is separated, the intersections of affine opens are affine,
@@ -2311,11 +2311,39 @@ a statement over a neighborhood: exactness of a complex at the generic point bec
 every point of an open set, and moreover exactness that persists after arbitrary base change,
 because flatness makes the short exact sequences universally exact.
 
+We first prove the dévissage used twice in the generic-freeness argument, rather than importing it
+as an unnamed noetherian prerequisite.
+
+**Prime-filtration lemma.** Let $R$ be a noetherian ring and $M$ a finite $R$-module. There is a
+finite chain
+
+$$
+0=M_0\subseteq M_1\subseteq\cdots\subseteq M_t=M
+$$
+
+whose nonzero successive quotients are isomorphic to $R/\mathfrak p_i$ for prime ideals
+$\mathfrak p_i\subseteq R$.
+
+**Proof.** First, every nonzero finite $R$-module $Q$ contains a submodule isomorphic to
+$R/\mathfrak p$ for some prime $\mathfrak p$. Indeed, among the annihilators of nonzero elements
+of $Q$, choose a maximal one, say $\mathfrak p=\operatorname{Ann}(q)$. Such a maximal annihilator
+exists because $R$ is noetherian. If $ab\in\mathfrak p$ and $b\notin\mathfrak p$, then $bq\ne0$
+and $\operatorname{Ann}(bq)$ contains $\mathfrak p$; maximality makes the two annihilators equal,
+so $a\in\mathfrak p$. Thus $\mathfrak p$ is prime, and $Rq\simeq R/\mathfrak p$.
+
+Now consider the submodules $N\subseteq M$ that admit a finite filtration of the required kind.
+The zero submodule is one of them. Because the finite module $M$ is noetherian, this collection
+has a maximal member $N$. If $N\ne M$, apply the preceding paragraph to $M/N$ and take the inverse
+image $N'$ of a submodule $R/\mathfrak p\subseteq M/N$. Then $N'/N\simeq R/\mathfrak p$, so the
+filtration of $N$ extends to the strictly larger submodule $N'$, a contradiction. Hence
+$N=M$. $\square$
+
 **Theorem 7.6 (generic freeness).** Let $A$ be a noetherian domain with fraction field $F$, let $B$
 be a finitely generated $A$-algebra, and let $M$ be a finite $B$-module. Then there is a nonzero
 $f\in A$ such that $M_f$ is a free $A_f$-module.
 
-**Proof.** _Dévissage._ Since $B$ is noetherian and $M$ is finite, $M$ has a filtration
+**Proof.** _Dévissage._ Since $B$ is noetherian and $M$ is finite, the prime-filtration lemma gives
+a filtration
 $0=M_0\subseteq M_1\subseteq\cdots\subseteq M_t=M$ by $B$-submodules with
 $M_i/M_{i-1}\simeq B/\mathfrak p_i$ for prime ideals $\mathfrak p_i\subseteq B$. If each
 $B/\mathfrak p_i$ becomes $A$-free after inverting some nonzero $f_i$, invert $f=\prod_if_i$: each
@@ -2451,7 +2479,8 @@ quasi-coherent sheaves (Corollary 2.4), quasi-coherence may be tested on any one
 multiplication by a power of $f$ (Corollary 2.5).
 
 **2. Permanence.** Quasi-coherent sheaves are stable under kernels, cokernels, images, extensions,
-arbitrary colimits, tensor products, and pullback along any morphism (Theorems 2.7 and 2.8), and
+arbitrary colimits, tensor products, and pullback along any morphism (Theorem 2.7 and
+Corollary 3.10), and
 under pushforward along any quasi-compact quasi-separated morphism, with
 $f_*\mathcal F=\widetilde{\Gamma(X,\mathcal F)}$ over an affine base (Lemma 2.9, Theorem 2.10). On a
 noetherian scheme every quasi-coherent sheaf is the filtered union of its coherent subsheaves
