@@ -10,7 +10,7 @@ open scoped BigOperators TensorProduct
 
 theorem chapter04_crossed_product_cocycle_identity_is_associativity
     {G L : Type*} [Group G] [Field L] [MulSemiringAction G L]
-    [MulAction G Lˣ]
+    [MulDistribMulAction G Lˣ]
     (c : Chapter04NormalizedTwoCocycle G L) :
     ∀ g h k,
       c.value g h * c.value (g * h) k =
@@ -19,7 +19,7 @@ theorem chapter04_crossed_product_cocycle_identity_is_associativity
 
 theorem chapter04_crossed_product_scalar_mul_scalar
     {G L : Type*} [Group G] [Field L] [MulSemiringAction G L]
-    [MulAction G Lˣ]
+    [MulDistribMulAction G Lˣ]
     (c : Chapter04NormalizedTwoCocycle G L) (x y : L) :
     chapter04CrossedProductMul c
         (chapter04CrossedProductScalar x)
@@ -29,7 +29,7 @@ theorem chapter04_crossed_product_scalar_mul_scalar
 
 theorem chapter04_crossed_product_basis_mul_scalar
     {G L : Type*} [Group G] [Field L] [MulSemiringAction G L]
-    [MulAction G Lˣ]
+    [MulDistribMulAction G Lˣ]
     (c : Chapter04NormalizedTwoCocycle G L) (g : G) (x : L) :
     chapter04CrossedProductMul c
         (chapter04CrossedProductBasis g)
@@ -39,7 +39,7 @@ theorem chapter04_crossed_product_basis_mul_scalar
 
 theorem chapter04_crossed_product_basis_mul_basis
     {G L : Type*} [Group G] [Field L] [MulSemiringAction G L]
-    [MulAction G Lˣ]
+    [MulDistribMulAction G Lˣ]
     (c : Chapter04NormalizedTwoCocycle G L) (g h : G) :
     chapter04CrossedProductMul c
         (chapter04CrossedProductBasis g)
@@ -49,7 +49,7 @@ theorem chapter04_crossed_product_basis_mul_basis
 
 theorem chapter04_crossed_product_mul_is_associative
     {G L : Type*} [Group G] [Field L] [MulSemiringAction G L]
-    [MulAction G Lˣ]
+    [MulDistribMulAction G Lˣ]
     (c : Chapter04NormalizedTwoCocycle G L) :
     ∀ x y z,
       chapter04CrossedProductMul c
@@ -109,7 +109,7 @@ theorem chapter04_coboundary_rescaling_preserves_crossed_product_class
 
 theorem chapter04_coboundary_is_basis_rescaling
     {G L : Type*} [Group G] [Field L] [MulSemiringAction G L]
-    [MulAction G Lˣ]
+    [MulDistribMulAction G Lˣ]
     (c₁ c₂ : Chapter04NormalizedTwoCocycle G L)
     (hcohom : chapter04CocycleCohomologous c₁ c₂) :
     ∃ b : G → Lˣ, ∀ g h,
@@ -152,12 +152,14 @@ structure Chapter04SplitDescentData
   matrixAction_apply : ∀ g X v,
     matrixAction g X v =
       semilinear_action g (X (semilinear_action g⁻¹ v))
-  cocycle : Chapter04NormalizedTwoCocycle (Gal(L / K)) L
-  inner_automorphism_relation : ∀ g, ∃ T : V ≃ₗ[L] V, ∀ X v,
-    matrixAction g X v = T (X (T.symm v))
+  cocycleValue : Gal(L / K) → Gal(L / K) → Lˣ
+  cocycle_left_normalized : ∀ g, cocycleValue 1 g = 1
+  cocycle_right_normalized : ∀ g, cocycleValue g 1 = 1
+  inner_automorphism_relation : ∀ g X v,
+    matrixAction g X v = linear_operators g (X ((linear_operators g).symm v))
   scalar_relation : ∀ g h v,
     linear_operators g (matrixAction g (linear_operators h) v) =
-      (cocycle.value g h : L) • linear_operators (g * h) v
+      (cocycleValue g h : L) • linear_operators (g * h) v
 
 theorem chapter04_split_descent_produces_a_cocycle
     {K L V : Type*} [Field K] [Field L] [Algebra K L]
@@ -165,8 +167,8 @@ theorem chapter04_split_descent_produces_a_cocycle
     [Module L V] [FiniteDimensional L V]
     (D : Chapter04SplitDescentData K L V) :
     ∀ g h k,
-      D.cocycle.value g h * D.cocycle.value (g * h) k =
-        (g • D.cocycle.value h k) * D.cocycle.value g (h * k) := by
+      D.cocycleValue g h * D.cocycleValue (g * h) k =
+        (g • D.cocycleValue h k) * D.cocycleValue g (h * k) := by
   sorry
 
 theorem chapter04_split_descent_inner_automorphisms_exist
@@ -185,7 +187,7 @@ theorem chapter04_split_descent_scalar_relation
     (D : Chapter04SplitDescentData K L V) :
     ∀ g h v,
       D.linear_operators g (D.matrixAction g (D.linear_operators h) v) =
-        (D.cocycle.value g h : L) • D.linear_operators (g * h) v := by
+        (D.cocycleValue g h : L) • D.linear_operators (g * h) v := by
   sorry
 
 theorem chapter04_relative_brauer_group_is_second_cohomology
@@ -204,6 +206,7 @@ structure Chapter04RelativeH2CyclicData
   finite : Finite (chapter04H2 K L)
   cyclic : IsAddCyclic (chapter04H2 K L)
   card_eq : Nat.card (chapter04H2 K L) = Nat.card (Gal(L / K))
+  card_eq_degree : Nat.card (chapter04H2 K L) = Module.finrank K L
 
 theorem chapter04_relative_h2_is_cyclic_of_degree
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -252,7 +255,9 @@ noncomputable def chapter04FundamentalClassChoice
     (I : Chapter04LocalInvariantData K)
     (R : Chapter04BrauerRestrictionData K L)
     (C : Chapter04RelativeBrauerCohomologyData K L R)
-    (n : ℕ) (hn : 0 < n) (hdegree : Module.finrank K L = n) :
+    (n : ℕ) (hn : 0 < n) (hdegree : Module.finrank K L = n)
+    (himage : Set.range (chapter04CohomologyInvariant I R C) =
+      chapter04RationalResidueOneOverMultiples n) :
     Chapter04FundamentalClass I R C n := by
   sorry
 

@@ -365,7 +365,7 @@ abbrev chapter04H2
 /-- Normalized multiplicative two-cocycles for a Galois action. -/
 structure Chapter04NormalizedTwoCocycle
     (G L : Type*) [Group G] [Field L] [MulSemiringAction G L]
-    [MulAction G Lˣ] where
+    [MulDistribMulAction G Lˣ] where
   value : G → G → Lˣ
   left_normalized : ∀ g, value 1 g = 1
   right_normalized : ∀ g, value g 1 = 1
@@ -389,7 +389,7 @@ def chapter04CrossedProductBasis
 
 def chapter04CrossedProductMul
     {G L : Type*} [Group G] [Field L] [MulSemiringAction G L]
-    [MulAction G Lˣ] (c : Chapter04NormalizedTwoCocycle G L) :
+    [MulDistribMulAction G Lˣ] (c : Chapter04NormalizedTwoCocycle G L) :
     chapter04CrossedProductCarrier G L →
       chapter04CrossedProductCarrier G L →
         chapter04CrossedProductCarrier G L :=
@@ -398,7 +398,7 @@ def chapter04CrossedProductMul
 
 def chapter04CocycleCohomologous
     {G L : Type*} [Group G] [Field L] [MulSemiringAction G L]
-    [MulAction G Lˣ]
+    [MulDistribMulAction G Lˣ]
     (c₁ c₂ : Chapter04NormalizedTwoCocycle G L) : Prop :=
   ∃ b : G → Lˣ, ∀ g h,
     c₂.value g h = b g * (g • b h) * (b (g * h))⁻¹ * c₁.value g h

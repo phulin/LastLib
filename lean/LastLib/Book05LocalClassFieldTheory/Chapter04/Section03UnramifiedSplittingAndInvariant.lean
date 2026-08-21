@@ -20,6 +20,7 @@ structure Chapter04ScalarExtensionAction
     [Algebra K D] [Algebra K E] [Module E D] [FiniteDimensional E D]
     (embedding : E →ₐ[K] D) where
   action : D ⊗[K] E →ₐ[E] Module.End E D
+  module_smul_eq : ∀ b : E, ∀ x : D, b • x = x * embedding b
   action_on_tmul : ∀ a : D, ∀ b : E, ∀ x : D,
     action (TensorProduct.tmul K a b) x = a * x * embedding b
   action_isomorphism : Nonempty
@@ -28,7 +29,7 @@ structure Chapter04ScalarExtensionAction
 theorem chapter04_scalar_extension_action_exists
     {K D E : Type*} [Field K] [Ring D] [Field E]
     [Algebra K D] [Algebra K E] [Module E D] [FiniteDimensional E D]
-    (φ : E →ₐ[K] D) (d : ℕ)
+    (φ : E →ₐ[K] D) (hsmul : ∀ b : E, ∀ x : D, b • x = x * φ b) (d : ℕ)
     (hdimension : Module.finrank E D = d) :
     Nonempty (Chapter04ScalarExtensionAction K D E φ) := by
   sorry
@@ -295,6 +296,23 @@ theorem chapter04_invariant_of_brauer_nat_power
 theorem chapter04_local_invariant_restriction_formula
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [Algebra.IsSeparable K L]
+    (I_K : Chapter04LocalInvariantData K)
+    (I_L : Chapter04LocalInvariantData L)
+    (R : Chapter04BrauerRestrictionData K L)
+    (n : ℕ) (hdegree : Module.finrank K L = n)
+    (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
+      R.restriction (chapter04BrauerClass A) =
+        chapter04BrauerClass (R.scalarExtension A))
+    (α : chapter04BrauerGroup K) :
+    I_L.invariant (R.restriction α) = n • I_K.invariant α := by
+  sorry
+
+/- The invariant theorem also covers finite extensions with a purely
+   inseparable part; separability is therefore not part of the final
+   restriction statement. -/
+theorem chapter04_local_invariant_restriction_formula_finite_extension
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     (I_K : Chapter04LocalInvariantData K)
     (I_L : Chapter04LocalInvariantData L)
     (R : Chapter04BrauerRestrictionData K L)
