@@ -33,7 +33,7 @@ def chapter03RestrictedProductMap
     ⟨fun i => f i ((x : ∀ i, G i) i), by
       have hx : ∀ᶠ i in Filter.cofinite,
           ((x : ∀ i, G i) i) ∈ H i :=
-        (chapter03_restrictedProduct_mem_iff H (x : ∀ i, G i)).1 x.property
+        x.property
       exact (hx.and hf).mono fun i hi => hi.2 _ hi.1⟩
   map_one' := by
     ext i
@@ -41,7 +41,9 @@ def chapter03RestrictedProductMap
   map_mul' := by
     intro x y
     ext i
-    simp
+    change f i ((x * y : Chapter03RestrictedProduct H) i) = _
+    rw [RestrictedProduct.mul_apply]
+    exact (f i).map_mul _ _
 
 theorem chapter03_restrictedProductMap_apply
     (H : ∀ i, Subgroup (G i)) (H' : ∀ i, Subgroup (G' i))

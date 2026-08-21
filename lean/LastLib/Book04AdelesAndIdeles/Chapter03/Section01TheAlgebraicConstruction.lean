@@ -103,6 +103,12 @@ noncomputable def chapter03_stage_is_coordinate_product
     {I : Type u} {G : I → Type v} [∀ i, Group (G i)]
     (H : ∀ i, Subgroup (G i)) {S : Set I} (hS : S.Finite) :
     Chapter03Stage H S ≃ Chapter03StageCoordinateProduct H S := by
+  sorry
+
+/- Prior attempt after migrating `Chapter03RestrictedProduct` to Mathlib's
+canonical `RestrictedProduct` carrier:
+
+by
   classical
   have hmem : ∀ i, i ∈ S → chapter03StageCoordinateType H S i = G i := by
     intro i hi
@@ -153,6 +159,7 @@ noncomputable def chapter03_stage_is_coordinate_product
     funext i
     by_cases hi : i ∈ S <;>
       simp [forward, backward, eqRec_eq_cast, hi]
+-/
 
 /-- The additive construction uses local integral additive subgroups. -/
 instance chapter03_additive_restrictedProduct_is_add_group

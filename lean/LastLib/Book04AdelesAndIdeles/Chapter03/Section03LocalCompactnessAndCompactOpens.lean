@@ -273,6 +273,7 @@ private theorem chapter03_compact_subset_basicProduct
       have hzE : z ∈ chapter03StageSubgroup H E := by
         intro i hi
         have hyK : y i ∈ K i := hy i (by simp)
+        change y i ∈ H i
         simpa [hKtail i hi] using hyK
       let t : T := ⟨z, hzE⟩
       exact ⟨t, hy, rfl⟩
@@ -411,6 +412,7 @@ theorem chapter03_restrictedProduct_has_compact_neighborhood
       have hzE : z ∈ chapter03StageSubgroup H E := by
         intro i hi
         have hyK : y i ∈ K i := hy i (by simp)
+        change y i ∈ H i
         simpa [hKtail i hi] using hyK
       let t : T := ⟨z, hzE⟩
       exact ⟨t, hy, rfl⟩
@@ -780,6 +782,7 @@ private theorem chapter03_additive_compact_subset_basicProduct
       have hzE : z ∈ chapter03AdditiveStageSubgroup H E := by
         intro i hi
         have hyK : y i ∈ K i := hy i (by simp)
+        change y i ∈ H i
         simpa [hKtail i hi] using hyK
       let t : T := ⟨z, hzE⟩
       exact ⟨t, hy, rfl⟩

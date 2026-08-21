@@ -308,6 +308,7 @@ theorem chapter03_restrictedProduct_sigmaCompact_of_local_data
           have hzS : z ∈ chapter03StageSubgroup H S := by
             intro i hiS
             have hyW : y i ∈ W m i := hy i (by simp)
+            change y i ∈ H i
             simpa [W, hiS] using hyW
           let x : T := ⟨z, hzS⟩
           exact ⟨x, hy, rfl⟩
