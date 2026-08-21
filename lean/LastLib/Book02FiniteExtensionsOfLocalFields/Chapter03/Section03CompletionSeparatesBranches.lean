@@ -171,7 +171,26 @@ theorem chapter03_complete_base_tensor_product_is_one_completion
       Nonempty
         (E ⊗[K₀] Valuation.Completion v ≃ₐ[Valuation.Completion v]
           chapter03CompletedBranch (D.branch i).extension.valuation) := by
-  sorry
+  obtain ⟨hne, hsub⟩ :=
+    chapter03_complete_base_has_one_completion_branch v hcomplete D
+  let i₀ : D.index := Classical.choice hne
+  letI : Unique D.index :=
+    { default := i₀
+      uniq := fun i => hsub.elim i i₀ }
+  obtain ⟨e⟩ :=
+    chapter03_completion_tensor_product_decomposition v D hne
+  let eFactor : ∀ i : D.index,
+      chapter03CompletedBranch (D.branch i).extension.valuation ≃ₐ[
+        Valuation.Completion v]
+        chapter03CompletedBranch (D.branch default).extension.valuation := by
+    intro i
+    have hi : i = default := Subsingleton.elim i default
+    subst i
+    exact AlgEquiv.refl
+  let ePi := AlgEquiv.piCongrRight eFactor
+  let eUnique := AlgEquiv.funUnique (Valuation.Completion v) D.index
+    (chapter03CompletedBranch (D.branch default).extension.valuation)
+  refine ⟨default, ⟨e.trans (ePi.trans eUnique)⟩⟩
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03
