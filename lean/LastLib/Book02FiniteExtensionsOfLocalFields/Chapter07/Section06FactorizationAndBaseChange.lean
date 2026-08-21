@@ -16,7 +16,7 @@ open LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
 
 noncomputable section
 
-universe uFactor
+universe uK uK' uL uk uk' ul
 
 -- The tensor product has a canonical right-factor algebra structure, but
 -- Mathlib keeps it local to avoid ambiguity with the left-factor action.
@@ -61,6 +61,45 @@ theorem chapter07_separable_factorization_lifts_uniquely
     ∃ G : Chapter07LiftedFactorization A k res r F g,
       ∀ H : Chapter07LiftedFactorization A k res r F g,
         H.factors = G.factors := by
+  /-
+  Proof roadmap (the required factor-lifting API is not yet in this Mathlib).
+
+  1. Use `hres_surjective` and `hres_kernel` to identify this presentation with
+     the canonical residue field.  In particular item 3 of
+     `HenselianLocalRing.TFAE` in `Mathlib/RingTheory/Henselian.lean` applies
+     to `res`; its proof uses `IsLocalRing.ker_eq_maximalIdeal`.  Thus the two
+     explicit residue-map hypotheses here are sufficient (the kernel equality
+     is also exactly what is needed to rewrite congruences modulo the maximal
+     ideal).
+  2. First establish the missing binary Hensel factorization lemma: if monic
+     `g : A[X]` reduces along a surjective `res : A →+* k` to `f₀ * f₁`, with
+     `IsCoprime (Ideal.span {f₀}) (Ideal.span {f₁})`, then there are unique
+     monic `g₀ g₁` reducing to `f₀ f₁` and satisfying `g = g₀ * g₁`.
+     `Mathlib/RingTheory/Henselian.lean` currently provides only simple-root
+     lifting (`HenselianLocalRing.TFAE`) and explicitly lists coprime
+     factorization lifting as a TODO, so there is no declaration to apply here.
+  3. Prove by induction on `r` (splitting `Fin (n + 1)` with
+     `finSuccEquiv`) that `g` has the uniquely labelled factors
+     `F.factors i`.  For the binary split, use `F.product`, `F.monic`, and
+     pairwise distinct irreducibles; over the field `k`, distinct irreducibles
+     give coprime elements via `Irreducible.coprime_iff_not_dvd` (after ruling
+     out associates using monicity and `F.distinct`), and
+     `Ideal.isCoprime_span_singleton_iff` converts this to the required ideal
+     statement.  Apply the binary lemma, then recurse on the complementary
+     product.
+  4. Reduction of the lifted Bezout identity shows that each lifted pair has
+     unit resultant (its image in `k` is nonzero); use the resultant/Bezout
+     identity to fill `Chapter07LiftedFactorization.pairwise_coprime`.
+     Fill `monic`, `reductions`, and `product` from the induction, and set
+     `reduced_product` to `hgred`.
+  5. For uniqueness, apply binary uniqueness at each induction step and then
+     `funext`; the fixed reductions prevent permutations of the factors.
+
+  Dead end: repeated use of the simple-root clause of
+  `HenselianLocalRing.TFAE` does not lift a non-linear factor.  The missing
+  binary factorization theorem must be proved first (normally through the
+  finite-etale/idempotent characterization of a Henselian pair).
+  -/
   sorry
 
 /-- The quotient of a separable product splits as the product of its field
@@ -208,18 +247,20 @@ theorem chapter07_residue_tensor_product_is_separable_product
 
 /-- A finite product of unramified factors after scalar extension. -/
 structure Chapter07UnramifiedScalarExtensionProduct
-    (K K' L k k' l : Type*) [Field K] [Field K'] [Field L]
+    (K : Type uK) (K' : Type uK') (L : Type uL)
+    (k : Type uk) (k' : Type uk') (l : Type ul)
+    [Field K] [Field K'] [Field L]
     [Field k] [Field k'] [Field l] [Algebra K K'] [Algebra K L]
     [Algebra k k'] [Algebra k l] (r : ℕ)
     (vK' : Valuation K' ℤᵐ⁰)
     (baseResidueIdentification : Chapter10ResidueField vK' ≃+* k')
     [FiniteDimensional K K'] [FiniteDimensional K L]
     [FiniteDimensional k l] where
-  factor : Fin r → Type uFactor
+  factor : Fin r → Type (max uK (max uK' uL))
   [factorField : ∀ i, Field (factor i)]
   [factorAlgebra : ∀ i, Algebra K' (factor i)]
   [factorFinite : ∀ i, FiniteDimensional K' (factor i)]
-  residue : Fin r → Type uFactor
+  residue : Fin r → Type (max uk (max uk' ul))
   [residueField : ∀ i, Field (residue i)]
   [residueAlgebra : ∀ i, Algebra k' (residue i)]
   [residueFinite : ∀ i, FiniteDimensional k' (residue i)]
@@ -284,6 +325,66 @@ theorem chapter07_unramified_scalar_extension_is_product
     ∃ r : ℕ, Nonempty
       (Chapter07UnramifiedScalarExtensionProduct K K' L k k' l r vK'
         baseChangeResidueIdentification) := by
+  /-
+  Proof roadmap (generic/residue factor compatibility is the missing bridge).
+
+  1. Give both tensor products their local right-factor algebra structures.
+     Obtain a finite product of generic field factors from
+     `Chapter03.chapter03_separable_scalar_extension_is_finite_reduced` and
+     `Chapter03.chapter03_separable_scalar_extension_has_field_factors` in
+     `Book02FiniteExtensionsOfLocalFields/Chapter03/Section04ScalarExtensionOfALocalField.lean`.
+     Equivalently, apply `Algebra.Etale.iff_exists_algEquiv_prod` from
+     `Mathlib/RingTheory/Etale/Field.lean`.  Replace its finite index type `I`
+     by `Fin r`, where `r := Fintype.card I`, using `Fintype.equivFin` and
+     `AlgEquiv.piCongrLeft'`.  The carrier universes in the structure above
+     deliberately match the `ULift` construction already used by the Chapter
+     3 theorem.
+  2. For each projection of the generic product equivalence, use
+     `Algebra.TensorProduct.includeLeft` and the projection `Pi.evalAlgHom` to
+     install the compatible `K`- and `L`-algebra maps on the factor.  This is
+     the `chapter03ScalarExtensionFieldFactor` witness required by
+     `Chapter03.chapter03_unramified_scalar_extension_field_factor_is_unramified`.
+     Finite-dimensionality over `K'` comes with the Chapter 3 decomposition;
+     hence `Algebra.IsAlgebraic K' (factor i)` is available.
+  3. Apply
+     `Chapter03.chapter03_complete_factor_has_unique_local_valuation` to `vK'`
+     and each factor.  Choose its heterogeneous extension, then normalize its
+     cyclic value group to `ℤᵐ⁰`; record the resulting valuation as
+     `factorValuation i` and its restriction equivalence as
+     `factorValuation_extension i`.  Build `factorExtensionData i` with
+     `Chapter10HeterogeneousExtensionData`.  The needed normalization lemma is
+     not currently exposed by Chapter 10/12; it should say that a finite
+     extension of a complete `ℤᵐ⁰`-valued rank-one discrete field admits an
+     equivalent extending valuation valued in `ℤᵐ⁰`.
+  4. Define `residue i := Chapter10ResidueField (factorValuation i)`, initially
+     with identity `factorResidueIdentification`, and use
+     `Chapter10ResidueFieldMap vK' (factorValuation i)` for
+     `factorResidueMap`.  Its compatibility with the base identification is
+     then definitional after transporting the `k'`-algebra structure.  Define
+     each numerical profile from its `Chapter10HeterogeneousExtensionData`;
+     the Chapter 3 unramified-factor theorem supplies ramification index one
+     and residue separability, while the Chapter 10 residue-degree definition
+     supplies the two profile equalities.
+  5. The essential missing theorem must lift the primitive idempotents of
+     `l ⊗[k] k'` across the integral models and identify their generic fibers
+     with the factors chosen in step 1.  Its output should use the *same* `I`
+     and provide both
+       `l ⊗[k] k' ≃ₐ[k'] (∀ i, Chapter10ResidueField (factorValuation i))`
+     and `L ⊗[K] K' ≃ₐ[K'] (∀ i, factor i)`.
+     Assemble these as `residueProductEquiv` and `productEquiv` and package the
+     fields, valuations, profiles, and maps into the structure.
+
+  Sufficiency check: `baseChangeComplete` gives the Henselian base;
+  `baseChangeValuation` transfers the original valuation branch to `K'`;
+  `hext`, the two residue identifications, and `residueMap_compatible` identify
+  the old residue extension with `k → l`; `hprofile` ties the numerical profile
+  to that actual branch; and `hLseparable` makes the generic tensor product
+  finite reduced.  No extra residue-map hypothesis is needed.  However,
+  independent applications of `Algebra.Etale.iff_exists_algEquiv_prod` on the
+  generic and residue tensor products are a dead end: they do not identify
+  their index sets or corresponding factors.  The idempotent-lifting bridge
+  in step 5 is required.
+  -/
   sorry
 
 theorem chapter07_galois_over_intersection_linearly_disjoint
