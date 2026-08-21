@@ -420,15 +420,62 @@ Two defects, neither operative: (1) lines 693–697 and 1229–1240 assert the o
 
 The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
 
+### Book 035a — `035a-moduli-stacks-for-modular-and-pel-problems.md`
+
+**Verdict: FAIL — all citations resolve to declared prerequisites and no forward references exist, but Chapters 8–9 operatively use component-contraction and node-decontraction/deformation facts proved nowhere in the allowed sources, and Theorem 5.4 has an in-book ordering defect.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 1644 (EOF), in chronological/result order, during this audit.
+
+The quotient-atlas machinery from Book 010 descent, the Hilbert/graph-scheme constructions, the very-ampleness bounds, cohomology-and-base-change, finite locally free algebra tools, Cartier duality inputs, and Book 035's abelian-scheme package (including Chapter 9A) were each verified at their cited locations. The boundary theta theorem and polygon Picard lemma of §9.3 are genuinely proved from scratch, and §9.3 deliberately circumvents the abelian-Riemann–Roch cluster by establishing rank via Book 15. The table of contents matches the thirteen-chapter structure exactly.
+
+Defects: (1) Lines 708 and 1184 use contraction of rational bridge components in genus-one families with no available source — Book 016 §3.3 proves it but is neither cited nor declared; the ledger claim at line 1623 is false for this input. (2) Lines 1192–1201 assert that adjoining `e`-th roots of node-smoothing parameters yields a finite flat representable cover by decontractions — node deformation theory absent from every cited source; Books 111 and 130 consume exactly this construction from "Book 35a", so the gap propagates. See X060. (3) Line 448: Theorem 5.4 invokes the quotient-atlas theorem proved later at lines 483–515 (no circularity, but an in-book chronology violation). (4) Soft: the quasi-projectivity sketch at lines 594–602 leaves the residual-stabilizer-character computation and ampleness descent unexecuted. Inherited consumers named: X008/X053 (lines 147–148, 1278, 1443–1444), X016/X053 (lines 183, 1397–1400, 1626–1627), X054 (lines 143, 797, 969, 1053–1063).
+
+### Book 043 — `043-elliptic-curves-over-dvrs.md`
+
+**Verdict: PASS — every operative cross-book input resolves to verified locations in declared prerequisites (Books 001, 002, 011); remaining defects are local assertions outside the operative chain, none circular and none a chronology violation.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 2400 (EOF), in chronological/result order, during this audit.
+
+The minimal-model, resolution, and positive-genus imports from Book 011 were confirmed at their cited locations (Book 011 Theorems 8.1/11.2 and the blowup charts); Hensel/unramified inputs come from Books 001/002; roadmap boundaries toward uniformization, potential semistability, and the full additive classification are explicitly labeled and unused. No forward references to Books 044+ exist anywhere. The table of contents matches the structure.
+
+Three non-operative defects: (1) lines 1406–1415 assert the completed normal form `R^{\mathrm{sh}\wedge}[[U,V]]/(UV-\varepsilon\pi^n)` and the identification `n=v(\Delta_{\min})` by a generic deformation slogan rather than from the explicit Weierstrass equation — load-bearing for §§8.5–8.7 and the conductor count (see the in-book repair note); (2) the formal-logarithm linearization at lines 1197, 1221–1231 presumes an unproved coefficient-valuation bound (X044 cluster), though no proof consumes it; (3) a minor regular-vs-smooth gap over imperfect residue fields at line 1237. Inherited consumers named: X007/X004/X006 via the Book 011 model-theory citations (lines 1237, 1345–1351, 1404–1497).
+
+### Book 044 — `044-tate-curves-and-multiplicative-reduction.md`
+
+**Verdict: FAIL — the two central theorems consume unproved inputs: a finiteness/function-field isomorphism criterion for complete nonarchimedean analytic curves (natural home: later Books 058/059) and the elliptic automorphism classification `Aut(E)=\{\pm1\}` for `j\notin\{0,1728\}` in all characteristics.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 2189 (EOF), in chronological/result order, during this audit.
+
+The book commendably builds its own quotient curve, theta divisor theory, and Laurent-series lemmas in-book rather than citing the later rigid-geometry volumes; the Weil pairing it uses is constructed in-book (§8.5); and the p-adic logarithm gap X044 is not inherited (every "log" is a formal logarithmic derivative). Verified Book 043 imports: Weierstrass invariants, minimality criterion, component-group polygons, Hensel lifting; the j-classification is genuinely available in Mathlib (`WeierstrassCurve.exists_variableChange_of_j_eq`). Roadmap mentions of the next volume are harmless. No circularity; table of contents accurate.
+
+Defects: (1) Lines 550, 603, 640 invoke "a finite map inducing equality of function fields between smooth complete analytic curves is an isomorphism" and companion finiteness facts for maps of complete nonarchimedean analytic curves — proved nowhere in-book, absent from Mathlib, home in later Books 058–060; consumers are Theorem 3.1 and hence every chapter using point-uniformization. See X061. (2) Lines 799 and 879 assert `Aut(E)=\{\pm1\}` including residue characteristics 2 and 3; not in Mathlib (only the j-classification exists) and Book 043 line 360 merely gestures; consumers are Theorem 5.1 (converse uniformization) and Theorem 6.1, hence the entire `(q,\eta)` dictionary. (3) Minor: unlabeled general torsion/separability claims at lines 1102, 1278, 1394 whose natural source is the deferred next volume; missing display tag (11.11); a garbled self-correcting passage at line 1937 (`q` is in fact a cube). Inherited: X007/X006 via the Book 043/011 component-group chain.
+
+### Book 045 — `045-torsion-and-tate-modules-of-elliptic-curves.md`
+
+**Verdict: FAIL — the Frobenius characteristic-polynomial theorem operatively consumes an unproved Néron–Severi cluster, and the claimed detailed proof of the ordinary/supersingular point counts is circular on the unproved Frobenius–Verschiebung package.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 1901 (EOF), in chronological/result order, during this audit.
+
+Verified imports: Book 043 smooth proper group curve theorem, Book 044 Tate parameter/matrix/tame character (for `E_q`), Book 028 connected–étale sequence and multiplication theorem, Book 017 finite étale algebra structure, Book 018's independent cube derivation. The book's discipline against smuggling later results is genuine (lines 1318, 1535–1539, 1710, 1854). No forward references to Books 046+ exist; the table of contents matches the structure.
+
+Defects: (1) Lines 1359–1370 "recall" that homomorphisms `E\to E^\vee` correspond to NS classes, that `\deg:NS(E)\xrightarrow{\sim}\mathbf Z`, and that the symmetric endomorphism of degree `a` is `[a]` — none proved anywhere (Book 036's NS facts are themselves X055-flagged); consumers are (9.8)–(9.12), the Hasse bound, and downstream (12.4). See X062. (2) Lines 239–249/272–285 assert (2.3)/(2.4) via the inseparable–separable factorization of `[p^r]`, supplying that factorization only by assertion; line 1621 then claims §11.3 supplies the detailed Chapter 2 proof while consuming exactly the unproved F–V package (X056). (3) Lines 1609–1617 display `(11.4)` identifying the ordinary special-fiber connected part with `\mu_{p^r}` as fact — the same concealed input flagged at Book 034 line 1519 and Book 042 lines 693–697. (4) Minor: Weil reciprocity (4.4) used without an available verbatim source (two-line derivation from Book 009's residue theorem possible); `\deg\widehat\varphi=d` and dual-isogeny uniqueness asserted at lines 975–996; small intra-book forward reference from §7.3 to (7.5)/(7.6). Inherited consumers named: X054 throughout Chapter 4/§7/§8.5/§9.4, X037 at lines 698, 1294–1304, 1567–1579.
+
+### Book 046 — `046-algebraic-de-rham-cohomology-and-gauss-manin-connections.md`
+
+**Verdict: FAIL — degeneration for curves and abelian schemes is genuinely proved, but Theorem 11.1 operatively invokes an unavailable coherent Künneth formula, and the characteristic-two alternation of `\psi_\lambda` is asserted; both feed the Chapter 14 reusable package.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 2033 (EOF), in chronological/result order, during this audit.
+
+Verified imports: Book 15 cohomology/base-change/duality facts, Book 9 trace/residue/principal-part machinery, Book 35 abelian-scheme identifications, Book 007a spectral machinery — all present at their cited locations. The Gauss–Manin connection, Kodaira–Spencer isomorphism, Picard–Fuchs elimination (Chapter 13, independently recomputed and correct), and char-2 residue computations (§7.1) are sound. No forward references to Books 047+ exist; the table of contents matches all fourteen chapters.
+
+Defects: (1) Line 1487: Theorem 11.1's `E_1`-page identification invokes "the coherent Künneth formula," which exists neither in Mathlib nor any earlier book (only the étale Künneth of Book 023 and a Leray remark in Book 007a); repairable in-book via (11.1)+(11.2) plus a fiberwise rank count. See X063. (2) Lines 543–552 reduce computation (4.6) to the Euler sequence on `\mathbf P^n`, which appears nowhere earlier. (3) Lines 1702–1705 assert characteristic-two alternation of `\psi_\lambda` ("canonical trivialization on the diagonal") without proof, feeding §12.2–12.3 and the §14.1 alternating form. (4) §11.4 (lines 1586–1605): Atiyah-class obstruction theory never defined, additivity and vector-extension identification asserted; (11.10)–(11.11) are unused later but stated unconditionally. Inherited consumers named: X009 at lines 1399–1415 (as predicted), X008/X053 at lines 1631–1637, 1665–1680, X037 cluster at lines 1746–1768.
+
+The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
+
 ## Pending scope inventory
 
 The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
 
-- PENDING — Book 035a, `035a-moduli-stacks-for-modular-and-pel-problems.md`
-- PENDING — Book 043, `043-elliptic-curves-over-dvrs.md`
-- PENDING — Book 044, `044-tate-curves-and-multiplicative-reduction.md`
-- PENDING — Book 045, `045-torsion-and-tate-modules-of-elliptic-curves.md`
-- PENDING — Book 046, `046-algebraic-de-rham-cohomology-and-gauss-manin-connections.md`
 - PENDING — Book 047, `047-betti-de-rham-and-etale-comparison-for-curves.md`
 - PENDING — Book 048, `048-divided-powers-and-crystalline-sites.md`
 - PENDING — Book 049, `049-crystalline-cohomology-of-curves-and-abelian-schemes.md`
@@ -919,3 +966,47 @@ The following manuscripts are in this review's assigned 001–064 scope and rema
 - X035/X036 gain consumers: Book 041 lines 3536–3545, 3619–3631; Book 042 lines 557–583 et al.
 - X054 gains consumers: Book 042 lines 973–1007, 1262, 1373–1388.
 - X014/X056 cluster gains consumer: Book 042 lines 693–697, 1229–1240 (ordinary special-fiber identification asserted; also unproved at Book 034 line 1519).
+
+### X060 — Book 035a uses component contraction and node decontraction without a chronological source
+
+- **Deficient source:** Book 035a, lines 708 and 1184 (contraction of rational bridge components in genus-one families); lines 1192–1201 (decontractions via `e`-th roots of node-smoothing parameters form a finite flat representable cover); ledger claim at line 1623 false for these inputs; in-book ordering defect at line 448 (Theorem 5.4 invokes the quotient-atlas theorem proved at lines 483–515).
+- **Consumers:** §8.3 Weierstrass chart; `\overline{\mathcal M}(\Gamma)\simeq[\widetilde X_M/\Delta_M]` (lines 1203–1210); local coarse curves (lines 1212–1223); PEL stack theorem finite diagonal (lines 1412–1416); downstream Books 111 and 130, which explicitly attribute this construction to Book 35a.
+- **Needed results:** existence/uniqueness of stable marked-model contraction (proved in Book 016 §3.3, lines 243–255, which is neither cited nor declared); a deformation-theoretic finiteness/flatness lemma for root adjunctions on nodal families.
+- **Why unavailable:** no contraction theory in Book 009 or Mathlib; no node deformation theory anywhere in the declared sources; Book 016 line 178 records the general smoothing statement as unproved.
+- **Recommended chronological repair:** cite/prove the contraction lemma in-book (relative Proj of the section algebra of an ample effective divisor) and add Book 016 to the ledger; prove the decontraction lemma on the Tate-chart model or flag it to the coordinator; move §6.2 before §5.4.
+
+### X061 — Book 044's uniformization rests on an unavailable analytic-curve isomorphism criterion and an unproved automorphism classification
+
+- **Deficient source:** Book 044, lines 550, 603, 640 ("a finite map inducing equality of function fields between smooth complete nonarchimedean analytic curves is an isomorphism" and companion finiteness facts); lines 799 and 879 (`Aut(E)=\{\pm1\}` for `j\notin\{0,1728\}`, including residue characteristics 2 and 3).
+- **Consumers:** Theorem 3.1 (Tate uniformization), Theorem 5.1 (converse), Theorem 6.1, the `(q,\eta)` dictionary (§§6.4, 9.4, 10.5, 13.1–13.2); downstream Books 045 §10, 110, 151.
+- **Needed results:** a self-contained theory of finite morphisms of complete nonarchimedean analytic curves (natural home: Books 058–060, later); the elliptic automorphism classification with its characteristic-2/3 cases (Book 043 line 360 only gestures).
+- **Why unavailable:** no nonarchimedean analytic curve theory exists in Mathlib or any earlier book; Book 044's own in-book analytic development stops short of the criterion; no Aut computation anywhere ≤043.
+- **Recommended chronological repair:** replace the function-field shortcut by explicit Laurent-series inversion of `\phi_q` on the fundamental annulus (the expansions already present invert termwise), and prove `Aut(E)=\{\pm1\}` from Book 043's admissible-change formalism by matching (2.9) weights.
+
+### X062 — Book 045's Frobenius theorem consumes an unproved Néron–Severi cluster and a circular ordinary/supersingular proof
+
+- **Deficient source:** Book 045, lines 1359–1370 (`Hom(E,E^\vee)\leftrightarrow NS(E)`, `\deg:NS(E)\xrightarrow{\sim}\mathbf Z`, symmetric endomorphism of degree `a` equals `[a]`); lines 239–249, 272–285, 1621 (point counts via asserted inseparable–separable factorization of `[p^r]`, then claimed "detailed proof" consuming it); lines 1609–1617 ((11.4) identifies the ordinary connected part with `\mu_{p^r}` as fact).
+- **Consumers:** (9.6)–(9.12), Hasse bound, (11.6), §11.7, (12.4); downstream weight/conductor consumers.
+- **Needed results:** genus-1 Riemann–Roch route to `NS(E)\cong\mathbf Z` and the Rosati-fixed subring (provable in-book from Book 009); the Frobenius–Verschiebung package (X056); Hasse-invariant identification of the connected part.
+- **Why unavailable:** no Chow/NS theory in Mathlib or any book ≤044 (Book 036's NS facts are X055-flagged); F–V package proved nowhere (X056); the `\mu_{p^r}` identification is flagged unproved at Book 034 line 1519 and Book 042 lines 693–697.
+- **Recommended chronological repair:** prove the NS cluster in-book via degree-0 divisor classes and the divisor map `P\mapsto t_P^*D-D`; prove `V\circ F=[p]` for elliptic curves from differential criteria and degree multiplicativity; mark (11.4) conditional otherwise.
+
+### X063 — Book 046 invokes coherent Künneth, the Euler sequence, and an asserted characteristic-two alternation
+
+- **Deficient source:** Book 046, line 1487 ("the coherent Künneth formula" in Theorem 11.1); lines 543–552 (Euler sequence on `\mathbf P^n`, appearing nowhere earlier); lines 1702–1705 (characteristic-two alternation of `\psi_\lambda` via an undefined diagonal trivialization); lines 1586–1605 (Atiyah-class obstruction theory never defined; additivity and vector-extension identification asserted).
+- **Consumers:** Theorem 11.1 and (11.3)–(11.9), §12.1–12.3, the §14.1 reusable package; (4.6)–(4.8); Books 047+ consuming Chapter 14.
+- **Needed results:** a two-factor external-product/Künneth lemma for coherent cohomology (or elimination via (11.1)+(11.2)+fiberwise rank count); the Euler sequence; the char-2 biextension calculation mirroring §7.1.
+- **Why unavailable:** no Künneth for coherent cohomology and no Euler sequence in Mathlib or Books ≤045; the alternation input is the same concealed cubical-trivialization gap as X054's second item.
+- **Recommended chronological repair:** apply (11.1)+(11.2) to `A\times_SA` directly with a fiberwise rank count; prove the Euler sequence in §4.3; supply the char-2 calculation or weaken §12.2/§14.1 off characteristic two; label (11.10)–(11.11) as unused constructions.
+
+### Consumer updates to earlier findings (batch 035a, 043–046)
+
+- X005/X035 status note: later-book reviewers report that Book 008's Macaulay–Gotzmann package (lines 2323–2520) and Book 027's finite-relation lemma now contain proofs; the current text supports this, but both repairs postdate the original findings and should be re-audited by the owner of Books 001–029 before X005/X035 are closed.
+- X007/X004/X006 gain consumer: Book 043 lines 1237, 1345–1351, 1404–1497.
+- X044 cluster gains consumer: Book 043 lines 1197, 1221–1231 (non-operative there); Book 044 does NOT inherit it (formal logarithmic derivatives only).
+- X054 gains consumers: Book 035a lines 143, 797, 969, 1053–1063, 1617–1618; Book 045 throughout Chapters 4, 7, 8.5, 9.4, 11.
+- X055 gains consumer: Book 045 lines 1359–1370 (via NS facts).
+- X056 gains consumers: Book 045 lines 239–285, 1621–1641, 1716–1722.
+- X037 gains consumers: Book 035a (none — it deliberately avoids §§10.x), Book 045 lines 698, 1294–1304, 1567–1579; Book 046 lines 1746–1768.
+- X009 confirmed consumer: Book 046 lines 1399–1415.
+- Book 044's fresh defects (X061) gain consumers: Book 045 §10.1 (lines 1457–1484), §10.4 (line 1537), (12.5) (lines 1770–1777).
