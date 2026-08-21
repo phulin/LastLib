@@ -124,6 +124,71 @@ theorem chapter07_finite_residue_unramified_exists
       gbar.Monic ∧ Irreducible gbar ∧ gbar.Separable ∧ gbar.natDegree = f) :
     ∃ M : Chapter07FiniteResidueUnramifiedModel A K k res,
       M.degree = f ∧ M.residueDegree = f ∧ M.ramificationIndex = 1 := by
+  /-
+  Proof roadmap (and the precise missing interface bridge).
+
+  1. Destructure `hpoly` as `⟨gbar, hmonic, hirr, hsep, hdeg⟩`.  Lift its
+     finitely many coefficients through `hres_surjective` to a polynomial
+     `g : A[X]`, arranged so that
+
+         hg : Chapter07MonicPolynomialLift res gbar g.
+
+     Preserve the leading coefficient as `1`; then `hg.1` and `hg.2` are the
+     two facts needed below.  `chapter07_monic_lift_irreducible` and
+     `chapter07_lifted_polynomial_quotient_degree` in
+     Section03ConstructingTheUnramifiedLift.lean give irreducibility and
+     finrank `f` for
+
+         L := Chapter07LiftedPolynomialQuotient K
+           (chapter07LiftedPolynomial g).
+
+     Install the `Field L` instance from the irreducibility `Fact`, and use
+     `chapter07LiftedRoot g` as the primitive element.
+
+  2. The integral carrier must be the integral closure of `A` in `L` (or a
+     proved-equal presentation by `Algebra.adjoin A {chapter07LiftedRoot g}`),
+     not the field `L`.  Build its quotient residue map to
+     `AdjoinRoot gbar`, prove surjectivity and the kernel equality, and then
+     invoke `chapter07_construct_unramified_lift_with_residue_maps` (same
+     file, line 452ff).  That theorem supplies the `profile`, `unramified`,
+     `integralModel_etale`, and the two profile equalities.  Its hypotheses
+     require explicit proofs that this integral carrier is a DVR, is the
+     integral closure, and has fraction field `L`; do not replace it by the
+     merely finite generated subalgebra supplied by
+     `chapter07_constructed_integral_model_is_finite`.
+
+  3. Put the finite residue field structure on `AdjoinRoot gbar`.  Its
+     finrank is `f` by `chapter07_lifted_polynomial_quotient_degree` applied
+     over `k`; obtain its cardinal formula from
+     `Module.card_eq_pow_finrank` in
+     Mathlib/FieldTheory/Finiteness.lean, rewriting `hdeg`.  Separability is
+     `hsep` transported through the power-basis presentation.
+
+  4. To fill the Frobenius fields, construct the reduction equivalence
+     `Chapter06UnramifiedGaloisReduction K L k (AdjoinRoot gbar)` from the
+     *same* integral model and residue map.  Then use
+     `chapter06UnramifiedArithmeticFrobenius`,
+     `chapter06_arithmetic_frobenius_order`, and
+     `chapter06_unramified_arithmetic_frobenius_generates` from
+     Chapter06/Section02FrobeniusInAnUnramifiedExtension.lean.  Its
+     `integralAction` and `integralAction_spec` provide `frobeniusOnModel`
+     and compatibility, while
+     `chapter06_unramified_arithmetic_frobenius_residue_formula` provides
+     the displayed `q`-power formula (set `q := Fintype.card k`).
+
+  5. Assemble `M` with `carrier := L`, the integral closure as
+     `integralModel`, and the data above; finish the three requested
+     equalities with `hdeg` and the profile equalities.
+
+  Current obstruction: Section03 exposes the field quotient and verifies an
+  already supplied integral/residue presentation, but has no declaration
+  constructing that presentation from `(res, gbar, g)`.  Likewise Chapter06
+  consumes a `Chapter06UnramifiedGaloisReduction` but does not construct one
+  from `Chapter07UnramifiedLocalExtensionData`.  Those two bridges must be
+  proved here (or, chronologically preferably, added to Section03) before the
+  assembly above is implementable.  `HenselianLocalRing.TFAE` only lifts a
+  simple root; it does not by itself provide either package.
+  -/
   sorry
 
 /-- The finite-field existence theorem with the irreducible-polynomial
@@ -162,6 +227,72 @@ theorem chapter07_finite_residue_unramified_unique
     letI : Algebra K M₁.carrier := M₁.carrierAlgebra
     letI : Algebra K M₂.carrier := M₂.carrierAlgebra
     Nonempty (M₁.carrier ≃ₐ[K] M₂.carrier) := by
+  /-
+  Proof roadmap (degree equality is not by itself an API bridge).
+
+  The conclusion is mathematically the usual uniqueness of the unramified
+  extension of degree `f`, but `h₁` and `h₂` alone cannot be passed to any
+  current declaration.  In particular,
+  `chapter07_different_monic_lifts_are_isomorphic` in
+  Section03ConstructingTheUnramifiedLift.lean requires a common residue
+  polynomial and an explicit root of the first lift in the second carrier;
+  neither datum is retained by `Chapter07FiniteResidueUnramifiedModel`.
+
+  The intended classification proof is as follows.
+
+  1. Embed both finite algebraic carriers in one algebraic closure `Ω` of
+     `K`, and both residues in one algebraic closure `κ` of `k`.  Package the
+     images as
+
+         E₁ E₂ : Chapter07CanonicalFiniteUnramifiedIntermediate K Ω k κ
+
+     with actual residue images `S₁ S₂`.  The package must retain algebra
+     equivalences `eᵢ : Mᵢ.carrier ≃ₐ[K] Eᵢ.1`; numerical `profile` fields do
+     not suffice to construct the required
+     `Chapter07ActualUnramifiedIntermediateData`.
+
+  2. Use one
+     `C : Chapter07CanonicalUnramifiedClassification K Ω k κ` and arrange
+     `C.reduction Eᵢ` to be the packaged `Sᵢ`, via
+     `C.reduction_realized`.  Install `C.extension_finite Eᵢ` and
+     `C.residue_finite (C.reduction Eᵢ)`.  From `Mᵢ.degree_eq`, `hᵢ`, and
+     `C.degree_preserved Eᵢ`, derive
+
+         Module.finrank k (C.reduction E₁).1 =
+           Module.finrank k (C.reduction E₂).1.
+
+  3. Prove the two residue intermediate fields equal.  Concretely, every
+     element of either degree-`f` field is a root of
+     `X ^ (Fintype.card k ^ f) - X`: use
+     `Module.card_eq_pow_finrank` (Mathlib/FieldTheory/Finiteness.lean) and
+     `FiniteField.pow_card` (Mathlib/FieldTheory/Finite/Basic.lean).
+     Inclusion in the common root field follows from
+     `Algebra.subset_adjoin`; close each inclusion/equality with
+     `IntermediateField.eq_of_le_of_finrank_eq`.  This is the
+     `residue_eq_level` lemma described in the roadmap for
+     `chapter07_finite_residue_tower_exists` later in this file.
+
+  4. Since `C.reduction` is injective, equality of its two residue values
+     gives `hE : E₁ = E₂`.  Form the intermediate-field equivalence with
+     `IntermediateField.equivOfEq (congrArg Subtype.val hE)` (or substitute
+     by `hE`), and assemble
+
+         e₁.trans ((IntermediateField.equivOfEq ...).trans e₂.symm).
+
+     Wrap this equivalence in `Nonempty`.
+
+  Current obstruction/interface correction required: the model stores no
+  common ambient embeddings, no `Chapter07FiniteUnramifiedIntermediateWitness`,
+  and no common `Chapter07CanonicalUnramifiedClassification`.  Moreover
+  `chapter07_canonical_unramified_classification_exists` requires a rank-one
+  valuation, adic completeness, and a residue identification, whereas this
+  theorem assumes only a henselian DVR presentation.  Thus equal degree
+  does support uniqueness only after a genuine henselian finite-etale
+  classification theorem (or equivalent common-classification presentation)
+  is connected to the model.  A normal proof must first add that bridge; it
+  must not treat finrank equality as if it produced an arbitrary field
+  `AlgEquiv`.
+  -/
   sorry
 
 /-- The finite unramified Galois group is cyclic, with generator characterized
