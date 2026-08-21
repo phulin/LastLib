@@ -342,7 +342,8 @@ theorem chapter14_frobenius_conjugacy_in_the_global_galois_group
     (hR' : chapter14UnramifiedAtPrime R') :
     (chapter14ArithmeticFrobeniusLift R' hR' : Gal(E / F)) =
       σ * (chapter14ArithmeticFrobeniusLift R hR : Gal(E / F)) * σ⁻¹ := by
-  sorry
+  rw [← chapter14_frobenius_conjugacy R R' σ C hR hR']
+  exact C.group_conjugation_apply _
 
 /- At a ramified prime the canonical object is a coset of lifts. -/
 def chapter14ArithmeticFrobeniusCoset
@@ -370,7 +371,13 @@ theorem chapter14_ramified_frobenius_coset_nonempty
     [Fintype p.asIdeal.ResidueField] [Finite P.1.ResidueField]
     (R : Chapter14PrimeReduction F E p P D) :
     (chapter14ArithmeticFrobeniusCoset R).Nonempty := by
-  sorry
+  change ∃ σ : D, R.reduction σ =
+    chapter14ArithmeticFrobeniusResidue
+      p.asIdeal.ResidueField P.1.ResidueField
+  obtain ⟨σ, hσ⟩ := R.surjective
+    (chapter14ArithmeticFrobeniusResidue
+      p.asIdeal.ResidueField P.1.ResidueField)
+  exact ⟨σ, hσ⟩
 
 theorem chapter14_frobenius_lifts_differ_by_inertia
     {F E : Type*} [Field F] [NumberField F] [Field E] [NumberField E]
@@ -386,7 +393,19 @@ theorem chapter14_frobenius_lifts_differ_by_inertia
     {g h : D} (hg : g ∈ chapter14ArithmeticFrobeniusCoset R)
     (hh : h ∈ chapter14ArithmeticFrobeniusCoset R) :
     ∃ i : R.inertia, h = g * i := by
-  sorry
+  change R.reduction g =
+    chapter14ArithmeticFrobeniusResidue
+      p.asIdeal.ResidueField P.1.ResidueField at hg
+  change R.reduction h =
+    chapter14ArithmeticFrobeniusResidue
+      p.asIdeal.ResidueField P.1.ResidueField at hh
+  refine ⟨⟨g⁻¹ * h, ?_⟩, ?_⟩
+  · rw [R.kernel_eq_inertia]
+    change R.reduction (g⁻¹ * h) = 1
+    rw [map_mul, map_inv, hg, hh]
+    exact inv_mul_cancel _
+  · change h = g * (g⁻¹ * h)
+    rw [← mul_assoc, mul_inv_cancel, one_mul]
 
 theorem chapter14_ramified_frobenius_has_no_unique_lift
     {F E : Type*} [Field F] [NumberField F] [Field E] [NumberField E]
@@ -401,7 +420,28 @@ theorem chapter14_ramified_frobenius_has_no_unique_lift
     (R : Chapter14PrimeReduction F E p P D)
     (hI : ∃ i : R.inertia, (i : D) ≠ 1) :
     ¬ ∃! g : D, g ∈ chapter14ArithmeticFrobeniusCoset R := by
-  sorry
+  rintro ⟨g, hg, huniq⟩
+  obtain ⟨i, hi⟩ := hI
+  have hgi : g * (i : D) ∈ chapter14ArithmeticFrobeniusCoset R := by
+    change R.reduction (g * (i : D)) =
+      chapter14ArithmeticFrobeniusResidue
+        p.asIdeal.ResidueField P.1.ResidueField
+    rw [map_mul]
+    have hi' : R.reduction (i : D) = 1 := by
+      change (i : D) ∈ MonoidHom.ker R.reduction
+      rw [← R.kernel_eq_inertia]
+      exact i.property
+    rw [hi', mul_one]
+    exact hg
+  have heq : g * (i : D) = g := huniq (g * (i : D)) hgi
+  have hi_eq : (i : D) = 1 := by
+    calc
+      (i : D) = 1 * (i : D) := by simp
+      _ = (g⁻¹ * g) * (i : D) := by simp
+      _ = g⁻¹ * (g * (i : D)) := by rw [mul_assoc]
+      _ = g⁻¹ * g := by rw [heq]
+      _ = 1 := by simp
+  exact hi hi_eq
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter14
