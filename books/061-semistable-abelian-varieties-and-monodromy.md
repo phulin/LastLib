@@ -165,11 +165,11 @@ When $k$ is imperfect, $B$ and the maximal smooth connected affine subgroup stil
 
 ### 1.3 The three prerequisite interfaces
 
-Three earlier theories enter, and it is important to say exactly what each supplies.
+Three earlier theories enter, and it is important to say exactly what each supplies: Book 3 (ramification theory), Book 60 (rigid uniformization of abelian varieties), and Book 38 (Neron models and component groups).
 
-First, ramification theory supplies lower and upper ramification groups, the tame character, and Artin and Swan conductors for finite inertial actions. Upper numbering is compatible with quotients, so a finite wild image has an intrinsic Swan conductor. We will extend the definition to the quasi-unipotent $\ell$-adic representations occurring here by observing that wild inertia has finite image.
+First, Book 3 supplies lower and upper ramification groups, the tame character, and Artin and Swan conductors for finite inertial actions. Upper numbering is compatible with quotients, so a finite wild image has an intrinsic Swan conductor. We will extend the definition to the quasi-unipotent $\ell$-adic representations occurring here by observing that wild inertia has finite image.
 
-Second, rigid uniformization supplies, for a semistable abelian variety, exact sequences
+Second, Book 60 supplies, for a semistable abelian variety, exact sequences
 
 $$
 0\longrightarrow T^{\mathrm{an}}\longrightarrow E
@@ -182,7 +182,7 @@ $$
 
 Here $B$ has good reduction, $T$ is a torus of rank $t$, and $Y$ is a full period lattice of rank $t$. The positivity theory of the period data supplies algebraization, duality, and polarizations. In particular, the rank equality in (1.3) and nondegeneracy of tropicalization have already been proved; they will not be inferred from the component formula that we later deduce from them.
 
-Third, Neron models supply the canonical smooth integral group, its identity component, its finite etale component group $\Phi_A$, and functorial extension of homomorphisms. For Jacobians, the prior graph theorem identifies the torus with graph homology and the component group with a weighted graph discriminant. The present book proves the corresponding lattice presentation for every semistable abelian variety.
+Third, Book 38 supplies the Neron model: the canonical smooth integral group, its identity component, its finite etale component group $\Phi_A$, and functorial extension of homomorphisms. For Jacobians, the prior graph theorem identifies the torus with graph homology and the component group with a weighted graph discriminant. The present book proves the corresponding lattice presentation for every semistable abelian variety.
 
 We also use ordinary facts from the preceding geometric foundation: duality and the Poincare bundle, Weil pairings, polarizations, quotients by finite subgroup schemes, and Bertini for sufficiently ample linear systems. When one of these facts bears the weight of a central argument, the needed form is restated and its application is proved.
 

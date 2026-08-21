@@ -75,6 +75,8 @@
 
 ## 1. The small-height problem
 
+The prerequisite interfaces are these. From Book 2 we use henselian discrete valuation rings, their fraction fields, uniformizers, and valuations, including Hensel lifting in finite extensions. From Book 26 we use finite locally free schemes and algebras, their ranks, and descent along faithfully flat maps. From Book 27 we use affine group schemes represented by Hopf algebras, with augmentation, comultiplication, counit, antipode, and Hopf ideals. From Book 28 we use the general theory of finite flat commutative group schemes: orders, closed subgroup schemes with finite-flat quotients, and exactness in the fppf sense. From Book 34 we use Cartier duality and its exactness properties. Nothing else is assumed from later books.
+
 ### 1.1 Integral torsion at the residue characteristic
 
 Finite group schemes of order prime to the residue characteristic are comparatively rigid. Their order is invertible, their cotangent spaces vanish, and finite flatness forces them to be étale. At the residue characteristic $p$, every part of that argument breaks in a controlled way. Generic points may collide, the special fiber may acquire nilpotents, and two integral models of the same generic group may have different connectedness behavior.

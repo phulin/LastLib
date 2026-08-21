@@ -129,7 +129,7 @@ $$
 
 Compatibility with the base always means compatibility with the specified operations on $J$, not merely preservation of the underlying ideal. Unless completion is explicitly mentioned, rings and schemes are ordinary. Unless a derived tensor symbol appears, base change is underived. A claim about a nilpotent crystalline site assumes nilpotence object by object; it does not assert a uniform exponent across the whole site.
 
-The general machinery of complexes, derived global sections, derived tensor products, ringed sites, and derived inverse limits is taken from the earlier treatment of arithmetic derived cohomology. We recall the needed consequences when they control a hypothesis.
+The general machinery of complexes, derived global sections, derived tensor products, ringed sites, and derived inverse limits is taken from Book 7a on arithmetic derived cohomology. The theory of quasi-coherent sheaves and their cohomology used for crystals, together with quasi-coherent open descent, is taken from Book 7b. We recall the needed consequences when they control a hypothesis.
 
 ## 2. Divided-power ideals
 
