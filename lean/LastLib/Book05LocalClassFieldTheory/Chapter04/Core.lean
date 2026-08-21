@@ -220,7 +220,7 @@ structure Chapter04ReducedNormData
     needed by the chapter until a canonical central-simple reduced norm is
     available from earlier LastLib or pinned Mathlib. -/
   reducedNorm_on_commutative_subfields :
-    ∀ {E : Type u} [Field E] [Algebra K E] [FiniteDimensional K E]
+    ∀ {E : Type*} [Field E] [Algebra K E] [FiniteDimensional K E]
       (φ : E →ₐ[K] D),
       Module.finrank K E ∣ degree →
       ∀ x : E,
