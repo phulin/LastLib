@@ -602,13 +602,40 @@ Defects: (1) "Formal Serre vanishing" and "formal global generation" at lines 79
 
 The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
 
+### Book 059 — `059-rigid-analytic-curves-and-formal-models.md`
+
+**Verdict: FAIL — the book honestly builds Tate-style rigid geometry from scratch with correct chronology and no forward references, but its load-bearing foundational theorems (Gerritzen–Grauert refinement, Tate acyclicity incl. the module case, Kiehl proper mapping, the Raynaud-style formal-model equivalence, curve GAGA, duality/vanishing) are stated with at most proof-strategy sketches containing asserted key steps.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 1534 (EOF), in chronological/result order, during this audit.
+
+Verified imports: Book 001 completeness/valuations/Hensel, Book 011 finite normalization/regular models/resolution (semistable reduction correctly not imported and deferred), Book 058 adic/formal foundations. Riemann–Roch is correctly positioned as a comparison consequence; no circularity; the table of contents matches exactly.
+
+Defects: (1) Gerritzen–Grauert refinement asserted at line 517, never proved anywhere — consumers are the admissible-topology definition and Theorem 5.1 for general affinoid covers, hence all sheaf theory downstream. (2) Spectral radius formula asserted (lines 336–342); strictness/flatness lemma of Theorem 4.2 asserted (lines 459–491). (3) Tate acyclicity is "proof strategy" only (lines 531–554), module case dispatched in three sentences; Kiehl proper mapping likewise (lines 651–673); the formal-model theorem (Theorem 9.2, lines 912–937) and curve GAGA (Theorem 14.1, lines 1409–1418) are strategy-level. See X069. (4) Duality/vanishing package sketched (lines 1157–1215); genus formula consumes undeclared Books 015/016 inputs (lines 1381–1384); analytic Nullstellensatz argument incomplete (lines 263–281). (5) Four broken displays at lines 143–147, 385–389, 901–904, 1362–1366. Inherited: X004/X006 via Book 011 excellence (line 1297).
+
+### Book 060 — `060-rigid-uniformization-of-abelian-varieties.md`
+
+**Verdict: FAIL — the headline Raynaud uniformization theorem (Thm 9.1) and Jacobian uniformization theorem (Thm 12.1) are strategy/sketch-level, resting on an unproved higher-dimensional algebraization lemma, on Grothendieck formal existence inherited from the undischarged Book 058 Chapter 9, and on asserted positivity/degree inputs — under a completely absent import ledger.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 1293 (EOF), in chronological/result order, during this audit.
+
+The book cites no other book by name; its anonymous interface list at line 99 conceals operative dependence on Book 059's rigid foundations (genuinely available for curves but not dimension `g`), Book 058's undischarged formal algebraization (X068/X012), and Book 035's X008/X053/X037-flagged dual abelian/[n] package. No forward references to Books 061+ exist and there is no internal circularity.
+
+Defects: (1) projective algebraization lemma unproved at lines 540–544 (consumers: Theorem 6.1, §9.3, §13.2); Grothendieck existence invoked at lines 704, 816, 1130; positivity via degree on toric 1-chains asserted at lines 476, 796, 883 with no available degree theory; Proposition 5.1's dimension formula and uniform gap asserted (lines 458–468); Theorems 3.2 (lines 294–300) and 12.1 (line 1117) headed "Proof strategy"; dual uniformization assertion-level (lines 900–915, X008 consumer); `[n]` surjectivity/torsion counts consume X037-flagged facts (lines 955–975). See X070.
+
+### Book 061 — `061-semistable-abelian-varieties-and-monodromy.md`
+
+**Verdict: FAIL — the in-book monodromy/component/conductor package is genuinely argued and largely non-circular, but the headline potential-semistable-reduction theorem (Thm 9.7) rests on unsourced or sketch-level inputs (Bertini-with-jets, surface-resolution termination, excellence/normalization, Néron smoothening monotonicity), and all semistable machinery consumes Book 060's sketch-level Raynaud uniformization — under a completely absent import ledger.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 2519 (EOF), in chronological/result order, during this audit.
+
+Proved genuinely in-book without circularity: the fixed-part theorem (4.1), Kummer lemma (5.1), inertia formula (5.2), monodromy operator and weight filtration (§6), Smith-normal-form Grothendieck pairing (8.2), conductor formula (12.1), `\ell`-independence (12.2), Néron–Ogg–Shafarevich (10.2) and finite-level tests; §11.4's Weil–Deligne material is self-contained; no p-adic logarithm is used (`\ell\neq p`). But zero book numbers appear anywhere: the three "prerequisite interfaces" (§1.3) are anonymous, hiding operative consumption of Book 003 conductors, Book 060's strategy-level uniformization everywhere, Book 038's X057-flagged smoothening, plus undeclared Books 011/016/017a/044 and the X008/X047-flagged dual-abelian/biextension cluster. See X071. Specific gaps: Lemma 9.2 needs unsourced Bertini-with-jets and the Albanese property (lines 1308–1358); Lemma 9.3/Theorem 9.4's stable-reduction chain consumes resolution termination that Book 011 itself concedes and a sketch-level relative-Proj contraction (lines 1374–1500); monotonicity `a_L\ge a_K` uses the unchecked smoothening-center hypothesis (lines 1610–1619); Theorem 7.2's degree formula unproved (lines 1060–1062); Prop 9.6 asserts Picard/Néron identification (line 1547, X010 cluster).
+
+The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
+
 ## Pending scope inventory
 
 The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
 
-- PENDING — Book 059, `059-rigid-analytic-curves-and-formal-models.md`
-- PENDING — Book 060, `060-rigid-uniformization-of-abelian-varieties.md`
-- PENDING — Book 061, `061-semistable-abelian-varieties-and-monodromy.md`
 - PENDING — Book 062, `062-pseudocompact-trace-algebras-and-carayol-descent.md`
 - PENDING — Book 063, `063-deformation-functors-of-representations.md`
 - PENDING — Book 064, `064-complete-local-algebra-for-deformation-theory.md`
@@ -1210,3 +1237,29 @@ Verdicts: Book 054 PASS. Book 055 PASS. Book 056 FAIL (X067 + inherited).
 - Book 057 verdict PASS; cosmetic items only (recorded in its entry).
 
 Verdicts: Book 057 PASS. Book 058 FAIL (X068 + inherited X008).
+
+### X069 — Book 059's foundational rigid-geometry theorems are strategy-level sketches
+
+- **Deficient source:** Book 059, line 517 (Gerritzen–Grauert refinement, never proved anywhere); lines 336–342 (spectral radius formula); lines 459–491 (Theorem 4.2 strictness/flatness lemma asserted); lines 531–554 (Tate acyclicity incl. module case — strategy only); lines 651–673 (Kiehl proper mapping — strategy); lines 912–937 (formal-model/Raynaud equivalence — strategy); lines 1409–1418 (curve GAGA — strategy); lines 1157–1215 (duality/vanishing package sketched); lines 263–281 (Nullstellensatz argument incomplete).
+- **Consumers:** every rigid-geometric chapter of Book 059 itself; Book 060's uniformization; Books 061's semistable theory; downstream consumers of rigid analytic curves.
+- **Needed results:** proofs of the six headline theorems or explicit standing-hypothesis labeling with consumer lists; sourcing of genus-formula inputs (Books 015/016).
+- **Why unavailable:** Tate/Kiehl/Gerritzen–Grauert/Raynaud theory exists nowhere in Mathlib or Books ≤058; the book builds foundations from scratch but stops at strategy level for the hard theorems.
+- **Recommended chronological repair:** prove Gerritzen–Grauert before §5.1 and restrict Theorem 5.1 to rational/Laurent covers meanwhile; add real proofs of the spectral-radius formula, strictness lemma, and module-case acyclicity contraction; execute the `P^N` GAGA calculation once; write out or explicitly declare Theorems 6.2/9.2/14.1 as conditional in the §15.1 ledger.
+
+### X070 — Book 060's Raynaud uniformization rests on an unproved algebraization lemma and undischarged formal existence
+
+- **Deficient source:** Book 060, lines 540–544 (projective algebraization lemma: convergent Čech homotopy, uniform bounds, "analytic sections are polynomials"); lines 704, 816, 1130 (Grothendieck formal existence via Book 058 Ch. 9 — X068/X012-undischarged); lines 476, 796, 883 (positivity via degree on toric 1-chains — no degree theory available); lines 458–468 (Prop 5.1 dimension formula/uniform gap asserted); lines 294–300 and 1117 (Theorems 3.2/12.1 headed "Proof strategy"); lines 900–915 (dual uniformization assertion-level); lines 955–975 (`[n]` facts consuming X037).
+- **Consumers:** Theorems 6.1/8.1/9.1/10.1/12.1 within Book 060; all of Book 061's semistable machinery; downstream component-group and monodromy books.
+- **Needed results:** a proved algebraization lemma (or torus-quotient special case), discharged Grothendieck existence (via X068), a combinatorial degree theory for periodic polyhedral formal models, full proofs replacing the two strategy headings.
+- **Why unavailable:** as recorded in X068/X037/X008; no higher-dimensional rigid GAGA exists anywhere earlier.
+- **Recommended chronological repair:** add an import ledger naming Books 035/059/058 with per-interface status; prove the torus-quotient algebraization case directly from the book's toric charts; define degree on effective 1-chains of a periodic polyhedral model combinatorially; promote Theorems 3.2 and 12.1 to full proofs.
+
+### X071 — Book 061's potential semistable reduction theorem consumes unsourced jet-Bertini, resolution termination, and smoothening monotonicity under a missing import ledger
+
+- **Deficient source:** Book 061, zero book citations anywhere (three anonymous interfaces at §1.3, lines 166–189); lines 1308–1358 (Lemma 9.2: Bertini-with-jets unsourced — near-verbatim of Book 041's X059-flagged passage; Albanese property from undeclared Book 017a); lines 1374–1500 (Lemma 9.3/Theorem 9.4: resolution termination that Book 011 concedes unproved at its line 2244, excellence/normalization per X004/X006 admitted at lines 1450/2395, sketch-level relative-Proj contraction at lines 1486–1498); lines 1610–1619 (monotonicity via unchecked Néron smoothening-center hypothesis = X057); lines 1060–1062 (Theorem 7.2 polarized-Raynaud degree formula unproved); line 1547 (Prop 9.6 Picard/Néron identification asserted, X010 cluster).
+- **Consumers:** Theorem 9.7 → Theorem 11.1, Theorems 10.1/10.2, §11.4 Weil–Deligne package, Prop 12.2; downstream potential-modularity books.
+- **Needed results:** an import ledger naming Books 003/011/015/035/016/017a/038/044/060 with specific theorems; Bertini-with-jets either proved or conditionally labeled; the contraction lemmas expanded; monotonicity re-proven via strict henselization/Chevalley fibers or flagged X057-conditional.
+- **Why unavailable:** all listed inputs are open findings (X057, X059-cluster, X004/X006, X010, Book 060 strategy headlines X070).
+- **Recommended chronological repair:** as itemized; also cite Book 010a as the excellence source in ledger §14.4 instead of "completeness makes R excellent".
+
+Verdicts: Book 059 FAIL (X069). Book 060 FAIL (X070 + inherited). Book 061 FAIL (X071 + inherited).
