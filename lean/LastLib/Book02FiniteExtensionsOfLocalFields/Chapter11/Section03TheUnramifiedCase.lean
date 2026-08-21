@@ -70,7 +70,7 @@ theorem chapter11_unramified_residue_trace_surjective
     (k l : Type*) [Field k] [Field l] [Algebra k l]
     [FiniteDimensional k l] [Algebra.IsSeparable k l] :
     Function.Surjective (Algebra.trace k l) := by
-  sorry
+  exact Algebra.trace_surjective k l
 
 /- On the `n`th graded layer the norm is the residue trace.  The coefficient
    is stated using an arbitrary integral lift `c`, avoiding a noncanonical

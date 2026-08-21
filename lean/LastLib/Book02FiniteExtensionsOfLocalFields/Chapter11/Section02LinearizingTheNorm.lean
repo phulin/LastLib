@@ -84,7 +84,7 @@ theorem chapter11_trace_vanishes_for_nonseparable_extension
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] (hsep : ¬Algebra.IsSeparable K L) :
     Algebra.trace K L = 0 := by
-  sorry
+  exact Algebra.trace_eq_zero_of_not_isSeparable hsep
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11
