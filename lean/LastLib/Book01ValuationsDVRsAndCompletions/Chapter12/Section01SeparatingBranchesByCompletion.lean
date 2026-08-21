@@ -473,6 +473,25 @@ theorem localization_of_branch_quotient_equiv
   exact (IsLocalization.AtPrime.equivQuotMaximalIdealPow P
     (Localization.AtPrime P) n).symm.toRingEquiv
 
+/-- Completion at a maximal prime is unchanged by localizing at that prime. -/
+theorem adic_completion_localization_equiv
+    {B : Type*} [CommRing B] (P : Ideal B) [P.IsPrime] [P.IsMaximal] :
+    Nonempty (AdicCompletion P B ≃+* branchCompletion B P) := by
+  let S := Localization.AtPrime P
+  let Q : Ideal S := Ideal.map (algebraMap B S) P
+  have hQ : Q = IsLocalRing.maximalIdeal S := by
+    exact IsLocalization.AtPrime.map_eq_maximalIdeal P S
+  let h : Chapter12CompatibleAdicEquiv P Q := {
+    equiv := fun n ↦
+      (IsLocalization.AtPrime.equivQuotMaximalIdealPow P S n).toRingEquiv |>.trans
+        (Ideal.quotientEquivAlgOfEq S (congrArg (fun L : Ideal S ↦ L ^ n) hQ)).symm.toRingEquiv
+    transition := by
+      intro m n hmn x
+      induction x using Quotient.inductionOn' with
+      | _ r => rfl }
+  simpa [S, Q, branchCompletion] using
+    adic_completion_equiv_of_compatible_quotient_equiv P Q h
+
 /-- Positive multiples are cofinal among all positive exponents. -/
 theorem positive_multiples_are_cofinal (e : ℕ) (he : positiveExponent (e := e)) :
     ∀ n : ℕ, ∃ m : ℕ, n ≤ m * e := by
