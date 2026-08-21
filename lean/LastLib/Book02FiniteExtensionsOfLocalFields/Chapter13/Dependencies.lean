@@ -31,13 +31,17 @@ def chapter13CompleteDiscreteValuedField
     (v : Valuation K Γ) : Prop :=
   Valuation.IsRankOneDiscrete v ∧
     IsAdicComplete (IsLocalRing.maximalIdeal v.valuationSubring)
-      v.valuationSubring ∧
-    Finite (IsLocalRing.ResidueField v.valuationSubring)
+      v.valuationSubring
 
 def chapter13FiniteResidueField
     {K Γ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ]
     (v : Valuation K Γ) : Prop :=
   Finite (IsLocalRing.ResidueField v.valuationSubring)
+
+def chapter13CompleteFiniteResidueProfile
+    {K Γ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ]
+    (v : Valuation K Γ) : Prop :=
+  chapter13CompleteDiscreteValuedField v ∧ chapter13FiniteResidueField v
 
 /-! A concrete quotient of finite extension presentations records precisely
 the `K`-isomorphism classes used by the two finiteness theorems. -/

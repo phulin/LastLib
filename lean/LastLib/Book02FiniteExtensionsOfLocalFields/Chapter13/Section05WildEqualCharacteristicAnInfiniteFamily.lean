@@ -381,7 +381,7 @@ theorem chapter13_laurent_series_is_complete
 
 theorem chapter13_laurent_series_has_complete_discrete_finite_residue_profile
     (k : Type*) [Field k] [Fintype k] :
-    chapter13CompleteDiscreteValuedField
+    chapter13CompleteFiniteResidueProfile
       (Valued.v : Valuation (LaurentSeries k) ℤᵐ⁰) := by
   sorry
 

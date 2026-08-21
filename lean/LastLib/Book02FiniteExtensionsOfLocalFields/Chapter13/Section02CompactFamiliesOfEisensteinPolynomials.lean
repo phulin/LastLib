@@ -97,7 +97,6 @@ theorem chapter13_eisenstein_parameter_space_compact
     (m : Ideal A) (e : ℕ)
     [TopologicalSpace A] [CompactSpace A]
     (hm_compact : IsCompact (m : Set A))
-    (hm_square_open : IsOpen ((m ^ 2 : Ideal A) : Set A))
     (hm_closed : IsClosed ((m : Set A) \
       ((m ^ 2 : Ideal A) : Set A))) :
     IsCompact (chapter13EisensteinCoefficientParameterSet m e) := by

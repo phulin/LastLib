@@ -37,7 +37,7 @@ The proof is kept as a reusable bridge because the compactness theorem is
 stated for an arbitrary normalized valuation. -/
 theorem chapter13_padic_field_has_complete_discrete_finite_residue_profile
     (p : ℕ) [Fact p.Prime] :
-    chapter13CompleteDiscreteValuedField (Padic.mulValuation (p := p)) := by
+    chapter13CompleteFiniteResidueProfile (Padic.mulValuation (p := p)) := by
   sorry
 
 /-- Every finite extension of a `p`-adic field is covered by Theorem 13.1. -/
@@ -46,12 +46,12 @@ theorem chapter13_padic_field_bounded_degree_finiteness
     chapter13BoundedDegreeFiniteness (K := ℚ_[p]) N := by
   let hprofile :=
     chapter13_padic_field_has_complete_discrete_finite_residue_profile p
-  let : Valuation.IsRankOneDiscrete (Padic.mulValuation (p := p)) := hprofile.1
+  let : Valuation.IsRankOneDiscrete (Padic.mulValuation (p := p)) := hprofile.1.1
   let : Finite (IsLocalRing.ResidueField
-      (Padic.mulValuation (p := p)).valuationSubring) := hprofile.2.2
+      (Padic.mulValuation (p := p)).valuationSubring) := hprofile.2
   exact chapter13_theorem_13_1_bounded_degree_finiteness
     (vK := Padic.mulValuation (p := p))
-    hprofile.2.1 N hN
+    hprofile.1.2 N hN
 
 /-- The source-level hypotheses for the tame bounded-degree theorem. -/
 def chapter13Theorem13_2Hypotheses

@@ -53,7 +53,7 @@ condition used in the coefficient argument. -/
 theorem chapter13_eisenstein_degree_prime_to_residue_characteristic_is_separable
     {A E : Type*} [CommRing A] [Field E]
     [Algebra A E] {p e : ℕ} [Fact p.Prime] [CharP E p]
-    (_m : Ideal A) (g : A[X])
+    (g : A[X])
     (hirreducible : Irreducible (g.map (algebraMap A E)))
     (hmonic : (g.map (algebraMap A E)).Monic)
     (hdegree : (g.map (algebraMap A E)).natDegree = e)
@@ -73,7 +73,7 @@ hypothesis required by the Krasner local-constancy interface. -/
 theorem chapter13_tame_eisenstein_family_is_separable
     {A E : Type*} [CommRing A] [Field E]
     [Algebra A E] {p e : ℕ} [Fact p.Prime] [CharP E p]
-    (_m : Ideal A) (_P : Set A) (g : A[X])
+    (_m : Ideal A) (g : A[X])
     (_hEisenstein : g.IsEisensteinAt _m)
     (hirreducible : Irreducible (g.map (algebraMap A E)))
     (hmonic : (g.map (algebraMap A E)).Monic)
@@ -81,7 +81,7 @@ theorem chapter13_tame_eisenstein_family_is_separable
     (he : 0 < e) (he_p : Nat.Coprime e p) :
     (g.map (algebraMap A E)).Separable := by
   exact chapter13_eisenstein_degree_prime_to_residue_characteristic_is_separable
-    _m g hirreducible hmonic hdegree he he_p
+    g hirreducible hmonic hdegree he he_p
 
 /-- The tame proof has the same compact-family shape as the characteristic
 zero proof; only the separability bridge changes. -/
