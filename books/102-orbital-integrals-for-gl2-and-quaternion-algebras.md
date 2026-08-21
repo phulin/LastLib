@@ -126,7 +126,7 @@ The following choices remain fixed.
 | quadratic torus $E^\times$                    | $\operatorname{vol}(\mathcal O_E^\times)=1$                                       |
 | quotient $T\backslash H$                      | $dh=dt\,d\dot h$                                                                  |
 | Weyl discriminant                             | $D_H(\gamma)=\det(1-\operatorname{Ad}(\gamma)\mid\mathfrak h/\mathfrak h_\gamma)$ |
-| normalized orbital integral                   | $I_\gamma(f)=                                                                     |
+| normalized orbital integral                   | $I_\gamma(f)=\lvert D_H(\gamma)\rvert^{1/2}O_\gamma(f)$                           |
 
 The multiplicative measure is related to additive measure by
 
