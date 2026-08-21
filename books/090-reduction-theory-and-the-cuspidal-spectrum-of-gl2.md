@@ -2253,22 +2253,22 @@ No arrow can be replaced by the conclusion of the preceding line alone. Finite v
 
 ### 13.2 A normalization ledger
 
-| Feature                       | Convention                                         |
-| ----------------------------- | -------------------------------------------------- |
-| Finite absolute value         | $                                                  |
-| Complex absolute value        | Square of the usual modulus                        |
-| Additive finite measure       | $\operatorname{vol}(\mathcal O_v)=1$               |
-| Additive adelic covolume      | $\operatorname{vol}(F\backslash\mathbf A)=2^{-r_2} |
-| Unipotent quotient measure    | Probability measure $d\bar x=c_F^{-1}dx$           |
-| Finite multiplicative measure | $\operatorname{vol}(\mathcal O_v^\times)=1$        |
-| Maximal compact measure       | Probability Haar measure                           |
-| Borel modular character       | $\delta_B(\operatorname{diag}(a,d))=               |
-| Height                        | $H_B=                                              |
-| Cusp measure                  | Bounded compact factor times $dH/H^2$              |
-| Central transformation        | $\phi(zg)=\omega(z)\phi(g)$                        |
-| Constant term                 | Probability average over $F\backslash\mathbf A$    |
-| Cuspidality                   | Constant term zero at every right translate        |
-| Compactness claim             | Fixed finite level and fixed $K_\infty$-type       |
+| Feature                       | Convention                                                                |
+| ----------------------------- | ------------------------------------------------------------------------- |
+| Finite absolute value         | $\lvert\varpi_v\rvert_v=q_v^{-1}$                                         |
+| Complex absolute value        | Square of the usual modulus                                               |
+| Additive finite measure       | $\operatorname{vol}(\mathcal O_v)=1$                                      |
+| Additive adelic covolume      | $\operatorname{vol}(F\backslash\mathbf A)=2^{-r_2}\lvert d_F\rvert^{1/2}$ |
+| Unipotent quotient measure    | Probability measure $d\bar x=c_F^{-1}dx$                                  |
+| Finite multiplicative measure | $\operatorname{vol}(\mathcal O_v^\times)=1$                               |
+| Maximal compact measure       | Probability Haar measure                                                  |
+| Borel modular character       | $\delta_B(\operatorname{diag}(a,d))=\lvert a/d\rvert_{\mathbf A}$         |
+| Height                        | $H_B=\lvert a/d\rvert_{\mathbf A}$                                        |
+| Cusp measure                  | Bounded compact factor times $dH/H^2$                                     |
+| Central transformation        | $\phi(zg)=\omega(z)\phi(g)$                                               |
+| Constant term                 | Probability average over $F\backslash\mathbf A$                           |
+| Cuspidality                   | Constant term zero at every right translate                               |
+| Compactness claim             | Fixed finite level and fixed $K_\infty$-type                              |
 
 Changing one Haar normalization rescales quotient volumes and constant-term norms but does not change zero constant terms or the abstract representation. Every numerical volume statement in this book refers to the ledger above.
 
