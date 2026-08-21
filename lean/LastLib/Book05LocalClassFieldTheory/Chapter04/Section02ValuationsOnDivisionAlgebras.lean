@@ -22,7 +22,7 @@ theorem chapter04_reduced_norm_agrees_with_determinant
 
 theorem chapter04_reduced_norm_on_a_commutative_subfield
     {K D : Type u} {E : Type*} [Field K] [Ring D] [Field E]
-    [Algebra K D] [Algebra K E] [FiniteDimensional K E]
+    [Algebra K D] [Algebra K E] [FiniteDimensional K D] [FiniteDimensional K E]
     (N : Chapter04ReducedNormData K D) (φ : E →ₐ[K] D)
     (hdiv : Module.finrank K E ∣ N.degree) :
     ∀ x : Eˣ,
@@ -33,13 +33,13 @@ theorem chapter04_reduced_norm_on_a_commutative_subfield
 def chapter04FieldNormValuationFormula
     {K E : Type*} [Field K] [Field E] [Algebra K E]
     [FiniteDimensional K E]
-    (vK : K → ℚ) (vE : E → ℚ) : Prop :=
+    (vK : K → ℚ) (vE : E → ℚ) (f : ℕ) : Prop :=
   ∀ x : E, x ≠ 0 →
-    vK (Algebra.norm K x) = (Module.finrank K E : ℚ) * vE x
+    vK (Algebra.norm K x) = (f : ℚ) * vE x
 
 theorem chapter04_division_valuation_on_a_subfield
     {K D : Type u} {E : Type*} [Field K] [DivisionRing D] [Field E]
-    [Algebra K D] [Algebra K E] [FiniteDimensional K E]
+    [Algebra K D] [Algebra K E] [FiniteDimensional K D] [FiniteDimensional K E]
     (N : Chapter04ReducedNormData K D) (vK : Kˣ → ℚ) (vE : Eˣ → ℚ)
     (φ : E →ₐ[K] D) (e : ℕ)
     (hdiv : Module.finrank K E ∣ N.degree)
@@ -321,7 +321,7 @@ theorem chapter04_unramified_unit_norm_normalizes_parameter
   exact hsurj c⁻¹
 
 def chapter04GeneratorChangeFactor (n r : ℕ) : ZMod n :=
-  (r : ZMod n)⁻¹
+  LastLib.Book05LocalClassFieldTheory.Chapter03.chapter03GeneratorChangeFactor n r
 
 theorem chapter04_generator_change_factor_mul
     (n r : ℕ) (hcoprime : Nat.Coprime r n) :

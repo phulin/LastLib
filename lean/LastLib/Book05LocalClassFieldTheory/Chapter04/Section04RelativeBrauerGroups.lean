@@ -20,10 +20,14 @@ def chapter04RationalResidueOneOverMultiples (n : ℕ) : Set chapter04RationalRe
 
 theorem chapter04_relative_brauer_invariant_mem_one_over_multiples
     {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     (I : Chapter04LocalInvariantData K)
     (R : Chapter04BrauerRestrictionData K L)
     (n : ℕ) (hn : 0 < n)
-    (hcompat : R.representative_compatibility)
+    (hdegree : Module.finrank K L = n)
+    (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
+      R.restriction (chapter04BrauerClass A) =
+        chapter04BrauerClass (R.scalarExtension A))
     (a : chapter04RelativeBrauerGroup K L R) :
     chapter04InvariantOfRelativeClass I R a ∈
       chapter04RationalResidueOneOverMultiples n := by
@@ -35,7 +39,9 @@ theorem chapter04_relative_brauer_invariant_image_eq_one_over_multiples
     (I : Chapter04LocalInvariantData K)
     (R : Chapter04BrauerRestrictionData K L)
     (n : ℕ) (hdegree : Module.finrank K L = n)
-    (hcompat : R.representative_compatibility) :
+    (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
+      R.restriction (chapter04BrauerClass A) =
+        chapter04BrauerClass (R.scalarExtension A)) :
     chapter04RelativeInvariantImage I R =
       chapter04RationalResidueOneOverMultiples n := by
   sorry
@@ -46,9 +52,11 @@ theorem chapter04_relative_brauer_invariant_kernel_iff
     (I : Chapter04LocalInvariantData K)
     (R : Chapter04BrauerRestrictionData K L)
     (n : ℕ) (hdegree : Module.finrank K L = n)
-    (hcompat : R.representative_compatibility)
+    (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
+      R.restriction (chapter04BrauerClass A) =
+        chapter04BrauerClass (R.scalarExtension A))
     (a : chapter04BrauerGroup K) :
-    R.restriction a = R.splitClass ↔ I.invariant a ∈
+    R.restriction a = chapter04RestrictionSplitClass K L R ↔ I.invariant a ∈
       chapter04RationalResidueOneOverMultiples n := by
   sorry
 
@@ -58,7 +66,9 @@ theorem chapter04_relative_brauer_group_card_eq_degree
     (I : Chapter04LocalInvariantData K)
     (R : Chapter04BrauerRestrictionData K L)
     (n : ℕ) (hdegree : Module.finrank K L = n)
-    (hcompat : R.representative_compatibility) :
+    (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
+      R.restriction (chapter04BrauerClass A) =
+        chapter04BrauerClass (R.scalarExtension A)) :
     Nat.card (chapter04RelativeBrauerGroup K L R) = n := by
   sorry
 
@@ -75,7 +85,9 @@ theorem chapter04_cyclic_norm_quotient_relative_brauer_equiv
     (n : ℕ) (σ : Gal(L / K))
     (hcyc : chapter03CyclicExtension K L n σ)
     (R : Chapter04BrauerRestrictionData K L)
-    (hcompat : R.representative_compatibility) :
+    (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
+      R.restriction (chapter04BrauerClass A) =
+        chapter04BrauerClass (R.scalarExtension A)) :
     Nonempty (Chapter04CyclicNormBrauerEquivalence K L R) := by
   sorry
 
@@ -87,7 +99,9 @@ theorem chapter04_cyclic_norm_quotient_card_eq_degree
     (hcyc : chapter03CyclicExtension K L n σ)
     (R : Chapter04BrauerRestrictionData K L)
     (hdegree : Module.finrank K L = n)
-    (hcompat : R.representative_compatibility)
+    (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
+      R.restriction (chapter04BrauerClass A) =
+        chapter04BrauerClass (R.scalarExtension A))
     (E : Chapter04CyclicNormBrauerEquivalence K L R) :
     Nat.card (chapter03NormQuotient K L) = n := by
   sorry
@@ -100,7 +114,9 @@ theorem chapter04_cyclic_norm_quotient_index
     (hcyc : chapter03CyclicExtension K L n σ)
     (R : Chapter04BrauerRestrictionData K L)
     (hdegree : Module.finrank K L = n)
-    (hcompat : R.representative_compatibility) :
+    (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
+      R.restriction (chapter04BrauerClass A) =
+        chapter04BrauerClass (R.scalarExtension A)) :
     Nat.card (Kˣ ⧸ chapter03NormSubgroup K L) = n := by
   sorry
 
@@ -114,7 +130,9 @@ theorem chapter04_cyclic_norm_index_including_wild_extensions
     (hcyc : chapter03CyclicExtension K L n σ)
     (R : Chapter04BrauerRestrictionData K L)
     (hdegree : Module.finrank K L = n)
-    (hcompat : R.representative_compatibility) :
+    (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
+      R.restriction (chapter04BrauerClass A) =
+        chapter04BrauerClass (R.scalarExtension A)) :
     Nat.card (Kˣ ⧸ chapter03NormSubgroup K L) = n := by
   exact chapter04_cyclic_norm_quotient_index I n σ hcyc R hdegree hcompat
 
@@ -126,7 +144,9 @@ theorem chapter04_theorem_4_2_cyclic_norm_index
     (hcyc : chapter03CyclicExtension K L n σ)
     (R : Chapter04BrauerRestrictionData K L)
     (hdegree : Module.finrank K L = n)
-    (hcompat : R.representative_compatibility) :
+    (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
+      R.restriction (chapter04BrauerClass A) =
+        chapter04BrauerClass (R.scalarExtension A)) :
     Nat.card (Kˣ ⧸ chapter03NormSubgroup K L) = n := by
   exact chapter04_cyclic_norm_quotient_index I n σ hcyc R hdegree hcompat
 

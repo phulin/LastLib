@@ -139,37 +139,65 @@ structure Chapter04UnramifiedExtensionData
     Units.map (Algebra.norm K (S := L)) x = u
 
 /- LOCAL_DEPENDENCY_GUESS: scalar restriction and corestriction are not
-  present in the pinned `BrauerGroup` API. -/
+  present in the pinned `BrauerGroup` API.  The representative maps below
+  make the missing compatibility data explicit instead of leaving it as an
+  unconstrained proposition. -/
+structure Chapter04SplitBrauerClass (K : Type*) [Field K] where
+  representative : chapter04CentralSimpleAlgebra K
+  matrixSize : ℕ
+  matrixSize_pos : 0 < matrixSize
+  split : Nonempty
+    (representative ≃ₐ[K]
+      Matrix (Fin matrixSize) (Fin matrixSize) K)
+
 structure Chapter04BrauerRestrictionData
     (K L : Type*) [Field K] [Field L] [Algebra K L] where
   restriction : chapter04BrauerGroup K → chapter04BrauerGroup L
-  splitClass : chapter04BrauerGroup L
-  representative_compatibility : Prop
+  splitClass : Chapter04SplitBrauerClass L
+  scalarExtension : chapter04CentralSimpleAlgebra K →
+    chapter04CentralSimpleAlgebra L
+  representative_compatibility : ∀ A : chapter04CentralSimpleAlgebra K,
+    restriction (chapter04BrauerClass A) =
+      chapter04BrauerClass (scalarExtension A)
 
 structure Chapter04BrauerCorestrictionData
-    (K L : Type*) [Field K] [Field L] [Algebra K L] where
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] where
   corestriction : chapter04BrauerGroup L → chapter04BrauerGroup K
-  representative_compatibility : Prop
+  representativeMap : chapter04CentralSimpleAlgebra L →
+    chapter04CentralSimpleAlgebra K
+  representative_compatibility : ∀ A : chapter04CentralSimpleAlgebra L,
+    corestriction (chapter04BrauerClass A) =
+      chapter04BrauerClass (representativeMap A)
+
+def chapter04RestrictionSplitClass
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    (R : Chapter04BrauerRestrictionData K L) : chapter04BrauerGroup L :=
+  chapter04BrauerClass R.splitClass.representative
 
 /-- The relative Brauer group for an explicit restriction interface. -/
 def chapter04RelativeBrauerGroup
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     (R : Chapter04BrauerRestrictionData K L) : Type _ :=
-  {a : chapter04BrauerGroup K // R.restriction a = R.splitClass}
+  {a : chapter04BrauerGroup K //
+    R.restriction a = chapter04RestrictionSplitClass K L R}
 
 def chapter04RelativeBrauerClass
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     (R : Chapter04BrauerRestrictionData K L)
-    (a : chapter04BrauerGroup K) (ha : R.restriction a = R.splitClass) :
+    (a : chapter04BrauerGroup K)
+    (ha : R.restriction a = chapter04RestrictionSplitClass K L R) :
     chapter04RelativeBrauerGroup K L R :=
   ⟨a, ha⟩
 
 /- LOCAL_DEPENDENCY_GUESS: reduced norms are not yet exposed by Mathlib for a
   general central division algebra. -/
 structure Chapter04ReducedNormData
-    (K D : Type u) [Field K] [Ring D] [Algebra K D] where
+    (K D : Type u) [Field K] [Ring D] [Algebra K D]
+    [FiniteDimensional K D] where
   degree : ℕ
   degree_pos : 0 < degree
+  finrank_eq_degree_sq : Module.finrank K D = degree ^ 2
   reducedNorm : Dˣ →* Kˣ
   baseUnitValue : Kˣ → ℚ
   /- LOCAL_DEPENDENCY_GUESS: this is the defining reduced-norm compatibility
@@ -195,6 +223,7 @@ def chapter04ReducedNormAgreesWithDeterminant
   with the zero value recorded separately. -/
 def chapter04DivisionValuation
     {K D : Type u} [Field K] [DivisionRing D] [Algebra K D]
+    [FiniteDimensional K D]
     (N : Chapter04ReducedNormData K D) :
     (Kˣ → ℚ) → D → WithTop ℚ :=
   fun vK x => by
@@ -205,6 +234,7 @@ def chapter04DivisionValuation
 
 def chapter04DivisionValuationOnUnits
     {K D : Type u} [Field K] [Ring D] [Algebra K D]
+    [FiniteDimensional K D]
     (N : Chapter04ReducedNormData K D) (vK : Kˣ → ℚ) : Dˣ → ℚ :=
   fun x => vK (N.reducedNorm x) / N.degree
 

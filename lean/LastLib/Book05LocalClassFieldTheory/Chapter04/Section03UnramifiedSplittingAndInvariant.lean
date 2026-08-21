@@ -284,7 +284,9 @@ theorem chapter04_local_invariant_restriction_formula
     (I_L : Chapter04LocalInvariantData L)
     (R : Chapter04BrauerRestrictionData K L)
     (n : ℕ) (hdegree : Module.finrank K L = n)
-    (hcompat : R.representative_compatibility)
+    (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
+      R.restriction (chapter04BrauerClass A) =
+        chapter04BrauerClass (R.scalarExtension A))
     (α : chapter04BrauerGroup K) :
     I_L.invariant (R.restriction α) = n • I_K.invariant α := by
   sorry
@@ -296,7 +298,9 @@ theorem chapter04_restriction_unramified_stage_formula
     (I_L : Chapter04LocalInvariantData L)
     (R : Chapter04BrauerRestrictionData K L)
     (U : Chapter04UnramifiedExtensionData K L)
-    (hcompat : R.representative_compatibility)
+    (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
+      R.restriction (chapter04BrauerClass A) =
+        chapter04BrauerClass (R.scalarExtension A))
     (α : chapter04BrauerGroup K) :
     I_L.invariant (R.restriction α) = U.degree • I_K.invariant α := by
   sorry
@@ -330,7 +334,9 @@ theorem chapter04_restriction_totally_ramified_stage_formula
     (I_L : Chapter04LocalInvariantData L)
     (R : Chapter04BrauerRestrictionData K L)
     (T : Chapter04TotallyRamifiedStageData K L)
-    (hcompat : R.representative_compatibility)
+    (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
+      R.restriction (chapter04BrauerClass A) =
+        chapter04BrauerClass (R.scalarExtension A))
     (α : chapter04BrauerGroup K) :
     I_L.invariant (R.restriction α) = T.degree • I_K.invariant α := by
   sorry
@@ -355,8 +361,12 @@ theorem chapter04_restriction_finite_extension_stage_formula
     (R : Chapter04BrauerRestrictionData K L)
     (hdegreeKM : Module.finrank K M = eKM)
     (hdegreeML : Module.finrank M L = eML)
-    (hcompatKM : R_KM.representative_compatibility)
-    (hcompatML : R_ML.representative_compatibility)
+    (hcompatKM : ∀ A : chapter04CentralSimpleAlgebra K,
+      R_KM.restriction (chapter04BrauerClass A) =
+        chapter04BrauerClass (R_KM.scalarExtension A))
+    (hcompatML : ∀ A : chapter04CentralSimpleAlgebra M,
+      R_ML.restriction (chapter04BrauerClass A) =
+        chapter04BrauerClass (R_ML.scalarExtension A))
     (hrestriction_trans : R.restriction = R_ML.restriction ∘ R_KM.restriction)
     (α : chapter04BrauerGroup K) :
     I_L.invariant (R.restriction α) = (eKM * eML) • I_K.invariant α := by
@@ -368,7 +378,9 @@ theorem chapter04_local_invariant_corestriction_formula
     (I_K : Chapter04LocalInvariantData K)
     (I_L : Chapter04LocalInvariantData L)
     (C : Chapter04BrauerCorestrictionData K L)
-    (hcompat : C.representative_compatibility)
+    (hcompat : ∀ A : chapter04CentralSimpleAlgebra L,
+      C.corestriction (chapter04BrauerClass A) =
+        chapter04BrauerClass (C.representativeMap A))
     (β : chapter04BrauerGroup L) :
     I_K.invariant (C.corestriction β) = I_L.invariant β := by
   sorry
@@ -380,7 +392,9 @@ theorem chapter04_restriction_is_surjective_on_brauer_groups
     (I_L : Chapter04LocalInvariantData L)
     (R : Chapter04BrauerRestrictionData K L)
     (n : ℕ) (hdegree : Module.finrank K L = n)
-    (hcompat : R.representative_compatibility) :
+    (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
+      R.restriction (chapter04BrauerClass A) =
+        chapter04BrauerClass (R.scalarExtension A)) :
     Function.Surjective R.restriction := by
   sorry
 
@@ -392,8 +406,12 @@ theorem chapter04_corestriction_restriction_degree_formula
     (R : Chapter04BrauerRestrictionData K L)
     (C : Chapter04BrauerCorestrictionData K L)
     (n : ℕ) (hdegree : Module.finrank K L = n)
-    (hcompatR : R.representative_compatibility)
-    (hcompatC : C.representative_compatibility)
+    (hcompatR : ∀ A : chapter04CentralSimpleAlgebra K,
+      R.restriction (chapter04BrauerClass A) =
+        chapter04BrauerClass (R.scalarExtension A))
+    (hcompatC : ∀ A : chapter04CentralSimpleAlgebra L,
+      C.corestriction (chapter04BrauerClass A) =
+        chapter04BrauerClass (C.representativeMap A))
     (α : chapter04BrauerGroup K) :
     C.corestriction (R.restriction α) =
       chapter04BrauerNatPower I_K.brauerLaw α n := by

@@ -4,7 +4,7 @@ namespace LastLib.Book05LocalClassFieldTheory.Chapter04
 
 noncomputable section
 
-open scoped BigOperators
+open scoped BigOperators TensorProduct
 
 /-! ## 4.5. The fundamental class -/
 
@@ -63,6 +63,11 @@ structure Chapter04CrossedProductBrauerRepresentative
     [FiniteDimensional K L] [IsGalois K L]
     (c : Chapter04NormalizedTwoCocycle (Gal(L / K)) L) where
   carrier : chapter04CentralSimpleAlgebra K
+  carrier_equivalence :
+    chapter04CrossedProductCarrier (Gal(L / K)) L ≃ₗ[K] carrier
+  multiplication_compatibility : ∀ x y,
+    carrier_equivalence (chapter04CrossedProductMul c x y) =
+      carrier_equivalence x * carrier_equivalence y
   dimension_eq : Module.finrank K carrier =
     (Nat.card (Gal(L / K))) ^ 2
   brauerClass : chapter04BrauerGroup K
@@ -79,8 +84,7 @@ theorem chapter04_crossed_product_is_central_simple_of_cocycle
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
     (c : Chapter04NormalizedTwoCocycle (Gal(L / K)) L) :
-    ∃ A : chapter04CentralSimpleAlgebra K,
-      Module.finrank K A = (Nat.card (Gal(L / K))) ^ 2 := by
+    Nonempty (Chapter04CrossedProductBrauerRepresentative K L c) := by
   sorry
 
 theorem chapter04_full_matrix_algebra_automorphism_is_inner
@@ -95,9 +99,9 @@ theorem chapter04_coboundary_rescaling_preserves_crossed_product_class
     [FiniteDimensional K L] [IsGalois K L]
     (c₁ c₂ : Chapter04NormalizedTwoCocycle (Gal(L / K)) L)
     (hcohom : chapter04CocycleCohomologous c₁ c₂) :
-    ∀ A₁ A₂ : Chapter04CrossedProductBrauerRepresentative K L c₁,
-      ∃ B₁ B₂ : Chapter04CrossedProductBrauerRepresentative K L c₂,
-        A₁.brauerClass = B₁.brauerClass ∧ A₂.brauerClass = B₂.brauerClass := by
+    ∀ A₁ : Chapter04CrossedProductBrauerRepresentative K L c₁,
+      ∃ B₁ : Chapter04CrossedProductBrauerRepresentative K L c₂,
+        A₁.brauerClass = B₁.brauerClass := by
   sorry
 
 theorem chapter04_coboundary_is_basis_rescaling
@@ -128,19 +132,29 @@ structure Chapter04SplitDescentData
     [FiniteDimensional K L] [IsGalois K L] [AddCommGroup V]
     [Module L V] [FiniteDimensional L V] where
   algebra : chapter04CentralSimpleAlgebra K
-  split_matrix_identification : Prop
+  split_matrix_identification : Nonempty
+    (L ⊗[K] algebra.carrier ≃ₐ[L] Module.End L V)
   semilinear_action : Gal(L / K) → V → V
   semilinear_add : ∀ g v w,
     semilinear_action g (v + w) = semilinear_action g v + semilinear_action g w
   semilinear_smul : ∀ (g : Gal(L / K)) (a : L) (v : V),
     semilinear_action g (a • v) = (g • a) • semilinear_action g v
   semilinear_bijective : ∀ g, Function.Bijective (semilinear_action g)
+  semilinear_one : ∀ v, semilinear_action 1 v = v
+  semilinear_mul : ∀ g h v,
+    semilinear_action (g * h) v =
+      semilinear_action g (semilinear_action h v)
   linear_operators : Gal(L / K) → (V ≃ₗ[L] V)
+  matrixAction : Gal(L / K) → Module.End L V → Module.End L V
+  matrixAction_apply : ∀ g X v,
+    matrixAction g X v =
+      semilinear_action g (X (semilinear_action g⁻¹ v))
   cocycle : Chapter04NormalizedTwoCocycle (Gal(L / K)) L
-  /- LOCAL_DEPENDENCY_GUESS: the pinned matrix API does not expose the
-    conjugation comparison in the book's descent proof. -/
-  inner_automorphism_relation : Prop
-  scalar_relation : Prop
+  inner_automorphism_relation : ∀ g, ∃ T : V ≃ₗ[L] V, ∀ X v,
+    matrixAction g X v = T (X (T.symm v))
+  scalar_relation : ∀ g h v,
+    linear_operators g (matrixAction g (linear_operators h) v) =
+      (cocycle.value g h : L) • linear_operators (g * h) v
 
 theorem chapter04_split_descent_produces_a_cocycle
     {K L V : Type*} [Field K] [Field L] [Algebra K L]
@@ -157,7 +171,8 @@ theorem chapter04_split_descent_inner_automorphisms_are_scalar_unique
     [FiniteDimensional K L] [IsGalois K L] [AddCommGroup V]
     [Module L V] [FiniteDimensional L V]
     (D : Chapter04SplitDescentData K L V) :
-    D.inner_automorphism_relation := by
+    ∀ g, ∃ T : V ≃ₗ[L] V, ∀ X v,
+      D.matrixAction g X v = T (X (T.symm v)) := by
   sorry
 
 theorem chapter04_split_descent_scalar_relation
@@ -165,14 +180,18 @@ theorem chapter04_split_descent_scalar_relation
     [FiniteDimensional K L] [IsGalois K L] [AddCommGroup V]
     [Module L V] [FiniteDimensional L V]
     (D : Chapter04SplitDescentData K L V) :
-    D.scalar_relation := by
+    ∀ g h v,
+      D.linear_operators g (D.matrixAction g (D.linear_operators h) v) =
+        (D.cocycle.value g h : L) • D.linear_operators (g * h) v := by
   sorry
 
 theorem chapter04_relative_brauer_group_is_second_cohomology
     {K L : Type} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
     (R : Chapter04BrauerRestrictionData K L)
-    (hcompat : R.representative_compatibility) :
+    (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
+      R.restriction (chapter04BrauerClass A) =
+        chapter04BrauerClass (R.scalarExtension A)) :
     Nonempty (Chapter04RelativeBrauerCohomologyData K L R) := by
   sorry
 
