@@ -31,10 +31,16 @@ theorem chapter09_normSubgroup_mono_of_tower
     [FiniteDimensional L M] [FiniteDimensional K M] :
     chapter09NormSubgroup K M ≤ chapter09NormSubgroup K L := by
   intro x hx
-  change x ∈ (chapter09NormHom K M).range at hx
-  rcases hx with ⟨y, rfl⟩
-  rw [chapter09_norm_hom_transitive K L M]
-  exact ⟨chapter09NormHom L M y, rfl⟩
+  obtain ⟨y, hy⟩ := (chapter09_mem_normSubgroup_iff K M x).mp hx
+  apply (chapter09_mem_normSubgroup_iff K L x).mpr
+  refine ⟨chapter09NormHom L M y, ?_⟩
+  calc
+    chapter09NormHom K L (chapter09NormHom L M y) =
+        chapter09NormHom K M y := by
+      have h := congrArg (fun f : Mˣ →* Kˣ => f y)
+        (chapter09_norm_hom_transitive K L M)
+      exact h.symm
+    _ = x := hy
 
 theorem chapter09_normSubgroup_mem_of_tower
     (K L M : Type*) [Field K] [Field L] [Field M]

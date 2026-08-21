@@ -47,7 +47,9 @@ theorem chapter09_mem_normSubgroup_iff
     [FiniteDimensional K L] (x : Kˣ) :
     x ∈ chapter09NormSubgroup K L ↔
       ∃ y : Lˣ, chapter09NormHom K L y = x := by
-  rfl
+  exact
+    LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05_mem_normSubgroup_iff
+      K L x
 
 /--
 The inclusion of automorphism groups obtained by restricting scalars.
