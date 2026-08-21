@@ -1,4 +1,7 @@
 import LastLib.Book05LocalClassFieldTheory.Chapter01.Dependencies
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter06.Section06CompactnessAndLocalCompactness
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.Section03UniformizersAndMinimalPolynomials
+import Mathlib.Topology.Algebra.Valued.LocallyCompact
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter01
 
@@ -17,7 +20,19 @@ theorem chapter01_local_field_has_uniformizer
     (v : AddValuation K (WithTop ℤ))
     (hlocal : Chapter01LocalField v) :
     ∃ π : Chapter01ValuationRing v, chapter01IsUniformizer v π := by
-  sorry
+  rcases hlocal.1.1 with ⟨π, hπ0, hπ, _⟩
+  have hπmem : π ∈ v.toValuation.valuationSubring := by
+    rw [Valuation.mem_valuationSubring_iff]
+    change (0 : WithTop ℤ) ≤ v π
+    rw [hπ]
+    norm_num
+  let π' : Chapter01ValuationRing v := ⟨π, hπmem⟩
+  refine ⟨π', ?_⟩
+  constructor
+  · intro hzero
+    apply hπ0
+    exact congrArg (fun x : Chapter01ValuationRing v => (x : K)) hzero
+  · exact hπ
 
 /-- A complete discretely valued field with infinite residue field is outside
 the local-field scope fixed in this chapter. -/
@@ -44,7 +59,26 @@ theorem chapter01_maximal_ideal_eq_span_uniformizer
     (hdiscrete :
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation v) :
     Chapter01MaximalIdeal v = Ideal.span ({π} : Set (Chapter01ValuationRing v)) := by
-  sorry
+  let _ : Valuation.IsRankOneDiscrete v.toValuation :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08_rank_one_discrete_of_add_valuation
+      v hdiscrete
+  have hintegral : ∀ x : K, IsIntegral (Chapter01ValuationRing v) x ↔ 0 ≤ v x := by
+    intro x
+    constructor
+    · intro hx
+      obtain ⟨a, ha⟩ :=
+        (IsIntegrallyClosed.isIntegral_iff (R := Chapter01ValuationRing v)).mp hx
+      have ha0 : 0 ≤ v (a : K) := a.property
+      have ha' : (a : K) = x := ha
+      rw [ha'] at ha0
+      exact ha0
+    · intro hx
+      apply (IsIntegrallyClosed.isIntegral_iff (R := Chapter01ValuationRing v)).mpr
+      exact ⟨⟨x, hx⟩, rfl⟩
+  rcases hπ with ⟨_, hπval⟩
+  simpa [ValuationSubring.algebraMap_apply] using
+    (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08_value_one_generates_maximal_ideal
+      v hdiscrete hintegral π hπval)
 
 /-- The zeroth unit group is the full valuation-ring unit group. -/
 theorem chapter01_unit_filtration_zero
@@ -77,7 +111,97 @@ theorem chapter01_valuation_coordinate_exists
     (v : AddValuation K (WithTop ℤ))
     (hlocal : Chapter01LocalField v) :
     Nonempty (Chapter01ValuationCoordinateData v) := by
-  sorry
+  classical
+  obtain ⟨π, hπ0, hπ, hvalues⟩ := hlocal.1.1
+  have unit_val (u : Kˣ) : ∃ z : ℤ, v (u : K) = (z : WithTop ℤ) :=
+    hvalues (u : K) (Units.ne_zero u)
+  let valInt : Kˣ → ℤ := fun u => Classical.choose (unit_val u)
+  have valInt_spec (u : Kˣ) : v (u : K) = (valInt u : WithTop ℤ) :=
+    Classical.choose_spec (unit_val u)
+  have hpow (z : ℤ) : v (π ^ z) = (z : WithTop ℤ) := by
+    cases z with
+    | ofNat n =>
+        change v (π ^ (n : ℤ)) = (n : WithTop ℤ)
+        rw [zpow_natCast]
+        rw [v.map_pow, hπ]
+        simp
+    | negSucc n =>
+        rw [zpow_negSucc, v.map_inv, v.map_pow, hπ]
+        simp [Int.negSucc_eq]
+  let ν : Kˣ →* Multiplicative ℤ :=
+    { toFun := fun u => Multiplicative.ofAdd (valInt u)
+      map_one' := by
+        change valInt (1 : Kˣ) = 0
+        apply WithTop.coe_injective
+        rw [← valInt_spec]
+        change v (1 : K) = 0
+        rw [v.map_one]
+      map_mul' := by
+        intro u w
+        change valInt (u * w) = valInt u + valInt w
+        apply WithTop.coe_injective
+        have huv : ((u * w : Kˣ) : K) = (u : K) * (w : K) := rfl
+        calc
+          (valInt (u * w) : WithTop ℤ) = v ((u * w : Kˣ) : K) :=
+            (valInt_spec (u * w)).symm
+          _ = v (u : K) + v (w : K) := by rw [huv, v.map_mul]
+          _ = (valInt u : WithTop ℤ) + (valInt w : WithTop ℤ) := by
+            rw [valInt_spec, valInt_spec] }
+  let hvint : v.toValuation.Integers (Chapter01ValuationRing v) :=
+    Valuation.valuationSubring.integers v.toValuation
+  refine ⟨⟨ν, ?_⟩⟩
+  change Function.Injective (chapter01UnitInclusion v) ∧
+    Function.MulExact (chapter01UnitInclusion v) ν ∧ Function.Surjective ν
+  refine ⟨?_, ?_, ?_⟩
+  · intro a b hab
+    apply Units.ext
+    apply Subtype.ext
+    exact congrArg (fun z : Kˣ => (z : K)) hab
+  · intro u
+    constructor
+    · intro hu
+      have huvint : valInt u = 0 := by
+        change Multiplicative.ofAdd (valInt u) = Multiplicative.ofAdd 0 at hu
+        exact Multiplicative.ofAdd.injective hu
+      have huval : v (u : K) = 0 := by
+        rw [valInt_spec, huvint]
+        simp
+      let a0 : Chapter01ValuationRing v :=
+        ⟨(u : K), by
+          change 0 ≤ v (u : K)
+          rw [huval]
+          ⟩
+      have haunit : IsUnit a0 := by
+        apply hvint.isUnit_iff_valuation_eq_one.mpr
+        change v (u : K) = 0
+        exact huval
+      obtain ⟨a, ha⟩ := haunit
+      refine ⟨a, ?_⟩
+      apply Units.ext
+      change ((a : Chapter01ValuationRing v) : K) = (u : K)
+      simpa [a0] using congrArg (fun z : Chapter01ValuationRing v => (z : K)) ha
+    · rintro ⟨a, rfl⟩
+      have hav : v ((chapter01UnitInclusion v a : Kˣ) : K) = 0 := by
+        change v ((a : Chapter01ValuationRing v) : K) = 0
+        exact hvint.valuation_unit a
+      have havint : valInt (chapter01UnitInclusion v a) = 0 := by
+        apply WithTop.coe_injective
+        rw [← valInt_spec, hav]
+        simp
+      simp [ν, havint]
+  · intro z
+    let u : Kˣ :=
+      Units.mk0 (π ^ (Multiplicative.toAdd z))
+        (zpow_ne_zero _ hπ0)
+    refine ⟨u, ?_⟩
+    have huvint : valInt u = Multiplicative.toAdd z := by
+      apply WithTop.coe_injective
+      rw [← valInt_spec]
+      change v (π ^ (Multiplicative.toAdd z)) = _
+      exact hpow (Multiplicative.toAdd z)
+    change Multiplicative.ofAdd (valInt u) = z
+    rw [huvint]
+    simp
 
 /-- A finite residue field is perfect, so finite residue extensions are
 separable. -/
@@ -94,7 +218,9 @@ theorem chapter01_finite_residue_extension_is_separable
     {k l : Type*} [Field k] [Field l] [Algebra k l]
     [Finite k] [Finite l] [FiniteDimensional k l] :
     Algebra.IsSeparable k l := by
-  sorry
+  let _ : PerfectField k := PerfectField.ofFinite
+  exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09.chapter09_perfect_residue_field_gives_separable_extension
+    k l
 
 /-- Purely inseparable finite extensions are not silently admitted as class
 field-theoretic levels. -/
@@ -103,7 +229,15 @@ theorem chapter01_purely_inseparable_warning
     (h : Chapter01PurelyInseparableExtension K L)
     (hnontrivial : 1 < Module.finrank K L) :
     ¬ Chapter01FiniteSeparableExtension K L := by
-  sorry
+  intro hsep
+  let _ : IsPurelyInseparable K L := h.2
+  let _ : Algebra.IsSeparable K L := ⟨hsep.2⟩
+  have hfin : Field.finSepDegree K L = Module.finrank K L :=
+    Field.finSepDegree_eq_finrank_of_isSeparable K L
+  have hone := IsPurelyInseparable.finSepDegree_eq_one K L
+  have hdegree := hnontrivial
+  rw [← hfin, hone] at hdegree
+  omega
 
 /-- The finite residue-field hypothesis gives the local-field compactness of
 the valuation ring.  The topological instances are the canonical valuation
@@ -118,7 +252,13 @@ theorem chapter01_local_field_integer_ring_compact
     [IsDiscreteValuationRing ((Valued.v : Valuation K ℤᵐ⁰).valuationSubring)] :
     IsCompact
       (Set.univ : Set ((Valued.v : Valuation K ℤᵐ⁰).valuationSubring)) := by
-  sorry
+  have hsub := (Valuation.isEquiv_iff_valuationSubring
+    (v₁ := (Valued.v : Valuation K ℤᵐ⁰)) (v₂ := v.toValuation)).mp hvaluation
+  let _ : Finite (IsLocalRing.ResidueField
+      ((Valued.v : Valuation K ℤᵐ⁰).valuationSubring)) := hsub ▸ hlocal.2
+  exact isCompact_univ_iff.mpr
+    (LastLib.Book01ValuationsDVRsAndCompletions.Chapter06.chapter06_integer_compact_iff_complete_dvr_finite_residue.mpr
+      ⟨inferInstance, inferInstance, inferInstance⟩)
 
 /-- The supplied valuation equivalence and canonical `Valued` topology are the
 bridge from compactness of the valuation ring to local compactness of `K`. -/
