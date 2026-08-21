@@ -4,8 +4,9 @@ import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Section02Equivalent
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07
 
-open Set
+open Set Ideal IsLocalRing
 open Polynomial
+open LastLib.Book01ValuationsDVRsAndCompletions.Chapter09
 open LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
 open scoped WithZero
 
@@ -59,6 +60,170 @@ theorem chapter07_lifted_polynomial_quotient_degree
     Module.finrank K (Chapter07LiftedPolynomialQuotient K g) = g.natDegree := by
   exact (AdjoinRoot.powerBasis hg.ne_zero).finrank.trans
     (AdjoinRoot.powerBasis_dim hg.ne_zero)
+
+/-- An algebra map from a finite etale algebra to the residue ring of a
+henselian local ring lifts uniquely to the ring itself.  This public §7.3
+interface exposes the henselian lifting input used by the unramified
+construction; the general proof in Book 1 is intentionally private. -/
+theorem chapter07_henselian_etale_algHom_lift_unique
+    {A S : Type*} [CommRing A] [HenselianLocalRing A]
+    [CommRing S] [Algebra A S] [Algebra.Etale A S]
+    (φ : S →ₐ[A] ResidueRing A) :
+    ∃! ψ : S →ₐ[A] A,
+      (Ideal.Quotient.mkₐ A (IsLocalRing.maximalIdeal A)).comp ψ = φ := by
+  classical
+  let ρ : A →ₐ[A] ResidueRing A :=
+    Ideal.Quotient.mkₐ A (IsLocalRing.maximalIdeal A)
+  have hquot : residueMap A =
+      Ideal.Quotient.mk (IsLocalRing.maximalIdeal A) := by
+    rfl
+  have halg : (algebraMap A (ResidueRing A) : A →+* ResidueRing A) =
+      residueMap A := by
+    ext x
+    rfl
+  let _ : Field (ResidueRing A) :=
+    Ideal.Quotient.field (IsLocalRing.maximalIdeal A)
+  let Q : Ideal S := RingHom.ker φ.toRingHom
+  let _ : Q.IsPrime := RingHom.ker_isPrime φ.toRingHom
+  let _ : Algebra.FormallyEtale A (Localization.AtPrime Q) := inferInstance
+  obtain ⟨s, hsQ, hs⟩ :=
+    Algebra.IsEtaleAt.exists_isStandardEtale (R := A) Q
+  let T := Localization.Away s
+  let _ : Algebra.IsStandardEtale A T := hs
+  have hsφ : IsUnit (φ s) := by
+    apply (isUnit_iff_ne_zero).mpr
+    intro hsφ0
+    apply hsQ
+    change φ s = 0
+    exact hsφ0
+  let φT : T →ₐ[A] ResidueRing A :=
+    IsLocalization.Away.liftAlgHom s (f := φ) hsφ
+  let P : StandardEtalePresentation A T :=
+    Algebra.IsStandardEtale.nonempty_standardEtalePresentation.some
+  let x₀ : ResidueRing A := φT P.x
+  have hP : P.P.HasMap x₀ := by
+    simpa [x₀] using P.hasMap.map φT
+  obtain ⟨a₀, ha₀⟩ := Ideal.Quotient.mk_surjective x₀
+  have hroot : P.P.f.eval a₀ ∈ IsLocalRing.maximalIdeal A := by
+    rw [← Ideal.Quotient.eq_zero_iff_mem]
+    change (Ideal.Quotient.mk (IsLocalRing.maximalIdeal A)) (P.P.f.eval a₀) = 0
+    have hroot' := hP.1
+    rw [← ha₀] at hroot'
+    simpa [aeval_def, eval₂_eq_eval_map, Polynomial.eval_map_apply] using hroot'
+  have hunit : IsUnit (P.P.f.derivative.eval a₀) := by
+    apply (IsLocalRing.residue_ne_zero_iff_isUnit _).mp
+    change (Ideal.Quotient.mk (IsLocalRing.maximalIdeal A))
+        (P.P.f.derivative.eval a₀) ≠ 0
+    have hsimple' := hP.isUnit_derivative_f.ne_zero
+    rw [← ha₀] at hsimple'
+    simpa [aeval_def, eval₂_eq_eval_map, Polynomial.eval_map_apply] using hsimple'
+  obtain ⟨a, ha, hres⟩ :=
+    HenselianLocalRing.is_henselian P.P.f P.P.monic_f a₀ hroot hunit
+  have hares : residueMap A a = x₀ := by
+    calc
+      residueMap A a = residueMap A a₀ := by
+        have hz := Ideal.Quotient.eq_zero_iff_mem.mpr hres
+        exact sub_eq_zero.mp (by simpa [residueMap] using hz)
+      _ = x₀ := ha₀
+  have hga : IsUnit (P.P.g.eval a) := by
+    apply (IsLocalRing.residue_ne_zero_iff_isUnit _).mp
+    change (Ideal.Quotient.mk (IsLocalRing.maximalIdeal A)) (P.P.g.eval a) ≠ 0
+    rw [← Polynomial.eval_map_apply, ← hquot, hares]
+    have hg' := hP.2.ne_zero
+    rw [aeval_def, eval₂_eq_eval_map, halg] at hg'
+    exact hg'
+  let ℓ : P.P.Ring →ₐ[A] A := P.P.lift a ⟨by simpa using ha, by simpa using hga⟩
+  let ψT : T →ₐ[A] A := ℓ.comp P.equivRing.toAlgHom
+  have hψT : ρ.comp ψT = φT := by
+    apply P.hom_ext
+    calc
+      (ρ.comp ψT) P.x = ρ (ℓ (P.equivRing P.x)) := rfl
+      _ = ρ (ℓ P.X) := by rw [P.equivRing_x]
+      _ = ρ a := by
+        rw [show ℓ P.X = a by
+          change P.P.lift a _ P.P.X = a
+          exact P.P.lift_X a _]
+      _ = x₀ := hares
+      _ = φT P.x := rfl
+  let ι : S →ₐ[A] T := IsScalarTower.toAlgHom A S T
+  let ψ : S →ₐ[A] A := ψT.comp ι
+  have hψ : ρ.comp ψ = φ := by
+    ext x
+    change ρ (ψT (ι x)) = φ x
+    have h := congrArg (fun F : T →ₐ[A] ResidueRing A =>
+      F (algebraMap S T x)) hψT
+    calc
+      ρ (ψT (ι x)) = φT (algebraMap S T x) := by simpa [ρ, ι] using h
+      _ = φ x := by simp [φT]
+  refine ⟨ψ, by simpa [ρ] using hψ, ?_⟩
+  intro ψ' hψ'
+  have hsψ' : IsUnit (ψ' s) := by
+    apply (IsLocalRing.residue_ne_zero_iff_isUnit _).mp
+    change residueMap A (ψ' s) ≠ 0
+    intro hzero
+    have hφs0 : φ s = 0 := by
+      calc
+        φ s = (Ideal.Quotient.mk (IsLocalRing.maximalIdeal A)) (ψ' s) := by
+          have h := congrArg (fun F : S →ₐ[A] ResidueRing A => F s) hψ'
+          exact h.symm
+        _ = 0 := by simpa [residueMap] using hzero
+    exact hsφ.ne_zero hφs0
+  let ψ'T : T →ₐ[A] A := IsLocalization.Away.liftAlgHom s (f := ψ') hsψ'
+  have hψ'T : ρ.comp ψ'T = φT := by
+    apply IsLocalization.algHom_ext (.powers s)
+    ext x
+    have h := congrArg (fun F : S →ₐ[A] ResidueRing A => F x) hψ'
+    calc
+      ρ (ψ'T (algebraMap S T x)) =
+          (Ideal.Quotient.mk (IsLocalRing.maximalIdeal A)) (ψ' x) := by
+        simp [ψ'T, ρ]
+      _ = φ x := h
+      _ = φT (algebraMap S T x) := by simp [φT]
+  have hT : ψ'T = ψT := by
+    apply P.hom_ext
+    let a' : A := ψ'T P.x
+    have hP' : P.P.HasMap a' := by
+      have hP' := P.P.hasMap_X.map (ψ'T.comp P.equivRing.symm.toAlgHom)
+      simpa [a', P.equivRing_symm_X] using hP'
+    have hca' : CongruentModIdeal (IsLocalRing.maximalIdeal A) a' a₀ := by
+      unfold CongruentModIdeal
+      rw [← Ideal.Quotient.eq_zero_iff_mem]
+      change (Ideal.Quotient.mk (IsLocalRing.maximalIdeal A)) (a' - a₀) = 0
+      have hx := congrArg (fun F : T →ₐ[A] ResidueRing A => F P.x) hψ'T
+      have hres' : (Ideal.Quotient.mk (IsLocalRing.maximalIdeal A)) a' = x₀ := by
+        simpa [a', x₀, ρ] using hx
+      rw [map_sub, hres', ha₀]
+      simp
+    have hca : CongruentModIdeal (IsLocalRing.maximalIdeal A) a a₀ := hres
+    have hunit_a : IsUnit (P.P.f.derivative.eval a) :=
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.derivative_unit_on_residue_class
+        P.P.f hca hunit
+    have habmem : a - a' ∈ IsLocalRing.maximalIdeal A := by
+      unfold CongruentModIdeal at hca hca'
+      have h := (IsLocalRing.maximalIdeal A).sub_mem hca hca'
+      simpa [sub_eq_add_neg, add_assoc] using h
+    have habunit : ¬ IsUnit (a - a') := by
+      intro hab
+      exact (notMem_maximalIdeal.mpr hab) habmem
+    have haa' := IsLocalRing.eq_of_eval_eq_zero_of_not_isUnit_sub
+      (f := P.P.f) (a := a) (b := a') (by simpa using ha) (by simpa using hP'.1)
+      habunit hunit_a
+    calc
+      ψ'T P.x = a' := rfl
+      _ = a := haa'.symm
+      _ = ℓ P.X := by
+        change a = P.P.lift a _ P.P.X
+        exact (P.P.lift_X a _).symm
+      _ = ℓ (P.equivRing P.x) := by rw [P.equivRing_x]
+      _ = ψT P.x := rfl
+  have hS := congrArg (fun F : T →ₐ[A] A => F.comp ι) hT
+  have hrestrict : ψ'T.comp ι = ψ' := by
+    ext x
+    simp [ψ'T, ι]
+  calc
+    ψ' = ψ'T.comp ι := hrestrict.symm
+    _ = ψT.comp ι := hS
+    _ = ψ := rfl
 
 /-- Residue irreducibility forces irreducibility of a monic lift over an
 integrally closed fraction-ring model. -/
