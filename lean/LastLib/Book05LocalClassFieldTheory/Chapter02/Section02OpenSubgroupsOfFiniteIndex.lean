@@ -126,6 +126,7 @@ theorem proposition_2_1_open_finite_index_criterion
     (v : AddValuation K (WithTop ℤ))
     (hlocal : Chapter02LocalField v)
     [TopologicalSpace Kˣ]
+    [IsTopologicalGroup Kˣ]
     (hbasis : Chapter02FieldUnitFiltrationNeighborhoodBasis v)
     (π : Kˣ) (hπ : chapter02IsUniformizerUnit v π)
     (hvaluebasis : Chapter02ValueUnitNeighborhoodBasis v π)
