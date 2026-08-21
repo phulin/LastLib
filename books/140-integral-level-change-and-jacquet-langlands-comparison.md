@@ -78,9 +78,8 @@
     - [Prerequisites and normalization](#153-prerequisites-and-normalization)
     - [Exact scope](#154-exact-scope)
 16. [Conclusion](#16-conclusion)
-
-- [The established package](#161-the-established-package)
-- [The conceptual picture](#162-the-conceptual-picture)
+    - [The established package](#161-the-established-package)
+    - [The conceptual picture](#162-the-conceptual-picture)
 
 ## 1. The integral comparison problem
 
