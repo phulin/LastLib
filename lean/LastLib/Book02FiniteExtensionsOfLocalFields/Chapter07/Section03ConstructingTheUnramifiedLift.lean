@@ -412,6 +412,27 @@ structure Chapter07CanonicalUnramifiedClassification
         (Chapter07CanonicalUnramifiedGaloisGroup E ≃*
           Chapter07CanonicalResidueGaloisGroup (reduction E))
 
+/-- A carrier based at the fixed valuation has an actual finite separable
+residue shadow.  The realization retains the particular witness supplied by
+`hcarriers`, rather than making an unrelated global choice of presentation. -/
+theorem chapter07_based_unramified_residue_shadow
+    {K Ω k κ : Type*} [Field K] [Field Ω] [Field k] [Field κ]
+    [Algebra K Ω] [Algebra k κ]
+    (vK : Valuation K ℤᵐ⁰) (rho : Chapter10ResidueField vK ≃+* k)
+    (hcarriers : Chapter07CanonicalUnramifiedCarriersAreBasedAt
+      (Ω := Ω) (κ := κ) vK rho)
+    (E : Chapter07CanonicalFiniteUnramifiedIntermediate K Ω k κ) :
+    ∃ S : Chapter07CanonicalFiniteSeparableResidueIntermediate k κ,
+      chapter07CanonicalUnramifiedResidueRealization E S := by
+  obtain ⟨W, _hvaluation, _hresidue⟩ := hcarriers E
+  let _ : FiniteDimensional K E.1 := W.extension_finite
+  let _ : FiniteDimensional k W.residue := W.residue_finite
+  let S : Chapter07CanonicalFiniteSeparableResidueIntermediate k κ :=
+    ⟨W.residue, ⟨
+      { separable := W.actual.unramified.2 }
+    ⟩⟩
+  exact ⟨S, W, rfl⟩
+
 /-- The non-circular §7.3 classification package.  Its reduction equivalence
 and preservation clauses are explicit construction data.  This is important:
 the unrelated choices of an algebraic ambient field and a residue algebraic
