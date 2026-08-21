@@ -1130,10 +1130,324 @@ theorem chapter13_power_series_evaluation_surjective_iff
     (F : MvPowerSeries (Fin n) R →+* A)
     (hF : Chapter13PowerSeriesEvaluationData n σ x F) :
     Function.Surjective F ↔
-      Chapter13CoefficientPlusIdeal σ
+    Chapter13CoefficientPlusIdeal σ
         (Ideal.map σ (IsLocalRing.maximalIdeal R) ⊔
             Ideal.span (Set.range x)) := by
-  sorry
+  classical
+  let S := MvPowerSeries (Fin n) R
+  let K : Ideal S := Chapter13PowerSeriesMaximalIdeal R n
+  let I : Ideal A :=
+    Ideal.map σ (IsLocalRing.maximalIdeal R) ⊔
+      Ideal.span (Set.range x)
+  rcases hF with ⟨hcoeff, hX, hcont⟩
+  have hKmap : Ideal.map F K ≤ I := by
+    have hconst : Ideal.map F
+        (Ideal.map (MvPowerSeries.C : R →+* S)
+          (IsLocalRing.maximalIdeal R)) ≤ I := by
+      rw [Ideal.map_map, hcoeff]
+      exact le_sup_left
+    have hvars : Ideal.map F
+        (Ideal.span (Set.range (MvPowerSeries.X : Fin n → S))) ≤ I := by
+      rw [Ideal.map_span]
+      apply Ideal.span_le.2
+      rintro _ ⟨a, ⟨i, rfl⟩, rfl⟩
+      change F (MvPowerSeries.X i) ∈ I
+      rw [hX i]
+      exact Ideal.mem_sup_right (Ideal.subset_span (Set.mem_range_self i))
+    change Ideal.map F
+        (Ideal.map (MvPowerSeries.C : R →+* S)
+          (IsLocalRing.maximalIdeal R) ⊔
+          Ideal.span (Set.range (MvPowerSeries.X : Fin n → S))) ≤ I
+    rw [Ideal.map_sup]
+    exact sup_le hconst hvars
+  constructor
+  · intro hsurj a
+    obtain ⟨z, rfl⟩ := hsurj a
+    let c := MvPowerSeries.constantCoeff z
+    let t : S := z - MvPowerSeries.C c
+    have ht : t ∈ Ideal.span (Set.range (MvPowerSeries.X : Fin n → S)) := by
+      rw [← chapter13_power_series_constantCoeff_ker]
+      change MvPowerSeries.constantCoeff t = 0
+      simp [t, c, MvPowerSeries.constantCoeff_C]
+    have hFt : F t ∈ I := by
+      apply hKmap
+      exact Ideal.mem_map_of_mem F (Ideal.mem_sup_right ht)
+    refine ⟨c, F t, hFt, ?_⟩
+    have hCc : F (MvPowerSeries.C c) = σ c := by
+      simpa using DFunLike.congr_fun hcoeff c
+    calc
+      F z = F (MvPowerSeries.C c + t) := by simp [t]
+      _ = σ c + F t := by rw [map_add, hCc]
+  · intro hplus
+    have hplus' : ∀ a : A, ∃ r : R, ∃ j : A,
+        j ∈ I ∧ a = σ r + j := by
+      change ∀ a : A, ∃ r : R, ∃ j : A, j ∈ I ∧ a = σ r + j
+      exact hplus
+    intro a
+    have hKmax : K ≤ Ideal.comap F (IsLocalRing.maximalIdeal A) := by
+      intro k hk
+      obtain ⟨d, hd⟩ := hcont 1
+      change F k ∈ IsLocalRing.maximalIdeal A
+      rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
+      intro hu
+      have hpow : k ^ d ∈ K ^ d := Ideal.pow_mem_pow hk d
+      have hFpow := hd (k ^ d) hpow
+      have hnon : F k ^ d ∈ nonunits A := by
+        rw [← IsLocalRing.mem_maximalIdeal]
+        simpa [map_pow, pow_one] using hFpow
+      exact (mem_nonunits_iff.mp hnon) (hu.pow d)
+    have hImax : I ≤ IsLocalRing.maximalIdeal A := by
+      apply sup_le
+      · rw [Ideal.map_le_iff_le_comap]
+        intro r hr
+        change σ r ∈ IsLocalRing.maximalIdeal A
+        have hcr : MvPowerSeries.C r ∈ K := by
+          exact Ideal.mem_sup_left (Ideal.mem_map_of_mem
+            (MvPowerSeries.C : R →+* S) hr)
+        have := hKmax hcr
+        change F (MvPowerSeries.C r) ∈ IsLocalRing.maximalIdeal A at this
+        have hcr' : F (MvPowerSeries.C r) = σ r := by
+          simpa using DFunLike.congr_fun hcoeff r
+        simpa only [hcr'] using this
+      · apply Ideal.span_le.2
+        rintro _ ⟨i, rfl⟩
+        have hxi : MvPowerSeries.X i ∈ K :=
+          Ideal.mem_sup_right (Ideal.subset_span (Set.mem_range_self i))
+        have := hKmax hxi
+        simpa [hX i] using this
+    have hS : Chapter13CompleteNoetherianLocalRing S := by
+      let instNoetherian : IsNoetherianRing R := hR.1
+      simpa [S] using
+        (chapter13_power_series_complete_local R hR.2 n).1
+    have hmax : IsLocalRing.maximalIdeal S = K := by
+      let instNoetherian : IsNoetherianRing R := hR.1
+      simpa [S, K] using
+        (chapter13_power_series_complete_local R hR.2 n).2.1
+    let ι := (IsLocalRing.maximalIdeal R) ⊕ Fin n
+    let v : ι → A := Sum.elim (fun r => σ r.1) x
+    let w : ι → S :=
+      Sum.elim (fun r => MvPowerSeries.C r.1)
+        (MvPowerSeries.X : Fin n → S)
+    have hvw : ∀ i : ι, F (w i) = v i := by
+      intro i
+      cases i with
+      | inl r =>
+          simpa [w, v] using DFunLike.congr_fun hcoeff r.1
+      | inr i => simpa [w, v] using hX i
+    have hspanv : Ideal.span (Set.range v) = I := by
+      apply le_antisymm
+      · apply Ideal.span_le.2
+        rintro _ ⟨i, rfl⟩
+        cases i with
+        | inl r =>
+            exact Ideal.mem_sup_left (Ideal.mem_map_of_mem σ r.2)
+        | inr i =>
+            exact Ideal.mem_sup_right (Ideal.subset_span (Set.mem_range_self i))
+      · change I ≤ Ideal.span (Set.range v)
+        apply sup_le
+        · rw [Ideal.map_le_iff_le_comap]
+          intro r hr
+          change σ r ∈ Ideal.span (Set.range v)
+          exact Ideal.subset_span ⟨Sum.inl ⟨r, hr⟩, rfl⟩
+        · apply Ideal.span_le.2
+          rintro _ ⟨i, rfl⟩
+          exact Ideal.subset_span ⟨Sum.inr i, rfl⟩
+    have hspanw : Ideal.span (Set.range w) = K := by
+      apply le_antisymm
+      · apply Ideal.span_le.2
+        rintro _ ⟨i, rfl⟩
+        cases i with
+        | inl r =>
+            exact Ideal.mem_sup_left (Ideal.mem_map_of_mem
+              (MvPowerSeries.C : R →+* S) r.2)
+        | inr i =>
+            exact Ideal.mem_sup_right (Ideal.subset_span (Set.mem_range_self i))
+      · change K ≤ Ideal.span (Set.range w)
+        apply sup_le
+        · rw [Ideal.map_le_iff_le_comap]
+          intro r hr
+          change MvPowerSeries.C r ∈ Ideal.span (Set.range w)
+          exact Ideal.subset_span ⟨Sum.inl ⟨r, hr⟩, rfl⟩
+        · apply Ideal.span_le.2
+          rintro _ ⟨i, rfl⟩
+          exact Ideal.subset_span ⟨Sum.inr i, rfl⟩
+    have happrox : ∀ m : ℕ, ∀ y : A, y ∈ I ^ m →
+        ∃ z : S, z ∈ K ^ m ∧ y - F z ∈ I ^ (m + 1) := by
+      intro m
+      induction m with
+      | zero =>
+          intro y _
+          obtain ⟨r, j, hj, hy⟩ := hplus' y
+          refine ⟨MvPowerSeries.C r, by simp, ?_⟩
+          have hcr : F (MvPowerSeries.C r) = σ r := by
+            simpa using DFunLike.congr_fun hcoeff r
+          rw [hy, hcr]
+          simpa using hj
+      | succ m ih =>
+          intro y hy
+          have hy' : y ∈ I ^ m • Ideal.span (Set.range v) := by
+            simpa [hspanv, Ideal.smul_eq_mul, pow_succ] using hy
+          obtain ⟨a, ha, hsum⟩ :=
+            (Submodule.mem_ideal_smul_span_iff_exists_sum (I := I ^ m) v y).mp hy'
+          choose z hzK hzE using fun i => ih (a i) (ha i)
+          let zsum : S := a.support.sum (fun i => z i * w i)
+          have hzsum : zsum ∈ K ^ (m + 1) := by
+            apply Submodule.sum_mem
+            intro i hi
+            have hwi : w i ∈ K := by
+              rw [← hspanw]
+              exact Ideal.subset_span (Set.mem_range_self i)
+            rw [pow_succ]
+            exact Ideal.mul_mem_mul (hzK i) hwi
+          have hres : y - F zsum ∈ I ^ (m + 2) := by
+            have hterm : ∀ i ∈ a.support,
+                (a i - F (z i)) * v i ∈ I ^ (m + 2) := by
+              intro i hi
+              have hvi : v i ∈ I := by
+                rw [← hspanv]
+                exact Ideal.subset_span (Set.mem_range_self i)
+              rw [pow_succ]
+              exact Ideal.mul_mem_mul (hzE i) hvi
+            have hident : y - F zsum =
+                a.support.sum (fun i => (a i - F (z i)) * v i) := by
+              rw [← hsum]
+              simp [zsum, Finsupp.sum, smul_eq_mul, map_sum, map_mul,
+                hvw]
+              rw [← Finset.sum_sub_distrib]
+              apply Finset.sum_congr rfl
+              intro i hi
+              ring
+            rw [hident]
+            exact Submodule.sum_mem _ hterm
+          exact ⟨zsum, hzsum, hres⟩
+    obtain ⟨r₀, j₀, hj₀, ha₀⟩ := hplus' a
+    have hbase : a - F (MvPowerSeries.C r₀) ∈ I ^ 1 := by
+      have hcr : F (MvPowerSeries.C r₀) = σ r₀ := by
+        simpa using DFunLike.congr_fun hcoeff r₀
+      rw [ha₀, hcr]
+      simpa using hj₀
+    let State := fun m : ℕ =>
+      {p : S × S //
+        a - F p.1 ∈ I ^ (m + 1) ∧
+        p.2 ∈ K ^ (m + 1) ∧
+        a - F (p.1 + p.2) ∈ I ^ (m + 2)}
+    let state : ∀ m : ℕ, State m :=
+      Nat.rec (motive := fun m => State m)
+        (let hq := happrox 1 (a - F (MvPowerSeries.C r₀)) hbase
+         let q := Classical.choose hq
+         ⟨(MvPowerSeries.C r₀, q), hbase,
+           (Classical.choose_spec hq).1, by
+             have heq : a - F (MvPowerSeries.C r₀ + q) =
+                 a - F (MvPowerSeries.C r₀) - F q := by
+               rw [map_add]
+               ring
+             rw [heq]
+             simpa [q] using (Classical.choose_spec hq).2⟩)
+        (fun m ih =>
+          let hq := happrox (m + 2)
+            (a - F (ih.1.1 + ih.1.2)) ih.2.2.2
+          let q := Classical.choose hq
+          ⟨(ih.1.1 + ih.1.2, q), ih.2.2.2,
+            (Classical.choose_spec hq).1, by
+              have heq : a - F (ih.1.1 + ih.1.2 + q) =
+                  a - F (ih.1.1 + ih.1.2) - F q := by
+                rw [map_add]
+                ring
+              rw [heq]
+              simpa [q] using (Classical.choose_spec hq).2⟩)
+    let z : ℕ → S := fun m =>
+      match m with
+      | 0 => MvPowerSeries.C r₀
+      | m + 1 => (state m).1.2
+    have hz : Chapter13AdicTermsVanish
+        (IsLocalRing.maximalIdeal S) z := by
+      intro m
+      cases m with
+      | zero => simp [z]
+      | succ m =>
+          simpa [z, hmax] using (state m).2.2.1
+    obtain ⟨q, hqconv, _⟩ := chapter13_finite_module_adic_series hS z hz
+    have hstate : ∀ m : ℕ,
+        (state (Nat.succ m)).1.1 = (state m).1.1 + (state m).1.2 := by
+      intro m
+      rfl
+    have hpartial : ∀ m : ℕ,
+        (Finset.range (m + 1)).sum z = (state m).1.1 := by
+      intro m
+      induction m with
+      | zero => simp [z, state]
+      | succ m ih =>
+          calc
+            (Finset.range (m.succ + 1)).sum z =
+                (Finset.range (m + 1)).sum z + z (m + 1) := by
+              simpa [Nat.succ_eq_add_one] using
+                (Finset.sum_range_succ z (m + 1))
+            _ = (state m).1.1 + z (m + 1) := by rw [ih]
+            _ = (state m).1.1 + (state m).1.2 := by rfl
+            _ = (state (Nat.succ m)).1.1 := (hstate m).symm
+    have hpartial_next : ∀ m : ℕ,
+        (Finset.range (m + 2)).sum z =
+          (state m).1.1 + (state m).1.2 := by
+      intro m
+      calc
+        (Finset.range (m + 2)).sum z =
+            (Finset.range (m + 1)).sum z + z (m + 1) := by
+          simpa [show m + 2 = (m + 1) + 1 by omega] using
+            (Finset.sum_range_succ z (m + 1))
+        _ = (state m).1.1 + z (m + 1) := by rw [hpartial]
+        _ = (state m).1.1 + (state m).1.2 := by rfl
+    refine ⟨q, ?_⟩
+    let _ : IsHausdorff (IsLocalRing.maximalIdeal A) A :=
+      hA.2.toIsHausdorff
+    apply (IsHausdorff.eq_iff_smodEq
+      (I := IsLocalRing.maximalIdeal A)).2
+    intro q'
+    rw [SModEq.sub_mem]
+    obtain ⟨d, hd⟩ := hcont q'
+    obtain ⟨N, hN⟩ := (eventually_atTop.1 (hqconv d))
+    let k := max N (max d (q' + 2))
+    have hk := hN k (le_max_left _ _)
+    have hlarge : max d (q' + 2) ≤ k := le_max_right _ _
+    have hkpos : 2 ≤ k := by omega
+    let m := k - 2
+    have hmplus : m + 2 = k := Nat.sub_add_cancel hkpos
+    have hsumK :
+        (Finset.range k).sum z - q ∈
+          (IsLocalRing.maximalIdeal S) ^ d := by
+      simpa [smul_eq_mul, Ideal.mul_top] using hk
+    have hqK : q - (Finset.range k).sum z ∈ K ^ d := by
+      rw [← hmax]
+      simpa only [neg_sub] using
+        (Submodule.neg_mem _ hsumK)
+    have hcontq := hd _ hqK
+    have hres := (state m).2.2.2
+    have hres' : a - F ((Finset.range k).sum z) ∈ I ^ k := by
+      have hsum_eq : (Finset.range k).sum z =
+          (state m).1.1 + (state m).1.2 := by
+        calc
+          (Finset.range k).sum z =
+              (Finset.range (m + 2)).sum z := by rw [hmplus]
+          _ = (state m).1.1 + (state m).1.2 := hpartial_next m
+      rw [hsum_eq]
+      simpa [hmplus] using hres
+    have hresA : a - F ((Finset.range k).sum z) ∈
+        (IsLocalRing.maximalIdeal A) ^ k :=
+      (Ideal.pow_right_mono hImax k) hres'
+    have hqle : q' ≤ k := by omega
+    have hres'' : a - F ((Finset.range k).sum z) ∈
+        (IsLocalRing.maximalIdeal A) ^ q' :=
+      (Ideal.pow_le_pow_right hqle) hresA
+    have hdiff : F q - a ∈ (IsLocalRing.maximalIdeal A) ^ q' := by
+      have h₁ : F q - F ((Finset.range k).sum z) ∈
+          (IsLocalRing.maximalIdeal A) ^ q' := by
+        simpa [map_sub] using hcontq
+      have hresneg : F ((Finset.range k).sum z) - a ∈
+          (IsLocalRing.maximalIdeal A) ^ q' := by
+        simpa [sub_eq_add_neg, add_comm, add_left_comm, add_assoc] using
+          (Submodule.neg_mem _ hres'')
+      have hadd := (IsLocalRing.maximalIdeal A ^ q').add_mem h₁ hresneg
+      simpa [sub_eq_add_neg, add_assoc, add_comm, add_left_comm] using hadd
+    simpa [smul_eq_mul, Ideal.mul_top] using hdiff
 
 /-! ### Coefficient rings and characteristic cases -/
 
