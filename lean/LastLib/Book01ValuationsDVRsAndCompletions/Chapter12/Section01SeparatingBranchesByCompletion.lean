@@ -521,6 +521,41 @@ theorem completion_product_of_finite_precision_crt
       exact ⟨G z, hFG z⟩
   exact ⟨RingEquiv.ofBijective F hbij⟩
 
+/-- A ramified factorization of every uniformizer power gives the corresponding
+product decomposition after completing at the extended uniformizer ideal.  The
+factors are initially completed at `P i ^ e i`; positivity later identifies
+these with the usual `P i`-adic completions. -/
+theorem ramified_branch_completion_product
+    {A B : Type*} [CommRing A] [CommRing B] [Algebra A B]
+    {g : ℕ} (π : A) (P : Fin g → Ideal B) (e : Fin g → ℕ)
+    (hfactor : ∀ n : ℕ,
+      extendedPrincipalPowerIdeal A B π n = ⨅ i, P i ^ (n * e i))
+    (hpair : pairwiseCoprimeIdeals P) :
+    Nonempty
+      (AdicCompletion (extendedPrincipalPowerIdeal A B π 1) B ≃+*
+        (∀ i, AdicCompletion (P i ^ e i) B)) := by
+  let K : Ideal B := extendedPrincipalPowerIdeal A B π 1
+  let J : Fin g → Ideal B := fun i ↦ P i ^ e i
+  have hKpow (n : ℕ) : K ^ n = extendedPrincipalPowerIdeal A B π n := by
+    simp [K, extendedPrincipalPowerIdeal, Ideal.span_singleton_pow]
+  have hKJ (n : ℕ) : K ^ n = ⨅ i, (J i) ^ n := by
+    rw [hKpow, hfactor]
+    congr 1
+    funext i
+    simp only [J, ← pow_mul, Nat.mul_comm]
+  have hJpair : pairwiseCoprimeIdeals J := by
+    intro i j hij
+    exact (hpair hij).pow
+  let crt : Chapter12CompatibleCRTSystem K J := {
+    equiv := fun n ↦
+      (Ideal.quotientEquivAlgOfEq B (hKJ n)).toRingEquiv.trans
+        (Ideal.quotientInfRingEquivPiQuotient (fun i ↦ (J i) ^ n)
+          (fun i j hij ↦ (hJpair hij).pow))
+    compatible := by
+      intro n x
+      rfl }
+  simpa [K, J] using completion_product_of_finite_precision_crt K J crt
+
 end
 
 end LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
