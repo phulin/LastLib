@@ -494,12 +494,32 @@ Minor defects only: the operative derived-cohomology citation at line 132 names 
 
 The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
 
+### Book 049 — `049-crystalline-cohomology-of-curves-and-abelian-schemes.md`
+
+**Verdict: FAIL — the core finiteness/duality machinery rests on three inputs proved nowhere in Mathlib or Books ≤048 (general-dimension relative duality; pseudo-coherent⇒perfect; scheme-level deformation obstructions), plus one intra-book forward use. Otherwise unusually strong.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 1547 (EOF), in chronological/result order, during this audit.
+
+The book genuinely discharges Book 048's deferred finiteness (Theorems 5.1/10.1), constructs the crystalline–de Rham comparison (Chapters 3–4), builds Frobenius without a global lift and proves the isogeny theorem via finite-flat adjunction (Chapter 9), correctly defers Dieudonné content to Book 052, contains no forward references to Books 050+, matches its table of contents exactly, and keeps an accurate hypothesis ledger in §16.2. Verified Book 046 imports (degeneration, residue computation, exterior algebra) are present at their cited locations.
+
+Defects: (1) Theorem 7.2 (lines 591–616) invokes "relative Grothendieck duality" for smooth proper morphisms of arbitrary relative dimension — chronology has it only for curves (Book 009) and abelian degree one (Book 046); the next source is later Book 065. Consumers: Prop 7.4 ((7.9)), Prop 9.3, Theorem 9.2, Chapter 13 beyond degree one. See X065. (2) Line 394 concludes Theorem 5.1 via "pseudo-coherent of finite Tor amplitude is perfect" — neither pseudo-coherence nor Tor-amplitude API exists in Mathlib or Book 007a beyond definitions; everything downstream consumes it. (3) Lines 975–1016 assert the `H^2(A_0,T\otimes I)` square-zero lifting obstruction class for smooth schemes; earlier books handle only cases where `H^2=0` trivially; the primitivity argument is plausible but the obstruction formalism is unsourced. (4) Intra-book ordering: Theorem 9.2 operatively cites Chapter 10's Theorem 10.1 at line 840. Inherited consumers named: X009/X063 (lines 998, 1124), X063 char-2 alternation (line 1276), X008/X053 (lines 1031, 1234–1252, 1305), X004 (lines 502, 565, 671, 1362), X015/X016 via Book 17a (lines 1331, 1354).
+
+### Book 050 — `050-syntomic-cohomology-and-integral-period-maps.md`
+
+**Verdict: FAIL — one new operative gap: the syntomic-vs-fppf torsor comparison rests on an lci-via-cotangent-complex criterion present in neither Mathlib nor any book ≤049; otherwise exceptionally clean, with honest disclaimers, no forward references to Books 051+, and Fontaine–Laffaille content correctly deferred.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 2024 (EOF), in chronological/result order, during this audit.
+
+The declared ledger (Books 29/34/35/48/49) was verified: Kummer segments, Steinberg relation, Cartier duality pushouts, PD envelopes/crystals/Frobenius, Poincaré lemma, derived base change, curve Hodge sequence, trace/pairing compatibility, Jacobian comparison, and the abelian crystal/exterior-algebra package all exist at their cited locations in Books 048–050's predecessors. The hypothesis ledger §14.4 is accurate and the table of contents matches exactly.
+
+Defects: (1) Lines 124, 954, 970 claim `\mu_{p^n}`-torsors are syntomic covers via a cotangent-complex lci criterion of amplitude `[-1,0]`; Mathlib has no syntomic morphisms and only an elementary cotangent complex, and no book ≤049 develops the derived cotangent complex (Book 065 is later). Consumers: Theorem 7.1 and hence Chapters 7–13, Props 10.1/11.1/11.2, Theorems 11.3/12.1, and clauses of Theorem 15.1. See X066. (2) Minor: Lemma 4.4 (lines 620–654) asserts the regular-sequence claim on successive root algebras and compresses the weight-zero step (load-bearing for Theorem 4.5); the crystalline logarithm `\ell_n`'s tower-independence (lines 557–602) is argued in prose only (load-bearing for Lemma 4.3, §7.2, Prop 10.1). Inherited consumers named: X043 (line 1285), X020 (lines 1140, 1147, 1260), X008/X053/X037 (lines 1524–1613, 1542), X042 (Čech comparisons).
+
+The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
+
 ## Pending scope inventory
 
 The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
 
-- PENDING — Book 049, `049-crystalline-cohomology-of-curves-and-abelian-schemes.md`
-- PENDING — Book 050, `050-syntomic-cohomology-and-integral-period-maps.md`
 - PENDING — Book 051, `051-finite-flat-group-schemes-of-small-height.md`
 - PENDING — Book 052, `052-dieudonne-theory-and-raynaud-full-faithfulness.md`
 - PENDING — Book 053, `053-fontaine-laffaille-modules-and-torsion-representations.md`
@@ -1044,3 +1064,27 @@ The following manuscripts are in this review's assigned 001–064 scope and rema
 - X003: Book 047 §9.5 now handles the Tate–Sen/Hodge–Tate input as an explicitly labeled assumption with conditional propositions — the named consumer is honest; X003 itself remains open pending Book 024a.
 - X017/X018 gain consumer: Book 047 §8.2 (lines 908–918).
 - Book 048 verdict PASS; no new standing finding. Minor citation-hygiene items recorded in its entry (unnamed Book 007a/007b citations at lines 132, 1141, 1188; PD-envelope construction sketch at lines 597–605).
+
+### X065 — Book 049 uses general-dimension relative duality, a pseudo-coherent⇒perfect criterion, and scheme-level deformation obstructions
+
+- **Deficient source:** Book 049, Theorem 7.2 (lines 591–616, "relative Grothendieck duality" for arbitrary relative dimension); line 394 ("pseudo-coherent of finite Tor amplitude is perfect"); lines 975–1016 (the `H^2(A_0,T\otimes I)` square-zero lifting obstruction class for smooth schemes).
+- **Consumers:** Prop 7.4 ((7.9)), Prop 9.3, Theorem 9.2, Chapter 13 beyond degree one; Theorems 5.2/6.2/10.1/11.1 and Chapters 12–15 via the perfectness step; Theorems 11.1/12.1 via the obstruction formalism; downstream Books 053–055.
+- **Needed results:** relative duality for smooth proper morphisms of any dimension (next chronological source: later Book 065); a pseudo-coherence/Tor-amplitude perfectness criterion; the square-zero deformation-obstruction formalism for schemes.
+- **Why unavailable:** Books ≤048 have duality only for curves (Book 009) and abelian degree one (Book 046); Mathlib has neither pseudo-coherence nor Tor-amplitude API; earlier lifting arguments cover only `H^2=0` cases.
+- **Recommended chronological repair:** restrict duality uses to curves/abelian schemes (deriving abelian duality from Book 046 §12 + exterior algebra); produce bounded finite-free representatives directly from Book 015's proper finiteness instead of the pseudo-coherence step; construct the obstruction class by Čech gluing or state it as an explicit hypothesis. In-book ordering fix: prove Theorem 10.1 before Chapter 9.
+
+### X066 — Book 050's syntomic torsor comparison rests on an unavailable cotangent-complex lci criterion
+
+- **Deficient source:** Book 050, lines 124, 954, 970 (`\mu_{p^n}`-torsors are syntomic covers via cotangent complex of amplitude `[-1,0]`).
+- **Consumers:** Theorem 7.1 (lines 956–970) ⇒ Chapters 7–13, Props 10.1/11.1/11.2, Theorems 11.3/12.1, Theorem 15.1(2)(5)(7).
+- **Needed result:** either the derived cotangent complex with its lci criterion (later Book 065) or an elementary verification that `\mu_{p^n}` and `\mathbf Z/p^n` are finite locally free complete intersections whose torsors are finite locally free and fppf-locally trivial enough for the §1.2 covering family.
+- **Why unavailable:** Mathlib has no syntomic morphology and only an elementary cotangent complex; no book ≤049 develops the derived theory.
+- **Recommended chronological repair:** replace line 970's sentence by a self-contained hypersurface/lci lemma (`T^{p^n}=1`, monic equations), verify admissibility from the monic presentations, and restate line 124 accordingly; also expand Lemma 4.4's induction and display the `\ell_n` tower-refinement computation as a lemma.
+
+### Consumer updates to earlier findings (batch 049–050)
+
+- X009/X063 gain consumers: Book 049 lines 998, 1124 (via Book 046's flagged theorem); X063 char-2 alternation gains consumer Book 049 line 1276.
+- X008/X053 gain consumers: Book 049 lines 1031, 1234–1252, 1305; Book 050 lines 1524–1613, 1542.
+- X004 gains consumers: Book 049 lines 502, 565, 671, 1362.
+- X015/X016 gain consumer: Book 049 lines 1331, 1354 (via Book 17a).
+- X043 gains consumer: Book 050 line 1285; X020 gains consumers: Book 050 lines 1140, 1147, 1260; X042 gains consumers: Book 050 Čech comparisons (§5.1, §7.2, Prop 10.1).
