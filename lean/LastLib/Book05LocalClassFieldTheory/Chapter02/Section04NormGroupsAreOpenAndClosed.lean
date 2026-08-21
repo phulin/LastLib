@@ -22,8 +22,6 @@ theorem chapter02_norm_unit_image_compact_closed
     (vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ))
     (d : Chapter02NormUnitMapData K L vK vL)
-    (hvaluation_extension :
-      vK.IsEquiv (AddValuation.comap (algebraMap K L) vL))
     [TopologicalSpace (Chapter02UnitGroup vL)]
     [TopologicalSpace (Chapter02UnitGroup vK)]
     [T2Space (Chapter02UnitGroup vK)]
@@ -85,6 +83,7 @@ theorem chapter02_deep_norm_contraction_bound_exists
     (vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ)) (b : L)
     (F : K[X])
+    (htrace : Algebra.trace K L b = 1)
     (hF : ∀ t : K, F.eval t = chapter02NormOneAddFunction K L b t)
     (hlocalK : Chapter02LocalField vK)
     (hvaluation_extension :
@@ -117,6 +116,7 @@ theorem chapter02_norm_one_add_maps_deep_ball_onto
     (K : Type*) [Field K]
     (vK : AddValuation K (WithTop ℤ)) (F : K[X]) (c : ℕ)
     (hbound : Chapter02NormContractionCoefficientBound vK F c)
+    (hzero : F.eval 0 = 0)
     (hcomplete :
       IsAdicComplete
         (IsLocalRing.maximalIdeal (Chapter02ValuationRing vK))
@@ -130,6 +130,7 @@ theorem chapter02_complete_ball_fixed_point_of_norm_correction
     (K : Type*) [Field K]
     (vK : AddValuation K (WithTop ℤ)) (F : K[X]) (c : ℕ)
     (hbound : Chapter02NormContractionCoefficientBound vK F c)
+    (hzero : F.eval 0 = 0)
     (hcomplete :
       IsAdicComplete
         (IsLocalRing.maximalIdeal (Chapter02ValuationRing vK))
