@@ -402,7 +402,7 @@ $$
 
 If the two outer modules have finite length, then
 
-# $$\operatorname{length}\Phi_R-\operatorname{length}\Phi_T
+$$\operatorname{length}\Phi_R-\operatorname{length}\Phi_T=
 
 \operatorname{length}\frac{J}{J\cap I_R^2}.
 $$
@@ -1338,7 +1338,7 @@ $$
 
 Combining this with the assumed opposite estimate produces
 
-# $$\operatorname{length}\Psi_T\geq\operatorname{length}\Phi_R
+$$\operatorname{length}\Psi_T\geq\operatorname{length}\Phi_R=
 
 \operatorname{length}C_f+\operatorname{length}\Phi_T
 \geq

@@ -784,7 +784,7 @@ Uniqueness of $(a,b)$ is visible from two invariants. The determinant valuation 
 
 Put $T=A_1$. A direct row-reduction calculation gives the disjoint right-coset decomposition
 
-# $$K\begin{pmatrix}\pi&0\\0&1\end{pmatrix}K
+$$K\begin{pmatrix}\pi&0\\0&1\end{pmatrix}K=
 
 \coprod_{u\in\mathcal O/\pi\mathcal O}
 \begin{pmatrix}\pi&u\\0&1\end{pmatrix}K
@@ -1710,7 +1710,7 @@ $$
 
 one has
 
-# $$\boxed{\Delta^*\Delta
+$$\boxed{\Delta^*\Delta=
 
 \begin{pmatrix}
 q+1&T\\

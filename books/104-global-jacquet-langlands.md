@@ -307,7 +307,7 @@ $$
 
 The connected subgroup is $\overline G_\gamma(F)=G_\gamma(F)/Z(F)$. If $\operatorname{Trd}(\gamma)\ne0$, taking traces in $x^{-1}\gamma x=z\gamma$ forces $z=1$. If $\operatorname{Trd}(\gamma)=0$, determinants force $z=\pm1$, and Skolem--Noether supplies an element which realizes the nontrivial automorphism of $F[\gamma]$ and sends $\gamma$ to $-\gamma$. Therefore
 
-# $$\kappa(\gamma):=[C_\gamma(F):\overline G_\gamma(F)]^{-1}
+$$\kappa(\gamma):=[C_\gamma(F):\overline G_\gamma(F)]^{-1}=
 
 \begin{cases}
 \frac12,&\operatorname{Trd}(\gamma)=0,\\
@@ -842,7 +842,7 @@ $$
 
 Combining the compact trace formula, the cuspidal split trace formula, and Theorem 7.1 gives directly
 
-# $$\boxed{\sum_{\pi\ \mathrm{cuspidal}}m_{G^*}(\pi)\operatorname{tr}\pi(f)
+$$\boxed{\sum_{\pi\ \mathrm{cuspidal}}m_{G^*}(\pi)\operatorname{tr}\pi(f)=
 
 \sum_{\Pi\ \mathrm{noncharacter}}
 m_D(\Pi)\operatorname{tr}\Pi(f').}

@@ -1257,7 +1257,7 @@ Transfer in rank two is governed by one invariant polynomial and one one-dimensi
 
 The decisive identity is the weighted Euler calculation
 
-# $$O_\gamma\left(\mathbf1_K-\frac{q+1}{2}\mathbf1_I\right)
+$$O_\gamma\left(\mathbf1_K-\frac{q+1}{2}\mathbf1_I\right)=
 
 \begin{cases}
 0,&\gamma\text{ split regular},\\

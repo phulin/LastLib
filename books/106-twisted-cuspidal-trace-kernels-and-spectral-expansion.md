@@ -2032,7 +2032,7 @@ not follow from local orbital matching by itself.
 channel identity, the ordinary simple trace formula over $F$ and the twisted simple trace
 formula over $E$ have equal geometric sides. Hence their cuspidal spectral sides are equal:
 
-# $$\sum_{\pi\in\mathcal A_{\mathrm{cusp}}(F,\omega)}m(\pi)\operatorname{tr}\pi(\varphi)
+$$\sum_{\pi\in\mathcal A_{\mathrm{cusp}}(F,\omega)}m(\pi)\operatorname{tr}\pi(\varphi)=
 
 \sum_{\substack{\Pi\in\mathcal A_{\mathrm{cusp}}(E,\Omega)\\
 \Pi^\sigma\simeq\Pi}}

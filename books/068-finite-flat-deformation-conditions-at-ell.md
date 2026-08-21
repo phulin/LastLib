@@ -1775,7 +1775,7 @@ $$
 
 The exact sequence of §5.5 gives
 
-# $$\dim_k t_{\bar\rho}^{\square,\mathrm{fl}}
+$$\dim_k t_{\bar\rho}^{\square,\mathrm{fl}}=
 
 \dim_kH^1_{\mathrm{fl}}(K,\operatorname{ad}\bar\rho)
 +d^2-h^0. \tag{13.4}
@@ -1783,7 +1783,7 @@ $$
 
 For fixed determinant with $\ell\nmid d$, the same formula becomes
 
-# $$\dim_k t_{\bar\rho}^{\square,\mathrm{fl},\delta}
+$$\dim_k t_{\bar\rho}^{\square,\mathrm{fl},\delta}=
 
 \dim_kH^1_{\mathrm{fl}}(K,\operatorname{ad}^0\bar\rho)
 +d^2-h^0. \tag{13.5}
@@ -1856,7 +1856,7 @@ The number three is a framing count. It is not a contribution from $[K:\mathbf Q
 
 Local Euler characteristic and Tate duality give
 
-# $$h^1(K,\operatorname{ad}^0\bar\rho)
+$$h^1(K,\operatorname{ad}^0\bar\rho)=
 
 3[K:\mathbf Q_\ell]
 +h^0(K,\operatorname{ad}^0\bar\rho)
@@ -1865,7 +1865,7 @@ $$
 
 Under the scalar-centralizer and oddness hypotheses this becomes
 
-# $$h^1(K,\operatorname{ad}^0\bar\rho)
+$$h^1(K,\operatorname{ad}^0\bar\rho)=
 
 3[K:\mathbf Q_\ell]
 +h^0(K,\operatorname{ad}^0\bar\rho(1)). \tag{13.9}
@@ -2684,7 +2684,7 @@ are removed by the units $b_i$ in (15.7).
 The equation has surjective derivative at every residual point. If
 $\dot\Phi_i$ is a first-order variation, its logarithmic derivative is
 
-# $$\lambda((\dot\Phi_i)_i)
+$$\lambda((\dot\Phi_i)_i)=
 
 \sum_i\operatorname{tr}
 (\bar\Phi_i^{-1}\dot\Phi_i). \tag{15.12}
@@ -2977,7 +2977,7 @@ $$
 
 reduces to $1$. Replace one matrix, say the zeroth, by
 
-# $$\widetilde\Phi_0\operatorname{diag}(u,1)
+$$\widetilde\Phi_0\operatorname{diag}(u,1)=
 
 \widetilde\Phi_0
 \begin{pmatrix}u&0\\0&1\end{pmatrix}. \tag{16.3}
@@ -3234,7 +3234,7 @@ $k(1)$ and $k$. Their coefficient-linear models are unique, so they must be
 these scalar-extended standard models. The middle object would then be one
 of the scalar-extended standard extensions classified in Chapter 12. Hence
 
-# $$\boxed{H^1_{\mathrm{fl}}(K,k(1))
+$$\boxed{H^1_{\mathrm{fl}}(K,k(1))=
 
 \bigl(R^\times/(R^\times)^\ell\bigr)\otimes k,} \tag{16.17}
 $$

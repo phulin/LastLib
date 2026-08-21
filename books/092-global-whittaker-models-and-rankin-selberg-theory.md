@@ -73,7 +73,7 @@ That last phrase conceals three separate theorems. First, every nonzero cuspidal
 
 Rankin–Selberg theory then multiplies two such Fourier coordinates and integrates. A naive diagonal integral nearly works, but at an unramified place it gives
 
-# $$\sum_{m\geq0}h_m(\alpha_1,\alpha_2)h_m(\beta_1,\beta_2)X^m
+$$\sum_{m\geq0}h_m(\alpha_1,\alpha_2)h_m(\beta_1,\beta_2)X^m=
 
 \frac{1-\alpha_1\alpha_2\beta_1\beta_2X^2}
 {\prod_{i,j}(1-\alpha_i\beta_jX)}.

@@ -737,7 +737,7 @@ $$
 
 and
 
-# $$\operatorname{End}_A(L')
+$$\operatorname{End}_A(L')=
 
 \begin{pmatrix}
 A&\pi^{-n}A\\

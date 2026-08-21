@@ -1145,7 +1145,7 @@ $\omega$ be a unitary idele class character, and let $f$ be a finite sum of fact
 admissible cuspidal tests of inverse central character $\omega^{-1}$. Then
 $R_\omega(f)$ is trace class on $L^2_\omega$, is zero on the noncuspidal subspace, and
 
-# $$\boxed{\sum_{\pi\in\mathcal A_{\mathrm{cusp}}(G,\omega)}m(\pi)\operatorname{tr}\pi(f)
+$$\boxed{\sum_{\pi\in\mathcal A_{\mathrm{cusp}}(G,\omega)}m(\pi)\operatorname{tr}\pi(f)=
 
 \int_{[\overline G]}
 \sum_{\gamma\in Z(F)\backslash G(F)}
@@ -1174,7 +1174,7 @@ operator, truncated spectral distribution, or continuous-spectrum correction sur
 Since $0\leq\chi_T\leq1$, $\chi_T(x)\to1$, and $K_f(x,x)\in L^1$, dominated convergence
 gives
 
-# $$\lim_{T\to\infty}I_T(f)
+$$\lim_{T\to\infty}I_T(f)=
 
 \int_{[\overline G]}K_f(x,x)\,dx.
 \tag{9.4}

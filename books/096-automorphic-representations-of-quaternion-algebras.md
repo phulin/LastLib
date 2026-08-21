@@ -978,7 +978,7 @@ $$
 
 Write the resulting split function as $f^*=\sum_j\otimes_v f_{j,v}^*$. Then
 
-# $$\boxed{\sum_{\sigma\ \mathrm{cuspidal}}m_{\mathrm{GL}_2}(\sigma)\operatorname{tr}\sigma(f^*)
+$$\boxed{\sum_{\sigma\ \mathrm{cuspidal}}m_{\mathrm{GL}_2}(\sigma)\operatorname{tr}\sigma(f^*)=
 
 \sum_{\pi\ \mathrm{noncharacter}}
 m_D(\pi)\operatorname{tr}\pi(f).} \tag{7.9}

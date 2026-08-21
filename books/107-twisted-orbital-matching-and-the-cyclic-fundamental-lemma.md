@@ -1815,7 +1815,7 @@ central neighborhood, constant there with $F_{0,z}(z)=1$. Choose $F_{N,z}$ suppo
 small thickening of a compact-open piece of the regular nilpotent orbit, disjoint from the
 center, and normalize it by $\mu_{N,z}(F_{N,z})=1$. Then
 
-# $$\begin{pmatrix}F_{0,z}(z)&\mu_{N,z}(F_{0,z})\\F_{N,z}(z)&\mu_{N,z}(F_{N,z})\end{pmatrix}
+$$\begin{pmatrix}F_{0,z}(z)&\mu_{N,z}(F_{0,z})\\F_{N,z}(z)&\mu_{N,z}(F_{N,z})\end{pmatrix}=
 
 \begin{pmatrix}1&*\\0&1\end{pmatrix}.
 \tag{9.6}

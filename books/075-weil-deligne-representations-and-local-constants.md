@@ -1487,7 +1487,7 @@ $$
 
 Multiplicativity gives
 
-# $$\frac{\epsilon_K(s,\operatorname{Ind}U,\psi_K)}{\epsilon_K(s,\operatorname{Ind}1_L,\psi_K)^{\dim U}}
+$$\frac{\epsilon_K(s,\operatorname{Ind}U,\psi_K)}{\epsilon_K(s,\operatorname{Ind}1_L,\psi_K)^{\dim U}}=
 
 \frac{\epsilon_L(s,U,\psi_L)}
 {\epsilon_L(s,1_L,\psi_L)^{\dim U}},

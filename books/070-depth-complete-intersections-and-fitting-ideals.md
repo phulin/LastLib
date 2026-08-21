@@ -655,7 +655,7 @@ The right side is the least codimension, inside the support of $M$, at which $V(
 
 Third, if $M$ is Cohen--Macaulay, every localization $M_{\mathfrak p}$ is Cohen--Macaulay, so the inequality becomes an equality:
 
-# $$\operatorname{depth}_I(M)
+$$\operatorname{depth}_I(M)=
 
 \inf_{\substack{\mathfrak p\in\operatorname{Supp}M\\I\subseteq\mathfrak p}}
 \dim_{R_{\mathfrak p}}M_{\mathfrak p}.

@@ -703,7 +703,7 @@ $$
 
 Unramified twists preserve $c_D$, $\ell_D$, and $a_D$. Ramified twists need not satisfy a formula involving only $a_D(\pi)$ and $a(\chi)$. Leading characters on a congruence layer can cancel. For a one-dimensional representation the exact formula is
 
-# $$a_D((\mu\circ\operatorname{Nrd})\otimes\chi)
+$$a_D((\mu\circ\operatorname{Nrd})\otimes\chi)=
 
 \begin{cases}
 1,&a(\mu\chi)=0,\\

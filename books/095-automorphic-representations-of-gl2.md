@@ -1321,7 +1321,7 @@ Suppress $v$ and write $K=\mathrm{GL}_2(\mathcal O)$, $q=q_v$, and $\varpi=\varp
 $f^\circ$ be the spherical vector in $I(\chi_1,\chi_2)$ normalized by $f^\circ(1)=1$. The double
 coset has the disjoint right-coset decomposition
 
-# $$K\begin{pmatrix}\varpi&0\\0&1\end{pmatrix}K
+$$K\begin{pmatrix}\varpi&0\\0&1\end{pmatrix}K=
 
 \coprod_{u\in\mathcal O/\mathfrak p}
 \begin{pmatrix}\varpi&u\\0&1\end{pmatrix}K

@@ -1222,7 +1222,7 @@ and pullbacks compose in the evident direction.
 
 Adjointness requires the stabilizer weights, not merely counting each class once. Normalize the quotient-groupoid measure separately at each level so that the image of the relevant projective compact open has volume one. For forms with inverse central characters, the orbit--stabilizer formula then gives
 
-# $$\left\langle \operatorname{res}_{U}^{U'}f,h\right\rangle_{U'}
+$$\left\langle \operatorname{res}_{U}^{U'}f,h\right\rangle_{U'}=
 
 \left\langle f,\operatorname{Tr}_{U'}^Uh\right\rangle_U.
 $$
@@ -1358,7 +1358,7 @@ $$
 
 Indeed,
 
-# $$\beta_{\mathfrak q}^{-1}\begin{pmatrix}a&b\\c&d\end{pmatrix}\beta_{\mathfrak q}
+$$\beta_{\mathfrak q}^{-1}\begin{pmatrix}a&b\\c&d\end{pmatrix}\beta_{\mathfrak q}=
 
 \begin{pmatrix}
 a&\varpi_{\mathfrak q}b\\
