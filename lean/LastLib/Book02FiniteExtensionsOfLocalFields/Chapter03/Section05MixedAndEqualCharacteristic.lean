@@ -210,7 +210,7 @@ private theorem chapter03_additive_value_group_eq_top
 private theorem chapter03_additive_value_one_is_uniformizer
     {K : Type*} [Field K]
     (v : AddValuation K (WithTop ℤ)) (π : K)
-    (hπ0 : π ≠ 0) (hπ : v π = 1)
+    (_hπ0 : π ≠ 0) (hπ : v π = 1)
     (hdiscrete :
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation v)
     [Valuation.IsRankOneDiscrete v.toValuation] :
@@ -755,17 +755,16 @@ theorem chapter03_purely_inseparable_extension_is_not_separable
     ¬ Algebra.IsSeparable K L ∧ ¬ IsGalois K L := by
   constructor
   · intro hseparable
-    letI : Algebra.IsSeparable K L := hseparable
     have hbij : Function.Bijective (algebraMap K L) :=
-      IsPurelyInseparable.bijective_algebraMap_of_isSeparable K L
+      @IsPurelyInseparable.bijective_algebraMap_of_isSeparable K L
+        _ _ _ _ _ _ _ hseparable
     apply hdegree
     exact Algebra.finrank_eq_one_iff_bijective_algebraMap.mpr hbij
   · intro hgalois
-    letI : IsGalois K L := hgalois
-    have hseparable : Algebra.IsSeparable K L := inferInstance
-    letI : Algebra.IsSeparable K L := hseparable
+    have hseparable : Algebra.IsSeparable K L := (isGalois_iff.mp hgalois).1
     have hbij : Function.Bijective (algebraMap K L) :=
-      IsPurelyInseparable.bijective_algebraMap_of_isSeparable K L
+      @IsPurelyInseparable.bijective_algebraMap_of_isSeparable K L
+        _ _ _ _ _ _ _ hseparable
     apply hdegree
     exact Algebra.finrank_eq_one_iff_bijective_algebraMap.mpr hbij
 
