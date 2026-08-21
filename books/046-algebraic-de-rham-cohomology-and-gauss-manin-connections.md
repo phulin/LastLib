@@ -16,6 +16,7 @@
    - [Definitions and affine computation](#32-definitions-and-affine-computation)
    - [The two hypercohomology spectral sequences](#33-the-two-hypercohomology-spectral-sequences)
    - [Products and graded commutativity](#34-products-and-graded-commutativity)
+   - [The two-factor Kunneth formula](#35-the-two-factor-kunneth-formula)
 4. [First computations and characteristic boundaries](#4-first-computations-and-characteristic-boundaries)
    - [Affine space and the algebraic Poincare lemma](#41-affine-space-and-the-algebraic-poincare-lemma)
    - [The punctured line](#42-the-punctured-line)
@@ -453,6 +454,299 @@ Every page of (3.4) therefore has a compatible product, and each differential is
 This compatibility will prove that polarization pairings are horizontal and that the cohomology
 of an abelian scheme is an exterior algebra.
 
+### 3.5 The two-factor Kunneth formula
+
+External products reduce the study of sheaves on a product to two factors. If $\mathcal F$ and
+$\mathcal G$ are sheaves on $k$-schemes $X$ and $Y$, their external product is
+
+$$
+\mathcal F\boxtimes\mathcal G
+=\mathrm{pr}_1^*\mathcal F\otimes_{\mathcal O}\mathrm{pr}_2^*\mathcal G
+$$
+
+on $X\times_kY$. When $X$ and $Y$ are proper, each cohomology group of the box product should be
+assembled from those of the factors; making this precise is the Kunneth problem. The Kunneth
+theorem available so far in this series is the étale one of Book 23, which does not apply here:
+coherent cohomology lives on the Zariski site, and its Künneth formula must be built from the
+Čech models of Book 7b. This section proves exactly the statements consumed by Chapter 11: an
+absolute form over a field and a relative form with locally free direct images.
+
+The engine is a remark of homological algebra. Over a field, every complex splits into its
+cohomology groups.
+
+**Lemma 3.1 (splitting over a field).** Let $k$ be a field and let $C^\bullet$ be a complex of
+$k$-vector spaces which vanishes in sufficiently negative and positive degrees. Then there is a
+quasi-isomorphism, non-canonical,
+
+$$
+C^\bullet\;\simeq\;\bigoplus_i H^i(C)[-i],
+$$
+
+**Proof.** For each $i$ let $Z^i=\ker d^i$ and $B^i=\operatorname{im}d^{i-1}$, so $B^i\subseteq
+Z^i$. Because every subspace of a vector space admits a complement, choose $H'^i\subseteq Z^i$
+with $Z^i=B^i\oplus H'^i$, so $H'^i\simeq H^i(C)$; and choose $E^{i+1}\subseteq C^i$ mapping
+isomorphically under $d^i$ onto $B^{i+1}$, possible because $d^i$ induces an isomorphism
+$C^i/Z^i\xrightarrow{\sim}B^{i+1}$ and we lift a basis. Then $C^i=B^i\oplus H'^i\oplus E^{i+1}$
+and $d^i$ kills $B^i\oplus H'^i$ and maps $E^{i+1}$ isomorphically onto $B^{i+1}$. Define
+$\pi:C\to\bigoplus_iH^i(C)[-i]$ by projecting each $C^i=B^i\oplus H'^i\oplus E^{i+1}$ onto the
+summand $H'^i$ and identifying it with $H^i(C)$. The target has zero differential, and $\pi$
+commutes with differentials: for $v=b+h+c$, the differential $dv=d(c)$ lies in $B^{i+1}$, which
+the projection to $H'^{i+1}$ kills, so $\pi(dv)=0=d\pi(v)$. The kernel of $\pi$ in degree $i$ is
+$B^i\oplus E^{i+1}$, and the differential identifies these kernels isomorphically with one
+another from degree to degree, so the kernel complex is exact. A degree-wise surjective morphism
+of bounded complexes whose kernel is exact is a quasi-isomorphism: this follows by induction on
+the width of the bounding interval from the long exact cohomology sequence of its short exact
+sequence with the kernel. Hence $\pi$ is a quasi-isomorphism between bounded complexes. $\square$
+
+**Lemma 3.2 (tensor product of split complexes).** Let $k$ be a field and let
+$C^\bullet,D^\bullet$ be complexes of $k$-vector spaces, each zero outside finitely many degrees.
+Equip the tensor-product double complex $D^{p,q}=C^p\otimes_kD^q$ with the commuting raw
+differentials and its total differential as in Book 7a, Section 7.1. Then
+
+$$
+H^n\bigl(\operatorname{Tot}(C\otimes_kD)\bigr)
+\simeq\bigoplus_{p+q=n}H^p(C)\otimes_kH^q(D).
+$$
+
+**Proof.** By Lemma 3.1 choose quasi-isomorphisms $u:C\to\bigoplus_iH^i(C)[-i]$ and
+$v:D\to\bigoplus_jH^j(D)[-j]$; their tensor product is a morphism of double complexes and hence,
+after totalization, a map of complexes. Since every term of a double complex built from vector
+spaces is flat in the strongest possible sense — all exact sequences of $k$-vector spaces split —
+totalizing a quasi-isomorphic pair of double complexes yields a quasi-isomorphism on total
+complexes; explicitly, the cone of such a morphism is totalized from an exact double complex, and
+an exact first-quadrant double complex has exact totalization because its column filtration
+furnishes a convergent spectral sequence whose abutment is zero. It therefore suffices to compute
+with the split complexes, where the differential is zero: there
+
+$$
+\operatorname{Tot}^n=\bigoplus_{p+q=n}H^p(C)\otimes_kH^q(D),
+$$
+
+with zero total differential, so the cohomology in degree $n$ is that direct sum itself.
+$\square$
+
+**Theorem 3.3 (two-factor Kunneth over a field).** Let $k$ be a field, let $X$ and $Y$ be
+quasi-compact separated $k$-schemes, and let $\mathcal F$ and $\mathcal G$ be quasi-coherent
+$\mathcal O_X$- and $\mathcal O_Y$-modules. Then for every $n$ there is a natural isomorphism
+
+$$
+H^n\bigl(X\times_kY,\,\mathcal F\boxtimes\mathcal G\bigr)
+\simeq\bigoplus_{i+j=n}
+H^i(X,\mathcal F)\otimes_kH^j(Y,\mathcal G). \tag{3.9}
+$$
+
+It is functorial in $\mathcal F$ and in $\mathcal G$, compatible with pullback along
+morphisms $X'\to X$, $Y'\to Y$ over $k$, and associative under triple products.
+
+**Proof.** Quasi-compactness gives finite affine open covers
+$\mathfrak U=(U_i)_{i\in I}$ of $X$ and $\mathfrak V=(V_j)_{j\in J}$; separatedness makes every
+finite intersection $U_I=\bigcap_{i\in I}U_i$ and $V_J=\bigcap_{j\in J}V_j$ affine. The family
+$\mathfrak W=(U_i\times_kV_j)$ is a finite affine open cover of $X\times_kY$: each member is
+affine because it is the spectrum of $\Gamma(U_i,\mathcal O)\otimes_k\Gamma(V_j,\mathcal O)$,
+and its finite intersections are the schemes $(U_I\times_kV_J)$, again spectra of tensor
+products. All three covers satisfy the hypotheses of the finite affine Cech model of Book 7b,
+Theorem 4.2.
+
+Write $A_{ij}=\Gamma(U_i\times V_j,\mathcal O)=\Gamma(U_i,\mathcal O)\otimes_k\Gamma(V_j,
+\mathcal O)$. The sheaf $\mathcal F\boxtimes\mathcal G$ restricted to $U_i\times V_j$ is
+quasi-coherent, associated to the module $\Gamma(U_i,\mathcal F)\otimes_k\Gamma(V_j,\mathcal G)$:
+this is the affine dictionary of Book 7b, Chapter 2, applied twice, since pullback of a
+quasi-coherent module to an affine open corresponds to tensoring its module over the coordinate
+ring, and tensor products of modules correspond to tensor products of sheaves (Book 7b,
+Theorem 2.7). Consequently sections over any intersection are given by
+
+$$
+\Gamma\bigl(U_I\times_kV_J,\mathcal F\boxtimes\mathcal G\bigr)
+=\Gamma(U_I,\mathcal F)\otimes_k\Gamma(V_J,\mathcal G), \tag{3.10}
+$$
+
+because restriction of a quasi-coherent sheaf to an affine open localizes the module, and
+localization commutes with tensor products over $k$.
+
+Now form the double complex $D^{p,q}$ whose $(I,J)$-component, for $|I|=p+1$ and $|J|=q+1$, is
+$\Gamma(U_I,\mathcal F)\otimes_k\Gamma(V_J,\mathcal G)$, with the horizontal differential
+induced from the alternating Cech differential of $\mathfrak U$ on the first factor tensored by
+the identity on the second, and the vertical differential defined symmetrically. The two raw
+differentials commute because they act on different tensor factors. The identification (3.10)
+exhibits $D^{p,q}$ as the degree-$(p,q)$ part of the alternating Cech complex
+$\check C^\bullet(\mathfrak W,\mathcal F\boxtimes\mathcal G)$, and the alternating differential
+of the product cover acts on the component indexed by
+$(I,J)\subseteq(I',J')$ as the signed restriction; grouping those indices by which factor grows
+shows that this signed restriction is exactly the total differential of $D$ under the convention
+of Book 7a, Section 7.1, the sign being the Koszul sign attached to the horizontal degree. Thus
+
+$$
+\operatorname{Tot}(D)\;=\;\operatorname{Tot}\bigl(
+\check C^\bullet(\mathfrak U,\mathcal F)\otimes_k\check C^\bullet(\mathfrak V,\mathcal G)\bigr),
+$$
+
+as complexes computing $R\Gamma(X\times_kY,\mathcal F\boxtimes\mathcal G)$. Both factors are
+bounded complexes of vector spaces, so Lemma 3.2 computes their total cohomology as the graded
+tensor product of the Cech cohomologies, and the Cech model of Book 7b, Theorem 4.2 identifies
+those with the sheaf cohomologies of the two factors and of the product. Assembling the three
+identifications gives (3.9).
+
+Functoriality holds because every step — restriction of covers, the dictionary (3.10), and the
+splitting maps of Lemma 3.1 after a choice made compatibly — is functorial in $\mathcal F$ and
+$\mathcal G$; compatibility with pullback follows by applying the theorem over $X'$ and $Y'$ and
+comparing the two Cech models through the refinement induced by the chosen covers and their
+pullbacks. Associativity is proved by running the same argument over a triple product cover, or
+by iterating (3.9) twice. $\square$
+
+**Remark.** Over a general base ring the splitting lemma fails, and Tor terms can appear; the
+correct general statement involves derived tensor products, which are not needed in this book.
+What Chapter 11 needs is the relative form below, where local freeness on one side replaces the
+field hypothesis.
+
+The relative statement concerns a family $f:X\to S$ with a second family $g:Y\to S$, and
+describes the direct images of the box product along $f\times g$ as sheaves on $S$. The proof
+runs over an affine open of $S$ and therefore works with complexes of modules over a ring, for
+which we need two substitutes for the splitting lemma. The first says that a complex whose
+cohomology consists of projective modules receives a quasi-isomorphism from the direct sum of its
+shifted cohomology groups; only this direction of formality is available, and only it is used.
+
+**Lemma 3.4 (one-sided formality).** Let $R$ be a ring and let $C^\bullet$ be a bounded complex
+of $R$-modules all of whose cohomology modules $H^i(C)$ are projective. Put
+$P^\bullet=\bigoplus_iH^i(C)[-i]$, the direct sum of the cohomology modules placed in their own
+degrees, with zero differential. Then there is a morphism of complexes $u:P\to C$ inducing the
+identity on every cohomology module; in particular $u$ is a quasi-isomorphism.
+
+**Proof.** Since $H^i(C)$ is projective, the surjection $Z^i=\ker d^i\twoheadrightarrow H^i(C)$
+splits: choose an $R$-linear section $\sigma_i:H^i(C)\to Z^i$. Define $u^i:P^i=H^i(C)\to C^i$
+to be $\sigma_i$. Because $\sigma_i$ lands in cycles and $d_P=0$, both composites around each
+square vanish, so $u$ commutes with differentials. On cohomology, $u$ sends the class of $x$ to
+the class of $\sigma_i(x)$, which is $x$ by construction. A morphism of bounded complexes that is
+an isomorphism on every cohomology group is a quasi-isomorphism. $\square$
+
+The second substitute controls tensor products. Over a field, exactness of tensoring made the
+passage from a complex to its split model harmless; over a ring it is exactly here that flatness
+is needed.
+
+**Lemma 3.5 (tensoring with bounded flat complexes preserves quasi-isomorphisms).** Let $R$ be a
+ring, let $Q^\bullet$ be a complex of flat $R$-modules supported in degrees in an interval
+$[a,b]$, and let $\alpha:E^\bullet\to E'^\bullet$ be a quasi-isomorphism of complexes of
+$R$-modules. Then
+
+$$
+\operatorname{Tot}(Q\otimes_R E)\longrightarrow
+\operatorname{Tot}(Q\otimes_R E')
+$$
+
+is a quasi-isomorphism.
+
+**Proof.** The proof has two steps. The first is the exactness claim used twice afterward:
+
+_Claim._ If $W^\bullet$ is an exact complex of $R$-modules, then $\operatorname{Tot}(Q\otimes_RW)$
+is exact.
+
+_Proof of the claim._ Induct on the length $b-a$ of the supporting interval of $Q$. If $Q$
+consists of a single flat module $M$ in one degree, then $\operatorname{Tot}(Q\otimes W)$ is
+$M\otimes_RW$ up to shift; tensoring each term of the exact complex $W$ with the flat module $M$
+preserves exactness term by term, so the total complex has zero cohomology. For the induction
+step let $Q'$ be the stupid truncation that discards the top degree $b$, and apply the
+functor $-\otimes_RW^q$ to the split-exact sequences of graded modules
+$0\to Q'\to Q\to Q^b[-b]\to0$: since $Q^b$ is flat, the sequences remain exact in every
+bidegree, and they commute with the differentials, so the total complexes form a short exact
+sequence. Its long exact cohomology sequence exhibits the middle cohomology as sandwiched between
+those of $\operatorname{Tot}(Q'\otimes W)$ and $\operatorname{Tot}(Q^b[-b]\otimes W)$, both
+exact by induction, so the middle is exact. This proves the claim.
+
+_Second step._ Now let $\alpha:E\to E'$ be an arbitrary quasi-isomorphism. Factor it through the
+mapping cylinder: put $\operatorname{Cyl}^q=E'^{q}\oplus E^{q+1}\oplus E^{q}$ with differential
+$d(e',e^{+},e)=\bigl(d_{E'}e'+\alpha e^{+},\,-de^{+},\,de\bigr)$, which squares to zero because
+$d_{E'}\alpha=\alpha d$. The inclusion $i:E\to\operatorname{Cyl}$,
+$e\mapsto(\alpha e,0,e)$, is a degreewise split injection and a quasi-isomorphism; the projection
+$p:\operatorname{Cyl}\to E'$, $(e',e^{+},e)\mapsto e'$, is a degreewise split surjection with
+$\alpha=p\circ i$; and the kernel of $p$ is the cone of $\mathrm{id}_E$, hence exact, so $p$ is a
+quasi-isomorphism. Both factor maps are therefore quasi-isomorphisms whose defining short exact
+sequences are split degree-wise, so tensoring those sequences with $Q$ preserves their exactness,
+and the resulting short exact sequences of total complexes have flanking terms
+$\operatorname{Tot}(Q\otimes\ker)$ or $\operatorname{Tot}(Q\otimes\operatorname{coker})$ which
+are exact by the Claim, the kernels and cokernels being the exact cones of identity morphisms.
+The long exact cohomology sequence then shows that both $i$ and $p$ remain quasi-isomorphisms
+after tensoring with $Q$, and hence so does their composition
+
+$$
+\operatorname{Tot}(Q\otimes_R E)\xrightarrow{\ \mathrm{id}_Q\otimes i\ }
+\operatorname{Tot}(Q\otimes_R\operatorname{Cyl})
+\xrightarrow{\ \mathrm{id}_Q\otimes p\ }
+\operatorname{Tot}(Q\otimes_RE').
+$$
+
+This proves the lemma. $\square$
+
+The same argument, with the two factors interchanged throughout, shows that
+$\operatorname{Tot}(E\otimes_RQ)\to\operatorname{Tot}(E'\otimes_RQ)$ is a quasi-isomorphism under
+identical hypotheses on $Q$: the claim and the mapping-cylinder factorization are symmetric once
+one filters by the supporting degrees of $Q$ instead of those of the cones involved.
+
+**Theorem 3.6 (relative two-factor Kunneth).** Let $S$ be a locally noetherian scheme and let
+$f:X\to S$ and $g:Y\to S$ be proper morphisms with $X$ and $Y$ covered by finitely many affine
+opens. Let $\mathcal F$ be coherent on $X$ and $\mathcal G$ coherent on $Y$, and suppose that
+every direct image sheaf $R^if_*\mathcal F$, $i\ge0$, is finite locally free on $S$. Then for
+every $n$ there is a natural isomorphism of quasi-coherent sheaves on $S$,
+
+$$
+R^n(f\times g)_*\bigl(\mathcal F\boxtimes\mathcal G\bigr)
+\simeq\bigoplus_{i+j=n}
+R^if_*\mathcal F\otimes_{\mathcal O_S}R^jg_*\mathcal G, \tag{3.11}
+$$
+
+functorial in $\mathcal F$ and compatible with restriction to open subsets of $S$.
+
+**Proof.** Isomorphisms of quasi-coherent sheaves are detected on affine opens, and all objects
+in sight restrict well, so we may assume $S=\operatorname{Spec}R$ affine. Then $X$ and $Y$ are
+quasi-compact separated schemes, and we choose finite affine covers $\mathfrak U$ and
+$\mathfrak V$ as in the proof of Theorem 3.3, writing $C=\check C^\bullet(\mathfrak U,\mathcal F)$
+and $D=\check C^\bullet(\mathfrak V,\mathcal G)$, both bounded complexes of $R$-modules. The
+argument of Theorem 3.3 goes through verbatim over $R$: the product cover of $X\times_SY$ by the
+spectra of the rings $\Gamma(U_i,\mathcal O)\otimes_R\Gamma(V_j,\mathcal O)$ is a finite affine
+cover, sections over its intersections are given by the affine dictionary as
+$\Gamma(U_I,\mathcal F)\otimes_R\Gamma(V_J,\mathcal G)$, and the alternating Cech complex of the
+box product for that cover is the totalization of $C\otimes_RD$. By Book 7b, Theorem 4.2 and
+Corollary 4.9,
+
+$$
+H^i(C)=H^i(X,\mathcal F)=\Gamma(S,R^if_*\mathcal F)=:M_i ,
+$$
+
+where the edge isomorphism of Corollary 4.9 applies because $S$ is affine and the sheaves
+$R^if_*\mathcal F$ are quasi-coherent by Book 7b, Theorem 4.7. Each $M_i$ is a finite projective
+$R$-module: a finite locally free sheaf on an affine scheme has module of global sections a
+direct summand of a free module, by the standard partition-of-unity argument applied to a finite
+cover trivializing the sheaf. In particular the $M_i$ are flat.
+
+Let $P=\bigoplus_iM_i[-i]$. Lemma 3.4 supplies a quasi-isomorphism $u:P\to C$, and Lemma 3.5,
+applied with the bounded complex $Q=P$ of flat modules inserted in the first tensor factor —
+using the symmetric form recorded after that lemma — upgrades $u$ to a quasi-isomorphism
+
+$$
+\operatorname{Tot}(P\otimes_RD)\;\simeq\;\operatorname{Tot}(C\otimes_RD)
+= R\Gamma\bigl(X\times_SY,\mathcal F\boxtimes\mathcal G\bigr),
+$$
+
+the equality holding in cohomology through the Cech model. Now $P\otimes_RD$ is the direct sum
+over $i$ of the complexes $M_i\otimes_RD[-i]$; since $M_i$ is flat, the cohomology of
+$M_i\otimes_RD$ in degree $j$ is $M_i\otimes_RH^j(D)$, and cohomology commutes with direct sums
+of complexes. Hence
+
+$$
+H^n\bigl(\operatorname{Tot}(P\otimes_RD)\bigr)
+=\bigoplus_{i+j=n}M_i\otimes_RH^j(D).
+$$
+
+Finally $H^j(D)=H^j(Y,\mathcal G)=\Gamma(S,R^jg_*\mathcal G)$, again by Corollary 4.9, and on
+the affine scheme $S$ the module of sections of a tensor product of quasi-coherent sheaves is
+the tensor product of their modules of sections. Assembling these identifications yields (3.11)
+at the level of global sections over every affine open of $S$, and hence as sheaves. Functoriality
+and compatibility with further restriction follow because each step was natural in $\mathcal F$.
+$\square$
+
+For Chapter 11 the theorem is applied with $S$ arbitrary, $X=Y=A$, and
+$\mathcal F=\bigwedge^{a'}\omega_A$, $\mathcal G=\bigwedge^{a''}\omega_A$ pulled back under the
+two projections, the local freeness hypothesis being supplied by the exterior algebra theorem
+(11.2) together with local freeness of $\omega_A$ and of $R^1p_*\mathcal O_A$.
+
 ## 4. First computations and characteristic boundaries
 
 Examples reveal both the strength and the limitations of algebraic differentiation. Affine space
@@ -540,16 +834,112 @@ H^q(\mathbf P^n_k,\Omega^p)=0\quad(p\ne q),
 \qquad H^p(\mathbf P^n_k,\Omega^p)\simeq k. \tag{4.6}
 $$
 
-For completeness, one proves (4.6) from the Euler sequence
+We prove both the Euler sequence and (4.6) from the twisting-sheaf machinery of Book 7b,
+Chapter 6, which computes $H^q(\mathbf P^n_A,\mathcal O(m))$ for every ring $A$, every twist
+$m$, and every degree $q$. Write $\mathbf P^n=\mathbf P^n_k$ with standard charts
+$U_i=D_+(x_i)$ and coordinates $t_j=x_j/x_i$ on $U_i$, $j\ne i$, and set $t_i=1$.
+
+**Lemma 4.9 (Euler sequence).** On $\mathbf P^n_k$, $n\ge1$, there is an exact sequence of
+locally free sheaves
 
 $$
-0\to\Omega^1_{\mathbf P^n/k}
-\to\mathcal O(-1)^{\oplus(n+1)}
-\to\mathcal O\to0
+0\longrightarrow\Omega^1_{\mathbf P^n/k}
+\longrightarrow\mathcal O(-1)^{\oplus(n+1)}
+\xrightarrow{\ \varphi\ }\mathcal O\longrightarrow0.
 $$
 
-and its exterior powers. The standard cohomology of $\mathcal O(r)$, followed by induction on $p$,
-leaves precisely the diagonal class. Since the $E_1$ page of (3.4) is supported on $p=q$, every
+**Proof.** By Lemma 6.2 of Book 7b, $\mathcal O(-1)|_{U_i}$ is free of rank one with basis
+$x_i^{-1}$; hence the middle term is free on basis vectors $e_0^{(i)},\ldots,e_n^{(i)}$, and on
+the overlap $U_i\cap U_j$ the two bases are related by $e_m^{(j)}=(x_i/x_j)\,e_m^{(i)}$, since
+$x_j^{-1}=(x_i/x_j)x_i^{-1}$ in $(S_{x_ix_j})_{-1}$. Define $\varphi$ chart by chart by
+
+$$
+\varphi\bigl(e_m^{(i)}\bigr)=t_m=x_m/x_i\in(S_{x_i})_0 .
+$$
+
+This is compatible with the transitions: expressed in the $i$-th chart, $\varphi(e_m^{(j)})$
+reads $(x_i/x_j)(x_m/x_i)=x_m/x_j$, which is the restriction of the same rule. On each chart
+$\varphi(e_i^{(i)})=1$, so $\varphi$ is surjective as a map of sheaves. Note that
+$\Omega^1_{\mathbf P^n/k}|_{U_i}$ is freely generated over $(S_{x_i})_0$ by the differentials
+$dt_j$, $j\ne i$: the chart $U_i$ is an affine space over $k$ with coordinates $t_j$, and
+Kahler differentials commute with localization. Define a chart-wise lift by
+
+$$
+\psi_i(dt_j)=e_j^{(i)}-t_j\,e_i^{(i)}\qquad(j\ne i).
+$$
+
+The $\psi_i$ glue to a global map $\psi:\Omega^1\to\mathcal O(-1)^{\oplus(n+1)}$: one must
+check that $\psi_i(dt_m)$ and $\psi_l(dt_m)$ agree on $U_i\cap U_l$ after identifying bases. On
+the overlap, from $x_m/x_i=(x_m/x_l)(x_l/x_i)$ and
+$d(x_l/x_i)=-(x_l/x_i)^2\,d(x_i/x_l)$, the section $dt_m$ reads
+
+$$
+dt_m=-\,(x_m/x_l)\,(x_l/x_i)^2\,d(x_i/x_l)+(x_l/x_i)\,d(x_m/x_l).
+$$
+
+Applying $\psi_l$ to both summands and collecting, the $e_l^{(l)}$-coefficients cancel and leave
+
+$$
+\psi_l(dt_m)
+=-\,(x_m/x_l)\,(x_l/x_i)^2\,e_i^{(l)}+(x_l/x_i)\,e_m^{(l)}.
+$$
+
+Converting bases through $e_a^{(l)}=(x_i/x_l)e_a^{(i)}$ turns the two coefficients into
+$(x_m/x_l)(x_l/x_i)=x_m/x_i$ and $1$, so
+
+$$
+\psi_l(dt_m)=e_m^{(i)}-(x_m/x_i)\,e_i^{(i)}=\psi_i(dt_m),
+$$
+
+as required.
+
+The composite $\varphi\circ\psi$ vanishes: $\varphi\psi_i(dt_j)=t_j-t_j=0$. Exactness at the
+middle: suppose
+$\sum_ma_me_m^{(i)}$ lies in $\ker\varphi|_{U_i}$, that is
+$\sum_ma_mt_m=0$ in $(S_{x_i})_0$; then $\omega=\sum_{m\ne i}a_md t_m$ satisfies
+$\psi_i(\omega)=\sum_ma_me_m^{(i)}-\bigl(\sum_{m\ne i}a_mt_m\bigr)e_i^{(i)}
+=\sum_ma_me_m^{(i)}$, because the vanishing hypothesis gives
+$\sum_{m\ne i}a_mt_m=-a_i$. Hence $\ker\varphi=\operatorname{im}\psi$ locally, and therefore
+globally. Injectivity of $\psi$: if $\sum_{j\ne i}c_j(e_j-t_je_i)=0$, the coefficient of each
+$e_j$, $j\ne i$, is $c_j$, so all $c_j$ vanish. All three verifications together give exactness
+at every position. $\square$
+
+Taking exterior powers converts the Euler sequence into the ladder used for the computation.
+For a locally split short exact sequence $0\to\mathcal K\to\mathcal E\to\mathcal Q\to0$ there
+are canonical exact sequences $0\to\bigwedge^p\mathcal K\to\bigwedge^p\mathcal E\to
+\bigwedge^{p-1}\mathcal K\otimes\mathcal Q\to0$, obtained by filtering the exterior algebra of
+$\mathcal E$ by the powers of $\mathcal K$ after splitting locally. Applying this to the Euler
+sequence, where $\mathcal K=\Omega^1$ and $\mathcal Q=\mathcal O$, yields, for every $p\ge2$,
+
+$$
+0\to\Omega^p\to\textstyle\bigwedge^p\mathcal O(-1)^{\oplus(n+1)}\to\Omega^{p-1}\to0,
+\tag{4.9a}
+$$
+
+with the $p=1$ case the Euler sequence itself. The middle term of (4.9a) identifies with
+$\mathcal O(-p)^{\oplus\binom{n+1}{p}}$, because wedge powers commute with direct sums and
+reduce to ordinary powers on line-bundle summands.
+
+Now compute cohomology by induction on the form degree $p$. The base case is
+$p=0$: by Theorem 6.5 of Book 7b applied with $A=k$, $r=n$, and $m=0$, we have
+$H^0(\mathbf P^n,\mathcal O)=k$ and $H^q(\mathbf P^n,\mathcal O)=0$ for $q>0$. Next, for every
+twist $-p$ with $1\le p\le n$, all cohomology of $\mathcal O(-p)$ vanishes: part 1 of
+Theorem 6.5 kills degree zero because no Laurent monomial of negative total degree has all
+exponents nonnegative; part 2 kills the intermediate degrees; part 3 would contribute only in
+degree $n$ and only when $-p\le-n-1$, which is excluded; part 4 is void. Consequently the long
+exact cohomology sequence of (4.9a) collapses to connecting isomorphisms
+
+$$
+H^q(\Omega^{p-1})\;\xrightarrow{\ \sim\ }\;H^{q+1}(\Omega^p)
+\qquad(2\le p\le n,\ q\ge0),
+$$
+
+and similarly across the Euler sequence itself for $p=1$. Chaining these from $\Omega^p$ back
+to $\Omega^0=\mathcal O$ gives $H^q(\Omega^p)\simeq H^{q-p}(\mathcal O)$, whence
+$H^p(\mathbf P^n,\Omega^p)\simeq k$ and $H^q(\mathbf P^n,\Omega^p)=0$ for $q\ne p$, which is
+exactly (4.6).
+
+Since the $E_1$ page of (3.4) is supported on $p=q$, every
 differential changes the two indices unequally and must vanish. Hence
 
 $$
@@ -1484,8 +1874,12 @@ reduced coproduct. Thus the differential vanishes on the degree-one generators a
 algebra they generate. Induction on the page proves degeneration at $E_1$.
 
 Apply the same argument to $A\times_SA$. External product identifies its $E_1$ page with the
-tensor product of the two Hodge pages by (11.1), (11.2), and the coherent Kunneth formula.
-Finite filtered comparison therefore gives the de Rham Kunneth isomorphism for this product. We
+tensor product of the two Hodge pages: by (11.1) each summand $\Omega^{a'}_{A/S}$ is the pullback
+of a locally free sheaf, so Theorem 3.6 applies with $\mathcal F$ and $\mathcal G$ exterior
+powers of $\omega_A$, and its local-freeness hypothesis holds because $R^bp_*\Omega^{a'}$ is
+$\bigwedge^{a'}\omega_A\otimes\bigwedge^bR^1p_*\mathcal O_A$ by the projection formula, (11.1),
+and (11.2), all of whose factors are locally free. Finite filtered comparison therefore gives
+the de Rham Kunneth isomorphism for this product. We
 may consequently write the coproduct in tensor notation without assuming the exterior theorem
 being proved.
 
