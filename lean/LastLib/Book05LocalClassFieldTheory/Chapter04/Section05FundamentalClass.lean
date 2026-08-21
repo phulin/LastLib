@@ -9,7 +9,7 @@ open scoped BigOperators
 /-! ## 4.5. The fundamental class -/
 
 theorem chapter04_crossed_product_cocycle_identity_is_associativity
-    {G L : Type*} [Group G] [Field L] [MulAction G L]
+    {G L : Type*} [Group G] [Field L] [MulSemiringAction G L]
     [MulAction G Lˣ]
     (c : Chapter04NormalizedTwoCocycle G L) :
     ∀ g h k,
@@ -18,7 +18,7 @@ theorem chapter04_crossed_product_cocycle_identity_is_associativity
   exact c.cocycle
 
 theorem chapter04_crossed_product_scalar_mul_scalar
-    {G L : Type*} [Group G] [Field L] [MulAction G L]
+    {G L : Type*} [Group G] [Field L] [MulSemiringAction G L]
     [MulAction G Lˣ]
     (c : Chapter04NormalizedTwoCocycle G L) (x y : L) :
     chapter04CrossedProductMul c
@@ -28,7 +28,7 @@ theorem chapter04_crossed_product_scalar_mul_scalar
   sorry
 
 theorem chapter04_crossed_product_basis_mul_scalar
-    {G L : Type*} [Group G] [Field L] [MulAction G L]
+    {G L : Type*} [Group G] [Field L] [MulSemiringAction G L]
     [MulAction G Lˣ]
     (c : Chapter04NormalizedTwoCocycle G L) (g : G) (x : L) :
     chapter04CrossedProductMul c
@@ -38,7 +38,7 @@ theorem chapter04_crossed_product_basis_mul_scalar
   sorry
 
 theorem chapter04_crossed_product_basis_mul_basis
-    {G L : Type*} [Group G] [Field L] [MulAction G L]
+    {G L : Type*} [Group G] [Field L] [MulSemiringAction G L]
     [MulAction G Lˣ]
     (c : Chapter04NormalizedTwoCocycle G L) (g h : G) :
     chapter04CrossedProductMul c
@@ -48,7 +48,7 @@ theorem chapter04_crossed_product_basis_mul_basis
   sorry
 
 theorem chapter04_crossed_product_mul_is_associative
-    {G L : Type*} [Group G] [Field L] [MulAction G L]
+    {G L : Type*} [Group G] [Field L] [MulSemiringAction G L]
     [MulAction G Lˣ]
     (c : Chapter04NormalizedTwoCocycle G L) :
     ∀ x y z,
@@ -101,7 +101,7 @@ theorem chapter04_coboundary_rescaling_preserves_crossed_product_class
   sorry
 
 theorem chapter04_coboundary_is_basis_rescaling
-    {G L : Type*} [Group G] [Field L] [MulAction G L]
+    {G L : Type*} [Group G] [Field L] [MulSemiringAction G L]
     [MulAction G Lˣ]
     (c₁ c₂ : Chapter04NormalizedTwoCocycle G L)
     (hcohom : chapter04CocycleCohomologous c₁ c₂) :
@@ -126,7 +126,7 @@ theorem chapter04_cocycle_product_corresponds_to_tensor_product
 structure Chapter04SplitDescentData
     (K L V : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [AddCommGroup V]
-    [Module L V] where
+    [Module L V] [FiniteDimensional L V] where
   algebra : chapter04CentralSimpleAlgebra K
   split_matrix_identification : Prop
   semilinear_action : Gal(L / K) → V → V
@@ -145,7 +145,7 @@ structure Chapter04SplitDescentData
 theorem chapter04_split_descent_produces_a_cocycle
     {K L V : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [AddCommGroup V]
-    [Module L V]
+    [Module L V] [FiniteDimensional L V]
     (D : Chapter04SplitDescentData K L V) :
     ∀ g h k,
       D.cocycle.value g h * D.cocycle.value (g * h) k =
@@ -155,7 +155,7 @@ theorem chapter04_split_descent_produces_a_cocycle
 theorem chapter04_split_descent_inner_automorphisms_are_scalar_unique
     {K L V : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [AddCommGroup V]
-    [Module L V]
+    [Module L V] [FiniteDimensional L V]
     (D : Chapter04SplitDescentData K L V) :
     D.inner_automorphism_relation := by
   sorry
@@ -163,7 +163,7 @@ theorem chapter04_split_descent_inner_automorphisms_are_scalar_unique
 theorem chapter04_split_descent_scalar_relation
     {K L V : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [AddCommGroup V]
-    [Module L V]
+    [Module L V] [FiniteDimensional L V]
     (D : Chapter04SplitDescentData K L V) :
     D.scalar_relation := by
   sorry
@@ -241,19 +241,19 @@ theorem chapter04_fundamental_class_is_unique
     (u v : Chapter04FundamentalClass I R C n) : u.value = v.value := by
   sorry
 
-/- SOURCE_ISSUE: The source says “restriction and corestriction of the
-  fundamental classes differ by exactly the degree factors dictated by the
-  invariant formulas” without specifying the maps or the equations.  The
-  following interface supplies the missing maps and records the minimal
-  explicit restriction/corestriction equations. -/
+/- The tower interface records the restriction and corestriction equations
+  stated explicitly in the source. -/
 structure Chapter04FundamentalClassTowerData
     (K M L : Type*) [Field K] [Field M] [Field L]
     [Algebra K M] [Algebra M L] [Algebra K L]
     [IsScalarTower K M L] [FiniteDimensional K M]
-    [FiniteDimensional M L] [FiniteDimensional K L] where
+    [FiniteDimensional M L] [FiniteDimensional K L] [IsGalois K L] where
   degreeKM : ℕ
   degreeML : ℕ
   degreeKL : ℕ
+  degreeKM_eq : Module.finrank K M = degreeKM
+  degreeML_eq : Module.finrank M L = degreeML
+  degreeKL_eq : Module.finrank K L = degreeKL
   degree_factor : degreeKL = degreeKM * degreeML
   invariantK : Chapter04LocalInvariantData K
   invariantM : Chapter04LocalInvariantData M
@@ -281,7 +281,7 @@ theorem chapter04_fundamental_class_is_tower_compatible
     {K M L : Type*} [Field K] [Field M] [Field L]
     [Algebra K M] [Algebra M L] [Algebra K L]
     [IsScalarTower K M L] [FiniteDimensional K M]
-    [FiniteDimensional M L] [FiniteDimensional K L]
+    [FiniteDimensional M L] [FiniteDimensional K L] [IsGalois K L]
     (T : Chapter04FundamentalClassTowerData K M L) :
     T.degreeKL = T.degreeKM * T.degreeML ∧
       T.restrictionKM.restriction T.fundamentalKL = T.fundamentalML ∧

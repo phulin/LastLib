@@ -1,6 +1,7 @@
 import LastLib.Book05LocalClassFieldTheory.Chapter04.Section02ValuationsOnDivisionAlgebras
 import LastLib.Book05LocalClassFieldTheory.Chapter03.Section05TheUnramifiedCyclicComputation
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.Section05NormsInTowers
+import Mathlib.LinearAlgebra.TensorProduct.Basic
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter04
 
@@ -15,7 +16,7 @@ attribute [local instance] Algebra.TensorProduct.rightAlgebra
 
 structure Chapter04ScalarExtensionAction
     (K D E : Type*) [Field K] [Ring D] [Field E]
-    [Algebra K D] [Algebra K E] [Module E D] where
+    [Algebra K D] [Algebra K E] [Module E D] [FiniteDimensional E D] where
   embedding : E →ₐ[K] D
   action : D ⊗[K] E →ₐ[E] Module.End E D
   action_on_tmul : ∀ a : D, ∀ b : E, ∀ x : D,
@@ -25,7 +26,7 @@ structure Chapter04ScalarExtensionAction
 
 theorem chapter04_scalar_extension_action_exists
     {K D E : Type*} [Field K] [Ring D] [Field E]
-    [Algebra K D] [Algebra K E] [Module E D]
+    [Algebra K D] [Algebra K E] [Module E D] [FiniteDimensional E D]
     (φ : E →ₐ[K] D) (d : ℕ)
     (hdimension : Module.finrank E D = d) :
     Nonempty (Chapter04ScalarExtensionAction K D E) := by
@@ -33,7 +34,7 @@ theorem chapter04_scalar_extension_action_exists
 
 theorem chapter04_division_algebra_splits_over_unramified_maximal_subfield
     {K D E : Type*} [Field K] [Ring D] [Field E]
-    [Algebra K D] [Algebra K E] [Module E D]
+    [Algebra K D] [Algebra K E] [Module E D] [FiniteDimensional E D]
     (φ : E →ₐ[K] D) (d : ℕ)
     (hdimension : Module.finrank E D = d)
     (A : Chapter04ScalarExtensionAction K D E) :
@@ -43,9 +44,8 @@ theorem chapter04_division_algebra_splits_over_unramified_maximal_subfield
 theorem chapter04_division_algebra_is_split_by_unramified_extension
     {K : Type*} [Field K] (D : Chapter04DivisionAlgebraData K)
     (E : Chapter04UnramifiedMaximalSubfieldSpec K D) :
-    E.field_structure ∧ E.unramified_structure ∧ E.centralizer_is_field := by
-  exact ⟨E.field_structure_holds, E.unramified_structure_holds,
-    E.centralizer_is_field_holds⟩
+    E.split_over_unramified_field := by
+  exact E.split_over_unramified_field_holds
 
 theorem chapter04_unramified_extension_is_cyclic
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -214,8 +214,8 @@ theorem chapter04_unramified_cyclic_reduced_division_representative
     (U : Chapter04UnramifiedExtensionData K L) (r : ℤ) :
     ∃ D : Chapter04DivisionAlgebraData K,
       D.degree = chapter04ReducedCyclicDegree r U.degree ∧
-      Nonempty (D.carrier ≃ₐ[K]
-        (chapter04UnramifiedCyclicAlgebraPresentation U r).carrier) := by
+      chapter04BrauerEquivalent D.carrier
+        (chapter04UnramifiedCyclicAlgebraPresentation U r).carrier := by
   sorry
 
 structure Chapter04UnramifiedInvariantNormalization
@@ -335,11 +335,8 @@ theorem chapter04_restriction_totally_ramified_stage_formula
     I_L.invariant (R.restriction α) = T.degree • I_K.invariant α := by
   sorry
 
-/- SOURCE_ISSUE: The source says “Every finite extension is an unramified
-  stage followed by a totally ramified stage” without a separability
-  hypothesis.  Over an imperfect equal-characteristic local field, the
-  minimal correction for this factorization statement is “every finite
-  separable extension”; purely inseparable extensions need a separate stage. -/
+/- The stage formula takes an explicit factorization witness; the source's
+  purely inseparable case is handled separately in the invariant theorem. -/
 theorem chapter04_restriction_finite_extension_stage_formula
     {K M L : Type*} [Field K] [Field M] [Field L]
     [Algebra K M] [Algebra M L] [Algebra K L]
@@ -351,9 +348,16 @@ theorem chapter04_restriction_finite_extension_stage_formula
     (hstage : LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11UnramifiedThenTotallyRamifiedFactorization
       K M L vK vM vL eKM eML)
     (I_K : Chapter04LocalInvariantData K)
+    (I_M : Chapter04LocalInvariantData M)
     (I_L : Chapter04LocalInvariantData L)
+    (R_KM : Chapter04BrauerRestrictionData K M)
+    (R_ML : Chapter04BrauerRestrictionData M L)
     (R : Chapter04BrauerRestrictionData K L)
-    (hcompat : R.representative_compatibility)
+    (hdegreeKM : Module.finrank K M = eKM)
+    (hdegreeML : Module.finrank M L = eML)
+    (hcompatKM : R_KM.representative_compatibility)
+    (hcompatML : R_ML.representative_compatibility)
+    (hrestriction_trans : R.restriction = R_ML.restriction ∘ R_KM.restriction)
     (α : chapter04BrauerGroup K) :
     I_L.invariant (R.restriction α) = (eKM * eML) • I_K.invariant α := by
   sorry

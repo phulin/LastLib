@@ -33,7 +33,6 @@ theorem chapter04_relative_brauer_invariant_image_eq_one_over_multiples
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L]
     (I : Chapter04LocalInvariantData K)
-    (J : Chapter04LocalInvariantData L)
     (R : Chapter04BrauerRestrictionData K L)
     (n : ℕ) (hdegree : Module.finrank K L = n)
     (hcompat : R.representative_compatibility) :
@@ -57,7 +56,6 @@ theorem chapter04_relative_brauer_group_card_eq_degree
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L]
     (I : Chapter04LocalInvariantData K)
-    (J : Chapter04LocalInvariantData L)
     (R : Chapter04BrauerRestrictionData K L)
     (n : ℕ) (hdegree : Module.finrank K L = n)
     (hcompat : R.representative_compatibility) :
@@ -70,7 +68,6 @@ structure Chapter04CyclicNormBrauerEquivalence
     (R : Chapter04BrauerRestrictionData K L) where
   forward : chapter03NormQuotient K L ≃
     chapter04RelativeBrauerGroup K L R
-  parameter_class_compatibility : Prop
 
 theorem chapter04_cyclic_norm_quotient_relative_brauer_equiv
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -85,9 +82,12 @@ theorem chapter04_cyclic_norm_quotient_relative_brauer_equiv
 theorem chapter04_cyclic_norm_quotient_card_eq_degree
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
+    (I : Chapter04LocalInvariantData K)
     (n : ℕ) (σ : Gal(L / K))
     (hcyc : chapter03CyclicExtension K L n σ)
     (R : Chapter04BrauerRestrictionData K L)
+    (hdegree : Module.finrank K L = n)
+    (hcompat : R.representative_compatibility)
     (E : Chapter04CyclicNormBrauerEquivalence K L R) :
     Nat.card (chapter03NormQuotient K L) = n := by
   sorry
@@ -95,9 +95,11 @@ theorem chapter04_cyclic_norm_quotient_card_eq_degree
 theorem chapter04_cyclic_norm_quotient_index
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
+    (I : Chapter04LocalInvariantData K)
     (n : ℕ) (σ : Gal(L / K))
     (hcyc : chapter03CyclicExtension K L n σ)
     (R : Chapter04BrauerRestrictionData K L)
+    (hdegree : Module.finrank K L = n)
     (hcompat : R.representative_compatibility) :
     Nat.card (Kˣ ⧸ chapter03NormSubgroup K L) = n := by
   sorry
@@ -107,22 +109,26 @@ theorem chapter04_cyclic_norm_quotient_index
 theorem chapter04_cyclic_norm_index_including_wild_extensions
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
+    (I : Chapter04LocalInvariantData K)
     (n : ℕ) (σ : Gal(L / K))
     (hcyc : chapter03CyclicExtension K L n σ)
     (R : Chapter04BrauerRestrictionData K L)
+    (hdegree : Module.finrank K L = n)
     (hcompat : R.representative_compatibility) :
     Nat.card (Kˣ ⧸ chapter03NormSubgroup K L) = n := by
-  exact chapter04_cyclic_norm_quotient_index n σ hcyc R hcompat
+  exact chapter04_cyclic_norm_quotient_index I n σ hcyc R hdegree hcompat
 
 theorem chapter04_theorem_4_2_cyclic_norm_index
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
+    (I : Chapter04LocalInvariantData K)
     (n : ℕ) (σ : Gal(L / K))
     (hcyc : chapter03CyclicExtension K L n σ)
     (R : Chapter04BrauerRestrictionData K L)
+    (hdegree : Module.finrank K L = n)
     (hcompat : R.representative_compatibility) :
     Nat.card (Kˣ ⧸ chapter03NormSubgroup K L) = n := by
-  exact chapter04_cyclic_norm_quotient_index n σ hcyc R hcompat
+  exact chapter04_cyclic_norm_quotient_index I n σ hcyc R hdegree hcompat
 
 end
 

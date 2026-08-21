@@ -1,10 +1,10 @@
 import LastLib.Book05LocalClassFieldTheory.Chapter02.Dependencies
 import LastLib.Book05LocalClassFieldTheory.Chapter03.Section05TheUnramifiedCyclicComputation
 import Mathlib.Algebra.BrauerGroup.Defs
+import Mathlib.Algebra.Ring.Action.Basic
 import Mathlib.Algebra.Group.Subgroup.ZPowers.Basic
 import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.GroupTheory.QuotientGroup.Basic
-import Mathlib.LinearAlgebra.TensorProduct.Basic
 import Mathlib.RingTheory.Norm.Defs
 import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
 
@@ -12,7 +12,7 @@ namespace LastLib.Book05LocalClassFieldTheory.Chapter04
 
 noncomputable section
 
-open scoped BigOperators TensorProduct
+open scoped BigOperators
 open LastLib.Book05LocalClassFieldTheory.Chapter02
 
 universe u
@@ -191,10 +191,8 @@ def chapter04ReducedNormAgreesWithDeterminant
   ∀ x : Dˣ,
     algebraMap K S (N x : K) = Matrix.det (ρ (x : D))
 
-/- SOURCE_ISSUE: In §4.2 the source writes `w_D(x)=v_K(Nrd(x))/d`
-  although `Nrd` was introduced only on `Dˣ` and the later valuation is on
-  all of `D`.  The minimal principled correction is the displayed extension
-  with `w_D 0 = ⊤`. -/
+/- The division valuation is explicitly extended from units to all of `D`,
+  with the zero value recorded separately. -/
 def chapter04DivisionValuation
     {K D : Type u} [Field K] [DivisionRing D] [Algebra K D]
     (N : Chapter04ReducedNormData K D) :
@@ -241,9 +239,13 @@ structure Chapter04DivisionValuationInterface
   value : D → WithTop ℚ
   unitValue : Dˣ → ℚ
   value_zero : value 0 = ⊤
+  value_one : value 1 = 0
   value_unit : ∀ x : Dˣ, value (x : D) = (unitValue x : WithTop ℚ)
   value_add : ∀ x y : D, value (x + y) ≥ min (value x) (value y)
+  value_strict_add : ∀ {x y : D}, value x < value y → value (x + y) = value x
   value_mul : ∀ x y : D, value (x * y) = value x + value y
+  value_inv : ∀ x : Dˣ,
+    value (x : D) + value ((x⁻¹ : Dˣ) : D) = 0
   valuationSubring : Subring D
   valuationSubring_eq : valuationSubring.carrier = {x | value x ≥ 0}
   maximalIdeal : Ideal valuationSubring
@@ -314,7 +316,7 @@ abbrev chapter04H2
 
 /-- Normalized multiplicative two-cocycles for a Galois action. -/
 structure Chapter04NormalizedTwoCocycle
-    (G L : Type*) [Group G] [Field L] [MulAction G L]
+    (G L : Type*) [Group G] [Field L] [MulSemiringAction G L]
     [MulAction G Lˣ] where
   value : G → G → Lˣ
   left_normalized : ∀ g, value 1 g = 1
@@ -338,7 +340,7 @@ def chapter04CrossedProductBasis
   Finsupp.single g 1
 
 def chapter04CrossedProductMul
-    {G L : Type*} [Group G] [Field L] [MulAction G L]
+    {G L : Type*} [Group G] [Field L] [MulSemiringAction G L]
     [MulAction G Lˣ] (c : Chapter04NormalizedTwoCocycle G L) :
     chapter04CrossedProductCarrier G L →
       chapter04CrossedProductCarrier G L →
@@ -347,7 +349,7 @@ def chapter04CrossedProductMul
     Finsupp.single (g * h) (a * (g • b) * (c.value g h : L))
 
 def chapter04CocycleCohomologous
-    {G L : Type*} [Group G] [Field L] [MulAction G L]
+    {G L : Type*} [Group G] [Field L] [MulSemiringAction G L]
     [MulAction G Lˣ]
     (c₁ c₂ : Chapter04NormalizedTwoCocycle G L) : Prop :=
   ∃ b : G → Lˣ, ∀ g h,

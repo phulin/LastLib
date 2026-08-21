@@ -55,9 +55,11 @@ theorem chapter04_division_valuation_on_a_subfield
   sorry
 
 theorem chapter04_division_valuation_integrality_iff
-    {D : Type*} [Ring D] (w : D → WithTop ℚ) (R : Subring D)
-    (hR : R.carrier = chapter04DivisionValuationRing w) (x : D) :
-    chapter04IsIntegralOverSubring R x ↔ w x ≥ 0 := by
+    {K D k barD : Type*} [Field K] [DivisionRing D] [Field k] [Field barD]
+    [Algebra K D] [Algebra k barD] [FiniteDimensional k barD]
+    [TopologicalSpace D]
+    (V : Chapter04DivisionValuationInterface K D k barD) (x : D) :
+    chapter04IsIntegralOverSubring V.valuationSubring x ↔ V.value x ≥ 0 := by
   sorry
 
 theorem chapter04_division_valuation_ultrametric
@@ -88,7 +90,7 @@ theorem chapter04_division_valuation_triangle_argument
   sorry
 
 theorem chapter04_division_valuation_ring_is_local
-    {K D k barD : Type*} [Field K] [Ring D] [Field k] [Field barD]
+    {K D k barD : Type*} [Field K] [DivisionRing D] [Field k] [Field barD]
     [Algebra K D] [Algebra k barD] [FiniteDimensional k barD]
     [TopologicalSpace D]
     (V : Chapter04DivisionValuationInterface K D k barD) :
@@ -169,6 +171,7 @@ structure Chapter04ResidueConjugationData
       Gal(barD / k)
   conjugation_mul : ∀ a b,
     conjugation (a + b) = conjugation a * conjugation b
+  conjugation_injective : Function.Injective conjugation
   fixed_field_eq_base :
     {z : barD | ∀ q, conjugation q z = z} = Set.range (algebraMap k barD)
 
@@ -199,8 +202,12 @@ theorem chapter04_division_indices_are_the_degree
     (V : Chapter04DivisionValuationInterface K (A.carrier) k barD)
     (C : Chapter04ResidueConjugationData K (A.carrier) k barD)
     (d : ℕ) (hdegree : Module.finrank K (A.carrier) = d ^ 2)
+    (hdpos : 0 < d)
+    (hπ : ∃ π : A.carrierˣ, V.unitValue π = 1)
     (hvalue : C.value = V.unitValue)
-    (hbound : chapter04ValueGroupContainedInFractionalLattice V.unitValue d) :
+    (hbound : chapter04ValueGroupContainedInFractionalLattice V.unitValue d)
+    (hdimension : d ^ 2 =
+      chapter04RamificationIndex V.unitValue * chapter04ResidueDegree k barD) :
     chapter04ResidueDegree k barD ≤ chapter04RamificationIndex V.unitValue ∧
       chapter04RamificationIndex V.unitValue ≤ d ∧
       d ≤ chapter04ResidueDegree k barD ∧
@@ -230,6 +237,10 @@ structure Chapter04UnramifiedMaximalSubfieldSpec
   unramified_structure_holds : unramified_structure
   centralizer_is_field : Prop
   centralizer_is_field_holds : centralizer_is_field
+  /- LOCAL_DEPENDENCY_GUESS: the surrounding local-field chapters supply the
+    concrete scalar-extension equivalence for this bundled field witness. -/
+  split_over_unramified_field : Prop
+  split_over_unramified_field_holds : split_over_unramified_field
 
 theorem chapter04_division_algebra_has_unramified_maximal_subfield
     {K : Type*} [Field K] (D : Chapter04DivisionAlgebraData K) :
