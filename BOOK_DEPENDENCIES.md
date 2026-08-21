@@ -5,10 +5,11 @@ manuscript X. Rows are in stable topological order, so every numbered prerequisi
 than its consumer. Purely transitive background is omitted unless the current manuscript
 explicitly reuses that source.
 
-`MATHLIB` denotes the mathematical background visible in the local checkout. `CFT` denotes the
-companion Class Field Theory development, including reciprocity and Brauer invariants. Both are
-proof sources rather than mathematical axioms. The dependency statement below concerns the
-manuscript graph; the integrity of those external proof sources is a separate foundational check.
+`MATHLIB` denotes the mathematical background visible in the local checkout. It is a proof
+source rather than a mathematical axiom. The dependency statement below concerns the manuscript
+graph; the integrity of that external proof source is a separate foundational check. The
+`CFT` token formerly denoted the companion Class Field Theory development; its one consumer,
+Book 77, now cites the in-collection Books 5 and 6 instead, and no row uses the token.
 
 The graph records proved source manuscripts only. Stronger results not established in the
 collection are not represented by invented book nodes; their relationship to the preferred
@@ -136,7 +137,7 @@ flowchart LR
 |   74 | Dihedral Supercuspidals, Types, and Newvectors for $\mathrm{GL}_2$             | 2, 72, 73                                                                                                                                                         |
 |   75 | Weil--Deligne Representations and Local Constants                              | 2, 3, 24, 72                                                                                                                                                      |
 |   76 | Local Langlands in the Principal, Special, and Dihedral Cases                  | 5, 73, 74, 75                                                                                                                                                     |
-|   77 | Quaternion Algebras over Number Fields                                         | 1, 2, 6, CFT                                                                                                                                                      |
+|   77 | Quaternion Algebras over Number Fields                                         | 1, 2, 5, 6                                                                                                                                                        |
 |   78 | Characters and Dihedral Types on Quaternion Division Algebras                  | 77, 72, 74                                                                                                                                                        |
 |   79 | Representations of Quaternion Division Algebras                                | 72, 74, 77, 78                                                                                                                                                    |
 |   80 | Local Jacquet--Langlands for Special and Dihedral Packets                      | 73, 74, 75, 76, 79, 78                                                                                                                                            |

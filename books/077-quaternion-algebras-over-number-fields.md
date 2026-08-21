@@ -94,7 +94,7 @@
 
 A matrix algebra is the most familiar noncommutative algebra over a field. Yet a field can possess algebras which become matrix algebras only after its scalars are enlarged. Quaternion algebras are the first place where this descent phenomenon is visible without being buried under high-dimensional structure. They have dimension four, their multiplication can be written on one line, and nevertheless their behavior records subtle information from every completion of a number field.
 
-Throughout this book, $F$ is a field of characteristic different from $2$ unless explicitly stated otherwise. The principal cases are number fields and their completions, all of characteristic zero. An $F$-algebra $B$ is **central simple** if its center is exactly $F$ and it has no nonzero proper two-sided ideals. Its **degree** is the positive integer $n$ such that
+Throughout this book, $F$ is a field of characteristic different from $2$ unless explicitly stated otherwise. The principal cases are number fields and their completions, all of characteristic zero. Class field theory is used as a proof source: local reciprocity, the norm-index theorem, and the local Brauer invariant are quoted from Book 5, while the global Brauer invariant sequence and the cyclic Hasse norm theorem are quoted from Book 6. An $F$-algebra $B$ is **central simple** if its center is exactly $F$ and it has no nonzero proper two-sided ideals. Its **degree** is the positive integer $n$ such that
 
 $$
 \dim_F B=n^2.
@@ -867,7 +867,7 @@ the algebra splits. The element $3+i+j$ is a visible nonzero element of norm zer
 
 By contrast, $(-1,-1)_{\mathbf R}$ asks whether $-1$ is a norm from $\mathbf C/\mathbf R$. Those norms are the positive real numbers, so it is not; Hamilton's algebra is division.
 
-The criterion is exact but not always computationally global. To decide whether $b$ is a norm from a quadratic number field, one may test all completions and use the cyclic Hasse norm theorem. In the quaternion setting this becomes the statement that the algebra splits globally exactly when it splits everywhere locally. The local symbols developed below turn those infinitely many apparent tests into finitely many calculations.
+The criterion is exact but not always computationally global. To decide whether $b$ is a norm from a quadratic number field, one may test all completions and use the cyclic Hasse norm theorem of Book 6. In the quaternion setting this becomes the statement that the algebra splits globally exactly when it splits everywhere locally. The local symbols developed below turn those infinitely many apparent tests into finitely many calculations.
 
 ### 5.5 What the parameter class remembers
 
@@ -1349,7 +1349,7 @@ is symmetric, bilinear, and nondegenerate. Equivalently, if $(a,b)_K=1$ for ever
 
 **Proof strategy.** For a nonsquare $a$, the quadratic field $E=K(\sqrt a)$ has a norm subgroup of index two. Choosing any element outside that subgroup gives a nontrivial symbol.
 
-**Proof.** Symmetry and bilinearity were established in Section 7.2. Suppose that $a$ is nonsquare. Then $E/K$ is quadratic. Local reciprocity, or the local norm-index theorem in its quadratic form, gives
+**Proof.** Symmetry and bilinearity were established in Section 7.2. Suppose that $a$ is nonsquare. Then $E/K$ is quadratic. Local reciprocity, or the local norm-index theorem in its quadratic form, both proved in Book 5, gives
 
 $$
 [K^\times:N_{E/K}(E^\times)]=[E:K]=2.
@@ -1387,7 +1387,7 @@ There is also a direct algebraic consequence. Given a nonsquare $a$, exactly hal
 
 ### 8.1 Why there is only one division algebra
 
-Let $K$ be a nonarchimedean local field. General local Brauer theory gives a canonical invariant isomorphism
+Let $K$ be a nonarchimedean local field. The local Brauer theory of Book 5 gives a canonical invariant isomorphism
 
 $$
 \operatorname{inv}_K:\operatorname{Br}(K)\xrightarrow{\sim}\mathbf Q/\mathbf Z.
@@ -1403,7 +1403,7 @@ $$
 (K_2/K,\varphi,\pi)
 $$
 
-has invariant $1/2$. Indeed, norms from $K_2$ have even valuation, so $\pi$ is not a norm and the algebra is nonsplit. Local cyclic theory identifies every class killed by $K_2$ with a parameter in $K^\times/N_{K_2/K}(K_2^\times)$, a group of order two. General local invariant theory says every degree-two class is killed by the unramified quadratic extension. Thus there is precisely one nonzero quaternion class.
+has invariant $1/2$. Indeed, norms from $K_2$ have even valuation, so $\pi$ is not a norm and the algebra is nonsplit. Local cyclic theory identifies every class killed by $K_2$ with a parameter in $K^\times/N_{K_2/K}(K_2^\times)$, a group of order two. The local invariant theory of Book 5 says every degree-two class is killed by the unramified quadratic extension. Thus there is precisely one nonzero quaternion class.
 
 This proof works in residue characteristic two as well. No odd-residue formula was used; the valuation of norms from an unramified quadratic extension still detects the nontrivial class.
 
@@ -1427,7 +1427,7 @@ $$
 
 Thus addition of invariants corresponds to multiplication of signs.
 
-The normalization agrees with arithmetic reciprocity: if $K_2/K$ is unramified quadratic, $\varphi$ is arithmetic Frobenius, and $\pi$ is a uniformizer, then
+The normalization agrees with the arithmetic reciprocity convention fixed in Book 5: if $K_2/K$ is unramified quadratic, $\varphi$ is arithmetic Frobenius, and $\pi$ is a uniformizer, then
 
 $$
 \operatorname{inv}_K(K_2/K,\varphi,\pi)=\frac12.
@@ -1628,7 +1628,7 @@ $$
 \qquad\text{in }\mathbf Q/\mathbf Z.
 $$
 
-Both expressions are finite because almost every local symbol is $+1$. The invariant form is the degree-two part of the global Brauer invariant sequence
+Both expressions are finite because almost every local symbol is $+1$. The invariant form is the degree-two part of the global Brauer invariant sequence of Book 6, Theorem 4.1,
 
 $$
 0\longrightarrow\operatorname{Br}(F)
@@ -1661,7 +1661,7 @@ $$
 \prod_v(a,b)_{F_v}=1.
 $$
 
-The cyclic Hasse norm theorem supplies the converse at the trivial pattern:
+The cyclic Hasse norm theorem, proved in Book 6, supplies the converse at the trivial pattern:
 
 $$
 b\in N_{E/F}(E^\times)
@@ -1792,7 +1792,7 @@ $$
 [B]-[C]
 $$
 
-has zero localization at every place. Injectivity of the global Brauer map forces $[B]=[C]$. Since both have degree two, equality of Brauer classes implies $B\cong C$.
+has zero localization at every place. Injectivity of the global Brauer map, part of Book 6's invariant sequence, forces $[B]=[C]$. Since both have degree two, equality of Brauer classes implies $B\cong C$.
 
 This proof clarifies why checking many local presentations independently is enough. One does not need to glue local generator choices. Local invariants glue at the level of the Brauer class, and degree two then recovers the algebra itself.
 
@@ -1818,7 +1818,7 @@ $$
 \end{cases}
 $$
 
-Their sum is $|S|/2=0$ in $\mathbf Q/\mathbf Z$. Exactness of the global Brauer invariant sequence produces a class $\alpha\in\operatorname{Br}(F)$ with precisely these local invariants.
+Their sum is $|S|/2=0$ in $\mathbf Q/\mathbf Z$. Exactness of the global Brauer invariant sequence of Book 6 produces a class $\alpha\in\operatorname{Br}(F)$ with precisely these local invariants.
 
 It remains important to explain why $\alpha$ is represented by a quaternion algebra, not merely by some larger central simple algebra. If $S$ is empty, $\alpha=0$ and $M_2(F)$ represents it. Suppose that $S$ is nonempty. Use weak approximation to choose $a\in F^\times$ whose square class is nonsquare at every finite $v\in S$ and which is negative at every real $v\in S$. Then $E=F(\sqrt a)$ is a quadratic field, and $E\otimes_FF_v$ is a field of degree two for every $v\in S$.
 
