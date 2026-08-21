@@ -112,6 +112,49 @@ theorem chapter08_unramified_lift_is_integrally_monogenic
     (hresidue : ∃ e : IsLocalRing.ResidueField A ≃+* k,
       ∀ a : A, algebraMap A k a = e (IsLocalRing.residue A a)) :
     chapter08IntegralGeneratorFor A L θ := by
+  /- PROOF ROADMAP.
+  This statement is intentionally the normalization-free interface: its
+  hypotheses already force `f.map (algebraMap A K)` to be irreducible and
+  separable, hence `L/K` is separable and the normalization is finite.  Do
+  not try to apply
+  `Chapter12.separable_residue_polynomial_lift_is_unramified` directly: that
+  theorem (Book01/Chapter12/Section07UnramifiedAndTotallyRamifiedEndpoints)
+  is formulated using complete valued-field models and an equality with an
+  upper valuation ring, neither of which is present here.
+
+  1. Choose `e` from `hresidue`.  Transport `fbar` along `e.symm` to a
+     polynomial over `IsLocalRing.ResidueField A`; after rewriting `hlift`,
+     apply
+     `Chapter09.irreducible_of_irreducible_residue_reduction`
+     (Book01/Chapter09/Section06AlgebraicConsequences) to obtain
+     `Irreducible (f.map (algebraMap A K))`.  For separability, use
+     `Polynomial.separable_iff_derivative_ne_zero` for that irreducible
+     polynomial; nonvanishing of the derivative descends from `hseparable`
+     using `Polynomial.derivative_map`, `hlift`, and injectivity of
+     `algebraMap A K`.  Convert `hroot` with `aeval_map_algebraMap`.
+  2. Use `minpoly.eq_of_irreducible_of_monic`, `hgen`, and `hdegree` to make
+     `θ` a `PowerBasis K L`; install `Algebra.IsSeparable K L`.  Then obtain
+     `Module.Finite A (integralClosure A L)` from
+     `Chapter11.chapter11_separable_extension_gives_finite_normalization`
+     (Book01/Chapter11/Section02FinitenessHypotheses), and locality from
+     `Chapter01.chapter01_henselian_integral_closure_is_local`
+     (Book02/Chapter01/Section02ExistenceUniquenessAndCompleteness).
+  3. Put `B := integralClosure A L`.  Give it the standard
+     `IsIntegralClosure B A L`, `IsFractionRing B L`, and local-DVR
+     instances (the fraction-ring bridge is
+     `IsIntegralClosure.isFractionRing_of_finite_extension`).  Let `θB : B`
+     be `⟨θ, hmonic.2.isIntegral hroot⟩`.  The canonical residue maps and `e`
+     identify the reduction of the powers
+     `1, θB, ..., θB^(fbar.natDegree-1)` with the power basis of
+     `k[X]/(fbar)`; use irreducibility and `hdegree` for the latter basis.
+  4. Apply `IsLocalRing.span_eq_top_of_tmul_eq_basis`
+     (Mathlib/RingTheory/LocalRing/Module) to those powers.  Since every
+     power lies in `Algebra.adjoin A {θB}`, its underlying `A`-submodule is
+     top.  This gives `Algebra.adjoin A {θB} = ⊤`; transport the set equality
+     through the subtype inclusion `B -> L` to obtain the second conjunct
+     of `chapter08IntegralGeneratorFor`.  The first conjunct is the monic
+     root integrality from step 3.
+  -/
   sorry
 
 /-- Book §8.5: the totally ramified endpoint is monogenic by any uniformizer.
@@ -155,12 +198,13 @@ theorem chapter08_local_monogenicity
     {A K B L k l : Type*} [CommRing A] [IsDomain A]
     [IsDiscreteValuationRing A] [HenselianLocalRing A]
     [Field K] [Field L] [Field k] [Field l]
-    [CommRing B] [IsDomain B] [IsLocalRing B]
+    [CommRing B] [IsDomain B]
     [Algebra A K] [IsFractionRing A K] [Algebra K L]
     [Algebra A B] [Algebra B L] [Algebra A L]
     [IsScalarTower A B L] [IsScalarTower A K L]
     [FiniteDimensional K L]
-    [IsIntegralClosure B A L] [Module.Finite A B]
+    [IsIntegralClosure B A L] [IsFractionRing B L]
+    [IsDiscreteValuationRing B] [Module.Finite A B]
     [Algebra k l] [Module.Finite k l] [Algebra.IsSeparable k l]
     (hresidue : ∃ eA : IsLocalRing.ResidueField A ≃+* k,
       ∃ eB : IsLocalRing.ResidueField B ≃+* l,
@@ -168,6 +212,62 @@ theorem chapter08_local_monogenicity
           eB (IsLocalRing.residue B (algebraMap A B a)) =
             algebraMap k l (eA (IsLocalRing.residue A a))) :
     chapter08Monogenic A B := by
+  /- PROOF ROADMAP.
+  The two added typeclasses are the missing normalization interface, not new
+  mathematics: in applications they come from a finite local integral
+  closure.  They expose the uniformizer and fraction-field operations needed
+  by the standard Henselian perturbation argument.
+
+  1. The first conjunct of `chapter08Monogenic A B` is
+     `IsIntegralClosure.isIntegral A L`.  For the generator, use
+     `Field.exists_primitive_element k l` (Mathlib/FieldTheory/PrimitiveElement)
+     with `[Module.Finite k l]` and `[Algebra.IsSeparable k l]`.  Via the two
+     equivalences in `hresidue`, choose `theta0 : B` whose residue is that
+     primitive element (`IsLocalRing.residue_surjective`).
+  2. Choose `pi : B` generating `IsLocalRing.maximalIdeal B`, using
+     `IsPrincipalIdealRing.principal`; the DVR assumptions ensure the ideal
+     is nonzero and proper.  First prove the two-generator claim
+     `Algebra.adjoin A {theta0, pi} = top`: reduce modulo the maximal ideal,
+     use residue generation for the coefficient-field part, and lift the
+     resulting span equality with `IsLocalRing.map_mkQ_eq_top` (or
+     `IsLocalRing.map_tensorProduct_mk_eq_top`) from
+     Mathlib/RingTheory/LocalRing/Module.  Finiteness of `B` is exactly the
+     Nakayama hypothesis.
+  3. Package the genuinely missing Henselian-normalization construction as a
+     source-local intermediate claim: if `theta0` lifts a separable residue
+     generator and `pi` generates the maximal ideal, then there is
+     `alpha : B` with both
+     `theta0 ∈ Algebra.adjoin A {alpha}` and
+     `pi ∈ Algebra.adjoin A {alpha}`.  Its proof is the standard two-stage
+     Henselian argument: first use `HenselianLocalRing.is_henselian` and the
+     unit derivative of the lifted residue minpoly to form the finite étale
+     coefficient subring `C = A[theta0]`; then prove `B = C[pi]` by the
+     maximal-ideal filtration and Nakayama, and apply the usual sufficiently
+     high uniformizer perturbation to replace `(theta0, pi)` by one element.
+     State the intermediate claim with these two membership conclusions and
+     with the displayed residue-generation/maximal-ideal hypotheses (rather
+     than as an opaque monogenicity axiom), so it is also usable by the
+     unramified endpoint.  No declaration in the current import closure
+     performs this perturbation; this is the new mathematical core of the
+     proof, not an instance-synthesis gap.
+     A suitable local signature is
+     `henselian_normalization_perturbation (theta0 pi : B)
+       (hresgen : Algebra.adjoin k {eB (residue B theta0)} = top)
+       (hpi : Ideal.span {pi} = IsLocalRing.maximalIdeal B) :
+       ∃ alpha : B, theta0 ∈ Algebra.adjoin A {alpha} ∧
+         pi ∈ Algebra.adjoin A {alpha}`;
+     keep all ring, tower, finite-normalization, DVR, and residue-equivalence
+     parameters exactly those of this theorem.
+  4. From step 3 and the two-generator equality, use
+     `Algebra.adjoin_le` and `top_unique` to show
+     `Algebra.adjoin A {alpha} = top`.  Pair this with integrality of every
+     element from `IsIntegralClosure.isIntegral`.
+
+  Dead ends: `IsLocalRing.exists_adjoin_eq_top` requires
+  `Algebra.FormallyUnramified A B` and therefore covers only the unramified
+  case.  A primitive element of `L/K` would additionally require
+  `[Algebra.IsSeparable K L]`, which is deliberately not assumed here.
+  -/
   sorry
 
 /-- Book §8.5: every finite extension of a p-adic field is integrally
@@ -179,6 +279,37 @@ theorem chapter08_padic_extensions_are_integrally_monogenic
     [Algebra (ℤ_[p]) L]
     [IsScalarTower (ℤ_[p]) (ℚ_[p]) L] :
     chapter08Monogenic (ℤ_[p]) (integralClosure (ℤ_[p]) L) := by
+  /- PROOF ROADMAP.
+  This corollary needs no extra public hypotheses; all normalization and
+  residue facts follow canonically in mixed characteristic.
+
+  1. Install `Algebra.IsSeparable (ℚ_[p]) L` from `CharZero L` and finite
+     dimensionality.  Obtain
+     `Module.Finite (ℤ_[p]) (integralClosure (ℤ_[p]) L)` from
+     `Chapter11.chapter11_separable_extension_gives_finite_normalization`
+     (Book01/Chapter11/Section02FinitenessHypotheses).
+  2. With `B := integralClosure (ℤ_[p]) L`, install its standard
+     `IsIntegralClosure`, `IsDomain`, and
+     `IsFractionRing B L` instances, then obtain `IsLocalRing B` from
+     `Chapter01.chapter01_henselian_integral_closure_is_local`
+     (Book02/Chapter01/Section02ExistenceUniquenessAndCompleteness).  Combine
+     localness with the finite integral closure of the DVR to install
+     `IsDiscreteValuationRing B`.
+  3. Take
+     `k := IsLocalRing.ResidueField (ℤ_[p])` and
+     `l := IsLocalRing.ResidueField B`.  The canonical residue algebra and
+     compatibility are `IsLocalRing.algebraMap_residue`; residue finiteness
+     is the instance `IsLocalRing.finite_of_module_finite`
+     (Mathlib/RingTheory/LocalRing/ResidueField/Basic).  The base residue
+     field is identified with `ZMod p` by `PadicInt.residueField`, hence is
+     finite/perfect; the standard perfect-field instance supplies
+     `Algebra.IsSeparable k l`.  Use identity ring equivalences for `eA` and
+     `eB` in `hresidue`.
+  4. Apply `chapter08_local_monogenicity` with
+     `A := ℤ_[p]`, `K := ℚ_[p]`, `B := B`, `L := L`, and the canonical
+     residue fields from step 3.  Its conclusion is definitionally the
+     required goal.
+  -/
   sorry
 
 /-- Book §8.5: if the residue extension is not simple, the normalization
