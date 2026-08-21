@@ -196,13 +196,13 @@ theorem chapter02_rational_scalar_value_at_a_finite_place
     simp [V]
   have hp0span : Ideal.span {(p.1 : ℤ)} = P.asIdeal.under ℤ := by
     exact q.2.over
-  letI : P.asIdeal.LiesOver (Ideal.span {(p.1 : ℤ)}) := q.2
+  let : P.asIdeal.LiesOver (Ideal.span {(p.1 : ℤ)}) := q.2
   have hVP : P.asIdeal.LiesOver V.asIdeal := by
     rw [hV]
     rw [← hp0span]
     exact q.2
-  letI : P.asIdeal.LiesOver V.asIdeal := hVP
-  letI : Fact p.1.Prime := ⟨p.2⟩
+  let : P.asIdeal.LiesOver V.asIdeal := hVP
+  let : Fact p.1.Prime := ⟨p.2⟩
   have hVint {z : ℤ} (hz : z ≠ 0) :
       V.intValuation z = WithZero.exp (-(padicValInt p.1 z : ℤ)) := by
     rw [V.intValuation_if_neg hz]
@@ -221,7 +221,8 @@ theorem chapter02_rational_scalar_value_at_a_finite_place
         rw [← Nat.cast_pow, Int.natCast_dvd] at hdiv
         have hle' := (Nat.pow_dvd_iff_le_padicValNat p.2.ne_one
           (Int.natAbs_ne_zero.mpr hz)).1 hdiv
-        exact (Nat.not_succ_le_self n) (by simpa [n] using hle')
+        simp at hle'
+        exact (Nat.not_succ_le_self n) hle'
       have hpz : Prime (p.1 : ℤ) := Nat.prime_iff_prime_int.mp p.2
       simpa [hp0span] using
         (Ideal.count_associates_eq' (R := ℤ) (x := (p.1 : ℤ)) (a := z)
@@ -267,9 +268,7 @@ theorem chapter02_rational_scalar_value_at_a_finite_place
       calc
         NumberField.FinitePlace.mk q.1 (algebraMap ℚ K a) =
             ‖NumberField.FinitePlace.embedding P (algebraMap ℚ K a)‖ := by
-              simpa [P] using
-                (NumberField.FinitePlace.norm_embedding_eq
-                  (NumberField.FinitePlace.mk q.1) (algebraMap ℚ K a)).symm
+              simp [P]
         _ = _ := NumberField.FinitePlace.norm_embedding' (v := P)
           (algebraMap ℚ K a)
     rw [hwval, ← hval a]

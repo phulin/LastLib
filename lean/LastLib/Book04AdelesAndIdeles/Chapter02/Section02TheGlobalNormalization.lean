@@ -97,7 +97,7 @@ theorem chapter02_finite_normalization_formula
     lt_trans Nat.zero_lt_one (NumberField.HeightOneSpectrum.one_lt_absNorm v)
   have hN : (v.asIdeal.absNorm : ℝ) ≠ 0 := by
     exact_mod_cast hNnat.ne'
-  simp only [NNReal.coe_div, NNReal.coe_zpow, NNReal.coe_natCast]
+  simp only [NNReal.coe_zpow, NNReal.coe_natCast]
   rw [← zpow_sub₀ hN]
   rw [← zpow_neg]
   congr 1

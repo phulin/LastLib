@@ -339,7 +339,7 @@ private theorem chapter02_product_algebra_norm_fin
       rw [hprod]
       rw [ih (M := fun j : Fin n => M (Fin.succ j))
         (x := fun j : Fin n => x (Fin.succ j))]
-      simp [e, Fin.prod_univ_succ]
+      simp [Fin.prod_univ_succ]
 
 private def chapter02_pi_reindex_algEquiv
     {K : Type u_1} [Field K] {ι : Type u_2} {n : ℕ}
