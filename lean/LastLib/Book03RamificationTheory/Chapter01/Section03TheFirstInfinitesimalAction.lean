@@ -94,8 +94,64 @@ noncomputable def chapter01TameCharacter
     { toFun := chapter01UniformizerRatioResidue vL π hπ
       map_one' := ?_
       map_mul' := ?_ }
-  · sorry
-  · sorry
+  · apply Units.ext
+    change IsLocalRing.residue vL.valuationSubring
+      (chapter01UniformizerRatio vL π hπ 1) = 1
+    have hrel := chapter01UniformizerRatio_relation (K := K) (L := L) vL π hπ
+      (1 : chapter01InertiaGroup K vL.valuationSubring)
+    have hratio :
+        chapter01UniformizerRatio (K := K) (L := L) vL π hπ
+            (1 : chapter01InertiaGroup K vL.valuationSubring) = 1 := by
+      apply Units.ext
+      dsimp
+      change π = (chapter01UniformizerRatio vL π hπ
+        (1 : chapter01InertiaGroup K vL.valuationSubring) :
+          vL.valuationSubring) * π at hrel
+      apply (mul_right_cancel₀ (M₀ := vL.valuationSubring) hπ.1)
+      simpa using hrel.symm
+    rw [hratio]
+    rfl
+  · intro σ τ
+    apply Units.ext
+    change IsLocalRing.residue vL.valuationSubring
+        (chapter01UniformizerRatio vL π hπ (σ * τ)) =
+      IsLocalRing.residue vL.valuationSubring
+        ((chapter01UniformizerRatio vL π hπ σ : vL.valuationSubring) *
+          (chapter01UniformizerRatio vL π hπ τ : vL.valuationSubring))
+    have hσ := chapter01UniformizerRatio_relation (K := K) (L := L) vL π hπ σ
+    have hτ := chapter01UniformizerRatio_relation (K := K) (L := L) vL π hπ τ
+    have hστ := chapter01UniformizerRatio_relation (K := K) (L := L) vL π hπ (σ * τ)
+    change (σ : chapter01DecompositionGroup K vL.valuationSubring) • π =
+      (chapter01UniformizerRatio vL π hπ σ : vL.valuationSubring) * π at hσ
+    change (τ : chapter01DecompositionGroup K vL.valuationSubring) • π =
+      (chapter01UniformizerRatio vL π hπ τ : vL.valuationSubring) * π at hτ
+    change (σ * τ : chapter01DecompositionGroup K vL.valuationSubring) • π =
+      (chapter01UniformizerRatio vL π hπ (σ * τ) : vL.valuationSubring) * π at hστ
+    have hratio :
+        (chapter01UniformizerRatio vL π hπ (σ * τ) : vL.valuationSubring) =
+          ((σ : chapter01DecompositionGroup K vL.valuationSubring) •
+            (chapter01UniformizerRatio vL π hπ τ : vL.valuationSubring)) *
+            (chapter01UniformizerRatio vL π hπ σ : vL.valuationSubring) := by
+      apply (mul_right_cancel₀ (M₀ := vL.valuationSubring) hπ.1)
+      rw [← hστ, mul_smul, hτ, smul_mul', hσ, mul_assoc]
+    rw [hratio]
+    simp only [map_mul]
+    rw [mul_comm]
+    have hres := chapter01_residue_action_commutes_with_reduction
+      (K := K) (L := L) vL.valuationSubring
+        (σ : chapter01DecompositionGroup K vL.valuationSubring)
+        (chapter01UniformizerRatio vL π hπ τ : vL.valuationSubring)
+    change IsLocalRing.residue vL.valuationSubring
+        ((σ : chapter01DecompositionGroup K vL.valuationSubring) •
+          (chapter01UniformizerRatio vL π hπ τ : vL.valuationSubring)) = _ at hres
+    change IsLocalRing.residue vL.valuationSubring
+        (chapter01UniformizerRatio vL π hπ σ : vL.valuationSubring) *
+          IsLocalRing.residue vL.valuationSubring
+            ((σ : chapter01DecompositionGroup K vL.valuationSubring) •
+              (chapter01UniformizerRatio vL π hπ τ : vL.valuationSubring)) = _
+    rw [hres]
+    rw [(chapter01_inertia_mem_iff_residue_fixed vL.valuationSubring
+      (σ : chapter01DecompositionGroup K vL.valuationSubring)).mp σ.property]
 
 @[simp] theorem chapter01TameCharacter_apply
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -119,7 +175,59 @@ theorem chapter01_uniformizer_change_ratio_residue
     (σ : chapter01InertiaGroup K vL.valuationSubring) :
     chapter01TameCharacter vL π' hπ' σ =
       chapter01TameCharacter vL π hπ σ := by
-  sorry
+  apply Units.ext
+  change IsLocalRing.residue vL.valuationSubring
+      (chapter01UniformizerRatio vL π' hπ' σ) =
+    IsLocalRing.residue vL.valuationSubring
+      (chapter01UniformizerRatio vL π hπ σ)
+  have hσ := chapter01UniformizerRatio_relation (K := K) (L := L) vL π hπ σ
+  have hσ' := chapter01UniformizerRatio_relation (K := K) (L := L) vL π' hπ' σ
+  change (σ : chapter01DecompositionGroup K vL.valuationSubring) • π =
+    (chapter01UniformizerRatio vL π hπ σ : vL.valuationSubring) * π at hσ
+  change (σ : chapter01DecompositionGroup K vL.valuationSubring) • π' =
+    (chapter01UniformizerRatio vL π' hπ' σ : vL.valuationSubring) * π' at hσ'
+  have hσ'' :
+      (σ : chapter01DecompositionGroup K vL.valuationSubring) •
+          ((u : vL.valuationSubring) * π) =
+        (chapter01UniformizerRatio vL π' hπ' σ : vL.valuationSubring) *
+          ((u : vL.valuationSubring) * π) := by
+    calc
+      (σ : chapter01DecompositionGroup K vL.valuationSubring) •
+          ((u : vL.valuationSubring) * π) =
+        (σ : chapter01DecompositionGroup K vL.valuationSubring) • π' :=
+          congrArg (fun x : vL.valuationSubring =>
+            (σ : chapter01DecompositionGroup K vL.valuationSubring) • x)
+            hchange.symm
+      _ = (chapter01UniformizerRatio vL π' hπ' σ : vL.valuationSubring) * π' := hσ'
+      _ = (chapter01UniformizerRatio vL π' hπ' σ : vL.valuationSubring) *
+          ((u : vL.valuationSubring) * π) :=
+        congrArg (fun x : vL.valuationSubring =>
+          (chapter01UniformizerRatio vL π' hπ' σ : vL.valuationSubring) * x)
+          hchange
+  have hratio :
+      (chapter01UniformizerRatio vL π' hπ' σ : vL.valuationSubring) *
+          (u : vL.valuationSubring) =
+        ((σ : chapter01DecompositionGroup K vL.valuationSubring) •
+          (u : vL.valuationSubring)) *
+          (chapter01UniformizerRatio vL π hπ σ : vL.valuationSubring) := by
+    apply (mul_right_cancel₀ (M₀ := vL.valuationSubring) hπ.1)
+    rw [smul_mul', hσ] at hσ''
+    simpa [mul_assoc] using hσ''.symm
+  have hres := congrArg (IsLocalRing.residue vL.valuationSubring) hratio
+  simp only [map_mul] at hres
+  have hres_u := chapter01_residue_action_commutes_with_reduction
+    (K := K) (L := L) vL.valuationSubring
+      (σ : chapter01DecompositionGroup K vL.valuationSubring)
+      (u : vL.valuationSubring)
+  change IsLocalRing.residue vL.valuationSubring
+      ((σ : chapter01DecompositionGroup K vL.valuationSubring) •
+        (u : vL.valuationSubring)) = _ at hres_u
+  rw [(chapter01_inertia_mem_iff_residue_fixed vL.valuationSubring
+    (σ : chapter01DecompositionGroup K vL.valuationSubring)).mp σ.property] at hres_u
+  rw [hres_u] at hres
+  apply (mul_right_cancel₀ (M₀ := chapter01ResidueField vL)
+    (Units.map (IsLocalRing.residue vL.valuationSubring).toMonoidHom u).ne_zero)
+  simpa [mul_comm] using hres
 
 /-- The tame character is intrinsic to the extension, not to the chosen
 uniformizer. -/
@@ -131,7 +239,21 @@ theorem chapter01_tame_character_is_intrinsic
     (hπ' : chapter01IsUniformizer vL π') :
     chapter01TameCharacter (K := K) vL π hπ =
       chapter01TameCharacter (K := K) vL π' hπ' := by
-  sorry
+  have hπirr : Irreducible (π : vL.valuationSubring) := by
+    rw [IsDiscreteValuationRing.irreducible_iff_uniformizer]
+    exact hπ.2
+  have hπ'irr : Irreducible (π' : vL.valuationSubring) := by
+    rw [IsDiscreteValuationRing.irreducible_iff_uniformizer]
+    exact hπ'.2
+  have hassoc : Associated (π' : vL.valuationSubring) (π : vL.valuationSubring) :=
+    IsDiscreteValuationRing.associated_of_irreducible
+      vL.valuationSubring hπ'irr hπirr
+  rcases hassoc.symm with ⟨u, hu⟩
+  have hchange : π' = (u : vL.valuationSubring) * π := by
+    rw [← hu, mul_comm]
+  apply MonoidHom.ext
+  intro σ
+  exact (chapter01_uniformizer_change_ratio_residue vL π π' hπ hπ' u hchange σ).symm
 
 /-
 The next structure records the integral-model part of the source's maximal
@@ -207,7 +329,64 @@ theorem chapter01_tame_character_mem_kernel_iff
     (σ : chapter01InertiaGroup K vL.valuationSubring) :
     σ ∈ (chapter01TameCharacter vL π hπ).ker ↔
       chapter01FirstInfinitesimalCongruence vL π σ := by
-  sorry
+  change (chapter01TameCharacter vL π hπ σ = 1) ↔
+    chapter01FirstInfinitesimalCongruence vL π σ
+  have hratio := chapter01UniformizerRatio_relation (K := K) (L := L) vL π hπ σ
+  change (σ : chapter01DecompositionGroup K vL.valuationSubring) • π =
+    (chapter01UniformizerRatio vL π hπ σ : vL.valuationSubring) * π at hratio
+  have hchar :
+      chapter01TameCharacter vL π hπ σ = 1 ↔
+        IsLocalRing.residue vL.valuationSubring
+          (chapter01UniformizerRatio vL π hπ σ) = 1 := by
+    rw [chapter01TameCharacter_apply]
+    constructor
+    · intro h
+      have h' := congrArg (fun z : (chapter01ResidueField vL)ˣ =>
+        (z : chapter01ResidueField vL)) h
+      simpa using h'
+    · intro h
+      apply Units.ext
+      exact h
+  have hresiff :
+      IsLocalRing.residue vL.valuationSubring
+          (chapter01UniformizerRatio vL π hπ σ) = 1 ↔
+        (chapter01UniformizerRatio vL π hπ σ : vL.valuationSubring) - 1 ∈
+          IsLocalRing.maximalIdeal vL.valuationSubring := by
+    constructor
+    · intro h
+      apply (IsLocalRing.residue_eq_zero_iff _).mp
+      rw [map_sub, h, map_one, sub_self]
+    · intro h
+      have hz := (IsLocalRing.residue_eq_zero_iff _).mpr h
+      apply sub_eq_zero.mp
+      simpa only [map_sub, map_one] using hz
+  have hmul_mem_iff (x : vL.valuationSubring) :
+      x * π ∈ (IsLocalRing.maximalIdeal vL.valuationSubring) ^ 2 ↔
+        x ∈ IsLocalRing.maximalIdeal vL.valuationSubring := by
+    have hmax : IsLocalRing.maximalIdeal vL.valuationSubring =
+        Ideal.span ({π} : Set vL.valuationSubring) := hπ.2
+    rw [hmax, Ideal.span_singleton_pow]
+    constructor
+    · intro hx
+      obtain ⟨c, hc⟩ := Ideal.mem_span_singleton.mp hx
+      apply Ideal.mem_span_singleton.mpr
+      refine ⟨c, ?_⟩
+      apply (mul_left_cancel₀ (M₀ := vL.valuationSubring) hπ.1)
+      simpa [pow_two, mul_assoc, mul_comm, mul_left_comm] using hc
+    · intro hx
+      obtain ⟨c, hc⟩ := Ideal.mem_span_singleton.mp hx
+      apply Ideal.mem_span_singleton.mpr
+      refine ⟨c, ?_⟩
+      rw [hc]
+      ring
+  unfold chapter01FirstInfinitesimalCongruence
+  change (chapter01TameCharacter vL π hπ σ = 1) ↔
+    ((σ : chapter01DecompositionGroup K vL.valuationSubring) • π - π ∈
+      (IsLocalRing.maximalIdeal vL.valuationSubring) ^ 2)
+  rw [hratio, show
+      (chapter01UniformizerRatio vL π hπ σ : vL.valuationSubring) * π - π =
+        ((chapter01UniformizerRatio vL π hπ σ : vL.valuationSubring) - 1) * π by ring]
+  exact hchar.trans (hresiff.trans (hmul_mem_iff _).symm)
 
 /-- The zero lower group is inertia. -/
 theorem chapter01_lower_ramification_group_zero_eq_inertia
