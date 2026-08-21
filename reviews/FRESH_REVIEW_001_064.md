@@ -472,12 +472,32 @@ Defects: (1) Line 1487: Theorem 11.1's `E_1`-page identification invokes "the co
 
 The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
 
+### Book 047 — `047-betti-de-rham-and-etale-comparison-for-curves.md`
+
+**Verdict: FAIL — the operative core rests on two foundation packages (topological triangulability/Poincaré duality and elliptic harmonic-form theory) asserted or sketched but available from neither local Mathlib nor any earlier book; the conditional apparatus around Tate–Sen is unusually clean and honest.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 1858 (EOF), in chronological/result order, during this audit.
+
+Verified operative imports: Book 009 global residue theorem and duality, Book 021 affine cd/Milnor sequence/étale trace, Book 046 base change/Gauss–Manin/perfect pairing/Griffiths transversality — all present at cited locations. §9.5 declares the `C_p`/Hodge–Tate package as an explicit assumption and proves its propositions conditionally; this is the correct discharge of Book 047's named consumer role for X003 (the new Book 024a is still a prospectus, so no volume yet supplies it). Roadmap mentions of later books are harmless, and the table of contents matches the headings exactly.
+
+Defects: (1) lines 217, 283, 287, 241–247, 322–330 use triangulability of compact surfaces, dual-cell Poincaré duality, excision, UCT, and the fundamental class — Mathlib has only rudimentary singular homology and no earlier book develops manifold duality; the whole comparison chain consumes this. See X064. (2) Lines 563 and 722–728 use elliptic harmonic theory ("elliptic theory gives" the harmonic decomposition, `\Delta_d=2\Delta_{\bar\partial}`) with no source; consumers are the Hodge decomposition (6.2), genus identification, and both comparison bridges. (3) §8.2 (lines 908–918) uses hypercover spectral-sequence descent on both sites — inherited X017/X018 via Book 021. (4) Minor in-book ordering: line 354 uses Chapter 6's result before Chapter 6 (labeled).
+
+### Book 048 — `048-divided-powers-and-crystalline-sites.md`
+
+**Verdict: PASS — all substantive results used in operative proofs are proved in-book, available in local Mathlib's divided-power infrastructure, or attributable to chronologically earlier Books 007a/007b; every finiteness/base-change/duality/Künneth claim is explicitly deferred to the next volume and never used operatively.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 1926 (EOF), in chronological/result order, during this audit.
+
+The PD algebra, envelopes, crystalline topology (with an elementary correct sheafiness proof), structure sheaf, and PD-de Rham comparison inputs are proved internally; Mathlib's `RingTheory.DividedPowers` supplies the underlying divided-power algebra infrastructure; the derived-limit/Tor inputs resolve to Book 007a and quasi-coherent descent to Book 007b. Forward references to Book 049 are uniformly roadmap and §17.3 explicitly withholds finiteness. Spot checks confirmed correctness of the exotic `F_2[\varepsilon]/\varepsilon^2` computation, canonical PD on `(p)` with mod-`p^N` descent, digit-sum estimates, topology axioms, and the Frobenius dual-direction warning. The table of contents matches all eighteen chapters exactly.
+
+Minor defects only: the operative derived-cohomology citation at line 132 names an anonymous "earlier treatment" instead of Book 007a (same hygiene at lines 1141, 1188 for Book 007b); the PD-envelope construction at lines 597–605 asserts the free relative PD algebra rather than constructing it (Mathlib's congruence-quotient pattern would close this); the Poincaré-comparison mechanism at lines 1676–1709 is sketch-level but self-contained and degree-one only.
+
+The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
+
 ## Pending scope inventory
 
 The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
 
-- PENDING — Book 047, `047-betti-de-rham-and-etale-comparison-for-curves.md`
-- PENDING — Book 048, `048-divided-powers-and-crystalline-sites.md`
 - PENDING — Book 049, `049-crystalline-cohomology-of-curves-and-abelian-schemes.md`
 - PENDING — Book 050, `050-syntomic-cohomology-and-integral-period-maps.md`
 - PENDING — Book 051, `051-finite-flat-group-schemes-of-small-height.md`
@@ -1010,3 +1030,17 @@ The following manuscripts are in this review's assigned 001–064 scope and rema
 - X037 gains consumers: Book 035a (none — it deliberately avoids §§10.x), Book 045 lines 698, 1294–1304, 1567–1579; Book 046 lines 1746–1768.
 - X009 confirmed consumer: Book 046 lines 1399–1415.
 - Book 044's fresh defects (X061) gain consumers: Book 045 §10.1 (lines 1457–1484), §10.4 (line 1537), (12.5) (lines 1770–1777).
+
+### X064 — Book 047's comparison chain consumes unproved topological and harmonic foundations
+
+- **Deficient source:** Book 047, lines 217 (triangulability of compact surfaces), 283 (Poincaré duality via dual cells), 287 (excision), 241–247 (UCT), 322–330 (fundamental class); lines 563, 722–728 (elliptic harmonic decomposition, `\Delta_d=2\Delta_{\bar\partial}`).
+- **Consumers:** the integral lattice, the ℓ-adic comparison, traces, polarizations — i.e. the whole book; downstream Books 097+, 125+ consuming its comparison package.
+- **Needed results:** a dimension-2 topological foundation (triangulability/classification of compact surfaces, dual-cell duality, completed UCT) and a dimension-one Hodge/harmonic theory (or a Dolbeault/residue-duality replacement).
+- **Why unavailable:** Mathlib has only rudimentary singular homology; no earlier book develops manifold duality or elliptic Hodge theory.
+- **Recommended chronological repair:** add an in-book topological chapter constructing the needed surface topology from scratch, and replace the elliptic-theory appeals by a one-dimensional Dirichlet/Dolbeault argument reusing Book 009's residue duality.
+
+### Consumer updates to earlier findings (batch 047–048)
+
+- X003: Book 047 §9.5 now handles the Tate–Sen/Hodge–Tate input as an explicitly labeled assumption with conditional propositions — the named consumer is honest; X003 itself remains open pending Book 024a.
+- X017/X018 gain consumer: Book 047 §8.2 (lines 908–918).
+- Book 048 verdict PASS; no new standing finding. Minor citation-hygiene items recorded in its entry (unnamed Book 007a/007b citations at lines 132, 1141, 1188; PD-envelope construction sketch at lines 597–605).
