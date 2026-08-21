@@ -580,12 +580,32 @@ The failure: Lemma 5.1's weighted-block claim (lines 636–691) asserts (a) the 
 
 The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
 
+### Book 057 — `057-artinian-and-complete-local-coefficient-rings.md`
+
+**Verdict: PASS — self-contained, chronologically clean, mathematically sound throughout; only cosmetic wording issues found.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 2687 (EOF), in chronological/result order, during this audit.
+
+The book contains zero cross-book citations and zero references to Books 058+; its external inputs are all verified Mathlib infrastructure (Artinian finite length, Nakayama, Krull intersection, Artin–Rees, Kähler differentials, Witt vectors/Teichmüller representatives). Cohen structure theory is explicitly declined as unnecessary (line 1302) and correctly not invoked; pro-representability criteria and hull theorems are honestly deferred. Spot-verified proofs (Krull intersection, fiber-product locality, cotangent surjectivity, Chevalley lemma, closed finite generation, pseudocompact Nakayama, strictness, the trace-ring limit argument, Cayley–Hamilton identity) are all sound; in-book references point only backward; the table of contents matches all eighteen chapters.
+
+Cosmetic items only: line 1857 misstates Banach spaces over nondiscrete fields as linearly topologized; line 1024 understates "nonzero" where "units" is meant; line 1014 garbles the embedding/Krull dimension phrasing; line 1686 has an apparent typo ("native" for "natural"); lines 639–646/2529–2532 use conormal-sequence right-exactness without a located Mathlib lemma (mathematically correct, used qualitatively).
+
+### Book 058 — `058-formal-schemes-gaga-and-algebraization.md`
+
+**Verdict: FAIL — the formal/algebraic core (Chapters 1–10, 13–16) is well grounded in declared prerequisites, but Chapter 9 (the intended discharge of X012, Grothendieck existence) invokes never-proved "Formal Serre vanishing"/"formal global generation", and Chapters 11–12 (complex GAGA) rest on analytic machinery proved nowhere in Mathlib or Books ≤057.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 1368 (EOF), in chronological/result order, during this audit.
+
+Verified imports: Book 008 relative Proj/ampleness, Book 015's theorem on formal functions, Chow's lemma, vanishing bounds, exact base-change criterion — all present at cited locations; Book 057 adic topologies/Artin–Rees/completed tensor; Mathlib supplies Zariski's main theorem for the proper-quasi-finite steps (citation hygiene only). Roadmap disclaimers of rigid generic fibers are harmless; no forward references exist.
+
+Defects: (1) "Formal Serre vanishing" and "formal global generation" at lines 793 and 867 occur nowhere else in the corpus and are never derived; consumers are §9.3 essential surjectivity and §10.3's embedding construction — i.e., X012's discharge and the ample-line criterion. See X068. (2) The complex GAGA chapters (lines 986–1063) consume cohomology of `\mathcal O(n)` via Cauchy formula on polycircular regions, Grauert/Remmert coherence of analytic direct images via Weierstrass charts, and Stein-cover/Cartan B vanishing — none exists in Mathlib or any earlier book (Book 047 covers curves only and carries X064); the text presents these as proved. Consumers: Theorem 12.2, §12.3 equivalence, Pic comparison, §12.4 morphism algebraization, §15.3. (3) Inherited X008 consumer at line 1288 (Book 015 §11.2's polarization-isogeny package). (4) Sketch-level: sheaf property of completed localization asserted from levelwise sheafness at line 297 (limits of sheaves need not be sheaves); nilpotent-thickening invariance of universal closedness uncited (lines 397–399, 662, 863). Cosmetic: malformed math delimiters at lines 831/881/1070.
+
+The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
+
 ## Pending scope inventory
 
 The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
 
-- PENDING — Book 057, `057-artinian-and-complete-local-coefficient-rings.md`
-- PENDING — Book 058, `058-formal-schemes-gaga-and-algebraization.md`
 - PENDING — Book 059, `059-rigid-analytic-curves-and-formal-models.md`
 - PENDING — Book 060, `060-rigid-uniformization-of-abelian-varieties.md`
 - PENDING — Book 061, `061-semistable-abelian-varieties-and-monodromy.md`
@@ -1174,3 +1194,19 @@ The following manuscripts are in this review's assigned 001–064 scope and rema
 - X036/X037 gain consumers via Book 056's uncited dependence on Books 051/042 chains (lines 151–583 region).
 
 Verdicts: Book 054 PASS. Book 055 PASS. Book 056 FAIL (X067 + inherited).
+
+### X068 — Book 058's Grothendieck-existence discharge and complex GAGA rest on unproved named/analytic inputs
+
+- **Deficient source:** Book 058, lines 793 and 867 ("Formal Serre vanishing" / "formal global generation" — occur nowhere else in the corpus, never derived); lines 986–1063 (complex GAGA: `\mathcal O(n)` cohomology via Cauchy formula on polycircular regions, Grauert/Remmert coherence of analytic direct images via Weierstrass charts, Stein covers/Cartan B — all presented as proved); line 297 (sheaf property of completed localization from levelwise sheafness).
+- **Consumers:** §9.3 essential surjectivity and §10.3 embedding construction (i.e., the X012 discharge that Book 017 §14.3 waits for); Theorem 12.2, §12.3 equivalence, Pic comparison (line 1063), §12.4 morphism algebraization, §15.3; downstream Books 059–062 and every consumer of Grothendieck existence.
+- **Needed results:** a written uniform-in-`n` vanishing/generation argument from Book 015's theorem on formal functions; either the complex-analytic foundation package as explicit assumptions with Theorem 12.2 stated conditionally, or an in-book development restricted to what is provable.
+- **Why unavailable:** Mathlib has no complex analytic spaces/Stein theory (its Weierstrass preparation is formal); Books ≤057 contain no analytic coherence machinery; Book 047's topology package is itself X064-flagged.
+- **Recommended chronological repair:** add the formal-vanishing preliminary before §9.3; relabel Chapter 11–12 inputs in the §16.2 ledger and state Theorem 12.2 conditionally; justify or hedge line 297.
+
+### Consumer updates to earlier findings (batch 057–058)
+
+- X008 gains consumer: Book 058 line 1288 (and §15.3 generally).
+- X012 status: still open — its intended source Book 058 does not yet prove Grothendieck existence unconditionally (X068).
+- Book 057 verdict PASS; cosmetic items only (recorded in its entry).
+
+Verdicts: Book 057 PASS. Book 058 FAIL (X068 + inherited X008).
