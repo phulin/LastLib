@@ -159,11 +159,6 @@ $$
 M/\mathbf Q,\qquad \Gamma=\operatorname{Gal}(M/\mathbf Q),
 $$
 
-Its arithmetic provenance is fixed upstream: Book 178, Theorem 12.2 supplies the restricted
-signed-special finite fibre and retained support, while Book 182, Proposition 7.1 and Theorem
-9.1 supply the selected-three packets and their signed-special realizations. This book uses
-that selected output through Book 183, Theorem 11.1.
-
 and the absolutely irreducible distinguished representation
 
 $$
@@ -171,6 +166,11 @@ $$
 \qquad \det\rho=\chi_\ell.
 \tag{1.1}
 $$
+
+Their arithmetic provenance is fixed upstream: Book 178, Theorem 12.2 supplies the restricted
+signed-special finite fibre and retained support, while Book 182, Proposition 7.1 and Theorem
+9.1 supply the selected-three packets and their signed-special realizations. This book uses
+that selected output through Book 183, Theorem 11.1.
 
 Here $E/\mathbf Q_\ell$ is finite, $\ell\geq7$, and no lattice is part of the input. The
 restriction $\rho|_{G_M}$ is absolutely irreducible; consequently every
