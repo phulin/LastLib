@@ -112,8 +112,8 @@ theorem chapter07_local_field_units_noncompact
     NoncompactSpace Kˣ := by
   exact
     @LastLib.Book05LocalClassFieldTheory.Chapter01.chapter01_local_field_units_noncompact
-      K _ D.valuation D.local_field D.valuation_coordinate _ _
-      D.unit_group_topology D.unit_group_topological D.coordinate_equiv
+      K _ D.valuation D.local_field _ _ D.unit_group_topology
+      D.unit_group_topological inferInstance D.coordinate_equiv
 
 /-- The profinite abelian Galois target is compact. -/
 theorem chapter07_reciprocity_target_is_compact

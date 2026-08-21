@@ -174,8 +174,7 @@ theorem chapter03_closedImmersion_projective (i : X ⟶ S) [IsClosedImmersion i]
   obtain ⟨e, he⟩ := chapter02_free_rank_one_projective_bundle_is_base S P
   obtain ⟨j, hj, hji⟩ :=
     chapter02_closed_immersion_transport_to_identity_bundle i (by infer_instance) P e he
-  exact ⟨{ module := M, ambient := P, embedding := j,
-    isClosedImmersion := hj, overBase := hji }⟩
+  exact ⟨{ module := M, ambient := P, embedding := j, isClosedImmersion := hj, overBase := hji }⟩
 
 /-- An open subscheme of a projective `S`-scheme is quasi-projective over `S`. -/
 theorem chapter03_openImmersion_quasiProjective (j : X ⟶ Y) (f : Y ⟶ S)
