@@ -220,7 +220,8 @@ $$
 
 is a finite projective $R$-module, $L\otimes_RK=W$, and $L_{\mathfrak p}$ is its localization at every $\mathfrak p$. Moreover
 
-# $$L\otimes_RL
+$$
+L\otimes_RL=
 
 \{z\in W\otimes_KW:z\in
 L_{\mathfrak p}\otimes_{R_{\mathfrak p}}L_{\mathfrak p}
@@ -874,7 +875,8 @@ $$
 
 and the carry identity
 
-# $$\left\lfloor\frac{i+j}{3}\right\rfloor+\left\lfloor\frac{(i+j)\bmod3+k}{3}\right\rfloor
+$$
+\left\lfloor\frac{i+j}{3}\right\rfloor+\left\lfloor\frac{(i+j)\bmod3+k}{3}\right\rfloor=
 
 \left\lfloor\frac{j+k}{3}\right\rfloor
 +\left\lfloor\frac{i+(j+k)\bmod3}{3}\right\rfloor

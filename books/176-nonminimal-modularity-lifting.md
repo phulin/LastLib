@@ -1403,7 +1403,8 @@ positive-rank $S$-free patched modules, and the finite source action images.
 
 For completeness, the avoidance faithfulness begins with
 
-# $$\operatorname {depth}_{P_\infty^{\rm av}}M_\infty^{\rm av}
+$$
+\operatorname {depth}_{P_\infty^{\rm av}}M_\infty^{\rm av}=
 
 \operatorname {depth}_{S_\infty^{\rm fr}}M_\infty^{\rm av}
 =h+4m.
@@ -1448,7 +1449,8 @@ $\mathcal O$-finite. The finiteness clause of Book 145, Corollary 17.4, equivale
 **Corollary 1.1I (optional exact acting-image augmentation).** In Theorem 1.1H, suppose in
 addition that
 
-# $$A_\infty^{\rm des}\cap\mathfrak a\operatorname {End}_{S_\infty^{\rm fr}}(M_\infty^{\rm des})
+$$
+A_\infty^{\rm des}\cap\mathfrak a\operatorname {End}_{S_\infty^{\rm fr}}(M_\infty^{\rm des})=
 
 \mathfrak aA_\infty^{\rm des}.
 \tag{1.8aq}

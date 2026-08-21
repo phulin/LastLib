@@ -563,7 +563,8 @@ The next lemma will eliminate the apparent inner-form index.
 
 **Lemma 3.2 (common generic support gives a common image order).** Let $A$ be an $\mathcal O$-algebra acting on two finite free modules $L_1,L_2$. Assume
 
-# $$\ker\bigl(A_E\to\operatorname{End}_E(L_{1,E})\bigr)
+$$
+\ker\bigl(A_E\to\operatorname{End}_E(L_{1,E})\bigr)=
 
 \ker\bigl(A_E\to\operatorname{End}_E(L_{2,E})\bigr).
 \tag{3.7}
@@ -571,7 +572,8 @@ $$
 
 Then
 
-# $$\ker\bigl(A\to\operatorname{End}_{\mathcal O}(L_1)\bigr)
+$$
+\ker\bigl(A\to\operatorname{End}_{\mathcal O}(L_1)\bigr)=
 
 \ker\bigl(A\to\operatorname{End}_{\mathcal O}(L_2)\bigr).
 \tag{3.8}
@@ -1617,7 +1619,8 @@ where $V_\Pi$ denotes the cohomological realization of the packet, with its one-
 
 The finite module $\mathcal C_{\mathrm{br},v}$ disappears after tensoring with $E$, so (8.2) has generic graded pieces $X_v^\vee$ and $X_v(-1)$. Book 125 makes the retained characteristic-zero Hecke action semisimple, hence the filtration splits as a Hecke module. The generic graph pairing is perfect and Hecke-adjoint; on the adjoint-stable block the actions on $X_v$ and $X_v^\vee$ therefore have the same kernel. It follows directly that
 
-# $$\ker\bigl(\mathbb T^{\Sigma,\mathrm{abs}}_E\to\operatorname{End}_E(Q_{\mathfrak m,E})\bigr)
+$$
+\ker\bigl(\mathbb T^{\Sigma,\mathrm{abs}}_E\to\operatorname{End}_E(Q_{\mathfrak m,E})\bigr)=
 
 \ker\bigl(\mathbb T^{\Sigma,\mathrm{abs}}_E
 \to\operatorname{End}_E(X_{v,\mathfrak m,E})\bigr).

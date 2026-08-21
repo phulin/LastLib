@@ -1815,7 +1815,8 @@ separating component projector. Let $\mathbb T_{\mathrm{abs}}$ be the integral a
 away-from-level Hecke algebra preserving the displayed lattices and put
 $\mathbb T_{\mathrm{abs},E}=\mathbb T_{\mathrm{abs}}\otimes_{\mathcal O}E$. Then
 
-# $$\ker\!\left(\mathbb T_{\mathrm{abs},E}\longrightarrow\operatorname{End}(N_{v,E}^+)\right)
+$$
+\ker\!\left(\mathbb T_{\mathrm{abs},E}\longrightarrow\operatorname{End}(N_{v,E}^+)\right)=
 
 \ker\!\left(\mathbb T_{\mathrm{abs},E}
 \longrightarrow\operatorname{End}(X_{v,E}^+)\right).

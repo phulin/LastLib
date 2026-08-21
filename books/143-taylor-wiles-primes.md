@@ -1037,7 +1037,8 @@ Its character-weighted consequence is the holomorphy at $s=1$ used in the former
 prove holomorphy and nonvanishing at one. Applied through reciprocity to a finite abelian
 extension $D/B$, it gives
 
-# $$\sum_{w\text{ unramified in }D}\frac{\chi(\operatorname{Frob}_w)}{(\mathrm Nw)^s}
+$$
+\sum_{w\text{ unramified in }D}\frac{\chi(\operatorname{Frob}_w)}{(\mathrm Nw)^s}=
 
 \begin{cases}
 \log(1/(s-1))+O(1),&\chi=1,\\
@@ -2088,7 +2089,8 @@ $$
 
 The localization matrix is
 
-# $$\begin{pmatrix}\lambda_1(x_1)&\lambda_1(x_2)\\\lambda_2(x_1)&\lambda_2(x_2)\end{pmatrix}
+$$
+\begin{pmatrix}\lambda_1(x_1)&\lambda_1(x_2)\\\lambda_2(x_1)&\lambda_2(x_2)\end{pmatrix}=
 
 \begin{pmatrix}
 \ast&0\\

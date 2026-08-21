@@ -1938,7 +1938,9 @@ $$
 
 It is an explicit module, not an unspecified index; Theorem 10.2 proves that it is finite under the abelian Ihara condition. Block row and column operations with unit determinant give
 
-# $$\begin{pmatrix}1&0\\-F_v^_&1\end{pmatrix}B_v\begin{pmatrix}1&-F_v^_\\0&1\end{pmatrix}
+$$
+\begin{pmatrix}1&0\\-F_v^\ast&1\end{pmatrix}B_v
+\begin{pmatrix}1&-F_v^\ast\\0&1\end{pmatrix}=
 
 \begin{pmatrix}1&0\\0&1-(F_v^*)^2\end{pmatrix}. \tag{10.12}
 $$

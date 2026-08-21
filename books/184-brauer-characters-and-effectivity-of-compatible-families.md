@@ -318,7 +318,8 @@ following more structured, still finite replacement for $(\mathrm{AI}_2)$. For e
 $(i,j,x)$ occurring in its Mackey calculation, with $D=D_{ij}(x)$, $L=M^D$, and
 $\delta=\delta_{ij,x}$ as in (3.15)--(3.16), require
 
-# $$\dim\operatorname{Hom}_{G_L}\left(r_{D,\tau},r_{D,\tau}\otimes\delta_\tau\right)
+$$
+\dim\operatorname{Hom}_{G_L}\left(r_{D,\tau},r_{D,\tau}\otimes\delta_\tau\right)=
 
 \begin{cases}
 1,&\pi_D\otimes(\psi_\delta\circ\det)\simeq\pi_D,\\

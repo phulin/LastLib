@@ -3073,7 +3073,8 @@ $$
 
 Third, at finite level let $M_N^{\mathrm{des}}$ and $M_N^{\mathrm{av}}$ be modules for their respective source actions and for the common diamond algebra. Define their base changes to the common quotient by
 
-# $$\overline M_N^{\bullet}
+$$
+\overline M_N^{\bullet}=
 
 (M_N^{\bullet}/\varpi)
 \otimes_{P^{\bullet}/\varpi}\overline P.

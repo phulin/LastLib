@@ -1234,7 +1234,8 @@ The $S_3$ relation (2.6) is a compact diagnostic. Let $K_2$ and $K_3$ be the fix
 a transposition subgroup and the alternating subgroup. For rank-$d$ source representations
 $V_2$ and $V_3$, the formal expression is
 
-## $$\operatorname{Ind}_{G_{K_2}}^{G_F}V_2
+$$
+\operatorname{Ind}_{G_{K_2}}^{G_F}V_2-
 
 \operatorname{Ind}_{G_{K_3}}^{G_F}(V_3\otimes\omega).
 \tag{6.8a}
@@ -1338,7 +1339,8 @@ eigenvalues of $V_{H_i,\tau}\otimes\theta_{i,\tau}$ at $w$.
 On the coset block belonging to $w$, $\operatorname{Frob}_v$ acts in a cycle of length
 $f_w$, and its $f_w$-th power acts internally as $\operatorname{Frob}_w$. Hence
 
-# $$\det(1-\operatorname{Frob}_vT\mid A_{i,\tau})
+$$
+\det(1-\operatorname{Frob}_vT\mid A_{i,\tau})=
 
 \prod_{w\mid v}\prod_{j=1}^d
 (1-\alpha_{i,w,j}T^{f_w}).
@@ -1442,7 +1444,8 @@ $$
 
 Then
 
-# $$\langle\mathcal R_{\mathfrak B,\tau},\mathcal R_{\mathfrak B,\tau}\rangle
+$$
+\langle\mathcal R_{\mathfrak B,\tau},\mathcal R_{\mathfrak B,\tau}\rangle=
 
 \sum_{i,j}n_in_jG_\tau(i,j).
 \tag{7.5}
@@ -1740,7 +1743,8 @@ $$
 
 Artin formalism gives the partial standard $L$-function identity
 
-# $$L_F^S(A_{i,\tau},s)
+$$
+L_F^S(A_{i,\tau},s)=
 
 L_{F_i}^{S_{F_i}}(\pi_{H_i}\otimes\psi_i,s).
 \tag{8.2}
@@ -1769,7 +1773,8 @@ local data in a range not supplied by the character identity.
 
 Local Mackey theory is exact:
 
-# $$\mathcal R_{\mathfrak B,\tau}|_{G_{F_v}}
+$$
+\mathcal R_{\mathfrak B,\tau}|_{G_{F_v}}=
 
 \sum_i n_i\sum_{w\mid v}
 \left[

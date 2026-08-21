@@ -778,7 +778,7 @@ At a place $\lambda$, form the virtual difference
 $$
 \mathcal D_\lambda=
 
-## \bigl([R_{\mathfrak B,\lambda}^+]-[R_{\mathfrak B,\lambda}^-]\bigr)
+\bigl([R_{\mathfrak B,\lambda}^+]-[R_{\mathfrak B,\lambda}^-]\bigr)-
 
 \bigl([R_{\mathfrak B',\lambda}^+]-[R_{\mathfrak B',\lambda}^-]\bigr).
 \tag{5.3}
@@ -1624,7 +1624,8 @@ is an $E$-line. Equation (8.9) makes it stable under the Weil group. The control
 includes one sign $\varepsilon_2\in\{1,-1\}$ such that arithmetic Frobenius acts on the
 quotient by $\varepsilon_2$ and on $\mathscr L_2$ by $2\varepsilon_2$:
 
-# $$\left(F_2\mid D_2/\mathscr L_2,F_2\mid\mathscr L_2\right)
+$$
+\left(F_2\mid D_2/\mathscr L_2,F_2\mid\mathscr L_2\right)=
 
 (\varepsilon_2,2\varepsilon_2).
 \tag{8.13}
