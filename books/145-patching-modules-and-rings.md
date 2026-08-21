@@ -202,6 +202,8 @@ Fix a controlled presentation-compatible Taylor--Wiles system of Book 144. Thus 
 
 The free-module construction will be developed first. The balanced and perfect-complex forms will then be stated with their weaker conclusions and their genuinely additional hypotheses.
 
+The imported foundations are precisely earlier results. Book 144 supplies the controlled presentation-compatible systems, the fixed diamond and deformation sources, the uniform padded relation bound, and the coherent finite-shadow data. Book 69 supplies the effective relative deformation presentations from which that bound originates. Book 70 supplies the regular-sequence, depth, Auslander--Buchsbaum, finite-map, complete-intersection, support, and Fitting-ideal results used after the patched objects have been constructed. The finite-tree compactness, Mittag--Leffler lifting, limiting-kernel calculation, augmentation comparison, and paired support-transfer statements needed here are proved in this book rather than assumed as a patching interface.
+
 Every ring homomorphism is continuous and local. Every module called finite is finitely generated. Inverse limits carry their inverse-limit topologies. For a complete local ring $B$ with maximal ideal $\mathfrak m_B$, a quotient described as a finite shadow is always an Artinian quotient by an explicitly stated open ideal; no untruncated infinite ring is inserted into a finite diagram.
 
 ### 1.4 Three rings that must not be conflated
