@@ -60,40 +60,54 @@ abbrev Chapter05UnramifiedExtensionData
     [FiniteDimensional K L] [IsGalois K L] :=
   LastLib.Book05LocalClassFieldTheory.Chapter04.Chapter04UnramifiedExtensionData K L
 
-/- The quotient equivalence supplied by the class-formation data and the
-   residue-field equivalence supplied by `U` are independent choices.  This
-   bridge is the missing normalization datum: it identifies the canonical
-   finite-Artin quotient map with the arithmetic Frobenius selected by `U`.
-   Keeping it separate from `D` is important, since `D` is also used for
-   ramified extensions, where no unramified Frobenius datum is present. -/
-structure Chapter05FiniteReciprocityNormalization
+/- The sign check in the source is a statement about the cap product before
+   it is inverted to obtain reciprocity.  This interface records that
+   chain-level normalization, rather than assuming the desired Artin-map
+   conclusion itself. -/
+noncomputable def chapter05CapImageOfGaloisElement
+    {K L : Type} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L]
+    [Fintype (Gal(L / K))]
+    (D : Chapter05LocalClassFormationData K L)
+    (σ : Gal(L / K)) : Additive (chapter05NormQuotient K L) :=
+  D.degreeZeroNorm
+    ((D.topRestriction.iso 0).toLinearEquiv.toAddEquiv
+      ((D.capProduct.cap (⊤ : Subgroup (Gal(L / K))) (-2))
+        ((D.topRestrictionTrivial.iso (-2)).symm.toLinearEquiv.toAddEquiv
+          ((chapter05TateMinusTwoAbelianizationIso (Gal(L / K))).symm
+            (Additive.ofMul (chapter05AbelianizationMap (Gal(L / K)) σ))))))
+
+structure Chapter05UnramifiedCapNormalization
     {K L : Type} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
     [Fintype (Gal(L / K))]
     (D : Chapter05LocalClassFormationData K L)
     (U : Chapter05UnramifiedExtensionData K L) where
-  quotient_uniformizer :
-    chapter05FiniteArtinQuotientEquiv D
-        (QuotientGroup.mk' (chapter05NormSubgroup K L) U.uniformizer) =
-      chapter05AbelianizationMap (Gal(L / K)) U.arithmeticFrobenius
+  cap_arithmeticFrobenius :
+    chapter05CapImageOfGaloisElement D U.arithmeticFrobenius =
+      Additive.ofMul (QuotientGroup.mk' (chapter05NormSubgroup K L) U.uniformizer)
 
-theorem chapter05FiniteReciprocityNormalization.artin_uniformizer
+theorem chapter05UnramifiedCapNormalization.artin_uniformizer
     {K L : Type} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
     [Fintype (Gal(L / K))]
     (D : Chapter05LocalClassFormationData K L)
     (U : Chapter05UnramifiedExtensionData K L)
-    (N : Chapter05FiniteReciprocityNormalization D U) :
+    (N : Chapter05UnramifiedCapNormalization D U) :
     chapter05FiniteArtinMap D U.uniformizer =
       chapter05AbelianizationMap (Gal(L / K)) U.arithmeticFrobenius := by
-  simpa [chapter05FiniteArtinMap] using N.quotient_uniformizer
+  /- Prior attempt: the quotient-level equality used to be assumed directly
+     as `N.quotient_uniformizer`; it was circular because it was the desired
+     conclusion of the sign check. -/
+  sorry
 
 theorem chapter05_unramified_uniformizer_is_arithmetic_frobenius_canonical_map
     {K L : Type} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [Fintype (Gal(L / K))]
     (D : Chapter05LocalClassFormationData K L)
-    (U : Chapter05UnramifiedExtensionData K L) :
+    (U : Chapter05UnramifiedExtensionData K L)
+    (N : Chapter05UnramifiedCapNormalization D U) :
     chapter05FiniteReciprocityMap D U.uniformizer = U.arithmeticFrobenius := by
   sorry
 
@@ -102,10 +116,11 @@ theorem chapter05_unramified_uniformizer_is_arithmetic_frobenius_canonical_artin
     [FiniteDimensional K L] [IsGalois K L]
     [Fintype (Gal(L / K))]
     (D : Chapter05LocalClassFormationData K L)
-    (U : Chapter05UnramifiedExtensionData K L) :
+    (U : Chapter05UnramifiedExtensionData K L)
+    (N : Chapter05UnramifiedCapNormalization D U) :
     chapter05FiniteArtinMap D U.uniformizer =
       chapter05AbelianizationMap (Gal(L / K)) U.arithmeticFrobenius := by
-  sorry
+  exact chapter05UnramifiedCapNormalization.artin_uniformizer D U N
 
 theorem chapter05_unramified_uniformizer_is_arithmetic_frobenius
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -113,9 +128,9 @@ theorem chapter05_unramified_uniformizer_is_arithmetic_frobenius
     [Fintype (Gal(L / K))]
     (D : Chapter05LocalClassFormationData K L)
     (U : Chapter05UnramifiedExtensionData K L)
-    (N : Chapter05FiniteReciprocityNormalization D U) :
+    (N : Chapter05UnramifiedCapNormalization D U) :
     chapter05FiniteReciprocityMap D U.uniformizer = U.arithmeticFrobenius := by
-  exact chapter05_unramified_uniformizer_is_arithmetic_frobenius_canonical_map D U
+  exact chapter05_unramified_uniformizer_is_arithmetic_frobenius_canonical_map D U N
 
 theorem chapter05_unramified_uniformizer_is_arithmetic_frobenius_in_abelianization
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -123,10 +138,10 @@ theorem chapter05_unramified_uniformizer_is_arithmetic_frobenius_in_abelianizati
     [Fintype (Gal(L / K))]
     (D : Chapter05LocalClassFormationData K L)
     (U : Chapter05UnramifiedExtensionData K L)
-    (N : Chapter05FiniteReciprocityNormalization D U) :
+    (N : Chapter05UnramifiedCapNormalization D U) :
     chapter05FiniteArtinMap D U.uniformizer =
     chapter05AbelianizationMap (Gal(L / K)) U.arithmeticFrobenius := by
-  exact chapter05_unramified_uniformizer_is_arithmetic_frobenius_canonical_artin D U
+  exact chapter05_unramified_uniformizer_is_arithmetic_frobenius_canonical_artin D U N
 
 structure Chapter05FiniteReciprocityCompatibility
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -171,7 +186,7 @@ theorem chapter05_finite_local_reciprocity_at_unramified
     [Fintype (Gal(L / K))]
     (D : Chapter05LocalClassFormationData K L)
     (U : Chapter05UnramifiedExtensionData K L)
-    (N : Chapter05FiniteReciprocityNormalization D U) :
+    (N : Chapter05UnramifiedCapNormalization D U) :
     ∃! e : chapter05NormQuotient K L ≃* Gal(L / K),
       Chapter05FiniteReciprocityCompatibilityAtUnramified D e U := by
   sorry
@@ -181,7 +196,8 @@ theorem chapter05_finite_local_reciprocity_at_unramified_canonical
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [Fintype (Gal(L / K))]
     (D : Chapter05LocalClassFormationData K L)
-    (U : Chapter05UnramifiedExtensionData K L) :
+    (U : Chapter05UnramifiedExtensionData K L)
+    (N : Chapter05UnramifiedCapNormalization D U) :
     ∃! e : chapter05NormQuotient K L ≃* Gal(L / K),
       Chapter05FiniteReciprocityCompatibilityAtUnramified D e U := by
   sorry

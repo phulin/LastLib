@@ -106,8 +106,7 @@ noncomputable def chapter05FiniteArtinQuotientEquiv
       chapter05TateCohomology (Gal(L / K))
           (Rep.trivial ℤ (Gal(L / K)) ℤ) (-2) ≃+
         Additive (chapter05Abelianization (Gal(L / K))) :=
-    (chapter05_tate_minus_two_is_homology (Gal(L / K))).toLinearEquiv.toAddEquiv.trans
-      (chapter05H1AbelianizationIso (Gal(L / K)))
+    chapter05TateMinusTwoAbelianizationIso (Gal(L / K))
   let eAdd : Additive (chapter05NormQuotient K L) ≃+
       Additive (chapter05Abelianization (Gal(L / K))) :=
     sourceToNorm.symm.trans sourceToAbelianization
@@ -248,15 +247,6 @@ theorem chapter05_reverse_cyclic_generator_inverts
     {G A : Type*} [Group G] [CommGroup A] (f : G →* A) (g : G) :
     f g⁻¹ = (f g)⁻¹ := by
   simp
-
-/- The local-field topology result used in the source is isolated as a
-bridge: once the norm quotient map is known to be continuous (equivalently,
-once the open norm subgroup has been proved), continuity of reciprocity is
-the displayed composition above. -/
-structure Chapter05OpenNormSubgroup
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [TopologicalSpace Kˣ] where
-  isOpen : IsOpen (chapter05NormSubgroup K L : Set Kˣ)
 
 end
 

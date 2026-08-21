@@ -92,6 +92,15 @@ noncomputable def chapter05_tate_minus_two_is_homology
       chapter05GroupHomology G (Rep.trivial ℤ G ℤ) 1 :=
   chapter05TateMinusTwoHomologyIso G
 
+/- The two identifications in the source combine to the actual
+abelianization target used by finite reciprocity. -/
+noncomputable def chapter05TateMinusTwoAbelianizationIso
+    (G : Type) [Group G] [Fintype G] :
+    chapter05TateCohomology G (Rep.trivial ℤ G ℤ) (-2) ≃+
+      Additive (chapter05Abelianization G) :=
+  (chapter05_tate_minus_two_is_homology G).toLinearEquiv.toAddEquiv.trans
+    (chapter05H1AbelianizationIso G)
+
 /- LOCAL_DEPENDENCY_GUESS: the fixed-point/norm calculation for the units of
 a finite Galois local extension is supplied by the local-class-field chapters;
 the record below exposes its exact degree-zero target without choosing a

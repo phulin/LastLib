@@ -35,13 +35,6 @@ theorem chapter05_maximal_abelian_subextension_is_abelian
   intro σ τ
   exact IsMulCommutative.is_comm.comm σ τ
 
-/- The finite reciprocity target is named before the Tate argument; the
-quotient equivalence itself is constructed after class formation. -/
-abbrev chapter05FiniteReciprocityTarget
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsGalois K L] :=
-  chapter05Abelianization (Gal(L / K))
-
 end
 
 end LastLib.Book05LocalClassFieldTheory.Chapter05

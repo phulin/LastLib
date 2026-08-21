@@ -116,19 +116,6 @@ abbrev chapter05NormQuotient
     [FiniteDimensional K L] :=
   LastLib.Book05LocalClassFieldTheory.Chapter03.chapter03NormQuotient K L
 
-def chapter05NormQuotientMk
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] (x : Kˣ) : chapter05NormQuotient K L :=
-  QuotientGroup.mk' (chapter05NormSubgroup K L) x
-
-theorem chapter05NormQuotientMk_eq_one_iff
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] (x : Kˣ) :
-    chapter05NormQuotientMk K L x = 1 ↔ x ∈ chapter05NormSubgroup K L := by
-  change QuotientGroup.mk' (chapter05NormSubgroup K L) x = 1 ↔
-    x ∈ chapter05NormSubgroup K L
-  exact QuotientGroup.eq_one_iff (N := chapter05NormSubgroup K L) x
-
 def chapter05MaximalAbelianSubextension
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] : IntermediateField K L :=
