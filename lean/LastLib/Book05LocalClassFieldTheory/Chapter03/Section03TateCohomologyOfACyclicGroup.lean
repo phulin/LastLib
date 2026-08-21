@@ -412,18 +412,105 @@ noncomputable def chapter03_tate_h0_cyclic_formula
     {G : Type} [CommGroup G] [Fintype G] (A : Rep ℤ G) (σ : G)
     (hσ : ∀ τ : G, τ ∈ Subgroup.zpowers σ) :
     chapter03TateH0 A ≅ chapter03TateH0Concrete A σ := by
-  sorry
+  letI : NeZero 2 := ⟨by norm_num⟩
+  let h2 : chapter03TateCohomology A 2 ≅ chapter03TateH0Concrete A σ :=
+    (TateCohomology.isoGroupCohomology (R := ℤ) (G := G) 2).app A ≪≫
+      Rep.FiniteCyclicGroup.groupCohomologyIsoEven A σ hσ 2 (by norm_num)
+  exact (chapter03_tate_periodicity A σ hσ 0).symm ≪≫ h2
 
 noncomputable def chapter03_tate_hminusone_cyclic_formula
     {G : Type} [CommGroup G] [Fintype G] (A : Rep ℤ G) (σ : G)
     (hσ : ∀ τ : G, τ ∈ Subgroup.zpowers σ) :
     chapter03TateHMinusOne A ≅ chapter03TateHMinusOneConcrete A σ := by
-  sorry
+  letI : NeZero 1 := ⟨by norm_num⟩
+  let h1 : chapter03TateCohomology A 1 ≅ chapter03TateHMinusOneConcrete A σ :=
+    (TateCohomology.isoGroupCohomology (R := ℤ) (G := G) 1).app A ≪≫
+      Rep.FiniteCyclicGroup.groupCohomologyIsoOdd A σ hσ 1 (by norm_num)
+  exact (chapter03_tate_periodicity A σ hσ (-1)).symm ≪≫ h1
 
 /-- The multiplicative Galois module `Lˣ` used in the local-field specialization. -/
 abbrev chapter03MultiplicativeGaloisModule
     (K L : Type*) [Field K] [Field L] [Algebra K L] :=
   Rep.ofAlgebraAutOnUnits K L
+
+attribute [local instance] IsCyclic.commGroup in
+private noncomputable def chapter03_fixed_units_add_equiv
+    (K L : Type) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [IsCyclic Gal(L/K)]
+    (σ : Gal(L/K)) (hσ : ∀ τ : Gal(L/K), τ ∈ Subgroup.zpowers σ) :
+    Additive Kˣ ≃+
+      LinearMap.ker ((chapter03MultiplicativeGaloisModule K L).applyAsHom σ - 𝟙
+        (chapter03MultiplicativeGaloisModule K L)).hom.toLinearMap := by
+  let f : Additive Kˣ →+
+      LinearMap.ker ((chapter03MultiplicativeGaloisModule K L).applyAsHom σ - 𝟙
+        (chapter03MultiplicativeGaloisModule K L)).hom.toLinearMap :=
+    { toFun := fun x =>
+        ⟨Additive.ofMul (Units.map (algebraMap K L).toMonoidHom x.toMul), by
+          apply LinearMap.mem_ker.mpr
+          simp only [Rep.sub_hom, hom_id,
+            Representation.IntertwiningMap.sub_toLinearMap,
+            Representation.IntertwiningMap.toLinearMap_id, LinearMap.sub_apply,
+            Representation.IntertwiningMap.coe_toLinearMap, Rep.applyAsHom_apply,
+            LinearMap.id_coe, id_eq]
+          apply sub_eq_zero.mpr
+          change Additive.ofMul (Units.map σ.toRingEquiv.toMonoidHom
+              (Units.map (algebraMap K L).toMonoidHom x.toMul)) =
+            Additive.ofMul (Units.map (algebraMap K L).toMonoidHom x.toMul)
+          apply congrArg Additive.ofMul
+          apply Units.ext
+          simp⟩
+      map_zero' := by
+        apply Subtype.ext
+        change Additive.ofMul (Units.map (algebraMap K L).toMonoidHom
+          (1 : Kˣ)) = (0 : Additive Lˣ)
+        simp
+      map_add' := by
+        intro x y
+        apply Subtype.ext
+        change Additive.ofMul (Units.map (algebraMap K L).toMonoidHom
+            (x.toMul * y.toMul)) =
+          Additive.ofMul (Units.map (algebraMap K L).toMonoidHom x.toMul) +
+            Additive.ofMul (Units.map (algebraMap K L).toMonoidHom y.toMul)
+        simp }
+  apply AddEquiv.ofBijective f
+  constructor
+  · intro x y hxy
+    apply Additive.ofMul.injective
+    apply Units.ext
+    apply (algebraMap K L).injective
+    have hxy' := congrArg Subtype.val hxy
+    change Additive.ofMul (Units.map (algebraMap K L).toMonoidHom x.toMul) =
+      Additive.ofMul (Units.map (algebraMap K L).toMonoidHom y.toMul) at hxy'
+    exact congrArg Units.val (congrArg Additive.toMul hxy')
+  · intro z
+    let zval : Additive Lˣ := z.1
+    have hzσ : (chapter03MultiplicativeGaloisModule K L).ρ σ z.1 = z.1 := by
+      apply sub_eq_zero.mp
+      simpa [Rep.sub_hom, Rep.applyAsHom] using z.2
+    have hzσ' : (chapter03MultiplicativeGaloisModule K L).ρ σ zval = zval := by
+      exact hzσ
+    have hzfix : ∀ τ : Gal(L / K), τ (zval.toMul : L) = (zval.toMul : L) := by
+      intro τ
+      have hzτ :=
+        (Representation.mem_invariants_iff_of_forall_mem_zpowers
+          (chapter03MultiplicativeGaloisModule K L).ρ σ hσ zval).2 hzσ' τ
+      change Additive.ofMul (Units.map τ.toRingEquiv.toMonoidHom zval.toMul) = zval at hzτ
+      exact congrArg Units.val (congrArg Additive.toMul hzτ)
+    obtain ⟨a, ha⟩ :=
+      (IsGalois.mem_range_algebraMap_iff_fixed (F := K) (x := (zval.toMul : L))).2 hzfix
+    have ha0 : a ≠ 0 := by
+      intro ha0
+      subst a
+      exact Units.ne_zero zval.toMul (by simpa using ha.symm)
+    let x : Kˣ := Units.mk0 a ha0
+    refine ⟨Additive.ofMul x, ?_⟩
+    apply Subtype.ext
+    change Additive.ofMul (Units.map (algebraMap K L).toMonoidHom x) = z.1
+    change Additive.ofMul (Units.map (algebraMap K L).toMonoidHom x) = zval
+    apply Additive.ofMul.injective
+    apply Units.ext
+    change algebraMap K L a = (zval.toMul : L)
+    exact ha
 
 attribute [local instance] IsCyclic.commGroup in
 noncomputable def chapter03_tate_h0_multiplicative_norm_quotient
@@ -433,7 +520,124 @@ noncomputable def chapter03_tate_h0_multiplicative_norm_quotient
     (hcyc : chapter03CyclicExtension K L n σ) :
     chapter03TateH0 (chapter03MultiplicativeGaloisModule K L) ≅
       ModuleCat.of ℤ (Additive (chapter03NormQuotient K L)) := by
-  sorry
+  let A := chapter03MultiplicativeGaloisModule K L
+  let T := Rep.FiniteCyclicGroup.normHomCompSub (k := ℤ) (G := Gal(L / K)) A σ
+  let eK : Additive Kˣ ≃+ T.moduleCatLeftHomologyData.K := by
+    change Additive Kˣ ≃+ LinearMap.ker ((A.applyAsHom σ - 𝟙 A).hom.toLinearMap)
+    exact chapter03_fixed_units_add_equiv K L σ
+      (chapter03_cyclic_extension_generator K L n σ hcyc)
+  let eT : chapter03TateH0 A ≅ ModuleCat.of ℤ T.moduleCatLeftHomologyData.H :=
+    chapter03_tate_h0_cyclic_formula A σ
+      (chapter03_cyclic_extension_generator K L n σ hcyc) ≪≫
+      T.moduleCatHomologyIso
+  let qH : Additive Kˣ →ₗ[ℤ] T.moduleCatLeftHomologyData.H :=
+    T.moduleCatLeftHomologyData.π.hom.comp eK.toIntLinearEquiv.toLinearMap
+  have hqH : Function.Surjective qH := by
+    intro z
+    obtain ⟨y, rfl⟩ := (ModuleCat.epi_iff_surjective T.moduleCatLeftHomologyData.π).1
+      inferInstance z
+    obtain ⟨x, rfl⟩ := eK.surjective y
+    exact ⟨x, rfl⟩
+  letI : (chapter03NormSubgroup K L).Normal :=
+    Subgroup.Normal.of_commutator_le (G := Kˣ) (H := chapter03NormSubgroup K L) (by
+      rw [(commutator_eq_bot_iff (G := Kˣ)).2 inferInstance]
+      exact bot_le)
+  letI : CommGroup (chapter03NormQuotient K L) :=
+    QuotientGroup.Quotient.commGroup (chapter03NormSubgroup K L)
+  letI : Module ℤ (Additive (chapter03NormQuotient K L)) := inferInstance
+  let qN : Additive Kˣ →ₗ[ℤ] Additive (chapter03NormQuotient K L) :=
+    { toFun := fun x =>
+        Additive.ofMul (QuotientGroup.mk' (chapter03NormSubgroup K L) x.toMul)
+      map_add' := by
+        intro x y
+        change Additive.ofMul (QuotientGroup.mk' (chapter03NormSubgroup K L)
+            (x.toMul * y.toMul)) =
+            Additive.ofMul (QuotientGroup.mk' (chapter03NormSubgroup K L) x.toMul) +
+            Additive.ofMul (QuotientGroup.mk' (chapter03NormSubgroup K L) y.toMul)
+        simp
+      map_smul' := by
+        intro z x
+        change Additive.ofMul (QuotientGroup.mk' (chapter03NormSubgroup K L)
+            (z • x : Additive Kˣ).toMul) = z •
+          Additive.ofMul (QuotientGroup.mk' (chapter03NormSubgroup K L) x.toMul)
+        simp }
+  have hnorm (u : Lˣ) :
+      A.norm.hom.toLinearMap (Additive.ofMul u) =
+        Additive.ofMul (Units.map (algebraMap K L).toMonoidHom
+          (chapter03NormUnit K L u)) := by
+    apply Additive.ext
+    apply Units.ext
+    change (Additive.toMul (A.norm.hom (Additive.ofMul u))).1 =
+      algebraMap K L (Algebra.norm K (u : L))
+    have hu' :
+        ((Rep.toAdditive (M := Gal(L / K)) (G := Lˣ)).symm (Additive.ofMul u) :
+          Additive Lˣ) = Additive.ofMul u := rfl
+    have hF : (inferInstance : Fintype (Gal(L / K))) = AlgEquiv.fintype K L :=
+      Subsingleton.elim _ _
+    cases hF
+    have hnorm' :=
+      groupCohomology.norm_ofAlgebraAutOnUnits_eq (K := K) (L := L) u
+    rw [hu'] at hnorm'
+    exact hnorm'
+  have hqN : Function.Surjective qN := by
+    intro z
+    obtain ⟨x, hx⟩ := QuotientGroup.mk'_surjective (chapter03NormSubgroup K L) z.toMul
+    refine ⟨Additive.ofMul x, ?_⟩
+    change Additive.ofMul (QuotientGroup.mk' (chapter03NormSubgroup K L) x) = z
+    exact congrArg Additive.ofMul hx
+  have hker : LinearMap.ker qH = LinearMap.ker qN := by
+    ext x
+    constructor
+    · intro hx
+      have hx0 : qH x = 0 := LinearMap.mem_ker.mp hx
+      have hxrange : eK x ∈ LinearMap.range T.moduleCatToCycles := by
+        apply (Submodule.Quotient.mk_eq_zero _).mp
+        change T.moduleCatLeftHomologyData.π.hom (eK x) = 0
+        exact hx0
+      rcases hxrange with ⟨y, hy⟩
+      let yval : Additive Lˣ := y
+      have hn : chapter03NormUnit K L yval.toMul = x.toMul := by
+        have hy' := congrArg Subtype.val hy
+        change A.norm.hom.toLinearMap yval =
+          Additive.ofMul (Units.map (algebraMap K L).toMonoidHom x.toMul) at hy'
+        have hny : A.norm.hom.toLinearMap yval =
+            Additive.ofMul (Units.map (algebraMap K L).toMonoidHom
+              (chapter03NormUnit K L yval.toMul)) := by
+          exact hnorm yval.toMul
+        rw [hny] at hy'
+        apply Units.ext
+        apply (algebraMap K L).injective
+        exact congrArg Units.val (congrArg Additive.toMul hy')
+      apply LinearMap.mem_ker.mpr
+      change Additive.ofMul (QuotientGroup.mk' (chapter03NormSubgroup K L) x.toMul) = 0
+      apply Additive.ofMul.injective
+      exact (QuotientGroup.eq_one_iff _).2
+        ((chapter03_mem_norm_subgroup_iff K L x.toMul).2 ⟨yval.toMul, hn⟩)
+    · intro hx
+      have hx0 : qN x = 0 := LinearMap.mem_ker.mp hx
+      change Additive.ofMul (QuotientGroup.mk' (chapter03NormSubgroup K L) x.toMul) = 0 at hx0
+      have hxmem : x.toMul ∈ chapter03NormSubgroup K L := by
+        apply (QuotientGroup.eq_one_iff _).1
+        exact Additive.ofMul.injective hx0
+      have hxnorm : ∃ u : Lˣ, chapter03NormUnit K L u = x.toMul :=
+        (chapter03_mem_norm_subgroup_iff K L x.toMul).1 hxmem
+      rcases hxnorm with ⟨u, hu⟩
+      have he : T.moduleCatToCycles (Additive.ofMul u) = eK x := by
+        apply Subtype.ext
+        change A.norm.hom.toLinearMap (Additive.ofMul u) =
+          Additive.ofMul (Units.map (algebraMap K L).toMonoidHom x.toMul)
+        rw [hnorm, hu]
+      apply LinearMap.mem_ker.mpr
+      change qH x = 0
+      change T.moduleCatLeftHomologyData.π.hom (eK x) = 0
+      rw [← he]
+      change (LinearMap.range T.moduleCatToCycles).mkQ
+        (T.moduleCatToCycles (Additive.ofMul u)) = 0
+      exact (Submodule.Quotient.mk_eq_zero _).2 ⟨_, rfl⟩
+  let eH := qH.quotKerEquivOfSurjective hqH
+  let eN := qN.quotKerEquivOfSurjective hqN
+  let eQ := Submodule.quotEquivOfEq (LinearMap.ker qH) (LinearMap.ker qN) hker
+  convert eT ≪≫ eH.symm.toModuleIso ≪≫ eQ.toModuleIso ≪≫ eN.toModuleIso using 1
 
 attribute [local instance] IsCyclic.commGroup in
 theorem chapter03_tate_hminusone_multiplicative_zero
@@ -442,7 +646,30 @@ theorem chapter03_tate_hminusone_multiplicative_zero
     (n : ℕ) (σ : Gal(L/K))
     (hcyc : chapter03CyclicExtension K L n σ) :
     Subsingleton (chapter03TateHMinusOne (chapter03MultiplicativeGaloisModule K L)) := by
-  sorry
+  letI : NeZero 1 := ⟨by norm_num⟩
+  let e1 : chapter03TateCohomology (chapter03MultiplicativeGaloisModule K L) 1 ≅
+      groupCohomology (chapter03MultiplicativeGaloisModule K L) 1 :=
+    (TateCohomology.isoGroupCohomology (R := ℤ) (G := Gal(L / K)) 1).app
+      (chapter03MultiplicativeGaloisModule K L)
+  let ep : chapter03TateCohomology (chapter03MultiplicativeGaloisModule K L) 1 ≅
+      chapter03TateHMinusOne (chapter03MultiplicativeGaloisModule K L) :=
+    by
+      convert chapter03_tate_periodicity (chapter03MultiplicativeGaloisModule K L) σ
+        (chapter03_cyclic_extension_generator K L n σ hcyc) (-1) using 1 <;> norm_num
+  let hsub : Subsingleton (groupCohomology (chapter03MultiplicativeGaloisModule K L) 1) :=
+    chapter03_hilbert90_h1_subsingleton K L
+  constructor
+  intro x y
+  calc
+    x = ep.hom (ep.inv x) := by simp
+    _ = ep.hom (ep.inv y) := by
+      congr 1
+      calc
+        ep.inv x = e1.inv (e1.hom (ep.inv x)) := by simp
+        _ = e1.inv (e1.hom (ep.inv y)) := by
+          rw [Subsingleton.elim (e1.hom (ep.inv x)) (e1.hom (ep.inv y))]
+        _ = ep.inv y := by simp
+    _ = y := by simp
 
 /-- Hilbert 90 written as the vanishing of the first ordinary cohomology group. -/
 theorem chapter03_group_cohomology_h1_multiplicative_zero
@@ -460,7 +687,18 @@ noncomputable def chapter03_group_cohomology_h2_multiplicative_norm_quotient
     (hcyc : chapter03CyclicExtension K L n σ) :
     groupCohomology (chapter03MultiplicativeGaloisModule K L) 2 ≅
       ModuleCat.of ℤ (Additive (chapter03NormQuotient K L)) := by
-  sorry
+  letI : NeZero 2 := ⟨by norm_num⟩
+  let e2 : chapter03TateCohomology (chapter03MultiplicativeGaloisModule K L) 2 ≅
+      groupCohomology (chapter03MultiplicativeGaloisModule K L) 2 :=
+    (TateCohomology.isoGroupCohomology (R := ℤ) (G := Gal(L / K)) 2).app
+      (chapter03MultiplicativeGaloisModule K L)
+  let hp : chapter03TateCohomology (chapter03MultiplicativeGaloisModule K L) 2 ≅
+      chapter03TateH0 (chapter03MultiplicativeGaloisModule K L) :=
+    by
+      convert chapter03_tate_periodicity (chapter03MultiplicativeGaloisModule K L) σ
+        (chapter03_cyclic_extension_generator K L n σ hcyc) 0 using 1 <;> norm_num
+  exact e2.symm ≪≫ hp ≪≫
+    chapter03_tate_h0_multiplicative_norm_quotient K L n σ hcyc
 
 end
 
