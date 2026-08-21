@@ -1343,9 +1343,9 @@ theorem chapter08_uniformizer_norm_has_value_one
     (htotal : chapter08TotallyRamified vK vL hval)
     (varpi : L) (hvarpi : vL varpi = 1) :
     vK (Algebra.norm K varpi) = 1 := by
-  letI : Valuation.IsRankOneDiscrete vK.toValuation :=
+  let : Valuation.IsRankOneDiscrete vK.toValuation :=
     chapter08_rank_one_discrete_of_add_valuation vK hdiscreteK
-  letI : Valuation.IsRankOneDiscrete vL.toValuation :=
+  let : Valuation.IsRankOneDiscrete vL.toValuation :=
     chapter08_rank_one_discrete_of_add_valuation vL hdiscreteL
   have hnsmul : ∀ n : ℕ, ∀ z : WithTop ℤ,
       n • z = (n : WithTop ℤ) * z := by
@@ -1373,7 +1373,7 @@ theorem chapter08_uniformizer_norm_has_value_one
         vK vL hval := by
     simpa [chapter08TotallyRamified] using htotal.symm
   have hdegree : Module.finrank K L = e * 1 := by
-    simpa [hedegree]
+    simp [hedegree]
   have hvarpi_ne : varpi ≠ 0 := by
     intro hz
     subst varpi

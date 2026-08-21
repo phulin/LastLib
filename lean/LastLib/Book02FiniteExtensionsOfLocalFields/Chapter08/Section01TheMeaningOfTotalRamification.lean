@@ -54,7 +54,7 @@ theorem chapter08_total_ramification_iff_residue_fields_equal
     (vL : AddValuation L (WithTop ℤ))
     (h : vK.IsEquiv (AddValuation.comap (algebraMap K L) vL)) :
     chapter08TotallyRamified vK vL h ↔ chapter08ResidueFieldsEqual vK vL h := by
-  haveI : Valuation.HasExtension vK.toValuation vL.toValuation := ⟨h⟩
+  have : Valuation.HasExtension vK.toValuation vL.toValuation := ⟨h⟩
   change Module.finrank
       (LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueField vK)
       (LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueField vL) = 1 ↔
