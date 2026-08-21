@@ -251,7 +251,7 @@ which realizes the generic action. The bound below does not use freeness of $M$ 
 
 ### 2.3 Faithfulness and upper numbering
 
-Let $L=K(M)$. The action of $G=\operatorname{Gal}(L/K)$ on $M$ is faithful by construction. Herbrand's quotient theorem gives, for every real $u\geq-1$, the image identity
+Let $L=K(M)$. The action of $G=\operatorname{Gal}(L/K)$ on $M$ is faithful by construction. We use the upper and lower ramification filtrations, the Herbrand function, and Herbrand's theorem exactly as constructed in Book 003, Chapter 9; in particular the upper-numbering groups are the images of the $G_K^u$ under the projection and are compatible with quotients. Herbrand's quotient theorem gives, for every real $u\geq-1$, the image identity
 
 $$
 \operatorname{im}\bigl(G_K^u\to G\bigr)=G^u.
