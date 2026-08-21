@@ -1583,7 +1583,7 @@ $U$, let $E(A^\vee)(U)$ consist of rigidified algebraically trivial line bundles
 equipped with an integrable $U$-relative connection compatible with the rigidification. Tensor
 product makes this an fppf sheaf of groups, and forgetting the connection maps it to $A^\vee$.
 
-The obstruction to a relative connection on $L$ is its Atiyah class in
+_(The canonical identification (11.11) is the classical description of the universal vector extension; the sketch that follows indicates why it holds, and later chapters use only the existence of an extension whose Lie algebra is identified as stated.)_ The obstruction to a relative connection on $L$ is its Atiyah class in
 $H^1(A_U,\Omega^1_{A_U/U})$. On the universal Poincare family, both this class and the de Rham
 class $c_1^{\mathrm{dR}}(L)$ are additive in the $A^\vee$-variable. By base change they therefore
 define homomorphisms from $A^\vee$ to the vector groups attached respectively to
