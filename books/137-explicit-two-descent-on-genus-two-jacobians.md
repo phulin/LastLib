@@ -2535,11 +2535,13 @@ the positive-rank descents to which the same method will be applied.
 
 ### 15.1 What is assumed
 
-The general descent theory used here supplies the Kummer injection, local
-Kummer images, their equality with unramified cohomology at good places away
-from $2$, Selmer finiteness, and the exact sequence (9.6). Its hypotheses
-match the present setting: Jacobians are abelian varieties over number fields,
-and multiplication by two is an isogeny in characteristic zero.
+Book 40 supplies the general descent theory used here: the Kummer injection,
+local Kummer images, their equality with unramified cohomology at good places
+away from $2$, Selmer finiteness, and the exact sequence (9.6). Book 6 supplies
+the Brauer localization injection used in the sextic true-to-fake comparison.
+The hypotheses match the present setting: Jacobians are abelian varieties
+over number fields, and multiplication by two is an isogeny in characteristic
+zero.
 
 The exact genus-two arithmetic used here supplies unique reduced Mumford
 pairs, total Cantor addition, finite-field point counting, specialization at
