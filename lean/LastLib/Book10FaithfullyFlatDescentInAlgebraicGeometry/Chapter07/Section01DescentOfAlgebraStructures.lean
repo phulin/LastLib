@@ -321,10 +321,10 @@ private theorem chapter07_module_equivalence_of_comparison_compatibility
     ∃ e : X.carrier ≃ₗ[A] Y.carrier,
     ∀ (b : B) (x : X.carrier),
         X.comparison (b ⊗ₜ[A] x) = Y.comparison (b ⊗ₜ[A] e x) := by
-  letI : CommRing X.carrier := X.commRing
-  letI : Algebra A X.carrier := X.algebra
-  letI : CommRing Y.carrier := Y.commRing
-  letI : Algebra A Y.carrier := Y.algebra
+  let : CommRing X.carrier := X.commRing
+  let : Algebra A X.carrier := X.algebra
+  let : CommRing Y.carrier := Y.commRing
+  let : Algebra A Y.carrier := Y.algebra
   rcases X.comparison_compatible with ⟨αX, hX⟩
   rcases Y.comparison_compatible with ⟨αY, hY⟩
   let β : chapter07CanonicalModuleDescentDatum A B X.carrier ≅
@@ -354,12 +354,10 @@ private theorem chapter07_module_equivalence_of_comparison_compatibility
       invFun := ecat.inv.hom
       left_inv := by
         intro x
-        simpa using congrArg (fun k : ModuleCat.of A X.carrier ⟶ ModuleCat.of A X.carrier => k.hom x)
-          ecat.hom_inv_id
+        simp
       right_inv := by
         intro y
-        simpa using congrArg (fun k : ModuleCat.of A Y.carrier ⟶ ModuleCat.of A Y.carrier => k.hom y)
-          ecat.inv_hom_id
+        simp
       map_add' := ecat.hom.hom.map_add
       map_smul' := ecat.hom.hom.map_smul }
   have hcoal : (F.map f).f ≫ αY.hom.f = αX.hom.f := by
@@ -402,11 +400,11 @@ private theorem chapter07_algebra_equiv_of_comparison_compatibility
     ∃ e : X.carrier ≃ₐ[A] Y.carrier,
       ∀ (b : B) (x : X.carrier),
         X.comparison (b ⊗ₜ[A] x) = Y.comparison (b ⊗ₜ[A] e x) := by
-  letI : CommRing X.carrier := X.commRing
-  letI : Algebra A X.carrier := X.algebra
-  letI : CommRing Y.carrier := Y.commRing
-  letI : Algebra A Y.carrier := Y.algebra
-  letI : Module.FaithfullyFlat A B :=
+  let : CommRing X.carrier := X.commRing
+  let : Algebra A X.carrier := X.algebra
+  let : CommRing Y.carrier := Y.commRing
+  let : Algebra A Y.carrier := Y.algebra
+  let : Module.FaithfullyFlat A B :=
     (RingHom.faithfullyFlat_algebraMap_iff).mp hff
   rcases chapter07_module_equivalence_of_comparison_compatibility D hff X Y with ⟨e, he⟩
   have h_one : e 1 = 1 := by
@@ -469,7 +467,7 @@ theorem chapter07_algebra_structure_descends
     (D : Chapter07AlgebraDescentData A B C)
     (hff : RingHom.FaithfullyFlat (algebraMap A B)) :
     Nonempty (Chapter07AlgebraDescentResult D) := by
-  letI : Module.FaithfullyFlat A B :=
+  let : Module.FaithfullyFlat A B :=
     (RingHom.faithfullyFlat_algebraMap_iff).mp hff
   rcases D.overlap_is_algebra_map with ⟨φ, hφ⟩
   let S : Subalgebra A C :=
@@ -500,7 +498,7 @@ theorem chapter07_algebra_structure_descends
   let F := Comonad.comparison adj
   let hcom : ComonadicLeftAdjoint (ModuleCat.extendScalars (algebraMap A B)) :=
     comonadicExtendScalars hff
-  letI : F.IsEquivalence := hcom.eqv
+  let : F.IsEquivalence := hcom.eqv
   let compAdj := Comonad.ComonadicityInternal.comparisonAdjunction adj
   let M := (Comonad.ComonadicityInternal.rightAdjointComparison adj).obj D.moduleDatum
   let i : M ⟶ R.obj D.moduleDatum.A :=
@@ -570,9 +568,7 @@ theorem chapter07_algebra_structure_descends
         ((ModuleCat.restrictScalars (algebraMap A B)).map D.carrier.hom).hom m =
           cR := by
       change D.carrier.hom.hom (D.carrier.inv.hom (s : C)) = (s : C)
-      simpa [cR] using
-        congrArg (fun k : ModuleCat.of B C ⟶ ModuleCat.of B C => k.hom (s : C))
-          D.carrier.inv_hom_id
+      simp
     rw [hm]
     have hpure :
         (chapter07ModuleBaseChangeEquiv A B C).symm (1 ⊗ₜ[A] (s : C)) =
@@ -591,7 +587,7 @@ theorem chapter07_algebra_structure_descends
   have hk : k ≫ i = j := by
     dsimp [k, i]
     exact Limits.equalizer.lift_ι j hj
-  letI : Module A (D.moduleDatum.A : Type u) := (R.obj D.moduleDatum.A).isModule
+  let : Module A (D.moduleDatum.A : Type u) := (R.obj D.moduleDatum.A).isModule
   let i' : M →ₗ[A] D.moduleDatum.A :=
     { toFun := fun m => i.hom m
       map_add' := by intro m n; exact i.hom.map_add m n
@@ -624,7 +620,7 @@ theorem chapter07_algebra_structure_descends
       have hci := congrArg
         (fun q : D.moduleDatum.A ⟶ D.moduleDatum.A => q.hom (i' m))
         D.carrier.hom_inv_id
-      simpa [c, lbase] using hci
+      simp [c, lbase]
     have hunit_m := ModuleCat.extendRestrictScalarsAdj_unit_app_apply
       (algebraMap A B) (R.obj D.moduleDatum.A) (i' m)
     rw [hunit_m] at hi_m
@@ -649,7 +645,7 @@ theorem chapter07_algebra_structure_descends
     have hm :
         ((ModuleCat.restrictScalars (algebraMap A B)).map D.carrier.hom).hom (i' m) = c := by
       change D.carrier.hom.hom (i' m) = c
-      simpa [c, lbase]
+      simp [c, lbase]
     have hiG' := hiG.trans hmap
     rw [hm] at hiG'
     have hiE := congrArg (chapter07ModuleBaseChangeEquiv A B C) hiG'
@@ -683,12 +679,9 @@ theorem chapter07_algebra_structure_descends
     have hki := congrArg
       (fun q : ModuleCat.of A S ⟶ R.obj D.moduleDatum.A => q.hom s) hk
     change i' (k.hom s) = D.carrier.inv.hom (s : C) at hki
-    have hcar := congrArg
-      (fun q : ModuleCat.of B C ⟶ ModuleCat.of B C => q.hom (s : C))
-      D.carrier.inv_hom_id
     change D.carrier.hom.hom (i' (k.hom s)) = (s : C)
     rw [hki]
-    simpa using hcar
+    simp
   let kIso : ModuleCat.of A S ≅ M :=
     { hom := k
       inv := l
@@ -700,14 +693,14 @@ theorem chapter07_algebra_structure_descends
         D.carrier.hom
   let q : B ⊗[A] S →ₗ[B] C :=
     qcat.hom.comp (chapter07CanonicalModuleDescentEquiv A B S).symm.toLinearMap
-  letI : IsIso kIso.hom := Iso.isIso_hom kIso
-  letI : IsIso (F.map kIso.hom) := Functor.map_isIso _ _
-  letI : IsIso ((Comonad.forget adj.toComonad).map (F.map kIso.hom)) :=
+  let : IsIso kIso.hom := Iso.isIso_hom kIso
+  let : IsIso (F.map kIso.hom) := Functor.map_isIso _ _
+  let : IsIso ((Comonad.forget adj.toComonad).map (F.map kIso.hom)) :=
     Functor.map_isIso _ _
-  letI : IsIso ((Comonad.forget adj.toComonad).map
+  let : IsIso ((Comonad.forget adj.toComonad).map
       (compAdj.counit.app D.moduleDatum)) := Functor.map_isIso _ _
-  letI : IsIso D.carrier.hom := Iso.isIso_hom D.carrier
-  letI : IsIso qcat := by
+  let : IsIso D.carrier.hom := Iso.isIso_hom D.carrier
+  let : IsIso qcat := by
     dsimp [qcat]
     have h23 : IsIso
         ((Comonad.forget adj.toComonad).map (compAdj.counit.app D.moduleDatum) ≫
@@ -757,7 +750,7 @@ theorem chapter07_algebra_structure_descends
           i' (kIso.hom s) := by
       simpa [adj, R, M, compAdj, i',
         ModuleCat.extendRestrictScalarsAdj_homEquiv_apply] using! heq_m
-    letI : Module B
+    let : Module B
         (↑((ModuleCat.restrictScalars (algebraMap A B)).obj (ModuleCat.of B B)) ⊗[A]
           (M : Type u)) :=
       ((ModuleCat.extendScalars (algebraMap A B)).obj M).isModule
@@ -802,12 +795,9 @@ theorem chapter07_algebra_structure_descends
     have hks : D.carrier.hom.hom (i' (kIso.hom s)) = (s : C) := by
       have hki := congrArg (fun q => q.hom s) hk
       change i' (kIso.hom s) = D.carrier.inv.hom (s : C) at hki
-      have hcar := congrArg
-        (fun q : ModuleCat.of B C ⟶ ModuleCat.of B C => q.hom (s : C))
-        D.carrier.inv_hom_id
       change D.carrier.hom.hom (i' (kIso.hom s)) = (s : C)
       rw [hki]
-      simpa using hcar
+      simp
     calc
       D.carrier.hom.hom
           ((compAdj.counit.app D.moduleDatum).f.hom
@@ -856,7 +846,7 @@ theorem chapter07_algebra_structure_descends
         _ = z := hx
   let comparisonAlg : B ⊗[A] S ≃ₐ[B] C :=
     AlgEquiv.ofBijective qAlg hqAlg
-  letI : IsIso (compAdj.counit.app D.moduleDatum) := by infer_instance
+  let : IsIso (compAdj.counit.app D.moduleDatum) := by infer_instance
   let α0 : F.obj (ModuleCat.of A S) ≅ D.moduleDatum :=
     (asIso (F.map kIso.hom)) ≪≫ asIso (compAdj.counit.app D.moduleDatum)
   refine ⟨{
@@ -890,11 +880,11 @@ theorem chapter07_algebra_structure_descends_equivalence_unique
     (_hff : RingHom.FaithfullyFlat (algebraMap A B))
     (X Y : Chapter07AlgebraDescentResult D)
     (e e' : Chapter07AlgebraDescentEquivalence X Y) : e = e' := by
-  letI : CommRing X.carrier := X.commRing
-  letI : Algebra A X.carrier := X.algebra
-  letI : CommRing Y.carrier := Y.commRing
-  letI : Algebra A Y.carrier := Y.algebra
-  letI : Module.FaithfullyFlat A B :=
+  let : CommRing X.carrier := X.commRing
+  let : Algebra A X.carrier := X.algebra
+  let : CommRing Y.carrier := Y.commRing
+  let : Algebra A Y.carrier := Y.algebra
+  let : Module.FaithfullyFlat A B :=
     (RingHom.faithfullyFlat_algebraMap_iff).mp _hff
   have heq : e.equivalence = e'.equivalence := by
     apply AlgEquiv.ext
@@ -923,12 +913,12 @@ private theorem chapter07_test_counit_iso
       (ModuleCat.extendRestrictScalarsAdj (algebraMap A B))).counit.app D.moduleDatum).f := by
   let hcom : ComonadicLeftAdjoint (ModuleCat.extendScalars (algebraMap A B)) :=
     comonadicExtendScalars hff
-  letI : (Comonad.comparison
+  let : (Comonad.comparison
       (ModuleCat.extendRestrictScalarsAdj (algebraMap A B))).IsEquivalence := hcom.eqv
-  haveI : IsIso ((Comonad.ComonadicityInternal.comparisonAdjunction
+  have : IsIso ((Comonad.ComonadicityInternal.comparisonAdjunction
       (ModuleCat.extendRestrictScalarsAdj (algebraMap A B))).counit.app
       D.moduleDatum) := by infer_instance
-  haveI : IsIso ((Comonad.forget
+  have : IsIso ((Comonad.forget
       (ModuleCat.extendRestrictScalarsAdj (algebraMap A B)).toComonad).map
       ((Comonad.ComonadicityInternal.comparisonAdjunction
         (ModuleCat.extendRestrictScalarsAdj (algebraMap A B))).counit.app D.moduleDatum) ) :=
