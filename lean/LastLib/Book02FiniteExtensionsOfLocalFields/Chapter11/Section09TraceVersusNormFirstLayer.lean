@@ -1,4 +1,5 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.Section08ExplicitTameNormEquations
+import Mathlib.Algebra.Field.ULift
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11
 
@@ -185,7 +186,51 @@ theorem chapter11_residue_norm_surjectivity_not_formal_for_arbitrary_fields :
     ¬ (∀ (k l : Type*) [Field k] [Field l] [Algebra k l]
       [FiniteDimensional k l] [Algebra.IsSeparable k l],
       Function.Surjective (Algebra.norm k (S := l))) := by
-  sorry
+  intro h
+  let k := ULift ℝ
+  let l := ULift ℂ
+  letI : Algebra k ℂ := by
+    dsimp [k]
+    exact ULift.algebra' ℝ ℂ
+  letI : Algebra k l := by
+    dsimp [k, l]
+    exact ULift.algebra
+  let b : Module.Basis (Fin 2) k ℂ :=
+    Complex.basisOneI.mapCoeffs (ULift.ringEquiv.symm) (by
+      intro c x
+      rfl)
+  letI : FiniteDimensional k ℂ := b.finiteDimensional_of_finite
+  letI : FiniteDimensional k l :=
+    (ULift.moduleEquiv (R := k) (M := ℂ)).symm.finiteDimensional
+  letI : CharZero k := ⟨by
+    intro m n hmn
+    apply (Nat.cast_injective : Function.Injective (Nat.cast : ℕ → ℝ))
+    exact congr_arg ULift.down hmn⟩
+  letI : Algebra.IsIntegral k l :=
+    ⟨fun x => IsIntegral.of_finite k x⟩
+  letI : Algebra.IsSeparable k l :=
+    Algebra.IsSeparable.of_integral (F := k) (K := l)
+  have hs := h k l
+  obtain ⟨z, hz⟩ := hs (-1 : k)
+  have he :
+      RingHom.comp (algebraMap ℝ ℂ)
+          (ULift.ringEquiv (R := ℝ) : k →+* ℝ) =
+        RingHom.comp (ULift.ringEquiv (R := ℂ) : l →+* ℂ)
+          (algebraMap k l) := by
+    ext x
+    rfl
+  have hnorm := Algebra.norm_eq_of_equiv_equiv
+    (ULift.ringEquiv (R := ℝ) : k ≃+* ℝ)
+    (ULift.ringEquiv (R := ℂ) : l ≃+* ℂ) he z
+  have hneg :
+      (ULift.ringEquiv (R := ℝ)).symm
+          (Algebra.norm ℝ ((ULift.ringEquiv (R := ℂ)) z)) = (-1 : k) :=
+    hnorm.symm.trans hz
+  have hnorm_complex :
+      Algebra.norm ℝ ((ULift.ringEquiv (R := ℂ)) z) = (-1 : ℝ) := by
+    simpa using congr_arg (ULift.ringEquiv (R := ℝ)) hneg
+  rw [Algebra.norm_complex_apply] at hnorm_complex
+  linarith [Complex.normSq_nonneg ((ULift.ringEquiv (R := ℂ)) z)]
 
 /- The higher-unit profile remains the data needed after a first-layer
    calculation; the source deliberately makes no claim that `e` and `f` alone
