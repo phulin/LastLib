@@ -333,6 +333,331 @@ theorem chapter13_quotient_complete_noetherian_local
   rw [hmap] at hS'
   exact ⟨inferInstance, hS'⟩
 
+private theorem chapter13_power_series_tail_mem_span_X_pow
+    {R : Type*} [CommRing R] {σ : Type*} [Finite σ]
+    (m : ℕ) (f : MvPowerSeries σ R)
+    (hf : ∀ d : σ →₀ ℕ, Finsupp.degree d < m →
+      MvPowerSeries.coeff d f = 0) :
+    f ∈ (Ideal.span (Set.range (MvPowerSeries.X : σ → MvPowerSeries σ R))) ^ m := by
+  classical
+  let P := MvPolynomial σ R
+  let I := MvPolynomial.idealOfVars σ R
+  let A := AdicCompletion I P
+  let e := MvPowerSeries.toAdicCompletionAlgEquiv σ R
+  have htrunc : MvPowerSeries.truncTotal m f = 0 := by
+    ext d
+    by_cases hd : Finsupp.degree d < m
+    · rw [MvPowerSeries.coeff_truncTotal _ hd, hf d hd]
+      simp
+    · rw [MvPowerSeries.coeff_truncTotal_eq_zero _ (not_lt.mp hd)]
+      simp
+  have heval : (e f).val m = 0 := by
+    rw [MvPowerSeries.toAdicCompletionAlgEquiv_apply,
+      MvPowerSeries.toAdicCompletion_apply_eq_mk_truncTotal]
+    simp [htrunc]
+  have hker : e f ∈ I ^ m • (⊤ : Submodule P A) := by
+    rw [AdicCompletion.pow_smul_top_eq_ker_eval (I := I) (M := P)
+      (MvPolynomial.idealOfVars_fg σ R)]
+    exact LinearMap.mem_ker.mpr heval
+  have hmap : Ideal.map e.toRingEquiv
+      (Ideal.span (Set.range (MvPowerSeries.X : σ → MvPowerSeries σ R))) =
+      I.map (algebraMap P A) := by
+    dsimp [e, I, P, A]
+    simp_rw [Ideal.map_span, ← Set.range_comp]
+    congr 2
+    ext1
+    simp [AdicCompletion.algebraMap_apply, ← MvPolynomial.coe_X,
+      MvPowerSeries.toAdicCompletion_coe]
+  have hef : e f ∈ Ideal.map e.toRingEquiv
+      ((Ideal.span (Set.range (MvPowerSeries.X : σ → MvPowerSeries σ R))) ^ m) := by
+    rw [Ideal.map_pow, hmap]
+    have hker' : e f ∈ (I.map (algebraMap P A)) ^ m := by
+      rw [← Ideal.map_pow]
+      change e f ∈ (I ^ m).map (algebraMap P A)
+      rw [← Submodule.restrictScalars_mem P, ← Ideal.smul_top_eq_map]
+      exact hker
+    exact hker'
+  obtain ⟨g, hg, hgf⟩ :=
+    (Ideal.mem_map_iff_of_surjective e.toRingEquiv e.surjective).mp hef
+  exact (e.injective hgf) ▸ hg
+
+private theorem chapter13_power_series_adic_complete
+    {R : Type*} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
+    (hR : IsAdicComplete (IsLocalRing.maximalIdeal R) R)
+    {σ : Type*} [Finite σ] :
+    IsAdicComplete
+      ((IsLocalRing.maximalIdeal R).map
+          (MvPowerSeries.C : R →+* MvPowerSeries σ R) ⊔
+        Ideal.span (Set.range (MvPowerSeries.X : σ → MvPowerSeries σ R)))
+      (MvPowerSeries σ R) := by
+  classical
+  let S := MvPowerSeries σ R
+  let I : Ideal R := IsLocalRing.maximalIdeal R
+  let XJ : Ideal S := Ideal.span (Set.range (MvPowerSeries.X : σ → S))
+  let J : Ideal S := I.map (MvPowerSeries.C : R →+* S) ⊔ XJ
+  let K : ℕ → Ideal S := fun q =>
+    { carrier := {f | ∀ d : σ →₀ ℕ, Finsupp.degree d < q →
+          MvPowerSeries.coeff d f ∈ I ^ (q - Finsupp.degree d)}
+      zero_mem' := by
+        intro d hd
+        simp
+      add_mem' := by
+        intro f g hf hg d hd
+        exact (I ^ (q - Finsupp.degree d)).add_mem (hf d hd) (hg d hd)
+      smul_mem' := by
+        intro c f hf d hd
+        rw [show c • f = c * f by rfl, MvPowerSeries.coeff_mul]
+        apply Ideal.sum_mem
+        rintro ⟨i, j⟩ hij
+        rw [Finset.mem_antidiagonal] at hij
+        have hdeg : Finsupp.degree j ≤ Finsupp.degree d := by
+          rw [← hij]
+          simp only [map_add]
+          omega
+        have hjq : Finsupp.degree j < q := lt_of_le_of_lt hdeg hd
+        have hpow : I ^ (q - Finsupp.degree j) ≤ I ^ (q - Finsupp.degree d) :=
+          Ideal.pow_le_pow_right (by omega)
+        exact (I ^ (q - Finsupp.degree d)).mul_mem_left _ (hpow (hf j hjq)) }
+  have hCstep : ∀ q (a : S), a ∈ K q → ∀ r : R, r ∈ I →
+      a * MvPowerSeries.C r ∈ K (q + 1) := by
+    intro q a ha r hr d hd
+    by_cases hlt : Finsupp.degree d < q
+    · rw [MvPowerSeries.coeff_mul_C]
+      have had := ha d hlt
+      have he : q + 1 - Finsupp.degree d =
+          (q - Finsupp.degree d) + 1 := by omega
+      rw [he, pow_succ]
+      exact Ideal.mul_mem_mul had hr
+    · have hdeq : Finsupp.degree d = q := by omega
+      rw [MvPowerSeries.coeff_mul_C, hdeq]
+      simpa using I.mul_mem_left _ hr
+  have Xmem : ∀ s : σ, MvPowerSeries.X s ∈ J := by
+    intro s
+    exact Ideal.mem_sup_right (Ideal.subset_span (Set.mem_range_self s))
+  have hXstep : ∀ q (a : S), a ∈ K q → ∀ s : σ,
+      a * MvPowerSeries.X s ∈ K (q + 1) := by
+    intro q a ha s d hd
+    rw [MvPowerSeries.X_def, MvPowerSeries.coeff_mul_monomial]
+    by_cases hle : Finsupp.single s 1 ≤ d
+    · rw [if_pos hle]
+      have hadd : d - Finsupp.single s 1 + Finsupp.single s 1 = d :=
+        tsub_add_cancel_of_le hle
+      have hdeg : Finsupp.degree (d - Finsupp.single s 1) + 1 =
+          Finsupp.degree d := by
+        have hdeg' := congrArg Finsupp.degree hadd
+        simpa only [map_add, Finsupp.degree_single] using hdeg'
+      have hlt : Finsupp.degree (d - Finsupp.single s 1) < q := by omega
+      have := ha (d - Finsupp.single s 1) hlt
+      have he : q + 1 - Finsupp.degree d =
+          q - Finsupp.degree (d - Finsupp.single s 1) := by omega
+      rw [he]
+      simpa only [mul_one] using this
+    · simp [hle]
+  have hmapstep : ∀ q (a : S), a ∈ K q → ∀ b, b ∈ I.map
+      (MvPowerSeries.C : R →+* S) → a * b ∈ K (q + 1) := by
+    intro q a ha b hb
+    change b ∈ Ideal.span (Set.image (MvPowerSeries.C : R →+* S) (I : Set R)) at hb
+    induction hb using Submodule.span_induction with
+    | mem z hz =>
+        obtain ⟨r, hr, rfl⟩ := hz
+        exact hCstep q a ha r hr
+    | zero => simp
+    | add z w hz hw ihz ihw =>
+        simpa [mul_add] using (K (q + 1)).add_mem ihz ihw
+    | smul c z hz ih =>
+        simpa [smul_eq_mul, mul_assoc, mul_left_comm, mul_comm] using
+          (K (q + 1)).mul_mem_left c ih
+  have hXmapstep : ∀ q (a : S), a ∈ K q → ∀ b, b ∈ XJ →
+      a * b ∈ K (q + 1) := by
+    intro q a ha b hb
+    change b ∈ Ideal.span (Set.range (MvPowerSeries.X : σ → S)) at hb
+    induction hb using Submodule.span_induction with
+    | mem z hz =>
+        obtain ⟨s, rfl⟩ := hz
+        exact hXstep q a ha s
+    | zero => simp
+    | add z w hz hw ihz ihw =>
+        simpa [mul_add] using (K (q + 1)).add_mem ihz ihw
+    | smul c z hz ih =>
+        simpa [smul_eq_mul, mul_assoc, mul_left_comm, mul_comm] using
+          (K (q + 1)).mul_mem_left c ih
+  have hKstep : ∀ q, K q * J ≤ K (q + 1) := by
+    intro q
+    rw [Ideal.mul_le]
+    intro a ha b hb
+    rcases Submodule.mem_sup.mp hb with ⟨b₁, hb₁, b₂, hb₂, rfl⟩
+    rw [mul_add]
+    exact (K (q + 1)).add_mem (hmapstep q a ha b₁ hb₁)
+      (hXmapstep q a ha b₂ hb₂)
+  have hKpow : ∀ q, J ^ q ≤ K q := by
+    intro q
+    induction q with
+    | zero =>
+        intro f hf d hd
+        omega
+    | succ q ih =>
+        rw [pow_succ]
+        exact (Ideal.mul_mono ih le_rfl).trans (hKstep q)
+  have hmapIp : I.map (MvPowerSeries.C : R →+* S) ≤ J :=
+    le_sup_left
+  have hmapIpPow : ∀ q, (I ^ q).map (MvPowerSeries.C : R →+* S) ≤ J ^ q := by
+    intro q
+    rw [Ideal.map_pow]
+    exact Ideal.pow_right_mono hmapIp q
+  have hprod : ∀ (t : Finset σ) (g : σ → ℕ),
+      (∀ s ∈ t, MvPowerSeries.X s ^ g s ∈ J ^ g s) →
+        (∏ s ∈ t, MvPowerSeries.X s ^ g s) ∈ J ^ (∑ s ∈ t, g s) := by
+    intro t
+    induction t using Finset.induction_on with
+    | empty =>
+        intro g hg
+        simp
+    | @insert s t hs ih =>
+        intro g hg
+        rw [Finset.prod_insert hs, Finset.sum_insert hs]
+        have hmul := Ideal.mul_mem_mul (hg s (by simp)) (ih g (by
+          intro u hu
+          exact hg u (by simp [hu])))
+        simpa [← pow_add] using hmul
+  have hmonomial : ∀ d : σ →₀ ℕ,
+      MvPowerSeries.monomial d (1 : R) ∈ J ^ Finsupp.degree d := by
+    intro d
+    have hp := hprod d.support (fun s => d s) (by
+      intro s hs
+      exact Ideal.pow_mem_pow (Xmem s) (d s))
+    simpa [MvPowerSeries.monomial_one_eq, Finsupp.prod, Finsupp.degree_apply] using hp
+  have htrunc_mem : ∀ q (f : S),
+      (∀ d : σ →₀ ℕ, Finsupp.degree d < q →
+        MvPowerSeries.coeff d f ∈ I ^ (q - Finsupp.degree d)) →
+      (MvPowerSeries.truncTotal q f : S) ∈ J ^ q := by
+    intro q f hf
+    rw [MvPowerSeries.truncTotal, MvPowerSeries.truncFinset_apply]
+    change MvPolynomial.coeToMvPowerSeries.ringHom
+        (∑ d ∈ (Finsupp.finite_of_degree_lt q).toFinset,
+          MvPolynomial.monomial d (MvPowerSeries.coeff d f)) ∈ J ^ q
+    rw [map_sum]
+    apply Ideal.sum_mem
+    intro d hd
+    have hdeg : Finsupp.degree d < q := by
+      simpa using hd
+    simp only [MvPolynomial.coeToMvPowerSeries.ringHom_apply,
+      MvPolynomial.coe_monomial]
+    rw [MvPowerSeries.monomial_eq']
+    have hc : MvPowerSeries.C (MvPowerSeries.coeff d f) ∈
+        J ^ (q - Finsupp.degree d) :=
+      hmapIpPow (q - Finsupp.degree d) (Ideal.mem_map_of_mem
+        (MvPowerSeries.C : R →+* S) (hf d hdeg))
+    have hm := hmonomial d
+    have hmul := Ideal.mul_mem_mul hc hm
+    simpa [MvPowerSeries.monomial_one_eq, Finsupp.prod, ← pow_add,
+      Nat.sub_add_cancel hdeg.le] using hmul
+  have hcoeff_to_mem : ∀ q (f : S),
+      (∀ d : σ →₀ ℕ, Finsupp.degree d < q →
+        MvPowerSeries.coeff d f ∈ I ^ (q - Finsupp.degree d)) → f ∈ J ^ q := by
+    intro q f hf
+    have htail : f - (MvPowerSeries.truncTotal q f : S) ∈ XJ ^ q := by
+      apply chapter13_power_series_tail_mem_span_X_pow q
+      intro d hd
+      simp [MvPowerSeries.coeff_truncTotal _ hd]
+    have htail' : f - (MvPowerSeries.truncTotal q f : S) ∈ J ^ q :=
+      (Ideal.pow_right_mono le_sup_right q) htail
+    have hsum := (J ^ q).add_mem htail' (htrunc_mem q f hf)
+    simpa [sub_add_cancel] using hsum
+  have hhaus : IsHausdorff J S := by
+    refine ⟨?_⟩
+    intro x hx
+    apply MvPowerSeries.ext
+    intro d
+    have hcoeff : ∀ q : ℕ, MvPowerSeries.coeff d x ∈ I ^ q := by
+      intro q
+      have hxmem : x ∈ J ^ (Finsupp.degree d + q) := by
+        simpa [SModEq.zero, smul_eq_mul, Ideal.mul_top] using
+          hx (Finsupp.degree d + q)
+      by_cases hq : q = 0
+      · subst q
+        simp
+      have hxd := hKpow (Finsupp.degree d + q) hxmem d
+        (by omega)
+      simpa [Nat.add_sub_cancel_left] using hxd
+    have hd : MvPowerSeries.coeff d x = 0 := by
+      apply IsHausdorff.haus hR.toIsHausdorff
+      intro q
+      rw [SModEq.zero]
+      simpa [smul_eq_mul, Ideal.mul_top] using hcoeff q
+    exact hd
+  have hpre : IsPrecomplete J S := by
+    refine ⟨?_⟩
+    intro f hf
+    let g : (σ →₀ ℕ) → ℕ → R := fun d k =>
+      MvPowerSeries.coeff d (f (k + Finsupp.degree d))
+    have hg : ∀ d, ∀ {m k : ℕ}, m ≤ k →
+        g d m ≡ g d k [SMOD (I ^ m • (⊤ : Submodule R R))] := by
+      intro d m k hmk
+      by_cases hm : m = 0
+      · subst m
+        simp [SModEq.sub_mem, smul_eq_mul, Ideal.mul_top]
+      rw [SModEq.sub_mem]
+      have hfdiff : f (m + Finsupp.degree d) - f (k + Finsupp.degree d) ∈
+          J ^ (m + Finsupp.degree d) := by
+        simpa [smul_eq_mul, Ideal.mul_top] using
+          (SModEq.sub_mem.mp (hf (Nat.add_le_add_right hmk _)))
+      have hcoeff := hKpow (m + Finsupp.degree d) hfdiff d (by omega)
+      simpa [g, map_sub, smul_eq_mul, Ideal.mul_top] using hcoeff
+    have hconv : ∀ d, ∃ a : R, ∀ k,
+        g d k ≡ a [SMOD (I ^ k • (⊤ : Submodule R R))] := by
+      intro d
+      exact IsPrecomplete.prec hR.toIsPrecomplete (hg d)
+    choose a ha using hconv
+    let L : S := fun d => a d
+    have hmem : ∀ k, f k - L ∈ J ^ k := by
+      intro k
+      apply hcoeff_to_mem k (f k - L)
+      intro d hd
+      have hda := SModEq.sub_mem.mp (ha d (k - Finsupp.degree d))
+      have hda' :
+          g d (k - Finsupp.degree d) - a d ∈ I ^ (k - Finsupp.degree d) := by
+        simpa [smul_eq_mul, Ideal.mul_top] using hda
+      have hcoeff_eq : g d (k - Finsupp.degree d) =
+          MvPowerSeries.coeff d (f k) := by
+        simp [g, Nat.sub_add_cancel hd.le]
+      rw [hcoeff_eq] at hda'
+      change MvPowerSeries.coeff d (f k) - a d ∈
+        I ^ (k - Finsupp.degree d) at hda'
+      rw [map_sub, MvPowerSeries.coeff_apply]
+      change f k d - a d ∈ I ^ (k - Finsupp.degree d)
+      exact hda'
+    refine ⟨L, ?_⟩
+    intro k
+    rw [SModEq.sub_mem]
+    simpa [smul_eq_mul, Ideal.mul_top] using hmem k
+  change IsAdicComplete J S
+  exact { toIsHausdorff := hhaus, toIsPrecomplete := hpre }
+
+private theorem chapter13_power_series_constantCoeff_ker
+    {R : Type*} [CommRing R] {σ : Type*} [Finite σ] :
+    RingHom.ker (MvPowerSeries.constantCoeff : MvPowerSeries σ R →+* R) =
+      Ideal.span (Set.range (MvPowerSeries.X : σ → MvPowerSeries σ R)) := by
+  classical
+  have hXker : Ideal.span (Set.range (MvPowerSeries.X : σ → MvPowerSeries σ R)) ≤
+      RingHom.ker (MvPowerSeries.constantCoeff : MvPowerSeries σ R →+* R) := by
+    apply Ideal.span_le.2
+    rintro _ ⟨s, rfl⟩
+    simp
+  apply le_antisymm
+  · intro f hf
+    have hpow : f ∈
+        (Ideal.span (Set.range (MvPowerSeries.X : σ → MvPowerSeries σ R))) ^ 1 := by
+      apply chapter13_power_series_tail_mem_span_X_pow (σ := σ) 1 f
+      intro d hd
+      change MvPowerSeries.constantCoeff f = 0 at hf
+      have hdeg : Finsupp.degree d = 0 := by omega
+      have hd0 : d = 0 := (Finsupp.degree_eq_zero_iff d).mp hdeg
+      subst d
+      simpa [MvPowerSeries.coeff_zero_eq_constantCoeff_apply] using hf
+    simpa using hpow
+  · intro f hf
+    exact hXker hf
+
 theorem chapter13_power_series_complete_local
     (R : Type u) [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
     (hR : IsAdicComplete (IsLocalRing.maximalIdeal R) R) (n : ℕ) :
@@ -342,7 +667,116 @@ theorem chapter13_power_series_complete_local
       Nonempty
         ((MvPowerSeries (Fin n) R ⧸ Chapter13PowerSeriesMaximalIdeal R n) ≃+*
           Chapter13ResidueRing R) := by
-  sorry
+  classical
+  let S := MvPowerSeries (Fin n) R
+  let I : Ideal R := IsLocalRing.maximalIdeal R
+  let XJ : Ideal S := Ideal.span (Set.range (MvPowerSeries.X : Fin n → S))
+  let J : Ideal S := I.map (MvPowerSeries.C : R →+* S) ⊔ XJ
+  have hcompleteJ : IsAdicComplete J S := by
+    dsimp [J, I, XJ]
+    exact chapter13_power_series_adic_complete (R := R) hR (σ := Fin n)
+  have hker_const :
+      RingHom.ker (MvPowerSeries.constantCoeff : S →+* R) = XJ := by
+    dsimp [S, XJ]
+    exact chapter13_power_series_constantCoeff_ker (R := R) (σ := Fin n)
+  have hJ_le_comap : J ≤ I.comap
+      (MvPowerSeries.constantCoeff : S →+* R) := by
+    apply sup_le
+    · rw [Ideal.map_le_iff_le_comap]
+      intro r hr
+      change MvPowerSeries.constantCoeff (MvPowerSeries.C r) ∈ I
+      simpa [I] using hr
+    · intro f hf
+      change MvPowerSeries.constantCoeff f ∈ I
+      have hfker : f ∈ RingHom.ker
+          (MvPowerSeries.constantCoeff : S →+* R) := by
+        rw [hker_const]
+        exact hf
+      have hzero : MvPowerSeries.constantCoeff f = 0 :=
+        RingHom.mem_ker.mp hfker
+      rw [hzero]
+      exact I.zero_mem
+  have hdecomp : ∀ f : S, MvPowerSeries.constantCoeff f ∈ I → f ∈ J := by
+    intro f hc
+    have htail : f - MvPowerSeries.C (MvPowerSeries.constantCoeff f) ∈ XJ := by
+      rw [← hker_const]
+      rw [RingHom.mem_ker]
+      rw [map_sub, MvPowerSeries.constantCoeff_C]
+      exact sub_self _
+    have hcoef : MvPowerSeries.C (MvPowerSeries.constantCoeff f) ∈
+        I.map (MvPowerSeries.C : R →+* S) :=
+      Ideal.mem_map_of_mem (MvPowerSeries.C : R →+* S) hc
+    have hsum : MvPowerSeries.C (MvPowerSeries.constantCoeff f) +
+        (f - MvPowerSeries.C (MvPowerSeries.constantCoeff f)) ∈
+        I.map (MvPowerSeries.C : R →+* S) ⊔ XJ :=
+      (I.map (MvPowerSeries.C : R →+* S) ⊔ XJ).add_mem
+        (Ideal.mem_sup_left hcoef) (Ideal.mem_sup_right htail)
+    change f ∈ I.map (MvPowerSeries.C : R →+* S) ⊔ XJ
+    simpa [add_sub_cancel_left] using hsum
+  have hmaxJ : IsLocalRing.maximalIdeal S = J := by
+    ext f
+    constructor
+    · intro hf
+      rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff] at hf
+      have hc : MvPowerSeries.constantCoeff f ∈ I := by
+        change MvPowerSeries.constantCoeff f ∈ IsLocalRing.maximalIdeal R
+        rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
+        intro hu
+        apply hf
+        rw [MvPowerSeries.isUnit_iff_constantCoeff]
+        exact hu
+      exact hdecomp f hc
+    · intro hf
+      rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
+      intro hu
+      have hnonunit : MvPowerSeries.constantCoeff f ∈ nonunits R := by
+        rw [← IsLocalRing.mem_maximalIdeal]
+        exact hJ_le_comap hf
+      exact (mem_nonunits_iff.mp hnonunit)
+        (IsUnit.map (MvPowerSeries.constantCoeff : S →+* R) hu)
+  let φ : S →+* Chapter13ResidueRing R :=
+    (Chapter13ResidueMap R).comp (MvPowerSeries.constantCoeff : S →+* R)
+  have hkerφ : RingHom.ker φ = J := by
+    ext f
+    constructor
+    · intro hf
+      change φ f = 0 at hf
+      change Chapter13ResidueMap R (MvPowerSeries.constantCoeff f) = 0 at hf
+      have hc : MvPowerSeries.constantCoeff f ∈ I := by
+        change MvPowerSeries.constantCoeff f ∈ IsLocalRing.maximalIdeal R
+        exact Ideal.Quotient.eq_zero_iff_mem.mp hf
+      exact hdecomp f hc
+    · intro hf
+      change φ f = 0
+      change Chapter13ResidueMap R (MvPowerSeries.constantCoeff f) = 0
+      apply Ideal.Quotient.eq_zero_iff_mem.mpr
+      exact hJ_le_comap hf
+  have hsurj : Function.Surjective φ := by
+    intro y
+    obtain ⟨r, hr⟩ := Ideal.Quotient.mk_surjective y
+    refine ⟨MvPowerSeries.C r, ?_⟩
+    change Chapter13ResidueMap R
+      (MvPowerSeries.constantCoeff (MvPowerSeries.C r)) = y
+    rw [MvPowerSeries.constantCoeff_C]
+    exact hr
+  have hresJ : Nonempty (S ⧸ J ≃+* Chapter13ResidueRing R) := by
+    rw [← hkerφ]
+    exact ⟨RingHom.quotientKerEquivOfSurjective hsurj⟩
+  have hcomplete : Chapter13CompleteNoetherianLocalRing S := by
+    refine ⟨inferInstance, ?_⟩
+    rw [hmaxJ]
+    exact hcompleteJ
+  have hJdef : J = Chapter13PowerSeriesMaximalIdeal R n := by
+    rfl
+  have hmax : IsLocalRing.maximalIdeal S =
+      Chapter13PowerSeriesMaximalIdeal R n := by
+    rw [← hJdef]
+    exact hmaxJ
+  have hres : Nonempty
+      ((S ⧸ Chapter13PowerSeriesMaximalIdeal R n) ≃+* Chapter13ResidueRing R) := by
+    rw [← hJdef]
+    exact hresJ
+  simpa [S] using And.intro hcomplete (And.intro hmax hres)
 
 /-- Evaluation data for the unique power-series homomorphism in Lemma 13.3. -/
 def Chapter13PowerSeriesEvaluationData
