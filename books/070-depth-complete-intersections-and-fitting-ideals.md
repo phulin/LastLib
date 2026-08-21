@@ -1190,8 +1190,10 @@ $$
 Its closed fiber is the infinite field $k(T)$, its maximal ideal is
 $\mathfrak mR'$, and flat base change of a finite free resolution makes $k(T)$ have finite
 projective dimension over $R'$. Moreover depth, dimension, and embedding dimension are
-unchanged: the depth assertion is the flat-local formula with field fiber, prime chains are
-unchanged under this generic coefficient extension, and
+unchanged: the depth assertion is the flat-local formula proved in Section 5.4 with field
+fiber, while the flat local dimension formula gives
+$\dim R'=\dim R+\dim k(T)=\dim R$ (equivalently,
+$\operatorname{ht}(\mathfrak mR[T])=\operatorname{ht}(\mathfrak m)$), and
 $\mathfrak mR'/(\mathfrak mR')^2\simeq
 (\mathfrak m/\mathfrak m^2)\otimes_k k(T)$. Thus it is enough to prove that $R'$ is regular;
 the equality of dimension and embedding dimension then descends the conclusion to $R$.
