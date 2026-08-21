@@ -99,7 +99,64 @@ theorem chapter05UnramifiedCapNormalization.artin_uniformizer
   /- Prior attempt: the quotient-level equality used to be assumed directly
      as `N.quotient_uniformizer`; it was circular because it was the desired
      conclusion of the sign check. -/
-  sorry
+  apply_fun Additive.ofMul
+  letI : CategoryTheory.IsIso
+      (D.capProduct.cap (⊤ : Subgroup (Gal(L / K))) (-2)) :=
+    chapter05_class_formation_top_isomorphism D (-2)
+  let topToNorm :
+      chapter05TateCohomology (⊤ : Subgroup (Gal(L / K)))
+          (Rep.res (⊤ : Subgroup (Gal(L / K))).subtype
+            (chapter05CoefficientRep K L)) 0 ≃+
+        Additive (chapter05NormQuotient K L) :=
+    (D.topRestriction.iso 0).toLinearEquiv.toAddEquiv.trans
+      D.degreeZeroNorm
+  let topMinusToNorm :
+      chapter05TateCohomology (⊤ : Subgroup (Gal(L / K)))
+          (Rep.res (⊤ : Subgroup (Gal(L / K))).subtype
+            (Rep.trivial ℤ (Gal(L / K)) ℤ)) (-2) ≃+
+        Additive (chapter05NormQuotient K L) :=
+    (@CategoryTheory.asIso _ _ _ _
+      (D.capProduct.cap (⊤ : Subgroup (Gal(L / K))) (-2)) inferInstance).toLinearEquiv.toAddEquiv.trans
+      topToNorm
+  let sourceToNorm :
+      chapter05TateCohomology (Gal(L / K))
+          (Rep.trivial ℤ (Gal(L / K)) ℤ) (-2) ≃+
+        Additive (chapter05NormQuotient K L) :=
+    ((D.topRestrictionTrivial.iso (-2)).symm.toLinearEquiv.toAddEquiv).trans
+      topMinusToNorm
+  let sourceToAbelianization :
+      chapter05TateCohomology (Gal(L / K))
+          (Rep.trivial ℤ (Gal(L / K)) ℤ) (-2) ≃+
+        Additive (chapter05Abelianization (Gal(L / K))) :=
+    chapter05TateMinusTwoAbelianizationIso (Gal(L / K))
+  have hN :
+      sourceToNorm
+          (sourceToAbelianization.symm
+          (Additive.ofMul
+              (chapter05AbelianizationMap (Gal(L / K)) U.arithmeticFrobenius))) =
+        Additive.ofMul
+          (QuotientGroup.mk' (chapter05NormSubgroup K L) U.uniformizer) := by
+    change chapter05CapImageOfGaloisElement D U.arithmeticFrobenius =
+      Additive.ofMul
+        (QuotientGroup.mk' (chapter05NormSubgroup K L) U.uniformizer)
+    exact N.cap_arithmeticFrobenius
+  have hsource :
+      sourceToNorm.symm
+          (Additive.ofMul
+            (QuotientGroup.mk' (chapter05NormSubgroup K L) U.uniformizer)) =
+        sourceToAbelianization.symm
+          (Additive.ofMul
+            (chapter05AbelianizationMap (Gal(L / K)) U.arithmeticFrobenius)) := by
+    apply sourceToNorm.injective
+    rw [sourceToNorm.apply_symm_apply, hN]
+  have h := congrArg sourceToAbelianization hsource
+  change sourceToAbelianization
+      (sourceToNorm.symm
+        (Additive.ofMul
+          (QuotientGroup.mk' (chapter05NormSubgroup K L) U.uniformizer))) =
+    Additive.ofMul
+      (chapter05AbelianizationMap (Gal(L / K)) U.arithmeticFrobenius)
+  simpa only [sourceToAbelianization.apply_symm_apply] using h
 
 theorem chapter05_unramified_uniformizer_is_arithmetic_frobenius_canonical_map
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -109,7 +166,11 @@ theorem chapter05_unramified_uniformizer_is_arithmetic_frobenius_canonical_map
     (U : Chapter05UnramifiedExtensionData K L)
     (N : Chapter05UnramifiedCapNormalization D U) :
     chapter05FiniteReciprocityMap D U.uniformizer = U.arithmeticFrobenius := by
-  sorry
+  change (Abelianization.equivOfComm (H := Gal(L / K))).symm
+      (chapter05FiniteArtinMap D U.uniformizer) =
+    U.arithmeticFrobenius
+  rw [chapter05UnramifiedCapNormalization.artin_uniformizer D U N]
+  rfl
 
 theorem chapter05_unramified_uniformizer_is_arithmetic_frobenius_canonical_artin
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -178,7 +239,21 @@ theorem chapter05_finite_local_reciprocity
     (D : Chapter05LocalClassFormationData K L) :
     ∃! e : chapter05NormQuotient K L ≃* Gal(L / K),
       Chapter05FiniteReciprocityCompatibility D e := by
-  sorry
+  let e := chapter05FiniteReciprocityIso D
+  refine ⟨e, ?_, ?_⟩
+  · exact ⟨by rfl⟩
+  · intro e' h'
+    apply MulEquiv.ext
+    intro z
+    obtain ⟨x, rfl⟩ := QuotientGroup.mk'_surjective
+      (chapter05NormSubgroup K L) z
+    have hcanon :
+        e.toMonoidHom.comp (QuotientGroup.mk' (chapter05NormSubgroup K L)) =
+          chapter05FiniteReciprocityMap D := by
+      rfl
+    have h := congrArg (fun f : Kˣ →* Gal(L / K) => f x)
+      (h'.fundamental_class_compatibility.trans hcanon.symm)
+    simpa using h
 
 theorem chapter05_finite_local_reciprocity_at_unramified
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -189,7 +264,22 @@ theorem chapter05_finite_local_reciprocity_at_unramified
     (N : Chapter05UnramifiedCapNormalization D U) :
     ∃! e : chapter05NormQuotient K L ≃* Gal(L / K),
       Chapter05FiniteReciprocityCompatibilityAtUnramified D e U := by
-  sorry
+  let e := chapter05FiniteReciprocityIso D
+  refine ⟨e, ?_, ?_⟩
+  · refine ⟨⟨by rfl⟩, ?_⟩
+    exact chapter05_unramified_uniformizer_is_arithmetic_frobenius_canonical_map D U N
+  · intro e' h'
+    apply MulEquiv.ext
+    intro z
+    obtain ⟨x, rfl⟩ := QuotientGroup.mk'_surjective
+      (chapter05NormSubgroup K L) z
+    have hcanon :
+        e.toMonoidHom.comp (QuotientGroup.mk' (chapter05NormSubgroup K L)) =
+          chapter05FiniteReciprocityMap D := by
+      rfl
+    have h := congrArg (fun f : Kˣ →* Gal(L / K) => f x)
+      (h'.base.fundamental_class_compatibility.trans hcanon.symm)
+    simpa using h
 
 theorem chapter05_finite_local_reciprocity_at_unramified_canonical
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -200,7 +290,7 @@ theorem chapter05_finite_local_reciprocity_at_unramified_canonical
     (N : Chapter05UnramifiedCapNormalization D U) :
     ∃! e : chapter05NormQuotient K L ≃* Gal(L / K),
       Chapter05FiniteReciprocityCompatibilityAtUnramified D e U := by
-  sorry
+  exact chapter05_finite_local_reciprocity_at_unramified D U N
 
 /- The source deliberately defers the precise quotient and tower diagrams to
 Chapter 9.  The finite-level API above exposes the canonical quotient map and
