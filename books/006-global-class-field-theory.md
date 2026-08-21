@@ -1408,9 +1408,16 @@ the following data and assertions are available.
    and its swapped analogue. These maps induce isomorphisms in the displayed
    degree. When $\mu_n\subset F$, the finite supporting calculation also gives
    the actual compact-degree-$1$/global-degree-$2$ pairing and the truncated
-   compact-degree-$3$/global-degree-$0$ endpoint. Those two adjacent cells are
-   used only inside the finite descent calculation. No assertion is made about
-   actual compact degree $3$, compact degree $0$, or global degree above $2$.
+   compact-degree-$3$/global-degree-$0$ endpoint. Section 4.7 completes these
+   two cells and adds their three mirrors, obtaining the full six-cell duality
+   statement for the truncated complex (the six-cell corollary of Section 4.7).
+   It is this six-cell package, not an assertion about actual compact degree
+   $3$ or compact degree $0$ of the untruncated complex and not about global
+   degree above $2$, that the later arithmetic-duality volumes consume: the
+   Selmer-finiteness volume uses the degree-$0$ and degree-$3$ endpoints
+   (Book 032), the Poitou--Tate volume uses the real-place blocks
+   (Book 033), and the Euler-characteristic volume uses the complete hexagon
+   in its duality comparison (Book 040).
 2. The groups in these pairings are finite, and each pairing identifies either factor with
    the full Pontryagin dual of the other. Moreover
    $H^q(G_{F,S},A_n)$ and $H^q(G_{F,S},\mu_n)$ are finite for $0\leq q\leq2$.
@@ -3575,6 +3582,232 @@ This is the trace-and-pairing layer used in Poitou--Tate arguments. Perfectness 
 finite module is a stronger theorem not needed here. For the pair $A_n,\mu_n$ used in
 Theorems 4.1 and 6.1, Theorem 4.2 proves the required perfectness before
 character existence and global class formation are constructed.
+
+**Six-cell duality for the truncated complex.** Theorem 4.2 pairs compact
+classes of $A_n$ against global classes of $\mu_n$. Interchanging the two
+modules produces three further cells, and the truncated endpoints supply one
+cell in each direction. This subsection proves all of them, reusing the
+units--divisors--class-group comparison of Theorem 4.2; the only new input is
+an elementary lemma about exact sequences of finite groups. Throughout,
+$\mu_n\subset F$, $S$ contains the archimedean places and the places above
+$n$, and every group below is finite: the global terms are finite by clause 2
+of Theorem 4.2, the local terms by local class field theory together with
+(4.F4h), and the truncated endpoints by their identifications (4.V2) below.
+
+We shall propagate perfectness along the two localization sequences, so we
+record the lemma that does the bookkeeping.
+
+**Kernel--cokernel lemma.** Suppose
+
+$$P\xrightarrow{p}Q\xrightarrow{q}W\xrightarrow{r}Y\longrightarrow0$$
+
+and
+
+$$0\longrightarrow Y'\xrightarrow{s}W'\xrightarrow{t}Q'\xrightarrow{u}P'$$
+
+are exact sequences of finite groups, and that pairings into $D_n$ identify
+$Y$ with $(Y')^\vee$, $W$ with $(W')^\vee$, and $Q$ with $(Q')^\vee$ so that
+$r$ and $q$ correspond to the transposes of $s$ and $t$. Then there is a
+unique isomorphism $P\to(P')^\vee$ under which $p$ corresponds to the
+transpose of $u$.
+
+Indeed, writing $\phi_Y$, $\phi_W$, and $\phi_Q$ for the three
+identification isomorphisms, exactness and finiteness give the annihilator
+identities
+$(\operatorname{im}s)^\perp=\ker t$ and
+$(\operatorname{im}t)^\perp=\operatorname{im}(u^\vee)$. The first, together
+with the commutation $r^\vee\phi_Y=\phi_W s$, carries $\ker r=\operatorname{im}q$
+onto $(\operatorname{im}s)^\perp=\ker t$; the second carries
+$\ker q=\operatorname{im}p$ onto $(\operatorname{im}t)^\perp$. Since $u^\vee$
+is injective, every $a\in P$ determines a unique element $\phi(a)\in(P')^\vee$
+with $u^\vee\phi(a)=\phi_Q(p(a))$: existence because $\phi_Q(p(a))$ lies in
+$(\operatorname{im}t)^\perp$, uniqueness by injectivity of $u^\vee$. Then
+$\phi$ is additive, kills exactly $\ker p$, and hits all of $(P')^\vee$
+because each $\xi\in(P')^\vee$ has $u^\vee\xi$ in the image of
+$\phi_Q|_{\ker q}$. $\square$
+
+The mirror pairing is the same cochain formula with the modules swapped.
+For $(a,b)\in C^q_{S,c}(\mu_n)$ and $y\in C^{3-q}(G_{F,S},A_n)$, put
+
+$$ \langle(a,b),y\rangle^{\mathrm{op}}
+   =\sum_{v\in S}t_v\bigl(b_v\smile\lambda_v(y)\bigr)
+    -\kappa_S(a\smile y).
+\tag{4.V1} $$
+
+The cup products in (4.V1) take values in $\mu_n$, so the same local
+cochains $t_v$ of (4.C0) and the same nullhomotopy $\kappa_S$ of (4.C0b)
+apply verbatim: no new choices are made. The verification that (4.C4) is a
+cochain map used only (4.C2), (4.C3), and (4.C0b); these are symmetric in
+the two factors apart from the Koszul sign, which the displayed order
+absorbs. Hence (4.V1) is a cochain map and induces, for $r=1,2,3$, the
+pairings
+
+$$ H^r(C_{S,c,\leq2}^\bullet(\mu_n))
+   \times H^{3-r}(G_{F,S},A_n)
+   \longrightarrow D_n,
+\tag{4.V1a} $$
+
+and it enjoys the same compatibilities as the pairings of clause 2 of
+Theorem 4.2: with localization, restriction, corestriction, cup products,
+connecting maps, and enlargement of $S$. The proofs are the mapping-cone
+functoriality arguments already given there, which treat the two
+coefficients symmetrically.
+
+Both truncated complexes terminate in the endpoint (4.C0d). For the
+$\mu_n$-complex, the calculation (4.F4d), (4.F4j') identifies
+$H^2(G_{F,S},\mu_n)$ with $\operatorname{Br}(F)[n]$, and the $n$-torsion of
+(4.I9h) then gives
+
+$$ H^3(C_{S,c,\leq2}^\bullet(\mu_n))
+   =\operatorname{coker}\!\Bigl(H^2(G_{F,S},\mu_n)\to
+     \bigoplus\nolimits_{v\in S}H^2(F_v,\mu_n)\Bigr)
+   \xrightarrow{\;\sum_v\operatorname{inv}_v\;}
+   D_n.
+\tag{4.V2} $$
+
+Well-definedness is the product formula for global Brauer classes;
+surjectivity is witnessed by a family supported at a single place of $S$
+with invariant $1/n$; injectivity is exactness of (4.I9h) on $n$-torsion.
+At real places the invariant reads the sign quotient of (4.F4p), and at
+complex places the terms vanish. For the $A_n$-complex, cup product with
+the chosen primitive root $\zeta$ gives compatible isomorphisms
+$H^2(-,A_n)\cong H^2(-,\mu_n)$ commuting with localization and preserving
+invariants -- at tame places this is (4.F3), at places above $n$ the
+Kummer generator computation of Section 4.6, at real places the sign
+block. Transporting (4.V2) along these isomorphisms identifies also
+
+$$ H^3(C_{S,c,\leq2}^\bullet(A_n))
+   \xrightarrow{\;\operatorname{tr}_{F,S}\;}
+   D_n.
+\tag{4.V2a} $$
+
+This proves the two degree-$3$/degree-$0$ cells. The pairing of
+$H^3(C_{S,c,\leq2}^\bullet(A_n))$ with $H^0(G_{F,S},\mu_n)=\mu_n(F)$ sends
+$(x,\zeta_0)$, for primitive $\zeta_0$, to the trace of $x$, which by
+(4.V2a) takes the value $1/n$ on a suitable witness; both sides have order
+$n$, so the cell is perfect. The mirror pairing of
+$H^3(C_{S,c,\leq2}^\bullet(\mu_n))$ with $H^0(G_{F,S},A_n)$ evaluates
+$a\in A_n$ on the same trace, and the same witness makes it perfect.
+
+It remains to derive the two mirror cells in degrees one and two; in the
+$A_n$-direction all three cells are already known, namely degrees two and
+one from Theorem 4.2 and degree three from (4.V2a). Write $U(M)$ for the
+long exact
+localization sequence of the truncated cone of $M$,
+
+$$ U(M):\; H^0_g\to H^0_v\to H^1_c\to H^1_g\to H^1_v\to H^2_c\to
+   H^2_g\to H^2_v\to H^3_c\to0,
+\tag{4.V3} $$
+
+where subscripts $g,v,c$ mean global, localized, and compact. The pairings
+between $U(\mu_n)$ and $U(A_n)$ reverse positions: the term in position $i$
+of $U(\mu_n)$ pairs with the term in position $8-i$ of $U(A_n)$, locally by
+the pairing (4.9) of Section 4.6 and globally by cup product followed by
+the endpoint traces:
+
+$$
+\begin{array}{c|ccccccccc}
+U(\mu_n)&H^0_g&H^0_v&H^1_c&H^1_g&H^1_v&H^2_c&H^2_g&H^2_v&H^3_c\\ \hline
+\text{partner in }U(A_n)&H^3_c&H^2_v&H^2_g&H^2_c&H^1_v&H^1_g&H^1_c&H^0_v&H^0_g\\ \hline
+\text{status}&(4.\text{V2a})&\text{loc.}&\text{below}&\text{Thm.\,4.2}&
+\text{loc.}&\text{below}&\text{Thm.\,4.2}&\text{loc.}&(4.\text{V2})
+\end{array}
+\tag{4.V4} $$
+
+Here "loc." records the local duality of Section 4.6, perfect in every
+degree used: in degree one by local reciprocity, in degrees zero and two
+because the invariant is an isomorphism onto its target and evaluation on
+$A_n$ or $\mu_n(F_v)$ is nondegenerate, including the real sign block
+retained by (4.F4p). The adjointness relations identifying the transposed
+maps of $U(\mu_n)$ with the maps of $U(A_n)$ read off (4.V4) are the
+compatibilities already established for (4.V1): the coboundary into the
+endpoint is adjoint to localization, restriction between local terms is
+adjoint to itself under (4.10), and the remaining squares are clause 2 of
+Theorem 4.2 read backwards.
+
+Apply the kernel--cokernel lemma to the tail of $U(\mu_n)$ against the head
+of $U(A_n)$:
+
+$$
+\begin{aligned}
+H^2_c(\mu_n)&\to H^2_g(\mu_n)\to
+   \bigoplus\nolimits_{v\in S}H^2(F_v,\mu_n)
+   \to H^3_c(\mu_n)\to0\\
+0&\to H^0_g(A_n)\to\bigoplus\nolimits_{v\in S}H^0(F_v,A_n)
+   \to H^1_c(A_n)\to H^1_g(A_n).
+\end{aligned}
+\tag{4.V5} $$
+
+The three right-hand identifications are, in order, the endpoint cell of
+(4.V2), the local duality in degrees two and zero, and the degree-one cell
+of Theorem 4.2. The lemma concludes
+
+$$ H^2(C_{S,c,\leq2}^\bullet(\mu_n))
+   \xrightarrow{\;\sim\;}H^1(G_{F,S},A_n)^\vee.
+\tag{4.V6} $$
+
+Now apply the lemma once more, to the middle window of $U(\mu_n)$ against
+the corresponding segment of $U(A_n)$:
+
+$$
+\begin{aligned}
+H^1_c(\mu_n)&\to H^1_g(\mu_n)\to
+   \bigoplus\nolimits_{v\in S}H^1(F_v,\mu_n)\to H^2_c(\mu_n)\\
+0&\to H^1_g(A_n)\to H^1_c(A_n)\to
+   \bigoplus\nolimits_{v\in S}H^1(F_v,A_n)\to H^2_g(A_n),
+\end{aligned}
+\tag{4.V7} $$
+
+using (4.V6), the local duality in degree one, and the degree-two cell of
+Theorem 4.2 as the outside identifications. The conclusion is
+
+$$ H^1(C_{S,c,\leq2}^\bullet(\mu_n))
+   \xrightarrow{\;\sim\;}H^2(G_{F,S},A_n)^\vee.
+\tag{4.V8} $$
+
+Together with Theorem 4.2 and (4.V2), this completes all six cells.
+
+**Corollary (complete six-cell duality for the truncated complex).** Let
+$n\geq1$ with $\mu_n\subset F$, let $S$ be a finite set of places containing
+the archimedean places and the places above $n$, and let
+$(M,N)=(A_n,\mu_n)$ or $(\mu_n,A_n)$. For each $r=1,2,3$, the cup-and-trace
+pairing
+
+$$ H^r(C_{S,c,\leq2}^\bullet(M))
+   \times H^{3-r}(G_{F,S},N)
+   \longrightarrow\tfrac1n\mathbf Z/\mathbf Z
+\tag{4.V9} $$
+
+identifies either finite group with the Pontryagin dual of the other.
+Explicitly, the six perfect cells pair
+
+$$
+\begin{aligned}
+H^1_c(A_n)&\times H^2(\mu_n),&
+H^2_c(A_n)&\times H^1(\mu_n),&
+H^3_c(A_n)&\times H^0(\mu_n),\\
+H^1_c(\mu_n)&\times H^2(A_n),&
+H^2_c(\mu_n)&\times H^1(A_n),&
+H^3_c(\mu_n)&\times H^0(A_n).
+\end{aligned}
+\tag{4.V10} $$
+
+All six are compatible with restriction and corestriction in the sense of
+(4.10) and (4.16), with cup products, with the localization sequences, and
+with enlargement of $S$. No assertion is made about actual compact degree
+$3$ or $0$ of the untruncated complex, about global degree above $2$, or
+about coefficients other than $A_n$ and $\mu_n$.
+
+The hypothesis $\mu_n\subset F$ enters only through the primitive root used
+to identify the two coefficient systems and through the equality
+$|\mu_n(F)|=n$. For general $F$, the descent argument of Theorem 4.2 --
+Alexander--Whitney collection and the shuffle map on the ordinary total
+complex of (4.F6a), with no averaging idempotent and no division by
+$|\Delta|$ -- applies unchanged, because the six cells are stable under
+restriction and corestriction and the prism homotopies commute with them.
+Thus the corollary holds verbatim for every number field, with the
+understanding that the degree-$3$ endpoints remain the truncated ones of
+(4.C0d).
 
 Restriction and corestriction preserve the global trace with no hidden degree. If $E/F$ is finite and $(z_w)_w$ is a family of local degree-two classes over $E$, then (4.6) gives
 
