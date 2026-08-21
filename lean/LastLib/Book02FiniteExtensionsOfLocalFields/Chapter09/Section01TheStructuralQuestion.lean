@@ -129,7 +129,10 @@ theorem chapter09_separable_residue_part_unique
     (k l : Type*) [Field k] [Field l] [Algebra k l]
     [Algebra.IsAlgebraic k l] :
     ∃! s : IntermediateField k l, chapter09SeparablePartProperty k l s := by
-  sorry
+  refine ⟨chapter09MaximalSeparableResidueSubfield k l, ?_, ?_⟩
+  · exact chapter09_separable_residue_part_properties k l
+  · intro s hs
+    exact (eq_separableClosure_iff k l s).2 hs
 
 /-- The maximal separable part is all of the residue field exactly when the
 residue extension is separable. -/
@@ -166,7 +169,29 @@ theorem chapter09_local_degree_formula
           (IsLocalRing.maximalIdeal B) *
         LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterResidueDegree A B
           (IsLocalRing.maximalIdeal B) := by
-  sorry
+  let p := IsLocalRing.maximalIdeal A
+  let q := IsLocalRing.maximalIdeal B
+  let : Module.Flat A B := by
+    rw [Module.Flat.flat_iff_torsion_eq_bot_of_isBezout]
+    rw [← Submodule.isTorsionFree_iff_torsion_eq_bot]
+    infer_instance
+  let : Fintype (p.primesOver B) :=
+    Set.Finite.fintype (Algebra.QuasiFinite.finite_primesOver p)
+  have hq_eq (q' : p.primesOver B) : q'.1 = q := by
+    exact IsLocalRing.eq_maximalIdeal
+      (q'.2.1.isMaximal (Ideal.ne_bot_of_mem_primesOver
+        (IsDiscreteValuationRing.not_a_field A) q'.2))
+  let : Unique (p.primesOver B) :=
+    { default := Ideal.primesOver.mk p q
+      uniq := fun q' => Subtype.ext (hq_eq q') }
+  have hdefault : (default : p.primesOver B).1 = q := hq_eq default
+  have hfinrank : Module.finrank A B = Module.finrank K L := by
+    exact (IsFractionRing.finrank_eq A K B L).symm
+  have hsum := Ideal.sum_ramification_inertia_eq_finrank (p := p) (S := B)
+  rw [Fintype.sum_unique, hfinrank] at hsum
+  simpa only [
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex,
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterResidueDegree, hdefault] using hsum.symm
 
 
 end
