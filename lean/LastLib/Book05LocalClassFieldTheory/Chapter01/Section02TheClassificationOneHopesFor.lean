@@ -1,4 +1,5 @@
 import LastLib.Book05LocalClassFieldTheory.Chapter01.Section01WhatKindOfLocalFieldIsMeant
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section07ContinuityOfEmbeddings
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter01
 
@@ -17,7 +18,10 @@ theorem chapter01_norm_continuous
     (K L : Type*) [NormedField K] [NormedField L]
     [NormedAlgebra K L] [FiniteDimensional K L] :
     Continuous (chapter01NormHom K L) := by
-  sorry
+  change Continuous (Units.map (Algebra.norm K (S := L)))
+  exact
+    (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03_trace_and_norm_are_continuous
+      (K := K) (L := L)).2.units_map _
 
 /-- For a finite abelian extension of local fields, the norm subgroup is open
 and has finite index.  The local hypotheses are explicit because the generic

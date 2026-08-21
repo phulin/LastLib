@@ -271,7 +271,13 @@ theorem chapter01_local_field_is_locally_compact
     [CompleteSpace ((Valued.v : Valuation K ℤᵐ⁰).valuationSubring)]
     [IsDiscreteValuationRing ((Valued.v : Valuation K ℤᵐ⁰).valuationSubring)] :
     LocallyCompactSpace K := by
-  sorry
+  have hsub := (Valuation.isEquiv_iff_valuationSubring
+    (v₁ := (Valued.v : Valuation K ℤᵐ⁰)) (v₂ := v.toValuation)).mp hvaluation
+  let _ : Finite (IsLocalRing.ResidueField
+      ((Valued.v : Valuation K ℤᵐ⁰).valuationSubring)) := hsub ▸ hlocal.2
+  exact
+    (LastLib.Book01ValuationsDVRsAndCompletions.Chapter06.chapter06_complete_dv_field_locallyCompact_iff_finite_residue
+      (K := K) (Γ₀ := ℤᵐ⁰)).mpr inferInstance
 
 /-- A topological product decomposition with its noncompact valuation
 coordinate forces the field-unit group to be noncompact. -/
@@ -286,7 +292,29 @@ theorem chapter01_local_field_units_noncompact
     (hcoordinate :
       Nonempty (Kˣ ≃ₜ* Multiplicative ℤ × Chapter01UnitGroup v)) :
     NoncompactSpace Kˣ := by
-  sorry
+  rcases hcoordinate with ⟨e⟩
+  apply not_compactSpace_iff.mp
+  intro hcompact
+  letI : CompactSpace Kˣ := hcompact
+  have hprod : IsCompact
+      (Set.univ : Set (Multiplicative ℤ × Chapter01UnitGroup v)) := by
+    have himage :=
+      (isCompact_univ : IsCompact (Set.univ : Set Kˣ)).image e.continuous_toFun
+    have hrange : Set.range e.toFun =
+        (Set.univ : Set (Multiplicative ℤ × Chapter01UnitGroup v)) :=
+      Set.range_eq_univ.mpr e.surjective
+    simpa only [Set.image_univ, hrange] using himage
+  have hfirst : IsCompact (Set.univ : Set (Multiplicative ℤ)) := by
+    have himage := hprod.image
+      (continuous_fst : Continuous (Prod.fst :
+        Multiplicative ℤ × Chapter01UnitGroup v → Multiplicative ℤ))
+    have hrange : Set.range (Prod.fst :
+        Multiplicative ℤ × Chapter01UnitGroup v → Multiplicative ℤ) =
+        (Set.univ : Set (Multiplicative ℤ)) := by
+      exact Set.range_eq_univ.mpr Prod.fst_surjective
+    simpa only [Set.image_univ, hrange] using himage
+  exact (not_compactSpace_iff.mpr (inferInstance : NoncompactSpace (Multiplicative ℤ)))
+    ⟨hfirst⟩
 
 /-- The unique-extension theorem used to fix the separable closure branch. -/
 theorem chapter01_finite_extension_has_unique_valuation
@@ -297,7 +325,8 @@ theorem chapter01_finite_extension_has_unique_valuation
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal v.valuationSubring) v.valuationSubring) :
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.hasUniqueValuationExtension v L := by
-  sorry
+  exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01_theorem_1_1
+    v hcomplete
 
 /-- A finite extension of a complete discretely valued field remains complete
 and discretely valued on its normalized branch. -/
@@ -448,7 +477,15 @@ theorem chapter01_unramified_extensions_classified_by_residue_extensions
           C.residue_finite (C.reduction u)
         LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Chapter07UnramifiedExtension
           (C.profile u)) := by
-  sorry
+  refine ⟨⟨Equiv.ofBijective C.reduction C.reduction_bijective⟩, ?_, ?_⟩
+  · exact
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.chapter07_actual_unramified_degree_matches_residue_degree C
+  · intro u
+    letI : FiniteDimensional K (C.extension u) := C.extension_finite u
+    letI : FiniteDimensional k (C.residueExtension (C.reduction u)) :=
+      C.residue_finite (C.reduction u)
+    rcases C.actual u with ⟨A⟩
+    exact A.unramified
 
 end
 
