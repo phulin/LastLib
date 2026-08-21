@@ -76,8 +76,10 @@ instance chapter02ResidueQuotientGroup
   infer_instance
 
 /- The preceding chapter's `K₀` is represented here by the coefficient ring
-   `C`; the structure records the uniformizer, integral generation, and
-   pointwise inertia fixing used in the uniformizer argument. -/
+   `C`; the structure records exactly the uniformizer, integral generation,
+   and pointwise inertia fixing used in the uniformizer argument.  The
+   monogenic presentation is explicit because residue separability alone does
+   not rule out defect over an imperfect residue field. -/
 structure Chapter02UnramifiedUniformizerPresentation
     (K L : Type u) [Field K] [Field L] [Algebra K L]
     (A : ValuationSubring L) (C : Type*) [CommRing C] [Algebra C A]
@@ -182,9 +184,10 @@ private theorem chapter02_uniformizer_ratio_exists
   refine ⟨c, ?_⟩
   simpa [e, mul_comm] using hc.symm
 
-/- DEPENDENCY_GUESS: The map called `θ₀` in Section 1.3 is not available in
-   this checkout.  The structure below keeps its source and kernel explicit,
-   while the quotient lift supplies the canonical induced map. -/
+/- Chapter 1 supplies a concrete `θ₀` for its valuation-specific interface.
+   The structure below is the necessary bridge to an abstract lower
+   filtration: it keeps the source map and its exact kernel explicit, while
+   the quotient lift supplies the induced map on `G₀/G₁`. -/
 structure Chapter02TameCharacterData
     {G : Type u} [Group G] [Finite G]
     (F : Chapter02LowerFiltration G) (l : Type*) [Field l] where

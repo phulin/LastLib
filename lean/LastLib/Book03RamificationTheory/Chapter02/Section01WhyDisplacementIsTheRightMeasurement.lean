@@ -533,10 +533,12 @@ def chapter02IntegralRingGeneratedByUniformizer
     (π : A) : Prop :=
   Algebra.adjoin C ({π} : Set A) = ⊤
 
-/- DEPENDENCY_GUESS: The preceding chapter's tame character package is not
-   present in this checkout.  The fixed coefficient ring and its generation by
-   a uniformizer below are the minimal local interface needed for the
-   uniformizer-displacement lemma. -/
+/- Chapter 1 exposes its concrete tame-character package for the multiplicative
+   valuation interface.  This chapter's canonical API uses additive valuations
+   with values in `WithTop ℤ`, so the fixed-coefficient and monogenic facts are
+   retained here as the minimal bridge needed by the uniformizer-displacement
+   lemma.  In particular, the monogenic presentation is explicit rather than
+   inferred from residue separability alone. -/
 /-- Under the displayed integral-generation hypothesis, the minimum can be
 tested on a uniformizer in the separable-residue case. -/
 theorem chapter02_displacement_eq_uniformizer

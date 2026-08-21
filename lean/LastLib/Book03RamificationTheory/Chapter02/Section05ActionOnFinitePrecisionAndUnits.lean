@@ -67,11 +67,10 @@ theorem chapter02_principal_unit_group_succ_le
   change ((z : A) - 1) ∈ (IsLocalRing.maximalIdeal A) ^ n
   exact (Ideal.pow_le_pow_right n.le_succ) hz
 
-/- DEPENDENCY_GUESS: The quotient action is the action of the decomposition
-   group on `A` descended through the stabilized ideal power.  The canonical
-   quotient-lifting declaration is not exposed by the pinned earlier API, so
-   this structure records the descended action, its compatibility, and exact
-   kernel until reconciliation. -/
+/- Earlier APIs expose the decomposition-group action on the valuation ring and
+   the unit-layer action, but this chapter needs the corresponding action on
+   the ring precision quotient together with its exact kernel.  The structure
+   records that descended action and its compatibility explicitly. -/
 /-- A finite-precision action package records the exact kernel. -/
 structure Chapter02PrecisionActionData
     (K L : Type u) [Field K] [Field L] [Algebra K L]
