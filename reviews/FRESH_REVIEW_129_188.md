@@ -34,7 +34,7 @@ Status labels:
 - **148 — Eisenstein Descent and the Mordell--Weil Group of the Eisenstein Quotient — PENDING FULL READ.**
 - **149 — Eisenstein Cotangent Lattices and Formal Immersion — PENDING FULL READ.**
 - **150 — Mordell--Weil Sieves for Hyperelliptic Curves — PENDING FULL READ.**
-- **151 — Semistable Full-Two Residual Irreducibility — PENDING FULL READ.**
+- **151 — Semistable Full-Two Residual Irreducibility — PASS.** Full-read-to-EOF attestation: read lines 1--EOF on 2026-08-21. Evidence: Chapters 2--6 prove the kernel/quotient character identities and treat good and multiplicative reduction separately at and away from $p$; Lemma 7.1 and Theorem 7.2 supply the global unramified-character step; Theorem 9.1 proves odd-isogeny invariance of full two-torsion; Books 149--150 supply the explicitly routed $p=7,11,13$ and $p\ge17$ point exclusions. The 6.2k-word length is below the soft target but the manuscript's deliberately narrow reusable theorem is fully motivated and proved, with local branches, exceptional cases, counterexamples, and a dependency ledger; no mathematical coverage gap follows from length alone.
 - **152 — Deep-Level Quaternionic Modules and Diamond Actions — PENDING FULL READ.**
 - **153 — Hilbert Irreducibility and Arithmetic Approximation — PENDING FULL READ.**
 - **154 — Moret--Bailly's Theorem — PENDING FULL READ.**
