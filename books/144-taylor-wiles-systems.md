@@ -234,6 +234,8 @@ with fraction field $E$. All complete local $\mathcal O$-algebras have residue f
 
 The clean arithmetic model is a fixed-determinant, absolutely irreducible rank-two residual representation over an odd-characteristic field. The abstract algebra below does not depend on rank two, but every use of the prime-selection theorem presupposes the exact image, determinant, and local-condition hypotheses under which that theorem was proved.
 
+The imported inputs are already established. Book 143, Theorems 14.1 and 15.2, supplies the ordinary and paired auxiliary-prime data, their local deformation rings, augmentation, and dual-Selmer killing. Book 69 supplies global representability, tangent and relative Selmer formulas, framing corrections, and effective relation bounds under its stated obstruction-theory hypotheses. The depth, regular-sequence, Auslander--Buchsbaum, finite-map, and Fitting-ideal facts used in Chapters 11--13 are the results of Book 70. Everything else in this book is either elementary finite algebra proved where used or is explicitly part of the definition of an automorphic realization; no module realization is inferred from prime selection alone.
+
 We use exact-level diamond quotients. Thus every local factor has order $\ell^N$, even if the maximal $\ell$-power quotient of the residue-field units is larger. This convention is what makes the cardinality formula uniform.
 
 For an ideal $I\subset A$ and an $A$-module $X$, the notation $X/IX$ means $A/I\otimes_A X$. This is a coinvariant construction when $I$ is an augmentation ideal. Invariants will always be written with a superscript and will never be substituted silently for this quotient.
@@ -2010,7 +2012,7 @@ Several types of variables can occur simultaneously, and none should be counted 
 | unframed auxiliary local ring               |                   $1$ smooth variable | selected Frobenius eigenvalue $X_v$               |
 | framed auxiliary local ring beyond unframed |                  $2$ smooth variables | positions $U_v,V_v$ of the lifted eigenlines      |
 | one global full frame                       |                  $3$ smooth variables | strict global basis directions                    |
-| $T$ local frames modulo global conjugacy    |                                    $4 | T                                                 |
+| $T$ local frames modulo global conjugacy    |                   $4\lvert T\rvert-1$ | local bases modulo the one global scalar          |
 | global variables over the chosen local base |                  $g_{\mathrm{rel},N}$ | strict Selmer tangent plus centralizer correction |
 
 The one-global-frame row is the case $|T|=1$ of the partial-framing row, not an additional summand. Likewise, the framed auxiliary local coordinates belong inside the local base when those places are included there; the global relative count then measures only what remains over that base.
