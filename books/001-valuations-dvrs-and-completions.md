@@ -2952,6 +2952,61 @@ is surjective. By Lemma 13.29 the source is a complete regular local domain of d
 
 The unramifiedness hypothesis cannot be dropped. The ring $A=\mathbf Z_p[\zeta_p]$ of Section 12.7 is a complete regular local ring — indeed a complete DVR — of dimension one and mixed characteristic, with residue field $\mathbf F_p$ and Cohen ring $\mathbf Z_p$. Here $p=(\zeta_p-1)^{p-1}\cdot(\text{unit})$ lies in $\mathfrak m^2$ as soon as $p>2$, so $A$ is ramified, and indeed $A$ is not isomorphic to $C[[X_1,\ldots,X_{d-1}]]=\mathbf Z_p$, which has a different fraction field. What Corollary 13.33 does give is a presentation $A\cong\mathbf Z_p[[X]]/(f)$ with $f$ the Eisenstein polynomial $\big((1+X)^p-1\big)/X$: the ramification has been pushed into the presenting equation, exactly where it belongs.
 
+Both corollaries are applied, in practice, to rings that are not complete to begin with. One starts with a regular local ring $R$ — the local ring of a point at which some geometric object is smooth, or the localization of a polynomial ring at a maximal ideal — and passes to the $\mathfrak m$-adic completion $\widehat R=\varprojlim_nR/\mathfrak m^n$ of Section 7.5 in order to read off formal coordinates. For that step to be legitimate, $\widehat R$ must itself be a complete _regular_ local ring, and of the _same_ dimension as $R$; otherwise Corollary 13.32 either does not apply at all or produces a power series ring in the wrong number of variables. Since this is the form in which the structure theorem is used in geometry, we prove it here rather than take it on credit.
+
+It is worth saying why the point is not bookkeeping. Completion is a drastic operation. It adjoins all the limits the filtration demands and is typically far larger than the ring it started from — $\mathbf Z_{(p)}$ is countable and $\mathbf Z_p$ is not — and Chapter 12 showed that it can destroy ring-theoretic properties outright: by Theorem 12.1 the $\mathfrak m_A$-adic completion of the domain $B$ breaks up into a product of complete discrete valuation rings, and so acquires zero divisors as soon as two primes lie over $\mathfrak m_A$. Nothing formal forbids such an enlargement from having a different Krull dimension than its source. Adding elements can create chains of primes that were not there before, and passing to a limit of quotients can just as easily collapse chains that were.
+
+Half of what has to be checked is easy and half is not. The embedding dimension $\dim_k\mathfrak m/\mathfrak m^2$ is already visible in $R/\mathfrak m^2$, which completion does not change, so it survives for trivial reasons. The Krull dimension is the real content, and it must be pinned down from both sides. The upper bound is a parameter count: a system of parameters of $R$, supplied by Lemma 13.28A, stays a system of parameters after completion, because the finite-length quotient it cuts out is not altered by completing. The lower bound is where a genuine input is needed, and the input is _flatness_ of $R\to\widehat R$. Flatness is exactly what forbids the primes of $R$ from being lost: it makes the map satisfy going-down, so a chain of primes of $R$ ending at $\mathfrak m$ can be lifted, one prime at a time from the top, to a chain of $\widehat R$ ending at $\mathfrak m\widehat R$, and the lifted primes stay distinct because their contractions do.
+
+Four standard facts about the completion of a Noetherian local ring $(R,\mathfrak m)$ will be used, all of them part of the basic theory of adic completions. First, $\widehat R$ is Noetherian. Second, it is local with maximal ideal $\mathfrak m\widehat R$, and $\mathfrak m^n\widehat R=(\mathfrak m\widehat R)^n$ is the kernel of the projection $\widehat R\to R/\mathfrak m^n$, so that
+
+$$
+\widehat R/\mathfrak m^n\widehat R\;\cong\;R/\mathfrak m^n
+\qquad(n\geq1),
+$$
+
+compatibly with the projections; in particular $\widehat R$ has residue field $k=R/\mathfrak m$ and the structure map $R\to\widehat R$ is local. Third, $\widehat R$ is complete and separated for its own maximal-adic topology. Fourth, $R\to\widehat R$ is flat, and a flat ring homomorphism satisfies going-down: if a prime $\mathfrak q$ of $\widehat R$ contracts to $\mathfrak p\subseteq R$ and $\mathfrak p'\subseteq\mathfrak p$ is a prime of $R$, then some prime $\mathfrak q'\subseteq\mathfrak q$ of $\widehat R$ contracts to $\mathfrak p'$. For a discrete valuation ring the first three of these were proved directly in Theorem 7.2, whose closing clause $A/(\pi^n)\cong\widehat A/(\pi^n)$ is the displayed isomorphism in that case.
+
+**Proposition 13.33A (completion preserves dimension and regularity).** Let $(R,\mathfrak m)$ be a Noetherian local ring of dimension $d$ with residue field $k$, and let $\widehat R$ be its $\mathfrak m$-adic completion. Then
+
+$$
+\dim\widehat R=d
+\qquad\text{and}\qquad
+\dim_k\mathfrak m\widehat R/\mathfrak m^2\widehat R=\dim_k\mathfrak m/\mathfrak m^2 .
+$$
+
+Consequently $\widehat R$ is regular if and only if $R$ is. In particular, if $R$ is regular with regular system of parameters $x_1,\ldots,x_d$, then $\widehat R$ is a complete regular local ring of dimension $d$ whose maximal ideal is generated by the images of $x_1,\ldots,x_d$. Finally, if $R$ contains a field, then so does $\widehat R$.
+
+**Proof.** Write $\widehat{\mathfrak m}=\mathfrak m\widehat R$ for the maximal ideal of $\widehat R$.
+
+_The cotangent space._ Take $n=2$ in the displayed isomorphism. It is an isomorphism of rings $\widehat R/\widehat{\mathfrak m}^2\cong R/\mathfrak m^2$ between local rings, hence carries the maximal ideal of one onto the maximal ideal of the other, that is, $\widehat{\mathfrak m}/\widehat{\mathfrak m}^2$ onto $\mathfrak m/\mathfrak m^2$; and it is compatible with the case $n=1$, which identifies both residue fields with $k$. So it is an isomorphism of $k$-vector spaces $\widehat{\mathfrak m}/\widehat{\mathfrak m}^2\cong\mathfrak m/\mathfrak m^2$, and the second displayed equality holds. Both sides are finite, $\mathfrak m$ being finitely generated.
+
+_The dimension, from above._ By Lemma 13.28A there is a system of parameters $x_1,\ldots,x_d$ of $R$, so that $M=R/(x_1,\ldots,x_d)$ has finite length, say $\ell$. Then $\mathfrak m^\ell M=0$. Indeed, consider the descending chain $M\supseteq\mathfrak mM\supseteq\mathfrak m^2M\supseteq\cdots$ of finitely generated submodules. Length is additive, so each strict inclusion lowers the length by at least one, and at most $\ell$ of them can be strict; hence $\mathfrak m^jM=\mathfrak m^{j+1}M=\mathfrak m(\mathfrak m^jM)$ for some $j\leq\ell$, and Nakayama's lemma forces $\mathfrak m^jM=0$, whence $\mathfrak m^\ell M=0$. In ideal-theoretic terms $\mathfrak m^\ell\subseteq(x_1,\ldots,x_d)$, whence
+
+$$
+\mathfrak m^\ell\widehat R\subseteq(x_1,\ldots,x_d)\widehat R .
+$$
+
+Therefore $\widehat R/(x_1,\ldots,x_d)\widehat R$ is a quotient of $\widehat R/\mathfrak m^\ell\widehat R\cong R/\mathfrak m^\ell$, which has finite length; so it has finite length too, and $(x_1,\ldots,x_d)\widehat R$ is $\widehat{\mathfrak m}$-primary. It is generated by $d$ elements, so $\widehat{\mathfrak m}$, being the only prime of $\widehat R$ containing it, is minimal over an ideal with $d$ generators, and Krull's height theorem gives
+
+$$
+\dim\widehat R=\operatorname{ht}\widehat{\mathfrak m}\leq d .
+$$
+
+_The dimension, from below._ Here flatness enters. Choose a chain of $d+1$ distinct primes of $R$,
+
+$$
+\mathfrak p_0\subsetneq\mathfrak p_1\subsetneq\cdots\subsetneq\mathfrak p_d ,
+$$
+
+and note that necessarily $\mathfrak p_d=\mathfrak m$: every prime of $R$ lies in $\mathfrak m$, so if $\mathfrak p_d\neq\mathfrak m$ the chain could be extended by $\mathfrak m$ at the top to give $d+2$ distinct primes, which $\dim R=d$ forbids. Set $\mathfrak q_d=\widehat{\mathfrak m}$; its contraction to $R$ is $\mathfrak m=\mathfrak p_d$, because $R\to\widehat R$ is local. Suppose $\mathfrak q_d\supseteq\cdots\supseteq\mathfrak q_{i+1}$ have been found with $\mathfrak q_j$ contracting to $\mathfrak p_j$. Applying going-down to $\mathfrak q_{i+1}$, which contracts to $\mathfrak p_{i+1}$, and to the smaller prime $\mathfrak p_i\subseteq\mathfrak p_{i+1}$ produces a prime $\mathfrak q_i\subseteq\mathfrak q_{i+1}$ of $\widehat R$ contracting to $\mathfrak p_i$. This constructs $\mathfrak q_0\subseteq\cdots\subseteq\mathfrak q_d$. The contractions of the $\mathfrak q_i$ are the $\mathfrak p_i$, which are pairwise distinct; hence the $\mathfrak q_i$ are pairwise distinct, and the chain is strictly increasing. So $\dim\widehat R\geq d$, and with the previous paragraph $\dim\widehat R=d$.
+
+_Regularity._ The two equalities just proved say that the pair (dimension, embedding dimension) is the same for $R$ and for $\widehat R$. Since regularity of a Noetherian local ring is the assertion that these two numbers agree, $\widehat R$ is regular precisely when $R$ is. Suppose $R$ is regular and $x_1,\ldots,x_d$ is a regular system of parameters, so $\mathfrak m=(x_1,\ldots,x_d)$. Then $\widehat{\mathfrak m}=\mathfrak m\widehat R$ is generated by the images of the $x_i$, and $\widehat R$ is a Noetherian local ring of dimension $d$, complete and separated for the $\widehat{\mathfrak m}$-adic topology, whose maximal ideal is generated by $d$ elements: a complete regular local ring with the images of $x_1,\ldots,x_d$ as a regular system of parameters.
+
+_Containing a field._ If $K\subseteq R$ is a subfield, the composite $K\to R\to\widehat R$ is a ring homomorphism from a field into a nonzero ring — nonzero because $\widehat R$ has residue field $k$ — hence is injective, and its image is a subfield of $\widehat R$. $\square$
+
+Two remarks are in order. First, the equivalence runs in both directions, and the direction not needed above is the one used in practice for detection: a Noetherian local ring is regular if and only if its completion is, so regularity may be tested after passing to formal coordinates, where the structure theorem is available. Second, the proposition preserves exactly the two numerical invariants named in it, and nothing more should be read into it: the completion of a Noetherian local _domain_ need not be a domain, as the splitting of Theorem 12.1 already shows, and it is only because regularity is a statement about dimension and embedding dimension that it transfers at all. With the regular case now settled both for complete rings and for the completions of arbitrary ones, we return to general complete Noetherian local rings.
+
 The structure theorem presents $A$ as a quotient of a large regular ring, with as many variables as it takes to generate $\mathfrak m$. There is a complementary statement in which the number of variables is as small as possible — equal to the dimension — at the price of replacing "quotient" by "finite extension". This is the local analogue of Noether normalization, and it is the form in which the theorem is used whenever one wants to compare $A$ with a regular ring having the _same_ fraction field up to a finite extension: for instance to prove finiteness of normalization, or to run an induction on the degree of a finite extension of complete local domains.
 
 The mechanism is the same convergence argument that proved Lemma 13.3, with generators replaced by module generators. If the chosen parameters cut $A$ down to something of finite length, then finitely many elements of $A$ suffice to span that finite-length quotient, and everything else can be expanded in the parameters with coefficients from the coefficient ring.
@@ -3035,7 +3090,13 @@ $$
 \dim A/pA=d-1 .
 $$
 
-Indeed $\dim A/pA\geq d-1$ by Krull's principal ideal theorem, while a chain of $d+1$ distinct primes of $A$ containing $p$ could be prefixed by the prime $0$ to give a chain of length $d+1$ in $A$, which is impossible; so $\dim A/pA\leq d-1$. Choosing $x_1,\ldots,x_{d-1}$ to be a system of parameters of $A/pA$, again by Lemma 13.28A, and lifting them to $A$ makes $A/(p,x_1,\ldots,x_{d-1})A$ of finite length, and $\dim C[[X_1,\ldots,X_{d-1}]]=d$ by Lemma 13.29. So a complete Noetherian local domain of dimension $d$ is always a finite extension of a complete regular local domain of dimension $d$: of $k[[X_1,\ldots,X_d]]$ in equal characteristic, and of $C[[X_1,\ldots,X_{d-1}]]$ in mixed characteristic.
+Neither inequality is immediate, and it is worth separating them. The upper bound is the chain argument used twice already: a chain of $d+1$ distinct primes of $A$ containing $p$ could be prefixed by the prime ideal $0$ of the domain $A$, which is distinct from all of them because each contains $p\neq0$, and this would give a chain of length $d+1$ in a ring of dimension $d$; so $\dim A/pA\leq d-1$. The lower bound is the more delicate half, and it is tempting to charge it to Krull's height theorem in its principal-ideal form. That would be a mistake: the height theorem bounds the height of a prime minimal over $(p)$ from _above_, and the inequality wanted here runs the other way, asserting that the quotient $A/pA$ is not too _small_. What does supply it is the minimality clause of Lemma 13.28A, applied to a parameter family assembled from $p$ and a system of parameters downstairs. In detail, put $e=\dim A/pA$ and use the existence clause of Lemma 13.28A to choose a system of parameters of $A/pA$, of length $e$; lift its members to elements $x_1,\ldots,x_e\in\mathfrak m$. Then
+
+$$
+A/(p,x_1,\ldots,x_e)A\;\cong\;(A/pA)\big/(\bar x_1,\ldots,\bar x_e)
+$$
+
+has finite length, so the ideal $(p,x_1,\ldots,x_e)$ is $\mathfrak m$-primary — and it is generated by $e+1$ elements. Since no ideal generated by fewer than $d=\dim A$ elements can be $\mathfrak m$-primary, again by Lemma 13.28A, we get $d\leq e+1$, that is, $e\geq d-1$. Together with the upper bound this proves the displayed equality. In particular the family produced along the way has exactly $d-1$ members: the lifted parameters $x_1,\ldots,x_{d-1}$ satisfy, by their very construction, that $A/(p,x_1,\ldots,x_{d-1})A$ has finite length, which is the hypothesis of case 2 of Theorem 13.34 with $s=d-1$; and $\dim C[[X_1,\ldots,X_{d-1}]]=d$ by Lemma 13.29, so the dimension hypothesis of the injectivity clause is met as well. So a complete Noetherian local domain of dimension $d$ is always a finite extension of a complete regular local domain of dimension $d$: of $k[[X_1,\ldots,X_d]]$ in equal characteristic, and of $C[[X_1,\ldots,X_{d-1}]]$ in mixed characteristic.
 
 This is the precise sense in which the local rings of arithmetic geometry are governed by two model families. Up to a finite extension of local domains, a complete local domain of dimension $d$ is a power series ring in $d$ variables over a field, or a power series ring in $d-1$ variables over a Cohen ring. The finite extension carries the remaining information — ramification, singularities, inseparability — while the model ring supplies regularity and a workable dimension theory, on which arguments about the extension can be based.
 
@@ -3124,7 +3185,7 @@ This example is the reason Section 13.6 insisted on coefficient-ring _maps_: the
 
 **Two mixed-characteristic regular rings.** The ring $\mathbf Z_p[[t]]$ of Section 4.3 is a complete regular local ring of dimension two with residue field $\mathbf F_p$ and maximal ideal $(p,t)$. Since $\mathfrak m^2=(p^2,pt,t^2)$ does not contain $p$, it is unramified, and Corollary 13.33 returns the tautology $A\cong C[[X]]$ with $C=\mathbf Z_p$. By contrast $\mathbf Z_p[\zeta_p]$, discussed after Corollary 13.33, is a complete regular local ring of dimension one whose maximal ideal contains $p$ in its square when $p>2$; it is ramified, is not isomorphic to its Cohen ring $\mathbf Z_p$, and appears instead as $\mathbf Z_p[[X]]/(f)$ for an Eisenstein $f$. The contrast is exactly the one drawn in Section 12.7 between unramified and totally ramified extensions, now seen from the structural side.
 
-**Formal local coordinates.** A geometric reading is worth recording. If $R$ is a Noetherian local ring of dimension $d$ containing a field, with residue field $k$, and if $R$ is regular — the algebraic form of smoothness at the point — then its completion is regular of dimension $d$ and Corollary 13.32 gives
+**Formal local coordinates.** A geometric reading is worth recording. If $R$ is a Noetherian local ring of dimension $d$ containing a field, with residue field $k$, and if $R$ is regular — the algebraic form of smoothness at the point — then Proposition 13.33A says that its completion $\widehat R$ is again a complete regular local ring, of the same dimension $d$ and with the same residue field $k$, and that it again contains a field; so Corollary 13.32 applies to $\widehat R$ and gives
 
 $$
 \widehat R\cong k[[X_1,\ldots,X_d]].

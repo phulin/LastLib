@@ -1704,16 +1704,29 @@ $T/\varpi^nT$ admit one coefficient-linear compatible finite-flat tower over $W$
 $n$. Then $\xi$ is locally algebraic. More precisely, after enlarging the coefficient
 field so that all embeddings $\tau:K_0\hookrightarrow\overline{\mathbf Q}_p$ are visible,
 there are $h_\tau\in\{0,1\}$ such that on an open subgroup of $\mathcal O_{K_0}^{\times}$
-the character corresponding to $\xi$ under arithmetic local reciprocity is
+the character $u\mapsto\xi(\operatorname{rec}_{K_0}(u))$ attached to $\xi$ by arithmetic
+local reciprocity is
 
 $$
-u\longmapsto\prod_\tau\tau(u)^{h_\tau},                 \tag{14.6a}
+u\longmapsto\prod_\tau\tau(u)^{-h_\tau}.                 \tag{14.6a}
 $$
 
-up to the simultaneous sign convention for arithmetic reciprocity. In particular, if
-$K_0/\mathbf Q_p$ is unramified and $\xi$ is the restriction of a character of
-$G_{\mathbf Q_p}$, all the $h_\tau$ are equal; on inertia it is therefore, up to finite
-order, either the trivial or the cyclotomic character.
+The exponents are negative, not positive: arithmetic reciprocity sends a unit $u$ to the
+automorphism acting on the Lubin--Tate torsion tower by $[u^{-1}]$, by Book 5,
+Proposition 10.1. This is the whole of the convention freedom in (14.6a). The integers
+$h_\tau$ are read off the Hodge steps and are themselves convention-free; only the overall
+sign of the exponents depends on the normalization of reciprocity, and it changes for all
+$\tau$ at once if one replaces $\operatorname{rec}_{K_0}$ by the geometric normalization
+$\operatorname{rec}_{K_0}^{-1}$. Book 5 fixes the arithmetic normalization, and (14.6a) is
+stated in it.
+
+In particular, if $K_0/\mathbf Q_p$ is unramified and $\xi$ is the restriction of a
+character of $G_{\mathbf Q_p}$, all the $h_\tau$ are equal; on inertia it is therefore, up
+to finite order, either the trivial character, when every $h_\tau=0$, or the cyclotomic
+character, when every $h_\tau=1$. The second identification is exactly the negative sign in
+(14.6a): the right-hand side becomes $N_{K_0/\mathbf Q_p}(u)^{-1}$, which is the value of
+the $p$-adic cyclotomic character on $\operatorname{rec}_{K_0}(u)$ in the arithmetic
+normalization of Book 5.
 
 **Proof.** Theorem 14.1, with the coefficient action retained as in Chapter 13, gives a
 coefficient-linear strongly divisible lattice $L$. Enlarge the coefficient field so that
@@ -1737,11 +1750,30 @@ two fundamental syntomic equations of Book 53, Sections 4.1--4.2: iterate ordina
 through the weight-zero factors and divided Frobenius at the one weight-one factor. The
 result is the torsion equation of the Lubin--Tate formal $\mathcal O_{K_0}$-module for the
 embedding $\tau$. Consequently its inverse-limit character is the $\tau$-conjugate
-Lubin--Tate character. Under arithmetic local reciprocity this character is
-$u\mapsto\tau(u)$ on a sufficiently small principal-unit group, with the
-arithmetic-reciprocity labeling of the torsion tower normalized as in Book 5, Proposition 10.1. Multiplying the factors and restoring the unramified scalar gives (14.6a)
-directly. No Sen operator or $\mathbf C_p$ period decomposition has entered the argument.
-Thus $\xi$ is locally algebraic.
+Lubin--Tate character $\tau\circ\chi_{\mathrm{LT}}$, and not its inverse. The contravariance
+of $T_{\mathrm{FL}}$ is already accounted for by the normalization (2.6), in which the
+weight-one line realizes $\mu_{p^n}$ rather than its dual, and the transition maps in (14.4)
+are the ones induced by the strict injections $L/p^nL\xrightarrow{p}L/p^{n+1}L$, which on
+torsion points are the standard $p$-power maps of the tower. So the passage to the inverse
+limit introduces no further reversal.
+
+It remains to convert this Galois-side statement into a statement about units. Book 5,
+Proposition 10.1 evaluates arithmetic reciprocity on the torsion tower as
+$\operatorname{rec}_{K_0}(u)(\omega_n)=[u^{-1}](\omega_n)$, so
+$\chi_{\mathrm{LT}}(\operatorname{rec}_{K_0}(u))=u^{-1}$, and the $\tau$-conjugate character
+is therefore
+
+$$
+u\longmapsto\tau(u)^{-1}
+$$
+
+on a sufficiently small principal-unit group. Multiplying the factors over those $\tau$ with
+$h_\tau=1$ and restoring the unramified scalar gives (14.6a) directly. As a check on the
+sign, taking $h_\tau=1$ for every $\tau$ makes the product $N_{K_0/\mathbf Q_p}(u)^{-1}$,
+which is the value of the cyclotomic character on $\operatorname{rec}_{K_0}(u)$ in the
+arithmetic normalization; that is the same character as the one produced by the weight-one
+line through (2.6), as it must be. No Sen operator or $\mathbf C_p$ period decomposition has
+entered the argument. Thus $\xi$ is locally algebraic.
 
 If $\xi$ descends to $G_{\mathbf Q_p}$, conjugation by arithmetic Frobenius fixes its
 inertial character. Frobenius cyclically permutes the embeddings $\tau$ of the unramified
