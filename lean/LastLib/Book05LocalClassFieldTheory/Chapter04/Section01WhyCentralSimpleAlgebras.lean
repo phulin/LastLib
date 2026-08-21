@@ -30,14 +30,15 @@ theorem chapter04_wedderburn_decomposition_matrix_dimension
     (W : Chapter04WedderburnDecomposition A) :
     Module.finrank K A =
       W.matrixSize ^ 2 * Module.finrank K W.division.carrier := by
-  sorry
+  simpa only [Module.finrank_matrix, Fintype.card_fin, Nat.pow_two] using
+    W.equivalence.some.toLinearEquiv.finrank_eq
 
 theorem chapter04_brauer_class_eq_iff
     {K : Type*} [Field K]
     (A B : chapter04CentralSimpleAlgebra K) :
     chapter04BrauerClass A = chapter04BrauerClass B ↔
       chapter04BrauerEquivalent A B := by
-  sorry
+  exact Quotient.eq
 
 theorem chapter04_brauer_group_law_exists
     (K : Type*) [Field K] :
