@@ -127,6 +127,8 @@
 
 ## 1. The deformation problem
 
+The ring-theoretic interface is that of Book 57: artinian quotients of complete local rings, dual numbers over the coefficient field, and finite modules with their Nakayama lemma. The Galois-cohomology interface is Book 30, Chapter 3, for the cohomology of finitely generated pro-$p$ groups with discrete torsion modules, including inflation--restriction. Nothing else is assumed from later books.
+
 ### 1.1 From one residual representation to a family
 
 Fix a finite field $k$, a profinite group $G$, a positive integer $d$, and a continuous representation
