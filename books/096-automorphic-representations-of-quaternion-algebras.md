@@ -2188,7 +2188,7 @@ Its contribution is $\mathcal M(\pi)\otimes\pi_f^U$ in the irreducible-weight ca
 | finite algebraic datum                    | global representation datum                 | exact local content                                              |
 | ----------------------------------------- | ------------------------------------------- | ---------------------------------------------------------------- |
 | value in $W^{\Gamma_i}$                   | scalar automorphic vectors of infinity type | $\pi_\infty\cong W^\vee$                                         |
-| compatible $\omega_f$ equations           | central character $\omega_\pi$              | $\omega_\infty=\rho                                              |
+| compatible $\omega_f$ equations           | central character $\omega_\pi$              | $\omega_\infty=\rho\rvert_{Z_\infty}^{-1}$                       |
 | class-set dimension                       | fixed-vector sum over constituents          | $\sum_\pi\dim\pi_f^U$ for irreducible $W$                        |
 | right-coset sum $[UaU]$                   | convolution on $\pi_f^U$                    | $\sum_r\pi_f(a_r)$                                               |
 | $T_v,S_v$ at a good split place           | spherical Hecke character                   | $1-t_vX+q_vs_vX^2$                                               |
