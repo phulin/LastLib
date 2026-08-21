@@ -209,10 +209,10 @@ theorem chapter09_hensel_lifts_separable_residue_generator
     (θbar : chapter09MaximalSeparableResidueSubfield
       (chapter09BaseResidueField A) (chapter09ExtensionResidueField B))
     (gbar : (chapter09BaseResidueField A)[X]) (g : A[X])
-    (hprimitive : Algebra.adjoin (chapter09BaseResidueField A)
+    (_hprimitive : Algebra.adjoin (chapter09BaseResidueField A)
       ({θbar} : Set (chapter09MaximalSeparableResidueSubfield
         (chapter09BaseResidueField A) (chapter09ExtensionResidueField B))) = ⊤)
-    (hmonic : gbar.Monic ∧ g.Monic) (hirreducible : Irreducible gbar)
+    (_hmonic : gbar.Monic ∧ g.Monic) (_hirreducible : Irreducible gbar)
     (hseparable : gbar.Separable)
     (hminimal : gbar = minpoly (chapter09BaseResidueField A) (θbar :
       chapter09ExtensionResidueField B))
