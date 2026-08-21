@@ -741,6 +741,39 @@ theorem complete_extension_defectless_without_separability
       (IsLocalRing.maximalIdeal w.valuationSubring)) rfl rfl hcomplete
   exact h.2.2
 
+/-- The two identifications needed to read a completed extension's local
+invariants as invariants computed in an ambient integral extension. -/
+structure CompleteExtensionGlobalInvariantIdentification
+    {K L Γ R S : Type*} [Field K] [Field L]
+    [LinearOrderedCommGroupWithZero Γ] [Algebra K L]
+    [CommRing R] [CommRing S] [Algebra R S]
+    (P : Ideal S) (vK : Valuation K Γ) (w : Valuation L Γ)
+    [vK.HasExtension w] where
+  ramification :
+    chapterRamificationIndex vK.valuationSubring w.valuationSubring
+        (IsLocalRing.maximalIdeal w.valuationSubring) =
+      P.ramificationIdx R
+  residue :
+    chapterResidueDegree vK.valuationSubring w.valuationSubring
+        (IsLocalRing.maximalIdeal w.valuationSubring) =
+      P.inertiaDeg R
+
+/-- A completed extension's fundamental equality after its two local factors
+have been identified with ambient global invariants. -/
+theorem complete_extension_defectless_of_global_invariant_identification
+    {K L Γ R S : Type*} [Field K] [Field L]
+    [LinearOrderedCommGroupWithZero Γ] [Algebra K L]
+    [CommRing R] [CommRing S] [Algebra R S]
+    (P : Ideal S) (vK : Valuation K Γ) (w : Valuation L Γ)
+    [vK.HasExtension w] [Valuation.IsRankOneDiscrete vK]
+    [Valuation.IsRankOneDiscrete w] [Module.Finite K L]
+    (hcomplete : IsAdicComplete
+      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
+    (H : CompleteExtensionGlobalInvariantIdentification (R := R) (S := S) P vK w) :
+    Module.finrank K L = P.ramificationIdx R * P.inertiaDeg R := by
+  rw [complete_extension_defectless_without_separability vK w hcomplete,
+    H.ramification, H.residue]
+
 end
 
 end LastLib.Book01ValuationsDVRsAndCompletions.Chapter12

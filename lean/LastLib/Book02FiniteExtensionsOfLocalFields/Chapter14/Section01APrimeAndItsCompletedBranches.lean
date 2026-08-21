@@ -5,6 +5,7 @@ namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter14
 noncomputable section
 
 open scoped BigOperators NumberField TensorProduct
+open LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
 
 universe u v w
 
@@ -99,29 +100,45 @@ theorem chapter14_completed_scalar_extension_decomposition
     Chapter14CompletedScalarExtension E p := by
   sorry
 
-/- The finite degree of an individual completed branch is `e f`.  The
-   equalities identifying the canonical global ideal invariants with the
-   normalized local invariants are kept as hypotheses so this declaration can
-   be reused before a dedicated number-field completion bridge is added. -/
+/- The finite degree of an individual completed branch is `e f`.  Its
+   completed valuations and the two global/local invariant identifications
+   are explicit because the branch model is a fraction field of an adic
+   completion, whereas Mathlib's finite-place completion uses a uniform-space
+   completion. -/
 theorem chapter14_completed_branch_degree
-    {F : Type u} (E : Type v) [Field F] [NumberField F]
+    {F : Type u} (E : Type v) {Γ : Type w} [Field F] [NumberField F]
     [Field E] [NumberField E] [Algebra F E] [FiniteDimensional F E]
     (p : Chapter14Prime F) (P : Chapter14PrimeAbove F E p)
+    [IsDomain (branchCompletion (𝓞 E) P.1)]
     [Algebra F (chapter14BaseCompletion F p)]
     [Algebra (chapter14BaseCompletion F p)
       (chapter14BranchCompletion F E p P)]
     [FiniteDimensional (chapter14BaseCompletion F p)
       (chapter14BranchCompletion F E p P)]
+    [LinearOrderedCommGroupWithZero Γ]
+    (vBase : Valuation (chapter14BaseCompletion F p) Γ)
+    (vBranch : Valuation (chapter14BranchCompletion F E p P) Γ)
+    [vBase.HasExtension vBranch]
+    [Valuation.IsRankOneDiscrete vBase]
+    [Valuation.IsRankOneDiscrete vBranch]
+    (hcomplete : IsAdicComplete
+      (IsLocalRing.maximalIdeal vBase.valuationSubring)
+      vBase.valuationSubring)
+    (H : CompleteExtensionGlobalInvariantIdentification
+        (K := chapter14BaseCompletion F p)
+        (L := chapter14BranchCompletion F E p P)
+        (R := 𝓞 F) (S := 𝓞 E) P.1 vBase vBranch)
     (e f : ℕ)
     (he : chapter14RamificationIndex E p P = e)
     (hf : chapter14ResidueDegree E p P = f) :
     Module.finrank (chapter14BaseCompletion F p)
         (chapter14BranchCompletion F E p P) = e * f := by
-  sorry
-
-/- DEPENDENCY_GUESS: The preceding chapters expose the `e f` formula for a
-   valuation extension and the canonical ideal invariants separately, but do
-   not yet expose their identification for this prime-above subtype. -/
+  have hglobal :=
+    complete_extension_defectless_of_global_invariant_identification
+      P.1 vBase vBranch hcomplete H
+  change P.1.ramificationIdx (𝓞 F) = e at he
+  change P.1.inertiaDeg (𝓞 F) = f at hf
+  simpa only [he, hf] using hglobal
 
 theorem chapter14_sum_of_completed_branch_degrees
     {F : Type u} (E : Type v) [Field F] [NumberField F]
