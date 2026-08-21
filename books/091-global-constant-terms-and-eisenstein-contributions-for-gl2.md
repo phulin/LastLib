@@ -856,7 +856,7 @@ R(\chi,s)=\rho(\chi,s)^{-1}M(\chi,s).
 \tag{7.5}
 $$
 
-The fixed factor $\mathcal A(\mu)^{-1/2}$ is absorbed into the finite correction in (7.3). On every fixed finite-level, finite-type space, $R(\chi,s)$ is meromorphic in the required half-plane and holomorphic on the imaginary axis. The rank-one composition identity for the global, self-dually measured operator is
+The fixed factor $\mathcal A(\mu)^{-1/2}$ is absorbed into the finite correction in (7.3). On every fixed finite-level, finite-type space, $R(\chi,s)$ is meromorphic in the required half-plane and holomorphic on the imaginary axis. We record the intended normalization identities here, but do not use them as inputs before their Poisson-summation proof in Section 8.3. The rank-one composition identity for the global, self-dually measured operator will be
 
 $$
 M(w\chi,-s)M(\chi,s)=\operatorname{id}
@@ -877,15 +877,14 @@ $$
 \tag{7.8}
 $$
 
-This identity uses the same local normalization at every place.
+These identities use the same local normalization at every place.
 
 The word _global_ is essential. A raw local intertwining integral generally composes to a
 nontrivial scalar. In the global product, the different, conductor, and ramified local
 corrections combine with the functional equation of $\Lambda$; under the self-dual measure
-ledger their product is exactly the scalar needed for (7.6). A clean proof in the present
-range uses the Eisenstein functional equation proved in Chapter 8: compare the two constant
-terms of the same continued Eisenstein series and use independence of the two height exponents
-away from $s=0$. Meromorphic continuation then fills the exceptional point.
+ledger their product is exactly the scalar needed for (7.6). The proof in the present range is
+given in Section 8.3 by the Eisenstein functional equation obtained from two-dimensional Poisson
+summation. Thus no later identity is being used in this chapter to prove an earlier result.
 
 ### 7.4 A normalization audit
 
