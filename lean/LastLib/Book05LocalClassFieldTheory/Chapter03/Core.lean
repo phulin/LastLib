@@ -62,14 +62,21 @@ theorem chapter03_exists_cyclic_generator
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [IsCyclic Gal(L/K)] :
     ∃ σ : Gal(L/K), ∀ τ : Gal(L/K), τ ∈ Subgroup.zpowers σ := by
-  sorry
+  exact IsCyclic.exists_generator
 
 theorem chapter03_cyclic_generator_exists_iff
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] :
     (∃ σ : Gal(L/K), chapter03CyclicGeneratorCondition K L σ) ↔
       IsCyclic Gal(L/K) := by
-  sorry
+  constructor
+  · rintro ⟨σ, hσ⟩
+    exact ⟨⟨σ, fun τ => Subgroup.mem_zpowers_iff.mp (hσ τ)⟩⟩
+  · intro h
+    obtain ⟨σ, hσ⟩ := h.exists_zpow_surjective
+    refine ⟨σ, ?_⟩
+    intro τ
+    exact Subgroup.mem_zpowers_iff.mpr (hσ τ)
 
 theorem chapter03_cyclic_extension_iff_degree_and_isCyclic
     (K L : Type*) [Field K] [Field L] [Algebra K L]
@@ -77,7 +84,13 @@ theorem chapter03_cyclic_extension_iff_degree_and_isCyclic
     (n : ℕ) :
     (∃ σ : Gal(L/K), chapter03CyclicExtension K L n σ) ↔
       Module.finrank K L = n ∧ IsCyclic Gal(L/K) := by
-  sorry
+  constructor
+  · rintro ⟨σ, hdegree, hσ⟩
+    exact ⟨hdegree,
+      (chapter03_cyclic_generator_exists_iff K L).mp ⟨σ, hσ⟩⟩
+  · rintro ⟨hdegree, hcyclic⟩
+    obtain ⟨σ, hσ⟩ := (chapter03_cyclic_generator_exists_iff K L).mpr hcyclic
+    exact ⟨σ, hdegree, hσ⟩
 
 /-- The difference operator `D = σ - 1` in the integral group ring. -/
 def chapter03GroupRingDifference {G : Type*} [Group G] (σ : G) : MonoidAlgebra ℤ G :=
@@ -87,15 +100,42 @@ def chapter03GroupRingDifference {G : Type*} [Group G] (σ : G) : MonoidAlgebra 
 def chapter03GroupRingNorm {G : Type*} [Group G] (σ : G) (n : ℕ) : MonoidAlgebra ℤ G :=
   ∑ i ∈ Finset.range n, MonoidAlgebra.single (σ ^ i) 1
 
+private theorem chapter03_group_ring_left_telescoping
+    {G : Type*} [Group G] (σ : G) (n : ℕ) :
+    (MonoidAlgebra.single σ (1 : ℤ) - MonoidAlgebra.single 1 (1 : ℤ)) *
+        (∑ i ∈ Finset.range n, MonoidAlgebra.single (σ ^ i) (1 : ℤ)) =
+      MonoidAlgebra.single (σ ^ n) (1 : ℤ) - MonoidAlgebra.single 1 (1 : ℤ) := by
+  classical
+  induction n with
+  | zero => simp
+  | succ n ih =>
+      rw [Finset.sum_range_succ, mul_add, ih]
+      simp [sub_mul, pow_succ]
+      exact congrArg (fun g : G => MonoidAlgebra.single g (1 : ℤ)) (Commute.self_pow σ n).eq
+
+private theorem chapter03_group_ring_right_telescoping
+    {G : Type*} [Group G] (σ : G) (n : ℕ) :
+    (∑ i ∈ Finset.range n, MonoidAlgebra.single (σ ^ i) (1 : ℤ)) *
+        (MonoidAlgebra.single σ (1 : ℤ) - MonoidAlgebra.single 1 (1 : ℤ)) =
+      MonoidAlgebra.single (σ ^ n) (1 : ℤ) - MonoidAlgebra.single 1 (1 : ℤ) := by
+  classical
+  induction n with
+  | zero => simp
+  | succ n ih =>
+      rw [Finset.sum_range_succ, add_mul, ih]
+      simp [mul_sub, pow_succ]
+
 theorem chapter03_group_ring_difference_mul_norm_eq_zero
     {G : Type*} [Group G] (σ : G) (n : ℕ) (hσ : σ ^ n = 1) :
     chapter03GroupRingDifference σ * chapter03GroupRingNorm σ n = 0 := by
-  sorry
+  simpa [chapter03GroupRingDifference, chapter03GroupRingNorm, hσ] using
+    (chapter03_group_ring_left_telescoping σ n)
 
 theorem chapter03_group_ring_norm_mul_difference_eq_zero
     {G : Type*} [Group G] (σ : G) (n : ℕ) (hσ : σ ^ n = 1) :
     chapter03GroupRingNorm σ n * chapter03GroupRingDifference σ = 0 := by
-  sorry
+  simpa [chapter03GroupRingDifference, chapter03GroupRingNorm, hσ] using
+    (chapter03_group_ring_right_telescoping σ n)
 
 theorem chapter03_group_ring_operators_compose_zero
     {G : Type*} [Group G] (σ : G) (n : ℕ) (hσ : σ ^ n = 1) :
@@ -167,7 +207,13 @@ theorem chapter03_field_norm_image_mem_iff
     [FiniteDimensional K L] (a : K) :
     a ∈ chapter03NormImage K L ↔
       ∃ x : L, x ≠ 0 ∧ Algebra.norm K x = a := by
-  sorry
+  constructor
+  · rintro ⟨u, hu⟩
+    refine ⟨(u : L), (u : Lˣ).isUnit.ne_zero, ?_⟩
+    simpa [chapter03_norm_unit_apply] using hu
+  · rintro ⟨x, hx, hnorm⟩
+    refine ⟨Units.mk0 x hx, ?_⟩
+    simpa [chapter03_norm_unit_apply] using hnorm
 
 end
 
