@@ -158,6 +158,94 @@ theorem chapter13_simple_p_extension_degree
       simp
     exact ⟨hbF, hdegree.trans hdegree_p⟩
 
+/-!
+Proof roadmap for `chapter13_p_independence_three_forms`.
+
+The statement below agrees with `Chapter13PIndependent`: both quantify over injective
+`Fin r`-indexed subfamilies.  The deletion clause is deliberately about all of `B`, not only a
+finite subset; adjoining has finite character, so these formulations are still equivalent when
+`B` is infinite.
+
+Two finite-family interfaces should be proved locally before assembling the equivalences (they are
+the missing step which `chapter13_simple_p_extension_degree` cannot replace).
+
+1. Prove a cardinality lemma
+   `Fintype.card (Chapter13PMonomialIndex (Fin r) p) = p ^ r`.  Reindex through the explicit
+   equivalence
+   `e |-> fun i => (⟨e.1 i, e.2 i⟩ : Fin p)` with inverse built from
+   `Finsupp.equivFunOnFinite.symm`.  Finish with `Fintype.card_congr`, `Fintype.card_pi`, and
+   `Fintype.card_fin` (from `Mathlib.Data.Finsupp.Fintype` and
+   `Mathlib.Data.Fintype.BigOperators`).  Keep `r` and `p` as `Nat`; no cardinal or universe lift is
+   needed.
+
+2. Prove the finite spanning interface, for `F : Subfield k` satisfying
+   `Chapter13PthPowerSubfield k p <= F` and `b : Fin r -> k`:
+
+       Submodule.span F
+           (Set.range (fun e : Chapter13PMonomialIndex (Fin r) p =>
+             Chapter13PMonomial b e)) =
+         Subalgebra.toSubmodule (Algebra.adjoin F (Set.range b)).
+
+   Induct on `r`.  Split `Fin (r + 1)` into the first `r` coordinates and `Fin.last r` using
+   `finSumFinEquiv`/`Fin.lastCases`, and split the exponent via
+   `Finsupp.equivFunOnFinite`.  Apply the induction hypothesis to
+   `fun i => b i.castSucc`.  For the last coordinate apply the first conjunct of
+   `chapter13_simple_p_extension_degree p F hF (b (Fin.last r))`.  Rewrite the full range as the
+   union of the prefix range and the singleton containing the last value, and combine the two
+   submodules with `Algebra.adjoin_union_coe_submodule` followed by
+   `Submodule.span_mul_span`.  The product of a prefix monomial and the last power is exactly the
+   full monomial under the exponent reindexing.  The focused APIs are in
+   `Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra`,
+   `Mathlib.LinearAlgebra.Dimension.Free`, and `Mathlib.RingTheory.Adjoin.Dimension`; add those
+   imports if they are not already transitively available.
+
+With these interfaces, prove the first displayed iff by specializing the spanning equality to the
+subtype `Algebra.adjoin F (Set.range b)`.  A spanning family of the cardinality computed in (1) is
+linearly independent exactly when its cardinality is the finrank: use
+`linearIndependent_iff_card_eq_finrank_span` from
+`Mathlib.LinearAlgebra.Dimension.OrzechProperty` (transport the family along the subalgebra subtype,
+whose map is injective).  This gives precisely the quantified clause after unfolding only
+`Chapter13PIndependent`.
+
+For the second iff, use intermediate fields to make the tower argument explicit.
+First factor out the construction already used inside `chapter13_simple_p_extension_degree`:
+`(isPurelyInseparable_iff_pow_mem F p).mpr` gives `IsPurelyInseparable F k` because every
+`y ^ p` lies in `F = Chapter13PthPowerSubfield k p`; install it locally and obtain
+`Algebra.IsAlgebraic F k` from `IsPurelyInseparable.isAlgebraic`.  This is what licenses every
+conversion between the two kinds of adjoin below.
+
+* From the finrank formula to deletion, suppose `x in B` also lies in the adjoin of
+  `B \\ {x}`.  Rewrite `Algebra.adjoin` as `IntermediateField.adjoin` with
+  `IntermediateField.adjoin_toSubalgebra_of_isAlgebraic`.  Apply
+  `IntermediateField.exists_finset_of_mem_adjoin` (in
+  `Mathlib.FieldTheory.IntermediateField.Adjoin.Basic`) to obtain a finite
+  `T subset B \\ {x}` supporting `x`.  Enumerate `T` by
+  `fun i => ((T.equivFin.symm i : T) : k)` using `Finset.equivFin` from
+  `Mathlib.Data.Fintype.EquivFin`, then append `x` with `Fin.lastCases`; the resulting map on
+  `Fin (T.card + 1)` is injective because `x notin T`.
+  The two adjoins are equal because `x` already belongs to the first.  The assumed formula gives
+  their finranks as `p ^ T.card` and `p ^ (T.card + 1)`, a contradiction using
+  `(Fact.out : Nat.Prime p).one_lt`.
+
+* From deletion to the formula, induct on `r`.  For the successor step let
+  `b0 i := b i.castSucc`, `x := b (Fin.last r)`, and
+  `E := IntermediateField.adjoin F (Set.range b0)`, with
+  `F := Chapter13PthPowerSubfield k p`.  Injectivity makes `Set.range b0 subset B \\ {x}`;
+  `IntermediateField.adjoin.mono`, the deletion hypothesis, and
+  `IntermediateField.adjoin_toSubalgebra_of_isAlgebraic` therefore give `x notin E`.
+  Apply `chapter13_simple_p_extension_degree p E.toSubfield _ x` to get relative finrank `p`, use
+  `IntermediateField.adjoin_toSubalgebra_of_isAlgebraic` and
+  `IntermediateField.adjoin_adjoin_left` to identify adjoining `x` with the full range, and apply
+  `Module.finrank_mul_finrank F E (IntermediateField.adjoin E {x})` from
+  `Mathlib.LinearAlgebra.Dimension.Free`.  Substitute the induction hypothesis and normalize
+  `p ^ (r + 1)` with `pow_succ`.
+
+Finally package the already obtained two iff proofs as `⟨h_independent_iff_degree,
+h_degree_iff_delete⟩`.  Do not retry direct unfolding plus the singleton lemma: without the spanning
+interface in (2), it provides neither the finite monomial basis nor the successor-step tower
+identification.
+-/
+
 /-- Three equivalent formulations of `p`-independence. -/
 theorem chapter13_p_independence_three_forms
     {k : Type u} [Field k] (p : ℕ) [Fact (Nat.Prime p)] [CharP k p]
