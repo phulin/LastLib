@@ -432,7 +432,9 @@ theorem chapter11_norm_depth_zero_residue_formula
     ∃ y : chapter11ValuationRing vK,
       (y : K) = Algebra.norm K (u : L) ∧
         ρK y = Algebra.norm k (ρL u) ^ e := by
-  sorry
+  let U : (chapter11ValuationRing vL)ˣ := hu.unit
+  refine ⟨(N U : chapter11ValuationRing vK), hnormunit U, ?_⟩
+  exact hnormred U
 
 /- The coarse norm bound along the unit filtration. -/
 theorem chapter11_norm_principal_unit_depth_bound

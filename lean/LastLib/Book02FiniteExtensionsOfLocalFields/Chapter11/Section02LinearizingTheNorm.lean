@@ -24,7 +24,7 @@ theorem chapter11_det_one_add_has_trace_linear_coefficient
     (M : Matrix ι ι K) :
     (Matrix.det (1 + (Polynomial.X : K[X]) • M.map Polynomial.C)).coeff 1 =
       Matrix.trace M := by
-  sorry
+  exact Matrix.coeff_det_one_add_X_smul_one M
 
 /- The same coefficient calculation for multiplication by an element of a
    finite free algebra. -/
@@ -35,7 +35,8 @@ theorem chapter11_norm_determinant_has_trace_linear_coefficient
     (Matrix.det
         (1 + (Polynomial.X : K[X]) • (Algebra.leftMulMatrix b x).map Polynomial.C)).coeff 1 =
       Algebra.trace K L x := by
-  sorry
+  simpa [Algebra.norm_eq_matrix_det b, Algebra.trace_eq_matrix_trace b] using
+    chapter11_det_one_add_has_trace_linear_coefficient K (Algebra.leftMulMatrix b x)
 
 /- The first-order norm expansion with its canonical higher-order remainder. -/
 theorem chapter11_norm_one_add_linearizes_to_trace
@@ -44,7 +45,8 @@ theorem chapter11_norm_one_add_linearizes_to_trace
     (x : L) :
     Algebra.norm K (1 + x) =
       1 + Algebra.trace K L x + chapter11NormRemainder K L x := by
-  sorry
+  unfold chapter11NormRemainder
+  ring
 
 /- The omitted determinant terms have valuation at least `2n`, and restriction
    of an extension valuation turns that into the displayed ceiling bound. -/
