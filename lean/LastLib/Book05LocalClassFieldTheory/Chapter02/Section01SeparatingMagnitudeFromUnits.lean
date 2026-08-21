@@ -144,7 +144,11 @@ theorem chapter02_valuation_sequence_splits
     (hπ : d.valuation π = Multiplicative.ofAdd 1) :
     Function.RightInverse (chapter02UniformizerSection π) d.valuation := by
   intro z
-  sorry
+  change d.valuation (π ^ (Multiplicative.toAdd z)) = z
+  rw [map_zpow, hπ]
+  rw [← ofAdd_toAdd z]
+  rw [← ofAdd_zsmul]
+  simp
 
 theorem chapter02_valuation_unit_decomposition
     {K : Type*} [Field K]
@@ -154,10 +158,176 @@ theorem chapter02_valuation_unit_decomposition
     (huniformizer : chapter02IsUniformizerUnit v π) :
     (∀ x : K, x ≠ 0 →
       ∃ n : ℤ, ∃ u : Chapter02UnitGroup v,
-        x = ((π : Kˣ) : K) ^ n * ((u : Chapter02UnitGroup v) : K)) ∧
+      x = ((π : Kˣ) : K) ^ n * ((u : Chapter02UnitGroup v) : K)) ∧
       Nonempty
         (Kˣ ≃* (Multiplicative ℤ × Chapter02UnitGroup v)) := by
-  sorry
+  classical
+  have hval_zpow (n : ℤ) :
+      d.valuation (π ^ n) = Multiplicative.ofAdd n := by
+    rw [map_zpow, hπ]
+    rw [← ofAdd_zsmul]
+    simp
+  have hker_unit (u : Chapter02UnitGroup v) :
+      d.valuation (chapter02UnitInclusion v u) = 1 :=
+    (d.exact.2.1 _).mpr ⟨u, rfl⟩
+  have hincval (u : Chapter02UnitGroup v) :
+      ((chapter02UnitInclusion v u : Kˣ) : K) =
+        ((u : Chapter02UnitGroup v) : K) := rfl
+  have factorization (x : K) (hx : x ≠ 0) :
+      ∃ n : ℤ, ∃ u : Chapter02UnitGroup v,
+        x = ((π : Kˣ) : K) ^ n * ((u : Chapter02UnitGroup v) : K) := by
+    let xunit : Kˣ := Units.mk0 x hx
+    let n : ℤ := Multiplicative.toAdd (d.valuation xunit)
+    let q : Kˣ := xunit * (π ^ n)⁻¹
+    have hqval : d.valuation q = 1 := by
+      dsimp [q]
+      rw [map_mul, map_inv, hval_zpow, ofAdd_toAdd]
+      exact mul_inv_cancel _
+    have hqker : q ∈ d.valuation.ker := MonoidHom.mem_ker.mpr hqval
+    have hqrange : q ∈ (chapter02UnitInclusion v).range := by
+      rw [← (MonoidHom.mulExact_iff.mp d.exact.2.1)]
+      exact hqker
+    obtain ⟨u, hu⟩ := hqrange
+    have hxu : xunit = π ^ n * chapter02UnitInclusion v u := by
+      calc
+        xunit = (xunit * (π ^ n)⁻¹) * π ^ n := by group
+        _ = chapter02UnitInclusion v u * π ^ n := by
+          change q * π ^ n = _
+          rw [hu.symm]
+        _ = π ^ n * chapter02UnitInclusion v u := by ac_rfl
+    refine ⟨n, u, ?_⟩
+    have hxu' := congrArg Units.val hxu
+    simpa [Units.val_mul, hincval, xunit, Units.val_zpow_eq_zpow_val] using hxu'
+  have normal_form (x : Kˣ) :
+      ∃ n : ℤ, ∃ u : Chapter02UnitGroup v,
+        (x : K) = ((π : Kˣ) : K) ^ n * ((u : Chapter02UnitGroup v) : K) ∧
+          ∀ m : ℤ, ∀ w : Chapter02UnitGroup v,
+            (x : K) = ((π : Kˣ) : K) ^ m * ((w : Chapter02UnitGroup v) : K) →
+              m = n ∧ w = u := by
+    obtain ⟨n, u, hfactor⟩ := factorization (x : K) x.ne_zero
+    have hxu : x = π ^ n * chapter02UnitInclusion v u := by
+      apply Units.ext
+      simpa [Units.val_mul, hincval, Units.val_zpow_eq_zpow_val] using hfactor
+    refine ⟨n, u, hfactor, ?_⟩
+    intro m w hmw
+    have hmw' : x = π ^ m * chapter02UnitInclusion v w := by
+      apply Units.ext
+      simpa [Units.val_mul, hincval, Units.val_zpow_eq_zpow_val] using hmw
+    have hcoord_m : d.valuation x = d.valuation (π ^ m) := by
+      calc
+        d.valuation x = d.valuation (π ^ m * chapter02UnitInclusion v w) :=
+          congrArg d.valuation hmw'
+        _ = d.valuation (π ^ m) := by rw [map_mul, hker_unit, mul_one]
+    have hcoord_n : d.valuation x = d.valuation (π ^ n) := by
+      calc
+        d.valuation x = d.valuation (π ^ n * chapter02UnitInclusion v u) :=
+          congrArg d.valuation hxu
+        _ = d.valuation (π ^ n) := by rw [map_mul, hker_unit, mul_one]
+    have hmnval : d.valuation (π ^ m) = d.valuation (π ^ n) :=
+      hcoord_m.symm.trans hcoord_n
+    have hmnval' : Multiplicative.ofAdd m = Multiplicative.ofAdd n :=
+      (hval_zpow m).symm.trans (hmnval.trans (hval_zpow n))
+    have hmn : m = n := Multiplicative.ofAdd.injective hmnval'
+    have hunit : chapter02UnitInclusion v w =
+        chapter02UnitInclusion v u := by
+      apply mul_left_cancel (a := π ^ n)
+      rw [hmn] at hmw'
+      exact hmw'.symm.trans hxu
+    exact ⟨hmn, chapter02_valuation_sequence_is_injective_on_units v hunit⟩
+  constructor
+  · exact factorization
+  · choose n u hfactor hunique using normal_form
+    let f : Kˣ →* (Multiplicative ℤ × Chapter02UnitGroup v) :=
+      { toFun := fun x => (Multiplicative.ofAdd (n x), u x)
+        map_one' := by
+          have h := hunique 1 0 1 (by simp)
+          apply Prod.ext
+          · change n 1 = 0
+            exact h.1.symm
+          · exact h.2.symm
+        map_mul' := by
+          intro x y
+          have hxy :
+              ((x * y : Kˣ) : K) =
+                ((π : Kˣ) : K) ^ (n x + n y) *
+                  (((u x * u y : Chapter02UnitGroup v) : K)) := by
+            change (x : K) * (y : K) = _
+            rw [hfactor x, hfactor y]
+            simp only [Units.val_mul]
+            calc
+              ((π : Kˣ) : K) ^ n x * ((u x : Chapter02UnitGroup v) : K) *
+                    (((π : Kˣ) : K) ^ n y * ((u y : Chapter02UnitGroup v) : K)) =
+                  (((π : Kˣ) : K) ^ n x * ((π : Kˣ) : K) ^ n y) *
+                    (((u x : Chapter02UnitGroup v) : K) *
+                      ((u y : Chapter02UnitGroup v) : K)) := by ring
+              _ = ((π : Kˣ) : K) ^ (n x + n y) *
+                    (((u x * u y : Chapter02UnitGroup v) : K)) := by
+                rw [← zpow_add₀ (Units.ne_zero π)]
+                rfl
+          have h := hunique (x * y) (n x + n y) (u x * u y) hxy
+          apply Prod.ext
+          · change n (x * y) = n x + n y
+            exact h.1.symm
+          · exact h.2.symm }
+    let g : (Multiplicative ℤ × Chapter02UnitGroup v) →* Kˣ :=
+      { toFun := fun z =>
+          Units.mk0
+            (((π : Kˣ) : K) ^ (Multiplicative.toAdd z.1) *
+              ((z.2 : Chapter02UnitGroup v) : K)) (by
+                have hz : ((z.2 : Chapter02UnitGroup v) : K) ≠ 0 := by
+                  intro hz
+                  apply z.2.ne_zero
+                  apply Subtype.ext
+                  exact hz
+                exact mul_ne_zero (zpow_ne_zero _ (Units.ne_zero π)) hz)
+        map_one' := by
+          apply Units.ext
+          simp
+        map_mul' := by
+          intro z w
+          apply Units.ext
+          change
+            ((π : Kˣ) : K) ^
+                (Multiplicative.toAdd z.1 + Multiplicative.toAdd w.1) *
+                (((z.2 * w.2 : Chapter02UnitGroup v) : K)) =
+              (((π : Kˣ) : K) ^ (Multiplicative.toAdd z.1) *
+                ((z.2 : Chapter02UnitGroup v) : K)) *
+                (((π : Kˣ) : K) ^ (Multiplicative.toAdd w.1) *
+                  ((w.2 : Chapter02UnitGroup v) : K))
+          rw [zpow_add₀ (Units.ne_zero π)]
+          simp only [Units.val_mul]
+          change
+            ((π : Kˣ) : K) ^ (Multiplicative.toAdd z.1) *
+                ((π : Kˣ) : K) ^ (Multiplicative.toAdd w.1) *
+                (((z.2 : Chapter02UnitGroup v) : K) *
+                  ((w.2 : Chapter02UnitGroup v) : K)) = _
+          ring }
+    have hfg : ∀ x : Kˣ, g (f x) = x := by
+      intro x
+      apply Units.ext
+      change ((π : Kˣ) : K) ^ n x * ((u x : Chapter02UnitGroup v) : K) = (x : K)
+      exact (hfactor x).symm
+    have hgf : ∀ z : Multiplicative ℤ × Chapter02UnitGroup v, f (g z) = z := by
+      intro z
+      have hz :
+          ((g z : Kˣ) : K) =
+            ((π : Kˣ) : K) ^ (Multiplicative.toAdd z.1) *
+              ((z.2 : Chapter02UnitGroup v) : K) := by
+        rfl
+      have h := hunique (g z) (Multiplicative.toAdd z.1) z.2 hz
+      apply Prod.ext
+      · change n (g z) = Multiplicative.toAdd z.1
+        exact h.1.symm
+      · exact h.2.symm
+    let e : Kˣ ≃* (Multiplicative ℤ × Chapter02UnitGroup v) :=
+      { toFun := fun x => f x
+        invFun := fun z => g z
+        left_inv := hfg
+        right_inv := hgf
+        map_mul' := by
+          intro x y
+          exact f.map_mul x y }
+    exact ⟨e⟩
 
 /- The choice of a uniformizer is not canonical.  The following bridge keeps
    the change-of-coordinate statement explicit instead of identifying two
@@ -172,7 +342,18 @@ theorem chapter02_uniformizer_change_is_unit_change
     ∀ z : ℤ, ∃ w : Chapter02UnitGroup v,
       ((π' : Kˣ) : K) ^ z =
         ((chapter02UnitInclusion v w : Kˣ) : K) * ((π : Kˣ) : K) ^ z := by
-  sorry
+  intro z
+  refine ⟨u ^ z, ?_⟩
+  change ((π' : Kˣ) : K) ^ z =
+    ((chapter02UnitInclusion v (u ^ z) : Kˣ) : K) *
+      ((π : Kˣ) : K) ^ z
+  rw [hchange, mul_zpow]
+  have hmapval :
+      ((chapter02UnitInclusion v (u ^ z) : Kˣ) : K) =
+        ((chapter02UnitInclusion v u : Kˣ) : K) ^ z := by
+    simpa only [Units.val_zpow_eq_zpow_val] using
+      congrArg Units.val ((chapter02UnitInclusion v).map_zpow u z)
+  rw [hmapval]
 
 theorem chapter02_unit_filtration_zero
     {K : Type*} [Field K]
@@ -245,7 +426,20 @@ theorem chapter02_unit_filtration_higher_quotient
           (Chapter02UnitFiltration v (n + 1)).subgroupOf
             (Chapter02UnitFiltration v n)) ≃*
         Multiplicative (Chapter02ResidueField v)) := by
-  sorry
+  classical
+  let A := Chapter02ValuationRing v
+  let _ : IsDiscreteValuationRing A := hDVR
+  obtain ⟨π, hπirr⟩ := IsDiscreteValuationRing.exists_irreducible A
+  have hπ : LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Chapter10Uniformizer A π :=
+    ⟨hπirr.ne_zero, hπirr.maximalIdeal_eq⟩
+  have hn' : 0 < n := by omega
+  let f :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10UniformizerLayerCoordinate
+      A π hπ n hn'
+  have hf : Function.Bijective f :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10_uniformizer_layer_coordinate_bijective
+      A π hπ n hn'
+  exact ⟨(MulEquiv.ofBijective f hf).symm⟩
 
 theorem chapter02_unit_filtration_is_compact_open
     {K : Type*} [Field K]
@@ -263,7 +457,8 @@ theorem chapter02_unit_filtration_is_compact_open
     ∀ n : ℕ,
       IsCompact (Chapter02UnitFiltration v n : Set (Chapter02UnitGroup v)) ∧
         IsOpen (Chapter02UnitFiltration v n : Set (Chapter02UnitGroup v)) := by
-  sorry
+  exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10_finite_residue_unit_filtration_compact_open
+    (Chapter02ValuationRing v) hcomplete hDVR hbasis
 
 theorem chapter02_unit_group_is_compact
     {K : Type*} [Field K]
@@ -279,7 +474,8 @@ theorem chapter02_unit_group_is_compact
     (hDVR : IsDiscreteValuationRing (Chapter02ValuationRing v))
     (hbasis : Chapter02UnitFiltrationNeighborhoodBasis v) :
     IsCompact (Set.univ : Set (Chapter02UnitGroup v)) := by
-  sorry
+  exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10_finite_residue_unit_group_compact
+    (Chapter02ValuationRing v) hcomplete hDVR hbasis
 
 theorem chapter02_unit_filtration_is_neighborhood_basis
     {K : Type*} [Field K]
