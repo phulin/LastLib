@@ -24,13 +24,8 @@ section MultiplicativeRestrictedProducts
 
 variable {I : Type u} {G : I → Type v} [∀ i, Group (G i)]
 
-/-- The restricted product inherits its group structure from the dependent
-product, so all operations are componentwise. -/
-instance chapter03_restrictedProduct_is_group
-    (H : ∀ i, Subgroup (G i)) :
-    Group (Chapter03RestrictedProduct H) := by
-  infer_instance
-
+/-- The restricted product inherits componentwise multiplication from
+Mathlib's canonical restricted-product group instance. -/
 theorem chapter03_restrictedProduct_mul_apply
     (H : ∀ i, Subgroup (G i)) (x y : Chapter03RestrictedProduct H) (i : I) :
     ((x * y : Chapter03RestrictedProduct H) : ∀ i, G i) i =
@@ -160,13 +155,6 @@ by
     by_cases hi : i ∈ S <;>
       simp [forward, backward, eqRec_eq_cast, hi]
 -/
-
-/-- The additive construction uses local integral additive subgroups. -/
-instance chapter03_additive_restrictedProduct_is_add_group
-    {I : Type u} {G : I → Type v} [∀ i, AddGroup (G i)]
-    (H : ∀ i, AddSubgroup (G i)) :
-    AddGroup (Chapter03AdditiveRestrictedProduct H) := by
-  infer_instance
 
 /-- The additive integral model attached to a valuation subring. -/
 def chapter03ValuationRingAdditiveSubgroup

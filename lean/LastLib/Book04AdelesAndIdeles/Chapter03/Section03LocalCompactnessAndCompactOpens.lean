@@ -1044,8 +1044,6 @@ def chapter03InfinitelyManyNoncompactFactors
 
 theorem chapter03_unrestrictedProduct_not_locallyCompact
     [∀ i, TopologicalSpace (G i)]
-    (hlocal : ∀ i, LocallyCompactSpace (G i))
-    (hhausdorff : ∀ i, T2Space (G i))
     (hinfinite : chapter03InfinitelyManyNoncompactFactors (G := G)) :
     ¬ LocallyCompactSpace (∀ i, G i) := by
   classical
@@ -1056,8 +1054,6 @@ theorem chapter03_unrestrictedProduct_not_locallyCompact
   rcases hKnhds with ⟨S, V, hV, hSK⟩
   have hcompact_of_not_mem : ∀ i, i ∉ S → IsCompact (Set.univ : Set (G i)) := by
     intro i hiS
-    let _ : LocallyCompactSpace (G i) := hlocal i
-    let _ : T2Space (G i) := hhausdorff i
     have himage : (fun x : (∀ j, G j) => x i) '' K = (Set.univ : Set (G i)) := by
       apply Set.eq_univ_of_forall
       intro g

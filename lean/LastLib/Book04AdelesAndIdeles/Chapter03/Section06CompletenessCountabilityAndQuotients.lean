@@ -72,7 +72,7 @@ theorem chapter03_restrictedProduct_metrizable
         have hi' : i ∉ E.stage m := by simpa using hi
         simp [W, hi']
     have hWopen : IsOpen (chapter03BasicProductSet H W) :=
-      chapter03_basicProductSet_isOpen_of_condition H W hWcond
+      chapter03_basicProductSet_isOpen H W hWcond
     have hWone : (1 : Chapter03RestrictedProduct H) ∈
         chapter03BasicProductSet H W := by
       change ∀ i, (1 : G i) ∈ W i
@@ -185,7 +185,7 @@ theorem chapter03_restrictedProduct_metrizable
         simpa [V] using hxV i
       exact Set.disjoint_left.1 huv (mem_of_mem_nhds hu) (hwv hxiw)
     refine ⟨chapter03BasicProductSet H V, ?_, hxnot⟩
-    exact (chapter03_basicProductSet_isOpen_of_condition H V hVcond).mem_nhds honeV
+    exact (chapter03_basicProductSet_isOpen H V hVcond).mem_nhds honeV
   let _ : T2Space (Chapter03RestrictedProduct H) :=
     IsTopologicalGroup.t2Space_of_one_sep hsep
   let u : UniformSpace (Chapter03RestrictedProduct H) :=

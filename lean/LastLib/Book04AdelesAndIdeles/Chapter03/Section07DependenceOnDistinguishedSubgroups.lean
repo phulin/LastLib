@@ -546,10 +546,12 @@ def chapter03MultiplicativeRestrictedProductChangeWitness
 
 theorem chapter03_pointwise_commensurability_with_witness_changes_underlying_product
     (H H' : ∀ i, Subgroup (G i))
-    (_hpoint : chapter03PointwiseCommensurableFamily H H')
+    (hpoint : chapter03PointwiseCommensurableFamily H H')
     (hwitness : chapter03MultiplicativeRestrictedProductChangeWitness H H') :
-    chapter03RestrictedProductSubgroup H ≠
-      chapter03RestrictedProductSubgroup H' := by
+    chapter03PointwiseCommensurableFamily H H' ∧
+      chapter03RestrictedProductSubgroup H ≠
+        chapter03RestrictedProductSubgroup H' := by
+  refine ⟨hpoint, ?_⟩
   intro heq
   obtain ⟨x, hx, hnotx⟩ := hwitness
   apply hnotx
@@ -612,10 +614,12 @@ def chapter03PointwiseAdditiveCommensurableFamily
 
 theorem chapter03_additive_pointwise_commensurability_with_witness_changes_underlying_product
     (H H' : ∀ i, AddSubgroup (G i))
-    (_hpoint : chapter03PointwiseAdditiveCommensurableFamily H H')
+    (hpoint : chapter03PointwiseAdditiveCommensurableFamily H H')
     (hwitness : chapter03RestrictedProductChangeWitness H H') :
-    chapter03AdditiveRestrictedProductSubgroup H ≠
-      chapter03AdditiveRestrictedProductSubgroup H' := by
+    chapter03PointwiseAdditiveCommensurableFamily H H' ∧
+      chapter03AdditiveRestrictedProductSubgroup H ≠
+        chapter03AdditiveRestrictedProductSubgroup H' := by
+  refine ⟨hpoint, ?_⟩
   intro heq
   obtain ⟨x, hx, hnotx⟩ := hwitness
   apply hnotx

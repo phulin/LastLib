@@ -28,13 +28,6 @@ theorem chapter03_basicProductCondition_inter
   · filter_upwards [hU.2, hV.2] with i hiU hiV
     simp [hiU, hiV]
 
-theorem chapter03_basicProductSet_isOpen_of_condition
-    [∀ i, TopologicalSpace (G i)]
-    (H : ∀ i, Subgroup (G i)) (U : ∀ i, Set (G i))
-    (hU : chapter03BasicProductCondition H U) :
-    IsOpen (chapter03BasicProductSet H U) :=
-  chapter03_basicProductSet_isOpen H U hU
-
 /-- Left translates of basic products are the neighborhoods used in the
 restricted-product basis. -/
 def chapter03LeftTranslate
@@ -62,7 +55,9 @@ theorem chapter03_basicProduct_translates_form_basis
             x ∈ chapter03LeftTranslate H a
               (chapter03BasicProductSet H U) ∧
             chapter03LeftTranslate H a
-              (chapter03BasicProductSet H U) ⊆ s := by
+              (chapter03BasicProductSet H U) ⊆ s ∧
+            IsOpen (chapter03LeftTranslate H a
+              (chapter03BasicProductSet H U)) := by
   intro x s hs
   change s ∈ @nhds _ (chapter03RestrictedProductTopology H) x at hs
   rw [TopologicalSpace.nhds_generateFrom] at hs
@@ -141,11 +136,12 @@ theorem chapter03_basicProduct_translates_form_basis
         (chapter03_mem_basicProductSet_iff H W y).1 hy i
       exact (mem_iInter.1 hyW) ⟨t, ht⟩
     simpa only [hUt ⟨t, ht⟩] using hy'
-  refine ⟨1, W, hW, ?_, ?_⟩
+  refine ⟨1, W, hW, ?_, ?_, ?_⟩
   · simpa [chapter03LeftTranslate] using hxW
   · intro y hy
     apply hWs
     simpa [chapter03LeftTranslate] using hy
+  · simpa [chapter03LeftTranslate] using chapter03_basicProductSet_isOpen H W hW
 
 /-- The ordinary product topology on a stage, viewed through its coordinate
     map into the unrestricted dependent product. -/
@@ -680,6 +676,21 @@ theorem chapter03_restrictedProduct_is_topologicalGroup
         (e.map_nhds_eq (1 : Chapter03RestrictedProduct H)).symm
       _ = map (fun x : Chapter03RestrictedProduct H => x * a)
           (𝓝 (1 : Chapter03RestrictedProduct H)) := by rw [hef]
+
+theorem chapter03_leftTranslate_basicProduct_isOpen
+    [∀ i, TopologicalSpace (G i)]
+    [∀ i, IsTopologicalGroup (G i)]
+    (H : ∀ i, Subgroup (G i))
+    (hH : ∀ i, IsOpen (H i : Set (G i)))
+    (a : Chapter03RestrictedProduct H) (U : ∀ i, Set (G i))
+    (hU : chapter03BasicProductCondition H U) :
+    IsOpen (chapter03LeftTranslate H a
+      (chapter03BasicProductSet H U)) := by
+  change IsOpen ((fun x : Chapter03RestrictedProduct H => a⁻¹ * x) ⁻¹'
+    chapter03BasicProductSet H U)
+  exact (chapter03_leftMul_continuous H hH a⁻¹).isOpen_preimage
+    (chapter03BasicProductSet H U)
+    (chapter03_basicProductSet_isOpen H U hU)
 
 private theorem chapter03_add_continuous
     {G : I → Type v} [∀ i, AddGroup (G i)]
