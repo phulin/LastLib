@@ -870,6 +870,78 @@ theorem chapter10_proper_algebraic_dense_completion_not_complete
 theorem chapter10_padic_algebraic_closure_is_not_complete
     {p : ℕ} [Fact (Nat.Prime p)] :
     ¬ CompleteSpace (PadicAlgCl p) := by
+  /-
+  Proof roadmap (the remaining input is the standard Baire-category proof that
+  an algebraic closure of a local field is not complete).
+
+  * Put `A := PadicAlgCl p` and `C := PadicComplex p`, and use
+    `((↑) : A → C)` for the completion map.  The definitions and the normed
+    field structures are in `Mathlib/NumberTheory/Padics/Complex.lean`.
+    Its required topological properties are already exactly
+    `UniformSpace.Completion.coe_injective A`,
+    `UniformSpace.Completion.isUniformInducing_coe A`, and
+    `UniformSpace.Completion.denseRange_coe` from
+    `Mathlib/Topology/UniformSpace/Completion.lean`; `C` has its inferred
+    `T2Space` instance.  Thus, after proving
+
+      `hproper : ¬ Function.Surjective ((↑) : A → C)`,
+
+    finish directly with
+
+    `chapter10_proper_dense_completion_is_not_complete
+        ((↑) : A → C) (UniformSpace.Completion.coe_injective A)
+        (UniformSpace.Completion.isUniformInducing_coe A)
+        UniformSpace.Completion.denseRange_coe hproper`.
+
+    The longer immediately preceding combined lemma has the same
+    instantiation, with `K := ℚ_[p]`, `A := PadicAlgCl p`, and
+    `C := PadicComplex p`.  Its last hypothesis says that every element of
+    `C` algebraic over `ℚ_[p]` is in the completion map's range.  Prove this by
+    taking the element's minimal polynomial, mapping it first to the
+    algebraically closed field `A` (its inferred `IsAlgClosed` instance) and then
+    along `algebraMap A C`; its linear factorization in `A`, together with
+    `Polynomial.map_prod`, polynomial evaluation, and `IsDomain` for `C`, shows that the given
+    root equals the image of one of those roots.  Feeding that fact and
+    `hproper` to
+    `chapter10_proper_algebraic_dense_completion_not_complete` also returns
+    the desired second conjunct.  This algebraic-range detour is not needed
+    when calling the dense-completion lemma directly.
+
+  * Prove `hproper` by contradiction.  If the completion map is surjective,
+    transport the inferred `CompleteSpace C` structure back along
+    `UniformSpace.Completion.isUniformEmbedding_coe A` (equivalently, use the
+    preceding dense/closed-range argument) to obtain `CompleteSpace A`.
+    Apply the Baire theorem
+    `nonempty_interior_of_iUnion_of_closed` from
+    `Mathlib/Topology/Baire/Lemmas.lean` to a countable increasing cofinal
+    family `E n : IntermediateField ℚ_[p] A` of finite subextensions.
+    Cofinality turns
+    `chapter10_algebraic_element_in_finite_subextension` (instantiated with
+    `K := ℚ_[p]`, `L := A`, using `PadicAlgCl.isAlgebraic`) into
+    `(⋃ n, (E n : Set A)) = Set.univ`.  Give every `E n` the restricted
+    norm topology; `chapter10_finite_extension_is_complete` with
+    `K := ℚ_[p]` shows it is complete, so its image in `A` is closed via
+    `IsUniformEmbedding.isClosedEmbedding`.  Baire supplies an `n` whose
+    underlying additive subspace has nonempty interior, and
+    `Submodule.eq_top_of_nonempty_interior'` from
+    `Mathlib/Topology/Algebra/Module/Basic.lean` makes `E n = ⊤`.  This
+    contradicts infinite dimensionality of the algebraic closure; use
+    `IntermediateField.exists_lt_finrank_of_infinite_dimensional` from
+    `Mathlib/FieldTheory/IntermediateField/Adjoin/Basic.lean` after deriving
+    `¬ FiniteDimensional ℚ_[p] A` from irreducible polynomials of arbitrarily
+    large degree (the usual Eisenstein polynomials `X ^ m - C p`).
+
+  The genuinely missing reusable bridge is the countable cofinal family of
+  finite subextensions of `ℚ_[p]` (obtained mathematically from finiteness of
+  extensions of each degree of a local field), together with the small
+  arbitrary-degree Eisenstein specialization.  Neither is supplied by
+  `Mathlib.NumberTheory.Padics.Complex` or by the preceding chapter results.
+  Do not try to obtain `hproper` from
+  `chapter10_proper_algebraic_completion_contains_transcendental`: that lemma
+  assumes `hproper`, so doing so is circular.  Once the two local-field bridges
+  are available, the instantiations above contain all topology and embedding
+  hypotheses needed by the final assembly.
+  -/
   sorry
 
 /-- Compatible finite-extension norms glue over an infinite algebraic extension. -/
