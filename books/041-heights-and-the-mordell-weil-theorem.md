@@ -1856,7 +1856,9 @@ $$
 \tag{12.2.13}
 $$
 
-where $X^*(T_\Gamma)=H_1(\Gamma,\mathbf Z)$. Books 25 and 38 prove that the separated Picard
+where $X^*(T_\Gamma)=H_1(\Gamma,\mathbf Z)$. Book 38, Theorem 9.3 (with the Picard-admissible
+semistable case of its §9), together with the dual-graph description of the special fiber in
+Book 16, proves that the separated Picard
 group is the identity component of the Néron model of $J(X)$. Its connected special fiber is
 therefore an extension of an abelian variety by a torus and has no unipotent radical. $\square$
 
