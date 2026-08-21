@@ -921,8 +921,8 @@ $$
 
 and $\Gamma_*$ commutes with geometric Frobenius. If $e$ is an idempotent in a rational correspondence algebra, then
 
-# $$H^i(\bar C,\mathbf Q_\ell)
-
+$$
+H^i(\bar C,\mathbf Q_\ell) =
 eH^i(\bar C,\mathbf Q_\ell)
 \oplus
 (1-e)H^i(\bar C,\mathbf Q_\ell).
@@ -940,8 +940,8 @@ $H^i(\bar A)\simeq\bigwedge^iH^1(\bar A)$ makes $H^i$ pure of weight $i$, and ev
 
 Transpose correspondences are adjoint for Poincaré duality:
 
-# $$\langle\Gamma_*x,y\rangle
-
+$$
+\langle\Gamma_*x,y\rangle =
 \langle x,{}^t\Gamma_*y\rangle.
 \tag{7.2}
 $$
@@ -962,8 +962,8 @@ A rational projector need not preserve a chosen $\mathbf Z_\ell$-lattice. Denomi
 
 Let $j:U\hookrightarrow C$ and let $\mathcal F$ be a determinant-normalized punctually pure lisse sheaf of weight $w$ satisfying the hypotheses of Theorem 5.2. A properly supported curve correspondence equipped with an identification between the two pulled-back coefficient sheaves acts on
 
-# $$H_p^1(U,\mathcal F)
-
+$$
+H_p^1(U,\mathcal F) =
 H^1(\bar C,j_*\mathcal F).
 $$
 
