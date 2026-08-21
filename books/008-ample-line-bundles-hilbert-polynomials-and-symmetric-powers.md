@@ -102,7 +102,7 @@ schemes, in the following form:
   extension of sections from a principal open after multiplication by a power (Corollary 2.5), and
   the fact that quasi-coherence may be tested on any one affine open cover (Corollary 2.6);
 - permanence of quasi-coherence under kernels, cokernels, extensions, colimits, tensor products
-  and pullback (Book 7b, Theorems 2.7 and 2.8), under pushforward along a quasi-compact
+  and pullback (Book 7b, Theorem 2.7 and Corollary 3.10), under pushforward along a quasi-compact
   quasi-separated morphism (Theorem 2.10), and the exhaustion of a quasi-coherent sheaf on a
   noetherian scheme by its coherent subsheaves (Theorem 2.11);
 - Serre's affine vanishing theorem $H^p(\operatorname{Spec}A,\mathcal F)=0$ for $p>0$ over an
@@ -410,16 +410,10 @@ $$
 
 whose universal quotient is the tensor product of the two universal quotients. On coordinates, its entries are $x_iy_j$; the $2\times2$ minors express rank one and cut out the image.
 
-Under the finite-presentation and local noetherian hypotheses used for the parameter spaces in this
-book, composites of projective morphisms are projective. Indeed, after embedding $X$ into a
-projective bundle over $Y$ and $Y$ into one over $S$, twist the finitely presented coefficient
-sheaf of the first embedding by a sufficiently high pullback of $\mathcal O_Y(1)$. Locally on
-$S$, Serre generation extends a finite set of generators from $Y$ to its ambient projective
-space. The local constructions are induced by the same tensor product of the two hyperplane
-bundles, so they glue; a Segre-Veronese embedding then puts the result in one projective bundle
-over $S$. The same argument with locally closed immersions proves the quasi-projective version.
-
-This proof is sometimes hidden behind a permanence slogan. The twisting step is decisive: coefficients varying on $Y$ do not automatically become homogeneous coordinates over $S$.
+Composition requires the Serre generation theorem for ample bundles and is therefore proved in
+Section 4.5, after that input is available. The twisting step there is decisive: coefficients
+varying on the intermediate scheme do not automatically become homogeneous coordinates over the
+base.
 
 ### 3.3 Separatedness, finite type, and properness
 
@@ -542,6 +536,18 @@ embedding. Without quasi-compactness of the base, the assertion remains local on
 need not be one exponent valid everywhere.
 
 If $\mathcal L$ and $\mathcal M$ are ample relative to $S$, then $\mathcal L\otimes\mathcal M$ is ample. One can either refine their affine nonvanishing covers and tensor the corresponding sections, or use eventual generation. Pullback along a finite morphism preserves ampleness; along an arbitrary morphism it need not, as the pullback to a positive-dimensional fiber of a constant map may become trivial.
+
+**Composition theorem.** Under the finite-presentation and local noetherian hypotheses used for
+the parameter spaces in this book, composites of projective morphisms are projective, and
+composites of quasi-projective morphisms are quasi-projective.
+
+**Proof.** Embed $X$ into a projective bundle over $Y$ and $Y$ into one over $S$. Twist the
+finitely presented coefficient sheaf of the first embedding by a sufficiently high pullback of
+$\mathcal O_Y(1)$. Locally on $S$, the Serre generation criterion of Section 4.4 extends a finite
+set of generators from $Y$ to its ambient projective space. The local constructions are induced
+by the same tensor product of the two hyperplane bundles, so they glue; a Segre--Veronese
+embedding then puts the result in one projective bundle over $S$. The same argument with locally
+closed immersions proves the quasi-projective version. $\square$
 
 ## 5. Base change and descent
 
