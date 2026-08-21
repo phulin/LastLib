@@ -329,7 +329,12 @@ theorem chapter07_binomialPolynomial_eval
         push_cast
         ring
   have hindex : n - a + r = n + r - a := by omega
-  rw [hprod, Nat.ascFactorial_eq_factorial_mul_choose, hindex]
+  have hprod' :
+      (∏ x ∈ Finset.range r,
+        ((n : ℚ) + (((x : ℤ) + 1 - (a : ℤ) : ℤ) : ℚ))) =
+        ((n - a + 1).ascFactorial r : ℚ) := by
+    simpa using hprod
+  rw [hprod', Nat.ascFactorial_eq_factorial_mul_choose, hindex]
   have hfac : (r.factorial : ℚ) ≠ 0 := by
     exact_mod_cast Nat.factorial_ne_zero r
   rw [Nat.cast_mul]

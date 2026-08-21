@@ -390,29 +390,6 @@ theorem splitCover_effective (s : D →ₐ[C] C) (Q : DescentDatum C D) :
         simpa using hsplit d 1 q
     | add x y hx hy =>
         simp only [map_add, hx, hy]
-  have hdelta_map :
-      k.comp ((descentComonad C D).δ.app Q.A).hom =
-        ((descentComonad C D).ε.app Q.A).hom := by
-    apply TensorProduct.AlgebraTensorModule.ext
-    intro d q
-    change k
-        (((ModuleCat.extendScalars (algebraMap C D)).map
-          ((ModuleCat.extendRestrictScalarsAdj (algebraMap C D)).unit.app
-            ((ModuleCat.restrictScalars (algebraMap C D)).obj Q.A))).hom
-          (d ⊗ₜ[C] q)) =
-      ((ModuleCat.extendRestrictScalarsAdj (algebraMap C D)).counit.app Q.A).hom
-        (d ⊗ₜ[C] q)
-    rw [ModuleCat.ExtendScalars.map_tmul,
-      ModuleCat.extendRestrictScalarsAdj_unit_app_apply]
-    rfl
-  have hkmap_map :
-      k.comp ((descentComonad C D).map Q.a).hom = r := by
-    apply TensorProduct.AlgebraTensorModule.ext
-    intro d q
-    change k (((ModuleCat.extendScalars (algebraMap C D)).map Q.a).hom
-      (d ⊗ₜ[C] q)) = r (d ⊗ₜ[C] q)
-    rw [ModuleCat.ExtendScalars.map_tmul]
-    rfl
   have hcoassoc (q : Q.A) := congrArg (fun f => f.hom q) Q.coassoc
   have hcounit (q : Q.A) := congrArg (fun f => f.hom q) Q.counit
   sorry

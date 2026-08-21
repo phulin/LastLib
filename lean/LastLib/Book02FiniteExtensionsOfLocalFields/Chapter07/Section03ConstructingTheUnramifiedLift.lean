@@ -345,6 +345,8 @@ def Chapter07CanonicalUnramifiedCarriersAreBasedAt
     (vK : Valuation K ℤᵐ⁰) (rho : Chapter10ResidueField vK ≃+* k) : Prop :=
   ∀ E : Chapter07CanonicalFiniteUnramifiedIntermediate K Ω k κ,
     ∃ W : Chapter07FiniteUnramifiedIntermediateWitness K Ω k κ E.1,
+      letI := W.extension_finite
+      letI := W.residue_finite
       W.actual.valuationBase = vK ∧
         HEq W.actual.residueBaseIdentification rho
 

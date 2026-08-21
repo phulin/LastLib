@@ -183,9 +183,13 @@ theorem chapter14_ample_bundle_gives_the_three_asymptotic_forms
       O.familySeparated O.projective L hL F hF
   · change ∃ n₀ : ℕ, ∀ n : ℕ, n₀ ≤ n →
       chapter04VeryAmple O.family (chapter04LineBundleTensorPower L n)
+    haveI := O.baseAffine
+    haveI := O.familyQuasiCompact
+    haveI := O.familyLocallyOfFiniteType
+    haveI := O.familyQuasiSeparated
     exact @chapter04_ample_eventually_veryAmple_power X O.base O.family
-      O.baseQuasiCompact O.familyQuasiCompact O.familyLocallyOfFiniteType
-      O.familyQuasiSeparated L hL
+      inferInstance inferInstance inferInstance inferInstance L
+      (show chapter04Ample O.family L from hL)
 
 def chapter14VeryAmplePowerEmbeddingStatement
     {X : Scheme} (O : Chapter14PositivityOperations X)

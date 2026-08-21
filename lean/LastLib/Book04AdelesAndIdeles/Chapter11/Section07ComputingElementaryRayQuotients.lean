@@ -77,7 +77,8 @@ def chapter11QuadraticResidueModFive (a : (ZMod 5)ˣ) : Prop :=
   ∃ x : (ZMod 5)ˣ, x * x = a
 
 def chapter11QuadraticCharacterModFive : (ZMod 5)ˣ →* SignTypeˣ := by
-  letI : Fact (Nat.Prime 5) := ⟨by norm_num⟩
+  have h5 : Nat.Prime 5 := by decide
+  letI : Fact (Nat.Prime 5) := ⟨h5⟩
   let intSign : ℤ →* SignType :=
     { toFun := SignType.sign
       map_one' := by simp

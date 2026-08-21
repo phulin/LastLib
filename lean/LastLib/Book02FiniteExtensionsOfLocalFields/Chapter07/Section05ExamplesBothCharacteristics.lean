@@ -76,6 +76,9 @@ theorem chapter07_equal_characteristic_constant_field_extension
       algebraMap (LaurentSeries k) (LaurentSeries k')
           (((PowerSeries.X : PowerSeries k) : LaurentSeries k)) =
         ((PowerSeries.X : PowerSeries k') : LaurentSeries k'))
+    (hcoeff : ∀ (x : LaurentSeries k) (n : ℤ),
+      (algebraMap (LaurentSeries k) (LaurentSeries k') x).coeff n =
+        algebraMap k k' (x.coeff n))
     (hseparable : Algebra.IsSeparable k k')
     (h : (Chapter10LaurentSeriesValuation k).IsEquiv
       ((Chapter10LaurentSeriesValuation k').comap
@@ -90,7 +93,7 @@ theorem chapter07_equal_characteristic_constant_field_extension
           Chapter10UnramifiedBranch
             (Chapter10LaurentSeriesValuation k)
             (Chapter10LaurentSeriesValuation k') h d := by
-  exact chapter10_constant_field_extension_profile hparameter hseparable h
+  exact chapter10_constant_field_extension_profile hparameter hcoeff hseparable h
 
 /-- The Laurent-series realization uses `k'((t))/k((t))`; the common
 uniformizer is the Laurent-series parameter. -/

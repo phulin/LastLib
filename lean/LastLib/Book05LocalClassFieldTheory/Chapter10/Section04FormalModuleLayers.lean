@@ -1,4 +1,5 @@
 import LastLib.Book05LocalClassFieldTheory.Chapter10.Dependencies
+import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter10
 
