@@ -225,7 +225,7 @@ private def chapter13_subfield_of_field_hom
     field_carrier :=
       { exists_pair_ne := by
           refine ⟨⟨f 0, ⟨0, rfl⟩⟩, ⟨f 1, ⟨1, rfl⟩⟩, ?_⟩
-          simpa using (zero_ne_one : (0 : A) ≠ 1)
+          simp
         mul_comm := by
           intro x y
           apply Subtype.ext
@@ -256,7 +256,7 @@ theorem chapter13_coefficient_field_exists_equal_characteristic_zero
       (∀ K : Chapter13Subfield A,
         ∃ L : Chapter13Subfield A,
           K.carrier ≤ L.carrier ∧ Chapter13IsCoefficientField L) := by
-  letI : Preorder (Chapter13Subfield A) :=
+  let : Preorder (Chapter13Subfield A) :=
     { le := fun K L => K.carrier ≤ L.carrier
       le_refl := fun K => le_rfl
       le_trans := fun _ _ _ hKL hLM => hKL.trans hLM }
@@ -313,7 +313,7 @@ theorem chapter13_coefficient_field_exists_equal_characteristic_zero
               intro x hx
               obtain ⟨Kx, hKx, hx⟩ := memU hx
               exact memU' hKx (Kx.carrier.neg_mem hx) }
-        letI : Field y.carrier := y.field_carrier.toField
+        let : Field y.carrier := y.field_carrier.toField
         have hUfield : IsField Ucarrier :=
           { exists_pair_ne := by
               obtain ⟨x, z, hxz⟩ := y.field_carrier.exists_pair_ne
@@ -350,11 +350,11 @@ theorem chapter13_coefficient_field_exists_equal_characteristic_zero
   have hmaximal_is_coefficient : ∀ K : Chapter13Subfield A,
       Chapter13IsMaximalSubfield K → Chapter13IsCoefficientField K := by
     intro K hKmax
-    letI : Field K.carrier := K.field_carrier.toField
+    let : Field K.carrier := K.field_carrier.toField
     have hKchar : CharP K.carrier 0 :=
       ((Chapter13ResidueMap A).comp K.carrier.subtype).charP_iff_charP 0 |>.mpr hchar
-    letI : CharP K.carrier 0 := hKchar
-    letI : CharZero K.carrier := CharP.charP_to_charZero K.carrier
+    let : CharP K.carrier 0 := hKchar
+    let : CharZero K.carrier := CharP.charP_to_charZero K.carrier
     refine ⟨chapter13_subfield_reduction_injective K, ?_⟩
     intro b
     by_contra hb
@@ -366,7 +366,7 @@ theorem chapter13_coefficient_field_exists_equal_characteristic_zero
     have haρ : ρ a = b := by
       change Ideal.Quotient.mk (IsLocalRing.maximalIdeal A) a = b
       exact ha
-    letI : Algebra K.carrier (Chapter13ResidueRing A) :=
+    let : Algebra K.carrier (Chapter13ResidueRing A) :=
       (ρ.comp σ).toAlgebra
     have hσ : ρ.comp σ = algebraMap K.carrier (Chapter13ResidueRing A) := by
       rfl
@@ -403,13 +403,13 @@ theorem chapter13_coefficient_field_exists_equal_characteristic_zero
         exact not_not.mp hbtrans
       have hminpoly : Irreducible (minpoly K.carrier b) :=
         minpoly.irreducible hbalg.isIntegral
-      letI : Fact (Irreducible (minpoly K.carrier b)) := ⟨hminpoly⟩
+      let : Fact (Irreducible (minpoly K.carrier b)) := ⟨hminpoly⟩
       have hsep : IsSeparable K.carrier b := by
         unfold IsSeparable
         exact hminpoly.separable
       have hsimple :
           LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.SimpleResidueRootLiftingProperty A := by
-        letI : HenselianLocalRing A :=
+        let : HenselianLocalRing A :=
           Chapter09.complete_separated_local_ring_has_simple_root_henselianity hA
         exact (Chapter09.mathlib_henselian_iff_simple_residue_root_lifting (A := A)).mp
           inferInstance
