@@ -28,6 +28,81 @@ Book 002 builds its valuation-extension, finite-freeness, degree, norm/trace, in
 
 The book proves its classical local theory in order: lower groups, Herbrand/upper numbering, a detailed cyclic Hasse–Arf argument, the different and discriminant, Hilbert's formula, and Artin/Swan conductor integrality. Its hypotheses around imperfect residue fields are stated carefully. A malformed carriage-return fragment in the cyclic-subgroup summation at former line 2142 was repaired to `\text{ cyclic}` in commit `ee119fd`. Chapter 15, however, crosses from a legitimate future interface into present conditional conclusions: §15.4 assumes cutoff (15.8), explicitly says it is not proved here, and then presents (15.9)–(15.17) and numerical ceilings as results. The actual proof is only Book 056, Theorem 6.1. See X002.
 
+### Book 004 — `004-adeles-and-ideles.md`
+
+**Verdict: PASS.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 3000 (EOF), in chronological/result order, during this audit.
+
+The number-field preliminaries, Minkowski/class-group argument, restricted-product topology, additive and multiplicative compactness, Dirichlet unit theorem, ray quotients, adelic norm, and additive self-duality are proved before use. The later reciprocity theorem and cyclic Hasse norm theorem are clearly labeled as future boundary statements and are not used in a proof or conclusion of the book. The linked contents agree with all sixteen chapters and their internal order; no conditional interface, forward proof dependency, notation defect, or malformed display was found.
+
+## Pending scope inventory
+
+The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
+
+- PENDING — Book 005, `005-local-class-field-theory.md`
+- PENDING — Book 006, `006-global-class-field-theory.md`
+- PENDING — Book 007, `007-analytic-foundations-for-odlyzko-poitou-bounds.md`
+- PENDING — Book 007a, `007a-arithmetic-spectral-sequences-and-derived-cohomology.md`
+- PENDING — Book 007b, `007b-quasi-coherent-cohomology-on-schemes.md`
+- PENDING — Book 008, `008-ample-line-bundles-hilbert-polynomials-and-symmetric-powers.md`
+- PENDING — Book 009, `009-divisors-riemann-roch-and-duality-on-relative-curves.md`
+- PENDING — Book 010, `010-faithfully-flat-descent-in-algebraic-geometry.md`
+- PENDING — Book 010a, `010a-excellent-rings-and-formal-fibers.md`
+- PENDING — Book 011, `011-normalization-and-regular-models-of-arithmetic-curves.md`
+- PENDING — Book 012, `012-blowups-and-intersection-theory-on-arithmetic-surfaces.md`
+- PENDING — Book 015, `015-coherent-cohomology-in-proper-families.md`
+- PENDING — Book 016, `016-semistable-curves-dual-graphs-and-component-groups.md`
+- PENDING — Book 017, `017-finite-etale-covers-and-fundamental-groups.md`
+- PENDING — Book 017a, `017a-relative-picard-schemes-and-jacobians.md`
+- PENDING — Book 018, `018-derived-etale-and-l-adic-cohomology.md`
+- PENDING — Book 019, `019-proper-and-smooth-base-change.md`
+- PENDING — Book 020, `020-etale-duality-and-trace-maps-for-curves.md`
+- PENDING — Book 021, `021-etale-sheaves-and-cohomology-on-curves.md`
+- PENDING — Book 022, `022-nearby-cycles-and-monodromy-for-semistable-curves.md`
+- PENDING — Book 023, `023-lefschetz-trace-formulas-for-curves.md`
+- PENDING — Book 024, `024-continuous-cohomology-of-profinite-groups.md`
+- PENDING — Book 026, `026-finite-locally-free-schemes-and-algebras.md`
+- PENDING — Book 027, `027-affine-group-schemes-and-hopf-algebras.md`
+- PENDING — Book 028, `028-finite-flat-commutative-group-schemes.md`
+- PENDING — Book 029, `029-fppf-cohomology-and-kummer-theory.md`
+- PENDING — Book 030, `030-local-galois-cohomology.md`
+- PENDING — Book 031, `031-tate-local-duality.md`
+- PENDING — Book 032, `032-global-galois-cohomology-and-selmer-groups.md`
+- PENDING — Book 033, `033-poitou-tate-duality.md`
+- PENDING — Book 034, `034-cartier-duality.md`
+- PENDING — Book 035, `035-abelian-schemes-isogenies-and-polarizations.md`
+- PENDING — Book 035a, `035a-moduli-stacks-for-modular-and-pel-problems.md`
+- PENDING — Book 036, `036-jacobians-and-h1-of-curves.md`
+- PENDING — Book 037, `037-weights-and-weil-bounds-for-curves-and-abelian-varieties.md`
+- PENDING — Book 038, `038-neron-models-and-component-groups.md`
+- PENDING — Book 039, `039-integral-correspondences-on-curves-and-jacobians.md`
+- PENDING — Book 040, `040-descent-and-weak-mordell-weil-for-abelian-varieties.md`
+- PENDING — Book 041, `041-heights-and-the-mordell-weil-theorem.md`
+- PENDING — Book 042, `042-finite-flat-galois-representations.md`
+- PENDING — Book 043, `043-elliptic-curves-over-dvrs.md`
+- PENDING — Book 044, `044-tate-curves-and-multiplicative-reduction.md`
+- PENDING — Book 045, `045-torsion-and-tate-modules-of-elliptic-curves.md`
+- PENDING — Book 046, `046-algebraic-de-rham-cohomology-and-gauss-manin-connections.md`
+- PENDING — Book 047, `047-betti-de-rham-and-etale-comparison-for-curves.md`
+- PENDING — Book 048, `048-divided-powers-and-crystalline-sites.md`
+- PENDING — Book 049, `049-crystalline-cohomology-of-curves-and-abelian-schemes.md`
+- PENDING — Book 050, `050-syntomic-cohomology-and-integral-period-maps.md`
+- PENDING — Book 051, `051-finite-flat-group-schemes-of-small-height.md`
+- PENDING — Book 052, `052-dieudonne-theory-and-raynaud-full-faithfulness.md`
+- PENDING — Book 053, `053-fontaine-laffaille-modules-and-torsion-representations.md`
+- PENDING — Book 054, `054-integral-fontaine-laffaille-equivalence-and-base-change.md`
+- PENDING — Book 055, `055-p-divisible-groups-and-serre-tate-theory.md`
+- PENDING — Book 056, `056-ramification-and-discriminants-of-finite-flat-representations.md`
+- PENDING — Book 057, `057-artinian-and-complete-local-coefficient-rings.md`
+- PENDING — Book 058, `058-formal-schemes-gaga-and-algebraization.md`
+- PENDING — Book 059, `059-rigid-analytic-curves-and-formal-models.md`
+- PENDING — Book 060, `060-rigid-uniformization-of-abelian-varieties.md`
+- PENDING — Book 061, `061-semistable-abelian-varieties-and-monodromy.md`
+- PENDING — Book 062, `062-pseudocompact-trace-algebras-and-carayol-descent.md`
+- PENDING — Book 063, `063-deformation-functors-of-representations.md`
+- PENDING — Book 064, `064-complete-local-algebra-for-deformation-theory.md`
+
 ## Cross-book findings
 
 ### X001 — Regular-local homological input is used in Book 001 before it is proved
