@@ -459,7 +459,7 @@ theorem chapter03_purely_inseparable_residue_root_has_e_one
     (ha : ¬ ∃ b : k, b ^ p = a)
     (hroot :
       aeval α (chapter03PurelyInseparableResiduePolynomial k p a) = 0)
-    (hgen : Algebra.adjoin K ({α} : Set L) = ⊤)
+    (_hgen : Algebra.adjoin K ({α} : Set L) = ⊤)
     [FiniteDimensional K L] (hdegree : Module.finrank K L = p)
     (vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ))
@@ -472,13 +472,122 @@ theorem chapter03_purely_inseparable_residue_root_has_e_one
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.toValuation.valuationSubring)
       vK.toValuation.valuationSubring)
-    (hrestriction :
+    (_hrestriction :
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01ValuationRestrictionScale
         vK vL 1) :
     ∃ data : Chapter03FiniteLocalExtensionData K L _
       vK.toValuation vL.toValuation,
       data.e = 1 ∧ data.f = p := by
-  sorry
+  classical
+  have hp : p.Prime := by
+    rcases expChar_is_prime_or_one k p with hp | rfl
+    · exact hp
+    · simp at ha
+  let A := vK.toValuation.valuationSubring
+  let B := vL.toValuation.valuationSubring
+  let mA := IsLocalRing.maximalIdeal A
+  let mB := IsLocalRing.maximalIdeal B
+  let cA : A := residueLift.lift a
+  let gA : A[X] := X ^ p - C cA
+  have hcA : algebraMap A L cA = algebraMap k L a := by
+    change algebraMap K L (residueLift.lift a : K) = algebraMap k L a
+    rw [← residueLift.algebra_compatibility a,
+      IsScalarTower.algebraMap_apply k K L]
+  have hroot' : α ^ p = algebraMap k L a := by
+    have h := hroot
+    simp [chapter03PurelyInseparableResiduePolynomial,
+      Polynomial.aeval_def] at h
+    exact sub_eq_zero.mp h
+  have hα_integral : IsIntegral A α := by
+    refine ⟨gA, monic_X_pow_sub_C cA hp.ne_zero, ?_⟩
+    simp [gA, hroot', hcA]
+  have hα_mem : α ∈ B :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_integral_elements_are_bounded
+      vK.toValuation vL.toValuation hα_integral
+  let αB : B := ⟨α, hα_mem⟩
+  let abar : IsLocalRing.ResidueField A := IsLocalRing.residue A cA
+  let αbar : IsLocalRing.ResidueField B := IsLocalRing.residue B αB
+  let gbar : (IsLocalRing.ResidueField A)[X] := X ^ p - C abar
+  have habareq : residueLift.residueEquiv abar = a := by
+    have hsection := DFunLike.congr_fun residueLift.section_compatibility a
+    exact hsection
+  have hgbar_map :
+      gbar.map residueLift.residueEquiv.toRingHom =
+        chapter03PurelyInseparableResiduePolynomial k p a := by
+    simp [gbar, chapter03PurelyInseparableResiduePolynomial, habareq]
+  have hgbar_irreducible : Irreducible gbar := by
+    apply Polynomial.Monic.irreducible_of_irreducible_map
+      residueLift.residueEquiv.toRingHom gbar
+        (monic_X_pow_sub_C abar hp.ne_zero)
+    rw [hgbar_map]
+    apply X_pow_sub_C_irreducible_of_prime hp
+    intro b hb
+    exact ha ⟨b, hb⟩
+  have hαBpow : αB ^ p = algebraMap A B cA := by
+    apply Subtype.ext
+    change α ^ p = algebraMap A L cA
+    exact hroot'.trans hcA.symm
+  have hαbar_root : aeval αbar gbar = 0 := by
+    simp only [gbar, map_sub, map_pow, aeval_X, aeval_C]
+    rw [sub_eq_zero]
+    rw [← map_pow, hαBpow]
+    calc
+      IsLocalRing.residue B (algebraMap A B cA) =
+          algebraMap A (IsLocalRing.ResidueField B) cA := by
+        rw [← IsLocalRing.ResidueField.algebraMap_eq B]
+        exact IsScalarTower.algebraMap_apply A B
+          (IsLocalRing.ResidueField B) cA
+      _ = algebraMap (IsLocalRing.ResidueField A)
+          (IsLocalRing.ResidueField B) abar := by
+        dsimp only [abar]
+        rw [← IsLocalRing.ResidueField.algebraMap_eq A]
+        exact IsScalarTower.algebraMap_apply A
+          (IsLocalRing.ResidueField A) (IsLocalRing.ResidueField B) cA
+  have hgbar_minpoly :
+      gbar = minpoly (IsLocalRing.ResidueField A) αbar :=
+    minpoly.eq_of_irreducible_of_monic hgbar_irreducible hαbar_root
+      (monic_X_pow_sub_C abar hp.ne_zero)
+  let ringFinite : Module.Finite A B :=
+    complete_extension_unit_ball_is_finite
+      vK.toValuation vL.toValuation hcomplete
+  let _ : Module.Finite A B := ringFinite
+  have hp_le_residue :
+      p ≤ Module.finrank (IsLocalRing.ResidueField A)
+        (IsLocalRing.ResidueField B) := by
+    have hmin := minpoly.natDegree_le
+      (A := IsLocalRing.ResidueField A) αbar
+    rw [← hgbar_minpoly] at hmin
+    simpa [gbar] using hmin
+  let e := chapterRamificationIndex A B mB
+  let f := chapterResidueDegree A B mB
+  have hf_finrank :
+      f = Module.finrank (IsLocalRing.ResidueField A)
+        (IsLocalRing.ResidueField B) := by
+    unfold f chapterResidueDegree
+    exact Ideal.inertiaDeg_eq_of_isMaximal mA mB
+  have hfund : p = e * f := by
+    rw [← hdegree]
+    exact complete_extension_defectless_without_separability
+      vK.toValuation vL.toValuation hcomplete
+  have hp_le_f : p ≤ f := by
+    rw [hf_finrank]
+    exact hp_le_residue
+  have hf_dvd : f ∣ p := ⟨e, by simpa [Nat.mul_comm] using hfund⟩
+  have hf_le_p : f ≤ p := Nat.le_of_dvd hp.pos hf_dvd
+  have hf : f = p := Nat.le_antisymm hf_le_p hp_le_f
+  have he : e = 1 := by
+    rw [hf] at hfund
+    exact Nat.eq_one_of_dvd_one (by
+      apply Nat.dvd_of_mul_dvd_mul_right hp.pos
+      simpa [Nat.mul_comm] using hfund.symm.dvd)
+  let data : Chapter03FiniteLocalExtensionData K L _
+      vK.toValuation vL.toValuation :=
+    { e := e
+      f := f
+      e_eq := rfl
+      f_eq := rfl
+      degree_eq := hdegree.trans hfund }
+  exact ⟨data, he, hf⟩
 
 /-- A root of `X^p-t` is purely inseparable and totally ramified. -/
 -- The `hvalue` hypothesis records the source's normalization `v(t)=1`.
