@@ -323,13 +323,30 @@ def chapter07CanonicalResidueIntersection
 
 /-- A residue carrier is the actual residue shadow of an unramified
 intermediate-field witness, rather than an unrelated carrier of the same
-ambient type. -/
+ambient type.  The witness is part of this proposition: using the global
+`Classical.choice` made by `chapter07CanonicalUnramifiedWitness` here would
+make the classification depend on an unrelated choice of presentation and
+need not produce a bijective reduction map. -/
 def chapter07CanonicalUnramifiedResidueRealization
     {K Ω k κ : Type*} [Field K] [Field Ω] [Field k] [Field κ]
     [Algebra K Ω] [Algebra k κ]
     (E : Chapter07CanonicalFiniteUnramifiedIntermediate K Ω k κ)
     (S : Chapter07CanonicalFiniteSeparableResidueIntermediate k κ) : Prop :=
-  (chapter07CanonicalUnramifiedWitness E).residue = S.1
+  ∃ W : Chapter07FiniteUnramifiedIntermediateWitness K Ω k κ E.1,
+    W.residue = S.1
+
+/-- The carrier predicate above deliberately forgets presentations.  An
+existence theorem based on one valuation must therefore say that every
+admitted carrier has a presentation based on that valuation and on the fixed
+identification of its residue field. -/
+def Chapter07CanonicalUnramifiedCarriersAreBasedAt
+    {K Ω k κ : Type*} [Field K] [Field Ω] [Field k] [Field κ]
+    [Algebra K Ω] [Algebra k κ]
+    (vK : Valuation K ℤᵐ⁰) (rho : Chapter10ResidueField vK ≃+* k) : Prop :=
+  ∀ E : Chapter07CanonicalFiniteUnramifiedIntermediate K Ω k κ,
+    ∃ W : Chapter07FiniteUnramifiedIntermediateWitness K Ω k κ E.1,
+      W.actual.valuationBase = vK ∧
+        HEq W.actual.residueBaseIdentification rho
 
 /-- The actual automorphism group of a canonical unramified intermediate
 field. -/
@@ -442,9 +459,114 @@ theorem chapter07_canonical_unramified_classification_exists
     (vK : Valuation K ℤᵐ⁰) [Valuation.IsRankOneDiscrete vK]
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
-    (residueIdentification : Nonempty
-      (Chapter10ResidueField vK ≃+* k)) :
+    (residueIdentification : Chapter10ResidueField vK ≃+* k)
+    (hcarriers : Chapter07CanonicalUnramifiedCarriersAreBasedAt
+      (Ω := Ω) (κ := κ) vK residueIdentification) :
     Nonempty (Chapter07CanonicalUnramifiedClassification K Ω k κ) := by
+  /-
+  Proof roadmap (after repairing `reduction_realized` to retain its witness).
+
+  The original hypotheses were not sufficient for the stated carrier type:
+  `Chapter07FiniteUnramifiedIntermediatePredicate` admits a field witnessed
+  using *any* valuation on `K` and any residue identification, whereas `vK`
+  controls only one valuation.  The added `hcarriers` hypothesis is the
+  minimal compatibility condition needed without globally reparameterizing
+  every carrier by `(vK, residueIdentification)`.  Put
+  `A := vK.valuationSubring`, and install the rank-one-discrete valuation-ring
+  and DVR instances on `A`.  The completeness hypothesis is the input for
+  the henselian lift; the relevant earlier results are
+  `Chapter09.complete_separated_local_ring_has_simple_root_henselianity` in
+  Book01/Chapter09/Section04HenselianLocalRings.lean (after proving the
+  separated instance for the DVR), or the valued-field formulation
+  `Chapter09.complete_valued_field_is_henselian` in
+  Book01/Chapter09/Section06AlgebraicConsequences.lean after converting adic
+  completeness to the induced `CompleteSpace` instance.
+
+  1. First prove a focused finite-level lifting helper, before this theorem,
+     with the following mathematical interface: for every
+
+         S : Chapter07CanonicalFiniteSeparableResidueIntermediate k κ
+
+     it returns `E : IntermediateField K Ω`, instances
+     `FiniteDimensional K E` and `FiniteDimensional k S.1`, and
+     `W : Chapter07FiniteUnramifiedIntermediateWitness K Ω k κ E` with
+     `W.residue = S.1`.  Recover the residue finiteness from
+     `Classical.choice S.2`; recover separability from its `separable` field.
+     Use `IsAlgClosed.lift` from
+     Mathlib/FieldTheory/IsAlgClosed/Basic.lean to embed the finite separable
+     residue extension in `κ`, and similarly embed the lifted finite
+     algebraic field in `Ω` (take the `fieldRange` of the resulting
+     `AlgHom`).  Both uses of `IsAlgClosed.lift` should leave the source and
+     target universes inferred independently (`S.1 : Type _`, `κ : Type _`
+     and the lifted quotient `L : Type _`, `Ω : Type _`); `fieldRange`
+     produces an `IntermediateField` without any same-universe assumption.
+
+  2. Construct the lift at the valuation-ring level, not just at the field
+     quotient level.  Choose a primitive-element polynomial for `S.1`, lift
+     its coefficients through the quotient map corresponding to
+     `residueIdentification`, and
+     use `chapter07_monic_lift_irreducible` and
+     `chapter07_construct_unramified_lift` above for the field quotient and
+     degree.  The integral closure in that quotient must then be equipped
+     with its quotient residue map.  Feed those maps to
+     `chapter07_construct_unramified_lift_with_residue_maps` below; it supplies
+     the `Chapter07UnramifiedExtension`, `Algebra.Etale`, and the two profile
+     equalities required by `Chapter07ActualUnramifiedIntermediateData`.
+     Finally use `chapter01_theorem_1_1_finite` from
+     Book02/Chapter01/Section02ExistenceUniquenessAndCompleteness.lean for the
+     unique extension valuation and its rank-one-discrete normalization, and
+     `chapter10_heterogeneous_extension_data_exists` from
+     Book01/Chapter10/Section04RamificationIndexAndResidueDegree.lean for
+     `extensionData`.
+
+  3. Prove the converse finite-level helper: for
+     `E : Chapter07CanonicalFiniteUnramifiedIntermediate K Ω k κ`, extract a
+     witness from `hcarriers E` (not merely from `E.2`); its two compatibility
+     equalities identify its base valuation and residue map with the fixed
+     inputs.  Its `residue`, finite instance, and the separability
+     clause `W.actual.unramified.2` give an element of the residue subtype.
+     (The theorem `chapter07_unramified_is_separable` in
+     Section01IsolatingResidueGrowth.lean instead proves separability of the
+     extension upstairs.)  Do not use `chapter07CanonicalUnramifiedWitness`
+     to define the correspondence: the repaired realization proposition
+     existentially retains the particular witness used by the lift.
+
+  4. Establish uniqueness on both sides.  Two lifts of the same embedded
+     residue field are equal as intermediate fields in `Ω`: apply the
+     henselian uniqueness of the finite etale lift, transport its `K`-algebra
+     equivalence into `Ω`, and prove that the resulting *unramified
+     subextensions with the fixed residue embedding* coincide.  Generic
+     embeddings into an algebraic closure are not unique, so
+     `IsAlgClosed.lift` alone cannot prove this equality.  Conversely, residue
+     shadows of one actual
+     unramified intermediate field are equal in `κ` after transporting the
+     compatible residue identifications.  These statements must also prove
+     compatibility with inclusions.  They are what makes the two finite-level
+     maps inverse and should be exposed as helper lemmas, rather than hidden
+     in an `Equiv.ofBijective` proof.
+
+  5. Define `reduction` from the converse helper and `reduction.symm` from the
+     lift helper.  Fill `reduction_realized E` with the extracted witness and
+     its residue equality.  Fill `extension_finite` and `residue_finite` from
+     the stored witnesses.  Degree preservation follows from
+     `chapter07_unramified_degree_eq_residue_degree` in
+     Section01IsolatingResidueGrowth.lean; inclusion preservation is the compatibility
+     lemma from step 4.  Apply inclusion preservation and lattice
+     extensionality to obtain the compositum and intersection clauses.
+     Transport separability/Galoisness through the residue construction for
+     `galois_preserved`, and construct `galois_group_preserved` from the
+     reduction action as in `Chapter06UnramifiedGaloisReduction` in
+     Chapter06/Section02FrobeniusInAnUnramifiedExtension.lean.
+
+  Current API obstruction: steps 2 and 4 are not packaged by any imported
+  declaration.  In particular, `chapter07_construct_unramified_lift` only
+  identifies an already supplied field with an `AdjoinRoot`, and
+  `chapter07_construct_unramified_lift_with_residue_maps` verifies an already
+  supplied integral closure and residue maps.  The normal proof stage must
+  first add the finite integral/residue construction and the uniqueness/
+  functoriality helpers described above; `IsAlgClosed.lift` and finrank
+  equality alone cannot manufacture the required reduction equivalence.
+  -/
   sorry
 
 /-- The lift construction with the integral model and its actual residue map
