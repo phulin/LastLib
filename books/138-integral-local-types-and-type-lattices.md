@@ -1731,7 +1731,7 @@ The constructions can now be assembled into the precise package promised by the 
 
 9. Primitive wild supercuspidal types, ramified quadratic types in residue characteristic two, and general congruent dihedral component calculations are excluded. No assertion about their lattices, reduction multiplicities, or deformation smoothness follows from this theorem.
 
-**Proof.** Parts 1--3 are Theorems 4.2, 5.2, 6.1--6.2, and 7.3 together with the perfect pairings (4.6), (5.6), and (7.5). Part 4 is Chapter 8 and the finite free base-change results of Chapter 3. Part 5 is Proposition 9.1 and Lemma 3.3. Part 6 is Theorems 10.1--10.2 and 11.1, Proposition 11.2, and Theorem 12.3. Part 7 is Definition (13.1) and Theorem 13.1, including the rectifier reconciliation of Proposition 12.2. Part 8 is Section 9.5 and Book 122, Propositions 9.8--9.10 and Corollary 9.11. Part 9 is the boundary proved in Sections 7.5 and 12.4. $\square$
+**Proof.** Parts 1--3 are Theorems 4.2, 5.2, 6.1--6.2, and 7.3 together with the perfect pairings (4.6), (5.6), and (7.5). Part 4 is Chapter 8 and the finite free base-change results of Chapter 3. Part 5 is Proposition 9.1 and Lemma 3.3. Part 6 is Theorems 10.1--10.2 and 11.1, Proposition 11.2, and Theorem 12.3. Part 7 is Definition (13.1) and Theorem 13.1, including the rectifier reconciliation of Proposition 12.2. Part 8 is Section 9.5 and Book 122, Propositions 9.2--9.10 and Corollary 9.11. Part 9 is the boundary proved in Sections 7.5 and 12.4. $\square$
 
 ### 14.2 Hypothesis and failure ledger
 
