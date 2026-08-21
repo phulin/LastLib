@@ -2155,6 +2155,36 @@ This proves simultaneously that the normalization is finite and that $[L:K]=ef$.
 
 Finite freeness deserves emphasis. It permits an integral basis, reduction modulo powers of the maximal ideal, determinants of multiplication, and passage between field dimension and module length. The proof also explains precisely why completeness matters: it makes the extended field topology complete and permits the unit ball to be compared with an ordinary finite lattice.
 
+The structural theorem also contains the ingredient that lets Hensel's lemma operate upstairs, not merely downstairs. Chapter 9 stated Hensel lifting for a complete DVR $A$: a simple residue root $\overline a\in A/\mathfrak m_A$ of the reduction $\overline f$ of a polynomial $f\in A[X]$ lifts uniquely to a root $a\in A$. Downstairs, however, the residue roots one wants to lift usually live in the enlarged residue field $l=B/\mathfrak m_B$, not in $k$, and the lift is required to land in $B$, not in $A$. Neither form of the Chapter 9 statement covers this situation on its own. What is missing is the corresponding _extension property_: the ring $B$ itself must be henselian, so that the same lifting principle applies to polynomials over $B$ with approximate roots in $B$. The completeness established above supplies exactly that.
+
+**Theorem 12.3 (henselianity of the extension valuation ring).** Let $K$ be complete discretely valued with valuation ring $A$, let $L/K$ be finite, and let $B\subset L$ be its valuation ring, equivalently the integral closure of $A$ in $L$. Then $B$, with maximal ideal $\mathfrak m_B$, is a complete and separated local ring; hence $B$ is henselian in the sense of Section 9.4. Consequently, if $f\in B[T]$ is monic and $\bar b\in l=B/\mathfrak m_B$ satisfies
+
+$$
+f(\bar b)=0 \text{ in } l,\qquad f'(\bar b)\neq 0 \text{ in } l,
+$$
+
+then there is a unique $b\in B$ with
+
+$$
+f(b)=0,\qquad b\equiv\bar b\pmod{\mathfrak m_B}.
+$$
+
+In particular this applies to any monic $g\in A[T]$ whose reduction modulo $\mathfrak m_A$ admits a simple root $\bar b$ in an intermediate subfield of $l$: that root lifts uniquely to a root in $B$.
+
+**Proof.** The structural argument above has already shown that $B$ is a DVR with fraction field $L$, that it is the closed unit ball of the complete valued field $(L,w)$, and that it is finite free over $A$. As a closed subset of the complete metric space $L$, the ring $B$ is complete for the metric induced by $w$.
+
+We claim that the $\mathfrak m_B$-adic topology on $B$ coincides with this metric topology. Since $w$ extends $v$ and $B$ is a DVR lying over $A$, every element of value $1$ for $w$ generates $\mathfrak m_B$, while the restriction of $w$ to $K^\times$ is a positive multiple of $v$; writing $\pi_A$ for a uniformizer of $A$ and $e=e(L/K)$, the ramification identity gives
+
+$$
+\mathfrak m_AB=\mathfrak m_B^e,
+$$
+
+so each power $\mathfrak m_B^n$ contains $\mathfrak m_A^{\lceil n/e\rceil}B$ and conversely each $\mathfrak m_A^nB=\mathfrak m_B^{en}$ is a power of $\mathfrak m_B$. Thus a sequence of elements of $B$ is Cauchy in the $\mathfrak m_B$-adic sense exactly when it is Cauchy for $w$, and completeness transfers from the metric side to the adic side. Separatedness holds because $B$ is a domain and $\bigcap_n\mathfrak m_B^n=0$: an element in every power of $\mathfrak m_B$ would have infinite value, which no nonzero element has, and $0$ does not.
+
+Now Theorem 9.4, applied to the complete separated local ring $B$, shows that $B$ is henselian. Taking one residue factor to be linear, as in Section 9.4, converts factor-lifting into the asserted root statement: the simple root condition says that $T-\bar b$ and the complementary factor form a coprime monic factorization of the reduction of $f$, this factorization lifts uniquely to monic factors $g,h\in B[T]$, and because a monic lift preserves degree, $g$ has degree one, so $g=T-b$ for some $b\in B$. Then $f=gh$ forces $f(b)=0$, and $b\equiv\bar b\pmod{\mathfrak m_B}$ by construction. Uniqueness of the lifted root is part of Hensel uniqueness in $B$: any two roots congruent to $\bar b$ reduce to the same simple root, and the uniqueness clause of the factor lifting — or equivalently the divided-difference argument of Theorem 9.1 applied in $B$ — makes them equal. $\square$
+
+Theorem 12.3 is what licenses the phrase "Hensel's lemma applied in $B$" used by later books: the extension valuation ring inherits the full lifting principle, with residue data read in $l$, without returning to the base ring or to the completion functor.
+
 ### 12.7 Unramified and totally ramified endpoints
 
 The degree equality has two extreme allocations. Naming them isolates residue growth from value-group growth and prepares the finer study of how a general finite extension combines the two.
