@@ -246,11 +246,20 @@ The fully linked contents match all fourteen chapters and subsections. The manus
 
 The failure is confined but substantive. Section 13.4's composite-functor proof correctly observes that `N`-invariants send injective `G`-modules to injective `Q`-modules, but it then says the first filtration of a `G`-injective resolution computes ordinary `H^j(N,A)`. That additionally requires injective `G`-modules to be acyclic for `N`-invariants, or an explicit comparison between the derived functor on `G`-modules and continuous cohomology after restriction to `N`; neither is proved. The alternative claim that one may filter homogeneous cochains by quotient directions does not define the double complex or its quasi-isomorphism to the total continuous bar complex (X034). Thus the Hochschild--Serre theorem and its higher edge/dimension consequences are not yet established, though the independently proved five-term sequence remains available.
 
+### Book 026 — `026-finite-locally-free-schemes-and-algebras.md`
+
+**Verdict: PASS — the finite-projective dictionary and its geometric applications are proved from earlier algebra, descent, and representability results with the necessary hypotheses retained.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 2645 (EOF), in chronological/result order, during this audit.
+
+The contents cover all twenty-three chapters, and internal references to the local/projective criteria, trace and norm, the DVR closure theorem, Weil restriction, and the final dictionary point to results established before their use. The book proves the finite-projective equivalences by dual bases and splitting; treats rank as a locally constant function rather than silently assuming connectedness; distinguishes finite, finite flat, and finite locally free over nonnoetherian rings; and supplies the local-ring and constant-fiber-rank arguments needed to recover projectivity. Base change, duality, determinant, trace, norm, characteristic polynomial, discriminant, reduced geometric fibers, and the finite étale criterion are derived from finite projectivity with the relevant constant-rank reductions made explicit.
+
+The less automatic constructions also retain their needed qualifications. Kernels, images, quotients, and schematic closure are not claimed to preserve flatness without a splitting/projectivity or DVR/Dedekind hypothesis; saturation is used before the DVR closure theorem. Affine Weil restriction is constructed by finite-projective coordinates, while the nonaffine result assumes quasi-projectivity and uses the Grassmannian developed in Book 008; fpqc descent is invoked only after the module/algebra/affine descent theorems of Book 010. The apparent forward pointer in §14.4 to the geometric-fiber criterion is expressly motivational and unused until the proof in §17.2. Standard commutative-algebra ingredients used in these proofs—Nakayama, localization, Fitting ideals, Cayley--Hamilton, finite integral algebra, and finite torsion-free modules over a DVR/Dedekind domain—were proved in the manuscript or earlier books, and the local Mathlib checkout contains the corresponding finite-projective/localization/determinant infrastructure. No malformed display, false local conclusion, circular dependency, or unsupported substantive theorem was found.
+
 ## Pending scope inventory
 
 The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
 
-- PENDING — Book 026, `026-finite-locally-free-schemes-and-algebras.md`
 - PENDING — Book 027, `027-affine-group-schemes-and-hopf-algebras.md`
 - PENDING — Book 028, `028-finite-flat-commutative-group-schemes.md`
 - PENDING — Book 029, `029-fppf-cohomology-and-kummer-theory.md`
