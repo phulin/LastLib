@@ -120,11 +120,20 @@ The affine normalization, gluing, model closure, blowup charts, base-change warn
 
 Two chronological failures nevertheless remain. First, Theorem 3.2 imports every substantive normalization, completion, openness, and base-excellence clause from Book 010a. Those clauses inherit X006, and they feed Theorem 3.3 and virtually every normalization/model/resolution theorem from Chapters 6–12. Book 011 therefore cannot serve as a repaired source for X004. Second, the manuscript itself says at the opening of Chapter 14 that earlier chapters used local algebra “on credit.” Proposition 4.2, the Cartier-divisor assertions in Chapters 5, 9, and 11, Proposition 11.0's intersection theory, and the contraction/factorization/minimal-model results all use regular-local factoriality from Theorem 14.43 and Corollary 14.44 before either is proved. The local checkout explicitly still marks “regular local rings are regular” as a TODO in `Mathlib/RingTheory/RegularLocalRing/Defs.lean`, and no theorem supplying regular-local factoriality was found there; Books 001–010 do not prove it. Proposition 4.1A closes several depth and finite-resolution needs early, but does not prove factoriality, so it does not repair this edge. See X007.
 
+### Book 012 — `012-blowups-and-intersection-theory-on-arithmetic-surfaces.md`
+
+**Verdict: FAIL — its regular-surface calculations are sound conditional on a supplied regular model, but its existence, comparison, and Cartier interfaces inherit X006 and X007.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 1816 (EOF), in chronological/result order, during this audit.
+
+The manuscript's independent numerical core is chronological and explicit: Rees algebras and affine blowup charts precede total/strict transforms; regular-point blowups precede local length intersections; restriction degrees precede the projection formula; those formulas precede the point-blowup calculus, adjunction, the weighted-Laplacian identity, fiber negativity, and rational vertical corrections. Residue-field degrees and the distinction between vertical integer intersections and horizontal line-bundle data are handled consistently. The linked contents match all fifteen chapters and sections, and no malformed display or independent notation defect was found.
+
+The global package is not yet available unconditionally. The standing convention that every Weil divisor on a regular surface is Cartier imports Book 011's late Theorem 14.43, so X007 underlies Chapters 7–15 even where the later calculations themselves are correct. Finite normalization in the local Bézout argument and after ramified base change, and the projective surface-resolution, contraction, and common-regular-resolution results repeatedly imported from Book 011, inherit X006 through Book 011's Theorem 3.2. In particular Theorem 15.1(9) uses common regular resolutions to assert model independence, while clauses (10)–(11) directly package the unavailable resolution/contraction/factorization interfaces. Book 012 therefore adds no new independent cross-book defect, but it is a concrete consumer of X006 and X007 and cannot be marked PASS until those earlier edges are repaired.
+
 ## Pending scope inventory
 
 The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
 
-- PENDING — Book 012, `012-blowups-and-intersection-theory-on-arithmetic-surfaces.md`
 - PENDING — Book 015, `015-coherent-cohomology-in-proper-families.md`
 - PENDING — Book 016, `016-semistable-curves-dual-graphs-and-component-groups.md`
 - PENDING — Book 017, `017-finite-etale-covers-and-fundamental-groups.md`
