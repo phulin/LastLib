@@ -740,7 +740,8 @@ theorem chapter10_extension_center_map_injective
     (hA : vK.Integers A) :
     Function.Injective
       (chapter10_extension_center_map (A := A) (B := B) (K := K) (L := L) vK hA) := by
-  sorry
+  exact (chapter10_algebraic_extension_prime_valuation_correspondence
+    (A := A) (B := B) (K := K) (L := L) vK hA).1
 
 /-- Finite-dimensional integral closure gives the extension-center
 correspondence between valuation classes and primes over the base center. -/
