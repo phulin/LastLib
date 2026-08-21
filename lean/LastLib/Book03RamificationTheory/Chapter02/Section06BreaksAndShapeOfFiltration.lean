@@ -14,6 +14,12 @@ universe u
 
 /-! ## 2.6. Breaks and the shape of a filtration -/
 
+/- A lower break is a strict change between consecutive integer levels. -/
+def chapter02LowerBreak
+    {G : Type u} [Group G] [Finite G]
+    (F : Chapter02LowerFiltration G) (n : ℕ) : Prop :=
+  F.group n ≠ F.group (n + 1)
+
 /-- The set of lower breaks of a finite lower filtration. -/
 def chapter02LowerBreakSet
     {G : Type u} [Group G] [Finite G]

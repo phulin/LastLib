@@ -120,12 +120,6 @@ theorem chapter02IntegerLowerGroup_normal
     (chapter02IntegerLowerGroup F i).Normal := by
   by_cases h : i < 0 <;> simp [chapter02IntegerLowerGroup, h, F.normal]
 
-/-- A lower break is a strict change between consecutive integer levels. -/
-def chapter02LowerBreak
-    {G : Type u} [Group G] [Finite G]
-    (F : Chapter02LowerFiltration G) (n : ℕ) : Prop :=
-  F.group n ≠ F.group (n + 1)
-
 /-- The displacement minimum is attained and finite away from the identity. -/
 theorem chapter02Displacement_attained_of_ne_one
     (K : Type u) {L : Type u} [Field K] [Field L] [Algebra K L]
