@@ -336,15 +336,53 @@ The book genuinely proves: theorem of the cube and square (Theorem 2.1), the rig
 
 Four inputs fail chronologically. (1) Line 156 attributes projectivity of abelian schemes and norm-ampleness to "the earlier projective-geometry and descent volumes": Book 008 §9.4 embeds only polarized abelian schemes and states that proper⇒projective requires special geometry, while Book 010 §15.3 (lines 2173–2186) explicitly declines norm positivity; every later "choose a relatively ample `L`" (lines 262, 401, 481, 994, 1134, 1204, 1559) consumes this. This is the concrete Book 035 consumer of X015. (2) Lines 328, 403–409, 455, 1013, 1041–1044 use top intersections `c_1(L)^g`, projection formulas, and intersection numbers with translation-invariant cycles; there is no intersection theory in Mathlib (no Chow groups/Chern classes) or any earlier book beyond Book 012's arithmetic surfaces, and Book 009 line 638 says the theory is not yet available. (3) Line 1044 invokes abelian Riemann–Roch ("Todd class is 1") and `|\ker\lambda_L|=\chi(L)^2` — the X016 machinery, assumed not proved. (4) Line 262 cites dual representability from the X008-flagged Book 015 §11.2 rather than proving it; the biduality Theorem 3.2 and everything downstream (f^∨, kernel duality applications, polarizations) depend on it. Additionally, line 379 uses miracle flatness/smooth⇒Cohen–Macaulay (available only in later Books 070/146), and line 502 cites Book 028 §10.4 as a proved source although Book 028 line 1253 defers the broader theory to Book 035 — a circular citation pair, mitigated because §§5.2–5.3 reproduce the construction in-book. An in-book ordering defect: §6.3 at line 734 uses the Chapter 7 pairing before Chapter 7. See X053 for the consolidated finding.
 
+### Book 034 — `034-cartier-duality.md`
+
+**Verdict: FAIL — Chapters 1–13 are essentially sound, but operative Chapter 14 rests on g-dimensional intersection theory that exists nowhere in the allowed chronology, plus a concealed alternation input and an intra-book ordering violation.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 2344 (EOF), in chronological/result order, during this audit.
+
+The Hopf duality, representability, biduality for finite locally free group schemes, exactness theorem (with the explicit inverse-matrix calculation (7.6a)–(7.6d)), annihilator calculus, DVR/lattice machinery, and Tate-twist models are proved from in-book results and verified Book 026–028 material; all cited Book 027/028 locations were confirmed. Roadmap mentions of later books are harmless and there is no circular citation. The table of contents matches the actual structure exactly.
+
+Three defects remain. (1) Lines 1853 and 1887–1893 identify `Pic^0_{A/S}` as an abelian scheme and prove biduality using top intersections `c_1(L)^g`, Riemann forms (defined only in Books 047/060), and degree multiplicativity under finite pullback — no Chow/intersection theory or degree-pullback formalism exists in Mathlib or any earlier book. See X054. (2) Lines 1956 and 1968 conceal the alternation input: the "normalized cubical structure" trivializing the commutator on the diagonal is never defined, and the delicate `n=2` case of `e_n^\lambda(x,x)=1` is asserted in one clause. (3) Intra-book ordering: §10.4 (lines 1351, 1373) operatively uses the dual abelian scheme/Poincaré bundle "constructed in §14.1", four chapters later (no circularity since §14.1 does not use §10.4); same pattern softly at line 1526. Book 034 inherits X035 (quotient hypotheses at lines 829–978, 982, 1079–1119) and X036/X037 (`A[n]` rank at lines 1818–1824, inside the flagged region).
+
+### Book 036 — `036-jacobians-and-h1-of-curves.md`
+
+**Verdict: FAIL — the §10.5 exterior-algebra calculation is genuinely attempted (Book 019's forward import points at real content), but its descent step cites a spectral sequence that does not exist in Book 018, and several operative inputs (NS finite generation, "no rational curves", abelian Riemann–Roch/Nakai) are proved nowhere.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 1826 (EOF), in chronological/result order, during this audit.
+
+Verified imports: Book 017a relative Picard theory, Book 035 abelian-scheme chapters, Book 021 trace/duality, Book 024 continuous cohomology, Book 018 degree/amplitude facts, Book 019 base change — all present at cited locations, with inherited gaps noted below. No forward references to any later book exist, and no intra-book circularity was found. The table of contents matches all seventeen chapters.
+
+Defects: (1) Line 930 attributes a "Cartan–Leray spectral sequence" to Book 018, which contains none (only Leray for site maps and the arithmetic Hochschild–Serre sequence); the needed finite-level spectral sequence is hypercover/descent machinery in X017 territory. See X055. (2) Line 1530 invokes finite generation of the Néron–Severi group (theorem of the base), proved nowhere; repairable in-book by the torsion/Hom(A[ℓ],B[ℓ]) argument. (3) Line 486 uses "an abelian variety contains no rational curves" operatively in the Albanese proof; provable in two lines from Book 035's rigidity lemma. (4) Lines 1064, 1172–1177 use abelian Riemann–Roch and the abelian Nakai criterion, and lines 1133–1158 a degeneracy-cycle/GRR computation — the X016/X053 cluster, here re-asserted in the book's own voice without attribution. (5) Line 922's cohomological cube argument rests on hypercover descent (X017); line 103 asserts purely inseparable cohomology invariance (X011 cluster). Consumers of the whole chain include Book 019 Chapters 13–14 (X023) and Book 037.
+
+### Book 037 — `037-weights-and-weil-bounds-for-curves-and-abelian-varieties.md`
+
+**Verdict: FAIL — the Rosati-positivity route to the Weil bounds is legitimate in structure, but it consumes abelian Riemann–Roch, ample-intersection positivity, and an unproved Frobenius–Verschiebung package, and Chapter 5 runs on asserted inputs (parabolic Poincaré complex, Cartan–Leray identity, determinant Brauer induction, invariant-theory FFT).**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 1086 (EOF), in chronological/result order, during this audit.
+
+The curve Riemann hypothesis is not assumed; the classical Weil route via Rosati positivity on the Jacobian is followed, which is chronologically legitimate modulo the missing inputs. Verified imports: Book 023 trace formula, Book 021 finiteness/cd, Book 020/036 duality and Jacobian theory, Book 035 cube/[n]-degree, Book 036 exterior algebra, Book 019 base change — all present at cited locations. No forward references to Books 038+ exist anywhere, and the table of contents matches the actual structure.
+
+Defects: (1) Lines 214–231 invoke abelian Riemann–Roch and Nakai-type intersection positivity (consumed at line 245 and throughout Theorems 3.1/4.1/4.2/5.2/9.1) — proved nowhere (X053/X016 cluster). (2) Lines 280–309: Verschiebung, `V\pi=[q]`, `\pi^\vee\lambda=\lambda V`, `\pi^\dagger=V` appear in no prerequisite (Book 035 is silent on Frobenius–Verschiebung despite X014 naming it as intended source); the in-book sketch does not construct `V`. This is the engine of Theorem 4.1. See X056. (3) Chapter 5: the finite parabolic Poincaré complex `K_\Pi` (lines 594–633), the Cartan–Leray-type identity (5.11a) (lines 637–656), determinant Brauer induction (lines 658–667, same gap as X045), and the FFT/Reynolds/reductivity package (lines 571, 673–674, 737–739) are each asserted without proof or chronological source. (4) Boundary inertia weight bounds for coefficient sheaves are admitted to need a local input (line 872) and the nodal check (lines 874–881) computes nothing, yet Theorem 9.1(3) claims the consequences operatively. Minor: tensor-product transpose–Rosati compatibility cited to Books 20/36 exceeds what they prove; broken display math with stray heading markers at lines 924–930, 943–947, 965–968 (in-book cosmetic fix).
+
+### Book 038 — `038-neron-models-and-component-groups.md`
+
+**Verdict: FAIL — the central existence theorems rest on unproved Greenberg/Weil-restriction machinery, an unchecked smoothening-center hypothesis, and operative uses of Lang's theorem, Chevalley's theorem, and Raynaud/Picard smoothening without chronological sources.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 1241 (EOF), in chronological/result order, during this audit.
+
+All explicit cross-book citations were verified at their locations: Book 011 models/blowups/minimal regular model, Book 016 dual graphs/lattice inputs and semistable Picard quotient, Book 017a high-degree quotients and specialization, Book 035 duals/isogenies/polarizations/[n]-degree. No citations to Books 039+ exist; the "next book" monodromy mention at line 1138 is roadmap and expressly unused. The table of contents matches the actual structure except two misindented subsection lines (cosmetic).
+
+Defects: (1) Line 622 uses Lang's theorem (surjectivity of Frobenius-minus-identity) with no source; consumers (6.6) and Theorem 13.1(4). (2) Lines 640–654 use Chevalley's theorem; the in-book "proof" asserts both hard steps without argument; consumers span §§7, 11, 13, 14. (3) Theorem 3.2 (lines 350–364) needs Weil restriction along finite morphisms for non-affine targets (Book 026 covers affine only), quasi-compactness of the Greenberg limit, jet-level openness of smoothness, and a vague excellence/completion comparison; Theorem 4.2 (Néron existence) consumes all of this. (4) Theorem 4.1 (lines 402–424): the smoothening-center hypothesis is never verified for the non-proper graph closures, and line 418 uses "étale radicial ⇒ open immersion" with no source. (5) Lines 434–436 apply the mapping property over a completed base without justification. (6) §9.1 (lines 858–866): the Picard smoothening "can initially be an algebraic space" — algebraic-space foundations exist nowhere in the library or Mathlib. (7) Line 974 invokes a relative moving lemma proved nowhere. (8) Line 254 asserts finite-étale relative `\pi_0` of a proper smooth group scheme — precisely the unproved X010 gap. See X057. Inherited: X008/X053 via Book 035's dual abelian scheme (Lemma 2.5 line 227), X005 behind line 860.
+
+The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
+
 ## Pending scope inventory
 
 The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
 
-- PENDING — Book 034, `034-cartier-duality.md`
 - PENDING — Book 035a, `035a-moduli-stacks-for-modular-and-pel-problems.md`
-- PENDING — Book 036, `036-jacobians-and-h1-of-curves.md`
-- PENDING — Book 037, `037-weights-and-weil-bounds-for-curves-and-abelian-varieties.md`
-- PENDING — Book 038, `038-neron-models-and-component-groups.md`
 - PENDING — Book 039, `039-integral-correspondences-on-curves-and-jacobians.md`
 - PENDING — Book 040, `040-descent-and-weak-mordell-weil-for-abelian-varieties.md`
 - PENDING — Book 041, `041-heights-and-the-mordell-weil-theorem.md`
@@ -773,3 +811,45 @@ The following manuscripts are in this review's assigned 001–064 scope and rema
 - X016 gains consumer: Book 035 line 1044.
 - X034 gains consumers: Book 030 ((4.8)/(4.9), §6.2, §7.6, §8.4), Book 032 lines 357–369 (uncited), Book 033 line 716.
 - X037 refinement: Book 028 line 1287 asserts surjectivity of `[n]` on geometric fibers without argument; fold into X037's needed-results list.
+
+### X054 — Book 034's Chapter 14 uses g-dimensional intersection theory and conceals its alternation input
+
+- **Deficient source:** Book 034, lines 1853 and 1887–1893 (top intersections `c_1(L)^g`, Riemann-form matrix `E_L`, degree multiplicativity under finite pullback in the `A^\vee`/biduality construction); lines 1956 and 1968 (undefined "normalized cubical structure" trivializing the commutator; asserted `n=2` alternation); intra-book ordering at lines 1351, 1373, 1526 (§10.4/§11.6 use §14.1 results before Chapter 14).
+- **Consumers:** Theorem 14.1, (14.3)–(14.8), (14.15)–(14.16), (16.8)–(16.9); downstream Books 035 (biduality), 045, 047, and the elliptic self-duality uses in Books 031/033.
+- **Needed results:** an intersection/degree theory for abelian schemes (or intersection-free replacements for `\dim Pic^0=g` and biduality degrees); a defined cubical trivialization proving `e_n^\lambda(x,x)=1` including `n=2`; reordering of Chapter 10's forward references.
+- **Why unavailable:** no Chow/Chern infrastructure in Mathlib or any earlier book; Riemann forms first appear in Books 047/060; Book 017a's cycle formulas are themselves X016-flagged.
+- **Recommended chronological repair:** reorder §14.1 before Chapter 10; replace degree determinations by descent/torsor arguments or develop minimal Snapper-style degree theory in an earlier geometry book; prove the symmetric-cubical alternation lemma explicitly.
+
+### X055 — Book 036 cites a nonexistent Cartan–Leray spectral sequence and asserts NS finiteness, "no rational curves", and abelian RR/Nakai
+
+- **Deficient source:** Book 036, line 930 ("Cartan–Leray spectral sequence of Book 18" — Book 018 contains none); line 1530 (Néron–Severi finite generation); line 486 (no rational curves on an abelian variety); lines 1064, 1172–1177 (abelian Riemann–Roch, abelian Nakai/nef positivity); lines 1133–1158 (degeneracy-cycle/GRR computation); line 922 (cohomological cube via hypercover descent); line 103 (purely inseparable cohomology invariance).
+- **Consumers:** §10.5 steps 2–3 → (10.13)/(10.14)/(10.17) → Book 019 Chapters 13–14 (X023) and Book 037; Albanese theorem (Chapter 6); Hom finiteness (§15.1); principality of `\lambda_C` (12.4) and all Chapter 13 pairings.
+- **Needed results:** a finite-Galois Cartan–Leray/Hochschild–Serre spectral sequence (derivable from Book 018 Leray + Book 024 Shapiro once X034 is closed); theorem of the base; rigidity-lemma proof of no rational curves; abelian RR/Nakai (X053/X016 cluster).
+- **Why unavailable:** as recorded in X017, X034, X053; none of these inputs exists in Mathlib or Books ≤035.
+- **Recommended chronological repair:** derive the finite-level spectral sequence in-book from Book 018 §5.1 plus Shapiro; replace the NS route by the Hom(A[ℓ],B[ℓ]) torsion argument; prove no-rational-curves from the rigidity lemma; attribute §§12.3's inputs to Book 017a §8.4 explicitly and flag abelian RR/Nakai to the coordinator.
+
+### X056 — Book 037's Weil bounds consume unproved abelian RR/Nakai, a Frobenius–Verschiebung package, and four asserted Chapter 5 inputs
+
+- **Deficient source:** Book 037, lines 214–231 (abelian Riemann–Roch expansion and ample-intersection positivity, consumed at line 245); lines 280–309 (Verschiebung, `V\pi=[q]`, `\pi^\vee\lambda=\lambda V`, `\pi^\dagger=V` with only heuristic justification); lines 594–633 (finite parabolic Poincaré complex `K_\Pi`); lines 637–656 (Cartan–Leray-type identity (5.11a)); lines 658–667 (determinant Brauer induction); lines 571, 673–674, 737–739 (FFT of invariant theory, Reynolds projectors, reductivity); lines 864–881 vs 1047–1048 (boundary inertia weight bounds admitted missing yet claimed operatively in Theorem 9.1(3)).
+- **Consumers:** Theorems 3.1, 4.1, 4.2, 5.2, 9.1; curve RH and Hasse–Weil; determinant comparison (5.12); downstream weight/conductor consumers in later books.
+- **Needed results:** as listed; the Frobenius–Verschiebung package was already named as needed in X014 with intended source Book 035, which does not contain it.
+- **Why unavailable:** none of these is proved in any declared prerequisite, transitively earlier book, or local Mathlib.
+- **Recommended chronological repair:** prove Rosati positivity without top-intersection expansions (ampleness + cube + `[n]`-degree suffice); construct `V` via a descended polarization and prove `V\pi=[q]` on prime-to-p torsion plus finiteness; prove or conditionally label the Chapter 5 machinery; complete the nodal boundary-weight calculation or downgrade Theorem 9.1(3).
+
+### X057 — Book 038's Néron existence rests on unproved Greenberg/Weil-restriction, smoothening, Lang, Chevalley, and moving-lemma inputs
+
+- **Deficient source:** Book 038, lines 350–364 (Theorem 3.2: Weil restriction along finite morphisms for non-affine targets, quasi-compactness of the Greenberg limit, jet-level openness, vague excellence/completion comparison); lines 402–424 (Theorem 4.1: unchecked smoothening-center hypothesis for non-proper graph closures; line 418 "étale radicial ⇒ open immersion" with no source); lines 434–436 (mapping property over completed base); lines 858–866 (Picard smoothening via algebraic spaces, which exist nowhere in the library); line 974 (relative moving lemma); line 254 (finite-étale relative `\pi_0` — the X010 gap); line 622 (Lang's theorem); lines 640–654 (Chevalley's theorem with both hard steps asserted).
+- **Consumers:** Theorems 3.2, 4.1, 4.2, 4.3, 6.2, 7.2, 9.2, 9.3, 10.2, 13.1, Corollary 2.7, Proposition 7.1; hence every component-group conclusion in Books 039, 041, 043, 114, 133 that imports Néron theory.
+- **Needed results:** Lang's theorem for connected smooth groups over finite fields (provable in-book: Frobenius-minus-identity is étale of dimension 0, image open, group proper ⇒ closed, connected ⇒ surjective); Chevalley's theorem (or narrow to the torus case needed); Weil restriction for quasi-projective targets; the étale-radicial lemma; jet-level smoothening with verified center hypothesis; scheme-theoretic Picard smoothening avoiding algebraic spaces; a relative moving lemma replacement.
+- **Why unavailable:** none of these is in local Mathlib (checked: no Greenberg, no Chevalley unitary decomposition, no Lang) or in Books ≤037; Book 026's Weil restriction is affine-target only; X010 records the relative `\pi_0` gap.
+- **Recommended chronological repair:** prove Lang's theorem and the torus case of Chevalley in-book; add quasi-projective Weil restriction and the étale-radicial lemma as lemmas; verify the center hypothesis via compactification; replace algebraic-space smoothening by the fppf-local quotient method of Book 016; replace the moving lemma by closure-plus-vertical-twist correction using Lemma 10.1's data; prove relative `\pi_0` via Stein factorization (machinery already used at lines 693, 962).
+
+### Consumer updates to earlier findings (batch 034–038)
+
+- X005: Book 034 line 1834 consumes the Book 008 Macaulay–Gotzmann package (still X005-flagged pending independent verification of the current text).
+- X008/X053 gain consumer: Book 038 Lemma 2.5 (line 227) and Prop 5.4 (line 551) via Book 035's dual abelian scheme.
+- X010 gains consumer: Book 038 line 254.
+- X014 refinement: intended source Book 035 contains no Frobenius–Verschiebung package; Book 037 lines 280–309 are the operative consumer (see X056).
+- X016/X053 gain consumer: Book 036 lines 1064, 1133–1158, 1172–1177; Book 037 lines 214–231.
+- X023 status update: Book 036 §10.5 (lines 883–978) contains a genuine structured attempt at the exterior-algebra calculation Book 019 imported forward, but it depends on the misattributed spectral sequence (X055) and hypercover descent (X017), so it does not yet discharge X023.
+- X045 gains consumer: Book 037 lines 658–667 (determinant Brauer induction).
