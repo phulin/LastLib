@@ -284,7 +284,7 @@ coordinate forces the field-unit group to be noncompact. -/
 theorem chapter01_local_field_units_noncompact
     {K : Type*} [Field K]
     (v : AddValuation K (WithTop ℤ))
-    (hlocal : Chapter01LocalField v)
+    (_hlocal : Chapter01LocalField v)
     [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [TopologicalSpace (Chapter01UnitGroup v)]
     [IsTopologicalGroup (Chapter01UnitGroup v)]
@@ -295,7 +295,7 @@ theorem chapter01_local_field_units_noncompact
   rcases hcoordinate with ⟨e⟩
   apply not_compactSpace_iff.mp
   intro hcompact
-  letI : CompactSpace Kˣ := hcompact
+  let : CompactSpace Kˣ := hcompact
   have hprod : IsCompact
       (Set.univ : Set (Multiplicative ℤ × Chapter01UnitGroup v)) := by
     have himage :=
@@ -481,8 +481,8 @@ theorem chapter01_unramified_extensions_classified_by_residue_extensions
   · exact
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.chapter07_actual_unramified_degree_matches_residue_degree C
   · intro u
-    letI : FiniteDimensional K (C.extension u) := C.extension_finite u
-    letI : FiniteDimensional k (C.residueExtension (C.reduction u)) :=
+    let : FiniteDimensional K (C.extension u) := C.extension_finite u
+    let : FiniteDimensional k (C.residueExtension (C.reduction u)) :=
       C.residue_finite (C.reduction u)
     rcases C.actual u with ⟨A⟩
     exact A.unramified

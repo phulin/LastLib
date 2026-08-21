@@ -11,12 +11,12 @@ open Polynomial
 
 /-- In positive characteristic the derivative of `T^p-a` vanishes. -/
 theorem chapter12_pth_power_derivative_zero
-    {K : Type*} [Field K] (p : ℕ) (hp : Nat.Prime p) [CharP K p]
+    {K : Type*} [Field K] (p : ℕ) (_hp : Nat.Prime p) [CharP K p]
     (a : K) :
     (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03PurelyInseparableResiduePolynomial
       K p a).derivative = 0 := by
   simp [LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03PurelyInseparableResiduePolynomial,
-    Polynomial.derivative_sub, Polynomial.derivative_pow, hp.ne_zero]
+    Polynomial.derivative_sub, Polynomial.derivative_pow]
 
 private theorem chapter12_sub_pow_of_charP
     {R : Type*} [CommRing R] (p : ℕ) (hp : Nat.Prime p) [CharP R p]
@@ -106,7 +106,7 @@ theorem chapter12_pth_power_has_one_geometric_root
 /- A nonzero linear coefficient can be made arbitrarily small.  Adding it to
 the inseparable equation gives a separable nearby polynomial. -/
 theorem chapter12_pth_power_coefficients_can_be_perturbed
-    {K : Type*} [NontriviallyNormedField K] (p : ℕ) (hp : Nat.Prime p)
+    {K : Type*} [NontriviallyNormedField K] (p : ℕ) (_hp : Nat.Prime p)
     [CharP K p] (a : K) :
     ∀ ε : ℝ, 0 < ε →
       ∃ c : K, c ≠ 0 ∧ ‖c‖ < ε ∧
@@ -123,7 +123,7 @@ theorem chapter12_pth_power_coefficients_can_be_perturbed
     have hc0 : c = 0 := by
       simpa [LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03PurelyInseparableResiduePolynomial,
         Polynomial.coeff_add, Polynomial.coeff_sub, Polynomial.coeff_X_pow,
-        Polynomial.coeff_C_mul_X, Polynomial.coeff_C, hp.ne_one] using hcoeff
+        Polynomial.coeff_C_mul_X, Polynomial.coeff_C, _hp.ne_one] using hcoeff
     exact hc hc0
   · have hunit : IsUnit c := isUnit_iff_ne_zero.mpr hc
     have hsep :=
