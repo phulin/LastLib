@@ -2203,9 +2203,8 @@ points do not automatically combine: inequalities
 
 $$
 \operatorname{length}\Phi_{R,i}
-
-> \operatorname{length}\Psi_{T,i}.
-> $$
+\mathrel{>} \operatorname{length}\Psi_{T,i}.
+$$
 
 may have defects supported by the same extra relation, and adding them can count that relation more
 than once. A multi-point criterion therefore requires a separate determinant statement for the
@@ -3124,9 +3123,8 @@ If
 
 $$
 \operatorname{length}\Phi_R
-
-> \operatorname{length}\Psi_{\mathbf T},
-> $$
+\mathrel{>} \operatorname{length}\Psi_{\mathbf T},
+$$
 
 the criterion is inconclusive. The map may be a proper quotient, as in Chapter 12. It may also be
 an isomorphism onto a finite flat algebra that is not a complete intersection, in which case the
