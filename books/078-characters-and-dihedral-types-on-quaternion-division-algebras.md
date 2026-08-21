@@ -157,7 +157,7 @@ $$
 and the two summands have valuations of opposite parity. They cannot cancel, so
 
 $$
-v_D(x)=\min\{2v_{F_2}(a),,2v_{F_2}(b)+1\}.
+v_D(x)=\min\{2v_{F_2}(a),2v_{F_2}(b)+1\}.
 $$
 
 This proves the valuation law, the image statement, and the descriptions of $\mathcal O_D$ and $\mathfrak P_D$ below. It also proves maximality: every element of an $\mathcal O$-order is integral over $\mathcal O$, hence has integral reduced norm and nonnegative $v_D$, so every order lies in $\mathcal O_D$. The elements of positive valuation form its unique maximal ideal. Thus none of the order structure is being inferred merely from notation.
