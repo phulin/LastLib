@@ -47,46 +47,40 @@
    - [The symmetric-square count](#93-the-symmetric-square-count)
    - [What finite-field counts can certify](#94-what-finite-field-counts-can-certify)
 10. [Models and reduction over discrete valuation rings](#10-models-and-reduction-over-discrete-valuation-rings)
-
-- [Good hyperelliptic models](#101-good-hyperelliptic-models)
-- [Specialization of points and divisor classes](#102-specialization-of-points-and-divisor-classes)
-- [Prime-to-residue-characteristic torsion](#103-prime-to-residue-characteristic-torsion)
-- [Semistable fibers and graph corrections](#104-semistable-fibers-and-graph-corrections)
+    - [Good hyperelliptic models](#101-good-hyperelliptic-models)
+    - [Specialization of points and divisor classes](#102-specialization-of-points-and-divisor-classes)
+    - [Prime-to-residue-characteristic torsion](#103-prime-to-residue-characteristic-torsion)
+    - [Semistable fibers and graph corrections](#104-semistable-fibers-and-graph-corrections)
 
 11. [Local fields and residue constraints](#11-local-fields-and-residue-constraints)
-
-- [Integral points from properness](#111-integral-points-from-properness)
-- [Residue disks and the Abel map](#112-residue-disks-and-the-abel-map)
-- [Local divisor classes](#113-local-divisor-classes)
-- [Compatibility across extensions](#114-compatibility-across-extensions)
+    - [Integral points from properness](#111-integral-points-from-properness)
+    - [Residue disks and the Abel map](#112-residue-disks-and-the-abel-map)
+    - [Local divisor classes](#113-local-divisor-classes)
+    - [Compatibility across extensions](#114-compatibility-across-extensions)
 
 12. [Number fields, Mordell--Weil groups, and heights](#12-number-fields-mordell--weil-groups-and-heights)
-
-- [The Jacobian as a finitely generated group](#121-the-jacobian-as-a-finitely-generated-group)
-- [The theta height](#122-the-theta-height)
-- [The embedded curve is not a subgroup](#123-the-embedded-curve-is-not-a-subgroup)
-- [Reduction maps as arithmetic interfaces](#124-reduction-maps-as-arithmetic-interfaces)
+    - [The Jacobian as a finitely generated group](#121-the-jacobian-as-a-finitely-generated-group)
+    - [The theta height](#122-the-theta-height)
+    - [The embedded curve is not a subgroup](#123-the-embedded-curve-is-not-a-subgroup)
+    - [Reduction maps as arithmetic interfaces](#124-reduction-maps-as-arithmetic-interfaces)
 
 13. [Rational-point geometry in genus two](#13-rational-point-geometry-in-genus-two)
-
-- [Degree one versus degree two information](#131-degree-one-versus-degree-two-information)
-- [Known classes and unknown points](#132-known-classes-and-unknown-points)
-- [Finite quotients and surviving residue classes](#133-finite-quotients-and-surviving-residue-classes)
-- [Completeness criteria and their boundaries](#134-completeness-criteria-and-their-boundaries)
+    - [Degree one versus degree two information](#131-degree-one-versus-degree-two-information)
+    - [Known classes and unknown points](#132-known-classes-and-unknown-points)
+    - [Finite quotients and surviving residue classes](#133-finite-quotients-and-surviving-residue-classes)
+    - [Completeness criteria and their boundaries](#134-completeness-criteria-and-their-boundaries)
 
 14. [The modular genus-two range](#14-the-modular-genus-two-range)
-
-- [From a modular point to a divisor class](#141-from-a-modular-point-to-a-divisor-class)
-- [Cusps, degeneracy points, and base divisors](#142-cusps-degeneracy-points-and-base-divisors)
-- [The range needed for $X_1(13)$](#143-the-range-needed-for-x_113)
-- [The range needed for the mixed-seven curve](#144-the-range-needed-for-the-mixed-seven-curve)
+    - [From a modular point to a divisor class](#141-from-a-modular-point-to-a-divisor-class)
+    - [Cusps, degeneracy points, and base divisors](#142-cusps-degeneracy-points-and-base-divisors)
+    - [The range needed for $X_1(13)$](#143-the-range-needed-for-x_113)
+    - [The range needed for the mixed-seven curve](#144-the-range-needed-for-the-mixed-seven-curve)
 
 15. [A reusable genus-two package](#15-a-reusable-genus-two-package)
-
-- [Hypothesis ledger](#151-hypothesis-ledger)
-- [Geometric theorem package](#152-geometric-theorem-package)
-- [Arithmetic theorem package](#153-arithmetic-theorem-package)
-- [Conclusion](#154-conclusion)
+    - [Hypothesis ledger](#151-hypothesis-ledger)
+    - [Geometric theorem package](#152-geometric-theorem-package)
+    - [Arithmetic theorem package](#153-arithmetic-theorem-package)
+    - [Conclusion](#154-conclusion)
 
 ## 1. Why genus two is the first genuinely new case
 
@@ -566,7 +560,13 @@ $$
 W_1=\{[L]:\deg L=1, h^0(C,L)>0\}. \tag{5.2}
 $$
 
-Every degree-one effective divisor is a single geometric point, and degree-one linear systems are rigid. Therefore $a_1$ is a geometric embedding. Once $b\in C(k)$ is fixed, translation by $\mathcal O(-b)$ identifies $W_1$ with the divisor
+Every degree-one effective divisor is a single geometric point, and degree-one linear systems are rigid, so $a_1$ is injective on geometric points. Its cotangent map at $P$ is the evaluation map
+
+$$
+H^0(C,\omega_C)\longrightarrow\omega_C|_P.
+$$
+
+The canonical system is base-point free by Theorem 2.1, so this map is surjective and $a_1$ is unramified. A proper morphism that is unramified and universally injective is a closed immersion. Thus $a_1$ is a geometric embedding over the ground field, including in positive characteristic. Once $b\in C(k)$ is fixed, translation by $\mathcal O(-b)$ identifies $W_1$ with the divisor
 
 $$
 \Theta_b=j_b(C)\subset J. \tag{5.3}
