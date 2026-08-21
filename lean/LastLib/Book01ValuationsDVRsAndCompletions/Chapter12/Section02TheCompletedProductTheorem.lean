@@ -32,8 +32,9 @@ def hasCompletedRingProduct (A B Ahat : Type*) [CommRing A] [CommRing B]
 /-- The same product assertion, remembering the `Ahat`-algebra structures. -/
 def hasCompletedAlgebraProduct (A B Ahat : Type*) [CommRing A] [CommRing B]
     [CommRing Ahat] [Algebra A B] [Algebra A Ahat]
-    [Algebra Ahat (B ⊗[A] Ahat)] {ι : Type*}
+    {ι : Type*}
     (C : ι → Type*) [∀ i, CommRing (C i)] [∀ i, Algebra Ahat (C i)] : Prop :=
+  letI : Algebra Ahat (B ⊗[A] Ahat) := Algebra.TensorProduct.rightAlgebra
   Nonempty (B ⊗[A] Ahat ≃ₐ[Ahat] (∀ i, C i))
 
 /-! Ramification labels used in the completed degree formula. -/
@@ -68,7 +69,6 @@ theorem completed_product_decomposition
     (hP_exhaustive :
       ∀ (q : Ideal B), q.IsPrime → q.LiesOver m → ∃ i, P i = q)
     (hP_distinct : Function.Injective P)
-    [Algebra (AdicCompletion m A) (B ⊗[A] AdicCompletion m A)]
     [∀ i, Algebra A (branchCompletion B (P i))]
     [∀ i, Algebra (AdicCompletion m A) (branchCompletion B (P i))]
     [∀ i, IsScalarTower A B (branchCompletion B (P i))]
