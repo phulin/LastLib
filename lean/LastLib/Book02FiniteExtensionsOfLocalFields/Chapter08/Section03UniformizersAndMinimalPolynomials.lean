@@ -1343,7 +1343,45 @@ theorem chapter08_uniformizer_norm_has_value_one
     (htotal : chapter08TotallyRamified vK vL hval)
     (varpi : L) (hvarpi : vL varpi = 1) :
     vK (Algebra.norm K varpi) = 1 := by
-  sorry
+  letI : Valuation.IsRankOneDiscrete vK.toValuation :=
+    chapter08_rank_one_discrete_of_add_valuation vK hdiscreteK
+  letI : Valuation.IsRankOneDiscrete vL.toValuation :=
+    chapter08_rank_one_discrete_of_add_valuation vL hdiscreteL
+  have hnsmul : ∀ n : ℕ, ∀ z : WithTop ℤ,
+      n • z = (n : WithTop ℤ) * z := by
+    intro n z
+    induction z using WithTop.recTopCoe with
+    | top =>
+        cases n with
+        | zero => simp
+        | succ n =>
+            have hn : (↑n + 1 : WithTop ℤ) ≠ 0 := by positivity
+            simp [succ_nsmul, WithTop.mul_top hn]
+    | coe z =>
+        rw [← WithTop.coe_nsmul]
+        norm_num [nsmul_eq_mul]
+  have hrestrict : ∀ y : K,
+      vL (algebraMap K L y) = (e : WithTop ℤ) * vK y := by
+    intro y
+    by_cases hy : y = 0
+    · subst y
+      simp [he.ne']
+    · rw [← hnsmul e (vK y)]
+      exact hscale y hy
+  have hf :
+      1 = LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
+        vK vL hval := by
+    simpa [chapter08TotallyRamified] using htotal.symm
+  have hdegree : Module.finrank K L = e * 1 := by
+    simpa [hedegree]
+  have hvarpi_ne : varpi ≠ 0 := by
+    intro hz
+    subst varpi
+    simp at hvarpi
+  have hnorm :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11_single_branch_norm_valuation_formula
+      K L e 1 hval he hrestrict hf hunique hdegree varpi hvarpi_ne
+  simpa [hvarpi] using hnorm
 
 end
 

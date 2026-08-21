@@ -54,7 +54,40 @@ theorem chapter08_total_ramification_iff_residue_fields_equal
     (vL : AddValuation L (WithTop ℤ))
     (h : vK.IsEquiv (AddValuation.comap (algebraMap K L) vL)) :
     chapter08TotallyRamified vK vL h ↔ chapter08ResidueFieldsEqual vK vL h := by
-  sorry
+  haveI : Valuation.HasExtension vK.toValuation vL.toValuation := ⟨h⟩
+  change Module.finrank
+      (LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueField vK)
+      (LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueField vL) = 1 ↔
+    Nonempty (LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueField vK
+      ≃ₐ[LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueField vK]
+        LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueField vL)
+  constructor
+  · intro hd
+    let R :=
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueField vK
+    let S :=
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueField vL
+    have hbij : Function.Bijective (algebraMap R S) :=
+      (Algebra.finrank_eq_one_iff_bijective_algebraMap).mp hd
+    have hf : Function.Bijective (Algebra.ofId R S) := by
+      constructor
+      · intro x y hxy
+        apply hbij.1
+        change algebraMap R S x = algebraMap R S y at hxy
+        exact hxy
+      · intro y
+        obtain ⟨x, hx⟩ := hbij.2 y
+        refine ⟨x, ?_⟩
+        change algebraMap R S x = y
+        exact hx
+    exact ⟨AlgEquiv.ofBijective (Algebra.ofId R S) hf⟩
+  · rintro ⟨e⟩
+    apply (Algebra.finrank_eq_one_iff_bijective_algebraMap).mpr
+    refine ⟨FaithfulSMul.algebraMap_injective _ _, ?_⟩
+    intro y
+    obtain ⟨x, hx⟩ := e.surjective y
+    refine ⟨x, ?_⟩
+    exact (e.commutes x).symm.trans hx
 
 /-- Book §8.1: the fundamental equality specializes to `[L : K] = e` at the
 totally ramified endpoint. -/
