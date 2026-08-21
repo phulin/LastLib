@@ -496,7 +496,7 @@ $$
 W_A\otimes_AE\cong W_E
 $$
 
-and such that every arithmetic subgroup $\Gamma_i$ relevant to the chosen level preserves $W_A$.
+and such that every arithmetic subgroup $\Gamma_i$ relevant to the chosen level preserves $W_A$. This is enough to define the uncharactered integral module in class-set coordinates. If a central character or a family of correspondences is also part of the datum, one must additionally require integrality of the finitely many rational transition maps used in its central equations or correspondence matrices. Stability under the $\Gamma_i$ alone does **not** make $W_A$ a module for all of $G(F)$: a rational element can have coefficient-prime denominators.
 
 There are two standard constructions. If integral matrix models are available at the chosen coefficient prime, the polynomial lattice
 
@@ -506,7 +506,7 @@ $$
 
 is stable under integral matrices with unit determinant. More generally, suppose first that the central subgroup of every $\Gamma_i$ preserves a chosen lattice $L$. Choose finitely many representatives for each finite quotient $\Gamma_i/C_i$ and replace $L$ by the sum of their translates. Clearing the finitely many denominators that occur yields a lattice stable under every $\Gamma_i$. Without the initial stability under the possibly infinite central unit groups, finiteness of the projective stabilizers alone does not justify this construction.
 
-The word “finitely” is essential. The full group $G(F)$ is infinite, and no arbitrary lattice is expected to be stable under all of it. The automorphic module only needs stability under the stabilizers, or under a specified semigroup if additional correspondences are later introduced.
+The word “finitely” is essential. The full group $G(F)$ is infinite, and a nontrivial algebraic representation generally has no lattice stable under all of it. The integral automorphic module is therefore defined below from its finitely many representative values, not as the set of all $W_A$-valued functions on $G_f$. It needs stability under the stabilizers and integrality of the finite transition data actually imposed.
 
 There is also a uniform local construction. Let $E_\lambda$ be a nonarchimedean coefficient field, let $A$ be its valuation ring, and let $K_{\mathrm{wt}}$ be a compact subgroup of the $E_\lambda$-points of the algebraic group acting on $W_E$. Starting from any lattice $L$, the compact set $K_{\mathrm{wt}}L$ is bounded. Its $A$-span lies in $\varpi^{-N}L$ for some $N$, so it is a finite $A$-module and is stable under $K_{\mathrm{wt}}$. This proves that continuous finite-dimensional representations of compact nonarchimedean groups admit stable lattices.
 
@@ -1279,7 +1279,7 @@ $$
 
 The inclusion is the exact well-definedness condition. A vague assertion that $U'$ is deeper than $U$ is not enough: conjugation by $a$ can deepen one matrix entry while making the opposite entry shallower.
 
-The formula is integral. It contains no division by an index or a stabilizer order. On finite class coordinates, if
+For an abstract coefficient module carrying an $A$-linear action of all of $G(F)$, the formula is integral and contains no division by an index or a stabilizer order. For an algebraic weight lattice stable only under the representative stabilizers, absence of denominators in the formal sum is not enough: the finitely many block transformations below must preserve the chosen representative-value lattices. This is the transition-integrality condition imposed on the specified arithmetic datum in Section 14.2. On finite class coordinates, if
 
 $$
 g_i'a=\gamma_{i,r}g_{j(i,r)}u_{i,r}
@@ -2176,7 +2176,7 @@ Later arguments must be able to refer to one module without silently changing it
 - $F$ is a totally real number field with ring of integers $R$.
 - $D/F$ is a totally definite quaternion algebra, with finite ramification ideal $\mathfrak d$.
 - $U=\prod_{v<\infty}U_v\subset D_f^\times$ is a compact open subgroup.
-- $E$ is a characteristic-zero coefficient field, $A\subset E$ is a chosen coefficient ring, and $W_A$ is a finite projective stable weight lattice.
+- $E$ is a characteristic-zero coefficient field, $A\subset E$ is a chosen coefficient ring, and $W_A\subset W_E$ is a finite projective lattice stable under the representative stabilizers. The finitely many rational transition maps used for the central equations, and for any correspondences declared integral, preserve the relevant representative-value lattices.
 - $\chi_f:Z_f\to A^\times$ is the finite part of a compatible central character.
 - $\Sigma$ is a finite set of finite places containing every place at which $D$ is ramified, $U_v$ is not maximal hyperspecial, $W_A$ or $\chi_f$ is ramified, or the chosen coefficient theory requires exclusion.
 
@@ -2216,27 +2216,33 @@ and the actual lattice $W_A\subset W_E$. Two commensurable lattices give the sam
 
 ### 14.3 The base-level module used later
 
-For the specified datum, write
+For the specified datum, first form the $E$-valued space
+
+$$
+S_E=S(U,W_E,\chi_f).
+$$
+
+Choose the representatives included in the integral datum and use evaluation to regard $S_E$ as a subspace of $\bigoplus_iW_E^{\Gamma_i}$ cut out by the central equations. Define
 
 $$
 \boxed{
 M_A(U;W,\chi)
-=S(U,W_A,\chi_f).}
+=S_E\cap\bigoplus_{i=1}^hW_A^{\Gamma_i}.}
 $$
 
-This is the finite integral carrier for the Hecke action constructed in the next stage. Once a specified family of finite double-coset correspondences is allowed to act, it is the corresponding finite Hecke module; the underlying module and lattice do not change when that operator family is named.
+The intersection is taken inside $\bigoplus_iW_E^{\Gamma_i}$. This is the finite integral carrier for the Hecke action constructed in the next stage. The transition-integrality clause makes the stated central equations and any declared integral correspondence preserve it. Once a specified family of finite double-coset correspondences is allowed to act, it is the corresponding finite Hecke module; the underlying module and lattice do not change when that operator family is named.
 
-Explicitly,
+Equivalently,
 
 $$
 M_A(U;W,\chi)
 =\left\{
-f:D_f^\times\to W_A:
-f(\gamma guz)=\rho(\gamma)\chi_f(z)f(g)
+f\in S(U,W_E,\chi_f):
+f(g_i)\in W_A\text{ for every }i
 \right\},
 $$
 
-where $\gamma\in D^\times$, $u\in U$, and $z\in Z_f$. The definition presupposes
+where $g_i$ are the fixed representatives. If $W_A$ happens to be stable under all of $D^\times$, this agrees with the simpler notation $S(U,W_A,\chi_f)$; that stronger stability is not assumed in general. The definition presupposes
 
 $$
 \chi_f(a)=\rho(a_\infty)\quad(a\in F^\times),
@@ -2505,9 +2511,9 @@ together with its class-set decomposition, central constraints, integral pairing
 | left order $\mathcal O_L(I_i)$                   | automorphisms of that class                   | $\Gamma_i=\mathcal O_L(I_i)^\times$                                      |
 | archimedean integers $(n_\tau,m_\tau)$           | algebraic weight                              | $W=\bigotimes_\tau\operatorname{Sym}^{n_\tau}V_\tau\otimes\det^{m_\tau}$ |
 | central exponents $c_\tau$                       | scalar action and parity                      | $c_\tau=n_\tau+2m_\tau$                                                  |
-| central character $\chi$                         | identifies finite and infinite scalar actions | $\chi_\infty=\rho^{-1}$ and $\chi_f                                      |
+| central character $\chi$                         | identifies finite and infinite scalar actions | $\chi_\infty=\rho^{-1}$ and $\chi_f\vert_{U\cap Z_f}=1$                  |
 | stable lattice $W_A$                             | integral coefficient system                   | invariant summands $W_A^{\Gamma_i}$                                      |
-| class representatives                            | coordinates for forms                         | $S(U,W_A)\cong\bigoplus_iW_A^{\Gamma_i}$                                 |
+| class representatives                            | coordinates for integral forms                | $M_A=S_E\cap\bigoplus_iW_A^{\Gamma_i}$                                   |
 | deeper level $U'\subset U$                       | more finite level structure                   | pullback and trace along $X_{U'}\to X_U$                                 |
 | admissible $a$ with $U'\subset aUa^{-1}$         | translated lower-level contribution           | degeneracy map $\delta_a$                                                |
 | family of degeneracy maps                        | old contribution from specified lower levels  | image of $\Delta$                                                        |
