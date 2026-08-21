@@ -748,8 +748,8 @@ $$
 
 These maps are functorial in $K$, compatible with long exact sequences, and transitive:
 
-# $$\operatorname{sp}_{\bar u/\bar s}
-
+$$
+\operatorname{sp}_{\bar u/\bar s}=
 \operatorname{sp}_{\bar u/\bar t}\circ
 \operatorname{sp}_{\bar t/\bar s}.
 $$
@@ -1262,8 +1262,8 @@ has stalks given by tame inertia cohomology. At a smooth boundary point there is
 
 Interior cohomology
 
-# $$H^q_!(M_{\bar b},\mathcal L_n)
-
+$$
+H^q_!(M_{\bar b},\mathcal L_n)=
 \operatorname{im}\bigl(
 H^q_c(M_{\bar b},\mathcal L_n)
 \to H^q(M_{\bar b},\mathcal L_n)
