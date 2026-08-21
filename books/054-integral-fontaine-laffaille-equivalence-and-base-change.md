@@ -1746,10 +1746,325 @@ product, over those $\tau$ with $h_\tau=1$, of the cyclic rank-one display havin
 weight-one factor and weight zero at the other embeddings.
 
 The generic points of that one-step display can be calculated at every finite level from the
-two fundamental syntomic equations of Book 53, Sections 4.1--4.2: iterate ordinary Frobenius
-through the weight-zero factors and divided Frobenius at the one weight-one factor. The
-result is the torsion equation of the Lubin--Tate formal $\mathcal O_{K_0}$-module for the
-embedding $\tau$. Consequently its inverse-limit character is the $\tau$-conjugate
+two atomic lines of Book 53, Sections 4.1--4.2, together with the two fundamental syntomic
+sequences of Book 53, Section 5.3, namely (5.6) and (5.7) there,
+
+$$
+0\to\mathbf Z/p^n\to\mathscr A_n\xrightarrow{\ 1-\varphi\ }\mathscr A_n\to0,
+\qquad
+0\to\mu_{p^n}\to\mathscr F^1_n\xrightarrow{\ \iota_n-\varphi _1\ }\mathscr A_n\to0 :
+$$
+
+one iterates the ordinary Frobenius equation of (5.6) through the weight-zero factors and
+applies the divided Frobenius equation of (5.7) at the single weight-one factor. This step
+is the heart of the proposition, and it is the only place where the embedding is actually
+pinned down, so we carry it out in full.
+
+_Strategy._ Three things must happen. First, the level-$n$ solution system of the one-step
+display is a chain: the value of a solution at one embedding determines its value at the
+next through the Frobenius equation there, and running once around the Frobenius cycle
+returns to the embedding one started from. Eliminating the intermediate values leaves a
+single equation in the single unknown attached to the weight-one embedding, and that
+equation iterates Frobenius $f$ times against exactly one division by $p$. For $f=1$ it is
+literally the weight-one equation of (5.7), whose solutions are $\mu_{p^n}$; in general it
+is the height-$f$ analogue, which is the torsion equation of a one-dimensional formal
+$\mathcal O_{K_0}$-module of height $f$. Second, the surviving equation does not remember
+which embedding carried the weight: the equation, its solution module, and the Galois action
+on that module are literally the same for all choices, and the chosen embedding enters only
+through the formula relating the coefficient action to multiplication inside the period
+module. This reduces the whole question to one universal character. Third, that character is
+computed by exhibiting a single display of the required shape whose realization is known
+independently, namely the $p$-power torsion of the Lubin--Tate formal
+$\mathcal O_{K_0}$-module of Book 5, Chapter 6, whose Hodge step is read off its cotangent
+module and turns out to sit at the identity embedding. The three steps together give the
+identification for every embedding, with no period decomposition and no Sen operator.
+
+_Notation, and the direction of the cycle._ The proposition concerns a $K_0$ with finitely
+many embeddings, so $k$ is finite; write
+
+$$
+f=[K_0:\mathbf Q_p],\qquad q=|k|=p^f,\qquad \sigma^f=\operatorname{id}\ \text{on}\ W.
+$$
+
+Two actions of $W$ are in play, and it is worth separating them notationally for the length
+of this computation: write $a\cdot x$ for the structural action of $a\in W$ on the filtered
+module and $c\ast x$ for the action of $c\in W$ through the coefficients. By definition
+$L_\tau$ is the summand on which
+
+$$
+a\cdot x=\tau(a)\ast x
+\qquad(a\in W).
+$$
+
+For $x\in L_\tau$, semilinearity of $\varphi$ over the structural action and its linearity
+over the coefficients give
+
+$$
+a\cdot\varphi(x)=\varphi\bigl(\sigma^{-1}(a)\cdot x\bigr)
+=\varphi\bigl(\tau(\sigma^{-1}(a))\ast x\bigr)
+=\tau\bigl(\sigma^{-1}(a)\bigr)\ast\varphi(x),
+$$
+
+so $\varphi(L_\tau)\subseteq L_{\tau\circ\sigma^{-1}}$. The symbol $\varphi\tau$ in (14.6b)
+therefore means
+
+$$
+\varphi\tau=\tau\circ\sigma^{-1},
+\tag{14.6c}
+$$
+
+and, since $\sigma$ generates $\operatorname{Gal}(K_0/\mathbf Q_p)$, the $f$ embeddings form
+a single $\varphi$-cycle: $\varphi^j\tau=\tau$ exactly when $f\mid j$.
+
+Because $K_0/\mathbf Q_p$ is unramified it is Galois, so every $\tau$ has image $K_0$ and
+each atomic factor of the tensor decomposition is already defined over the coefficient ring
+$W$ itself. By Theorem 12.2(2), its realization over the larger $\mathcal O$ is
+$\mathcal O\otimes_W(-)$ applied to its realization over $W$, which does not change the
+character, only the ring in which its values are read. We may therefore compute one atomic
+factor with $\mathcal O=W$. Then each line $L_\tau=W\cdot e_\tau$ is free of rank one for the
+structural action as well, because $\tau$ is an automorphism of $W$, and the two actions are
+related by $c\ast e_\tau=\tau^{-1}(c)\cdot e_\tau$.
+
+Finally, replacing $e_\tau$ by $c_\tau e_\tau$ with $c_\tau\in W^\times$ replaces $a_\tau$ by
+$c_\tau a_\tau c_{\varphi\tau}^{-1}$, so the product $\prod_\tau a_\tau$ around the cycle is
+the only invariant of the collection $(a_\tau)$. That product is the unramified character
+already divided out, so we may and do take $a_\tau=1$ for every $\tau$.
+
+_The level-$n$ equations._ Fix the atomic factor whose weight-one embedding is $\tau_0$ and
+list the cycle as $\tau_j=\varphi^j\tau_0$, so that $\tau_f=\tau_0$ and
+$\tau_1,\dots,\tau_{f-1}$ are the weight-zero embeddings. The display is
+
+$$
+F_L=W\cdot e_{\tau_0},
+\qquad
+\varphi _1(e_{\tau_0})=e_{\tau_1},
+\qquad
+\varphi _0(e_{\tau_j})=e_{\tau_{j+1}}\quad(1\le j\le f-1),
+$$
+
+together with $\varphi _0(e_{\tau_0})=p\varphi _1(e_{\tau_0})=pe_{\tau_1}$. Put
+$M_n=L/p^nL$. By Book 53, Section 5.2, a solution is a pair of $W$-linear maps
+$s_0:M_n\to\mathscr A_n$ and $s_1:F_{M_n}\to\mathscr F^1_n$ subject to $\iota_ns_1=s_0|_{F_{M_n}}$
+and to the two Frobenius identities of (5.5), written there with the letter $f$, which we
+have reserved for the degree. Write
+
+$$
+x_j=s_0(e_{\tau_j})\in\mathscr A_n,
+\qquad
+y=s_1(e_{\tau_0})\in\mathscr F^1_n .
+$$
+
+The structural equation, the divided Frobenius equation at $\tau_0$, and the ordinary
+Frobenius equations at the weight-zero embeddings become, in that order,
+
+$$
+x_0=\iota_n(y),
+\qquad
+x_1=\varphi _1(y),
+\qquad
+x_{j+1}=\varphi(x_j)\quad(1\le j\le f-1).
+\tag{14.6d}
+$$
+
+The one remaining condition, $s_0\varphi _0=\varphi s_0$ at $\tau_0$ itself, reads
+$p\,x_1=\varphi(x_0)$; it is automatic, being the finite-level form
+$\varphi\circ\iota_n=p\varphi _1$ of the relation (5.4). Nothing else is imposed.
+
+Now iterate. The last group of equations in (14.6d) is the weight-zero equation of (5.6)
+written as a transition, and running it from $j=1$ to $j=f-1$ carries $x_1$ around the
+weight-zero part of the cycle back to $x_f=x_0$:
+
+$$
+x_0=x_f=\varphi^{f-1}(x_1)=\varphi^{f-1}\bigl(\varphi _1(y)\bigr).
+$$
+
+Comparing with $x_0=\iota_n(y)$ leaves a single equation in a single unknown:
+
+$$
+\iota_n(y)=\varphi^{f-1}\bigl(\varphi _1(y)\bigr),
+\qquad y\in\mathscr F^1_n .
+\tag{14.6e}
+$$
+
+Conversely every $y$ satisfying (14.6e) defines a solution: put $x_1=\varphi _1(y)$, define
+$x_2,\dots,x_{f-1}$ by the transitions, and put $x_0=\iota_n(y)$; all the conditions above
+then hold. The Galois action on solutions is $(g\cdot s)(m)=g(s(m))$ by Book 53, (6.3), and
+$\iota_n,\varphi,\varphi _1$ commute with $G_{K_0}$, so evaluation at $e_{\tau_0}$ is an
+isomorphism of $G_{K_0}$-modules
+
+$$
+T_{\mathrm{FL}}(M_n)\xrightarrow{\ \sim\ }
+\Sigma_n:=\ker\bigl(\iota_n-\varphi^{f-1}\varphi _1:
+\mathscr F^1_n\to\mathscr A_n\bigr),
+\qquad
+s\longmapsto s_1(e_{\tau_0}).
+\tag{14.6f}
+$$
+
+Equation (14.6e) is what the two fundamental sequences deliver, and it has exactly the shape
+of the level-$n$ torsion equation of a one-dimensional formal $\mathcal O_{K_0}$-module of
+height $f$. Three features show this; the identification itself is completed below.
+
+It is the height-$f$ analogue of the weight-one equation. For $f=1$ it is literally
+$\iota_n(y)=\varphi _1(y)$, whose kernel is $\mu_{p^n}$ by (5.7), so that (14.6f) recovers
+(4.3) and the normalization (2.6); and $\mu_{p^\infty}$ is the torsion tower of the
+Lubin--Tate module of $\mathbf Q_p$ for the uniformizer $p$.
+
+Next, combining (14.6e) with $\varphi\circ\iota_n=p\varphi _1$ gives
+
+$$
+\varphi^f(x_0)=\varphi^{f-1}\bigl(\varphi\iota_n(y)\bigr)
+=p\,\varphi^{f-1}\bigl(\varphi _1(y)\bigr)=p\,x_0 .
+$$
+
+One trip around the Frobenius cycle multiplies the solution by $p$: the single factor $p$ is
+contributed by the one division performed by divided Frobenius at $\tau_0$, and the $f-1$
+undivided steps are contributed by the weight-zero factors. For $f=1$ this is the period
+relation $\varphi(t)=pt$ of Book 53, Section 5.2, so $\varphi^f=p$ is its height-$f$ form,
+and it is the same bookkeeping as in Book 5's series for the uniformizer $p$ over
+$\mathcal O_{K_0}=W$,
+
+$$
+\lambda(T)=pT+T^{q},
+$$
+
+in which the exponent $q=p^f$ is the $f$-fold iterate of the $p$-power map and the linear
+term $pT$ is the single correction by $p$: at level one the torsion equation of Book 5,
+Section 6.3 reads $T^{q}=-pT$, one $q$-power against one factor of $p$, which is (14.6e)
+read through $\varphi^f\equiv(\ )^{q}$ modulo $p$.
+
+Finally the count agrees: Book 53, Proposition 6.1 gives
+$|\Sigma_n|=p^{\ell_W(M_n)}=p^{nf}=q^n$, which is exactly the order of the $p^n$-torsion of
+that formal module, by the parametrization of its torsion by $W/p^n$ in Book 5,
+Section 6.3.
+
+_The module structure, and where $\tau_0$ enters._ The map $\iota_n$ is $W$-linear and
+$\varphi$ and $\varphi _1$ are $\sigma$-semilinear, so $\varphi^{f-1}\varphi _1$ is
+$\sigma^f$-semilinear, that is, $W$-linear, because $\sigma^f=\operatorname{id}$ on $W$.
+Hence $\Sigma_n$ is a $G_{K_0}$-stable $W/p^n$-submodule of $\mathscr F^1_n$ for
+multiplication inside the period module. The coefficient action transported by (14.6f) is a
+twist of that multiplication: writing $c\ast s$ for the coefficient action on solutions,
+which is precomposition with $c\ast(-)$ on $M_n$,
+
+$$
+(c\ast s)_1(e_{\tau_0})=s_1\bigl(c\ast e_{\tau_0}\bigr)
+=s_1\bigl(\tau_0^{-1}(c)\cdot e_{\tau_0}\bigr)
+=\tau_0^{-1}(c)\,s_1(e_{\tau_0}),
+$$
+
+since $s_1$ is linear for the structural action. Thus, under (14.6f),
+
+$$
+c\ast y=\tau_0^{-1}(c)\,y
+\qquad(c\in W),
+\tag{14.6g}
+$$
+
+the right-hand side being multiplication inside the $W$-algebra $\mathscr F^1_n$.
+
+This is the decisive point. Neither the equation (14.6e), nor the module $\Sigma_n$, nor the
+Galois action on it, nor the transition maps of (14.4), which become $y\mapsto py$, mention
+$\tau_0$ anywhere: they are the same for every choice of the weight-one embedding. The
+embedding enters only through (14.6g), which says that the coefficient action is the natural
+multiplication composed with $\tau_0^{-1}$. Moreover $T_p(L)=\varprojlim_n\Sigma_n$ is free
+of rank $f$ over $\mathbf Z_p$ by (14.5), is $p$-torsion free, and carries an action of the
+discrete valuation ring $W$ whose uniformizer is $p$; a finitely generated torsion-free
+module over a discrete valuation ring is free, so $T_p(L)$ is free of rank one over $W$ and
+Galois acts on it through a character
+
+$$
+\psi:G_{K_0}\longrightarrow W^\times,
+\qquad g\cdot y=\psi(g)\,y ,
+$$
+
+for multiplication inside the period module. By the preceding paragraph $\psi$ does not
+depend on $\tau_0$. Comparing multiplication with the coefficient action through (14.6g),
+the character realized by the atomic factor whose weight-one embedding is $\tau_0$ is
+
+$$
+\xi_{\tau_0}=\tau_0\circ\psi .
+$$
+
+The question of which embedding indexes the answer has thereby been reduced to the
+computation of the single character $\psi$, and one instance settles it.
+
+_Identification of $\psi$._ Apply Book 5, Chapter 6 to the field $K_0$, its ring of integers
+$\mathcal O_{K_0}=W$, and the uniformizer $p$, with the series $\lambda(T)=pT+T^q$ of
+Section 6.3 there. Let $F_\lambda$ be the resulting formal $W$-module of Book 5,
+Theorem 6.1, let $\omega_n$ be a compatible system of primitive $p^n$-torsion points, and
+let $\chi_{\mathrm{LT}}:G_{K_0}\to W^\times$ be the Lubin--Tate character, defined by
+$g(\omega_n)=[\chi_{\mathrm{LT}}(g)]_\lambda(\omega_n)$; Book 5, Section 6.3 identifies
+$W/p^n$ with $F_\lambda[p^n]$ by $a\mapsto[a]_\lambda(\omega_n)$, and Theorem 6.3 there shows
+that this character is well defined and compatible in $n$.
+
+That torsion is a finite-flat group over $W$. The polynomial $\lambda^{\circ n}(T)$ is monic
+of degree $q^n$, so $B_n=W[T]/(\lambda^{\circ n}(T))$ is finite free of rank $q^n$ over $W$.
+Since $\lambda^{\circ n}(T)\equiv T^{q^n}$ modulo $p$, the ideal $(T)$ is nilpotent modulo
+$p$ in $B_n$, and $B_n$, being finite over $W$ and hence $p$-adically complete, is complete
+and separated for the $(T)$-adic topology; the power series $F_\lambda(X,Y)$ and
+$[a]_\lambda(T)$ therefore converge in the relevant completed tensor products. Because
+$[p^n]_\lambda$ is an endomorphism,
+
+$$
+\lambda^{\circ n}\bigl(F_\lambda(X,Y)\bigr)
+=F_\lambda\bigl(\lambda^{\circ n}(X),\lambda^{\circ n}(Y)\bigr)
+$$
+
+lies in the ideal generated by $\lambda^{\circ n}(X)$ and $\lambda^{\circ n}(Y)$, and
+likewise $\lambda^{\circ n}([a]_\lambda(T))=[a]_\lambda(\lambda^{\circ n}(T))$ lies in
+$(\lambda^{\circ n}(T))$. So $T\mapsto F_\lambda(X,Y)$ and $T\mapsto[a]_\lambda(T)$ define a
+comultiplication and a $W$-action on $\mathcal G_n=\operatorname{Spec}B_n$, whose geometric
+points are $F_\lambda[p^n]\simeq W/p^n$ with $G_{K_0}$ acting by $\chi_{\mathrm{LT}}$.
+
+Consequently $T=W(\chi_{\mathrm{LT}})$ is free of rank one over $W$, all of its quotients
+$T/p^nT$ are finite flat, and it carries a coefficient action of $W$. Theorem 14.1, together
+with Section 9.3, supplies a coefficient-linear strongly divisible lattice
+$L^{\mathrm{LT}}$ with $L^{\mathrm{LT}}/p^nL^{\mathrm{LT}}=\mathbf D_{\mathrm{FL}}(\mathcal
+G_n)$; the identification (2.8) is covariant, so the coefficient action of $a$ corresponds to
+multiplication by $a$ on $F_\lambda[p^n]$ and the character realized by $L^{\mathrm{LT}}$ is
+$\chi_{\mathrm{LT}}$ itself rather than its inverse.
+
+Its Hodge steps can now be read off. By (3.2) the Hodge step of
+$\mathbf D_{\mathrm{FL}}(\mathcal G_n)$ is the image of the invariant differentials
+$\omega_{\mathcal G_n}=I/I^2$, where $I=(T)$ is the augmentation ideal of $B_n$. Since
+$\lambda^{\circ n}(T)\equiv p^nT$ modulo $T^2$,
+
+$$
+\omega_{\mathcal G_n}=(W/p^n)\,T,
+$$
+
+free of rank one, while the coefficient action of $a\in W$, namely $[a]_\lambda^*$, sends $T$
+to $[a]_\lambda(T)\equiv aT$ modulo $T^2$ and so acts by multiplication by $a$. On
+$\omega_{\mathcal G_n}$ the coefficient action therefore agrees with the structural action of
+$W$, which is to say that $\omega_{\mathcal G_n}$, and hence the Hodge step, lies entirely in
+the component indexed by the identity embedding. The Hodge step is not zero: otherwise
+$L^{\mathrm{LT}}$ would be a unit-root object and its realization unramified by Book 53,
+Section 4.1, whereas Book 5, Section 6.3 shows that $K_0(\omega_1)/K_0$ is totally ramified
+of degree $q-1>1$. Hence
+
+$$
+h^{\mathrm{LT}}_{\operatorname{id}}=1,
+\qquad
+h^{\mathrm{LT}}_\tau=0\quad(\tau\ne\operatorname{id}),
+$$
+
+so that $L^{\mathrm{LT}}$ is, up to its own unramified factor $\prod_\tau a_\tau$, exactly
+the atomic one-step display with weight one at $\tau_0=\operatorname{id}$. For that display
+$\xi_{\tau_0}=\tau_0\circ\psi$ reads $\chi_{\mathrm{LT}}=\psi$, up to an unramified
+character. Therefore, for every embedding $\tau$, the atomic display with weight one at
+$\tau$ and weight zero elsewhere realizes $\tau\circ\chi_{\mathrm{LT}}$ up to an unramified
+character, and its level-$n$ equation (14.6e) is the level-$n$ torsion equation of the
+Lubin--Tate formal $\mathcal O_{K_0}$-module read through $\tau$.
+
+Two things have been bought. The exponent $h_\tau$ is now visibly the number of times the
+embedding $\tau$ carries a division by $p$ around the Frobenius cycle, so the exponents in
+(14.6a) are read off the Hodge steps and nothing else; and the index of the resulting formal
+module is forced rather than chosen, since it is fixed by the single computation of
+$\omega_{\mathcal G_n}$ above. Relabelling the embeddings permutes the atomic factors among
+themselves and therefore leaves the product over $\{\tau:h_\tau=1\}$, in particular the case
+of (14.6a) in which every $h_\tau=1$, unchanged.
+
+Consequently the inverse-limit character of that display is the $\tau$-conjugate
 Lubin--Tate character $\tau\circ\chi_{\mathrm{LT}}$, and not its inverse. The contravariance
 of $T_{\mathrm{FL}}$ is already accounted for by the normalization (2.6), in which the
 weight-one line realizes $\mu_{p^n}$ rather than its dual, and the transition maps in (14.4)
