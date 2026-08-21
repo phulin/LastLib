@@ -632,13 +632,29 @@ Proved genuinely in-book without circularity: the fixed-part theorem (4.1), Kumm
 
 The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
 
-## Pending scope inventory
+### Book 062 — `062-pseudocompact-trace-algebras-and-carayol-descent.md`
 
-The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
+**Verdict: PASS — the Carayol descent theorem (Ch. 9) and strict-conjugacy descent (Thm 10.3) are fully proved from self-contained inline machinery; only cosmetic/ordering defects found.**
 
-- PENDING — Book 062, `062-pseudocompact-trace-algebras-and-carayol-descent.md`
-- PENDING — Book 063, `063-deformation-functors-of-representations.md`
-- PENDING — Book 064, `064-complete-local-algebra-for-deformation-theory.md`
+**Full-read attestation:** I personally read this manuscript from line 1 through line 2234 (EOF), in chronological/result order, during this audit.
+
+Every result used is proved inside the book (Schur's lemma, Jacobson density, Burnside, trace generation, Azumaya criterion, idempotent lifting, Henselian splitting, local Skolem–Noether, Carayol descent); no earlier book or Mathlib result is consumed and none is needed. No roadmap-labeled statements exist, no forward references to Books 063+, no circularity; spot checks (Gram determinants, center computation, conjugation identity, scalar-torsor tower correction, examples) all verified correct. Defects: malformed display at line 952; in-book forward dependency on Chapter 8's Skolem–Noether at lines 521/879 (verified non-circular); forward reference to §2.7 at line 320; sketch-level extension of the finite-coset property to inverse limits at line 355 (consumer: continuity of `\rho_B` in Theorem 9.1); openly flagged countable-cofinal-tower assumption at line 178 inherited by every main theorem.
+
+### Book 063 — `063-deformation-functors-of-representations.md`
+
+**Verdict: PASS — self-contained for everything asserted: deformation functors, tangent/obstruction identifications, and torsor structures are proved in-book; external inputs (Book 024 continuous cohomology, Book 057 coefficient categories/small extensions) are available and verified; representability/Schlessinger theory consistently deferred to Book 066 as roadmap.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 3240 (EOF), in chronological/result order, during this audit.
+
+Verified imports: Book 057 `Art_k/\mathcal A` theory, Book 024 continuous cochains/`H^2` classification/inflation–restriction/cyclic formulas. Checked non-defects: tangent theorem, fixed-determinant formulas with characteristic-divides corrections, lifting criterion, scalar-centralizer theorem, Heisenberg counterexample — all proved/computed in-book; no hidden duality use; versal/universal rings correctly not claimed. Defects: broken display at lines 2436–2439 (stray heading marker, missing `=` in the obstruction-localization identity); misleading "next book" pointer at line 546 (representability is Book 066, not 064); unattributed reliance on Book 057's small-extension factorization at line 1695; within-book forward use of obstruction classes in §2.7 before their Chapters 9–11 construction (heuristic tone mitigates).
+
+### Book 064 — `064-complete-local-algebra-for-deformation-theory.md`
+
+**Verdict: PASS — no chronology violations, no forward references to Books 065+, no circularity; defects are concealed-input gaps, all repairable in-book.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 3164 (EOF), in chronological/result order, during this audit.
+
+Verified imports: Book 057 coefficient formalism/Kähler–conormal material; Cohen structure is redundantly re-proved in Chapter 4 (permitted); Krull height/power-series facts available from Book 001 Chapter 13. Defects: (1) line 1201–1203 asserts "`gr dim = dim R`" without proof — Hilbert–Samuel theory exists nowhere before the later Book 070; consumers include Theorem 7.2(4)⇔(5) and the whole CM/freeness chain of Chapter 15. See X072. (2) Line 2168 asserts Eakin–Nagata with a one-line sketch (absent from Mathlib and earlier books); consumer: Noetherianity of fiber products used throughout §§13.8, 15.6–15.7. (3) Lines 365–368/932–934 use Kähler differentials for continuous power-series rings, which neither Mathlib nor Book 057 supplies (the mod-`k` sequence actually used is derivable in-book). (4) Lines 2024–2027 justify the completed-tensor dimension formula by vague formal-fiber appeal instead of Book 010a Lemma 2.12 plus an unproved projection flatness. (5) Line 3013's freeness induction omits the Tor argument for left exactness. (6) Minor: purely inseparable coefficient-field step hand-waved at line 557 (Book 001 Ch. 13 has it); over-general dimension formula at line 1040; TOC indentation loss for chapters 10–13.
 
 ## Cross-book findings
 
@@ -1263,3 +1279,15 @@ Verdicts: Book 057 PASS. Book 058 FAIL (X068 + inherited X008).
 - **Recommended chronological repair:** as itemized; also cite Book 010a as the excellence source in ledger §14.4 instead of "completeness makes R excellent".
 
 Verdicts: Book 059 FAIL (X069). Book 060 FAIL (X070 + inherited). Book 061 FAIL (X071 + inherited).
+
+### X072 — Book 064 uses Hilbert–Samuel, Eakin–Nagata, and continuous-Kähler inputs without proof
+
+- **Deficient source:** Book 064, lines 1201–1203 (`\dim gr_{\mathfrak m}R=\dim R` asserted; Hilbert–Samuel theory first appears in the later Book 070); line 2168 (Eakin–Nagata, one-line sketch; absent from Mathlib and Books ≤063); lines 365–368/932–934 (Kähler differentials of continuous power-series rings — neither Mathlib nor Book 057 supplies them); lines 2024–2027 (completed-tensor dimension formula via vague formal-fiber appeal instead of Book 010a Lemma 2.12 plus unproved projection flatness); line 3013 (omitted Tor argument for left exactness).
+- **Consumers:** Theorem 7.2(4)⇔(5), §7.6, §8.8, Chapter 15's CM/freeness chain; Noetherianity of fiber products in §§11.9/13.8/15.6–15.7 (used by later deformation books 070–071 and the patching volumes).
+- **Needed results:** a Hilbert–Samuel dimension inequality proved in-book from the height theorem; a real Eakin–Nagata proof or a direct presentation-based Noetherianity argument; derivation of the mod-`k` conormal sequence from §4.1's universal property.
+- **Why unavailable:** as listed; none is in Mathlib or any earlier book.
+- **Recommended chronological repair:** as itemized per section in Book 064's entry.
+
+## Scope completion
+
+All 38 manuscripts in this review's scope (Books 028–064, including 035a) have now been replaced by full-read attestations and verdicts; the pending inventory above is empty. Summary: **12 PASS** (040, 042, 043, 048, 052, 053, 054, 055, 057, 062, 063, 064) and **26 FAIL**, with new standing findings X041–X072 recorded below and consumer updates to X001–X040 throughout. The dominant failure modes in this range are: (i) inherited upstream gaps (X005/X008/X015/X016/X036/X037 abelian-scheme and finite-flat foundations; X017–X033 étale-cohomology chain; X004/X006/X007 excellence/factoriality chain); (ii) strategy-level headline proofs (Books 056, 059, 060, 061); (iii) missing import ledgers concealing operative dependence on flagged regions (Books 051, 056, 060, 061); and (iv) isolated unproved named inputs (X044 p-adic logarithm, X048 duality cell, X050 real-place duality, X051 Pontryagin infrastructure, X061 analytic-curve criteria, X062 NS cluster, X063 coherent Künneth, X064 topological/harmonic foundations, X065 relative duality/perfectness, X066 syntomic lci criterion, X067 weighted-block conversion, X068 formal vanishing/GAGA analytics, X072 complete-local algebra inputs).
