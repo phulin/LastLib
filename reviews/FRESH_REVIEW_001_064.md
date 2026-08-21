@@ -36,11 +36,18 @@ The book proves its classical local theory in order: lower groups, Herbrand/uppe
 
 The number-field preliminaries, Minkowski/class-group argument, restricted-product topology, additive and multiplicative compactness, Dirichlet unit theorem, ray quotients, adelic norm, and additive self-duality are proved before use. The later reciprocity theorem and cyclic Hasse norm theorem are clearly labeled as future boundary statements and are not used in a proof or conclusion of the book. The linked contents agree with all sixteen chapters and their internal order; no conditional interface, forward proof dependency, notation defect, or malformed display was found.
 
+### Book 005 — `005-local-class-field-theory.md`
+
+**Verdict: PASS.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 4021 (EOF), in chronological/result order, during this audit.
+
+The manuscript proves its local prerequisites in dependency order: norm openness and Hilbert 90 precede cyclic algebras; the local Brauer invariant and complete-resolution/Tate–Nakayama argument precede finite reciprocity; finite reciprocity precedes the independent Herbrand norm-filtration calculation; and that calculation precedes Lubin–Tate cofinality, existence, infinite reciprocity, ramification compatibility, and the character dictionary. In particular, Lemma 6.4 uses the already established finite Artin isomorphism only for the total unit-norm index and proves the filtered comparison separately, so Theorem 8.1 is not circular. The Book 003 inputs (Hasse–Arf integrality, trace ideals, and Herbrand transitivity/quotients) occur only after those results. Important ambient claims were checked in the local checkout: Hilbert 90 is in `Mathlib/RepresentationTheory/Homological/GroupCohomology/Hilbert90.lean`, Tate cohomology infrastructure is in `Mathlib/RepresentationTheory/Homological/TateCohomology/Basic.lean`, Brauer-group definitions are in `Mathlib/Algebra/BrauerGroup/Defs.lean`, and the finite-division-ring theorem is in `Mathlib/RingTheory/LittleWedderburn.lean`. The linked contents match all twelve chapters and sections, and no forward proof dependency, conditional interface, notation, conclusion, or malformed-display defect was found.
+
 ## Pending scope inventory
 
 The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
 
-- PENDING — Book 005, `005-local-class-field-theory.md`
 - PENDING — Book 006, `006-global-class-field-theory.md`
 - PENDING — Book 007, `007-analytic-foundations-for-odlyzko-poitou-bounds.md`
 - PENDING — Book 007a, `007a-arithmetic-spectral-sequences-and-derived-cohomology.md`
