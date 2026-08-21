@@ -1852,14 +1852,20 @@ for nonzero integral $x$. Applied to $x=\pi$, this length is $e_i$. Viewing the 
 
 The valuation of an element depends on a chosen branch, whereas the field norm returns to the base field and therefore combines all branches. The resulting formula is a useful consistency check: residue degrees supply the weights, and ramification is already contained in the normalized values upstairs.
 
+The formula is a statement about the finite normalization of $A$ in $L$, and both of its input families must be read off that normalization rather than chosen arbitrarily.
+
+First, the branches themselves. Assume throughout this section that the normalization is finite: the integral closure $B$ of $A$ in $L$ is finite over $A$, as supplied by separability or completeness under Section 11.2. By Theorem 11.1, the maximal ideals $\mathfrak P_1,\ldots,\mathfrak P_g$ of $B$ above $\mathfrak m_A$ label all branches, and each localization $B_{\mathfrak P_i}$ is a DVR whose valuation extends that of $A$. The branch correspondence used below is precisely this identification: every extension of $v$ to $L$ is equivalent to the normalized valuation of exactly one localization $B_{\mathfrak P_i}$, and distinct primes give inequivalent valuations. A family $(w_1,\ldots,w_g)$ of valuations of $L$ may therefore be called _the_ branches when each $w_i$ is equivalent to the valuation of $B_{\mathfrak P_i}$; exhaustivity and pairwise inequivalence are part of the correspondence, not extra assumptions to be checked separately.
+
+Second, the normalization of each branch. Each equivalence class contains a unique representative with value group exactly $\mathbf Z$: rescaling by the positive index of the value group produces it, and it sends a uniformizer of $B_{\mathfrak P_i}$ to $1$. It is _these representatives_ that enter the formula. This is not a cosmetic convention but a statement defect waiting to happen if omitted: a merely discrete (rank-one) branch valuation differs from its representative by a positive rational factor $\lambda_i$, and for it the coefficient on the right side below would have to be $f_i/\lambda_i$, not $f_i$. Discreteness alone does not determine the scaling, so a consumer who assumes only discreteness cannot state the formula correctly; the proof — which counts lengths against unit contributions of $B_{\mathfrak P_i}$ — uses $w_i(\varpi_i)=1$ for a uniformizer $\varpi_i$ at every step.
+
 For $0\ne x\in L$, the determinant of multiplication by $x$ is the field norm $N_{L/K}(x)$. Valuations of norms aggregate local valuations:
 
 $$
 v\bigl(N_{L/K}(x)\bigr)
-=\sum_{i=1}^g f_i w_i(x)
+=\sum_{i=1}^g f_i w_i(x),
 $$
 
-when each $w_i$ is normalized to value group $\mathbf Z$. To see the coefficient, first take $x$ integral and interpret both sides as lengths. Multiplication by $x$ on the free $A$-lattice $B$ has determinant of valuation equal to the $A$-length of $B/xB$. Chinese remainder localization splits this length into local contributions; one unit of $B_{\mathfrak P_i}$-length contributes $f_i$ units of $A$-length. Fractions follow by division.
+where $(w_i)$ is any family of normalized representatives of the branches of the finite normalization $B$ of $A$ in $L$, one per prime $\mathfrak P_i\mid\mathfrak m_A$, as provided by Theorem 11.1. To see the coefficient, first take $x$ integral and interpret both sides as lengths. Multiplication by $x$ on the free $A$-lattice $B$ has determinant of valuation equal to the $A$-length of $B/xB$. Chinese remainder localization splits this length into local contributions; one unit of $B_{\mathfrak P_i}$-length contributes $f_i$ units of $A$-length, and the normalization $w_i(\varpi_i)=1$ is what makes "one unit" correspond to value $1$. Fractions follow by division.
 
 Notice that $e_i$ does not appear explicitly in this formula because it is already built into $w_i(\pi)=e_i$. Setting $x=\pi$ gives
 

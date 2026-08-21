@@ -461,27 +461,38 @@ A warning is useful. A compositum of two totally ramified extensions need not ha
 
 ### 3.3 Completion separates branches
 
-The local theory also explains what completion does to a finite extension of a noncomplete discretely valued field. Let $K_0$ carry a discrete valuation $v$, let $\widehat K_0$ be its completion, and let $E/K_0$ be finite separable. There may be several extensions $w$ of $v$ to $E$. Completing $E$ at each one produces fields $E_w$, and there is a canonical decomposition
+The local theory also explains what completion does to a finite extension of a noncomplete discretely valued field. Let $K_0$ carry a discrete valuation $v$, let $\widehat K_0$ be its completion, and let $E/K_0$ be finite separable, so that by Section 11.2 of Book 1 the integral model $\mathcal O_E$, the integral closure of $\mathcal O_{K_0}$ in $E$, is finite — hence finite free — over $\mathcal O_{K_0}$. This finiteness of the integral model is a genuine hypothesis: without it there is no lattice argument available, and neither the product statement below nor its degree refinement can be formulated.
+
+There may be several extensions $w$ of $v$ to $E$. Completing $E$ at each one produces fields $E_w$. The completed tensor product decomposes at the level of integral models:
 
 $$
-E\otimes_{K_0}\widehat K_0\cong\prod_{w\mid v}E_w.
+\mathcal O_E\otimes_{\mathcal O_{K_0}}\widehat{\mathcal O}_{K_0}
+\;\cong\;\prod_{w\mid v}\mathcal O_{E_w}.
 $$
+
+The isomorphism is compatible with the natural maps from $\mathcal O_E$: composing with the inclusion $\mathcal O_E\to\mathcal O_E\otimes\widehat{\mathcal O}_{K_0}$ and then projecting to the factor indexed by $w$ is exactly the embedding $\mathcal O_E\to\mathcal O_{E_w}$ attached to that branch. It is also compatible with reduction branchwise: reducing the $w$-factor modulo its maximal ideal reproduces, for each prime $\mathfrak P\mid\mathfrak m_{K_0}$ of the normalization, the residue identification $\mathcal O_E/\mathfrak P\cong$ the residue field of $E_w$ for the corresponding $w$, in the sense of the branch correspondence of Theorem 11.1 in Book 1. Inverting uniformizers turns this integral-model decomposition into the field-level canonical decomposition
+
+$$
+E\otimes_{K_0}\widehat K_0\cong\prod_{w\mid v}E_w,
+$$
+
+because both sides are obtained from their unit balls by localizing at the respective uniformizers, and tensor products commute with localization.
 
 The factor indexed by $w$ has degree
 
 $$
-[E_w:\widehat K_0]=e(w/v)f(w/v).
+[E_w:\widehat K_0]=e(w/v)f(w/v),
 $$
 
-Summing over the branches recovers
+each completed factor being a finite extension of the complete discretely valued field $\widehat K_0$ by Section 12.6 of Book 1. Summing over the branches recovers
 
 $$
 [E:K_0]=\sum_{w\mid v}e(w/v)f(w/v)
 $$
 
-under the usual finite-normalization hypotheses, in particular for finite extensions of number fields localized at a nonzero prime. Completion does not merge branches; it turns them into explicit product factors.
+under exactly the finite-normalization hypotheses just named — $\mathcal O_E$ finite over $\mathcal O_{K_0}$, which separability of $E/K_0$ supplies — applied through Theorem 12.1 of Book 1. Completion does not merge branches; it turns them into explicit product factors.
 
-If $K_0$ is already complete and $E$ is a field, the tensor product has only one factor. This is another manifestation of valuation uniqueness.
+If $K_0$ is already complete and $E$ is a field, the tensor product has only one factor. This is another manifestation of valuation uniqueness: uniqueness of the extension of $v$ leaves a single index $w$, so the integral-model product has one factor and the completed tensor product is the field $E_w=E\otimes_{K_0}\widehat K_0$ itself.
 
 ### 3.4 Scalar extension of a local field
 
