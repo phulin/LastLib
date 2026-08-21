@@ -444,7 +444,6 @@ For the relation (1.9), put
 
 $$
 A_{i,\lambda}=
-
 \operatorname{Ind}_{G_{F_{H_i}}}^{G_{\mathbf Q}}
 (r_{H_i,\lambda}\otimes\theta_{i,\lambda}).
 \tag{2.5}
@@ -777,9 +776,7 @@ At a place $\lambda$, form the virtual difference
 
 $$
 \mathcal D_\lambda=
-
 \bigl([R_{\mathfrak B,\lambda}^+]-[R_{\mathfrak B,\lambda}^-]\bigr)-
-
 \bigl([R_{\mathfrak B',\lambda}^+]-[R_{\mathfrak B',\lambda}^-]\bigr).
 \tag{5.3}
 $$
@@ -1077,7 +1074,6 @@ term is
 
 $$
 D_{i,p}(T)=
-
 \prod_{w\mid p}
 \left(
 1-a_{i,w}\theta_i(\operatorname{Frob}_w)T^{f_w}
@@ -1293,7 +1289,6 @@ Finite twisting and Weil-group induction are algebraic operations on Weil--Delig
 
 $$
 \mathscr D_{v,E}^\pm=
-
 \bigoplus_i\bigoplus_{w\mid v}
 \left(
 \operatorname{Ind}_{W_{(F_{H_i})_w}}^{W_{\mathbf Q_v}}
@@ -1626,7 +1621,6 @@ quotient by $\varepsilon_2$ and on $\mathscr L_2$ by $2\varepsilon_2$:
 
 $$
 \left(F_2\mid D_2/\mathscr L_2,F_2\mid\mathscr L_2\right)=
-
 (\varepsilon_2,2\varepsilon_2).
 \tag{8.13}
 $$

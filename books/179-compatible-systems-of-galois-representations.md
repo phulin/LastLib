@@ -1779,7 +1779,6 @@ Suppose the elliptic curve or coefficient factor is known to be associated with 
 $$
 V_\lambda(B)^{\mathrm{ss}}\simeq
 \rho_{\pi,\lambda}^{\mathrm{ss}} \tag{12.11}
-
 $$
 
 after embedding both coefficient fields into a common local field. If the representations are irreducible, the semisimplification signs may be removed.
@@ -2272,7 +2271,6 @@ Strong compatibility supplies, at every fixed $v\nmid q$,
 $$
 \operatorname{WD}_v(\rho_\nu)^{\mathrm{F\text{-}ss}}
 \simeq\iota_\nu D_v. \tag{18.2}
-
 $$
 
 Thus characteristic-zero conductor, inertial type, and monodromy at $v$ survive the change. In particular, a place above the old prime $\ell$ is now away from the new coefficient prime and is governed by (18.2), provided the system is strong there.
@@ -2290,7 +2288,6 @@ Assume the $\lambda$-adic member is automorphic:
 $$
 \rho_\lambda^{\mathrm{ss}}\simeq
 \rho_{\pi,\lambda}^{\mathrm{ss}} \tag{18.3}
-
 $$
 
 for a regular algebraic cuspidal $\pi$, after placing the coefficient fields in one local field. At almost every $v$, (18.3) identifies the common polynomial $P_v$ with $P_{\pi,v}$. Hence, at the new coefficient place,
@@ -2305,7 +2302,6 @@ for almost every $v\nmid q$. Chebotarev gives
 $$
 \rho_\nu^{\mathrm{ss}}\simeq
 \rho_{\pi,\nu}^{\mathrm{ss}} \tag{18.5}
-
 $$
 
 after a common coefficient extension.

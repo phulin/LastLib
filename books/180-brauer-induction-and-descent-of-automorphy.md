@@ -1236,7 +1236,6 @@ $V_2$ and $V_3$, the formal expression is
 
 $$
 \operatorname{Ind}_{G_{K_2}}^{G_F}V_2-
-
 \operatorname{Ind}_{G_{K_3}}^{G_F}(V_3\otimes\omega).
 \tag{6.8a}
 $$
@@ -1341,7 +1340,6 @@ $f_w$, and its $f_w$-th power acts internally as $\operatorname{Frob}_w$. Hence
 
 $$
 \det(1-\operatorname{Frob}_vT\mid A_{i,\tau})=
-
 \prod_{w\mid v}\prod_{j=1}^d
 (1-\alpha_{i,w,j}T^{f_w}).
 \tag{6.14}
@@ -1446,7 +1444,6 @@ Then
 
 $$
 \langle\mathcal R_{\mathfrak B,\tau},\mathcal R_{\mathfrak B,\tau}\rangle=
-
 \sum_{i,j}n_in_jG_\tau(i,j).
 \tag{7.5}
 $$
@@ -1479,7 +1476,6 @@ $V_{D_x,\tau}$. Put
 
 $$
 \delta_{ij,x}=
-
 ({}^x\theta_j)|_{D_x}\,
 (\theta_i|_{D_x})^{-1}.
 \tag{7.8}
@@ -1745,7 +1741,6 @@ Artin formalism gives the partial standard $L$-function identity
 
 $$
 L_F^S(A_{i,\tau},s)=
-
 L_{F_i}^{S_{F_i}}(\pi_{H_i}\otimes\psi_i,s).
 \tag{8.2}
 $$
@@ -1775,7 +1770,6 @@ Local Mackey theory is exact:
 
 $$
 \mathcal R_{\mathfrak B,\tau}|_{G_{F_v}}=
-
 \sum_i n_i\sum_{w\mid v}
 \left[
 \operatorname{Ind}_{G_{(F_i)_w}}^{G_{F_v}}

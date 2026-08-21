@@ -320,7 +320,6 @@ $\delta=\delta_{ij,x}$ as in (3.15)--(3.16), require
 
 $$
 \dim\operatorname{Hom}_{G_L}\left(r_{D,\tau},r_{D,\tau}\otimes\delta_\tau\right)=
-
 \begin{cases}
 1,&\pi_D\otimes(\psi_\delta\circ\det)\simeq\pi_D,\\
 0,&\text{otherwise}
