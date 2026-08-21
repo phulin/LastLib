@@ -1096,11 +1096,11 @@ character, Whittaker model, and Hecke system, not by a uniform family label.
 
 At a finite place the generic possibilities and their elementary invariants are as follows.
 
-| local component               | genericity condition  | conductor exponent                     | standard factor |
-| ----------------------------- | --------------------- | -------------------------------------- | --------------- |
-| $I(\chi_1,\chi_2)$            | $\chi_1\chi_2^{-1}\ne | \cdot                                  | ^{\pm1}$        |
-| $\operatorname{St}\otimes\mu$ | always generic        | $1$ if $a(\mu)=0$, otherwise $2a(\mu)$ | $L(s+1/2,\mu)$  |
-| supercuspidal $\sigma$        | intrinsic             | $a(\sigma)\ge2$                        | $1$             |
+| local component               | genericity condition                           | conductor exponent                     | standard factor          |
+| ----------------------------- | ---------------------------------------------- | -------------------------------------- | ------------------------ |
+| $I(\chi_1,\chi_2)$            | $\chi_1\chi_2^{-1}\ne\lvert\cdot\rvert^{\pm1}$ | $a(\chi_1)+a(\chi_2)$                  | $L(s,\chi_1)L(s,\chi_2)$ |
+| $\operatorname{St}\otimes\mu$ | always generic                                 | $1$ if $a(\mu)=0$, otherwise $2a(\mu)$ | $L(s+1/2,\mu)$           |
+| supercuspidal $\sigma$        | intrinsic                                      | $a(\sigma)\ge2$                        | $1$                      |
 
 The table uses the unitary representation normalization. In the principal-series row, a ramified
 character contributes the factor $1$ to its degree-one local $L$-function, so the displayed
