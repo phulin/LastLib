@@ -2029,23 +2029,23 @@ Thus the Hecke trace, Frobenius trace, and ideal-theoretic norm-fiber sum are th
 
 For quick use, the construction may be summarized as follows.
 
-| Character datum over $M$                    | Automorphic datum over $F$                       | Galois datum over $F$                          |
-| ------------------------------------------- | ------------------------------------------------ | ---------------------------------------------- |
-| Hecke character $\psi$                      | $\pi=\operatorname{AI}_{M/F}(\psi)$              | $\rho=\operatorname{Ind}_{G_M}^{G_F}\chi_\psi$ |
-| conjugate $\psi^\sigma$                     | same $\pi$                                       | conjugate induction, isomorphic to $\rho$      |
-| $\psi\ne\psi^\sigma$                        | $\pi$ cuspidal                                   | $\rho$ irreducible                             |
-| $\psi=\mu\circ N$                           | $\mu\boxplus\mu\eta$                             | $\chi_\mu\oplus\chi_\mu\eta$                   |
-| diagonal restriction $\psi                  | _{C_F}$                                          | central character $\eta\psi                    |
-| norm twist $\psi(\mu\circ N)$               | $\pi\otimes(\mu\circ\det)$                       | $\rho\otimes\chi_\mu$                          |
-| inverse $\psi^{-1}$                         | contragredient $\pi^\vee$                        | dual $\rho^\vee$                               |
-| $v=ww^\sigma$ split                         | $I(\psi_w,\psi_{w^\sigma})$                      | $\chi_w\oplus\chi_{w^\sigma}$                  |
-| $M_w/F_v$ field, local ratio regular        | supercuspidal                                    | irreducible local induction                    |
-| $\psi_w=\mu_v\circ N$                       | $I(\mu_v,\mu_v\eta_v)$                           | $\chi_{\mu_v}\oplus\chi_{\mu_v}\eta_v$         |
-| conductor $\mathfrak f(\psi)$               | $\mathfrak d_{M/F}N\mathfrak f(\psi)$            | Artin conductor with the same local formula    |
-| infinity type $(p_v,q_v)$                   | weight $                                         | p_v-q_v                                        |
-| good split prime                            | $a_v=\psi(\mathfrak P)+\psi(\mathfrak P^\sigma)$ | same Frobenius trace                           |
-| good inert prime                            | $a_v=0$                                          | Frobenius exchanges the two lines              |
-| reduction with $\bar\psi\ne\bar\psi^\sigma$ | residual eigensystem is non-Eisenstein           | residual induction is absolutely irreducible   |
+| Character datum over $M$                    | Automorphic datum over $F$                       | Galois datum over $F$                           |
+| ------------------------------------------- | ------------------------------------------------ | ----------------------------------------------- |
+| Hecke character $\psi$                      | $\pi=\operatorname{AI}_{M/F}(\psi)$              | $\rho=\operatorname{Ind}_{G_M}^{G_F}\chi_\psi$  |
+| conjugate $\psi^\sigma$                     | same $\pi$                                       | conjugate induction, isomorphic to $\rho$       |
+| $\psi\ne\psi^\sigma$                        | $\pi$ cuspidal                                   | $\rho$ irreducible                              |
+| $\psi=\mu\circ N$                           | $\mu\boxplus\mu\eta$                             | $\chi_\mu\oplus\chi_\mu\eta$                    |
+| diagonal restriction $\psi\rvert_{C_F}$     | central character $\eta\psi\rvert_{C_F}$         | determinant $\eta(\chi\circ\operatorname{Ver})$ |
+| norm twist $\psi(\mu\circ N)$               | $\pi\otimes(\mu\circ\det)$                       | $\rho\otimes\chi_\mu$                           |
+| inverse $\psi^{-1}$                         | contragredient $\pi^\vee$                        | dual $\rho^\vee$                                |
+| $v=ww^\sigma$ split                         | $I(\psi_w,\psi_{w^\sigma})$                      | $\chi_w\oplus\chi_{w^\sigma}$                   |
+| $M_w/F_v$ field, local ratio regular        | supercuspidal                                    | irreducible local induction                     |
+| $\psi_w=\mu_v\circ N$                       | $I(\mu_v,\mu_v\eta_v)$                           | $\chi_{\mu_v}\oplus\chi_{\mu_v}\eta_v$          |
+| conductor $\mathfrak f(\psi)$               | $\mathfrak d_{M/F}N\mathfrak f(\psi)$            | Artin conductor with the same local formula     |
+| infinity type $(p_v,q_v)$                   | weight $\lvert p_v-q_v\rvert+1$                  | labeled exponent pair $\{p_v,q_v\}$             |
+| good split prime                            | $a_v=\psi(\mathfrak P)+\psi(\mathfrak P^\sigma)$ | same Frobenius trace                            |
+| good inert prime                            | $a_v=0$                                          | Frobenius exchanges the two lines               |
+| reduction with $\bar\psi\ne\bar\psi^\sigma$ | residual eigensystem is non-Eisenstein           | residual induction is absolutely irreducible    |
 
 The local conductor entry at a nonsplit finite place is
 
