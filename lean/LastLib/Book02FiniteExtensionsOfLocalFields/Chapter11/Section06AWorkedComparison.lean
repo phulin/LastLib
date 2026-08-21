@@ -18,6 +18,7 @@ theorem chapter11_unramified_comparison_norm_valuation
     [Algebra.IsSeparable K L]
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
     (f : ℕ) (hunram : chapter11UnramifiedValuedExtension vK vL)
+    (hnorm : chapter11NormValuationFormula K L vK vL f)
     (hdegree : Module.finrank K L = f)
     (hfres : f =
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
@@ -52,6 +53,7 @@ theorem chapter11_unramified_comparison_uniformizer_not_a_norm
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
     (f : ℕ) (hf : 1 < f)
     (hunram : chapter11UnramifiedValuedExtension vK vL)
+    (hnorm : chapter11NormValuationFormula K L vK vL f)
     (hdegree : Module.finrank K L = f)
     (hfres : f =
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree

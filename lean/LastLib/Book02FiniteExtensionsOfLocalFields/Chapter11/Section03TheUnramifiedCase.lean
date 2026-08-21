@@ -1,4 +1,5 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.Section02LinearizingTheNorm
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.Section01WhyDiscretenessIsDecisive
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11
 
@@ -15,7 +16,8 @@ def chapter11IsUniformizer {K : Type*} [Field K]
     (v : AddValuation K (WithTop ℤ)) (π : K) : Prop :=
   π ≠ 0 ∧ v π = (1 : WithTop ℤ) ∧ ∃ p : chapter11ValuationRing v,
     (p : K) = π ∧
-      IsLocalRing.maximalIdeal (chapter11ValuationRing v) = Ideal.span {p}
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.Chapter04Uniformizer
+        (chapter11ValuationRing v) p
 
 /- Residue separability for the canonical residue-field algebra induced by a
    chosen valuation extension.  This is kept explicit because the valuation
@@ -135,12 +137,14 @@ theorem proposition_11_1_unramified_all_unit_norm_image
 /- For finite residue fields, the norm is the exponent map displayed in the
    chapter and is surjective on nonzero residue classes. -/
 theorem chapter11_finite_residue_norm_surjective
-    (k l : Type*) [Field k] [Field l] [Algebra k l] [Finite l] :
+    (k l : Type*) [Field k] [Field l] [Algebra k l] [Finite l]
+    [FiniteDimensional k l] :
     Function.Surjective (Algebra.norm k (S := l)) := by
   sorry
 
 theorem chapter11_finite_residue_norm_is_exponent_map
-    (k l : Type*) [Field k] [Field l] [Algebra k l] [Finite l] (x : l) :
+    (k l : Type*) [Field k] [Field l] [Algebra k l] [Finite l]
+    [FiniteDimensional k l] (x : l) :
     algebraMap k l (Algebra.norm k x) =
       x ^ ((Nat.card l - 1) / (Nat.card k - 1)) := by
   sorry
@@ -154,6 +158,7 @@ theorem chapter11_unramified_full_norm_image
     (πK : K) (f : ℕ)
     (hunram : chapter11UnramifiedValuedExtension vK vL)
     (hπ : chapter11IsUniformizer vK πK)
+    (hnorm : chapter11NormValuationFormula K L vK vL f)
     (hdegree : Module.finrank K L = f)
     (hfres : f =
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
@@ -176,6 +181,7 @@ theorem chapter11_unramified_norm_subgroup_index
     (πK : K) (f : ℕ)
     (hunram : chapter11UnramifiedValuedExtension vK vL)
     (hπ : chapter11IsUniformizer vK πK)
+    (hnorm : chapter11NormValuationFormula K L vK vL f)
     (hdegree : Module.finrank K L = f)
     (hfres : f =
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree

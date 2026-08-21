@@ -40,6 +40,7 @@ theorem chapter11_unramified_norm_equation_valuation_formula
     [Algebra.IsSeparable K L]
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
     (f : ℕ) (hunram : chapter11UnramifiedValuedExtension vK vL)
+    (hnorm : chapter11NormValuationFormula K L vK vL f)
     (hdegree : Module.finrank K L = f)
     (hfres : f =
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
@@ -53,6 +54,7 @@ theorem chapter11_unramified_norm_equation_valuation_necessary
     [Algebra.IsSeparable K L]
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
     (f : ℕ) (hunram : chapter11UnramifiedValuedExtension vK vL)
+    (hnorm : chapter11NormValuationFormula K L vK vL f)
     (hdegree : Module.finrank K L = f)
     (hfres : f =
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
@@ -148,6 +150,7 @@ theorem chapter11_unramified_norm_equation_iff
     (hfres : f =
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
         vK vL hunram.1)
+    (hnorm : chapter11NormValuationFormula K L vK vL f)
     [Finite (chapter11ResidueField vK)]
     [Finite (chapter11ResidueField vL)]
     [Algebra (chapter11ResidueField vK) (chapter11ResidueField vL)]

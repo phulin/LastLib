@@ -51,9 +51,10 @@ theorem chapter11_norm_one_add_linearizes_to_trace
 theorem chapter11_norm_remainder_has_depth
     (K L : Type*) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
-    (e : ℕ) (he : 0 < e)
+    (e f : ℕ) (he : 0 < e)
     (hext : chapter11ValuationExtension vK vL)
     (hscale : chapter11ValuationScaling vK vL e)
+    (hnorm : chapter11NormValuationFormula K L vK vL f)
     (hcompleteK : chapter11ValuationComplete vK)
     (hcompleteL : chapter11ValuationComplete vL)
     (n : ℕ) (hn : 1 ≤ n) (x : L)

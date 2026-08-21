@@ -115,9 +115,8 @@ def chapter11ContainsEThRootsOfUnity
 
 /- The constant coefficient of the Kummer polynomial gives the norm sign. -/
 theorem chapter11_kummer_uniformizer_norm
-    (K L E : Type*) [Field K] [Field L] [Field E] [Algebra K L] [Algebra K E]
-    [IsAlgClosed E] [FiniteDimensional K L] (π : K) (root : L) (e : ℕ)
-    (hroots : chapter11ContainsEThRootsOfUnity K E e)
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] (π : K) (root : L) (e : ℕ)
     (hminpoly : minpoly K root = chapter11KummerPolynomial π e)
     (hdegree : Module.finrank K L = e) :
     Algebra.norm K root = (-1 : K) ^ (e + 1) * π := by

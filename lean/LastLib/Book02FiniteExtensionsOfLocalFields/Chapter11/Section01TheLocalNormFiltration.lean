@@ -371,9 +371,10 @@ theorem chapter11_norm_depth_zero_residue_formula
 theorem chapter11_norm_principal_unit_depth_bound
     (K L : Type*) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
-    (e : ℕ) (he : 0 < e)
+    (e f : ℕ) (he : 0 < e)
     (hext : chapter11ValuationExtension vK vL)
     (hscale : chapter11ValuationScaling vK vL e)
+    (hnorm : chapter11NormValuationFormula K L vK vL f)
     (hcompleteK : chapter11ValuationComplete vK)
     (hcompleteL : chapter11ValuationComplete vL) (n : ℕ) (hn : 1 ≤ n) :
     chapter11NormImage K L vL n ⊆
@@ -387,9 +388,10 @@ theorem chapter11_norm_principal_unit_depth_bound_purely_inseparable
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsPurelyInseparable K L]
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
-    (e : ℕ) (he : 0 < e)
+    (e f : ℕ) (he : 0 < e)
     (hext : chapter11ValuationExtension vK vL)
     (hscale : chapter11ValuationScaling vK vL e)
+    (hnorm : chapter11NormValuationFormula K L vK vL f)
     (hcompleteK : chapter11ValuationComplete vK)
     (hcompleteL : chapter11ValuationComplete vL) (n : ℕ) (hn : 1 ≤ n) :
     chapter11NormImage K L vL n ⊆
