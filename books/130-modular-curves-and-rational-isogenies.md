@@ -2434,6 +2434,8 @@ At $v\mid p$, a proper finite-flat level model replaces point-set torsion. Under
 
 ### 12.2 A hypothesis ledger
 
+Four earlier books supply the non-elementary geometric foundations used here. Book 110 supplies generalized elliptic curves, Néron polygons, Drinfeld point and cyclic level structures, stable contractions, quotient isogenies, and the Tate-curve boundary calculations. Book 111 supplies the compactified modular stacks, their projective coarse curves, auxiliary rigidification, and effective descent of the natural maps. Book 112 supplies the prime-level integral model, its Frobenius--Verschiebung components, and the rigidified supersingular deformation ring $R[[x,y]]/(xy-p)$. Book 113 supplies the Hodge line, the discriminant section, and the integral $q$-expansion package used in the alternative genus and cusp-width checks. The elementary subgroup/isogeny, cusp-orbit, explicit-coordinate, specialization, and genus calculations developed in this book are built on those four sources; no later Jacobian or rational-point theorem is used.
+
 The logical dependencies of the dictionary are compact enough to audit.
 
 | Statement                                                         | Exact hypothesis or qualification                                                                                      |

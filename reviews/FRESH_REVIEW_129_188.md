@@ -13,7 +13,7 @@ Status labels:
 ## Book-by-book ledger
 
 - **129 — Galois Lattices and Finite-Flat Closures in Abelian Tate Modules — PASS.** Full-read-to-EOF attestation: read lines 1--EOF on 2026-08-21. Evidence: Propositions 2.1--4.1 establish saturation, levelwise closure, and Raynaud-range transition exactness before Theorem 5.1; Sections 5.2--9.2 prove every construction and transfer used in the theorem. Books 168, 177, 179, and 186--187 occur only in the later-handoff chapter and perform no proof work. The dependency ledger at Section 11.1 routes all substantive inputs to Books 26--28, 34--35, 42, 45, 52--54, and 125--126. No hidden canonicality, arbitrary-twist, dyadic, or ramified-base claim is made.
-- **130 — Modular Curves $X_0(N)$ and $X_1(N)$ — PENDING FULL READ.**
+- **130 — Modular Curves $X_0(N)$ and $X_1(N)$ — PASS.** Full-read-to-EOF attestation: read lines 1--EOF on 2026-08-21. Evidence: Theorems 3.1 and 6.1--6.4 construct the stack/coarse objects and prove the subgroup--isogeny--reducibility dictionary with the descent-gerbe qualification; Chapters 4--5 prove maps, cusp widths, cusp fields, and compactified boundary behavior; Chapter 8 states the exact rigidified scope of the prime-level $xy=p$ model; Chapters 9--10 prove specialization and genus claims without promoting local tests or genus to a rational-point classification. The added source paragraph in Section 12.2 now routes the non-elementary foundations exactly to Books 110--113. All later Jacobian material is explicitly a handoff, not proof input.
 - **131 — Jacobians of Modular Curves — PENDING FULL READ.**
 - **132 — Eisenstein Series, Congruences, and the Eisenstein Ideal — PENDING FULL READ.**
 - **133 — Cuspidal Divisors and Specialization on Modular Jacobians — PENDING FULL READ.**
