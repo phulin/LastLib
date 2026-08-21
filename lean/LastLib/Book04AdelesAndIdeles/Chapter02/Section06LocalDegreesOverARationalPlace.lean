@@ -170,6 +170,45 @@ noncomputable def Chapter02RationalPAdicOrder
   (-(WithZero.unzero
       ((Rat.padicValuation p.1).ne_zero_iff.mpr a.ne_zero)).toAdd)
 
+private theorem chapter02_rational_height_one_valuation_is_padic
+    (p : Chapter02RationalPrime)
+    (V : IsDedekindDomain.HeightOneSpectrum ℤ)
+    (hV : V.asIdeal = Ideal.span {(p.1 : ℤ)})
+    [Fact p.1.Prime] :
+    ∀ b : ℚ, V.valuation ℚ b = Rat.padicValuation p.1 b := by
+  let : Fact p.1.Prime := ⟨p.2⟩
+  have hVint {z : ℤ} (hz : z ≠ 0) :
+      V.intValuation z = WithZero.exp (-(padicValInt p.1 z : ℤ)) := by
+    rw [V.intValuation_if_neg hz, hV]
+    have hcount : (Associates.mk (Ideal.span {(p.1 : ℤ)} : Ideal ℤ)).count
+        (Associates.mk (Ideal.span {z} : Ideal ℤ)).factors =
+        padicValNat p.1 z.natAbs := by
+      let n : ℕ := padicValNat p.1 z.natAbs
+      have hle : (p.1 : ℤ) ^ n ∣ z := by
+        rw [← Nat.cast_pow, Int.natCast_dvd]
+        exact (Nat.pow_dvd_iff_le_padicValNat p.2.ne_one
+          (Int.natAbs_ne_zero.mpr hz)).2 (le_rfl)
+      have hlt : ¬(p.1 : ℤ) ^ (n + 1) ∣ z := by
+        intro hdiv
+        rw [← Nat.cast_pow, Int.natCast_dvd] at hdiv
+        have hle' := (Nat.pow_dvd_iff_le_padicValNat p.2.ne_one
+          (Int.natAbs_ne_zero.mpr hz)).1 hdiv
+        simp at hle'
+        exact (Nat.not_succ_le_self n) hle'
+      have hpz : Prime (p.1 : ℤ) := Nat.prime_iff_prime_int.mp p.2
+      exact Ideal.count_associates_eq' (R := ℤ) (x := (p.1 : ℤ)) (a := z)
+        hpz hle hlt
+    rw [hcount]
+    simp [padicValInt]
+  intro b
+  obtain ⟨r, s, h⟩ := IsLocalization.exists_mk'_eq (nonZeroDivisors ℤ) b
+  rw [← h, IsDedekindDomain.HeightOneSpectrum.valuation_of_mk']
+  by_cases hr : r = 0
+  · simp [hr]
+  · have hs : (s : ℤ) ≠ 0 := nonZeroDivisors.ne_zero s.property
+    rw [hVint hr, hVint hs]
+    simp [Rat.padicValuation, padicValRat, padicValInt, hr]
+
 /-- On scalar elements, the finite order is `e_𝔭 v_p`. -/
 theorem chapter02_scalar_order_is_ramification_times_rational_order
     {K : Type*} [Field K] [NumberField K]
@@ -177,7 +216,68 @@ theorem chapter02_scalar_order_is_ramification_times_rational_order
     LastLib.Book04AdelesAndIdeles.Chapter01.chapter01UnitOrder q.1
         (Units.map (algebraMap ℚ K) a) =
       (Chapter02RamificationIndex q : ℤ) * Chapter02RationalPAdicOrder p a := by
-  sorry
+  classical
+  let : Fact p.1.Prime := ⟨p.2⟩
+  let P : IsDedekindDomain.HeightOneSpectrum (𝓞 K) := q.1
+  have hp0 : P.asIdeal.under ℤ ≠ ⊥ := by
+    exact Ideal.under_ne_bot ℤ P.ne_bot
+  have hp0' : Prime (P.asIdeal.under ℤ) := by
+    exact Ideal.prime_of_isPrime hp0 (by infer_instance)
+  let V : IsDedekindDomain.HeightOneSpectrum ℤ := .ofPrime hp0'
+  have hV : V.asIdeal = P.asIdeal.under ℤ := by
+    simp [V]
+  have hp0span : Ideal.span {(p.1 : ℤ)} = P.asIdeal.under ℤ := by
+    exact q.2.over
+  have hVval : ∀ b : ℚ, V.valuation ℚ b = Rat.padicValuation p.1 b := by
+    apply chapter02_rational_height_one_valuation_is_padic p V
+    rw [hV, ← hp0span]
+  let _ : P.asIdeal.LiesOver V.asIdeal := by
+    rw [hV, ← hp0span]
+    exact q.2
+  have hram : V.asIdeal.ramificationIdx' P.asIdeal =
+      P.asIdeal.ramificationIdx ℤ := by
+    apply Ideal.ramificationIdx'_eq_ramificationIdx
+    exact V.ne_bot
+  have hval : ∀ b : ℚ, Rat.padicValuation p.1 b ^ P.asIdeal.ramificationIdx ℤ =
+      P.valuation K (algebraMap ℚ K b) := by
+    intro b
+    rw [← hram, ← hVval b]
+    exact IsDedekindDomain.HeightOneSpectrum.valuation_liesOver
+      (L := K) (v := V) (w := P) b
+  have hx : (algebraMap ℚ K (a : ℚ)) ≠ 0 := by
+    exact (map_ne_zero (algebraMap ℚ K)).2 a.ne_zero
+  have hqval : P.valuation K (algebraMap ℚ K (a : ℚ)) =
+      WithZero.exp (-(LastLib.Book04AdelesAndIdeles.Chapter01.chapter01UnitOrder
+        P (Units.map (algebraMap ℚ K) a))) := by
+    simpa [LastLib.Book04AdelesAndIdeles.Chapter01.chapter01UnitOrder,
+      LastLib.Book04AdelesAndIdeles.Chapter01.chapter01Order,
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter01.dedekindExponent] using
+      (LastLib.Book01ValuationsDVRsAndCompletions.Chapter01.dedekindExponent_valuation
+        P hx)
+  have hq0 : P.valuation K (algebraMap ℚ K (a : ℚ)) ≠ 0 := by
+    rw [hqval]
+    exact WithZero.exp_ne_zero
+  have hp0v : Rat.padicValuation p.1 (a : ℚ) ≠ 0 :=
+    (Rat.padicValuation p.1).ne_zero_iff.mpr a.ne_zero
+  have htoAdd :
+      (WithZero.unzero hq0).toAdd =
+        (WithZero.unzero hp0v).toAdd * (P.asIdeal.ramificationIdx ℤ : ℤ) := by
+    rw [WithZero.toAdd_unzero_eq_log hq0,
+      WithZero.toAdd_unzero_eq_log hp0v, ← hval (a : ℚ)]
+    simp [WithZero.log_pow]
+    ring
+  have horder :
+      LastLib.Book04AdelesAndIdeles.Chapter01.chapter01UnitOrder P
+        (Units.map (algebraMap ℚ K) a) =
+      -(WithZero.unzero hq0).toAdd := by
+    rw [WithZero.toAdd_unzero_eq_log hq0, hqval]
+    simp
+  rw [horder, Chapter02RationalPAdicOrder]
+  change -(WithZero.unzero hq0).toAdd =
+    (P.asIdeal.ramificationIdx ℤ : ℤ) *
+      -(WithZero.unzero hp0v).toAdd
+  rw [htoAdd]
+  ring
 
 /-- The finite-place scalar norm is the rational `p`-adic norm raised to the
 local degree. -/
@@ -381,7 +481,48 @@ theorem chapter02_product_over_infinite_places_above_a_rational_place
     (∏ w : Chapter02InfinitePlaceAbove K v,
       w.1 (algebraMap ℚ K a) ^ w.1.mult) =
       v a ^ Chapter02GlobalDegree K := by
-  sorry
+  classical
+  have hval : ∀ w : Chapter02InfinitePlaceAbove K v,
+      w.1 (algebraMap ℚ K a) = v a := by
+    intro w
+    let _ : w.1.LiesOver v := w.2
+    have hv0 := congrArg (fun f : AbsoluteValue ℚ ℝ => f a)
+      (AbsoluteValue.LiesOver.comp_eq w.1.1 v.1)
+    change w.1 (algebraMap ℚ K a) = v a at hv0
+    exact hv0
+  have hmult (w : Chapter02InfinitePlaceAbove K v) :
+      w.1.mult = v.inertiaDeg w.1 := by
+    let _ : w.1.LiesOver v := w.2
+    rw [NumberField.InfinitePlace.inertiaDeg_eq_finrank v w.1]
+    rw [← chapter02_infinite_local_degree_formula v w.1]
+    simp
+  have hsum' :
+      (∑ w : Chapter02InfinitePlaceAbove K v, v.inertiaDeg w.1) =
+        ∑ w ∈ v.placesOver K, v.inertiaDeg w := by
+    symm
+    apply Finset.sum_subtype
+    intro x
+    exact Set.mem_toFinset
+  have hexp :
+      (∑ w : Chapter02InfinitePlaceAbove K v, w.1.mult) =
+        Chapter02GlobalDegree K := by
+    calc
+      (∑ w : Chapter02InfinitePlaceAbove K v, w.1.mult) =
+          ∑ w : Chapter02InfinitePlaceAbove K v, v.inertiaDeg w.1 := by
+            apply Fintype.sum_congr
+            intro w
+            exact hmult w
+      _ = ∑ w ∈ v.placesOver K, v.inertiaDeg w := hsum'
+      _ = Module.finrank ℚ K :=
+        NumberField.InfinitePlace.sum_inertiaDeg_eq_finrank ℚ K v
+      _ = Chapter02GlobalDegree K := by
+        simp [Chapter02GlobalDegree]
+  simp_rw [hval]
+  rw [show (∏ w : Chapter02InfinitePlaceAbove K v, v a ^ w.1.mult) =
+      v a ^ (∑ w : Chapter02InfinitePlaceAbove K v, w.1.mult) by
+        simpa using (Finset.prod_pow_eq_pow_sum (s := Finset.univ)
+          (f := fun w : Chapter02InfinitePlaceAbove K v => w.1.mult) (a := v a))]
+  rw [hexp]
 
 /-- Every rational scalar sees total local degree `n=[K:ℚ]`. -/
 theorem chapter02_rational_scalar_product_over_all_places
