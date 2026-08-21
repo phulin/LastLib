@@ -2,12 +2,14 @@
 
 ## Contents
 
-[1. Degeneration as an action](#1-degeneration-as-an-action)
+1. [Degeneration as an action](#1-degeneration-as-an-action)
 
 - [1.1 The missing information in the special fiber](#11-the-missing-information-in-the-special-fiber)
 - [1.2 Conventions and normalizations](#12-conventions-and-normalizations)
 - [1.3 Strictly semistable curves](#13-strictly-semistable-curves)
-  [2. The nearby-cycle construction](#2-the-nearby-cycle-construction)
+
+2. [The nearby-cycle construction](#2-the-nearby-cycle-construction)
+
 - [2.1 The oriented fiber site](#21-the-oriented-fiber-site)
 - [2.2 Nearby and vanishing cycles](#22-nearby-and-vanishing-cycles)
 - [2.3 Stalks, proper comparison, and base change](#23-stalks-proper-comparison-and-base-change)
@@ -15,52 +17,72 @@
 - [2.5 Convergence of the nearby-cycle spectral sequence](#25-convergence-of-the-nearby-cycle-spectral-sequence)
 - [2.6 Inertia invariants and iterated spectral sequences](#26-inertia-invariants-and-iterated-spectral-sequences)
 - [2.7 A specialization checklist](#27-a-specialization-checklist)
-  [3. The semistable local calculation](#3-the-semistable-local-calculation)
+
+3. [The semistable local calculation](#3-the-semistable-local-calculation)
+
 - [3.1 The punctured normal-crossings chart](#31-the-punctured-normal-crossings-chart)
 - [3.2 The exterior-algebra theorem](#32-the-exterior-algebra-theorem)
 - [3.3 Curves: smooth points and nodes](#33-curves-smooth-points-and-nodes)
 - [3.4 What fails outside strict semistability](#34-what-fails-outside-strict-semistability)
 - [3.5 Tame ramified coefficients at a strict node](#35-tame-ramified-coefficients-at-a-strict-node)
 - [3.6 Finite wild image before the tame complex](#36-finite-wild-image-before-the-tame-complex)
-  [4. Inertia: tame, wild, and finite parts](#4-inertia-tame-wild-and-finite-parts)
+
+4. [Inertia: tame, wild, and finite parts](#4-inertia-tame-wild-and-finite-parts)
+
 - [4.1 The tame character](#41-the-tame-character)
 - [4.2 Unipotence in a strict semistable model](#42-unipotence-in-a-strict-semistable-model)
 - [4.3 Descent from a semistable extension](#43-descent-from-a-semistable-extension)
 - [4.4 Invariant cycles](#44-invariant-cycles)
-  [5. The monodromy operator and its filtration](#5-the-monodromy-operator-and-its-filtration)
+
+5. [The monodromy operator and its filtration](#5-the-monodromy-operator-and-its-filtration)
+
 - [5.1 Logarithm of tame inertia](#51-logarithm-of-tame-inertia)
 - [5.2 The canonical filtration of a nilpotent operator](#52-the-canonical-filtration-of-a-nilpotent-operator)
 - [5.3 Centers, twists, and Frobenius](#53-centers-twists-and-frobenius)
 - [5.4 Integral qualifications](#54-integral-qualifications)
-  [6. The weight spectral sequence](#6-the-weight-spectral-sequence)
+
+6. [The weight spectral sequence](#6-the-weight-spectral-sequence)
+
 - [6.1 Strata and the incidence operators](#61-strata-and-the-incidence-operators)
 - [6.2 The semistable curve formula](#62-the-semistable-curve-formula)
 - [6.3 Curves on the first page](#63-curves-on-the-first-page)
 - [6.4 Degeneration and the weight qualification](#64-degeneration-and-the-weight-qualification)
-  [7. Semistable curves](#7-semistable-curves)
+
+7. [Semistable curves](#7-semistable-curves)
+
 - [7.1 The three graded pieces of first cohomology](#71-the-three-graded-pieces-of-first-cohomology)
 - [7.2 The specialization exact sequence](#72-the-specialization-exact-sequence)
 - [7.3 The graph monodromy pairing](#73-the-graph-monodromy-pairing)
 - [7.4 Model calculations](#74-model-calculations)
-  [8. Picard--Lefschetz theory for curves](#8-picard--lefschetz-theory-for-curves)
+
+8. [Picard--Lefschetz theory for curves](#8-picard--lefschetz-theory-for-curves)
+
 - [8.1 Thimbles and vanishing classes](#81-thimbles-and-vanishing-classes)
 - [8.2 The transvection formula](#82-the-transvection-formula)
 - [8.3 Several nodes and relations](#83-several-nodes-and-relations)
 - [8.4 Separating and nonseparating nodes](#84-separating-and-nonseparating-nodes)
-  [9. Component pairings and geometric correspondences](#9-component-pairings-and-geometric-correspondences)
+
+9. [Component pairings and geometric correspondences](#9-component-pairings-and-geometric-correspondences)
+
 - [9.1 Restriction and Gysin as adjoints](#91-restriction-and-gysin-as-adjoints)
 - [9.2 The curve component group](#92-the-curve-component-group)
 - [9.3 Pull--push actions](#93-pull--push-actions)
-  [10. Conductors and local type](#10-conductors-and-local-type)
+
+10. [Conductors and local type](#10-conductors-and-local-type)
+
 - [10.1 The conductor formula](#101-the-conductor-formula)
 - [10.2 Curves](#102-curves)
 - [10.3 Tame type, wild type, and what the conductor forgets](#103-tame-type-wild-type-and-what-the-conductor-forgets)
-  [11. Base change, descent, and diagnostic examples](#11-base-change-descent-and-diagnostic-examples)
+
+11. [Base change, descent, and diagnostic examples](#11-base-change-descent-and-diagnostic-examples)
+
 - [11.1 Ramified base change](#111-ramified-base-change)
 - [11.2 Residue extension and nonsplit strata](#112-residue-extension-and-nonsplit-strata)
 - [11.3 Good reduction and false converses](#113-good-reduction-and-false-converses)
 - [11.4 A calculation protocol](#114-a-calculation-protocol)
-  [12. The local memory of a degeneration](#12-the-local-memory-of-a-degeneration)
+
+12. [The local memory of a degeneration](#12-the-local-memory-of-a-degeneration)
+
 - [12.1 The curve package](#121-the-curve-package)
 - [12.2 Conclusion](#122-conclusion)
 
