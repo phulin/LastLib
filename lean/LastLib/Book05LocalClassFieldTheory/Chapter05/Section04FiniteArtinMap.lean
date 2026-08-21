@@ -63,8 +63,8 @@ structure Chapter05FundamentalClassTowerCompatibility
     coefficientMap x = (chapter05AlgebraMapUnits L M).toAdditive x
   inflation_fundamental :
     (groupCohomology.map (AlgEquiv.restrictNormalHom L) coefficientMap 2)
-        D_L.fundamentalClass.value =
-      (Module.finrank L M) • D_M.fundamentalClass.value
+        D_L.fundamentalClass =
+      (Module.finrank L M) • D_M.fundamentalClass
 
 noncomputable def chapter05FiniteArtinQuotientEquiv
     {K L : Type} [Field K] [Field L] [Algebra K L]

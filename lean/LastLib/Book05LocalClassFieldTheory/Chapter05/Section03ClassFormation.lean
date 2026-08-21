@@ -93,20 +93,20 @@ structure Chapter05LocalClassFormationData
     (K L : Type) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
     [Fintype (Gal(L / K))] where
-  fundamentalClass : Chapter05FundamentalTwoClass
-    (Gal(L / K)) (chapter05CoefficientRep K L)
-  localInvariant : Chapter05LocalBrauerInvariantSystem K L fundamentalClass.value
+  fundamentalClass : chapter05GroupCohomology (Gal(L / K))
+    (chapter05CoefficientRep K L) 2
+  localInvariant : Chapter05LocalBrauerInvariantSystem K L fundamentalClass
   capProduct : Chapter05CapProduct (Gal(L / K))
-    (chapter05CoefficientRep K L) fundamentalClass.value
+    (chapter05CoefficientRep K L) fundamentalClass
   twoExtensionRepresentative :
     Chapter05TwoExtensionRepresentative (Gal(L / K))
-      (chapter05CoefficientRep K L) fundamentalClass.value capProduct
+      (chapter05CoefficientRep K L) fundamentalClass capProduct
   topRestriction : Chapter05TopRestrictionTateIso (Gal(L / K))
     (chapter05CoefficientRep K L)
   topRestrictionTrivial :
     Chapter05TopRestrictionTrivialTateIso (Gal(L / K))
   nakayama : Chapter05TateNakayamaHypotheses (Gal(L / K))
-    (chapter05CoefficientRep K L) fundamentalClass.value
+    (chapter05CoefficientRep K L) fundamentalClass
   degreeZeroNorm :
     chapter05TateCohomology (Gal(L / K))
       (chapter05CoefficientRep K L) 0 ≃+
@@ -210,7 +210,9 @@ theorem chapter05_restriction_invariant_fraction_mod_integer
     [Fintype (Gal(L / K))] (H : Subgroup (Gal(L / K))) :
     chapter05RationalResidueMk (chapter05RestrictionInvariantFraction K L H) =
       chapter05RationalResidueOneOver (Nat.card H) := by
-  simpa [chapter05RationalResidueOneOver] using
+  change chapter05RationalResidueMk (chapter05RestrictionInvariantFraction K L H) =
+    chapter05RationalResidueMk ((1 : ℚ) / (Nat.card H : ℚ))
+  simpa using
     congrArg chapter05RationalResidueMk
       (chapter05_restriction_invariant_fraction K L H)
 

@@ -12,6 +12,7 @@ import Mathlib.RepresentationTheory.Homological.GroupHomology.LowDegree
 import Mathlib.RepresentationTheory.Homological.Resolution
 import Mathlib.RepresentationTheory.Homological.TateCohomology.Basic
 import Mathlib.RingTheory.Norm.Defs
+import LastLib.Book05LocalClassFieldTheory.Chapter04.Core
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter05
 
@@ -38,22 +39,24 @@ abbrev chapter05CommutatorSubgroup (G : Type*) [Group G] : Subgroup G :=
 def chapter05AbelianizationMap (G : Type*) [Group G] : G →* chapter05Abelianization G :=
   Abelianization.of
 
-noncomputable def chapter05NormMap
+abbrev chapter05NormMap
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] : Lˣ →* Kˣ :=
-  Units.map (Algebra.norm K (S := L))
+  LastLib.Book05LocalClassFieldTheory.Chapter03.chapter03NormUnit K L
 
-def chapter05NormSubgroup
+abbrev chapter05NormSubgroup
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] : Subgroup Kˣ :=
-  (chapter05NormMap K L).range
+  LastLib.Book05LocalClassFieldTheory.Chapter03.chapter03NormSubgroup K L
 
 theorem chapter05_mem_normSubgroup_iff
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] (x : Kˣ) :
     x ∈ chapter05NormSubgroup K L ↔
       ∃ y : Lˣ, chapter05NormMap K L y = x := by
-  rfl
+  exact
+    LastLib.Book05LocalClassFieldTheory.Chapter03.chapter03_mem_norm_subgroup_iff
+      K L x
 
 def chapter05AlgebraMapUnits
     (K L : Type*) [Field K] [Field L] [Algebra K L] : Kˣ →* Lˣ :=
@@ -111,7 +114,7 @@ theorem chapter05FixedUnitSubgroup_eq_algebraMap_range
 abbrev chapter05NormQuotient
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] :=
-  Kˣ ⧸ chapter05NormSubgroup K L
+  LastLib.Book05LocalClassFieldTheory.Chapter03.chapter03NormQuotient K L
 
 def chapter05NormQuotientMk
     (K L : Type*) [Field K] [Field L] [Algebra K L]
@@ -171,7 +174,7 @@ noncomputable def chapter05MaximalAbelianSubextension_galoisEquiv
 
 abbrev chapter05CoefficientRep
     (K L : Type) [CommRing K] [CommRing L] [Algebra K L] :=
-  Rep.ofAlgebraAutOnUnits K L
+  LastLib.Book05LocalClassFieldTheory.Chapter04.chapter04CoefficientRep K L
 
 abbrev chapter05TateCohomology
     (G : Type) [Group G] [Fintype G] (A : Rep ℤ G) (r : ℤ) : ModuleCat ℤ :=
@@ -197,13 +200,14 @@ noncomputable def chapter05H1TensorAbelianizationIso
       Additive (chapter05Abelianization G) ⊗[ℤ] ℤ :=
   groupHomology.H1AddEquivOfIsTrivial (Rep.trivial ℤ G ℤ)
 
-abbrev chapter05RationalResidue := ℚ ⧸ AddSubgroup.zmultiples (1 : ℚ)
+abbrev chapter05RationalResidue :=
+  LastLib.Book05LocalClassFieldTheory.Chapter04.chapter04RationalResidue
 
 def chapter05RationalResidueMk (q : ℚ) : chapter05RationalResidue :=
-  QuotientAddGroup.mk' (AddSubgroup.zmultiples (1 : ℚ)) q
+  LastLib.Book05LocalClassFieldTheory.Chapter04.chapter04RationalResidueMk q
 
 def chapter05RationalResidueOneOver (n : ℕ) : chapter05RationalResidue :=
-  chapter05RationalResidueMk ((1 : ℚ) / (n : ℚ))
+  LastLib.Book05LocalClassFieldTheory.Chapter04.chapter04RationalResidueOneOver n
 
 def chapter05RestrictTwoClass
     {G : Type} [Group G] {A : Rep ℤ G}
@@ -265,12 +269,6 @@ structure Chapter05TopRestrictionTrivialTateIso
     chapter05TateCohomology (⊤ : Subgroup G)
       (Rep.res (⊤ : Subgroup G).subtype (Rep.trivial ℤ G ℤ)) r ≅
       chapter05TateCohomology G (Rep.trivial ℤ G ℤ) r
-
-structure Chapter05FundamentalTwoClass
-    (G : Type) [Group G] [Fintype G] (A : Rep ℤ G) where
-  /- The normalization is supplied by the local invariant system, whose
-  subgroup restrictions are not definitionally the restriction to `⊤`. -/
-  value : chapter05GroupCohomology G A 2
 
 /- The standard augmentation is the `degree zero` map in the standard
 resolution, so this record packages the exact two-extension used in the

@@ -40,12 +40,14 @@ theorem chapter05_norm_subgroup_mono_of_tower
     [IsScalarTower K L M] [FiniteDimensional K L]
     [FiniteDimensional L M] [FiniteDimensional K M] :
     chapter05NormSubgroup K M ≤ chapter05NormSubgroup K L := by
-  rintro x ⟨y, rfl⟩
-  change ∃ z : Lˣ, chapter05NormMap K L z = chapter05NormMap K M y
+  rintro x ⟨y, _, rfl⟩
+  apply (chapter05_mem_normSubgroup_iff K L _).2
   refine ⟨chapter05NormMap L M y, ?_⟩
   have h := congrArg (fun f : Mˣ →* Kˣ => f y)
     (chapter05_norm_map_transitive K L M)
-  simpa only [MonoidHom.coe_comp, Function.comp_apply] using h.symm
+  simpa [chapter05NormMap,
+    LastLib.Book05LocalClassFieldTheory.Chapter03.chapter03NormUnit,
+    MonoidHom.coe_comp, Function.comp_apply] using h.symm
 
 /- The intermediate-field specialization is the natural quotient inclusion
    needed by Proposition 5.2A; it is stated after the general norm-tower

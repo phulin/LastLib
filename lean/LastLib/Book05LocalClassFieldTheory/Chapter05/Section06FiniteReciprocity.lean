@@ -1,8 +1,5 @@
 import Mathlib.FieldTheory.Galois.Abelian
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.Section02FrobeniusInAnUnramifiedExtension
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Section01IsolatingResidueGrowth
-import Mathlib.RingTheory.Valuation.Discrete.Basic
-import Mathlib.RingTheory.Valuation.Extension
+import LastLib.Book05LocalClassFieldTheory.Chapter04.Core
 import LastLib.Book05LocalClassFieldTheory.Chapter05.Core
 import LastLib.Book05LocalClassFieldTheory.Chapter05.Section04FiniteArtinMap
 
@@ -54,62 +51,14 @@ theorem chapter05FiniteReciprocityMap_surjective
     (chapter05NormSubgroup K L) z
   exact ⟨x, rfl⟩
 
-/- The local-field input is carried by the earlier valuation and residue-field
-interfaces.  In particular, the reduction equivalence is part of the data, so
-the Frobenius used below cannot be an unrelated generator of an abstract
-cyclic group. -/
-structure Chapter05UnramifiedExtensionData
+/- The earlier chapter already packages the valued unramified extension,
+   normalized uniformizer, and arithmetic Frobenius used by the source.
+   Reuse that interface so this chapter does not introduce a second residue
+   extension model. -/
+abbrev Chapter05UnramifiedExtensionData
     (K L : Type) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsGalois K L]
-    [Fintype (Gal(L / K))] where
-  valuationK : Valuation K ℤᵐ⁰
-  valuationL : Valuation L ℤᵐ⁰
-  [valuationKDiscrete : Valuation.IsRankOneDiscrete valuationK]
-  [valuationLDiscrete : Valuation.IsRankOneDiscrete valuationL]
-  [valuationExtension : valuationK.HasExtension valuationL]
-  uniformizer : Kˣ
-  uniformizer_is_uniformizer :
-    valuationK.IsUniformizer (uniformizer : K)
-  residueBase : Type
-  residueExtension : Type
-  [residueBaseField : Field residueBase]
-  [residueExtensionField : Field residueExtension]
-  [residueFintype : Fintype residueBase]
-  [residueFinite : Finite residueExtension]
-  [residueAlgebra : Algebra residueBase residueExtension]
-  [residueAlgebraic : Algebra.IsAlgebraic residueBase residueExtension]
-  [residueFiniteDimensional : FiniteDimensional residueBase residueExtension]
-  [residueGalois : IsGalois residueBase residueExtension]
-  localExtension :
-    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Chapter07FiniteLocalExtensionData
-      K L residueBase residueExtension
-  unramified :
-    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Chapter07UnramifiedExtension
-      localExtension
-  reduction :
-    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.Chapter06UnramifiedGaloisReduction
-      K L residueBase residueExtension
-  residueAction :
-    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.Chapter06UnramifiedResidueAction
-      K L residueBase residueExtension valuationL.valuationSubring reduction
-
-noncomputable def Chapter05UnramifiedExtensionData.arithmeticFrobenius
-    {K L : Type} [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsGalois K L]
-    [Fintype (Gal(L / K))]
-    (U : Chapter05UnramifiedExtensionData K L) : Gal(L / K) := by
-  letI : Field U.residueBase := U.residueBaseField
-  letI : Field U.residueExtension := U.residueExtensionField
-  letI : Fintype U.residueBase := U.residueFintype
-  letI : Finite U.residueExtension := U.residueFinite
-  letI : Algebra U.residueBase U.residueExtension := U.residueAlgebra
-  letI : Algebra.IsAlgebraic U.residueBase U.residueExtension := U.residueAlgebraic
-  letI : FiniteDimensional U.residueBase U.residueExtension :=
-    U.residueFiniteDimensional
-  letI : IsGalois U.residueBase U.residueExtension := U.residueGalois
-  exact
-  LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.chapter06UnramifiedArithmeticFrobenius
-    U.reduction
+    [FiniteDimensional K L] [IsGalois K L] :=
+  LastLib.Book05LocalClassFieldTheory.Chapter04.Chapter04UnramifiedExtensionData K L
 
 /- The quotient equivalence supplied by the class-formation data and the
    residue-field equivalence supplied by `U` are independent choices.  This
@@ -139,6 +88,25 @@ theorem chapter05FiniteReciprocityNormalization.artin_uniformizer
       chapter05AbelianizationMap (Gal(L / K)) U.arithmeticFrobenius := by
   simpa [chapter05FiniteArtinMap] using N.quotient_uniformizer
 
+theorem chapter05_unramified_uniformizer_is_arithmetic_frobenius_canonical_map
+    {K L : Type} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    [Fintype (Gal(L / K))]
+    (D : Chapter05LocalClassFormationData K L)
+    (U : Chapter05UnramifiedExtensionData K L) :
+    chapter05FiniteReciprocityMap D U.uniformizer = U.arithmeticFrobenius := by
+  sorry
+
+theorem chapter05_unramified_uniformizer_is_arithmetic_frobenius_canonical_artin
+    {K L : Type} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L]
+    [Fintype (Gal(L / K))]
+    (D : Chapter05LocalClassFormationData K L)
+    (U : Chapter05UnramifiedExtensionData K L) :
+    chapter05FiniteArtinMap D U.uniformizer =
+      chapter05AbelianizationMap (Gal(L / K)) U.arithmeticFrobenius := by
+  sorry
+
 theorem chapter05_unramified_uniformizer_is_arithmetic_frobenius
     {K L : Type} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
@@ -147,7 +115,7 @@ theorem chapter05_unramified_uniformizer_is_arithmetic_frobenius
     (U : Chapter05UnramifiedExtensionData K L)
     (N : Chapter05FiniteReciprocityNormalization D U) :
     chapter05FiniteReciprocityMap D U.uniformizer = U.arithmeticFrobenius := by
-  sorry
+  exact chapter05_unramified_uniformizer_is_arithmetic_frobenius_canonical_map D U
 
 theorem chapter05_unramified_uniformizer_is_arithmetic_frobenius_in_abelianization
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -158,7 +126,7 @@ theorem chapter05_unramified_uniformizer_is_arithmetic_frobenius_in_abelianizati
     (N : Chapter05FiniteReciprocityNormalization D U) :
     chapter05FiniteArtinMap D U.uniformizer =
     chapter05AbelianizationMap (Gal(L / K)) U.arithmeticFrobenius := by
-  exact chapter05FiniteReciprocityNormalization.artin_uniformizer D U N
+  exact chapter05_unramified_uniformizer_is_arithmetic_frobenius_canonical_artin D U
 
 structure Chapter05FiniteReciprocityCompatibility
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -204,6 +172,16 @@ theorem chapter05_finite_local_reciprocity_at_unramified
     (D : Chapter05LocalClassFormationData K L)
     (U : Chapter05UnramifiedExtensionData K L)
     (N : Chapter05FiniteReciprocityNormalization D U) :
+    ∃! e : chapter05NormQuotient K L ≃* Gal(L / K),
+      Chapter05FiniteReciprocityCompatibilityAtUnramified D e U := by
+  sorry
+
+theorem chapter05_finite_local_reciprocity_at_unramified_canonical
+    {K L : Type} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    [Fintype (Gal(L / K))]
+    (D : Chapter05LocalClassFormationData K L)
+    (U : Chapter05UnramifiedExtensionData K L) :
     ∃! e : chapter05NormQuotient K L ≃* Gal(L / K),
       Chapter05FiniteReciprocityCompatibilityAtUnramified D e U := by
   sorry
