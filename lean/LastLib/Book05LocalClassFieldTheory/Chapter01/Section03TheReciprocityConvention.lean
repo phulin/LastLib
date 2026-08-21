@@ -106,6 +106,7 @@ structure Chapter01FiniteReciprocityNormalization
     [Fintype (Gal(L / K))] [IsMulCommutative (Gal(L / K))] where
   unramified : Chapter01UnramifiedGaloisReduction K L k l
   quotientEquiv : Chapter01NormQuotient K L ≃* Gal(L / K)
+  local_field : Chapter01LocalField vK
   normalization :
     Chapter01ArithmeticNormalization vK
       (chapter01FiniteArtinMap quotientEquiv)

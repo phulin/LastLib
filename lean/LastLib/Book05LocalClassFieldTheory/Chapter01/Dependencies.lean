@@ -101,7 +101,7 @@ structure Chapter01LocalFieldData (K : Type*) [Field K] where
 
 /-- The residue cardinality `q` attached to a finite residue field. -/
 noncomputable def chapter01ResidueCardinality {K : Type*} [Field K]
-    (v : AddValuation K (WithTop ℤ)) : ℕ :=
+    (v : AddValuation K (WithTop ℤ)) [Finite (Chapter01ResidueField v)] : ℕ :=
   Nat.card (Chapter01ResidueField v)
 
 /-- The field-level unit filtration, with `U⁰ = 𝓞ˣ` and

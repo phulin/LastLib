@@ -36,15 +36,17 @@ theorem chapter01_abelian_norm_subgroup_is_open_and_finite_index
     (chapter01NormSubgroup K L).FiniteIndex := by
   sorry
 
-/-- Compactness of the source unit group makes a continuous norm image closed
-in a Hausdorff target. -/
-theorem chapter01_norm_subgroup_is_closed_of_compact_source
+/-- A continuous image of a compact source set is closed in a Hausdorff target.
+The full field-unit group of a local field is not compact, so this criterion is
+stated for an explicitly chosen compact source set rather than incorrectly
+assuming compactness of `Lˣ`. -/
+theorem chapter01_norm_image_is_closed_of_compact_source
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [TopologicalSpace Lˣ] [TopologicalSpace Kˣ]
     [T2Space Kˣ]
-    (hcompact : IsCompact (Set.univ : Set Lˣ))
+    (C : Set Lˣ) (hcompact : IsCompact C)
     (hcontinuous : Continuous (chapter01NormHom K L)) :
-    IsClosed (chapter01NormSubgroup K L : Set Kˣ) := by
+    IsClosed ((chapter01NormHom K L) '' C) := by
   sorry
 
 /-- The local norm-index formula. -/
