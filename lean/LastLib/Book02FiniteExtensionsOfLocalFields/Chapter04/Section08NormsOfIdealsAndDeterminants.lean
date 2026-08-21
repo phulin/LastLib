@@ -2,6 +2,8 @@ import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.Section05ResidueFie
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.Section02LeadingTermsAndDigits
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section07NormsAndIdeals
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section08TraceAndBoundedness
+import Mathlib.Algebra.Polynomial.Div
+import Mathlib.LinearAlgebra.Matrix.Polynomial
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04
 
@@ -318,6 +320,56 @@ theorem chapter04_norm_of_base_element_is_degree_power
     [FiniteDimensional K L] (πK : K) :
     Algebra.norm K (algebraMap K L πK) = πK ^ Module.finrank K L := by
   exact Algebra.norm_algebraMap πK
+
+/- The determinant norm of `1 + a z` is congruent to one modulo `a`.  Writing
+the determinant over `A[X]` keeps the argument independent of any choice of
+quotient basis. -/
+theorem chapter04_norm_one_add_algebraMap_mul_sub_one_dvd
+    (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
+    [Module.Free A B] [Module.Finite A B] (a : A) (z : B) :
+    a ∣ Algebra.norm A (1 + algebraMap A B a * z) - 1 := by
+  let ι := Module.Free.ChooseBasisIndex A B
+  let b : Module.Basis ι A B := Module.Free.chooseBasis A B
+  let M : Matrix ι ι A := Algebra.leftMulMatrix b z
+  let p : A[X] := Matrix.det
+    (1 + (Polynomial.X : A[X]) • M.map Polynomial.C)
+  have hp_eval (r : A) :
+      p.eval r = Matrix.det (1 + r • M) := by
+    change (Polynomial.evalRingHom r) (Matrix.det
+      (1 + (Polynomial.X : A[X]) • M.map Polynomial.C)) = _
+    calc
+      _ = Matrix.det ((Polynomial.evalRingHom r).mapMatrix
+          (1 + (Polynomial.X : A[X]) • M.map Polynomial.C)) :=
+        RingHom.map_det _ _
+      _ = Matrix.det (1 + r • M) := by
+        congr 1
+        ext i j
+        simp only [RingHom.mapMatrix_apply, Matrix.add_apply, map_add,
+          Matrix.one_apply, map_one, Matrix.smul_apply, Matrix.map_apply]
+        simp [smul_eq_mul]
+        exact mul_comm _ _
+  have hmatrix :
+      Algebra.leftMulMatrix b (1 + algebraMap A B a * z) = 1 + a • M := by
+    simp [M, map_add, map_mul, Algebra.smul_def]
+  have hd := Polynomial.sub_dvd_eval_sub a 0 p
+  rw [Algebra.norm_eq_matrix_det b, hmatrix, ← hp_eval a]
+  simpa [hp_eval] using hd
+
+/- If an element is zero modulo the extension of `I`, then the norm of one
+plus that element is one modulo `I`. -/
+theorem chapter04_intNorm_one_add_mem_of_mem_map
+    (A B : Type*) [CommRing A] [IsPrincipalIdealRing A]
+    [CommRing B] [Algebra A B]
+    [Module.Free A B] [Module.Finite A B]
+    (I : Ideal A) (x : B) (hx : x ∈ Ideal.map (algebraMap A B) I) :
+    Algebra.norm A (1 + x) - 1 ∈ I := by
+  obtain ⟨a, ha⟩ := IsPrincipalIdealRing.principal I
+  rw [ha] at hx ⊢
+  rw [Ideal.map_span] at hx
+  simp only [Set.image_singleton] at hx ⊢
+  obtain ⟨z, rfl⟩ := (Ideal.mem_span_singleton.mp hx)
+  exact Ideal.mem_span_singleton.mpr
+    (chapter04_norm_one_add_algebraMap_mul_sub_one_dvd A B a z)
 
 /- The residue quotient has the cardinality of the residue field (§4.8). -/
 theorem chapter04_residue_quotient_cardinality
