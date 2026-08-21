@@ -11,6 +11,10 @@
  * and deterministically injects a synthetic continuation message. The loop is
  * bounded by `options.maxRounds`.
  *
+ * The active goal is shown in the session title. `/goal pause` (or a user
+ * interrupt) preserves the goal without driving further rounds; `/goal resume`
+ * restores the active loop.
+ *
  * Install (project-local, auto-discovered):
  *   .opencode/plugins/goal-loop.ts          <- this file
  *   .opencode/package.json                  <- {"dependencies":{"@opencode-ai/plugin":"beta"}}
@@ -30,13 +34,25 @@ type GoalState = {
   round: number;
   /** Set by goal_certify during the current round; reset when a new round starts. */
   certified: boolean;
-  /** Terminal: sentinel accepted, aborted, cancelled, or errored. */
+  /** Terminal: sentinel accepted, aborted, or cancelled. */
   closed: boolean;
+  /** Paused (user interrupt or /goal pause): driver holds off until /goal resume. */
+  paused: boolean;
   /** True while we are driving the session after injecting a continuation. */
   driving: boolean;
+  /** Original session title, restored when the loop closes. */
+  titleBackup?: string;
 };
 
 const goals = new Map<string, GoalState>();
+
+const GOAL_MARK = "\u{1F3AF} "; // 🎯
+const PAUSED_MARK = "\u{23F8}\u{FE0F} "; // ⏸️
+
+const titleFor = (goal: string): string =>
+  GOAL_MARK + (goal.length > 60 ? `${goal.slice(0, 57)}...` : goal);
+
+const pausedTitleFor = (goal: string): string => PAUSED_MARK + titleFor(goal);
 
 export default Plugin.define({
   id: "lastlib.goal-loop",
@@ -47,6 +63,25 @@ export default Plugin.define({
       typeof rawRounds === "number" && Number.isFinite(rawRounds) && rawRounds > 0
         ? Math.floor(rawRounds)
         : 50;
+
+    /** Rename without allowing a cosmetic failure to break the loop. */
+    const rename = async (sid: string, title: string) => {
+      try {
+        await ctx.session.rename({ sessionID: sid, title });
+      } catch (error) {
+        console.error("[goal-loop] session rename failed:", error);
+      }
+    };
+
+    /** Close a loop terminally and give the session its title back. */
+    const closeLoop = async (sid: string, state: GoalState) => {
+      if (state.closed) return;
+      state.closed = true;
+      state.paused = false;
+      if (state.titleBackup !== undefined) {
+        await rename(sid, state.titleBackup);
+      }
+    };
 
     const protocolPrompt = (state: GoalState): string =>
       [
@@ -66,19 +101,22 @@ export default Plugin.define({
       ].join("\n");
 
     //
-    // /goal command — hands the goal text to the agent, which registers it via goal_set.
+    // /goal command — register a goal, or pause/resume the current one.
     //
     void ctx.command.transform((commands) => {
       commands.update("goal", (command) => {
         command.description =
-          "Set a persistent goal; the agent must certify completion (or not) at the end of every round";
+          "Set, pause, or resume a persistent goal with end-of-round certification";
         command.template = [
-          "Register the following text as my persistent goal by calling the `goal_set` tool now, quoted verbatim:",
+          "Interpret the following `/goal` argument:",
           "",
           "$ARGUMENTS",
           "",
-          "After registering it, immediately begin working toward the goal.",
-          `Remember: every round must end with a \`${CERT_TOOL}\` call.`,
+          "- If it is exactly `pause`, call `goal_pause`.",
+          "- If it is exactly `resume`, call `goal_resume`, then immediately continue the saved goal.",
+          "- Otherwise call `goal_set` with the argument quoted verbatim, then immediately begin working toward it.",
+          `After setting or resuming a goal, every round must end with a \`${CERT_TOOL}\` call.`,
+          "A pause command ends without certification because the loop is then paused.",
         ].join("\n");
       });
     });
@@ -116,17 +154,105 @@ export default Plugin.define({
             throw new Error("goal_set requires a non-empty string `goal`.");
           }
           const previous = goals.get(toolCtx.sessionID);
+          let titleBackup = previous && !previous.closed ? previous.titleBackup : undefined;
+          if (titleBackup === undefined) {
+            try {
+              titleBackup = (await ctx.session.get({ sessionID: toolCtx.sessionID })).title;
+            } catch (error) {
+              console.error("[goal-loop] failed to capture session title:", error);
+            }
+          }
           goals.set(toolCtx.sessionID, {
             goal,
             round: 0,
             certified: false,
             closed: false,
+            paused: false,
             driving: false,
+            titleBackup,
           });
+          await rename(toolCtx.sessionID, titleFor(goal));
           const replaced = previous && !previous.closed ? " (previous goal discarded)" : "";
           return {
             output: { status: "registered" },
             content: `Goal armed${replaced}. Every round must end with a \`${CERT_TOOL}\` call.`,
+          };
+        },
+      });
+
+      tools.add({
+        name: "goal_pause",
+        description:
+          "Pause the current goal loop. Use for `/goal pause`; the saved goal can later be resumed.",
+        options: { codemode: false },
+        input: {
+          type: "object",
+          properties: {},
+          additionalProperties: false,
+        },
+        output: {
+          type: "object",
+          properties: { status: { type: "string" } },
+          required: ["status"],
+          additionalProperties: false,
+        },
+        execute: async (_input: unknown, toolCtx) => {
+          const state = goals.get(toolCtx.sessionID);
+          if (!state || state.closed) {
+            return {
+              output: { status: "no-active-goal" },
+              content: "No active goal loop to pause.",
+            };
+          }
+          state.paused = true;
+          state.certified = false;
+          await rename(toolCtx.sessionID, pausedTitleFor(state.goal));
+          return {
+            output: { status: "paused" },
+            content: `Goal loop paused. Run \`/goal resume\` to continue: ${state.goal}`,
+          };
+        },
+      });
+
+      tools.add({
+        name: "goal_resume",
+        description:
+          "Resume the saved goal loop. Use for `/goal resume`, then continue working toward the goal.",
+        options: { codemode: false },
+        input: {
+          type: "object",
+          properties: {},
+          additionalProperties: false,
+        },
+        output: {
+          type: "object",
+          properties: {
+            status: { type: "string" },
+            goal: { type: "string" },
+          },
+          required: ["status", "goal"],
+          additionalProperties: false,
+        },
+        execute: async (_input: unknown, toolCtx) => {
+          const state = goals.get(toolCtx.sessionID);
+          if (!state || state.closed) {
+            return {
+              output: { status: "no-paused-goal", goal: "" },
+              content: "No paused goal loop to resume. Use `/goal <text>` to set one.",
+            };
+          }
+          if (!state.paused) {
+            return {
+              output: { status: "already-active", goal: state.goal },
+              content: `Goal loop is already active: ${state.goal}`,
+            };
+          }
+          state.paused = false;
+          state.certified = false;
+          await rename(toolCtx.sessionID, titleFor(state.goal));
+          return {
+            output: { status: "resumed", goal: state.goal },
+            content: `Goal loop resumed. Continue working now: ${state.goal}`,
           };
         },
       });
@@ -169,6 +295,12 @@ export default Plugin.define({
               content: "No active goal loop; certification ignored.",
             };
           }
+          if (state.paused) {
+            return {
+              output: { accepted: false, loop: "open" as const },
+              content: "Goal loop is paused; run `/goal resume` before certifying.",
+            };
+          }
           if (typeof args.complete !== "boolean") {
             throw new Error("goal_certify requires a boolean `complete`.");
           }
@@ -177,7 +309,7 @@ export default Plugin.define({
               ? args.summary.trim()
               : "(no summary provided)";
           state.certified = true;
-          if (args.complete) state.closed = true;
+          if (args.complete) await closeLoop(toolCtx.sessionID, state);
           return {
             output: {
               accepted: true,
@@ -197,7 +329,7 @@ export default Plugin.define({
     //
     void ctx.session.hook("context", (event) => {
       const state = goals.get(event.sessionID);
-      if (!state || state.closed) return;
+      if (!state || state.closed || state.paused) return;
       event.system.push({ type: "text", text: protocolPrompt(state) });
     });
 
@@ -205,45 +337,61 @@ export default Plugin.define({
     // The deterministic continuation driver: consume the server event stream;
     // whenever a round finishes without the sentinel, continue the session.
     //
-    const controller = new AbortController();
+    const events = ctx.event.subscribe();
+    const iterator = events[Symbol.asyncIterator]();
+    let disposed = false;
     const drive = async () => {
       try {
-        for await (const event of ctx.event.subscribe({ signal: controller.signal })) {
+        while (!disposed) {
+          const next = await iterator.next();
+          if (next.done) break;
           try {
-            await handleEvent(event);
+            await handleEvent(next.value);
           } catch (error) {
             console.error("[goal-loop] event handling failed:", error);
           }
         }
       } catch (error) {
-        if (!controller.signal.aborted) console.error("[goal-loop] event stream failed:", error);
+        if (!disposed) console.error("[goal-loop] event stream failed:", error);
       }
     };
 
     const handleEvent = async (event: { type: string; data?: Record<string, unknown> }) => {
       const data = (event.data ?? {}) as { sessionID?: string; reason?: string };
 
-      // Provider/model failure or a user interrupt terminates the loop rather
-      // than fighting the user or spin-retrying.
+      // Provider/model failure closes the loop rather than spin-retrying.
+      if (event.type === "session.execution.failed" && data.sessionID) {
+        const state = goals.get(data.sessionID);
+        if (state && !state.closed) await closeLoop(data.sessionID, state);
+        return;
+      }
+
+      // A user interrupt pauses the loop. Shutdown/supersession are runtime
+      // lifecycle events and do not mutate the user's saved goal.
       if (
-        event.type === "session.execution.failed" ||
-        (event.type === "session.execution.interrupted" && data.reason === "user")
+        event.type === "session.execution.interrupted" &&
+        data.reason === "user" &&
+        data.sessionID
       ) {
-        const state = data.sessionID ? goals.get(data.sessionID) : undefined;
-        if (state && !state.closed) state.closed = true;
+        const state = goals.get(data.sessionID);
+        if (state && !state.closed) {
+          state.paused = true;
+          state.certified = false;
+          await rename(data.sessionID, pausedTitleFor(state.goal));
+        }
         return;
       }
 
       if (event.type !== "session.idle" || !data.sessionID) return;
       const sid = data.sessionID;
       const state = goals.get(sid);
-      if (!state || state.closed || state.driving) return;
+      if (!state || state.closed || state.paused || state.driving) return;
 
       state.driving = true;
       try {
         let text: string;
         if (state.round >= maxRounds) {
-          state.closed = true;
+          await closeLoop(sid, state);
           text =
             `[GOAL LOOP ABORTED] Round limit (${maxRounds}) reached without a completion ` +
             `sentinel for goal:\n${state.goal}\nThe loop is now closed; no further continuations will be issued.`;
@@ -252,10 +400,6 @@ export default Plugin.define({
             `[GOAL LOOP] Your previous round ended WITHOUT calling \`${CERT_TOOL}\`. ` +
             `That is a protocol violation; the harness has continued you automatically.\n\n` +
             `${protocolPrompt(state)}\n\nContinue working toward the goal now, and end this reply with a \`${CERT_TOOL}\` call.`;
-        } else if (state.closed) {
-          // Sentinel said complete: confirm once and shut the loop quietly.
-          text =
-            "[GOAL LOOP] Completion sentinel accepted. Goal loop closed — no further certification is required.";
         } else {
           text =
             `[GOAL LOOP] Round ${state.round} certified incomplete; continuing.\n\n` +
@@ -270,7 +414,7 @@ export default Plugin.define({
       } catch (error) {
         // Never let the driver crash the session; drop the loop instead.
         console.error("[goal-loop] continuation failed:", error);
-        state.closed = true;
+        await closeLoop(sid, state);
       } finally {
         state.driving = false;
       }
@@ -280,7 +424,8 @@ export default Plugin.define({
 
     // Released when the plugin is disabled, reloaded, or shut down.
     return async () => {
-      controller.abort();
+      disposed = true;
+      await iterator.return?.();
       await task.catch(() => {});
     };
   },
