@@ -378,15 +378,53 @@ Defects: (1) Line 622 uses Lang's theorem (surjectivity of Frobenius-minus-ident
 
 The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
 
+### Book 039 — `039-integral-correspondences-on-curves-and-jacobians.md`
+
+**Verdict: FAIL — one new operative unproved input (preservation of toric parts under Néron homomorphisms); all other operative inputs were located in declared prerequisites and verified at their cited locations.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 1493 (EOF), in chronological/result order, during this audit.
+
+The correspondence calculus is well sourced: pullback/norm and adjointness from Book 017a §§10.1–10.4, Néron mapping property/existence/base change from Book 038 Chapters 2–8, Raynaud quotient from Book 038 §9, component-group lattice machinery from Books 016/038, flatness of closures from DVR theory, finite-local-freeness of dominant maps between regular surfaces from Book 011 Chapter 14, and Cartier/pushforward facts from Book 012. Intra-book forward references (lines 355, 443, 468) are all discharged later in the book. No forward references to any later book exist, and the table of contents matches the actual structure exactly.
+
+The single new defect is substantive: lines 813–818 and 848 assert that a Néron homomorphism maps maximal tori into maximal tori (equivalently `Hom(\mathbf G_m,A)=0` for abelian `A`), defining `v_\Gamma` in (7.10) and driving (7.12)–(7.14) and the general-case halves of Theorems 8.1, 12.1(5), and 13.1(6). This lemma is proved nowhere in Books ≤039 (Book 035's rigidity lemma would yield it but the corollary is never drawn; Book 038's Chevalley-type filtration is non-functorial and X057-flagged). See X058. Inherited consumers named: X057 via Book 038's smoothening (lines 488, 528, 547) and moving lemma (lines 596–615, 985–991, 1447–1454); X007 via Book 012 intersection machinery; X018/X020/X021 via the Tate-module specialization at lines 1308–1313.
+
+### Book 040 — `040-descent-and-weak-mordell-weil-for-abelian-varieties.md`
+
+**Verdict: PASS — the main chain (Kummer sequence, Selmer definition and finiteness, weak Mordell–Weil) is fully sourced in declared prerequisites, Lang's theorem is proved inline, and no forward reference is operative; remaining gaps are peripheral and repairable in-book.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 1390 (EOF), in chronological/result order, during this audit.
+
+Lang's theorem over finite fields is proved in-book at lines 470–478 by the étale-differential/open-image/properness/connectedness argument, so the book does not inherit the X049/X057 Lang gaps. Verified imports: Book 029 Kummer theory and fppf–Galois comparison (inheriting X038/X039), Book 035 quotient/isogeny/duality package (inheriting X053), Book 030/032 finiteness (inheriting X048), Book 017 henselian equivalence, Book 024 inflation–restriction/Shapiro, Books 004/006/007 class-group mechanism. Heights/Northcott mentions are roadmap only and never used in proofs. The table of contents matches the structure exactly, and no circularity was found.
+
+Three peripheral defects, none load-bearing for the main chain: (1) lines 1070–1096 assert convergence/functoriality/depth bounds for the formal logarithm of an abelian variety's formal group with no chronological source (nearest treatment is the later Book 043); only Chapter 9's quantitative claims consume it — see the in-book repair note. (2) Lines 721–727 assert a formal-neighborhood filtration without proof (standalone torsion remark). (3) Line 979 sketches semilocal rank-one projective freeness rather than proving it.
+
+### Book 041 — `041-heights-and-the-mordell-weil-theorem.md`
+
+**Verdict: FAIL — the completed Mordell–Weil core (Chapters 2–10) is clean and correctly sourced, but line 1859 cites a nonexistent Book 25, and two inputs inside the conditional region (Weil-restriction trace, Bertini-with-jets) are consumed without appearing in the Section 13.7 gap ledger.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 3996 (EOF), in chronological/result order, during this audit.
+
+The height machine, quadraticity, canonical heights, and the Mordell–Weil assembly from Book 040's weak theorem are proved with verified sources (Books 008, 035 cube/square, 004 Minkowski, 002 finiteness/completions, 036 endomorphism ring facts). All Faltings–Tate content in Chapters 12–16 is explicitly boxed as hypothesis or proof-incomplete; the full Faltings theorem is not claimed, and the reductions that are proved match the declared scope. No citations to Books 042+ exist anywhere, there are no intra-book ordering violations, and the table of contents matches the body exactly.
+
+Defects: (1) Line 1859 cites "Books 25 and 38" — Book 025 does not exist; the needed result is Book 038 Theorem 9.3 plus Book 016's dual-graph description. See X059. (2) Lines 1433–1440 use a Weil-restriction trace homomorphism whose representability input is the X057-flagged gap, omitted from the §13.7 ledger; repairable in-book by the elementary Galois-conjugate sum. (3) Lemma 12.3 (lines 1705–1733) consumes jet separation and a Bertini-with-jets existence theorem with no source, also missing from the ledger. (4) Named inherited consumers: X057 (Chevalley filtration at lines 1685–1688), X035/X036 (quotient/isogeny steps at lines 3536–3545, 3619–3631), X053/X016 (polarization Riemann–Roch rank formula at line 2726). Cosmetic: truncated math in the §17.2 ledger table at lines 3950/3952 and literal `Pl\"ucker` escapes.
+
+### Book 042 — `042-finite-flat-galois-representations.md`
+
+**Verdict: PASS — every operative theorem's inputs are proved in-book or traceable to declared prerequisites 002/017/028/034; no forward references, no circularity, table of contents exact; one non-operative concealed assumption and one cosmetic breakage remain.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 1539 (EOF), in chronological/result order, during this audit.
+
+The representation/group-scheme dictionary, Galois descent of models, duality via Cartier duality, and closure-commutation results are proved with verified sources; the book explicitly declines the finite-flat ramification cutoff (lines 405, 1112, 1217) and contains no Raynaud content (correctly deferred to Book 052). No citations to Books 043+ exist. Inherited consumers named: X035 (quotient uses at lines 557–583, 701, 772, 817–833, 847, 1254, 1308, 1349, 1462), X037 (`A[n]`/abelian quotient at lines 1203–1211, 1217–1219, 1248–1262, 1468), X054 (Cartier-duality biduality inputs at lines 973–1007, 1262, 1373–1388).
+
+Two defects, neither operative: (1) lines 693–697 and 1229–1240 assert the ordinary special-fiber structure `\mu_p \to \mathscr E_k[p] \to \underline{\mathbf Z/p\mathbf Z}` (and supersingular total connectedness) as fact; its only earlier occurrence is Book 034 line 1519, equally unproved, and the identification needs the Frobenius/Hasse-invariant cluster of later Books 043/045/052 — contradicting the book's own discipline at line 405. (2) Lines 1034–1037 contain a broken display (stray heading marker inside the math block, missing relation symbol).
+
+The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
+
 ## Pending scope inventory
 
 The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
 
 - PENDING — Book 035a, `035a-moduli-stacks-for-modular-and-pel-problems.md`
-- PENDING — Book 039, `039-integral-correspondences-on-curves-and-jacobians.md`
-- PENDING — Book 040, `040-descent-and-weak-mordell-weil-for-abelian-varieties.md`
-- PENDING — Book 041, `041-heights-and-the-mordell-weil-theorem.md`
-- PENDING — Book 042, `042-finite-flat-galois-representations.md`
 - PENDING — Book 043, `043-elliptic-curves-over-dvrs.md`
 - PENDING — Book 044, `044-tate-curves-and-multiplicative-reduction.md`
 - PENDING — Book 045, `045-torsion-and-tate-modules-of-elliptic-curves.md`
@@ -853,3 +891,31 @@ The following manuscripts are in this review's assigned 001–064 scope and rema
 - X016/X053 gain consumer: Book 036 lines 1064, 1133–1158, 1172–1177; Book 037 lines 214–231.
 - X023 status update: Book 036 §10.5 (lines 883–978) contains a genuine structured attempt at the exterior-algebra calculation Book 019 imported forward, but it depends on the misattributed spectral sequence (X055) and hypercover descent (X017), so it does not yet discharge X023.
 - X045 gains consumer: Book 037 lines 658–667 (determinant Brauer induction).
+
+### X058 — Book 039 asserts preservation of toric parts under Néron homomorphisms
+
+- **Deficient source:** Book 039, lines 813–818 (defining `v_\Gamma` in (7.10)) and line 848 ("maps maximal tori to maximal tori and therefore induces a map on their abelian quotients").
+- **Consumers:** (7.10) line 816; adjunction (7.12) line 833; discriminant identification (7.13) lines 838–844; diagram (7.14) lines 850–858; Theorem 8.1 items 2–3 (lines 952–958); Theorem 12.1 item 5 (lines 1421/1425); Theorem 13.1 item 6 (line 1455).
+- **Needed result:** any homomorphism of semiabelian varieties over a field carries the toric subgroup into the toric subgroup (equivalently `Hom(\mathbf G_m,A)=0` for an abelian variety `A`).
+- **Why unavailable:** proved nowhere in Books ≤039; Book 035's rigidity lemma would yield it but the corollary is never drawn; Book 038's Chevalley-type filtration is single-group and X057-flagged; Mathlib has no semiabelian theory.
+- **Recommended chronological repair:** insert the lemma in Book 039 Chapter 7 before (7.10), proved from smoothness/diagonalizability of torus images plus proper-vs-affine triviality in the abelian quotient (or from Book 035 §1.3 rigidity); otherwise restrict the general-case branches to admissible finite semistable extensions and flag the lemma for a prior book.
+
+### X059 — Book 041 cites a nonexistent Book 25 and omits two conditional-region inputs from its gap ledger
+
+- **Deficient source:** Book 041, line 1859 ("Books 25 and 38 prove that the separated Picard group is the identity component of the Néron model" — Book 025 does not exist); lines 1433–1440 (Weil-restriction trace homomorphism, whose representability input is the X057 gap); lines 1705–1733 (Lemma 12.3's jet separation and Bertini-with-jets existence, no source); §13.7 ledger (lines 3460–3462) omits both.
+- **Consumers:** Lemma 12.5 → Theorem 12.6 (conditional chain); §10.2 statements; Lemma 12.3 → conditional Theorem 12.6.
+- **Needed results:** correct citation to Book 038 Theorem 9.3 + Book 016 dual graphs; an elementary Galois-conjugate trace construction avoiding Weil-restriction representability; jet-separation/Bertini inputs either supplied or added to the ledger.
+- **Why unavailable:** Book 025 does not exist in the library; Book 038 declines non-affine Weil restriction (X057); Bertini appears in no book ≤040.
+- **Recommended chronological repair:** fix the citation; replace the trace by the Galois sum `\sum_\sigma\sigma(P)` with `G_K`-invariance already proved at lines 1427–1431; add the missing entries to the §13.7 ledger or prove them.
+
+### Consumer updates to earlier findings (batch 039–042)
+
+- X057 gains consumers: Book 039 lines 488, 528, 547 (smoothening) and 596–615, 985–991, 1447–1454 (moving lemma inside Book 038 Thm 10.2); Book 041 lines 1685–1688 (Chevalley filtration) and 1433–1440 (Weil restriction).
+- X007 gains consumer: Book 039 intersection-matrix machinery via Book 012.
+- X018/X020/X021 gain consumer: Book 039 lines 1308–1313 (Tate-module specialization).
+- X038/X039 gain consumer: Book 040 lines 101, 160–265.
+- X048 gains consumer: Book 040 Theorem 5.1 (lines 603–609).
+- X053 gains consumers: Book 040 Ch 8 (lines 906, 934); Book 041 line 2726.
+- X035/X036 gain consumers: Book 041 lines 3536–3545, 3619–3631; Book 042 lines 557–583 et al.
+- X054 gains consumers: Book 042 lines 973–1007, 1262, 1373–1388.
+- X014/X056 cluster gains consumer: Book 042 lines 693–697, 1229–1240 (ordinary special-fiber identification asserted; also unproved at Book 034 line 1519).
