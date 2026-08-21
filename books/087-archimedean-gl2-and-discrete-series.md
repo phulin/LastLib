@@ -1506,8 +1506,8 @@ The following statements all refer to the same object and remove the remaining a
 | Central derivative                     | $0$                                                                                                        |
 | Casimir                                | $\Omega=H^2+2H+4FE$, eigenvalue $0$                                                                        |
 | Harish--Chandra parameter              | $\{\pm1\}$                                                                                                 |
-| Weil absolute value                    | $                                                                                                          |
-| Weil parameter                         | $\operatorname{Ind}_{W_{\mathbf C}}^{W_{\mathbf R}}(z/                                                     |
+| Weil absolute value                    | $\lvert z\rvert_W=z\bar z$ on $\mathbf C^\times$                                                           |
+| Weil parameter                         | $\operatorname{Ind}_{W_{\mathbf C}}^{W_{\mathbf R}}(z/\lvert z\rvert)$                                     |
 | Elliptic character                     | $-1$ on regular elliptic elements                                                                          |
 | Formal degree                          | $1/(4\pi)$ when $\mathrm{PSO}(2)$ has volume one                                                           |
 | Coefficient system                     | Trivial in the unitary weight-two normalization                                                            |
