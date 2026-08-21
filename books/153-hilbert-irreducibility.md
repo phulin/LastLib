@@ -270,7 +270,37 @@ Separability is indispensable over imperfect fields. A purely inseparable polyno
 
 The one-parameter definition implies the corresponding assertion for $K(T_1,\ldots,T_m)$, but a naive induction would be circular: applying Hilbert irreducibility to $T_m$ while leaving the other parameters transcendental would assume that $K(T_1,\ldots,T_{m-1})$ is already Hilbertian. The bridge is a line-selection lemma whose proof is algebraic rather than Hilbertian.
 
-**Lemma 3.1 (affine-line specialization).** Let $K$ be an infinite field of characteristic zero, and let
+We first place the approximation input before any use of it.
+
+**Theorem 3.1 (weak approximation).** Let $K$ be a number field and let $S$ be a finite set of
+pairwise distinct places. The diagonal map
+
+$$
+K\longrightarrow\prod_{v\in S}K_v
+$$
+
+has dense image, and the same is true coordinatewise for $K^m$.
+
+**Proof.** At the finite places, shrink the prescribed neighborhoods to congruence classes
+modulo powers of the corresponding distinct prime ideals. After clearing one common
+denominator, the Chinese remainder theorem gives a class $c+I$, where $I$ is a nonzero
+fractional ideal, all of whose elements satisfy those congruences. Under the Archimedean
+embedding $K\hookrightarrow K_\infty$, the image of $I$ is a full lattice $\Lambda$.
+
+Let $M$ be the product of the rational primes below the selected finite places. Choose arbitrarily
+large integers $N\equiv1\pmod M$. Then $N$ is a unit at every selected finite place, so every
+element of $c+N^{-1}I$ still satisfies the finite congruences. If $P$ is a bounded fundamental
+parallelepiped for $\Lambda$ and $t\in K_\infty$ is the tuple of Archimedean targets, choose
+$\lambda\in\Lambda$ with $N(t-c)-\lambda\in P$. The point $c+\lambda/N$ differs from $t$ by an
+element of $N^{-1}P$, which lies in every prescribed Archimedean neighborhood once $N$ is large.
+This proves density; applying the argument in each coordinate proves the assertion for $K^m$.
+$\square$
+
+Chapter 6 will restate this theorem and develop the refinements needed for local algebras. We
+have proved it here so that neither the line-selection argument nor the proof of Hilbert
+irreducibility depends on a later section.
+
+**Lemma 3.2 (affine-line specialization).** Let $K$ be an infinite field of characteristic zero, and let
 
 $$
 E_1,\ldots,E_r/K(T_1,\ldots,T_m)
@@ -348,8 +378,8 @@ its generic degree.
 
 Finally, over a number field a proper algebraic subset has empty interior in every product of
 finitely many local open sets. Choose a local point of the box off one nonzero defining
-polynomial and shrink around it; the independently proved weak approximation theorem of
-Section 6.1 then supplies a $K$-point in that smaller box, still off the closed subset. Thus the
+polynomial and shrink around it; Theorem 3.1 then supplies a $K$-point in that smaller box, still
+off the closed subset. Thus the
 line coefficients can retain all prescribed local restrictions. $\square$
 
 Once such a line is chosen, form the compositum of the finitely many pulled-back extensions in
@@ -601,7 +631,7 @@ $$
 
 For each $j$, choose a distinct large finite place $w_j\notin S$ that splits completely in $C$, is a place of good reduction, and whose residue cover realizes the conjugacy class of $\gamma_j$. Section 4.4 supplies a nonempty congruence tube $\Theta_j\subset K_{w_j}$ on which that class occurs.
 
-Weak approximation, proved independently in Section 6.1, gives
+Weak approximation, proved in Theorem 3.1, gives
 
 $$
 a\in K\cap
@@ -618,7 +648,7 @@ The fiber of the Galois cover is therefore connected, and the specialized action
 
 **Proof.** The one-parameter assertion is Theorem 4.3, and allowing a further nonzero polynomial
 to vanish on any finite set of old parameters makes the good set infinite. For several
-parameters, apply Lemma 3.1 simultaneously to the finite extensions defined by all the
+parameters, apply Lemma 3.2 simultaneously to the finite extensions defined by all the
 primitive-element polynomials. Choose the line coefficients in local neighborhoods for which
 $\mathbf a+\mathbf b u$ remains in the prescribed box whenever $u$ is sufficiently close to
 $0$. On the selected line every generic polynomial remains irreducible over $K(U)$. Theorem 4.3,
