@@ -825,8 +825,10 @@ $X^{1/[B:\mathbf Q]}$. Their volume is a constant times
 $(\mathrm N\mathfrak b_c)X$, while the covolume of the ideal lattice contains the same factor
 $\mathrm N\mathfrak b_c$. Thus the leading constant is independent of $c$.
 
-The Lipschitz lattice-point estimate, followed by a dyadic decomposition along the finitely many
-faces of the logarithmic fundamental domain, gives an error
+The elementary Lipschitz lattice-point estimate proved in Book 6, Section 4.2 (by covering the
+boundary with $O(t^{[B:\mathbf Q]-1})$ fundamental parallelotopes), applies unchanged to each
+of the finitely many congruence translates and sign sectors. Followed by a dyadic decomposition
+along the finitely many faces of the logarithmic fundamental domain, it gives an error
 $O(X^{1-1/[B:\mathbf Q]}(\log X)^r)$, hence $O(X^{1-\eta})$ after decreasing $\eta$. Only
 finitely many ideal classes, congruence translates, and sign sectors occur, so the constants are
 uniform in $c$. Summing the displayed asymptotic with the values of a nontrivial ray-class
