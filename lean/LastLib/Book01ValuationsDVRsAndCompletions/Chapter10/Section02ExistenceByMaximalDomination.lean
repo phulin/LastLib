@@ -1,5 +1,6 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section01TheExtensionProblem
 import Mathlib.RingTheory.Valuation.LocalSubring
+import Mathlib.RingTheory.Polynomial.ContentIdeal
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
 
@@ -416,6 +417,63 @@ theorem chapter10_algebraic_valuation_extension_exists
     ∃ W : ValuationSubring L,
       Chapter10ContractsTo v.valuationSubring.toSubring W.toSubring :=
   chapter10_valuation_extension_exists v
+
+/-- A primitive algebraic relation over a valuation ring has a unit
+coefficient.  This is the normalization input for comparing extensions by
+their centers. -/
+theorem chapter10_exists_unit_normalized_algebraic_relation
+    {A K L : Type*} [CommRing A] [IsDomain A] [ValuationRing A]
+    [Field K] [Algebra A K] [IsFractionRing A K]
+    [Field L] [Algebra K L] [Algebra.IsAlgebraic K L]
+    [Algebra A L] [IsScalarTower A K L] (x : L) :
+    ∃ p : Polynomial A, p ≠ 0 ∧ Polynomial.aeval x p = 0 ∧
+      ∃ i : ℕ, IsUnit (p.coeff i) := by
+  classical
+  let _ : NormalizedGCDMonoid A := Classical.choice inferInstance
+  let q₀ : Polynomial A :=
+    IsLocalization.integerNormalization (nonZeroDivisors A) (minpoly K x)
+  let p : Polynomial A := q₀.primPart
+  have hmin : minpoly K x ≠ 0 :=
+    minpoly.ne_zero (Algebra.IsAlgebraic.isAlgebraic x).isIntegral
+  have hq₀ : q₀ ≠ 0 := by
+    exact (IsFractionRing.integerNormalization_eq_zero_iff.not).2 hmin
+  have hp : p ≠ 0 := q₀.primPart_ne_zero
+  have hq₀root : Polynomial.aeval x q₀ = 0 := by
+    exact IsLocalization.integerNormalization_aeval_eq_zero
+      (nonZeroDivisors A) (minpoly K x) (minpoly.aeval K x)
+  have hc : q₀.content ≠ 0 := by
+    intro hc
+    apply hq₀
+    rw [q₀.eq_C_content_mul_primPart, hc, Polynomial.C_0, zero_mul]
+  have hproot : Polynomial.aeval x p = 0 := by
+    rw [q₀.eq_C_content_mul_primPart, map_mul, Polynomial.aeval_C] at hq₀root
+    have hAL : Function.Injective (algebraMap A L) := by
+      intro a b hab
+      apply IsFractionRing.injective A K
+      apply FaithfulSMul.algebraMap_injective K L
+      simpa only [IsScalarTower.algebraMap_apply A K L] using hab
+    exact (mul_eq_zero.mp hq₀root).resolve_left
+      ((map_ne_zero_iff (algebraMap A L) hAL).2 hc)
+  refine ⟨p, hp, hproot, ?_⟩
+  have hprim : p.IsPrimitive := by
+    dsimp only [p]
+    exact q₀.isPrimitive_primPart
+  have hcontent : p.contentIdeal = (⊤ : Ideal A) :=
+    (Polynomial.isPrimitive_iff_contentIdeal_eq_top p).mp hprim
+  by_contra hunit
+  push Not at hunit
+  have hcoeff : ∀ i : ℕ, p.coeff i ∈ IsLocalRing.maximalIdeal A := by
+    intro i
+    rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
+    exact hunit i
+  have hle : p.contentIdeal ≤ IsLocalRing.maximalIdeal A := by
+    rw [Polynomial.contentIdeal_def, Ideal.span_le]
+    intro a ha
+    rw [Finset.mem_coe, Polynomial.mem_coeffs_iff] at ha
+    obtain ⟨i, _, rfl⟩ := ha
+    exact hcoeff i
+  rw [hcontent] at hle
+  exact (IsLocalRing.maximalIdeal.isMaximal A).ne_top (top_unique hle)
 
 /-- Ring-level contraction of a valuation subring is the corresponding
 book-facing equivalence of valuations. -/
