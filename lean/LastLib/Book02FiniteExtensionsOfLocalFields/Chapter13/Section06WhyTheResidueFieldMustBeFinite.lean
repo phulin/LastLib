@@ -123,8 +123,9 @@ theorem chapter13_complete_perfect_residue_extension_has_fundamental_equality
         vK.valuationSubring vL.valuationSubring
         (IsLocalRing.maximalIdeal vL.valuationSubring) = f) :
     Module.finrank K L = e * f := by
-  exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter12.complete_extension_degree_is_ramification_times_residue_degree
-    vK vL e f hcomplete he hf
+  rw [← he, ← hf]
+  exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.complete_extension_defectless_without_separability
+    vK vL hcomplete
 
 /- SOURCE_ISSUE: The last hierarchy bullet says “completeness and
    discreteness give ... `[L : K] = e f`” without a defectless or perfect

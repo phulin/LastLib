@@ -62,6 +62,69 @@ def chapter13MaximalUnramifiedIntermediate
     ∀ M : IntermediateField K L,
       chapter13IsUnramifiedIntermediate vK M → M ≤ Kf
 
+/-! The generic factorization interface used below belongs to this chapter's
+    valuation-level presentation.  Earlier chapters provide the endpoint
+    invariants, but not a record containing the chosen middle field. -/
+structure Chapter13UnramifiedTotallyRamifiedFactorization
+    {K L Γ : Type u} [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero Γ]
+    (vK : Valuation K Γ) (vL : Valuation L Γ)
+    [vK.HasExtension vL]
+    [Algebra (IsLocalRing.ResidueField vK.valuationSubring)
+      (IsLocalRing.ResidueField vL.valuationSubring)] where
+  middle : Type u
+  [field_middle : Field middle]
+  [algebra_K_middle : Algebra K middle]
+  [algebra_middle_L : Algebra middle L]
+  [tower_K_middle_L : IsScalarTower K middle L]
+  vMiddle : Valuation middle Γ
+  [extension_K_middle : vK.HasExtension vMiddle]
+  [extension_middle_L : vMiddle.HasExtension vL]
+  [middle_rank_one_discrete : Valuation.IsRankOneDiscrete vMiddle]
+  [finiteDimensional_K_middle : FiniteDimensional K middle]
+  [finiteDimensional_middle_L : FiniteDimensional middle L]
+  [residueAlgebra_K_middle :
+    Algebra (IsLocalRing.ResidueField vK.valuationSubring)
+      (IsLocalRing.ResidueField vMiddle.valuationSubring)]
+  [residueFinite_K_middle :
+    FiniteDimensional (IsLocalRing.ResidueField vK.valuationSubring)
+      (IsLocalRing.ResidueField vMiddle.valuationSubring)]
+  [residueAlgebra_middle_L :
+    Algebra (IsLocalRing.ResidueField vMiddle.valuationSubring)
+      (IsLocalRing.ResidueField vL.valuationSubring)]
+  [residueFinite_middle_L :
+    FiniteDimensional (IsLocalRing.ResidueField vMiddle.valuationSubring)
+      (IsLocalRing.ResidueField vL.valuationSubring)]
+  [residueTower :
+    IsScalarTower (IsLocalRing.ResidueField vK.valuationSubring)
+      (IsLocalRing.ResidueField vMiddle.valuationSubring)
+      (IsLocalRing.ResidueField vL.valuationSubring)]
+  [residueSeparable_K_middle :
+    Algebra.IsSeparable (IsLocalRing.ResidueField vK.valuationSubring)
+      (IsLocalRing.ResidueField vMiddle.valuationSubring)]
+  eKM : ℕ
+  fKM : ℕ
+  eML : ℕ
+  fML : ℕ
+  eKM_eq_ramification_index :
+    eKM = LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex
+      vK.valuationSubring vMiddle.valuationSubring
+        (IsLocalRing.maximalIdeal vMiddle.valuationSubring)
+  fKM_eq_residue_degree :
+    fKM = LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterResidueDegree
+      vK.valuationSubring vMiddle.valuationSubring
+        (IsLocalRing.maximalIdeal vMiddle.valuationSubring)
+  eML_eq_ramification_index :
+    eML = LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex
+      vMiddle.valuationSubring vL.valuationSubring
+        (IsLocalRing.maximalIdeal vL.valuationSubring)
+  fML_eq_residue_degree :
+    fML = LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterResidueDegree
+      vMiddle.valuationSubring vL.valuationSubring
+        (IsLocalRing.maximalIdeal vL.valuationSubring)
+  eKM_eq_one : eKM = 1
+  fML_eq_one : fML = 1
+
 /-- Book-facing degree data for the maximal unramified stage and the
 remaining totally ramified stage. -/
 structure Chapter13UnramifiedTotallyRamifiedDegreeData
@@ -93,7 +156,7 @@ structure Chapter13UnramifiedTotallyRamifiedDegreeData
       vK.valuationSubring vL.valuationSubring
       (IsLocalRing.maximalIdeal vL.valuationSubring)
   factorization :
-    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter12.Chapter12UnramifiedTotallyRamifiedFactorization vK vL
+    Chapter13UnramifiedTotallyRamifiedFactorization vK vL
   /-- The abstract middle field in Chapter 12 is the chosen intermediate
   field `Kf` after its canonical map into `L`. -/
   middle_range :
