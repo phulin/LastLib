@@ -673,6 +673,25 @@ theorem ramified_branch_completion_product
       rfl }
   simpa [K, J] using completion_product_of_finite_precision_crt K J crt
 
+/-- The ring-level completed product theorem, including positive-power
+cofinality and localization at each maximal branch. -/
+theorem completed_branch_product_ring_equiv
+    {A B : Type*} [CommRing A] [CommRing B] [Algebra A B]
+    {g : ℕ} (π : A) (P : Fin g → Ideal B) (e : Fin g → ℕ)
+    [∀ i, (P i).IsPrime] [∀ i, (P i).IsMaximal]
+    (hfactor : ∀ n : ℕ,
+      extendedPrincipalPowerIdeal A B π n = ⨅ i, P i ^ (n * e i))
+    (he : ∀ i, 0 < e i) (hpair : pairwiseCoprimeIdeals P) :
+    Nonempty
+      (AdicCompletion (extendedPrincipalPowerIdeal A B π 1) B ≃+*
+        (∀ i, branchCompletion B (P i))) := by
+  obtain ⟨ecrt⟩ := ramified_branch_completion_product π P e hfactor hpair
+  let ebranch (i : Fin g) :
+      AdicCompletion (P i ^ e i) B ≃+* branchCompletion B (P i) :=
+    Classical.choice (adic_completion_equiv_power (P i) (e i) (he i)) |>.trans
+      (Classical.choice (adic_completion_localization_equiv (P i)))
+  exact ⟨ecrt.trans (RingEquiv.piCongrRight ebranch)⟩
+
 end
 
 end LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
