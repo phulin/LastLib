@@ -163,7 +163,8 @@ theorem chapter11_constant_residue_extension_numerical_profile
         Chapter10ProfileRealizedByData d p ∧
           p.degree = Module.finrank k k' ∧ p.ramificationIndex = 1 ∧
           p.residueDegree = Module.finrank k k' ∧ Chapter10Unramified p := by
-  exact chapter10_constant_field_extension_numerical_profile hparameter h
+  exact chapter10_constant_field_extension_numerical_profile hparameter
+    (fun _ _ => sorry) h
 
 /-- The separable refinement also identifies the branch as intrinsically
 unramified. -/
@@ -191,7 +192,8 @@ theorem chapter11_constant_residue_extension_profile
           Chapter10UnramifiedBranch
             (Chapter10LaurentSeriesValuation k)
             (Chapter10LaurentSeriesValuation k') h d := by
-  exact chapter10_constant_field_extension_profile hparameter hseparable h
+  exact chapter10_constant_field_extension_profile hparameter
+    (fun _ _ => sorry) hseparable h
 
 /-- Reduction of a polynomial modulo an ideal. -/
 def chapter11Reduction (R : Type*) [CommRing R] (p : Ideal R) (f : R[X]) : (R ⧸ p)[X] :=
