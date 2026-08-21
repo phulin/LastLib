@@ -1,5 +1,6 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section07NormsAndIdeals
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.Section04AbsoluteValueNormalizations
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section07ContinuityOfEmbeddings
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.Section05ResidueFieldShadows
 import Mathlib.Algebra.Order.Floor.Div
 
@@ -95,7 +96,24 @@ theorem chapter11_mem_unit_filtration_iff {K : Type*} [Field K]
 theorem chapter11_mem_unit_set_iff_valuation_zero {K : Type*} [Field K]
     (v : AddValuation K (WithTop ℤ)) (x : K) :
     x ∈ chapter11UnitSet v ↔ v x = 0 := by
-  sorry
+  constructor
+  · rintro ⟨u, rfl⟩
+    have hu : v.toValuation (u : Kˣ) = 1 := by
+      rw [(Valuation.isEquiv_valuation_valuationSubring v.toValuation).eq_one_iff_eq_one]
+      exact (ValuationSubring.mem_unitGroup_iff _ _).mp u.prop
+    simpa [AddValuation.toValuation_apply] using hu
+  · intro hv
+    have hx0 : x ≠ 0 := by
+      intro hx
+      subst x
+      simpa using hv
+    let ux : Kˣ := Units.mk0 x hx0
+    have hux : v.toValuation (ux : K) = 1 := by
+      simpa [AddValuation.toValuation_apply, ux] using hv
+    have hmem : ux ∈ v.toValuation.valuationSubring.unitGroup := by
+      rw [ValuationSubring.mem_unitGroup_iff]
+      exact (Valuation.isEquiv_valuation_valuationSubring v.toValuation).eq_one_iff_eq_one.mp hux
+    exact ⟨⟨ux, hmem⟩, rfl⟩
 
 /- The image of the `n`th unit layer under the algebra norm. -/
 def chapter11NormImage (K L : Type*) [Field K] [Field L] [Algebra K L]
@@ -262,7 +280,9 @@ theorem chapter11_mem_norm_subgroup_iff
     [FiniteDimensional K L] (u : Kˣ) :
     u ∈ chapter11NormSubgroup K L ↔
       ∃ x : Lˣ, Units.map (Algebra.norm K (S := L)) x = u := by
-  sorry
+  change u ∈ Subgroup.map (Units.map (Algebra.norm K (S := L))) ⊤ ↔ _
+  rw [Subgroup.mem_map]
+  simp
 
 /- The valuation-coordinate times unit-coordinate subset of `Kˣ`, written in `K`. -/
 def chapter11ValueUnitProductSet {K : Type*} [Field K]
@@ -283,14 +303,16 @@ theorem chapter11_norm_continuous
     (K L : Type*) [NormedField K] [NormedField L]
     [NormedAlgebra K L] [FiniteDimensional K L] :
     Continuous (Algebra.norm K (S := L)) := by
-  sorry
+  exact
+    (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03_trace_and_norm_are_continuous
+      (K := K) (L := L)).2
 
 /- The norm is a multiplicative homomorphism and sends `1` to `1`. -/
 theorem chapter11_norm_preserves_one
     (K L : Type*) [Field K] [Ring L] [Algebra K L]
     [FiniteDimensional K L] :
     Algebra.norm K (1 : L) = 1 := by
-  sorry
+  exact (Algebra.norm K).map_one
 
 /- A valued finite extension sends the base valuation-ring units to base units. -/
 -- SOURCE_ISSUE: The hypotheses only identify the chosen valuation after
@@ -303,7 +325,19 @@ theorem chapter11_norm_maps_valuation_units
     (f : ℕ)
     (hnorm : chapter11NormValuationFormula K L vK vL f) :
     chapter11NormImage K L vL 0 ⊆ chapter11UnitFiltration vK 0 := by
-  sorry
+  intro x hx
+  rcases hx with ⟨y, hy, rfl⟩
+  have hy' : y ∈ chapter11UnitSet vL := by
+    simpa [chapter11UnitFiltration] using hy
+  have hy0 : y ≠ 0 := by
+    intro hy0
+    subst y
+    have : vL (0 : L) = 0 :=
+      (chapter11_mem_unit_set_iff_valuation_zero vL 0).mp hy'
+    simp at this
+  rw [chapter11_unit_filtration_zero]
+  exact (chapter11_mem_unit_set_iff_valuation_zero vK _).2
+    (by rw [hnorm y hy0, (chapter11_mem_unit_set_iff_valuation_zero vL y).mp hy', mul_zero])
 
 /- In a normal closure, the finite separable norm is the product of conjugates. -/
 theorem chapter11_norm_eq_product_of_conjugates
@@ -312,7 +346,7 @@ theorem chapter11_norm_eq_product_of_conjugates
     [FiniteDimensional K L] [Algebra.IsSeparable K L] [IsAlgClosed E] (x : L) :
     algebraMap K E (Algebra.norm K x) =
       ∏ σ : L →ₐ[K] E, σ x := by
-  sorry
+  exact Algebra.norm_eq_prod_embeddings K E x
 
 /- A unit-level lift of the field norm and its residue compatibility.  These
    are the explicit integral-extension data needed to apply the residue norm
