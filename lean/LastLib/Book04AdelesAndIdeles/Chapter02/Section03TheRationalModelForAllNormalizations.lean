@@ -62,12 +62,12 @@ theorem chapter02_rational_real_value_formula (a : ℚ) :
 theorem chapter02_rational_padic_value_formula
     (p : Chapter02RationalPrime) (a : ℚ) :
     Chapter02RationalPadicValue p a =
-      if ha : a = 0 then 0 else
+      if _ha : a = 0 then 0 else
         (p.1 : ℝ) ^ (-Chapter02RationalPAdicExponent p a) := by
-  letI : Fact p.1.Prime := ⟨p.2⟩
+  let : Fact p.1.Prime := ⟨p.2⟩
   by_cases ha : a = 0
   · simp [Chapter02RationalPadicValue, Chapter02RationalPadicAbsoluteValue,
-      Chapter02RationalPAdicExponent, ha]
+      ha]
   · have h_toAdd :
         (WithZero.unzero ((Rat.padicValuation p.1).ne_zero_iff.mpr ha)).toAdd =
           -padicValRat p.1 a := by
@@ -214,7 +214,7 @@ theorem chapter02_rational_product_formula
   have hnorm (p : Chapter02RationalPrime) :
       Chapter02RationalPadicValue p a =
         (p.1 : ℝ) ^ (-(padicValNat p.1 N : ℤ) + padicValNat p.1 D) := by
-    letI : Fact p.1.Prime := ⟨p.2⟩
+    let : Fact p.1.Prime := ⟨p.2⟩
     change (padicNorm p.1 a : ℝ) = _
     rw [padicNorm.eq_zpow_of_nonzero ha, hval, Rat.cast_zpow, Rat.cast_natCast]
     congr 1
@@ -395,18 +395,20 @@ theorem chapter02_restriction_to_Q_has_local_degree_weight
     let p : Chapter02RationalPrime := ⟨p0.absNorm, hp⟩
     have hPover : P.asIdeal.LiesOver (Ideal.span {(p.1 : ℤ)}) := by
       simpa [p, p0] using (Int.liesOver_span_absNorm P.asIdeal)
-    letI : P.asIdeal.LiesOver (Ideal.span {(p.1 : ℤ)}) := hPover
+    let : P.asIdeal.LiesOver (Ideal.span {(p.1 : ℤ)}) := hPover
     let V : IsDedekindDomain.HeightOneSpectrum ℤ := .ofPrime hp0'
     have hV : V.asIdeal = p0 := by
       simp [V]
     have hp0span : Ideal.span {(p.1 : ℤ)} = p0 := by
-      simpa [p] using (Int.ideal_span_absNorm_eq_self p0)
+      have : (p.1 : ℤ) = p0.absNorm := rfl
+      rw [this]
+      exact Int.ideal_span_absNorm_eq_self p0
     have hVP : P.asIdeal.LiesOver V.asIdeal := by
       rw [hV]
       rw [← hp0span]
       exact hPover
-    letI : P.asIdeal.LiesOver V.asIdeal := hVP
-    letI : Fact p.1.Prime := ⟨p.2⟩
+    let : P.asIdeal.LiesOver V.asIdeal := hVP
+    let : Fact p.1.Prime := ⟨p.2⟩
     have hVint {z : ℤ} (hz : z ≠ 0) :
         V.intValuation z = WithZero.exp (-(padicValInt p.1 z : ℤ)) := by
       rw [V.intValuation_if_neg hz]
@@ -425,7 +427,7 @@ theorem chapter02_restriction_to_Q_has_local_degree_weight
           rw [← Nat.cast_pow, Int.natCast_dvd] at hdiv
           have hle' := (Nat.pow_dvd_iff_le_padicValNat p.2.ne_one
             (Int.natAbs_ne_zero.mpr hz)).1 hdiv
-          exact (Nat.not_succ_le_self n) (by simpa [n] using hle')
+          exact (Nat.not_succ_le_self n) (by simp at hle'; exact hle')
         have hpz : Prime (p.1 : ℤ) := Nat.prime_iff_prime_int.mp p.2
         simpa [n] using
           (Ideal.count_associates_eq' (R := ℤ) (x := (p.1 : ℤ)) (a := z)
