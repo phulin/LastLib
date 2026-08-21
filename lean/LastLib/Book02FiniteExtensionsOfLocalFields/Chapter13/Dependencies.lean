@@ -1,13 +1,7 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter06.Section06CompactnessAndLocalCompactness
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter02.Section03RamificationIndexAndResidueDegree
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Section04FiniteResidueFields
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.Section03UniformizersAndMinimalPolynomials
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09.Section06TameBoundary
-import Mathlib.Analysis.Normed.Field.Krasner
 import Mathlib.FieldTheory.Finite.GaloisField
 import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
-import Mathlib.RingTheory.Polynomial.Eisenstein.Basic
-import Mathlib.RingTheory.Polynomial.Eisenstein.Criterion
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter13
 
@@ -179,7 +173,8 @@ structure Chapter13ValuationExtensionWitness
   tame : chapter13TameExtension vK valuation
 
 def chapter13ModelHasTameWitness
-    {K : Type u} [Field K] (vK : Valuation K ℤᵐ⁰)
+    {K Γ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ]
+    (vK : Valuation K Γ)
     [Valuation.IsRankOneDiscrete vK]
     (E : Chapter13FiniteExtensionModel K) : Prop :=
   letI : Field E.carrier := E.field_carrier
@@ -188,7 +183,8 @@ def chapter13ModelHasTameWitness
   Nonempty (Chapter13ValuationExtensionWitness vK (L := E.carrier))
 
 def chapter13TameBoundedDegreeClasses
-    {K : Type u} [Field K] (vK : Valuation K ℤᵐ⁰)
+    {K Γ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ]
+    (vK : Valuation K Γ)
     [Valuation.IsRankOneDiscrete vK] (N : ℕ) :
     Set (Chapter13FiniteExtensionClass K) :=
   {c | ∃ E : Chapter13FiniteExtensionModel K,
@@ -197,7 +193,8 @@ def chapter13TameBoundedDegreeClasses
         chapter13ModelHasTameWitness vK E}
 
 def chapter13TameBoundedDegreeFiniteness
-    {K : Type u} [Field K] (vK : Valuation K ℤᵐ⁰)
+    {K Γ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ]
+    (vK : Valuation K Γ)
     [Valuation.IsRankOneDiscrete vK] (N : ℕ) : Prop :=
   Set.Finite (chapter13TameBoundedDegreeClasses vK N)
 
@@ -252,18 +249,6 @@ theorem chapter13_root_field_isomorphic_classes_equal
     chapter13RootFieldExtensionClass E Ω α =
       chapter13RootFieldExtensionClass E Ω β := by
   sorry
-
-structure Chapter13KrasnerNeighborhoodData
-    (E Ω : Type*) [Field E] [Field Ω] [Algebra E Ω]
-    [TopologicalSpace (E[X])]
-    (g : E[X]) (α : Ω) where
-  root : aeval α g = 0
-  neighborhood : Set E[X]
-  isOpen_neighborhood : IsOpen neighborhood
-  mem_neighborhood : g ∈ neighborhood
-  root_field_constant :
-    ∀ h : E[X], h ∈ neighborhood → ∀ β : Ω,
-      aeval β h = 0 → chapter13RootFieldsEIsomorphic E Ω α β
 
 end
 

@@ -1,6 +1,7 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter13.Section02CompactFamiliesOfEisensteinPolynomials
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter13.Section01TheFinitenessQuestionAndItsExactScope
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter12.Section02TheSeparabilityMap
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter13.Section02CompactFamiliesOfEisensteinPolynomials
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Section04FiniteResidueFields
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.Section03UniformizersAndMinimalPolynomials
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter13
 
@@ -16,7 +17,7 @@ open scoped Polynomial
 
 /-- The finite set of numerical factorizations used for one fixed degree. -/
 def chapter13DegreeFactorPairs (d : ℕ) : Set (ℕ × ℕ) :=
-  {q | q.1 * q.2 = d}
+  {q | 0 < q.1 ∧ 0 < q.2 ∧ q.1 * q.2 = d}
 
 theorem chapter13_degree_has_finitely_many_factor_pairs (d : ℕ) :
     Set.Finite (chapter13DegreeFactorPairs d) := by
@@ -38,6 +39,9 @@ structure Chapter13UnramifiedIntermediateData
   [finite : FiniteDimensional K M]
   [residue_algebra :
     Algebra (IsLocalRing.ResidueField vK.valuationSubring)
+      (IsLocalRing.ResidueField valuation.valuationSubring)]
+  [residue_finite :
+    FiniteDimensional (IsLocalRing.ResidueField vK.valuationSubring)
       (IsLocalRing.ResidueField valuation.valuationSubring)]
   residue_separable :
     Algebra.IsSeparable
@@ -209,7 +213,7 @@ theorem chapter13_finite_extension_has_finite_residue_field
   sorry
 
 def chapter13BoundedDegreeFactorPairs (N : ℕ) : Set (ℕ × ℕ) :=
-  {q | q.1 * q.2 ≤ N}
+  {q | 0 < q.1 ∧ 0 < q.2 ∧ q.1 * q.2 ≤ N}
 
 theorem chapter13_bounded_degree_has_finitely_many_factor_pairs (N : ℕ) :
     Set.Finite (chapter13BoundedDegreeFactorPairs N) := by
@@ -236,7 +240,15 @@ theorem chapter13_unique_unramified_base_of_fixed_degree
           letI : Algebra K M.carrier := M.carrierAlgebra
           letI : Algebra K M'.carrier := M'.carrierAlgebra
           Nonempty (M.carrier ≃ₐ[K] M'.carrier) := by
-  sorry
+  obtain ⟨M, hM, _, _⟩ :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.chapter07_finite_residue_unramified_exists
+      (A := A) (K := K) (k := k)
+      res f hf hres_surjective hres_kernel hpoly
+  refine ⟨M, hM, ?_⟩
+  intro M' hM'
+  exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.chapter07_finite_residue_unramified_unique
+      (A := A) (K := K) (k := k)
+      res f hres_surjective hres_kernel M M' hM hM'
 
 /-- A uniformizer in the totally ramified stage has an Eisenstein minimal
 polynomial of the ramification degree. -/

@@ -1,5 +1,4 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter13.Dependencies
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section05MixedAndEqualCharacteristic
 import Mathlib.NumberTheory.Padics.PadicNumbers
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter13
@@ -68,8 +67,8 @@ field with finite residue field, the tamely ramified classes of bounded degree
 form a finite set.  Unramified extensions are included because their
 ramification index is one. -/
 theorem chapter13_theorem_13_2_bounded_tame_finiteness
-    {K : Type*} [Field K]
-    (vK : Valuation K ℤᵐ⁰)
+    {K Γ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ]
+    (vK : Valuation K Γ)
     [Valuation.IsRankOneDiscrete vK]
     [Finite (IsLocalRing.ResidueField vK.valuationSubring)]
     (hcomplete : IsAdicComplete
@@ -79,8 +78,8 @@ theorem chapter13_theorem_13_2_bounded_tame_finiteness
   sorry
 
 theorem chapter13_char_zero_finiteness_restricts_to_tame_classes
-    {K : Type*} [Field K]
-    (vK : Valuation K ℤᵐ⁰) [CharZero K]
+    {K Γ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ]
+    (vK : Valuation K Γ) [CharZero K]
     [Valuation.IsRankOneDiscrete vK]
     [Finite (IsLocalRing.ResidueField vK.valuationSubring)]
     (hcomplete : IsAdicComplete
@@ -100,7 +99,7 @@ def chapter13ExtensionEmbeddings
 theorem chapter13_one_separable_class_can_have_several_embeddings
     {K L Ω : Type*} [Field K] [Field L] [Field Ω]
     [Algebra K L] [Algebra K Ω] [Algebra L Ω]
-    [IsScalarTower K L Ω] [IsAlgClosed Ω] [Normal K Ω]
+    [IsScalarTower K L Ω] [IsAlgClosed Ω]
     [FiniteDimensional K L] [Algebra.IsSeparable K L]
     (hdegree : 2 ≤ Module.finrank K L) :
     ∃ σ τ : chapter13ExtensionEmbeddings K L Ω, σ ≠ τ := by

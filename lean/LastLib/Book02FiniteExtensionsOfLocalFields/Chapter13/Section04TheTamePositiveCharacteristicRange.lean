@@ -22,20 +22,23 @@ theorem chapter13_prime_to_characteristic_derivative_has_expected_degree
       g.derivative.leadingCoeff = (e : E) := by
   sorry
 
-/-- A monic degree-`e` polynomial over a field of characteristic `p` is
-separable when `p` does not divide `e`. -/
+/-- An irreducible monic degree-`e` polynomial over a field of characteristic
+`p` is separable when `p` does not divide `e`.  Irreducibility is essential:
+a repeated-factor polynomial can have prime-to-`p` total degree. -/
 theorem chapter13_prime_to_characteristic_monic_polynomial_is_separable
     {E : Type*} [Field E] {p e : ℕ} [Fact p.Prime] [CharP E p]
-    (g : E[X]) (hmonic : g.Monic) (hdegree : g.natDegree = e)
+    (g : E[X]) (hirreducible : Irreducible g) (hmonic : g.Monic)
+    (hdegree : g.natDegree = e)
     (he : 0 < e) (he_p : Nat.Coprime e p) :
     g.Separable := by
   sorry
 
-/-- In characteristic zero, every monic positive-degree polynomial is
-separable. -/
+/-- In characteristic zero, every irreducible monic positive-degree
+polynomial is separable. -/
 theorem chapter13_characteristic_zero_monic_polynomial_is_separable
     {E : Type*} [Field E] [CharZero E]
-    (g : E[X]) (he : 0 < g.natDegree) (hmonic : g.Monic) :
+    (g : E[X]) (hirreducible : Irreducible g) (he : 0 < g.natDegree)
+    (hmonic : g.Monic) :
     g.Separable := by
   sorry
 
@@ -51,12 +54,13 @@ theorem chapter13_eisenstein_degree_prime_to_residue_characteristic_is_separable
     {A E : Type*} [CommRing A] [Field E]
     [Algebra A E] {p e : ℕ} [Fact p.Prime] [CharP E p]
     (_m : Ideal A) (g : A[X])
+    (hirreducible : Irreducible (g.map (algebraMap A E)))
     (hmonic : (g.map (algebraMap A E)).Monic)
     (hdegree : (g.map (algebraMap A E)).natDegree = e)
     (he : 0 < e) (he_p : Nat.Coprime e p) :
     (g.map (algebraMap A E)).Separable := by
   exact chapter13_prime_to_characteristic_monic_polynomial_is_separable
-    _ hmonic hdegree he he_p
+    _ hirreducible hmonic hdegree he he_p
 
 /-- Unramified extensions are tame because their ramification index is one. -/
 theorem chapter13_unramified_ramification_index_is_tame
@@ -71,12 +75,13 @@ theorem chapter13_tame_eisenstein_family_is_separable
     [Algebra A E] {p e : ℕ} [Fact p.Prime] [CharP E p]
     (_m : Ideal A) (_P : Set A) (g : A[X])
     (_hEisenstein : g.IsEisensteinAt _m)
+    (hirreducible : Irreducible (g.map (algebraMap A E)))
     (hmonic : (g.map (algebraMap A E)).Monic)
     (hdegree : (g.map (algebraMap A E)).natDegree = e)
     (he : 0 < e) (he_p : Nat.Coprime e p) :
     (g.map (algebraMap A E)).Separable := by
   exact chapter13_eisenstein_degree_prime_to_residue_characteristic_is_separable
-    _m g hmonic hdegree he he_p
+    _m g hirreducible hmonic hdegree he he_p
 
 /-- The tame proof has the same compact-family shape as the characteristic
 zero proof; only the separability bridge changes. -/

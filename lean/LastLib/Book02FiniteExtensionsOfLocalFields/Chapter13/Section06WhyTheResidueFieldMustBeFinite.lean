@@ -49,7 +49,8 @@ structure Chapter13UnramifiedExtensionWitness
       (IsLocalRing.maximalIdeal valuation.valuationSubring) = 1
 
 def chapter13UnramifiedDegreeClasses
-    {K : Type u} [Field K] (vK : Valuation K ℤᵐ⁰) (d : ℕ) :
+    {K Γ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ]
+    (vK : Valuation K Γ) (d : ℕ) :
     Set (Chapter13FiniteExtensionClass K) :=
   {c | ∃ E : Chapter13FiniteExtensionModel K,
       chapter13FiniteExtensionClassOf E = c ∧
@@ -76,8 +77,8 @@ def chapter13FiniteSeparableDegreeClasses
    Henselian hypothesis, and the residue field is used without assuming it
    is finite. -/
 theorem chapter13_unramified_classes_correspond_to_separable_residue_classes
-    {K : Type u} [Field K]
-    (vK : Valuation K ℤᵐ⁰)
+    {K Γ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ]
+    (vK : Valuation K Γ)
     [Valuation.IsRankOneDiscrete vK]
     (d : ℕ)
     (hcomplete : IsAdicComplete
@@ -90,8 +91,8 @@ theorem chapter13_unramified_classes_correspond_to_separable_residue_classes
 
 /-- The fixed-degree consequence of the residue-field classification. -/
 theorem chapter13_infinite_residue_separable_classes_lift_to_unramified_classes
-    {K : Type u} [Field K]
-    (vK : Valuation K ℤᵐ⁰)
+    {K Γ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ]
+    (vK : Valuation K Γ)
     [Valuation.IsRankOneDiscrete vK]
     (d : ℕ)
     (hresidue_infinite :

@@ -1,4 +1,8 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter13.Dependencies
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter12.Section05Conclusion
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter06.Section06CompactnessAndLocalCompactness
+import Mathlib.RingTheory.Polynomial.Eisenstein.Basic
+import Mathlib.RingTheory.Polynomial.Eisenstein.Criterion
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter13
 
@@ -151,19 +155,29 @@ theorem chapter13_eisenstein_root_field_classes_are_finite
   chapter13_compact_locally_constant_range_finite
     (chapter13RootFieldClassMap E Ω P root hfinite) hcompact hlocally_constant
 
-/- DEPENDENCY_GUESS: The source invokes Corollary 12.3, but no declaration
-   with that name is available in the preceding Chapter 12 files.  The
-   following local interface is the natural Krasner consequence needed by
-   the compactness proof: a separable root field is locally constant under
-   coefficient perturbation. -/
+/-- The Chapter 12 local-constancy theorem in the form needed here.  The
+source applies it to monic Eisenstein polynomials, which are irreducible;
+keeping irreducibility and the fixed degree explicit prevents the false
+claim that an arbitrary separable polynomial has one generated field for
+all of its roots. -/
 theorem chapter13_separable_root_field_has_krasner_neighborhood
     {E Ω : Type*} [NontriviallyNormedField E] [CompleteSpace E]
-    [IsUltrametricDist E] [NormedField Ω] [TopologicalSpace (E[X])]
-    [NormedAlgebra E Ω]
-    [Algebra.IsAlgebraic E Ω] [IsKrasner E Ω]
-    (g : E[X]) (α : Ω) (hroot : aeval α g = 0)
-    (hseparable : g.Separable) :
-    Nonempty (Chapter13KrasnerNeighborhoodData E Ω g α) := by
+    [IsUltrametricDist E] [NormedField Ω] [NormedAlgebra E Ω]
+    [FiniteDimensional E Ω]
+    (g : E[X]) (α : Ω) (d : ℕ)
+    (hmonic : g.Monic) (hirreducible : Irreducible g)
+    (hseparable : g.Separable) (hdegree : g.natDegree = d)
+    (hroot : aeval α g = 0)
+    (hsplits : (g.map (algebraMap E Ω)).Splits) :
+    ∃ U : Set (Fin d → E), IsOpen U ∧
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter12.chapter12CoefficientVector d g ∈ U ∧
+      ∀ b : Fin d → E, b ∈ U →
+        let h := LastLib.Book02FiniteExtensionsOfLocalFields.Chapter12.chapter12MonicPolynomial d b
+        Irreducible h ∧
+          (h.map (algebraMap E Ω)).Splits ∧
+          ∀ β : Ω, aeval β h = 0 →
+            Nonempty (chapter13RootField E Ω α ≃ₐ[E]
+              chapter13RootField E Ω β) := by
   sorry
 
 /-- Coefficientwise congruence modulo a fixed power of the maximal ideal. -/
