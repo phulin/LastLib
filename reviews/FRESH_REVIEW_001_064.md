@@ -516,13 +516,42 @@ Defects: (1) Lines 124, 954, 970 claim `\mu_{p^n}`-torsors are syntomic covers v
 
 The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
 
+### Book 051 — `051-finite-flat-group-schemes-of-small-height.md`
+
+**Verdict: FAIL — no new structural defects and no chronology violations; the Oort–Tate classification is fully proved in all cases, but the central chain operatively consumes X036 (Book 028's summation law) plus inherited X037/X054 consumers, and the book's missing import ledger conceals those dependencies.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 1839 (EOF), in chronological/result order, during this audit.
+
+The internal development is complete and correct as written: odd-`p` Oort–Tate via self-contained Vandermonde interpolation with the `v(w_p)=1` argument and faithfully flat root adjunction; the `p=2` case with explicit converse and dual swap; connected–étale filtrations, exponent calculus, base-change scaling, rigidity, descent, the dyadic family, and the intermediate model all proved internally. No forward references to Books 052+ exist, there is no circularity, and the table of contents matches exactly.
+
+Defects: (1) lines 507–519 and 907–913 consume Book 028 §4.4's finite-flat summation law (X036) for `[p]=0`; lines 294–300 and 1729 consume the X037-flagged abelian torsion/quotient foundation; lines 1526/1733–1739 consume Book 034 Chapter 14's Weil pairing and the ordinary `E_k[p]` identification flagged at Book 034 line 1519 (X054 cluster). The book cites no external sources by name, so these operative dependencies are concealed — an import ledger is needed. (2) Lines 479–485 assert primitive-element-from-coradical-filtration ("follows directly") with no coradical theory available anywhere earlier. (3) Minor: line 772 justifies the odd-`p` duality normalization by recalling a Vandermonde calculation rather than displaying it (the `p=2` analogue is displayed).
+
+### Book 052 — `052-dieudonne-theory-and-raynaud-full-faithfulness.md`
+
+**Verdict: PASS — the headline chain (Dieudonné anti-equivalence, denominator theorem, isomorphism lemma, graph closure, Raynaud full faithfulness) is proved in-book with every cross-book citation verified present and chronological; remaining defects are in-book proof gaps, none a chronology violation or circularity.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through EOF (line 1665) across two passes: lines 1–1665 were read by the first auditor in three chunks whose notes I verified and extended, and the boundary region was re-read directly; every line was read.
+
+All operative citations verified at their sources: Book 049's primitivity of degree-one crystalline cohomology (Prop 11.2), Book 051's Oort–Tate unit-coefficient lemma, schematic closure theorem, frame normalization, and dyadic family, and Book 042's generic-fiber faithfulness. The only forward mention (Book 053 at line 1188) is labeled future and unused; p-divisible groups are avoided entirely via compatible divisible systems, so there is no Book 055 dependency. The table of contents matches all fourteen chapters.
+
+In-book gaps to repair: (1) line 246 asserts étaleness of the Lang map on `GL_d` for semilinear descent without proof (consumers: the étale classification feeding Chapters 3–4); (2) lines 881–890 define `D(G)` on the big fppf crystalline site, but Book 048 supplies only the small/Zariski site and expressly declines the comparison theorem — the asserted fppf-descent identification of `\mathcal Ext` sheaves is the concealed step (consumers: (8.2), Theorems 8.1–8.2, Chapter 9); (3) line 938 asserts `Ext^2` vanishing making Theorem 8.2(1)'s sequence stop after `\mathcal Ext^1`; (4) lines 999–1015 inherit the X008 Picard-representability gap via rigidified line bundles with connection; (5) line 1117's pairing comparison uses an unidentified "logarithm". Cosmetic equation-numbering gaps at (4.x)/(9.4a).
+
+### Book 053 — `053-fontaine-laffaille-modules-and-torsion-representations.md`
+
+**Verdict: PASS — no chronology violations, no forward references; essential surjectivity and base change are honestly deferred; defects are one non-circular intra-book ordering defect and several sketch-level steps, all repairable in-book.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 1690 (EOF), in chronological/result order, during this audit.
+
+The import ledger (§13.2) matches actual usage: Book 050's fundamental sequences and PD logarithm, Book 048's PD/crystalline machinery, Book 046's Hodge filtration facts, Book 049's comparison/duality/polarization, and Book 052's Dieudonné theory are all present at their cited locations; Raynaff full faithfulness is declared non-operative here. Boundary honesty checks passed: essential surjectivity, subrepresentation lifting, integral base change, and `p=2` claims are correctly withheld. The table of contents matches exactly.
+
+Defects: (1) Proposition 6.1 operatively uses Theorem 7.1(1) (lines 694–695, acknowledged at 708) — not circular since Theorem 7.1's free-object size calculation is independent, but out of order. (2) Lines 1432–1434 invoke perfectness of the generic Weil pairing with no citation (derivable from Book 052's Cartier duality). (3) Lines 869–885 assert "flat over `W/p^n` ⇒ projective" and self-injectivity without sourcing the artinian-perfect/QF facts or finite generation of `A_n`, `F_n^1`. (4) Sketch-level: the elementary-divisor dévissage of §3.4 (lines 324–352) and Lemma 7.2's cross-term cancellation/coefficient descent (lines 810–856). Inherited consumers named: X065 via Book 049 duality/perfection (lines 1295–1353, 1461–1483), thence X008/X053 into §11.4; minimal X066 exposure at lines 552–553.
+
+The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
+
 ## Pending scope inventory
 
 The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
 
-- PENDING — Book 051, `051-finite-flat-group-schemes-of-small-height.md`
-- PENDING — Book 052, `052-dieudonne-theory-and-raynaud-full-faithfulness.md`
-- PENDING — Book 053, `053-fontaine-laffaille-modules-and-torsion-representations.md`
 - PENDING — Book 054, `054-integral-fontaine-laffaille-equivalence-and-base-change.md`
 - PENDING — Book 055, `055-p-divisible-groups-and-serre-tate-theory.md`
 - PENDING — Book 056, `056-ramification-and-discriminants-of-finite-flat-representations.md`
@@ -1088,3 +1117,13 @@ The following manuscripts are in this review's assigned 001–064 scope and rema
 - X004 gains consumers: Book 049 lines 502, 565, 671, 1362.
 - X015/X016 gain consumer: Book 049 lines 1331, 1354 (via Book 17a).
 - X043 gains consumer: Book 050 line 1285; X020 gains consumers: Book 050 lines 1140, 1147, 1260; X042 gains consumers: Book 050 Čech comparisons (§5.1, §7.2, Prop 10.1).
+
+### Consumer updates to earlier findings (batch 051–053)
+
+- X036 gains consumers: Book 051 lines 507–519, 907–913 ([p]=0 in the Oort–Tate chain).
+- X037 gains consumers: Book 051 lines 294–300, 1729.
+- X054 cluster gains consumers: Book 051 lines 1526, 1733–1739 (Weil pairing + ordinary E_k[p] identification via Book 034 Ch 14 / line 1519).
+- X008 gains consumer: Book 052 lines 999–1015 (rigidified line bundles with connection).
+- X065 gains consumers: Book 053 lines 1295–1353, 1461–1483 (Book 049 duality/perfection), thence X008/X053 into Book 053 §11.4.
+- X066 exposure in Book 053 confined to lines 552–553.
+- Book 052's big-fppf crystalline site comparison gap (lines 881–890) is recorded as an in-book defect of Book 052 (Book 048 expressly declines that comparison theorem); no separate standing number needed since the fix is local to Book 052, but it is a required repair before Books 054/055 consume `D(G)`.
