@@ -60,11 +60,18 @@ The global class-field-theory core is ordered carefully: the idelic inequalities
 
 The proof chain is chronological and self-contained above its declared analytic foundations: Minkowski supplies the geometric baseline; ideal Euler products precede the theta/Poisson continuation; the functional equation and internally constructed genus-one product precede the zero count; those estimates precede the explicit formula; strip or GRH positivity precedes the root-discriminant inequalities; and directed rational enclosures precede every finite cutoff. The local checkout supplies the important named analytic inputs: Minkowski's convex-body theorem is in `Mathlib/MeasureTheory/Group/GeometryOfNumbers.lean`, Poisson summation is in `Mathlib/Analysis/Fourier/PoissonSummation.lean`, Jensen's formula is in `Mathlib/Analysis/Complex/JensenFormula.lean`, Borel–Carathéodory is in `Mathlib/Analysis/Complex/BorelCaratheodory.lean`, and the vertical-strip Phragmén–Lindelöf principle is in `Mathlib/Analysis/Complex/PhragmenLindelof.lean`. Book 004 supplies the ideal-class and Dirichlet-unit facts used in the theta unfolding. The linked contents match all sixteen chapters and sections, and no conditional interface, forward proof dependency, malformed display, or uncertified numerical conclusion was found.
 
+### Book 007a — `007a-arithmetic-spectral-sequences-and-derived-cohomology.md`
+
+**Verdict: PASS after local chronological repairs.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 1450 (EOF), in chronological/result order, during this audit.
+
+The manuscript builds cones, localization, truncations, K-injective and K-flat criteria, bounded and unbounded replacements, derived operations, filtered-complex convergence, hypercohomology, Leray and Hochschild–Serre, products, and base-change comparison in dependency order. Its single explicitly imported foundation—Grothendieck abelian categories have enough injectives—is genuinely available in `Mathlib/CategoryTheory/Abelian/GrothendieckCategory/EnoughInjectives.lean`, including the same generating-monomorphism and small-object argument summarized in §1.2; the canonical derived-category t-structure is available in `Mathlib/Algebra/Homology/DerivedCategory/TStructure.lean`. The manuscript itself proves the stronger replacement statements it needs, including the presheaf-projective construction of arbitrary K-flat resolutions and the exact-countable-product hypothesis for unbounded K-injective resolutions. Two forward-proof references were repaired locally: §2.5 no longer appeals to Chapter 3 injective replacements to establish t-structure orthogonality, and §11.1 now states bounded-below cohomology directly and cites the already proved §§3.4–3.5 replacements instead of future §12.3. The compact linked contents are accurate and useful despite omitting individual subsection links. No missing cross-book prerequisite, unresolved conditional interface, notation defect, or malformed display remains.
+
 ## Pending scope inventory
 
 The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
 
-- PENDING — Book 007a, `007a-arithmetic-spectral-sequences-and-derived-cohomology.md`
 - PENDING — Book 007b, `007b-quasi-coherent-cohomology-on-schemes.md`
 - PENDING — Book 008, `008-ample-line-bundles-hilbert-polynomials-and-symmetric-powers.md`
 - PENDING — Book 009, `009-divisors-riemann-roch-and-duality-on-relative-curves.md`

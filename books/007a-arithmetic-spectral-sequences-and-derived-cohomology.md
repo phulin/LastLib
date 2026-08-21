@@ -242,7 +242,7 @@ D^{\le0}=\{K:H^n(K)=0\text{ for }n>0\},\qquad
 D^{\ge0}=\{K:H^n(K)=0\text{ for }n<0\}
 $$
 
-form the standard t-structure. Thus $D^{\le0}[1]\subseteq D^{\le0}$, $D^{\ge0}[-1]\subseteq D^{\ge0}$, there are no morphisms from $D^{\le0}$ to $D^{\ge1}$, and every $K$ occurs in the truncation triangle of Section 2.4. For the vanishing assertion, replace the target by a bounded-below injective complex and remove its boundary pieces; there is then no degree-preserving component from degrees at most zero to degrees at least one. The truncation triangle gives the decomposition assertion.
+form the standard t-structure. Thus $D^{\le0}[1]\subseteq D^{\le0}$, $D^{\ge0}[-1]\subseteq D^{\ge0}$, there are no morphisms from $D^{\le0}$ to $D^{\ge1}$, and every $K$ occurs in the truncation triangle of Section 2.4. The orthogonality assertion is the truncation universal property in the localized category: after replacing the source and target by their canonical truncations, every roof from an object concentrated cohomologically in degrees at most zero to one concentrated in degrees at least one represents the zero morphism. The triangle of Section 2.4 gives the decomposition assertion. This argument uses only truncation and localization, not the injective replacements constructed later.
 
 The heart $D^{\le0}\cap D^{\ge0}$ is the original abelian category, embedded in degree zero. The t-structure therefore recovers ordinary sheaves and supplies the cohomology objects intrinsically.
 
@@ -1273,7 +1273,7 @@ Y'&\xrightarrow{g}&Y.
 \end{array}
 $$
 
-Adjunction produces the underived map $g^*f_*\to f'_*g'^*$. Choose K-flat replacements for the inverse images, which Section 3.5 supplies for arbitrary complexes, and bounded-below injective replacements for the direct images, so that $K$ is taken with bounded-below cohomology as in the theorem of Section 12.3. This yields
+Adjunction produces the underived map $g^*f_*\to f'_*g'^*$. Assume here that $K$ has bounded-below cohomology. Choose K-flat replacements for the inverse images, which Section 3.5 supplies for arbitrary complexes, and the bounded-below injective replacements for the direct images supplied by Section 3.4. This yields
 
 $$
 Lg^*Rf_*K\longrightarrow Rf'_*Lg'^*K.
