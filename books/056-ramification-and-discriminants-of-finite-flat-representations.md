@@ -672,16 +672,82 @@ $$
 
 There are only finitely many critical $t$. If at one critical value a block of size $h$ splits into $m$ equal subblocks, the stabilizer factor in (5.5) multiplies the continuing charge by $1/m$; the complementary proportion $1-1/m$ becomes the charge of the new quotient blocks. At the next critical value that new quotient charge is the continuing charge. Hence all intermediate terms cancel in the finite sum. This telescoping is orbitwise, so transitivity of the action is not required.
 
-It remains to identify the two boundary charges. Pull the congruence filtration on $Y$ back through $[\ell]:X\to Y$. Proposition 4.1 gives
+It remains to identify the two boundary charges, and we do so with explicit
+estimates rather than by assertion. Two preliminary facts are recorded.
+
+First, the pullback estimate. For $z\in X$ let
+$B_t=[\ell]^{-1}\bigl(C_t(Y)\bigr)=\{z\in X:\nu([\ell]z)>t\}$ denote the
+partition of $X$ pulled back from the congruence filtration of $Y$.
+The depth estimate (4.5),
+applied to $z$, gives
+$\nu([\ell]z)\geq\min\{e_K+\nu(z),\ell\nu(z)\}$, whence
 
 $$
-[\ell]^*I\subseteq \ell I+I^\ell.
-\tag{5.8}
+C_{\max(t-e_K,\;t/\ell)}(X)\;\subseteq\;B_t .
+\tag{5.8a}
 $$
 
-In the finite sum over critical congruence depths, the summand $\ell I$ translates every lower threshold by exactly $v_L(\ell)=Ee_K$. The $I^\ell$ summand only refines the current congruence block: its values are products of $\ell$ augmentation values, so its critical depths occur among the intermediate refinements already paired in the telescoping sum. It creates no additional boundary term. Thus pulling the quotient-block clock back from $Y$ to $X$ leaves one new raw boundary interval, of length at most $Ee_K$. In (5.6) the equal-block stabilizer factor divides that interval by the inertia index already accumulated. Since $E=|G_0|$ for a finite Galois extension of local fields with finite residue field, its total upper length is at most $e_K$. This gives the first term $b(Y)+e_K$ in (5.4).
+Indeed, if $\nu(z)>t-e_K$ then $e_K+\nu(z)>t$, and if $\nu(z)>t/\ell$
+then $\ell\nu(z)>t$; a point satisfying the stronger of the two depth
+conditions therefore satisfies both branches of the minimum. In words:
+every congruence block of $X$ at threshold $\max(t-e_K,\,t/\ell)$ is
+contained in a single pulled-back block at threshold $t$, so the pulled-back
+partition refines nothing finer than the congruence partition shifted down
+by $e_K$. As $t$ runs through the critical depths of the filtration of $Y$,
+all refinements of $B_\bullet$ relative to the coarsening direction are
+therefore already visible in the congruence filtration of $X$ at thresholds
+at least $t-e_K$: pulling the quotient-block clock back from $Y$ to $X$
+leaves exactly one new raw interval, of $K$-scale length at most $e_K$, and
+the $I^\ell$ branch of the minimum never forces a deeper threshold than the
+displayed maximum. This yields the first boundary term: the portion of the
+upper clock during which the action on the pulled-back blocks is not yet
+accounted for by the action on $Y/C_t(Y)$ is at most $b(Y)+e_K$.
 
-If the image block has already become a point, motion can remain only inside the kernel of $[\ell]$. Its last nonzero difference has depth at most $c$, so after the same $Ee_K$ linear shift the remaining raw terminal interval has length at most $Ec$. In the lower numbering, membership in $G_s$ means displacement valuation at least $s+1$; the first unit interval is therefore the integral-displacement baseline, and it lies where the Herbrand slope is one. Positive upper time starts after upper index $0$, so removing that unit interval subtracts exactly one from the upper clock. The terminal upper charge is consequently
+Second, the displacement-to-depth bound. Let $\sigma\in G_s$, so that
+$i_G(\sigma)\geq s+1$ in the normalization of Chapter 2, that is,
+$v_L(\sigma y-y)\geq s+1$ for every $y\in\mathcal O_L$. Any geometric point
+$P\in\mathcal G(L)$ takes integral values, because $A$ is finite over
+$\mathcal O_K$ and evaluations of integral elements are integral. Hence for
+every $a\in A$,
+
+$$
+v_K\bigl((\sigma P-P)(a)\bigr)
+=v_K\bigl(\sigma(P(a))-P(a)\bigr)
+=\tfrac1E\,v_L\bigl(\sigma(P(a))-P(a)\bigr)
+\geq\tfrac{s+1}{E}.
+$$
+
+Since the depth of a point is the minimum of such evaluation valuations,
+
+$$
+\nu(\sigma P-P)\geq\frac{s+1}{E}
+\qquad\text{for all }P\in\mathcal G(L),\ \sigma\in G_s.
+\tag{5.8b}
+$$
+
+Now identify the two boundary terms in the telescoping sum.
+
+Pulling the congruence filtration on $Y$ back through $[\ell]$ is controlled
+by Proposition 4.1 in the form (5.8a): in the double-counting ledger, upper
+time during which the quotient blocks move is charged to $Y/C_t(Y)$, and by
+(5.8a) the additional time during which only the pulled-back blocks move
+corresponds to congruence thresholds of $X$ lying below those of $Y$ by at
+most $e_K$. Its total raw length is at most $Ee_K$. In (5.6) the
+equal-block stabilizer factor divides that interval by the index of the
+acting group in its predecessor; the resulting upper charge is $e_K$, which
+is the first term $b(Y)+e_K$ in (5.4).
+
+If the image block has already become a point, motion can remain only inside
+the kernel of $[\ell]$. Every nonzero point of that kernel has depth at most
+$c$, while (5.8b) shows that an element of $G_s$ moves a nonzero point only
+if $(s+1)/E\leq c$, that is, $s\leq Ec-1$. The raw terminal interval of
+lower parameters during which kernel blocks can still move therefore has
+length at most $Ec$. Membership in $G_s$ means displacement valuation at
+least $s+1$; the first unit interval is the integral-displacement baseline,
+and positive upper time starts after upper index $0$, so removing that unit
+interval subtracts exactly one from the upper clock. Dividing the raw
+lengths by the block indices exactly as above, the terminal upper charge is
+consequently
 
 $$
 e_K+c-1.
