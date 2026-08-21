@@ -42,15 +42,15 @@ def chapter11TameNormEquationSet
 
 /- The norm image of units already lying in the base field. -/
 def chapter11BaseUnitNormImage
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    (K : Type*) [Field K]
     (vK : AddValuation K (WithTop ℤ)) (e : ℕ) : Set K :=
   Set.range (fun u : (chapter11ValuationRing vK)ˣ =>
     ((u : chapter11ValuationRing vK) : K) ^ e)
 
 theorem chapter11_mem_base_unit_norm_image_iff
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    (K : Type*) [Field K]
     (vK : AddValuation K (WithTop ℤ)) (e : ℕ) (x : K) :
-    x ∈ chapter11BaseUnitNormImage K L vK e ↔
+    x ∈ chapter11BaseUnitNormImage K vK e ↔
       ∃ u : (chapter11ValuationRing vK)ˣ,
         ((u : chapter11ValuationRing vK) : K) ^ e = x := Iff.rfl
 
@@ -64,14 +64,6 @@ theorem chapter11_mem_base_unit_norm_image_iff
 theorem chapter11_tame_total_norm_valuation_coordinate_surjective
     (K L : Type*) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
-    (e : ℕ) (he : 0 < e)
-    (hext : chapter11ValuationExtension vK vL)
-    (hscale : chapter11ValuationScaling vK vL e)
-    (hres : chapter11TotallyRamifiedResidueAgreement vK vL)
-    (hdegree : Module.finrank K L = e)
-    (hfres :
-      LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
-        vK vL hext = 1)
     (πL : L) (hπ : chapter11IsUniformizer vL πL)
     (hnormπ : vK (Algebra.norm K πL) = (1 : WithTop ℤ)) (r : ℤ) :
     ∃ x : L, x ≠ 0 ∧ vK (Algebra.norm K x) = (r : WithTop ℤ) := by
@@ -148,12 +140,9 @@ theorem chapter11_base_unit_norm_image_subset
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L]
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
-    (e : ℕ) (hext : chapter11ValuationExtension vK vL)
-    (hscale : chapter11ValuationScaling vK vL e)
-    (hcompleteK : chapter11ValuationComplete vK)
-    (hcompleteL : chapter11ValuationComplete vL)
+    (e : ℕ) (hscale : chapter11ValuationScaling vK vL e)
     (hdegree : Module.finrank K L = e) :
-    chapter11BaseUnitNormImage K L vK e ⊆ chapter11NormImage K L vL 0 := by
+    chapter11BaseUnitNormImage K vK e ⊆ chapter11NormImage K L vL 0 := by
   sorry
 
 /- The finite-residue tame quotient is the residue-unit obstruction, with no

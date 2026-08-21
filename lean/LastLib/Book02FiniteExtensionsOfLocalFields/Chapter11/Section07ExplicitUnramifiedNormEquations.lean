@@ -64,9 +64,9 @@ theorem chapter11_unramified_norm_equation_valuation_necessary
 /- In a discretely valued base, the valuation condition gives the displayed
    power-of-a-uniformizer times unit decomposition. -/
 theorem chapter11_unramified_norm_equation_decomposition
-    (K L : Type*) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
-    (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
-    (f : ℕ) (hunram : chapter11UnramifiedValuedExtension vK vL)
+    (K : Type*) [Field K]
+    (vK : AddValuation K (WithTop ℤ))
+    (f : ℕ)
     (πK : K) (hπ : chapter11IsUniformizer vK πK) (a : K) (ha : a ≠ 0)
     (hval : chapter11ValuationValueDivisibleBy vK f a) :
     chapter11UnramifiedValueUnitDecomposition vK πK f a := by

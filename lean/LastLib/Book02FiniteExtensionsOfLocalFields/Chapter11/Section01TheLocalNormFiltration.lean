@@ -299,11 +299,7 @@ theorem chapter11_norm_preserves_one
 theorem chapter11_norm_maps_valuation_units
     (K L : Type*) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
-    (e f : ℕ) (he : 0 < e)
-    (hext : chapter11ValuationExtension vK vL)
-    (hscale : chapter11ValuationScaling vK vL e)
-    (hcompleteK : chapter11ValuationComplete vK)
-    (hcompleteL : chapter11ValuationComplete vL)
+    (f : ℕ)
     (hnorm : chapter11NormValuationFormula K L vK vL f) :
     chapter11NormImage K L vL 0 ⊆ chapter11UnitFiltration vK 0 := by
   sorry
