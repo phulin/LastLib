@@ -6,7 +6,7 @@ import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section02TheComplete
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03
 
-universe uK₀ uE uΓ uΓE
+universe uK₀ uE uΓ
 
 noncomputable section
 
@@ -41,7 +41,8 @@ structure Chapter03CompletionBranchData
     (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ValuationBranch
       (K := K₀) (L := E) v)
   family_complete :
-    LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10CompleteBranchFamily.{uK₀, uE, uΓ, uΓE} v family
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10CompleteBranchFamily.{
+      uK₀, uE, uΓ, max (max uK₀ uE) uΓ} v family
 
 namespace Chapter03CompletionBranchData
 
@@ -163,18 +164,22 @@ theorem chapter03_complete_base_tensor_product_is_one_completion
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal v.valuationSubring) v.valuationSubring)
     (D : Chapter03CompletionBranchData K₀ E Γ v)
-    [Algebra (Valuation.Completion v)
-      (E ⊗[K₀] Valuation.Completion v)]
     [∀ i, Algebra (Valuation.Completion v)
       (chapter03CompletedBranch (D.branch i).extension.valuation)] :
+    letI : Algebra (Valuation.Completion v)
+      (E ⊗[K₀] Valuation.Completion v) :=
+      Algebra.TensorProduct.rightAlgebra
     ∃ i : D.index,
       Nonempty
         (E ⊗[K₀] Valuation.Completion v ≃ₐ[Valuation.Completion v]
           chapter03CompletedBranch (D.branch i).extension.valuation) := by
   obtain ⟨hne, hsub⟩ :=
     chapter03_complete_base_has_one_completion_branch v hcomplete D
+  letI : Algebra (Valuation.Completion v)
+      (E ⊗[K₀] Valuation.Completion v) :=
+    Algebra.TensorProduct.rightAlgebra
   let i₀ : D.index := Classical.choice hne
-  letI : Unique D.index :=
+  let _ : Unique D.index :=
     { default := i₀
       uniq := fun i => hsub.elim i i₀ }
   obtain ⟨e⟩ :=

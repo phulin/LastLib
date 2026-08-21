@@ -421,7 +421,7 @@ theorem chapter03_self_scalar_extension_factors_have_e_one
     chapterRamificationIndex vL.valuationSubring vF.valuationSubring
       (IsLocalRing.maximalIdeal vF.valuationSubring) = 1 := by
   classical
-  letI : Algebra L (L ⊗[K] L) := Algebra.TensorProduct.rightAlgebra
+  let _ : Algebra L (L ⊗[K] L) := Algebra.TensorProduct.rightAlgebra
   change ∃ φ : L ⊗[K] L →ₐ[L] F, Function.Surjective φ at hfactor
   rcases hfactor with ⟨φ, hφ⟩
   obtain ⟨n, hn, hsplit⟩ := chapter03_galois_self_scalar_extension_splits K L
@@ -445,7 +445,7 @@ theorem chapter03_self_scalar_extension_factors_have_e_one
         intro i hi
         exact hall i
       have : (0 : F) = 1 := by
-        simpa [map_sum, hzero] using hsum
+        simp [map_sum, hzero] at hsum
       exact zero_ne_one this
     obtain ⟨i, hi⟩ := hex
     have hid : IsIdempotentElem (ψ (Pi.single i (1 : L))) := by
