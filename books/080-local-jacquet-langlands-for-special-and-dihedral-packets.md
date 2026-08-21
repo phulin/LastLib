@@ -1403,7 +1403,7 @@ Changing one row is allowed only if every dependent formula changes with it. Ari
 | ------------------ | --------------------------------------------------- | ----------------------------------------------------------------- |
 | split member       | $\operatorname{St}\otimes(\mu\circ\det)$            | $\pi(E,\theta)$                                                   |
 | division member    | $\mu\circ\operatorname{Nrd}$                        | $\pi'(E,\theta)$                                                  |
-| central character  | $\mu^2$                                             | $\theta                                                           |
+| central character  | $\mu^2$                                             | $\theta\vert_{F^\times}\omega_{E/F}$                              |
 | parameter          | $\operatorname{Sp}_2(\mu)$                          | $\operatorname{Ind}_{W_E}^{W_F}\theta$                            |
 | conductor          | $1$ if $a(\mu)=0$, else $2a(\mu)$                   | $v_F(\mathfrak d_{E/F})+f(E/F)a_E(\theta)$                        |
 | Euler factor       | $L(s+1/2,\mu)$                                      | $1$                                                               |
