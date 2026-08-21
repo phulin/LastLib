@@ -6,6 +6,7 @@ import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Algebra.IsUniformGroup.Defs
 import Mathlib.Order.Filter.CountablyGenerated
 import Mathlib.Topology.Metrizable.Basic
+import Mathlib.Topology.Sequences
 import Mathlib.Topology.UniformSpace.Cauchy
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter03
@@ -486,7 +487,8 @@ def chapter03NaturalConvergenceFilterCharacterization
             (𝓝 (((x : ∀ i, G i) i)))) ∧
           ∃ S : Set I, S.Finite ∧
             ∀ᶠ y : Chapter03RestrictedProduct H in l, ∀ i, i ∉ S →
-              ((y : ∀ i, G i) i) ∈ H i
+              ((((x : ∀ i, G i) i)⁻¹) *
+                ((y : ∀ i, G i) i)) ∈ H i
 
 /-- The natural-uniformity interface needed by the completeness theorem.
 
@@ -523,6 +525,7 @@ theorem chapter03_cauchy_filter_has_eventually_integral_tail
 
 theorem chapter03_restrictedProduct_complete_of_natural_characterization
     [∀ i, UniformSpace (G i)]
+    [∀ i, IsTopologicalGroup (G i)]
     (H : ∀ i, Subgroup (G i))
     [UniformSpace (Chapter03RestrictedProduct H)]
     (hlocal : ∀ i, CompleteSpace (G i))
@@ -549,7 +552,8 @@ theorem chapter03_restrictedProduct_complete_of_natural_characterization
   let R : Set I := S ∪ chapter03ExceptionalSet H (a : ∀ i, G i)
   have hR : R.Finite := hS.union hT
   have hRtail : ∀ᶠ y : Chapter03RestrictedProduct H in l, ∀ i, i ∉ R →
-      ((y : ∀ i, G i) i) ∈ H i := by
+      (((a : Chapter03RestrictedProduct H) : ∀ i, G i) i)⁻¹ *
+          ((y : ∀ i, G i) i) ∈ H i := by
     filter_upwards [ht] with y hy
     intro i hiR
     have hiR' : i ∉ S ∪ chapter03ExceptionalSet H (a : ∀ i, G i) := by
@@ -557,40 +561,54 @@ theorem chapter03_restrictedProduct_complete_of_natural_characterization
     have hiS : i ∉ S := by
       intro hi
       exact hiR' (Or.inl hi)
-    have hiT : i ∉ chapter03ExceptionalSet H (a : ∀ i, G i) := by
-      intro hi
-      exact hiR' (Or.inr hi)
-    have haH : ((a : ∀ i, G i) i) ∈ H i := by
-      by_contra hne
-      apply hiT
-      simpa [chapter03ExceptionalSet] using hne
     have hrel :
         ((((a : Chapter03RestrictedProduct H) : ∀ i, G i) i)⁻¹) *
             (((y : Chapter03RestrictedProduct H) : ∀ i, G i) i) ∈ H i := by
       have hpair : (a, y) ∈ s ×ˢ t := ⟨ha, hy⟩
       exact hst hpair i hiS
-    have hmul := (H i).mul_mem haH hrel
-    simpa [mul_assoc] using hmul
-  have hxHtail : ∀ i, i ∉ R → x i ∈ H i := by
+    exact hrel
+  have haxH : ∀ i, i ∉ R →
+      ((((a : Chapter03RestrictedProduct H) : ∀ i, G i) i)⁻¹) * x i ∈ H i := by
     intro i hiR
-    apply (hclosed i).mem_of_tendsto (hcoordTendsto i)
+    have haxTendsto : Tendsto
+        (fun y : Chapter03RestrictedProduct H =>
+          (((a : Chapter03RestrictedProduct H) : ∀ i, G i) i)⁻¹ *
+            ((y : ∀ i, G i) i)) l
+        (𝓝 ((((a : Chapter03RestrictedProduct H) : ∀ i, G i) i)⁻¹ * x i)) := by
+      simpa only [Function.comp_def] using
+        Filter.Tendsto.comp
+          (continuous_const_mul
+            (((a : Chapter03RestrictedProduct H) : ∀ i, G i) i)⁻¹).continuousAt
+          (hcoordTendsto i)
+    apply (hclosed i).mem_of_tendsto haxTendsto
     exact hRtail.mono fun y hy => hy i hiR
+  have hxyTail : ∀ᶠ y : Chapter03RestrictedProduct H in l, ∀ i, i ∉ R →
+      (x i)⁻¹ * ((y : ∀ i, G i) i) ∈ H i := by
+    filter_upwards [hRtail] with y hy
+    intro i hiR
+    have hmul := (H i).mul_mem ((H i).inv_mem (haxH i hiR)) (hy i hiR)
+    simpa [mul_assoc] using hmul
   have hxmem : ∀ᶠ i in Filter.cofinite, x i ∈ H i := by
     filter_upwards [hR.compl_mem_cofinite] with i hiR
-    exact hxHtail i hiR
+    have hax := haxH i hiR
+    have haH : ((a : Chapter03RestrictedProduct H) : ∀ i, G i) i ∈ H i := by
+      by_contra hne
+      apply hiR
+      exact Or.inr (by simpa [chapter03ExceptionalSet] using hne)
+    simpa [mul_assoc] using (H i).mul_mem haH hax
   let z : Chapter03RestrictedProduct H := ⟨x, hxmem⟩
   have hzconv : Tendsto (fun y : Chapter03RestrictedProduct H => y) l
       (@nhds _
         (UniformSpace.toTopologicalSpace
           (α := Chapter03RestrictedProduct H)) z) := by
     apply (hconv l z).2
-    refine ⟨hcoordTendsto, ?_⟩
-    exact ⟨R, hR, hRtail⟩
+    exact ⟨hcoordTendsto, R, hR, hxyTail⟩
   exact ⟨z, Filter.tendsto_id'.mp (by
     convert hzconv using 1 ; rfl)⟩
 
 theorem chapter03_restrictedProduct_complete_of_complete_local_closed_natural
     [∀ i, UniformSpace (G i)]
+    [∀ i, IsTopologicalGroup (G i)]
     (H : ∀ i, Subgroup (G i))
     [UniformSpace (Chapter03RestrictedProduct H)]
     [Chapter03NaturalRestrictedProductUniformity H]
@@ -661,7 +679,8 @@ def chapter03AdditiveNaturalConvergenceFilterCharacterization
             (𝓝 (((x : ∀ i, G i) i)))) ∧
           ∃ S : Set I, S.Finite ∧
             ∀ᶠ y : Chapter03AdditiveRestrictedProduct H in l, ∀ i, i ∉ S →
-              ((y : ∀ i, G i) i) ∈ H i
+              -(((x : ∀ i, G i) i)) +
+                ((y : ∀ i, G i) i) ∈ H i
 
 class Chapter03NaturalAdditiveRestrictedProductUniformity
     [∀ i, UniformSpace (G i)]
@@ -697,6 +716,7 @@ theorem chapter03_additive_cauchy_filter_has_eventually_integral_tail
 
 theorem chapter03_additiveRestrictedProduct_complete_of_natural_characterization
     [∀ i, UniformSpace (G i)]
+    [∀ i, IsTopologicalAddGroup (G i)]
     (H : ∀ i, AddSubgroup (G i))
     [UniformSpace (Chapter03AdditiveRestrictedProduct H)]
     (hlocal : ∀ i, CompleteSpace (G i))
@@ -722,7 +742,8 @@ theorem chapter03_additiveRestrictedProduct_complete_of_natural_characterization
   let R : Set I := S ∪ {i | ((a : ∀ i, G i) i) ∉ H i}
   have hR : R.Finite := hS.union hT
   have hRtail : ∀ᶠ y : Chapter03AdditiveRestrictedProduct H in l, ∀ i, i ∉ R →
-      ((y : ∀ i, G i) i) ∈ H i := by
+      -(((a : Chapter03AdditiveRestrictedProduct H) : ∀ i, G i) i) +
+          ((y : ∀ i, G i) i) ∈ H i := by
     filter_upwards [ht] with y hy
     intro i hiR
     have hiR' : i ∉ S ∪ {i | ((a : ∀ i, G i) i) ∉ H i} := by
@@ -730,40 +751,54 @@ theorem chapter03_additiveRestrictedProduct_complete_of_natural_characterization
     have hiS : i ∉ S := by
       intro hi
       exact hiR' (Or.inl hi)
-    have hiT : i ∉ {i | ((a : ∀ i, G i) i) ∉ H i} := by
-      intro hi
-      exact hiR' (Or.inr hi)
-    have haH : ((a : ∀ i, G i) i) ∈ H i := by
-      by_contra hne
-      apply hiT
-      exact hne
     have hrel :
         -(((a : Chapter03AdditiveRestrictedProduct H) : ∀ i, G i) i) +
             (((y : Chapter03AdditiveRestrictedProduct H) : ∀ i, G i) i) ∈ H i := by
       have hpair : (a, y) ∈ s ×ˢ t := ⟨ha, hy⟩
       exact hst hpair i hiS
-    have hadd := (H i).add_mem haH hrel
-    simpa [add_assoc] using hadd
-  have hxHtail : ∀ i, i ∉ R → x i ∈ H i := by
+    exact hrel
+  have haxH : ∀ i, i ∉ R →
+      -(((a : Chapter03AdditiveRestrictedProduct H) : ∀ i, G i) i) + x i ∈ H i := by
     intro i hiR
-    apply (hclosed i).mem_of_tendsto (hcoordTendsto i)
+    have haxTendsto : Tendsto
+        (fun y : Chapter03AdditiveRestrictedProduct H =>
+          -(((a : Chapter03AdditiveRestrictedProduct H) : ∀ i, G i) i) +
+            ((y : ∀ i, G i) i)) l
+        (𝓝 (-(((a : Chapter03AdditiveRestrictedProduct H) : ∀ i, G i) i) + x i)) := by
+      simpa only [Function.comp_def] using
+        Filter.Tendsto.comp
+          (continuous_const_add
+            (-(((a : Chapter03AdditiveRestrictedProduct H) : ∀ i, G i) i))).continuousAt
+          (hcoordTendsto i)
+    apply (hclosed i).mem_of_tendsto haxTendsto
     exact hRtail.mono fun y hy => hy i hiR
+  have hxyTail : ∀ᶠ y : Chapter03AdditiveRestrictedProduct H in l, ∀ i, i ∉ R →
+      -(x i) + ((y : ∀ i, G i) i) ∈ H i := by
+    filter_upwards [hRtail] with y hy
+    intro i hiR
+    have hadd := (H i).add_mem ((H i).neg_mem (haxH i hiR)) (hy i hiR)
+    simpa [add_assoc] using hadd
   have hxmem : ∀ᶠ i in Filter.cofinite, x i ∈ H i := by
     filter_upwards [hR.compl_mem_cofinite] with i hiR
-    exact hxHtail i hiR
+    have hax := haxH i hiR
+    have haH : ((a : Chapter03AdditiveRestrictedProduct H) : ∀ i, G i) i ∈ H i := by
+      by_contra hne
+      apply hiR
+      exact Or.inr hne
+    simpa [add_assoc] using (H i).add_mem haH hax
   let z : Chapter03AdditiveRestrictedProduct H := ⟨x, hxmem⟩
   have hzconv : Tendsto (fun y : Chapter03AdditiveRestrictedProduct H => y) l
       (@nhds _
         (UniformSpace.toTopologicalSpace
           (α := Chapter03AdditiveRestrictedProduct H)) z) := by
     apply (hconv l z).2
-    refine ⟨hcoordTendsto, ?_⟩
-    exact ⟨R, hR, hRtail⟩
+    exact ⟨hcoordTendsto, R, hR, hxyTail⟩
   exact ⟨z, Filter.tendsto_id'.mp (by
     convert hzconv using 1 ; rfl)⟩
 
 theorem chapter03_additiveRestrictedProduct_complete_of_complete_local_closed_natural
     [∀ i, UniformSpace (G i)]
+    [∀ i, IsTopologicalAddGroup (G i)]
     (H : ∀ i, AddSubgroup (G i))
     [UniformSpace (Chapter03AdditiveRestrictedProduct H)]
     [Chapter03NaturalAdditiveRestrictedProductUniformity H]

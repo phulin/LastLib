@@ -1,5 +1,5 @@
 import LastLib.Book04AdelesAndIdeles.Chapter03.Dependencies
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Dependencies
+import Mathlib.RingTheory.Valuation.ValuationSubring
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter03
 
