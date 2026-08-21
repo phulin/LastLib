@@ -19,9 +19,9 @@ theorem chapter01_norm_continuous
     Continuous (chapter01NormHom K L) := by
   sorry
 
-/- LOCAL_DEPENDENCY_GUESS: the finite norm-openness theorem is supplied by the
-cyclic/cohomological layers of the book; the local-field hypotheses are kept
-outside this chapter's generic norm API until those layers are reconciled. -/
+/-- For a finite abelian extension of local fields, the norm subgroup is open
+and has finite index.  The local hypotheses are explicit because the generic
+norm homomorphism above does not carry a valuation topology. -/
 theorem chapter01_abelian_norm_subgroup_is_open_and_finite_index
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
@@ -299,29 +299,56 @@ theorem chapter01_galois_ab_is_inverse_limit
         ProfiniteGrp.limit (InfiniteGalois.asProfiniteGaloisGroupFunctor K KAb)) :=
   ⟨chapter01AbelianGaloisLimitEquiv K KAb⟩
 
-/-- A continuous homomorphism extending local reciprocity to the profinite
-completion. -/
+/-- The open-indexed completion admits an extension of local reciprocity once
+all finite norm levels are open. -/
+theorem chapter01_open_completion_artin_extension_exists
+    {K KAb : Type u} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
+    [IsAbelianGalois K KAb] (S : Chapter01FiniteArtinSystem K KAb)
+    (hopen : ∀ L : Chapter01FiniteAbelianIndex K KAb,
+      IsOpen (chapter01NormSubgroup K L : Set Kˣ)) :
+    ∃ F : Chapter01OpenProfiniteCompletion Kˣ →* Gal(KAb / K),
+      Continuous F ∧
+        ∀ x,
+          F (chapter01OpenProfiniteCompletionEta Kˣ x) =
+            chapter01LocalReciprocity S x := by
+  sorry
+
 noncomputable def chapter01CompletedReciprocity
     {K KAb : Type u} [Field K] [Field KAb] [Algebra K KAb]
-    [IsAbelianGalois K KAb] (S : Chapter01FiniteArtinSystem K KAb) :
-    Chapter01ProfiniteCompletion Kˣ →* Gal(KAb / K) :=
-  (ProfiniteGrp.ProfiniteCompletion.lift
-    (G := GrpCat.of Kˣ)
-    (P := InfiniteGalois.profiniteGalGrp K KAb)
-    (GrpCat.ofHom (chapter01LocalReciprocity S))).hom.toMonoidHom
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
+    [IsAbelianGalois K KAb] (S : Chapter01FiniteArtinSystem K KAb)
+    (hopen : ∀ L : Chapter01FiniteAbelianIndex K KAb,
+      IsOpen (chapter01NormSubgroup K L : Set Kˣ)) :
+    Chapter01OpenProfiniteCompletion Kˣ →* Gal(KAb / K) :=
+  (chapter01_open_completion_artin_extension_exists S hopen).choose
 
-/-- The completed map extends local reciprocity on the dense copy of `Kˣ`. -/
+/-- The completed map extends local reciprocity on the canonical copy of
+`Kˣ`. -/
 theorem chapter01_completed_reciprocity_extends_local
     {K KAb : Type u} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb] (S : Chapter01FiniteArtinSystem K KAb)
+    (hopen : ∀ L : Chapter01FiniteAbelianIndex K KAb,
+      IsOpen (chapter01NormSubgroup K L : Set Kˣ))
     (x : Kˣ) :
-    chapter01CompletedReciprocity S
-        (ProfiniteGrp.ProfiniteCompletion.etaFn (GrpCat.of Kˣ) x) =
+    chapter01CompletedReciprocity S hopen
+        (chapter01OpenProfiniteCompletionEta Kˣ x) =
       chapter01LocalReciprocity S x := by
   sorry
 
-/- LOCAL_DEPENDENCY_GUESS: local existence makes the finite norm quotients
-cofinal among the finite quotients used by the profinite completion. -/
+/-- The completed reciprocity map is continuous. -/
+theorem chapter01_completed_reciprocity_continuous
+    {K KAb : Type u} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
+    [IsAbelianGalois K KAb] (S : Chapter01FiniteArtinSystem K KAb)
+    (hopen : ∀ L : Chapter01FiniteAbelianIndex K KAb,
+      IsOpen (chapter01NormSubgroup K L : Set Kˣ)) :
+    Continuous (chapter01CompletedReciprocity S hopen) := by
+  sorry
+
+/-- The topology-sensitive completion is identified with the abelian Galois
+target when the finite norm levels realize every open finite-index subgroup. -/
 theorem chapter01_completed_reciprocity_is_topological_equivalence
     {K KAb : Type u} [Field K] [Field KAb] [Algebra K KAb]
     [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
@@ -332,8 +359,8 @@ theorem chapter01_completed_reciprocity_is_topological_equivalence
     (hExist : ∀ H : Chapter01OpenFiniteIndexSubgroup Kˣ,
       ∃! L : Chapter01FiniteAbelianIndex K KAb,
         chapter01NormSubgroup K L = H.1) :
-    ∃ e : Chapter01ProfiniteCompletion Kˣ ≃ₜ* Gal(KAb / K),
-      ∀ x, e x = chapter01CompletedReciprocity S x := by
+    ∃ e : Chapter01OpenProfiniteCompletion Kˣ ≃ₜ* Gal(KAb / K),
+      ∀ x, e x = chapter01CompletedReciprocity S hopen x := by
   sorry
 
 /-- The abelian Galois target is compact in the profinite topology. -/

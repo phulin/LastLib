@@ -118,7 +118,8 @@ def chapter01PrincipalUnitSet {K : Type*} [Field K]
 def Chapter01ValuationExactSequence {K : Type*} [Field K]
     (v : AddValuation K (WithTop ℤ))
     (ν : Kˣ →* Multiplicative ℤ) : Prop :=
-  Function.MulExact (chapter01UnitInclusion v) ν ∧ Function.Surjective ν
+  Function.Injective (chapter01UnitInclusion v) ∧
+    Function.MulExact (chapter01UnitInclusion v) ν ∧ Function.Surjective ν
 
 /-- Book-facing data for the normalized valuation coordinate. -/
 structure Chapter01ValuationCoordinateData {K : Type*} [Field K]
@@ -185,6 +186,115 @@ abbrev Chapter01OpenFiniteIndexSubgroup
     (G : Type*) [Group G] [TopologicalSpace G] :=
   {H : Subgroup G // IsOpen (H : Set G) ∧ H.FiniteIndex}
 
+/-! The source in §1.2 uses the topology-sensitive profinite completion.  The
+abstract Mathlib completion below is indexed by all finite-index normal
+subgroups, so it is deliberately kept separate from this open-indexed
+diagram. -/
+
+/-- Open finite-index normal subgroups of a topological group. -/
+structure Chapter01OpenFiniteIndexNormalSubgroup
+    (G : Type*) [Group G] [TopologicalSpace G]
+    extends FiniteIndexNormalSubgroup G where
+  isOpen : IsOpen (toSubgroup : Set G)
+
+namespace Chapter01OpenFiniteIndexNormalSubgroup
+
+variable {G : Type*} [Group G] [TopologicalSpace G]
+
+instance (H : Chapter01OpenFiniteIndexNormalSubgroup G) :
+    H.toSubgroup.Normal := H.isNormal'
+
+instance (H : Chapter01OpenFiniteIndexNormalSubgroup G) :
+    H.toSubgroup.FiniteIndex := H.isFiniteIndex'
+
+instance : SetLike (Chapter01OpenFiniteIndexNormalSubgroup G) G where
+  coe H := H.toSubgroup
+  coe_injective A B h := by
+    cases A with
+    | mk A hA =>
+      cases B with
+      | mk B hB =>
+        have hAB : A.toSubgroup = B.toSubgroup := by
+          ext g
+          exact Set.ext_iff.mp h g
+        cases FiniteIndexNormalSubgroup.toSubgroup_injective hAB
+        rfl
+
+instance : PartialOrder (Chapter01OpenFiniteIndexNormalSubgroup G) :=
+  .ofSetLike (Chapter01OpenFiniteIndexNormalSubgroup G) G
+
+@[simp]
+theorem mem_toSubgroup_iff {H : Chapter01OpenFiniteIndexNormalSubgroup G}
+    {g : G} : g ∈ H.toSubgroup ↔ g ∈ H :=
+  Iff.rfl
+
+end Chapter01OpenFiniteIndexNormalSubgroup
+
+noncomputable def chapter01OpenFiniteIndexDiagram
+    (G : Type*) [CommGroup G] [TopologicalSpace G] :
+    Chapter01OpenFiniteIndexNormalSubgroup G ⥤ FiniteGrp where
+  obj H := FiniteGrp.of (G ⧸ H.toSubgroup)
+  map f := FiniteGrp.ofHom <|
+    QuotientGroup.map _ _ (MonoidHom.id G) (by
+      intro g hg
+      exact f.le hg)
+  map_id H := by
+    ext ⟨g⟩
+    rfl
+  map_comp f g := by
+    ext ⟨x⟩
+    rfl
+
+noncomputable def chapter01OpenFiniteIndexProfiniteDiagram
+    (G : Type*) [CommGroup G] [TopologicalSpace G] :
+    Chapter01OpenFiniteIndexNormalSubgroup G ⥤ ProfiniteGrp :=
+  chapter01OpenFiniteIndexDiagram G ⋙ forget₂ FiniteGrp ProfiniteGrp
+
+/-- The topology-sensitive profinite completion over open finite-index
+quotients. -/
+noncomputable def chapter01OpenProfiniteCompletion
+    (G : Type*) [CommGroup G] [TopologicalSpace G] : ProfiniteGrp :=
+  ProfiniteGrp.limit (chapter01OpenFiniteIndexProfiniteDiagram G)
+
+abbrev Chapter01OpenProfiniteCompletion
+    (G : Type*) [CommGroup G] [TopologicalSpace G] : Type _ :=
+  (chapter01OpenProfiniteCompletion G : Type _)
+
+noncomputable def chapter01OpenProfiniteCompletionEtaFn
+    (G : Type*) [CommGroup G] [TopologicalSpace G] (g : G) :
+    Chapter01OpenProfiniteCompletion G :=
+  ⟨fun H => QuotientGroup.mk g, by
+    intro H K f
+    rfl⟩
+
+noncomputable def chapter01OpenProfiniteCompletionEta
+    (G : Type*) [CommGroup G] [TopologicalSpace G] :
+    G →* Chapter01OpenProfiniteCompletion G where
+  toFun := chapter01OpenProfiniteCompletionEtaFn G
+  map_one' := by
+    apply ProfiniteGrp.limit_ext _
+    intro H
+    rfl
+  map_mul' g h := by
+    apply ProfiniteGrp.limit_ext _
+    intro H
+    rfl
+
+noncomputable def chapter01OpenProfiniteCompletionProjection
+    (G : Type*) [CommGroup G] [TopologicalSpace G]
+    (H : Chapter01OpenFiniteIndexNormalSubgroup G) :
+    Chapter01OpenProfiniteCompletion G →* (G ⧸ H.toSubgroup) :=
+  (((ProfiniteGrp.limitCone
+      (chapter01OpenFiniteIndexProfiniteDiagram G)).π.app H).hom).toMonoidHom
+
+@[simp]
+theorem chapter01OpenProfiniteCompletionProjection_eta
+    (G : Type*) [CommGroup G] [TopologicalSpace G]
+    (H : Chapter01OpenFiniteIndexNormalSubgroup G) (g : G) :
+    chapter01OpenProfiniteCompletionProjection G H
+        (chapter01OpenProfiniteCompletionEta G g) = QuotientGroup.mk g := by
+  rfl
+
 /-- The finite abelian levels in a chosen maximal abelian extension. -/
 abbrev Chapter01FiniteAbelianIndex
     (K KAb : Type*) [Field K] [Field KAb] [Algebra K KAb]
@@ -227,7 +337,10 @@ noncomputable def chapter01AbelianGaloisLimitEquiv
       ProfiniteGrp.limit (InfiniteGalois.asProfiniteGaloisGroupFunctor K KAb) :=
   InfiniteGalois.continuousMulEquivToLimit K KAb
 
-/-- The profinite completion of a group in the pinned Mathlib interface. -/
+/-- The abstract profinite completion of a group in the pinned Mathlib
+interface.  It is indexed by all finite-index normal subgroups; the
+topology-sensitive completion used by §1.2 is
+`Chapter01OpenProfiniteCompletion`. -/
 abbrev Chapter01ProfiniteCompletion (G : Type*) [Group G] : Type _ :=
   (ProfiniteGrp.ProfiniteCompletion.completion (GrpCat.of G) : Type _)
 

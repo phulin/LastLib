@@ -88,9 +88,8 @@ theorem chapter01_geometric_reciprocity_apply
     chapter01GeometricInverseHom f x = (f x)⁻¹ :=
   rfl
 
-/- LOCAL_DEPENDENCY_GUESS: the canonical maximal-unramified Galois target is
-supplied by the later extension-theoretic API; this predicate isolates the
-arithmetic normalization independently of that target construction. -/
+/-- Arithmetic normalization for a chosen finite or inverse-limit target.  A
+uniformizer is represented by a field unit whose valuation is one. -/
 def Chapter01ArithmeticNormalization
     {K G : Type*} [Field K] [Group G]
     (vK : AddValuation K (WithTop ℤ)) (rec : Kˣ →* G) (φ : G) : Prop :=
@@ -141,9 +140,8 @@ theorem chapter01_geometric_normalization_apply
         π = (chapter01ArithmeticFrobenius N.unramified)⁻¹ := by
   sorry
 
-/-- The normalization condition can be read on every finite unramified level;
-the compatible limit is the arithmetic Frobenius on the maximal unramified
-extension. -/
+/-- The normalization predicate applies to any chosen normalized
+uniformizer. -/
 theorem chapter01_arithmetic_normalization_condition_apply
     {K G : Type*} [Field K] [Group G]
     (vK : AddValuation K (WithTop ℤ)) (rec : Kˣ →* G) (φ : G)

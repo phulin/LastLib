@@ -70,9 +70,8 @@ theorem chapter01_unit_filtration_descending
   exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10_unit_filtration_descending
     (Chapter01ValuationRing v) n
 
-/- LOCAL_DEPENDENCY_GUESS: the normalized additive valuation coordinate is the
-earlier DVR decomposition map; the exact sequence itself is kept explicit in
-`Chapter01ValuationCoordinateData`. -/
+/-- The normalized additive valuation coordinate is recorded by the exact
+sequence interface from the dependencies file. -/
 theorem chapter01_valuation_coordinate_exists
     {K : Type*} [Field K]
     (v : AddValuation K (WithTop ℤ))
@@ -121,9 +120,8 @@ theorem chapter01_local_field_integer_ring_compact
       (Set.univ : Set ((Valued.v : Valuation K ℤᵐ⁰).valuationSubring)) := by
   sorry
 
-/- LOCAL_DEPENDENCY_GUESS: the earlier valuation-topology theorem identifies
-the additive valuation used here with the `Valued` topology on `K`; once that
-bridge is reconciled, finite residue compactness gives local compactness. -/
+/-- The supplied valuation equivalence and canonical `Valued` topology are the
+bridge from compactness of the valuation ring to local compactness of `K`. -/
 theorem chapter01_local_field_is_locally_compact
     {K : Type*} [Field K] [Valued K ℤᵐ⁰]
     (v : AddValuation K (WithTop ℤ))
@@ -135,14 +133,16 @@ theorem chapter01_local_field_is_locally_compact
     LocallyCompactSpace K := by
   sorry
 
-/- LOCAL_DEPENDENCY_GUESS: the valuation-coordinate quotient is the standard
-noncompact `ℤ` coordinate of the local-field multiplicative group. -/
+/-- A topological product decomposition with its noncompact valuation
+coordinate forces the field-unit group to be noncompact. -/
 theorem chapter01_local_field_units_noncompact
     {K : Type*} [Field K]
     (v : AddValuation K (WithTop ℤ))
+    (hlocal : Chapter01LocalField v)
     [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [TopologicalSpace (Chapter01UnitGroup v)]
     [IsTopologicalGroup (Chapter01UnitGroup v)]
+    [NoncompactSpace (Multiplicative ℤ)]
     (hcoordinate :
       Nonempty (Kˣ ≃ₜ* Multiplicative ℤ × Chapter01UnitGroup v)) :
     NoncompactSpace Kˣ := by
