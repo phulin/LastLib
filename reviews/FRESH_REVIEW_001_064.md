@@ -94,11 +94,18 @@ The divisor, degree, residue, absolute and relative duality, nodal-dualizing, co
 
 The remaining failure is X004. Lemma 9.1A begins its proof of projectivity of every proper Cohen–Macaulay curve by taking the finite normalization of each reduced component “by Book 8”; Lemma 9.2A again uses the finite normalization of an arbitrary reduced geometric fiber to prove fiberwise ampleness. Absolute curve duality, relative curve duality, Stein factorization/proper finiteness as developed here, and the later Riemann–Roch/Serre-duality package all depend on those projective embeddings. For inseparable function-field extensions, that finiteness is neither proved in Books 001–008 nor available in the local Mathlib checkout; Book 010a supplies the first complete Japanese/excellence theorem. See X004.
 
+### Book 010 — `010-faithfully-flat-descent-in-algebraic-geometry.md`
+
+**Verdict: PASS.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 2455 (EOF), in chronological/result order, during this audit.
+
+The manuscript keeps its three target categories distinct and proves each conclusion before using it: faithful exactness and the Amitsur complex precede effective module descent; finiteness/flatness/projectivity precede algebra, affine-scheme, and quasi-coherent descent; full faithfulness and the diagonal method precede the table of local properties; and the arbitrary-fpqc result is deliberately only an equalizer sheaf unless an affine, finite, stable-affine, quasi-affine, or compatibly polarized scheme criterion has been proved. The surjective-étale quotient construction proves its representable diagonal and atlas rather than assuming that every fpqc equalizer is algebraic. Its separated locally-quasi-finite effectivity argument legitimately uses Zariski's Main Theorem, available in the local checkout at `Mathlib/AlgebraicGeometry/ZariskisMainTheorem.lean`; the constructible-topology input is developed in `Mathlib/Topology/Spectral/ConstructibleTopology.lean`. The local checkout also confirms the algebraic backbone in `Mathlib/Algebra/Category/ModuleCat/Descent.lean`, `Mathlib/RingTheory/Flat/FaithfullyFlat/Descent.lean`, and the morphism-property results in `Mathlib/AlgebraicGeometry/Morphisms/FlatDescent.lean`. Chapter 12 gives a complete invariant-norm/stable-minor proof of the finite-flat free-action quotient, including arbitrary base change, before torsors and subgroup quotients consume it. The Book 008 Hilbert-scheme discussion in §16.3 is a conditional moduli workflow, not a representability theorem proved or consumed here, so X005 is not a Book 010 dependency. The linked contents match all seventeen chapters and sections; no forward proof edge, conditional conclusion, notation defect, malformed display, or missing pedagogical bridge was found.
+
 ## Pending scope inventory
 
 The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
 
-- PENDING — Book 010, `010-faithfully-flat-descent-in-algebraic-geometry.md`
 - PENDING — Book 010a, `010a-excellent-rings-and-formal-fibers.md`
 - PENDING — Book 011, `011-normalization-and-regular-models-of-arithmetic-curves.md`
 - PENDING — Book 012, `012-blowups-and-intersection-theory-on-arithmetic-surfaces.md`
