@@ -437,7 +437,7 @@ theorem chapter03_norm_transitive_in_tower
     [FiniteDimensional K M] [FiniteDimensional M L] [FiniteDimensional K L] (x : L) :
     Algebra.norm K (S := L) x =
       Algebra.norm K (S := M) (Algebra.norm M (S := L) x) := by
-  sorry
+  exact (Algebra.norm_norm (R := K) (S := M) (a := x)).symm
 
 end
 
