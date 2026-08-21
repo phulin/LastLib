@@ -76,8 +76,10 @@
     - [The detection mechanism in detail](#125-the-detection-mechanism-in-detail)
     - [Reconstructing the full image](#126-reconstructing-the-full-image)
 13. [A final image protocol](#13-a-final-image-protocol)
-    - [The decision tree](#131-the-decision-tree)
-    - [The package established](#132-the-package-established)
+
+- [The decision tree](#131-the-decision-tree)
+- [The package established](#132-the-package-established)
+- [Dependencies and exact scope](#133-dependencies-and-exact-scope)
 
 ## 1. The image problem in dimension two
 
@@ -1495,3 +1497,26 @@ The finite subgroup theorem and the arithmetic interfaces now form one reusable 
 The cohomological conclusions are equally precise. Prime-to-$\ell$ absolutely irreducible images are adequate. Groups containing a defining-characteristic special-linear core are adequate in dimension two for $\ell\ge7$. Hence every absolutely irreducible two-dimensional residual image is adequate at those primes, including after cyclotomic restriction when that restriction remains absolutely irreducible. Adequacy supplies vanishing of scalar and adjoint first cohomology and regular semisimple detection; it does not replace separate adjoint-twist or local-condition checks.
 
 Coefficient five remains outside that uniform conclusion in one exact case. The coincidence $A_5\simeq\operatorname{PSL}_2(\mathbf F_5)$ leaves a genuine adjoint cohomology class, so that projective image must be eliminated or handled directly. The outer involution in $\operatorname{PGL}_2(\mathbf F_5)$ kills the class, and special-linear cores over $\mathbf F_{5^f}$ with $f>1$ satisfy the general calculation. With that boundary explicit, the image theory is strong enough for later Taylor--Wiles prime selection and potential-modularity constructions without concealing a small-prime exception or a local ramification hypothesis.
+
+### 13.3 Dependencies and exact scope
+
+The group classification, the matrix lifting argument, and every finite-image cohomology and
+adequacy calculation are proved in this book. The arithmetic interfaces use five earlier
+sources. Book 3 supplies upper ramification groups and the different/discriminant inequality
+(6.3). Book 6 supplies the ray-class classification of the quadratic and abelian exceptional
+quotients in Sections 6--7. Book 42 supplies finite-flat models, schematic closure, duality,
+and the warning that a generic invariant line does not automatically extend to a finite-flat
+subgroup. Book 45 supplies the Weil-pairing determinant and the good and multiplicative
+reduction descriptions for elliptic-curve torsion. Book 24 supplies the continuous
+inflation--restriction and Shapiro interfaces used when the finite-image calculations are
+inserted into global Galois cohomology.
+
+No ramification cutoff is deduced from finite flatness alone, no arithmetic prime is produced
+by adequacy alone, and no image is asserted to survive a base change without the stated
+linear-disjointness check. Realizing the regular semisimple detector at a prime is the job of
+the subsequent density theorem; references to Taylor--Wiles and potential-modularity uses are
+therefore downstream interfaces, not proof inputs here. The direct dependency row is
+
+$$
+141\mid 3,6,24,42,45.
+$$
