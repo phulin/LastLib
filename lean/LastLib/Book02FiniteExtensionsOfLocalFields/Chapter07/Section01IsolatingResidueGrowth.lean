@@ -133,7 +133,7 @@ theorem chapter07_unramified_is_separable
     [Valuation.IsRankOneDiscrete vL]
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
-    (hdegree : Module.finrank K L =
+    (_hdegree : Module.finrank K L =
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex
           vK.valuationSubring vL.valuationSubring
           (IsLocalRing.maximalIdeal vL.valuationSubring) *
@@ -155,8 +155,8 @@ theorem chapter07_unramified_is_separable
   let hfinite : Module.Finite vK.valuationSubring vL.valuationSubring :=
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.complete_extension_unit_ball_is_finite
       vK vL hcomplete
-  letI : Module.Finite vK.valuationSubring vL.valuationSubring := hfinite
-  letI : Algebra.IsSeparable (IsLocalRing.ResidueField vK.valuationSubring)
+  let : Module.Finite vK.valuationSubring vL.valuationSubring := hfinite
+  let : Algebra.IsSeparable (IsLocalRing.ResidueField vK.valuationSubring)
       (IsLocalRing.ResidueField vL.valuationSubring) := ⟨hresidue⟩
   have hformulas :=
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.complete_extension_ideal_and_residue_formulas
@@ -167,7 +167,7 @@ theorem chapter07_unramified_is_separable
           (algebraMap vK.valuationSubring vL.valuationSubring) =
         IsLocalRing.maximalIdeal vL.valuationSubring := by
     simpa only [pow_one] using hformulas.1
-  letI : Algebra.FormallyUnramified vK.valuationSubring vL.valuationSubring :=
+  let : Algebra.FormallyUnramified vK.valuationSubring vL.valuationSubring :=
     Algebra.FormallyUnramified.of_map_maximalIdeal hmap
   let T :=
     Localization (Algebra.algebraMapSubmonoid vL.valuationSubring
@@ -180,33 +180,33 @@ theorem chapter07_unramified_is_separable
           (nonZeroDivisors vK.valuationSubring) ≤
         nonZeroDivisors vL.valuationSubring := by
     exact map_le_nonZeroDivisors_of_injective _ hinj le_rfl
-  letI : Algebra K T :=
+  let : Algebra K T :=
     localizationAlgebra (nonZeroDivisors vK.valuationSubring)
       vL.valuationSubring
-  letI : IsScalarTower vK.valuationSubring K T :=
+  let : IsScalarTower vK.valuationSubring K T :=
     isScalarTower_localizationAlgebra
       (nonZeroDivisors vK.valuationSubring) vL.valuationSubring
-  letI : Module.Finite K T :=
+  let : Module.Finite K T :=
     Module.Finite.of_isLocalization vK.valuationSubring vL.valuationSubring
       (nonZeroDivisors vK.valuationSubring)
-  letI : IsLocalization
+  let : IsLocalization
       ((nonZeroDivisors vK.valuationSubring).map
         (algebraMap vK.valuationSubring vL.valuationSubring)) T :=
     inferInstanceAs (IsLocalization
       (Algebra.algebraMapSubmonoid vL.valuationSubring
         (nonZeroDivisors vK.valuationSubring)) T)
-  letI : IsDomain T := IsLocalization.isDomain_localization hbaseMap
+  let : IsDomain T := IsLocalization.isDomain_localization hbaseMap
   have hfieldT : IsField T :=
     isField_of_isIntegral_of_isField' (R := K) (S := T) (Field.toIsField K)
-  letI : IsField T := hfieldT
-  letI : Field T := hfieldT.toField
+  let : IsField T := hfieldT
+  let : Field T := hfieldT.toField
   have hformalT : Algebra.FormallyUnramified K T := by
     exact Algebra.FormallyUnramified.localization_map
       (R := vK.valuationSubring) (S := vL.valuationSubring)
       (Rₘ := K) (Sₘ := T) (M := nonZeroDivisors vK.valuationSubring)
   have hsepT : Algebra.IsSeparable K T :=
     (Algebra.FormallyUnramified.iff_isSeparable K T).mp hformalT
-  letI : IsFractionRing vL.valuationSubring T :=
+  let : IsFractionRing vL.valuationSubring T :=
     IsLocalization.of_le
       (M := Algebra.algebraMapSubmonoid vL.valuationSubring
         (nonZeroDivisors vK.valuationSubring))
@@ -224,8 +224,7 @@ theorem chapter07_unramified_is_separable
   ext x
   simp only [RingHom.comp_apply]
   obtain ⟨a, b, hb, rfl⟩ := IsFractionRing.div_surjective vK.valuationSubring x
-  simp [map_div₀, ← IsScalarTower.algebraMap_apply vK.valuationSubring K T,
-    ← IsScalarTower.algebraMap_apply vK.valuationSubring vL.valuationSubring L]
+  simp [map_div₀]
   congr 1
   · have haK : (a : K) = algebraMap vK.valuationSubring K a := rfl
     have haL : (algebraMap K L) (a : K) =

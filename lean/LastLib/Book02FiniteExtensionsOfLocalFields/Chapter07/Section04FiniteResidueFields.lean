@@ -139,7 +139,8 @@ theorem chapter07_finite_residue_unramified_exists_for_degree
     ∃ M : Chapter07FiniteResidueUnramifiedModel A K k res,
       M.degree = f ∧ M.residueDegree = f ∧ M.ramificationIndex = 1 := by
   obtain ⟨gbar, hgbar_monic, hgbar_irreducible, hgbar_separable,
-    hgbar_degree⟩ := chapter07_finite_field_irreducible_separable_polynomial_exists f hf
+    hgbar_degree⟩ := chapter07_finite_field_irreducible_separable_polynomial_exists
+      (k := k) f hf
   exact chapter07_finite_residue_unramified_exists res f hf
     hres_surjective hres_kernel
     ⟨gbar, hgbar_monic, hgbar_irreducible, hgbar_separable, hgbar_degree⟩
@@ -452,7 +453,8 @@ theorem chapter07_finite_residue_galois_data_exists
       Nonempty
         (Chapter07MaximalUnramifiedGaloisData
           (Chapter07MaximalUnramifiedAutomorphismGroup K Ω k κ T)) := by
-  obtain ⟨T⟩ := chapter07_finite_residue_tower_exists vK hcomplete
+  obtain ⟨T⟩ := chapter07_finite_residue_tower_exists
+    (K := K) (Ω := Ω) (k := k) (κ := κ) vK hcomplete
     residueIdentification
   exact ⟨T, chapter07_finite_residue_tower_galois_data_exists T⟩
 

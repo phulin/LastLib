@@ -95,7 +95,7 @@ theorem chapter07_unramified_criteria
       resB.comp (algebraMap A B) = (algebraMap k l).comp res)
     (hE : E.ramificationIndex =
       P.ramificationIdx A)
-    (hf : E.residueDegree =
+    (_hf : E.residueDegree =
       P.inertiaDeg A) :
     (Chapter07UnramifiedExtension E ↔
       (Chapter07MaximalIdealExtension A B m P ∧
@@ -104,9 +104,9 @@ theorem chapter07_unramified_criteria
         Nonempty (Chapter07MonogenicResiduePresentation A B K L k l P res)) ∧
       (Chapter07UnramifiedExtension E ↔
         Chapter07FiniteEtaleExtension A B) := by
-  letI : Algebra.IsIntegral A B := IsIntegralClosure.isIntegral_algebra A L
-  letI : FaithfulSMul A B := FaithfulSMul.of_field_isFractionRing A B K L
-  letI : Module.IsTorsionFree A B :=
+  let : Algebra.IsIntegral A B := IsIntegralClosure.isIntegral_algebra A L
+  let : FaithfulSMul A B := FaithfulSMul.of_field_isFractionRing A B K L
+  let : Module.IsTorsionFree A B :=
     (Module.isTorsionFree_iff_faithfulSMul).mpr inferInstance
   have hformula :
       Ideal.map (algebraMap A B) (IsLocalRing.maximalIdeal A) =
@@ -221,14 +221,14 @@ theorem chapter07_unramified_criteria
       (hsep : Chapter07ResidueExtensionIsSeparable k l) :
       Algebra.IsSeparable (IsLocalRing.ResidueField A)
         (IsLocalRing.ResidueField B) := by
-    letI : Algebra.IsSeparable k l := ⟨hsep⟩
+    let : Algebra.IsSeparable k l := ⟨hsep⟩
     exact (Algebra.IsSeparable.iff_of_equiv_equiv eA eB heq).mpr inferInstance
   have hflat : Module.Flat A B := inferInstance
   have hfp : Module.FinitePresentation A B :=
     Module.finitePresentation_of_finite A B
-  letI : Module.Flat A B := hflat
-  letI : Module.FinitePresentation A B := hfp
-  letI : Algebra.FinitePresentation A B :=
+  let : Module.Flat A B := hflat
+  let : Module.FinitePresentation A B := hfp
+  let : Algebra.FinitePresentation A B :=
     Algebra.FinitePresentation.of_finitePresentation A B
   have hformal :
       Algebra.FormallyUnramified A B ↔
@@ -278,19 +278,19 @@ theorem chapter07_unramified_criteria
         unfold Chapter07MaximalIdealExtension Chapter07ExtendedIdeal at hmap
         rw [hm, hP] at hmap
         exact hmap.symm
-      letI : Algebra.IsSeparable (IsLocalRing.ResidueField A)
+      let : Algebra.IsSeparable (IsLocalRing.ResidueField A)
           (IsLocalRing.ResidueField B) := hsepCanon hU.2
-      letI : Algebra.FormallyUnramified A B :=
+      let : Algebra.FormallyUnramified A B :=
         Algebra.FormallyUnramified.of_map_maximalIdeal hmapCanon
       exact hetale.mpr inferInstance
     · rintro ⟨_, hEtale⟩
       have hform : Algebra.FormallyUnramified A B := hetale.mp hEtale
-      letI : Algebra.FormallyUnramified A B := hform
+      let : Algebra.FormallyUnramified A B := hform
       have hcanon := hformal.mp inferInstance
       have hsepClass : Algebra.IsSeparable k l := by
         exact (Algebra.IsSeparable.iff_of_equiv_equiv eA eB heq).mp hcanon.1
       have hsep : Chapter07ResidueExtensionIsSeparable k l := by
-        letI : Algebra.IsSeparable k l := hsepClass
+        let : Algebra.IsSeparable k l := hsepClass
         intro x
         exact Algebra.IsSeparable.isSeparable k x
       have hmap : Chapter07MaximalIdealExtension A B m P := by
@@ -308,11 +308,11 @@ theorem chapter07_unramified_criteria
       unfold Chapter07MaximalIdealExtension Chapter07ExtendedIdeal at hmap
       rw [hm, hP] at hmap
       exact hmap.symm
-    letI : Algebra.IsSeparable (IsLocalRing.ResidueField A)
+    let : Algebra.IsSeparable (IsLocalRing.ResidueField A)
         (IsLocalRing.ResidueField B) := hsepCanon hU.2
-    letI : Algebra.FormallyUnramified A B :=
+    let : Algebra.FormallyUnramified A B :=
       Algebra.FormallyUnramified.of_map_maximalIdeal hmapCanon
-    letI : Algebra.Etale A B := hetale.mpr inferInstance
+    let : Algebra.Etale A B := hetale.mpr inferInstance
     obtain ⟨theta, htheta⟩ :=
       IsLocalRing.exists_adjoin_eq_top (R := A) (S := B)
     have hthetaInt : IsIntegral A theta :=
@@ -345,8 +345,7 @@ theorem chapter07_unramified_criteria
     have hresgen :
         Algebra.adjoin k ({resB theta} : Set l) = ⊤ := by
       rw [eq_top_iff]
-      intro x
-      intro _
+      intro x _
       obtain ⟨b, rfl⟩ := hresB_surjective x
       have hb : b ∈ Algebra.adjoin A ({theta} : Set B) := by
         rw [htheta]
@@ -452,7 +451,7 @@ theorem chapter07_unramified_criteria
     · rintro ⟨p⟩
       have hsepClass : Algebra.IsSeparable k l := hsep_from_p p
       have hsep : Chapter07ResidueExtensionIsSeparable k l := by
-        letI : Algebra.IsSeparable k l := hsepClass
+        let : Algebra.IsSeparable k l := hsepClass
         intro x
         exact Algebra.IsSeparable.isSeparable k x
       exact ⟨hram_from_p p, hsep⟩

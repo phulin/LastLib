@@ -188,7 +188,23 @@ theorem chapter07_residue_tensor_product_is_separable_product
     [Algebra k k'] [Algebra k l] [FiniteDimensional k l]
     [Algebra.IsSeparable k l] :
     Chapter07FiniteEtaleExtension k' (l ⊗[k] k') := by
-  exact ⟨inferInstance, inferInstance⟩
+    exact
+    (letI : Module.Finite k' (k' ⊗[k] l) :=
+        Module.Finite.base_change k k' l
+     let e : k' ⊗[k] l ≃ₐ[k'] l ⊗[k] k' :=
+       Algebra.TensorProduct.commRight k k' l
+     letI : Module.Finite k' (l ⊗[k] k') :=
+       Module.Finite.of_surjective e.toLinearMap e.surjective
+     letI : Module.FinitePresentation k l :=
+        Module.finitePresentation_of_finite k l
+     letI : Algebra.FinitePresentation k l := inferInstance
+     letI : Algebra.FormallyEtale k l :=
+       Algebra.FormallyEtale.of_isSeparable k l
+     letI : Algebra.Etale k l := ⟨inferInstance, inferInstance⟩
+     letI : Algebra.Etale k' (k' ⊗[k] l) := inferInstance
+     letI : Algebra.Etale k' (l ⊗[k] k') :=
+       Algebra.Etale.of_equiv e
+     ⟨inferInstance, inferInstance⟩)
 
 /-- A finite product of unramified factors after scalar extension. -/
 structure Chapter07UnramifiedScalarExtensionProduct
@@ -286,27 +302,28 @@ theorem chapter07_galois_over_intersection_linearly_disjoint
     (F := F) (E := K₁) inf_le_left
   let E₂ := IntermediateField.extendScalars
     (F := F) (E := K₂) inf_le_right
-  letI : Algebra K E₁ := Algebra.compHom E₁ (algebraMap K F)
-  letI : Algebra K E₂ := Algebra.compHom E₂ (algebraMap K F)
-  letI : IsScalarTower K F E₁ := IsScalarTower.of_algebraMap_eq (by
+  let : Algebra K E₁ := Algebra.compHom E₁ (algebraMap K F)
+  let : Algebra K E₂ := Algebra.compHom E₂ (algebraMap K F)
+  let : IsScalarTower K F E₁ := IsScalarTower.of_algebraMap_eq (by
     intro x
     rfl)
-  letI : IsScalarTower K F E₂ := IsScalarTower.of_algebraMap_eq (by
+  let : IsScalarTower K F E₂ := IsScalarTower.of_algebraMap_eq (by
     intro x
     rfl)
-  letI : Module.Finite K E₁ := by
+  let : Module.Finite K E₁ := by
     change Module.Finite K K₁
     infer_instance
-  letI : Module.Finite K E₂ := by
+  let : Module.Finite K E₂ := by
     change Module.Finite K K₂
     infer_instance
-  letI : Module.Finite F E₁ :=
+  let : Module.Finite F E₁ :=
     Module.Finite.of_restrictScalars_finite K F E₁
-  letI : Module.Finite F E₂ :=
+  let : Module.Finite F E₂ :=
     Module.Finite.of_restrictScalars_finite K F E₂
   change E₁.LinearDisjoint E₂
   apply (IntermediateField.LinearDisjoint.iff_inf_eq_bot).2
-  rw [E₁, E₂, F, IntermediateField.extendScalars_inf,
+  dsimp [E₁, E₂, F]
+  rw [IntermediateField.extendScalars_inf,
     IntermediateField.extendScalars_self]
 
 end
