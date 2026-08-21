@@ -102,11 +102,6 @@ theorem chapter01_characteristic_zero_has_no_wild_stage
     W = ⊥ := by
   sorry
 
-/-- The canonical tame Kummer-coordinate package from Book 2, exposed under
-the chapter-facing namespace. -/
-abbrev Chapter01TameKummerPresentation :=
-  LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09.Chapter09TameKummerPresentation
-
 /-- A coordinate choice for a tame totally ramified stage is extra data, not a
 canonical subfield construction. -/
 structure Chapter01TameCoordinateChoice

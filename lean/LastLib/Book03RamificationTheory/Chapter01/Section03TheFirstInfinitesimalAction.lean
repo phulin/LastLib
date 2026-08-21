@@ -1,4 +1,5 @@
 import LastLib.Book03RamificationTheory.Chapter01.Section02InertiaRevisited
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.Section05MonogenicityAndResidueGenerators
 
 namespace LastLib.Book03RamificationTheory.Chapter01
 
@@ -137,9 +138,9 @@ structure Chapter01MaximalUnramifiedMonogenicPresentation
     {A₀ B k l : Type*} [CommRing A₀] [CommRing B]
     [Field k] [Field l] [Algebra A₀ B] [Algebra k l]
     (π : B)
-    (P : Chapter01MaximalUnramifiedMonogenicPresentation A₀ B k l π) :
+    (_P : Chapter01MaximalUnramifiedMonogenicPresentation A₀ B k l π) :
     Algebra.adjoin A₀ ({π} : Set B) = ⊤ := by
-  exact P.integral_generator.2
+  exact _P.integral_generator.2
 
 /-- The canonical maximal-unramified stage package, specialized to the
 defectless perfect-residue interface used by the preceding book. -/

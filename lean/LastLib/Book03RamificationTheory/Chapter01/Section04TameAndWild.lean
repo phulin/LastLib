@@ -1,4 +1,5 @@
 import LastLib.Book03RamificationTheory.Chapter01.Section03TheFirstInfinitesimalAction
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Section01IsolatingResidueGrowth
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09.Section04ImperfectResidueFields
 
 namespace LastLib.Book03RamificationTheory.Chapter01
@@ -210,8 +211,7 @@ structure Chapter01SeparableFierceExtensionProfile
     LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Chapter07FiniteLocalExtensionData
       K L k l
   field_separable :
-    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Chapter07FiniteExtensionIsSeparable
-      K L
+    Algebra.IsSeparable K L
   residue_purely_inseparable : IsPurelyInseparable k l
   residue_not_separable :
     ¬LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Chapter07ResidueExtensionIsSeparable
@@ -234,17 +234,15 @@ theorem chapter01_separable_fierce_profile_is_not_unramified
     [Algebra K L] [Algebra k l]
     [FiniteDimensional K L] [FiniteDimensional k l]
     (E : Chapter01SeparableFierceExtensionProfile K L k l) :
-    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Chapter07FiercelyRamifiedExtension
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Chapter07EOneInseparableResidueExtension
         E.data ∧
       ¬LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Chapter07UnramifiedExtension
         E.data := by
-  refine ⟨⟨E.ramification_index_eq_one, E.residue_purely_inseparable,
-    E.residue_not_separable⟩, ?_⟩
+  refine ⟨⟨E.ramification_index_eq_one, E.residue_not_separable⟩, ?_⟩
   exact
-    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.chapter07_fierce_is_not_unramified
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.chapter07_e_one_inseparable_residue_is_not_unramified
       E.data
-      ⟨E.ramification_index_eq_one, E.residue_purely_inseparable,
-        E.residue_not_separable⟩
+      ⟨E.ramification_index_eq_one, E.residue_not_separable⟩
 
 end
 
