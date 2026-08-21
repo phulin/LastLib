@@ -46,6 +46,9 @@ theorem chapter11_tame_total_first_layer_trace_formula
     (hred : chapter11ResidueReductionCompatible vK vL ρK ρL)
     (hcompleteK : chapter11ValuationComplete vK)
     (hcompleteL : chapter11ValuationComplete vL)
+    (T : chapter11ValuationRing vL →+ chapter11ValuationRing vK)
+    (htrace : chapter11TraceLiftCompatibility K L vK vL T)
+    (htracered : chapter11TraceResidueScalarCompatibility K L k vK vL ρK ρL e T)
     (x : chapter11ValuationRing vL) :
     ∃ y : chapter11ValuationRing vK,
       (y : K) = Algebra.trace K L (x : L) ∧
@@ -66,6 +69,9 @@ theorem chapter11_tame_total_first_layer_norm_formula
     (hred : chapter11ResidueReductionCompatible vK vL ρK ρL)
     (hcompleteK : chapter11ValuationComplete vK)
     (hcompleteL : chapter11ValuationComplete vL)
+    (N : (chapter11ValuationRing vL)ˣ →* (chapter11ValuationRing vK)ˣ)
+    (hnormunit : chapter11NormUnitLiftCompatibility K L vK vL N)
+    (hnormred : chapter11NormResidueCompatibility K L k k vK vL ρK ρL e N)
     (u : chapter11ValuationRing vL) (hu : IsUnit u) :
     ∃ y : chapter11ValuationRing vK,
       (y : K) = Algebra.norm K (u : L) ∧ ρK y = (ρL u) ^ e := by
@@ -85,6 +91,11 @@ theorem chapter11_unramified_first_layer_trace_formula
       Module.finrank (chapter11ResidueField vK) (chapter11ResidueField vL))
     (hred : chapter11ResidueReductionCompatible vK vL
       (chapter11ResidueMap vK) (chapter11ResidueMap vL))
+    (T : chapter11ValuationRing vL →+ chapter11ValuationRing vK)
+    (htrace : chapter11TraceLiftCompatibility K L vK vL T)
+    (htracered : chapter11TraceResidueCompatibility K L
+      (chapter11ResidueField vK) (chapter11ResidueField vL) vK vL
+      (chapter11ResidueMap vK) (chapter11ResidueMap vL) 1 T)
     (x : chapter11ValuationRing vL) :
     ∃ y : chapter11ValuationRing vK,
       (y : K) = Algebra.trace K L (x : L) ∧
@@ -105,6 +116,11 @@ theorem chapter11_unramified_first_layer_norm_formula
       Module.finrank (chapter11ResidueField vK) (chapter11ResidueField vL))
     (hred : chapter11ResidueReductionCompatible vK vL
       (chapter11ResidueMap vK) (chapter11ResidueMap vL))
+    (N : (chapter11ValuationRing vL)ˣ →* (chapter11ValuationRing vK)ˣ)
+    (hnormunit : chapter11NormUnitLiftCompatibility K L vK vL N)
+    (hnormred : chapter11NormResidueCompatibility K L
+      (chapter11ResidueField vK) (chapter11ResidueField vL) vK vL
+      (chapter11ResidueMap vK) (chapter11ResidueMap vL) 1 N)
     (u : chapter11ValuationRing vL) (hu : IsUnit u) :
     ∃ y : chapter11ValuationRing vK,
       (y : K) = Algebra.norm K (u : L) ∧

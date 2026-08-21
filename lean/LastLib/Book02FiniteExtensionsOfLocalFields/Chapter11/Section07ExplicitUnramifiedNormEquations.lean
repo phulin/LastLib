@@ -40,7 +40,10 @@ theorem chapter11_unramified_norm_equation_valuation_formula
     [Algebra.IsSeparable K L]
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
     (f : ℕ) (hunram : chapter11UnramifiedValuedExtension vK vL)
-    (hnorm : chapter11NormValuationFormula K L vK vL f)
+    [Valuation.IsRankOneDiscrete vK.toValuation]
+    [Valuation.IsRankOneDiscrete vL.toValuation]
+    (hunique : ∀ w : AddValuation L (WithTop ℤ),
+      vK.IsEquiv (AddValuation.comap (algebraMap K L) w) → vL.IsEquiv w)
     (hdegree : Module.finrank K L = f)
     (hfres : f =
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
@@ -158,6 +161,11 @@ theorem chapter11_unramified_norm_equation_iff
     [Algebra.IsSeparable (chapter11ResidueField vK) (chapter11ResidueField vL)]
     (hred : chapter11ResidueReductionCompatible vK vL
       (chapter11ResidueMap vK) (chapter11ResidueMap vL))
+    (N : (chapter11ValuationRing vL)ˣ →* (chapter11ValuationRing vK)ˣ)
+    (hnormunit : chapter11NormUnitLiftCompatibility K L vK vL N)
+    (hnormred : chapter11NormResidueCompatibility K L
+      (chapter11ResidueField vK) (chapter11ResidueField vL) vK vL
+      (chapter11ResidueMap vK) (chapter11ResidueMap vL) 1 N)
     (πL : L) (hcommon : chapter11CommonUniformizer vK vL πK πL)
     (a : K) (ha : a ≠ 0) :
     chapter11NormEquationSolution K L a ↔

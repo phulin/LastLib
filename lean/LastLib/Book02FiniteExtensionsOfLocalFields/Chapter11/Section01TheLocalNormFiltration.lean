@@ -287,7 +287,8 @@ theorem chapter11_norm_continuous
 
 /- The norm is a multiplicative homomorphism and sends `1` to `1`. -/
 theorem chapter11_norm_preserves_one
-    (K L : Type*) [CommRing K] [Ring L] [Algebra K L] :
+    (K L : Type*) [Field K] [Ring L] [Algebra K L]
+    [FiniteDimensional K L] :
     Algebra.norm K (1 : L) = 1 := by
   sorry
 
@@ -336,6 +337,38 @@ def chapter11NormResidueCompatibility
   ∀ u : (chapter11ValuationRing vL)ˣ,
     ρK (N u : chapter11ValuationRing vK) =
       Algebra.norm k (ρL (u : chapter11ValuationRing vL)) ^ e
+
+/- The trace has the analogous integral lift and reduction interfaces.  The
+   lift is kept as an additive homomorphism because trace is additive, while
+   the residue statement is separated from the field-level identity. -/
+def chapter11TraceLiftCompatibility
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
+    (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
+    (T : chapter11ValuationRing vL →+ chapter11ValuationRing vK) : Prop :=
+  ∀ x : chapter11ValuationRing vL,
+    ((T x : chapter11ValuationRing vK) : K) = Algebra.trace K L (x : L)
+
+def chapter11TraceResidueCompatibility
+    (K L k l : Type*) [Field K] [Field L] [Field k] [Field l]
+    [Algebra K L] [Algebra k l] [FiniteDimensional K L]
+    [FiniteDimensional k l]
+    (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
+    (ρK : chapter11ValuationRing vK →+* k)
+    (ρL : chapter11ValuationRing vL →+* l) (e : ℕ)
+    (T : chapter11ValuationRing vL →+ chapter11ValuationRing vK) : Prop :=
+  ∀ x : chapter11ValuationRing vL,
+    ρK (T x) = (e : k) * Algebra.trace k l (ρL x)
+
+def chapter11TraceResidueScalarCompatibility
+    (K L k : Type*) [Field K] [Field L] [Field k]
+    [Algebra K L] [FiniteDimensional K L]
+    (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
+    (ρK : chapter11ValuationRing vK →+* k)
+    (ρL : chapter11ValuationRing vL →+* k) (e : ℕ)
+    (T : chapter11ValuationRing vL →+ chapter11ValuationRing vK) : Prop :=
+  ∀ x : chapter11ValuationRing vL,
+    ρK (T x) = (e : k) * ρL x
 
 /- At depth zero the residue of a norm is the `e`th power of the residue
    extension norm.  The residue maps are kept as explicit ring homomorphisms,

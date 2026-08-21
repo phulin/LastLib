@@ -1,4 +1,5 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.Section03TheUnramifiedCase
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Section04MultiplicationPowersAndResidueCharacteristic
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11
 
@@ -46,6 +47,9 @@ theorem chapter11_totally_ramified_trace_residue_formula
     (hred : chapter11ResidueReductionCompatible vK vL ρK ρL)
     (hcompleteK : chapter11ValuationComplete vK)
     (hcompleteL : chapter11ValuationComplete vL)
+    (T : chapter11ValuationRing vL →+ chapter11ValuationRing vK)
+    (htrace : chapter11TraceLiftCompatibility K L vK vL T)
+    (htracered : chapter11TraceResidueScalarCompatibility K L k vK vL ρK ρL e T)
     (x : chapter11ValuationRing vL) :
     ∃ y : chapter11ValuationRing vK,
       (y : K) = Algebra.trace K L (x : L) ∧
@@ -66,6 +70,9 @@ theorem chapter11_totally_ramified_norm_residue_formula
     (hred : chapter11ResidueReductionCompatible vK vL ρK ρL)
     (hcompleteK : chapter11ValuationComplete vK)
     (hcompleteL : chapter11ValuationComplete vL)
+    (N : (chapter11ValuationRing vL)ˣ →* (chapter11ValuationRing vK)ˣ)
+    (hnormunit : chapter11NormUnitLiftCompatibility K L vK vL N)
+    (hnormred : chapter11NormResidueCompatibility K L k k vK vL ρK ρL e N)
     (u : chapter11ValuationRing vL) (hu : IsUnit u) :
     ∃ y : chapter11ValuationRing vK,
       (y : K) = Algebra.norm K (u : L) ∧ ρK y = (ρL u) ^ e := by
@@ -164,6 +171,9 @@ theorem proposition_11_2_tame_totally_ramified_all_unit_norm_image
     (hred : chapter11ResidueReductionCompatible vK vL ρK ρL)
     (hcompleteK : chapter11ValuationComplete vK)
     (hcompleteL : chapter11ValuationComplete vL)
+    (N : (chapter11ValuationRing vL)ˣ →* (chapter11ValuationRing vK)ˣ)
+    (hnormunit : chapter11NormUnitLiftCompatibility K L vK vL N)
+    (hnormred : chapter11NormResidueCompatibility K L k k vK vL ρK ρL e N)
     (hprincipal :
       Set.SurjOn (Algebra.norm K (S := L))
         (chapter11UnitFiltration vL 1) (chapter11UnitFiltration vK 1)) :
@@ -187,6 +197,9 @@ theorem proposition_11_2_char_zero_totally_ramified_all_unit_norm_image
     (hred : chapter11ResidueReductionCompatible vK vL ρK ρL)
     (hcompleteK : chapter11ValuationComplete vK)
     (hcompleteL : chapter11ValuationComplete vL)
+    (N : (chapter11ValuationRing vL)ˣ →* (chapter11ValuationRing vK)ˣ)
+    (hnormunit : chapter11NormUnitLiftCompatibility K L vK vL N)
+    (hnormred : chapter11NormResidueCompatibility K L k k vK vL ρK ρL e N)
     (hprincipal :
       Set.SurjOn (Algebra.norm K (S := L))
         (chapter11UnitFiltration vL 1) (chapter11UnitFiltration vK 1)) :

@@ -87,6 +87,10 @@ theorem chapter11_unramified_norm_first_layer_congruence
     (hdegree : Module.finrank K L = Module.finrank k l)
     (hred : chapter11ResidueReductionCompatible vK vL ρK ρL)
     (πK : K) (πL : L) (hπ : chapter11CommonUniformizer vK vL πK πL)
+    (hnorm : chapter11NormValuationFormula K L vK vL (Module.finrank k l))
+    (T : chapter11ValuationRing vL →+ chapter11ValuationRing vK)
+    (htrace : chapter11TraceLiftCompatibility K L vK vL T)
+    (htracered : chapter11TraceResidueCompatibility K L k l vK vL ρK ρL 1 T)
     (n : ℕ) (hn : 1 ≤ n) (a : chapter11ValuationRing vL) :
     ∃ c : chapter11ValuationRing vK,
       ρK c = Algebra.trace k l (ρL a) ∧
@@ -126,6 +130,9 @@ theorem proposition_11_1_unramified_all_unit_norm_image
     (ρL : chapter11ValuationRing vL →+* l)
     (hdegree : Module.finrank K L = Module.finrank k l)
     (hred : chapter11ResidueReductionCompatible vK vL ρK ρL)
+    (N : (chapter11ValuationRing vL)ˣ →* (chapter11ValuationRing vK)ˣ)
+    (hnormunit : chapter11NormUnitLiftCompatibility K L vK vL N)
+    (hnormred : chapter11NormResidueCompatibility K L k l vK vL ρK ρL 1 N)
     (hprincipal :
       Set.SurjOn (Algebra.norm K (S := L))
         (chapter11UnitFiltration vL 1) (chapter11UnitFiltration vK 1)) :
@@ -168,7 +175,13 @@ theorem chapter11_unramified_full_norm_image
     [FiniteDimensional (chapter11ResidueField vK) (chapter11ResidueField vL)]
     [Algebra.IsSeparable (chapter11ResidueField vK) (chapter11ResidueField vL)]
     (hred : chapter11ResidueReductionCompatible vK vL
-      (chapter11ResidueMap vK) (chapter11ResidueMap vL)) :
+      (chapter11ResidueMap vK) (chapter11ResidueMap vL))
+    (N : (chapter11ValuationRing vL)ˣ →* (chapter11ValuationRing vK)ˣ)
+    (hnormunit : chapter11NormUnitLiftCompatibility K L vK vL N)
+    (hnormred : chapter11NormResidueCompatibility K L
+      (chapter11ResidueField vK) (chapter11ResidueField vL) vK vL
+      (chapter11ResidueMap vK) (chapter11ResidueMap vL)
+      1 N) :
     {x : K | ∃ y : L, y ≠ 0 ∧ x = Algebra.norm K y} =
       chapter11ValueUnitProductSet vK πK f := by
   sorry
@@ -191,7 +204,13 @@ theorem chapter11_unramified_norm_subgroup_index
     [FiniteDimensional (chapter11ResidueField vK) (chapter11ResidueField vL)]
     [Algebra.IsSeparable (chapter11ResidueField vK) (chapter11ResidueField vL)]
     (hred : chapter11ResidueReductionCompatible vK vL
-      (chapter11ResidueMap vK) (chapter11ResidueMap vL)) :
+      (chapter11ResidueMap vK) (chapter11ResidueMap vL))
+    (N : (chapter11ValuationRing vL)ˣ →* (chapter11ValuationRing vK)ˣ)
+    (hnormunit : chapter11NormUnitLiftCompatibility K L vK vL N)
+    (hnormred : chapter11NormResidueCompatibility K L
+      (chapter11ResidueField vK) (chapter11ResidueField vL) vK vL
+      (chapter11ResidueMap vK) (chapter11ResidueMap vL)
+      1 N) :
     Nat.card (Kˣ ⧸ chapter11NormSubgroup K L) = f := by
   sorry
 

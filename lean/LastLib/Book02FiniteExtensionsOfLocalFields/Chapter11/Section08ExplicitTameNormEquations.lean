@@ -85,6 +85,9 @@ theorem chapter11_tame_total_norm_equation_iff
     (hred : chapter11ResidueReductionCompatible vK vL ρK ρL)
     (hcompleteK : chapter11ValuationComplete vK)
     (hcompleteL : chapter11ValuationComplete vL)
+    (N : (chapter11ValuationRing vL)ˣ →* (chapter11ValuationRing vK)ˣ)
+    (hnormunit : chapter11NormUnitLiftCompatibility K L vK vL N)
+    (hnormred : chapter11NormResidueCompatibility K L k k vK vL ρK ρL e N)
     (hprincipal :
       Set.SurjOn (Algebra.norm K (S := L))
         (chapter11UnitFiltration vL 1) (chapter11UnitFiltration vK 1))
@@ -118,6 +121,7 @@ theorem chapter11_kummer_uniformizer_norm
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] (π : K) (root : L) (e : ℕ)
     (hminpoly : minpoly K root = chapter11KummerPolynomial π e)
+    (hgenerates : Algebra.adjoin K ({root} : Set L) = ⊤)
     (hdegree : Module.finrank K L = e) :
     Algebra.norm K root = (-1 : K) ^ (e + 1) * π := by
   sorry

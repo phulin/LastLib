@@ -1,4 +1,5 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.Section05NormsInTowers
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.Section04TheValuationOfANorm
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11
 
@@ -18,7 +19,10 @@ theorem chapter11_unramified_comparison_norm_valuation
     [Algebra.IsSeparable K L]
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
     (f : ℕ) (hunram : chapter11UnramifiedValuedExtension vK vL)
-    (hnorm : chapter11NormValuationFormula K L vK vL f)
+    [Valuation.IsRankOneDiscrete vK.toValuation]
+    [Valuation.IsRankOneDiscrete vL.toValuation]
+    (hunique : ∀ w : AddValuation L (WithTop ℤ),
+      vK.IsEquiv (AddValuation.comap (algebraMap K L) w) → vL.IsEquiv w)
     (hdegree : Module.finrank K L = f)
     (hfres : f =
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
@@ -40,7 +44,12 @@ theorem chapter11_unramified_comparison_units_are_norms
     (hdegree : Module.finrank K L =
       Module.finrank (chapter11ResidueField vK) (chapter11ResidueField vL))
     (hred : chapter11ResidueReductionCompatible vK vL
-      (chapter11ResidueMap vK) (chapter11ResidueMap vL)) :
+      (chapter11ResidueMap vK) (chapter11ResidueMap vL))
+    (N : (chapter11ValuationRing vL)ˣ →* (chapter11ValuationRing vK)ˣ)
+    (hnormunit : chapter11NormUnitLiftCompatibility K L vK vL N)
+    (hnormred : chapter11NormResidueCompatibility K L
+      (chapter11ResidueField vK) (chapter11ResidueField vL) vK vL
+      (chapter11ResidueMap vK) (chapter11ResidueMap vL) 1 N) :
     Set.SurjOn (Algebra.norm K (S := L))
       (chapter11UnitFiltration vL 0) (chapter11UnitFiltration vK 0) := by
   sorry
@@ -100,6 +109,9 @@ theorem chapter11_tame_total_comparison_residue_obstruction
     (hred : chapter11ResidueReductionCompatible vK vL ρK ρL)
     (hcompleteK : chapter11ValuationComplete vK)
     (hcompleteL : chapter11ValuationComplete vL)
+    (N : (chapter11ValuationRing vL)ˣ →* (chapter11ValuationRing vK)ˣ)
+    (hnormunit : chapter11NormUnitLiftCompatibility K L vK vL N)
+    (hnormred : chapter11NormResidueCompatibility K L k k vK vL ρK ρL e N)
     (hprincipal :
       Set.SurjOn (Algebra.norm K (S := L))
         (chapter11UnitFiltration vL 1) (chapter11UnitFiltration vK 1)) :
