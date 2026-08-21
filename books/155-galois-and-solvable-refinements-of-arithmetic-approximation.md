@@ -84,10 +84,9 @@
     - [Proof and dependency audit](#163-proof-and-dependency-audit)
     - [How to read the output](#164-how-to-read-the-output)
 17. [Synthesis](#17-synthesis)
-
-- [The field diagram](#171-the-field-diagram)
-- [The order of construction](#172-the-order-of-construction)
-- [Conclusion](#173-conclusion)
+    - [The field diagram](#171-the-field-diagram)
+    - [The order of construction](#172-the-order-of-construction)
+    - [Conclusion](#173-conclusion)
 
 ## 1. Why ordinary approximation is not enough
 

@@ -58,26 +58,23 @@
    - [Selecting a monodromy class](#93-selecting-a-monodromy-class)
    - [Limits of the cover variant](#94-limits-of-the-cover-variant)
 10. [Avoidance and density](#10-avoidance-and-density)
-
-- [Removing a closed subset](#101-removing-a-closed-subset)
-- [Zariski density over varying fields](#102-zariski-density-over-varying-fields)
-- [Avoidance together with local constraints](#103-avoidance-together-with-local-constraints)
-- [Why one fixed extension is different](#104-why-one-fixed-extension-is-different)
+    - [Removing a closed subset](#101-removing-a-closed-subset)
+    - [Zariski density over varying fields](#102-zariski-density-over-varying-fields)
+    - [Avoidance together with local constraints](#103-avoidance-together-with-local-constraints)
+    - [Why one fixed extension is different](#104-why-one-fixed-extension-is-different)
 
 11. [Examples and failures](#11-examples-and-failures)
-
-- [Affine space with coefficient conditions](#111-affine-space-with-coefficient-conditions)
-- [Curves](#112-curves)
-- [A frame variety](#113-a-frame-variety)
-- [Counterexamples and boundary phenomena](#114-counterexamples-and-boundary-phenomena)
+    - [Affine space with coefficient conditions](#111-affine-space-with-coefficient-conditions)
+    - [Curves](#112-curves)
+    - [A frame variety](#113-a-frame-variety)
+    - [Counterexamples and boundary phenomena](#114-counterexamples-and-boundary-phenomena)
 
 12. [A practical package for arithmetic geometry](#12-a-practical-package-for-arithmetic-geometry)
-
-- [Local inputs from a moduli problem](#121-local-inputs-from-a-moduli-problem)
-- [Auxiliary primes and residue-characteristic primes](#122-auxiliary-primes-and-residue-characteristic-primes)
-- [The reusable theorem](#123-the-reusable-theorem)
-- [A verification checklist](#124-a-verification-checklist)
-- [Conclusion](#125-conclusion)
+    - [Local inputs from a moduli problem](#121-local-inputs-from-a-moduli-problem)
+    - [Auxiliary primes and residue-characteristic primes](#122-auxiliary-primes-and-residue-characteristic-primes)
+    - [The reusable theorem](#123-the-reusable-theorem)
+    - [A verification checklist](#124-a-verification-checklist)
+    - [Conclusion](#125-conclusion)
 
 ## 1. The local-to-global point problem
 
