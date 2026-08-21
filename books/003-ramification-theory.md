@@ -2139,7 +2139,7 @@ otherwise. Summing induced functions and evaluating at $g\in G$ counts each conj
 once, hence
 
 $$
-n\mathbf1_G=\sum_{C\leq G\ {m cyclic}}\operatorname{Ind}_C^G\vartheta_C.
+n\mathbf1_G=\sum_{C\leq G\ {\text{ cyclic}}}\operatorname{Ind}_C^G\vartheta_C.
 \tag{11.1c}
 $$
 
