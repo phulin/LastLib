@@ -1565,7 +1565,7 @@ $$
 
 with all Hopf operations tensored accordingly. The rank function pulls back. If $R'$ is faithfully flat, finite projectivity, morphism isomorphisms, normality, and torsor exactness can be detected after base change.
 
-Several plausible fiberwise arguments are invalid. Equality of the number of geometric points does not imply equality of subgroup schemes. A morphism can be bijective on all geometric points without being an isomorphism, as Frobenius on $\mathbf G_a$ shows. Fiberwise injectivity of a map of finite projective modules does not imply a locally split injection unless the cokernel is flat. Constancy of fiber cardinality says less than constancy of fiber length, and even constant length does not replace a global flatness proof unless finite presentation and a valid flatness criterion are present.
+Several plausible fiberwise arguments are invalid. Equality of the number of geometric points does not imply equality of subgroup schemes. A morphism can be bijective on all geometric points without being an isomorphism, as Frobenius on $\mathbf G_a$ shows. By contrast, injectivity on every residue-field fiber of a map of finite projective modules does imply a locally split injection and a finite-projective cokernel, by Book 26, §18.5; the unsafe shortcuts are to check only selected or generic fibers, to count points instead of testing the module map, or to omit finite projectivity. Constancy of fiber cardinality says less than constancy of fiber length, and even constant length does not replace a global flatness proof unless finite presentation and a valid flatness criterion are present.
 
 ## 14. Connected, reduced, and nonreduced behavior
 
