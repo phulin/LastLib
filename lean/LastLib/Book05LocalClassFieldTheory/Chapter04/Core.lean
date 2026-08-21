@@ -6,13 +6,14 @@ import Mathlib.Algebra.Group.Subgroup.ZPowers.Basic
 import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.RingTheory.Norm.Defs
+import Mathlib.LinearAlgebra.TensorProduct.Basic
 import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter04
 
 noncomputable section
 
-open scoped BigOperators
+open scoped BigOperators TensorProduct
 open LastLib.Book05LocalClassFieldTheory.Chapter02
 
 universe u
@@ -124,6 +125,8 @@ structure Chapter04UnramifiedExtensionData
     [FiniteDimensional K L] [IsGalois K L] where
   valuationK : AddValuation K (WithTop ℤ)
   valuationL : AddValuation L (WithTop ℤ)
+  localFieldK : Chapter02LocalField valuationK
+  localFieldL : Chapter02LocalField valuationL
   unramified :
     LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11UnramifiedValuedExtension
       valuationK valuationL
@@ -153,16 +156,21 @@ structure Chapter04SplitBrauerClass (K : Type*) [Field K] where
 structure Chapter04BrauerRestrictionData
     (K L : Type*) [Field K] [Field L] [Algebra K L] where
   restriction : chapter04BrauerGroup K → chapter04BrauerGroup L
+  brauerLaw : Chapter04BrauerGroupLaw L
   splitClass : Chapter04SplitBrauerClass L
   scalarExtension : chapter04CentralSimpleAlgebra K →
     chapter04CentralSimpleAlgebra L
+  scalarExtension_is_tensor_extension : ∀ A : chapter04CentralSimpleAlgebra K,
+    Nonempty (L ⊗[K] A.carrier ≃ₐ[L] (scalarExtension A).carrier)
   representative_compatibility : ∀ A : chapter04CentralSimpleAlgebra K,
     restriction (chapter04BrauerClass A) =
       chapter04BrauerClass (scalarExtension A)
+  splitClass_is_identity :
+    chapter04BrauerClass splitClass.representative = brauerLaw.one
 
 structure Chapter04BrauerCorestrictionData
     (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] where
+    [FiniteDimensional K L] [Algebra.IsSeparable K L] where
   corestriction : chapter04BrauerGroup L → chapter04BrauerGroup K
   representativeMap : chapter04CentralSimpleAlgebra L →
     chapter04CentralSimpleAlgebra K
@@ -173,7 +181,7 @@ structure Chapter04BrauerCorestrictionData
 def chapter04RestrictionSplitClass
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     (R : Chapter04BrauerRestrictionData K L) : chapter04BrauerGroup L :=
-  chapter04BrauerClass R.splitClass.representative
+  R.brauerLaw.one
 
 /-- The relative Brauer group for an explicit restriction interface. -/
 def chapter04RelativeBrauerGroup
@@ -199,6 +207,14 @@ structure Chapter04ReducedNormData
   degree_pos : 0 < degree
   finrank_eq_degree_sq : Module.finrank K D = degree ^ 2
   reducedNorm : Dˣ →* Kˣ
+  /- The reduced norm is defined on all elements, with its restriction to
+    units retained as the multiplicative API used by the valuation formulas. -/
+  reducedNormAll : D → K
+  reducedNormAll_zero : reducedNormAll 0 = 0
+  reducedNormAll_ne_zero : ∀ {x : D}, x ≠ 0 → reducedNormAll x ≠ 0
+  reducedNormAll_mul : ∀ x y, reducedNormAll (x * y) = reducedNormAll x * reducedNormAll y
+  reducedNormAll_on_units : ∀ x : Dˣ,
+    reducedNormAll (x : D) = (reducedNorm x : K)
   baseUnitValue : Kˣ → ℚ
   /- LOCAL_DEPENDENCY_GUESS: this is the defining reduced-norm compatibility
     needed by the chapter until a canonical central-simple reduced norm is
@@ -207,17 +223,17 @@ structure Chapter04ReducedNormData
     ∀ {E : Type u} [Field E] [Algebra K E] [FiniteDimensional K E]
       (φ : E →ₐ[K] D),
       Module.finrank K E ∣ degree →
-      ∀ x : Eˣ,
-        (reducedNorm (Units.map φ.toMonoidHom x) : K) =
-          (Algebra.norm K (x : E)) ^ (degree / Module.finrank K E)
+      ∀ x : E,
+        reducedNormAll (φ x) =
+          (Algebra.norm K x) ^ (degree / Module.finrank K E)
 
 def chapter04ReducedNormAgreesWithDeterminant
     {K D S : Type*} [Field K] [Ring D] [Field S]
     [Algebra K D] [Algebra K S]
-    (N : Dˣ →* Kˣ) (d : ℕ)
+    (N : D → K) (d : ℕ)
     (ρ : D →ₐ[K] Matrix (Fin d) (Fin d) S) : Prop :=
-  ∀ x : Dˣ,
-    algebraMap K S (N x : K) = Matrix.det (ρ (x : D))
+  ∀ x : D,
+    algebraMap K S (N x) = Matrix.det (ρ x)
 
 /- The division valuation is explicitly extended from units to all of `D`,
   with the zero value recorded separately. -/
@@ -230,7 +246,8 @@ def chapter04DivisionValuation
     classical
     by_cases hx : x = 0
     · exact ⊤
-    · exact ((vK (N.reducedNorm (Units.mk0 x hx)) / N.degree : ℚ) : WithTop ℚ)
+    · exact ((vK (Units.mk0 (N.reducedNormAll x) (N.reducedNormAll_ne_zero hx)) /
+        N.degree : ℚ) : WithTop ℚ)
 
 def chapter04DivisionValuationOnUnits
     {K D : Type u} [Field K] [Ring D] [Algebra K D]
@@ -320,6 +337,7 @@ def chapter04IntegerValueLattice : AddSubgroup ℚ :=
 
 /- The quotient-level local invariant interface. -/
 structure Chapter04LocalInvariantData (K : Type*) [Field K] where
+  localField : Chapter04LocalFieldProfile K
   brauerLaw : Chapter04BrauerGroupLaw K
   invariant : chapter04BrauerGroup K → chapter04RationalResidue
   invariant_injective : Function.Injective invariant

@@ -9,6 +9,7 @@ noncomputable section
 
 open scoped BigOperators TensorProduct
 open LastLib.Book05LocalClassFieldTheory.Chapter03
+open LastLib.Book05LocalClassFieldTheory.Chapter02
 
 attribute [local instance] Algebra.TensorProduct.rightAlgebra
 
@@ -16,8 +17,8 @@ attribute [local instance] Algebra.TensorProduct.rightAlgebra
 
 structure Chapter04ScalarExtensionAction
     (K D E : Type*) [Field K] [Ring D] [Field E]
-    [Algebra K D] [Algebra K E] [Module E D] [FiniteDimensional E D] where
-  embedding : E →ₐ[K] D
+    [Algebra K D] [Algebra K E] [Module E D] [FiniteDimensional E D]
+    (embedding : E →ₐ[K] D) where
   action : D ⊗[K] E →ₐ[E] Module.End E D
   action_on_tmul : ∀ a : D, ∀ b : E, ∀ x : D,
     action (TensorProduct.tmul K a b) x = a * x * embedding b
@@ -29,7 +30,7 @@ theorem chapter04_scalar_extension_action_exists
     [Algebra K D] [Algebra K E] [Module E D] [FiniteDimensional E D]
     (φ : E →ₐ[K] D) (d : ℕ)
     (hdimension : Module.finrank E D = d) :
-    Nonempty (Chapter04ScalarExtensionAction K D E) := by
+    Nonempty (Chapter04ScalarExtensionAction K D E φ) := by
   sorry
 
 theorem chapter04_division_algebra_splits_over_unramified_maximal_subfield
@@ -37,15 +38,15 @@ theorem chapter04_division_algebra_splits_over_unramified_maximal_subfield
     [Algebra K D] [Algebra K E] [Module E D] [FiniteDimensional E D]
     (φ : E →ₐ[K] D) (d : ℕ)
     (hdimension : Module.finrank E D = d)
-    (A : Chapter04ScalarExtensionAction K D E) :
+    (A : Chapter04ScalarExtensionAction K D E φ) :
     Nonempty (D ⊗[K] E ≃ₐ[E] Matrix (Fin d) (Fin d) E) := by
   sorry
 
 theorem chapter04_division_algebra_is_split_by_unramified_extension
     {K : Type*} [Field K] (D : Chapter04DivisionAlgebraData K)
     (E : Chapter04UnramifiedMaximalSubfieldSpec K D) :
-    E.split_over_unramified_field := by
-  exact E.split_over_unramified_field_holds
+    chapter04UnramifiedMaximalSubfieldSplits D E := by
+  exact E.split_over_unramified_field
 
 theorem chapter04_unramified_extension_is_cyclic
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -135,6 +136,19 @@ theorem chapter04_unramified_fraction_denominator_change
       chapter04RationalResidueFraction (m * r) (m * d) := by
   sorry
 
+theorem chapter04_unramified_cyclic_brauer_denominator_change
+    {K L M : Type*} [Field K] [Field L] [Field M]
+    [Algebra K L] [Algebra K M]
+    [FiniteDimensional K L] [FiniteDimensional K M]
+    [IsGalois K L] [IsGalois K M]
+    (U : Chapter04UnramifiedExtensionData K L)
+    (U' : Chapter04UnramifiedExtensionData K M)
+    (m : ℕ) (hm : 0 < m)
+    (hdegree : U'.degree = m * U.degree) (r : ℤ) :
+    chapter04UnramifiedCyclicBrauerClass U r =
+      chapter04UnramifiedCyclicBrauerClass U' (m * r) := by
+  sorry
+
 theorem chapter04_rational_residue_multiplication_is_surjective
     (n : ℕ) (hn : 0 < n) :
     Function.Surjective (fun q : chapter04RationalResidue => n • q) := by
@@ -167,6 +181,7 @@ theorem chapter04_unramified_cyclic_is_division_of_coprime_parameter
     (U : Chapter04UnramifiedExtensionData K L) (r : ℤ)
     (hcoprime : chapter04CoprimeParameter r U.degree) :
     ∃ w : (chapter04UnramifiedCyclicAlgebraPresentation U r).carrier → WithTop ℚ,
+      w 0 = ⊤ ∧ w 1 = 0 ∧
       (∀ x y, x ≠ 0 → y ≠ 0 → w (x * y) = w x + w y) ∧
       (∀ x, x ≠ 0 → w x ≠ ⊤) ∧
       (∀ x y, x * y = 0 → x = 0 ∨ y = 0) := by
@@ -279,7 +294,7 @@ theorem chapter04_invariant_of_brauer_nat_power
 
 theorem chapter04_local_invariant_restriction_formula
     {K L : Type*} [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L]
+    [FiniteDimensional K L] [Algebra.IsSeparable K L]
     (I_K : Chapter04LocalInvariantData K)
     (I_L : Chapter04LocalInvariantData L)
     (R : Chapter04BrauerRestrictionData K L)
@@ -310,6 +325,8 @@ structure Chapter04TotallyRamifiedStageData
     [FiniteDimensional K L] where
   valuationK : AddValuation K (WithTop ℤ)
   valuationL : AddValuation L (WithTop ℤ)
+  localK : Chapter02LocalField valuationK
+  localL : Chapter02LocalField valuationL
   degree : ℕ
   degree_pos : 0 < degree
   degree_eq : Module.finrank K L = degree
@@ -319,13 +336,10 @@ structure Chapter04TotallyRamifiedStageData
   uniformizerK : K
   uniformizerL : L
   unit_factor : Lˣ
+  uniformizerK_spec : chapter02IsUniformizer valuationK uniformizerK
+  uniformizerL_spec : chapter02IsUniformizer valuationL uniformizerL
   uniformizer_factor :
     algebraMap K L uniformizerK = (unit_factor : L) * uniformizerL ^ degree
-  /- LOCAL_DEPENDENCY_GUESS: the pinned local-field API does not yet expose
-    the tensor-product linear-disjointness and unramified unit-norm packages
-    used by the source proof. -/
-  linearly_disjoint_unramified_base_change : Prop
-  unit_is_unramified_norm : Prop
 
 theorem chapter04_restriction_totally_ramified_stage_formula
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -400,7 +414,7 @@ theorem chapter04_restriction_is_surjective_on_brauer_groups
 
 theorem chapter04_corestriction_restriction_degree_formula
     {K L : Type*} [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L]
+    [FiniteDimensional K L] [Algebra.IsSeparable K L]
     (I_K : Chapter04LocalInvariantData K)
     (I_L : Chapter04LocalInvariantData L)
     (R : Chapter04BrauerRestrictionData K L)

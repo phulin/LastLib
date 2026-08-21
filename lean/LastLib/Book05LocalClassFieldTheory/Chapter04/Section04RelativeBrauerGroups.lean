@@ -38,7 +38,7 @@ theorem chapter04_relative_brauer_invariant_image_eq_one_over_multiples
     [FiniteDimensional K L]
     (I : Chapter04LocalInvariantData K)
     (R : Chapter04BrauerRestrictionData K L)
-    (n : ℕ) (hdegree : Module.finrank K L = n)
+    (n : ℕ) (hn : 0 < n) (hdegree : Module.finrank K L = n)
     (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
       R.restriction (chapter04BrauerClass A) =
         chapter04BrauerClass (R.scalarExtension A)) :
@@ -51,7 +51,7 @@ theorem chapter04_relative_brauer_invariant_kernel_iff
     [FiniteDimensional K L]
     (I : Chapter04LocalInvariantData K)
     (R : Chapter04BrauerRestrictionData K L)
-    (n : ℕ) (hdegree : Module.finrank K L = n)
+    (n : ℕ) (hn : 0 < n) (hdegree : Module.finrank K L = n)
     (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
       R.restriction (chapter04BrauerClass A) =
         chapter04BrauerClass (R.scalarExtension A))
@@ -65,7 +65,7 @@ theorem chapter04_relative_brauer_group_card_eq_degree
     [FiniteDimensional K L]
     (I : Chapter04LocalInvariantData K)
     (R : Chapter04BrauerRestrictionData K L)
-    (n : ℕ) (hdegree : Module.finrank K L = n)
+    (n : ℕ) (hn : 0 < n) (hdegree : Module.finrank K L = n)
     (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
       R.restriction (chapter04BrauerClass A) =
         chapter04BrauerClass (R.scalarExtension A)) :

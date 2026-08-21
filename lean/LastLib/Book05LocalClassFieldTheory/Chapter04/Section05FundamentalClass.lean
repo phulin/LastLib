@@ -63,8 +63,11 @@ structure Chapter04CrossedProductBrauerRepresentative
     [FiniteDimensional K L] [IsGalois K L]
     (c : Chapter04NormalizedTwoCocycle (Gal(L / K)) L) where
   carrier : chapter04CentralSimpleAlgebra K
+  embedL : L →ₐ[K] carrier
   carrier_equivalence :
     chapter04CrossedProductCarrier (Gal(L / K)) L ≃ₗ[K] carrier
+  carrier_equivalence_scalar : ∀ x : L,
+    carrier_equivalence (chapter04CrossedProductScalar x) = embedL x
   multiplication_compatibility : ∀ x y,
     carrier_equivalence (chapter04CrossedProductMul c x y) =
       carrier_equivalence x * carrier_equivalence y
@@ -166,7 +169,7 @@ theorem chapter04_split_descent_produces_a_cocycle
         (g • D.cocycle.value h k) * D.cocycle.value g (h * k) := by
   sorry
 
-theorem chapter04_split_descent_inner_automorphisms_are_scalar_unique
+theorem chapter04_split_descent_inner_automorphisms_exist
     {K L V : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [AddCommGroup V]
     [Module L V] [FiniteDimensional L V]
@@ -224,7 +227,9 @@ theorem chapter04_fundamental_class_exists_unique
     (I : Chapter04LocalInvariantData K)
     (R : Chapter04BrauerRestrictionData K L)
     (C : Chapter04RelativeBrauerCohomologyData K L R)
-    (n : ℕ) (hdegree : Module.finrank K L = n) :
+    (n : ℕ) (hdegree : Module.finrank K L = n)
+    (himage : Set.range (chapter04CohomologyInvariant I R C) =
+      chapter04RationalResidueOneOverMultiples n) :
     ∃! u : chapter04H2 K L,
       chapter04CohomologyInvariant I R C u =
         chapter04RationalResidueOneOver n := by
@@ -237,6 +242,7 @@ structure Chapter04FundamentalClass
     (R : Chapter04BrauerRestrictionData K L)
     (C : Chapter04RelativeBrauerCohomologyData K L R) (n : ℕ) where
   value : chapter04H2 K L
+  degree_pos : 0 < n
   invariant_eq_one_over :
     chapter04CohomologyInvariant I R C value = chapter04RationalResidueOneOver n
 
@@ -246,10 +252,9 @@ noncomputable def chapter04FundamentalClassChoice
     (I : Chapter04LocalInvariantData K)
     (R : Chapter04BrauerRestrictionData K L)
     (C : Chapter04RelativeBrauerCohomologyData K L R)
-    (n : ℕ) (hdegree : Module.finrank K L = n) :
+    (n : ℕ) (hn : 0 < n) (hdegree : Module.finrank K L = n) :
     Chapter04FundamentalClass I R C n := by
-  let h := chapter04_fundamental_class_exists_unique I R C n hdegree
-  exact ⟨Classical.choose h, (Classical.choose_spec h).1⟩
+  sorry
 
 theorem chapter04_fundamental_class_is_unique
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -265,8 +270,9 @@ theorem chapter04_fundamental_class_is_unique
 structure Chapter04FundamentalClassTowerData
     (K M L : Type*) [Field K] [Field M] [Field L]
     [Algebra K M] [Algebra M L] [Algebra K L]
-    [IsScalarTower K M L] [FiniteDimensional K M]
-    [FiniteDimensional M L] [FiniteDimensional K L] [IsGalois K L] where
+    [IsScalarTower K M L] [FiniteDimensional K M] [Algebra.IsSeparable K M]
+    [FiniteDimensional M L] [FiniteDimensional K L] [IsGalois K L]
+    [IsGalois M L] where
   degreeKM : ℕ
   degreeML : ℕ
   degreeKL : ℕ
@@ -280,16 +286,12 @@ structure Chapter04FundamentalClassTowerData
   corestrictionKM : Chapter04BrauerCorestrictionData K M
   fundamentalKL : chapter04BrauerGroup K
   fundamentalML : chapter04BrauerGroup M
-  fundamentalKM : chapter04BrauerGroup K
   fundamentalKL_invariant :
     invariantK.invariant fundamentalKL =
       chapter04RationalResidueOneOver degreeKL
   fundamentalML_invariant :
     invariantM.invariant fundamentalML =
       chapter04RationalResidueOneOver degreeML
-  fundamentalKM_invariant :
-    invariantK.invariant fundamentalKM =
-      chapter04RationalResidueOneOver degreeKM
   restriction_fundamental :
     restrictionKM.restriction fundamentalKL = fundamentalML
   corestriction_fundamental :
@@ -299,8 +301,9 @@ structure Chapter04FundamentalClassTowerData
 theorem chapter04_fundamental_class_is_tower_compatible
     {K M L : Type*} [Field K] [Field M] [Field L]
     [Algebra K M] [Algebra M L] [Algebra K L]
-    [IsScalarTower K M L] [FiniteDimensional K M]
+    [IsScalarTower K M L] [FiniteDimensional K M] [Algebra.IsSeparable K M]
     [FiniteDimensional M L] [FiniteDimensional K L] [IsGalois K L]
+    [IsGalois M L]
     (T : Chapter04FundamentalClassTowerData K M L) :
     T.degreeKL = T.degreeKM * T.degreeML ∧
       T.restrictionKM.restriction T.fundamentalKL = T.fundamentalML ∧

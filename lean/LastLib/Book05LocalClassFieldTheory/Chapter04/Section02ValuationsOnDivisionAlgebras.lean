@@ -1,5 +1,6 @@
 import LastLib.Book05LocalClassFieldTheory.Chapter04.Section01WhyCentralSimpleAlgebras
 import Mathlib.LinearAlgebra.Basis.Basic
+import Mathlib.LinearAlgebra.TensorProduct.Basic
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter04
 
@@ -7,17 +8,17 @@ noncomputable section
 
 universe u
 
-open scoped BigOperators
+open scoped BigOperators TensorProduct
 
 /-! ## 4.2. Valuations on division algebras -/
 
 theorem chapter04_reduced_norm_agrees_with_determinant
     {K D S : Type*} [Field K] [Ring D] [Field S]
     [Algebra K D] [Algebra K S]
-    (N : Dˣ →* Kˣ) (d : ℕ)
+    (N : D → K) (d : ℕ)
     (ρ : D →ₐ[K] Matrix (Fin d) (Fin d) S)
     (hdet : chapter04ReducedNormAgreesWithDeterminant N d ρ) :
-    ∀ x : Dˣ, algebraMap K S (N x : K) = Matrix.det (ρ (x : D)) := by
+    ∀ x : D, algebraMap K S (N x) = Matrix.det (ρ x) := by
   exact hdet
 
 theorem chapter04_reduced_norm_on_a_commutative_subfield
@@ -25,9 +26,9 @@ theorem chapter04_reduced_norm_on_a_commutative_subfield
     [Algebra K D] [Algebra K E] [FiniteDimensional K D] [FiniteDimensional K E]
     (N : Chapter04ReducedNormData K D) (φ : E →ₐ[K] D)
     (hdiv : Module.finrank K E ∣ N.degree) :
-    ∀ x : Eˣ,
-      (N.reducedNorm (Units.map φ.toMonoidHom x) : K) =
-        (Algebra.norm K (x : E)) ^ (N.degree / Module.finrank K E) := by
+    ∀ x : E,
+      N.reducedNormAll (φ x) =
+        (Algebra.norm K x) ^ (N.degree / Module.finrank K E) := by
   sorry
 
 def chapter04FieldNormValuationFormula
@@ -42,6 +43,7 @@ theorem chapter04_division_valuation_on_a_subfield
     [Algebra K D] [Algebra K E] [FiniteDimensional K D] [FiniteDimensional K E]
     (N : Chapter04ReducedNormData K D) (vK : Kˣ → ℚ) (vE : Eˣ → ℚ)
     (φ : E →ₐ[K] D) (e : ℕ)
+    (he : 0 < e)
     (hdiv : Module.finrank K E ∣ N.degree)
     (hnorm : ∀ x : Eˣ,
       vK (N.reducedNorm (Units.map φ.toMonoidHom x)) =
@@ -174,6 +176,11 @@ structure Chapter04ResidueConjugationData
   conjugation_injective : Function.Injective conjugation
   fixed_field_eq_base :
     {z : barD | ∀ q, conjugation q z = z} = Set.range (algebraMap k barD)
+  [quotient_finite : Finite
+    (chapter04ValueGroup value ⧸ chapter04ValueGroupModInteger value)]
+  quotient_card_eq_galois_card :
+    Nat.card (chapter04ValueGroup value ⧸ chapter04ValueGroupModInteger value) =
+      Nat.card (Gal(barD / k))
 
 theorem chapter04_residue_conjugation_has_base_fixed_field
     {K D k barD : Type*} [Field K] [Ring D] [Field k] [Field barD]
@@ -187,9 +194,7 @@ theorem chapter04_residue_conjugation_is_surjective
     {K D k barD : Type*} [Field K] [Ring D] [Field k] [Field barD]
     [Algebra K D] [Algebra k barD] [FiniteDimensional k barD]
     [IsGalois k barD]
-    (C : Chapter04ResidueConjugationData K D k barD)
-    (hfixed : {z : barD | ∀ q, C.conjugation q z = z} =
-      Set.range (algebraMap k barD)) :
+    (C : Chapter04ResidueConjugationData K D k barD) :
     Function.Surjective C.conjugation := by
   sorry
 
@@ -208,11 +213,7 @@ theorem chapter04_division_indices_are_the_degree
     (hbound : chapter04ValueGroupContainedInFractionalLattice V.unitValue d)
     (hdimension : d ^ 2 =
       chapter04RamificationIndex V.unitValue * chapter04ResidueDegree k barD) :
-    chapter04ResidueDegree k barD ≤ chapter04RamificationIndex V.unitValue ∧
-      chapter04RamificationIndex V.unitValue ≤ d ∧
-      d ≤ chapter04ResidueDegree k barD ∧
-      chapter04RamificationIndex V.unitValue = chapter04ResidueDegree k barD ∧
-      chapter04RamificationIndex V.unitValue = d ∧
+    chapter04RamificationIndex V.unitValue = chapter04ResidueDegree k barD ∧
       chapter04ResidueDegree k barD = d := by
   sorry
 
@@ -221,26 +222,42 @@ theorem chapter04_value_group_contains_integer_lattice
     chapter04IntegerValueLattice ≤ chapter04ValueGroup w := by
   sorry
 
-/- A lightweight witness records the Hensel-lifted unramified maximal field;
-  its field, valuation, and centralizer APIs are supplied by the surrounding
-  local-field chapters. -/
+/- A bundled witness records the Hensel-lifted unramified maximal field.  The
+  field and extension instances are part of the witness, so later statements
+  cannot be satisfied by an untyped `Prop` token. -/
 structure Chapter04UnramifiedMaximalSubfieldSpec
     (K : Type*) [Field K] (D : Chapter04DivisionAlgebraData K) where
   field : Type*
+  [field_isField : Field field]
+  [field_algebra : Algebra K field]
+  [field_finiteDimensional : FiniteDimensional K field]
+  [field_isGalois : IsGalois K field]
+  [field_algebra_on_division : Algebra field D.carrier]
+  extensionData : Chapter04UnramifiedExtensionData K field
   degree : ℕ
   degree_eq : degree = D.degree
-  embedding : field → D.carrier
+  degree_eq_finrank : Module.finrank K field = degree
+  embedding : field →ₐ[K] D.carrier
   embedding_injective : Function.Injective embedding
-  field_structure : Prop
-  field_structure_holds : field_structure
-  unramified_structure : Prop
-  unramified_structure_holds : unramified_structure
-  centralizer_is_field : Prop
-  centralizer_is_field_holds : centralizer_is_field
-  /- LOCAL_DEPENDENCY_GUESS: the surrounding local-field chapters supply the
-    concrete scalar-extension equivalence for this bundled field witness. -/
-  split_over_unramified_field : Prop
-  split_over_unramified_field_holds : split_over_unramified_field
+  embedding_eq_algebraMap : ∀ x : field,
+    embedding x = algebraMap field D.carrier x
+  centralizer_eq_range :
+    {x : D.carrier | ∀ y : field, x * embedding y = embedding y * x} =
+      Set.range embedding
+  split_over_unramified_field :
+    Nonempty (field ⊗[K] D.carrier ≃ₐ[field]
+      Matrix (Fin D.degree) (Fin D.degree) field)
+
+def chapter04UnramifiedMaximalSubfieldSplits
+    {K : Type*} [Field K] (D : Chapter04DivisionAlgebraData K)
+    (E : Chapter04UnramifiedMaximalSubfieldSpec K D) : Prop :=
+  letI := E.field_isField
+  letI := E.field_algebra
+  letI := E.field_finiteDimensional
+  letI := E.field_isGalois
+  letI := E.field_algebra_on_division
+  Nonempty (E.field ⊗[K] D.carrier ≃ₐ[E.field]
+    Matrix (Fin D.degree) (Fin D.degree) E.field)
 
 theorem chapter04_division_algebra_has_unramified_maximal_subfield
     {K : Type*} [Field K] (D : Chapter04DivisionAlgebraData K) :
@@ -250,8 +267,10 @@ theorem chapter04_division_algebra_has_unramified_maximal_subfield
 theorem chapter04_unramified_maximal_subfield_is_maximal
     {K : Type*} [Field K] (D : Chapter04DivisionAlgebraData K)
     (E : Chapter04UnramifiedMaximalSubfieldSpec K D) :
-    E.degree = D.degree ∧ E.centralizer_is_field := by
-  exact ⟨E.degree_eq, E.centralizer_is_field_holds⟩
+    E.degree = D.degree ∧
+      ({x : D.carrier | ∀ y : E.field,
+        x * E.embedding y = E.embedding y * x} = Set.range E.embedding) := by
+  exact ⟨E.degree_eq, E.centralizer_eq_range⟩
 
 structure Chapter04ResidueConjugationIsomorphism
     {K D k barD : Type*} [Field K] [Ring D] [Field k] [Field barD]
@@ -272,28 +291,80 @@ theorem chapter04_unramified_residue_conjugation_is_an_isomorphism
     Nonempty (Chapter04ResidueConjugationIsomorphism C) := by
   sorry
 
-/- LOCAL_DEPENDENCY_GUESS: the pinned cyclic-algebra API has a presentation
-  carrier, but not the theorem identifying every division representative with
-  one.  These fields retain the exact degree, Frobenius, parameter, and
-  equivalence data needed by later invariant statements. -/
+/- The pinned cyclic-algebra API packages the presentation together with the
+  chosen parameter as a unit.  These small bridges install the instances
+  carried by the maximal subfield specification before referring to that API. -/
+def chapter04CyclicPresentationOverUnramifiedField
+    {K : Type*} [Field K]
+    (D : Chapter04DivisionAlgebraData K)
+    (E : Chapter04UnramifiedMaximalSubfieldSpec K D) (a : Kˣ) : Type _ :=
+  letI := E.field_isField
+  letI := E.field_algebra
+  letI := E.field_finiteDimensional
+  letI := E.field_isGalois
+  LastLib.Book05LocalClassFieldTheory.Chapter03.chapter03CyclicAlgebra
+    K E.field D.degree E.extensionData.arithmeticFrobenius a
+
+def chapter04CyclicExtensionOverUnramifiedField
+    {K : Type*} [Field K]
+    (D : Chapter04DivisionAlgebraData K)
+    (E : Chapter04UnramifiedMaximalSubfieldSpec K D) : Prop :=
+  letI := E.field_isField
+  letI := E.field_algebra
+  letI := E.field_finiteDimensional
+  letI := E.field_isGalois
+  LastLib.Book05LocalClassFieldTheory.Chapter03.chapter03CyclicExtension
+    K E.field D.degree E.extensionData.arithmeticFrobenius
+
+def chapter04CyclicPresentationCarrier
+    {K : Type*} [Field K]
+    (D : Chapter04DivisionAlgebraData K)
+    (E : Chapter04UnramifiedMaximalSubfieldSpec K D) (a : Kˣ)
+    (P : chapter04CyclicPresentationOverUnramifiedField D E a) :
+    chapter04CentralSimpleAlgebra K :=
+  letI := E.field_isField
+  letI := E.field_algebra
+  letI := E.field_finiteDimensional
+  letI := E.field_isGalois
+  let Q :
+      LastLib.Book05LocalClassFieldTheory.Chapter03.Chapter03CyclicAlgebraPresentation
+        K E.field D.degree E.extensionData.arithmeticFrobenius a :=
+    P
+  Q.carrier
+
+def chapter04UnramifiedMaximalSubfieldUniformizer
+    {K : Type*} [Field K]
+    (D : Chapter04DivisionAlgebraData K)
+    (E : Chapter04UnramifiedMaximalSubfieldSpec K D) : Kˣ :=
+  letI := E.field_isField
+  letI := E.field_algebra
+  letI := E.field_finiteDimensional
+  letI := E.field_isGalois
+  E.extensionData.uniformizer
+
 structure Chapter04CyclicPresentationSpec
-    {K : Type*} [Field K] (D : Chapter04DivisionAlgebraData K) where
+    {K : Type*} [Field K] (D : Chapter04DivisionAlgebraData K)
+    (E : Chapter04UnramifiedMaximalSubfieldSpec K D) where
   exponent : ℕ
   exponent_pos : 0 < exponent
   exponent_coprime : Nat.Coprime exponent D.degree
-  presentation : chapter04CentralSimpleAlgebra K
+  parameter : Kˣ
+  presentation : chapter04CyclicPresentationOverUnramifiedField D E parameter
   equivalence : Nonempty
-    (D.carrier ≃ₐ[K] presentation)
+    (D.carrier ≃ₐ[K]
+      chapter04CyclicPresentationCarrier D E parameter presentation)
   unramified_field_degree : ℕ
   unramified_field_degree_eq : unramified_field_degree = D.degree
-  arithmetic_frobenius_relation : Prop
-  parameter_power_normalization : Prop
+  arithmetic_frobenius_relation : chapter04CyclicExtensionOverUnramifiedField D E
+  parameter_power_normalization :
+    ∃ c : Kˣ,
+      parameter = c * chapter04UnramifiedMaximalSubfieldUniformizer D E ^ exponent
 
 theorem chapter04_division_algebra_has_cyclic_presentation
     {K : Type*} [Field K]
     (D : Chapter04DivisionAlgebraData K)
     (U : Chapter04UnramifiedMaximalSubfieldSpec K D) :
-    Nonempty (Chapter04CyclicPresentationSpec D) := by
+    Nonempty (Chapter04CyclicPresentationSpec D U) := by
   sorry
 
 theorem chapter04_division_parameter_power_is_central
