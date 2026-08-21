@@ -25,7 +25,21 @@ theorem chapter14_prime_above_enumeration_exists
     [Field E] [NumberField E] [Algebra F E] [FiniteDimensional F E]
     (p : Chapter14Prime F) :
     Nonempty (Chapter14PrimeAboveEnumeration E p) := by
-  sorry
+  let _ : Fintype (Chapter14PrimeAbove F E p) :=
+    Set.Finite.fintype (Algebra.QuasiFinite.finite_primesOver p.asIdeal)
+  let e : Chapter14PrimeAbove F E p ≃
+      Fin (Fintype.card (Chapter14PrimeAbove F E p)) :=
+    Fintype.equivFin _
+  let H : Chapter14PrimeAboveEnumeration E p :=
+    { index := ULift (Fin (Fintype.card (Chapter14PrimeAbove F E p)))
+      finite_index := inferInstance
+      prime := fun i => e.symm i.down
+      exhaustive := by
+        intro P
+        refine ⟨⟨e P⟩, ?_⟩
+        simp [e]
+      injective := e.symm.injective.comp ULift.down_injective }
+  exact ⟨H⟩
 
 def Chapter14CompletedScalarExtension
     {F : Type u} (E : Type v) [Field F] [NumberField F]
@@ -68,7 +82,10 @@ theorem chapter14_selected_branch_projection_surjective
     [Algebra F (chapter14BaseCompletion F p)]
     (hproduct : Chapter14CompletedScalarExtension E p) :
     Function.Surjective (chapter14SelectedBranchProjection E p P hproduct) := by
-  sorry
+  let e := Classical.choice hproduct
+  exact
+    (Pi.evalRingHom (fun Q : Chapter14PrimeAbove F E p =>
+      chapter14BranchCompletion F E p Q) P).surjective.comp e.surjective
 
 /- The product decomposition over the completed localization is the earlier
    Dedekind-domain product theorem, transported to the prime-above subtype. -/
@@ -115,7 +132,15 @@ theorem chapter14_sum_of_completed_branch_degrees
     Module.finrank F E =
       ∑ P : Chapter14PrimeAbove F E p,
         chapter14RamificationIndex E p P * chapter14ResidueDegree E p P := by
-  sorry
+  calc
+    Module.finrank F E = Module.finrank (𝓞 F) (𝓞 E) := by
+      exact IsFractionRing.finrank_eq (𝓞 F) F (𝓞 E) E
+    _ = ∑ Q : p.asIdeal.primesOver (𝓞 E),
+        Q.1.ramificationIdx (𝓞 F) * Q.1.inertiaDeg (𝓞 F) :=
+      (Ideal.sum_ramification_inertia_eq_finrank p.asIdeal (𝓞 E)).symm
+    _ = ∑ P : Chapter14PrimeAbove F E p,
+        chapter14RamificationIndex E p P * chapter14ResidueDegree E p P := by
+      rfl
 
 /- The action on prime ideals is Mathlib's canonical Galois action. -/
 def chapter14PrimeAction
