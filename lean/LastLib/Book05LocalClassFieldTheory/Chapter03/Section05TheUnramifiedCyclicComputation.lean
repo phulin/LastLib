@@ -66,13 +66,17 @@ theorem chapter03_unramified_norm_valuation
     (n : ℕ) (hunram :
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11UnramifiedValuedExtension
         vK vL)
+    [Valuation.IsRankOneDiscrete vK.toValuation]
+    [Valuation.IsRankOneDiscrete vL.toValuation]
+    (hunique : ∀ w : AddValuation L (WithTop ℤ),
+      vK.IsEquiv (AddValuation.comap (algebraMap K L) w) → vL.IsEquiv w)
     (hdegree : Module.finrank K L = n)
     (hfres : n =
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
         vK vL hunram.1) (x : L) :
     vK (Algebra.norm K x) = (n : WithTop ℤ) * vL x := by
   exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11_unramified_comparison_norm_valuation
-    K L vK vL n hunram hdegree hfres x
+    K L vK vL n hunram hunique hdegree hfres x
 
 theorem chapter03_unramified_norm_valuation_divisible
     (K L : Type*) [Field K] [Field L] [Algebra K L]
@@ -114,12 +118,26 @@ theorem chapter03_unramified_units_are_norms
     (hred : LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueReductionCompatible
       vK vL
       (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueMap vK)
-      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueMap vL)) :
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueMap vL))
+    (N : (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ValuationRing vL)ˣ →*
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ValuationRing vK)ˣ)
+    (hnormunit :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11NormUnitLiftCompatibility
+        K L vK vL N)
+    (hnormred :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11NormResidueCompatibility
+        K L
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueField vK)
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueField vL)
+        vK vL
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueMap vK)
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueMap vL)
+        1 N) :
     Set.SurjOn (Algebra.norm K (S := L))
       (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11UnitFiltration vL 0)
       (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11UnitFiltration vK 0) := by
   exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11_unramified_comparison_units_are_norms
-    K L vK vL hunram hdegree hred
+    K L vK vL hunram hdegree hred N hnormunit hnormred
 
 theorem chapter03_unramified_uniformizer_not_a_norm
     (K L : Type*) [Field K] [Field L] [Algebra K L]
@@ -129,13 +147,22 @@ theorem chapter03_unramified_uniformizer_not_a_norm
     (hunram :
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11UnramifiedValuedExtension
         vK vL)
+    [Valuation.IsRankOneDiscrete vK.toValuation]
+    [Valuation.IsRankOneDiscrete vL.toValuation]
+    (hunique : ∀ w : AddValuation L (WithTop ℤ),
+      vK.IsEquiv (AddValuation.comap (algebraMap K L) w) → vL.IsEquiv w)
     (hdegree : Module.finrank K L = n)
     (hfres : n =
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
         vK vL hunram.1) (π : K) (hπ : vK π = (1 : WithTop ℤ)) :
     ¬ ∃ x : L, Algebra.norm K x = π := by
+  have hnorm :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11NormValuationFormula
+        K L vK vL n := by
+    intro x _
+    exact chapter03_unramified_norm_valuation K L vK vL n hunram hunique hdegree hfres x
   exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11_unramified_comparison_uniformizer_not_a_norm
-    K L vK vL n hn hunram hdegree hfres π hπ
+    K L vK vL n hn hunram hnorm hdegree hfres π hπ
 
 theorem chapter03_unramified_full_norm_image
     (K L : Type*) [Field K] [Field L] [Algebra K L]
@@ -144,6 +171,10 @@ theorem chapter03_unramified_full_norm_image
     (n : ℕ) (hunram :
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11UnramifiedValuedExtension
         vK vL)
+    [Valuation.IsRankOneDiscrete vK.toValuation]
+    [Valuation.IsRankOneDiscrete vL.toValuation]
+    (hunique : ∀ w : AddValuation L (WithTop ℤ),
+      vK.IsEquiv (AddValuation.comap (algebraMap K L) w) → vL.IsEquiv w)
     (π : K) (hπ :
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11IsUniformizer vK π)
     (hdegree : Module.finrank K L = n)
@@ -162,11 +193,30 @@ theorem chapter03_unramified_full_norm_image
     (hred : LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueReductionCompatible
       vK vL
       (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueMap vK)
-      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueMap vL)) :
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueMap vL))
+    (N : (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ValuationRing vL)ˣ →*
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ValuationRing vK)ˣ)
+    (hnormunit :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11NormUnitLiftCompatibility
+        K L vK vL N)
+    (hnormred :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11NormResidueCompatibility
+        K L
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueField vK)
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueField vL)
+        vK vL
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueMap vK)
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueMap vL)
+        1 N) :
     {x : K | ∃ y : L, y ≠ 0 ∧ x = Algebra.norm K y} =
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ValueUnitProductSet vK π n := by
+  have hnorm :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11NormValuationFormula
+        K L vK vL n := by
+    intro x _
+    exact chapter03_unramified_norm_valuation K L vK vL n hunram hunique hdegree hfres x
   exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11_unramified_full_norm_image
-    K L vK vL π n hunram hπ hdegree hfres hred
+    K L vK vL π n hunram hπ hnorm hdegree hfres hred N hnormunit hnormred
 
 theorem chapter03_unramified_norm_quotient_index
     (K L : Type*) [Field K] [Field L] [Algebra K L]
@@ -175,6 +225,10 @@ theorem chapter03_unramified_norm_quotient_index
     (n : ℕ) (hunram :
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11UnramifiedValuedExtension
         vK vL)
+    [Valuation.IsRankOneDiscrete vK.toValuation]
+    [Valuation.IsRankOneDiscrete vL.toValuation]
+    (hunique : ∀ w : AddValuation L (WithTop ℤ),
+      vK.IsEquiv (AddValuation.comap (algebraMap K L) w) → vL.IsEquiv w)
     (π : K) (hπ :
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11IsUniformizer vK π)
     (hdegree : Module.finrank K L = n)
@@ -193,11 +247,30 @@ theorem chapter03_unramified_norm_quotient_index
     (hred : LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueReductionCompatible
       vK vL
       (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueMap vK)
-      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueMap vL)) :
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueMap vL))
+    (N : (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ValuationRing vL)ˣ →*
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ValuationRing vK)ˣ)
+    (hnormunit :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11NormUnitLiftCompatibility
+        K L vK vL N)
+    (hnormred :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11NormResidueCompatibility
+        K L
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueField vK)
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueField vL)
+        vK vL
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueMap vK)
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueMap vL)
+        1 N) :
     Nat.card (chapter03NormQuotient K L) = n := by
+  have hnorm :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11NormValuationFormula
+        K L vK vL n := by
+    intro x _
+    exact chapter03_unramified_norm_valuation K L vK vL n hunram hunique hdegree hfres x
   simpa [chapter03NormQuotient, chapter03NormSubgroup] using
     (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11_unramified_norm_subgroup_index
-      K L vK vL π n hunram hπ hdegree hfres hred)
+      K L vK vL π n hunram hπ hnorm hdegree hfres hred N hnormunit hnormred)
 
 def chapter03UniformizerUnit
     {K : Type*} [Field K] (π : K) (hπ : π ≠ 0) : Kˣ :=
