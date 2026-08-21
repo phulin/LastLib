@@ -106,7 +106,7 @@ theorem chapter11_mem_unit_set_iff_valuation_zero {K : Type*} [Field K]
     have hx0 : x ≠ 0 := by
       intro hx
       subst x
-      simpa using hv
+      simp at hv
     let ux : Kˣ := Units.mk0 x hx0
     have hux : v.toValuation (ux : K) = 1 := by
       simpa [AddValuation.toValuation_apply, ux] using hv
@@ -419,15 +419,15 @@ theorem chapter11_norm_depth_zero_residue_formula
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
     (ρK : chapter11ValuationRing vK →+* k)
     (ρL : chapter11ValuationRing vL →+* l) (e : ℕ)
-    (hext : chapter11ValuationExtension vK vL)
-    (hscale : chapter11ValuationScaling vK vL e)
-    (hdegree : Module.finrank K L = e * Module.finrank k l)
-    (hred : chapter11ResidueReductionCompatible vK vL ρK ρL)
+    (_hext : chapter11ValuationExtension vK vL)
+    (_hscale : chapter11ValuationScaling vK vL e)
+    (_hdegree : Module.finrank K L = e * Module.finrank k l)
+    (_hred : chapter11ResidueReductionCompatible vK vL ρK ρL)
     (N : (chapter11ValuationRing vL)ˣ →* (chapter11ValuationRing vK)ˣ)
     (hnormunit : chapter11NormUnitLiftCompatibility K L vK vL N)
     (hnormred : chapter11NormResidueCompatibility K L k l vK vL ρK ρL e N)
-    (hcompleteK : chapter11ValuationComplete vK)
-    (hcompleteL : chapter11ValuationComplete vL)
+    (_hcompleteK : chapter11ValuationComplete vK)
+    (_hcompleteL : chapter11ValuationComplete vL)
     (u : chapter11ValuationRing vL) (hu : IsUnit u) :
     ∃ y : chapter11ValuationRing vK,
       (y : K) = Algebra.norm K (u : L) ∧
