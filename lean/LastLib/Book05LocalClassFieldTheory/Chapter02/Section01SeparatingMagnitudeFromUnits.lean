@@ -495,7 +495,8 @@ theorem chapter02_unit_filtration_separated
       (∀ n : ℕ, x ∈
         (IsLocalRing.maximalIdeal (Chapter02ValuationRing v)) ^ n) → x = 0) :
     ⨅ n : ℕ, Chapter02UnitFiltration v n = ⊥ := by
-  sorry
+  exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10_unit_filtration_separated
+    (Chapter02ValuationRing v) hseparated
 
 theorem chapter02_unit_group_inverse_limit
     {K : Type*} [Field K]
@@ -506,14 +507,16 @@ theorem chapter02_unit_group_inverse_limit
     (hDVR : IsDiscreteValuationRing (Chapter02ValuationRing v)) :
     Nonempty
       (Chapter02UnitGroup v ≃* Chapter02UnitInverseLimit v) := by
-  sorry
+  let _ : IsDiscreteValuationRing (Chapter02ValuationRing v) := hDVR
+  exact ⟨(LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10_complete_units_inverse_limit
+    (Chapter02ValuationRing v) hcomplete).choose⟩
 
 theorem chapter02_inverse_limit_family_is_transition_compatible
     {K : Type*} [Field K]
     (v : AddValuation K (WithTop ℤ))
     (x : Chapter02UnitInverseLimit v) (n : ℕ) :
     chapter02PrecisionUnitTransition v n (x.1 (n + 1)) = x.1 n := by
-  sorry
+  exact x.2 n
 
 end
 

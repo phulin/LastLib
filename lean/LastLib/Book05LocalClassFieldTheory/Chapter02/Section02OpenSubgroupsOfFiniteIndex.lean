@@ -34,7 +34,25 @@ theorem chapter02_mem_value_unit_subgroup_iff
     x ∈ chapter02ValueUnitSubgroup v π m n ↔
       ∃ z : ℤ, ∃ u : chapter02FieldUnitFiltration v n,
         x = π ^ ((m : ℤ) * z) * (u : Kˣ) := by
-  sorry
+  change x ∈ Subgroup.zpowers (π ^ m) ⊔ chapter02FieldUnitFiltration v n ↔
+    ∃ z : ℤ, ∃ u : chapter02FieldUnitFiltration v n,
+      x = π ^ ((m : ℤ) * z) * (u : Kˣ)
+  rw [Subgroup.mem_sup]
+  constructor
+  · rintro ⟨y, hy, u, hu, hxy⟩
+    obtain ⟨z, hz⟩ := Subgroup.mem_zpowers_iff.mp hy
+    refine ⟨z, ⟨u, hu⟩, ?_⟩
+    rw [← hxy, ← hz, zpow_mul]
+    rfl
+  · rintro ⟨z, u, hxu⟩
+    have hzmem : (π ^ m) ^ z ∈ Subgroup.zpowers (π ^ m) :=
+      (Subgroup.mem_zpowers_iff).2 ⟨z, rfl⟩
+    refine ⟨(π ^ m) ^ z, hzmem, (u : Kˣ), u.property, ?_⟩
+    calc
+      (π ^ m) ^ z * (u : Kˣ) = (π ^ (m : ℤ)) ^ z * (u : Kˣ) := by
+        rw [zpow_natCast]
+      _ = π ^ ((m : ℤ) * z) * (u : Kˣ) := by rw [zpow_mul]
+      _ = x := hxu.symm
 
 theorem chapter02_value_unit_subgroup_contains_deep_units
     {K : Type*} [Field K]
@@ -64,7 +82,44 @@ theorem chapter02_open_subgroup_iff_quotient_discrete
     (H : Subgroup G) [TopologicalSpace (G ⧸ H)]
     (hquotient : Chapter02QuotientTopology H) :
     IsOpen (H : Set G) ↔ DiscreteTopology (G ⧸ H) := by
-  sorry
+  constructor
+  · intro hH
+    have hsingletons : ∀ q : G ⧸ H, IsOpen ({q} : Set (G ⧸ H)) := by
+      intro q
+      obtain ⟨g, hg⟩ := QuotientGroup.mk'_surjective H q
+      have hpre : (QuotientGroup.mk' H) ⁻¹' ({q} : Set (G ⧸ H)) =
+          (fun z : G => g * z) '' (H : Set G) := by
+        ext y
+        constructor
+        · intro hy
+          change QuotientGroup.mk' H y = q at hy
+          have hyeq : QuotientGroup.mk' H y = QuotientGroup.mk' H g := by
+            exact hy.trans hg.symm
+          obtain ⟨z, hz, hyz⟩ :=
+            (QuotientGroup.mk'_eq_mk' H).mp hyeq
+          refine ⟨z⁻¹, H.inv_mem hz, ?_⟩
+          calc
+            g * z⁻¹ = (y * z) * z⁻¹ := by rw [hyz]
+            _ = y := by simp [mul_assoc]
+        · rintro ⟨z, hz, rfl⟩
+          change QuotientGroup.mk' H (g * z) = q
+          rw [← hg]
+          apply (QuotientGroup.mk'_eq_mk' H).mpr
+          exact ⟨z⁻¹, H.inv_mem hz, by simp [mul_assoc]⟩
+      apply (hquotient {q}).mpr
+      rw [hpre]
+      exact (isOpenMap_mul_left g) _ hH
+    exact ⟨eq_bot_of_singletons_open hsingletons⟩
+  · intro hdiscrete
+    have hone : IsOpen ({(1 : G ⧸ H)} : Set (G ⧸ H)) :=
+      (discreteTopology_iff_isOpen_singleton.mp hdiscrete) 1
+    have hpre : (QuotientGroup.mk' H) ⁻¹' ({(1 : G ⧸ H)} : Set (G ⧸ H)) =
+        (H : Set G) := by
+      ext g
+      change QuotientGroup.mk' H g = 1 ↔ g ∈ H
+      exact QuotientGroup.eq_one_iff g
+    rw [← hpre]
+    exact (hquotient {1}).mp hone
 
 theorem proposition_2_1_open_finite_index_criterion
     {K : Type*} [Field K]
