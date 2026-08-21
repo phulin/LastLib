@@ -9,9 +9,22 @@ open scoped BigOperators Pointwise Topology WithZero IsMulCommutative
 
 /-! ## 1.3. The reciprocity convention -/
 
-/-- A reduction identification for an unramified finite extension. -/
-abbrev Chapter01UnramifiedGaloisReduction :=
-  LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.Chapter06UnramifiedGaloisReduction
+/- A reduction identification for an unramified finite extension.  The
+`Chapter06` reduction record only stores the group equivalence; this wrapper
+also carries the existing Book 2 unramified-extension witness. -/
+structure Chapter01UnramifiedGaloisReduction
+    (K L k l : Type*) [Field K] [Field L] [Field k] [Field l]
+    [Algebra K L] [Algebra k l] [FiniteDimensional K L]
+    [FiniteDimensional k l] [IsGalois K L] [IsGalois k l] where
+  reduction :
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.Chapter06UnramifiedGaloisReduction
+      K L k l
+  profile :
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Chapter07FiniteLocalExtensionData
+      K L k l
+  unramified :
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Chapter07UnramifiedExtension
+      profile
 
 /-- The arithmetic Frobenius lifted to an unramified local extension. -/
 noncomputable def chapter01ArithmeticFrobenius
@@ -21,7 +34,7 @@ noncomputable def chapter01ArithmeticFrobenius
     [FiniteDimensional k l] [IsGalois K L] [IsGalois k l]
     (D : Chapter01UnramifiedGaloisReduction K L k l) : Gal(L / K) :=
   LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.chapter06UnramifiedArithmeticFrobenius
-    D
+    D.reduction
 
 /-- The geometric Frobenius convention upstairs. -/
 noncomputable def chapter01GeometricFrobenius
@@ -39,7 +52,7 @@ theorem chapter01_arithmetic_frobenius_residue_formula
     [Algebra.IsAlgebraic k l] [FiniteDimensional K L]
     [FiniteDimensional k l] [IsGalois K L] [IsGalois k l]
     (D : Chapter01UnramifiedGaloisReduction K L k l) (x : l) :
-    D.reduction (chapter01ArithmeticFrobenius D) x =
+    D.reduction.reduction (chapter01ArithmeticFrobenius D) x =
       x ^ Fintype.card k := by
   sorry
 
@@ -51,11 +64,11 @@ theorem chapter01_arithmetic_frobenius_lift_unique
     [FiniteDimensional k l] [IsGalois K L] [IsGalois k l]
     (D : Chapter01UnramifiedGaloisReduction K L k l) :
     ∃! σ : Gal(L / K),
-      D.reduction σ =
+      D.reduction.reduction σ =
         LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.chapter06ArithmeticFrobenius
           k l := by
   exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.chapter06_unramified_arithmetic_frobenius_unique
-    D
+    D.reduction
 
 /-- Arithmetic and geometric Frobenius are inverse conventions. -/
 theorem chapter01_geometric_frobenius_is_inverse

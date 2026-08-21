@@ -140,8 +140,6 @@ noncompact `ℤ` coordinate of the local-field multiplicative group. -/
 theorem chapter01_local_field_units_noncompact
     {K : Type*} [Field K]
     (v : AddValuation K (WithTop ℤ))
-    (hlocal : Chapter01LocalField v)
-    (D : Chapter01ValuationCoordinateData v)
     [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [TopologicalSpace (Chapter01UnitGroup v)]
     [IsTopologicalGroup (Chapter01UnitGroup v)]

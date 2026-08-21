@@ -104,11 +104,15 @@ noncomputable def chapter01ResidueCardinality {K : Type*} [Field K]
     (v : AddValuation K (WithTop ℤ)) : ℕ :=
   Nat.card (Chapter01ResidueField v)
 
-/-- The canonical `1 + 𝔪ⁿ` membership predicate in the field. -/
+/-- The field-level unit filtration, with `U⁰ = 𝓞ˣ` and
+`Uⁿ = 1 + 𝔪ⁿ` for positive `n`. -/
 def chapter01PrincipalUnitSet {K : Type*} [Field K]
     (v : AddValuation K (WithTop ℤ)) (n : ℕ) : Set K :=
-  {x | ∃ y : Chapter01ValuationRing v,
-    y ∈ (Chapter01MaximalIdeal v) ^ n ∧ x = 1 + (y : K)}
+  if n = 0 then
+    {x | ∃ u : Chapter01UnitGroup v, x = (u : K)}
+  else
+    {x | ∃ y : Chapter01ValuationRing v,
+      y ∈ (Chapter01MaximalIdeal v) ^ n ∧ x = 1 + (y : K)}
 
 /-- The valuation exact sequence `1 → 𝓞ˣ → Kˣ → ℤ → 0`. -/
 def Chapter01ValuationExactSequence {K : Type*} [Field K]

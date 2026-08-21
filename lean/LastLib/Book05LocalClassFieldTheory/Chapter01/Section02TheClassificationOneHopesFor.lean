@@ -94,13 +94,22 @@ theorem chapter01_finite_artin_map_surjective
 theorem chapter01_finite_reciprocity
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
-    [Fintype (Gal(L / K))] [IsMulCommutative (Gal(L / K))] :
+    [Fintype (Gal(L / K))] [IsMulCommutative (Gal(L / K))]
+    (vK : AddValuation K (WithTop ℤ))
+    (vL : AddValuation L (WithTop ℤ))
+    (hKlocal : Chapter01LocalField vK)
+    (hLlocal : Chapter01LocalField vL)
+    (hplace : vK.IsEquiv (AddValuation.comap (algebraMap K L) vL)) :
     Nonempty (Chapter01NormQuotient K L ≃* Gal(L / K)) := by
   sorry
 
 /-- The maximal abelian extension realizes every open finite-index subgroup. -/
 theorem chapter01_local_existence_theorem
     {K : Type*} [Field K] [TopologicalSpace Kˣ]
+    [IsTopologicalGroup Kˣ]
+    (vK : AddValuation K (WithTop ℤ))
+    (hKlocal : Chapter01LocalField vK)
+    (hbasis : Chapter01FieldUnitFiltrationNeighborhoodBasis vK)
     (D : Chapter01MaximalAbelianExtensionData K)
     [IsAbelianGalois K D.extension]
     (H : Chapter01OpenFiniteIndexSubgroup Kˣ) :
@@ -111,35 +120,51 @@ theorem chapter01_local_existence_theorem
 /-- The unique finite abelian level selected by an open subgroup. -/
 noncomputable def chapter01ExtensionOfOpenSubgroup
     {K : Type*} [Field K] [TopologicalSpace Kˣ]
+    [IsTopologicalGroup Kˣ]
+    (vK : AddValuation K (WithTop ℤ))
+    (hKlocal : Chapter01LocalField vK)
+    (hbasis : Chapter01FieldUnitFiltrationNeighborhoodBasis vK)
     (D : Chapter01MaximalAbelianExtensionData K)
     [IsAbelianGalois K D.extension]
     (H : Chapter01OpenFiniteIndexSubgroup Kˣ) :
     Chapter01FiniteAbelianIndex K D.extension :=
-  (chapter01_local_existence_theorem D H).choose
+  (chapter01_local_existence_theorem vK hKlocal hbasis D H).choose
 
 theorem chapter01_norm_of_extension_of_open_subgroup
     {K : Type*} [Field K] [TopologicalSpace Kˣ]
+    [IsTopologicalGroup Kˣ]
+    (vK : AddValuation K (WithTop ℤ))
+    (hKlocal : Chapter01LocalField vK)
+    (hbasis : Chapter01FieldUnitFiltrationNeighborhoodBasis vK)
     (D : Chapter01MaximalAbelianExtensionData K)
     [IsAbelianGalois K D.extension]
     (H : Chapter01OpenFiniteIndexSubgroup Kˣ) :
-    chapter01NormSubgroup K (chapter01ExtensionOfOpenSubgroup D H) = H.1 :=
-  ((chapter01_local_existence_theorem D H).choose_spec).1
+    chapter01NormSubgroup K (chapter01ExtensionOfOpenSubgroup vK hKlocal hbasis D H) = H.1 :=
+  ((chapter01_local_existence_theorem vK hKlocal hbasis D H).choose_spec).1
 
 /-- Uniqueness of the extension attached to an open subgroup. -/
 theorem chapter01_extension_of_open_subgroup_unique
     {K : Type*} [Field K] [TopologicalSpace Kˣ]
+    [IsTopologicalGroup Kˣ]
+    (vK : AddValuation K (WithTop ℤ))
+    (hKlocal : Chapter01LocalField vK)
+    (hbasis : Chapter01FieldUnitFiltrationNeighborhoodBasis vK)
     (D : Chapter01MaximalAbelianExtensionData K)
     [IsAbelianGalois K D.extension]
     (H : Chapter01OpenFiniteIndexSubgroup Kˣ)
     (L : Chapter01FiniteAbelianIndex K D.extension)
     (hL : chapter01NormSubgroup K L = H.1) :
-    L = chapter01ExtensionOfOpenSubgroup D H :=
-  (chapter01_local_existence_theorem D H).unique hL
-    (chapter01_norm_of_extension_of_open_subgroup D H)
+    L = chapter01ExtensionOfOpenSubgroup vK hKlocal hbasis D H :=
+  (chapter01_local_existence_theorem vK hKlocal hbasis D H).unique hL
+    (chapter01_norm_of_extension_of_open_subgroup vK hKlocal hbasis D H)
 
 /-- Inclusion of finite abelian levels reverses inclusion of norm groups. -/
 theorem chapter01_norm_inclusion_reversing
     {K : Type*} [Field K] [TopologicalSpace Kˣ]
+    [IsTopologicalGroup Kˣ]
+    (vK : AddValuation K (WithTop ℤ))
+    (hKlocal : Chapter01LocalField vK)
+    (hbasis : Chapter01FieldUnitFiltrationNeighborhoodBasis vK)
     (D : Chapter01MaximalAbelianExtensionData K)
     [IsAbelianGalois K D.extension]
     {L₁ L₂ : Chapter01FiniteAbelianIndex K D.extension} :
