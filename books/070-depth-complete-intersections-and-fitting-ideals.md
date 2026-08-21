@@ -1180,13 +1180,43 @@ differ by one. This proves the asserted projective-dimension formula. The condit
 $x\notin\mathfrak m^2$ is what permits the indicated minimal cancellation; for an element in
 $\mathfrak m^2$ the Betti-number relation is different.
 
-Now suppose $k$ has finite projective dimension. Auslander--Buchsbaum gives
+Now suppose $k$ has finite projective dimension. Before choosing a regular element, make
+the standard faithfully flat residue-field enlargement
+
+$$
+R\longrightarrow R'=R[T]_{\mathfrak mR[T]}.
+$$
+
+Its closed fiber is the infinite field $k(T)$, its maximal ideal is
+$\mathfrak mR'$, and flat base change of a finite free resolution makes $k(T)$ have finite
+projective dimension over $R'$. Moreover depth, dimension, and embedding dimension are
+unchanged: the depth assertion is the flat-local formula with field fiber, prime chains are
+unchanged under this generic coefficient extension, and
+$\mathfrak mR'/(\mathfrak mR')^2\simeq
+(\mathfrak m/\mathfrak m^2)\otimes_k k(T)$. Thus it is enough to prove that $R'$ is regular;
+the equality of dimension and embedding dimension then descends the conclusion to $R$.
+Replacing $R$ by $R'$ therefore lets us assume that the residue field is infinite.
+
+Auslander--Buchsbaum gives
 
 $$
 \operatorname{pd}_Rk=\operatorname{depth}R,
 $$
 
-because $\operatorname{depth}k=0$. If $R$ is not a field, this depth is positive. Prime avoidance, applied also to $\mathfrak m^2$, supplies an $R$-regular element $x\in\mathfrak m\setminus\mathfrak m^2$. The change-of-rings step makes $k$ have finite projective dimension over $\overline R=R/(x)$. Induction on $\operatorname{pd}_Rk$ shows that $\overline R$ is regular. Since $x$ is both regular and part of a minimal generating set,
+because $\operatorname{depth}k=0$. If $R$ is not a field, this depth is positive. The
+associated primes are therefore all proper below $\mathfrak m$. Their images in
+$\mathfrak m/\mathfrak m^2$ are finitely many proper linear subspaces; over the now infinite
+residue field they cannot cover that vector space. Choose a class outside their union and
+lift it to
+
+$$
+x\in\mathfrak m\setminus\mathfrak m^2.
+$$
+
+Then $x$ avoids every associated prime and is $R$-regular. The change-of-rings step makes
+$k$ have finite projective dimension over $\overline R=R/(x)$. Induction on
+$\operatorname{pd}_Rk$ shows that $\overline R$ is regular. Since $x$ is both regular and
+part of a minimal generating set,
 
 $$
 \dim R=\dim\overline R+1
