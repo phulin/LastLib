@@ -672,7 +672,38 @@ theorem chapter10_extension_center_map_surjective
 /-- The extension-center correspondence remains available for an algebraic
 extension, without imposing finite-dimensionality on the ambient extension.
 This is the general form used by the book before specializing to finite
-extensions. -/
+extensions.  The correspondence is specifically the center map constructed
+above, rather than an unspecified equivalence of its source and target. -/
+/- Proof roadmap.
+
+The surjective half is exactly `chapter10_extension_center_map_surjective`
+above.  For injectivity, quotient-induct the two arguments to representatives
+`W₁ W₂ : Chapter10HeterogeneousValuationExtension L vK`.  The key local claim
+is that an extending valuation subring is recovered from its center on the
+integral closure: after identifying `B` with the range of `algebraMap B L` by
+`IsIntegralClosure.algebraMap_injective`, show
+
+`W.valuation.valuationSubring.toLocalSubring = LocalSubring.ofPrime R I`,
+
+where `R = (algebraMap B L).range` and `I` is the image of
+`chapter10_extension_center vK hA W`.  Prove the forward inclusion using the
+fraction representation supplied by `IsFractionRing.div_surjective`; prove
+the reverse inclusion with `LocalSubring.le_ofPrime` and the facts that the
+denominators outside `I` map to units (`IsLocalization.AtPrime.isUnit_to_map_iff`)
+and that membership in the maximal ideal is characterized by
+`Valuation.mem_maximalIdeal_iff`.  This is the standard statement that the
+localization of the integral closure at a center is the corresponding
+valuation ring; it must be established here because Mathlib's
+`RingTheory/Valuation/LocalSubring.lean` only supplies the construction
+`LocalSubring.ofPrime`, not this integral-closure identification.
+
+An equality of centers then gives equality of the two local subrings, hence
+equality of `W₁.valuation.valuationSubring` and
+`W₂.valuation.valuationSubring`.  Convert that equality to
+`W₁.valuation.IsEquiv W₂.valuation` with
+`Valuation.isEquiv_iff_valuationSubring`, apply `Quotient.sound`, and combine
+this injectivity proof with the existing surjectivity proof to construct the
+required `Function.Bijective` pair. -/
 theorem chapter10_algebraic_extension_prime_valuation_correspondence
     {A B : Type*} {K : Type u10K} {L : Type u10L} {Γ : Type u10Γ}
     [CommRing A] [IsDomain A] [ValuationRing A] [IsIntegrallyClosed A]
@@ -683,12 +714,19 @@ theorem chapter10_algebraic_extension_prime_valuation_correspondence
     [IsIntegralClosure B A L]
     [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
     (hA : vK.Integers A) :
-    Nonempty
-      (Chapter10ValuationExtensionClass (L := L) vK ≃
-        {P : Ideal B // Chapter10PrimeAboveMaximal (A := A) (B := B) P}) := by
+    Function.Bijective
+      (chapter10_extension_center_map
+        (A := A) (B := B) (K := K) (L := L) vK hA) := by
   sorry
 
 /-- Distinct valuation-extension classes have distinct centers. -/
+/- Proof roadmap.  This is now the first projection of the immediately
+preceding, center-map-specific correspondence:
+
+`exact (chapter10_algebraic_extension_prime_valuation_correspondence vK hA).1`.
+
+Supply the four explicit type arguments if inference chooses the wrong
+integral-closure algebra: `(A := A) (B := B) (K := K) (L := L)`. -/
 theorem chapter10_extension_center_map_injective
     {A B : Type*} {K : Type u10K} {L : Type u10L} {Γ : Type u10Γ}
     [CommRing A] [IsDomain A] [ValuationRing A]
@@ -733,6 +771,45 @@ identify it directly with their `ValuationSubring` branch sets.
 
 /-- A finite Galois extension acts transitively on the valuation branches above
 a fixed base valuation. -/
+/- Proof roadmap.
+
+Set `A := v.valuationSubring` and
+`B := integralClosure v.valuationSubring L`.  The algebra and scalar-tower
+instances needed for these choices are in
+`Mathlib/RingTheory/Valuation/AlgebraInstances.lean` (imported through the
+valuation-extension imports).  Regard each `Wᵢ.valuation` as a heterogeneous
+extension of `v`: use `Valuation.isEquiv_valuation_valuationSubring`, the
+hypothesis `Wᵢ.comap (algebraMap K L) = v.valuationSubring`, and
+`Valuation.isEquiv_iff_valuationSubring`.  If the value-group universe does not
+match `Chapter10HeterogeneousValuationExtension`, map the valuation to the
+appropriate `ULift` exactly as in
+`chapter10_extension_center_map_surjective`; mapping does not change its
+valuation subring.
+
+Install the Galois action on `B` with
+`IsIntegralClosure.MulSemiringAction A K L B` and its invariant instance with
+`Algebra.isInvariant_of_isGalois A K L B` from
+`Mathlib/RingTheory/Invariant/Galois.lean`.  Apply
+`Algebra.IsInvariant.exists_smul_of_under_eq A B Gal(L / K)` from
+`Mathlib/RingTheory/Invariant/Basic.lean` to the two centers; their `under A`
+are equal because `chapter10_extension_center_is_prime_above` contracts both
+to `IsLocalRing.maximalIdeal A`.
+
+Prove the required equivariance claim by extensionality on `b : B`:
+the center of the representative attached to `σ • W₁` equals `σ` times the
+center of the representative attached to `W₁`.  Unfold
+`chapter10_extension_center`, rewrite membership using
+`Valuation.mem_maximalIdeal_iff`, and use
+`ValuationSubring.mem_smul_pointwise_iff_exists` together with
+`algebraMap_galRestrict_apply` from
+`Mathlib/RingTheory/IntegralClosure/IntegralRestrict.lean`.  The prime
+transitivity equality and equivariance give equal center-map values.
+Injectivity from `chapter10_extension_center_map_injective` gives equivalent
+representatives.  Finally rewrite that equivalence with
+`Valuation.isEquiv_iff_valuationSubring` and
+`ValuationSubring.valuationSubring_valuation`; the resulting equality is
+exactly `σ • W₁ = W₂` (replace `σ` by its inverse if the orientation returned
+by `exists_smul_of_under_eq` is reversed). -/
 theorem chapter10_galois_group_transitive_on_valuation_branches
     {K L Γ : Type*} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero Γ]
@@ -746,6 +823,48 @@ theorem chapter10_galois_group_transitive_on_valuation_branches
 
 /-- Factorization-form henselianity makes the center over the base maximal
 ideal unique in every finite integral extension. -/
+/- Proof roadmap.
+
+First turn `hH` into Mathlib's root-lifting interface using
+`Chapter09.factorization_henselian_implies_mathlib_henselian` from
+`Chapter09/Section04HenselianLocalRings.lean`; use `hA` to transport this from
+`vK.valuationSubring` to `A` (the ring equivalence is obtained by restricting
+`algebraMap A K`, with inverse furnished by `hA.exists_of_le_one`, and its
+unit-ball identity by `hA.map_le_one`).
+
+Establish the standard finite henselian local-algebra claim needed here: every
+finite integral `A`-algebra which is a domain is local.  Prove first, by
+induction on a finite generating set, that a finite integral algebra over a
+factorization-henselian local ring is a finite product of local algebras.  At
+the one-generator step, factor the reduction of a monic integrality
+polynomial into pairwise coprime primary factors and use the defining
+application of `Chapter09.HenselianFactorizationProperty` to lift a bipartition;
+its witness exposes `Chapter09.IsFactorizationLift`.  Iterate the bipartition
+until the residue factors are primary.  Useful existing combinators are
+`Polynomial.exists_monic_irreducible_factor` from
+`Mathlib/RingTheory/Polynomial/UniqueFactorization.lean`,
+`Polynomial.monic_prod_of_monic` from
+`Mathlib/Algebra/Polynomial/Monic.lean`, and `IsCoprime.prod_left` /
+`IsCoprime.prod_right` from `Mathlib/RingTheory/Coprime/Lemmas.lean`.  A domain
+has no nontrivial idempotents, so only one product factor survives and the
+algebra is local.
+
+For uniqueness, if `P ≠ Q`, choose `b ∈ P \ Q` (swap the ideals if necessary)
+and let `C := Algebra.adjoin A {b}`.  It is finite over `A` by
+`Algebra.finite_adjoin_simple_of_isIntegral`, and it is a domain because it is
+a subalgebra of `B`.  The contractions of `P` and `Q` to `C` are maximal
+ideals over the base maximal ideal (use integrality and
+`Ideal.isMaximal_of_isIntegral_of_isMaximal_comap` from
+`Mathlib/RingTheory/Ideal/GoingUp.lean`), but they differ on `b`, contradicting
+the local-algebra claim.
+
+For Lean assembly, obtain existence independently with
+`Ideal.exists_maximal_ideal_liesOver_of_isIntegral` (as in
+`chapter10_finite_extension_primes_above_are_finite` below), package its prime
+and contraction fields as `Chapter10PrimeAboveMaximal`, and use the local
+claim for uniqueness.  Do not try to derive this theorem merely from
+`chapter10_galois_group_transitive_on_valuation_branches`: transitivity does
+not imply uniqueness without the henselian fixed-branch argument. -/
 theorem chapter10_henselian_valuation_ring_has_unique_prime_above
     {A B : Type*} {K : Type u10K} {L : Type u10L} {Γ : Type u10Γ}
     [CommRing A] [IsDomain A] [ValuationRing A] [IsIntegrallyClosed A]
@@ -857,6 +976,41 @@ theorem chapter10_finite_extension_primes_above_are_finite
     exact ⟨⟨P, hPmax.isPrime, hPover.over.symm⟩⟩
 
 /-- Algebraic uniqueness is proved here from finite-subextension centers. -/
+/- Proof roadmap.
+
+It suffices, by `Valuation.isEquiv_of_val_le_one`, to prove for every `x : L`
+that `w₁ x ≤ 1 ↔ w₂ x ≤ 1`.  Put
+`E := IntermediateField.adjoin K ({x} : Set L)`.  The hypothesis
+`Algebra.IsAlgebraic K L` gives `FiniteDimensional K E` through
+`IntermediateField.adjoin.finiteDimensional` (compare
+`chapter10_algebraic_element_in_finite_subextension` in the chronologically
+later Section06 only as a pattern; reproduce its two-line construction here,
+since Section03 cannot import Section06).
+
+Restrict each valuation to `E` using
+`wᵢ.comap (algebraMap E L)`.  Show it extends `v` by composing `hᵢ` with the
+comap identity
+`(wᵢ.comap (algebraMap E L)).comap (algebraMap K E) =
+ wᵢ.comap (algebraMap K L)`; prove the identity by `ext` and
+`IsScalarTower.algebraMap_apply K E L`.  Instantiate
+`chapter10_henselian_valued_field_has_unique_prime_and_extension` with
+`L := E`, `A := v.valuationSubring`, and
+`B := integralClosure v.valuationSubring E`.  The required fraction-ring,
+integral-closure, and scalar-tower instances are provided by
+`Mathlib/RingTheory/Valuation/AlgebraInstances.lean`.
+
+Package the two restricted valuations as
+`Chapter10HeterogeneousValuationExtension E v`.  When their value groups do
+not inhabit the structure's fixed universe, map each to a common sufficiently
+large `ULift` using `Valuation.map` and the injective order-preserving
+`ULift.up`, following the construction in
+`chapter10_extension_center_map_surjective`; prove that this preserves the
+`≤ 1` predicate.  Apply the `.2` component of
+`chapter10_henselian_valued_field_has_unique_prime_and_extension` to obtain
+equivalence of the restricted valuations, then use its `le_one_iff_le_one` at
+the element `⟨x, IntermediateField.subset_adjoin K {x} (Set.mem_singleton x)⟩`.
+Unfolding both comaps gives `w₁ x ≤ 1 ↔ w₂ x ≤ 1`.  Feed these pointwise
+equivalences to `Valuation.isEquiv_of_val_le_one` for the final result. -/
 theorem chapter10_henselian_valuation_has_unique_branch
     {K : Type u10K} {L : Type u10L} {Γ₀ : Type u10Γ}
     {Γ₁ Γ₂ : Type*} [Field K] [Field L] [Algebra K L]
