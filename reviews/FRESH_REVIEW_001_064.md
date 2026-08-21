@@ -1292,6 +1292,24 @@ Verdicts: Book 059 FAIL (X069). Book 060 FAIL (X070 + inherited). Book 061 FAIL 
 
 All 38 manuscripts in this review's scope (Books 028–064, including 035a) have now been replaced by full-read attestations and verdicts; the pending inventory above is empty. Summary: **12 PASS** (040, 042, 043, 048, 052, 053, 054, 055, 057, 062, 063, 064) and **26 FAIL**, with new standing findings X041–X072 recorded below and consumer updates to X001–X040 throughout. The dominant failure modes in this range are: (i) inherited upstream gaps (X005/X008/X015/X016/X036/X037 abelian-scheme and finite-flat foundations; X017–X033 étale-cohomology chain; X004/X006/X007 excellence/factoriality chain); (ii) strategy-level headline proofs (Books 056, 059, 060, 061); (iii) missing import ledgers concealing operative dependence on flagged regions (Books 051, 056, 060, 061); and (iv) isolated unproved named inputs (X044 p-adic logarithm, X048 duality cell, X050 real-place duality, X051 Pontryagin infrastructure, X061 analytic-curve criteria, X062 NS cluster, X063 coherent Künneth, X064 topological/harmonic foundations, X065 relative duality/perfectness, X066 syntomic lci criterion, X067 weighted-block conversion, X068 formal vanishing/GAGA analytics, X072 complete-local algebra inputs).
 
+## Discharge progress (repair campaign)
+
+- X068 (partial): Book 058 now proves the difference-sheaf control lemma
+  (kernel of level restriction killed by I^{n+1}, quotient of F_0 tensor
+  I^{n+1}/I^{n+2}), propagation of eventual goodness over artinian special
+  fibers (composition-series reduction to residue fields + syzygy over the
+  field via Book 007b Ch 7), uniform levelwise vanishing/generation
+  (Lemma 9.3.3), and formal Serre vanishing with the Cech-limit comparison
+  (Proposition 9.3.4), under the hypothesis that the closed fiber is
+  projective over an artinian ring -- satisfied by every downstream consumer
+  (complete DVR / complete local bases in Books 060-062, 121, 122, 157).
+  Section 8.2's sketch is thereby justified; section numbering of Chapter 9
+  shifted (9.3-9.6). STILL OPEN: the effectivity half of Grothendieck
+  existence (finiteness of the module of formal global sections and the
+  finite presentation of F by twists), i.e. the discharge proper of X012 and
+  the algebraization inputs of Books 060/061; this needs the completed-Rees
+  graded-module equivalence for Coh(P^r_A-hat).
+
 ## Operational note on in-book cosmetic repairs
 
 The safe mechanical repairs identified in this audit (broken split displays with stray heading markers in Books 037, 042, 054, 059, 062, 063, plus Book 041's phantom citation) were applied and committed where the tree held still; Book 041's phantom-citation fix landed in `7036c34` and Book 059's Tate-algebra marker in `94ac35f`. Repeated attempts to land the remaining display repairs were reverted within seconds by concurrent prove-agent processes rewriting the same manuscripts from stale snapshots; they should be reapplied once those agents quiesce. All substantive findings are independent of these cosmetics.
