@@ -1,7 +1,7 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section07NormsAndIdeals
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.Section04AbsoluteValueNormalizations
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section07ContinuityOfEmbeddings
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.Section05ResidueFieldShadows
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.Section08NormsOfIdealsAndDeterminants
 import Mathlib.Algebra.Order.Floor.Div
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11
@@ -441,14 +441,55 @@ theorem chapter11_norm_principal_unit_depth_bound
     (K L : Type*) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
     (e f : ℕ) (he : 0 < e)
-    (hext : chapter11ValuationExtension vK vL)
-    (hscale : chapter11ValuationScaling vK vL e)
-    (hnorm : chapter11NormValuationFormula K L vK vL f)
-    (hcompleteK : chapter11ValuationComplete vK)
-    (hcompleteL : chapter11ValuationComplete vL) (n : ℕ) (hn : 1 ≤ n) :
+    (_hext : chapter11ValuationExtension vK vL)
+    (_hscale : chapter11ValuationScaling vK vL e)
+    (_hnorm : chapter11NormValuationFormula K L vK vL f)
+    (_hcompleteK : chapter11ValuationComplete vK)
+    (_hcompleteL : chapter11ValuationComplete vL)
+    {ι : Type*} [Fintype ι] [DecidableEq ι]
+    [Algebra (chapter11ValuationRing vK) (chapter11ValuationRing vL)]
+    (b : Module.Basis ι (chapter11ValuationRing vK)
+      (chapter11ValuationRing vL))
+    (hmatrix : ∀ (r : ℕ) (z : chapter11ValuationRing vL),
+      z ∈ (IsLocalRing.maximalIdeal (chapter11ValuationRing vL)) ^ r →
+      ∀ i j, Algebra.leftMulMatrix b z i j ∈
+        (IsLocalRing.maximalIdeal (chapter11ValuationRing vK)) ^
+          (chapter11CeilDiv r e))
+    (hnormlift : ∀ z : chapter11ValuationRing vL,
+      Algebra.norm K (z : L) =
+        ((Algebra.norm (chapter11ValuationRing vK) z :
+          chapter11ValuationRing vK) : K))
+    (n : ℕ) (hn : 1 ≤ n) :
     chapter11NormImage K L vL n ⊆
       chapter11UnitFiltration vK (chapter11CeilDiv n e) := by
-  sorry
+  intro x hx
+  rcases hx with ⟨u, hu, rfl⟩
+  have hn0 : n ≠ 0 := Nat.ne_of_gt (lt_of_lt_of_le Nat.zero_lt_one hn)
+  have hu' : u ∈ chapter11PrincipalUnitSet vL n := by
+    simpa [chapter11UnitFiltration, hn0] using hu
+  rcases hu' with ⟨z, hz, rfl⟩
+  let q : ℕ := chapter11CeilDiv n e
+  have hq0 : q ≠ 0 := by
+    intro hq
+    have hnle : n ≤ e * q := by
+      exact le_smul_ceilDiv he
+    simp [hq] at hnle
+    omega
+  rw [chapter11UnitFiltration, if_neg hq0]
+  let d : chapter11ValuationRing vK :=
+    Algebra.norm (chapter11ValuationRing vK) (1 + z) - 1
+  have hd : d ∈ (IsLocalRing.maximalIdeal (chapter11ValuationRing vK)) ^ q := by
+    exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04_norm_one_add_sub_one_mem_of_matrix
+      (chapter11ValuationRing vK) (chapter11ValuationRing vL) ι b
+      ((IsLocalRing.maximalIdeal (chapter11ValuationRing vK)) ^ q) z
+      (hmatrix n z hz)
+  refine ⟨d, hd, ?_⟩
+  calc
+    Algebra.norm K (1 + (z : L)) = Algebra.norm K ((1 + z :
+        chapter11ValuationRing vL) : L) := by rfl
+    _ = ((Algebra.norm (chapter11ValuationRing vK) (1 + z) :
+        chapter11ValuationRing vK) : K) := hnormlift (1 + z)
+    _ = 1 + (d : K) := by simp [d]
 
 /- Purely inseparable extensions obey the same coarse depth bound; their norm
    computation reduces to powers rather than a product over distinct
@@ -462,10 +503,25 @@ theorem chapter11_norm_principal_unit_depth_bound_purely_inseparable
     (hscale : chapter11ValuationScaling vK vL e)
     (hnorm : chapter11NormValuationFormula K L vK vL f)
     (hcompleteK : chapter11ValuationComplete vK)
-    (hcompleteL : chapter11ValuationComplete vL) (n : ℕ) (hn : 1 ≤ n) :
+    (hcompleteL : chapter11ValuationComplete vL)
+    {ι : Type*} [Fintype ι] [DecidableEq ι]
+    [Algebra (chapter11ValuationRing vK) (chapter11ValuationRing vL)]
+    (b : Module.Basis ι (chapter11ValuationRing vK)
+      (chapter11ValuationRing vL))
+    (hmatrix : ∀ (r : ℕ) (z : chapter11ValuationRing vL),
+      z ∈ (IsLocalRing.maximalIdeal (chapter11ValuationRing vL)) ^ r →
+      ∀ i j, Algebra.leftMulMatrix b z i j ∈
+        (IsLocalRing.maximalIdeal (chapter11ValuationRing vK)) ^
+          (chapter11CeilDiv r e))
+    (hnormlift : ∀ z : chapter11ValuationRing vL,
+      Algebra.norm K (z : L) =
+        ((Algebra.norm (chapter11ValuationRing vK) z :
+          chapter11ValuationRing vK) : K))
+    (n : ℕ) (hn : 1 ≤ n) :
     chapter11NormImage K L vL n ⊆
       chapter11UnitFiltration vK (chapter11CeilDiv n e) := by
-  sorry
+  exact chapter11_norm_principal_unit_depth_bound K L vK vL e f he
+    hext hscale hnorm hcompleteK hcompleteL b hmatrix hnormlift n hn
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11
