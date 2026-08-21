@@ -218,6 +218,32 @@ theorem chapter13_separable_adjoin_is_field
   exact isField_of_isIntegral_of_isField' (R := K)
     (S := Algebra.adjoin K ({b} : Set k)) (Field.toIsField K)
 
+private def chapter13_subfield_of_field_hom
+    {F A : Type*} [Field F] [CommRing A] [Nontrivial A]
+    (f : F →+* A) : Chapter13Subfield A :=
+  { carrier := f.range
+    field_carrier :=
+      { exists_pair_ne := by
+          refine ⟨⟨f 0, ⟨0, rfl⟩⟩, ⟨f 1, ⟨1, rfl⟩⟩, ?_⟩
+          simpa using (zero_ne_one : (0 : A) ≠ 1)
+        mul_comm := by
+          intro x y
+          apply Subtype.ext
+          exact mul_comm x.1 y.1
+        mul_inv_cancel := by
+          intro x hx
+          rcases x.property with ⟨y, hyx⟩
+          have hy : y ≠ 0 := by
+            intro hy
+            apply hx
+            apply Subtype.ext
+            simpa [hy] using hyx.symm
+          refine ⟨⟨f y⁻¹, ⟨y⁻¹, rfl⟩⟩, ?_⟩
+          apply Subtype.ext
+          calc
+            x.1 * f y⁻¹ = f y * f y⁻¹ := by rw [hyx]
+            _ = 1 := by simpa using congrArg f (mul_inv_cancel₀ hy) } }
+
 /-- A complete local ring of residue characteristic zero contains a coefficient field. -/
 theorem chapter13_coefficient_field_exists_equal_characteristic_zero
     {A : Type u} [CommRing A] [IsLocalRing A]
@@ -230,7 +256,196 @@ theorem chapter13_coefficient_field_exists_equal_characteristic_zero
       (∀ K : Chapter13Subfield A,
         ∃ L : Chapter13Subfield A,
           K.carrier ≤ L.carrier ∧ Chapter13IsCoefficientField L) := by
-  sorry
+  letI : Preorder (Chapter13Subfield A) :=
+    { le := fun K L => K.carrier ≤ L.carrier
+      le_refl := fun K => le_rfl
+      le_trans := fun _ _ _ hKL hLM => hKL.trans hLM }
+  have hmaximal_extension : ∀ K₀ : Chapter13Subfield A,
+      ∃ K : Chapter13Subfield A,
+        K₀.carrier ≤ K.carrier ∧ Chapter13IsMaximalSubfield K := by
+    intro K₀
+    obtain ⟨K, hK, hKmax⟩ := zorn_le_nonempty_Ici₀ K₀
+      (fun c hc hchain y hy => by
+        let U : Set A := ⋃ K : Chapter13Subfield A,
+          ⋃ (_ : K ∈ c), (K.carrier : Set A)
+        have memU : ∀ {x : A}, x ∈ U → ∃ K ∈ c, x ∈ K.carrier := by
+          intro x hx
+          change x ∈ ⋃ K : Chapter13Subfield A,
+            ⋃ (_ : K ∈ c), (K.carrier : Set A) at hx
+          rcases Set.mem_iUnion.mp hx with ⟨K, hx⟩
+          rcases Set.mem_iUnion.mp hx with ⟨hK, hx⟩
+          exact ⟨K, hK, hx⟩
+        have memU' : ∀ {K : Chapter13Subfield A}, K ∈ c →
+            ∀ {x : A}, x ∈ K.carrier → x ∈ U := by
+          intro K hK x hx
+          change x ∈ ⋃ K : Chapter13Subfield A,
+            ⋃ (_ : K ∈ c), (K.carrier : Set A)
+          exact Set.mem_iUnion.2 ⟨K, Set.mem_iUnion.2 ⟨hK, hx⟩⟩
+        let Ucarrier : Subring A :=
+          { carrier := U
+            zero_mem' := memU' hy (zero_mem y.carrier)
+            add_mem' := by
+              intro x z hx hz
+              obtain ⟨Kx, hKx, hx⟩ := memU hx
+              obtain ⟨Kz, hKz, hz⟩ := memU hz
+              have hcomp : Kx ≤ Kz ∨ Kz ≤ Kx := by
+                by_cases heq : Kx = Kz
+                · subst Kz
+                  exact Or.inl le_rfl
+                · exact hchain hKx hKz heq
+              rcases hcomp with hle | hle
+              · exact memU' hKz (Kz.carrier.add_mem (hle hx) hz)
+              · exact memU' hKx (Kx.carrier.add_mem hx (hle hz))
+            one_mem' := memU' hy (one_mem y.carrier)
+            mul_mem' := by
+              intro x z hx hz
+              obtain ⟨Kx, hKx, hx⟩ := memU hx
+              obtain ⟨Kz, hKz, hz⟩ := memU hz
+              have hcomp : Kx ≤ Kz ∨ Kz ≤ Kx := by
+                by_cases heq : Kx = Kz
+                · subst Kz
+                  exact Or.inl le_rfl
+                · exact hchain hKx hKz heq
+              rcases hcomp with hle | hle
+              · exact memU' hKz (Kz.carrier.mul_mem (hle hx) hz)
+              · exact memU' hKx (Kx.carrier.mul_mem hx (hle hz))
+            neg_mem' := by
+              intro x hx
+              obtain ⟨Kx, hKx, hx⟩ := memU hx
+              exact memU' hKx (Kx.carrier.neg_mem hx) }
+        letI : Field y.carrier := y.field_carrier.toField
+        have hUfield : IsField Ucarrier :=
+          { exists_pair_ne := by
+              obtain ⟨x, z, hxz⟩ := y.field_carrier.exists_pair_ne
+              refine ⟨⟨x, memU' hy x.property⟩, ⟨z, memU' hy z.property⟩, ?_⟩
+              intro heq
+              apply hxz
+              apply Subtype.ext
+              exact congrArg (fun w : Ucarrier => w.1) heq
+            mul_comm := by
+              intro x z
+              apply Subtype.ext
+              exact mul_comm x.1 z.1
+            mul_inv_cancel := by
+              intro x hx
+              obtain ⟨Kx, hKx, hxK⟩ := memU x.property
+              let xK : Kx.carrier := ⟨x.1, hxK⟩
+              have hxK0 : xK ≠ 0 := by
+                intro hzero
+                apply hx
+                apply Subtype.ext
+                exact congrArg (fun w : Kx.carrier => w.1) hzero
+              obtain ⟨z, hz⟩ := Kx.field_carrier.mul_inv_cancel hxK0
+              refine ⟨⟨z.1, memU' hKx z.property⟩, ?_⟩
+              apply Subtype.ext
+              simpa using congrArg Subtype.val hz }
+        let Usub : Chapter13Subfield A :=
+          { carrier := Ucarrier, field_carrier := hUfield }
+        refine ⟨Usub, ?_⟩
+        intro z hz
+        exact fun x hx => memU' hz hx) K₀ le_rfl
+    refine ⟨K, hK, ?_⟩
+    intro L hKL
+    exact hKmax hKL
+  have hmaximal_is_coefficient : ∀ K : Chapter13Subfield A,
+      Chapter13IsMaximalSubfield K → Chapter13IsCoefficientField K := by
+    intro K hKmax
+    letI : Field K.carrier := K.field_carrier.toField
+    have hKchar : CharP K.carrier 0 :=
+      ((Chapter13ResidueMap A).comp K.carrier.subtype).charP_iff_charP 0 |>.mpr hchar
+    letI : CharP K.carrier 0 := hKchar
+    letI : CharZero K.carrier := CharP.charP_to_charZero K.carrier
+    refine ⟨chapter13_subfield_reduction_injective K, ?_⟩
+    intro b
+    by_contra hb
+    have hb' : b ∉ Set.range
+        ((Chapter13ResidueMap A).comp K.carrier.subtype) := hb
+    obtain ⟨a, ha⟩ := Ideal.Quotient.mk_surjective b
+    let σ : K.carrier →+* A := K.carrier.subtype
+    let ρ : A →+* Chapter13ResidueRing A := Chapter13ResidueMap A
+    have haρ : ρ a = b := by
+      change Ideal.Quotient.mk (IsLocalRing.maximalIdeal A) a = b
+      exact ha
+    letI : Algebra K.carrier (Chapter13ResidueRing A) :=
+      (ρ.comp σ).toAlgebra
+    have hσ : ρ.comp σ = algebraMap K.carrier (Chapter13ResidueRing A) := by
+      rfl
+    have hρ : RingHom.ker ρ = IsLocalRing.maximalIdeal A := by
+      change RingHom.ker (Ideal.Quotient.mk (IsLocalRing.maximalIdeal A)) =
+        IsLocalRing.maximalIdeal A
+      exact Ideal.mk_ker
+    by_cases hbtrans : Transcendental K.carrier b
+    · obtain ⟨ι, hι⟩ := chapter13_transcendental_fraction_field_lift
+          (Chapter13TranscendentalLiftData.mk hρ hσ haρ hbtrans)
+      let L := chapter13_subfield_of_field_hom ι
+      have hKL : K.carrier ≤ L.carrier := by
+        intro x hx
+        let xK : K.carrier := ⟨x, hx⟩
+        change σ xK ∈ RingHom.range ι
+        refine ⟨algebraMap K.carrier[X] (FractionRing K.carrier[X])
+          (Polynomial.C xK), ?_⟩
+        have hx' := congrArg (fun f => f (Polynomial.C xK)) hι
+        simpa [σ, Polynomial.eval₂RingHom] using hx'
+      have haL : a ∈ L.carrier := by
+        change a ∈ RingHom.range ι
+        refine ⟨algebraMap K.carrier[X] (FractionRing K.carrier[X]) Polynomial.X, ?_⟩
+        have ha' := congrArg (fun f => f Polynomial.X) hι
+        simpa [ρ, σ, Polynomial.eval₂RingHom] using ha'
+      have hnot : ¬L.carrier ≤ K.carrier := by
+        intro hLK
+        have haK : a ∈ K.carrier := hLK haL
+        let x : K.carrier := ⟨a, haK⟩
+        apply hb'
+        refine ⟨x, ?_⟩
+        simpa [x, σ, ρ] using haρ
+      exact hnot (hKmax L hKL)
+    · have hbalg : IsAlgebraic K.carrier b := by
+        exact not_not.mp hbtrans
+      have hminpoly : Irreducible (minpoly K.carrier b) :=
+        minpoly.irreducible hbalg.isIntegral
+      letI : Fact (Irreducible (minpoly K.carrier b)) := ⟨hminpoly⟩
+      have hsep : IsSeparable K.carrier b := by
+        unfold IsSeparable
+        exact hminpoly.separable
+      have hsimple :
+          LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.SimpleResidueRootLiftingProperty A := by
+        letI : HenselianLocalRing A :=
+          Chapter09.complete_separated_local_ring_has_simple_root_henselianity hA
+        exact (Chapter09.mathlib_henselian_iff_simple_residue_root_lifting (A := A)).mp
+          inferInstance
+      obtain ⟨a, ha_root, _ha_res⟩ := chapter13_separable_residue_lift
+        hsimple σ ρ hρ Ideal.Quotient.mk_surjective hσ b hsep
+      let ψ : AdjoinRoot (minpoly K.carrier b) →+* A :=
+        AdjoinRoot.lift σ a (by
+          simpa [Polynomial.eval₂RingHom] using ha_root.1)
+      let L := chapter13_subfield_of_field_hom ψ
+      have hKL : K.carrier ≤ L.carrier := by
+        intro x hx
+        let xK : K.carrier := ⟨x, hx⟩
+        change σ xK ∈ RingHom.range ψ
+        refine ⟨AdjoinRoot.of (minpoly K.carrier b) xK, ?_⟩
+        simp [ψ]
+      have haL : a ∈ L.carrier := by
+        change a ∈ RingHom.range ψ
+        refine ⟨AdjoinRoot.root (minpoly K.carrier b), ?_⟩
+        simp [ψ]
+      have hnot : ¬L.carrier ≤ K.carrier := by
+        intro hLK
+        have haK : a ∈ K.carrier := hLK haL
+        let x : K.carrier := ⟨a, haK⟩
+        apply hb'
+        refine ⟨x, ?_⟩
+        simpa [x, σ, ρ] using ha_root.2
+      exact hnot (hKmax L hKL)
+  obtain ⟨K₀⟩ := hcontains
+  obtain ⟨K, hK₀, hKmax⟩ := hmaximal_extension K₀
+  have hKcoeff := hmaximal_is_coefficient K hKmax
+  refine ⟨⟨K, hKcoeff⟩, ?_, ?_⟩
+  · intro K hKmax'
+    exact hmaximal_is_coefficient K hKmax'
+  · intro K
+    obtain ⟨L, hKL, hLmax⟩ := hmaximal_extension K
+    exact ⟨L, hKL, hmaximal_is_coefficient L hLmax⟩
 
 end
 
