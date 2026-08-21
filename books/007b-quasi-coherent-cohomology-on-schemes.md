@@ -42,7 +42,7 @@ Chapter 8 records the resulting interface.
 - [2. Quasi-coherent sheaves](#2-quasi-coherent-sheaves)
   - [2.1 The sheaf attached to a module](#21-the-sheaf-attached-to-a-module)
   - [2.2 Quasi-coherence and its local character](#22-quasi-coherence-and-its-local-character)
-  - [2.3 Kernels, cokernels, extensions, and pullback](#23-kernels-cokernels-extensions-and-pullback)
+  - [2.3 Kernels, cokernels, tensor products, and pullback](#23-kernels-cokernels-tensor-products-and-pullback)
   - [2.4 Pushforward along quasi-compact morphisms](#24-pushforward-along-quasi-compact-morphisms)
 - [3. Cohomology of quasi-coherent sheaves](#3-cohomology-of-quasi-coherent-sheaves)
   - [3.1 Flasque sheaves and functorial resolutions](#31-flasque-sheaves-and-functorial-resolutions)
@@ -578,7 +578,7 @@ $i_*(R/\pi)$ at the closed point is quasi-coherent, being $\widetilde{R/\pi}$; e
 along an open immersion destroys quasi-coherence, while pushforward along a closed immersion
 preserves it. Section 2.4 explains which direct images are safe.
 
-### 2.3 Kernels, cokernels, extensions, and pullback
+### 2.3 Kernels, cokernels, tensor products, and pullback
 
 For quasi-coherent sheaves to be a usable category, the operations of homological algebra must not
 lead out of it. This is not automatic for a subcategory of $\mathcal O_X$-modules: cokernels
@@ -619,30 +619,10 @@ modules, hence agree on all modules by choosing a presentation. $\square$
 Extensions require one further input. If $0\to\mathcal F'\to\mathcal F\to\mathcal F''\to0$ is exact
 with the outer terms quasi-coherent, the affine criterion for $\mathcal F$ needs global sections
 over an affine to surject onto global sections of $\mathcal F''$, and that is a vanishing
-statement, not a formal one.
-
-**Theorem 2.8 (extensions).** Let $0\to\mathcal F'\to\mathcal F\to\mathcal F''\to0$ be an exact
-sequence of $\mathcal O_X$-modules on a scheme $X$ with $\mathcal F'$ and $\mathcal F''$
-quasi-coherent. Then $\mathcal F$ is quasi-coherent.
-
-**Proof.** The question is local, so let $X=\operatorname{Spec}A$ and verify condition (4) of
-Theorem 2.3. Write $F'(V),F(V),F''(V)$ for sections. By Theorem 3.9 below,
-$H^1(V,\mathcal F')=0$ for every affine open $V$ of $X$, so the sequence of sections
-
-$$
-0\to F'(V)\to F(V)\to F''(V)\to0
-$$
-
-is exact for $V=X$ and for $V=D(f)$. Localizing the first at $f$ preserves exactness, and the outer
-vertical comparison maps $F'(X)_f\to F'(D(f))$ and $F''(X)_f\to F''(D(f))$ are isomorphisms
-because $\mathcal F'$ and $\mathcal F''$ are quasi-coherent. The five lemma gives the middle
-isomorphism. There is no circularity: the proof of Theorem 3.9 uses only Theorem 1.1, Section 2.2,
-and the general machinery of Chapter 3, none of which invokes the present statement. $\square$
-
-Thus $\mathrm{QCoh}(X)$ is what is sometimes called a weak Serre subcategory of
-$\mathrm{Mod}(\mathcal O_X)$: closed under kernels, cokernels, and extensions. In particular an
-exact sequence of $\mathcal O_X$-modules with quasi-coherent outer terms may be used freely, and
-its long exact cohomology sequence, once cohomology is available, stays within the theory.
+statement, not a formal one. We therefore do not claim extension-closure here. Serre's affine
+vanishing theorem is proved independently in Chapter 3, and Corollary 3.10 then establishes that
+$\mathrm{QCoh}(X)$ is closed under extensions. Until that corollary, only the permanence
+properties proved in Theorem 2.7 are available.
 
 Two classes of examples will recur. A **locally free** sheaf of rank $r$ is one that is locally
 isomorphic to $\mathcal O_X^r$; it is quasi-coherent, being $\widetilde{A^r}$ on suitable affine
@@ -1121,9 +1101,8 @@ $H^p(D(f),\mathcal F)=0$ for every $f$ and every $p>0$. Taking $f=1$ gives the t
 Notice what the proof did not use. There is no noetherian hypothesis, no finiteness assumption on
 $\mathcal F$, and no hypothesis on the ring $A$ whatsoever; the only inputs are Theorem 1.1, the
 affine criterion of Section 2.2, and the general machinery of Sections 3.1 and 3.2. This is exactly
-the non-circularity promised in the proof of Theorem 2.8, whose remaining step we can now complete,
-and it is also why the theory survives the base changes to non-noetherian rings that later
-applications perform.
+the independence needed to establish the deferred extension-closure now, and it is also why the
+theory survives the base changes to non-noetherian rings that later applications perform.
 
 **Corollary 3.10.** Let $X$ be a scheme.
 
@@ -1132,8 +1111,7 @@ applications perform.
 2. If $0\to\mathcal F'\to\mathcal F\to\mathcal F''\to0$ is an exact sequence of
    $\mathcal O_X$-modules with $\mathcal F'$ quasi-coherent, then
    $0\to\Gamma(U,\mathcal F')\to\Gamma(U,\mathcal F)\to\Gamma(U,\mathcal F'')\to0$ is exact for
-   every affine open $U$. In particular the proof of Theorem 2.8 is complete, and
-   $\mathrm{QCoh}(X)$ is closed under extensions.
+   every affine open $U$. In particular $\mathrm{QCoh}(X)$ is closed under extensions.
 
 **Proof.** (1) is Theorem 3.9 applied to $U$, using that $\mathcal F|_U$ is quasi-coherent. (2) The
 long exact cohomology sequence on $U$ ends the segment
