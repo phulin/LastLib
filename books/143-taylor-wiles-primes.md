@@ -2091,8 +2091,8 @@ The localization matrix is
 # $$\begin{pmatrix}\lambda_1(x_1)&\lambda_1(x_2)\\\lambda_2(x_1)&\lambda_2(x_2)\end{pmatrix}
 
 \begin{pmatrix}
-*&0\\
-_&_
+\ast&0\\
+\ast&\ast
 \end{pmatrix},
 \tag{11.6}
 $$

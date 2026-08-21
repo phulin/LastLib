@@ -1105,7 +1105,8 @@ We now place the finite-level arithmetic data into the precise paired framework.
 the nonempty set of old framed places, with $m=|T|$, and put $d_F=[F:\mathbf Q]$. The strict
 relative dual Selmer group is
 
-# $$V_T^0
+$$
+V_T^0=
 
 H^1_{(\mathcal L_T^0)^\perp}
 \left(F,\operatorname {ad}^0\bar\rho(1)\right),

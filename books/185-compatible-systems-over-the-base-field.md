@@ -442,7 +442,8 @@ construction in this book uses only its Galois avatar.
 
 For the relation (1.9), put
 
-# $$A_{i,\lambda}
+$$
+A_{i,\lambda}=
 
 \operatorname{Ind}_{G_{F_{H_i}}}^{G_{\mathbf Q}}
 (r_{H_i,\lambda}\otimes\theta_{i,\lambda}).
@@ -774,7 +775,8 @@ is required.
 
 At a place $\lambda$, form the virtual difference
 
-# $$\mathcal D_\lambda
+$$
+\mathcal D_\lambda=
 
 ## \bigl([R_{\mathfrak B,\lambda}^+]-[R_{\mathfrak B,\lambda}^-]\bigr)
 
@@ -1073,7 +1075,8 @@ $$
 is the packet polynomial, then the reciprocal characteristic series for the $i$th induced
 term is
 
-# $$D_{i,p}(T)
+$$
+D_{i,p}(T)=
 
 \prod_{w\mid p}
 \left(
@@ -1288,7 +1291,8 @@ the other places their unramified Frobenius polynomials already lie in $E[X]$.
 
 Finite twisting and Weil-group induction are algebraic operations on Weil--Deligne pairs. Put
 
-# $$\mathscr D_{v,E}^\pm
+$$
+\mathscr D_{v,E}^\pm=
 
 \bigoplus_i\bigoplus_{w\mid v}
 \left(

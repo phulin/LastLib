@@ -1474,7 +1474,8 @@ $$
 Suppose the overlap hypothesis identifies both untwisted restrictions with one irreducible
 $V_{D_x,\tau}$. Put
 
-# $$\delta_{ij,x}
+$$
+\delta_{ij,x}=
 
 ({}^x\theta_j)|_{D_x}\,
 (\theta_i|_{D_x})^{-1}.

@@ -609,7 +609,16 @@ Here raising to the odd power $p$ does not change a square class. This table fix
 
 ### 4.3. The normalized minimal model at two
 
-# The raw equation is not minimal at $2$. Make the change$$  x=4x',  \qquad  y=8y'+4x'.  \tag{4.7}$$After dividing by $64$ and suppressing primes on the new coordinates, one gets$$y^2+xy
+The raw equation is not minimal at $2$. Make the change
+
+$$
+x=4x', \qquad y=8y'+4x'. \tag{4.7}
+$$
+
+After dividing by $64$ and suppressing primes on the new coordinates, one gets
+
+$$
+y^2+xy=
 
 x^3+\frac{B-A-1}{4}x^2-\frac{AB}{16}x.
 \tag{4.8}
@@ -999,9 +1008,18 @@ $$
   \tag{7.2}
 $$
 
-# In a basis respecting this filtration, inertia acts by$$\bar\rho(\sigma)
+In a basis respecting this filtration, inertia acts by
 
-# I+m_2\bar t_p(\sigma)e_{12}\qquad(\sigma\in I_2).\tag{7.3}$$Since $m_2\not\equiv0\pmod p$, rescale the quotient basis vector and put$$\bar N=e_{12}
+$$
+\bar\rho(\sigma)
+=I+m_2\bar t_p(\sigma)e_{12}
+\qquad(\sigma\in I_2). \tag{7.3}
+$$
+
+Since $m_2\not\equiv0\pmod p$, rescale the quotient basis vector and put
+
+$$
+\bar N=e_{12}=
 
 \begin{pmatrix}0&1\\0&0\end{pmatrix}.
 \tag{7.4}
