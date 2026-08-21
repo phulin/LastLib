@@ -1,0 +1,11 @@
+{
+  "name": "lastlib-opencode-plugins",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@opencode-ai/plugin": "beta"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
+}
