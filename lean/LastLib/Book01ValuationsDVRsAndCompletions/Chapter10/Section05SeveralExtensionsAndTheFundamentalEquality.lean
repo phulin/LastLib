@@ -484,6 +484,51 @@ theorem chapter10_henselized_tensor_factor_dimensions
 /-- There are only finitely many inequivalent extensions of a finite
 extension.  It is placed after the henselized-tensor finiteness package that
 will supply its proof. -/
+/- Proof roadmap.
+
+The missing result is not another finiteness lemma: it is the branch/factor
+bridge which constructs `S` and
+`Chapter10HenselizedTensorBranchCorrespondence v S`.  In particular,
+`chapter10_henselized_tensor_has_finitely_many_factors` only enumerates the
+maximal ideals after a field `Kh` has been chosen, and the correspondence
+structure above *takes* completeness as a field; neither result constructs a
+valuation branch from a factor.
+
+First add a helper immediately before this theorem which packages the standard
+henselization argument.  Choose a henselization `(Kh, vh)` of `(K, v)` in a
+universe at least
+`max (max u10K u10L) u10Γ`, install
+`Algebra.TensorProduct.rightAlgebra : Algebra Kh (L ⊗[K] Kh)`, and obtain its
+module-finiteness by transporting
+`Module.Finite.base_change (R := K) (A := Kh) (M := L)` across
+`Algebra.TensorProduct.commRight K Kh L`.  Use
+`chapter10_henselized_tensor_has_finitely_many_factors` to turn
+`Chapter10TensorMaximalIdeals` into a `Finset`.  The helper must then prove the
+standard equivalence
+
+`{extensions of v to L}/IsEquiv ≃ {P // P.IsMaximal in L ⊗[K] Kh}`,
+
+constructing the extension attached to a factor by pulling back the unique
+extension over the henselian factor field.  Package each representative using
+`chapter10_valuation_extension_exists_as_heterogeneous` from
+`Section02ExistenceByMaximalDomination.lean`, and build its
+`Chapter10HeterogeneousExtensionData` with
+`chapter10_heterogeneous_extension_data_exists` from
+`Section04RamificationIndexAndResidueDegree.lean`; set the profile to
+`{ degree := d.ramificationIndex * d.residueDegree,
+   e := d.ramificationIndex, f := d.residueDegree }`.
+Surjectivity of the displayed equivalence gives the first conjunct of
+`Chapter10CompleteBranchFamily`; injectivity gives its no-duplicates conjunct.
+The same construction must also prove `factorContributionIndependent` (using
+the value/residue independent family constructed in the proof of
+`chapter10_heterogeneous_single_extension_fundamental_inequality` in Section04),
+so that the resulting object can be reused by the next theorem.
+
+Once the helper returns `⟨Kh, instances, S, D⟩`, this theorem is just
+`⟨S, D.complete⟩`.  There is currently no henselization object or theorem in
+this Mathlib snapshot, so do not try to manufacture `D` merely from
+`chapter10_henselized_tensor_has_finitely_many_factors`; the field and the
+branch/factor equivalence are the substantive missing formalization. -/
 theorem chapter10_finitely_many_valuation_extensions
     {K L ΓK : Type*} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero ΓK] [FiniteDimensional K L]
@@ -493,6 +538,26 @@ theorem chapter10_finitely_many_valuation_extensions
   sorry
 
 /-- The sum of `e f` over all branches is bounded by the extension degree. -/
+/- Proof roadmap.
+
+Reuse the *strong* helper described above, retaining its `Kh` and
+`D : Chapter10HenselizedTensorBranchCorrespondence v S`.  Return
+
+`⟨S, D.complete,
+  chapter10_henselized_tensor_branch_sum_bound (K := K) (L := L)
+    (Kh := Kh) v S D⟩`.
+
+Universe parameters on `D` must be supplied as in the declaration of
+`chapter10_henselized_tensor_branch_sum_bound`: the fifth parameter is the
+universe of the factor/branch value groups, while `Kh` is the fourth.  Install
+the helper's `Field Kh`, `Algebra K Kh`,
+`Algebra Kh (L ⊗[K] Kh)`, and `Module.Finite Kh (L ⊗[K] Kh)` fields as local
+instances before applying the bound.
+
+Do not first call `chapter10_finitely_many_valuation_extensions`: that theorem
+forgets both `Kh` and `D`, and completeness alone cannot reconstruct
+`factorContributionIndependent` or `branchFactor`.  This loss of the tensor
+witness was the dead end in the previous proof attempt. -/
 theorem chapter10_fundamental_inequality
     {K L ΓK : Type*} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero ΓK] [FiniteDimensional K L]
@@ -534,6 +599,62 @@ def Chapter10FiniteNormalization
   Module.Finite A (integralClosure A L)
 
 /-- Finite normalization of a DVR gives equality in the sum formula. -/
+/- Proof roadmap.
+
+Put `B := integralClosure A L`, `m := IsLocalRing.maximalIdeal A`, and install
+`hfinite` as `Module.Finite A B`.  A DVR is a valuation ring, integrally
+closed, and a PID; `B` is torsion-free over `A` by
+`IsIntegralClosure.isTorsionFree`, hence free/flat over the PID (the relevant
+Mathlib infrastructure is in
+`Mathlib/LinearAlgebra/FreeModule/PID.lean`).  Give `m.primesOver B` its finite
+type with `Set.Finite.fintype (Algebra.QuasiFinite.finite_primesOver m)`.  Then
+`Ideal.sum_ramification_inertia_eq_finrank` from
+`Mathlib/RingTheory/RamificationInertia/Basic.lean` yields
+
+`∑ q : m.primesOver B, q.1.ramificationIdx A * q.1.inertiaDeg A
+    = Module.finrank A B`.
+
+Use `chapter10_finite_extension_prime_valuation_correspondence` from
+`Section03IntegralElementsAreBounded.lean`, instantiated with
+`(A := A) (B := B) (K := K) (L := L)`, to identify valuation-extension
+classes with primes above `m`.  Map `b : {b // b ∈ S}` first to the quotient
+class `Quotient.mk'' b.1.extension`, then through that equivalence.  The
+coverage and no-duplicates halves of `hcomplete` prove that this map is
+bijective (for coverage, eliminate a quotient representative and apply the
+forward implication in `hcomplete.1`; for injectivity use `hcomplete.2` and
+`Valuation.isEquiv_iff_valuationSubring`).  Turn it into an `Equiv` with
+`Equiv.ofBijective`, identifying the prime-above subtype with
+`m.primesOver B` by `Subtype.ext` and the definition of
+`Chapter10PrimeAboveMaximal`.
+
+Before reindexing the sum, prove the two local comparison lemmas which are
+still absent from the file.  For a branch `b` with center `P` they must state
+
+* `b.extensionData.ramificationIndex = P.ramificationIdx A`, and
+* `b.extensionData.residueDegree = P.inertiaDeg A`.
+
+For the first, identify the localization `Localization.AtPrime P` with
+`b.w.valuationSubring` using the center-localization argument already spelled
+out beside `chapter10_algebraic_extension_prime_valuation_correspondence` in
+`Section03IntegralElementsAreBounded.lean`; compare a DVR uniformizer and use
+`chapter10_normalized_ramification_index_eq_scale` from Section04.  For the
+second, the same local-ring equivalence induces an equivalence of residue
+fields; rewrite `Chapter10HeterogeneousResidueDegree` and use
+`Ideal.inertiaDeg_eq` from
+`Mathlib/RingTheory/RamificationInertia/Inertia.lean`.  Merely knowing equality of centers is
+insufficient for either numerical rewrite.
+
+Now rewrite `b.profile.e` and `b.profile.f` with `b.profile_e`, `b.profile_f`
+and the two comparison lemmas, and use `Fintype.sum_equiv` for the branch/prime
+equivalence.  Finish with the displayed ramification-inertia sum and
+`IsIntegralClosure.rank A K L B` (or directly its localization-basis proof) to
+replace `Module.finrank A B` by `Module.finrank K L`.  The direct named
+`IsIntegralClosure.rank` theorem in this Mathlib version carries a separability
+assumption from its section; because the present statement assumes only
+`hfinite`, do not add separability.  Instead use finite freeness plus
+`IsIntegralClosure.isLocalization A K L B` and
+`Basis.localizationLocalization`, exactly the rank-comparison argument in that
+Mathlib file. -/
 theorem chapter10_finite_dvr_normalization_fundamental_equality
     {A K L ΓK : Type*} [CommRing A] [IsDomain A]
     [IsDiscreteValuationRing A]
