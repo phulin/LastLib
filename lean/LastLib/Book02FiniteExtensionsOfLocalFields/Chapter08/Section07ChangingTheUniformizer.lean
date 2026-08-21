@@ -81,19 +81,24 @@ theorem chapter08_norm_of_totally_ramified_uniformizer
     (vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ))
     (hval : vK.IsEquiv (AddValuation.comap (algebraMap K L) vL))
+    (hdiscreteK :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vK)
+    (hdiscreteL :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vL)
     (e : ℕ) (he : 0 < e)
     (hedegree : e = Module.finrank K L)
     (hscale : ∀ x : K, x ≠ 0 →
       vL (algebraMap K L x) = e • vK x)
-    (hnorm : ∀ x : L, x ≠ 0 →
-      vK (Algebra.norm K x) = (1 : WithTop ℤ) * vL x)
+    (hunique : ∀ w : AddValuation L (WithTop ℤ),
+      vK.IsEquiv (AddValuation.comap (algebraMap K L) w) →
+        vL.IsEquiv w)
     (πK : K) (πL : L)
     (hπK : vK πK = 1) (hπL : vL πL = 1)
     (htotal : chapter08TotallyRamified vK vL hval) :
     chapter08NormOfUniformizerForm vK πK πL := by
   unfold chapter08NormOfUniformizerForm
   have hnorm_varpi := chapter08_uniformizer_norm_has_value_one
-    vK vL hval e he hedegree hscale hnorm htotal πL hπL
+    vK vL hval hdiscreteK hdiscreteL e he hedegree hscale hunique htotal πL hπL
   have hπK0 : πK ≠ 0 := by
     intro hzero
     subst πK

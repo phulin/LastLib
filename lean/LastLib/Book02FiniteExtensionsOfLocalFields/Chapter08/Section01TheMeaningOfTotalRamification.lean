@@ -28,20 +28,25 @@ def chapter08TotallyRamified
     (h : vK.IsEquiv (AddValuation.comap (algebraMap K L) vL)) : Prop :=
   LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree vK vL h = 1
 
-/-- Book §8.1: the chosen valuation interface's encoding of equality of the
-residue fields, namely residue degree one for the induced residue extension. -/
+/-- Book §8.1: the induced residue extension is trivial as an extension of
+residue fields.  The algebra equivalence records equality of the residue
+fields over the base residue field; it is stronger and more informative than
+merely repeating the numerical residue-degree condition. -/
 def chapter08ResidueFieldsEqual
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L]
     (vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ))
     (h : vK.IsEquiv (AddValuation.comap (algebraMap K L) vL)) : Prop :=
-  LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
-    vK vL h = 1
+  by
+    letI : Valuation.HasExtension vK.toValuation vL.toValuation := ⟨h⟩
+    exact Nonempty
+      (LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueField vK
+        ≃ₐ[LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueField vK]
+          LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueField vL)
 
-/-- Book §8.1: for a finite extension, the total-ramification predicate is
-definitionally equivalent to the residue-degree-one encoding of no
-residue-field growth. -/
+/-- Book §8.1: for a finite extension, total ramification is equivalent to
+triviality of the induced residue-field extension. -/
 theorem chapter08_total_ramification_iff_residue_fields_equal
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L]
@@ -49,7 +54,7 @@ theorem chapter08_total_ramification_iff_residue_fields_equal
     (vL : AddValuation L (WithTop ℤ))
     (h : vK.IsEquiv (AddValuation.comap (algebraMap K L) vL)) :
     chapter08TotallyRamified vK vL h ↔ chapter08ResidueFieldsEqual vK vL h := by
-  rfl
+  sorry
 
 /-- Book §8.1: the fundamental equality specializes to `[L : K] = e` at the
 totally ramified endpoint. -/

@@ -394,9 +394,6 @@ theorem chapter08_uniformizer_maximal_ideal_map
   let : Algebra vk.valuationSubring vl.valuationSubring :=
     (inferInstance : Algebra vK.toValuation.valuationSubring
       vL.toValuation.valuationSubring)
-  let : Algebra vk.valuationSubring vl.valuationSubring :=
-    (inferInstance : Algebra vK.toValuation.valuationSubring
-      vL.toValuation.valuationSubring)
   have hcompleteV :=
     chapter08_valuation_subring_is_complete_of_integral_test
       vK hcomplete hintegralK
@@ -1332,12 +1329,17 @@ theorem chapter08_uniformizer_norm_has_value_one
     (vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ))
     (hval : vK.IsEquiv (AddValuation.comap (algebraMap K L) vL))
+    (hdiscreteK :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vK)
+    (hdiscreteL :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vL)
     (e : ℕ) (he : 0 < e)
     (hedegree : e = Module.finrank K L)
     (hscale : ∀ x : K, x ≠ 0 →
       vL (algebraMap K L x) = e • vK x)
-    (hnorm : ∀ x : L, x ≠ 0 →
-      vK (Algebra.norm K x) = (1 : WithTop ℤ) * vL x)
+    (hunique : ∀ w : AddValuation L (WithTop ℤ),
+      vK.IsEquiv (AddValuation.comap (algebraMap K L) w) →
+        vL.IsEquiv w)
     (htotal : chapter08TotallyRamified vK vL hval)
     (varpi : L) (hvarpi : vL varpi = 1) :
     vK (Algebra.norm K varpi) = 1 := by
