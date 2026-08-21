@@ -25,7 +25,12 @@ abbrev chapter14BranchResidueField
 theorem chapter14_prime_norm_eq_residue_field_card
     {F : Type u} [Field F] [NumberField F] (p : Chapter14Prime F) :
     chapter14PrimeNorm p = Nat.card (chapter14PrimeResidueField p) :=
-  by sorry
+  by
+    change Ideal.absNorm p.asIdeal = Nat.card p.asIdeal.ResidueField
+    rw [Ideal.absNorm_apply, Submodule.cardQuot_apply]
+    exact Nat.card_congr (Equiv.ofBijective (algebraMap
+      ((NumberField.RingOfIntegers F) ⧸ p.asIdeal) p.asIdeal.ResidueField)
+      p.asIdeal.bijective_algebraMap_quotient_residueField)
 
 def chapter14ArithmeticFrobeniusResidue
     (k l : Type*) [Field k] [Fintype k] [Field l] [Finite l]

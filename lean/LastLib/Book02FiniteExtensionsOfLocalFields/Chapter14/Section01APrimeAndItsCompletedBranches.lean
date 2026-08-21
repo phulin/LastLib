@@ -175,9 +175,24 @@ def chapter14DecompositionGroup
   classical
   refine
     { carrier := {σ | chapter14PrimeAction E p σ P = P}
-      one_mem' := by sorry
-      mul_mem' := by sorry
-      inv_mem' := by sorry }
+      one_mem' := by
+        change chapter14PrimeAction E p 1 P = P
+        simp [chapter14PrimeAction]
+      mul_mem' := by
+        intro σ τ hσ hτ
+        change σ • P = P at hσ
+        change τ • P = P at hτ
+        change chapter14PrimeAction E p (σ * τ) P = P
+        change (σ * τ) • P = P
+        rw [mul_smul, hτ, hσ]
+      inv_mem' := by
+        intro σ hσ
+        change σ • P = P at hσ
+        change chapter14PrimeAction E p σ⁻¹ P = P
+        change σ⁻¹ • P = P
+        calc
+          σ⁻¹ • P = σ⁻¹ • (σ • P) := by rw [hσ]
+          _ = P := inv_smul_smul σ P }
 
 theorem chapter14_mem_decomposition_group_iff
     {F : Type u} (E : Type v) [Field F] [NumberField F]
@@ -195,7 +210,19 @@ theorem chapter14_galois_factors_are_transitive
     (p : Chapter14Prime F) :
     ∀ P Q : Chapter14PrimeAbove F E p,
       ∃ σ : Gal(E / F), chapter14PrimeAction E p σ P = Q := by
-  sorry
+  intro P Q
+  obtain ⟨σ, hσ⟩ :=
+    Ideal.exists_comap_galRestrict_eq (𝓞 F) F E (𝓞 E) Q.2 P.2
+  have hmap :
+      Ideal.map (galRestrict (𝓞 F) F E (𝓞 E) σ) P.1 = Q.1 := by
+    rw [← hσ]
+    exact Ideal.map_comap_of_surjective _
+      (galRestrict (𝓞 F) F E (𝓞 E) σ).surjective _
+  refine ⟨σ, ?_⟩
+  change σ • P = Q
+  apply Subtype.ext
+  rw [Ideal.coe_smul_primesOver_eq_map_galRestrict]
+  exact hmap
 
 /- The global decomposition group becomes the local Galois group after the
    selected completion is supplied with its induced algebra and action. -/
