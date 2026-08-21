@@ -54,7 +54,9 @@ theorem chapter01_arithmetic_frobenius_residue_formula
     (D : Chapter01UnramifiedGaloisReduction K L k l) (x : l) :
     D.reduction.reduction (chapter01ArithmeticFrobenius D) x =
       x ^ Fintype.card k := by
-  sorry
+  simpa [chapter01ArithmeticFrobenius,
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.chapter06UnramifiedArithmeticFrobenius] using
+    (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.chapter06_arithmetic_frobenius_apply k l x)
 
 /-- The arithmetic Frobenius lift is unique. -/
 theorem chapter01_arithmetic_frobenius_lift_unique

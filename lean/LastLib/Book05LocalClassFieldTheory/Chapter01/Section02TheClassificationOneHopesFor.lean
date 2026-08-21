@@ -342,7 +342,7 @@ theorem chapter01_completed_reciprocity_extends_local
     chapter01CompletedReciprocity S hopen
         (chapter01OpenProfiniteCompletionEta Kˣ x) =
       chapter01LocalReciprocity S x := by
-  sorry
+  exact (chapter01_open_completion_artin_extension_exists S hopen).choose_spec.2 x
 
 /-- The completed reciprocity map is continuous. -/
 theorem chapter01_completed_reciprocity_continuous
@@ -352,7 +352,7 @@ theorem chapter01_completed_reciprocity_continuous
     (hopen : ∀ L : Chapter01FiniteAbelianIndex K KAb,
       IsOpen (chapter01NormSubgroup K L : Set Kˣ)) :
     Continuous (chapter01CompletedReciprocity S hopen) := by
-  sorry
+  exact (chapter01_open_completion_artin_extension_exists S hopen).choose_spec.1
 
 /-- The topology-sensitive completion is identified with the abelian Galois
 target when the finite norm levels realize every open finite-index subgroup. -/
@@ -375,7 +375,7 @@ theorem chapter01_reciprocity_target_is_compact
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
     [IsAbelianGalois K KAb] :
     IsCompact (Set.univ : Set (Gal(KAb / K))) := by
-  sorry
+  exact isCompact_univ
 
 /-- A noncompact source cannot be topologically equivalent to the compact
 profinite target. -/
@@ -386,7 +386,12 @@ theorem chapter01_reciprocity_not_a_topological_equivalence
     (hnoncompact : NoncompactSpace Kˣ)
     (hcompact : IsCompact (Set.univ : Set (Gal(KAb / K)))) :
     ¬ Nonempty (Kˣ ≃ₜ* Gal(KAb / K)) := by
-  sorry
+  exact fun ⟨e⟩ =>
+    (not_compactSpace_iff.mpr hnoncompact) ⟨by
+      have himage := hcompact.image e.symm.continuous_toFun
+      have hrange : Set.range e.symm.toFun = (Set.univ : Set Kˣ) :=
+        Set.range_eq_univ.mpr e.symm.surjective
+      simpa only [Set.image_univ, hrange] using himage⟩
 
 end
 
