@@ -82,9 +82,8 @@ for the full congruence kernel is required or developed.
     - [Hypotheses and dependencies](#143-hypotheses-and-dependencies)
     - [Exact boundary of the theorem](#144-exact-boundary-of-the-theorem)
 15. [Conclusion](#15-conclusion)
-
-- [The mathematical package](#151-the-mathematical-package)
-- [The role in integral level change](#152-the-role-in-integral-level-change)
+    - [The mathematical package](#151-the-mathematical-package)
+    - [The role in integral level change](#152-the-role-in-integral-level-change)
 
 ## 1. Why integral level change is difficult
 
@@ -175,9 +174,15 @@ There is a second, logically independent Smith module. Projecting the old image 
 
 ### 1.4 Dependency boundary
 
-Eight earlier books supply the geometric, profinite, and Hecke-theoretic core.
+Nine earlier books supply the geometric, profinite, weight-theoretic, and Hecke-theoretic
+core.
 
 Book 16 supplies the normalization sequence of a nodal curve, graph homology, weighted monodromy pairings, their discriminant groups, subdivision invariance, and functoriality under finite maps. Book 24 supplies continuous cohomology of profinite groups and the five-term inflation--restriction sequence with transgression. Book 38 supplies Néron models, extension of Jacobian homomorphisms, identity components, component maps, and the Raynaud description of a semistable Jacobian. Book 39 supplies integral pull--norm correspondences, adjunction, specialization, and the intersection- and graph-lattice formulas for their component actions. Book 124 supplies the two Shimura degeneracy maps with the right-double-coset orientation, their adjoints, and the exact old-level Gram formalism; it explicitly does not supply saturation. Book 118 supplies rank-one strong approximation for the simply connected norm-one quaternion group, with the required archimedean noncompactness and arbitrary compact-open conditions at every finite place. Book 122 supplies the parahoric PEL model, the chart $xy=\pi_v$, strict semistability, the graph description of monodromy, and Hecke functoriality away from $v$; it explicitly makes integral conclusions conditional on saturation.
+
+Book 37 supplies the weight-one Frobenius theorem for good-reduction abelian varieties and
+the weight-zero character of finite graph permutation modules. These are used once in Lemma
+10.1 to prove that the good-reduction old image has zero intersection with the bottom graph
+lattice.
 
 No listed prerequisite computes the prime-to-small-prime abelianization of the norm-one $S$-arithmetic group or the action of its good-place commensurators. Book 24 identifies what inflation--restriction would require but proves no arithmetic vanishing for the kernel in (5.21). In particular Book 118 proves strong approximation, which gives density and the one-edge tree quotient, but not a congruence-subgroup property and not continuity of an abstract finite character for the congruence topology.
 
@@ -2594,13 +2599,14 @@ Correspondence extension, graph adjunction, and descent preserve each constructi
 
 ### 14.3 Hypotheses and dependencies
 
-The logical use of the eight direct prerequisites is exact.
+The logical use of the nine direct prerequisites is exact.
 
 | Source                  | Imported result                                                                                                       | Hypotheses retained                                                                                                                                            | Work done here                                                                                                      |
 | ----------------------- | --------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | Book 85                 | finite acting Hecke algebras, localization, support, and old/new congruence conventions                               | the algebra is the faithful image on the stated finite module; localization is taken only at an occurring maximal ideal                                        | operator-theoretic Eisenstein localization and the integral old/new module conventions                              |
 | Book 16                 | nodal normalization, graph cycles, weighted pairing, discriminant component group, subdivision, finite-map adjunction | semistable curve; geometric graph; thickness and signed descent retained                                                                                       | application to the Iwahori quotient and separation of the graph discriminant from the branch correction             |
 | Book 24                 | continuous profinite cohomology, inflation, restriction, transgression, and the five-term exact sequence              | profinite extension; finite discrete continuous coefficients                                                                                                   | application to the full profinite-to-congruence extension and identification (5.23)                                 |
+| Book 37                 | Frobenius purity for good-reduction abelian varieties and weight separation                                           | finite residue field; coefficient characteristic different from the residue characteristic                                                                     | zero intersection of the good-reduction old image with the weight-zero graph lattice in Lemma 10.1                  |
 | Book 38                 | Néron mapping property, identity component, component group, semistable Jacobian, unramified base change              | excellent DVR; henselianity where reduction is used; perfect residue field for fixed-point notation                                                            | identification of the ambient component term in the localized monodromy-cokernel sequence                           |
 | Book 39                 | extension of pull--norm correspondences, transpose, specialization, graph and intersection maps                       | smooth proper generic curves; regular models; controlled resolved correspondence                                                                               | simultaneous Hecke action and adjunction on the new and component lattices                                          |
 | Book 124                | Shimura degeneracy maps, right-coset orientation, component routing, old map, adjoints, Gram matrix framework         | stable component union; fine or tame descent; unnormalized operators                                                                                           | exact tree criterion and, under (6.11), geometric injectivity and saturation, which Book 124 explicitly leaves open |
@@ -2624,7 +2630,7 @@ separately.
 The mathematical direct-dependency row is therefore
 
 $$
-139\mid 16,24,38,39,85,118,122,124. \tag{14.1}
+139\mid 16,24,37,38,39,85,118,122,124. \tag{14.1}
 $$
 
 The first seven hypotheses of Theorem 14.1 do not imply hypothesis 8 within the argument. It is enough in addition to prove (5.18) on the localized noncongruence quotient, compute (5.19) and obtain the required vanishing, or prove the last vanishing in (6.10) directly. Strong approximation alone does not give any of these conclusions.
