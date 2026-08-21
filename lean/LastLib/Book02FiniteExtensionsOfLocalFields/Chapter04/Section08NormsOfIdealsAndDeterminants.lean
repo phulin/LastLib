@@ -371,6 +371,37 @@ theorem chapter04_intNorm_one_add_mem_of_mem_map
   exact Ideal.mem_span_singleton.mpr
     (chapter04_norm_one_add_algebraMap_mul_sub_one_dvd A B a z)
 
+/- A matrix congruent to zero modulo `I` has `det (1 + M)` congruent to one.
+This isolates the small determinant calculation used by valuation-lattice
+bases, without asking downstream files to unfold the determinant. -/
+theorem chapter04_det_one_add_sub_one_mem
+    {A ι : Type*} [CommRing A] [Fintype ι] [DecidableEq ι]
+    (I : Ideal A) (M : Matrix ι ι A)
+    (hM : ∀ i j, M i j ∈ I) :
+    Matrix.det (1 + M) - 1 ∈ I := by
+  rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_one, RingHom.map_det]
+  have hadd : (Ideal.Quotient.mk I).mapMatrix (1 + M) = 1 := by
+    ext i j
+    simp only [RingHom.mapMatrix_apply, Matrix.add_apply, map_add,
+      Matrix.one_apply, map_one, Matrix.map_apply]
+    have hij : Ideal.Quotient.mk I (M i j) = 0 :=
+      Ideal.Quotient.eq_zero_iff_mem.mpr (hM i j)
+    rw [hij, add_zero]
+  rw [hadd, Matrix.det_one, sub_self]
+
+/- The matrix-entry form of the principal-unit norm congruence.  A filtered
+integral basis is allowed to provide the entrywise depth estimate separately
+from this determinant argument. -/
+theorem chapter04_norm_one_add_sub_one_mem_of_matrix
+    (A B ι : Type*) [CommRing A] [CommRing B] [Algebra A B]
+    [Fintype ι] [DecidableEq ι]
+    (b : Module.Basis ι A B) (I : Ideal A) (x : B)
+    (hx : ∀ i j, Algebra.leftMulMatrix b x i j ∈ I) :
+    Algebra.norm A (1 + x) - 1 ∈ I := by
+  rw [Algebra.norm_eq_matrix_det b, map_add, map_one]
+  exact chapter04_det_one_add_sub_one_mem I
+    (Algebra.leftMulMatrix b x) hx
+
 /- The residue quotient has the cardinality of the residue field (§4.8). -/
 theorem chapter04_residue_quotient_cardinality
     (B l : Type*) [CommRing B] [Field l] (m : Ideal B)
