@@ -425,7 +425,7 @@ The conventions can be summarized as follows.
 
 | Object                     | Convention                                                       |
 | -------------------------- | ---------------------------------------------------------------- |
-| Finite absolute value      | $                                                                |
+| Finite absolute value      | $\lvert\varpi_v\rvert_v=q_v^{-1}$                                |
 | Complex absolute value     | Square of ordinary modulus                                       |
 | Maximal compact measure    | $\operatorname{vol}(K_v)=1$                                      |
 | Unipotent quotient         | Probability measure on $F\backslash\mathbf A$                    |
