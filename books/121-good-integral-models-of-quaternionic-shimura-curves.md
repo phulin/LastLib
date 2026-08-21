@@ -500,13 +500,24 @@ This map is finite because refinements of a fixed prime-to-$p$ level form a fini
 
 ### 7.2 Stack and coarse levels
 
-At a level with stabilizers, choose a normal fine subgroup with effective deck group $\Delta$. The natural object is
+At a level with stabilizers, choose a normal fine subgroup and write
 
 $$
-\mathscr M_{K_2}\simeq[\mathscr M_{K_1}/\Delta].             \tag{7.2}
+\widetilde\Delta=K_2^p/K_1^p
+$$
+
+for the nominal level group. The natural object is
+
+$$
+\mathscr M_{K_2}\simeq[\mathscr M_{K_1}/\widetilde\Delta].   \tag{7.2}
 $$
 
 It is smooth and proper because these properties descend from the finite etale fine atlas. The coarse scheme can have quotient singularities at fixed points. The universal abelian scheme descends to the stack through its genuine PEL linearization. It descends to the coarse scheme exactly when every stabilizer acts trivially on the complete PEL object; a scalar such as $-1$ usually prevents this.
+
+The coarse scheme is the finite categorical quotient by the effective image of
+$\widetilde\Delta$ on the fine base. One must not use that effective image in (7.2): a
+rational central element can act trivially on the base and nontrivially on the universal
+abelian scheme, and is therefore genuine inertia of the moduli stack.
 
 ### 7.3 Base change
 
