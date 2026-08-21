@@ -1738,8 +1738,8 @@ through the weight-zero factors and divided Frobenius at the one weight-one fact
 result is the torsion equation of the Lubin--Tate formal $\mathcal O_{K_0}$-module for the
 embedding $\tau$. Consequently its inverse-limit character is the $\tau$-conjugate
 Lubin--Tate character. Under arithmetic local reciprocity this character is
-$u\mapsto\tau(u)$ on a sufficiently small principal-unit group, as calculated in Book 6,
-Section 11.5. Multiplying the factors and restoring the unramified scalar gives (14.6a)
+$u\mapsto\tau(u)$ on a sufficiently small principal-unit group, with the
+arithmetic-reciprocity labeling of the torsion tower normalized as in Book 5, Proposition 10.1. Multiplying the factors and restoring the unramified scalar gives (14.6a)
 directly. No Sen operator or $\mathbf C_p$ period decomposition has entered the argument.
 Thus $\xi$ is locally algebraic.
 
@@ -1983,8 +1983,9 @@ All three integral languages are now interchangeable in the safe range. This fin
 
 The proof uses the direct prerequisites in the following exact forms.
 
-- Book 6 supplies the principal-unit reciprocity calculation used to
-  identify the rank-one Lubin--Tate factors in the height-two local test.
+- Book 5 supplies the arithmetic-reciprocity labeling of the Lubin--Tate
+  torsion tower used to identify the rank-one Lubin--Tate factors in the
+  height-two local test.
 - Book 34 supplies schematic Cartier duality, its exactness, the
   perfect evaluation pairing, and the Tate-twisted formula on an étale
   generic fiber.

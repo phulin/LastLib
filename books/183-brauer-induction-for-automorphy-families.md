@@ -1953,9 +1953,12 @@ through a nonsolvable quotient.
 
 Book 98 supplies the finite-order Hecke avatars of the Brauer characters together with their
 reciprocity, norm, and conjugation behavior; no higher-rank automorphic induction across
-$F_H/\mathbf Q$ is used. Book 6 supplies the rank-one local-algebraicity input used in the
-optional Hodge--Tate route, whose geometric premise remains $(\mathrm{HT}_1)$. Book 142 gives
-the Chebotarev density theorem used to recognize two already constructed semisimple
+$F_H/\mathbf Q$ is used. Book 6 supplies the rank-one avatar theorem used in the optional
+Hodge--Tate route: it converts a locally algebraic $\ell$-adic character into an algebraic
+Hecke character. It does not supply local algebraicity itself, which that route takes from its
+geometric premise $(\mathrm{HT}_1)$; deriving $(\mathrm{HT}_1)$ from a Hodge--Tate hypothesis
+needs the rank-one algebraicity theorem that Book 6, Section 11.5 defers to Book 24a, and that
+theorem is not available. Book 142 gives the Chebotarev density theorem used to recognize two already constructed semisimple
 representations, not an automorphic admissibility statement.
 
 Books 127--128 and 168 provide the weight-two packet realizations, covariant arithmetic

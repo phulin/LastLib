@@ -92,10 +92,7 @@
     - [Fields cut out by finite actions](#151-fields-cut-out-by-finite-actions)
     - [Faithfulness, Swan conductor, and the last break](#152-faithfulness-swan-conductor-and-the-last-break)
     - [The elliptic-curve and torsion-field interface](#153-the-elliptic-curve-and-torsion-field-interface)
-    - [The finite-flat interface](#154-the-finite-flat-interface)
-    - [The local-to-global discriminant ledger](#155-the-local-to-global-discriminant-ledger)
-    - [Fontaine-style estimates as a ramification theorem](#156-fontaine-style-estimates-as-a-ramification-theorem)
-    - [Numerical checks and failure modes](#157-numerical-checks-and-failure-modes)
+    - [From a break bound to a discriminant bound](#154-from-a-break-bound-to-a-discriminant-bound)
 16. [A working synthesis](#16-a-working-synthesis)
     - [The ramification dictionary](#161-the-ramification-dictionary)
     - [A calculation protocol](#162-a-calculation-protocol)
@@ -2819,6 +2816,28 @@ $$
 
 The maximum, rather than a sum, is a principal advantage of upper-numbered cutoffs. It explains why a class of finite modules closed under direct sums can yield one discriminant ceiling for all finite composita of their cutout fields.
 
+It is worth measuring, on extensions whose filtration is known exactly, how much is lost when that filtration is compressed into the single number $R$. Both wild computations of Chapter 3 can be read as such a test, and neither uses any input beyond this book.
+
+For $\mathbf Q_2(\sqrt2)/\mathbf Q_2$, Section 3.4 found $e=2$ together with $G_0=G_1=G_2=G$ and $G_3=1$, hence $d=3$. The group has order $2$, so lower and upper numbering agree and the last upper break is $R=2$. The exact upper integral of Section 9.5 gives
+
+$$
+\frac de
+=1-\frac12+\int_0^2\left(1-\frac12\right)du
+=\frac12+1=\frac32,
+$$
+
+whereas the degree-free estimate $d/e<1+R$ returns only $d/e<3$. The loss comes from replacing the integrand $1-1/|G^u|=1/2$ by $1$.
+
+For the equal-characteristic Artin--Schreier extension of Section 3.3, $e=p$ and $d=(m+1)(p-1)$, so
+
+$$
+\frac de
+=\frac{(m+1)(p-1)}p
+=(m+1)\left(1-\frac1p\right).
+$$
+
+Its unique upper break is $m$, and the coarse bound reads $d/e<1+m$. The two now agree up to the factor $1-1/p$, so the compression costs little when the break is deep. Letting $m$ grow while the group remains cyclic of order $p$ confirms once more that the size of the image contributes nothing to such an estimate: only the position of the last break does.
+
 ### 15.3 The elliptic-curve and torsion-field interface
 
 Let $E/K$ be an elliptic curve and let $n$ be prime to the characteristic of $K$. Its geometric $n$-torsion $E[n]$ is a finite module of rank two over $\mathbf Z/n\mathbf Z$, and
@@ -2850,253 +2869,71 @@ These statements require no comparison between a field discriminant and the disc
 
 There is also a conductor interface. For a characteristic-zero, finite-image two-dimensional representation, the tame term is $0$, $1$, or $2$ according as inertia fixes two, one, or no dimensions. Its wild contribution is the upper-depth area. An actual Tate-module representation can have infinite tame image, for example through unipotent monodromy. Extending the conductor to that setting requires the later theory of continuous $\ell$-adic representations; nothing in the finite-image definition silently covers it. Its finite torsion quotients and their cutout fields, however, are already governed by (15.1) and (15.5).
 
-### 15.4 The finite-flat interface
+### 15.4 From a break bound to a discriminant bound
 
-Finite flatness is integral geometric structure, not a numerical ramification invariant defined in this book. Its role here can nevertheless be isolated exactly. Let $K$ have residue characteristic $\ell$, let $M$ be a finite $G_K$-module, and suppose a later geometric theorem proves
+Sections 15.2 and 15.3 both arrived at hypotheses of one shape: beyond some level, the upper filtration of the absolute group no longer moves the module under study. In each case the single number $R$ was the only thing about the module that the discriminant estimate consumed. Everything needed to carry out that conversion has already been proved. Equation (15.1) transports the hypothesis from the module to the field it cuts out, and the upper-numbered form of Hilbert's formula in Section 9.5 integrates it into a different exponent. It is worth recording the passage once, for an arbitrary finite module and an arbitrary level, since this is the statement that arithmetic applications quote; the elliptic-curve estimate (15.5) is the special case $M=E[n]$.
+
+**Theorem 15.1 (discriminant bound from a break level).** Let $K$ be complete discretely valued with perfect residue field, let $M$ be a finite $G_K$-module with continuous action, and let $R\geq0$. Suppose that
 
 $$
 G_K^u\text{ acts trivially on }M
-\qquad(u>R_{K,M}).
+\qquad(u>R).
 \tag{15.6}
 $$
 
-If $L=K(M)$, then the only input this ramification theory needs is the number $R_{K,M}$. It returns
+Put $L=K(M)$ and write $e=e(L/K)$, $f=f(L/K)$, $d=d(L/K)$. Then $L/K$ is finite Galois, its last upper break is at most $R$, and
 
 $$
-\frac{d(L/K)}{e(L/K)}
-\leq1-\frac1{e(L/K)}+R_{K,M}
-<1+R_{K,M}.
+\boxed{
+d\leq(e-1)+eR,
+\qquad
+\frac de\leq1-\frac1e+R<1+R.}
 \tag{15.7}
 $$
 
-In common mixed-characteristic applications, $K$ is a finite extension of $\mathbf Q_\ell$ and one writes
+Consequently the discriminant exponent satisfies
 
 $$
-e_K=v_K(\ell).
-$$
-
-If an integral theorem for a module killed by $\ell^n$ supplies the cutoff
-
-$$
-R_{K,M}\leq
-e_K\left(n+\frac1{\ell-1}\right)-1,
+\delta(L/K)=fd
+\leq f\bigl((e-1)+eR\bigr).
 \tag{15.8}
 $$
 
-then substitution into (15.7), and nothing more, gives
+**Proof.** Because $M$ is finite and the action is continuous, the kernel of $G_K\to\operatorname{Aut}(M)$ is open and normal, so by Section 15.1 the field $L=K(M)$ is finite Galois over $K$ and $G=\operatorname{Gal}(L/K)$ is the image of that homomorphism, acting faithfully on $M$.
+
+Upper numbering was designed to be compatible with passage to a quotient (Herbrand's theorem, Section 5.2), and the profinite filtration of Section 6.1 is assembled from the finite ones so that the image of $G_K^u$ in $G$ is $G^u$. Hypothesis (15.6) therefore says that $G^u$ fixes every element of $M$, and faithfulness upgrades this to $G^u=1$. Thus $G^u=1$ for every $u>R$, which is the implication recorded in (15.1).
+
+Since $k$ is perfect, the residue extension $l/k$ is separable and Chapter 9 applies. The upper-numbered form of Hilbert's formula gives
+
+$$
+d=(|G_0|-1)
++|G_0|\int_0^\infty
+\left(1-\frac1{|G^v|}\right)dv,
+$$
+
+and $|G_0|=e$ under residue separability. The integrand is zero for $v>R$ and is bounded above by $1$ everywhere, so the integral is at most $R$. This proves $d\leq(e-1)+eR$. Dividing by $e$ gives $d/e\leq1-1/e+R$, and $1-1/e<1$ gives the strict final inequality. Finally $\delta(L/K)=fd$, as in Section 9.5, which yields (15.8). $\square$
+
+Nothing about $M$ beyond (15.6) is used: not its rank, not the order of its image, not the ring over which it is a module. That economy is exactly what makes the theorem usable, because a hypothesis of the form (15.6) is often available when no description of the image is. It also explains why the estimate cannot be replaced by one in terms of the image alone. Section 3.7 keeps the group cyclic of order $p$ while letting the break, and with it $d/e$, grow without limit; a break level is strictly more information than a degree, and (15.7) uses precisely that extra information.
+
+For $R>0$ the bound is not attained, but it is asymptotically correct; at $R=0$ it is the exact tame value $d=e-1$. If $L/K$ is totally ramified with a single upper break at $R$, then $G^v=G$ for $0<v\leq R$ and the exact value is $d/e=1-1/e+R(1-1/e)$, so the ratio of the true quantity to the bound tends to $1$ as $e$ grows. The gap is entirely the difference between the integrand $1-1/|G^v|$ and its ceiling $1$, as the two computations at the end of Section 15.2 display numerically.
+
+One normalization deserves to be separated off, because it is where the sharpest form of such estimates is won or lost.
+
+**Corollary 15.2.** In the setting of Theorem 15.1, suppose that $R\leq C-1$ for some real $C>0$. Then
 
 $$
 \boxed{
-d(L/K)\leq
-e(L/K)e_K\left(n+\frac1{\ell-1}\right)-1,}
+d\leq eC-1,
+\qquad
+\frac de\leq C-\frac1e<C.}
 \tag{15.9}
 $$
 
-and
+**Proof.** Substitute $R\leq C-1$ into (15.7): the tame term $e-1$ and the wild term $e(C-1)$ add to $eC-1$, and division by $e$ gives $C-1/e$. $\square$
 
-$$
-\boxed{
-\frac{d(L/K)}{e(L/K)}
-\leq e_K\left(n+\frac1{\ell-1}\right)
--\frac1{e(L/K)}
-<e_K\left(n+\frac1{\ell-1}\right).}
-\tag{15.10}
-$$
+The arithmetic is trivial; the bookkeeping is not. A break level presented in the form $C-1$ has its $-1$ cancelled exactly against the $+1$ of the coarse tame baseline, leaving the clean ceiling $C$ instead of $C+1$. A full tame unit at every ramified place rides on which of the two normalizations a given break level is expressed in, so the first thing to check before quoting (15.9) is where the level was measured from.
 
-The $-1$ in the upper-break cutoff cancels the $+1$ from the coarse tame baseline. This is the decisive normalization in Fontaine-style discriminant estimates. The geometric cutoff (15.8) is not proved here: it belongs to the later study of finite-flat group schemes and their torsion points. Equations (15.9) and (15.10) are the exact interface by which that theorem enters ramification theory.
-
-At level $\ell$ over an unramified base, $e_K=1$ and the cutoff is $R\leq1/(\ell-1)$. The resulting degree-free local estimate is
-
-$$
-\frac de<1+\frac1{\ell-1}=\frac\ell{\ell-1}.
-\tag{15.11}
-$$
-
-The exponent $\ell/(\ell-1)$ is not itself the last upper break. It is the sum of a tame contribution strictly below $1$ and the positive-depth cutoff $1/(\ell-1)$.
-
-The exponent hypothesis cannot be discarded. For $\mu_{\ell^n}$, all levels have finite integral models, but the cyclotomic fields have growing wild depth as $n$ grows. Formula (15.10) correctly grows linearly with $n$. Thus finite flatness at all levels does not by itself give a uniform bound for an entire $\ell$-power tower; a uniform exponent or an additional descent mechanism is needed.
-
-### 15.5 The local-to-global discriminant ledger
-
-Fontaine-style arguments compare a local upper bound with a global lower bound. The conversion is elementary once every normalization is retained. Let $F$ be a number field and let $L/F$ be finite Galois. For a finite place $v$ of $F$, choose $w\mid v$ and put
-
-$$
-e_v=e(L_w/F_v),
-\qquad d_v=d(L_w/F_v).
-$$
-
-Absolute discriminant transitivity gives
-
-$$
-|D_L|=|D_F|^{[L:F]}
-N_{F/\mathbf Q}(\mathfrak d_{L/F}).
-$$
-
-Writing $\operatorname{rd}(F)=|D_F|^{1/[F:\mathbf Q]}$ and using the equality of local invariants at conjugate primes yields
-
-$$
-\boxed{
-\operatorname{rd}(L)
-=\operatorname{rd}(F)
-\prod_{v<\infty}(Nv)^{d_v/(e_v[F:\mathbf Q])}.}
-\tag{15.12}
-$$
-
-Here $Nv=|\mathcal O_F/v|$. To verify the exponent, if there are $g_v$ primes above $v$ and their common residue degree is $f_v$, then the exponent of $v$ in $\mathfrak d_{L/F}$ is $g_vf_vd_v$, while
-
-$$
-[L:F]=g_ve_vf_v.
-$$
-
-Division by the global degree leaves $d_v/e_v$. This check is the safest way to prevent the local residue degree from being counted twice or omitted.
-
-If $L/F$ is not Galois, the exact formula is instead a sum over $w\mid v$:
-
-$$
-v(\mathfrak d_{L/F})
-=\sum_{w\mid v}f(w/v)d(L_w/F_v).
-\tag{15.13}
-$$
-
-One may use (15.13) directly or pass to a normal closure and the permutation conductor. Replacing it by the regular conductor of the normal closure generally overcounts.
-
-For a Galois extension unramified outside a finite set $S$, with last upper break at most $R_v$ at $v\in S$, equations (15.7) and (15.12) give
-
-$$
-\boxed{
-\operatorname{rd}(L)
-<\operatorname{rd}(F)
-\prod_{v\in S}(Nv)^{(1+R_v)/[F:\mathbf Q]}.}
-\tag{15.14}
-$$
-
-At a tame place the exact replacement is
-
-$$
-(Nv)^{(1-1/e_v)/[F:\mathbf Q]},
-$$
-
-and at an unramified place the factor is $1$. A list of ramified primes alone never implies (15.14); one also needs a depth bound at every wild prime.
-
-### 15.6 Fontaine-style estimates as a ramification theorem
-
-Suppose $M$ is a finite global module killed by $\ell^n$, $L=F(M)$, and $L/F$ is unramified away from places above $\ell$. At every $v\mid\ell$, write
-
-$$
-e_v^0=v(\ell)=e(F_v/\mathbf Q_\ell),
-\qquad Nv=\ell^{f_v^0}.
-$$
-
-Assume a local integral theorem supplies (15.8) with $e_K=e_v^0$. Then (15.10) and (15.12) show that the exponent of $\ell$ in the relative root-discriminant factor is strictly less than
-
-$$
-\frac1{[F:\mathbf Q]}
-\sum_{v\mid\ell}f_v^0e_v^0
-\left(n+\frac1{\ell-1}\right).
-$$
-
-The local degree identity
-
-$$
-\sum_{v\mid\ell}e_v^0f_v^0=[F:\mathbf Q]
-$$
-
-therefore gives the clean global estimate
-
-$$
-\boxed{
-\operatorname{rd}(F(M))
-<\operatorname{rd}(F)\,
-\ell^{\,n+1/(\ell-1)}.}
-\tag{15.15}
-$$
-
-For a module killed by $\ell$, this specializes to
-
-$$
-\boxed{
-\operatorname{rd}(F(M))
-<\operatorname{rd}(F)\,
-\ell^{\ell/(\ell-1)}.}
-\tag{15.16}
-$$
-
-The formula is independent of the rank of $M$ and of the splitting of $\ell$ in $F$. Rank independence comes from bounding the support of the upper filtration before counting moved dimensions. Splitting independence comes from the displayed sum of local degrees. The base root discriminant remains: ramification already present in $F/\mathbf Q$ is not canceled by the local calculation.
-
-If auxiliary ramification occurs at a finite set $S$ away from $\ell$, with last upper break at most $R_v$, then the correct extension of (15.15) is
-
-$$
-\operatorname{rd}(F(M))
-<\operatorname{rd}(F)\,
-\ell^{\,n+1/(\ell-1)}
-\prod_{v\in S}(Nv)^{(1+R_v)/[F:\mathbf Q]}.
-\tag{15.17}
-$$
-
-Known tame inertia of order $e_v$ improves its factor to exponent $(1-1/e_v)/[F:\mathbf Q]$. These auxiliary factors are not cosmetic: even shallow ramification at a large prime can consume more of a root-discriminant budget than wild ramification at a small prime.
-
-The logical division is now exact. Integral geometry proves a cutoff such as (15.8). Ramification theory converts it to (15.9) and (15.10), then global discriminant transitivity converts those to (15.15)--(15.17). Analytic lower bounds for root discriminants, and the deductions about possible field degrees, lie beyond this book.
-
-### 15.7 Numerical checks and failure modes
-
-Several recomputations test the constants.
-
-For $F=\mathbf Q$, $n=1$, and no auxiliary ramification, (15.16) gives
-
-$$
-\ell=2:\quad \operatorname{rd}(L)<2^2=4,
-$$
-
-$$
-\ell=3:\quad \operatorname{rd}(L)<3^{3/2}=3\sqrt3\approx5.196,
-$$
-
-$$
-\ell=5:\quad \operatorname{rd}(L)<5^{5/4}\approx7.477.
-$$
-
-These are universal ceilings obtained from the stated cutoff input, not predictions that equality occurs. The cyclotomic first level $\mathbf Q(\mu_\ell)$ is tame of degree $\ell-1$, so its exact root discriminant is
-
-$$
-\ell^{(\ell-2)/(\ell-1)},
-$$
-
-well below the universal level-$\ell$ ceiling.
-
-For $\mathbf Q_2(\sqrt2)$, Section 3.4 gave $e=2$ and $d=3$, hence
-
-$$
-\text{the local factor at }2\text{ is }2^{d/e}=2^{3/2}.
-$$
-
-The upper filtration has last break $R=2$. The exact formula gives
-
-$$
-\frac de
-=1-\frac12+2\left(1-\frac12\right)
-=\frac32,
-$$
-
-whereas the degree-free cutoff gives only $d/e<3$. The loss comes from replacing the integrand $1-1/|G^u|=1/2$ by $1$.
-
-For the equal-characteristic Artin--Schreier extension of Section 3.3,
-
-$$
-\frac de
-=\frac{(m+1)(p-1)}p
-=(m+1)\left(1-\frac1p\right).
-$$
-
-Its unique upper break is $m$, so the coarse bound is $d/e<1+m$. Letting $m$ grow while the group remains cyclic of order $p$ confirms again that image size alone cannot supply a Fontaine-style estimate.
-
-Finally, add one tame quadratic auxiliary prime $q$ over $\mathbf Q$ to a level-$\ell$ situation. The exact tame cost is $q^{1/2}$, so
-
-$$
-\operatorname{rd}(L)
-<\ell^{\ell/(\ell-1)}q^{1/2}.
-$$
-
-This example exposes three common errors at once: omitting the auxiliary prime, charging it a full factor $q$, or adding local exponents before dividing by the global degree.
+Break levels satisfying (15.6) typically come from integral structure carried by $M$, such as a finite flat model over $\mathcal O_K$, whose points cannot be separated by the upper filtration beyond a depth controlled by the model. Producing such a level is a question about integral models rather than about ramification filtrations, and it is not undertaken in this book; Theorem 15.1 and Corollary 15.2 are what ramification theory contributes once a level is in hand.
 
 ## 16. A working synthesis
 

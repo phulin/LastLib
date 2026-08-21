@@ -1099,8 +1099,22 @@ One must instead use a general proper-smooth theorem or extend the good-reductio
 sequence through semistable uniformization. This distinction matters here because (9.7) is
 required without a good-reduction hypothesis.
 
+The assumption $(\mathrm{HT}_{\mathrm{curve}})$ is understood to carry with it the
+Tate--Sen apparatus in which the comparison is used below, since (9.7) by itself is a
+statement about the single representation $V_C$ and says nothing about its subquotients.
+Explicitly, we assume in addition that every continuous finite-dimensional $\mathbf Q_p$-linear
+representation $U$ of $G_L$ carries labeled Sen operators $\Theta_\tau(U)$, one for each
+embedding $\tau$ of $L$ into the coefficient field, which are functorial in $U$, compatible
+with $G_L$-stable subspaces, quotients, and extension of the coefficient field, and which
+detect the Hodge--Tate condition: $U$ is Hodge--Tate exactly when every $\Theta_\tau(U)$ is
+semisimple with integer eigenvalues, and those eigenvalues are then the labeled weights of $U$.
+Constructing these operators requires the completion $\mathbf C_p$, the continuous Galois
+cohomology of $\mathbf C_p$, and a decompletion argument along a Lubin--Tate or cyclotomic
+tower; no volume of this library develops any of that, so the apparatus is assumed here
+alongside (9.7) and is recorded in the list of required work below.
+
 The exact consequence needed for curve-carried packet factors is nevertheless formal once
-(9.7) is supplied.
+$(\mathrm{HT}_{\mathrm{curve}})$ is supplied in this form.
 
 **Proposition 9.1 (Hodge--Tate inheritance for curve factors).** Assume
 $(\mathrm{HT}_{\mathrm{curve}})$. Let $E/\mathbf Q_p$ be finite, and let $W$ be an $E$-linear
@@ -1116,8 +1130,9 @@ either. Then $W$ is Hodge--Tate. After any finite extension of $E$, every one-di
 Jordan--Hölder constituent of $W$ is Hodge--Tate, with weights among $0$ and $1$ in the
 normalization of (9.7).
 
-**Proof.** The Hodge--Tate decomposition is equivalently the assertion that the labeled Sen
-operators are semisimple with integral eigenvalues, here $0$ and $1$. A $G_L$-stable subspace
+**Proof.** By the Sen-operator clause of $(\mathrm{HT}_{\mathrm{curve}})$, the Hodge--Tate
+condition is equivalent to the assertion that the labeled Sen operators are semisimple with
+integral eigenvalues, here $0$ and $1$. A $G_L$-stable subspace
 is stable under every Sen operator. Restricting commuting semisimple operators to an invariant
 subspace, and then passing to the induced operators on a quotient, preserves semisimplicity and
 keeps the eigenvalues among those of the original space. Scalar extension does the same. Hence
@@ -1127,7 +1142,8 @@ is needed for this rational conclusion. $\square$
 
 The Sen-operator formulation is important. The class of arbitrary representations admitting
 some filtration is not automatically closed under subquotients; what makes the argument work
-is the semisimple integral Sen operator furnished by the actual Hodge--Tate decomposition.
+is the semisimple integral Sen operator attached to the actual Hodge--Tate decomposition by
+the assumed apparatus.
 Nor does semisimplifying $V_C$ before applying (9.7) prove a statement about a raw local
 monodromy operator. Proposition 9.1 supplies Hodge--Tate one-dimensional factors; a separate
 global irreducibility argument is what can then identify a raw packet representation with its
@@ -1157,10 +1173,14 @@ Thus no theorem in Books 18--20, 35--36, 46--55, or 59--61 is an alias for
 $(\mathrm{HT}_{\mathrm{curve}})$. A source-closed proof must add at least the following
 reusable package.
 
-1. A $\mathbf C_p$ and Tate--Sen foundation beyond the rank-one calculation of Book 6:
-   completed tensor products and continuous $G_L$-cohomology, Tate twists and labeled
-   embeddings, and the normalized-trace or almost ramification estimates which compute the
-   relevant invariants and make the period maps exact.
+1. The entire $\mathbf C_p$ and Tate--Sen foundation, the rank-one case included: completed
+   tensor products and continuous $G_L$-cohomology, Tate twists and labeled embeddings, the
+   normalized-trace or almost ramification estimates which compute the relevant invariants and
+   make the period maps exact, the decompletion argument along a Lubin--Tate tower, and the
+   labeled Sen operators together with their functoriality and their characterization of the
+   Hodge--Tate condition. No volume of this library supplies any part of this, at any rank.
+   Book 24a, _Tate--Sen Theory and $\mathbf C_\ell$ Period Foundations_, is the volume that
+   will carry it.
 2. The functorial Hodge--Tate map and its dual for $p$-divisible groups over valuation rings,
    together with the good-reduction exact sequence, dimension calculation, Cartier duality,
    polarizations, isogenies, and finite base change. Merely constructing the map by invariant
@@ -1182,10 +1202,13 @@ theory for $p$-divisible groups and semistable abelian varieties, reusing the Ja
 uniformization books. Developing general perfectoid spaces, the pro-etale site, and
 smooth-proper comparison would be a broader multi-volume expansion and is unnecessary for
 the FLT dependency chain. Until the restricted volume or an accepted external theorem is
-supplied, $(\mathrm{HT}_{\mathrm{curve}})$ remains the sole exact gap here. Once it is
-available, Proposition 9.1 closes every geometric-subquotient step used by the packet
-applications; the rank-one passage from Hodge--Tate to local algebraicity is already supplied
-by Book 6, Section 11.5.
+supplied, $(\mathrm{HT}_{\mathrm{curve}})$, in the strengthened form fixed above, remains the
+exact gap here, and that form now includes the Tate--Sen apparatus as well as (9.7). Once both
+are available, Proposition 9.1 closes every geometric-subquotient step used by the packet
+applications. The further rank-one passage from Hodge--Tate to local algebraicity is not
+available from any earlier volume: Book 6, Section 11.5 builds the $\ell$-adic avatar of an
+algebraic Hecke character out of local algebraicity and expressly defers the converse to
+Book 24a, so that passage belongs to item 1 above rather than to anything already proved.
 
 ## 10. Cycle classes, twists, and trace normalizations
 

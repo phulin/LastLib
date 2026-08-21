@@ -2,8 +2,12 @@
 
 This is the canonical catalog of the 188 retained mathematical manuscripts. The numbering is
 a stable topological reading order: every substantial direct manuscript prerequisite has a
-smaller number. Mathlib and the companion Class Field Theory development are proof sources,
-not axioms, and their transitive imports remain subject to the same gap-free standard.
+smaller number. One further entry, Book 24a, is catalogued as a placeholder: it records a
+volume the graph requires but which has not been written, and it is marked as such in place.
+It is not counted among the 188.
+
+Mathlib and the companion Class Field Theory development are proof sources, not axioms, and
+their transitive imports remain subject to the same gap-free standard.
 
 The preferred selected-three route is dependency-closed in the present manuscript graph. It
 constructs the finite-set source patches used in the potential-modularity argument, obtains the
@@ -181,6 +185,22 @@ functoriality under finite maps and correspondences.
     compare the cochain and derived-functor constructions. Applications identify deformation-theoretic
     tangent and obstruction spaces with low-degree cohomology.
 
+24a. **Tate--Sen Theory and $\mathbf C_\ell$ Period Foundations** — PLACEHOLDER: this volume is
+catalogued and depended upon but not yet written; the repository holds only an outline at
+`books/024a-tate-sen-theory-and-c-ell-period-foundations.md`. Construct the completed algebraic
+closure $\mathbf C_\ell$ with its valuation and continuous Galois action; prove the finite
+Ax--Sen approximation estimate with its uniform constant from ramification-break clustering,
+together with its additive cocycle form; construct explicit contracting homotopies on continuous
+bar cochains in degrees one and two, with verified valuation losses and compatibility under
+refinement of the tower; deduce the vanishing of $H^1$ of the completed algebraic closure over
+the tower kernel, semilinear descent, and decompletion; construct the Sen operator and prove its
+integrality and semisimplicity criteria; compute the cohomology of Tate twists and prove that a
+Hodge--Tate rank-one character is locally algebraic. This last theorem is the input Book 6 §11.5
+formerly asserted and now defers, and its foundational package is item one of the missing-work
+list in Book 47. The volume supplies the $\mathbf C_\ell$ and Tate--Sen foundation only: the
+$p$-divisible-group Hodge--Tate exact sequence, the coefficient-prime Raynaud one-motive descent,
+and any general smooth-proper comparison remain outside its scope and are separate later work.
+
 25. **Finite Locally Free Schemes and Algebras** — Study finite locally free morphisms through finite projective algebras. Develop rank, fibers,
     base change, composition, dual modules, finite flatness over local rings and DVRs, and faithfully
     flat descent. The principal structural result is that finite flat morphisms of constant rank are
@@ -306,11 +326,12 @@ functoriality under finite maps and correspondences.
     smooth-proper Hodge--Tate comparison and prove that, once supplied, it passes to all
     curve-cohomology subquotients and their one-dimensional constituents. The existing
     comparison, crystalline, and rigid volumes do not supply the $C_p$ period exact sequence.
-    The smallest source-closed repair is one substantial future volume covering Tate--Sen/$C_p$
-    foundations, the good-reduction $p$-divisible-group Hodge--Tate sequence, and the
-    coefficient-prime Raynaud one-motive/semistable descent; general perfectoid or pro-étale
-    smooth-proper theory would be a broader multi-volume expansion. Proposition 9.1 remains a
-    formal inheritance result, not a proof of that input.
+    The smallest source-closed repair is Tate--Sen/$C_p$ foundations, catalogued as the
+    placeholder Book 24a, together with the good-reduction $p$-divisible-group Hodge--Tate
+    sequence and the coefficient-prime Raynaud one-motive/semistable descent, neither of which
+    Book 24a covers; general perfectoid or pro-étale smooth-proper theory would be a broader
+    multi-volume expansion. Proposition 9.1 remains a formal inheritance result, not a proof of
+    that input.
 
 48. **Divided Powers and Crystalline Sites** — Develop PD rings and envelopes, crystalline
     sites and topoi, crystals, Frobenius crystals, and the functorial constructions required in

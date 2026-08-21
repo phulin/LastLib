@@ -4789,7 +4789,8 @@ Changing arithmetic to geometric reciprocity changes every $n_\tau$ by a sign; i
 change the condition. A finite-order or unramified factor is invisible on a sufficiently small
 $U$ and is therefore allowed.
 
-We construct the local comparison needed here. Let $\mathbf C_\ell$ be the completion of an
+We record the Hodge-theoretic condition against which that elementary condition is
+usually compared. Let $\mathbf C_\ell$ be the completion of an
 algebraic closure of $\mathbf Q_\ell$, with its continuous Galois action. For an
 $E$-representation $V$, extend scalars through every embedding
 $\tau:L\hookrightarrow E$. We say that $V$ is **Hodge--Tate** if the canonical map
@@ -4803,9 +4804,13 @@ $$
 
 is an isomorphism; the $\tau$-labeled multiplicity in degree $m$ is its labeled weight.
 
-The analytic input is proved by the following trace calculation.
+This book proves nothing about the Hodge--Tate condition. The definition is
+recorded only to fix the weight-sign convention against which labeled weights
+are read, and no argument in this book uses it.
 
-**Lemma 11.1 (rank-one Tate--Sen integrality lemma).** Let
+The elementary part of the local dictionary is a differential calculation.
+
+**Lemma 11.1 (logarithmic differential of a rank-one character).** Let
 $\xi:G_L\to E^\times$ be continuous.
 On a sufficiently deep principal-unit group there are unique $c_\tau\in E$ with
 
@@ -4814,524 +4819,48 @@ $$
 =\sum_{\tau:L\hookrightarrow E}c_\tau\tau(x).             \tag{11.HT2}
 $$
 
-The $c_\tau$, with the common sign fixed by arithmetic reciprocity, are the
-labeled eigenvalues of the Sen operator. If the rank-one representation is
-Hodge--Tate, then every $c_\tau$ is an integer.
+The common sign of the $c_\tau$ is fixed by arithmetic reciprocity.
 
-**Proof.** The first assertion is elementary. After shrinking the principal-unit
+**Proof.** After shrinking the principal-unit
 group, both logarithms converge and their composite is a continuous additive
 map from an open lattice in $L$ to $E$. It extends uniquely to a
 $\mathbf Q_\ell$-linear map $L\to E$, and Dedekind independence gives the
-unique expansion (11.HT2). What remains is to identify this differential with
-the Hodge--Tate grading. We prove the required rank-one Tate--Sen theorem.
-
-Fix a uniformizer $\pi$, a Lubin--Tate formal module, and its tower
-$L_\infty=\bigcup_mL_m$. Put
-$$
- H=\operatorname {Gal}(\overline L/L_\infty),\qquad
- \Gamma=\operatorname {Gal}(L_\infty/L).
-$$
-
-After discarding a finite initial layer, Lubin--Tate reciprocity identifies
-$\Gamma$ with $1+\pi^m\mathcal O_L$. In the special case
-$L=\mathbf Q_\ell$ this is the cyclotomic tower. The trace calculation is
-first made in a procyclic direction (hence is the usual cyclotomic
-calculation) and is then applied in each Lubin--Tate direction to retain all
-labels.
-
-We first establish precisely the bounded projections used in descent. If
-$E/F$ is a finite extension of local fields, $e=e(E/F)$, and
-$d_{E/F}=v_E(\mathfrak D_{E/F})$, the inverse-different definition and
-duality of fractional ideals give
-$$
- \operatorname {Tr}_{E/F}(\mathfrak m_E^r)
- =\mathfrak m_F^{\lfloor(r+d_{E/F})/e\rfloor}.             \tag{11.HT3}
-$$
-
-Indeed $y$ annihilates the ideal on the left exactly when
-$y\mathfrak m_E^r\subseteq\mathfrak D_{E/F}^{-1}$; taking the annihilator
-again proves equality. Consequently
-$$
- v_\ell\!\left([E:F]^{-1}\operatorname {Tr}_{E/F}x\right)
- \ge v_\ell(x)-v_\ell([E:F])
-       +\frac{d_{E/F}}{e(E/\mathbf Q_\ell)}
-       -\frac1{e(F/\mathbf Q_\ell)}.                       \tag{11.HT3a}
-$$
-
-This is the correct different estimate; omitting the positive different term
-would give an accumulating and useless loss.
-
-For completeness, the boundedness in the chosen tower follows without an
-asymptotic assertion about raw differents. The conductor--different formula
-for the abelian extension $L_r/L_s$ is
-$$
- d_{r/s}=\sum_{\substack{\chi\in
- \widehat{\operatorname {Gal}(L_r/L_s)}\\\chi\ne1}}
- f_s(\chi),                                                \tag{11.HT3b}
-$$
-
-where $f_s(\chi)$ is the least Lubin--Tate unit level on which $\chi$ is
-trivial. There are $q^j-q^{j-1}$ characters of exact level $s+j$, with
-$q=|\mathcal O_L/\pi|$. Summing this geometric list, and using
-$e(L_{s+j}/L_s)=q^j$, gives
-$$
- \sup_{r\ge s\ge m}\left\{
- v_\ell([L_r:L_s])-
- \frac{d_{r/s}}{e(L_r/\mathbf Q_\ell)}
- +\frac1{e(L_s/\mathbf Q_\ell)}\right\}\le c_{L,m}<\infty. \tag{11.HT3c}
-$$
-
-The tame first layer merely changes $c_{L,m}$. For later use in one closed
-$\mathbf Z_\ell$-direction, choose the generators only after applying
-$\log:1+\pi^m\mathcal O_L\simeq\pi^m\mathcal O_L$. If $a_i$ is a
-$\mathbf Z_\ell$-basis vector, the $r$th power step is represented by
-$\ell^ra_i$ and therefore lies in the Lubin--Tate unit level
-
-$$
-m_i+r e(L/\mathbf Q_\ell),\qquad m_i=v_L(a_i).          \tag{11.HT3c'}
-$$
-
-Thus its order is $\ell^r$ and its conductor levels are the explicit
-arithmetic progression (11.HT3c'), not an assumed copy of the full
-$q$-power tower. Substituting this list in the conductor--different sum
-(11.HT3b) gives the same bounded expression (11.HT3c), with a constant
-depending on the chosen basis. Passing farther out in a transverse
-direction multiplies every absolute ramification index and can only improve
-the bound.
-
-For $r\ge s$ set
-$$
- R_{r/s}=[L_r:L_s]^{-1}\operatorname {Tr}_{L_r/L_s}.
-$$
-
-Transitivity of trace gives $R_{t/s}R_{r/t}=R_{r/s}$, and (11.HT3a)--(11.HT3c)
-give
-$$
- v_\ell(R_{r/s}x)\ge v_\ell(x)-c_{L,m}.                   \tag{11.HT3d}
-$$
-
-Thus, on $A=\widehat{L_\infty}$, the rule
-$R_s(x)=R_{r/s}(x)$ for $x\in L_r$ extends uniquely to a bounded
-$L_s$-linear projection
-$$
- R_s:A\longrightarrow L_s,\qquad R_sR_t=R_{\min(s,t)}.    \tag{11.HT3e}
-$$
-
-It commutes with every element of $\Gamma$. In particular
-$A=L_s\oplus X_s$, where $X_s=\ker R_s$, as a topological
-$L_s$-space.
-
-For more than one Lubin--Tate direction, $\gamma-1$ is not invertible on
-$X_s$: the other directions supply fixed vectors. We use the simultaneous
-Koszul decomposition instead.
-
-After increasing $s$, choose a topological decomposition
-
-$$
-\Gamma_s=\Gamma_1\oplus\cdots\oplus\Gamma_d,
-\qquad \Gamma_i=\mathbf Z_\ell\gamma_i,
-\qquad d=[L:\mathbf Q_\ell].                             \tag{11.HT3f}
-$$
-
-For an algebraic vector fixed by $\gamma_i^{\ell^a}$ define the directional
-average and weighted average
-
-$$
- P_{i,a}=\ell^{-a}\sum_{j=0}^{\ell^a-1}\gamma_i^j,
-\qquad
- T_{i,a}=\ell^{-a}\sum_{j=0}^{\ell^a-1}j\gamma_i^j.       \tag{11.HT3g}
-$$
-
-They satisfy
-
-$$
-(\gamma_i-1)T_{i,a}=T_{i,a}(\gamma_i-1)=1-P_{i,a}.        \tag{11.HT3h}
-$$
-
-We prove the uniform estimate rather than appeal to the formal identity
-(11.HT3h). At a finite transverse level let $E_a/E_0$ be the cyclic
-degree-$\ell^a$ extension in the $i$th direction. For $0\le r\le a$ let
-$H_r$ be its subgroup of order $\ell^r$, put $F_r=E_a^{H_r}$, and let
-$Q_r$ be averaging over $H_r$; thus
-$Q_0=1$, $Q_a=P_{i,a}$, and
-
-$$
-1-Q_a=\sum_{r=0}^{a-1}(Q_r-Q_{r+1}).                    \tag{11.HT3h'}
-$$
-
-On the image of $Q_r-Q_{r+1}$, solve $(\gamma_i-1)b=x$ by first using the
-weighted order-$\ell$ sum in $F_r/F_{r+1}$ and then the geometric sum for
-$(\gamma_i^{\ell^{a-r-1}}-1)/(\gamma_i-1)$. Denote the resulting group-ring
-operator by $S_{r,a}$. Direct multiplication gives
-
-$$
-(\gamma_i-1)S_{r,a}=Q_r-Q_{r+1},\qquad
-Q_aS_{r,a}=0.                                           \tag{11.HT3h''}
-$$
-
-Here is the valuation bound on this formula. If $e_r$ is the absolute
-ramification index of $F_{r+1}$, apply
-(11.HT3) to the trace-zero ideal and use the conductor list in
-(11.HT3b). Substitution of its different exponent in the weighted
-order-$\ell$ sum gives
-
-$$
-v_\ell(S_{r,a}x)\ge v_\ell((Q_r-Q_{r+1})x)
- -\frac{\ell}{e_r(\ell-1)}.                             \tag{11.HT3h'''}
-$$
-
-To check the rounding term, write $v_E(x)=m$ in (11.HT3), subtract one for
-the division by $\ell$, and use
-$d(F_r/F_{r+1})=(\ell-1)(t_r+1)$; the Lubin--Tate conductor count gives
-$(t_r+1)/e(F_r/\mathbf Q_\ell)\ge1/\ell-
-1/(e_r(\ell-1))$. This cancels the division loss and leaves exactly the
-last term of (11.HT3h'''). Thus the estimate applies to the trace-zero
-difference, not to an arbitrary normalized trace.
-
-The ordinary averages $Q_r$ satisfy (11.HT3d), uniformly in $r,a$ and in
-the transverse level. Reading the order-$\ell$ steps from the bottom of the
-tower upward, their absolute ramification indices are
-$e_0,\ell e_0,\ldots$ after the fixed initial layers. Reindexing the sum in
-that order, (11.HT3h')--(11.HT3h''') and the nonarchimedean triangle
-inequality give
-
-$$
-v_\ell\!\left(\sum_{r=0}^{a-1}S_{r,a}x\right)
-\ge v_\ell(x)-c_{L,m}-
- \sum_{r\ge0}\frac{\ell}{\ell^re_0(\ell-1)}.             \tag{11.HT3h''''}
-$$
-
-If $Q_ax=0$, the sum in (11.HT3h'''') and $T_{i,a}x$ are both killed by
-$Q_a$ and both solve $(\gamma_i-1)b=x$; their difference is simultaneously
-invariant and of average zero, hence is zero. We have therefore proved
-constants $b_i$, independent of the transverse level and of $a$. After
-enlarging for the finitely many initial layers one may take
-$b_i=c_{L,m}+\ell^2/(e_0(\ell-1)^2)$, and
-
-$$
- v_\ell(P_{i,a}x),\ v_\ell(T_{i,a}x)
- \ge v_\ell(x)-b_i
- \quad\text{when }P_{i,a}x=0\text{ in the second estimate}.              \tag{11.HT3i}
-$$
-
-Consequently the $P_{i,a}$ extend to commuting bounded idempotents $P_i$ on
-$A$, with image $A^{\Gamma_i}$, and the $T_{i,a}$ extend to an inverse
-$T_i$ for $\gamma_i-1$ on $\ker P_i$. Their joint projector is
-
-$$
-P_1\cdots P_d=R_s,
-\qquad \bigcap_i A^{\Gamma_i}=L_s.                       \tag{11.HT3i'}
-$$
-
-Here no individual inverse is asserted on $\ker R_s$. Instead decompose
-
-$$
-A=\bigoplus_{J\subseteq\{1,\ldots,d\}}A_J,
-\qquad
-A_J=\left(\prod_{i\in J}(1-P_i)\right)
-    \left(\prod_{i\notin J}P_i\right)A.                 \tag{11.HT3i''}
-$$
-
-The complex used here is not a finite-group approximation. For
-$\Lambda_s=\mathbf Q_\ell[[\Gamma_s]]$, the completed Koszul complex on
-$\gamma_1-1,\ldots,\gamma_d-1$ is a free resolution of the trivial
-$\Lambda_s$-module: successively identify
-$\mathbf Q_\ell[[\mathbf Z_\ell^r]]$ with
-$\mathbf Q_\ell[[T_1,\ldots,T_r]]$ and quotient by the regular parameter
-$T_r$. Applying continuous $\operatorname {Hom}_{\Lambda_s}(-,A)$ gives
-the displayed $K^\bullet(\Delta_1,\ldots,\Delta_d;A)$ with no inverse-limit
-$\varprojlim^1$ term, since every term of the resolution is finite free.
-
-On the Koszul complex for
-$\Delta_i=\gamma_i-1$, the summand indexed by a nonempty $J$ is contracted
-by $T_i$ in the least direction $i\in J$, with the usual Koszul sign. The
-commutativity of the $P_i,T_i$, and $\Delta_j$ gives
-$dh+hd=1$ on that summand. The $J=\varnothing$ summand is the Koszul complex
-of $L_s$ with zero operators. Thus the inclusion of this joint-invariant
-summand is a bounded quasi-isomorphism
-
-$$
-K^\bullet(\Delta_1,\ldots,\Delta_d;L_s)
-\xrightarrow{\ \sim\ }
-K^\bullet(\Delta_1,\ldots,\Delta_d;A).                  \tag{11.HT3i'''}
-$$
-
-This is the multivariable Tate--Sen contraction used below. Formula
-(11.HT3h) is applied only on $\ker P_i$, where it is an actual inverse;
-the other directions are retained by the Koszul complex.
-
-We also need descent through $H$. The preceding directional estimate must
-not be applied to an arbitrary wild subextension: its conductor list was
-proved only inside the Lubin--Tate tower. We use the general Ax--Sen
-estimate instead.
-
-**Finite Ax--Sen estimate.** Put
-$c_{\rm Ax}=\ell/(\ell-1)^2$. For a finite Galois extension $M/K$ of
-$\ell$-adic fields, a subgroup $J$, and $x\in M$, there is $y\in M^J$ with
-
-$$
-v_\ell(x-y)\ge\min_{\sigma\in J}v_\ell(\sigma x-x)-c_{\rm Ax}.          \tag{11.HT3j}
-$$
-
-The affine version is uniform as well. If $f:J\to M$ is an additive
-one-cocycle, there is $a\in M$ such that
-
-$$
-f(\sigma)=\sigma a-a\quad(\sigma\in J),\qquad
-v_\ell(a)\ge\inf_\sigma v_\ell(f(\sigma))-c_{\rm Ax}.                   \tag{11.HT3j'}
-$$
-
-Here is the finite calculation. Separate the unramified quotient by an
-integral normal basis and the prime-to-$\ell$ tame quotient by its integral
-Reynolds operator. Cluster the remaining conjugates according to the lower
-ramification breaks. At an order-$\ell$ cluster generated by $\sigma$, use
-
-$$
-B_\sigma(c)=\ell^{-1}\sum_{a=0}^{\ell-1}a\sigma^ac,
-\qquad c=(\sigma-1)x.                                   \tag{11.HT3j0}
-$$
-
-The identities $(\sigma-1)B_\sigma(c)=c$ and
-$\sum_a\sigma^ac=0$ are exact. Put
-$P_\sigma=\ell^{-1}\sum_a\sigma^a$. The inverse-different formula (11.HT3),
-applied to the ideal generated by the conjugate differences, shows that the
-loss for the $r$th nested cluster is at most
-
-$$
-\frac1{\ell^{r-1}(\ell-1)}.                             \tag{11.HT3j1}
-$$
-
-Indeed the different exponent is the sum of the cardinalities of the lower
-ramification groups minus one; subtracting the division by $\ell$ leaves
-one rounding layer divided by the absolute ramification index. Passing to
-the next cluster multiplies that index by $\ell$. The nonarchimedean
-triangle inequality and
-
-$$
-\sum_{r\ge1}\frac1{\ell^{r-1}(\ell-1)}
-=\frac{\ell}{(\ell-1)^2}
-$$
-
-prove (11.HT3j). This grouping by ramification breaks, rather than an
-arbitrary composition series, is what makes the bound uniform. Apply the
-additive normal-basis argument to write $f(\sigma)=\sigma x-x$. Formula
-(11.HT3j), applied to $x$, supplies $y\in M^J$ with
-$v_\ell(x-y)\ge\inf_\sigma v_\ell(f(\sigma))-c_{\rm Ax}$; taking
-$a=x-y$ proves (11.HT3j').
-
-We shall also use compatibility with approximation. On normalized additive
-bar cochains, the same operator $B_\sigma$ in the first cluster coordinate
-and the ordinary coset prism satisfy $dh+hd=1-P_\sigma$ in degrees $1$ and
-$2$; this is the expansion of the two identities following (11.HT3j0).
-Concatenating in ramification-cluster order gives homotopies $h^1_J,h^2_J$
-with valuation loss at most the same geometric sum $c_{\rm Ax}$. Therefore
-an algebraic $1$-cochain whose cocycle defect has valuation at least $N$
-can be changed by an error of valuation at least $N-c_{\rm Ax}$ to an exact
-finite cocycle. Coset refinement changes these homotopies by the displayed
-prism, so the corrections can be chosen compatibly as the finite Galois
-field and quotient grow.
-
-Now let $x\in\mathbf C_\ell^H$ and choose algebraic $x_N\in M_N$ with
-$v_\ell(x-x_N)\ge N$. If $J_N$ is the image of $H$ in
-$\operatorname {Gal}(M_N/L)$, (11.HT3j) supplies
-$y_N\in M_N^{J_N}=M_N\cap L_\infty$ with
-$v_\ell(x_N-y_N)\ge N-c_{\rm Ax}$. Hence $y_N\to x$ in $A$, and
-
-$$
- \mathbf C_\ell^H=A.                                     \tag{11.HT3k}
-$$
-
-For a continuous cocycle $f:H\to\mathbf C_\ell$, compactness makes
-$\inf_hv_\ell(f(h))$ finite. Approximate its values on finitely many cosets
-in one finite Galois extension. The cocycle identity makes the defect of
-this algebraic $1$-cochain arbitrarily small. Correct that defect with
-$h^2_J$ and then apply (11.HT3j') to the resulting exact finite cocycle.
-This produces an algebraic coboundary agreeing with $f$ to precision $N$.
-Apply the construction successively to the residual cocycle with precisions
-$N,N+1,\ldots$. The compatible corrections $b_N$ satisfy
-$v_\ell(b_N)\ge N-c_{\rm Ax}$, so their sum converges and kills the
-cocycle uniformly. Therefore
-
-$$
- H^1(H,\mathbf C_\ell)=0.                                 \tag{11.HT3l}
-$$
-
-The coefficient extension must be retained here. Put
-
-$$
-B_E=\mathbf C_\ell\widehat\otimes_{\mathbf Q_\ell}E,
-\qquad A_E=A\otimes_{\mathbf Q_\ell}E.
-$$
-
-Choose a $\mathbf Z_\ell$-basis $e_1,\ldots,e_t$ of $\mathcal O_E$ and put
-$v_B(\sum_jz_j\otimes e_j)=\min_jv_\ell(z_j)$. The multiplication structure
-constants of this basis are integral, so this norm is submultiplicative and
-the exponential converges when $v_B(z)>1/(\ell-1)$. Since $H$ acts only on
-the first tensor factor, the finite Ax--Sen projections, the weighted
-cluster homotopies, and the successive $H^1$ corrections all extend
-coefficient by coefficient with exactly the same loss $c_{\rm Ax}$. Thus
-
-$$
-B_E^H=A_E,
-\qquad H^1(H,B_E)=0.                                    \tag{11.HT3l'}
-$$
-
-This coefficientwise statement is compatible with the residual-cocycle
-iteration: at precision $N$ all coordinates use the same finite quotient and
-the same ramification-cluster ordering, so their corrections assemble in
-$B_E$ and have valuation at least $N-c_{\rm Ax}$.
-
-We apply (11.HT3l') with attention to the exponential radius. Let $v$ be a
-basis of the line $V$. Shrink to an open normal subgroup $H_0\subset H$ so that
-$$
- v_B(1\otimes\log\xi(h))>c_{\rm Ax}+\frac1{\ell-1}
- \quad(h\in H_0).                                       \tag{11.HT3m}
-$$
-
-The construction proving (11.HT3l'), begun with this cocycle, gives
-$a\in B_E$ with $v_B(a)>1/(\ell-1)$ and
-$h(a)-a=1\otimes\log\xi(h)$. Therefore $b_0=\exp(-a)$ converges and
-$$
- h(b_0)/b_0=1\otimes\xi(h)^{-1}\quad(h\in H_0).          \tag{11.HT3n}
-$$
-
-The vector $b_0v$ is $H_0$-fixed. The finite group $H/H_0$ acts
-semilinearly on its one-dimensional line over $B_E^{H_0}$.
-Multiplicative Hilbert 90 for this finite étale fixed algebra, proved by
-the normal-basis resolvent on each factor, supplies $d\in(B_E^{H_0})^\times$
-such that $db_0v$ is $H$-fixed. With $b=db_0$ this gives
-$b\in B_E^\times$ satisfying (11.HT3n) for all $h\in H$.
-Consequently
-$$
- (\mathbf C_\ell\otimes_{\mathbf Q_\ell}V)^H
-   =A_E\,(bv).                                           \tag{11.HT3o}
-$$
-
-This proves semilinear rank-one descent and records why exponentiation is
-legitimate.
-
-It remains to decomplete the $\Gamma$-action. Use the generators in
-(11.HT3f) and put $d_0=bv$. Shrink the group until
-$$
- u_i=\log(\gamma_i(d_0)/d_0)
-$$
-
-converges and lies inside the exponential radius after every bounded
-operator in the Koszul homotopy. Commutativity gives
-$$
- (\gamma_i-1)u_j=(\gamma_j-1)u_i.                         \tag{11.HT3p}
-$$
-
-Thus $(u_i)_i$ is a closed degree-one element of the Koszul complex in
-(11.HT3i'''). Tensoring that finite free Koszul complex and its bounded
-homotopy with $E$ gives the same decomposition on $A_E$. Apply this
-coefficient-extended homotopy to the sum of the nonempty-$J$ components. It
-gives $a\in A_E$ and
-$u_i^{(0)}\in L_s\otimes_{\mathbf Q_\ell}E$ with
-$$
-u_i=u_i^{(0)}+(\gamma_i-1)a.                              \tag{11.HT3q}
-$$
-
-The initial shrinking makes $\exp(-a)$ converge. For
-$d=\exp(-a)d_0$, equation (11.HT3q) says
-$\log(\gamma_i(d)/d)=u_i^{(0)}$. The cocycle relations extend this from the
-chosen generators to $\Gamma_s$, so the scalar cocycle of $d$ is defined
-over $L_s\otimes E$ and is locally analytic. This is rank-one decompletion.
-It used the simultaneous Koszul homotopy; no generator was inverted on the
-trace-zero space of the other directions.
-
-Take $s$ so that this finite layer is $L_s$, and restrict to
-$\Gamma_s$, which fixes $L_s$. Differentiating its scalar action on
-$(L_s\otimes_{\mathbf Q_\ell}E)d$, and using
-$$
- L\otimes_{\mathbf Q_\ell}E
-   =\prod_{\tau:L\hookrightarrow E}E_\tau,
-$$
-
-gives scalars $\Theta_\tau\in E$ characterized by
-$$
- \log(\gamma_x(d)/d)=
- \sum_{\tau:L\hookrightarrow E}\Theta_\tau\,\tau(x)
- \quad(x\in\pi^s\mathcal O_L).                            \tag{11.HT3r}
-$$
-
-Changing the decompleted basis adds a locally analytic coboundary. The joint
-projector in (11.HT3i') kills its nonconstant Koszul components, so it does
-not alter the $\Theta_\tau$. For the original basis, (11.HT3r) is
-exactly (11.HT2), so $\Theta_\tau=c_\tau$. These scalars are the labeled
-rank-one Sen operator.
-
-It remains to compare these operators with the Hodge--Tate grading. Here the
-full cyclotomic differential must be retained. With arithmetic reciprocity
-and the sign convention of (11.HT1), local compatibility in Book 5 gives
-
-$$
- \log\chi_{\rm cyc}(\gamma_x)
- =-\operatorname {Tr}_{L/\mathbf Q_\ell}(x)
- =-\sum_{\tau:L\hookrightarrow E}\tau(x).                \tag{11.HT3s}
-$$
-
-In particular a Tate twist changes all labeled operators by the same
-integer; it does not replace the trace in (11.HT3s) by one selected
-$\tau(x)$.
-
-The comparison with (11.HT1) is now formal but we give the typed calculation.
-The constructions (11.HT3o)--(11.HT3r) commute with tensor products,
-coefficient extension, and passage to $G_L$-invariants: all three operations
-commute with the bar maps, the projectors $P_i$, and the Koszul homotopy.
-Hence the canonical Hodge--Tate map intertwines the labeled operators.
-On
-
-$$
-e_\tau\bigl(\mathbf C_\ell(-m)\otimes_L
-  (\mathbf C_\ell(m)\otimes V)^{G_L}\bigr),              \tag{11.HT3t}
-$$
-
-the invariant factor has zero infinitesimal action. Formula (11.HT3s) says
-that the twist contributes the trace character $m\sum_\sigma\sigma(x)$.
-After applying the idempotent $e_\tau$ of
-$L\otimes_{\mathbf Q_\ell}E=\prod_\sigma E_\sigma$, this is multiplication
-by $m$ in the $\tau$-labeled operator and by zero in the other labeled
-operators. Thus the source of (11.HT1), in degree $m$ and label $\tau$, has
-labeled eigenvalue $m$ at $\tau$.
-
-If $V$ is Hodge--Tate, (11.HT1) is an isomorphism. Since $V$ has rank one,
-for each label $\tau$ exactly one degree $m_\tau$ occurs in that label.
-Intertwining then gives
-$\Theta_\tau=m_\tau\in\mathbf Z$. Since
-$\Theta_\tau=c_\tau$, every coefficient in (11.HT2) is integral. This proves
-the lemma. $\square$
-
-Only this implication is needed below and downstream. The converse assertion
-that every locally algebraic character is Hodge--Tate would require, in
-particular, an independent Hodge--Tate calculation for every conjugate
-Lubin--Tate Tate module. That calculation belongs to the later
-$p$-divisible-group comparison theory and is not used in this book, so it is
-not asserted here.
-
-**Rank-one Hodge--Tate algebraicity theorem.** A continuous one-dimensional
-$E$-linear representation $\xi$ of $G_L$ which is Hodge--Tate is locally
-algebraic.
-
-**Proof.** Apply (11.HT2). Lemma 11.1 makes every $c_\tau$ an integer
-$n_\tau$. For $x$ in a sufficiently small lattice, functoriality of the
-convergent exponential gives
-
-$$
- \log\!\left(\prod_\tau\tau(\exp x)^{n_\tau}\right)
- =\sum_\tau n_\tau\tau(x)
- =\log\bigl(\xi(\operatorname {rec}_L(\exp x))\bigr).
-$$
-
-Shrink once more so that the target logarithm is injective. The two
-characters are then equal on that principal-unit group, which is precisely
-local algebraicity. $\square$
-
-Coefficient extension causes no ambiguity. If $E$ initially omits some embeddings, apply the
-theorem after one finite extension containing them. Local algebraicity then descends as a
-statement about the original $\overline{\mathbf Q}_\ell$-valued character. Once a
-one-dimensional constituent of a geometric representation is known to be Hodge--Tate, no
-second global theorem is needed to make it locally algebraic.
+unique expansion (11.HT2). $\square$
+
+The expansion reads local algebraicity off the coefficients. If $\xi$ is
+locally algebraic with exponents $n_\tau$, then on a small enough
+principal-unit group $\xi(\operatorname{rec}_L(\exp x))=\prod_\tau\tau(\exp
+x)^{n_\tau}$, and taking logarithms gives $\sum_\tau n_\tau\tau(x)$; by the
+uniqueness in Lemma 11.1, $c_\tau=n_\tau$ for every $\tau$. So a locally
+algebraic character has integral coefficients, and the coefficients are its
+exponents.
+
+The converse direction is not established in this book. That a rank-one
+Hodge--Tate character of $G_L$ is locally algebraic — equivalently, that the
+coefficients $c_\tau$ of (11.HT2) are forced to be integers by the
+isomorphism (11.HT1) — is a genuinely quantitative statement, and the
+machinery it needs is not developed in this volume. That machinery consists
+of: the completion $\mathbf C_\ell$ of an algebraic closure of
+$\mathbf Q_\ell$, together with uniform valuation-loss estimates for finite
+Galois descent inside it; the continuous Galois cohomology of $\mathbf C_\ell$,
+in particular the vanishing of $H^1$ for the subgroup fixing a Lubin--Tate
+tower, which is what makes $\mathbf C_\ell$-semilinear descent along the tower
+possible; the decompletion argument that returns such semilinear data to a
+finite-level algebraic module with a continuous action of the tower group; and
+the Sen operator extracted from that module, whose labeled eigenvalues are to
+be matched with the $c_\tau$. Each of these is a substantial development in
+its own right and none of them is carried out here, so no form of the rank-one
+Hodge--Tate algebraicity statement is asserted in this book. It is deferred to
+Book 24a, _Tate--Sen Theory and $\mathbf C_\ell$ Period Foundations_, which
+builds the $\mathbf C_\ell$ period foundations and the Sen operator from the
+ground up.
+
+Nothing in the remainder of this book depends on that deferred statement. The
+$\ell$-adic avatar constructed next, its Frobenius description, and the
+converse passage from an $\ell$-adic character back to an algebraic Hecke
+character all take local algebraicity at the places above $\ell$ as an
+explicit hypothesis, and local algebraicity is exactly what the global
+algebraicity of an infinity type supplies.
 
 Choose an isomorphism $\iota:\overline{\mathbf Q}\hookrightarrow\overline{\mathbf Q}_\ell$. An algebraic Hecke character whose finite values are algebraic has an $\ell$-adic avatar. On finite ideles, transport its algebraic values through $\iota$ and correct at the places above $\ell$ by the algebraic infinity type. Explicitly, for $x_f\in\mathbf A_{K,f}^\times$, put
 
