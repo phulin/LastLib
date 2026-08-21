@@ -369,6 +369,90 @@ theorem finite_precision_pi_power_product_form
   exact ⟨Ideal.quotientInfRingEquivPiQuotient (fun i => P i ^ (n * e i)) hpow⟩
 
 
+/-- Evaluation from an adic completion commutes with the transition between
+finite quotients. -/
+theorem adic_completion_factorPow_evalₐ
+    {R : Type*} [CommRing R] (I : Ideal R) {m n : ℕ}
+    (hmn : m ≤ n) (x : AdicCompletion I R) :
+    Ideal.Quotient.factorPow I hmn (AdicCompletion.evalₐ I n x) =
+      AdicCompletion.evalₐ I m x := by
+  have htop (k : ℕ) : I ^ k • (⊤ : Ideal R) = I ^ k := by ext y; simp
+  have hle (k : ℕ) : I ^ k ≤ I ^ k • (⊤ : Ideal R) := by rw [htop k]
+  apply (Ideal.quotientEquivAlgOfEq R (htop m)).symm.injective
+  change Ideal.Quotient.factor (hle m)
+      (Ideal.Quotient.factorPow I hmn (AdicCompletion.evalₐ I n x)) =
+    Ideal.Quotient.factor (hle m) (AdicCompletion.evalₐ I m x)
+  rw [AdicCompletion.factor_evalₐ_eq_eval I x (by rw [htop m])]
+  rw [← AdicCompletion.factor_eval_eq_evalₐ I x (by rw [htop n])]
+  change _ = x.val m
+  rw [← x.property hmn, AdicCompletion.eval_apply]
+  induction x.val n using Quotient.inductionOn' with
+  | _ r => rfl
+
+/-- Compatible quotient equivalences between two adic systems. -/
+structure Chapter12CompatibleAdicEquiv
+    {R S : Type*} [CommRing R] [CommRing S]
+    (I : Ideal R) (J : Ideal S) where
+  equiv : ∀ n : ℕ, (R ⧸ I ^ n) ≃+* (S ⧸ J ^ n)
+  transition : ∀ {m n : ℕ} (hmn : m ≤ n) (x : R ⧸ I ^ n),
+    equiv m (Ideal.Quotient.factorPow I hmn x) =
+      Ideal.Quotient.factorPow J hmn (equiv n x)
+
+/-- Isomorphic compatible quotient systems have isomorphic inverse-limit completions. -/
+theorem adic_completion_equiv_of_compatible_quotient_equiv
+    {R S : Type*} [CommRing R] [CommRing S]
+    (I : Ideal R) (J : Ideal S) (h : Chapter12CompatibleAdicEquiv I J) :
+    Nonempty (AdicCompletion I R ≃+* AdicCompletion J S) := by
+  let f : ∀ n, AdicCompletion I R →+* S ⧸ J ^ n := fun n ↦
+    (h.equiv n).toRingHom.comp (AdicCompletion.evalₐ I n).toRingHom
+  have hf {m n : ℕ} (hmn : m ≤ n) :
+      (Ideal.Quotient.factorPow J hmn).comp (f n) = f m := by
+    ext x
+    exact (h.transition hmn (AdicCompletion.evalₐ I n x)).symm.trans
+      (congrArg (h.equiv m) (adic_completion_factorPow_evalₐ I hmn x))
+  let F : AdicCompletion I R →+* AdicCompletion J S :=
+    AdicCompletion.liftRingHom J f hf
+  let g : ∀ n, AdicCompletion J S →+* R ⧸ I ^ n := fun n ↦
+    (h.equiv n).symm.toRingHom.comp (AdicCompletion.evalₐ J n).toRingHom
+  have hg {m n : ℕ} (hmn : m ≤ n) :
+      (Ideal.Quotient.factorPow I hmn).comp (g n) = g m := by
+    ext x
+    apply (h.equiv m).injective
+    change h.equiv m (Ideal.Quotient.factorPow I hmn
+        ((h.equiv n).symm (AdicCompletion.evalₐ J n x))) =
+      h.equiv m ((h.equiv m).symm (AdicCompletion.evalₐ J m x))
+    rw [h.transition hmn]
+    simp only [RingEquiv.apply_symm_apply]
+    exact adic_completion_factorPow_evalₐ J hmn x
+  let G : AdicCompletion J S →+* AdicCompletion I R :=
+    AdicCompletion.liftRingHom I g hg
+  have hGF (x : AdicCompletion I R) : G (F x) = x := by
+    apply AdicCompletion.ext_evalₐ
+    intro n
+    dsimp only [G]
+    rw [AdicCompletion.evalₐ_liftRingHom]
+    dsimp only [g, F]
+    change (h.equiv n).symm (AdicCompletion.evalₐ J n
+        (AdicCompletion.liftRingHom J f hf x)) = AdicCompletion.evalₐ I n x
+    rw [AdicCompletion.evalₐ_liftRingHom]
+    simp [f]
+  have hFG (x : AdicCompletion J S) : F (G x) = x := by
+    apply AdicCompletion.ext_evalₐ
+    intro n
+    dsimp only [F]
+    rw [AdicCompletion.evalₐ_liftRingHom]
+    dsimp only [f, G]
+    change h.equiv n (AdicCompletion.evalₐ I n
+        (AdicCompletion.liftRingHom I g hg x)) = AdicCompletion.evalₐ J n x
+    rw [AdicCompletion.evalₐ_liftRingHom]
+    simp [g]
+  refine ⟨RingEquiv.ofBijective F ?_⟩
+  constructor
+  · intro x y hxy
+    simpa only [hGF] using congrArg G hxy
+  · intro y
+    exact ⟨G y, hFG y⟩
+
 /-- Localizing a primary branch quotient does not change it. -/
 theorem localization_of_branch_quotient_equiv
     {B : Type*} [CommRing B] (P : Ideal B) (n : ℕ)
