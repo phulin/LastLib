@@ -1888,7 +1888,7 @@ $$
 
 Conversely every $y$ satisfying (14.6e) defines a solution: put $x_1=\varphi _1(y)$, define
 $x_2,\dots,x_{f-1}$ by the transitions, and put $x_0=\iota_n(y)$; all the conditions above
-then hold. The Galois action on solutions is $(g\cdot s)(m)=g(s(m))$ by Book 53, (6.3), and
+then hold. The Galois action on solutions is $(gs)(m)=g(s(m))$ by Book 53, (6.3), and
 $\iota_n,\varphi,\varphi _1$ commute with $G_{K_0}$, so evaluation at $e_{\tau_0}$ is an
 isomorphism of $G_{K_0}$-modules
 
@@ -1930,8 +1930,9 @@ $$
 
 in which the exponent $q=p^f$ is the $f$-fold iterate of the $p$-power map and the linear
 term $pT$ is the single correction by $p$: at level one the torsion equation of Book 5,
-Section 6.3 reads $T^{q}=-pT$, one $q$-power against one factor of $p$, which is (14.6e)
-read through $\varphi^f\equiv(\ )^{q}$ modulo $p$.
+Section 6.3 reads $T^{q}=-pT$, one $q$-power against one factor of $p$. Since $\varphi$
+reduces to the $p$-power map modulo $p$, that is the same balance which (14.6e) exhibits.
+The identification is not asserted from this resemblance; it is proved below.
 
 Finally the count agrees: Book 53, Proposition 6.1 gives
 $|\Sigma_n|=p^{\ell_W(M_n)}=p^{nf}=q^n$, which is exactly the order of the $p^n$-torsion of
@@ -1974,7 +1975,7 @@ Galois acts on it through a character
 
 $$
 \psi:G_{K_0}\longrightarrow W^\times,
-\qquad g\cdot y=\psi(g)\,y ,
+\qquad g(y)=\psi(g)\,y ,
 $$
 
 for multiplication inside the period module. By the preceding paragraph $\psi$ does not
@@ -1989,8 +1990,8 @@ The question of which embedding indexes the answer has thereby been reduced to t
 computation of the single character $\psi$, and one instance settles it.
 
 _Identification of $\psi$._ Apply Book 5, Chapter 6 to the field $K_0$, its ring of integers
-$\mathcal O_{K_0}=W$, and the uniformizer $p$, with the series $\lambda(T)=pT+T^q$ of
-Section 6.3 there. Let $F_\lambda$ be the resulting formal $W$-module of Book 5,
+$\mathcal O_{K_0}=W$, and the uniformizer $p$, with the same series
+$\lambda(T)=pT+T^{q}$ of Section 6.3 there. Let $F_\lambda$ be the resulting formal $W$-module of Book 5,
 Theorem 6.1, let $\omega_n$ be a compatible system of primitive $p^n$-torsion points, and
 let $\chi_{\mathrm{LT}}:G_{K_0}\to W^\times$ be the Lubin--Tate character, defined by
 $g(\omega_n)=[\chi_{\mathrm{LT}}(g)]_\lambda(\omega_n)$; Book 5, Section 6.3 identifies
@@ -2016,15 +2017,20 @@ $(\lambda^{\circ n}(T))$. So $T\mapsto F_\lambda(X,Y)$ and $T\mapsto[a]_\lambda(
 comultiplication and a $W$-action on $\mathcal G_n=\operatorname{Spec}B_n$, whose geometric
 points are $F_\lambda[p^n]\simeq W/p^n$ with $G_{K_0}$ acting by $\chi_{\mathrm{LT}}$.
 
-Consequently $T=W(\chi_{\mathrm{LT}})$ is free of rank one over $W$, all of its quotients
-$T/p^nT$ are finite flat, and it carries a coefficient action of $W$. Theorem 14.1, together
-with Section 9.3, supplies a coefficient-linear strongly divisible lattice
-$L^{\mathrm{LT}}$ with $L^{\mathrm{LT}}/p^nL^{\mathrm{LT}}=\mathbf D_{\mathrm{FL}}(\mathcal
-G_n)$; the identification (2.8) is covariant, so the coefficient action of $a$ corresponds to
-multiplication by $a$ on $F_\lambda[p^n]$ and the character realized by $L^{\mathrm{LT}}$ is
-$\chi_{\mathrm{LT}}$ itself rather than its inverse.
+Consequently the lattice $T^{\mathrm{LT}}=W(\chi_{\mathrm{LT}})$ is free of rank one over
+$W$, all of its quotients $T^{\mathrm{LT}}/p^nT^{\mathrm{LT}}$ are finite flat, and it
+carries a coefficient action of $W$. Theorem 14.1, together with Section 9.3, supplies a
+coefficient-linear strongly divisible lattice $L^{\mathrm{LT}}$ with
+$L^{\mathrm{LT}}/p^nL^{\mathrm{LT}}=\mathbf D_{\mathrm{FL}}(\mathcal G_n)$. Here $a\in W$
+acts on $\mathbf D_{\mathrm{FL}}(\mathcal G_n)$ by $[a]_\lambda^{*}$ and on solutions by
+precomposition, which under the covariant identification (2.8) is the map induced by
+$[a]_\lambda$ on geometric points, namely multiplication by $a$ on $F_\lambda[p^n]$. So the
+character realized by $L^{\mathrm{LT}}$ is $\chi_{\mathrm{LT}}$ itself rather than its
+inverse.
 
-Its Hodge steps can now be read off. By (3.2) the Hodge step of
+The opening paragraph of this proof, applied to $\chi_{\mathrm{LT}}$ with the coefficient
+ring $W$, splits $L^{\mathrm{LT}}$ into lines $L^{\mathrm{LT}}_\tau$ with equations of the
+form (14.6b). Its Hodge steps can now be read off. By (3.2) the Hodge step of
 $\mathbf D_{\mathrm{FL}}(\mathcal G_n)$ is the image of the invariant differentials
 $\omega_{\mathcal G_n}=I/I^2$, where $I=(T)$ is the augmentation ideal of $B_n$. Since
 $\lambda^{\circ n}(T)\equiv p^nT$ modulo $T^2$,
