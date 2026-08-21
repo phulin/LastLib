@@ -276,17 +276,71 @@ The linked contents cover all fourteen chapters and their subsections. The book 
 
 Three foundations remain unavailable. First, all unconditional finite-flat subgroup quotients inherit X035. Second, §4.4 introduces a functorial “finite-flat summation law” through a degree-`N` symmetric power, including base change and additivity, in one sentence; neither the symmetric-power construction for arbitrary finite locally free `X/T` nor the norm/sum morphism into an arbitrary commutative group is constructed (X036). The order-annihilation theorem and its prime-to-order étaleness consequences therefore lack their first input. Third, §§10.1–10.4 claim to prove multiplication and subgroup quotients for abelian schemes but invoke the cube/square theorem, intersection-theoretic degree, miracle flatness, fiberwise flatness, line-bundle norms and norm-ampleness, invariant affine neighborhoods, and descent of properness/smoothness without establishing those results (X037). These are not available in earlier books; systematic abelian-scheme theory is deferred to Book 035. The later closure and Galois-model conclusions that use `A[n]` or `A/H` inherit this gap. Searches of the local Mathlib checkout found no abelian-scheme, theorem-of-the-cube/square, finite-flat group quotient, or corresponding norm-ampleness theorem.
 
+### Book 029 — `029-fppf-cohomology-and-kummer-theory.md`
+
+**Verdict: FAIL — the explicit degree-one Kummer theory is convincing, but the higher derived, topology-comparison, and transfer machinery is asserted rather than established.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 1553 (EOF), in chronological/result order, during this audit.
+
+The contents accurately link all fourteen chapters. The fppf root cover `A[T]/(T^n-a)`, sheaf-exact Kummer sequence in every characteristic, torsor-of-lifts boundary, classification of `\mu_n`-torsors by `(L,L^n\simeq\mathcal O)`, field/local/Dedekind degree-one calculations, and distinctions among fppf and pointwise surjectivity, Azumaya and cohomological Brauer groups, and abelian-scheme versus total-space Kummer maps are well stated. The grading argument correctly avoids dividing by `n`; the cyclic/symbol algebra calculations retain the root-of-unity twist and field-degree hypotheses; and norm claims for units and line bundles are separated from higher transfer for a general finite locally free map.
+
+The derived foundation does not meet the same standard. Sections 2.4–2.5 and Theorem 4.2 assume that the proposed affine fppf hypercovers calculate derived sheaf cohomology and that their totalization has the asserted Amitsur rows, without constructing the hypercover comparison or proving cohomological descent (X038). This also underlies the identification of derived `H^1` with all torsors and subsequent higher boundaries. Proposition 6.1's all-degree smooth fppf--étale comparison then says arbitrary hypercover cocycles can be killed level-by-level by smooth torsors, but it constructs neither those matching-object torsors nor the finite-stage refinement/derived-effacement argument (X039); the field Brauer and higher comparison conclusions depend on it. Finally, §12.2 obtains higher corestriction and restriction--corestriction multiplication merely by splitting a finite étale map locally and descending a sum, omitting the exact-pushforward/Shapiro identification and descent on derived cohomology needed to define the map (X040). Abelian Kummer sequences also inherit X037, and finite-flat quotient/exact-sequence uses inherit X035. The local Mathlib checkout has abstract site and low hypercover infrastructure, but no fppf site cohomological-descent, smooth change-of-topology, Brauer, or finite-étale transfer theorem supplying these steps.
+
+### Book 030 — `030-local-galois-cohomology.md`
+
+**Verdict: FAIL — the mixed-characteristic Euler characteristic rests on an unproved p-adic logarithm isomorphism, and a Brauer-induction lemma is sketched rather than proved.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 2404 (EOF), in chronological/result order, during this audit.
+
+The book's local-cohomology spine is genuinely developed in order: Kummer and the flat cohomology dictionary from Book 029 feed the degree-one computations; Book 005's reciprocity, invariant map, and res/cor formulas are verified present and used where cited; Book 024 supplies five-term sequences, Shapiro, Milnor sequence, cup products, and cd machinery; Hilbert 90 (multiplicative and additive) is available in Mathlib. Roadmap boundaries toward Tate duality and deformation functors are explicit and unused. The table of contents matches all fourteen chapters.
+
+Two inputs are not available at the point of use. First, the p-adic logarithm isomorphism `log: U^s \simeq m_K^s` (lines 398, 407–423) is invoked to count `H^1(K,\mu_p)` and drive every `d_K`-weighted Euler term; Book 002 §10.9 (lines 1979–1991) states the log series but explicitly declines to establish the isomorphism or any convergence threshold, and no Mathlib p-adic exponential/logarithm file exists. See X044. Second, lines 1365–1380 compress the Brauer-character injectivity/linear-independence argument for the modular induction lemma into a sketch; no Brauer-character theory exists in Mathlib or earlier books. See X045. Separately, the book contains non-circular intra-book forward references: operative uses at lines 749–756, 768–783, 875–882, 984–987, and 1027–1029 of results proved only later in the book (§7.3's `H^2(K,\mu_n)`, §8.4's degree-two descent). These are recorded as an in-book ordering defect (fixable within Book 030 by relocating §7.3 or relabeling the earlier occurrences). Book 030 also inherits X034 (full Hochschild–Serre uses at (4.8)/(4.9), §6.2, §7.6, §8.4) and X038–X040 through Book 029.
+
+### Book 031 — `031-tate-local-duality.md`
+
+**Verdict: FAIL — the core local duality chain is sound, but §14.4 operatively uses dual-isogeny, Weil-pairing, Poincaré-biextension, and Néron-measure machinery proved only in later books.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 2380 (EOF), in chronological/result order, during this audit.
+
+The main theorem's chain is chronological and internally proved: cyclic case via Book 005, an in-book continuous Hilbert 90 (Theorem 6.1), Tate–Nakayama in §§7.3–7.4, finiteness from Book 030 before any pairing, and perfectness in §8.2. Book 024's continuous-cochain inputs (finite-quotient factorization, Milnor/Mittag–Leffler, Shapiro) were verified at their cited locations; the Hochschild–Serre uses are confined to places where the proved five-term sequence suffices, so the X034 inheritance is benign here. Book 029's abelian Kummer sequence is used at lines 2113–2119 as cited. No circularity was found, and the table of contents matches the actual structure.
+
+The failure is confined to Chapter 14.4 (lines 2090–2232) plus the unlabeled assertion at line 293: the perfect alternating Weil pairing on `E[n]` (lines 2092–2111), the dual elliptic curve with canonical principal polarization and Poincaré biextension (lines 2136–2170), the dual isogeny with `d\widehat\phi\,d\phi=m` and the isogeny Weil pairing (lines 2128–2129, 2204–2209), and the local index formula via a Néron invariant differential and Haar measure (lines 2172–2215) are all sourced — where sourced at all — from Books 034/035/038/045, which are later, or from the X008-flagged region of Book 015. See X047. A minor unproved display: the tame Hilbert-symbol formula (11.9) at lines 1485–1493, used only illustratively.
+
+### Book 032 — `032-global-galois-cohomology-and-selmer-groups.md`
+
+**Verdict: FAIL — the cd theorem consumes a duality cell its cited source explicitly disclaims, the finiteness theorem uses an uncited Hochschild–Serre spectral sequence, and §11.1 relies on an unproved finite-field Lang theorem.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 2268 (EOF), in chronological/result order, during this audit.
+
+The book is scrupulous about its forward boundary: every Poitou–Tate/global-duality mention (lines 623, 637, 1009, 1051, 1473, 1724, 2195–2197, 2258) is roadmap and no proof consumes Book 033. Verified operative imports: Book 006 §4.2 cyclic dualities, Book 030 §6.3 cd criterion, Book 024's Milnor sequence/scalar extension/torsion passage, Book 031 §8.4 local duality, Book 029 Kummer theory, and class-field-theory inputs — all present at the cited locations. The table of contents matches the actual structure, and no intra-book circularity was found.
+
+Three gaps remain. (1) Lines 405–448: the proof of the cd theorem claims Book 006 Theorem 4.2 "explicitly proves the same statement with the two modules interchanged" and forms the compact-degree-0 × global-degree-3 pairing (3.1g) whose perfectness kills `H^3`; Book 006 Theorem 4.2 (006 lines 1379–1430) provides only compact-2/global-1, conditional compact-1/global-2, and a truncated compact-3/global-0 endpoint, and states verbatim that no assertion is made about compact degree 3 or 0 or global degree above 2. The missing cell is normally a Poitou–Tate consequence, and Book 033 is later. See X048. (2) Lines 357–369: (3.1e) is an uncited Hochschild–Serre spectral-sequence use; the only available source is Book 024 §13.4, whose full construction is open per X034. (3) Line 1654: surjectivity of `x \mapsto \mathrm{Frob}_v(x)-x` on `\widetilde E(\overline{k_v})` (Lang's theorem) has no proof here, nothing in Mathlib, and its natural isogeny-theoretic home is Books 035/036/040; consumers are lines 1639–1661, i.e. the identification of the Kummer-defined Selmer group with (11.1). See X049. The reduction exact sequence and `[n]`-invertibility on the formal group at lines 1641–1652 are likewise sketched with the natural source (Book 043) later.
+
+### Book 033 — `033-poitou-tate-duality.md`
+
+**Verdict: FAIL — the Poitou–Tate machine is genuinely constructed and its Book 006/031/032 imports verified, but real-place duality and the infinite-level Pontryagin-duality infrastructure are unproved, and §12.3 uses later Weil-pairing machinery.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 1951 (EOF), in chronological/result order, during this audit.
+
+The construction is real: two-extensions with cohomologically trivial middle terms from Book 006 §4.3 (verified at 006:2898–2941 and 006:3275–3297), cyclic compact-support dualities with real tails from Book 006 §4.2, finiteness and cd from Book 032, local duality from Book 031, Shapiro, Kummer, and Dirichlet units — all verified at their cited locations. The table of contents matches the actual structure, and no citation to any later book occurs outside §12.3.
+
+Four gaps remain. (1) The real-place local duality pairing (2.5) for arbitrary finite `M` and the "place by place" perfectness of (2.7) (lines 234–270) are unavailable: Book 031's duality is nonarchimedean only, Book 005 gives periodicity but not perfectness of the evaluation pairing, and Book 006 covers only the cyclic pair; consumers include lines 270, 691, 716, 794, 1126, and 1426–1458. See X050. (2) The infinite-level Pontryagin-duality infrastructure (biduality of LCA groups, annihilator exactness (7.1), dual-of-colimit identities, closedness/compactness for (7.10)–(7.11); lines 885–931, 1001–1043, 1085–1093) exists neither in local Mathlib nor any earlier book; Books 031/032 merely invoke the same facts. See X051. (3) §12.3 (lines 1681–1699) identifies `E[n]'\simeq E[n]` "after using the principal polarization" with Weil-pairing compatibility of connecting maps — later-book machinery of the X047 cluster, unlabeled. See X052. (4) Intra-book forward references: the unramified-orthogonality theorem (10.2), proved only in §10.1 (lines 1518–1532), is used operatively earlier at lines 425, 569, and 1140; this is the same in-book ordering pathology as Book 030's and is repairable within Book 033. The limit passage from (6.1) to the all-places sequence (6.5) at lines 806–819 also asserts compactness/exactness at infinite level without the argument, depending on (2).
+
+### Book 035 — `035-abelian-schemes-isogenies-and-polarizations.md`
+
+**Verdict: FAIL — the cube/square, rigidity, quotient, kernel-duality, Weil-pairing, and theta-group theory is proved in-book, but projectivity/norm-ampleness, top-intersection degrees, abelian Riemann–Roch, and dual representability rest on unavailable or misattributed sources.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 1856 (EOF), in chronological/result order, during this audit.
+
+The book genuinely proves: theorem of the cube and square (Theorem 2.1), the rigidity lemma (§1.3), the quotient by a finite locally free subgroup (Chapter 5, modulo Book 027 §9.4), kernel duality (Theorem 6.1), perfectness of the Weil pairing (Theorem 7.1), the Serre tensor construction, and the theta-group standard form. Book 034's Cartier-duality inputs and Book 015's cohomology-and-base-change were verified at their cited locations; X009 is not consumed anywhere. The table of contents matches the actual structure. No forward references to later books exist.
+
+Four inputs fail chronologically. (1) Line 156 attributes projectivity of abelian schemes and norm-ampleness to "the earlier projective-geometry and descent volumes": Book 008 §9.4 embeds only polarized abelian schemes and states that proper⇒projective requires special geometry, while Book 010 §15.3 (lines 2173–2186) explicitly declines norm positivity; every later "choose a relatively ample `L`" (lines 262, 401, 481, 994, 1134, 1204, 1559) consumes this. This is the concrete Book 035 consumer of X015. (2) Lines 328, 403–409, 455, 1013, 1041–1044 use top intersections `c_1(L)^g`, projection formulas, and intersection numbers with translation-invariant cycles; there is no intersection theory in Mathlib (no Chow groups/Chern classes) or any earlier book beyond Book 012's arithmetic surfaces, and Book 009 line 638 says the theory is not yet available. (3) Line 1044 invokes abelian Riemann–Roch ("Todd class is 1") and `|\ker\lambda_L|=\chi(L)^2` — the X016 machinery, assumed not proved. (4) Line 262 cites dual representability from the X008-flagged Book 015 §11.2 rather than proving it; the biduality Theorem 3.2 and everything downstream (f^∨, kernel duality applications, polarizations) depend on it. Additionally, line 379 uses miracle flatness/smooth⇒Cohen–Macaulay (available only in later Books 070/146), and line 502 cites Book 028 §10.4 as a proved source although Book 028 line 1253 defers the broader theory to Book 035 — a circular citation pair, mitigated because §§5.2–5.3 reproduce the construction in-book. An in-book ordering defect: §6.3 at line 734 uses the Chapter 7 pairing before Chapter 7. See X053 for the consolidated finding.
+
 ## Pending scope inventory
 
 The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
 
-- PENDING — Book 029, `029-fppf-cohomology-and-kummer-theory.md`
-- PENDING — Book 030, `030-local-galois-cohomology.md`
-- PENDING — Book 031, `031-tate-local-duality.md`
-- PENDING — Book 032, `032-global-galois-cohomology-and-selmer-groups.md`
-- PENDING — Book 033, `033-poitou-tate-duality.md`
 - PENDING — Book 034, `034-cartier-duality.md`
-- PENDING — Book 035, `035-abelian-schemes-isogenies-and-polarizations.md`
 - PENDING — Book 035a, `035a-moduli-stacks-for-modular-and-pel-problems.md`
 - PENDING — Book 036, `036-jacobians-and-h1-of-curves.md`
 - PENDING — Book 037, `037-weights-and-weil-bounds-for-curves-and-abelian-varieties.md`
@@ -615,3 +669,107 @@ The following manuscripts are in this review's assigned 001–064 scope and rema
 - **Needed result:** the theorem of the cube/square and a symmetric relatively ample bundle; intersection-theoretic pullback and degree formulas on every abelian-variety fiber; the required quasi-finiteness and miracle/fiberwise-flatness theorems; construction and ampleness of line-bundle norms along finite locally free maps; existence of orbitwise invariant affine neighborhoods; and effective representability/descent of the proper quotient by a finite locally free subgroup.
 - **Why unavailable:** §10.2 names each geometric theorem and applies it but does not prove any of them. Section 10.4 similarly asserts norm-ampleness, canonical linearization, finite prime avoidance on an orbit, quotient gluing, and descent of projectivity/properness/smoothness. Its affine-local step also depends on X035. These are the hard inputs of multiplication-is-finite-flat and quotient-is-an-abelian-scheme, not elementary consequences of the finite-projective algebra in Books 026–027. No earlier book provides an abelian-scheme theory, and searches of the local Mathlib checkout found no abelian schemes or theorem-of-the-cube/square implementation.
 - **Recommended chronological repair:** move a proved abelian-scheme prerequisite package before Book 028 (or move Chapters 10–11 after Book 035). It must establish `[n]` finite locally free of degree `n^{2g}` and the quotient theorem for finite locally free subgroups, including their descent compatibilities. After repairing X035 and X036, Book 028 can then use those theorems to develop closure/model consequences without circularly sketching their proofs.
+
+### X041 — Book 029 asserts the Azumaya/Brauer injection and the Morita group law
+
+- **Deficient source:** Book 029, §§7.1 and 7.3, especially lines 670–678 (natural injection `Br(X)\to H^2(X,\mathbf G_m)` with torsion image) and line 732 (tensoring of Azumaya algebras corresponds to addition of cohomology classes; Morita classes form a group).
+- **Consumers:** Theorem 7.1's right-hand term identification (lines 697–701), §7.4 (lines 739, 784), §13.1 (line 1342), §13.3 (line 1429), the ledger (line 1492), and §14.1 (lines 1510–1521).
+- **Needed result:** an fppf-local splitting criterion for Azumaya algebras, injectivity of the Brauer class map into `H^2`, additivity under tensor product, and the Morita class-group law.
+- **Why unavailable:** local Mathlib has only `IsAzumaya` basics (`Mathlib/Algebra/Azumaya/`) and the field CSA setoid (`Mathlib/Algebra/BrauerGroup/Defs.lean`); no splitting criterion, no `Br\to H^2`, no Morita group. Books 010/028 do not supply it, and Book 029's own injectivity sentence is a sketch.
+- **Recommended chronological repair:** prove injectivity from the scalar-defect cocycle by explicitly building the vector-bundle descent when the defect cocycle is a coboundary, and prove tensor-additivity on a common refinement; or restate Theorem 7.1's last term purely cohomologically and label the Azumaya comparison as external.
+
+### X042 — Book 029 uses Leray and Čech-to-derived spectral sequences for the fppf site without construction
+
+- **Deficient source:** Book 029, lines 246–267 (Čech-to-derived comparison and Leray spectral sequence for a map of sites), 271–277 (hypercover spectral sequence), 646–652 (Leray for `\varepsilon` in Proposition 6.1), and 744 (Čech-to-derived for `Spec L\to Spec K`). This extends X038 beyond §§2.4–2.5/Theorem 4.2.
+- **Consumers:** Proposition 6.1, §7.4 essential surjectivity, §2.5 edge sequences, and the field Brauer computations.
+- **Needed result:** construction of the Leray spectral sequence for maps of sites, a Čech-to-derived comparison theorem, and the hypercover spectral sequence in the fppf setting.
+- **Why unavailable:** `Mathlib/CategoryTheory/Sites/SheafCohomology/Cech.lean` defines only the Čech complex functor; no comparison theorem or Leray spectral sequence for sites exists there, and no earlier book constructs them.
+- **Recommended chronological repair:** develop these spectral sequences in Book 007a (which already builds derived-cohomology machinery) before Book 029 consumes them, or restrict Book 029 to degree-one statements where the Amitsur exactness of Book 010 suffices.
+
+### X043 — Book 029 computes Picard groups through an unproved divisor/class-group bridge
+
+- **Deficient source:** Book 029, §13.1, lines 1323–1329 (`Pic(\mathbf P^r_k)\cong\mathbf Z` via "every prime divisor is cut out by an irreducible homogeneous polynomial") and lines 1347–1351 (`Pic` of a noetherian UFD vanishes via the same valuation/divisor assembly); minor companion at §13.2, lines 1363–1366 (Pic of a Dedekind domain vs its class group).
+- **Consumers:** lines 1331–1345 (`H^1(\mathbf P^r,\mu_n)` and the degree-two segment) and lines 1369–1375.
+- **Needed result:** the Weil-divisor class group equals Pic for factorial schemes (or a direct two-chart computation of `Pic(\mathbf P^r)`).
+- **Why unavailable:** Mathlib has no Weil-divisor/Pic comparison theory; Books 001–028 cover divisors only for relative curves (Book 009), and Book 008 does not prove this bridge.
+- **Recommended chronological repair:** replace the divisor-theoretic proof by the standard two-chart units calculation for `\mathbf P^r`, which needs no divisor theory, and prove the Dedekind dictionary inline from fractional ideals.
+
+### X044 — Book 030's Euler characteristic rests on an unproved p-adic logarithm isomorphism
+
+- **Deficient source:** Book 030, lines 398 and 407–423 ("choose `s` deep enough that logarithm gives an isomorphism `log: U^s\to m_K^s`").
+- **Consumers:** line 1259 (`|H^1(K,\mu_p)|=p^{d_K+1}u`), lines 1270 and 1310 ((8.6)/(8.6a)), §8.5 Theorems (8.3)/(8.4), line 1441, lines 1718/1730–1735, (13.1)/(13.3), and every `d_K`-weighted term in §12; downstream Books 031–033 use the resulting finiteness/Euler formulas.
+- **Needed result:** convergence and mutual inversion of the p-adic logarithm and exponential on explicit unit-filtration levels of a finite extension of `\mathbf Q_p`, plus `\mathcal O_K` finite free over `\mathbf Z_p`.
+- **Why unavailable:** Book 002 §10.9 (lines 1979–1991) states the series but expressly declines to establish thresholds or the isomorphism; Books 001/003/004/005/024 have nothing; the local Mathlib checkout has no p-adic exponential/logarithm file.
+- **Recommended chronological repair:** either prove the log/exp theorem in Book 002 (or early Book 030) with explicit bounds, or replace the log argument by a direct unit-filtration count of `U^1/(U^1)^{p^r}` via the `p^r`-power map on graded pieces.
+
+### X045 — Book 030's modular Brauer-induction lemma is sketched, not proved
+
+- **Deficient source:** Book 030, lines 1365–1380 (spanning argument asserting Brauer characters inject the Grothendieck group into class functions, with linear independence via a triangular value matrix).
+- **Consumers:** (8.7a) at line 1336, Theorem (8.3), and everything downstream of the Euler formula.
+- **Needed result:** injectivity of the Brauer-character map (or an elementary spanning proof of the induction lemma by induction over cyclic subgroups with the explicit triangular matrix).
+- **Why unavailable:** no Brauer-character theory in local Mathlib or Books 001–029.
+- **Recommended chronological repair:** expand lines 1365–1380 into the full cyclic-subgroup induction with the triangular matrix computed, or develop minimal Brauer-character injectivity in place.
+
+### X047 — Book 031's Chapter 14.4 operatively uses later elliptic-curve duality machinery
+
+- **Deficient source:** Book 031, lines 2090–2232 (§14.4) and the unlabeled assertion at line 293.
+- **Consumers:** (14.7)–(14.15) within Book 031; later books citing Book 031's elliptic self-duality discussion.
+- **Needed results:** perfect alternating equivariant Weil pairing on `E[n]`; dual elliptic curve with canonical principal polarization and Poincaré biextension; dual-isogeny adjunction with `d\widehat\phi\,d\phi=m` and the isogeny Weil pairing; the local index formula via Néron invariant differential and Haar measure.
+- **Why unavailable:** sources are Books 034/035/038/045 (all later) or the X008-flagged region of Book 015; nothing in Books ≤030 or local Mathlib constructs any of them.
+- **Recommended chronological repair:** truncate §14.4 to the abstract conditional statement "a perfect self-dual coefficient pairing induces (14.7)" and delete (14.9)–(14.15); rewrite line 293 as motivation.
+
+### X048 — Book 032's cd theorem consumes a compact-0/global-3 duality cell that Book 006 explicitly disclaims
+
+- **Deficient source:** Book 032, lines 405–448, especially line 412 ("Book 006 §4.2 explicitly proves the same statement with the two modules interchanged") and lines 414–433 (pairing (3.1g) `H^0_{S,c}\times H^3\to\frac1\ell\mathbf Z/\mathbf Z` whose perfectness kills `H^3`).
+- **Consumers:** (3.1f)/(3.1), the Finiteness Theorem §3.2, and all Selmer finiteness downstream (§3.5, §6.2, §9.3, §11.3, §12.2–12.3, §13.9).
+- **Needed result:** the compact-degree-0/global-degree-3 cell of arithmetic duality for `A_\ell=\mathbf Z_\ell(1)^r\oplus\mu_{\ell^\infty}^{1-r}` (and its mirror), normally a Poitou–Tate consequence.
+- **Why unavailable:** Book 006 Theorem 4.2 (lines 1379–1430) supplies compact-2/global-1, conditional compact-1/global-2, and a truncated endpoint, and states verbatim that no assertion is made about actual compact degree 3 or 0 or global degree above 2 (reiterated at 006 lines 1796–1803). Book 033 is later.
+- **Recommended chronological repair:** extend Book 006 Theorem 4.2 by the two mirror cells proved by the same T-units/divisors/class-group calculation, or have Book 032 prove the missing cell in place; in either case correct line 412's description of Book 006.
+
+### X049 — Book 032 §11.1 relies on an unproved finite-field Lang theorem
+
+- **Deficient source:** Book 032, line 1654 (surjectivity of `x\mapsto\mathrm{Frob}_v(x)-x` on `\widetilde E(\overline{k_v})`, gestured at as "the degree-one case of the finite-field isogeny argument"); related sketches at lines 1641–1652 (reduction exact sequence, `[n]` automorphism of the formal group).
+- **Consumers:** lines 1639–1661 — the identification of the Kummer-defined Selmer group with (11.1) and its finiteness statement as given.
+- **Needed results:** Lang's theorem for elliptic curves over finite fields; surjectivity of reduction; `[n]` invertibility on the formal group.
+- **Why unavailable:** not proved in Book 032; absent from local Mathlib's elliptic-curve files; the natural isogeny-theoretic homes are Books 035/036/040/043, all later.
+- **Recommended chronological repair:** prove the three facts in place from the smooth Weierstrass model, Hensel lifting, and separability/positive degree of Frobenius-minus-one, or move §11.1 after the elliptic-curve volumes.
+
+### X050 — Book 033 asserts real-place local Tate duality without proof
+
+- **Deficient source:** Book 033, lines 234–242 (pairing (2.5) for arbitrary finite `M` at a real place) and line 270 ("This follows place by place from local Tate duality").
+- **Consumers:** lines 270, 691, 716, 794, 1126, and 1426–1458 — the perfectness of the global package and several exact-sequence steps.
+- **Needed result:** perfectness of the two-periodic evaluation pairing `\widetilde H^i(\mathbf R,M)\times\widetilde H^{2-i}(\mathbf R,M')\to\frac12\mathbf Z/\mathbf Z` for arbitrary finite Galois modules.
+- **Why unavailable:** Book 031's duality is nonarchimedean only; Book 005 gives periodicity/complete resolutions but not perfectness; Book 006 covers only the cyclic pair; Mathlib has no Tate cohomology duality theorem.
+- **Recommended chronological repair:** insert an explicit `C_2` computation after (2.4) checking the four parity cases against evaluation into `\mu_2`.
+
+### X051 — Book 033's infinite-level Pontryagin-duality infrastructure is unproved
+
+- **Deficient source:** Book 033, lines 885–931, 1001–1043, and 1085–1093 (biduality of LCA groups, annihilator exactness (7.1), dual-of-colimit identities, closedness/compactness arguments for (7.10)–(7.11)).
+- **Consumers:** (7.4), (7.8)–(7.11), §7.8, the topological claims of §6.4, and the limit passage to (6.5) at lines 806–819; Books 031/032 invoke the same facts and are consumers too.
+- **Needed results:** Pontryagin duality for the profinite/discrete-torsion and locally-compact cases used, annihilator correspondences, and compatibility of duality with filtered colimits/limits.
+- **Why unavailable:** local Mathlib has only basic Pontryagin-dual constructions; no earlier book proves the general facts.
+- **Recommended chronological repair:** prove the needed duality facts for the specific categories used (profinite ↔ discrete torsion, finitely generated cases), or reduce every statement to those special cases.
+
+### X052 — Book 033 §12.3 uses later Weil-pairing machinery without labeling
+
+- **Deficient source:** Book 033, lines 1681–1699 (`E[n]'\simeq E[n]` "after using the principal polarization"; "(12.4)" via "compatibility of the Weil pairing with connecting maps").
+- **Consumers:** (12.4)/(12.5) locally; otherwise illustrative.
+- **Needed results:** principal polarization/Weil pairing on elliptic curves — the X047 cluster.
+- **Why unavailable:** sources are Books 034/035/045, all later.
+- **Recommended chronological repair:** rewrite §12.3 as explicitly conditional roadmap or delete the proofs of (12.4)/(12.5).
+
+### X053 — Book 035 assumes projectivity/norm-ampleness, top intersection theory, abelian Riemann–Roch, and dual representability
+
+- **Deficient source:** Book 035, line 156 (misattributed projectivity/norm-ampleness), lines 328, 403–409, 455, 1013, 1041–1044 (top intersections `c_1(L)^g`, projection formula, translation-invariant cycle intersections), line 379 (miracle flatness / smooth⇒Cohen–Macaulay), line 1044 (abelian Riemann–Roch, `|\ker\lambda_L|=\chi(L)^2`), and line 262 (dual representability cited from Book 015 rather than proved); circular citation pair at line 502 vs Book 028 line 1253.
+- **Consumers:** every "choose a relatively ample `L`" step (lines 262, 401, 481, 994, 1134, 1204, 1559); biduality Theorem 3.2; `[n]` degree `n^{2g}` (Theorem 4.2); (8.4)/(8.5); Theorem 8.4; Chapter 9A; and downstream Books 035a, 036–041, 045, 049, 055, 060–061 that consume Book 035's package.
+- **Needed results:** proper⇒projective for abelian schemes with norm-ampleness proved; an intersection/degree theory for abelian varieties (or intersection-free rank computations); abelian Riemann–Roch; an in-book proof of dual representability replacing the X008 citation.
+- **Why unavailable:** Book 008 embeds only polarized abelian schemes and Book 010 §15.3 declines norm positivity; Mathlib has no Chow/Chern infrastructure; Books ≤034 contain no abelian intersection theory (Book 009 line 638 concedes this); miracle flatness appears only in later Books 070/146; Book 015 §11.2 is itself X008-flagged.
+- **Recommended chronological repair:** prove norm-ampleness in-book from determinant/descent methods; obtain `deg[n]=n^{2g}` intersection-free via the character/rank pattern of Theorem 8.3; prove abelian Riemann–Roch from the vanishing theorem plus theta-group counts; prove dual representability in-book; fix the false attribution at line 156 and the circular citation at line 502; move §6.3 after Chapter 7 (in-book ordering defect at line 734).
+
+### Consumer updates to earlier findings
+
+- X008 gains consumers: Book 028 line 1281 (theorem of the square inside the flagged region), Book 031 Chapter 14.4, Book 033 §12.3, Book 035 line 262.
+- X015 gains consumer: Book 035 line 156 (with the misattribution documented in X053).
+- X016 gains consumer: Book 035 line 1044.
+- X034 gains consumers: Book 030 ((4.8)/(4.9), §6.2, §7.6, §8.4), Book 032 lines 357–369 (uncited), Book 033 line 716.
+- X037 refinement: Book 028 line 1287 asserts surjectivity of `[n]` on geometric fibers without argument; fold into X037's needed-results list.
