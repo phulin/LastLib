@@ -168,9 +168,13 @@ theorem chapter13_characteristic_zero_finite_extensions_are_separable
 theorem chapter13_tame_positive_characteristic_and_wild_equal_characteristic
     (k : Type*) [Field k] [Fintype k]
     (p : ℕ) [Fact p.Prime] [CharP k p] :
-    Set.Infinite (chapter13DegreeClasses (K := LaurentSeries k) p) := by
-  exact chapter13_laurent_series_has_infinitely_many_degree_p_separable_extensions
-    k p
+    (∀ d : ℕ, Nat.Coprime d p →
+      Set.Finite (chapter13DegreeClasses (K := LaurentSeries k) d)) ∧
+      Set.Infinite (chapter13DegreeClasses (K := LaurentSeries k) p) := by
+  constructor
+  · intro d hd
+    exact chapter13_laurent_series_prime_to_p_degree_finiteness k p d hd
+  · exact chapter13_laurent_series_has_infinitely_many_degree_p_separable_extensions k p
 
 end
 
