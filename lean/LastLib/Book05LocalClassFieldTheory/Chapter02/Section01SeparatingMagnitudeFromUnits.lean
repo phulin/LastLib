@@ -33,7 +33,10 @@ theorem chapter02_valuation_sequence_is_injective_on_units
     {K : Type*} [Field K]
     (v : AddValuation K (WithTop ℤ)) :
     Function.Injective (chapter02UnitInclusion v) := by
-  sorry
+  intro x y h
+  apply Units.ext
+  apply Subtype.ext
+  exact congrArg Units.val h
 
 /- LOCAL_DEPENDENCY_GUESS: the normalized valuation-coordinate homomorphism is
    supplied by the earlier DVR decomposition interface. -/
@@ -42,7 +45,97 @@ theorem chapter02_valuation_coordinate_exists
     (v : AddValuation K (WithTop ℤ))
     (hlocal : Chapter02LocalField v) :
     Nonempty (Chapter02ValuationCoordinateData v) := by
-  sorry
+  classical
+  obtain ⟨π, hπ0, hπ, hvalues⟩ := hlocal.1.1
+  have unit_val (u : Kˣ) : ∃ z : ℤ, v (u : K) = (z : WithTop ℤ) :=
+    hvalues (u : K) (Units.ne_zero u)
+  let valInt : Kˣ → ℤ := fun u => Classical.choose (unit_val u)
+  have valInt_spec (u : Kˣ) : v (u : K) = (valInt u : WithTop ℤ) :=
+    Classical.choose_spec (unit_val u)
+  have hpow (z : ℤ) : v (π ^ z) = (z : WithTop ℤ) := by
+    cases z with
+    | ofNat n =>
+        change v (π ^ (n : ℤ)) = (n : WithTop ℤ)
+        rw [zpow_natCast]
+        rw [v.map_pow, hπ]
+        simp
+    | negSucc n =>
+        rw [zpow_negSucc, v.map_inv, v.map_pow, hπ]
+        simp [Int.negSucc_eq]
+  let ν : Kˣ →* Multiplicative ℤ :=
+    { toFun := fun u => Multiplicative.ofAdd (valInt u)
+      map_one' := by
+        change valInt (1 : Kˣ) = 0
+        apply WithTop.coe_injective
+        rw [← valInt_spec]
+        change v (1 : K) = 0
+        rw [v.map_one]
+      map_mul' := by
+        intro u w
+        change valInt (u * w) = valInt u + valInt w
+        apply WithTop.coe_injective
+        have huv : ((u * w : Kˣ) : K) = (u : K) * (w : K) := rfl
+        calc
+          (valInt (u * w) : WithTop ℤ) = v ((u * w : Kˣ) : K) :=
+            (valInt_spec (u * w)).symm
+          _ = v (u : K) + v (w : K) := by rw [huv, v.map_mul]
+          _ = (valInt u : WithTop ℤ) + (valInt w : WithTop ℤ) := by
+            rw [valInt_spec, valInt_spec] }
+  let hvint : v.toValuation.Integers (Chapter02ValuationRing v) :=
+    Valuation.valuationSubring.integers v.toValuation
+  refine ⟨⟨ν, ?_⟩⟩
+  change Function.Injective (chapter02UnitInclusion v) ∧
+    Function.MulExact (chapter02UnitInclusion v) ν ∧
+      Function.Surjective ν
+  refine ⟨?_, ?_, ?_⟩
+  · intro a b hab
+    apply Units.ext
+    apply Subtype.ext
+    exact congrArg (fun z : Kˣ => (z : K)) hab
+  · intro u
+    constructor
+    · intro hu
+      have huvint : valInt u = 0 := by
+        change Multiplicative.ofAdd (valInt u) = Multiplicative.ofAdd 0 at hu
+        exact Multiplicative.ofAdd.injective hu
+      have huval : v (u : K) = 0 := by
+        rw [valInt_spec, huvint]
+        simp
+      let a0 : Chapter02ValuationRing v :=
+        ⟨(u : K), by
+          change 0 ≤ v (u : K)
+          rw [huval]⟩
+      have haunit : IsUnit a0 := by
+        apply hvint.isUnit_iff_valuation_eq_one.mpr
+        change v (u : K) = 0
+        exact huval
+      obtain ⟨a, ha⟩ := haunit
+      refine ⟨a, ?_⟩
+      apply Units.ext
+      change ((a : Chapter02ValuationRing v) : K) = (u : K)
+      simpa [a0] using congrArg (fun z : Chapter02ValuationRing v => (z : K)) ha
+    · rintro ⟨a, rfl⟩
+      have hav : v ((chapter02UnitInclusion v a : Kˣ) : K) = 0 := by
+        change v ((a : Chapter02ValuationRing v) : K) = 0
+        exact hvint.valuation_unit a
+      have havint : valInt (chapter02UnitInclusion v a) = 0 := by
+        apply WithTop.coe_injective
+        rw [← valInt_spec, hav]
+        simp
+      simp [ν, havint]
+  · intro z
+    let u : Kˣ :=
+      Units.mk0 (π ^ (Multiplicative.toAdd z))
+        (zpow_ne_zero _ hπ0)
+    refine ⟨u, ?_⟩
+    have huvint : valInt u = Multiplicative.toAdd z := by
+      apply WithTop.coe_injective
+      rw [← valInt_spec]
+      change v (π ^ (Multiplicative.toAdd z)) = _
+      exact hpow (Multiplicative.toAdd z)
+    change Multiplicative.ofAdd (valInt u) = z
+    rw [huvint]
+    simp
 
 theorem chapter02_valuation_sequence_splits
     {K : Type*} [Field K]

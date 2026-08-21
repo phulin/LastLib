@@ -146,8 +146,12 @@ def chapter02ValuationExactSequence {K : Type*} [Field K]
 def chapter02UniformizerSection {K : Type*} [Field K]
     (π : Kˣ) : Multiplicative ℤ →* Kˣ :=
   { toFun := fun z => π ^ (Multiplicative.toAdd z)
-    map_one' := by sorry
-    map_mul' := by sorry }
+    map_one' := by simp
+    map_mul' := by
+      intro z w
+      change π ^ (Multiplicative.toAdd z + Multiplicative.toAdd w) =
+        π ^ Multiplicative.toAdd z * π ^ Multiplicative.toAdd w
+      rw [zpow_add] }
 
 def chapter02ValueUnitSubgroup {K : Type*} [Field K]
     (v : AddValuation K (WithTop ℤ)) (π : Kˣ) (m n : ℕ) : Subgroup Kˣ :=
@@ -191,10 +195,33 @@ def chapter02UnitNormSubgroup
     simp
   mul_mem' := by
     intro u w hu hw
-    sorry
+    rcases hu with ⟨x, hx⟩
+    rcases hw with ⟨y, hy⟩
+    refine ⟨x * y, ?_⟩
+    change (u : K) * (w : K) = _
+    rw [hx, hy]
+    simp
   inv_mem' := by
     intro u hu
-    sorry
+    rcases hu with ⟨x, hx⟩
+    refine ⟨x⁻¹, ?_⟩
+    have huinv :
+        ((u⁻¹ : Chapter02UnitGroup vK) : K) =
+          ((u : Chapter02UnitGroup vK) : K)⁻¹ := by
+      change ((chapter02UnitInclusion vK (u⁻¹) : Kˣ) : K) =
+        ((chapter02UnitInclusion vK u : Kˣ) : K)⁻¹
+      rw [map_inv, Units.val_inv_eq_inv_val]
+    have hxinv :
+        ((x⁻¹ : Chapter02UnitGroup vL) : L) =
+          ((x : Chapter02UnitGroup vL) : L)⁻¹ := by
+      change ((chapter02UnitInclusion vL (x⁻¹) : Lˣ) : L) =
+        ((chapter02UnitInclusion vL x : Lˣ) : L)⁻¹
+      rw [map_inv, Units.val_inv_eq_inv_val]
+    calc
+      ((u⁻¹ : Chapter02UnitGroup vK) : K) = ((u : K)⁻¹) := huinv
+      _ = (Algebra.norm K (x : L))⁻¹ := by rw [hx]
+      _ = Algebra.norm K ((x⁻¹ : Chapter02UnitGroup vL) : L) := by
+        rw [hxinv, Algebra.norm_inv]
 
 structure Chapter02NormUnitMapData
     (K L : Type*) [Field K] [Field L] [Algebra K L]
