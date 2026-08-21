@@ -49,7 +49,7 @@ theorem chapter11_unramified_norm_equation_valuation_formula
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
         vK vL hunram.1) (x : L) :
     vK (Algebra.norm K x) = (f : WithTop ℤ) * vL x := by
-  sorry
+  exact chapter11_unramified_comparison_norm_valuation K L vK vL f hunram hunique hdegree hfres x
 
 /- Divisibility of the valuation is necessary for a nonzero norm equation. -/
 theorem chapter11_unramified_norm_equation_valuation_necessary
@@ -64,7 +64,13 @@ theorem chapter11_unramified_norm_equation_valuation_necessary
         vK vL hunram.1) (a : K) (x : L)
     (hx : x ≠ 0) (heq : Algebra.norm K x = a) :
     chapter11ValuationValueDivisibleBy vK f a := by
-  sorry
+  unfold chapter11ValuationValueDivisibleBy
+  obtain ⟨z, hz⟩ := WithTop.ne_top_iff_exists.mp (vL.ne_top_iff.mpr hx)
+  refine ⟨z, ?_⟩
+  rw [← heq, hnorm x hx, ← hz]
+  change (↑(f : ℤ) : WithTop ℤ) * (z : WithTop ℤ) =
+    (↑((f : ℤ) * z) : WithTop ℤ)
+  exact (WithTop.coe_mul (f : ℤ) z).symm
 
 /- In a discretely valued base, the valuation condition gives the displayed
    power-of-a-uniformizer times unit decomposition. -/
@@ -75,7 +81,32 @@ theorem chapter11_unramified_norm_equation_decomposition
     (πK : K) (hπ : chapter11IsUniformizer vK πK) (a : K) (ha : a ≠ 0)
     (hval : chapter11ValuationValueDivisibleBy vK f a) :
     chapter11UnramifiedValueUnitDecomposition vK πK f a := by
-  sorry
+  unfold chapter11UnramifiedValueUnitDecomposition at ⊢
+  unfold chapter11ValuationValueDivisibleBy at hval
+  rcases hval with ⟨r, hr⟩
+  have hcast : (↑((f : ℤ) * r) : WithTop ℤ) =
+      (f : WithTop ℤ) * (r : WithTop ℤ) := by
+    change (↑((f : ℤ) * r) : WithTop ℤ) =
+      (↑(f : ℤ) : WithTop ℤ) * (r : WithTop ℤ)
+    exact WithTop.coe_mul (f : ℤ) r
+  have hpow (m : ℤ) : vK (πK ^ m) = (m : WithTop ℤ) := by
+    induction m using Int.induction_on with
+    | zero => simp
+    | succ m ih =>
+        rw [zpow_add_one₀ hπ.1, AddValuation.map_mul, ih, hπ.2.1]
+        simp
+    | pred m ih =>
+        rw [zpow_sub_one₀ hπ.1, AddValuation.map_mul, ih, AddValuation.map_inv, hπ.2.1]
+        norm_cast
+  refine ⟨r, a / πK ^ ((f : ℤ) * r), ?_, ?_⟩
+  · rw [chapter11_unit_filtration_zero]
+    apply (chapter11_mem_unit_set_iff_valuation_zero vK _).2
+    rw [AddValuation.map_div, hr, hpow]
+    have htop : (f : WithTop ℤ) * (r : WithTop ℤ) ≠ ⊤ := by
+      rw [← hcast, ← hr]
+      exact vK.ne_top_iff.mpr ha
+    simp [htop]
+  · field_simp [hπ.1]
 
 /- A common uniformizer accounts for the valuation part of the norm equation. -/
 theorem chapter11_unramified_common_uniformizer_norm

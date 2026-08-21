@@ -69,7 +69,28 @@ theorem chapter11_unramified_comparison_uniformizer_not_a_norm
         vK vL hunram.1) (πK : K)
     (hπ : vK πK = (1 : WithTop ℤ)) :
     ¬∃ x : L, Algebra.norm K x = πK := by
-  sorry
+  rintro ⟨x, hx⟩
+  have hx0 : x ≠ 0 := by
+    intro hx0
+    have hπ0 : πK = 0 := by
+      rw [← hx]
+      simp [hx0]
+    rw [hπ0] at hπ
+    norm_num at hπ
+  have hval : (1 : WithTop ℤ) = (f : WithTop ℤ) * vL x := by
+    calc
+      1 = vK πK := hπ.symm
+      _ = vK (Algebra.norm K x) := by rw [hx]
+      _ = _ := hnorm x hx0
+  obtain ⟨z, hz⟩ := WithTop.ne_top_iff_exists.mp (vL.ne_top_iff.mpr hx0)
+  have hzval : (1 : WithTop ℤ) = (f : WithTop ℤ) * (z : WithTop ℤ) := by
+    simpa [hz] using hval
+  have hzint : (1 : ℤ) = (f : ℤ) * z := by
+    exact_mod_cast hzval
+  have hfd : (f : ℤ) ∣ (1 : ℤ) := ⟨z, hzint⟩
+  have hfdn : f ∣ 1 := Int.natCast_dvd_natCast.mp hfd
+  have hf_one : f = 1 := Nat.dvd_one.mp hfdn
+  omega
 
 /- In the totally tamely ramified comparison, the first positive unit layer is
    surjective; the same lifting argument is iterated for deeper layers. -/
@@ -90,7 +111,8 @@ theorem chapter11_tame_total_comparison_principal_units_are_norms
     (hcompleteL : chapter11ValuationComplete vL) :
     Set.SurjOn (Algebra.norm K (S := L))
       (chapter11UnitFiltration vL 1) (chapter11UnitFiltration vK 1) := by
-  sorry
+  exact proposition_11_2_tame_totally_ramified_principal_unit_norm_surjective K L k vK vL ρK ρL e p he
+    htame hext hscale hres hdegree hred hcompleteK hcompleteL
 
 /- The elementary residue-unit obstruction for the tame total extension is
    exactly the `e`th-power condition, of order `gcd(e,q-1)` over `F_q`. -/
@@ -118,7 +140,8 @@ theorem chapter11_tame_total_comparison_residue_obstruction
     chapter11NormImage K L vL 0 =
       chapter11ResidueConditionSet vK ρK
         (chapter11ResidueUnitPowerImage k e) := by
-  sorry
+  exact proposition_11_2_tame_totally_ramified_all_unit_norm_image K L k vK vL ρK ρL e p he
+    htame hext hscale hres hdegree hred hcompleteK hcompleteL N hnormunit hnormred hprincipal
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11
