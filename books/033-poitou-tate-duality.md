@@ -1533,8 +1533,8 @@ The common abbreviation $-r_2m$ is valid only when every real complex conjugatio
 
 The numerical consequence used most often is
 
-# $$\boxed{\frac{|H^1_{\mathcal L}(K,M)|}{|H^1_{\mathcal L^\perp}(K,M')|}\cdot\frac{|H^0(G_{K,S},M)|}{|H^0(G_{K,S},M')|}
-
+$$
+\boxed{\frac{|H^1_{\mathcal L}(K,M)|}{|H^1_{\mathcal L^\perp}(K,M')|}\cdot\frac{|H^0(G_{K,S},M)|}{|H^0(G_{K,S},M')|}
 \prod_{v\in S}
 \frac{|\mathcal L_v|}{|H^0(K_v,M)|}.}
 \tag{9.4}
