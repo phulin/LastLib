@@ -249,6 +249,115 @@ $$
 
 in every degree. Ordinary cohomology has $H^0=M$ and a periodic positive tail, but no negative degrees. The complete Tate complex supplies precisely the two-sided periodic object needed by the cone.
 
+#### The $C_2$ calculation behind (2.5)
+
+The pairing (2.5) is a theorem, and at a real place it can be proved outright. Because $G_{K_v}=\operatorname{Gal}(\mathbf C/\mathbf R)=\langle c\rangle$ has order two, the whole statement reduces to two explicit cocycle calculations with the cyclic machinery of Book 5, Section 3.3. We carry them out here; nowhere later does the book rely on a duality statement for $\mathbf R$ beyond what this subsection establishes.
+
+Write $N=1+c$ for the norm and $\delta=c-1$ for the augmentation direction, so that
+
+$$
+N\delta=\delta N=0,
+\qquad
+N-\delta=2.
+$$
+
+Book 5, Section 3.3 defines $\widehat H^0(G,M)=M^G/NM$ and $\widehat H^{-1}(G,M)=\ker N/\delta M$ for a module over a cyclic group $G$, constructs the periodic resolution, and proves the periodicity isomorphism $\widehat H^{r+2}(G,M)\cong\widehat H^r(G,M)$ for every integer $r$. Applied to $C_2$, this yields (2.3) and (2.4) in every integral degree, the even groups being $M^G/NM$ and the odd groups $\ker N/\delta M$.
+
+**The target of the pairing.** Complex conjugation acts on $\mu_n$ by inversion. Hence $\mu_n^{C_2}=\{\pm1\}$ while $N\mu_n=\{1\}$, so
+
+$$
+\widehat H^0(C_2,\mu_n)=\{\pm1\}
+\cong\tfrac12\mathbf Z/\mathbf Z,
+$$
+
+and periodicity identifies $\widehat H^2(C_2,\mu_n)$ with the same group. The identification is normalized by sending the class of $-1$ to the Hamilton quaternion algebra in $\operatorname{Br}(\mathbf R)$, whose invariant is $\tfrac12$; this agrees with the normalization fixed in Section 4.1. The pairing (2.5) is by definition the cup product followed by this identification. Cup product adds degrees, both arguments are two-periodic, and the two mixed cases $(i,2-i)=(0,2)$ and $(2,0)$ are exchanged with the diagonal cases by the biduality symmetry recorded below, so only the two parity pairings require computation.
+
+**Lemma (vanishing off the $2$-primary part).** If multiplication by $2$ is an automorphism of $M$, then $\widehat H^r(C_2,M)=0$ for every integer $r$.
+
+**Proof.** If $x\in M^G$, then $x=N(2^{-1}x)$ because $c$ fixes $x$. If $y\in\ker N$, then $cy=-y$, so $y=\delta(-2^{-1}y)$. Periodicity gives the assertion in every degree. $\square$
+
+The $2$-primary submodule $M_2=\{m:2^km=0\text{ for some }k\}$ is $C_2$-stable, and precomposition identifies $(M_2)'$ with the character group of $M_2$. By the lemma, both sides of (2.5) are unchanged on replacing $M$ by $M_2$. Until the end of the proof of perfectness we therefore assume that $M$ is $2$-primary.
+
+**Proposition (the two parity formulas).** The pairing (2.5), evaluated on representatives, has the following form.
+
+(i) In even degrees, for $x\in M^G$ and $\phi\in M'^{G}$,
+
+$$
+\bigl\langle[x],[\phi]\bigr\rangle=\tfrac12\,\phi(x). \tag{2.5a}
+$$
+
+(ii) In odd degrees, for $a\in\ker N$ and $\psi\in\ker N'$,
+
+$$
+\bigl\langle[a],[\psi]\bigr\rangle=\tfrac12\,(c\psi)(a)
+=\tfrac12\,\psi(ca)^{-1}. \tag{2.5b}
+$$
+
+In both cases the displayed value lies in $\{\pm1\}\subset\mu_n$, read as an element of $\tfrac12\mathbf Z/\mathbf Z$, and is independent of the chosen representatives.
+
+**Proof.** In degree zero the cup product of invariant classes is their evaluation, giving (2.5a). For odd degree, note that $\widetilde H^1=H^1$, so both entries are ordinary cocycle classes and the Alexander--Whitney diagonal applies: the cup of the cocycles determined by $a$ and $\psi$, evaluated at $(c,c)$, is the class of $\mathrm{ev}(a,c\cdot\psi)=(c\psi)(a)$ in $H^2(C_2,\mu_n)$, which (2.5b) records. No complete-resolution diagonal is needed in this case.
+
+For the value ranges: if $\phi\in M'^G$, then $(c\phi)(x)=\phi(cx)^{-1}=\phi(x)^{-1}$, while $c\phi=\phi$ forces $\phi(x)=\phi(x)^{-1}$, so $\phi(x)\in\{\pm1\}$. If $\psi\in\ker N'$, then $(c\psi)\cdot\psi=1$ reads pointwise as $\psi(cm)=\psi(m)$; taking $m=a$ and using $ca=-a$ gives $\psi(a)=\psi(-a)=\psi(a)^{-1}$.
+
+Well-definedness in case (i): replacing $x$ by $x+Nm$ changes $\phi(x)$ by $\phi(Nm)=\phi(m)\phi(cm)=1$; replacing $\phi$ by $N'\chi=\chi\cdot(c\chi)$ changes the value by $\chi(x)(c\chi)(x)=\chi(x)\chi(cx)^{-1}=1$.
+
+Well-definedness in case (ii): replacing $a$ by $a+\delta m$ changes $(c\psi)(a)$ by $(c\psi)(\delta m)=\psi(c\,\delta m)^{-1}$, and $c\,\delta m=-\delta m$, so the change equals $\psi(\delta m)=\psi(cm-m)=\psi(cm)\psi(m)^{-1}=1$; replacing $\psi$ by $\psi\cdot(c\chi)\chi^{-1}$ changes the value by $\chi(a)(c\chi)(a)=\chi(a)\chi(ca)^{-1}=\chi(Na)=1$.
+
+Finally, under the canonical biduality $(M')'=M$ the two formulas are exchanged with their arguments: by the definition of the dual action, viewing the class of $a$ as a character of $M'$ gives $(c\cdot a)(\psi)=(c\psi)(a)$. This symmetry is what lets the single computation below serve all four combinations $(i,2-i)=(0,2),(1,1),(2,0)$ and their periodic translates. $\square$
+
+**Example (both parities over $\mathbf Z/4\mathbf Z$).** Let $T=\mathbf Z/4\mathbf Z$ carry the trivial action and $S=\mathbf Z/4\mathbf Z$ the action $cm=-m$. For $T$ one finds $T^G=T$, $NT=2T$, $\ker N=\{0,2\}$, $\delta T=0$, so $\widehat H^0(T)\cong\widehat H^1(T)\cong\mathbf Z/2\mathbf Z$. The dual module is $T'=\mu_4$ with inversion action; there $N'T'=1$ and the invariant submodule is the pair of quadratic characters, so $\widehat H^0(T')\cong\mathbf Z/2\mathbf Z$, while $\widehat H^1(T')\cong\mu_4/\{\text{squares}\}\cong\mathbf Z/2\mathbf Z$. Formula (2.5a) pairs the two generators of $\widehat H^0$ to $\tfrac12$, and (2.5b) evaluates the primitive character at $c\cdot2=2$, likewise giving $\tfrac12$. For $S$ one finds $S^G=S[2]$, $NS=0$, $\ker N=S$, $\delta S=2S$, so again both modified groups are $\mathbf Z/2\mathbf Z$; the dual module $S'=\mu_4$ carries the trivial action, $\widehat H^0(S')$ is generated by the class of a primitive character modulo the norm image, and $\widehat H^1(S')$ by the quadratic character. Formula (2.5a) evaluates the primitive character at $2$, giving $\zeta_4^2=-1$, and (2.5b) evaluates the quadratic character at $c\cdot1=-1$, giving $-1$. All four pairings of distinguished generators are nonzero, as perfectness requires.
+
+**Lemma (orders).** For every finite $C_2$-module $M$, $|\widehat H^0(C_2,M)|=|\widehat H^1(C_2,M)|$.
+
+**Proof.** The maps $\delta:M\to\delta M$ and $N:M\to NM$ are surjective with kernels $M^G$ and $\ker N$ respectively, so $|M^G|\,|\delta M|=|M|=|\ker N|\,|NM|$. Therefore
+
+$$
+\frac{|\widehat H^0(C_2,M)|}{|\widehat H^1(C_2,M)|}
+=\frac{|M^G|\,|\delta M|}{|NM|\,|\ker N|}
+=1.
+$$
+
+$\square$
+
+**Lemma (flags).** Every finite $2$-primary $C_2$-module admits a chain $0=M_0\subset\cdots\subset M_k=M$ of $C_2$-submodules such that $M_{j+1}/M_j\cong\mathbf Z/2\mathbf Z$ with trivial action.
+
+**Proof.** Induct on $|M|$. If $M\neq0$, choose $m$ of maximal order and put $e=2^{j-1}m$, where $2^j$ is the order of $m$. Then $e$ has order two, and $c$ fixes every element of order two because $ce=\pm e=e$. So $\langle e\rangle$ is a trivial submodule, and the quotient is smaller. $\square$
+
+**Lemma (adjointness of connecting maps).** Let $0\to M_1\to M_2\to M_3\to0$ be a short exact sequence of finite $C_2$-modules, with connecting maps $\partial:\widehat H^r(M_3)\to\widehat H^{r+1}(M_1)$ and $\partial':\widehat H^{1-r}(M_1')\to\widehat H^{2-r}(M_3')$. Then for $\alpha\in\widehat H^r(M_3)$ and $\beta'\in\widehat H^{1-r}(M_1')$,
+
+$$
+\bigl\langle\partial\alpha,\beta'\bigr\rangle
+=(-1)^r\bigl\langle\alpha,\partial'\beta'\bigr\rangle .
+$$
+
+**Proof.** Both pairings take values in $\{\pm1\}$, so it suffices to compute on representatives; the cases $r=0$ and $r=1$ are exchanged by applying the biduality symmetry recorded in the parity proposition to the dual sequence, so treat $r=0$. Let $\alpha=[x]$ with $x\in M_3^G$ and lift $x$ to $\tilde x\in M_2$. Then $c\tilde x-\tilde x$ lies in $M_1$, lies in $\ker N_{M_1}$, and represents $\partial\alpha$: a change of lift alters it by $\delta m$, and replacing $x$ by $x+Ny_3$ allows the lift to be changed by $Ny_2$, on which $c$ acts trivially. Let $\beta'=[\psi']$ with $\psi'\in\ker N_{M_1'}$, and put $\tilde\psi=\psi'\circ p\in M_2'$. The norm $N\tilde\psi$ kills $M_1$, since $\psi'(cm)=\psi'(m)$ for $\psi'\in\ker N'$, so $N\tilde\psi=\eta\circ p$ for a function $\eta$ on $M_3$, and the identity $p(cm)=cp(m)$ shows that $c\eta=\eta$; by definition $\partial'\beta'=[\eta]$. Now
+
+$$
+\bigl\langle\partial\alpha,[\psi']\bigr\rangle
+=\tfrac12\,(c\psi')(c\tilde x-\tilde x)
+=\tfrac12\,\psi'(\tilde x-c\tilde x)^{-1},
+$$
+
+while
+
+$$
+\bigl\langle[x],[\eta]\bigr\rangle
+=\tfrac12\,\eta(p\tilde x)
+=\tfrac12\,(N\tilde\psi)(\tilde x)
+=\tfrac12\,\tilde\psi(\tilde x-c\tilde x)
+=\tfrac12\,\psi'(\tilde x-c\tilde x),
+$$
+
+and since $\psi'$ takes values in $\{\pm1\}$ on $M_1$, the two displayed quantities are negatives. This proves the lemma for $r=0$, and hence in general. $\square$
+
+**Proposition (perfectness of real local duality).** For every finite $M$ satisfying the standing hypotheses and every integer $i$, the pairing (2.5) identifies $\widetilde H^i(\mathbf R,M)$ with the full character group of $\widetilde H^{2-i}(\mathbf R,M')$.
+
+**Proof.** The formulas (2.5a) and (2.5b) equip each group $\widehat H^r(C_2,M)$ with a map $\theta_M:\widehat H^r(C_2,M)\to\widehat H^{2-r}(C_2,M')^D$; inserting the conventional alternating sign in the identification of the duals of consecutive degrees, the adjointness lemma says exactly that the maps $\theta_M$ commute with connecting maps. They visibly commute with the maps induced by coefficient maps, so for every short exact sequence of finite $C_2$-modules the maps $\theta$ form a morphism from the long exact cohomology sequence to the reversed dualized sequence, on which $\operatorname{Hom}(-,\mathbf Q/\mathbf Z)$ is exact because $\mathbf Q/\mathbf Z$ is divisible and therefore injective. Every finite $2$-primary module admits a flag with trivial $\mathbf Z/2\mathbf Z$ graded pieces, so induction along the flag and the five lemma reduce the assertion to $M=\mathbf Z/2\mathbf Z$ with trivial action. There $M'=M$, $\widehat H^0\cong\widehat H^{-1}\cong\mathbf Z/2\mathbf Z$, and both (2.5a) and (2.5b) reduce to the dot product of coordinate characters, which is perfect. The passage from $2$-primary modules to arbitrary finite modules is supplied by the vanishing lemma. $\square$
+
+**Corollary.** The pairing $H^1(\mathbf R,M)\times H^1(\mathbf R,M')\to\tfrac12\mathbf Z/\mathbf Z$ is perfect for every finite $M$; in degrees zero and two the same holds with modified groups $\widehat H^0$, and replacing $\widehat H^0$ by ordinary invariants destroys perfectness whenever $M^G/NM\neq M^G$. For $M$ of odd order all real terms vanish.
+
+This discharges the real-place case of (2.7): the package (2.6) is perfect place by place, finite places being covered by local Tate duality and real places by the computation just concluded. With the normalization above, the real summand of (4.2) is literally the invariant of the localized cup product, so reciprocity includes the archimedean terms without further argument. At a real place that becomes complex in a finite extension, all modified groups vanish and the adjointness (11.1) below is vacuous on both sides.
+
 ### 2.4 Local packages and their topology
 
 For finite $S$, define
@@ -267,7 +376,7 @@ P_S^i(M)\times P_S^{2-i}(M')\longrightarrow\mathbf Q/\mathbf Z,
 ((x_v),(y_v))\longmapsto\sum_{v\in S}\langle x_v,y_v\rangle_v \tag{2.7}
 $$
 
-is perfect. This follows place by place from local Tate duality. Notice that its second degree is $2-i$, whereas global compact-support duality uses $3-i$. The shift by one comes from the localization cone.
+is perfect. At finite places this is local Tate duality; at real places it is perfect by the explicit $C_2$ computation of Section 2.3. Notice that its second degree is $2-i$, whereas global compact-support duality uses $3-i$. The shift by one comes from the localization cone.
 
 For a finite abelian group $A$, write
 
@@ -906,6 +1015,68 @@ $$
 
 under the usual locally compact hypotheses. The closure in (7.1) is unnecessary for finite groups and dangerous to omit at infinite level.
 
+Every assertion recorded above is elementary, but at infinite level it is the proof, not the statement, that disciplines its use. We prove them here for the three categories this book uses: finite abelian groups, profinite abelian groups, and discrete torsion abelian groups. The only input beyond elementary group theory is that $\mathbf Q/\mathbf Z$ is divisible and therefore injective as a $\mathbf Z$-module: every homomorphism from a subgroup of an abelian group into $\mathbf Q/\mathbf Z$ extends to the whole group.
+
+**Lemma (extension from closed subgroups).** Let $A$ be profinite abelian or discrete torsion abelian, let $B\subseteq A$ be a closed subgroup, and let $\chi_0:B\to\mathbf Q/\mathbf Z$ be a character. Then $\chi_0$ extends to a character of $A$.
+
+**Proof.** In the torsion case there is no topology to respect and this is exactly injectivity of $\mathbf Q/\mathbf Z$. In the profinite case, $\chi_0$ factors through a finite quotient $B/U_0$ with $U_0$ open in $B$; write $U_0=B\cap W$ with $W$ open in $A$. Then $\chi_0$ factors through $(B+W)/W\cong B/(B\cap W)$, a subgroup of the finite group $A/W$. Extending the resulting character from this subgroup to all of $A/W$, which divisibility of $\mathbf Q/\mathbf Z$ permits, and inflating along $A\to A/W$ gives the required extension. $\square$
+
+**Proposition (finite groups).** For a finite abelian group $A$:
+
+1. the evaluation map $A\to A^{DD}$ is an isomorphism, and $|A^D|=|A|$;
+2. duality is exact: if $0\to A_1\to A_2\to A_3\to0$ is exact, so is $0\to A_3^D\to A_2^D\to A_1^D\to0$, with no closures;
+3. $A\cong A^D$, though not canonically.
+
+**Proof.** Decompose $A=\bigoplus_j\mathbf Z/n_j\mathbf Z$. Pairing each cyclic summand with itself by $(a,b)\mapsto ab/n_j$ identifies it with its own dual, giving $|A^D|=|A|$, an isomorphism $A\cong A^D$ depending on the chosen decomposition, and the evaluation isomorphism of (1). For (2), surjectivity of the restriction $A_2^D\to A_1^D$ is injectivity of $\mathbf Q/\mathbf Z$; its kernel consists of the characters vanishing on $A_1$, which is canonically $(A_2/A_1)^D=A_3^D$. Statement (3) records why a finite group is self-dual only up to a choice: the target $\mathbf Q/\mathbf Z$ is fixed once and for all, but the identification requires coordinates. $\square$
+
+**Proposition (profinite against discrete torsion).** (i) If $A=\varprojlim_i A_i$ is a profinite abelian group, written as the inverse limit of its finite quotients with surjective transition maps, then every continuous character of $A$ has finite order and factors through some $A_i$; the inflation maps $A_i^D\to A^D$ are injective, their images cover $A^D$, and $A^D$ is a discrete torsion group.
+
+(ii) If $T$ is a discrete torsion abelian group and $W$ ranges over its finite subgroups, ordered by inclusion, then restriction identifies
+
+$$
+T^D=\operatorname{Hom}(T,\mathbf Q/\mathbf Z)
+\cong\varprojlim_W W^D,
+$$
+
+a profinite group.
+
+(iii) For $A$ profinite or discrete torsion, the evaluation map $A\to A^{DD}$ is an isomorphism.
+
+(iv) For $A$ profinite or discrete torsion, the assignments $B\mapsto B^\perp=(A/B)^D\subseteq A^D$ and $\Lambda\mapsto\Lambda_\perp\subseteq A$ are inverse bijections between the closed subgroups of $A$ and those of $A^D$, and for each closed $B$ there are canonical short exact sequences
+
+$$
+0\longrightarrow B^\perp\longrightarrow A^D
+\longrightarrow B^D\longrightarrow0,
+\qquad
+B\xrightarrow{\ \sim\ }(A^D/B^\perp)^D .
+$$
+
+**Proof.** (i) A continuous character has open kernel, every open subgroup of $A$ contains some level kernel $\ker(A\to A_i)$, so the character factors through $A_i$; its image is a quotient of the finite group $A_i$, so it has finite order. Inflation is injective because $A\to A_i$ is surjective, and the factorization statement just proved says that the inflated images cover $A^D$. Being a union of finite images with the discrete topology, $A^D$ is discrete and torsion.
+
+(ii) Every character of $T$ restricts to each $W$, compatibly; conversely, a compatible family defines a character of $T$, because any finitely generated subgroup of the torsion group $T$ is finite and hence one of the $W$. Each restriction $V^D\to W^D$ is surjective by injectivity of $\mathbf Q/\mathbf Z$, so the limit is an inverse limit of finite discrete groups, hence compact, Hausdorff, and totally disconnected.
+
+(iii) Injectivity of evaluation holds in both categories because characters separate points: for $a\neq0$ one separates its image from zero in a finite quotient (profinite case) or extends a suitable character of the finite cyclic group $\langle a\rangle$ (torsion case). For surjectivity, first let $A$ be profinite. Given $\Lambda\in A^{DD}$ and an open subgroup $U\subseteq A$, the annihilator $U^\perp\subseteq A^D$ satisfies $U^\perp\cong(A/U)^D$: indeed restriction $A^D\to U^D$ is surjective by the extension lemma, with kernel $U^\perp$, and $U^D=(A/U)^D$ since $U$ contains a level kernel. Hence $U^\perp$ is finite, and finite duality identifies $(U^\perp)^D$ with $A/U$. Let $\bar a_U\in A/U$ be the element corresponding to $\Lambda|_{U^\perp}$ under this chain. If $V\subseteq U$, then restricting the same $\Lambda$ first to $V^\perp$ and then to $U^\perp$ shows that the image of $\bar a_V$ in $A/U$ equals $\bar a_U$, evaluation being injective on the finite group $A/U$. The system $\bar a_U$ is therefore compatible, and since $A$ is the inverse limit of its finite quotients there is a unique $a\in A$ mapping to each $\bar a_U$. Finally $\Lambda=\mathrm{ev}_a$: both sides agree on each $U^\perp$ by construction, and these subgroups cover $A^D$ by (i), every character factoring through some level kernel. Now let $T$ be discrete torsion, so that $T^D$ is profinite by (ii). Given $\Lambda\in T^{DD}=\operatorname{Hom}_{\mathrm{cont}}(T^D,\mathbf Q/\mathbf Z)$, continuity on the profinite group $T^D$ factors $\Lambda$ through some finite quotient $T^D/O$, and shrinking $O$ we may take $O=W^\perp$ for a finite subgroup $W\leq T$, the basic opens of the limit presentation (ii) being exactly these annihilators. Then $T^D/W^\perp\cong W^D$, so $\Lambda$ corresponds to an element of $(W^D)^D$, which finite duality identifies with an element $w\in W\subseteq T$. Thus $\Lambda=\mathrm{ev}_w$.
+
+(iv) For closed $B\subseteq A$, the extension lemma makes the restriction $A^D\to B^D$ surjective, and its kernel is by definition the set of characters vanishing on $B$, that is, the characters factoring through $A/B$; this gives the displayed exact sequence and the canonical identification $B^\perp\cong(A/B)^D$. If $a\notin B$, some character of the profinite quotient $A/B$ is nonzero on the image of $a$ (separate the image from zero in a finite quotient of $A/B$ and inflate); composing with $A\to A/B$ gives $\lambda\in B^\perp$ with $\lambda(a)\neq0$. Hence $(B^\perp)_\perp=B$. Applying this to the other category, where $A^D$ lives, shows likewise that $(\Lambda_\perp)^\perp=\Lambda$ for closed $\Lambda\subseteq A^D$, so the two assignments are inverse bijections. Finally $A^D/B^\perp\cong B^D$ was just recorded, and composing with evaluation for $B$, which lies in one of our two categories, yields $B\cong(A^D/B^\perp)^D$. $\square$
+
+**Corollary (exactness without closures).** Let $u:A\to B$ be a continuous homomorphism with $A$ and $B$ both profinite or both discrete torsion abelian. Then (7.1) holds verbatim:
+
+$$
+(\ker u)^D\cong A^D/\operatorname{im}(u^D),
+\qquad
+(\operatorname{coker}u)^D\cong\ker(u^D),
+$$
+
+and the image of $u^D$ is closed.
+
+**Proof.** $\ker u$ is closed in either category, so the extension lemma makes the restriction $A^D\to(\ker u)^D$ surjective. Its kernel is the set of characters vanishing on $\ker u$. Such a character $\chi$ factors uniquely through $u(A)$, and $u:A\to u(A)$ identifies $u(A)$ with the Hausdorff quotient $A/\ker u$ topologically: in the compact case $u(A)$ is compact and the continuous bijection $A/\ker u\to u(A)$ is a homeomorphism, while in the discrete case everything is discrete. So $\chi$ corresponds to a character of the closed subgroup $u(A)$ of $B$, and the extension lemma, applied to $u(A)$ inside $B$, extends it to $B$; the extensions are exactly the elements of $B^D$ whose composite with $u$ is $\chi$, that is, the preimage of $\chi$ under $u^D$. This proves the first isomorphism and exhibits $\operatorname{im}(u^D)=\{\chi\in B^D:\chi|_{\ker u}=0\}$ as the kernel of the restriction $B^D\to(\ker u)^D$, hence as a closed subgroup; note that $u(A)$ is automatically closed, being compact in the profinite case, while in the discrete case every subgroup is closed. For the second isomorphism, a character of $B$ kills $\operatorname{im}(u)$ exactly when its composite with $u$ is trivial. $\square$
+
+**Corollary (limits and colimits under duality).** If $T=\varinjlim_W W$ is a discrete torsion group written as the directed union of its finite subgroups, then restriction gives a canonical isomorphism $(\varinjlim W)^D\cong\varprojlim W^D$. If $A=\varprojlim_i A_i$ is profinite, then every continuous character of $A$ factors through exactly one level up to inflation-equivalence, so after any choice of compatible retractions $A_j^D\to A_i^D$ one may write $(\varprojlim A_i)^D\cong\varinjlim A_i^D$.
+
+**Proof.** The first assertion is Proposition (ii) restated. For the second, existence and uniqueness of the factorization through a level is Proposition (i); two characters at levels $i\le j$ inflate to the same character of $A$ exactly when they have equal retractions to level $i$, which is the colimit relation imposed by the retraction maps. $\square$
+
+These are the facts used below: (7.8) exchanges the colimit over $m$ with the inverse limit of the finite duals through the first corollary, (7.15) propagates annihilators through the same mechanism, and the closedness arguments of Section 7.6 combine the second corollary with the fact that a continuous image of a compact group is compact and a compact subset of a Hausdorff group is closed.
+
 ### 7.2 Lattices and discrete torsion partners
 
 Let $E/\mathbf Q_\ell$ be finite, $\mathcal O$ its integers, and $T$ a finite free $\mathcal O$-module with continuous $G_{K,S}$-action and its $\varpi$-adic topology. Its natural Tate partner is the discrete module
@@ -1362,10 +1533,8 @@ The common abbreviation $-r_2m$ is valid only when every real complex conjugatio
 
 The numerical consequence used most often is
 
-# $$\boxed{\frac{|H^1_{\mathcal L}(K,M)|}{|H^1_{\mathcal L^\perp}(K,M')|}
+# $$\boxed{\frac{|H^1_{\mathcal L}(K,M)|}{|H^1_{\mathcal L^\perp}(K,M')|}\cdot\frac{|H^0(G_{K,S},M)|}{|H^0(G_{K,S},M')|}
 
-\frac{|H^0(G_{K,S},M)|}
-{|H^0(G_{K,S},M')|}
 \prod_{v\in S}
 \frac{|\mathcal L_v|}{|H^0(K_v,M)|}.}
 \tag{9.4}
