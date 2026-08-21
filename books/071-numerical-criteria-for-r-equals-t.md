@@ -2204,7 +2204,7 @@ points do not automatically combine: inequalities
 $$
 \operatorname{length}\Phi_{R,i}
 
-> \operatorname{length}\Psi_{T,i}
+> \operatorname{length}\Psi_{T,i}.
 > $$
 
 may have defects supported by the same extra relation, and adding them can count that relation more
