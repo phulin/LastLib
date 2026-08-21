@@ -548,13 +548,42 @@ Defects: (1) Proposition 6.1 operatively uses Theorem 7.1(1) (lines 694–695, a
 
 The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
 
+### Book 054 — `054-integral-fontaine-laffaille-equivalence-and-base-change.md`
+
+**Verdict: PASS — essential surjectivity, base change, descent, and coefficient theorems are proved in-book from verified earlier-book inputs; no forward references, no circularity; remaining defects are cosmetic/ledger-hygiene plus one inherited gap.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 2397 (EOF), in chronological/result order, during this audit.
+
+All operative imports verified at their sources: Book 052's Dieudonné crystal and Raynaud full faithfulness, Book 053's `T_{FL}` exactness/full faithfulness/length/lifting, Book 042's finite-flat closure and Galois correspondence, Book 050's modified filtration and fundamental sequences, Book 034's Cartier duality normalization, and Book 005's Lubin–Tate theory (reachable transitively). Notably, Prop 14.2 explicitly avoids Sen operators/`C_p` decomposition by using the Book 005 Lubin–Tate tower, so **X003 is not consumed**. Essential surjectivity is genuinely proved here (Lemma 4.1 → Theorems 5.1/6.2/7.1), and §7.2's non-circularity audit checks out against the actual proof order. The `p>2`/`e<p-1` restrictions are stated up front and audited honestly.
+
+Defects: (1) line 897 has broken display math (stray heading marker); (2) equation tag `(14.6)` at line 2112 collides with the `(14.6a)`–`(14.6g)` family; (3) the §17.2 ledger lists "Book 5" but omits Book 006 entirely; (4) lines 297–321, 362–374 argue the smooth two-term resolution of the crystalline extension sheaf at sketch level — the one load-bearing construction deserving expansion (consumers: Props 3.1/3.2, Theorems 5.1/6.2/7.1); (5) inherited: Chapter 3 is a major consumer of Book 052's big-fppf site comparison gap (recorded with Book 052).
+
+### Book 055 — `055-p-divisible-groups-and-serre-tate-theory.md`
+
+**Verdict: PASS — slope theory, ordinary criteria, Grothendieck–Messing, the Serre–Tate equivalence, Kummer coordinates, canonical lifts, PEL quotients, and Hasse openness are argued in-book with explicit proofs and honest hypothesis ledgers; remaining defects are inherited consumers plus minor in-book gaps.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 1218 (EOF), in chronological/result order, during this audit.
+
+Verified imports: Book 035 `[n]`-finiteness, Book 052's crystalline comparison `D(A[p^n])\simeq H^1_{cris}/p^n`, Book 049's finite local freeness of `H^1_{cris}` and the abelian Hodge sequence. The definition equivalence (sheaf ↔ system) is proved; the Serre–Tate ordinary lifting theorem is proved with its effectivity boundary stated; p-divisible duality is handled carefully. No forward references to Books 056+ exist (grep-verified); Book 052's big-fppf gap is not consumed here. Book 054's `p>2` restriction carries an honest all-prime fallback declaration.
+
+Defects: (1) line 1088 assumes a polarized-abelian-variety moduli scheme/DM stack as setting for §§13.3–14 — representability is exactly the X008/X010/X015/X060-flagged material, contradicting the ledger sentence at line 1210 unless relabeled conditional; (2) line 1130 asserts that a nonzero restricted power series cannot vanish on a polydisc, unproved anywhere (load-bearing for §14.2's density claim); (3) line 593 compresses crystalline-descent equalizer effectivity into two sentences; (4) lines 609/854 use ampleness-openness and `Pic^0` lifting uncited (X008 cluster); (5) minor: the Hasse–Witt ordinarity argument appears twice (lines 415, Prop 13.1). Inherited consumers named: X008/X053 at lines 466–482, 583, 1204; possible X065 wording exposure at line 1204.
+
+### Book 056 — `056-ramification-and-discriminants-of-finite-flat-representations.md`
+
+**Verdict: FAIL — Theorem 6.1 (the Fontaine–Raynaud upper-break cutoff, intended discharge of X002) depends on Lemma 5.1, whose proof asserts its decisive cancellation/boundary steps, one with a directionally wrong justification; the X002 forward import from Book 003 §15 remains undischarged.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 1805 (EOF), in chronological/result order, during this audit.
+
+The book contains zero explicit cross-book citations (all imports prose-attributed in §14.3); every operative import was nonetheless verified present in declared prerequisites: Book 003's Herbrand quotient compatibility and Hilbert different formula, Book 042's model dictionary, Book 051's Oort–Tate classification, Book 034/052 Cartier duality and Frobenius factorization, Books 053/054 integral FL equivalence. Input chronology is clean, there are no forward references to Books 057+, no circularity, and the table of contents matches exactly. Verified correct as written: Prop 3.1 and the change of variables (3.5), Theorem 4.2/Corollary 4.3, the cyclotomic discriminant computation (12.1)/(12.2), the global cancellation behind Theorem 11.1, tower identities, and (13.5)–(13.6).
+
+The failure: Lemma 5.1's weighted-block claim (lines 636–691) asserts (a) the telescoping cancellation at line 673, (b) at line 682 that the raw interval `Ee_K` has upper length "at most `e_K`" although the integrand bound gives length `\ge e_K` with equality only where `G_s=G_0`, (c) at line 682 that `I^\ell` creates no additional boundary term, and (d) at line 684 a terminal charge `e_K+c-1` with the same slope problem and a hand-waved `-1` baseline. A complete conversion argument bounding `i_G(\sigma)` directly (Fontaine's route) is needed; no prerequisite book contains the cluster lemma. Consumers: Theorem 6.1 and hence (6.3), Theorem 7.1, Theorem 8.1, Theorem 11.1, Chapter 13, Theorems 14.1/14.2 — and through them Book 003 §§15.4–15.7 (X002) and everything downstream. See X067. Secondary defects: concealed monogenicity at lines 340–355 (Book 003 Chapter 9 proves it but is neither cited nor stated); the zero-citation concealment pattern flagged for Book 051 recurs here; minor uncited recalls at lines 929–952 and 1079.
+
+The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
+
 ## Pending scope inventory
 
 The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
 
-- PENDING — Book 054, `054-integral-fontaine-laffaille-equivalence-and-base-change.md`
-- PENDING — Book 055, `055-p-divisible-groups-and-serre-tate-theory.md`
-- PENDING — Book 056, `056-ramification-and-discriminants-of-finite-flat-representations.md`
 - PENDING — Book 057, `057-artinian-and-complete-local-coefficient-rings.md`
 - PENDING — Book 058, `058-formal-schemes-gaga-and-algebraization.md`
 - PENDING — Book 059, `059-rigid-analytic-curves-and-formal-models.md`
@@ -1127,3 +1156,21 @@ The following manuscripts are in this review's assigned 001–064 scope and rema
 - X065 gains consumers: Book 053 lines 1295–1353, 1461–1483 (Book 049 duality/perfection), thence X008/X053 into Book 053 §11.4.
 - X066 exposure in Book 053 confined to lines 552–553.
 - Book 052's big-fppf crystalline site comparison gap (lines 881–890) is recorded as an in-book defect of Book 052 (Book 048 expressly declines that comparison theorem); no separate standing number needed since the fix is local to Book 052, but it is a required repair before Books 054/055 consume `D(G)`.
+
+### X067 — Book 056's Lemma 5.1 asserts the decisive weighted-block steps, leaving Theorem 6.1 (and X002) unsupported
+
+- **Deficient source:** Book 056, §5.3 lines 636–691: telescoping cancellation asserted (line 673); "upper length at most `e_K`" for the raw interval `Ee_K` contradicts the integrand bound `1/[G_0:G_s]\ge 1/E` (line 682; equality only where `G_s=G_0`); "`I^\ell` creates no additional boundary term" unjustified (line 682); terminal charge `e_K+c-1` with the same slope problem and hand-waved `-1` baseline (line 684). Concealed monogenicity at lines 340–355.
+- **Consumers:** Theorem 6.1 (line 752), (6.3), Theorems 7.1/8.1/11.1, Chapter 13, Theorems 14.1/14.2; externally Book 003 §§15.4–15.7 (X002) and all downstream consumers of the finite-flat cutoff (Books 159, 160, 161).
+- **Needed result:** a complete conversion argument bounding `i_G(\sigma)` directly for `\sigma` moving an `\ell^j`-torsion point, then converting once through `\varphi_{L/K}` (Fontaine's route), with justified boundary terms.
+- **Why unavailable:** no prerequisite book contains the cluster lemma; the in-book proof as written proves only the easy regions.
+- **Recommended chronological repair:** rewrite §5.3 with the orbitwise telescoping count carried out, correct upper-length bound, the `I^\ell` claim proved or absorbed, and the terminal charge justified from the slope-1 region `G_s=G_0`, `s\in[0,1)`. Once done, Theorem 6.1 becomes genuine and X002 is discharged. Citation hygiene: add an import ledger naming Books 003/042/051/053/054/034/052 and cite Book 003 Ch. 9 for monogenicity.
+
+### Consumer updates to earlier findings (batch 054–056)
+
+- Book 052's big-fppf crystalline-site comparison gap gains major consumer: Book 054 Chapter 3 (lines 259, 297–421) propagating through Theorems 6.2/7.1/10.1.
+- X008/X053 gain consumers: Book 055 lines 466–482, 583, 1204; Book 055 line 1088 additionally consumes the X010/X015/X060 moduli-representability cluster.
+- X065 possible wording exposure: Book 055 line 1204.
+- X003 status: Book 054 explicitly avoids Sen operators via Book 005's Lubin–Tate tower (Prop 14.2) — not a consumer.
+- X036/X037 gain consumers via Book 056's uncited dependence on Books 051/042 chains (lines 151–583 region).
+
+Verdicts: Book 054 PASS. Book 055 PASS. Book 056 FAIL (X067 + inherited).
