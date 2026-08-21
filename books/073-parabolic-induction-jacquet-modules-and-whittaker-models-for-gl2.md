@@ -2436,7 +2436,7 @@ The following table gathers the conversions proved above.
 | Jacquet functor             | $r_N(V)=\delta_B^{-1/2}V_N$                         | $V_N$                                                           |
 | Principal Jacquet exponents | $\chi_1\boxtimes\chi_2$, $\chi_2\boxtimes\chi_1$    | $\rho_1\boxtimes\rho_2$, $(\rho_2\nu)\boxtimes(\rho_1\nu^{-1})$ |
 | Spherical Hecke eigenvalue  | $q^{1/2}(\alpha+\beta)$ for raw $T$                 | obtained after the displayed parameter conversion               |
-| Whittaker zeta power        | $                                                   | y                                                               |
+| Whittaker zeta power        | $\lvert y\rvert^{s-1/2}$                            | $\lvert y\rvert^s$                                              |
 
 The measure ledger is equally short:
 
