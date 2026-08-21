@@ -395,6 +395,20 @@ theorem positive_multiples_are_cofinal (e : ℕ) (he : positiveExponent (e := e)
   intro n
   exact ⟨n, Nat.le_mul_of_pos_right n he⟩
 
+/-- Replacing an ideal by a positive power does not change its adic completion. -/
+theorem adic_completion_equiv_power
+    {R : Type*} [CommRing R] (I : Ideal R) (e : ℕ) (he : 0 < e) :
+    Nonempty (AdicCompletion (I ^ e) R ≃+* AdicCompletion I R) := by
+  apply adic_completion_equiv_of_cofinal_filtrations
+  constructor
+  · intro n
+    refine ⟨n, ?_⟩
+    rw [← pow_mul]
+    exact Ideal.pow_le_pow_right (Nat.le_mul_of_pos_left n he)
+  · intro n
+    refine ⟨n * e, ?_⟩
+    rw [← pow_mul, Nat.mul_comm]
+
 
 /-- The finite-product CRT is compatible with passing to inverse limits. -/
 theorem completion_product_of_finite_precision_crt
