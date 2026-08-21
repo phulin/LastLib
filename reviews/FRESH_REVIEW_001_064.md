@@ -44,11 +44,18 @@ The number-field preliminaries, Minkowski/class-group argument, restricted-produ
 
 The manuscript proves its local prerequisites in dependency order: norm openness and Hilbert 90 precede cyclic algebras; the local Brauer invariant and complete-resolution/Tate–Nakayama argument precede finite reciprocity; finite reciprocity precedes the independent Herbrand norm-filtration calculation; and that calculation precedes Lubin–Tate cofinality, existence, infinite reciprocity, ramification compatibility, and the character dictionary. In particular, Lemma 6.4 uses the already established finite Artin isomorphism only for the total unit-norm index and proves the filtered comparison separately, so Theorem 8.1 is not circular. The Book 003 inputs (Hasse–Arf integrality, trace ideals, and Herbrand transitivity/quotients) occur only after those results. Important ambient claims were checked in the local checkout: Hilbert 90 is in `Mathlib/RepresentationTheory/Homological/GroupCohomology/Hilbert90.lean`, Tate cohomology infrastructure is in `Mathlib/RepresentationTheory/Homological/TateCohomology/Basic.lean`, Brauer-group definitions are in `Mathlib/Algebra/BrauerGroup/Defs.lean`, and the finite-division-ring theorem is in `Mathlib/RingTheory/LittleWedderburn.lean`. The linked contents match all twelve chapters and sections, and no forward proof dependency, conditional interface, notation, conclusion, or malformed-display defect was found.
 
+### Book 006 — `006-global-class-field-theory.md`
+
+**Verdict: FAIL — the rank-one Tate–Sen theorem rests on an asserted quantitative homotopy.**
+
+**Full-read attestation:** I personally read this manuscript from line 1 through line 5856 (EOF), in chronological/result order, during this audit.
+
+The global class-field-theory core is ordered carefully: the idelic inequalities precede the Brauer localization sequence and principal reciprocity; finite degree-one duality precedes character existence; the regular absolute idèle-class construction precedes the global fundamental class; and reciprocity precedes ray fields, norm principles, and infinite completion. Roadmap boundaries are generally explicit, and the linked contents match all twelve chapters and sections. Chapter 11.5, however, proves a further rank-one Hodge–Tate-to-local-algebraicity theorem and then uses it in the ℓ-adic character discussion. The crucial “Finite Ax–Sen estimate” at lines 5068–5120 gives only a verbal ramification-cluster prescription, and lines 5122–5129 then assert compatible degree-1/degree-2 bar homotopies with the same uniform valuation loss without constructing their operators or verifying the cochain identities and bounds. Those homotopies are immediately used to prove `H^1(H,\mathbf C_\ell)=0`, coefficient descent, decompletion, the Sen operator, and Lemma 11.1. No earlier book or local Mathlib result supplies this missing quantitative Tate–Sen input. See X003.
+
 ## Pending scope inventory
 
 The following manuscripts are in this review's assigned 001–064 scope and remain **PENDING**. Each entry will be replaced by a full-read attestation and verdict only after a personal line-1-to-EOF read.
 
-- PENDING — Book 006, `006-global-class-field-theory.md`
 - PENDING — Book 007, `007-analytic-foundations-for-odlyzko-poitou-bounds.md`
 - PENDING — Book 007a, `007a-arithmetic-spectral-sequences-and-derived-cohomology.md`
 - PENDING — Book 007b, `007b-quasi-coherent-cohomology-on-schemes.md`
@@ -127,3 +134,11 @@ The following manuscripts are in this review's assigned 001–064 scope and rema
 - **Needed result:** for a finite-flat $G_K$-module killed by $\ell^n$, triviality of $G_K^u$ above $e_K(n+1/(\ell-1))-1$.
 - **Why unavailable:** this is a specialized finite-flat group-scheme ramification theorem, not a Mathlib theorem and not proved in Books 001–002 or earlier in Book 003. Equations (15.9)–(15.17) are conditional consequences, not unconditional results at this chronological point.
 - **Recommended chronological repair:** retain only the abstract implication “a supplied cutoff $R$ gives (15.7)” in Book 003. Move the Fontaine constants, global ceilings, and numerical applications to Book 056 after Theorem 6.1, or move/prove that theorem before Book 003.
+
+### X003 — Book 006's rank-one Tate–Sen conclusion lacks the quantitative cochain argument it uses
+
+- **Deficient source:** Book 006, §11.5, especially the “Finite Ax–Sen estimate” at lines 5068–5120 and the asserted compatible approximation homotopies at lines 5122–5129.
+- **Consumers:** Book 006, lines 5131–5334 (completion invariants, `H^1` vanishing, semilinear descent, decompletion, Sen integrality, and the rank-one Hodge–Tate algebraicity theorem); Book 047, §9.5, especially lines 1115–1132 and 1187, treats Book 006's rank-one passage as already supplied; Book 098's ℓ-adic Hecke-character discussion likewise uses local algebraicity/Hodge–Tate labels.
+- **Needed result:** a uniform finite Ax–Sen approximation theorem together with explicit compatible contracting homotopies on degree-1 and degree-2 continuous bar cochains, with the stated valuation bound, sufficient to pass to `\mathbf C_\ell`, prove `H^1(H,\mathbf C_\ell)=0`, and decomplete the multivariable Lubin–Tate action.
+- **Why unavailable:** searches of the local Mathlib checkout found no Ax–Sen, Tate–Sen, Sen-operator, or Hodge–Tate theorem. Books 001–005 do not develop this analytic Galois-cohomology input. Book 006 proves the cyclic weighted-average identity, but the passage to arbitrary ramification clusters and the compatible degree-2 correction is stated rather than constructed; the later conclusions depend on exactly that omitted compatibility. Book 047 explicitly lists a broader `\mathbf C_p`/Tate–Sen foundation as future work and does not repair the rank-one proof.
+- **Recommended chronological repair:** keep the Hecke-character and ℓ-adic-avatar construction conditional only on _local algebraicity_, which is enough for the class-field-theory interface, and remove the Hodge–Tate-implies-local-algebraic claim from Book 006. Develop the quantitative Tate–Sen cochain theorem in a later dedicated p-adic comparison volume, then cite it before Book 047/Book 098 use Sen or Hodge–Tate labels. Alternatively, expand §11.5 with a complete ramification-cluster construction and verified bounded bar homotopies before Lemma 11.1.
