@@ -3,6 +3,7 @@ import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Section08Completene
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.Section04TheValuationOfANorm
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.Section05ResidueFieldShadows
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.Section04AbsoluteValueNormalizations
+import Mathlib.GroupTheory.Abelianization.Defs
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter02
 
@@ -266,12 +267,6 @@ def chapter02StrictValuationContraction
   ∀ t t' : K,
     v t ≥ (c : WithTop ℤ) → v t' ≥ (c : WithTop ℤ) →
       v ((F t - t) - (F t' - t')) ≥ v (t - t') + 1
-
-def chapter02CommutatorSubgroup (G : Type*) [Group G] : Subgroup G :=
-  Subgroup.normalClosure {g : G | ∃ x y : G, g = x * y * x⁻¹ * y⁻¹}
-
-abbrev Chapter02Abelianization (G : Type*) [Group G] : Type _ :=
-  G ⧸ chapter02CommutatorSubgroup G
 
 end
 

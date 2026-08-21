@@ -49,7 +49,7 @@ theorem chapter02_valuation_sequence_splits
     (v : AddValuation K (WithTop ℤ))
     (d : Chapter02ValuationCoordinateData v) (π : Kˣ)
     (hπ : d.valuation π = Multiplicative.ofAdd 1) :
-    Function.LeftInverse (chapter02UniformizerSection π) d.valuation := by
+    Function.RightInverse (chapter02UniformizerSection π) d.valuation := by
   intro z
   sorry
 

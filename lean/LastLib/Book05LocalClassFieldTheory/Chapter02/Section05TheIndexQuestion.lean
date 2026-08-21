@@ -18,7 +18,7 @@ def chapter02MaximalAbelianIntermediateField
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] : IntermediateField K L :=
   IntermediateField.fixedField
-    (chapter02CommutatorSubgroup (Chapter02GaloisGroup K L))
+    (commutator (Chapter02GaloisGroup K L))
 
 def Chapter02GaloisNormIndexStatement
     (K L : Type*) [Field K] [Field L] [Algebra K L]
@@ -42,7 +42,7 @@ theorem chapter02_galois_norm_index_eq_abelianization
     [FiniteDimensional K L] [IsGalois K L]
     (d : Chapter02LocalGaloisExtensionData K L) :
     Nat.card (Kˣ ⧸ chapter02NormSubgroup K L) =
-      Nat.card (Chapter02Abelianization (Chapter02GaloisGroup K L)) := by
+      Nat.card (Abelianization (Chapter02GaloisGroup K L)) := by
   sorry
 
 theorem chapter02_galois_norm_index_eq_maximal_abelian_degree
@@ -57,7 +57,7 @@ theorem chapter02_galois_abelianization_degree
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
     (habelian : ∀ σ τ : Chapter02GaloisGroup K L, σ * τ = τ * σ) :
-    Nat.card (Chapter02Abelianization (Chapter02GaloisGroup K L)) =
+    Nat.card (Abelianization (Chapter02GaloisGroup K L)) =
       Module.finrank K L := by
   sorry
 

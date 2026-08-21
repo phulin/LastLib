@@ -76,27 +76,33 @@ theorem chapter02_norm_unit_map_data_exists
     [FiniteDimensional K L]
     (vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ)) (f : ℕ)
-    (hformula : chapter02NormValuationFormula K L vK vL f)
-    (hcompleteK : IsAdicComplete
-      (IsLocalRing.maximalIdeal (Chapter02ValuationRing vK))
-      (Chapter02ValuationRing vK))
-    (hcompleteL : IsAdicComplete
-      (IsLocalRing.maximalIdeal (Chapter02ValuationRing vL))
-      (Chapter02ValuationRing vL))
-    (hDVRK : IsDiscreteValuationRing (Chapter02ValuationRing vK))
-    (hDVRL : IsDiscreteValuationRing (Chapter02ValuationRing vL)) :
+    (hformula : chapter02NormValuationFormula K L vK vL f) :
     Nonempty (Chapter02NormUnitMapData K L vK vL) := by
   sorry
 
 theorem chapter02_norm_valuation_formula
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L]
-    (vK : AddValuation K (WithTop ℤ))
-    (vL : AddValuation L (WithTop ℤ)) (f : ℕ)
-    (hformula : chapter02NormValuationFormula K L vK vL f) :
-    ∀ x : L, x ≠ 0 →
-      vK (Algebra.norm K x) = (f : WithTop ℤ) * vL x := by
-  exact hformula
+    {vK : AddValuation K (WithTop ℤ)}
+    {vL : AddValuation L (WithTop ℤ)} (e f : ℕ)
+    [Valuation.IsRankOneDiscrete vK.toValuation]
+    [Valuation.IsRankOneDiscrete vL.toValuation]
+    (hvaluation_extension :
+      vK.IsEquiv (AddValuation.comap (algebraMap K L) vL))
+    (hrestriction : ∀ y : K,
+      vL (algebraMap K L y) = (e : WithTop ℤ) * vK y)
+    (hresidue_degree : f =
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
+        vK vL hvaluation_extension)
+    (hunique : ∀ w : AddValuation L (WithTop ℤ),
+      vK.IsEquiv (AddValuation.comap (algebraMap K L) w) →
+        vL.IsEquiv w)
+    (hdegree : Module.finrank K L = e * f) :
+    chapter02NormValuationFormula K L vK vL f := by
+  intro x hx
+  exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04_norm_valuation_formula
+      K L e f hvaluation_extension
+      hrestriction hresidue_degree hunique hdegree x hx
 
 theorem chapter02_norm_valuation_image
     (K L : Type*) [Field K] [Field L] [Algebra K L]
@@ -233,6 +239,7 @@ theorem chapter02_totally_ramified_obstruction_is_unit
     (hf : f = 1)
     (hformula : chapter02NormValuationFormula K L vK vL f)
     (πL : Lˣ) (hπL : vL (πL : L) = (1 : WithTop ℤ))
+    (hvalueK : Chapter02NormalizedValueGroup vK)
     (hvalueL : Chapter02NormalizedValueGroup vL) :
     ∀ x : Kˣ, ∃ y : Kˣ, y ∈ chapter02NormSubgroup K L ∧
       ∃ u : chapter02FieldUnitFiltration vK 0,
