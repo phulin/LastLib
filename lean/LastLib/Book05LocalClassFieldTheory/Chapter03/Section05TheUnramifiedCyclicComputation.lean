@@ -362,7 +362,15 @@ theorem chapter03_unramified_frobenius_orientation_exists
     (hO : Nonempty (Chapter03UnramifiedNormOrientation K L n π hπ))
     (hcyc : chapter03CyclicExtension K L n (chapter03ArithmeticFrobenius D)) :
     Nonempty (Chapter03UnramifiedFrobeniusOrientation D n π hπ) := by
-  sorry
+  obtain ⟨O⟩ := hO
+  have hncard : Nat.card (Gal(L/K)) = n := by
+    rw [IsGalois.card_aut_eq_finrank K L, hcyc.1]
+  let e : Gal(L/K) ≃* Multiplicative (ZMod n) :=
+    (zmodMulEquivOfGenerator (G := Gal(L/K))
+      (g := chapter03ArithmeticFrobenius D) hcyc.2 hncard).symm
+  refine ⟨{ normOrientation := O, galoisEquiv := e, arithmetic_maps_to_one := ?_ }⟩
+  exact zmodMulEquivOfGenerator_symm_apply_generator
+    (G := Gal(L/K)) (g := chapter03ArithmeticFrobenius D) hcyc.2 hncard
 
 theorem chapter03_geometric_frobenius_maps_to_inverse_generator
     {K L k l : Type*} [Field K] [Field L] [Field k] [Field l]
@@ -375,7 +383,8 @@ theorem chapter03_geometric_frobenius_maps_to_inverse_generator
     (O : Chapter03UnramifiedFrobeniusOrientation D n π hπ) :
     O.galoisEquiv (chapter03GeometricFrobenius D) =
       (Multiplicative.ofAdd 1)⁻¹ := by
-  sorry
+  rw [chapter03_arithmetic_frobenius_is_inverse_of_geometric D, map_inv,
+    O.arithmetic_maps_to_one]
 
 theorem chapter03_cyclic_algebra_split_over_extension
     (K L : Type*) [Field K] [Field L] [Algebra K L]
@@ -401,7 +410,24 @@ theorem chapter03_unramified_cyclic_algebra_basic_nontrivial
     chapter03ScalarExtensionSplits K L C.carrier C.algebraL n ∧
       ¬ chapter03CyclicAlgebraSplitsOverBase K L n (chapter03ArithmeticFrobenius D)
         (chapter03UniformizerUnit π hπ) C := by
-  sorry
+  constructor
+  · exact C.split_by_L
+  · have _ : 1 < n := hn
+    intro hsplit
+    apply hnotnorm
+    obtain ⟨u, hu⟩ :=
+      (chapter03_mem_norm_subgroup_iff K L
+        (chapter03UniformizerUnit π hπ)).mp
+        ((chapter03_cyclic_algebra_split_iff_norm K L n
+          (chapter03ArithmeticFrobenius D) (chapter03UniformizerUnit π hπ)
+          hcyc C).mp hsplit)
+    refine ⟨(u : L), ?_⟩
+    have hu' : (chapter03NormUnit K L u : K) =
+        (chapter03UniformizerUnit π hπ : K) :=
+      congrArg (fun z : Kˣ => (z : K)) hu
+    rw [chapter03_norm_unit_apply] at hu'
+    change Algebra.norm K (u : L) = π at hu'
+    exact hu'
 
 /- Norms in a tower are the compatibility relation needed to transport the chosen orientation of
    a fundamental class through successive unramified extensions. -/

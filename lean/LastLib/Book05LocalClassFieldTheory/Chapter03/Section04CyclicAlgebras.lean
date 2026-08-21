@@ -226,7 +226,7 @@ def chapter03GeneratorChangeFactor (n r : ℕ) : ZMod n :=
 theorem chapter03_generator_change_factor_mul
     (n r : ℕ) (hr : Nat.Coprime r n) :
     (r : ZMod n) * chapter03GeneratorChangeFactor n r = 1 := by
-  sorry
+  exact ZMod.coe_mul_inv_eq_one r hr
 
 /-- A numerical invariant convention records the generator-dependence by the inverse of `r mod n`. -/
 structure Chapter03GeneratorInvariantConvention
