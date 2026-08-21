@@ -1225,7 +1225,7 @@ The entire comparison can be audited in one table.
 
 | datum                  | normalization and consequence                                    |
 | ---------------------- | ---------------------------------------------------------------- |
-| absolute value         | $                                                                |
+| absolute value         | $\lvert\varpi\rvert=q^{-1}$                                      |
 | split group measure    | $\operatorname{vol}(K)=1$                                        |
 | division group measure | $\operatorname{vol}(\mathcal O_D^\times)=1$                      |
 | quadratic torus        | $\operatorname{vol}(\mathcal O_E^\times)=1$                      |
@@ -1233,7 +1233,7 @@ The entire comparison can be audited in one table.
 | Iwahori                | $\operatorname{vol}(I)=1/(q+1)$                                  |
 | geometric edge         | two orientations, producing $1/2$                                |
 | odd kernel             | $-(q+1)\mathbf1_{\eta I}$ on determinant valuation one           |
-| Weyl factor            | $                                                                |
+| Weyl factor            | $\lvert D_H(h)\rvert=\lvert\Delta(h)/n(h)\rvert$                 |
 | division quotient      | $\operatorname{vol}(E^\times\backslash D^\times)=f(E/F)$         |
 | regular orbital sign   | $O_G=-O_D$ at division places                                    |
 | character sign         | $\Theta_G=-\Theta_D$ for selected packets                        |
