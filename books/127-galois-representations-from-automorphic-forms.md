@@ -375,7 +375,7 @@ $$
 
 on the raw multiplicity space and hence on its semisimplification.
 
-Equation (5.2) proves unramifiedness and a quadratic annihilator. It does not yet prove the trace in the scalar case.
+Smooth proper base change proves unramifiedness, and equation (5.2) gives a quadratic annihilator. It does not yet prove the trace in the scalar case.
 
 ### 5.3 The scalar-Frobenius issue
 
