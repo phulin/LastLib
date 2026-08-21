@@ -116,7 +116,9 @@ theorem chapter11_unramified_common_uniformizer_norm
     (hcommon : chapter11CommonUniformizer vK vL πK πL)
     (hdegree : Module.finrank K L = f) (r : ℤ) :
     Algebra.norm K (πL ^ r) = πK ^ ((f : ℤ) * r) := by
-  sorry
+  rcases hcommon with ⟨hπK, hπL, hmap⟩
+  rw [hmap, Algebra.norm_zpow, Algebra.norm_algebraMap, hdegree]
+  simpa using (zpow_mul πK (f : ℤ) r).symm
 
 /- The residue-field step produces a unit lift before the principal-unit
    correction is applied.  The unit-lift assumption is stated explicitly
@@ -137,7 +139,10 @@ theorem chapter11_unramified_residue_unit_lift
     ∃ y : lˣ, Algebra.norm k (y : l) = ρK u ∧
       ∃ y₀ : chapter11ValuationRing vL,
         IsUnit y₀ ∧ ρL y₀ = (y : l) := by
-  sorry
+  obtain ⟨z, hz⟩ := hbaseunit u hu
+  obtain ⟨y, hy⟩ := hresunit z
+  obtain ⟨y₀, hy₀, hyres⟩ := hunitlift y
+  exact ⟨y, hy.trans hz, y₀, hy₀, hyres⟩
 
 /- Proposition 11.1 supplies the correction whose norm is the residual unit
    error. -/
@@ -151,7 +156,9 @@ theorem chapter11_unramified_principal_unit_correction
     ∃ y₁ : L,
       y₁ ∈ chapter11UnitFiltration vL 1 ∧
         Algebra.norm K y₁ = u / Algebra.norm K y₀ := by
-  sorry
+  unfold chapter11PrincipalUnitCorrection at herror
+  rcases hprincipal herror with ⟨y₁, hy₁, hnorm⟩
+  exact ⟨y₁, hy₁, hnorm⟩
 
 /- Multiplying the residue lift and the principal correction solves the unit
    equation, and multiplying by the uniformizer power solves the original one. -/
@@ -170,7 +177,47 @@ theorem chapter11_unramified_norm_equation_from_lifting
         y₀ ∈ chapter11UnitFiltration vL 0 ∧
           chapter11PrincipalUnitCorrection K L vK u y₀) :
     chapter11NormEquationSolution K L a := by
-  sorry
+  rcases hdecomp with ⟨r, u, hu, ha⟩
+  obtain ⟨y₀, hy₀, herror⟩ := hunitlift u hu
+  obtain ⟨y₁, hy₁, hnormy₁⟩ :=
+    chapter11_unramified_principal_unit_correction K L vK vL hprincipal u y₀ herror
+  have hu_ne : u ≠ 0 := by
+    intro hu0
+    subst u
+    rw [chapter11_unit_filtration_zero] at hu
+    have hval := (chapter11_mem_unit_set_iff_valuation_zero vK 0).mp hu
+    simp at hval
+  have hy₀_ne : y₀ ≠ 0 := by
+    intro hy₀0
+    subst y₀
+    rw [chapter11_unit_filtration_zero] at hy₀
+    have hval := (chapter11_mem_unit_set_iff_valuation_zero vL 0).mp hy₀
+    simp at hval
+  have hnormy₀_ne : Algebra.norm K y₀ ≠ 0 := by
+    intro hnormy₀0
+    apply hy₀_ne
+    exact (Algebra.norm_eq_zero_iff).mp hnormy₀0
+  have hy₁_ne : y₁ ≠ 0 := by
+    intro hy₁0
+    subst y₁
+    have hquot : u / Algebra.norm K y₀ = 0 := by
+      rw [← hnormy₁]
+      simp
+    field_simp [hnormy₀_ne] at hquot
+    apply hu_ne
+    simpa using hquot
+  refine ⟨πL ^ r * y₀ * y₁, ?_, ?_⟩
+  · exact mul_ne_zero (mul_ne_zero (zpow_ne_zero r hcommon.2.1.1) hy₀_ne) hy₁_ne
+  · calc
+      Algebra.norm K (πL ^ r * y₀ * y₁) =
+          Algebra.norm K (πL ^ r) * Algebra.norm K y₀ * Algebra.norm K y₁ := by
+            rw [(Algebra.norm K).map_mul, (Algebra.norm K).map_mul]
+      _ = πK ^ ((f : ℤ) * r) * Algebra.norm K y₀ * (u / Algebra.norm K y₀) := by
+        rw [chapter11_unramified_common_uniformizer_norm K L vK vL πK πL f hcommon hdegree r,
+          hnormy₁]
+      _ = πK ^ ((f : ℤ) * r) * u := by
+        field_simp
+      _ = a := ha.symm
 
 /- Finite residue fields make the valuation divisibility condition sufficient,
    while separability and completeness provide the principal-unit correction. -/
@@ -201,7 +248,77 @@ theorem chapter11_unramified_norm_equation_iff
     (a : K) (ha : a ≠ 0) :
     chapter11NormEquationSolution K L a ↔
       chapter11ValuationValueDivisibleBy vK f a := by
-  sorry
+  have hdegree_res :
+      Module.finrank K L =
+        Module.finrank (chapter11ResidueField vK) (chapter11ResidueField vL) := by
+    rw [hdegree, hfres]
+    have hcard_explicit :
+        Nat.card (chapter11ResidueField vL) =
+          Nat.card (chapter11ResidueField vK) ^
+            Module.finrank (chapter11ResidueField vK) (chapter11ResidueField vL) :=
+      Module.natCard_eq_pow_finrank
+    have hcard_add :
+        Nat.card (chapter11ResidueField vL) =
+          Nat.card (chapter11ResidueField vK) ^
+            LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
+              vK vL hunram.1 := by
+      let _ : Valuation.HasExtension vK.toValuation vL.toValuation := ⟨hunram.1⟩
+      unfold LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
+      exact Module.natCard_eq_pow_finrank
+    have hpowers :
+        Nat.card (chapter11ResidueField vK) ^
+            LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
+              vK vL hunram.1 =
+          Nat.card (chapter11ResidueField vK) ^
+            Module.finrank (chapter11ResidueField vK) (chapter11ResidueField vL) :=
+      hcard_add.symm.trans hcard_explicit
+    by_contra hne
+    rcases lt_or_gt_of_ne hne with hlt | hgt
+    · exact (Nat.ne_of_lt
+        (Nat.pow_lt_pow_right (Finite.one_lt_card : 2 ≤ Nat.card (chapter11ResidueField vK)) hlt))
+        hpowers
+    · exact (Nat.ne_of_lt
+        (Nat.pow_lt_pow_right (Finite.one_lt_card : 2 ≤ Nat.card (chapter11ResidueField vK)) hgt))
+        hpowers.symm
+  have hunitnorm :
+      Set.SurjOn (Algebra.norm K (S := L))
+        (chapter11UnitFiltration vL 0) (chapter11UnitFiltration vK 0) :=
+    chapter11_unramified_comparison_units_are_norms K L vK vL hunram
+      hdegree_res hred N hnormunit hnormred
+  have hprincipal :
+      Set.SurjOn (Algebra.norm K (S := L))
+        (chapter11UnitFiltration vL 1) (chapter11UnitFiltration vK 1) :=
+    proposition_11_1_unramified_principal_unit_norm_surjective K L vK vL hunram
+      hdegree_res hred
+  have hone : (1 : K) ∈ chapter11UnitFiltration vK 1 := by
+    rw [chapter11_unit_filtration_succ]
+    refine ⟨0, ?_, ?_⟩
+    · simp
+    · simp
+  have hunitlift : ∀ u : K, u ∈ chapter11UnitFiltration vK 0 →
+      ∃ y₀ : L,
+        y₀ ∈ chapter11UnitFiltration vL 0 ∧
+          chapter11PrincipalUnitCorrection K L vK u y₀ := by
+    intro u hu
+    have hu_ne : u ≠ 0 := by
+      intro hu0
+      subst u
+      rw [chapter11_unit_filtration_zero] at hu
+      have hval := (chapter11_mem_unit_set_iff_valuation_zero vK 0).mp hu
+      simp at hval
+    rcases hunitnorm hu with ⟨y₀, hy₀, hnorm₀⟩
+    refine ⟨y₀, hy₀, ?_⟩
+    unfold chapter11PrincipalUnitCorrection
+    rw [hnorm₀, div_self hu_ne]
+    exact hone
+  constructor
+  · rintro ⟨x, hx, heq⟩
+    exact chapter11_unramified_norm_equation_valuation_necessary K L vK vL f hunram hnorm
+      hdegree hfres a x hx heq
+  · intro hval
+    apply chapter11_unramified_norm_equation_from_lifting K L vK vL πK πL f a
+      (chapter11_unramified_norm_equation_decomposition K vK f πK hπ a ha hval)
+      hcommon hdegree hprincipal hunitlift
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11

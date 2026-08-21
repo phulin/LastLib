@@ -25,7 +25,8 @@ theorem chapter11_tame_norm_uniformizer_factor_spec
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] (πK : K) (πL : L) (hπK : πK ≠ 0) :
     chapter11TameNormUniformizerFactor K L πK πL * πK = Algebra.norm K πL := by
-  sorry
+  unfold chapter11TameNormUniformizerFactor
+  field_simp [hπK]
 
 /- The full set of tame norm-equation candidates: powers of a chosen
    uniformizer times a unit whose residue, after correcting by `c⁻ʳ`, is an
