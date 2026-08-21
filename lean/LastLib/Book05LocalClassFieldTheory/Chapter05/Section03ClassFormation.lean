@@ -1,6 +1,7 @@
 import Mathlib.Algebra.Module.ZMod
 import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
 import LastLib.Book05LocalClassFieldTheory.Chapter05.Core
+import LastLib.Book05LocalClassFieldTheory.Chapter05.Section02TateHomology
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter05
 
@@ -317,16 +318,6 @@ theorem chapter05_middle_two_extension_vanishing
     (H : Subgroup G) :
     IsZero (chapter05TateCohomology H (Rep.res H.subtype T.extension.middle) 0) ∧
       IsZero (chapter05TateCohomology H (Rep.res H.subtype T.extension.middle) 1) := by
-  sorry
-
-theorem chapter05_cohomological_triviality_criterion
-    {G : Type} [Group G] [Fintype G] (A : Rep ℤ G)
-    (h0 : ∀ H : Subgroup G,
-      IsZero (chapter05TateCohomology H (Rep.res H.subtype A) 0))
-    (h1 : ∀ H : Subgroup G,
-      IsZero (chapter05TateCohomology H (Rep.res H.subtype A) 1)) :
-    ∀ (H : Subgroup G) (r : ℤ),
-      IsZero (chapter05TateCohomology H (Rep.res H.subtype A) r) := by
   sorry
 
 theorem chapter05_two_extension_connecting_isomorphism

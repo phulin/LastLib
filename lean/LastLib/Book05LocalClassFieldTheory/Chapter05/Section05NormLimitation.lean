@@ -47,6 +47,17 @@ theorem chapter05_norm_subgroup_mono_of_tower
     (chapter05_norm_map_transitive K L M)
   simpa only [MonoidHom.coe_comp, Function.comp_apply] using h.symm
 
+/- The intermediate-field specialization is the natural quotient inclusion
+   needed by Proposition 5.2A; it is stated after the general norm-tower
+   lemma so the chapter’s dependency order remains chronological. -/
+theorem chapter05_intermediate_norm_subgroup_mono
+    (K M : Type*) [Field K] [Field M] [Algebra K M]
+    [FiniteDimensional K M]
+    (L : IntermediateField K M) [FiniteDimensional K L]
+    [FiniteDimensional L M] :
+    chapter05NormSubgroup K M ≤ chapter05NormSubgroup K L := by
+  exact chapter05_norm_subgroup_mono_of_tower K L M
+
 theorem chapter05_norm_limitation
     (K L : Type) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]

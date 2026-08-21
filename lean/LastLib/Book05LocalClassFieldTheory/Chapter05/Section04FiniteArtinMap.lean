@@ -19,6 +19,53 @@ open CategoryTheory
 isomorphism after the canonical degree `-2`/`H₁` and degree-zero norm bridges
 are composed.  The construction is named independently so later kernel and
 functoriality lemmas can use it. -/
+
+/- The natural map between norm quotients is the left vertical map in the
+   source's finite tower square.  It is kept as a quotient map with an
+   explicit subgroup inclusion so this section does not depend on the later
+   norm-limitation section. -/
+def chapter05NormQuotientMapOfLe
+    {K : Type*} [Field K] {N M : Subgroup Kˣ} (h : N ≤ M) :
+    (Kˣ ⧸ N) →* (Kˣ ⧸ M) :=
+  QuotientGroup.map N M (MonoidHom.id Kˣ) (by simpa using h)
+
+@[simp] theorem chapter05NormQuotientMapOfLe_mk
+    {K : Type*} [Field K] {N M : Subgroup Kˣ} (h : N ≤ M) (x : Kˣ) :
+    chapter05NormQuotientMapOfLe h (QuotientGroup.mk' N x) =
+      QuotientGroup.mk' M x := by
+  rfl
+
+/- The induced map on abelianizations is the established universal map from
+   `Abelianization.lift`; it is the right vertical map when the finite Artin
+   targets are presented in their source form `Gᵃᵇ`. -/
+def chapter05AbelianizationMapOfHom
+    {G Q : Type*} [Group G] [Group Q] (f : G →* Q) :
+    chapter05Abelianization G →* chapter05Abelianization Q :=
+  Abelianization.lift (chapter05AbelianizationMap Q |>.comp f)
+
+/- The source's tower compatibility uses the inflation of the lower
+   fundamental class and the degree factor `[M : L]`.  The pinned
+   cohomology API does not provide this cross-field inflation map, so the
+   missing local-class input is recorded with its actual source and target,
+   rather than by assuming the quotient square itself. -/
+structure Chapter05FundamentalClassTowerCompatibility
+    (K M : Type) [Field K] [Field M] [Algebra K M]
+    [FiniteDimensional K M] [IsAbelianGalois K M]
+    [Fintype (Gal(M / K))]
+    (L : IntermediateField K M) [FiniteDimensional K L]
+    [FiniteDimensional L M] [IsGalois K L] [Fintype (Gal(L / K))]
+    (D_M : Chapter05LocalClassFormationData K M)
+    (D_L : Chapter05LocalClassFormationData K L) where
+  coefficientMap :
+    Rep.res (AlgEquiv.restrictNormalHom L) (chapter05CoefficientRep K L) ⟶
+      chapter05CoefficientRep K M
+  coefficientMap_apply : ∀ x : Additive (Lˣ),
+    coefficientMap x = (chapter05AlgebraMapUnits L M).toAdditive x
+  inflation_fundamental :
+    (groupCohomology.map (AlgEquiv.restrictNormalHom L) coefficientMap 2)
+        D_L.fundamentalClass.value =
+      (Module.finrank L M) • D_M.fundamentalClass.value
+
 noncomputable def chapter05FiniteArtinQuotientEquiv
     {K L : Type} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
@@ -70,6 +117,26 @@ noncomputable def chapter05FiniteArtinQuotientEquiv
       (MulEquiv.toMultiplicative_toAdditive
         (G := chapter05Abelianization (Gal(L / K))))
   exact eMul
+
+/- Proposition 5.2A.  The field-theoretic tower supplies the normality and
+   quotient maps; the class-compatibility record supplies precisely the
+   inflation relation used in the chain-level cap-product argument. -/
+theorem chapter05_finite_artin_quotient_compatibility
+    (K M : Type) [Field K] [Field M] [Algebra K M]
+    [FiniteDimensional K M] [IsAbelianGalois K M]
+    [Fintype (Gal(M / K))]
+    (L : IntermediateField K M) [FiniteDimensional K L]
+    [FiniteDimensional L M] [IsGalois K L] [Normal K L]
+    [Fintype (Gal(L / K))]
+    (D_M : Chapter05LocalClassFormationData K M)
+    (D_L : Chapter05LocalClassFormationData K L)
+    (T : Chapter05FundamentalClassTowerCompatibility K M L D_M D_L)
+    (hNorm : chapter05NormSubgroup K M ≤ chapter05NormSubgroup K L) :
+    (chapter05AbelianizationMapOfHom (AlgEquiv.restrictNormalHom L)).comp
+        (chapter05FiniteArtinQuotientEquiv D_M).toMonoidHom =
+      (chapter05FiniteArtinQuotientEquiv D_L).toMonoidHom.comp
+        (chapter05NormQuotientMapOfLe hNorm) := by
+  sorry
 
 def chapter05FiniteArtinMap
     {K L : Type} [Field K] [Field L] [Algebra K L]

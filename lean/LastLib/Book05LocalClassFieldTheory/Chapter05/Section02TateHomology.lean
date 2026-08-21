@@ -4,7 +4,7 @@ namespace LastLib.Book05LocalClassFieldTheory.Chapter05
 
 noncomputable section
 
-open CategoryTheory
+open CategoryTheory CategoryTheory.Limits
 
 /-!
 ### 5.2. Tate homology in degree minus two
@@ -114,6 +114,19 @@ theorem chapter05_tate_zero_is_fixed_points_mod_norm
         (chapter05CoefficientRep K L) 0 ≃+
         Additive (chapter05NormQuotient K L)) := by
   exact ⟨chapter05TateZeroNormIso K L⟩
+
+/- The source criterion is uniform in the two consecutive degrees: the
+   vanishing pair may be any fixed integer `q`, not only degrees zero and one.
+   The subgroup quantifier is part of the statement. -/
+theorem chapter05_cohomological_triviality_criterion
+    {G : Type} [Group G] [Fintype G] (A : Rep ℤ G) (q : ℤ)
+    (hq : ∀ H : Subgroup G,
+      IsZero (chapter05TateCohomology H (Rep.res H.subtype A) q))
+    (hq1 : ∀ H : Subgroup G,
+      IsZero (chapter05TateCohomology H (Rep.res H.subtype A) (q + 1))) :
+    ∀ (H : Subgroup G) (r : ℤ),
+      IsZero (chapter05TateCohomology H (Rep.res H.subtype A) r) := by
+  sorry
 
 /- The cap-product interface from the shared file has precisely the source
 and target appearing here. -/
