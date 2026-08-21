@@ -214,23 +214,23 @@ noncomputable def splitEvaluation (s : D →ₐ[C] C) (Q : DescentDatum C D) :
 
 theorem splitCover_effective (s : D →ₐ[C] C) (Q : DescentDatum C D) :
     Function.Bijective (splitEvaluation s Q) := by
-  letI : Module D C := s.toRingHom.toModule
-  letI : Module C Q.A :=
+  let : Module D C := s.toRingHom.toModule
+  let : Module C Q.A :=
     ((ModuleCat.restrictScalars (algebraMap C D)).obj Q.A).isModule
-  letI : Module C ((descentComonad C D).obj Q.A) :=
+  let : Module C ((descentComonad C D).obj Q.A) :=
     ((ModuleCat.restrictScalars (algebraMap C D)).obj
       ((descentComonad C D).obj Q.A)).isModule
-  letI : Module D
+  let : Module D
       ((((ModuleCat.restrictScalars (algebraMap C D)).obj (ModuleCat.of D D) : Type u)
         ⊗[C] Q.A) : Type u) :=
     ((descentComonad C D).obj Q.A).isModule
-  letI : Module D
+  let : Module D
       (((ModuleCat.extendScalars (algebraMap C D)).obj (splitInvariant s Q)) : Type u) :=
     ((ModuleCat.extendScalars (algebraMap C D)).obj (splitInvariant s Q)).isModule
-  letI : IsScalarTower C D
+  let : IsScalarTower C D
       (((ModuleCat.restrictScalars (algebraMap C D)).obj (ModuleCat.of D D)) : Type u) :=
     IsScalarTower.of_compHom C D _
-  letI : IsScalarTower C D Q.A := IsScalarTower.of_compHom C D _
+  let : IsScalarTower C D Q.A := IsScalarTower.of_compHom C D _
   let j : Q.A →ₗ[C] (splitInvariant s Q : Type u) :=
     { toFun := fun q => (1 : C) ⊗ₜ[D] q
       map_add' := by
@@ -241,7 +241,7 @@ theorem splitCover_effective (s : D →ₐ[C] C) (Q : DescentDatum C D) :
         change (1 : C) ⊗ₜ[D] (algebraMap C D c • q) =
           c • ((1 : C) ⊗ₜ[D] q)
         rw [TensorProduct.tmul_smul]
-        simp [RingHom.toModule_smul, s.commutes] }
+        simp }
   let t :
       ((((ModuleCat.restrictScalars (algebraMap C D)).obj (ModuleCat.of D D) : Type u)
         ⊗[C] Q.A) : Type u) →ₗ[D]
