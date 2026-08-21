@@ -121,13 +121,13 @@ We will not attach any new object to this polynomial. Its role here is to keep t
 
 Let $\mathcal O$ be a complete discrete valuation ring with uniformizer $\varpi$, fraction field $E$, and residue field $k$. A finite extension of $E$ will always be given its extended valuation, and its valuation ring will be denoted by a primed or indexed version of $\mathcal O$.
 
-Write
+Write, using the representative-value integral lattice of Book 83,
 
 $$
-M=M_{\mathcal O}=S(U,W_{\mathcal O},\chi_f).
+M=M_{\mathcal O}(U;W,\chi).
 $$
 
-The notation means the exact integral module of quaternionic forms, not the possibly larger module formed directly after reduction. We assume throughout Chapters 1--8 that:
+This is the exact integral module of quaternionic forms, not a globally $D^\times$-stable weight lattice and not the possibly larger module formed directly after reduction. We assume throughout Chapters 1--8 that:
 
 1. $M$ is a finite torsion-free $\mathcal O$-module;
 2. every specified $T_v,S_v$ preserves $M$;
@@ -2634,9 +2634,9 @@ This is the precise interface with change of level. Correspondence calculations 
 We now assemble the endpoint in the exact form needed for later comparison. The input is:
 
 1. a complete DVR $(\mathcal O,\varpi,k)$;
-2. a finite free integral quaternionic automorphic module
+2. a finite free integral quaternionic automorphic module in the representative-value sense of Book 83
    $$
-   M=S(U,W_{\mathcal O},\chi_f);
+   M=M_{\mathcal O}(U;W,\chi);
    $$
 3. a finite bad set $\Sigma$;
 4. the specified commuting integral family $T_v,S_v^{\pm1}$ for $v\notin\Sigma$;
