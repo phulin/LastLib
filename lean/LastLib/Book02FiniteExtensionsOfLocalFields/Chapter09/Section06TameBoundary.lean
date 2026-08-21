@@ -103,43 +103,27 @@ theorem chapter09_finite_galois_inertia_order
     Nonempty (Chapter09FiniteGaloisRamificationData A B K L) := by
   sorry
 
-/-- A post-base-change Kummer presentation for the ramified stage.  The
-coefficient ring is the valuation ring after adjoining the needed roots of
-unity or making the suitable unramified base change; an integral-model
-package is needed to state the corresponding total-ramification predicate. -/
-structure Chapter09TameKummerPresentation
-    (A K L : Type*) [CommRing A] [IsDomain A]
-    [IsDiscreteValuationRing A] [Field K] [Field L]
-    [Algebra A K] [Algebra K L] [Algebra A L]
-    [IsScalarTower A K L] [IsFractionRing A K]
-    [FiniteDimensional K L]
-    (e : ℕ) (u : Aˣ) (π : A) where
-  tame : chapter09Tame (chapter09BaseResidueField A) e
-  positive : 0 < e
-  roots_of_unity : ∃ ζ : K, IsPrimitiveRoot ζ e
-  uniformizer :
-    Ideal.span ({π} : Set A) = IsLocalRing.maximalIdeal A
-  alpha : L
-  alpha_pow_eq_unit_mul_uniformizer : alpha ^ e =
-    algebraMap A L ((u : A) * π)
-  generates : Algebra.adjoin K ({alpha} : Set L) = ⊤
-  degree : Module.finrank K L = e
-
-/- The radical presentation supplies the Galois conclusion and the
-root-of-unity parametrization of its automorphisms. -/
-theorem chapter09_tame_kummer_is_galois_with_roots_of_unity
-    (A K L : Type*) [CommRing A] [IsDomain A]
-    [IsDiscreteValuationRing A] [Field K] [Field L]
-    [Algebra A K] [Algebra K L] [Algebra A L]
-    [IsScalarTower A K L] [IsFractionRing A K]
-    [FiniteDimensional K L]
-    (e : ℕ) (u : Aˣ) (π : A)
-    (d : Chapter09TameKummerPresentation A K L e u π) :
-    IsGalois K L ∧
-      ∃ κ : rootsOfUnity e K ≃* (L ≃ₐ[K] L),
-        ∀ ζ : rootsOfUnity e K,
-          κ ζ d.alpha = algebraMap K L ((ζ : Kˣ) : K) * d.alpha := by
-  sorry
+/- The Kummer conclusion used at the tame boundary is already established in
+§8.8 for the radical field itself.  Reuse that theorem rather than introducing
+another presentation of an arbitrary generated extension here. -/
+theorem chapter09_tame_kummer_radical_is_galois_with_roots_of_unity
+    {K : Type*} [Field K] {a : K} {e : ℕ} [NeZero e]
+    [Fact (Irreducible
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08KummerPolynomial
+        a e))]
+    (hζ : (primitiveRoots e K).Nonempty) :
+    IsGalois K
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08KummerRadicalField
+          K a e) ∧
+      Nonempty
+        (rootsOfUnity e K ≃*
+          (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08KummerRadicalField
+            K a e ≃ₐ[K]
+              LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08KummerRadicalField
+                K a e)) := by
+  exact
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08_kummer_radical_is_galois_with_roots_of_unity
+      hζ
 
 /- The chapter deliberately stops before introducing higher ramification
 filtrations, jumps, wild inertia subgroups, different ideals, or discriminants. -/

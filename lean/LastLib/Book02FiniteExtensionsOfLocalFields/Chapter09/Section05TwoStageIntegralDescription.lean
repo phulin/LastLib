@@ -1,4 +1,3 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.Section05MonogenicityAndResidueGenerators
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09.Section03CleanDecomposition
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09
