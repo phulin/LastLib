@@ -2089,7 +2089,7 @@ If $p\equiv1\pmod4$, the valuation line $\{1,\pi\}$ is self-orthogonal. If $p\eq
 
 ### 14.4 Elliptic-curve torsion
 
-Let $E/K$ be an elliptic curve and let $n$ satisfy (1.1). The Weil pairing
+_(Conditional remark._ The Weil pairing on elliptic-curve torsion used throughout this subsection, together with its compatibility with Kummer boundaries and dual isogenies, is proved later in the library, where the elliptic-curve isogeny theory is developed; the present book proves only finite-module duality and constructs no elliptic pairings. The statements of this subsection are therefore conditional on that later construction.*) Let $E/K$ be an elliptic curve and let $n$ satisfy (1.1). The Weil pairing
 
 $$
 e_n:E[n]\times E[n]\longrightarrow\mu_n
