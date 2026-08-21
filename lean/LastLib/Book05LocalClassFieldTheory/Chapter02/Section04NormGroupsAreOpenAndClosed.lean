@@ -22,12 +22,15 @@ theorem chapter02_norm_unit_image_compact_closed
     (vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ))
     (d : Chapter02NormUnitMapData K L vK vL)
+    (hvaluation_extension :
+      vK.IsEquiv (AddValuation.comap (algebraMap K L) vL))
     [TopologicalSpace (Chapter02UnitGroup vL)]
     [TopologicalSpace (Chapter02UnitGroup vK)]
     [T2Space (Chapter02UnitGroup vK)]
     [TopologicalSpace Kˣ] [T2Space Kˣ]
     (hcompact : IsCompact (Set.univ : Set (Chapter02UnitGroup vL)))
-    (hcontinuous : Continuous d.map) :
+    (hcontinuous : Continuous d.map)
+    (hcontinuous_inclusion : Continuous (chapter02UnitInclusion vK)) :
     IsCompact (chapter02NormUnitFieldImage K L vK vL d : Set Kˣ) ∧
       IsClosed (chapter02NormUnitFieldImage K L vK vL d : Set Kˣ) := by
   sorry
@@ -44,6 +47,8 @@ theorem chapter02_integral_trace_image_contains_deep_ideal
     [FiniteDimensional K L] [Algebra.IsSeparable K L]
     (vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ))
+    (hvaluation_extension :
+      vK.IsEquiv (AddValuation.comap (algebraMap K L) vL))
     (hcompleteK : IsAdicComplete
       (IsLocalRing.maximalIdeal (Chapter02ValuationRing vK))
       (Chapter02ValuationRing vK))
@@ -54,7 +59,7 @@ theorem chapter02_integral_trace_image_contains_deep_ideal
     (hDVRL : IsDiscreteValuationRing (Chapter02ValuationRing vL)) :
     ∃ c : ℕ, 1 ≤ c ∧
       chapter02ValuationIdealPowerSet vK c ⊆
-        chapter02TraceImage K L vK vL 0 := by
+        chapter02TraceImage K L vL 0 := by
   sorry
 
 theorem chapter02_norm_one_add_polynomial_exists
@@ -82,6 +87,8 @@ theorem chapter02_deep_norm_contraction_bound_exists
     (F : K[X])
     (hF : ∀ t : K, F.eval t = chapter02NormOneAddFunction K L b t)
     (hlocalK : Chapter02LocalField vK)
+    (hvaluation_extension :
+      vK.IsEquiv (AddValuation.comap (algebraMap K L) vL))
     (hbounded : ∃ c : ℕ, 1 ≤ c ∧ ∀ x : K,
       vK x ≥ (c : WithTop ℤ) →
         vL (algebraMap K L x * b) ≥ 1) :
@@ -92,8 +99,7 @@ theorem chapter02_deep_norm_contraction_bound_exists
   sorry
 
 theorem chapter02_norm_one_add_is_strict_contraction
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L]
+    (K : Type*) [Field K]
     (vK : AddValuation K (WithTop ℤ)) (F : K[X]) (c : ℕ)
     (hbound : Chapter02NormContractionCoefficientBound vK F c)
     {t t' : K}
@@ -108,27 +114,27 @@ def chapter02ValuationBall {K : Type*} [Field K]
   {x | v x ≥ (c : WithTop ℤ)}
 
 theorem chapter02_norm_one_add_maps_deep_ball_onto
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L]
+    (K : Type*) [Field K]
     (vK : AddValuation K (WithTop ℤ)) (F : K[X]) (c : ℕ)
     (hbound : Chapter02NormContractionCoefficientBound vK F c)
     (hcomplete :
       IsAdicComplete
         (IsLocalRing.maximalIdeal (Chapter02ValuationRing vK))
-        (Chapter02ValuationRing vK)) :
+        (Chapter02ValuationRing vK))
+    (hDVR : IsDiscreteValuationRing (Chapter02ValuationRing vK)) :
     Set.SurjOn F.eval (chapter02ValuationBall vK c)
       (chapter02ValuationBall vK c) := by
   sorry
 
 theorem chapter02_complete_ball_fixed_point_of_norm_correction
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L]
+    (K : Type*) [Field K]
     (vK : AddValuation K (WithTop ℤ)) (F : K[X]) (c : ℕ)
     (hbound : Chapter02NormContractionCoefficientBound vK F c)
     (hcomplete :
       IsAdicComplete
         (IsLocalRing.maximalIdeal (Chapter02ValuationRing vK))
-        (Chapter02ValuationRing vK)) :
+        (Chapter02ValuationRing vK))
+    (hDVR : IsDiscreteValuationRing (Chapter02ValuationRing vK)) :
     ∀ s ∈ chapter02ValuationBall vK c, ∃! t,
       t ∈ chapter02ValuationBall vK c ∧ F.eval t = s := by
   sorry
@@ -139,6 +145,8 @@ theorem proposition_2_2_deep_principal_units_are_norms
     (vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ))
     (d : Chapter02NormUnitMapData K L vK vL)
+    (hvaluation_extension :
+      vK.IsEquiv (AddValuation.comap (algebraMap K L) vL))
     (hcompleteK :
       IsAdicComplete
         (IsLocalRing.maximalIdeal (Chapter02ValuationRing vK))
@@ -160,16 +168,27 @@ theorem chapter02_norm_subgroup_open_of_deep_units
     (vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ))
     [TopologicalSpace Kˣ]
+    [IsTopologicalGroup Kˣ]
     (hbasis : Chapter02FieldUnitFiltrationNeighborhoodBasis vK)
     (hdeep : ∃ c : ℕ,
       chapter02FieldUnitFiltration vK c ≤ chapter02NormSubgroup K L) :
     IsOpen (chapter02NormSubgroup K L : Set Kˣ) := by
   sorry
 
-def Chapter02NormTranslateDecomposition
+structure Chapter02NormTranslateDecomposition
     {K : Type*} [Field K] [TopologicalSpace Kˣ]
-    (N U : Subgroup Kˣ) (π : Kˣ) : Prop :=
-  ∃ f : ℕ, ∀ x : Kˣ,
+    (N U : Subgroup Kˣ) (π : Kˣ) where
+  f : ℕ
+  f_pos : 0 < f
+  valuation : Kˣ →* Multiplicative ℤ
+  valuation_surjective : Function.Surjective valuation
+  valuation_uniformizer : valuation π = Multiplicative.ofAdd 1
+  valuation_continuous : Continuous valuation
+  units_eq_kernel : U = MonoidHom.ker valuation
+  membership_by_valuation : ∀ x : Kˣ,
+    x ∈ N ↔ ∃ z : ℤ,
+      valuation x = Multiplicative.ofAdd ((f : ℤ) * z)
+  membership_by_translate : ∀ x : Kˣ,
     x ∈ N ↔ ∃ z : ℤ, ∃ u : U,
       x = π ^ ((f : ℤ) * z) * (u : Kˣ)
 
@@ -186,7 +205,7 @@ theorem chapter02_norm_subgroup_is_open_closed_and_finite_index
     [FiniteDimensional K L] [Algebra.IsSeparable K L]
     (vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ))
-    [TopologicalSpace Kˣ] [T2Space Kˣ]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ] [T2Space Kˣ]
     (hbasis : Chapter02FieldUnitFiltrationNeighborhoodBasis vK)
     (d : Chapter02NormUnitMapData K L vK vL)
     (hdeep : ∃ c : ℕ, chapter02FieldUnitFiltration vK c ≤

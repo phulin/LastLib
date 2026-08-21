@@ -104,8 +104,9 @@ theorem chapter02_norm_valuation_image
     (vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ)) (f : ℕ)
     (hformula : chapter02NormValuationFormula K L vK vL f)
-    (πL : Lˣ) (hπL : vL (πL : L) = (1 : WithTop ℤ)) :
-    chapter02NormValuationImage K L vK vL =
+    (πL : Lˣ) (hπL : vL (πL : L) = (1 : WithTop ℤ))
+    (hvalueL : Chapter02NormalizedValueGroup vL) :
+    chapter02NormValuationImage K L vK =
       Set.range (fun z : ℤ => (f : WithTop ℤ) * z) := by
   sorry
 
@@ -115,9 +116,10 @@ theorem chapter02_norm_valuation_image_eq_multiples
     (vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ)) (f : ℕ)
     (hformula : chapter02NormValuationFormula K L vK vL f)
-    (πL : Lˣ) (hπL : vL (πL : L) = (1 : WithTop ℤ)) :
+    (πL : Lˣ) (hπL : vL (πL : L) = (1 : WithTop ℤ))
+    (hvalueL : Chapter02NormalizedValueGroup vL) :
     ∀ z : WithTop ℤ,
-      z ∈ chapter02NormValuationImage K L vK vL ↔
+      z ∈ chapter02NormValuationImage K L vK ↔
         ∃ n : ℤ, z = (f : WithTop ℤ) * n := by
   sorry
 
@@ -129,7 +131,10 @@ theorem chapter02_norm_index_decomposition
     (vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ)) (f : ℕ)
     (hformula : chapter02NormValuationFormula K L vK vL f)
+    (πK : Kˣ) (hπK : vK (πK : K) = (1 : WithTop ℤ))
     (πL : Lˣ) (hπL : vL (πL : L) = (1 : WithTop ℤ))
+    (hvalueK : Chapter02NormalizedValueGroup vK)
+    (hvalueL : Chapter02NormalizedValueGroup vL) (hf : 0 < f)
     (hintersection :
       (chapter02NormSubgroup K L).comap (chapter02UnitInclusion vK) =
         chapter02UnitNormSubgroup K L vK vL)
@@ -160,6 +165,15 @@ structure Chapter02UnramifiedNormData
   common_uniformizer :
     (πL : L) = algebraMap K L (πK : K)
   norm_formula : chapter02NormValuationFormula K L vK vL degree
+  base_decomposition : ∀ x : K, x ≠ 0 →
+    ∃ z : ℤ, ∃ u : Chapter02UnitGroup vK,
+      x = (πK : K) ^ z * (u : K)
+  extension_decomposition : ∀ x : L, x ≠ 0 →
+    ∃ z : ℤ, ∃ u : Chapter02UnitGroup vL,
+      x = (πL : L) ^ z * (u : L)
+  norm_unit_is_unit : ∀ u : Chapter02UnitGroup vL,
+    chapter02NormHom K L (chapter02UnitInclusion vL u) ∈
+      chapter02FieldUnitFiltration vK 0
   units_are_norms :
     chapter02FieldUnitFiltration vK 0 ≤
       (chapter02NormSubgroup K L)
@@ -205,8 +219,9 @@ theorem chapter02_totally_ramified_norm_valuation_unrestricted
     (vL : AddValuation L (WithTop ℤ)) (f : ℕ)
     (hf : f = 1)
     (hformula : chapter02NormValuationFormula K L vK vL f)
-    (πL : Lˣ) (hπL : vL (πL : L) = (1 : WithTop ℤ)) :
-    chapter02NormValuationImage K L vK vL =
+    (πL : Lˣ) (hπL : vL (πL : L) = (1 : WithTop ℤ))
+    (hvalueL : Chapter02NormalizedValueGroup vL) :
+    chapter02NormValuationImage K L vK =
       Set.range (fun z : ℤ => (z : WithTop ℤ)) := by
   sorry
 
@@ -217,7 +232,8 @@ theorem chapter02_totally_ramified_obstruction_is_unit
     (vL : AddValuation L (WithTop ℤ)) (f : ℕ)
     (hf : f = 1)
     (hformula : chapter02NormValuationFormula K L vK vL f)
-    (πL : Lˣ) (hπL : vL (πL : L) = (1 : WithTop ℤ)) :
+    (πL : Lˣ) (hπL : vL (πL : L) = (1 : WithTop ℤ))
+    (hvalueL : Chapter02NormalizedValueGroup vL) :
     ∀ x : Kˣ, ∃ y : Kˣ, y ∈ chapter02NormSubgroup K L ∧
       ∃ u : chapter02FieldUnitFiltration vK 0,
         x = y * (u : Kˣ) := by

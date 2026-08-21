@@ -3,8 +3,6 @@ import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Section08Completene
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.Section04TheValuationOfANorm
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.Section05ResidueFieldShadows
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.Section04AbsoluteValueNormalizations
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Topology.Instances.ZMod
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter02
 
@@ -129,12 +127,20 @@ def chapter02IsUniformizerUnit {K : Type*} [Field K]
     (v : AddValuation K (WithTop ℤ)) (π : Kˣ) : Prop :=
   v (π : K) = (1 : WithTop ℤ)
 
+/- Every nonzero element has an integral value in the chosen normalization.
+   This is the value-group hypothesis used when a uniformizer is used to
+   parameterize all valuation coordinates. -/
+def Chapter02NormalizedValueGroup {K : Type*} [Field K]
+    (v : AddValuation K (WithTop ℤ)) : Prop :=
+  ∀ x : K, x ≠ 0 → ∃ n : ℤ, v x = (n : WithTop ℤ)
+
 /- The valuation map has an additive target.  `Multiplicative ℤ` records the
    same target as a group homomorphism out of the multiplicative field group. -/
 def chapter02ValuationExactSequence {K : Type*} [Field K]
     (v : AddValuation K (WithTop ℤ))
     (ν : Kˣ →* Multiplicative ℤ) : Prop :=
-  Function.MulExact (chapter02UnitInclusion v) ν ∧ Function.Surjective ν
+  Function.Injective (chapter02UnitInclusion v) ∧
+    Function.MulExact (chapter02UnitInclusion v) ν ∧ Function.Surjective ν
 
 def chapter02UniformizerSection {K : Type*} [Field K]
     (π : Kˣ) : Multiplicative ℤ →* Kˣ :=
@@ -146,11 +152,21 @@ def chapter02ValueUnitSubgroup {K : Type*} [Field K]
     (v : AddValuation K (WithTop ℤ)) (π : Kˣ) (m n : ℕ) : Subgroup Kˣ :=
   Subgroup.zpowers (π ^ m) ⊔ chapter02FieldUnitFiltration v n
 
+/- The value-unit subgroups form the neighborhood basis at the identity in
+   the multiplicative topology.  The separate predicate prevents a basis for
+   the compact unit subgroup from being mistaken for a basis of all of Kˣ. -/
+def Chapter02ValueUnitNeighborhoodBasis {K : Type*} [Field K]
+    (v : AddValuation K (WithTop ℤ)) (π : Kˣ) [TopologicalSpace Kˣ] : Prop :=
+  (∀ m n : ℕ, 1 ≤ m → 1 ≤ n →
+    IsOpen (chapter02ValueUnitSubgroup v π m n : Set Kˣ)) ∧
+    ∀ s ∈ 𝓝 (1 : Kˣ), ∃ m n : ℕ, 1 ≤ m ∧ 1 ≤ n ∧
+      (chapter02ValueUnitSubgroup v π m n : Set Kˣ) ⊆ s
+
 def chapter02ValueUnitProductSet {K : Type*} [Field K]
-    (v : AddValuation K (WithTop ℤ)) (π : K) (m n : ℕ) : Set K :=
+    (v : AddValuation K (WithTop ℤ)) (π : Kˣ) (m n : ℕ) : Set K :=
   {x | ∃ z : ℤ, ∃ u : K,
     u ∈ chapter02FieldUnitSet v n ∧
-      x = π ^ ((m : ℤ) * z) * u}
+      x = ((π : Kˣ) : K) ^ ((m : ℤ) * z) * u}
 
 def chapter02NormHom
     (K L : Type*) [Field K] [Field L] [Algebra K L]
@@ -217,8 +233,7 @@ def chapter02NormValuationFormula
 def chapter02NormValuationImage
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L]
-    (vK : AddValuation K (WithTop ℤ))
-    (_vL : AddValuation L (WithTop ℤ)) : Set (WithTop ℤ) :=
+    (vK : AddValuation K (WithTop ℤ)) : Set (WithTop ℤ) :=
   {z | ∃ x : L, x ≠ 0 ∧ z = vK (Algebra.norm K x)}
 
 def chapter02UnitNormImage
@@ -233,7 +248,6 @@ def chapter02UnitNormImage
 def chapter02TraceImage
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L]
-    (_vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ)) (n : ℕ) : Set K :=
   Algebra.trace K L '' chapter02ValuationIdealPowerSet vL n
 

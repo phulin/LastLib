@@ -24,7 +24,8 @@ theorem chapter02_valuation_exact_sequence
     {K : Type*} [Field K]
     (v : AddValuation K (WithTop ℤ))
     (d : Chapter02ValuationCoordinateData v) :
-    Function.MulExact (chapter02UnitInclusion v) d.valuation ∧
+    Function.Injective (chapter02UnitInclusion v) ∧
+      Function.MulExact (chapter02UnitInclusion v) d.valuation ∧
       Function.Surjective d.valuation := by
   exact d.exact
 

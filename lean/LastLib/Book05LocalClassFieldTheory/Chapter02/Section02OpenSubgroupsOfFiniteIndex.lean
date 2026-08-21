@@ -1,4 +1,7 @@
 import LastLib.Book05LocalClassFieldTheory.Chapter02.Dependencies
+import LastLib.Book05LocalClassFieldTheory.Chapter02.Section01SeparatingMagnitudeFromUnits
+import Mathlib.Data.ZMod.Basic
+import Mathlib.Topology.Instances.ZMod
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter02
 
@@ -57,7 +60,7 @@ def Chapter02QuotientTopology
     IsOpen s ↔ IsOpen ((QuotientGroup.mk' H) ⁻¹' s)
 
 theorem chapter02_open_subgroup_iff_quotient_discrete
-    {G : Type*} [CommGroup G] [TopologicalSpace G]
+    {G : Type*} [CommGroup G] [TopologicalSpace G] [IsTopologicalGroup G]
     (H : Subgroup G) [TopologicalSpace (G ⧸ H)]
     (hquotient : Chapter02QuotientTopology H) :
     IsOpen (H : Set G) ↔ DiscreteTopology (G ⧸ H) := by
@@ -70,6 +73,7 @@ theorem proposition_2_1_open_finite_index_criterion
     [TopologicalSpace Kˣ]
     (hbasis : Chapter02FieldUnitFiltrationNeighborhoodBasis v)
     (π : Kˣ) (hπ : chapter02IsUniformizerUnit v π)
+    (hvaluebasis : Chapter02ValueUnitNeighborhoodBasis v π)
     (H : Subgroup Kˣ) [TopologicalSpace (Kˣ ⧸ H)]
     (hquotient : Chapter02QuotientTopology H) :
     (Chapter02OpenFiniteIndexSubgroup H ↔
@@ -83,8 +87,10 @@ theorem chapter02_finite_quotient_of_value_unit_neighborhood
     {K : Type*} [Field K]
     (v : AddValuation K (WithTop ℤ))
     [TopologicalSpace Kˣ]
+    [IsTopologicalGroup Kˣ]
     (hbasis : Chapter02FieldUnitFiltrationNeighborhoodBasis v)
-    (π : Kˣ) (m n : ℕ) (hm : 1 ≤ m) (hn : 1 ≤ n)
+    (π : Kˣ) (hvaluebasis : Chapter02ValueUnitNeighborhoodBasis v π)
+    (m n : ℕ) (hm : 1 ≤ m) (hn : 1 ≤ n)
     (H : Subgroup Kˣ)
     (hH : chapter02ValueUnitSubgroup v π m n ≤ H)
     (hfinite : Finite (Kˣ ⧸ chapter02ValueUnitSubgroup v π m n)) :
