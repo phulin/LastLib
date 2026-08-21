@@ -103,7 +103,7 @@ characteristic. -/
 theorem chapter01_characteristic_exponent_eq_prime
     (k : Type*) [Field k] (p : ℕ) [Fact p.Prime] [CharP k p] :
     chapter01CharacteristicExponent k = p := by
-  sorry
+  exact ringExpChar.eq k p
 
 end
 

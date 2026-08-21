@@ -27,11 +27,30 @@ theorem chapter01_uniformizer_ratio_exists_for_valuation
     (π : vL.valuationSubring) (hπ : chapter01IsUniformizer vL π)
     (σ : chapter01InertiaGroup K vL.valuationSubring) :
     ∃ c : vL.valuationSubringˣ,
-      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05ValuationRingAction
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05ValuationRingAction
           K vL.valuationSubring
           (σ : chapter01DecompositionGroup K vL.valuationSubring) π =
         (c : vL.valuationSubring) * π := by
-  sorry
+  have hπirr : Irreducible (π : vL.valuationSubring) := by
+    rw [IsDiscreteValuationRing.irreducible_iff_uniformizer]
+    exact hπ.2
+  have hσirr : Irreducible
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05ValuationRingAction
+        K vL.valuationSubring
+        (σ : chapter01DecompositionGroup K vL.valuationSubring) π) := by
+    exact hπirr.map
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05ValuationRingAction
+        K vL.valuationSubring (σ : chapter01DecompositionGroup K vL.valuationSubring))
+  have hassoc : Associated
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05ValuationRingAction
+        K vL.valuationSubring
+        (σ : chapter01DecompositionGroup K vL.valuationSubring) π)
+      (π : vL.valuationSubring) := by
+    exact IsDiscreteValuationRing.associated_of_irreducible
+      vL.valuationSubring hσirr hπirr
+  rcases hassoc.symm with ⟨u, hu⟩
+  refine ⟨u, ?_⟩
+  rw [← hu, mul_comm]
 
 /-- A chosen unit ratio `σ(π)/π` for an inertial automorphism. -/
 noncomputable def chapter01UniformizerRatio

@@ -70,7 +70,12 @@ theorem chapter01_kernel_card_eq_degree_factor
     (e f : ℕ) (hD : Nat.card D = e * f)
     (hQ : Nat.card Q = f) :
     Nat.card (MonoidHom.ker ρ) = e := by
-  sorry
+  have hcard := chapter01_residue_exact_sequence_cardinality ρ hρ
+  have hf : 0 < f := by
+    rw [← hQ]
+    exact Nat.card_pos
+  rw [hD, hQ] at hcard
+  exact (Nat.mul_right_cancel_iff hf).mp hcard.symm
 
 /-- The preceding kernel calculation applies to any chosen inertia subgroup
 identified as the kernel of residue reduction. -/
@@ -156,7 +161,43 @@ theorem chapter01_separable_residue_reduction_exists
           IsLocalRing.ResidueField v.valuationSubring),
       Function.Surjective ρ ∧
         MonoidHom.ker ρ = chapter01InertiaGroup F w.valuationSubring := by
-  sorry
+  obtain ⟨e⟩ :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.residue_automorphisms_over_base_is_galois_group
+      (k := IsLocalRing.ResidueField v.valuationSubring)
+      (l := IsLocalRing.ResidueField w.valuationSubring)
+  let a :=
+    chapter01ResidueActionOverBase F w.valuationSubring
+      (IsLocalRing.ResidueField v.valuationSubring) hbase
+  let rho := e.toMonoidHom.comp a
+  refine ⟨rho, ?_, ?_⟩
+  · exact e.surjective.comp
+      (chapter01_residue_action_over_base_surjective v w hext hcomplete hunique
+        hbase hseparable)
+  · have ha :
+        MonoidHom.ker a = chapter01InertiaGroup F w.valuationSubring := by
+      ext sigma
+      constructor
+      · intro h
+        rw [chapter01_inertia_group_is_residue_action_kernel]
+        change chapter01ResidueAction F w.valuationSubring sigma = 1
+        exact congrArg Subtype.val h
+      · intro h
+        rw [chapter01_inertia_group_is_residue_action_kernel] at h
+        change a sigma = 1
+        apply Subtype.ext
+        exact h
+    have hc : MonoidHom.ker rho = MonoidHom.ker a := by
+      ext sigma
+      constructor
+      · intro h
+        change e (a sigma) = 1 at h
+        apply e.injective
+        simpa using h
+      · intro h
+        change a sigma = 1 at h
+        change e (a sigma) = 1
+        rw [h, e.map_one]
+    exact hc.trans ha
 
 /-!
 The next statement is the corrected form of the source's “fixed field of
@@ -184,7 +225,10 @@ theorem chapter01_inertia_fixed_field_is_maximal_unramified
       Nonempty
         (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09.Chapter09GaloisInertiaIdentification
           A B K L I) := by
-  sorry
+  refine LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09.chapter09_galois_inertia_fixed_field
+    A B K L ?_
+  exact
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.perfect_residue_field_has_separable_finite_extensions
 
 /-- The fixed field of inertia carries the quotient Galois group. -/
 theorem chapter01_residue_quotient_is_fixed_field_galois_group
