@@ -41,9 +41,9 @@ theorem chapter13_nonunique_coefficient_fields
 theorem chapter13_p_basis_lift_family_power_series
     (k : Type u) [Field k] (p : ℕ) [Fact (Nat.Prime p)] [CharP k p]
     (B : Set k)
-    (hB : Chapter13PBasis (Chapter13PthPowerSubfield k p) B p)
+    (_hB : Chapter13PBasis (Chapter13PthPowerSubfield k p) B p)
     (g : B → PowerSeries k)
-    (hg : ∀ b : B, g b ∈ Ideal.span ({PowerSeries.X} : Set (PowerSeries k))) :
+    (_hg : ∀ b : B, g b ∈ Ideal.span ({PowerSeries.X} : Set (PowerSeries k))) :
     ∃ K : Chapter13Subfield (PowerSeries k),
       Chapter13IsCoefficientField K := by
   let f : k →+* PowerSeries k := PowerSeries.C
@@ -340,9 +340,9 @@ instance chapter13CyclotomicOrderLocalRing
       (Ideal.span {(p : PadicInt p)}) := by
     simpa [f, Ideal.map_span, Polynomial.map_comp,
       Polynomial.map_cyclotomic_int] using hE0
-  letI : Module.Finite (PadicInt p) (AdjoinRoot f) :=
+  let : Module.Finite (PadicInt p) (AdjoinRoot f) :=
     hmonic.finite_adjoinRoot
-  letI : Algebra.IsIntegral (PadicInt p) (AdjoinRoot f) :=
+  let : Algebra.IsIntegral (PadicInt p) (AdjoinRoot f) :=
     Algebra.IsIntegral.of_finite (R := PadicInt p) (B := AdjoinRoot f)
   have hqroot :
       f.eval₂ (PadicInt.toZMod : PadicInt p →+* ZMod p) 0 = 0 := by
@@ -356,7 +356,7 @@ instance chapter13CyclotomicOrderLocalRing
       (PadicInt.toZMod : PadicInt p →+* ZMod p) y
     refine ⟨AdjoinRoot.of f a, ?_⟩
     simpa [q] using ha
-  letI : Nontrivial (AdjoinRoot f) := hqsurj.nontrivial
+  let : Nontrivial (AdjoinRoot f) := hqsurj.nontrivial
   let N : Ideal (AdjoinRoot f) :=
     Ideal.map (AdjoinRoot.of f : PadicInt p →+* AdjoinRoot f)
         (Ideal.span {(p : PadicInt p)}) ⊔
@@ -419,7 +419,7 @@ instance chapter13CyclotomicOrderLocalRing
     apply IsLocalRing.of_unique_max_ideal
     refine ⟨N, hNmax, ?_⟩
     intro Q hQ
-    letI : Q.IsMaximal := hQ
+    let : Q.IsMaximal := hQ
     have hQbase :
         (Q.comap (algebraMap (PadicInt p) (AdjoinRoot f))).IsMaximal :=
       Ideal.isMaximal_comap_of_isIntegral_of_isMaximal Q
@@ -469,7 +469,7 @@ instance chapter13CyclotomicOrderLocalRing
   let e : AdjoinRoot f ≃+* Chapter13CyclotomicOrder p :=
     Ideal.quotEquivOfEq (congrArg (fun q : Polynomial (PadicInt p) =>
       Ideal.span ({q} : Set (Polynomial (PadicInt p)))) hf)
-  letI : IsLocalRing (AdjoinRoot f) := hlocal
+  let : IsLocalRing (AdjoinRoot f) := hlocal
   exact e.isLocalRing
 
 instance chapter13CyclotomicOrderDomain
@@ -536,7 +536,7 @@ instance chapter13CyclotomicOrderDomain
         exact_mod_cast (Fact.out : Nat.Prime p).ne_zero)).2
       exact PadicInt.prime_p
     exact (hE.irreducible hP hmonic.isPrimitive hdegree).prime
-  haveI : IsDomain (AdjoinRoot f) := AdjoinRoot.isDomain_of_prime hprime
+  have : IsDomain (AdjoinRoot f) := AdjoinRoot.isDomain_of_prime hprime
   let e : AdjoinRoot f ≃+* Chapter13CyclotomicOrder p :=
     Ideal.quotEquivOfEq (congrArg (fun q : Polynomial (PadicInt p) =>
       Ideal.span ({q} : Set (Polynomial (PadicInt p)))) hf)
