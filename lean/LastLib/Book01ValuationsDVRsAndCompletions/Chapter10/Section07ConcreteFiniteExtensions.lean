@@ -774,6 +774,9 @@ theorem chapter10_constant_field_extension_numerical_profile
       algebraMap (LaurentSeries k) (LaurentSeries k')
           (((PowerSeries.X : PowerSeries k) : LaurentSeries k)) =
         ((PowerSeries.X : PowerSeries k') : LaurentSeries k'))
+    (hcoeff : ∀ (x : LaurentSeries k) (n : ℤ),
+      (algebraMap (LaurentSeries k) (LaurentSeries k') x).coeff n =
+        algebraMap k k' (x.coeff n))
     (h : (Chapter10LaurentSeriesValuation k).IsEquiv
       ((Chapter10LaurentSeriesValuation k').comap
         (algebraMap (LaurentSeries k) (LaurentSeries k')))) :
@@ -949,6 +952,32 @@ theorem chapter10_constant_field_extension_numerical_profile
   let p : Chapter10FiniteExtensionProfile :=
     { degree := Module.finrank (LaurentSeries k) (LaurentSeries k'),
       ramificationIndex := 1, residueDegree := Module.finrank k k' }
+  /-
+  Proof roadmap for `hdegree` (there is no chronological Mathlib theorem computing this
+  Laurent-series finrank).
+
+  * Put `b := Module.finBasis k k'`, indexed by `Fin (Module.finrank k k')`.  For
+    `x : LaurentSeries k'` and `i`, define its coordinate Laurent series by
+    `x.map ((b.repr).coord i).toZeroHom`.  `HahnSeries.map` is in
+    `Mathlib/RingTheory/HahnSeries/Basic.lean`; its support lies in `x.support`, so the
+    partially-well-ordered support obligation is automatic.
+  * Show coefficientwise, using `HahnSeries.ext`, `HahnSeries.coeff_sum`,
+    `HahnSeries.coeff_mul`, `hcoeff`, and `b.sum_repr`, that
+      `x = ∑ i, algebraMap (LaurentSeries k) (LaurentSeries k') (coord x i) *
+        HahnSeries.C (b i)`.
+    Use `HahnSeries.algebraMap_apply' ℤ` and `HahnSeries.C_mul_eq_smul` for constants.
+  * Hence `fun i => HahnSeries.C (b i)` spans over `LaurentSeries k`.  Apply
+    `Module.finrank_le_of_span_eq_top` from
+    `Mathlib/LinearAlgebra/Dimension/Constructions.lean` for the upper bound.
+  * For the reverse bound, rewrite
+    `chapter10_heterogeneous_single_extension_fundamental_inequality` from
+    `Chapter10/Section04RamificationIndexAndResidueDegree.lean` with `hram` and
+    `hresdegree`.  Finish by `Nat.le_antisymm`.
+
+  Dead end: the fundamental inequality alone supplies only the lower bound.  Moreover,
+  `hparameter` controls only `X`; it does not make an arbitrary Laurent-series algebra map
+  coefficientwise, which is why the corrected interface includes `hcoeff`.
+  -/
   have hdegree : Module.finrank (LaurentSeries k) (LaurentSeries k') =
       Module.finrank k k' := by
     sorry
@@ -967,6 +996,9 @@ theorem chapter10_constant_field_extension_profile
       algebraMap (LaurentSeries k) (LaurentSeries k')
           (((PowerSeries.X : PowerSeries k) : LaurentSeries k)) =
         ((PowerSeries.X : PowerSeries k') : LaurentSeries k'))
+    (hcoeff : ∀ (x : LaurentSeries k) (n : ℤ),
+      (algebraMap (LaurentSeries k) (LaurentSeries k') x).coeff n =
+        algebraMap k k' (x.coeff n))
     (hseparable : Algebra.IsSeparable k k')
     (h : (Chapter10LaurentSeriesValuation k).IsEquiv
       ((Chapter10LaurentSeriesValuation k').comap
@@ -982,7 +1014,7 @@ theorem chapter10_constant_field_extension_profile
             (Chapter10LaurentSeriesValuation k)
             (Chapter10LaurentSeriesValuation k') h d := by
   obtain ⟨d, p, hprof, hdegree, hram, hresdegree, hunram⟩ :=
-    chapter10_constant_field_extension_numerical_profile hparameter h
+    chapter10_constant_field_extension_numerical_profile hparameter hcoeff h
   let : Valuation.HasExtension (Chapter10LaurentSeriesValuation k)
       (Chapter10LaurentSeriesValuation k') := ⟨h⟩
   have he :
@@ -1650,6 +1682,48 @@ theorem chapter10_unramified_lift_profile
   obtain ⟨d⟩ := chapter10_heterogeneous_extension_data_exists v w hext
   let p : Chapter10FiniteExtensionProfile :=
     { degree := f, ramificationIndex := 1, residueDegree := f }
+  /-
+  Proof roadmap for `hhard`; the existing hypotheses are sufficient.
+
+  * Install `Valuation.HasExtension v w := ⟨hext⟩`.  Prove `w α ≤ 1`: the witness
+    `⟨P, hPmonic, hroot⟩` gives `IsIntegral A α`; `hA.map_le_one` and `hext.le_iff_le`
+    define a ring hom `A →+* w.valuationSubring`.  Map the monic integral equation along
+    this hom, then use `Valuation.Integers.isIntegral_iff_v_le_one` for the canonical
+    witness `Valuation.integer.integers w` from
+    `Mathlib/RingTheory/Valuation/Integral.lean`.  (Do not try to construct
+    `w.Integers A`: `A` need not be the whole valuation ring of `L`.)  Let `αbar` be the
+    residue of this bounded lift.
+  * Transport the base residue field with the equivalence supplied by `hres`.  Its ring-hom
+    equation, `Valuation.HasExtension.algebraMap_residue_eq_residue_algebraMap`, `hroot`,
+    and `Polynomial.eval_map_apply` prove `(P.map res).eval αbar = 0`.
+  * Build `AdjoinRoot (P.map res) →ₐ[k] Chapter10ResidueField w` with
+    `AdjoinRoot.liftAlgHom` (`Mathlib/RingTheory/AdjoinRoot.lean`).  It is injective because
+    `hQirr` makes the source a field.  `AdjoinRoot.powerBasis hQirr.ne_zero`, `hQdegree`,
+    `LinearMap.finrank_le_finrank_of_injective`, and `d.residueDegree_eq` then give
+    `f ≤ d.residueDegree`; transport finrank across `hres` with the same
+    `Algebra.finrank_eq_of_equiv_equiv` pattern used in the constant-field proof above.
+  * Combine that bound with `hdegree` and
+    `chapter10_heterogeneous_single_extension_fundamental_inequality v w hext d`.
+    Positivity of `d.ramificationIndex` follows by rewriting `d.ramificationIndex_eq` and
+    using that its quotient group is inhabited.  Natural-number arithmetic yields
+    `d.residueDegree = f` and `d.ramificationIndex = 1`.
+  * The injection has equal finite source and target dimensions, hence is surjective by
+    `(LinearMap.injective_iff_surjective_of_finrank_eq_finrank hdim).mp hinj` from
+    `Mathlib/LinearAlgebra/FiniteDimensional/Lemmas.lean`.  For separability, first show
+    the `AdjoinRoot` generator is separable: its minpoly divides `P.map res`, so apply
+    `Polynomial.Separable.of_dvd hQsep`; then use
+    `IntermediateField.isSeparable_adjoin_simple_iff_isSeparable` from
+    `Mathlib/FieldTheory/SeparableDegree.lean` (add that focused Mathlib import) and the
+    power-basis generation.  Transport the resulting `Algebra.IsSeparable` instance
+    through the bijective algebra hom using `AlgEquiv.Algebra.isSeparable` to prove
+    `Chapter10ResidueExtensionIsSeparable v w`.  Finally simp
+    `Chapter10ProfileRealizedByData` with `hdegree` and the invariant equalities, and
+    unfold `Chapter10UnramifiedBranch` to assemble `hhard`.
+
+  Dead end: `hQsep` concerns the abstract reduction over `k`; it cannot directly prove
+  branch separability before the residue-root map is built and shown surjective by the
+  degree comparison.
+  -/
   have hhard :
       Chapter10ProfileRealizedByData d p ∧
         Chapter10UnramifiedBranch v w hext d := by
