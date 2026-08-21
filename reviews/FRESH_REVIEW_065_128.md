@@ -359,14 +359,22 @@ locations and evidence below.
 - Book 070, Section 9.2 -- repaired the regular-minimal-generator step in the Auslander--Buchsbaum--Serre proof by inserting the necessary faithfully flat infinite-residue-field reduction.
 - Book 071, Sections 11.5 and 16.6 -- restored the missing strict-inequality relations in two display equations.
 - Book 073, Section 16.2 -- restored the normalization-table row $|y|^{s-1/2}$ versus $|y|^s$.
+- `5402f4b` -- repaired Book 121's quotient-stack presentation to retain the nominal deck group and reserve the effective image for the coarse quotient.
+- `36f34cf` -- corrected Book 127's attribution of good-place unramifiedness to smooth proper base change rather than to the quadratic operator equation.
 
-## Pending targeted classifications
+## Resolved targeted classifications
 
-These are not yet verdicts because their books have not completed the full-read pass:
+The complete reads give the following final classifications:
 
-- Book 079's mention of Book 080 appears to be future scope/roadmap rather than a proof dependency.
-- Book 081's mention of Book 108 appears to prescribe a later local input, not use Book 108 to prove Book 081.
-- Book 082's mention of Book 083 appears to be roadmap for the later automorphic model.
-- Book 084's mention of Book 085 appears to be roadmap for the later congruence comparison.
-- Book 085's finite-free automorphic module and Hecke family appear to be explicit object data supplied by Books 083--084; its level-injectivity paragraph appears to state a boundary rather than assert the missing theorem. The full read will verify that no later conclusion silently uses it.
-- Book 120's PEL-realizability, fine-level, and component-stability clauses appear to be visible theorem hypotheses, but its use of Book 118 strong approximation inherits confirmed finding 2.
+- Book 079's mentions of Book 080 are future scope/roadmap, not proof dependencies.
+- Book 081's mentions of Book 108 prescribe inputs for the later global construction and do not use Book 108 to prove Book 081.
+- Book 082's mentions of Book 083 are roadmap for the later automorphic model.
+- Book 084's mentions of Book 085 are roadmap for later congruence comparison.
+- Book 085's finite-free automorphic module and Hecke family are explicit object data supplied by Books 083--084; its level-injectivity paragraph states an unavailable boundary and is not used unconditionally.
+- Book 120's PEL-realizability, fine-level, component-stability, and Section 5.1 onward standing clauses are visible theorem hypotheses, not concealed prerequisites; its advertised basic instantiation still inherits Book 118's failed strong-approximation proof.
+- Book 124's reference to Book 128 is an operative proof dependency, not roadmap; it is finding 34.
+- Book 128's mentions of Book 168 are downstream roadmap and supply no proof to Book 128.
+
+## Completion validation
+
+The finished ledger contains exactly 64 per-book rows (Books 065--128), exactly 64 full-read-to-EOF attestations, and no pending book row. The corresponding 64 rows of `BOOK_DEPENDENCIES.md` contain no numeric edge to the same or a later book. That table therefore preserves formal chronology, but it cannot encode Book 124's declared use of Book 128 without a forbidden forward edge; finding 34 records the necessary manuscript repair rather than falsifying the table with such an edge.
