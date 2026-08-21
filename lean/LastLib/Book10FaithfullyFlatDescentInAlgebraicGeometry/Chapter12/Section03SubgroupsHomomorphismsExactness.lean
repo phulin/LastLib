@@ -397,7 +397,7 @@ theorem chapter12_group_closed_subgroup_descends
       simp only [chapter12GroupSchemeBaseChangeComparison,
         chapter12GroupSchemeBaseChangeCompIso,
         LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapComparison,
-        Iso.trans_hom, Iso.trans_inv, Iso.symm_hom]
+        Iso.trans_hom, Iso.symm_hom]
       have hc₁ :
           ((Functor.mapGrpCompIso (F := Over.pullback p)
             (G := Over.pullback
@@ -442,7 +442,7 @@ theorem chapter12_group_closed_subgroup_descends
               (LastLib.Book10FaithfullyFlatDescentInAlgebraicGeometry.Chapter10.chapter10DoubleOverlapSecond p) p).app G.X).hom := by
         apply Over.OverMorphism.ext
         rfl
-      simp only [Iso.trans_hom, Iso.trans_inv, Over.comp_left]
+      simp only [Over.comp_left]
       rw [hc₁, hn₁, hc₃, hn₂]
       simp
     rw [hcompG, hcompK] at hgroup'

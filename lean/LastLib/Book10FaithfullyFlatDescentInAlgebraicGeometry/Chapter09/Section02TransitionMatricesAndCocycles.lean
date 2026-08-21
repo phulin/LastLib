@@ -421,12 +421,12 @@ noncomputable def chapter09ProjectiveLineTransitionExtractor
         (LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02.chapter02ProjectiveSpaceData
           (AlgebraicGeometry.Spec (.of K))
           (LastLib.Book08AmpleLineBundlesHilbertPolynomialsAndSymmetricPowers.Chapter02.Chapter02ProjectiveSpaceIndex 1)))
-    (trivial_on_zero_chart :
+    (_trivial_on_zero_chart :
       (Scheme.Modules.pullback
         (standardCover.chart (ULift.up (0 : Fin 2))).ι).obj standardLineBundle.sheaf ≅
       SheafOfModules.unit
         (standardCover.chart (ULift.up (0 : Fin 2))).toScheme.ringCatSheaf)
-    (trivial_on_infinity_chart :
+    (_trivial_on_infinity_chart :
       (Scheme.Modules.pullback
         (standardCover.chart (ULift.up (1 : Fin 2))).ι).obj standardLineBundle.sheaf ≅
       SheafOfModules.unit

@@ -210,8 +210,8 @@ theorem chapter12_finite_projective_dual_base_change
     (j : V →ₗ[R] W) (h : IsBaseChange A j)
     (hV : Chapter12FiniteProjectiveModule R V) :
     IsBaseChange A (h.toDual) := by
-  letI : Module.Finite R V := hV.1
-  letI : Module.Projective R V := hV.2
+  let : Module.Finite R V := hV.1
+  let : Module.Projective R V := hV.2
   let c₀ : Module.Dual R V →ₗ[R] (V →ₗ[R] A) :=
     (Algebra.linearMap R A).compRight R
   let c : A ⊗[R] Module.Dual R V →ₗ[A] (V →ₗ[R] A) :=
