@@ -141,7 +141,8 @@ theorem chapter01_geometric_normalization_apply
     (π : Kˣ) (hπ : vK (π : K) = (1 : WithTop ℤ)) :
     chapter01GeometricInverseHom (chapter01FiniteArtinMap N.quotientEquiv)
         π = (chapter01ArithmeticFrobenius N.unramified)⁻¹ := by
-  sorry
+  rw [chapter01_geometric_reciprocity_apply,
+    chapter01_arithmetic_normalization_apply vK N π hπ]
 
 /-- The normalization predicate applies to any chosen normalized
 uniformizer. -/
