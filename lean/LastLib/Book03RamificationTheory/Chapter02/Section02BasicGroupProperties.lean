@@ -76,6 +76,48 @@ theorem chapter02_canonical_lower_group_eventually_trivial
     ∃ N : ℕ, ∀ n : ℕ, N ≤ n → chapter02LowerGroupNat K v n = ⊥ := by
   exact (chapter02CanonicalLowerFiltration K v hnormalized).eventually_trivial
 
+/- The abstract filtration stores the nonnegative levels, while the
+   valuation-facing definition also exposes the book's `G₋₁` convention.
+   This equality keeps those two interfaces definitionally separate but
+   mathematically synchronized. -/
+theorem chapter02_canonical_integer_lower_group_eq
+    (K : Type u) {L : Type u} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L]
+    (v : AddValuation L (WithTop ℤ))
+    [Valuation.IsRankOneDiscrete v.toValuation]
+    [Finite (chapter02DecompositionGroup K v)]
+    (hnormalized : Function.Surjective v) (i : ℤ) :
+    chapter02IntegerLowerGroup
+        (chapter02CanonicalLowerFiltration K v hnormalized) i =
+      chapter02LowerGroup K v i := by
+  by_cases hi : i < 0
+  · simp [chapter02IntegerLowerGroup, chapter02LowerGroup, hi]
+  · simp [chapter02IntegerLowerGroup, chapter02LowerGroup,
+      chapter02CanonicalLowerFiltration, hi]
+
+theorem chapter02_canonical_integer_lower_group_normal
+    (K : Type u) {L : Type u} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L]
+    (v : AddValuation L (WithTop ℤ))
+    [Valuation.IsRankOneDiscrete v.toValuation]
+    [Finite (chapter02DecompositionGroup K v)]
+    (hnormalized : Function.Surjective v) (i : ℤ) :
+    (chapter02LowerGroup K v i).Normal := by
+  rw [← chapter02_canonical_integer_lower_group_eq K v hnormalized i]
+  exact chapter02IntegerLowerGroup_normal _ i
+
+theorem chapter02_canonical_integer_lower_group_succ_le
+    (K : Type u) {L : Type u} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L]
+    (v : AddValuation L (WithTop ℤ))
+    [Valuation.IsRankOneDiscrete v.toValuation]
+    [Finite (chapter02DecompositionGroup K v)]
+    (hnormalized : Function.Surjective v) (i : ℤ) (hi : -1 ≤ i) :
+    chapter02LowerGroup K v (i + 1) ≤ chapter02LowerGroup K v i := by
+  rw [← chapter02_canonical_integer_lower_group_eq K v hnormalized (i + 1),
+    ← chapter02_canonical_integer_lower_group_eq K v hnormalized i]
+  exact chapter02IntegerLowerGroup_succ_le _ i hi
+
 /-- The group-valued form of the commutator estimate. -/
 theorem chapter02_commutator_lower_group_le
     (K L : Type u) [Field K] [Field L] [Algebra K L]

@@ -224,6 +224,40 @@ theorem chapter02_intrinsic_higher_target_finrank_one
     Module.finrank l (chapter02IntrinsicHigherTarget l M N) = 1 := by
   rw [Module.finrank_linearMap, hM, hN]
 
+/- The preceding generic Hom-space is instantiated here with the actual
+   successive DVR layers used by the chapter.  `chapterGradedPiece A 1` is
+   `𝔪/𝔪²`, and the target at level `i` is
+   `𝔪^(i+1)/𝔪^(i+2)`. -/
+abbrev chapter02ValuationIntrinsicHigherTarget
+    (A : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
+    (i : ℕ) : Type _ :=
+  LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.chapterGradedPiece A 1 →ₗ[
+      IsLocalRing.ResidueField A]
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.chapterGradedPiece A (i + 1)
+
+theorem chapter02_valuation_intrinsic_higher_target_finrank_one
+    (A : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
+    (i : ℕ) :
+    Module.finrank (IsLocalRing.ResidueField A)
+      (chapter02ValuationIntrinsicHigherTarget A i) = 1 := by
+  let : FiniteDimensional (IsLocalRing.ResidueField A)
+      (LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.chapterGradedPiece A 1) :=
+    FiniteDimensional.of_finrank_pos (by
+      rw [LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.chapter_graded_piece_finrank_one
+        (A := A) 1]
+      norm_num)
+  let : FiniteDimensional (IsLocalRing.ResidueField A)
+      (LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.chapterGradedPiece A (i + 1)) :=
+    FiniteDimensional.of_finrank_pos (by
+      rw [LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.chapter_graded_piece_finrank_one
+        (A := A) (i + 1)]
+      norm_num)
+  rw [Module.finrank_linearMap,
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.chapter_graded_piece_finrank_one
+      (A := A) 1,
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.chapter_graded_piece_finrank_one
+      (A := A) (i + 1)]
+
 /- The intrinsic target is only a one-dimensional residue-field Hom-space;
    this does not assert that every additive subspace occurs or that the
    successive extensions of the filtration split. -/
