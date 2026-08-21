@@ -229,9 +229,9 @@ structure Chapter14KrasnerNeighborhoodData
   monic : g.Monic
   neighborhood : Set (Fin g.natDegree → K)
   open_neighborhood : IsOpen neighborhood
-  contains_polynomial : (fun i => g.coeff i) ∈ neighborhood
+  contains_polynomial : (fun i : Fin g.natDegree => g.coeff i) ∈ neighborhood
   factor_field : ∀ h, h.Monic → h.natDegree = g.natDegree →
-    (fun i => h.coeff i) ∈ neighborhood →
+    (fun i : Fin g.natDegree => h.coeff i) ∈ neighborhood →
     ∃ q : K[X], q ∣ h ∧ q.Monic ∧
       Nonempty (AdjoinRoot q ≃ₐ[K] K⟮α⟯)
 

@@ -139,14 +139,15 @@ structure Chapter14LocalPolynomialFactorCondition
   separable : polynomial.Separable
   neighborhood : Set (Fin n → chapter14BaseCompletion F p)
   neighborhood_open : IsOpen neighborhood
-  neighborhood_contains : (fun i => polynomial.coeff i) ∈ neighborhood
+  neighborhood_contains :
+    (fun i : Fin n => polynomial.coeff i) ∈ neighborhood
   factor : (chapter14BaseCompletion F p)[X]
   factor_monic : factor.Monic
   factor_divides : factor ∣ polynomial
   factor_generates : Nonempty
     (AdjoinRoot factor ≃ₐ[chapter14BaseCompletion F p] L)
   factor_stable : ∀ g, g.Monic → g.natDegree = n →
-    (fun i => g.coeff i) ∈ neighborhood →
+    (fun i : Fin n => g.coeff i) ∈ neighborhood →
     ∃ q : (chapter14BaseCompletion F p)[X], q ∣ g ∧ q.Monic ∧
       Nonempty (AdjoinRoot q ≃ₐ[chapter14BaseCompletion F p] L)
 

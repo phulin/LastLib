@@ -93,7 +93,7 @@ theorem chapter14_weak_approximation_targets_only_open_stability_neighborhoods
     (N : Chapter14SimultaneousPolynomialNeighborhood S n) :
     ∃ g : F[X], g.Monic ∧ g.natDegree = n ∧
       ∀ p,
-        (fun i => (chapter14PolynomialMapAt p.1 g).coeff i) ∈ N.neighborhood p := by
+        (fun i : Fin n => (chapter14PolynomialMapAt p.1 g).coeff i) ∈ N.neighborhood p := by
   exact chapter14_simultaneous_monic_polynomial_approximation S n N
 
 def chapter14KrasnerStrictInequality

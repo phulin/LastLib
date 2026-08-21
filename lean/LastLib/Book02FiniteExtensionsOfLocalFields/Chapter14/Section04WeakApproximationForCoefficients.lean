@@ -106,7 +106,7 @@ structure Chapter14SimultaneousPolynomialNeighborhood
   neighborhood : ∀ p : S, Set (Fin n → chapter14BaseCompletion F p.1)
   open_neighborhood : ∀ p, IsOpen (neighborhood p)
   contains : ∀ p,
-    (fun i => (local_polynomial p).coeff i) ∈ neighborhood p
+    (fun i : Fin n => (local_polynomial p).coeff i) ∈ neighborhood p
 
 theorem chapter14_simultaneous_monic_polynomial_approximation
     {F : Type u} [Field F] [NumberField F]
@@ -114,7 +114,7 @@ theorem chapter14_simultaneous_monic_polynomial_approximation
     (N : Chapter14SimultaneousPolynomialNeighborhood S n) :
     ∃ g : F[X], g.Monic ∧ g.natDegree = n ∧
       ∀ p,
-        (fun i => (chapter14PolynomialMapAt p.1 g).coeff i) ∈ N.neighborhood p := by
+        (fun i : Fin n => (chapter14PolynomialMapAt p.1 g).coeff i) ∈ N.neighborhood p := by
   sorry
 
 /- Coefficient congruences are the nonarchimedean neighborhood basis used by
@@ -188,9 +188,9 @@ theorem chapter14_distinct_factor_hensel_stability
     [IsUltrametricDist K]
     (n : ℕ) (H : Chapter14HenselProductData K n) :
     ∃ U : Set (Fin H.local_polynomial.natDegree → K), IsOpen U ∧
-      (fun i => H.local_polynomial.coeff i) ∈ U ∧
+      (fun i : Fin H.local_polynomial.natDegree => H.local_polynomial.coeff i) ∈ U ∧
       ∀ g, g.Monic → g.natDegree = H.local_polynomial.natDegree →
-        (fun i => g.coeff i) ∈ U →
+        (fun i : Fin H.local_polynomial.natDegree => g.coeff i) ∈ U →
         ∃ G : Chapter14HenselProductData K n,
         G.local_polynomial = g ∧
           chapter14PolynomialProductDecomposition n g G.factors := by
