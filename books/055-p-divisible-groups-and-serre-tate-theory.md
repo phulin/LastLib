@@ -1103,6 +1103,8 @@ $$
 
 For a safe unramified PEL datum, the number of variables is $\operatorname{rank}L_{\mathrm{PEL}}$.
 
+_(Remark on the moduli setting._ The stack-theoretic interpretation of these completions — formal tori quotiented by finite automorphism groups when the level does not rigidify — is used informally here; the full statement requires the deformation theory of the moduli problem, developed later in the library. The assertions below that depend on it are local and survive without it.)*
+
 These isomorphisms are noncanonical as power-series rings because they require bases. Canonically, the completions are formal tori with the character lattices already described. If the level does not remove automorphisms, the completed stack is the quotient of this formal torus by the finite stabilizer; its coarse completed local ring is the invariant ring and need not itself be regular.
 
 ## 14. Local loci used in potential modularity
