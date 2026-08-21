@@ -52,3 +52,57 @@ For each finding:
 4. re-read every affected consumer from the repair point through EOF, and re-run its complete
    verdict if statement scope or order changed; and
 5. close the finding here only when the per-book ledgers contain that evidence.
+
+## Consumer-contract repair log (Books 001/002)
+
+The following statement-scope defects in Books 001 and 002 were repaired at their
+chronologically valid sources. Each repair is a manuscript-level change; the affected
+consumers must still be re-read from the repair point through EOF per the rule above.
+
+- **Book 001, Section 12.6 (residue-lift extension property).** The chapter's Hensel
+  machinery lifted simple residue roots only over the base ring, with residue data in
+  $k$. Book 002, Section 9.2 invoked "Hensel's lemma applied in $B$" for a residue root
+  living in $l$, which no earlier statement supported. Repaired by adding
+  **Theorem 12.3** (henselianity of the extension valuation ring): the valuation ring of
+  a finite extension of a complete discretely valued field is complete and separated for
+  its maximal-adic topology, hence henselian, so simple residue roots in $l$ lift
+  uniquely to $B$. Book 002 Section 9.2 now cites this theorem for both the lift and the
+  uniqueness step.
+
+- **Book 001, Section 11.7 (finite-normalization branch-correspondence data;
+  normalized valuations).** The norm-valuation formula previously asked only that each
+  branch be "normalized to value group $\mathbf Z$", without exposing (a) that the
+  branches are those supplied by the finite normalization via Theorem 11.1 — one per
+  prime above $\mathfrak m_A$, exhaustive and pairwise inequivalent up to equivalence —
+  nor (b) that the coefficient $f_i$ is correct only for genuinely normalized
+  representatives: a merely discrete rank-one branch differs by an unspecified positive
+  factor and would need weight $f_i/\lambda_i$. Both hypotheses are now stated
+  explicitly, with the normalization defect called out as a warning.
+
+- **Book 002, Sections 7.3--7.4 (based data exposed; four consumer sites).** The
+  classification and tower statements were phrased "inside a fixed separable closure",
+  which admits witnesses (intermediate fields) carrying no specified valuation, while
+  downstream use fixes $v_K$ once and for all. Repaired by introducing explicit based
+  data $(K, v_K, k)$ — henselian rank-one discrete $v_K$, the unique extended branch on
+  the chosen separable closure (Theorem 12.2, Book 1), and a fixed residue
+  identification — and restating (i) Theorem 7.2, (ii) the uniqueness of $K_f$, (iii)
+  the compositum/intersection laws and the maximal unramified union, and (iv) the
+  Frobenius generator of $\operatorname{Gal}(K^{\mathrm{nr}}/K)$ together with the
+  nonalgebraicity of its completion, all relative to the fixed based data.
+
+- **Book 002, Section 3.3 (integral-model compatibility and tensor-product
+  decomposition).** The completed tensor product is now decomposed first at the level
+  of integral models,
+  $\mathcal O_E\otimes_{\mathcal O_{K_0}}\widehat{\mathcal O}_{K_0}\cong\prod_w\mathcal O_{E_w}$,
+  compatibly with the maps from $\mathcal O_E$ and with reduction branchwise, under the
+  explicitly named finite-normalization hypothesis ($\mathcal O_E$ finite free over
+  $\mathcal O_{K_0}$, supplied by separability); the field-level decomposition follows
+  by inverting uniformizers.
+
+- **Book 002, Section 8.5 (height-one monogenicity principle).** Added **Lemma 8.4**:
+  for a finite algebra over a Dedekind domain, $B=A[\alpha]$ holds iff it holds after
+  localization at every height-one prime. The surrounding text records precisely what
+  the etale case supplies (local monogenicity of height-one localizations over
+  henselian bases) and states honestly that local monogenicities do not glue without a
+  compatibility input, so the global statement needs henselian/completion hypotheses or
+  an independent compatibility choice.
