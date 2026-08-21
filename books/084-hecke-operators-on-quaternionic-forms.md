@@ -390,7 +390,7 @@ The set on the right is a union of right $U$-cosets, so its normalized volume is
 
 Often one uses only double cosets drawn from a subsemigroup $\Delta\subset G$ containing $U$. The corresponding integral Hecke algebra is the $A$-span of $U\backslash\Delta/U$, provided convolution stays inside $\Delta$. This restriction is useful when a weight lattice is stable under a prescribed collection of transition maps but not under every rational element that could arise from all of $G$.
 
-Over a field $E$, the action above is automatic. Over a ring $A$ with lattice $W_A\subset W_E$, integrality requires more: after rewriting translated class representatives, the rational weight matrices that occur must preserve $W_A$, or their total sums must preserve the automorphic lattice. Book 83 guaranteed stability under the class stabilizers; that alone does not guarantee stability under every Hecke transition. An **integral Hecke datum** therefore consists of $U$, $W_A$, and a double-coset semigroup for which all correspondence maps preserve $S(U,W_A)$.
+Over a field $E$, the action above is automatic. Over a ring $A$ with lattice $W_A\subset W_E$, integrality requires more: after rewriting translated class representatives, the rational weight matrices that occur must preserve $W_A$, or their total sums must preserve the representative-value lattice $M_A(U;W,\chi)$ of Book 83. Stability under the class stabilizers alone does not guarantee stability under every Hecke transition. An **integral Hecke datum** therefore consists of $U$, the representative-value lattices, and a double-coset semigroup for which all correspondence maps preserve $M_A(U;W,\chi)$.
 
 For the standard operators away from the coefficient characteristic, natural polynomial lattices have this stability. At a coefficient place or for a lattice with denominators, it must be checked rather than inferred from the characteristic-zero action.
 
@@ -1024,10 +1024,10 @@ $$
 =A[T_v,S_v,S_v^{-1}:v\notin\Sigma],
 $$
 
-interpreted as the restricted tensor product of the local spherical algebras: each element involves only finitely many places. Its canonical action on $S(U,W_A,\chi)$ may have a kernel. The **acting Hecke algebra** is its image in
+interpreted as the restricted tensor product of the local spherical algebras: each element involves only finitely many places. Its canonical action on the integral module $M_A(U;W,\chi)$ may have a kernel. The **acting Hecke algebra** is its image in
 
 $$
-\operatorname{End}_A(S(U,W_A,\chi)).
+\operatorname{End}_A(M_A(U;W,\chi)).
 $$
 
 Keeping abstract algebra and image distinct prevents an unjustified claim that infinitely many formal generators remain algebraically independent on a fixed finite module.
@@ -2005,7 +2005,7 @@ Repeated roots or zero Gram determinants can make the $2^r$ degeneracy direction
 
 ### 12.1 When the action is integral
 
-Let $A$ be a domain, $E$ its fraction field, and $W_A\subset W_E$ a stable weight lattice. The characteristic functions of double cosets have integer structure constants, but that fact alone does not prove that they preserve $S(U,W_A)$. In the class-set formula the operator uses matrices
+Let $A$ be a domain, $E$ its fraction field, and $W_A\subset W_E$ a stable weight lattice. The characteristic functions of double cosets have integer structure constants, but that fact alone does not prove that they preserve the representative-value lattice $M_A(U;W,\chi)$. In the class-set formula the operator uses matrices
 
 $$
 \rho(\gamma_{i,r}):W_E^{\Gamma_{j(i,r)}}\longrightarrow W_E.
@@ -2022,13 +2022,13 @@ Once stability holds, the matrix algorithm shows that all entries lie in $A$. Th
 Suppose an integral Hecke datum is fixed and $A\to B$ is a ring map. There is a natural comparison
 
 $$
-S(U,W_A,\chi)\otimes_AB
-\longrightarrow S(U,W_A\otimes_AB,\chi_B).
+M_A(U;W,\chi)\otimes_AB
+\longrightarrow M_B(U;W_B,\chi_B),
 $$
 
-If it is an isomorphism, then every Hecke matrix base-changes entry by entry. Sufficient hypotheses were established in Book 83: flatness for finite effective stabilizers, or invertibility of all stabilizer and central quotient orders for arbitrary base change.
+where the module on the right is formed from the base-changed finite representative and transition data. If this map is an isomorphism, then every Hecke matrix base-changes entry by entry. Sufficient hypotheses were established in Book 83: flatness for finite effective stabilizers and integral transition maps, or suitable averaging idempotents for arbitrary base change.
 
-More explicitly, let $M_A=S(U,W_A,\chi)$ and suppose $M_A\otimes_AB\cong M_B$. For any integral double coset $C$, the square
+More explicitly, suppose $M_A\otimes_AB\cong M_B$. For any integral double coset $C$, the square
 
 $$
 \begin{array}{ccc}
@@ -2492,10 +2492,10 @@ We now assemble the construction on precisely the modules produced in Book 83. F
 - a compatible central character $\chi$;
 - an integral double-coset semigroup $\Delta$ preserving the lattice.
 
-The exact automorphic module is
+The exact automorphic module is the representative-value lattice of Book 83,
 
 $$
-M_A=S(U,W_A,\chi_f)
+M_A=M_A(U;W,\chi)
 \subset
 \bigoplus_{i=1}^hW_A^{\Gamma_i},
 $$
