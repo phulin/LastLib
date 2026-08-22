@@ -128,7 +128,10 @@ theorem chapter08_unramified_action_unchanged_by_unit_multiple
     (u : Kˣ) (hu : u ∈ chapter08Units D.valuation) :
     chapter08RestrictionToUnramified S U (u * D.uniformizer) =
       chapter08RestrictionToUnramified S U D.uniformizer := by
-  sorry
+  rw [chapter08_reciprocity_restricts_to_frobenius_power D S U hvaluation]
+  rw [map_mul, (D.mem_units_iff u).mp hu, D.valuation_uniformizer]
+  simp
+  exact (chapter08_uniformizer_acts_as_arithmetic_frobenius D S U hvaluation).symm
 
 /- The finite unramified norm criterion.  The branch data expose the degree
    `f` as the residue degree; no separate unit condition is present. -/
@@ -150,7 +153,11 @@ theorem chapter08_unramified_units_are_norms
     (X : Chapter08FiniteLocalExtensionData K L)
     (hX : chapter08FiniteUnramified X) :
     chapter08Units X.base.valuation ≤ chapter08NormSubgroup K L := by
-  sorry
+  intro x hx
+  apply (chapter08_unramified_norm_iff_valuation_divisible X hX x).2
+  rw [X.base.mem_units_iff x] at hx
+  rw [hx]
+  simp
 
 def chapter08ValuationDivisibilitySubgroup
     {K : Type*} [Field K]
@@ -162,7 +169,20 @@ theorem chapter08_mem_valuation_divisibility_subgroup_iff
     (D : Chapter08LocalFieldData K) (m : ℕ) (x : Kˣ) :
     x ∈ chapter08ValuationDivisibilitySubgroup D m ↔
       (m : ℤ) ∣ Multiplicative.toAdd (D.coordinate.valuation x) := by
-  sorry
+  change D.coordinate.valuation x ∈
+      Subgroup.zpowers (Multiplicative.ofAdd (m : ℤ)) ↔ _
+  rw [Subgroup.mem_zpowers_iff]
+  constructor
+  · rintro ⟨z, hz⟩
+    refine ⟨z, ?_⟩
+    have hz' := congrArg Multiplicative.toAdd hz
+    simpa [mul_comm] using hz'.symm
+  · rintro ⟨z, hz⟩
+    refine ⟨z, ?_⟩
+    rw [← ofAdd_toAdd (D.coordinate.valuation x), hz]
+    have hmz : (m : ℤ) * z = z • (m : ℤ) := by
+      simpa [smul_eq_mul] using (mul_comm (m : ℤ) z)
+    rw [hmz, ofAdd_zsmul]
 
 theorem chapter08_unramified_norm_subgroup_is_valuation_preimage
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -206,7 +226,8 @@ theorem chapter08_lubin_tate_uniformizer_reciprocity
     (D : Chapter08LocalFieldData K)
     (T : Chapter08LubinTateTower D) (n : ℕ) :
     T.artin n D.uniformizer = 1 := by
-  sorry
+  rw [← MonoidHom.mem_ker, T.artin_kernel_norm n]
+  exact T.uniformizer_is_norm n
 
 theorem chapter08_lubin_tate_unit_action_on_division_point
     {K : Type*} [Field K]
