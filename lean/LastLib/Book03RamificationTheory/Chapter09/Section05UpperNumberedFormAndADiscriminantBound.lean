@@ -224,7 +224,27 @@ theorem chapter09_normalized_different_bound_from_last_break
     (hR : chapter09UpperGroupTrivialAfter D R) :
     (d : ℝ) / (e : ℝ) ≤ 1 - (e : ℝ)⁻¹ + R ∧
       (d : ℝ) / (e : ℝ) < 1 + R := by
-  sorry
+  have hbound : (d : ℝ) ≤ (e - 1 : ℕ) + (e : ℝ) * R :=
+    chapter09_different_upper_bound_from_last_break D d e R he hformula hbij
+      hR_nonneg hR
+  have he_pos : 0 < e := by
+    rw [he]
+    exact Nat.card_pos
+  have he_one : 1 ≤ e := Nat.succ_le_iff.mpr he_pos
+  constructor
+  · apply (div_le_iff₀ (by exact_mod_cast he_pos)).2
+    field_simp [Nat.cast_ne_zero.mpr (Nat.ne_of_gt he_pos)]
+    rw [Nat.cast_sub he_one] at hbound
+    norm_num at hbound ⊢
+    exact hbound
+  · have hfirst : (d : ℝ) / (e : ℝ) ≤ 1 - (e : ℝ)⁻¹ + R := by
+      apply (div_le_iff₀ (by exact_mod_cast he_pos)).2
+      field_simp [Nat.cast_ne_zero.mpr (Nat.ne_of_gt he_pos)]
+      rw [Nat.cast_sub he_one] at hbound
+      norm_num at hbound ⊢
+      exact hbound
+    have hinv_pos : 0 < (e : ℝ)⁻¹ := inv_pos.mpr (by exact_mod_cast he_pos)
+    nlinarith [hfirst, hinv_pos]
 
 structure Chapter09GlobalDiscriminantLedger where
   relativeDegree : ℕ
@@ -243,7 +263,15 @@ theorem chapter09_global_discriminant_ratio_is_local_ratio
     (C : Chapter09GlobalDiscriminantLedger) :
     (C.discriminantExponent : ℚ) / (C.relativeDegree : ℚ) =
       (C.d : ℚ) / (C.e : ℚ) := by
-  sorry
+  have hbranches : (0 : ℚ) < C.branches := by
+    exact_mod_cast C.branches_pos
+  have he : (0 : ℚ) < C.e := by
+    exact_mod_cast C.e_pos
+  have hf : (0 : ℚ) < C.f := by
+    exact_mod_cast C.f_pos
+  rw [C.discriminant_eq, C.degree_eq]
+  norm_num [Nat.cast_mul]
+  field_simp [ne_of_gt hbranches, ne_of_gt he, ne_of_gt hf]
 
 end
 
