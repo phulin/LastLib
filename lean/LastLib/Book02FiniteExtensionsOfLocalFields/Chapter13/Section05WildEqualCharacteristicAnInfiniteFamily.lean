@@ -41,10 +41,11 @@ def chapter13ArtinSchreierPolynomial
 def chapter13ArtinSchreierMap
     (K : Type*) [Field K] (p : ℕ) [Fact p.Prime] [CharP K p] : K →+ K :=
   { toFun := fun x => x ^ p - x
-    map_zero' := by sorry
+    map_zero' := by simp [(Fact.out : Nat.Prime p).ne_zero]
     map_add' := by
       intro x y
-      sorry }
+      rw [add_pow_char]
+      ring }
 
 def chapter13ArtinSchreierCoboundarySubgroup
     (K : Type*) [Field K] (p : ℕ) [Fact p.Prime] [CharP K p] : AddSubgroup K :=
@@ -78,7 +79,128 @@ theorem chapter13_artin_schreier_line_equality_iff
     chapter13ArtinSchreierLine K p a =
       chapter13ArtinSchreierLine K p b ↔
     chapter13ArtinSchreierEquivalent K p a b := by
-  sorry
+  let line : K → Set (Chapter13ArtinSchreierQuotient K p) :=
+    chapter13ArtinSchreierLine K p
+  change line a = line b ↔
+    ∃ c : ZMod p, c ≠ 0 ∧ ∃ x : K,
+      b - (ZMod.cast c : K) * a = x ^ p - x
+  have hclass (u v : K) :
+      chapter13ArtinSchreierClass K p u =
+        chapter13ArtinSchreierClass K p v ↔
+      ∃ x : K, u - v = x ^ p - x := by
+    change (u : Chapter13ArtinSchreierQuotient K p) = v ↔ _
+    rw [QuotientAddGroup.eq_iff_sub_mem, AddMonoidHom.mem_range]
+    constructor
+    · rintro ⟨x, hx⟩
+      exact ⟨x, by simpa [chapter13ArtinSchreierMap] using hx.symm⟩
+    · rintro ⟨x, hx⟩
+      exact ⟨x, by simpa [chapter13ArtinSchreierMap] using hx.symm⟩
+  have hscalar (c : ZMod p) (x : K) :
+      chapter13ArtinSchreierClass K p
+          ((ZMod.cast c : K) * (x ^ p - x)) = 0 := by
+    apply (hclass _ _).2
+    refine ⟨(ZMod.cast c : K) * x, ?_⟩
+    have hc : (ZMod.cast c : K) ^ p = (ZMod.cast c : K) := by
+      rw [← ZMod.cast_pow', ZMod.pow_card]
+    rw [sub_zero, mul_pow, hc]
+    ring
+  have htransport (c d : ZMod p) (x : K)
+      (h : b - (ZMod.cast c : K) * a = x ^ p - x) :
+      chapter13ArtinSchreierClass K p ((ZMod.cast d : K) * b) =
+        chapter13ArtinSchreierClass K p
+          ((ZMod.cast (d * c) : K) * a) := by
+    apply (hclass _ _).2
+    refine ⟨(ZMod.cast d : K) * x, ?_⟩
+    have hd : (ZMod.cast d : K) ^ p = (ZMod.cast d : K) := by
+      rw [← ZMod.cast_pow', ZMod.pow_card]
+    rw [ZMod.cast_mul']
+    calc
+      (ZMod.cast d : K) * b - (ZMod.cast d * ZMod.cast c : K) * a =
+          (ZMod.cast d : K) * (b - (ZMod.cast c : K) * a) := by ring
+      _ = (ZMod.cast d : K) * (x ^ p - x) := by rw [h]
+      _ = ((ZMod.cast d : K) * x) ^ p - (ZMod.cast d : K) * x := by
+        rw [mul_pow, hd]
+        ring
+  constructor
+  · intro hline
+    by_cases ha : chapter13ArtinSchreierClass K p a = 0
+    · have hb_mem : chapter13ArtinSchreierClass K p b ∈ line b := by
+        refine ⟨1, ?_⟩
+        simp
+      have hb_mem_a : chapter13ArtinSchreierClass K p b ∈ line a := by
+        rw [hline]
+        exact hb_mem
+      rcases hb_mem_a with ⟨c, hc⟩
+      have hcb : chapter13ArtinSchreierClass K p b =
+          chapter13ArtinSchreierClass K p ((ZMod.cast c : K) * a) := hc.symm
+      obtain ⟨x, hx⟩ := (hclass a 0).1 ha
+      have hxa : a = x ^ p - x := by simpa using hx
+      have hb0 : chapter13ArtinSchreierClass K p b = 0 := by
+        rw [hcb, hxa]
+        exact hscalar c x
+      have hba : chapter13ArtinSchreierClass K p b =
+          chapter13ArtinSchreierClass K p a := hb0.trans ha.symm
+      obtain ⟨y, hy⟩ := (hclass b a).1 hba
+      exact ⟨1, one_ne_zero, y, hy⟩
+    · have hb_mem : chapter13ArtinSchreierClass K p b ∈ line b := by
+        refine ⟨1, ?_⟩
+        simp
+      have hb_mem_a : chapter13ArtinSchreierClass K p b ∈ line a := by
+        rw [hline]
+        exact hb_mem
+      rcases hb_mem_a with ⟨c, hc⟩
+      have hcb : chapter13ArtinSchreierClass K p b =
+          chapter13ArtinSchreierClass K p ((ZMod.cast c : K) * a) := hc.symm
+      have hc0 : c ≠ 0 := by
+        intro hc0
+        subst c
+        have hb0 : chapter13ArtinSchreierClass K p b = 0 := by
+          have hzero : chapter13ArtinSchreierClass K p 0 = 0 := by
+            change (0 : Chapter13ArtinSchreierQuotient K p) = 0
+            rfl
+          have hcb' : chapter13ArtinSchreierClass K p b =
+              chapter13ArtinSchreierClass K p 0 := by simpa using hcb
+          exact hcb'.trans hzero
+        have ha_mem : chapter13ArtinSchreierClass K p a ∈ line a := by
+          refine ⟨1, ?_⟩
+          simp
+        have ha_mem_b : chapter13ArtinSchreierClass K p a ∈ line b := by
+          rw [hline] at ha_mem
+          exact ha_mem
+        rcases ha_mem_b with ⟨d, hd⟩
+        have hda : chapter13ArtinSchreierClass K p a =
+            chapter13ArtinSchreierClass K p ((ZMod.cast d : K) * b) := hd.symm
+        obtain ⟨x, hx⟩ := (hclass b 0).1 hb0
+        have hxb : b = x ^ p - x := by simpa using hx
+        have hdb0 : chapter13ArtinSchreierClass K p
+            ((ZMod.cast d : K) * b) = 0 := by
+          rw [hxb]
+          exact hscalar d x
+        exact ha (hda.trans hdb0)
+      obtain ⟨x, hx⟩ :=
+        (hclass b ((ZMod.cast c : K) * a)).1 hcb
+      exact ⟨c, hc0, x, hx⟩
+  · rintro ⟨c, hc0, x, hx⟩
+    have hcb : chapter13ArtinSchreierClass K p b =
+        chapter13ArtinSchreierClass K p ((ZMod.cast c : K) * a) :=
+      (hclass _ _).2 ⟨x, hx⟩
+    ext q
+    constructor
+    · rintro ⟨d, hd⟩
+      refine ⟨d * c⁻¹, ?_⟩
+      have hrel := htransport c (d * c⁻¹) x hx
+      calc
+        chapter13ArtinSchreierClass K p
+              ((ZMod.cast (d * c⁻¹) : K) * b) =
+            chapter13ArtinSchreierClass K p
+              ((ZMod.cast ((d * c⁻¹) * c) : K) * a) := hrel
+        _ = chapter13ArtinSchreierClass K p ((ZMod.cast d : K) * a) := by
+          rw [mul_assoc, inv_mul_cancel₀ hc0, mul_one]
+        _ = q := hd
+    · rintro ⟨d, hd⟩
+      refine ⟨d * c, ?_⟩
+      have hrel := htransport c d x hx
+      exact hrel.symm.trans hd
 
 /-- The root equation for `T^p - T - a`. -/
 theorem chapter13_artin_schreier_root_equation_iff
@@ -86,19 +208,23 @@ theorem chapter13_artin_schreier_root_equation_iff
     (a x : K) :
     aeval x ((X : K[X]) ^ p - X - C a) = 0 ↔
       x ^ p - x = a := by
-  sorry
+  simp only [map_sub, map_pow, aeval_X, aeval_C]
+  exact sub_eq_zero
 
 theorem chapter13_artin_schreier_polynomial_derivative
     (K : Type*) [Field K] (p : ℕ) [Fact p.Prime] [CharP K p]
     (a : K) :
     ((X : K[X]) ^ p - X - C a).derivative = -1 := by
-  sorry
+  simp [Polynomial.derivative_sub, Polynomial.derivative_X_pow,
+    Polynomial.derivative_X, Polynomial.derivative_C, CharP.cast_eq_zero]
 
 theorem chapter13_artin_schreier_polynomial_is_separable
     (K : Type*) [Field K] (p : ℕ) [Fact p.Prime] [CharP K p]
     (a : K) :
     ((X : K[X]) ^ p - X - C a).Separable := by
-  sorry
+  rw [Polynomial.separable_def,
+    chapter13_artin_schreier_polynomial_derivative K p a]
+  exact isCoprime_one_right.neg_right
 
 def chapter13ArtinSchreierCoboundary (K : Type*) [Field K]
     (p : ℕ) (a : K) : Prop :=
