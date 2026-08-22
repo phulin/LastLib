@@ -53,6 +53,13 @@ def invariantAverage [Fintype G] [Invertible (Fintype.card G : E)]
     (ρ : Representation E G V) : V →ₗ[E] V :=
   Representation.averageMap ρ
 
+/-- The averaging operator supplied by characteristic zero alone. -/
+noncomputable def characteristicZeroInvariantAverage
+    [Fintype G] [CharZero E] (ρ : Representation E G V) : V →ₗ[E] V := by
+  letI : Invertible (Fintype.card G : E) :=
+    invertibleOfNonzero (Nat.cast_ne_zero.mpr Fintype.card_ne_zero)
+  exact invariantAverage ρ
+
 omit [FiniteDimensional E V] in
 theorem invariantAverage_mem [Fintype G] [Invertible (Fintype.card G : E)]
     (ρ : Representation E G V) (v : V) :
@@ -84,6 +91,17 @@ theorem invariantAverage_splits_fixedSpace
     exact invariantAverage_mem ρ v
   · intro v hv
     exact invariantAverage_eq_self_of_mem ρ hv
+
+omit [FiniteDimensional E V] in
+theorem characteristicZeroInvariantAverage_splits_fixedSpace
+    [Fintype G] [CharZero E] (ρ : Representation E G V) :
+    (∀ v, characteristicZeroInvariantAverage ρ v ∈
+        fixedSpace ρ (⊤ : Subgroup G)) ∧
+      (∀ v, v ∈ fixedSpace ρ (⊤ : Subgroup G) →
+        characteristicZeroInvariantAverage ρ v = v) := by
+  let _ : Invertible (Fintype.card G : E) :=
+    invertibleOfNonzero (Nat.cast_ne_zero.mpr Fintype.card_ne_zero)
+  exact invariantAverage_splits_fixedSpace ρ
 
 /-- A finite-image representation together with a chosen cutting quotient. -/
 def HasFiniteCuttingQuotient
