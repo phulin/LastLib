@@ -5,7 +5,7 @@
 1. [Degeneration seen by inertia](#1-degeneration-seen-by-inertia)
    - [The problem](#11-the-problem)
    - [Standing conventions](#12-standing-conventions)
-   - [The three prerequisite interfaces](#13-the-three-prerequisite-interfaces)
+   - [The prerequisite interfaces](#13-the-prerequisite-interfaces)
    - [The shape of the answer](#14-the-shape-of-the-answer)
 2. [The toric and abelian parts](#2-the-toric-and-abelian-parts)
    - [The connected special fiber](#21-the-connected-special-fiber)
@@ -163,13 +163,13 @@ $$
 
 When $k$ is imperfect, $B$ and the maximal smooth connected affine subgroup still exist, but the split description of the unipotent radical may require purely inseparable extension. Every result below that uses (1.1) only through dimensions remains valid after geometric base change. Statements requiring a torus over $R$ or classical ramification groups will carry their separability hypotheses explicitly.
 
-### 1.3 The three prerequisite interfaces
+### 1.3 The prerequisite interfaces
 
-Three earlier theories enter, and it is important to say exactly what each supplies: Book 3 (ramification theory), Book 60 (rigid uniformization of abelian varieties), and Book 38 (Neron models and component groups).
+The earlier theories entering this book are the following, named precisely so that every consumption below can be checked against its source. Three of them bear central weight; the rest are recorded with the sections that use them.
 
-First, Book 3 supplies lower and upper ramification groups, the tame character, and Artin and Swan conductors for finite inertial actions. Upper numbering is compatible with quotients, so a finite wild image has an intrinsic Swan conductor. We will extend the definition to the quasi-unipotent $\ell$-adic representations occurring here by observing that wild inertia has finite image.
+_First, Book 3_ (ramification theory) _supplies lower and upper ramification groups, the tame character, and Artin and Swan conductors_ for finite inertial actions. Upper numbering is compatible with quotients, so a finite wild image has an intrinsic Swan conductor. We extend the definition to the quasi-unipotent $\ell$-adic representations occurring here by observing that wild inertia has finite image.
 
-Second, Book 60 supplies, for a semistable abelian variety, exact sequences
+_Second, Book 60_ (rigid uniformization of abelian varieties) _supplies, for a semistable abelian variety_, exact sequences
 
 $$
 0\longrightarrow T^{\mathrm{an}}\longrightarrow E
@@ -180,11 +180,18 @@ $$
 \tag{1.3}
 $$
 
-Here $B$ has good reduction, $T$ is a torus of rank $t$, and $Y$ is a full period lattice of rank $t$. The positivity theory of the period data supplies algebraization, duality, and polarizations. In particular, the rank equality in (1.3) and nondegeneracy of tropicalization have already been proved; they will not be inferred from the component formula that we later deduce from them.
+Here $B$ has good reduction, $T$ is a torus of rank $t$, and $Y$ is a full period lattice of rank $t$. The positivity theory of the period data supplies algebraization, duality, and polarizations; in particular the rank equality in (1.3) and nondegeneracy of tropicalization are proved there (its Sections 5.4--6.3 and 8.2--8.3), and will not be inferred from the component formula we later deduce from them. Specific interfaces consumed below, each proved in Book 60: the uniformization equivalence and its functoriality (its Theorems 8.1 and 9.1); the dual uniformization exchanging period and character lattices (its Proposition 10.4); the polarization criterion and the degree formula $\deg\lambda_A=\deg\lambda_B\,[X:\lambda(M)]^2$ (its Theorem 10.1 and formula (10.6)); the combinatorial degree on effective one-cycles of periodic polyhedral models (its Lemmas 5.4.1--5.4.2); and the torsion sequences away from the residue characteristic (its (11.3)--(11.7)). Book 60's own import ledger names Books 58 and 59 as its inputs; this book consumes those two volumes only transitively, through Book 60's proved statements, and never cites them directly.
 
-Third, Book 38 supplies the Neron model: the canonical smooth integral group, its identity component, its finite etale component group $\Phi_A$, and functorial extension of homomorphisms. For Jacobians, the prior graph theorem identifies the torus with graph homology and the component group with a weighted graph discriminant. The present book proves the corresponding lattice presentation for every semistable abelian variety.
+_Third, Book 38_ (Neron models and component groups) _supplies the Neron model_: existence and uniqueness via the mapping property (its Chapters 2 and 4), the identity component and finite etale component group $\Phi_A$ (its Chapter 6), functorial extension of homomorphisms (its Chapter 5), base-change morphisms (its Chapter 8), the Picard-route identification of the Neron model of a Jacobian with a separated relative Picard quotient (its Chapter 9, in particular the Raynaud quotient theorem of its Section 9.3), and the smoothening theorem with its center hypothesis stated and its termination proved (its Theorem 3.2). For Jacobians, Book 38's graph theorem identifies the torus with graph homology and the component group with a weighted graph discriminant; the present book proves the corresponding lattice presentation for every semistable abelian variety.
 
-We also use ordinary facts from the preceding geometric foundation: duality and the Poincare bundle, Weil pairings, polarizations, quotients by finite subgroup schemes, and Bertini for sufficiently ample linear systems. When one of these facts bears the weight of a central argument, the needed form is restated and its application is proved.
+_Fourth, the geometric inputs used at specific points:_
+
+- surface resolution and prepared models: Book 11, whose Theorem 8.1 proves resolution of excellent arithmetic surfaces including termination, whose Section 11.4 supplies embedded resolution of marked boundaries, and whose Theorem 12.1 assembles regular proper models and their behavior under finite base change;
+- Bertini with prescribed first-order jets: Book 41, Lemma 12.3, whose proof carries out the jet-incidence transversality and geometric-integrality argument in full;
+- the Albanese universal property: Book 36, Section 6.2;
+- duality, Poincare bundles, Weil pairings, polarizations, and quotients by finite subgroup schemes: Book 35, which develops them for abelian schemes over bases where they are smooth and proper.
+
+When one of these facts bears the weight of a central argument, the needed form is restated here and its application is proved.
 
 One further theorem is deeper than those interfaces and cannot be hidden inside them: stable reduction for curves. Chapter 9 proves the exact trait-level form needed here. Starting with a regular marked model, it prepares a strict normal-crossings boundary, performs a finite separable saturated base change that makes the vertical divisor reduced, and contracts the unstable rational components. The resulting stable model is canonical, its descent action is controlled by uniqueness, and its relative Picard model is semiabelian. Thus the later potential-semistability argument does not assume existence of a semistable curve model from the graph or Picard calculations, which begin only after such a model exists.
 
@@ -1059,7 +1066,7 @@ $$
 
 **Theorem 7.2.** The form $q_\lambda$ is symmetric and positive definite. If $\lambda$ is principal, $\lambda_Y$ is an isomorphism.
 
-**Proof.** Pull the ample line bundle inducing $\lambda$ to the Raynaud covering. Its period descent cocycle is governed by the Poincare biextension. Commutativity of the cocycle in the two period directions gives symmetry of (7.8). For $0\ne y\in Y$, restrict the quotient and the line bundle to the one-dimensional analytic direction generated by $y$. Its closed period loop has degree a positive multiple of $q_\lambda(y,y)$. Ampleness makes that degree positive, so $q_\lambda(y,y)>0$. The principal assertion follows from the degree formula for a polarized Raynaud quotient: the polarization degree is the degree on the good-reduction abelian part times the square of the lattice index. Degree one forces both factors and the index to be one. $\square$
+**Proof.** Pull the ample line bundle inducing $\lambda$ to the Raynaud covering. Its period descent cocycle is governed by the Poincare biextension. Commutativity of the cocycle in the two period directions gives symmetry of (7.8). For $0\ne y\in Y$, restrict the quotient and the line bundle to the one-dimensional analytic direction generated by $y$. By the degree theory on periodic polyhedral models — Book 60, Lemmas 5.4.1 and 5.4.2 — its closed period loop has degree exactly the corresponding diagonal period value, and Book 60's Theorem 10.1 shows that ampleness forces precisely these degrees to be positive; hence $q_\lambda(y,y)>0$. The principal assertion is Book 60's formula (10.6) for a polarized Raynaud quotient: the polarization degree is the degree on the good-reduction abelian part times the square of the lattice index. Degree one forces both factors and the index to be one. $\square$
 
 Nondegeneracy of $\mu_A$ does not depend on a polarization, but positivity does. Calling an arbitrary nonsymmetric pairing positive would be meaningless; positivity is a property of (7.8).
 
@@ -1307,7 +1314,7 @@ The curve theorem proved in Sections 9.3-9.4 will supply semistable reduction fo
 
 **Lemma 9.2.** After a finite separable extension of $K$, every abelian variety $A/K$ is an isogeny factor of the Jacobian of a smooth proper geometrically connected curve.
 
-**Proof.** For the zero-dimensional abelian variety take $C=\mathbf P^1$, and for $g=1$ take $C=A$. Assume $g\ge2$. Choose a symmetric very ample line bundle on $A$. Select finitely many points and tangent vectors whose translates span the tangent space of $A$. A sufficiently high tensor power separates these first-order jets. Since a nontrivially valued field is infinite, Bertini with the prescribed finite jet conditions allows successive general hyperplane sections, after finite separable extension to secure rational choices, whose complete intersection
+**Proof.** For the zero-dimensional abelian variety take $C=\mathbf P^1$, and for $g=1$ take $C=A$. Assume $g\ge2$. Choose a symmetric very ample line bundle on $A$. Select finitely many points and tangent vectors whose translates span the tangent space of $A$. A sufficiently high tensor power separates these first-order jets. Since a nontrivially valued field is infinite, Bertini with prescribed finite jet conditions — proved in full, in exactly this jet-incidence form together with the geometric integrality of the generic complete intersection, in the proof of Book 41's Lemma 12.3 — allows successive general hyperplane sections, after finite separable extension to secure rational choices, whose complete intersection
 
 $$
 C=H_1\cap\cdots\cap H_{g-1}\subset A
@@ -1322,7 +1329,7 @@ $$
 
 which has positive degree; hence $g(C)\geq2$. If an invariant differential on $A$ vanishes on $C$, it vanishes on all those tangent vectors. Their translates span the tangent space, so the differential is zero. Hence restriction of invariant differentials to $C$ is injective.
 
-The inclusion $i:C\to A$, based at the origin, induces by the Albanese property a homomorphism
+The inclusion $i:C\to A$, based at the origin, induces by the Albanese universal property (Book 36, Section 6.2) a homomorphism
 
 $$
 f:J(C)\longrightarrow A.
@@ -1456,9 +1463,9 @@ $$
 
 Its generic algebra is $H^0(C_L,\mathcal O)=L$, so normality of $R_L$ makes the finite factor the base itself. The same argument after every finite unramified extension proves that the special fiber is geometrically connected. This proves all the assertions. $\square$
 
-The lemma begins with a prepared boundary, so we must explain why that hypothesis costs nothing. Start with the regular proper model supplied by surface resolution. Resolve the reduced vertical divisor and the closures of the marked points as a pair. Each blowup is centered at a closed boundary defect: a singular point of a component, a nontransverse intersection, a collision of markings, or a marking through a node. Embedded resolution on a regular surface terminates by the same multiplicity--tangent--conductor invariant used for surface resolution. We have therefore reached the strict normal-crossings hypothesis of Lemma 9.3 without changing the generic marked curve; its proof performs the additional finite residue preparation needed for geometric components and branches.
+The lemma begins with a prepared boundary, so we must explain why that hypothesis costs nothing. Start with the regular proper model supplied by Book 11: its Theorem 12.1(2) gives a regular flat projective model of $C$ over the excellent base, and after a finite extension its part (4) gives a regular projective model over the normalized base. Resolve the reduced vertical divisor and the closures of the marked points as a pair: the embedded-resolution lemma of Book 11, Section 11.4, applied on the regular surface, terminates by the same invariant machinery as its Theorem 8.1, whose termination is proved in its Section 8.7. Each blowup is centered at a closed boundary defect: a singular point of a component, a nontransverse intersection, a collision of markings, or a marking through a node. We have therefore reached the strict normal-crossings hypothesis of Lemma 9.3 without changing the generic marked curve; the proof above performs the additional finite residue preparation needed for geometric components and branches.
 
-For a stabilizing marked curve, use the regular refinement in assertion 5. It can contain rational tails, but the whole fiber cannot be a rational component with fewer than two special points. Any remaining rational component having only one special point and no marking meets the rest of a reduced fiber once. Since the whole fiber has intersection zero with that component, the component has self-intersection $-1$. Relative contraction removes it to a regular point. Repeating terminates and preserves the reduced nodal property. The resulting model is semistable: every rational component now has at least two incident branches or markings.
+For a stabilizing marked curve, use the regular refinement in assertion 5. It can contain rational tails, but the whole fiber cannot be a rational component with fewer than two special points. Any remaining rational component having only one special point and no marking meets the rest of a reduced fiber once. Since the whole fiber has intersection zero with that component, the component has self-intersection $-1$, and the contraction theorem for exceptional curves of the first kind on regular arithmetic surfaces (Book 11, Theorem 11.1) removes it to a regular point. Repeating terminates because each contraction drops the number of vertical components, and preserves the reduced nodal property since contractions of $(-1)$-curves in a nodal fiber are local. The resulting model is semistable: every rational component now has at least two incident branches or markings.
 
 **Theorem 9.4 (stable reduction for curves).** Let $C/K$ be a smooth proper geometrically connected curve.
 
@@ -1544,7 +1551,7 @@ $$
 
 The construction, the canonical principal polarization, and the weighted cycle pairing commute with finite extension and with the Galois action of Proposition 9.5.
 
-**Proof.** Resolve every thick node $xy=u\varpi^d$ into its chain of $d$ unit-thickness edges. This gives a regular semistable model without changing the generic curve. Its relative total-degree-zero Picard object is smooth but may be nonseparated because vertical divisors are generically trivial. Quotient by the schematic closure of the generic identity. The resulting group $\mathcal J$ is smooth and separated and has the extension property for maps from smooth $R_L$-schemes; hence it is the Neron model of $J$.
+**Proof.** Resolve every thick node $xy=u\varpi^d$ into its chain of $d$ unit-thickness edges. This gives a regular semistable model without changing the generic curve. Its relative total-degree-zero Picard object is smooth but may be nonseparated because vertical divisors are generically trivial. Quotient by the schematic closure of the generic identity; that this Raynaud quotient is the Neron model of $J$, smooth, separated, and satisfying the mapping property for maps from smooth $R_L$-schemes, is exactly the Picard-route identification carried out in Book 38, Chapter 9 — in particular its Section 9.2 on the closure of the generic identity and its Section 9.3, the Raynaud quotient theorem — applied to the regular semistable model at hand.
 
 On the special fiber, normalization of line bundles gives (9.14). A degree-zero line bundle consists of degree-zero line bundles on the $\widetilde C_v$ and one gluing scalar at each node, modulo rescaling on each component. The gluing torus is therefore the cokernel of
 
@@ -1616,7 +1623,7 @@ $$
 \mathcal A\times_RR_L\longrightarrow\mathcal A_L
 $$
 
-has affine connected kernel on special identity components. This can be seen directly from Neron smoothening: after taking a common smooth group model, the comparison is factored into group dilatations, and the kernel introduced by a dilatation is a subgroup of the vector group normal to its center. Successive kernels are therefore affine. If $G$ is the image of the old identity component in the new one, quotienting the old component by that affine kernel preserves its abelian quotient up to isogeny. The map $G\to\mathcal A_{L,\bar k}^0$ then sends the affine radical of $G$ into the affine radical of the target. Its induced map on abelian quotients has finite kernel: the inverse image of that kernel lies in an affine group, whereas a positive-dimensional abelian variety is not affine. Thus the old abelian quotient is isogenous to an abelian subvariety of the new one, proving (10.1).
+has affine connected kernel on special identity components. This can be seen directly from Neron smoothening — Book 38, Theorem 3.2, whose center hypothesis is satisfied here because every $K^{\mathrm{sh}}$-point of the abelian variety has a center on the Neron model by its defining mapping property, and whose uniform termination via Greenberg schemes is proved there: after taking a common smooth group model, the comparison is factored into group dilatations, and the kernel introduced by a dilatation is a subgroup of the vector group normal to its center (Book 38, Section 3.2). Successive kernels are therefore affine. If $G$ is the image of the old identity component in the new one, quotienting the old component by that affine kernel preserves its abelian quotient up to isogeny. The map $G\to\mathcal A_{L,\bar k}^0$ then sends the affine radical of $G$ into the affine radical of the target. Its induced map on abelian quotients has finite kernel: the inverse image of that kernel lies in an affine group, whereas a positive-dimensional abelian variety is not affine. Thus the old abelian quotient is isogenous to an abelian subvariety of the new one, proving (10.1).
 
 **Proof.** If $A$ is semistable, Theorem 5.2 gives condition 3, which implies 2.
 
@@ -2390,9 +2397,9 @@ If $A$ is not semistable over $K$, base change can remove a unipotent radical, c
 
 ### 14.4 A hypothesis ledger
 
-The main statements are safe under the following boundaries.
+The prerequisite interfaces are named, with their sources and statuses, in Section 1.3. The main statements are additionally safe under the following boundaries.
 
-**Valuation and residue field.** Completeness and discreteness are used for uniformization and normalized integral lengths. Completeness also makes the valuation ring excellent, which gives finite normalization and surface resolution in the stable-reduction construction. Lemma 9.3 allows arbitrary residue characteristic and realizes any required finite inseparable residue preparation inside a finite separable extension of $K$. Classical upper ramification and Swan formulas are stated when finite residue extensions are separable; perfection of $k$ guarantees this. Finite $k$ is required only for a distinguished Frobenius and the Weil--Deligne formulation.
+**Valuation and residue field.** Completeness and discreteness are used for uniformization and normalized integral lengths. Normalization and surface resolution in the stable-reduction construction consume excellence of the valuation ring: by Book 010a, Theorem 10.6(2), a complete discrete valuation ring whose residue field has finite $p$-degree is excellent — in particular whenever $k$ is perfect, finite, or of characteristic zero — and we assume this hypothesis explicitly when $k$ is arbitrary; completeness alone would not suffice. Lemma 9.3 allows arbitrary residue characteristic and realizes any required finite inseparable residue preparation inside a finite separable extension of $K$. Classical upper ramification and Swan formulas are stated when finite residue extensions are separable; perfection of $k$ guarantees this. Finite $k$ is required only for a distinguished Frobenius and the Weil--Deligne formulation.
 
 **The auxiliary prime.** Every Tate-module, fixed-part, and Kummer statement assumes $\ell\ne p$. At $\ell=p$, formal and connected finite group schemes require a different theory.
 
