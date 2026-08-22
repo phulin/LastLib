@@ -165,7 +165,9 @@ theorem chapter01_tame_galois_closure
     (D : Chapter01TameGaloisClosureData K Ω k l lg L LG e eg)
     (h : chapter01TamelyRamifiedExtension K L k l e) :
     chapter01TamelyRamifiedExtension K LG k lg eg := by
-  sorry
+  unfold chapter01TamelyRamifiedExtension at h ⊢
+  refine ⟨D.field_separable, D.residue_separable, ?_⟩
+  exact Nat.Coprime.of_dvd_left D.ramification_index_divides h.2.2
 
 /-- The quotient operation that kills a wild subgroup. -/
 def chapter01WildPartKilled
