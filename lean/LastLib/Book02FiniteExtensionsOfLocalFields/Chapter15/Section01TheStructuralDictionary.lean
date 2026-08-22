@@ -288,6 +288,9 @@ theorem trace_and_norm_transfer_in_a_tower
 -- equality when applied to a nonzero base element, so it is also false for a
 -- finite defect extension.  The corrected interface assumes a perfect base
 -- residue field and completeness, which imply defectlessness in this setting.
+-- It also requires the literal normalized restriction: `HasExtension` alone
+-- provides only valuation equivalence and cannot determine the displayed
+-- power formula.
 theorem structural_norm_valuation_formula
     {K L : Type*} [Field K] [Field L]
     [Algebra K L]
@@ -301,6 +304,10 @@ theorem structural_norm_valuation_formula
     (hf : LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterResidueDegree
       vK.valuationSubring vL.valuationSubring
         (IsLocalRing.maximalIdeal vL.valuationSubring) = f)
+    (hrestriction : normalizedValuationRestriction vK vL
+      (LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex
+        vK.valuationSubring vL.valuationSubring
+          (IsLocalRing.maximalIdeal vL.valuationSubring)))
     (x : L) :
     vK (Algebra.norm K x) = (vL x) ^ f := by
   sorry

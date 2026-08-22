@@ -214,7 +214,10 @@ theorem complete_galois_reduction_is_surjective
     [Algebra.IsSeparable (IsLocalRing.ResidueField vK.valuationSubring)
       (IsLocalRing.ResidueField vL.valuationSubring)]
     (hcomplete : IsAdicComplete
-      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
+      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
+    (hunique :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05UniqueNormalizedValuationExtension
+        vK vL) :
     ∃ d : Chapter15GaloisReductionData vK vL,
       Function.Surjective d.reduction := by
   sorry
@@ -235,11 +238,14 @@ theorem complete_galois_reduction_is_exact
     [Algebra.IsSeparable (IsLocalRing.ResidueField vK.valuationSubring)
       (IsLocalRing.ResidueField vL.valuationSubring)]
     (hcomplete : IsAdicComplete
-      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
+      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
+    (hunique :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05UniqueNormalizedValuationExtension
+        vK vL) :
     ∃ d : Chapter15GaloisReductionData vK vL,
       chapter15GaloisReductionExactSequence vK vL d ∧
         Function.Surjective d.reduction := by
-  rcases complete_galois_reduction_is_surjective vK vL hcomplete with ⟨d, hred⟩
+  rcases complete_galois_reduction_is_surjective vK vL hcomplete hunique with ⟨d, hred⟩
   exact ⟨d, galois_reduction_is_exact vK vL d, hred⟩
 
 /-- Book 2, §15.3: the decomposition/inertia reduction has the exact quotient. -/

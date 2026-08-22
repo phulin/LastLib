@@ -199,11 +199,13 @@ theorem finite_residue_extension_of_finite_base_is_finite
 
 /-- Book 2, §15.2: a finite residue field has compactness, cyclic units, and surjective norms. -/
 theorem finite_residue_field_has_the_listed_consequences
-    (k l : Type*) [Field k] [Field l] [Fintype k] [Fintype l]
+    (k l : Type*) [Field k] [Field l] [Fintype k]
     [Algebra k l] [TopologicalSpace k] [DiscreteTopology k]
     [TopologicalSpace l] [DiscreteTopology l]
     [Module.Finite k l] :
     finiteResidueFieldConsequences k l := by
+  letI : Finite l := finite_residue_extension_of_finite_base_is_finite k l
+  letI : Fintype l := Fintype.ofFinite l
   exact ⟨inferInstance, inferInstance, inferInstance, inferInstance,
     FiniteField.norm_surjective k l⟩
 

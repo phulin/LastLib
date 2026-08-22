@@ -223,15 +223,18 @@ theorem bounded_degree_extension_has_fixed_closure_representative
         Nonempty (L ≃ₐ[K] ↥M) := by
   sorry
 
-/-- Tame bounded-degree subextensions, expressed through a normalized valuation. -/
+/-- Tame bounded-degree subextensions, expressed through the actual normalized
+ramification-scaling witness rather than an unconstrained auxiliary index. -/
 def chapter15TameBoundedDegreeSubextensions
     {K Ω Γ : Type*} [Field K] [Field Ω] [Algebra K Ω]
     [LinearOrderedCommGroupWithZero Γ]
     (vK : Valuation K Γ) (p N : ℕ) : Set (IntermediateField K Ω) :=
   {L | Module.Finite K L ∧ Module.finrank K L ≤ N ∧
     ∃ vL : Valuation L Γ,
-      vK.IsEquiv (vL.comap (algebraMap K L)) ∧
-        ∃ e, tameRamification e p ∧
+        Valuation.IsRankOneDiscrete vL ∧
+        vK.IsEquiv (vL.comap (algebraMap K L)) ∧
+        ∃ e,
+          tameRamification e p ∧
           normalizedValuationRestriction vK vL e}
 
 /- DEPENDENCY_GUESS: the tame compactness theorem from the preceding

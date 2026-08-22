@@ -1,4 +1,6 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter15.Section03TheGaloisPicture
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Section01WhyUnitsNeedTheirOwnFiltration
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Section03HigherQuotientsAreAdditiveResidueFields
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section02TheCompletedProductTheorem
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter15
@@ -11,41 +13,17 @@ universe u
 
 /-! ## 15.4. The multiplicative picture -/
 
-/--
-The unit filtration on a local ring.  For a valuation ring this is
-`U^0 = O^×` and, for positive indices, `U^n = 1 + m^n`.
+/-
+Prior attempt retained for provenance: this chapter initially rebuilt the
+congruence subgroup and its quotient locally.  The active declarations below
+use Chapter 10's established `chapter10UnitFiltration` and
+`Chapter10UnitLayerQuotient` interfaces instead.
 -/
-def unitFiltration
-    (A : Type u) [CommRing A] [IsLocalRing A] (n : ℕ) : Subgroup Aˣ where
-  carrier := {u | (u : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ n}
-  one_mem' := by simp
-  mul_mem' := by
-    intro u v hu hv
-    change ((u : A) * (v : A) - 1) ∈ (IsLocalRing.maximalIdeal A) ^ n
-    change (u : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ n at hu
-    change (v : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ n at hv
-    rw [show (u : A) * (v : A) - 1 =
-      ((u : A) - 1) * (v : A) + ((v : A) - 1) by ring]
-    exact ((IsLocalRing.maximalIdeal A) ^ n).add_mem
-      (((IsLocalRing.maximalIdeal A) ^ n).mul_mem_right (v : A) hu) hv
-  inv_mem' := by
-    intro u hu
-    change ((↑(u⁻¹) : A) - 1) ∈ (IsLocalRing.maximalIdeal A) ^ n
-    change (u : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ n at hu
-    simpa [sub_mul] using
-      ((IsLocalRing.maximalIdeal A) ^ n).neg_mem
-        (((IsLocalRing.maximalIdeal A) ^ n).mul_mem_right (↑(u⁻¹) : A) hu)
-
-/-- The successive quotient of two adjacent unit-filtration terms. -/
-abbrev unitFiltrationLayer
-    (A : Type u) [CommRing A] [IsLocalRing A] (n : ℕ) : Type u :=
-  (unitFiltration A n : Type u) ⧸
-    ((unitFiltration A (n + 1)).comap (unitFiltration A n).subtype)
 
 /-- Membership in the filtration is the defining congruence condition. -/
 theorem mem_unit_filtration_iff
     (A : Type u) [CommRing A] [IsLocalRing A] (n : ℕ) (u : Aˣ) :
-    u ∈ unitFiltration A n ↔
+    u ∈ LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10UnitFiltration A n ↔
       (u : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ n :=
   Iff.rfl
 
@@ -67,62 +45,20 @@ theorem units_split_by_uniformizer
 /-- Book 2, §15.4: the unit filtration is descending. -/
 theorem unit_filtration_is_nested
     (A : Type u) [CommRing A] [IsLocalRing A] :
-    ∀ n : ℕ, unitFiltration A (n + 1) ≤ unitFiltration A n := by
-  intro n u hu
-  change (u : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ n
-  change (u : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ (n + 1) at hu
-  exact Ideal.pow_le_pow_right (Nat.le_add_right n 1) hu
+    ∀ n : ℕ,
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10UnitFiltration A (n + 1) ≤
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10UnitFiltration A n := by
+  exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10_unit_filtration_descending A
 
 /-- Book 2, §15.4: the zeroth layer is the residue-field multiplicative group. -/
 theorem unit_zero_layer_is_residue_units
     (A : Type u) [CommRing A]
     [IsDomain A] [IsDiscreteValuationRing A] :
     Nonempty
-      (unitFiltrationLayer A 0 ≃*
+      ((Aˣ ⧸
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10UnitFiltration A 1) ≃*
         (IsLocalRing.ResidueField A)ˣ) := by
-  let ρ : (unitFiltration A 0 : Type u) →*
-      (IsLocalRing.ResidueField A)ˣ :=
-    (Units.map (IsLocalRing.residue A).toMonoidHom).comp
-      (unitFiltration A 0).subtype
-  have hρ : Function.Surjective ρ := by
-    intro y
-    obtain ⟨u, hu⟩ :=
-      IsLocalRing.surjective_units_map_of_local_ringHom
-        (IsLocalRing.residue A) IsLocalRing.residue_surjective
-        (inferInstanceAs (IsLocalHom (IsLocalRing.residue A))) y
-    refine ⟨⟨u, ?_⟩, ?_⟩
-    · simp [unitFiltration]
-    · simpa [ρ] using hu
-  have hker : ρ.ker =
-      (unitFiltration A 1).comap (unitFiltration A 0).subtype := by
-    classical
-    ext u
-    constructor
-    · intro hu
-      change ρ u = 1 at hu
-      have hval : IsLocalRing.residue A ((u.1 : Aˣ) : A) = 1 := by
-        have h := congrArg Units.val hu
-        simpa [ρ] using h
-      change ((u.1 : Aˣ) : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ 1
-      rw [pow_one]
-      rw [← IsLocalRing.residue_eq_zero_iff]
-      simpa [map_sub] using sub_eq_zero.mpr hval
-    · intro hu
-      change ((u.1 : Aˣ) : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ 1 at hu
-      rw [pow_one] at hu
-      have hzero : IsLocalRing.residue A ((u.1 : Aˣ) : A) - 1 = 0 := by
-        have hz : IsLocalRing.residue A (((u.1 : Aˣ) : A) - 1) = 0 :=
-          (IsLocalRing.residue_eq_zero_iff _).2 hu
-        simpa [map_sub] using hz
-      have hval : IsLocalRing.residue A ((u.1 : Aˣ) : A) = 1 :=
-        sub_eq_zero.mp hzero
-      apply MonoidHom.mem_ker.mpr
-      apply Units.ext
-      change IsLocalRing.residue A ((u.1 : Aˣ) : A) = 1
-      exact hval
-  refine ⟨?_⟩
-  exact (QuotientGroup.quotientMulEquivOfEq hker).symm.trans
-    (QuotientGroup.quotientKerEquivOfSurjective ρ hρ)
+  exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.chapter08_units_mod_principal_units A
 
 /-- Book 2, §15.4: every positive layer is the additive residue field. -/
 /-
@@ -131,10 +67,10 @@ represented by `Multiplicative (Additive k)`.  This is the standard Lean
 wrapper for the source's notation `k⁺`.
 -/
 theorem positive_unit_layer_is_residue_additive
-    (A : Type u) [CommRing A]
-    [IsDomain A] [IsDiscreteValuationRing A] (n : ℕ) (hn : 0 < n) :
+    {L : Type u} [Field L] (A : ValuationSubring L)
+    [IsDiscreteValuationRing A] (n : ℕ) (hn : 0 < n) :
     Nonempty
-      (unitFiltrationLayer A n ≃*
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Chapter10UnitLayerQuotient A n ≃*
         Multiplicative (Additive (IsLocalRing.ResidueField A))) := by
   sorry
 
@@ -154,9 +90,13 @@ theorem norm_valuation_coordinate
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
     (hf : LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterResidueDegree
       vK.valuationSubring vL.valuationSubring
-        (IsLocalRing.maximalIdeal vL.valuationSubring) = f) (x : L) :
+        (IsLocalRing.maximalIdeal vL.valuationSubring) = f)
+    (hrestriction : normalizedValuationRestriction vK vL
+      (LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex
+        vK.valuationSubring vL.valuationSubring
+          (IsLocalRing.maximalIdeal vL.valuationSubring))) (x : L) :
     vK (Algebra.norm K x) = (vL x) ^ f := by
-  exact structural_norm_valuation_formula vK vL f hcomplete hf x
+  exact structural_norm_valuation_formula vK vL f hcomplete hf hrestriction x
 
 /-- Book 2, §15.4: the residue-unit coordinate is the residue norm raised to `e`. -/
 theorem norm_residue_unit_coordinate
