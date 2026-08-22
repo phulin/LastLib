@@ -351,7 +351,17 @@ theorem chapter13FiniteLocalIdele_coordinate
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) (x : (v.adicCompletion K)ˣ) :
     chapter13FiniteIdeleCoordinate K
         ((MulEquiv.prodUnits (chapter13FiniteLocalIdele K v x)).2) v = x := by
-  sorry
+  classical
+  unfold chapter13FiniteIdeleCoordinate
+  change (RestrictedProduct.unitsEquiv
+      (fun w : IsDedekindDomain.HeightOneSpectrum (𝓞 K) => w.adicCompletion K)
+      ((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K
+        (chapter13FiniteLocalIdele K v x)).2)) v = x
+  unfold chapter13FiniteLocalIdele
+  simp
+  apply Units.ext
+  rw [RestrictedProduct.unitsEquiv_apply]
+  simp [RestrictedProduct.mkUnit]
 
 theorem chapter13FiniteLocalIdele_coordinate_off
     (K : Type*) [Field K] [NumberField K]
@@ -359,7 +369,17 @@ theorem chapter13FiniteLocalIdele_coordinate_off
     (hvw : w ≠ v) :
     chapter13FiniteIdeleCoordinate K
         ((MulEquiv.prodUnits (chapter13FiniteLocalIdele K v x)).2) w = 1 := by
-  sorry
+  classical
+  unfold chapter13FiniteIdeleCoordinate
+  change (RestrictedProduct.unitsEquiv
+      (fun z : IsDedekindDomain.HeightOneSpectrum (𝓞 K) => z.adicCompletion K)
+      ((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K
+        (chapter13FiniteLocalIdele K v x)).2)) w = 1
+  unfold chapter13FiniteLocalIdele
+  simp
+  apply Units.ext
+  rw [RestrictedProduct.unitsEquiv_apply]
+  simp [RestrictedProduct.mkUnit, hvw]
 
 theorem chapter13FiniteLocalIdele_infinite_coordinate
     (K : Type*) [Field K] [NumberField K]
@@ -367,26 +387,244 @@ theorem chapter13FiniteLocalIdele_infinite_coordinate
     (w : NumberField.InfinitePlace K) :
     (MulEquiv.piUnits
       ((MulEquiv.prodUnits (chapter13FiniteLocalIdele K v x)).1)) w = 1 := by
-  sorry
+  classical
+  change (MulEquiv.piUnits
+      ((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K
+        (chapter13FiniteLocalIdele K v x)).1)) w = 1
+  unfold chapter13FiniteLocalIdele
+  simp
+  change (1 : ∀ z : NumberField.InfinitePlace K, (z.Completion)ˣ) w = 1
+  rfl
 
 theorem chapter13FiniteLocalIdele_one
     (K : Type*) [Field K] [NumberField K]
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) :
     chapter13FiniteLocalIdele K v 1 = 1 := by
-  sorry
+  classical
+  apply (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K).injective
+  let localUnit : ∀ w : IsDedekindDomain.HeightOneSpectrum (𝓞 K),
+      (w.adicCompletion K)ˣ :=
+    fun w => dite (w = v) (fun h => h ▸ (1 : (v.adicCompletion K)ˣ)) (fun _ => 1)
+  have hlocal : localUnit = (fun _ => 1) := by
+    funext w
+    by_cases hw : w = v
+    · subst w
+      simp [localUnit]
+    · simp [localUnit, hw]
+  change (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K)
+      ((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K).symm
+        (1, RestrictedProduct.mkUnit localUnit _)) =
+    (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K) 1
+  simp [hlocal, RestrictedProduct.mkUnit]
+  apply Prod.ext
+  · rfl
+  · apply Units.ext
+    ext i
+    rfl
 
 theorem chapter13FiniteLocalIdele_mul
     (K : Type*) [Field K] [NumberField K]
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) (x y : (v.adicCompletion K)ˣ) :
     chapter13FiniteLocalIdele K v (x * y) =
       chapter13FiniteLocalIdele K v x * chapter13FiniteLocalIdele K v y := by
-  sorry
+  classical
+  apply (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K).injective
+  let localUnitXY : ∀ w : IsDedekindDomain.HeightOneSpectrum (𝓞 K),
+      (w.adicCompletion K)ˣ :=
+    fun w => dite (w = v) (fun h => h ▸ (x * y)) (fun _ => 1)
+  let localUnitX : ∀ w : IsDedekindDomain.HeightOneSpectrum (𝓞 K),
+      (w.adicCompletion K)ˣ :=
+    fun w => dite (w = v) (fun h => h ▸ x) (fun _ => 1)
+  let localUnitY : ∀ w : IsDedekindDomain.HeightOneSpectrum (𝓞 K),
+      (w.adicCompletion K)ˣ :=
+    fun w => dite (w = v) (fun h => h ▸ y) (fun _ => 1)
+  have hunitXY : ∀ᶠ w : IsDedekindDomain.HeightOneSpectrum (𝓞 K) in Filter.cofinite,
+      localUnitXY w ∈ (Submonoid.ofClass (w.adicCompletionIntegers K)).units := by
+    filter_upwards [(Set.finite_singleton v).compl_mem_cofinite] with w hw
+    have hw' : w ≠ v := by simpa using hw
+    simp [localUnitXY, hw']
+  have hunitX : ∀ᶠ w : IsDedekindDomain.HeightOneSpectrum (𝓞 K) in Filter.cofinite,
+      localUnitX w ∈ (Submonoid.ofClass (w.adicCompletionIntegers K)).units := by
+    filter_upwards [(Set.finite_singleton v).compl_mem_cofinite] with w hw
+    have hw' : w ≠ v := by simpa using hw
+    simp [localUnitX, hw']
+  have hunitY : ∀ᶠ w : IsDedekindDomain.HeightOneSpectrum (𝓞 K) in Filter.cofinite,
+      localUnitY w ∈ (Submonoid.ofClass (w.adicCompletionIntegers K)).units := by
+    filter_upwards [(Set.finite_singleton v).compl_mem_cofinite] with w hw
+    have hw' : w ≠ v := by simpa using hw
+    simp [localUnitY, hw']
+  let finiteXY : Chapter13FiniteIdele K := RestrictedProduct.mkUnit localUnitXY hunitXY
+  let finiteX : Chapter13FiniteIdele K := RestrictedProduct.mkUnit localUnitX hunitX
+  let finiteY : Chapter13FiniteIdele K := RestrictedProduct.mkUnit localUnitY hunitY
+  change (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K)
+      ((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K).symm
+        (1, finiteXY)) =
+    (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K)
+      ((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K).symm
+        (1, finiteX)) *
+      (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K)
+        ((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K).symm
+          (1, finiteY))
+  simp
+  let e : (IsDedekindDomain.FiniteAdeleRing (𝓞 K) K)ˣ ≃*
+      (Πʳ w : IsDedekindDomain.HeightOneSpectrum (𝓞 K),
+        [(w.adicCompletion K)ˣ,
+          (Submonoid.ofClass (w.adicCompletionIntegers K)).units]_[Filter.cofinite] ) :=
+    RestrictedProduct.unitsEquiv
+      (fun w : IsDedekindDomain.HeightOneSpectrum (𝓞 K) => w.adicCompletion K)
+  apply e.injective
+  rw [e.map_mul]
+  apply RestrictedProduct.ext
+  intro i
+  apply Units.ext
+  change (chapter13FiniteIdeleCoordinate K finiteXY i).val =
+    (chapter13FiniteIdeleCoordinate K finiteX i *
+      chapter13FiniteIdeleCoordinate K finiteY i).val
+  simp [chapter13FiniteIdeleCoordinate, finiteXY, finiteX, finiteY,
+    RestrictedProduct.unitsEquiv, RestrictedProduct.mkUnit,
+    localUnitXY, localUnitX, localUnitY]
+  change (localUnitXY i : i.adicCompletion K) =
+    (localUnitX i : i.adicCompletion K) * (localUnitY i : i.adicCompletion K)
+  by_cases hi : i = v
+  · subst i
+    simp [localUnitXY, localUnitX, localUnitY]
+  · simp [localUnitXY, localUnitX, localUnitY, hi]
 
 theorem chapter13FiniteLocalIdele_continuous
     (K : Type*) [Field K] [NumberField K]
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) :
     Continuous (chapter13FiniteLocalIdele K v) := by
-  sorry
+  classical
+  let e := LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K
+  let tprod : TopologicalSpace
+      ((LastLib.Book04AdelesAndIdeles.Chapter09.Chapter09InfiniteAdele K)ˣ ×
+        Chapter13FiniteIdele K) :=
+    @instTopologicalSpaceProd
+      ((LastLib.Book04AdelesAndIdeles.Chapter09.Chapter09InfiniteAdele K)ˣ)
+      (Chapter13FiniteIdele K) inferInstance
+      (LastLib.Book04AdelesAndIdeles.Chapter11.chapter11FiniteIdeleGraphTopology K)
+  let tRP : TopologicalSpace
+      (LastLib.Book04AdelesAndIdeles.Chapter07.chapter07FiniteIdeleRestrictedProduct
+        (𝓞 K) K) :=
+    @RestrictedProduct.topologicalSpace
+      (IsDedekindDomain.HeightOneSpectrum (𝓞 K))
+      (fun w : IsDedekindDomain.HeightOneSpectrum (𝓞 K) => (w.adicCompletion K)ˣ)
+      (fun w : IsDedekindDomain.HeightOneSpectrum (𝓞 K) =>
+        ((Submonoid.ofClass (w.adicCompletionIntegers K)).units :
+          Set ((w.adicCompletion K)ˣ)))
+      Filter.cofinite
+      (fun w => inferInstance)
+  let finiteMap : (v.adicCompletion K)ˣ → Chapter13FiniteIdele K := fun x =>
+    (MulEquiv.prodUnits (chapter13FiniteLocalIdele K v x)).2
+  let S : Set (IsDedekindDomain.HeightOneSpectrum (𝓞 K)) := {v}ᶜ
+  have hS : Filter.cofinite ≤ Filter.principal S := by
+    apply Filter.le_principal_iff.mpr
+    apply Filter.mem_cofinite.mpr
+    simp [S]
+  let g : (v.adicCompletion K)ˣ →
+      (Πʳ w : IsDedekindDomain.HeightOneSpectrum (𝓞 K),
+        [(w.adicCompletion K)ˣ,
+          (Submonoid.ofClass (w.adicCompletionIntegers K)).units]_[Filter.principal S]) :=
+    fun x => ⟨Pi.mulSingle v x, by
+      apply Filter.mem_principal.mpr
+      intro w hw
+      have hw' : w ≠ v := by simpa [S] using hw
+      simp [Pi.mulSingle_eq_of_ne hw']⟩
+  have hg : Continuous g := by
+    apply RestrictedProduct.continuous_rng_of_principal.mpr
+    apply continuous_pi
+    intro w
+    change Continuous (fun x : (v.adicCompletion K)ˣ =>
+      Pi.mulSingle (M := fun w : IsDedekindDomain.HeightOneSpectrum (𝓞 K) =>
+        (w.adicCompletion K)ˣ) v x w)
+    by_cases hw : w = v
+    · subst w
+      have hfun : (fun x : (v.adicCompletion K)ˣ =>
+          Pi.mulSingle (M := fun w : IsDedekindDomain.HeightOneSpectrum (𝓞 K) =>
+            (w.adicCompletion K)ˣ) v x v) =
+          (id : (v.adicCompletion K)ˣ → (v.adicCompletion K)ˣ) := by
+        funext x
+        exact Pi.mulSingle_eq_same
+          (M := fun w : IsDedekindDomain.HeightOneSpectrum (𝓞 K) =>
+            (w.adicCompletion K)ˣ) v x
+      rw [hfun]
+      exact continuous_id
+    · simpa [g, Pi.mulSingle_eq_of_ne hw] using
+        (continuous_const : Continuous
+          (fun _ : (v.adicCompletion K)ˣ => (1 : (w.adicCompletion K)ˣ)))
+  have hfactor :
+      (fun x =>
+        LastLib.Book04AdelesAndIdeles.Chapter07.chapter07FiniteIdeleEquiv
+          (𝓞 K) K (finiteMap x)) =
+        RestrictedProduct.inclusion
+          (fun w : IsDedekindDomain.HeightOneSpectrum (𝓞 K) =>
+            (w.adicCompletion K)ˣ)
+          (fun w : IsDedekindDomain.HeightOneSpectrum (𝓞 K) =>
+            ((Submonoid.ofClass (w.adicCompletionIntegers K)).units :
+              Set ((w.adicCompletion K)ˣ))) hS ∘ g := by
+    funext x
+    apply RestrictedProduct.ext
+    intro w
+    apply Units.ext
+    by_cases hw : w = v
+    · subst w
+      change (chapter13FiniteIdeleCoordinate K (finiteMap x) v).val =
+        (g x v).val
+      have hcoord : chapter13FiniteIdeleCoordinate K (finiteMap x) v = x := by
+        simpa [finiteMap] using (chapter13FiniteLocalIdele_coordinate K v x)
+      rw [hcoord]
+      change (x : v.adicCompletion K) =
+        Pi.mulSingle (M := fun w : IsDedekindDomain.HeightOneSpectrum (𝓞 K) =>
+          (w.adicCompletion K)ˣ) v x v
+      simp
+    · change (chapter13FiniteIdeleCoordinate K (finiteMap x) w).val =
+        (g x w).val
+      have hcoord : chapter13FiniteIdeleCoordinate K (finiteMap x) w = 1 := by
+        simpa [finiteMap] using
+          (chapter13FiniteLocalIdele_coordinate_off K v w x hw)
+      rw [hcoord]
+      change (1 : w.adicCompletion K) =
+        Pi.mulSingle (M := fun z : IsDedekindDomain.HeightOneSpectrum (𝓞 K) =>
+          (z.adicCompletion K)ˣ) v x w
+      simp [hw]
+  have hfinite : @Continuous
+      ((v.adicCompletion K)ˣ) (Chapter13FiniteIdele K)
+      (inferInstance : TopologicalSpace ((v.adicCompletion K)ˣ))
+      (LastLib.Book04AdelesAndIdeles.Chapter11.chapter11FiniteIdeleGraphTopology K)
+      finiteMap := by
+    change @Continuous
+      ((v.adicCompletion K)ˣ) (Chapter13FiniteIdele K)
+      (inferInstance : TopologicalSpace ((v.adicCompletion K)ˣ))
+      (TopologicalSpace.induced
+        (LastLib.Book04AdelesAndIdeles.Chapter07.chapter07FiniteIdeleEquiv
+          (𝓞 K) K) tRP)
+      finiteMap
+    rw [continuous_induced_rng]
+    change Continuous (fun x =>
+      LastLib.Book04AdelesAndIdeles.Chapter07.chapter07FiniteIdeleEquiv
+        (𝓞 K) K (finiteMap x))
+    rw [hfactor]
+    exact (RestrictedProduct.continuous_inclusion hS).comp hg
+  change @Continuous
+    ((v.adicCompletion K)ˣ) (Chapter13Idele K)
+    (inferInstance : TopologicalSpace ((v.adicCompletion K)ˣ))
+    (TopologicalSpace.induced e tprod)
+    (fun x => e.symm (1, finiteMap x))
+  rw [continuous_induced_rng]
+  have hprod : @Continuous
+      ((v.adicCompletion K)ˣ)
+      ((LastLib.Book04AdelesAndIdeles.Chapter09.Chapter09InfiniteAdele K)ˣ ×
+        Chapter13FiniteIdele K)
+      (inferInstance : TopologicalSpace ((v.adicCompletion K)ˣ)) tprod
+      (fun x => (1, finiteMap x)) := by
+    exact continuous_const.prodMk hfinite
+  have heq : (fun x => e (e.symm (1, finiteMap x))) =
+      (fun x => (1, finiteMap x)) := by
+    funext x
+    exact e.apply_symm_apply _
+  change Continuous (fun x => e (e.symm (1, finiteMap x)))
+  rw [heq]
+  exact hprod
 
 def chapter13FiniteLocalIdeleHom
     (K : Type*) [Field K] [NumberField K]
