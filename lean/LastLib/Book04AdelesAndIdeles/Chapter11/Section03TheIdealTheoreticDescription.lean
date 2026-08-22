@@ -967,7 +967,9 @@ theorem chapter11_idele_ray_quotient_equiv_ideal_ray_quotient
           change QuotientGroup.mk' Q (idealOfNormalizer z 1 hzray) = _
           rw [hIzn]
     exact ⟨z, hΦz⟩
-  sorry
+  exact ⟨QuotientGroup.liftEquiv
+    (chapter11PrincipalIdeleSubgroup (K := K) ⊔ chapter11RayUnitSubgroup m)
+    hsurj hker⟩
 
 /- The preliminary principal adjustment above is essential: the ideal map
 attached to an arbitrary idele is not, by itself, an API assertion that its
