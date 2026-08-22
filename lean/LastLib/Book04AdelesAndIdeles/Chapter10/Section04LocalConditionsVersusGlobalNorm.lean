@@ -336,7 +336,20 @@ theorem chapter10_class_norm_image_is_principal_times_adelic_norm
     chapter10ClassNormImage pK pL globalNorm ideleNorm hcompat =
       QuotientGroup.mk' (chapter10PrincipalSubgroup pK) ''
         chapter10PrincipalTimesAdelicNormSet pK ideleNorm := by
-  sorry
+  ext x
+  constructor
+  · rintro ⟨q, rfl⟩
+    obtain ⟨y, rfl⟩ := QuotientGroup.mk'_surjective (chapter10PrincipalSubgroup pL) q
+    refine ⟨ideleNorm y, ⟨1, y, by simp⟩, ?_⟩
+    exact (chapter10_idele_class_norm_mk pK pL globalNorm ideleNorm hcompat y).symm
+  · rintro ⟨x, ⟨g, y, hxy⟩, rfl⟩
+    refine ⟨QuotientGroup.mk' (chapter10PrincipalSubgroup pL) y, ?_⟩
+    rw [chapter10_idele_class_norm_mk]
+    rw [← hxy, (QuotientGroup.mk' (chapter10PrincipalSubgroup pK)).map_mul]
+    have hp : QuotientGroup.mk' (chapter10PrincipalSubgroup pK) (pK g) = 1 := by
+      rw [QuotientGroup.mk'_apply, QuotientGroup.eq_one_iff]
+      exact Subgroup.mem_map.mpr ⟨g, Subgroup.mem_top _, rfl⟩
+    rw [hp, one_mul]
 
 end
 end LastLib.Book04AdelesAndIdeles.Chapter10

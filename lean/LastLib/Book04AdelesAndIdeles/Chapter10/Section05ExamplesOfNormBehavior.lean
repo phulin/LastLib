@@ -11,19 +11,23 @@ open scoped BigOperators
 
 theorem chapter10_complex_real_norm_formula (z : ℂ) :
     Algebra.norm ℝ z = Complex.normSq z := by
-  sorry
+  exact Algebra.norm_complex_apply z
 
 theorem chapter10_complex_real_norm_formula_expanded (z : ℂ) :
     Algebra.norm ℝ z = z.re ^ 2 + z.im ^ 2 := by
-  sorry
+  simp [Algebra.norm_complex_apply, Complex.normSq_apply, pow_two]
 
 theorem chapter10_complex_real_norm_positive (z : ℂ) (hz : z ≠ 0) :
     0 < Algebra.norm ℝ z := by
-  sorry
+  rw [Algebra.norm_complex_apply, Complex.normSq_pos]
+  exact hz
 
 theorem chapter10_negative_real_not_a_complex_norm (r : ℝ) (hr : r < 0) :
     ¬ ∃ z : ℂ, Algebra.norm ℝ z = r := by
-  sorry
+  exact by
+    rintro ⟨z, hz⟩
+    rw [Algebra.norm_complex_apply] at hz
+    exact (not_lt_of_ge (Complex.normSq_nonneg z)) (hz ▸ hr)
 
 /-- A complexified real place is represented by a map into the complex local
 factor together with the local determinant compatibility. -/
@@ -33,7 +37,11 @@ theorem chapter10_global_norm_positive_at_a_complexified_real_place
     (hcompat : placeNorm.comp place =
       (chapter10LocalNormUnitHom ℝ ℂ).comp place) (a : G) :
     0 < (placeNorm (place a) : ℝ) := by
-  sorry
+  have hnorm : (placeNorm (place a) : ℝ) = Algebra.norm ℝ (place a : ℂ) := by
+    have h := congrArg (fun u : ℝˣ => (u : ℝ)) (DFunLike.congr_fun hcompat a)
+    simpa [MonoidHom.comp_apply, chapter10LocalNormUnitHom, chapter10LocalNorm, Units.map] using h
+  rw [hnorm]
+  exact chapter10_complex_real_norm_positive (place a : ℂ) (Units.ne_zero (place a))
 
 /-! ### Unramified and totally ramified local obstructions -/
 
