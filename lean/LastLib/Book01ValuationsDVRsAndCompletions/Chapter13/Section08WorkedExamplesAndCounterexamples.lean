@@ -10,6 +10,7 @@ import Mathlib.RingTheory.PowerSeries.WeierstrassPreparation
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter13
 
 open Ideal IsLocalRing
+open scoped PowerSeries.WithPiTopology MvPowerSeries.WithPiTopology
 
 noncomputable section
 
@@ -357,7 +358,650 @@ theorem chapter13_cusp_presentation
           Chapter13CuspPowerSeriesSubring k) ∧
       ¬IsRegularLocalRing (Chapter13CuspPowerSeriesSubring k) := by
   constructor
-  · sorry
+  · let _ : TopologicalSpace k := ⊥
+    let _ : UniformSpace k := ⊥
+    let _ : DiscreteTopology k := discreteTopology_bot k
+    have hX : IsTopologicallyNilpotent (PowerSeries.X : PowerSeries k) :=
+      PowerSeries.HasEval.X
+    have hpow : ∀ i : Fin 2,
+        IsTopologicallyNilpotent
+          (if i = 0 then (PowerSeries.X : PowerSeries k) ^ 2 else PowerSeries.X ^ 3) := by
+      intro i
+      fin_cases i
+      · change IsTopologicallyNilpotent ((PowerSeries.X : PowerSeries k) ^ 2)
+        simpa only [pow_two] using hX.mul_right (PowerSeries.X : PowerSeries k)
+      · change IsTopologicallyNilpotent ((PowerSeries.X : PowerSeries k) ^ 3)
+        change IsTopologicallyNilpotent
+          ((PowerSeries.X : PowerSeries k) ^ 2 * PowerSeries.X)
+        exact hX.mul_left ((PowerSeries.X : PowerSeries k) ^ 2)
+    have hzero : Filter.Tendsto
+        (fun i : Fin 2 =>
+          if i = 0 then (PowerSeries.X : PowerSeries k) ^ 2 else PowerSeries.X ^ 3)
+        Filter.cofinite (nhds 0) := by
+      rw [Filter.cofinite_eq_bot]
+      exact Filter.tendsto_bot
+    have ha : MvPowerSeries.HasEval (fun i : Fin 2 =>
+        if i = 0 then (PowerSeries.X : PowerSeries k) ^ 2 else PowerSeries.X ^ 3) :=
+      ⟨hpow, hzero⟩
+    let a : Fin 2 → PowerSeries k := fun i =>
+      if i = 0 then (PowerSeries.X : PowerSeries k) ^ 2 else PowerSeries.X ^ 3
+    let E : MvPowerSeries (Fin 2) k →+* PowerSeries k :=
+      MvPowerSeries.eval₂Hom (continuous_algebraMap k (PowerSeries k)) ha
+    have hpoly : ∀ p : MvPolynomial (Fin 2) k,
+        PowerSeries.coeff 1 (MvPolynomial.eval₂Hom (PowerSeries.C : k →+* PowerSeries k)
+          a p) = 0 := by
+      intro p
+      induction p using MvPolynomial.induction_on with
+      | C c => simp [a]
+      | add p q hp hq =>
+          have hp' : PowerSeries.coeff 1 (MvPolynomial.eval₂
+              (PowerSeries.C : k →+* PowerSeries k) a p) = 0 := by
+            simpa only [MvPolynomial.coe_eval₂Hom] using hp
+          have hq' : PowerSeries.coeff 1 (MvPolynomial.eval₂
+              (PowerSeries.C : k →+* PowerSeries k) a q) = 0 := by
+            simpa only [MvPolynomial.coe_eval₂Hom] using hq
+          simp [map_add, hp', hq']
+      | mul_X p i hp =>
+          have hp' : PowerSeries.coeff 1 (MvPolynomial.eval₂
+              (PowerSeries.C : k →+* PowerSeries k) a p) = 0 := by
+            simpa only [MvPolynomial.coe_eval₂Hom] using hp
+          rw [MvPolynomial.coe_eval₂Hom, MvPolynomial.eval₂_mul,
+            MvPolynomial.eval₂_X]
+          fin_cases i
+          · simp [a, PowerSeries.coeff_one_mul, hp']
+          · simp [a, PowerSeries.coeff_one_mul, hp']
+    have hEcont : Continuous (E : MvPowerSeries (Fin 2) k → PowerSeries k) := by
+      simpa only [E, MvPowerSeries.coe_eval₂Hom] using
+        (MvPowerSeries.continuous_eval₂
+          (continuous_algebraMap k (PowerSeries k)) ha)
+    have hcoeffcont : Continuous (fun f : MvPowerSeries (Fin 2) k =>
+        PowerSeries.coeff 1 (E f)) :=
+      (PowerSeries.WithPiTopology.continuous_coeff k 1).comp hEcont
+    have hrestrict : ∀ p : MvPolynomial (Fin 2) k,
+        (fun f : MvPowerSeries (Fin 2) k => PowerSeries.coeff 1 (E f))
+            (p : MvPowerSeries (Fin 2) k) = 0 := by
+      intro p
+      simpa [E, MvPowerSeries.coe_eval₂Hom] using hpoly p
+    have hext :
+        MvPolynomial.toMvPowerSeries_isDenseInducing.extend
+            (fun _ : MvPolynomial (Fin 2) k => (0 : k)) =
+          (fun f : MvPowerSeries (Fin 2) k => PowerSeries.coeff 1 (E f)) := by
+      apply MvPolynomial.toMvPowerSeries_isDenseInducing.extend_unique
+      · exact hrestrict
+      · exact hcoeffcont
+    have hzeroext :
+        MvPolynomial.toMvPowerSeries_isDenseInducing.extend
+            (fun _ : MvPolynomial (Fin 2) k => (0 : k)) =
+          (fun _ : MvPowerSeries (Fin 2) k => (0 : k)) := by
+      apply MvPolynomial.toMvPowerSeries_isDenseInducing.extend_unique
+      · intro p
+        rfl
+      · exact continuous_const
+    have hcoeff : ∀ f : MvPowerSeries (Fin 2) k,
+        PowerSeries.coeff 1 (E f) = 0 := by
+      intro f
+      have := congrFun (hzeroext.symm.trans hext) f
+      exact this.symm
+    have hX0 : PowerSeries.HasSubst
+        (MvPowerSeries.X (0 : Fin 2) : MvPowerSeries (Fin 2) k) :=
+      PowerSeries.HasSubst.X (0 : Fin 2)
+    let J : PowerSeries k →ₐ[k] MvPowerSeries (Fin 2) k :=
+      PowerSeries.substAlgHom hX0
+    have hX2 : PowerSeries.HasSubst (PowerSeries.X ^ 2 : PowerSeries k) :=
+      PowerSeries.HasSubst.X_pow (by decide)
+    let K2 : PowerSeries k →ₐ[k] PowerSeries k :=
+      PowerSeries.substAlgHom hX2
+    let Ealg : MvPowerSeries (Fin 2) k →ₐ[k] PowerSeries k :=
+      MvPowerSeries.aeval ha
+    have hEalg : Ealg.toRingHom = E := by
+      ext f
+      rfl
+    have hJcont : Continuous (J : PowerSeries k → MvPowerSeries (Fin 2) k) := by
+      rw [show J = PowerSeries.aeval hX0.hasEval by
+        simpa [J] using (PowerSeries.substAlgHom_eq_aeval hX0)]
+      exact PowerSeries.continuous_aeval hX0.hasEval
+    have hEalgcont : Continuous (Ealg : MvPowerSeries (Fin 2) k → PowerSeries k) := by
+      exact MvPowerSeries.continuous_aeval ha
+    have hcomp : Ealg.comp J = K2 := by
+      have hcompcont : Continuous ((Ealg.comp J).toRingHom :
+          PowerSeries k → PowerSeries k) := hEalgcont.comp hJcont
+      have hXcomp : (Ealg.comp J) PowerSeries.X = PowerSeries.X ^ 2 := by
+        simp [Ealg, J, PowerSeries.substAlgHom_X, MvPowerSeries.coe_aeval]
+      have hpoint0 : PowerSeries.HasEval ((Ealg.comp J) PowerSeries.X) :=
+        PowerSeries.HasEval.map hcompcont PowerSeries.HasEval.X
+      have hpoint : PowerSeries.HasEval ((PowerSeries.X : PowerSeries k) ^ 2) := by
+        rw [← hXcomp]
+        exact hpoint0
+      have hu0 : PowerSeries.aeval hpoint0 = Ealg.comp J :=
+        PowerSeries.aeval_unique (ε := Ealg.comp J) hcompcont
+      have hu : PowerSeries.aeval hpoint = Ealg.comp J := by
+        simpa only [hXcomp] using hu0
+      change Ealg.comp J = PowerSeries.substAlgHom hX2
+      rw [PowerSeries.substAlgHom_eq_aeval hX2]
+      have hproof : hpoint = hX2.hasEval := Subsingleton.elim _ _
+      rw [hproof] at hu
+      exact hu.symm
+    have hEJ : ∀ f : PowerSeries k, E (J f) = K2 f := by
+      intro f
+      have hf := congrArg (fun h : PowerSeries k →ₐ[k] PowerSeries k => h f) hcomp
+      rw [← hEalg]
+      exact hf
+    let S : Subring (PowerSeries k) := Chapter13CuspPowerSeriesSubring k
+    have hrange : ∀ f : MvPowerSeries (Fin 2) k, E f ∈ S := by
+      intro f
+      change PowerSeries.coeff 1 (E f) = 0
+      exact hcoeff f
+    let F : MvPowerSeries (Fin 2) k →+* S := E.codRestrict S hrange
+    have hK2coeff : ∀ q : PowerSeries k, ∀ n : ℕ,
+        PowerSeries.coeff n (K2 q) =
+          if 2 ∣ n then PowerSeries.coeff (n / 2) q else 0 := by
+      intro q n
+      rw [show K2 q = PowerSeries.subst (PowerSeries.X ^ 2) q by
+        simpa [K2] using congrFun (PowerSeries.coe_substAlgHom hX2) q]
+      exact PowerSeries.coeff_subst_X_pow (R := k) (S := k) (k := 2)
+        (by decide) q n
+    have hsurj : Function.Surjective F := by
+      intro z
+      rcases z with ⟨s, hs⟩
+      let even : PowerSeries k := PowerSeries.mk (fun n =>
+        PowerSeries.coeff (2 * n) s)
+      let odd : PowerSeries k := PowerSeries.mk (fun n =>
+        PowerSeries.coeff (2 * n + 3) s)
+      have hs1 : PowerSeries.coeff 1 s = 0 := by
+        change PowerSeries.coeff 1 s = 0 at hs
+        exact hs
+      let f : MvPowerSeries (Fin 2) k :=
+        J even + MvPowerSeries.X (1 : Fin 2) * J odd
+      refine ⟨f, ?_⟩
+      apply Subtype.ext
+      change E f = s
+      have hEX1 : E (MvPowerSeries.X (1 : Fin 2)) =
+          (PowerSeries.X : PowerSeries k) ^ 3 := by
+        simp [E, MvPowerSeries.coe_eval₂Hom]
+      rw [show E f = E (J even) + E (MvPowerSeries.X (1 : Fin 2)) * E (J odd) by
+        simp [f]]
+      rw [hEJ, hEJ, hEX1]
+      have hevenK : ∀ m : ℕ,
+          PowerSeries.coeff m (K2 even) =
+            if 2 ∣ m then PowerSeries.coeff m s else 0 := by
+        intro m
+        rw [hK2coeff even m]
+        split_ifs with hm
+        · obtain ⟨r, rfl⟩ := hm
+          simp [even]
+        · rfl
+      apply PowerSeries.ext
+      intro n
+      rw [map_add, hevenK, PowerSeries.coeff_X_pow_mul']
+      by_cases h2 : 2 ∣ n
+      · obtain ⟨m, rfl⟩ := h2
+        simp only [dvd_mul_right, if_true]
+        by_cases h3 : 3 ≤ 2 * m
+        · rw [if_pos h3]
+          have hodd : ¬2 ∣ 2 * m - 3 := by
+            intro hodd
+            obtain ⟨r, hr⟩ := hodd
+            omega
+          rw [hK2coeff odd (2 * m - 3), if_neg hodd]
+          simp
+        · simp [h3]
+      · obtain ⟨m, rfl⟩ : ∃ m, n = 2 * m + 1 := by
+          refine ⟨n / 2, ?_⟩
+          omega
+        have hodd : ¬2 ∣ 2 * m + 1 := by
+          intro hodd
+          obtain ⟨r, hr⟩ := hodd
+          omega
+        simp only [hodd, if_false, zero_add]
+        by_cases hm : 3 ≤ 2 * m + 1
+        · rw [if_pos hm]
+          have hidx : 2 * m + 1 - 3 = 2 * m - 2 := by omega
+          rw [hidx, hK2coeff odd (2 * m - 2)]
+          have hdiv : 2 ∣ 2 * m - 2 := by
+            refine ⟨m - 1, ?_⟩
+            omega
+          rw [if_pos hdiv]
+          simp [odd]
+          have hquot : (2 * m - 2) / 2 = m - 1 := by
+            apply Nat.div_eq_of_eq_mul_left (by decide)
+            omega
+          congr 1
+          rw [hquot]
+          have hm1 : 1 ≤ m := by omega
+          have hidx2 : 2 * (m - 1) + 3 = 2 * m + 1 := by
+            calc
+              2 * (m - 1) + 3 = 2 * (m - 1) + 2 + 1 := by ring
+              _ = 2 * ((m - 1) + 1) + 1 := by ring
+              _ = 2 * m + 1 := by rw [Nat.sub_add_cancel hm1]
+          rw [hidx2]
+        · have hm0 : m = 0 := by omega
+          subst m
+          exact hs1.symm
+    let A := MvPowerSeries (Fin 1) k
+    let e : MvPowerSeries (Fin 2) k ≃ₐ[k] PowerSeries A :=
+      (MvPowerSeries.renameEquiv k (Equiv.swap (0 : Fin 2) 1)).trans
+        (MvPowerSeries.finSuccEquiv k 1)
+    have hecont : Continuous (e : MvPowerSeries (Fin 2) k → PowerSeries A) := by
+      apply continuous_pi_iff.2
+      intro n
+      apply continuous_pi_iff.2
+      intro x
+      let d : Fin 2 →₀ ℕ :=
+        Finsupp.mapDomain (Equiv.swap (0 : Fin 2) 1) (x.cons (n ()))
+      have hcoeffe :
+          (fun a : MvPowerSeries (Fin 2) k => e a n x) =
+            MvPowerSeries.coeff d := by
+        funext a
+        have hn : n = Finsupp.single () (n ()) := Finsupp.unique_single n
+        rw [hn]
+        simp only [e, AlgEquiv.trans_apply]
+        change MvPowerSeries.coeff x
+            (MvPowerSeries.coeff (Finsupp.single () (n ()))
+              ((MvPowerSeries.finSuccEquiv k 1)
+                ((MvPowerSeries.renameEquiv k (Equiv.swap (0 : Fin 2) 1)) a))) =
+          MvPowerSeries.coeff d a
+        rw [← PowerSeries.coeff_def (R := A) (n := n ()) (by simp)]
+        rw [MvPowerSeries.coeff_coeff_finSuccEquiv]
+        have hd : Finsupp.embDomain
+            (Equiv.swap (0 : Fin 2) 1).toEmbedding d = x.cons (n ()) := by
+          rw [Finsupp.embDomain_eq_mapDomain]
+          rw [← Finsupp.mapDomain_comp]
+          have hswap :
+              ((Equiv.swap (0 : Fin 2) 1).toEmbedding ∘
+                Equiv.swap (0 : Fin 2) 1) = id := by
+            funext i
+            fin_cases i <;> rfl
+          rw [hswap]
+          simp
+        have hrename := MvPowerSeries.coeff_embDomain_rename
+          (Equiv.swap (0 : Fin 2) 1).toEmbedding a d
+        rw [hd] at hrename
+        simpa [MvPowerSeries.renameEquiv] using hrename
+      rw [hcoeffe]
+      exact MvPowerSeries.WithPiTopology.continuous_coeff k d
+    let g : PowerSeries A :=
+      (PowerSeries.X : PowerSeries A) ^ 2 -
+        PowerSeries.C ((MvPowerSeries.X (0 : Fin 1) : A) ^ 3)
+    have he_relation : e (Chapter13CuspRelation k) = g := by
+      simp [e, g, Chapter13CuspRelation, MvPowerSeries.finSuccEquiv]
+      rw [show (finSuccEquiv 1) (1 : Fin 2) = some (0 : Fin 1) by rfl,
+        MvPowerSeries.optionEquivLeft_X_some]
+    let _ : IsAdicComplete (IsLocalRing.maximalIdeal A) A := by
+      have hlocal := chapter13_power_series_complete_local k (by infer_instance) 1
+      simpa [A] using hlocal.1.2
+    have hgmap : g.map (IsLocalRing.residue A) ≠ 0 := by
+      intro hgzero
+      have hcoeff := congrArg (PowerSeries.coeff 2) hgzero
+      simp [g] at hcoeff
+      have hCpow :
+          (PowerSeries.C ((IsLocalRing.residue A) (MvPowerSeries.X (0 : Fin 1))) :
+              PowerSeries (IsLocalRing.ResidueField A)) ^ 3 =
+            PowerSeries.C (((IsLocalRing.residue A) (MvPowerSeries.X (0 : Fin 1))) ^ 3) := by
+        exact ((PowerSeries.C : IsLocalRing.ResidueField A →+*
+          PowerSeries (IsLocalRing.ResidueField A)).map_pow _ _).symm
+      rw [hCpow, PowerSeries.coeff_C] at hcoeff
+      norm_num at hcoeff
+    let H : PowerSeries.IsWeierstrassDivisor g :=
+      PowerSeries.IsWeierstrassDivisor.of_map_ne_zero hgmap
+    let hLsub : MvPowerSeries.HasSubst
+        (fun _ : Fin 1 => (MvPowerSeries.X (0 : Fin 2) : MvPowerSeries (Fin 2) k)) :=
+      MvPowerSeries.HasSubst.X_comp (f := fun _ : Fin 1 => (0 : Fin 2))
+    let L : A →ₐ[k] MvPowerSeries (Fin 2) k :=
+      MvPowerSeries.substAlgHom hLsub
+    have hLcont : Continuous (L : A → MvPowerSeries (Fin 2) k) := by
+      change Continuous (MvPowerSeries.substAlgHom hLsub :
+        A → MvPowerSeries (Fin 2) k)
+      rw [MvPowerSeries.coe_substAlgHom (R := k) (S := k)
+        (σ := Fin 1) (τ := Fin 2) hLsub]
+      exact MvPowerSeries.continuous_subst (R := k) (S := k)
+        (σ := Fin 1) (τ := Fin 2) hLsub
+    let φ : A →+* PowerSeries k := E.comp L.toRingHom
+    have hφcont : Continuous (φ : A → PowerSeries k) := by
+      exact hEcont.comp hLcont
+    have hX3 : PowerSeries.HasEval (PowerSeries.X ^ 3 : PowerSeries k) :=
+      (PowerSeries.HasSubst.X_pow (by decide)).hasEval
+    let E' : PowerSeries A →+* PowerSeries k :=
+      PowerSeries.eval₂Hom hφcont hX3
+    have hE'cont : Continuous (E' : PowerSeries A → PowerSeries k) := by
+      simpa only [E', PowerSeries.coe_eval₂Hom] using
+        (PowerSeries.continuous_eval₂ hφcont hX3)
+    have hLX0 : L (MvPowerSeries.X (0 : Fin 1) : A) =
+        MvPowerSeries.X (0 : Fin 2) := by
+      change (MvPowerSeries.substAlgHom hLsub)
+          (MvPowerSeries.X (0 : Fin 1)) = _
+      rw [MvPowerSeries.substAlgHom_X]
+    have heX0 : e (MvPowerSeries.X (0 : Fin 2)) =
+        PowerSeries.C (MvPowerSeries.X (0 : Fin 1) : A) := by
+      simpa [e] using
+        (MvPowerSeries.finSuccEquiv_X_succ (R := k) (n := 1) (j := 0))
+    have heX1 : e (MvPowerSeries.X (1 : Fin 2)) =
+        (PowerSeries.X : PowerSeries A) := by
+      simp only [e, AlgEquiv.trans_apply]
+      have hrename :
+          MvPowerSeries.renameEquiv k (Equiv.swap (0 : Fin 2) 1)
+              (MvPowerSeries.X (1 : Fin 2)) = MvPowerSeries.X 0 := by
+        change MvPowerSeries.rename (Equiv.swap (0 : Fin 2) 1)
+            (MvPowerSeries.X (1 : Fin 2)) = _
+        rw [MvPowerSeries.rename_X]
+        rfl
+      rw [hrename]
+      exact MvPowerSeries.finSuccEquiv_X_zero
+    have hE'eX0 : E' (e (MvPowerSeries.X (0 : Fin 2))) =
+        (PowerSeries.X : PowerSeries k) ^ 2 := by
+      rw [heX0]
+      rw [show E' (PowerSeries.C (MvPowerSeries.X (0 : Fin 1) : A)) =
+          φ (MvPowerSeries.X (0 : Fin 1) : A) by
+            simp [E', PowerSeries.coe_eval₂Hom]]
+      change E (L (MvPowerSeries.X (0 : Fin 1) : A)) = _
+      rw [hLX0]
+      simp [E, MvPowerSeries.coe_eval₂Hom]
+    have hE'eX1 : E' (e (MvPowerSeries.X (1 : Fin 2))) =
+        (PowerSeries.X : PowerSeries k) ^ 3 := by
+      rw [heX1]
+      simp [E', PowerSeries.coe_eval₂Hom]
+    let Cmp : MvPowerSeries (Fin 2) k →+* PowerSeries k :=
+      E'.comp e.toRingEquiv.toRingHom
+    have hCmpX0 : Cmp (MvPowerSeries.X (0 : Fin 2)) =
+        (PowerSeries.X : PowerSeries k) ^ 2 := by
+      exact hE'eX0
+    have hCmpX1 : Cmp (MvPowerSeries.X (1 : Fin 2)) =
+        (PowerSeries.X : PowerSeries k) ^ 3 := by
+      exact hE'eX1
+    have hCmpcont : Continuous (Cmp : MvPowerSeries (Fin 2) k → PowerSeries k) := by
+      exact hE'cont.comp hecont
+    have hCmpEq : Cmp = E := by
+      have huniq : (Cmp : MvPowerSeries (Fin 2) k → PowerSeries k) =
+          MvPowerSeries.eval₂ (algebraMap k (PowerSeries k)) a := by
+        apply MvPowerSeries.eval₂_unique (continuous_algebraMap k (PowerSeries k)) ha
+          hCmpcont
+        intro p
+        induction p using MvPolynomial.induction_on with
+        | C c =>
+            simp [Cmp, e, E', PowerSeries.coe_eval₂Hom]
+            rw [MvPowerSeries.finSuccEquiv_C, PowerSeries.eval₂_C]
+            have hL_C :
+                (MvPowerSeries.substAlgHom hLsub) (MvPowerSeries.C c) =
+                  MvPowerSeries.C c := by
+              simp
+            change E (L (MvPowerSeries.C c)) = PowerSeries.C c
+            rw [hL_C]
+            simp [E, MvPowerSeries.coe_eval₂Hom]
+        | add p q hp hq =>
+            rw [MvPolynomial.coe_add, map_add, hp, hq]
+            simp
+        | mul_X p i hp =>
+            rw [MvPolynomial.coe_mul, map_mul, MvPolynomial.coe_X,
+              MvPolynomial.eval₂_mul, MvPolynomial.eval₂_X]
+            fin_cases i <;> simp [hCmpX0, hCmpX1, hp]
+      apply RingHom.ext
+      intro f
+      have hf := congrFun huniq f
+      simpa [E, MvPowerSeries.coe_eval₂Hom] using hf
+    have hE'e : ∀ f : MvPowerSeries (Fin 2) k, E' (e f) = E f := by
+      intro f
+      change Cmp f = E f
+      exact congrArg (fun h : MvPowerSeries (Fin 2) k →+* PowerSeries k => h f) hCmpEq
+    have hrel : E (Chapter13CuspRelation k) = 0 := by
+      simp only [Chapter13CuspRelation]
+      rw [map_sub, map_pow, map_pow]
+      simp [E, MvPowerSeries.coe_eval₂Hom]
+      ring
+    have hspan : Ideal.span {Chapter13CuspRelation k} ≤ RingHom.ker F := by
+      apply Ideal.span_le.2
+      intro x hx
+      rcases Set.mem_singleton_iff.mp hx with rfl
+      change F (Chapter13CuspRelation k) = 0
+      apply Subtype.ext
+      change E (Chapter13CuspRelation k) = 0
+      exact hrel
+    have hker : RingHom.ker F ≤ Ideal.span {Chapter13CuspRelation k} := by
+      intro f hf
+      rw [RingHom.mem_ker] at hf
+      have hEf : E f = 0 := congrArg Subtype.val hf
+      have hE'f : E' (e f) = 0 := by rw [hE'e, hEf]
+      have hEg : E' g = 0 := by
+        rw [← he_relation, hE'e]
+        exact hrel
+      obtain ⟨hrdeg, hdiv⟩ := H.isWeierstrassDivisionAt_div_mod (e f)
+      have hdiv' := congrArg E' hdiv
+      rw [map_add, map_mul, hEg, zero_mul, hE'f] at hdiv'
+      have hEr : E' (H.mod (e f) : PowerSeries A) = 0 := by simpa using hdiv'.symm
+      have hX0nonunit : ¬IsUnit (MvPowerSeries.X (0 : Fin 1) : A) := by
+        intro hu
+        simpa using (MvPowerSeries.isUnit_iff_constantCoeff.mp hu)
+      have hX0mem : (MvPowerSeries.X (0 : Fin 1) : A) ∈
+          IsLocalRing.maximalIdeal A := by
+        rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
+        exact hX0nonunit
+      have hresX0 :
+          (Ideal.Quotient.mk (IsLocalRing.maximalIdeal A))
+              (MvPowerSeries.X (0 : Fin 1) : A) = 0 :=
+        Ideal.Quotient.eq_zero_iff_mem.mpr hX0mem
+      have horder :
+          (PowerSeries.map (Ideal.Quotient.mk (IsLocalRing.maximalIdeal A)) g).order.toNat = 2 := by
+        rw [show PowerSeries.map (Ideal.Quotient.mk (IsLocalRing.maximalIdeal A)) g =
+            (PowerSeries.X : PowerSeries (A ⧸ IsLocalRing.maximalIdeal A)) ^ 2 by
+              simp [g, hresX0]]
+        rw [PowerSeries.order_X_pow]
+        simp
+      have hrdeg2 : (H.mod (e f)).degree < 2 := by
+        rw [horder] at hrdeg
+        exact hrdeg
+      let e0 : A →+* PowerSeries k :=
+        (PowerSeries.map (MvPowerSeries.isEmptyEquiv (Fin 0) k).toRingHom).comp
+          (MvPowerSeries.finSuccEquiv k 0).toRingEquiv.toRingHom
+      have he0coeff : ∀ (b : A) (n : ℕ),
+          PowerSeries.coeff n (e0 b) =
+            MvPowerSeries.coeff (Finsupp.single (0 : Fin 1) n) b := by
+        intro b n
+        simp only [e0, RingHom.coe_comp, Function.comp_apply, PowerSeries.coeff_map]
+        change MvPowerSeries.coeff (0 : Fin 0 →₀ ℕ)
+            (PowerSeries.coeff n (MvPowerSeries.finSuccEquiv k 0 b)) = _
+        rw [MvPowerSeries.coeff_coeff_finSuccEquiv]
+        have hcons : Finsupp.cons n 0 = Finsupp.single (0 : Fin 1) n := by
+          ext i
+          fin_cases i
+          simp
+        rw [hcons]
+      have he0cont : Continuous (e0 : A → PowerSeries k) := by
+        apply continuous_pi_iff.2
+        intro n
+        rw [show (fun b : A => e0 b n) =
+            MvPowerSeries.coeff (Finsupp.single (0 : Fin 1) (n ())) by
+              funext b
+              have hn : n = Finsupp.single () (n ()) := Finsupp.unique_single n
+              rw [hn]
+              change PowerSeries.coeff (n ()) (e0 b) = _
+              simpa using he0coeff b (n ())]
+        exact MvPowerSeries.WithPiTopology.continuous_coeff k
+          (Finsupp.single (0 : Fin 1) (n ()))
+      have he0X : e0 (MvPowerSeries.X (0 : Fin 1) : A) = PowerSeries.X := by
+        change PowerSeries.map (MvPowerSeries.isEmptyEquiv (Fin 0) k).toRingHom
+            (MvPowerSeries.finSuccEquiv k 0 (MvPowerSeries.X (0 : Fin 1))) =
+          PowerSeries.X
+        rw [MvPowerSeries.finSuccEquiv_X_zero, PowerSeries.map_X]
+      have he0inj : Function.Injective e0 := by
+        intro b c hbc
+        apply (MvPowerSeries.finSuccEquiv k 0).injective
+        apply PowerSeries.map_injective
+          (MvPowerSeries.isEmptyEquiv (Fin 0) k).toRingHom
+          (MvPowerSeries.isEmptyEquiv (Fin 0) k).injective
+        exact hbc
+      have hK2cont : Continuous (K2 : PowerSeries k → PowerSeries k) := by
+        rw [← hcomp]
+        exact hEalgcont.comp hJcont
+      let e2 : A →+* PowerSeries k := K2.toRingHom.comp e0
+      have he2cont : Continuous (e2 : A → PowerSeries k) :=
+        hK2cont.comp he0cont
+      have ha0 : MvPowerSeries.HasEval
+          (fun _ : Fin 1 => (PowerSeries.X : PowerSeries k) ^ 2) := by
+        refine ⟨?_, ?_⟩
+        · intro i
+          fin_cases i
+          exact hX2.hasEval
+        · rw [Filter.cofinite_eq_bot]
+          exact Filter.tendsto_bot
+      have hφX : φ (MvPowerSeries.X (0 : Fin 1) : A) =
+          (PowerSeries.X : PowerSeries k) ^ 2 := by
+        change E (L (MvPowerSeries.X (0 : Fin 1) : A)) = _
+        rw [hLX0]
+        simp [E, MvPowerSeries.coe_eval₂Hom]
+      have he2X : e2 (MvPowerSeries.X (0 : Fin 1) : A) =
+          (PowerSeries.X : PowerSeries k) ^ 2 := by
+        change K2 (e0 (MvPowerSeries.X (0 : Fin 1) : A)) = _
+        rw [he0X]
+        simpa [K2] using (PowerSeries.substAlgHom_X hX2)
+      have hφC : ∀ c : k,
+          φ (MvPowerSeries.C c : A) = PowerSeries.C c := by
+        intro c
+        change E (L (MvPowerSeries.C c : A)) = PowerSeries.C c
+        have hL_C : L (MvPowerSeries.C c : A) = MvPowerSeries.C c := by
+          simpa [A, MvPowerSeries.algebraMap_apply] using L.commutes c
+        rw [hL_C]
+        simp [E, MvPowerSeries.coe_eval₂Hom]
+      have he0C : ∀ c : k,
+          e0 (MvPowerSeries.C c : A) = PowerSeries.C c := by
+        intro c
+        apply PowerSeries.ext
+        intro n
+        rw [he0coeff]
+        by_cases hn : n = 0
+        · subst n
+          simp [MvPowerSeries.coeff_C, PowerSeries.coeff_C]
+        · simp [hn, MvPowerSeries.coeff_C, PowerSeries.coeff_C]
+      have he2C : ∀ c : k,
+          e2 (MvPowerSeries.C c : A) = PowerSeries.C c := by
+        intro c
+        change K2 (e0 (MvPowerSeries.C c : A)) = PowerSeries.C c
+        rw [he0C]
+        rw [show K2 (PowerSeries.C c) =
+            PowerSeries.subst ((PowerSeries.X : PowerSeries k) ^ 2)
+              (PowerSeries.C c) by
+                simp [K2, PowerSeries.coe_substAlgHom]]
+        change (PowerSeries.C c : PowerSeries k).subst
+            ((PowerSeries.X : PowerSeries k) ^ 2) = PowerSeries.C c
+        rw [PowerSeries.subst_C]
+        exact PowerSeries.C_apply.symm
+      have hφeval : (φ : A → PowerSeries k) =
+          MvPowerSeries.eval₂ (algebraMap k (PowerSeries k))
+            (fun _ : Fin 1 => (PowerSeries.X : PowerSeries k) ^ 2) := by
+        apply MvPowerSeries.eval₂_unique (continuous_algebraMap k (PowerSeries k))
+          ha0 hφcont
+        intro p
+        induction p using MvPolynomial.induction_on with
+        | C c =>
+            rw [MvPolynomial.coe_C]
+            simpa only [MvPolynomial.eval₂_C, PowerSeries.C_eq_algebraMap] using hφC c
+        | add p q hp hq =>
+            rw [MvPolynomial.coe_add, map_add, hp, hq]
+            simp
+        | mul_X p i hp =>
+            rw [MvPolynomial.coe_mul, map_mul, MvPolynomial.coe_X,
+              MvPolynomial.eval₂_mul, MvPolynomial.eval₂_X]
+            fin_cases i; simp [hφX, hp]
+      have he2eval : (e2 : A → PowerSeries k) =
+          MvPowerSeries.eval₂ (algebraMap k (PowerSeries k))
+            (fun _ : Fin 1 => (PowerSeries.X : PowerSeries k) ^ 2) := by
+        apply MvPowerSeries.eval₂_unique (continuous_algebraMap k (PowerSeries k))
+          ha0 he2cont
+        intro p
+        induction p using MvPolynomial.induction_on with
+        | C c =>
+            rw [MvPolynomial.coe_C]
+            simpa only [MvPolynomial.eval₂_C, PowerSeries.C_eq_algebraMap] using he2C c
+        | add p q hp hq =>
+            rw [MvPolynomial.coe_add, map_add, hp, hq]
+            simp
+        | mul_X p i hp =>
+            rw [MvPolynomial.coe_mul, map_mul, MvPolynomial.coe_X,
+              MvPolynomial.eval₂_mul, MvPolynomial.eval₂_X]
+            fin_cases i; simp [he2X, hp]
+      have hφe2 : φ = e2 := by
+        apply RingHom.ext
+        intro b
+        exact (congrFun hφeval b).trans (congrFun he2eval b).symm
+      have hK2inj : Function.Injective (K2 : PowerSeries k → PowerSeries k) := by
+        intro q q' hqq'
+        apply PowerSeries.ext
+        intro n
+        have hcoeff := congrArg (PowerSeries.coeff (2 * n)) hqq'
+        simpa [hK2coeff] using hcoeff
+      have he2inj : Function.Injective (e2 : A → PowerSeries k) :=
+        hK2inj.comp he0inj
+      have hφinj : Function.Injective (φ : A → PowerSeries k) := by
+        rw [hφe2]
+        exact he2inj
+      have hφcoeff : ∀ b : A, ∀ n : ℕ,
+          PowerSeries.coeff n (φ b) =
+            if 2 ∣ n then PowerSeries.coeff (n / 2) (e0 b) else 0 := by
+        intro b n
+        have hb : φ b = K2 (e0 b) := by
+          rw [hφe2]
+          rfl
+        rw [hb, hK2coeff]
+      let r : Polynomial A := H.mod (e f)
+      have hrdeg' : r.degree < 2 := by
+        simpa [r] using hrdeg2
+      have hrdeg1 : r.degree ≤ (1 : WithBot ℕ) := by
+        rw [Polynomial.degree_le_iff_coeff_zero]
+        intro n hn
+        have hn' : 1 < n := by exact_mod_cast hn
+        exact (Polynomial.degree_lt_iff_coeff_zero r 2).mp hrdeg' n (by omega)
+      have hrpoly : r = Polynomial.C (r.coeff 1) * Polynomial.X +
+          Polynomial.C (r.coeff 0) :=
+        Polynomial.eq_X_add_C_of_degree_le_one hrdeg1
+      have hEr' : E' (r : PowerSeries A) = 0 := by
+        simpa [r] using hEr
+      have hErpoly : Polynomial.eval₂ φ (PowerSeries.X ^ 3) r = 0 := by
+        simpa [E', PowerSeries.coe_eval₂Hom, PowerSeries.eval₂_coe] using hEr'
+      rw [hrpoly] at hErpoly
+      rw [Polynomial.eval₂_add, Polynomial.eval₂_mul, Polynomial.eval₂_C,
+        Polynomial.eval₂_X] at hErpoly
+      have he0r0 : e0 (r.coeff 0) = 0 := by
+        apply PowerSeries.ext
+        intro n
+        have hc := congrArg (PowerSeries.coeff (2 * n)) hErpoly
+        rw [map_add, PowerSeries.coeff_mul_X_pow'] at hc
+        by_cases h3 : 3 ≤ 2 * n
+        · have hodd : ¬2 ∣ (2 * n - 3) := by
+            intro hd
+            obtain ⟨m, hm⟩ := hd
+            omega
+          simpa [h3, hodd, hφcoeff] using hc
+        · simpa [h3, hφcoeff] using hc
+      have he0r1 : e0 (r.coeff 1) = 0 := by
+        apply PowerSeries.ext
+        intro n
+        have hc := congrArg (PowerSeries.coeff (2 * n + 3)) hErpoly
+        rw [map_add, PowerSeries.coeff_mul_X_pow'] at hc
+        have hodd : ¬2 ∣ (2 * n + 3) := by
+          intro hd
+          obtain ⟨m, hm⟩ := hd
+          omega
+        simpa [hφcoeff, hodd] using hc
+      have hr0 : r.coeff 0 = 0 := by
+        apply he0inj
+        simpa using he0r0
+      have hr1 : r.coeff 1 = 0 := by
+        apply he0inj
+        simpa using he0r1
+      have hrzero : r = 0 := by
+        rw [hrpoly, hr0, hr1]
+        simp
+      have hediv : e f = g * PowerSeries.IsWeierstrassDivisorAt.div H (e f) := by
+        simpa [r, hrzero] using hdiv
+      apply Ideal.mem_span_singleton.mpr
+      refine ⟨e.symm (PowerSeries.IsWeierstrassDivisorAt.div H (e f)), ?_⟩
+      have hf_eq : f = Chapter13CuspRelation k *
+          e.symm (PowerSeries.IsWeierstrassDivisorAt.div H (e f)) := by
+        apply e.injective
+        rw [map_mul, he_relation, e.apply_symm_apply]
+        exact hediv
+      exact hf_eq
+    have hquot : RingHom.ker F = Ideal.span {Chapter13CuspRelation k} :=
+      le_antisymm hker hspan
+    exact ⟨(Ideal.quotEquivOfEq hquot.symm).trans
+      (RingHom.quotientKerEquivOfSurjective hsurj)⟩
   · intro hreg
     let S := Chapter13CuspPowerSeriesSubring k
     let : IsLocalRing S := hreg.toIsLocalRing
