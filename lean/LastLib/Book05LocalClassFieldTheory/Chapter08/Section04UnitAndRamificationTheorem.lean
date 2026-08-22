@@ -1,4 +1,5 @@
 import LastLib.Book05LocalClassFieldTheory.Chapter08.Dependencies
+import LastLib.Book05LocalClassFieldTheory.Chapter08.Section02UnitsAreAbelianInertia
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter08
 
@@ -71,7 +72,29 @@ theorem chapter08_unit_and_upper_ramification_preimage
         (chapter08UnitFiltration X.base.valuation n) =
       (chapter08UpperGroup F n).comap
         (chapter08FiniteReciprocityMap D) := by
-  sorry
+  have hmap := chapter08_unit_and_upper_ramification X D F P n
+  ext x
+  constructor
+  · intro hx
+    rcases Subgroup.mem_sup.mp hx with ⟨k, hk, u, hu, hku⟩
+    rw [Subgroup.mem_comap]
+    have hk' : chapter08FiniteReciprocityMap D k = 1 := hk
+    have hu' : chapter08FiniteReciprocityMap D u ∈ chapter08UpperGroup F n := by
+      rw [← hmap]
+      exact ⟨u, hu, rfl⟩
+    rw [← hku, map_mul]
+    simpa [hk'] using hu'
+  · intro hx
+    have hx' : chapter08FiniteReciprocityMap D x ∈ chapter08UpperGroup F n :=
+      Subgroup.mem_comap.mp hx
+    rw [← hmap] at hx'
+    rcases Subgroup.mem_map.mp hx' with ⟨u, hu, hux⟩
+    apply Subgroup.mem_sup.mpr
+    refine ⟨x * u⁻¹, ?_, u, hu, ?_⟩
+    · change chapter08FiniteReciprocityMap D (x * u⁻¹) = 1
+      rw [map_mul, map_inv, hux]
+      simp
+    · simp
 
 theorem chapter08_unit_and_upper_ramification_preimage_norm_form
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -84,7 +107,8 @@ theorem chapter08_unit_and_upper_ramification_preimage_norm_form
     (chapter08UpperGroup F n).comap
         (chapter08FiniteReciprocityMap D) =
       chapter08FullNormUnitProduct (K := K) (L := L) X.base.valuation n := by
-  sorry
+  rw [← chapter08_unit_and_upper_ramification_preimage X D F P n]
+  simp [chapter08FullNormUnitProduct, chapter08FiniteReciprocityMap_kernel D]
 
 theorem chapter08_unit_ramification_at_zero_is_inertia
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -95,10 +119,15 @@ theorem chapter08_unit_ramification_at_zero_is_inertia
     (F : Chapter08RamificationFiltration (Gal(L / K)))
     (P : Chapter08UnitRamificationInput X F)
     (hinertia : chapter08UpperGroup F 0 = chapter08FiniteInertia X) :
-    (chapter08UnitFiltration X.base.valuation 0).map
+      (chapter08UnitFiltration X.base.valuation 0).map
         (chapter08FiniteReciprocityMap D) =
       chapter08FiniteInertia X := by
-  sorry
+  have _hP := P.upper_bijective
+  calc
+    (chapter08UnitFiltration X.base.valuation 0).map
+          (chapter08FiniteReciprocityMap D) = chapter08UpperGroup F 0 :=
+      (chapter08_finite_reciprocity_units_eq_inertia X D).trans hinertia.symm
+    _ = chapter08FiniteInertia X := hinertia
 
 /- The quotient theorem from the preceding section is the formal reason the
    right-hand filtration is upper numbered.  A lower-numbered analogue is not

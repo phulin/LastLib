@@ -197,7 +197,8 @@ theorem chapter08_herbrand_inverse_right_inverse
     (hbij : Function.Bijective (chapter08HerbrandFunction F))
     {u : ℝ} (hu : -1 ≤ u) :
     chapter08HerbrandFunction F (chapter08HerbrandInverse F u) = u := by
-  sorry
+  have _hu : -1 ≤ u := hu
+  exact LastLib.Book03RamificationTheory.Chapter05.chapter05_herbrand_inverse_spec F hbij u
 
 theorem chapter08_upper_group_eq_lower_at_herbrand_inverse
     {G : Type*} [Group G] [Finite G]
@@ -205,7 +206,7 @@ theorem chapter08_upper_group_eq_lower_at_herbrand_inverse
     {v : ℝ} (hv : (-1 : ℝ) ≤ v) :
     chapter08UpperGroup F v =
       chapter08LowerGroup F (chapter08HerbrandInverse F v) := by
-  sorry
+  exact LastLib.Book03RamificationTheory.Chapter05.chapter05_upper_group_eq_lower_at_inverse F hv
 
 theorem chapter08_upper_group_neg_one_eq_group
     {G : Type*} [Group G] [Finite G]
