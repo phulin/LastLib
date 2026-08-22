@@ -91,13 +91,50 @@ def chapter04AdelicTrace
     (D : Chapter04AdelicTraceData K L) :
     Chapter04AdeleRing L →+ Chapter04AdeleRing K where
   toFun y :=
-    (fun v => D.infiniteTrace v (fun w => y.1 w.1),
+      (fun v => D.infiniteTrace v (fun w => y.1 w.1),
       ⟨fun v => D.finiteTrace v (fun w => y.2 w.1), by
-        sorry⟩)
+        let bad : Set (Chapter04FinitePlace L) :=
+          chapter04FiniteAdeleExceptionalSet L y.2
+        let base : Chapter04FinitePlace L → Chapter04FinitePlace K := fun w =>
+          { asIdeal := Ideal.comap (algebraMap (𝓞 K) (𝓞 L)) w.asIdeal
+            isPrime := Ideal.comap_isPrime _ _
+            ne_bot := Ideal.IsIntegral.comap_ne_bot (𝓞 K) w.ne_bot }
+        have hbad : bad.Finite := by
+          exact chapter04_finiteAdele_exceptionalSet_finite L y.2
+        have hbase : (base '' bad).Finite := hbad.image base
+        filter_upwards [D.finiteTrace_preserves_integral, hbase.compl_mem_cofinite]
+          with v htrace hv
+        apply htrace
+        intro w
+        by_contra hw
+        have hwbad : w.1 ∈ bad := by
+          simpa [bad, chapter04FiniteAdeleExceptionalSet] using hw
+        have hbasew : base w.1 = v := by
+          dsimp [base]
+          apply HeightOneSpectrum.ext
+          exact w.2
+        apply hv
+        exact ⟨w.1, hwbad, hbasew⟩⟩)
   map_zero' := by
-    sorry
+    apply chapter04_adeleRing_ext K
+    · funext v
+      change D.infiniteTrace v (fun _ => 0) = 0
+      exact (D.infiniteTrace v).map_zero
+    · apply Subtype.ext
+      funext v
+      change D.finiteTrace v (fun _ => 0) = 0
+      exact (D.finiteTrace v).map_zero
   map_add' x y := by
-    sorry
+    apply chapter04_adeleRing_ext K
+    · funext v
+      change D.infiniteTrace v (fun w => x.1 w.1 + y.1 w.1) =
+        D.infiniteTrace v (fun w => x.1 w.1) + D.infiniteTrace v (fun w => y.1 w.1)
+      exact (D.infiniteTrace v).map_add _ _
+    · apply Subtype.ext
+      funext v
+      change D.finiteTrace v (fun w => x.2 w.1 + y.2 w.1) =
+        D.finiteTrace v (fun w => x.2 w.1) + D.finiteTrace v (fun w => y.2 w.1)
+      exact (D.finiteTrace v).map_add _ _
 
 theorem chapter04AdelicTrace_apply_infinite
     (D : Chapter04AdelicTraceData K L)
@@ -134,7 +171,118 @@ theorem chapter04AdelicTrace_apply_finite_as_sum_over_branches
 theorem chapter04_adelic_trace_is_continuous
     (D : Chapter04AdelicTraceData K L) :
     Continuous (chapter04AdelicTrace D) := by
-  sorry
+  classical
+  let finiteMap : Chapter04FiniteAdeleRing L → Chapter04FiniteAdeleRing K := fun x =>
+    (chapter04AdelicTrace D ((0 : Chapter04InfiniteAdeleRing L), x)).2
+  have hfinite : Continuous finiteMap := by
+    apply (RestrictedProduct.continuous_dom (f := finiteMap)).2
+    intro S hS
+    have hSc : Sᶜ.Finite :=
+      Filter.mem_cofinite.mp (Filter.le_principal_iff.mp hS)
+    let bad : Set (Chapter04FinitePlace L) := Sᶜ
+    let base : Chapter04FinitePlace L → Chapter04FinitePlace K := fun w =>
+      { asIdeal := Ideal.comap (algebraMap (𝓞 K) (𝓞 L)) w.asIdeal
+        isPrime := Ideal.comap_isPrime _ _
+        ne_bot := Ideal.IsIntegral.comap_ne_bot (𝓞 K) w.ne_bot }
+    let good : Set (Chapter04FinitePlace K) :=
+      {v | ∀ x : ∀ w : Chapter04FinitePlaceAbove K L v,
+        Chapter04FiniteLocalField L w.1,
+        (∀ w, x w ∈ chapter04FiniteLocalIntegerSet L w.1) →
+          D.finiteTrace v x ∈ chapter04FiniteLocalIntegerSet K v}
+    have hgood : goodᶜ.Finite := by
+      refine (Filter.eventually_cofinite.mp D.finiteTrace_preserves_integral).subset ?_
+      intro v hv
+      change v ∉ good
+      intro hgv
+      apply hv
+      intro x hx
+      exact hgv x hx
+    let T : Set (Chapter04FinitePlace K) :=
+      {v | (∀ w : Chapter04FinitePlaceAbove K L v, w.1 ∈ S) ∧ v ∈ good}
+    have hTc : Tᶜ.Finite := by
+      refine ((hSc.image base).union hgood).subset ?_
+      intro v hv
+      by_cases hforall : ∀ w : Chapter04FinitePlaceAbove K L v, w.1 ∈ S
+      · right
+        intro hgoodv
+        apply hv
+        exact ⟨hforall, hgoodv⟩
+      · left
+        rcases not_forall.mp hforall with ⟨w, hw⟩
+        have hbasew : base w.1 = v := by
+          dsimp [base]
+          apply HeightOneSpectrum.ext
+          exact w.2
+        exact ⟨w.1, hw, hbasew⟩
+    have hT : Filter.cofinite ≤ Filter.principal T :=
+      Filter.le_principal_iff.mpr (Filter.mem_cofinite.mpr hTc)
+    let gS :
+        (Πʳ w : Chapter04FinitePlace L,
+          [Chapter04FiniteLocalField L w,
+            chapter04FiniteLocalIntegerSet L w]_[Filter.principal S]) →
+        (Πʳ v : Chapter04FinitePlace K,
+          [Chapter04FiniteLocalField K v,
+            chapter04FiniteLocalIntegerSet K v]_[Filter.principal T]) := fun z =>
+      ⟨fun v => D.finiteTrace v (fun w => z.1 w.1), by
+        filter_upwards [Filter.eventually_principal.mpr (fun v hv => hv)] with v hv
+        apply hv.2
+        intro w
+        exact Filter.eventually_principal.mp z.2 w.1 (hv.1 w)⟩
+    have hgS : Continuous gS := by
+      apply RestrictedProduct.continuous_rng_of_principal.mpr
+      apply continuous_pi
+      intro v
+      change Continuous (fun z :
+        (Πʳ w : Chapter04FinitePlace L,
+          [Chapter04FiniteLocalField L w,
+            chapter04FiniteLocalIntegerSet L w]_[Filter.principal S]) =>
+        D.finiteTrace v (fun w => z.1 w.1))
+      apply (D.finiteTrace_continuous v).comp
+      exact continuous_pi fun w =>
+        RestrictedProduct.continuous_eval (𝓕 := Filter.principal S) w.1
+    have hfactor :
+        finiteMap ∘ RestrictedProduct.inclusion
+            (fun w : Chapter04FinitePlace L => Chapter04FiniteLocalField L w)
+            (fun w : Chapter04FinitePlace L =>
+              (chapter04FiniteLocalIntegerSet L w : Set (Chapter04FiniteLocalField L w))) hS =
+          RestrictedProduct.inclusion
+              (fun v : Chapter04FinitePlace K => Chapter04FiniteLocalField K v)
+              (fun v : Chapter04FinitePlace K =>
+                (chapter04FiniteLocalIntegerSet K v : Set (Chapter04FiniteLocalField K v))) hT ∘ gS := by
+      funext z
+      apply RestrictedProduct.ext
+      intro v
+      rfl
+    change Continuous (finiteMap ∘ RestrictedProduct.inclusion
+      (fun w : Chapter04FinitePlace L => Chapter04FiniteLocalField L w)
+      (fun w : Chapter04FinitePlace L =>
+        (chapter04FiniteLocalIntegerSet L w : Set (Chapter04FiniteLocalField L w))) hS)
+    rw [hfactor]
+    exact (RestrictedProduct.continuous_inclusion hT).comp hgS
+  have hinfinite : Continuous
+      (fun y : Chapter04AdeleRing L =>
+        fun v : Chapter04InfinitePlace K =>
+          D.infiniteTrace v (fun w => y.1 w.1)) := by
+    apply continuous_pi
+    intro v
+    apply (D.infiniteTrace_continuous v).comp
+    exact continuous_pi fun w => (continuous_apply w.1).comp continuous_fst
+  have hfinite' : Continuous (fun y : Chapter04AdeleRing L => finiteMap y.2) :=
+    hfinite.comp continuous_snd
+  let F : Chapter04AdeleRing L → Chapter04AdeleRing K := fun y =>
+    (fun v : Chapter04InfinitePlace K =>
+        D.infiniteTrace v (fun w => y.1 w.1),
+      finiteMap y.2)
+  have hF : Continuous F := hinfinite.prodMk hfinite'
+  have hEq : (chapter04AdelicTrace D : Chapter04AdeleRing L → Chapter04AdeleRing K) = F := by
+    funext y
+    apply chapter04_adeleRing_ext K
+    · rfl
+    · apply Subtype.ext
+      funext v
+      rfl
+  rw [hEq]
+  exact hF
 
 def chapter04AdeleBaseScalarMap
     (e : L ⊗[K] Chapter04AdeleRing K ≃ₐ[K] Chapter04AdeleRing L) :
