@@ -44,14 +44,69 @@ theorem chapter07_profinite_completion_eta_dense
 theorem chapter07_open_profinite_completion_eta_dense
     {G : Type*} [CommGroup G] [TopologicalSpace G] :
     DenseRange (chapter07OpenProfiniteCompletionEta G) := by
-  sorry
+  apply dense_iff_inter_open.mpr
+  rintro U ⟨s, hsO, hsv⟩ ⟨⟨spc, hspc⟩, uDefaultSpec⟩
+  have hpre : ⟨spc, hspc⟩ ∈ Subtype.val ⁻¹' s := hsv.symm ▸ uDefaultSpec
+  have hspc_s : spc ∈ s := hpre
+  rcases (isOpen_pi_iff.mp hsO) _ hspc_s with ⟨J, fJ, hJ1, hJ2⟩
+  let M : Subgroup G := iInf fun (j : J) => j.1.toSubgroup
+  have hM : M.Normal := Subgroup.normal_iInf_normal fun j => inferInstance
+  have hMFinite : M.FiniteIndex := by
+    apply Subgroup.finiteIndex_iInf
+    infer_instance
+  have hMOpen : IsOpen (M : Set G) := by
+    rw [Subgroup.coe_iInf]
+    exact isOpen_iInter_of_finite fun i => i.1.isOpen
+  let m : Chapter07OpenFiniteIndexNormalSubgroup G :=
+    { toSubgroup := M
+      isNormal' := hM
+      isFiniteIndex' := hMFinite
+      isOpen := hMOpen }
+  rcases QuotientGroup.mk'_surjective M (spc m) with ⟨origin, horigin⟩
+  use chapter07OpenProfiniteCompletionEtaFn G origin
+  refine ⟨?_, origin, rfl⟩
+  rw [← hsv]
+  apply hJ2
+  intro a a_in_J
+  let M_to_Na : m ⟶ a :=
+    (iInf_le (fun (j : J) => (j.1.toSubgroup)) ⟨a, a_in_J⟩).hom
+  change (ProfiniteGrp.Hom.hom
+      ((LastLib.Book05LocalClassFieldTheory.Chapter01.chapter01OpenFiniteIndexProfiniteDiagram G).map
+        M_to_Na))
+      ((LastLib.Book05LocalClassFieldTheory.Chapter01.chapter01OpenProfiniteCompletionEtaFn G
+        origin).val m) ∈ fJ a
+  have horigin_map :
+      (ProfiniteGrp.Hom.hom
+          ((LastLib.Book05LocalClassFieldTheory.Chapter01.chapter01OpenFiniteIndexProfiniteDiagram G).map
+            M_to_Na))
+          ((LastLib.Book05LocalClassFieldTheory.Chapter01.chapter01OpenProfiniteCompletionEtaFn G
+            origin).val m) =
+        (ProfiniteGrp.Hom.hom
+          ((LastLib.Book05LocalClassFieldTheory.Chapter01.chapter01OpenFiniteIndexProfiniteDiagram G).map
+            M_to_Na)) (spc m) := by
+    congr 1
+  rw [horigin_map]
+  exact Set.mem_of_eq_of_mem (hspc M_to_Na) (hJ1 a a_in_J).right
 
 /-- The canonical map into the open-indexed completion is continuous for the
 original topological group. -/
 theorem chapter07_open_profinite_completion_eta_continuous
     {G : Type*} [CommGroup G] [TopologicalSpace G] [IsTopologicalGroup G] :
     Continuous (chapter07OpenProfiniteCompletionEta G) := by
-  sorry
+  apply Continuous.subtype_mk
+  refine continuous_pi
+    (T := fun H => ((chapter07OpenFiniteIndexProfiniteDiagram G).obj H).toProfinite.toTop.str)
+    (fun H ↦ ?_)
+  let hdisc : DiscreteTopology (G ⧸ H.toSubgroup) :=
+    QuotientGroup.discreteTopology_iff.mpr H.isOpen
+  have htop :
+      ((chapter07OpenFiniteIndexProfiniteDiagram G).obj H).toProfinite.toTop.str =
+        (inferInstance : TopologicalSpace (G ⧸ H.toSubgroup)) := by
+    change (⊥ : TopologicalSpace (G ⧸ H.toSubgroup)) =
+      QuotientGroup.instTopologicalSpace H.toSubgroup
+    exact hdisc.eq_bot.symm
+  rw [htop]
+  exact QuotientGroup.continuous_mk
 
 /-- The universal continuous extension of local reciprocity to the profinite
 completion. -/
@@ -67,7 +122,10 @@ theorem chapter07_open_completion_artin_extension_exists
         ∀ x,
           F (chapter07OpenProfiniteCompletionEta Kˣ x) =
             chapter07LocalReciprocity S x := by
-  sorry
+  intro hopen
+  exact
+    LastLib.Book05LocalClassFieldTheory.Chapter01.chapter01_open_completion_artin_extension_exists
+      S hopen
 
 noncomputable def chapter07CompletedReciprocity
     {K KAb : Type u} [Field K] [Field KAb] [Algebra K KAb]
@@ -120,7 +178,9 @@ theorem chapter07_completed_reciprocity_is_topological_equivalence
     (hExist : chapter07ExistenceProperty K KAb) :
     ∃ e : Chapter07OpenProfiniteCompletion Kˣ ≃ₜ* Gal(KAb / K),
       ∀ x, e x = chapter07CompletedReciprocity S hopen x := by
-  sorry
+  exact
+    LastLib.Book05LocalClassFieldTheory.Chapter01.chapter01_completed_reciprocity_is_topological_equivalence
+      S hopen hExist
 
 /-- A chosen uniformizer/unit decomposition, with the normalization that the
 uniformizer has unramified coordinate one. -/

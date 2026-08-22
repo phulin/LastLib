@@ -73,7 +73,29 @@ theorem chapter07_local_reciprocity_kernel_le_precision
 theorem chapter07_precision_intersection_eq_bot
     {G : Type*} [CommGroup G] (D : Chapter07PrecisionData G) :
     chapter07PrecisionIntersection D = ⊥ := by
-  sorry
+  apply le_antisymm
+  · intro x hx
+    have hxmn : ∀ m n : Chapter07PositiveNat,
+        x ∈ chapter07PrecisionSubgroup D m n := by
+      intro m n
+      exact (Subgroup.mem_iInf.mp (Subgroup.mem_iInf.mp hx m)) n
+    let v : ℤ := Multiplicative.toAdd (D.valuation x)
+    let m : Chapter07PositiveNat :=
+      ⟨Int.natAbs v + 1, Nat.succ_pos _⟩
+    have hdiv : (m.1 : ℤ) ∣ v := by
+      change (m.1 : ℤ) ∣ Multiplicative.toAdd (D.valuation x)
+      exact D.valuation_precision (hxmn m ⟨1, Nat.zero_lt_succ 0⟩)
+    have hdiv_nat : m.1 ∣ Int.natAbs v := Int.natCast_dvd.mp hdiv
+    have hv : v = 0 := by
+      by_contra hv
+      apply (Nat.not_dvd_of_pos_of_lt (Int.natAbs_pos.mpr hv) ?_) hdiv_nat
+      exact Nat.lt_succ_self _
+    apply D.units_separated
+    intro n
+    have hnorm := D.normalized_precision (hxmn ⟨1, Nat.zero_lt_succ 0⟩ n)
+    change x * D.uniformizer ^ (-v) ∈ D.unitFiltration n.1 at hnorm
+    simpa [hv] using hnorm
+  · exact bot_le
 
 /-- The infinite reciprocity map has trivial kernel once the cofinal
 precision family is available. -/
@@ -96,7 +118,8 @@ theorem chapter07_local_reciprocity_injective
     (D : Chapter07PrecisionData Kˣ)
     (hcofinal : chapter07KernelCofinality (KAb := KAb) D) :
     Function.Injective (chapter07LocalReciprocity S) := by
-  sorry
+  exact (MonoidHom.ker_eq_bot_iff _).mp
+    (chapter07_local_reciprocity_kernel_eq_bot S D hcofinal)
 
 /-- The finite quotient form retained in Theorem 7.2. -/
 theorem chapter07_local_reciprocity_finite_quotient
