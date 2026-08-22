@@ -90,14 +90,54 @@ instance chapter04ProfiniteQuotientTopologicalSpace
     (K : Type*) [Field K] [NumberField K]
     (I : Chapter04ProfiniteIdealIndex K) :
     TopologicalSpace (Chapter04RingOfIntegers K ⧸ I.1) :=
-  ⊤
+  ⊥
+
+instance chapter04ProfiniteQuotientDiscreteTopology
+    (K : Type*) [Field K] [NumberField K]
+    (I : Chapter04ProfiniteIdealIndex K) :
+    DiscreteTopology (Chapter04RingOfIntegers K ⧸ I.1) :=
+  ⟨rfl⟩
 
 theorem chapter04_profiniteCompletion_is_compact_t2_totally_disconnected
     (K : Type*) [Field K] [NumberField K] :
       CompactSpace (Chapter04ProfiniteCompletion K) ∧
       T2Space (Chapter04ProfiniteCompletion K) ∧
       TotallyDisconnectedSpace (Chapter04ProfiniteCompletion K) := by
-  sorry
+  let hFinite (I : Chapter04ProfiniteIdealIndex K) :
+      Finite (Chapter04RingOfIntegers K ⧸ I.1) :=
+    Ring.HasFiniteQuotients.finiteQuotient I.2
+  let hCompact (I : Chapter04ProfiniteIdealIndex K) :
+      CompactSpace (Chapter04RingOfIntegers K ⧸ I.1) :=
+    @Finite.compactSpace _ _ (hFinite I)
+  let hT2 (I : Chapter04ProfiniteIdealIndex K) :
+      T2Space (Chapter04RingOfIntegers K ⧸ I.1) := by infer_instance
+  let hTotallyDisconnected (I : Chapter04ProfiniteIdealIndex K) :
+      TotallyDisconnectedSpace (Chapter04RingOfIntegers K ⧸ I.1) := by
+    infer_instance
+  have hclosed : IsClosed {x : ∀ I : Chapter04ProfiniteIdealIndex K,
+      Chapter04RingOfIntegers K ⧸ I.1 | chapter04ProfiniteCompatibility K x} := by
+    unfold chapter04ProfiniteCompatibility
+    rw [Set.ofPred_forall]
+    apply isClosed_iInter
+    intro I
+    rw [Set.ofPred_forall]
+    apply isClosed_iInter
+    intro J
+    rw [Set.ofPred_forall]
+    apply isClosed_iInter
+    intro hIJ
+    exact isClosed_eq (continuous_of_discreteTopology.comp (continuous_apply I))
+      (continuous_apply J)
+  let _ : CompactSpace (∀ I : Chapter04ProfiniteIdealIndex K,
+      Chapter04RingOfIntegers K ⧸ I.1) :=
+    @Pi.compactSpace _ _ (fun _ => inferInstance) hCompact
+  let _ : T2Space (∀ I : Chapter04ProfiniteIdealIndex K,
+      Chapter04RingOfIntegers K ⧸ I.1) :=
+    @Pi.t2Space _ _ (fun _ => inferInstance) hT2
+  let _ : TotallyDisconnectedSpace
+      (∀ I : Chapter04ProfiniteIdealIndex K, Chapter04RingOfIntegers K ⧸ I.1) :=
+    @Pi.totallyDisconnectedSpace _ _ (fun _ => inferInstance) hTotallyDisconnected
+  exact ⟨isCompact_iff_compactSpace.mp (hclosed.isCompact), inferInstance, inferInstance⟩
 
 def chapter04ProfiniteCompletionMap
     (K : Type*) [Field K] [NumberField K] :
