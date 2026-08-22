@@ -417,23 +417,90 @@ $$
 
 the adjunction between cap and cup on which every pairing comparison in this book rests.
 
-### 2.4 Relative groups, compact support, and functoriality
+### 2.4 The fundamental class and Poincaré duality
 
-For $Z\subseteq T$, the quotient complex $C_\bullet(T)/C_\bullet(Z)$ defines $H_\bullet(T,Z;A)$. Its short exact sequence of complexes produces the long exact sequence of a pair. Dually, cochains vanishing on $Z$ define relative cohomology. If $T$ is a compact triangulable space and $Z$ is a closed subcomplex after subdivision—as happens for a finite set in a compact surface—then excision identifies
+Everything so far concerned an arbitrary finite complex. We now specialize to dimension two, where the duality theory can be built by hand, cell by cell, and proved completely; this is the last remaining input the comparison chain will consume.
+
+A finite two-dimensional complex $K$ is a _combinatorial surface_ when every edge is contained in exactly two faces and the link of every vertex is a circle: listing the edges and faces containing $v$ in the order in which they meet around $v$, the sequence closes up after one tour and visits each face once. A combinatorial surface is homeomorphic to a closed topological surface, and under Hypothesis (T) every compact curve in this book has such a model. An orientation of a face is an ordering of its three vertices up to even permutation; it induces an orientation on each of its boundary edges. The complex $K$ is _orientable_ when orientations of all faces can be chosen so that along every shared edge the two induced orientations are opposite. If orientations are chosen arbitrarily on one face after another, each crossing of a shared edge forces the unique flip; orientability means that propagating around every closed loop of adjacent faces returns to the starting orientation. For connected $K$ a compatible choice, if it exists, has exactly two variants, differing by a global sign.
+
+**Lemma (fundamental class).** _Let $K$ be a connected combinatorial surface._
+
+_(i) If $K$ is orientable and $(\varepsilon_F)$ is a compatible choice of face signs, then $z=\sum_F\varepsilon_F[F]$ is an integral cycle, every integral two-cycle is an integral multiple of $z$, and $H_2(K,\mathbf Z)\cong\mathbf Z\,z$._
+
+_(ii) If $K$ is not orientable then $H_2(K,\mathbf Z)=0$._
+
+_Proof._ Compatibility says precisely that the two occurrences of each edge in $\partial z$ cancel, so $\partial z=0$. Conversely let $w=\sum_Fa_FF$ be any cycle. On an edge shared by faces $F,G$ write $s_F,s_G\in\{\pm1\}$ for the signs with which they induce a fixed orientation of that edge; the vanishing of the edge coefficient reads $a_Fs_F+a_Gs_G=0$. If $K$ is orientable and $(\varepsilon_F)$ is compatible, then $s_G=-s_F$ for adjacent faces after comparing against the $\varepsilon$, so the relation forces $a_G=a_F$ along every edge; connectedness propagates equality across all faces and $w=a\cdot z$. This shows the cycles are exactly the multiples of $z$, whence $H_2=\mathbf Z z$. If $K$ is not orientable, some loop of adjacent faces returns with $s$ flipped, and the same relations force $a=-a$ for the common value, hence $a=0$ and there are no cycles at all. □
+
+**Dual cells.** Fix an oriented connected closed combinatorial surface $K$. Place at the barycenter $m_\sigma$ of each simplex $\sigma$—for a vertex, $m_v=v$ itself—the following dual cells, drawn inside $|K|$:
+
+- to each face $F$, the point $D(F):=\{m_F\}$;
+- to each edge $e$ bordered by faces $F^+,F^-$, the open segment $D(e)$ from $m_{F^-}$ through $m_e$ to $m_{F^+}$, endpoints removed;
+- to each vertex $v$, the open polygon $D(v)$ obtained as the union of the triangles $(v,m_e,m_F)$ over all flags $v\subset e\subset F$, boundary removed.
+
+These cells are pairwise disjoint and their closures partition $|K|$; they turn $|K|$ into a finite cell complex $K^\ast$ whose $p$-cells correspond bijectively to the $(2-p)$-simplices of $K$. Orient each dual edge transversally to its edge so that, at the crossing point, the orientation of $D(e)$ followed by that of $e$ gives the chosen orientation of $K$; give each $D(v)$ the resulting boundary-compatible orientation. Writing $C_p(K^\ast,\mathbf Z)$ for the cellular chains, addition of these orientations identifies $C_p(K^\ast,\mathbf Z)=\bigoplus_{\dim\sigma=2-p}\mathbf Z\,D(\sigma)$ canonically with the group underlying $C^{2-p}(K,\mathbf Z)$. Let
+$\Theta:C^{2-p}(K,\mathbf Z)\to C_p(K^\ast,\mathbf Z)$
+send a cochain $\varphi$ to the chain $\sum_\sigma\varphi(\sigma)D(\sigma)$.
+
+**Lemma (dual boundary formula).** _With the orientations just prescribed,_ $\partial\,\Theta(\varphi)=-\,\Theta(d\varphi)$ _for $\varphi\in C^{1}(K,\mathbf Z)$ and $\varphi\in C^{0}(K,\mathbf Z)$; in degree two both sides vanish identically._
+
+_Proof._ Degree two: $C_3(K^\ast)=0$ and $d$ on $C^2$ lands in $C^3=0$. Edge case, $\varphi\in C^1$: the closure of $D(e)$ meets the closures of exactly two dual points, $m_{F^+}$ and $m_{F^-}$, and the transversal orientation rule attaches to them the coefficients $\pm1$ according as $F^\pm$ does or does not induce the prescribed orientation on $e$—which are exactly the incidences entering $(d\varphi)(e)=\varphi(\partial e)$ collected with the opposite sign. Vertex case, $\varphi\in C^0$: the boundary of the polygon $D(v)$ passes once through each dual edge $D(e)$ with $e\ni v$, and collecting over the two endpoint stars of each edge $e=[u,v]$ reproduces, with sign minus the incidence of the endpoint in $e$, the quantity $(d\varphi)(e)=\varphi(v)-\varphi(u)$. Both inspections are local pictures with two cells and no hidden terms. □
+
+**Poincaré duality theorem.** _Let $K$ be a connected closed orientable combinatorial surface with fundamental class $z$, and let $A$ be any abelian group. Then capping with $z$ gives isomorphisms_
 
 $$
-H^n_c(U,A)\simeq H^n(T,Z;A). \tag{2.6}
+z\frown-\;:\;H^p(K,A)\xrightarrow{\ \sim\ }H_{2-p}(K,A)
+\qquad(p=0,1,2). \tag{2.5}
 $$
 
-This is the topological counterpart of extension by zero in étale cohomology.
+_Proof._ By the dual boundary formula, $\Theta$ followed by multiplication with the fixed sign is an isomorphism of chain complexes between $C^{2-\bullet}(K,A)$ and $C_\bullet(K^\ast,A)$—tensoring with $A$ is harmless because both sides are free abelian levelwise and the identification is levelwise. Hence $H_p(K^\ast,A)\cong H^{2-p}(K,A)$. Since $|K^\ast|=|K|$ as spaces, literally the same polyhedron, the identity map is a homeomorphism and $H_p(K^\ast,A)\cong H_p(K,A)$. Composing yields isomorphisms $\Psi:H^{2-p}(K,A)\xrightarrow{\sim}H_p(K,A)$. It remains to identify $\Psi(a)$ with $z\frown a$. Both constructions are natural in $a$, and on generators they agree cell by cell: capping the fundamental cycle against a cochain supported on a single simplex retains precisely the dual cell of that simplex with the orientation prescribed above, because the front-face evaluation selects the incidence of $\sigma$ in $z$ and the retained back part is carried by the corresponding block. Hence $\Psi(a)=z\frown a$ for every cocycle, proving (2.5). $\square$
 
-A proper map induces pullback on compactly supported cohomology. A finite covering $f:T\to U$ of degree $d$ has a transfer on chains: lift a simplex after subdivision to every sheet and sum the lifts. The cohomological trace is the adjoint sum over sheets. It satisfies
+Three corollaries record what the later chapters consume.
+
+First, taking $p=2$: evaluation on the fundamental class identifies $H^2(K,\mathbf Z)$ with $H_0(K,\mathbf Z)$, hence with $\mathbf Z$ for connected $K$; more generally $H^2(K,A)\cong A$ canonically via $z$.
+
+Second, combining (2.5) in degree one with the universal coefficient theorem (2.2) and the torsion-freeness of $H_1$ supplied by the explicit genus calculation of Section 3.2, the cup-evaluation pairing
+
+$$
+H^1(K,\mathbf Z)\otimes H^1(K,\mathbf Z)\longrightarrow\mathbf Z,
+\qquad
+(\alpha,\beta)\longmapsto\langle\alpha\smile\beta,z\rangle
+$$
+
+is unimodular: indeed it equals $\langle\beta,z\frown\alpha\rangle$ by the adjunction of Section 2.3, and as $\beta$ ranges over cohomology these functionals run through all of $\operatorname{Hom}(H_1(K,\mathbf Z),\mathbf Z)$, a lattice in which every primitive vector is realized because $H_1$ is finitely generated free. This is the integral perfectness used for symplectic bases in Section 3.4.
+
+Third, capping with $z$ also identifies cohomology with homology after any change of coefficients simultaneously on both sides, so no distinction between cohomological and homological lattices ever survives to Chapter 9's ℓ-adic comparison.
+
+### 2.5 Relative groups, compact support, and functoriality
+
+Let $L\subseteq K$ be a subcomplex. The quotient $C_n(K,L;\mathbf Z):=C_n(K,\mathbf Z)/C_n(L,\mathbf Z)$ is again a finite free complex, and its homology $H_n(K,L;A)=H_n(C_\bullet(K,L)\otimes A)$ fits into the long exact sequence of the pair, constructed termwise from the short exact sequence of complexes $0\to C_\bullet(L)\to C_\bullet(K)\to C_\bullet(K,L)\to0$. Relative cochains are the functionals vanishing on all simplices of $L$, that is, $\operatorname{Hom}(C_\bullet(K)/C_\bullet(L),A)$, and because the quotient complex still consists of finitely generated free groups, the universal coefficient theorem (2.2) holds verbatim for pairs.
+
+Excision, in the finite form in which this book uses it, is now a one-line computation rather than an axiom. The quotient polyhedron $|K|/|L|$ inherits from $K$ a cell structure whose cellular chains are literally $C_\bullet(K)/C_\bullet(L)$, so for $|L|\neq\emptyset$
+
+$$
+H_n(K,L;\mathbf Z)\cong\widetilde H_n(|K|/|L|,\mathbf Z);
+$$
+
+whenever a pair of spaces $(T,Z)$ is realized as $(|K|,|L|)$ after subdivision—as happens for a compact curve and a union of deleted points made into vertices—the relative groups depend only on the quotient and are computable inside the complex. Concretely, let $X$ be a compact surface with triangulation $K$ in which a finite set $P$ of points consists of vertices, and put $U=X\setminus P$ and $K_P:=K\setminus\bigcup_{p\in P}\operatorname{star}^{\circ}(p)$, a closed subcomplex included in $U$. The stars give a deformation retraction of $U$ onto $K_P$, and we _define_ compactly supported cohomology by
+
+$$
+H_c^n(U,A):=H^n(K,K_P;A),
+$$
+
+which reproduces
+
+$$
+H_c^n(U,A)\simeq H^n(T,Z;A) \tag{2.6}
+$$
+
+for any pair realization as above. This is the topological counterpart of extension by zero in étale cohomology. Capping the fundamental class of $K$ with relative cocycles—whose coboundaries vanish modulo $K_P$—and using the dual-cell method of Section 2.4 unchanged near the deleted points, where the vertex-stars simply acquire boundary circles, yields compact-support duality $H_c^p(U,A)\cong H_{2-p}(U,A)$; Chapter 8 consumes exactly these groups.
+
+A proper map induces pullback on compactly supported cohomology through functoriality of the pairs. A finite unbranched covering $f:T\to U$ of degree $d$ between surfaces with triangulations compatible as in Hypothesis (T) may be assumed simplicial after subdividing the source. Then every simplex $\sigma$ of $U$ lifts to exactly $d$ simplices of $T$, the chain-level composite $f_\#\circ f^\#$ multiplies each simplex by $d$, and therefore
 
 $$
 f_*f^*=d
 $$
 
-on cohomology, where $f_*$ is the cohomological transfer. The projection formula follows already on lifted simplices:
+on homology and on the adjoint cohomological trace, where $f_*$ denotes pushforward of chains. The projection formula holds already on lifted simplices:
 
 $$
 f_*(f^*a\smile b)=a\smile f_*b. \tag{2.7}
@@ -443,10 +510,10 @@ For a branched holomorphic map $f:T\to U$ of compact Riemann surfaces, define th
 
 $$
 f_*^{\mathrm{coh}}=\operatorname{PD}_U^{-1}
-\circ f_*^{\mathrm{hom}}\circ\operatorname{PD}_T.
+\circ f_*^{\mathrm{hom}}\circ\operatorname{PD}_T,
 $$
 
-On the complement of the branch values this is the sum over sheets. A small positive disc about a branch value pulls back with total local degree $d$, so the definition extends the covering trace and gives the same formulas with $d$ equal to the algebraic degree.
+with the duality isomorphisms of (2.5). On the complement of the branch values this is the sum over sheets, because there $f$ is a covering and the preceding paragraph applies. A small positive disc about a branch value pulls back with total local degree $d$, so the definition extends the covering trace and gives the same formulas with $d$ equal to the algebraic degree.
 
 ## 3. Compact Riemann surfaces as oriented topological surfaces
 
