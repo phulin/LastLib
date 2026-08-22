@@ -188,7 +188,23 @@ theorem chapter08_units_topologically_isomorphic_to_abelian_inertia
           hvaluation))) :
     Nonempty
       (chapter08UnitFiltration D.valuation 0 ≃ₜ* U.quotient.ker) := by
-  sorry
+  let U₀ : Subgroup Kˣ := chapter08UnitFiltration D.valuation 0
+  let φ := chapter08UnitReciprocityIntoInertia D S U
+    (chapter08_infinite_reciprocity_units_eq_inertia_image D S U hvaluation)
+  have hsurj : Function.Surjective φ := by
+    intro y
+    have hmap : U₀.map (chapter08LocalReciprocity S) = U.quotient.ker :=
+      chapter08_infinite_reciprocity_units_eq_inertia_image D S U hvaluation
+    have hy : (y : Gal(KAb / K)) ∈ U₀.map (chapter08LocalReciprocity S) :=
+      hmap.symm ▸ y.2
+    rcases (Subgroup.mem_map.mp hy) with ⟨u, hu, hφ⟩
+    exact ⟨⟨u, hu⟩, Subtype.ext hφ⟩
+  have hbij : Function.Bijective φ := ⟨hinjective, hsurj⟩
+  let e : U₀ ≃ U.quotient.ker := Equiv.ofBijective φ hbij
+  let _ : CompactSpace U₀ := isCompact_iff_compactSpace.mp hcompact
+  let htop : U₀ ≃ₜ U.quotient.ker :=
+    Continuous.homeoOfEquivCompactToT2 (f := e) hcontinuous
+  exact ⟨ContinuousMulEquiv.mk' htop (fun x y => φ.map_mul x y)⟩
 
 /- The maximal unramified fixed field has norm group
    `π^(f ℤ) · O_Kˣ`. -/
@@ -211,7 +227,27 @@ local instance chapter08_finite_inertia_normal
     [Fintype (Gal(L / K))] [CommGroup (Gal(L / K))]
     (X : Chapter08FiniteLocalExtensionData K L) :
     (chapter08FiniteInertia X).Normal := by
-  sorry
+  have hD : ∀ g : Gal(L / K),
+      g ∈ LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup
+        K X.branch := by
+    intro g
+    apply (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.decomposition_group_membership_iff_valuation_ring_stable
+      X.branch g).2
+    ext x
+    rw [ValuationSubring.mem_pointwise_smul_iff_inv_smul_mem]
+    exact (X.branch_preserved g.symm x).symm
+  have hnormal :
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05InertiaGroup
+        K X.branch).Normal := by
+    rw [LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.inertia_group_is_residue_action_kernel]
+    exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.inertia_kernel_is_normal _
+  have hmap_normal :
+      ((LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05InertiaGroup
+        K X.branch).map (Subgroup.subtype _)).Normal := by
+    apply Subgroup.Normal.map hnormal
+    intro g
+    exact ⟨⟨g, hD g⟩, rfl⟩
+  exact hmap_normal
 
 def chapter08FiniteInertiaQuotientMap
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -230,7 +266,9 @@ theorem chapter08_finite_units_are_in_kernel_of_residue_quotient
     ∀ u : chapter08UnitFiltration X.base.valuation 0,
       chapter08FiniteInertiaQuotientMap X
         (chapter08FiniteReciprocityMap D u) = 1 := by
-  sorry
+  intro u
+  exact (QuotientGroup.eq_one_iff _).2
+    (chapter08_finite_reciprocity_units_are_inertia X D u.property)
 
 abbrev chapter08UnitNormQuotient
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -250,7 +288,7 @@ local instance chapter08_field_norm_subgroup_normal
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] :
     (chapter08NormSubgroup K L).Normal := by
-  sorry
+  infer_instance
 
 local instance chapter08_unit_norm_subgroup_normal
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -259,7 +297,7 @@ local instance chapter08_unit_norm_subgroup_normal
     (X : Chapter08FiniteLocalExtensionData K L) :
     ((chapter08NormUnitSubgroup X.base.valuation X.valuation).comap
       (chapter08UnitFiltration X.base.valuation 0).subtype).Normal := by
-  sorry
+  infer_instance
 
 def chapter08ValuationModHom
     {K : Type*} [Field K]
