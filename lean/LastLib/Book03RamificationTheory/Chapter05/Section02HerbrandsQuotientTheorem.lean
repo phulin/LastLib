@@ -185,7 +185,7 @@ structure Chapter05QuotientLocalFieldOrbitRealization
         vM ((quotient_equiv σ : Gal(M / K)) (x : M) - (x : M)) ≥
           (downstairs.displacement σ : WithTop ℤ)
   downstairs_displacement :
-    ∀ {σ : G ⧸ H}, σ ≠ 1 →
+    ∀ {σ : G ⧸ H}, σ ≠ 1 → σ ∈ downstairs.lowerGroup 0 →
       vM ((quotient_equiv σ : Gal(M / K)) β - β) =
         (downstairs.displacement σ : WithTop ℤ)
 
@@ -442,6 +442,8 @@ theorem chapter05_coset_displacement_identity
       intro hρq
       apply hq_ne
       exact hρmap.symm.trans hρq
+    have hρq0 : chapter05QuotientMap H ρ ∈ S.downstairs.lowerGroup 0 := by
+      simpa [hρmap] using hq0
     have hcoset_ne : ∀ γ : (H ⊓ S.upstairs.lowerGroup (0 : ℝ) : Subgroup G),
         ρ * (γ : G) ≠ 1 := by
       intro γ hγ
@@ -465,8 +467,13 @@ theorem chapter05_coset_displacement_identity
     have hdown :
         R.vM ((R.quotient_equiv (chapter05QuotientMap H ρ) : Gal(R.M / R.K)) R.β - R.β) =
           (S.downstairs.displacement (chapter05QuotientMap H σ) : WithTop ℤ) := by
-      rw [hρmap]
-      exact R.downstairs_displacement hq_ne
+      calc
+        R.vM ((R.quotient_equiv (chapter05QuotientMap H ρ) : Gal(R.M / R.K)) R.β - R.β) =
+            (S.downstairs.displacement (chapter05QuotientMap H ρ) : WithTop ℤ) :=
+          R.downstairs_displacement (σ := chapter05QuotientMap H ρ)
+            hρq_ne hρq0
+        _ = (S.downstairs.displacement (chapter05QuotientMap H σ) : WithTop ℤ) := by
+          rw [hρmap]
     have hconst_eq :
         R.vM0 (a (F.coeff 0) - F.coeff 0) =
           (S.downstairs.displacement (chapter05QuotientMap H σ) : WithTop ℤ) := by
@@ -504,7 +511,9 @@ theorem chapter05_coset_displacement_identity
         (S.downstairs.displacement (chapter05QuotientMap H σ) : WithTop ℤ) ≤
           R.vM0 (a (F.coeff (i : ℕ)) - F.coeff (i : ℕ)) := by
       have hi := R.coefficient_displacement_lower_bound (σ := ρ) hρ_notH hρ0 (i : ℕ)
-      rw [hρmap, R.downstairs_displacement hq_ne] at hi
+      rw [R.downstairs_displacement (σ := chapter05QuotientMap H ρ)
+        hρq_ne hρq0] at hi
+      rw [hρmap] at hi
       exact hi
     have hterm_strict (i : I) (hi : i ≠ 0) :
         S.eLM • (S.downstairs.displacement (chapter05QuotientMap H σ) : WithTop ℤ) <

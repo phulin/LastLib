@@ -1,5 +1,6 @@
 import LastLib.Book03RamificationTheory.Chapter05.Section05ATwoBreakTower
 import Mathlib.FieldTheory.Fixed
+import Mathlib.NumberTheory.Padics.PadicIntegers
 import Mathlib.RingTheory.Valuation.Discrete.RankOne
 
 namespace LastLib.Book03RamificationTheory.Chapter05
@@ -99,6 +100,81 @@ theorem chapter05_local_dold_ramification_number_congruence
         (D.profile.displacement (σ ^ (p ^ r)) : ℤ) -
           (D.profile.displacement (σ ^ (p ^ (r - 1))) : ℤ) := by
   sorry
+
+/-!
+  The preceding consequence is the special prime-power step used by the
+  unfinished arithmetic route.  This interface records the full
+  source-facing cyclic congruence as well: the ramification number depends
+  only on the p-adic order of the exponent, and exponents congruent modulo
+  p^a give ramification numbers congruent modulo p^(a+1).  Integer exponents
+  retain the source's formulation for arbitrary k₁ and k₂.
+-/
+def chapter05SenRamificationNumber
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    (D : Chapter05LocalGaloisUpperData K L) (σ : Gal(L / K)) (k : ℤ) : ℕ :=
+  D.profile.displacement (σ ^ k)
+
+structure Chapter05SenCyclicCongruenceData
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    (D : Chapter05LocalGaloisUpperData K L)
+    (σ : Gal(L / K)) where
+  p : ℕ
+  wild_exponent : ℕ
+  p_prime : Nat.Prime p
+  wild_exponent_pos : 0 < wild_exponent
+  residue_characteristic : CharP
+    (IsLocalRing.ResidueField D.vL.toValuation.valuationSubring) p
+  sigma_order : orderOf σ = p ^ wild_exponent
+  sigma_generates : ∀ τ : Gal(L / K), ∃ k : ℤ, τ = σ ^ k
+  wild : σ ∈ D.profile.lowerGroup 1
+  c_depends_only_on_padic_order :
+    ∀ {k₁ k₂ : ℤ},
+      ¬((p ^ wild_exponent : ℕ) : ℤ) ∣ k₁ →
+      ¬((p ^ wild_exponent : ℕ) : ℤ) ∣ k₂ →
+      padicValInt p k₁ = padicValInt p k₂ →
+      chapter05SenRamificationNumber D σ k₁ =
+        chapter05SenRamificationNumber D σ k₂
+  c_congruent_of_exponent_congruent :
+    ∀ {a : ℕ} {k₁ k₂ : ℤ},
+      a < wild_exponent →
+      ¬((p ^ wild_exponent : ℕ) : ℤ) ∣ k₁ →
+      ¬((p ^ wild_exponent : ℕ) : ℤ) ∣ k₂ →
+      ((p : ℤ) ^ a) ∣ k₁ - k₂ →
+      Int.ModEq (p ^ (a + 1))
+        (chapter05SenRamificationNumber D σ k₁ : ℤ)
+        (chapter05SenRamificationNumber D σ k₂ : ℤ)
+
+theorem chapter05_sen_cyclic_congruence_depends_only_on_padic_order
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    {D : Chapter05LocalGaloisUpperData K L}
+    {σ : Gal(L / K)}
+    (S : Chapter05SenCyclicCongruenceData D σ)
+    {k₁ k₂ : ℤ}
+    (hk₁ : ¬((S.p ^ S.wild_exponent : ℕ) : ℤ) ∣ k₁)
+    (hk₂ : ¬((S.p ^ S.wild_exponent : ℕ) : ℤ) ∣ k₂)
+    (hval : padicValInt S.p k₁ = padicValInt S.p k₂) :
+    chapter05SenRamificationNumber D σ k₁ =
+      chapter05SenRamificationNumber D σ k₂ := by
+  exact S.c_depends_only_on_padic_order hk₁ hk₂ hval
+
+theorem chapter05_sen_cyclic_congruence_modulus
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    {D : Chapter05LocalGaloisUpperData K L}
+    {σ : Gal(L / K)}
+    (S : Chapter05SenCyclicCongruenceData D σ)
+    {a : ℕ} {k₁ k₂ : ℤ}
+    (ha : a < S.wild_exponent)
+    (hk₁ : ¬((S.p ^ S.wild_exponent : ℕ) : ℤ) ∣ k₁)
+    (hk₂ : ¬((S.p ^ S.wild_exponent : ℕ) : ℤ) ∣ k₂)
+    (hcongruent : ((S.p : ℤ) ^ a) ∣ k₁ - k₂) :
+    Int.ModEq (S.p ^ (a + 1))
+      (chapter05SenRamificationNumber D σ k₁ : ℤ)
+      (chapter05SenRamificationNumber D σ k₂ : ℤ) := by
+  exact S.c_congruent_of_exponent_congruent ha hk₁ hk₂ hcongruent
 
 /-- The normalized lower-group sum in the cyclic Hasse--Arf lemma. -/
 def chapter05CyclicHasseArfSum
@@ -835,6 +911,7 @@ theorem chapter05_cyclic_local_arithmetic_interface_of_last_break
     (hcyclic : IsCyclic (Gal(L / K)))
     [PerfectField (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)]
     {b : ℕ}
+    (hb_pos : 0 < b)
     (hlast : ∀ n : ℕ, b < n →
       D.profile.lowerGroup (n : ℝ) = ⊥)
     (hbreak : b = 0 ∨
@@ -859,9 +936,13 @@ theorem chapter05_cyclic_hasse_arf_lemma
         D.profile.lowerGroup (b + 1 : ℕ))
     (htotally_ramified : D.profile.lowerGroup 0 = ⊤) :
     ∃ z : ℤ, (z : ℚ) = chapter05CyclicHasseArfSum D.profile b := by
-  rcases chapter05_cyclic_local_arithmetic_interface_of_last_break
-      D hcyclic hlast hbreak htotally_ramified with ⟨σ, ⟨A⟩⟩
-  exact chapter05_cyclic_local_arithmetic_integrality D A
+  by_cases hb : b = 0
+  · refine ⟨0, ?_⟩
+    simp [chapter05CyclicHasseArfSum, hb]
+  · have hb_pos : 0 < b := Nat.pos_of_ne_zero hb
+    rcases chapter05_cyclic_local_arithmetic_interface_of_last_break
+        D hcyclic hb_pos hlast hbreak htotally_ramified with ⟨σ, ⟨A⟩⟩
+    exact chapter05_cyclic_local_arithmetic_integrality D A
 
 /- The inertia stage is naturally presented by a fixed-field transfer rather
    than by the original quotient local data.  This version keeps its base

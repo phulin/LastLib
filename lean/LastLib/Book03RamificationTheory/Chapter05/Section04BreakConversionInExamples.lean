@@ -306,12 +306,32 @@ theorem chapter05_tame_has_only_zero_break
     (htotal : Nat.card G = e)
     (htrivial : ∀ u : ℝ, 0 < u → D.lowerGroup u = ⊥)
     (hbij : Function.Bijective (chapter05HerbrandFunction D))
-    (hzero : D.lowerGroup 0 ≠ ⊥) :
+    :
     chapter05UpperBreak D 0 ∧
       ∀ v : ℝ, v ≠ 0 → ¬chapter05UpperBreak D v := by
   have htop0 : D.lowerGroup 0 = (⊤ : Subgroup G) := by
     apply Subgroup.eq_top_of_card_eq
     rw [hcard, htotal]
+  have hcard_gt : 1 < Nat.card G := by
+    rw [htotal]
+    omega
+  have hnontrivial : Nontrivial G :=
+    (Finite.one_lt_card_iff_nontrivial).mp hcard_gt
+  have htopbot : (⊤ : Subgroup G) ≠ ⊥ := by
+    intro h
+    obtain ⟨x, y, hxy⟩ := hnontrivial.exists_pair_ne
+    have hx : x ∈ (⊥ : Subgroup G) := by
+      rw [← h]
+      trivial
+    have hy : y ∈ (⊥ : Subgroup G) := by
+      rw [← h]
+      trivial
+    have hx1 : x = 1 := by simpa using hx
+    have hy1 : y = 1 := by simpa using hy
+    exact hxy (hx1.trans hy1.symm)
+  have hzero : D.lowerGroup 0 ≠ ⊥ := by
+    rw [htop0]
+    exact htopbot
   have htame : ∀ x : ℝ,
       chapter05HerbrandFunction D x = chapter05TameHerbrand e x := by
     intro x
