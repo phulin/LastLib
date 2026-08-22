@@ -197,7 +197,8 @@ theorem finite_residue_extension_of_finite_base_is_finite
     (k l : Type*) [Field k] [Field l] [Algebra k l]
     [Fintype k] [Module.Finite k l] :
     Finite l := by
-  sorry
+  obtain ⟨n, f, hf⟩ := Module.Finite.exists_fin' k l
+  exact Finite.of_surjective f hf
 
 /-- Book 2, §15.2: a finite residue field has compactness, cyclic units, and surjective norms. -/
 theorem finite_residue_field_has_the_listed_consequences

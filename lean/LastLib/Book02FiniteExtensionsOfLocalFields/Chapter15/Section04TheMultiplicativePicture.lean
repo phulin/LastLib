@@ -2,6 +2,8 @@ import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter15.Section03TheGaloisP
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Section01WhyUnitsNeedTheirOwnFiltration
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Section03HigherQuotientsAreAdditiveResidueFields
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section02TheCompletedProductTheorem
+import Mathlib.Algebra.Group.Int.TypeTags
+import Mathlib.Algebra.Order.Group.Cyclic
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter15
 noncomputable section
@@ -40,7 +42,191 @@ theorem units_split_by_uniformizer
     (v : Valuation L Γ) [Valuation.IsRankOneDiscrete v] :
     ∃ π : L, v.IsUniformizer π ∧
       Nonempty (Lˣ ≃* Multiplicative ℤ × v.valuationSubring.unitGroup) := by
-  sorry
+  classical
+  let V := MonoidWithZeroHom.valueGroup (.ofClass v)
+  obtain ⟨eVal⟩ :=
+    (LinearOrderedCommGroup.isCyclic_iff_nonempty_equiv_int).mp
+      (inferInstance : IsCyclic V)
+  let γ : V := eVal.symm (Multiplicative.ofAdd (-1))
+  have hγlt : γ < 1 := by
+    have hsource : Multiplicative.ofAdd (-1) < Multiplicative.ofAdd (0 : ℤ) := by
+      exact Multiplicative.ofAdd_strictMono (by norm_num)
+    change eVal.symm (Multiplicative.ofAdd (-1)) < 1
+    rw [← eVal.symm.map_one]
+    exact eVal.symm.toOrderIso.strictMono hsource
+  have hγgen : Subgroup.zpowers γ = ⊤ := by
+    apply le_antisymm le_top
+    intro x hx
+    rw [Subgroup.mem_zpowers_iff]
+    refine ⟨-(eVal x).toAdd, ?_⟩
+    apply eVal.injective
+    simp [γ, Int.toAdd_zpow]
+    rw [← Int.ofAdd_mul, one_mul]
+    exact ofAdd_toAdd _
+  have hγeq : γ = LinearOrderedCommGroup.genLTOne V :=
+    LinearOrderedCommGroup.genLTOne_unique V hγlt hγgen
+  obtain ⟨π, hπ⟩ :=
+    Valuation.exists_isUniformizer_of_isCyclic_of_nontrivial v
+  let πunit : Lˣ := Units.mk0 (π : L) hπ.ne_zero
+  let γunit : Γˣ := Units.mk0 (v (π : L)) hπ.val_ne_zero
+  have hπunit : γunit = Valuation.IsRankOneDiscrete.generator v := by
+    apply Units.ext
+    exact hπ.val
+  let δ : V :=
+    ⟨γunit,
+      (MonoidWithZeroHom.ofClass v).mem_valueGroup (Set.mem_range_self (π : L))⟩
+  have hδlt : δ < 1 := by
+    change v (π : L) < 1
+    exact hπ.val_lt_one
+  have hδgen : Subgroup.zpowers δ = ⊤ := by
+    apply le_antisymm le_top
+    intro x hx
+    rw [Subgroup.mem_zpowers_iff]
+    have hx' : (x : Γˣ) ∈ Subgroup.zpowers
+        (Valuation.IsRankOneDiscrete.generator v) := by
+      rw [Valuation.IsRankOneDiscrete.generator_zpowers_eq_valueGroup]
+      exact x.property
+    rw [Subgroup.mem_zpowers_iff] at hx'
+    obtain ⟨n, hn⟩ := hx'
+    refine ⟨n, ?_⟩
+    apply Subtype.ext
+    change ((δ : Γˣ) ^ n) = (x : Γˣ)
+    rw [show (δ : Γˣ) = γunit by rfl, hπunit]
+    exact hn
+  have hδeq : δ = γ := by
+    exact (LinearOrderedCommGroup.genLTOne_unique V hδlt hδgen).trans hγeq.symm
+  let valUnit : Lˣ →* V :=
+    { toFun := fun x =>
+        ⟨Units.mk0 (v (x : L)) (v.ne_zero_iff.mpr x.ne_zero),
+          (MonoidWithZeroHom.ofClass v).mem_valueGroup (Set.mem_range_self (x : L))⟩
+      map_one' := by
+        apply Subtype.ext
+        apply Units.ext
+        simp
+      map_mul' := by
+        intro x y
+        apply Subtype.ext
+        apply Units.ext
+        simp }
+  have hvalπ : valUnit πunit = γ := by
+    calc
+      valUnit πunit = δ := by
+        apply Subtype.ext
+        apply Units.ext
+        rfl
+      _ = γ := hδeq
+  let degree : Lˣ →* Multiplicative ℤ := eVal.toMonoidHom.comp valUnit
+  have hdegreeπ : degree πunit = Multiplicative.ofAdd (-1) := by
+    simp [degree, hvalπ, γ]
+  let unitPart : Lˣ → v.valuationSubring.unitGroup := fun x =>
+    ⟨πunit ^ (degree x).toAdd * x, by
+      rw [ValuationSubring.mem_unitGroup_iff]
+      have hvg : valUnit (πunit ^ (degree x).toAdd * x) = 1 := by
+        rw [map_mul, map_zpow, hvalπ]
+        apply eVal.injective
+        simp [degree, γ, Int.toAdd_zpow]
+        rw [← Int.ofAdd_mul, one_mul, ← ofAdd_toAdd (eVal (valUnit x))]
+        simp
+      have hvg' := congrArg (fun y : V => (y : Γˣ).1) hvg
+      exact (Valuation.isEquiv_valuation_valuationSubring v).symm.eq_one_iff_eq_one.mpr
+        (by simpa [valUnit] using hvg')⟩
+  refine ⟨(π : L), hπ, ?_⟩
+  have hunitPart_mul (x y : Lˣ) :
+      unitPart (x * y) = unitPart x * unitPart y := by
+    apply Subtype.ext
+    apply Units.ext
+    dsimp [unitPart]
+    simp only [Units.val_mul, Units.val_zpow_eq_zpow_val]
+    have hπne : (πunit : L) ≠ 0 := πunit.ne_zero
+    change (πunit : L) ^ (degree (x * y)).toAdd *
+        ((x : L) * (y : L)) =
+      ((πunit : L) ^ (degree x).toAdd * (x : L)) *
+        ((πunit : L) ^ (degree y).toAdd * (y : L))
+    rw [show (degree (x * y)).toAdd = (degree x).toAdd + (degree y).toAdd by
+      simp [degree]]
+    rw [zpow_add₀ hπne]
+    ac_rfl
+  have hdegree_unit (u : v.valuationSubring.unitGroup) :
+      degree (u : Lˣ) = 1 := by
+    have hu : v ((u : Lˣ) : L) = 1 := by
+      exact (Valuation.isEquiv_valuation_valuationSubring v).eq_one_iff_eq_one.mpr
+        (by
+          simpa using
+            (ValuationSubring.mem_unitGroup_iff v.valuationSubring (u : Lˣ)).mp
+              u.property)
+    have hvalUnit_u : valUnit (u : Lˣ) = 1 := by
+      apply Subtype.ext
+      apply Units.ext
+      simp [valUnit, hu]
+    simp [degree, hvalUnit_u]
+  let toCoord : Lˣ →* (Multiplicative ℤ × v.valuationSubring.unitGroup) :=
+    { toFun := fun x => (degree x, unitPart x)
+      map_one' := by
+        apply Prod.ext
+        · simp [degree]
+        · apply Subtype.ext
+          apply Units.ext
+          simp [unitPart, degree]
+      map_mul' := by
+        intro x y
+        apply Prod.ext
+        · simp [degree]
+        · exact hunitPart_mul x y }
+  let fromCoord :
+      (Multiplicative ℤ × v.valuationSubring.unitGroup) →* Lˣ :=
+    { toFun := fun z => πunit ^ (-(z.1.toAdd)) * (z.2 : Lˣ)
+      map_one' := by simp
+      map_mul' := by
+        intro x y
+        change πunit ^ (-(x.1.toAdd + y.1.toAdd)) *
+            ((x.2 : Lˣ) * (y.2 : Lˣ)) =
+          (πunit ^ (-x.1.toAdd) * (x.2 : Lˣ)) *
+            (πunit ^ (-y.1.toAdd) * (y.2 : Lˣ))
+        rw [neg_add, zpow_add]
+        ac_rfl }
+  have hleft (x : Lˣ) : fromCoord (toCoord x) = x := by
+    change πunit ^ (-(degree x).toAdd) *
+        (πunit ^ (degree x).toAdd * x) = x
+    calc
+      πunit ^ (-(degree x).toAdd) *
+          (πunit ^ (degree x).toAdd * x) =
+          (πunit ^ (degree x).toAdd)⁻¹ *
+            (πunit ^ (degree x).toAdd * x) := by rw [zpow_neg]
+      _ = x := by simp
+  have hdegree_from (z : Multiplicative ℤ × v.valuationSubring.unitGroup) :
+      degree (fromCoord z) = z.1 := by
+    change degree (πunit ^ (-(z.1.toAdd)) * (z.2 : Lˣ)) = z.1
+    rw [map_mul, map_zpow, hdegreeπ, hdegree_unit]
+    rw [← Int.ofAdd_mul]
+    simpa only [neg_one_mul, neg_neg, ofAdd_toAdd, mul_one]
+  have hright (z : Multiplicative ℤ × v.valuationSubring.unitGroup) :
+      toCoord (fromCoord z) = z := by
+    apply Prod.ext
+    · exact hdegree_from z
+    · apply Subtype.ext
+      apply Units.ext
+      dsimp [toCoord, unitPart, fromCoord]
+      change ↑(πunit ^ (degree (fromCoord z)).toAdd) *
+          (fromCoord z : L) = ((z.2 : Lˣ) : L)
+      rw [hdegree_from]
+      change ↑(πunit ^ z.1.toAdd) *
+          (fromCoord z : L) = ((z.2 : Lˣ) : L)
+      rw [show fromCoord z = πunit ^ (-(z.1.toAdd)) * (z.2 : Lˣ) by rfl]
+      simp only [Units.val_mul, Units.val_zpow_eq_zpow_val]
+      rw [zpow_neg]
+      rw [← mul_assoc]
+      rw [mul_inv_cancel₀]
+      simp
+      exact zpow_ne_zero _ πunit.ne_zero
+  exact ⟨{
+    toFun := toCoord
+    invFun := fromCoord
+    left_inv := hleft
+    right_inv := hright
+    map_mul' := by
+      intro x y
+      exact toCoord.map_mul x y
+  }⟩
 
 /-- Book 2, §15.4: the unit filtration is descending. -/
 theorem unit_filtration_is_nested
