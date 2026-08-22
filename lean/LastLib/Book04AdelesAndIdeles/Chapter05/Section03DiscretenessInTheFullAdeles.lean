@@ -2,6 +2,9 @@ import LastLib.Book04AdelesAndIdeles.Chapter05.Section01TheDiagonalEmbedding
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter05
 
+open LastLib.Book04AdelesAndIdeles.Chapter01
+open LastLib.Book04AdelesAndIdeles.Chapter04
+
 noncomputable section
 
 open scoped Topology
@@ -10,47 +13,47 @@ open scoped Topology
 
 theorem chapter05_finite_integral_is_compact_open
     (K : Type*) [Field K] [NumberField K] :
-    IsCompact (chapter05FiniteIntegralAdeleSubring K :
-      Set (Chapter05FiniteAdeleRing K)) ∧
-      IsOpen (chapter05FiniteIntegralAdeleSubring K :
-        Set (Chapter05FiniteAdeleRing K)) := by
+    IsCompact (Chapter04FiniteIntegralAdeleSubring K :
+      Set (Chapter04FiniteAdeleRing K)) ∧
+      IsOpen (Chapter04FiniteIntegralAdeleSubring K :
+        Set (Chapter04FiniteAdeleRing K)) := by
   sorry
 
 theorem chapter05_exists_small_archimedean_neighborhood
     (K : Type*) [Field K] [NumberField K] :
-    ∃ Uinf : Set (Chapter05MinkowskiSpace K),
-      IsOpen Uinf ∧ Uinf ∈ 𝓝 (0 : Chapter05MinkowskiSpace K) ∧
-        Uinf ∩ (Chapter05IntegerLattice K : Set (Chapter05MinkowskiSpace K)) =
+    ∃ Uinf : Set (chapter01MinkowskiSpace K),
+      IsOpen Uinf ∧ Uinf ∈ 𝓝 (0 : chapter01MinkowskiSpace K) ∧
+        Uinf ∩ (NumberField.mixedEmbedding.integerLattice K : Set (chapter01MinkowskiSpace K)) =
           {0} := by
   sorry
 
 theorem chapter05_full_adele_is_nondiscrete_at_zero
     (K : Type*) [Field K] [NumberField K] :
-    chapter05NondiscreteAtZero (G := Chapter05AdeleRing K) := by
+    chapter05NondiscreteAtZero (G := Chapter04AdeleRing K) := by
   sorry
 
 theorem chapter05_full_zero_neighborhood_is_open
     (K : Type*) [Field K] [NumberField K]
-    (Uinf : Set (Chapter05MinkowskiSpace K)) (hUinf : IsOpen Uinf) :
+    (Uinf : Set (chapter01MinkowskiSpace K)) (hUinf : IsOpen Uinf) :
     IsOpen (chapter05FullZeroNeighborhood K Uinf) := by
   sorry
 
 theorem chapter05_full_zero_neighborhood_is_nhds
     (K : Type*) [Field K] [NumberField K]
-    (Uinf : Set (Chapter05MinkowskiSpace K))
-    (hUinf : Uinf ∈ 𝓝 (0 : Chapter05MinkowskiSpace K)) :
+    (Uinf : Set (chapter01MinkowskiSpace K))
+    (hUinf : Uinf ∈ 𝓝 (0 : chapter01MinkowskiSpace K)) :
     chapter05FullZeroNeighborhood K Uinf ∈
-      𝓝 (0 : Chapter05AdeleRing K) := by
+      𝓝 (0 : Chapter04AdeleRing K) := by
   sorry
 
 theorem chapter05_full_zero_neighborhood_meets_diagonal_only_at_zero
     (K : Type*) [Field K] [NumberField K]
-    (Uinf : Set (Chapter05MinkowskiSpace K))
+    (Uinf : Set (chapter01MinkowskiSpace K))
     (hUinf : Uinf ∩
-      (Chapter05IntegerLattice K : Set (Chapter05MinkowskiSpace K)) = {0}) :
+      (NumberField.mixedEmbedding.integerLattice K : Set (chapter01MinkowskiSpace K)) = {0}) :
     chapter05FullZeroNeighborhood K Uinf ∩
         Set.range (chapter05Diagonal K) =
-      ({0} : Set (Chapter05AdeleRing K)) := by
+      ({0} : Set (Chapter04AdeleRing K)) := by
   sorry
 
 /-!
@@ -78,16 +81,16 @@ theorem chapter05_theorem_5_2_diagonal_is_discrete_closed
 theorem chapter05_finite_integral_preimage_of_diagonal
     (K : Type*) [Field K] [NumberField K] :
     (chapter05FiniteDiagonal K ⁻¹'
-      (chapter05FiniteIntegralAdeleSubring K :
-        Set (Chapter05FiniteAdeleRing K))) =
+      (Chapter04FiniteIntegralAdeleSubring K :
+        Set (Chapter04FiniteAdeleRing K))) =
       chapter05RingOfIntegersSet K := by
   sorry
 
 theorem chapter05_finite_integral_intersection_eq_integer_image
     (K : Type*) [Field K] [NumberField K] :
     Set.range (chapter05FiniteDiagonal K) ∩
-        (chapter05FiniteIntegralAdeleSubring K :
-          Set (Chapter05FiniteAdeleRing K)) =
+        (Chapter04FiniteIntegralAdeleSubring K :
+          Set (Chapter04FiniteAdeleRing K)) =
       chapter05FiniteDiagonal K '' chapter05RingOfIntegersSet K := by
   sorry
 
@@ -95,8 +98,8 @@ theorem chapter05_finite_integral_intersection_is_infinite
     (K : Type*) [Field K] [NumberField K] :
     Set.Infinite
       (Set.range (chapter05FiniteDiagonal K) ∩
-        (chapter05FiniteIntegralAdeleSubring K :
-          Set (Chapter05FiniteAdeleRing K))) := by
+        (Chapter04FiniteIntegralAdeleSubring K :
+          Set (Chapter04FiniteAdeleRing K))) := by
   sorry
 
 /-! The finite-place warning from the source: the compact open integral tail
