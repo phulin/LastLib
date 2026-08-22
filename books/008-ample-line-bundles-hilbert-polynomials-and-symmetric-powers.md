@@ -1202,25 +1202,34 @@ different exponent for every $Z$: the finite affine-chart argument in Section 4.
 generates the coordinate algebras and their first-order relations. It gives one exponent separating
 all points and tangent vectors. The resulting immersion is closed because $C$ is proper.
 
-Smooth proper curves have ample bundles, and this can be proved without anticipating
-Riemann--Roch. We first record the finiteness fact needed in the argument.
+Smooth proper curves over a field $k$ with $[k:k^p]<\infty$ have ample bundles, and this can be
+proved without anticipating Riemann--Roch; throughout this subsection the ground field is assumed
+to satisfy that standing condition. We first record the finiteness fact needed in the argument.
 
-**Finite-normalization lemma for curves.** The normalization of an integral curve of finite type
-over a field is finite.
+**Finite-normalization lemma for curves.** Let $k$ be a field with $[k:k^p]<\infty$. The
+normalization of an integral curve of finite type over $k$ is finite.
 
 It is enough to work with an affine coordinate ring $A$. Noether normalization supplies
 $k[t]\subseteq A$ with $A$ finite over $k[t]$, so
-$K=\operatorname{Frac}(A)$ is finite over $k(t)$. The integral closure $B$ of $k[t]$ in $K$ is a
-finite $k[t]$-module. Here is the one-dimensional lattice argument. After clearing denominators,
-choose a field basis of the maximal separable subextension consisting of elements integral over
-$k[t]$. The trace pairing places every integral element in the dual of the lattice spanned by
-that basis, after multiplication by its nonzero discriminant. A submodule of this finite free
-$k[t]$-module is finite because $k[t]$ is noetherian. For the remaining purely inseparable
-extension in characteristic $p$, choose a finite $p$-basis and clear denominators in the finitely
-many monomials of exponents below their inseparability degrees; the same bounded-lattice argument
-applies. Thus $B$ is finite. Since $A$ is integral over $k[t]$, an element of $K$ is integral over
-$A$ exactly when it is integral over $k[t]$. Hence $B$ is also the normalization of $A$, and its
-finite set of $k[t]$-generators generates it over $A$.
+$K=\operatorname{Frac}(A)$ is finite over $k(t)$, and everything reduces to the integral
+closure $B$ of $k[t]$ in $K$. Here is what this volume proves directly. If $K/k(t)$ is
+separable, then after clearing denominators there is a field basis of $K$ over $k(t)$ consisting
+of elements integral over $k[t]$; the trace pairing places every integral element in the dual of
+the lattice spanned by that basis, after multiplication by its nonzero discriminant; and a
+submodule of this finite free $k[t]$-module is finite because $k[t]$ is noetherian. If
+$K/k(t)$ is not separable, it has a nontrivial purely inseparable part, and for that part the
+trace pairing degenerates; this volume contains no independent lattice argument for it.
+
+_(Standing input._ What Sections 9.1–9.2 consume is precisely the finiteness of $B$: the Japanese
+property of $k[t]$. It is not proved in Books 1–7b, whose local separable theorem does not cover
+this case, but it is discharged later in the library: Book 10a, Section 9.2, Theorem 9.8 with
+Corollary 9.9 proves that a field $k$ with $[k:k^p]<\infty$ is quasi-excellent with $p$-finite
+residue fields, hence universally Japanese, so the integral closure of $k[t]$ — indeed of every
+finite-type $k$-algebra domain — in each finite extension of its fraction field is finite. Fields
+of infinite $p$-degree fall outside that theorem and outside the results of this section.*) Since
+$A$ is integral over $k[t]$, an element of $K$ is integral over $A$ exactly when it is integral
+over $k[t]$. Hence $B$ is also the normalization of $A$, and its finite set of $k[t]$-generators
+generates it over $A$.
 
 Now suppose $C$ is connected, hence integral because it is regular. Choose a nonempty affine open
 $U\subset C$ and a closed immersion $U\hookrightarrow\mathbf A^N_k$. Let $\overline U$ be its
