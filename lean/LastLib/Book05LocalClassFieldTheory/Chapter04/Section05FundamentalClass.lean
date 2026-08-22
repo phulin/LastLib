@@ -472,7 +472,15 @@ noncomputable def chapter04FundamentalClassChoice
     (himage : Set.range (chapter04CohomologyInvariant I R C) =
       chapter04RationalResidueOneOverMultiples n) :
     Chapter04FundamentalClass I R C n := by
-  sorry
+  let h := chapter04_fundamental_class_exists_unique I R C n hdegree himage
+  let u : chapter04H2 K L := Classical.choose h.exists
+  have hu : chapter04CohomologyInvariant I R C u =
+      chapter04RationalResidueOneOver n := Classical.choose_spec h.exists
+  exact {
+    value := u
+    degree_pos := hn
+    invariant_eq_one_over := hu
+  }
 
 theorem chapter04_fundamental_class_is_unique
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -481,7 +489,18 @@ theorem chapter04_fundamental_class_is_unique
     (R : Chapter04BrauerRestrictionData K L)
     (C : Chapter04RelativeBrauerCohomologyData K L R) (n : ℕ)
     (u v : Chapter04FundamentalClass I R C n) : u.value = v.value := by
-  sorry
+  have hinj : Function.Injective (chapter04CohomologyInvariant I R C) := by
+    intro a b hab
+    have hsub : (C.toRelative a).1 = (C.toRelative b).1 := by
+      apply I.invariant_injective
+      exact hab
+    have hto : C.toRelative a = C.toRelative b := Subtype.ext hsub
+    calc
+      a = C.fromRelative (C.toRelative a) := (C.left_inverse a).symm
+      _ = C.fromRelative (C.toRelative b) := congrArg C.fromRelative hto
+      _ = b := C.left_inverse b
+  apply hinj
+  exact u.invariant_eq_one_over.trans v.invariant_eq_one_over.symm
 
 /- The tower interface records the restriction and corestriction equations
   stated explicitly in the source. -/
