@@ -187,7 +187,7 @@ theorem chapter08_herbrand_inverse_left_inverse
     {G : Type*} [Group G] [Finite G]
     (F : Chapter08RamificationFiltration G)
     (hbij : Function.Bijective (chapter08HerbrandFunction F))
-    {u : ℝ} (hu : -1 ≤ u) :
+    {u : ℝ} (_hu : -1 ≤ u) :
     chapter08HerbrandInverse F (chapter08HerbrandFunction F u) = u := by
   exact LastLib.Book03RamificationTheory.Chapter05.chapter05_herbrand_inverse_left_inverse F hbij u
 

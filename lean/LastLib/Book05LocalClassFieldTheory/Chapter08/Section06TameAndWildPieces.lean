@@ -6,7 +6,7 @@ noncomputable section
 
 open scoped IsMulCommutative Pointwise
 
-local instance chapter08_isMulCommutative_of_commGroup
+local instance chapter08_section06_isMulCommutative_of_commGroup
     {G : Type*} [CommGroup G] : IsMulCommutative G :=
   IsMulCommutative.of_comm (fun _ _ => mul_comm _ _)
 
