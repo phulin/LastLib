@@ -10,11 +10,13 @@ open scoped BigOperators Polynomial nonZeroDivisors
 
 /-- The numerical and residue-field profile of an unramified extension. -/
 def chapter07UnramifiedProfile
-    (e : ℕ) (k l : Type*) [Field k] [Field l] [Algebra k l] : Prop :=
+    (e : ℕ) (k l : Type*) [Field k] [Field l] [Algebra k l]
+    [FiniteDimensional k l] : Prop :=
   e = 1 ∧ Algebra.IsSeparable k l
 
 @[simp] theorem chapter07UnramifiedProfile_iff
-    (e : ℕ) (k l : Type*) [Field k] [Field l] [Algebra k l] :
+    (e : ℕ) (k l : Type*) [Field k] [Field l] [Algebra k l]
+    [FiniteDimensional k l] :
     chapter07UnramifiedProfile e k l ↔ e = 1 ∧ Algebra.IsSeparable k l :=
   Iff.rfl
 
@@ -46,16 +48,23 @@ theorem chapter07_unramified_trace_pairing_perfect
     [IsDiscreteValuationRing A] [CommRing B] [IsDedekindDomain B]
     [IsDiscreteValuationRing B] [Field K] [Field L] [Field k] [Field l]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
-    [Algebra k l] [IsScalarTower A K L] [IsScalarTower A B L]
+    [Algebra k l] [FiniteDimensional k l]
+    [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
     [Algebra.IsSeparable K L] [IsIntegralClosure B A L]
     [IsIntegrallyClosed A]
     [Module.Finite A B] [Module.Free A B] [Module.IsTorsionFree A B]
     [Algebra.IsIntegral A B]
+    (mA : Ideal A) (mB : Ideal B)
+    (hmA : mA = IsLocalRing.maximalIdeal A)
+    (hmB : mB = IsLocalRing.maximalIdeal B)
     (e : ℕ) (hunram : chapter07UnramifiedProfile e k l)
+    (hpower :
+      (Ideal.map (algebraMap A B) mA : FractionalIdeal B⁰ L) =
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04FractionalIdealPower
+          B L mB (e : ℤ))
     (hdegree : Module.finrank K L = Module.finrank k l)
-    (hresidue_model : Nonempty ((A ⧸ IsLocalRing.maximalIdeal A) ≃+* k) ∧
-      Nonempty ((B ⧸ IsLocalRing.maximalIdeal B) ≃+* l)) :
+    (hresidue_model : chapter07CompatibleResidueModel A B k l) :
     chapter07IntegralTracePairingPerfect A B K L ∧
       chapter07DifferentIdeal A B = ⊤ ∧ e = 1 := by
   sorry
@@ -165,8 +174,7 @@ theorem chapter07_different_zero_iff_unramified
         LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04FractionalIdealPower
           B L mB (e : ℤ))
     (hdegree : Module.finrank K L = Module.finrank k l)
-    (hresidue_model : Nonempty ((A ⧸ mA) ≃+* k) ∧
-      Nonempty ((B ⧸ mB) ≃+* l))
+    (hresidue_model : chapter07CompatibleResidueModel A B k l)
     (hquotient_reduced : chapter07DifferentIdeal A B = ⊤ →
       IsReduced (B ⧸ Ideal.map (algebraMap A B) mA))
     (htrace_nondegenerate : chapter07DifferentIdeal A B = ⊤ →
@@ -198,8 +206,7 @@ theorem chapter07_e_one_inseparable_residue_forces_nontrivial_different
         LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04FractionalIdealPower
           B L mB (1 : ℤ))
     (hdegree : Module.finrank K L = Module.finrank k l)
-    (hresidue_model : Nonempty ((A ⧸ mA) ≃+* k) ∧
-      Nonempty ((B ⧸ mB) ≃+* l))
+    (hresidue_model : chapter07CompatibleResidueModel A B k l)
     (hquotient_reduced : chapter07DifferentIdeal A B = ⊤ →
       IsReduced (B ⧸ Ideal.map (algebraMap A B) mA))
     (htrace_nondegenerate : chapter07DifferentIdeal A B = ⊤ →

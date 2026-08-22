@@ -116,7 +116,7 @@ theorem chapter07_trace_hom_action_mul
 
 /- The different is Mathlib's canonical inverse trace-dual ideal. -/
 noncomputable def chapter07DifferentIdeal
-    (A B : Type*) [CommRing A] [IsDomain A] [CommRing B]
+    (A B : Type*) [CommRing A] [IsDomain A] [IsIntegrallyClosed A] [CommRing B]
     [Algebra A B] [IsDedekindDomain B] [Module.IsTorsionFree A B] : Ideal B :=
   differentIdeal A B
 

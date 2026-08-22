@@ -27,6 +27,19 @@ abbrev chapter07ResidueField {K : Type*} [Field K]
     (v : AddValuation K (WithTop ℤ)) : Type _ :=
   IsLocalRing.ResidueField (chapter07ValuationRing v)
 
+/- A residue-field model must identify the residue map induced by `A → B`
+   with the specified field extension `k → l`; separate ring equivalences do
+   not provide that compatibility. -/
+def chapter07CompatibleResidueModel
+    (A B k l : Type*) [CommRing A] [CommRing B] [Field k] [Field l]
+    [IsLocalRing A] [IsLocalRing B] [Algebra A B] [Algebra k l] : Prop :=
+  ∃ eA : (A ⧸ IsLocalRing.maximalIdeal A) ≃+* k,
+    ∃ eB : (B ⧸ IsLocalRing.maximalIdeal B) ≃+* l,
+      ∀ a : A,
+        eB (Ideal.Quotient.mk (IsLocalRing.maximalIdeal B) (algebraMap A B a)) =
+          algebraMap k l
+            (eA (Ideal.Quotient.mk (IsLocalRing.maximalIdeal A) a))
+
 /-- A normalized value-one element, the valuation-level uniformizer interface
     used in the derivative estimates. -/
 def chapter07IsUniformizer {K : Type*} [Field K]

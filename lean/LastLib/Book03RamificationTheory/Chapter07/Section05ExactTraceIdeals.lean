@@ -201,7 +201,6 @@ theorem chapter07_norm_one_add_trace_remainder
 def chapter07NormLiftingFailure
     (K L k l : Type*) [Field K] [Field L] [Field k] [Field l]
     [Algebra K L] [Algebra k l]
-    (_ρK : K →+* k) (_ρL : L →+* l)
     (unitLayerL : Set L) (unitLayerK : Set K) : Prop :=
   Function.Surjective (Algebra.norm k (S := l)) ∧
     ¬Set.SurjOn (Algebra.norm K (S := L)) unitLayerL unitLayerK

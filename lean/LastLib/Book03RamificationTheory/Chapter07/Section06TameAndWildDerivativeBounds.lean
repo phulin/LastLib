@@ -127,7 +127,7 @@ theorem chapter07_tame_different_exponent_eq_e_sub_one
   sorry
 
 theorem chapter07_tame_iff_different_baseline
-    (e p d : ℕ) [Fact (Nat.Prime p)]
+    (e p d : ℕ) [Fact (Nat.Prime p)] (he : 0 < e)
     (htame : chapter07TameAtResidueCharacteristic e p → d = e - 1)
     (hwild : p ∣ e → e ≤ d) (hbaseline : e - 1 ≤ d) :
     chapter07TameAtResidueCharacteristic e p ↔ d = e - 1 := by
@@ -137,7 +137,8 @@ theorem chapter07_tame_iff_different_baseline
    p divides the ramification degree. -/
 theorem chapter07_equal_characteristic_wild_leading_term_zero
     (K L : Type*) [Field K] [Field L] [Algebra K L]
-    (p e : ℕ) [CharP K p] (hdiv : p ∣ e) (π : L) :
+    (p e : ℕ) [CharP K p] [Fact (Nat.Prime p)]
+    (hdiv : p ∣ e) (π : L) :
     chapter07DerivativeTerm K L e 1 π = 0 := by
   sorry
 
@@ -145,7 +146,7 @@ theorem chapter07_equal_characteristic_wild_leading_term_zero
    normalized valuation is transferred upstairs. -/
 theorem chapter07_mixed_characteristic_wild_leading_term_lower_bound
     (K L : Type*) [Field K] [Field L] [Algebra K L]
-    (vK : AddValuation K (WithTop ℤ))
+    [CharZero K] (vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ)) (p e : ℕ) [Fact (Nat.Prime p)] (π : L)
     (hdiv : p ∣ e)
     (hscale : ∀ x : K, x ≠ 0 →

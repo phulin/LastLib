@@ -116,7 +116,9 @@ theorem chapter07_dual_numerators_form_basis
     (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B]
     [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra K L]
     [Algebra B L] [Algebra A L] [IsScalarTower A K L]
-    [IsScalarTower A B L] [IsIntegralClosure B A L]
+    [IsScalarTower A B L] [IsFractionRing A K] [IsFractionRing B L]
+    [FiniteDimensional K L] [Algebra.IsSeparable K L]
+    [IsIntegralClosure B A L]
     (α : B) (f : A[X]) (n : ℕ)
     (hmono : chapter07MonogenicPresentation A B K L α f)
     (hdegree : f.natDegree = n) :
@@ -149,7 +151,7 @@ def chapter07InversePrincipalSet
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
     (δ : B) : Set L :=
-  {x | ∃ b : B, x = algebraMap B L b / algebraMap B L δ}
+  {x | ∃ b : B, algebraMap B L b = x * algebraMap B L δ}
 
 theorem chapter07_inverse_principal_mem_iff
     (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
@@ -157,7 +159,7 @@ theorem chapter07_inverse_principal_mem_iff
     [IsScalarTower A K L] [IsScalarTower A B L]
     (δ : B) (x : L) :
     x ∈ chapter07InversePrincipalSet A B K L δ ↔
-      ∃ b : B, x = algebraMap B L b / algebraMap B L δ := Iff.rfl
+      ∃ b : B, algebraMap B L b = x * algebraMap B L δ := Iff.rfl
 
 theorem chapter07_codifferent_eq_inverse_derivative_principal
     (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B] [IsDedekindDomain B]
@@ -189,7 +191,10 @@ theorem chapter07_eisenstein_different_exponent_eq_derivative_valuation
     (hmono : chapter07MonogenicPresentation A B K L πL f)
     (hD : chapter07DifferentIdeal A B = mB ^ d)
     (hmB : mB = IsLocalRing.maximalIdeal B)
-    (hπL : chapter07IsUniformizer vL (algebraMap B L πL)) :
+    (hπL : chapter07IsUniformizer vL (algebraMap B L πL))
+    (hpower_valuation : ∀ z : B, z ≠ 0 →
+      Ideal.span ({z} : Set B) = mB ^ d →
+        vL (algebraMap B L z) = (d : WithTop ℤ)) :
     vL (algebraMap B L (chapter07DerivativeAt A B f πL)) =
       (d : WithTop ℤ) := by
   sorry

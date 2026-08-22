@@ -76,7 +76,10 @@ theorem chapter07_cyclotomic_derivative_valuation
     (huniformizer : chapter07IsUniformizer vL lambda)
     (hEisenstein :
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.IsEisensteinAt
-        (p : ℤ_[p]) (chapter07CyclotomicPolynomial (ℤ_[p]) p)) :
+        (p : ℤ_[p]) (chapter07CyclotomicPolynomial (ℤ_[p]) p))
+    (hscale : ∀ x : ℚ_[p], x ≠ 0 →
+      vL (algebraMap (ℚ_[p]) L x) =
+        ((p - 1 : ℕ) : WithTop ℤ) * Padic.addValuation x) :
     vL (aeval lambda
       (chapter07CyclotomicPolynomial (ℚ_[p]) p).derivative) =
       (p - 2 : WithTop ℤ) := by
@@ -94,6 +97,9 @@ theorem chapter07_cyclotomic_different_exponent
     (hEisenstein :
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.IsEisensteinAt
         (p : ℤ_[p]) (chapter07CyclotomicPolynomial (ℤ_[p]) p))
+    (hscale : ∀ x : ℚ_[p], x ≠ 0 →
+      vL (algebraMap (ℚ_[p]) L x) =
+        ((p - 1 : ℕ) : WithTop ℤ) * Padic.addValuation x)
     (hdifferent : chapter07DifferentExponentValuation vL
       (aeval lambda (chapter07CyclotomicPolynomial (ℚ_[p]) p).derivative) d) :
     d = p - 2 := by
