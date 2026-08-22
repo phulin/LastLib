@@ -1,5 +1,5 @@
 import LastLib.Book05LocalClassFieldTheory.Chapter02.Dependencies
-import LastLib.Book05LocalClassFieldTheory.Chapter03.Section05TheUnramifiedCyclicComputation
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.Section03TheUnramifiedCase
 import Mathlib.Algebra.BrauerGroup.Defs
 import Mathlib.Algebra.Ring.Action.Basic
 import Mathlib.Algebra.Group.Subgroup.ZPowers.Basic
@@ -103,6 +103,7 @@ canonical valuation interface from Book 2. -/
 structure Chapter04LocalFieldProfile (K : Type*) [Field K] where
   valuation : AddValuation K (WithTop ℤ)
   localField : Chapter02LocalField valuation
+  normalizedValueGroup : Chapter02NormalizedValueGroup valuation
   uniformizer : K
   uniformizer_spec : chapter02IsUniformizer valuation uniformizer
 
@@ -201,7 +202,7 @@ def chapter04RelativeBrauerClass
 /- LOCAL_DEPENDENCY_GUESS: reduced norms are not yet exposed by Mathlib for a
   general central division algebra. -/
 structure Chapter04ReducedNormData
-    (K D : Type u) [Field K] [Ring D] [Algebra K D]
+    (K D : Type u) [Field K] [DivisionRing D] [Algebra K D]
     [FiniteDimensional K D] where
   degree : ℕ
   degree_pos : 0 < degree
@@ -215,7 +216,6 @@ structure Chapter04ReducedNormData
   reducedNormAll_mul : ∀ x y, reducedNormAll (x * y) = reducedNormAll x * reducedNormAll y
   reducedNormAll_on_units : ∀ x : Dˣ,
     reducedNormAll (x : D) = (reducedNorm x : K)
-  baseUnitValue : Kˣ → ℚ
   /- LOCAL_DEPENDENCY_GUESS: this is the defining reduced-norm compatibility
     needed by the chapter until a canonical central-simple reduced norm is
     available from earlier LastLib or pinned Mathlib. -/
@@ -241,19 +241,19 @@ def chapter04DivisionValuation
     {K D : Type u} [Field K] [DivisionRing D] [Algebra K D]
     [FiniteDimensional K D]
     (N : Chapter04ReducedNormData K D) :
-    (Kˣ → ℚ) → D → WithTop ℚ :=
+    (K → ℚ) → D → WithTop ℚ :=
   fun vK x => by
     classical
     by_cases hx : x = 0
     · exact ⊤
-    · exact ((vK (Units.mk0 (N.reducedNormAll x) (N.reducedNormAll_ne_zero hx)) /
+    · exact ((vK (N.reducedNormAll x) /
         N.degree : ℚ) : WithTop ℚ)
 
 def chapter04DivisionValuationOnUnits
-    {K D : Type u} [Field K] [Ring D] [Algebra K D]
+    {K D : Type u} [Field K] [DivisionRing D] [Algebra K D]
     [FiniteDimensional K D]
-    (N : Chapter04ReducedNormData K D) (vK : Kˣ → ℚ) : Dˣ → ℚ :=
-  fun x => vK (N.reducedNorm x) / N.degree
+    (N : Chapter04ReducedNormData K D) (vK : K → ℚ) : Dˣ → ℚ :=
+  fun x => vK (N.reducedNormAll x) / N.degree
 
 def chapter04DivisionValuationRing
     {D : Type*} [Ring D] (w : D → WithTop ℚ) : Set D :=

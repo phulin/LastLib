@@ -1,4 +1,5 @@
 import LastLib.Book05LocalClassFieldTheory.Chapter04.Section01WhyCentralSimpleAlgebras
+import LastLib.Book05LocalClassFieldTheory.Chapter03.Section05TheUnramifiedCyclicComputation
 import Mathlib.LinearAlgebra.Basis.Basic
 import Mathlib.LinearAlgebra.TensorProduct.Basic
 
@@ -22,7 +23,7 @@ theorem chapter04_reduced_norm_agrees_with_determinant
   exact hdet
 
 theorem chapter04_reduced_norm_on_a_commutative_subfield
-    {K D : Type u} {E : Type*} [Field K] [Ring D] [Field E]
+    {K D : Type u} {E : Type*} [Field K] [DivisionRing D] [Field E]
     [Algebra K D] [Algebra K E] [FiniteDimensional K D] [FiniteDimensional K E]
     (N : Chapter04ReducedNormData K D) (φ : E →ₐ[K] D)
     (hdiv : Module.finrank K E ∣ N.degree) :
@@ -41,18 +42,18 @@ def chapter04FieldNormValuationFormula
 theorem chapter04_division_valuation_on_a_subfield
     {K D : Type u} {E : Type*} [Field K] [DivisionRing D] [Field E]
     [Algebra K D] [Algebra K E] [FiniteDimensional K D] [FiniteDimensional K E]
-    (N : Chapter04ReducedNormData K D) (vK : Kˣ → ℚ) (vE : Eˣ → ℚ)
+    (N : Chapter04ReducedNormData K D) (vK : K → ℚ) (vE : E → ℚ)
     (φ : E →ₐ[K] D) (e : ℕ)
     (he : 0 < e)
     (hdiv : Module.finrank K E ∣ N.degree)
-    (hnorm : ∀ x : Eˣ,
-      vK (N.reducedNorm (Units.map φ.toMonoidHom x)) =
+    (hnorm : ∀ x : E, x ≠ 0 →
+      vK (N.reducedNormAll (φ x)) =
         (N.degree : ℚ) / e * vE x)
-    (x : Eˣ) :
-    chapter04DivisionValuation N vK (φ (x : E)) =
-        ((vK (N.reducedNorm (Units.map φ.toMonoidHom x)) / N.degree : ℚ) :
+    (x : E) (hx : x ≠ 0) :
+    chapter04DivisionValuation N vK (φ x) =
+        ((vK (N.reducedNormAll (φ x)) / N.degree : ℚ) :
           WithTop ℚ) ∧
-      (vK (N.reducedNorm (Units.map φ.toMonoidHom x)) / N.degree) =
+      (vK (N.reducedNormAll (φ x)) / N.degree) =
         (vE x / e : ℚ) := by
   sorry
 
@@ -146,8 +147,16 @@ structure Chapter04ValuationProductBasis
     basis ij = valueRepresentatives ij.1 * residueLifts ij.2
 
 theorem chapter04_valuation_lattice_basis_exists
-    {K : Type*} [Field K]
-    (A : Chapter04DivisionAlgebraData K) (e f : ℕ)
+    {K k barD : Type*} [Field K] [Field k] [Field barD]
+    [Algebra k barD] [FiniteDimensional k barD]
+    (A : Chapter04DivisionAlgebraData K)
+    [TopologicalSpace A.carrier]
+    (V : Chapter04DivisionValuationInterface K A.carrier k barD)
+    (e f : ℕ)
+    (hvalue : Nat.card
+      (chapter04ValueGroup V.unitValue ⧸
+        chapter04ValueGroupModInteger V.unitValue) = e)
+    (hresidue : Module.finrank k barD = f)
     (hcard : Module.finrank K (A.carrier) = e * f) :
     Nonempty (Chapter04ValuationProductBasis K (A.carrier) e f) := by
   sorry
@@ -211,6 +220,10 @@ theorem chapter04_division_indices_are_the_degree
     (hπ : ∃ π : A.carrierˣ, V.unitValue π = 1)
     (hvalue : C.value = V.unitValue)
     (hbound : chapter04ValueGroupContainedInFractionalLattice V.unitValue d)
+    (hvalue_card : Nat.card
+      (chapter04ValueGroup V.unitValue ⧸
+        chapter04ValueGroupModInteger V.unitValue) ≤ d)
+    (hresidue_degree_le : chapter04ResidueDegree k barD ≤ d)
     (hdimension : d ^ 2 =
       chapter04RamificationIndex V.unitValue * chapter04ResidueDegree k barD) :
     chapter04RamificationIndex V.unitValue = chapter04ResidueDegree k barD ∧
@@ -233,6 +246,7 @@ structure Chapter04UnramifiedMaximalSubfieldSpec
   [field_finiteDimensional : FiniteDimensional K field]
   [field_isGalois : IsGalois K field]
   [field_algebra_on_division : Algebra field D.carrier]
+  [field_scalarTower : IsScalarTower K field D.carrier]
   extensionData : Chapter04UnramifiedExtensionData K field
   degree : ℕ
   degree_eq : degree = D.degree
@@ -256,6 +270,7 @@ def chapter04UnramifiedMaximalSubfieldSplits
   letI := E.field_finiteDimensional
   letI := E.field_isGalois
   letI := E.field_algebra_on_division
+  letI := E.field_scalarTower
   Nonempty (E.field ⊗[K] D.carrier ≃ₐ[E.field]
     Matrix (Fin D.degree) (Fin D.degree) E.field)
 
@@ -369,16 +384,16 @@ theorem chapter04_division_algebra_has_cyclic_presentation
 
 theorem chapter04_division_parameter_power_is_central
     {K D : Type*} [Field K] [DivisionRing D]
+    [Algebra K D] [Algebra.IsCentral K D]
     (piD : D) (d : ℕ)
     (hconj : ∀ x : D, piD ^ d * x = x * piD ^ d)
     :
-    ∃ c : D, c = piD ^ d ∧ ∀ x : D, c * x = x * c := by
+    ∃ c : K, algebraMap K D c = piD ^ d := by
   sorry
 
 theorem chapter04_division_parameter_power_is_uniformizer_times_unit
     {K D : Type*} [Field K] [DivisionRing D] [Algebra K D]
     (piD : D) (π : K) (d : ℕ)
-    (hcentral : ∀ x : D, piD ^ d * x = x * piD ^ d)
     (hfactor : ∃ c : K, c ≠ 0 ∧ piD ^ d = algebraMap K D (c * π)) :
     ∃ c : Kˣ, piD ^ d = algebraMap K D ((c : K) * π) := by
   sorry

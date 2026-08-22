@@ -331,6 +331,7 @@ theorem chapter04_restriction_unramified_stage_formula
     (I_L : Chapter04LocalInvariantData L)
     (R : Chapter04BrauerRestrictionData K L)
     (U : Chapter04UnramifiedExtensionData K L)
+    (hdegree : Module.finrank K L = U.degree)
     (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
       R.restriction (chapter04BrauerClass A) =
         chapter04BrauerClass (R.scalarExtension A))

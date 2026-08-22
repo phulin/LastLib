@@ -273,7 +273,7 @@ theorem chapter04_fundamental_class_is_unique
 /- The tower interface records the restriction and corestriction equations
   stated explicitly in the source. -/
 structure Chapter04FundamentalClassTowerData
-    (K M L : Type*) [Field K] [Field M] [Field L]
+    (K M L : Type) [Field K] [Field M] [Field L]
     [Algebra K M] [Algebra M L] [Algebra K L]
     [IsScalarTower K M L] [FiniteDimensional K M] [Algebra.IsSeparable K M]
     [FiniteDimensional M L] [FiniteDimensional K L] [IsGalois K L]
@@ -281,40 +281,43 @@ structure Chapter04FundamentalClassTowerData
   degreeKM : ℕ
   degreeML : ℕ
   degreeKL : ℕ
+  degreeKM_pos : 0 < degreeKM
+  degreeML_pos : 0 < degreeML
   degreeKM_eq : Module.finrank K M = degreeKM
   degreeML_eq : Module.finrank M L = degreeML
   degreeKL_eq : Module.finrank K L = degreeKL
   degree_factor : degreeKL = degreeKM * degreeML
   invariantK : Chapter04LocalInvariantData K
   invariantM : Chapter04LocalInvariantData M
-  restrictionKM : Chapter04BrauerRestrictionData K M
-  corestrictionKM : Chapter04BrauerCorestrictionData K M
-  fundamentalKL : chapter04BrauerGroup K
-  fundamentalML : chapter04BrauerGroup M
+  restrictionKL : Chapter04BrauerRestrictionData K L
+  restrictionML : Chapter04BrauerRestrictionData M L
+  cohomologyKL : Chapter04RelativeBrauerCohomologyData K L restrictionKL
+  cohomologyML : Chapter04RelativeBrauerCohomologyData M L restrictionML
+  restriction : chapter04H2 K L → chapter04H2 M L
+  corestriction : chapter04H2 M L → chapter04H2 K L
+  fundamentalKL : chapter04H2 K L
+  fundamentalML : chapter04H2 M L
   fundamentalKL_invariant :
-    invariantK.invariant fundamentalKL =
+    chapter04CohomologyInvariant invariantK restrictionKL cohomologyKL fundamentalKL =
       chapter04RationalResidueOneOver degreeKL
   fundamentalML_invariant :
-    invariantM.invariant fundamentalML =
+    chapter04CohomologyInvariant invariantM restrictionML cohomologyML fundamentalML =
       chapter04RationalResidueOneOver degreeML
   restriction_fundamental :
-    restrictionKM.restriction fundamentalKL = fundamentalML
+    restriction fundamentalKL = fundamentalML
   corestriction_fundamental :
-    corestrictionKM.corestriction fundamentalML =
-      chapter04BrauerNatPower invariantK.brauerLaw fundamentalKL degreeKM
+    corestriction fundamentalML = degreeKM • fundamentalKL
 
 theorem chapter04_fundamental_class_is_tower_compatible
-    {K M L : Type*} [Field K] [Field M] [Field L]
+    {K M L : Type} [Field K] [Field M] [Field L]
     [Algebra K M] [Algebra M L] [Algebra K L]
     [IsScalarTower K M L] [FiniteDimensional K M] [Algebra.IsSeparable K M]
     [FiniteDimensional M L] [FiniteDimensional K L] [IsGalois K L]
     [IsGalois M L]
     (T : Chapter04FundamentalClassTowerData K M L) :
     T.degreeKL = T.degreeKM * T.degreeML ∧
-      T.restrictionKM.restriction T.fundamentalKL = T.fundamentalML ∧
-      T.corestrictionKM.corestriction T.fundamentalML =
-        chapter04BrauerNatPower T.invariantK.brauerLaw
-          T.fundamentalKL T.degreeKM := by
+      T.restriction T.fundamentalKL = T.fundamentalML ∧
+      T.corestriction T.fundamentalML = T.degreeKM • T.fundamentalKL := by
   exact ⟨T.degree_factor, T.restriction_fundamental,
     T.corestriction_fundamental⟩
 

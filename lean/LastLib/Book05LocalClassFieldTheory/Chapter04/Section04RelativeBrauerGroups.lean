@@ -75,9 +75,18 @@ theorem chapter04_relative_brauer_group_card_eq_degree
 structure Chapter04CyclicNormBrauerEquivalence
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
+    (n : ℕ) (σ : Gal(L / K))
+    (hcyc : chapter03CyclicExtension K L n σ)
     (R : Chapter04BrauerRestrictionData K L) where
   forward : chapter03NormQuotient K L ≃
     chapter04RelativeBrauerGroup K L R
+  cyclicClass : Kˣ → chapter04RelativeBrauerGroup K L R
+  cyclicClass_forget : ∀ a,
+    (cyclicClass a).1 =
+      chapter03CyclicAlgebraBrauerClass K L n σ a
+        (chapter03CyclicAlgebraChoice K L n σ a hcyc)
+  forward_parameter : ∀ a,
+    forward (chapter03CyclicParameterClass K L a) = cyclicClass a
 
 theorem chapter04_cyclic_norm_quotient_relative_brauer_equiv
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -88,7 +97,7 @@ theorem chapter04_cyclic_norm_quotient_relative_brauer_equiv
     (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
       R.restriction (chapter04BrauerClass A) =
         chapter04BrauerClass (R.scalarExtension A)) :
-    Nonempty (Chapter04CyclicNormBrauerEquivalence K L R) := by
+    Nonempty (Chapter04CyclicNormBrauerEquivalence K L n σ hcyc R) := by
   sorry
 
 theorem chapter04_cyclic_norm_quotient_card_eq_degree
@@ -102,7 +111,7 @@ theorem chapter04_cyclic_norm_quotient_card_eq_degree
     (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
       R.restriction (chapter04BrauerClass A) =
         chapter04BrauerClass (R.scalarExtension A))
-    (E : Chapter04CyclicNormBrauerEquivalence K L R) :
+    (E : Chapter04CyclicNormBrauerEquivalence K L n σ hcyc R) :
     Nat.card (chapter03NormQuotient K L) = n := by
   sorry
 
