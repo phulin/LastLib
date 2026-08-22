@@ -154,7 +154,7 @@ In the absolutely unramified range, the integral Fontaine--Laffaille equivalence
 
 ### 1.4 The architecture of the argument
 
-Chapters 2 and 3 translate finite actions into fields and recall the exact upper-numbered formula for the different. Chapter 4 extracts a universal separation radius from the Hopf algebra of a finite-flat group. Chapter 5 proves the central cluster-counting lemma that converts this radius into upper numbering. Chapter 6 then proves the Fontaine--Raynaud cutoff
+Chapters 2 and 3 translate finite actions into fields and recall the exact upper-numbered formula for the different. Chapter 4 extracts a universal separation radius from the Hopf algebra of a finite-flat group. Chapter 5 proves the central cluster-counting lemma that converts this radius into upper numbering; its sharp constant is proved there modulo two explicitly stated open inputs, together with an unconditional weaker cutoff carrying the splitting-field index. Chapter 6 then proves the Fontaine--Raynaud cutoff
 
 $$
 M^{G_K^u}=M
@@ -162,7 +162,7 @@ M^{G_K^u}=M
 u>e_K\left(n+\frac1{\ell-1}\right)-1,
 $$
 
-where the displayed equality means pointwise fixedness.
+where the displayed equality means pointwise fixedness; this sharp form is conditional exactly as in Chapter 5, while Corollary 6.1A records the unconditional bound $u>ee_K/(\ell-1)-1$ with $e=e(K(M)/K)$.
 
 Chapters 7--10 prove the different bound and its stability under the operations that arise from coefficients, exact sequences, local base change, towers, and Fontaine--Laffaille realization. Chapters 11--13 globalize the local estimate and distinguish full-level growth from genuinely uniform statements. The final chapter packages the results with every hypothesis visible.
 
@@ -629,7 +629,7 @@ $$
 
 The term $e_Kn$ records $n$ passages through multiplication by $\ell$. The radius $c$ records terminal separation. The $-1$ converts integral displacement, which begins at congruence modulo the maximal ideal, to the upper clock whose tame baseline sits at index zero.
 
-**Status of the constant.** Section 5.3 proves Lemma 5.1 in this sharp form only modulo two open inputs; what it proves unconditionally is the weaker Lemma 5.1′ with $e(L/K)\cdot c-1$ in place of $e_Kn+c-1$, where $L/K$ is any finite Galois extension rationalizing the geometric points. Both forms are recorded there, and every later quotation of the sharp constant carries exactly that conditionality.
+**Status of the constant.** Section 5.3 proves Lemma 5.1 in this sharp form only modulo two open inputs; what it proves unconditionally is the weaker Lemma 5.1′ with $e(K(\mathcal G)/K)\cdot c-1$, or any rationalizing extension's index in its place, instead of $e_Kn+c-1$. Both forms are recorded there, and every later quotation of the sharp constant carries exactly that conditionality.
 
 ### 5.3 Proof of the lemma
 
@@ -823,10 +823,10 @@ b(X_j)\leq Ec-1\qquad\text{for every }j\geq1,
 \tag{5.12w}
 $$
 
-the terminal layer included: $b_1\leq Ec-1$, which resolves input (i) with
-$Ec-1$ in place of $e_K+c-1$; and $G^u$ fixes all geometric points for
-$u>Ec-1$, which resolves input (ii) weakened through
-$\varphi_{L/K}(Ec-1)\leq Ec-1$.
+the terminal layer included: $b_1\leq Ec-1$, which settles the
+terminal-layer bound with $Ec-1$ in place of $e_K+c-1$; and $G^u$ fixes
+all geometric points for $u>Ec-1$, which settles the Case-B branch
+weakened through $\varphi_{L/K}(Ec-1)\leq Ec-1$.
 
 **Proof.** We show, by descent on the layer index, that any
 $\sigma\in G^u$ moving some $x\in X_j$ satisfies $u\leq Ec-1$. If $\sigma$
@@ -847,9 +847,9 @@ $b(X_j)\leq Ec-1$ throughout. $\square$
 Lemma 5.1, let $c$ be an admissible separation radius, for instance the
 radius $e_K/(\ell-1)$ supplied by Theorem 4.2, and let $L=K(\mathcal G)$
 be the field generated over $K$ by all geometric points of $\mathcal G$.
-Then $G^u$ fixes $\mathcal G(L)$ pointwise for every $u>e(L/K)c-1$; by
-(2.7) this is equivalent to triviality of $G_K^u$ on $\mathcal G(K^s)$ in
-the same range, independently of the chosen rationalizing extension.
+Then $G^u$ fixes $\mathcal G(L)$ pointwise for every $u>e(L/K)c-1$, and by
+(2.7) the group $G_K^u$ acts trivially on $\mathcal G(K^s)$ in the same
+range.
 
 **Proof.** Proposition 5.2 applied to $L$ with separation radius $c$ shows
 that no element of $G^u$ moves a geometric point once
@@ -880,8 +880,8 @@ of through pointwise divisions that fail because the Herbrand slope equals
 $|G_1|/E$ near $s=0$.
 
 The argument may be remembered as a three-column ledger, read as the
-accounting that the two outstanding terminal-layer inputs must still
-justify:
+accounting that separates what Proposition 5.2 delivers outright from
+what the sharp constant still owes:
 
 $$
 \begin{array}{c|c|c}
@@ -941,7 +941,35 @@ $$
 
 Under the generic marking, the geometric points are $M$. $\square$
 
-Let $L=K(M)$. Faithfulness and (2.8) give the field version
+**Status.** The proof consumes Lemma 5.1 with its sharp constant, which
+section 5.3 establishes only modulo two open inputs (the terminal-layer
+bound $b_1\leq e_K+c-1$ and the conversion estimate
+$\varphi_{L/K}(Ec-1)\leq e_K+c-1$). The theorem above is therefore
+conditional in exactly that measure. The unconditional content delivered
+by the same reduction is the following corollary, which trades the
+exponent $n$ for a factor equal to the ramification index of the cutout
+field.
+
+**Corollary 6.1A (unconditional upper-break bound).** Let $K/\mathbf
+Q_\ell$ be finite, put $e_K=v_K(\ell)$, let $M$ be a finite continuous
+$G_K$-module killed by $\ell^n$ admitting a finite-flat model over
+$\mathcal O_K$, and put $L=K(M)$ with ramification index $e=e(L/K)$. Then
+
+$$
+G^u=1
+\quad\text{for every}\quad
+u>\frac{e\,e_K}{\ell-1}-1 .
+\tag{6.6}
+$$
+
+**Proof.** Theorem 4.2 gives the separation radius $c=e_K/(\ell-1)$ for
+the model, and Lemma 5.1′ applies with this $c$: $G^u$ acts trivially on
+all geometric points for $u>e(L/K)c-1$. Under the generic marking these
+points are $M$, and the action of $G=\operatorname{Gal}(L/K)$ on $M$ is
+faithful, so $G^u=1$ by (2.8). $\square$
+
+Let $L=K(M)$. Faithfulness and (2.8) give the field version of the sharp
+bound, conditional exactly like Theorem 6.1:
 
 $$
 \operatorname{Gal}(L/K)^u=1
@@ -971,6 +999,8 @@ $$
 The equality of (6.5) with the separation radius is special to $e_K=1$. Over a ramified base, the separation radius is $e_K/(\ell-1)$, whereas the upper cutoff also contains $e_K-1$. That correction records the passage from the first integral congruence to positive upper time. Omitting it would give a false base-change rule.
 
 The theorem remains valid for $\ell=2$. It then says $c_n(K)=e_K(n+1)-1$. The low-weight Fontaine--Laffaille classification used later requires $\ell>2$, but the Hopf-algebra and ramification proof above does not.
+
+All constants in this subsection belong to the sharp, conditional tier. Under Corollary 6.1A the unconditional cutoff is $e\,e_K/(\ell-1)-1$ with $e=e(K(M)/K)$, and the base-change correction discussed above is a feature of the sharp constant only.
 
 ### 6.3 Endpoints, strict inequalities, and optimality
 
@@ -1043,6 +1073,25 @@ $$
 $$
 
 The number $\ell/(\ell-1)$ is not the last upper break. It is the tame baseline, strictly below $1$, plus the positive-depth allowance $1/(\ell-1)$.
+
+**Status and unconditional form.** The proof consumes (6.3), so Theorem 7.1 is conditional exactly like Theorem 6.1. Corollary 6.1A supplies an unconditional ceiling: with
+
+$$
+R_u=\frac{e\,e_K}{\ell-1}-1,
+$$
+
+Proposition 3.1 applied to $R_u$ gives
+
+$$
+d\leq(e-1)+e\,R_u
+=\frac{e^2e_K}{\ell-1}-1,
+\qquad
+\frac de<\frac{e\,e_K}{\ell-1},
+\qquad
+\delta(L/K)\leq f\left(\frac{e^2e_K}{\ell-1}-1\right).
+$$
+
+These are usable ceilings in which the local degree $e$ of the cutout field appears where the sharp estimate carries $ne_K$; the two agree in shape precisely when the two open inputs of section 5.3 are supplied. Every later quotation of Theorem 7.1 inherits the corresponding tier: the sharp constants where the sharp theorem is assumed, the displayed $e^2$ bounds where only Corollary 6.1A is invoked.
 
 ### 7.2 Refinements from the actual filtration
 
@@ -1562,6 +1611,15 @@ $$
 
 The negative final term is the source of strictness. After multiplication by $f_v^0/[F:\mathbf Q]$ and summation, the main terms become exactly $n+1/(\ell-1)$. Dropping the $-1$ from the local upper cutoff before adding the tame term would produce the weaker exponent $n+1+1/(\ell-1)$ and would lose the characteristic Fontaine constant.
 
+**Status and unconditional fallback.** Theorem 11.1 consumes (11.4), hence the sharp tier of Theorems 6.1 and 7.1, and is conditional in that measure. Corollary 6.1A applied over $F_v$ gives unconditionally $\operatorname{Gal}(L_w/F_v)^u=1$ for $u>e_ve_v^0/(\ell-1)-1$, where now $e_v=e(L_w/F_v)$ is the local degree of the cutout field itself, so Proposition 3.1 yields
+
+$$
+\frac{d_v}{e_v}<\frac{e_ve_v^0}{\ell-1}.
+$$
+
+Substituting this in (11.3) replaces the exponent $n+1/(\ell-1)$ by
+$\frac{1}{[F:\mathbf Q]}\sum_{v\mid\ell}f_v^0e_ve_v^0/(\ell-1)$, a quantity involving the local degrees of $L/F$ above $\ell$: the cancellation against $\sum e_v^0f_v^0=[F:\mathbf Q]$ no longer closes, because the factor $e_v$ is not constant across places. The unconditional global ceiling is therefore of the form $\operatorname{rd}(F(M))<\operatorname{rd}(F)\cdot\ell^{C}$ with $C$ bounded in terms of the local degrees $e(L_w/F_v)$ at $\ell$, not a universal function of $n$; it still beats the trivial ceiling through the strict tame bookkeeping, but the sharp universal estimate remains conditional on the two open inputs of section 5.3.
+
 ### 11.3 Auxiliary ramification away from the coefficient prime
 
 Let $S$ be a finite set of places of $F$ not dividing $\ell$. Suppose $L/F$ is unramified outside $S$ and the places above $\ell$. If the local field at $v\in S$ has upper groups trivial for $u>R_v$, Proposition 3.1 and (11.3) give
@@ -1949,8 +2007,10 @@ The substantial imported results have now appeared with their hypotheses. Ramifi
 Finite flatness turns a qualitative extension property into a quantitative ramification theorem. The augmentation ideal measures how close generic torsion points can be. Multiplication by $\ell$ has a Frobenius-divisible expansion, which excludes nonzero points from the ball of radius $e_K/(\ell-1)$. Translation makes congruence clusters equal, and Herbrand's clock converts their lower displacement into the quotient-compatible cutoff
 
 $$
-e_K\left(n+\frac1{\ell-1}\right)-1.
+e_K\left(n+\frac1{\ell-1}\right)-1,
 $$
+
+proved in this sharp form modulo the two open terminal-layer inputs of section 5.3; unconditionally the same argument delivers $ee_K/(\ell-1)-1$ with $e=e(K(M)/K)$ (Proposition 5.2 and Corollary 6.1A).
 
 Hilbert's formula then adds the tame baseline and yields the normalized different ceiling
 
