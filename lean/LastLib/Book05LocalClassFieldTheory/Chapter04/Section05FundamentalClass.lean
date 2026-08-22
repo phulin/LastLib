@@ -25,7 +25,8 @@ theorem chapter04_crossed_product_scalar_mul_scalar
         (chapter04CrossedProductScalar x)
         (chapter04CrossedProductScalar y) =
       chapter04CrossedProductScalar (x * y) := by
-  sorry
+  simp [chapter04CrossedProductMul, chapter04CrossedProductScalar,
+    c.right_normalized]
 
 theorem chapter04_crossed_product_basis_mul_scalar
     {G L : Type*} [Group G] [Field L] [MulSemiringAction G L]
@@ -35,7 +36,8 @@ theorem chapter04_crossed_product_basis_mul_scalar
         (chapter04CrossedProductBasis g)
         (chapter04CrossedProductScalar x) =
       Finsupp.single g (g • x) := by
-  sorry
+  simp [chapter04CrossedProductMul, chapter04CrossedProductBasis,
+    chapter04CrossedProductScalar, c.right_normalized]
 
 theorem chapter04_crossed_product_basis_mul_basis
     {G L : Type*} [Group G] [Field L] [MulSemiringAction G L]
@@ -45,7 +47,7 @@ theorem chapter04_crossed_product_basis_mul_basis
         (chapter04CrossedProductBasis g)
         (chapter04CrossedProductBasis h) =
       Finsupp.single (g * h) (c.value g h : L) := by
-  sorry
+  simp [chapter04CrossedProductMul, chapter04CrossedProductBasis]
 
 theorem chapter04_crossed_product_mul_is_associative
     {G L : Type*} [Group G] [Field L] [MulSemiringAction G L]
