@@ -791,7 +791,7 @@ Each tube is an admissible open, but the family has no finite subcover and is no
 
 ### 5.2 Tate acyclicity
 
-The definition of admissibility earns its keep through one exact sequence. Let $X=\operatorname{Sp}A$ and let $X=U_1\cup\cdots\cup U_r$ be a finite rational cover. Write $A_{i_0\cdots i_p}$ for the affinoid algebra of the intersection. Then the augmented Čech complex
+The definition of admissibility earns its keep through one exact sequence. Let $X=\operatorname{Sp}A$ and let $X=U_1\cup\cdots\cup U_r$ be a finite cover by Laurent domains of $X$. Write $A_{i_0\cdots i_p}$ for the affinoid algebra of the intersection. Then the augmented Čech complex
 
 $$
 0\longrightarrow A
@@ -802,17 +802,118 @@ $$
 
 is exact.
 
-**Proof strategy.** A rational cover can be refined into elementary two-piece covers associated with an inequality $|f|\leq|g|$ and its reverse. For such a cover, convergent division gives the equalizer assertion and a bounded contracting homotopy on the augmented Čech complex. Repeating this construction proves exactness for Laurent covers. A finite rational cover has a Laurent refinement; the double Čech complex for the cover and its refinement transfers the contraction, and hence exactness, to the original cover.
+We prove the theorem by routing the analytic content through the flatness theorem of Section 4.4. Classical proofs begin with an explicit contracting homotopy for a two-piece cover $|f|\leq|c|$, $|f|\geq|c|$, obtained from convergent division; the norm estimates that force the glued series to converge are precisely the estimates behind flatness, so once Theorem 4.2 is available the remaining argument is a descent along faithful flatness.
 
-The decisive analytic detail is bounded division. Algebraic equality on overlaps alone would not control whether the glued series converges. The norm estimates in division give a global element of $A$, not merely an element of a completion chosen after the fact.
+**Lemma 5.2 (faithful flatness of finite rational covers).** Let $X=\operatorname{Sp}A$ and let $X=U_1\cup\cdots\cup U_r$ be a finite cover by rational domains. Then
 
-**Theorem 5.1 (Tate acyclicity).** The preceding Čech complex is exact for every finite admissible covering of an affinoid space by affinoid subdomains. The same is true after tensoring with any finite $A$-module.
+$$
+A\longrightarrow\prod_i A_{U_i}
+$$
 
-The bounded division operators act coefficientwise on a finite module. Choosing a finite
-presentation and using flatness shows that the resulting homotopy is independent of the
-chosen lifts, proving the module statement. This stronger argument is needed: tensoring an
-arbitrary exact complex with a module would not by itself preserve exactness. The theorem will
-turn finite modules into coherent sheaves and make higher cohomology vanish on affinoids.
+is faithfully flat: a finite $A$-module $M$ is zero exactly when all its restrictions
+$M\otimes_AA_{U_i}$ are zero.
+
+**Proof.** Each $A\to A_{U_i}$ is flat by Theorem 4.2, hence so is the map into the product.
+For faithfulness, let $M\neq0$ be finite and suppose first that some element $\xi$ of $M$ is
+nonzero; its annihilator is a proper ideal, contained in a maximal ideal
+$\mathfrak m$, and $\xi_{\mathfrak m}\neq0$: if it vanished, some $s\notin\mathfrak m$ would
+kill $\xi$, putting $s$ in the annihilator and contradicting
+$\operatorname{Ann}(\xi)\subseteq\mathfrak m$. The point $\mathfrak m$ lies in some $U_i$
+because the cover is finite and set-theoretic, and localization at the image of
+$\mathfrak m$ identifies $(M\otimes_AA_{U_i})_{\mathfrak m}=M_{\mathfrak m}\neq0$. Hence
+$M\otimes_AA_{U_i}\neq0$. Conversely each restriction of the zero module is zero. $\square$
+
+**Lemma 5.3 (inequality descent).** Let $W=\operatorname{Sp}B$ be an affinoid space, let
+$h_1,\ldots,h_s\in B$ and $0\neq c_1,\ldots,c_s\in K$, and write
+
+$$
+W_\nu^{+}=\{x\in W:|h_\nu(x)|\leq|c_\nu|\},\qquad
+W_\nu^{-}=\{x\in W:|h_\nu(x)|\geq|c_\nu|\},
+$$
+
+and let $\mathfrak U$ be a finite cover of $W$ whose members have the form
+$W\cap\bigcap_{\nu\in S}W_\nu^{\varepsilon_\nu}$ for some set of indices
+$S\subseteq\{1,\ldots,s\}$ and signs $\varepsilon_\nu$. Then for every finite
+$B$-module $M$ the augmented Čech complex of $\mathfrak U$ with values in the completed
+tensor products of $M$ is exact:
+
+$$
+0\longrightarrow M\longrightarrow\prod_U(M\widehat\otimes_BB_U)
+\longrightarrow\prod_{U<V}(M\widehat\otimes_BB_{UV})
+\longrightarrow\cdots .
+$$
+
+**Proof.** We argue by induction on $s$. For $s=0$ the only member is $W$ itself and the
+complex is $0\to M\to M\to0$. Assume $s\geq1$. For each sign vector
+$\sigma\in\{\pm\}^s$ put
+
+$$
+P_\sigma=W\cap\bigcap_{\nu=1}^{s}W_\nu^{\sigma_\nu},
+$$
+
+discard the empty ones, and note that the survivors form a finite cover of $W$ by Laurent,
+hence rational, domains: every point satisfies each inequality in one direction. By Lemma
+5.2 and the flatness part of Theorem 4.2, the algebra $B\to\prod_\sigma B_{P_\sigma}$ is
+faithfully flat. Since each $B_{P_\sigma}$ is flat over $B$, cohomology of our bounded
+complex commutes with tensoring by $B_{P_\sigma}$; and an element $\xi\neq0$ of any
+cohomology group survives at some maximal ideal, whose point lies in some $P_\sigma$, where
+flat localization keeps it nonzero. It therefore suffices to prove exactness after
+tensoring by each $B_{P_\sigma}$ in turn.
+
+Fix $\sigma$. Termwise,
+
+$$
+(M\widehat\otimes_BB_U)\otimes_BB_{P_\sigma}
+=M\widehat\otimes_BB_{U\cap P_\sigma},
+$$
+
+because completed base changes compose by the transitivity statement of Theorem 4.2, and the
+differentials agree under this identification. So the tensor is the augmented Čech complex
+of the induced cover $\mathfrak U|_{P_\sigma}=\{U\cap P_\sigma\}$ of the affinoid space
+$P_\sigma$. Its members with $s\in S$ and $\varepsilon_s=-\sigma_s$ are empty and are
+discarded; every survivor equals
+
+$$
+P_\sigma\cap\bigcap_{\nu\in S\setminus\{s\}}W_\nu^{\varepsilon_\nu},
+$$
+
+because every point of $P_\sigma$ satisfies the inequality defining
+$W_s^{\sigma_s}$ identically. Thus
+$\mathfrak U|_{P_\sigma}$ is a finite cover of $P_\sigma$ of exactly the form treated by the
+induction hypothesis, cut out by the $s-1$ inequalities $h_1,\ldots,h_{s-1}$ restricted to
+$P_\sigma$. Exactness follows. $\square$
+
+**Theorem 5.1 (Tate acyclicity).** Let $X=\operatorname{Sp}A$ and let
+$X=U_1\cup\cdots\cup U_r$ be a finite cover by Laurent domains of $X$. Then the augmented
+Čech complex above is exact, and it remains exact after replacing every term by its
+completed tensor product with any finite $A$-module.
+
+**Proof.** Each $U_i$, being Laurent, is presented by finitely many elementary inequalities
+of the form $|f|\leq1$ and $|g|\geq1$; constants are folded into the functions by scaling.
+Collect all inequalities occurring in the presentations of the $U_i$ into one list
+$h_1,\ldots,h_s$ with constants $c_1,\ldots,c_s$, so that every $U_i$ has the form treated
+by Lemma 5.3. The lemma gives exactness for every finite module, which is the assertion.
+$\square$
+
+Two remarks place the theorem in its natural range. First, the induction proves more than it
+states: nothing about the pieces was used beyond their presentation by elementary
+inequalities, so the same complex is exact for any finite cover whose members are cut out
+from a fixed finite list of such inequalities. Second, the passage from Laurent covers to
+arbitrary finite admissible covers by affinoid subdomains consumes the refinement principle
+of Section 5.1 together with the comparison of Čech complexes under common finite rational
+refinement: if $\mathfrak V$ refines $\mathfrak U$ and the theorem holds for every restriction
+of $\mathfrak V$ to an intersection of members of $\mathfrak U$, all of which are affinoid
+spaces with rational covers, then the double Čech complex transfers exactness from
+$\mathfrak V$ to $\mathfrak U$. This refinement step is the one standing input used below
+whenever a general admissible cover, rather than a Laurent or rational cover, enters an
+argument; the covers arising from inequalities in Chapters 6 through 14 are Laurent or
+rational covers, to which the theorem applies directly.
+
+The module statement deserves emphasis because it is not formal. Tensoring an arbitrary
+exact complex with a module would not preserve exactness; here exactness was proved
+simultaneously for all finite modules, the flatness theorem supplying the uniform control.
+The theorem will turn finite modules into coherent sheaves and make higher cohomology vanish
+on affinoids.
 
 ### 5.3 The structure sheaf
 
