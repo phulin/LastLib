@@ -27,12 +27,12 @@
    - [Definition and first consequences](#51-definition-and-first-consequences)
    - [Smooth atlases and finite flat presentations](#52-smooth-atlases-and-finite-flat-presentations)
    - [Parameter spaces and change of framing](#53-parameter-spaces-and-change-of-framing)
-   - [An atlas criterion for the moduli problems of this book](#54-an-atlas-criterion-for-the-moduli-problems-of-this-book)
 6. [Quotient stacks](#6-quotient-stacks)
    - [Torsors with equivariant maps](#61-torsors-with-equivariant-maps)
    - [The canonical quotient atlas](#62-the-canonical-quotient-atlas)
    - [The diagonal of a quotient stack](#63-the-diagonal-of-a-quotient-stack)
    - [Examples and warnings](#64-examples-and-warnings)
+   - [An atlas criterion for the moduli problems of this book](#65-an-atlas-criterion-for-the-moduli-problems-of-this-book)
 7. [Rigidification, finite quotients, and coarse spaces](#7-rigidification-finite-quotients-and-coarse-spaces)
    - [Removing a prescribed central stabilizer](#71-removing-a-prescribed-central-stabilizer)
    - [Finite group quotients](#72-finite-group-quotients)
@@ -434,23 +434,6 @@ where $H$ is a locally closed parameter scheme. The frame bundle of any family i
 
 There is no circular use of a universal moduli space here. Book 8 constructs the parameter scheme, and Book 10 descends the family after changes of frame. The quotient stack packages precisely those changes.
 
-### 5.4 An atlas criterion for the moduli problems of this book
-
-**Framed-parameter atlas theorem.** Suppose a stack $\mathcal X$ classifies proper flat finitely presented schemes with a canonical relatively ample line bundle $\mathcal L$, and suppose:
-
-1. a fixed power $\mathcal L^m$ has a base-change-compatible locally free pushforward of rank $r$ and gives a closed immersion;
-2. the relevant Hilbert polynomial is fixed;
-3. all additional structures are represented by locally closed conditions in the resulting parameter scheme;
-4. isomorphisms preserving the structures are representable.
-
-Then $\mathcal X$ is algebraic, with a smooth atlas by the scheme of objects framed by a basis of the pushforward.
-
-**Proof.** The framed objects form a locally closed subscheme $H$ of the Hilbert parameter space. The frame-change group $G=\operatorname{GL}_r$ acts on $H$. A family in $\mathcal X(T)$ acquires a frame after the fppf cover given by its frame bundle, and a framed family gives a map to $H$. Changes between frames are exactly $G$-valued arrows. Hence $\mathcal X\simeq[H/G]$. The quotient-atlas theorem of the next chapter makes $H\to\mathcal X$ smooth and surjective; its proof uses only torsor descent and does not use the present atlas criterion. Representability of the diagonal follows from the assumed isomorphism spaces. $\square$
-
-The first condition is applied only where the needed base-change statement is available. Here
-explicit Weierstrass or level charts replace it when necessary; no broader cohomological
-base-change statement is used.
-
 ## 6. Quotient stacks
 
 ### 6.1 Torsors with equivariant maps
@@ -534,6 +517,23 @@ also linearly reductive and the quotient is tame. When the order is not invertib
 group is still etale, but naturally occurring group schemes such as $\mu_p$ are not etale in
 characteristic $p$. “Finite stabilizer” must not be replaced by “etale stabilizer,” and
 “finite etale” must not be replaced by “tame.”
+
+### 6.5 An atlas criterion for the moduli problems of this book
+
+**Framed-parameter atlas theorem.** Suppose a stack $\mathcal X$ classifies proper flat finitely presented schemes with a canonical relatively ample line bundle $\mathcal L$, and suppose:
+
+1. a fixed power $\mathcal L^m$ has a base-change-compatible locally free pushforward of rank $r$ and gives a closed immersion;
+2. the relevant Hilbert polynomial is fixed;
+3. all additional structures are represented by locally closed conditions in the resulting parameter scheme;
+4. isomorphisms preserving the structures are representable.
+
+Then $\mathcal X$ is algebraic, with a smooth atlas by the scheme of objects framed by a basis of the pushforward.
+
+**Proof.** The framed objects form a locally closed subscheme $H$ of the Hilbert parameter space. The frame-change group $G=\operatorname{GL}_r$ acts on $H$. A family in $\mathcal X(T)$ acquires a frame after the fppf cover given by its frame bundle, and a framed family gives a map to $H$. Changes between frames are exactly $G$-valued arrows. Hence $\mathcal X\simeq[H/G]$. The quotient-atlas theorem of Section 6.2 makes $H\to\mathcal X$ smooth and surjective; its proof uses only torsor descent and does not use the present atlas criterion. Representability of the diagonal follows from the assumed isomorphism spaces. $\square$
+
+The first condition is applied only where the needed base-change statement is available. Here
+explicit Weierstrass or level charts replace it when necessary; no broader cohomological
+base-change statement is used.
 
 ## 7. Rigidification, finite quotients, and coarse spaces
 
@@ -750,7 +750,7 @@ that the projection over the smooth-domain open is an isomorphism. The component
 only finitely many graph polynomials. The identity, inverse, associativity, commutativity, and
 transitivity conditions are equalities or open fiber conditions. They therefore cut out a
 locally closed parameter scheme. Choosing a basis of the high-power section bundle gives a
-general-linear frame torsor, so Chapter 5 supplies a smooth scheme atlas of $\mathcal V_m$.
+general-linear frame torsor, so Section 6.5 supplies a smooth scheme atlas of $\mathcal V_m$.
 Composing with the smooth surjection above gives a smooth atlas of
 $\mathcal E\!ll_{\leq m}$.
 
