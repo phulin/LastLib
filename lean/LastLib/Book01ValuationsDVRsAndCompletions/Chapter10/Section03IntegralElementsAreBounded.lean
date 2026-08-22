@@ -1044,7 +1044,291 @@ theorem chapter10_henselian_valuation_ring_has_unique_prime_above
     (hA : vK.Integers A)
     (hH : Chapter10IsHenselianValuedField vK) :
     Chapter10HasUniquePrimeAbove (A := A) (B := B) := by
-  sorry
+  classical
+  let _ : Algebra.IsIntegral A B :=
+    ⟨fun x => (isIntegral_algHom_iff (IsScalarTower.toAlgHom A B L)
+      (IsIntegralClosure.algebraMap_injective (A := B) (R := A) (B := L)) (x := x)).mp
+        ((IsIntegralClosure.isIntegral_iff (A := B) (R := A) (B := L)).mpr ⟨x, rfl⟩)⟩
+  have hmap_inj : Function.Injective (algebraMap A B) := by
+    intro a b hab
+    apply hA.hom_inj
+    apply FaithfulSMul.algebraMap_injective K L
+    rw [← IsScalarTower.algebraMap_apply A K L,
+      ← IsScalarTower.algebraMap_apply A K L]
+    have habL := congrArg (fun x : B => algebraMap B L x) hab
+    change algebraMap B L (algebraMap A B a) =
+        algebraMap B L (algebraMap A B b) at habL
+    rw [← IsScalarTower.algebraMap_apply A B L,
+      ← IsScalarTower.algebraMap_apply A B L] at habL
+    exact habL
+  let _ : FaithfulSMul A B :=
+    ⟨fun {a b} h => hmap_inj (by simpa [Algebra.smul_def] using h 1)⟩
+  let _ : IsDomain B :=
+    (IsIntegralClosure.algebraMap_injective (A := B) (R := A) (B := L)).isDomain _
+  let eMap : A →+* vK.valuationSubring :=
+    { toFun := fun a =>
+        ⟨algebraMap A K a, (vK.mem_valuationSubring_iff _).mpr (hA.map_le_one a)⟩
+      map_one' := by ext; simp
+      map_mul' := by intro a b; ext; simp
+      map_zero' := by ext; simp
+      map_add' := by intro a b; ext; simp }
+  let eInv : vK.valuationSubring → A := fun x =>
+    Classical.choose (hA.exists_of_le_one
+      ((vK.mem_valuationSubring_iff (x : K)).mp x.property))
+  have eInv_spec (x : vK.valuationSubring) :
+      algebraMap A K (eInv x) = (x : K) :=
+    Classical.choose_spec (hA.exists_of_le_one
+      ((vK.mem_valuationSubring_iff (x : K)).mp x.property))
+  have eMap_bij : Function.Bijective eMap := by
+    refine ⟨?_, ?_⟩
+    · intro a b hab
+      apply hA.hom_inj
+      exact congrArg (fun x : vK.valuationSubring => (x : K)) hab
+    · intro x
+      refine ⟨eInv x, ?_⟩
+      apply Subtype.ext
+      exact eInv_spec x
+  let e : A ≃+* vK.valuationSubring := RingEquiv.ofBijective eMap eMap_bij
+  let _ : Algebra vK.valuationSubring B :=
+    ((algebraMap A B).comp e.symm.toRingHom).toAlgebra
+  let _ : Algebra.IsIntegral vK.valuationSubring B :=
+    ⟨fun x => by
+      obtain ⟨p, hp, hpx⟩ := (Algebra.IsIntegral.isIntegral x : IsIntegral A x)
+      refine ⟨p.map e.toRingHom, hp.map e.toRingHom, ?_⟩
+      have hecomp :
+          (algebraMap vK.valuationSubring B).comp e.toRingHom =
+            (RingHom.id B).comp (algebraMap A B) := by
+        ext a
+        change algebraMap A B (e.symm (e a)) = algebraMap A B a
+        rw [e.symm_apply_apply]
+      change Polynomial.aeval x (p.map e.toRingHom) = 0
+      calc
+        Polynomial.aeval x (p.map e.toRingHom) = Polynomial.aeval x p := by
+          simpa using (Polynomial.map_aeval_eq_aeval_map hecomp p x).symm
+        _ = 0 := by simpa [Polynomial.aeval_def] using hpx
+    ⟩
+  let _ : IsIntegrallyClosed vK.valuationSubring :=
+    (Valuation.Integers.isIntegrallyClosed (Valuation.valuationSubring.integers vK))
+  unfold Chapter10HasUniquePrimeAbove
+  let m : Ideal A := IsLocalRing.maximalIdeal A
+  obtain ⟨P, hPmax, hPover⟩ :=
+    Ideal.exists_maximal_ideal_liesOver_of_isIntegral (R := A) (S := B) m
+  have hP : Chapter10PrimeAboveMaximal (A := A) (B := B) P :=
+    ⟨hPmax.isPrime, hPover.over.symm⟩
+  refine ⟨P, hP, ?_⟩
+  have hdistinct : ∀ (R S : Ideal B),
+      Chapter10PrimeAboveMaximal (A := A) (B := B) R →
+      Chapter10PrimeAboveMaximal (A := A) (B := B) S →
+      ∀ b : B, b ∈ R → b ∉ S → False := by
+    intro R S hR hS b hbR hbS
+    let _ : R.IsPrime := hR.1
+    let _ : S.IsPrime := hS.1
+    have hSmax : S.IsMaximal := by
+      exact Ideal.isMaximal_of_isIntegral_of_isMaximal_comap S
+        (hS.2.symm ▸ IsLocalRing.maximalIdeal.isMaximal A)
+    let _ : S.IsMaximal := hSmax
+    have hemax (x : vK.valuationSubring) :
+        x ∈ IsLocalRing.maximalIdeal vK.valuationSubring ↔
+          e.symm x ∈ IsLocalRing.maximalIdeal A := by
+      rw [IsLocalRing.mem_maximalIdeal, IsLocalRing.mem_maximalIdeal,
+        mem_nonunits_iff, mem_nonunits_iff]
+      constructor
+      · intro hx hu
+        apply hx
+        simpa using e.toRingHom.isUnit_map hu
+      · intro hx hu
+        apply hx
+        simpa using e.symm.toRingHom.isUnit_map hu
+    have hRcomp : R.comap (algebraMap vK.valuationSubring B) =
+        IsLocalRing.maximalIdeal vK.valuationSubring := by
+      ext x
+      change e.symm x ∈ R.comap (algebraMap A B) ↔
+        x ∈ IsLocalRing.maximalIdeal vK.valuationSubring
+      rw [hR.2]
+      exact (hemax x).symm
+    have hScomp : S.comap (algebraMap vK.valuationSubring B) =
+        IsLocalRing.maximalIdeal vK.valuationSubring := by
+      ext x
+      change e.symm x ∈ S.comap (algebraMap A B) ↔
+        x ∈ IsLocalRing.maximalIdeal vK.valuationSubring
+      rw [hS.2]
+      exact (hemax x).symm
+    have hOinj : Function.Injective (algebraMap vK.valuationSubring B) := by
+      intro x y hxy
+      apply e.symm.injective
+      apply hmap_inj
+      change algebraMap A B (e.symm x) = algebraMap A B (e.symm y)
+      change algebraMap A B (e.symm x) = algebraMap A B (e.symm y) at hxy
+      exact hxy
+    let _ : Module.IsTorsionFree vK.valuationSubring B :=
+      (Module.isTorsionFree_iff_algebraMap_injective).mpr hOinj
+    let f : vK.valuationSubring[X] := minpoly vK.valuationSubring b
+    have hfint : IsIntegral vK.valuationSubring b := Algebra.IsIntegral.isIntegral b
+    have hf : f.Monic := by
+      simpa [f] using minpoly.monic hfint
+    have hfirr : Irreducible f := by
+      exact (minpoly.prime_of_isIntegrallyClosed hfint).irreducible
+    let πR : B →+* B ⧸ R := Ideal.Quotient.mk R
+    let πS : B →+* B ⧸ S := Ideal.Quotient.mk S
+    have hcompR :
+        (algebraMap vK.valuationSubring (B ⧸ R)).comp (RingHom.id _) =
+          πR.comp (algebraMap vK.valuationSubring B) := by
+      ext a
+      rfl
+    have hcompS :
+        (algebraMap vK.valuationSubring (B ⧸ S)).comp (RingHom.id _) =
+          πS.comp (algebraMap vK.valuationSubring B) := by
+      ext a
+      rfl
+    have hrootR :
+        (f.map (algebraMap vK.valuationSubring (B ⧸ R))).eval (πR b) = 0 := by
+      rw [Polynomial.eval_map_algebraMap]
+      have hm :
+          πR (Polynomial.aeval b f) =
+            Polynomial.aeval (πR b) f := by
+        simpa using (Polynomial.map_aeval_eq_aeval_map hcompR f b)
+      rw [← hm, minpoly.aeval]
+      simp
+    have hrootS :
+        (f.map (algebraMap vK.valuationSubring (B ⧸ S))).eval (πS b) = 0 := by
+      rw [Polynomial.eval_map_algebraMap]
+      have hm :
+          πS (Polynomial.aeval b f) =
+            Polynomial.aeval (πS b) f := by
+        simpa using (Polynomial.map_aeval_eq_aeval_map hcompS f b)
+      rw [← hm, minpoly.aeval]
+      simp
+    have hbR0 : πR b = 0 := by
+      apply Ideal.Quotient.eq_zero_iff_mem.mpr
+      exact hbR
+    have hcoeff : f.coeff 0 ∈ IsLocalRing.maximalIdeal vK.valuationSubring := by
+      have hzero : algebraMap vK.valuationSubring (B ⧸ R) (f.coeff 0) = 0 := by
+        calc
+          algebraMap vK.valuationSubring (B ⧸ R) (f.coeff 0) =
+              Polynomial.aeval (0 : B ⧸ R) f :=
+            Polynomial.coeff_zero_eq_aeval_zero' f
+          _ = Polynomial.aeval (πR b) f := by rw [hbR0]
+          _ = 0 := by
+            have hrootR' := hrootR
+            rw [Polynomial.eval_map_algebraMap] at hrootR'
+            exact hrootR'
+      have hmem : f.coeff 0 ∈ R.comap (algebraMap vK.valuationSubring B) := by
+        change algebraMap vK.valuationSubring B (f.coeff 0) ∈ R
+        apply Ideal.Quotient.eq_zero_iff_mem.mp
+        change Ideal.Quotient.mk R (algebraMap vK.valuationSubring B (f.coeff 0)) = 0
+        exact hzero
+      rw [← hRcomp]
+      exact hmem
+    let fbar : (Chapter09.ResidueRing vK.valuationSubring)[X] :=
+      Chapter09.residuePolynomial f
+    have hfbar : fbar.Monic := by
+      simpa [fbar, Chapter09.residuePolynomial] using
+        hf.map (Chapter09.residueMap vK.valuationSubring)
+    have hcoeff0 :
+        Chapter09.residueMap vK.valuationSubring (f.coeff 0) = 0 := by
+      apply Ideal.Quotient.eq_zero_iff_mem.mpr
+      exact hcoeff
+    have hroot0 : fbar.eval 0 = 0 := by
+      change (Chapter09.residuePolynomial f).eval 0 = 0
+      rw [Chapter09.residuePolynomial, Polynomial.eval_zero_map,
+        ← Polynomial.coeff_zero_eq_eval_zero]
+      exact hcoeff0
+    let n : ℕ := fbar.rootMultiplicity 0
+    have hn : 0 < n := by
+      exact (Polynomial.rootMultiplicity_pos hfbar.ne_zero).mpr hroot0
+    obtain ⟨q, hfactor, hqnotdvd⟩ :=
+      Polynomial.exists_eq_pow_rootMultiplicity_mul_and_not_dvd fbar hfbar.ne_zero 0
+    let g₀ : (Chapter09.ResidueRing vK.valuationSubring)[X] :=
+      (X - C (0 : Chapter09.ResidueRing vK.valuationSubring)) ^ n
+    have hfactor' : fbar = g₀ * q := by
+      simpa [g₀, n] using hfactor
+    have hg₀ : g₀.Monic := by
+      dsimp [g₀]
+      exact (monic_X_sub_C (0 : Chapter09.ResidueRing vK.valuationSubring)).pow n
+    have hq : q.Monic := by
+      apply hg₀.of_mul_monic_left
+      rw [← hfactor']
+      exact hfbar
+    have hgcd : IsCoprime g₀ q := by
+      let _ : Field (Chapter09.ResidueRing vK.valuationSubring) :=
+        Ideal.Quotient.field _
+      apply (IsCoprime.pow_left_iff hn).mpr
+      simpa using (EuclideanDomain.dvd_or_coprime
+        (X : (Chapter09.ResidueRing vK.valuationSubring)[X]) q
+        (prime_X : Prime (X : (Chapter09.ResidueRing vK.valuationSubring)[X])).irreducible).resolve_left (by
+          simpa using hqnotdvd)
+    let kmap : Chapter09.ResidueRing vK.valuationSubring →+* B ⧸ S :=
+      Ideal.Quotient.lift (IsLocalRing.maximalIdeal vK.valuationSubring)
+        (algebraMap vK.valuationSubring (B ⧸ S)) (by
+          intro a ha
+          apply Ideal.Quotient.eq_zero_iff_mem.mpr
+          change algebraMap vK.valuationSubring B a ∈ S
+          have ha' : a ∈ S.comap (algebraMap vK.valuationSubring B) := by
+            rw [hScomp]
+            exact ha
+          exact ha')
+    have hkmap :
+        kmap.comp (Chapter09.residueMap vK.valuationSubring) =
+          (algebraMap vK.valuationSubring (B ⧸ S) :
+            vK.valuationSubring →+* B ⧸ S) := by
+      ext a
+      simp [kmap, Chapter09.residueMap]
+    have hrootSbar :
+        (fbar.map kmap).eval (πS b) = 0 := by
+      change ((Chapter09.residuePolynomial f).map kmap).eval (πS b) = 0
+      rw [Chapter09.residuePolynomial, Polynomial.map_map, hkmap]
+      exact hrootS
+    have hβ : πS b ≠ 0 := by
+      intro hβ
+      apply hbS
+      exact Ideal.Quotient.eq_zero_iff_mem.mp hβ
+    have hfactor_map := congrArg (fun z => z.map kmap) hfactor'
+    have hfactor_eval :
+        (fbar.map kmap).eval (πS b) =
+          (g₀.map kmap).eval (πS b) * (q.map kmap).eval (πS b) := by
+      rw [hfactor_map, Polynomial.map_mul, eval_mul]
+    have hg₀eval : (g₀.map kmap).eval (πS b) ≠ 0 := by
+      simpa [g₀] using pow_ne_zero n hβ
+    have hqroot : (q.map kmap).eval (πS b) = 0 := by
+      have hz := hfactor_eval
+      rw [hrootSbar] at hz
+      exact (mul_eq_zero.mp hz.symm).resolve_left hg₀eval
+    have hqne : q ≠ 1 := by
+      intro hq1
+      rw [hq1] at hqroot
+      simpa using hqroot
+    have hqnonunit : ¬ IsUnit q := by
+      intro hunit
+      exact hqne (hq.eq_one_of_isUnit hunit)
+    have hnq : 0 < q.natDegree := hq.natDegree_pos.mpr hqne
+    have hfactorization :
+        Chapter09.HenselianFactorizationProperty vK.valuationSubring := by
+      exact hH
+    obtain ⟨gh, hgh, _⟩ :=
+      hfactorization f g₀ q hf hg₀ hq hgcd hfactor'
+    rcases hgh with ⟨hG, hH', hGdeg, hHdeg, hGres, hHres, hfac⟩
+    have hGpos : 0 < gh.1.natDegree := by
+      rw [hGdeg]
+      simpa [g₀] using hn
+    have hHpos : 0 < gh.2.natDegree := by
+      rw [hHdeg]
+      exact hnq
+    have hGnonunit : ¬ IsUnit gh.1 := not_isUnit_of_natDegree_pos _ hGpos
+    have hHnonunit : ¬ IsUnit gh.2 := not_isUnit_of_natDegree_pos _ hHpos
+    exact (hfirr.isUnit_or_isUnit hfac).elim hGnonunit hHnonunit
+  intro Q hQ
+  by_cases hQP : Q ≤ P
+  · by_cases hPQ : P ≤ Q
+    · exact le_antisymm hQP hPQ
+    have hne : Q ≠ P := by
+      intro h
+      apply hPQ
+      exact h.symm ▸ le_rfl
+    obtain ⟨b, hbP, hbQ⟩ := (SetLike.lt_iff_le_and_exists.mp
+      (lt_of_le_of_ne hQP hne)).2
+    exact False.elim (hdistinct P Q hP hQ b hbP hbQ)
+  · obtain ⟨b, hbQ, hbP⟩ := SetLike.not_le_iff_exists.mp hQP
+    exact False.elim (hdistinct Q P hQ hP b hbQ hbP)
 
 /-- The correspondence transfers uniqueness between its two parameter
 spaces. -/
