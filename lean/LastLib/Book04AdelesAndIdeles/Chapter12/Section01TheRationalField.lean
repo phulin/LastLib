@@ -20,7 +20,10 @@ structure Chapter12RationalInfinitePortrait where
 
 theorem chapter12_rational_has_one_real_place :
     Nonempty Chapter12RationalInfinitePortrait := by
-  sorry
+  let e : chapter12InfiniteAdeleRing ℚ ≃+* ℝ :=
+    (RingEquiv.piUnique (fun v : NumberField.InfinitePlace ℚ => v.Completion)).trans
+      (NumberField.InfinitePlace.Completion.ringEquivRealOfIsReal Rat.isReal_infinitePlace)
+  exact ⟨{ equiv := e, one_real_place := NumberField.InfinitePlace.nrRealPlaces_eq_one_of_finrank_eq_one (by simp), no_complex_places := NumberField.InfinitePlace.nrComplexPlaces_eq_zero_of_finrank_eq_one (by simp) }⟩
 
 /-- The finite rational adeles written as the canonical restricted product over `ℤ`. -/
 abbrev chapter12RationalFiniteRestrictedProduct :=
@@ -34,7 +37,7 @@ theorem chapter12_rational_finite_adele_restricted_product :
 
 theorem chapter12_rational_finite_places_are_prime_indexed :
     Nonempty (IsDedekindDomain.HeightOneSpectrum ℤ ≃ Nat.Primes) := by
-  sorry
+  exact ⟨Rat.HeightOneSpectrum.primesEquiv (R := ℤ)⟩
 
 theorem chapter12_rational_ideles_split_into_infinite_and_finite_units :
     Nonempty (chapter12RationalIdeles ≃*

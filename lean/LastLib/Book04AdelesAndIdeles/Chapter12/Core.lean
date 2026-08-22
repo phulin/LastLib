@@ -208,7 +208,9 @@ def chapter12CanonicalIdeleModuleData
   module := chapter09IdeleModuleNNRealHom K
   principal_one := by
     intro u
-    sorry
+    change ((chapter09IdeleModule (chapter09PrincipalIdele K u) : Chapter09PositiveReal) : ℝ≥0) = 1
+    rw [chapter09PrincipalIdele_module_eq_one]
+    rfl
   module_ne_zero := by
     intro x
     exact Units.ne_zero _
@@ -281,7 +283,20 @@ theorem chapter12NormOneIdeleClasses_eq_subgroup_carrier
     (M : Chapter12IdeleModuleData R K) :
     chapter12NormOneIdeleClasses M =
       (chapter12NormOneIdeleClassSubgroup M : Set (chapter12IdeleClassGroup R K)) := by
-  sorry
+  ext c
+  constructor
+  · rintro ⟨x, hx, rfl⟩
+    change chapter12IdeleClassMk R K x ∈ chapter12NormOneIdeleClassSubgroup M
+    rw [chapter12NormOneIdeleClassSubgroup_mem_iff,
+      chapter12IdeleClassModule_apply]
+    exact hx
+  · intro hc
+    obtain ⟨x, rfl⟩ :=
+      QuotientGroup.mk'_surjective (chapter12PrincipalIdeleSubgroup R K) c
+    refine ⟨x, ?_, rfl⟩
+    change chapter12IdeleClassMk R K x ∈ chapter12NormOneIdeleClassSubgroup M at hc
+    rw [chapter12NormOneIdeleClassSubgroup_mem_iff] at hc
+    simpa only [chapter12IdeleClassModule_apply] using hc
 
 /-- A group carrier for the norm-one part of the idele class group. -/
 abbrev chapter12NormOneIdeleClassCarrier
@@ -330,7 +345,11 @@ noncomputable def chapter12CanonicalFiniteIdeleIdealData
     simp
   principal := by
     intro u
-    sorry
+    change (LastLib.Book04AdelesAndIdeles.Chapter08.chapter08FiniteIdeleIdealMap K
+      (LastLib.Book04AdelesAndIdeles.Chapter08.chapter08FinitePrincipalIdele u) :
+        FractionalIdeal (𝓞 K)⁰ K) = FractionalIdeal.spanSingleton (𝓞 K)⁰ (u : K)
+    rw [LastLib.Book04AdelesAndIdeles.Chapter08.chapter08_finite_idele_ideal_principal]
+    simp only [coe_toPrincipalIdeal]
 
 def chapter12IdeleIdeal
     {R K : Type*} [CommRing R] [IsDedekindDomain R] [Field K]
@@ -388,7 +407,15 @@ theorem chapter12_coordinate_product_norm_apply
 theorem chapter12_coordinate_product_norm_surjective
     {F : Type*} [CommMonoid F] (d : ℕ) [NeZero d] :
     Function.Surjective (chapter12CoordinateProductNorm (F := F) d) := by
-  sorry
+  intro z
+  let i : Fin d := ⟨0, Nat.pos_of_ne_zero (NeZero.ne d)⟩
+  refine ⟨Function.update (fun _ : Fin d => 1) i z, ?_⟩
+  change (∏ j, Function.update (fun _ : Fin d => 1) i z j) = z
+  rw [Finset.prod_eq_single i]
+  · simp
+  · intro j _ hji
+    simp [hji]
+  · simp
 
 /- The right-factor algebra on a tensor product is deliberately not a global
    Mathlib instance.  Keep the canonical instance local to this reusable
