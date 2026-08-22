@@ -58,8 +58,8 @@ theorem chapter11_unramified_norm_equation_valuation_necessary
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
     (f : ℕ) (hunram : chapter11UnramifiedValuedExtension vK vL)
     (hnorm : chapter11NormValuationFormula K L vK vL f)
-    (hdegree : Module.finrank K L = f)
-    (hfres : f =
+    (_hdegree : Module.finrank K L = f)
+    (_hfres : f =
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
         vK vL hunram.1) (a : K) (x : L)
     (hx : x ≠ 0) (heq : Algebra.norm K x = a) :

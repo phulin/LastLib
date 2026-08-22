@@ -189,26 +189,26 @@ theorem chapter11_residue_norm_surjectivity_not_formal_for_arbitrary_fields :
   intro h
   let k := ULift ℝ
   let l := ULift ℂ
-  letI : Algebra k ℂ := by
+  let : Algebra k ℂ := by
     dsimp [k]
     exact ULift.algebra' ℝ ℂ
-  letI : Algebra k l := by
+  let : Algebra k l := by
     dsimp [k, l]
     exact ULift.algebra
   let b : Module.Basis (Fin 2) k ℂ :=
     Complex.basisOneI.mapCoeffs (ULift.ringEquiv.symm) (by
       intro c x
       rfl)
-  letI : FiniteDimensional k ℂ := b.finiteDimensional_of_finite
-  letI : FiniteDimensional k l :=
+  let : FiniteDimensional k ℂ := b.finiteDimensional_of_finite
+  let : FiniteDimensional k l :=
     (ULift.moduleEquiv (R := k) (M := ℂ)).symm.finiteDimensional
-  letI : CharZero k := ⟨by
+  let : CharZero k := ⟨by
     intro m n hmn
     apply (Nat.cast_injective : Function.Injective (Nat.cast : ℕ → ℝ))
     exact congr_arg ULift.down hmn⟩
-  letI : Algebra.IsIntegral k l :=
+  let : Algebra.IsIntegral k l :=
     ⟨fun x => IsIntegral.of_finite k x⟩
-  letI : Algebra.IsSeparable k l :=
+  let : Algebra.IsSeparable k l :=
     Algebra.IsSeparable.of_integral (F := k) (K := l)
   have hs := h k l
   obtain ⟨z, hz⟩ := hs (-1 : k)
