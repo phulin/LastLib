@@ -980,7 +980,42 @@ theorem chapter10_constant_field_extension_numerical_profile
   -/
   have hdegree : Module.finrank (LaurentSeries k) (LaurentSeries k') =
       Module.finrank k k' := by
-    sorry
+    let b := Module.finBasis k k'
+    let coord (i : Fin (Module.finrank k k')) : k' →ₗ[k] k :=
+      (Finsupp.lapply i).comp b.repr.toLinearMap
+    have hspan :
+        Submodule.span (LaurentSeries k)
+          (Set.range (fun i : Fin (Module.finrank k k') =>
+            (HahnSeries.C (b i) : LaurentSeries k'))) = ⊤ := by
+      apply top_unique
+      intro x _hx
+      let z : Fin (Module.finrank k k') → LaurentSeries k :=
+        fun i => x.map (coord i)
+      have hxrepr : x = ∑ i, algebraMap (LaurentSeries k) (LaurentSeries k')
+          (z i) * HahnSeries.C (b i) := by
+        apply HahnSeries.ext
+        funext n
+        simp only [HahnSeries.coeff_sum]
+        simpa [z, coord, hcoeff, Algebra.smul_def] using
+          (b.sum_repr (x.coeff n)).symm
+      rw [hxrepr]
+      apply Submodule.sum_mem
+      intro i _hi
+      rw [← Algebra.smul_def]
+      apply Submodule.smul_mem
+      exact Submodule.subset_span
+        (show (HahnSeries.C (b i) : LaurentSeries k') ∈
+          Set.range (fun j : Fin (Module.finrank k k') =>
+            (HahnSeries.C (b j) : LaurentSeries k')) from ⟨i, rfl⟩)
+    have hupper : Module.finrank (LaurentSeries k) (LaurentSeries k') ≤
+        Module.finrank k k' := by
+      simpa using (finrank_le_of_span_eq_top hspan)
+    have hlower :
+        Module.finrank k k' ≤ Module.finrank (LaurentSeries k) (LaurentSeries k') := by
+      have hineq := chapter10_heterogeneous_single_extension_fundamental_inequality
+        (Chapter10LaurentSeriesValuation k) (Chapter10LaurentSeriesValuation k') h d
+      simpa [hram, hresdegree] using hineq
+    exact Nat.le_antisymm hupper hlower
   refine ⟨d, p, ?_⟩
   refine ⟨?_, hdegree, rfl, rfl, ?_⟩
   · simp [p, Chapter10ProfileRealizedByData, hram, hresdegree]
