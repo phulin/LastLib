@@ -4,6 +4,7 @@ import Mathlib.Algebra.Polynomial.Div
 import Mathlib.NumberTheory.Padics.RingHoms
 import Mathlib.RingTheory.Polynomial.Eisenstein.IsIntegral
 import Mathlib.Algebra.Polynomial.Inductions
+import Mathlib.RingTheory.PowerSeries.WeierstrassPreparation
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter13
 
@@ -354,7 +355,30 @@ theorem chapter13_cusp_presentation
             Ideal.span {Chapter13CuspRelation k}) ≃+*
           Chapter13CuspPowerSeriesSubring k) ∧
       ¬IsRegularLocalRing (Chapter13CuspPowerSeriesSubring k) := by
-  sorry
+  constructor
+  · sorry
+  · intro hreg
+    let S := Chapter13CuspPowerSeriesSubring k
+    let : IsLocalRing S := hreg.toIsLocalRing
+    let : IsNoetherianRing S := hreg.toIsNoetherian
+    let : IsDomain S :=
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.cusp_power_series_is_complete_one_dimensional_non_normal k |>.1
+    have hdim : ringKrullDim S = 1 :=
+      by simpa [S] using
+        LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.cusp_power_series_is_complete_one_dimensional_non_normal k |>.2.2.2.1
+    have hspan' :
+        (↑(IsLocalRing.maximalIdeal S).spanFinrank : WithBot ℕ∞) = 1 := by
+      calc
+        (↑(IsLocalRing.maximalIdeal S).spanFinrank : WithBot ℕ∞) = ringKrullDim S :=
+          hreg.spanFinrank_maximalIdeal
+        _ = 1 := hdim
+    have hspan : (IsLocalRing.maximalIdeal S).spanFinrank = 1 := by
+      exact_mod_cast hspan'
+    have hcot : Module.finrank (ResidueField S) (CotangentSpace S) = 1 := by
+      rw [← IsLocalRing.spanFinrank_maximalIdeal_eq_finrank_cotangentSpace,
+        hspan]
+    exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.cusp_power_series_is_not_a_dvr k
+      ((IsLocalRing.finrank_CotangentSpace_eq_one_iff).mp hcot)
 
 /-! ### Mixed-characteristic examples -/
 
@@ -723,6 +747,9 @@ instance chapter13CyclotomicOrderLocalRing
       simpa [f, mul_comm] using h
     apply (mul_left_cancel₀ Polynomial.X_ne_zero)
     exact hcomp.trans hdiv.symm
+  have hcoeff : f.coeff 0 = (p : PadicInt p) := by
+    simp [f, Polynomial.coeff_zero_eq_eval_zero, Polynomial.cyclotomic_prime,
+      Polynomial.eval_finsetSum]
   let e : AdjoinRoot f ≃+* Chapter13CyclotomicOrder p :=
     Ideal.quotEquivOfEq (congrArg (fun q : Polynomial (PadicInt p) =>
       Ideal.span ({q} : Set (Polynomial (PadicInt p)))) hf)
@@ -809,7 +836,335 @@ theorem chapter13_cyclotomic_order_is_ramified
       (p : Chapter13CyclotomicOrder p) ∈
         (IsLocalRing.maximalIdeal (Chapter13CyclotomicOrder p)) ^ 2 ∧
       ¬Chapter13IsCohenRing (Chapter13CyclotomicOrder p) (ZMod p) p := by
-  sorry
+  classical
+  let f : Polynomial (PadicInt p) :=
+    ((Polynomial.cyclotomic p (PadicInt p)).comp (Polynomial.X + 1))
+  have hmonic : f.Monic := by
+    simpa [f] using (Polynomial.cyclotomic.monic p (PadicInt p)).comp
+      (Polynomial.monic_X_add_C 1) (by
+        rw [Polynomial.natDegree_X_add_C]
+        exact Nat.one_ne_zero)
+  have hE0 := (cyclotomic_comp_X_add_one_isEisensteinAt p).isWeaklyEisensteinAt.map
+    (Int.castRingHom (PadicInt p))
+  have hweak : f.IsWeaklyEisensteinAt
+      (Ideal.span {(p : PadicInt p)}) := by
+    simpa [f, Ideal.map_span, Polynomial.map_comp,
+      Polynomial.map_cyclotomic_int] using hE0
+  have hE : f.IsEisensteinAt (Ideal.span {(p : PadicInt p)}) := by
+    refine Polynomial.Monic.isEisensteinAt_of_mem_of_notMem hmonic ?_ hweak.mem ?_
+    · exact Ideal.span_singleton_ne_top (mem_nonunits_iff.mp PadicInt.p_nonunit)
+    · have hcoeff : f.coeff 0 = (p : PadicInt p) := by
+        simp [f, Polynomial.coeff_zero_eq_eval_zero, Polynomial.cyclotomic_prime,
+          Polynomial.eval_finsetSum]
+      rw [hcoeff, Ideal.span_singleton_pow, Ideal.mem_span_singleton]
+      rintro ⟨a, ha⟩
+      have hp0 : (p : PadicInt p) ≠ 0 := by
+        exact_mod_cast (Fact.out : Nat.Prime p).ne_zero
+      have hpa : (p : PadicInt p) * a = 1 := by
+        apply (mul_left_cancel₀ hp0)
+        simpa [pow_two, mul_assoc] using ha.symm
+      exact (mem_nonunits_iff.mp PadicInt.p_nonunit)
+        (IsUnit.of_mul_eq_one a hpa)
+  have hf : f = Chapter13CyclotomicEisensteinPolynomial p := by
+    have hdiv : Polynomial.X * Chapter13CyclotomicEisensteinPolynomial p =
+        (Polynomial.X + 1) ^ p - 1 := by
+      simpa [Chapter13CyclotomicEisensteinPolynomial] using
+        (Polynomial.mul_divByMonic_eq_iff_isRoot
+        (p := (Polynomial.X + 1) ^ p - 1) (a := (0 : PadicInt p))).2 (by simp)
+    have hcomp : Polynomial.X * f = (Polynomial.X + 1) ^ p - 1 := by
+      have h := congrArg (fun q : Polynomial (PadicInt p) =>
+          q.comp (Polynomial.X + 1))
+        (Polynomial.cyclotomic_prime_mul_X_sub_one (PadicInt p) p)
+      simpa [f, mul_comm] using h
+    apply (mul_left_cancel₀ Polynomial.X_ne_zero)
+    exact hcomp.trans hdiv.symm
+  have hcoeff : f.coeff 0 = (p : PadicInt p) := by
+    simp [f, Polynomial.coeff_zero_eq_eval_zero, Polynomial.cyclotomic_prime,
+      Polynomial.eval_finsetSum]
+  let e : AdjoinRoot f ≃+* Chapter13CyclotomicOrder p :=
+    Ideal.quotEquivOfEq (congrArg (fun q : Polynomial (PadicInt p) =>
+      Ideal.span ({q} : Set (Polynomial (PadicInt p)))) hf)
+  let : IsLocalRing (AdjoinRoot f) := e.symm.isLocalRing
+  let : IsDomain (AdjoinRoot f) := e.toMulEquiv.isDomain
+  have hdist : f.IsDistinguishedAt (Ideal.span {(p : PadicInt p)}) :=
+    ⟨hweak, hmonic⟩
+  let H : (f : PowerSeries (PadicInt p)).IsWeierstrassFactorizationAt f 1
+      (Ideal.span {(p : PadicInt p)}) :=
+    ⟨hdist, isUnit_one, by simp⟩
+  let : IsAdicComplete (Ideal.span {(p : PadicInt p)}) (PadicInt p) := by
+    rw [← PadicInt.maximalIdeal_eq_span_p]
+    infer_instance
+  have h04 :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.padic_power_series_is_complete_regular_local_two_dimensional p
+  have hQne : Ideal.span ({(f : PowerSeries (PadicInt p))} :
+      Set (PowerSeries (PadicInt p))) ≠ ⊤ := by
+    intro htop
+    have hunit : IsUnit (f : PowerSeries (PadicInt p)) :=
+      Ideal.span_singleton_eq_top.mp htop
+    have hc := PowerSeries.isUnit_iff_constantCoeff.mp hunit
+    change IsUnit (f.coeff 0) at hc
+    rw [hcoeff] at hc
+    exact (mem_nonunits_iff.mp PadicInt.p_nonunit) hc
+  let : IsLocalRing
+      (PowerSeries (PadicInt p) ⧸
+        Ideal.span ({(f : PowerSeries (PadicInt p))} : Set (PowerSeries (PadicInt p)))) :=
+    @IsLocalRing.of_surjective' (PowerSeries (PadicInt p)) _ _ _ _
+      (Ideal.Quotient.nontrivial_iff.mpr hQne) (Ideal.Quotient.mk _)
+      Ideal.Quotient.mk_surjective
+  have hquot : Chapter13CompleteNoetherianLocalRing
+      (PowerSeries (PadicInt p) ⧸
+        Ideal.span ({(f : PowerSeries (PadicInt p))} : Set (PowerSeries (PadicInt p)))) := by
+    apply chapter13_quotient_complete_noetherian_local
+      (R := PowerSeries (PadicInt p))
+    · rw [h04.2.2.2.1]
+      exact h04.1
+    · exact hQne
+  have hW : AdjoinRoot f ≃+*
+      (PowerSeries (PadicInt p) ⧸
+        Ideal.span ({(f : PowerSeries (PadicInt p))} : Set (PowerSeries (PadicInt p)))) :=
+    H.algEquivQuotient.toRingEquiv
+  have hcompleteB : IsAdicComplete (IsLocalRing.maximalIdeal (AdjoinRoot f))
+      (AdjoinRoot f) := by
+    apply (IsAdicComplete.congr_ringEquiv
+      (IsLocalRing.maximalIdeal (AdjoinRoot f)) hW).mp
+    rw [IsLocalRing.map_ringEquiv_maximalIdeal hW]
+    exact hquot.2
+  have hqroot :
+      f.eval₂ (PadicInt.toZMod : PadicInt p →+* ZMod p) 0 = 0 := by
+    simp [f, Polynomial.eval₂_at_zero, Polynomial.coeff_zero_eq_eval_zero,
+      Polynomial.cyclotomic_prime, Polynomial.eval_finsetSum]
+  let q : AdjoinRoot f →+* ZMod p :=
+    AdjoinRoot.lift (f := f) (PadicInt.toZMod : PadicInt p →+* ZMod p) 0 hqroot
+  have hqsurj : Function.Surjective q := by
+    intro y
+    obtain ⟨a, ha⟩ := ZMod.ringHom_surjective
+      (PadicInt.toZMod : PadicInt p →+* ZMod p) y
+    refine ⟨AdjoinRoot.of f a, ?_⟩
+    simpa [q] using ha
+  let N : Ideal (AdjoinRoot f) :=
+    Ideal.map (AdjoinRoot.of f : PadicInt p →+* AdjoinRoot f)
+        (Ideal.span {(p : PadicInt p)}) ⊔
+      Ideal.span {AdjoinRoot.root f}
+  have hker : RingHom.ker q = N := by
+    apply le_antisymm
+    · intro z hz
+      induction z using AdjoinRoot.induction_on with
+      | ih g =>
+          have hqg : PadicInt.toZMod (g.coeff 0) = 0 := by
+            simpa [q, AdjoinRoot.lift_mk, Polynomial.eval₂_at_zero] using hz
+          have hcg : g.coeff 0 ∈ Ideal.span {(p : PadicInt p)} := by
+            rw [← PadicInt.maximalIdeal_eq_span_p, ← PadicInt.ker_toZMod]
+            exact RingHom.mem_ker.mpr hqg
+          have hmap :
+              Ideal.map (AdjoinRoot.of f : PadicInt p →+* AdjoinRoot f)
+                (Ideal.span {(p : PadicInt p)}) ≤ N := le_sup_left
+          have hdiv := Polynomial.divX_mul_X_add g
+          rw [← hdiv, map_add]
+          apply N.add_mem
+          · have hmul := (AdjoinRoot.mk f).map_mul
+                (Polynomial.divX g) Polynomial.X
+            rw [hmul, AdjoinRoot.mk_X]
+            have hrootN : AdjoinRoot.root f ∈ N := by
+              change AdjoinRoot.root f ∈
+                Ideal.map (AdjoinRoot.of f : PadicInt p →+* AdjoinRoot f)
+                    (Ideal.span {(p : PadicInt p)}) ⊔
+                  Ideal.span {AdjoinRoot.root f}
+              exact (le_sup_right : Ideal.span
+                ({AdjoinRoot.root f} : Set (AdjoinRoot f)) ≤
+                  Ideal.map (AdjoinRoot.of f : PadicInt p →+* AdjoinRoot f)
+                      (Ideal.span {(p : PadicInt p)}) ⊔
+                    Ideal.span {AdjoinRoot.root f})
+                (Ideal.subset_span (Set.mem_singleton _))
+            exact N.mul_mem_left _ hrootN
+          · change AdjoinRoot.of f (g.coeff 0) ∈ N
+            exact hmap (Ideal.mem_map_of_mem _ hcg)
+    · rw [show N =
+        Ideal.map (AdjoinRoot.of f : PadicInt p →+* AdjoinRoot f)
+          (Ideal.span {(p : PadicInt p)}) ⊔
+          Ideal.span {AdjoinRoot.root f} by rfl]
+      apply sup_le
+      · rw [Ideal.map_le_iff_le_comap]
+        intro a ha
+        rw [Ideal.mem_comap, RingHom.mem_ker]
+        have ha0 : PadicInt.toZMod a = 0 := by
+          rw [← RingHom.mem_ker, PadicInt.ker_toZMod,
+            PadicInt.maximalIdeal_eq_span_p]
+          exact ha
+        simpa [q] using ha0
+      · apply Ideal.span_le.2
+        intro z hz
+        rw [Set.mem_singleton_iff.mp hz]
+        simp [q, AdjoinRoot.lift_root]
+  have hmax : IsLocalRing.maximalIdeal (AdjoinRoot f) = N := by
+    exact (IsLocalRing.ker_eq_maximalIdeal q hqsurj).symm.trans hker
+  have hproot : (p : AdjoinRoot f) ∈ Ideal.span {AdjoinRoot.root f} := by
+    have h := congrArg (fun g : Polynomial (PadicInt p) =>
+        g.eval₂ (AdjoinRoot.of f) (AdjoinRoot.root f))
+      (Polynomial.divX_mul_X_add f)
+    rw [AdjoinRoot.eval₂_root, hcoeff] at h
+    exact Ideal.mem_span_singleton'.2 ⟨-
+      (Polynomial.divX f).eval₂ (AdjoinRoot.of f) (AdjoinRoot.root f), by
+        have h' : (0 : AdjoinRoot f) = (p : AdjoinRoot f) +
+            AdjoinRoot.root f *
+              (Polynomial.divX f).eval₂ (AdjoinRoot.of f) (AdjoinRoot.root f) := by
+          simpa [map_add, map_mul, mul_comm, add_comm] using h.symm
+        linear_combination h'⟩
+  have hmaproot :
+      Ideal.map (AdjoinRoot.of f : PadicInt p →+* AdjoinRoot f)
+          (Ideal.span {(p : PadicInt p)}) ≤ Ideal.span {AdjoinRoot.root f} := by
+    rw [Ideal.map_le_iff_le_comap]
+    apply Ideal.span_le.2
+    intro a ha
+    rw [Set.mem_singleton_iff.mp ha]
+    exact hproot
+  have hNroot : N = Ideal.span {AdjoinRoot.root f} := by
+    dsimp [N]
+    apply le_antisymm
+    · exact sup_le hmaproot le_rfl
+    · exact le_sup_right
+  have hmaxroot : IsLocalRing.maximalIdeal (AdjoinRoot f) =
+      Ideal.span {AdjoinRoot.root f} := hmax.trans hNroot
+  have hdeg : f.degree ≠ 0 := by
+    have hdegree : 0 < f.natDegree := hmonic.natDegree_pos.mpr (by
+      intro h
+      have hc := congrArg (fun q : Polynomial (PadicInt p) => q.coeff 0) h
+      rw [hcoeff] at hc
+      have hu : IsUnit (p : PadicInt p) := by
+        rw [show (p : PadicInt p) = 1 by simpa using hc]
+        exact isUnit_one
+      exact (mem_nonunits_iff.mp PadicInt.p_nonunit) hu)
+    rw [Polynomial.degree_eq_natDegree hmonic.ne_zero]
+    exact_mod_cast (Nat.ne_of_gt hdegree)
+  have hofinj : Function.Injective (AdjoinRoot.of f) :=
+    AdjoinRoot.of.injective_of_degree_ne_zero hdeg
+  have hp0 : (p : AdjoinRoot f) ≠ 0 := by
+    intro hpzero
+    apply (show (p : PadicInt p) ≠ 0 by
+      exact_mod_cast (Fact.out : Nat.Prime p).ne_zero)
+    apply hofinj
+    simpa [hcoeff] using hpzero
+  have hroot0 : AdjoinRoot.root f ≠ 0 := by
+    intro hroot
+    have h := AdjoinRoot.eval₂_root f
+    rw [hroot, Polynomial.eval₂_at_zero, hcoeff] at h
+    apply (show (p : PadicInt p) ≠ 0 by
+      exact_mod_cast (Fact.out : Nat.Prime p).ne_zero)
+    apply hofinj
+    simpa using h
+  have hnotfield : ¬IsField (AdjoinRoot f) := by
+    intro hfield
+    have hbot : IsLocalRing.maximalIdeal (AdjoinRoot f) = ⊥ :=
+      IsLocalRing.isField_iff_maximalIdeal_eq.mp hfield
+    have hspan : Ideal.span ({AdjoinRoot.root f} : Set (AdjoinRoot f)) = ⊥ :=
+      hmaxroot.symm.trans hbot
+    exact hroot0 (Ideal.span_singleton_eq_bot.mp hspan)
+  have hprincipal : (IsLocalRing.maximalIdeal (AdjoinRoot f)).IsPrincipal :=
+    ⟨AdjoinRoot.root f, hmaxroot⟩
+  let : IsDiscreteValuationRing (AdjoinRoot f) :=
+    ((IsDiscreteValuationRing.TFAE (AdjoinRoot f) hnotfield).out 4 0).mp hprincipal
+  have hdimB : ringKrullDim (AdjoinRoot f) = 1 :=
+    IsDiscreteValuationRing.ringKrullDim_eq_one (AdjoinRoot f)
+  have hregularB : IsRegularLocalRing (AdjoinRoot f) := by
+    have hspan :
+        (↑(IsLocalRing.maximalIdeal (AdjoinRoot f)).spanFinrank : WithBot ℕ∞) = 1 := by
+      rw [hmaxroot]
+      exact_mod_cast Submodule.spanFinrank_singleton hroot0
+    exact ⟨hspan.trans (by exact_mod_cast hdimB.symm)⟩
+  have hdegree_eq : f.natDegree = p - 1 := by
+    have hX : (Polynomial.X + 1 : Polynomial (PadicInt p)).natDegree = 1 := by
+      rw [show (Polynomial.X + 1 : Polynomial (PadicInt p)) =
+        Polynomial.X + Polynomial.C 1 by simp, Polynomial.natDegree_X_add_C]
+    change ((Polynomial.cyclotomic p (PadicInt p)).comp
+      (Polynomial.X + 1)).natDegree = p - 1
+    rw [Polynomial.natDegree_comp, Polynomial.natDegree_cyclotomic,
+      Nat.totient_prime (Fact.out : Nat.Prime p), hX, Nat.mul_one]
+  have hdegree_two : 2 ≤ f.natDegree := by
+    rw [hdegree_eq]
+    omega
+  have hdiveval :
+      (Polynomial.divX f).eval₂ (AdjoinRoot.of f) (AdjoinRoot.root f) ∈
+        Ideal.span {AdjoinRoot.root f} := by
+    rw [Polynomial.eval₂_eq_sum_range]
+    apply Submodule.sum_mem
+    intro i hi
+    by_cases hi0 : i = 0
+    · subst i
+      have hcoef : (Polynomial.divX f).coeff 0 ∈
+          Ideal.span {(p : PadicInt p)} := by
+        rw [Polynomial.coeff_divX]
+        exact hweak.mem (by omega)
+      simpa using hmaproot (Ideal.mem_map_of_mem _ hcoef)
+    · have hpowmem : (AdjoinRoot.root f) ^ i ∈
+          Ideal.span {AdjoinRoot.root f} := by
+        obtain ⟨j, rfl⟩ := Nat.exists_eq_succ_of_ne_zero hi0
+        rw [pow_succ]
+        exact (Ideal.span {AdjoinRoot.root f}).mul_mem_left _
+          (Ideal.subset_span (Set.mem_singleton _))
+      exact (Ideal.span {AdjoinRoot.root f}).mul_mem_left _ hpowmem
+  have hpow : (p : AdjoinRoot f) ∈
+      (IsLocalRing.maximalIdeal (AdjoinRoot f)) ^ 2 := by
+    rw [hmaxroot, Ideal.span_singleton_pow]
+    obtain ⟨b, hb⟩ := Ideal.mem_span_singleton'.1 hdiveval
+    have hrel : -((AdjoinRoot.root f) *
+        (Polynomial.divX f).eval₂ (AdjoinRoot.of f) (AdjoinRoot.root f)) =
+        (p : AdjoinRoot f) := by
+      have h := congrArg (fun g : Polynomial (PadicInt p) =>
+          g.eval₂ (AdjoinRoot.of f) (AdjoinRoot.root f))
+        (Polynomial.divX_mul_X_add f)
+      rw [AdjoinRoot.eval₂_root, hcoeff] at h
+      have h' : (AdjoinRoot.root f) *
+          (Polynomial.divX f).eval₂ (AdjoinRoot.of f) (AdjoinRoot.root f) +
+            (p : AdjoinRoot f) = 0 := by
+        simpa [map_add, map_mul, mul_comm] using h
+      linear_combination -h'
+    refine Ideal.mem_span_singleton'.2 ⟨-b, ?_⟩
+    calc
+      -b * (AdjoinRoot.root f) ^ 2 =
+          -((AdjoinRoot.root f) * (b * AdjoinRoot.root f)) := by ring
+      _ = -((AdjoinRoot.root f) *
+          (Polynomial.divX f).eval₂ (AdjoinRoot.of f) (AdjoinRoot.root f)) := by
+        rw [hb]
+      _ = (p : AdjoinRoot f) := hrel
+  have hcompleteOrder : IsAdicComplete
+      (IsLocalRing.maximalIdeal (Chapter13CyclotomicOrder p))
+        (Chapter13CyclotomicOrder p) := by
+    rw [← IsLocalRing.map_ringEquiv_maximalIdeal e]
+    exact (IsAdicComplete.congr_ringEquiv
+      (IsLocalRing.maximalIdeal (AdjoinRoot f)) e).mpr hcompleteB
+  have hregularOrder : IsRegularLocalRing (Chapter13CyclotomicOrder p) :=
+    hregularB.of_ringEquiv e
+  have hdimOrder : ringKrullDim (Chapter13CyclotomicOrder p) = 1 := by
+    rw [← ringKrullDim_eq_of_ringEquiv e]
+    exact hdimB
+  have hpowOrder : (p : Chapter13CyclotomicOrder p) ∈
+      (IsLocalRing.maximalIdeal (Chapter13CyclotomicOrder p)) ^ 2 := by
+    rw [← IsLocalRing.map_ringEquiv_maximalIdeal e, ← Ideal.map_pow]
+    change (p : Chapter13CyclotomicOrder p) ∈
+      Ideal.map e.toRingHom ((IsLocalRing.maximalIdeal (AdjoinRoot f)) ^ 2)
+    exact Ideal.mem_map_of_mem e.toRingHom hpow
+  have hpOrder : (p : Chapter13CyclotomicOrder p) ≠ 0 := by
+    intro hz
+    apply hp0
+    apply e.injective
+    simpa using hz
+  have hramified : IsLocalRing.maximalIdeal (Chapter13CyclotomicOrder p) ≠
+      Ideal.span {(p : Chapter13CyclotomicOrder p)} := by
+    intro heq
+    have hp2 : (p : Chapter13CyclotomicOrder p) ∈
+        (Ideal.span {(p : Chapter13CyclotomicOrder p)}) ^ 2 := by
+      rw [← heq]
+      exact hpowOrder
+    rw [Ideal.span_singleton_pow, Ideal.mem_span_singleton] at hp2
+    obtain ⟨a, ha⟩ := hp2
+    have hpa : (p : Chapter13CyclotomicOrder p) * a = 1 := by
+      apply (mul_left_cancel₀ hpOrder)
+      simpa [pow_two, mul_assoc] using ha.symm
+    exact (IsLocalRing.notMem_maximalIdeal.mpr (IsUnit.of_mul_eq_one a hpa))
+      (Ideal.pow_le_self (by omega) hpowOrder)
+  exact ⟨hcompleteOrder, hregularOrder,
+    IsDiscreteValuationRing.RingEquivClass.isDiscreteValuationRing e,
+    hdimOrder, hpowOrder,
+    chapter13_ramified_dvr_is_not_cohen p hramified⟩
 
 /-! ### Formal local coordinates -/
 
@@ -823,7 +1178,80 @@ theorem chapter13_formal_local_coordinates
     Nonempty
       (MvPowerSeries (Fin d) k ≃+*
         AdicCompletion (IsLocalRing.maximalIdeal R) R) := by
-  sorry
+  let : IsNoetherianRing R := hR
+  let A := AdicCompletion (IsLocalRing.maximalIdeal R) R
+  let hfg : (IsLocalRing.maximalIdeal R).FG :=
+    (IsLocalRing.maximalIdeal R).fg_of_isNoetherianRing
+  have hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A := by
+    exact AdicCompletion.isAdicComplete_of_fg hfg
+  have hspan : (IsLocalRing.maximalIdeal A).spanFinrank =
+      (IsLocalRing.maximalIdeal R).spanFinrank := by
+    exact AdicCompletion.spanFinrank_maximalIdeal_eq
+  let : Module.FaithfullyFlat R A :=
+    Module.FaithfullyFlat.of_flat_of_isLocalHom
+  have hdimle : ringKrullDim R ≤ ringKrullDim A := by
+    exact chapter13_ringKrullDim_le_of_faithfullyFlat (R := R) (S := A)
+  have hspanle : (IsLocalRing.maximalIdeal A).spanFinrank ≤ ringKrullDim A := by
+    rw [hspan]
+    calc
+      (IsLocalRing.maximalIdeal R).spanFinrank = ringKrullDim R :=
+        hregular.spanFinrank_maximalIdeal
+      _ ≤ ringKrullDim A := hdimle
+  have hregularA : IsRegularLocalRing A := by
+    sorry
+  have hdimA : ringKrullDim A = d := by
+    apply le_antisymm
+    · calc
+        ringKrullDim A ≤ (IsLocalRing.maximalIdeal A).spanFinrank :=
+          ringKrullDim_le_spanFinrank_maximalIdeal A
+        _ = (IsLocalRing.maximalIdeal R).spanFinrank := by
+          exact_mod_cast hspan
+        _ = ringKrullDim R := hregular.spanFinrank_maximalIdeal
+        _ = d := by exact_mod_cast hdim
+    · calc
+        (d : WithBot ℕ∞) = ringKrullDim R := by
+          exact_mod_cast hdim.symm
+        _ ≤ ringKrullDim A := hdimle
+  have hcontainsA : Chapter13ContainsField A := by
+    obtain ⟨K⟩ := hcontains
+    let f : K.carrier →+* A :=
+      (algebraMap R A).comp K.carrier.subtype
+    have hf : Function.Injective f := by
+      exact (FaithfulSMul.algebraMap_injective R A).comp
+        (fun x y h => Subtype.ext h)
+    let ef : K.carrier ≃+* f.range :=
+      RingEquiv.ofBijective f.rangeRestrict
+        ⟨fun x y h => hf (congrArg Subtype.val h), f.rangeRestrict_surjective⟩
+    have hfield : IsField f.range :=
+      ef.symm.toMulEquiv.isField K.field_carrier
+    exact ⟨⟨f.range, hfield⟩⟩
+  obtain ⟨K, hK, _⟩ :=
+    chapter13_coefficient_field_exists_when_contains_field hcomplete hcontainsA
+  let ρ : K.carrier →+* Chapter13ResidueRing A :=
+    (Chapter13ResidueMap A).comp K.carrier.subtype
+  let eK : K.carrier ≃+* Chapter13ResidueRing A :=
+    RingEquiv.ofBijective ρ hK
+  let eA : Chapter13ResidueRing A ≃+* k := by
+    let r : Chapter13ResidueRing R →+* Chapter13ResidueRing A :=
+      IsLocalRing.ResidueField.map (algebraMap R A)
+    have hr : Function.Bijective r := by
+      exact AdicCompletion.residueField_map_bijective R
+    exact (RingEquiv.ofBijective r hr).symm.trans e
+  let σ : k →+* A :=
+    K.carrier.subtype.comp (eK.trans eA).symm.toRingHom
+  have hσ : IsLocalHom σ := by
+    apply ((IsLocalRing.local_hom_TFAE σ).out 3 0).mp
+    rw [IsLocalRing.maximalIdeal_eq_bot]
+    exact bot_le
+  have hres : Function.Bijective ((Chapter13ResidueMap A).comp σ) := by
+    have hcomp : (Chapter13ResidueMap A).comp σ = eA.symm.toRingHom := by
+      ext x
+      change eK ((eK.trans eA).symm x) = eA.symm x
+      simp
+    rw [hcomp]
+    exact eA.symm.bijective
+  exact chapter13_equal_characteristic_complete_regular_is_power_series d
+    ⟨inferInstance, hcomplete⟩ hregularA hdimA hcontainsA σ hσ hres
 
 end
 
