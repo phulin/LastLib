@@ -70,6 +70,7 @@ theorem dedekind_local_fraction_field_product
     [IsScalarTower R (FractionRing R) (FractionRing S)]
     [Algebra.IsSeparable (FractionRing R) (FractionRing S)]
     [Algebra (FractionRing R) (localizationFractionField R p)]
+    [IsScalarTower R (FractionRing R) (localizationFractionField R p)]
     (hfinite : Module.Finite R S) (hfree : Module.Free R S)
     (hlies : ∀ i, (P i).LiesOver p)
     [hprime : ∀ i, (P i).IsPrime]

@@ -289,6 +289,7 @@ theorem completed_product_field_decomposition
     [IsScalarTower A B (FractionRing B)]
     [IsScalarTower A (FractionRing A) (FractionRing B)]
     [Algebra (FractionRing A) (completionFractionField A m)]
+    [IsScalarTower A (FractionRing A) (completionFractionField A m)]
     :
     Nonempty
       (FractionRing B ⊗[FractionRing A] completionFractionField A m ≃+*
