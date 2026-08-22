@@ -147,11 +147,12 @@ def chapter03IsometricEmbedding
     {L Ω : Type*} [Norm L] [Norm Ω] (σ : L → Ω) : Prop :=
   ∀ x : L, ‖σ x‖ = ‖x‖
 
-/- A finite-dimensional normed-algebra embedding is continuous.  Isometry is
-provided by the valuation-normalization results above once the norms are the
-corresponding local norms. -/
+/- A finite-dimensional normed-algebra embedding over a complete nontrivial
+   base is continuous.  Isometry is provided by the valuation-normalization
+   results above once the norms are the corresponding local norms. -/
 theorem chapter03_algebraic_embedding_is_continuous
-    {K L Ω : Type*} [NormedField K] [NormedField L] [NormedField Ω]
+    {K L Ω : Type*} [NontriviallyNormedField K] [CompleteSpace K]
+    [NormedField L] [NormedField Ω]
     [NormedAlgebra K L] [NormedAlgebra K Ω] [FiniteDimensional K L]
     (σ : L →ₐ[K] Ω) :
     Continuous σ := by
@@ -165,9 +166,11 @@ theorem chapter03_galois_action_is_continuous
     Continuous σ := by
   exact (AddMonoidHomClass.isometry_of_norm σ hnorm).continuous
 
-/-- Trace and norm are continuous finite algebraic operations. -/
+/-- Trace and norm are continuous finite algebraic operations over a complete
+nontrivially normed base. -/
 theorem chapter03_trace_and_norm_are_continuous
-    {K L : Type*} [NormedField K] [NormedField L] [NormedAlgebra K L]
+    {K L : Type*} [NontriviallyNormedField K] [CompleteSpace K]
+    [NormedField L] [NormedAlgebra K L]
     [FiniteDimensional K L] :
     Continuous (fun x : L => Algebra.trace K L x) ∧
       Continuous (fun x : L => Algebra.norm K x) := by
