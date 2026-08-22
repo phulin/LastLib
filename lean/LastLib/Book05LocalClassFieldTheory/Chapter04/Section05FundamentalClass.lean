@@ -56,7 +56,7 @@ theorem chapter04_crossed_product_mul_is_associative
     ∀ x y z,
       chapter04CrossedProductMul c
           (chapter04CrossedProductMul c x y) z =
-        chapter04CrossedProductMul c x
+      chapter04CrossedProductMul c x
           (chapter04CrossedProductMul c y z) := by
   sorry
 
@@ -90,7 +90,7 @@ theorem chapter04_crossed_product_is_central_simple_of_cocycle
     [FiniteDimensional K L] [IsGalois K L]
     (c : Chapter04NormalizedTwoCocycle (Gal(L / K)) L) :
     Nonempty (Chapter04CrossedProductBrauerRepresentative K L c) := by
-  sorry
+  exact chapter04_crossed_product_is_central_simple c
 
 theorem chapter04_full_matrix_algebra_automorphism_is_inner
     {S : Type*} [Field S] (n : ℕ)
@@ -98,7 +98,40 @@ theorem chapter04_full_matrix_algebra_automorphism_is_inner
     (φ : Matrix (Fin n) (Fin n) S ≃ₐ[S] Matrix (Fin n) (Fin n) S) :
     ∃ T : (Matrix (Fin n) (Fin n) S)ˣ, ∀ X,
       φ X = (T : Matrix (Fin n) (Fin n) S) * X * (T⁻¹ : Matrix (Fin n) (Fin n) S) := by
-  sorry
+  let e : Matrix (Fin n) (Fin n) S ≃ₐ[S] Module.End S (Fin n → S) :=
+    Matrix.toLinAlgEquiv'
+  let ψ : Module.End S (Fin n → S) ≃ₐ[S] Module.End S (Fin n → S) :=
+    (e.symm.trans φ).trans e
+  obtain ⟨Tlin, hTlin⟩ := ψ.eq_linearEquivConjAlgEquiv
+  let Tlin' : LinearMap.GeneralLinearGroup S (Fin n → S) :=
+    LinearMap.GeneralLinearGroup.ofLinearEquiv Tlin
+  let T : (Matrix (Fin n) (Fin n) S)ˣ :=
+    Matrix.GeneralLinearGroup.toLin.symm Tlin'
+  have hTunit : Matrix.GeneralLinearGroup.toLin T = Tlin' := by
+    exact Matrix.GeneralLinearGroup.toLin.apply_symm_apply Tlin'
+  have hT : e (T : Matrix (Fin n) (Fin n) S) = Tlin.toLinearMap := by
+    change (Matrix.GeneralLinearGroup.toLin T).val = Tlin'.val
+    rw [hTunit]
+  have hTinv : e (T⁻¹ : Matrix (Fin n) (Fin n) S) = Tlin.symm.toLinearMap := by
+    have hval :
+        ((T : Matrix (Fin n) (Fin n) S)⁻¹) = (↑(T⁻¹) : Matrix (Fin n) (Fin n) S) :=
+      (Matrix.GeneralLinearGroup.coe_inv T).symm
+    rw [hval]
+    have hTunit_inv : Matrix.GeneralLinearGroup.toLin T⁻¹ = Tlin'⁻¹ := by
+      rw [map_inv, hTunit]
+    change (Matrix.GeneralLinearGroup.toLin T⁻¹).val = Tlin.symm.toLinearMap
+    rw [hTunit_inv]
+    rfl
+  refine ⟨T, ?_⟩
+  intro X
+  apply e.injective
+  have hX := congrArg (fun f => f (e X)) hTlin
+  have hψX : ψ (e X) = e (φ X) := by
+    simp [ψ]
+  rw [← hψX, hX]
+  simp only [LinearEquiv.conjAlgEquiv_apply, LinearMap.comp_apply, hT, hTinv,
+    map_mul, AlgEquiv.coe_trans, AlgEquiv.apply_symm_apply, Module.End.mul_eq_comp]
+  rw [LinearMap.comp_assoc]
 
 theorem chapter04_coboundary_rescaling_preserves_crossed_product_class
     {K L : Type*} [Field K] [Field L] [Algebra K L]
