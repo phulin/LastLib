@@ -70,25 +70,290 @@ def Chapter11SplitShortExact
       s ≫ S.g = 𝟙 S.X₃ ∧
       r ≫ S.f + S.g ≫ s = 𝟙 S.X₂
 
+private theorem chapter11_fixed_space_codim_direct_sum
+    {k G : Type*} [Field k] [Fintype G] [Group G]
+    (V W : FDRep k G) (H : Subgroup G) :
+    LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+        (V ⊞ W).ρ H =
+      LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim V.ρ H +
+        LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim W.ρ H := by
+  let iV : V →ₗ[k] (V ⊞ W).V :=
+    ((CategoryTheory.Limits.biprod.inl :
+      (V : FDRep k G) ⟶ (V ⊞ W : FDRep k G)).hom.hom.hom)
+  let iW : W →ₗ[k] (V ⊞ W).V :=
+    ((CategoryTheory.Limits.biprod.inr :
+      (W : FDRep k G) ⟶ (V ⊞ W : FDRep k G)).hom.hom.hom)
+  let pV : (V ⊞ W).V →ₗ[k] V :=
+    ((CategoryTheory.Limits.biprod.fst :
+      (V ⊞ W : FDRep k G) ⟶ (V : FDRep k G)).hom.hom.hom)
+  let pW : (V ⊞ W).V →ₗ[k] W :=
+    ((CategoryTheory.Limits.biprod.snd :
+      (V ⊞ W : FDRep k G) ⟶ (W : FDRep k G)).hom.hom.hom)
+  let e : (V × W) ≃ₗ[k] (V ⊞ W).V :=
+    { toFun := fun x => iV x.1 + iW x.2
+      invFun := fun x => (pV x, pW x)
+      left_inv := by
+        intro x
+        have hVV := congrArg (fun f => f.hom.hom.hom x.1)
+          (CategoryTheory.Limits.biprod.inl_fst
+            (X := (V : FDRep k G)) (Y := (W : FDRep k G)))
+        have hWV := congrArg (fun f => f.hom.hom.hom x.2)
+          (CategoryTheory.Limits.biprod.inr_fst
+            (X := (V : FDRep k G)) (Y := (W : FDRep k G)))
+        have hVW := congrArg (fun f => f.hom.hom.hom x.1)
+          (CategoryTheory.Limits.biprod.inl_snd
+            (X := (V : FDRep k G)) (Y := (W : FDRep k G)))
+        have hWW := congrArg (fun f => f.hom.hom.hom x.2)
+          (CategoryTheory.Limits.biprod.inr_snd
+            (X := (V : FDRep k G)) (Y := (W : FDRep k G)))
+        change pV (iV x.1) = x.1 at hVV
+        change pV (iW x.2) = 0 at hWV
+        change pW (iV x.1) = 0 at hVW
+        change pW (iW x.2) = x.2 at hWW
+        change (pV (iV x.1 + iW x.2), pW (iV x.1 + iW x.2)) = x
+        simp only [map_add]
+        rw [hVV, hWV, hVW, hWW]
+        simp only [add_zero, zero_add]
+      right_inv := by
+        intro x
+        have htotal := CategoryTheory.Limits.biprod.total
+          (X := (V : FDRep k G)) (Y := (W : FDRep k G))
+        have hx := congrArg (fun f => f.hom.hom.hom x) htotal
+        change iV (pV x) + iW (pW x) = x at hx
+        exact hx
+      map_add' := by
+        intro x y
+        change iV (x.1 + y.1) + iW (x.2 + y.2) =
+          (iV x.1 + iW x.2) + (iV y.1 + iW y.2)
+        simp only [map_add]
+        abel
+      map_smul' := by
+        intro a x
+        simp [iV, iW] }
+  have he_comm (g : G) :
+      (V ⊞ W).ρ g ∘ₗ e.toLinearMap =
+        e.toLinearMap ∘ₗ (V.ρ g).prodMap (W.ρ g) := by
+    apply LinearMap.prod_ext <;> ext x
+    · have hV := congrArg (fun f => f.hom.hom x)
+        ((CategoryTheory.Limits.biprod.inl :
+          (V : FDRep k G) ⟶ (V ⊞ W : FDRep k G)).comm g)
+      simpa [e, iV] using hV.symm
+    · have hW := congrArg (fun f => f.hom.hom x)
+        ((CategoryTheory.Limits.biprod.inr :
+          (W : FDRep k G) ⟶ (V ⊞ W : FDRep k G)).comm g)
+      simpa [e, iW] using hW.symm
+  let ρprod := chapter11DirectSumRepresentation V.ρ W.ρ
+  have hfixed_prod :
+      LastLib.Book03RamificationTheory.Chapter10.fixedSpace ρprod H =
+        (LastLib.Book03RamificationTheory.Chapter10.fixedSpace V.ρ H).prod
+          (LastLib.Book03RamificationTheory.Chapter10.fixedSpace W.ρ H) := by
+    ext x
+    constructor
+    · intro hx
+      rw [LastLib.Book03RamificationTheory.Chapter10.fixedSpace.mem_iff] at hx
+      have hxV : x.1 ∈ LastLib.Book03RamificationTheory.Chapter10.fixedSpace V.ρ H := by
+        rw [LastLib.Book03RamificationTheory.Chapter10.fixedSpace.mem_iff]
+        intro h
+        have hx' := congrArg Prod.fst (hx h)
+        simpa [ρprod, chapter11DirectSumRepresentation] using hx'
+      have hxW : x.2 ∈ LastLib.Book03RamificationTheory.Chapter10.fixedSpace W.ρ H := by
+        rw [LastLib.Book03RamificationTheory.Chapter10.fixedSpace.mem_iff]
+        intro h
+        have hx' := congrArg Prod.snd (hx h)
+        simpa [ρprod, chapter11DirectSumRepresentation] using hx'
+      exact ⟨hxV, hxW⟩
+    · intro hx
+      have hxV :=
+        (LastLib.Book03RamificationTheory.Chapter10.fixedSpace.mem_iff V.ρ H x.1).mp hx.1
+      have hxW :=
+        (LastLib.Book03RamificationTheory.Chapter10.fixedSpace.mem_iff W.ρ H x.2).mp hx.2
+      rw [LastLib.Book03RamificationTheory.Chapter10.fixedSpace.mem_iff]
+      intro h
+      apply Prod.ext
+      · simpa [ρprod, chapter11DirectSumRepresentation] using hxV h
+      · simpa [ρprod, chapter11DirectSumRepresentation] using hxW h
+  have hfixed_map :
+      LastLib.Book03RamificationTheory.Chapter10.fixedSpace (V ⊞ W).ρ H =
+        (LastLib.Book03RamificationTheory.Chapter10.fixedSpace ρprod H).map
+          e.toLinearMap := by
+    apply le_antisymm
+    · intro y hy
+      have hy' :=
+        (LastLib.Book03RamificationTheory.Chapter10.fixedSpace.mem_iff
+          (V ⊞ W).ρ H y).mp hy
+      let x := e.symm y
+      have hx : x ∈ LastLib.Book03RamificationTheory.Chapter10.fixedSpace ρprod H := by
+        rw [LastLib.Book03RamificationTheory.Chapter10.fixedSpace.mem_iff]
+        intro h
+        have hcomm := LinearMap.congr_fun (he_comm h) x
+        apply e.injective
+        rw [e.apply_symm_apply]
+        simpa [x, ρprod, chapter11DirectSumRepresentation, LinearMap.comp_apply, hy' h]
+          using hcomm.symm
+      exact ⟨x, hx, by simp [x]⟩
+    · rintro y ⟨x, hx, rfl⟩
+      have hx' :=
+        (LastLib.Book03RamificationTheory.Chapter10.fixedSpace.mem_iff ρprod H x).mp hx
+      rw [LastLib.Book03RamificationTheory.Chapter10.fixedSpace.mem_iff]
+      intro h
+      have hx'' : (V.ρ (h : G) x.1, W.ρ (h : G) x.2) = x := by
+        simpa [ρprod, chapter11DirectSumRepresentation] using hx' h
+      have hcomm := LinearMap.congr_fun (he_comm h) x
+      change (V ⊞ W).ρ (h : G) (e x) =
+        e ((V.ρ (h : G) x.1, W.ρ (h : G) x.2)) at hcomm
+      rw [hx''] at hcomm
+      exact hcomm
+  have he_fixed_dim :
+      Module.finrank k
+          (LastLib.Book03RamificationTheory.Chapter10.fixedSpace (V ⊞ W).ρ H) =
+        Module.finrank k
+          (LastLib.Book03RamificationTheory.Chapter10.fixedSpace ρprod H) := by
+    rw [hfixed_map, e.finrank_map_eq]
+  let p := LastLib.Book03RamificationTheory.Chapter10.fixedSpace V.ρ H
+  let q := LastLib.Book03RamificationTheory.Chapter10.fixedSpace W.ρ H
+  let epq : (p × q) ≃ₗ[k] (p.prod q) :=
+    { toFun := fun x => ⟨(x.1.1, x.2.1), ⟨x.1.2, x.2.2⟩⟩
+      invFun := fun x => (⟨x.1.1, x.2.1⟩, ⟨x.1.2, x.2.2⟩)
+      left_inv := by intro x; rfl
+      right_inv := by intro x; rfl
+      map_add' := by intro x y; rfl
+      map_smul' := by intro a x; rfl }
+  have hprod_fixed_dim :
+      Module.finrank k (LastLib.Book03RamificationTheory.Chapter10.fixedSpace ρprod H) =
+        Module.finrank k p + Module.finrank k q := by
+    rw [hfixed_prod]
+    calc
+      Module.finrank k (p.prod q) = Module.finrank k (p × q) :=
+        (LinearEquiv.finrank_eq epq).symm
+      _ = Module.finrank k p + Module.finrank k q := Module.finrank_prod
+  change Module.finrank k ((V ⊞ W).V ⧸
+      LastLib.Book03RamificationTheory.Chapter10.fixedSpace (V ⊞ W).ρ H) =
+    Module.finrank k (V.V ⧸ LastLib.Book03RamificationTheory.Chapter10.fixedSpace V.ρ H) +
+      Module.finrank k (W.V ⧸ LastLib.Book03RamificationTheory.Chapter10.fixedSpace W.ρ H)
+  rw [Submodule.finrank_quotient, Submodule.finrank_quotient,
+    Submodule.finrank_quotient, he_fixed_dim, hprod_fixed_dim]
+  rw [← e.finrank_eq, Module.finrank_prod]
+  have hp : Module.finrank k p ≤ Module.finrank k V.V := Submodule.finrank_le p
+  have hq : Module.finrank k q ≤ Module.finrank k W.V := Submodule.finrank_le q
+  change Module.finrank k V.V + Module.finrank k W.V -
+      (Module.finrank k p + Module.finrank k q) =
+    (Module.finrank k V.V - Module.finrank k p) +
+      (Module.finrank k W.V - Module.finrank k q)
+  rw [Nat.sub_eq_iff_eq_add (Nat.add_le_add hp hq)]
+  omega
+
+private theorem chapter11_fixed_space_codim_iso
+    {k G : Type*} [Field k] [Fintype G] [Group G]
+    {V W : FDRep k G} (e : V ≅ W) (H : Subgroup G) :
+    LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim V.ρ H =
+      LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim W.ρ H := by
+  let l := FDRep.isoToLinearEquiv e
+  have hl (g : G) : W.ρ g ∘ₗ l.toLinearMap = l.toLinearMap ∘ₗ V.ρ g := by
+    rw [FDRep.Iso.conj_ρ e g]
+    ext x
+    simp [l, LinearEquiv.conj_apply]
+  have hfixed :
+      LastLib.Book03RamificationTheory.Chapter10.fixedSpace W.ρ H =
+        (LastLib.Book03RamificationTheory.Chapter10.fixedSpace V.ρ H).map
+          l.toLinearMap := by
+    apply le_antisymm
+    · intro y hy
+      have hy' :=
+        (LastLib.Book03RamificationTheory.Chapter10.fixedSpace.mem_iff W.ρ H y).mp hy
+      let x := l.symm y
+      have hx : x ∈ LastLib.Book03RamificationTheory.Chapter10.fixedSpace V.ρ H := by
+        rw [LastLib.Book03RamificationTheory.Chapter10.fixedSpace.mem_iff]
+        intro g
+        have hcomm := LinearMap.congr_fun (hl g) x
+        apply l.injective
+        rw [l.apply_symm_apply]
+        simpa [x, LinearMap.comp_apply, hy' g] using hcomm.symm
+      exact ⟨x, hx, by simp [x]⟩
+    · rintro y ⟨x, hx, rfl⟩
+      have hx' :=
+        (LastLib.Book03RamificationTheory.Chapter10.fixedSpace.mem_iff V.ρ H x).mp hx
+      rw [LastLib.Book03RamificationTheory.Chapter10.fixedSpace.mem_iff]
+      intro g
+      have hcomm := LinearMap.congr_fun (hl g) x
+      have hx'' := hx' g
+      change W.ρ (g : G) (l x) = l (V.ρ (g : G) x) at hcomm
+      rw [hx''] at hcomm
+      exact hcomm
+  unfold LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+  rw [Submodule.finrank_quotient, Submodule.finrank_quotient,
+    hfixed, l.finrank_map_eq, ← l.finrank_eq]
+
+private theorem chapter11_artin_conductor_iso
+    {k G : Type*} [Field k] [Fintype G] [Group G]
+    (D : Chapter11RamificationData G) {V W : FDRep k G} (e : V ≅ W) :
+    chapter11ArtinConductor D V.ρ = chapter11ArtinConductor D W.ρ := by
+  unfold chapter11ArtinConductor
+  simp_rw [chapter11_fixed_space_codim_iso e]
+
 theorem chapter11_short_exact_representation_splits
     {k G : Type*} [Field k] [CharZero k] [Fintype G] [Group G]
     (S : Chapter11ShortExactRepresentation k G) :
     Chapter11SplitShortExact S.sequence := by
-  sorry
+  letI : NeZero (Nat.card G : k) := by
+    have hcard : (Nat.card G : k) ≠ 0 := by
+      rw [← Fintype.card_eq_nat_card]
+      exact (Nat.cast_ne_zero (R := k)).mpr
+        (Fintype.card_ne_zero : Fintype.card G ≠ 0)
+    exact ⟨hcard⟩
+  letI : Injective S.sequence.X₁ := by
+    constructor
+    intro X Y g f hf
+    letI : Mono f := hf
+    let F := forget₂ (FDRep k G) (Rep k G)
+    let T := Rep.toModuleMonoidAlgebra (k := k) (G := G)
+    let fR := F.map f
+    let gR := F.map g
+    let fM := T.map fR
+    let gM := T.map gR
+    letI : Mono fR := F.map_mono f
+    have hfM : Function.Injective fM.hom := by
+      apply (ModuleCat.mono_iff_injective fM).mp
+      exact T.map_mono fR
+    haveI : IsSemisimpleRing (MonoidAlgebra k G) := by infer_instance
+    haveI : Module.Injective (MonoidAlgebra k G) (T.obj (F.obj S.sequence.X₁)) :=
+      Module.injective_of_isSemisimpleRing _ _
+    obtain ⟨hM, hhM⟩ := Module.Injective.out fM.hom hfM gM.hom
+    obtain ⟨hR, hTR⟩ := T.map_surjective (ModuleCat.ofHom hM)
+    obtain ⟨hFD, hF⟩ := F.map_surjective hR
+    refine ⟨hFD, ?_⟩
+    apply F.map_injective
+    rw [F.map_comp, hF]
+    apply T.map_injective
+    rw [T.map_comp, hTR]
+    apply ModuleCat.hom_ext
+    ext x
+    exact hhM x
+  let hsplit := S.short_exact.splittingOfInjective
+  exact ⟨hsplit.r, hsplit.s, hsplit.f_r, hsplit.s_g, hsplit.id⟩
 
 theorem chapter11_artin_conductor_direct_sum
     {k G : Type*} [Field k] [Fintype G] [Group G]
     (D : Chapter11RamificationData G) (V W : FDRep k G) :
     chapter11ArtinConductorFD D (chapter11DirectSumFDRep V W) =
       chapter11ArtinConductorFD D V + chapter11ArtinConductorFD D W := by
-  sorry
+  change chapter11ArtinConductor D (V ⊞ W).ρ =
+    chapter11ArtinConductor D V.ρ + chapter11ArtinConductor D W.ρ
+  unfold chapter11ArtinConductor
+  simp_rw [chapter11_fixed_space_codim_direct_sum]
+  simp only [Nat.cast_add, mul_add]
+  rw [Finset.sum_add_distrib]
 
 theorem chapter11_swan_conductor_direct_sum
     {k G : Type*} [Field k] [Fintype G] [Group G]
     (D : Chapter11RamificationData G) (V W : FDRep k G) :
     chapter11SwanConductorFD D (chapter11DirectSumFDRep V W) =
       chapter11SwanConductorFD D V + chapter11SwanConductorFD D W := by
-  sorry
+  change chapter11SwanConductor D (V ⊞ W).ρ =
+    chapter11SwanConductor D V.ρ + chapter11SwanConductor D W.ρ
+  unfold chapter11SwanConductor
+  simp_rw [chapter11_fixed_space_codim_direct_sum]
+  simp only [Nat.cast_add, mul_add]
+  rw [Finset.sum_add_distrib]
 
 /-- Artin conductors are additive in a short exact sequence of finite-dimensional representations. -/
 theorem chapter11_artin_conductor_short_exact_additive
@@ -98,7 +363,20 @@ theorem chapter11_artin_conductor_short_exact_additive
     chapter11ArtinConductorFD D S.sequence.X₂ =
       chapter11ArtinConductorFD D S.sequence.X₁ +
         chapter11ArtinConductorFD D S.sequence.X₃ := by
-  sorry
+  rcases chapter11_short_exact_representation_splits S with
+    ⟨r, s, hr, hs, hid⟩
+  let hsplit : S.sequence.Splitting :=
+    { r := r
+      s := s
+      f_r := hr
+      s_g := hs
+      id := hid }
+  let e := hsplit.isoBinaryBiproduct
+  change chapter11ArtinConductor D S.sequence.X₂.ρ =
+    chapter11ArtinConductor D S.sequence.X₁.ρ +
+      chapter11ArtinConductor D S.sequence.X₃.ρ
+  rw [chapter11_artin_conductor_iso D e]
+  exact chapter11_artin_conductor_direct_sum D S.sequence.X₁ S.sequence.X₃
 
 theorem chapter11_swan_conductor_short_exact_additive
     {k G : Type*} [Field k] [CharZero k] [Fintype G] [Group G]

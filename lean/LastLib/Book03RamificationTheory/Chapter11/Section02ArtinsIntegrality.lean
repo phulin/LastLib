@@ -1,5 +1,8 @@
 import LastLib.Book03RamificationTheory.Chapter06.Section03FiniteUpperBreakDecompositions
 import LastLib.Book03RamificationTheory.Chapter11.Section01WhyTheWeightedSumIsAnInteger
+import Mathlib.GroupTheory.FiniteAbelian.Duality
+import Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed
+import Mathlib.Analysis.Complex.Polynomial.Basic
 
 namespace LastLib.Book03RamificationTheory.Chapter11
 
@@ -764,7 +767,33 @@ theorem chapter11_exists_character_of_upper_break
     (hr : U.IsUpperBreak r) :
     ∃ χ : G →* ℂˣ,
       Chapter11HasLargestUpperBreak U.upper U.upperRight χ r := by
-  sorry
+  rcases hr with ⟨hrnonneg, hrneq⟩
+  have hnot : ¬ U.upper r ≤ U.upperRight r := by
+    intro hle
+    exact hrneq (le_antisymm hle (U.upperRight_le_upper r))
+  have hnot' : ¬ ∀ g, g ∈ U.upper r → g ∈ U.upperRight r := by
+    exact hnot
+  push_neg at hnot'
+  obtain ⟨g, hgupper, hgright⟩ := hnot'
+  let H : Subgroup G := U.upperRight r
+  have hq : QuotientGroup.mk' H g ≠ 1 := by
+    intro h
+    exact hgright ((QuotientGroup.eq_one_iff (N := H) g).mp h)
+  obtain ⟨φ, hφ⟩ :=
+    CommGroup.exists_apply_ne_one_of_hasEnoughRootsOfUnity
+      (G ⧸ H) (M := ℂ) hq
+  refine ⟨φ.comp (QuotientGroup.mk' H), ?_⟩
+  refine ⟨?_, ?_, ⟨g, hgupper, ?_⟩⟩
+  · intro x hx
+    have hxq : QuotientGroup.mk' H x = 1 :=
+      (QuotientGroup.eq_one_iff (N := H) x).2 hx
+    rw [MonoidHom.comp_apply, hxq, map_one]
+  · intro u hru x hx
+    have hxH : x ∈ H := (U.upper_later_le_right hru) hx
+    have hxq : QuotientGroup.mk' H x = 1 :=
+      (QuotientGroup.eq_one_iff (N := H) x).2 hxH
+    rw [MonoidHom.comp_apply, hxq, map_one]
+  · simpa [H] using hφ
 
 theorem chapter11_upper_break_character_has_conductor_r_plus_one
     {G : Type*} [Fintype G] [CommGroup G]
@@ -783,7 +812,18 @@ theorem chapter11_hasse_arf_upper_break_integer
     (hr : U.IsUpperBreak r) (hperfect : D.residue_perfect)
     (hinput : Chapter11CanonicalArtinInput D) :
     ∃ z : ℤ, r = z := by
-  sorry
+  obtain ⟨χ, hχ⟩ := chapter11_exists_character_of_upper_break U hr
+  have hseparable := chapter11_residue_separable_of_perfect D hperfect
+  have hconductor :=
+    chapter11_upper_break_character_has_conductor_r_plus_one
+      U χ hseparable hr.1 hχ
+  obtain ⟨n, hn⟩ :=
+    chapter11_artin_conductor_is_nonnegative_integer
+      D (chapter11OneDimensionalRepresentation χ) hseparable hperfect hinput
+  have hn' : (n : ℚ) = r + 1 := hn.trans hconductor
+  refine ⟨(n : ℤ) - 1, ?_⟩
+  norm_num [Int.cast_sub]
+  linarith
 
 end
 end LastLib.Book03RamificationTheory.Chapter11
