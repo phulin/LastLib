@@ -535,7 +535,7 @@ The preceding kernel calculation assumes smoothness and properness. The trace fo
 
 A cycle class alone acts cleanly only in a smooth oriented setting. A cohomological correspondence packages the coefficient map and extraordinary pullback needed on open or singular spaces, so it is the correct input for the general theorem.
 
-Let $X$ be separated of finite type over a separably closed field, let $K\in D_c^b(X,E)$, and let
+Let $X$ be separated of finite type of dimension at most one over a separably closed field, let $K\in D_c^b(X,E)$, and let
 
 $$
 c=(c_1,c_2):C\longrightarrow X\times X
@@ -693,11 +693,13 @@ $$
 
 is equivariant. Additivity of linear trace matches the decomposition of the geometric trace class into its portions over $U$ and $Z$. This compatibility is the engine of dimension induction.
 
+Both assertions are consequences of Lemma 6.2(c) and Standing Input 6.3 rather than separate principles: the trace-class construction is an additive functor of $K$ on localization triangles, so a class on $X$ restricts to classes on $U$ and $Z$ whose pushforwards sum to it, and conversely classes on the pieces glue over an open--closed decomposition because $H^0$ of a disjoint coproduct of supports is the direct product of the pieces. No uniqueness-by fiat is used anywhere: every extension step is the five-lemma induction over an explicit constructible filtration, exactly as in the proof of Lemma 6.2(c).
+
 ### 6.4 Proof of the trace theorem
 
-The proof now has one task: show that categorical evaluation of the global operator becomes geometric evaluation after pulling the kernel to the diagonal. We keep compactification, Künneth, duality, and proper trace visible because each accounts for one hypothesis in the statement.
+The proof now has one task: show that categorical evaluation of the global operator becomes geometric evaluation after pulling the kernel to the diagonal. We keep Künneth, duality, and proper trace visible because each accounts for one hypothesis in the statement. One input is consumed under an explicit label: Standing Input 6.3, which is a theorem whenever both legs are proper and is otherwise recorded, not proved.
 
-**Theorem 6.1 (Lefschetz--Verdier).** Let $X$ be separated of finite type over a separably closed field, let $K\in D_c^b(X,E)$, and let $(c,u)$ be a properly supported cohomological correspondence whose fixed locus is proper. Then
+**Theorem 6.1 (Lefschetz--Verdier).** Let $X$ be separated of finite type of dimension at most one over a separably closed field, let $K\in D_c^b(X,E)$, and let $(c,u)$ be a properly supported cohomological correspondence whose fixed locus is proper. Then
 
 $$
 \sum_i(-1)^i
@@ -707,25 +709,25 @@ $$
 
 If the fixed locus is a disjoint union of proper components $Z_\alpha$, the right side is $\sum_\alpha LT_{Z_\alpha}(c,u)$.
 
-**Proof.** First compactify $X$ and the proper support of $c$. Extension by zero replaces $K$ by $j_!K$ on a proper space, and the cohomological correspondence extends by zero on the added support. Any new boundary fixed component then has zero trace class because one of its coefficient factors is the zero boundary stalk of $j_!K$. Independence of compactification, localization, and proper base change show that both the induced operator and the original fixed-locus trace class are unchanged. Thus we may work with proper direct images.
+**Proof.** The proof never passes to a compactification of the correspondence. Compact support is already intrinsic — $R\Gamma_c$ is defined by Book 20, Section 2 and is a functor independently of any chosen compactification, by Section 3.1 of this book — and the trace class of Section 6.2 was constructed directly on the given $(c,u)$, not on an extension by zero. This is deliberate: extending a correspondence across a boundary and proving that the added fixed components contribute zero would be a substantive boundary theorem in its own right, and nothing below uses it. The hypotheses are used only in the forms stated: proper support makes $R\Gamma_c(u)$ exist through the adjunction of Book 20, Sections 2.4 and 3.2; bounded constructibility on a curve makes $V=R\Gamma_c(X,K)$ perfect; properness of $\operatorname{Fix}(c)$ makes the integration of the trace class defined.
 
 Write $V=R\Gamma_c(X,K)$. Verdier duality identifies $V^\vee$ with $R\Gamma(X,D_XK)$. The mixed-support Künneth isomorphism identifies
 
 $$
 V^\vee\otimes^LV
 \simeq
-R\Gamma_c(X\times X,D_XK\boxtimes^LK).
+R\Gamma_c(X\times X,D_XK\boxtimes^LK),
 $$
 
-Under this identification, coevaluation $E\to V^\vee\otimes^LV$ is the diagonal coevaluation class: pulling it back by the diagonal and applying $D_XK\otimes K\to\omega_X^\bullet$ gives the structural trace $R\Gamma_c(X,\omega_X^\bullet)\to E$. This characterization proves the assertion first for a lisse sheaf and then, by the localization induction of Section 6.2, for every bounded constructible $K$.
+and Lemma 6.2 constructs under this identification the diagonal coevaluation class $\operatorname{coev}_K$, characterized by clause (b): pulling it back along the diagonal and applying evaluation gives the structural trace. By Section 5.1's cyclicity, the alternating trace of the endomorphism $R\Gamma_c(u)$ equals the evaluation against $\operatorname{coev}_K$ of the image of $R\Gamma_c(u)$ under this chain of identifications.
 
-The cohomological correspondence supplies a functional on the displayed kernel complex. Pull back to $C$, apply the pairing (6.1), and integrate $\omega_C^\bullet$ by the structural trace. The support hypothesis is exactly what makes this compactly supported functional defined. Unwinding the adjunctions shows that evaluation of this functional after inserting $R\Gamma_c(u)$ is the categorical trace of the endomorphism $R\Gamma_c(u)$, hence its alternating cohomological trace by Section 5.1.
+The cohomological correspondence transports that image to $C$: pull $\operatorname{coev}_K$ back along the flipped correspondence $(c_2,c_1)$, apply the kernel pairing (6.1), and integrate over $C$ by the structural trace of Book 20, Section 5.1. The support hypothesis on $(c,u)$ is exactly what makes each arrow defined at the level of compactly supported complexes. That the resulting scalar is the categorical trace of $R\Gamma_c(u)$ is checked adjunction by adjunction: the unit for $c_1$, the coefficient map $u$, and the counit $\operatorname{Tr}_{c_2}$ appear on the operator side exactly as their transposed pullback, pairing, and integration appear on the kernel side, and the two composite morphisms $E\to E$ agree because both are computed as the same composition of adjoints — this is the uniqueness-by-adjoint characterization of traces recorded in Book 20, Section 5.1. The identity is first verified when $K$ is a shifted lisse sheaf on a smooth stratum, where it is matrix algebra against the Poincaré pairing of Book 20, Section 7.1, and extends to all bounded constructible $K$ by the dévissage of Lemma 6.2(c), both sides being additive on localization triangles: the left side by additivity of the perfect trace (Section 5.2), the right side by Standing Input 6.3's functoriality clause.
 
-On the other hand, the cartesian square defining $\operatorname{Fix}(c)$ is precisely the pullback of $C$ along the diagonal. Proper base change moves the kernel evaluation to that square. The projection formula contracts the two coefficient factors, and transitivity of extraordinary traces integrates the resulting map $E\to a^!E$. By the explicit construction in Section 6.2, this map is $\operatorname{Tr}_c(u)$. Hence the categorical trace is $\int\operatorname{Tr}_c(u)$.
+It remains to identify the geometric side with the integral over the fixed locus. The functional just built factors through the fixed-locus lift supplied by Standing Input 6.3, whose composite with pushforward it is by construction. Proper base change of Book 19, Section 6.1 — applicable because the square has properly supported legs in every case covered by the input's provenance — moves the kernel evaluation from $C$ to the cartesian square defining $\operatorname{Fix}(c)$; the projection formula of Book 20, Section 6.2 contracts the two coefficient factors along the diagonal; and transitivity of the extraordinary traces of Book 20, Section 5.1 integrates the resulting map $E\to a^!E$. By the explicit construction in Section 6.2, that map carries $1$ to $\operatorname{Tr}_c(u)$. Hence the categorical trace is $\int_{\operatorname{Fix}(c)}\operatorname{Tr}_c(u)$.
 
 Therefore the two scalars are equal. Decomposing a proper fixed locus into open-and-closed components and using additivity gives the final assertion. $\square$
 
-The proof explains the hypotheses. Constructibility and finite cohomology make the global complex perfect. Proper support makes pushforward and integration exist. Properness of the fixed locus makes the final scalar defined. Smoothness is absent because the dualizing complex supplies the orientation.
+The proof explains the hypotheses. Constructibility on a curve and finite cohomology make the global complex perfect. Proper support makes pushforward and integration exist, and supplies the two-proper-legs reduction under which Standing Input 6.3 follows from proved base change. Properness of the fixed locus makes the final scalar defined. Smoothness is absent because the dualizing complex supplies the orientation.
 
 ## 7. Local terms and isolated fixed points
 
@@ -795,7 +797,7 @@ We now combine the global theorem with the Frobenius local calculation. Smooth v
 
 The smooth constant-coefficient case contains the essential fixed-point geometry in its purest form. Once proved, all remaining generality will come from additivity rather than a new local computation.
 
-**Theorem 8.1.** Let $X$ be a smooth separated scheme of finite type over $\mathbf F_q$. For every $n\ge1$,
+**Theorem 8.1.** Let $X$ be a smooth separated scheme of finite type of dimension at most one over $\mathbf F_q$. For every $n\ge1$,
 
 $$
 \#X(\mathbf F_{q^n})
@@ -805,6 +807,8 @@ $$
 $$
 
 **Proof.** The graph of $F^n$ has fixed locus $X(\mathbf F_{q^n})$, a finite proper scheme. Theorem 6.1 identifies the alternating cohomological trace with the sum of local terms. At every fixed point, $dF^n=0$, so Proposition 7.1 gives local term $1$ for the constant sheaf. Summing gives the formula. $\square$
+
+The restriction to dimension at most one is exactly the range of the duality package of Book 20 on which Theorem 6.1 rests. A point-count formula for higher-dimensional smooth schemes would require the Lefschetz--Verdier theorem beyond that range and is neither proved nor claimed here; every later application of this chapter, including the zeta function of Chapter 11 and the weight theory that follows it, takes place on curves.
 
 Properness of $X$ was not used: compact support absorbs the boundary. Ordinary cohomology would already give the wrong answer for $\mathbf A^1$.
 
@@ -826,7 +830,7 @@ Rational points satisfy the same decomposition. Theorem 8.1 treats $U$. Inductio
 
 Replacing the constant sheaf by a coefficient system turns a variety into a function on its finite-field points. The purpose of the sheaf--function formula is to show that the sum of those local values is still one global cohomological trace.
 
-Let $K_0\in D_c^b(X_0,E)$ carry its descent, equivalently Frobenius, structure, and let $K$ be its pullback to $\bar X$. A point $x\in X_0(\mathbf F_{q^n})$ and a geometric lift $\bar x$ give an endomorphism of the stalk complex by transporting $\bar x$ once around $F^n$. Define its supertrace by
+Let $X_0$ be a separated finite-type scheme of dimension at most one over $\mathbf F_q$, let $K_0\in D_c^b(X_0,E)$ carry its descent, equivalently Frobenius, structure, and let $K$ be its pullback to $\bar X$. A point $x\in X_0(\mathbf F_{q^n})$ and a geometric lift $\bar x$ give an endomorphism of the stalk complex by transporting $\bar x$ once around $F^n$. Define its supertrace by
 
 $$
 \operatorname{Tr}(F_{x,n}\mid K_{\bar x})
@@ -969,13 +973,13 @@ If $f=\operatorname{id}$, the fixed locus is the whole curve, so the isolated fo
 
 ## 10. Trace formulas for correspondences
 
-Point counting uses the graph of Frobenius, but arithmetic applications often insert a second geometric operator. A correspondence defined over the finite field commutes with Frobenius, so its action and the Galois action can be traced simultaneously. The geometry then counts fixed points of a twisted correspondence rather than rational points of the original variety.
+Point counting uses the graph of Frobenius, but arithmetic applications often insert a second geometric operator. A correspondence defined over the finite field commutes with Frobenius, so its action and the Galois action can be traced simultaneously. The geometry then counts fixed points of a twisted correspondence rather than rational points of the original variety. Throughout this chapter $X$ is a curve, the range in which Chapter 6 proves the trace theorem; remarks about general varieties are motivational, and no trace formula outside that range is used or claimed.
 
 ### 10.1 Properly supported correspondences
 
 Before tracing a correspondence, one must know that its pull--push action preserves compact support. This section isolates that geometric condition, especially at a compactification boundary where an apparently finite open correspondence may acquire new components.
 
-Let $X/\mathbf F_q$ be a smooth variety of dimension $d$, and let
+Let $X/\mathbf F_q$ be a smooth curve, and let
 
 $$
 c=(c_1,c_2):C\longrightarrow X\times X
@@ -1330,7 +1334,7 @@ The trace formula is most reusable when it travels with coefficient sheaves and 
 
 The constant-sheaf zeta function is only the first member of a wider construction. Local Frobenius actions on a coefficient complex produce Euler factors whose global rationality follows from the same sheaf--function trace identity.
 
-Let $K_0$ be a constructible $E$-complex on $X_0/\mathbf F_q$ with Frobenius structure. Define
+Let $X_0$ be a separated finite-type scheme of dimension at most one over $\mathbf F_q$, and let $K_0$ be a constructible $E$-complex on $X_0$ with Frobenius structure. Define
 
 $$
 L(X_0,K_0,t)
@@ -1348,7 +1352,7 @@ $$
 \operatorname{Tr}(F_{y,n}\mid K_{\bar y}).
 $$
 
-Theorem 8.3 therefore proves
+Theorem 8.3, applied on the curve $X_0$, therefore proves
 
 $$
 L(X_0,K_0,t)
