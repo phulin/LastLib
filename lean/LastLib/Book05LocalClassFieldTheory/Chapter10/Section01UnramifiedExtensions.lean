@@ -105,7 +105,279 @@ theorem chapter10_unramified_norm_subgroup_eq_value_unit_subgroup
     (U : Chapter10UnramifiedExtensionData (L := L) D m) :
     chapter10NormSubgroup K L =
       chapter10ValueUnitSubgroup D D.uniformizer m 0 := by
-  sorry
+  classical
+  let A := Chapter10ValuationRing D.valuation
+  let B := Chapter10ValuationRing U.valuation
+  let _ : Valuation.IsRankOneDiscrete D.valuation.toValuation :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08_rank_one_discrete_of_add_valuation
+      D.valuation D.complete.1
+  let _ : Valuation.IsRankOneDiscrete U.valuation.toValuation :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08_rank_one_discrete_of_add_valuation
+      U.valuation U.unramified.2.2.2.1.1
+  let _ : Valuation.HasExtension D.valuation.toValuation U.valuation.toValuation :=
+    ⟨U.unramified.1⟩
+  letI : Algebra (Chapter10ResidueField D.valuation)
+      (Chapter10ResidueField U.valuation) := U.residue_algebra
+  letI : Module (Chapter10ResidueField D.valuation)
+      (Chapter10ResidueField U.valuation) := U.residue_algebra.toModule
+  letI : FiniteDimensional (Chapter10ResidueField D.valuation)
+      (Chapter10ResidueField U.valuation) := U.residue_finite_dimensional
+  letI : Algebra.IsSeparable (Chapter10ResidueField D.valuation)
+      (Chapter10ResidueField U.valuation) := U.residue_separable
+  let _ : Algebra A K := A.subtype.toAlgebra
+  let _ : Algebra B L := B.subtype.toAlgebra
+  let _ : Algebra A B :=
+    Valuation.HasExtension.instAlgebra_valuationSubring
+      D.valuation.toValuation U.valuation.toValuation
+  let _ : Algebra A L :=
+    ((algebraMap K L).comp A.subtype).toAlgebra
+  let _ : IsScalarTower A K L :=
+    IsScalarTower.of_algebraMap_eq (fun _ => rfl)
+  let _ : IsScalarTower A B L := by
+    apply IsScalarTower.of_algebraMap_eq
+    intro a
+    change algebraMap K L (a : K) = (algebraMap A B a : L)
+    exact
+      (Valuation.HasExtension.coe_algebraMap_valuationSubring_eq
+        D.valuation.toValuation U.valuation.toValuation a).symm
+  let _ : IsFractionRing A K :=
+    (Valuation.valuationSubring.integers D.valuation.toValuation).isFractionRing
+  let _ : IsFractionRing B L :=
+    (Valuation.valuationSubring.integers U.valuation.toValuation).isFractionRing
+  let hstruct :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.finite_complete_extension_valuation_ring
+      D.valuation.toValuation U.valuation.toValuation D.complete.2
+  let _ : Module.Finite A B := hstruct.1
+  let _ : Module.Free A B := hstruct.2.1
+  let _ : Module.IsTorsionFree A B := by infer_instance
+  let _ : IsDiscreteValuationRing B := hstruct.2.2.2.1
+  let _ : IsDedekindDomain B := by infer_instance
+  let _ : IsIntegrallyClosed A :=
+    Valuation.Integers.isIntegrallyClosed
+      (Valuation.valuationSubring.integers D.valuation.toValuation)
+  let _ : IsIntegrallyClosed B := by infer_instance
+  let _ : Algebra.IsIntegral A B := by infer_instance
+  let N : Bˣ →* Aˣ := Units.map (Algebra.intNorm A B)
+  let hvint := Valuation.valuationSubring.integers D.valuation.toValuation
+  have hintegral : ∀ x : K, IsIntegral A x ↔ 0 ≤ D.valuation x := by
+    intro x
+    constructor
+    · intro hx
+      obtain ⟨a, ha⟩ :=
+        (IsIntegrallyClosed.isIntegral_iff (R := A)).mp hx
+      have ha0 : 0 ≤ D.valuation (a : K) := a.property
+      change 0 ≤ D.valuation ((algebraMap A K) a) at ha0
+      rw [ha] at ha0
+      exact ha0
+    · intro hx
+      apply (IsIntegrallyClosed.isIntegral_iff (R := A)).mpr
+      exact ⟨⟨x, hx⟩, rfl⟩
+  let p : A := ⟨(D.uniformizer : K), by
+    apply (Valuation.mem_valuationSubring_iff D.valuation.toValuation _).2
+    change Multiplicative.ofAdd (OrderDual.toDual (D.valuation (D.uniformizer : K))) ≤ 1
+    rw [D.uniformizer_value]
+    change (0 : WithTop ℤ) ≤ 1
+    norm_num⟩
+  have hp : D.valuation (algebraMap A K p) = (1 : WithTop ℤ) := by
+    exact D.uniformizer_value
+  have hmax : IsLocalRing.maximalIdeal A = Ideal.span ({p} : Set A) :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08_value_one_generates_maximal_ideal
+      D.valuation D.complete.1 hintegral p hp
+  have hintegralB : ∀ x : L, IsIntegral B x ↔ 0 ≤ U.valuation x := by
+    intro x
+    constructor
+    · intro hx
+      obtain ⟨b, hb⟩ :=
+        (IsIntegrallyClosed.isIntegral_iff (R := B)).mp hx
+      have hb0 : 0 ≤ U.valuation (b : L) := b.property
+      rw [← hb]
+      exact hb0
+    · intro hx
+      apply (IsIntegrallyClosed.isIntegral_iff (R := B)).mpr
+      exact ⟨⟨x, hx⟩, rfl⟩
+  let pB : B := algebraMap A B p
+  have hpB : U.valuation (algebraMap B L pB) = (1 : WithTop ℤ) := by
+    change U.valuation (algebraMap K L (algebraMap A K p)) = (1 : WithTop ℤ)
+    rw [U.unramified.2.1]
+    simp [hp]
+  have hmaxB : IsLocalRing.maximalIdeal B = Ideal.span ({pB} : Set B) :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08_value_one_generates_maximal_ideal
+      U.valuation U.unramified.2.2.2.1.1 hintegralB pB hpB
+  have hmap :
+      Ideal.map (algebraMap A B) (IsLocalRing.maximalIdeal A) =
+        IsLocalRing.maximalIdeal B := by
+    rw [hmax, hmaxB]
+    rw [Ideal.map_span, Set.image_singleton]
+  have hram : (IsLocalRing.maximalIdeal B).ramificationIdx A = 1 := by
+    let hform : Algebra.FormallyUnramified A B :=
+      Algebra.FormallyUnramified.of_map_maximalIdeal hmap
+    letI : Algebra.FormallyUnramified A B := hform
+    exact Ideal.ramificationIdx_eq_one (IsLocalRing.maximalIdeal B) A
+  have hπ :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11IsUniformizer
+        D.valuation (D.uniformizer : K) := by
+    refine ⟨D.uniformizer.ne_zero, D.uniformizer_value, p, rfl, ?_⟩
+    refine ⟨?_, hmax⟩
+    intro hp
+    apply D.uniformizer.ne_zero
+    exact congrArg Subtype.val hp
+  have hnormunit :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11NormUnitLiftCompatibility
+        K L D.valuation U.valuation N := by
+    intro u
+    change (algebraMap A K) (Algebra.intNorm A B (u : B)) =
+      Algebra.norm K (algebraMap B L (u : B))
+    exact Algebra.algebraMap_intNorm (A := A) (B := B) (K := K) (L := L) (u : B)
+  have hredA :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04ResidueMap
+        A (Chapter10ResidueField D.valuation)
+        (IsLocalRing.maximalIdeal A)
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueMap
+          D.valuation) := by
+    exact U.residue_reduction_compatible.1
+  have hredB :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04ResidueMap
+        B (Chapter10ResidueField U.valuation)
+        (IsLocalRing.maximalIdeal B)
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueMap
+          U.valuation) := by
+    exact U.residue_reduction_compatible.2.1
+  have hcompat : ∀ a : A,
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueMap
+          U.valuation) (algebraMap A B a) =
+        algebraMap (Chapter10ResidueField D.valuation)
+          (Chapter10ResidueField U.valuation)
+          ((LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueMap
+            D.valuation) a) := by
+    intro a
+    rcases U.residue_reduction_compatible.2.2 a with ⟨b, hb, hres⟩
+    have hab : algebraMap A B a = b := by
+      apply Subtype.ext
+      change (algebraMap A B a : L) = (b : L)
+      rw [Valuation.HasExtension.coe_algebraMap_valuationSubring_eq
+        D.valuation.toValuation U.valuation.toValuation a, hb]
+    rw [hab]
+    exact hres
+  obtain ⟨d⟩ :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_heterogeneous_extension_data_exists
+      D.valuation.toValuation U.valuation.toValuation U.unramified.1
+  have hscale : ∀ x : K, x ≠ 0 →
+      U.valuation (algebraMap K L x) =
+        (1 : ℕ) • D.valuation x := by
+    intro x hx
+    simpa [one_nsmul] using U.unramified.2.1 x
+  have hri :=
+    @LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_normalized_ramification_index_eq_scale
+      K L _ _ _ _ D.valuation U.valuation D.complete.1
+      U.unramified.2.2.2.1.1 U.unramified.1 d 1 (by simp) hscale d.finite_quotient
+  have hnormred :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11NormResidueCompatibility
+        K L (Chapter10ResidueField D.valuation) (Chapter10ResidueField U.valuation)
+        D.valuation U.valuation
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueMap D.valuation)
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueMap U.valuation)
+        1 N := by
+    intro u
+    obtain ⟨ha, hb⟩ :=
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04_residue_trace_and_norm
+        A B K L (Chapter10ResidueField D.valuation) (Chapter10ResidueField U.valuation)
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueMap D.valuation)
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueMap U.valuation)
+        hredA hredB hcompat 1 0 (Algebra.intNorm A B (u : B)) 0 u
+        (by simp) (by
+          change (algebraMap A K) (Algebra.intNorm A B (u : B)) =
+            Algebra.norm K (algebraMap B L (u : B))
+          exact Algebra.algebraMap_intNorm (A := A) (B := B) (K := K) (L := L) (u : B))
+        hram.symm
+    change (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueMap
+        D.valuation) (Algebra.intNorm A B (u : B)) =
+      Algebra.norm (Chapter10ResidueField D.valuation)
+        ((LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueMap
+          U.valuation) (u : B)) ^ 1
+    simpa [N] using hb
+  have hfull :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11_unramified_full_norm_image
+      K L D.valuation U.valuation (D.uniformizer : K) m U.unramified hπ
+      (chapter10_unramified_norm_valuation_formula D m U) U.degree_eq
+      U.residue_degree_eq U.residue_reduction_compatible N hnormunit hnormred
+  have hzero :
+      Chapter10FieldUnitFiltration D.valuation 0 =
+        (Chapter10ValuationRing D.valuation).unitGroup :=
+    (chapter10_field_unit_filtration_zero_one D.valuation).1
+  have hfield_unit_of_unitSet :
+      ∀ u : K,
+        u ∈
+          LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11UnitFiltration
+            D.valuation 0 →
+        ∃ v : Chapter10FieldUnitFiltration D.valuation 0,
+          ((v : Kˣ) : K) = u := by
+    intro u hu
+    rw [LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11_unit_filtration_zero]
+      at hu
+    rcases hu with ⟨a, ha⟩
+    have hva : (a : Kˣ) ∈ Chapter10FieldUnitFiltration D.valuation 0 := by
+      rw [hzero]
+      exact a.property
+    refine ⟨⟨a, hva⟩, ?_⟩
+    exact ha.symm
+  have hunitSet_of_field_unit :
+      ∀ v : Chapter10FieldUnitFiltration D.valuation 0,
+        ((v : Kˣ) : K) ∈
+          LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11UnitFiltration
+            D.valuation 0 := by
+    intro v
+    rw [LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11_unit_filtration_zero]
+    have hva : (v : Kˣ) ∈ (Chapter10ValuationRing D.valuation).unitGroup := by
+      rw [← hzero]
+      exact v.property
+    exact ⟨⟨(v : Kˣ), hva⟩, rfl⟩
+  apply le_antisymm
+  · intro x hx
+    rcases (chapter10_mem_normSubgroup_iff K L x).mp hx with ⟨y, hy⟩
+    have hnorm :
+        Algebra.norm K (y : L) = (x : K) := by
+      have hy' := congrArg Units.val hy
+      change Algebra.norm K (y : L) = (x : K) at hy'
+      exact hy'
+    have hxset :
+        (x : K) ∈
+          LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ValueUnitProductSet
+            D.valuation (D.uniformizer : K) m := by
+      rw [← hfull]
+      refine ⟨(y : L), y.ne_zero, hnorm.symm⟩
+    obtain ⟨z, u, hu, hxu⟩ :=
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11_mem_value_unit_product_set_iff
+        D.valuation (D.uniformizer : K) m (x : K)).mp hxset
+    obtain ⟨v, hv⟩ := hfield_unit_of_unitSet u hu
+    apply (chapter10_mem_value_unit_subgroup_iff D D.uniformizer m 0 x).2
+    refine ⟨z, v, ?_⟩
+    apply Units.ext
+    simpa [hv] using hxu
+  · intro x hx
+    obtain ⟨z, v, hxv⟩ :=
+      (chapter10_mem_value_unit_subgroup_iff D D.uniformizer m 0 x).mp hx
+    have hu :
+        ((v : Kˣ) : K) ∈
+          LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11UnitFiltration
+            D.valuation 0 :=
+      hunitSet_of_field_unit v
+    have hxset :
+        (x : K) ∈
+          LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ValueUnitProductSet
+            D.valuation (D.uniformizer : K) m := by
+      apply
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11_mem_value_unit_product_set_iff
+          D.valuation (D.uniformizer : K) m (x : K)).2
+      refine ⟨z, ((v : Kˣ) : K), hu, ?_⟩
+      have hxv' := congrArg Units.val hxv
+      simpa using hxv'
+    rw [← hfull] at hxset
+    rcases hxset with ⟨y, hy, hxy⟩
+    apply (chapter10_mem_normSubgroup_iff K L x).2
+    refine ⟨Units.mk0 y hy, ?_⟩
+    apply Units.ext
+    change Algebra.norm K y = (x : K)
+    exact hxy.symm
 
 /- The quotient has only the valuation coordinate.  `Multiplicative (ZMod m)`
    is the multiplicative presentation of the source's additive `ℤ/mℤ`. -/
@@ -117,7 +389,170 @@ theorem chapter10_unramified_norm_quotient_equiv
     Nonempty
       ((Chapter10NormQuotient K L) ≃*
         Multiplicative (ZMod m)) := by
-  sorry
+  classical
+  let A := Chapter10ValuationRing D.valuation
+  let _ : Valuation.IsRankOneDiscrete D.valuation.toValuation :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08_rank_one_discrete_of_add_valuation
+      D.valuation D.complete.1
+  let _ : Algebra A K := A.subtype.toAlgebra
+  let _ : IsFractionRing A K :=
+    (Valuation.valuationSubring.integers D.valuation.toValuation).isFractionRing
+  let _ : IsIntegrallyClosed A :=
+    Valuation.Integers.isIntegrallyClosed
+      (Valuation.valuationSubring.integers D.valuation.toValuation)
+  have hintegral : ∀ x : K, IsIntegral A x ↔ 0 ≤ D.valuation x := by
+    intro x
+    constructor
+    · intro hx
+      obtain ⟨a, ha⟩ :=
+        (IsIntegrallyClosed.isIntegral_iff (R := A)).mp hx
+      have ha0 : 0 ≤ D.valuation (a : K) := a.property
+      change 0 ≤ D.valuation ((algebraMap A K) a) at ha0
+      rw [ha] at ha0
+      exact ha0
+    · intro hx
+      apply (IsIntegrallyClosed.isIntegral_iff (R := A)).mpr
+      exact ⟨⟨x, hx⟩, rfl⟩
+  let p : A := ⟨(D.uniformizer : K), by
+    apply (Valuation.mem_valuationSubring_iff D.valuation.toValuation _).2
+    change Multiplicative.ofAdd (OrderDual.toDual (D.valuation (D.uniformizer : K))) ≤ 1
+    rw [D.uniformizer_value]
+    change (0 : WithTop ℤ) ≤ 1
+    norm_num⟩
+  have hp : D.valuation (algebraMap A K p) = (1 : WithTop ℤ) := by
+    exact D.uniformizer_value
+  have hmax : IsLocalRing.maximalIdeal A = Ideal.span ({p} : Set A) :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08_value_one_generates_maximal_ideal
+      D.valuation D.complete.1 hintegral p hp
+  have hπA :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.Chapter04Uniformizer A p := by
+    refine ⟨?_, hmax⟩
+    intro hp0
+    apply D.uniformizer.ne_zero
+    exact congrArg Subtype.val hp0
+  have hzero :
+      Chapter10FieldUnitFiltration D.valuation 0 = A.unitGroup :=
+    (chapter10_field_unit_filtration_zero_one D.valuation).1
+  have hunitSet_of_field_unit :
+      ∀ v : Chapter10FieldUnitFiltration D.valuation 0,
+        ((v : Kˣ) : K) ∈
+          LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11UnitFiltration
+            D.valuation 0 := by
+    intro v
+    rw [LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11_unit_filtration_zero]
+    have hva : (v : Kˣ) ∈ A.unitGroup := by
+      rw [← hzero]
+      exact v.property
+    exact ⟨⟨(v : Kˣ), hva⟩, rfl⟩
+  have hsub :
+      chapter10NormSubgroup K L =
+        chapter10ValueUnitSubgroup D D.uniformizer m 0 :=
+    chapter10_unramified_norm_subgroup_eq_value_unit_subgroup D m U
+  let N : Subgroup Kˣ := chapter10NormSubgroup K L
+  let qπ : Kˣ ⧸ N := QuotientGroup.mk' N D.uniformizer
+  have hgen : ∀ q : Kˣ ⧸ N, q ∈ Subgroup.zpowers qπ := by
+    intro q
+    refine QuotientGroup.induction_on q ?_
+    intro x
+    obtain ⟨n, u, hxu, _⟩ :=
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.dvr_fraction_field_unique_normal_form
+        A K hπA x.ne_zero
+    let v : Kˣ := Units.map A.subtype.toMonoidHom u
+    have hv : v ∈ Chapter10FieldUnitFiltration D.valuation 0 := by
+      rw [hzero]
+      rw [ValuationSubring.mem_unitGroup_iff]
+      change A.valuation ((v : Kˣ) : K) = 1
+      simp [v]
+    have hvN : v ∈ N := by
+      change v ∈ chapter10NormSubgroup K L
+      rw [hsub]
+      exact Subgroup.mem_sup_right hv
+    have hxu' : (x : K) = (D.uniformizer : K) ^ n * (v : K) := by
+      have hmapu : (algebraMap A K (u : A)) = (v : K) := by
+        rfl
+      have hmapp : (algebraMap A K p) = (D.uniformizer : K) := by
+        rfl
+      calc
+        (x : K) = (algebraMap A K (u : A)) * (algebraMap A K p) ^ n := by
+          simpa [Units.smul_def, Algebra.smul_def] using hxu
+        _ = (D.uniformizer : K) ^ n * (v : K) := by
+          rw [hmapu, hmapp]
+          ring
+    have hq : QuotientGroup.mk' N x = qπ ^ n := by
+      change (x : Kˣ ⧸ N) =
+        (D.uniformizer : Kˣ ⧸ N) ^ n
+      rw [← QuotientGroup.mk_zpow]
+      change QuotientGroup.mk' N x =
+        QuotientGroup.mk' N (D.uniformizer ^ n)
+      rw [QuotientGroup.mk'_eq_mk']
+      have hvNinv : v⁻¹ ∈ N := by
+        change v⁻¹ ∈ chapter10NormSubgroup K L
+        obtain ⟨y, hy⟩ := hvN
+        refine ⟨y⁻¹, ?_⟩
+        rw [map_inv, hy]
+      refine ⟨v⁻¹, hvNinv, ?_⟩
+      apply Units.ext
+      simpa [hxu']
+    exact (Subgroup.mem_zpowers_iff).2 ⟨n, hq.symm⟩
+  have hpow : qπ ^ m = 1 := by
+    change (D.uniformizer : Kˣ ⧸ N) ^ m = 1
+    rw [← QuotientGroup.mk_pow]
+    apply (QuotientGroup.eq_one_iff (D.uniformizer ^ m)).2
+    change D.uniformizer ^ m ∈ N
+    change D.uniformizer ^ m ∈ chapter10NormSubgroup K L
+    rw [hsub]
+    exact Subgroup.mem_sup_left ((Subgroup.mem_zpowers_iff).2 ⟨1, by simp⟩)
+  have hm_dvd : ∀ z : ℤ, qπ ^ z = 1 → (m : ℤ) ∣ z := by
+    intro z hz
+    have hmem : D.uniformizer ^ z ∈ N := by
+      apply (QuotientGroup.eq_one_iff (D.uniformizer ^ z)).mp
+      change (D.uniformizer ^ z : Kˣ ⧸ N) = 1
+      rw [← QuotientGroup.mk_zpow]
+      simpa [qπ] using hz
+    have hmem' : D.uniformizer ^ z ∈
+        chapter10ValueUnitSubgroup D D.uniformizer m 0 := by
+      rw [← hsub]
+      exact hmem
+    obtain ⟨k, u, hzu⟩ :=
+      (chapter10_mem_value_unit_subgroup_iff D D.uniformizer m 0
+        (D.uniformizer ^ z)).mp hmem'
+    have huval : D.valuation ((u : Kˣ) : K) = 0 :=
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11_mem_unit_set_iff_valuation_zero
+        D.valuation ((u : Kˣ) : K)).mp (hunitSet_of_field_unit u)
+    have huniformizer_val : ∀ r : ℤ,
+        D.valuation ((D.uniformizer : K) ^ r) = (r : WithTop ℤ) := by
+      intro r
+      cases r with
+      | ofNat n =>
+          simp [zpow_natCast, AddValuation.map_pow, D.uniformizer_value]
+      | negSucc n =>
+          simp [zpow_negSucc, AddValuation.map_inv, AddValuation.map_pow,
+            D.uniformizer_value, Int.cast_negSucc, Nat.cast_add,
+            Nat.cast_one]
+          change -1 + -(n : WithTop ℤ) = -((n + 1 : ℕ) : WithTop ℤ)
+          simp [Nat.cast_add, Nat.cast_one]
+    have hval := congrArg D.valuation (congrArg Units.val hzu)
+    have hzval : z = (m : ℤ) * k := by
+      simp only [Units.val_zpow_eq_zpow_val, Units.val_mul] at hval
+      rw [huniformizer_val, AddValuation.map_mul, huniformizer_val,
+        huval] at hval
+      have hval' : (z : WithTop ℤ) = (((m : ℤ) * k : ℤ) : WithTop ℤ) := by
+        simpa only [add_zero] using hval
+      exact_mod_cast hval'
+    exact ⟨k, hzval⟩
+  have horddiv : orderOf qπ ∣ m :=
+    (orderOf_dvd_iff_pow_eq_one).2 hpow
+  have hmorder : m ∣ orderOf qπ := by
+    have hzpow : qπ ^ (orderOf qπ : ℤ) = 1 := by
+      simpa [zpow_natCast] using pow_orderOf_eq_one qπ
+    have hz := hm_dvd (orderOf qπ : ℤ) hzpow
+    exact_mod_cast hz
+  have hord : orderOf qπ = m := Nat.dvd_antisymm horddiv hmorder
+  have hcard : Nat.card (Kˣ ⧸ N) = m := by
+    rw [← hord]
+    exact (orderOf_eq_card_of_forall_mem_zpowers hgen).symm
+  change Nonempty ((Kˣ ⧸ N) ≃* Multiplicative (ZMod m))
+  exact ⟨(zmodMulEquivOfGenerator hgen hcard).symm⟩
 
 theorem chapter10_unramified_norm_quotient_card
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -125,7 +560,12 @@ theorem chapter10_unramified_norm_quotient_card
     (D : Chapter10LocalFieldProfile K) (m : ℕ)
     (U : Chapter10UnramifiedExtensionData (L := L) D m) :
     Nat.card (Chapter10NormQuotient K L) = m := by
-  sorry
+  obtain ⟨e⟩ := chapter10_unramified_norm_quotient_equiv D m U
+  calc
+    Nat.card (Chapter10NormQuotient K L) =
+        Nat.card (Multiplicative (ZMod m)) := Nat.card_congr e.toEquiv
+    _ = Nat.card (ZMod m) := Nat.card_congr Multiplicative.toAdd
+    _ = m := Nat.card_zmod m
 
 /- The uniformizer class is the arithmetic Frobenius class at finite level.
    This wrapper reuses the normalized finite-reciprocity theorem from Chapter
