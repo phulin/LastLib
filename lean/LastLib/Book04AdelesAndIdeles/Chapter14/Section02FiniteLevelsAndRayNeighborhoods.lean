@@ -30,9 +30,9 @@ theorem chapter14_ray_class_group_is_the_canonical_idele_quotient
   rfl
 
 theorem chapter14_ray_subgroups_are_cofinal {K : Type*} [Field K] [NumberField K]
-    (D : Chapter14LocalComponentData K) (U : Chapter14FiniteLevel K)
-    (hpositive : chapter14ContainsPositiveMagnitudeDirections D U)
-    (htail : chapter14ContainsIntegralUnitTail D U) :
+    (U : Chapter14FiniteLevel K)
+    (hpositive : chapter14ContainsPositiveMagnitudeDirections U)
+    (htail : chapter14ContainsIntegralUnitTail U) :
     ∃ m : Chapter14Modulus K, (chapter14RayFiniteLevel m).subgroup ≤ U.subgroup := by
   sorry
 

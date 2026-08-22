@@ -11,6 +11,7 @@ import Mathlib.RingTheory.ClassGroup.Basic
 import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Completion
 import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Algebra.RestrictedProduct.Units
+import LastLib.Book04AdelesAndIdeles.Chapter10.Dependencies
 import LastLib.Book04AdelesAndIdeles.Chapter11.Dependencies
 import LastLib.Book04AdelesAndIdeles.Chapter11.Section04FinitenessOfRayClassGroups
 import LastLib.Book04AdelesAndIdeles.Chapter11.Section05OpenCompactSubgroups
@@ -199,20 +200,24 @@ cofinality argument.  They are kept separate from the quotient data so that an a
 quotient level cannot be mistaken for a ray neighborhood. -/
 def chapter14ContainsPositiveMagnitudeDirections
     {K : Type*} [Field K] [NumberField K]
-    (D : Chapter14LocalComponentData K) (U : Chapter14FiniteLevel K) : Prop :=
-  ∀ (w : NumberField.InfinitePlace K),
-    (∀ (hw : w.IsReal) (x : (w.Completion)ˣ),
-        0 < NumberField.InfinitePlace.Completion.extensionEmbeddingOfIsReal
-          hw (x : w.Completion) → D.infiniteComponent w x ∈ U.subgroup) ∧
-      (∀ (_hw : w.IsComplex) (x : (w.Completion)ˣ),
-        D.infiniteComponent w x ∈ U.subgroup)
+    (U : Chapter14FiniteLevel K) : Prop :=
+  ∀ x : chapter14InfiniteIdeleGroup K,
+    (∀ (w : NumberField.InfinitePlace K) (hw : w.IsReal),
+      0 < NumberField.InfinitePlace.Completion.extensionEmbeddingOfIsReal
+        hw ((MulEquiv.piUnits x) w : w.Completion)) →
+      (chapter14IdeleProductEquiv K).symm (x, 1) ∈ U.subgroup
 
 def chapter14ContainsIntegralUnitTail
     {K : Type*} [Field K] [NumberField K]
-    (D : Chapter14LocalComponentData K) (U : Chapter14FiniteLevel K) : Prop :=
-  ∀ᶠ v : NumberField.FinitePlace K in Filter.cofinite,
-    ∀ x : (v.maximalIdeal.adicCompletion K)ˣ,
-      D.finiteComponent v x ∈ U.subgroup
+    (U : Chapter14FiniteLevel K) : Prop :=
+  ∃ S : Finset (IsDedekindDomain.HeightOneSpectrum (𝓞 K)),
+    ∀ x : chapter14FiniteIdeleGroup K,
+      (∀ v ∈ S,
+        RestrictedProduct.unitsEquiv _ x v = 1) →
+      (∀ v ∉ S,
+        RestrictedProduct.unitsEquiv _ x v ∈
+          Chapter11.chapter11FiniteLocalUnitGroup K v 0) →
+      (chapter14IdeleProductEquiv K).symm (1, x) ∈ U.subgroup
 
 abbrev chapter14IdeleLevelQuotient {K : Type*} [Field K] [NumberField K]
     (U : Chapter14FiniteLevel K) :=
@@ -349,9 +354,9 @@ abbrev chapter14ClassModule (K : Type*) [Field K] [NumberField K] :=
 abbrev chapter14NormOneClassSubgroup (K : Type*) [Field K] [NumberField K] :=
   Chapter09.chapter09ClassNormOne K
 
-def chapter14FieldNormOnUnits (K L : Type*) [Field K] [Field L]
+abbrev chapter14FieldNormOnUnits (K L : Type*) [Field K] [Field L]
     [Algebra K L] [FiniteDimensional K L] : Lˣ →* Kˣ :=
-  Units.map (Algebra.norm K)
+  Chapter10.chapter10LocalNormUnitHom K L
 
 /-! Chapter 10 supplies generic local norm and continuity interfaces; this record supplies the
 number-field-wide idele norm and local-global norm predicate needed by this chapter.  No

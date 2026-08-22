@@ -1,3 +1,4 @@
+import LastLib.Book04AdelesAndIdeles.Chapter14.Section03LocalComponentsAndNormalization
 import LastLib.Book04AdelesAndIdeles.Chapter14.Dependencies
 
 /-!
@@ -67,6 +68,16 @@ structure Chapter14FiniteAbelianExtensionWitness
   reciprocity_surjective : Function.Surjective reciprocity
   reciprocity_kernel : reciprocity.ker = N
 
+structure Chapter14RayExtensionWitness
+    (K : Type*) [Field K] [NumberField K]
+    (m : Chapter14Modulus K) where
+  extension :
+    Chapter14FiniteAbelianExtensionWitness K (chapter14RayClassQuotientMap m).ker
+  ramifiedAtFinite : NumberField.FinitePlace K → Prop
+  ramifiedAtReal : NumberField.InfinitePlace K → Prop
+  ramification_control :
+    chapter14RayQuotientRamificationControl m ramifiedAtFinite ramifiedAtReal
+
 /-!
 These two predicates expose the exact objects that the final reciprocity theorem relates.  The
 remaining ramification and conductor assertions are packaged with their local maps below.
@@ -76,11 +87,10 @@ def chapter14ConductorUnitFiltrationCompatibility
     {K G : Type*} [Field K] [NumberField K] [Group G]
     (localMap : ∀ v : NumberField.FinitePlace K,
       (v.maximalIdeal.adicCompletion K)ˣ →* G)
-    (filtration : ∀ v : NumberField.FinitePlace K, ℕ →
-      Subgroup (v.maximalIdeal.adicCompletion K)ˣ)
     (conductorExponent : NumberField.FinitePlace K → ℕ) : Prop :=
   ∀ v n,
-    (∀ x, x ∈ filtration v n → localMap v x = 1) ↔
+    (∀ x, x ∈ chapter14LocalMultiplicativeFiltrationAtFinitePlace v n →
+      localMap v x = 1) ↔
       conductorExponent v ≤ n
 
 def chapter14FrobeniusCompatibility
@@ -93,7 +103,9 @@ def chapter14FrobeniusCompatibility
       NumberField.FinitePlace K → G)
     (uniformizer : ∀ v : NumberField.FinitePlace K,
       (v.maximalIdeal.adicCompletion K)ˣ) : Prop :=
-  ∀ v, unramifiedAt v → localMap v (uniformizer v) = frobenius convention v
+  ∀ v, unramifiedAt v →
+    chapter14FiniteUniformizer K v (uniformizer v) ∧
+      localMap v (uniformizer v) = frobenius convention v
 
 /-!
 The law contains the canonical map, its local compatibility, the open-subgroup/extension
@@ -131,20 +143,18 @@ structure Chapter14GlobalReciprocityLaw (K : Type*) [Field K] [NumberField K]
       Nonempty (Chapter14FiniteAbelianExtensionWitness K U.1.toSubgroup)
   rayQuotientGaloisControl :
     ∀ m : Chapter14Modulus K,
-      Nonempty (Chapter14FiniteAbelianExtensionWitness K
-        (chapter14RayClassQuotientMap m).ker)
+      Nonempty (Chapter14RayExtensionWitness K m)
   conductorFrobeniusUnitFiltrationCompatibility :
-    ∃ filtration : ∀ v : NumberField.FinitePlace K, ℕ →
-        Subgroup (v.maximalIdeal.adicCompletion K)ˣ,
-      ∃ conductorExponent : NumberField.FinitePlace K → ℕ,
+    ∃ conductorExponent : NumberField.FinitePlace K → ℕ,
         ∃ unramifiedAt : NumberField.FinitePlace K → Prop,
           ∃ convention : Chapter14FrobeniusConvention,
             ∃ frobenius : Chapter14FrobeniusConvention →
-                NumberField.FinitePlace K → chapter14AbelianGaloisGroup K,
+                NumberField.FinitePlace K →
+                chapter14AbelianGaloisGroup K,
               ∃ uniformizer : ∀ v : NumberField.FinitePlace K,
                   (v.maximalIdeal.adicCompletion K)ˣ,
                 chapter14ConductorUnitFiltrationCompatibility
-                    finiteLocalMap filtration conductorExponent ∧
+                    finiteLocalMap conductorExponent ∧
                   chapter14FrobeniusCompatibility finiteLocalMap unramifiedAt convention
                     frobenius uniformizer
 

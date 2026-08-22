@@ -1,4 +1,3 @@
-import LastLib.Book04AdelesAndIdeles.Chapter10.Dependencies
 import LastLib.Book04AdelesAndIdeles.Chapter14.Dependencies
 
 /-!

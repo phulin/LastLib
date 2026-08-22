@@ -83,13 +83,6 @@ theorem chapter14_complex_infinite_magnitude_is_squared {K : Type*} [Field K]
 
 /-! The principal-unit filtration at a finite place is the canonical Chapter 11 filtration. -/
 
-def chapter14LocalFieldUnitEmbedding {K : Type*} [Field K] [NumberField K]
-    (v : NumberField.FinitePlace K) :
-    (v.maximalIdeal.adicCompletionIntegers K)ˣ →*
-      (v.maximalIdeal.adicCompletion K)ˣ :=
-  Units.map (algebraMap (v.maximalIdeal.adicCompletionIntegers K)
-    (v.maximalIdeal.adicCompletion K)).toMonoidHom
-
 def chapter14LocalUnitFiltrationAtFinitePlace {K : Type*} [Field K] [NumberField K]
     (v : NumberField.FinitePlace K) (n : ℕ) :
     Subgroup (v.maximalIdeal.adicCompletionIntegers K)ˣ :=
@@ -98,8 +91,7 @@ def chapter14LocalUnitFiltrationAtFinitePlace {K : Type*} [Field K] [NumberField
 def chapter14LocalFieldUnitFiltrationAtFinitePlace {K : Type*} [Field K]
     [NumberField K] (v : NumberField.FinitePlace K) (n : ℕ) :
   Subgroup (v.maximalIdeal.adicCompletion K)ˣ :=
-  Subgroup.map (chapter14LocalFieldUnitEmbedding v)
-    (chapter14LocalUnitFiltrationAtFinitePlace v n)
+  Chapter11.chapter11FiniteLocalUnitGroup K v.maximalIdeal n
 
 /-! Add the valuation coordinate to the unit filtration: level zero is the whole local
 multiplicative group, level one is the valuation-ring unit group, and higher levels are principal
@@ -123,12 +115,8 @@ theorem chapter14_local_multiplicative_filtration_succ {K : Type*} [Field K]
 theorem chapter14_local_field_unit_filtration_zero {K : Type*} [Field K]
     [NumberField K] (v : NumberField.FinitePlace K) :
     chapter14LocalFieldUnitFiltrationAtFinitePlace v 0 =
-      Subgroup.map (chapter14LocalFieldUnitEmbedding v) (⊤ :
-        Subgroup (v.maximalIdeal.adicCompletionIntegers K)ˣ) := by
-  change Subgroup.map (chapter14LocalFieldUnitEmbedding v)
-      (Chapter11.chapter11LocalUnitFiltration (A :=
-        v.maximalIdeal.adicCompletionIntegers K) 0) = _
-  rw [Chapter11.chapter11LocalUnitFiltration_zero]
+      (v.maximalIdeal.adicCompletionIntegers K).unitGroup := by
+  exact Chapter11.chapter11FiniteLocalUnitGroup_zero K v.maximalIdeal
 
 theorem chapter14_local_unit_filtration_zero {K : Type*} [Field K] [NumberField K]
     (v : NumberField.FinitePlace K) :

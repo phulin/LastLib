@@ -90,13 +90,6 @@ structure Chapter14RayNormDepthCompatibility {K L : Type*} [Field K] [Field L]
       (chapter14RayClassQuotientMap mK).comp
         (chapter14NormOnClassGroups N)
 
-def chapter14EqualExponentNormClaim (sourceDepth targetDepth : ℕ) : Prop :=
-  sourceDepth = targetDepth
-
-def chapter14NormSurjectivityClaim {G H : Type*} [Group G] [Group H]
-    (f : G →* H) : Prop :=
-  Function.Surjective f
-
 /-!
 The structure above intentionally has no field asserting either equal exponents or surjectivity.
 Those are additional claims, not formal consequences of the norm construction.
