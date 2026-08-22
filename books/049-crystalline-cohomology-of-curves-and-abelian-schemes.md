@@ -30,13 +30,14 @@
    - [Genus zero, genus one, and a warning](#64-genus-zero-genus-one-and-a-warning)
 7. [Trace and Poincaré duality](#7-trace-and-poincaré-duality)
    - [Construction of the trace](#71-construction-of-the-trace)
-   - [Perfect duality](#72-perfect-duality)
+   - [Perfect duality for curves](#72-perfect-duality-for-curves)
    - [Curves and the alternating degree-one form](#73-curves-and-the-alternating-degree-one-form)
    - [Adjointness for finite maps](#74-adjointness-for-finite-maps)
 8. [The Künneth theorem](#8-the-künneth-theorem)
    - [The derived exterior product](#81-the-derived-exterior-product)
    - [Proof by local de Rham comparison](#82-proof-by-local-de-rham-comparison)
    - [The cohomological decomposition](#83-the-cohomological-decomposition)
+   - [Compatible finite free models over the Witt ring](#84-compatible-finite-free-models-over-the-witt-ring)
 9. [Frobenius](#9-frobenius)
    - [Semilinearity and twists](#91-semilinearity-and-twists)
    - [Construction without a global Frobenius lift](#92-construction-without-a-global-frobenius-lift)
@@ -51,6 +52,7 @@
     - [The crystalline Hodge extension](#112-the-crystalline-hodge-extension)
     - [Primitivity under the group law](#113-primitivity-under-the-group-law)
     - [Homomorphisms and isogenies](#114-homomorphisms-and-isogenies)
+    - [Frobenius isogeny in degree one](#115-frobenius-isogeny-in-degree-one)
 12. [The exterior algebra theorem](#12-the-exterior-algebra-theorem)
     - [The cup-product map](#121-the-cup-product-map)
     - [Proof of the exterior algebra theorem](#122-proof-of-the-exterior-algebra-theorem)
@@ -215,7 +217,7 @@ R\Gamma_{\mathrm{cris}}(X/W(k))
 =R\varprojlim_nR\Gamma_{\mathrm{cris}}(X/W_n(k)). \tag{2.4}
 $$
 
-This definition records the possible $R^1\varprojlim$ term. Once the finite-level complexes are represented compatibly by bounded finite free complexes, their transition maps can be chosen degreewise surjective. Then derived and ordinary inverse limits agree degree by degree. Chapter 10 will make this consequence explicit.
+This definition records the possible $R^1\varprojlim$ term. Once the finite-level complexes are represented compatibly by bounded finite free complexes, their transition maps can be chosen degreewise surjective. Then derived and ordinary inverse limits agree degree by degree. Section 8.4 will make this consequence explicit.
 
 ## 3. The crystalline Poincaré lemma
 
@@ -370,6 +372,31 @@ The embedding-system model is explicit but not yet finite. Its terms may contain
 
 ### 5.1 Perfect complexes at finite level
 
+The crystalline complex will be produced as an explicit object of the derived category of the base, so its finiteness must be a statement of derived linear algebra. The input we need is that a derived object with finitely generated cohomology and finite Tor amplitude is perfect. Neither pseudo-coherence nor Tor-amplitude tables are available from earlier books, so we record the implication here in the exact form used below, proved by peeling one cohomology group at a time.
+
+**Perfection lemma.** Let $A$ be a noetherian ring and let $K$ be an object of the derived category of $A$-modules such that every cohomology module $H^i(K)$ is finitely generated and such that for some integers $a\le b$,
+
+$$
+H^i\bigl(K\otimes_A^LN\bigr)=0
+\quad\text{for }i<a\text{ and for }i>b
+$$
+
+and every $A$-module $N$. Then $K$ is quasi-isomorphic to a bounded complex of finite free $A$-modules; in particular it is perfect.
+
+**Proof.** Write $r(K)$ for the number of integers $i$ with $H^i(K)\neq0$, and induct on $r(K)$.
+
+Suppose $r(K)=0$, so $K$ is acyclic: the zero complex represents it. Suppose $r(K)=1$, say $H^j(K)=H$ is the only nonzero module. The truncation triangles kill the acyclic parts, so $K$ is isomorphic in the derived category to $H[-j]$. Taking $N=A$ shows $j\in[a,b]$; taking arbitrary $N$ shows $\operatorname{Tor}^{A}_{t}(H,N)=0$ for all $t>0$, because these Tor modules are exactly the cohomology of $H[-j]\otimes^LN$ in degrees above $j$. Thus $H$ is flat, and finitely generated flat over a noetherian ring is finitely presented and hence finite projective. Then $K\simeq P[-j]$ with $P$ finite projective, which is perfect.
+
+Now let $r(K)\ge2$. Let $j$ be the top degree with $H^j(K)\neq0$, and choose a finite free module $F$ mapping onto $H^j(K)$; such an $F$ exists because $H^j(K)$ is finitely generated. Book 7a supplies a degreewise epimorphic quasi-isomorphism $Q\to K$ from a bounded-above complex $Q$ of projectives. Since $F$ is finite free and concentrated in one degree, the homotopy classes of chain maps $F[-j]\to Q$ identify with $A$-linear maps $F\to H^j(Q)$: both sides compute the same Hom in the derived category, and because $F$ is a finite direct sum of copies of $A$, taking $\operatorname{Hom}_A(F,-)$ commutes with taking cohomology. We may therefore lift the chosen surjection to a chain map $\beta:F[-j]\to K$. Form the mapping cone $C=\operatorname{Cone}(\beta)$ and its triangle
+
+$$
+F[-j]\longrightarrow K\longrightarrow C\longrightarrow F[-j+1].
+$$
+
+The long exact cohomology sequence shows that $H^i(C)\cong H^i(K)$ for $i<j-1$, that $H^{j-1}(C)$ is the kernel of the chosen surjection, and that $H^i(C)=0$ for $i\ge j$: the last point holds because $H^j(F[-j])\to H^j(K)$ was built as a surjection. In particular every $H^i(C)$ is finitely generated and $r(C)<r(K)$. The Tor amplitude of $C$ is finite: in the long exact sequence obtained from the triangle after derived tensor with any $N$, the terms coming from $K\otimes^LN$ vanish outside $[a,b]$, and the terms coming from the shifted free summand live only in degree $j$. Hence all cohomology of $C\otimes^LN$ lies in $[a-1,b+1]$. By induction $C$ is quasi-isomorphic to a bounded complex $M_C$ of finite free modules. Rotating the triangle exhibits $K$ as the shift of the cone of the connecting map $C\to F[-j+1]$; totalizing that two-term map against $M_C$ produces once more a bounded complex of finite free modules, whose shift represents $K$ by the cone triangle. This closes the induction. $\square$
+
+The lemma uses nothing about crystals; it is pure derived algebra. What the geometry contributes is the two hypotheses.
+
 **Theorem 5.1 (crystalline finiteness).** Let $(S,J,\gamma)$ be a finite-level PD base and let $f:X\to S_0$ be smooth and proper of relative dimension $d$. Then
 
 $$
@@ -378,11 +405,11 @@ $$
 
 is a perfect complex of amplitude contained locally in $[0,2d]$. With coefficients in a finite locally free crystal $\mathcal E$, the same conclusion holds.
 
-**Proof strategy.** Perfectness is local on $S$, so take $S=\operatorname{Spec}A$. The infinite-looking pieces of a PD envelope cannot simply be discarded at a chosen order. We use the explicit integral homotopy of Theorem 3.1 to remove them, prove pseudo-coherence from proper coherent descent, and prove finite Tor amplitude by running the same contraction after tensoring with an arbitrary module.
+**Proof strategy.** Perfectness is local on $S$, so take $S=\operatorname{Spec}A$. The infinite-looking pieces of a PD envelope cannot simply be discarded at a chosen order. We use the explicit integral homotopy of Theorem 3.1 to remove them, prove finite generation of the cohomology modules from proper coherent descent, and prove finite Tor amplitude by running the same contraction after tensoring with an arbitrary module.
 
 Choose a finite affine cover and its normalized embedding system. At each nilpotent envelope level, order the total complex first by Cech degree, then by de Rham degree, and finally by positive divided-power degree in the normal variables. Equation (3.2) pairs every positive divided monomial with its differential with coefficient $1$. Elementary row and column cancellation therefore splits off an acyclic summand; no factorial, prime, or base element is inverted. The Taylor stratification performs the same cancellation with coefficients in $\mathcal E$. Compatibility of the contraction with face and degeneracy maps makes these splittings compatible in the normalized simplicial total and at every nilpotent level.
 
-After cancellation, only de Rham degrees $0,\ldots,d$ remain. Its Cech terms are $A$-flat: the local lifts are smooth over $A$, their differential modules are finite locally free, and localization and finite normalized sums preserve flatness. In each form degree the Cech augmentation is coherent descent on $X$. Proper coherent finiteness therefore makes the resulting total pseudo-coherent over $A$, and Proposition 4.2 bounds its cohomology by $[0,2d]$.
+After cancellation, only de Rham degrees $0,\ldots,d$ remain. Its Cech terms are $A$-flat: the local lifts are smooth over $A$, their differential modules are finite locally free, and localization and finite normalized sums preserve flatness. In each form degree the Cech augmentation is coherent descent on $X$. Proper coherent finiteness therefore makes every cohomology module of the resulting total finitely generated over $A$, and Proposition 4.2 bounds its cohomology by $[0,2d]$.
 
 It remains to rule out hidden infinite Tor amplitude. The bounded normalized survivor complex is termwise flat, hence $K$-flat. For any $A$-module $N$, its ordinary tensor with $N$ therefore computes derived tensor. The contraction just used is $A$-linear and still has coefficient $1$, so it survives this tensor product. Its survivors again have de Rham degree at most $d$, and Cech cohomology of a quasi-coherent sheaf on a proper relative $d$-fold has degree at most $d$. Thus
 
@@ -391,7 +418,7 @@ H^i\bigl(R\Gamma_{\mathrm{cris}}(X/S,\mathcal E)\otimes_A^LN\bigr)=0
 \quad\text{for }i\notin[0,2d]
 $$
 
-for every $N$. Hence the pseudo-coherent complex has Tor amplitude in $[0,2d]$. A pseudo-coherent complex of finite Tor amplitude is perfect. The same construction on affine opens of the base proves the relative assertion. $\square$
+for every $N$. Hence the total complex has finitely generated cohomology and Tor amplitude in $[0,2d]$, so the Perfection lemma represents it by a bounded complex of finite free $A$-modules. The same construction on affine opens of the base proves the relative assertion. $\square$
 
 The theorem claims perfectness of the total complex, not local freeness of each $H^i$. A two-term complex $[A\xrightarrow{p}A]$ is perfect over $A=\mathbf Z_p$ but has torsion cohomology. Additional geometry will rule this out for curves and abelian schemes.
 
@@ -545,67 +572,70 @@ Smoothness cannot be removed. On a nodal curve, ordinary differentials have tors
 
 ## 7. Trace and Poincaré duality
 
-Finiteness alone gives a lattice; duality gives its geometry. The trace turns top-degree cup product into a scalar, and smooth properness makes the resulting pairing perfect. We construct the trace locally in de Rham theory and use descent to show that it is intrinsic.
+Finiteness alone gives a lattice; duality gives its geometry. The trace turns top-degree cup product into a scalar, and smooth properness makes the resulting pairing perfect.
+
+One scope restriction must be recorded honestly at the outset. Relative duality for coherent cohomology is available in this collection for curves, where it takes the form of the residue duality of Book 9 together with its base-change theory, and for abelian schemes in degree one through the Poincare bundle of Book 46. A relative duality theorem for smooth proper morphisms of arbitrary dimension belongs to a later stage of the theory and is not developed here. Fortunately every consumer of this book operates on curves or on degree-one objects of abelian schemes: the Jacobian and correspondence calculus of Chapter 14, the Dieudonne comparisons of Book 52, and the syntomic period maps of Book 50 all evaluate duality only in these cases. We therefore construct the trace and the derived Poincare duality for smooth proper curves, prove the alternating form and the adjointness for finite maps between them, and supply the corresponding abelian-scheme structures in Chapters 12 and 13 from the exterior algebra theorem and the polarization form. Nothing downstream requires more.
 
 ### 7.1 Construction of the trace
 
-Let $f:X\to S_0$ be smooth proper of pure relative dimension $d$. On a smooth proper lift $\widetilde X/S$, relative duality gives
+Let $f:C\to S_0$ be a smooth proper geometrically connected curve over a finite-level PD base $S$. After a faithfully flat localization on $S$, choose a smooth proper lift $\widetilde C/S$ as in Section 6.1. Under the crystalline--de Rham comparison (6.1),
 
 $$
-R^df_*\Omega^d_{\widetilde X/S}\longrightarrow\mathcal O_S. \tag{7.1}
+H^2_{\mathrm{cris}}(C/S)\simeq R^1f_*\Omega^1_{\widetilde C/S}
+=R^1f_*\omega_{\widetilde C/S},
 $$
 
-The Hodge edge map sends top de Rham cohomology to this module. Define
+and Book 9 supplies the relative duality trace of the curve,
+
+$$
+\operatorname{tr}_f:R^1f_*\omega_{\widetilde C/S}\longrightarrow\mathcal O_S,
+$$
+
+compatible with arbitrary base change and characterized by residues. Define
 
 $$
 \operatorname{Tr}_{\mathrm{cris}}:
-H^{2d}_{\mathrm{cris}}(X/S)\longrightarrow\mathcal O_S \tag{7.2}
+H^{2}_{\mathrm{cris}}(C/S)\longrightarrow\mathcal O_S \tag{7.2}
 $$
 
-as the composite under crystalline--de Rham comparison.
+as the composite under the comparison.
 
-**Proposition 7.1.** The trace (7.2) is independent of the lift, compatible with arbitrary PD base change, and normalized by
+**Proposition 7.1.** The trace (7.2) is independent of the lift, compatible with arbitrary PD base change, and sends the class $h$ of Section 6.4 to $1$ on $\mathbf P^1$.
 
-$$
-\operatorname{Tr}_{\mathrm{cris}}(c_1(\mathcal O(1))^d)=1
-$$
+**Proof.** A comparison between two lifts is induced from their product envelope. On each lift the trace is characterized by the residue evaluation against $1\in f_*\mathcal O$ of Book 9, and the comparison respects wedge product and residue pairing by Theorem 3.2 and functoriality of the de Rham model; hence the two local traces agree. Base change follows from base-change compatibility of the comparison (6.1) and of the relative duality trace of Book 9. On $\mathbf P^1$, the Cech residue calculation sends the standard top logarithmic cocycle, which represents $h$, to $1$. $\square$
 
-on $\mathbf P^d$.
+For a disconnected smooth proper curve, the trace is the sum over connected components.
 
-**Proof.** A comparison between two lifts is induced from their product envelope. Relative duality trace is functorial under this comparison because it is characterized by evaluation against $1\in f_*\mathcal O$; hence the two local traces agree. The same characterization proves base change. On projective space, the Čech residue calculation sends the standard top logarithmic cocycle, which represents $c_1(\mathcal O(1))^d$, to $1$. $\square$
-
-For a disconnected smooth proper scheme, the trace is the sum over connected components. We shall mainly use geometrically connected curves and abelian schemes.
-
-### 7.2 Perfect duality
+### 7.2 Perfect duality for curves
 
 Cup product followed by trace defines
 
 $$
-H^i_{\mathrm{cris}}(X/S,\mathcal E)
-\otimes H^{2d-i}_{\mathrm{cris}}(X/S,\mathcal E^\vee)
+H^i_{\mathrm{cris}}(C/S,\mathcal E)
+\otimes H^{2-i}_{\mathrm{cris}}(C/S,\mathcal E^\vee)
 \longrightarrow\mathcal O_S. \tag{7.3}
 $$
 
 The derived form is cleaner.
 
-**Theorem 7.2 (crystalline Poincaré duality).** For $f:X\to S_0$ smooth proper of relative dimension $d$ and $\mathcal E$ a finite locally free crystal, cup product and trace induce an isomorphism
+**Theorem 7.2 (crystalline Poincaré duality for curves).** For $f:C\to S_0$ a smooth proper curve and $\mathcal E$ a finite locally free crystal, cup product and trace induce an isomorphism
 
 $$
 Rf_*\mathcal E
 \xrightarrow{\sim}
-R\mathcal Hom_S(Rf_*\mathcal E^\vee,\mathcal O_S)[-2d]. \tag{7.4}
+R\mathcal Hom_S(Rf_*\mathcal E^\vee,\mathcal O_S)[-2]. \tag{7.4}
 $$
 
 If the cohomology modules on either side are finite locally free, (7.3) is a perfect pairing in each degree.
 
-**Proof strategy and proof.** The assertion is local on $S$ and compatible with derived base change. Choose an embedding system and compare with de Rham complexes on smooth lifts. There (7.4) is relative de Rham duality: wedge product
+**Proof strategy and proof.** The assertion is local on $S$, so work where $C$ has a smooth proper lift $\widetilde C$. Under the comparison (6.1), (7.4) becomes a statement about the two-term de Rham complex $[\mathcal O\to\Omega^1]$ of $\widetilde C$: wedge product
 
 $$
-(M\otimes\Omega^a)\otimes(M^\vee\otimes\Omega^{d-a})
-\to\Omega^d
+(\mathcal E\otimes\Omega^a)\otimes(\mathcal E^\vee\otimes\Omega^{1-a})
+\to\Omega^1
 $$
 
-is perfect termwise after reversing degrees, and relative Grothendieck duality identifies derived global sections of the resulting dual complex with the dual of derived global sections. The differentials are adjoint up to the total-complex sign, since
+pairs the summands of complementary form degree, and relative duality for the curve $\widetilde C/S$, in the form proved in Book 9, identifies derived global sections of the resulting dual two-term complex with the dual of derived global sections. Concretely, in each form degree the pairing of vector bundles is perfect after reversing degrees, and the differential is adjoint up to the total-complex sign, since
 
 $$
 d\langle\alpha,\beta\rangle
@@ -613,7 +643,7 @@ d\langle\alpha,\beta\rangle
 +(-1)^{\deg\alpha}\langle\alpha,\nabla^\vee\beta\rangle.
 $$
 
-Thus the local map is a quasi-isomorphism. Comparisons between lifts respect wedge product and trace, so descent globalizes it. Taking cohomology of a dual perfect complex yields the final assertion when the cohomology modules are projective. $\square$
+Thus the local map is a quasi-isomorphism of perfect complexes. Comparisons between lifts respect wedge product and trace, so descent along the localizing cover globalizes it. Taking cohomology of a dual perfect complex yields the final assertion when the cohomology modules are projective. $\square$
 
 Derived duality remains true even when individual cohomology modules contain torsion. In that case Ext terms can join neighboring degrees, and one must not replace (7.4) by a collection of naive module dualities.
 
@@ -634,9 +664,9 @@ Two Hodge classes cup into filtration degree two, which is zero for a curve; the
 
 ### 7.4 Adjointness for finite maps
 
-Let $u:X\to Y$ be a finite locally free morphism of constant degree $n$ between smooth proper $S_0$-schemes of the same pure relative dimension $d$. In positive characteristic, the algebra trace on functions and the duality trace on forms need not form a termwise map of naive de Rham complexes; a purely inseparable map is the basic obstruction. We therefore use the characteristic-free construction of Book 46.
+Let $u:X\to Y$ be a finite locally free morphism of constant degree $n$ between smooth proper geometrically connected $S_0$-curves. In positive characteristic, the algebra trace on functions and the duality trace on forms need not form a termwise map of naive de Rham complexes; a purely inseparable map is the basic obstruction. We therefore use the characteristic-free construction of Book 46.
 
-Derived Poincare duality makes pullback $u^*:R\Gamma_{\mathrm{cris}}(Y/S)\to R\Gamma_{\mathrm{cris}}(X/S)$ admit a unique adjoint
+Poincare duality for curves makes pullback on the perfect complexes $R\Gamma_{\mathrm{cris}}$ admit a unique adjoint
 
 $$
 u_*:R\Gamma_{\mathrm{cris}}(X/S)\longrightarrow
@@ -650,7 +680,7 @@ $$
 =\operatorname{Tr}_X(y\smile u^*z) \tag{7.7}
 $$
 
-for all complementary-degree classes. This definition also works when individual cohomology modules are not locally free, because (7.4) is an isomorphism of perfect complexes.
+for all complementary-degree classes. Concretely, since every cohomology module of a curve is finite locally free by Theorem 6.2 and the pairings (7.3) are perfect by Theorem 7.2, the class $u_*y$ is constructed degree by degree as the unique class satisfying (7.7); no further duality theory enters.
 
 **Proposition 7.4.** The adjoint satisfies the projection formula
 
@@ -660,15 +690,15 @@ $$
 
 commutes with PD base change, and satisfies $u_*u^*=n$.
 
-**Proof.** Pair the two sides of (7.8) with an arbitrary complementary class and use associativity of cup product plus (7.7); perfect duality makes the two sides equal. The same characterization and base change for pullback, cup product, and trace prove base-change compatibility.
+**Proof.** Pair the two sides of (7.8) with an arbitrary complementary class and use associativity of cup product plus (7.7); perfection of the curve pairings makes the two sides equal. The same characterization and base change for pullback, cup product, and trace prove base-change compatibility.
 
-It remains to compute the composite. Relative duality for the finite locally free algebra $u_*\mathcal O_X$ gives
+It remains to compute the composite. For the finite locally free algebra $u_*\mathcal O_X$, Book 9 proves that the relative duality trace of the composite agrees with evaluation at $1$ followed by the algebra trace; in top degree this gives
 
 $$
 \operatorname{Tr}_X(u^*w)=n\operatorname{Tr}_Y(w) \tag{7.9}
 $$
 
-in top degree: evaluation at $1$ followed by algebra trace is multiplication by the rank $n$. For classes $x,z$ of complementary degrees, (7.7), (7.9), and multiplicativity give
+because the algebra trace of the rank-$n$ algebra is multiplication by $n$. For classes $x,z$ of complementary degrees, (7.7), (7.9), and multiplicativity give
 
 $$
 \operatorname{Tr}_Y(u_*u^*x\smile z)
@@ -676,9 +706,9 @@ $$
 =n\operatorname{Tr}_Y(x\smile z).
 $$
 
-Perfect duality yields $u_*u^*=n$. $\square$
+Perfection yields $u_*u^*=n$. $\square$
 
-For curves this recovers exactly the pull-push operation of Book 46 and makes pullback and pushforward adjoint for (7.5). No inverse to $n$ is asserted integrally.
+This recovers exactly the pull-push operation of Book 46 and makes pullback and pushforward adjoint for (7.5). No inverse to $n$ is asserted integrally.
 
 ## 8. The Künneth theorem
 
@@ -699,7 +729,7 @@ The derived tensor is essential. If the cohomology of either factor has torsion,
 
 ### 8.2 Proof by local de Rham comparison
 
-**Theorem 8.1 (derived Künneth).** The map (8.1) is a quasi-isomorphism. It is associative, graded commutative under interchange of factors, compatible with arbitrary PD base change, and compatible with trace.
+**Theorem 8.1 (derived Künneth).** The map (8.1) is a quasi-isomorphism. It is associative, graded commutative under interchange of factors, compatible with arbitrary PD base change, and compatible with the trace wherever a trace has been constructed (Section 8.2).
 
 **Proof strategy and proof.** Locally choose smooth lifts $\widetilde X,\widetilde Y$; their product lifts $X\times Y$. The de Rham complex of the product has the canonical decomposition
 
@@ -710,12 +740,16 @@ $$
 \otimes\operatorname{pr}_Y^*\Omega^b_{\widetilde Y/S}. \tag{8.2}
 $$
 
-The differential is $d_X\otimes1+(-1)^a1\otimes d_Y$. Proper projection formulas and the fact that the de Rham terms are finite locally free identify derived global sections of (8.2) with the derived tensor of the two de Rham hypercohomology complexes. This proves the local quasi-isomorphism. Embedding systems give the same proof when global lifts do not exist. The identities follow from the corresponding identities for exterior products of forms. Trace compatibility is Fubini for relative duality:
+The differential is $d_X\otimes1+(-1)^a1\otimes d_Y$. Proper projection formulas and the fact that the de Rham terms are finite locally free identify derived global sections of (8.2) with the derived tensor of the two de Rham hypercohomology complexes. This proves the local quasi-isomorphism. Embedding systems give the same proof when global lifts do not exist. The identities follow from the corresponding identities for exterior products of forms.
+
+Trace compatibility is asserted only where a trace has been constructed. For curves it is Fubini for the residue duality of Book 9: if $X$ and $Y$ are smooth proper curves and $x,y$ have complementary degrees on their factors, then
 
 $$
 \operatorname{Tr}_{X\times Y}(x\boxtimes y)
-=\operatorname{Tr}_X(x)\operatorname{Tr}_Y(y).
+=\operatorname{Tr}_X(x)\operatorname{Tr}_Y(y),
 $$
+
+because under the product lift both sides are computed by the same iterated residue sum, and Book 46 proves the corresponding identity for curve pairings. The abelian-scheme analogue will follow from the determinant trace normalized in Section 13.4.
 
 Finally, Theorem 5.2 supplies arbitrary derived base change. $\square$
 
@@ -737,6 +771,50 @@ H^1_{\mathrm{cris}}(X\times Y/S)
 $$
 
 The two summands are the images of the projection pullbacks. Formula (8.4) will make the word "primitive" precise for abelian schemes.
+
+### 8.4 Compatible finite free models over the Witt ring
+
+Arithmetic applications use one $p$-adic lattice rather than an unrelated module at each finite level. Before Frobenius is studied, we record the passage to the limit. It uses only finite-level perfectness and derived base change; no trace or duality enters.
+
+Let $k$ be perfect of characteristic $p$, let $W(k)$ be its Witt ring with Frobenius $\sigma$, let $W_n=W_n(k)$, and let $X/k$ be smooth and proper. Put
+
+$$
+K_n=R\Gamma_{\mathrm{cris}}(X/W_n).
+$$
+
+Derived base change gives
+
+$$
+K_{n+1}\otimes^L_{W_{n+1}}W_n\simeq K_n. \tag{8.5}
+$$
+
+**Theorem 8.2 (compatible finite free models).** There is a bounded complex $P$ of finite free $W(k)$-modules such that
+
+$$
+P\otimes^L_WW_n\simeq K_n
+$$
+
+compatibly for all $n$. Consequently
+
+$$
+R\varprojlim_nK_n\simeq P,
+$$
+
+so completed crystalline cohomology is a perfect $W$-complex, and every $H^i_{\mathrm{cris}}(X/W(k))$ is a finite $W(k)$-module.
+
+**Proof strategy.** Lifting arbitrary differential matrices and then asserting that the obstruction vanishes would leave a gap. Over the Artinian local rings $W_n$, minimal finite free complexes make the lifting canonical enough.
+
+Every bounded perfect $W_n$-complex is represented by a bounded **minimal** finite free complex: whenever a differential matrix has a unit entry, row and column operations split off the contractible summand $[W_n\xrightarrow{1}W_n]$; iteration stops because the complex is bounded and finite. In the remaining complex every differential has entries in $(p)$. A quasi-isomorphism between two minimal complexes is a chain isomorphism. To see this, reduce modulo $p$. The differentials become zero, so a quasi-isomorphism is an isomorphism in every degree; Nakayama then makes each component an isomorphism over $W_n$.
+
+Choose a minimal representative $P_1$ of $K_1$. Suppose $P_n$ has been chosen. Choose a minimal representative $Q_{n+1}$ of $K_{n+1}$. Its reduction $Q_{n+1}\otimes W_n$ is still minimal and represents $K_n$ by (8.5), so minimal uniqueness gives a chain isomorphism
+
+$$
+Q_{n+1}\otimes_{W_{n+1}}W_n\xrightarrow{\sim}P_n.
+$$
+
+Set $P_{n+1}=Q_{n+1}$ and use this isomorphism after reduction as the transition map. These transitions are degreewise surjective. Minimality also shows that the rank in each degree is independent of $n$: after reduction modulo $p$, it is the dimension of the corresponding graded term of the minimal model of $K_1$.
+
+Taking inverse limits degreewise now gives finite free $W$-modules. The compatible differentials square to zero, and surjectivity kills $R^1\varprojlim$ degree by degree. The resulting bounded finite free complex $P$ reduces to every $P_n$ and therefore to every $K_n$. It computes the derived inverse limit. $\square$
 
 ## 9. Frobenius
 
@@ -786,9 +864,9 @@ $$
 \longrightarrow R\Gamma_{\mathrm{cris}}(X/W_n). \tag{9.3}
 $$
 
-It is functorial in $X$, multiplicative, compatible with finite-level reduction, base change of perfect fields, Künneth, and trace.
+It is functorial in $X$, multiplicative, compatible with finite-level reduction, base change of perfect fields, Künneth, and cup product.
 
-**Proof.** On every simplicial lift, pullback by $\varphi$ is a map of de Rham models. The diagonal stratification supplies a chain homotopy between maps from two choices; the triple diagonal gives coherence among three choices. Hence the maps glue in the derived category and are independent of all choices. Pullback of functions and forms respects products and simplicial maps, proving functoriality, multiplicativity, and Künneth compatibility. All constructions commute with reduction of PD envelopes. Trace compatibility follows from functoriality of relative duality, with the factor $p^d$ computed in Section 9.4. $\square$
+**Proof.** On every simplicial lift, pullback by $\varphi$ is a map of de Rham models. The diagonal stratification supplies a chain homotopy between maps from two choices; the triple diagonal gives coherence among three choices. Hence the maps glue in the derived category and are independent of all choices. Pullback of functions and forms respects products and simplicial maps, proving functoriality, multiplicativity, and Künneth compatibility. All constructions commute with reduction of PD envelopes. Compatibility with a trace is recorded in each setting where a trace has been constructed: for curves it follows from functoriality of the residue trace under pullback along maps of lifts, with the factor computed in Section 9.4. $\square$
 
 The differential $d\varphi$ is divisible by $p$ on a $p$-torsion-free lift. In degree $a$ there is therefore a divided map of modules
 
@@ -800,44 +878,45 @@ This auxiliary map explains the integral divisibility of Frobenius on forms. The
 
 ### 9.3 The Frobenius isogeny theorem
 
-**Theorem 9.2 (Frobenius isogeny).** Let $X/k$ be smooth proper with $k$ perfect. Each
+**Theorem 9.2 (Frobenius isogeny for curves).** Let $C/k$ be a smooth proper curve with $k$ perfect. Each
 
 $$
-H^i_{\mathrm{cris}}(X/W(k))
+H^i_{\mathrm{cris}}(C/W(k))
 $$
 
 is finite over $W(k)$, and its Frobenius becomes an isomorphism after inverting $p$:
 
 $$
-\Phi:\sigma^*H^i_{\mathrm{cris}}(X/W)[1/p]
-\xrightarrow{\sim}H^i_{\mathrm{cris}}(X/W)[1/p]. \tag{9.5}
+\Phi:\sigma^*H^i_{\mathrm{cris}}(C/W)[1/p]
+\xrightarrow{\sim}H^i_{\mathrm{cris}}(C/W)[1/p]. \tag{9.5}
 $$
 
 If $H^i$ is torsion-free, $\Phi$ is injective and its cokernel is killed by a power of $p$.
 
+The corresponding statement for the degree-one cohomology of an abelian scheme is proved in Section 11.5, and the exterior algebra theorem of Chapter 12 then extends it to every degree.
+
 **Proof strategy and proof.** Keep the relative Frobenius visible:
 
 $$
-F_{X/k}:X\longrightarrow X^{(p)}.
+F_{C/k}:C\longrightarrow C^{(p)}.
 $$
 
-Because $X/k$ is smooth of dimension $d$, this morphism is finite locally free of degree $p^d$. Indeed, étale-locally it is the map
-$k[x_1^p,\ldots,x_d^p]\to k[x_1,\ldots,x_d]$, whose target is free on the monomials $x_1^{a_1}\cdots x_d^{a_d}$ with $0\le a_j<p$; finite local freeness descends through the étale charts.
+Because $C/k$ is a smooth curve, this morphism is finite locally free of degree $p$. Indeed, étale-locally it is the map $k[t^p]\to k[t]$, whose target is free on the monomials $t^a$ with $0\le a<p$; finite local freeness descends through the étale charts.
 
 Proposition 7.4 supplies an adjoint to crystalline pullback and gives
 
 $$
-(F_{X/k})_*(F_{X/k})^*=p^d. \tag{9.6}
+(F_{C/k})_*(F_{C/k})^*=p. \tag{9.6}
 $$
 
-After inverting $p$, $(F_{X/k})^*$ is therefore injective. Derived base change along the Witt automorphism $\sigma$ identifies
+After inverting $p$, $(F_{C/k})^*$ is therefore injective. Derived base change along the Witt automorphism $\sigma$ identifies
 
 $$
-H^i_{\mathrm{cris}}(X^{(p)}/W)[1/p]
-\simeq \sigma^*H^i_{\mathrm{cris}}(X/W)[1/p].
+H^i_{\mathrm{cris}}(C^{(p)}/W)[1/p]
+\simeq \sigma^*H^i_{\mathrm{cris}}(C/W)[1/p].
 $$
 
-The two sides of (9.5) consequently have the same finite $K_0=W[1/p]$-dimension. An injective map between them is an isomorphism. The required finiteness follows from the compatible finite-free lifting theorem proved in Theorem 10.1; that proof uses only finite-level perfectness and derived base change, not Frobenius.
+The two sides of (9.5) consequently have the same finite $K_0=W[1/p]$-dimension: Theorem 8.2 makes each a finite $W(k)$-module, hence finite-dimensional over $K_0$, and that proof uses only finite-level perfectness and derived base change, not Frobenius. An injective map between them is an isomorphism.
 
 If $H^i$ is torsion-free, rational injectivity implies integral injectivity. Its finite cokernel becomes zero after inverting $p$, so it is killed by a power of $p$. $\square$
 
@@ -845,69 +924,31 @@ The theorem does not say that $\Phi$ is integrally invertible. For $H^2_{\mathrm
 
 ### 9.4 Duality and Frobenius
 
-**Proposition 9.3.** For $X/k$ smooth proper of dimension $d$,
+**Proposition 9.3.** For a smooth proper geometrically connected curve $C/k$,
 
 $$
 \operatorname{Tr}_{\mathrm{cris}}(\Phi z)
-=p^d\sigma(\operatorname{Tr}_{\mathrm{cris}}z), \tag{9.7}
+=p\sigma(\operatorname{Tr}_{\mathrm{cris}}z), \tag{9.7}
 $$
 
 and therefore
 
 $$
-\langle\Phi x,\Phi y\rangle
-=p^d\sigma\langle x,y\rangle. \tag{9.8}
+\langle\Phi x,\Phi y\rangle_C
+=p\sigma\langle x,y\rangle_C. \tag{9.8}
 $$
 
-**Proof.** Apply the top-degree trace formula (7.9) to the finite locally free relative Frobenius, whose degree is $p^d$. Base change along $\sigma$ accounts for semilinearity on scalars and gives (9.7). Equation (9.8) follows from multiplicativity of $\Phi$ and the definition of the pairing. $\square$
+**Proof.** Apply the top-degree trace formula (7.9) to the finite locally free relative Frobenius, whose degree is $p$. Base change along $\sigma$ accounts for semilinearity on scalars and gives (9.7). Equation (9.8) follows from multiplicativity of $\Phi$ and the definition of the pairing. $\square$
 
-For a curve, the alternating form on $H^1$ therefore takes values in $W(-1)$. For an abelian variety of dimension $g$, top duality takes values in $W(-g)$, while the polarization form on degree one takes values in $W(-1)$.
+The alternating form on $H^1$ therefore takes values in $W(-1)$. For an abelian scheme, the polarization form on degree one will take values in $W(-1)$ by the same mechanism; this is recorded with the determinant trace of Section 13.4, which also identifies the weight-$g$ behavior of the top cohomology line.
 
 ## 10. Completed crystalline cohomology
 
-Arithmetic applications use one $p$-adic lattice rather than an unrelated module at each finite level. The passage to the limit is safe because perfectness allows compatible finite free models and because the transition systems are surjective. This chapter isolates exactly what is gained, and what still requires torsion-freeness.
+The compatible finite free models were constructed in Section 8.4 without reference to Frobenius. This chapter records what the limit lattice remembers beyond the finite levels, and what still requires torsion-freeness.
 
 ### 10.1 Passage through finite levels
 
-Put
-
-$$
-K_n=R\Gamma_{\mathrm{cris}}(X/W_n(k)).
-$$
-
-Derived base change gives
-
-$$
-K_{n+1}\otimes^L_{W_{n+1}}W_n\simeq K_n. \tag{10.1}
-$$
-
-**Theorem 10.1.** If $X/k$ is smooth proper, there is a bounded complex $P$ of finite free $W(k)$-modules such that
-
-$$
-P\otimes^L_WW_n\simeq K_n
-$$
-
-compatibly for all $n$. Consequently
-
-$$
-R\varprojlim_nK_n\simeq P,
-$$
-
-so completed crystalline cohomology is a perfect $W$-complex.
-
-**Proof strategy.** Lifting arbitrary differential matrices and then asserting that the obstruction vanishes would leave a gap. Over the Artinian local rings $W_n$, minimal finite free complexes make the lifting canonical enough.
-
-Every bounded perfect $W_n$-complex is represented by a bounded **minimal** finite free complex: whenever a differential matrix has a unit entry, row and column operations split off the contractible summand $[W_n\xrightarrow{1}W_n]$; iteration stops because the complex is bounded and finite. In the remaining complex every differential has entries in $(p)$. A quasi-isomorphism between two minimal complexes is a chain isomorphism. To see this, reduce modulo $p$. The differentials become zero, so a quasi-isomorphism is an isomorphism in every degree; Nakayama then makes each component an isomorphism over $W_n$.
-
-Choose a minimal representative $P_1$ of $K_1$. Suppose $P_n$ has been chosen. Choose a minimal representative $Q_{n+1}$ of $K_{n+1}$. Its reduction $Q_{n+1}\otimes W_n$ is still minimal and represents $K_n$ by (10.1), so minimal uniqueness gives a chain isomorphism
-
-$$
-Q_{n+1}\otimes_{W_{n+1}}W_n\xrightarrow{\sim}P_n.
-$$
-
-Set $P_{n+1}=Q_{n+1}$ and use this isomorphism after reduction as the transition map. These transitions are degreewise surjective. Minimality also shows that the rank in each degree is independent of $n$: after reduction modulo $p$, it is the dimension of the corresponding graded term of the minimal model of $K_1$.
-
-Taking inverse limits degreewise now gives finite free $W$-modules. The compatible differentials square to zero, and surjectivity kills $R^1\varprojlim$ degree by degree. The resulting bounded finite free complex $P$ reduces to every $P_n$ and therefore to every $K_n$. It computes the derived inverse limit. $\square$
+With the notation of Section 8.4, Theorem 8.2 supplies a bounded complex $P$ of finite free $W(k)$-modules with compatible identifications $P\otimes^L_WW_n\simeq K_n$, and identifies $R\varprojlim_nK_n$ with $P$. In particular completed crystalline cohomology is a perfect $W$-complex whose reductions compute all finite levels.
 
 ### 10.2 Torsion-freeness and reduction
 
@@ -974,35 +1015,68 @@ We need one deformation fact before using de Rham theory.
 
 **Local lifting lemma.** Let $T_0\hookrightarrow T$ be a nilpotent closed immersion of locally noetherian schemes. Every abelian scheme $A_0/T_0$ lifts, after a faithfully flat localization on $T$, to an abelian scheme $\widetilde A/T$.
 
-**Proof strategy and proof.** Filter the ideal of $T_0$ in $T$ by powers and treat one square-zero layer with ideal $I$. Work after an affine faithfully flat localization. Deform the unit, multiplication, and inversion simultaneously, using the normalized bar diagram
+**Proof strategy and proof.** Filter the ideal of $T_0$ in $T$ by powers and treat one square-zero layer with ideal $I$, so $T_0\hookrightarrow T$ is defined by $I$ with $I^2=0$. Work after an affine faithfully flat localization on $T$, so $T=\operatorname{Spec}R$ and $T_0=\operatorname{Spec}R_0$ are affine. The proof then has four explicit steps: lift affine charts, compute the gluing obstruction as an actual Cech cocycle, trivialize it by translation, and kill it by primitivity.
+
+**Step 1: charts and their lifts.** Cover $A_0$ by finitely many affine opens $U_i$ on which the smooth morphism $A_0\to T_0$ is etale-locally split: there are etale maps $U_i\to\mathbf A^g_{R_0}$. Because smooth means formally smooth of finite presentation, each $U_i$ admits a lift $\widetilde U_i\to T$: an affine scheme flat over $R$ whose special fiber is $U_i$. Choose one such lift for every $i$.
+
+**Step 2: the gluing obstruction as a Cech cocycle.** On a double overlap $U_{ij}=U_i\cap U_j$, the two lifts $\widetilde U_i\times_TT_0$ and $\widetilde U_j\times_TT_0$ agree over $U_{ij}$ but need not be identified over $U_{ij}$ itself. The automorphisms of such a square-zero thickening are exactly the vector fields with values in the ideal: there is a canonical bijection between pairs of lifts of $U_{ij}$ over $R$ and sections
 
 $$
-A_0\;\substack{\longleftarrow\\[-6pt]\longleftarrow}\;
-A_0^2\;\substack{\longleftarrow\\[-6pt]\longleftarrow\\[-6pt]\longleftarrow}\;
-A_0^3.
+\theta_{ij}\in\Gamma\bigl(U_{ij},\,T_{A_0/T_0}\otimes a_0^*I\bigr),
 $$
 
-Smoothness lifts each affine chart. The obstruction to gluing the lifted charts as a smooth scheme lies in
+obtained by transporting the identity through the infinitesimal action; the classical computation is that an automorphism of $U_{ij}[I]$ over $U_{ij}$ is given by $x\mapsto x+D(x)$ with $D$ an $R_0$-derivation into $I$, that is, a section of the tangent sheaf tensored with $I$. The triple overlaps now measure the failure to glue: on $U_{ijk}$ the composite identifications round the triangle, and their defect is
 
 $$
-H^2(A_0,T_{A_0/T_0}\otimes a_0^*I).
+\delta\theta_{ijk}=\theta_{jk}-\theta_{ik}+\theta_{ij}
+\in\Gamma\bigl(U_{ijk},\,T_{A_0/T_0}\otimes a_0^*I\bigr).
 $$
+
+The collection $\{\delta\theta_{ijk}\}$ is a Cech $2$-cocycle for the cover, because the quadruple-overlap alternated sum vanishes term by term. Its class
+
+$$
+o(A_0)\in\check H^2\bigl(A_0,\,T_{A_0/T_0}\otimes a_0^*I\bigr)
+$$
+
+is the obstruction to gluing the lifted charts into a scheme $\widetilde X/T$ lifting $A_0$: if it vanishes after refinement of the cover, the lifted pieces glue to a flat $R$-scheme $\widetilde X$ with special fiber $A_0$, automatically smooth because smoothness of $A_0\to T_0$ and formal smoothness lift across nilpotent thickenings. Changing the chart lifts changes $\theta$ by a Cech coboundary, so $o(A_0)$ is well defined by the construction.
 
 Translation identifies $T_{A_0/T_0}$ with $a_0^*\operatorname{Lie}(A_0)$, so the obstruction is a section of
 
 $$
-R^2a_{0,*}\mathcal O_{A_0}\otimes
-\operatorname{Lie}(A_0)\otimes I.
+\check H^2(A_0,\mathcal O_{A_0})\otimes
+\operatorname{Lie}(A_0)\otimes I,
 $$
 
-Compatibility with the two projections and multiplication in the bar diagram makes this section primitive for the coherent Hopf coproduct. The coherent exterior-algebra theorem for abelian schemes, recalled in Book 46, identifies
+and Cech cohomology of quasi-coherent sheaves computes coherent cohomology by Book 7b.
+
+**Step 3: the group law makes the obstruction primitive.** Now deform not just the scheme but the group structure. The multiplication $m:A_0^2\to A_0$, the unit, and the inversion must also lift. Apply Step 1 and Step 2 simultaneously to the normalized bar diagram
+
+$$
+A_0\;\substack{\longleftarrow\\[-6pt]\longleftarrow}\;
+A_0^2\;\substack{\longleftarrow\\[-6pt]\\[-6pt]\longleftarrow\\[-6pt]}\;
+A_0^3
+$$
+
+with its projections. On each product of charts, the lifted multiplication maps identify the local thickening data, and comparing the obstruction cocycles along the two projections of $A_0^2$ gives the key identity: the pullback of $o(A_0)$ under addition satisfies
+
+$$
+m^*o(A_0)=p_1^*o(A_0)+p_2^*o(A_0)
+\quad\text{in }
+\check H^2(A_0^2,T\otimes a^*I),
+$$
+
+because on triple overlaps of product charts both sides compute the same alternating sum of the same transport automorphisms, arranged according to the associativity of transport. In other words, the obstruction class is **primitive** for the Hopf coproduct induced by addition. This identity uses only the functoriality of the transport description of Step 2 under products of charts; no duality theory enters.
+
+**Step 4: no nonzero primitives in degree two.** The coherent Hopf-algebra theorem for abelian schemes, recalled in Book 46, gives a coproduct-compatible identification
 
 $$
 R^2a_{0,*}\mathcal O_{A_0}
 \simeq\bigwedge^2R^1a_{0,*}\mathcal O_{A_0}.
 $$
 
-Its reduced coproduct sends $v\wedge w$ to $v\otimes w-w\otimes v$ and is injective, including in characteristic two. There is therefore no nonzero primitive obstruction in degree two, so the normalized deformation supplies an underlying smooth lift together with lifted unit, multiplication, and inverse.
+Under it, the reduced coproduct sends $v\wedge w$ to $v\otimes w-w\otimes v$, an injective pairing onto the antisymmetric tensors, including in characteristic two. Hence the only primitive element of degree two is zero. Since $o(A_0)$ is primitive, it vanishes.
+
+The normalized deformation therefore supplies an underlying smooth lift together with lifted unit, multiplication, and inverse.
 
 The group identities have no further obstruction. For example, the two composites on the two sides of associativity lift the same map $A_0^3\to A_0$. Their first-order difference is a global section of the pullback of $T_{A_0/T_0}\otimes a_0^*I$. Translation trivializes that tangent bundle, and proper geometric connectedness gives $H^0(A_0^3,\mathcal O)=\mathcal O_{T_0}$ after the faithfully flat localization. The difference is therefore constant; normalization at the identity makes it zero. The same argument, with two factors, proves commutativity and the inverse identities. Hence a smooth commutative group-scheme lift exists. The possible corrections form the expected degree-one module
 
@@ -1088,6 +1162,53 @@ $$
 
 For a $p$-isogeny in characteristic $p$, $u^*$ need not be an integral isomorphism: its map on invariant differentials may vanish. Isogeny invariance must therefore state which integer is inverted.
 
+### 11.5 Frobenius isogeny in degree one
+
+Let $k$ be perfect of characteristic $p$ and let $a:A\to\operatorname{Spec}k$ be an abelian scheme of relative dimension $g$. The relative Frobenius
+
+$$
+F_{A/k}:A\longrightarrow A^{(p)}
+$$
+
+is a homomorphism of abelian schemes. It is an isogeny of degree $p^g$: étale-locally it is induced by $k[x_1^p,\ldots,x_g^p]\to k[x_1,\ldots,x_g]$, whose target is free on the monomials $x_1^{a_1}\cdots x_g^{a_g}$ with $0\le a_j<p$; finite local freeness descends through the étale charts, and the monomial count gives the degree. Book 35 supplies a quasi-inverse isogeny $G:A^{(p)}\to A$ satisfying
+
+$$
+G\circ F_{A/k}=[p^g]_A,
+\qquad
+F_{A/k}\circ G=[p^g]_{A^{(p)}}.
+$$
+
+Pulling back cohomology turns the second identity into a left inverse for $F^*$ in degree one. At each finite level $W_n$, Proposition 11.2 computes $([p^g])^*=p^g$ on $H^1_{\mathrm{cris}}$, so
+
+$$
+G^*F^*=p^g
+\quad\text{on }H^1_{\mathrm{cris}}(A^{(p)}/W_n).
+$$
+
+**Theorem 11.4 (Frobenius isogeny for abelian schemes).** For every $n$,
+
+$$
+F_{A/k}^*[1/p]:
+\sigma^*H^1_{\mathrm{cris}}(A^{(p)}/W_n)\otimes\mathbf Q
+\longrightarrow
+H^1_{\mathrm{cris}}(A/W_n)\otimes\mathbf Q
+$$
+
+is an isomorphism. Equivalently, under the base-change identification of Section 9.1,
+
+$$
+\Phi:\sigma^*H^1_{\mathrm{cris}}(A/W(k))[1/p]
+\xrightarrow{\sim}H^1_{\mathrm{cris}}(A/W(k))[1/p].
+$$
+
+Integrally the kernel and cokernel of $\Phi$ are killed by a power of $p$; if $H^1_{\mathrm{cris}}(A/W(k))$ is torsion-free, they are killed by $p^g$.
+
+**Proof.** After inverting $p$, the identity $G^*F^*=p^g$ exhibits $p^{-g}G^*$ as a left inverse to $F^*$, so $F^*[1/p]$ is injective. Derived base change along the Witt automorphism identifies $H^1_{\mathrm{cris}}(A^{(p)}/W_n)[1/p]$ with $\sigma^*H^1_{\mathrm{cris}}(A/W_n)[1/p]$, as in the proof of Theorem 9.2, and both modules have dimension $2g$ over the fraction field because Theorem 11.1 makes them finite locally free of rank $2g$. An injective map between spaces of equal dimension is bijective. This proves the assertion at every finite level; the completed statement follows by evaluating on the compatible finite free models of Theorem 8.2, to which $F^*$ and $G^*$ apply compatibly because they come from morphisms defined on the special fiber.
+
+If $M$ is torsion-free, rational invertibility makes $\Phi$ injective over $W$, and the cokernel, which dies after inverting $p$, is killed by a power of $p$; tracing the argument through the identity $G^*F^*=p^g$ sharpens the exponent to $p^g$. $\square$
+
+The exterior algebra theorem of Chapter 12 identifies $H^n_{\mathrm{cris}}$ with $\bigwedge^nH^1_{\mathrm{cris}}$, and Frobenius on an exterior power is the exterior power of Frobenius. Hence $\Phi[1/p]$ is an isomorphism on every $H^n_{\mathrm{cris}}(A/W(k))$, completing for abelian schemes what Theorem 9.2 proves for curves.
+
 ## 12. The exterior algebra theorem
 
 The cohomology of an abelian scheme is not merely of the same rank as an exterior algebra. Cup product gives a canonical exterior-algebra map, the Hopf coproduct recognizes its primitive generators, and de Rham comparison proves that the map is an integral isomorphism.
@@ -1167,7 +1288,7 @@ H^{2g}_{\mathrm{cris}}(A/S)
 \simeq\bigwedge^{2g}H^1_{\mathrm{cris}}(A/S).
 $$
 
-Trace identifies this line with $\mathcal O_S$, while Frobenius on it is $p^g\sigma$ after the trace normalization. This agrees with Proposition 9.3.
+A trace on this line is not supplied by the curve construction of Chapter 7. Section 13.4 will normalize it as the determinant of a chosen principal polarization form; under that normalization Frobenius on the line acts as $p^g\sigma$, the abelian analogue of Proposition 9.3.
 
 ## 13. Dual abelian schemes and polarizations
 
@@ -1301,6 +1422,38 @@ $$
 $$
 
 Thus a principally polarized abelian variety over a perfect field determines a symplectic $F$-crystal with pairing into $W(-1)$.
+
+**The determinant trace.** The polarization form also normalizes a trace on the top cohomology line, replacing the general-dimensional duality that this book does not assume. Let $\beta=\psi_\lambda\in\bigwedge^2V^*$ be the perfect alternating form of (13.9). Its $g$-fold wedge power
+
+$$
+\operatorname{vol}_\lambda:=\frac{\beta^{\smile g}}{g!}\in\bigwedge^{2g}V^*
+$$
+
+is a section of the dual of the invertible module $\bigwedge^{2g}V$, and perfection of $\beta$ is equivalent to $\operatorname{vol}_\lambda$ generating that dual line: evaluation against it identifies $\bigwedge^{2g}V$ with $\mathcal O_S$. Composing with the exterior algebra identification of Theorem 12.1 defines the **determinant trace**
+
+$$
+\operatorname{Tr}_\lambda:
+H^{2g}_{\mathrm{cris}}(A/S)\xrightarrow{\sim}
+\bigwedge^{2g}H^1_{\mathrm{cris}}(A/S)
+\xrightarrow{\langle-, \operatorname{vol}_\lambda\rangle}
+\mathcal O_S.
+$$
+
+It is independent of all choices, commutes with PD base change because both ingredients do, and for an elliptic curve with its canonical principal polarization agrees with the curve trace (7.2): on a lift, both evaluate a top-degree class by the same residue computation.
+
+Frobenius acts on it by the weight rule. Frobenius is multiplicative, so on a wedge product it acts factor by factor; applying $\psi_\lambda(\Phi x,\Phi y)=p\,\sigma(\psi_\lambda(x,y))$ to each of the $g$ factors gives
+
+$$
+\Phi^*\operatorname{vol}_\lambda=p^g\,\sigma(\operatorname{vol}_\lambda),
+$$
+
+and therefore, for every $z\in H^{2g}_{\mathrm{cris}}(A/S)$,
+
+$$
+\operatorname{Tr}_\lambda(\Phi z)=p^g\,\sigma\bigl(\operatorname{Tr}_\lambda(z)\bigr).
+$$
+
+This is the abelian analogue of Proposition 9.3: the top cohomology line carries weight $g$, while degree one carries weight one by (13.11).
 
 If $u:A\to B$ is an isogeny and principal polarizations $\lambda$ on $A$ and $\mu$ on $B$ satisfy
 
@@ -1444,7 +1597,7 @@ $$
 M=H^1_{\mathrm{cris}}(A/W(k)),
 $$
 
-or that an effective relative $p$-adic inverse system over a $p$-torsion-free base has been fixed. Theorem 10.1 and the exterior-algebra theorem make $M$ finite locally free, while Theorem 9.2 makes Frobenius an isogeny. Together with the polarization and endomorphism action, the completed degree-one package is therefore
+or that an effective relative $p$-adic inverse system over a $p$-torsion-free base has been fixed. Theorem 8.2 and the exterior-algebra theorem make $M$ finite locally free, while Theorems 9.2 and 11.4 make Frobenius an isogeny. Together with the polarization and endomorphism action, the completed degree-one package is therefore
 
 $$
 (M,\Phi,\psi,\iota), \tag{15.4}
@@ -1492,8 +1645,8 @@ For a smooth proper morphism $X\to S_0$ over a finite-level PD base:
 
 - $Rf_{\mathrm{cris},*}\mathcal O$ is perfect and satisfies arbitrary derived PD base change;
 - crystalline--de Rham comparison holds on every smooth lift and descends through embedding systems;
-- cup product, the derived Künneth isomorphism, trace, and derived Poincaré duality are compatible;
-- over a perfect field of characteristic $p$, Frobenius is semilinear and becomes invertible after $p$ is inverted.
+- cup product, the derived Künneth isomorphism, trace, and Poincaré duality are compatible wherever the trace and duality have been constructed: for curves, by Chapters 7 and 8, and for abelian schemes, by the exterior algebra theorem and the polarization form of Chapters 12--13;
+- over a perfect field of characteristic $p$, Frobenius is semilinear and becomes invertible after $p$ is inverted: for curves in all degrees by Theorem 9.2, and for abelian schemes in degree one by Theorem 11.4 and then in every degree through the exterior algebra theorem.
 
 For a smooth proper genus-$g$ curve, the cohomology crystals are finite locally free of ranks $1,2g,1$. Degree one has a perfect alternating form, and every base change is ordinary because flatness has been proved.
 
@@ -1516,6 +1669,7 @@ with ranks $\binom{2g}{n}$. The Poincaré bundle identifies the degree-one cryst
 | arbitrary base change                     | a morphism of finite-level PD bases and derived tensor product                     | nonflat change creates Tor, while an unproved change of crystalline regime has no comparison theorem    |
 | ordinary base change on $H^i$             | finite local freeness, or the precise neighboring Tor vanishing                    | cohomology need not commute with reduction                                                              |
 | degreewise perfect duality                | locally free cohomology                                                            | derived duality may contain Ext between degrees                                                         |
+| trace and Poincaré duality                | curves, or abelian schemes through polarization forms                              | relative duality in arbitrary dimension is neither proved nor assumed                                   |
 | cohomological Künneth direct sum          | flat cohomology modules                                                            | Tor terms can survive                                                                                   |
 | Frobenius as one endomorphism             | perfect base field, or a retained Frobenius twist                                  | absolute Frobenius is semilinear                                                                        |
 | Frobenius isomorphism                     | coefficients rationalized                                                          | integral Frobenius can have $p$-power cokernel                                                          |
