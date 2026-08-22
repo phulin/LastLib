@@ -162,7 +162,11 @@ theorem chapter11_artin_class_function_eq_residue_degree_smul_ramification
     (D : Chapter11RamificationData G) :
     chapter11ArtinClassFunction (k := k) D =
       (D.f : k) • chapter11RamificationClassFunction (k := k) D := by
-  sorry
+  funext σ
+  by_cases hσ : σ = 1
+  · simp [chapter11ArtinClassFunction, chapter11RamificationClassFunction, hσ]
+  · simp [chapter11ArtinClassFunction, chapter11RamificationClassFunction, hσ,
+      smul_eq_mul]
 
 /-- The induction formula (11.1) for the Artin class function. -/
 theorem chapter11_artin_class_function_eq_induced_inertia
@@ -171,7 +175,127 @@ theorem chapter11_artin_class_function_eq_induced_inertia
     chapter11ArtinClassFunction (k := k) D =
       chapter11InducedClassFunction (k := k) D.inertia
         (chapter11InertiaClassFunction (k := k) D) := by
-  sorry
+  classical
+  funext g
+  by_cases hg : g ∈ D.inertia
+  · have hmem : ∀ x : G, x⁻¹ * g * x ∈ D.inertia := by
+      intro x
+      simpa using D.inertia_normal.conj_mem g hg x⁻¹
+    have hvalue : ∀ x : G,
+        (if h : x⁻¹ * g * x ∈ D.inertia then
+            chapter11InertiaClassFunction (k := k) D ⟨x⁻¹ * g * x, h⟩
+          else 0) =
+          chapter11InertiaClassFunction (k := k) D ⟨g, hg⟩ := by
+      intro x
+      rw [dif_pos (hmem x)]
+      by_cases hg1 : g = 1
+      · subst g
+        simp [chapter11InertiaClassFunction]
+      · have hconj1 : x⁻¹ * g * x ≠ 1 := by
+          intro h
+          apply hg1
+          have h' := congrArg (fun y : G => x * y * x⁻¹) h
+          simpa [mul_assoc] using h'
+        have hconj1' :
+            (⟨x⁻¹ * g * x, hmem x⟩ : D.inertia) ≠ 1 := by
+          intro h
+          apply hconj1
+          exact congrArg Subtype.val h
+        have hg1' : (⟨g, hg⟩ : D.inertia) ≠ 1 := by
+          intro h
+          apply hg1
+          exact congrArg Subtype.val h
+        simp only [chapter11InertiaClassFunction, dif_neg hconj1', dif_neg hg1']
+        change -(chapter11Displacement D (x⁻¹ * g * x) : k) =
+          -(chapter11Displacement D g : k)
+        rw [show x⁻¹ * g * x = x⁻¹ * g * (x⁻¹)⁻¹ by simp]
+        rw [chapter11_displacement_conjugation_invariant]
+    have hcard : Fintype.card G = Nat.card D.inertia * D.f := by
+      rw [D.group_card, D.inertia_card]
+    have hcard' : (Fintype.card G : k) =
+        (D.f : k) * (Nat.card D.inertia : k) := by
+      rw [hcard, Nat.cast_mul, mul_comm]
+    have hsum_subtype (f : G → k) :
+        (∑ x : G, if x ∈ D.inertia then f x else 0) =
+          ∑ x : D.inertia, f x := by
+      rw [← Finset.sum_filter]
+      refine Finset.sum_bij
+        (fun x hx => ⟨x, (Finset.mem_filter.mp hx).2⟩) ?_ ?_ ?_ ?_
+      · intro x hx
+        simp
+      · intro x₁ hx₁ x₂ hx₂ h
+        exact congrArg Subtype.val h
+      · intro x hx
+        refine ⟨(x : G), by simp [x.property], ?_⟩
+        rfl
+      · intro x hx
+        rfl
+    have hsum_erase_G (f : G → k) (hf : f 1 = 0) :
+        (∑ x ∈ (Finset.univ.erase (1 : G)), f x) = ∑ x : G, f x := by
+      have h := Finset.sum_erase_add
+        (s := (Finset.univ : Finset G)) (f := f)
+        (Finset.mem_univ (1 : G))
+      rw [← h, hf, add_zero]
+    have hsum_erase_I (f : D.inertia → k) (hf : f 1 = 0) :
+        (∑ x ∈ (Finset.univ.erase (1 : D.inertia)), f x) =
+          ∑ x : D.inertia, f x := by
+      have h := Finset.sum_erase_add
+        (s := (Finset.univ : Finset D.inertia)) (f := f)
+        (Finset.mem_univ (1 : D.inertia))
+      rw [← h, hf, add_zero]
+    have hdisp :
+        (∑ x : G, (chapter11Displacement D x : k)) =
+          ∑ x : D.inertia, (chapter11Displacement D (x : G) : k) := by
+      calc
+        (∑ x : G, (chapter11Displacement D x : k)) =
+            ∑ x : G, if x ∈ D.inertia then
+              (chapter11Displacement D x : k) else 0 := by
+          apply Finset.sum_congr rfl
+          intro x hx
+          by_cases hxin : x ∈ D.inertia
+          · simp [hxin]
+          · rw [chapter11_displacement_eq_zero_of_not_mem_inertia D hxin]
+            simp [hxin]
+        _ = ∑ x : D.inertia, (chapter11Displacement D (x : G) : k) :=
+          hsum_subtype (fun x => (chapter11Displacement D x : k))
+    have hleft :
+        chapter11ArtinClassFunction (k := k) D g =
+          (D.f : k) * chapter11InertiaClassFunction (k := k) D ⟨g, hg⟩ := by
+      by_cases hg1 : g = 1
+      · subst g
+        rw [chapter11ArtinClassFunction, chapter11InertiaClassFunction]
+        have hsub : (⟨1, hg⟩ : D.inertia) = 1 := Subtype.ext (by rfl)
+        rw [dif_pos hsub]
+        split
+        · rename_i htrue
+          rw [hsum_erase_G
+            (fun x : G => (chapter11Displacement D x : k))
+            (by simp [chapter11Displacement]), hdisp]
+          rw [← hsum_erase_I (fun x : D.inertia =>
+            (chapter11Displacement D (x : G) : k))
+            (by simp [chapter11Displacement])]
+        · rename_i hfalse
+          exact False.elim (hfalse rfl)
+      · simp [chapter11ArtinClassFunction, chapter11InertiaClassFunction, hg1]
+    have hsum :
+        (∑ x : G, if h : x⁻¹ * g * x ∈ D.inertia then
+            chapter11InertiaClassFunction (k := k) D ⟨x⁻¹ * g * x, h⟩
+          else 0) =
+          ∑ _ : G, chapter11InertiaClassFunction (k := k) D ⟨g, hg⟩ := by
+      apply Finset.sum_congr rfl
+      intro x hx
+      exact hvalue x
+    rw [hleft, chapter11InducedClassFunction, hsum]
+    simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
+    rw [hcard']
+    field_simp
+  · have hnot : ∀ x : G, x⁻¹ * g * x ∉ D.inertia := by
+      intro x hx
+      apply hg
+      have h' := D.inertia_normal.conj_mem (x⁻¹ * g * x) hx x
+      simpa [mul_assoc] using h'
+    rw [chapter11_artin_class_function_eq_zero_of_not_mem_inertia D hg]
+    simp [chapter11InducedClassFunction, hnot]
 
 /-- The augmentation-shaped class function attached to a subgroup; when the
     subgroup is normal it is the augmentation character of the quotient. -/
@@ -277,14 +401,32 @@ theorem chapter11_ramification_class_function_integer_valued
     {G : Type*} [Fintype G] [Group G]
     (D : Chapter11RamificationData G) :
     Chapter11IntegerValuedClassFunction (chapter11RamificationClassFunction D) := by
-  sorry
+  classical
+  intro σ
+  by_cases hσ : σ = 1
+  · subst σ
+    refine ⟨∑ τ ∈ (Finset.univ.erase (1 : G)),
+      (chapter11Displacement D τ : ℤ), ?_⟩
+    simp [chapter11RamificationClassFunction, chapter11Displacement]
+  · refine ⟨-(chapter11Displacement D σ : ℤ), ?_⟩
+    simp [chapter11RamificationClassFunction, hσ]
 
 theorem chapter11_ramification_class_function_conjugacy_invariant
     {G : Type*} [Fintype G] [Group G]
     (D : Chapter11RamificationData G) :
     Chapter11ConjugacyInvariantClassFunction
       (chapter11RamificationClassFunction D) := by
-  sorry
+  intro g h
+  by_cases hg : g = 1
+  · subst g
+    simp [chapter11RamificationClassFunction]
+  · have hconj : h * g * h⁻¹ ≠ 1 := by
+      intro h'
+      apply hg
+      have := congrArg (fun x : G => h⁻¹ * x * h) h'
+      simpa [mul_assoc] using this
+    simp only [chapter11RamificationClassFunction, dif_neg hg, dif_neg hconj]
+    rw [chapter11_displacement_conjugation_invariant]
 
 theorem chapter11_ramification_class_function_power_invariant
     {G : Type*} [Fintype G] [Group G]
