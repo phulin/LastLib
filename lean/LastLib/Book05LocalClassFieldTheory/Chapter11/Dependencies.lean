@@ -8,6 +8,7 @@ import Mathlib.Topology.Algebra.ContinuousMonoidHom
 import Mathlib.Topology.Algebra.Group.TopologicalAbelianization
 import Mathlib.Topology.Algebra.Group.Units
 import Mathlib.Topology.Algebra.OpenSubgroup
+import LastLib.Book05LocalClassFieldTheory.Chapter08.Dependencies
 import LastLib.Book05LocalClassFieldTheory.Chapter10.Dependencies
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter11
@@ -50,6 +51,13 @@ def chapter11FiniteOrderCharacter
     (χ : X →ₜ* A) : Prop :=
   chapter11FiniteImage χ
 
+theorem chapter11_finite_image_character_kernel_finite_index
+    {X A : Type*} [Group X] [CommGroup A]
+    [TopologicalSpace X] [TopologicalSpace A]
+    (χ : X →ₜ* A) (hχ : chapter11FiniteImage χ) :
+    χ.toMonoidHom.ker.FiniteIndex := by
+  sorry
+
 def chapter11CharacterKernel
     {K A : Type*} [Field K] [CommGroup A]
     [TopologicalSpace Kˣ] [TopologicalSpace A]
@@ -73,6 +81,8 @@ called `Uⁿ` in the source; positive levels are the principal-unit groups.
   unit-filtration package produced by Book 5, Chapters 1--10. -/
 structure Chapter11LocalFieldData
     (K : Type*) [Field K] [TopologicalSpace Kˣ] where
+  /-- The canonical local-field presentation from Chapter 8. -/
+  base : LastLib.Book05LocalClassFieldTheory.Chapter08.Chapter08LocalFieldData K
   /-- The book's valuation-ring unit group, as a subgroup of `Kˣ`. -/
   unitGroup : Subgroup Kˣ
   /-- A chosen uniformizer. -/
@@ -98,6 +108,15 @@ structure Chapter11LocalFieldData
   unitFiltration_basis :
     ∀ s ∈ 𝓝 (1 : Kˣ), ∃ n, (unitFiltration n : Set Kˣ) ⊆ s
   unitGroup_compact : IsCompact (unitGroup : Set Kˣ)
+  /-- The local field data is the Chapter 8 data, with a selected topology. -/
+  unitGroup_eq_canonical :
+    unitGroup = Chapter08.chapter08Units base.valuation
+  uniformizer_eq_canonical :
+    uniformizer = base.uniformizer
+  valuation_eq_canonical :
+    valuation = base.coordinate.valuation
+  unitFiltration_eq_canonical :
+    ∀ n, unitFiltration n = Chapter08.chapter08UnitFiltration base.valuation n
 
 /-!
 The abstract profinite completion forgets the original topology on `Kˣ`.
@@ -115,7 +134,8 @@ def chapter11OpenFiniteIndexCofinality
 
 def chapter11ResidueDegreeOfSubgroup
     {K : Type*} [Field K] [TopologicalSpace Kˣ]
-    (D : Chapter11LocalFieldData K) (H : Subgroup Kˣ) : ℕ :=
+    (D : Chapter11LocalFieldData K) (H : Subgroup Kˣ)
+    (_hH : H.FiniteIndex) : ℕ :=
   orderOf (QuotientGroup.mk'
     (D.unitGroup.map (QuotientGroup.mk' H))
     (QuotientGroup.mk' H D.uniformizer))
@@ -186,6 +206,7 @@ class Chapter11ClassFieldExistenceData
   localFieldData : Chapter11LocalFieldData K
   extension : Type*
   normGroup : extension → Subgroup Kˣ
+  normGroup_open : ∀ e : extension, IsOpen (normGroup e : Set Kˣ)
   normGroup_finiteIndex : ∀ e : extension, (normGroup e).FiniteIndex
   degree : extension → ℕ
   cyclic : extension → Prop
@@ -201,6 +222,7 @@ class Chapter11ClassFieldExistenceData
     ∀ (e : extension),
       residueDegree e =
         chapter11ResidueDegreeOfSubgroup localFieldData (normGroup e)
+          (normGroup_finiteIndex e)
 
 /-!
 Tower compatibility is stated on chosen topological models of the two Galois
@@ -231,12 +253,12 @@ structure Chapter11TowerData
     restrictionAb.comp (chapter11AbelianizationMap Gₗ) =
       (chapter11AbelianizationMap Gₖ).comp restriction
 
-def chapter11NormHom
+abbrev chapter11NormHom
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] : Lˣ →* Kˣ :=
   LastLib.Book05LocalClassFieldTheory.Chapter10.chapter10NormHom K L
 
-def chapter11NormGroup
+abbrev chapter11NormGroup
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] : Subgroup Kˣ :=
   LastLib.Book05LocalClassFieldTheory.Chapter10.chapter10NormSubgroup K L

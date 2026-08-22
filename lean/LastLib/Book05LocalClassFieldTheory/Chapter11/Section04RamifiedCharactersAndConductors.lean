@@ -138,7 +138,8 @@ theorem chapter11_residue_degree_of_character_eq_subgroup
     (D : Chapter11LocalFieldData K) (χ : Kˣ →ₜ* A)
     (hχ : chapter11FiniteImage χ) :
     chapter11ResidueDegreeOfCharacter D χ hχ =
-      chapter11ResidueDegreeOfSubgroup D (chapter11CharacterKernel χ) := by
+      chapter11ResidueDegreeOfSubgroup D (chapter11CharacterKernel χ)
+        (chapter11_finite_image_character_kernel_finite_index χ hχ) := by
   sorry
 
 theorem chapter11_conductor_zero_iff_unramified

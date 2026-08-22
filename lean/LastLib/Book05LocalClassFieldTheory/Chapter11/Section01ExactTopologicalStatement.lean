@@ -67,6 +67,19 @@ theorem chapter11_profinite_extension_iff_finite_index_neighborhood_condition
     [TopologicalSpace Kˣ]
     [UniformSpace A] [IsUniformGroup A]
     [IsTopologicalGroup A]
+    [T2Space A]
+    (χ : Kˣ →ₜ* A)
+    (hcofinal : chapter11OpenFiniteIndexCofinality (K := K)) :
+    chapter11ProfiniteExtensionOf χ ↔
+      IsComplete (closure (Set.range χ)) ∧
+        chapter11FiniteIndexNeighborhoodCondition χ := by
+  sorry
+
+theorem chapter11_profinite_extension_iff_finite_index_neighborhood_condition_of_complete_target
+    {K A : Type*} [Field K] [CommGroup A]
+    [TopologicalSpace Kˣ]
+    [UniformSpace A] [IsUniformGroup A]
+    [IsTopologicalGroup A]
     [T2Space A] [CompleteSpace A]
     (χ : Kˣ →ₜ* A)
     (hcofinal : chapter11OpenFiniteIndexCofinality (K := K)) :
