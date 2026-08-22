@@ -721,6 +721,30 @@ This formula will turn positivity of the area form into positivity of the period
 
 The analytic theorem compares smooth forms with topology. Algebraic de Rham cohomology, however, uses regular algebraic forms and Zariski gluing. The missing step is to show that analytification preserves the hypercohomology of the two-term algebraic de Rham complex. In dimension one this can be proved from divisors, principal parts, and compactness.
 
+Before the first analytic comparison we record, once and precisely, the harmonic input that the rest of this book consumes.
+
+**Standing analytic hypothesis (H) (elliptic Hodge theory on compact surfaces).** _Fix, throughout this book, the following three statements about compact Riemann surfaces $M$ and holomorphic line bundles $L$ on $M$._
+
+_(H1) Harmonic decomposition._ _With respect to any Hermitian metric on $M$, the space $\mathcal A^1(M)$ of smooth complex one-forms decomposes as an orthogonal direct sum_
+
+$$
+\mathcal A^1=\mathcal H^1\oplus d\mathcal A^0\oplus d^*\mathcal A^2,
+$$
+
+_where $\mathcal H^1$ is the kernel of the Laplacian $\Delta_d=dd^*+d^*d$ acting on one-forms. Consequently every de Rham class has a unique harmonic representative, and a form is harmonic precisely when it is both closed and co-closed._
+
+_(H2) Kähler identity._ _On a complex curve, $\Delta_d=2\Delta_{\bar\partial}$; the Laplacian preserves the decomposition $\mathcal A^1=\mathcal A^{1,0}\oplus\mathcal A^{0,1}$, a harmonic $(1,0)$-form is holomorphic, a holomorphic one-form is harmonic, and complex conjugation carries harmonic forms of one type to harmonic forms of the other._
+
+_(H3) Analytic Serre duality._ _Dolbeault cohomology identifies $H^1(M,L)$ with the quotient $\mathcal A^{0,1}(M,L)/\bar\partial\,\mathcal A^{0,0}(M,L)$, and the integration pairing_
+
+$$
+H^1(M,L)\times H^0(M,K_M\otimes L^{-1})\longrightarrow\mathbf C
+$$
+
+_into the coefficient field is perfect._
+
+The status of (H) must be stated as plainly as that of Hypothesis (T). Each clause is a theorem of elliptic analysis: (H1) rests on elliptic regularity and the Fredholm alternative for $\Delta_d$ on a compact manifold, (H2) on the type decomposition of the Laplacian in complex dimension one, and (H3) on solvability of $\bar\partial$ modulo the kernel of its formal adjoint. None is proved in any earlier book of this series—Books 9 and 46 supply the corresponding algebraic dualities, not the analytic ones—and neither Mathlib nor any prior volume develops elliptic regularity on manifolds. Pretending to derive them would repeat, in analysis, the dishonesty that Hypothesis (T) avoids in topology. They are therefore carried as one explicitly scoped standing hypothesis rather than hidden in the phrase "elliptic theory gives". Every use below cites (H1), (H2), or (H3) by name, and the complete list of consumption sites is recorded in the audit of Section 15.2.
+
 ### 5.1 Analytification of a smooth projective curve
 
 Let $X/\mathbf C$ be smooth and projective. Its set of complex points has charts obtained by applying the complex implicit-function theorem to affine equations. Smoothness makes these charts one-dimensional complex manifolds, and projectivity makes the resulting Riemann surface compact. A regular algebraic function or differential becomes holomorphic, giving maps
@@ -757,15 +781,15 @@ $$
 
 **Proof strategy.** We compare line-bundle sections by algebraizing meromorphic quotients, compare their first cohomology by an explicit analytic duality argument, and then filter a vector bundle by a line subbundle. This mirrors the residue proof of duality in Book 9 and avoids importing a higher-dimensional comparison theorem.
 
-**Proof.** We first record the analytic input rather than hide it in the word “comparison.” On a compact Riemann surface $M$, Dolbeault cohomology identifies
+**Proof.** We first record the analytic input rather than hide it in the word "comparison." Clause (H3) applies verbatim to $M$ and $L$ and yields both halves of what is needed: the Dolbeault identification
 
 $$
 H^1(M,L)\simeq
 \frac{\mathcal A^{0,1}(L)}
-{\bar\partial\mathcal A^{0,0}(L)}.
+{\bar\partial\mathcal A^{0,0}(L)},
 $$
 
-Integration of the product gives a pairing with $H^0(M,K_M\otimes L^{-1})$. It is perfect. Choose Hermitian metrics and take the harmonic representative of a Dolbeault class. The formal-adjoint identity identifies harmonic $L$-valued $(0,1)$-forms with the conjugate duals of holomorphic $K_M\otimes L^{-1}$-valued sections. If the pairing with every such section is zero, the harmonic representative has zero norm; the class is zero. The same argument in the other variable proves perfection. This is analytic Serre duality, normalized by integration.
+and the perfectness of the integration pairing with $H^0(M,K_M\otimes L^{-1})$. This is analytic Serre duality, normalized by integration; it is exactly clause (H3), not a consequence proved here.
 
 Adding a point and using
 
@@ -773,15 +797,15 @@ $$
 0\to L\to L(p)\to L(p)|_p\to0
 $$
 
-shows that $\chi(L(p))=\chi(L)+1$. For sufficiently large degree, analytic duality and negative-degree vanishing kill $H^1$. Descending by points gives
+shows that $\chi(L(p))=\chi(L)+1$. For sufficiently large degree, clause (H3) and negative-degree vanishing kill $H^1$: if $\deg(K_M\otimes L^{-1})<0$ then $H^0(M,K_M\otimes L^{-1})=0$, since a nonzero holomorphic section of a line bundle of negative degree would give an effective divisor of negative degree, and perfectness of the pairing forces $H^1(M,L)=0$. Descending by points gives
 
 $$
 \chi(L)=\deg L+1-h^1(M,\mathcal O_M).
 $$
 
-Taking $L=\mathcal O_M$ identifies $h^1(\mathcal O_M)$ with $h^0(K_M)$. This proves the analytic Riemann--Roch formula in exactly the form used here.
+Taking $L=\mathcal O_M$ and using (H3) once more identifies $h^1(\mathcal O_M)$ with $h^0(K_M)$. This proves the analytic Riemann--Roch formula in exactly the form used here.
 
-Now let $L$ be algebraic. A nonzero algebraic meromorphic section $e$ identifies every analytic section with $he$ for a meromorphic function $h$. Section 5.1 makes $h$ algebraic, so comparison on $H^0$ is always an isomorphism. Algebraic Serre duality from Book 9 and the analytic duality just proved identify the two $H^1$ dimensions, because Section 5.1 also algebraizes holomorphic differentials and hence the relevant dual sections. Thus comparison is an isomorphism for line bundles in both degrees.
+Now let $L$ be algebraic. A nonzero algebraic meromorphic section $e$ identifies every analytic section with $he$ for a meromorphic function $h$. Section 5.1 makes $h$ algebraic, so comparison on $H^0$ is always an isomorphism. Algebraic Serre duality from Book 9 and clause (H3) identify the two $H^1$ dimensions, because Section 5.1 also algebraizes holomorphic differentials and hence the relevant dual sections. Thus comparison is an isomorphism for line bundles in both degrees.
 
 For a point $p$, compare
 
