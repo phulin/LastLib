@@ -48,7 +48,10 @@ theorem chapter07_local_reciprocity_dense
 unramified quotient and identify its arithmetic coordinate. -/
 structure Chapter07ArithmeticUnramifiedQuotient
     (K KAb : Type*) [Field K] [Field KAb] [Algebra K KAb]
-    [IsAbelianGalois K KAb] (S : Chapter07FiniteArtinSystem K KAb) where
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
+    [IsAbelianGalois K KAb] (S : Chapter07FiniteArtinSystem K KAb)
+    (I : Subgroup (Gal(KAb / K))) where
+  localField : Chapter07LocalFieldData K
   G : Type*
   [groupG : Group G]
   [topologyG : TopologicalSpace G]
@@ -56,23 +59,29 @@ structure Chapter07ArithmeticUnramifiedQuotient
   quotient : Gal(KAb / K) →* G
   quotient_continuous : Continuous quotient
   quotient_surjective : Function.Surjective quotient
+  quotient_kernel :
+    (letI : Group G := groupG; quotient.ker = I)
   completionEquiv : G ≃ₜ* Chapter07ProfiniteIntegers
-  valuation : Kˣ →* Multiplicative ℤ
   uniformizer : Kˣ
   valuation_uniformizer :
-    valuation uniformizer = Multiplicative.ofAdd 1
+    localField.valuation (uniformizer : K) = (1 : WithTop ℤ)
+  coordinate_uniformizer :
+    localField.valuation_coordinate.valuation uniformizer =
+      Multiplicative.ofAdd 1
   reciprocity_valuation :
     ∀ x : Kˣ,
       completionEquiv (quotient (chapter07LocalReciprocity S x)) =
-      chapter07IntegerToProfiniteCompletion (Multiplicative.toAdd
-          (valuation x))
+      chapter07IntegerToProfiniteCompletion
+        (Multiplicative.toAdd (localField.valuation_coordinate.valuation x))
 
 /-- The arithmetic unramified coordinate of reciprocity has exactly the
 integer image inside the profinite integers. -/
 theorem chapter07_unramified_reciprocity_image_is_integer
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb] (S : Chapter07FiniteArtinSystem K KAb)
-    (U : Chapter07ArithmeticUnramifiedQuotient K KAb S) :
+    (I : Subgroup (Gal(KAb / K)))
+    (U : Chapter07ArithmeticUnramifiedQuotient K KAb S I) :
     Set.range (fun x : Kˣ =>
       U.completionEquiv (U.quotient (chapter07LocalReciprocity S x))) =
       Set.range chapter07IntegerToProfiniteCompletion := by
@@ -90,8 +99,10 @@ theorem chapter07_integer_image_dense_and_proper :
 field element under the arithmetic-normalized unramified quotient. -/
 theorem chapter07_local_reciprocity_not_surjective
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb] (S : Chapter07FiniteArtinSystem K KAb)
-    (U : Chapter07ArithmeticUnramifiedQuotient K KAb S) :
+    (I : Subgroup (Gal(KAb / K)))
+    (U : Chapter07ArithmeticUnramifiedQuotient K KAb S I) :
     ¬ Function.Surjective (chapter07LocalReciprocity S) := by
   sorry
 

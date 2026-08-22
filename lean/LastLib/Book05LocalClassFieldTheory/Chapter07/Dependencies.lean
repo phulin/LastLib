@@ -226,7 +226,8 @@ structure Chapter07PrecisionData (G : Type*) [CommGroup G] where
         x * uniformizer ^ (-(Multiplicative.toAdd (valuation x))) ∈
           unitFiltration n.1
   units_separated :
-    ∀ {x : G}, (∀ n : ℕ, x ∈ unitFiltration n) → x = 1
+    ∀ {x : G},
+      (∀ n : Chapter07PositiveNat, x ∈ unitFiltration n.1) → x = 1
 
 /-- The standard finite-precision subgroup pi^(mZ) U^n. -/
 def chapter07PrecisionSubgroup

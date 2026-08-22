@@ -1,4 +1,5 @@
 import LastLib.Book05LocalClassFieldTheory.Chapter07.Section05ProfiniteCompletion
+import LastLib.Book05LocalClassFieldTheory.Chapter06.Section07TheExistenceTheorem
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter07
 
@@ -48,6 +49,25 @@ theorem chapter07_maximal_abelian_subextension_fixing_subgroup
     (chapter07MaximalAbelianSubextension (K := K) (E := E)).fixingSubgroup =
       commutator (Gal(E / K)) := by
   sorry
+
+/-! The explicit construction in Chapter 6 is the existence input used by
+Chapter 7.  Keep its finite-precision realization visible here rather than
+silently replacing it by the abstract existence property below. -/
+theorem chapter07_chapter06_precision_subgroup_is_realized
+    {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    (D : LastLib.Book05LocalClassFieldTheory.Chapter06.Chapter06LocalFieldData K)
+    (hmax :
+      LastLib.Book05LocalClassFieldTheory.Chapter06.Chapter06IsMaximalAbelianExtension
+        K KAb)
+    (m n : ℕ) (hm : 0 < m) (hn : 0 < n) :
+    ∃ L :
+        LastLib.Book05LocalClassFieldTheory.Chapter06.Chapter06FiniteAbelianSubextension
+          K KAb,
+      L.normSubgroup =
+        LastLib.Book05LocalClassFieldTheory.Chapter06.chapter06PrecisionSubgroup D m n := by
+  exact
+    LastLib.Book05LocalClassFieldTheory.Chapter06.chapter06_precision_subgroup_is_realized
+      D hmax m n hm hn
 
 /-- The unique finite abelian level attached by the local existence theorem
 to an open finite-index subgroup. -/
@@ -189,6 +209,9 @@ theorem chapter07_norm_subgroup_injective
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
     [TopologicalSpace Kˣ] [IsAbelianGalois K KAb]
     (hExist : chapter07ExistenceProperty K KAb)
+    (hopen :
+      ∀ L : Chapter07FiniteAbelianIndex K KAb,
+        IsOpen (chapter07NormSubgroup (K := K) (L := L) : Set Kˣ))
     {L₁ L₂ : Chapter07FiniteAbelianIndex K KAb}
     (hL : chapter07NormSubgroup (K := K) (L := L₁) =
       chapter07NormSubgroup (K := K) (L := L₂)) :

@@ -13,14 +13,24 @@ abbrev Chapter07FiniteQuotientDiagram (G : Type*) [Group G] :
     FiniteIndexNormalSubgroup (GrpCat.of G) ⥤ ProfiniteGrp :=
   ProfiniteGrp.ProfiniteCompletion.diagram (GrpCat.of G)
 
-/-- Mathlib's profinite completion is the inverse limit of its finite
-quotients.  For the commutative group K-units, finite-index normal subgroups
-are the same as finite-index subgroups. -/
+/-- Mathlib's abstract profinite completion is the inverse limit of its
+finite-index normal quotients.  The source's topology-sensitive completion is
+recorded separately below. -/
 theorem chapter07_profinite_completion_is_the_finite_quotient_limit
     {G : Type*} [Group G] :
     Nonempty
       (Chapter07ProfiniteCompletion G ≃*
         (ProfiniteGrp.limit (Chapter07FiniteQuotientDiagram G) : Type _)) :=
+  ⟨MulEquiv.refl _⟩
+
+/-- The completion used in the source is the inverse limit over open
+finite-index quotients.  For the commutative multiplicative group, these are
+the same subgroup quotients used in the source statement. -/
+theorem chapter07_open_profinite_completion_is_the_open_finite_quotient_limit
+    {G : Type*} [CommGroup G] [TopologicalSpace G] :
+    Nonempty
+      (Chapter07OpenProfiniteCompletion G ≃*
+        (ProfiniteGrp.limit (chapter07OpenFiniteIndexProfiniteDiagram G) : Type _)) :=
   ⟨MulEquiv.refl _⟩
 
 /-- The canonical copy of a group is dense in its profinite completion. -/
@@ -153,21 +163,31 @@ theorem chapter07_uniformizer_split_depends_on_choice
 /-- The inertia subgroup presented as the kernel of an unramified quotient. -/
 def chapter07InertiaSubgroup
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb] (S : Chapter07FiniteArtinSystem K KAb)
-    (U : Chapter07ArithmeticUnramifiedQuotient K KAb S) :
+    (I : Subgroup (Gal(KAb / K)))
+    (_U : Chapter07ArithmeticUnramifiedQuotient K KAb S I) :
     Subgroup (Gal(KAb / K)) :=
-  letI : Group U.G := U.groupG
-  U.quotient.ker
+  I
+
+theorem chapter07_inertia_subgroup_is_quotient_kernel
+    {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
+    [IsAbelianGalois K KAb] (S : Chapter07FiniteArtinSystem K KAb)
+    (I : Subgroup (Gal(KAb / K)))
+    (U : Chapter07ArithmeticUnramifiedQuotient K KAb S I) :
+    (letI : Group U.G := U.groupG; U.quotient.ker) =
+      chapter07InertiaSubgroup S I U := by
+  exact U.quotient_kernel
 
 theorem chapter07_inertia_subgroup_is_canonical
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb] (S : Chapter07FiniteArtinSystem K KAb)
-    (U₁ U₂ : Chapter07ArithmeticUnramifiedQuotient K KAb S) :
-    (letI : Group U₁.G := U₁.groupG
-     letI : Group U₂.G := U₂.groupG
-     U₁.quotient.ker = U₂.quotient.ker) →
-    chapter07InertiaSubgroup S U₁ = chapter07InertiaSubgroup S U₂ := by
-  sorry
+    (I : Subgroup (Gal(KAb / K)))
+    (U₁ U₂ : Chapter07ArithmeticUnramifiedQuotient K KAb S I) :
+    chapter07InertiaSubgroup S I U₁ = chapter07InertiaSubgroup S I U₂ := by
+  rfl
 
 end
 
