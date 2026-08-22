@@ -372,7 +372,14 @@ theorem chapter10_congruence_quotient_is_finite
     (m m' n : ℕ) (hm' : 0 < m') (hn : 0 < n)
     (a : Chapter10RingUnitGroup D.valuation) :
     Finite (Chapter10CongruenceQuotient D m m' n a) := by
-  sorry
+  cases n with
+  | zero => omega
+  | succ n =>
+      let _ : NeZero m' := ⟨Nat.ne_of_gt hm'⟩
+      let _ : Finite (Chapter10PrecisionQuotient D.valuation (n + 1)) :=
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10_finite_residue_finite_precision_quotients
+          (Chapter10ValuationRing D.valuation) n D.valuationRing_dvr
+      infer_instance
 
 theorem chapter10_congruence_presented_quotient_is_finite
     {K : Type*} [Field K] (D : Chapter10LocalFieldProfile K)
@@ -381,7 +388,14 @@ theorem chapter10_congruence_presented_quotient_is_finite
     (C : Chapter10CongruenceCoordinateData D m' n)
     (m : ℕ) (a : Chapter10RingUnitGroup D.valuation) (V : Subgroup Kˣ) :
     Finite (Chapter10CongruencePresentedQuotient D m' n C m a V) := by
-  sorry
+  cases n with
+  | zero => omega
+  | succ n =>
+      let _ : NeZero m' := ⟨Nat.ne_of_gt hm'⟩
+      let _ : Finite (Chapter10PrecisionQuotient D.valuation (n + 1)) :=
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10_finite_residue_finite_precision_quotients
+          (Chapter10ValuationRing D.valuation) n D.valuationRing_dvr
+      infer_instance
 
 /- The subgroup in the finite Galois group corresponding to a presented base
    subgroup is the image of that subgroup under finite reciprocity. -/
@@ -434,7 +448,8 @@ theorem chapter10_finite_abelian_extensions_have_finite_conductor
         D.valuation)
     (hopen : IsOpen (chapter10NormSubgroup K L : Set Kˣ)) :
     Chapter10FiniteConductor D (chapter10NormSubgroup K L) := by
-  sorry
+  exact chapter10_open_subgroup_contains_deep_units D hbasis
+    (chapter10NormSubgroup K L) hopen
 
 theorem chapter10_open_norm_subgroup_has_finite_conductor
     {K : Type*} [Field K] [TopologicalSpace Kˣ]
@@ -444,7 +459,7 @@ theorem chapter10_open_norm_subgroup_has_finite_conductor
         D.valuation)
     (H : Subgroup Kˣ) (hopen : IsOpen (H : Set Kˣ)) :
     Chapter10FiniteConductor D H := by
-  sorry
+  exact chapter10_open_subgroup_contains_deep_units D hbasis H hopen
 
 end
 
