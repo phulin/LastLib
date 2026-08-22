@@ -436,26 +436,30 @@ theorem chapter06_Qn_degree
     (chapter06Qn D n).natDegree =
       chapter06ResidueCardinality D ^ (n - 1) *
         (chapter06ResidueCardinality D - 1) := by
-  sorry
+  have _hn : 0 < n := hn
+  exact chapter06_primitive_division_polynomial_degree D (n - 1)
 
 theorem chapter06_Qn_monic
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K)
     (n : ℕ) (hn : 0 < n) :
     (chapter06Qn D n).Monic := by
-  sorry
+  have _hn : 0 < n := hn
+  exact chapter06_primitive_division_polynomial_monic D (n - 1)
 
 theorem chapter06_Qn_constant
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K)
     (n : ℕ) (hn : 0 < n) :
     (chapter06Qn D n).eval 0 = D.uniformizer := by
-  sorry
+  have _hn : 0 < n := hn
+  exact chapter06_primitive_division_polynomial_constant D (n - 1)
 
 theorem chapter06_Qn_is_eisenstein
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K)
     (n : ℕ) (hn : 0 < n) :
     (chapter06Qn D n).IsEisensteinAt
       (IsLocalRing.maximalIdeal (Chapter06ValuationRing D)) := by
-  sorry
+  have _hn : 0 < n := hn
+  exact chapter06_primitive_division_polynomial_is_eisenstein D (n - 1)
 
 /-- The `πⁿ`-torsion set in the fixed algebraic closure. -/
 def chapter06TorsionPolynomialOverK
@@ -491,7 +495,68 @@ theorem chapter06_primitive_torsion_point_exists
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K)
     (n : ℕ) (hn : 0 < n) :
     Nonempty (Chapter06PrimitiveTorsionPoint D n hn) := by
-  sorry
+  have hq1 : 1 < chapter06ResidueCardinality D := by
+    let _ := D.residue_finite
+    let _ : Fintype (Chapter06ResidueField D) := Fintype.ofFinite _
+    simpa [chapter06ResidueCardinality, Nat.card_eq_fintype_card] using
+      (Fintype.one_lt_card : 1 < Fintype.card (Chapter06ResidueField D))
+  have hdegree :
+      0 < (chapter06PrimitiveTorsionPolynomialOverK D n).natDegree := by
+    have hmapdegree :
+        (chapter06PrimitiveTorsionPolynomialOverK D n).natDegree =
+          (chapter06Qn D n).natDegree := by
+      unfold chapter06PrimitiveTorsionPolynomialOverK
+      apply Polynomial.natDegree_map_eq_of_isUnit_leadingCoeff
+      rw [(chapter06_Qn_monic D n hn).leadingCoeff]
+      exact isUnit_one
+    rw [hmapdegree, chapter06_Qn_degree D n hn]
+    exact Nat.mul_pos (pow_pos (by omega) _) (by omega)
+  have hdegree' :
+      (chapter06PrimitiveTorsionPolynomialOverK D n).degree ≠ 0 :=
+    ne_of_gt ((Polynomial.natDegree_pos_iff_degree_pos).mp hdegree)
+  obtain ⟨x, hx⟩ := IsAlgClosed.exists_aeval_eq_zero
+    (AlgebraicClosure K) (chapter06PrimitiveTorsionPolynomialOverK D n) hdegree'
+  have hfactor :
+      chapter06TorsionPolynomialOverK D n =
+        chapter06TorsionPolynomialOverK D (n - 1) *
+          chapter06PrimitiveTorsionPolynomialOverK D n := by
+    unfold chapter06TorsionPolynomialOverK chapter06PrimitiveTorsionPolynomialOverK
+    rw [chapter06_Qn_factorization D n hn, Polynomial.map_mul]
+  have hformula :
+      chapter06PrimitiveTorsionPolynomialOverK D n =
+        Polynomial.C (algebraMap (Chapter06ValuationRing D) K D.uniformizer) +
+          (chapter06TorsionPolynomialOverK D (n - 1)) ^
+            (chapter06ResidueCardinality D - 1) := by
+    simp [chapter06PrimitiveTorsionPolynomialOverK, chapter06Qn,
+      chapter06PrimitiveDivisionPolynomial, chapter06TorsionPolynomialOverK]
+  have hpi :
+      algebraMap K (AlgebraicClosure K)
+          (algebraMap (Chapter06ValuationRing D) K D.uniformizer) ≠ 0 := by
+    intro hzero
+    apply chapter06_uniformizer_ne_zero D
+    apply (FaithfulSMul.algebraMap_injective K (AlgebraicClosure K))
+    simpa using hzero
+  have hqminus : chapter06ResidueCardinality D - 1 ≠ 0 := by
+    omega
+  refine ⟨⟨x, ?_, ?_⟩⟩
+  · change Polynomial.aeval x (chapter06TorsionPolynomialOverK D n) = 0
+    rw [hfactor]
+    simp only [map_mul, hx, mul_zero]
+  · change Polynomial.aeval x
+        (chapter06TorsionPolynomialOverK D (n - 1)) ≠ 0
+    intro hprev
+    have hprev' :
+        Polynomial.eval₂ (algebraMap K (AlgebraicClosure K)) x
+            (chapter06TorsionPolynomialOverK D (n - 1)) = 0 := by
+      simpa [Polynomial.aeval_def] using hprev
+    have hconst :
+        Polynomial.aeval x (chapter06PrimitiveTorsionPolynomialOverK D n) =
+            algebraMap K (AlgebraicClosure K)
+            (algebraMap (Chapter06ValuationRing D) K D.uniformizer) := by
+      rw [hformula]
+      simp [Polynomial.aeval_def, hprev', hqminus]
+    rw [hx] at hconst
+    exact hpi hconst.symm
 
 theorem chapter06_primitive_torsion_point_is_a_root
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K)
@@ -522,7 +587,61 @@ theorem chapter06_mem_primitiveTorsionSet_iff
     x ∈ chapter06PrimitiveTorsionSet D n ↔
       x ∈ chapter06TorsionSet D n ∧
         x ∉ chapter06TorsionSet D (n - 1) := by
-  sorry
+  change Polynomial.aeval x (chapter06PrimitiveTorsionPolynomialOverK D n) = 0 ↔
+    Polynomial.aeval x (chapter06TorsionPolynomialOverK D n) = 0 ∧
+      Polynomial.aeval x (chapter06TorsionPolynomialOverK D (n - 1)) ≠ 0
+  have hq1 : 1 < chapter06ResidueCardinality D := by
+    let _ := D.residue_finite
+    let _ : Fintype (Chapter06ResidueField D) := Fintype.ofFinite _
+    simpa [chapter06ResidueCardinality, Nat.card_eq_fintype_card] using
+      (Fintype.one_lt_card : 1 < Fintype.card (Chapter06ResidueField D))
+  have hqminus : chapter06ResidueCardinality D - 1 ≠ 0 := by
+    omega
+  have hfactor :
+      chapter06TorsionPolynomialOverK D n =
+        chapter06TorsionPolynomialOverK D (n - 1) *
+          chapter06PrimitiveTorsionPolynomialOverK D n := by
+    unfold chapter06TorsionPolynomialOverK chapter06PrimitiveTorsionPolynomialOverK
+    rw [chapter06_Qn_factorization D n hn, Polynomial.map_mul]
+  have hformula :
+      chapter06PrimitiveTorsionPolynomialOverK D n =
+        Polynomial.C (algebraMap (Chapter06ValuationRing D) K D.uniformizer) +
+          (chapter06TorsionPolynomialOverK D (n - 1)) ^
+            (chapter06ResidueCardinality D - 1) := by
+    simp [chapter06PrimitiveTorsionPolynomialOverK, chapter06Qn,
+      chapter06PrimitiveDivisionPolynomial, chapter06TorsionPolynomialOverK]
+  have hpi :
+      algebraMap K (AlgebraicClosure K)
+          (algebraMap (Chapter06ValuationRing D) K D.uniformizer) ≠ 0 := by
+    intro hzero
+    apply chapter06_uniformizer_ne_zero D
+    apply (FaithfulSMul.algebraMap_injective K (AlgebraicClosure K))
+    simpa using hzero
+  constructor
+  · intro hprimitive
+    constructor
+    · rw [hfactor]
+      simp only [map_mul, hprimitive, mul_zero]
+    · intro hprev
+      have hprev' :
+          Polynomial.eval₂ (algebraMap K (AlgebraicClosure K)) x
+              (chapter06TorsionPolynomialOverK D (n - 1)) = 0 := by
+        simpa [Polynomial.aeval_def] using hprev
+      have hconst :
+          Polynomial.aeval x (chapter06PrimitiveTorsionPolynomialOverK D n) =
+              algebraMap K (AlgebraicClosure K)
+              (algebraMap (Chapter06ValuationRing D) K D.uniformizer) := by
+        rw [hformula]
+        simp [Polynomial.aeval_def, hprev', hqminus]
+      rw [hprimitive] at hconst
+      exact hpi hconst.symm
+  · rintro ⟨htorsion, hprev⟩
+    rw [hfactor] at htorsion
+    have hprod :
+        Polynomial.aeval x (chapter06TorsionPolynomialOverK D (n - 1)) *
+          Polynomial.aeval x (chapter06PrimitiveTorsionPolynomialOverK D n) = 0 := by
+      simpa only [map_mul] using htorsion
+    exact (mul_eq_zero.mp hprod).resolve_left hprev
 
 theorem chapter06_primitive_torsion_point_is_primitive_division_root
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K)
