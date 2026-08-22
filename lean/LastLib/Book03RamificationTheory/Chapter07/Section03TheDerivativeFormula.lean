@@ -753,14 +753,46 @@ theorem chapter07_eisenstein_different_exponent_eq_derivative_valuation
     (πL : B) (f : A[X])
     (hmono : chapter07MonogenicPresentation A B K L πL f)
     (hD : chapter07DifferentIdeal A B = mB ^ d)
-    (hmB : mB = IsLocalRing.maximalIdeal B)
-    (hπL : chapter07IsUniformizer vL (algebraMap B L πL))
+    (_hmB : mB = IsLocalRing.maximalIdeal B)
+    (_hπL : chapter07IsUniformizer vL (algebraMap B L πL))
     (hpower_valuation : ∀ z : B, z ≠ 0 →
       Ideal.span ({z} : Set B) = mB ^ d →
         vL (algebraMap B L z) = (d : WithTop ℤ)) :
     vL (algebraMap B L (chapter07DerivativeAt A B f πL)) =
       (d : WithTop ℤ) := by
-  sorry
+  have hderiv :
+      algebraMap B L (chapter07DerivativeAt A B f πL) =
+        aeval (algebraMap B L πL)
+          (derivative (minpoly K (algebraMap B L πL))) := by
+    change algebraMap B L (eval₂ (algebraMap A B) πL f.derivative) =
+      eval₂ (algebraMap K L) (algebraMap B L πL)
+        (derivative (minpoly K (algebraMap B L πL)))
+    rw [hom_eval₂]
+    rw [show (algebraMap B L).comp (algebraMap A B) = algebraMap A L by
+      ext a
+      rw [RingHom.comp_apply, ← IsScalarTower.algebraMap_apply A B L]]
+    have hderiv_map :
+        f.derivative.map (algebraMap A K) =
+          derivative (minpoly K (algebraMap B L πL)) := by
+      rw [← derivative_map, hmono.2.2.2.2]
+    rw [← hderiv_map, eval₂_map]
+    congr 1
+    ext a
+    rw [RingHom.comp_apply, IsScalarTower.algebraMap_apply A K L]
+  have hδ :
+      aeval (algebraMap B L πL)
+          (derivative (minpoly K (algebraMap B L πL))) ≠ 0 := by
+    exact (Algebra.IsSeparable.isSeparable K (algebraMap B L πL)).aeval_derivative_ne_zero
+      (minpoly.aeval K (algebraMap B L πL))
+  have hne : chapter07DerivativeAt A B f πL ≠ 0 := by
+    intro hz
+    apply hδ
+    rw [← hderiv, hz]
+    simp
+  have hspan :
+      Ideal.span ({chapter07DerivativeAt A B f πL} : Set B) = mB ^ d := by
+    rw [← chapter07_different_eq_derivative_ideal A B K L πL f hmono, hD]
+  exact hpower_valuation (chapter07DerivativeAt A B f πL) hne hspan
 
 end
 
