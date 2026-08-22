@@ -769,7 +769,7 @@ theorem chapter06FormalModuleIntertwiner_inverse_reverse
         (chapter06FormalModuleIntertwiner D g f hg hf)
         (chapter06FormalModuleIntertwiner D f g hf hg) =
       PowerSeries.X := by
-  sorry
+  exact chapter06FormalModuleIntertwiner_inverse D g f hg hf
 
 theorem chapter06FormalModuleIntertwiner_conjugates_scalars
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K)
@@ -779,10 +779,147 @@ theorem chapter06FormalModuleIntertwiner_conjugates_scalars
     chapter06PowerSeriesCompose
         ((chapter06FormalModuleOf D f hf).scalar a)
         (chapter06FormalModuleIntertwiner D f g hf hg) =
-      chapter06PowerSeriesCompose
+        chapter06PowerSeriesCompose
         (chapter06FormalModuleIntertwiner D f g hf hg)
         ((chapter06FormalModuleOf D g hg).scalar a) := by
-  sorry
+  let Mf := chapter06FormalModuleOf D f hf
+  let Mg := chapter06FormalModuleOf D g hg
+  let h := chapter06FormalModuleIntertwiner D f g hf hg
+  let sf := Mf.scalar a
+  let sg := Mg.scalar a
+  have hh := chapter06FormalModuleIntertwiner_spec D f g hf hg
+  have hh0 : PowerSeries.constantCoeff h = 0 := by
+    rw [← PowerSeries.coeff_zero_eq_constantCoeff]
+    rw [hh.1 0 (by omega)]
+    simp
+  have hsf_lin : chapter06HasLinearCoefficient sf a := Mf.scalar_linear a
+  have hsg_lin : chapter06HasLinearCoefficient sg a := Mg.scalar_linear a
+  have hsf0 : PowerSeries.constantCoeff sf = 0 := by
+    rw [← PowerSeries.coeff_zero_eq_constantCoeff]
+    rw [hsf_lin 0 (by omega)]
+    simp
+  have hsg0 : PowerSeries.constantCoeff sg = 0 := by
+    rw [← PowerSeries.coeff_zero_eq_constantCoeff]
+    rw [hsg_lin 0 (by omega)]
+    simp
+  have hcomp_linear :
+      ∀ (p q : Chapter06UnivariateSeries (Chapter06ValuationRing D))
+        (ap aq : Chapter06ValuationRing D),
+        PowerSeries.constantCoeff p = 0 →
+        PowerSeries.constantCoeff q = 0 →
+        chapter06HasLinearCoefficient p ap →
+        chapter06HasLinearCoefficient q aq →
+        chapter06HasLinearCoefficient
+          (chapter06PowerSeriesCompose p q) (ap * aq) := by
+    intro p q ap aq hp0 hq0 hpl hql n hn
+    interval_cases n
+    · simpa [chapter06PowerSeriesCompose, PowerSeries.constantCoeff_eq] using
+        (PowerSeries.constantCoeff_subst_eq_zero hp0 q hq0)
+    · have hpl1 : PowerSeries.coeff 1 p = ap := by
+        simpa [chapter06HasLinearCoefficient] using hpl 1 (by omega)
+      have hql1 : PowerSeries.coeff 1 q = aq := by
+        simpa [chapter06HasLinearCoefficient] using hql 1 (by omega)
+      have hcoeff : PowerSeries.coeff 1 (PowerSeries.subst p q) = aq * ap := by
+        rw [PowerSeries.coeff_subst'
+          (PowerSeries.HasSubst.of_constantCoeff_zero' hp0),
+          finsum_eq_single _ 1]
+        · simp [hpl1, hql1]
+        · intro d hd
+          by_cases hd0 : d = 0
+          · subst d
+            simp
+          · by_cases hd1 : d = 1
+            · exact (hd hd1).elim
+            · have hd2 : 2 ≤ d := by omega
+              rw [PowerSeries.coeff_one_pow]
+              have hdpos : 0 < d - 1 := by omega
+              rw [hp0, zero_pow (Nat.ne_of_gt hdpos)]
+              simp
+      simpa [chapter06PowerSeriesCompose, mul_comm] using hcoeff
+  have hhs : PowerSeries.HasSubst h :=
+    PowerSeries.HasSubst.of_constantCoeff_zero' hh0
+  have hsf_sub : PowerSeries.HasSubst sf :=
+    PowerSeries.HasSubst.of_constantCoeff_zero' hsf0
+  have hsg_sub : PowerSeries.HasSubst sg :=
+    PowerSeries.HasSubst.of_constantCoeff_zero' hsg0
+  have hA_linear :
+      chapter06HasLinearCoefficient
+        (chapter06PowerSeriesCompose sf h) a := by
+    simpa using hcomp_linear sf h a 1 hsf0 hh0 hsf_lin
+      (by simpa using hh.1)
+  have hB_linear :
+      chapter06HasLinearCoefficient
+        (chapter06PowerSeriesCompose h sg) a := by
+    simpa [mul_comm] using hcomp_linear h sg 1 a hh0 hsg0
+      (by simpa using hh.1) hsg_lin
+  have hh_eq :
+      PowerSeries.subst f h = PowerSeries.subst h g := hh.2
+  have hf0 : PowerSeries.constantCoeff f = 0 := by
+    rw [← PowerSeries.coeff_zero_eq_constantCoeff]
+    rw [hf.1 0 (by omega)]
+    simp
+  have hg0 : PowerSeries.constantCoeff g = 0 := by
+    rw [← PowerSeries.coeff_zero_eq_constantCoeff]
+    rw [hg.1 0 (by omega)]
+    simp
+  have hfs : PowerSeries.HasSubst f :=
+    PowerSeries.HasSubst.of_constantCoeff_zero' hf0
+  have hgs : PowerSeries.HasSubst g :=
+    PowerSeries.HasSubst.of_constantCoeff_zero' hg0
+  have hA_eq :
+      chapter06PowerSeriesCompose f
+          (chapter06PowerSeriesCompose sf h) =
+        chapter06PowerSeriesCompose
+          (chapter06PowerSeriesCompose sf h) g := by
+    change PowerSeries.subst f (PowerSeries.subst sf h) =
+      PowerSeries.subst (PowerSeries.subst sf h) g
+    calc
+      PowerSeries.subst f (PowerSeries.subst sf h) =
+          PowerSeries.subst (PowerSeries.subst f sf) h :=
+        PowerSeries.subst_comp_subst_apply hsf_sub hfs h
+      _ = PowerSeries.subst (PowerSeries.subst sf f) h := by
+        have hcomm : PowerSeries.subst f sf = PowerSeries.subst sf f := by
+          simpa [chapter06PowerSeriesCompose, sf] using Mf.scalar_commutes a
+        rw [hcomm]
+      _ = PowerSeries.subst sf (PowerSeries.subst f h) :=
+        (PowerSeries.subst_comp_subst_apply hfs hsf_sub h).symm
+      _ = PowerSeries.subst sf (PowerSeries.subst h g) := by rw [hh_eq]
+      _ = PowerSeries.subst (PowerSeries.subst sf h) g :=
+        PowerSeries.subst_comp_subst_apply hhs hsf_sub g
+  have hB_eq :
+      chapter06PowerSeriesCompose f
+          (chapter06PowerSeriesCompose h sg) =
+        chapter06PowerSeriesCompose
+          (chapter06PowerSeriesCompose h sg) g := by
+    change PowerSeries.subst f (PowerSeries.subst h sg) =
+      PowerSeries.subst (PowerSeries.subst h sg) g
+    calc
+      PowerSeries.subst f (PowerSeries.subst h sg) =
+          PowerSeries.subst (PowerSeries.subst f h) sg :=
+        PowerSeries.subst_comp_subst_apply hhs hfs sg
+      _ = PowerSeries.subst (PowerSeries.subst h g) sg := by rw [hh_eq]
+      _ = PowerSeries.subst h (PowerSeries.subst g sg) :=
+        (PowerSeries.subst_comp_subst_apply hgs hhs sg).symm
+      _ = PowerSeries.subst h (PowerSeries.subst sg g) := by
+        have hcomm : PowerSeries.subst g sg = PowerSeries.subst sg g := by
+          simpa [chapter06PowerSeriesCompose, sg] using Mg.scalar_commutes a
+        rw [hcomm]
+      _ = PowerSeries.subst (PowerSeries.subst h sg) g :=
+        PowerSeries.subst_comp_subst_apply hsg_sub hhs g
+  have hAcond :
+      chapter06IntertwinerCondition f g
+        (chapter06PowerSeriesCompose sf h) a :=
+    ⟨hA_linear, hA_eq⟩
+  have hBcond :
+      chapter06IntertwinerCondition f g
+        (chapter06PowerSeriesCompose h sg) a :=
+    ⟨hB_linear, hB_eq⟩
+  have hAB : chapter06PowerSeriesCompose sf h =
+      chapter06PowerSeriesCompose h sg := by
+    apply (chapter06_integral_intertwining_recursion D f g hf hg a).unique
+    · exact hAcond
+    · exact hBcond
+  simpa [Mf, Mg, h, sf, sg] using hAB
 
 theorem chapter06_formal_module_intertwiner_maps_positive_valuation
     {K E : Type*} [Field K] [Field E] [Algebra K E]
