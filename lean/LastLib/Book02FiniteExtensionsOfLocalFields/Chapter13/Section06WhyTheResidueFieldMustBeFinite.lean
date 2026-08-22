@@ -101,7 +101,13 @@ theorem chapter13_infinite_residue_separable_classes_lift_to_unramified_classes
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
     Set.Infinite (chapter13UnramifiedDegreeClasses vK d) := by
-  sorry
+  rcases chapter13_unramified_classes_correspond_to_separable_residue_classes
+      vK d hcomplete with ⟨e⟩
+  intro hfinite
+  apply hresidue_infinite
+  rw [← Set.finite_coe_iff]
+  let _ : Finite (chapter13UnramifiedDegreeClasses vK d) := hfinite.to_subtype
+  exact Finite.of_equiv _ e
 
 /-- The residue-field-free finite-degree part of the complete DVR package.
 The perfectness hypothesis is explicit because it is the standard
@@ -147,7 +153,27 @@ theorem chapter13_complete_discrete_extension_has_unique_valuation_and_finite_in
       (integralClosure vK.valuationSubring L : Set L) =
         (vL.valuationSubring : Set L) ∧
       Module.Finite vK.valuationSubring vL.valuationSubring := by
-  sorry
+  let _ : LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.CompleteDVR
+      vK.valuationSubring :=
+    { toIsDiscreteValuationRing := inferInstance
+      isAdicComplete' := hcomplete }
+  have hH :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10IsHenselianValuedField
+        vK :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.complete_DVR_is_henselian
+  have hunique :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.hasUniqueValuationExtension
+        vK L := by
+    refine ⟨LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_valuation_extension_exists_as_heterogeneous
+      vK, ?_⟩
+    intro W₁ W₂
+    exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_henselian_valuation_has_unique_branch
+      vK hH
+      W₁.valuation W₂.valuation W₁.isExtension W₂.isExtension
+  have hstructure :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.finite_complete_extension_valuation_ring
+      vK vL hcomplete
+  exact ⟨hunique, hstructure.2.2.2.2.symm, hstructure.1⟩
 
 theorem chapter13_finite_residue_adds_integer_ring_compactness
     {A : Type*} [CommRing A] [IsDomain A]
