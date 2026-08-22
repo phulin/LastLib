@@ -207,7 +207,7 @@ $$
 \partial[v_0,\ldots,v_n]=\sum_{i=0}^n(-1)^i\,[v_0,\ldots,\widehat{v_i},\ldots,v_n].
 $$
 
-A direct expansion shows $\partial^2=0$: for fixed $i<j$ the term $v_j$ survives in the $i$th summand and $v_i$ in none of the later ones, so each ordered $(n-2)$-face arises exactly twice, from the pairs $(i,j)$ and $(j,i)$, with opposite signs $(-1)^{i+j}$ and $(-1)^{j+i}$. No cancellation argument over a geometric picture is required—the sign count is literal. A simplicial map $f:K\to L$, that is, a map $V(K)\to V(L)$ carrying simplices to simplices, induces chain maps $f_\#=\sum f(v_i)$ entrywise, and functoriality $(gf)_\#=g_\#f_\#$ holds because both sides reindex tuples identically.
+A direct expansion shows $\partial^2=0$: each ordered $(n-2)$-face arises exactly twice, by deleting $v_i$ first and then $v_j$ or vice versa for some $i<j$, with total signs $(-1)^{i+j-1}$ and $(-1)^{i+j}$ respectively—opposite, since they differ by one factor of $-1$. No cancellation argument over a geometric picture is required; the sign count is literal. A simplicial map $f:K\to L$, that is, a map $V(K)\to V(L)$ carrying simplices to simplices, induces chain maps $f_\#=\sum f(v_i)$ entrywise, and functoriality $(gf)_\#=g_\#f_\#$ holds because both sides reindex tuples identically.
 
 For an abelian group $A$ put $C_n(K,A)=C_n(K,\mathbf Z)\otimes A$ and define
 
@@ -382,13 +382,13 @@ $$
 \partial(c\frown a)=(-1)^p\bigl((\partial c)\frown a-c\frown da\bigr).
 $$
 
-_Proof._ Both sides are additive in $c$, so it suffices to check the identity on a single ordered simplex $\sigma=[v_0,\ldots,v_n]$. Write $\Phi=a(\sigma|[v_0,\ldots,v_p])$ and, for $j\leq p$, let $\varphi_j=a([v_0,\ldots,\widehat{v_j},\ldots,v_p])$. The left side is
+_Proof._ Both sides are additive in $c$, so it suffices to check the identity on a single ordered simplex $\sigma=[v_0,\ldots,v_n]$. Write $\Phi=a(\sigma|[v_0,\ldots,v_p])$ and, for $j\leq p$, let $\varphi_j=a([v_0,\ldots,\widehat{v_j},\ldots,v_{p+1}])$. The left side is
 
 $$
 \partial(\sigma\frown a)=\Phi\sum_{i=p}^{n}(-1)^{i-p}\,\sigma|[v_p,\ldots,\widehat{v_i},\ldots,v_n].
 $$
 
-On the right, each face $F_j=[v_0,\ldots,\widehat{v_j},\ldots,v_n]$ of $\sigma$ contributes through its own front $(p+1)$-face: for $j\leq p$ that front face is $[v_0,\ldots,\widehat{v_j},\ldots,v_{p+1}]$ with value $\varphi_j$, and the retained back part is $[v_{p+1},\ldots,v_n]$; for $j>p$ the front face is $[v_0,\ldots,v_p]$ with value $\Phi$ and the retained back part is $[v_p,\ldots,\widehat{v_j},\ldots,v_n]$. Hence
+On the right, each face $F_j=[v_0,\ldots,\widehat{v_j},\ldots,v_n]$ of $\sigma$ contributes through its own front $(p+1)$-face: for $j\leq p$ that front face is $[v_0,\ldots,\widehat{v_j},\ldots,v_{p+1}]$ with value $\varphi_j$, and the retained back part runs from the vertex in position $p$ of $F_j$, namely $v_{p+1}$, giving $[v_{p+1},\ldots,v_n]$; for $j>p$ the front face is $[v_0,\ldots,v_p]$ with value $\Phi$ and the retained back part is $[v_p,\ldots,\widehat{v_j},\ldots,v_n]$. Hence
 
 $$
 (\partial\sigma)\frown a=\sum_{j\leq p}(-1)^j\varphi_j\,[v_{p+1},\ldots,v_n]
