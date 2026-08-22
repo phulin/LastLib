@@ -36,7 +36,8 @@
 8. [The crystalline Dieudonné crystal](#8-the-crystalline-dieudonné-crystal)
    - [Why one evaluation is not enough](#81-why-one-evaluation-is-not-enough)
    - [Construction on divided-power thickenings](#82-construction-on-divided-power-thickenings)
-   - [Exactness, base change, and duality](#83-exactness-base-change-and-duality)
+   - [Comparison with the Zariski crystalline topology](#83-comparison-with-the-zariski-crystalline-topology)
+   - [Exactness, base change, and duality](#84-exactness-base-change-and-duality)
 9. [Torsion in abelian schemes](#9-torsion-in-abelian-schemes)
    - [The comparison problem](#91-the-comparison-problem)
    - [The finite-level comparison theorem](#92-the-finite-level-comparison-theorem)
@@ -887,7 +888,7 @@ $$
 \tag{8.2}
 $$
 
-Here $\mathcal{E}xt^1$ means equivalence classes of extensions of abelian fppf sheaves; Baer sum makes it an $\mathcal O_T$-module. The scalar action comes from pushout on the additive kernel. Relative Frobenius on $G$, Frobenius on the crystalline structure sheaf, and Cartier duality define $F$ and $V$; their composites are multiplication by $p$. Passing from the big fppf crystalline site to the Zariski crystalline site does not change this quasi-coherent module, because quasi-coherent modules and their extensions satisfy fppf descent.
+Here $\mathcal{E}xt^1$ means equivalence classes of extensions of abelian fppf sheaves; Baer sum makes it an $\mathcal O_T$-module. The scalar action comes from pushout on the additive kernel. Relative Frobenius on $G$, Frobenius on the crystalline structure sheaf, and Cartier duality define $F$ and $V$; their composites are multiplication by $p$. Passing from the big fppf crystalline site to the Zariski crystalline site does not change this quasi-coherent module. This comparison is a theorem, not an abbreviation: Section 8.3 proves that the extension group computed with the fppf topology and the one computed with the Zariski topology identify through quasi-coherent cohomology, because quasi-coherent modules satisfy faithfully flat descent.
 
 Thus an element of $\mathbf D(G)_T$ is an extension
 
@@ -917,7 +918,35 @@ for every $n$, with the right side interpreted literally; when $p^rG=0$ and $n\g
 
 The construction is intrinsic even though covector coordinates entered the proof: two choices give resolutions of the same additive crystalline sheaf, and the comparison theorem for resolutions gives a unique isomorphism on $\mathcal E xt^1$.
 
-### 8.3 Exactness, base change, and duality
+### 8.3 Comparison with the Zariski crystalline topology
+
+The construction (8.2) was carried out on the big crystalline fppf site because finite flat torsors under $G_U$ are locally trivial only for the fppf topology; Chapter 9 uses exactly that local triviality. The module produced, however, is consumed downstream as a quasi-coherent crystal in the sense of Book 48, whose structure theory — crystals as modules with connection, descent of local presentations — is stated on the Zariski crystalline topology. This section proves the comparison asserted after (8.2). The statement proved here is deliberately narrower than a general equivalence of sheaf topoi, which is neither proved nor needed: what is shown is that the $\mathcal O_T$-module $\mathbf D(G)_T$ is unchanged when every sheaf in sight is taken for the Zariski topology instead of the fppf topology, and that consequently the object transports to the small Zariski crystalline site, where Book 48's calculus applies verbatim.
+
+Fix $(S,J,\gamma)$ and $G$ over $S_0$ finite locally free and killed by a power of $p$, as in Section 8.2. The **Zariski variant** of the big site keeps the objects $(U,T,\delta)$ with $U$ an $S_0$-scheme locally of finite type, but declares a family $\{(U_i,T_i)\to(U,T)\}$ to cover only when the maps $T_i\to T$ are open immersions whose images cover $T$ and $U_i=U\times_TT_i$ with the induced divided powers. Open immersions are fppf covers, so this site embeds in the fppf one, and both share the same underlying category and the same arrows. Restriction along the embedding is exact: kernels and cokernels of maps of abelian sheaves are computed objectwise, and the object classes agree. On shared objects the additive group of $\mathcal O_{U/T}$, each covector sheaf $CW^{(m)}_{U/T}$, and the sheaf $G_U$ are given by identical formulas on the two sites. Two of these are already fppf sheaves: $G_U$, because it is representable in the first variable and schemes satisfy faithfully flat descent; and the additive group of $\mathcal O_{U/T}$, because quasi-coherent modules do.
+
+**Lemma 8.1a (topology-independent resolution computation).** On either topology, applying $\mathcal Hom(G_U,-)$ to the crystalline Witt covector resolution computes $\mathcal Ext^1(G_U,\mathcal O_{U/T})$, and the result identifies naturally with $H^1$ of one and the same complex of finitely generated $\mathcal O_T$-modules.
+
+**Proof.** The acyclicity of the covector terms against finite $p$-group sheaves was established by the lifting calculation behind Lemma 3.1, which is performed objectwise over divided-power rings and glued afterwards. Zariski gluing is formally weaker than fppf gluing, so the terms are $\mathcal Hom(G_U,-)$-acyclic on the Zariski site too, and in both categories they compute the derived functors of $\mathcal Hom(G_U,-)$ applied to $\mathcal O_{U/T}$. It remains to see that the Hom groups themselves carry no trace of the topology. A homomorphism $\psi:G_U\to CW^{(m)}$ assigns to each object $(V,T')$ a map $G(V)\to CW(T')$, natural in the arrows of the site. Because $G_U$ depends only on first components, naturality along the canonical arrow $(V,V)\to(V,T')$ shows that every component of $\psi$ lifts its restriction to trivial thickenings; conversely, $\psi$ is determined by the system of these lifts together with their compatibilities along morphisms of thickenings, all expressed by universal Witt-polynomial equations in the divided-power structure of $T'$ and the Hopf algebra of $G$. Through the evaluation dictionary used in Section 6.2 — restrict a covector homomorphism to the first infinitesimal neighborhood of the identity, where Frobenius terms vanish, and reconstruct it from its last coordinate through the recursive carry equations — such systems identify with finitely generated $\mathcal O_T$-modules built from the conormal module of $G$ and finitely many covector coordinates; on a group killed by $p^r$ only the first $r$ coordinates occur, exactly as in Theorem 8.1. The differentials induced by the resolution are $\mathcal O_T$-linear maps between these modules, given by Witt polynomials. Both topologies therefore yield literally the same complex over $\mathcal O_T$. $\square$
+
+**Proposition 8.1b (comparison of topologies).** The natural map
+$$
+\mathcal Ext^1_{\mathrm{Zar}}\bigl(G_U,\mathcal O_{U/T}\bigr)
+\longrightarrow
+\mathcal Ext^1_{\mathrm{fppf}}\bigl(G_U,\mathcal O_{U/T}\bigr)
+$$
+
+induced by sheafification of middle terms is an isomorphism of $\mathcal O_T$-modules, functorial for pullback along morphisms of thickenings and compatible with Baer sum, pushout along $\mathcal O_{U/T}$-linear maps, and PD base change.
+
+**Proof.** Sheafification for the finer topology is an exact functor between the two abelian sheaf categories and fixes both endpoints, which were noted above to be fppf sheaves already. Applying it to the middle term of a short exact sequence therefore defines the displayed map, and Baer sums and pushouts, being colimits built from diagrams of extensions, pass through it. Under Lemma 8.1a on both sides, this map compares the cohomology of one fixed complex $M_T^\bullet$ of finitely generated $\mathcal O_T$-modules computed with Zariski cohomology or with fppf cohomology. For every quasi-coherent $\mathcal O_T$-module $\mathcal M$, the change-of-topology map
+$$
+H^1_{\mathrm{Zar}}(T,\mathcal M)\longrightarrow H^1_{\mathrm{fppf}}(T,\mathcal M)
+$$
+
+is an isomorphism. Indeed, choose an fppf covering of $T$ by affines; faithful flatness makes its Čech nerve an effective descent diagram for modules, so fppf cohomology is computed by that Čech complex. Each term of this complex is a quasi-coherent module on an affine scheme, where higher Zariski cohomology vanishes, so the descent complex also computes Zariski cohomology; this is the quasi-coherent descent formalism recorded among Book 48's preliminaries. Applying this termwise to $M_T^\bullet$ gives the asserted isomorphism. Functoriality under pullback holds because both sides transport along pullbacks of the covector resolution, exactly as in Theorem 8.1, and PD base change acts on that resolution by scalar extension. $\square$
+
+Consequently the module $\mathbf D(G)_T$ of (8.2) may be computed with either topology, and the assignments $T\mapsto\mathbf D(G)_T$, shown in Theorem 8.1 to form a crystal, form a quasi-coherent crystal in the sense of Book 48: Lemma 8.1a presents every value locally as the first cohomology of a bounded complex of finite locally free modules. Through Book 48's identification of quasi-coherent crystals with modules carrying an integrable connection, the object transfers to the small Zariski crystalline site without changing any value. What does not transfer is method: Chapter 9's torsor arguments genuinely require the fppf topology, because sections of torsors under finite flat groups glue only fppf-locally, and nothing proved here replaces them. Conversely, every downstream consumer that evaluates $\mathbf D(G)$ on divided-power thickenings, base-changes it, or presents it by local free resolutions may work on the small Zariski crystalline site, and the filtered-crystal construction of such consumers rests on precisely this license.
+
+### 8.4 Exactness, base change, and duality
 
 The crystalline construction is useful only if it preserves the operations used on finite flat groups. Exactness lets one pass to subquotients, base change makes the values into a genuine crystal, and duality is what identifies Frobenius information with the complementary Verschiebung information.
 
