@@ -29,7 +29,8 @@ abbrev chapter10IdeleClassGroup
 theorem chapter10_mem_principal_subgroup_iff
     {G I : Type*} [Group G] [CommGroup I] (p : G →* I) (x : I) :
     x ∈ chapter10PrincipalSubgroup p ↔ ∃ g : G, p g = x := by
-  sorry
+  rw [chapter10PrincipalSubgroup, Subgroup.mem_map]
+  simp
 
 /-- The norm-one ideles and their image in the idele class group. -/
 def chapter10NormOneIdeleSet
@@ -86,7 +87,12 @@ def chapter10IdeleClassNorm
   refine QuotientGroup.lift (chapter10PrincipalSubgroup pL)
     ((QuotientGroup.mk' (chapter10PrincipalSubgroup pK)).comp ideleNorm) ?_
   intro x hx
-  sorry
+  rcases (Subgroup.mem_map.mp hx) with ⟨g, -, rfl⟩
+  apply MonoidHom.mem_ker.mpr
+  change QuotientGroup.mk' (chapter10PrincipalSubgroup pK) (ideleNorm (pL g)) = 1
+  rw [QuotientGroup.mk'_apply, QuotientGroup.eq_one_iff]
+  exact Subgroup.mem_map.mpr ⟨fieldNorm g, Subgroup.mem_top _,
+    (DFunLike.congr_fun hcompat g).symm⟩
 
 theorem chapter10_idele_class_norm_mk
     {G_K G_L I_K I_L : Type*} [Group G_K] [Group G_L]
@@ -110,7 +116,11 @@ theorem chapter10_idele_class_norm_continuous
     (hcompat : chapter10PrincipalNormCompatibility pK pL fieldNorm ideleNorm)
     (hcontinuous : Continuous ideleNorm) :
     Continuous (chapter10IdeleClassNorm pK pL fieldNorm ideleNorm hcompat) := by
-  sorry
+  apply (QuotientGroup.isQuotientMap_mk
+    (chapter10PrincipalSubgroup pL)).continuous_iff.mpr
+  change Continuous (fun x : I_L =>
+    QuotientGroup.mk' (chapter10PrincipalSubgroup pK) (ideleNorm x))
+  exact QuotientGroup.continuous_mk.comp hcontinuous
 
 theorem chapter10_idele_class_norm_preserves_norm_one
     {G_K G_L I_K I_L : Type*} [Group G_K] [Group G_L]
@@ -172,7 +182,15 @@ theorem chapter10_idele_class_norm_transitive
     (hq2 : Function.Surjective q_2)
     (htrans : chapter10AdelicNormTransitivity N_10 N_21 N_20) :
     Q_20 = Q_10.comp Q_21 := by
-  sorry
+  apply MonoidHom.ext
+  intro x
+  obtain ⟨y, rfl⟩ := hq2 x
+  change Q_20 (q_2 y) = Q_10 (Q_21 (q_2 y))
+  rw [show Q_20 (q_2 y) = q_0 (N_20 y) from DFunLike.congr_fun hq20 y]
+  rw [htrans y]
+  rw [← show Q_10 (q_1 (N_21 y)) = q_0 (N_10 (N_21 y)) from
+    DFunLike.congr_fun hq10 (N_21 y)]
+  rw [← show Q_21 (q_2 y) = q_1 (N_21 y) from DFunLike.congr_fun hq21 y]
 
 /-! ### The ideal norm shadow -/
 

@@ -315,7 +315,87 @@ theorem chapter10_scalar_extension_module_degree_formula
     (x : kIdeles d) :
     M.moduleL (chapter10ScalarExtensionHom d scalar hscalar x) =
       M.moduleK x ^ degree := by
-  sorry
+  classical
+  have hbelow : Filter.Tendsto d.below Filter.cofinite Filter.cofinite := by
+    apply Filter.Tendsto.cofinite_of_finite_preimage_singleton
+    intro v
+    apply Set.finite_coe_iff.mpr
+    exact Set.finite_coe_iff.mp (d.finiteOver v)
+  have hsupportK : Function.HasFiniteMulSupport
+      (fun v : ιK => M.localK v (x v)) := by
+    rw [Function.HasFiniteMulSupport]
+    apply Filter.eventually_cofinite.mp
+    filter_upwards [x.2] with v hv
+    exact M.localK_unit v ⟨x v, hv⟩
+  have hsupportL : Function.HasFiniteMulSupport
+      (fun w : ιL =>
+        (M.localK (d.below w) (x (d.below w))) ^ localDegree w) := by
+    rw [Function.HasFiniteMulSupport]
+    apply Filter.eventually_cofinite.mp
+    filter_upwards [hbelow.eventually x.2] with w hw
+    rw [M.localK_unit (d.below w) ⟨x (d.below w), hw⟩]
+    simp
+  have hlocal' (w : ιL) :
+      M.localL w ((chapter10ScalarExtensionHom d scalar hscalar x) w) =
+        (M.localK (d.below w) (x (d.below w))) ^ localDegree w := by
+    change M.localL w (scalar w (x (d.below w))) = _
+    exact hlocal w (x (d.below w))
+  rw [M.moduleL_factorization, M.moduleK_factorization]
+  simp_rw [hlocal']
+  let s : Finset ιL := hsupportL.toFinset
+  have hinner (v : ιK) :
+      (∏ w : {w : ιL // d.below w = v},
+        (M.localK (d.below (w : ιL)) (x (d.below (w : ιL)))) ^
+          localDegree (w : ιL)) =
+        ∏ w ∈ s with d.below w = v,
+          (M.localK (d.below w) (x (d.below w))) ^ localDegree w := by
+    refine Finset.prod_bij_ne_one
+      (s := Finset.univ)
+      (t := s.filter (fun w => d.below w = v))
+      (f := fun w : {w : ιL // d.below w = v} =>
+        (M.localK (d.below (w : ιL)) (x (d.below (w : ιL)))) ^
+          localDegree (w : ιL))
+      (g := fun w : ιL =>
+        (M.localK (d.below w) (x (d.below w))) ^ localDegree w)
+      (i := fun w _ _ => (w : ιL)) ?_ ?_ ?_ ?_
+    · intro w _ hne
+      exact Finset.mem_filter.mpr ⟨hsupportL.mem_toFinset.mpr hne, w.property⟩
+    · intro w₁ _ hne₁ w₂ _ hne₂ heq
+      exact Subtype.ext heq
+    · intro w _ hne
+      exact ⟨⟨w, (Finset.mem_filter.mp ‹w ∈ s.filter (fun w => d.below w = v)›).2⟩,
+        Finset.mem_univ _, hne, rfl⟩
+    · intro w _ _
+      rfl
+  rw [finprod_eq_prod_of_mulSupport_toFinset_subset _ hsupportL Finset.Subset.rfl]
+  rw [← finprod_prod_filter d.below s
+    (fun w => (M.localK (d.below w) (x (d.below w))) ^ localDegree w)]
+  simp_rw [← hinner]
+  have hfiber (v : ιK) :
+      (∏ w : {w : ιL // d.below w = v},
+        (M.localK (d.below (w : ιL)) (x (d.below (w : ιL)))) ^
+          localDegree (w : ιL)) =
+        (M.localK v (x v)) ^ degree := by
+    calc
+      (∏ w : {w : ιL // d.below w = v},
+          (M.localK (d.below (w : ιL)) (x (d.below (w : ιL)))) ^
+            localDegree (w : ιL)) =
+          ∏ w : {w : ιL // d.below w = v},
+            (M.localK v (x v)) ^ localDegree (w : ιL) := by
+        apply Finset.prod_congr rfl
+        intro w _
+        cases w with
+        | mk w hw =>
+          cases hw
+          rfl
+      _ = (M.localK v (x v)) ^
+          ∑ w : {w : ιL // d.below w = v}, localDegree (w : ιL) := by
+        simpa using (Finset.prod_pow_eq_pow_sum (s := Finset.univ)
+          (f := fun w : {w : ιL // d.below w = v} => localDegree (w : ιL))
+          (a := M.localK v (x v)))
+      _ = (M.localK v (x v)) ^ degree := by rw [hdegree v]
+  simp_rw [hfiber]
+  exact (finprod_pow hsupportK degree).symm
 
 theorem chapter10_scalar_extension_degree_formula
     {ιK ιL : Type*} {Kloc : ιK → Type*} {Lloc : ιL → Type*}
@@ -334,7 +414,11 @@ theorem chapter10_scalar_extension_degree_formula
     chapter10AdelicDegree M.moduleL
         (chapter10ScalarExtensionHom d scalar hscalar x) =
       degree * chapter10AdelicDegree M.moduleK x := by
-  sorry
+  rw [chapter10AdelicDegree, chapter10AdelicDegree]
+  rw [chapter10_scalar_extension_module_degree_formula d M scalar hscalar
+    localDegree degree hdegree hlocal x]
+  rw [NNReal.coe_pow, Real.log_pow]
+  ring
 
 def chapter10NormAndScalarDegreeConvention
     {ιK ιL : Type*} {Kloc : ιK → Type*} {Lloc : ιL → Type*}
