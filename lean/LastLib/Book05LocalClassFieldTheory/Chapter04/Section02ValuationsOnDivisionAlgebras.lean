@@ -94,7 +94,141 @@ theorem chapter04_division_valuation_integrality_iff
     [TopologicalSpace D]
     (V : Chapter04DivisionValuationInterface K D k barD) (x : D) :
     chapter04IsIntegralOverSubring V.valuationSubring x ↔ V.value x ≥ 0 := by
-  sorry
+  classical
+  have hpow : ∀ z : D, ∀ n : ℕ, V.value (z ^ n) = n • V.value z := by
+    intro z n
+    induction n with
+    | zero => simp [V.value_one]
+    | succ n ih =>
+      rw [pow_succ, V.value_mul, ih, add_nsmul, one_nsmul]
+  constructor
+  · intro hx
+    rcases hx with ⟨n, p, hlead, hpoly⟩
+    have hnzero : n ≠ 0 := by
+      intro hn
+      subst n
+      have hp : p ⟨0, Nat.zero_lt_succ 0⟩ = 1 := by simpa using hlead
+      have hzero : (p ⟨0, Nat.zero_lt_succ 0⟩ : D) = 0 := by
+        simpa [Fin.sum_univ_one] using hpoly
+      have hpD : (p ⟨0, Nat.zero_lt_succ 0⟩ : D) = 1 := congrArg Subtype.val hp
+      exact one_ne_zero (hpD.symm.trans hzero)
+    have hnpos : 0 < n := Nat.pos_of_ne_zero hnzero
+    have hsum_gt : ∀ (s : Finset (Fin (n + 1))) (f : Fin (n + 1) → D)
+        (c : WithTop ℚ), s.Nonempty →
+          (∀ i ∈ s, c < V.value (f i)) → c < V.value (Finset.sum s f) := by
+      intro s
+      induction s using Finset.induction_on with
+      | empty =>
+          intro f c hs h
+          rcases hs with ⟨i, hi⟩
+          exact False.elim (by simpa using hi)
+      | @insert a s ha ih =>
+          intro f c hs h
+          rw [Finset.sum_insert ha]
+          by_cases hs' : s.Nonempty
+          · apply lt_of_lt_of_le
+              (lt_min (h a (Finset.mem_insert_self a s)) (ih f c hs' ?_))
+              (V.value_add _ _)
+            intro i hi
+            exact h i (Finset.mem_insert_of_mem hi)
+          · have hs0 : s = ∅ := Finset.not_nonempty_iff_eq_empty.mp hs'
+            subst s
+            simpa using h a (by simp)
+    by_contra hnot
+    have hxneg : V.value x < 0 := lt_of_not_ge hnot
+    have hxne : x ≠ 0 := by
+      intro hx0
+      rw [hx0, V.value_zero] at hxneg
+      exact (not_lt_of_ge le_top) hxneg
+    let ux : Dˣ := Units.mk0 x hxne
+    have hxval : V.value x = (V.unitValue ux : WithTop ℚ) := by
+      simpa [ux] using V.value_unit ux
+    have hxneg' : V.unitValue ux < 0 := by
+      apply WithTop.coe_lt_coe.mp
+      simpa [hxval] using hxneg
+    let last : Fin (n + 1) := ⟨n, Nat.lt_succ_self n⟩
+    let f : Fin (n + 1) → D := fun i => (p i : D) * x ^ (i : ℕ)
+    change Finset.sum Finset.univ f = 0 at hpoly
+    have hp_lead : (p last : D) = 1 := by
+      exact congrArg Subtype.val hlead
+    have hleadval : V.value (f last) = n • V.value x := by
+      dsimp [f, last]
+      rw [hp_lead, one_mul, hpow]
+    have hterm : ∀ i : Fin (n + 1), i ≠ last →
+        V.value (f last) < V.value (f i) := by
+      intro i hi
+      have hi_le : (i : ℕ) ≤ n := Nat.le_of_lt_succ i.isLt
+      have hi_ne : (i : ℕ) ≠ n := by
+        intro h
+        apply hi
+        apply Fin.ext
+        exact h
+      have hi_lt : (i : ℕ) < n := Nat.lt_of_le_of_ne hi_le hi_ne
+      have hcoeff : 0 ≤ V.value (p i : D) := by
+        have h := (p i).property
+        change (p i : D) ∈ V.valuationSubring.carrier at h
+        rw [V.valuationSubring_eq] at h
+        exact h
+      have hbase : n • V.value x < (i : ℕ) • V.value x := by
+        rw [hxval, ← WithTop.coe_nsmul, ← WithTop.coe_nsmul,
+          WithTop.coe_lt_coe, nsmul_eq_mul, nsmul_eq_mul]
+        have hi_lt' : (i : ℚ) < (n : ℚ) := by exact_mod_cast hi_lt
+        nlinarith [hxneg']
+      have htermval : V.value (f i) =
+          V.value (p i : D) + (i : ℕ) • V.value x := by
+        dsimp [f]
+        rw [V.value_mul, hpow]
+      rw [hleadval, htermval]
+      exact lt_of_lt_of_le hbase (le_add_of_nonneg_left hcoeff)
+    have hdecomp : Finset.sum Finset.univ f = f last +
+        Finset.sum (Finset.univ.erase last) f := by
+      symm
+      simpa [add_comm] using Finset.sum_erase_add Finset.univ f (Finset.mem_univ last)
+    have hrel : f last + Finset.sum (Finset.univ.erase last) f = 0 := by
+      calc
+        f last + Finset.sum (Finset.univ.erase last) f = Finset.sum Finset.univ f :=
+          hdecomp.symm
+        _ = 0 := hpoly
+    have hlead_eq : f last = -(Finset.sum (Finset.univ.erase last) f) :=
+      eq_neg_of_add_eq_zero_left hrel
+    have hnegval : ∀ z : D, V.value (-z) = V.value z := by
+      intro z
+      let um : Dˣ := Units.mk0 (-1 : D) (by simp)
+      have hmval : V.value (-1 : D) = (V.unitValue um : WithTop ℚ) := by
+        simpa [um] using V.value_unit um
+      have hm := V.value_mul (-1 : D) (-1 : D)
+      rw [neg_mul_neg, one_mul, V.value_one] at hm
+      rw [hmval] at hm
+      have hmq : (0 : ℚ) = V.unitValue um + V.unitValue um := by
+        exact_mod_cast hm
+      have hmzero : V.unitValue um = 0 := by linarith
+      have hmval0 : V.value (-1 : D) = 0 := by simpa [hmval, hmzero]
+      have hz' := V.value_mul (-1 : D) z
+      simpa [neg_one_mul, hmval0] using hz'
+    have hrest_gt : V.value (f last) <
+        V.value (Finset.sum (Finset.univ.erase last) f) := by
+      refine hsum_gt (Finset.univ.erase last) f (V.value (f last)) ?_ ?_
+      · refine ⟨⟨0, Nat.zero_lt_succ n⟩, ?_⟩
+        simp only [Finset.mem_erase, Finset.mem_univ, and_true]
+        intro hzero
+        have hzero' : (0 : ℕ) = n := by
+          simpa [last] using congrArg Fin.val hzero
+        omega
+      · intro i hi
+        exact hterm i (Finset.ne_of_mem_erase hi)
+    have hrest_eq : V.value (Finset.sum (Finset.univ.erase last) f) =
+        V.value (f last) := by
+      rw [hlead_eq, hnegval]
+    rw [hrest_eq] at hrest_gt
+    exact (lt_irrefl _) hrest_gt
+  · intro hx
+    have hxmem : x ∈ V.valuationSubring.carrier := by
+      rw [V.valuationSubring_eq]
+      exact hx
+    let z : V.valuationSubring := ⟨x, hxmem⟩
+    refine ⟨1, ![-z, 1], ?_, ?_⟩
+    · simp
+    · simp [Fin.sum_univ_two, z]
 
 theorem chapter04_division_valuation_ultrametric
     {K D k barD : Type*} [Field K] [Ring D] [Field k] [Field barD]
@@ -121,7 +255,42 @@ theorem chapter04_division_valuation_triangle_argument
     (hle : V.value x ≤ V.value y) :
     V.value (x + y) = V.value x + V.value (1 + x⁻¹ * y) ∧
       V.value (1 + x⁻¹ * y) ≥ 0 := by
-  sorry
+  have hfactor : x + y = x * (1 + x⁻¹ * y) := by
+    rw [mul_add, mul_one, ← mul_assoc, mul_inv_cancel₀ hx, one_mul]
+  have hnonneg : V.value (x⁻¹ * y) ≥ 0 := by
+    by_cases hy : y = 0
+    · simp [hy, V.value_zero]
+    · let ux : Dˣ := Units.mk0 x hx
+      let uy : Dˣ := Units.mk0 y hy
+      have hxval : V.value x = (V.unitValue ux : WithTop ℚ) := by
+        simpa [ux] using V.value_unit ux
+      have hyval : V.value y = (V.unitValue uy : WithTop ℚ) := by
+        simpa [uy] using V.value_unit uy
+      have hle' : V.unitValue ux ≤ V.unitValue uy := by
+        apply WithTop.coe_le_coe.mp
+        simpa [hxval, hyval] using hle
+      have hinv : V.unitValue ux + V.unitValue (ux⁻¹) = 0 := by
+        have h := V.value_inv ux
+        rw [V.value_unit ux, V.value_unit (ux⁻¹)] at h
+        exact_mod_cast h
+      have hxinv : V.value x⁻¹ = ((-V.unitValue ux : ℚ) : WithTop ℚ) := by
+        calc
+          V.value x⁻¹ = V.value ((ux⁻¹ : Dˣ) : D) := by
+            congr 1
+          _ = (V.unitValue (ux⁻¹) : WithTop ℚ) := V.value_unit (ux⁻¹)
+          _ = ((-V.unitValue ux : ℚ) : WithTop ℚ) := by
+            rw [eq_neg_of_add_eq_zero_right hinv]
+      have hprod : V.value (x⁻¹ * y) =
+          ((-V.unitValue ux + V.unitValue uy : ℚ) : WithTop ℚ) := by
+        rw [V.value_mul, hxinv, hyval]
+        norm_num
+      rw [hprod]
+      exact WithTop.coe_le_coe.mpr (by linarith)
+  constructor
+  · rw [hfactor, V.value_mul]
+  · have hadd := V.value_add 1 (x⁻¹ * y)
+    rw [V.value_one] at hadd
+    simpa [min_eq_left hnonneg] using hadd
 
 theorem chapter04_division_valuation_ring_is_local
     {K D k barD : Type*} [Field K] [DivisionRing D] [Field k] [Field barD]
@@ -129,7 +298,66 @@ theorem chapter04_division_valuation_ring_is_local
     [TopologicalSpace D]
     (V : Chapter04DivisionValuationInterface K D k barD) :
     IsLocalRing V.valuationSubring := by
-  sorry
+  have hunit_of_value_zero : ∀ z : V.valuationSubring,
+      V.value (z : D) = 0 → IsUnit z := by
+    intro z hz
+    have hz_ne : (z : D) ≠ 0 := by
+      intro hz0
+      rw [hz0, V.value_zero] at hz
+      exact WithTop.top_ne_zero hz
+    have hzinv : V.value (z : D)⁻¹ = 0 := by
+      have hmul := V.value_mul (z : D) (z : D)⁻¹
+      rw [mul_inv_cancel₀ hz_ne, V.value_one] at hmul
+      simpa [hz] using hmul.symm
+    have hzinv_mem : (z : D)⁻¹ ∈ V.valuationSubring.carrier := by
+      rw [V.valuationSubring_eq]
+      change V.value (z : D)⁻¹ ≥ 0
+      simpa [hzinv]
+    let u : V.valuationSubringˣ :=
+      { val := z
+        inv := ⟨(z : D)⁻¹, hzinv_mem⟩
+        val_inv := by
+          apply Subtype.ext
+          exact mul_inv_cancel₀ hz_ne
+        inv_val := by
+          apply Subtype.ext
+          exact inv_mul_cancel₀ hz_ne }
+    exact ⟨u, rfl⟩
+  refine
+    { toNontrivial := ⟨⟨0, 1, by
+        intro h
+        have h' : (0 : D) = 1 := congrArg Subtype.val h
+        exact zero_ne_one h'⟩⟩
+      isUnit_or_isUnit_of_add_one := ?_ }
+  intro a b hab
+  have habD : (a : D) + (b : D) = 1 := congrArg Subtype.val hab
+  have ha_mem : V.value (a : D) ≥ 0 := by
+    have h := a.property
+    change (a : D) ∈ V.valuationSubring.carrier at h
+    rw [V.valuationSubring_eq] at h
+    exact h
+  have hb_mem : V.value (b : D) ≥ 0 := by
+    have h := b.property
+    change (b : D) ∈ V.valuationSubring.carrier at h
+    rw [V.valuationSubring_eq] at h
+    exact h
+  by_cases ha0 : V.value (a : D) = 0
+  · exact Or.inl (hunit_of_value_zero a ha0)
+  · have ha_pos : 0 < V.value (a : D) := lt_of_le_of_ne ha_mem (Ne.symm ha0)
+    have hab_lt : V.value (b : D) < V.value (a : D) := by
+      by_contra h
+      have hle : V.value (a : D) ≤ V.value (b : D) := le_of_not_gt h
+      have hadd := V.value_add (a : D) (b : D)
+      rw [habD, V.value_one] at hadd
+      have hzero : (0 : WithTop ℚ) ≥ V.value (a : D) := by
+        simpa [min_eq_left hle] using hadd
+      exact (not_le_of_gt ha_pos) hzero
+    have hb0 : V.value (b : D) = 0 := by
+      have hstrict := V.value_strict_add hab_lt
+      have habD' : (b : D) + (a : D) = 1 := by rw [add_comm, habD]
+      rw [habD', V.value_one] at hstrict
+      exact hstrict.symm
+    exact Or.inr (hunit_of_value_zero b hb0)
 
 theorem chapter04_division_valuation_ring_and_maximal_ideal
     {K D k barD : Type*} [Field K] [DivisionRing D] [Field k] [Field barD]
@@ -138,7 +366,7 @@ theorem chapter04_division_valuation_ring_and_maximal_ideal
     (V : Chapter04DivisionValuationInterface K D k barD) :
     V.valuationSubring.carrier = {x | V.value x ≥ 0} ∧
       chapter04IdealImage V.valuationSubring V.maximalIdeal = {x | V.value x > 0} := by
-  sorry
+  exact ⟨V.valuationSubring_eq, V.maximalIdeal_eq⟩
 
 theorem chapter04_division_residue_is_a_finite_field
     {K D k barD : Type*} [Field K] [DivisionRing D] [Field k] [Field barD]
@@ -154,7 +382,21 @@ theorem chapter04_division_residue_quotient_equiv
     [TopologicalSpace D]
     (V : Chapter04DivisionValuationInterface K D k barD) :
     Nonempty ((V.valuationSubring ⧸ V.maximalIdeal) ≃+ barD) := by
-  sorry
+  have hker : V.maximalIdeal.toAddSubgroup = V.residueMap.toAddMonoidHom.ker := by
+    ext x
+    constructor
+    · intro hx
+      have hres : V.residueMap x = V.residueMap 0 :=
+        (V.residue_eq_iff x 0).2 (by simpa using hx)
+      simpa using hres
+    · intro hx
+      have hres : V.residueMap x = V.residueMap 0 := by simpa using hx
+      have hmem := (V.residue_eq_iff x 0).1 hres
+      simpa using hmem
+  change Nonempty ((V.valuationSubring ⧸ V.maximalIdeal.toAddSubgroup) ≃+ barD)
+  rw [hker]
+  exact ⟨QuotientAddGroup.quotientKerEquivOfSurjective
+    V.residueMap.toAddMonoidHom V.residue_surjective⟩
 
 theorem chapter04_division_dimension_value_residue_formula
     {K D k barD : Type*} [Field K] [Ring D] [Field k] [Field barD]
