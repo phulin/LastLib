@@ -2416,29 +2416,169 @@ whose successive quotients are $E_\infty^{i,n-i}$. Because the spectral sequence
 first quadrant, only finitely many terms contribute to a fixed total degree; no completeness or
 conditional-convergence issue occurs.
 
-The construction uses the composite of left exact functors
+The construction rests on three verifications: a cross-section splitting of $G$ over $Q$, an
+acyclicity statement for coinduced modules under restriction to $N$, and the identification of
+the derived functor of $N$-invariants on the category of discrete $G$-modules with the cochain
+groups $H^j(N,-)$. The assembly itself is then an instance of the derived-composition theorem
+(Book 007a, Section 12.2), applied to the composite of left exact functors on discrete
+$G$-modules,
 
 $$
-A\longmapsto A^N\longmapsto (A^N)^Q=A^G.
+A\longmapsto A^N\longmapsto (A^N)^Q=A^G,
 $$
 
-Here are the hypotheses behind the composite-functor argument. The inflation functor from
-discrete $Q$-modules to discrete $G$-modules is exact and is left adjoint to $N$-invariants.
-Consequently $N$-invariants carry injective $G$-modules to injective, hence acyclic,
-$Q$-modules. Resolve $A$ by injective discrete $G$-modules, apply $N$-invariants, and then resolve
-the resulting complex for $Q$-invariants. The first filtration computes $H^j(N,A)$ and then
-$H^i(Q,-)$, giving
+where the intermediate functor lands in discrete $Q$-modules because $N$ is normal.
+
+**Cross-section lemma (splitting over the quotient).** _The projection $\pi:G\to Q$ admits a
+continuous section $s:Q\to G$ with $s(1)=1$. Consequently $g\mapsto(t,q)$, where
+$g=t\,s(q)$ with $t\in N$, is a homeomorphism $G\simeq N\times Q$, and right multiplication by
+elements of $N$ moves only the first coordinate._
+
+_Proof._ This belongs to the standard theory of profinite spaces, of which profinite groups and
+their quotients are examples: every continuous surjection of compact, Hausdorff,
+zero-dimensional spaces admits a continuous cross-section. One construction runs as follows.
+Profinite spaces are dual to Boolean algebras of clopen sets, and under this duality continuous
+surjections correspond to subalgebra inclusions of clopen algebras, while cross-sections
+correspond to retractions of those inclusions. Such retractions exist because Boolean algebras
+are projective in their category: free Boolean algebras are projective, and every Boolean algebra
+is a retract of a free one. Applying the duality in reverse therefore yields the required section,
+which may be normalized to send $1$ to $1$ by composing it with right multiplication by the
+inverse of $s(1)$. The map $(t,q)\mapsto t\,s(q)$ from $N\times Q$ to $G$ is then a continuous
+bijection from a compact space to a Hausdorff space, hence a homeomorphism: uniqueness of the
+decomposition follows by applying $\pi$, which recovers $q$ from $g$ and then $t=g\,s(q)^{-1}$;
+and right translation by $n\in N$ sends $(t,q)$ to $(tn,q)$. $\square$
+
+**Acyclicity lemma (restriction of coinduced modules).** _Let $J$ be any discrete abelian group
+and let $\mathcal C_G(J)=\operatorname{Map}_{cts}(G,J)$ carry the right-translation structure.
+Then_
 
 $$
-E_2^{i,j}=H^i(Q,H^j(N,A)).
+H^j\bigl(N,\operatorname{Res}^G_N\mathcal C_G(J)\bigr)=0\qquad(j>0).
 $$
 
-The other filtration computes the derived functors of the composite, which are $H^{i+j}(G,A)$
-by Chapter 10. This proves both the asserted page and its abutment using the ordinary spectral
-sequence of a first-quadrant double complex. Equivalently, one may filter homogeneous cochains
-by quotient directions; the horizontal differential computes $Q$-cohomology and the vertical
-differential computes $N$-cohomology. The total differential uses $d_h+(-1)^i d_v$, so its two
-parts anticommute and fix the sign of transgression.
+_Proof._ Use homogeneous continuous cochains, which compute the same groups (Section 2.6). A
+homogeneous $j$-cocycle datum is a continuous $N$-equivariant map
+$F:N^{j+1}\to\mathcal C_G(J)$; adjoining evaluation gives a continuous function
+$\Phi_F(n_0,\ldots,n_j;x)=F(n_0,\ldots,n_j)(x)$ on $N^{j+1}\times G$, characterized by
+
+$$
+\Phi_F(n_0t,\ldots,n_jt;x)=\Phi_F(n_0,\ldots,n_j;xt)\qquad(t\in N),
+$$
+
+and every continuous function with this property arises from exactly one such $F$. Choose a
+cross-section as in the splitting lemma and define the normalization
+
+$$
+\psi_F(n_0,\ldots,n_j;q):=\Phi_F(n_0,\ldots,n_j;s(q)),
+$$
+
+a continuous function on $N^{j+1}\times Q$. Applying the displayed equivariance with $t$ chosen
+so that $x=s(q)t$ reconstructs $\Phi_F$ entirely:
+
+$$
+\Phi_F(n_0,\ldots,n_j;x)=\psi_F(n_0t,\ldots,n_jt;q).
+$$
+
+Hence normalization is a bijection from homogeneous $j$-cochains onto all continuous functions
+$N^{j+1}\times Q\to J$, with no constraint left. Because the homogeneous differential deletes
+entries and never touches their values, this bijection identifies the cochain differential with
+the simplicial deletion differential on $N^{j+1}$, with the variable in $Q$ carried along as a
+passive parameter. On such functions the homotopy that inserts the identity in front,
+
+$$
+(sf)(n_0,\ldots,n_{j-1};q)=f(1,n_0,\ldots,n_{j-1};q),
+$$
+
+satisfies $ds+sd=\operatorname{id}$ in every positive degree: the terms of $dsf$ and of $sdf$
+that carry a leading identity cancel pairwise, and one term survives. Every cocycle of positive
+degree is therefore a coboundary. All continuity assertions follow from the homeomorphism
+$G\simeq N\times Q$ of the splitting lemma, which makes both factors of the decomposition depend
+continuously on the point of $G$. $\square$
+
+**Corollary (injective modules are $N$-acyclic).** _Every injective discrete $G$-module $I$
+satisfies $H^j(N,I)=0$ for $j>0$._
+
+_Proof._ Embed the underlying abelian group of $I$ into a divisible group $J$ and form the
+$G$-equivariant monomorphism $I\to\mathcal C_G(J)$ of Section 10.2. Since $I$ is injective, the
+monomorphism splits as a map of $G$-modules, so $I$ is a direct summand of
+$\operatorname{Res}^G_N\mathcal C_G(J)$ as an $N$-module. Restriction to $N$ is additive on
+cochains, so $H^j(N,I)$ is a direct summand of the group killed by the acyclicity lemma.
+$\square$
+
+**Comparison proposition (the two meanings of subgroup cohomology).** _On the category of
+discrete continuous $G$-modules, the cochain functors $M\mapsto H^j(N,M)$, with $N$ acting
+through restriction, form a cohomological delta functor extending $M\mapsto M^N$, and they are
+canonically identified with the right derived functors of $M\mapsto M^N$ computed in that
+category._
+
+_Proof._ The long exact sequence for a short exact sequence of discrete $G$-modules, viewed as
+one of $N$-modules, is supplied by Chapter 4, and degree zero is invariants. Effaceability holds
+in every positive degree by the corollary just proved: any $M$ embeds into
+$\operatorname{Res}^G_N\mathcal C_G(J)$, on which all positive cohomology vanishes. An effaceable
+cohomological delta functor extending a left exact functor is universal, and universality
+identifies it with the derived functors, exactly as in Section 10.4. Consequently, for any
+injective resolution $A\to I^\bullet$ by discrete $G$-modules there are natural isomorphisms
+
+$$
+H^j\bigl((I^\bullet)^N\bigr)\simeq H^j(N,A)\qquad(j\geq0).
+$$
+
+$\square$
+
+**Proposition ($N$-invariants of injectives are $Q$-injective).** _If $I$ is an injective
+discrete $G$-module, then $I^N$ is an injective discrete $Q$-module._
+
+_Proof._ The inflation functor from discrete $Q$-modules to discrete $G$-modules is exact and
+left adjoint to $N$-invariants:
+
+$$
+\operatorname{Hom}_Q\bigl(B,\,I^N\bigr)\simeq\operatorname{Hom}_G(\operatorname{Inf}B,\,I).
+$$
+
+Indeed, a $Q$-map $B\to I^N$ extends uniquely to a $G$-map on $\operatorname{Inf}B$, since $N$
+acts trivially on $I^N$ and the decomposition $g=\bar g\,n$ resolves the ambiguity. The right-hand
+side is exact in $B$ because inflation is exact and $I$ is injective; hence the left-hand side is
+exact in $B$, which is injectivity of $I^N$. $\square$
+
+**Assembly of the spectral sequence.** Apply the derived-composition theorem (Book 007a,
+Section 12.2) to the pair of left exact functors
+
+$$
+Mod_G^{\mathrm{disc}}\xrightarrow{\;\Gamma_N\;}Mod_Q^{\mathrm{disc}}
+\xrightarrow{\;\Gamma_Q\;}Ab,
+$$
+
+where $\Gamma_N(M)=M^N$ carries its conjugation $Q$-structure because $N$ is normal, and
+$\Gamma_Q$ is $Q$-invariants. Both categories have enough injectives by the construction of
+Section 10.2, applied verbatim to $G$ and to $Q$, which is the range required by the theorem.
+The hypothesis of the theorem is precisely the proposition just proved:
+$\Gamma_N$ sends injective $G$-modules to injective $Q$-modules, which are acyclic for
+$\Gamma_Q$ by Section 10.4 applied to the profinite group $Q$. The conclusion is a strongly
+convergent first-quadrant sequence
+
+$$
+R^p\Gamma_Q\bigl(R^q\Gamma_N(A)\bigr)\Longrightarrow R^{p+q}(\Gamma_Q\circ\Gamma_N)(A),
+$$
+
+natural in $A$. The comparison theorem of Section 10.4, applied to $N$ and to $G$, identifies the
+inner derived functors and the abutment with the cochain theories, and the comparison proposition
+above does the same inside the $G$-module category, where the theorem computes:
+
+$$
+R^q\Gamma_N(A)=H^q(N,A),\qquad R^{p+q}(\Gamma_Q\circ\Gamma_N)(A)=R^{p+q}\Gamma(G,A)=H^{p+q}(G,A),
+$$
+
+and $R^p\Gamma_Q(H^q(N,-))=H^p(Q,H^q(N,-))$ by Section 10.4 applied to $Q$. This yields the page
+asserted above. It also fixes the filtration on the abutment: the derived-composition theorem
+filters $R^n(\Gamma_Q\circ\Gamma_N)(A)$ with graded pieces $E_\infty^{p,q}$ for $p+q=n$, which is
+exactly the finite decreasing filtration described earlier in this section, with no completeness
+issue because the sequence lies in the first quadrant. The edge maps are computed from the
+Cartan--Eilenberg model used in the proof of Book 007a, Section 12.2: along the bottom row the
+augmentation $A^N\to(I^\bullet)^N$ realizes inflation, and along the left column the adjunction
+unit realizes restriction followed by passage to $Q$-invariants; Section 13.5 verifies that they
+are the familiar maps. Multiplicativity follows from Chapter 10 of Book 007a, applied to the lax
+monoidal structures carried by invariants and cochains; the induced Leibniz rule on differentials
+is recorded after the edge analysis below.
 
 ### 13.5 Edges, differentials, and low degrees
 
