@@ -172,28 +172,33 @@ def chapter13TraceDual
 
 def chapter13LocalInverseDifferent
     {L F : Type*} [NonUnitalNonAssocRing L] [AddCommGroup F]
-    (tr : L →+ F) (O : Set L) (R : Set F) : Set L :=
-  chapter13TraceDual tr O R
+    (tr : L →+ F) (O : AddSubgroup L) (R : AddSubgroup F) : AddSubgroup L := by
+  refine
+    { carrier := chapter13TraceDual tr (O : Set L) (R : Set F)
+      zero_mem' := by sorry
+      add_mem' := by sorry
+      neg_mem' := by sorry }
 
 theorem chapter13_local_annihilator_is_inverse_different
     {L F : Type*} [NonUnitalNonAssocRing L] [AddCommGroup F]
-    (tr : L →+ F) (O : Set L) (R : Set F) :
-    chapter13TraceDual tr O R = chapter13LocalInverseDifferent tr O R :=
+    (tr : L →+ F) (O : AddSubgroup L) (R : AddSubgroup F) :
+    chapter13TraceDual tr (O : Set L) (R : Set F) =
+      (chapter13LocalInverseDifferent tr O R : Set L) :=
   rfl
 
 theorem chapter13_mem_local_inverse_different_iff
     {L F : Type*} [NonUnitalNonAssocRing L] [AddCommGroup F]
-    (tr : L →+ F) (O : Set L) (R : Set F) (y : L) :
+    (tr : L →+ F) (O : AddSubgroup L) (R : AddSubgroup F) (y : L) :
     y ∈ chapter13LocalInverseDifferent tr O R ↔
-      ∀ x, x ∈ O → tr (x * y) ∈ R :=
+      ∀ x, x ∈ (O : Set L) → tr (x * y) ∈ (R : Set F) :=
   Iff.rfl
 
 theorem chapter13_local_inverse_different_is_additive_subgroup
     {L F : Type*} [NonUnitalNonAssocRing L] [AddCommGroup F]
     (tr : L →+ F) (O : AddSubgroup L) (R : AddSubgroup F) :
     ∃ H : AddSubgroup L,
-      (H : Set L) = chapter13LocalInverseDifferent tr O R := by
-  sorry
+      (H : Set L) = (chapter13LocalInverseDifferent tr O R : Set L) := by
+  exact ⟨chapter13LocalInverseDifferent tr O R, rfl⟩
 
 def chapter13GlobalInverseDifferent (K : Type*) [Field K] [NumberField K] : Set K :=
   {y | ∀ x : 𝓞 K, ∃ z : ℤ,

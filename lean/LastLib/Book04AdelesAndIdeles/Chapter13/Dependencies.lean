@@ -53,6 +53,9 @@ abbrev Chapter13InfiniteIdele (K : Type*) [Field K] [NumberField K] :=
 abbrev Chapter13Idele (K : Type*) [Field K] [NumberField K] :=
   LastLib.Book04AdelesAndIdeles.Chapter11.Chapter11IdeleGroup K
 
+abbrev Chapter13PositiveReal : Type :=
+  LastLib.Book04AdelesAndIdeles.Chapter09.Chapter09PositiveReal
+
 abbrev Chapter13LocalUnitSubgroup (K : Type*) [Field K] [NumberField K]
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) :
     Subgroup (v.adicCompletion K)ˣ :=

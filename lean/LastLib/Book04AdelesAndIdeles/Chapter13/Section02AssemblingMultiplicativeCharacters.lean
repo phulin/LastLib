@@ -120,44 +120,36 @@ theorem chapter13_idele_class_character_iff
       chapter13DescendsToIdeleClass K χ := by
   sorry
 
-/-! The idele module is the normalized absolute value.  Chapter 9 already packages the finite
-normalization and the product formula in `chapter09IdeleModuleNNRealHom`; this section only views
-that canonical positive-real homomorphism in `ℝ` for the character formulas below. -/
+/-! The idele module is the normalized absolute value.  Chapter 9 already packages its
+positive-real-valued homomorphism and its descent through principal ideles, so this chapter keeps
+those canonical interfaces instead of replacing them by a real-valued duplicate. -/
 
 def chapter13IdeleModule (K : Type*) [Field K] [NumberField K] :
-    Chapter13Idele K → ℝ := fun x =>
-  ((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModuleNNRealHom K x : ℝ≥0) : ℝ)
+    Chapter13Idele K → Chapter13PositiveReal :=
+  fun x => LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModule x
 
 def chapter13IdeleModuleHom (K : Type*) [Field K] [NumberField K] :
-    Chapter13Idele K →* ℝ :=
+    Chapter13Idele K →* Chapter13PositiveReal :=
   { toFun := chapter13IdeleModule K
     map_one' := by
-      change
-        (((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModuleNNRealHom K) 1 :
-          ℝ≥0) : ℝ) = 1
-      rw [map_one]
-      rfl
+      change LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModule
+        (1 : LastLib.Book04AdelesAndIdeles.Chapter09.Chapter09Idele K) = 1
+      exact (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModuleHom K).map_one
     map_mul' := by
       intro x y
-      change
-        (((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModuleNNRealHom K) (x * y) :
-          ℝ≥0) : ℝ) =
-        (((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModuleNNRealHom K) x :
-          ℝ≥0) : ℝ) *
-          (((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModuleNNRealHom K) y :
-            ℝ≥0) : ℝ)
-      rw [map_mul]
-      rfl }
+      change LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModule (x * y) = _
+      exact (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModuleHom K).map_mul x y
+  }
 
 theorem chapter13_idele_module_apply
     (K : Type*) [Field K] [NumberField K] (x : Chapter13Idele K) :
     chapter13IdeleModule K x =
-      ((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModuleNNRealHom K x : ℝ≥0) : ℝ) :=
+      LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModule x :=
   rfl
 
 theorem chapter13_idele_module_positive
     (K : Type*) [Field K] [NumberField K] (x : Chapter13Idele K) :
-    0 < chapter13IdeleModule K x := by
+    0 < ((chapter13IdeleModule K x : Chapter13PositiveReal) : ℝ≥0) := by
   sorry
 
 theorem chapter13_idele_module_continuous
@@ -171,7 +163,7 @@ theorem chapter13_idele_module_principal
   sorry
 
 def chapter13IdeleClassModule (K : Type*) [Field K] [NumberField K] :
-    Chapter13IdeleClass K →* ℝ :=
+    Chapter13IdeleClass K →* Chapter13PositiveReal :=
   QuotientGroup.lift (chapter13PrincipalIdeleSubgroup K)
     (chapter13IdeleModuleHom K) (by
       intro x hx
@@ -182,11 +174,16 @@ theorem chapter13_idele_class_module_apply
     (K : Type*) [Field K] [NumberField K] (x : Chapter13Idele K) :
     chapter13IdeleClassModule K (QuotientGroup.mk' (chapter13PrincipalIdeleSubgroup K) x) =
       chapter13IdeleModule K x :=
-  rfl
+  by
+    exact QuotientGroup.lift_mk' (chapter13PrincipalIdeleSubgroup K)
+      (by
+        intro z hz
+        rcases hz with ⟨a, rfl⟩
+        exact chapter13_idele_module_principal K a) x
 
 theorem chapter13_idele_class_module_positive
     (K : Type*) [Field K] [NumberField K] (x : Chapter13IdeleClass K) :
-    0 < chapter13IdeleClassModule K x := by
+    0 < ((chapter13IdeleClassModule K x : Chapter13PositiveReal) : ℝ≥0) := by
   sorry
 
 theorem chapter13_idele_class_module_continuous

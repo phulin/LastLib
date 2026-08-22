@@ -17,9 +17,9 @@ def chapter13IsUnitaryCharacter {G : Type*} [Monoid G] [TopologicalSpace G]
 
 def chapter13CharacterAbsoluteValue (K : Type*) [Field K] [NumberField K]
     (χ : Chapter13ClassCharacter K) :
-    Chapter13IdeleClass K →ₜ* ℝ :=
+    Chapter13IdeleClass K →ₜ* Chapter13PositiveReal :=
   { toMonoidHom :=
-      { toFun := fun x => ‖(χ x : ℂ)‖
+      { toFun := fun x => Units.mk0 ‖(χ x : ℂ)‖₊ (by sorry)
         map_one' := by sorry
         map_mul' := by sorry }
     continuous_toFun := by sorry }
@@ -27,13 +27,13 @@ def chapter13CharacterAbsoluteValue (K : Type*) [Field K] [NumberField K]
 theorem chapter13CharacterAbsoluteValue_apply
     (K : Type*) [Field K] [NumberField K]
     (χ : Chapter13ClassCharacter K) (x : Chapter13IdeleClass K) :
-    chapter13CharacterAbsoluteValue K χ x = ‖(χ x : ℂ)‖ :=
+    ((chapter13CharacterAbsoluteValue K χ x : Chapter13PositiveReal) : ℝ≥0) = ‖(χ x : ℂ)‖₊ :=
   rfl
 
 theorem chapter13CharacterAbsoluteValue_positive
     (K : Type*) [Field K] [NumberField K]
     (χ : Chapter13ClassCharacter K) (x : Chapter13IdeleClass K) :
-    0 < chapter13CharacterAbsoluteValue K χ x := by
+    0 < ((chapter13CharacterAbsoluteValue K χ x : Chapter13PositiveReal) : ℝ≥0) := by
   sorry
 
 def chapter13NormOneSubgroup (K : Type*) [Field K] [NumberField K] :
@@ -66,7 +66,7 @@ structure Chapter13NormDirectionData (K : Type*) [Field K] [NumberField K] where
     Chapter13PositiveNormQuotient K ≃ₜ* ℝ≥0ˣ
   quotient_module :
     ∀ x : Chapter13IdeleClass K,
-      (((quotient_equiv (QuotientGroup.mk' (chapter13NormOneSubgroup K) x) : ℝ≥0ˣ) : ℝ≥0) : ℝ) =
+      quotient_equiv (QuotientGroup.mk' (chapter13NormOneSubgroup K) x) =
         chapter13IdeleClassModule K x
 
 theorem chapter13_character_absolute_value_trivial_on_norm_one
@@ -81,20 +81,19 @@ theorem chapter13_character_absolute_value_factors_through_norm_one_quotient
     (K : Type*) [Field K] [NumberField K]
     (D : Chapter13NormDirectionData K)
     (χ : Chapter13ClassCharacter K) :
-    ∃ f : Chapter13PositiveNormQuotient K →ₜ* ℝ,
+    ∃ f : Chapter13PositiveNormQuotient K →ₜ* Chapter13PositiveReal,
       ∀ x : Chapter13IdeleClass K,
         f (QuotientGroup.mk' (chapter13NormOneSubgroup K) x) =
           chapter13CharacterAbsoluteValue K χ x := by
   sorry
 
-def chapter13RealModulusPower (r : ℝ) (σ : ℝ) : ℝ :=
-  Real.rpow r σ
+def chapter13RealModulusPower (r : Chapter13PositiveReal) (σ : ℝ) : Chapter13PositiveReal :=
+  Units.mk0 (((r : Chapter13PositiveReal) : ℝ≥0) ^ σ) (by sorry)
 
 theorem chapter13_continuous_positive_real_hom_is_power
     (f : ℝ≥0ˣ →ₜ* ℝ≥0ˣ) :
     ∃! σ : ℝ, ∀ x : ℝ≥0ˣ,
-      (((f x : ℝ≥0ˣ) : ℝ≥0) : ℝ) =
-        Real.rpow (((x : ℝ≥0ˣ) : ℝ≥0) : ℝ) σ := by
+      f x = chapter13RealModulusPower x σ := by
   sorry
 
 theorem chapter13_character_absolute_value_is_modulus_power
@@ -106,8 +105,8 @@ theorem chapter13_character_absolute_value_is_modulus_power
         chapter13RealModulusPower (chapter13IdeleClassModule K x) σ := by
   sorry
 
-def chapter13PositiveRealPowerUnit (r : ℝ) (hr : 0 < r) (σ : ℝ) : ℂˣ :=
-  Units.mk0 (Real.rpow r σ : ℂ) (by sorry)
+def chapter13PositiveRealPowerUnit (r : Chapter13PositiveReal) (σ : ℝ) : ℂˣ :=
+  Units.mk0 (Real.rpow (((r : Chapter13PositiveReal) : ℝ≥0) : ℝ) σ : ℂ) (by sorry)
 
 def chapter13CharacterUnitaryPart
     (K : Type*) [Field K] [NumberField K]
@@ -115,8 +114,7 @@ def chapter13CharacterUnitaryPart
   { toMonoidHom :=
       { toFun := fun x =>
           χ x * (chapter13PositiveRealPowerUnit
-            (chapter13IdeleClassModule K x)
-            (chapter13_idele_class_module_positive K x) σ)⁻¹
+            (chapter13IdeleClassModule K x) σ)⁻¹
         map_one' := by sorry
         map_mul' := by sorry }
     continuous_toFun := by sorry }
@@ -126,8 +124,7 @@ theorem chapter13CharacterUnitaryPart_apply
     (χ : Chapter13ClassCharacter K) (σ : ℝ) (x : Chapter13IdeleClass K) :
     chapter13CharacterUnitaryPart K χ σ x =
       χ x * (chapter13PositiveRealPowerUnit
-        (chapter13IdeleClassModule K x)
-        (chapter13_idele_class_module_positive K x) σ)⁻¹ :=
+        (chapter13IdeleClassModule K x) σ)⁻¹ :=
   rfl
 
 theorem chapter13CharacterUnitaryPart_is_unitary
@@ -148,8 +145,8 @@ theorem chapter13_character_has_canonical_unitary_decomposition
       chapter13IsUnitaryCharacter (chapter13CharacterUnitaryPart K χ σ) := by
   sorry
 
-def chapter13ComplexPower (r : ℝ) (_hr : 0 < r) (s : ℂ) : ℂˣ :=
-  Units.mk0 (Complex.exp (s * Complex.log (r : ℂ))) (by
+def chapter13ComplexPower (r : Chapter13PositiveReal) (s : ℂ) : ℂˣ :=
+  Units.mk0 (Complex.exp (s * Complex.log (((r : Chapter13PositiveReal) : ℝ≥0) : ℂ))) (by
     exact Complex.exp_ne_zero _)
 
 def chapter13ComplexModulusTwist
@@ -158,7 +155,7 @@ def chapter13ComplexModulusTwist
   { toMonoidHom :=
       { toFun := fun x =>
           χ x * chapter13ComplexPower (chapter13IdeleClassModule K x)
-            (chapter13_idele_class_module_positive K x) s
+            s
         map_one' := by sorry
         map_mul' := by sorry }
     continuous_toFun := by sorry }
@@ -168,14 +165,13 @@ theorem chapter13ComplexModulusTwist_apply
     (χ : Chapter13ClassCharacter K) (s : ℂ) (x : Chapter13IdeleClass K) :
     chapter13ComplexModulusTwist K χ s x =
       χ x * chapter13ComplexPower (chapter13IdeleClassModule K x)
-        (chapter13_idele_class_module_positive K x) s :=
+        s :=
   rfl
 
 theorem chapter13_positive_real_complex_character_is_complex_power
     (χ : ℝ≥0ˣ →ₜ* ℂˣ) :
     ∃ s : ℂ, ∀ t : ℝ≥0ˣ,
-      χ t = chapter13ComplexPower
-        (((t : ℝ≥0ˣ) : ℝ≥0) : ℝ) (by sorry) s := by
+      χ t = chapter13ComplexPower t s := by
   sorry
 
 theorem chapter13_imaginary_modulus_twist_unitary
