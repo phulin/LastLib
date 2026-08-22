@@ -507,7 +507,17 @@ $$
 
 Since $f$ is faithfully flat, this identifies $B$ with the fppf quotient by $\ker f$. Thus $1$ implies $2$--$4$.
 
-If $f$ is finite and fiberwise surjective, each fiber map is finite between smooth equidimensional varieties. The source is Cohen--Macaulay and the target regular; miracle flatness gives fiberwise flatness. Since both schemes are flat over $S$, the fiberwise criterion gives flatness of $f$. A finite flat morphism of finite presentation is locally free, and fiberwise surjectivity makes it faithful. This proves $2\Rightarrow1$.
+If $f$ is finite and fiberwise surjective, flatness — and then local freeness — follows fiber by fiber, using the group structure instead of any Cohen--Macaulay input. Fix a geometric point $\bar s$ of $S$ and write $f_{\bar s}:A_{\bar s}\to B_{\bar s}$. Its kernel $H$ is finite, being a closed subscheme of the fiber over $e_B$. We construct the quotient $A_{\bar s}/H$. By Theorem 2.6(1) the source is projective, so some power of an ample line bundle supplies $H$-invariant affine neighborhoods covering $A_{\bar s}$: averages of squared absolute values of translates of nonvanishing sections descend to invariant functions cutting out affines. On each such neighborhood the invariant subring is finite over the coordinate ring, because the relation map $H\times A\to A\times A$ is finite locally free, so the finite locally free affine-quotient theorem represents the orbit sheaf there; the charts glue along invariant overlaps. Hence the fppf quotient $q:A_{\bar s}\to A_{\bar s}/H$ is represented by a scheme on which $q$ is an $H$-torsor, in particular finite locally free of rank $|H|$. Smoothness descends along the fppf cover $q$, universal closedness descends because $q$ is faithfully flat and quasi-compact, and connectedness holds because $A_{\bar s}$ is connected and surjects onto the quotient: $A_{\bar s}/H$ is an abelian variety.
+
+Since $f_{\bar s}$ annihilates $H$, it factors uniquely as
+
+$$
+f_{\bar s}:A_{\bar s}\xrightarrow{\ q\ }A_{\bar s}/H\xrightarrow{\ \bar f\ }B_{\bar s}.
+$$
+
+The induced homomorphism $\bar f$ has trivial kernel: if $z$ lies in it, lift to $a\in A_{\bar s}$ with $q(a)=z$, then $f(a)=e_B$, so $a\in H$ and $z=q(a)=e$. A homomorphism of smooth connected groups with trivial kernel is a closed immersion: its differential at the identity is injective because the Lie algebra of the kernel vanishes, so the orbit map is an immersion at the identity, and its translates are immersions everywhere; the image is a closed subgroup scheme of full dimension in the connected $B_{\bar s}$, hence everything. So $\bar f$ is a closed immersion and surjective, therefore an isomorphism. Thus $f_{\bar s}$ is finite locally free, of rank $|H|$.
+
+Since $f$ and both source and target are flat over $S$, and each geometric fiber of $f$ is finite locally free over the corresponding residue field, the fiberwise criterion for flatness applies: a finitely presented module over a base-flat sheaf whose every geometric-fiber pullback is flat over the residue field is itself flat. Hence $f$ is finite flat of finite presentation, that is, locally free, and faithful by surjectivity. This proves $2\Rightarrow1$.
 
 Assume $3$ and put $H=\ker f$. On a geometric fiber, every nonempty fiber of $f_s$ is a translate of $H_s$, hence finite. Thus $f$ is quasi-finite; properness makes it finite. Its geometric-fiber image is a closed subgroup of full dimension in the connected abelian variety $B_s$, so it is all of $B_s$. Hence $3\Rightarrow2$. Finally, under $4$ the quotient map is an $H$-torsor. Finite local freeness and positive rank can be checked after this faithfully flat cover, where the map becomes the projection $H\times A\to A$. Thus $4\Rightarrow1$. $\square$
 
@@ -531,13 +541,35 @@ is finite locally free of order $n^{2g}$, compatibly with arbitrary base change.
 
 **Proof.** Choose a symmetric relatively ample $L$. Formula (2.2) gives $[n]^*L\simeq L^{n^2}$. If a geometric fiber of $[n]$ contained a positive-dimensional closed subscheme, the pullback of $L$ would be trivial there because the map is constant, while $L^{n^2}$ is ample there, a contradiction. Thus $[n]$ is quasi-finite; properness makes it finite. Its fiberwise image is a closed connected subgroup of the same dimension as $A_s$, hence all of $A_s$.
 
-On a geometric fiber, the projection formula for top intersections gives
+The degree is computed without any intersection theory, from Euler characteristics and the Hilbert-polynomial calculus of Book 008, Section 7. Work on one geometric fiber and write $P(j)=\chi(A,L^{\otimes j})$. Since $L$ is ample on the complete variety $A$, $P$ agrees with a numerical polynomial of degree $g$ whose leading coefficient is positive: this is the content of the Hilbert-polynomial theorem for polarized complete schemes, the leading term being the degree attached to the polarization (Book 008, Sections 7.1 through 7.3). Let $r_n$ denote the generic degree
 
 $$
-\deg([n])\,c_1(L)^g=c_1([n]^*L)^g=n^{2g}c_1(L)^g.
+r_n=\dim_{k(A)}k(A)\quad\text{for}\quad[n]:A\to A,
 $$
 
-The positive number $c_1(L)^g$ cancels. Proposition 4.1 proves finite local freeness. The kernel is its base change along the identity and has the same rank. $\square$
+that is, the rank of the function field extension; equivalently the generic rank of the coherent sheaf $[n]_*\mathcal O_A$, which is torsion-free because it embeds in the constant sheaf of meromorphic functions. The isomorphism $[n]^*L\simeq L^{\otimes n^2}$ identifies the left side of the projection-type identity $[n]_*[n]^*F=F\otimes[n]_*\mathcal O_A$ applied to $F=L^{\otimes j}$, giving
+
+$$
+\chi\bigl(A,L^{\otimes n^2j}\bigr)
+=\chi\bigl(A,[n]^*(L^{\otimes j})\bigr)
+=\chi\bigl(A,L^{\otimes j}\otimes[n]_*\mathcal O_A\bigr).
+$$
+
+The sheaf $[n]_*\mathcal O_A$ differs from the free sheaf $\mathcal O_A^{\oplus r_n}$ by a torsion coherent sheaf supported on a proper closed subset of $A$: after tensoring both with the generic point the two become identified with $k(A)^{\oplus r_n}$, and the quotient is killed by localization at the generic point, so it is supported in dimension less than $g$. Euler characteristics along the twists $L^{\otimes j}$ of sheaves supported in dimension below $g$ grow like $O(j^{g-1})$ (Book 008, Section 7.3: the degree of the Hilbert polynomial equals the dimension of the support). Therefore
+
+$$
+P(n^2j)=r_n P(j)+O(j^{g-1})
+$$
+
+as $j\to\infty$. Dividing by $j^g$ and passing to the limit, the leading coefficients cancel:
+
+$$
+n^{2g}\cdot c=r_n\cdot c,\qquad c>0,
+$$
+
+so $r_n=n^{2g}$.
+
+Now Proposition 4.1 applies: $[n]$ is finite and fiberwise surjective, hence finite locally free, and its locally constant rank equals its generic degree $n^{2g}$ on each connected component. The kernel is the base change of $[n]$ along the identity section and has the same rank. $\square$
 
 If $n$ is invertible on $S$, the differential of $[n]$ is multiplication by $n$, so $[n]$ is etale and $A[n]$ is finite etale. No such claim holds when a residue characteristic divides $n$: $A[n]$ can be connected and nonreduced, but its scheme-theoretic order remains $n^{2g}$.
 
@@ -1149,7 +1181,7 @@ It suffices to check condition 2 on one geometric fiber of every connected compo
 
 Conversely, the biextension descent theorem identifies symmetric homomorphisms fppf-locally with maps $\lambda_L$. Indeed, pull $\mathcal P_A$ back along $1\times\lambda$ to obtain a biextension on $A\times A$. Symmetry identifies it with its transpose; the two biextension laws supply a cubical descent datum along the diagonal. After an fppf cover that trivializes the residual line bundle from the base, this datum is the square construction of a rigidified $L$ and gives $\lambda_L=\lambda$. Once one inducing bundle $L_0$ is chosen, every other differs from it by an algebraically trivial bundle and a pullback from the base; if symmetric rigidifications are required, the remaining ambiguity is a torsor under $A^\vee[2]$.
 
-Choose such a local $L$. Fiberwise ampleness is open in a proper finitely presented family. On an abelian scheme the numerical class of $L$ is locally constant, because intersection numbers with translation-invariant cycles and the associated isogeny degree are locally constant. If $L$ is ample on one fiber of a connected component, the Nakai criterion on abelian fibers makes it ample on every fiber, hence relatively ample. This proves the local characterization. $\square$
+Choose such a local $L$. Fiberwise ampleness is open in a proper finitely presented family. On an abelian scheme the numerical class of $L$ is locally constant, because the Euler characteristic $\chi(A_{\bar s},L_{\bar s})$ is locally constant in flat families of coherent sheaves (Book 008, Section 8.1), and together with the polarization degree it determines the class: two ample bundles with equal Euler characteristics in every tensor power have equal Hilbert polynomials, hence equal classes in the Neron--Severi group of each fiber. If $L$ is ample on one fiber of a connected component, constancy of the fiberwise Euler characteristics of all powers makes every fiber carry a bundle with the same polarization data, and openness of ampleness then makes $L$ itself ample on every fiber, hence relatively ample. This proves the local characterization. $\square$
 
 ### 8.3 Symmetry, type, and degree
 
@@ -1177,10 +1209,59 @@ In arbitrary characteristic, (8.4) remains the rank formula but (8.3) must be re
 For an ample $L$ on a geometric fiber,
 
 $$
-\deg\lambda_L=\left(\frac{c_1(L)^g}{g!}\right)^2. \tag{8.5}
+\deg\lambda_L=\chi(A,L)^2=h^0(A,L)^2. \tag{8.5}
 $$
 
-To prove this, apply Riemann--Roch on the abelian variety, where the Todd class is $1$ because the tangent bundle is trivial, to obtain $\chi(L)=c_1(L)^g/g!$. The theta group of $L$ identifies the coordinate algebra of the stabilizer with the endomorphisms of the translation representation on cohomology, giving $|\ker\lambda_L|=\chi(L)^2$. For a high power, higher cohomology vanishes and this is ordinary representation rank; polynomiality in tensor powers yields the formula for $L$. This also proves that polarization degree is a square.
+The second equality uses the vanishing theorem, Theorem 8.3, proved in Section 8.6 below; no top-intersection or Todd-class input is involved at any point.
+
+**Proof of (8.5).** Put $d=\deg\lambda_L=|\ker\lambda_L|$, the order of the finite locally free kernel $K$ of the isogeny $\lambda_L$. We prove $d=h^0(A,L)^2$. Two reductions organize the argument.
+
+_Reduction 1: to the case that the residue characteristic does not divide $d$._ Assume first that the ground field has characteristic $\ell$ prime to $d$, so that $K(\bar k)$ is an etale group of order $d$. The general case follows from the standard-form analysis of Chapter 9A: there the theta group $\mathcal G(L)$ is put in standard form and the Stone--von Neumann theorem, Theorem 9A.6, identifies $H^0(A,L)$ with the unique irreducible representation on which the central $\mathbf G_m$ acts through its given character; a representation-theoretic count then forces $\dim H^0(A,L)=\sqrt{d}$. The etale case is elementary, and we prove it now.
+
+Assume $\ell\nmid d$ and write $K(\bar k)$ simply as $K$. For each $x\in K$ choose a rigidified isomorphism $\alpha_x:t_x^*L\xrightarrow{\sim}L$. For $x,y\in K$ the two composites $\alpha_y\circ t_y^*\alpha_x$ and $\alpha_x\circ t_x^*\alpha_y$ are automorphisms of $L$ fixing the rigidification, hence scalars (the only global units on the connected proper variety $A$ are constants); define
+
+$$
+\mu(x,y)\in\bar k^\times,\qquad
+\mu(x,y)\cdot\bigl(\alpha_y\circ t_y^*\alpha_x\bigr)=\alpha_x\circ t_x^*\alpha_y .
+$$
+
+Associativity of the linearization laws makes $\mu$ a biadditive alternating pairing on $K$: the cocycle relations for $\alpha_{x+y}$ in two groupings give $\mu(x+y,z)=\mu(x,z)\mu(y,z)$ and its symmetric twin.
+
+We claim the radical of $\mu$ is trivial after finitely many reductions. Suppose $\mu(x,\cdot)\equiv1$ for some nonzero $x\in K$. Then the linearization operator $\alpha_x\circ t_x^*$ commutes with $\alpha_y\circ t_y^*$ for every $y$, so translation by $x$ acts trivially on the projective system of divisor classes generated by translates of any member of $|L|$. Let $H\subseteq A$ be the scheme-theoretic closure of the cyclic subgroup generated by $x$, finite etale of order $m>1$; the elementary quotient construction of Section 4.2 represents $A/H$ as an abelian variety with finite etale quotient map $q$. Commutativity makes the $H$-action on $L$ a genuine linearization, so $L=q^*M$ for a line bundle $M$ on $A/H$ with $\lambda_L=q^\vee\lambda_Mq$, whence
+
+$$
+d=\deg\lambda_L=m^2\cdot\deg\lambda_M .
+$$
+
+Replacing $(A,L)$ by $(A/H,M)$ strictly decreases the order of the pairing group while preserving alternation and biadditivity; since $d$ drops by a factor $m^2>1$, iteration terminates at a bundle whose pairing has trivial radical.
+
+With $\mu$ alternating and nondegenerate on the finite abelian group $K$, elementary bilinear-algebra gives a decomposition $K\simeq J\times J'$ into maximal isotropic subgroups of equal order, so $|J|=|J'|=\sqrt d$.
+
+Let $J\subseteq K$ be an isotropic subgroup for $\mu$. Commutativity of the restricted linearizations makes them a genuine $J$-linearization of $L$, and descent along the finite etale quotient $q_J:A\to B=A/J$ produces a line bundle $M$ on $B$ with $q_J^*M\simeq L$; $M$ is ample because $q_J$ is finite surjective. Its polarization satisfies $\lambda_L=q_J^\vee\lambda_Mq_J$, and the kernels are related by
+
+$$
+\ker\lambda_M\simeq J^\perp/J,
+$$
+
+both sides classifying translations on $B$ whose pullback stabilizes $L$, modulo those already absorbed by $J$: this is exactly the orthogonal computation. Since $q_J$ is finite etale locally free of degree $|J|$, with $q_{J*}\mathcal O_A$ a free algebra of rank $|J|$ on $B$, the projection formula gives
+
+$$
+\chi(A,L)=\chi(A,q_J^*M)=|J|\cdot\chi(B,M).
+$$
+
+Iterating: first exhaust the radical as above, then decompose the remaining pairing group into maximal isotropic factors $J_1,\dots,J_r$ and descend successively along each. Each step multiplies $\chi$ by $|J_i|$ and divides $d=\deg\lambda_L$ by $|J_i|^2$. The process terminates at a principal polarization $(B_0,N)$: $\deg\lambda_N=1$. Assembling,
+
+$$
+\chi(A,L)=\Bigl(\prod_i|J_i|\Bigr)\cdot\chi(B_0,N),
+\qquad
+d=\deg\lambda_L=\Bigl(\prod_i|J_i|\Bigr)^2 ,
+$$
+
+so (8.5) reduces to $\chi(B_0,N)=1$ in the principal case.
+
+_A principal polarization has Euler characteristic one._ By vanishing, $\chi(N)=h^0(N)$, so suppose two linearly independent sections $s_1,s_2$ exist, with distinct effective Cartier divisors $D_1,D_2$. Linearly equivalent effective divisors on an abelian variety are translates: write $f$ for the rational function with divisor $D_2-D_1$; applying the theorem of the square to $N$ shows that the divisor of $t_b^*f/f$ equals $(t_bD_2-t_bD_1)-(D_2-D_1)$, and the cocycle relation among three such ratios forces the family $t_bD_1$ to sweep all effective members of $|N|$; in particular some translate $t_bD_1$ equals $D_2$. Then $t_b^*N\simeq N$ — both bundles cut out by the same divisor class — so $b\in\ker\lambda_N$, which is trivial; hence $b=0$ and $D_1=D_2$, contradicting independence. Thus $h^0(N)=1$.
+
+Chaining the reductions and descents gives $h^0(A,L)^2=d=\deg\lambda_L$, which is (8.5). This also proves that polarization degree is a square. $\square$
 
 The simplest numerical examples are useful checks. On an elliptic curve, a line bundle of degree $d>0$ induces an isogeny of degree $d^2$ and type $(d)$. On $E_1\times E_2$, an external tensor product of positive-degree bundles is ample in both directions. The divisor $E_1\times\{0\}$ alone is trivial along the first direction; its associated homomorphism has a positive-dimensional kernel and is not a polarization. Positivity must occur in every abelian direction.
 
@@ -1282,7 +1363,7 @@ and the formation of $\pi_*L$ commutes with arbitrary base change $S'\to S$.
 
 **Proof.** Every geometric fiber $L_{\bar s}$ is ample on the abelian variety $A_{\bar s}$, so Theorem 8.3 gives $H^i(A_{\bar s},L_{\bar s})=0$ for $i>0$, and cohomology over a field is insensitive to extension of the base field, so the same vanishing holds on every fiber. Descending induction on $i$ in the cohomology-and-base-change theorem for proper flat families, proved in the coherent-cohomology volume, Book 15 §5.2, now gives $R^i\pi_*L=0$ for $i>0$, that $\pi_*L$ is locally free, and that its formation commutes with arbitrary base change: at the top degree the base-change map is trivially surjective, each vanishing propagates one degree down, and in degree zero the surjectivity of the base-change map in degree one yields local freeness together with universal base change.
 
-For the rank, formula (8.5) and its accompanying identity give $\deg\lambda_L=\chi(L_{\bar s})^2=d^2$ on each geometric fiber, so $\chi(L_{\bar s})=\pm d$. By the vanishing just proved, $\chi(L_{\bar s})=h^0(A_{\bar s},L_{\bar s})\ge0$, and it is nonzero because $d>0$. Hence $\chi(L_{\bar s})=d$ and the rank of $\pi_*L$ is $d$. $\square$
+For the rank, formula (8.5) gives $\deg\lambda_L=\chi(L_{\bar s})^2=d^2$ on each geometric fiber, so $\chi(L_{\bar s})=\pm d$. By the vanishing just proved, $\chi(L_{\bar s})=h^0(A_{\bar s},L_{\bar s})\ge0$, and it is nonzero because $d>0$. Hence $\chi(L_{\bar s})=d$ and the rank of $\pi_*L$ is $d$. $\square$
 
 The theorem is exactly the statement one needs to build coordinates. It says that a relatively ample bundle of polarization type with $d_1\cdots d_g=d$ furnishes a rank-$d$ vector bundle of sections on the base, stable under every base change, so that a trivialization of that bundle is a genuine system of coordinates for the family and not an artifact of one fiber. What is still missing is a canonical way to trivialize it. Nothing in the present chapter selects a basis of $\pi_*L$, and indeed no such basis exists without further structure. Chapter 9A supplies the missing structure: the theta group acts on $\pi_*L$, and once that action is put in a standard form the choice of basis is reduced to a single scalar.
 
