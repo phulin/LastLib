@@ -214,7 +214,20 @@ theorem chapter13_compact_locally_constant_range_finite
     (φ : P → C) (hcompact : IsCompact (Set.univ : Set P))
     (hlocally_constant : chapter13LocallyConstant φ) :
     Set.Finite (Set.range φ) := by
-  sorry
+  classical
+  unfold chapter13LocallyConstant at hlocally_constant
+  choose U hUopen hxU hφ using hlocally_constant
+  obtain ⟨s, hs⟩ :=
+    hcompact.elim_finite_subcover U hUopen (by
+      intro x _
+      simp only [Set.mem_iUnion]
+      exact ⟨x, hxU x⟩)
+  refine (s.finite_toSet.image φ).subset ?_
+  rintro z ⟨x, rfl⟩
+  have hx : x ∈ ⋃ i ∈ s, U i := hs (Set.mem_univ x)
+  simp only [Set.mem_iUnion] at hx
+  rcases hx with ⟨i, ⟨his, hxi⟩⟩
+  exact ⟨i, his, (hφ i x hxi).symm⟩
 
 /-! Root fields are kept as actual intermediate fields, so the Krasner
 interface compares book-facing generated fields by canonical `AlgEquiv`s. -/
@@ -252,7 +265,9 @@ theorem chapter13_root_field_isomorphic_classes_equal
     (hiso : chapter13RootFieldsEIsomorphic E Ω α β) :
     chapter13RootFieldExtensionClass E Ω α =
       chapter13RootFieldExtensionClass E Ω β := by
-  sorry
+  rcases hiso with ⟨e⟩
+  apply Quotient.sound
+  exact ⟨e⟩
 
 end
 
