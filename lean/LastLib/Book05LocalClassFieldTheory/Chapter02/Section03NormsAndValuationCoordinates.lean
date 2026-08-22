@@ -15,7 +15,7 @@ theorem chapter02_mem_norm_subgroup_iff
     [FiniteDimensional K L] (u : Kˣ) :
     u ∈ chapter02NormSubgroup K L ↔
       ∃ x : Lˣ, chapter02NormHom K L x = u := by
-  sorry
+  simp [chapter02NormSubgroup]
 
 theorem chapter02_mem_unit_norm_subgroup_iff
     (K L : Type*) [Field K] [Field L] [Algebra K L]
