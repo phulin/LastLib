@@ -90,6 +90,13 @@ structure Chapter12UnramifiedLocalNormData
   degree_eq_finrank : degree = Module.finrank K E
   base_valuation : AddValuation K (WithTop ℤ)
   extension_valuation : AddValuation E (WithTop ℤ)
+  base_valuation_discrete :
+    Valuation.IsRankOneDiscrete base_valuation.toValuation
+  extension_valuation_discrete :
+    Valuation.IsRankOneDiscrete extension_valuation.toValuation
+  restriction_preserves_valuation :
+    ∀ y : K,
+      extension_valuation (algebraMap K E y) = base_valuation y
   norm_bridge : Chapter12UnramifiedLocalNormBridge K E degree
     base_valuation extension_valuation
   extension_values_are_integer :

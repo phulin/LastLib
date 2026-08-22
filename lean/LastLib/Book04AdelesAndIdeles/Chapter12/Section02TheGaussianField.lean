@@ -26,6 +26,8 @@ structure Chapter12GaussianFieldData
   complexEmbedding : K →+* ℂ
   complexEmbedding_i : complexEmbedding i = Complex.I
   ringOfIntegersEquiv : 𝓞 K ≃+* GaussianInt
+  ringOfIntegers_i :
+    algebraMap (𝓞 K) K (ringOfIntegersEquiv.symm (⟨0, 1⟩ : GaussianInt)) = i
 
 def chapter12GaussianUnitValues
     {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
@@ -185,17 +187,26 @@ theorem chapter12_gaussian_split_local_tensor_shape
     chapter12TensorSplitShape K ℚ_[p] := by
   sorry
 
-/- LOCAL_DEPENDENCY_GUESS: `E` is the canonical quadratic local factor of
-   `K ⊗[ℚ] ℚ_[p]`; the pinned APIs do not yet expose its chosen carrier. -/
+/- The inert factor is existential data because the chosen carrier for the
+   quadratic local field is not canonical in the available API.  The tensor
+   equivalence is part of the data, so the factor cannot be unrelated to the
+   scalar extension. -/
+structure Chapter12GaussianInertLocalFactorData
+    {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
+    (G : Chapter12GaussianFieldData K) (p : Nat.Primes) where
+  E : Type*
+  [fieldE : Field E]
+  [algebraE : Algebra ℚ_[p] E]
+  [finiteDimensionalE : FiniteDimensional ℚ_[p] E]
+  [unramifiedE : Algebra.Unramified ℚ_[p] E]
+  degree_two : Module.finrank ℚ_[p] E = 2
+  tensor_shape : chapter12TensorFieldShape K ℚ_[p] E
+
 theorem chapter12_gaussian_inert_local_tensor_shape
-    {K E : Type*} [Field K] [Field E] [NumberField K]
-    [Algebra ℚ K]
-    (p : Nat.Primes) [Algebra ℚ_[p] E] [FiniteDimensional ℚ_[p] E]
-    [Algebra.Unramified ℚ_[p] E]
-    (G : Chapter12GaussianFieldData K)
-    (hcongr : p.1 % 4 = 3)
-    (hdegree : Module.finrank ℚ_[p] E = 2) :
-    chapter12TensorFieldShape K ℚ_[p] E := by
+    {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
+    (G : Chapter12GaussianFieldData K) (p : Nat.Primes)
+    (hcongr : p.1 % 4 = 3) :
+    Nonempty (Chapter12GaussianInertLocalFactorData G p) := by
   sorry
 
 /- The ramified prime is represented by a quadratic field factor of the same

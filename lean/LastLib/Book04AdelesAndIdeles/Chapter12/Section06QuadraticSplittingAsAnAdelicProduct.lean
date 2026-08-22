@@ -28,10 +28,11 @@ def chapter12QuadraticResidueRootSet (d : ℤ) (p : Nat.Primes) : Set (ZMod p.1)
   {a | a ^ 2 = (d : ZMod p.1)}
 
 theorem chapter12_quadratic_odd_prime_has_roots_or_no_roots
-    (d : ℤ) (p : Nat.Primes) :
-    chapter12QuadraticResidueSquare d p ∨
-      ¬chapter12QuadraticResidueSquare d p := by
-  exact Classical.em (chapter12QuadraticResidueSquare d p)
+    (d : ℤ) (p : Nat.Primes) (hpodd : p.1 ≠ 2)
+    (hpd : ¬((p.1 : ℤ) ∣ d)) :
+    Set.ncard (chapter12QuadraticResidueRootSet d p) = 2 ∨
+      chapter12QuadraticResidueRootSet d p = ∅ := by
+  sorry
 
 theorem chapter12_quadratic_square_residue_has_two_roots
     (d : ℤ) (p : Nat.Primes) (hpodd : p.1 ≠ 2)
@@ -88,10 +89,10 @@ theorem chapter12_quadratic_nonsquare_at_odd_prime_is_unramified_field
 theorem chapter12_quadratic_odd_prime_residue_dichotomy
     {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
     (Q : Chapter12QuadraticFieldData K) (p : Nat.Primes)
-    (_hpodd : p.1 ≠ 2) (_hpd : ¬((p.1 : ℤ) ∣ Q.d)) :
-    chapter12QuadraticResidueSquare Q.d p ∨
-      ¬chapter12QuadraticResidueSquare Q.d p := by
-  exact chapter12_quadratic_odd_prime_has_roots_or_no_roots Q.d p
+    (hpodd : p.1 ≠ 2) (hpd : ¬((p.1 : ℤ) ∣ Q.d)) :
+    Set.ncard (chapter12QuadraticResidueRootSet Q.d p) = 2 ∨
+      chapter12QuadraticResidueRootSet Q.d p = ∅ := by
+  exact chapter12_quadratic_odd_prime_has_roots_or_no_roots Q.d p hpodd hpd
 
 /-! ## Ramification, the dyadic place, and integral tensors -/
 
