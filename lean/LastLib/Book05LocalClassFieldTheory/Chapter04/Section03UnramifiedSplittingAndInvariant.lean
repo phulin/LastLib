@@ -316,7 +316,79 @@ theorem chapter04_finite_csa_without_zero_divisors_is_division
     (hnozero : ∀ x y : A, x * y = 0 → x = 0 ∨ y = 0) :
     ∃ D : Chapter04DivisionAlgebraData K,
       Nonempty (A ≃ₐ[K] D.carrier) := by
-  sorry
+  let W := (chapter04_wedderburn_decomposition_exists A).some
+  have hsize : W.matrixSize = 1 := by
+    by_contra hne
+    have hpos : 0 < W.matrixSize := W.matrixSize_pos
+    have htwo : 2 ≤ W.matrixSize := by
+      omega
+    let i : Fin W.matrixSize := ⟨0, by omega⟩
+    let j : Fin W.matrixSize := ⟨1, by omega⟩
+    have hij : i ≠ j := by
+      simp [i, j]
+    let e := W.equivalence.some
+    let M : Matrix (Fin W.matrixSize) (Fin W.matrixSize) W.division.carrier :=
+      Matrix.single i j 1
+    have hM : M ≠ 0 := by
+      intro h
+      have hentry := congrArg (fun X => X i j) h
+      simp [M] at hentry
+    let x : A := e.symm M
+    have hx : x ≠ 0 := by
+      intro hx
+      apply hM
+      calc
+        M = e (e.symm M) := (e.apply_symm_apply M).symm
+        _ = e 0 := by rw [show e.symm M = x from rfl, hx]
+        _ = 0 := map_zero e
+    have hxx : x * x = 0 := by
+      apply e.injective
+      change e (e.symm M * e.symm M) = e 0
+      simpa only [map_mul, e.apply_symm_apply, map_zero] using
+        (Matrix.single_mul_single_of_ne (1 : W.division.carrier)
+          i j i hij.symm 1)
+    rcases hnozero x x hxx with hx0 | hx0
+    · exact hx hx0
+    · exact hx hx0
+  have hdivision : ∀ x : A, x ≠ 0 →
+      ∃ y : A, x * y = 1 ∧ y * x = 1 := by
+    intro x hx
+    have hinj : Function.Injective (LinearMap.mulLeft K x) := by
+      intro y z h
+      change x * y = x * z at h
+      apply sub_eq_zero.mp
+      have hzero : x * (y - z) = 0 := by
+        rw [mul_sub, h, sub_self]
+      rcases hnozero x (y - z) hzero with hzero | hzero
+      · exact (hx hzero).elim
+      · exact hzero
+    have hsurj : Function.Surjective (LinearMap.mulLeft K x) :=
+      (LinearMap.injective_iff_surjective).mp hinj
+    obtain ⟨y, hy⟩ := hsurj 1
+    change x * y = 1 at hy
+    have hleft : y * x = 1 := by
+      have hzero : x * (y * x - 1) = 0 := by
+        rw [mul_sub, ← mul_assoc, hy, one_mul, mul_one, sub_self]
+      rcases hnozero x (y * x - 1) hzero with hzero | hzero
+      · exact (hx hzero).elim
+      · exact sub_eq_zero.mp hzero
+    exact ⟨y, hy, hleft⟩
+  have hfinrank : Module.finrank K A = W.division.degree ^ 2 := by
+    calc
+      Module.finrank K A =
+          W.matrixSize ^ 2 * Module.finrank K W.division.carrier :=
+        chapter04_wedderburn_decomposition_matrix_dimension A W
+      _ = W.division.degree ^ 2 := by
+        rw [hsize, W.division.finrank_eq_degree_sq]
+        simp
+  let D : Chapter04DivisionAlgebraData K :=
+    { carrier := A
+      isDivision := hdivision
+      degree := W.division.degree
+      degree_pos := W.division.degree_pos
+      finrank_eq_degree_sq := hfinrank }
+  refine ⟨D, ?_⟩
+  exact ⟨AlgEquiv.refl⟩
 
 def chapter04ReducedCyclicDegree (r : ℤ) (d : ℕ) : ℕ :=
   d / Nat.gcd r.natAbs d
@@ -366,7 +438,83 @@ theorem chapter04_unramified_cyclic_invariant_fraction
     (N : Chapter04UnramifiedInvariantNormalization I U) (r : ℤ) :
     I.invariant (chapter04UnramifiedCyclicBrauerClass U r) =
       chapter04RationalResidueFraction r U.degree := by
-  sorry
+  have hdq : (U.degree : ℚ) ≠ 0 := by
+    exact_mod_cast U.degree_pos.ne'
+  have hfrac_add (a b : ℤ) :
+      chapter04RationalResidueFraction a U.degree +
+          chapter04RationalResidueFraction b U.degree =
+        chapter04RationalResidueFraction (a + b) U.degree := by
+    change (QuotientAddGroup.mk' (AddSubgroup.zmultiples (1 : ℚ)))
+        ((a : ℚ) / (U.degree : ℚ)) +
+          (QuotientAddGroup.mk' (AddSubgroup.zmultiples (1 : ℚ)))
+            ((b : ℚ) / (U.degree : ℚ)) =
+      (QuotientAddGroup.mk' (AddSubgroup.zmultiples (1 : ℚ)))
+        (((a + b : ℤ) : ℚ) / (U.degree : ℚ))
+    rw [← (QuotientAddGroup.mk' (AddSubgroup.zmultiples (1 : ℚ))).map_add]
+    congr 1
+    push_cast
+    field_simp [hdq]
+  have hfrac_neg (a : ℤ) :
+      -chapter04RationalResidueFraction a U.degree =
+        chapter04RationalResidueFraction (-a) U.degree := by
+    change -(QuotientAddGroup.mk' (AddSubgroup.zmultiples (1 : ℚ)))
+        ((a : ℚ) / (U.degree : ℚ)) =
+      (QuotientAddGroup.mk' (AddSubgroup.zmultiples (1 : ℚ)))
+        (((-a : ℤ) : ℚ) / (U.degree : ℚ))
+    rw [← (QuotientAddGroup.mk' (AddSubgroup.zmultiples (1 : ℚ))).map_neg]
+    congr 1
+    push_cast
+    field_simp [hdq]
+  have hzero :
+      I.invariant (chapter04UnramifiedCyclicBrauerClass U 0) =
+        chapter04RationalResidueFraction 0 U.degree := by
+    rw [N.zero_parameter, I.invariant_one]
+    simp [chapter04RationalResidueFraction, chapter04RationalResidueMk]
+  have hone :
+      I.invariant (chapter04UnramifiedCyclicBrauerClass U 1) =
+        chapter04RationalResidueFraction 1 U.degree := by
+    exact N.uniformizer_value
+  have hminus_one :
+      I.invariant (chapter04UnramifiedCyclicBrauerClass U (-1)) =
+        chapter04RationalResidueFraction (-1) U.degree := by
+    calc
+      I.invariant (chapter04UnramifiedCyclicBrauerClass U (-1)) =
+          I.invariant (I.brauerLaw.opposite
+            (chapter04UnramifiedCyclicBrauerClass U 1)) := by
+              rw [N.opposite_parameter_neg]
+      _ = -I.invariant (chapter04UnramifiedCyclicBrauerClass U 1) :=
+        I.invariant_opposite _
+      _ = chapter04RationalResidueFraction (-1) U.degree := by
+        rw [hone, hfrac_neg]
+  refine Int.induction_on r hzero ?_ ?_
+  · intro i hi
+    calc
+      I.invariant (chapter04UnramifiedCyclicBrauerClass U (i + 1)) =
+          I.invariant (I.brauerLaw.tensor
+            (chapter04UnramifiedCyclicBrauerClass U i)
+            (chapter04UnramifiedCyclicBrauerClass U 1)) := by
+              rw [N.tensor_parameter_add]
+      _ = I.invariant (chapter04UnramifiedCyclicBrauerClass U i) +
+            I.invariant (chapter04UnramifiedCyclicBrauerClass U 1) :=
+          I.invariant_tensor _ _
+      _ = chapter04RationalResidueFraction i U.degree +
+            chapter04RationalResidueFraction 1 U.degree := by rw [hi, hone]
+      _ = chapter04RationalResidueFraction (i + 1) U.degree := hfrac_add _ _
+  · intro i hi
+    calc
+      I.invariant (chapter04UnramifiedCyclicBrauerClass U (-i - 1)) =
+          I.invariant (I.brauerLaw.tensor
+            (chapter04UnramifiedCyclicBrauerClass U (-i))
+            (chapter04UnramifiedCyclicBrauerClass U (-1))) := by
+              rw [N.tensor_parameter_add]
+              ring_nf
+      _ = I.invariant (chapter04UnramifiedCyclicBrauerClass U (-i)) +
+            I.invariant (chapter04UnramifiedCyclicBrauerClass U (-1)) :=
+          I.invariant_tensor _ _
+      _ = chapter04RationalResidueFraction (-i) U.degree +
+            chapter04RationalResidueFraction (-1) U.degree := by
+              rw [hi, hminus_one]
+      _ = chapter04RationalResidueFraction (-i - 1) U.degree := hfrac_add _ _
 
 theorem chapter04_local_invariant_data_exists
     {K : Type*} [Field K] (P : Chapter04LocalFieldProfile K) :
@@ -406,7 +554,11 @@ theorem chapter04_invariant_of_brauer_nat_power
     (a : chapter04BrauerGroup K) (n : ℕ) :
     I.invariant (chapter04BrauerNatPower I.brauerLaw a n) =
       n • I.invariant a := by
-  sorry
+  induction n with
+  | zero =>
+      simpa [chapter04BrauerNatPower] using I.invariant_one
+  | succ n ih =>
+      rw [chapter04BrauerNatPower, I.invariant_tensor, ih, succ_nsmul]
 
 theorem chapter04_local_invariant_restriction_formula
     {K L : Type*} [Field K] [Field L] [Algebra K L]
