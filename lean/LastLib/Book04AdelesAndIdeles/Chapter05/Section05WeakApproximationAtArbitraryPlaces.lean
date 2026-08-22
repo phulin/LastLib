@@ -341,13 +341,13 @@ theorem chapter05_correction_lattice_mesh
       ∃ c : K,
         c ∈ chapter05ScaledFractionalIdeal K I ell s ∧
           chapter01MinkowskiEmbedding K c ∈ U := by
-  sorry
+  exact chapter05_minkowski_correction_lattice_mesh K I ell hℓ hℓ x U hU
 
 theorem chapter05_place_system_lattice_mesh
     (K : Type*) [Field K] [NumberField K]
     (I : chapter01FractionalIdealGroup K) (ell : ℕ) (hℓ : 1 < ell) :
     chapter05MinkowskiLatticeMesh K I ell := by
-  sorry
+  exact chapter05_minkowski_correction_lattice_mesh K I ell hℓ
 
 /-!
 **Theorem 5.3 (weak approximation).** For every finite list of distinct
@@ -358,20 +358,289 @@ theorem chapter05_theorem_5_3_weak_approximation
     (K : Type*) [Field K] [NumberField K]
     (T : Finset (Chapter04Place K)) :
     chapter05WeakApproximationStatement K T := by
-  sorry
+  classical
+  intro x W hW
+  let S : Finset (Chapter04FinitePlace K) :=
+    chapter05SelectedFinitePlaces K T
+  let A : Finset (Chapter04InfinitePlace K) :=
+    chapter05SelectedArchimedeanPlaces K T
+  have hS_mem (v : Chapter04FinitePlace K) (hv : v ∈ S) :
+      Sum.inl v ∈ T := by
+    exact (Finset.mem_toLeft.mp hv)
+  have hA_mem (w : Chapter04InfinitePlace K) (hw : w ∈ A) :
+      Sum.inr w ∈ T := by
+    exact (Finset.mem_toRight.mp hw)
+  let xfin : ∀ v : Chapter04FinitePlace K, v ∈ S →
+      Chapter04FiniteLocalField K v := fun v hv =>
+    x ⟨Sum.inl v, hS_mem v hv⟩
+  have hWlocal (v : Chapter04FinitePlace K) (hv : v ∈ S) :
+      ∃ n : ℤ, ∀ z : Chapter04FiniteLocalField K v,
+        chapter01LocallyClose v (xfin v hv) z n →
+          z ∈ W ⟨Sum.inl v, hS_mem v hv⟩ := by
+    have hmem : W ⟨Sum.inl v, hS_mem v hv⟩ ∈
+        𝓝 (xfin v hv) := hW ⟨Sum.inl v, hS_mem v hv⟩
+    rcases Valued.mem_nhds.mp hmem with ⟨γ, hγ⟩
+    let γ' := MonoidWithZeroHom.ValueGroup₀.embedding γ.1
+    refine ⟨-(WithZero.log γ' - 1), ?_⟩
+    intro z hz
+    apply hγ
+    change Valued.v.restrict (z - xfin v hv) < γ.1
+    rw [Valued.v.restrict_lt_iff_lt_embedding]
+    have hz' : Valued.v (xfin v hv - z) ≤
+        WithZero.exp (-(-(WithZero.log γ' - 1))) := by
+      change Valued.v (xfin v hv - z) ≤
+        WithZero.exp (-(-(WithZero.log γ' - 1))) at hz
+      exact hz
+    rw [Valuation.map_sub_swap] at hz'
+    have hγ'ne : γ' ≠ 0 := by
+      exact MonoidWithZeroHom.ValueGroup₀.embedding_unit_ne_zero γ
+    change Valued.v (z - xfin v hv) < γ'
+    rw [← WithZero.exp_log hγ'ne]
+    apply lt_of_le_of_lt hz'
+    rw [WithZero.exp_lt_exp]
+    omega
+  let mfin : ∀ v : Chapter04FinitePlace K, v ∈ S → ℤ := fun v hv =>
+    Classical.choose (hWlocal v hv)
+  let m : ∀ v : S, ℤ := fun v => mfin v.1 v.2
+  have hm (v : Chapter04FinitePlace K) (hv : v ∈ S) :
+      ∀ z : Chapter04FiniteLocalField K v,
+        chapter01LocallyClose v (xfin v hv) z (mfin v hv) →
+        z ∈ W ⟨Sum.inl v, hS_mem v hv⟩ := by
+    exact Classical.choose_spec (hWlocal v hv)
+  obtain ⟨a₀, ha₀, haout⟩ :=
+    chapter01_finite_approximation K S xfin mfin
+  obtain ⟨I, hI, hIset⟩ :=
+    chapter05_finite_correction_set_is_fractional_ideal K S m
+  have hIunit : IsUnit I := isUnit_iff_ne_zero.mpr hI
+  let Iu : chapter01FractionalIdealGroup K := hIunit.unit
+  have hIu : (Iu : FractionalIdeal (𝓞 K)⁰ K) = I :=
+    hIunit.unit_spec
+  obtain ⟨ell, hell⟩ := chapter05_exists_auxiliary_prime K S
+  have hell' : 1 < ell := hell.1.one_lt
+  let z : Chapter04InfiniteAdeleRing K := fun w =>
+    if hw : Sum.inr w ∈ T then
+      x ⟨Sum.inr w, hw⟩ - chapter05LocalEmbedding K (Sum.inr w) a₀
+    else 0
+  let B : ∀ w : Chapter04InfinitePlace K, Set w.Completion := fun w =>
+    if hw : w ∈ A then
+      {y | y + algebraMap K w.Completion a₀ ∈
+        W ⟨Sum.inr w, hA_mem w hw⟩}
+    else Set.univ
+  let V : Set (Chapter04InfiniteAdeleRing K) :=
+    Set.pi (A : Set (Chapter04InfinitePlace K)) B
+  have hV : V ∈ 𝓝 z := by
+    dsimp only [V]
+    have hV' :
+        (Set.pi (A : Set (Chapter04InfinitePlace K)) B :
+          Set (∀ w : Chapter04InfinitePlace K, w.Completion)) ∈
+        @nhds (∀ w : Chapter04InfinitePlace K, w.Completion)
+          Pi.topologicalSpace (z : ∀ w : Chapter04InfinitePlace K, w.Completion) := by
+      rw [nhds_pi, Filter.mem_pi']
+      refine ⟨A, B, ?_, ?_⟩
+      · intro w
+        by_cases hw : w ∈ A
+        · have hcont : ContinuousAt
+              (fun y : w.Completion =>
+                y + algebraMap K w.Completion a₀) (z w) :=
+            continuousAt_id.add continuousAt_const
+          have hz : z w + algebraMap K w.Completion a₀ =
+              x ⟨Sum.inr w, hA_mem w hw⟩ := by
+            simp [z, hA_mem w hw, chapter05LocalEmbedding]
+            rw [← NumberField.InfinitePlace.Completion.algebraMap_apply w a₀]
+            exact sub_add_cancel _ _
+          have hW0 := hW ⟨Sum.inr w, hA_mem w hw⟩
+          change (W ⟨Sum.inr w, hA_mem w hw⟩ : Set w.Completion) ∈
+              @nhds w.Completion _
+                (x ⟨Sum.inr w, hA_mem w hw⟩) at hW0
+          have hW' :
+              (W ⟨Sum.inr w, hA_mem w hw⟩ : Set w.Completion) ∈
+                𝓝 (z w + algebraMap K w.Completion a₀) := by
+            simpa only [hz] using hW0
+          have hpre := hcont.preimage_mem_nhds hW'
+          change {y : w.Completion |
+              y + algebraMap K w.Completion a₀ ∈
+                W ⟨Sum.inr w, hA_mem w hw⟩} ∈ 𝓝 (z w) at hpre
+          simpa [B, z, hw, hA_mem w hw, chapter05LocalEmbedding,
+            Set.preimage_ofPred_eq] using hpre
+        · simp [B, hw]
+      · exact Set.Subset.rfl
+    exact hV'
+  have hcont' : Continuous
+      ((NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K).symm :
+        chapter01MinkowskiSpace K → Chapter04InfiniteAdeleRing K) := by
+    let e : Chapter04InfiniteAdeleRing K ≃ₜ chapter01MinkowskiSpace K :=
+      (Homeomorph.piEquivPiSubtypeProd
+          (fun (v : NumberField.InfinitePlace K) =>
+            NumberField.InfinitePlace.IsReal v)
+          (fun (v : NumberField.InfinitePlace K) => v.Completion)).trans
+        (Homeomorph.prodCongr
+          (Homeomorph.piCongrRight
+            (fun w : {w : NumberField.InfinitePlace K //
+                NumberField.InfinitePlace.IsReal w} =>
+              (NumberField.InfinitePlace.Completion.isometryEquivRealOfIsReal
+                w.2).toHomeomorph))
+          ((Homeomorph.piCongrRight
+              (fun w : {w : NumberField.InfinitePlace K //
+                  ¬ NumberField.InfinitePlace.IsReal w} =>
+                (NumberField.InfinitePlace.Completion.isometryEquivComplexOfIsComplex
+                  (NumberField.InfinitePlace.not_isReal_iff_isComplex.1 w.2)).toHomeomorph)).trans
+            (Homeomorph.piCongrLeft
+              (Y := fun _ : {w : NumberField.InfinitePlace K //
+                  NumberField.InfinitePlace.IsComplex w} => ℂ)
+              (Equiv.subtypeEquivRight
+                (fun _ => NumberField.InfinitePlace.not_isReal_iff_isComplex)))))
+    exact e.symm.continuous
+  let U : Set (chapter01MinkowskiSpace K) :=
+    (NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K).symm ⁻¹' V
+  have hU : U ∈ 𝓝
+      (NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K z) := by
+    have ht : Filter.Tendsto
+        ((NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K).symm :
+          chapter01MinkowskiSpace K → Chapter04InfiniteAdeleRing K)
+        (𝓝 (NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K z))
+        (𝓝 z) := by
+      have ht0 := hcont'.continuousAt
+        (x := NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K z)
+      change Filter.Tendsto
+        ((NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K).symm :
+          chapter01MinkowskiSpace K → Chapter04InfiniteAdeleRing K)
+        (𝓝 (NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K z))
+        (𝓝 ((NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K).symm
+          (NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K z))) at ht0
+      simpa only [RingEquiv.symm_apply_apply] using ht0
+    simpa [U] using ht hV
+  obtain ⟨s, hs⟩ :=
+    (chapter05_correction_lattice_mesh K Iu ell hell'
+      (NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K z) U hU).exists
+  rcases hs with ⟨c, hc, hcU⟩
+  have hcV :
+      (NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K).symm
+          (chapter01MinkowskiEmbedding K c) ∈ V := hcU
+  have hpres : c ∈ chapter05ScaledCorrectionSet K S m ell s := by
+    rcases hc with ⟨d, hd, rfl⟩
+    refine ⟨d, ?_, rfl⟩
+    have hdI : d ∈ (I : Set K) := by
+      rw [← hIu]
+      exact hd
+    rw [hIset]
+    exact hdI
+  have hfinite :=
+    chapter05_scaled_correction_preserves_finite_precision K S m ell s hell hpres
+  refine ⟨a₀ + c, ?_⟩
+  intro v
+  rcases v with ⟨v, hvT⟩
+  rcases v with w | w
+  · have hv : w ∈ S := Finset.mem_toLeft.mpr hvT
+    have hclose :
+        chapter01LocallyClose w (xfin w hv)
+          (chapter05FiniteDiagonal K (a₀ + c) w) (mfin w hv) := by
+      change Valued.v (xfin w hv - ((a₀ + c : K) : w.adicCompletion K)) ≤
+        WithZero.exp (-(mfin w hv))
+      have ha := ha₀ w hv
+      have hc' := hfinite ⟨w, hv⟩
+      change Valued.v (xfin w hv - (a₀ : w.adicCompletion K)) ≤
+        WithZero.exp (-(mfin w hv)) at ha
+      change Valued.v ((c : K) : w.adicCompletion K) ≤
+        WithZero.exp (-(mfin w hv)) at hc'
+      have hdiff :
+          xfin w hv - ((a₀ + c : K) : w.adicCompletion K) =
+            (xfin w hv - (a₀ : w.adicCompletion K)) -
+              ((c : K) : w.adicCompletion K) := by
+        have hcoe (d : K) : (d : w.adicCompletion K) =
+            algebraMap K (w.adicCompletion K) d := by
+          simp [IsDedekindDomain.HeightOneSpectrum.algebraMap_adicCompletion]
+        rw [hcoe (a₀ + c), map_add, ← hcoe a₀, ← hcoe c]
+        abel
+      rw [hdiff]
+      exact (Valued.v.map_sub _ _).trans
+        (max_le ha hc')
+    have hmem := hm w hv _ hclose
+    have hdiag : chapter05FiniteDiagonal K (a₀ + c) w =
+        chapter05LocalEmbedding K (Sum.inl w) (a₀ + c) := by
+      change (algebraMap K (Chapter04FiniteAdeleRing K) (a₀ + c)) w =
+        NumberField.FinitePlace.embedding w (a₀ + c)
+      rw [map_add, chapter04_finiteAdele_add_apply]
+      have hcoe0 :
+          (algebraMap K (Chapter04FiniteAdeleRing K) a₀) w =
+            (a₀ : w.adicCompletion K) := by
+        exact IsDedekindDomain.FiniteAdeleRing.algebraMap_apply (𝓞 K) K a₀ w
+      have hcoec :
+          (algebraMap K (Chapter04FiniteAdeleRing K) c) w =
+            (c : w.adicCompletion K) := by
+        exact IsDedekindDomain.FiniteAdeleRing.algebraMap_apply (𝓞 K) K c w
+      rw [hcoe0, hcoec, NumberField.FinitePlace.embedding_apply]
+      have hcoe (d : K) : (d : w.adicCompletion K) =
+          algebraMap K (w.adicCompletion K) d := by
+        simp [IsDedekindDomain.HeightOneSpectrum.algebraMap_adicCompletion]
+      rw [hcoe a₀, hcoe c, hcoe (a₀ + c), map_add]
+    rw [← hdiag]
+    exact hmem
+  · have hv : w ∈ A := Finset.mem_toRight.mpr hvT
+    have hv' := hcV w hv
+    simp only [B, dif_pos hv, Set.mem_ofPred_eq] at hv'
+    have hmix :
+        (NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K).symm
+            (chapter01MinkowskiEmbedding K c) =
+          algebraMap K (Chapter04InfiniteAdeleRing K) c := by
+      rw [NumberField.InfiniteAdeleRing.mixedEmbedding_eq_algebraMap_comp]
+      exact (NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K).symm_apply_apply _
+    rw [hmix, NumberField.InfiniteAdeleRing.algebraMap_apply] at hv'
+    change algebraMap K w.Completion (a₀ + c) ∈ W ⟨Sum.inr w, hvT⟩
+    rw [map_add]
+    simpa [add_comm] using hv'
+
+private theorem chapter05_weak_approximation_iff_dense_selected_diagonal_aux
+    (K : Type*) [Field K] [NumberField K]
+    (T : Finset (Chapter04Place K)) :
+    chapter05WeakApproximationStatement K T ↔
+      DenseRange (chapter05DiagonalAtPlaces K T) := by
+  classical
+  constructor
+  · intro hweak
+    rw [denseRange_iff_closure_range]
+    apply Set.eq_univ_of_forall
+    intro x
+    rw [mem_closure_iff_nhds]
+    intro U hU
+    rw [nhds_pi] at hU
+    rcases Filter.mem_pi'.mp hU with ⟨I, V, hV, hIU⟩
+    obtain ⟨a, ha⟩ := hweak x V hV
+    have haI : chapter05DiagonalAtPlaces K T a ∈
+        Set.pi (I : Set T) V := by
+      intro v hv
+      exact ha v
+    exact ⟨chapter05DiagonalAtPlaces K T a,
+      hIU haI, ⟨a, rfl⟩⟩
+  · intro hdense x W hW
+    have hP : Set.pi (Set.univ : Set T) W ∈ 𝓝 x := by
+      rw [nhds_pi, Filter.mem_pi']
+      refine ⟨Finset.univ, W, hW, ?_⟩
+      intro y hy v _
+      exact hy v (Finset.mem_univ v)
+    have hxcl : x ∈ closure
+        (Set.range (chapter05DiagonalAtPlaces K T)) := by
+      rw [hdense.closure_range]
+      exact Set.mem_univ x
+    rw [mem_closure_iff_nhds] at hxcl
+    rcases hxcl (Set.pi (Set.univ : Set T) W) hP with
+      ⟨y, hyP, ⟨a, rfl⟩⟩
+    refine ⟨a, ?_⟩
+    intro v
+    exact hyP v (Set.mem_univ v)
 
 theorem chapter05_theorem_5_3_weak_approximation_dense
     (K : Type*) [Field K] [NumberField K]
     (T : Finset (Chapter04Place K)) :
     DenseRange (chapter05DiagonalAtPlaces K T) := by
-  sorry
+  exact (chapter05_weak_approximation_iff_dense_selected_diagonal_aux K T).mp
+    (chapter05_theorem_5_3_weak_approximation K T)
 
 theorem chapter05_weak_approximation_iff_dense_selected_diagonal
     (K : Type*) [Field K] [NumberField K]
     (T : Finset (Chapter04Place K)) :
     chapter05WeakApproximationStatement K T ↔
       DenseRange (chapter05DiagonalAtPlaces K T) := by
-  sorry
+  exact chapter05_weak_approximation_iff_dense_selected_diagonal_aux K T
 
 end
 

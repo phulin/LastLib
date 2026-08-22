@@ -18,7 +18,10 @@ theorem chapter05_away_complement_is_finite_place
     (hSinf : chapter05InfinitePlaces K ⊆ S) :
     ∀ v : Chapter04Place K, v ∉ S →
       ∃ w : Chapter04FinitePlace K, v = Sum.inl w := by
-  sorry
+  intro v hv
+  cases v with
+  | inl w => exact ⟨w, rfl⟩
+  | inr w => exact (hv (hSinf ⟨w, rfl⟩)).elim
 
 /-! For a finite set `S` containing every canonical infinite place, the
 following is the restricted product away from `S`. -/
