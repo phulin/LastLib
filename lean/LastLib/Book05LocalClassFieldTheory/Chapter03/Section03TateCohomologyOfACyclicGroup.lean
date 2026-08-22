@@ -447,11 +447,7 @@ private noncomputable def chapter03_fixed_units_add_equiv
     { toFun := fun x =>
         ⟨Additive.ofMul (Units.map (algebraMap K L).toMonoidHom x.toMul), by
           apply LinearMap.mem_ker.mpr
-          simp only [Rep.sub_hom, hom_id,
-            Representation.IntertwiningMap.sub_toLinearMap,
-            Representation.IntertwiningMap.toLinearMap_id, LinearMap.sub_apply,
-            Representation.IntertwiningMap.coe_toLinearMap, Rep.applyAsHom_apply,
-            LinearMap.id_coe, id_eq]
+          simp only [Rep.sub_hom, Representation.IntertwiningMap.sub_toLinearMap]
           apply sub_eq_zero.mpr
           change Additive.ofMul (Units.map σ.toRingEquiv.toMonoidHom
               (Units.map (algebraMap K L).toMonoidHom x.toMul)) =
@@ -646,7 +642,7 @@ theorem chapter03_tate_hminusone_multiplicative_zero
     (n : ℕ) (σ : Gal(L/K))
     (hcyc : chapter03CyclicExtension K L n σ) :
     Subsingleton (chapter03TateHMinusOne (chapter03MultiplicativeGaloisModule K L)) := by
-  letI : NeZero 1 := ⟨by norm_num⟩
+  let _ : NeZero 1 := ⟨by norm_num⟩
   let e1 : chapter03TateCohomology (chapter03MultiplicativeGaloisModule K L) 1 ≅
       groupCohomology (chapter03MultiplicativeGaloisModule K L) 1 :=
     (TateCohomology.isoGroupCohomology (R := ℤ) (G := Gal(L / K)) 1).app
@@ -655,7 +651,7 @@ theorem chapter03_tate_hminusone_multiplicative_zero
       chapter03TateHMinusOne (chapter03MultiplicativeGaloisModule K L) :=
     by
       convert chapter03_tate_periodicity (chapter03MultiplicativeGaloisModule K L) σ
-        (chapter03_cyclic_extension_generator K L n σ hcyc) (-1) using 1 <;> norm_num
+        (chapter03_cyclic_extension_generator K L n σ hcyc) (-1) using 1; norm_num
   let hsub : Subsingleton (groupCohomology (chapter03MultiplicativeGaloisModule K L) 1) :=
     chapter03_hilbert90_h1_subsingleton K L
   constructor
@@ -696,7 +692,7 @@ noncomputable def chapter03_group_cohomology_h2_multiplicative_norm_quotient
       chapter03TateH0 (chapter03MultiplicativeGaloisModule K L) :=
     by
       convert chapter03_tate_periodicity (chapter03MultiplicativeGaloisModule K L) σ
-        (chapter03_cyclic_extension_generator K L n σ hcyc) 0 using 1 <;> norm_num
+        (chapter03_cyclic_extension_generator K L n σ hcyc) 0 using 1; norm_num
   exact e2.symm ≪≫ hp ≪≫
     chapter03_tate_h0_multiplicative_norm_quotient K L n σ hcyc
 
