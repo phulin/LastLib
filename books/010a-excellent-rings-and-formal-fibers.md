@@ -260,7 +260,142 @@ prime. By $R_0$, $A_P$ is a field, so $PA_P=0$; since $x\in P$ (as $xz=0$), ther
 $s\notin P$ with $sx=0$. Then $sz\neq0$ (its annihilator would contain $s$ outside $P$,
 contradicting $\operatorname{Ann}(z)=P$), while $x(sz)=0$ and
 $\operatorname{Ann}(sz)\supseteq P+\mathbf Z s$ strictly contain $P$, contradicting
-maximality of $P$ inside $\mathcal F$. Hence no nonzero nilpotent exists. $\square$
+contradicting maximality of $P$ inside $\mathcal F$. Hence no nonzero nilpotent exists. $\square$
+
+### 1.2B Serre's normality criterion
+
+The declaration of Section 1.2 lists Serre's normality criterion among the standing tools; like
+the two criteria of Section 1.2A, it is recorded here with a proof of the direction that carries
+the weight. A noetherian ring $A$ is **normal** when $A_{\mathfrak p}$ is an integrally closed
+domain for every prime $\mathfrak p$. Recall that $A$ satisfies $R_1$ when $A_{\mathfrak p}$ is
+regular for every prime with $\operatorname{ht}\mathfrak p\leq1$, and $S_2$ when
+$\operatorname{depth}A_{\mathfrak p}\geq\min(2,\dim A_{\mathfrak p})$ for every prime
+$\mathfrak p$.
+
+**Lemma 1.2B.1.** Let $(V,\mathfrak n)$ be a one-dimensional regular local ring. Then $V$ is a
+domain and there is a discrete valuation $v$ of $K=\operatorname{Frac}(V)$ whose valuation ring
+is $V$. In particular $V$ is a discrete valuation ring in the sense of Book 1, Theorem 4.1, and
+is integrally closed.
+
+_Proof._ Regularity gives $\dim_k\mathfrak n/\mathfrak n^2=\dim V=1$, so $\mathfrak n=(t)$ for
+some $t\neq0$: were $t=0$ the ring would be a field, of dimension zero. Krull's intersection
+theorem gives $\bigcap_k\mathfrak n^k=0$, so for every $0\neq a\in V$ the set of integers
+$k\geq0$ with $a\in\mathfrak n^k$ has a largest element — it contains $0$ but not all $k$ — and
+then $a=t^Ku$ with $u\notin\mathfrak n$, that is, with $u$ a unit. If $ab=0$ with $a,b\neq0$,
+say $a=t^ju$ and $b=t^kv$ with units $u,v$, then multiplying $t^{j+k}uv=0$ by the inverse of
+$uv$ gives $t^{j+k}=0$, hence $t=0$, a contradiction; so $V$ is a domain. Every
+$x\in K^\times$ now has a unique expression $x=t^nu$ with $n\in\mathbf Z$ and $u$ a unit: write
+$x=a/b$ and combine the expressions found for $a$ and $b$. Setting $v(x)=n$ gives
+$v(xy)=v(x)+v(y)$ by uniqueness and $v(x+y)\geq\min\big(v(x),v(y)\big)$: if $v(x)<v(y)$ then
+$x+y=t^{v(x)}\big(u+t^{\,v(y)-v(x)}\,v'\big)$ and the parenthesis lies outside $\mathfrak n$
+because its first summand is a unit. Since $v(t)=1$ the map $v$ is a surjective valuation
+$K^\times\to\mathbf Z$, and its valuation ring — the elements of nonnegative value — is exactly
+$V$. Integrality follows formally: if $x\in K$ is integral over $V$ and $v(x)<0$, then in a
+monic relation $x^n+a_1x^{n-1}+\cdots+a_n=0$ the leading term has value $nv(x)$, while each
+$a_ix^{n-i}$ has value at least $(n-i)v(x)>nv(x)$ because $v(a_i)\geq0$; a sum in which one term
+has strictly smallest value has that value and cannot vanish. Hence $v(x)\geq0$ and $x\in V$.
+$\square$
+
+**Lemma 1.2B.2.** Let $B$ be a reduced noetherian ring satisfying $S_1$, with minimal primes
+$\mathfrak p_1,\ldots,\mathfrak p_r$. Then the zerodivisors of $B$ are exactly the elements of
+$\mathfrak p_1\cup\cdots\cup\mathfrak p_r$, every nonzerodivisor is a unit of the total quotient
+ring $Q(B)$, and
+
+$$
+Q(B)\;\cong\;\prod_{i=1}^{r}\kappa(\mathfrak p_i).
+$$
+
+_Proof._ By Lemma 1.2A.1 the associated primes of $B$ are precisely its minimal primes, and the
+zerodivisors are the union of the associated primes. Hence $Q(B)=S^{-1}B$ where $S$ is the
+complement of $\bigcup_i\mathfrak p_i$, and elements of $S$ are invertible in $Q(B)$ by
+construction. The primes of $S^{-1}B$ correspond to the primes of $B$ disjoint from $S$, that
+is, to the $\mathfrak p_i$ themselves, and
+
+$$
+S^{-1}B\,/\,\mathfrak p_iS^{-1}B\;\cong\;S^{-1}(B/\mathfrak p_i)
+\;=\;\operatorname{Frac}(B/\mathfrak p_i)\;=\;\kappa(\mathfrak p_i),
+$$
+
+since the image of $S$ in the domain $B/\mathfrak p_i$ is the set of its nonzero elements. Thus
+$S^{-1}B$ is artinian, all of its primes being maximal, and reduced. Its Jacobson radical is
+nilpotent — artinian radicals always are — hence zero, so $S^{-1}B$ is a product of fields,
+namely its residue fields as displayed. $\square$
+
+**Proposition 1.2B.3 (Serre).** A noetherian ring satisfying $R_1$ and $S_2$ is normal: every
+localization at a prime is an integrally closed domain.
+
+_Proof._ Trivially $R_1$ implies $R_0$ and $S_2$ implies $S_1$, so $A$ is reduced by Proposition
+1.2A.3. Both conditions pass to localizations: the primes below a fixed prime are unchanged by
+localization, so heights do not increase, while depth and dimension at corresponding primes take
+the same values. Fix a prime $\mathfrak q$ and put $B=A_{\mathfrak q}$. We prove more generally,
+by induction on $d=\dim B$, the statement
+
+$$
+\text{every local noetherian ring of dimension }d\text{ satisfying }R_1\text{ and }S_2
+\text{ is an integrally closed domain.}
+\tag{1.3}
+$$
+
+If $d=0$, then $B$ is reduced and artinian local, so its maximal ideal, being the nilradical,
+vanishes: $B$ is a field. If $d=1$, every prime of $B$ has height at most one, so every
+localization of $B$ is regular and $B$ itself is a one-dimensional regular local ring;
+Lemma 1.2B.1 makes it an integrally closed domain.
+
+Let $d\geq2$. Write $(B,\mathfrak m)$ and $Q=Q(B)$.
+
+(a) By $S_2$ the depth of $B$ is at least $2$, and the standard theory of depths declared in
+Section 1.2 produces a regular sequence of length two inside $\mathfrak m$: an element
+$t\in\mathfrak m$ that is a nonzerodivisor on $B$, and an element $s\in\mathfrak m$ that is a
+nonzerodivisor on $B/tB$.
+
+(b) Let $x\in Q$ be integral over $B$ and let $\mathfrak p\subsetneq\mathfrak m$ be a prime.
+Then $\dim B_{\mathfrak p}\leq d-1$, and $B_{\mathfrak p}$ is again a local noetherian ring
+satisfying $R_1$ and $S_2$: its primes are the primes of $B$ contained in $\mathfrak p$, with
+unchanged heights, depths, and dimensions, so both conditions are read off from those of $B$.
+Statement $(1.3)$ at smaller dimension makes $B_{\mathfrak p}$ integrally closed in
+$Q(B_{\mathfrak p})$. The natural map $Q(B)\to Q(B_{\mathfrak p})$ is defined — a denominator
+$e$ that is a nonzerodivisor on $B$ avoids the associated primes of $B_{\mathfrak p}$, which
+are extended from associated primes of $B$ contained in $\mathfrak p$ — and it carries $x$ to
+an element integral over $B_{\mathfrak p}$. Hence $x/1\in B_{\mathfrak p}$.
+
+(c) The subring $B'=B[x]$ of $Q$ is a finite $B$-module: a monic relation for $x$ of degree $n$
+lets every power $x^m$ with $m\geq n$ be rewritten as a $B$-linear combination of
+$1,x,\ldots,x^{n-1}$. So $M=B'/B$ is a finite $B$-module, and (b) says
+$\operatorname{Supp}M\subseteq\{\mathfrak m\}$. Suppose $M\neq0$. Then $\mathfrak m$ is the
+radical of $\operatorname{Ann}M$, so $\mathfrak m^NM=0$ for some $N$; taking $i$ maximal with
+$\mathfrak m^iM\neq0$ and any nonzero $\xi$ in that submodule, $\xi$ is killed by
+$\mathfrak m$. Since $B$ is reduced it embeds in $Q$, so $B'$ is a subring of $Q$; lift $\xi$ to
+$y\in B'$. Then $y\notin B$ while $\mathfrak m\,y\subseteq B$.
+
+(d) Put $w=ty\in B$. Were $w\in tB$, say $w=t\rho$, then $t(y-\rho)=0$ in $Q$, and $t$ is a unit
+of $Q$ because it is a nonzerodivisor; so $y=\rho\in B$, contradicting (c). Hence the class
+$\bar w$ of $w$ in $B/tB$ is nonzero. On the other hand $sw=s\,ty=t(sy)$ lies in $tB$ because
+$sy\in B$, so $s\bar w=0$ in $B/tB$ — impossible, since $s$ was chosen a nonzerodivisor there.
+Therefore $M=0$ after all, meaning $x\in B$; and as $x$ was arbitrary, $B$ is integrally closed
+in $Q$.
+
+(e) It remains to see that $B$ is a domain. Suppose there were $r\geq2$ minimal primes. By
+Lemma 1.2B.2,
+
+$$
+Q\;\cong\;\kappa(\mathfrak p_1)\times\cdots\times\kappa(\mathfrak p_r),
+$$
+
+and the idempotent $e=(1,0,\ldots,0)$ satisfies $e^2-e=0$, a monic equation over $B$, so $e$ is
+integral over $B$ and belongs to $B$. But then $B=Be\times B(1-e)$ with both factors nonzero,
+and a product of two nonzero rings has at least two maximal ideals, contradicting locality.
+Hence $r=1$, so $Q=\operatorname{Frac}(B)$, and by (d) $B$ is an integrally closed domain. This
+completes the induction, and $A_{\mathfrak q}$ is an integrally closed domain for every
+$\mathfrak q$. $\square$
+
+The converse implication is classical — EGA IV$_2$, Theorem 5.8.6 — and is covered by the
+standing declaration of Section 1.2; part of it is immediate from what has been proved here. If
+$A$ is normal, its local rings are domains, so $A$ is reduced and satisfies $R_0$; a local
+domain of positive dimension never has $\mathfrak m$ as an associated prime, whence $S_1$; and a
+one-dimensional normal local domain is a one-dimensional noetherian local integrally closed
+domain, hence a discrete valuation ring and regular by Book 1, Theorem 4.1, whence $R_1$. That
+a normal local domain of dimension at least two has depth at least two needs an additional
+argument, for which we invoke the declaration rather than duplicate it here.
 
 ### 1.3 The shape of the argument
 
