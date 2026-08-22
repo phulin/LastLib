@@ -667,9 +667,17 @@ def chapter13AdditiveAnnihilator {A : Type*} [NonUnitalNonAssocRing A]
     (ψ : AddChar A Circle) (H : AddSubgroup A) : AddSubgroup A := by
   refine
     { carrier := {y | ∀ x : H, ψ ((x : A) * y) = 1}
-      zero_mem' := by sorry
-      add_mem' := by sorry
-      neg_mem' := by sorry }
+      zero_mem' := by
+        intro x
+        simp
+      add_mem' := by
+        intro a b ha hb x
+        rw [mul_add, ψ.map_add_eq_mul, ha x, hb x]
+        exact mul_one 1
+      neg_mem' := by
+        intro x hx y
+        rw [mul_neg, ψ.map_neg_eq_inv, hx y]
+        exact inv_one }
 
 theorem chapter13_mem_additiveAnnihilator_iff
     {A : Type*} [NonUnitalNonAssocRing A]
@@ -693,7 +701,9 @@ def chapter13RationalModIntegerCharacter : AddChar Chapter13QModZ Circle :=
   (AddChar.toAddMonoidHomEquiv.symm
     (QuotientAddGroup.lift (AddSubgroup.zmultiples (1 : ℚ))
       (Real.fourierChar.compAddMonoidHom (Rat.castHom ℝ).toAddMonoidHom).toAddMonoidHom
-      (by sorry)))⁻¹
+      (by
+        rw [AddSubgroup.zmultiples_le]
+        simp [Real.fourierChar_apply', mul_one, Circle.exp_two_pi])))⁻¹
 
 /- The ray levels are the canonical Chapter 11 moduli and quotients.  Keeping these aliases here
 lets the character statements use chapter-13 names without replacing the established ray-class
