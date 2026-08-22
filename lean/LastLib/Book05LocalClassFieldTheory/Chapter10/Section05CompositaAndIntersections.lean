@@ -16,7 +16,8 @@ theorem chapter10_mem_normSubgroupProduct_iff
     {K : Type*} [Field K] (H₁ H₂ : Subgroup Kˣ) (x : Kˣ) :
     x ∈ chapter10NormSubgroupProduct H₁ H₂ ↔
       ∃ a ∈ H₁, ∃ b ∈ H₂, a * b = x := by
-  sorry
+  change x ∈ H₁ ⊔ H₂ ↔ ∃ a ∈ H₁, ∃ b ∈ H₂, a * b = x
+  rw [Subgroup.mem_sup]
 
 theorem chapter10_compositum_norm_subgroup_eq_intersection
     {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
@@ -47,7 +48,12 @@ theorem chapter10_norm_subgroup_product_is_open_closed
     (h₂open : IsOpen (H₂ : Set Kˣ)) :
     IsOpen (chapter10NormSubgroupProduct H₁ H₂ : Set Kˣ) ∧
       IsClosed (chapter10NormSubgroupProduct H₁ H₂ : Set Kˣ) := by
-  sorry
+  unfold chapter10NormSubgroupProduct
+  have hopen : IsOpen ((H₁ ⊔ H₂ : Subgroup Kˣ) : Set Kˣ) :=
+    Subgroup.isOpen_mono le_sup_left h₁open
+  have hopen' : IsOpen ((H₁ ⊔ H₂ : Subgroup Kˣ) : Set Kˣ) :=
+    Subgroup.isOpen_mono le_sup_right h₂open
+  exact ⟨hopen, Subgroup.isClosed_of_isOpen _ hopen'⟩
 
 /- The formulas reverse field operations and subgroup operations. -/
 theorem chapter10_compositum_intersection_reversal
