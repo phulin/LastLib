@@ -41,13 +41,127 @@ theorem chapter01_tame_group_presentation_exists
     (q e f : ℕ) (hq : Fintype.card k = q)
     (hf : Module.finrank k l = f)
     (hI : Nat.card I = e)
-    (hresidue_separable : Algebra.IsSeparable k l)
-    (htame : Nat.Coprime e (chapter01CharacteristicExponent k))
+    (_hresidue_separable : Algebra.IsSeparable k l)
+    (_htame : Nat.Coprime e (chapter01CharacteristicExponent k))
     (hdata : Chapter01FiniteTameGroupInput
       (chapter01GaloisGroup K L) k l I) :
     Nonempty (Chapter01FiniteTameGroupPresentation
       (chapter01GaloisGroup K L) I q e f) := by
-  sorry
+  let _ : Fintype l := Fintype.ofFinite l
+  let hcyclic : IsCyclic I :=
+    isCyclic_of_injective hdata.tame_character hdata.tame_character_injective
+  obtain ⟨tau, htau⟩ :=
+    (Subgroup.isCyclic_iff_exists_zpowers_eq_top I).mp
+      hcyclic
+  have htau_mem : tau ∈ I := by
+    rw [← htau]
+    exact Subgroup.mem_zpowers tau
+  have htau_order : orderOf tau = e := by
+    rw [← Nat.card_zpowers tau, htau, hI]
+  have hqpos : 0 < q := by
+    rw [← hq]
+    exact Fintype.card_pos
+  have hepos : 0 < e := by
+    rw [← hI]
+    exact Nat.card_pos
+  let phi : Gal(l / k) := chapter01ArithmeticFrobenius k l
+  obtain ⟨F, hF⟩ := hdata.residue_reduction_surjective phi
+  have hphi_order : orderOf phi = f := by
+    simpa [phi, chapter01ArithmeticFrobenius] using
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.chapter06_arithmetic_frobenius_order
+        k l f hf
+  have hphi_pow : phi ^ f = 1 := by
+    rw [← hphi_order]
+    exact pow_orderOf_eq_one phi
+  have hF_pow_mem_kernel : F ^ f ∈ MonoidHom.ker hdata.residue_reduction := by
+    rw [MonoidHom.mem_ker]
+    rw [map_pow, hF, hphi_pow]
+  have hF_pow_mem_I : F ^ f ∈ I := by
+    rw [← hdata.kernel_eq_inertia]
+    exact hF_pow_mem_kernel
+  let hi : I := ⟨tau, htau_mem⟩
+  have hconj_mem : F * tau * F⁻¹ ∈ I :=
+    (inferInstance : I.Normal).conj_mem tau htau_mem F
+  let hj : I := ⟨F * tau * F⁻¹, hconj_mem⟩
+  have hchar := hdata.conjugation_compatibility F hi hj (by rfl)
+  have hmap :
+      Units.map (hdata.residue_reduction F).toRingEquiv.toMonoidHom
+          (hdata.tame_character hi) =
+        (hdata.tame_character hi) ^ q := by
+    rw [hF]
+    apply Units.ext
+    change phi (hdata.tame_character hi : l) =
+      (hdata.tame_character hi : l) ^ q
+    simpa [phi, chapter01ArithmeticFrobenius, hq] using
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.chapter06_arithmetic_frobenius_apply
+        k l (hdata.tame_character hi : l)
+  have hchar_pow : hdata.tame_character hj =
+      hdata.tame_character (hi ^ q) := by
+    calc
+      hdata.tame_character hj =
+          Units.map (hdata.residue_reduction F).toRingEquiv.toMonoidHom
+            (hdata.tame_character hi) := hchar
+      _ = (hdata.tame_character hi) ^ q := hmap
+      _ = hdata.tame_character (hi ^ q) :=
+        (hdata.tame_character.map_pow hi q).symm
+  have hconj : F * tau * F⁻¹ = tau ^ q := by
+    have heq : hj = hi ^ q := hdata.tame_character_injective hchar_pow
+    simpa [hi, hj] using congrArg Subtype.val heq
+  have hF_pow_mem_zpowers : F ^ f ∈ Subgroup.zpowers tau := by
+    rw [htau]
+    exact hF_pow_mem_I
+  have hF_pow_mem_powers : F ^ f ∈ Submonoid.powers tau :=
+    (isOfFinOrder_of_finite tau).mem_powers_iff_mem_zpowers.mpr hF_pow_mem_zpowers
+  obtain ⟨a, ha⟩ := hF_pow_mem_powers
+  let C : Subgroup (chapter01GaloisGroup K L) :=
+    Subgroup.closure ({F, tau} : Set (chapter01GaloisGroup K L))
+  have hFC : F ∈ C := by
+    exact Subgroup.subset_closure (by simp)
+  have htauC : tau ∈ C := by
+    exact Subgroup.subset_closure (by simp)
+  have hIleC : I ≤ C := by
+    rw [← htau]
+    exact Subgroup.zpowers_le.mpr htauC
+  have hFzleC : Subgroup.zpowers F ≤ C :=
+    Subgroup.zpowers_le.mpr hFC
+  have hphizpowers :
+      Subgroup.zpowers phi = (⊤ : Subgroup (Gal(l / k))) := by
+    simpa [phi, chapter01ArithmeticFrobenius] using
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.chapter06_arithmetic_frobenius_zpowers_eq_top
+        k l
+  have hCtop : C = ⊤ := by
+    apply top_unique
+    intro g hg
+    have hquot : hdata.residue_reduction g ∈ Subgroup.zpowers phi := by
+      rw [hphizpowers]
+      exact Subgroup.mem_top _
+    obtain ⟨n, hn⟩ := Subgroup.mem_zpowers_iff.mp hquot
+    have hFn : F ^ n ∈ C :=
+      hFzleC (Subgroup.zpow_mem_zpowers F n)
+    have hker : F ^ n * g⁻¹ ∈ MonoidHom.ker hdata.residue_reduction := by
+      rw [MonoidHom.mem_ker]
+      rw [map_mul, map_zpow, hF, hn]
+      simp
+    have hIelem : F ^ n * g⁻¹ ∈ I := by
+      rw [← hdata.kernel_eq_inertia]
+      exact hker
+    have hx := C.mul_mem (C.inv_mem (hIleC hIelem)) hFn
+    simpa [mul_assoc] using hx
+  refine ⟨{
+    frobenius := F
+    tameGenerator := tau
+    tameGenerator_mem := htau_mem
+    tameGenerator_order_positive := hepos
+    tameGenerator_order := htau_order
+    residue_degree_positive := by
+      rw [← hphi_order]
+      exact orderOf_pos _
+    residue_card_positive := hqpos
+    inertia_generated := htau
+    group_generated := hCtop
+    conjugation := hconj
+    frobenius_power := ⟨a, ha.symm⟩
+  }⟩
 
 /-- In the arithmetic convention, conjugation acts on a tame generator by the
 `q`th power. -/

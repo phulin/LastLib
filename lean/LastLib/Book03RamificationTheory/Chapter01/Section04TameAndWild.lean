@@ -244,7 +244,21 @@ theorem chapter01_imperfect_residue_example_is_not_tame
       IsPurelyInseparable k l ∧
       ¬Algebra.IsSeparable k l ∧
       ¬chapter01TameExtension k l E.ramification_index := by
-  sorry
+  have hnotsep : ¬Algebra.IsSeparable k l := by
+    intro hsep
+    let _ : IsPurelyInseparable k l := E.residue_purely_inseparable
+    have hsurj : Function.Surjective (algebraMap k l) :=
+      IsPurelyInseparable.surjective_algebraMap_of_isSeparable k l
+    obtain ⟨x, hx⟩ := hsurj E.alpha
+    apply E.a_not_pth_power
+    refine ⟨x, ?_⟩
+    apply (algebraMap k l).injective
+    calc
+      algebraMap k l (x ^ E.p) = (algebraMap k l x) ^ E.p := by rw [map_pow]
+      _ = E.alpha ^ E.p := by rw [hx]
+      _ = algebraMap k l E.a := E.alpha_pow_eq
+  exact ⟨E.ramification_index_eq_one, E.residue_purely_inseparable, hnotsep,
+    fun htame => hnotsep htame.1⟩
 
 /-- Profile for the later warning that a separable field extension can have
 `e=1` and purely inseparable residue growth. -/
