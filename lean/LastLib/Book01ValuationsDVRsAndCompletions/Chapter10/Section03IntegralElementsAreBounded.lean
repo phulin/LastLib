@@ -820,7 +820,173 @@ theorem chapter10_galois_group_transitive_on_valuation_branches
       W₁.comap (algebraMap K L) = v.valuationSubring →
       W₂.comap (algebraMap K L) = v.valuationSubring →
         ∃ σ : Gal(L / K), σ • W₁ = W₂ := by
-  sorry
+  classical
+  intro W₁ W₂ hW₁ hW₂
+  let mkExt : ∀ (W : ValuationSubring L),
+      W.comap (algebraMap K L) = v.valuationSubring →
+        Chapter10HeterogeneousValuationExtension L v :=
+    fun W hW => by
+      let G := ULift.{max u_1 u_3} W.ValueGroup
+      let : LinearOrderedCommMonoidWithZero G := by
+        change LinearOrderedCommMonoidWithZero (ULift.{max u_1 u_3} W.ValueGroup)
+        apply Function.Injective.linearOrderedCommMonoidWithZero ULift.down ULift.down_injective
+        all_goals (intros; rfl)
+      let : CommGroupWithZero G := by
+        change CommGroupWithZero (ULift.{max u_1 u_3} W.ValueGroup)
+        apply Function.Injective.commGroupWithZero ULift.down ULift.down_injective
+        all_goals (intros; rfl)
+      let : LinearOrderedCommGroupWithZero G :=
+        { __ := (inferInstance : LinearOrderedCommMonoidWithZero G)
+          __ := (inferInstance : CommGroupWithZero G) }
+      let f : W.ValueGroup →*₀ G :=
+        { toFun := ULift.up
+          map_one' := rfl
+          map_zero' := rfl
+          map_mul' := by intros; rfl }
+      let w' : Valuation L G :=
+        W.valuation.map f (by
+          intro a b hab
+          change ULift.up a ≤ ULift.up b
+          exact hab)
+      exact
+        { valueGroup := G
+          valuation := w'
+          isExtension := by
+            apply Valuation.isEquiv_of_val_le_one
+            intro x
+            change v x ≤ 1 ↔ ULift.up (W.valuation (algebraMap K L x)) ≤ (1 : G)
+            change v x ≤ 1 ↔ W.valuation (algebraMap K L x) ≤ 1
+            rw [← Valuation.mem_valuationSubring_iff,
+              ← Valuation.mem_valuationSubring_iff,
+              ValuationSubring.valuationSubring_valuation]
+            rw [← ValuationSubring.mem_comap, hW] }
+  let E₁ := mkExt W₁ hW₁
+  let E₂ := mkExt W₂ hW₂
+  let A : ValuationSubring K := v.valuationSubring
+  let B := integralClosure A L
+  let hA : v.Integers A := by
+    exact Valuation.valuationSubring.integers v
+  let : IsFractionRing B L :=
+    integralClosure.isFractionRing_of_finite_extension K L
+  let : MulSemiringAction Gal(L / K) B :=
+    IsIntegralClosure.MulSemiringAction A K L B
+  let : Algebra.IsInvariant A B Gal(L / K) :=
+    Algebra.isInvariant_of_isGalois A K L B
+  let c :=
+    chapter10_extension_center_map (A := A) (B := B) (K := K) (L := L) v hA
+  let P₁ := c (Quotient.mk (Chapter10ValuationExtensionSetoid (L := L) v) E₁)
+  let P₂ := c (Quotient.mk (Chapter10ValuationExtensionSetoid (L := L) v) E₂)
+  have hP₁ : P₁.1.IsPrime :=
+    (c (Quotient.mk (Chapter10ValuationExtensionSetoid (L := L) v) E₁)).2.1
+  have hP₂ : P₂.1.IsPrime :=
+    (c (Quotient.mk (Chapter10ValuationExtensionSetoid (L := L) v) E₂)).2.1
+  have hP₁under : P₁.1.under A = P₂.1.under A := by
+    change P₁.1.comap (algebraMap A B) = P₂.1.comap (algebraMap A B)
+    rw [P₁.2.2, P₂.2.2]
+  let : SMul Gal(L / K) A := ⟨fun _ a => a⟩
+  let : SMulCommClass Gal(L / K) A B :=
+    ⟨fun σ a b => by
+      have ha : σ • algebraMap A B a = algebraMap A B a := by
+        apply (FaithfulSMul.algebraMap_injective B L)
+        change algebraMap B L (galRestrict A K L B σ (algebraMap A B a)) =
+          algebraMap B L (algebraMap A B a)
+        rw [algebraMap_galRestrict_apply]
+        rw [(IsScalarTower.algebraMap_apply A B L a).symm]
+        rw [IsScalarTower.algebraMap_apply A K L a]
+        simp
+      rw [Algebra.smul_def, smul_mul', ha, Algebra.smul_def]⟩
+  let : P₁.1.IsPrime := hP₁
+  let : P₂.1.IsPrime := hP₂
+  obtain ⟨σ, hσ⟩ :=
+    Algebra.IsInvariant.exists_smul_of_under_eq A B Gal(L / K) P₁.1 P₂.1 hP₁under
+  let T := σ • W₁
+  have hT : T.comap (algebraMap K L) = v.valuationSubring := by
+    ext x
+    rw [ValuationSubring.mem_comap, ValuationSubring.mem_pointwise_smul_iff_inv_smul_mem]
+    have hs : σ⁻¹ • algebraMap K L x = algebraMap K L x := by
+      change σ⁻¹ (algebraMap K L x) = algebraMap K L x
+      exact σ⁻¹.commutes x
+    rw [hs]
+    change x ∈ W₁.comap (algebraMap K L) ↔ x ∈ v.valuationSubring
+    rw [hW₁]
+  let Eσ := mkExt T hT
+  let Pσ := c (Quotient.mk (Chapter10ValuationExtensionSetoid (L := L) v) Eσ)
+  have hcenter : Pσ.1 = σ • P₁.1 := by
+    ext b
+    simp only [Pσ, P₁, c, chapter10_extension_center_map, Quotient.lift_mk,
+      chapter10_extension_center, Ideal.mem_comap, Valuation.mem_maximalIdeal_iff]
+    rw [Ideal.mem_pointwise_smul_iff_inv_smul_mem, Ideal.mem_comap,
+      Valuation.mem_maximalIdeal_iff]
+    let : LinearOrderedCommGroupWithZero E₁.valueGroup := E₁.orderedValueGroup
+    let : LinearOrderedCommGroupWithZero Eσ.valueGroup := Eσ.orderedValueGroup
+    let wσ : Valuation L E₁.valueGroup :=
+      E₁.valuation.comap (σ⁻¹ : L ≃ₐ[K] L).toRingHom
+    have hE₁ : E₁.valuation.valuationSubring = W₁ := by
+      ext x
+      change E₁.valuation x ≤ 1 ↔ x ∈ W₁
+      change ULift.up (W₁.valuation x) ≤ (1 : E₁.valueGroup) ↔ x ∈ W₁
+      change W₁.valuation x ≤ 1 ↔ x ∈ W₁
+      rw [← Valuation.mem_valuationSubring_iff,
+        ValuationSubring.valuationSubring_valuation]
+    have hsub : Eσ.valuation.valuationSubring = wσ.valuationSubring := by
+      ext x
+      change Eσ.valuation x ≤ 1 ↔ wσ x ≤ 1
+      change T.valuation x ≤ 1 ↔ E₁.valuation (σ⁻¹ • x) ≤ 1
+      have hleft : T.valuation x ≤ 1 ↔ x ∈ T := by
+        rw [← Valuation.mem_valuationSubring_iff,
+          ValuationSubring.valuationSubring_valuation]
+      have hright : E₁.valuation (σ⁻¹ • x) ≤ 1 ↔ σ⁻¹ • x ∈ W₁ := by
+        rw [← Valuation.mem_valuationSubring_iff, hE₁]
+      have hpoint : x ∈ T ↔ σ⁻¹ • x ∈ W₁ := by
+        simpa [T] using
+          (ValuationSubring.mem_pointwise_smul_iff_inv_smul_mem
+            (g := σ) (S := W₁) (x := x))
+      exact hleft.trans (hpoint.trans hright.symm)
+    have heq : Eσ.valuation.IsEquiv wσ :=
+      (Valuation.isEquiv_iff_valuationSubring Eσ.valuation wσ).mpr hsub
+    have hlt : Eσ.valuation (algebraMap B L b) < 1 ↔
+        wσ (algebraMap B L b) < 1 := heq.lt_one_iff_lt_one
+    dsimp [wσ] at hlt
+    change Eσ.valuation (algebraMap B L b) < 1 ↔
+      E₁.valuation (algebraMap B L (σ⁻¹ • b)) < 1
+    have harg : algebraMap B L (σ⁻¹ • b) =
+        (σ⁻¹ : L ≃ₐ[K] L) (algebraMap B L b) := by
+      change algebraMap B L (galRestrict A K L B (σ⁻¹) b) = _
+      exact algebraMap_galRestrict_apply A (σ⁻¹) b
+    rw [harg]
+    exact hlt
+  have hP : Pσ.1 = P₂.1 := hcenter.trans hσ.symm
+  have hclass :
+      Quotient.mk (Chapter10ValuationExtensionSetoid (L := L) v) Eσ =
+        Quotient.mk (Chapter10ValuationExtensionSetoid (L := L) v) E₂ := by
+    apply chapter10_extension_center_map_injective (A := A) (B := B)
+      (K := K) (L := L) v hA
+    apply Subtype.ext
+    exact hP
+  let : LinearOrderedCommGroupWithZero Eσ.valueGroup := Eσ.orderedValueGroup
+  let : LinearOrderedCommGroupWithZero E₂.valueGroup := E₂.orderedValueGroup
+  have hval : Eσ.valuation.IsEquiv E₂.valuation := Quotient.exact hclass
+  have hEσ : Eσ.valuation.valuationSubring = T := by
+    ext x
+    change Eσ.valuation x ≤ 1 ↔ x ∈ T
+    change ULift.up (T.valuation x) ≤ (1 : Eσ.valueGroup) ↔ x ∈ T
+    change T.valuation x ≤ 1 ↔ x ∈ T
+    rw [← Valuation.mem_valuationSubring_iff,
+      ValuationSubring.valuationSubring_valuation]
+  have hE₂ : E₂.valuation.valuationSubring = W₂ := by
+    ext x
+    change E₂.valuation x ≤ 1 ↔ x ∈ W₂
+    change ULift.up (W₂.valuation x) ≤ (1 : E₂.valueGroup) ↔ x ∈ W₂
+    change W₂.valuation x ≤ 1 ↔ x ∈ W₂
+    rw [← Valuation.mem_valuationSubring_iff,
+      ValuationSubring.valuationSubring_valuation]
+  have hbranch : T = W₂ := by
+    calc
+      T = Eσ.valuation.valuationSubring := hEσ.symm
+      _ = E₂.valuation.valuationSubring :=
+        (Valuation.isEquiv_iff_valuationSubring Eσ.valuation E₂.valuation).mp hval
+      _ = W₂ := hE₂
+  exact ⟨σ, by simpa [T] using hbranch⟩
 
 /-- Factorization-form henselianity makes the center over the base maximal
 ideal unique in every finite integral extension. -/
