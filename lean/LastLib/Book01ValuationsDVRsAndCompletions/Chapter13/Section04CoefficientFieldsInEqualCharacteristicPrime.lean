@@ -1,5 +1,7 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter13.Section03PBasesAndDerivations
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Section02InfiniteDigits
+import Mathlib.Algebra.CharP.Invertible
+import Mathlib.Algebra.CharP.Quotient
 import Mathlib.RingTheory.PowerSeries.Inverse
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter13
@@ -121,7 +123,123 @@ theorem chapter13_perfect_residue_unique_coefficient_field
       Chapter13IsCoefficientField K ∧
         (K.carrier : Set A) =
           ⋂ n : ℕ, Set.range (fun x : A => x ^ (p ^ n)) := by
-  sorry
+  classical
+  have hB : Chapter13PBasis
+      (Chapter13PthPowerSubfield (Chapter13ResidueRing A) p)
+      (∅ : Set (Chapter13ResidueRing A)) p := by
+    letI : CharP (Chapter13ResidueRing A) p := CharP.quotient' p
+      (IsLocalRing.maximalIdeal A)
+      (by
+        intro n hn
+        by_contra hpn
+        have hnotdvd : ¬p ∣ n := by
+          intro hdiv
+          exact hpn ((CharP.cast_eq_zero_iff A p n).2 hdiv)
+        have hunit : IsUnit (n : A) :=
+          (CharP.isUnit_natCast_iff (R := A) (Fact.out : Nat.Prime p)).2
+            hnotdvd
+        exact (IsLocalRing.mem_maximalIdeal (R := A) (n : A)).mp hn hunit)
+    exact chapter13_perfect_field_empty_p_basis p hperfect
+  obtain ⟨e⟩ := chapter13_equal_characteristic_p_coefficient_fields_bijection
+    p (∅ : Set (Chapter13ResidueRing A)) hB hA
+  have hintersection : ∀ K : Chapter13Subfield A,
+      Chapter13IsCoefficientField K →
+        (K.carrier : Set A) = ⋂ n : ℕ, Set.range (fun x : A => x ^ (p ^ n)) := by
+    intro K hK
+    let rK : K.carrier →+* Chapter13ResidueRing A :=
+      (Chapter13ResidueMap A).comp K.carrier.subtype
+    have hroot : ∀ x : K.carrier, ∃ y : K.carrier, y ^ p = x := by
+      intro x
+      obtain ⟨z, hz⟩ := hperfect (rK x)
+      obtain ⟨y, hy⟩ := hK.2 z
+      refine ⟨y, ?_⟩
+      apply hK.1
+      change rK y ^ p = rK x
+      calc
+        rK y ^ p = z ^ p := by rw [hy]
+        _ = rK x := by simpa using hz
+    have hpow : ∀ (x : K.carrier) (n : ℕ),
+        ∃ y : K.carrier, y ^ (p ^ n) = x := by
+      intro x n
+      induction n generalizing x with
+      | zero => exact ⟨x, by simp⟩
+      | succ n ih =>
+          obtain ⟨x', hx'⟩ := hroot x
+          obtain ⟨y, hy⟩ := ih x'
+          refine ⟨y, ?_⟩
+          calc
+            y ^ (p ^ n * p) = (y ^ (p ^ n)) ^ p := pow_mul y (p ^ n) p
+            _ = x' ^ p := by rw [hy]
+            _ = x := hx'
+    have hhaus : IsHausdorff (IsLocalRing.maximalIdeal A) A := hA.toIsHausdorff
+    ext x
+    constructor
+    · intro hx
+      let xK : K.carrier := ⟨x, hx⟩
+      refine Set.mem_iInter.mpr ?_
+      intro n
+      obtain ⟨y, hy⟩ := hpow xK n
+      refine ⟨(y : A), congrArg (fun z : K.carrier => (z : A)) hy⟩
+    · intro hx
+      have hxall : ∀ n : ℕ, x ∈ Set.range (fun y : A => y ^ (p ^ n)) :=
+        Set.mem_iInter.mp hx
+      obtain ⟨xK, hxK⟩ := hK.2 (Chapter13ResidueMap A x)
+      have hzero : x - (xK : A) = 0 := hhaus.haus (x - (xK : A)) (by
+        intro n
+        obtain ⟨y, hy⟩ := hxall n
+        change y ^ (p ^ n) = x at hy
+        obtain ⟨yK, hyK⟩ := hK.2 (Chapter13ResidueMap A y)
+        have hpowK' : yK ^ (p ^ n) = xK := by
+          apply hK.1
+          change rK (yK ^ (p ^ n)) = rK xK
+          calc
+            rK (yK ^ (p ^ n)) = rK yK ^ (p ^ n) := by rw [map_pow]
+            _ = (Chapter13ResidueMap A y) ^ (p ^ n) := by rw [hyK]
+            _ = Chapter13ResidueMap A (y ^ (p ^ n)) := by
+              rw [map_pow]
+            _ = Chapter13ResidueMap A x := by rw [hy]
+            _ = rK xK := hxK.symm
+        have hpowK : (yK : A) ^ (p ^ n) = (xK : A) :=
+          congrArg (fun z : K.carrier => (z : A)) hpowK'
+        have hdiff : x - (xK : A) = (y - (yK : A)) ^ (p ^ n) := by
+          calc
+            x - (xK : A) = y ^ (p ^ n) - (xK : A) := by rw [hy]
+            _ = y ^ (p ^ n) - (yK : A) ^ (p ^ n) := by rw [hpowK]
+            _ = (y - (yK : A)) ^ (p ^ n) :=
+              (sub_pow_char_pow (p := p) (n := n) y (yK : A)).symm
+        rw [hdiff]
+        have hym : y - (yK : A) ∈ IsLocalRing.maximalIdeal A := by
+          apply (Ideal.Quotient.eq_zero_iff_mem).mp
+          change Chapter13ResidueMap A y - rK yK = 0
+          rw [hyK]
+          exact sub_self _
+        have hnp : n ≤ p ^ n := by
+          by_cases hn : n = 0
+          · simp [hn]
+          · exact le_trans (by
+              simpa only [one_mul] using
+                Nat.mul_le_mul_right n ((Fact.out : Nat.Prime p).one_le : 1 ≤ p))
+              (Nat.mul_le_pow (Fact.out : Nat.Prime p).ne_one n)
+        exact SModEq.zero.2 (by
+          simpa only [smul_eq_mul, mul_top] using
+            (Ideal.pow_le_pow_right hnp) (Ideal.pow_mem_pow hym (p ^ n)))
+        )
+      have hxeq : x = (xK : A) := sub_eq_zero.mp hzero
+      rw [hxeq]
+      exact xK.property
+  let emptyFamily : {a : (∅ : Set (Chapter13ResidueRing A)) → A //
+        Chapter13AdmissiblePBaseLiftFamily (∅ : Set (Chapter13ResidueRing A)) a} :=
+    ⟨fun b => b.property.elim, by intro b; exact b.property.elim⟩
+  let z : Chapter13CoefficientFields A := e.symm
+    emptyFamily
+  refine ⟨z.1, ⟨z.2, hintersection z.1 z.2⟩, ?_⟩
+  intro K hK
+  have heq : e ⟨K, hK.1⟩ = e z := by
+    apply Subtype.ext
+    funext b
+    exact b.property.elim
+  have : (⟨K, hK.1⟩ : Chapter13CoefficientFields A) = z := e.injective heq
+  exact congrArg Subtype.val this
 
 /-- An equicharacteristic complete DVR is a one-variable power-series ring. -/
 theorem chapter13_equicharacteristic_complete_dvr_power_series
