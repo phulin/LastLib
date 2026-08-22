@@ -699,9 +699,11 @@ therefore already visible in the congruence filtration of $X$ at thresholds
 at least $t-e_K$: pulling the quotient-block clock back from $Y$ to $X$
 leaves exactly one new raw interval, of $K$-scale length at most $e_K$, and
 the $I^\ell$ branch of the minimum never forces a deeper threshold than the
-displayed maximum. This yields the first boundary term: the portion of the
-upper clock during which the action on the pulled-back blocks is not yet
-accounted for by the action on $Y/C_t(Y)$ is at most $b(Y)+e_K$.
+displayed maximum. In the ledger picture the pulled-back blocks can
+therefore continue to move only during a window whose raw length exceeds
+the critical thresholds of $Y$ by at most $Ee_K$. How much upper time this
+window contributes is decided by the case analysis below, not by any
+pointwise division.
 
 Second, the displacement-to-depth bound. Let $\sigma\in G_s$, so that
 $i_G(\sigma)\geq s+1$ in the normalization of Chapter 2, that is,
@@ -725,38 +727,17 @@ $$
 \tag{5.8b}
 $$
 
-Now identify the two boundary terms in the telescoping sum.
+What the count motivates must now be verified pointwise, because the
+Herbrand picture admits no pointwise division: near $s=0$ the slope of
+$\varphi_{L/K}$ on the interval $(0,1]$ equals $|G_1|/|G_0|=|G_1|/E$, since
+$|G_0|=E=e(L/K)$ by §3.1, so no individual raw interval is divided by a
+block index. The count (5.5) and the telescoping discussion above are
+therefore heuristic; the weighted-block claim (5.4) records the shape the
+induction should take and is _not_ completed here. What we verify is the
+following two-case reduction, in which each case is a literal computation,
+and we state explicitly what part of the claim remains open.
 
-Pulling the congruence filtration on $Y$ back through $[\ell]$ is controlled
-by Proposition 4.1 in the form (5.8a): in the double-counting ledger, upper
-time during which the quotient blocks move is charged to $Y/C_t(Y)$, and by
-(5.8a) the additional time during which only the pulled-back blocks move
-corresponds to congruence thresholds of $X$ lying below those of $Y$ by at
-most $e_K$. Its total raw length is at most $Ee_K$. In (5.6) the
-equal-block stabilizer factor divides that interval by the index of the
-acting group in its predecessor; the resulting upper charge is $e_K$, which
-is the first term $b(Y)+e_K$ in (5.4).
-
-If the image block has already become a point, motion can remain only inside
-the kernel of $[\ell]$. Every nonzero point of that kernel has depth at most
-$c$, while (5.8b) shows that an element of $G_s$ moves a nonzero point only
-if $(s+1)/E\leq c$, that is, $s\leq Ec-1$. The raw terminal interval of
-lower parameters during which kernel blocks can still move therefore has
-length at most $Ec$. Membership in $G_s$ means displacement valuation at
-least $s+1$; the first unit interval is the integral-displacement baseline,
-and positive upper time starts after upper index $0$, so removing that unit
-interval subtracts exactly one from the upper clock. Dividing the raw
-lengths by the block indices exactly as above, the terminal upper charge is
-consequently
-
-$$
-e_K+c-1.
-\tag{5.9}
-$$
-
-These are the only boundary terms left after telescoping, and (5.4) follows. Notice exactly where the dangerous $E$ disappeared: lower valuation multiplies every raw interval by $E$, while the equal-block stabilizer denominator in the Herbrand sum divides by the same inertia index. Without translation blocks of equal size, the cancellation would be unavailable.
-
-We now prove Lemma 5.1. Take
+We prove Lemma 5.1. Take
 
 $$
 X_j=\mathcal G[\ell^j](L),\qquad
@@ -770,26 +751,92 @@ b(Y_j)\leq b_{j-1}.
 \tag{5.10}
 $$
 
-The kernel of $X_j\to Y_j$ is contained in $X_1$, and every one of its nonzero points has depth at most $c$. The weighted-block claim gives
+**Two-case reduction.** Fix $j\geq1$ and let $\sigma\in G^u$ move some
+$x\in X_j$. Two cases exhaust the possibilities.
+
+_Case A: $\sigma$ moves $[\ell]x$._ Then $\sigma$ moves the point
+$[\ell]x$ of $Y_j\subseteq X_{j-1}$, so directly from (5.10),
 
 $$
-b_1\leq e_K+c-1,
+u\leq b(Y_j)\leq b_{j-1}:
+$$
+
+on this branch the upper parameter is controlled by the previous layer
+outright, and no $e_K$ correction is needed or used.
+
+_Case B: $\sigma$ fixes $Y_j$ pointwise._ Then
+
+$$
+w=\sigma x-x\in\ker[\ell]\cap X_j\subseteq X_1,
+$$
+
+and $w\neq0$ because $\sigma x\neq x$. Two estimates meet on $w$. First,
+the displacement-to-depth bound (5.8b) gives $\nu(w)\geq i_G(\sigma)/E$:
+this is (5.8b) applied with $P=w$, using that evaluations of integral
+elements are integral and that
+$i_G(\sigma)=\min_{a\in\mathcal O_L}v_L(\sigma a-a)$ in the normalization
+of §3.1. Second, terminal separation gives $\nu(w)\leq c$, because $w$ is a
+nonzero point of the terminal layer $X_1$. Hence
+
+$$
+i_G(\sigma)\leq Ec.
+$$
+
+Finally, record the conversion identity between displacement depth and
+upper index, with the left-continuous convention of §3.1:
+
+$$
+\sigma\in G^u\quad\Longleftrightarrow\quad
+u\leq\varphi_{L/K}\bigl(i_G(\sigma)-1\bigr),
 \qquad
-b_j\leq\max\{b_{j-1}+e_K,e_K+c-1\}
-\quad(j>1).
+\varphi_{L/K}(t)=\int_0^t\frac{ds}{[G_0:G_s]} .
+$$
+
+Case B therefore yields $u\leq\varphi_{L/K}(Ec-1)$, and combining the two
+cases gives, for every layer,
+
+$$
+b_j\leq\max\bigl\{b_{j-1},\ \varphi_{L/K}(Ec-1)\bigr\}.
 \tag{5.11}
 $$
 
-Induction yields
+**What remains open.** Statement (5.11) is a reduction, not a proof. Its
+Case-B branch still has to be closed: one must bound the conversion
+quantity $\varphi_{L/K}(Ec-1)$ — the upper-clock reading of the deepest
+displacement that terminal separation permits, detected on the terminal
+layer — by $e_K+c-1$. Together with the terminal-layer bound
 
 $$
-b_j\leq je_K+c-1.
+b_1\leq e_K+c-1,
+$$
+
+which is the same problem at $j=1$ (there $Y_1\subseteq X_0=\{0\}$, so only
+Case B occurs and no earlier layer assists), this is precisely the
+remaining content of Lemma 5.1. If both inputs hold, the recursion (5.11)
+closes by induction toward the target
+
+$$
+b_j\leq je_K+c-1,
 \tag{5.12}
 $$
 
-Because $[\ell^n]_{\mathcal G}=0$, all geometric points lie in $X_n$. Thus $G^u$ fixes every point for $u>ne_K+c-1$. Herbrand quotient compatibility makes this independent of the chosen splitting field and identifies it with the assertion for $G_K^u$. This proves the lemma. $\square$
+but neither input is proved here; the argument reduces the lemma to them
+rather than deriving them. What the reduction does achieve is exactness
+about where the splitting-field index $E$ enters: once, through the single
+conversion quantity $\varphi_{L/K}(Ec-1)$, instead of through pointwise
+divisions that fail because the Herbrand slope equals $|G_1|/E$ near
+$s=0$.
 
-The proof may be remembered as a three-column ledger:
+Assume henceforth the two outstanding inputs. Because
+$[\ell^n]_{\mathcal G}=0$, all geometric points lie in $X_n$, so (5.12)
+gives that $G^u$ fixes every point for $u>ne_K+c-1$. Herbrand quotient
+compatibility makes this independent of the chosen splitting field and
+identifies it with the assertion for $G_K^u$. This proves the lemma
+modulo the two stated terminal-layer inputs. $\square$
+
+The argument may be remembered as a three-column ledger, read as the
+accounting that the two outstanding terminal-layer inputs must still
+justify:
 
 $$
 \begin{array}{c|c|c}
@@ -801,7 +848,12 @@ $$
 \end{array}
 $$
 
-Equal translation blocks supply the denominators which cancel $E$. Without them, only the much weaker lower-numbered bound $Ec-1$ would be visible.
+Equal translation blocks supply the denominators which cancel $E$ in this
+picture; in the pointwise reduction above, that cancellation is deferred
+entirely to the open conversion estimate $\varphi_{L/K}(Ec-1)\leq e_K+c-1$.
+Without translation blocks of equal size not even the heuristic is
+available, and only the much weaker lower-numbered bound $Ec-1$ would be
+visible.
 
 ### 5.4 Why the group structure is essential
 
