@@ -44,17 +44,10 @@ theorem chapter08_trace_hom_tower_compatibility
 /- The fractional-lattice form of trace transitivity is retained separately
    from the ideal formula.  It is the form used when passing to codifferents. -/
 theorem chapter08_different_ideal_transitivity
-    (A B C K M N : Type*) [CommRing A] [CommRing B] [CommRing C]
+    (A B C : Type*) [CommRing A] [CommRing B] [CommRing C]
     [IsDomain A]
-    [Field K] [Field M] [Field N]
     [Algebra A B] [Algebra B C] [Algebra A C]
-    [Algebra A K] [Algebra K M] [Algebra M N]
-    [Algebra K N]
-    [Algebra A M]
-    [Algebra B M] [Algebra C N] [Algebra A N] [Algebra B N]
-    [IsScalarTower A B C] [IsScalarTower A K M]
-    [IsScalarTower K M N] [IsScalarTower A M N]
-    [IsScalarTower A B N] [IsScalarTower B C N]
+    [IsScalarTower A B C]
     [IsIntegrallyClosed A]
     [IsDedekindDomain B] [IsDedekindDomain C]
     [Module.Finite A B] [Module.Finite A C] [Module.Finite B C]
@@ -103,10 +96,10 @@ theorem chapter08_different_fractional_transitivity
     [IsDedekindDomain B] [IsDedekindDomain C]
     [Module.IsTorsionFree A B] [Module.IsTorsionFree A C]
     [Module.IsTorsionFree B C] :
-    chapter08DifferentFractionalIdeal A C K N =
-      chapter08DifferentFractionalIdeal B C M N *
+    LastLib.Book03RamificationTheory.Chapter07.chapter07DifferentFractionalIdeal A C K N =
+      LastLib.Book03RamificationTheory.Chapter07.chapter07DifferentFractionalIdeal B C M N *
         FractionalIdeal.extendedHom N C
-          (chapter08DifferentFractionalIdeal A B K M) := by
+          (LastLib.Book03RamificationTheory.Chapter07.chapter07DifferentFractionalIdeal A B K M) := by
   sorry
 
 theorem chapter08_trace_dual_product_formula
@@ -131,20 +124,17 @@ theorem chapter08_trace_dual_product_formula
     [IsDedekindDomain B] [IsDedekindDomain C]
     [Module.IsTorsionFree A B] [Module.IsTorsionFree A C]
     [Module.IsTorsionFree B C] :
-    chapter08CodifferentFractionalIdeal A C K N =
-      chapter08CodifferentFractionalIdeal B C M N *
+    LastLib.Book03RamificationTheory.Chapter07.chapter07CodifferentFractionalIdeal A C K N =
+      LastLib.Book03RamificationTheory.Chapter07.chapter07CodifferentFractionalIdeal B C M N *
         FractionalIdeal.extendedHom N C
-          (chapter08CodifferentFractionalIdeal A B K M) := by
+          (LastLib.Book03RamificationTheory.Chapter07.chapter07CodifferentFractionalIdeal A B K M) := by
   sorry
 
 /- The valuation exponent of an extended ideal is multiplied by the
    ramification index. -/
-theorem chapter08_extended_maximal_power
-    (B C : Type*) [CommRing B] [CommRing C] [IsDomain B] [IsDomain C]
-    [Algebra B C] [IsDiscreteValuationRing B] [IsDiscreteValuationRing C]
+theorem chapter08_extended_power
+    (B C : Type*) [CommRing B] [CommRing C] [Algebra B C]
     (mB : Ideal B) (mC : Ideal C) (e : ℕ)
-    (hmaxB : mB = IsLocalRing.maximalIdeal B)
-    (hmaxC : mC = IsLocalRing.maximalIdeal C)
     (hmap : Ideal.map (algebraMap B C) mB = mC ^ e) (d : ℕ) :
     Ideal.map (algebraMap B C) (mB ^ d) = mC ^ (e * d) := by
   sorry
@@ -155,14 +145,11 @@ theorem chapter08_different_exponent_transitivity
     [Algebra A C] [IsScalarTower A B C]
     [IsIntegrallyClosed A]
     [IsDedekindDomain B] [IsDedekindDomain C]
-    [IsDiscreteValuationRing B] [IsDiscreteValuationRing C]
     [Module.Finite A B] [Module.Finite A C] [Module.Finite B C]
     [Module.IsTorsionFree A B] [Module.IsTorsionFree A C]
     [Module.IsTorsionFree B C]
     [Algebra.IsSeparable (FractionRing A) (FractionRing C)]
     (mB : Ideal B) (mC : Ideal C) (dAB dBC dAC eBC : ℕ)
-    (hmaxB : mB = IsLocalRing.maximalIdeal B)
-    (hmaxC : mC = IsLocalRing.maximalIdeal C)
     (hAB : chapter08DifferentIdeal A B = mB ^ dAB)
     (hBC : chapter08DifferentIdeal B C = mC ^ dBC)
     (hAC : chapter08DifferentIdeal A C = mC ^ dAC)
@@ -177,14 +164,11 @@ theorem chapter08_different_exponent_transitivity_from_unique_exponents
     [Algebra A C] [IsScalarTower A B C]
     [IsIntegrallyClosed A]
     [IsDedekindDomain B] [IsDedekindDomain C]
-    [IsDiscreteValuationRing B] [IsDiscreteValuationRing C]
     [Module.Finite A B] [Module.Finite A C] [Module.Finite B C]
     [Module.IsTorsionFree A B] [Module.IsTorsionFree A C]
     [Module.IsTorsionFree B C]
     [Algebra.IsSeparable (FractionRing A) (FractionRing C)]
     (mB : Ideal B) (mC : Ideal C) (eBC : ℕ)
-    (hmaxB : mB = IsLocalRing.maximalIdeal B)
-    (hmaxC : mC = IsLocalRing.maximalIdeal C)
     (hmap : Ideal.map (algebraMap B C) mB = mC ^ eBC)
     (hAB : ∃! d : ℕ, chapter08DifferentIdeal A B = mB ^ d)
     (hBC : ∃! d : ℕ, chapter08DifferentIdeal B C = mC ^ d)

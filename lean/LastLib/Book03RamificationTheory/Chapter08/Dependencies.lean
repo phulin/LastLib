@@ -39,14 +39,6 @@ def chapter08TraceDualLattice
     [IsScalarTower A K L] [IsScalarTower A B L] : Submodule B L :=
   Submodule.traceDual A K (1 : Submodule B L)
 
-/-- Pointwise trace-dual membership, with the coefficient ring made explicit. -/
-def chapter08TraceDualSet
-    (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
-    [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
-    [IsScalarTower A K L] [IsScalarTower A B L] : Set L :=
-  {x | ∀ y : B,
-    Algebra.trace K L (x * algebraMap B L y) ∈ Set.range (algebraMap A K)}
-
 @[simp]
 theorem chapter08_mem_traceDualLattice_iff
     (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
@@ -69,46 +61,13 @@ theorem chapter08_mem_traceDualLattice_iff
     simpa [Algebra.traceForm_apply] using hx y
 
 @[simp]
-theorem chapter08_traceDualLattice_coe_eq_set
+theorem chapter08_traceDualLattice_coe_eq_traceDual
     (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L] :
     (chapter08TraceDualLattice A B K L : Set L) =
-      chapter08TraceDualSet A B K L := by
-  ext x
-  exact chapter08_mem_traceDualLattice_iff A B K L x
-
-@[simp]
-theorem chapter08_mem_traceDualSet_iff_exists
-    (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
-    [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
-    [IsScalarTower A K L] [IsScalarTower A B L] (x : L) :
-    x ∈ chapter08TraceDualSet A B K L ↔
-      ∀ y : B, ∃ a : A,
-        algebraMap A K a = Algebra.trace K L (x * algebraMap B L y) := by
-  rfl
-
-/-- The fractional-ideal realization of the codifferent. -/
-noncomputable def chapter08CodifferentFractionalIdeal
-    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B]
-    [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra K L]
-    [Algebra B L] [Algebra A L] [IsScalarTower A K L] [IsScalarTower A B L]
-    [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
-    [Algebra.IsSeparable K L] [IsIntegralClosure B A L]
-    [IsIntegrallyClosed A] [IsDedekindDomain B] :
-    FractionalIdeal B⁰ L :=
-  FractionalIdeal.dual A K (1 : FractionalIdeal B⁰ L)
-
-/-- The different as the inverse of the codifferent fractional ideal. -/
-noncomputable def chapter08DifferentFractionalIdeal
-    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B]
-    [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra K L]
-    [Algebra B L] [Algebra A L] [IsScalarTower A K L] [IsScalarTower A B L]
-    [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
-    [Algebra.IsSeparable K L] [IsIntegralClosure B A L]
-    [IsIntegrallyClosed A] [IsDedekindDomain B] :
-    FractionalIdeal B⁰ L :=
-  (chapter08CodifferentFractionalIdeal A B K L)⁻¹
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04TraceDual A B K L := by
+  exact LastLib.Book03RamificationTheory.Chapter07.chapter07_codifferent_coe_eq_set A B K L
 
 /-- The different ideal in the integral closure. -/
 def chapter08DifferentIdeal
@@ -123,9 +82,9 @@ theorem chapter08_different_fractional_is_inverse_codifferent
     [Algebra B L] [Algebra A L] [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
     [Algebra.IsSeparable K L] [IsIntegralClosure B A L]
-    [IsIntegrallyClosed A] [IsDedekindDomain B] :
-    chapter08DifferentFractionalIdeal A B K L =
-      (chapter08CodifferentFractionalIdeal A B K L)⁻¹ := by
+    [IsIntegrallyClosed A] [IsDedekindDomain B] [Module.IsTorsionFree A B] :
+    LastLib.Book03RamificationTheory.Chapter07.chapter07DifferentFractionalIdeal A B K L =
+      (LastLib.Book03RamificationTheory.Chapter07.chapter07CodifferentFractionalIdeal A B K L)⁻¹ := by
   rfl
 
 /-- The unique exponent of a specified ideal power, when it exists. -/
@@ -168,9 +127,14 @@ structure Chapter08TraceHomTowerEquivalence
     [Algebra A B] [Algebra B C] [Algebra A C] [IsScalarTower A B C] where
   forward : (C →ₗ[A] A) →
     {φ : C →ₗ[A] (B →ₗ[A] A) // chapter08TraceHomBLinear A B C φ}
+  /-- The forward map is the canonical currying map for multiplication. -/
+  forward_apply : ∀ f c b,
+    (forward f).1 c b = f (algebraMap B C b * c)
   inverse :
     {φ : C →ₗ[A] (B →ₗ[A] A) // chapter08TraceHomBLinear A B C φ} →
       (C →ₗ[A] A)
+  /-- The inverse evaluates the curried map at `1 : B`. -/
+  inverse_apply : ∀ f c, inverse f c = f.1 c 1
   inverse_forward : ∀ f, inverse (forward f) = f
   forward_inverse : ∀ f, forward (inverse f) = f
 

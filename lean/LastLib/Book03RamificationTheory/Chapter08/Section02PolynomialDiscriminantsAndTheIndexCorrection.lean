@@ -205,7 +205,6 @@ theorem chapter08_power_family_discriminant_is_field_discriminant_of_full_order
     [Module.Finite A B] [Module.Free A B] [Module.IsTorsionFree A B]
     [Algebra.IsIntegral A B] (α : B) (n : ℕ)
     (b : Module.Basis (Fin n) A B)
-    (_hmono : chapter08MonogenicIntegralExtension A B K L α)
     (hpower : b = chapter08MonogenicPowerFamily B α n) :
     chapter08PowerFamilyDiscriminantElement A B α n =
       chapter08FieldDiscriminant A B b := by

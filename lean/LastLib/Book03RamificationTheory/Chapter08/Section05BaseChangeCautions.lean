@@ -48,23 +48,21 @@ theorem chapter08_separable_scalar_extension_has_field_factors
   sorry
 
 /- The source's preservation statement is exposed at the exact point where
-   the local derivative calculations meet: the two different exponents are
-   each identified with the corresponding Eisenstein-derivative valuation.
-   The unramified, total-ramification, and tensor-field hypotheses remain
-   explicit so the theorem can be connected to the valuation API later. -/
+   the local derivative calculations meet.  This is deliberately a conditional
+   bridge: the derivative comparison is a separate valuation-theoretic input,
+   rather than the conclusion being smuggled into a theorem about base change. -/
 theorem chapter08_unramified_base_change_preserves_different_exponent
     (K L K' L' : Type*) [Field K] [Field L] [Field K'] [Field L']
     [Algebra K L] [Algebra K K'] [Algebra K' L']
     [FiniteDimensional K L] [FiniteDimensional K K']
     (vL : AddValuation L (WithTop ℤ))
-    (vL' : AddValuation L' (WithTop ℤ)) (eBase f f' d d' : ℕ)
+    (vL' : AddValuation L' (WithTop ℤ)) (d d' : ℕ)
     (_hbase :
       LastLib.Book03RamificationTheory.Chapter07.chapter07UnramifiedProfile
-        eBase K K')
+        1 K K')
     (_htensor : chapter08TensorProductRemainsField K L K')
     (_hsplitting : Nonempty
       (chapter08ScalarExtension K L K' ≃ₐ[K'] L'))
-    (_htotal : f = 1) (_htotal' : f' = 1)
     (πK : K) (πK' : K') (α : L) (α' : L') (g : K[X])
     (_huniformizer_scale :
       vL (algebraMap K L πK) = vL' (algebraMap K' L' πK'))
@@ -151,12 +149,13 @@ theorem chapter08_tensor_product_discriminant_is_factor_product
       ∏ i, Algebra.discr K' (b i) := by
   sorry
 
-/- Taking K' = L in a nontrivial ramified separable extension supplies a
-   concrete source of splitting under ramified base change. -/
-theorem chapter08_ramified_self_base_change_can_split
+/- Taking K' = L in a nontrivial finite separable extension supplies a
+   concrete source of splitting under base change.  The conclusion records
+   the splitting itself; a separate local ramification model is not needed. -/
+theorem chapter08_nontrivial_self_base_change_can_split
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [Algebra.IsSeparable K L]
-    (hdegree : 1 < Module.finrank K L) (d : ℕ) (hramified : 0 < d) :
+    (hdegree : 1 < Module.finrank K L) :
     ∃ (I : Type*) (_ : Fintype I) (F : I → Type*)
       (_ : ∀ i, Field (F i)) (_ : ∀ i, Algebra L (F i)),
       2 ≤ Fintype.card I ∧

@@ -115,7 +115,7 @@ theorem chapter08_relative_discriminant_ideal_eq_norm_different
 /- The integral trace dual is the inverse of the different.  The coercion
    equality is the bridge from the book's lattice notation to Mathlib's
    fractional-ideal API. -/
-theorem chapter08_codifferent_fractional_coe_eq_traceDualSet
+theorem chapter08_codifferent_fractional_coe_eq_traceDual
     (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B]
     [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra K L]
     [Algebra B L] [Algebra A L] [IsScalarTower A K L]
@@ -123,8 +123,9 @@ theorem chapter08_codifferent_fractional_coe_eq_traceDualSet
     [FiniteDimensional K L] [Algebra.IsSeparable K L]
     [IsIntegralClosure B A L] [IsIntegrallyClosed A]
     [IsDedekindDomain B] :
-    (chapter08CodifferentFractionalIdeal A B K L : Set L) =
-      chapter08TraceDualSet A B K L := by
+    (LastLib.Book03RamificationTheory.Chapter07.chapter07CodifferentFractionalIdeal
+      A B K L : Set L) =
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04TraceDual A B K L := by
   sorry
 
 theorem chapter08_different_fractional_coe_eq_ideal
@@ -136,7 +137,7 @@ theorem chapter08_different_fractional_coe_eq_ideal
     [IsIntegralClosure B A L] [IsIntegrallyClosed A]
     [IsDedekindDomain B] [Module.IsTorsionFree A B] :
     (chapter08DifferentIdeal A B : FractionalIdeal B⁰ L) =
-      chapter08DifferentFractionalIdeal A B K L := by
+      LastLib.Book03RamificationTheory.Chapter07.chapter07DifferentFractionalIdeal A B K L := by
   sorry
 
 /- The quotient is formed in the dual lattice itself, so its length is the
@@ -170,17 +171,11 @@ theorem chapter08_trace_dual_quotient_length
   sorry
 
 /- The norm of a maximal-ideal power records the residue-degree factor. -/
-theorem chapter08_relative_norm_of_maximal_power
-    (A B K L : Type*) [CommRing A] [CommRing B]
-    [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra K L]
-    [Algebra B L] [Algebra A L] [IsScalarTower A K L]
-    [IsScalarTower A B L] [IsFractionRing A K] [IsFractionRing B L]
-    [FiniteDimensional K L] [IsLocalRing A] [IsLocalRing B]
+theorem chapter08_relative_norm_of_power
+    (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
     [IsDedekindDomain A] [IsDedekindDomain B]
     [Module.Finite A B] [Module.IsTorsionFree A B]
     (mA : Ideal A) (mB : Ideal B) (f d : ℕ)
-    (_hmaxA : mA = IsLocalRing.maximalIdeal A)
-    (_hmaxB : mB = IsLocalRing.maximalIdeal B)
     (hnorm : Ideal.relNorm A mB = mA ^ f) :
     Ideal.relNorm A (mB ^ d) = mA ^ (f * d) := by
   rw [map_pow, hnorm, ← pow_mul]

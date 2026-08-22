@@ -1,4 +1,5 @@
 import LastLib.Book03RamificationTheory.Chapter08.Section01FromADualLatticeToAnIdealDownstairs
+import LastLib.Book03RamificationTheory.Chapter08.Section03TransitivityOfTheDifferent
 
 namespace LastLib.Book03RamificationTheory.Chapter08
 
