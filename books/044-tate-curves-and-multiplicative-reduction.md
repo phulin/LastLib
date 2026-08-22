@@ -2061,7 +2061,13 @@ E_q(K)\cong K^\times/q^{\mathbf Z},
 \qquad E_q(K)/E_0(K)\cong\mathbf Z/3\mathbf Z. \tag{12.5}
 $$
 
-Notice that $q$ is not a cube in $K$: although its valuation is divisible by $3$, its unit $1+t$ need not have a cube root because $3$ is prime to $7$—in this particular case it actually does, by Hensel lifting, since the residue $1$ is a cube and $3$ is a unit. Hence $q=t^3(1+t)$ is a cube after all. Replacing $1+t$ by a unit with noncube residue, such as $3+t$, removes the cube root. This comparison isolates the residue-unit obstruction from the valuation obstruction.
+Whether $q=t^3(1+t)$ is itself a cube in $K$ is a separate question about units. The valuation
+$3=v_t(q)$ is divisible by $3$, but a cube root of $q$ would also require a cube root of the unit
+$1+t$. Here Hensel lifting applies: the residue $1$ is a cube in $\mathbf F_7$, and $3$ is a
+unit, so $1+t$ has a cube root in $R$ and $q$ is in fact a cube. Replacing $1+t$ by a unit whose
+residue is not a cube — the cube classes in $\mathbf F_7^\times$ are $\{1,6\}$, so $3+t$ works —
+removes the cube root despite the divisibility of the valuation. This comparison isolates the
+residue-unit obstruction from the valuation obstruction.
 
 For every $\ell\ne7$, the Tate module is two-dimensional and inertia has the unipotent form with coefficient $3$. There is no analogous rank-two $7$-adic Tate module built from geometric torsion points.
 
