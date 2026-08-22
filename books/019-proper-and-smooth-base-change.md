@@ -520,9 +520,40 @@ $$
 g^*Rf_*K\xrightarrow{\sim}Rf'_*g'^*K.
 $$
 
-**Proof.** Test on a geometric point $\bar s'\to S'$ with image $\bar s\to S$. The stalk on the left is $R\Gamma(X_{(\bar s)},K)$. The strict-local theorem identifies it with $R\Gamma(X_{\bar s},K_{\bar s})$. The fibers $X'_{\bar s'}$ and $X_{\bar s}$ differ only by extension between separably closed fields, which leaves finite prime-to-characteristic cohomology unchanged. Applying the strict-local theorem to $f'$ identifies the result with the stalk on the right. Tracing adjunctions shows that this is the stalk of the canonical map. $\square$
+The proof never compares two fibers over different fields; it transports both stalks to one strictly henselian scheme and applies the strict-local theorem once there.
 
-Here the last application is first made when $S'$ is noetherian. For general $S'$, work on an affine neighborhood of $\bar s'$. The square, the chosen finite étale neighborhoods, and every finite stage of the presentation complex descend to a finitely generated $S$-algebra. Continuity of constructible torsion cohomology then identifies the stalk with the filtered colimit of the noetherian comparisons. Thus no noetherian hypothesis on the changing base is hidden in “every.”
+**Descent remark for the coefficient complex.** Let $V\to S$ run over the pointed étale neighborhoods of $\bar s$, with affine ones cofinal as in Book 18, Section 4.6, and let $S_0=\operatorname{Spec}\mathcal O^{\mathrm{sh}}_{S',\bar s'}$, so that $g$ factors through $S_0\to S$ by the universal property of the strict localization: every pointed étale neighborhood $V\to S$ pulls back along $S_0\to S$, and $S_0=\varprojlim_V V$ over this filtered system, whose transition maps are affine because they are base changes of open immersions between affines. Then $X\times_SS_0=\varprojlim_VX\times_SV$ over affine transitions. We claim that $K$ descends to some $X\times_SV_0$. Since $f$ is separated of finite type, stratify $X$ into finitely many locally closed subschemes on whose interiors the cohomology sheaves of $K$ are lisse; each such subscheme is cut out by finitely many equations and inequations of finite presentation, which pull back from some $X\times_SV_\alpha$; each lisse piece is trivialized by a finite étale cover whose finitely many structure equations likewise pull back from some stage; and the bounded complex $K$ together with its differentials is glued from finitely many such pieces, so one common $V_0$ carries all of them. This is the same spreading mechanism by which Book 18, Section 4.6, descends étale morphisms through the limit.
+
+**Proof.** Test on a geometric point $\bar s'\to S'$ with image $\bar s\to S$, and write
+$$
+S_0=\operatorname{Spec}\mathcal O^{\mathrm{sh}}_{S',\bar s'},\qquad
+f''=f':X'=X\times_SS'\to S',\quad f_0:X_0=X\times_SS_0\to S_0,
+$$
+
+so that $f_0$ is the further base change of $f'$ along $S_0\to S'$, and $K''=g'^*K$, $K_0=(S_0\text{-pullback})$ accordingly. The scheme $S_0$ is strictly henselian local and noetherian, since $S'$ is noetherian.
+
+_Stalk of the left side._ By definition $(Rf_*K)_{\bar s}=\varinjlim_VH^q(X\times_SV,K)$, the colimit over pointed étale neighborhoods of $\bar s$. By the descent remark, $K_0$ descends to some level of the system $(X\times_SV)_V$, so the Continuity theorem of Book 18, Section 4.6, gives a canonical isomorphism
+$$
+(Rf_*K)_{\bar s}\;\cong\;H^q(X_0,K_0).
+$$
+
+No comparison of residue fields enters this step: it only reorganizes the colimit that defines the stalk, using that $S_0\to S$ factors cofinally through pointed étale neighborhoods.
+
+_Stalk of the right side._ The morphism $f_0$ is proper, being a base change of $f$, and $K_0\in D^b_c(X_0,\Lambda)$, constructibility being stable under pullback. Applying the Strict-local proper theorem of Section 5.1 to $f_0$ over the strictly henselian local base $S_0$ yields a quasi-isomorphism
+$$
+R\Gamma(X_0,K_0)\xrightarrow{\sim}R\Gamma((X_0)_{s''},(K_0)_{s''}),
+$$
+
+where $s''$ is the closed point. Its residue field is $\kappa(\bar s')$, so the fiber is exactly $X'_{\bar s'}$ with coefficients $K''$ pulled back to it.
+
+_Combination and compatibility._ Chasing the two identifications through the adjunction units that define them shows that the composite isomorphism
+$$
+(Rf_*K)_{\bar s}\cong H^q(X_0,K_0)\cong H^q(X'_{\bar s'},K''_{s''})
+$$
+
+is induced by restriction along $X'_{\bar s'}\to X\times_SV$ for neighborhoods $V$, hence equals the stalk of the canonical base-change map at $\bar s'$. Since geometric stalks detect isomorphisms of sheaves of $\Lambda$-modules (Book 18, Section 2.2), the base-change map is an isomorphism. $\square$
+
+Here $S_0$ was first formed when $S'$ is noetherian. For general $S'$, work on an affine neighborhood of $\bar s'$. The square, the pointed étale neighborhoods, and the descent data for $K$ all descend to a finitely generated $S$-algebra, and continuity of constructible torsion cohomology identifies the stalk with the filtered colimit of the noetherian comparisons. Thus no noetherian hypothesis on the changing base is hidden in “every.”
 
 For a sheaf $\mathcal F$,
 
@@ -553,7 +584,7 @@ R\Gamma(Y,\mathcal F)\xrightarrow{\sim}
 R\Gamma(Y_\Omega,\mathcal F_\Omega).
 $$
 
-This field-extension instance is often what permits one to enlarge a geometric point without changing an answer.
+This is now a consequence of the theorem just proved rather than an input to it: apply proper base change to the square with $S=\operatorname{Spec}k$, $S'=\operatorname{Spec}\Omega$, and note that the proof above never compared fibers over two different fields, so no circularity arises from consuming the theorem here. This field-extension instance is what permits one to enlarge a geometric point without changing an answer.
 
 ### 6.3 Products, projection, and composition
 
