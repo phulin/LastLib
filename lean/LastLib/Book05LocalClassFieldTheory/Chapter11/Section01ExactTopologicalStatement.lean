@@ -578,13 +578,25 @@ def chapter11CharacterPairEquiv
   left_inv := by
     intro χ
     ext x
-    sorry
+    let p := D.decomposition.symm x
+    have hx : x = D.uniformizer ^ p.1.toAdd * (p.2 : Kˣ) := by
+      rw [← D.decomposition_apply p.1 p.2]
+      exact (D.decomposition.apply_symm_apply x).symm
+    rw [hx, chapter11_character_of_pair_apply_decomposition]
+    change χ D.uniformizer ^ p.1.toAdd * χ (p.2 : Kˣ) =
+      χ (D.uniformizer ^ p.1.toAdd * (p.2 : Kˣ))
+    rw [map_mul, map_zpow]
   right_inv := by
     rintro ⟨α, η⟩
     apply Prod.ext
-    · sorry
+    · change chapter11CharacterOfPair D α η D.uniformizer = α
+      have h := chapter11_character_of_pair_apply_decomposition D α η 1
+        (1 : D.unitGroup)
+      simpa using h
     · ext u
-      sorry
+      change chapter11CharacterOfPair D α η (u : Kˣ) = η u
+      have h := chapter11_character_of_pair_apply_decomposition D α η 0 u
+      simpa using h
 
 def chapter11ChangedUniformizer
     {K : Type*} [Field K] [TopologicalSpace Kˣ]
@@ -603,7 +615,7 @@ theorem chapter11_uniformizer_change_value
     [TopologicalSpace Kˣ] [TopologicalSpace A] [IsTopologicalGroup A]
     (D : Chapter11LocalFieldData K) (χ : Kˣ →ₜ* A) (a : D.unitGroup) :
     χ (chapter11ChangedUniformizer D a) = χ D.uniformizer * χ (a : Kˣ) := by
-  sorry
+  rw [chapter11ChangedUniformizer, map_mul, mul_comm]
 
 theorem chapter11_character_pair_finite_image_iff
     {K A : Type*} [Field K] [CommGroup A]
@@ -612,7 +624,37 @@ theorem chapter11_character_pair_finite_image_iff
     (η : D.unitGroup →ₜ* A) :
     chapter11FiniteImage (chapter11CharacterOfPair D α η) ↔
       IsOfFinOrder α ∧ chapter11FiniteImage η := by
-  sorry
+  constructor
+  · intro hχ
+    change (Set.range (chapter11CharacterOfPair D α η)).Finite at hχ
+    constructor
+    · have hpow : (Subgroup.zpowers α : Set A).Finite := by
+        apply hχ.subset
+        intro y hy
+        obtain ⟨r, hr⟩ := Subgroup.mem_zpowers_iff.mp hy
+        refine ⟨D.uniformizer ^ r * ((1 : D.unitGroup) : Kˣ), ?_⟩
+        rw [chapter11_character_of_pair_apply_decomposition]
+        simp [hr]
+      exact finite_zpowers.mp hpow
+    · change (Set.range η).Finite
+      apply hχ.subset
+      rintro y ⟨u, rfl⟩
+      refine ⟨(u : Kˣ), ?_⟩
+      simpa using (chapter11_character_of_pair_apply_decomposition D α η 0 u)
+  · rintro ⟨hα, hη⟩
+    change (Set.range (chapter11CharacterOfPair D α η)).Finite
+    have hprod : (Set.image2 (fun x y : A => x * y)
+        (Subgroup.zpowers α : Set A) (Set.range η)).Finite :=
+      hα.finite_zpowers.image2 _ hη
+    apply hprod.subset
+    rintro y ⟨x, rfl⟩
+    let p := D.decomposition.symm x
+    refine ⟨α ^ p.1.toAdd, ?_, η p.2, ⟨p.2, rfl⟩, ?_⟩
+    · exact (Subgroup.mem_zpowers_iff).2 ⟨p.1.toAdd, rfl⟩
+    · have hx : x = D.uniformizer ^ p.1.toAdd * (p.2 : Kˣ) := by
+        rw [← D.decomposition_apply p.1 p.2]
+        exact (D.decomposition.apply_symm_apply x).symm
+      rw [hx, chapter11_character_of_pair_apply_decomposition]
 
 def chapter11ComplexCounterexample
     {K : Type*} [Field K] [TopologicalSpace Kˣ]
@@ -626,7 +668,61 @@ theorem chapter11_complex_counterexample_not_galois
     (D : Chapter11LocalFieldData K) :
     ¬ chapter11ProfiniteExtensionOf (chapter11ComplexCounterexample D) ∧
       ¬ IsCompact (closure (Set.range (chapter11ComplexCounterexample D))) := by
-  sorry
+  have hvalue : ∀ n : ℕ,
+      ((chapter11ComplexCounterexample D (D.uniformizer ^ n) : ℂˣ) : ℂ) =
+        (2 : ℂ) ^ n := by
+    intro n
+    have h := chapter11_character_of_pair_apply_decomposition D
+      (Units.mk0 (2 : ℂ) (by norm_num))
+      (1 : D.unitGroup →ₜ* ℂˣ) (n : ℤ) (1 : D.unitGroup)
+    have h' := congrArg (fun z : ℂˣ => (z : ℂ)) h
+    simpa [chapter11ComplexCounterexample] using h'
+  have hnoncompact :
+      ¬ IsCompact (closure (Set.range (chapter11ComplexCounterexample D))) := by
+    intro hcompact
+    have hcompact_val :
+        IsCompact ((fun z : ℂˣ => (z : ℂ)) ''
+          closure (Set.range (chapter11ComplexCounterexample D))) :=
+      hcompact.image Units.continuous_val
+    have hbounded_val := hcompact_val.isBounded
+    rcases (Metric.isBounded_iff_subset_closedBall (0 : ℂ)).mp hbounded_val with
+      ⟨R, hR⟩
+    obtain ⟨n, hn⟩ := exists_nat_gt R
+    have hmem :
+        ((fun z : ℂˣ => (z : ℂ))
+          (chapter11ComplexCounterexample D (D.uniformizer ^ n))) ∈
+          (fun z : ℂˣ => (z : ℂ)) ''
+            closure (Set.range (chapter11ComplexCounterexample D)) := by
+      refine ⟨chapter11ComplexCounterexample D (D.uniformizer ^ n),
+        subset_closure ⟨D.uniformizer ^ n, rfl⟩, rfl⟩
+    have hbound := Metric.mem_closedBall.mp (hR hmem)
+    change dist ((chapter11ComplexCounterexample D (D.uniformizer ^ n) : ℂˣ) : ℂ)
+      0 ≤ R at hbound
+    rw [hvalue n] at hbound
+    have hpow : (n : ℝ) < (2 : ℝ) ^ n := by
+      exact_mod_cast (Nat.lt_two_pow_self : n < 2 ^ n)
+    have hn2 : R < (2 : ℝ) ^ n := hn.trans hpow
+    have hle : (2 : ℝ) ^ n ≤ R := by
+      simpa using hbound
+    exact (not_lt_of_ge hle hn2)
+  have hnotextension :
+      ¬ chapter11ProfiniteExtensionOf (chapter11ComplexCounterexample D) := by
+    rintro ⟨F, hF⟩
+    have hcompactF : IsCompact (Set.range F) := by
+      rw [← Set.image_univ]
+      exact isCompact_univ.image F.continuous
+    have hsubset :
+        closure (Set.range (chapter11ComplexCounterexample D)) ⊆ Set.range F := by
+      apply closure_minimal
+      · rintro y ⟨x, rfl⟩
+        refine ⟨LastLib.Book05LocalClassFieldTheory.Chapter07.chapter07OpenProfiniteCompletionEtaFn
+          Kˣ x, ?_⟩
+        exact hF x
+      · exact hcompactF.isClosed
+    have hcompactS : IsCompact (closure (Set.range (chapter11ComplexCounterexample D))) :=
+      hcompactF.of_isClosed_subset isClosed_closure hsubset
+    exact hnoncompact hcompactS
+  exact ⟨hnotextension, hnoncompact⟩
 
 end
 end LastLib.Book05LocalClassFieldTheory.Chapter11
