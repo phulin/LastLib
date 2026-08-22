@@ -39,7 +39,11 @@ theorem chapter08_residue_unit_quotient_card
     [Finite (Chapter08ResidueField v)] :
     Nat.card (chapter08ResidueUnitQuotient v) =
       Nat.card (Chapter08ResidueField v) - 1 := by
-  sorry
+  rcases chapter08_residue_unit_quotient_equiv_residue_units v with ⟨e⟩
+  calc
+    Nat.card (chapter08ResidueUnitQuotient v) =
+        Nat.card ((Chapter08ResidueField v)ˣ) := Nat.card_congr e.toEquiv
+    _ = Nat.card (Chapter08ResidueField v) - 1 := Nat.card_units _
 
 theorem chapter08_residue_unit_quotient_prime_to_residue_characteristic
     {K : Type*} [Field K]
@@ -48,7 +52,21 @@ theorem chapter08_residue_unit_quotient_prime_to_residue_characteristic
     Nat.Coprime
       (Nat.card (chapter08ResidueUnitQuotient v))
       (chapter08ResidueCharacteristic v) := by
-  sorry
+  let _ := Fintype.ofFinite (Chapter08ResidueField v)
+  obtain ⟨n, hp, hcard⟩ :=
+    FiniteField.card (Chapter08ResidueField v) (chapter08ResidueCharacteristic v)
+  rw [chapter08_residue_unit_quotient_card v,
+    Nat.card_eq_fintype_card, hcard]
+  rw [Nat.coprime_comm, hp.coprime_iff_not_dvd]
+  intro h
+  have hpow : chapter08ResidueCharacteristic v ∣
+      chapter08ResidueCharacteristic v ^ (n : ℕ) :=
+    dvd_pow_self _ n.ne_zero
+  have hone : chapter08ResidueCharacteristic v ∣ 1 := by
+    have hd := Nat.dvd_sub hpow h
+    rw [tsub_tsub_cancel_of_le (Nat.one_le_pow _ _ hp.pos)] at hd
+    exact hd
+  exact hp.not_dvd_one hone
 
 abbrev chapter08TameInertiaQuotient
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -94,7 +112,10 @@ theorem chapter08_principal_units_are_wild_abelian_inertia
     (F : Chapter08RamificationFiltration (Gal(L / K)))
     (P : Chapter08UnitRamificationInput X F) :
     chapter08WildAbelianInertia X D = chapter08UpperGroup F 1 := by
-  sorry
+  change (chapter08UnitFiltration X.base.valuation 1).map
+      (chapter08FiniteReciprocityMap D) = chapter08UpperGroup F 1
+  simpa only [Nat.cast_one] using
+    (chapter08_unit_and_upper_ramification X D F P 1)
 
 theorem chapter08_higher_principal_units_are_higher_abelian_ramification
     {K L : Type} [Field K] [Field L] [Algebra K L]

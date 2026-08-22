@@ -25,7 +25,7 @@ def chapter08ExtensionConductor
 
 theorem chapter08_extension_conductor_exists_of_unit_ramification_input
     {K L : Type*} [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsGalois K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
     [Fintype (Gal(L / K))] [CommGroup (Gal(L / K))]
     (X : Chapter08FiniteLocalExtensionData K L)
     (F : Chapter08RamificationFiltration (Gal(L / K)))
@@ -298,6 +298,99 @@ def chapter08NontrivialRamification
     (X : Chapter08FiniteLocalExtensionData K L) : Prop :=
   chapter08FiniteInertia X ≠ ⊥
 
+private theorem chapter08_tame_principal_units_are_norm_units
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    [Fintype (Gal(L / K))]
+    (X : Chapter08FiniteLocalExtensionData K L)
+    (htame : chapter08TamelyRamified X) :
+    chapter08UnitFiltration X.base.valuation 1 ≤
+      chapter08NormUnitSubgroup X.base.valuation X.valuation := by
+  classical
+  let A := X.base.valuation.toValuation.valuationSubring
+  let _ : Finite (Chapter08ResidueField X.base.valuation) :=
+    X.base.localField.2
+  let _ : Fintype (Chapter08ResidueField X.base.valuation) :=
+    Fintype.ofFinite _
+  let _ : Valuation.IsRankOneDiscrete X.base.valuation.toValuation :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08_rank_one_discrete_of_add_valuation
+      X.base.valuation X.base.localField.1.1
+  let _ : Nontrivial
+      (MonoidWithZeroHom.valueGroup (.ofClass X.base.valuation.toValuation)) :=
+    ⟨⟨Valuation.IsRankOneDiscrete.generator' X.base.valuation.toValuation, 1,
+      ne_of_lt (Valuation.IsRankOneDiscrete.generator'_lt_one
+        X.base.valuation.toValuation)⟩⟩
+  have hDVR : IsDiscreteValuationRing A := by
+    change IsDiscreteValuationRing X.base.valuation.toValuation.valuationSubring
+    infer_instance
+  have hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A :=
+    X.base.localField.1.2
+  let p := chapter08ResidueCharacteristic X.base.valuation
+  have hp : Nat.Prime p := CharP.prime_ringChar _
+  have hcop : Nat.Coprime X.ramificationIndex p := by
+    exact htame
+  have heunit :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Chapter10IntegerIsUnit
+        A X.ramificationIndex := by
+    apply (IsLocalRing.residue_ne_zero_iff_isUnit
+      (X.ramificationIndex : A)).mp
+    intro hzero
+    have hcast :
+        (X.ramificationIndex : Chapter08ResidueField X.base.valuation) = 0 := by
+      change IsLocalRing.residue A (X.ramificationIndex : A) = 0
+      simpa using hzero
+    have hdiv : p ∣ X.ramificationIndex :=
+      (CharP.cast_eq_zero_iff (Chapter08ResidueField X.base.valuation) p
+        X.ramificationIndex).mp hcast
+    exact (hp.coprime_iff_not_dvd.mp (Nat.coprime_comm.mp hcop)) hdiv
+  obtain ⟨e, hepow⟩ :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10_principal_unit_power_isomorphism
+      A X.ramificationIndex heunit hcomplete hDVR
+  let N₀ : Subgroup (chapter08UnitFiltration X.base.valuation 0) :=
+    (chapter08NormUnitSubgroup X.base.valuation X.valuation).comap
+      (chapter08UnitFiltration X.base.valuation 0).subtype
+  have hindex : N₀.index = X.ramificationIndex := by
+    dsimp [N₀]
+    exact chapter08_unit_norm_index_eq_ramification_index X
+  intro x hx
+  change x ∈
+    (Chapter08RingUnitFiltration X.base.valuation 1).map
+      (chapter08RingUnitInclusion X.base.valuation) at hx
+  rcases hx with ⟨u, hu, hux⟩
+  let u₁ : LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10UnitFiltration
+      A 1 := ⟨u, hu⟩
+  let v₁ := e.symm u₁
+  have hvpow : v₁ ^ X.ramificationIndex = u₁ := by
+    have h := e.apply_symm_apply u₁
+    rw [hepow] at h
+    exact h
+  have hvpow' :
+      (chapter08RingUnitInclusion X.base.valuation (v₁ : Aˣ)) ^
+          X.ramificationIndex = x := by
+    rw [← map_pow]
+    have hinc := congrArg
+      (fun w : LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10UnitFiltration
+          A 1 =>
+        chapter08RingUnitInclusion X.base.valuation (w : Aˣ)) hvpow
+    exact hinc.trans hux
+  have hv1 : (v₁ : Aˣ) ∈ Chapter08RingUnitFiltration X.base.valuation 1 := by
+    exact v₁.property
+  have hv0 : (v₁ : Aˣ) ∈ Chapter08RingUnitFiltration X.base.valuation 0 := by
+    exact (LastLib.Book05LocalClassFieldTheory.Chapter02.chapter02_unit_filtration_descending
+      X.base.valuation 0) hv1
+  have hv0' :
+      chapter08RingUnitInclusion X.base.valuation (v₁ : Aˣ) ∈
+        chapter08UnitFiltration X.base.valuation 0 := by
+    exact ⟨v₁, hv0, rfl⟩
+  let z : chapter08UnitFiltration X.base.valuation 0 :=
+    ⟨chapter08RingUnitInclusion X.base.valuation (v₁ : Aˣ), hv0'⟩
+  have hz : (z : Kˣ) ^ N₀.index ∈
+      chapter08NormUnitSubgroup X.base.valuation X.valuation :=
+    N₀.pow_index_mem z
+  rw [hindex] at hz
+  rw [← hvpow']
+  exact hz
+
 theorem chapter08_nontrivial_tame_conductor_one
     {K L : Type} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
@@ -310,7 +403,37 @@ theorem chapter08_nontrivial_tame_conductor_one
     (htame : chapter08TamelyRamified X)
     (hnontrivial : chapter08NontrivialRamification X) :
     chapter08ExtensionConductor (K := K) (L := L) X.base.valuation hunit = 1 := by
-  sorry
+  have hU1norm := chapter08_tame_principal_units_are_norm_units X htame
+  have hU1 :
+      chapter08UnitFiltration X.base.valuation 1 ≤
+        chapter08NormSubgroup K L :=
+    hU1norm.trans
+      (chapter08_norm_unit_subgroup_le_norm_subgroup
+        X.base.valuation X.valuation)
+  let n := chapter08ExtensionConductor (K := K) (L := L)
+    X.base.valuation hunit
+  have hnle : n ≤ 1 := by
+    exact chapter08_extension_conductor_minimal X.base.valuation hunit 1 hU1
+  have hnzero : n ≠ 0 := by
+    intro hn
+    have hspec :
+        chapter08UnitFiltration X.base.valuation n ≤
+          chapter08NormSubgroup K L :=
+      chapter08_extension_conductor_spec X.base.valuation hunit
+    have hI : chapter08FiniteInertia X = ⊥ := by
+      apply bot_unique
+      rw [← chapter08_finite_reciprocity_units_eq_inertia X D]
+      intro y hy
+      rcases hy with ⟨u, hu, rfl⟩
+      have hun : u ∈ chapter08UnitFiltration X.base.valuation n := by
+        rw [hn]
+        exact hu
+      have hunorm := hspec hun
+      rw [← chapter08FiniteReciprocityMap_kernel D] at hunorm
+      exact hunorm
+    exact hnontrivial hI
+  have hnge : 1 ≤ n := Nat.one_le_iff_ne_zero.mpr hnzero
+  exact Nat.le_antisymm hnle hnge
 
 theorem chapter08_wild_conductor_at_least_two
     {K L : Type} [Field K] [Field L] [Algebra K L]
