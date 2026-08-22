@@ -773,7 +773,7 @@ theorem chapter11_exists_character_of_upper_break
     exact hrneq (le_antisymm hle (U.upperRight_le_upper r))
   have hnot' : ¬ ∀ g, g ∈ U.upper r → g ∈ U.upperRight r := by
     exact hnot
-  push_neg at hnot'
+  push Not at hnot'
   obtain ⟨g, hgupper, hgright⟩ := hnot'
   let H : Subgroup G := U.upperRight r
   have hq : QuotientGroup.mk' H g ≠ 1 := by
