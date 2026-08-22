@@ -86,11 +86,11 @@ theorem chapter09_inertial_mixed_displacement
     (σ : LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup
       F w.toValuation.valuationSubring)
     (θ πL : w.toValuation.valuationSubring)
-    (hinertial : chapter09InertialAutomorphism w σ)
+    (_hinertial : chapter09InertialAutomorphism w σ)
     (hθfixed : (σ : Gal(L / F)) (θ : L) = (θ : L)) :
     chapter09DisplacementValue w σ (θ + πL) =
       chapter09DisplacementValue w σ πL := by
-  sorry
+  simp [chapter09DisplacementValue, hθfixed]
 
 def chapter09MixedGenerator
     {B : Type*} [AddCommMonoid B] (θ πL : B) : B :=
@@ -115,7 +115,15 @@ theorem chapter09_separable_residue_extension_has_generator
     (k l : Type*) [Field k] [Field l] [Algebra k l]
     [FiniteDimensional k l] [Algebra.IsSeparable k l] :
     ∃ θbar : l, chapter09ResidueGenerator k l θbar := by
-  sorry
+  obtain ⟨θbar, hθbar⟩ := Field.exists_primitive_element k l
+  refine ⟨θbar, ?_⟩
+  unfold chapter09ResidueGenerator
+  apply Algebra.adjoin_eq_top_of_intermediateField (S := ({θbar} : Set l))
+  · intro x hx
+    rw [Set.mem_singleton_iff] at hx
+    subst x
+    exact IsAlgebraic.of_finite k θbar
+  · exact hθbar
 
 def chapter09SeparatingLift
     (A B k l : Type*) [CommRing A] [CommRing B]
@@ -156,7 +164,7 @@ theorem chapter09_mixed_generator_is_integral
     {A B : Type*} [CommRing A] [CommRing B] [Algebra A B]
     (θ πL : B) (hθ : IsIntegral A θ) (hπL : IsIntegral A πL) :
     IsIntegral A (chapter09MixedGenerator θ πL) := by
-  sorry
+  exact hθ.add hπL
 
 theorem chapter09_mixed_generator_choice_recovers_uniformizer
     {A B k l L : Type*} [CommRing A] [CommRing B]
@@ -223,15 +231,61 @@ theorem chapter09_conjugate_product_is_monic
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [Fintype (Gal(L / K))] (α : L) :
     (chapter09ConjugateProductPolynomial (K := K) (L := L) α).Monic := by
-  sorry
+  exact Polynomial.monic_prod_of_monic (Finset.univ : Finset (Gal(L / K)))
+    (fun σ => Polynomial.X - Polynomial.C (σ α))
+    (fun σ _ => Polynomial.monic_X_sub_C _)
 
 theorem chapter09_conjugate_product_derivative_at_root
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [Fintype (Gal(L / K))] (α : L)
-    (horbit : ∀ {σ : Gal(L / K)}, σ α = α → σ = 1) :
+    (_horbit : ∀ {σ : Gal(L / K)}, σ α = α → σ = 1) :
     eval α (chapter09ConjugateProductPolynomial (K := K) (L := L) α).derivative =
       ∏ σ ∈ (Finset.univ.erase (1 : Gal(L / K))), (α - σ α) := by
-  sorry
+  classical
+  have hroot :
+      Polynomial.eval α (Polynomial.derivative
+        (Finset.prod (Finset.univ : Finset (Gal(L / K)))
+          (fun σ => Polynomial.X - Polynomial.C (σ α)))) =
+        Finset.prod (Finset.univ.erase (1 : Gal(L / K)))
+          (fun σ => α - σ α) := by
+    have hd :
+        Polynomial.derivative
+            (Finset.prod (Finset.univ : Finset (Gal(L / K)))
+              (fun σ => Polynomial.X - Polynomial.C (σ α))) =
+          Finset.sum (Finset.univ : Finset (Gal(L / K))) (fun σ =>
+            Finset.prod (Finset.univ.erase σ)
+                (fun τ => Polynomial.X - Polynomial.C (τ α)) *
+              (Polynomial.X - Polynomial.C (σ α)).derivative) := by
+      change Polynomial.derivative
+          ((Multiset.map (fun σ => Polynomial.X - Polynomial.C (σ α))
+            (Finset.univ : Finset (Gal(L / K))).1).prod) = _
+      rw [Polynomial.derivative_prod]
+      rfl
+    rw [hd, Polynomial.eval_finsetSum]
+    have hsum := Finset.sum_erase_add
+      (s := (Finset.univ : Finset (Gal(L / K))))
+      (f := fun σ => Polynomial.eval α
+        (Finset.prod (Finset.univ.erase σ)
+            (fun τ => Polynomial.X - Polynomial.C (τ α)) *
+          (Polynomial.X - Polynomial.C (σ α)).derivative))
+      (Finset.mem_univ (1 : Gal(L / K)))
+    rw [← hsum]
+    rw [Finset.sum_eq_zero]
+    · simp only [zero_add]
+      rw [Polynomial.eval_mul, Polynomial.eval_prod]
+      simp
+    · intro σ hσ
+      rw [Polynomial.eval_mul, Polynomial.eval_prod]
+      have hone : (1 : Gal(L / K)) ∈ Finset.univ.erase σ := by
+        rw [Finset.mem_erase]
+        exact ⟨Ne.symm (Finset.mem_erase.mp hσ |>.1), Finset.mem_univ _⟩
+      have hzero :
+          Polynomial.eval α
+              (Polynomial.X - Polynomial.C ((1 : Gal(L / K)) α)) = 0 := by
+        simp
+      rw [Finset.prod_eq_zero hone hzero]
+      simp
+  simpa [chapter09ConjugateProductPolynomial] using hroot
 
 theorem chapter09_generator_derivative_eq_conjugate_difference_product
     {A B K L : Type*}
@@ -254,7 +308,42 @@ theorem chapter09_generator_derivative_eq_conjugate_difference_product
     algebraMap B L (chapter07DerivativeAt A B S.f S.α) =
       ∏ σ ∈ (Finset.univ.erase (1 : Gal(L / K))),
         (algebraMap B L S.α - σ (algebraMap B L S.α)) := by
-  sorry
+  classical
+  let αL : L := algebraMap B L S.α
+  have hmap_eval :
+      algebraMap B L (chapter07DerivativeAt A B S.f S.α) =
+        Polynomial.eval αL (S.f.derivative.map (algebraMap A L)) := by
+    rw [chapter07DerivativeAt]
+    rw [Polynomial.map_aeval_eq_aeval_map (φ := algebraMap A L)
+      (ψ := algebraMap B L) (by
+        ext x
+        simp only [RingHom.comp_apply]
+        simp [IsScalarTower.algebraMap_apply A B L])]
+    simp [αL, Polynomial.aeval_def]
+  have hfactor :
+      Polynomial.derivative (S.f.map (algebraMap A L)) =
+        Polynomial.derivative (chapter09ConjugateProductPolynomial
+          (K := K) (L := L) αL) := by
+    apply congrArg (fun p : Polynomial L => p.derivative)
+    simpa [αL] using S.conjugate_factorization
+  calc
+    algebraMap B L (chapter07DerivativeAt A B S.f S.α) =
+        Polynomial.eval αL (S.f.derivative.map (algebraMap A L)) := hmap_eval
+    _ = Polynomial.eval αL (Polynomial.derivative
+        (S.f.map (algebraMap A L))) := by
+      rw [Polynomial.derivative_map]
+    _ = Polynomial.eval αL (Polynomial.derivative
+        (chapter09ConjugateProductPolynomial (K := K) (L := L) αL)) := by
+      rw [hfactor]
+    _ = ∏ σ ∈ (Finset.univ.erase (1 : Gal(L / K))),
+        (αL - σ αL) := by
+      apply chapter09_conjugate_product_derivative_at_root αL
+      intro σ hσ
+      apply S.orbit_separates
+      simpa [αL] using hσ
+    _ = ∏ σ ∈ (Finset.univ.erase (1 : Gal(L / K))),
+        (algebraMap B L S.α - σ (algebraMap B L S.α)) := by
+      simp [αL]
 
 theorem chapter09_generator_derivative_value_eq_displacement_sum
     {A B K L : Type*}
