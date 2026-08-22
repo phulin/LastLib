@@ -213,7 +213,8 @@ theorem chapter07_integral_ring_le_codifferent
     [IsIntegrallyClosed A] [IsDedekindDomain B] :
     (1 : FractionalIdeal B⁰ L) ≤
       chapter07CodifferentFractionalIdeal A B K L := by
-  sorry
+  simpa [chapter07CodifferentFractionalIdeal] using
+    (FractionalIdeal.one_le_dual_one A K (L := L) (B := B))
 
 theorem chapter07_different_fractional_coe_eq
     (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B]
@@ -225,7 +226,9 @@ theorem chapter07_different_fractional_coe_eq
     [Module.IsTorsionFree A B] :
     (chapter07DifferentIdeal A B : FractionalIdeal B⁰ L) =
       chapter07DifferentFractionalIdeal A B K L := by
-  sorry
+  change (differentIdeal A B : FractionalIdeal B⁰ L) =
+    (FractionalIdeal.dual A K (1 : FractionalIdeal B⁰ L))⁻¹
+  exact coeIdeal_differentIdeal A K L B
 
 /- A DVR has a unique exponent for every nonzero ideal, applied to the
    different. -/
@@ -243,7 +246,24 @@ theorem chapter07_different_is_unique_maximal_power
     ∃! d : ℕ,
       chapter07DifferentIdeal A B =
         (IsLocalRing.maximalIdeal B) ^ d := by
-  sorry
+  have hDfrac :
+      (chapter07DifferentIdeal A B : FractionalIdeal B⁰ L) ≠ 0 := by
+    rw [chapter07_different_fractional_coe_eq A B K L]
+    exact inv_ne_zero (FractionalIdeal.dual_ne_zero A K one_ne_zero)
+  have hD : chapter07DifferentIdeal A B ≠ ⊥ :=
+    (FractionalIdeal.coeIdeal_ne_zero).mp hDfrac
+  obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible B
+  obtain ⟨d, hd⟩ :=
+    IsDiscreteValuationRing.ideal_eq_span_pow_irreducible hD hϖ
+  have hd' : chapter07DifferentIdeal A B =
+      (IsLocalRing.maximalIdeal B) ^ d := by
+    rw [hd, hϖ.maximalIdeal_eq, Ideal.span_singleton_pow]
+  refine ⟨d, hd', ?_⟩
+  intro n hn
+  have hco := congrArg Order.coheight hn
+  rw [hd', IsDiscreteValuationRing.coheight_pow_maximalIdeal,
+    IsDiscreteValuationRing.coheight_pow_maximalIdeal] at hco
+  exact_mod_cast hco.symm
 
 noncomputable def chapter07DifferentExponent
     {B : Type*} [CommRing B] (mB D : Ideal B)
