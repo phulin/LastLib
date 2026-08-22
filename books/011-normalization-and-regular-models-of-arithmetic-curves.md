@@ -19,9 +19,11 @@
    - [What fails without finiteness hypotheses](#35-what-fails-without-finiteness-hypotheses)
 4. [Normality and regularity in low dimension](#4-normality-and-regularity-in-low-dimension)
    - [Depth and codimension](#41-depth-and-codimension)
-   - [The dimension-one coincidence](#42-the-dimension-one-coincidence)
-   - [Normal surfaces need not be regular](#43-normal-surfaces-need-not-be-regular)
-   - [Jacobian and fiberwise criteria](#44-jacobian-and-fiberwise-criteria)
+   - [Projective dimension and finite free resolutions](#42-projective-dimension-and-finite-free-resolutions)
+   - [Regular local rings are factorial](#43-regular-local-rings-are-factorial)
+   - [The dimension-one coincidence](#44-the-dimension-one-coincidence)
+   - [Normal surfaces need not be regular](#45-normal-surfaces-need-not-be-regular)
+   - [Jacobian and fiberwise criteria](#46-jacobian-and-fiberwise-criteria)
 5. [Arithmetic surfaces over Dedekind schemes](#5-arithmetic-surfaces-over-dedekind-schemes)
    - [Definitions and local dimensions](#51-definitions-and-local-dimensions)
    - [Flatness from torsion-freeness](#52-flatness-from-torsion-freeness)
@@ -80,9 +82,8 @@
     - [Cohen–Macaulay local rings](#144-cohenmacaulay-local-rings)
     - [Serre's conditions and the normality criterion](#145-serres-conditions-and-the-normality-criterion)
     - [Freeness in dimension two](#146-freeness-in-dimension-two)
-    - [Finite free resolutions and the homological criterion for regularity](#147-finite-free-resolutions-and-the-homological-criterion-for-regularity)
-    - [Regular local rings are factorial](#148-regular-local-rings-are-factorial)
-    - [What the criteria return to the models](#149-what-the-criteria-return-to-the-models)
+    - [Homological regularity and factoriality](#147-homological-regularity-and-factoriality)
+    - [What the criteria return to the models](#148-what-the-criteria-return-to-the-models)
 
 ## 1. The problem of integral models
 
@@ -258,7 +259,7 @@ With that convention in place, the entire content of excellence needed downstrea
 4. _(Openness of singularities.)_ Let $X$ be an excellent locally noetherian scheme. Then the regular locus of $X$ is open, and so is the regular locus of every scheme locally of finite type over $X$. The singular locus is therefore closed; if $X$ is normal of dimension two, it meets every quasi-compact open in a finite set of closed points.
 5. _(The bases.)_ The following noetherian rings are excellent in the sense of this book: every field $k$ with $[k:k^p]<\infty$ in characteristic $p$, in particular every perfect field, every finite field and every field of characteristic zero; every complete noetherian local ring whose residue field has finite $p$-degree, in particular every complete discrete valuation ring with perfect residue field, such as $\mathbf Z_p$, $\mathbf F_q[[t]]$ and $k[[t]]$ with $k$ perfect; and $\mathbf Z$, the ring of integers of a number field, every localization of such a ring, and more generally every Dedekind domain of characteristic zero with $p$-finite residue fields. By (1) so is every algebra essentially of finite type over one of them — for instance every finite-type $\mathbf F_q$-algebra, hence the coordinate ring of every affine curve over a finite field, together with all of its localizations and completions.
 
-**Proof.** Every clause is proved in Book 10a. Clause (1) is Theorem 10.5 there, the scheme-theoretic restatement being the affine-local one; clause (2) is Theorem 9.8, whose hypothesis is quasi-excellence with $p$-finite residue fields, applied to $A$ and to its finite-type algebras, the final sentence being Proposition 9.5; clause (3) is Theorem 4.13 applied to the local ring $\mathcal O_{X,x}$, which is a localization of an excellent ring and hence a $G$-ring by (1); clause (4) is the $J_2$ condition supplied by (1), the last assertion following as in Theorem 10.7(4) there, since on a normal scheme the singular locus is closed and, by Serre's criterion $R_1$ recalled in Section 14.5, contains no point of codimension at most one, so that in dimension two it consists of closed points and is finite on each quasi-compact open. For clause (5), Theorem 10.6 of Book 10a establishes excellence for the three listed families and Corollary 7.6 there establishes the $p$-finiteness of their residue fields. $\square$
+**Proof.** Every clause is proved in Book 10a. Clause (1) is Theorem 10.5 there, the scheme-theoretic restatement being the affine-local one; clause (2) is Theorem 9.8, whose hypothesis is quasi-excellence with $p$-finite residue fields, applied to $A$ and to its finite-type algebras, the final sentence being Proposition 9.5; clause (3) is Theorem 4.13 applied to the local ring $\mathcal O_{X,x}$, which is a localization of an excellent ring and hence a $G$-ring by (1); clause (4) is the $J_2$ condition supplied by (1), the last assertion following as in Theorem 10.7(4) there, since on a normal scheme the singular locus is closed and, by Serre's criterion $R_1$ recalled in Section 4.1, contains no point of codimension at most one, so that in dimension two it consists of closed points and is finite on each quasi-compact open. For clause (5), Theorem 10.6 of Book 10a establishes excellence for the three listed families and Corollary 7.6 there establishes the $p$-finiteness of their residue fields. $\square$
 
 For the three families of clause (5) all four assertions are collected in Book 10a, Theorem 10.7, in exactly the form used here; the statement above simply frees them from the choice of a particular base.
 
@@ -392,9 +393,498 @@ the completed Koszul complexes compute the same first nonzero Ext degree. Hence 
 embedding dimension are unchanged; faithful flatness and the dimension theorem for completion
 give the assertions in (4). $\square$
 
-This criterion explains a major feature of normal surfaces: their nonregular locus has codimension at least two and therefore consists of closed points locally. If the surface is of finite type over an excellent Dedekind scheme, the singular locus is closed by the $J_2$ property, supplied for every chart by Theorem 3.2(1) and (4); on a quasi-compact surface it is a finite set whenever it contains no curve.
+The divisor calculus of the later chapters needs two further facts that no argument so far supplies:
+that a regular local ring remains regular after localization at any prime, and that a regular local
+ring is factorial, so that every Weil divisor on a regular model is Cartier. Both are proved in the
+next two sections. The engine is Serre's homological characterization of regularity, which is also
+proved in Book 10a, Section 2.2, where it is the foundation of the excellence package; the proof is
+repeated here in the form the divisor calculus of this book needs, in agreement with the version in
+Book 10a.
 
-### 4.2 The dimension-one coincidence
+This criterion also explains a major feature of normal surfaces: their nonregular locus has codimension at least two and therefore consists of closed points locally. If the surface is of finite type over an excellent Dedekind scheme, the singular locus is closed by the $J_2$ property, supplied for every chart by Theorem 3.2(1) and (4); on a quasi-compact surface it is a finite set whenever it contains no curve.
+
+### 4.2 Projective dimension and finite free resolutions
+
+Throughout this section $(A,\mathfrak m,k)$ is a noetherian local ring. For a finite $A$-module
+$M$ the **projective dimension** $\operatorname{pd}_AM$ is the least length of a resolution of
+$M$ by finite projective — equivalently, by Nakayama's lemma over a local ring, by finite free
+— modules, or $\infty$ if no finite such resolution exists; $\operatorname{pd}_AM=0$ says exactly
+that $M$ is free. A surjection $F\to M$ from a finite free module is a **minimal cover** when it
+becomes an isomorphism after tensoring with $k$, which holds exactly when its kernel lies in
+$\mathfrak mF$. Every finite module admits a minimal cover, and iterating on kernels produces the
+**minimal free resolution**, in which every differential has image inside $\mathfrak mF_i$.
+
+Two elementary facts about depth are used repeatedly. Recall that an element of $A$ is a
+zerodivisor precisely when it lies in an associated prime of $A$, that $A$ has finitely many
+associated primes, and that prime avoidance is available in the version allowing one ideal to be
+arbitrary provided all the others are prime.
+
+**Lemma 4.1B (annihilators at depth zero).** Let every element of $\mathfrak m$ be a zerodivisor
+in $A$. Then some associated prime of $A$ equals $\mathfrak m$, so there exists $0\neq a\in A$
+with $a\mathfrak m=0$. In particular, if some element of $\mathfrak m$ is a nonzerodivisor, then
+every associated prime of $A$ is properly contained in $\mathfrak m$.
+
+**Proof.** Every element of $\mathfrak m$ is a zerodivisor, hence lies in some associated prime of
+$A$, and $A$ has only finitely many associated primes, so
+$$
+\mathfrak m\subseteq\bigcup_{\mathfrak p\in\operatorname{Ass}A}\mathfrak p .
+$$
+
+Prime avoidance — legitimate here even though $\mathfrak m$ itself is not prime, provided the other
+sets are — gives $\mathfrak m\subseteq\mathfrak q$ for a single associated prime $\mathfrak q$;
+since $\mathfrak q$ is proper and $\mathfrak m$ is the unique maximal ideal, $\mathfrak q=\mathfrak m$.
+Choosing $0\neq a$ with annihilator $\operatorname{Ann}(a)=\mathfrak m$ gives $a\mathfrak m=0$.
+For the last sentence, an associated prime equal to $\mathfrak m$ would be the annihilator of some
+$b\neq0$, so every element of $\mathfrak m$ would kill $b$ and thus be a zerodivisor. $\square$
+
+**Lemma 4.1C (dimension drop along a nonzerodivisor).** If $x\in\mathfrak m$ is a nonzerodivisor,
+then $\dim A/xA=\dim A-1$.
+
+**Proof.** For the lower bound, Krull's theorems include the companion statement that a prime
+ideal minimal over an ideal generated by $r$ elements has coheight at least $\dim A-r$. The ring
+$A/xA$ is local with maximal ideal $\mathfrak m/xA$, so its dimension is the coheight of
+$\mathfrak m/xA$, and lifting chains from $A/xA$ to primes of $A$ containing $xA$ shows this
+coheight equals $\dim A/xA$. Applying the companion statement to the one-generator ideal $xA$
+gives $\dim A/xA\geq\dim A-1$.
+
+For the upper bound, take a chain of primes of $A/xA$ lifting to
+$$
+(x)\subseteq\mathfrak p_0\subsetneq\mathfrak p_1\subsetneq\cdots\subsetneq\mathfrak p_r=\mathfrak m
+$$
+
+in $A$. Since $x$ is a nonzerodivisor it belongs to no minimal prime of $A$, while $\mathfrak p_0$
+contains some minimal prime $\mathfrak q_0$. Then $\mathfrak q_0\subsetneq\mathfrak p_0$ because
+$x\in\mathfrak p_0\setminus\mathfrak q_0$, so
+$$
+\mathfrak q_0\subsetneq\mathfrak p_0\subsetneq\cdots\subsetneq\mathfrak p_r
+$$
+
+is a chain of length $r+1$, whence $r+1\leq\dim A$ and $\dim A/xA\leq\dim A-1$. $\square$
+
+**Lemma 4.1D (minimal covers and syzygies).** Let $M\neq0$ be finite with $p=\operatorname{pd}_AM
+\geq1$ finite, and let $0\to N\to F\to M\to0$ be exact with $F\to M$ a minimal cover. Then
+$N\subseteq\mathfrak mF$, $N\neq0$, and $\operatorname{pd}_AN=p-1$.
+
+**Proof.** Minimality means $F\otimes k\to M\otimes k$ is an isomorphism, so $N\subseteq\mathfrak mF$;
+and $N\neq0$ because $M$ is not free. Take any projective resolution of $M$ of length $p$ and let
+$N'$ be its first syzygy, so $\operatorname{pd}N'\leq p-1$. Schanuel's lemma — whose short proof is
+a diagram chase on the pullback of the two surjections onto $M$ — gives $N\oplus P'\simeq N'\oplus P$
+with $P,P'$ finite free, and adding free summands changes no projective dimension, so
+$\operatorname{pd}N=\operatorname{pd}N'\leq p-1$. Conversely, splicing a projective resolution of
+$N$ of length $\operatorname{pd}N$ with $F$ produces one of $M$ of length $\operatorname{pd}N+1$,
+whence $p\leq\operatorname{pd}N+1$. The two inequalities give $\operatorname{pd}N=p-1$. $\square$
+
+Iterating Lemma 4.1D along the syzygies of a minimal free resolution $F_\bullet$ of a finite module
+$M$ yields the computation that makes projective dimension effective. All differentials of
+$F_\bullet$ have image inside $\mathfrak mF_i$, so after tensoring with $k$ all differentials
+vanish and
+$$
+\operatorname{Tor}^A_i(M,k)\simeq F_i\otimes_Ak\quad\text{for all }i\geq0 .
+$$
+
+Moreover $\operatorname{pd}_AM=\sup\{i:\operatorname{Tor}^A_i(M,k)\neq0\}$: writing
+$\ell=\sup\{i:F_i\neq0\}$, the resolution stops once some $F_i$ vanishes, because then the
+corresponding syzygy is zero, so $\operatorname{pd}_AM\leq\ell$, while if
+$p=\operatorname{pd}_AM<\infty$ then iterating Lemma 4.1D shows that the $p$-th syzygy is free,
+its minimal cover is an isomorphism between free modules of the same finite rank, and hence
+$F_{p+1}=0$, giving $\ell\leq p$.
+
+**Corollary 4.1E (basic inequalities).** Let all modules be finite.
+
+1. If $0\to M'\to M\to M''\to0$ is exact, then $\operatorname{pd}M''\leq\max\{\operatorname{pd}M,\operatorname{pd}M'+1\}$.
+2. If $N$ is a direct summand of $M$, then $\operatorname{pd}N\leq\operatorname{pd}M$.
+3. If $\operatorname{pd}_Ak=n<\infty$, then $\operatorname{pd}_AM\leq n$ for every finite $M$.
+
+**Proof.** For (1), let $i>\max\{\operatorname{pd}M,\operatorname{pd}M'+1\}$. By the computation
+after Lemma 4.1D both $\operatorname{Tor}_i(M,k)$ and $\operatorname{Tor}_{i-1}(M',k)$ vanish, and
+the long exact sequence
+$$
+\operatorname{Tor}_i(M,k)\to\operatorname{Tor}_i(M'',k)\to\operatorname{Tor}_{i-1}(M',k)
+$$
+
+forces $\operatorname{Tor}_i(M'',k)=0$; the same computation gives the displayed bound. For (2),
+$\operatorname{Tor}_i(N,k)$ is a direct summand of $\operatorname{Tor}_i(M,k)$. For (3), compute
+$\operatorname{Tor}^A_i(M,k)$ from a free resolution of the second argument $k$, which has length
+$n$: the groups vanish for $i>n$, so $\sup\{i:\operatorname{Tor}^A_i(M,k)\neq0\}\leq n$, which by
+the computation after Lemma 4.1D equals $\operatorname{pd}_AM$. $\square$
+
+The next lemma transfers projective dimension across the quotient by a single nonzerodivisor. Both
+directions are used: one builds finite resolutions over $A$ out of finite resolutions over $A/xA$,
+the other pushes a finite resolution down.
+
+**Lemma 4.1F (transfer modulo a nonzerodivisor).** Let $x\in\mathfrak m$ be a nonzerodivisor on
+$A$ and put $\bar A=A/xA$.
+
+1. If $M$ is a finite $A$-module on which $x$ is a nonzerodivisor, then $\operatorname{pd}_{\bar A}
+   (M/xM)\leq\operatorname{pd}_AM$.
+2. If $M\neq0$ is a finite $\bar A$-module, then $\operatorname{pd}_AM\leq\operatorname{pd}_{\bar A}
+   M+1$.
+
+**Proof.** The sequence $0\to A\xrightarrow{x}A\to\bar A\to0$ is a free resolution of $\bar A$ of
+length one, so $\operatorname{Tor}^A_i(M,\bar A)=0$ for $i\geq2$ and
+$\operatorname{Tor}^A_1(M,\bar A)=\{m\in M:xm=0\}$.
+
+For (1) we may assume $p=\operatorname{pd}_AM<\infty$ and take a free resolution
+$0\to F_p\to\cdots\to F_0\to M\to0$. Since $x$ is a nonzerodivisor on $M$, all
+$\operatorname{Tor}^A_i(M,\bar A)$ with $i\geq1$ vanish. Let $Z_0=M$ and $Z_{i+1}=\ker(F_i\to Z_i)$
+be the syzygies, so that dimension shifting along the short exact sequences
+$0\to Z_{i+1}\to F_i\to Z_i\to0$ gives $\operatorname{Tor}^A_j(Z_i,\bar A)
+\simeq\operatorname{Tor}^A_{j+i}(M,\bar A)=0$ for all $j\geq1$. Consequently each of those short
+exact sequences remains exact after $-\otimes_A\bar A$, and splicing shows that
+$F_\bullet\otimes_A\bar A$ is a resolution of $M/xM$ by free $\bar A$-modules of length $p$.
+
+For (2) we may assume $q=\operatorname{pd}_{\bar A}M<\infty$ and induct on $q$. If $q=0$ then $M$
+is a finite free $\bar A$-module, so $\operatorname{pd}_AM=\operatorname{pd}_A\bar A$, which is
+$1$: the displayed resolution has length one, and $\bar A$ is not $A$-free because $x\neq0$
+annihilates it while $xA^r\neq0$ for $r\geq1$. If $q\geq1$, choose $0\to N\to\bar F\to M\to0$
+with $\bar F$ finite free over $\bar A$ and $\operatorname{pd}_{\bar A}N=q-1$, possible by Lemma
+4.1D applied over $\bar A$. By induction $\operatorname{pd}_AN\leq q$, while
+$\operatorname{pd}_A\bar F=1$, and Corollary 4.1E(1) gives $\operatorname{pd}_AM\leq\max\{1,q+1\}=q+1$.
+$\square$
+
+**Lemma 4.1G (splitting off the residue field).** Let $x\in\mathfrak m\setminus\mathfrak m^2$ be a
+nonzerodivisor. Put $\bar A=A/xA$ and $\bar{\mathfrak m}=\mathfrak m/xA$. Then there is an
+isomorphism of $\bar A$-modules
+$$
+\mathfrak m/x\mathfrak m\simeq\bar{\mathfrak m}\oplus k .
+$$
+
+**Proof.** Because $x\notin\mathfrak m^2$, its residue is part of a basis of $\mathfrak m/\mathfrak m^2$,
+so by Nakayama there is a minimal generating set $x,y_2,\ldots,y_t$ of $\mathfrak m$. All three
+modules in the statement are killed by $x$ and hence are $\bar A$-modules. Inside
+$\mathfrak m/x\mathfrak m$ consider
+$$
+N=xA/x\mathfrak m,\qquad M'=\bigl((y_2,\ldots,y_t)+x\mathfrak m\bigr)/x\mathfrak m .
+$$
+
+Since $x$ is a nonzerodivisor, $a\mapsto ax$ identifies $A/\mathfrak m$ with $N$, so $N\simeq k$.
+Clearly $N+M'=\mathfrak m/x\mathfrak m$. Suppose an element of $N\cap M'$ is represented by
+$ax=\sum_{i\geq2}a_iy_i+xm$ with $m\in\mathfrak m$. Then $(a-m)x\in(y_2,\ldots,y_t)$. If $a$ were
+a unit, so would be $a-m$, and then $x\in(y_2,\ldots,y_t)$, making $y_2,\ldots,y_t$ generate
+$\mathfrak m$ and contradicting minimality. Hence $a\in\mathfrak m$, so $ax\in x\mathfrak m$ and
+the element is zero. Thus $\mathfrak m/x\mathfrak m=N\oplus M'$, and
+$M'\simeq(\mathfrak m/x\mathfrak m)/N=\mathfrak m/xA=\bar{\mathfrak m}$. $\square$
+
+**Theorem 4.1H (Serre's homological characterization of regularity).** For a noetherian local
+ring $(A,\mathfrak m,k)$ of dimension $n$ the following are equivalent.
+
+1. $A$ is regular.
+2. $\operatorname{pd}_Ak<\infty$.
+3. $\operatorname{pd}_AM<\infty$ for every finite $A$-module $M$.
+
+When they hold, $\operatorname{pd}_Ak=n$ and every finite module has a resolution of length at
+most $n$ by finite free modules.
+
+**Proof.** (1) implies (3) is Proposition 4.1A(1), whose Koszul resolution gives both the bound and
+its attainment on $k$. (3) implies (2) is trivial. Assume (2) and write
+$t=\dim_k\mathfrak m/\mathfrak m^2$ for the embedding dimension; we induct on $t$.
+
+Suppose first that every element of $\mathfrak m$ is a zerodivisor, i.e. $\operatorname{depth}A=0$.
+If $p=\operatorname{pd}_Ak\geq1$, take a minimal free resolution of $k$ with injective differential
+$\varphi:F_p\to F_{p-1}$, where $F_p\neq0$ and $\varphi(F_p)\subseteq\mathfrak mF_{p-1}$. Lemma
+4.1B supplies $a\neq0$ in $A$ with $a\mathfrak m=0$. Choose $0\neq u\in F_p$; then $au\neq0$
+because $F_p$ is free, yet $\varphi(au)=a\varphi(u)\in a\mathfrak mF_{p-1}=0$, contradicting
+injectivity. Hence $p=0$, so $k\simeq A^r$ with $r\geq1$; but $\mathfrak m$ annihilates $k$, hence
+annihilates $A^r$, forcing $\mathfrak m=0$ and $A=k$, regular of dimension zero. This case covers
+in particular $t=0$, since $t=0$ means $\mathfrak m=\mathfrak m^2$ and hence $\mathfrak m=0$ by
+Nakayama.
+
+Now let $t\geq1$ and let some element of $\mathfrak m$ be a nonzerodivisor. Lemma 4.1B shows every
+associated prime of $A$ is a proper subset of $\mathfrak m$, and $\mathfrak m\neq\mathfrak m^2$, so
+prime avoidance produces
+$$
+x\in\mathfrak m\setminus\Bigl(\mathfrak m^2\cup\bigcup_{\mathfrak p\in\operatorname{Ass}A}\mathfrak p\Bigr),
+$$
+
+a nonzerodivisor outside $\mathfrak m^2$. Put $\bar A=A/xA$. Since $t\geq1$ the field $k$ is not
+free over $A$, so $\operatorname{pd}_Ak\geq1$, and applying Lemma 4.1D to the minimal cover
+$A\to k$ with kernel $\mathfrak m$ gives $\operatorname{pd}_A\mathfrak m=\operatorname{pd}_Ak-1<\infty$.
+As $\mathfrak m\subseteq A$ and $x$ is a nonzerodivisor on $A$, it is a nonzerodivisor on
+$\mathfrak m$, so Lemma 4.1F(1) gives $\operatorname{pd}_{\bar A}(\mathfrak m/x\mathfrak m)<\infty$.
+By Lemma 4.1G the residue field $k$ is a direct summand of $\mathfrak m/x\mathfrak m$ over
+$\bar A$, so $\operatorname{pd}_{\bar A}k<\infty$ by Corollary 4.1E(2).
+
+The embedding dimension of $\bar A$ is $\dim_k\mathfrak m/(\mathfrak m^2+xA)=t-1$, because
+$x\notin\mathfrak m^2$. By the inductive hypothesis $\bar A$ is regular, hence $\dim\bar A=t-1$.
+Lemma 4.1C gives $\dim\bar A=\dim A-1$, so $\dim A=t=\dim_k\mathfrak m/\mathfrak m^2$ and $A$ is
+regular. The final assertions are those of Proposition 4.1A(1), which gives the sharper bound
+$\operatorname{pd}_Ak=n$ directly from the Koszul resolution. $\square$
+
+**Corollary 4.1I (regularity localizes).** Let $A$ be a regular local ring of dimension $n$ and
+let $\mathfrak p$ be a prime of $A$. Then $A_{\mathfrak p}$ is a regular local ring of dimension
+$\operatorname{ht}\mathfrak p$, and $\operatorname{ht}\mathfrak p\leq n-1$ if $\mathfrak p\neq\mathfrak m$.
+In particular $\operatorname{Spec}A$ is a regular scheme, so a regular local ring is a regular
+ring in the sense of Section 1.2.
+
+**Proof.** By Theorem 4.1H the module $A/\mathfrak p$ has a resolution
+$$
+0\to F_r\to\cdots\to F_0\to A/\mathfrak p\to0
+$$
+
+by finite free $A$-modules with $r\leq n$. Localization at $\mathfrak p$ is exact and carries
+finite free modules to finite free modules, so the localized complex is a finite free resolution
+of $(A/\mathfrak p)_{\mathfrak p}$, which is the residue field of $A_{\mathfrak p}$. Hence that
+residue field has finite projective dimension over $A_{\mathfrak p}$, and Theorem 4.1H makes
+$A_{\mathfrak p}$ regular. Its dimension is $\operatorname{ht}\mathfrak p$ by definition of height.
+If $\mathfrak p\neq\mathfrak m$, any chain of primes of length $\operatorname{ht}\mathfrak p$ ending
+at $\mathfrak p$ extends by $\mathfrak m$, so $\operatorname{ht}\mathfrak p+1\leq\dim A$. $\square$
+
+### 4.3 Regular local rings are factorial
+
+A domain $A$ is **factorial**, or a **unique factorization domain**, if every nonzero nonunit is a
+product of irreducible elements and such a factorization is unique up to reordering and unit
+factors. Here $\pi\in A$ is _irreducible_ if it is a nonzero nonunit and $\pi=ab$ forces $a$ or
+$b$ to be a unit, and _prime_ if it is a nonzero nonunit and $(\pi)$ is a prime ideal. A prime
+element is irreducible; the content of factoriality is the converse.
+
+Factoriality is what makes divisor theory work. On an integral scheme a prime divisor is the
+closure of a height-one point, and it is a Cartier divisor near a point $x$ exactly when the
+corresponding height-one prime of $\mathcal O_{X,x}$ becomes principal. So the statement that
+every Weil divisor on a regular scheme is Cartier — the statement that lets one intersect
+divisors, pull them back, and compute degrees on the models built in Chapters 6 to 11 — is
+precisely the assertion that regular local rings are factorial. That is the theorem of this
+section.
+
+The proof has three movements. The first replaces factoriality by a statement about height-one
+primes, so that the problem becomes local rather than combinatorial. The second is a descent
+principle: inverting a single prime element cannot destroy factoriality, so one is allowed to work
+on the complement of one hypersurface. The third is the homological input from Section 4.2: a
+height-one prime of a regular local ring has a finite free resolution, and an ideal that has a
+finite free resolution and is principal at every localization must itself be principal.
+
+**Theorem 4.1J (Kaplansky's criterion).** A noetherian domain $A$ is factorial if and only if
+every prime ideal of height one is principal.
+
+**Proof.** Suppose $A$ is factorial and let $\mathfrak p$ have height one. Choose $0\neq a\in\mathfrak p$;
+it is a nonunit, so it factors into irreducibles, and since $\mathfrak p$ is prime one irreducible
+factor $\pi$ lies in $\mathfrak p$. In a factorial domain an irreducible element is prime: if
+$\pi\mid ab$, write $ab=\pi c$ and compare factorizations of both sides, so that $\pi$ agrees up
+to a unit with an irreducible factor of $a$ or of $b$. Hence
+$0\subsetneq(\pi)\subseteq\mathfrak p$ is a chain of primes, and $\operatorname{ht}\mathfrak p=1$
+forces $(\pi)=\mathfrak p$.
+
+Conversely, assume every height-one prime is principal. First, every nonzero nonunit $a$ is a
+product of irreducibles. Otherwise the set of principal ideals $(a)$ with $a$ a nonzero nonunit
+admitting no such factorization is nonempty, and since $A$ is noetherian it has a maximal member
+$(a)$. Then $a$ is not irreducible, so $a=bc$ with $b,c$ nonunits, both nonzero; the inclusions
+$(a)\subseteq(b)$ and $(a)\subseteq(c)$ are strict because $c$, respectively $b$, is not a unit.
+By maximality $b$ and $c$ factor into irreducibles, hence so does $a$, a contradiction.
+
+Next, every irreducible $\pi$ is prime. Let $\mathfrak p$ be a prime minimal over $(\pi)$. Krull's
+height theorem gives $\operatorname{ht}\mathfrak p\leq1$, and $\operatorname{ht}\mathfrak p\geq1$
+because $\pi\neq0$ and $A$ is a domain, so $\mathfrak p=(t)$ for some $t$ by hypothesis. Write
+$\pi=tu$. Since $\mathfrak p$ is a proper ideal, $t$ is not a unit, so irreducibility of $\pi$
+makes $u$ a unit and $(\pi)=(t)=\mathfrak p$ prime.
+
+Finally, existence of factorizations together with primality of irreducibles gives uniqueness by
+the usual induction on the number of factors: if $\pi_1\cdots\pi_r=\rho_1\cdots\rho_s$ with all
+factors irreducible, then $\pi_1$ is prime and divides the right-hand side, so it divides some
+$\rho_j$, which being irreducible equals $\pi_1$ times a unit; cancel and repeat. $\square$
+
+The second movement is Nagata's descent principle. It is what allows an induction on dimension: in
+a regular local ring one can always find a prime element, and inverting it lands in rings of
+strictly smaller dimension.
+
+**Theorem 4.1K (Nagata's lemma).** Let $A$ be a noetherian domain and let $S\subseteq A$ be the
+multiplicative set generated by a family of prime elements of $A$ together with $1$. If $S^{-1}A$
+is factorial, then $A$ is factorial.
+
+**Proof.** By Theorem 4.1J it suffices to prove that every height-one prime $\mathfrak q$ of $A$
+is principal. Note first that $0\notin S$, since a product of nonzero elements of a domain is
+nonzero, so $S^{-1}A$ is again a noetherian domain with the same fraction field.
+
+Suppose $\mathfrak q\cap S\neq\emptyset$. An element of $S$ is a product $\pi_1\cdots\pi_r$ of
+prime elements, and if it lies in the prime $\mathfrak q$ then some $\pi_i\in\mathfrak q$. Then
+$0\subsetneq(\pi_i)\subseteq\mathfrak q$ is a chain of primes and $\operatorname{ht}\mathfrak q=1$
+gives $\mathfrak q=(\pi_i)$, which is principal.
+
+Suppose instead $\mathfrak q\cap S=\emptyset$. Then $Q=S^{-1}\mathfrak q$ is a prime of $S^{-1}A$
+with $(S^{-1}A)_Q=A_{\mathfrak q}$, so $\operatorname{ht}Q=\operatorname{ht}\mathfrak q=1$, and
+Theorem 4.1J applied to the factorial ring $S^{-1}A$ makes $Q$ principal. Clearing a denominator,
+$Q=\theta\,S^{-1}A$ for some $\theta\in\mathfrak q$: if $Q=\alpha S^{-1}A$ and $\alpha=\theta/s$
+with $\theta\in A$ and $s\in S$, then $\theta=s\alpha$ still generates $Q$ because $s$ is a unit
+in $S^{-1}A$, and $\theta\in Q\cap A=\mathfrak q$, the last equality holding because $\mathfrak q$
+is prime and disjoint from $S$. Among all such generators contained in $\mathfrak q$ choose one
+for which the ideal $\theta A$ is maximal, possible because $A$ is noetherian. No prime element
+$\pi$ occurring in the chosen family divides $\theta$: indeed if $\theta=\pi\theta'$, then
+$\pi\notin\mathfrak q$ because $\mathfrak q\cap S=\emptyset$, so $\theta'\in\mathfrak q$ as
+$\mathfrak q$ is prime; moreover $\pi$ is a unit in $S^{-1}A$, so $\theta'$ still generates $Q$;
+and $\theta A\subsetneq\theta'A$ strictly, since $\pi$ is not a unit and $A$ is a domain. This
+contradicts maximality.
+
+Now let $a\in\mathfrak q$. Then $a/1\in Q=\theta S^{-1}A$, so $sa=\theta b$ for some $s\in S$ and
+$b\in A$. Write $s$ as a product of prime elements from the family. Each such factor $\pi$ divides
+$\theta b$ but not $\theta$, hence divides $b$ because $(\pi)$ is prime; cancelling $\pi$ from
+$sa=\theta b$ is legitimate in the domain $A$ and reduces the number of factors of $s$. After
+finitely many steps $a=\theta b'$ with $b'\in A$. Therefore $\mathfrak q\subseteq\theta A
+\subseteq\mathfrak q$, and $\mathfrak q$ is principal. $\square$
+
+The third movement supplies the local-to-global step. After inverting a prime element one is left
+with a noetherian ring $R$, no longer local, and a height-one prime $Q$ that is principal at every
+localization of $R$ and possesses a finite free resolution. Neither property alone makes $Q$
+principal; together they do, and the mechanism is that a finite free resolution converts a locally
+free module first into a direct summand of a free module, then into a _stably_ free module, and
+finally a determinant computation removes the word "stably".
+
+**Lemma 4.1L.** Let $R$ be a noetherian ring and $M$ a finite $R$-module such that $M_P$ is a free
+$R_P$-module for every prime $P$. Then $M$ is a direct summand of a finite free $R$-module.
+
+**Proof.** Choose a surjection $\varphi:F\to M$ with $F$ finite free and let $K=\ker\varphi$, a
+finite module since $R$ is noetherian. For every prime $P$ the module $M_P$ is free, hence
+projective, so $\operatorname{Ext}^1_{R_P}(M_P,K_P)=0$. Because $M$ is finite and $R$ noetherian,
+$\operatorname{Ext}^1_R(M,K)_P\simeq\operatorname{Ext}^1_{R_P}(M_P,K_P)$, so all localizations of
+$\operatorname{Ext}^1_R(M,K)$ vanish. A module with this property is zero: a nonzero element
+generates a nonzero submodule whose annihilator is proper, and localizing at a maximal ideal
+containing that annihilator keeps the element nonzero. The extension class of
+$0\to K\to F\to M\to0$ therefore vanishes, so the sequence splits. $\square$
+
+**Lemma 4.1M.** Let $R$ be a ring and $M$ a direct summand of a finite free module which admits a
+resolution
+$$
+0\to F_p\to\cdots\to F_1\to F_0\to M\to0
+$$
+
+by finite free $R$-modules. Then $M$ is **stably free**: there are integers $a,b\geq0$ with
+$M\oplus R^a\simeq R^b$.
+
+**Proof.** Induct on $p$. If $p=0$ then $M\simeq F_0$ is free. If $p\geq1$, let $K=\ker(F_0\to M)$.
+Since $M$ is a direct summand of a free module, the surjection $F_0\to M$ splits, so
+$F_0\simeq M\oplus K$ and $K$ is itself a direct summand of a finite free module. Moreover
+$0\to F_p\to\cdots\to F_1\to K\to0$ is a resolution of $K$ by finite free modules of length $p-1$,
+so by induction $K\oplus R^a\simeq R^b$ for some $a,b$. Then
+$$
+M\oplus R^b\simeq M\oplus K\oplus R^a\simeq F_0\oplus R^a ,
+$$
+
+and the right-hand side is finite free. $\square$
+
+**Lemma 4.1N.** Let $R$ be a domain with fraction field $K$ and let $I\subseteq R$ be a nonzero
+ideal with $I\oplus R^m\simeq R^{m'}$ for integers $m,m'\geq0$. Then $m'=m+1$ and $I$ is principal.
+
+**Proof.** Localizing at the multiplicative set $R\setminus\{0\}$ turns the hypothesis into an
+isomorphism of $K$-vector spaces $K\oplus K^m\simeq K^{m'}$, because $I$ is a nonzero ideal of a
+domain and hence $I\otimes_RK=K$. Comparing dimensions gives $m'=m+1$.
+
+Regard $M=I\oplus R^m$ as an $R$-submodule of $K^{m+1}$ by way of $I\subseteq R\subseteq K$, and
+write $e_1,\ldots,e_{m+1}$ for the standard basis of $K^{m+1}$, so that $M$ is generated by the
+elements $ae_1$ with $a\in I$ together with $e_2,\ldots,e_{m+1}$. For an $R$-submodule
+$N\subseteq K^{m+1}$ let $\Delta(N)\subseteq K$ be the $R$-submodule generated by all determinants
+$\det(v_1|\cdots|v_{m+1})$ of matrices whose columns $v_i$ lie in $N$. Since the determinant is
+$R$-multilinear in its columns, $\Delta(N)$ is already generated by the determinants formed from
+any generating set of $N$.
+
+Compute $\Delta(M)$ from the generators listed above. A tuple containing two elements of the form
+$ae_1,a'e_1$ has proportional columns and determinant zero; a tuple containing none of them repeats
+some $e_j$ and again has determinant zero; and a tuple consisting of one $ae_1$ and all of
+$e_2,\ldots,e_{m+1}$ has determinant $\pm a$. Hence $\Delta(M)=I$.
+
+On the other hand, let $u:R^{m+1}\to K^{m+1}$ be the composite of an isomorphism
+$R^{m+1}\simeq M$ with the inclusion, and let $U\in K^{(m+1)\times(m+1)}$ be its matrix in the
+standard bases. Every $(m+1)$-tuple of elements of $M=u(R^{m+1})$ is of the form
+$u(w_1),\ldots,u(w_{m+1})$ with $w_i\in R^{m+1}$, and multiplicativity of determinants gives
+$\det(u(w_1)|\cdots|u(w_{m+1}))=\det(U)\cdot\det(w_1|\cdots|w_{m+1})$. As the $w_i$ range over
+$R^{m+1}$ the determinants $\det(w_1|\cdots|w_{m+1})$ range over a set generating $R$, the
+identity matrix contributing $1$. Therefore $\Delta(M)=\det(U)\,R$.
+
+Comparing the two computations gives $I=\det(U)R$. Since $I\subseteq R$ is nonzero, $\det U$ is a
+nonzero element of $R$ and $I=(\det U)$ is principal. $\square$
+
+We can now prove the theorem. The induction is on dimension; the prime element needed to feed
+Nagata's lemma is any element of $\mathfrak m\setminus\mathfrak m^2$, which is prime precisely
+because the quotient by it is again regular and therefore a domain.
+
+**Theorem 4.1O (the Auslander–Buchsbaum factoriality theorem).** Every regular local ring is a
+unique factorization domain.
+
+**Proof.** Let $A$ be regular local of dimension $n$, with maximal ideal $\mathfrak m$. It is a
+domain by Proposition 4.1A. We induct on $n$, the statement being that all regular local rings of
+dimension $n$ are factorial.
+
+If $n=0$ then $A$ is a field and there is nothing to prove. If $n=1$ then $\mathfrak m$ is
+principal and is the only prime of height one, so Theorem 4.1J applies.
+
+Let $n\geq2$ and choose $x\in\mathfrak m\setminus\mathfrak m^2$, possible because
+$\mathfrak m\neq\mathfrak m^2$ by Nakayama. By Proposition 4.1A the ring $A/(x)$ is regular local
+of dimension $n-1$, hence a domain, so $x$ is a prime element of $A$. Let
+$S=\{1,x,x^2,\ldots\}$ and $R=S^{-1}A=A_x$, a noetherian domain. By Theorem 4.1K it suffices to
+prove that $R$ is factorial, and by Theorem 4.1J it suffices to prove that every height-one prime
+$Q$ of $R$ is principal.
+
+Such a $Q$ is $\mathfrak qR$ for a unique prime $\mathfrak q$ of $A$ with $x\notin\mathfrak q$ and
+$\operatorname{ht}\mathfrak q=\operatorname{ht}Q=1$. We verify the two hypotheses of the
+local-to-global step.
+
+_The module $Q$ has a finite free resolution._ By Theorem 4.1H the cyclic module $A/\mathfrak q$
+has a resolution $0\to F_r\to\cdots\to F_0\to A/\mathfrak q\to0$ by finite free $A$-modules with
+$r\leq n$; splicing off the final map $F_0\to A/\mathfrak q$ leaves such a resolution of
+$\mathfrak q$, since $F_0$ is free. Localizing at $S$ is exact and preserves finite freeness, so
+$Q=S^{-1}\mathfrak q$ has such a resolution over $R$.
+
+_The module $Q$ is free at every localization._ A prime of $R$ is $P=\mathfrak pR$ with
+$\mathfrak p$ a prime of $A$ not containing $x$, and $R_P=A_{\mathfrak p}$, while
+$Q_P=\mathfrak qA_{\mathfrak p}$. Since $x\in\mathfrak m\setminus\mathfrak p$, we have
+$\mathfrak p\neq\mathfrak m$, so Corollary 4.1I makes $A_{\mathfrak p}$ a regular local ring of
+dimension $\operatorname{ht}\mathfrak p\leq n-1$. By the inductive hypothesis $A_{\mathfrak p}$ is
+factorial. If $\mathfrak q\not\subseteq\mathfrak p$ then $\mathfrak qA_{\mathfrak p}=A_{\mathfrak p}$
+is free of rank one. If $\mathfrak q\subseteq\mathfrak p$ then $\mathfrak qA_{\mathfrak p}$ is a
+prime of $A_{\mathfrak p}$ of height one, hence principal by Theorem 4.1J, say
+$\mathfrak qA_{\mathfrak p}=tA_{\mathfrak p}$ with $t\neq0$; multiplication by $t$ is injective on
+the domain $A_{\mathfrak p}$, so $\mathfrak qA_{\mathfrak p}$ is again free of rank one.
+
+By Lemma 4.1L the module $Q$ is a direct summand of a finite free $R$-module, by Lemma 4.1M it is
+stably free, and by Lemma 4.1N — applied to the nonzero ideal $Q\subseteq R$ of the domain $R$ —
+it is principal. Hence $R$ is factorial by Theorem 4.1J, and $A$ is factorial by Theorem 4.1K.
+$\square$
+
+Two remarks on the shape of the argument are worth recording. The induction is genuinely an
+induction on the dimension of _other_ rings: what is used about $A$ itself at dimension $n$ is
+only the existence of a prime element, whereas factoriality of the smaller-dimensional rings
+$A_{\mathfrak p}$ is what makes the height-one prime locally principal. This is why Corollary
+4.1I is indispensable and why the homological characterization of regularity, rather than the
+numerical one, is the right tool. Second, the finite free resolution is used exactly once, to
+upgrade "locally principal" to "principal"; the local hypothesis alone would only say that the
+ideal is invertible, and invertible ideals need not be principal on a general noetherian domain.
+
+**Corollary 4.1P.** A factorial domain is integrally closed in its fraction field. Consequently
+every regular local ring is a normal domain, and a regular noetherian ring is normal.
+
+**Proof.** Let $A$ be factorial with fraction field $K$ and let $z\in K$ be integral over $A$,
+satisfying
+$$
+z^d+c_{d-1}z^{d-1}+\cdots+c_0=0,\qquad c_i\in A .
+$$
+
+Write $z=a/b$ with $a,b\in A$, $b\neq0$, and cancel all common irreducible factors, possible by
+unique factorization; then no irreducible element divides both $a$ and $b$. Multiplying the
+equation by $b^d$ gives
+$$
+a^d=-b\,(c_{d-1}a^{d-1}+c_{d-2}a^{d-2}b+\cdots+c_0b^{d-1}).
+$$
+
+If $b$ were a nonunit, an irreducible factor $\pi$ of $b$ would be prime and would divide $a^d$,
+hence $a$, contradicting the choice of $a$ and $b$. So $b$ is a unit and $z\in A$.
+
+For the consequences, a regular local ring is factorial by Theorem 4.1O, hence integrally closed;
+and if $A$ is a regular noetherian ring, each $A_{\mathfrak p}$ is regular local, hence an
+integrally closed domain, which is normality. $\square$
+
+Corollary 4.1P also makes the two Serre conditions automatic for a regular ring in a way that does
+not pass through the depth calculus at all: such a ring is normal outright, and the conditions
+$(R_1)$ and $(S_2)$ then follow since $(R_1)$ is Corollary 4.1I and $(S_2)$ holds because a
+regular local ring is Cohen–Macaulay by Proposition 4.1A.
+
+The divisor-theoretic consequence is the one that later chapters consume. On an integral
+noetherian scheme $X$, a prime divisor $Z$ with generic point $\eta$ corresponds at each point
+$x\in Z$ to the height-one prime $\mathfrak p_x\subseteq\mathcal O_{X,x}$ of functions vanishing
+on $Z$. If $X$ is regular, Theorem 4.1O and Theorem 4.1J make every such $\mathfrak p_x$
+principal, so $Z$ is cut out near $x$ by a single equation. Thus on a regular integral noetherian
+scheme every Weil divisor is Cartier, and the group of Weil divisors, the group of Cartier
+divisors, and the group of invertible fractional ideal sheaves coincide. For a regular arithmetic
+surface, as studied from Section 5 onward, this is the statement that both horizontal divisors and
+the components of special fibers are locally principal, which is what allows intersection numbers
+to be defined by pulling back local equations.
+
+### 4.4 The dimension-one coincidence
 
 **Proposition 4.2.** For a noetherian local domain $A$ of dimension one, the following are equivalent:
 
@@ -402,11 +892,11 @@ This criterion explains a major feature of normal surfaces: their nonregular loc
 2. $A$ is a discrete valuation ring;
 3. $A$ is regular.
 
-**Proof.** Normality implies that every nonzero ideal has a factor of least valuation, giving a principal maximal ideal; this is the discrete valuation characterization. A one-dimensional local ring with principal maximal ideal has embedding dimension one and is regular. Conversely, a regular local ring is factorial by Theorem 14.43, and a factorial domain is integrally closed in its fraction field by Corollary 14.44; so a regular local ring is normal, in every dimension and in particular in dimension one. $\square$
+**Proof.** Normality implies that every nonzero ideal has a factor of least valuation, giving a principal maximal ideal; this is the discrete valuation characterization. A one-dimensional local ring with principal maximal ideal has embedding dimension one and is regular. Conversely, a regular local ring is factorial by Theorem 4.1O, and a factorial domain is integrally closed in its fraction field by Corollary 4.1P; so a regular local ring is normal, in every dimension and in particular in dimension one. $\square$
 
 Consequently a normal curve over a perfect field is regular, and because its residue extensions are separable, it is smooth. Over an imperfect field, regular need not imply smooth: geometric regularity can fail after a purely inseparable field extension. This is the first reason to keep “regular” and “smooth” separate.
 
-### 4.3 Normal surfaces need not be regular
+### 4.5 Normal surfaces need not be regular
 
 Let $k$ have characteristic different from $2$ and consider
 
@@ -430,7 +920,7 @@ $$
 
 is regular at $(x,y,\pi)$: the relation makes $\pi=xy$, so the maximal ideal is generated by $x,y$, equal to the dimension. Its special fiber is $k[x,y]/(xy)$, a nodal curve. The morphism is flat but not smooth at the node.
 
-### 4.4 Jacobian and fiberwise criteria
+### 4.6 Jacobian and fiberwise criteria
 
 For a finite-type algebra over a field, the Jacobian criterion tests smoothness when the field and presentation satisfy the usual separability hypotheses. For a hypersurface $A=P/(f)$ in a regular local ring $(P,\mathfrak n)$, the quotient is regular exactly when
 
@@ -2278,7 +2768,7 @@ Let $P\in C(K)$. Properness extends the map $\eta\to\mathcal X$ uniquely to a se
 
 More generally, for a closed point $P$ of $C$ with residue field $L$, let $S_L$ be the normalization of $S$ in $L$. It is finite over $S$. Properness extends the $L$-point to a section over $S_L$, and its image in $\mathcal X$ is the horizontal closure of $P$. That closure need not be regular before normalization; its normalization is $S_L$.
 
-A section of a regular arithmetic surface is a Cartier divisor. At a point of the section, the local ring has dimension two and the section is cut out by one parameter transverse to the base direction; that a single equation suffices is the factoriality of regular local rings, Theorem 14.43 combined with Theorem 14.38. This fact later makes marked points compatible with blowups and semistable models.
+A section of a regular arithmetic surface is a Cartier divisor. At a point of the section, the local ring has dimension two and the section is cut out by one parameter transverse to the base direction; that a single equation suffices is the factoriality of regular local rings, Theorem 4.1O combined with Theorem 4.1J. This fact later makes marked points compatible with blowups and semistable models.
 
 ## 10. Finite extensions and base change
 
@@ -2330,7 +2820,7 @@ however large.
 
 **Proof.** The question is local, so let $X=\operatorname{Spec}A$ with $A$ a finite-type
 $K$-algebra; all the rings below are of finite type over a field and hence noetherian, so
-Serre's criterion, Theorem 14.26, is available: normality means $(R_1)$ and $(S_2)$. We use
+Serre's criterion, Theorem 4.1, is available: normality means $(R_1)$ and $(S_2)$. We use
 repeatedly the flat local dimension and depth formulas: for a flat local homomorphism
 $(R,\mathfrak m)\to(T,\mathfrak n)$ of noetherian local rings with closed fiber
 $\bar T=T/\mathfrak mT$,
@@ -2364,8 +2854,8 @@ $F_\bullet\otimes_{C_{\mathfrak q}}D_{\mathfrak Q}$ a free resolution of
 $D_{\mathfrak Q}/\mathfrak qD_{\mathfrak Q}$, and its differentials still have entries in the
 maximal ideal, so it is a minimal free resolution and therefore has length
 $\operatorname{pd}_{D_{\mathfrak Q}}(D_{\mathfrak Q}/\mathfrak qD_{\mathfrak Q})$, which is
-finite by Theorem 14.34. So $F_\bullet$ is finite, $\operatorname{pd}_{C_{\mathfrak q}}\kappa(\mathfrak q)<\infty$,
-and $C_{\mathfrak q}$ is regular by Theorem 14.36. Thus we may assume $K'=\Omega$ is
+finite by Proposition 4.1A(1). So $F_\bullet$ is finite, $\operatorname{pd}_{C_{\mathfrak q}}\kappa(\mathfrak q)<\infty$,
+and $C_{\mathfrak q}$ is regular by Theorem 4.1H. Thus we may assume $K'=\Omega$ is
 algebraically closed.
 
 _Step 2: the purely inseparable part._ Let $K^{\mathrm i}\subseteq\Omega$ be the purely
@@ -2429,7 +2919,7 @@ $\operatorname{depth}C_{\mathfrak Q}=\dim C_{\mathfrak Q}$. Either way $C_{\math
 satisfies the required inequality, so $C$ is $(S_2)$, and $C$ is normal.
 
 Combining the three steps proves the proposition. Finally, if $X$ is smooth over $K$ then
-$X_{K'}$ is smooth over $K'$ for every $K'$, hence regular, hence normal by Corollary 14.44; so
+$X_{K'}$ is smooth over $K'$ for every $K'$, hence regular, hence normal by Corollary 4.1P; so
 a smooth $K$-scheme, in particular a smooth curve, is geometrically normal and the conclusion is
 automatic. $\square$
 
@@ -2551,7 +3041,7 @@ proper arithmetic surface over a discrete valuation ring $R$ with residue field 
 
 **Proof.** A vertical integral curve on the regular surface is an effective Cartier divisor: its
 generic point is a height-one prime of each local ring it meets, and such a prime is principal by
-Theorems 14.43 and 14.38.
+Theorems 4.1O and 4.1J.
 For a rational section of a line bundle on $C$, the degree of its divisor is the sum of the
 orders multiplied by $[\kappa(x):k_C]$. Apply this to the restriction of a local equation $f$
 of $D$. In the one-dimensional Cohen--Macaulay local ring $\mathcal O_{C,x}$, its order is
@@ -2608,7 +3098,7 @@ which is an isomorphism on $X\setminus E$, maps $E$ to a closed regular point $y
 justify the polarization. On each irreducible component of the closed fiber choose a closed
 regular point away from the other components. At such a point a parameter transverse to that
 component cuts out a horizontal prime divisor. Its closure is finite over the DVR by properness
-and is Cartier because $X$ is regular, hence factorial at every point by Theorem 14.43. The sum of these closures has positive degree on every
+and is Cartier because $X$ is regular, hence factorial at every point by Theorem 4.1O. The sum of these closures has positive degree on every
 fiber component, so the fiberwise ampleness criterion for proper curves makes its associated
 line bundle relatively ample. Choose such a relatively ample $H$.
 
@@ -3124,7 +3614,15 @@ This separation of roles is the durable lesson. Normal, regular, smooth, excelle
 
 ## 14. Depth, Cohen–Macaulay rings, and Serre's criteria
 
-Several pieces of local algebra were used on credit in the preceding chapters. Section 4.1 stated Serre's criterion and the condition $(S_2)$ with a proof strategy rather than a proof. Section 4.3 called a hypersurface Cohen–Macaulay in order to conclude that the quadratic cone is normal. Sections 8.5 and 10.4 produced the surfaces $xy=\pi^n$ without deciding which of them are normal, and Section 11.4 used the regularity of $xy=\pi$ without locating it in a general framework. Finally, the divisor calculus of Chapters 5, 9, and 11 rests on the assertion that a regular local ring is factorial, so that prime divisors on a regular model are locally principal, and Section 4.2 used the same assertion in dimension one. This chapter proves all of it.
+The local algebra of the preceding chapters is now assembled in one place. Section 4.1 stated and
+proved Serre's criterion for normality, and Sections 4.2 and 4.3 established, ahead of every use,
+the homological characterization of regularity and the factoriality of regular local rings that
+Proposition 4.2 and the divisor calculus consume. This chapter develops the underlying theory in
+full: the depth invariant and its calculus, the Auslander–Buchsbaum formula, Cohen–Macaulay rings,
+Serre's conditions rederived from the depth machinery, and the freeness theorems in dimension two
+that later books apply to finite covers of regular surfaces. Sections 8.5 and 10.4 produced the
+surfaces $xy=\pi^n$ without deciding which of them are normal, and Section 11.4 used the
+regularity of $xy=\pi$ without locating it in a general framework; Theorem 14.20 settles both.
 
 The material is pure local algebra and depends on none of Chapters 5 to 13; a reader may insert it immediately after Chapter 4. It is placed last because it is also the form in which later books of the collection use these results: a freeness statement over two-dimensional regular local rings, and the two criteria of Serre.
 
@@ -3447,9 +3945,9 @@ For (3), $f=xy-\pi^n$ lies in $\mathfrak N^2$ exactly when $n\geq2$, since $xy\i
 
 For (4), by (2) the only prime at which $B_n$ can fail to be regular is $\mathfrak n$, whose height is two by the computation above. So $(R_1)$ holds, and (1) gives $(S_2)$; Proposition 14.19 concludes. $\square$
 
-Part (3) is the local reason for the running example of Sections 4.3, 4.4, and 11.4: the semistable equation $xy=\pi$ has regular total space, while $xy=\pi^n$ with $n\geq2$ does not. Part (4) says that the singular members of the family are nevertheless normal, so normalization is powerless against them and only the blowups of Section 8.5 remove them. This is exactly the situation created by ramified base change in Section 10.4, where $xy=\pi$ becomes $xy=w(\pi')^e$ for a unit $w$: after absorbing $w$ into one of the coordinates, the base-changed surface is one of the $B_e$ above, normal and Cohen–Macaulay but no longer regular when $e\geq2$, and its repair is a resolution, not a normalization.
+Part (3) is the local reason for the running example of Sections 4.5, 4.6, and 11.4: the semistable equation $xy=\pi$ has regular total space, while $xy=\pi^n$ with $n\geq2$ does not. Part (4) says that the singular members of the family are nevertheless normal, so normalization is powerless against them and only the blowups of Section 8.5 remove them. This is exactly the situation created by ramified base change in Section 10.4, where $xy=\pi$ becomes $xy=w(\pi')^e$ for a unit $w$: after absorbing $w$ into one of the coordinates, the base-changed surface is one of the $B_e$ above, normal and Cohen–Macaulay but no longer regular when $e\geq2$, and its repair is a resolution, not a normalization.
 
-**Example.** The quadratic cone of Section 4.3, $A=k[x,y,z]/(xy-z^2)$ over a field of characteristic different from two, is handled by the same three steps. The ring $P=k[x,y,z]$ is regular, since a field is a regular ring and polynomial algebras over regular noetherian rings are regular, and $f=xy-z^2$ is a nonzerodivisor in the domain $P$; so all localizations of $A$ are Cohen–Macaulay by Proposition 14.19 and $(S_2)$ holds. A prime of $A$ containing $x$ and $y$ contains $z^2$, hence $z$, hence the maximal ideal $\mathfrak v=(x,y,z)$. As in Theorem 14.20, $P_{(x,y,z)}$ is regular local of dimension three, so $A_{\mathfrak v}$ has dimension two and $\mathfrak v$ has height two. Every other prime survives in $A[1/x]\simeq k[x,1/x,z]$ or in the symmetric localization $A[1/y]$, both of them localizations of polynomial algebras over $k$ and hence regular. Thus $(R_1)$ holds and $A$ is normal, while $f\in\mathfrak v^2$ shows by Corollary 14.18 that $A$ is not regular at the vertex. This completes the assertion made in Section 4.3.
+**Example.** The quadratic cone of Section 4.5, $A=k[x,y,z]/(xy-z^2)$ over a field of characteristic different from two, is handled by the same three steps. The ring $P=k[x,y,z]$ is regular, since a field is a regular ring and polynomial algebras over regular noetherian rings are regular, and $f=xy-z^2$ is a nonzerodivisor in the domain $P$; so all localizations of $A$ are Cohen–Macaulay by Proposition 14.19 and $(S_2)$ holds. A prime of $A$ containing $x$ and $y$ contains $z^2$, hence $z$, hence the maximal ideal $\mathfrak v=(x,y,z)$. As in Theorem 14.20, $P_{(x,y,z)}$ is regular local of dimension three, so $A_{\mathfrak v}$ has dimension two and $\mathfrak v$ has height two. Every other prime survives in $A[1/x]\simeq k[x,1/x,z]$ or in the symmetric localization $A[1/y]$, both of them localizations of polynomial algebras over $k$ and hence regular. Thus $(R_1)$ holds and $A$ is normal, while $f\in\mathfrak v^2$ shows by Corollary 14.18 that $A$ is not regular at the vertex. This completes the assertion made in Section 4.5.
 
 ### 14.5 Serre's conditions and the normality criterion
 
@@ -3475,7 +3973,8 @@ $$
 
 If $a\neq0$, its annihilator is contained in some associated prime $\mathfrak p$, which is minimal by Proposition 14.21; since no element outside $\mathfrak p$ annihilates $a$, the image of $a$ in $A_{\mathfrak p}$ is nonzero. Hence the map is injective. By $(R_0)$ each factor is a field, so the product is reduced, and therefore so is $A$. $\square$
 
-The next theorem is the $(S_2)$ half of Serre's criterion, and it is the statement that Section 4.1 used without proof.
+The next theorem is the $(S_2)$ half of Serre's criterion; Section 4.1 stated it and used it there,
+and this section supplies the general ring form of that implication from the depth calculus.
 
 **Theorem 14.23.** Let $A$ be a noetherian local domain that is integrally closed in its fraction field. Then
 $$
@@ -3602,253 +4101,50 @@ which is $\min\{2,\operatorname{depth}A\}$. $\square$
 
 The dimension hypothesis on $B$ is automatic when $A\to B$ is injective, by the incomparability and going-up theorems for finite extensions; it is stated separately so that no such theorem is needed for the proof itself. Applied to the local ring at a closed point of a regular arithmetic surface, Theorem 14.30 says that a finite normal cover is locally free there, which is the algebraic content of purity statements about branched covers of surfaces: the direct image of the structure sheaf of the cover is locally free, so its rank is constant and can be computed generically.
 
-### 14.7 Finite free resolutions and the homological criterion for regularity
-
-Every result so far has treated regularity as a numerical condition: the maximal ideal needs exactly $\dim A$ generators. That definition is easy to check on an explicit presentation, which is why Corollary 14.18 settles the family $xy=\pi^n$ at a stroke. It is, however, useless for two questions that the geometry of models keeps raising. First, if $A$ is regular local, is $A_{\mathfrak p}$ regular for every prime $\mathfrak p$? The definition compares two numbers attached to the closed point and says nothing at all about other points, and the standing convention that a _regular ring_ is one all of whose local rings are regular quietly presupposes an answer. Second, is a regular local ring factorial? Factoriality is a statement about height-one primes, that is, about localizations again.
-
-Serre's discovery is that regularity has an equivalent formulation in which both questions become trivial or nearly so: a noetherian local ring is regular exactly when its residue field admits a _finite_ free resolution. The virtue of this reformulation is that it is manifestly stable under localization, because localizing a finite free resolution produces a finite free resolution. The cost is that one must prove the equivalence, and this is where the Auslander–Buchsbaum formula of Section 14.3 earns its place: it converts the finiteness of a projective dimension into an exact numerical identity, and the identity is rigid enough to force the ring to be regular.
-
-This criterion is also proved in Book 10a, Section 2.2, where it is the foundation of the whole excellence package: the two consequences drawn from it there — that a localization of a regular local ring is regular, and that regularity descends along a faithfully flat map — are exactly what makes formal fibres a usable tool. The proof is repeated here in the form the divisor calculus of this book needs, so that Chapter 14 remains a self-contained account of the local algebra used in Chapters 4 to 12; nothing below depends on the version in Book 10a, and the two agree.
-
-Throughout this section $\operatorname{pd}$ denotes projective dimension as in Section 14.3, and we use the standard properties of $\operatorname{Tor}$ listed at the head of the chapter. The first step is to make projective dimension computable over a local ring.
-
-**Lemma 14.31.** Let $M\neq0$ be finite over $(A,\mathfrak m,k)$ and let
-$$
-\cdots\to F_2\to F_1\to F_0\to M\to0
-$$
-
-be a minimal free resolution: setting $N_0=M$ and $N_{i+1}=\ker(F_i\to N_i)$, each map $F_i\to N_i$ is a minimal cover by a finite free module. Then all differentials of $F_\bullet$ have image inside $\mathfrak mF_i$,
-$$
-\operatorname{Tor}^A_i(M,k)\simeq F_i\otimes_Ak\quad\text{for all }i\geq0,
-$$
-
-and
-$$
-\operatorname{pd}_AM=\sup\{i:\operatorname{Tor}^A_i(M,k)\neq0\}.
-$$
-
-**Proof.** Minimality of a cover $F\to N$ means that $F\otimes k\to N\otimes k$ is an isomorphism, so the kernel lies in $\mathfrak mF$; applied at each stage this is the first assertion. Computing $\operatorname{Tor}^A_\bullet(M,k)$ from $F_\bullet$, all differentials of $F_\bullet\otimes_Ak$ vanish, which gives the second assertion.
-
-Write $\ell\in\{0,1,\ldots,\infty\}$ for the supremum of the $i$ with $F_i\neq0$; once some $F_i$ vanishes the remaining syzygy is zero and all later terms vanish too, so $F_\bullet$ is a free resolution of length $\ell$ and $\operatorname{pd}_AM\leq\ell$. By Nakayama $F_i\neq0$ if and only if $F_i\otimes k\neq0$, so $\ell$ is exactly the displayed supremum. It remains to see $\ell\leq\operatorname{pd}_AM$, and for this we may assume $p:=\operatorname{pd}_AM<\infty$. As long as $\operatorname{pd}N_i\geq1$, Lemma 14.10 gives $\operatorname{pd}N_{i+1}=\operatorname{pd}N_i-1$; hence $\operatorname{pd}N_p=0$ and $N_p$ is free, say of rank $r$. Then $F_p\to N_p$ is a minimal cover of a free module, so $F_p$ also has rank $r$, and a surjection between free modules of the same finite rank over a commutative ring is an isomorphism. Therefore $N_{p+1}=0$, $F_{p+1}=0$, and $\ell\leq p$. $\square$
-
-**Corollary 14.32.** Let $(A,\mathfrak m,k)$ be noetherian local and let all modules be finite.
-
-1. If $0\to M'\to M\to M''\to0$ is exact, then $\operatorname{pd}M''\leq\max\{\operatorname{pd}M,\operatorname{pd}M'+1\}$.
-2. If $N$ is a direct summand of $M$, then $\operatorname{pd}N\leq\operatorname{pd}M$.
-3. If $\operatorname{pd}_Ak=n<\infty$, then $\operatorname{pd}_AM\leq n$ for every finite $M$.
-
-**Proof.** For (1), let $i>\max\{\operatorname{pd}M,\operatorname{pd}M'+1\}$. By Lemma 14.31 both $\operatorname{Tor}_i(M,k)$ and $\operatorname{Tor}_{i-1}(M',k)$ vanish, and the long exact sequence
-$$
-\operatorname{Tor}_i(M,k)\to\operatorname{Tor}_i(M'',k)\to\operatorname{Tor}_{i-1}(M',k)
-$$
-
-forces $\operatorname{Tor}_i(M'',k)=0$; Lemma 14.31 again gives the bound. For (2), $\operatorname{Tor}_i(N,k)$ is a direct summand of $\operatorname{Tor}_i(M,k)$. For (3), compute $\operatorname{Tor}^A_i(M,k)$ from a free resolution of the second argument $k$, which has length $n$: the groups vanish for $i>n$. $\square$
-
-The next lemma is the transfer of projective dimension across the quotient by a single regular element. Both directions are used: one to build finite resolutions over $A$ out of finite resolutions over $A/xA$, the other to push a finite resolution down.
-
-**Lemma 14.33.** Let $(A,\mathfrak m,k)$ be noetherian local, let $x\in\mathfrak m$ be a nonzerodivisor on $A$, and put $\bar A=A/xA$.
-
-1. If $M$ is a finite $A$-module on which $x$ is a nonzerodivisor, then $\operatorname{pd}_{\bar A}(M/xM)\leq\operatorname{pd}_AM$.
-2. If $M\neq0$ is a finite $\bar A$-module, then $\operatorname{pd}_AM\leq\operatorname{pd}_{\bar A}M+1$.
-
-**Proof.** The sequence $0\to A\xrightarrow{\ x\ }A\to\bar A\to0$ is a free resolution of $\bar A$ of length one, so $\operatorname{Tor}^A_i(M,\bar A)=0$ for $i\geq2$ and $\operatorname{Tor}^A_1(M,\bar A)=\{m\in M:xm=0\}$.
-
-For (1) we may assume $p=\operatorname{pd}_AM<\infty$ and take a free resolution $0\to F_p\to\cdots\to F_0\to M\to0$. Since $x$ is a nonzerodivisor on $M$, all $\operatorname{Tor}^A_i(M,\bar A)$ with $i\geq1$ vanish. Let $Z_0=M$ and $Z_{i+1}=\ker(F_i\to Z_i)$ be the syzygies, so that dimension shifting along the short exact sequences $0\to Z_{i+1}\to F_i\to Z_i\to0$ gives $\operatorname{Tor}^A_j(Z_i,\bar A)\simeq\operatorname{Tor}^A_{j+i}(M,\bar A)=0$ for all $j\geq1$. Consequently each of those short exact sequences remains exact after $-\otimes_A\bar A$, and splicing shows that $F_\bullet\otimes_A\bar A$ is a resolution of $M/xM$ by free $\bar A$-modules of length $p$.
-
-For (2) we may assume $q=\operatorname{pd}_{\bar A}M<\infty$ and induct on $q$. If $q=0$ then $M$ is a finite free $\bar A$-module, so $\operatorname{pd}_AM=\operatorname{pd}_A\bar A$, which is $1$: the displayed resolution has length one, and $\bar A$ is not $A$-free because $x\neq0$ annihilates it while $x A^r\neq0$ for $r\geq1$. If $q\geq1$, choose $0\to N\to\bar F\to M\to0$ with $\bar F$ finite free over $\bar A$ and $\operatorname{pd}_{\bar A}N=q-1$, which is possible by Lemma 14.10 applied over $\bar A$. By induction $\operatorname{pd}_AN\leq q$, while $\operatorname{pd}_A\bar F=1$, and Corollary 14.32(1) gives $\operatorname{pd}_AM\leq\max\{1,q+1\}=q+1$. $\square$
-
-**Theorem 14.34.** Let $A$ be a regular local ring of dimension $n$. Then $\operatorname{pd}_Ak\leq n$, and consequently every finite $A$-module has a free resolution of length at most $n$ by finite free modules.
-
-**Proof.** Induct on $n$. If $n=0$ then $\mathfrak m=0$, $A=k$, and $\operatorname{pd}_Ak=0$. Let $n\geq1$ and choose $x\in\mathfrak m\setminus\mathfrak m^2$, which is possible because $\mathfrak m\neq\mathfrak m^2$ by Nakayama. By Proposition 14.15 the ring $A$ is a domain, so $x$ is a nonzerodivisor, and by Lemma 14.14 the ring $\bar A=A/(x)$ is regular local of dimension $n-1$ with the same residue field $k$. By induction $\operatorname{pd}_{\bar A}k\leq n-1$, so Lemma 14.33(2) gives $\operatorname{pd}_Ak\leq n$. The last assertion is Corollary 14.32(3) together with Lemma 14.31, which produces the resolution by finite free modules. $\square$
-
-In fact the bound is an equality, and this is the first place where the Auslander–Buchsbaum formula is used for something other than bookkeeping: $k$ has depth $0$, since $\operatorname{Hom}_A(k,k)\neq0$, so Theorem 14.12 and Theorem 14.16 give
-$$
-\operatorname{pd}_Ak=\operatorname{depth}A-\operatorname{depth}k=n-0=n .
-$$
-
-The converse implication is the substantial half. Its engine is the following decomposition, which says that dividing the maximal ideal by a minimal generator splits off a copy of the residue field.
-
-**Lemma 14.35.** Let $(A,\mathfrak m,k)$ be noetherian local and let $x\in\mathfrak m\setminus\mathfrak m^2$ be a nonzerodivisor. Put $\bar A=A/xA$ and $\bar{\mathfrak m}=\mathfrak m/xA$. Then there is an isomorphism of $\bar A$-modules
-$$
-\mathfrak m/x\mathfrak m\simeq\bar{\mathfrak m}\oplus k .
-$$
-
-**Proof.** Because $x\notin\mathfrak m^2$, its residue is part of a basis of $\mathfrak m/\mathfrak m^2$, so by Nakayama there is a minimal generating set $x,y_2,\ldots,y_t$ of $\mathfrak m$. All three modules in the statement are killed by $x$ and hence are $\bar A$-modules. Inside $\mathfrak m/x\mathfrak m$ consider
-$$
-N=xA/x\mathfrak m,\qquad M'=\bigl((y_2,\ldots,y_t)+x\mathfrak m\bigr)/x\mathfrak m .
-$$
-
-Since $x$ is a nonzerodivisor, $a\mapsto ax$ identifies $A/\mathfrak m$ with $N$, so $N\simeq k$. Clearly $N+M'=\mathfrak m/x\mathfrak m$. Suppose an element of $N\cap M'$ is represented by $ax=\sum_{i\geq2}a_iy_i+xm$ with $m\in\mathfrak m$. Then $(a-m)x\in(y_2,\ldots,y_t)$. If $a$ were a unit, so would be $a-m$, and then $x\in(y_2,\ldots,y_t)$, making $y_2,\ldots,y_t$ generate $\mathfrak m$ and contradicting the minimality of the chosen generating set. Hence $a\in\mathfrak m$, so $ax\in x\mathfrak m$ and the element is zero. Thus $\mathfrak m/x\mathfrak m=N\oplus M'$, and $M'\simeq(\mathfrak m/x\mathfrak m)/N=\mathfrak m/xA=\bar{\mathfrak m}$. $\square$
-
-**Theorem 14.36 (Serre's homological characterization of regularity).** For a noetherian local ring $(A,\mathfrak m,k)$ of dimension $n$ the following are equivalent.
-
-1. $A$ is regular.
-2. $\operatorname{pd}_Ak<\infty$.
-3. $\operatorname{pd}_AM<\infty$ for every finite $A$-module $M$.
-
-When they hold, $\operatorname{pd}_Ak=n$ and every finite module has a resolution of length at most $n$ by finite free modules.
-
-**Proof.** (1) implies (3) is Theorem 14.34, and (3) implies (2) is trivial. Assume (2) and write $t=\dim_k\mathfrak m/\mathfrak m^2$ for the embedding dimension; we induct on $t$.
-
-Suppose first $\operatorname{depth}A=0$. Then Theorem 14.12, applied to $M=k$, which has finite projective dimension by hypothesis and depth $0$ because $\operatorname{Hom}_A(k,k)\neq0$ (Lemma 14.1 and Corollary 14.4), gives $\operatorname{pd}_Ak=\operatorname{depth}A-\operatorname{depth}k=0$. So $k$ is a finite free $A$-module, say $k\simeq A^r$ with $r\geq1$; but $\mathfrak m$ annihilates $k$, hence annihilates $A^r$, which forces $\mathfrak m=0$. Then $A=k$ is a field, regular of dimension zero. This case covers in particular $t=0$, since $t=0$ means $\mathfrak m=\mathfrak m^2$ and hence $\mathfrak m=0$ by Nakayama.
-
-Now let $t\geq1$ and $\operatorname{depth}A\geq1$. Every $\mathfrak p\in\operatorname{Ass}A$ is then a proper subset of $\mathfrak m$ by Lemma 14.1, and $\mathfrak m\neq\mathfrak m^2$, so prime avoidance in the version allowing one non-prime member produces
-$$
-x\in\mathfrak m\setminus\Bigl(\mathfrak m^2\cup\bigcup_{\mathfrak p\in\operatorname{Ass}A}\mathfrak p\Bigr),
-$$
-
-a nonzerodivisor outside $\mathfrak m^2$. Put $\bar A=A/xA$. Since $t\geq1$ the field $k$ is not free over $A$, so $\operatorname{pd}_Ak\geq1$, and applying Lemma 14.10 to the minimal cover $A\to k$ with kernel $\mathfrak m$ gives $\operatorname{pd}_A\mathfrak m=\operatorname{pd}_Ak-1<\infty$. As $\mathfrak m\subseteq A$ and $x$ is a nonzerodivisor on $A$, it is a nonzerodivisor on $\mathfrak m$, so Lemma 14.33(1) gives $\operatorname{pd}_{\bar A}(\mathfrak m/x\mathfrak m)<\infty$. By Lemma 14.35 the residue field $k$ is a direct summand of $\mathfrak m/x\mathfrak m$ over $\bar A$, so $\operatorname{pd}_{\bar A}k<\infty$ by Corollary 14.32(2).
-
-The embedding dimension of $\bar A$ is $\dim_k\mathfrak m/(\mathfrak m^2+xA)=t-1$, because $x\notin\mathfrak m^2$. By the inductive hypothesis $\bar A$ is regular, hence $\dim\bar A=t-1$. Lemma 14.2, applied to the module $A$ and the nonzerodivisor $x$, gives $\dim\bar A=\dim A-1$, so $\dim A=t=\dim_k\mathfrak m/\mathfrak m^2$ and $A$ is regular.
-
-The final assertions are the computation after Theorem 14.34 and Theorem 14.34 itself. $\square$
-
-**Corollary 14.37 (regularity localizes).** Let $A$ be a regular local ring of dimension $n$ and let $\mathfrak p$ be a prime of $A$. Then $A_{\mathfrak p}$ is a regular local ring of dimension $\operatorname{ht}\mathfrak p$, and $\operatorname{ht}\mathfrak p\leq n-1$ if $\mathfrak p\neq\mathfrak m$. In particular $\operatorname{Spec}A$ is a regular scheme, so a regular local ring is a regular ring in the sense of Section 1.2.
-
-**Proof.** By Theorem 14.36 the module $A/\mathfrak p$ has a resolution
-$$
-0\to F_r\to\cdots\to F_0\to A/\mathfrak p\to0
-$$
-
-by finite free $A$-modules with $r\leq n$. Localization at $\mathfrak p$ is exact and carries finite free modules to finite free modules, so the localized complex is a finite free resolution of $(A/\mathfrak p)_{\mathfrak p}$, which is the residue field of $A_{\mathfrak p}$. Hence that residue field has finite projective dimension over $A_{\mathfrak p}$, and Theorem 14.36 makes $A_{\mathfrak p}$ regular. Its dimension is $\operatorname{ht}\mathfrak p$ by definition of height. If $\mathfrak p\neq\mathfrak m$, any chain of primes of length $\operatorname{ht}\mathfrak p$ ending at $\mathfrak p$ extends by $\mathfrak m$, so $\operatorname{ht}\mathfrak p+1\leq\dim A$. $\square$
-
-This is the first genuinely new structural fact of the chapter: regularity, defined at one point, propagates to all points of the spectrum. It also removes a small circularity that the standing conventions of Section 1.2 would otherwise leave open, and it is the hypothesis-free version of the ad hoc verifications made in Theorem 14.20 and in the example of the quadratic cone, where regularity away from the singular point had to be checked by inverting a coordinate.
-
-### 14.8 Regular local rings are factorial
-
-A domain $A$ is **factorial**, or a **unique factorization domain**, if every nonzero nonunit is a product of irreducible elements and such a factorization is unique up to reordering and unit factors. Recall that $\pi\in A$ is _irreducible_ if it is a nonzero nonunit and $\pi=ab$ forces $a$ or $b$ to be a unit, and that $\pi$ is _prime_ if it is a nonzero nonunit and $(\pi)$ is a prime ideal. A prime element is irreducible; the content of factoriality is the converse.
-
-Factoriality is what makes divisor theory work. On an integral scheme a prime divisor is the closure of a height-one point, and it is a Cartier divisor near a point $x$ exactly when the corresponding height-one prime of $\mathcal O_{X,x}$ becomes principal. So the statement that every Weil divisor on a regular scheme is Cartier — the statement that lets one intersect divisors, pull them back, and compute degrees on the models built in Chapters 6 to 11 — is precisely the assertion that regular local rings are factorial. That is the theorem of this section.
-
-The proof has three movements. The first replaces factoriality by a statement about height-one primes, so that the problem becomes local and homological rather than combinatorial. The second is a descent principle: inverting a single prime element cannot destroy factoriality, so one is allowed to work on the complement of one hypersurface. The third is the homological input: a height-one prime of a regular local ring has a finite free resolution, and an ideal that has a finite free resolution and is principal at every localization must itself be principal. Only the last step uses Section 14.7.
-
-**Theorem 14.38 (Kaplansky's criterion).** A noetherian domain $A$ is factorial if and only if every prime ideal of height one is principal.
-
-**Proof.** Suppose $A$ is factorial and let $\mathfrak p$ have height one. Choose $0\neq a\in\mathfrak p$; it is a nonunit, so it factors into irreducibles, and since $\mathfrak p$ is prime one irreducible factor $\pi$ lies in $\mathfrak p$. In a factorial domain an irreducible element is prime: if $\pi\mid ab$, write $ab=\pi c$ and compare factorizations of both sides, so that $\pi$ agrees up to a unit with an irreducible factor of $a$ or of $b$. Hence $0\subsetneq(\pi)\subseteq\mathfrak p$ is a chain of primes, and $\operatorname{ht}\mathfrak p=1$ forces $(\pi)=\mathfrak p$.
-
-Conversely, assume every height-one prime is principal. First, every nonzero nonunit $a$ is a product of irreducibles. Otherwise the set of principal ideals $(a)$ with $a$ a nonzero nonunit admitting no such factorization is nonempty, and since $A$ is noetherian it has a maximal member $(a)$. Then $a$ is not irreducible, so $a=bc$ with $b,c$ nonunits, and both are nonzero; the inclusions $(a)\subseteq(b)$ and $(a)\subseteq(c)$ are strict because $c$, respectively $b$, is not a unit. By maximality $b$ and $c$ factor into irreducibles, hence so does $a$, a contradiction.
-
-Next, every irreducible $\pi$ is prime. Let $\mathfrak p$ be a prime minimal over $(\pi)$. Krull's height theorem gives $\operatorname{ht}\mathfrak p\leq1$, and $\operatorname{ht}\mathfrak p\geq1$ because $\pi\neq0$ and $A$ is a domain, so $\mathfrak p=(t)$ for some $t$ by hypothesis. Write $\pi=tu$. Since $\mathfrak p$ is a proper ideal, $t$ is not a unit, so irreducibility of $\pi$ makes $u$ a unit and $(\pi)=(t)=\mathfrak p$ prime.
-
-Finally, existence of factorizations together with primality of irreducibles gives uniqueness by the usual induction on the number of factors: if $\pi_1\cdots\pi_r=\rho_1\cdots\rho_s$ with all factors irreducible, then $\pi_1$ is prime and divides the right-hand side, so it divides some $\rho_j$, which being irreducible equals $\pi_1$ times a unit; cancel and repeat. $\square$
-
-The second movement is Nagata's descent principle. It is what allows an induction on dimension: in a regular local ring one can always find a prime element, and inverting it lands in rings of strictly smaller dimension.
-
-**Theorem 14.39 (Nagata's lemma).** Let $A$ be a noetherian domain and let $S\subseteq A$ be the multiplicative set generated by a family of prime elements of $A$ together with $1$. If $S^{-1}A$ is factorial, then $A$ is factorial.
-
-**Proof.** By Theorem 14.38 it suffices to prove that every height-one prime $\mathfrak q$ of $A$ is principal. Note first that $0\notin S$, since a product of nonzero elements of a domain is nonzero, so $S^{-1}A$ is again a noetherian domain with the same fraction field.
-
-Suppose $\mathfrak q\cap S\neq\emptyset$. An element of $S$ is a product $\pi_1\cdots\pi_r$ of prime elements, and if it lies in the prime $\mathfrak q$ then some $\pi_i\in\mathfrak q$. Then $0\subsetneq(\pi_i)\subseteq\mathfrak q$ is a chain of primes and $\operatorname{ht}\mathfrak q=1$ gives $\mathfrak q=(\pi_i)$, which is principal.
-
-Suppose instead $\mathfrak q\cap S=\emptyset$. Then $Q=S^{-1}\mathfrak q$ is a prime of $S^{-1}A$ with $(S^{-1}A)_Q=A_{\mathfrak q}$, so $\operatorname{ht}Q=\operatorname{ht}\mathfrak q=1$, and Theorem 14.38 applied to the factorial ring $S^{-1}A$ makes $Q$ principal. Clearing a denominator, $Q=\theta\,S^{-1}A$ for some $\theta\in\mathfrak q$: if $Q=\alpha S^{-1}A$ and $\alpha=\theta/s$ with $\theta\in A$ and $s\in S$, then $\theta=s\alpha$ still generates $Q$ because $s$ is a unit in $S^{-1}A$, and $\theta\in Q\cap A=\mathfrak q$, the last equality holding because $\mathfrak q$ is prime and disjoint from $S$. Among all such generators contained in $\mathfrak q$ choose one for which the ideal $\theta A$ is maximal, which is possible because $A$ is noetherian. We claim that no prime element $\pi$ occurring in the chosen family divides $\theta$. Indeed if $\theta=\pi\theta'$, then $\pi\notin\mathfrak q$ because $\mathfrak q\cap S=\emptyset$, so $\theta'\in\mathfrak q$ as $\mathfrak q$ is prime; moreover $\pi$ is a unit in $S^{-1}A$, so $\theta'$ still generates $Q$; and $\theta A\subsetneq\theta'A$ strictly, since $\pi$ is not a unit and $A$ is a domain. This contradicts maximality.
-
-Now let $a\in\mathfrak q$. Then $a/1\in Q=\theta S^{-1}A$, so $sa=\theta b$ for some $s\in S$ and $b\in A$. Write $s$ as a product of prime elements from the family. Each such factor $\pi$ divides $\theta b$ but not $\theta$, hence divides $b$ because $(\pi)$ is prime; cancelling $\pi$ from both sides of $sa=\theta b$ is legitimate in the domain $A$ and reduces the number of factors of $s$. After finitely many steps $a=\theta b'$ with $b'\in A$. Therefore $\mathfrak q\subseteq\theta A\subseteq\mathfrak q$, and $\mathfrak q$ is principal. $\square$
-
-The third movement supplies the local-to-global step. The situation to be handled is this: after inverting a prime element one is left with a noetherian ring $R$, no longer local, and a height-one prime $Q$ that is principal at every localization of $R$ and possesses a finite free resolution. Neither property alone makes $Q$ principal; together they do, and the mechanism is that a finite free resolution converts a locally free module first into a direct summand of a free module, then into a _stably_ free module, and finally a determinant computation removes the word "stably".
-
-**Lemma 14.40.** Let $R$ be a noetherian ring and $M$ a finite $R$-module such that $M_P$ is a free $R_P$-module for every prime $P$. Then $M$ is a direct summand of a finite free $R$-module.
-
-**Proof.** Choose a surjection $\varphi:F\to M$ with $F$ finite free and let $K=\ker\varphi$, a finite module since $R$ is noetherian. For every prime $P$ the module $M_P$ is free, hence projective, so $\operatorname{Ext}^1_{R_P}(M_P,K_P)=0$. Because $M$ is finite and $R$ noetherian, $\operatorname{Ext}^1_R(M,K)_P\simeq\operatorname{Ext}^1_{R_P}(M_P,K_P)$, so all localizations of $\operatorname{Ext}^1_R(M,K)$ vanish. A module with this property is zero: a nonzero element generates a nonzero submodule whose annihilator is proper, and localizing at a maximal ideal containing that annihilator keeps the element nonzero. The extension class of $0\to K\to F\to M\to0$ therefore vanishes, so the sequence splits. $\square$
-
-**Lemma 14.41.** Let $R$ be a ring and $M$ a direct summand of a finite free module which admits a resolution
-$$
-0\to F_p\to\cdots\to F_1\to F_0\to M\to0
-$$
-
-by finite free $R$-modules. Then $M$ is **stably free**: there are integers $a,b\geq0$ with $M\oplus R^a\simeq R^b$.
-
-**Proof.** Induct on $p$. If $p=0$ then $M\simeq F_0$ is free. If $p\geq1$, let $K=\ker(F_0\to M)$. Since $M$ is a direct summand of a free module, the surjection $F_0\to M$ splits, so $F_0\simeq M\oplus K$ and $K$ is itself a direct summand of a finite free module. Moreover $0\to F_p\to\cdots\to F_1\to K\to0$ is a resolution of $K$ by finite free modules of length $p-1$, so by induction $K\oplus R^a\simeq R^b$ for some $a,b$. Then
-$$
-M\oplus R^b\simeq M\oplus K\oplus R^a\simeq F_0\oplus R^a,
-$$
-
-and the right-hand side is finite free. $\square$
-
-**Lemma 14.42.** Let $R$ be a domain with fraction field $K$ and let $I\subseteq R$ be a nonzero ideal with $I\oplus R^m\simeq R^{m'}$ for integers $m,m'\geq0$. Then $m'=m+1$ and $I$ is principal.
-
-**Proof.** Localizing at the multiplicative set $R\setminus\{0\}$ turns the hypothesis into an isomorphism of $K$-vector spaces $K\oplus K^m\simeq K^{m'}$, because $I$ is a nonzero ideal of a domain and hence $I\otimes_RK=K$. Comparing dimensions gives $m'=m+1$.
-
-Regard $M=I\oplus R^m$ as an $R$-submodule of $K^{m+1}$ by way of $I\subseteq R\subseteq K$, and write $e_1,\ldots,e_{m+1}$ for the standard basis of $K^{m+1}$, so that $M$ is generated by the elements $ae_1$ with $a\in I$ together with $e_2,\ldots,e_{m+1}$. For an $R$-submodule $N\subseteq K^{m+1}$ let
-$$
-\Delta(N)\subseteq K
-$$
-
-be the $R$-submodule generated by all determinants $\det(v_1|\cdots|v_{m+1})$ of matrices whose columns $v_i$ lie in $N$. Since the determinant is $R$-multilinear in its columns, $\Delta(N)$ is already generated by the determinants formed from any generating set of $N$.
-
-Compute $\Delta(M)$ from the generators listed above. A tuple containing two elements of the form $ae_1,a'e_1$ has proportional columns and determinant zero; a tuple containing none of them repeats some $e_j$ and again has determinant zero; and a tuple consisting of one $ae_1$ and all of $e_2,\ldots,e_{m+1}$ has determinant $\pm a$. Hence $\Delta(M)=I$.
-
-On the other hand, let $u:R^{m+1}\to K^{m+1}$ be the composite of an isomorphism $R^{m+1}\simeq M$ with the inclusion, and let $U\in K^{(m+1)\times(m+1)}$ be its matrix in the standard bases. Every $(m+1)$-tuple of elements of $M=u(R^{m+1})$ is of the form $u(w_1),\ldots,u(w_{m+1})$ with $w_i\in R^{m+1}$, and the multiplicativity of determinants gives
-$$
-\det\bigl(u(w_1)|\cdots|u(w_{m+1})\bigr)=\det(U)\cdot\det(w_1|\cdots|w_{m+1}).
-$$
-
-As the $w_i$ range over $R^{m+1}$, the determinants $\det(w_1|\cdots|w_{m+1})$ range over a set generating $R$, the identity matrix contributing $1$. Therefore $\Delta(M)=\det(U)\,R$.
-
-Comparing the two computations gives $I=\det(U)R$. Since $I\subseteq R$ is nonzero, $\det(U)$ is a nonzero element of $R$ and $I=(\det U)$ is principal. $\square$
-
-We can now prove the theorem. The induction is on dimension; the prime element needed to feed Nagata's lemma is any element of $\mathfrak m\setminus\mathfrak m^2$, which is prime precisely because the quotient by it is again regular and therefore a domain.
-
-**Theorem 14.43 (the Auslander–Buchsbaum factoriality theorem).** Every regular local ring is a unique factorization domain.
-
-**Proof.** Let $A$ be regular local of dimension $n$, with maximal ideal $\mathfrak m$. It is a domain by Proposition 14.15. We induct on $n$, the statement being that all regular local rings of dimension $n$ are factorial.
-
-If $n=0$ then $A$ is a field and there is nothing to prove. If $n=1$ then $\mathfrak m$ is principal and is the only prime of height one, so Theorem 14.38 applies.
-
-Let $n\geq2$ and choose $x\in\mathfrak m\setminus\mathfrak m^2$, possible because $\mathfrak m\neq\mathfrak m^2$. By Lemma 14.14 the ring $A/(x)$ is regular local of dimension $n-1$, hence a domain by Proposition 14.15, so $x$ is a prime element of $A$. Let $S=\{1,x,x^2,\ldots\}$ and $R=S^{-1}A=A_x$, a noetherian domain. By Theorem 14.39 it suffices to prove that $R$ is factorial, and by Theorem 14.38 it suffices to prove that every height-one prime $Q$ of $R$ is principal.
-
-Such a $Q$ is $\mathfrak qR$ for a unique prime $\mathfrak q$ of $A$ with $x\notin\mathfrak q$ and $\operatorname{ht}\mathfrak q=\operatorname{ht}Q=1$. We verify the two hypotheses of the local-to-global step.
-
-_The module $Q$ has a finite free resolution._ By Theorem 14.36 the ideal $\mathfrak q$, a finite $A$-module, has a resolution $0\to F_r\to\cdots\to F_0\to\mathfrak q\to0$ by finite free $A$-modules with $r\leq n$. Localizing at $S$ is exact and preserves finite freeness, so $Q=S^{-1}\mathfrak q$ has such a resolution over $R$.
-
-_The module $Q$ is free at every localization._ A prime of $R$ is $P=\mathfrak pR$ with $\mathfrak p$ a prime of $A$ not containing $x$, and $R_P=A_{\mathfrak p}$, while $Q_P=\mathfrak qA_{\mathfrak p}$. Since $x\in\mathfrak m\setminus\mathfrak p$, we have $\mathfrak p\neq\mathfrak m$, so Corollary 14.37 makes $A_{\mathfrak p}$ a regular local ring of dimension $\operatorname{ht}\mathfrak p\leq n-1$. By the inductive hypothesis $A_{\mathfrak p}$ is factorial. If $\mathfrak q\not\subseteq\mathfrak p$ then $\mathfrak qA_{\mathfrak p}=A_{\mathfrak p}$ is free of rank one. If $\mathfrak q\subseteq\mathfrak p$ then $\mathfrak qA_{\mathfrak p}$ is a prime of $A_{\mathfrak p}$ of height one, hence principal by Theorem 14.38, say $\mathfrak qA_{\mathfrak p}=tA_{\mathfrak p}$ with $t\neq0$; multiplication by $t$ is injective on the domain $A_{\mathfrak p}$, so $\mathfrak qA_{\mathfrak p}$ is again free of rank one.
-
-By Lemma 14.40 the module $Q$ is a direct summand of a finite free $R$-module, by Lemma 14.41 it is stably free, and by Lemma 14.42 — applied to the nonzero ideal $Q\subseteq R$ of the domain $R$ — it is principal. Hence $R$ is factorial by Theorem 14.38, and $A$ is factorial by Theorem 14.39. $\square$
-
-Two remarks on the shape of the argument are worth recording. The induction is genuinely an induction on the dimension of _other_ rings: what is used about $A$ itself at dimension $n$ is only the existence of a prime element, whereas factoriality of the smaller-dimensional rings $A_{\mathfrak p}$ is what makes the height-one prime locally principal. This is why Corollary 14.37 is indispensable and why the homological characterization of regularity, rather than the numerical one, is the right tool. Second, the finite free resolution is used exactly once, to upgrade "locally principal" to "principal"; the local hypothesis alone would only say that the ideal is invertible, and invertible ideals need not be principal on a general noetherian domain.
-
-**Corollary 14.44.** A factorial domain is integrally closed in its fraction field. Consequently every regular local ring is a normal domain, and a regular noetherian ring is normal.
-
-**Proof.** Let $A$ be factorial with fraction field $K$ and let $z\in K$ be integral over $A$, satisfying
-$$
-z^d+c_{d-1}z^{d-1}+\cdots+c_0=0,\qquad c_i\in A .
-$$
-
-Write $z=a/b$ with $a,b\in A$, $b\neq0$, and cancel all common irreducible factors, which is possible by unique factorization; then no irreducible element divides both $a$ and $b$. Multiplying the equation by $b^d$ gives
-$$
-a^d=-b\,(c_{d-1}a^{d-1}+c_{d-2}a^{d-2}b+\cdots+c_0b^{d-1}).
-$$
-
-If $b$ were a nonunit, an irreducible factor $\pi$ of $b$ would be prime and would divide $a^d$, hence $a$, contradicting the choice of $a$ and $b$. So $b$ is a unit and $z\in A$.
-
-For the consequences, a regular local ring is factorial by Theorem 14.43, hence integrally closed; and if $A$ is a regular noetherian ring, each $A_{\mathfrak p}$ is regular local, hence an integrally closed domain, which is normality. $\square$
-
-Corollary 14.44 makes the two Serre conditions automatic for a regular ring in a way that does not pass through the depth calculus at all: such a ring is normal outright, and the conditions $(R_1)$ and $(S_2)$ then follow from Theorem 14.26. It also completes the picture of Section 4.2, where the equivalence of normality, regularity, and the discrete valuation property in dimension one was asserted with only a sketch: in dimension one, factoriality of a regular local ring gives integral closedness directly, and the reverse implication is the valuation-theoretic characterization of Book 1.
-
-The divisor-theoretic consequence is the one that later chapters and later books consume. On an integral noetherian scheme $X$, a prime divisor $Z$ with generic point $\eta$ corresponds at each point $x\in Z$ to the height-one prime $\mathfrak p_x\subseteq\mathcal O_{X,x}$ of functions vanishing on $Z$. If $X$ is regular, Theorem 14.43 and Theorem 14.38 make every such $\mathfrak p_x$ principal, so $Z$ is cut out near $x$ by a single equation. Thus on a regular integral noetherian scheme every Weil divisor is Cartier, and the group of Weil divisors, the group of Cartier divisors, and the group of invertible fractional ideal sheaves coincide. For a regular arithmetic surface this is the statement that both the horizontal divisors of Section 5.3 and the components of the special fibers are locally principal, which is what allows the intersection numbers of Section 11.1 to be defined by pulling back local equations.
-
-### 14.9 What the criteria return to the models
+### 14.7 Homological regularity and factoriality
+
+Two results used constantly in Chapters 4 to 12 were established once and for all in Sections 4.2
+and 4.3, before any of them was needed: Serre's homological characterization of regularity
+(Theorem 4.1H), with its consequence that regularity passes to localizations (Corollary 4.1I),
+and the Auslander--Buchsbaum factoriality theorem (Theorem 4.1O), with Kaplansky's criterion,
+Nagata's lemma, and the stable-freeness mechanism that feeds it. They are recorded there rather
+than here because their first consumers are Proposition 4.2 and the divisor calculus: a regular
+local ring is normal by Corollary 4.1P, every Weil divisor on a regular arithmetic surface is
+Cartier, and the intersection pairing of Section 11.1 is defined through local equations.
+
+This chapter adds what those sections deliberately left out. The homological characterization as
+proved in Section 4.2 gives the bound $\operatorname{pd}_Ak\leq n$; the Auslander--Buchsbaum
+formula of Section 14.3 upgrades it to equality, since $k$ has depth $0$. The freeness results of
+Section 14.6 turn the same formula into the statements later books use on covers of surfaces: a
+finite module of depth two over a two-dimensional regular local ring is free, and a finite normal
+local domain over one is free as a module. The criterion proved here agrees with its Book 10a
+version, Section 2.2, where the same equivalence carries the excellence package; neither proof
+depends on the other.
+
+### 14.8 What the criteria return to the models
 
 The chapter closes by recording where each result is used.
 
-Section 4.1 proved Serre's criterion in the codimension-two form needed by the intervening
-chapters. Theorem 14.26 rederives the general ring statement from the expanded depth calculus:
-Theorem 14.23 supplies the forward implication, while Theorem 14.24 and Lemma 14.25 supply the
-converse. In this respect the chapter is an expansion of Section 4.1 rather than a prerequisite for it.
+Section 4.1 stated and proved Serre's criterion for the intervening chapters. Theorem 14.26
+rederives the general ring statement from the expanded depth calculus: Theorem 14.23 supplies the
+forward implication, while Theorem 14.24 and Lemma 14.25 supply the converse. In this respect the
+chapter is an expansion of Section 4.1 rather than a prerequisite for it.
 
-Sections 14.7 and 14.8 are the exception, and deliberately so: Proposition 4.2 and the divisor
-calculus of Chapters 5, 9, and 11 use the factoriality of regular local rings, and Theorem 14.43 is
-where that is proved. No circularity arises, because the proof of Theorem 14.43 draws only on
-Sections 14.1 to 14.4 — depth, the Auslander–Buchsbaum formula, and the elementary properties of
-regular local rings — and never on Serre's normality criterion or on Proposition 4.2.
+The homological characterization of regularity and the factoriality of regular local rings are not
+proved in this chapter; they are established once, before their first consumers, as Theorem 4.1H
+and Theorem 4.1O of Sections 4.2 and 4.3, because Proposition 4.2 and the divisor calculus of
+Chapters 5, 9, and 11 need them there. Section 14.7 records what those sections prove and how the
+results of this chapter — the Auslander–Buchsbaum equality, the freeness theorems of Section 14.6 —
+complete them.
 
-Section 4.2 identified normal, regular, and discrete valuation rings in dimension one. Its
+Section 4.4 identified normal, regular, and discrete valuation rings in dimension one. Its
 valuation-theoretic half is Book 1, Theorem 4.1; the implication from regularity to normality is
-Theorem 14.43 together with Corollary 14.44, and the resulting statement is used inside Theorem
+Theorem 4.1O together with Corollary 4.1P, and the resulting statement is used inside Theorem
 14.26.
 
-Section 4.3 asserted that the quadratic cone is normal because it is a Cohen–Macaulay hypersurface with a codimension-two singularity. The example after Theorem 14.20 proves it, and the same three steps prove Theorem 14.20 itself for the arithmetic family $xy=\pi^n$.
+Section 4.5 asserted that the quadratic cone is normal because it is a Cohen–Macaulay hypersurface with a codimension-two singularity. The example after Theorem 14.20 proves it, and the same three steps prove Theorem 14.20 itself for the arithmetic family $xy=\pi^n$.
 
-Section 4.4 gave the hypersurface regularity test $f\notin\mathfrak n^2$; that is Corollary 14.18, and it identifies $n=1$ as the only regular member of the family $xy=\pi^n$.
+Section 4.6 gave the hypersurface regularity test $f\notin\mathfrak n^2$; that is Corollary 14.18, and it identifies $n=1$ as the only regular member of the family $xy=\pi^n$.
 
 Sections 8.5 and 10.4 blow up the singular members of that family. Theorem 14.20 shows what the blowups are for: the surfaces $xy=\pi^n$ with $n\geq2$ are normal, so normalization is powerless against them and only a resolution helps. This is the precise sense in which normalization and resolution repair different defects.
 
@@ -3856,4 +4152,17 @@ Section 11.4 and Section 12.4 use the semistable local equation $xy=\pi$ and its
 
 Theorems 14.27 and 14.30 and Corollary 14.29 are stated in the form that later books require: over a two-dimensional regular local ring, a finite module of depth two is free, and this applies to reflexive modules and to finite normal local domains. The hypothesis that cannot be dropped is depth, not torsion-freeness: a torsion-free module has depth at least one, which in dimension two is not enough, and the freeness statement genuinely uses the second regular parameter.
 
-Sections 14.7 and 14.8 close the last two gaps in the treatment of regularity itself. Corollary 14.37 proves that regularity passes to localizations, which the standing terminology of Section 1.2 and the fiberwise arguments of Section 4.4 both presuppose, and which Theorem 14.20 and the quadratic-cone example verified by hand in their particular cases. Theorem 14.43 proves that a regular local ring is factorial, so that Proposition 4.2 is complete as stated, so that the normality of regular schemes recorded in Corollary 14.44 needs no separate verification, and above all so that on a regular arithmetic surface every prime divisor is locally cut out by one equation. That last statement is the standing hypothesis behind the divisor calculus of Chapters 5, 9, and 11: it is what identifies Weil divisors with Cartier divisors, hence what makes the intersection pairing of Section 11.1 well defined and computable from local equations. The chain of implications is worth naming once more, because each link was proved here: regular implies finite global dimension (Theorem 14.36), finite global dimension localizes (Corollary 14.37), locally free plus finite free resolution implies free (Lemmas 14.40 to 14.42), and factoriality follows by descent along one prime element (Theorem 14.39).
+Theorem 4.1I closes the last gap in the treatment of regularity itself. It proves that regularity
+passes to localizations, which the standing terminology of Section 1.2 and the fiberwise arguments
+of Section 4.6 both presuppose, and which Theorem 14.20 and the quadratic-cone example verified by
+hand in their particular cases. Theorem 4.1O proves that a regular local ring is factorial, so that
+Proposition 4.2 is complete as stated, so that the normality of regular schemes recorded in
+Corollary 4.1P needs no separate verification, and above all so that on a regular arithmetic surface
+every prime divisor is locally cut out by one equation. That last statement is the standing
+hypothesis behind the divisor calculus of Chapters 5, 9, and 11: it is what identifies Weil divisors
+with Cartier divisors, hence what makes the intersection pairing of Section 11.1 well defined and
+computable from local equations. The chain of implications is worth naming once more; each link was
+proved in Sections 4.2 and 4.3: regular implies finite global dimension (Proposition 4.1A),
+finite global dimension characterizes regularity (Theorem 4.1H) and so localizes (Corollary 4.1I),
+locally free plus finite free resolution implies free (Lemmas 4.1L to 4.1N), and factoriality
+follows by descent along one prime element (Theorem 4.1K).
