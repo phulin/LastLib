@@ -753,14 +753,16 @@ structure Chapter05AbelianBreakDetectionData
         reduced_package.quotient_local.profile
         reduced_package.quotient_inertia_transfer v b
 
+universe u
+
 theorem chapter05_abelian_break_detection_data_of_construction
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
     {D : Chapter05RamificationFiltration (Gal(L / K))} {v : ℝ}
-    (B : Chapter05AbelianBreakDetectionConstructionData D v)
+    (B : Chapter05AbelianBreakDetectionConstructionData.{_, _, u} D v)
     (hbreak : chapter05UpperBreak D v) :
-    Nonempty (Chapter05AbelianBreakDetectionData D v) := by
-  sorry
+    Nonempty (Chapter05AbelianBreakDetectionData.{_, _, u} D v) := by
+  exact ⟨{ B with source_break := hbreak }⟩
 
 theorem chapter05_abelian_break_detection_construction
     {K L : Type*} [Field K] [Field L] [Algebra K L]
