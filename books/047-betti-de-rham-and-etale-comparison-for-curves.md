@@ -7,11 +7,12 @@
    - [Standing hypotheses and notation](#12-standing-hypotheses-and-notation)
    - [The comparison triangle](#13-the-comparison-triangle)
    - [Normalizations that cannot be suppressed](#14-normalizations-that-cannot-be-suppressed)
-2. [Singular chains, cochains, and products](#2-singular-chains-cochains-and-products)
-   - [Chains and homotopy](#21-chains-and-homotopy)
+2. [Simplicial chains, cochains, and products](#2-simplicial-chains-cochains-and-products)
+   - [Finite simplicial complexes, chains, and homology](#21-finite-simplicial-complexes-chains-and-homology)
    - [Cochains and the universal coefficient theorem](#22-cochains-and-the-universal-coefficient-theorem)
    - [Cup products and cap products](#23-cup-products-and-cap-products)
-   - [Relative groups, compact support, and functoriality](#24-relative-groups-compact-support-and-functoriality)
+   - [The fundamental class and Poincaré duality](#24-the-fundamental-class-and-poincaré-duality)
+   - [Relative groups, compact support, and functoriality](#25-relative-groups-compact-support-and-functoriality)
 3. [Compact Riemann surfaces as oriented topological surfaces](#3-compact-riemann-surfaces-as-oriented-topological-surfaces)
    - [Complex orientation and the fundamental class](#31-complex-orientation-and-the-fundamental-class)
    - [The genus calculation](#32-the-genus-calculation)
@@ -134,7 +135,7 @@ $$
 
 Books 9 and 46 identify this with $\dim_KH^1(X,\mathcal O_X)$ and show that $H^1_{\mathrm{dR}}(X/K)$ has dimension $2g$.
 
-Singular homology is written $H_n(X^{\mathrm{an}},A)$ and singular cohomology $H^n_B(X,A)$. For a commutative ring $A$, constant coefficients mean the constant sheaf or constant local system associated with $A$. Étale coefficients have order invertible on the curve whenever the ground field has positive characteristic; over $\mathbf C$ this restriction is automatic. We write $\mathbf Z_\ell(1)=\varprojlim_m\mu_{\ell^m}$ and keep this twist visible.
+Under Hypothesis (T), Betti homology and cohomology are computed from the finite simplicial complex $K_X$: we write $H_n(X^{\mathrm{an}},A)$ for $H_n(K_X,A)$ and $H^n_B(X,A)$ for $H^n_B(K_X,A)$, the notation of Section 2.1 making these independent of the chosen triangulation. For a commutative ring $A$, constant coefficients mean the constant sheaf or constant local system associated with $A$. Étale coefficients have order invertible on the curve whenever the ground field has positive characteristic; over $\mathbf C$ this restriction is automatic. We write $\mathbf Z_\ell(1)=\varprojlim_m\mu_{\ell^m}$ and keep this twist visible.
 
 Maps act contravariantly on cohomology. A finite map also has a covariant trace, denoted $f_*$. A finite correspondence
 
@@ -164,7 +165,7 @@ $$
 
 The vertical arrows in the middle express change of coefficients from one integral Betti lattice. They do not identify $\mathbf C$ with $\mathbf Q_\ell$. Thus the Betti lattice is the common rational source, while the de Rham and étale realizations retain their own scalar fields and extra structures.
 
-The construction proceeds in the only logically safe order. We first build singular (co)homology and its surface duality. We next prove analytic de Rham comparison, then algebraize it. Separately, we prove Riemann existence and finite-coefficient Betti--étale comparison before passing to inverse limits. Only after both bridges exist do we compare traces, cycles, correspondences, and polarizations.
+The construction proceeds in the only logically safe order. We first build simplicial (co)homology together with its universal coefficient theorem, surface duality, and fundamental class—everything reduced to finite combinatorics once Hypothesis (T) supplies a triangulation. We next prove analytic de Rham comparison, then algebraize it. Separately, we prove Riemann existence and finite-coefficient Betti--étale comparison before passing to inverse limits. Only after both bridges exist do we compare traces, cycles, correspondences, and polarizations.
 
 ### 1.4 Normalizations that cannot be suppressed
 
@@ -2025,6 +2026,8 @@ If $X$ is smooth but not proper, the logarithmic-boundary argument of Section 5.
 The hypotheses have distinct roles.
 
 - Smoothness makes $X^{\mathrm{an}}$ a manifold, makes algebraic differentials locally free, and identifies finite unramified maps with covering maps. Singular curves require intersection cohomology, normalization terms, or dualizing complexes and are outside this comparison statement.
+
+- Hypothesis (T) of Chapter 2—the finite triangulability of every Riemann surface occurring here, classically the theorem of Radó plus surface triangulability—is a standing geometric input that this book does not prove. It is consumed once, in fixing the simplicial model of Section 2.1 from which all Betti groups, products, dualities, and relative groups are then derived combinatorially; dropping it suspends the integral lattice itself, not any later step.
 
 - Properness makes $X^{\mathrm{an}}$ compact, algebraizes finite analytic covers without boundary data, gives ordinary Poincaré duality, and makes the Jacobian compact. Open curves use compact support and boundary monodromy.
 
