@@ -111,13 +111,20 @@ diagonal image of `K` is dense in the finite adele ring.
 theorem chapter05_theorem_5_1_strong_approximation_away_from_infinity
     (K : Type*) [Field K] [NumberField K] :
     DenseRange (chapter05FiniteDiagonal K) := by
-  sorry
+  rw [denseRange_iff_closure_range]
+  apply Set.eq_univ_of_forall
+  intro x
+  rw [mem_closure_iff_nhds]
+  intro U hU
+  rcases chapter05_finite_diagonal_hits_nhds K x U hU with ⟨a, ha⟩
+  exact ⟨chapter05FiniteDiagonal K a, ha, ⟨a, rfl⟩⟩
 
 theorem chapter05_strong_approximation_finite_adeles_closure
     (K : Type*) [Field K] [NumberField K] :
     closure (Set.range (chapter05FiniteDiagonal K)) =
       (Set.univ : Set (Chapter04FiniteAdeleRing K)) := by
-  sorry
+  rw [← denseRange_iff_closure_range]
+  exact chapter05_theorem_5_1_strong_approximation_away_from_infinity K
 
 theorem chapter05_strong_approximation_finite_adeles_iff_nhds
     (K : Type*) [Field K] [NumberField K] :
@@ -125,7 +132,11 @@ theorem chapter05_strong_approximation_finite_adeles_iff_nhds
       ∀ (x : Chapter04FiniteAdeleRing K)
         (U : Set (Chapter04FiniteAdeleRing K)), U ∈ 𝓝 x →
           ∃ a : K, chapter05FiniteDiagonal K a ∈ U := by
-  sorry
+  constructor
+  · intro _ x U hU
+    exact chapter05_finite_diagonal_hits_nhds K x U hU
+  · intro _
+    exact chapter05_theorem_5_1_strong_approximation_away_from_infinity K
 
 end
 
