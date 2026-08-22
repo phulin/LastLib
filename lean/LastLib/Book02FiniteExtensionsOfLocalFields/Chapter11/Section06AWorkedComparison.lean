@@ -28,7 +28,15 @@ theorem chapter11_unramified_comparison_norm_valuation
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
         vK vL hunram.1) (x : L) :
     vK (Algebra.norm K x) = (f : WithTop ℤ) * vL x := by
-  sorry
+  have hfpos : 0 < f := by
+    rw [← hdegree]
+    exact Module.finrank_pos
+  by_cases hx : x = 0
+  · subst x
+    simp [hfpos.ne']
+  · exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04_norm_valuation_formula
+      K L 1 f hunram.1 hunram.2.1 hfres hunique
+      (by simpa using hdegree) x hx
 
 /- All base units are norms in the finite-residue unramified comparison. -/
 theorem chapter11_unramified_comparison_units_are_norms
@@ -52,7 +60,47 @@ theorem chapter11_unramified_comparison_units_are_norms
       (chapter11ResidueMap vK) (chapter11ResidueMap vL) 1 N) :
     Set.SurjOn (Algebra.norm K (S := L))
       (chapter11UnitFiltration vL 0) (chapter11UnitFiltration vK 0) := by
-  sorry
+  have hprincipal :=
+    proposition_11_1_unramified_principal_unit_norm_surjective K L vK vL hunram hdegree hred
+  have himage :=
+    proposition_11_1_unramified_all_unit_norm_image K L
+      (chapter11ResidueField vK) (chapter11ResidueField vL) vK vL hunram
+      (chapter11ResidueMap vK) (chapter11ResidueMap vL) hdegree hred N hnormunit hnormred
+      hprincipal
+  intro x hx
+  have hxunit : x ∈ chapter11UnitSet vK := by
+    simpa [chapter11UnitFiltration] using hx
+  rcases hxunit with ⟨u, hu⟩
+  let U : (chapter11ValuationRing vK)ˣ :=
+    vK.toValuation.valuationSubring.unitGroupMulEquiv u
+  have hUx : ((U : chapter11ValuationRing vK) : K) = x := by
+    exact (vK.toValuation.valuationSubring.coe_unitGroupMulEquiv_apply u).trans hu.symm
+  let wK : (chapter11ResidueField vK)ˣ :=
+    Units.map (chapter11ResidueMap vK) U
+  have hwK0 : (wK : chapter11ResidueField vK) ≠ 0 := wK.ne_zero
+  obtain ⟨a, ha⟩ :=
+    chapter11_finite_residue_norm_surjective
+      (chapter11ResidueField vK) (chapter11ResidueField vL) (wK : chapter11ResidueField vK)
+  have ha0 : a ≠ 0 := by
+    intro ha0
+    apply hwK0
+    rw [← ha, ha0]
+    simp
+  let w : (chapter11ResidueField vL)ˣ := Units.mk0 a ha0
+  have hw : Algebra.norm (chapter11ResidueField vK) (w : chapter11ResidueField vL) =
+      (wK : chapter11ResidueField vK) := by
+    change Algebra.norm (chapter11ResidueField vK) a = _
+    exact ha
+  have hxcond : x ∈ chapter11ResidueConditionSet (vK) (chapter11ResidueMap vK)
+      (chapter11ResidueUnitNormImage (chapter11ResidueField vK)
+        (chapter11ResidueField vL)) := by
+    refine ⟨?_, ⟨(U : chapter11ValuationRing vK), hUx, ?_⟩⟩
+    · exact ⟨u, hu⟩
+    · exact ⟨w, hw⟩
+  have hxnorm : x ∈ chapter11NormImage K L vL 0 := by
+    rw [himage]
+    exact hxcond
+  exact (chapter11_mem_norm_image_iff K L vL 0 x).mp hxnorm
 
 /- A base uniformizer cannot be a norm when the unramified degree is greater
    than one, because its valuation is not divisible by that degree. -/

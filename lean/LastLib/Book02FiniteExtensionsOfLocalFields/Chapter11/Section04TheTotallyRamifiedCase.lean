@@ -544,7 +544,18 @@ theorem chapter11_tame_residue_power_quotient_index
     (k : Type*) [Field k] [Fintype k] (e : ℕ) :
     Nat.card (kˣ ⧸ chapter11PowerSubgroup k e) =
       Nat.gcd e (Fintype.card k - 1) := by
-  sorry
+  have hpow : chapter11PowerSubgroup k e =
+      (powMonoidHom e : kˣ →* kˣ).range := by
+    ext u
+    rw [chapter11_mem_power_subgroup_iff]
+    constructor
+    · rintro ⟨z, hz⟩
+      exact ⟨z, by simpa [powMonoidHom_apply] using hz⟩
+    · rintro ⟨z, hz⟩
+      exact ⟨z, by simpa [powMonoidHom_apply] using hz⟩
+  rw [← Subgroup.index_eq_card, hpow, IsCyclic.index_powMonoidHom_range]
+  rw [Nat.card_units, Nat.card_eq_fintype_card]
+  exact Nat.gcd_comm _ _
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11
