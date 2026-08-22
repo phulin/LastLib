@@ -1,4 +1,5 @@
 import LastLib.Book03RamificationTheory.Chapter04.Section01PassingToAnIntermediateBase
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.Section01TheLocalExtensionProblem
 
 namespace LastLib.Book03RamificationTheory.Chapter04
 
@@ -56,21 +57,12 @@ theorem chapter04_naive_quotient_formula_fails_of_mismatch
   intro hformula
   exact hmismatch (hformula i)
 
-/-- The normalization datum that compares a valuation on an intermediate field
-with the restriction of the normalized valuation upstairs. -/
-def chapter04NormalizedValuationRestriction
-    {M L : Type*} [Field M] [Field L] [Algebra M L]
-    (vM : AddValuation M (WithTop ℤ))
-    (vL : AddValuation L (WithTop ℤ)) (e : ℕ) : Prop :=
-  0 < e ∧
-    ∀ x : M,
-      vL (algebraMap M L x) = e • vM x
-
 /- SOURCE_WARNING: `chapter04NaiveQuotientLowerGroup` is only the displayed
    candidate `Gᵢ H / H`.  The source explicitly warns that it is generally
    false after normalized valuations are compared downstairs.  The comparison
-   is recorded by `chapter04NormalizedValuationRestriction`; this file does not
-   turn the candidate into an axiom or theorem. -/
+   is recorded by the established Book 2 interface
+   `chapter01ValuationRestrictionScale`; this file does not turn the candidate
+   into an axiom or theorem. -/
 
 /-- When `H` is normal, the fixed field is Galois over `K`, and Mathlib's
 canonical quotient equivalence identifies its Galois group with `G / H`. -/
