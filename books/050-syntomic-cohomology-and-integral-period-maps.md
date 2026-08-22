@@ -21,8 +21,9 @@
    - [Divided-power exponential and logarithm](#41-divided-power-exponential-and-logarithm)
    - [The fixed points in weight zero](#42-the-fixed-points-in-weight-zero)
    - [The fixed points in weight one](#43-the-fixed-points-in-weight-one)
-   - [Local surjectivity of the Frobenius differences](#44-local-surjectivity-of-the-frobenius-differences)
-   - [The fundamental exact sequences](#45-the-fundamental-exact-sequences)
+   - [Syntomic covers from monic equations](#44-syntomic-covers-from-monic-equations)
+   - [Local surjectivity of the Frobenius differences](#45-local-surjectivity-of-the-frobenius-differences)
+   - [The fundamental exact sequences](#46-the-fundamental-exact-sequences)
 5. [Syntomic cohomology and its exact sequences](#5-syntomic-cohomology-and-its-exact-sequences)
    - [Hypercohomology](#51-hypercohomology)
    - [The long exact sequence](#52-the-long-exact-sequence)
@@ -121,7 +122,7 @@ for its finite levels, special fiber, and generic fiber. The completion organize
 
 The unramified choice $V=W(k)$ is substantive. It provides a canonical Frobenius on the base and gives the clean divisibility needed for weights $0$ and $1$. Ramified bases require additional divided-power envelopes and, in general, a ramification bound or logarithmic theory. No theorem below is silently extended to that setting.
 
-We use the small $p$-adic syntomic site attached to $X$. Its algebraic objects are syntomic morphisms $U\to X$; the period sheaves evaluate their compatible reductions $U_m\to X_m$ and the divided-power thickenings of $U_1$. A covering is jointly surjective and consists of syntomic morphisms. This convention is important: the coefficient sheaves below classify torsors on the integral model, not torsors on the special fiber alone. Etale covers are syntomic, and the finite-flat root covers used in Kummer theory are syntomic. For the two coefficients used here, $\mathbf Z/p^n$ and $\mu_{p^n}$, degree-one torsors have the same classification in the syntomic and fppf topologies: both coefficient schemes, and hence their torsors locally, are finite locally free complete intersections. No such comparison is asserted for an arbitrary finite locally free group scheme without the local-complete-intersection hypothesis.
+We use the small $p$-adic syntomic site attached to $X$. Its algebraic objects are syntomic morphisms $U\to X$; the period sheaves evaluate their compatible reductions $U_m\to X_m$ and the divided-power thickenings of $U_1$. A morphism is called syntomic if it is flat, of finite presentation, and locally on the source factors as a regular immersion into a smooth scheme over the target. A covering is jointly surjective and consists of syntomic morphisms. This convention is important: the coefficient sheaves below classify torsors on the integral model, not torsors on the special fiber alone. Etale covers are syntomic, and the finite-flat root covers used in Kummer theory are syntomic; Section 4.4 proves this for root covers from their monic equations, with no cotangent-complex input. For the two coefficients used here, $\mathbf Z/p^n$ and $\mu_{p^n}$, degree-one torsors have the same classification in the syntomic and fppf topologies; the comparison is proved in Theorem 7.1. No such comparison is asserted for an arbitrary finite locally free group scheme without the local-complete-intersection hypothesis.
 
 Complexes are cohomological. For a map $f:A^\bullet\to B^\bullet$, the complex
 
@@ -603,7 +604,27 @@ Thus $u$ belongs to $\mu_{p^n}$. Lemma 4.1 shows on every finite mixed quotient 
 
 This proof retains the nonreduced structure of $\mu_{p^n}$. Counting geometric roots would give only the identity in characteristic $p$ and would miss the theorem.
 
-### 4.4 Local surjectivity of the Frobenius differences
+### 4.4 Syntomic covers from monic equations
+
+The syntomic topology is used through finite-flat root adjunctions, so the fact that such adjunctions produce syntomic covers must be proved rather than invoked. This section isolates the argument. Recall the working notion of Section 1.2: a morphism of $V$-schemes is **syntomic** if it is flat, of finite presentation, and locally on the source factors as a regular immersion into a smooth scheme over the target; a family of morphisms is a **syntomic cover** if it is jointly surjective and each member is syntomic.
+
+**Lci lemma.** Let $S$ be a scheme and let $u\in\Gamma(S,\mathcal O_S)^\times$ be a unit. Then
+
+$$
+P_u=\operatorname{Spec}\mathcal O_S[T]/\bigl(T^{p^n}-u\bigr)
+$$
+
+is finite locally free of rank $p^n$ over $S$, the morphism $P_u\to S$ is syntomic, and it is surjective. Moreover every fppf torsor under $\mu_{p^n}$ is Zariski-locally on its base of this form, and is therefore itself a syntomic cover of its base. The constant group $\mathbf Z/p^n$ and its torsors are finite etale, hence syntomic.
+
+**Proof.** Because $T^{p^n}-u$ is monic, division with remainder makes $\mathcal O_S[T]/(T^{p^n}-u)$ a free module of rank $p^n$ over $\mathcal O_S$ with basis $1,T,\ldots,T^{p^n-1}$: for any polynomial, replace the leading term $aT^m$, $m\ge p^n$, by $a\,uT^{m-p^n}$, which lowers the degree. So $P_u\to S$ is finite locally free, hence flat and of finite presentation, and of positive constant rank; a finite flat morphism of positive rank hits every point of the target, since its fibers have degree $p^n>0$, so the morphism is surjective.
+
+It remains to see the local complete intersection property. The polynomial $T^{p^n}-u$ is monic, and a monic polynomial is never a zero divisor in a polynomial ring: multiplication by it shifts the filtration by degree, so it is injective. Hence the single equation $T^{p^n}-u=0$ is a regular sequence of length one in the polynomial algebra $\mathcal O_S[T]$, which is smooth over $\mathcal O_S$. Thus $P_u\to S$ is, Zariski-locally on $S$, the regular immersion of a hypersurface into the smooth $S$-scheme $\mathbf A^1_S$: exactly the factorization required by the definition, with no cotangent-complex input. Therefore $P_u\to S$ is syntomic.
+
+For the torsor statement, Book 29 classifies fppf torsors under $\mu_{p^n}$ by pairs $(L,\varphi)$ consisting of a line bundle $L$ and an isomorphism $\varphi:L^{\otimes p^n}\xrightarrow{\sim}\mathcal O_X$; the torsor is the relative spectrum of the graded algebra $\mathcal O_X\oplus L^{-1}\oplus\cdots\oplus L^{-(p^n-1)}$. Choose a local frame $e$ of $L$ and put $\varphi(e^{\otimes p^n})=c$. Over that same Zariski open, multiplication by powers of a root coordinate identifies the graded algebra with $\mathcal O_X[T]/(T^{p^n}-c^{-1})$, which is exactly the scheme $P_u$ analyzed above with $u=c^{-1}$. Since being finite locally free and locally a regular immersion into a smooth scheme are Zariski-local properties of the morphism, an arbitrary $\mu_{p^n}$-torsor is syntomic over its base, and being finite locally free of positive rank it is surjective; as a torsor, its own total space trivializes it. For $\mathbf Z/p^n$, the group scheme is a disjoint union of copies of the base and both statements are immediate. $\square$
+
+Two consequences are recorded for repeated use. First, adjoining a root of a monic equation to any algebra returns a finite free extension: the free basis above is compatible with base change along an arbitrary morphism. Second, a successive adjunction of finitely many roots of monic equations is again covered by the lemma layer by layer, because each layer is flat and of finite presentation over the previous one and a composite of regular immersions into smooth schemes is presented by the concatenated regular sequence. Both facts are used, without further comment, in the refinement arguments below.
+
+### 4.5 Local surjectivity of the Frobenius differences
 
 Identifying kernels is only half of an exact sequence. We must prove that $1-\varphi_r$ is locally surjective in the syntomic topology.
 
@@ -617,7 +638,7 @@ $$
 
 is an epimorphism of sheaves on the small syntomic site.
 
-**Proof strategy.** Filter source and target simultaneously by powers of $p$ and divided-power order. In weight zero the graded lifting equations have invertible derivative and give finite-etale covers. In weight one the extra source digit instead produces monic $p$-power equations; their root algebras are finite free complete intersections and hence syntomic. The finitely many generators of a local PD presentation solve all divided monomials compatibly.
+**Proof strategy.** Filter source and target simultaneously by powers of $p$ and divided-power order. In weight zero the graded lifting equations have invertible derivative and give finite-etale covers. In weight one the extra source digit instead produces monic $p$-power equations; by the lci lemma of Section 4.4 their root algebras are syntomic over the previous layer. The finitely many generators of a local PD presentation solve all divided monomials compatibly.
 
 **Proof.** Work locally with a regular immersion into a smooth algebra, choose its finite regular sequence of generators, and first pass to a finite mixed quotient. Filter source and target by the combined $p$-adic and divided-power order. In weight zero, every associated-graded correction module is finite locally free and the equation has the form
 
@@ -640,7 +661,7 @@ z^p=a.
 \tag{4.10c}
 $$
 
-For a regular-immersion generator, (2.5) adds terms depending only on earlier divided-power order. Ordering the regular generators and then the divided monomials consequently makes the system triangular, with equations either (4.10a) or a monic equation $z^p+bz=a$ in the current variable. Adjoining their roots successively gives a finite free algebra: division by a monic polynomial supplies the free basis. The equations form a regular sequence in that free algebra, so the resulting faithfully flat cover is a local complete intersection, hence syntomic. This includes the purely inseparable root covers which weight one genuinely needs.
+For a regular-immersion generator, (2.5) adds terms depending only on earlier divided-power order. Ordering the regular generators and then the divided monomials consequently makes the system triangular, with equations either (4.10a) or a monic equation $z^p+bz=a$ in the current variable. Adjoining their roots successively gives a finite free algebra: division by a monic polynomial supplies the free basis. The equations form a regular sequence in that free algebra, so the resulting faithfully flat cover is a local complete intersection, hence syntomic by the lci lemma of Section 4.4. This includes the purely inseparable root covers which weight one genuinely needs.
 
 Order the finitely many coefficient layers. Suppose a solution has been found modulo the next layer. Its defect lies in a square-zero graded module. The preceding finite-etale or finite-free root algebra supplies a correction, and triangularity ensures that the correction does not disturb earlier layers. A finite succession of syntomic refinements therefore solves every coefficient-layer equation.
 
@@ -655,7 +676,7 @@ The series is finite on every divided-power quotient and hence converges in the 
 
 Weight zero uses the etale part of the syntomic topology, while weight one also uses its finite-flat complete-intersection covers. Zariski localization alone need solve neither (4.10b) nor (4.10c).
 
-### 4.5 The fundamental exact sequences
+### 4.6 The fundamental exact sequences
 
 Combining the kernel and surjectivity calculations gives the local theorem on which the rest of the book rests.
 
@@ -727,7 +748,7 @@ R\mathscr S_n(1)\simeq R\epsilon_*\mu_{p^n}.
 \tag{5.3}
 $$
 
-In degrees zero and one the right sides may equally be computed in the fppf topology. Indeed sections are the same, and a torsor under either coefficient is locally a finite locally free complete intersection, hence supplies a syntomic trivializing cover. This assertion in higher degrees would require a topology-comparison theorem and is not used without proof.
+In degrees zero and one the right sides may equally be computed in the fppf topology. Indeed sections are the same, and a torsor under either coefficient is trivialized by its own total space, which the lci lemma of Section 4.4 and Theorem 7.1 show to be a syntomic cover; hence the Cech classifications coincide. This assertion in higher degrees would require a topology-comparison theorem and is not used without proof.
 
 ### 5.2 The long exact sequence
 
@@ -967,7 +988,7 @@ H^1_{\mathrm{syn}}(X,\mathbf Z/p^n(1))
 \tag{7.3}
 $$
 
-**Proof.** Equation (7.1) identifies sections and torsors on the syntomic site. A $\mu_{p^n}$-torsor is finite locally free over the base and is itself a syntomic cover: locally it has a monic equation, and the torsor condition makes the relative cotangent complex perfect of amplitude $[-1,0]$. Hence every fppf torsor is syntomically locally trivial. Conversely every syntomic trivialization is fppf. The torsor classifications coincide. $\square$
+**Proof.** Equation (7.1) identifies sections and torsor classes on the syntomic site, so it remains to compare the two topologies on $\mu_{p^n}$-torsors. Every syntomic cover is flat and of finite presentation, hence an fppf cover; this gives the arrow from syntomic to fppf classification. Conversely, let $P\to X$ be an arbitrary fppf $\mu_{p^n}$-torsor. By the lci lemma of Section 4.4, applied to the Kummer presentation of Book 29, the scheme $P$ is finite locally free of rank $p^n$, surjective, and syntomic over $X$. Thus $P$ itself is a syntomic cover trivializing $P$, so every fppf torsor is syntomically locally trivial and the two Cech classifications coincide. No cotangent-complex criterion is used: syntomy of a root cover was verified from its monic equation. $\square$
 
 The theorem is not an etale comparison on the special fiber. When $p$ is the residue characteristic, $\mu_{p^n}$ is nonetale and its infinitesimal torsors would be lost in the etale topology.
 
