@@ -957,14 +957,53 @@ $$
 
 modulo coboundaries. For $n=\ell^r$ the right side is zero in $\Lambda_m$ once $rq\geq m$.
 
-_Descent along the tower._ For the finite Galois étale cover $[\ell^r]$ with group $G_r=A[\ell^r](\bar k)$, the Cartan--Leray spectral sequence of Book 18 reads
+_A finite Galois Cartan--Leray sequence._ Book 18 contains Leray for a site map and the arithmetic Hochschild--Serre sequence, but no Cartan--Leray spectral sequence; we derive the finite-level statement here from the double-complex machinery of Book 7a. The input is the following lemma.
+
+**Lemma (Cartan--Leray for a finite étale Galois cover).** Let $\pi:Y\to X$ be a finite étale Galois cover with finite group $G$, and let $\mathcal F$ be a sheaf of $\Lambda_m$-modules on $X$. There is a functorial first-quadrant spectral sequence
+
+$$
+E_2^{a,b}=H^a\bigl(G,H^b(Y,\pi^*\mathcal F)\bigr)
+\Longrightarrow H^{a+b}(X,\mathcal F).
+$$
+
+A map $Y'\to Y$ over $X$ that is equivariant through a homomorphism $G'\to G$ induces a compatible map of spectral sequences: inflation on the group-cohomology factor, pullback on the geometric factor, and the identity on the common abutment.
+
+**Proof.** Write $G\operatorname{-Shv}(Y)$ for the category of $\Lambda_m$-sheaves on $Y$ equipped with a semilinear $G$-action satisfying the cocycle condition.
+
+First, descent identifies this category with sheaves on $X$. Since $\pi$ is finite étale it is an effective descent morphism for sheaves (the fpqc descent formalism of Book 10 applies to sheaves of sets and modules on the small étale sites), and the canonical identification $Y\times_XY\cong\coprod_{g\in G}Y$ rewrites a descent datum as exactly a semilinear action with the cocycle condition. Under this equivalence $\mathcal F$ corresponds to $\pi^*\mathcal F$ with its canonical descent action, and global sections obey the equalizer identity
+
+$$
+\Gamma(X,\mathcal F)=\Gamma(Y,\pi^*\mathcal F)^G,
+$$
+
+because a section on $X$ is a section on $Y$ whose two pullbacks along $Y\rightrightarrows X$ agree, which says precisely $G$-invariance.
+
+Second, the resolution machinery. The category $G\operatorname{-Shv}(Y)$, being equivalent to a sheaf category, has enough injectives (Book 7a, Section 3). Choose an injective resolution $\mathcal F\to I^\bullet$ on $X$ and transport it along the equivalence: this resolves $\pi^*\mathcal F$ by objects $J^q$ injective in $G\operatorname{-Shv}(Y)$ whose images in $\operatorname{Shv}(Y)$ remain injective, since the forgetful functor has an exact left adjoint, namely the free equivariant object generated levelwise (Book 7a, Section 3.1).
+
+Third, the double complex. Put $M^q=\Gamma(Y,J^q)$, a complex of $G$-modules with
+
+$$
+H^b(M^\bullet)=H^b(Y,\pi^*\mathcal F),
+$$
+
+and let $C^{p,q}=C^p_{\mathrm{cts}}(G,M^q)$ — ordinary cochains, since $G$ is finite — totalized as in Book 7a, Section 7.1. Filtering by cochain degree gives one spectral sequence: the surviving initial differential is the sheaf differential, each column is the exact functor $C^p(G,-)$ applied to $M^\bullet$, so
+
+$$
+E_1^{p,q}=C^p(G,H^q(M^\bullet)),
+\qquad
+E_2^{a,b}=H^a\bigl(G,H^b(Y,\pi^*\mathcal F)\bigr).
+$$
+
+Filtering by resolution degree gives the other: the initial page is the group-cohomology of each term, $H^p(G,M^q)$. Here the key finiteness input enters: $M^q$ is an injective $G$-module. Indeed the functor $\Gamma(Y,-):G\operatorname{-Shv}(Y)\to G\operatorname{-Mod}$ has an exact left adjoint, sending a $G$-module $N$ to the constant sheaf on $Y$ with value $N$, carrying the diagonal of the descent actions; a right adjoint to an exact functor preserves injectives (Book 7a, Section 3.1). Hence $H^p(G,M^q)=0$ for $p>0$, this second sequence collapses at level two to the invariant complex $(M^\bullet)^G$, and its abutment is $H^\ast\bigl((M^\bullet)^G\bigr)$. On the equivariant injective resolution the equalizer identity computes this as $R((-)^G\circ\Gamma_Y)(\pi^*\mathcal F)$, that is, as $R\Gamma(X,\mathcal F)$: both sides agree because each $J^q$ is acyclic for the composite functor, its global sections being acyclic for invariants. Since both filtrations totalize the same double complex, the desired page abuts to $H^{a+b}(X,\mathcal F)$. Functoriality for equivariant maps over $X$ is functoriality of the double complex (Book 7a, Sections 8.2 and 10). $\square$
+
+_Descent along the tower._ For the finite Galois étale cover $[\ell^r]$ with group $G_r=A[\ell^r](\bar k)$, the lemma reads
 
 $$
 H^a\bigl(G_r,H^b(A,\Lambda_m)\bigr)
 \Longrightarrow H^{a+b}(A,\Lambda_m),
 $$
 
-where the coefficient $H^b$ is taken upstairs and the abutment downstairs. Pass to the colimit over $r$. By the previous step every transition map on $H^b$ with $b>0$ is eventually zero, so all rows with $b>0$ die in the colimit, and only the row $b=0$ survives. On that row the coefficients are the constant module $\Lambda_m$ with trivial action, and
+where the coefficient $H^b$ is taken upstairs and the abutment downstairs. Pass to the colimit over $r$; this is legitimate term by term, each total diagonal meeting only the rows $0\leq b\leq 2g$, and it commutes with the abutment because the transition maps on the abutment are the identity. By the previous step every transition map on $H^b$ with $b>0$ is eventually zero, so all rows with $b>0$ die in the colimit, and only the row $b=0$ survives. On that row the coefficients are the constant module $\Lambda_m$ with trivial action, and
 
 $$
 \varinjlim_r H^a(G_r,\Lambda_m)
