@@ -1,4 +1,5 @@
 import LastLib.Book03RamificationTheory.Chapter07.Section06TameAndWildDerivativeBounds
+import LastLib.Book03RamificationTheory.Chapter03.Section05WildKummerCalculation
 import LastLib.Book03RamificationTheory.Chapter03.Section07SameDegreeArbitrarilyDifferentDepth
 
 namespace LastLib.Book03RamificationTheory.Chapter07
@@ -9,25 +10,6 @@ open Polynomial
 open scoped BigOperators Polynomial nonZeroDivisors
 
 /-! ## 7.7. Further derivative calculations -/
-
-/-- The cyclotomic polynomial in the coordinate `λ = ζ - 1`. -/
-def chapter07CyclotomicPolynomial
-    (R : Type*) [CommRing R] (p : ℕ) : R[X] :=
-  Finset.sum (Finset.range p) (fun i =>
-    C (Nat.choose p (i + 1) : R) * X ^ i)
-
-theorem chapter07_cyclotomic_polynomial_is_the_displayed_quotient
-    (R : Type*) [CommRing R] (p : ℕ) :
-    X * chapter07CyclotomicPolynomial R p =
-      (1 + X) ^ p - 1 := by
-  sorry
-
-theorem chapter07_cyclotomic_polynomial_is_eisenstein_at_p
-    (p : ℕ) [Fact (Nat.Prime p)] :
-    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.IsEisensteinAt
-      (p : ℤ_[p])
-      (chapter07CyclotomicPolynomial (ℤ_[p]) p) := by
-  sorry
 
 /- The degree and tame numerical profile of `Q_p(ζ_p)`. -/
 theorem chapter07_cyclotomic_degree_and_tameness
@@ -56,7 +38,9 @@ theorem chapter07_cyclotomic_lambda_is_uniformizer_and_root
     lambda = ζ - 1 ∧
       Module.finrank (ℚ_[p]) L = p - 1 ∧
       chapter07IsUniformizer vL lambda ∧
-      aeval lambda (chapter07CyclotomicPolynomial (ℚ_[p]) p) = 0 := by
+      aeval lambda
+        (LastLib.Book03RamificationTheory.Chapter03.chapter03CyclotomicPolynomial
+          (ℚ_[p]) p) = 0 := by
   /- PRIOR ATTEMPT (before repairing the interface):
      exact ⟨hlambda, hroot⟩
      The repaired statement no longer assumes the root equation and exposes
@@ -72,16 +56,21 @@ theorem chapter07_cyclotomic_derivative_valuation
     [FiniteDimensional (ℚ_[p]) L]
     (vL : AddValuation L (WithTop ℤ)) (ζ lambda : L)
     (hζ : IsPrimitiveRoot ζ p) (hlambda : lambda = ζ - 1)
-    (hroot : aeval lambda (chapter07CyclotomicPolynomial (ℚ_[p]) p) = 0)
+    (hroot : aeval lambda
+      (LastLib.Book03RamificationTheory.Chapter03.chapter03CyclotomicPolynomial
+        (ℚ_[p]) p) = 0)
     (huniformizer : chapter07IsUniformizer vL lambda)
     (hEisenstein :
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.IsEisensteinAt
-        (p : ℤ_[p]) (chapter07CyclotomicPolynomial (ℤ_[p]) p))
+        (p : ℤ_[p])
+        (LastLib.Book03RamificationTheory.Chapter03.chapter03CyclotomicPolynomial
+          (ℤ_[p]) p))
     (hscale : ∀ x : ℚ_[p], x ≠ 0 →
       vL (algebraMap (ℚ_[p]) L x) =
         ((p - 1 : ℕ) : WithTop ℤ) * Padic.addValuation x) :
     vL (aeval lambda
-      (chapter07CyclotomicPolynomial (ℚ_[p]) p).derivative) =
+      (LastLib.Book03RamificationTheory.Chapter03.chapter03CyclotomicPolynomial
+        (ℚ_[p]) p).derivative) =
       (p - 2 : WithTop ℤ) := by
   sorry
 
@@ -92,29 +81,23 @@ theorem chapter07_cyclotomic_different_exponent
     [FiniteDimensional (ℚ_[p]) L]
     (vL : AddValuation L (WithTop ℤ)) (ζ lambda : L) (d : ℕ)
     (hζ : IsPrimitiveRoot ζ p) (hlambda : lambda = ζ - 1)
-    (hroot : aeval lambda (chapter07CyclotomicPolynomial (ℚ_[p]) p) = 0)
+    (hroot : aeval lambda
+      (LastLib.Book03RamificationTheory.Chapter03.chapter03CyclotomicPolynomial
+        (ℚ_[p]) p) = 0)
     (huniformizer : chapter07IsUniformizer vL lambda)
     (hEisenstein :
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.IsEisensteinAt
-        (p : ℤ_[p]) (chapter07CyclotomicPolynomial (ℤ_[p]) p))
+        (p : ℤ_[p])
+        (LastLib.Book03RamificationTheory.Chapter03.chapter03CyclotomicPolynomial
+          (ℤ_[p]) p))
     (hscale : ∀ x : ℚ_[p], x ≠ 0 →
       vL (algebraMap (ℚ_[p]) L x) =
         ((p - 1 : ℕ) : WithTop ℤ) * Padic.addValuation x)
     (hdifferent : chapter07DifferentExponentValuation vL
-      (aeval lambda (chapter07CyclotomicPolynomial (ℚ_[p]) p).derivative) d) :
+      (aeval lambda
+        (LastLib.Book03RamificationTheory.Chapter03.chapter03CyclotomicPolynomial
+          (ℚ_[p]) p).derivative) d) :
     d = p - 2 := by
-  sorry
-
-/-- The prime-radical polynomial used for the second mixed-characteristic
-    calculation. -/
-def chapter07PrimeRadicalPolynomial
-    (K : Type*) [CommRing K] (a : K) (p : ℕ) : K[X] :=
-  X ^ p - C a
-
-theorem chapter07_prime_radical_derivative_formula
-    (K : Type*) [CommRing K] (a : K) (p : ℕ) :
-    (chapter07PrimeRadicalPolynomial K a p).derivative =
-      C (p : K) * X ^ (p - 1) := by
   sorry
 
 theorem chapter07_prime_radical_derivative_valuation
@@ -124,7 +107,9 @@ theorem chapter07_prime_radical_derivative_valuation
     (hvalp : vL (algebraMap K L (p : K)) =
       (p * (p - 1) : WithTop ℤ))
     (hvalpha : vL α = (1 : WithTop ℤ)) :
-    vL (aeval α (chapter07PrimeRadicalPolynomial K a p).derivative) =
+    vL (aeval α
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08KummerPolynomial
+        a p).derivative) =
       (p ^ 2 - 1 : WithTop ℤ) := by
   sorry
 
@@ -137,7 +122,9 @@ theorem chapter07_prime_radical_different_exponent
       (p * (p - 1) : WithTop ℤ))
     (hvalpha : vL α = (1 : WithTop ℤ))
     (hdifferent : chapter07DifferentExponentValuation vL
-      (aeval α (chapter07PrimeRadicalPolynomial K a p).derivative) d) :
+      (aeval α
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08KummerPolynomial
+          a p).derivative) d) :
     d = p ^ 2 - 1 := by
   sorry
 
@@ -161,7 +148,10 @@ theorem chapter07_artin_schreier_coordinate_not_integral
   exact (not_le_of_gt hy) hnonnegative
 
 theorem chapter07_artin_schreier_hilbert_different_formula
-    (p m : ℕ) :
+    (p m : ℕ) [Fact (Nat.Prime p)]
+    (_hm :
+      LastLib.Book03RamificationTheory.Chapter03.chapter03ArtinSchreierFamilyMember
+        p m) :
     (LastLib.Book03RamificationTheory.Chapter03.chapter03ArtinSchreierNumericalProfile
       p m).differentExponent =
       chapter07ArtinSchreierHilbertExponent p m := by

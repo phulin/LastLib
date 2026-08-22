@@ -8,47 +8,12 @@ open scoped BigOperators Polynomial nonZeroDivisors
 
 /-! ## 7.1. Measuring the defect of integral trace duality -/
 
-/-- The trace pairing on the field extension. -/
-def chapter07TracePairing
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] : LinearMap.BilinForm K L :=
-  Algebra.traceForm K L
-
-@[simp] theorem chapter07TracePairing_apply
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] (x y : L) :
-    chapter07TracePairing K L x y = Algebra.trace K L (x * y) := by
-  rfl
-
-/- The displayed codifferent, kept as a set for the book-facing definition. -/
-def chapter07CodifferentSet
-    (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
-    [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
-    [IsScalarTower A K L] [IsScalarTower A B L] : Set L :=
-  {x | ∀ y : B, ∃ a : A,
-    algebraMap A K a = Algebra.trace K L (x * algebraMap B L y)}
-
-@[simp] theorem chapter07_mem_codifferentSet_iff
-    (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
-    [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
-    [IsScalarTower A K L] [IsScalarTower A B L] (x : L) :
-    x ∈ chapter07CodifferentSet A B K L ↔
-      ∀ y : B, ∃ a : A,
-        algebraMap A K a = Algebra.trace K L (x * algebraMap B L y) := Iff.rfl
-
-/- The canonical Mathlib submodule underlying the same fractional lattice. -/
-def chapter07Codifferent
-    (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
-    [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
-    [IsScalarTower A K L] [IsScalarTower A B L] : Submodule B L :=
-  Submodule.traceDual A K (1 : Submodule B L)
-
 theorem chapter07_codifferent_coe_eq_set
     (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L] :
-    (chapter07Codifferent A B K L : Set L) =
-      chapter07CodifferentSet A B K L := by
+    (Submodule.traceDual A K (1 : Submodule B L) : Set L) =
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04TraceDual A B K L := by
   sorry
 
 /- The fractional-ideal realization of the codifferent. -/
@@ -70,7 +35,7 @@ theorem chapter07_codifferent_fractional_coe_eq
     [Algebra.IsSeparable K L] [IsIntegralClosure B A L]
     [IsIntegrallyClosed A] [IsDedekindDomain B] :
     (chapter07CodifferentFractionalIdeal A B K L : Set L) =
-      chapter07CodifferentSet A B K L := by
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04TraceDual A B K L := by
   sorry
 
 /- The trace-dual representation makes the Hom description explicit. -/
@@ -90,7 +55,7 @@ theorem chapter07_codifferent_iff_unique_trace_dual
     [Algebra.IsSeparable K L] [IsIntegralClosure B A L]
     [IsIntegrallyClosed A] [IsDedekindDomain B]
     (x : L) :
-    x ∈ chapter07CodifferentSet A B K L ↔
+    x ∈ LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04TraceDual A B K L ↔
       ∃! φ : B →ₗ[A] A, chapter07TraceDualRepresentation A B K L x φ := by
   sorry
 

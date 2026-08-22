@@ -78,7 +78,8 @@ def chapter07IntegralTraceMatrix
 
 theorem chapter07_perfect_trace_pairing_has_unit_trace_determinant
     (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
-    [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
+    [Algebra A B] [Algebra A K] [IsDomain A] [IsFractionRing A K]
+    [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
     {ι : Type*} [Fintype ι] [DecidableEq ι]
     (tr : B →ₗ[A] A)

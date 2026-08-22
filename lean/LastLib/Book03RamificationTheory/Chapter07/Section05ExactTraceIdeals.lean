@@ -166,24 +166,25 @@ theorem chapter07_quadratic_trace_formula
   sorry
 
 theorem chapter07_sqrt_two_trace_formula
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] (sqrtTwo : L)
-    (hmodel : chapter07QuadraticTraceModel K L sqrtTwo)
-    (_hsquare : sqrtTwo ^ 2 = algebraMap K L 2) (a b : K) :
-    Algebra.trace K L
-        (algebraMap K L a + algebraMap K L b * sqrtTwo) = 2 * a := by
-  exact chapter07_quadratic_trace_formula K L sqrtTwo hmodel a b
+    (L : Type*) [Field L] [Algebra ℚ_[2] L]
+    [FiniteDimensional ℚ_[2] L] (sqrtTwo : L)
+    (hmodel : chapter07QuadraticTraceModel ℚ_[2] L sqrtTwo)
+    (_hsquare : sqrtTwo ^ 2 = algebraMap ℚ_[2] L 2) (a b : ℚ_[2]) :
+    Algebra.trace ℚ_[2] L
+        (algebraMap ℚ_[2] L a + algebraMap ℚ_[2] L b * sqrtTwo) = 2 * a := by
+  exact chapter07_quadratic_trace_formula ℚ_[2] L sqrtTwo hmodel a b
 
 theorem chapter07_sqrt_two_integral_trace_is_two_adic
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] (sqrtTwo : L)
-    (hmodel : chapter07QuadraticTraceModel K L sqrtTwo)
-    (hsquare : sqrtTwo ^ 2 = algebraMap K L 2) :
-    ∀ a b : K,
-      Algebra.trace K L (algebraMap K L a + algebraMap K L b * sqrtTwo) =
+    (L : Type*) [Field L] [Algebra ℚ_[2] L]
+    [FiniteDimensional ℚ_[2] L] (sqrtTwo : L)
+    (hmodel : chapter07QuadraticTraceModel ℚ_[2] L sqrtTwo)
+    (hsquare : sqrtTwo ^ 2 = algebraMap ℚ_[2] L 2) :
+    ∀ a b : ℚ_[2],
+      Algebra.trace ℚ_[2] L
+        (algebraMap ℚ_[2] L a + algebraMap ℚ_[2] L b * sqrtTwo) =
         2 * a := by
   intro a b
-  exact chapter07_sqrt_two_trace_formula K L sqrtTwo hmodel hsquare a b
+  exact chapter07_sqrt_two_trace_formula L sqrtTwo hmodel hsquare a b
 
 /- The exact linear term in the norm expansion, with the higher terms named. -/
 theorem chapter07_norm_one_add_trace_remainder

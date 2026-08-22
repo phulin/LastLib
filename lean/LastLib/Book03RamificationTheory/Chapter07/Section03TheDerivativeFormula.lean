@@ -170,7 +170,7 @@ theorem chapter07_codifferent_eq_inverse_derivative_principal
     [IsIntegralClosure B A L] [IsIntegrallyClosed A]
     (α : B) (f : A[X])
     (hmono : chapter07MonogenicPresentation A B K L α f) :
-    chapter07CodifferentSet A B K L =
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04TraceDual A B K L =
       chapter07InversePrincipalSet A B K L
         (chapter07DerivativeAt A B f α) := by
   sorry
