@@ -1896,7 +1896,7 @@ For uniqueness, embed two candidate curves projectively. The analytic graph of a
 isomorphism is a coherent closed subspace of the analytification of their projective product;
 the projective comparison just proved algebraizes it. Its two projections are isomorphisms
 because this can be checked after analytification. Thus the algebraic curve is unique. Every
-proper algebraic curve over a field is projective, so in particular the smooth curve obtained
+proper algebraic curve over a field is projective — the standing input recorded in Section 14.2 — so in particular the smooth curve obtained
 above is projective. $\square$
 
 This order of proof is important: analytic duality supplies the positive divisor before any
@@ -2035,7 +2035,54 @@ $$
 
 for every $q$. The functor $\mathcal F\mapsto\mathcal F^{\mathrm{an}}$ is an equivalence from coherent algebraic sheaves on $C$ to coherent analytic sheaves on $C^{\mathrm{an}}$.
 
-**Proof strategy.** For projective space, compute both sides with the same finite cover by standard charts and the same homogeneous localization complex; convergent division shows the analytic complex has the algebraic cohomology. Resolve a coherent sheaf by finite sums of twists. A proper curve is projective, so a finite morphism to projective space or an ample line bundle reduces it to that calculation. Full faithfulness follows by applying cohomology to internal homomorphisms. Essential surjectivity uses enough negative twists to present any analytic coherent sheaf by algebraizable bundles, then algebraizes the kernel.
+**Proof.** Assume first that $C$ is projective, and fix a closed immersion $C\hookrightarrow\mathbf P^N_K$. The proof has three steps: an integral model, the cohomology comparison, and the sheaf-theoretic comparison.
+
+**Lemma (integral model).** _Let $C\subseteq\mathbf P^N_K$ be a closed subscheme of dimension one. Then there is a proper flat $R$-scheme $\mathcal C\subseteq\mathbf P^N_R$, finitely presented, with $(\mathcal C)_K=C$. Moreover every coherent $\mathcal F$ on $C$ extends to a coherent $\mathfrak F_{\mathrm{alg}}$ on $\mathcal C$._
+
+**Proof.** Let $\mathcal C_0$ be the scheme-theoretic closure of $C$ in $\mathbf P^N_R$: on each standard affine chart, the closure is defined by the kernels of $A\to A[1/\pi]$ for the coordinate rings $A$ of the chart of $C$. The structure sheaf of $\mathcal C_0$ may carry $\pi$-torsion; the elements killed by some power of $\pi$ form a coherent ideal sheaf $\mathcal T$ (coherent because the scheme is noetherian, and an ideal because multiplication by any function preserves annihilation). Set $\mathcal C:=V(\mathcal T)\subseteq\mathcal C_0$. Then $\mathcal O_{\mathcal C}$ has no $\pi$-torsion, since a class killed by $\pi^n$ lifts to an element of $\mathcal T$ by definition of the quotient; over the discrete valuation ring $R$, torsion-free is flat. Tensoring the exact sequence $0\to\mathcal T\to\mathcal O_{\mathcal C_0}\to\mathcal O_{\mathcal C}\to0$ with $K$ kills the middle torsion term and gives $(\mathcal C)_K=\mathcal C_0\otimes_RK=C$. Properness descends along the closed immersion into the proper scheme $\mathbf P^N_R$, and finite presentation is preserved by the noetherian quotient.
+
+For the sheaf extension: Book 8's presentation theory on projective space gives an exact sequence
+$\mathcal O(-m_1)^{\oplus s}\to\mathcal O(-m_2)^{\oplus r}\to\widetilde F\to0$ on $\mathbf P^N_K$ whose restriction presents $F$. Multiply the matrix entries by a common power of $\pi$ so that they become homogeneous forms with coefficients in $R$; the transposed matrices define maps between the corresponding twist sheaves on $\mathbf P^N_R$, and restricting both sides to $\mathcal C$ defines $\mathfrak F_{\mathrm{alg}}$ as the cokernel. Cokernels commute with base change, so $(\mathfrak F_{\mathrm{alg}})_K\simeq F$. $\square$
+
+Let $\mathfrak X$ be the $\pi$-adic completion of $\mathcal C$ along its special fiber; it is admissible (noetherian, topologically of finite type, $\pi$-torsion-free), and let $\mathfrak F$ be the completion of $\mathfrak F_{\mathrm{alg}}$.
+
+_Step 1: cohomology comparison._ Three identifications compose. First, flat base change along $\operatorname{Spec}K\to\operatorname{Spec}R$ (Book 15, Section 5) identifies
+
+$$
+H^q(C,F)\ \xrightarrow{\ \sim\ }\ H^q(\mathcal C,\mathfrak F_{\mathrm{alg}})\otimes_RK .
+$$
+
+Second, the theorem on formal functions (Book 58, Section 8.2) computes formal cohomology as the inverse limit of the levelwise groups; applied to the proper morphism $\mathfrak X\to\operatorname{Spf}R$, it identifies $H^q(\mathfrak X,\mathfrak F)$ with the $\pi$-adic completion of the finite $R$-module $H^q(\mathcal C,\mathfrak F_{\mathrm{alg}})$, and completing a finite module before or after tensoring with $K$ gives the same $K$-vector space, since completion differs from the identity only by $\pi$-torsion, which dies when $\pi$ is inverted:
+
+$$
+H^q(\mathcal C,\mathfrak F_{\mathrm{alg}})\otimes_RK\ \xrightarrow{\ \sim\ }\ H^q(\mathfrak X,\mathfrak F)\otimes_RK .
+$$
+
+Third, the generic-fiber comparison lemma of Section 9.5 applies verbatim to the admissible model $\mathfrak X$ with its principal-open cover, because locally the completed localization defining a formal open becomes, after inverting $\pi$, exactly the analytic localization defining the corresponding affinoid of $C^{\mathrm{an}}$ (Section 7.3); hence
+
+$$
+H^q(\mathfrak X,\mathfrak F)\otimes_RK\ \xrightarrow{\ \sim\ }\ H^q(C^{\mathrm{an}},F^{\mathrm{an}}).
+$$
+
+Each arrow is functorial in the pair $(\mathcal C,\mathfrak F_{\mathrm{alg}})$, and on Čech representatives all three are the evident scalar-extension identifications, so their composite agrees with the canonical analytification map on cochains and therefore on cohomology. This proves the displayed isomorphism of the theorem.
+
+_Step 2: full faithfulness._ Let $F,G$ be coherent on $C$. Internal homomorphism sheaves are coherent (Section 6.3), $\operatorname{Hom}_C(F,G)=H^0(C,\mathscr H om(F,G))$, and the analytification of $\mathscr H om(F,G)$ is the internal homomorphism of the analytifications: on a finite affinoid trivializing a finite presentation of $F$ by free modules, the internal hom is the kernel of a matrix map, and kernel formation commutes with the analytic tensor product because finite presentations remain finite presentations after it. Applying Step 1 to the coherent sheaf $\mathscr H om(F,G)$ therefore gives a bijection
+
+$$
+\operatorname{Hom}_C(F,G)\ \xrightarrow{\ \sim\ }\ \operatorname{Hom}_{C^{\mathrm{an}}}(F^{\mathrm{an}},G^{\mathrm{an}}),
+$$
+
+natural in both arguments, which is precisely full faithfulness of $F\mapsto F^{\mathrm{an}}$.
+
+_Step 3: essential surjectivity._ Let $\mathcal G$ be coherent on $C^{\mathrm{an}}$. By the lattice-extension mechanism of Section 13.2 applied to the model $\mathfrak X$, after replacing $\mathfrak X$ by an admissible blowup there is a coherent sheaf $\mathfrak G$ on it with $\mathfrak G_\eta\simeq\mathcal G$. The blowup center is supported on the special fiber, so it contains a power of $\pi$; if $J\subseteq\mathcal O_\mathcal C$ is an integral finitely generated ideal generating the blown-up ideal sheaf, then the algebraic blowup $\mathcal C':=\operatorname{Bl}_J(\mathcal C)$ is proper and flat over $R$ with $(\mathcal C')_K\simeq C$, since $J$ generates the unit ideal after $\pi$ is inverted, and its completion is exactly the blown-up formal model: on affine charts this is the statement that formation of the degree-zero part of the Rees algebra commutes with $\pi$-adic completion, which holds because completion is exact on finitely generated modules (Book 58, Sections 2.2 and 5.3). Grothendieck existence (Book 58, Chapter 9, with the passage from projective to proper made there) then algebraizes $\mathfrak G$ uniquely: there is a coherent $\mathcal G'$ on $\mathcal C'$ with completed sheaf $\mathfrak G$. Define $\mathcal H:=(\mathcal G')_K$, transported along $(\mathcal C')_K\simeq C$ to a coherent sheaf on $C$. Then $\mathcal H^{\mathrm{an}}\simeq\mathcal G$, because the sheaf-level form of Step 1's third identification — completed localization followed by inversion of $\pi$ equals analytic tensor product (Section 7.3) — gives $\mathcal H^{\mathrm{an}}\simeq(\mathcal G')^{\wedge}{}_{\!\eta}=\mathfrak G_\eta$, which is $\mathcal G$ by construction. Thus every coherent analytic sheaf arises as the analytification of a coherent algebraic one.
+
+Steps 1 through 3 together give the cohomology isomorphism, full faithfulness, and essential surjectivity, that is, the equivalence of coherent sheaf categories. For a merely proper curve, projectivity is consumed as a standing input:
+
+**Standing Input (projectivity of proper curves).** _Every proper algebraic curve over a field is projective. Equivalently, every such curve carries an effective ample divisor._
+
+This is the same assertion used at the close of the proof of Theorem 12.1; it follows classically once divisor theory supplies an effective divisor of positive degree on each component, which is available algebraically but is not developed in Books 0--58 at this generality. Its only consumers in this book are the final sentences of Theorems 12.1 and 14.1; downstream books receive the two theorems themselves.
+
+Applying what has been proved to a projective curve $C'\subseteq\mathbf P^N_K$ with an isomorphism $C'\simeq C$ supplied by the standing input, and transporting coherent sheaves along that isomorphism in both directions, extends all three conclusions from projective to proper curves and completes the proof. $\square$
 
 Exact hypotheses matter. Properness is needed both for finite-dimensional cohomology and for essential surjectivity. Coherence is needed for finite presentations. The theorem does not equate arbitrary analytic sheaves with algebraic sheaves.
 
@@ -2121,7 +2168,7 @@ The main results of the book can be used safely by keeping their hypotheses visi
 
 **Reduction and tubes.** Specialization sends maximal analytic points to scheme points by reduction of bounded values. It is naturally surjective onto closed points in the finite-type setting, not asserted onto every nonclosed point at this level. Tubes depend on reduced strata and are often non-affinoid. Their descriptions by discs and annuli may require finite residue-field extension or étale coordinates.
 
-**Curves.** Normality, regularity, and smoothness coincide only under the stated separability or perfection assumptions. A proper reduced rigid curve is algebraizable; smooth proper curves are projective. Proper comparison applies to coherent sheaves and cohomology. The analytic Serre vanishing of Section 12.2 consumes one standing input, residue duality for smooth proper curves, recorded there with provenance and a consumer list; every downstream use (Theorem 12.1, Book 60's interface) passes through that proposition's vanishing clauses, never through duality itself. Genus is defined as $\dim H^0(\Omega^1)=\dim H^1(\mathcal O)$; the genus formula in divisor degrees is a comparison consequence available only after Chapter 14. If a semistable model is supplied, its nodes give annular tubes; the graph genus formula uses the split and geometric-irreducibility hypotheses stated in Section 13.4. General existence of a semistable model is not assumed here.
+**Curves.** Normality, regularity, and smoothness coincide only under the stated separability or perfection assumptions. A proper reduced rigid curve is algebraizable; smooth proper curves are projective. Proper comparison applies to coherent sheaves and cohomology. Two standing inputs are consumed on the curve side, each recorded with provenance and consumer lists where stated: residue duality for smooth proper curves (Section 12.2), whose vanishing consequences drive algebraization, and projectivity of proper algebraic curves over a field (Section 14.2), consumed only by the final sentences of Theorems 12.1 and 14.1. If a semistable model is supplied, its nodes give annular tubes; the graph genus formula uses the split and geometric-irreducibility hypotheses stated in Section 13.4. General existence of a semistable model is not assumed here.
 
 ### 15.2 The model-independence principle
 
