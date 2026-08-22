@@ -143,7 +143,9 @@ theorem chapter08_upper_numbering_is_the_quotient_compatible_choice
     chapter08UpperGroup S.downstairs v =
       (chapter08UpperGroup S.upstairs v).map (QuotientGroup.mk' H) :=
   by
-    sorry
+    have _hup := hup
+    have _hdown := hdown
+    exact LastLib.Book03RamificationTheory.Chapter05.chapter05_herbrand_quotient_theorem H S hv
 
 end
 

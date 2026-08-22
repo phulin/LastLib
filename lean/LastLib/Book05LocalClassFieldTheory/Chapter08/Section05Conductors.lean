@@ -31,7 +31,96 @@ theorem chapter08_extension_conductor_exists_of_unit_ramification_input
     (F : Chapter08RamificationFiltration (Gal(L / K)))
     (P : Chapter08UnitRamificationInput X F) :
     chapter08ExtensionConductorExists (K := K) (L := L) X.base.valuation := by
-  sorry
+  classical
+  change ∃ n : ℕ, chapter08UnitFiltration X.base.valuation n ≤ chapter08NormSubgroup K L
+  obtain ⟨n, hn⟩ : ∃ n : ℕ, chapter08UpperGroup F n = ⊥ := by
+    obtain ⟨b, hb⟩ := F.lower_eventually_trivial
+    have hbij' :
+        Function.Bijective
+          (LastLib.Book03RamificationTheory.Chapter05.chapter05HerbrandFunction F) :=
+      P.upper_bijective
+    have hstrict :=
+      (LastLib.Book03RamificationTheory.Chapter05.chapter05_herbrand_function_is_continuous_increasing_piecewise_linear
+        F).2.1
+    have hb0 : (0 : ℝ) ≤ (b : ℝ) := by
+      exact_mod_cast Nat.zero_le b
+    have hbm : (-1 : ℝ) ≤ (b : ℝ) := by
+      linarith
+    have hblt : (-1 : ℝ) < (b : ℝ) := by
+      linarith
+    have hφ : (-1 : ℝ) ≤ chapter08HerbrandFunction F (b : ℝ) := by
+      change (-1 : ℝ) ≤
+        LastLib.Book03RamificationTheory.Chapter05.chapter05HerbrandFunction F (b : ℝ)
+      have hlt :
+          LastLib.Book03RamificationTheory.Chapter05.chapter05HerbrandFunction F (-1 : ℝ) <
+            LastLib.Book03RamificationTheory.Chapter05.chapter05HerbrandFunction F (b : ℝ) :=
+        hstrict (a := (-1 : ℝ)) (b := (b : ℝ)) (by simp) hbm hblt
+      rw [LastLib.Book03RamificationTheory.Chapter05.chapter05_herbrand_function_neg_one F] at hlt
+      linarith
+    obtain ⟨n, hn⟩ := exists_nat_ge (chapter08HerbrandFunction F (b : ℝ))
+    refine ⟨n, ?_⟩
+    have hbot :
+        chapter08UpperGroup F (chapter08HerbrandFunction F (b : ℝ)) = ⊥ := by
+      rw [chapter08UpperGroup,
+        LastLib.Book03RamificationTheory.Chapter05.chapter05_upper_group_eq_lower_at_inverse
+          F hφ]
+      change F.lowerGroup
+        (LastLib.Book03RamificationTheory.Chapter05.chapter05HerbrandInverse F
+          (LastLib.Book03RamificationTheory.Chapter05.chapter05HerbrandFunction F (b : ℝ))) = ⊥
+      rw [LastLib.Book03RamificationTheory.Chapter05.chapter05_herbrand_inverse_left_inverse
+        F hbij' (b : ℝ)]
+      exact hb b le_rfl
+    have hanti :=
+      LastLib.Book03RamificationTheory.Chapter05.chapter05_upper_filtration_antitone F hbij'
+    apply bot_unique
+    calc
+      chapter08UpperGroup F (n : ℝ) ≤
+          chapter08UpperGroup F (chapter08HerbrandFunction F (b : ℝ)) :=
+        hanti hn
+      _ = ⊥ := hbot
+  have hU := P.units_norm_from_fixed_field n
+  rw [hn] at hU
+  rw [show
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05FixedField
+          (K := K) (L := L) (⊥ : Subgroup (Gal(L / K))) =
+        (⊤ : IntermediateField K L) by simp] at hU
+  have hnormtop :
+      chapter08NormSubgroup K (⊤ : IntermediateField K L) =
+        chapter08NormSubgroup K L := by
+    ext x
+    constructor
+    · intro hx
+      rcases (LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05_mem_normSubgroup_iff
+        K (⊤ : IntermediateField K L) x).mp hx with ⟨y, hy⟩
+      apply (LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05_mem_normSubgroup_iff
+        K L x).mpr
+      let e : (⊤ : IntermediateField K L) ≃ₐ[K] L := IntermediateField.topEquiv
+      let y' : Lˣ := Units.map e.toRingEquiv.toMonoidHom y
+      refine ⟨y', ?_⟩
+      apply Units.ext
+      dsimp [y', LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05NormMap,
+        LastLib.Book05LocalClassFieldTheory.Chapter03.chapter03NormUnit]
+      change Algebra.norm K (e (y : (⊤ : IntermediateField K L))) = (x : K)
+      rw [Algebra.norm_eq_of_algEquiv e]
+      exact congrArg Units.val hy
+    · intro hx
+      rcases (LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05_mem_normSubgroup_iff
+        K L x).mp hx with ⟨y, hy⟩
+      apply (LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05_mem_normSubgroup_iff
+        K (⊤ : IntermediateField K L) x).mpr
+      let e : (⊤ : IntermediateField K L) ≃ₐ[K] L := IntermediateField.topEquiv
+      let y' : (⊤ : IntermediateField K L)ˣ :=
+        Units.map e.symm.toRingEquiv.toMonoidHom y
+      refine ⟨y', ?_⟩
+      apply Units.ext
+      dsimp [y', LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05NormMap,
+        LastLib.Book05LocalClassFieldTheory.Chapter03.chapter03NormUnit]
+      change Algebra.norm K (e.symm (y : L)) = (x : K)
+      rw [Algebra.norm_eq_of_algEquiv e.symm]
+      exact congrArg Units.val hy
+  refine ⟨n, ?_⟩
+  rw [← hnormtop]
+  exact hU
 
 theorem chapter08_extension_conductor_spec
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -72,7 +161,50 @@ theorem chapter08_ramification_conductor_exists
     (F : Chapter08RamificationFiltration G)
     (hbij : Function.Bijective (chapter08HerbrandFunction F)) :
     chapter08RamificationConductorExists F := by
-  sorry
+  classical
+  obtain ⟨b, hb⟩ := F.lower_eventually_trivial
+  have hbij' :
+      Function.Bijective
+        (LastLib.Book03RamificationTheory.Chapter05.chapter05HerbrandFunction F) := hbij
+  have hstrict :=
+    (LastLib.Book03RamificationTheory.Chapter05.chapter05_herbrand_function_is_continuous_increasing_piecewise_linear
+      F).2.1
+  have hb0 : (0 : ℝ) ≤ (b : ℝ) := by
+    exact_mod_cast Nat.zero_le b
+  have hbm : (-1 : ℝ) ≤ (b : ℝ) := by
+    linarith
+  have hblt : (-1 : ℝ) < (b : ℝ) := by
+    linarith
+  have hφ : (-1 : ℝ) ≤ chapter08HerbrandFunction F (b : ℝ) := by
+    change (-1 : ℝ) ≤
+      LastLib.Book03RamificationTheory.Chapter05.chapter05HerbrandFunction F (b : ℝ)
+    have hlt :
+        LastLib.Book03RamificationTheory.Chapter05.chapter05HerbrandFunction F (-1 : ℝ) <
+          LastLib.Book03RamificationTheory.Chapter05.chapter05HerbrandFunction F (b : ℝ) :=
+      hstrict (a := (-1 : ℝ)) (b := (b : ℝ)) (by simp) hbm hblt
+    rw [LastLib.Book03RamificationTheory.Chapter05.chapter05_herbrand_function_neg_one F] at hlt
+    linarith
+  obtain ⟨n, hn⟩ := exists_nat_ge (chapter08HerbrandFunction F (b : ℝ))
+  refine ⟨n, ?_⟩
+  have hbot :
+      chapter08UpperGroup F (chapter08HerbrandFunction F (b : ℝ)) = ⊥ := by
+    rw [chapter08UpperGroup,
+      LastLib.Book03RamificationTheory.Chapter05.chapter05_upper_group_eq_lower_at_inverse
+        F hφ]
+    change F.lowerGroup
+      (LastLib.Book03RamificationTheory.Chapter05.chapter05HerbrandInverse F
+        (LastLib.Book03RamificationTheory.Chapter05.chapter05HerbrandFunction F (b : ℝ))) = ⊥
+    rw [LastLib.Book03RamificationTheory.Chapter05.chapter05_herbrand_inverse_left_inverse
+      F hbij' (b : ℝ)]
+    exact hb b le_rfl
+  have hanti :=
+    LastLib.Book03RamificationTheory.Chapter05.chapter05_upper_filtration_antitone F hbij'
+  apply bot_unique
+  calc
+    chapter08UpperGroup F (n : ℝ) ≤
+        chapter08UpperGroup F (chapter08HerbrandFunction F (b : ℝ)) :=
+      hanti hn
+    _ = ⊥ := hbot
 
 theorem chapter08_ramification_conductor_spec
     {G : Type*} [Group G] [Finite G]
@@ -94,7 +226,41 @@ theorem chapter08_extension_conductor_eq_ramification_conductor
     (hram : chapter08RamificationConductorExists F) :
     chapter08ExtensionConductor (K := K) (L := L) X.base.valuation hunit =
       chapter08RamificationConductor F hram := by
-  sorry
+  classical
+  let nu : ℕ :=
+    chapter08ExtensionConductor (K := K) (L := L) X.base.valuation hunit
+  let nr : ℕ := chapter08RamificationConductor F hram
+  have hnu_spec :
+      chapter08UnitFiltration X.base.valuation nu ≤ chapter08NormSubgroup K L := by
+    exact chapter08_extension_conductor_spec X.base.valuation hunit
+  have hnr_spec : chapter08UpperGroup F nr = ⊥ := by
+    exact chapter08_ramification_conductor_spec F hram
+  have hnr_unit :
+      chapter08UnitFiltration X.base.valuation nr ≤ chapter08NormSubgroup K L := by
+    intro x hx
+    have hxupper :
+        chapter08FiniteReciprocityMap D x ∈ chapter08UpperGroup F nr := by
+      rw [← chapter08_unit_and_upper_ramification X D F P nr]
+      exact ⟨x, hx, rfl⟩
+    rw [hnr_spec] at hxupper
+    change chapter08FiniteReciprocityMap D x = 1 at hxupper
+    rw [← chapter08FiniteReciprocityMap_kernel D]
+    exact hxupper
+  have hnu_le_nr : nu ≤ nr := by
+    exact chapter08_extension_conductor_minimal X.base.valuation hunit nr hnr_unit
+  have hnr_upper :
+      chapter08UpperGroup F nu = ⊥ := by
+    have hmap := chapter08_unit_and_upper_ramification X D F P nu
+    apply bot_unique
+    rw [← hmap]
+    intro y hy
+    rcases hy with ⟨x, hx, rfl⟩
+    have hxnorm : x ∈ chapter08NormSubgroup K L := hnu_spec hx
+    rw [← chapter08FiniteReciprocityMap_kernel D] at hxnorm
+    exact hxnorm
+  have hnr_le_nu : nr ≤ nu := by
+    exact Nat.find_min' hram hnr_upper
+  exact Nat.le_antisymm hnu_le_nr hnr_le_nu
 
 theorem chapter08_extension_conductor_zero_iff_unramified
     {K L : Type} [Field K] [Field L] [Algebra K L]
