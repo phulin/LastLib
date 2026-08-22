@@ -245,6 +245,8 @@ This is not a technical nuisance. The trace is defined on the perfect complex, a
 
 Finite coefficients are the foundational level because compactification, proper base change, and constructible dévissage all operate there without an inverse-limit ambiguity. Proving the derived statement first also displays exactly where Tor terms enter, so the later integral theorem is not based on a false degreewise tensor formula.
 
+The proof below consumes exactly two earlier results, and it is worth naming them before starting. First, Book 18, Section 4.5 proves the descent theorem for hypercovers of the small étale site, together with its split-enlargement and Čech spectral-sequence corollaries; that subsection constructs the descent bicomplex $R\Gamma(U_\bullet,\mathcal F)$ and proves that the natural map from $R\Gamma(X,\mathcal F)$ to it is a derived isomorphism for every hypercover and every sheaf. Second, Book 18, Section 6.4 bounds the torsion cohomological dimension of low-dimensional finite-type schemes, which is what makes the totalizations below converge. Nothing in the proof invokes a Künneth theorem from elsewhere: the product statement is built here from those two inputs plus the localization triangles of Book 18, Section 3.3.
+
 **Theorem 3.1 (compactly supported Künneth).** Let $X,Y$ be separated of finite type over a separably closed field, and let $K\in D_c^b(X,\Lambda_m)$ and $L\in D_c^b(Y,\Lambda_m)$ have finite Tor-amplitude. Then the external-product morphism is an isomorphism:
 
 $$
@@ -253,6 +255,10 @@ R\Gamma_c(X,K)\otimes^L_{\Lambda_m}R\Gamma_c(Y,L)
 R\Gamma_c(X\times Y,K\boxtimes^L L).
 $$
 
+**Lemma 3.2 (finite hypercovers exist).** Let $X$ be separated of finite type over a field, let $\Lambda_m$ be a finite coefficient ring invertible on $X$, and let $K\in D_c^b(X,\Lambda_m)$. Then $X$ admits an étale hypercover $U_\bullet\to X$ such that only finitely many objects occur in each simplicial degree, and such that every $U_n$ is affine and every cohomology sheaf of $K$ becomes lisse after pullback along a common refinement of the members of $U_1$ compatible with the stratification data used below.
+
+**Proof.** Separated finite type implies quasi-compact, so $X$ has a finite affine étale cover; set $U_0$ equal to the disjoint union of its members, which is affine. Suppose $U_n$ has been constructed and is quasi-compact. The matching object $M_{n+1}(U_\bullet)$ is an object of the site built from $U_n$ by fiber products and finite coproducts, hence is quasi-compact. The hypercover condition requires $U_{n+1}\to M_{n+1}$ to be jointly surjective on geometric points, and the composite $M_{n+1}\to X$ is separated, so we may take $U_{n+1}$ to be a finite disjoint union of affine opens of $M_{n+1}$ mapping étale to it. This closes the induction and produces finitely many objects per degree. The assertion about lisse pullbacks uses that each cohomology sheaf of $K$ is constructible (Book 18, Section 3.2), hence lisse on a dense open of each stratum; refining the members of $U_1$, which are finitely many quasi-compact objects, achieves this simultaneously and preserves the hypercover property because refinements of hypercovers are hypercovers. $\square$
+
 **Proof.** Choose compactifications $j_X:X\hookrightarrow\overline X$ and $j_Y:Y\hookrightarrow\overline Y$. Their product is a compactification of $X\times Y$, and extension by zero satisfies
 
 $$
@@ -260,13 +266,23 @@ $$
 \cong j_{X!}K\boxtimes j_{Y!}L
 $$
 
-by checking geometric stalks. We may therefore assume $X$ and $Y$ proper.
+by checking geometric stalks: over $X\times Y$ both sides agree with $K\boxtimes L$, and at a boundary geometric point one factor has empty fiber, so both sides vanish (Book 18, Section 3.3). Independence of the compactifications is the functoriality of compact support established in Section 3.1. We may therefore assume $X$ and $Y$ proper.
 
-For proper schemes, choose étale hypercovers adapted to finite constructibility stratifications of $K$ and $L$, with finitely many quasi-compact objects in every degree relevant to the bounded calculation. A single Čech cover would not suffice, because its intersections need not be acyclic. The product of the two hypercovers is a bisimplicial hypercover of $X\times Y$. After replacing one coefficient variable by a bounded K-flat representative, its cochain bicomplex is the derived tensor product of the two factor cochain complexes. The shuffle and Alexander--Whitney maps give mutually inverse maps up to homotopy between that tensor product and the total cochain complex of the product hypercover.
+Choose finite hypercovers $U_\bullet\to X$ and $V_\bullet\to Y$ as in Lemma 3.2. Their product $W_\bullet=U_\bullet\times V_\bullet$ is a hypercover of $X\times Y$: formation of matching objects commutes with products of simplicial objects, and the germ lemma of Book 18, Section 4.5 shows that the germ simplicial set of a product at a geometric point is the product of the germ simplicial sets, whose normalized chain complex is the tensor product of two acyclic complexes and hence acyclic. Only finitely many nondegenerate objects occur in each degree, so the Čech spectral-sequence corollary of Book 18, Section 4.5 applies to all three hypercovers, and the torsion-cohomological-dimension bound of Book 18, Section 6.4 makes the $b$-direction bounded; both totalizations converge.
 
-The finite Tor-amplitude hypotheses and the uniform cohomological-dimension bounds make every totalization finite in each relevant degree. Cohomological descent therefore identifies the three cochain complexes with the three derived global-section complexes in the statement. First this proves the claim for lisse finite locally free sheaves on a common pair of strata. The localization triangles for extension by zero, followed by induction over the finitely many strata and truncation triangles, prove it for $K$ and $L$. Reinstating the compactifications proves the compact-support theorem. $\square$
+By the descent theorem of Book 18, Section 4.5, applied termwise to a bounded-below injective resolution of $K$, the natural map identifies $R\Gamma(X,K)$ with the descent bicomplex $\operatorname{Tot}(\Gamma(U_p,\mathcal I^q|_{U_p}))$; likewise for $(Y,L)$. Because $X$ and $Y$ are now proper, these bicomplexes compute $R\Gamma_c$ as well.
 
-The proof also establishes associativity and symmetry because those identities hold for external products before global sections. When two odd-degree classes are exchanged, the symmetry contributes the Koszul sign $(-1)^{ab}$.
+We first finish for lisse finite locally free coefficient sheaves $\mathcal F,\mathcal G$, constant on the members of the covers after the refinement of Lemma 3.2. Locally free sheaves are K-flat, so the levelwise tensor product of the two descent bicomplexes is a representative of the derived tensor product $R\Gamma(U_\bullet,\mathcal F)\otimes^LR\Gamma(V_\bullet,\mathcal G)$. The shuffle map from this levelwise tensor product to the descent bicomplex of the product hypercover, and the Alexander--Whitney map in the opposite direction, are chain maps between the two totalizations; their composites are homotopic to the identities by the standard acyclic-model contraction, which is valid here because both sides converge strongly by the previous paragraph and the homotopies act degreewise on finitely many summands. Hence
+
+$$
+R\Gamma_c(X,\mathcal F)\otimes^LR\Gamma_c(Y,\mathcal G)
+\simeq
+R\Gamma_c(X\times Y,\mathcal F\boxtimes\mathcal G).
+$$
+
+For bounded constructible $K,L$ with finite Tor-amplitude, argue by induction on a finite constructibility filtration. Both sides of the displayed isomorphism are contravariantly triangulated in each variable: cones in $K$ produce cones of the whole morphism on the left by additivity of derived tensor in a K-flat range, which the finite Tor-amplitude hypothesis supplies, and on the right by the localization triangles of Book 18, Section 3.3 for extension by zero across strata. The five lemma against the proved stratumwise case, run over the finitely many strata and truncation triangles, transports the isomorphism to $K$ and $L$. Reinstating the compactifications proves the compact-support theorem. $\square$
+
+The proof also establishes associativity and symmetry because those identities hold for external products before global sections. When two odd-degree classes are exchanged, the symmetry contributes the Koszul sign $(-1)^{ab}$. The same argument, carried out with duality pairings instead of plain coefficients, is recorded in Book 20, Section 6.3 for the external products used on curve kernels; that section consumes this theorem and adds no independent Künneth input.
 
 ### 3.3 Integral and rational coefficients
 
