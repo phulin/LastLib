@@ -52,7 +52,10 @@ theorem chapter08_tower_discriminant_exponent_formula
     (T : Chapter08TowerNumericalData) :
     T.discriminantLK = T.degreeLM * T.discriminantMK +
       T.residueMK * T.discriminantLM := by
-  sorry
+  rw [T.discriminant_eq_residue_mul_different, T.different_transitivity,
+    T.residue_mul, T.middle_discriminant_eq_residue_mul_different,
+    T.base_discriminant_eq_residue_mul_different,
+    T.degreeLM_eq_ramification_mul_residue]; ring
 
 /- The ideal-valued formula is stated with the complete finite-separable
    integral-closure interface.  In particular, no Galois typeclass occurs. -/

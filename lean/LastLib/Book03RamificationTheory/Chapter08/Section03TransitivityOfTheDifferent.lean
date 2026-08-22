@@ -191,7 +191,10 @@ theorem chapter08_trace_dual_product_formula
       LastLib.Book03RamificationTheory.Chapter07.chapter07CodifferentFractionalIdeal B C M N *
         FractionalIdeal.extendedHom N C
           (LastLib.Book03RamificationTheory.Chapter07.chapter07CodifferentFractionalIdeal A B K M) := by
-  sorry
+  simpa [LastLib.Book03RamificationTheory.Chapter07.chapter07DifferentFractionalIdeal,
+    map_inv₀, mul_inv, mul_comm] using
+    congrArg (fun I : FractionalIdeal C⁰ N => I⁻¹)
+      (chapter08_different_fractional_transitivity A B C K M N)
 
 /- The valuation exponent of an extended ideal is multiplied by the
    ramification index. -/
@@ -200,7 +203,7 @@ theorem chapter08_extended_power
     (mB : Ideal B) (mC : Ideal C) (e : ℕ)
     (hmap : Ideal.map (algebraMap B C) mB = mC ^ e) (d : ℕ) :
     Ideal.map (algebraMap B C) (mB ^ d) = mC ^ (e * d) := by
-  sorry
+  rw [Ideal.map_pow, hmap, ← pow_mul]
 
 theorem chapter08_different_exponent_transitivity
     (A B C : Type*) [CommRing A] [CommRing B] [CommRing C]
@@ -219,7 +222,16 @@ theorem chapter08_different_exponent_transitivity
     (hmap : Ideal.map (algebraMap B C) mB = mC ^ eBC)
     (hpow_unique : ∀ {i j : ℕ}, mC ^ i = mC ^ j → i = j) :
     dAC = dBC + eBC * dAB := by
-  sorry
+  apply hpow_unique
+  calc
+    mC ^ dAC = chapter08DifferentIdeal A C := hAC.symm
+    _ = chapter08DifferentIdeal B C *
+        (chapter08DifferentIdeal A B).map (algebraMap B C) :=
+      chapter08_different_ideal_transitivity A B C
+    _ = mC ^ dBC * (mB ^ dAB).map (algebraMap B C) := by rw [hBC, hAB]
+    _ = mC ^ dBC * mC ^ (eBC * dAB) := by
+      rw [chapter08_extended_power B C mB mC eBC hmap dAB]
+    _ = mC ^ (dBC + eBC * dAB) := by rw [← pow_add]
 
 theorem chapter08_different_exponent_transitivity_from_unique_exponents
     (A B C : Type*) [CommRing A] [CommRing B] [CommRing C]
@@ -240,7 +252,15 @@ theorem chapter08_different_exponent_transitivity_from_unique_exponents
     chapter08UniqueIdealExponent mC (chapter08DifferentIdeal A C) hAC =
       chapter08UniqueIdealExponent mC (chapter08DifferentIdeal B C) hBC +
         eBC * chapter08UniqueIdealExponent mB (chapter08DifferentIdeal A B) hAB := by
-  sorry
+  exact chapter08_different_exponent_transitivity A B C mB mC
+    (chapter08UniqueIdealExponent mB (chapter08DifferentIdeal A B) hAB)
+    (chapter08UniqueIdealExponent mC (chapter08DifferentIdeal B C) hBC)
+    (chapter08UniqueIdealExponent mC (chapter08DifferentIdeal A C) hAC)
+    eBC
+    (chapter08UniqueIdealExponent_spec mB (chapter08DifferentIdeal A B) hAB)
+    (chapter08UniqueIdealExponent_spec mC (chapter08DifferentIdeal B C) hBC)
+    (chapter08UniqueIdealExponent_spec mC (chapter08DifferentIdeal A C) hAC)
+    hmap hpow_unique
 
 end
 
