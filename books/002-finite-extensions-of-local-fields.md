@@ -2023,7 +2023,149 @@ $$
 \exp(x)=1+x+\frac{x^2}{2!}+\cdots
 $$
 
-often identify a deep principal-unit group with an additive ideal. The depth required depends on the residue characteristic and the ramification of $L/\mathbf Q_p$. We do not need precise convergence thresholds here. The first-order congruence $1+x\leftrightarrow x$ already supplies the uniform, characteristic-free part of this linearization.
+often identify a deep principal-unit group with an additive ideal. The depth required depends on the residue characteristic and the ramification of $L/\mathbf Q_p$. In fact the depth can be pinned down exactly, and doing so converts the heuristic congruence $1+x\leftrightarrow x$ into a genuine group isomorphism on a deep layer. We now carry this out in mixed characteristic; it is the only setting in which the series involve a residue characteristic at all.
+
+Throughout the remainder of this subsection, $L$ is a finite extension of $\mathbf Q_p$, of absolute ramification index
+
+$$
+e=v_L(p),
+$$
+
+with $v_L$ normalized by $v_L(L^\times)=\mathbf Z$. The engine behind every estimate below is the valuation of factorials. Counting multiples of $p$, then of $p^2$, and so on among $1,\dots,k$ gives Legendre's formula
+
+$$
+v_L(k!)\;=\;e\sum_{a\geq1}\Big\lfloor\frac{k}{p^a}\Big\rfloor.
+$$
+
+In particular $v_L(k!)\leq ek/(p-1)$, and also $v_L(k)=e\,v_p(k)$ for the exponent $v_p$ of $p$ in $k$. Both bounds grow far more slowly than the linear function $kc$ whenever $c\geq1$, and the precise competition is what the next proposition records.
+
+**Proposition 10.2 (Convergence and first-term dominance).** _Let $n\geq1$ be an integer._
+
+1. The logarithmic series $\log(1+x)=\sum_{k\geq1}(-1)^{k+1}x^k/k$ converges for every $x\in\mathfrak m_L^n$: its $k$th term has valuation at least $kn-e\log_2 k$, which tends to infinity.
+2. If $n(p-1)>e$, then for every $x\in\mathfrak m_L^n$ the exponential series $\exp(x)=\sum_{k\geq0}x^k/k!$ converges, every nonconstant term has valuation strictly larger than $v_L(x)$, and
+
+$$
+v_L(\exp(x)-1)=v_L(x).
+$$
+
+3. If $n(p-1)>e$, then for every $x\in\mathfrak m_L^n$ the logarithm satisfies
+
+$$
+v_L(\log(1+x)-x)>v_L(x),\qquad\text{hence}\qquad v_L(\log(1+x))=v_L(x).
+$$
+
+_Proof._ For (1), the $k$th term of the logarithm has valuation $kv_L(x)-v_L(k)\geq kn-ev_p(k)$, and since $v_p(k)\leq\log_2 k$ grows logarithmically while $kn$ grows linearly, the valuations tend to infinity.
+
+For (2), let $c=v_L(x)\geq n$, so $c(p-1)-e=:\delta$ is a positive integer. By Legendre's formula,
+
+$$
+kv_L(x)-v_L(k!)
+=\frac{k\big(c(p-1)\big)-e\big(k-s_p(k)\big)}{p-1}
+=c+\frac{\delta(k-1)+e(s_p(k)-1)}{p-1},
+$$
+
+where $s_p(k)$ is the sum of the digits of $k$ in base $p$. This is at least $c$, with equality only for $k=1$. So the constant term $1$ is followed by terms of valuation exactly $c$ and higher, all later ones strictly deeper: the series converges, and its value minus $1$ has valuation exactly $c$ because no cancellation against the constant term occurs and all terms beyond the first are strictly deeper than $c$. The same computation with the strict inequality shows each term of order $k\geq2$ alone has valuation exceeding $v_L(x)$, giving the dominance claim.
+
+For (3), the $k$th term ($k\geq2$) of the logarithm has valuation $kv_L(x)-ev_p(k)$, which exceeds $v_L(x)$ precisely when $(k-1)v_L(x)>e\,v_p(k)$. Writing $k=p^jm$ with $p\nmid m$, we have $k-1\geq p^j-1=(p-1)(1+p+\cdots+p^{j-1})\geq j(p-1)$, so
+
+$$
+(k-1)v_L(x)\geq(k-1)n\geq j(p-1)n>j\,e=e\,v_p(k),
+$$
+
+where the strict inequality uses $n(p-1)>e$. Hence every term past the first is strictly deeper than $x$, and both assertions follow. $\square$
+
+The threshold in Proposition 10.2 is the classical one: the exponential converges once $v_L(x)>e/(p-1)$, that is, on the layers $\mathfrak m_L^n$ with $n(p-1)>e$, while the logarithm needs nothing beyond $v_L(x)>0$. At the critical depth $v_L(x)=e/(p-1)$ convergence may persist, but the inversion theory below genuinely fails there: as Proposition 10.5 will show, roots of unity of $p$-power order, when they exist, have valuations of exactly this size. The strict inequality is what excludes them.
+
+The reason these convergent series are useful is that they satisfy the functional equations of ordinary logarithm and exponential. These hold as identities between formal power series over $\mathbf Q$, and formal identities survive substitution of convergent series: if two power series with rational coefficients are identical, their evaluations at any convergent substitutions agree, because corresponding partial sums coincide and the tails tend to zero.
+
+**Lemma 10.3 (Formal identities).** _In $\mathbf Q[[X,Y]]$ the following identities hold:_
+
+$$
+\exp(X+Y)=\exp(X)\exp(Y),\qquad
+\log\big((1+X)(1+Y)\big)=\log(1+X)+\log(1+Y),
+$$
+
+$$
+\exp(\log(1+X))=1+X,\qquad
+\log(\exp(X))=X.
+$$
+
+_Proof._ All four follow by comparing derivatives and constant terms, using uniqueness of formal antiderivatives in characteristic zero. For the first, fix $Y$ and differentiate $F(X)=\exp(X+Y)\exp(X)^{-1}$ with respect to $X$:
+
+$$
+F'=F\cdot\frac{d}{dX}(X+Y)-F\cdot\frac{d}{dX}X=F-F=0,
+$$
+
+using $\exp'=\exp$; hence $F$ is constant, and $F(0)=\exp(Y)$ gives the identity. For the second, differentiate both sides with respect to $X$: the left side contributes $((1+X)(1+Y))'/((1+X)(1+Y))=1/(1+X)$ and the right side contributes $1/(1+X)+0$; the two sides agree at $X=0$, both equal to $\log(1+Y)$. For the third, differentiate $G(X)=\exp(\log(1+X))$:
+
+$$
+G'=G\cdot\frac{1}{1+X},\qquad\text{so}\qquad
+\Big(\frac{G}{1+X}\Big)'=0,
+$$
+
+and $G(0)=1$ forces $G=1+X$. The fourth is identical: $H(X)=\log(\exp(X))$ satisfies $H'=\exp(X)/\exp(X)=1$ and $H(0)=0$, so $H=X$. $\square$
+
+Combining convergence with the formal identities yields the main result of this subsection.
+
+**Theorem 10.4 (The logarithm isomorphism).** _Let $L/\mathbf Q_p$ be a finite extension of ramification index $e=v_L(p)$, and let $n$ be any integer with_
+
+$$
+n(p-1)>e.
+$$
+
+_Then_
+
+$$
+\log:\;U_L^n\;\longrightarrow\;\mathfrak m_L^n,
+\qquad 1+x\longmapsto\log(1+x),
+$$
+
+_is an isomorphism of groups, where $\mathfrak m_L^n$ carries addition. Its inverse is $x\mapsto\exp(x)$. Moreover both maps are isometries in the sense that for all $x,y\in\mathfrak m_L^n$,_
+
+$$
+v_L(\log(1+x)-\log(1+y))=v_L(x-y),\qquad
+v_L(\exp(x)-\exp(y))=v_L(x-y).
+$$
+
+_Proof._ First, exp does map $\mathfrak m_L^n$ into $U_L^n$: by Proposition 10.2(2), $\exp(x)\in 1+\mathfrak m_L^{v_L(x)}$ with $v_L(x)\geq n$. All series appearing below converge, by Proposition 10.2 and the closure of the layers under addition and multiplication.
+
+_Group homomorphism._ For $x,y\in\mathfrak m_L^n$, substitute into the second formal identity of Lemma 10.3: the left side evaluates to $\log((1+x)(1+y))$ and the right side to $\log(1+x)+\log(1+y)$, so log is a homomorphism on $U_L^n$. Similarly, substituting into the first identity shows that $\exp(x+y)=\exp(x)\exp(y)$, so exp is a homomorphism on $\mathfrak m_L^n$.
+
+_Mutual inversion._ For $x\in\mathfrak m_L^n$, the fourth identity of Lemma 10.3 gives $\log(\exp(x))=x$; note that $\exp(x)-1$ again lies in $\mathfrak m_L^n$, as observed above, so the outer logarithm is defined on the correct layer. For $u=1+x\in U_L^n$, the third identity gives $\exp(\log(1+x))=1+x$. Thus each map is a two-sided inverse of the other.
+
+_Isometry._ For $x,y\in\mathfrak m_L^n$, multiplicativity gives
+
+$$
+\log(1+x)-\log(1+y)
+=\log\bigl((1+x)(1+y)^{-1}\bigr)
+=\log\Bigl(1+\frac{x-y}{1+y}\Bigr),
+$$
+
+and $(1+y)^{-1}$ is a unit, so the substituted argument has valuation exactly $v_L(x-y)\geq n$; Proposition 10.2(3) then makes the displayed value equal to $v_L(x-y)$. For the exponential, the homomorphism property and unit-ness of $\exp(y)$ give
+
+$$
+\exp(x)-\exp(y)=\exp(y)\bigl(\exp(x-y)-1\bigr),
+$$
+
+and Proposition 10.2(2) applied to $x-y$ finishes the proof. $\square$
+
+The theorem identifies each sufficiently deep principal-unit group with an additive $\mathbf Z_p$-like object, but with distances preserved rather than merely compared. This exactness is what lets later books transport questions about deep principal units — solvability of power equations, torsion, indices of subgroups — into linear algebra over the ideal layers, where the valuation settles them.
+
+Two complements record what happens at shallower depths.
+
+**Proposition 10.5 (Torsion dies above the threshold).** _Let $n(p-1)>e$. Then $U_L^n$ has no nontrivial roots of unity._
+
+_Proof._ Suppose $\zeta\neq1$ is a root of unity in $U_L^n$. Its order cannot be prime to $p$, because such roots inject under reduction modulo $\mathfrak m_L$ while every element of $U_L^n$ reduces to $1$. So $\zeta$ has order $p^j$ for some $j\geq1$. Let $K'=\mathbf Q_p(\zeta)$, of ramification index $e'=\varphi(p^j)=p^{j-1}(p-1)$: indeed $\Phi_{p^j}(T+1)=\bigl((T+1)^{p^j}-1\bigr)/\bigl((T+1)^{p^{j-1}}-1\bigr)$ is Eisenstein over $\mathbf Q_p$, since its reduction is congruent to $T^{e'}$ modulo $p$ and its constant coefficient is $p$. Hence $\zeta-1$ generates the maximal ideal of $K'$, and because $K'\subseteq L$, with $e'\mid e(L/\mathbf Q_p)=e$,
+
+$$
+v_L(\zeta-1)=\frac{e}{e'}=\frac{e}{p^{j-1}(p-1)}\leq\frac{e}{p-1}<n,
+$$
+
+contradicting $\zeta\in U_L^n$. $\square$
+
+In particular the kernel of the logarithm on $U_L^1$, which consists exactly of the $p$-power roots of unity when those exist, is already killed once one passes above depth $e/(p-1)$. Below that depth the logarithm still converges, but it can no longer be injective, and its image need not lie inside the convergence domain of the exponential: both failures occur precisely at the critical depth, where the theory genuinely changes character.
+
+Finally we record the exact scope. The construction used characteristic zero twice: to define the coefficients $1/k$ and $1/k!$, and to differentiate formal power series. Both uses fail in residue characteristic $p$ when the field itself has characteristic $p$, so the theorem covers precisely the finite extensions of $\mathbf Q_p$ — mixed characteristic local fields — and nothing needs to be true of it in equal characteristic. Within mixed characteristic, the hypothesis $n(p-1)>e$ is a condition on the layer, not on the field: every finite extension $L/\mathbf Q_p$ admits such layers (for instance any $n>e$), and the deeper the layer, the larger the additive group on the right. For odd $p$ the threshold $n>e/(p-1)$ is often met already at $n=2$ or below; for $p=2$ it requires $n>e$. In all cases the shallow layers between depth $1$ and the threshold remain governed by the filtration methods of this chapter, which make no use of the series.
 
 ### 10.10 Roots of unity inside the unit filtration
 
