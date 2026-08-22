@@ -207,8 +207,8 @@ theorem finite_residue_field_has_the_listed_consequences
     [TopologicalSpace l] [DiscreteTopology l]
     [Module.Finite k l] :
     finiteResidueFieldConsequences k l := by
-  letI : Finite l := finite_residue_extension_of_finite_base_is_finite k l
-  letI : Fintype l := Fintype.ofFinite l
+  let _ : Finite l := finite_residue_extension_of_finite_base_is_finite k l
+  let _ : Fintype l := Fintype.ofFinite l
   exact ⟨inferInstance, inferInstance, inferInstance, inferInstance,
     FiniteField.norm_surjective k l⟩
 

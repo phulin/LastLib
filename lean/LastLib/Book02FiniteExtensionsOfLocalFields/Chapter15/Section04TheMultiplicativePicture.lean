@@ -60,7 +60,7 @@ theorem units_split_by_uniformizer
     rw [Subgroup.mem_zpowers_iff]
     refine ⟨-(eVal x).toAdd, ?_⟩
     apply eVal.injective
-    simp [γ, Int.toAdd_zpow]
+    simp [γ]
     rw [← Int.ofAdd_mul, one_mul]
     exact ofAdd_toAdd _
   have hγeq : γ = LinearOrderedCommGroup.genLTOne V :=
@@ -124,7 +124,7 @@ theorem units_split_by_uniformizer
       have hvg : valUnit (πunit ^ (degree x).toAdd * x) = 1 := by
         rw [map_mul, map_zpow, hvalπ]
         apply eVal.injective
-        simp [degree, γ, Int.toAdd_zpow]
+        simp [degree, γ]
         rw [← Int.ofAdd_mul, one_mul, ← ofAdd_toAdd (eVal (valUnit x))]
         simp
       have hvg' := congrArg (fun y : V => (y : Γˣ).1) hvg
@@ -136,7 +136,7 @@ theorem units_split_by_uniformizer
     apply Subtype.ext
     apply Units.ext
     dsimp [unitPart]
-    simp only [Units.val_mul, Units.val_zpow_eq_zpow_val]
+    simp only [Units.val_zpow_eq_zpow_val]
     have hπne : (πunit : L) ≠ 0 := πunit.ne_zero
     change (πunit : L) ^ (degree (x * y)).toAdd *
         ((x : L) * (y : L)) =
@@ -198,7 +198,7 @@ theorem units_split_by_uniformizer
     change degree (πunit ^ (-(z.1.toAdd)) * (z.2 : Lˣ)) = z.1
     rw [map_mul, map_zpow, hdegreeπ, hdegree_unit]
     rw [← Int.ofAdd_mul]
-    simpa only [neg_one_mul, neg_neg, ofAdd_toAdd, mul_one]
+    simp only [neg_one_mul, neg_neg, ofAdd_toAdd, mul_one]
   have hright (z : Multiplicative ℤ × v.valuationSubring.unitGroup) :
       toCoord (fromCoord z) = z := by
     apply Prod.ext
@@ -209,8 +209,6 @@ theorem units_split_by_uniformizer
       change ↑(πunit ^ (degree (fromCoord z)).toAdd) *
           (fromCoord z : L) = ((z.2 : Lˣ) : L)
       rw [hdegree_from]
-      change ↑(πunit ^ z.1.toAdd) *
-          (fromCoord z : L) = ((z.2 : Lˣ) : L)
       rw [show fromCoord z = πunit ^ (-(z.1.toAdd)) * (z.2 : Lˣ) by rfl]
       simp only [Units.val_mul, Units.val_zpow_eq_zpow_val]
       rw [zpow_neg]
@@ -314,7 +312,7 @@ theorem norm_principal_units_are_trace_linearized
     [Algebra.IsIntegral A B]
     [Module.Finite A B] [Module.Free A B]
     (n : ℕ) (hn : 0 < n) :
-    normPrincipalUnitLinearization (A := A) (B := B)
+      normPrincipalUnitLinearization (A := A) (B := B)
       (IsLocalRing.maximalIdeal B) n := by
   sorry
 
