@@ -10,6 +10,7 @@ import Mathlib.Topology.Algebra.Group.Basic
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.Section03TheUnramifiedCase
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.Section04TheTotallyRamifiedCase
 import LastLib.Book05LocalClassFieldTheory.Chapter02.Dependencies
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.Section03UniformizersAndMinimalPolynomials
 import LastLib.Book05LocalClassFieldTheory.Chapter05.Section06FiniteReciprocity
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter06
@@ -66,7 +67,11 @@ noncomputable def chapter06ValuationRingUnitSubgroup
 theorem chapter06_unit_filtration_zero_eq_valuationRingUnits
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K) :
     Chapter06UnitFiltration D 0 = chapter06ValuationRingUnitSubgroup D := by
-  sorry
+  change
+    (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10UnitFiltration
+        (Chapter06ValuationRing D) 0).map _ =
+      (⊤ : Subgroup (Chapter06ValuationRing D)ˣ).map _
+  rw [LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10_unit_filtration_zero]
 
 def Chapter06UnitFiltrationNeighborhoodBasis
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K)
@@ -99,7 +104,8 @@ noncomputable def chapter06ResidueCardinality
 theorem chapter06_residue_cardinality_pos
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K) :
     0 < chapter06ResidueCardinality D := by
-  sorry
+  let _ := D.residue_finite
+  exact Nat.card_pos
 
 /-- Positive indices used for the precision family. -/
 abbrev Chapter06PositiveNat := {n : ℕ // 0 < n}
@@ -118,7 +124,37 @@ theorem chapter06_mem_precisionSubgroup_iff
       ∃ z : ℤ, ∃ u : Kˣ,
         u ∈ Chapter06UnitFiltration D n ∧
           x = (chapter06UniformizerUnit D) ^ (m * z) * u := by
-  sorry
+  change x ∈
+      Subgroup.zpowers ((chapter06UniformizerUnit D) ^ m) ⊔
+        Chapter06UnitFiltration D n ↔
+    ∃ z : ℤ, ∃ u : Kˣ,
+      u ∈ Chapter06UnitFiltration D n ∧
+        x = (chapter06UniformizerUnit D) ^ (m * z) * u
+  rw [Subgroup.mem_sup]
+  constructor
+  · rintro ⟨y, hy, u, hu, hxy⟩
+    obtain ⟨z, hz⟩ := Subgroup.mem_zpowers_iff.mp hy
+    refine ⟨z, u, hu, ?_⟩
+    calc
+      x = y * u := hxy.symm
+      _ = (chapter06UniformizerUnit D ^ m) ^ z * u := by rw [hz]
+      _ = (chapter06UniformizerUnit D ^ (m : ℤ)) ^ z * u := by
+        rw [zpow_natCast]
+      _ = chapter06UniformizerUnit D ^ (m * z) * u := by
+        rw [zpow_mul]
+  · rintro ⟨z, u, hu, hxu⟩
+    have hzmem :
+        (chapter06UniformizerUnit D ^ m) ^ z ∈
+          Subgroup.zpowers (chapter06UniformizerUnit D ^ m) :=
+      (Subgroup.mem_zpowers_iff).2 ⟨z, rfl⟩
+    refine ⟨(chapter06UniformizerUnit D ^ m) ^ z, hzmem, u, hu, ?_⟩
+    calc
+      (chapter06UniformizerUnit D ^ m) ^ z * u =
+          (chapter06UniformizerUnit D ^ (m : ℤ)) ^ z * u := by
+            rw [zpow_natCast]
+      _ = chapter06UniformizerUnit D ^ (m * z) * u := by
+            rw [zpow_mul]
+      _ = x := hxu.symm
 
 /-- The precision subgroups are a neighborhood basis at the identity. -/
 def Chapter06PrecisionCofinality
@@ -200,7 +236,9 @@ instance chapter06FiniteAbelianSubextension.isAbelian
     @Chapter06FiniteAbelianExtension K L.field
       (inferInstance : Field K) (IntermediateField.toField L.field)
       (IntermediateField.algebra' L.field) L.finite L.galois := by
-  sorry
+  let _ : FiniteDimensional K L.field := L.finite
+  let _ : IsGalois K L.field := L.galois
+  exact ⟨L.abelian⟩
 
 noncomputable def Chapter06FiniteAbelianSubextension.normSubgroup
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
