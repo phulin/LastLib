@@ -100,7 +100,63 @@ theorem chapter08_herbrand_function_integral_formula
       ∫ t in (0 : ℝ)..u,
         ((chapter08LowerGroup F t).relIndex
           (chapter08LowerGroup F 0) : ℝ)⁻¹ := by
-  sorry
+  by_cases hu0 : u = 0
+  · subst u
+    simp [chapter08HerbrandFunction, chapter08LowerGroup,
+      LastLib.Book03RamificationTheory.Chapter05.chapter05HerbrandFunction]
+  · have hu_pos : 0 < u := lt_of_le_of_ne hu (Ne.symm hu0)
+    rw [chapter08HerbrandFunction,
+      LastLib.Book03RamificationTheory.Chapter05.chapter05HerbrandFunction,
+      if_neg (not_le.mpr hu_pos)]
+    have hconst : Set.EqOn
+        (LastLib.Book03RamificationTheory.Chapter05.chapter05HerbrandSlope F)
+        (fun t : ℝ =>
+          ((F.lowerGroup t).relIndex (F.lowerGroup 0) : ℝ)⁻¹)
+        (Set.Ioo 0 u) := by
+      intro t ht
+      rw [LastLib.Book03RamificationTheory.Chapter05.chapter05HerbrandSlope,
+        if_neg (not_le.mpr ht.1)]
+      have hsub : F.lowerGroup t ≤ F.lowerGroup 0 :=
+        F.lower_antitone ht.1.le
+      have hrel := Subgroup.relIndex_mul_index hsub
+      have hA := Subgroup.index_mul_card (F.lowerGroup t)
+      have hB := Subgroup.index_mul_card (F.lowerGroup 0)
+      have hidxpos : 0 < (F.lowerGroup 0).index :=
+        Nat.pos_of_ne_zero
+          (Subgroup.index_ne_zero_of_finite (H := F.lowerGroup 0))
+      have hcard :
+          (F.lowerGroup t).relIndex (F.lowerGroup 0) *
+              Nat.card (F.lowerGroup t) = Nat.card (F.lowerGroup 0) := by
+        apply Nat.eq_of_mul_eq_mul_left hidxpos
+        calc
+          (F.lowerGroup 0).index *
+              ((F.lowerGroup t).relIndex (F.lowerGroup 0) *
+                Nat.card (F.lowerGroup t)) =
+              ((F.lowerGroup t).relIndex (F.lowerGroup 0) *
+                (F.lowerGroup 0).index) * Nat.card (F.lowerGroup t) := by
+            ring
+          _ = (F.lowerGroup t).index * Nat.card (F.lowerGroup t) := by
+            rw [hrel]
+          _ = Nat.card G := hA
+          _ = (F.lowerGroup 0).index * Nat.card (F.lowerGroup 0) := hB.symm
+      have hrelpos : 0 < (F.lowerGroup t).relIndex (F.lowerGroup 0) := by
+        apply Nat.pos_of_ne_zero
+        intro hzero
+        have hcard0 : Nat.card (F.lowerGroup 0) = 0 := by
+          simpa [hzero] using hcard.symm
+        exact (Nat.ne_of_gt (show 0 < Nat.card (F.lowerGroup 0) from Nat.card_pos))
+          hcard0
+      have hcard_real :
+          ((F.lowerGroup t).relIndex (F.lowerGroup 0) : ℝ) *
+              Nat.card (F.lowerGroup t) = Nat.card (F.lowerGroup 0) := by
+        exact_mod_cast hcard
+      have hcard0ne : (Nat.card (F.lowerGroup 0) : ℝ) ≠ 0 := by
+        exact_mod_cast (Nat.ne_of_gt (show 0 < Nat.card (F.lowerGroup 0) from Nat.card_pos))
+      rw [div_eq_iff hcard0ne]
+      rw [← hcard_real]
+      field_simp [ne_of_gt (show 0 <
+        ((F.lowerGroup t).relIndex (F.lowerGroup 0) : ℝ) by exact_mod_cast hrelpos)]
+    exact intervalIntegral.integral_congr_Ioo_of_le hu_pos.le hconst
 
 theorem chapter08_herbrand_function_is_continuous_increasing_piecewise_linear
     {G : Type*} [Group G] [Finite G]
@@ -114,7 +170,7 @@ theorem chapter08_herbrand_function_is_continuous_increasing_piecewise_linear
           (u - v) *
             ((Nat.card (chapter08LowerGroup F (m + 1 : ℕ)) : ℝ) /
               Nat.card (chapter08LowerGroup F 0))) := by
-  sorry
+  exact LastLib.Book03RamificationTheory.Chapter05.chapter05_herbrand_function_is_continuous_increasing_piecewise_linear F
 
 theorem chapter08_herbrand_function_bijective
     {G : Type*} [Group G] [Finite G]
@@ -133,7 +189,7 @@ theorem chapter08_herbrand_inverse_left_inverse
     (hbij : Function.Bijective (chapter08HerbrandFunction F))
     {u : ℝ} (hu : -1 ≤ u) :
     chapter08HerbrandInverse F (chapter08HerbrandFunction F u) = u := by
-  sorry
+  exact LastLib.Book03RamificationTheory.Chapter05.chapter05_herbrand_inverse_left_inverse F hbij u
 
 theorem chapter08_herbrand_inverse_right_inverse
     {G : Type*} [Group G] [Finite G]
