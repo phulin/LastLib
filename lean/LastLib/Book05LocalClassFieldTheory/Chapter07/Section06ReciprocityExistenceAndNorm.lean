@@ -107,7 +107,9 @@ theorem chapter07_local_existence_theorem
     (H : Chapter07OpenFiniteIndexSubgroup Kˣ) :
     ∃! L : Chapter07FiniteAbelianIndex K D.extension,
       chapter07NormSubgroup (K := K) (L := L) = H.1 := by
-  sorry
+  exact
+    LastLib.Book05LocalClassFieldTheory.Chapter01.chapter01_local_existence_theorem
+      vK hKlocal hbasis D H
 
 /-- The pointwise local-existence theorem is the chapter's existence
 property used by the completion and correspondence APIs. -/
@@ -167,7 +169,13 @@ theorem chapter07_local_existence_degree
     (H : Chapter07OpenFiniteIndexSubgroup Kˣ) :
     Module.finrank K (chapter07ExtensionOfOpenSubgroup hExist H) =
       H.1.index := by
-  sorry
+  change Module.finrank K (chapter07ExtensionOfOpenSubgroup hExist H) =
+    Nat.card (Kˣ ⧸ H.1)
+  rw [← chapter07_norm_of_extension_of_open_subgroup hExist H]
+  rw [Nat.card_congr (chapter07FiniteReciprocityEquiv S
+    (chapter07ExtensionOfOpenSubgroup hExist H)).toEquiv]
+  exact (IsGalois.card_aut_eq_finrank K
+    (chapter07ExtensionOfOpenSubgroup hExist H)).symm
 
 /-- Finite reciprocity at the level selected by an open subgroup. -/
 noncomputable def chapter07LocalExistenceFiniteReciprocityEquiv
@@ -221,7 +229,26 @@ theorem chapter07_norm_subgroup_antitone
     (hL : L₁ ≤ L₂) :
     chapter07NormSubgroup (K := K) (L := L₂) ≤
       chapter07NormSubgroup (K := K) (L := L₁) := by
-  sorry
+  let _ : Algebra L₁ L₂ := RingHom.toAlgebra
+    (Subsemiring.inclusion ((FiniteGaloisIntermediateField.le_iff L₁ L₂).mp hL))
+  let _ : IsScalarTower K L₁ L₂ := IsScalarTower.of_algebraMap_eq (congrFun rfl)
+  let _ : FiniteDimensional L₁ L₂ :=
+    Module.Finite.of_restrictScalars_finite K L₁ L₂
+  have hnorm₁ : chapter07NormSubgroup (K := K) (L := L₁) =
+      LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05NormSubgroup K L₁ := by
+    ext x
+    rw [chapter07_mem_norm_subgroup_iff,
+      LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05_mem_normSubgroup_iff]
+    rfl
+  have hnorm₂ : chapter07NormSubgroup (K := K) (L := L₂) =
+      LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05NormSubgroup K L₂ := by
+    ext x
+    rw [chapter07_mem_norm_subgroup_iff,
+      LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05_mem_normSubgroup_iff]
+    rfl
+  rw [hnorm₂, hnorm₁]
+  exact LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05_norm_subgroup_mono_of_tower
+    K L₁ L₂
 
 /-- Equality of norm groups determines the finite abelian level. -/
 theorem chapter07_norm_subgroup_injective
@@ -237,6 +264,202 @@ theorem chapter07_norm_subgroup_injective
     L₁ = L₂ := by
   sorry
 
+private theorem chapter07_norm_subgroup_le_of_norm_le
+    {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsAbelianGalois K KAb]
+    (S : Chapter07FiniteArtinSystem K KAb)
+    (hopen :
+      ∀ L : Chapter07FiniteAbelianIndex K KAb,
+        IsOpen (chapter07NormSubgroup (K := K) (L := L) : Set Kˣ))
+    (hExist : chapter07ExistenceProperty K KAb)
+    {L₁ L₂ : Chapter07FiniteAbelianIndex K KAb}
+    (hN : chapter07NormSubgroup (K := K) (L := L₂) ≤
+      chapter07NormSubgroup (K := K) (L := L₁)) :
+    L₁ ≤ L₂ := by
+  let M : Chapter07FiniteAbelianIndex K KAb := L₁ ⊔ L₂
+  have hL₁M : L₁.toIntermediateField ≤ M.toIntermediateField := le_sup_left
+  have hL₂M : L₂.toIntermediateField ≤ M.toIntermediateField := le_sup_right
+  let L₁' : IntermediateField K M := IntermediateField.restrict hL₁M
+  let L₂' : IntermediateField K M := IntermediateField.restrict hL₂M
+  have hsup : L₁' ⊔ L₂' = (⊤ : IntermediateField K M) := by
+    apply IntermediateField.lift_injective M.toIntermediateField
+    rw [IntermediateField.lift_sup, IntermediateField.lift_top,
+      IntermediateField.lift_restrict, IntermediateField.lift_restrict]
+    rfl
+  let f₁ : Opposite.op M ⟶ Opposite.op L₁ :=
+    CategoryTheory.opHomOfLE (x := Opposite.op L₁) (y := Opposite.op M)
+      ((FiniteGaloisIntermediateField.le_iff L₁ M).2 hL₁M)
+  let f₂ : Opposite.op M ⟶ Opposite.op L₂ :=
+    CategoryTheory.opHomOfLE (x := Opposite.op L₂) (y := Opposite.op M)
+      ((FiniteGaloisIntermediateField.le_iff L₂ M).2 hL₂M)
+  let _ : Algebra L₁ M := RingHom.toAlgebra (Subsemiring.inclusion hL₁M)
+  let _ : IsScalarTower K L₁ M :=
+    IsScalarTower.of_algebraMap_eq (congrFun rfl)
+  let _ : Algebra L₂ M := RingHom.toAlgebra (Subsemiring.inclusion hL₂M)
+  let _ : IsScalarTower K L₂ M :=
+    IsScalarTower.of_algebraMap_eq (congrFun rfl)
+  have hnorm_le :
+      chapter07NormSubgroup (K := K) (L := L₂) ≤
+        chapter07NormSubgroup (K := K) (L := M) := by
+    intro x hx
+    have hx₁ : x ∈ chapter07NormSubgroup (K := K) (L := L₁) := hN hx
+    have hxker₁ : x ∈ (S.artin L₁).ker := by
+      rw [S.kernel_eq_norm L₁]
+      exact hx₁
+    have hxker₂ : x ∈ (S.artin L₂).ker := by
+      rw [S.kernel_eq_norm L₂]
+      exact hx
+    have hres₁ :
+        (finGaloisGroupMap f₁).hom.hom
+            (S.artin M x) = 1 := by
+      rw [S.compatible f₁ x]
+      exact MonoidHom.mem_ker.mp hxker₁
+    have hres₂ :
+        (finGaloisGroupMap f₂).hom.hom
+            (S.artin M x) = 1 := by
+      rw [S.compatible f₂ x]
+      exact MonoidHom.mem_ker.mp hxker₂
+    have hz₁ (y : M) (hy : y ∈ L₁') :
+        (S.artin M x) y = y := by
+      have hy₁ : y.1 ∈ L₁.toIntermediateField :=
+        (IntermediateField.mem_restrict hL₁M y).mp hy
+      let z : L₁ := ⟨y.1, hy₁⟩
+      let r : Gal(L₁ / K) := (finGaloisGroupMap f₁).hom.hom (S.artin M x)
+      have hz : r z = z := by
+        have h := congrArg (fun τ : Gal(L₁ / K) => τ z) hres₁
+        change r z = (1 : Gal(L₁ / K)) z at h
+        exact h.trans (by rfl)
+      have hcomm :
+          algebraMap L₁ M (r z) =
+            (S.artin M x) (algebraMap L₁ M z) := by
+        change algebraMap L₁ M ((S.artin M x).restrictNormal L₁ z) =
+          (S.artin M x) (algebraMap L₁ M z)
+        exact AlgEquiv.restrictNormal_commutes (S.artin M x) L₁ z
+      apply Subtype.ext
+      have hcomm' := congrArg (fun w : M => (w : KAb)) hcomm
+      have hz' := congrArg (algebraMap L₁ M) hz
+      have hzM' := congrArg (fun w : M => (w : KAb)) hz'
+      have hyalg : algebraMap L₁ M z = y := by
+        apply Subtype.ext
+        rfl
+      rw [hyalg] at hcomm' hzM'
+      exact hcomm'.symm.trans hzM'
+    have hz₂ (y : M) (hy : y ∈ L₂') :
+        (S.artin M x) y = y := by
+      have hy₂ : y.1 ∈ L₂.toIntermediateField :=
+        (IntermediateField.mem_restrict hL₂M y).mp hy
+      let z : L₂ := ⟨y.1, hy₂⟩
+      let r : Gal(L₂ / K) := (finGaloisGroupMap f₂).hom.hom (S.artin M x)
+      have hz : r z = z := by
+        have h := congrArg (fun τ : Gal(L₂ / K) => τ z) hres₂
+        change r z = (1 : Gal(L₂ / K)) z at h
+        exact h.trans (by rfl)
+      have hcomm :
+          algebraMap L₂ M (r z) =
+            (S.artin M x) (algebraMap L₂ M z) := by
+        change algebraMap L₂ M ((S.artin M x).restrictNormal L₂ z) =
+          (S.artin M x) (algebraMap L₂ M z)
+        exact AlgEquiv.restrictNormal_commutes (S.artin M x) L₂ z
+      apply Subtype.ext
+      have hcomm' := congrArg (fun w : M => (w : KAb)) hcomm
+      have hz' := congrArg (algebraMap L₂ M) hz
+      have hzM' := congrArg (fun w : M => (w : KAb)) hz'
+      have hyalg : algebraMap L₂ M z = y := by
+        apply Subtype.ext
+        rfl
+      rw [hyalg] at hcomm' hzM'
+      exact hcomm'.symm.trans hzM'
+    have hfix₁ : (S.artin M x) ∈ L₁'.fixingSubgroup := by
+      exact (IntermediateField.mem_fixingSubgroup_iff L₁' (S.artin M x)).2 hz₁
+    have hfix₂ : (S.artin M x) ∈ L₂'.fixingSubgroup := by
+      exact (IntermediateField.mem_fixingSubgroup_iff L₂' (S.artin M x)).2 hz₂
+    have hfix : (S.artin M x) ∈ (L₁' ⊔ L₂').fixingSubgroup := by
+      rw [IntermediateField.fixingSubgroup_sup]
+      exact ⟨hfix₁, hfix₂⟩
+    rw [hsup, IntermediateField.fixingSubgroup_top] at hfix
+    have htriv : S.artin M x = 1 := Subgroup.mem_bot.mp hfix
+    have hxkerM : x ∈ (S.artin M).ker := MonoidHom.mem_ker.mpr htriv
+    have hnormM : x ∈
+        LastLib.Book05LocalClassFieldTheory.Chapter01.chapter01NormSubgroup K M :=
+      S.kernel_eq_norm M ▸ hxkerM
+    simpa only [chapter07NormSubgroup] using hnormM
+  have hnorm_ge :
+      chapter07NormSubgroup (K := K) (L := M) ≤
+        chapter07NormSubgroup (K := K) (L := L₂) := by
+    exact chapter07_norm_subgroup_antitone L₂ M
+      ((FiniteGaloisIntermediateField.le_iff L₂ M).2 hL₂M)
+  have hnorm_eq :
+      chapter07NormSubgroup (K := K) (L := M) =
+        chapter07NormSubgroup (K := K) (L := L₂) := by
+    exact le_antisymm hnorm_ge hnorm_le
+  let H₂ : Chapter07OpenFiniteIndexSubgroup Kˣ :=
+    chapter07NormSubgroupAsOpenFiniteIndex S hopen L₂
+  have hM : M = L₂ := by
+    apply (hExist H₂).unique
+    · exact hnorm_eq.trans rfl
+    · rfl
+  exact hM ▸ le_sup_left
+
+private theorem chapter07_norm_subgroup_order_iso_exists
+    {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsAbelianGalois K KAb]
+    (S : Chapter07FiniteArtinSystem K KAb)
+    (hopen :
+      ∀ L : Chapter07FiniteAbelianIndex K KAb,
+        IsOpen (chapter07NormSubgroup (K := K) (L := L) : Set Kˣ))
+    (hExist : chapter07ExistenceProperty K KAb) :
+    ∃ e : Chapter07FiniteAbelianIndex K KAb ≃o
+        OrderDual (Chapter07OpenFiniteIndexSubgroup Kˣ),
+      ∀ L, e L = chapter07NormSubgroupAsOpenFiniteIndex S hopen L := by
+  let f : Chapter07FiniteAbelianIndex K KAb →
+      OrderDual (Chapter07OpenFiniteIndexSubgroup Kˣ) :=
+    fun L => chapter07NormSubgroupAsOpenFiniteIndex S hopen L
+  have hf : Monotone f := by
+    intro L₁ L₂ hL
+    exact chapter07_norm_subgroup_antitone L₁ L₂ hL
+  have hf_injective : Function.Injective f := by
+    intro L₁ L₂ hL
+    let H : Chapter07OpenFiniteIndexSubgroup Kˣ :=
+      chapter07NormSubgroupAsOpenFiniteIndex S hopen L₁
+    have hnorm :
+        chapter07NormSubgroup (K := K) (L := L₁) =
+          chapter07NormSubgroup (K := K) (L := L₂) := by
+      exact congrArg (fun H : Chapter07OpenFiniteIndexSubgroup Kˣ => H.1) hL
+    apply (hExist H).unique
+    · rfl
+    · change chapter07NormSubgroup (K := K) (L := L₂) =
+        chapter07NormSubgroup (K := K) (L := L₁)
+      exact hnorm.symm
+  have hf_surjective : Function.Surjective f := by
+    intro H
+    obtain ⟨L, hL, _⟩ := hExist H
+    refine ⟨L, ?_⟩
+    apply Subtype.ext
+    exact hL
+  let e : Chapter07FiniteAbelianIndex K KAb ≃
+      OrderDual (Chapter07OpenFiniteIndexSubgroup Kˣ) :=
+    Equiv.ofBijective f ⟨hf_injective, hf_surjective⟩
+  have he_inv : Monotone e.symm := by
+    intro H₁ H₂ hH
+    have hH' : H₂.1 ≤ H₁.1 := hH
+    have hnorm₁ :
+        chapter07NormSubgroup (K := K) (L := e.symm H₁) = H₁.1 := by
+      exact congrArg (fun H : OrderDual (Chapter07OpenFiniteIndexSubgroup Kˣ) => H.1)
+        (e.apply_symm_apply H₁)
+    have hnorm₂ :
+        chapter07NormSubgroup (K := K) (L := e.symm H₂) = H₂.1 := by
+      exact congrArg (fun H : OrderDual (Chapter07OpenFiniteIndexSubgroup Kˣ) => H.1)
+        (e.apply_symm_apply H₂)
+    apply chapter07_norm_subgroup_le_of_norm_le S hopen hExist
+    rw [hnorm₂, hnorm₁]
+    exact hH'
+  let e' : Chapter07FiniteAbelianIndex K KAb ≃o
+      OrderDual (Chapter07OpenFiniteIndexSubgroup Kˣ) :=
+    Equiv.toOrderIso e hf he_inv
+  refine ⟨e', ?_⟩
+  intro L
+  rfl
+
 /- LOCAL_DEPENDENCY_GUESS: the finite reciprocity, local existence, and norm
 limitation interfaces together assemble into the inclusion-reversing
 correspondence stated by the chapter. -/
@@ -251,7 +474,9 @@ theorem chapter07_norm_subgroup_inclusion_reversing_bijection
     Nonempty
       (Chapter07FiniteAbelianIndex K KAb ≃o
         OrderDual (Chapter07OpenFiniteIndexSubgroup Kˣ)) := by
-  sorry
+  obtain ⟨e, _⟩ :=
+    chapter07_norm_subgroup_order_iso_exists S hopen hExist
+  exact ⟨e⟩
 
 /-- The order equivalence sends a finite level to its norm subgroup. -/
 theorem chapter07_norm_subgroup_correspondence_is_norm
@@ -265,7 +490,7 @@ theorem chapter07_norm_subgroup_correspondence_is_norm
     ∃ e : Chapter07FiniteAbelianIndex K KAb ≃o
         OrderDual (Chapter07OpenFiniteIndexSubgroup Kˣ),
       ∀ L, e L = chapter07NormSubgroupAsOpenFiniteIndex S hopen L := by
-  sorry
+  exact chapter07_norm_subgroup_order_iso_exists S hopen hExist
 
 /- LOCAL_DEPENDENCY_GUESS: this is the norm-limitation theorem proved at
 finite level and reused by the final Chapter 7 synthesis. -/
