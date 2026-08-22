@@ -99,7 +99,6 @@ theorem chapter10_mem_local_norm_unit_image_iff
 def chapter10ValuationUnitNormImage
     (F E : Type*) [Field F] [Field E] [Algebra F E]
     [FiniteDimensional F E]
-    (_vF : AddValuation F (WithTop ℤ))
     (vE : AddValuation E (WithTop ℤ)) : Set F :=
   {x | ∃ y : E, y ∈ chapter10LocalUnitSet vE ∧
     chapter10LocalNorm F E y = x}
@@ -107,9 +106,8 @@ def chapter10ValuationUnitNormImage
 theorem chapter10_mem_valuation_unit_norm_image_iff
     (F E : Type*) [Field F] [Field E] [Algebra F E]
     [FiniteDimensional F E]
-    (vF : AddValuation F (WithTop ℤ))
     (vE : AddValuation E (WithTop ℤ)) (x : F) :
-    x ∈ chapter10ValuationUnitNormImage F E vF vE ↔
+    x ∈ chapter10ValuationUnitNormImage F E vE ↔
       ∃ y : E, y ∈ chapter10LocalUnitSet vE ∧
         chapter10LocalNorm F E y = x := Iff.rfl
 
@@ -156,10 +154,10 @@ abbrev chapter10FiniteIdeles
     [Algebra R K] [IsFractionRing R K] : Type _ :=
   (chapter10FiniteAdeles R K)ˣ
 
-/- LOCAL_DEPENDENCY_GUESS: the preceding global chapters should instantiate
-the abstract place/completion data below with the number-field completions and
-their finite fibers.  This record keeps the norm construction independent of
-an unavailable Chapter 9/Book 4 global completion package. -/
+/- LOCAL_DEPENDENCY_GUESS: Chapter 9 supplies the idele and module APIs for a
+single number field, but not the extension-indexed completion data needed for
+the source's family of places above each base place.  This record keeps that
+additional bookkeeping explicit until such an extension interface exists. -/
 /- A global extension datum records only the data needed to form the
 restricted-product norm.  The local multiplicative groups may be unit groups
 of completions, or any equivalent book-facing model. -/

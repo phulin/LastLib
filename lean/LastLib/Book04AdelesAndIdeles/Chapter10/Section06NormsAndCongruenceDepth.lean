@@ -55,6 +55,10 @@ theorem chapter10_local_norm_maps_deep_principal_unit_sets
     (vF : AddValuation F (WithTop ℤ)) (vE : AddValuation E (WithTop ℤ))
     (hF : chapter10ValuationNeighborhoodBasis vF)
     (hE : chapter10ValuationNeighborhoodBasis vE)
+    (hprincipalF : ∀ n,
+      chapter10ValuationNeighborhood vF n ⊆ chapter10LocalPrincipalUnitSet vF n)
+    (hprincipalE : ∀ n,
+      chapter10LocalPrincipalUnitSet vE n ⊆ chapter10ValuationNeighborhood vE n)
     (n : ℕ) :
     ∃ m : ℕ, Set.MapsTo (chapter10LocalNorm F E)
       (chapter10LocalPrincipalUnitSet vE m)
@@ -68,18 +72,14 @@ theorem chapter10_local_norm_tendsto_one
       (𝓝 (1 : E)) (𝓝 (1 : F)) := by
   sorry
 
-/-- The remainder after the constant and trace terms in the norm expansion. -/
-def chapter10NormHigherTerms
-    (F E : Type*) [Field F] [Field E] [Algebra F E]
-    [FiniteDimensional F E] (z : E) : F :=
-  chapter10LocalNorm F E (1 + z) - 1 - Algebra.trace F E z
-
 theorem chapter10_norm_first_order_expansion
     (F E : Type*) [Field F] [Field E] [Algebra F E]
     [FiniteDimensional F E] (z : E) :
     chapter10LocalNorm F E (1 + z) =
-      1 + Algebra.trace F E z + chapter10NormHigherTerms F E z := by
-  sorry
+      1 + Algebra.trace F E z +
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11NormRemainder F E z := by
+  exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11_norm_one_add_linearizes_to_trace
+    F E z
 
 /- The different governs the sharp relation between source and target depth;
 the chapter only needs the existence statement, so no universal sharp formula

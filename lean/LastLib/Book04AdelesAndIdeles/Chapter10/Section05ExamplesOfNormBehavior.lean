@@ -22,7 +22,7 @@ theorem chapter10_complex_real_norm_positive (z : ℂ) (hz : z ≠ 0) :
   sorry
 
 theorem chapter10_negative_real_not_a_complex_norm (r : ℝ) (hr : r < 0) :
-    ¬ ∃ z : ℂ, z ≠ 0 ∧ Algebra.norm ℝ z = r := by
+    ¬ ∃ z : ℂ, Algebra.norm ℝ z = r := by
   sorry
 
 /-- A complexified real place is represented by a map into the complex local
@@ -57,10 +57,25 @@ theorem chapter10_unramified_full_norm_quotient_cyclic_of_order
     (d : ℕ) (hunram : chapter10UnramifiedLocalExtension vF vE)
     (hdegree : Module.finrank F E = d) (πF : F)
     (hπF : chapter10NormalizedUniformizer vF πF)
+    (hnorm : chapter10NormValuationFormula F E vF vE d)
+    (hfres : d =
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
+        vF vE hunram.1)
     [Finite (chapter10ResidueField vF)]
     [Algebra (chapter10ResidueField vF) (chapter10ResidueField vE)]
     [FiniteDimensional (chapter10ResidueField vF) (chapter10ResidueField vE)]
-    [Algebra.IsSeparable (chapter10ResidueField vF) (chapter10ResidueField vE)] :
+    [Algebra.IsSeparable (chapter10ResidueField vF) (chapter10ResidueField vE)]
+    (hred :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueReductionCompatible
+        vF vE (chapter10ResidueMap vF) (chapter10ResidueMap vE))
+    (N : (chapter10ValuationRing vE)ˣ →* (chapter10ValuationRing vF)ˣ)
+    (hnormunit :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11NormUnitLiftCompatibility
+        F E vF vE N)
+    (hnormred :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11NormResidueCompatibility
+        F E (chapter10ResidueField vF) (chapter10ResidueField vE) vF vE
+          (chapter10ResidueMap vF) (chapter10ResidueMap vE) 1 N) :
     IsCyclic (chapter10FullNormQuotient F E) ∧
       Nat.card (chapter10FullNormQuotient F E) = d := by
   sorry
@@ -84,18 +99,16 @@ def chapter10TotallyRamifiedUnitNormIsProper
     (F E : Type*) [Field F] [Field E] [Algebra F E]
     [FiniteDimensional F E]
     (vF : AddValuation F (WithTop ℤ))
-    (vE : AddValuation E (WithTop ℤ))
-    (_hformula : chapter10NormValuationFormula F E vF vE 1) : Prop :=
-  chapter10ValuationUnitNormImage F E vF vE ≠ chapter10LocalUnitSet vF
+    (vE : AddValuation E (WithTop ℤ)) : Prop :=
+  chapter10ValuationUnitNormImage F E vE ≠ chapter10LocalUnitSet vF
 
 theorem chapter10_totally_ramified_unit_norm_properness_is_an_extra_condition
     (F E : Type*) [Field F] [Field E] [Algebra F E]
     [FiniteDimensional F E]
     (vF : AddValuation F (WithTop ℤ))
-    (vE : AddValuation E (WithTop ℤ))
-    (hformula : chapter10NormValuationFormula F E vF vE 1) :
-    chapter10TotallyRamifiedUnitNormIsProper F E vF vE hformula ↔
-      chapter10ValuationUnitNormImage F E vF vE ≠ chapter10LocalUnitSet vF := Iff.rfl
+    (vE : AddValuation E (WithTop ℤ)) :
+    chapter10TotallyRamifiedUnitNormIsProper F E vF vE ↔
+      chapter10ValuationUnitNormImage F E vE ≠ chapter10LocalUnitSet vF := Iff.rfl
 
 /-! ### The Gaussian rational example -/
 

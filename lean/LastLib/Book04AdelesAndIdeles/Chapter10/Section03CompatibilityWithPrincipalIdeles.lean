@@ -168,8 +168,9 @@ theorem chapter10_idele_class_norm_transitive
     (hq10 : Q_10.comp q_1 = q_0.comp N_10)
     (hq21 : Q_21.comp q_2 = q_1.comp N_21)
     (hq20 : Q_20.comp q_2 = q_0.comp N_20)
+    (hq2 : Function.Surjective q_2)
     (htrans : chapter10AdelicNormTransitivity N_10 N_21 N_20) :
-    Q_20.comp q_2 = (Q_10.comp Q_21).comp q_2 := by
+    Q_20 = Q_10.comp Q_21 := by
   sorry
 
 /-! ### The ideal norm shadow -/

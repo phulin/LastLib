@@ -203,11 +203,19 @@ theorem chapter10_unramified_norm_first_layer_congruence
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueReductionCompatible
         vF vE ρF ρE)
     (hdegree : Module.finrank F E = Module.finrank k l)
+    (hnorm : chapter10NormValuationFormula F E vF vE (Module.finrank k l))
     (n : ℕ) (hn : 1 ≤ n) (a : chapter10ValuationRing vE)
     (πF : F) (πE : E)
     (hπF : chapter10NormalizedUniformizer vF πF)
     (hπE : chapter10NormalizedUniformizer vE πE)
-    (hπ : πE = algebraMap F E πF) :
+    (hπ : πE = algebraMap F E πF)
+    (T : chapter10ValuationRing vE →+ chapter10ValuationRing vF)
+    (htrace :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11TraceLiftCompatibility
+        F E vF vE T)
+    (htracered :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11TraceResidueCompatibility
+        F E k l vF vE ρF ρE 1 T) :
     ∃ c : chapter10ValuationRing vF,
       ρF c = Algebra.trace k l (ρE a) ∧
         chapter10ValuationCongruence vF (n + 1)
@@ -222,11 +230,26 @@ theorem lemma_10_1_norms_in_an_unramified_extension
     (d : ℕ) (hunram : chapter10UnramifiedLocalExtension vF vE)
     (hdegree : Module.finrank F E = d)
     (πF : F) (hπF : chapter10NormalizedUniformizer vF πF)
+    (hnorm : chapter10NormValuationFormula F E vF vE d)
+    (hfres : d =
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
+        vF vE hunram.1)
     [Finite (chapter10ResidueField vF)]
     [Algebra (chapter10ResidueField vF) (chapter10ResidueField vE)]
     [FiniteDimensional (chapter10ResidueField vF) (chapter10ResidueField vE)]
-    [Algebra.IsSeparable (chapter10ResidueField vF) (chapter10ResidueField vE)] :
-    chapter10ValuationUnitNormImage F E vF vE = chapter10LocalUnitSet vF ∧
+    [Algebra.IsSeparable (chapter10ResidueField vF) (chapter10ResidueField vE)]
+    (hred :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueReductionCompatible
+        vF vE (chapter10ResidueMap vF) (chapter10ResidueMap vE))
+    (N : (chapter10ValuationRing vE)ˣ →* (chapter10ValuationRing vF)ˣ)
+    (hnormunit :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11NormUnitLiftCompatibility
+        F E vF vE N)
+    (hnormred :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11NormResidueCompatibility
+        F E (chapter10ResidueField vF) (chapter10ResidueField vE) vF vE
+          (chapter10ResidueMap vF) (chapter10ResidueMap vE) 1 N) :
+    chapter10ValuationUnitNormImage F E vE = chapter10LocalUnitSet vF ∧
       chapter10LocalNormImage F E = chapter10UnramifiedNormTarget vF πF d := by
   sorry
 
