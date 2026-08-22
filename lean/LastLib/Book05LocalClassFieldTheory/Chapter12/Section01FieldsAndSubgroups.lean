@@ -488,7 +488,13 @@ theorem chapter12_totally_ramified_norm_has_unit_times_uniformizer
     {K k : Type*} [Field K] [Field k]
     (C : Chapter12LocalCoordinates K k) (H : Subgroup Kˣ)
     (hH : chapter12TotallyRamifiedNormSubgroup C H) :
-    chapter12ValuationOneNormForm C H := by sorry
+    chapter12ValuationOneNormForm C H := by
+  rcases hH 1 with ⟨x, hx⟩
+  refine ⟨x, hx, x.1 * C.uniformizer⁻¹, ?_, ?_⟩
+  · rw [C.valuation_mul, C.valuation_inv, C.uniformizer_value]
+    rw [show C.valuation x.1 = 1 from hx]
+    norm_num
+  · simp [mul_assoc]
 
 end
 

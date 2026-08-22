@@ -128,7 +128,12 @@ theorem chapter12_frobenius_lifts_differ_by_inertia
     {g h : G} (hg : g ∈ chapter12ArithmeticFrobeniusLifts D)
     (hh : h ∈ chapter12ArithmeticFrobeniusLifts D) :
     g⁻¹ * h ∈ D.inertia := by
-  sorry
+  change D.reduction g = D.arithmeticFrobenius at hg
+  change D.reduction h = D.arithmeticFrobenius at hh
+  rw [← hkernel]
+  apply MonoidHom.mem_ker.mpr
+  rw [map_mul, map_inv, hg, hh]
+  exact inv_mul_cancel _
 
 theorem chapter12_uniformizer_has_arithmetic_frobenius_image
     {K k G Q : Type*} [Field K] [Field k] [CommGroup G] [Finite G] [Group Q]

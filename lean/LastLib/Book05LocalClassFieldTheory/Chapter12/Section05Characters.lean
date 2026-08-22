@@ -65,16 +65,43 @@ theorem chapter12_unramified_character_has_frobenius_value
     {g : G} (hg : g ∈ chapter12ArithmeticFrobeniusLifts D) :
     chapter12CharacterUniformizerValue D χ =
       chapter12CharacterFrobeniusLiftValue χ g := by
-  sorry
+  change χ (D.reciprocity D.coordinates.uniformizer) = χ g
+  have hdiff : g⁻¹ * D.reciprocity D.coordinates.uniformizer ∈ D.inertia :=
+    chapter12_frobenius_lifts_differ_by_inertia D D.reduction_kernel hg
+      D.uniformizer_mod_inertia
+  have hχ : χ (g⁻¹ * D.reciprocity D.coordinates.uniformizer) = 1 :=
+    hunram ⟨g⁻¹ * D.reciprocity D.coordinates.uniformizer, hdiff⟩
+  rw [map_mul, map_inv] at hχ
+  calc
+    χ (D.reciprocity D.coordinates.uniformizer) =
+        χ g * ((χ g)⁻¹ * χ (D.reciprocity D.coordinates.uniformizer)) := by
+          rw [← mul_assoc, mul_inv_cancel, one_mul]
+    _ = χ g * 1 := by rw [hχ]
+    _ = χ g := mul_one _
 
 theorem chapter12_character_unramified_iff_units_trivial
     {K k G Q A : Type*} [Field K] [Field k] [CommGroup G] [Finite G] [Group Q] [Group A]
     (D : Chapter12GaloisPieceDictionary K k G Q) (χG : G →* A) :
     chapter12CharacterUnramifiedOnInertia
         D.inertia χG ↔
-      chapter12CharacterUnramifiedOnUnits D.coordinates
+    chapter12CharacterUnramifiedOnUnits D.coordinates
         (χG.comp D.reciprocity) := by
-  sorry
+  constructor
+  · intro hunram u
+    change χG (D.reciprocity u) = 1
+    exact hunram ⟨D.reciprocity u, by
+      rw [D.inertia_eq_units]
+      exact Subgroup.mem_map_of_mem D.reciprocity u.property⟩
+  · intro hunits g
+    have hg : (g : G) ∈ chapter12GaloisInertia D.coordinates D.reciprocity := by
+      rw [← D.inertia_eq_units]
+      exact g.property
+    rcases Subgroup.mem_map.mp hg with ⟨u, hu, hgu⟩
+    have hunit := hunits ⟨u, hu⟩
+    change χG (D.reciprocity u) = 1 at hunit
+    change χG g.1 = 1
+    rw [← hgu]
+    exact hunit
 
 /-- Triviality at a unit level, on either side of the dictionary. -/
 def chapter12CharacterTrivialOnUnitLevel
@@ -95,7 +122,22 @@ theorem chapter12_character_unit_level_iff_ramification_level
       (χ.comp D.reciprocity) ↔
       chapter12CharacterTrivialOnRamificationLevel
         (D.ramification n) χ := by
-  sorry
+  constructor
+  · intro hunit g
+    have hg : (g : G) ∈ chapter12GaloisRamification D.coordinates D.reciprocity n := by
+      rw [← D.ramification_eq_principal n]
+      exact g.property
+    rcases Subgroup.mem_map.mp hg with ⟨u, hu, hgu⟩
+    have hvalue := hunit ⟨u, hu⟩
+    change χ (D.reciprocity u) = 1 at hvalue
+    change χ g.1 = 1
+    rw [← hgu]
+    exact hvalue
+  · intro hram u
+    change χ (D.reciprocity u) = 1
+    exact hram ⟨D.reciprocity u, by
+      rw [D.ramification_eq_principal n]
+      exact Subgroup.mem_map_of_mem D.reciprocity u.property⟩
 
 /-- Norm pullback and restriction of a Galois character agree on extension
 elements. -/
