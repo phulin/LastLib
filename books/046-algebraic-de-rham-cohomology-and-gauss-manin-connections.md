@@ -2093,17 +2093,29 @@ $$
 
 The symmetry condition $\lambda^\vee\delta_A=\lambda$ identifies the transpose of the Poincare
 tensor with its pullback under interchange of the two factors. The biextension commutator reverses
-under that interchange, so (12.5) is skew-symmetric. More is needed in characteristic two: the
-commutator has a canonical trivialization on the diagonal, and its first-order de Rham
-linearization says $\psi_\lambda(x,x)=0$. Thus the form is genuinely alternating in every
-characteristic. It is perfect by construction. More generally, the same formula defines a perfect
-pairing after inverting $\deg\lambda$: a quasi-inverse to the isogeny shows that $\lambda^*$
-becomes invertible there. Before that degree is inverted, it is safer to retain the integral map
-$V^\vee\to V$ rather than claim a perfect form.
+under that interchange, so (12.5) is skew-symmetric: $\psi_\lambda(x,y)=-\psi_\lambda(y,x)$.
+After inverting $2$ on $S$, skew-symmetry implies genuine alternation,
+$\psi_\lambda(x,x)=0$. In residue characteristic two this implication is unavailable, and we do
+not supply the stronger input that the literature uses there. That input consists of two steps:
+first, a canonical trivialization of the biextension commutator restricted to the diagonal,
+produced by the cubical identity for the normalized Poincare bundle; second, its first-order de
+Rham linearization, identifying the infinitesimal sign of that trivialization with
+$\psi_\lambda(x,x)$. The torsion-level analogue of exactly this cubical input is asserted without
+proof at Book 34, (14.5); neither step has been carried out anywhere earlier in this series.
+Accordingly, downstream use of (12.5) is made here only through skew-symmetry, with alternation
+available after $2$ is inverted; any application requiring genuine alternation of $\psi_\lambda$
+in characteristic two is conditional on the unproved diagonal trivialization and its linearization.
+
+The form (12.5) is perfect by construction when $\lambda$ is principal. More generally, the same
+formula defines a perfect pairing after inverting $\deg\lambda$: a quasi-inverse to the isogeny
+shows that $\lambda^*$ becomes invertible there. Before that degree is inverted, it is safer to
+retain the integral map $V^\vee\to V$ rather than claim a perfect form.
 
 The Hodge bundle $\omega_A$ is isotropic. On the Hodge graded pairing, it pairs only with the
-quotient $R^1p_*\mathcal O_A$, not with itself. Under a principal polarization it is a rank-$g$
-Lagrangian subbundle of the rank-$2g$ symplectic de Rham bundle.
+quotient $R^1p_*\mathcal O_A$, not with itself. Under a principal polarization it is thus an
+isotropic rank-$g$ subbundle of the rank-$2g$ bundle, self-dual under the perfect skew form; when
+the ambient form is alternating — in particular after inverting $2$ — it is a Lagrangian
+subbundle.
 
 For an elliptic scheme, the canonical principal polarization identifies this construction with
 the curve pairing of Chapter 7. Both are induced by the diagonal divisor and have the same
@@ -2124,8 +2136,10 @@ d\psi_\lambda(x,y)
 =\psi_\lambda(\nabla x,y)+\psi_\lambda(x,\nabla y). \tag{12.6}
 $$
 
-A principally polarized abelian scheme consequently determines a flat symplectic bundle with a
-Lagrangian Hodge subbundle. Its second fundamental form is symmetric, just as in (10.7). This is
+A principally polarized abelian scheme consequently determines a flat bundle equipped with a
+horizontal perfect skew-symmetric form — alternating, hence symplectic, after inverting $2$ by
+Section 12.2 — whose Hodge subbundle is isotropic of half rank. Its second fundamental form is
+symmetric, just as in (10.7). This is
 the linear algebra underlying the Hodge conditions in polarized moduli spaces.
 
 ### 12.4 Isogeny invariance
@@ -2363,7 +2377,10 @@ $$
 $$
 
 The Poincare class pairs the degree-one bundles of $A$ and $A^\vee$ perfectly. A principal
-polarization gives a horizontal perfect alternating form with Lagrangian Hodge subbundle.
+polarization gives a horizontal perfect skew-symmetric form on $\mathcal H^1_{\mathrm{dR}}(A/S)$,
+alternating after $2$ is inverted; its Hodge subbundle is isotropic of half rank, hence
+Lagrangian whenever the form is alternating. Section 12.2 records precisely which part of this
+statement remains open in residue characteristic two.
 
 ### 14.2 Failure modes and hypothesis checks
 
@@ -2393,6 +2410,11 @@ Before using the package, the following distinctions must be checked.
 - An isogeny identifies de Rham cohomology by pullback only after its degree is invertible, unless
   a stronger argument is supplied. In residue characteristic its cotangent map can be singular.
 
+- The polarization form of Section 12.2 is skew-symmetric in every characteristic but is proved
+  alternating only after $2$ is inverted. The diagonal trivialization of the biextension
+  commutator that would give genuine alternation in characteristic two is not established here;
+  consumers needing it must treat it as an open input.
+
 These checks are part of the mathematical content: each prevents a real counterexample rather
 than a merely formal inconvenience.
 
@@ -2410,7 +2432,8 @@ forms produces the Gauss--Manin connection; the equality $d^2=0$ becomes integra
 rule becomes horizontality of cup products, and the interaction of two filtrations becomes
 Griffiths transversality. The Kodaira--Spencer class then identifies the derivative of the Hodge
 bundle with the infinitesimal deformation of the family. For a polarized abelian scheme, the
-Poincare class makes the resulting flat bundle symplectic.
+Poincare class makes the resulting flat bundle carry a perfect skew-symmetric horizontal form,
+symplectic after inverting $2$.
 
 The final package is therefore one continuous chain:
 
