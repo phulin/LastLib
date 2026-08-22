@@ -829,7 +829,13 @@ theorem chapter05_character_kernel_positive_break_inertia_bridge
       Chapter05FixedFieldInertiaBridge
         (R.quotient_local.profile.lowerGroup 0)
         R.quotient_local.profile R.quotient_inertia_transfer v b := by
-  sorry
+  exact chapter05_fixed_field_inertia_bridge_of_canonical_profile
+    (R.quotient_local.profile.lowerGroup 0)
+    R.quotient_local.profile R.quotient_inertia_transfer
+    (fun n => chapter05_character_kernel_quotient_profile_canonical_at_inertia_top χ R n)
+    rfl (chapter05_character_kernel_inertia_is_cyclic χ R)
+    (chapter05_character_kernel_inertia_base_residue_over_base_is_perfect χ R)
+    hv hbreak hmax
 
 private theorem chapter05_nat_card_map_group_equiv
     {G G' : Type*} [Group G] [Group G'] [Finite G] [Finite G']
