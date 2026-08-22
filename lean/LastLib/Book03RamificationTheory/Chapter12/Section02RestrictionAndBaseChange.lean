@@ -31,11 +31,11 @@ def chapter12IntersectRamificationProfile
     intro i hi
     simp [P.lower_eq_bot_of_bound i hi]
 
-theorem chapter12_intersected_lower_group_coe
+theorem chapter12_intersected_lower_group_eq_comap
     {G : Type*} [Group G] [Fintype G]
     (P : Chapter12RamificationProfile G) (H : Subgroup G) (i : ℕ) :
-    ((P.lower i).comap H.subtype : Set H) =
-      ((H ⊓ P.lower i : Subgroup G).comap H.subtype : Set H) := by
+    (P.lower i).comap H.subtype =
+      (H ⊓ P.lower i : Subgroup G).comap H.subtype := by
   sorry
 
 def chapter12RestrictionConductorSum
@@ -234,9 +234,8 @@ theorem chapter12_tame_base_change_tame_term
       LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
           (ρ.comp H.subtype) T.extensionInertia +
         pM.swanConductor _ (ρ.comp H.subtype) := by
-  simpa [hinertia] using
-    pM.artin_eq_tame_add_swan _
-      (ρ.comp H.subtype)
+  rw [← hinertia]
+  exact pM.artin_eq_tame_add_swan _ (ρ.comp H.subtype)
 
 /- The tame change-of-variables statement in the source, displayed at the
 conductor level so it can be consumed without choosing an integration API. -/
