@@ -246,7 +246,21 @@ theorem chapter06SigmaA_injective
     [FiniteDimensional K (chapter06TorsionField D n ω.point)]
     [IsGalois K (chapter06TorsionField D n ω.point)] :
     Function.Injective (chapter06SigmaA D n hn f hf M A ω) := by
-  sorry
+  intro a b hab
+  apply Units.ext
+  apply (chapter06_torsion_parametrization_bijective D n hn f hf M A ω).1
+  apply Subtype.ext
+  change (A.quotientAction (a : Chapter06TorsionResidueRing D n)
+      (chapter06PrimitivePointAsTorsion D n hn ω)).1 =
+    (A.quotientAction (b : Chapter06TorsionResidueRing D n)
+      (chapter06PrimitivePointAsTorsion D n hn ω)).1
+  have hp := congrArg
+    (fun σ : Gal(chapter06TorsionField D n ω.point / K) =>
+      σ (chapter06PrimitivePointInField D n hn ω)) hab
+  rw [chapter06SigmaA_spec D n hn f hf M A ω a,
+    chapter06SigmaA_spec D n hn f hf M A ω b] at hp
+  exact congrArg (fun z : chapter06TorsionField D n ω.point =>
+    (z : AlgebraicClosure K)) hp
 
 theorem chapter06SigmaA_exhausts_galois_group
     {K : Type*} [Field K] [UniformSpace (AlgebraicClosure K)]
@@ -261,7 +275,100 @@ theorem chapter06SigmaA_exhausts_galois_group
     [FiniteDimensional K (chapter06TorsionField D n ω.point)]
     [IsGalois K (chapter06TorsionField D n ω.point)] :
     Function.Surjective (chapter06SigmaA D n hn f hf M A ω) := by
-  sorry
+  let L := chapter06TorsionField D n ω.point
+  let p : L := chapter06PrimitivePointInField D n hn ω
+  intro σ
+  have hincl (Q : Polynomial K) :
+      (algebraMap L (AlgebraicClosure K)) (Polynomial.aeval p Q) =
+        Polynomial.aeval ((p : L) : AlgebraicClosure K) Q := by
+    have h := Polynomial.map_aeval_eq_aeval_map
+      (R := K) (S := L) (T := K) (U := AlgebraicClosure K)
+      (φ := RingHom.id K) (ψ := algebraMap L (AlgebraicClosure K))
+      (p := Q) (a := p) ?_
+    convert h using 1
+    all_goals simp
+    · ext x
+      simp [RingHom.comp_apply, ← IsScalarTower.algebraMap_apply K L
+        (AlgebraicClosure K)]
+  have hmap (Q : Polynomial K) :
+      (algebraMap L (AlgebraicClosure K))
+          (σ (Polynomial.aeval p Q)) =
+        Polynomial.aeval ((σ p : L) : AlgebraicClosure K) Q := by
+    have h := Polynomial.map_aeval_eq_aeval_map
+      (R := K) (S := L) (T := K) (U := AlgebraicClosure K)
+      (φ := RingHom.id K)
+      (ψ := (algebraMap L (AlgebraicClosure K)).comp σ.toRingHom)
+      (p := Q) (a := p) ?_
+    simpa [RingHom.comp_apply] using h
+    · ext x
+      simp [RingHom.comp_apply]
+  have hpT : Polynomial.aeval p
+      (chapter06TorsionPolynomialOverK D n) = 0 := by
+    apply (algebraMap L (AlgebraicClosure K)).injective
+    rw [hincl]
+    simpa [p, chapter06PrimitivePointInField] using
+      (chapter06_primitive_torsion_point_is_a_root D n hn ω)
+  have hpPrev : Polynomial.aeval p
+      (chapter06TorsionPolynomialOverK D (n - 1)) ≠ 0 := by
+    intro h
+    apply ω.primitive
+    change Polynomial.aeval ω.point
+      (chapter06TorsionPolynomialOverK D (n - 1)) = 0
+    have hm := congrArg (algebraMap L (AlgebraicClosure K)) h
+    rw [hincl] at hm
+    simpa [p, chapter06PrimitivePointInField] using hm
+  have hprim : ((σ p : L) : AlgebraicClosure K) ∈
+      chapter06PrimitiveTorsionSet D n := by
+    apply (chapter06_mem_primitiveTorsionSet_iff D n hn _).2
+    constructor
+    · change Polynomial.aeval ((σ p : L) : AlgebraicClosure K)
+        (chapter06TorsionPolynomialOverK D n) = 0
+      rw [← hmap, hpT]
+      simp
+    · intro h
+      change Polynomial.aeval ((σ p : L) : AlgebraicClosure K)
+          (chapter06TorsionPolynomialOverK D (n - 1)) = 0 at h
+      apply hpPrev
+      apply σ.injective
+      apply (algebraMap L (AlgebraicClosure K)).injective
+      rw [hmap]
+      simpa [p, chapter06PrimitivePointInField] using h
+  have htorsion : ((σ p : L) : AlgebraicClosure K) ∈
+      chapter06TorsionSet D n :=
+    (chapter06_mem_primitiveTorsionSet_iff D n hn _).1 hprim |>.1
+  obtain ⟨c, hc⟩ :=
+    (chapter06_torsion_parametrization_bijective D n hn f hf M A ω).2
+      ⟨(σ p : L), htorsion⟩
+  have hcprim : (A.quotientAction c
+      (chapter06PrimitivePointAsTorsion D n hn ω)).1 ∈
+      chapter06PrimitiveTorsionSet D n := by
+    have hc' := congrArg Subtype.val hc
+    rw [hc']
+    exact hprim
+  have hcunit : IsUnit c :=
+    (chapter06_torsion_parametrization_primitive_iff_unit D n hn f hf M A ω c).2
+      hcprim
+  let a : (Chapter06TorsionResidueRing D n)ˣ := hcunit.unit
+  have ha : (a : Chapter06TorsionResidueRing D n) = c := hcunit.unit_spec
+  have hgen : ((σ p : L) : AlgebraicClosure K) =
+      A.quotientAction (a : Chapter06TorsionResidueRing D n)
+        (chapter06PrimitivePointAsTorsion D n hn ω) := by
+    have h := congrArg Subtype.val hc.symm
+    simpa [a, ha] using h
+  have hσ : ((σ (chapter06PrimitivePointInField D n hn ω) : L) :
+      AlgebraicClosure K) =
+      A.quotientAction (a : Chapter06TorsionResidueRing D n)
+        (chapter06PrimitivePointAsTorsion D n hn ω) := by
+    simpa [p, L] using hgen
+  have haσ : ((chapter06SigmaA D n hn f hf M A ω a)
+      (chapter06PrimitivePointInField D n hn ω) : AlgebraicClosure K) =
+      A.quotientAction (a : Chapter06TorsionResidueRing D n)
+        (chapter06PrimitivePointAsTorsion D n hn ω) := by
+    exact congrArg (fun z : chapter06TorsionField D n ω.point =>
+      (z : AlgebraicClosure K))
+      (chapter06SigmaA_spec D n hn f hf M A ω a)
+  exact ⟨a, (chapter06_torsion_action_gives_unique_automorphism D n hn f hf M A ω a).unique
+    hσ haσ |>.symm⟩
 
 theorem chapter06_torsion_galois_group_card
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K)
@@ -273,7 +380,45 @@ theorem chapter06_torsion_galois_group_card
     Nat.card (Gal(chapter06TorsionField D n ω.point / K)) =
       chapter06ResidueCardinality D ^ (n - 1) *
         (chapter06ResidueCardinality D - 1) := by
-  sorry
+  let L := chapter06TorsionField D n ω.point
+  let P := chapter06PrimitiveTorsionPolynomialOverK D n
+  let _ := D.residue_finite
+  let _ : Fintype (Chapter06ResidueField D) := Fintype.ofFinite _
+  have hq : 1 < chapter06ResidueCardinality D := by
+    simpa [chapter06ResidueCardinality, Nat.card_eq_fintype_card] using
+      (Fintype.one_lt_card : 1 < Fintype.card (Chapter06ResidueField D))
+  have hmonicQ := chapter06_Qn_monic D n hn
+  have hposQ : 0 < (chapter06Qn D n).natDegree := by
+    rw [chapter06_Qn_degree D n hn]
+    exact Nat.mul_pos (pow_pos (chapter06_residue_cardinality_pos D) _)
+      (by omega)
+  have hirrA : Irreducible (chapter06Qn D n) := by
+    apply (chapter06_Qn_is_eisenstein D n hn).irreducible
+      (IsLocalRing.maximalIdeal.isMaximal _).isPrime
+      hmonicQ.isPrimitive hposQ
+  have hirrK : Irreducible P := by
+    unfold P chapter06PrimitiveTorsionPolynomialOverK
+    exact (hmonicQ.irreducible_iff_irreducible_map_fraction_map).mp hirrA
+  have hroot : Polynomial.aeval ω.point P = 0 :=
+    chapter06_primitive_torsion_point_is_primitive_division_root D n hn ω
+  have hmin : P = minpoly K ω.point := by
+    exact minpoly.eq_of_irreducible_of_monic hirrK hroot
+      (hmonicQ.map (algebraMap (Chapter06ValuationRing D) K))
+  calc
+    Nat.card (Gal(L / K)) = Module.finrank K L :=
+      IsGalois.card_aut_eq_finrank K L
+    _ = (minpoly K ω.point).natDegree := by
+      change Module.finrank K
+          (IntermediateField.adjoin K ({ω.point} : Set (AlgebraicClosure K))) = _
+      exact IntermediateField.adjoin.finrank
+        (Algebra.IsAlgebraic.isAlgebraic ω.point).isIntegral
+    _ = P.natDegree := by
+      exact congrArg Polynomial.natDegree hmin.symm
+    _ = chapter06ResidueCardinality D ^ (n - 1) *
+        (chapter06ResidueCardinality D - 1) := by
+      unfold P chapter06PrimitiveTorsionPolynomialOverK
+      rw [hmonicQ.natDegree_map]
+      exact chapter06_Qn_degree D n hn
 
 /-- The torsion labeling equivalence. Its construction depends on the
 chosen primitive point, even though its isomorphism type does not. -/
@@ -292,7 +437,35 @@ theorem chapter06_torsion_galois_equiv_exists
     Nonempty
       (Gal(chapter06TorsionField D n ω.point / K) ≃*
         (Chapter06TorsionResidueRing D n)ˣ) := by
-  sorry
+  let φ : (Chapter06TorsionResidueRing D n)ˣ →
+      Gal(chapter06TorsionField D n ω.point / K) :=
+    chapter06SigmaA D n hn f hf M A ω
+  have hφinj : Function.Injective φ := by
+    exact chapter06SigmaA_injective D n hn f hf M A ω
+  have hφsurj : Function.Surjective φ := by
+    exact chapter06SigmaA_exhausts_galois_group D n hn f hf M A ω
+  have hφmul : ∀ x y, φ (x * y) = φ x * φ y := by
+    intro x y
+    exact (chapter06SigmaA_mul D n hn f hf M A ω x y).symm
+  have hφone : φ 1 = 1 := by
+    obtain ⟨u, hu⟩ := hφsurj 1
+    have h1u : (1 : (Chapter06TorsionResidueRing D n)ˣ) = u := by
+      apply hφinj
+      calc
+        φ 1 = φ 1 * 1 := (mul_one _).symm
+        _ = φ 1 * φ u := by rw [hu]
+        _ = φ (1 * u) := (hφmul 1 u).symm
+        _ = φ u := by simp
+    rw [← h1u] at hu
+    exact hu
+  let φhom : (Chapter06TorsionResidueRing D n)ˣ →*
+      Gal(chapter06TorsionField D n ω.point / K) :=
+    { toFun := φ
+      map_one' := hφone
+      map_mul' := by
+        intro x y
+        exact hφmul x y }
+  exact ⟨(MulEquiv.ofBijective φhom ⟨hφinj, hφsurj⟩).symm⟩
 
 noncomputable def chapter06TorsionGaloisEquiv
     {K : Type*} [Field K] [UniformSpace (AlgebraicClosure K)]
