@@ -150,17 +150,18 @@ theorem chapter04_scalar_extension_has_a_finite_adelic_basis
 
 /- SOURCE_ISSUE (§4.4, displayed scalar-extension isomorphism): the source
 calls this an isomorphism of topological rings without specifying a topology
-on the algebraic tensor product `L ⊗[K] 𝔸_K`. The declaration below therefore
-makes that missing topology an explicit instance; the minimal source repair is
-to equip the tensor product with the finite-dimensional module topology induced
-by a chosen `K`-basis (and then prove independence of that choice). -/
+on the algebraic tensor product `L ⊗[K] 𝔸_K`. The topology below is the
+finite-dimensional module topology induced by a finite `K`-basis; the later
+comparison theorem is the interface for independence of that choice. -/
 theorem chapter04_scalar_extension_adelic_topological_ring_equiv
-    [TopologicalSpace (L ⊗[K] Chapter04AdeleRing K)]
-    (D : Chapter04FiniteExtensionIntegralData K L) :
+    :
     ∃ e : L ⊗[K] Chapter04AdeleRing K ≃ₐ[K] Chapter04AdeleRing L,
-      Continuous (e : L ⊗[K] Chapter04AdeleRing K → Chapter04AdeleRing L) ∧
-        Continuous (e.symm : Chapter04AdeleRing L →
-          L ⊗[K] Chapter04AdeleRing K) := by
+      @Continuous (L ⊗[K] Chapter04AdeleRing K) (Chapter04AdeleRing L)
+          (chapter04TensorProductTopology K (Chapter04AdeleRing K) L)
+          inferInstance (e : L ⊗[K] Chapter04AdeleRing K → Chapter04AdeleRing L) ∧
+        @Continuous (Chapter04AdeleRing L) (L ⊗[K] Chapter04AdeleRing K)
+          inferInstance (chapter04TensorProductTopology K (Chapter04AdeleRing K) L)
+          (e.symm : Chapter04AdeleRing L → L ⊗[K] Chapter04AdeleRing K) := by
   sorry
 
 theorem chapter04_scalar_extension_commutes_with_completion

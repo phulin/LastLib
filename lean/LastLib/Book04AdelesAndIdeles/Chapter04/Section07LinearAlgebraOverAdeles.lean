@@ -13,15 +13,15 @@ open scoped BigOperators TensorProduct Topology RestrictedProduct
 /- SOURCE_ISSUE (§4.7, first displayed equivalence): the source uses the
 algebraic tensor products `V ⊗_K 𝔸_K` and `V ⊗_K K_v` as topological spaces
 without specifying their topologies. The topology-bearing declarations below
-therefore make those local and global topologies explicit instances; the
-minimal source repair is to define them through a finite basis and then prove
-that the resulting topology is lattice- and basis-independent. -/
+use the finite-dimensional module topology induced by a finite `K`-basis; the
+lattice comparison theorem records its independence of the integral model. -/
 
 /-! ### 4.7 Linear algebra over the adele ring -/
 
 structure Chapter04Lattice
     (K V : Type*) [Field K] [NumberField K]
-    [AddCommGroup V] [Module K V] [Module (𝓞 K) V] where
+    [AddCommGroup V] [Module K V] [Module (𝓞 K) V]
+    [Module.Finite K V] [IsScalarTower (𝓞 K) K V] where
   carrier : Submodule (𝓞 K) V
   finite : Module.Finite (𝓞 K) carrier
   full : ∀ v : V, ∃ a : 𝓞 K, a ≠ 0 ∧ (a : K) • v ∈ carrier
@@ -30,6 +30,7 @@ structure Chapter04Lattice
 theorem chapter04Lattice_ext
     (K V : Type*) [Field K] [NumberField K]
     [AddCommGroup V] [Module K V] [Module (𝓞 K) V]
+    [Module.Finite K V] [IsScalarTower (𝓞 K) K V]
     {M N : Chapter04Lattice K V}
     (hcarrier : M.carrier = N.carrier) :
     M = N := by
@@ -40,6 +41,7 @@ theorem chapter04Lattice_ext
 def chapter04IsLattice
     (K V : Type*) [Field K] [NumberField K]
     [AddCommGroup V] [Module K V] [Module (𝓞 K) V]
+    [Module.Finite K V] [IsScalarTower (𝓞 K) K V]
     (M : Submodule (𝓞 K) V) : Prop :=
   Module.Finite (𝓞 K) M ∧
     ∀ v : V, ∃ a : 𝓞 K, a ≠ 0 ∧ (a : K) • v ∈ M
@@ -47,6 +49,7 @@ def chapter04IsLattice
 theorem chapter04Lattice.is_lattice
     (K V : Type*) [Field K] [NumberField K]
     [AddCommGroup V] [Module K V] [Module (𝓞 K) V]
+    [Module.Finite K V] [IsScalarTower (𝓞 K) K V]
     (M : Chapter04Lattice K V) :
     chapter04IsLattice K V M.carrier :=
   ⟨M.finite, M.full⟩
@@ -80,6 +83,7 @@ section Chapter04LatticeContext
 
 variable {K V : Type*} [Field K] [NumberField K]
   [AddCommGroup V] [Module K V] [Module (𝓞 K) V]
+  [Module.Finite K V] [IsScalarTower (𝓞 K) K V]
 
 def chapter04LocalLattice
     (M : Chapter04Lattice K V) (v : Chapter04FinitePlace K) :
@@ -103,6 +107,25 @@ abbrev Chapter04AdelicVectorSpace
     [AddCommGroup V] [Module K V] :=
   V ⊗[K] Chapter04AdeleRing K
 
+noncomputable instance chapter04AdelicVectorSpaceTopologicalSpace
+    (K V : Type*) [Field K] [NumberField K]
+    [AddCommGroup V] [Module K V] [Module.Finite K V] :
+    TopologicalSpace (Chapter04AdelicVectorSpace K V) :=
+  chapter04TensorProductTopology K (Chapter04AdeleRing K) V
+
+noncomputable instance chapter04FiniteTensorProductTopologicalSpace
+    (K V : Type*) [Field K] [NumberField K]
+    [AddCommGroup V] [Module K V] [Module.Finite K V]
+    (v : Chapter04FinitePlace K) :
+    TopologicalSpace (V ⊗[K] Chapter04FiniteLocalField K v) :=
+  chapter04TensorProductTopology K (Chapter04FiniteLocalField K v) V
+
+noncomputable instance chapter04InfiniteTensorProductTopologicalSpace
+    (K V : Type*) [Field K] [NumberField K] [AddCommGroup V] [Module K V]
+    [Module.Finite K V] :
+    TopologicalSpace (V ⊗[K] Chapter04InfiniteAdeleRing K) :=
+  chapter04TensorProductTopology K (Chapter04InfiniteAdeleRing K) V
+
 abbrev Chapter04AdelicVectorSpaceFiniteTail
     (M : Chapter04Lattice K V) :=
   Chapter03AdditiveRestrictedProduct
@@ -123,10 +146,6 @@ theorem chapter04_adelic_vector_space_is_infinite_times_restricted_finite
   sorry
 
 theorem chapter04_adelic_vector_space_topology_is_the_restricted_product_topology
-    [TopologicalSpace (Chapter04AdelicVectorSpace K V)]
-    [TopologicalSpace (V ⊗[K] Chapter04InfiniteAdeleRing K)]
-    [∀ v : Chapter04FinitePlace K,
-      TopologicalSpace (V ⊗[K] Chapter04FiniteLocalField K v)]
     (M : Chapter04Lattice K V) :
     ∃ e : Chapter04AdelicVectorSpace K V ≃+
         Chapter04AdelicVectorSpaceRestrictedProduct M,
@@ -144,9 +163,6 @@ theorem chapter04_two_lattices_agree_locally_outside_finitely_many_places
   sorry
 
 theorem chapter04_adelic_vector_space_topology_is_independent_of_the_lattice
-    [TopologicalSpace (V ⊗[K] Chapter04InfiniteAdeleRing K)]
-    [∀ v : Chapter04FinitePlace K,
-      TopologicalSpace (V ⊗[K] Chapter04FiniteLocalField K v)]
     (M N : Chapter04Lattice K V) :
     ∃ e : Chapter04AdelicVectorSpaceRestrictedProduct M ≃+
         Chapter04AdelicVectorSpaceRestrictedProduct N,
@@ -156,8 +172,7 @@ theorem chapter04_adelic_vector_space_topology_is_independent_of_the_lattice
 theorem chapter04_adelic_vector_space_is_coordinatewise_after_a_basis
     (M : Chapter04Lattice K V)
     {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (b : Basis ι K V)
-    [TopologicalSpace (Chapter04AdelicVectorSpace K V)] :
+    (b : Basis ι K V) :
     ∃ e : Chapter04AdelicVectorSpace K V ≃+
         (ι → Chapter04AdeleRing K),
       Continuous e ∧ Continuous e.symm := by
@@ -195,8 +210,7 @@ theorem chapter04AdelicLinearMap_apply_tmul
 theorem chapter04_adelic_linear_map_is_continuous
     {V W : Type*} [Field K] [NumberField K]
     [AddCommGroup V] [AddCommGroup W] [Module K V] [Module K W]
-    [TopologicalSpace (V ⊗[K] Chapter04AdeleRing K)]
-    [TopologicalSpace (W ⊗[K] Chapter04AdeleRing K)]
+    [Module.Finite K V] [Module.Finite K W]
     (T : V →ₗ[K] W) :
     Continuous (chapter04AdelicLinearMap T) := by
   sorry
@@ -218,6 +232,8 @@ def chapter04AdelicLinearMapPreservesLatticeAlmostAll
     {V W : Type*} [Field K] [NumberField K]
     [AddCommGroup V] [AddCommGroup W] [Module K V] [Module K W]
     [Module (𝓞 K) V] [Module (𝓞 K) W]
+    [Module.Finite K V] [Module.Finite K W]
+    [IsScalarTower (𝓞 K) K V] [IsScalarTower (𝓞 K) K W]
     (T : V →ₗ[K] W) (M : Chapter04Lattice K V) (N : Chapter04Lattice K W) : Prop :=
   ∃ d : 𝓞 K, d ≠ 0 ∧
     ∃ S : Set (Chapter04FinitePlace K), S.Finite ∧
@@ -230,6 +246,8 @@ theorem chapter04_linear_maps_preserve_integral_models_after_a_common_denominato
     {V W : Type*} [Field K] [NumberField K]
     [AddCommGroup V] [AddCommGroup W] [Module K V] [Module K W]
     [Module (𝓞 K) V] [Module (𝓞 K) W]
+    [Module.Finite K V] [Module.Finite K W]
+    [IsScalarTower (𝓞 K) K V] [IsScalarTower (𝓞 K) K W]
     (T : V →ₗ[K] W) (M : Chapter04Lattice K V) (N : Chapter04Lattice K W) :
     chapter04AdelicLinearMapPreservesLatticeAlmostAll T M N := by
   sorry
@@ -254,8 +272,7 @@ theorem chapter04_adelic_kernel_commutes_with_scalar_extension
 theorem chapter04_adelic_image_of_an_invertible_map_is_open_and_closed
     {V W : Type*} [Field K] [NumberField K]
     [AddCommGroup V] [AddCommGroup W] [Module K V] [Module K W]
-    [TopologicalSpace (V ⊗[K] Chapter04AdeleRing K)]
-    [TopologicalSpace (W ⊗[K] Chapter04AdeleRing K)]
+    [Module.Finite K V] [Module.Finite K W]
     (e : V ≃ₗ[K] W) :
     IsOpen (Set.range (chapter04AdelicLinearMap e.toLinearMap)) ∧
       IsClosed (Set.range (chapter04AdelicLinearMap e.toLinearMap)) := by

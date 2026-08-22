@@ -24,7 +24,7 @@ def chapter04FiniteBasicNeighborhoodCondition
     (K : Type*) [Field K] [NumberField K]
     (S : Set (Chapter04FinitePlace K))
     (U : ∀ v : Chapter04FinitePlace K, Set (Chapter04FiniteLocalField K v)) : Prop :=
-  S.Finite ∧ ∀ v, IsOpen (U v)
+  S.Finite ∧ ∀ v, v ∈ S → IsOpen (U v)
 
 def chapter04FiniteDifferenceNeighborhood
     (K : Type*) [Field K] [NumberField K]

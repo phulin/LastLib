@@ -61,7 +61,7 @@ def chapter04FullBasicOpenCondition
     (S : Set (Chapter04Place K))
     (U : ∀ v : Chapter04Place K, Set (chapter04LocalField K v)) : Prop :=
   S.Finite ∧
-    (∀ v, IsOpen (U v)) ∧
+    (∀ v, v ∈ S → IsOpen (U v)) ∧
     (∀ w : Chapter04InfinitePlace K, Sum.inr w ∈ S)
 
 theorem chapter04_mem_fullBasicOpen_iff

@@ -38,6 +38,12 @@ structure Chapter04AdelicTraceData
       finiteTrace v x =
         letI := finiteBranchFintype v
         ∑ w, finiteBranchTrace v w (x w)
+  finiteTrace_on_principal :
+    ∀ (v : Chapter04FinitePlace K) (a : L),
+      finiteTrace v (fun w => (a : Chapter04FiniteLocalField L w.1)) =
+        (Algebra.trace K L a : Chapter04FiniteLocalField K v)
+  finiteTrace_continuous :
+    ∀ v : Chapter04FinitePlace K, Continuous (finiteTrace v)
   infiniteTrace :
     ∀ v : Chapter04InfinitePlace K,
       (∀ w : Chapter04InfinitePlaceAbove K L v,
@@ -55,6 +61,12 @@ structure Chapter04AdelicTraceData
       infiniteTrace v x =
         letI := infiniteBranchFintype v
         ∑ w, infiniteBranchTrace v w (x w)
+  infiniteTrace_on_principal :
+    ∀ (v : Chapter04InfinitePlace K) (a : L),
+      infiniteTrace v (fun w => (a : w.1.Completion)) =
+        (Algebra.trace K L a : v.Completion)
+  infiniteTrace_continuous :
+    ∀ v : Chapter04InfinitePlace K, Continuous (infiniteTrace v)
   finiteTrace_preserves_integral :
     ∀ᶠ v : Chapter04FinitePlace K in Filter.cofinite,
       ∀ x : ∀ w : Chapter04FinitePlaceAbove K L v,
@@ -131,11 +143,11 @@ def chapter04AdeleBaseScalarMap
     Chapter04AdeleRing K →ₐ[K] L ⊗[K] Chapter04AdeleRing K)).toRingHom
 
 theorem chapter04_adelic_trace_is_linear_over_the_base_adele_ring
-    (D : Chapter04AdelicTraceData K L)
-    (e : L ⊗[K] Chapter04AdeleRing K ≃ₐ[K] Chapter04AdeleRing L)
-    (a : Chapter04AdeleRing K) (y : Chapter04AdeleRing L) :
-    chapter04AdelicTrace D (chapter04AdeleBaseScalarMap e a * y) =
-      a * chapter04AdelicTrace D y := by
+    (D : Chapter04AdelicTraceData K L) :
+    ∃ e : L ⊗[K] Chapter04AdeleRing K ≃ₐ[K] Chapter04AdeleRing L,
+      ∀ (a : Chapter04AdeleRing K) (y : Chapter04AdeleRing L),
+        chapter04AdelicTrace D (chapter04AdeleBaseScalarMap e a * y) =
+          a * chapter04AdelicTrace D y := by
   sorry
 
 theorem chapter04_adelic_trace_on_principal_adeles

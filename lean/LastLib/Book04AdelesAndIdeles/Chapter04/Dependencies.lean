@@ -17,6 +17,7 @@ import Mathlib.RingTheory.Ideal.Quotient.Basic
 import Mathlib.RingTheory.Ideal.Quotient.Operations
 import Mathlib.RingTheory.TensorProduct.Basic
 import Mathlib.RingTheory.TensorProduct.Finite
+import Mathlib.LinearAlgebra.TensorProduct.Free
 import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Algebra.RestrictedProduct.Basic
 import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
@@ -36,9 +37,28 @@ noncomputable section
 
 open Set Filter Function
 open NumberField IsDedekindDomain
+open Module
 open scoped BigOperators Pointwise TensorProduct Topology RestrictedProduct
 
 universe uK uV uW uι
+
+noncomputable def chapter04TensorProductCoordinateMap
+    (R A V : Type*) [Field R] [CommRing A] [Algebra R A]
+    [AddCommGroup V] [Module R V] {ι : Type*} [Finite ι]
+    (b : Basis ι R V) : (V ⊗[R] A) → (ι → A) :=
+  fun x => Algebra.TensorProduct.equivPiOfFiniteBasis A b
+    (TensorProduct.comm R V A x)
+
+@[instance_reducible]
+noncomputable def chapter04TensorProductTopology
+    (R A V : Type*) [Field R] [CommRing A] [Algebra R A]
+    [AddCommGroup V] [Module R V] [Module.Finite R V]
+    [TopologicalSpace A] :
+    TopologicalSpace (V ⊗[R] A) :=
+  let b := Module.Free.chooseBasis R V
+  letI := Module.Finite.finite_basis b
+  TopologicalSpace.induced (chapter04TensorProductCoordinateMap R A V b)
+    inferInstance
 
 /-!
 Shared canonical interfaces for Chapter 4.

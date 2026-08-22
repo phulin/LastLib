@@ -134,20 +134,32 @@ theorem chapter04_global_diagonal_subspace_is_not_discrete
     ¬ @DiscreteTopology K (chapter04GlobalDiagonalSubspaceTopology K) := by
   sorry
 
-theorem chapter04_global_dense_subspace_quotient_is_not_discrete
+theorem chapter04_global_dense_subspace_quotient_is_discrete
     (K : Type*) [Field K] [NumberField K] :
-    ¬ @DiscreteTopology (Chapter04GlobalPrincipalPartsQuotient K)
+    @DiscreteTopology (Chapter04GlobalPrincipalPartsQuotient K)
       (chapter04GlobalPrincipalPartsDenseSubspaceQuotientTopology K) := by
   sorry
 
-theorem chapter04_principalParts_transport_is_not_the_dense_subspace_quotient_topology
+theorem chapter04_principalParts_transport_is_the_dense_subspace_quotient_topology
     (K : Type*) [Field K] [NumberField K] :
-    @DiscreteTopology (Chapter04GlobalPrincipalPartsQuotient K)
-        (chapter04PrincipalPartsTransportedDiscreteTopology K) ∧
-      ¬ @DiscreteTopology (Chapter04GlobalPrincipalPartsQuotient K)
-        (chapter04GlobalPrincipalPartsDenseSubspaceQuotientTopology K) := by
-  exact ⟨chapter04_principalParts_transport_is_discrete K,
-    chapter04_global_dense_subspace_quotient_is_not_discrete K⟩
+    chapter04PrincipalPartsTransportedDiscreteTopology K =
+      chapter04GlobalPrincipalPartsDenseSubspaceQuotientTopology K := by
+  /- PRIOR ATTEMPT: the preceding proof asserted that the dense-subspace
+     quotient was non-discrete.  Since the integral subgroup is open in the
+     induced finite-adele topology, that assertion was mathematically false. -/
+  sorry
+
+theorem chapter04_principalParts_quotient_is_a_topological_additive_group_isomorphism
+    (K : Type*) [Field K] [NumberField K] :
+    @Continuous (Chapter04GlobalPrincipalPartsQuotient K)
+        (Chapter04FinitePrincipalPartsQuotient K)
+        (chapter04GlobalPrincipalPartsDenseSubspaceQuotientTopology K) inferInstance
+        (chapter04PrincipalPartsEquiv K) ∧
+      @Continuous (Chapter04FinitePrincipalPartsQuotient K)
+        (Chapter04GlobalPrincipalPartsQuotient K)
+        inferInstance (chapter04GlobalPrincipalPartsDenseSubspaceQuotientTopology K)
+        (chapter04PrincipalPartsEquiv K).symm := by
+  sorry
 
 def chapter04FiniteAdeleSingleCoordinate
     (K : Type*) [Field K] [NumberField K]
