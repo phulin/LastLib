@@ -47,7 +47,7 @@ def chapter10LocalUnitSet {F : Type*} [Field F]
 theorem chapter10_mem_local_unit_set_iff
     {F : Type*} [Field F] (v : AddValuation F (WithTop ℤ)) (x : F) :
     x ∈ chapter10LocalUnitSet v ↔ v x = 0 := by
-  sorry
+  exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11_mem_unit_set_iff_valuation_zero v x
 
 /-- The canonical principal-unit layer at depth `n`. -/
 def chapter10LocalPrincipalUnitSet {F : Type*} [Field F]
@@ -241,7 +241,17 @@ theorem chapter10ScalarExtensionRaw_eventually_unit
     (x : kIdeles d) :
     ∀ᶠ w in Filter.cofinite,
       chapter10ScalarExtensionRaw d scalar x w ∈ d.unitL w := by
-  sorry
+  have hbelow : Filter.Tendsto d.below Filter.cofinite Filter.cofinite := by
+    apply Filter.Tendsto.cofinite_of_finite_preimage_singleton
+    intro v
+    apply Set.finite_coe_iff.mpr
+    have hEq : Set.Finite {w : ιL | d.below w = v} :=
+      Set.finite_coe_iff.mp (d.finiteOver v)
+    convert hEq using 1
+    ext w
+    simp
+  filter_upwards [hbelow.eventually x.2] with w hw
+  exact hscalar w hw
 
 /-- Scalar extension of an idele, with the restricted-product proof supplied
 by the finite-fibre argument. -/
@@ -265,8 +275,15 @@ def chapter10ScalarExtensionHom
     (hscalar : ∀ w, Set.MapsTo (scalar w) (d.unitK (d.below w)) (d.unitL w)) :
     kIdeles d →* lIdeles d where
   toFun := chapter10ScalarExtension d scalar hscalar
-  map_one' := by sorry
-  map_mul' := by sorry
+  map_one' := by
+    exact (by ext w; simp [chapter10ScalarExtension, chapter10ScalarExtensionRaw])
+  map_mul' := by
+    exact (by
+      intro x y
+      ext w
+      change (scalar w) (x (d.below w) * y (d.below w)) =
+        (scalar w) (x (d.below w)) * (scalar w) (y (d.below w))
+      exact (scalar w).map_mul _ _)
 
 end
 end LastLib.Book04AdelesAndIdeles.Chapter10

@@ -55,7 +55,7 @@ theorem chapter10_local_norm_transitive
     (y : E) :
     chapter10LocalNorm F E y =
       chapter10LocalNorm F M (chapter10LocalNorm M E y) := by
-  sorry
+  exact (Algebra.norm_norm (R := F) (S := M) (A := E) (a := y)).symm
 
 /- The valuation-side interface used below is the normalized branch formula
 from the preceding local-field chapters. -/
@@ -86,7 +86,45 @@ theorem chapter10_local_norm_maps_integers
     (f : ℕ) (hformula : chapter10NormValuationFormula F E vF vE f) :
     Set.MapsTo (chapter10LocalNorm F E)
       (chapter10LocalIntegerSet vE) (chapter10LocalIntegerSet vF) := by
-  sorry
+  intro y hy
+  unfold chapter10LocalIntegerSet at hy ⊢
+  apply (Valuation.mem_valuationSubring_iff vF.toValuation _).2
+  have hyval : 0 ≤ vE y := by
+    have hyval' := (Valuation.mem_valuationSubring_iff vE.toValuation y).mp hy
+    change Multiplicative.ofAdd (OrderDual.toDual (vE y)) ≤
+      Multiplicative.ofAdd (OrderDual.toDual (0 : WithTop ℤ)) at hyval'
+    rw [Multiplicative.ofAdd_le, OrderDual.toDual_le_toDual] at hyval'
+    exact hyval'
+  by_cases hy0 : y = 0
+  · subst y
+    have hnormzero : chapter10LocalNorm F E (0 : E) = 0 := by
+      change Algebra.norm F (0 : E) = 0
+      exact Algebra.norm_zero
+    rw [hnormzero]
+    change Multiplicative.ofAdd (OrderDual.toDual (vF 0)) ≤
+      Multiplicative.ofAdd (OrderDual.toDual (0 : WithTop ℤ))
+    rw [AddValuation.map_zero]
+    exact zero_le_one
+  · change Multiplicative.ofAdd
+      (OrderDual.toDual (vF (chapter10LocalNorm F E y))) ≤
+      Multiplicative.ofAdd (OrderDual.toDual (0 : WithTop ℤ))
+    rw [hformula y hy0, Multiplicative.ofAdd_le, OrderDual.toDual_le_toDual]
+    cases hv : vE y with
+    | top =>
+      cases f with
+      | zero => simp
+      | succ n =>
+        rw [WithTop.mul_top]
+        · exact le_top
+        · exact ne_of_gt (by positivity)
+    | coe z =>
+      rw [hv] at hyval
+      have hz : (0 : ℤ) ≤ z := by exact_mod_cast hyval
+      have hprod : (0 : ℤ) ≤ (f : ℤ) * z :=
+        mul_nonneg (by exact_mod_cast Nat.zero_le f) hz
+      change (0 : WithTop ℤ) ≤ ((f : ℤ) : WithTop ℤ) * (z : WithTop ℤ)
+      rw [← WithTop.coe_mul]
+      exact_mod_cast hprod
 
 theorem chapter10_local_norm_maps_units
     (F E : Type*) [Field F] [Field E] [Algebra F E]
