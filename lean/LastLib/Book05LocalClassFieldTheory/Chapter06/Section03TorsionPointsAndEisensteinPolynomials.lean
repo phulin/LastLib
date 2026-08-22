@@ -239,24 +239,103 @@ theorem chapter06_torsion_polynomial_degree
 theorem chapter06_torsion_polynomial_monic
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K) (n : ℕ) :
     (chapter06Sn D n).Monic := by
-  sorry
+  have hq1 : 1 < chapter06ResidueCardinality D := by
+    let _ := D.residue_finite
+    let _ : Fintype (Chapter06ResidueField D) := Fintype.ofFinite _
+    simpa [chapter06ResidueCardinality, Nat.card_eq_fintype_card] using
+      (Fintype.one_lt_card : 1 < Fintype.card (Chapter06ResidueField D))
+  have hπ0 : (D.uniformizer : Chapter06ValuationRing D) ≠ 0 := by
+    exact D.uniformizer_spec.1
+  have hdeg :
+      ((Polynomial.C D.uniformizer : Polynomial (Chapter06ValuationRing D)) *
+          (Polynomial.X : Polynomial (Chapter06ValuationRing D))).degree <
+        (chapter06ResidueCardinality D : WithBot ℕ) := by
+    rw [Polynomial.degree_C_mul_X hπ0]
+    exact WithBot.coe_lt_coe.mpr hq1
+  have hfmonic : (chapter06LubinTatePolynomial D).Monic := by
+    rw [chapter06LubinTatePolynomial, add_comm]
+    exact Polynomial.monic_X_pow_add hdeg
+  induction n with
+  | zero =>
+      simp [chapter06Sn, chapter06TorsionPolynomialSequence]
+  | succ n ih =>
+      change (chapter06LubinTatePolynomial D).comp (chapter06Sn D n) |>.Monic
+      apply hfmonic.comp ih
+      rw [chapter06_torsion_polynomial_degree D n]
+      exact pow_ne_zero _ (by omega)
 
 theorem chapter06_primitive_division_polynomial_monic
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K) (n : ℕ) :
     (chapter06PrimitiveDivisionPolynomial D n).Monic := by
-  sorry
+  have hSn : (chapter06Sn D n).Monic :=
+    chapter06_torsion_polynomial_monic D n
+  have hq1 : 1 < chapter06ResidueCardinality D := by
+    let _ := D.residue_finite
+    let _ : Fintype (Chapter06ResidueField D) := Fintype.ofFinite _
+    simpa [chapter06ResidueCardinality, Nat.card_eq_fintype_card] using
+      (Fintype.one_lt_card : 1 < Fintype.card (Chapter06ResidueField D))
+  have hSnDegree : (chapter06Sn D n).natDegree =
+      chapter06ResidueCardinality D ^ n :=
+    chapter06_torsion_polynomial_degree D n
+  change (Polynomial.C D.uniformizer +
+    (chapter06Sn D n) ^ (chapter06ResidueCardinality D - 1)).Monic
+  apply (hSn.pow (chapter06ResidueCardinality D - 1)).add_of_right
+  apply (Polynomial.degree_C_le (a := D.uniformizer)).trans_lt
+  rw [Polynomial.degree_eq_natDegree ((hSn.pow _).ne_zero), hSn.natDegree_pow,
+    hSnDegree]
+  apply WithBot.coe_lt_coe.mpr
+  exact Nat.mul_pos (by omega) (pow_pos (by omega) _)
 
 theorem chapter06_primitive_division_polynomial_degree
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K) (n : ℕ) :
     (chapter06PrimitiveDivisionPolynomial D n).natDegree =
       chapter06ResidueCardinality D ^ n *
         (chapter06ResidueCardinality D - 1) := by
-  sorry
+  have hSn : (chapter06Sn D n).Monic :=
+    chapter06_torsion_polynomial_monic D n
+  have hq1 : 1 < chapter06ResidueCardinality D := by
+    let _ := D.residue_finite
+    let _ : Fintype (Chapter06ResidueField D) := Fintype.ofFinite _
+    simpa [chapter06ResidueCardinality, Nat.card_eq_fintype_card] using
+      (Fintype.one_lt_card : 1 < Fintype.card (Chapter06ResidueField D))
+  have hSnDegree : (chapter06Sn D n).natDegree =
+      chapter06ResidueCardinality D ^ n :=
+    chapter06_torsion_polynomial_degree D n
+  have hlt : (Polynomial.C D.uniformizer).natDegree <
+      ((chapter06Sn D n) ^ (chapter06ResidueCardinality D - 1)).natDegree := by
+    rw [Polynomial.natDegree_C, hSn.natDegree_pow, hSnDegree]
+    exact Nat.mul_pos (by omega) (pow_pos (by omega) _)
+  change (Polynomial.C D.uniformizer +
+    (chapter06Sn D n) ^ (chapter06ResidueCardinality D - 1)).natDegree = _
+  rw [Polynomial.natDegree_add_eq_right_of_natDegree_lt hlt,
+    hSn.natDegree_pow, hSnDegree]
+  exact Nat.mul_comm _ _
 
 theorem chapter06_primitive_division_polynomial_constant
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K) (n : ℕ) :
     (chapter06PrimitiveDivisionPolynomial D n).eval 0 = D.uniformizer := by
-  sorry
+  have hzero : ∀ m,
+      (chapter06Sn D m).eval 0 = 0 := by
+    intro m
+    induction m with
+    | zero =>
+        simp [chapter06Sn, chapter06TorsionPolynomialSequence]
+    | succ m hm =>
+        change ((chapter06LubinTatePolynomial D).comp
+          (chapter06Sn D m)).eval 0 = 0
+        rw [Polynomial.eval_comp]
+        have hq0 : chapter06ResidueCardinality D ≠ 0 :=
+          Nat.ne_of_gt (chapter06_residue_cardinality_pos D)
+        simp [chapter06LubinTatePolynomial, hm, hq0]
+  have hq1 : 1 < chapter06ResidueCardinality D := by
+    let _ := D.residue_finite
+    let _ : Fintype (Chapter06ResidueField D) := Fintype.ofFinite _
+    simpa [chapter06ResidueCardinality, Nat.card_eq_fintype_card] using
+      (Fintype.one_lt_card : 1 < Fintype.card (Chapter06ResidueField D))
+  have hqminus : chapter06ResidueCardinality D - 1 ≠ 0 := by
+    omega
+  simp [chapter06PrimitiveDivisionPolynomial, Polynomial.eval_add,
+    Polynomial.eval_pow, hzero n, hqminus]
 
 theorem chapter06_primitive_division_polynomial_mod_uniformizer
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K) (n : ℕ) :
@@ -265,13 +344,91 @@ theorem chapter06_primitive_division_polynomial_mod_uniformizer
       Polynomial.X ^
         (chapter06ResidueCardinality D ^ n *
           (chapter06ResidueCardinality D - 1)) := by
-  sorry
+  have hπmem : (D.uniformizer : Chapter06ValuationRing D) ∈
+      IsLocalRing.maximalIdeal (Chapter06ValuationRing D) := by
+    change (D.uniformizer : Chapter06ValuationRing D) ∈
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01MaximalIdeal
+        D.valuation.toValuation
+    rw [D.uniformizer_spec.2]
+    exact Ideal.mem_span_singleton_self _
+  have hπmap :
+      (algebraMap (Chapter06ValuationRing D) (Chapter06ResidueField D))
+          D.uniformizer = 0 := by
+    rw [IsLocalRing.ResidueField.algebraMap_eq,
+      IsLocalRing.residue_eq_zero_iff]
+    exact hπmem
+  change (Polynomial.C D.uniformizer +
+    (chapter06Sn D n) ^ (chapter06ResidueCardinality D - 1)).map
+      (algebraMap (Chapter06ValuationRing D) (Chapter06ResidueField D)) = _
+  rw [Polynomial.map_add, Polynomial.map_C, Polynomial.map_pow, hπmap,
+    chapter06_torsion_polynomial_mod_uniformizer D n]
+  simp only [map_zero, zero_add]
+  rw [← pow_mul]
 
 theorem chapter06_primitive_division_polynomial_is_eisenstein
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K) (n : ℕ) :
     (chapter06PrimitiveDivisionPolynomial D n).IsEisensteinAt
       (IsLocalRing.maximalIdeal (Chapter06ValuationRing D)) := by
-  sorry
+  let A := Chapter06ValuationRing D
+  let B := Chapter06ResidueField D
+  let φ : A →+* B := algebraMap A B
+  have hdegree := chapter06_primitive_division_polynomial_degree D n
+  have hspan : Ideal.span ({(D.uniformizer : A)} : Set A) =
+      IsLocalRing.maximalIdeal A := by
+    change Ideal.span ({(D.uniformizer : A)} : Set A) =
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01MaximalIdeal
+        D.valuation.toValuation
+    exact D.uniformizer_spec.2.symm
+  have hπ0 : (D.uniformizer : A) ≠ 0 := D.uniformizer_spec.1
+  have hirr : Irreducible (D.uniformizer : A) :=
+    IsDiscreteValuationRing.irreducible_of_span_eq_maximalIdeal
+      D.uniformizer hπ0 hspan.symm
+  have hcoeff_mem : ∀ i < (chapter06PrimitiveDivisionPolynomial D n).natDegree,
+      (chapter06PrimitiveDivisionPolynomial D n).coeff i ∈
+        IsLocalRing.maximalIdeal A := by
+    intro i hi
+    have hi' : i < chapter06ResidueCardinality D ^ n *
+        (chapter06ResidueCardinality D - 1) := by
+      simpa [hdegree] using hi
+    have hcoeff := congrArg (fun p : Polynomial B => p.coeff i)
+      (chapter06_primitive_division_polynomial_mod_uniformizer D n)
+    have hzero : φ ((chapter06PrimitiveDivisionPolynomial D n).coeff i) = 0 := by
+      rw [Polynomial.coeff_map] at hcoeff
+      rw [Polynomial.coeff_X_pow, if_neg (Nat.ne_of_lt hi')] at hcoeff
+      exact hcoeff
+    have hmemmax : (chapter06PrimitiveDivisionPolynomial D n).coeff i ∈
+        IsLocalRing.maximalIdeal A := by
+      apply (IsLocalRing.residue_eq_zero_iff _).mp
+      rw [← IsLocalRing.ResidueField.algebraMap_eq]
+      exact hzero
+    exact hmemmax
+  have hconst :
+      (chapter06PrimitiveDivisionPolynomial D n).constantCoeff = D.uniformizer := by
+    simpa [Polynomial.constantCoeff, Polynomial.coeff_zero_eq_eval_zero] using
+      chapter06_primitive_division_polynomial_constant D n
+  have hconstant_not_mem :
+      (chapter06PrimitiveDivisionPolynomial D n).constantCoeff ∉
+        (IsLocalRing.maximalIdeal A) ^ 2 := by
+    rw [hconst, ← hspan, Ideal.span_singleton_pow]
+    intro hmem
+    have hdiv : (D.uniformizer : A) ^ 2 ∣ D.uniformizer :=
+      Ideal.mem_span_singleton.mp hmem
+    rcases hdiv with ⟨c, hc⟩
+    have hcancel : (1 : A) = D.uniformizer * c := by
+      apply (mul_left_cancel₀ hπ0)
+      simpa [pow_two, mul_assoc] using hc
+    have hunit : IsUnit (D.uniformizer : A) := by
+      apply isUnit_of_dvd_one
+      refine ⟨c, hcancel⟩
+    exact hirr.not_isUnit hunit
+  have hleading :
+      (chapter06PrimitiveDivisionPolynomial D n).leadingCoeff ∉
+        IsLocalRing.maximalIdeal A :=
+    (chapter06_primitive_division_polynomial_monic D n).leadingCoeff_notMem
+      (IsLocalRing.maximalIdeal.isMaximal A).ne_top
+  refine ⟨hleading, ?_, hconstant_not_mem⟩
+  intro i hi
+  simpa [A] using hcoeff_mem i hi
 
 theorem chapter06_Qn_degree
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K)
