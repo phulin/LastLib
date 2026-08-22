@@ -621,7 +621,10 @@ noncomputable instance chapter06FormalGroupPointAddCommGroup
       Chapter06FormalGroupPoint V F → Chapter06FormalGroupPoint V F := fun x y =>
     ⟨chapter06EvaluatedFormalGroupOperation F x.1 y.1,
       chapter06_formal_group_points_closed D V F x.1 y.1 x.2 y.2⟩
-  let zero : Chapter06FormalGroupPoint V F := ⟨0, by sorry⟩
+  let zero : Chapter06FormalGroupPoint V F := ⟨0, by
+    change V.valuation (0 : E) > 0
+    rw [AddValuation.map_zero]
+    simp⟩
   let neg : Chapter06FormalGroupPoint V F → Chapter06FormalGroupPoint V F := fun x =>
     ⟨chapter06EvaluatedFormalGroupInverse F x.1,
       chapter06_formal_group_inverse_closed D V F x.1 x.2⟩
@@ -639,12 +642,12 @@ noncomputable instance chapter06FormalGroupPointAddCommGroup
       add_comm := by sorry
       nsmul := nsmulRec
       zsmul := zsmulRec
-      nsmul_zero := by sorry
-      nsmul_succ := by sorry
-      sub_eq_add_neg := by sorry
-      zsmul_zero' := by sorry
-      zsmul_succ' := by sorry
-      zsmul_neg' := by sorry }
+      nsmul_zero := by intros; rfl
+      nsmul_succ := by intros; rfl
+      sub_eq_add_neg := by intros; rfl
+      zsmul_zero' := by intros; rfl
+      zsmul_succ' := by intros; rfl
+      zsmul_neg' := by intros; rfl }
 
 /-- Changing the Lubin--Tate series gives an integral formal-module
 isomorphism, not a literal equality of coordinates. -/
