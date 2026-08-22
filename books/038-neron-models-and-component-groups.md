@@ -16,6 +16,7 @@
    - [Dilatations and the defect of a section](#32-dilatations-and-the-defect-of-a-section)
    - [The smoothening theorem](#33-the-smoothening-theorem)
    - [What smoothening does not yet provide](#34-what-smoothening-does-not-yet-provide)
+   - [Auxiliary tools](#35-auxiliary-tools)
 4. [Existence of Néron models](#4-existence-of-néron-models)
    - [The extension sheaf](#41-the-extension-sheaf)
    - [Representability from a weak model](#42-representability-from-a-weak-model)
