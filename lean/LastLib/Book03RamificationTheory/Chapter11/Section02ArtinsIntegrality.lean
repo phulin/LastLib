@@ -152,7 +152,10 @@ theorem chapter11_integral_monomial_induction
 theorem chapter11_character_has_integral_monomial_induction
     {G : Type*} [Fintype G] [Group G] (V : FDRep ℂ G) :
     Chapter11IntegralMonomialExpression V.character := by
-  sorry
+  apply chapter11_integral_monomial_induction V.character
+  refine ⟨V, FDRep.of (Representation.trivial ℂ G (Fin 0 → ℂ)), ?_⟩
+  ext g
+  simp [FDRep.character]
 
 theorem chapter11_artin_class_function_eq_residue_degree_smul_ramification
     {k G : Type*} [Field k] [Fintype G] [Group G]
