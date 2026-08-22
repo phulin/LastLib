@@ -25,6 +25,7 @@ import Mathlib.Topology.Algebra.Ring.Basic
 import Mathlib.Topology.Algebra.Valued.LocallyCompact
 import Mathlib.Topology.Algebra.Module.FiniteDimension
 import Mathlib.Topology.Instances.Real.Lemmas
+import Mathlib.Topology.MetricSpace.Ultra.TotallySeparated
 import Mathlib.Topology.Separation.Profinite
 import LastLib.Book04AdelesAndIdeles.Chapter01.Section04Approximation
 import LastLib.Book04AdelesAndIdeles.Chapter01.Section05IdealLatticesAndDiscriminants
@@ -38,7 +39,7 @@ noncomputable section
 open Set Filter Function
 open NumberField IsDedekindDomain
 open Module
-open scoped BigOperators Pointwise TensorProduct Topology RestrictedProduct
+open scoped BigOperators Pointwise TensorProduct Topology RestrictedProduct WithZero
 
 universe uK uV uW uι
 
@@ -129,13 +130,13 @@ theorem chapter04_finiteAdele_mem_iff_eventually_integral
     ∀ᶠ v : Chapter04FinitePlace K in Filter.cofinite,
       x v ∈ chapter04FiniteLocalIntegerSet K v :=
   by
-    sorry
+    exact x.2
 
 theorem chapter04_finiteAdele_exceptionalSet_finite
     (K : Type uK) [Field K] [NumberField K]
     (x : Chapter04FiniteAdeleRing K) :
     (chapter04FiniteAdeleExceptionalSet K x).Finite := by
-  sorry
+  exact x.2
 
 theorem chapter04_finiteAdele_add_apply
     (K : Type uK) [Field K] [NumberField K]
@@ -212,26 +213,131 @@ theorem chapter04_finiteIntegralAdele_mem_iff_all_coordinates_integral
     x ∈ Chapter04FiniteIntegralAdeleSubring K ↔
       ∀ v : Chapter04FinitePlace K,
         x v ∈ chapter04FiniteLocalIntegerSet K v := by
-  sorry
+  constructor
+  · rintro ⟨y, rfl⟩ v
+    exact (y v).property
+  · intro hx
+    let y : Chapter04FiniteIntegralAdele K := fun v => ⟨x v, hx v⟩
+    have hy : chapter04FiniteIntegralAdeleEmbedding K y = x := by
+      apply chapter04_finiteAdele_ext K
+      intro v
+      rfl
+    exact ⟨y, hy⟩
 
 theorem chapter04_finiteIntegralAdele_is_compact_open
     (K : Type uK) [Field K] [NumberField K] :
     IsCompact (Chapter04FiniteIntegralAdeleSubring K : Set (Chapter04FiniteAdeleRing K)) ∧
       IsOpen (Chapter04FiniteIntegralAdeleSubring K : Set (Chapter04FiniteAdeleRing K)) := by
-  sorry
+  have hAopen : ∀ v : Chapter04FinitePlace K,
+      IsOpen (chapter04FiniteLocalIntegerSet K v) := by
+    intro v
+    exact Valued.isOpen_valuationSubring _
+  have hproduct : IsCompact (Set.univ : Set (∀ v : Chapter04FinitePlace K,
+      Chapter04FiniteLocalIntegerRing K v)) :=
+    by
+      rw [← Set.pi_univ univ]
+      exact isCompact_univ_pi (fun v => isCompact_univ_iff.mpr
+        (LastLib.Book04AdelesAndIdeles.Chapter01.chapter01_completion_integers_compact K v))
+  have hcompact : IsCompact ({x : Chapter04FiniteAdeleRing K |
+      ∀ v : Chapter04FinitePlace K, x v ∈ chapter04FiniteLocalIntegerSet K v} :
+      Set (Chapter04FiniteAdeleRing K)) := by
+    change IsCompact ({x : Πʳ v : Chapter04FinitePlace K,
+      [Chapter04FiniteLocalField K v, chapter04FiniteLocalIntegerSet K v] |
+        ∀ v : Chapter04FinitePlace K, x v ∈ chapter04FiniteLocalIntegerSet K v} :
+      Set (Πʳ v : Chapter04FinitePlace K,
+        [Chapter04FiniteLocalField K v, chapter04FiniteLocalIntegerSet K v]))
+    have himage := hproduct.image
+      (RestrictedProduct.isOpenEmbedding_structureMap hAopen).continuous
+    have hset :
+        ({x : Πʳ v : Chapter04FinitePlace K,
+          [Chapter04FiniteLocalField K v, chapter04FiniteLocalIntegerSet K v] |
+            ∀ v : Chapter04FinitePlace K,
+              x v ∈ chapter04FiniteLocalIntegerSet K v} : Set _) =
+          RestrictedProduct.structureMap (Chapter04FiniteLocalField K)
+            (chapter04FiniteLocalIntegerSet K) cofinite '' Set.univ := by
+      ext x
+      constructor
+      · intro hx
+        exact ⟨fun v => ⟨x v, hx v⟩, Set.mem_univ _, rfl⟩
+      · rintro ⟨y, hy, rfl⟩ v
+        exact (y v).property
+    rw [hset]
+    exact himage
+  have hEq : (Chapter04FiniteIntegralAdeleSubring K : Set (Chapter04FiniteAdeleRing K)) =
+      {x | ∀ v : Chapter04FinitePlace K,
+        x v ∈ chapter04FiniteLocalIntegerSet K v} := by
+    ext x
+    exact chapter04_finiteIntegralAdele_mem_iff_all_coordinates_integral K x
+  exact ⟨hEq ▸ hcompact, hEq ▸ RestrictedProduct.isOpen_forall_mem hAopen⟩
 
 theorem chapter04_finiteIntegralAdele_is_profinite_topological_ring
     (K : Type uK) [Field K] [NumberField K] :
     CompactSpace (Chapter04FiniteIntegralAdele K) ∧
       T2Space (Chapter04FiniteIntegralAdele K) ∧
       TotallyDisconnectedSpace (Chapter04FiniteIntegralAdele K) := by
-  sorry
+  let hCompact : CompactSpace (Chapter04FiniteIntegralAdele K) := by
+    constructor
+    rw [← Set.pi_univ univ]
+    exact isCompact_univ_pi (fun v => isCompact_univ_iff.mpr
+      (LastLib.Book04AdelesAndIdeles.Chapter01.chapter01_completion_integers_compact K v))
+  let hT2 : ∀ v : Chapter04FinitePlace K,
+      T2Space (Chapter04FiniteLocalIntegerRing K v) := fun _ => inferInstance
+  let hTotallyDisconnected : ∀ v : Chapter04FinitePlace K,
+      TotallyDisconnectedSpace (Chapter04FiniteLocalIntegerRing K v) :=
+    fun _ => inferInstance
+  have hT2Product : T2Space (Chapter04FiniteIntegralAdele K) :=
+    @Pi.t2Space (Chapter04FinitePlace K)
+      (fun v => Chapter04FiniteLocalIntegerRing K v)
+      (fun _ => inferInstance) hT2
+  have hTotallyDisconnectedProduct : TotallyDisconnectedSpace
+      (Chapter04FiniteIntegralAdele K) :=
+    @Pi.totallyDisconnectedSpace (Chapter04FinitePlace K)
+      (fun v => Chapter04FiniteLocalIntegerRing K v)
+      (fun _ => inferInstance) hTotallyDisconnected
+  exact ⟨hCompact, hT2Product, hTotallyDisconnectedProduct⟩
 
 theorem chapter04_finiteAdeleRing_is_locally_compact_topological_ring
     (K : Type uK) [Field K] [NumberField K] :
     LocallyCompactSpace (Chapter04FiniteAdeleRing K) ∧
       IsTopologicalRing (Chapter04FiniteAdeleRing K) := by
-  sorry
+  let hopen : Fact (∀ v : Chapter04FinitePlace K,
+      IsOpen (chapter04FiniteLocalIntegerSet K v)) :=
+    ⟨fun v => by exact Valued.isOpen_valuationSubring _⟩
+  let hlocal : ∀ v : Chapter04FinitePlace K,
+      LocallyCompactSpace (Chapter04FiniteLocalField K v) := fun v => by
+    have hproper : ProperSpace (Chapter04FiniteLocalField K v) :=
+      (Valued.integer.properSpace_iff_compactSpace_integer
+        (K := Chapter04FiniteLocalField K v) (Γ₀ := ℤᵐ⁰)).2
+        (LastLib.Book04AdelesAndIdeles.Chapter01.chapter01_completion_integers_compact K v)
+    exact @locallyCompact_of_proper (Chapter04FiniteLocalField K v) _ hproper
+  have hcompact : ∀ v : Chapter04FinitePlace K,
+      IsCompact (chapter04FiniteLocalIntegerSet K v) := by
+    intro v
+    have hcompact' : IsCompact (Set.univ : Set (Chapter04FiniteLocalIntegerRing K v)) :=
+      isCompact_univ_iff.mpr
+        (LastLib.Book04AdelesAndIdeles.Chapter01.chapter01_completion_integers_compact K v)
+    have himage := hcompact'.image
+      (show Continuous (fun x : Chapter04FiniteLocalIntegerRing K v =>
+        (x : Chapter04FiniteLocalField K v)) from continuous_subtype_val)
+    simpa [chapter04FiniteLocalIntegerSet] using himage
+  constructor
+  · change LocallyCompactSpace
+      (Πʳ v : Chapter04FinitePlace K,
+        [Chapter04FiniteLocalField K v, chapter04FiniteLocalIntegerSet K v])
+    exact @RestrictedProduct.locallyCompactSpace_of_addGroup
+      (Chapter04FinitePlace K)
+      (fun v : Chapter04FinitePlace K => Chapter04FiniteLocalField K v)
+      (fun v : Chapter04FinitePlace K => ValuationSubring (Chapter04FiniteLocalField K v))
+      _
+      (fun v : Chapter04FinitePlace K => v.adicCompletionIntegers K)
+      _
+      hopen
+      _
+      _
+      _
+      hlocal
+      (Filter.Eventually.of_forall hcompact)
+  · infer_instance
 
 def chapter04LocalField
     (K : Type uK) [Field K] [NumberField K]
