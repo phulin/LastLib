@@ -161,7 +161,7 @@ noncomputable def chapter08IndexIdeal
   Ideal.span ({chapter08OrderIndexDeterminant A B O bO bB} : Set A)
 
 theorem chapter08_order_discriminant_index_correction
-    (A B : Type*) [CommRing A] [IsDomain A] [CommRing B]
+    (A B : Type*) [CommRing A] [CommRing B]
     [Algebra A B] {ι : Type*} [Fintype ι] [DecidableEq ι]
     (O : Subalgebra A B) (bO : Module.Basis ι A O) (bB : Module.Basis ι A B) :
     chapter08OrderDiscriminant A B O bO =
@@ -170,7 +170,7 @@ theorem chapter08_order_discriminant_index_correction
   sorry
 
 theorem chapter08_order_discriminant_ideal_index_correction
-    (A B : Type*) [CommRing A] [IsDomain A] [CommRing B]
+    (A B : Type*) [CommRing A] [CommRing B]
     [Algebra A B] {ι : Type*} [Fintype ι] [DecidableEq ι]
     (O : Subalgebra A B) (bO : Module.Basis ι A O) (bB : Module.Basis ι A B) :
     Ideal.span ({chapter08OrderDiscriminant A B O bO} : Set A) =
@@ -195,15 +195,8 @@ theorem chapter08_proper_order_has_nonunit_index
 /- The polynomial discriminant is the order discriminant when the power basis
    is integral and spans the full order. -/
 theorem chapter08_power_family_discriminant_is_field_discriminant_of_full_order
-    (A B K L : Type*) [CommRing A] [CommRing B]
-    [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra K L]
-    [Algebra B L] [Algebra A L] [IsScalarTower A K L]
-    [IsScalarTower A B L] [IsFractionRing A K] [IsFractionRing B L]
-    [FiniteDimensional K L] [Algebra.IsSeparable K L]
-    [IsIntegralClosure B A L]
-    [IsDedekindDomain A] [IsDedekindDomain B]
-    [Module.Finite A B] [Module.Free A B] [Module.IsTorsionFree A B]
-    [Algebra.IsIntegral A B] (α : B) (n : ℕ)
+    (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
+    (α : B) (n : ℕ)
     (b : Module.Basis (Fin n) A B)
     (hpower : b = chapter08MonogenicPowerFamily B α n) :
     chapter08PowerFamilyDiscriminantElement A B α n =

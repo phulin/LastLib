@@ -40,7 +40,7 @@ theorem chapter08TensorProductRemainsField_iff
 theorem chapter08_separable_scalar_extension_has_field_factors
     (K L K' : Type*) [Field K] [Field L] [Field K']
     [Algebra K L] [Algebra K K'] [FiniteDimensional K L]
-    [FiniteDimensional K K'] [Algebra.IsSeparable K L] :
+    [Algebra.IsSeparable K L] :
     ∃ (I : Type*) (_ : Finite I) (F : I → Type*)
       (_ : ∀ i, Field (F i)) (_ : ∀ i, Algebra K' (F i)),
       Nonempty
