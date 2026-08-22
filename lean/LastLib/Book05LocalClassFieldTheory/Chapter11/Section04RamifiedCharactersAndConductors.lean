@@ -30,9 +30,16 @@ theorem chapter11_conductor_spec
     (D : Chapter11LocalFieldData K) (χ : Kˣ →ₜ* A)
     (hχ : chapter11ConductorExists D χ) :
     ∀ x ∈ D.unitFiltration (chapter11Conductor D χ hχ), χ x = 1 := by
+  classical
   -- Prior attempt: `exact Nat.find_spec hχ` used the canonical Chapter 8
   -- filtration directly and did not rewrite it to the Chapter 11 interface.
-  sorry
+  intro x hx
+  have hx' : x ∈
+      LastLib.Book05LocalClassFieldTheory.Chapter08.chapter08UnitFiltration
+        D.base.valuation (chapter11Conductor D χ hχ) := by
+    rw [← D.unitFiltration_eq_canonical]
+    exact hx
+  exact (Nat.find_spec hχ) x hx'
 
 theorem chapter11_conductor_minimal
     {K A : Type*} [Field K] [CommGroup A]
@@ -41,7 +48,11 @@ theorem chapter11_conductor_minimal
     (hχ : chapter11ConductorExists D χ) :
     ∀ n, (∀ x ∈ D.unitFiltration n, χ x = 1) →
       chapter11Conductor D χ hχ ≤ n := by
-  sorry
+  classical
+  intro n hn
+  exact Nat.find_min' hχ (fun x hx => hn x (by
+    rw [D.unitFiltration_eq_canonical]
+    exact hx))
 
 structure Chapter11GaloisRamificationFiltration
     (G : Type*) [Group G] where
@@ -83,7 +94,88 @@ theorem chapter11_conductor_matches_reciprocity_filtration
     chapter11Conductor D χ hχ =
       chapter11GaloisConductor F
         (chapter11CorrespondingAbelianGaloisCharacter R χ) hρ := by
-  sorry
+  classical
+  have hcompat :
+      (chapter11CorrespondingAbelianGaloisCharacter R χ).comp R.reciprocity = χ := by
+    have hcomp := chapter11_abelian_continuous_character_equiv_apply R
+      (chapter11CorrespondingAbelianGaloisCharacter R χ)
+    calc
+      _ = (chapter11AbelianContinuousCharacterEquiv R)
+          (chapter11CorrespondingAbelianGaloisCharacter R χ) := hcomp.symm
+      _ = χ := (chapter11AbelianContinuousCharacterEquiv R).apply_symm_apply χ
+  apply Nat.le_antisymm
+  · apply chapter11_conductor_minimal D χ hχ
+      (chapter11GaloisConductor F
+        (chapter11CorrespondingAbelianGaloisCharacter R χ) hρ)
+    intro x hx
+    have hxg :
+        R.reciprocity x ∈ F.group
+          (chapter11GaloisConductor F
+            (chapter11CorrespondingAbelianGaloisCharacter R χ) hρ) := by
+      rw [hfiltration]
+      exact ⟨x, hx, rfl⟩
+    have hρx := chapter11_galois_conductor_spec F
+      (chapter11CorrespondingAbelianGaloisCharacter R χ) hρ
+      (R.reciprocity x) hxg
+    exact (congrArg (fun f : Kˣ →ₜ* A => f x) hcompat).symm.trans hρx
+  · change Nat.find hρ ≤ chapter11Conductor D χ hχ
+    apply Nat.find_min' hρ
+    intro g hg
+    rw [hfiltration (chapter11Conductor D χ hχ)] at hg
+    rcases hg with ⟨x, hx, hgx⟩
+    rw [← hgx]
+    exact (congrArg (fun f : Kˣ →ₜ* A => f x) hcompat).trans
+      (chapter11_conductor_spec D χ hχ x hx)
+
+private theorem chapter11_conductor_exists_of_finite_unit_image
+    {K A : Type*} [Field K] [CommGroup A]
+    [TopologicalSpace Kˣ] [TopologicalSpace A] [T2Space A]
+    [IsTopologicalGroup A]
+    (D : Chapter11LocalFieldData K) (χ : Kˣ →ₜ* A)
+    (hχ : (Set.range (fun u : D.unitGroup => χ (u : Kˣ))).Finite) :
+    chapter11ConductorExists D χ := by
+  have hclosed : IsClosed
+      (Set.range (fun u : D.unitGroup => χ (u : Kˣ)) \ ({1} : Set A)) := by
+    exact hχ.sdiff.isClosed
+  have hone : (1 : A) ∉
+      Set.range (fun u : D.unitGroup => χ (u : Kˣ)) \ ({1} : Set A) := by
+    simp
+  have hA :
+      (Set.range (fun u : D.unitGroup => χ (u : Kˣ)) \ ({1} : Set A))ᶜ ∈ 𝓝 (1 : A) :=
+    IsOpen.mem_nhds hclosed.isOpen_compl hone
+  have hK :
+      χ ⁻¹' (Set.range (fun u : D.unitGroup => χ (u : Kˣ)) \ ({1} : Set A))ᶜ ∈
+        𝓝 (1 : Kˣ) := by
+    apply χ.continuous_toFun.continuousAt.preimage_mem_nhds
+    change (Set.range (fun u : D.unitGroup => χ (u : Kˣ)) \ ({1} : Set A))ᶜ ∈
+      𝓝 (χ (1 : Kˣ))
+    rw [map_one]
+    exact hA
+  obtain ⟨n, hn⟩ := D.unitFiltration_basis _ hK
+  have hunit : ∀ n, D.unitFiltration n ≤ D.unitGroup := by
+    intro n
+    have hlevel : ∀ m, D.unitFiltration m ≤ D.unitFiltration 0 := by
+      intro m
+      induction m with
+      | zero => exact le_rfl
+      | succ m ihm =>
+          exact (D.unitFiltration_succ_le m).trans ihm
+    exact (hlevel n).trans_eq D.unitFiltration_zero
+  change ∃ n : ℕ, ∀ x ∈
+    LastLib.Book05LocalClassFieldTheory.Chapter08.chapter08UnitFiltration
+      D.base.valuation n, χ.toMonoidHom x = 1
+  refine ⟨n, ?_⟩
+  intro x hx
+  have hxD : x ∈ D.unitFiltration n := by
+    rw [D.unitFiltration_eq_canonical]
+    exact hx
+  have hxunit : x ∈ D.unitGroup := hunit n hxD
+  have hxrange : χ x ∈ Set.range (fun u : D.unitGroup => χ (u : Kˣ)) := by
+    exact ⟨⟨x, hxunit⟩, rfl⟩
+  have hxnhds : χ x ∈
+      (Set.range (fun u : D.unitGroup => χ (u : Kˣ)) \ ({1} : Set A))ᶜ := hn hxD
+  by_contra hne
+  exact hxnhds ⟨hxrange, hne⟩
 
 theorem chapter11_finite_image_has_finite_conductor
     {K A : Type*} [Field K] [CommGroup A]
@@ -92,7 +184,11 @@ theorem chapter11_finite_image_has_finite_conductor
     (D : Chapter11LocalFieldData K) (χ : Kˣ →ₜ* A)
     (hχ : chapter11FiniteImage χ) :
     chapter11ConductorExists D χ := by
-  sorry
+  change (Set.range χ).Finite at hχ
+  apply chapter11_conductor_exists_of_finite_unit_image D χ
+  apply hχ.subset
+  rintro y ⟨u, rfl⟩
+  exact ⟨(u : Kˣ), rfl⟩
 
 theorem chapter11_unit_restriction_finite_image_has_finite_conductor
     {K A : Type*} [Field K] [CommGroup A]
@@ -101,7 +197,7 @@ theorem chapter11_unit_restriction_finite_image_has_finite_conductor
     (D : Chapter11LocalFieldData K) (χ : Kˣ →ₜ* A)
     (hχ : (Set.range (fun u : D.unitGroup => χ (u : Kˣ))).Finite) :
     chapter11ConductorExists D χ := by
-  sorry
+  exact chapter11_conductor_exists_of_finite_unit_image D χ hχ
 
 theorem chapter11_infinite_unit_image_has_no_finite_conductor
     {K A : Type*} [Field K] [CommGroup A]
@@ -110,7 +206,9 @@ theorem chapter11_infinite_unit_image_has_no_finite_conductor
     (hinfinite :
       ∀ n, ∃ x ∈ D.unitFiltration n, χ x ≠ 1) :
     ¬ chapter11ConductorExists D χ := by
-  sorry
+  intro hχ
+  obtain ⟨x, hx, hne⟩ := hinfinite (chapter11Conductor D χ hχ)
+  exact hne (chapter11_conductor_spec D χ hχ x hx)
 
 def chapter11UnitImage
     {K A : Type*} [Field K] [CommGroup A]
