@@ -57,7 +57,47 @@ theorem chapter07_different_eq_derivative_ideal
     (hmono : chapter07MonogenicPresentation A B K L α f) :
     chapter07DifferentIdeal A B =
       Ideal.span ({chapter07DerivativeAt A B f α} : Set B) := by
-  sorry
+  let S : IntermediateField K L :=
+    IntermediateField.adjoin K ({algebraMap B L α} : Set L)
+  have hBmem : ∀ b : B, algebraMap B L b ∈ S := by
+    intro b
+    have hb : b ∈ Algebra.adjoin A ({α} : Set B) := by
+      rw [hmono.2.1]
+      trivial
+    refine Algebra.adjoin_induction ?_ ?_ ?_ ?_ hb
+    · intro x hx
+      rcases Set.mem_singleton_iff.mp hx with rfl
+      exact IntermediateField.subset_adjoin K _ (by simp)
+    · intro a
+      rw [← IsScalarTower.algebraMap_apply A B L,
+        IsScalarTower.algebraMap_apply A K L]
+      exact S.algebraMap_mem _
+    · intro x y hx hy hxm hym
+      simpa only [map_add] using S.add_mem hxm hym
+    · intro x y hx hy hxm hym
+      simpa only [map_mul] using S.mul_mem hxm hym
+  have hS : S = ⊤ := by
+    apply top_unique
+    intro z hz
+    obtain ⟨b, c, hc, rfl⟩ := IsFractionRing.div_surjective B z
+    exact S.div_mem (hBmem b) (hBmem c)
+  have hgen : Algebra.adjoin K ({algebraMap B L α} : Set L) = ⊤ := by
+    apply Algebra.adjoin_eq_top_of_intermediateField
+      (fun x _ => Algebra.IsAlgebraic.isAlgebraic x)
+    exact hS
+  have hf : f = minpoly A α := by
+    apply Polynomial.map_injective (algebraMap A K)
+      (FaithfulSMul.algebraMap_injective A K)
+    calc
+      f.map (algebraMap A K) = minpoly K (algebraMap B L α) := hmono.2.2.2.2
+      _ = (minpoly A α).map (algebraMap A K) :=
+        minpoly.isIntegrallyClosed_eq_field_fractions K L hmono.1
+  have hcon := conductor_mul_differentIdeal A K L α hgen
+  rw [conductor_eq_top_of_adjoin_eq_top hmono.2.1] at hcon
+  have hcon' : differentIdeal A B =
+      Ideal.span {aeval α (derivative (minpoly A α))} := by
+    simpa using hcon
+  simpa [chapter07DifferentIdeal, chapter07DerivativeAt, hf] using hcon'
 
 /- Lagrange interpolation in a splitting field. -/
 def chapter07InterpolationRootData

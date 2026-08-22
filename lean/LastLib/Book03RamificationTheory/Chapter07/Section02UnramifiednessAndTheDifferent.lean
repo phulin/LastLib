@@ -383,7 +383,8 @@ theorem chapter07_reduced_finite_local_algebra_is_a_field
     (k R : Type*) [Field k] [CommRing R] [Algebra k R]
     [FiniteDimensional k R] [IsLocalRing R] [IsReduced R] :
     IsField R := by
-  sorry
+  let _ : IsArtinianRing R := IsArtinianRing.of_finite k R
+  exact IsArtinianRing.isField_of_isReduced_of_isLocalRing R
 
 theorem chapter07_field_trace_pairing_nondegenerate_iff_separable
     (k l : Type*) [Field k] [Field l] [Algebra k l]
@@ -391,7 +392,9 @@ theorem chapter07_field_trace_pairing_nondegenerate_iff_separable
     chapter07TracePairingNondegenerate l k
         (chapter07FiniteAlgebraTracePairing k l) ↔
       Algebra.IsSeparable k l := by
-  sorry
+  change (Algebra.traceForm k l).SeparatingLeft ↔ Algebra.IsSeparable k l
+  rw [← (Algebra.traceForm_isSymm k (S := l)).isRefl.nondegenerate_iff_separatingLeft]
+  exact (traceForm_nondegenerate_tfae k l).out 2 0
 
 /- If the different is the unit ideal, the reduced quotient argument forces
    both value-group invariants and residue separability. -/
@@ -417,12 +420,57 @@ theorem chapter07_zero_different_implies_unramified
     (hzero : chapter07DifferentIdeal A B = ⊤)
     (hquotient_reduced : chapter07DifferentIdeal A B = ⊤ →
       IsReduced (B ⧸ Ideal.map (algebraMap A B) mA))
-    (hresidue : Nonempty ((B ⧸ mB) ≃+* l))
+    (_hresidue : Nonempty ((B ⧸ mB) ≃+* l))
     (htrace_nondegenerate : chapter07DifferentIdeal A B = ⊤ →
       chapter07TracePairingNondegenerate l k
         (chapter07FiniteAlgebraTracePairing k l)) :
     chapter07UnramifiedProfile e k l := by
-  sorry
+  have hmap_ne_top : Ideal.map (algebraMap A B) mA ≠ ⊤ := by
+    intro htop
+    have hker : RingHom.ker (algebraMap A B) ≤ mA := by
+      rw [(RingHom.injective_iff_ker_eq_bot (algebraMap A B)).mp
+        (FaithfulSMul.algebraMap_injective A B)]
+      exact bot_le
+    have hintegral : (algebraMap A B).IsIntegral := by
+      intro b
+      exact Algebra.IsIntegral.isIntegral b
+    have hmA_top : mA = (⊤ : Ideal A) := by
+      apply (Ideal.map_eq_top_iff_of_ker_le (algebraMap A B)
+        hker hintegral).mp
+      exact htop
+    apply (IsLocalRing.maximalIdeal.isMaximal A).ne_top
+    simpa [hmA] using hmA_top
+  have hmap : Ideal.map (algebraMap A B) mA = mB ^ e := by
+    apply FractionalIdeal.coeIdeal_injective (R := B) (K := L)
+    simpa [LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04FractionalIdealPower]
+      using hpower
+  have he0 : e ≠ 0 := by
+    intro he
+    apply hmap_ne_top
+    rw [hmap, he, pow_zero, Ideal.one_eq_top]
+  let _ : mB.IsPrime := by
+    simpa [hmB] using
+      (inferInstance : (IsLocalRing.maximalIdeal B).IsPrime)
+  have hrad : (mB ^ e).IsRadical := by
+    apply (Ideal.isRadical_iff_quotient_reduced (mB ^ e)).mpr
+    rw [← hmap]
+    exact hquotient_reduced hzero
+  have hpow_eq : mB ^ e = mB := by
+    calc
+      mB ^ e = (mB ^ e).radical := hrad.radical.symm
+      _ = mB.radical := Ideal.radical_pow mB he0
+      _ = mB := (inferInstance : mB.IsPrime).radical
+  have hpow_eq' : (IsLocalRing.maximalIdeal B) ^ e =
+      (IsLocalRing.maximalIdeal B) ^ 1 := by
+    simpa [hmB] using hpow_eq.trans (pow_one mB).symm
+  have hco := congrArg Order.coheight hpow_eq'
+  rw [IsDiscreteValuationRing.coheight_pow_maximalIdeal,
+    IsDiscreteValuationRing.coheight_pow_maximalIdeal] at hco
+  have he : e = 1 := by
+    exact_mod_cast hco
+  refine ⟨he, ?_⟩
+  exact (chapter07_field_trace_pairing_nondegenerate_iff_separable k l).mp
+    (htrace_nondegenerate hzero)
 
 theorem chapter07_different_zero_iff_unramified
     (A B K L k l : Type*) [CommRing A] [IsDomain A]
@@ -452,7 +500,17 @@ theorem chapter07_different_zero_iff_unramified
         (chapter07FiniteAlgebraTracePairing k l)) :
     chapter07DifferentIdeal A B = ⊤ ↔
       chapter07UnramifiedProfile e k l := by
-  sorry
+  have hresidue : Nonempty ((B ⧸ mB) ≃+* l) := by
+    rcases hresidue_model with ⟨eA, eB, _⟩
+    rw [hmB]
+    exact ⟨eB⟩
+  constructor
+  · intro hzero
+    exact chapter07_zero_different_implies_unramified A B K L k l e mA mB
+      hmA hmB hpower hzero hquotient_reduced hresidue htrace_nondegenerate
+  · intro hunram
+    exact (chapter07_unramified_trace_pairing_perfect A B K L k l mA mB
+      hmA hmB e hunram hpower hdegree hresidue_model).2.1
 
 /- The value group may be unchanged while inseparable residue growth still
    forces a nontrivial different. -/
@@ -475,7 +533,7 @@ theorem chapter07_e_one_inseparable_residue_forces_nontrivial_different
       (Ideal.map (algebraMap A B) mA : FractionalIdeal B⁰ L) =
         LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04FractionalIdealPower
           B L mB (1 : ℤ))
-    (hdegree : Module.finrank K L = Module.finrank k l)
+    (_hdegree : Module.finrank K L = Module.finrank k l)
     (hresidue_model : chapter07CompatibleResidueModel A B k l)
     (hquotient_reduced : chapter07DifferentIdeal A B = ⊤ →
       IsReduced (B ⧸ Ideal.map (algebraMap A B) mA))
@@ -484,7 +542,14 @@ theorem chapter07_e_one_inseparable_residue_forces_nontrivial_different
         (chapter07FiniteAlgebraTracePairing k l))
     (hinsep : ¬Algebra.IsSeparable k l) :
     chapter07DifferentIdeal A B ≠ ⊤ := by
-  sorry
+  intro hzero
+  have hresidue : Nonempty ((B ⧸ mB) ≃+* l) := by
+    rcases hresidue_model with ⟨eA, eB, _⟩
+    rw [hmB]
+    exact ⟨eB⟩
+  have hunram := chapter07_zero_different_implies_unramified A B K L k l 1 mA mB
+    hmA hmB hpower hzero hquotient_reduced hresidue htrace_nondegenerate
+  exact hinsep hunram.2
 
 end
 
