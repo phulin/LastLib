@@ -1148,7 +1148,171 @@ theorem chapter13_p_basis_polynomial_presentation
       (B.Finite →
         FiniteDimensional (Chapter13PthPowerSubfield k p) k ∧
         Module.finrank (Chapter13PthPowerSubfield k p) k = p ^ B.ncard) := by
-  sorry
+  classical
+  let F := Chapter13PthPowerSubfield k p
+  let ev : MvPolynomial B F →ₐ[F] k :=
+    MvPolynomial.aeval (fun b : B => (b : k))
+  obtain ⟨β, hβ⟩ := chapter13_p_basis_monomial_basis p B hB
+  let A := Algebra.adjoin F (Set.range (fun b : B => (b : k)))
+  have hmonomial_mem (e : Chapter13PMonomialIndex B p) :
+      Chapter13PMonomial (fun b : B => (b : k)) e ∈ A := by
+    change ∏ i ∈ e.1.support, (i : k) ^ e.1 i ∈ A
+    exact A.prod_mem fun i _hi => A.pow_mem (Algebra.subset_adjoin ⟨i, rfl⟩) _
+  have hspan_le :
+      Submodule.span F (Set.range (fun e : Chapter13PMonomialIndex B p =>
+        Chapter13PMonomial (fun b : B => (b : k)) e)) ≤ A.toSubmodule := by
+    exact Submodule.span_le.2 (Set.range_subset_iff.2 hmonomial_mem)
+  have hAtop : A.toSubmodule = ⊤ := by
+    apply top_unique
+    rw [← hB.2]
+    exact hspan_le
+  have hA : A = ⊤ := by
+    ext x
+    change x ∈ A.toSubmodule ↔ x ∈ (⊤ : Submodule F k)
+    rw [hAtop]
+  have hsurj : Function.Surjective ev := by
+    apply (AlgHom.range_eq_top ev).mp
+    change (MvPolynomial.aeval (fun b : B => (b : k))).range = _
+    rw [MvPolynomial.aeval_range]
+    exact hA
+  let I : Ideal (MvPolynomial B F) :=
+    Ideal.span (Set.range (fun b : B => MvPolynomial.X b ^ p - MvPolynomial.C (c b)))
+  let g : Chapter13PMonomialIndex B p → MvPolynomial B F :=
+    fun e => MvPolynomial.monomial e.1 (1 : F)
+  let N : Submodule F (MvPolynomial B F) :=
+    Submodule.span F (Set.range g)
+  have hmono : ∀ (e : B →₀ ℕ) (a : F), ∃ r : MvPolynomial B F,
+      MvPolynomial.monomial e a - r ∈ I ∧ r ∈ N := by
+    have hP : ∀ n : ℕ, ∀ e : B →₀ ℕ, e.degree = n → ∀ a : F,
+        ∃ r : MvPolynomial B F, MvPolynomial.monomial e a - r ∈ I ∧ r ∈ N := by
+      intro n
+      induction n using Nat.strong_induction_on with
+      | h n ih =>
+          intro e he a
+          by_cases ha : a = 0
+          · subst a
+            refine ⟨0, ?_, N.zero_mem⟩
+            simp
+          by_cases hbnd : ∀ i, e i < p
+          · let ep : Chapter13PMonomialIndex B p := ⟨e, hbnd⟩
+            refine ⟨MvPolynomial.monomial e a, by simp, ?_⟩
+            have hm : a • MvPolynomial.monomial e (1 : F) ∈ N :=
+              N.smul_mem a (Submodule.subset_span ⟨ep, rfl⟩)
+            rw [MvPolynomial.smul_monomial] at hm
+            simpa using hm
+          · push_neg at hbnd
+            obtain ⟨i, hi⟩ := hbnd
+            have hpi : p ≤ e i := hi
+            let q : B →₀ ℕ := e - Finsupp.single i p
+            have hsingle : Finsupp.single i p ≤ e := Finsupp.single_le_iff.mpr hpi
+            have hqeq : q + Finsupp.single i p = e := tsub_add_cancel_of_le hsingle
+            have hdegree : q.degree < e.degree := by
+              have hdeg : q.degree + p = e.degree := by
+                rw [← Finsupp.degree_single i p, ← map_add, hqeq]
+              rw [← hdeg]
+              have hp : 0 < p := (Fact.out : Nat.Prime p).pos
+              omega
+            rw [he] at hdegree
+            obtain ⟨r, hrI, hrN⟩ := ih q.degree hdegree q rfl (a * c i)
+            have hrel : MvPolynomial.X i ^ p - MvPolynomial.C (c i) ∈ I := by
+              change MvPolynomial.X i ^ p - MvPolynomial.C (c i) ∈
+                Ideal.span (Set.range (fun b : B =>
+                  MvPolynomial.X b ^ p - MvPolynomial.C (c b)))
+              exact Ideal.subset_span ⟨i, rfl⟩
+            have hdiff : MvPolynomial.monomial e a -
+                MvPolynomial.monomial q (a * c i) ∈ I := by
+              have hm := I.mul_mem_left (MvPolynomial.monomial q a) hrel
+              have hfactor : MvPolynomial.monomial q a * MvPolynomial.X i ^ p =
+                  MvPolynomial.monomial e a := by
+                rw [MvPolynomial.X_pow_eq_monomial, MvPolynomial.monomial_mul, mul_one,
+                  hqeq]
+              have hscalar : MvPolynomial.monomial q a * MvPolynomial.C (c i) =
+                  MvPolynomial.monomial q (a * c i) := by
+                simpa [mul_comm] using
+                  (MvPolynomial.C_mul_monomial (s := q) (a := c i) (a' := a))
+              rw [mul_sub, hfactor, hscalar] at hm
+              exact hm
+            refine ⟨r, ?_, hrN⟩
+            convert I.add_mem hdiff hrI using 1 <;> ring
+    intro e a
+    exact hP e.degree e rfl a
+  refine ⟨hsurj, ?_, ?_⟩
+  · change RingHom.ker ev.toRingHom = I
+    have hIle : I ≤ RingHom.ker ev.toRingHom := by
+      change Ideal.span (Set.range (fun b : B =>
+        MvPolynomial.X b ^ p - MvPolynomial.C (c b))) ≤ RingHom.ker ev.toRingHom
+      rw [Ideal.span_le]
+      rintro _ ⟨b, rfl⟩
+      simp only [RingHom.mem_ker, AlgHom.toRingHom_eq_coe]
+      simp [ev, hc b, Algebra.algebraMap_ofSubsemiring_apply]
+    refine le_antisymm ?_ hIle
+    have hreduce : ∀ q : MvPolynomial B F, ∃ r : MvPolynomial B F,
+        q - r ∈ I ∧ r ∈ N := by
+      intro q
+      induction q using MvPolynomial.induction_on' with
+      | monomial e a => exact hmono e a
+      | add q r hq hr =>
+          obtain ⟨q', hqI, hqN⟩ := hq
+          obtain ⟨r', hrI, hrN⟩ := hr
+          refine ⟨q' + r', ?_, N.add_mem hqN hrN⟩
+          convert I.add_mem hqI hrI using 1 <;> ring
+    intro q hq
+    obtain ⟨r, hqr, hrN⟩ := hreduce q
+    change ev q = 0 at hq
+    have hqr0 : ev (q - r) = 0 := by
+      change ev (q - r) = 0
+      exact hIle hqr
+    have hr0 : ev r = 0 := by
+      rw [map_sub, hq] at hqr0
+      simpa using hqr0
+    have hevg (e : Chapter13PMonomialIndex B p) : ev (g e) = β e := by
+      rw [hβ]
+      simp only [g, ev, MvPolynomial.aeval_def, MvPolynomial.eval₂_monomial,
+        map_one, one_mul]
+      rfl
+    change r ∈ Submodule.span F (Set.range g) at hrN
+    obtain ⟨l, hl⟩ := (Finsupp.mem_span_range_iff_exists_finsupp).mp hrN
+    let evL : MvPolynomial B F →ₗ[F] k := ev.toLinearMap
+    have heval : evL r = Finsupp.linearCombination F
+        (fun e => evL (g e)) l := by
+      rw [← hl]
+      exact evL.map_finsupp_linearCombination l
+    have hfamily : (fun e => evL (g e)) = β := by
+      funext e
+      exact hevg e
+    rw [hfamily] at heval
+    have hlin : Finsupp.linearCombination F β l = 0 := by
+      rw [← heval]
+      exact hr0
+    have hlzero : l = 0 := by
+      apply β.linearIndependent.finsuppLinearCombination_injective
+      simpa using hlin
+    rw [hlzero] at hl
+    have hrzero : r = 0 := by simpa using hl.symm
+    rw [hrzero, sub_zero] at hqr
+    exact hqr
+  · intro hfinite
+    letI : Fintype B := hfinite.fintype
+    let e : Chapter13PMonomialIndex B p ≃ (B → Fin p) :=
+      { toFun := fun x i => ⟨x.1 i, x.2 i⟩
+        invFun := fun x => ⟨Finsupp.equivFunOnFinite.symm (fun i => x i), fun i => (x i).isLt⟩
+        left_inv := by
+          intro x
+          apply Subtype.ext
+          ext i
+          rfl
+        right_inv := by
+          intro x
+          funext i
+          apply Fin.ext
+          rfl }
+    letI : Fintype (Chapter13PMonomialIndex B p) :=
+      Fintype.ofEquiv (B → Fin p) e.symm
+    have hcard : Fintype.card (Chapter13PMonomialIndex B p) = p ^ B.ncard := by
+      rw [Fintype.card_congr e]
+      simp
+    let _ : FiniteDimensional F k := β.finiteDimensional_of_finite
+    exact ⟨inferInstance, (Module.finrank_eq_card_basis β).trans hcard⟩
 
 /-- Restriction of a derivation to a chosen `p`-basis. -/
 def Chapter13DerivationRestriction
