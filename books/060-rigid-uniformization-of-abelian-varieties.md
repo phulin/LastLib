@@ -1016,22 +1016,30 @@ Formula (10.6) is a useful audit check: it specializes to (6.3) when $B=0$ and t
 
 ### 10.4 Dual uniformization
 
-The dual abelian variety has Raynaud data in which the two lattices exchange roles. If
+**Proposition 10.4 (dual uniformization).** Let $A/K$ be an abelian variety with semistable reduction and Raynaud datum $(T,E,B,M,u)$, and let $\tau$ be a biextension trivialization (10.3) presented by an ample descended line bundle. Let $(T_1,E_1,B_1,M_1)$ be the Raynaud datum of the dual $A^\vee$, supplied by Theorem 9.1. Then:
+
+1. $B_1\simeq B^\vee$; the character lattice of $T_1$ is naturally $M$; and $M_1$ is naturally $X=X^*(T)$;
+2. under these identifications, the projection $u:M\to E(K)\to B(K)$ is the classifying map of $E_1$, and the period embedding $u_1:X\to E_1(K)$ sends a character $x$ to the torus point $m\mapsto\tau(m,x)$;
+3. writing $b:M\times X\to\mathbf Z$ for the intrinsic valuation pairing $b(m,x)=v(\tau(m,x))$, the valuation pairing of the dual datum is its transpose $b^\vee(x,m)=b(m,x)$;
+4. biduality returns the original datum.
+
+If moreover a polarization supplies $\lambda:M\to X$, the symmetric form of Section 10.2 is $q(m,n)=b(n,\lambda(m))$, the dual formula becomes its transpose, and the maps $\lambda_B:B\to B^\vee$ and $\lambda:M\to X$ assemble into the uniformized form of $A\to A^\vee$.
+
+**Proof.** _Step 1: the pairing on the product of covering groups._ Pull the Poincare bundle of $A\times A^\vee$ back along the covering maps $E\times E_1\to A^{\mathrm{an}}\times A^{\vee,\mathrm{an}}$. Because $E$ and $E_1$ carry canonical $M$- and $M_1$-descent respectively, and because the restriction of the Poincare bundle to each factor is trivial near the identity sections, this pullback is trivialized off a codimension-two locus, and comparing trivializations across the period translations produces a biextension pairing
 
 $$
-0\to T\to E\to B\to0,
+\sigma:M\times M_1\longrightarrow K^\times,
 $$
 
-then the dual extension has abelian part $B^\vee$ and torus with character lattice $M$. Its period lattice is $X$. Before choosing a polarization, the intrinsic valuation pairing is
+satisfying the same cocycle law as $\tau$. Concretely, translating the first factor by $u(m)$ multiplies the pullback by a unit constant, and recording that constant along the second factor's periods defines $\sigma$; the biextension identity on triple translations is inherited from the Poincare bundle. By construction $\sigma(m,\cdot)$ restricted to characters coming from $X$ reproduces $\tau(m,x)$, and dually $\sigma(\cdot,n)$ reproduces the analogous constant system on $(E_1,M_1)$.
 
-$$
-b:M\times X\longrightarrow\mathbf Z,
-\qquad b(m,x)=v(\tau(m,x)). \tag{10.7}
-$$
+_Step 2: lattice identification._ The pairing $\sigma$ induces maps $M\to\operatorname{Hom}(M_1,\mathbf Z)$ via $b_\sigma(m,n)=v(\sigma(m,n))$ and dually $M_1\to\operatorname{Hom}(M,\mathbf Z)$. Both composites with the period pairings of Section 10.2 recover $q$ up to the fixed identification supplied by the ample bundle: $q(m,n)=v(\sigma(m,\text{the element of }M_1\text{ paired with }\lambda(m)))$. Since $q$ is nondegenerate — it is the valuation form of an ample descended bundle, so Theorem 5.2's criterion applies to its toric part and condition 1 of Theorem 10.1 to its abelian part — the two induced maps have finite-index images. Rank equality comes from the torsion counts (11.5): $|M/nM|=n^{t(A)}$, $|M_1/nM_1|=n^{t(A^\vee)}$, and the exact sequences (11.3)--(11.4) give $t(A)=t(A^\vee)$ because duality exchanges the two short exact sequences of $\ell$-adic Tate modules while preserving their ranks. Hence both maps are injective with finite cokernel between free modules of equal rank. Identifying $M_1\simeq X$ through $\sigma$ is therefore legitimate; applying the same argument to the dual side identifies the character lattice of $T_1$ with $M$.
 
-The Poincare trivialization transposes, so the dual pairing is $b^\vee(x,m)=b(m,x)$. If a polarization supplies $\lambda:M\to X$, the symmetric form of Section 10.2 is $q(m,n)=b(n,\lambda(m))$; the dual formula becomes its transpose. Biduality returns the original extension.
+_Step 3: the abelian parts._ Restricting the Poincare pairing to the bounded subgroups — the generic fibers of the formal identity neighborhoods — kills no toric direction and recovers the classical duality pairing between $B$ and $B_1$: a point of $B_1$ acting trivially on every $x\in X$ would make the corresponding translate of the pulled-back Poincare bundle descend trivially against all characters, forcing it to restrict trivially to the toric fibers and hence, by rigidity of homomorphisms from an abelian variety to a torus, to be zero. Symmetrically for $B$. Thus $B_1\simeq B^\vee$ compatibly with the pairings.
 
-For a polarization, the maps $\lambda_B:B\to B^\vee$ and $\lambda:M\to X$ assemble into the uniformized form of $A\to A^\vee$. Symmetry is literal transposition of these maps and the biextension trivialization. This proves compatibility of Raynaud uniformization with duality and explains geometrically why a principal polarization identifies the period and character lattices.
+_Step 4: classifying maps and periods._ With the identifications of Steps 2–3, the classifying map of $E_1$ is a homomorphism $M\to B^\vee(K)$; evaluating it against the Poincare pairing of Step 1 reproduces, for each $m$, the point of $B(K)$ obtained by projecting $u(m)$ — the two differ by a point pairing trivially against all of $X$, which Step 3 annihilates. This is assertion 2's first half. For the second half, the torus point $m\mapsto\tau(m,x)$ of $T_1(K)$ is well defined because $\tau(\cdot,x)$ is a homomorphism $M\to K^\times$ by the biextension law, and its period translates act on the trivialization exactly as the descent data of the Poincare bundle prescribe; discreteness and fullness of its image follow because $x\mapsto(m\mapsto v(\tau(m,x)))$ is the transpose of the full period map of Step 2. Assertion 3 is then read off directly from $b(m,x)=v(\tau(m,x))$: the dual pairing evaluates $\sigma$ with the roles exchanged. Assertion 4 follows because the construction used only $\tau$ and the Poincare bundle, both of which are canonically recovered from the dual datum by the same recipe.
+
+_For the polarization clause_, symmetry (10.5) makes $q(m,n)=b(n,\lambda(m))$ symmetric, and the transpose statement is literal: exchanging the factors in $b$ conjugates $q$ to its transpose while fixing it. Assembling $\lambda_B$ and $\lambda$ into one homomorphism is the content of the adjunction between biextension pushout and pullback, recorded in Section 10.1's reconstruction clause; positivity was already analyzed in Theorem 10.1. This explains geometrically why a principal polarization, characterized by $\lambda_B$ principal and $\lambda$ an isomorphism in Theorem 10.1, identifies the period and character lattices. $\square$
 
 ## 11. Reduction type and numerical invariants
 
