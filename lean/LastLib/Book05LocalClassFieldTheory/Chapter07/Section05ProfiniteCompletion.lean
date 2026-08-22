@@ -163,7 +163,9 @@ theorem chapter07_inertia_subgroup_is_canonical
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
     [IsAbelianGalois K KAb] (S : Chapter07FiniteArtinSystem K KAb)
     (U₁ U₂ : Chapter07ArithmeticUnramifiedQuotient K KAb S) :
-    U₁.valuation = U₂.valuation →
+    (letI : Group U₁.G := U₁.groupG
+     letI : Group U₂.G := U₂.groupG
+     U₁.quotient.ker = U₂.quotient.ker) →
     chapter07InertiaSubgroup S U₁ = chapter07InertiaSubgroup S U₂ := by
   sorry
 

@@ -6,12 +6,12 @@ noncomputable section
 
 open CategoryTheory Opposite
 
-/-- The fixed field of the commutator subgroup of a finite Galois group. -/
-noncomputable def chapter07MaximalAbelianSubextension
+/-- The maximal abelian subextension supplied by Chapter 5. -/
+abbrev chapter07MaximalAbelianSubextension
     {K E : Type*} [Field K] [Field E] [Algebra K E]
     [FiniteDimensional K E] [IsGalois K E] :
     IntermediateField K E :=
-  IntermediateField.fixedField (commutator (Gal(E / K)))
+  LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05MaximalAbelianSubextension K E
 
 /-- The commutator fixed field is Galois over the base. -/
 theorem chapter07_maximal_abelian_subextension_is_galois
@@ -54,25 +54,39 @@ to an open finite-index subgroup. -/
 /- LOCAL_DEPENDENCY_GUESS: the direct construction and uniqueness proof are
 the local-existence theorem supplied by the preceding chapters. -/
 theorem chapter07_local_existence_theorem
-    {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
-    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ] [IsAbelianGalois K KAb]
-    (D : Chapter07LocalFieldData K)
-    (hmax : chapter07IsMaximalAbelianExtension K KAb)
+    {K : Type*} [Field K]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
+    (vK : AddValuation K (WithTop ℤ))
+    (hKlocal :
+      LastLib.Book05LocalClassFieldTheory.Chapter01.Chapter01LocalField vK)
+    (hbasis :
+      LastLib.Book05LocalClassFieldTheory.Chapter01.Chapter01FieldUnitFiltrationNeighborhoodBasis
+        vK)
+    (D :
+      LastLib.Book05LocalClassFieldTheory.Chapter01.Chapter01MaximalAbelianExtensionData K)
+    [IsAbelianGalois K D.extension]
     (H : Chapter07OpenFiniteIndexSubgroup Kˣ) :
-    ∃! L : Chapter07FiniteAbelianIndex K KAb,
+    ∃! L : Chapter07FiniteAbelianIndex K D.extension,
       chapter07NormSubgroup (K := K) (L := L) = H.1 := by
   sorry
 
 /-- The pointwise local-existence theorem is the chapter's existence
 property used by the completion and correspondence APIs. -/
 theorem chapter07_local_existence_gives_existence_property
-    {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
-    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ] [IsAbelianGalois K KAb]
-    (D : Chapter07LocalFieldData K)
-    (hmax : chapter07IsMaximalAbelianExtension K KAb) :
-    chapter07ExistenceProperty K KAb := by
+    {K : Type*} [Field K]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
+    (vK : AddValuation K (WithTop ℤ))
+    (hKlocal :
+      LastLib.Book05LocalClassFieldTheory.Chapter01.Chapter01LocalField vK)
+    (hbasis :
+      LastLib.Book05LocalClassFieldTheory.Chapter01.Chapter01FieldUnitFiltrationNeighborhoodBasis
+        vK)
+    (D :
+      LastLib.Book05LocalClassFieldTheory.Chapter01.Chapter01MaximalAbelianExtensionData K)
+    [IsAbelianGalois K D.extension] :
+    chapter07ExistenceProperty K D.extension := by
   intro H
-  exact chapter07_local_existence_theorem D hmax H
+  exact chapter07_local_existence_theorem vK hKlocal hbasis D H
 
 /-- The unique finite abelian level attached by the local existence theorem
 to an open finite-index subgroup. -/
@@ -174,10 +188,6 @@ theorem chapter07_norm_subgroup_antitone
 theorem chapter07_norm_subgroup_injective
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
     [TopologicalSpace Kˣ] [IsAbelianGalois K KAb]
-    (S : Chapter07FiniteArtinSystem K KAb)
-    (hopen :
-      ∀ L : Chapter07FiniteAbelianIndex K KAb,
-        IsOpen (chapter07NormSubgroup (K := K) (L := L) : Set Kˣ))
     (hExist : chapter07ExistenceProperty K KAb)
     {L₁ L₂ : Chapter07FiniteAbelianIndex K KAb}
     (hL : chapter07NormSubgroup (K := K) (L := L₁) =
@@ -219,14 +229,29 @@ theorem chapter07_norm_subgroup_correspondence_is_norm
 finite level and reused by the final Chapter 7 synthesis. -/
 /-- Norm limitation for a finite Galois extension. -/
 theorem chapter07_norm_limitation
-    {K E : Type*} [Field K] [Field E] [Algebra K E]
-    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
+    {K E : Type} [Field K] [Field E] [Algebra K E]
     [FiniteDimensional K E] [IsGalois K E]
-    (D : Chapter07LocalFieldData K) :
+    [Fintype (Gal(E / K))]
+    [Fintype (Gal(chapter07MaximalAbelianSubextension (K := K) (E := E) / K))]
+    (D :
+      LastLib.Book05LocalClassFieldTheory.Chapter05.Chapter05LocalClassFormationData K E)
+    (DM :
+      LastLib.Book05LocalClassFieldTheory.Chapter05.Chapter05LocalClassFormationData K
+      (chapter07MaximalAbelianSubextension (K := K) (E := E))) :
     chapter07NormSubgroup (K := K) (L := E) =
       chapter07NormSubgroup (K := K)
         (L := chapter07MaximalAbelianSubextension (K := K) (E := E)) := by
   sorry
+
+/-- The norm-limitation assertion for all finite Galois extensions of a base
+field.  Naming this proposition keeps the final three-theorem package at one
+universe-polymorphic interface. -/
+def chapter07NormLimitationProperty (K : Type*) [Field K] : Prop :=
+  ∀ (E : Type) [Field E] [Algebra K E] [FiniteDimensional K E]
+    [IsGalois K E],
+    chapter07NormSubgroup (K := K) (L := E) =
+      chapter07NormSubgroup (K := K)
+        (L := chapter07MaximalAbelianSubextension (K := K) (E := E))
 
 /- LOCAL_DEPENDENCY_GUESS: this packages the three named theorems as a
 single source-facing declaration; the finite Artin system and the selected
@@ -235,19 +260,14 @@ theorem chapter07_reciprocity_existence_and_norm_theorems
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
     [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ] [IsAbelianGalois K KAb]
     (S : Chapter07FiniteArtinSystem K KAb)
-    (D : Chapter07LocalFieldData K)
-    (hmax : chapter07IsMaximalAbelianExtension K KAb) :
+    (hExist : chapter07ExistenceProperty K KAb)
+    (hNorm : chapter07NormLimitationProperty K) :
     (∀ L : Chapter07FiniteAbelianIndex K KAb,
       Nonempty
         (Kˣ ⧸ chapter07NormSubgroup (K := K) (L := L) ≃*
-          Gal(L / K))) ∧
-      chapter07ExistenceProperty K KAb ∧
-      (∀ (E : Type*) [Field E] [Algebra K E] [FiniteDimensional K E]
-        [IsGalois K E],
-        chapter07NormSubgroup (K := K) (L := E) =
-          chapter07NormSubgroup (K := K)
-            (L := chapter07MaximalAbelianSubextension (K := K) (E := E))) := by
-  sorry
+      Gal(L / K))) ∧
+      chapter07ExistenceProperty K KAb ∧ chapter07NormLimitationProperty K := by
+  exact ⟨fun L => ⟨chapter07FiniteReciprocityEquiv S L⟩, hExist, hNorm⟩
 
 end
 

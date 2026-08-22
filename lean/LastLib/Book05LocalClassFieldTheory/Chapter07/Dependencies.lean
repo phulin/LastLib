@@ -1,5 +1,7 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.Section01TheLocalExtensionProblem
 import LastLib.Book05LocalClassFieldTheory.Chapter01.Section01WhatKindOfLocalFieldIsMeant
+import LastLib.Book05LocalClassFieldTheory.Chapter01.Section02TheClassificationOneHopesFor
+import LastLib.Book05LocalClassFieldTheory.Chapter05.Section05NormLimitation
 import Mathlib.Algebra.Category.Grp.FiniteGrp
 import Mathlib.Algebra.Group.Subgroup.ZPowers.Basic
 import Mathlib.Algebra.Group.TypeTags.Basic
@@ -137,100 +139,45 @@ abstract `ProfiniteCompletion` uses all finite-index normal subgroups, which is
 strictly larger in general; the topology-sensitive diagram below keeps the two
 constructions distinct. -/
 
-structure Chapter07OpenFiniteIndexNormalSubgroup
-    (G : Type*) [Group G] [TopologicalSpace G]
-    extends FiniteIndexNormalSubgroup G where
-  isOpen : IsOpen (toSubgroup : Set G)
+abbrev Chapter07OpenFiniteIndexNormalSubgroup
+    (G : Type*) [Group G] [TopologicalSpace G] :=
+  LastLib.Book05LocalClassFieldTheory.Chapter01.Chapter01OpenFiniteIndexNormalSubgroup G
 
-namespace Chapter07OpenFiniteIndexNormalSubgroup
-
-variable {G : Type*} [Group G] [TopologicalSpace G]
-
-instance (H : Chapter07OpenFiniteIndexNormalSubgroup G) :
-    H.toSubgroup.Normal := H.isNormal'
-
-instance (H : Chapter07OpenFiniteIndexNormalSubgroup G) :
-    H.toSubgroup.FiniteIndex := H.isFiniteIndex'
-
-instance : SetLike (Chapter07OpenFiniteIndexNormalSubgroup G) G where
-  coe H := H.toSubgroup
-  coe_injective A B h := by
-    cases A with
-    | mk A hA =>
-      cases B with
-      | mk B hB =>
-        have hAB : A.toSubgroup = B.toSubgroup := by
-          ext g
-          exact Set.ext_iff.mp h g
-        cases FiniteIndexNormalSubgroup.toSubgroup_injective hAB
-        rfl
-
-instance : PartialOrder (Chapter07OpenFiniteIndexNormalSubgroup G) :=
-  .ofSetLike (Chapter07OpenFiniteIndexNormalSubgroup G) G
-
-@[simp]
-theorem mem_toSubgroup_iff {H : Chapter07OpenFiniteIndexNormalSubgroup G}
-    {g : G} : g ∈ H.toSubgroup ↔ g ∈ H :=
-  Iff.rfl
-
-end Chapter07OpenFiniteIndexNormalSubgroup
-
-noncomputable def chapter07OpenFiniteIndexDiagram
+abbrev chapter07OpenFiniteIndexDiagram
     (G : Type*) [CommGroup G] [TopologicalSpace G] :
-    Chapter07OpenFiniteIndexNormalSubgroup G ⥤ FiniteGrp where
-  obj H := FiniteGrp.of (G ⧸ H.toSubgroup)
-  map f := FiniteGrp.ofHom <|
-    QuotientGroup.map _ _ (MonoidHom.id G) (by
-      intro g hg
-      exact f.le hg)
-  map_id H := by
-    ext ⟨g⟩
-    rfl
-  map_comp f g := by
-    ext ⟨x⟩
-    rfl
+    Chapter07OpenFiniteIndexNormalSubgroup G ⥤ FiniteGrp :=
+  LastLib.Book05LocalClassFieldTheory.Chapter01.chapter01OpenFiniteIndexDiagram G
 
-noncomputable def chapter07OpenFiniteIndexProfiniteDiagram
+abbrev chapter07OpenFiniteIndexProfiniteDiagram
     (G : Type*) [CommGroup G] [TopologicalSpace G] :
     Chapter07OpenFiniteIndexNormalSubgroup G ⥤ ProfiniteGrp :=
-  chapter07OpenFiniteIndexDiagram G ⋙ forget₂ FiniteGrp ProfiniteGrp
+  LastLib.Book05LocalClassFieldTheory.Chapter01.chapter01OpenFiniteIndexProfiniteDiagram G
 
 /-- The topology-sensitive profinite completion over open finite-index
 quotients. -/
-noncomputable def chapter07OpenProfiniteCompletion
+abbrev chapter07OpenProfiniteCompletion
     (G : Type*) [CommGroup G] [TopologicalSpace G] : ProfiniteGrp :=
-  ProfiniteGrp.limit (chapter07OpenFiniteIndexProfiniteDiagram G)
+  LastLib.Book05LocalClassFieldTheory.Chapter01.chapter01OpenProfiniteCompletion G
 
 abbrev Chapter07OpenProfiniteCompletion
     (G : Type*) [CommGroup G] [TopologicalSpace G] : Type _ :=
   (chapter07OpenProfiniteCompletion G : Type _)
 
-noncomputable def chapter07OpenProfiniteCompletionEtaFn
+abbrev chapter07OpenProfiniteCompletionEtaFn
     (G : Type*) [CommGroup G] [TopologicalSpace G] (g : G) :
     Chapter07OpenProfiniteCompletion G :=
-  ⟨fun H => QuotientGroup.mk g, by
-    intro H K f
-    rfl⟩
+  LastLib.Book05LocalClassFieldTheory.Chapter01.chapter01OpenProfiniteCompletionEtaFn G g
 
-noncomputable def chapter07OpenProfiniteCompletionEta
+abbrev chapter07OpenProfiniteCompletionEta
     (G : Type*) [CommGroup G] [TopologicalSpace G] :
-    G →* Chapter07OpenProfiniteCompletion G where
-  toFun := chapter07OpenProfiniteCompletionEtaFn G
-  map_one' := by
-    apply ProfiniteGrp.limit_ext _
-    intro H
-    rfl
-  map_mul' g h := by
-    apply ProfiniteGrp.limit_ext _
-    intro H
-    rfl
+    G →* Chapter07OpenProfiniteCompletion G :=
+  LastLib.Book05LocalClassFieldTheory.Chapter01.chapter01OpenProfiniteCompletionEta G
 
-noncomputable def chapter07OpenProfiniteCompletionProjection
+abbrev chapter07OpenProfiniteCompletionProjection
     (G : Type*) [CommGroup G] [TopologicalSpace G]
     (H : Chapter07OpenFiniteIndexNormalSubgroup G) :
     Chapter07OpenProfiniteCompletion G →* (G ⧸ H.toSubgroup) :=
-  (((ProfiniteGrp.limitCone
-      (chapter07OpenFiniteIndexProfiniteDiagram G)).π.app H).hom).toMonoidHom
+  LastLib.Book05LocalClassFieldTheory.Chapter01.chapter01OpenProfiniteCompletionProjection G H
 
 @[simp]
 theorem chapter07OpenProfiniteCompletionProjection_eta
@@ -238,7 +185,8 @@ theorem chapter07OpenProfiniteCompletionProjection_eta
     (H : Chapter07OpenFiniteIndexNormalSubgroup G) (g : G) :
     chapter07OpenProfiniteCompletionProjection G H
         (chapter07OpenProfiniteCompletionEta G g) = QuotientGroup.mk g := by
-  rfl
+  exact LastLib.Book05LocalClassFieldTheory.Chapter01.chapter01OpenProfiniteCompletionProjection_eta
+    G H g
 
 noncomputable def chapter07OpenFiniteIndexSubgroup.toNormal
     {G : Type*} [CommGroup G] [TopologicalSpace G]
