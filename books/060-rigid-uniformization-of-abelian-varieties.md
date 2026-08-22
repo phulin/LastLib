@@ -1233,7 +1233,7 @@ $$
 
 and under these identifications the valuation of its period pairing is $q_\Gamma$. The map $M\to X^*(T)$ is the identity, so the induced polarization is principal.
 
-**Proof strategy.** The normalization sequence computes the bounded semiabelian part, while the smoothing parameters at nodes compute the periods.
+**Proof.** The normalization sequence computes the bounded semiabelian part, the smoothing parameters at the nodes compute the periods, and the theta polarization identifies the two lattices. We proceed in four steps: the special-fiber Picard sequence, its formal lift, the period lattice, and the period pairing.
 
 On the special fiber there is an exact sequence of fppf sheaves
 
