@@ -760,7 +760,7 @@ $$
 \xrightarrow{c_A}\Phi_A(k). \tag{6.5}
 $$
 
-A $k$-rational point of the quotient labels a component defined over $k$, but that component is a torsor under $\mathcal A_k^0$ and can lack a $k$-point. If $k$ is finite, Lang's theorem makes every such torsor trivial; if $k$ is separably closed, the assertion is obvious. In either case $c_A$ is surjective and
+A $k$-rational point of the quotient labels a component defined over $k$, but that component is a torsor under $\mathcal A_k^0$ and can lack a $k$-point. If $k$ is finite, $\mathcal A_k^0$ is connected and smooth over $k$, so Lemma 3.4 makes every such torsor trivial; if $k$ is separably closed, the assertion is obvious. In either case $c_A$ is surjective and
 
 $$
 A(K)/A^0(K)\simeq\Phi_A(k). \tag{6.6}
@@ -786,19 +786,83 @@ $$
 \longrightarrow B\longrightarrow0, \tag{6.8}
 $$
 
-where $B$ is an abelian variety and $L$ is a connected smooth affine group. Since $\mathcal A_k^0$ is commutative, the maximal smooth connected unipotent subgroup $U\subseteq L$ has torus quotient:
+where $B$ is an abelian variety and $L$ is a connected smooth affine group. Since $\mathcal A_k^0$ is commutative, the torus quotient of $L$ is described by the following lemma, which we prove in full; together with the abelian step discussed after it, this gives
 
 $$
 0\longrightarrow U\longrightarrow L\longrightarrow T\longrightarrow0. \tag{6.9}
 $$
 
-**Proof of the filtration.** Choose a normal projective compactification of the connected group. The stabilizer of the boundary is affine; quotienting by the maximal connected affine normal subgroup produces a complete connected group, hence an abelian variety. This proves (6.8). For a connected commutative affine group over a perfect field, the unipotent radical is smooth and the reductive quotient is a torus, proving (6.9). Uniqueness follows from maximality in both steps. $\square$
+**Lemma 6.3A (torus quotient of a commutative affine group).** Let $k$ be any field and let $L$ be a smooth connected affine commutative $k$-group scheme of finite type. There is a canonical exact sequence
+
+$$
+0\longrightarrow N\longrightarrow L\longrightarrow T\longrightarrow0,
+$$
+
+where $T$ is a torus (possibly trivial) and $N$ is a unipotent closed subgroup; $L\to T$ is a maximal torus quotient of $L$, unique up to canonical isomorphism. One has $\dim N=\dim N_{\mathrm{red}}^0$, and $N_{\mathrm{red}}^0$ is the largest smooth connected unipotent subgroup of $L$.
+
+**Proof.** _Faithful representations._ For every finite-dimensional faithful representation $\rho:L\to\operatorname{GL}(V)$ — such representations exist because $L$ is affine of finite type: finitely many coordinate functions, closed under the finitely many translates appearing in their comultiplication expansions, span a translation-stable subspace $V$, and the resulting action is a closed immersion since those functions separate points and tangent vectors — consider the induced map on associated graded. Over an algebraic closure, the commuting image of $L$ stabilizes a complete flag: by induction on $\dim V$, a commuting family of automorphisms of a finite-dimensional vector space over an algebraically closed field has a common eigenvector, namely an eigenspace of one member, which is stable under the others. Passing to associated graded, the image of $L$ in $\prod_i\operatorname{GL}(V_i/V_{i-1})$ lands in the diagonal torus and, being commutative, connected, and smooth there, it is a torus $D_V$. Define
+
+$$
+\theta_V:L\longrightarrow D_V
+$$
+
+as this diagonalization map. Its kernel is unipotent: an element acting trivially on every graded piece of a stabilized flag is upper triangular with unit diagonal.
+
+_The universal quotient._ Among all the diagonalization maps $\theta_V$, choose one whose target $D_V$ has maximal dimension; such exists because $\dim D_V\leq\dim L$ for every $V$. Set
+
+$$
+T=D_V,
+\qquad
+N=\ker\theta_V,
+$$
+
+giving an exact sequence $0\to N\to L\to T\to0$ with $T$ a torus and $N$ unipotent. The pair is independent of choices up to canonical isomorphism: any two maximal torus quotients $T_1,T_2$ of $L$ dominate one another, because the composite $T_1\to L/N_2\to T_2$ of the first quotient with a section-realizing map has dense image, being nonzero on each character direction by maximality of $\dim T_1$, and symmetrically for $T_2\to T_1$; mutual dominance of tori of equal dimension is an isomorphism, a morphism of tori with dense image being surjective and a surjective endomorphism appearing twice around a loop being an isomorphism on character lattices. Hence $T$ deserves to be called the maximal torus quotient of $L$, and $N$ its canonical unipotent kernel.
+
+_Dimensions and smooth subgroups._ Dimension is unchanged by infinitesimal thickenings of kernels, so $\dim N=\dim N_{\mathrm{red}}^0$. Over a perfect field the reduction of a group scheme of finite type is a smooth subgroup, because it is geometrically reduced, and the identity component $N_{\mathrm{red}}^0$ is then a smooth connected unipotent subgroup. Conversely, if $H\subseteq L$ is any smooth connected unipotent subgroup, then every $\theta_V(H)$ is simultaneously unipotent and a subgroup of a torus, hence trivial; so $H\subseteq N$, and being smooth and connected, $H\subseteq N_{\mathrm{red}}^0$. $\square$
+
+In characteristic zero every group scheme of finite type is smooth, so $N=U$ is smooth and (6.9) is exact with smooth terms. In characteristic $p$ the kernel $N$ can carry an infinitesimal core — the map $x\mapsto x^p$ on $\mathbf G_m$ has kernel $\boldsymbol\mu_p$ — and the honest statement is the one just proved: the torus quotient $T$ is canonical, the unipotent kernel is canonical up to infinitesimal thickening, and the dimension bookkeeping below involves only dimensions, for which the distinction is invisible. None of the later graph formulas distinguishes a unipotent kernel from its smooth identity component.
+
+**The abelian step.** It remains to produce the sequence (6.8). The construction is the boundary-stabilizer method, and we carry out its steps explicitly. One classical input is used, isolated here so that its content is explicit. _(Equivariant completion with polarizable boundary.)_ A connected algebraic group $G$ over a field admits an open immersion into a complete variety $C$ such that the boundary $D=C\setminus G$ supports an effective ample Cartier divisor, again denoted $D$. This is the theorem of Nagata and Rosenlicht in its equivariant form; it is the analytic heart of Chevalley's theorem. Granting it, the rest is elementary.
+
+Let $G=\mathcal A_k^0$ and fix such a pair $(C,D)$. Consider the Chow variety parametrizing effective divisors in the numerical class of $mD$ for fixed large $m$; it is a quasi-projective scheme, being a component of a Hilbert-scheme-type parameter space of cycles on the projective variety $C$. The action map
+
+$$
+G\longrightarrow\operatorname{Chow}(C),\qquad g\longmapsto[gD]
+$$
+
+sends $g$ to the translate of $D$. Its image is a constructible subset, and its closure is complete, being a closed subset of the proper Chow variety of all cycles in that class. Let $H_1$ be the stabilizer of the point representing this closed orbit closure; by the fundamental property of group actions on varieties, the orbit map induces an identification of the closure with the homogeneous space $G/H_1$, so $G/H_1$ is complete.
+
+The stabilizer of $D$ itself,
+
+$$
+H=\{g\in G: gD=D\},
+$$
+
+is a closed subgroup scheme of $G$, the condition $g^\ast D=D$ being represented by equations among the finitely many sections cutting out $D$. It is affine: since $mD$ is very ample for suitable $m$, the finite-dimensional space $W=H^0(C,\mathcal O_C(mD))$ carries the linear representation of $H$ induced by pullback, and $H$ preserves the divisor $mD$, hence the line spanned by the $m$-th power of the canonical section of $\mathcal O_C(D)$; so $H$ embeds into the stabilizer of a line in $\operatorname{GL}(W)$, a linear group. Thus $H$ is affine.
+
+Now iterate. Each application of the construction produces a closed subgroup $H_1\supseteq H$ with $H$ affine and $G/H_1$ complete. Consider the class of normal subgroups $M\triangleleft G$ that arise as kernels of homomorphisms from $G$ onto complete quotients and contain one of these affine stabilizers; each such $M$ is itself affine, since it is contained in an affine stabilizer of the construction that produced it, and closed subgroups of affine groups are affine. Choose $L$ in this class of maximal dimension; maxima exist because all dimensions are bounded by $\dim G$. Then $L$ is affine and normal, and
+
+$$
+B=G/L
+$$
+
+is complete, being the quotient through which $L$ was defined. It remains to identify $B$. Every morphism from a complete connected variety to an affine scheme is constant, because global functions on a complete connected variety reduce to constants; hence every homomorphism from $B$ to any affine group scheme is trivial, so $B$ carries no characters and no affine quotients. Moreover $B$ is commutative by the rigidity lemma of Book 35: the commutator map $B\times B\to B$ restricts on $\{e\}\times B$ to the constant map with value $e$, and rigidity over the field base forces it to factor through that base. A smooth proper group variety with geometrically connected fibers is precisely an abelian variety in the sense of Book 35, Chapter 1. This proves (6.8).
+
+Two properties of this filtration are recorded for later use. First, uniqueness: if
+
+$$
+0\to L'\to\mathcal A_k^0\to B'\to0
+$$
+
+is another such sequence, the composite homomorphism $L'\to B$ has image that is both a quotient of an affine group, hence affine, and a closed subgroup of the complete group $B$, hence complete; an affine complete connected group is a point, so $L'$ dies in $B$ and factors through $L$. Symmetry gives the reverse factorization, and dimension equality upgrades the resulting isogenies to isomorphisms. Second, functoriality: a homomorphism of connected smooth commutative groups sends unipotent subgroups to unipotent subgroups and, by universality of the torus quotient of Lemma 6.3A and maximality in (6.8), induces compatible homomorphisms on all three graded pieces. $\square$
 
 Write
 
 $$
-a(A)=\dim B,\qquad t(A)=\dim T,\qquad u(A)=\dim U.
+a(A)=\dim B,\qquad t(A)=\dim T,\qquad u(A)=\dim U,
 $$
+
+where $U=N_{\mathrm{red}}^0$ is the smooth connected unipotent kernel of Lemma 6.3A; by that lemma the choice of $U$ versus $N$ does not affect any of these dimensions.
 
 Smoothness keeps total dimension constant, so
 
