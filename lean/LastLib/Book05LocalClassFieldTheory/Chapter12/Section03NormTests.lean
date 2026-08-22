@@ -1,4 +1,5 @@
 import LastLib.Book05LocalClassFieldTheory.Chapter12.Core
+import LastLib.Book05LocalClassFieldTheory.Chapter05.Section05NormLimitation
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter12
 
@@ -8,11 +9,11 @@ noncomputable section
 
 /-- The norm subgroup is the kernel of the finite Artin map. -/
 theorem chapter12_norm_membership_iff_artin_trivial
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsGalois K L]
-    [Chapter12FiniteAbelianExtension K L]
+    (K L : Type) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    [Fintype (Gal(L / K))]
     (A : Chapter12FiniteArtinMap K L) (x : Kˣ) :
-    x ∈ chapter12NormSubgroup K L ↔ A.reciprocity x = 1 := by
+    x ∈ chapter12NormSubgroup K L ↔ A.artin.reciprocity x = 1 := by
   rw [← chapter12_finite_artin_kernel_eq_norm K L A]
   exact MonoidHom.mem_ker
 
@@ -138,36 +139,21 @@ theorem chapter12_wild_norm_test_sees_higher_layers
     ∃ n : ℕ, 0 < n ∧ V n ≠ C.principalUnits n := by
   exact hwild
 
-/-- A maximal abelian subextension package for a nonabelian Galois extension. -/
-structure Chapter12MaximalAbelianSubextension
-    (K E : Type*) [Field K] [Field E] [Algebra K E]
-    [FiniteDimensional K E] [IsGalois K E] where
-  field : IntermediateField K E
-  [finite : FiniteDimensional K field]
-  [galois : IsGalois K field]
-  commutative : ∀ σ τ : Gal(field / K), σ * τ = τ * σ
-  maximal : ∀ N : IntermediateField K E,
-    (∀ σ τ : Gal(N / K), σ * τ = τ * σ) → N ≤ field
-
-/-- The norm subgroup of the maximal abelian intermediate field. -/
-noncomputable def Chapter12MaximalAbelianSubextension.normSubgroup
-    {K E : Type*} [Field K] [Field E] [Algebra K E]
-    [FiniteDimensional K E] [IsGalois K E]
-    (D : Chapter12MaximalAbelianSubextension K E) : Subgroup Kˣ := by
-  letI : FiniteDimensional K D.field := D.finite
-  exact chapter12NormSubgroup K D.field
-
 /-- Norm limitation reduces a finite Galois extension to its maximal abelian
 subextension. -/
--- DEPENDENCY_GUESS: The fixed-field/commutator proof of norm limitation is
--- part of the missing finite reciprocity chapter.
 theorem chapter12_nonabelian_norm_limitation
-    {K E : Type*} [Field K] [Field E] [Algebra K E]
+    (K E : Type) [Field K] [Field E] [Algebra K E]
     [FiniteDimensional K E] [IsGalois K E]
-    (P : Chapter12LocalFieldProfile K)
-    (D : Chapter12MaximalAbelianSubextension K E) :
-    chapter12NormSubgroup K E = D.normSubgroup := by
-  sorry
+    [Fintype (Gal(E / K))]
+    [Fintype (Gal(
+      LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05MaximalAbelianField K E / K))]
+    (D : LastLib.Book05LocalClassFieldTheory.Chapter05.Chapter05LocalClassFormationData K E)
+    (DM : LastLib.Book05LocalClassFieldTheory.Chapter05.Chapter05LocalClassFormationData K
+      (LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05MaximalAbelianField K E)) :
+    LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05NormSubgroup K E =
+      LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05NormSubgroup K
+        (LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05MaximalAbelianField K E) := by
+  exact LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05_norm_limitation K E D DM
 
 end
 

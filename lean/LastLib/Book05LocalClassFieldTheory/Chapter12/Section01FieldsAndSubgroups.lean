@@ -6,9 +6,6 @@ noncomputable section
 
 /-! ## 12.1. Fields and subgroups -/
 
-/- DEPENDENCY_GUESS: The finite local reciprocity theorem from the missing
-preceding Book 5 chapters supplies the quotient equivalence and its lattice
-compatibilities for the bundled subextensions below. -/
 /-- Finite reciprocity identifies the norm quotient with the Galois group. -/
 theorem chapter12_subextension_artin_quotient_equiv
     {K : Type*} [Field K]
@@ -26,10 +23,8 @@ theorem chapter12_subextension_norm_index_eq_degree
     Nat.card (Kˣ ⧸ E.normSubgroup) = E.degree := by
   sorry
 
-/-- Every open finite-index subgroup is realized by a unique finite abelian
+ /-- Every open finite-index subgroup is realized by a unique finite abelian
 subextension of the fixed algebraic closure. -/
--- DEPENDENCY_GUESS: This is the existence theorem from the explicit
--- unramified/formal-module construction in Book 5, Chapter 6.
 theorem chapter12_open_subgroup_correspondence
     {K : Type*} [Field K] [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     (P : Chapter12LocalFieldProfile K)
@@ -87,7 +82,8 @@ def chapter12UnramifiedNormProfile
 
 theorem chapter12_unramified_norm_profile_iff
     {K k : Type*} [Field K] [Field k]
-    (C : Chapter12LocalCoordinates K k) (H : Subgroup Kˣ) (m : ℕ) :
+    (C : Chapter12LocalCoordinates K k) (H : Subgroup Kˣ) (m : ℕ)
+    (_hm : 0 < m) :
     chapter12UnramifiedNormProfile C H m ↔
       H = chapter12UnramifiedNormSubgroup C m ∧
         Finite (Kˣ ⧸ H) ∧ Nat.card (Kˣ ⧸ H) = m := by

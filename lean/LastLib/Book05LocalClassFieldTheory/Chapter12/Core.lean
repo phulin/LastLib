@@ -1,6 +1,11 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.Section01TheLocalNormFiltration
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter12.Section03TheGaloisPicture
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter12.Section04TheMultiplicativePicture
+import LastLib.Book05LocalClassFieldTheory.Chapter06.Dependencies
+import LastLib.Book05LocalClassFieldTheory.Chapter07.Dependencies
+import LastLib.Book05LocalClassFieldTheory.Chapter10.Dependencies
+import LastLib.Book05LocalClassFieldTheory.Chapter11.Dependencies
+import LastLib.Book05LocalClassFieldTheory.Chapter11.Section01ExactTopologicalStatement
 import Mathlib.FieldTheory.AlgebraicClosure
 import Mathlib.FieldTheory.Galois.Notation
 import Mathlib.Topology.Algebra.Group.Basic
@@ -16,24 +21,14 @@ universe u v
 
 /-! ### Shared interfaces for the reciprocity dictionary
 
-The preceding chapters of Book 5 are not yet available in this checkout.  The
-interfaces below keep the genuinely canonical constructions (norm images,
-quotients, unit layers, and continuous characters) separate from the finite
-reciprocity and existence statements that consume them.
+The constructions below are the small bridges needed to state the source's
+dictionary. Norms, finite Artin maps, finite abelian subextensions, and
+continuous characters are inherited from the preceding Book 5 chapters.
 -/
 
 /-- The local-field hypotheses fixed at the beginning of the book. -/
-structure Chapter12LocalFieldProfile
-    (K : Type*) [Field K] where
-  valuation : AddValuation K (WithTop ℤ)
-  [discrete : Valuation.IsRankOneDiscrete valuation.toValuation]
-  complete :
-    IsAdicComplete (IsLocalRing.maximalIdeal valuation.toValuation.valuationSubring)
-      valuation.toValuation.valuationSubring
-  [finite_residue : Finite
-    (IsLocalRing.ResidueField valuation.toValuation.valuationSubring)]
-  uniformizer : K
-  uniformizer_value : valuation uniformizer = 1
+abbrev Chapter12LocalFieldProfile (K : Type*) [Field K] :=
+  LastLib.Book05LocalClassFieldTheory.Chapter10.Chapter10LocalFieldProfile K
 
 /-- The canonical valuation-ring unit filtration imported from Book 2. -/
 abbrev chapter12CanonicalUnitFiltration
@@ -58,16 +53,16 @@ theorem chapter12_canonical_unit_filtration_succ
 noncomputable def chapter12MultiplicativeNormMap
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] : Lˣ →* Kˣ :=
-  Units.map (Algebra.norm K (S := L))
+  LastLib.Book05LocalClassFieldTheory.Chapter10.chapter10NormHom K L
 
 /-- The norm subgroup in the multiplicative group of the base field.
 
 This is the Chapter 12 name for the canonical norm subgroup already exposed
-by Book 2, Chapter 11. -/
+by Book 5, Chapter 10. -/
 abbrev chapter12NormSubgroup
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] : Subgroup Kˣ :=
-  LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11NormSubgroup K L
+  LastLib.Book05LocalClassFieldTheory.Chapter10.chapter10NormSubgroup K L
 
 /-- Membership in a norm subgroup, with the units map exposed. -/
 theorem chapter12_mem_normSubgroup_iff
@@ -75,70 +70,55 @@ theorem chapter12_mem_normSubgroup_iff
     [FiniteDimensional K L] (u : Kˣ) :
     u ∈ chapter12NormSubgroup K L ↔
       ∃ y : Lˣ, chapter12MultiplicativeNormMap K L y = u := by
-  constructor
-  · intro hu
-    change u ∈ Subgroup.map (chapter12MultiplicativeNormMap K L) ⊤ at hu
-    rcases hu with ⟨y, -, hy⟩
-    exact ⟨y, hy⟩
-  · rintro ⟨y, hy⟩
-    change u ∈ Subgroup.map (chapter12MultiplicativeNormMap K L) ⊤
-    exact ⟨y, trivial, hy⟩
+  exact LastLib.Book05LocalClassFieldTheory.Chapter10.chapter10_mem_normSubgroup_iff
+    K L u
 
 /-- The abelianity condition on a finite Galois extension. -/
-class Chapter12FiniteAbelianExtension
+abbrev Chapter12FiniteAbelianExtension
     (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsGalois K L] : Prop where
-  galois_commutative : ∀ σ τ : Gal(L / K), σ * τ = τ * σ
+    [FiniteDimensional K L] [IsGalois K L] : Prop :=
+  LastLib.Book05LocalClassFieldTheory.Chapter06.Chapter06FiniteAbelianExtension K L
 
 /-- A finite Artin map together with the two properties needed for its quotient. -/
-structure Chapter12FiniteArtinMap
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsGalois K L]
-    [Chapter12FiniteAbelianExtension K L] where
-  reciprocity : Kˣ →* Gal(L / K)
-  kernel_eq_norm : reciprocity.ker = chapter12NormSubgroup K L
-  surjective : Function.Surjective reciprocity
+abbrev Chapter12FiniteArtinMap
+    (K L : Type) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    [Fintype (Gal(L / K))] :=
+  LastLib.Book05LocalClassFieldTheory.Chapter10.Chapter10NormalizedFiniteArtinMap K L
 
-/-
-DEPENDENCY_GUESS: The finite Artin-map construction is the output of the
-fundamental-class part of Book 5, Chapters 3--5.  Those chapters are not
-present in this workspace, so the natural local interface is recorded here.
--/
 theorem chapter12_finite_artin_map_exists
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsGalois K L]
-    [Chapter12FiniteAbelianExtension K L]
-    (P : Chapter12LocalFieldProfile K) :
-    Nonempty (Chapter12FiniteArtinMap K L) := by
+    (K L : Type) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    [Fintype (Gal(L / K))]
+    (D : LastLib.Book05LocalClassFieldTheory.Chapter05.Chapter05LocalClassFormationData K L) :
+  Nonempty (Chapter12FiniteArtinMap K L) := by
   sorry
 
 /-- The finite Artin kernel is the norm subgroup. -/
--- DEPENDENCY_GUESS: This is the kernel computation supplied by the
--- fundamental-class construction in the missing preceding chapters.
 theorem chapter12_finite_artin_kernel_eq_norm
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsGalois K L]
-    [Chapter12FiniteAbelianExtension K L]
+    (K L : Type) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    [Fintype (Gal(L / K))]
     (A : Chapter12FiniteArtinMap K L) :
-    A.reciprocity.ker = chapter12NormSubgroup K L := by
-  exact A.kernel_eq_norm
+    A.artin.reciprocity.ker = chapter12NormSubgroup K L := by
+  exact A.artin.kernel_eq_norm
 
 /-- The finite Artin map is onto the finite abelian Galois group. -/
 theorem chapter12_finite_artin_surjective
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsGalois K L]
-    [Chapter12FiniteAbelianExtension K L]
+    (K L : Type) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    [Fintype (Gal(L / K))]
     (A : Chapter12FiniteArtinMap K L) :
-    Function.Surjective A.reciprocity := by
-  exact A.surjective
+    Function.Surjective A.artin.reciprocity := by
+  exact A.artin.surjective
 
 /- The quotient form is intentionally exposed as a `Nonempty` equivalence;
    later users may choose a representative without rebuilding the kernel
    calculation. -/
 theorem chapter12_finite_artin_quotient_equiv
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsGalois K L]
-    [Chapter12FiniteAbelianExtension K L]
+    (K L : Type) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    [Fintype (Gal(L / K))]
     (A : Chapter12FiniteArtinMap K L) :
     Nonempty
       (Kˣ ⧸ chapter12NormSubgroup K L ≃* Gal(L / K)) := by
@@ -146,9 +126,9 @@ theorem chapter12_finite_artin_quotient_equiv
 
 /-- The finite quotient degree is the field degree. -/
 theorem chapter12_norm_quotient_card_eq_degree
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsGalois K L]
-    [Chapter12FiniteAbelianExtension K L]
+    (K L : Type) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    [Fintype (Gal(L / K))]
     (A : Chapter12FiniteArtinMap K L) :
     Nat.card (Kˣ ⧸ chapter12NormSubgroup K L) = Module.finrank K L := by
   sorry
@@ -158,33 +138,15 @@ theorem chapter12_norm_quotient_card_eq_degree
 The separability field records the intended separable closure rather than
 silently allowing purely inseparable intermediate fields in equal
 characteristic. -/
-structure Chapter12FiniteAbelianSubextension
-    (K : Type*) [Field K] where
-  field : IntermediateField K (AlgebraicClosure K)
-  [finite : FiniteDimensional K field]
-  [galois : IsGalois K field]
-  separable : Algebra.IsSeparable K field
-  commutative : ∀ σ τ : Gal(field / K), σ * τ = τ * σ
-
-/-- The canonical norm subgroup attached to a bundled subextension. -/
-noncomputable def Chapter12FiniteAbelianSubextension.normSubgroup
-    {K : Type*} [Field K]
-    (E : Chapter12FiniteAbelianSubextension K) : Subgroup Kˣ := by
-  letI : FiniteDimensional K E.field := E.finite
-  exact chapter12NormSubgroup K E.field
-
-/-- The degree of a bundled finite subextension. -/
-noncomputable def Chapter12FiniteAbelianSubextension.degree
-    {K : Type*} [Field K]
-    (E : Chapter12FiniteAbelianSubextension K) : ℕ := by
-  letI : FiniteDimensional K E.field := E.finite
-  exact Module.finrank K E.field
+abbrev Chapter12FiniteAbelianSubextension (K : Type*) [Field K] :=
+  LastLib.Book05LocalClassFieldTheory.Chapter06.Chapter06FiniteAbelianSubextension
+    K (AlgebraicClosure K)
 
 /-- Open finite-index subgroups of the topological multiplicative group. -/
 def chapter12OpenFiniteIndex
     {K : Type*} [Field K] [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     (H : Subgroup Kˣ) : Prop :=
-  IsOpen (H : Set Kˣ) ∧ Finite (Kˣ ⧸ H)
+  IsOpen (H : Set Kˣ) ∧ H.FiniteIndex
 
 /-- The cyclic quotient condition used for cyclic extensions. -/
 def chapter12CyclicQuotient
@@ -264,90 +226,37 @@ abbrev chapter12UnitLayer
   (C.principalUnits n : Type _) ⧸
     ((C.principalUnits (n + 1)).comap (C.principalUnits n).subtype)
 
-/-- A topological group isomorphism, keeping both continuity obligations explicit. -/
-structure Chapter12TopologicalGroupEquiv
+/-- Topological equivalences and continuous characters use the canonical
+interfaces from Mathlib and Chapter 11. -/
+abbrev Chapter12TopologicalGroupEquiv
     (G H : Type*) [Group G] [Group H]
-    [TopologicalSpace G] [TopologicalSpace H] where
-  toGroupEquiv : G ≃* H
-  continuous_toFun : Continuous toGroupEquiv
-  continuous_invFun : Continuous toGroupEquiv.symm
+    [TopologicalSpace G] [TopologicalSpace H] := G ≃ₜ* H
 
-@[ext] theorem chapter12TopologicalGroupEquiv_ext
-    {G H : Type*} [Group G] [Group H]
-    [TopologicalSpace G] [TopologicalSpace H]
-    {e₁ e₂ : Chapter12TopologicalGroupEquiv G H}
-    (h : e₁.toGroupEquiv = e₂.toGroupEquiv) : e₁ = e₂ := by
-  cases e₁
-  cases e₂
-  cases h
-  rfl
-
-/-- A continuous multiplicative character. -/
-structure Chapter12ContinuousCharacter
-    (G A : Type*) [Group G] [Group A]
-    [TopologicalSpace G] [TopologicalSpace A] where
-  hom : G →* A
-  continuous_hom : Continuous hom
-
-@[ext] theorem chapter12ContinuousCharacter_ext
-    {G A : Type*} [Group G] [Group A]
-    [TopologicalSpace G] [TopologicalSpace A]
-    {χ ψ : Chapter12ContinuousCharacter G A}
-    (h : χ.hom = ψ.hom) : χ = ψ := by
-  cases χ
-  cases ψ
-  cases h
-  rfl
+abbrev Chapter12ContinuousCharacter
+    (G A : Type*) [Monoid G] [Monoid A]
+    [TopologicalSpace G] [TopologicalSpace A] := G →ₜ* A
 
 /-- Pullback of a continuous character along a continuous group homomorphism. -/
 def chapter12CharacterPullback
-    {G H A : Type*} [Group G] [Group H] [Group A]
+    {G H A : Type*} [Monoid G] [Monoid H] [Monoid A]
     [TopologicalSpace G] [TopologicalSpace H] [TopologicalSpace A]
-    (f : G →* H) (hf : Continuous f)
+    (f : G →ₜ* H)
     (χ : Chapter12ContinuousCharacter H A) :
     Chapter12ContinuousCharacter G A :=
-  { hom := χ.hom.comp f
-    continuous_hom := χ.continuous_hom.comp hf }
+  χ.comp f
 
 /-- Relative compactness of a character image. -/
 def chapter12RelativeCompactRange
-    {G A : Type*} [Group G] [Group A]
+    {G A : Type*} [Monoid G] [Monoid A]
     [TopologicalSpace G] [TopologicalSpace A]
     (χ : Chapter12ContinuousCharacter G A) : Prop :=
-  IsCompact (closure (Set.range χ.hom))
+  IsCompact (closure (Set.range χ))
 
-/-- The infinite reciprocity interface supplied by the inverse-limit construction.
-
-DEPENDENCY_GUESS: the inverse-limit construction in the missing preceding
-chapters supplies the continuity, injectivity, and density fields. -/
-structure Chapter12ReciprocityLimit
-    (K G : Type*) [Field K] [CommGroup G]
-    [TopologicalSpace Kˣ] [TopologicalSpace G] where
-  source_topological_group : IsTopologicalGroup Kˣ
-  target_topological_group : IsTopologicalGroup G
-  compact : IsCompact (Set.univ : Set G)
-  hausdorff : T2Space G
-  totally_disconnected : TotallyDisconnectedSpace G
-  map : Kˣ →* G
-  continuous_map : Continuous map
-  injective_map : Function.Injective map
-  dense_range_map : Dense (Set.range map)
-
-/-- A profinite-completion interface.  The carrier is supplied by the
-inverse-limit construction; the universal property is used only through its
-embedding and its resulting equivalences in this chapter. -/
-structure Chapter12CompletionData
-    (G Ghat : Type*) [CommGroup G] [CommGroup Ghat]
-    [TopologicalSpace G] [TopologicalSpace Ghat] where
-  source_topological_group : IsTopologicalGroup G
-  target_topological_group : IsTopologicalGroup Ghat
-  compact : IsCompact (Set.univ : Set Ghat)
-  hausdorff : T2Space Ghat
-  totally_disconnected : TotallyDisconnectedSpace Ghat
-  embedding : G →* Ghat
-  continuous_embedding : Continuous embedding
-  injective_embedding : Function.Injective embedding
-  dense_embedding : Dense (Set.range embedding)
+/-- The infinite reciprocity comparison is the canonical Chapter 11 datum. -/
+abbrev Chapter12ReciprocityLimit
+    (K G : Type*) [Field K] [Group G]
+    [TopologicalSpace Kˣ] [TopologicalSpace G] [IsTopologicalGroup G] :=
+  LastLib.Book05LocalClassFieldTheory.Chapter11.Chapter11ReciprocityData K G
 
 end
 

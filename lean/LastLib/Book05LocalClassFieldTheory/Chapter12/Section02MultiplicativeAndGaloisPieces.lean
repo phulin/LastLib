@@ -19,23 +19,15 @@ def chapter12GaloisRamification
     (n : ℕ) : Subgroup G :=
   Subgroup.map reciprocity (C.principalUnits n)
 
-/-- The finite-level multiplicative/Galois dictionary, with all maps explicit.
-
-DEPENDENCY_GUESS: the reduction-kernel and arithmetic-normalization fields are
-the finite-level local reciprocity interfaces supplied by the missing
-preceding Book 5 chapters. -/
+/-- The finite-level multiplicative/Galois dictionary, with the reduction map
+and its canonical unit-kernel identification explicit. -/
 structure Chapter12GaloisPieceDictionary
     (K k G Q : Type*) [Field K] [Field k] [CommGroup G] [Group Q] where
   coordinates : Chapter12LocalCoordinates K k
   reciprocity : Kˣ →* G
-  inertia : Subgroup G
-  ramification : ℕ → Subgroup G
-  inertia_eq_units_image :
-    inertia = chapter12GaloisInertia coordinates reciprocity
-  ramification_eq_principal_units_image :
-    ∀ n, ramification n = chapter12GaloisRamification coordinates reciprocity n
   reduction : G →* Q
-  reduction_kernel : reduction.ker = inertia
+  reduction_kernel :
+    reduction.ker = chapter12GaloisInertia coordinates reciprocity
   reduction_surjective : Function.Surjective reduction
   finite_quotient : Finite Q
   arithmeticFrobenius : Q
@@ -53,8 +45,8 @@ theorem chapter12_valuation_coordinate_is_integer_quotient
 theorem chapter12_units_are_exactly_abelian_inertia
     {K k G Q : Type*} [Field K] [Field k] [CommGroup G] [Group Q]
     (D : Chapter12GaloisPieceDictionary K k G Q) :
-    Subgroup.map D.reciprocity D.coordinates.units = D.inertia := by
-  rw [D.inertia_eq_units_image]
+    Subgroup.map D.reciprocity D.coordinates.units =
+      chapter12GaloisInertia D.coordinates D.reciprocity := by
   rfl
 
 /-- The residue-unit quotient is the tame abelian inertia coordinate. -/
@@ -72,8 +64,7 @@ theorem chapter12_principal_units_are_wild_inertia
     {K k G Q : Type*} [Field K] [Field k] [CommGroup G] [Group Q]
     (D : Chapter12GaloisPieceDictionary K k G Q) :
     Subgroup.map D.reciprocity (D.coordinates.principalUnits 1) =
-      D.ramification 1 := by
-  rw [D.ramification_eq_principal_units_image]
+      chapter12GaloisRamification D.coordinates D.reciprocity 1 := by
   rfl
 
 /-- Every higher unit level maps to the matching upper-numbered ramification
@@ -82,26 +73,18 @@ theorem chapter12_higher_units_are_higher_ramification
     {K k G Q : Type*} [Field K] [Field k] [CommGroup G] [Group Q]
     (D : Chapter12GaloisPieceDictionary K k G Q) (n : ℕ) :
     Subgroup.map D.reciprocity (D.coordinates.principalUnits n) =
-      D.ramification n := by
-  rw [D.ramification_eq_principal_units_image]
+      chapter12GaloisRamification D.coordinates D.reciprocity n := by
   rfl
 
-/-- A separate interface for the profinite unramified coordinate. -/
-structure Chapter12ProfiniteIntegerCoordinate
-    (Zhat : Type*) [AddCommGroup Zhat] [TopologicalSpace Zhat] where
-  topological_group : IsTopologicalAddGroup Zhat
-  compact : IsCompact (Set.univ : Set Zhat)
-  hausdorff : T2Space Zhat
-  totally_disconnected : TotallyDisconnectedSpace Zhat
-  embedding : ℤ →+ Zhat
-  dense_powers : Dense (Set.range embedding)
+/- The profinite integer coordinate is the canonical Chapter 8 object. -/
+abbrev Chapter12ProfiniteIntegerCoordinate : Type _ :=
+  LastLib.Book05LocalClassFieldTheory.Chapter08.Chapter08ProfiniteIntegers
 
 /-- The integer valuation powers are dense in the profinite Frobenius line. -/
-theorem chapter12_integer_valuation_powers_are_dense
-    (Zhat : Type*) [AddCommGroup Zhat] [TopologicalSpace Zhat]
-    (P : Chapter12ProfiniteIntegerCoordinate Zhat) :
-    Dense (Set.range P.embedding) := by
-  exact P.dense_powers
+theorem chapter12_integer_valuation_powers_are_dense :
+    Dense (Set.range
+      LastLib.Book05LocalClassFieldTheory.Chapter08.chapter08IntegerToProfiniteCompletionHom) := by
+  sorry
 
 /-- The arithmetic Frobenius class has lifts, but no distinguished lift through
 inertia is supplied by the quotient. -/
@@ -112,20 +95,15 @@ def chapter12ArithmeticFrobeniusLifts
 
 theorem chapter12_arithmetic_frobenius_lifts_nonempty
     {K k G Q : Type*} [Field K] [Field k] [CommGroup G] [Group Q]
-    (D : Chapter12GaloisPieceDictionary K k G Q)
-    (hfrobenius :
-      D.reduction (D.reciprocity D.coordinates.uniformizer) =
-        D.arithmeticFrobenius) :
+    (D : Chapter12GaloisPieceDictionary K k G Q) :
     (chapter12ArithmeticFrobeniusLifts D).Nonempty := by
-  exact ⟨D.reciprocity D.coordinates.uniformizer, hfrobenius⟩
+  exact ⟨D.reciprocity D.coordinates.uniformizer, D.uniformizer_mod_inertia⟩
 
 /-- The residue-reduction kernel is the inertia subgroup. -/
--- DEPENDENCY_GUESS: This is the finite-level reduction exactness bridge from
--- the missing preceding local reciprocity chapters.
 theorem chapter12_reduction_kernel_is_inertia
     {K k G Q : Type*} [Field K] [Field k] [CommGroup G] [Group Q]
     (D : Chapter12GaloisPieceDictionary K k G Q) :
-    D.reduction.ker = D.inertia := by
+    D.reduction.ker = chapter12GaloisInertia D.coordinates D.reciprocity := by
   exact D.reduction_kernel
 
 theorem chapter12_reduction_is_surjective
@@ -137,10 +115,11 @@ theorem chapter12_reduction_is_surjective
 theorem chapter12_frobenius_lifts_differ_by_inertia
     {K k G Q : Type*} [Field K] [Field k] [CommGroup G] [Group Q]
     (D : Chapter12GaloisPieceDictionary K k G Q)
-    (hkernel : D.reduction.ker = D.inertia)
+    (hkernel : D.reduction.ker =
+      chapter12GaloisInertia D.coordinates D.reciprocity)
     {g h : G} (hg : g ∈ chapter12ArithmeticFrobeniusLifts D)
     (hh : h ∈ chapter12ArithmeticFrobeniusLifts D) :
-    g⁻¹ * h ∈ D.inertia := by
+    g⁻¹ * h ∈ chapter12GaloisInertia D.coordinates D.reciprocity := by
   sorry
 
 theorem chapter12_uniformizer_has_arithmetic_frobenius_image
