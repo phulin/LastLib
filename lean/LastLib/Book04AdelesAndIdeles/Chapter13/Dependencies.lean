@@ -90,7 +90,7 @@ theorem chapter13PrincipalIdele_infinite_coordinate
     (MulEquiv.piUnits
       ((MulEquiv.prodUnits (chapter13PrincipalIdele K a)).1)) v =
       Units.map (algebraMap K v.Completion) a := by
-  sorry
+  rfl
 
 theorem chapter13PrincipalIdele_finite_coordinate
     (K : Type*) [Field K] [NumberField K]
@@ -98,21 +98,66 @@ theorem chapter13PrincipalIdele_finite_coordinate
     chapter13FiniteIdeleCoordinate K
         ((MulEquiv.prodUnits (chapter13PrincipalIdele K a)).2) v =
       chapter13PrincipalFiniteIdeleValue K a v := by
-  sorry
+  rfl
 
 theorem chapter13FiniteIdeleCoordinate_principal
     (K : Type*) [Field K] [NumberField K] (a : Kˣ)
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) :
     chapter13FiniteIdeleCoordinate K (chapter13PrincipalFiniteIdele K a) v =
       chapter13PrincipalFiniteIdeleValue K a v := by
-  sorry
+  rfl
 
 theorem chapter13FiniteIdeleCoordinate_continuous
     (K : Type*) [Field K] [NumberField K]
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) :
     Continuous (fun x : Chapter13FiniteIdele K =>
       chapter13FiniteIdeleCoordinate K x v) := by
-  sorry
+  change Continuous (fun x : Chapter13FiniteIdele K =>
+    (LastLib.Book04AdelesAndIdeles.Chapter07.chapter07FiniteIdeleEquiv (𝓞 K) K x) v)
+  let tRP : TopologicalSpace
+      (LastLib.Book04AdelesAndIdeles.Chapter07.chapter07FiniteIdeleRestrictedProduct
+        (𝓞 K) K) :=
+    @RestrictedProduct.topologicalSpace
+      (IsDedekindDomain.HeightOneSpectrum (𝓞 K))
+      (fun w : IsDedekindDomain.HeightOneSpectrum (𝓞 K) => (w.adicCompletion K)ˣ)
+      (fun w : IsDedekindDomain.HeightOneSpectrum (𝓞 K) =>
+        ((Submonoid.ofClass (w.adicCompletionIntegers K)).units :
+          Set ((w.adicCompletion K)ˣ)))
+      Filter.cofinite
+      (fun w => inferInstance)
+  have hEval :
+      @Continuous
+        (LastLib.Book04AdelesAndIdeles.Chapter07.chapter07FiniteIdeleRestrictedProduct
+          (𝓞 K) K)
+        ((v.adicCompletion K)ˣ)
+        tRP
+        (inferInstance : TopologicalSpace ((v.adicCompletion K)ˣ))
+        (fun y => y v) := by
+    simpa [tRP] using
+      (@RestrictedProduct.continuous_eval
+        (ι := IsDedekindDomain.HeightOneSpectrum (𝓞 K))
+        (R := fun w : IsDedekindDomain.HeightOneSpectrum (𝓞 K) =>
+          (w.adicCompletion K)ˣ)
+        (A := fun w : IsDedekindDomain.HeightOneSpectrum (𝓞 K) =>
+          ((Submonoid.ofClass (w.adicCompletionIntegers K)).units :
+            Set ((w.adicCompletion K)ˣ)))
+        (𝓕 := Filter.cofinite)
+        (fun w => inferInstance) v)
+  change @Continuous (Chapter13FiniteIdele K)
+    ((v.adicCompletion K)ˣ)
+    (TopologicalSpace.induced
+      (LastLib.Book04AdelesAndIdeles.Chapter07.chapter07FiniteIdeleEquiv (𝓞 K) K)
+      tRP)
+    (inferInstance : TopologicalSpace ((v.adicCompletion K)ˣ))
+    (fun x : Chapter13FiniteIdele K =>
+      (LastLib.Book04AdelesAndIdeles.Chapter07.chapter07FiniteIdeleEquiv (𝓞 K) K x) v)
+  exact hEval.comp
+    (@continuous_induced_dom
+      (Chapter13FiniteIdele K)
+      (LastLib.Book04AdelesAndIdeles.Chapter07.chapter07FiniteIdeleRestrictedProduct
+        (𝓞 K) K)
+      (LastLib.Book04AdelesAndIdeles.Chapter07.chapter07FiniteIdeleEquiv (𝓞 K) K)
+      tRP)
 
 /- The following local embeddings are the canonical single-place maps after transporting local
 units through the unit equivalences of the infinite and finite adele factors. -/
@@ -120,13 +165,26 @@ units through the unit equivalences of the infinite and finite adele factors. -/
 def chapter13InfiniteLocalIdele
     (K : Type*) [Field K] [NumberField K]
     (v : NumberField.InfinitePlace K) (x : (v.Completion)ˣ) : Chapter13Idele K := by
-  sorry
+  classical
+  exact (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K).symm
+    ((MulEquiv.piUnits (M := fun w : NumberField.InfinitePlace K => w.Completion)).symm
+      (Pi.mulSingle v x), 1)
 
 def chapter13FiniteLocalIdele
     (K : Type*) [Field K] [NumberField K]
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K))
     (x : (v.adicCompletion K)ˣ) : Chapter13Idele K := by
-  sorry
+  classical
+  let localUnit : ∀ w : IsDedekindDomain.HeightOneSpectrum (𝓞 K),
+      (w.adicCompletion K)ˣ :=
+    fun w => dite (w = v) (fun h => h ▸ x) (fun _ => 1)
+  have hunit : ∀ᶠ w : IsDedekindDomain.HeightOneSpectrum (𝓞 K) in Filter.cofinite,
+      localUnit w ∈ (Submonoid.ofClass (w.adicCompletionIntegers K)).units := by
+    filter_upwards [(Set.finite_singleton v).compl_mem_cofinite] with w hw
+    have hw' : w ≠ v := by simpa using hw
+    simp [localUnit, hw']
+  let finite : Chapter13FiniteIdele K := RestrictedProduct.mkUnit localUnit hunit
+  exact (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K).symm (1, finite)
 
 theorem chapter13InfiniteLocalIdele_coordinate
     (K : Type*) [Field K] [NumberField K]
