@@ -258,11 +258,16 @@ theorem chapter07_norm_subgroup_injective
     (hopen :
       ∀ L : Chapter07FiniteAbelianIndex K KAb,
         IsOpen (chapter07NormSubgroup (K := K) (L := L) : Set Kˣ))
+    (hfinite :
+      ∀ L : Chapter07FiniteAbelianIndex K KAb,
+        (chapter07NormSubgroup (K := K) (L := L)).FiniteIndex)
     {L₁ L₂ : Chapter07FiniteAbelianIndex K KAb}
     (hL : chapter07NormSubgroup (K := K) (L := L₁) =
       chapter07NormSubgroup (K := K) (L := L₂)) :
     L₁ = L₂ := by
-  sorry
+  let H : Chapter07OpenFiniteIndexSubgroup Kˣ :=
+    ⟨chapter07NormSubgroup (K := K) (L := L₁), hopen L₁, hfinite L₁⟩
+  exact (hExist H).unique rfl hL.symm
 
 private theorem chapter07_norm_subgroup_le_of_norm_le
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
