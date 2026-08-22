@@ -128,7 +128,33 @@ theorem chapter01_tame_iff_wild_inertia_trivial
     {I W : Subgroup G} {p e : ℕ}
     (D : Chapter01TameWildProfile G I W p e) :
     Nat.Coprime e p ↔ W = ⊥ := by
-  sorry
+  constructor
+  · intro he
+    have hW_dvd_e : Nat.card W ∣ e := by
+      rw [← D.inertia_order, D.order_factor]
+      exact dvd_mul_right _ _
+    have hW_coprime : Nat.Coprime (Nat.card W) p :=
+      Nat.Coprime.of_dvd_left hW_dvd_e he
+    obtain ⟨r, hr⟩ := D.wild_order
+    apply (Subgroup.card_eq_one).mp
+    cases r with
+    | zero => simpa using hr
+    | succ r =>
+        rw [Nat.pow_succ] at hr
+        have hp_dvd_cardW : p ∣ Nat.card W := by
+          rw [hr]
+          exact dvd_mul_left _ _
+        have hp_dvd_e : p ∣ e := hp_dvd_cardW.trans hW_dvd_e
+        have hp_one : p = 1 :=
+          Nat.eq_one_of_dvd_coprimes he hp_dvd_e (dvd_refl p)
+        simpa [hp_one] using hr
+  · intro hW
+    rw [hW] at D
+    have hquot : e = Nat.card I / Nat.card (⊥ : Subgroup G) := by
+      rw [← D.inertia_order, D.order_factor]
+      simp
+    rw [hquot]
+    exact D.tame_quotient_order
 
 /-- The tame quotient of the inertia stage has the order of the first
 infinitesimal quotient. -/
@@ -152,7 +178,14 @@ theorem chapter01_tame_iff_totally_ramified_stage_prime_to_p
 theorem chapter01_finite_residue_units_no_p_torsion
     (l : Type*) [Field l] [Finite l] (p : ℕ) [Fact p.Prime] [CharP l p] :
     ∀ u : lˣ, u ^ p = 1 → u = 1 := by
-  sorry
+  intro u hu
+  apply Units.ext
+  change (u : l) = 1
+  have hpow : (u : l) ^ p = 1 := congrArg (fun z : lˣ => (z : l)) hu
+  have hz : ((u : l) - 1) ^ p = 0 := by
+    rw [sub_pow_char, hpow]
+    simp
+  exact sub_eq_zero.mp (eq_zero_of_pow_eq_zero hz)
 
 /-- The tame character identifies the tame inertia quotient with a subgroup
 of residue-field units. -/
@@ -161,7 +194,7 @@ theorem chapter01_tame_character_quotient_embeds
     {l : Type*} [Field l] [Finite l]
     (θ : I →* lˣ) :
     Nonempty ((I ⧸ MonoidHom.ker θ) ≃* θ.range) := by
-  sorry
+  exact ⟨QuotientGroup.quotientKerEquivRange θ⟩
 
 /-- The character's image is prime to the residue characteristic. -/
 theorem chapter01_tame_character_image_prime_to_p
@@ -170,7 +203,19 @@ theorem chapter01_tame_character_image_prime_to_p
     (p : ℕ) [Fact p.Prime] [CharP l p]
     (θ : I →* lˣ) :
     Nat.Coprime (Nat.card θ.range) p := by
-  sorry
+  let _ := Fintype.ofFinite l
+  obtain ⟨n, hp, hcard⟩ := FiniteField.card l p
+  have hunit : Nat.Coprime (Nat.card lˣ) p := by
+    rw [Nat.card_units, Nat.card_eq_fintype_card, hcard]
+    rw [Nat.coprime_comm, hp.coprime_iff_not_dvd]
+    intro h
+    have hpow : p ∣ p ^ (n : ℕ) := dvd_pow_self p n.ne_zero
+    have hone : p ∣ 1 := by
+      have hd := Nat.dvd_sub hpow h
+      rw [tsub_tsub_cancel_of_le (Nat.one_le_pow _ _ hp.pos)] at hd
+      exact hd
+    exact hp.not_dvd_one hone
+  exact Nat.Coprime.of_dvd_left (Subgroup.card_subgroup_dvd_card θ.range) hunit
 
 /-- The imperfect-residue warning example is represented with the canonical
 Laurent-series tower from Book 2. -/

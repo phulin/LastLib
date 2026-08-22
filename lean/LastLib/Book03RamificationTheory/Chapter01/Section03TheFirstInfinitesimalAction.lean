@@ -452,7 +452,9 @@ theorem chapter01_first_infinitesimal_scalar_formula
     (a : chapter01ResidueField vL) :
     chapter01FirstInfinitesimalScalarAction vL π hπ σ a =
       (chapter01TameCharacter vL π hπ σ : chapter01ResidueField vL) * a := by
-  sorry
+  change ((IsLocalRing.residue vL.valuationSubring
+      (chapter01UniformizerRatio vL π hπ σ)) ^ 1) * a = _
+  simp [chapter01TameCharacter_apply]
 
 end
 
