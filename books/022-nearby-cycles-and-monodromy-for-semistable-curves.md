@@ -1036,9 +1036,7 @@ _Consumer analysis._ The standing input enters only through the single map $\gam
 $$
 E_2^{a,b}=H^a(Y,R^b\Psi_fE),\qquad b\in\{0,1\},
 \Longrightarrow
-\mathbb H^{a+b}(Y,R\Psi_fE)
-\overset{(\ref*{eq:wss-abut})}{=}
-H^{a+b}(X_{\bar\eta},E),
+\mathbb H^{a+b}(Y,R\Psi_fE),
 \tag{6.2}
 $$
 
@@ -1068,16 +1066,9 @@ is the signed Gysin map $\gamma=(\varepsilon_{e,i}\gamma_{e,i})_{e,i}$ of the st
 
 _Proof._ Everything except $d_2$ is assembly: Proposition 6.1 identifies the two rows, the hypercohomology sequence (2.7) provides the spectral sequence, strong convergence holds because only finitely many terms occur in each total degree, equivariance is inherited from Proposition 6.1, and the row values come from the normalization sequence above. Only $b\in\{0,1\}$ occurs, so the sole candidate differential out of $(0,1)$ lands in $(2,0)$, and it remains to identify it with $\gamma$.
 
-Both maps have the same source and target and are built node by node, since skyscrapers at distinct points and the decomposition $H^2(Y,E)=\bigoplus_iH^2(Y_i,E)$ split the problem. Fix one node $e$ on components $i,j$. The differential $d_2$ is the connecting homomorphism of the localization triangle of the inclusion of the node into $Y$, applied to the summand $E_e(-1)$ of $R^1\Psi_fE$: tracing its construction through the cone definition (2.4) and the stalk description (Theorem 2.4), its value at $e$ is the composition of the restriction of the vanishing class to the punctured branch tubes with the boundary maps of their Mayer--Vietoris sequences — that is, exactly the Gysin boundary of the branch into its component, evaluated on the local generator. By the very definition of the Gysin map in the standing input, this composition is $\pm$ times $\gamma_{e,i}$ on the $i$-summand and $\mp\varepsilon_{e,i}\gamma_{e,i}$ on the $j$-summand, the relative sign being forced by the orientation reversal between the two branches of one oriented smoothing. Summing over nodes gives $d_2=\gamma$. Equivariance: $d_2$ commutes with the arithmetic actions because the triangle, the stalk formula, and the standing input all do.
+Both maps have the same source and target and are built node by node, since skyscrapers at distinct points and the decomposition $H^2(Y,E)=\bigoplus_iH^2(Y_i,E)$ split the problem. Fix one node $e$ on components $i,j$. The differential $d_2$ is the connecting homomorphism of the localization triangle of the inclusion of the node into $Y$, applied to the summand $E_e(-1)$ of $R^1\Psi_fE$: tracing its construction through the cone definition (2.4) and the stalk description (Theorem 2.4), its value at $e$ is the composition of the restriction of the vanishing class to the punctured branch tubes with the boundary maps of their Mayer--Vietoris sequences — that is, a branch-by-branch boundary class. Identifying each such boundary class with the Gysin pushforward of the branch into its component is precisely the unproved residue recorded in the provenance of the Standing Input; granting it, the value at $e$ is $\varepsilon_{e,i}\gamma_{e,i}$ on the $i$-summand and $\varepsilon_{e,j}\gamma_{e,j}=-\varepsilon_{e,i}\gamma_{e,j}$ on the $j$-summand, the relative sign being forced by the antisymmetry of the convention. Summing over nodes gives $d_2=\gamma$. Equivariance: $d_2$ commutes with the arithmetic actions because the triangle, the stalk formula, and the standing input all do.
 
-Finally the abutment replacement, tagged
-
-$$
-\mathbb H^{w}(Y,R\Psi_fE)=H^{w}(X_{\bar\eta},E),
-\label{eq:wss-abut}
-$$
-
-is precisely the Standing Input of Section 2.3, consumed here as recorded there; for total degree one with constant coefficients it is re-derived inside Section 7.2 from the explicit filtration, so the representation-theoretic conclusions do not depend on it. $\square$
+Finally the abutment replacement $\mathbb H^{w}(Y,R\Psi_fE)=H^{w}(X_{\bar\eta},E)$ is precisely the Standing Input of Section 2.3, consumed here as recorded there; for total degree one with constant coefficients its consequences are re-derived inside Section 7.2 from the explicit filtration and specialization map, so the representation-theoretic conclusions do not depend on it beyond that use. $\square$
 
 **Corollary 6.3 (incidence identities).** Let $d_2=\gamma$ be the differential of Theorem 6.2, written through its node and component decomposition. Then:
 
