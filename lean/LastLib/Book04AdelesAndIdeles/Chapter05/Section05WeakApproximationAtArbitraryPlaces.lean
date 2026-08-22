@@ -38,7 +38,7 @@ theorem chapter05_finite_correction_set_is_fractional_ideal
     (K : Type*) [Field K] [NumberField K]
     (S : Finset (Chapter05FinitePlace K)) (m : ∀ v : S, ℤ) :
     ∃ I : FractionalIdeal (𝓞 K)⁰ K,
-      chapter05FiniteCorrectionSet K S m = (I : Set K) := by
+      I ≠ 0 ∧ chapter05FiniteCorrectionSet K S m = (I : Set K) := by
   sorry
 
 /-! An auxiliary rational prime is characterized canonically by vanishing
@@ -71,7 +71,10 @@ theorem chapter05_scaled_correction_preserves_finite_precision
     (S : Finset (Chapter05FinitePlace K)) (m : ∀ v : S, ℤ)
     (ell s : ℕ) (hℓ : chapter05AuxiliaryPrimeAvoids K S ell)
     {c : K} (hc : c ∈ chapter05ScaledCorrectionSet K S m ell s) :
-    c ∈ chapter05FiniteCorrectionSet K S m := by
+    ∀ v : S,
+      chapter05FiniteDiagonal K c v.1 ∈
+        LastLib.Book04AdelesAndIdeles.Chapter01.chapter01LocalNeighborhood
+          v.1 (m v) := by
   sorry
 
 /-! The correction lattice is now the canonical mixed-space image of a
@@ -83,9 +86,10 @@ theorem chapter05_correction_lattice_mesh
     (I : Chapter05FractionalIdealGroup K) (ell : ℕ) (hℓ : 1 < ell)
     (x : Chapter05MinkowskiSpace K)
     (U : Set (Chapter05MinkowskiSpace K)) (hU : U ∈ 𝓝 x) :
-    ∃ s : ℕ, ∃ c : K,
-      c ∈ chapter05ScaledFractionalIdeal K I ell s ∧
-        chapter05MinkowskiEmbedding K c ∈ U := by
+    ∀ᶠ s : ℕ in Filter.atTop,
+      ∃ c : K,
+        c ∈ chapter05ScaledFractionalIdeal K I ell s ∧
+          chapter05MinkowskiEmbedding K c ∈ U := by
   sorry
 
 theorem chapter05_place_system_lattice_mesh

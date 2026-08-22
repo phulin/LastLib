@@ -88,6 +88,26 @@ abbrev Chapter05InfiniteAdeleRing (K : Type*) [Field K] [NumberField K] :=
 abbrev Chapter05AdeleRing (K : Type*) [Field K] [NumberField K] :=
   LastLib.Book04AdelesAndIdeles.Chapter04.Chapter04AdeleRing K
 
+noncomputable instance chapter05InfiniteAdeleRingT2Space
+    (K : Type*) [Field K] [NumberField K] :
+    T2Space (Chapter05InfiniteAdeleRing K) := by
+  change T2Space (∀ v : Chapter05InfinitePlace K, v.Completion)
+  exact Pi.t2Space
+
+noncomputable instance chapter05FiniteAdeleRingT2Space
+    (K : Type*) [Field K] [NumberField K] :
+    T2Space (Chapter05FiniteAdeleRing K) := by
+  change T2Space
+    (Πʳ v : Chapter05FinitePlace K,
+      [Chapter05FiniteLocalField K v, chapter05FiniteLocalIntegerSet K v]_[Filter.cofinite])
+  exact RestrictedProduct.instT2Space
+
+noncomputable instance chapter05AdeleRingT2Space
+    (K : Type*) [Field K] [NumberField K] :
+    T2Space (Chapter05AdeleRing K) := by
+  change T2Space (Chapter05InfiniteAdeleRing K × Chapter05FiniteAdeleRing K)
+  exact Prod.t2Space
+
 abbrev Chapter05MinkowskiSpace (K : Type*) [Field K] [NumberField K] :=
   NumberField.mixedEmbedding.mixedSpace K
 
@@ -192,9 +212,10 @@ def chapter05MinkowskiLatticeMesh (K : Type*) [Field K] [NumberField K]
   1 < ell →
     ∀ (x : Chapter05MinkowskiSpace K) (U : Set (Chapter05MinkowskiSpace K)),
       U ∈ 𝓝 x →
-        ∃ s : ℕ, ∃ c : K,
-          c ∈ chapter05ScaledFractionalIdeal K I ell s ∧
-            NumberField.mixedEmbedding K c ∈ U
+        ∀ᶠ s : ℕ in atTop,
+          ∃ c : K,
+            c ∈ chapter05ScaledFractionalIdeal K I ell s ∧
+              NumberField.mixedEmbedding K c ∈ U
 
 theorem chapter05_minkowski_correction_lattice_mesh
     (K : Type*) [Field K] [NumberField K]

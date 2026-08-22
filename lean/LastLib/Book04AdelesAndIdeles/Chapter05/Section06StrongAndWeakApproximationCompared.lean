@@ -1,4 +1,4 @@
-import LastLib.Book04AdelesAndIdeles.Chapter05.Dependencies
+import LastLib.Book04AdelesAndIdeles.Chapter05.Section03DiscretenessInTheFullAdeles
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter05
 
@@ -43,11 +43,16 @@ theorem chapter05_strong_approximation_away_neighborhood_form
                 Set (Chapter05LocalField K v.1))) := by
   sorry
 
+theorem chapter05_away_restricted_product_has_canonical_basis
+    (K : Type*) [Field K] [NumberField K]
+    (S : Set (Chapter05Place K)) :
+    chapter05RestrictedProductBasis K S := by
+  sorry
+
 theorem chapter05_away_diagonal_dense
     (K : Type*) [Field K] [NumberField K]
     (S : Set (Chapter05Place K)) (hSfinite : S.Finite)
     (hSinf : chapter05InfinitePlaces K ⊆ S)
-    (hbasis : chapter05RestrictedProductBasis K S)
     (hstrong : chapter05StrongApproximationAwayFrom K S) :
     DenseRange (chapter05AwayDiagonal K S hSinf) := by
   sorry
@@ -56,7 +61,6 @@ theorem chapter05_away_diagonal_closure_eq_univ
     (K : Type*) [Field K] [NumberField K]
     (S : Set (Chapter05Place K)) (hSfinite : S.Finite)
     (hSinf : chapter05InfinitePlaces K ⊆ S)
-    (hbasis : chapter05RestrictedProductBasis K S)
     (hstrong : chapter05StrongApproximationAwayFrom K S) :
     closure (Set.range (chapter05AwayDiagonal K S hSinf)) =
       (Set.univ : Set (Chapter05AdeleAwayFrom K S)) := by
@@ -79,20 +83,34 @@ theorem chapter05_finite_to_away_projection_coordinate
       | Sum.inr _ => 0 := by
   sorry
 
+theorem chapter05_finite_to_away_projection_surjective
+    (K : Type*) [Field K] [NumberField K]
+    (S : Set (Chapter05Place K))
+    (hfinite : ∀ v, v ∉ S → ∃ w : Chapter05FinitePlace K,
+      v = Sum.inl w) :
+    Function.Surjective (chapter05FiniteToAwayProjection K S hfinite) := by
+  sorry
+
+theorem chapter05_finite_to_away_projection_diagonal
+    (K : Type*) [Field K] [NumberField K]
+    (S : Set (Chapter05Place K))
+    (hSinf : chapter05InfinitePlaces K ⊆ S)
+    (hfinite : ∀ v, v ∉ S → ∃ w : Chapter05FinitePlace K,
+      v = Sum.inl w) (a : K) :
+    chapter05FiniteToAwayProjection K S hfinite (chapter05FiniteDiagonal K a) =
+      chapter05AwayDiagonal K S hSinf a := by
+  sorry
+
 /-! With no places omitted, the canonical full-adele diagonal is discrete and
 therefore cannot be dense in a nondiscrete full adele group. -/
 
 theorem chapter05_full_adele_diagonal_not_dense
-    (K : Type*) [Field K] [NumberField K]
-    (hnondiscrete : chapter05NondiscreteAtZero
-      (G := Chapter05AdeleRing K)) :
+    (K : Type*) [Field K] [NumberField K] :
     ¬ DenseRange (chapter05Diagonal K) := by
   sorry
 
 theorem chapter05_strong_approximation_with_no_omitted_places_is_false
-    (K : Type*) [Field K] [NumberField K]
-    (hnondiscrete : chapter05NondiscreteAtZero
-      (G := Chapter05AdeleRing K)) :
+    (K : Type*) [Field K] [NumberField K] :
     ¬ DenseRange (chapter05Diagonal K) := by
   sorry
 

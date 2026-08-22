@@ -1,4 +1,4 @@
-import LastLib.Book04AdelesAndIdeles.Chapter05.Dependencies
+import LastLib.Book04AdelesAndIdeles.Chapter05.Section01TheDiagonalEmbedding
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter05
 
@@ -22,6 +22,11 @@ theorem chapter05_exists_small_archimedean_neighborhood
       IsOpen Uinf ∧ Uinf ∈ 𝓝 (0 : Chapter05MinkowskiSpace K) ∧
         Uinf ∩ (Chapter05IntegerLattice K : Set (Chapter05MinkowskiSpace K)) =
           {0} := by
+  sorry
+
+theorem chapter05_full_adele_is_nondiscrete_at_zero
+    (K : Type*) [Field K] [NumberField K] :
+    chapter05NondiscreteAtZero (G := Chapter05AdeleRing K) := by
   sorry
 
 theorem chapter05_full_zero_neighborhood_is_open
@@ -54,27 +59,18 @@ the full adele additive group.
 -/
 theorem chapter05_theorem_5_2_diagonal_is_discrete
     (K : Type*) [Field K] [NumberField K]
-    (Uinf : Set (Chapter05MinkowskiSpace K))
-    (hUinfOpen : IsOpen Uinf)
-    (hUinfNhds : Uinf ∈ 𝓝 (0 : Chapter05MinkowskiSpace K))
-    (hUinf : Uinf ∩
-      (Chapter05IntegerLattice K : Set (Chapter05MinkowskiSpace K)) = {0}) :
+    :
     DiscreteTopology (Set.range (chapter05Diagonal K)) := by
   sorry
 
 theorem chapter05_diagonal_full_is_closed
-    (K : Type*) [Field K] [NumberField K] [T2Space (Chapter05AdeleRing K)]
+    (K : Type*) [Field K] [NumberField K]
     (hdisc : DiscreteTopology (Set.range (chapter05Diagonal K))) :
     IsClosed (Set.range (chapter05Diagonal K)) := by
   sorry
 
 theorem chapter05_theorem_5_2_diagonal_is_discrete_closed
-    (K : Type*) [Field K] [NumberField K] [T2Space (Chapter05AdeleRing K)]
-    (Uinf : Set (Chapter05MinkowskiSpace K))
-    (hUinfOpen : IsOpen Uinf)
-    (hUinfNhds : Uinf ∈ 𝓝 (0 : Chapter05MinkowskiSpace K))
-    (hUinf : Uinf ∩
-      (Chapter05IntegerLattice K : Set (Chapter05MinkowskiSpace K)) = {0}) :
+    (K : Type*) [Field K] [NumberField K] :
     DiscreteTopology (Set.range (chapter05Diagonal K)) ∧
       IsClosed (Set.range (chapter05Diagonal K)) := by
   sorry
