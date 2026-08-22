@@ -1,6 +1,10 @@
 import LastLib.Book03RamificationTheory.Chapter08.Dependencies
+import Mathlib.RingTheory.Etale.Field
+import Mathlib.RingTheory.TensorProduct.Maps
 
 namespace LastLib.Book03RamificationTheory.Chapter08
+
+universe uK uL uKp
 
 noncomputable section
 
@@ -38,14 +42,48 @@ theorem chapter08TensorProductRemainsField_iff
    hence a finite product of fields.  The factor index is existential and is
    intentionally not collapsed to one chosen branch. -/
 theorem chapter08_separable_scalar_extension_has_field_factors
-    (K L K' : Type*) [Field K] [Field L] [Field K']
+    (K : Type uK) (L : Type uL) (K' : Type uKp)
+    [Field K] [Field L] [Field K']
     [Algebra K L] [Algebra K K'] [FiniteDimensional K L]
     [Algebra.IsSeparable K L] :
-    ∃ (I : Type*) (_ : Finite I) (F : I → Type*)
+    ∃ (I : Type (max uK (max uL uKp))) (_ : Finite I)
+      (F : I → Type (max uK (max uL uKp)))
       (_ : ∀ i, Field (F i)) (_ : ∀ i, Algebra K' (F i)),
       Nonempty
         (chapter08ScalarExtension K L K' ≃ₐ[K'] (∀ i, F i)) := by
-  sorry
+  let : Algebra.FormallyEtale K L := Algebra.FormallyEtale.of_isSeparable K L
+  let : Module.Finite K' (K' ⊗[K] L) := Module.Finite.base_change K K' L
+  let : Module.Finite K' (L ⊗[K] K') :=
+    Module.Finite.equiv (Algebra.TensorProduct.commRight K K' L).toLinearEquiv
+  let : Algebra.FormallyEtale K' (K' ⊗[K] L) := inferInstance
+  let : Algebra.FormallyEtale K' (L ⊗[K] K') :=
+    Algebra.FormallyEtale.of_equiv (Algebra.TensorProduct.commRight K K' L)
+  have hEtale : Algebra.Etale K' (L ⊗[K] K') := by
+    constructor
+    · infer_instance
+    · exact Algebra.FinitePresentation.of_finiteType.mp inferInstance
+  rcases (Algebra.Etale.iff_exists_algEquiv_prod (K := K')
+      (A := L ⊗[K] K')).mp hEtale with
+    ⟨I, hI, F, hF, hA, e, _hfinite⟩
+  refine ⟨ULift.{max uK uL} I, inferInstance,
+    (fun i : ULift.{max uK uL} I => ULift.{max uK uL} (F i.down)), ?_, ?_, ?_⟩
+  · intro i
+    exact ((ULift.ringEquiv :
+      ULift.{max uK uL} (F i.down) ≃+* F i.down).toMulEquiv.isField
+        (Field.toIsField (F i.down))).toField
+  · intro i
+    infer_instance
+  · let eIndex : I ≃ ULift.{max uK uL} I := Equiv.ulift.symm
+    let eIndexAlg : (∀ i, F i) ≃ₐ[K']
+        (∀ i : ULift.{max uK uL} I, F (eIndex.symm i)) :=
+      AlgEquiv.piCongrLeft' K' F eIndex
+    let eLift : (∀ i : ULift.{max uK uL} I, F (eIndex.symm i)) ≃ₐ[K']
+        (∀ i : ULift.{max uK uL} I,
+          ULift.{max uK uL} (F (eIndex.symm i))) :=
+      AlgEquiv.piCongrRight (fun i ↦
+        (ULift.algEquiv (R := K') :
+          ULift.{max uK uL} (F (eIndex.symm i)) ≃ₐ[K'] F (eIndex.symm i)).symm)
+    exact ⟨e.trans (eIndexAlg.trans eLift)⟩
 
 /- The source's preservation statement is exposed at the exact point where
    the local derivative calculations meet.  This is deliberately a conditional
@@ -171,18 +209,62 @@ theorem chapter08_tensor_product_discriminant_is_factor_product
     _ = ∏ i, Algebra.discr K' (b i) :=
       chapter08_product_discriminant_is_product K' ι κ F b
 
+/-- If an extension has degree greater than one, multiplication on its self
+tensor product has too small a target to be injective, so the tensor product
+cannot be a field. -/
+theorem chapter08_self_tensor_product_not_field
+    (K : Type uK) (L : Type uL) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] (hdegree : 1 < Module.finrank K L) :
+    ¬ IsField (L ⊗[K] L) := by
+  intro hfield
+  let : Field (L ⊗[K] L) := hfield.toField
+  let mulHom : L ⊗[K] L →ₐ[K] L :=
+    Algebra.TensorProduct.lmul' K
+  have hinjective : Function.Injective mulHom := mulHom.injective
+  have hrank : Module.finrank K (L ⊗[K] L) ≤ Module.finrank K L :=
+    LinearMap.finrank_le_finrank_of_injective
+      (f := mulHom.toLinearMap) hinjective
+  rw [Module.finrank_tensorProduct] at hrank
+  have hlt : Module.finrank K L < Module.finrank K L * Module.finrank K L :=
+    lt_mul_of_one_lt_left (Nat.zero_lt_of_lt hdegree) hdegree
+  exact (not_le_of_gt hlt) hrank
+
 /- Taking K' = L in a nontrivial finite separable extension supplies a
    concrete source of splitting under base change.  The conclusion records
    the splitting itself; a separate local ramification model is not needed. -/
 theorem chapter08_nontrivial_self_base_change_can_split
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    (K : Type uK) (L : Type uL) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [Algebra.IsSeparable K L]
     (hdegree : 1 < Module.finrank K L) :
-    ∃ (I : Type*) (_ : Fintype I) (F : I → Type*)
+    ∃ (I : Type (max uK uL)) (_ : Fintype I)
+      (F : I → Type (max uK uL))
       (_ : ∀ i, Field (F i)) (_ : ∀ i, Algebra L (F i)),
       2 ≤ Fintype.card I ∧
         Nonempty (L ⊗[K] L ≃ₐ[L] (∀ i, F i)) := by
-  sorry
+  rcases chapter08_separable_scalar_extension_has_field_factors K L L with
+    ⟨I, hI, F, hF, hA, ⟨e⟩⟩
+  let : Fintype I := Fintype.ofFinite I
+  have hnonempty : Nonempty I := by
+    by_contra hempty
+    have hprod : Subsingleton (∀ i, F i) := by
+      constructor
+      intro f g
+      funext i
+      exact (hempty ⟨i⟩).elim
+    exact zero_ne_one (e.injective (hprod.elim (e 0) (e 1)))
+  have hcard : 2 ≤ Fintype.card I := by
+    by_contra hnot
+    have hle : Fintype.card I ≤ 1 :=
+      Nat.lt_succ_iff.mp (Nat.lt_of_not_ge hnot)
+    let : Subsingleton I := Fintype.card_le_one_iff_subsingleton.mp hle
+    let : Unique I :=
+      { default := Classical.choice hnonempty
+        uniq := fun _ ↦ Subsingleton.elim _ _ }
+    have hfield : IsField (L ⊗[K] L) :=
+      (e.toRingEquiv.trans (RingEquiv.piUnique F)).toMulEquiv.isField
+        (Field.toIsField (F (Classical.choice hnonempty)))
+    exact chapter08_self_tensor_product_not_field K L hdegree hfield
+  exact ⟨I, inferInstance, F, hF, hA, hcard, ⟨e⟩⟩
 
 end
 
