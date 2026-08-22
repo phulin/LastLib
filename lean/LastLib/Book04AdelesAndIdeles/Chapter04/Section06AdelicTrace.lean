@@ -302,7 +302,16 @@ theorem chapter04_adelic_trace_on_principal_adeles
     (D : Chapter04AdelicTraceData K L) (a : L) :
     chapter04AdelicTrace D (algebraMap L (Chapter04AdeleRing L) a) =
       algebraMap K (Chapter04AdeleRing K) (Algebra.trace K L a) := by
-  sorry
+  apply chapter04_adeleRing_ext K
+  · funext v
+    change D.infiniteTrace v (fun w => (a : w.1.Completion)) =
+      (Algebra.trace K L a : v.Completion)
+    exact D.infiniteTrace_on_principal v a
+  · apply Subtype.ext
+    funext v
+    change D.finiteTrace v (fun w => (a : Chapter04FiniteLocalField L w.1)) =
+      (Algebra.trace K L a : Chapter04FiniteLocalField K v)
+    exact D.finiteTrace_on_principal v a
 
 def chapter04IntegralLocalTraceSurjective
     (D : Chapter04AdelicTraceData K L) (v : Chapter04FinitePlace K) : Prop :=
@@ -320,7 +329,8 @@ theorem chapter04_global_trace_pairing_is_nondegenerate
     (K L : Type*) [Field K] [Field L] [NumberField K] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] [IsScalarTower ℚ K L] :
     chapter04GlobalTracePairingNondegenerate K L := by
-  sorry
+  intro x hx
+  exact (traceForm_nondegenerate K L).1 x hx
 
 def chapter04TraceHasANontrivialKernel
     (K L : Type*) [Field K] [Field L] [Algebra K L] : Prop :=
@@ -331,7 +341,11 @@ theorem chapter04_trace_can_annihilate_nonzero_elements
     [Algebra K L] [FiniteDimensional K L]
     (hdegree : 1 < Module.finrank K L) :
     chapter04TraceHasANontrivialKernel K L := by
-  sorry
+  have hker : LinearMap.ker (Algebra.trace K L) ≠ ⊥ := by
+    apply LinearMap.ker_ne_bot_of_finrank_lt
+    simpa using hdegree
+  obtain ⟨x, hx, hx0⟩ := (LinearMap.ker (Algebra.trace K L)).ne_bot_iff.mp hker
+  exact ⟨x, hx0, hx⟩
 
 /- The field-level trace pairing and integral trace surjectivity are kept as
 separate predicates: ramification may obstruct the latter even when the former
@@ -433,7 +447,34 @@ theorem chapter04_adelic_trace_is_transitive_in_towers
     chapter04AdelicTrace T.compositeTrace =
       (chapter04AdelicTrace T.baseTrace).comp
         (chapter04AdelicTrace T.upperTrace) := by
-  sorry
+  apply AddMonoidHom.ext
+  intro y
+  apply chapter04_adeleRing_ext K
+  · funext v
+    change T.compositeTrace.infiniteTrace v (fun w => y.1 w.1) =
+      T.baseTrace.infiniteTrace v (fun u =>
+        T.upperTrace.infiniteTrace u.1 (fun z => y.1 z.1))
+    rw [T.infinite_trace_is_locally_transitive]
+    congr 2
+    funext u
+    congr 2
+    funext z
+    exact eq_of_heq (rec_heq_of_heq
+      (T.infiniteRestrictionIndex_underlying_eq v u z)
+      (congr_arg_heq y.1 (T.infiniteRestrictionIndex_underlying_eq v u z)))
+  · apply Subtype.ext
+    funext v
+    change T.compositeTrace.finiteTrace v (fun w => y.2 w.1) =
+      T.baseTrace.finiteTrace v (fun u =>
+        T.upperTrace.finiteTrace u.1 (fun z => y.2 z.1))
+    rw [T.finite_trace_is_locally_transitive]
+    congr 2
+    funext u
+    congr 2
+    funext z
+    exact eq_of_heq (rec_heq_of_heq
+      (T.finiteRestrictionIndex_underlying_eq v u z)
+      (congr_arg_heq y.2 (T.finiteRestrictionIndex_underlying_eq v u z)))
 
 end
 
