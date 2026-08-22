@@ -73,7 +73,7 @@ theorem lower_canonical_at
 end Chapter05LocalGaloisUpperData
 
 /-
- The manuscript's proof of Hasse--Arf requires the local Dold congruence for
+ The manuscript's proof of Hasse--Arf requires the local Sen congruence for
  the fixed ideals of all iterates of one automorphism.  That local-intersection
  theorem is not proved in Books 1--3.  This class records exactly the
  ramification-number consequence used by the unfinished proof route.  It is
@@ -85,7 +85,7 @@ end Chapter05LocalGaloisUpperData
  `p ^ r ∣ i(σ^(p^r)) - i(σ^(p^(r-1)))`, equivalently the congruence for the
  corresponding ramification numbers after subtracting one from both terms.
 -/
-theorem chapter05_local_dold_ramification_number_congruence
+theorem chapter05_local_sen_ramification_number_congruence
     : ∀ {K L : Type*} [Field K] [Field L] [Algebra K L]
       [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
       (D : Chapter05LocalGaloisUpperData K L)
@@ -1431,7 +1431,6 @@ theorem chapter05_perfect_residue_p_squared_two_break_second_upper_integral_dire
     [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
     [Fintype (Gal(L / K))]
     (D : Chapter05LocalGaloisUpperData K L)
-    (habelian : ∀ σ τ : Gal(L / K), σ * τ = τ * σ)
     [PerfectField (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)]
     {H : Subgroup (Gal(L / K))} [H.Normal]
     (T : Chapter05TwoBreakTowerData (Gal(L / K)) H)
@@ -1439,6 +1438,8 @@ theorem chapter05_perfect_residue_p_squared_two_break_second_upper_integral_dire
     chapter05UpperBreakIsInteger
         (chapter05TwoBreakSecondUpper T.twoBreak.p T.twoBreak.a T.twoBreak.b) ∧
       T.twoBreak.p ∣ T.twoBreak.b - T.twoBreak.a := by
+  have habelian : ∀ σ τ : Gal(L / K), σ * τ = τ * σ := by
+    exact (chapter05_two_break_group_is_commutative H T.twoBreak).is_comm.comm
   have hbreaks := chapter05_two_break_upper_breaks H T.twoBreak
     (chapter05_herbrand_bijective_of_filtration T.twoBreak.profile)
   have hsecond : chapter05UpperBreak D.profile

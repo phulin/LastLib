@@ -1,4 +1,5 @@
 import LastLib.Book03RamificationTheory.Chapter05.Section04BreakConversionInExamples
+import Mathlib.GroupTheory.PGroup
 
 namespace LastLib.Book03RamificationTheory.Chapter05
 
@@ -40,6 +41,17 @@ structure Chapter05TwoBreakData
     ∀ u : ℝ, (a : ℝ) < u → u ≤ (b : ℝ) → profile.lowerGroup u = H
   lower_after_second_layer :
     ∀ u : ℝ, (b : ℝ) < u → profile.lowerGroup u = ⊥
+
+/- A genuine group of order p² is abelian.  The two-break profile above is
+   intentionally more abstract, so this bridge is stated separately for the
+   actual group-theoretic hypothesis used by the Hasse--Arf discussion. -/
+theorem chapter05_two_break_group_is_commutative
+    {G : Type*} [Group G] [Fintype G]
+    (H : Subgroup G) [H.Normal]
+    (D : Chapter05TwoBreakData G H) :
+    IsMulCommutative G := by
+  let _hprime : Fact (Nat.Prime D.p) := ⟨D.p_prime⟩
+  exact IsPGroup.isMulCommutative_of_card_eq_prime_sq D.group_card
 
 /-- The complete tower package needed to identify the subgroup and quotient stages. -/
 structure Chapter05TwoBreakTowerData
