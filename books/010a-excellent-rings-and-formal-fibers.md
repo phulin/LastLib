@@ -220,6 +220,48 @@ needed twice, in ways that no elementary argument replaces — to know that a lo
 regular local ring is regular, and to descend regularity along a faithfully flat map — and both
 facts are used constantly from Chapter 4 onward.
 
+### 1.2A Two Serre criteria
+
+The declaration above lists two criteria of Serre among the standing tools. Because they carry
+weight from Chapter 3 onward, they are recorded here with proofs rather than as declarations.
+Throughout, $A$ is noetherian. Recall that $A$ satisfies
+$S_1$ when $\operatorname{depth}A_{\mathfrak p}\geq\min(1,\dim A_{\mathfrak p})$ for every
+prime $\mathfrak p$, and $R_0$ when $A_{\mathfrak p}$ is regular for every minimal prime
+$\mathfrak p$ (equivalently, a field).
+
+**Lemma 1.2A.1.** $S_1$ holds if and only if every associated prime of $A$ is minimal.
+
+_Proof._ If $\mathfrak p\in\operatorname{Ass}(A)$ then $\mathfrak p A_{\mathfrak p}$ is
+associated to $A_{\mathfrak p}$, so $\operatorname{depth}A_{\mathfrak p}=0$; if moreover
+$\dim A_{\mathfrak p}\geq1$ this violates $S_1$, so $\mathfrak p$ is minimal. Conversely,
+assume all associated primes are minimal and let $\mathfrak p$ be a prime with
+$\dim A_{\mathfrak p}\geq1$. The associated primes of $A_{\mathfrak p}$ are the extensions
+$\mathfrak q A_{\mathfrak p}$ of the associated primes $\mathfrak q\subseteq\mathfrak p$ of
+$A$; each such $\mathfrak q$ is minimal, hence distinct from $\mathfrak p$, so
+$\mathfrak p A_{\mathfrak p}$ is not associated and $\operatorname{depth}A_{\mathfrak p}\geq1$.
+$\square$
+
+**Lemma 1.2A.2.** Let $x\in A$ and let
+$\mathcal F=\{\operatorname{Ann}(u):0\neq u,\ xu=0\}$ be nonempty. Every maximal member of
+$\mathcal F$ is a prime ideal belonging to $\operatorname{Ass}(A)$.
+
+_Proof._ Let $P=\operatorname{Ann}(z)$ be maximal in $\mathcal F$, with $z\neq0$ and $xz=0$.
+If $ab\in P$ and $a\notin P$, then $bz\neq0$ and $x(bz)=0$, so
+$\operatorname{Ann}(bz)\in\mathcal F$; it contains $P$ together with $b$, hence equals $P$
+by maximality, whence $b\in P$. Thus $P$ is prime, and a prime that is the annihilator of an
+element belongs to $\operatorname{Ass}(A)$. $\square$
+
+**Proposition 1.2A.3 (Serre).** If $A$ satisfies $R_0$ and $S_1$, then $A$ is reduced.
+
+_Proof._ Suppose $x\neq0$ is nilpotent and choose $n\geq1$ maximal with $y=x^n\neq0$; then
+$xy=0$, so the family $\mathcal F$ of Lemma 1.2A.2 is nonempty. Take a maximal member
+$P=\operatorname{Ann}(z)$ of $\mathcal F$: by Lemmas 1.2A.1 and 1.2A.2, $P$ is a minimal
+prime. By $R_0$, $A_P$ is a field, so $PA_P=0$; since $x\in P$ (as $xz=0$), there exists
+$s\notin P$ with $sx=0$. Then $sz\neq0$ (its annihilator would contain $s$ outside $P$,
+contradicting $\operatorname{Ann}(z)=P$), while $x(sz)=0$ and
+$\operatorname{Ann}(sz)\supseteq P+\mathbf Z s$ strictly contain $P$, contradicting
+maximality of $P$ inside $\mathcal F$. Hence no nonzero nilpotent exists. $\square$
+
 ### 1.3 The shape of the argument
 
 It is worth recording at the outset how Theorem $(1.1)$ is reduced to a statement about complete
