@@ -97,7 +97,36 @@ $$
 
 for a fixed $0<c<1$. Nothing requires $k$ to be finite or perfect unless said so. An algebraic $K$-group carries a superscript $\mathrm{an}$ after analytification. All analytic groups are separated and locally of finite type.
 
-The rigid-analytic and formal results used from the preceding theory are these, all supplied by Book 59: affinoid spaces glue along rational domains; coherent objects descend over admissible covers; admissible formal blowups preserve generic fibers; proper rigid spaces admit useful formal models; and proper analytic varieties with ample line bundles algebraize. From Book 35, the algebraic theory of abelian schemes, we use dual abelian schemes, the Poincare bundle, isogenies, and the construction $L\mapsto\lambda_L$. We recall each interface when it is used.
+**Import ledger.** The preceding theory used from this book is the following, named by book and theorem, with its status recorded. Citations elsewhere in the text refer to these entries.
+
+_From Book 59 (rigid-analytic curves and formal models), all proved there:_
+
+- Tate acyclicity for finite affinoid covers and affinoid coherence: its Theorems 5.1 and 6.1; consumed by every analytic gluing argument in Chapters 2–4 and 9.
+- Flatness of rational localization: its Theorem 4.2; consumed in Sections 4.2 and 9.3 when charts are glued along rational subdomains.
+- Admissible formal blowups preserve generic fibers: its Theorem 9.1; consumed in Sections 8.4, 9.3, and 12.1 whenever formal models are refined.
+- The formal-model theorem — generic-fiber equivalence up to admissible blowup, existence of models, extension of morphisms after blowup: its Theorem 9.2 and Proposition 13.1; consumed in Section 9.3 and in the projective algebraization lemma of Section 6.3.
+- Extension of coherent sheaves to models after admissible blowup: its Section 13.2; consumed by Step 1 of the projective algebraization lemma.
+- Generic fibers of affine formal schemes and the completed-localization comparison: its Sections 7.1–7.3; consumed by the polyannular formal charts of Chapter 3, Section 9.3, and Step 4 of the algebraization proof.
+- The valuative criterion for rigid spaces: its Section 12.1; consumed by the properness proofs of Theorems 3.2 and 4.1 and of Section 9.3.
+- Coherence of proper direct images: its Theorem 9.3; consumed nowhere directly, but presupposed wherever finiteness of analytic section spaces is used (Proposition 5.1).
+- Its own flagged inputs (Gerritzen–Grauert, residue duality) are not consumed here: this book never leaves the category of covers by rational polyannuli and never uses curve duality.
+
+_From Book 58 (formal schemes, GAGA, algebraization), all proved there:_
+
+- Grothendieck existence for coherent sheaves on the completion of a proper scheme: its Theorem 9.4.4, with the projective-to-proper reduction of its Section 9.5; consumed by the formal structure lemma of Section 8.1, Section 9.3, Section 12.1, and Steps 3–4 of the projective algebraization lemma.
+- Formal Serre vanishing and uniform levelwise bounds: its Proposition 9.3.4 and Lemma 9.3.3; consumed at the same sites to make bounds independent of the infinitesimal level.
+- Algebraization of a proper formal scheme carrying an ample bundle on its special fiber: its Section 10.2; consumed by Section 9.3's construction of the semistable model.
+- Proper formal full faithfulness — completion identifies morphisms between proper schemes: its Section 10.4; consumed implicitly by every uniqueness clause obtained from analytic equality (Sections 6.3, 8.4, 9.4, 13.2–13.3).
+- Transfer of smoothness and connectedness from formal data to the algebraized scheme: its Section 10.5; consumed by Section 9.3.
+- Algebraization of polarized formal abelian varieties: its Chapter 15; consumed by Section 12.1.
+
+_From Book 35 (abelian schemes, isogenies, polarizations):_
+
+- Dual abelian schemes, the Poincare bundle with its biextension law, and the polarization homomorphism $L\mapsto\lambda_L$: consumed in Chapters 7, 10, 11, and 13. Book 35 proves these from its own standing input on divisors with finite stabilizer, which it flags explicitly; that flag propagates only through statements about degrees and kernels of $\lambda_L$, and every such use here (formulae (6.3), (10.6)) restates the needed kernel structure locally rather than importing Book 35's global positivity machinery.
+
+_Flagged internal inputs._ Beyond the imported interfaces, two inputs are consumed under explicit standing labels rather than proofs: duality preserves semistable reduction (Section 10.4), and smoothness transfer from analytifications to group varieties over $K$ (Section 6.3). Their provenance and consumer analyses appear at their points of consumption.
+
+We recall each interface once more, briefly, at the point where it is first used.
 
 A **lattice** in a split analytic group means a free abelian group of finite rank together with a specified discrete embedding. It is not a lattice over $R$. For a nonsplit group the invariant object is instead a free abelian group with continuous Galois action whose embedding becomes a lattice after a finite separable splitting extension; calling only its $K$-fixed points the lattice would lose periods. A **torus** over a base is a smooth affine group which becomes a power of $\mathbf G_m$ after an étale extension. A **semiabelian scheme** is an extension of an abelian scheme by a torus.
 
@@ -1016,7 +1045,9 @@ Formula (10.6) is a useful audit check: it specializes to (6.3) when $B=0$ and t
 
 ### 10.4 Dual uniformization
 
-**Proposition 10.4 (dual uniformization).** Let $A/K$ be an abelian variety with semistable reduction and Raynaud datum $(T,E,B,M,u)$, and let $\tau$ be a biextension trivialization (10.3) presented by an ample descended line bundle. Let $(T_1,E_1,B_1,M_1)$ be the Raynaud datum of the dual $A^\vee$, supplied by Theorem 9.1. Then:
+**Standing input (duality preserves semistable reduction).** _If $A/K$ has semistable reduction, then $A^\vee$ has semistable reduction._ Provenance: this is classical, but no volume up to and including this one proves it in this generality; Book 35 develops duality over bases where the abelian scheme is smooth and proper, which excludes degenerate models, and Book 38 treats component groups without duality. Within this book it is consumed exactly once, at the opening of the proof below, to know that $A^\vee$ possesses a Raynaud datum at all; every other clause of Proposition 10.4 is proved here from the biextension formalism of Sections 7.2 and 10.1.
+
+**Proposition 10.4 (dual uniformization).** Let $A/K$ be an abelian variety with semistable reduction and Raynaud datum $(T,E,B,M,u)$, and let $\tau$ be a biextension trivialization (10.3) presented by an ample descended line bundle. Let $(T_1,E_1,B_1,M_1)$ be the Raynaud datum of the dual $A^\vee$, supplied by Theorem 9.1 via the standing input above. Then:
 
 1. $B_1\simeq B^\vee$; the character lattice of $T_1$ is naturally $M$; and $M_1$ is naturally $X=X^*(T)$;
 2. under these identifications, the projection $u:M\to E(K)\to B(K)$ is the classifying map of $E_1$, and the period embedding $u_1:X\to E_1(K)$ sends a character $x$ to the torus point $m\mapsto\tau(m,x)$;
