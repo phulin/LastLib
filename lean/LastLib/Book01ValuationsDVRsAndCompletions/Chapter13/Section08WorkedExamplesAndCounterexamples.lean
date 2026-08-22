@@ -1,5 +1,6 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter13.Section07TheStructureTheorem
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.Section03ArithmeticAndExamples
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter07.Section05SeparatedCompletionOfRings
 import Mathlib.Algebra.Polynomial.Div
 import Mathlib.NumberTheory.Padics.RingHoms
 import Mathlib.RingTheory.Polynomial.Eisenstein.IsIntegral
@@ -1180,6 +1181,9 @@ theorem chapter13_formal_local_coordinates
         AdicCompletion (IsLocalRing.maximalIdeal R) R) := by
   let : IsNoetherianRing R := hR
   let A := AdicCompletion (IsLocalRing.maximalIdeal R) R
+  let : IsNoetherianRing A :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter07.chapter07_adic_completion_isNoetherianRing
+      (IsLocalRing.maximalIdeal R)
   let hfg : (IsLocalRing.maximalIdeal R).FG :=
     (IsLocalRing.maximalIdeal R).fg_of_isNoetherianRing
   have hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A := by
@@ -1198,7 +1202,7 @@ theorem chapter13_formal_local_coordinates
         hregular.spanFinrank_maximalIdeal
       _ ≤ ringKrullDim A := hdimle
   have hregularA : IsRegularLocalRing A := by
-    sorry
+    exact IsRegularLocalRing.of_spanFinrank_maximalIdeal_le A hspanle
   have hdimA : ringKrullDim A = d := by
     apply le_antisymm
     · calc

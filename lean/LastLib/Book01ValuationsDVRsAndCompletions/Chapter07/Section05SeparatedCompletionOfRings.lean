@@ -78,6 +78,19 @@ theorem chapter07_adic_completion_injective_iff_separated
     Function.Injective (chapter07AdicCompletionMap I) ↔ IsHausdorff I R := by
   exact AdicCompletion.of_injective_iff
 
+/-- The completion of a Noetherian ring along an ideal is again Noetherian.
+
+This is the Noetherian completion theorem.  Its proof is the standard
+Artin--Rees argument: finite generation of `I` identifies the associated
+graded ring of the completion with the corresponding finitely generated
+graded algebra over `R ⧸ I`; lifting homogeneous generators degree by degree
+and using completeness then shows that every ideal of the completion is
+finitely generated. -/
+theorem chapter07_adic_completion_isNoetherianRing
+    {R : Type*} [CommRing R] [IsNoetherianRing R] (I : Ideal R) :
+    IsNoetherianRing (AdicCompletion I R) := by
+  sorry
+
 -- A witness in every power of I disappears in the adic completion.
 theorem chapter07_adic_nonseparated_witness_in_kernel
     {R : Type*} [CommRing R] (I : Ideal R) (x : R)
