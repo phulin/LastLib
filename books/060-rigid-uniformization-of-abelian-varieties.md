@@ -458,13 +458,25 @@ Positive definiteness makes (5.10) tend to $+\infty$ quadratically. Linear chara
 
 **Proposition 5.1.** If $q_\lambda$ is positive definite and $\lambda(M)$ has finite index in $X$, then the theta functions attached to (5.3) form a finite-dimensional space. After a sufficiently large tensor power, they have no common zero and separate points and tangent directions on $Q$.
 
-**Proof.** Comparing the coefficient of a character in (5.9) shows that coefficients in one coset of $\lambda(M)$ determine one another and that coefficients in distinct cosets are independent. The quadratic estimate (5.10) proves convergence for every initial coefficient. Hence
+**Proof.** Comparing the coefficient of a character in (5.9) shows that coefficients in one coset of $\lambda(M)$ determine one another and that coefficients in distinct cosets are independent. The determination is effective: for $x$ and $m$, the coefficient equation reads
+
+$$
+b_{x+\lambda(m)}\,x(u(m))\,\lambda(m)(u(m))=a(m)\,b_x,
+$$
+
+up to the fixed normalization of the trivialization, and both $a(m)$ and $\lambda(m)(u(m))$ are nonzero, so each step of the recursion is multiplication by a uniquely inverted scalar; the resulting series converges because its term valuations obey the quadratic estimate (5.10). Hence every choice of one initial coefficient per coset yields exactly one convergent theta function, and different choices give linearly independent ones, because their initial terms have distinct characters and cannot cancel. Therefore
 
 $$
 \dim_K H^0(Q,L)=[X:\lambda(M)]. \tag{5.11}
 $$
 
-For $L^n$ the same calculation uses $n\lambda(M)$. We explain why large $n$ gives an embedding, since dimension alone would not suffice. Subdivide a fundamental parallelotope into finitely many rational cells so that, on the inverse image of each cell, every theta series has a well-defined finite set of terms of smallest valuation. For each cell $\sigma$ and each vertex of its dual character polytope, choose the theta series whose initial character is that vertex. Positive definiteness implies a uniform gap between these initial terms and all remaining terms after replacing $L$ by a sufficiently high power. Dividing by one nonvanishing initial theta series, the ratios reduce on the formal chart of $\sigma$ to the character monomials of the dual polytope.
+For $L^n$ the same calculation uses $n\lambda(M)$. We explain why large $n$ gives an embedding, since dimension alone would not suffice; the point is to make the gap between leading and subleading terms uniform and quantitative. Subdivide a fundamental parallelotope into finitely many rational cells so that, on the inverse image of each cell, every theta series has a well-defined finite set of terms of smallest valuation. For each cell $\sigma$ and each vertex of its dual character polytope, choose the theta series whose initial character is that vertex. The recurrence along a coset, read off from (5.9) and (5.8), forces the coefficient valuation of the term with character $x_0+n\lambda(m)$ to be exactly $v(a(m))+\langle n\lambda(m),x_0\rangle$, because each step multiplies by the unit-normalized factor $a(m)\lambda(m)(z)$ evaluated at a unit; hence on the cell $\sigma$, where the tropical coordinate $n_\sigma$ is bounded, the valuation of any noninitial term exceeds that of its coset's initial term by at least
+
+$$
+\tfrac12\,n^2q_\lambda(m,m)+O(n),
+$$
+
+with the linear correction depending only on the finitely many bounded quantities $x_0$ and $n_\sigma$. Positive definiteness makes this grow quadratically in $m$, so after replacing $L$ by $L^n$ for some fixed $n>0$ — one power serving all finitely many cells, since there are only finitely many cells modulo $M$ and finitely many vertex characters per cell — there is a uniform integer gap $\delta(\sigma)>0$ between the initial terms and all remaining terms on that cell. Dividing by one nonvanishing initial theta series, the ratios reduce on the formal chart of $\sigma$ to the character monomials of the dual polytope: every noninitial contribution has valuation at least $\delta(\sigma)$, hence vanishes upon reduction to the residue field, while the initial monomial survives with coefficient a unit.
 
 For a sufficiently fine multiple, those monomials generate the semigroup of every tangent cone of the polytope. Consequently the ratios have no common zero, distinguish points in the reduction of the chart, and generate its cotangent space. If two analytic points have the same reduction, the same ratios distinguish their residue-disc coordinates because their differentials form a basis; if their reductions differ, a vertex section vanishes at one reduction and not the other. Points lying in different translates are first moved into the finite fundamental cover, and the automorphy relation makes the conclusion independent of the chosen representatives. There are finitely many cells modulo $M$, so one multiple works for all of them. The resulting map to projective space is proper and an immersion with singleton geometric fibers, hence a closed immersion. $\square$
 
