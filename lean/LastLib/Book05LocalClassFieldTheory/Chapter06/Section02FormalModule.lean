@@ -411,13 +411,40 @@ theorem chapter06_intertwining_recursion_coefficient_step
     (D.uniformizer : Chapter06ValuationRing D) ^ r - D.uniformizer =
       D.uniformizer *
         ((D.uniformizer : Chapter06ValuationRing D) ^ (r - 1) - 1) := by
-  sorry
+  calc
+    (D.uniformizer : Chapter06ValuationRing D) ^ r - D.uniformizer =
+        (D.uniformizer : Chapter06ValuationRing D) ^ ((r - 1) + 1) -
+          D.uniformizer := by
+      rw [Nat.sub_add_cancel (by omega : 1 ≤ r)]
+    _ = D.uniformizer * (D.uniformizer : Chapter06ValuationRing D) ^ (r - 1) -
+        D.uniformizer := by
+      rw [pow_succ']
+    _ = D.uniformizer *
+        ((D.uniformizer : Chapter06ValuationRing D) ^ (r - 1) - 1) := by
+      ring
 
 theorem chapter06_uniformizer_power_sub_one_is_unit
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K)
     (r : ℕ) (hr : 2 ≤ r) :
     IsUnit ((D.uniformizer : Chapter06ValuationRing D) ^ (r - 1) - 1) := by
-  sorry
+  have hmax :
+      IsLocalRing.maximalIdeal (Chapter06ValuationRing D) =
+        Ideal.span ({D.uniformizer} : Set (Chapter06ValuationRing D)) :=
+    D.uniformizer_spec.2
+  have hπ : (D.uniformizer : Chapter06ValuationRing D) ∈
+      IsLocalRing.maximalIdeal (Chapter06ValuationRing D) := by
+    rw [hmax]
+    exact Ideal.mem_span_singleton_self _
+  have hpow : (D.uniformizer : Chapter06ValuationRing D) ^ (r - 1) ∈
+      IsLocalRing.maximalIdeal (Chapter06ValuationRing D) := by
+    apply (Ideal.pow_le_self (by omega : r - 1 ≠ 0))
+    exact Ideal.pow_mem_pow hπ (r - 1)
+  have hnonunit : ¬ IsUnit ((D.uniformizer : Chapter06ValuationRing D) ^ (r - 1)) := by
+    intro hu
+    exact (IsLocalRing.notMem_maximalIdeal.mpr hu) hpow
+  have hu : IsUnit (1 - (D.uniformizer : Chapter06ValuationRing D) ^ (r - 1)) :=
+    IsLocalRing.isUnit_one_sub_self_of_mem_nonunits _ hnonunit
+  simpa [sub_eq_neg_add] using hu.neg
 
 theorem chapter06_intertwining_error_coefficient_change
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K)
@@ -433,10 +460,18 @@ theorem chapter06_intertwining_error_is_uniformizer_divisible
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K)
     (f g : Chapter06UnivariateSeries (Chapter06ValuationRing D))
     (hf : chapter06LubinTateCondition D f)
-    (hg : chapter06LubinTateCondition D g) (r : ℕ) (hr : 2 ≤ r) :
+    (hg : chapter06LubinTateCondition D g) (r : ℕ) (_hr : 2 ≤ r) :
     ∃ c : Chapter06ValuationRing D,
       PowerSeries.coeff r (f - g) = (D.uniformizer : _) * c := by
-  sorry
+  let I : Ideal (Chapter06ValuationRing D) :=
+    Ideal.span ({D.uniformizer} : Set (Chapter06ValuationRing D))
+  have hmem : PowerSeries.coeff r (f - g) ∈ I := by
+    have hfmem := hf.2 r
+    have hgmem := hg.2 r
+    have hsub := I.sub_mem hfmem hgmem
+    simpa only [map_sub, sub_sub_sub_cancel_right] using hsub
+  rcases Ideal.mem_span_singleton'.mp hmem with ⟨c, hc⟩
+  exact ⟨c, hc.symm.trans (mul_comm _ _)⟩
 
 /-- The positive-valuation domain on which the formal series are evaluated. -/
 def chapter06PositiveValuationPoint
