@@ -177,28 +177,28 @@ theorem chapter05_diagonal_image_mem_iff
     (x : Chapter04AdeleRing K) :
     x ∈ chapter05DiagonalImage K ↔
       ∃ a : K, chapter05Diagonal K a = x := by
-  sorry
+  simp [chapter05DiagonalImage]
 
 theorem chapter05_finite_diagonal_image_mem_iff
     (K : Type*) [Field K] [NumberField K]
     (x : Chapter04FiniteAdeleRing K) :
     x ∈ chapter05FiniteDiagonalImage K ↔
       ∃ a : K, chapter05FiniteDiagonal K a = x := by
-  sorry
+  simp [chapter05FiniteDiagonalImage]
 
 theorem chapter05_diagonal_image_eq_principal_subgroup
     (K : Type*) [Field K] [NumberField K] :
     chapter05DiagonalImage K =
       (NumberField.AdeleRing.principalSubgroup (𝓞 K) K :
         Set (Chapter04AdeleRing K)) := by
-  sorry
+  rfl
 
 theorem chapter05_finite_diagonal_image_eq_range_subgroup
     (K : Type*) [Field K] [NumberField K] :
     chapter05FiniteDiagonalImage K =
       ((chapter05FiniteDiagonal K).range.toAddSubgroup :
         Set (Chapter04FiniteAdeleRing K)) := by
-  sorry
+  simp [chapter05FiniteDiagonalImage]
 
 end
 
