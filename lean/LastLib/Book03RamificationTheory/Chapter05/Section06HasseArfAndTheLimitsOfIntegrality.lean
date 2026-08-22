@@ -332,11 +332,19 @@ structure Chapter05CyclicLocalArithmeticInterface
     (D : Chapter05LocalGaloisUpperData K L)
     (σ : Gal(L / K)) (b : ℕ) where
   cyclic_group : IsCyclic (Gal(L / K))
+  /- A generator of the full cyclic inertia group.  The wild generator is its
+     `tame_factor`-th power, as in the source's decomposition
+     `|C| = tame_factor * p ^ wild_exponent`. -/
+  cyclic_generator : Gal(L / K)
   fixed_point : Chapter05CyclicFixedPointMultiplicityData D σ
   ramification_number :
     Chapter05CyclicRamificationNumberData fixed_point
   layer_shape :
     Chapter05CyclicLowerLayerShape D.profile b
+  cyclic_generator_zpowers : Subgroup.zpowers cyclic_generator = ⊤
+  wild_generator_eq :
+    cyclic_generator ^ layer_shape.tame_factor = σ
+  wild_generator_mem_lower_one : σ ∈ D.profile.lowerGroup 1
   p_eq : layer_shape.p = ramification_number.p
   wild_exponent_eq :
     layer_shape.wild_exponent = ramification_number.wild_exponent
@@ -347,6 +355,25 @@ structure Chapter05CyclicLocalArithmeticInterface
     layer_shape.q r = ramification_number.q r
   tame_factor_eq :
     layer_shape.tame_factor = ramification_number.tame_factor
+  /- Comparing the tame character on the leading term of
+     `σ ^ (p ^ r)` with commutation by `cyclic_generator` gives
+     `ζ ^ (q r) = 1`.  Since `ζ` has exact order `tame_factor`, this is
+     precisely the reusable prime-to-`p` divisibility consequence. -/
+  tame_character_divisibility :
+    ∀ {r : ℕ}, r < layer_shape.wild_exponent →
+      layer_shape.tame_factor ∣ layer_shape.q r
+
+/-- The tame character forces every positive ramification number of a cyclic
+inertia group to be divisible by the order of its tame quotient. -/
+theorem chapter05_cyclic_tame_character_divisibility
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    {D : Chapter05LocalGaloisUpperData K L}
+    {σ : Gal(L / K)} {b r : ℕ}
+    (A : Chapter05CyclicLocalArithmeticInterface D σ b)
+    (hr : r < A.layer_shape.wild_exponent) :
+    A.layer_shape.tame_factor ∣ A.layer_shape.q r := by
+  exact A.tame_character_divisibility hr
 
 theorem chapter05_cyclic_local_arithmetic_lower_layer_decomposition
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -355,7 +382,31 @@ theorem chapter05_cyclic_local_arithmetic_lower_layer_decomposition
     {σ : Gal(L / K)} {b : ℕ}
     (A : Chapter05CyclicLocalArithmeticInterface D σ b) :
     Nonempty (Chapter05CyclicLowerLayerDecomposition D.profile b) := by
-  sorry
+  refine ⟨{ A.layer_shape with tame_wild_jump_divisibility := ?_ }⟩
+  intro r hr hr_last
+  have hr_prev : r - 1 < A.layer_shape.wild_exponent :=
+    lt_of_le_of_lt (Nat.sub_le r 1) hr_last
+  have htame_r : A.layer_shape.tame_factor ∣ A.layer_shape.q r :=
+    chapter05_cyclic_tame_character_divisibility A hr_last
+  have htame_prev :
+      A.layer_shape.tame_factor ∣ A.layer_shape.q (r - 1) :=
+    chapter05_cyclic_tame_character_divisibility A hr_prev
+  have htame :
+      A.layer_shape.tame_factor ∣
+        A.layer_shape.q r - A.layer_shape.q (r - 1) :=
+    Nat.dvd_sub htame_r htame_prev
+  have hp :
+      A.layer_shape.p ^ r ∣
+        A.layer_shape.q r - A.layer_shape.q (r - 1) := by
+    rw [A.p_eq, A.q_eq, A.q_eq]
+    apply chapter05_cyclic_ramification_number_congruence
+      A.fixed_point A.ramification_number hr
+    rwa [← A.wild_exponent_eq]
+  have hcoprime :
+      Nat.Coprime A.layer_shape.tame_factor (A.layer_shape.p ^ r) := by
+    rw [A.p_eq, A.tame_factor_eq]
+    exact A.ramification_number.tame_factor_coprime_p.pow_right r
+  exact hcoprime.mul_dvd_of_dvd_of_dvd htame hp
 
 theorem chapter05_cyclic_lower_layer_sum_decomposition
     {G : Type*} [Group G] [Finite G]
