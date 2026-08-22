@@ -1029,12 +1029,90 @@ theorem chapter04_finitePrecisionNeighborhood_is_a_compact_open_additive_subgrou
   · rw [hHset]
     exact (chapter04_finitePrecisionNeighborhood_is_compact_open K S m).2
 
+private theorem chapter04_local_neighborhood_subset_of_mem_nhds_zero
+    (K : Type*) [Field K] [NumberField K]
+    (v : Chapter04FinitePlace K)
+    (U : Set (Chapter04FiniteLocalField K v)) (hU : U ∈ 𝓝 0) :
+    ∃ n : ℤ, chapter01LocalNeighborhood v n ⊆ U := by
+  obtain ⟨γ, hγ⟩ := Valued.mem_nhds_zero.mp hU
+  let c : Chapter04FiniteLocalField K v :=
+    Classical.choose (v.valuedAdicCompletion_surjective K (WithZero.exp (-1)))
+  have hc : Valued.v c = WithZero.exp (-1) := by
+    exact Classical.choose_spec
+      (v.valuedAdicCompletion_surjective K (WithZero.exp (-1)))
+  have hc_lt :
+      (Valued.v : Valuation (Chapter04FiniteLocalField K v)
+        (WithZero (Multiplicative ℤ))).restrict c <
+      (1 : MonoidWithZeroHom.ValueGroup₀
+        (.ofClass (Valued.v : Valuation (Chapter04FiniteLocalField K v)
+          (WithZero (Multiplicative ℤ))))) := by
+    rw [Valuation.restrict_lt_iff_lt_embedding]
+    rw [hc]
+    simpa using (WithZero.exp_lt_exp.mpr (show (-1 : ℤ) < 0 by norm_num))
+  obtain ⟨n, hn⟩ := exists_pow_lt₀ hc_lt γ
+  have hn' : WithZero.exp (-(n : ℤ)) <
+      MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := by
+    have hn'' :
+        (Valued.v : Valuation (Chapter04FiniteLocalField K v)
+          (WithZero (Multiplicative ℤ))).restrict (c ^ n) < γ.1 := by
+      simpa only [map_pow] using hn
+    have hn''' :=
+      (Valuation.restrict_lt_iff_lt_embedding
+        (v := (Valued.v : Valuation (Chapter04FiniteLocalField K v)
+          (WithZero (Multiplicative ℤ))))).mp hn''
+    calc
+      WithZero.exp (-(n : ℤ)) = Valued.v (c ^ n) := by
+        rw [map_pow, hc, ← WithZero.exp_nsmul]
+        congr 1
+        simp
+      _ < MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := hn'''
+  refine ⟨n, ?_⟩
+  intro y hy
+  apply hγ
+  change Valued.v.restrict y < γ.1
+  rw [Valuation.restrict_lt_iff_lt_embedding]
+  change Valued.v y ≤ WithZero.exp (-(n : ℤ)) at hy
+  exact hy.trans_lt hn'
+
 theorem chapter04_finitePrecisionNeighborhoods_form_a_zero_basis
     (K : Type*) [Field K] [NumberField K]
     (V : Set (Chapter04FiniteAdeleRing K)) (hV : V ∈ 𝓝 0) :
     ∃ S : Finset (Chapter04FinitePlace K), ∃ m : ∀ v : S, ℤ,
       chapter04FinitePrecisionNeighborhood K S m ⊆ V := by
-  sorry
+  classical
+  rcases chapter04_finiteAdele_has_local_specification_basis K
+      (0 : Chapter04FiniteAdeleRing K) V hV with
+    ⟨S, U, hcondition, hzero, hsubset⟩
+  let T : Finset (Chapter04FinitePlace K) := hcondition.1.toFinset
+  let m : ∀ v : T, ℤ := fun v =>
+    Classical.choose (chapter04_local_neighborhood_subset_of_mem_nhds_zero K v.1
+      (U v.1) (by
+        have hvT : v.1 ∈ hcondition.1.toFinset := by
+          exact v.2
+        have hvS : v.1 ∈ S := hcondition.1.mem_toFinset.mp hvT
+        exact (hcondition.2 v.1 hvS).mem_nhds (hzero.1 v.1 hvS)))
+  refine ⟨T, m, ?_⟩
+  intro y hy
+  have hy' := (chapter04_mem_finitePrecisionNeighborhood_iff K T m y).1 hy
+  apply hsubset
+  change (∀ v, v ∈ (S : Set (Chapter04FinitePlace K)) → y v ∈ U v) ∧
+    (∀ v, v ∉ (S : Set (Chapter04FinitePlace K)) →
+      y v ∈ chapter04FiniteLocalIntegerSet K v)
+  constructor
+  · intro v hv
+    have hvT : v ∈ T := by
+      change v ∈ hcondition.1.toFinset
+      exact hcondition.1.mem_toFinset.mpr hv
+    have hprec : chapter01LocalNeighborhood v (m ⟨v, hvT⟩) ⊆ U v := by
+      simpa [m] using
+        (Classical.choose_spec
+          (chapter04_local_neighborhood_subset_of_mem_nhds_zero K v (U v)
+            ((hcondition.2 v hv).mem_nhds (hzero.1 v hv))))
+    exact hprec (hy'.1 ⟨v, hvT⟩)
+  · intro v hv
+    exact hy'.2 v (by
+      intro hvS
+      exact hv (by simpa [T] using hvS))
 
 theorem chapter04_independent_finite_exponents_are_fractional_ideal_completions
     (K : Type*) [Field K] [NumberField K]
@@ -1042,7 +1120,63 @@ theorem chapter04_independent_finite_exponents_are_fractional_ideal_completions
     ∃ I : FractionalIdeal (𝓞 K)⁰ K,
       chapter04FinitePrecisionNeighborhood K S m =
         chapter04FractionalIdealCompletion K I := by
-  sorry
+  classical
+  let exps : Chapter04FinitePlace K → ℤ := fun v =>
+    if hv : v ∈ S then m ⟨v, hv⟩ else 0
+  have h_exps : ∀ᶠ v : Chapter04FinitePlace K in Filter.cofinite,
+      exps v = 0 := by
+    filter_upwards [S.finite_toSet.compl_mem_cofinite] with v hv
+    have hv' : v ∉ S := by simpa using hv
+    simp [exps, hv']
+  let I : FractionalIdeal (𝓞 K)⁰ K :=
+    ∏ᶠ v : Chapter04FinitePlace K,
+      (v.asIdeal : FractionalIdeal (𝓞 K)⁰ K) ^ exps v
+  have hcount : ∀ v : Chapter04FinitePlace K,
+      FractionalIdeal.count K v I = exps v := by
+    intro v
+    simpa [I] using
+      (FractionalIdeal.count_finprod (R := 𝓞 K) K v exps h_exps)
+  refine ⟨I, ?_⟩
+  ext x
+  constructor
+  · intro hx
+    change (∀ v : S,
+        x v.1 ∈ chapter01LocalNeighborhood v.1 (m v)) ∧
+      (∀ v : Chapter04FinitePlace K, v ∉ S →
+        x v ∈ chapter04FiniteLocalIntegerSet K v) at hx
+    change ∀ v : Chapter04FinitePlace K,
+      Valued.v (x v) ≤ WithZero.exp (-FractionalIdeal.count K v I)
+    intro v
+    by_cases hv : v ∈ S
+    · rw [hcount v]
+      have hxv := hx.1 ⟨v, hv⟩
+      change Valued.v (x v) ≤ WithZero.exp (-m ⟨v, hv⟩) at hxv
+      simpa [exps, hv] using hxv
+    · rw [hcount v]
+      simp only [exps, dif_neg hv, neg_zero, WithZero.exp_zero]
+      exact (IsDedekindDomain.HeightOneSpectrum.mem_adicCompletionIntegers
+        (𝓞 K) K v).1 (hx.2 v hv)
+  · intro hx
+    change ∀ v : Chapter04FinitePlace K,
+      Valued.v (x v) ≤ WithZero.exp (-FractionalIdeal.count K v I) at hx
+    change (∀ v : S,
+        x v.1 ∈ chapter01LocalNeighborhood v.1 (m v)) ∧
+      (∀ v : Chapter04FinitePlace K, v ∉ S →
+        x v ∈ chapter04FiniteLocalIntegerSet K v)
+    constructor
+    · intro v
+      have hxv := hx v.1
+      rw [hcount v.1] at hxv
+      change Valued.v (x v.1) ≤ WithZero.exp (-exps v.1) at hxv
+      change Valued.v (x v.1) ≤ WithZero.exp (-m v) 
+      simpa [exps, v.2] using hxv
+    · intro v hv
+      have hxv := hx v
+      rw [hcount v] at hxv
+      apply (IsDedekindDomain.HeightOneSpectrum.mem_adicCompletionIntegers
+        (𝓞 K) K v).2
+      change Valued.v (x v) ≤ 1
+      simpa only [exps, dif_neg hv, neg_zero, WithZero.exp_zero] using hxv
 
 theorem chapter04_finiteAdele_neighborhoods_are_local_specifications_not_plain_product_neighborhoods
     (K : Type*) [Field K] [NumberField K]
@@ -1055,7 +1189,41 @@ theorem chapter04_finiteAdele_neighborhoods_are_local_specifications_not_plain_p
         (∀ v, v ∉ S → U v = chapter04FiniteLocalIntegerSet K v) ∧
         x ∈ chapter04FiniteBasicNeighborhood K S U ∧
         chapter04FiniteBasicNeighborhood K S U ⊆ V := by
-  sorry
+  classical
+  rcases chapter04_finiteAdele_has_local_specification_basis K x V hV with
+    ⟨S, U, hcondition, hx, hsubset⟩
+  let U' : ∀ v : Chapter04FinitePlace K,
+      Set (Chapter04FiniteLocalField K v) := fun v =>
+    if v ∈ S then U v else chapter04FiniteLocalIntegerSet K v
+  have hU' : ∀ v, IsOpen (U' v) := by
+    intro v
+    by_cases hv : v ∈ S
+    · simpa [U', hv] using hcondition.2 v hv
+    · simp only [U', hv]
+      exact Valued.isOpen_valuationSubring _
+  have hEq : chapter04FiniteBasicNeighborhood K S U' =
+      chapter04FiniteBasicNeighborhood K S U := by
+    ext y
+    change ((∀ v, v ∈ S → y v ∈ U' v) ∧
+      (∀ v, v ∉ S → y v ∈ chapter04FiniteLocalIntegerSet K v)) ↔
+      ((∀ v, v ∈ S → y v ∈ U v) ∧
+      (∀ v, v ∉ S → y v ∈ chapter04FiniteLocalIntegerSet K v))
+    constructor
+    · rintro ⟨hyS, hyT⟩
+      refine ⟨?_, hyT⟩
+      intro v hv
+      simpa [U', hv] using hyS v hv
+    · rintro ⟨hyS, hyT⟩
+      refine ⟨?_, hyT⟩
+      intro v hv
+      simpa [U', hv] using hyS v hv
+  refine ⟨S, U', hcondition.1, hU', ?_, ?_, ?_⟩
+  · intro v hv
+    simp [U', hv]
+  · rw [hEq]
+    exact hx
+  · rw [hEq]
+    exact hsubset
 
 abbrev chapter04FiniteAdeleUnrestrictedSubspaceTopology
     (K : Type*) [Field K] [NumberField K] :
@@ -1065,11 +1233,131 @@ abbrev chapter04FiniteAdeleUnrestrictedSubspaceTopology
       (x : ∀ v : Chapter04FinitePlace K, Chapter04FiniteLocalField K v))
     inferInstance
 
+private theorem chapter04_finite_places_are_infinite
+    (K : Type*) [Field K] [NumberField K] :
+    (Set.univ : Set (Chapter04FinitePlace K)).Infinite := by
+  classical
+  let V := Chapter04FinitePlace K
+  let PType := {p : ℕ // p.Prime}
+  let chooseOver : ∀ p : PType,
+      (Ideal.span {(p.1 : ℤ)}).primesOver (𝓞 K) := fun p => by
+    letI : Fact (Nat.Prime p.1) := ⟨p.2⟩
+    letI : (Ideal.span {(p.1 : ℤ)}).IsMaximal :=
+      Int.ideal_span_isMaximal_of_prime p.1
+    exact Classical.choice (Ideal.nonempty_primesOver _)
+  let f : PType → V := fun p =>
+    ⟨(chooseOver p).1, (chooseOver p).2.1,
+      Ideal.ne_bot_of_mem_primesOver
+        (by simp [p.2.ne_zero]) (chooseOver p).2⟩
+  have hf : Function.Injective f := by
+    intro p p' hpq
+    have hP : Ideal.span {(p.1 : ℤ)} =
+        Ideal.span {(p'.1 : ℤ)} := by
+      calc
+        Ideal.span {(p.1 : ℤ)} = (f p).asIdeal.under ℤ := by
+          change _ = (chooseOver p).1.under ℤ
+          exact (chooseOver p).2.2.over
+        _ = (f p').asIdeal.under ℤ := by rw [hpq]
+        _ = Ideal.span {(p'.1 : ℤ)} := by
+          change (chooseOver p').1.under ℤ = _
+          exact (chooseOver p').2.2.over.symm
+    have hn := congrArg Ideal.absNorm hP
+    have hn' : p.1 = p'.1 := by
+      simpa [Ideal.absNorm_span_singleton] using hn
+    exact Subtype.ext hn'
+  have hPinf : Infinite PType := Nat.infinite_setOfPred_prime.to_subtype
+  have hVinst : Infinite V := @Infinite.of_injective V PType hPinf f hf
+  exact @Set.infinite_univ V hVinst
+
+private theorem chapter04_finite_local_integer_subring_is_proper
+    (K : Type*) [Field K] [NumberField K]
+    (v : Chapter04FinitePlace K) :
+    v.adicCompletionIntegers K ≠ ⊤ := by
+  obtain ⟨g, hgval⟩ := v.valuedAdicCompletion_surjective K (WithZero.exp 1)
+  have hgnot : g ∉ v.adicCompletionIntegers K := by
+    rw [IsDedekindDomain.HeightOneSpectrum.notMem_adicCompletionIntegers]
+    rw [hgval]
+    exact WithZero.exp_lt_exp.mpr (by norm_num)
+  intro htop
+  apply hgnot
+  rw [htop]
+  trivial
+
 theorem chapter04_finiteAdele_restricted_topology_differs_from_plain_product_subspace
     (K : Type*) [Field K] [NumberField K] :
     (inferInstance : TopologicalSpace (Chapter04FiniteAdeleRing K)) ≠
       chapter04FiniteAdeleUnrestrictedSubspaceTopology K := by
-  sorry
+  classical
+  intro htop
+  let Tail : Set (Chapter04FiniteAdeleRing K) :=
+    {x | ∀ v : Chapter04FinitePlace K,
+      x v ∈ chapter04FiniteLocalIntegerSet K v}
+  have htailR : IsOpen Tail := by
+    have hbasic := chapter04_finiteBasicNeighborhood_isOpen K
+      (∅ : Set (Chapter04FinitePlace K))
+      (fun v : Chapter04FinitePlace K => chapter04FiniteLocalIntegerSet K v)
+      ⟨Set.finite_empty, by simp [chapter04FiniteLocalIntegerSet]⟩
+    simpa [Tail, chapter04FiniteBasicNeighborhood] using hbasic
+  have htailU : IsOpen[chapter04FiniteAdeleUnrestrictedSubspaceTopology K] Tail := by
+    rw [← htop]
+    exact htailR
+  have hzero : (0 : Chapter04FiniteAdeleRing K) ∈ Tail := by
+    intro v
+    change (0 : Chapter04FiniteLocalField K v) ∈
+      v.adicCompletionIntegers K
+    exact (v.adicCompletionIntegers K).zero_mem
+  let _ : TopologicalSpace (Chapter04FiniteAdeleRing K) :=
+    chapter04FiniteAdeleUnrestrictedSubspaceTopology K
+  have htail_mem : Tail ∈ 𝓝 (0 : Chapter04FiniteAdeleRing K) :=
+    htailU.mem_nhds hzero
+  rcases (mem_nhds_induced
+      (fun x : Chapter04FiniteAdeleRing K =>
+        (x : ∀ v : Chapter04FinitePlace K, Chapter04FiniteLocalField K v))
+      (0 : Chapter04FiniteAdeleRing K) Tail).mp htail_mem with
+    ⟨U, hUnh, hUsub⟩
+  have hUnh' : U ∈ 𝓝
+      (0 : ∀ v : Chapter04FinitePlace K, Chapter04FiniteLocalField K v) := hUnh
+  rw [nhds_pi, Filter.mem_pi'] at hUnh'
+  rcases hUnh' with ⟨S, W, hW, hSW⟩
+  have hproper : {v : Chapter04FinitePlace K |
+      v.adicCompletionIntegers K ≠ ⊤}.Infinite := by
+    apply (chapter04_finite_places_are_infinite K).mono
+    intro v hv
+    exact chapter04_finite_local_integer_subring_is_proper K v
+  obtain ⟨v, hvproper, hvS⟩ := hproper.exists_notMem_finset S
+  obtain ⟨g, hgval⟩ := v.valuedAdicCompletion_surjective K (WithZero.exp 1)
+  have hgnonint : g ∉ v.adicCompletionIntegers K := by
+    rw [IsDedekindDomain.HeightOneSpectrum.notMem_adicCompletionIntegers]
+    rw [hgval]
+    exact WithZero.exp_lt_exp.mpr (by norm_num)
+  let y : ∀ w : Chapter04FinitePlace K, Chapter04FiniteLocalField K w :=
+    Function.update (fun _ => 0) v g
+  have hy : ∀ᶠ w : Chapter04FinitePlace K in Filter.cofinite,
+      y w ∈ chapter04FiniteLocalIntegerSet K w := by
+    filter_upwards [Filter.eventually_cofinite_ne v] with w hwv
+    simp [y, hwv, chapter04FiniteLocalIntegerSet]
+  let z : Chapter04FiniteAdeleRing K := ⟨y, hy⟩
+  have hyS : y ∈ Set.pi (↑S : Set (Chapter04FinitePlace K)) W := by
+    intro w hw
+    have hwW : W w ∈ 𝓝 (0 : Chapter04FiniteLocalField K w) := hW w
+    have hzeroW : (0 : Chapter04FiniteLocalField K w) ∈ W w :=
+      mem_of_mem_nhds hwW
+    have hwv : w ≠ v := by
+      intro hwv
+      subst w
+      exact hvS hw
+    simpa [y, hwv] using hzeroW
+  have hyU : y ∈ U := hSW hyS
+  have hzpre : z ∈
+      (fun x : Chapter04FiniteAdeleRing K =>
+        (x : ∀ v : Chapter04FinitePlace K, Chapter04FiniteLocalField K v)) ⁻¹' U :=
+    hyU
+  have hzTail : z ∈ Tail := hUsub hzpre
+  have hginteger : g ∈ v.adicCompletionIntegers K := by
+    have hzv := hzTail v
+    change y v ∈ v.adicCompletionIntegers K at hzv
+    simpa [y] using hzv
+  exact hgnonint hginteger
 
 end
 

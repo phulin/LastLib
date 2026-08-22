@@ -87,7 +87,8 @@ theorem chapter04_finite_extension_trace_discriminant_is_nonzero
     [Algebra K L] [FiniteDimensional K L] [IsScalarTower ℚ K L] :
     ∀ {ι : Type*} [Fintype ι] [DecidableEq ι]
       (b : Basis ι K L), Algebra.discr K b ≠ 0 := by
-  sorry
+  intro ι _ _ b
+  exact Algebra.discr_not_zero_of_basis K b
 
 variable {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
   [Algebra K L] [FiniteDimensional K L] [IsScalarTower ℚ K L]
