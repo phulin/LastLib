@@ -34,9 +34,54 @@ theorem chapter06_explicit_torsion_sequence_is_scalar_power
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K) (n : ℕ)
     (M : Chapter06FormalModuleData D
       (chapter06ExplicitLubinTateSeries D)) :
-    M.scalar ((D.uniformizer : Chapter06ValuationRing D) ^ n) =
+      M.scalar ((D.uniformizer : Chapter06ValuationRing D) ^ n) =
       (chapter06Sn D n : PowerSeries (Chapter06ValuationRing D)) := by
-  sorry
+  have hzero : ∀ m,
+      PowerSeries.constantCoeff
+          (chapter06Sn D m : PowerSeries (Chapter06ValuationRing D)) = 0 := by
+    intro m
+    induction m with
+    | zero =>
+        simp [chapter06Sn, chapter06TorsionPolynomialSequence]
+    | succ m hm =>
+        change Polynomial.coeff
+          (chapter06TorsionPolynomialSequence D (m + 1)) 0 = 0
+        rw [chapter06TorsionPolynomialSequence,
+          Polynomial.coeff_zero_eq_eval_zero, Polynomial.eval_comp]
+        have hm' : Polynomial.eval 0 (chapter06TorsionPolynomialSequence D m) = 0 := by
+          rw [← Polynomial.coeff_zero_eq_eval_zero]
+          simpa only [Polynomial.constantCoeff_coe] using hm
+        have hq0 : chapter06ResidueCardinality D ≠ 0 :=
+          Nat.ne_of_gt (chapter06_residue_cardinality_pos D)
+        simp [chapter06LubinTatePolynomial, hm', hq0]
+  induction n with
+  | zero =>
+      rw [pow_zero, M.scalar_one]
+      simp [chapter06Sn, chapter06TorsionPolynomialSequence]
+  | succ n ih =>
+      rw [pow_succ', ← M.scalar_mul]
+      rw [ih, M.scalar_pi]
+      have hsub : PowerSeries.HasSubst
+          (chapter06Sn D n : PowerSeries (Chapter06ValuationRing D)) :=
+        PowerSeries.HasSubst.of_constantCoeff_zero' (hzero n)
+      have hexplicit : chapter06ExplicitLubinTateSeries D =
+          (chapter06LubinTatePolynomial D : PowerSeries (Chapter06ValuationRing D)) := by
+        simp [chapter06ExplicitLubinTateSeries, chapter06LubinTatePolynomial]
+      rw [hexplicit]
+      change PowerSeries.subst
+        (chapter06Sn D n : PowerSeries (Chapter06ValuationRing D))
+        (chapter06LubinTatePolynomial D : PowerSeries (Chapter06ValuationRing D)) =
+        (chapter06Sn D (n + 1) : PowerSeries (Chapter06ValuationRing D))
+      rw [PowerSeries.subst_coe hsub]
+      have hcompat :
+          Polynomial.aeval
+              (chapter06Sn D n : PowerSeries (Chapter06ValuationRing D))
+              (chapter06LubinTatePolynomial D) =
+            (chapter06Sn D (n + 1) : PowerSeries (Chapter06ValuationRing D)) := by
+        simp [chapter06Sn, chapter06TorsionPolynomialSequence,
+          chapter06LubinTatePolynomial, Polynomial.aeval_def,
+          Polynomial.add_comp, Polynomial.X_comp]
+      exact hcompat
 
 /-- The polynomial `Qₙ` whose roots are the primitive `πⁿ`-torsion points;
 the source's indexing is `Qₙ = Qₙ₋₁` in this zero-based definition. -/
@@ -63,25 +108,133 @@ theorem chapter06_Qn_factorization
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K)
     (n : ℕ) (hn : 0 < n) :
     chapter06Sn D n = chapter06Sn D (n - 1) * chapter06Qn D n := by
-  sorry
+  have hfactor :
+      chapter06Sn D ((n - 1) + 1) =
+        chapter06Sn D (n - 1) * chapter06PrimitiveDivisionPolynomial D (n - 1) := by
+    change (chapter06LubinTatePolynomial D).comp (chapter06Sn D (n - 1)) =
+      chapter06Sn D (n - 1) *
+        (Polynomial.C D.uniformizer +
+          (chapter06Sn D (n - 1)) ^ (chapter06ResidueCardinality D - 1))
+    rw [chapter06LubinTatePolynomial, Polynomial.add_comp,
+      Polynomial.C_mul_comp, Polynomial.X_comp, Polynomial.X_pow_comp]
+    have hq : 0 < chapter06ResidueCardinality D :=
+      chapter06_residue_cardinality_pos D
+    have hpow :
+        (chapter06Sn D (n - 1)) ^ chapter06ResidueCardinality D =
+          chapter06Sn D (n - 1) *
+            (chapter06Sn D (n - 1)) ^ (chapter06ResidueCardinality D - 1) := by
+      calc
+        (chapter06Sn D (n - 1)) ^ chapter06ResidueCardinality D =
+            (chapter06Sn D (n - 1)) ^
+              ((chapter06ResidueCardinality D - 1) + 1) := by
+          rw [Nat.sub_add_cancel hq]
+        _ = chapter06Sn D (n - 1) *
+              (chapter06Sn D (n - 1)) ^ (chapter06ResidueCardinality D - 1) := by
+          rw [pow_succ']
+    rw [hpow]
+    ring
+  simpa [chapter06Qn, Nat.sub_add_cancel (by omega : 1 ≤ n)] using hfactor
 
 theorem chapter06_torsion_polynomial_succ_factorization
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K) (n : ℕ) :
     chapter06Sn D (n + 1) =
       chapter06Sn D n * chapter06PrimitiveDivisionPolynomial D n := by
-  sorry
+  change (chapter06LubinTatePolynomial D).comp (chapter06Sn D n) =
+    chapter06Sn D n *
+      (Polynomial.C D.uniformizer +
+        (chapter06Sn D n) ^ (chapter06ResidueCardinality D - 1))
+  rw [chapter06LubinTatePolynomial, Polynomial.add_comp,
+    Polynomial.C_mul_comp, Polynomial.X_comp, Polynomial.X_pow_comp]
+  have hq : 0 < chapter06ResidueCardinality D :=
+    chapter06_residue_cardinality_pos D
+  have hpow :
+      (chapter06Sn D n) ^ chapter06ResidueCardinality D =
+        chapter06Sn D n *
+          (chapter06Sn D n) ^ (chapter06ResidueCardinality D - 1) := by
+    calc
+      (chapter06Sn D n) ^ chapter06ResidueCardinality D =
+          (chapter06Sn D n) ^
+            ((chapter06ResidueCardinality D - 1) + 1) := by
+        rw [Nat.sub_add_cancel hq]
+      _ = chapter06Sn D n *
+            (chapter06Sn D n) ^ (chapter06ResidueCardinality D - 1) := by
+        rw [pow_succ']
+  rw [hpow]
+  ring
 
 theorem chapter06_torsion_polynomial_mod_uniformizer
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K) (n : ℕ) :
     (chapter06Sn D n).map
         (algebraMap (Chapter06ValuationRing D) (Chapter06ResidueField D)) =
       Polynomial.X ^ chapter06ResidueCardinality D ^ n := by
-  sorry
+  have hπmem : (D.uniformizer : Chapter06ValuationRing D) ∈
+      IsLocalRing.maximalIdeal (Chapter06ValuationRing D) := by
+    change (D.uniformizer : Chapter06ValuationRing D) ∈
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01MaximalIdeal
+        D.valuation.toValuation
+    rw [D.uniformizer_spec.2]
+    exact Ideal.mem_span_singleton_self _
+  have hπmap :
+      (algebraMap (Chapter06ValuationRing D) (Chapter06ResidueField D))
+          D.uniformizer = 0 := by
+    rw [IsLocalRing.ResidueField.algebraMap_eq,
+      IsLocalRing.residue_eq_zero_iff]
+    exact hπmem
+  have hq : 0 < chapter06ResidueCardinality D :=
+    chapter06_residue_cardinality_pos D
+  have hq0 : chapter06ResidueCardinality D ≠ 0 := Nat.ne_of_gt hq
+  induction n with
+  | zero =>
+      simp [chapter06Sn, chapter06TorsionPolynomialSequence]
+  | succ n ih =>
+      change ((chapter06LubinTatePolynomial D).comp (chapter06Sn D n)).map
+          (algebraMap (Chapter06ValuationRing D) (Chapter06ResidueField D)) = _
+      rw [Polynomial.map_comp]
+      have hmap :
+          (chapter06LubinTatePolynomial D).map
+              (algebraMap (Chapter06ValuationRing D) (Chapter06ResidueField D)) =
+            Polynomial.X ^ chapter06ResidueCardinality D := by
+        rw [chapter06LubinTatePolynomial, Polynomial.map_add,
+          Polynomial.map_mul, Polynomial.map_C, Polynomial.map_X,
+          Polynomial.map_pow, hπmap]
+        simp
+      rw [hmap, Polynomial.X_pow_comp, ih]
+      rw [← pow_mul]
+      rw [pow_succ']
+      congr 1
+      exact Nat.mul_comm _ _
 
 theorem chapter06_torsion_polynomial_degree
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K) (n : ℕ) :
     (chapter06Sn D n).natDegree = chapter06ResidueCardinality D ^ n := by
-  sorry
+  let _ := D.residue_finite
+  let _ : Fintype (Chapter06ResidueField D) := Fintype.ofFinite _
+  have hq1 : 1 < chapter06ResidueCardinality D := by
+    simpa [chapter06ResidueCardinality, Nat.card_eq_fintype_card] using
+      (Fintype.one_lt_card : 1 < Fintype.card (Chapter06ResidueField D))
+  have hπ0 : (D.uniformizer : Chapter06ValuationRing D) ≠ 0 := by
+    exact D.uniformizer_spec.1
+  have hleft :
+      ((Polynomial.C D.uniformizer :
+          Polynomial (Chapter06ValuationRing D)) *
+          (Polynomial.X : Polynomial (Chapter06ValuationRing D))).natDegree <
+        ((Polynomial.X : Polynomial (Chapter06ValuationRing D)) ^
+          chapter06ResidueCardinality D).natDegree := by
+    rw [Polynomial.natDegree_C_mul hπ0, Polynomial.natDegree_X_pow]
+    simp [hq1]
+  have hLT :
+      (chapter06LubinTatePolynomial D).natDegree =
+        chapter06ResidueCardinality D := by
+    rw [chapter06LubinTatePolynomial,
+      Polynomial.natDegree_add_eq_right_of_natDegree_lt hleft,
+      Polynomial.natDegree_X_pow]
+  induction n with
+  | zero =>
+      simp [chapter06Sn, chapter06TorsionPolynomialSequence]
+  | succ n ih =>
+      change ((chapter06LubinTatePolynomial D).comp
+          (chapter06Sn D n)).natDegree = _
+      rw [Polynomial.natDegree_comp, hLT, ih, pow_succ']
 
 theorem chapter06_torsion_polynomial_monic
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K) (n : ℕ) :

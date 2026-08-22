@@ -1004,7 +1004,33 @@ theorem chapter06_formal_module_intertwiner_preserves_primitive_torsion
         (chapter06FormalModuleIntertwiner D f g hf hg) x ∈
       chapter06FormalModulePrimitiveTorsionSet V
         (chapter06FormalModuleOf D g hg) n := by
-  sorry
+  rcases hx with ⟨⟨hxpos, hxn⟩, hxprev⟩
+  let h := chapter06FormalModuleIntertwiner D f g hf hg
+  let y := chapter06FormalIntertwinerEvaluation h x
+  have hypos : chapter06PositiveValuationPoint V y := by
+    exact chapter06_formal_module_intertwiner_maps_positive_valuation
+      V f g hf hg x hxpos
+  have hyn :
+      chapter06FormalModuleScalarEvaluation
+          (chapter06FormalModuleOf D g hg)
+          ((D.uniformizer : Chapter06ValuationRing D) ^ n) y = 0 := by
+    exact (chapter06_formal_module_intertwiner_maps_torsion
+      V f g hf hg x hxpos n).mp hxn
+  have hyprev :
+      chapter06FormalModuleScalarEvaluation
+          (chapter06FormalModuleOf D g hg)
+          ((D.uniformizer : Chapter06ValuationRing D) ^ (n - 1)) y ≠ 0 := by
+    intro hzero
+    have hzero' :
+        chapter06FormalModuleScalarEvaluation
+            (chapter06FormalModuleOf D f hf)
+            ((D.uniformizer : Chapter06ValuationRing D) ^ (n - 1)) x = 0 := by
+      exact (chapter06_formal_module_intertwiner_maps_torsion
+        V f g hf hg x hxpos (n - 1)).mpr hzero
+    exact hxprev hzero'
+  change y ∈ chapter06FormalModulePrimitiveTorsionSet V
+    (chapter06FormalModuleOf D g hg) n
+  exact ⟨⟨hypos, hyn⟩, hyprev⟩
 
 end
 
