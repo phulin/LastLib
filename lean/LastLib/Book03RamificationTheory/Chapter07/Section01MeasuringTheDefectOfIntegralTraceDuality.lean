@@ -14,7 +14,20 @@ theorem chapter07_codifferent_coe_eq_set
     [IsScalarTower A K L] [IsScalarTower A B L] :
     (Submodule.traceDual A K (1 : Submodule B L) : Set L) =
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04TraceDual A B K L := by
-  sorry
+  ext x
+  constructor
+  · intro hx y
+    have hx' := (Submodule.mem_traceDual.mp hx)
+      (algebraMap B L y) (by simp [Submodule.one_eq_range])
+    rcases hx' with ⟨a, ha⟩
+    exact ⟨a, by simpa [Algebra.traceForm_apply] using ha⟩
+  · intro hx
+    apply Submodule.mem_traceDual.mpr
+    intro b hb
+    rcases (show ∃ y : B, algebraMap B L y = b by
+      simpa [Submodule.one_eq_range] using hb) with ⟨y, rfl⟩
+    obtain ⟨a, ha⟩ := hx y
+    exact ⟨a, by simpa [Algebra.traceForm_apply] using ha⟩
 
 /- The fractional-ideal realization of the codifferent. -/
 noncomputable def chapter07CodifferentFractionalIdeal
@@ -36,7 +49,21 @@ theorem chapter07_codifferent_fractional_coe_eq
     [IsIntegrallyClosed A] [IsDedekindDomain B] :
     (chapter07CodifferentFractionalIdeal A B K L : Set L) =
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04TraceDual A B K L := by
-  sorry
+  calc
+    (chapter07CodifferentFractionalIdeal A B K L : Set L) =
+        (Submodule.traceDual A K (1 : Submodule B L) : Set L) := by
+      have hcoe :
+          (chapter07CodifferentFractionalIdeal A B K L : Submodule B L) =
+            Submodule.traceDual A K (1 : Submodule B L) := by
+        dsimp [chapter07CodifferentFractionalIdeal]
+        simpa only using
+          (FractionalIdeal.coe_dual_one (A := A) (K := K) (B := B) (L := L))
+      ext z
+      change z ∈ (chapter07CodifferentFractionalIdeal A B K L : Submodule B L) ↔
+        z ∈ Submodule.traceDual A K (1 : Submodule B L)
+      rw [hcoe]
+    _ = LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04TraceDual
+        A B K L := chapter07_codifferent_coe_eq_set A B K L
 
 /- The trace-dual representation makes the Hom description explicit. -/
 def chapter07TraceDualRepresentation
@@ -57,7 +84,74 @@ theorem chapter07_codifferent_iff_unique_trace_dual
     (x : L) :
     x ∈ LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04TraceDual A B K L ↔
       ∃! φ : B →ₗ[A] A, chapter07TraceDualRepresentation A B K L x φ := by
-  sorry
+  constructor
+  · intro hx
+    change ∀ y : B, ∃ a : A,
+      algebraMap A K a = Algebra.trace K L (x * algebraMap B L y) at hx
+    choose f hf using hx
+    let φ : B →ₗ[A] A :=
+      { toFun := f
+        map_add' := by
+          intro y z
+          apply IsFractionRing.injective A K
+          calc
+            algebraMap A K (f (y + z)) =
+                Algebra.trace K L (x * algebraMap B L (y + z)) := hf (y + z)
+            _ = Algebra.trace K L (x * algebraMap B L y) +
+                Algebra.trace K L (x * algebraMap B L z) := by
+              simp [mul_add]
+            _ = algebraMap A K (f y + f z) := by
+              rw [map_add, hf y, hf z]
+        map_smul' := by
+          intro a y
+          apply IsFractionRing.injective A K
+          calc
+            algebraMap A K (f (a • y)) =
+                Algebra.trace K L (x * algebraMap B L (a • y)) := hf (a • y)
+            _ = algebraMap A K a *
+                Algebra.trace K L (x * algebraMap B L y) := by
+              have hmap :
+                  algebraMap B L (a • y) =
+                    (algebraMap A K a) • algebraMap B L y := by
+                rw [Algebra.smul_def (R := A) (A := B), map_mul,
+                  ← IsScalarTower.algebraMap_apply A B L,
+                  IsScalarTower.algebraMap_apply A K L,
+                  Algebra.smul_def (R := K) (A := L)]
+              calc
+                Algebra.trace K L (x * algebraMap B L (a • y)) =
+                    Algebra.trace K L
+                      (x * ((algebraMap A K a) •
+                        algebraMap B L y)) := by rw [hmap]
+                _ = Algebra.trace K L
+                      ((algebraMap A K a) •
+                        (x * algebraMap B L y)) := by
+                  congr 1
+                  rw [Algebra.smul_def (R := K) (A := L),
+                    Algebra.smul_def (R := K) (A := L)]
+                  ac_rfl
+                _ = (algebraMap A K a) •
+                      Algebra.trace K L (x * algebraMap B L y) := by
+                  rw [LinearMap.map_smul_of_tower]
+                _ = algebraMap A K a *
+                      Algebra.trace K L (x * algebraMap B L y) := by
+                  simp
+            _ = algebraMap A K (a • f y) := by
+              rw [← hf y]
+              simp
+      }
+    refine ⟨φ, ?_, ?_⟩
+    · intro y
+      exact hf y
+    · intro ψ hψ
+      ext y
+      change ψ y = f y
+      apply IsFractionRing.injective A K
+      rw [hψ y, hf y]
+  · rintro ⟨φ, hφ, _⟩
+    change ∀ y : B, ∃ a : A,
+      algebraMap A K a = Algebra.trace K L (x * algebraMap B L y)
+    intro y
+    exact ⟨φ y, hφ y⟩
 
 /- The natural action of an integral element on the A-dual is by
    precomposition with multiplication. -/
@@ -70,14 +164,16 @@ theorem chapter07_trace_hom_action_one
     (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
     (φ : B →ₗ[A] A) :
     chapter07TraceHomAction A B 1 φ = φ := by
-  sorry
+  ext y
+  simp [chapter07TraceHomAction]
 
 theorem chapter07_trace_hom_action_mul
     (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
     (b c : B) (φ : B →ₗ[A] A) :
     chapter07TraceHomAction A B (b * c) φ =
       chapter07TraceHomAction A B b (chapter07TraceHomAction A B c φ) := by
-  sorry
+  ext y
+  simp [chapter07TraceHomAction, mul_left_comm]
 
 /- The different is Mathlib's canonical inverse trace-dual ideal. -/
 noncomputable def chapter07DifferentIdeal

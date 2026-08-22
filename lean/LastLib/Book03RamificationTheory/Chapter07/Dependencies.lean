@@ -7,6 +7,7 @@ import Mathlib.Algebra.Module.Presentation.Differentials
 import Mathlib.NumberTheory.Padics.PadicNumbers
 import Mathlib.RingTheory.Kaehler.Basic
 import Mathlib.RingTheory.Length
+import Mathlib.Data.Rat.Floor
 
 namespace LastLib.Book03RamificationTheory.Chapter07
 
@@ -65,7 +66,10 @@ def chapter07FloorDiv (n d : ℤ) (e : ℕ) : ℤ :=
 
 theorem chapter07FloorDiv_eq_floor (n d : ℤ) (e : ℕ) (he : 0 < e) :
     chapter07FloorDiv n d e = ⌊(n + d : ℚ) / e⌋ := by
-  sorry
+  rcases e with _ | e
+  · omega
+  · simpa [chapter07FloorDiv] using
+      (Rat.floor_intCast_div_natCast (n + d) (e + 1)).symm
 
 end
 
