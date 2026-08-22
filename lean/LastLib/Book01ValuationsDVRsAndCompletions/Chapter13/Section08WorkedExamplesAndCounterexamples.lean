@@ -36,7 +36,85 @@ theorem chapter13_nonunique_coefficient_fields
     (k : Type u) [Field k] [Algebra ℚ k] (u₀ : k)
     (hu₀ : Transcendental ℚ u₀) :
     Nonempty (Chapter13TwoCoefficientFieldExample k u₀) := by
-  sorry
+  let f : k →+* PowerSeries k := PowerSeries.C
+  have hf : Function.Injective f := by
+    simpa [f] using PowerSeries.C_injective
+  let e : k ≃+* f.range :=
+    RingEquiv.ofBijective f.rangeRestrict
+      ⟨fun x y h => hf (congrArg Subtype.val h), f.rangeRestrict_surjective⟩
+  have hfield : IsField f.range :=
+    e.symm.toMulEquiv.isField (Field.toIsField k)
+  let first : Chapter13Subfield (PowerSeries k) :=
+    ⟨f.range, hfield⟩
+  have hconst := chapter13_power_series_constants_are_coefficients k
+  have hfirst : Chapter13IsCoefficientField first := by
+    constructor
+    · intro x y hxy
+      obtain ⟨a, ha⟩ := x.property
+      obtain ⟨b, hb⟩ := y.property
+      have hab : a = b := hconst.1 (by
+        simpa [f, ha, hb] using hxy)
+      exact Subtype.ext (ha.symm.trans (congrArg f hab) |>.trans hb)
+    · intro z
+      obtain ⟨a, ha⟩ := hconst.2 z
+      refine ⟨f.rangeRestrict a, ?_⟩
+      simpa [f] using ha
+  let ρ : PowerSeries k →+* k := PowerSeries.constantCoeff
+  let σ : ℚ →+* PowerSeries k :=
+    (PowerSeries.C : k →+* PowerSeries k).comp (algebraMap ℚ k)
+  have hρ : RingHom.ker ρ = IsLocalRing.maximalIdeal (PowerSeries k) := by
+    exact PowerSeries.ker_coeff_eq_max_ideal (k := k)
+  have hσ : ρ.comp σ = algebraMap ℚ k := by
+    ext q
+    simp [ρ, σ]
+  have haρ : ρ (PowerSeries.C u₀ + PowerSeries.X) = u₀ := by
+    simp [ρ]
+  have hdata : Chapter13TranscendentalLiftData
+      (PowerSeries k) ℚ k σ ρ u₀ (PowerSeries.C u₀ + PowerSeries.X) :=
+    ⟨hρ, hσ, haρ, hu₀⟩
+  obtain ⟨ι, hι⟩ := chapter13_transcendental_fraction_field_lift hdata
+  let er : FractionRing (Polynomial ℚ) ≃+* ι.range :=
+    RingEquiv.ofBijective ι.rangeRestrict
+      ⟨fun x y h => by
+          exact (RingHom.injective ι) (congrArg Subtype.val h),
+        ι.rangeRestrict_surjective⟩
+  have herfield : IsField ι.range :=
+    er.symm.toMulEquiv.isField (Field.toIsField (FractionRing (Polynomial ℚ)))
+  let second₀ : Chapter13Subfield (PowerSeries k) :=
+    ⟨ι.range, herfield⟩
+  have hcontains : Chapter13ContainsField (PowerSeries k) := ⟨first⟩
+  have hcharK : CharP k 0 := by
+    exact ((algebraMap ℚ k).charP_iff_charP 0).mp inferInstance
+  have hchar : CharP (Chapter13ResidueRing (PowerSeries k)) 0 := by
+    exact ((Chapter13ResidueMap (PowerSeries k)).comp f
+      |>.charP_iff_charP 0).mp hcharK
+  have hcomplete : IsAdicComplete
+      (IsLocalRing.maximalIdeal (PowerSeries k)) (PowerSeries k) := by
+    rw [PowerSeries.maximalIdeal_eq_span_X]
+    infer_instance
+  have hcoeff := chapter13_coefficient_field_exists_equal_characteristic_zero
+    (A := PowerSeries k) hcomplete hchar hcontains
+  obtain ⟨second, hsecond_ext, hsecond⟩ := hcoeff.2.2 second₀
+  have htranslated : PowerSeries.C u₀ + PowerSeries.X ∈ second₀.carrier := by
+    change PowerSeries.C u₀ + PowerSeries.X ∈ ι.range
+    refine ⟨algebraMap (Polynomial ℚ) (FractionRing (Polynomial ℚ))
+      Polynomial.X, ?_⟩
+    have hx := congrArg (fun g => g Polynomial.X) hι
+    simpa [σ, Polynomial.eval₂RingHom] using hx
+  have htranslated' : PowerSeries.C u₀ + PowerSeries.X ∈ second.carrier :=
+    hsecond_ext htranslated
+  have hdistinct : first.carrier ≠ second.carrier := by
+    intro heq
+    have hx : PowerSeries.C u₀ + PowerSeries.X ∈ first.carrier := by
+      rw [heq]
+      exact htranslated'
+    obtain ⟨a, ha⟩ := hx
+    have ha' : PowerSeries.C a = PowerSeries.C u₀ + PowerSeries.X := by
+      simpa [f] using ha
+    have ha'' := congrArg (fun z : PowerSeries k => z.coeff 1) ha'
+    simpa using ha''
+  exact ⟨⟨first, second, hfirst, hsecond, fun a => ⟨a, rfl⟩,
+    htranslated', hdistinct⟩⟩
 
 theorem chapter13_p_basis_lift_family_power_series
     (k : Type u) [Field k] (p : ℕ) [Fact (Nat.Prime p)] [CharP k p]
@@ -75,7 +153,186 @@ theorem chapter13_maximal_subfield_not_coefficient
     ∃ K : Chapter13Subfield
         (PowerSeries (FractionRing (Polynomial (ZMod p)))),
       Chapter13IsMaximalSubfield K ∧ ¬Chapter13IsCoefficientField K := by
-  sorry
+  let k := FractionRing (Polynomial (ZMod p))
+  let u : k := algebraMap (Polynomial (ZMod p)) k Polynomial.X
+  have hu : Transcendental (ZMod p) u := by
+    exact (transcendental_algebraMap_iff (IsFractionRing.injective
+      (R := Polynomial (ZMod p)) (K := k))).mpr
+      (Polynomial.transcendental_X (ZMod p))
+  have hpu : Transcendental (ZMod p) (u ^ p) :=
+    hu.pow ((Fact.out : Nat.Prime p).pos)
+  let ρ : PowerSeries k →+* k := PowerSeries.constantCoeff
+  let σ : ZMod p →+* PowerSeries k :=
+    (PowerSeries.C : k →+* PowerSeries k).comp (algebraMap (ZMod p) k)
+  have hρ : RingHom.ker ρ = IsLocalRing.maximalIdeal (PowerSeries k) := by
+    exact PowerSeries.ker_coeff_eq_max_ideal (k := k)
+  have hσ : ρ.comp σ = algebraMap (ZMod p) k := by
+    ext q
+    simp [ρ, σ]
+  let a : PowerSeries k := PowerSeries.C (u ^ p) + PowerSeries.X
+  have haρ : ρ a = u ^ p := by
+    simp [a, ρ]
+  have hdata : Chapter13TranscendentalLiftData
+      (PowerSeries k) (ZMod p) k σ ρ (u ^ p) a :=
+    ⟨hρ, hσ, haρ, hpu⟩
+  obtain ⟨ι, hι⟩ := chapter13_transcendental_fraction_field_lift hdata
+  let er : FractionRing (Polynomial (ZMod p)) ≃+* ι.range :=
+    RingEquiv.ofBijective ι.rangeRestrict
+      ⟨fun x y h => by
+          exact (RingHom.injective ι) (congrArg Subtype.val h),
+        ι.rangeRestrict_surjective⟩
+  have herfield : IsField ι.range :=
+    er.symm.toMulEquiv.isField
+      (Field.toIsField (FractionRing (Polynomial (ZMod p))))
+  let K₀ : Chapter13Subfield (PowerSeries k) := ⟨ι.range, herfield⟩
+  let : Preorder (Chapter13Subfield (PowerSeries k)) :=
+    { le := fun K L => K.carrier ≤ L.carrier
+      le_refl := fun K => le_rfl
+      le_trans := fun _ _ _ hKL hLM => hKL.trans hLM }
+  have hmaximal_extension : ∀ K₀ : Chapter13Subfield (PowerSeries k),
+      ∃ K : Chapter13Subfield (PowerSeries k),
+        K₀.carrier ≤ K.carrier ∧ Chapter13IsMaximalSubfield K := by
+    intro K₀
+    obtain ⟨K, hK, hKmax⟩ := zorn_le_nonempty_Ici₀ K₀
+      (fun c hc hchain y hy => by
+        let U : Set (PowerSeries k) := ⋃ K : Chapter13Subfield (PowerSeries k),
+          ⋃ (_ : K ∈ c), (K.carrier : Set (PowerSeries k))
+        have memU : ∀ {x : PowerSeries k}, x ∈ U →
+            ∃ K ∈ c, x ∈ K.carrier := by
+          intro x hx
+          change x ∈ ⋃ K : Chapter13Subfield (PowerSeries k),
+            ⋃ (_ : K ∈ c), (K.carrier : Set (PowerSeries k)) at hx
+          rcases Set.mem_iUnion.mp hx with ⟨K, hx⟩
+          rcases Set.mem_iUnion.mp hx with ⟨hK, hx⟩
+          exact ⟨K, hK, hx⟩
+        have memU' : ∀ {K : Chapter13Subfield (PowerSeries k)}, K ∈ c →
+            ∀ {x : PowerSeries k}, x ∈ K.carrier → x ∈ U := by
+          intro K hK x hx
+          change x ∈ ⋃ K : Chapter13Subfield (PowerSeries k),
+            ⋃ (_ : K ∈ c), (K.carrier : Set (PowerSeries k))
+          exact Set.mem_iUnion.2 ⟨K, Set.mem_iUnion.2 ⟨hK, hx⟩⟩
+        let Ucarrier : Subring (PowerSeries k) :=
+          { carrier := U
+            zero_mem' := memU' hy (zero_mem y.carrier)
+            add_mem' := by
+              intro x z hx hz
+              obtain ⟨Kx, hKx, hx⟩ := memU hx
+              obtain ⟨Kz, hKz, hz⟩ := memU hz
+              have hcomp : Kx ≤ Kz ∨ Kz ≤ Kx := by
+                by_cases heq : Kx = Kz
+                · subst Kz
+                  exact Or.inl le_rfl
+                · exact hchain hKx hKz heq
+              rcases hcomp with hle | hle
+              · exact memU' hKz (Kz.carrier.add_mem (hle hx) hz)
+              · exact memU' hKx (Kx.carrier.add_mem hx (hle hz))
+            one_mem' := memU' hy (one_mem y.carrier)
+            mul_mem' := by
+              intro x z hx hz
+              obtain ⟨Kx, hKx, hx⟩ := memU hx
+              obtain ⟨Kz, hKz, hz⟩ := memU hz
+              have hcomp : Kx ≤ Kz ∨ Kz ≤ Kx := by
+                by_cases heq : Kx = Kz
+                · subst Kz
+                  exact Or.inl le_rfl
+                · exact hchain hKx hKz heq
+              rcases hcomp with hle | hle
+              · exact memU' hKz (Kz.carrier.mul_mem (hle hx) hz)
+              · exact memU' hKx (Kx.carrier.mul_mem hx (hle hz))
+            neg_mem' := by
+              intro x hx
+              obtain ⟨Kx, hKx, hx⟩ := memU hx
+              exact memU' hKx (Kx.carrier.neg_mem hx) }
+        let : Field y.carrier := y.field_carrier.toField
+        have hUfield : IsField Ucarrier :=
+          { exists_pair_ne := by
+              obtain ⟨x, z, hxz⟩ := y.field_carrier.exists_pair_ne
+              refine ⟨⟨x, memU' hy x.property⟩,
+                ⟨z, memU' hy z.property⟩, ?_⟩
+              intro heq
+              apply hxz
+              apply Subtype.ext
+              exact congrArg (fun w : Ucarrier => w.1) heq
+            mul_comm := by
+              intro x z
+              apply Subtype.ext
+              exact mul_comm x.1 z.1
+            mul_inv_cancel := by
+              intro x hx
+              obtain ⟨Kx, hKx, hxK⟩ := memU x.property
+              let xK : Kx.carrier := ⟨x.1, hxK⟩
+              have hxK0 : xK ≠ 0 := by
+                intro hzero
+                apply hx
+                apply Subtype.ext
+                exact congrArg (fun w : Kx.carrier => w.1) hzero
+              obtain ⟨z, hz⟩ := Kx.field_carrier.mul_inv_cancel hxK0
+              refine ⟨⟨z.1, memU' hKx z.property⟩, ?_⟩
+              apply Subtype.ext
+              simpa using congrArg Subtype.val hz }
+        let Usub : Chapter13Subfield (PowerSeries k) :=
+          ⟨Ucarrier, hUfield⟩
+        refine ⟨Usub, ?_⟩
+        intro z hz
+        exact fun x hx => memU' hz hx) K₀ le_rfl
+    refine ⟨K, hK, ?_⟩
+    intro L hKL
+    exact hKmax hKL
+  obtain ⟨K, hK₀, hKmax⟩ := hmaximal_extension K₀
+  refine ⟨K, hKmax, ?_⟩
+  intro hcoeff
+  obtain ⟨z, hz⟩ := hcoeff.2
+    (Chapter13ResidueMap (PowerSeries k) (PowerSeries.C u))
+  have haK : a ∈ K.carrier := hK₀ (show a ∈ K₀.carrier by
+    change a ∈ RingHom.range ι
+    refine ⟨algebraMap (Polynomial (ZMod p))
+      (FractionRing (Polynomial (ZMod p))) Polynomial.X, ?_⟩
+    have hx := congrArg (fun g => g Polynomial.X) hι
+    simpa [a, σ, Polynomial.eval₂RingHom] using hx)
+  let zA : PowerSeries k := K.carrier.subtype z
+  have hmem : zA ^ p - a ∈ IsLocalRing.maximalIdeal (PowerSeries k) := by
+    apply (Ideal.Quotient.eq_zero_iff_mem).mp
+    change Chapter13ResidueMap (PowerSeries k) (zA ^ p - a) = 0
+    rw [map_sub, map_pow]
+    have hzA : Chapter13ResidueMap (PowerSeries k) zA =
+        Chapter13ResidueMap (PowerSeries k) (PowerSeries.C u) := by
+      simpa [zA] using hz
+    rw [hzA]
+    have hresX : Chapter13ResidueMap (PowerSeries k) PowerSeries.X = 0 := by
+      change Ideal.Quotient.mk _ PowerSeries.X = 0
+      apply (Ideal.Quotient.eq_zero_iff_mem).mpr
+      rw [PowerSeries.maximalIdeal_eq_span_X]
+      exact Ideal.subset_span (by simp)
+    have hres_a : (Chapter13ResidueMap (PowerSeries k)) a =
+        (Chapter13ResidueMap (PowerSeries k)) (PowerSeries.C u) ^ p := by
+      simp [a, map_pow, hresX]
+    rw [hres_a, sub_self]
+  have hzero : zA ^ p - a = 0 := by
+    by_contra hne
+    letI : Field K.carrier := K.field_carrier.toField
+    let aK : K.carrier := ⟨a, haK⟩
+    have hneK : z ^ p - aK ≠ 0 := by
+      intro hzK
+      apply hne
+      exact congrArg K.carrier.subtype hzK
+    have huK : IsUnit (z ^ p - aK) := isUnit_iff_ne_zero.mpr hneK
+    have huA := IsUnit.map K.carrier.subtype huK
+    exact (IsLocalRing.notMem_maximalIdeal.mpr (by
+      simpa [zA, aK, map_sub, map_pow] using huA)) hmem
+  have hcoeffeq := congrArg (fun w : PowerSeries k => w.coeff 1) hzero
+  have hleft : (zA ^ p).coeff 1 = 0 := by
+    rw [PowerSeries.coeff_one_pow]
+    have hp0 : (p : k) = 0 := CharP.cast_eq_zero (R := k) p
+    rw [hp0]
+    simp
+  have hright : a.coeff 1 = 1 := by
+    rw [show a = PowerSeries.C (u ^ p) + PowerSeries.X by rfl,
+      map_add, PowerSeries.coeff_C, PowerSeries.coeff_X]
+    norm_num
+  have hcoeffeq' : (zA ^ p).coeff 1 - a.coeff 1 = 0 := by
+    simpa using hcoeffeq
+  rw [hleft, hright] at hcoeffeq'
+  exact zero_ne_one (sub_eq_zero.mp hcoeffeq')
 
 /-! ### The cusp -/
 

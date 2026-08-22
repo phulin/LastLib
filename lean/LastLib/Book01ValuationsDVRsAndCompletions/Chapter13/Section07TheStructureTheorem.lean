@@ -3,6 +3,8 @@ import Mathlib.RingTheory.FiniteLength
 import Mathlib.RingTheory.MvPowerSeries.Equiv
 import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
+import Mathlib.RingTheory.KrullDimension.Module
+import Mathlib.RingTheory.Ideal.GoingUp
 import Mathlib.SetTheory.Cardinal.NatCard
 import Mathlib.RingTheory.Ideal.Cotangent
 import Mathlib.LinearAlgebra.Basis.VectorSpace
@@ -1056,7 +1058,77 @@ theorem chapter13_finite_power_series_map_injective
     (hdomain : IsDomain A)
     (hdim : ringKrullDim Q = ringKrullDim A) :
     Function.Injective F := by
-  sorry
+  letI : Algebra Q A := F.toAlgebra
+  letI : Module Q A := Module.compHom A F
+  letI : Module.Finite Q A := by
+    simpa [Chapter13FinitePowerSeriesModule] using hfinite
+  have hann : Module.annihilator Q A = RingHom.ker F := by
+    ext q
+    constructor
+    · intro hq
+      have h1 : q • (1 : A) = 0 := (Module.mem_annihilator.mp hq) 1
+      change F q * (1 : A) = 0 at h1
+      simpa using h1
+    · intro hq
+      rw [Module.mem_annihilator]
+      intro a
+      rw [show q • a = F q * a by rfl, RingHom.mem_ker.mp hq, zero_mul]
+  let B := Q ⧸ RingHom.ker F
+  let g : B →+* A := Ideal.Quotient.lift (RingHom.ker F) F
+    (fun a ha => RingHom.mem_ker.mp ha)
+  letI : Algebra B A := g.toAlgebra
+  letI : Module B A := Module.compHom A g
+  letI : Module Q B := Module.compHom B (Ideal.Quotient.mk (RingHom.ker F))
+  have hcomp : F = g.comp (Ideal.Quotient.mk (RingHom.ker F)) := by
+    ext q
+    rfl
+  letI : IsScalarTower Q B A := IsScalarTower.of_algebraMap_eq' (by
+    change F = g.comp (Ideal.Quotient.mk (RingHom.ker F))
+    exact hcomp)
+  letI : Module.Finite B A := Module.Finite.of_restrictScalars_finite Q B A
+  letI : Algebra.IsIntegral B A := Algebra.IsIntegral.of_finite B A
+  have hdimA_le : ringKrullDim A ≤ ringKrullDim B := by
+    let φ : PrimeSpectrum A → PrimeSpectrum B :=
+      PrimeSpectrum.comap (algebraMap B A)
+    have hφ : StrictMono φ := by
+      intro p q hpq
+      change p.asIdeal.comap (algebraMap B A) <
+        q.asIdeal.comap (algebraMap B A)
+      exact IsIntegral.comap_lt_comap hpq
+    exact Order.krullDim_le_of_strictMono _ hφ
+  have hdimquot : ringKrullDim B = ringKrullDim A := by
+    have hs : Module.supportDim Q A =
+        ringKrullDim (Q ⧸ Module.annihilator Q A) :=
+      Module.supportDim_eq_ringKrullDim_quotient_annihilator Q A
+    rw [hann] at hs
+    have hB_leQ : ringKrullDim B ≤ ringKrullDim Q := by
+      simpa [B] using (hs.symm ▸ Module.supportDim_le_ringKrullDim Q A)
+    exact le_antisymm (hB_leQ.trans (le_of_eq hdim)) hdimA_le
+  intro x y hxy
+  by_contra hxy'
+  have hker : RingHom.ker F ≠ ⊥ := by
+    intro hker
+    apply hxy'
+    apply (RingHom.injective_iff_ker_eq_bot F).mpr hker
+    exact hxy
+  obtain ⟨r, hr, hr0⟩ : ∃ r : Q, r ∈ RingHom.ker F ∧ r ≠ 0 := by
+    by_contra hn
+    apply hker
+    apply le_antisymm
+    · intro q hq
+      by_contra hq0
+      exact hn ⟨q, hq, hq0⟩
+    · exact bot_le
+  letI : IsDomain Q := hQ.2.2.1
+  have hqdim := ringKrullDim_succ_le_of_surjective
+    (Ideal.Quotient.mk (RingHom.ker F)) Ideal.Quotient.mk_surjective
+    (mem_nonZeroDivisors_of_ne_zero hr0) (Ideal.Quotient.eq_zero_iff_mem.mpr hr)
+  change ringKrullDim B + 1 ≤ ringKrullDim Q at hqdim
+  have hplusAB : ringKrullDim A + 1 ≤ ringKrullDim B + 1 := by
+    simpa [add_comm] using add_le_add_right hdimA_le (1 : WithBot ℕ∞)
+  have hplus := hplusAB.trans hqdim
+  rw [← hdim, hQ.2.2.2] at hplus
+  exact (not_le_of_gt (by exact_mod_cast Nat.lt_succ_self d)) hplus
 
 end
 
