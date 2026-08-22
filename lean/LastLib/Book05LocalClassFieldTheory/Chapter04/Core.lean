@@ -69,6 +69,21 @@ structure Chapter04BrauerGroupLaw (K : Type*) [Field K] where
   tensor : chapter04BrauerGroup K → chapter04BrauerGroup K → chapter04BrauerGroup K
   one : chapter04BrauerGroup K
   opposite : chapter04BrauerGroup K → chapter04BrauerGroup K
+  /-- Representative-level bridges keep the abstract law tied to the CSA quotient. -/
+  oneRepresentative : chapter04CentralSimpleAlgebra K
+  oneRepresentative_class :
+    chapter04BrauerClass oneRepresentative = one
+  tensorRepresentative :
+    chapter04CentralSimpleAlgebra K → chapter04CentralSimpleAlgebra K →
+      chapter04CentralSimpleAlgebra K
+  tensorRepresentative_class : ∀ A B,
+    tensor (chapter04BrauerClass A) (chapter04BrauerClass B) =
+      chapter04BrauerClass (tensorRepresentative A B)
+  oppositeRepresentative :
+    chapter04CentralSimpleAlgebra K → chapter04CentralSimpleAlgebra K
+  oppositeRepresentative_class : ∀ A,
+    opposite (chapter04BrauerClass A) =
+      chapter04BrauerClass (oppositeRepresentative A)
   tensor_assoc : ∀ a b c, tensor (tensor a b) c = tensor a (tensor b c)
   tensor_comm : ∀ a b, tensor a b = tensor b a
   one_tensor : ∀ a, tensor one a = a
@@ -204,6 +219,8 @@ def chapter04RelativeBrauerClass
 structure Chapter04ReducedNormData
     (K D : Type u) [Field K] [DivisionRing D] [Algebra K D]
     [FiniteDimensional K D] where
+  /-- Reduced norms in this chapter are attached to central division algebras. -/
+  central : Algebra.IsCentral K D
   degree : ℕ
   degree_pos : 0 < degree
   finrank_eq_degree_sq : Module.finrank K D = degree ^ 2
@@ -239,7 +256,7 @@ def chapter04ReducedNormAgreesWithDeterminant
   with the zero value recorded separately. -/
 def chapter04DivisionValuation
     {K D : Type u} [Field K] [DivisionRing D] [Algebra K D]
-    [FiniteDimensional K D]
+    [FiniteDimensional K D] [Algebra.IsCentral K D]
     (N : Chapter04ReducedNormData K D) :
     (K → ℚ) → D → WithTop ℚ :=
   fun vK x => by
@@ -251,7 +268,7 @@ def chapter04DivisionValuation
 
 def chapter04DivisionValuationOnUnits
     {K D : Type u} [Field K] [DivisionRing D] [Algebra K D]
-    [FiniteDimensional K D]
+    [FiniteDimensional K D] [Algebra.IsCentral K D]
     (N : Chapter04ReducedNormData K D) (vK : K → ℚ) : Dˣ → ℚ :=
   fun x => vK (N.reducedNormAll x) / N.degree
 

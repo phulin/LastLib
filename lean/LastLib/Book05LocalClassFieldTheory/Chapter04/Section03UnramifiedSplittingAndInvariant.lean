@@ -1,5 +1,5 @@
 import LastLib.Book05LocalClassFieldTheory.Chapter04.Section02ValuationsOnDivisionAlgebras
-import LastLib.Book05LocalClassFieldTheory.Chapter03.Section05TheUnramifiedCyclicComputation
+import LastLib.Book05LocalClassFieldTheory.Chapter03.Section04CyclicAlgebras
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.Section05NormsInTowers
 import Mathlib.LinearAlgebra.TensorProduct.Basic
 
@@ -138,15 +138,34 @@ theorem chapter04_unramified_fraction_denominator_change
       chapter04RationalResidueFraction (m * r) (m * d) := by
   sorry
 
+/- A denominator change is a tower calculation.  Merely having two
+  unramified extensions of the required dimensions does not identify their
+  crossed products, so the intermediate-field and Frobenius compatibilities
+  are recorded explicitly here. -/
+structure Chapter04UnramifiedTowerData
+    {K L M : Type*} [Field K] [Field L] [Field M]
+    [Algebra K L] [Algebra K M] [Algebra L M]
+    [IsScalarTower K L M]
+    [FiniteDimensional K L] [FiniteDimensional K M]
+    [IsGalois K L] [IsGalois K M]
+    (U : Chapter04UnramifiedExtensionData K L)
+    (U' : Chapter04UnramifiedExtensionData K M) (m : ℕ) where
+  positive : 0 < m
+  degree_factor : U'.degree = m * U.degree
+  uniformizer_eq : U'.uniformizer = U.uniformizer
+  frobenius_restricts : ∀ x : L,
+    U'.arithmeticFrobenius ^ m (algebraMap L M x) =
+      algebraMap L M (U.arithmeticFrobenius x)
+
 theorem chapter04_unramified_cyclic_brauer_denominator_change
     {K L M : Type*} [Field K] [Field L] [Field M]
-    [Algebra K L] [Algebra K M]
+    [Algebra K L] [Algebra K M] [Algebra L M]
+    [IsScalarTower K L M]
     [FiniteDimensional K L] [FiniteDimensional K M]
     [IsGalois K L] [IsGalois K M]
     (U : Chapter04UnramifiedExtensionData K L)
     (U' : Chapter04UnramifiedExtensionData K M)
-    (m : ℕ) (hm : 0 < m)
-    (hdegree : U'.degree = m * U.degree) (r : ℤ) :
+    (m : ℕ) (T : Chapter04UnramifiedTowerData U U' m) (r : ℤ) :
     chapter04UnramifiedCyclicBrauerClass U r =
       chapter04UnramifiedCyclicBrauerClass U' (m * r) := by
   sorry
@@ -311,9 +330,6 @@ theorem chapter04_local_invariant_restriction_formula
     (I_L : Chapter04LocalInvariantData L)
     (R : Chapter04BrauerRestrictionData K L)
     (n : ℕ) (hdegree : Module.finrank K L = n)
-    (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
-      R.restriction (chapter04BrauerClass A) =
-        chapter04BrauerClass (R.scalarExtension A))
     (α : chapter04BrauerGroup K) :
     I_L.invariant (R.restriction α) = n • I_K.invariant α := by
   sorry
@@ -328,9 +344,6 @@ theorem chapter04_local_invariant_restriction_formula_finite_extension
     (I_L : Chapter04LocalInvariantData L)
     (R : Chapter04BrauerRestrictionData K L)
     (n : ℕ) (hdegree : Module.finrank K L = n)
-    (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
-      R.restriction (chapter04BrauerClass A) =
-        chapter04BrauerClass (R.scalarExtension A))
     (α : chapter04BrauerGroup K) :
     I_L.invariant (R.restriction α) = n • I_K.invariant α := by
   sorry
@@ -343,9 +356,6 @@ theorem chapter04_restriction_unramified_stage_formula
     (R : Chapter04BrauerRestrictionData K L)
     (U : Chapter04UnramifiedExtensionData K L)
     (hdegree : Module.finrank K L = U.degree)
-    (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
-      R.restriction (chapter04BrauerClass A) =
-        chapter04BrauerClass (R.scalarExtension A))
     (α : chapter04BrauerGroup K) :
     I_L.invariant (R.restriction α) = U.degree • I_K.invariant α := by
   sorry
@@ -378,9 +388,6 @@ theorem chapter04_restriction_totally_ramified_stage_formula
     (I_L : Chapter04LocalInvariantData L)
     (R : Chapter04BrauerRestrictionData K L)
     (T : Chapter04TotallyRamifiedStageData K L)
-    (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
-      R.restriction (chapter04BrauerClass A) =
-        chapter04BrauerClass (R.scalarExtension A))
     (α : chapter04BrauerGroup K) :
     I_L.invariant (R.restriction α) = T.degree • I_K.invariant α := by
   sorry
@@ -405,12 +412,6 @@ theorem chapter04_restriction_finite_extension_stage_formula
     (R : Chapter04BrauerRestrictionData K L)
     (hdegreeKM : Module.finrank K M = eKM)
     (hdegreeML : Module.finrank M L = eML)
-    (hcompatKM : ∀ A : chapter04CentralSimpleAlgebra K,
-      R_KM.restriction (chapter04BrauerClass A) =
-        chapter04BrauerClass (R_KM.scalarExtension A))
-    (hcompatML : ∀ A : chapter04CentralSimpleAlgebra M,
-      R_ML.restriction (chapter04BrauerClass A) =
-        chapter04BrauerClass (R_ML.scalarExtension A))
     (hrestriction_trans : R.restriction = R_ML.restriction ∘ R_KM.restriction)
     (α : chapter04BrauerGroup K) :
     I_L.invariant (R.restriction α) = (eKM * eML) • I_K.invariant α := by
@@ -422,9 +423,6 @@ theorem chapter04_local_invariant_corestriction_formula
     (I_K : Chapter04LocalInvariantData K)
     (I_L : Chapter04LocalInvariantData L)
     (C : Chapter04BrauerCorestrictionData K L)
-    (hcompat : ∀ A : chapter04CentralSimpleAlgebra L,
-      C.corestriction (chapter04BrauerClass A) =
-        chapter04BrauerClass (C.representativeMap A))
     (β : chapter04BrauerGroup L) :
     I_K.invariant (C.corestriction β) = I_L.invariant β := by
   sorry
@@ -435,10 +433,7 @@ theorem chapter04_restriction_is_surjective_on_brauer_groups
     (I_K : Chapter04LocalInvariantData K)
     (I_L : Chapter04LocalInvariantData L)
     (R : Chapter04BrauerRestrictionData K L)
-    (n : ℕ) (hdegree : Module.finrank K L = n)
-    (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
-      R.restriction (chapter04BrauerClass A) =
-        chapter04BrauerClass (R.scalarExtension A)) :
+    (n : ℕ) (hdegree : Module.finrank K L = n) :
     Function.Surjective R.restriction := by
   sorry
 
@@ -450,12 +445,6 @@ theorem chapter04_corestriction_restriction_degree_formula
     (R : Chapter04BrauerRestrictionData K L)
     (C : Chapter04BrauerCorestrictionData K L)
     (n : ℕ) (hdegree : Module.finrank K L = n)
-    (hcompatR : ∀ A : chapter04CentralSimpleAlgebra K,
-      R.restriction (chapter04BrauerClass A) =
-        chapter04BrauerClass (R.scalarExtension A))
-    (hcompatC : ∀ A : chapter04CentralSimpleAlgebra L,
-      C.corestriction (chapter04BrauerClass A) =
-        chapter04BrauerClass (C.representativeMap A))
     (α : chapter04BrauerGroup K) :
     C.corestriction (R.restriction α) =
       chapter04BrauerNatPower I_K.brauerLaw α n := by

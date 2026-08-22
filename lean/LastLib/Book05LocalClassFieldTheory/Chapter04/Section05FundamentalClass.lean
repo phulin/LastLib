@@ -92,6 +92,7 @@ theorem chapter04_crossed_product_is_central_simple_of_cocycle
 
 theorem chapter04_full_matrix_algebra_automorphism_is_inner
     {S : Type*} [Field S] (n : ℕ)
+    (hn : 0 < n)
     (φ : Matrix (Fin n) (Fin n) S ≃ₐ[S] Matrix (Fin n) (Fin n) S) :
     ∃ T : (Matrix (Fin n) (Fin n) S)ˣ, ∀ X,
       φ X = (T : Matrix (Fin n) (Fin n) S) * X * (T⁻¹ : Matrix (Fin n) (Fin n) S) := by
@@ -193,10 +194,7 @@ theorem chapter04_split_descent_scalar_relation
 theorem chapter04_relative_brauer_group_is_second_cohomology
     {K L : Type} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
-    (R : Chapter04BrauerRestrictionData K L)
-    (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
-      R.restriction (chapter04BrauerClass A) =
-        chapter04BrauerClass (R.scalarExtension A)) :
+    (R : Chapter04BrauerRestrictionData K L) :
     Nonempty (Chapter04RelativeBrauerCohomologyData K L R) := by
   sorry
 
@@ -215,9 +213,6 @@ theorem chapter04_relative_h2_is_cyclic_of_degree
     (R : Chapter04BrauerRestrictionData K L)
     (C : Chapter04RelativeBrauerCohomologyData K L R)
     (n : ℕ) (hdegree : Module.finrank K L = n)
-    (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
-      R.restriction (chapter04BrauerClass A) =
-        chapter04BrauerClass (R.scalarExtension A)) :
     Nonempty (Chapter04RelativeH2CyclicData K L) := by
   sorry
 
@@ -309,10 +304,6 @@ structure Chapter04FundamentalClassTowerData
   fundamentalML_invariant :
     chapter04CohomologyInvariant invariantM restrictionML cohomologyML fundamentalML =
       chapter04RationalResidueOneOver degreeML
-  restriction_fundamental :
-    restriction fundamentalKL = fundamentalML
-  corestriction_fundamental :
-    corestriction fundamentalML = degreeKM • fundamentalKL
 
 theorem chapter04_fundamental_class_is_tower_compatible
     {K M L : Type} [Field K] [Field M] [Field L]
@@ -324,8 +315,9 @@ theorem chapter04_fundamental_class_is_tower_compatible
     T.degreeKL = T.degreeKM * T.degreeML ∧
       T.restriction T.fundamentalKL = T.fundamentalML ∧
       T.corestriction T.fundamentalML = T.degreeKM • T.fundamentalKL := by
-  exact ⟨T.degree_factor, T.restriction_fundamental,
-    T.corestriction_fundamental⟩
+  /- Prior attempt: the tower equalities were incorrectly stored as fields of
+     `Chapter04FundamentalClassTowerData`, making this theorem circular. -/
+  sorry
 
 theorem chapter04_unramified_fundamental_class_has_frobenius_cyclic_representative
     {K L : Type*} [Field K] [Field L] [Algebra K L]

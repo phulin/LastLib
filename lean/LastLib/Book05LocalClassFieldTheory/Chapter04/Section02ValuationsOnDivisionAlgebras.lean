@@ -1,5 +1,5 @@
 import LastLib.Book05LocalClassFieldTheory.Chapter04.Section01WhyCentralSimpleAlgebras
-import LastLib.Book05LocalClassFieldTheory.Chapter03.Section05TheUnramifiedCyclicComputation
+import LastLib.Book05LocalClassFieldTheory.Chapter03.Section04CyclicAlgebras
 import Mathlib.LinearAlgebra.Basis.Basic
 import Mathlib.LinearAlgebra.TensorProduct.Basic
 
@@ -22,9 +22,21 @@ theorem chapter04_reduced_norm_agrees_with_determinant
     ∀ x : D, algebraMap K S (N x) = Matrix.det (ρ x) := by
   exact hdet
 
+/- The reduced norm is a construction for a central division algebra, not an
+  extra hypothesis on each later valuation lemma.  Mathlib exposes the CSA
+  quotient but not this construction, so the chapter keeps its existence as
+  the single supporting interface below. -/
+theorem chapter04_reduced_norm_data_exists
+    {K D : Type u} [Field K] [DivisionRing D] [Algebra K D]
+    [FiniteDimensional K D] [Algebra.IsCentral K D]
+    (d : ℕ) (hdegree : Module.finrank K D = d ^ 2) :
+    Nonempty (Chapter04ReducedNormData K D) := by
+  sorry
+
 theorem chapter04_reduced_norm_on_a_commutative_subfield
     {K D : Type u} {E : Type*} [Field K] [DivisionRing D] [Field E]
     [Algebra K D] [Algebra K E] [FiniteDimensional K D] [FiniteDimensional K E]
+    [Algebra.IsCentral K D]
     (N : Chapter04ReducedNormData K D) (φ : E →ₐ[K] D)
     (hdiv : Module.finrank K E ∣ N.degree) :
     ∀ x : E,
@@ -42,6 +54,7 @@ def chapter04FieldNormValuationFormula
 theorem chapter04_division_valuation_on_a_subfield
     {K D : Type u} {E : Type*} [Field K] [DivisionRing D] [Field E]
     [Algebra K D] [Algebra K E] [FiniteDimensional K D] [FiniteDimensional K E]
+    [Algebra.IsCentral K D]
     (N : Chapter04ReducedNormData K D) (vK : K → ℚ) (vE : E → ℚ)
     (φ : E →ₐ[K] D) (e : ℕ)
     (he : 0 < e)
@@ -280,8 +293,7 @@ def chapter04UnramifiedMaximalSubfieldSplits
 
 theorem chapter04_division_algebra_has_unramified_maximal_subfield
     {K : Type*} [Field K] (P : Chapter04LocalFieldProfile K)
-    (D : Chapter04DivisionAlgebraData K)
-    [DivisionRing D.carrier] :
+    (D : Chapter04DivisionAlgebraData K) :
     Nonempty (Chapter04UnramifiedMaximalSubfieldSpec K P D) := by
   sorry
 
@@ -380,12 +392,11 @@ structure Chapter04CyclicPresentationSpec
   unramified_field_degree_eq : unramified_field_degree = D.degree
   arithmetic_frobenius_relation : chapter04CyclicExtensionOverUnramifiedField P D E
   parameter_power_normalization :
-    ∃ c : Kˣ,
-      parameter = c * chapter04UnramifiedMaximalSubfieldUniformizer P D E ^ exponent
+    parameter = chapter04UnramifiedMaximalSubfieldUniformizer P D E ^ exponent
 
 theorem chapter04_division_algebra_has_cyclic_presentation
     {K : Type*} [Field K] (P : Chapter04LocalFieldProfile K)
-    (D : Chapter04DivisionAlgebraData K) [DivisionRing D.carrier]
+    (D : Chapter04DivisionAlgebraData K)
     (U : Chapter04UnramifiedMaximalSubfieldSpec K P D) :
     Nonempty (Chapter04CyclicPresentationSpec P D U) := by
   sorry
