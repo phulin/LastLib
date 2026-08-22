@@ -37,6 +37,82 @@ structure Chapter13PowerSeriesDVRModel
     (Ideal.span ({PowerSeries.X} : Set (PowerSeries K))).map equiv.toRingHom =
       IsLocalRing.maximalIdeal A
 
+/-- Fixed lifts of a residue `p`-basis determine compatible splittings of all
+positive adic quotients. -/
+theorem chapter13_compatible_p_basis_splittings
+    {A : Type u} [CommRing A] [IsLocalRing A]
+    (p : ℕ) [Fact (Nat.Prime p)] [CharP A p]
+    (B : Set (Chapter13ResidueRing A))
+    (hB : Chapter13PBasis
+      (Chapter13PthPowerSubfield (Chapter13ResidueRing A) p) B p)
+    (a : B → A) (ha : Chapter13AdmissiblePBaseLiftFamily B a) :
+    ∃ f : (n : ℕ) → Chapter13ResidueRing A →+*
+        A ⧸ (IsLocalRing.maximalIdeal A) ^ (n + 1),
+      (∀ n, (Ideal.Quotient.factorPow (IsLocalRing.maximalIdeal A)
+        (Nat.le_succ (n + 1))).comp (f (n + 1)) = f n) ∧
+      (Ideal.Quotient.factor
+        (le_of_eq (pow_one (IsLocalRing.maximalIdeal A)))).comp (f 0) =
+          RingHom.id _ ∧
+      ∀ n (b : B), f n (b : Chapter13ResidueRing A) =
+        Ideal.Quotient.mk
+          ((IsLocalRing.maximalIdeal A) ^ (n + 1)) (a b) := by
+  classical
+  let I : Ideal A := IsLocalRing.maximalIdeal A
+  have hcast (J : Ideal A) (hJ : J ≤ I) :
+      ∀ n : ℕ, (n : A) ∈ J → (n : A) = 0 := by
+    intro n hn
+    by_contra hpn
+    have hnotdvd : ¬p ∣ n :=
+      fun hdiv => hpn ((CharP.cast_eq_zero_iff A p n).2 hdiv)
+    have hunit : IsUnit (n : A) :=
+      (CharP.isUnit_natCast_iff (R := A) Fact.out).2 hnotdvd
+    exact (IsLocalRing.mem_maximalIdeal (R := A) (n : A)).mp (hJ hn) hunit
+  let _ : CharP (Chapter13ResidueRing A) p :=
+    CharP.quotient' p I (hcast I le_rfl)
+  let X (n : ℕ) :=
+    {φ : Chapter13ResidueRing A →+* A ⧸ I ^ (n + 1) //
+      ∀ b : B, φ (b : Chapter13ResidueRing A) =
+        Ideal.Quotient.mk (I ^ (n + 1)) (a b)}
+  let e0 : Chapter13ResidueRing A ≃+* A ⧸ I ^ (0 + 1) :=
+    Ideal.quotEquivOfEq (by simp [I])
+  let x0 : X 0 := ⟨e0.toRingHom, by
+    intro b
+    rw [show (b : Chapter13ResidueRing A) = Chapter13ResidueMap A (a b) from
+      (ha b).symm]
+    simp [e0, Chapter13ResidueMap, Ideal.quotEquivOfEq_mk]⟩
+  have hstep (n : ℕ) (x : X n) : ∃ y : X (n + 1),
+      (Ideal.Quotient.factorPow I (Nat.le_succ (n + 1))).comp y.1 = x.1 := by
+    let _ : CharP (A ⧸ I ^ (n + 2)) p :=
+      CharP.quotient' p _ (hcast _ (Ideal.pow_le_self (by omega)))
+    let q := Ideal.Quotient.factorPow I (Nat.le_succ (n + 1))
+    let β : B → A ⧸ I ^ (n + 2) :=
+      fun b => Ideal.Quotient.mk (I ^ (n + 2)) (a b)
+    have hβ : ∀ b : B, q (β b) = x.1 (b : Chapter13ResidueRing A) := by
+      intro b
+      rw [x.2 b]
+      simp [q, β, Ideal.Quotient.factorPow]
+    obtain ⟨φ, hφ, _⟩ :=
+      chapter13_char_p_square_zero_lift_surjective p Fact.out B hB q
+        (Ideal.Quotient.factor_surjective _)
+        (chapter13_factorPow_succ_ker_sq I (n + 1) (by omega)) x.1 β hβ
+    exact ⟨⟨φ, hφ.2⟩, hφ.1⟩
+  let step (n : ℕ) (x : X n) : X (n + 1) :=
+    Classical.choose (hstep n x)
+  let xs : (n : ℕ) → X n :=
+    fun n => Nat.rec (motive := X) x0 (fun n x => step n x) n
+  refine ⟨fun n => (xs n).1, ?_, ?_, ?_⟩
+  · intro n
+    change (Ideal.Quotient.factorPow I (Nat.le_succ (n + 1))).comp
+      (xs (n + 1)).1 = (xs n).1
+    exact Classical.choose_spec (hstep n (xs n))
+  · apply RingHom.ext
+    intro z
+    obtain ⟨z, rfl⟩ := Ideal.Quotient.mk_surjective z
+    simp [xs, x0, e0, I,
+      Ideal.quotEquivOfEq_mk]
+  · intro n b
+    exact (xs n).2 b
+
 /-- Chosen lifts of a `p`-basis determine a unique coefficient-field splitting. -/
 theorem chapter13_equal_characteristic_p_coefficient_field_splitting
     {A : Type u} [CommRing A] [IsLocalRing A]
@@ -118,9 +194,9 @@ theorem chapter13_coefficient_field_exists_when_contains_field
         rw [map_sub]
         exact sub_eq_zero.mpr hk.symm
       exact ⟨k, m, hm, by simp [m]⟩, hdecomp K hK⟩
-  · letI : Fact (Nat.Prime p) := ⟨hpprime⟩
-    letI : CharP A p := hpA
-    letI : CharP (Chapter13ResidueRing A) p := hres
+  · let _ : Fact (Nat.Prime p) := ⟨hpprime⟩
+    let _ : CharP A p := hpA
+    let _ : CharP (Chapter13ResidueRing A) p := hres
     obtain ⟨B, hB⟩ :=
       (chapter13_p_basis_existence (k := Chapter13ResidueRing A) p).2.1
     let a : B → A := fun b =>
@@ -198,7 +274,7 @@ theorem chapter13_perfect_residue_unique_coefficient_field
   have hB : Chapter13PBasis
       (Chapter13PthPowerSubfield (Chapter13ResidueRing A) p)
       (∅ : Set (Chapter13ResidueRing A)) p := by
-    letI : CharP (Chapter13ResidueRing A) p := CharP.quotient' p
+    let _ : CharP (Chapter13ResidueRing A) p := CharP.quotient' p
       (IsLocalRing.maximalIdeal A)
       (by
         intro n hn

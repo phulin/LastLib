@@ -1675,6 +1675,52 @@ theorem chapter13_char_p_square_zero_lift
     simpa only [RingHom.comp_apply] using h2
   exact h1'.trans h2'.symm
 
+/-- Lifting across a surjection with square-zero kernel.  This is the form of the
+square-zero lifting theorem used for successive adic quotients. -/
+theorem chapter13_char_p_square_zero_lift_surjective
+    {R S : Type u} [CommRing R] [CommRing S]
+    {k : Type v} [Field k]
+    (p : ℕ) (hp : Nat.Prime p) [CharP R p] [CharP k p]
+    (B : Set k)
+    (hB : Chapter13PBasis (Chapter13PthPowerSubfield k p) B p)
+    (q : R →+* S) (hq : Function.Surjective q)
+    (hqker : RingHom.ker q ^ 2 = ⊥)
+    (ψ : k →+* S) (β : B → R)
+    (hβ : ∀ b : B, q (β b) = ψ (b : k)) :
+    ∃! φ : k →+* R,
+      q.comp φ = ψ ∧ ∀ b : B, φ (b : k) = β b := by
+  let e : (R ⧸ RingHom.ker q) ≃+* S := q.quotientKerEquivOfSurjective hq
+  let ψ' : k →+* (R ⧸ RingHom.ker q) := e.symm.toRingHom.comp ψ
+  have hβ' : ∀ b : B,
+      Ideal.Quotient.mk (RingHom.ker q) (β b) = ψ' (b : k) := by
+    intro b
+    apply e.injective
+    simp [e, ψ', hβ b]
+  obtain ⟨φ, hφ, huniq⟩ :=
+    chapter13_char_p_square_zero_lift p hp B hB
+      (RingHom.ker q) hqker ψ' β hβ'
+  refine ⟨φ, ⟨?_, hφ.2⟩, ?_⟩
+  · apply RingHom.ext
+    intro x
+    have hx := congrArg e (DFunLike.congr_fun hφ.1 x)
+    simpa [e, ψ'] using hx
+  · intro φ' hφ'
+    apply huniq φ'
+    refine ⟨?_, hφ'.2⟩
+    apply RingHom.ext
+    intro x
+    apply e.injective
+    simpa [e, ψ'] using DFunLike.congr_fun hφ'.1 x
+
+/-- Successive positive powers of an ideal form square-zero extensions. -/
+theorem chapter13_factorPow_succ_ker_sq
+    {R : Type u} [CommRing R] (I : Ideal R) (n : ℕ) (hn : 1 ≤ n) :
+    RingHom.ker (Ideal.Quotient.factorPow I (Nat.le_succ n)) ^ 2 = ⊥ := by
+  rw [Ideal.Quotient.factor_ker]
+  rw [← Ideal.map_pow]
+  rw [map_eq_bot_iff_le_ker, Ideal.mk_ker, ← pow_mul]
+  exact Ideal.pow_le_pow_right (by omega)
+
 /-- Perfect residue fields have no `p`-basis choices. -/
 theorem chapter13_perfect_field_empty_p_basis
     {k : Type u} [Field k] (p : ℕ) [Fact (Nat.Prime p)] [CharP k p]
