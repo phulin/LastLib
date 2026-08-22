@@ -165,7 +165,7 @@ $$
 
 The vertical arrows in the middle express change of coefficients from one integral Betti lattice. They do not identify $\mathbf C$ with $\mathbf Q_\ell$. Thus the Betti lattice is the common rational source, while the de Rham and étale realizations retain their own scalar fields and extra structures.
 
-The construction proceeds in the only logically safe order. We first build simplicial (co)homology together with its universal coefficient theorem, surface duality, and fundamental class—everything reduced to finite combinatorics once Hypothesis (T) supplies a triangulation. We next prove analytic de Rham comparison, then algebraize it. Separately, we prove Riemann existence and finite-coefficient Betti--étale comparison before passing to inverse limits. Only after both bridges exist do we compare traces, cycles, correspondences, and polarizations.
+The construction proceeds in the only logically safe order. We first build simplicial (co)homology together with its universal coefficient theorem, surface duality, and fundamental class—everything reduced to finite combinatorics once Hypothesis (T) supplies a triangulation. We next prove analytic de Rham comparison, then algebraize it; the genuinely elliptic analytic inputs consumed along the way are isolated once as the standing hypothesis (H) at the head of Chapter 5 and cited by clause wherever used. Separately, we prove Riemann existence and finite-coefficient Betti--étale comparison before passing to inverse limits. Only after both bridges exist do we compare traces, cycles, correspondences, and polarizations.
 
 ### 1.4 Normalizations that cannot be suppressed
 
@@ -556,14 +556,14 @@ H_1\simeq\mathbf Z^{2h},\qquad
 H_2\simeq\mathbf Z. \tag{3.1}
 $$
 
-For a compact Riemann surface arising from a smooth projective curve, Chapter 6 will prove
+For a compact Riemann surface arising from a smooth projective curve, Section 6.2 proves
 
 $$
 H^1_B(X,\mathbf C)
 =H^{1,0}(X)\oplus H^{0,1}(X),
 $$
 
-with both summands of dimension equal to the algebraic genus $g$. Comparing (3.1) after tensoring with $\mathbf C$ shows $h=g$. This avoids assuming in advance that the analytic and algebraic notions of genus coincide.
+with both summands of dimension equal to the algebraic genus $g$. The proof rests on clauses (H1) and (H3) of the standing analytic hypothesis (H) stated at the head of Chapter 5: (H3) identifies the second summand with $H^1(X^{\mathrm{an}},\mathcal O_{X^{\mathrm{an}}})$, whose dimension Book 9's Serre duality puts at $h^0(K)=g$, while Section 5.1 algebraizes the holomorphic differentials forming the first summand. Comparing (3.1) after tensoring with $\mathbf C$ shows $h=g$. This avoids assuming in advance that the analytic and algebraic notions of genus coincide, at the price of carrying hypothesis (H); independently of (H), Books 9 and 46 already give $\dim_KH^1_{\mathrm{dR}}(X/K)=2g$, so once any comparison bridge is available the same count applies.
 
 The Euler characteristic is consequently
 
@@ -2058,6 +2058,8 @@ The hypotheses have distinct roles.
 - Smoothness makes $X^{\mathrm{an}}$ a manifold, makes algebraic differentials locally free, and identifies finite unramified maps with covering maps. Singular curves require intersection cohomology, normalization terms, or dualizing complexes and are outside this comparison statement.
 
 - Hypothesis (T) of Chapter 2—the finite triangulability of every Riemann surface occurring here, classically the theorem of Radó plus surface triangulability—is a standing geometric input that this book does not prove. It is consumed once, in fixing the simplicial model of Section 2.1 from which all Betti groups, products, dualities, and relative groups are then derived combinatorially; dropping it suspends the integral lattice itself, not any later step.
+
+- Hypothesis (H) of Chapter 5—harmonic decomposition on a compact Riemann surface, the Kähler identity $\Delta_d=2\Delta_{\bar\partial}$ with its type consequences, and analytic Serre duality for line bundles—is a standing analytic input that this book does not prove. Its classical proofs are elliptic: regularity and the Fredholm alternative for $\Delta_d$ for clause (H1), the type decomposition of the Laplacian for (H2), and solvability of $\bar\partial$ modulo the adjoint kernel for (H3). No earlier volume or Mathlib-level tool supplies any clause. It is consumed at exactly three places: clause (H3) in the coherent comparison theorem of Section 5.2, which feeds the algebraic de Rham comparison of Section 5.3 and hence every later period computation; clauses (H1) and (H2) in the Hodge decomposition (6.2) of Section 6.2; and clause (H3) again in the Dolbeault identification (6.3) used for the genus count quoted in Section 3.2. Everything further—the filtration (6.4), the bilinear relations of Section 6.4, Jacobian positivity in Chapter 12, and the weight-one variation of Section 13.3—consumes (H) only through those three sites: the bilinear relations use only that holomorphic forms are closed and that $H^0(\Omega^1)$ has dimension $g$, both already available. Dropping (H) suspends the Hodge decomposition, the genus identification, and the coherent comparison bridge; Chapters 2 through 4 and the simplicial topology stand without it.
 
 - Properness makes $X^{\mathrm{an}}$ compact, algebraizes finite analytic covers without boundary data, gives ordinary Poincaré duality, and makes the Jacobian compact. Open curves use compact support and boundary monodromy.
 
