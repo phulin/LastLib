@@ -508,7 +508,23 @@ theorem chapter07_norm_limitation
     chapter07NormSubgroup (K := K) (L := E) =
       chapter07NormSubgroup (K := K)
         (L := chapter07MaximalAbelianSubextension (K := K) (E := E)) := by
-  sorry
+  have hnormE : chapter07NormSubgroup (K := K) (L := E) =
+      LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05NormSubgroup K E := by
+    ext x
+    rw [chapter07_mem_norm_subgroup_iff,
+      LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05_mem_normSubgroup_iff]
+    rfl
+  have hnormM :
+      chapter07NormSubgroup (K := K)
+          (L := chapter07MaximalAbelianSubextension (K := K) (E := E)) =
+        LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05NormSubgroup K
+          (LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05MaximalAbelianField K E) := by
+    ext x
+    rw [chapter07_mem_norm_subgroup_iff,
+      LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05_mem_normSubgroup_iff]
+    rfl
+  rw [hnormE, hnormM]
+  exact LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05_norm_limitation K E D DM
 
 /-- The norm-limitation assertion for all finite Galois extensions of a base
 field.  Naming this proposition keeps the final three-theorem package at one
