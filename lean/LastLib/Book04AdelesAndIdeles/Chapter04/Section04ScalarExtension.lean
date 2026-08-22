@@ -107,7 +107,73 @@ theorem chapter04_finite_extension_basis_has_only_finitely_many_denominator_plac
     (D : Chapter04FiniteExtensionIntegralData K L)
     {ι : Type*} (b : Basis ι K L) :
     (chapter04FiniteExtensionBasisDenominatorSupport D b).Finite := by
-  sorry
+  classical
+  let _ : Finite ι := Module.Finite.finite_basis b
+  choose a ha0 hamem using fun i : ι => D.chosenIntegralLattice_full (b i)
+  let u : ι → Chapter04FiniteAdeleRing K := fun i =>
+    IsDedekindDomain.FiniteAdeleRing.algebraMap (𝓞 K) K ((a i : 𝓞 K) : K)⁻¹
+  have hfinite : (⋃ i : ι, chapter04FiniteAdeleExceptionalSet K (u i)).Finite := by
+    convert Set.Finite.biUnion (Set.finite_univ : (Set.univ : Set ι).Finite)
+      (fun i _ => chapter04_finiteAdele_exceptionalSet_finite K (u i)) using 1
+    ext w
+    simp
+  refine hfinite.subset ?_
+  intro v hv
+  rcases hv with ⟨i, hi⟩
+  by_contra hvnot
+  have hvnoti : v ∉ chapter04FiniteAdeleExceptionalSet K (u i) := by
+    intro hvi
+    apply hvnot
+    exact Set.mem_iUnion.2 ⟨i, hvi⟩
+  have hvint : u i v ∈ chapter04FiniteLocalIntegerSet K v := by
+    by_contra hvi
+    apply hvnoti
+    simpa [chapter04FiniteAdeleExceptionalSet] using hvi
+  have hcinv : (((a i : 𝓞 K) : K)⁻¹ : v.adicCompletion K) ∈
+      chapter04FiniteLocalIntegerSet K v := by
+    have hcval : u i v = (((a i : 𝓞 K) : K)⁻¹ : v.adicCompletion K) := by
+      change (algebraMap K (v.adicCompletion K) (((a i : 𝓞 K) : K)⁻¹)) = _
+      rw [map_inv₀]
+      congr 1
+    rw [← hcval]
+    exact hvint
+  let c : Chapter04FiniteLocalIntegerRing K v :=
+    ⟨((a i : 𝓞 K) : K)⁻¹, hcinv⟩
+  have hgen : TensorProduct.mk K L (Chapter04FiniteLocalField K v) (b i) 1 ∈
+      chapter04TensorFiniteExtensionIntegralModel K L
+        D.chosenIntegralLattice v := by
+    change TensorProduct.mk K L (Chapter04FiniteLocalField K v) (b i) 1 ∈
+      AddSubgroup.closure (Set.range (fun z :
+        D.chosenIntegralLattice × Chapter04FiniteLocalIntegerRing K v =>
+        TensorProduct.mk K L (Chapter04FiniteLocalField K v) z.1.1
+          (z.2 : Chapter04FiniteLocalField K v)))
+    apply AddSubgroup.subset_closure
+    refine ⟨⟨⟨((a i : 𝓞 K) : K) • b i, hamem i⟩, c⟩, ?_⟩
+    dsimp
+    rw [TensorProduct.smul_tmul]
+    change TensorProduct.mk K L (Chapter04FiniteLocalField K v) (b i)
+        (((a i : 𝓞 K) : K) • (c : Chapter04FiniteLocalField K v)) =
+      TensorProduct.mk K L (Chapter04FiniteLocalField K v) (b i) 1
+    congr 1
+    dsimp [c]
+    rw [Algebra.smul_def]
+    have hcoe :
+        (((a i : 𝓞 K) : K) : Chapter04FiniteLocalField K v) =
+          algebraMap K (Chapter04FiniteLocalField K v) ((a i : 𝓞 K) : K) := by
+      simp [IsDedekindDomain.HeightOneSpectrum.algebraMap_adicCompletion]
+    rw [hcoe]
+    have hane : ((a i : 𝓞 K) : K) ≠ 0 :=
+      RingOfIntegers.coe_ne_zero_iff.mpr (ha0 i)
+    have hmapne :
+        algebraMap K (Chapter04FiniteLocalField K v) ((a i : 𝓞 K) : K) ≠ 0 := by
+      exact (map_ne_zero_iff (algebraMap K (Chapter04FiniteLocalField K v))
+        (FaithfulSMul.algebraMap_injective K (Chapter04FiniteLocalField K v))).2 hane
+    exact mul_inv_cancel₀ hmapne
+  have hmodel : TensorProduct.mk K L (Chapter04FiniteLocalField K v) (b i) 1 ∈
+      D.integralModel v := by
+    rw [D.integral_model_is_generated_by_chosen_lattice v]
+    exact hgen
+  exact hi hmodel
 
 theorem chapter04_finite_extension_bad_places_are_finite
     (D : Chapter04FiniteExtensionIntegralData K L) :
@@ -136,14 +202,17 @@ theorem chapter04_scalar_extension_is_finite_over_the_base_adele_ring
     [Algebra K L] [FiniteDimensional K L] [IsScalarTower ℚ K L] :
     Module.Finite (Chapter04AdeleRing K)
       (L ⊗[K] Chapter04AdeleRing K) := by
-  sorry
+  exact Module.Finite.equiv
+    (Algebra.TensorProduct.commRight K (Chapter04AdeleRing K) L).toLinearEquiv
 
 theorem chapter04_scalar_extension_has_a_finite_adelic_basis
     (K L : Type*) [Field K] [Field L] [NumberField K] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] [IsScalarTower ℚ K L] :
     ∃ n : ℕ, Nonempty (Basis (Fin n) (Chapter04AdeleRing K)
       (L ⊗[K] Chapter04AdeleRing K)) := by
-  sorry
+  exact ⟨Module.finrank K L,
+    ⟨(Module.finBasis K L).baseChange (Chapter04AdeleRing K) |>.map
+      (Algebra.TensorProduct.commRight K (Chapter04AdeleRing K) L).toLinearEquiv⟩⟩
 
 /- The topology on the algebraic tensor product is the finite-dimensional
 module topology induced by a finite `K`-basis; the comparison theorem below

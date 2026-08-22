@@ -46,7 +46,22 @@ def chapter04PrincipalPartsMap
     ((chapter04FinitePrincipalPartsQuotientMap K).comp
       (chapter04GlobalToFiniteAdeleAdditiveMap K)) (by
         intro x hx
-        sorry)
+        rcases hx with ⟨a, rfl⟩
+        change QuotientAddGroup.mk' (Chapter04FiniteIntegralAdeleAddSubgroup K)
+          (chapter04GlobalToFiniteAdeleAdditiveMap K
+            (algebraMap (𝓞 K) K a)) = 0
+        change (↑(chapter04GlobalToFiniteAdeleAdditiveMap K
+            (algebraMap (𝓞 K) K a)) : Chapter04FinitePrincipalPartsQuotient K) =
+          ↑(0 : Chapter04FiniteAdeleRing K)
+        rw [QuotientAddGroup.eq_iff_sub_mem]
+        apply (chapter04_finiteIntegralAdele_mem_iff_all_coordinates_integral K _).2
+        intro v
+        simp only [sub_zero]
+        change algebraMap K (v.adicCompletion K) (algebraMap (𝓞 K) K a) ∈
+          v.adicCompletionIntegers K
+        rw [← IsScalarTower.algebraMap_apply (𝓞 K) K (v.adicCompletion K) a]
+        exact IsDedekindDomain.HeightOneSpectrum.coe_mem_adicCompletionIntegers
+          (R := 𝓞 K) (K := K) v a)
 
 @[simp]
 theorem chapter04PrincipalPartsMap_apply
@@ -59,7 +74,35 @@ theorem chapter04PrincipalPartsMap_apply
 theorem chapter04_principalParts_map_injective
     (K : Type*) [Field K] [NumberField K] :
     Function.Injective (chapter04PrincipalPartsMap K) := by
-  sorry
+  intro x y h
+  obtain ⟨a, rfl⟩ := QuotientAddGroup.mk'_surjective
+    (Chapter04RingOfIntegersAddSubgroup K) x
+  obtain ⟨b, rfl⟩ := QuotientAddGroup.mk'_surjective
+    (Chapter04RingOfIntegersAddSubgroup K) y
+  rw [chapter04PrincipalPartsMap_apply, chapter04PrincipalPartsMap_apply] at h
+  have hzero :
+      chapter04FinitePrincipalPartsQuotientMap K
+          (chapter04GlobalToFiniteAdeleAdditiveMap K (a - b)) = 0 := by
+    rw [map_sub]
+    exact sub_eq_zero.mpr h
+  have hmem :
+      chapter04GlobalToFiniteAdeleAdditiveMap K (a - b) ∈
+        Chapter04FiniteIntegralAdeleAddSubgroup K := by
+    change (↑(chapter04GlobalToFiniteAdeleAdditiveMap K (a - b)) :
+      Chapter04FinitePrincipalPartsQuotient K) = ↑(0 : Chapter04FiniteAdeleRing K) at hzero
+    simpa only [sub_zero] using (QuotientAddGroup.eq_iff_sub_mem).mp hzero
+  have hlocal : ∀ v : Chapter04FinitePlace K,
+      ((a - b : K) : v.adicCompletion K) ∈ v.adicCompletionIntegers K := by
+    intro v
+    exact (chapter04_finiteIntegralAdele_mem_iff_all_coordinates_integral K _).1 hmem v
+  apply (QuotientAddGroup.eq_iff_sub_mem).2
+  change a - b ∈ (chapter04RingOfIntegersEmbedding K).range
+  apply IsDedekindDomain.HeightOneSpectrum.mem_integers_of_valuation_le_one
+    (R := 𝓞 K) (K := K) (a - b)
+  intro v
+  rw [← IsDedekindDomain.HeightOneSpectrum.valuedAdicCompletion_eq_valuation' v]
+  exact (IsDedekindDomain.HeightOneSpectrum.mem_adicCompletionIntegers
+    (𝓞 K) K v).1 (hlocal v)
 
 theorem chapter04_principalParts_map_surjective
     (K : Type*) [Field K] [NumberField K] :
