@@ -1,6 +1,7 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section03LiftingFactorizations
 import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Algebraic.Defs
+import Mathlib.RingTheory.Ideal.Quotient.Operations
 import Mathlib.RingTheory.Valuation.ValuationRing
 import Mathlib.RingTheory.Valuation.ValuationSubring
 import Mathlib.RingTheory.Polynomial.Resultant.Basic
@@ -767,6 +768,112 @@ theorem mathlib_henselian_implies_factorization
     · have hsecond := congrArg
         (fun z : MonicDegreeEq A k => z.1) (congrArg Prod.snd hpair)
       simpa [hm, MonicDegreeEq.mk] using hsecond
+
+/-- Coprimality of monic residue factors lifts through any presentation of
+the residue field. -/
+theorem coprime_of_coprime_reductions_along_residue_map
+    {A k : Type*} [CommRing A] [IsLocalRing A] [Field k]
+    (res : A →+* k) (hres : Function.Surjective res)
+    (hker : RingHom.ker res = IsLocalRing.maximalIdeal A)
+    {g h : A[X]} {g₀ h₀ : k[X]}
+    (hg : g.Monic) (hh : h.Monic)
+    (hredg : g.map res = g₀) (hredh : h.map res = h₀)
+    (hcop : IsCoprime g₀ h₀) : IsCoprime g h := by
+  classical
+  let e : ResidueRing A ≃+* k :=
+    (Ideal.quotEquivOfEq hker.symm).trans
+      (res.quotientKerEquivOfSurjective hres)
+  have he : e.toRingHom.comp (residueMap A) = res := by
+    ext x
+    simp [e, residueMap]
+  let gbar : Polynomial (ResidueRing A) := g₀.map e.symm
+  let hbar : Polynomial (ResidueRing A) := h₀.map e.symm
+  have hredgbar : residuePolynomial g = gbar := by
+    apply Polynomial.map_injective e.toRingHom e.injective
+    unfold residuePolynomial
+    rw [Polynomial.map_map, he, hredg]
+    simp [gbar, Polynomial.map_map]
+  have hredhbar : residuePolynomial h = hbar := by
+    apply Polynomial.map_injective e.toRingHom e.injective
+    unfold residuePolynomial
+    rw [Polynomial.map_map, he, hredh]
+    simp [hbar, Polynomial.map_map]
+  exact coprime_lifts_are_coprime hg hh hredgbar hredhbar
+    (hcop.map (Polynomial.mapRingHom e.symm.toRingHom))
+
+/-- Binary Hensel factorization transported through any presentation of the
+residue field.  The kernel condition says precisely that `res` presents the
+canonical residue quotient. -/
+theorem henselian_lifts_coprime_factorization_along_residue_map
+    {A k : Type*} [CommRing A] [Field k] [HenselianLocalRing A]
+    (res : A →+* k) (hres : Function.Surjective res)
+    (hker : RingHom.ker res = IsLocalRing.maximalIdeal A)
+    (f : A[X]) (g₀ h₀ : k[X])
+    (hf : f.Monic) (hg₀ : g₀.Monic) (hh₀ : h₀.Monic)
+    (hcop : IsCoprime g₀ h₀) (hred : f.map res = g₀ * h₀) :
+    ∃! gh : A[X] × A[X],
+      gh.1.Monic ∧ gh.2.Monic ∧ gh.1.map res = g₀ ∧
+        gh.2.map res = h₀ ∧ f = gh.1 * gh.2 := by
+  classical
+  let e : ResidueRing A ≃+* k :=
+    (Ideal.quotEquivOfEq hker.symm).trans
+      (res.quotientKerEquivOfSurjective hres)
+  have he : e.toRingHom.comp (residueMap A) = res := by
+    ext x
+    simp [e, residueMap]
+  have hmap (p : A[X]) :
+      (p.map (residueMap A)).map e.toRingHom = p.map res := by
+    rw [Polynomial.map_map, he]
+  let gbar : Polynomial (ResidueRing A) := g₀.map e.symm
+  let hbar : Polynomial (ResidueRing A) := h₀.map e.symm
+  have hgbar : gbar.Monic := hg₀.map e.symm.toRingHom
+  have hhbar : hbar.Monic := hh₀.map e.symm.toRingHom
+  have hcopbar : IsCoprime gbar hbar :=
+    hcop.map (Polynomial.mapRingHom e.symm.toRingHom)
+  have hredbar : residuePolynomial f = gbar * hbar := by
+    apply Polynomial.map_injective e.toRingHom e.injective
+    rw [Polynomial.map_mul]
+    unfold residuePolynomial
+    rw [hmap, hred]
+    simp [gbar, hbar, Polynomial.map_map]
+  obtain ⟨gh, hgh, huniq⟩ :=
+    mathlib_henselian_implies_factorization f gbar hbar hf hgbar hhbar hcopbar hredbar
+  rcases hgh with ⟨hg, hh, _, _, hrg, hrh, hfac⟩
+  change gh.1.map (residueMap A) = gbar at hrg
+  change gh.2.map (residueMap A) = hbar at hrh
+  refine ⟨gh, ⟨hg, hh, ?_, ?_, hfac⟩, ?_⟩
+  · calc
+      gh.1.map res = (gh.1.map (residueMap A)).map e.toRingHom := (hmap gh.1).symm
+      _ = g₀ := by rw [hrg]; simp [gbar, Polynomial.map_map]
+  · calc
+      gh.2.map res = (gh.2.map (residueMap A)).map e.toRingHom := (hmap gh.2).symm
+      _ = h₀ := by rw [hrh]; simp [hbar, Polynomial.map_map]
+  · intro gh' hgh'
+    rcases hgh' with ⟨hg', hh', hrg', hrh', hfac'⟩
+    apply huniq gh'
+    refine ⟨hg', hh', ?_, ?_, ?_, ?_, hfac'⟩
+    · calc
+        gh'.1.natDegree = (gh'.1.map res).natDegree := (hg'.natDegree_map res).symm
+        _ = g₀.natDegree := congrArg Polynomial.natDegree hrg'
+        _ = gbar.natDegree := by
+          change g₀.natDegree = (g₀.map e.symm.toRingHom).natDegree
+          exact (hg₀.natDegree_map e.symm.toRingHom).symm
+    · calc
+        gh'.2.natDegree = (gh'.2.map res).natDegree := (hh'.natDegree_map res).symm
+        _ = h₀.natDegree := congrArg Polynomial.natDegree hrh'
+        _ = hbar.natDegree := by
+          change h₀.natDegree = (h₀.map e.symm.toRingHom).natDegree
+          exact (hh₀.natDegree_map e.symm.toRingHom).symm
+    · apply Polynomial.map_injective e.toRingHom e.injective
+      calc
+        (gh'.1.map (residueMap A)).map e.toRingHom = gh'.1.map res := hmap gh'.1
+        _ = g₀ := hrg'
+        _ = gbar.map e.toRingHom := by simp [gbar, Polynomial.map_map]
+    · apply Polynomial.map_injective e.toRingHom e.injective
+      calc
+        (gh'.2.map (residueMap A)).map e.toRingHom = gh'.2.map res := hmap gh'.2
+        _ = h₀ := hrh'
+        _ = hbar.map e.toRingHom := by simp [hbar, Polynomial.map_map]
 
 /-- The Mathlib-to-Chapter-9 bridge for the valuation subring attached to a
 valuation ring and its fraction field. -/

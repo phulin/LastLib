@@ -5,6 +5,7 @@ import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
 import Mathlib.RingTheory.Ideal.Quotient.Operations
 import Mathlib.RingTheory.TensorProduct.Maps
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Section05ExamplesBothCharacteristics
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section04HenselianLocalRings
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07
 
@@ -13,6 +14,7 @@ open Function
 open Polynomial
 open scoped BigOperators TensorProduct WithZero
 open LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
+open LastLib.Book01ValuationsDVRsAndCompletions.Chapter09
 
 noncomputable section
 
@@ -61,46 +63,137 @@ theorem chapter07_separable_factorization_lifts_uniquely
     ∃ G : Chapter07LiftedFactorization A k res r F g,
       ∀ H : Chapter07LiftedFactorization A k res r F g,
         H.factors = G.factors := by
-  /-
-  Proof roadmap (the required factor-lifting API is not yet in this Mathlib).
-
-  1. Use `hres_surjective` and `hres_kernel` to identify this presentation with
-     the canonical residue field.  In particular item 3 of
-     `HenselianLocalRing.TFAE` in `Mathlib/RingTheory/Henselian.lean` applies
-     to `res`; its proof uses `IsLocalRing.ker_eq_maximalIdeal`.  Thus the two
-     explicit residue-map hypotheses here are sufficient (the kernel equality
-     is also exactly what is needed to rewrite congruences modulo the maximal
-     ideal).
-  2. First establish the missing binary Hensel factorization lemma: if monic
-     `g : A[X]` reduces along a surjective `res : A →+* k` to `f₀ * f₁`, with
-     `IsCoprime (Ideal.span {f₀}) (Ideal.span {f₁})`, then there are unique
-     monic `g₀ g₁` reducing to `f₀ f₁` and satisfying `g = g₀ * g₁`.
-     `Mathlib/RingTheory/Henselian.lean` currently provides only simple-root
-     lifting (`HenselianLocalRing.TFAE`) and explicitly lists coprime
-     factorization lifting as a TODO, so there is no declaration to apply here.
-  3. Prove by induction on `r` (splitting `Fin (n + 1)` with
-     `finSuccEquiv`) that `g` has the uniquely labelled factors
-     `F.factors i`.  For the binary split, use `F.product`, `F.monic`, and
-     pairwise distinct irreducibles; over the field `k`, distinct irreducibles
-     give coprime elements via `Irreducible.coprime_iff_not_dvd` (after ruling
-     out associates using monicity and `F.distinct`), and
-     `Ideal.isCoprime_span_singleton_iff` converts this to the required ideal
-     statement.  Apply the binary lemma, then recurse on the complementary
-     product.
-  4. Reduction of the lifted Bezout identity shows that each lifted pair has
-     unit resultant (its image in `k` is nonzero); use the resultant/Bezout
-     identity to fill `Chapter07LiftedFactorization.pairwise_coprime`.
-     Fill `monic`, `reductions`, and `product` from the induction, and set
-     `reduced_product` to `hgred`.
-  5. For uniqueness, apply binary uniqueness at each induction step and then
-     `funext`; the fixed reductions prevent permutations of the factors.
-
-  Dead end: repeated use of the simple-root clause of
-  `HenselianLocalRing.TFAE` does not lift a non-linear factor.  The missing
-  binary factorization theorem must be proved first (normally through the
-  finite-etale/idempotent characterization of a Henselian pair).
-  -/
-  sorry
+  classical
+  have hpair : PairwiseCoprimeFamily F.factors := by
+    intro i j hij
+    apply (F.irreducible i).coprime_iff_not_dvd.mpr
+    intro hdvd
+    exact F.distinct hij (eq_of_monic_of_associated (F.monic i) (F.monic j)
+      ((F.irreducible i).associated_of_dvd (F.irreducible j) hdvd))
+  let P : ∀ (ι : Type) [Fintype ι], Prop := fun ι _ =>
+    ∀ (f : A[X]) (f₀ : ι → k[X]), f.Monic →
+      (∀ i, (f₀ i).Monic) → PairwiseCoprimeFamily f₀ →
+      f.map res = ∏ i, f₀ i →
+      ∃! lifts : ι → A[X],
+        ((∀ i, (lifts i).Monic ∧ (lifts i).map res = f₀ i) ∧
+          f = ∏ i, lifts i)
+  have hP : P (Fin r) := by
+    apply Fintype.induction_empty_option (P := fun ι _ => P ι)
+    · intro α β inst equiv IH f f₀ hf hmonic hcop hred
+      let _ : Fintype α := Fintype.ofEquiv β equiv.symm
+      let f₀' : α → k[X] := fun a => f₀ (equiv a)
+      obtain ⟨lifts, hlifts, huniq⟩ := IH f f₀' hf
+        (fun a => hmonic (equiv a))
+        (by
+          intro a b hab
+          apply hcop
+          exact fun h => hab (equiv.injective h))
+        (by simpa [f₀'] using hred.trans (equiv.prod_comp f₀).symm)
+      let lifts' : β → A[X] := fun b => lifts (equiv.symm b)
+      refine ⟨lifts', ?_, ?_⟩
+      · refine ⟨?_, ?_⟩
+        · intro b
+          simpa [lifts', f₀'] using hlifts.1 (equiv.symm b)
+        · calc
+            f = ∏ a, lifts a := hlifts.2
+            _ = ∏ b, lifts' b := by
+              rw [← equiv.prod_comp lifts']
+              simp [lifts']
+      · intro other hother
+        let other' : α → A[X] := fun a => other (equiv a)
+        have heq : other' = lifts := huniq other' (by
+          refine ⟨?_, ?_⟩
+          · intro a
+            simpa [other', f₀'] using hother.1 (equiv a)
+          · calc
+              f = ∏ b, other b := hother.2
+              _ = ∏ a, other' a := by
+                rw [equiv.prod_comp])
+        funext b
+        have heval := congrFun heq (equiv.symm b)
+        simpa [other', lifts'] using heval
+    · intro f f₀ hf _hmonic _hcop hred
+      have hf1 : f = 1 := by
+        apply hf.natDegree_eq_zero.mp
+        calc
+          f.natDegree = (f.map res).natDegree := (hf.natDegree_map res).symm
+          _ = 0 := by simpa using congrArg Polynomial.natDegree hred
+      refine ⟨fun i => PEmpty.elim i, ?_, ?_⟩
+      · exact ⟨fun i => PEmpty.elim i, by simp [hf1]⟩
+      · intro other _hother
+        funext i
+        exact PEmpty.elim i
+    · intro α inst IH f f₀ hf hmonic hcop hred
+      let g₀ : k[X] := f₀ none
+      let h₀ : k[X] := ∏ a, f₀ (some a)
+      have hg₀ : g₀.Monic := hmonic none
+      have hh₀ : h₀.Monic := monic_prod_of_monic Finset.univ _
+        (fun a _ha => hmonic (some a))
+      have hcoph : IsCoprime g₀ h₀ := by
+        apply IsCoprime.prod_right
+        intro a _ha
+        exact hcop (by simp)
+      have hred' : f.map res = g₀ * h₀ := by
+        simpa [g₀, h₀, Fintype.prod_option] using hred
+      obtain ⟨gh, hgh, hghuniq⟩ :=
+        henselian_lifts_coprime_factorization_along_residue_map
+          res hres_surjective hres_kernel f g₀ h₀ hf hg₀ hh₀ hcoph hred'
+      obtain ⟨rest, hrest, hrestuniq⟩ := IH gh.2 (fun a => f₀ (some a))
+        hgh.2.1 (fun a => hmonic (some a))
+        (by
+          intro a b hab
+          exact hcop (fun h => hab (Option.some.inj h))) hgh.2.2.2.1
+      let lifts : Option α → A[X]
+        | none => gh.1
+        | some a => rest a
+      refine ⟨lifts, ?_, ?_⟩
+      · refine ⟨?_, ?_⟩
+        · intro o
+          cases o with
+          | none => simpa [lifts, g₀] using ⟨hgh.1, hgh.2.2.1⟩
+          | some a => simpa [lifts] using hrest.1 a
+        · calc
+            f = gh.1 * gh.2 := hgh.2.2.2.2
+            _ = gh.1 * ∏ a, rest a := by rw [hrest.2]
+            _ = ∏ o, lifts o := by rw [Fintype.prod_option]
+      · intro other hother
+        let otherTail : α → A[X] := fun a => other (some a)
+        have htailmonic : (∏ a, otherTail a).Monic :=
+          monic_prod_of_monic Finset.univ _ (fun a _ha => (hother.1 (some a)).1)
+        have htailred : (∏ a, otherTail a).map res = h₀ := by
+          simp only [Polynomial.map_prod]
+          apply Finset.prod_congr rfl
+          intro a _ha
+          exact (hother.1 (some a)).2
+        have hotherprod : f = other none * ∏ a, otherTail a := by
+          rw [hother.2, Fintype.prod_option]
+        have hghEq : (other none, ∏ a, otherTail a) = gh :=
+          hghuniq _ ⟨(hother.1 none).1, htailmonic, (hother.1 none).2,
+            htailred, hotherprod⟩
+        have htailprod : gh.2 = ∏ a, otherTail a :=
+          (congrArg Prod.snd hghEq).symm
+        have hrestEq : otherTail = rest := hrestuniq otherTail
+          ⟨fun a => hother.1 (some a), htailprod⟩
+        funext o
+        cases o with
+        | none => simpa [lifts] using congrArg Prod.fst hghEq
+        | some a => simpa [lifts, otherTail] using congrFun hrestEq a
+  obtain ⟨lifts, hlifts, huniq⟩ := hP g F.factors hgmonic F.monic hpair hgred
+  let G : Chapter07LiftedFactorization A k res r F g :=
+    { factors := lifts
+      monic := fun i => (hlifts.1 i).1
+      pairwise_coprime := by
+        intro i j hij
+        apply (Ideal.isCoprime_span_singleton_iff _ _).mpr
+        exact coprime_of_coprime_reductions_along_residue_map
+          res hres_surjective hres_kernel (hlifts.1 i).1 (hlifts.1 j).1
+            (hlifts.1 i).2 (hlifts.1 j).2 (hpair hij)
+      reductions := fun i => (hlifts.1 i).2
+      product := hlifts.2
+      reduced_product := hgred }
+  refine ⟨G, ?_⟩
+  intro H
+  exact huniq H.factors ⟨fun i => ⟨H.monic i, H.reductions i⟩, H.product⟩
 
 /-- The quotient of a separable product splits as the product of its field
 factors. -/
