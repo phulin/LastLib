@@ -22,7 +22,10 @@ theorem chapter08_trace_hom_tower_identification
     (x : C) (b : B) :
     Algebra.trace A C (x * algebraMap B C b) =
       Algebra.trace A B (Algebra.trace B C x * b) := by
-  sorry
+  rw [← Algebra.trace_trace (R := A) (S := B) (T := C)]
+  rw [mul_comm x, ← Algebra.smul_def]
+  rw [map_smul]
+  simp [mul_comm]
 
 noncomputable def chapter08_trace_hom_tower_equivalence
     (A B C : Type*) [CommRing A] [CommRing B] [CommRing C]
@@ -30,7 +33,50 @@ noncomputable def chapter08_trace_hom_tower_equivalence
     [Module.Free A B] [Module.Finite A B]
     [Module.Free B C] [Module.Finite B C] :
     Chapter08TraceHomTowerEquivalence A B C := by
-  sorry
+  let mulMap : C →ₗ[A] B →ₗ[A] C :=
+    LinearMap.mk₂ A (fun c b => algebraMap B C b * c)
+      (by intro c₁ c₂ b; exact mul_add _ _ _)
+      (by intro a c b; simp [Algebra.smul_def, mul_assoc, mul_comm, mul_left_comm])
+      (by intro c b₁ b₂; simp only [map_add, add_mul])
+      (by intro a c b
+          simp only [Algebra.smul_def, map_mul]
+          rw [IsScalarTower.algebraMap_apply A B C]
+          ac_rfl)
+  let forward : (C →ₗ[A] A) →
+      {φ : C →ₗ[A] (B →ₗ[A] A) // chapter08TraceHomBLinear A B C φ} :=
+    fun f =>
+      ⟨mulMap.compr₂ f, by
+        intro b x
+        ext y
+        simp [chapter08DualRightAction, mulMap, Algebra.smul_def,
+          mul_comm, mul_left_comm]⟩
+  let inverse :
+      {φ : C →ₗ[A] (B →ₗ[A] A) // chapter08TraceHomBLinear A B C φ} →
+        (C →ₗ[A] A) :=
+    fun f =>
+      { toFun := fun c => f.1 c 1
+        map_add' := by intro c₁ c₂; simp
+        map_smul' := by intro a c; simp }
+  refine
+    { forward := forward
+      forward_apply := by
+        intro f c b
+        simp [forward, mulMap]
+      inverse := inverse
+      inverse_apply := by
+        intro f c
+        rfl
+      inverse_forward := by
+        intro f
+        ext c
+        simp [forward, inverse, mulMap]
+      forward_inverse := by
+        intro f
+        apply Subtype.ext
+        ext c b
+        have h := congrArg (fun ψ : B →ₗ[A] A => ψ 1) (f.2 b c)
+        simpa [forward, inverse, mulMap, chapter08DualRightAction,
+          Algebra.smul_def, mul_assoc, mul_comm, mul_left_comm] using h }
 
 theorem chapter08_trace_hom_tower_compatibility
     (A B C : Type*) [CommRing A] [CommRing B] [CommRing C]
@@ -57,7 +103,10 @@ theorem chapter08_different_ideal_transitivity
     chapter08DifferentIdeal A C =
       chapter08DifferentIdeal B C *
         (chapter08DifferentIdeal A B).map (algebraMap B C) := by
-  sorry
+  change differentIdeal A C = differentIdeal B C *
+    (differentIdeal A B).map (algebraMap B C)
+  exact differentIdeal_eq_differentIdeal_mul_differentIdeal
+    (A := A) (B := B) (C := C)
 
 theorem chapter08_different_ideal_transitivity_canonical
     (A B C : Type*) [CommRing A] [CommRing B]
@@ -70,7 +119,7 @@ theorem chapter08_different_ideal_transitivity_canonical
     [Algebra.IsSeparable (FractionRing A) (FractionRing C)] :
     differentIdeal A C =
       differentIdeal B C * (differentIdeal A B).map (algebraMap B C) := by
-  sorry
+  exact chapter08_different_ideal_transitivity A B C
 
 /- The fractional-ideal transitivity formula extends the middle ideal
    upstairs; the inverse-lattice version is recorded immediately below. -/
@@ -100,7 +149,21 @@ theorem chapter08_different_fractional_transitivity
       LastLib.Book03RamificationTheory.Chapter07.chapter07DifferentFractionalIdeal B C M N *
         FractionalIdeal.extendedHom N C
           (LastLib.Book03RamificationTheory.Chapter07.chapter07DifferentFractionalIdeal A B K M) := by
-  sorry
+  change
+    (LastLib.Book03RamificationTheory.Chapter07.chapter07CodifferentFractionalIdeal
+      A C K N)⁻¹ =
+      (LastLib.Book03RamificationTheory.Chapter07.chapter07CodifferentFractionalIdeal
+        B C M N)⁻¹ *
+        FractionalIdeal.extendedHom N C
+          (LastLib.Book03RamificationTheory.Chapter07.chapter07CodifferentFractionalIdeal
+            A B K M)⁻¹
+  rw [map_inv₀, ← mul_inv]
+  change
+    (FractionalIdeal.dual A K (1 : FractionalIdeal C⁰ N))⁻¹ =
+      (FractionalIdeal.dual B M (1 : FractionalIdeal C⁰ N) *
+        FractionalIdeal.extendedHom N C
+          (FractionalIdeal.dual A K (1 : FractionalIdeal B⁰ M)))⁻¹
+  rw [FractionalIdeal.dual_eq_dual_mul_dual A K M B C N]
 
 theorem chapter08_trace_dual_product_formula
     (A B C K M N : Type*) [CommRing A] [CommRing B] [CommRing C]

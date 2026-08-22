@@ -605,7 +605,12 @@ theorem chapter08_sqrt_two_polynomial_discr_is_eight :
 theorem chapter08_sqrt_two_polynomial_discriminant_valuation :
     Padic.addValuation (p := 2) chapter08SqrtTwoPolynomialDiscriminant =
       (3 : WithTop ℤ) := by
-  sorry
+  rw [chapter08_sqrt_two_polynomial_discriminant_is_eight]
+  norm_num [Padic.addValuation, AddValuation.of_apply, Padic.addValuationDef,
+    Padic.valuation_ofNat]
+  have hpv : padicValNat 2 8 = 3 := by
+    convert padicValNat_base_pow (p := 2) (by norm_num) 3 using 1
+  exact_mod_cast hpv
 
 end
 
