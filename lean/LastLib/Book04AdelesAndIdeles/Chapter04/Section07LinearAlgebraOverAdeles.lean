@@ -257,7 +257,160 @@ def chapter04LatticeLocalAgreementOutside
 theorem chapter04_two_lattices_agree_locally_outside_finitely_many_places
     (M N : Chapter04Lattice K V) :
     chapter04LatticeLocalAgreementOutside M N := by
-  sorry
+  classical
+  have hcommon : ∃ a : 𝓞 K, a ≠ 0 ∧
+      (∀ x : V, x ∈ M.carrier → (a : K) • x ∈ N.carrier) ∧
+      (∀ x : V, x ∈ N.carrier → (a : K) • x ∈ M.carrier) := by
+    rcases (Submodule.fg_def.mp M.finite.fg_top) with ⟨sM, hsM, hspanM⟩
+    rcases (Submodule.fg_def.mp N.finite.fg_top) with ⟨sN, hsN, hspanN⟩
+    let dM : M.carrier → 𝓞 K := fun x => Classical.choose (N.full x.1)
+    let dN : N.carrier → 𝓞 K := fun x => Classical.choose (M.full x.1)
+    have hdM : ∀ x : M.carrier, dM x ≠ 0 ∧
+        ((dM x : K) • (x : V) ∈ N.carrier) := by
+      intro x
+      exact Classical.choose_spec (N.full x.1)
+    have hdN : ∀ x : N.carrier, dN x ≠ 0 ∧
+        ((dN x : K) • (x : V) ∈ M.carrier) := by
+      intro x
+      exact Classical.choose_spec (M.full x.1)
+    let pM : 𝓞 K := ∏ x ∈ hsM.toFinset, dM x
+    let pN : 𝓞 K := ∏ x ∈ hsN.toFinset, dN x
+    have hpM : pM ≠ 0 := by
+      exact Finset.prod_ne_zero_iff.mpr (fun x hx => (hdM x).1)
+    have hpN : pN ≠ 0 := by
+      exact Finset.prod_ne_zero_iff.mpr (fun x hx => (hdN x).1)
+    have hM : ∀ x : V, x ∈ M.carrier →
+        (pM : K) • x ∈ N.carrier := by
+      intro x hx
+      have hx' : (⟨x, hx⟩ : M.carrier) ∈ Submodule.span (𝓞 K) sM := by
+        rw [hspanM]
+        exact Submodule.mem_top
+      refine Submodule.span_induction (R := 𝓞 K) (s := sM)
+        (x := (⟨x, hx⟩ : M.carrier)) (p := fun y _ =>
+          (pM : K) • (y : V) ∈ N.carrier) ?_ ?_ ?_ ?_ hx'
+      · intro y hy
+        obtain ⟨c, hc⟩ := Finset.dvd_prod_of_mem dM
+          (hsM.mem_toFinset.mpr hy)
+        rw [show pM = dM y * c by exact hc]
+        have hmem := N.carrier.smul_mem c (hdM y).2
+        rw [← smul_assoc] at hmem
+        simpa [Algebra.smul_def, map_mul, mul_comm] using hmem
+      · simpa using N.carrier.zero_mem
+      · intro y z _ _ hy hz
+        simpa [smul_add] using N.carrier.add_mem hy hz
+      · intro c y _ hy
+        simpa [smul_smul, mul_comm] using N.carrier.smul_mem c hy
+    have hN : ∀ x : V, x ∈ N.carrier →
+        (pN : K) • x ∈ M.carrier := by
+      intro x hx
+      have hx' : (⟨x, hx⟩ : N.carrier) ∈ Submodule.span (𝓞 K) sN := by
+        rw [hspanN]
+        exact Submodule.mem_top
+      refine Submodule.span_induction (R := 𝓞 K) (s := sN)
+        (x := (⟨x, hx⟩ : N.carrier)) (p := fun y _ =>
+          (pN : K) • (y : V) ∈ M.carrier) ?_ ?_ ?_ ?_ hx'
+      · intro y hy
+        obtain ⟨c, hc⟩ := Finset.dvd_prod_of_mem dN
+          (hsN.mem_toFinset.mpr hy)
+        rw [show pN = dN y * c by exact hc]
+        have hmem := M.carrier.smul_mem c (hdN y).2
+        rw [← smul_assoc] at hmem
+        simpa [Algebra.smul_def, map_mul, mul_comm] using hmem
+      · simpa using M.carrier.zero_mem
+      · intro y z _ _ hy hz
+        simpa [smul_add] using M.carrier.add_mem hy hz
+      · intro c y _ hy
+        simpa [smul_smul, mul_comm] using M.carrier.smul_mem c hy
+    refine ⟨pM * pN, mul_ne_zero hpM hpN, ?_, ?_⟩
+    · intro x hx
+      have hmem := N.carrier.smul_mem pN (hM x hx)
+      rw [← smul_assoc] at hmem
+      simpa [Algebra.smul_def, map_mul, mul_comm] using hmem
+    · intro x hx
+      have hmem := M.carrier.smul_mem pM (hN x hx)
+      rw [← smul_assoc] at hmem
+      simpa [Algebra.smul_def, map_mul, mul_comm] using hmem
+  rcases hcommon with ⟨a, ha, hMN, hNM⟩
+  let hlocal_inclusion : ∀ (P Q : Chapter04Lattice K V),
+      (∀ x : V, x ∈ P.carrier → (a : K) • x ∈ Q.carrier) →
+      ∀ v : Chapter04FinitePlace K,
+        (a : v.adicCompletion K) ∈ v.adicCompletionIntegers K →
+        ((a : v.adicCompletion K)⁻¹) ∈ v.adicCompletionIntegers K →
+        chapter04LocalLattice P v ≤ chapter04LocalLattice Q v := by
+    intro P Q hPQ v haint hainv
+    change AddSubgroup.closure (chapter04LocalLatticeGenerators P v) ≤
+      chapter04LocalLattice Q v
+    apply (AddSubgroup.closure_le _).2
+    intro z hz
+    rcases hz with ⟨z, rfl⟩
+    rcases z with ⟨x, o⟩
+    rcases x with ⟨x, hx⟩
+    apply AddSubgroup.subset_closure
+    let o' : Chapter04FiniteLocalIntegerRing K v :=
+      ⟨(a : v.adicCompletion K)⁻¹ * (o : v.adicCompletion K),
+        (v.adicCompletionIntegers K).mul_mem _ _ hainv o.property⟩
+    refine ⟨(⟨(a : K) • x, hPQ x hx⟩, o'), ?_⟩
+    change ((a : K) • x) ⊗ₜ[K] (o' : v.adicCompletion K) =
+      x ⊗ₜ[K] (o : v.adicCompletion K)
+    rw [TensorProduct.smul_tmul]
+    dsimp [o']
+    have hK : (a : K) ≠ 0 := by
+      intro h
+      apply ha
+      exact Subtype.ext h
+    have hane : (a : v.adicCompletion K) ≠ 0 := by
+      have hmapne : algebraMap K (v.adicCompletion K) (a : K) ≠ 0 := by
+        exact (map_ne_zero_iff (algebraMap K (v.adicCompletion K))
+          (FaithfulSMul.algebraMap_injective K (v.adicCompletion K))).2 hK
+      simpa [IsDedekindDomain.HeightOneSpectrum.algebraMap_adicCompletion]
+        using hmapne
+    have hcoe : (a : v.adicCompletion K) =
+        algebraMap K (v.adicCompletion K) (a : K) := by
+      simp [IsDedekindDomain.HeightOneSpectrum.algebraMap_adicCompletion]
+    have hmapne : algebraMap K (v.adicCompletion K) (a : K) ≠ 0 := by
+      exact (map_ne_zero_iff (algebraMap K (v.adicCompletion K))
+        (FaithfulSMul.algebraMap_injective K (v.adicCompletion K))).2 hK
+    rw [hcoe]
+    congr 1
+    simp [Algebra.smul_def, hmapne]
+  let d : K →+* Chapter04FiniteAdeleRing K :=
+    IsDedekindDomain.FiniteAdeleRing.algebraMap (𝓞 K) K
+  let da : Chapter04FiniteAdeleRing K := d (a : K)
+  let dai : Chapter04FiniteAdeleRing K := d ((a : K)⁻¹)
+  let S : Set (Chapter04FinitePlace K) :=
+    chapter04FiniteAdeleExceptionalSet K da ∪
+      chapter04FiniteAdeleExceptionalSet K dai
+  have hS : S.Finite := by
+    exact (chapter04_finiteAdele_exceptionalSet_finite K da).union
+      (chapter04_finiteAdele_exceptionalSet_finite K dai)
+  refine ⟨S, hS, ?_⟩
+  intro v hv
+  have hda : da v ∈ chapter04FiniteLocalIntegerSet K v := by
+    have hv' : v ∉ chapter04FiniteAdeleExceptionalSet K da := by
+      intro hv'
+      exact hv (Or.inl hv')
+    exact not_not.mp hv'
+  have hdai : dai v ∈ chapter04FiniteLocalIntegerSet K v := by
+    have hv' : v ∉ chapter04FiniteAdeleExceptionalSet K dai := by
+      intro hv'
+      exact hv (Or.inr hv')
+    exact not_not.mp hv'
+  have haint : (a : v.adicCompletion K) ∈ v.adicCompletionIntegers K := by
+    have hcoe : da v = (a : v.adicCompletion K) := by
+      exact IsDedekindDomain.FiniteAdeleRing.algebraMap_apply (𝓞 K) K a v
+    rw [hcoe] at hda
+    exact hda
+  have hainv : ((a : v.adicCompletion K)⁻¹) ∈ v.adicCompletionIntegers K := by
+    have hcoe : dai v = ((a : v.adicCompletion K)⁻¹) := by
+      change (algebraMap K (v.adicCompletion K) ((a : K)⁻¹)) =
+        ((a : v.adicCompletion K)⁻¹)
+      rw [map_inv₀]
+      congr 1
+    rw [hcoe] at hdai
+    exact hdai
+  apply le_antisymm
+  · exact hlocal_inclusion M N hMN v haint hainv
+  · exact hlocal_inclusion N M hNM v haint hainv
 
 theorem chapter04_adelic_vector_space_topology_is_independent_of_the_lattice
     (M N : Chapter04Lattice K V) :
@@ -303,7 +456,7 @@ theorem chapter04AdelicLinearMap_apply_tmul
     [AddCommGroup V] [AddCommGroup W] [Module K V] [Module K W]
     (T : V →ₗ[K] W) (v : V) (a : Chapter04AdeleRing K) :
     chapter04AdelicLinearMap T (v ⊗ₜ[K] a) = T v ⊗ₜ[K] a := by
-  sorry
+  simp [chapter04AdelicLinearMap]
 
 theorem chapter04_adelic_linear_map_is_continuous
     {V W : Type*} [Field K] [NumberField K]
