@@ -150,10 +150,31 @@ theorem chapter10_formal_unit_layer_card
     [Fintype (Chapter10ResidueField D.valuation)] (n : ℕ) (hn : 0 < n) :
     Nat.card
         (Chapter10UnitFiltration D.valuation n ⧸
-          (Chapter10UnitFiltration D.valuation (n + 1)).subgroupOf
+        (Chapter10UnitFiltration D.valuation (n + 1)).subgroupOf
             (Chapter10UnitFiltration D.valuation n)) =
       Fintype.card (Chapter10ResidueField D.valuation) := by
-  sorry
+  let A := Chapter10ValuationRing D.valuation
+  obtain ⟨π, hπirr⟩ := IsDiscreteValuationRing.exists_irreducible A
+  let hπ : LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Chapter10Uniformizer A π :=
+    ⟨hπirr.ne_zero, hπirr.maximalIdeal_eq⟩
+  let e : Multiplicative (Chapter10ResidueField D.valuation) ≃*
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Chapter10UnitLayerQuotient A n :=
+    MulEquiv.ofBijective
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10UniformizerLayerCoordinate
+        A π hπ n hn)
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10_uniformizer_layer_coordinate_bijective
+        A π hπ n hn)
+  change Nat.card
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Chapter10UnitLayerQuotient A n) =
+    Fintype.card (Chapter10ResidueField D.valuation)
+  calc
+    Nat.card
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Chapter10UnitLayerQuotient A n) =
+        Nat.card (Multiplicative (Chapter10ResidueField D.valuation)) :=
+      Nat.card_congr e.symm.toEquiv
+    Nat.card (Multiplicative (Chapter10ResidueField D.valuation)) =
+        Fintype.card (Chapter10ResidueField D.valuation) := by
+      simp [Nat.card_eq_fintype_card]
 
 theorem chapter10_formal_torsion_layers_are_totally_ramified
     {K : Type*} [Field K] (D : Chapter10LocalFieldProfile K)
@@ -210,7 +231,13 @@ theorem chapter10_artin_of_uniformizer_on_formal_torsion
     [Fintype (Gal(T.torsionField n / K))]
     (A : Chapter10NormalizedFiniteArtinMap K (T.torsionField n)) :
     A.artin.reciprocity D.uniformizer = 1 := by
-  sorry
+  apply (MonoidHom.mem_ker).mp
+  rw [A.artin.kernel_eq_norm]
+  change D.uniformizer ∈ chapter10TorsionNormSubgroup D T n
+  rw [chapter10_formal_torsion_norm_group D T n hn]
+  apply (chapter10_mem_value_unit_subgroup_iff D D.uniformizer 1 n D.uniformizer).2
+  refine ⟨1, ⟨1, (Chapter10FieldUnitFiltration D.valuation n).one_mem⟩, ?_⟩
+  simp
 
 /- The source's `\mathbb Q_p` specialization uses the multiplicative formal
    group and writes the inverse unit in the exponent modulo `p^n`.  This
