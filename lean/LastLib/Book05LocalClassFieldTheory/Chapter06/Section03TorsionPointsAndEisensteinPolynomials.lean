@@ -1633,7 +1633,409 @@ theorem chapter06_torsion_field_is_eisenstein_extension
         (chapter06ResidueCardinality D - 1) ∧
       chapter06TotallyRamifiedValuedExtension D V ∧
       V.valuation (chapter06PrimitivePointInField D n hn ω) = 1 := by
-  sorry
+  let L := chapter06TorsionField D n ω.point
+  let Pi : L := chapter06PrimitivePointInField D n hn ω
+  have hmonicQ := chapter06_Qn_monic D n hn
+  have hq : 1 < chapter06ResidueCardinality D := by
+    let _ := D.residue_finite
+    let _ : Fintype (Chapter06ResidueField D) := Fintype.ofFinite _
+    simpa [chapter06ResidueCardinality, Nat.card_eq_fintype_card] using
+      (Fintype.one_lt_card : 1 < Fintype.card (Chapter06ResidueField D))
+  have hposQ : 0 < (chapter06Qn D n).natDegree := by
+    rw [chapter06_Qn_degree D n hn]
+    exact Nat.mul_pos (pow_pos (chapter06_residue_cardinality_pos D) _)
+      (by omega)
+  have hirrA : Irreducible (chapter06Qn D n) := by
+    apply (chapter06_Qn_is_eisenstein D n hn).irreducible
+      (IsLocalRing.maximalIdeal.isMaximal _).isPrime
+      hmonicQ.isPrimitive hposQ
+  have hrootK : Polynomial.aeval ω.point
+      (chapter06PrimitiveTorsionPolynomialOverK D n) = 0 :=
+    chapter06_primitive_torsion_point_is_primitive_division_root D n hn ω
+  have hrootQ : Polynomial.eval₂
+      (algebraMap (Chapter06ValuationRing D) (AlgebraicClosure K)) ω.point
+      (chapter06Qn D n) = 0 := by
+    change Polynomial.eval₂ (algebraMap K (AlgebraicClosure K)) ω.point
+      ((chapter06Qn D n).map (algebraMap (Chapter06ValuationRing D) K)) = 0 at hrootK
+    rw [Polynomial.eval₂_map,
+      ← IsScalarTower.algebraMap_eq] at hrootK
+    exact hrootK
+  have hrootL : Polynomial.eval₂
+      (algebraMap (Chapter06ValuationRing D) L) Pi
+      (chapter06Qn D n) = 0 := by
+    apply L.val.injective
+    change L.val (Polynomial.eval₂
+      (algebraMap (Chapter06ValuationRing D) L) Pi
+      (chapter06Qn D n)) = 0
+    change L.val.toRingHom (Polynomial.eval₂
+      (algebraMap (Chapter06ValuationRing D) L) Pi
+      (chapter06Qn D n)) = 0
+    rw [Polynomial.hom_eval₂]
+    simpa [Pi, L, chapter06PrimitivePointInField,
+      IsScalarTower.algebraMap_eq] using hrootQ
+  have hgenIF : IntermediateField.adjoin K ({Pi} : Set L) = ⊤ := by
+    apply IntermediateField.map_injective L.val
+    rw [IntermediateField.adjoin_map]
+    have hmaptop : IntermediateField.map L.val (⊤ : IntermediateField K L) = L := by
+      ext x
+      constructor
+      · rintro ⟨y, -, rfl⟩
+        exact y.property
+      · intro hx
+        exact ⟨⟨x, hx⟩, trivial, rfl⟩
+    rw [hmaptop]
+    rw [Set.image_singleton]
+    change IntermediateField.adjoin K ({ω.point} : Set (AlgebraicClosure K)) =
+      IntermediateField.adjoin K ({ω.point} : Set (AlgebraicClosure K))
+    rfl
+  have hPiAlg : IsAlgebraic K Pi :=
+    Algebra.IsAlgebraic.isAlgebraic Pi
+  have hgen : Algebra.adjoin K ({Pi} : Set L) = ⊤ :=
+    (IntermediateField.adjoin_eq_top_iff_of_isAlgebraic (by
+      intro x hx
+      rcases Set.mem_singleton_iff.mp hx with rfl
+      exact hPiAlg)).mp hgenIF
+  let _ : Valuation.IsRankOneDiscrete D.valuation.toValuation :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08_rank_one_discrete_of_add_valuation
+      D.valuation D.complete.1
+  let _ : Valuation.IsRankOneDiscrete V.valuation.toValuation :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08_rank_one_discrete_of_add_valuation
+      V.valuation V.complete.1
+  let _ : IsDiscreteValuationRing (Chapter06ValuationRing D) := by
+    change IsDiscreteValuationRing D.valuation.toValuation.valuationSubring
+    infer_instance
+  have hval : D.valuation.IsEquiv
+      (AddValuation.comap (algebraMap K L) V.valuation) := V.extension
+  let _ : Valuation.HasExtension D.valuation.toValuation V.valuation.toValuation :=
+    ⟨hval⟩
+  have hupper : (V.valuation.toValuation.valuationSubring : Set L) =
+      (integralClosure (Chapter06ValuationRing D) L : Set L) := by
+    exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01_extension_valuation_ring_is_integral_closure
+      D.valuation.toValuation V.valuation.toValuation D.complete.2
+  have hEcustom :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.IsEisensteinAt
+        D.uniformizer (chapter06Qn D n) := by
+    have hEi := chapter06_Qn_is_eisenstein D n hn
+    refine ⟨hmonicQ, hposQ, ?_, ?_, D.uniformizer_spec.2.symm⟩
+    · intro i hi
+      rw [← D.uniformizer_spec.2]
+      exact hEi.mem hi
+    · rw [← Ideal.span_singleton_pow, ← D.uniformizer_spec.2]
+      exact hEi.notMem
+  have hbaseValuationRing :
+      (D.valuation.toValuation.valuationSubring : Set K) =
+        Set.range (algebraMap (Chapter06ValuationRing D) K) := by
+    ext x
+    constructor
+    · intro hx
+      exact ⟨⟨x, hx⟩, rfl⟩
+    · rintro ⟨a, rfl⟩
+      exact a.property
+  have hbaseIntegers :
+      D.valuation.toValuation.Integers (Chapter06ValuationRing D) := by
+    refine
+      { hom_inj := IsFractionRing.injective (Chapter06ValuationRing D) K
+        map_le_one := ?_
+        exists_of_le_one := ?_ }
+    · intro a
+      apply (Valuation.mem_valuationSubring_iff D.valuation.toValuation
+        (algebraMap (Chapter06ValuationRing D) K a)).mp
+      change (algebraMap (Chapter06ValuationRing D) K a) ∈
+        (D.valuation.toValuation.valuationSubring : Set K)
+      rw [hbaseValuationRing]
+      exact ⟨a, rfl⟩
+    · intro x hx
+      have hx' : x ∈ D.valuation.toValuation.valuationSubring :=
+        (Valuation.mem_valuationSubring_iff D.valuation.toValuation x).mpr hx
+      change x ∈ (D.valuation.toValuation.valuationSubring : Set K) at hx'
+      rw [hbaseValuationRing] at hx'
+      exact hx'
+  have hE :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.eisenstein_root_is_uniformizer_and_totally_ramified
+      D.valuation.toValuation V.valuation.toValuation D.uniformizer
+      (chapter06Qn D n) Pi hEcustom
+      hrootL (chapter06_Qn_degree D n hn) hgen hbaseIntegers
+      hbaseValuationRing hupper
+  have hresrank :
+      Module.finrank
+          (LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueField
+            D.valuation)
+          (LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueField
+            V.valuation) = 1 := by
+    let A0 := Chapter06ValuationRing D
+    let B0 := V.valuation.toValuation.valuationSubring
+    let mA := IsLocalRing.maximalIdeal A0
+    let mB := IsLocalRing.maximalIdeal B0
+    let _ : Algebra A0 B0 :=
+      Valuation.HasExtension.instAlgebra_valuationSubring
+        D.valuation.toValuation V.valuation.toValuation
+    let _ : IsLocalHom (algebraMap A0 B0) :=
+      Valuation.HasExtension.instIsLocalHomValuationInteger
+        (vR := D.valuation.toValuation) (vS := V.valuation.toValuation)
+    let eA : (A0 ⧸ mA) ≃+*
+        LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueField
+          D.valuation := RingEquiv.refl _
+    let eB : (B0 ⧸ mB) ≃+*
+        LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueField
+          V.valuation := RingEquiv.refl _
+    have hfin : Module.finrank (A0 ⧸ mA) (B0 ⧸ mB) =
+        Module.finrank
+          (LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueField
+            D.valuation)
+          (LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueField
+            V.valuation) := by
+      apply Algebra.finrank_eq_of_equiv_equiv eA eB
+      apply RingHom.ext
+      intro a
+      exact Quotient.inductionOn' a (fun _ => rfl)
+    have hquot : Module.finrank (A0 ⧸ mA) (B0 ⧸ mB) = 1 := by
+      rw [← Ideal.inertiaDeg_eq_of_isMaximal mA mB]
+      exact hE.2.2.1
+    exact hfin.symm.trans hquot
+  have htotal :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08TotallyRamified
+        D.valuation V.valuation hval := by
+    change Module.finrank
+          (LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueField
+          D.valuation)
+        (LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueField
+          V.valuation) = 1
+    exact hresrank
+  have hPiVal : V.valuation Pi = 1 := by
+    have hvg :
+        MonoidWithZeroHom.valueGroup (.ofClass V.valuation.toValuation) = ⊤ := by
+      obtain ⟨π, _hπ0, hπ, _hv⟩ := V.complete.1
+      have hone : ∀ z : ℕ, z • (1 : WithTop ℤ) = (z : WithTop ℤ) := by
+        intro z
+        induction z with
+        | zero => simp
+        | succ z ih =>
+            rw [succ_nsmul, Nat.cast_succ, ih]
+      have hnegcast : ∀ z : ℕ,
+          (Int.negSucc z : WithTop ℤ) = -((z + 1 : ℕ) : WithTop ℤ) := by
+        intro z
+        simp [Int.negSucc_eq]
+      have hpow : ∀ z : ℤ, V.valuation (π ^ z) = (z : WithTop ℤ) := by
+        intro z
+        cases z with
+        | ofNat z =>
+            change V.valuation (π ^ (z : ℤ)) = (z : WithTop ℤ)
+            rw [zpow_natCast, V.valuation.map_pow, hπ, hone]
+        | negSucc z =>
+            rw [zpow_negSucc, V.valuation.map_inv, V.valuation.map_pow, hπ]
+            rw [hnegcast z, hone]
+      apply top_unique
+      intro u _hu
+      have hu0 :
+          (OrderDual.ofDual (Multiplicative.toAdd
+            (u : Multiplicative (WithTop ℤ)ᵒᵈ)) : WithTop ℤ) ≠ ⊤ := by
+        intro htop
+        apply Units.ne_zero u
+        change Multiplicative.ofAdd (OrderDual.toDual
+          (OrderDual.ofDual (Multiplicative.toAdd
+            (u : Multiplicative (WithTop ℤ)ᵒᵈ)))) =
+          Multiplicative.ofAdd (OrderDual.toDual (⊤ : WithTop ℤ))
+        rw [htop]
+      obtain ⟨z, hz⟩ := WithTop.ne_top_iff_exists.mp hu0
+      apply MonoidWithZeroHom.mem_valueGroup
+      refine ⟨π ^ z, ?_⟩
+      change Multiplicative.ofAdd (OrderDual.toDual (V.valuation (π ^ z))) = u
+      rw [hpow z]
+      exact congrArg (fun t : WithTop ℤ =>
+        Multiplicative.ofAdd (OrderDual.toDual t)) hz
+    let γ : (Multiplicative (WithTop ℤ)ᵒᵈ)ˣ :=
+      Units.mk0 (Multiplicative.ofAdd (OrderDual.toDual (1 : WithTop ℤ)))
+        (by
+          intro h
+          have htop : (1 : WithTop ℤ) = ⊤ := congrArg (fun z =>
+            OrderDual.ofDual (Multiplicative.toAdd z)) h
+          exact (WithTop.coe_lt_top 1).ne htop)
+    have hγ_lt : γ < 1 := by
+      change Multiplicative.ofAdd (OrderDual.toDual (1 : WithTop ℤ)) < 1
+      change (0 : WithTop ℤ) < 1
+      norm_num
+    have hone : ∀ z : ℕ, z • (1 : WithTop ℤ) = (z : WithTop ℤ) := by
+      intro z
+      induction z with
+      | zero => simp
+      | succ z ih =>
+          rw [succ_nsmul, Nat.cast_succ, ih]
+    have hnegcast : ∀ z : ℕ,
+        (Int.negSucc z : WithTop ℤ) = -((z + 1 : ℕ) : WithTop ℤ) := by
+      intro z
+      simp [Int.negSucc_eq]
+    have hγpow : ∀ z : ℤ,
+        (γ ^ z : (Multiplicative (WithTop ℤ)ᵒᵈ)ˣ).val =
+          Multiplicative.ofAdd (OrderDual.toDual (z : WithTop ℤ)) := by
+      intro z
+      cases z with
+      | ofNat z =>
+          simp [γ, zpow_natCast]
+          change Multiplicative.ofAdd (OrderDual.toDual (1 : WithTop ℤ)) ^ z =
+            Multiplicative.ofAdd (OrderDual.toDual (z : WithTop ℤ))
+          rw [← ofAdd_nsmul z (OrderDual.toDual (1 : WithTop ℤ))]
+          congr 1
+          exact congrArg OrderDual.toDual (hone z)
+      | negSucc z =>
+          simp [γ, zpow_negSucc]
+          change (Multiplicative.ofAdd (OrderDual.toDual (1 : WithTop ℤ)) ^
+              (z + 1))⁻¹ =
+            Multiplicative.ofAdd (OrderDual.toDual (Int.negSucc z : WithTop ℤ))
+          rw [hnegcast z]
+          change (Multiplicative.ofAdd (OrderDual.toDual (1 : WithTop ℤ)) ^
+              (z + 1))⁻¹ =
+            Multiplicative.ofAdd (-(OrderDual.toDual ((z + 1 : ℕ) : WithTop ℤ)))
+          rw [ofAdd_neg]
+          rw [← ofAdd_nsmul (z + 1) (OrderDual.toDual (1 : WithTop ℤ))]
+          congr 1
+          exact congrArg OrderDual.toDual (hone (z + 1))
+    have hγ_zpowers : Subgroup.zpowers γ =
+        (⊤ : Subgroup ((Multiplicative (WithTop ℤ)ᵒᵈ)ˣ)) := by
+      apply top_unique
+      intro u _hu
+      have hu0 :
+          (OrderDual.ofDual (Multiplicative.toAdd
+            (u : Multiplicative (WithTop ℤ)ᵒᵈ)) : WithTop ℤ) ≠ ⊤ := by
+        intro htop
+        apply Units.ne_zero u
+        change Multiplicative.ofAdd (OrderDual.toDual
+          (OrderDual.ofDual (Multiplicative.toAdd
+            (u : Multiplicative (WithTop ℤ)ᵒᵈ)))) =
+          Multiplicative.ofAdd (OrderDual.toDual (⊤ : WithTop ℤ))
+        rw [htop]
+      obtain ⟨z, hz⟩ := WithTop.ne_top_iff_exists.mp hu0
+      rw [Subgroup.mem_zpowers_iff]
+      refine ⟨z, ?_⟩
+      apply Units.ext
+      rw [hγpow]
+      exact congrArg (fun t : WithTop ℤ =>
+        Multiplicative.ofAdd (OrderDual.toDual t)) hz
+    have hγ_zpowers_v : Subgroup.zpowers γ =
+        MonoidWithZeroHom.valueGroup (.ofClass V.valuation.toValuation) := by
+      rw [hvg]
+      exact hγ_zpowers
+    have hgen : γ = LinearOrderedCommGroup.Subgroup.genLTOne
+        (MonoidWithZeroHom.valueGroup (.ofClass V.valuation.toValuation)) := by
+      exact LinearOrderedCommGroup.Subgroup.genLTOne_unique
+        (MonoidWithZeroHom.valueGroup (.ofClass V.valuation.toValuation))
+        hγ_lt hγ_zpowers_v
+    have hPiUniform : V.valuation.toValuation Pi =
+        Valuation.IsRankOneDiscrete.generator V.valuation.toValuation := hE.1
+    have hgenval :
+        (Valuation.IsRankOneDiscrete.generator V.valuation.toValuation :
+          Multiplicative (WithTop ℤ)ᵒᵈ) =
+          Multiplicative.ofAdd (OrderDual.toDual (1 : WithTop ℤ)) := by
+      calc
+        (Valuation.IsRankOneDiscrete.generator V.valuation.toValuation :
+            Multiplicative (WithTop ℤ)ᵒᵈ) =
+            LinearOrderedCommGroup.Subgroup.genLTOne
+              (MonoidWithZeroHom.valueGroup (.ofClass V.valuation.toValuation)) :=
+          congrArg Units.val
+            (Valuation.IsRankOneDiscrete.valueGroup_genLTOne_eq_generator
+              V.valuation.toValuation).symm
+        _ = γ := (congrArg Units.val hgen).symm
+        _ = Multiplicative.ofAdd (OrderDual.toDual (1 : WithTop ℤ)) := by rfl
+    have hmul :
+        Multiplicative.ofAdd (OrderDual.toDual (V.valuation Pi)) =
+          Multiplicative.ofAdd (OrderDual.toDual (1 : WithTop ℤ)) := by
+      calc
+        Multiplicative.ofAdd (OrderDual.toDual (V.valuation Pi)) =
+            V.valuation.toValuation Pi := by rfl
+        _ = Valuation.IsRankOneDiscrete.generator V.valuation.toValuation :=
+          hPiUniform
+        _ = Multiplicative.ofAdd (OrderDual.toDual (1 : WithTop ℤ)) := hgenval
+    exact congrArg (fun z : Multiplicative (WithTop ℤ)ᵒᵈ =>
+      OrderDual.ofDual (Multiplicative.toAdd z)) hmul
+  have hfiniteUpper : Module.Finite (Chapter06ValuationRing D)
+      V.valuation.toValuation.valuationSubring :=
+    (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01_finite_extension_remains_local
+      D.valuation.toValuation V.valuation.toValuation D.complete.2).1
+  have hfiniteIntegralClosure : Module.Finite (Chapter06ValuationRing D)
+      (integralClosure (Chapter06ValuationRing D) L) := by
+    let e : (integralClosure (Chapter06ValuationRing D) L) ≃ₗ[Chapter06ValuationRing D]
+        V.valuation.toValuation.valuationSubring :=
+      { toFun := fun x =>
+          ⟨x.1, (Set.ext_iff.mp hupper x.1).mpr x.2⟩
+        invFun := fun x =>
+          ⟨x.1, (Set.ext_iff.mp hupper x.1).mp x.2⟩
+        left_inv := by intro x; apply Subtype.ext; rfl
+        right_inv := by intro x; apply Subtype.ext; rfl
+        map_add' := by intro x y; apply Subtype.ext; rfl
+        map_smul' := by intro c x; apply Subtype.ext; rfl }
+    exact Module.Finite.equiv e.symm
+  have hintegralK : ∀ x : K,
+      IsIntegral (Chapter06ValuationRing D) x ↔ 0 ≤ D.valuation x := by
+    intro x
+    constructor
+    · intro hx
+      obtain ⟨a, ha⟩ :=
+        (IsIntegrallyClosed.isIntegral_iff (R := Chapter06ValuationRing D)).mp hx
+      have ha0 : 0 ≤ D.valuation (a : K) := a.property
+      have ha' : (a : K) = x := ha
+      rw [ha'] at ha0
+      exact ha0
+    · intro hx
+      apply (IsIntegrallyClosed.isIntegral_iff
+        (R := Chapter06ValuationRing D)).mpr
+      exact ⟨⟨x, hx⟩, rfl⟩
+  have hintegralL : ∀ x : L,
+      IsIntegral (Chapter06ValuationRing D) x ↔ 0 ≤ V.valuation x := by
+    intro x
+    constructor
+    · intro hx
+      change x ∈ (integralClosure (Chapter06ValuationRing D) L : Set L) at hx
+      rw [← hupper] at hx
+      exact hx
+    · intro hx
+      have hx' : x ∈ V.valuation.toValuation.valuationSubring := by
+        exact (Valuation.mem_valuationSubring_iff V.valuation.toValuation x).mpr hx
+      change x ∈ (integralClosure (Chapter06ValuationRing D) L : Set L)
+      rw [← hupper]
+      exact hx'
+  obtain ⟨e, he, hscale, hdegree⟩ :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08_uniformizer_extension_degree_data
+      D.complete.2 hfiniteIntegralClosure D.valuation V.valuation D.complete.1
+      V.complete.1 hval htotal hintegralK hintegralL Pi hPiVal
+  have hnsmul : ∀ m : ℕ, ∀ z : WithTop ℤ,
+      m • z = (m : WithTop ℤ) * z := by
+    intro m z
+    induction z using WithTop.recTopCoe with
+    | top =>
+        cases m with
+        | zero => simp
+        | succ m =>
+            have hm : (↑m + 1 : WithTop ℤ) ≠ 0 := by positivity
+            simp [succ_nsmul, WithTop.mul_top hm]
+    | coe z =>
+        rw [← WithTop.coe_nsmul]
+        norm_num [nsmul_eq_mul]
+  have hscaleFinal :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ValuationScaling
+        D.valuation V.valuation (Module.finrank K L) := by
+    rw [hdegree]
+    unfold LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ValuationScaling
+    intro x
+    by_cases hx : x = 0
+    · subst x
+      simp [Nat.ne_of_gt he]
+    · calc
+        V.valuation (algebraMap K L x) = e • D.valuation x := by
+          simpa [L] using hscale x hx
+        _ = (e : WithTop ℤ) * D.valuation x := hnsmul e (D.valuation x)
+  have hresAgreement :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11TotallyRamifiedResidueAgreement
+        D.valuation V.valuation := by
+    refine ⟨V.extension, ?_⟩
+    intro hext
+    have htotal' :
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08TotallyRamified
+          D.valuation V.valuation hext := htotal
+    rcases
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08_total_ramification_iff_residue_fields_equal
+          D.valuation V.valuation hext).mp htotal' with ⟨e⟩
+    exact ⟨e.symm⟩
+  refine ⟨hE.2.2.2.2, ?_, hPiVal⟩
+  exact ⟨V.extension, hscaleFinal, hresAgreement⟩
 
 theorem chapter06_torsion_field_is_finite_and_galois
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K)
@@ -1641,6 +2043,10 @@ theorem chapter06_torsion_field_is_finite_and_galois
     (ω : Chapter06PrimitiveTorsionPoint D n hn) :
     FiniteDimensional K (chapter06TorsionField D n ω.point) ∧
       IsGalois K (chapter06TorsionField D n ω.point) := by
+  have hfinite : FiniteDimensional K (chapter06TorsionField D n ω.point) :=
+    IntermediateField.adjoin.finiteDimensional
+      (Algebra.IsAlgebraic.isAlgebraic ω.point).isIntegral
+  refine ⟨hfinite, ?_⟩
   sorry
 
 end

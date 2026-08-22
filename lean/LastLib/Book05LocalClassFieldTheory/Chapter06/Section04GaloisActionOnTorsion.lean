@@ -47,7 +47,91 @@ theorem chapter06_torsion_action_gives_automorphism
         chapter06TorsionField D n ω.point) : AlgebraicClosure K) =
         A.quotientAction (a : Chapter06TorsionResidueRing D n)
           (chapter06PrimitivePointAsTorsion D n hn ω) := by
-  sorry
+  let L := chapter06TorsionField D n ω.point
+  let P := chapter06PrimitiveTorsionPolynomialOverK D n
+  have hmonicQ := chapter06_Qn_monic D n hn
+  have hq : 1 < chapter06ResidueCardinality D := by
+    let _ := D.residue_finite
+    let _ : Fintype (Chapter06ResidueField D) := Fintype.ofFinite _
+    simpa [chapter06ResidueCardinality, Nat.card_eq_fintype_card] using
+      (Fintype.one_lt_card : 1 < Fintype.card (Chapter06ResidueField D))
+  have hposQ : 0 < (chapter06Qn D n).natDegree := by
+    rw [chapter06_Qn_degree D n hn]
+    exact Nat.mul_pos (pow_pos (chapter06_residue_cardinality_pos D) _)
+      (by omega)
+  have hdegP : P.natDegree = (chapter06Qn D n).natDegree := by
+    unfold P chapter06PrimitiveTorsionPolynomialOverK
+    apply Polynomial.natDegree_map_eq_of_isUnit_leadingCoeff
+    rw [hmonicQ.leadingCoeff]
+    exact isUnit_one
+  have hpos : 0 < P.natDegree := by
+    rw [hdegP]
+    exact hposQ
+  have hirrA : Irreducible (chapter06Qn D n) := by
+    apply (chapter06_Qn_is_eisenstein D n hn).irreducible
+      (IsLocalRing.maximalIdeal.isMaximal _).isPrime
+      hmonicQ.isPrimitive hposQ
+  have hirrK : Irreducible P := by
+    exact (hmonicQ.irreducible_iff_irreducible_map_fraction_map).mp hirrA
+  have hroot : Polynomial.aeval ω.point P = 0 :=
+    chapter06_primitive_torsion_point_is_primitive_division_root D n hn ω
+  have hmin : P = minpoly K ω.point := by
+    exact minpoly.eq_of_irreducible_of_monic hirrK hroot
+      (hmonicQ.map (algebraMap (Chapter06ValuationRing D) K))
+  have hmem :
+      (A.quotientAction (a : Chapter06TorsionResidueRing D n)
+        (chapter06PrimitivePointAsTorsion D n hn ω)).1 ∈ L := by
+    exact chapter06_primitive_action_mem_torsion_field D n hn f hf M A ω a
+  let y : L := ⟨_, hmem⟩
+  obtain ⟨r, hr⟩ := Ideal.Quotient.mk_surjective (a : Chapter06TorsionResidueRing D n)
+  let I : Ideal (Chapter06ValuationRing D) :=
+    Ideal.span ({D.uniformizer} : Set (Chapter06ValuationRing D))
+  have hI : I = IsLocalRing.maximalIdeal (Chapter06ValuationRing D) := by
+    change Ideal.span ({D.uniformizer} : Set (Chapter06ValuationRing D)) =
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01MaximalIdeal
+        D.valuation.toValuation
+    exact D.uniformizer_spec.2.symm
+  let _ : I.IsMaximal := hI ▸ inferInstance
+  have hunit_mk (r : Chapter06ValuationRing D) :
+      IsUnit (Ideal.Quotient.mk
+        ((Ideal.span ({D.uniformizer} : Set (Chapter06ValuationRing D))) ^ n) r) ↔
+      IsUnit r := by
+    have hunitI : IsUnit (Ideal.Quotient.mk (I ^ n) r) ↔ IsUnit r := by
+      rw [Ideal.Quotient.isUnit_mk_pow_iff_notMem I (Nat.ne_of_gt hn)]
+      rw [hI, IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
+      simp
+    simpa [I] using hunitI
+  have hrunit : IsUnit r := (hunit_mk r).mp (by
+    rw [hr]
+    exact Units.isUnit a)
+  have hrprimitive := (A.primitive_iff_unit r ω).mp hrunit
+  have hyroot : Polynomial.aeval (y : AlgebraicClosure K) P = 0 := by
+    change Polynomial.aeval
+      (A.quotientAction (a : Chapter06TorsionResidueRing D n)
+        (chapter06PrimitivePointAsTorsion D n hn ω)).1 P = 0
+    rw [← hr, A.quotientAction_spec r
+      (chapter06PrimitivePointAsTorsion D n hn ω)]
+    exact hrprimitive
+  have hminL :
+      minpoly K (chapter06PrimitivePointInField D n hn ω) = minpoly K ω.point := by
+    rw [← minpoly.algebraMap_eq
+      (algebraMap L (AlgebraicClosure K)).injective]
+    rfl
+  have hymin : Polynomial.aeval y (minpoly K (chapter06PrimitivePointInField D n hn ω)) = 0 := by
+    rw [hminL, ← hmin]
+    apply L.val.injective
+    change L.val (Polynomial.aeval y P) = 0
+    rw [← Polynomial.aeval_algHom_apply L.val]
+    exact hyroot
+  obtain ⟨φ, hφ⟩ :=
+    IntermediateField.exists_algHom_of_splits_of_aeval
+      (fun x : L =>
+        ⟨Algebra.IsIntegral.isIntegral x, IsGalois.splits K x⟩) hymin
+  let σ : L ≃ₐ[K] L :=
+    AlgEquiv.ofBijective φ (φ.normal_bijective K L L)
+  refine ⟨σ, ?_⟩
+  have hφ' := congrArg (fun z : L => (z : AlgebraicClosure K)) hφ
+  simpa [σ, y, L, chapter06PrimitivePointInField] using hφ'
 
 theorem chapter06_torsion_action_gives_unique_automorphism
     {K : Type*} [Field K] [UniformSpace (AlgebraicClosure K)]
@@ -67,7 +151,25 @@ theorem chapter06_torsion_action_gives_unique_automorphism
         chapter06TorsionField D n ω.point) : AlgebraicClosure K) =
         A.quotientAction (a : Chapter06TorsionResidueRing D n)
           (chapter06PrimitivePointAsTorsion D n hn ω) := by
-  sorry
+  obtain ⟨σ, hσ⟩ :=
+    chapter06_torsion_action_gives_automorphism D n hn f hf M A ω a
+  refine ⟨σ, hσ, ?_⟩
+  intro τ hτ
+  have hhom : τ.toAlgHom = σ.toAlgHom := by
+    refine IntermediateField.algHom_ext_of_eq_adjoin
+      (F := K) (E := AlgebraicClosure K)
+      (S := chapter06TorsionField D n ω.point)
+      (s := ({ω.point} : Set (AlgebraicClosure K))) ?_ ?_
+    · change IntermediateField.adjoin K ({ω.point} : Set (AlgebraicClosure K)) =
+        IntermediateField.adjoin K ({ω.point} : Set (AlgebraicClosure K))
+      rfl
+    · intro x hx
+      subst x
+      apply Subtype.ext
+      simpa [chapter06PrimitivePointInField] using hτ.trans hσ.symm
+  apply AlgEquiv.ext
+  intro x
+  exact DFunLike.congr_fun hhom x
 
 /-- A choice of the automorphism `σₐ`. -/
 noncomputable def chapter06SigmaA
@@ -106,7 +208,11 @@ theorem chapter06SigmaA_spec
       ⟨(A.quotientAction (a : Chapter06TorsionResidueRing D n)
           (chapter06PrimitivePointAsTorsion D n hn ω)).1,
         chapter06_primitive_action_mem_torsion_field D n hn f hf M A ω a⟩ := by
-  sorry
+  have hspec :=
+    Classical.choose_spec
+      (chapter06_torsion_action_gives_automorphism D n hn f hf M A ω a)
+  apply Subtype.ext
+  exact hspec
 
 /-- The scalar relations give the group law on the torsion automorphisms. -/
 theorem chapter06SigmaA_mul
