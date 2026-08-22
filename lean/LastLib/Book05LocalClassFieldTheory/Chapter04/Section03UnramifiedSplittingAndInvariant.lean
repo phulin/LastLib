@@ -672,7 +672,17 @@ theorem chapter04_restriction_is_surjective_on_brauer_groups
     (R : Chapter04BrauerRestrictionData K L)
     (n : ℕ) (hdegree : Module.finrank K L = n) :
     Function.Surjective R.restriction := by
-  sorry
+  have hn : 0 < n := by
+    rw [← hdegree]
+    exact Module.finrank_pos
+  intro β
+  obtain ⟨q, hq⟩ :=
+    chapter04_rational_residue_multiplication_is_surjective n hn (I_L.invariant β)
+  obtain ⟨α, hα⟩ := I_K.invariant_surjective q
+  refine ⟨α, I_L.invariant_injective ?_⟩
+  rw [chapter04_local_invariant_restriction_formula_finite_extension
+    I_K I_L R n hdegree α, hα]
+  exact hq
 
 theorem chapter04_corestriction_restriction_degree_formula
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -685,7 +695,11 @@ theorem chapter04_corestriction_restriction_degree_formula
     (α : chapter04BrauerGroup K) :
     C.corestriction (R.restriction α) =
       chapter04BrauerNatPower I_K.brauerLaw α n := by
-  sorry
+  apply I_K.invariant_injective
+  rw [chapter04_local_invariant_corestriction_formula I_K I_L C]
+  rw [chapter04_local_invariant_restriction_formula_finite_extension
+    I_K I_L R n hdegree α]
+  rw [chapter04_invariant_of_brauer_nat_power]
 
 end
 
