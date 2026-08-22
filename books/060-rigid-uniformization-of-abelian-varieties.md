@@ -935,7 +935,7 @@ The equivalence commutes with finite scalar extension, duality, products, and is
 
 ### 9.2 From an abelian variety to uniformizing data
 
-**Proof strategy.** The formal identity neighborhood records good-reduction and toric parts. Properness forces the missing toric translations to close up by a full lattice. An ample algebraic bundle supplies positivity.
+**Proof.** The formal identity neighborhood records good-reduction and toric parts. Properness forces the missing toric translations to close up by a full lattice. An ample algebraic bundle supplies positivity. We treat the three steps in turn.
 
 Starting from $A$, the formal structure lemma constructs $E$, $B$, and $T$. The local map (8.3) is continued by translations: if $V$ is a formal identity chart and $a\in A(L)$ for a finite complete extension, choose a lift of $a$ after an admissible extension of $V$ and translate the chart. On overlaps, two choices differ by a section of the formal torus; the group law makes the differences a cocycle. Gluing all translates gives $E\to A^{\mathrm{an}}$. Its kernel $M$ and exactness are established in Sections 8.2--8.3, and properness of $A$ proves fullness.
 
