@@ -60,7 +60,20 @@ def chapter06ExplicitLubinTateSeries
 theorem chapter06_explicitLubinTateSeries_satisfies
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K) :
     chapter06LubinTateCondition D (chapter06ExplicitLubinTateSeries D) := by
-  sorry
+  let _ := D.residue_finite
+  let _ : Fintype (Chapter06ResidueField D) := Fintype.ofFinite _
+  have hq : 1 < chapter06ResidueCardinality D := by
+    simpa [chapter06ResidueCardinality, Nat.card_eq_fintype_card] using
+      (Fintype.one_lt_card : 1 < Fintype.card (Chapter06ResidueField D))
+  have hq0 : chapter06ResidueCardinality D ≠ 0 := by omega
+  have hqne1 : 1 ≠ chapter06ResidueCardinality D := by omega
+  constructor
+  · intro n hn
+    interval_cases n <;>
+      simp [chapter06ExplicitLubinTateSeries, hq0, hqne1]
+  · intro n
+    refine Ideal.mem_span_singleton'.2 ⟨PowerSeries.coeff n PowerSeries.X, ?_⟩
+    simp [chapter06ExplicitLubinTateSeries, mul_comm]
 
 /-- Substitute a family of formal series into a multivariate series. -/
 noncomputable def chapter06FormalSubstitute
@@ -141,21 +154,67 @@ instance Chapter06FormalGroupLaw.formalGroupIsComm
 theorem chapter06FormalGroupLaw_hasLinearPart
     {O : Type*} [CommRing O] (F : Chapter06FormalGroupLaw O) :
     chapter06HasLinearPart F.series 1 1 := by
-  sorry
+  intro d hd
+  classical
+  by_cases hzero : d = 0
+  · subst d
+    change MvPowerSeries.constantCoeff F.formalGroup.toPowerSeries =
+      MvPowerSeries.constantCoeff (chapter06LinearSeries 1 1)
+    simpa [chapter06LinearSeries] using F.formalGroup.zero_constantCoeff
+  have htest : d.sum (fun _ n => n) = d 0 + d 1 := by
+    rw [Finsupp.sum_fintype d (fun _ n => n) (fun _ => rfl)]
+    simp
+  have hsum : d 0 + d 1 < 2 := by
+    rw [← htest]
+    exact hd
+  have hnonzero : d 0 + d 1 ≠ 0 := by
+    intro hsumzero
+    have hd0 : d 0 = 0 := by omega
+    have hd1 : d 1 = 0 := by omega
+    apply hzero
+    ext i
+    fin_cases i <;> simp [hd0, hd1]
+  have hdegree : d.sum (fun _ n => n) = 1 := by
+    rw [htest]
+    omega
+  obtain ⟨i, hi⟩ := (Finsupp.sum_eq_one_iff d).mp hdegree
+  fin_cases i
+  · rw [hi]
+    change F.formalGroup.toPowerSeries.coeff (Finsupp.single 0 1) =
+      MvPowerSeries.coeff (Finsupp.single 0 1) (chapter06LinearSeries 1 1)
+    rw [F.formalGroup.lin_coeff_X]
+    simp [chapter06LinearSeries, MvPowerSeries.coeff_X, Finsupp.single_left_inj]
+  · rw [hi]
+    change F.formalGroup.toPowerSeries.coeff (Finsupp.single 1 1) =
+      MvPowerSeries.coeff (Finsupp.single 1 1) (chapter06LinearSeries 1 1)
+    rw [F.formalGroup.lin_coeff_Y]
+    simp [chapter06LinearSeries, MvPowerSeries.coeff_X, Finsupp.single_left_inj]
 
 theorem chapter06FormalGroupLaw_zero_left
     {O : Type*} [CommRing O] (F : Chapter06FormalGroupLaw O)
     (x : Chapter06UnivariateSeries O)
     (hx : MvPowerSeries.constantCoeff x = 0) :
     chapter06FormalGroupOperation F.series 0 x = x := by
-  sorry
+  change MvPowerSeries.subst (fun i : Fin 2 => if i = 0 then 0 else x) F.series = x
+  have hfun : (fun i : Fin 2 => if i = 0 then 0 else x) = ![0, x] := by
+    funext i
+    fin_cases i <;> simp
+  rw [hfun]
+  exact F.formalGroup.zero_add
+    (PowerSeries.HasSubst.of_constantCoeff_zero' hx)
 
 theorem chapter06FormalGroupLaw_zero_right
     {O : Type*} [CommRing O] (F : Chapter06FormalGroupLaw O)
     (x : Chapter06UnivariateSeries O)
     (hx : MvPowerSeries.constantCoeff x = 0) :
     chapter06FormalGroupOperation F.series x 0 = x := by
-  sorry
+  change MvPowerSeries.subst (fun i : Fin 2 => if i = 0 then x else 0) F.series = x
+  have hfun : (fun i : Fin 2 => if i = 0 then x else 0) = ![x, 0] := by
+    funext i
+    fin_cases i <;> simp
+  rw [hfun]
+  exact F.formalGroup.add_zero
+    (PowerSeries.HasSubst.of_constantCoeff_zero' hx)
 
 theorem chapter06FormalGroupLaw_associative
     {O : Type*} [CommRing O] (F : Chapter06FormalGroupLaw O)
