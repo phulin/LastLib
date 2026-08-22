@@ -68,7 +68,24 @@ theorem chapter04_division_valuation_on_a_subfield
           WithTop ℚ) ∧
       (vK (N.reducedNormAll (φ x)) / N.degree) =
         (vE x / e : ℚ) := by
-  sorry
+  have hφx : φ x ≠ 0 := by
+    intro h
+    apply hx
+    apply φ.injective
+    change φ.toRingHom x = φ.toRingHom 0
+    exact h.trans (map_zero φ).symm
+  have hdegree : (N.degree : ℚ) ≠ 0 := by
+    have _he := he
+    have _hdiv := hdiv
+    exact_mod_cast N.degree_pos.ne'
+  dsimp [chapter04DivisionValuation]
+  rw [if_neg hφx]
+  constructor
+  · rfl
+  · rw [hnorm x hx]
+    apply (div_eq_iff hdegree).2
+    rw [div_eq_mul_inv, div_eq_mul_inv]
+    ac_rfl
 
 theorem chapter04_division_valuation_integrality_iff
     {K D k barD : Type*} [Field K] [DivisionRing D] [Field k] [Field barD]
