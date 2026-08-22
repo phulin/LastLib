@@ -161,18 +161,20 @@ theorem chapter08_finite_idele_ideal_forgets_local_units
     chapter08FiniteIdeleIdealMap K x = chapter08FiniteIdeleIdealMap K y := by
   exact (chapter08_finite_idele_ideal_eq_iff_same_orders).2 h
 
-/-! A small abstract congruence interface records the finite data retained by ray conditions. -/
+/-! A prime-power congruence interface records the finite data retained by ray conditions. -/
 
 def chapter08CongruentModulo {R : Type*} [Ring R]
     (I : Ideal R) (m : ℕ) (a b : R) : Prop :=
   a - b ∈ I ^ m
 
-def chapter08RayClassFiniteCongruence (p m a b : ℕ) : Prop :=
+/-! This is only a natural-number illustration; it is not the ray-class congruence for
+the ring of integers of a number field. -/
+def chapter08NatPrimePowerCongruence (p m a b : ℕ) : Prop :=
   Nat.ModEq (p ^ m) a b
 
-theorem chapter08_one_two_not_congruent_mod_prime_pow
+theorem chapter08_one_two_not_nat_congruent_mod_prime_pow
     {p m : ℕ} (hp : Nat.Prime p) (hm : 0 < m) :
-    ¬ chapter08RayClassFiniteCongruence p m 1 2 := by
+    ¬ chapter08NatPrimePowerCongruence p m 1 2 := by
   intro h
   have hpow : (p ^ m : ℤ) ∣ (1 : ℤ) := by
     simpa using (Nat.modEq_iff_dvd.mp h)

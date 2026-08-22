@@ -328,9 +328,6 @@ def chapter08ExtendedDivisorDegree
     ∑ w : NumberField.InfinitePlace K,
       chapter08ArchimedeanDivisorCoefficient x.1 w
 
-/- Local dependency guess for the later fixup pass: the earlier product-formula API identifies the
-normalization of the finite ideal norm with the weighted archimedean norm used here. -/
-
 theorem chapter08_extended_divisor_degree_principal_zero
     {K : Type*} [Field K] [NumberField K]
     (a : Kˣ) :

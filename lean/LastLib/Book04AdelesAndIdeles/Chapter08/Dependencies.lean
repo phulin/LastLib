@@ -12,29 +12,30 @@ import Mathlib.Topology.Algebra.IsOpenUnits
 import Mathlib.Topology.Algebra.RestrictedProduct.Units
 import Mathlib.Topology.Instances.Sign
 import Mathlib.Topology.Order
+import LastLib.Book04AdelesAndIdeles.Chapter07.Dependencies
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter08
+
+open LastLib.Book04AdelesAndIdeles.Chapter07
 
 noncomputable section
 
 open scoped BigOperators nonZeroDivisors RestrictedProduct
 
 /-!
-The chapter uses the standard number-field choices throughout.  In particular, `Chapter08FiniteAdeles`
-is Mathlib's restricted product, while `Chapter08FiniteIdeles` is its algebraic unit group.  The
-topology used for finite ideles below is the graph topology transported through
-`RestrictedProduct.unitsEquiv`; this is deliberately not the induced topology from the ambient
-finite adele ring's unit embedding.
+The chapter uses the standard number-field choices throughout.  The finite adele, finite idele,
+and finite divisor types below are the Chapter 7 interfaces specialized to the ring of integers.
+Chapter 7 also identifies the restricted-product graph topology with the ambient unit topology.
 -/
 
 abbrev Chapter08Integers (K : Type*) [Field K] [NumberField K] :=
   NumberField.RingOfIntegers K
 
 abbrev Chapter08FiniteAdeles (K : Type*) [Field K] [NumberField K] :=
-  IsDedekindDomain.FiniteAdeleRing (Chapter08Integers K) K
+  chapter07FiniteAdeleRing (Chapter08Integers K) K
 
 abbrev Chapter08FiniteIdeles (K : Type*) [Field K] [NumberField K] :=
-  (Chapter08FiniteAdeles K)ˣ
+  chapter07FiniteIdeleGroup (Chapter08Integers K) K
 
 abbrev Chapter08InfiniteAdeles (K : Type*) [Field K] [NumberField K] :=
   NumberField.InfiniteAdeleRing K
@@ -55,7 +56,7 @@ abbrev Chapter08OrdinaryClassGroup (K : Type*) [Field K] [NumberField K] :=
   ClassGroup (Chapter08Integers K)
 
 abbrev Chapter08FiniteDivisors (K : Type*) [Field K] [NumberField K] :=
-  IsDedekindDomain.HeightOneSpectrum (Chapter08Integers K) →₀ ℤ
+  chapter07FiniteDivisorGroup (Chapter08Integers K)
 
 /-! A small reusable interface for exact displays in the source chapter. -/
 
@@ -73,12 +74,7 @@ def chapter08IsShortExact {A B C : Type*} [Group A] [Group B] [Group C]
 def chapter08FiniteIdeleGraphTopology (K : Type*) [Field K] [NumberField K] :
     TopologicalSpace (Chapter08FiniteIdeles K) :=
   TopologicalSpace.induced
-    (RestrictedProduct.unitsEquiv
-      (𝓕 := Filter.cofinite)
-      (B := fun v : IsDedekindDomain.HeightOneSpectrum (Chapter08Integers K) =>
-        v.adicCompletionIntegers K)
-      (fun v : IsDedekindDomain.HeightOneSpectrum (Chapter08Integers K) =>
-        v.adicCompletion K))
+    (chapter07FiniteIdeleEquiv (Chapter08Integers K) K)
     inferInstance
 
 @[instance_reducible]

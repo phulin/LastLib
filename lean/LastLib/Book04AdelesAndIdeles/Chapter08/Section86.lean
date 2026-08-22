@@ -100,9 +100,6 @@ theorem chapter08_narrow_to_class_group_surjective
 /-! Weak approximation supplies a field element with any prescribed real sign pattern.  This is
 the bridge needed to define the sign-to-narrow-class map. -/
 
-/- Local dependency guess for the later fixup pass: the preceding chapters expose weak
-approximation in the form needed to realize every finite real sign pattern by an element of Kˣ. -/
-
 theorem chapter08_sign_pattern_realization
     (K : Type*) [Field K] [NumberField K]
     (s : Chapter08SignGroup K) :
