@@ -948,13 +948,19 @@ $$
 \mathcal A^1=\mathcal A^{1,0}\oplus\mathcal A^{0,1}.
 $$
 
-Choose any Hermitian metric. Every de Rham class has a unique harmonic representative: elliptic theory gives the orthogonal decomposition
+Choose any Hermitian metric. Clause (H1) gives the orthogonal decomposition
 
 $$
-\mathcal A^1=\mathcal H^1\oplus d\mathcal A^0\oplus d^*\mathcal A^2.
+\mathcal A^1=\mathcal H^1\oplus d\mathcal A^0\oplus d^*\mathcal A^2,
 $$
 
-On a complex curve the Laplacian preserves type, and a harmonic $(1,0)$-form is holomorphic. The Kähler identity $\Delta_d=2\Delta_{\bar\partial}$ makes harmonicity force $\bar\partial\omega=0$; conversely a holomorphic one-form has $\partial\omega=0$ for dimension reasons and is closed and co-closed. Complex conjugation exchanges the two types. Hence
+and identifies de Rham cohomology with $\mathcal H^1$: the harmonic projection of a closed form is co-closed by (H1), so each class contains exactly one harmonic form. By (H2) the Laplacian preserves type, so the harmonic space itself splits,
+
+$$
+\mathcal H^1=(\mathcal H^1\cap\mathcal A^{1,0})\oplus(\mathcal H^1\cap\mathcal A^{0,1}).
+$$
+
+On a complex curve harmonicity of a $(1,0)$-form forces $\bar\partial\omega=0$—this is (H2), via $\Delta_d=2\Delta_{\bar\partial}$—so it is holomorphic; conversely a holomorphic one-form has $\partial\omega=0$ for dimension reasons and is closed and co-closed, hence harmonic. Complex conjugation exchanges the two types and commutes with $\Delta_d$, so conjugation identifies the two summands. Hence
 
 $$
 H^1_B(X,\mathbf C)=H^{1,0}(X)\oplus H^{0,1}(X), \tag{6.2}
@@ -968,13 +974,13 @@ H^{1,0}(X)=H^0(X,\Omega^1_X),
 H^{0,1}(X)=\overline{H^{1,0}(X)}\simeq H^1(X,\mathcal O_X). \tag{6.3}
 $$
 
-The last identification is Dolbeault cohomology. Algebraic coherent comparison identifies it with algebraic $H^1(\mathcal O_X)$, and Book 9's Serre duality shows both summands have dimension $g$. This proves that the topological genus of Section 3.2 equals the algebraic genus.
+The first equality in (6.3) is the preceding paragraph: the $(1,0)$-harmonic forms are exactly the holomorphic ones. For the second, restrict (H3) to $L=\mathcal O_X$ and combine it with (H1). A harmonic representative argument identifies both sides: if $\alpha\in\mathcal A^{0,1}$ satisfies $\bar\partial\alpha=0$, then $d\alpha=0$, its harmonic representative $\beta$ differs from $\alpha$ by an exact form, and taking $(0,1)$-parts shows the Dolbeault class of $\alpha$ equals that of $\beta$; conversely distinct harmonic $(0,1)$-forms give distinct Dolbeault classes because a difference killed by Dolbeault would be exact, hence co-exact by (H1)'s orthogonality unless zero. Thus conjugation of holomorphic forms identifies $H^{0,1}$ with the Dolbeault group $H^1(X^{\mathrm{an}},\mathcal O_{X^{\mathrm{an}}})$. Algebraic coherent comparison (Section 5.2) identifies it with algebraic $H^1(\mathcal O_X)$, and Book 9's Serre duality shows both summands have dimension $g$. This proves that the topological genus of Section 3.2 equals the algebraic genus.
 
 The decomposition is not defined over $\mathbf Q$ in general. Complex conjugation interchanges the summands, so neither can contain a nonzero real class: if a real class lies in $H^{1,0}$, it also lies in $H^{0,1}$, and the direct sum forces it to vanish.
 
 ### 6.3 The Hodge filtration and the rational lattice
 
-Under de Rham comparison, Book 46's Hodge exact sequence becomes
+The identification is concrete. Book 46 proves the algebraic exact sequence $0\to F^1\to H^1_{\mathrm{dR}}(X/K)\to \mathbb E^\vee\to0$ with $F^1=\mathbb E=H^0(X,\Omega^1_X)$, and Book 9's Serre duality identifies $\mathbb E^\vee$ with $H^1(X,\mathcal O_X)$. The comparison morphism of Section 5.3 is induced by the inclusion of the two-term algebraic complex into smooth forms; it sends the edge class of a holomorphic differential $\omega\in F^1$ to the smooth de Rham class of the same closed form $\omega$. By (6.2) that image is $H^{1,0}(X)$, and the isomorphism (5.4) then transports the whole sequence, its quotient matching $H^{0,1}$ by dimension count. So
 
 $$
 0\to H^{1,0}(X)\to H^1_B(X,\mathbf C)
