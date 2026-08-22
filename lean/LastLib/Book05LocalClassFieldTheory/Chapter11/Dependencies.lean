@@ -56,7 +56,18 @@ theorem chapter11_finite_image_character_kernel_finite_index
     [TopologicalSpace X] [TopologicalSpace A]
     (χ : X →ₜ* A) (hχ : chapter11FiniteImage χ) :
     χ.toMonoidHom.ker.FiniteIndex := by
-  sorry
+  change (Set.range χ).Finite at hχ
+  let _ : Finite (Set.range χ) := Set.finite_coe_iff.mp hχ
+  let _ : Finite χ.toMonoidHom.range :=
+    Finite.of_injective
+      (fun x : χ.toMonoidHom.range =>
+        (⟨x.1, by
+          rcases x.2 with ⟨g, hg⟩
+          exact ⟨g, hg⟩⟩ : Set.range χ))
+      (by
+        intro x y h
+        exact Subtype.ext (congrArg Subtype.val h))
+  exact Subgroup.finiteIndex_ker χ.toMonoidHom
 
 def chapter11CharacterKernel
     {K A : Type*} [Field K] [CommGroup A]
