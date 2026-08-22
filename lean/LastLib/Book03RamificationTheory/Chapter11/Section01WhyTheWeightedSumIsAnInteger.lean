@@ -37,12 +37,12 @@ def chapter11AveragingProjector
 theorem chapter11_card_inertia_eq_e
     {G : Type*} [Fintype G] [Group G]
     (D : Chapter11RamificationData G) : Nat.card D.inertia = D.e := by
-  sorry
+  exact D.inertia_card
 
 theorem chapter11_card_group_eq_ef
     {G : Type*} [Fintype G] [Group G]
     (D : Chapter11RamificationData G) : Fintype.card G = D.e * D.f := by
-  sorry
+  exact D.group_card
 
 theorem chapter11_displacement_conjugation_invariant
     {G : Type*} [Fintype G] [Group G]

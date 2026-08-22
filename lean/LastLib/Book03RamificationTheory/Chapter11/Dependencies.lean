@@ -180,13 +180,15 @@ abbrev Chapter11LowerGroup
 theorem chapter11_lower_le_inertia
     {G : Type*} [Fintype G] [Group G]
     (D : Chapter11RamificationData G) (i : ℕ) : D.lower i ≤ D.inertia := by
-  sorry
+  induction i with
+  | zero => simp [D.lower_zero]
+  | succ i ih => exact (D.lower_succ_le i).trans ih
 
 theorem chapter11_residue_separable_of_perfect
     {G : Type*} [Fintype G] [Group G]
     (D : Chapter11RamificationData G) (hperfect : D.residue_perfect) :
     D.residue_separable := by
-  sorry
+  exact D.residue_perfect_implies_separable hperfect
 
 /-- The finite set of lower levels at which a group element occurs. -/
 def chapter11LowerSupport
@@ -211,13 +213,20 @@ theorem chapter11_displacement_eq_support_card_of_ne_one
     {G : Type*} [Fintype G] [Group G]
     (D : Chapter11RamificationData G) {σ : G} (hσ : σ ≠ 1) :
     chapter11Displacement D σ = (chapter11LowerSupport D σ).card := by
-  sorry
+  simp [chapter11Displacement, hσ]
 
 theorem chapter11_displacement_eq_zero_of_not_mem_inertia
     {G : Type*} [Fintype G] [Group G]
     (D : Chapter11RamificationData G) {σ : G} (hσ : σ ∉ D.inertia) :
     chapter11Displacement D σ = 0 := by
-  sorry
+  classical
+  by_cases hσ1 : σ = 1
+  · simp [chapter11Displacement, hσ1]
+  · rw [chapter11_displacement_eq_support_card_of_ne_one D hσ1]
+    have hsupport : chapter11LowerSupport D σ = ∅ := by
+      ext i
+      simp [chapter11LowerSupport, D.support_outside_inertia hσ i]
+    simp [hsupport]
 
 /-!
 The conductor is recorded as a rational number.  This keeps the weighted
