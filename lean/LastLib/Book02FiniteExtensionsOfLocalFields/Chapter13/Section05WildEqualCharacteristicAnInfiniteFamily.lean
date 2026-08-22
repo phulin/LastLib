@@ -587,7 +587,40 @@ theorem chapter13_laurent_series_artin_schreier_rhs_not_coboundary
     (hm : 0 < m) (hmp : ¬p ∣ m) :
     ¬chapter13ArtinSchreierCoboundary
       (LaurentSeries k) p (chapter13ArtinSchreierRightHandSide k m) := by
-  sorry
+  rintro ⟨x, hx⟩
+  have hv := congrArg v hx
+  rw [chapter13_laurent_series_rhs_has_pole_order k v ht hm] at hv
+  by_cases hx0 : 0 ≤ v x
+  · have hnonneg := chapter13_artin_schreier_no_pole_from_integral_input v x hx0
+    rw [hv] at hnonneg
+    have hmZ : (0 : ℤ) < (m : ℤ) := by exact_mod_cast hm
+    have hneg : (-(m : ℤ) : WithTop ℤ) < 0 := by
+      exact_mod_cast (neg_lt_zero.mpr hmZ)
+    exact (not_le_of_gt hneg) hnonneg
+  · have hxneg : v x < 0 := lt_of_not_ge hx0
+    have hpole := chapter13_artin_schreier_pole_order_multiple_of_p v x hxneg
+    have heq : p • v x = (-(m : ℤ) : WithTop ℤ) := hpole.symm.trans hv
+    have hxtop : v x ≠ (⊤ : WithTop ℤ) := ne_top_of_lt hxneg
+    let q : ℤ := (v x).untop hxtop
+    have hq : (q : WithTop ℤ) = v x := by
+      exact WithTop.coe_untop (v x) hxtop
+    have heqInt : p • q = -(m : ℤ) := by
+      apply WithTop.coe_eq_coe.mp
+      calc
+        ((p • q : ℤ) : WithTop ℤ) = p • (q : WithTop ℤ) :=
+          (WithTop.coe_nsmul q p).symm
+        _ = p • v x := by rw [hq]
+        _ = (-(m : ℤ) : WithTop ℤ) := heq
+    have hdvdZ : (p : ℤ) ∣ (m : ℤ) := by
+      refine ⟨-q, ?_⟩
+      have heqInt' : (p : ℤ) * q = -(m : ℤ) := by
+        simpa [nsmul_eq_mul] using heqInt
+      calc
+        (m : ℤ) = -(-(m : ℤ)) := by ring
+        _ = -((p : ℤ) * q) := by rw [heqInt']
+        _ = (p : ℤ) * (-q) := by ring
+    have hdvd : p ∣ m := Int.natCast_dvd_natCast.mp hdvdZ
+    exact hmp hdvd
 
 theorem chapter13_artin_schreier_extension_exists
     (k : Type*) [Field k]
@@ -597,7 +630,94 @@ theorem chapter13_artin_schreier_extension_exists
     (hm : 0 < m) (hmp : ¬p ∣ m) :
     Nonempty (Chapter13ArtinSchreierExtensionData k p m
       (chapter13ArtinSchreierRightHandSide k m)) := by
-  sorry
+  let K := LaurentSeries k
+  let a : K := chapter13ArtinSchreierRightHandSide k m
+  let f : K[X] := X ^ p - X - C a
+  have hnot : ¬chapter13ArtinSchreierCoboundary K p a := by
+    simpa [K, a] using
+      (chapter13_laurent_series_artin_schreier_rhs_not_coboundary k v ht hm hmp)
+  have hf : Irreducible f := by
+    dsimp [f]
+    exact chapter13_artin_schreier_irreducible_of_not_coboundary K p a hnot
+  have hmonic : f.Monic := by
+    dsimp [f]
+    have hdeg : degree (-(X + C a) : K[X]) < p := by
+      rw [degree_neg, degree_X_add_C]
+      exact_mod_cast (Fact.out : Nat.Prime p).one_lt
+    have h := monic_X_pow_add (p := (-(X + C a) : K[X])) (n := p) hdeg
+    convert h using 1
+    ring
+  letI : Fact (Irreducible f) := ⟨hf⟩
+  letI : FiniteDimensional K (AdjoinRoot f) := hmonic.finite_adjoinRoot
+  have hnat : f.natDegree = p := by
+    dsimp [f]
+    have hdeg : degree (-(X + C a) : K[X]) < p := by
+      rw [degree_neg, degree_X_add_C]
+      exact_mod_cast (Fact.out : Nat.Prime p).one_lt
+    have hdeg' : degree (-(X + C a) : K[X]) <
+        (X ^ p : K[X]).degree := by
+      simpa [degree_X_pow] using hdeg
+    rw [show X ^ p - X - C a = X ^ p + -(X + C a) by ring]
+    rw [natDegree_add_eq_left_of_degree_lt hdeg', natDegree_X_pow]
+  have hroot : aeval (AdjoinRoot.root f) f = 0 := by
+    simp [AdjoinRoot.aeval_eq]
+  have hEq : (AdjoinRoot.root f) ^ p - AdjoinRoot.root f =
+      algebraMap K (AdjoinRoot f) a := by
+    simpa [f, Polynomial.aeval_def] using hroot
+  have hdegree : Module.finrank K (AdjoinRoot f) = p := by
+    rw [PowerBasis.finrank (AdjoinRoot.powerBasis' hmonic)]
+    exact hnat
+  let : Algebra (ZMod p) (AdjoinRoot f) := ZMod.algebra _ _
+  have hsplit0 : (X ^ p - X : (AdjoinRoot f)[X]).Splits := by
+    have hsplitZ :
+        ((X ^ p - X : (ZMod p)[X]).map
+          (algebraMap (ZMod p) (ZMod p))).Splits := by
+      simpa using (GaloisField.splits_zmod_X_pow_sub_X (p := p))
+    have h := hsplitZ.of_algHom (Algebra.ofId (ZMod p) (AdjoinRoot f))
+    simpa only [Polynomial.map_sub, Polynomial.map_pow, map_X] using h
+  have hEqPoly : f.map (algebraMap K (AdjoinRoot f)) =
+      (X ^ p - X : (AdjoinRoot f)[X]).comp
+        (X - C (AdjoinRoot.root f)) := by
+    dsimp [f]
+    simp [Polynomial.comp, sub_pow_char]
+    rw [← hEq, map_sub, ← C.map_pow]
+    ring
+  have hsplit : (f.map (algebraMap K (AdjoinRoot f))).Splits := by
+    rw [hEqPoly]
+    exact hsplit0.comp_X_sub_C (AdjoinRoot.root f)
+  have hroot_mem : AdjoinRoot.root f ∈ f.rootSet (AdjoinRoot f) := by
+    rw [mem_rootSet_of_ne hf.ne_zero]
+    exact hroot
+  have hadjoin : Algebra.adjoin K (f.rootSet (AdjoinRoot f)) = ⊤ := by
+    apply top_unique
+    have hmono := Algebra.adjoin_mono K ({AdjoinRoot.root f} : Set (AdjoinRoot f))
+      (f.rootSet (AdjoinRoot f)) (Set.singleton_subset_iff.mpr hroot_mem)
+    rw [AdjoinRoot.adjoinRoot_eq_top] at hmono
+    exact hmono
+  have hsplitfield : f.IsSplittingField K (AdjoinRoot f) :=
+    (isSplittingField_iff_intermediateField).2 ⟨hsplit, hadjoin⟩
+  let : f.IsSplittingField K (AdjoinRoot f) := hsplitfield
+  have hsep : f.Separable := by
+    simpa [f] using chapter13_artin_schreier_polynomial_is_separable K p a
+  let : IsGalois K (AdjoinRoot f) :=
+    IsGalois.of_separable_splitting_field hsep
+  have hcard : Nat.card (AdjoinRoot f ≃ₐ[K] AdjoinRoot f) = p := by
+    rw [IsGalois.card_aut_eq_finrank]
+    exact hdegree
+  have hcyc : IsCyclic (AdjoinRoot f ≃ₐ[K] AdjoinRoot f) :=
+    isCyclic_of_prime_card hcard
+  refine ⟨{
+    carrier := AdjoinRoot f
+    carrierField := inferInstance
+    carrierAlgebra := inferInstance
+    carrierFinite := inferInstance
+    root := AdjoinRoot.root f
+    root_equation := hroot
+    generates := AdjoinRoot.adjoinRoot_eq_top
+    degree := hdegree
+    separable := inferInstance
+    galois := inferInstance
+    cyclic := hcyc }⟩
 
 theorem chapter13_artin_schreier_extension_data_is_cyclic_degree_p
     (k : Type*) [Field k] {p m : ℕ} [Fact p.Prime] [CharP k p]
@@ -635,7 +755,15 @@ theorem chapter13_wild_artin_schreier_family_classes_pairwise_distinct
         (chapter13ArtinSchreierRightHandSide k m.1) (F.extension m) ≠
       chapter13ArtinSchreierExtensionClass k p n.1
         (chapter13ArtinSchreierRightHandSide k n.1) (F.extension n) := by
-  sorry
+  intro hclasses
+  apply F.pairwise_nonisomorphic m n hmn
+  change chapter13FiniteExtensionClassOf
+      (chapter13ArtinSchreierExtensionModel k p m.1
+        (chapter13ArtinSchreierRightHandSide k m.1) (F.extension m)) =
+    chapter13FiniteExtensionClassOf
+      (chapter13ArtinSchreierExtensionModel k p n.1
+        (chapter13ArtinSchreierRightHandSide k n.1) (F.extension n)) at hclasses
+  exact Quotient.exact hclasses
 
 /- DEPENDENCY_GUESS: The preceding pole-order lemmas and the standard
    Artin--Schreier construction supply this family, but the project has no
