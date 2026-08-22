@@ -531,14 +531,18 @@ theorem chapter04FiniteAdeleSingleCoordinate_apply_same
     (K : Type*) [Field K] [NumberField K]
     (v₀ : Chapter04FinitePlace K) (z : Chapter04FiniteLocalField K v₀) :
     chapter04FiniteAdeleSingleCoordinate K v₀ z v₀ = z := by
-  sorry
+  classical
+  change (if h : v₀ = v₀ then h ▸ z else 0) = z
+  simp
 
 theorem chapter04FiniteAdeleSingleCoordinate_apply_ne
     (K : Type*) [Field K] [NumberField K]
     (v₀ : Chapter04FinitePlace K) (z : Chapter04FiniteLocalField K v₀)
     {v : Chapter04FinitePlace K} (hv : v ≠ v₀) :
     chapter04FiniteAdeleSingleCoordinate K v₀ z v = 0 := by
-  sorry
+  classical
+  change (if h : v = v₀ then h ▸ z else 0) = 0
+  simp [hv]
 
 theorem chapter04_finite_principal_parts_are_represented_by_one_global_element
     (K : Type*) [Field K] [NumberField K]
@@ -546,7 +550,7 @@ theorem chapter04_finite_principal_parts_are_represented_by_one_global_element
     ∃ a : K, ∀ v : Chapter04FinitePlace K,
       x v - (a : Chapter04FiniteLocalField K v) ∈
         chapter04FiniteLocalIntegerSet K v := by
-  sorry
+  exact LastLib.Book04AdelesAndIdeles.Chapter01.chapter01_principal_parts_approximation K x
 
 def chapter04RationalPrincipalPartsCorrectionExample
     (p q : Chapter04FinitePlace ℚ) (_hpq : p ≠ q)
@@ -565,10 +569,30 @@ theorem chapter04_rational_principal_parts_correction_example
       chapter04RationalPrincipalPartsCorrectionExample p q hpq r s hr hs v -
           (a : Chapter04FiniteLocalField ℚ v) ∈
       chapter04FiniteLocalIntegerSet ℚ v := by
-  sorry
+  obtain ⟨a, ha⟩ :=
+    chapter04_finite_principal_parts_are_represented_by_one_global_element ℚ
+      (chapter04RationalPrincipalPartsCorrectionExample p q hpq r s hr hs)
+  refine ⟨a, ?_⟩
+  intro v
+  have hcanonical :
+      (a : v.adicCompletion ℚ) =
+        { toCompletion :=
+            ↑((WithVal.equiv (v.valuation ℚ)).symm a) } := by
+    have hcoe : (a : v.adicCompletion ℚ) = algebraMap ℚ (v.adicCompletion ℚ) a := by
+      simp
+    have halg :
+        algebraMap ℚ (v.adicCompletion ℚ) a =
+          { toCompletion :=
+              ↑((WithVal.equiv (v.valuation ℚ)).symm a) } := by
+      apply IsDedekindDomain.HeightOneSpectrum.adicCompletion.ext
+      rw [IsDedekindDomain.HeightOneSpectrum.algebraMap_adicCompletion_toCompletion]
+      rfl
+    exact hcoe.trans halg
+  rw [hcanonical]
+  exact ha v
 
 def chapter04RationalDisplayedPrincipalPartsFamily
-    (p q : Chapter04RationalPrime) (hpq : p ≠ q) :
+    (p q : Chapter04RationalPrime) (_hpq : p ≠ q) :
     Chapter04RationalFiniteRestrictedProduct := by
   classical
   exact RestrictedProduct.mk (fun r =>
@@ -578,7 +602,9 @@ def chapter04RationalDisplayedPrincipalPartsFamily
     else if h : r = q then
       h ▸ (q.1 : Chapter04RationalPadic q)⁻¹
     else 0) (by
-      sorry)
+      filter_upwards [eventually_cofinite_ne p, eventually_cofinite_ne q] with r hrp hrq
+      simp only [dif_neg hrp, dif_neg hrq]
+      exact (Chapter04RationalPadicIntegerSubring r).zero_mem)
 
 def chapter04RationalDisplayedPrincipalPartsRepresentative
     (p q : Chapter04RationalPrime) : ℚ :=
@@ -590,7 +616,93 @@ theorem chapter04_rational_displayed_principal_parts_are_represented
       chapter04RationalDisplayedPrincipalPartsFamily p q hpq r -
           (chapter04RationalDisplayedPrincipalPartsRepresentative p q :
             Chapter04RationalPadic r) ∈ Chapter04RationalPadicIntegerSubring r := by
-  sorry
+  classical
+  have hinv : ∀ (u w : Chapter04RationalPrime), u ≠ w →
+      ‖((w.1 : Chapter04RationalPadic u)⁻¹)‖ ≤ 1 := by
+    intro u w huw
+    have hden : ¬u.1 ∣ ((w.1 : ℚ)⁻¹).den := by
+      have huw' : u.1 ≠ w.1 := by
+        intro h
+        exact huw (Subtype.ext h)
+      simpa [Rat.inv_natCast_den, w.2.ne_zero] using
+        (u.2.coprime_iff_not_dvd.1
+          ((Nat.coprime_primes u.2 w.2).2 huw'))
+    simpa only [Rat.cast_inv, Rat.cast_natCast] using
+      (@Padic.norm_rat_le_one u.1 ⟨u.2⟩ ((w.1 : ℚ)⁻¹) hden)
+  have hinv_mem : ∀ (u w : Chapter04RationalPrime), u ≠ w →
+      (w.1 : Chapter04RationalPadic u)⁻¹ ∈ Chapter04RationalPadicIntegerSubring u := by
+    intro u w huw
+    exact (@PadicInt.mem_subring_iff u.1 ⟨u.2⟩).2 (hinv u w huw)
+  have hpow_mem : ∀ (u w : Chapter04RationalPrime), u ≠ w →
+      ((w.1 : Chapter04RationalPadic u) ^ 2)⁻¹ ∈
+        Chapter04RationalPadicIntegerSubring u := by
+    intro u w huw
+    rw [← inv_pow]
+    simpa only [pow_two] using
+      (Chapter04RationalPadicIntegerSubring u).mul_mem
+        (hinv_mem u w huw) (hinv_mem u w huw)
+  intro r
+  by_cases hrp : r = p
+  · subst r
+    have hqp : q ≠ p := by
+      intro h
+      exact hpq h.symm
+    have hmem := (Chapter04RationalPadicIntegerSubring p).neg_mem (hinv_mem p q hpq)
+    have hfamily :
+        chapter04RationalDisplayedPrincipalPartsFamily p q hpq p =
+          ((p.1 : Chapter04RationalPadic p)⁻¹) ^ 2 +
+            (p.1 : Chapter04RationalPadic p)⁻¹ := by
+      unfold chapter04RationalDisplayedPrincipalPartsFamily
+      simp
+    rw [hfamily]
+    change
+      (((p.1 : Chapter04RationalPadic p)⁻¹) ^ 2 +
+          (p.1 : Chapter04RationalPadic p)⁻¹) -
+        (chapter04RationalDisplayedPrincipalPartsRepresentative p q :
+          Chapter04RationalPadic p) ∈ Chapter04RationalPadicIntegerSubring p
+    simp only [chapter04RationalDisplayedPrincipalPartsRepresentative]
+    convert hmem using 1
+    push_cast
+    ring
+  · by_cases hrq : r = q
+    · subst r
+      have hp_inv := hinv_mem q p hrp
+      have hp_sq := hpow_mem q p hrp
+      have hmem := (Chapter04RationalPadicIntegerSubring q).add_mem
+        ((Chapter04RationalPadicIntegerSubring q).neg_mem hp_inv)
+        ((Chapter04RationalPadicIntegerSubring q).neg_mem hp_sq)
+      have hfamily :
+          chapter04RationalDisplayedPrincipalPartsFamily p q hpq q =
+            (q.1 : Chapter04RationalPadic q)⁻¹ := by
+        unfold chapter04RationalDisplayedPrincipalPartsFamily
+        simp [hrp]
+      rw [hfamily]
+      change
+        ((q.1 : Chapter04RationalPadic q)⁻¹) -
+        (chapter04RationalDisplayedPrincipalPartsRepresentative p q :
+            Chapter04RationalPadic q) ∈ Chapter04RationalPadicIntegerSubring q
+      simp only [chapter04RationalDisplayedPrincipalPartsRepresentative]
+      convert hmem using 1
+      push_cast
+      ring
+    · have hmem := (Chapter04RationalPadicIntegerSubring r).add_mem
+        ((Chapter04RationalPadicIntegerSubring r).neg_mem (hinv_mem r q hrq))
+        ((Chapter04RationalPadicIntegerSubring r).add_mem
+          ((Chapter04RationalPadicIntegerSubring r).neg_mem (hinv_mem r p hrp))
+          ((Chapter04RationalPadicIntegerSubring r).neg_mem (hpow_mem r p hrp)))
+      have hfamily :
+          chapter04RationalDisplayedPrincipalPartsFamily p q hpq r = 0 := by
+        unfold chapter04RationalDisplayedPrincipalPartsFamily
+        simp [hrp, hrq]
+      rw [hfamily]
+      change
+        (0 : Chapter04RationalPadic r) -
+        (chapter04RationalDisplayedPrincipalPartsRepresentative p q :
+            Chapter04RationalPadic r) ∈ Chapter04RationalPadicIntegerSubring r
+      simp only [chapter04RationalDisplayedPrincipalPartsRepresentative]
+      convert hmem using 1
+      push_cast
+      ring
 
 end
 
