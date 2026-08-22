@@ -59,17 +59,114 @@ local instance chapter04TensorRightModule
   smul b x := TensorProduct.map
     (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B b) x
   one_smul := by
-    sorry
+    intro z
+    induction z with
+    | zero =>
+        change TensorProduct.map
+          (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B 1) 0 = 0
+        exact (TensorProduct.map
+          (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B 1)).map_zero
+    | tmul v b =>
+        change v ⊗ₜ[K] (1 * b) = v ⊗ₜ[K] b
+        rw [one_mul]
+    | add z₁ z₂ ih₁ ih₂ =>
+        change TensorProduct.map
+          (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B 1) (z₁ + z₂) = z₁ + z₂
+        have h₁ : TensorProduct.map
+            (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B 1) z₁ = z₁ := ih₁
+        have h₂ : TensorProduct.map
+            (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B 1) z₂ = z₂ := ih₂
+        rw [map_add, h₁, h₂]
   mul_smul := by
-    sorry
+    intro x y z
+    induction z with
+    | zero =>
+        change TensorProduct.map
+          (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B (x * y)) 0 =
+          TensorProduct.map (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B x)
+            (TensorProduct.map (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B y) 0)
+        simp only [map_zero]
+    | tmul v b =>
+        change v ⊗ₜ[K] ((x * y) * b) = v ⊗ₜ[K] (x * (y * b))
+        rw [mul_assoc]
+    | add z₁ z₂ ih₁ ih₂ =>
+        change TensorProduct.map
+          (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B (x * y)) (z₁ + z₂) =
+          TensorProduct.map (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B x)
+            (TensorProduct.map (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B y)
+              (z₁ + z₂))
+        have h₁ : TensorProduct.map
+            (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B (x * y)) z₁ =
+            TensorProduct.map (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B x)
+              (TensorProduct.map (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B y) z₁) := ih₁
+        have h₂ : TensorProduct.map
+            (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B (x * y)) z₂ =
+            TensorProduct.map (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B x)
+              (TensorProduct.map (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B y) z₂) := ih₂
+        rw [map_add, map_add, h₁, h₂]
+        exact ((TensorProduct.map
+          (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B x)).map_add _ _).symm
   smul_add := by
-    sorry
+    intro b x y
+    change TensorProduct.map
+      (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B b) (x + y) =
+      TensorProduct.map (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B b) x +
+        TensorProduct.map (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B b) y
+    exact (TensorProduct.map
+      (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B b)).map_add x y
   smul_zero := by
-    sorry
+    intro b
+    change TensorProduct.map
+      (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B b) 0 = 0
+    exact (TensorProduct.map
+      (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B b)).map_zero
   add_smul := by
-    sorry
+    intro x y z
+    induction z with
+    | zero =>
+        change TensorProduct.map
+          (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B (x + y)) 0 =
+          TensorProduct.map (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B x) 0 +
+            TensorProduct.map (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B y) 0
+        rw [map_zero, map_zero, map_zero, add_zero]
+    | tmul v b =>
+        change v ⊗ₜ[K] ((x + y) * b) = v ⊗ₜ[K] (x * b) + v ⊗ₜ[K] (y * b)
+        rw [add_mul, TensorProduct.tmul_add]
+    | add z₁ z₂ ih₁ ih₂ =>
+        change TensorProduct.map
+          (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B (x + y)) (z₁ + z₂) =
+          TensorProduct.map (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B x)
+              (z₁ + z₂) +
+            TensorProduct.map (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B y)
+              (z₁ + z₂)
+        have h₁ : TensorProduct.map
+            (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B (x + y)) z₁ =
+            TensorProduct.map (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B x) z₁ +
+              TensorProduct.map (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B y) z₁ := ih₁
+        have h₂ : TensorProduct.map
+            (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B (x + y)) z₂ =
+            TensorProduct.map (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B x) z₂ +
+              TensorProduct.map (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B y) z₂ := ih₂
+        rw [map_add, h₁, h₂, map_add, map_add, add_add_add_comm]
   zero_smul := by
-    sorry
+    intro z
+    induction z with
+    | zero =>
+        change TensorProduct.map
+          (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B 0) 0 = 0
+        exact (TensorProduct.map
+          (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B 0)).map_zero
+    | tmul v b =>
+        change v ⊗ₜ[K] (0 * b) = 0
+        rw [zero_mul, TensorProduct.tmul_zero]
+    | add z₁ z₂ ih₁ ih₂ =>
+        change TensorProduct.map
+          (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B 0) (z₁ + z₂) = 0
+        have h₁ : TensorProduct.map
+            (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B 0) z₁ = 0 := ih₁
+        have h₂ : TensorProduct.map
+            (LinearMap.id : V →ₗ[K] V) (Algebra.lmul K B 0) z₂ = 0 := ih₂
+        rw [map_add, h₁, h₂, add_zero]
 
 def chapter04LocalScalarExtensionMap
     (K V : Type*) [Field K] [NumberField K]
