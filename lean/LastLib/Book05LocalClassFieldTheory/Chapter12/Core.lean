@@ -4,6 +4,7 @@ import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter12.Section04TheMultipl
 import LastLib.Book05LocalClassFieldTheory.Chapter06.Dependencies
 import LastLib.Book05LocalClassFieldTheory.Chapter07.Dependencies
 import LastLib.Book05LocalClassFieldTheory.Chapter10.Dependencies
+import LastLib.Book05LocalClassFieldTheory.Chapter10.Section05CompositaAndIntersections
 import LastLib.Book05LocalClassFieldTheory.Chapter11.Dependencies
 import LastLib.Book05LocalClassFieldTheory.Chapter11.Section01ExactTopologicalStatement
 import Mathlib.FieldTheory.AlgebraicClosure
@@ -149,9 +150,9 @@ def chapter12OpenFiniteIndex
   IsOpen (H : Set Kˣ) ∧ H.FiniteIndex
 
 /-- The cyclic quotient condition used for cyclic extensions. -/
-def chapter12CyclicQuotient
+abbrev chapter12CyclicQuotient
     {K : Type*} [Field K] (H : Subgroup Kˣ) : Prop :=
-  ∃ g : Kˣ ⧸ H, ∀ x : Kˣ ⧸ H, ∃ n : ℤ, g ^ n = x
+  IsCyclic (Kˣ ⧸ H)
 
 /-- The local coordinates used by the dictionary. -/
 structure Chapter12LocalCoordinates
@@ -179,7 +180,7 @@ structure Chapter12LocalCoordinates
 def chapter12UnramifiedNormSubgroup
     {K k : Type*} [Field K] [Field k]
     (C : Chapter12LocalCoordinates K k) (m : ℕ) : Subgroup Kˣ :=
-  Subgroup.closure (Set.insert (C.uniformizer ^ m) (C.units : Set Kˣ))
+  Subgroup.zpowers (C.uniformizer ^ m) ⊔ C.units
 
 /-- Set-level notation for `π^(mℤ) Oˣ`. -/
 def chapter12PiPowUnits
@@ -195,10 +196,10 @@ theorem chapter12_mem_unramified_norm_subgroup_iff
       x ∈ chapter12PiPowUnits C m := by
   sorry
 
-/-- In the abelian multiplicative group this is the product of two subgroups. -/
-def chapter12NormSubgroupProduct
+/-- The product of two norm subgroups, using the established Chapter 10 API. -/
+abbrev chapter12NormSubgroupProduct
     {K : Type*} [Field K] (H₁ H₂ : Subgroup Kˣ) : Subgroup Kˣ :=
-  H₁ ⊔ H₂
+  LastLib.Book05LocalClassFieldTheory.Chapter10.chapter10NormSubgroupProduct H₁ H₂
 
 theorem chapter12_mem_norm_subgroup_product_iff
     {K : Type*} [Field K] (H₁ H₂ : Subgroup Kˣ) (x : Kˣ) :

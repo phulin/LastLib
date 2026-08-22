@@ -1,4 +1,5 @@
 import LastLib.Book05LocalClassFieldTheory.Chapter12.Core
+import LastLib.Book05LocalClassFieldTheory.Chapter09.Section02NormCorrespondsToGaloisInclusion
 import LastLib.Book05LocalClassFieldTheory.Chapter09.Section04TowersAndFiniteQuotientDiagrams
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter12
@@ -10,7 +11,7 @@ open LastLib.Book05LocalClassFieldTheory.Chapter09
 /-! ## 12.4. Functoriality at a glance -/
 
 /-- The canonical multiplicative inclusion induced by a field extension. -/
-noncomputable def chapter12MultiplicativeInclusion
+abbrev chapter12MultiplicativeInclusion
     (K L : Type*) [Field K] [Field L] [Algebra K L] : Kˣ →* Lˣ :=
   chapter09FieldInclusionHom K L
 
@@ -33,7 +34,8 @@ theorem chapter12_norm_corresponds_to_galois_inclusion
     D.reciprocity.recK.reciprocity.comp (chapter12MultiplicativeNormMap K L) =
       (chapter09GaloisInclusionAbelianization K L Ks).comp
         D.reciprocity.recL.reciprocity := by
-  sorry
+  exact chapter09_norm_inclusion_compatibility K L Ks
+    D.finite_separable D.reciprocity
 
 theorem chapter12_norm_corresponds_to_galois_inclusion_apply
     (K L Ks : Type) [Field K] [Field L] [Field Ks]
@@ -57,7 +59,8 @@ theorem chapter12_multiplicative_inclusion_corresponds_to_transfer
     D.reciprocity.recL.reciprocity.comp (chapter12MultiplicativeInclusion K L) =
       (chapter09GaloisTransfer K L Ks D.finite_separable).comp
         D.reciprocity.recK.reciprocity := by
-  sorry
+  exact chapter09_inclusion_transfer_compatibility K L Ks
+    D.finite_separable D.reciprocity
 
 theorem chapter12_multiplicative_inclusion_corresponds_to_transfer_apply
     (K L Ks : Type) [Field K] [Field L] [Field Ks]
@@ -79,7 +82,7 @@ theorem chapter12_norms_are_transitive
     chapter12MultiplicativeNormMap K M =
       (chapter12MultiplicativeNormMap K L).comp
         (chapter12MultiplicativeNormMap L M) := by
-  sorry
+  exact chapter09_norm_hom_transitive K L M
 
 /-- Composition of transfer maps in a tower. -/
 def chapter12TransferTowerComposition
@@ -88,10 +91,16 @@ def chapter12TransferTowerComposition
   V₂₃.comp V₁₂
 
 theorem chapter12_transfers_are_transitive
-    {G₁ G₂ G₃ : Type*} [Group G₁] [Group G₂] [Group G₃]
-    (V₁₂ : G₁ →* G₂) (V₂₃ : G₂ →* G₃) (g : G₁) :
-    chapter12TransferTowerComposition V₁₂ V₂₃ g = V₂₃ (V₁₂ g) := by
-  rfl
+    {G₀ G₁ G₂ : Type*} [Group G₀] [Group G₁] [Group G₂]
+    (f : G₁ →* G₀) (g : G₂ →* G₁)
+    (hf : Function.Injective f) (hg : Function.Injective g)
+    (hfg : f.range.FiniteIndex) (hgg : g.range.FiniteIndex)
+    (hcomp : (f.comp g).range.FiniteIndex) :
+    chapter09TransferAlong (f.comp g) (hf.comp hg) hcomp =
+      chapter12TransferTowerComposition
+        (chapter09TransferAlong f hf hfg)
+        (chapter09TransferAlong g hg hgg) := by
+  exact chapter09_transferAlong_transitive f g hf hg hfg hgg hcomp
 
 end
 

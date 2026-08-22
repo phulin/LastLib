@@ -47,7 +47,7 @@ def chapter12CharacterUnramifiedOnInertia
 
 /-- Uniformizer and Frobenius values, with a chosen Frobenius lift exposed. -/
 def chapter12CharacterUniformizerValue
-    {K k G Q A : Type*} [Field K] [Field k] [CommGroup G] [Group Q] [Group A]
+    {K k G Q A : Type*} [Field K] [Field k] [CommGroup G] [Finite G] [Group Q] [Group A]
     (D : Chapter12GaloisPieceDictionary K k G Q)
     (χ : G →* A) : A :=
   χ (D.reciprocity D.coordinates.uniformizer)
@@ -58,20 +58,20 @@ def chapter12CharacterFrobeniusLiftValue
   χ g
 
 theorem chapter12_unramified_character_has_frobenius_value
-    {K k G Q A : Type*} [Field K] [Field k] [CommGroup G] [Group Q] [Group A]
+    {K k G Q A : Type*} [Field K] [Field k] [CommGroup G] [Finite G] [Group Q] [Group A]
     (D : Chapter12GaloisPieceDictionary K k G Q) (χ : G →* A)
     (hunram : chapter12CharacterUnramifiedOnInertia
-      (chapter12GaloisInertia D.coordinates D.reciprocity) χ)
+      D.inertia χ)
     {g : G} (hg : g ∈ chapter12ArithmeticFrobeniusLifts D) :
     chapter12CharacterUniformizerValue D χ =
       chapter12CharacterFrobeniusLiftValue χ g := by
   sorry
 
 theorem chapter12_character_unramified_iff_units_trivial
-    {K k G Q A : Type*} [Field K] [Field k] [CommGroup G] [Group Q] [Group A]
+    {K k G Q A : Type*} [Field K] [Field k] [CommGroup G] [Finite G] [Group Q] [Group A]
     (D : Chapter12GaloisPieceDictionary K k G Q) (χG : G →* A) :
     chapter12CharacterUnramifiedOnInertia
-        (chapter12GaloisInertia D.coordinates D.reciprocity) χG ↔
+        D.inertia χG ↔
       chapter12CharacterUnramifiedOnUnits D.coordinates
         (χG.comp D.reciprocity) := by
   sorry
@@ -89,12 +89,12 @@ def chapter12CharacterTrivialOnRamificationLevel
   ∀ g : Gₙ, χ g.1 = 1
 
 theorem chapter12_character_unit_level_iff_ramification_level
-    {K k G Q A : Type*} [Field K] [Field k] [CommGroup G] [Group Q] [Group A]
+    {K k G Q A : Type*} [Field K] [Field k] [CommGroup G] [Finite G] [Group Q] [Group A]
     (D : Chapter12GaloisPieceDictionary K k G Q) (n : ℕ) (χ : G →* A) :
     chapter12CharacterTrivialOnUnitLevel D.coordinates n
       (χ.comp D.reciprocity) ↔
       chapter12CharacterTrivialOnRamificationLevel
-        (chapter12GaloisRamification D.coordinates D.reciprocity n) χ := by
+        (D.ramification n) χ := by
   sorry
 
 /-- Norm pullback and restriction of a Galois character agree on extension
@@ -124,7 +124,7 @@ abbrev chapter12CharacterExtendsToCompletion
 theorem chapter12_completion_extension_implies_relative_compact_range
     {K A : Type*} [Field K] [CommGroup A]
     [TopologicalSpace Kˣ] [UniformSpace A] [IsUniformGroup A]
-    [IsTopologicalGroup A] [T2Space A] [CompactSpace A]
+    [IsTopologicalGroup A] [T2Space A]
     (χ : Chapter12ContinuousCharacter Kˣ A)
     (hext : chapter12CharacterExtendsToCompletion χ) :
     chapter12RelativeCompactRange χ := by

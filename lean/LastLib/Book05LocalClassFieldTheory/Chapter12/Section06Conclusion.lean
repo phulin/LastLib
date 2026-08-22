@@ -12,7 +12,6 @@ theorem chapter12_reciprocity_is_continuous_injective_dense
     {K G : Type*} [Field K] [CommGroup G]
     [TopologicalSpace Kˣ] [TopologicalSpace G]
     [IsTopologicalGroup Kˣ] [IsTopologicalGroup G]
-    (_P : Chapter12LocalFieldProfile K)
     (R : Chapter12ReciprocityLimit K G) :
     Continuous R.reciprocity ∧ Function.Injective R.reciprocity ∧
       Dense (Set.range R.reciprocity) := by
@@ -24,7 +23,6 @@ theorem chapter12_profinite_completion_equiv_galois_abelianization
     {K G : Type*} [Field K] [CommGroup G]
     [TopologicalSpace Kˣ] [TopologicalSpace G]
     [IsTopologicalGroup Kˣ] [IsTopologicalGroup G]
-    (_P : Chapter12LocalFieldProfile K)
     (R : Chapter12ReciprocityLimit K G)
     : Nonempty (Chapter12TopologicalGroupEquiv
       (LastLib.Book05LocalClassFieldTheory.Chapter11.Chapter11ProfiniteCompletion Kˣ)

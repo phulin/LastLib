@@ -51,10 +51,6 @@ def chapter12NormTest
 /-- The hypotheses consumed by the norm-test reconstruction lemma.  The
 valuation and unit-layer clauses are deliberately separate so that later
 norm-filtration proofs can replace either component without changing the API. -/
-/- The converse reconstruction direction is intentionally left to the
-canonical norm-filtration interface from the missing preceding chapters; the
-safe projection theorem below records the direction available from these
-book-facing factors. -/
 structure Chapter12NormTestProfile
     {K k : Type*} [Field K] [Field k]
     (C : Chapter12LocalCoordinates K k) (H : Subgroup Kˣ) where
@@ -78,6 +74,15 @@ theorem chapter12_norm_membership_implies_three_tests
       P.higherNormSubgroups x := by
   exact ⟨P.valuation_factor hx, P.unit_factor hx, P.higher_factor hx⟩
 
+theorem chapter12_norm_membership_iff_three_tests
+    {K k : Type*} [Field K] [Field k]
+    {C : Chapter12LocalCoordinates K k} {H : Subgroup Kˣ}
+    (P : Chapter12NormTestProfile C H) {x : Kˣ} :
+    x ∈ H ↔
+      chapter12NormTest C H P.residueDegree P.unitNormSubgroup
+        P.higherNormSubgroups x := by
+  sorry
+
 /-- For an unramified profile, only valuation divisibility remains. -/
 def chapter12UnramifiedNormTest
     {K k : Type*} [Field K] [Field k]
@@ -97,22 +102,21 @@ def chapter12TameTotallyRamifiedNormProfile
     {K k : Type*} [Field K] [Field k]
     (C : Chapter12LocalCoordinates K k) (H : Subgroup Kˣ) : Prop :=
   Function.Surjective (fun y : H => C.valuation y.1) ∧
-    ∀ n, 0 < n → C.principalUnits n ≤ H
+    C.principalUnits 1 ≤ H
 
 theorem chapter12_tame_total_profile_has_unrestricted_valuation_and_principal_norms
     {K k : Type*} [Field K] [Field k]
     (C : Chapter12LocalCoordinates K k) (H : Subgroup Kˣ)
     (hprofile : chapter12TameTotallyRamifiedNormProfile C H) :
     Function.Surjective (fun y : H => C.valuation y.1) ∧
-      ∀ n, 0 < n → C.principalUnits n ≤ H := by
+      C.principalUnits 1 ≤ H := by
   exact hprofile
 
 def chapter12TameTotallyRamifiedNormTest
     {K k : Type*} [Field K] [Field k]
     (C : Chapter12LocalCoordinates K k) (H : Subgroup Kˣ)
     (U : Subgroup C.units) (x : Kˣ) : Prop :=
-  chapter12NormUnitTest C H U x ∧
-    chapter12HigherUnitTest C (fun n => C.principalUnits n) x
+  chapter12NormUnitTest C H U x
 
 theorem chapter12_tame_total_norm_test_has_no_valuation_obstruction
     {K k : Type*} [Field K] [Field k]
@@ -120,8 +124,7 @@ theorem chapter12_tame_total_norm_test_has_no_valuation_obstruction
     (U : Subgroup C.units) (x : Kˣ)
     (_hvaluation : Function.Surjective (fun y : H => C.valuation y.1)) :
     chapter12TameTotallyRamifiedNormTest C H U x ↔
-      chapter12NormUnitTest C H U x ∧
-        chapter12HigherUnitTest C (fun n => C.principalUnits n) x := by
+      chapter12NormUnitTest C H U x := by
   rfl
 
 /-- Wild ramification contributes genuine higher principal-unit obstructions. -/
@@ -129,14 +132,14 @@ def chapter12WildNormObstruction
     {K k : Type*} [Field K] [Field k]
     (C : Chapter12LocalCoordinates K k)
     (V : ℕ → Subgroup Kˣ) : Prop :=
-  ∃ n : ℕ, 0 < n ∧ V n ≠ C.principalUnits n
+  ∃ n : ℕ, 0 < n ∧ V n < C.principalUnits n
 
 theorem chapter12_wild_norm_test_sees_higher_layers
     {K k : Type*} [Field K] [Field k]
     (C : Chapter12LocalCoordinates K k)
     (V : ℕ → Subgroup Kˣ)
     (hwild : chapter12WildNormObstruction C V) :
-    ∃ n : ℕ, 0 < n ∧ V n ≠ C.principalUnits n := by
+    ∃ n : ℕ, 0 < n ∧ V n < C.principalUnits n := by
   exact hwild
 
 /-- Norm limitation reduces a finite Galois extension to its maximal abelian
@@ -149,11 +152,12 @@ theorem chapter12_nonabelian_norm_limitation
       LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05MaximalAbelianField K E / K))]
     (D : LastLib.Book05LocalClassFieldTheory.Chapter05.Chapter05LocalClassFormationData K E)
     (DM : LastLib.Book05LocalClassFieldTheory.Chapter05.Chapter05LocalClassFormationData K
-      (LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05MaximalAbelianField K E)) :
-    LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05NormSubgroup K E =
-      LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05NormSubgroup K
+      (LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05MaximalAbelianField K E))
+    (x : Kˣ) :
+    x ∈ LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05NormSubgroup K E ↔
+      x ∈ LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05NormSubgroup K
         (LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05MaximalAbelianField K E) := by
-  exact LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05_norm_limitation K E D DM
+  rw [LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05_norm_limitation K E D DM]
 
 end
 
