@@ -481,7 +481,7 @@ theorem chapter11_finite_residue_norm_is_exponent_map
     [FiniteDimensional k l] (x : l) :
     algebraMap k l (Algebra.norm k x) =
       x ^ ((Nat.card l - 1) / (Nat.card k - 1)) := by
-  sorry
+  exact FiniteField.algebraMap_norm_eq_pow
 
 /- The valuation coordinate is the only obstruction for the full norm group
    in the finite-residue unramified case. -/
