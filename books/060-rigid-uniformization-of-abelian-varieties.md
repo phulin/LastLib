@@ -25,7 +25,8 @@
    - [Line bundles on an infinite quotient](#51-line-bundles-on-an-infinite-quotient)
    - [Bilinear period data](#52-bilinear-period-data)
    - [Convergent theta series](#53-convergent-theta-series)
-   - [Ampleness and positivity](#54-ampleness-and-positivity)
+   - [Degree on effective one-chains of a periodic model](#54-degree-on-effective-one-chains-of-a-periodic-model)
+   - [Ampleness and positivity](#55-ampleness-and-positivity)
 6. [Polarized analytic torus quotients](#6-polarized-analytic-torus-quotients)
    - [The nonarchimedean Riemann form](#61-the-nonarchimedean-riemann-form)
    - [The polarization homomorphism](#62-the-polarization-homomorphism)
@@ -469,11 +470,85 @@ For a sufficiently fine multiple, those monomials generate the semigroup of ever
 
 The proof explains why positive definiteness, rather than nondegeneracy, is required. An indefinite form makes coefficients grow in one direction and decay in another, so the formal theta expression fails to converge on fixed polyannuli.
 
-### 5.4 Ampleness and positivity
+### 5.4 Degree on effective one-chains of a periodic model
+
+Theorems 5.2 and 10.1 and the positivity step of Section 9.2 all compare a period value with the degree of a descended line bundle on an effective one-cycle of an integral model. No algebraic degree theory on one-dimensional subvarieties is available at this point, and none is needed: the models in question are periodic polyhedral formal models, and on them degree can be defined combinatorially. This section carries out that definition once, together with its three required properties — additivity, refinement invariance, and identification with the period form — so that the later proofs may cite it.
+
+Fix a full split lattice quotient $Q=T^{\mathrm{an}}/M$ and a **periodic rational polyhedral formal model** for it: a rational polyhedral decomposition $\Sigma$ of $N_\mathbf R=\operatorname{Hom}(X,\mathbf R)$, periodic under the tropical lattice $\ell(M)$ and with only finitely many cells modulo the $\ell(M)$-translation action, together with the associated toric formal charts glued by period translations as in Section 9.3. Passing to the quotient complex gives a finite polyhedral cell complex $|\Sigma|/\ell(M)$. A **closed effective one-chain** is a finite formal sum $\gamma=\sum_e c_e\,e$ of oriented one-cells with integer coefficients $c_e\geq0$ and vanishing boundary; its **period class** is the unique element $\mu(\gamma)\in M$ whose tropical image $\ell(\mu(\gamma))$ is the total displacement of any lift of $\gamma$ to the universal cover. The lift exists because $\gamma$ is closed, and it is well defined up to an overall $\ell(M)$-translation, so $\mu(\gamma)$ depends only on $\gamma$. If $\mu(\gamma)=0$, the lift closes to a null-homologous loop; the chains consumed below have $\mu(\gamma)\ne0$.
+
+Let $L$ be a line bundle on $Q$ presented by automorphy data $(\lambda,a)$ as in (5.3). Trivializing $L$ over each cell of $\Sigma$ compatibly with the character monomials and taking valuations of the transition functions attaches to $L$ its **support function**: a continuous map
+
+$$
+\psi:N_\mathbf R\longrightarrow\mathbf R
+$$
+
+which is integral-valued on $N$, linear on each cell of $\Sigma$, and satisfies the equivariance
+
+$$
+\psi(n+\ell(m))=\psi(n)+v(a(m))+\langle\lambda(m),n\rangle,
+$$
+
+where $\langle-,-\rangle:X\times N\to\mathbf Z$ is the character--cocharacter pairing. The relation holds because translation by $u(m)$ multiplies a local trivialization by $a(m)\lambda(m)(z)$, whose valuation at tropical coordinate $n$ is $v(a(m))+\langle\lambda(m),n\rangle$. Conversely such a $\psi$ presents $L$. If $(\lambda,a')$ is another presentation with the same $\lambda$, then $d(m):=v(a'(m))-v(a(m))$ satisfies the additivity forced by (5.4), and on each period direction the difference $\psi'-\psi$ changes by the resulting linear functional; the second differences defined below are blind to every affine ambiguity, so nothing below depends on these choices.
+
+**Definition (degree on a period chain).** Fix $m\in M$, $m\ne0$, and a vertex $p\in N$ of $\Sigma$. The **period chain** $\gamma_m(p)$ is the effective one-cycle obtained by subdividing the segment from $p$ to $p+\ell(m)$ into edges of a rational subdivision of $\Sigma$ and closing it by the translation $\ell(m)$; in the quotient complex it is the loop winding once in the period direction $m$. The **degree** of $L$ on $\gamma_m(p)$ is the normalized second difference of the support function,
+
+$$
+\deg_L\bigl(\gamma_m(p)\bigr):=\psi(p+\ell(m))+\psi(p-\ell(m))-2\psi(p).
+$$
+
+It is an integer because $\psi$ is integral on $N$. A closed effective one-chain whose lifts decompose into finitely many period chains receives the summed value over that decomposition; Lemma 5.4.1 makes the value independent of the decomposition, so the extension is legitimate wherever it is used below.
+
+**Lemma 5.4.1 (well-definedness).** The integer $\deg_L(\gamma_m(p))$ does not depend on:
+
+1. the base vertex $p$;
+2. the presenting data $(\lambda,a)$;
+3. the periodic model $\Sigma$, nor on any common rational refinement.
+
+Moreover, for a chain decomposed as a sum $\sum_j c_j\gamma_{m_j}(p_j)$ with $c_j>0$, the summed value depends only on the chain, not on the decomposition.
+
+**Proof.** For (1), compare base points $p$ and $p+s$. Applying equivariance at $p+s$ and at $p+s-\ell(m)$ gives
+
+$$
+\psi(p+s+\ell(m))=\psi(p+s)+v(a(m))+\langle\lambda(m),p+s\rangle,
+$$
+
+$$
+\psi(p+s-\ell(m))=\psi(p+s)-v(a(m))-\langle\lambda(m),p+s\rangle+\langle\lambda(m),\ell(m)\rangle.
+$$
+
+Substituting both into the second difference at $p+s$, all terms cancel except $\langle\lambda(m),\ell(m)\rangle=q_\lambda(m,m)$; carrying out the identical substitution at $p$ shows that the second difference equals $q_\lambda(m,m)$ at every base point, so it is independent of $p$. For (2), two presentations differ by data whose contribution to $\psi$ differs by an affine function of $n$, and the second difference of any affine function vanishes. Changing per-cell trivializations by units changes nothing, since units have valuation zero. For (3), the second difference involves only the values of $\psi$ at three lattice points and no feature of the decomposition between them, so it is unchanged by replacing $\Sigma$ by any common refinement or by any other periodic model presenting the same quotient line bundle. The additivity claim follows from the same three points applied to each summand: any two decompositions of one chain admit a common refinement of subdivisions after which they coincide edge by edge, and each period-chain value is unaffected by that passage. $\square$
+
+**Lemma 5.4.2 (identification with the period form).** For every $m\ne0$ in $M$ and every vertex $p$,
+
+$$
+\deg_L\bigl(\gamma_m(p)\bigr)=q_\lambda(m,m).
+$$
+
+In particular, when $L$ comes from Riemann data with $q_\lambda$ positive definite, the degree is the strictly positive integer $q_\lambda(m,m)$ for every nonzero period class, independently of base point, presentation, and model.
+
+**Proof.** The computation was already carried out inside part (1) of Lemma 5.4.1: substituting the equivariance relation at $p+s$ and at $p+s-\ell(m)$ and adding,
+
+$$
+\begin{aligned}
+\deg_L(\gamma_m(p))
+&=\psi(p+\ell(m))+\psi(p-\ell(m))-2\psi(p)\\
+&=\bigl[\psi(p)+v(a(m))+\langle\lambda(m),p\rangle\bigr]\\
+&\quad+\bigl[\psi(p)-v(a(m))-\langle\lambda(m),p\rangle+q_\lambda(m,m)\bigr]-2\psi(p)\\
+&=q_\lambda(m,m),
+\end{aligned}
+$$
+
+using $\langle\lambda(m),p-\ell(m)\rangle=\langle\lambda(m),p\rangle-q_\lambda(m,m)$. Positivity is (5.7). $\square$
+
+The name _degree_ is justified by comparison with the special fiber: after star-subdividing the cells along which $\psi$ bends, the period chain is realized by a chain of one-dimensional toric strata of the special fiber, each a complete rational curve, and the classical toric degree formula expresses the degree of the presented bundle on such a stratum as exactly these second differences of the support function at vertices. The definition above extracts the model-independent content of that formula without developing toric intersection theory.
+
+This supplies exactly the input used below: ampleness will be characterized precisely by positive definiteness of $q_\lambda$ in Theorem 5.2, and Lemmas 5.4.1–5.4.2 convert positive definiteness into positivity of the combinatorial degrees, and conversely, without invoking any theory of algebraic curves inside $Q$. In the converse direction of Theorem 5.2, the period chain $\gamma_m$ is an effective closed one-cycle of the special fiber's cell complex on which an ample $L$ must have positive degree; by Lemma 5.4.2 that degree is $q_\lambda(m,m)$, so ampleness forces positivity. The definition is deliberately confined to effective one-cycles of periodic polyhedral models; no statement about arbitrary analytic curves or algebraic subvarieties is being made or used.
+
+### 5.5 Ampleness and positivity
 
 **Theorem 5.2 (analytic Appell--Humbert criterion).** For automorphy data $(\lambda,a)$ satisfying (5.4), the descended line bundle $L$ on $Q$ is ample if and only if $q_\lambda$ is positive definite. It is numerically nondegenerate if and only if $q_\lambda$ is nondegenerate.
 
-**Proof.** If $q_\lambda$ is positive definite, Proposition 5.1 gives a closed immersion into projective space from a high tensor power of $L$, so $L$ is ample. Conversely, choose a periodic rational polyhedral formal model of $Q$. For $m\ne0$, the segment from a point $n$ of the tropical space to $n+\ell(m)$ closes to a one-cycle in the quotient cell complex. After a rational subdivision, its inverse image is a chain of one-dimensional toric strata. The degree of $L$ on this effective closed chain is a positive integral multiple of $q_\lambda(m,m)$: across each face the change of the piecewise-linear support function of $L$ is the valuation of the automorphy factor, and summing the changes around the period gives (5.6). An ample bundle has positive degree on every such nonzero effective chain, so $q_\lambda(m,m)>0$.
+**Proof.** If $q_\lambda$ is positive definite, Proposition 5.1 gives a closed immersion into projective space from a high tensor power of $L$, so $L$ is ample. Conversely, choose a periodic rational polyhedral formal model of $Q$. For $m\ne0$, the segment from a vertex $p$ of the tropical space to $p+\ell(m)$ closes to an effective one-cycle $\gamma_m(p)$ in the quotient cell complex; after a rational subdivision, its inverse image is a chain of one-dimensional toric strata. By Lemma 5.4.2 the degree of $L$ on this cycle is exactly $q_\lambda(m,m)$, and by Lemma 5.4.1 the value is independent of the model and presentation. An ample bundle has positive degree on every nonzero effective one-cycle of the special fiber, so $q_\lambda(m,m)>0$.
 
 If the form has a radical, the support function is affine along a nonzero tropical direction. After a rational subdivision, the corresponding toric stratum has degree zero, and the polarization has positive-dimensional kernel; hence $L$ is numerically degenerate. If the form is nondegenerate, the induced lattice map has finite cokernel and the polarization kernel is finite, proving numerical nondegeneracy. $\square$
 
@@ -793,7 +868,7 @@ Starting from $A$, the formal structure lemma constructs $E$, $B$, and $T$. The 
 
 Choose an ample symmetric line bundle $L$ on $A$. Pull it back to $E$. Because $M$ is the kernel of $E\to A^{\mathrm{an}}$, the pullback has canonical $M$-descent data. Pushout by characters and the Poincare biextension decompose this descent datum into a lattice map and a bilinear period pairing. Symmetry of $L$ makes the pairing symmetric. The cocycle identity on triple period overlaps is exactly the biextension identity, so no extra associativity condition is being suppressed.
 
-To prove positivity, choose a periodic rational polyhedral formal model. For a nonzero $m\in M$, the segment from a point of the tropical space to its translate by $\ell(m)$ closes to a one-cycle in the quotient cell complex. After subdivision, its inverse image is an effective chain of one-dimensional toric strata. The degree of $L$ on that chain is positive, while the automorphy calculation in Theorem 5.2 identifies it with a positive integral multiple of the diagonal period value $q(m,m)$. Hence the period form is positive definite. This argument does not assume the existence of an algebraic one-dimensional subvariety in every period direction. All data are canonical under base change, and a polarization defined over $K$ makes their Galois descent effective.
+To prove positivity, choose a periodic rational polyhedral formal model. For a nonzero $m\in M$, the segment from a vertex of the tropical space to its translate by $\ell(m)$ closes to an effective one-cycle in the quotient cell complex; after subdivision, its inverse image is an effective chain of one-dimensional toric strata. By the degree theory of Section 5.4 — Lemmas 5.4.1 and 5.4.2 — the degree of $L$ on that cycle equals the diagonal period value $q(m,m)$, independently of the chosen model and presentation, while ampleness of $L$ makes every such degree positive. Hence $q(m,m)>0$ for all nonzero $m$, so the period form is positive definite. This argument does not assume the existence of an algebraic one-dimensional subvariety in every period direction; the only cycles consumed are the toric strata chains of Section 5.4. All data are canonical under base change, and a polarization defined over $K$ makes their Galois descent effective.
 
 This proves that every semistable abelian variety produces a polarizable datum. Notice that positivity was derived from ampleness rather than inferred from properness; the distinction closes a common logical gap.
 
@@ -880,7 +955,7 @@ The rank of $M$ equals that of $X$, and positivity means $q(m,m)>0$ for $m\ne0$.
 
 It is principal if and only if $\lambda_B$ is principal and $\lambda:M\to X$ is an isomorphism.
 
-**Proof.** If the descended bundle is ample, its restriction to the zero section of the toric formal chart is ample on $B$, giving condition 1. For $m\ne0$, close a tropical segment from $n$ to $n+\ell(m)$ in a periodic formal model and refine it into one-dimensional toric strata. The degree on the resulting effective cycle is a positive multiple of $q(m,m)$, just as in Theorem 5.2. Ampleness therefore gives condition 2.
+**Proof.** If the descended bundle is ample, its restriction to the zero section of the toric formal chart is ample on $B$, giving condition 1. For $m\ne0$, close a tropical segment from a vertex to its translate by $\ell(m)$ in a periodic formal model and refine it into one-dimensional toric strata; this is a period chain in the sense of Section 5.4, whose degree under $L$ equals $q(m,m)$ by Lemma 5.4.2, and ampleness makes that degree positive. Ampleness therefore gives condition 2.
 
 Conversely, choose a high tensor power and a periodic decomposition adapted to its support function. Positivity of $\lambda_B$ supplies sections separating points and tangent vectors on the proper horizontal base. Above each of the finitely many formal charts modulo $M$, theta sums converge because $q$ has quadratic growth; their initial characters generate the tangent-cone semigroup and therefore separate vertical reductions and vertical tangent vectors. Tensoring horizontal sections with these theta sections also separates pairs having both horizontal and vertical displacement. A finite chart cover gives one common power. The resulting projective map is a closed immersion, proving ampleness.
 
