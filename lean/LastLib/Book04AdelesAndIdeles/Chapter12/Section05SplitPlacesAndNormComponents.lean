@@ -55,9 +55,8 @@ theorem chapter12_split_place_local_norm_is_surjective
   sorry
 
 theorem chapter12_split_place_norm_surjective_by_first_coordinate
-    {K L Kv : Type*} [Field K] [Field L] [Field Kv]
-    [Algebra K L] [Algebra K Kv] [FiniteDimensional K L]
-    (d : ℕ) [NeZero d] (P : Chapter12CompletelySplitPlaceData K L Kv d) :
+    {Kv : Type*} [CommMonoid Kv]
+    (d : ℕ) [NeZero d] :
     ∀ b : Kv, ∃ y : Fin d → Kv,
       y 0 = b ∧ (∀ i : Fin d, i ≠ 0 → y i = 1) ∧
         chapter12SplitPlaceLocalNorm d y = b := by

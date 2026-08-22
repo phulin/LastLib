@@ -1,4 +1,5 @@
 import LastLib.Book04AdelesAndIdeles.Chapter12.Core
+import LastLib.Book04AdelesAndIdeles.Chapter11.Section07ComputingElementaryRayQuotients
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter12
 
@@ -6,6 +7,7 @@ noncomputable section
 
 open Filter Set NumberField
 open LastLib.Book04AdelesAndIdeles.Chapter09
+open LastLib.Book04AdelesAndIdeles.Chapter11
 open scoped BigOperators NNReal RestrictedProduct
 
 /-! # Book 4, Chapter 12, §12.1: The rational field -/
@@ -245,25 +247,26 @@ theorem chapter12_rational_global_units_are_signs :
 
 /-! ## Rational ray class quotients -/
 
-def chapter12RationalRaySignSubgroup (N : ℕ) : Subgroup (ZMod N)ˣ :=
-  Subgroup.closure ({(1 : (ZMod N)ˣ), (-1 : (ZMod N)ˣ)} : Set (ZMod N)ˣ)
+abbrev chapter12RationalRaySignSubgroup (N : ℕ) : Subgroup (ZMod N)ˣ :=
+  chapter11ResidueSignSubgroup N
 
-abbrev chapter12RationalRayClassWithInfinity (N : ℕ) := (ZMod N)ˣ
+abbrev chapter12RationalRayClassWithInfinity (N : ℕ) (hN : 0 < N) :=
+  chapter11RationalRayClassGroup N hN .included
 
-abbrev chapter12RationalRayClassWithoutInfinity (N : ℕ) :=
-  (ZMod N)ˣ ⧸ chapter12RationalRaySignSubgroup N
+abbrev chapter12RationalRayClassWithoutInfinity (N : ℕ) (hN : 0 < N) :=
+  chapter11RationalRayClassGroup N hN .omitted
 
 theorem chapter12_rational_ray_class_group_with_infinity
-    (N : ℕ) (_hN : 0 < N) :
-    Nonempty (chapter12RationalRayClassWithInfinity N ≃*
-      (ZMod N)ˣ) := by
-  exact ⟨MulEquiv.refl _⟩
+    (N : ℕ) (hN : 0 < N) :
+    Nonempty (chapter12RationalRayClassWithInfinity N hN ≃*
+      (ZMod N)ˣ) :=
+  chapter11_rational_infinite_ray_class_group_equiv_residue_units N hN
 
 theorem chapter12_rational_ray_class_group_without_infinity
-    (N : ℕ) (_hN : 0 < N) :
-    Nonempty (chapter12RationalRayClassWithoutInfinity N ≃*
-      (ZMod N)ˣ ⧸ chapter12RationalRaySignSubgroup N) := by
-  exact ⟨MulEquiv.refl _⟩
+    (N : ℕ) (hN : 0 < N) :
+    Nonempty (chapter12RationalRayClassWithoutInfinity N hN ≃*
+      (ZMod N)ˣ ⧸ chapter12RationalRaySignSubgroup N) :=
+  chapter11_rational_omitting_infinity_quotients_by_signs N hN
 
 end
 end LastLib.Book04AdelesAndIdeles.Chapter12

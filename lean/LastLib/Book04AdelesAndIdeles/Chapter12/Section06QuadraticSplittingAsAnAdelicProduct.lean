@@ -163,8 +163,8 @@ structure Chapter12QuadraticIntegralUnramifiedFactorData
   [commRingE : CommRing E]
   [isDomainE : IsDomain E]
   [algebraBE : Algebra B E]
-  [algebraZE : Algebra ℤ E]
   [unramifiedE : Algebra.Unramified B E]
+  [isIntegralE : Algebra.IsIntegral B E]
   degree_two : Module.finrank B E = 2
   basis : Nonempty (Module.Basis (Fin 2) B E)
   tensor_shape : chapter12IntegralTensorQuadraticFieldShape A B E

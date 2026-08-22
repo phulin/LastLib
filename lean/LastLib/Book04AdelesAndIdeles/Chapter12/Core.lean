@@ -205,7 +205,7 @@ number field. -/
 def chapter12CanonicalIdeleModuleData
     (K : Type*) [Field K] [NumberField K] :
     Chapter12IdeleModuleData (𝓞 K) K where
-  module := (Units.coeHom ℝ≥0).comp (chapter09IdeleModuleHom K)
+  module := chapter09IdeleModuleNNRealHom K
   principal_one := by
     intro u
     sorry
