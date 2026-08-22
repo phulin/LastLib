@@ -56,20 +56,20 @@ theorem chapter05_completion_map_injective
     (K : Type*) [Field K] [NumberField K]
     (v : Chapter04FinitePlace K) :
     Function.Injective (NumberField.FinitePlace.embedding (K := K) v) := by
-  sorry
+  exact FaithfulSMul.algebraMap_injective K (v.adicCompletion K)
 
 theorem chapter05_diagonal_components
     (K : Type*) [Field K] [NumberField K] (a : K) :
     chapter05Diagonal K a =
       (chapter05InfiniteDiagonal K a, chapter05FiniteDiagonal K a) := by
-  sorry
+  exact Prod.ext (by rfl) (by rfl)
 
 theorem chapter05_diagonal_is_integral_at_almost_all_finite_places
     (K : Type*) [Field K] [NumberField K] (a : K) :
     ({v : Chapter04FinitePlace K |
       chapter05FiniteDiagonal K a v ∉
         chapter04FiniteLocalIntegerSet K v}).Finite := by
-  sorry
+  exact chapter04_finiteAdele_exceptionalSet_finite K (chapter05FiniteDiagonal K a)
 
 theorem chapter05_diagonal_is_unit_or_zero_at_almost_all_finite_places
     (K : Type*) [Field K] [NumberField K] (a : K) :
@@ -77,14 +77,39 @@ theorem chapter05_diagonal_is_unit_or_zero_at_almost_all_finite_places
       chapter05FiniteDiagonal K a v ≠ 0 ∧
         ¬ chapter05FiniteLocalUnit K v (chapter05FiniteDiagonal K a v)} :
       Set (Chapter04FinitePlace K)).Finite := by
-  sorry
+  by_cases ha : a = 0
+  · subst a
+    have hset : {v : Chapter04FinitePlace K |
+        chapter05FiniteDiagonal K 0 v ≠ 0 ∧
+          ¬ chapter05FiniteLocalUnit K v (chapter05FiniteDiagonal K 0 v)} =
+        (∅ : Set (Chapter04FinitePlace K)) := by
+      ext v
+      constructor
+      · intro hv
+        exact (hv.1 rfl).elim
+      · intro hv
+        exact hv.elim
+    rw [hset]
+    exact Set.finite_empty
+  · apply (chapter01_order_finite_support K ha).subset
+    intro v hv hzero
+    apply hv.2
+    change Valued.v ((a : K) : v.adicCompletion K) = 1
+    change LastLib.Book01ValuationsDVRsAndCompletions.Chapter01.dedekindExponent v a = 0 at hzero
+    rw [IsDedekindDomain.HeightOneSpectrum.valuedAdicCompletion_eq_valuation' v,
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter01.dedekindExponent_valuation
+        v ha, hzero]
+    simp
 
 theorem chapter05_unit_or_zero_component_is_integral
     (K : Type*) [Field K] [NumberField K]
     (v : Chapter04FinitePlace K) (x : Chapter04FiniteLocalField K v)
     (h : x = 0 ∨ chapter05FiniteLocalUnit K v x) :
     x ∈ chapter04FiniteLocalIntegerSet K v := by
-  sorry
+  exact h.elim (fun hx => by subst x; simp [chapter04FiniteLocalIntegerSet]) (fun hu => by
+    change Valued.v x ≤ 1
+    change Valued.v x = 1 at hu
+    exact hu.le)
 
 theorem chapter05_diagonal_integrality_iff
     (K : Type*) [Field K] [NumberField K] (a : K) :
@@ -92,7 +117,19 @@ theorem chapter05_diagonal_integrality_iff
       ∀ v : Chapter04FinitePlace K,
         chapter05FiniteDiagonal K a v ∈
           chapter04FiniteLocalIntegerSet K v := by
-  sorry
+  constructor
+  · rintro ⟨r, rfl⟩ v
+    change (algebraMap (𝓞 K) K r : v.adicCompletion K) ∈
+      v.adicCompletionIntegers K
+    exact IsDedekindDomain.HeightOneSpectrum.coe_algebraMap_mem _ _ v r
+  · intro ha
+    change a ∈ Set.range (algebraMap (𝓞 K) K)
+    apply IsDedekindDomain.HeightOneSpectrum.mem_integers_of_valuation_le_one K
+    intro v
+    have hv := ha v
+    change Valued.v ((a : K) : v.adicCompletion K) ≤ 1 at hv
+    rw [chapter01_completion_valuation_agrees_with_global K v a] at hv
+    exact hv
 
 /-! A canonical formulation of the unit-escape warning.  The size is the
 normalized absolute value supplied by the infinite-place API, rather than a
