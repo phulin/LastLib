@@ -483,7 +483,37 @@ f^{(d)}:C^{(d)}\longrightarrow A,
 \qquad x_1+\cdots+x_d\longmapsto\sum_i f(x_i).
 $$
 
-If two effective divisors $E,E'$ are linearly equivalent, they lie in one projective-space fiber $|L|$ of the Abel map. Every morphism from projective space to an abelian variety is constant: restricting to a line reduces to the fact that an abelian variety contains no rational curves. Thus $f^{(d)}$ is constant on the fibers and descends to $\operatorname{Pic}^d$. Translating by $dD_0$ gives $F:J\to A$.
+**Proposition 6.2 (no rational curves on an abelian variety).** Every morphism $u:\mathbf P^1_k\to A$ from projective space to an abelian variety $A/k$ is constant.
+
+**Proof.** Constancy is geometric: if $u_{\bar k}$ is constant, then $u$ is constant, because morphisms descend along the faithfully flat cover $\operatorname{Spec}\bar k\to\operatorname{Spec}k$ (Book 10). Assume therefore $k=\bar k$. If $\operatorname{char}k=p>0$ fix a prime $\ell\neq p$; otherwise fix any prime $\ell$. Choose a symmetric ample line bundle $L$ on $A$: projectivity supplies an ample bundle (Book 35, Section 2.8), and replacing it by $L\otimes[-1]^*L$ makes it symmetric while preserving ampleness (Book 35, Section 2.4).
+
+First, $d:=\deg(u^*L)\geq1$ whenever $u$ is nonconstant. Some power $L^{\otimes N}$ is very ample, exhibiting a closed immersion $i:A\hookrightarrow\mathbf P^r$ with $i^*\mathcal O(1)=L^{\otimes N}$ (Book 8, Section 7). If $u$ is nonconstant, so is $i\circ u$, and a nonconstant morphism $\mathbf P^1\to\mathbf P^r$ is given by $r+1$ rational functions in $k(t)$ with no common factor and not all constant; pulling back $\mathcal O(1)$ yields $\mathcal O(e)$ with $e$ the largest of their cleared degrees, so $e\geq1$. But $(i\circ u)^*\mathcal O(1)=u^*(L^{\otimes N})=\mathcal O(Nd)$, whence $Nd=e\geq1$ and $d\geq1$.
+
+Next, $u$ lifts through multiplication by any power of $\ell$. The isogeny $[\ell^n]:A\to A$ is finite étale of degree $\ell^{2gn}$ ($\ell$ invertible on $k$; Book 35, Theorem 4.2, with separability from invertibility of $n$), so
+
+$$
+W_n:=\mathbf P^1\times_{u,A,[\ell^n]}A\longrightarrow\mathbf P^1
+$$
+
+is finite étale of rank $\ell^{2gn}$. Geometric $\mathbf P^1$ is simply connected in the finite étale sense: every connected finite étale cover of $\mathbf P^1_{\bar k}$ is trivial, in any characteristic (Book 17, Section 15.1). Hence $W_n$ is a disjoint union of copies of $\mathbf P^1$ mapping isomorphically to the base, and choosing one copy supplies a section $s$; the second projection $v_n:=\operatorname{pr}_2\circ s:\mathbf P^1\to A$ satisfies $[\ell^n]\circ v_n=u$.
+
+Now compare degrees. By the theorem of the square for the symmetric bundle $L$,
+
+$$
+[\ell^n]^*L\simeq L^{\otimes \ell^{2gn}}
+$$
+
+(Book 35, formula (2.2)), whence
+
+$$
+d=\deg(u^*L)
+=\deg\bigl(v_n^*[\ell^n]^*L\bigr)
+=\ell^{2gn}\,\deg(v_n^*L).
+$$
+
+If some $v_n$ were constant, $u=[\ell^n]\circ v_n$ would be constant and we would be done. Otherwise $\deg(v_n^*L)\geq1$ for every $n$ by the first step, forcing $d\geq\ell^{2gn}$ for all $n$ — impossible once $\ell^{2gn}>d$. So $u$ is constant. $\square$
+
+If two effective divisors $E,E'$ are linearly equivalent, they lie in one projective-space fiber $|L|$ of the Abel map. Every morphism from projective space to an abelian variety is constant: restricting to a line through two points with distinct images reduces to Proposition 6.2. Thus $f^{(d)}$ is constant on the fibers and descends to $\operatorname{Pic}^d$. Translating by $dD_0$ gives $F:J\to A$.
 
 The normalization makes the descended map take $0$ to $0$. A morphism between abelian varieties carrying identity to identity is a homomorphism: compare $F(x+y)$ with $F(x)+F(y)$ and apply the rigidity lemma to their difference on $J\times J$. Equation (6.4) follows on degree-one classes, and uniqueness follows because the classes $u_{D_0}(x)$ generate $J$: every degree-zero divisor is a difference of effective divisors after adding a sufficiently positive divisor.
 
