@@ -33,7 +33,21 @@ theorem chapter07_derivative_eval_expansion
     aeval π f.derivative =
       Finset.sum (Finset.range n) (fun j =>
         chapter07DerivativeTerm K L (j + 1) (f.coeff (j + 1)) π) := by
-  sorry
+  by_cases hn : n = 0
+  · have hdeg0 : f.natDegree = 0 := hdegree.trans hn
+    rw [Polynomial.derivative_of_natDegree_zero hdeg0]
+    simp [hn]
+  · have hnat : f.derivative.natDegree < n := by
+      have hfne : f.natDegree ≠ 0 := by
+        intro hfzero
+        apply hn
+        rw [← hdegree, hfzero]
+      simpa [hdegree] using Polynomial.natDegree_derivative_lt hfne
+    rw [f.derivative.as_sum_range_C_mul_X_pow' hnat]
+    simp [chapter07DerivativeTerm, aeval_def, Polynomial.coeff_derivative]
+    apply Finset.sum_congr rfl
+    intro j hj
+    ring
 
 theorem chapter07_leading_derivative_term_value
     (K L : Type*) [Field K] [Field L] [Algebra K L]
