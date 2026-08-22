@@ -507,7 +507,9 @@ H^p_{\mathrm{cts}}\bigl(\pi_1(X),H^q(\widetilde X,\mathcal L)\bigr)
 \Longrightarrow H^{p+q}(X,\mathcal L).
 $$
 
-If $\widetilde X$ is acyclic for the relevant finite coefficients, $X$ is an étale $K(\pi,1)$ and the comparison is an isomorphism in all degrees. Smooth affine curves over an algebraically closed field have this property for finite coefficients prime to the characteristic. Proper curves do not: $\mathbf P^1_{\bar k}$ has trivial fundamental group but $H^2(\mathbf P^1_{\bar k},\mu_n)\cong\mathbf Z/n\mathbf Z$. This is the decisive counterexample to an unrestricted comparison.
+If $\widetilde X$ is acyclic for the relevant finite coefficients, $X$ is an étale $K(\pi,1)$ and the comparison is an isomorphism in all degrees.
+
+For smooth affine curves over an algebraically closed field, this book uses only what has actually been proved, and not the $K(\pi,1)$ statement itself. What Book 18 supplies, by divisor theory together with the degree of multiplication on the Jacobian, is the geometric side: for finite coefficients of order prime to the characteristic, a smooth affine curve has no cohomology above degree one, and Section 15.4 below computes its first group exactly. Combined with the degree-one comparison proved above, this determines every cohomology group of such a curve. It does not identify them with continuous group cohomology in degrees two and higher: no presentation of the fundamental group of a punctured curve as a free profinite group on inertia generators modulo the product-of-commutators relation is available from any earlier book, and neither the presentation nor the resulting vanishing of $H^q_{\mathrm{cts}}$ for $q\ge2$ is asserted or used anywhere in this volume. The étale $K(\pi,1)$ property of smooth affine curves remains unproved here; nothing downstream depends on it. Proper curves do not even enjoy the geometric vanishing: $\mathbf P^1_{\bar k}$ has trivial fundamental group but $H^2(\mathbf P^1_{\bar k},\mu_n)\cong\mathbf Z/n\mathbf Z$. This is the decisive counterexample to an unrestricted comparison.
 
 For $X=\operatorname{Spec}K$, the small étale topos is the classifying topos of $G_K$, so
 
@@ -1149,40 +1151,23 @@ H^1(C,\mathbf Z/n\mathbf Z)\times H^1(C,\mu_n)
 \xrightarrow{\smile,\operatorname{Tr}}\mathbf Z/n\mathbf Z
 $$
 
-is nondegenerate in both variables. Its proof uses only divisors, residues, and Riemann--Roch. Represent the Kummer class by a divisor $D$ and a rational function $f$ with $\operatorname{div}(f)=nD$. Trivialize the cyclic étale torsor representing the other class above the support of $D$. The cup product is the sum of the resulting local Kummer symbols. Changing $f$, $D$, or the local trivializations changes that sum by the symbol of a principal divisor, which is zero because the product of local tame symbols of two rational functions is $1$.
+is nondegenerate in both variables.
 
-Detection is a finite-group calculation. Choose a finite Galois étale cover $Y\to C$ trivializing the torsors under consideration, with group $G$. Use the exact divisor complexes
+This is not an independent computation but the $i=1$ case of the duality theorem itself: take $\mathcal F=\mathbf Z/n\mathbf Z$ in (14.1) and use the trace identification $H^2(C,\mu_n)\xrightarrow{\sim}\mathbf Z/n\mathbf Z$ of (13.1). Its content is exactly the perfectness asserted by the general theorem, specialized to constant coefficients; no proof from divisor theory alone is available in any earlier volume, and none is attempted here.
 
-$$
-1\to k^\times\to k(Y)^\times
-\xrightarrow{\operatorname{div}}\operatorname{Div}(Y)
-\to\operatorname{Pic}(Y)\to0
-$$
-
-and
-
-$$
-0\to\operatorname{Div}^0(Y)\to\operatorname{Div}(Y)
-\xrightarrow{\deg}\mathbf Z\to0.
-$$
-
-Hilbert's theorem in degree one makes $k(Y)^\times$ exact at the first descent obstruction. Because the cover is étale and $k$ is separably closed, $\operatorname{Div}(Y)$ is a direct sum of free permutation modules $\mathbf Z[G]$; its Tate cohomology vanishes. Riemann--Roch supplies the remaining moving step: every divisor class may be represented away from a prescribed finite set, while prescribed local valuation data subject to the principal-divisor relation can be tested after adding a sufficiently positive divisor.
-
-Apply a complete $G$-resolution to the two divisor complexes. On a permutation summand, the local-symbol map is the evident perfect evaluation between a point above $C$ and its character. Hilbert 90 removes the rational-function obstruction, the product formula removes the single sum-of-residues relation, and the Riemann--Roch moving step shows that the mapping cone has no remaining homology. The resulting chain comparison identifies characters of the torsor group with character duals of the $n$-torsion divisor classes. Since the chain map is the sum of local symbols, this identification is exactly cup product followed by trace. It follows that each nonzero class has a local-symbol detector, proving the curve reciprocity lemma.
-
-Finiteness from Chapter 10 now turns nondegeneracy in both variables into perfectness. The proof is not a cardinality-only argument: the local symbols and the Riemann--Roch moving step construct a detector for a nonzero class.
+What can be checked directly, and what makes the pairing concrete, is its value on explicit classes. Represent one class by a Kummer torsor: a divisor $D$ together with a rational function $f$ with $\operatorname{div}(f)=nD$. Trivialize the cyclic étale torsor representing the other class above the support of $D$. The cup product is then the sum of the resulting local Kummer symbols over the points of $D$. Changing $f$, $D$, or the local trivializations changes that sum by the symbol of a principal divisor, which is zero because the product of the local tame symbols of two rational functions over all points of the curve equals $1$. This calculation verifies that the abstract pairing of (14.1) agrees with the classical residue pairing on representatives, and it exhibits local symbols as the visible pieces of the global trace pairing. What it does not supply—and what no earlier book supplies—is a chain-level construction proving that every nonzero class admits a detector: writing complete group resolutions for a Galois trivializing cover, forming the mapping cone of the local-symbol comparison map, and proving that cone acyclic would amount to reconstructing the duality theorem in this special case. That construction belongs to the general theory; here the lemma rests on (14.1) as imported from Book 20.
 
 There is a useful alternative consistency check. For $C=\mathbf P^1$, both $H^1$ groups vanish and endpoint duality is exactly the degree isomorphism. Cutting a general $C$ at finitely many points and applying (14.2) shows that adding a handle creates two mutually paired degree-one directions, anticipating the dimension $2g$.
 
 ### 14.3 Perfectness for lisse sheaves
 
-Let $\mathcal F$ be lisse. Choose a connected finite Galois cover $p:D\to C$ with group $G$ such that $p^*\mathcal F$ is constant with stalk $M$. The following finite descent lemma is the curve-level specialization of the descent step in Book 20.
+Let $\mathcal F$ be lisse, and choose a connected finite Galois cover $p:D\to C$ with group $G$ such that $p^*\mathcal F$ is constant with stalk $M$. Perfectness of (14.1) for $\mathcal F$ is part of the duality theorem imported from Book 20; this section does not reconstruct it. What the section supplies is the mechanism by which constant-coefficient duality on the cover descends to duality on the base even when $\ell$ divides $|G|$—the precise point where naive averaging arguments break.
 
-**Finite descent lemma.** Suppose constant-coefficient duality on $D$ is compatible with the $G$-action and with restriction and trace. Then it implies duality on $C$ for the local system associated with every $\Lambda$-module $M$ which is finite free over $\Lambda$ and carries a $G$-action.
+The structural input, which belongs to the general theory and is proved nowhere above, is an equivariant perfect model for the cohomology of the cover: because $D\to C$ is a finite étale $G$-torsor and $C$ is proper, the descent formalism of Book 18 together with the duality package of Book 20 represents $R\Gamma(D,\Lambda)$ by a bounded complex $K$ of finite projective $\Lambda[G]$-modules, compatibly with the cup product and the trace. This is stronger than representing $R\Gamma(D,\Lambda)$ by finite $\Lambda$-modules, and it is what prevents spurious group-cohomology or Tate-cohomology terms when $\ell\mid|G|$. Since every term of $K$ is projective over $\Lambda[G]$, ordinary tensor--Hom adjunction computes all derived functors in sight; no averaging idempotent exists or is needed, and no complete resolution enters.
 
-The point requiring care is equivariant finiteness. Because $D\to C$ is a finite étale $G$-torsor and $C$ is proper, a finite étale hypercover of $C$ pulls back to one on which $G$ acts freely in every simplicial degree. After truncation above the curve cohomological dimension, its cochain complex represents $R\Gamma(D,\Lambda)$ by a bounded complex $K$ of finite projective $\Lambda[G]$-modules. This is stronger than merely representing it by finite $\Lambda$-modules, and it is what prevents spurious group-cohomology or Tate-cohomology terms when $\ell$ divides $|G|$.
+**Finite descent lemma.** Grant the equivariant perfect model $K$ above and suppose constant-coefficient duality on $D$ is compatible with the $G$-action and with restriction and trace. Then duality holds on $C$ for the local system associated with every $\Lambda$-module $M$ which is finite free over $\Lambda$ and carries a $G$-action.
 
-Constant duality on $D$ gives a $G$-equivariant quasi-isomorphism
+Under those hypotheses the argument is short, and we record it because it exhibits the trace normalization. Constant duality on $D$ gives a $G$-equivariant quasi-isomorphism
 
 $$
 K\simeq R\operatorname{Hom}_\Lambda(K(1),\Lambda)[-2].
@@ -1213,15 +1198,15 @@ $$
 
 Thus neither a norm factor nor an inverse action has entered. Taking cohomology proves the finite descent lemma, including when $\ell\mid |G|$.
 
-Apply the lemma to $M$. For coefficient rings rather than fields, a short exact sequence
+For coefficient rings rather than fields, a short exact sequence
 
 $$
 0\to\mathcal F'\to\mathcal F\to\mathcal F''\to0
 $$
 
-dualizes in reverse. The two long exact cohomology sequences are adjoint because cup product is compatible with connecting homomorphisms. If duality holds for two terms, the five lemma gives it for the third. This exact devissage completes the proof.
+dualizes in reverse. The two long exact cohomology sequences are adjoint because cup product is compatible with connecting homomorphisms. If duality holds for two terms, the five lemma gives it for the third. This devissage is how the imported theorem propagates through the coefficient sequences used in Chapter 17.
 
-The same chain construction, combined with the open--closed exact sequence of Section 4.2 and the codimension-one purity calculation of Section 13.3, proves the constructible form needed on a proper curve: lisse pieces are treated by finite descent, point-supported pieces by the trace pairing on their stalks, and the two are glued by adjoint localization sequences. This is why the open-curve argument below does not silently assume that $j_!\mathcal F$ is lisse at the boundary.
+The same mechanism, combined with the open--closed exact sequence of Section 4.2 and the codimension-one purity calculation of Section 13.3, explains the constructible form needed on a proper curve: lisse pieces are treated by finite descent, point-supported pieces by the trace pairing on their stalks, and the two are glued through localization sequences whose adjoint maps the general theorem supplies. The gluing itself—constructing those adjoint maps between long exact sequences and checking that they identify the dual pairs—is part of Book 20's theorem and is not rederived here; recording the mechanism is why the open-curve argument below does not silently assume that $j_!\mathcal F$ is lisse at the boundary.
 
 ### 14.4 Consequences and tests
 
@@ -1234,7 +1219,7 @@ $$
 
 Thus top cohomology vanishes exactly when the twisted dual has no global invariant. For a geometrically nontrivial rank-one local system $\mathcal L$ with neither $\mathcal L$ nor $\mathcal L^{-1}(1)$ constant geometrically, both $H^0$ and $H^2$ vanish; all cohomology is concentrated in degree one.
 
-For constant $\Lambda$, the pairing on $H^1(C,\Lambda)$ takes values in $\Lambda(-1)$ before applying a chosen twist identification. Graded commutativity makes it alternating when $\ell$ is odd. When $\ell=2$, alternation follows from the geometric self-intersection calculation for degree-one classes, not from the sign alone.
+For constant $\Lambda$, the pairing on $H^1(C,\Lambda)$ takes values in $\Lambda(-1)$ before applying a chosen twist identification. Graded commutativity makes it alternating when $\ell$ is odd. When $\ell=2$ the sign gives only symmetry: proving that $a\smile a=0$ for every degree-one class requires a cup-square calculation that belongs to the general duality formalism of Book 20 and is carried out nowhere above. No statement in this book depends on characteristic-two alternation; over $\mathbf Q_\ell$ the skew-symmetric form is automatically alternating because $2$ acts invertibly on the coefficient field.
 
 If $C$ and the sheaf descend to $k$, the pairing is $G_k$-equivariant:
 
@@ -1283,45 +1268,97 @@ $$
 \chi(C,\mathcal F)=\sum_i(-1)^i\dim_\Lambda H^i(C,\mathcal F),
 $$
 
-and similarly $\chi_c(U,\mathcal F)$. Long exact sequences make Euler characteristic additive. For constant coefficients on a smooth proper genus-$g$ curve,
+and similarly $\chi_c(U,\mathcal F)$. Long exact sequences make Euler characteristic additive.
+
+For constant coefficients the needed dimensions come from Sections 13.4 and 15.4, which derive them from the Kummer theorem and the degree of multiplication on the Jacobian (Book 18, Sections 6.7--6.8): a smooth proper connected genus-$g$ curve $C$ over a separably closed field satisfies
 
 $$
-\chi(C,\Lambda)=2-2g. \tag{15.2}
+H^0(C,\Lambda)=\Lambda,
+\qquad
+\dim_\Lambda H^1(C,\Lambda)=2g,
+\qquad
+\dim_\Lambda H^2(C,\Lambda)=1,
 $$
 
-For $U=C\setminus Z$ with $r=|Z|$ geometric points,
+and $H^q(C,\Lambda)=0$ for $q\ge3$. Hence
 
 $$
-\chi_c(U,\Lambda)=2-2g-r. \tag{15.3}
+\chi(C,\Lambda)=1-2g+1=2-2g. \tag{15.2}
 $$
 
-Indeed localization subtracts one degree-zero skyscraper contribution for each missing point.
-
-There is also a coefficient-independent tame formula that follows from the curve presentations already available in Book 18. Suppose $Z\ne\varnothing$ and a lisse sheaf $\mathcal F$ of rank $d$ is tamely ramified along $Z$. The tame affine-curve presentation represents the cohomology of $\mathcal F^\vee(1)$ by a two-term finite complex whose terms have dimensions $d$ and $d(2g+r-1)$. Its Euler characteristic is therefore $d(2-2g-r)$. Compactly supported duality identifies this Euler characteristic with that of $R\Gamma_c(U,\mathcal F)$, so
+For $U=C\setminus Z$ with $r=|Z|$ geometric points and $r>0$, compactly supported cohomology is computed from the localization triangle $j_!\Lambda_U\to\Lambda_C\to i_*\Lambda_Z\to$, whose long exact sequence contains
 
 $$
-\chi_c(U,\mathcal F)=d\,\chi_c(U,\Lambda). \tag{15.4}
+0\to H^0(C,j_!\Lambda)\longrightarrow H^0(C,\Lambda)
+\xrightarrow{\ \mathrm{diag}\ }\bigoplus_{Z}\Lambda
+\longrightarrow H^1_c(U,\Lambda)
+\longrightarrow H^1(C,\Lambda)\longrightarrow 0,
 $$
 
-The dimensions of the presentation terms, not the ranks of its differentials, explain why tame inertia invariants do not enter (15.4). They do enter $\chi(C,j_*\mathcal F)$ through the boundary stalks. For wild ramification an additional local correction is necessary; proving that conductor formula requires input not developed in this volume, and no wild Euler-characteristic formula is being asserted here.
+followed by $0\to H^2_c(U,\Lambda)\to H^2(C,\Lambda)\to\bigoplus_ZH^2(\operatorname{Spec}k,\Lambda)$. The sheaf $j_!\Lambda$ has no global sections: a section is a locally constant function on the connected curve $C$ whose stalk at each boundary point vanishes, hence identically zero. The diagonal map is injective, its cokernel has dimension $r-1$, and the final target vanishes because the small étale site of a separably closed field has no cohomology in positive degrees. Therefore
+
+$$
+\dim_\Lambda H^1_c(U,\Lambda)=(r-1)+2g,
+\qquad
+\dim_\Lambda H^2_c(U,\Lambda)=1,
+\qquad
+H^0_c(U,\Lambda)=0,
+$$
+
+so
+
+$$
+\chi_c(U,\Lambda)=-(2g+r-1)+1=2-2g-r. \tag{15.3}
+$$
+
+Each missing point removes one degree-zero class through the diagonal relation, while the fundamental class survives as top compactly supported cohomology.
+
+No Euler-characteristic formula is asserted here for lisse coefficients of rank greater than one. A rank-scaling statement $\chi_c(U,\mathcal F)=d\,\chi_c(U,\Lambda)$ for a lisse sheaf $\mathcal F$ of rank $d$ tamely ramified along $Z$ would require controlling the action of each puncture's inertia group on the nearby stalks—the Swan-conductor analysis underlying the Grothendieck--Ogg--Shafarevich formula—and neither that local analysis nor its global consequence is constructed in any earlier volume or in this one. Nothing downstream consumes such a formula: the Euler characteristics used below are the constant-coefficient values just computed, together with additivity along short exact sequences.
 
 ### 15.4 The dimension $2g$
 
-The dimension calculation is available before duality and supplies the promised proof of (15.2). Over a separably closed field choose a point $x\in C$ and put $U=C\setminus\{x\}$. The affine-curve presentation proved in Book 18 and applied to relative curves in Book 19 gives
+The dimension calculation is available before duality, and it rests entirely on two computations already made in Book 18: the Kummer description of first cohomology through the Picard group, and the count of the torsion of the Jacobian through the degree of multiplication by $n$. No presentation of any fundamental group enters; in particular, the classical argument through the commutator relation at the puncture is not used, because no earlier volume supplies the group-theoretic input it would need.
+
+Over an algebraically closed field the Kummer sheaves are constant. When $n$ is prime to the characteristic, $T^n-1$ splits into $n$ distinct linear factors, so $\mu_n$, regarded as a base scheme, is a disjoint union of $n$ copies of the base; on the small étale site it is therefore the constant sheaf $\mathbf Z/n\mathbf Z$, and a choice of primitive root fixes the identification. Choosing roots compatibly, with $\zeta_{m+1}^\ell=\zeta_m$, makes the identifications compatible with the coefficient maps between levels.
+
+Let $U=C\setminus\{x\}$ be the curve punctured at one geometric point. The torsion-order corollary of Book 18, Sections 6.7--6.8, computes for every $n$ prime to the characteristic
 
 $$
-H^0(U,\Lambda)=\Lambda,\qquad
-H^1(U,\Lambda)=\Lambda^{2g},\qquad
+H^0(U,\mu_n)=\mathbf Z/n,
+\qquad
+H^1(U,\mu_n)\ \text{free of rank}\ 2g+r-1=2g,
+\qquad
+H^q(U,\mu_n)=0\quad(q\ge2),
+$$
+
+with $r=1$ used in the middle term; and $H^1(C,\mu_n)\cong\operatorname{Pic}(C)[n]\cong(\mathbf Z/n)^{2g}$, the unit term vanishing because the global units reduce to the divisible group $k^\times$. Transporting along the constant identification gives
+
+$$
+H^0(U,\Lambda)=\Lambda,
+\qquad
+H^1(U,\Lambda)=\Lambda^{2g},
+\qquad
 H^q(U,\Lambda)=0\quad(q>1).
 $$
 
-Purity at $x$ identifies $R\Gamma_x(C,\Lambda)$ with $\Lambda(-1)[-2]$. In the localization sequence the residue from $H^1(U,\Lambda)$ is zero: in the curve presentation the loop about the sole puncture is the product of the $g$ commutators, so it vanishes after abelianization. Restriction consequently identifies $H^1(C,\Lambda)$ with $H^1(U,\Lambda)$, while the support generator identifies $H^2(C,\Lambda)$ with $\Lambda(-1)$. Hence
+It remains to prove that restriction identifies $H^1(C,\Lambda)$ with $H^1(U,\Lambda)$. In the long exact sequence of local cohomology the kernel of the restriction is the image of $H^1_x(C,\Lambda)$, and this group vanishes. Local cohomology is étale-local, so compute on the strict henselian local ring $R$ of $C$ at $x$, with fraction field $K$. In the exact sequence for the pair $(\operatorname{Spec}R,\operatorname{Spec}K)$,
+
+$$
+H^0(K,\mu_n)\longrightarrow H^1_x(\operatorname{Spec}R,\mu_n)
+\longrightarrow H^1(\operatorname{Spec}R,\mu_n)
+\longrightarrow H^1(K,\mu_n)
+\longrightarrow H^2_x(\operatorname{Spec}R,\mu_n),
+$$
+
+the first term $H^0(K,\mu_n)=\mu_n(k)$ maps to zero: every unit of a strictly henselian discrete valuation ring is an $n$th power of a unit, Hensel's lemma lifting the root from the separably closed residue field because $n$ is invertible there; so each root of unity lies in $(K^\times)^n$ and its torsor is trivial. The group $H^1(\operatorname{Spec}R,\mu_n)$ vanishes as well: it is $R^\times/(R^\times)^n$, and the units of a strictly henselian ring possess $n$th roots because the residue field is separably closed. Exactness forces $H^1_x=0$, and the restriction $H^1(C,\Lambda)\to H^1(U,\Lambda)$ is injective.
+
+Domain and codomain of this injection are finite modules of the same order $n^{2g}$, each free of rank $2g$ over $\mathbf Z/n\mathbf Z$, so the restriction is an isomorphism. Connectedness gives $H^0(C,\Lambda)=\Lambda$, and the support generator identifies $H^2(C,\Lambda(1))$ with $\Lambda$ as in (13.1). Hence
 
 $$
 \dim_\Lambda H^1(C,\Lambda)=2g. \tag{15.5}
 $$
 
-Together with $H^0(C,\Lambda)=\Lambda$, these three groups give
+Together with the two endpoint dimensions this gives
 
 $$
 \chi(C,\Lambda)=1-2g+1=2-2g,
@@ -1329,30 +1366,7 @@ $$
 
 which proves (15.2) rather than assuming it from topology or from a later Euler-characteristic theorem.
 
-For $\ell^m$ coefficients, use
-
-$$
-0\longrightarrow\mathbf Z/\ell^{m-1}\mathbf Z
-\xrightarrow{\ell}\mathbf Z/\ell^m\mathbf Z
-\longrightarrow\mathbf Z/\ell\mathbf Z\longrightarrow0.
-$$
-
-The induced map on $H^2$ is the injective coefficient map between the free rank-one trace modules. The long exact sequence therefore makes reduction
-
-$$
-H^1(C,\mathbf Z/\ell^m\mathbf Z)\longrightarrow
-H^1(C,\mathbf Z/\ell\mathbf Z)
-$$
-
-surjective. Applying the same argument to
-
-$$
-0\longrightarrow\mathbf Z/\ell\mathbf Z
-\xrightarrow{\ell^{m-1}}\mathbf Z/\ell^m\mathbf Z
-\longrightarrow\mathbf Z/\ell^{m-1}\mathbf Z\longrightarrow0
-$$
-
-shows that reduction to level $m-1$ is surjective. Composing that reduction with the coefficient injection from level $m-1$ is multiplication by $\ell$, so the kernel of reduction to level one is exactly $\ell H^1(C,\mathbf Z/\ell^m\mathbf Z)$. Induction on $m$, Nakayama's lemma, and the length supplied by the first exact sequence show that $H^1(C,\mathbf Z/\ell^m\mathbf Z)$ is free of rank $2g$. This argument, rather than perfectness alone, excludes shorter cyclic summands. The finite-level freeness is what makes the later inverse limit a $\mathbf Z_\ell$-lattice of rank $2g$.
+For $\ell^m$ coefficients the same argument runs verbatim with $n=\ell^m$ and the compatible choices of roots: each $H^1(C,\mathbf Z/\ell^m\mathbf Z)$ is free of rank $2g$, and the reduction map to level one is transported by the Kummer identification to the $\ell^{m-1}$-power map from $J(k)[\ell^m]$ onto $J(k)[\ell]$, which is surjective because $J(k)$ is divisible. The transitions of the inverse system of first cohomology groups are therefore surjective maps between free modules of one fixed rank, and the continuous construction of Book 18 identifies the inverse limit with a free $\mathbf Z_\ell$-module of rank $2g$: the lattice whose Galois action Chapter 20 analyzes.
 
 ## 16. Finite maps and correspondences
 
