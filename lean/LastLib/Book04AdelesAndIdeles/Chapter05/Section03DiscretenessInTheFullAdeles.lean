@@ -153,7 +153,50 @@ theorem chapter05_full_zero_neighborhood_is_open
     (K : Type*) [Field K] [NumberField K]
     (Uinf : Set (chapter01MinkowskiSpace K)) (hUinf : IsOpen Uinf) :
     IsOpen (chapter05FullZeroNeighborhood K Uinf) := by
-  sorry
+  classical
+  change IsOpen
+    (((NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K).symm '' Uinf) ×ˢ
+      (Chapter04FiniteIntegralAdeleSubring K : Set (Chapter04FiniteAdeleRing K)))
+  have hcont : Continuous
+      (NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K :
+        Chapter04InfiniteAdeleRing K → chapter01MinkowskiSpace K) := by
+    let e : Chapter04InfiniteAdeleRing K ≃ₜ chapter01MinkowskiSpace K :=
+      (Homeomorph.piEquivPiSubtypeProd
+          (fun (v : NumberField.InfinitePlace K) =>
+            NumberField.InfinitePlace.IsReal v)
+          (fun (v : NumberField.InfinitePlace K) => v.Completion)).trans
+        (Homeomorph.prodCongr
+          (Homeomorph.piCongrRight
+            (fun w : {w : NumberField.InfinitePlace K //
+                NumberField.InfinitePlace.IsReal w} =>
+              (NumberField.InfinitePlace.Completion.isometryEquivRealOfIsReal
+                w.2).toHomeomorph))
+          ((Homeomorph.piCongrRight
+              (fun w : {w : NumberField.InfinitePlace K //
+                  ¬ NumberField.InfinitePlace.IsReal w} =>
+                (NumberField.InfinitePlace.Completion.isometryEquivComplexOfIsComplex
+                  (NumberField.InfinitePlace.not_isReal_iff_isComplex.1 w.2)).toHomeomorph)).trans
+            (Homeomorph.piCongrLeft
+              (Y := fun _ : {w : NumberField.InfinitePlace K //
+                  NumberField.InfinitePlace.IsComplex w} => ℂ)
+              (Equiv.subtypeEquivRight
+                (fun _ => NumberField.InfinitePlace.not_isReal_iff_isComplex)))))
+    exact e.continuous
+  have hInf : IsOpen
+      ((NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K).symm '' Uinf) := by
+    have hset :
+        (NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K).symm '' Uinf =
+          (NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K) ⁻¹' Uinf := by
+      ext x
+      constructor
+      · rintro ⟨y, hy, rfl⟩
+        simpa using hy
+      · intro hx
+        exact ⟨NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K x, hx,
+          (NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K).symm_apply_apply x⟩
+    rw [hset]
+    exact hUinf.preimage hcont
+  exact hInf.prod (chapter05_finite_integral_is_compact_open K).2
 
 theorem chapter05_full_zero_neighborhood_is_nhds
     (K : Type*) [Field K] [NumberField K]
@@ -161,7 +204,26 @@ theorem chapter05_full_zero_neighborhood_is_nhds
     (hUinf : Uinf ∈ 𝓝 (0 : chapter01MinkowskiSpace K)) :
     chapter05FullZeroNeighborhood K Uinf ∈
       𝓝 (0 : Chapter04AdeleRing K) := by
-  sorry
+  rcases mem_nhds_iff.mp hUinf with ⟨W, hWU, hWopen, hWzero⟩
+  have hWopen' : IsOpen (chapter05FullZeroNeighborhood K W) :=
+    chapter05_full_zero_neighborhood_is_open K W hWopen
+  have hWzero' : (0 : Chapter04AdeleRing K) ∈
+      chapter05FullZeroNeighborhood K W := by
+    change (0 : Chapter04InfiniteAdeleRing K) ∈
+        (NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K).symm '' W ∧
+      (0 : Chapter04FiniteAdeleRing K) ∈
+        (Chapter04FiniteIntegralAdeleSubring K : Set (Chapter04FiniteAdeleRing K))
+    constructor
+    · exact ⟨0, hWzero, by simp⟩
+    · exact (Chapter04FiniteIntegralAdeleSubring K).zero_mem
+  have hWnhds : chapter05FullZeroNeighborhood K W ∈
+      𝓝 (0 : Chapter04AdeleRing K) := hWopen'.mem_nhds hWzero'
+  apply Filter.mem_of_superset hWnhds
+  change ((NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K).symm '' W) ×ˢ
+      (Chapter04FiniteIntegralAdeleSubring K : Set (Chapter04FiniteAdeleRing K)) ⊆
+    ((NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K).symm '' Uinf) ×ˢ
+      (Chapter04FiniteIntegralAdeleSubring K : Set (Chapter04FiniteAdeleRing K))
+  exact Set.prod_mono (Set.image_mono hWU) subset_rfl
 
 theorem chapter05_full_zero_neighborhood_meets_diagonal_only_at_zero
     (K : Type*) [Field K] [NumberField K]
@@ -171,7 +233,65 @@ theorem chapter05_full_zero_neighborhood_meets_diagonal_only_at_zero
     chapter05FullZeroNeighborhood K Uinf ∩
         Set.range (chapter05Diagonal K) =
       ({0} : Set (Chapter04AdeleRing K)) := by
-  sorry
+  classical
+  ext x
+  constructor
+  · rintro ⟨⟨hxInf, hxFin⟩, ⟨a, rfl⟩⟩
+    rcases hxInf with ⟨y, hyU, hyeq⟩
+    change chapter05FiniteDiagonal K a ∈
+      (Chapter04FiniteIntegralAdeleSubring K : Set (Chapter04FiniteAdeleRing K)) at hxFin
+    have haInt : a ∈ chapter05RingOfIntegersSet K := by
+      apply (chapter05_diagonal_integrality_iff K a).2
+      intro v
+      exact (chapter04_finiteIntegralAdele_mem_iff_all_coordinates_integral K
+        (chapter05FiniteDiagonal K a)).mp hxFin v
+    have hmix : NumberField.mixedEmbedding K a ∈ Uinf := by
+      have hyeq' : y =
+          NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K
+            (chapter05InfiniteDiagonal K a) := by
+        calc
+          y = NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K
+              ((NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K).symm y) :=
+            (NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K).apply_symm_apply y |>.symm
+          _ = NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K
+              (chapter05InfiniteDiagonal K a) := by
+            rw [hyeq]
+            rfl
+      rw [NumberField.InfiniteAdeleRing.mixedEmbedding_eq_algebraMap_comp]
+      simpa [chapter05InfiniteDiagonal] using
+        (show NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K
+            (chapter05InfiniteDiagonal K a) ∈ Uinf by rw [← hyeq']; exact hyU)
+    have hmixInt : NumberField.mixedEmbedding K a ∈
+        (NumberField.mixedEmbedding.integerLattice K : Set (chapter01MinkowskiSpace K)) := by
+      apply (chapter01_integer_lattice_mem_iff (K := K)).2
+      rcases haInt with ⟨r, hr⟩
+      exact ⟨r, congrArg (NumberField.mixedEmbedding K) hr⟩
+    have hmem : NumberField.mixedEmbedding K a ∈ ({0} : Set (chapter01MinkowskiSpace K)) := by
+      rw [← hUinf]
+      exact ⟨hmix, hmixInt⟩
+    have hzero : NumberField.mixedEmbedding K a = 0 :=
+      Set.mem_singleton_iff.mp hmem
+    have ha0 : a = 0 := by
+      apply chapter01_minkowski_embedding_injective K
+      simpa using hzero
+    subst a
+    simp
+  · intro hx
+    have hx0 : x = 0 := Set.mem_singleton_iff.mp hx
+    subst x
+    have hzeroInf : (0 : chapter01MinkowskiSpace K) ∈ Uinf := by
+      have hzero' : (0 : chapter01MinkowskiSpace K) ∈ Uinf ∩
+          (NumberField.mixedEmbedding.integerLattice K : Set (chapter01MinkowskiSpace K)) := by
+        rw [hUinf]
+        simp
+      exact hzero'.1
+    constructor
+    · constructor
+      · exact ⟨0, hzeroInf, by
+          change (NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace K).symm 0 = 0
+          simp⟩
+      · exact (Chapter04FiniteIntegralAdeleSubring K).zero_mem
+    · exact ⟨0, by simp⟩
 
 /-!
 **Theorem 5.2.** The canonical diagonal copy of `K` is a discrete subgroup of
@@ -181,19 +301,65 @@ theorem chapter05_theorem_5_2_diagonal_is_discrete
     (K : Type*) [Field K] [NumberField K]
     :
     DiscreteTopology (Set.range (chapter05Diagonal K)) := by
-  sorry
+  classical
+  rcases chapter05_exists_small_archimedean_neighborhood K with
+    ⟨Uinf, hUinfOpen, hUinfNhds, hUinfInter⟩
+  let U : Set (Chapter04AdeleRing K) := chapter05FullZeroNeighborhood K Uinf
+  have hUopen : IsOpen U := by
+    exact chapter05_full_zero_neighborhood_is_open K Uinf hUinfOpen
+  have hUzero : (0 : Chapter04AdeleRing K) ∈ U := by
+    exact mem_of_mem_nhds
+      (chapter05_full_zero_neighborhood_is_nhds K Uinf hUinfNhds)
+  have hUinter : U ∩ Set.range (chapter05Diagonal K) =
+      ({0} : Set (Chapter04AdeleRing K)) := by
+    exact chapter05_full_zero_neighborhood_meets_diagonal_only_at_zero K Uinf hUinfInter
+  rw [discreteTopology_subtype_iff']
+  intro x hx
+  rcases hx with ⟨a, rfl⟩
+  let V : Set (Chapter04AdeleRing K) :=
+    (fun z : Chapter04AdeleRing K => z - chapter05Diagonal K a) ⁻¹' U
+  refine ⟨V, hUopen.preimage (continuous_id.sub continuous_const), ?_⟩
+  ext z
+  constructor
+  · rintro ⟨hzV, ⟨b, rfl⟩⟩
+    change chapter05Diagonal K b - chapter05Diagonal K a ∈ U at hzV
+    have hdiff : chapter05Diagonal K (b - a) ∈ U ∩
+        Set.range (chapter05Diagonal K) := by
+      constructor
+      · simpa only [map_sub] using hzV
+      · exact ⟨b - a, rfl⟩
+    have hmem : chapter05Diagonal K (b - a) ∈ ({0} : Set (Chapter04AdeleRing K)) := by
+      rw [← hUinter]
+      exact hdiff
+    have hzero : chapter05Diagonal K (b - a) = 0 :=
+      Set.mem_singleton_iff.mp hmem
+    have hba0 : b - a = 0 := chapter05_diagonal_injective K hzero
+    simp [sub_eq_zero.mp hba0]
+  · intro hz
+    have hz' : z = chapter05Diagonal K a := Set.mem_singleton_iff.mp hz
+    subst z
+    constructor
+    · change chapter05Diagonal K a - chapter05Diagonal K a ∈ U
+      simpa using hUzero
+    · exact ⟨a, rfl⟩
 
 theorem chapter05_diagonal_full_is_closed
     (K : Type*) [Field K] [NumberField K]
     (hdisc : DiscreteTopology (Set.range (chapter05Diagonal K))) :
     IsClosed (Set.range (chapter05Diagonal K)) := by
-  sorry
+  change IsClosed ((chapter05Diagonal K).range.toAddSubgroup : Set (Chapter04AdeleRing K))
+  let _ : DiscreteTopology (chapter05Diagonal K).range.toAddSubgroup := by
+    change DiscreteTopology (Set.range (chapter05Diagonal K))
+    exact hdisc
+  exact AddSubgroup.isClosed_of_discrete
 
 theorem chapter05_theorem_5_2_diagonal_is_discrete_closed
     (K : Type*) [Field K] [NumberField K] :
     DiscreteTopology (Set.range (chapter05Diagonal K)) ∧
       IsClosed (Set.range (chapter05Diagonal K)) := by
-  sorry
+  have hdisc : DiscreteTopology (Set.range (chapter05Diagonal K)) :=
+    chapter05_theorem_5_2_diagonal_is_discrete K
+  exact ⟨hdisc, chapter05_diagonal_full_is_closed K hdisc⟩
 
 theorem chapter05_finite_integral_preimage_of_diagonal
     (K : Type*) [Field K] [NumberField K] :
