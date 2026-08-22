@@ -20,7 +20,32 @@ theorem chapter13_prime_to_characteristic_derivative_has_expected_degree
     (he : 0 < e) (he_p : Nat.Coprime e p) :
     (g.derivative).natDegree = e - 1 ∧
       g.derivative.leadingCoeff = (e : E) := by
-  sorry
+  have he_cast : (e : E) ≠ 0 := by
+    intro hezero
+    have hdiv : p ∣ e := (CharP.cast_eq_zero_iff E p e).mp hezero
+    exact (Nat.Prime.ne_one (Fact.out : Nat.Prime p)
+      (he_p.symm.eq_one_of_dvd hdiv))
+  have hcast : ((e - 1 : ℕ) : E) + 1 = (e : E) := by
+    rw [Nat.cast_sub he]
+    push_cast
+    ring
+  have hlead : g.coeff e = 1 := by
+    rw [← hdegree]
+    exact hmonic.coeff_natDegree
+  have hdegree_le : (g.derivative).natDegree ≤ e - 1 := by
+    simpa [hdegree] using Polynomial.natDegree_derivative_le g
+  have hcoeff : (g.derivative).coeff (e - 1) ≠ 0 := by
+    rw [Polynomial.coeff_derivative]
+    rw [show e - 1 + 1 = e by omega, hlead, hcast]
+    simpa using he_cast
+  have hderivative_degree : (g.derivative).natDegree = e - 1 :=
+    Polynomial.natDegree_eq_of_le_of_coeff_ne_zero hdegree_le hcoeff
+  constructor
+  · exact hderivative_degree
+  · rw [Polynomial.leadingCoeff, hderivative_degree,
+      Polynomial.coeff_derivative]
+    rw [show e - 1 + 1 = e by omega, hlead, hcast]
+    simp
 
 /-- An irreducible monic degree-`e` polynomial over a field of characteristic
 `p` is separable when `p` does not divide `e`.  Irreducibility is essential:

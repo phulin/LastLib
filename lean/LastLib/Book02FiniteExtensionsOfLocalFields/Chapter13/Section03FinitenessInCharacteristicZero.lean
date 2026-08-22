@@ -21,7 +21,17 @@ def chapter13DegreeFactorPairs (d : ℕ) : Set (ℕ × ℕ) :=
 
 theorem chapter13_degree_has_finitely_many_factor_pairs (d : ℕ) :
     Set.Finite (chapter13DegreeFactorPairs d) := by
-  sorry
+  refine (Set.finite_Icc 1 d).prod (Set.finite_Icc 1 d) |>.subset ?_
+  intro q hq
+  change 0 < q.1 ∧ 0 < q.2 ∧ q.1 * q.2 = d at hq
+  change (1 ≤ q.1 ∧ q.1 ≤ d) ∧ (1 ≤ q.2 ∧ q.2 ≤ d)
+  have hq1 : q.1 ≤ d := by
+    rw [← hq.2.2]
+    exact Nat.le_mul_of_pos_right q.1 hq.2.1
+  have hq2 : q.2 ≤ d := by
+    rw [← hq.2.2]
+    exact Nat.le_mul_of_pos_left q.2 hq.1
+  exact ⟨⟨hq.1, hq1⟩, ⟨hq.2.1, hq2⟩⟩
 
 /-- The valuation data expressing that an intermediate field is unramified.
 The residue separability field is retained explicitly because it is part of
@@ -210,14 +220,67 @@ theorem chapter13_finite_extension_has_finite_residue_field
     [Valuation.IsRankOneDiscrete vL] [FiniteDimensional K L]
     [Finite (IsLocalRing.ResidueField vK.valuationSubring)] :
     Finite (IsLocalRing.ResidueField vL.valuationSubring) := by
-  sorry
+  let vKcomap : Valuation K ΓL := vL.comap (algebraMap K L)
+  have hsub : vK.valuationSubring = vKcomap.valuationSubring :=
+    (Valuation.isEquiv_iff_valuationSubring (v₁ := vK)
+      (v₂ := vKcomap)).mp
+      (Valuation.HasExtension.val_isEquiv_comap (vR := vK) (vA := vL))
+  have hcomap : Valuation.HasExtension vKcomap vL :=
+    ⟨Valuation.IsEquiv.refl⟩
+  have hresidue_comap : Module.Finite
+      (IsLocalRing.ResidueField vKcomap.valuationSubring)
+      (IsLocalRing.ResidueField vL.valuationSubring) :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_ramification_residue_finite
+      vKcomap vL
+  have hresidue : Module.Finite
+      (IsLocalRing.ResidueField vK.valuationSubring)
+      (IsLocalRing.ResidueField vL.valuationSubring) := by
+    let eSub : vK.valuationSubring ≃+* vKcomap.valuationSubring :=
+      { toFun := fun x =>
+          ⟨(x : K), by
+            rw [← hsub]
+            exact x.property⟩
+        invFun := fun x =>
+          ⟨(x : K), by
+            rw [hsub]
+            exact x.property⟩
+        left_inv := by intro x; rfl
+        right_inv := by intro x; rfl
+        map_add' := by intro x y; rfl
+        map_mul' := by intro x y; rfl }
+    let eA : IsLocalRing.ResidueField vKcomap.valuationSubring ≃+*
+        IsLocalRing.ResidueField vK.valuationSubring :=
+      (IsLocalRing.ResidueField.mapEquiv eSub).symm
+    let e : IsLocalRing.ResidueField vL.valuationSubring ≃+*
+        IsLocalRing.ResidueField vL.valuationSubring := RingEquiv.refl _
+    apply Module.Finite.of_equiv_equiv eA e
+    apply RingHom.ext
+    intro a
+    obtain ⟨a, rfl⟩ := IsLocalRing.residue_surjective a
+    simp [eA, e, eSub]
+    apply congrArg (fun z : vL.valuationSubring =>
+      IsLocalRing.residue vL.valuationSubring z)
+    apply Subtype.ext
+    rfl
+  let _ : Module.Finite
+      (IsLocalRing.ResidueField vK.valuationSubring)
+      (IsLocalRing.ResidueField vL.valuationSubring) := hresidue
+  exact Module.finite_of_finite (IsLocalRing.ResidueField vK.valuationSubring)
 
 def chapter13BoundedDegreeFactorPairs (N : ℕ) : Set (ℕ × ℕ) :=
   {q | 0 < q.1 ∧ 0 < q.2 ∧ q.1 * q.2 ≤ N}
 
 theorem chapter13_bounded_degree_has_finitely_many_factor_pairs (N : ℕ) :
     Set.Finite (chapter13BoundedDegreeFactorPairs N) := by
-  sorry
+  refine (Set.finite_Icc 1 N).prod (Set.finite_Icc 1 N) |>.subset ?_
+  intro q hq
+  change 0 < q.1 ∧ 0 < q.2 ∧ q.1 * q.2 ≤ N at hq
+  change (1 ≤ q.1 ∧ q.1 ≤ N) ∧ (1 ≤ q.2 ∧ q.2 ≤ N)
+  have hq1 : q.1 ≤ N := by
+    exact (Nat.le_mul_of_pos_right q.1 hq.2.1).trans hq.2.2
+  have hq2 : q.2 ≤ N := by
+    exact (Nat.le_mul_of_pos_left q.2 hq.1).trans hq.2.2
+  exact ⟨⟨hq.1, hq1⟩, ⟨hq.2.1, hq2⟩⟩
 
 /-- The unique unramified base for a fixed residue degree, up to the
 base-field isomorphism used in the source. -/
@@ -276,7 +339,11 @@ theorem chapter13_totally_ramified_stage_has_eisenstein_minpoly
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.IsEisensteinAt πK g ∧
       g.natDegree = Module.finrank K L ∧
       g.map (algebraMap A K) = minpoly K πL := by
-  sorry
+  obtain ⟨g, hgmonic, hmap, hdegree, hEisenstein, _, _, _⟩ :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08_uniformizer_theorem
+      hcomplete hfinite vK vL hdiscreteK hdiscreteL hval htotal
+        hintegralK hintegralL πK hπK πL hπL
+  exact ⟨g, hgmonic, hEisenstein, hdegree, hmap⟩
 
 /-- The finite union over the finitely many degree factorizations is the
 book's final characteristic-zero counting step. -/
