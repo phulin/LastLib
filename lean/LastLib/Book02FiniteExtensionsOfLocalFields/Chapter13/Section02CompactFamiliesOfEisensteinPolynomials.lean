@@ -183,7 +183,19 @@ theorem chapter13_maximal_ideal_difference_square_is_closed
     @IsClosed A (IsLocalRing.maximalIdeal A).adicTopology
       (((IsLocalRing.maximalIdeal A : Ideal A) : Set A) \
         (((IsLocalRing.maximalIdeal A ^ 2 : Ideal A) : Set A))) := by
-  sorry
+  let m := IsLocalRing.maximalIdeal A
+  let _ : @TopologicalSpace A := m.adicTopology
+  have hmclosed : @IsClosed A m.adicTopology (m : Set A) := by
+    convert (m.openAddSubgroup 1).isClosed using 1
+    ext x
+    simp [Ideal.openAddSubgroup, pow_one]
+    change x ∈ m ↔ x ∈ m
+    rfl
+  have hm2open : @IsOpen A m.adicTopology ((m ^ 2 : Ideal A) : Set A) := by
+    let U := m.openAddSubgroup 2
+    change @IsOpen A m.adicTopology (↑U : Set A)
+    exact U.isOpen
+  exact IsClosed.sdiff hmclosed hm2open
 
 /-- The coefficient parameter space is compact once its valuation-ring
 coordinates are equipped with the compact adic topology. -/
@@ -196,7 +208,9 @@ theorem chapter13_eisenstein_parameter_space_compact
     (hm_closed : IsClosed ((m : Set A) \
       ((m ^ 2 : Ideal A) : Set A))) :
     IsCompact (chapter13EisensteinCoefficientParameterSet m e) := by
-  sorry
+  unfold chapter13EisensteinCoefficientParameterSet
+  refine (isCompact_univ_pi (fun _ => hm_compact)).prod ?_
+  exact hm_closed.isCompact
 
 /-- The compactness theorem in the exact form used for the chapter's
 valuation ring.  The topology is intentionally explicit so it does not
@@ -217,7 +231,20 @@ theorem chapter13_complete_dvr_eisenstein_parameter_space_compact
           (IsLocalRing.maximalIdeal vE.valuationSubring).adicTopology
          inferInstance)
         P := by
-  sorry
+  let O := vE.valuationSubring
+  let m := IsLocalRing.maximalIdeal O
+  let _ : @TopologicalSpace O := m.adicTopology
+  let _ : @CompactSpace O m.adicTopology :=
+    @LastLib.Book01ValuationsDVRsAndCompletions.Chapter06.chapter06_complete_dvr_integer_compact
+      O _ _ _ _ hcomplete
+  have hm_compact : IsCompact (m : Set O) := by
+    simpa [m, pow_one] using
+      (chapter13_complete_dvr_maximal_ideal_powers_compact_open
+        (A := O) hcomplete 1).1
+  have hm_closed : IsClosed ((m : Set O) \ ((m ^ 2 : Ideal O) : Set O)) := by
+    exact chapter13_maximal_ideal_difference_square_is_closed (A := O)
+  refine ⟨chapter13EisensteinCoefficientParameterSet m e, rfl, ?_⟩
+  exact chapter13_eisenstein_parameter_space_compact m e hm_compact hm_closed
 
 /-- A compact locally constant family has only finitely many values. -/
 theorem chapter13_eisenstein_family_has_finitely_many_extension_classes
@@ -273,7 +300,13 @@ theorem chapter13_separable_root_field_has_krasner_neighborhood
           ∀ β : Ω, aeval β h = 0 →
             Nonempty (chapter13RootField E Ω α ≃ₐ[E]
               chapter13RootField E Ω β) := by
-  sorry
+  obtain ⟨U, hUopen, hcenter, hstable⟩ :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter12.chapter12_local_constancy_of_generated_field
+      g α d hmonic hirreducible hseparable hdegree hroot hsplits
+  refine ⟨U, hUopen, hcenter, ?_⟩
+  intro b hb
+  dsimp
+  exact hstable b hb
 
 /-- Coefficientwise congruence modulo a fixed power of the maximal ideal. -/
 def chapter13CoefficientCongruent
@@ -286,7 +319,8 @@ theorem chapter13_coefficient_congruent_mono
     {n N : ℕ} (hnN : n ≤ N) (f g : A[X]) :
     chapter13CoefficientCongruent m N f g →
       chapter13CoefficientCongruent m n f g := by
-  sorry
+  intro h i
+  exact Ideal.pow_le_pow_right hnN (h i)
 
 /-- A finite Krasner subcover can be refined by one common coefficient
 congruence modulus when the congruence sets form the chosen neighborhood
@@ -312,7 +346,47 @@ theorem chapter13_finite_subcover_has_common_congruence_modulus
         (chapter13EisensteinPolynomial m e a)
         (chapter13EisensteinPolynomial m e b) →
       φ a = φ b := by
-  sorry
+  classical
+  have hP : CompactSpace (Chapter13EisensteinParameterSpace A m e) :=
+    isCompact_iff_compactSpace.mp hcompact
+  have huniv : IsCompact
+      (Set.univ : Set (Chapter13EisensteinParameterSpace A m e)) :=
+    hP.isCompact_univ
+  choose n hn using hlocal_congruence
+  obtain ⟨s, hs⟩ :=
+    huniv.elim_finite_subcover
+      (fun a : Chapter13EisensteinParameterSpace A m e =>
+        {b | chapter13CoefficientCongruent m (n a)
+          (chapter13EisensteinPolynomial m e a)
+          (chapter13EisensteinPolynomial m e b)})
+      (fun a => hopen a (n a))
+      (by
+        intro a _
+        refine Set.mem_iUnion.2 ⟨a, ?_⟩
+        simp [chapter13CoefficientCongruent])
+  have hcover (a : Chapter13EisensteinParameterSpace A m e) :
+      ∃ i ∈ s,
+        chapter13CoefficientCongruent m (n i)
+          (chapter13EisensteinPolynomial m e i)
+          (chapter13EisensteinPolynomial m e a) := by
+    have ha := hs (Set.mem_univ a)
+    simp only [Set.mem_iUnion] at ha
+    rcases ha with ⟨i, ⟨hi, hai⟩⟩
+    exact ⟨i, hi, hai⟩
+  refine ⟨s.sup n, ?_⟩
+  intro a b hab
+  obtain ⟨i, hi, hai⟩ := hcover a
+  have hNi : n i ≤ s.sup n := Finset.le_sup hi
+  have hab' := chapter13_coefficient_congruent_mono m hNi
+    (chapter13EisensteinPolynomial m e a)
+    (chapter13EisensteinPolynomial m e b) hab
+  have hib : chapter13CoefficientCongruent m (n i)
+      (chapter13EisensteinPolynomial m e i)
+      (chapter13EisensteinPolynomial m e b) := by
+    intro j
+    have hsum := (m ^ n i).add_mem (hai j) (hab' j)
+    simpa [sub_add_sub_cancel] using hsum
+  exact (hn i a hai).trans (hn i b hib).symm
 
 end
 
