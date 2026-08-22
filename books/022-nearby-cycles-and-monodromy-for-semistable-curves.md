@@ -381,7 +381,7 @@ R\Psi K\otimes^L R\Psi L
 \tag{2.9}
 $$
 
-At finite level, Verdier duality on the strict-local generic fibers identifies the Verdier dual of $R\Psi K$ with nearby cycles of the generic-fiber dual. The dual on $Y$ is taken with respect to its actual dualizing complex; at a singular fiber it is not obtained by replacing that complex with a shifted constant sheaf. The identification is checked on the stalks (2.2), where it is local duality, and then glues because geometric stalks detect isomorphisms. Passing through a normalized inverse system gives the integral statement, and rationalization gives the $E$-statement. For a proper family, proper comparison and the generic trace consequently yield a perfect pairing
+At finite level, Verdier duality on the strict-local generic fibers identifies the Verdier dual of $R\Psi K$ with nearby cycles of the generic-fiber dual. The dual on $Y$ is taken with respect to its actual dualizing complex; at a singular fiber it is not obtained by replacing that complex with a shifted constant sheaf. The identification is checked on the stalks (2.2), where it is local duality, and then glues because geometric stalks detect isomorphisms. Both halves of this argument now rest on constructed tools: the stalk formula is Theorem 2.4, and detection on geometric stalks for constructible complexes is Book 18, Section 2.2; what the argument consumes from outside is local duality in the range proved in Book 20. Passing through a normalized inverse system gives the integral statement, and rationalization gives the $E$-statement. For a proper family, proper comparison and the generic trace consequently yield a perfect pairing
 
 $$
 H^m(X_{\bar\eta},E)\times
