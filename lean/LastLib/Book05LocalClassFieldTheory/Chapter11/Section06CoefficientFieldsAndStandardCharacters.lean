@@ -747,7 +747,8 @@ theorem chapter11_padic_cyclotomic_formula_finite_extension_standard
       χK = χp.comp (chapter11ContinuousNormHom (ℚ_[p]) K hcont))
     (x : Kˣ) :
     χK x = (unitPart (chapter11NormHom (ℚ_[p]) K x))⁻¹ := by
-  sorry
+  exact (congrArg (fun f : Kˣ →ₜ* (ℤ_[p])ˣ => f x) hcompat).trans
+    (Eq.trans rfl (hunitPart (chapter11NormHom (ℚ_[p]) K x)))
 
 /-!
 The fixed field is now expressed using Mathlib's absolute Galois group and
@@ -808,7 +809,34 @@ theorem chapter11_finite_character_recovers_extension_invariants
           C.degree e = Nat.card (Set.range χ) ∧
           C.residueDegree e =
             chapter11ResidueDegreeOfCharacter C.localFieldData χ hχ := by
-  sorry
+  have hkernel := chapter11_character_kernel_open_finite_index χ
+  obtain ⟨e, he⟩ := C.realizes (chapter11CharacterKernel χ) hkernel.1 hkernel.2
+  have hdegree : C.degree e = Nat.card (Set.range χ) :=
+    chapter11_finite_character_norm_index C χ e he
+  have hresidue_subgroup :
+      chapter11ResidueDegreeOfSubgroup C.localFieldData (C.normGroup e)
+          (C.normGroup_finiteIndex e) =
+        chapter11ResidueDegreeOfSubgroup C.localFieldData
+          (chapter11CharacterKernel χ)
+          (chapter11_finite_image_character_kernel_finite_index χ hχ) := by
+    change orderOf (QuotientGroup.mk'
+      (C.localFieldData.unitGroup.map (QuotientGroup.mk' (C.normGroup e)))
+      (QuotientGroup.mk' (C.normGroup e) C.localFieldData.uniformizer)) =
+      orderOf (QuotientGroup.mk'
+        (C.localFieldData.unitGroup.map (QuotientGroup.mk'
+          (chapter11CharacterKernel χ)))
+        (QuotientGroup.mk' (chapter11CharacterKernel χ)
+          C.localFieldData.uniformizer))
+    rw [he]
+  have hresidue_character :
+      chapter11ResidueDegreeOfSubgroup C.localFieldData
+          (chapter11CharacterKernel χ)
+          (chapter11_finite_image_character_kernel_finite_index χ hχ) =
+        chapter11ResidueDegreeOfCharacter C.localFieldData χ hχ :=
+    (chapter11_residue_degree_of_character_eq_subgroup C.localFieldData χ hχ).symm
+  exact ⟨e, he, hdegree,
+    (C.residueDegree_eq_subgroup e).trans
+      (hresidue_subgroup.trans hresidue_character)⟩
 
 theorem chapter11_finite_character_recovers_ramification_images
     {K G A : Type*} [Field K] [Group G] [CommGroup A]
@@ -824,7 +852,24 @@ theorem chapter11_finite_character_recovers_ramification_images
     (F.group n).map
         (chapter11CorrespondingAbelianGaloisCharacter R χ).toMonoidHom =
       chapter11UnitImage D χ n := by
-  sorry
+  rw [hfiltration n]
+  rw [Subgroup.map_map]
+  change (D.unitFiltration n).map
+      ((chapter11CorrespondingAbelianGaloisCharacter R χ).comp R.reciprocity).toMonoidHom =
+    chapter11UnitImage D χ n
+  have hcompat :
+      (chapter11CorrespondingAbelianGaloisCharacter R χ).comp R.reciprocity = χ := by
+    have hcomp := chapter11_abelian_continuous_character_equiv_apply R
+      (chapter11CorrespondingAbelianGaloisCharacter R χ)
+    calc
+      (chapter11CorrespondingAbelianGaloisCharacter R χ).comp R.reciprocity =
+          (chapter11AbelianContinuousCharacterEquiv R)
+            (chapter11CorrespondingAbelianGaloisCharacter R χ) := hcomp.symm
+      (chapter11AbelianContinuousCharacterEquiv R)
+          (chapter11CorrespondingAbelianGaloisCharacter R χ) = χ :=
+        (chapter11AbelianContinuousCharacterEquiv R).apply_symm_apply χ
+  rw [hcompat]
+  rfl
 
 end
 end LastLib.Book05LocalClassFieldTheory.Chapter11
