@@ -35,7 +35,15 @@ theorem chapter08_trace_pairing_inclusion_fraction_field
     ∀ x y : B,
       algebraMap A K (chapter08TracePairingInclusion A B x y) =
         Algebra.trace K L (algebraMap B L x * algebraMap B L y) := by
-  sorry
+  exact fun x y => by
+    change algebraMap A K (Algebra.trace A B (x * y)) = _
+    rw [← Algebra.intTrace_eq_trace A B]
+    calc
+      algebraMap A K (Algebra.intTrace A B (x * y)) =
+          Algebra.trace K L (algebraMap B L (x * y)) :=
+        Algebra.algebraMap_intTrace (A := A) (B := B) (K := K) (L := L) (x * y)
+      _ = Algebra.trace K L (algebraMap B L x * algebraMap B L y) := by
+        rw [map_mul]
 
 /- The Gram matrix of the trace pairing.  `Algebra.traceMatrix` is the
    canonical matrix implementation of the displayed entries. -/
@@ -86,7 +94,21 @@ theorem chapter08_discriminant_basis_change
     ∃ u : Aˣ,
       chapter08DiscriminantElement A B b' =
         (u : A) ^ 2 * chapter08DiscriminantElement A B b := by
-  sorry
+  exact by
+    let P : Matrix ι ι A := b.toMatrix b'
+    have hP : b ᵥ* P.map (algebraMap A B) = b' := by
+      dsimp [P]
+      exact b.toMatrix_map_vecMul b'
+    have hdet : IsUnit P.det := by
+      dsimp [P]
+      rw [← b.det_apply]
+      exact b.isUnit_det b'
+    refine ⟨hdet.unit, ?_⟩
+    rw [← hP]
+    change Algebra.discr A (b ᵥ* P.map (algebraMap A B)) = _
+    rw [Algebra.discr_of_matrix_vecMul]
+    rw [hdet.unit_spec]
+    rfl
 
 theorem chapter08_discriminant_ideal_of_basis_independent
     (A B : Type*) [CommRing A] [CommRing B]
@@ -96,7 +118,24 @@ theorem chapter08_discriminant_ideal_of_basis_independent
     (b : Module.Basis ι A B) :
     chapter08DiscriminantIdealOfBasis A B b =
       chapter08RelativeDiscriminantIdeal A B := by
-  sorry
+  exact by
+    let c := Module.Free.chooseBasis A B
+    let e : Module.Free.ChooseBasisIndex A B ≃ ι :=
+      Fintype.equivOfCardEq (by
+        rw [← Module.finrank_eq_card_basis c, ← Module.finrank_eq_card_basis b])
+    let c' := c.reindex e
+    have hdisc : chapter08DiscriminantElement A B c' =
+        chapter08DiscriminantElement A B c := by
+      change Algebra.discr A (c.reindex e) = Algebra.discr A c
+      rw [Module.Basis.coe_reindex]
+      exact Algebra.discr_reindex (A := A) (B := B) c e
+    change Ideal.span ({chapter08DiscriminantElement A B b} : Set A) =
+      Ideal.span ({chapter08DiscriminantElement A B c} : Set A)
+    rw [← hdisc]
+    apply Ideal.span_singleton_eq_span_singleton.mpr
+    obtain ⟨u, hu⟩ := chapter08_discriminant_basis_change A B b c'
+    rw [hu]
+    exact (associated_unit_mul_left _ _ (u.isUnit.pow 2)).symm
 
 theorem chapter08_relative_discriminant_ideal_eq_norm_different
     (A B K L : Type*) [CommRing A] [CommRing B]
@@ -126,7 +165,7 @@ theorem chapter08_codifferent_fractional_coe_eq_traceDual
     (LastLib.Book03RamificationTheory.Chapter07.chapter07CodifferentFractionalIdeal
       A B K L : Set L) =
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04TraceDual A B K L := by
-  sorry
+  exact LastLib.Book03RamificationTheory.Chapter07.chapter07_codifferent_fractional_coe_eq A B K L
 
 theorem chapter08_different_fractional_coe_eq_ideal
     (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B]
@@ -138,7 +177,7 @@ theorem chapter08_different_fractional_coe_eq_ideal
     [IsDedekindDomain B] [Module.IsTorsionFree A B] :
     (chapter08DifferentIdeal A B : FractionalIdeal B⁰ L) =
       LastLib.Book03RamificationTheory.Chapter07.chapter07DifferentFractionalIdeal A B K L := by
-  sorry
+  exact LastLib.Book03RamificationTheory.Chapter07.chapter07_different_fractional_coe_eq A B K L
 
 /- The quotient is formed in the dual lattice itself, so its length is the
    book's `length_A(B^∨/B)` rather than the length of the ambient field. -/
