@@ -13,6 +13,7 @@ import Mathlib.FieldTheory.PurelyInseparable.Exponent
 import Mathlib.RingTheory.Adjoin.PowerBasis
 import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
 import Mathlib.RingTheory.Derivation.ToSquareZero
+import Mathlib.Algebra.MvPolynomial.Derivation
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter13
 
@@ -1329,7 +1330,109 @@ theorem chapter13_derivation_extension
     (M : Type v) [AddCommGroup M] [Module k M] (δ : B → M) :
     ∃! D : Derivation (Chapter13PthPowerSubfield k p) k M,
       ∀ b : B, D (b : k) = δ b := by
-  sorry
+  classical
+  let F := Chapter13PthPowerSubfield k p
+  let c : B → F := fun b =>
+    ⟨(b : k) ^ p, Subfield.subset_closure ⟨(b : k), rfl⟩⟩
+  have hc : ∀ b : B, (c b : k) = (b : k) ^ p := by
+    intro b
+    rfl
+  let ev : MvPolynomial B F →ₐ[F] k :=
+    MvPolynomial.aeval (fun b : B => (b : k))
+  obtain ⟨hev, hker, _⟩ := chapter13_p_basis_polynomial_presentation p B hB c hc
+  have hev' : Function.Surjective ev.toLinearMap := hev
+  letI : Module (MvPolynomial B F) M := Module.compHom M ev.toRingHom
+  have htower : IsScalarTower F (MvPolynomial B F) M :=
+    IsScalarTower.of_algebraMap_smul (by
+      intro r x
+      change ev (algebraMap F (MvPolynomial B F) r) • x = algebraMap F k r • x
+      rw [ev.commutes])
+  letI : IsScalarTower F (MvPolynomial B F) M := htower
+  let q : Derivation F (MvPolynomial B F) M := MvPolynomial.mkDerivation F δ
+  let I : Ideal (MvPolynomial B F) := Ideal.span (Set.range (fun b : B =>
+    MvPolynomial.X b ^ p - MvPolynomial.C (c b)))
+  have hz : ∀ x : MvPolynomial B F, x ∈ I → q x = 0 ∧ ev x = 0 := by
+    intro x hx
+    induction hx using Submodule.span_induction with
+    | mem x hx =>
+        rcases hx with ⟨b, rfl⟩
+        constructor
+        · have hqpow : q (MvPolynomial.X b ^ p) = 0 := by
+            rw [q.leibniz_pow]
+            rw [← Nat.cast_smul_eq_nsmul k, CharP.cast_eq_zero (R := k), zero_smul]
+          have hqC : q (MvPolynomial.C (c b)) = 0 :=
+            MvPolynomial.derivation_C q (c b)
+          rw [map_sub, hqpow, hqC, sub_zero]
+        · simpa [ev, Algebra.algebraMap_ofSubsemiring_apply, sub_eq_zero,
+            hc b]
+    | zero => simp
+    | add x y hx hy ihx ihy =>
+        constructor
+        · rw [q.map_add, ihx.1, ihy.1, add_zero]
+        · rw [map_add, ihx.2, ihy.2, add_zero]
+    | smul a x hx ih =>
+        change q (a * x) = 0 ∧ ev (a * x) = 0
+        constructor
+        · rw [q.leibniz, ih.1]
+          rw [smul_zero, zero_add]
+          change ev x • q a = 0
+          rw [ih.2, zero_smul]
+        · rw [map_mul, ih.2]
+          simp
+  have hker' : LinearMap.ker ev.toLinearMap ≤ LinearMap.ker q.toLinearMap := by
+    intro x hx
+    change q x = 0
+    have hxI : x ∈ I := by
+      change ev x = 0 at hx
+      have hx' : x ∈ RingHom.ker ev.toRingHom := hx
+      rw [hker] at hx'
+      exact hx'
+    exact (hz x hxI).1
+  let qbar : (MvPolynomial B F ⧸ LinearMap.ker ev.toLinearMap) →ₗ[F] M :=
+    (LinearMap.ker ev.toLinearMap).liftQ q.toLinearMap hker'
+  let e : (MvPolynomial B F ⧸ LinearMap.ker ev.toLinearMap) ≃ₗ[F] k :=
+    ev.toLinearMap.quotKerEquivOfSurjective hev'
+  let d : k →ₗ[F] M := qbar.comp e.symm.toLinearMap
+  have hd (x : MvPolynomial B F) : d (ev x) = q x := by
+    dsimp [d, qbar, e]
+    change (LinearMap.ker ev.toLinearMap).liftQ q.toLinearMap hker'
+        ((ev.toLinearMap.quotKerEquivOfSurjective hev').symm (ev.toLinearMap x)) = q x
+    rw [ev.toLinearMap.quotKerEquivOfSurjective_symm_apply hev']
+    exact Submodule.liftQ_apply _ _ _
+  let D : Derivation F k M :=
+    { toLinearMap := d
+      map_one_eq_zero' := by
+        simpa [ev] using hd 1
+      leibniz' := by
+        intro x y
+        obtain ⟨x', hx'⟩ := hev' x
+        obtain ⟨y', hy'⟩ := hev' y
+        subst x
+        subst y
+        calc
+          d (ev x' * ev y') = d (ev (x' * y')) := by rw [map_mul ev]
+          _ = q (x' * y') := hd _
+          _ = ev x' • q y' + ev y' • q x' := by
+            change q (x' * y') = x' • q y' + y' • q x'
+            exact q.leibniz x' y'
+          _ = ev x' • d (ev y') + ev y' • d (ev x') := by
+            rw [hd x', hd y'] }
+  have hDb : ∀ b : B, D (b : k) = δ b := by
+    intro b
+    have hX := hd (MvPolynomial.X b)
+    simpa [D, ev, q] using hX
+  have hadj : Algebra.adjoin F B = ⊤ := by
+    apply top_unique
+    intro x hx
+    apply chapter13_pMonomials_span_le_adjoin p B
+    rw [hB.2]
+    trivial
+  refine ⟨D, hDb, ?_⟩
+  intro D' hD'
+  apply Derivation.ext_of_adjoin_eq_top B hadj
+  intro x hx
+  let b : B := ⟨x, hx⟩
+  exact (hD' b).trans (hDb b).symm
 
 /-- Restriction identifies derivations with arbitrary values on a `p`-basis. -/
 theorem chapter13_derivation_restriction_bijective
@@ -1374,7 +1477,203 @@ theorem chapter13_char_p_square_zero_lift
     ∃! φ : k →+* R,
       (Ideal.Quotient.mk I).comp φ = ψ ∧
         ∀ b : B, φ (b : k) = β b := by
-  sorry
+  classical
+  letI : Fact (Nat.Prime p) := ⟨hp⟩
+  let F : Subfield k := Chapter13PthPowerSubfield k p
+  have hroot_val : ∀ x : k, x ∈ F → ∃ y : k, y ^ p = x := by
+    intro x hx
+    induction hx using Subfield.closure_induction with
+    | mem x hx =>
+        rcases hx with ⟨x, rfl⟩
+        exact ⟨x, rfl⟩
+    | one => exact ⟨1, by simp⟩
+    | add x y hx hy ihx ihy =>
+        rcases ihx with ⟨x', hx'⟩
+        rcases ihy with ⟨y', hy'⟩
+        refine ⟨x' + y', ?_⟩
+        rw [add_pow_char, hx', hy']
+    | neg x hx ih =>
+        rcases ih with ⟨x', hx'⟩
+        refine ⟨-x', ?_⟩
+        have hneg := map_neg (frobenius k p) x'
+        change (-x') ^ p = -(x' ^ p) at hneg
+        rw [hneg, hx']
+    | inv x hx ih =>
+        rcases ih with ⟨x', hx'⟩
+        refine ⟨x'⁻¹, ?_⟩
+        rw [inv_pow, hx']
+    | mul x y hx hy ihx ihy =>
+        rcases ihx with ⟨x', hx'⟩
+        rcases ihy with ⟨y', hy'⟩
+        refine ⟨x' * y', ?_⟩
+        rw [mul_pow, hx', hy']
+  have hroot_exists : ∀ f : F, ∃ x : k, x ^ p = (f : k) := by
+    intro f
+    exact hroot_val (f : k) f.property
+  let root : F → k := fun f => Classical.choose (hroot_exists f)
+  have hroot (f : F) : root f ^ p = (f : k) :=
+    Classical.choose_spec (hroot_exists f)
+  have hroot_inj : Function.Injective (fun x : k => x ^ p) :=
+    frobenius_inj k p
+  have hroot_zero : root 0 = 0 := by
+    apply hroot_inj
+    change root 0 ^ p = (0 : k) ^ p
+    rw [hroot, zero_pow hp.ne_zero]
+    rfl
+  have hroot_one : root 1 = 1 := by
+    apply hroot_inj
+    change root 1 ^ p = (1 : k) ^ p
+    rw [hroot]
+    simp
+  have hroot_add (x y : F) : root (x + y) = root x + root y := by
+    apply hroot_inj
+    calc
+      root (x + y) ^ p = (x + y : k) := hroot (x + y)
+      _ = root x ^ p + root y ^ p := by rw [hroot x, hroot y]
+      _ = (root x + root y) ^ p := by rw [add_pow_char]
+  have hroot_mul (x y : F) : root (x * y) = root x * root y := by
+    apply hroot_inj
+    calc
+      root (x * y) ^ p = (x * y : k) := hroot (x * y)
+      _ = root x ^ p * root y ^ p := by rw [hroot x, hroot y]
+      _ = (root x * root y) ^ p := by rw [mul_pow]
+  let rootHom : F →+* k :=
+    { toFun := root
+      map_one' := hroot_one
+      map_mul' := hroot_mul
+      map_zero' := hroot_zero
+      map_add' := hroot_add }
+  have hpowI : ∀ x : R, x ∈ I → (frobenius R p) x = 0 := by
+    intro x hx
+    change x ^ p = 0
+    apply pow_eq_zero_of_le hp.two_le
+    have hx2 : x ^ 2 ∈ I ^ 2 := Ideal.pow_mem_pow hx 2
+    rw [hI] at hx2
+    simpa using hx2
+  let theta : (R ⧸ I) →+* R := Ideal.Quotient.lift I (frobenius R p) hpowI
+  have htheta : theta.comp (Ideal.Quotient.mk I) = frobenius R p := by
+    exact Ideal.Quotient.lift_comp_mk I (frobenius R p) hpowI
+  have htheta_pow (q : R ⧸ I) : Ideal.Quotient.mk I (theta q) = q ^ p := by
+    refine Quotient.inductionOn' q ?_
+    intro x
+    change Ideal.Quotient.mk I ((frobenius R p) x) =
+      (Ideal.Quotient.mk I x) ^ p
+    rfl
+  let φ0 : F →+* R := theta.comp (ψ.comp rootHom)
+  have hφ0 : (Ideal.Quotient.mk I).comp φ0 = ψ.comp F.subtype := by
+    ext f
+    change Ideal.Quotient.mk I (theta (ψ (root f))) = ψ (f : k)
+    rw [htheta_pow, ← map_pow, hroot]
+  let c : B → F := fun b =>
+    ⟨(b : k) ^ p, Subfield.subset_closure ⟨(b : k), rfl⟩⟩
+  have hc (b : B) : (c b : k) = (b : k) ^ p := by rfl
+  have hroot_c (b : B) : root (c b) = (b : k) := by
+    apply hroot_inj
+    exact (hroot (c b)).trans (hc b)
+  have hφ0_c (b : B) : φ0 (c b) = (β b) ^ p := by
+    change theta (ψ (root (c b))) = (β b) ^ p
+    rw [hroot_c b, ← hβ b]
+    rfl
+  letI : Algebra F R := φ0.toAlgebra
+  let evR : MvPolynomial B F →ₐ[F] R :=
+    MvPolynomial.aeval (fun b : B => β b)
+  let evk : MvPolynomial B F →ₐ[F] k :=
+    MvPolynomial.aeval (fun b : B => (b : k))
+  obtain ⟨hev, hker, _⟩ :=
+    chapter13_p_basis_polynomial_presentation p B hB c hc
+  have hrel (b : B) : evR (MvPolynomial.X b ^ p - MvPolynomial.C (c b)) = 0 := by
+    simp [evR, RingHom.algebraMap_toAlgebra, hφ0_c b]
+  let J : Ideal (MvPolynomial B F) := RingHom.ker evk.toRingHom
+  have hzeroJ : ∀ x : MvPolynomial B F, x ∈ J → evR.toRingHom x = 0 := by
+    intro x hx
+    have hJ : J = Ideal.span (Set.range (fun b : B =>
+        MvPolynomial.X b ^ p - MvPolynomial.C (c b))) := by
+      dsimp [J, evk]
+      exact hker
+    rw [hJ] at hx
+    induction hx using Submodule.span_induction with
+    | mem x hx =>
+        rcases hx with ⟨b, rfl⟩
+        exact hrel b
+    | zero => simp
+    | add x y hx hy ihx ihy =>
+        rw [map_add, ihx, ihy, add_zero]
+    | smul a x hx ih =>
+        change evR.toRingHom (a * x) = 0
+        rw [map_mul, ih, mul_zero]
+  let qbar : (MvPolynomial B F ⧸ J) →+* R :=
+    Ideal.Quotient.lift J evR.toRingHom hzeroJ
+  let e : (MvPolynomial B F ⧸ J) ≃+* k :=
+    evk.toRingHom.quotientKerEquivOfSurjective hev
+  let φ : k →+* R := qbar.comp e.symm.toRingHom
+  have hesym : e.symm.toRingHom.comp evk.toRingHom = Ideal.Quotient.mk J := by
+    exact RingHom.quotientKerEquivOfSurjective_symm_comp hev
+  have hφev (x : MvPolynomial B F) : φ (evk x) = evR x := by
+    change qbar ((evk.toRingHom.quotientKerEquivOfSurjective hev).symm
+      (evk.toRingHom x)) = evR x
+    rw [RingHom.quotientKerEquivOfSurjective_symm_apply hev]
+    exact Ideal.Quotient.lift_mk _ _ _
+  have hmap : (Ideal.Quotient.mk I).comp evR.toRingHom =
+      ψ.comp evk.toRingHom := by
+    apply MvPolynomial.ringHom_ext
+    · intro r
+      simpa [RingHom.comp_apply, RingHom.algebraMap_toAlgebra,
+        Subfield.algebraMap_ofSubfield] using
+        RingHom.congr_fun hφ0 r
+    · intro b
+      simpa [RingHom.comp_apply, evR, evk] using hβ b
+  have hres : (Ideal.Quotient.mk I).comp φ = ψ := by
+    apply RingHom.ext
+    intro x
+    obtain ⟨y, rfl⟩ := hev x
+    have hcomp : φ.comp evk.toRingHom = evR.toRingHom := by
+      apply RingHom.ext
+      intro z
+      exact hφev z
+    have hcomp_y := RingHom.congr_fun hcomp y
+    have hmap_y := RingHom.congr_fun hmap y
+    calc
+      Ideal.Quotient.mk I (φ (evk y)) = Ideal.Quotient.mk I (evR y) := by
+        simpa [RingHom.comp_apply] using congrArg (Ideal.Quotient.mk I) hcomp_y
+      _ = ψ (evk y) := hmap_y
+  have hvalues : ∀ b : B, φ (b : k) = β b := by
+    intro b
+    simpa [evk, evR] using hφev (MvPolynomial.X b)
+  refine ⟨φ, ⟨hres, hvalues⟩, ?_⟩
+  intro φ' hφ'
+  have hφ'F : ∀ r : F, φ' (r : k) = φ0 r := by
+    intro r
+    have hquot : Ideal.Quotient.mk I (φ' (root r)) = ψ (root r) := by
+      exact RingHom.congr_fun hφ'.1 (root r)
+    calc
+      φ' (r : k) = φ' (root r ^ p) := by rw [hroot r]
+      _ = (φ' (root r)) ^ p := by rw [map_pow]
+      _ = theta (Ideal.Quotient.mk I (φ' (root r))) := by
+        change (φ' (root r)) ^ p = (frobenius R p) (φ' (root r))
+        rfl
+      _ = theta (ψ (root r)) := by rw [hquot]
+      _ = φ0 r := rfl
+  have hcomp' : φ'.comp evk.toRingHom = evR.toRingHom := by
+    apply MvPolynomial.ringHom_ext
+    · intro r
+      simpa [RingHom.comp_apply, evk, evR, RingHom.algebraMap_toAlgebra,
+        Subfield.algebraMap_ofSubfield] using hφ'F r
+    · intro b
+      simpa [RingHom.comp_apply, evk, evR] using hφ'.2 b
+  apply RingHom.ext
+  intro x
+  obtain ⟨y, rfl⟩ := hev x
+  have h1 := congrArg (fun f : MvPolynomial B F →+* R => f y) hcomp'
+  have h2 := congrArg (fun f : MvPolynomial B F →+* R => f y)
+    (show φ.comp evk.toRingHom = evR.toRingHom from by
+      apply RingHom.ext
+      intro z
+      exact hφev z)
+  have h1' : φ' (evk.toRingHom y) = evR.toRingHom y := by
+    simpa only [RingHom.comp_apply] using h1
+  have h2' : φ (evk.toRingHom y) = evR.toRingHom y := by
+    simpa only [RingHom.comp_apply] using h2
+  exact h1'.trans h2'.symm
 
 /-- Perfect residue fields have no `p`-basis choices. -/
 theorem chapter13_perfect_field_empty_p_basis
