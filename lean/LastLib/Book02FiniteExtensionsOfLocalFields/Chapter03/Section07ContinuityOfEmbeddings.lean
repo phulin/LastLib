@@ -156,7 +156,7 @@ theorem chapter03_algebraic_embedding_is_continuous
     [NormedAlgebra K L] [NormedAlgebra K Ω] [FiniteDimensional K L]
     (σ : L →ₐ[K] Ω) :
     Continuous σ := by
-  sorry
+  exact σ.toLinearMap.continuous_of_finiteDimensional
 
 /-- Galois automorphisms are continuous for the extending local absolute value. -/
 theorem chapter03_galois_action_is_continuous
@@ -174,7 +174,16 @@ theorem chapter03_trace_and_norm_are_continuous
     [FiniteDimensional K L] :
     Continuous (fun x : L => Algebra.trace K L x) ∧
       Continuous (fun x : L => Algebra.norm K x) := by
-  sorry
+  classical
+  constructor
+  · exact (Algebra.trace K L).continuous_of_finiteDimensional
+  · let b := Module.Free.chooseBasis K L
+    rw [show (fun x : L => Algebra.norm K x) =
+        (fun x => Matrix.det (Algebra.leftMulMatrix b x)) by
+      funext x
+      exact Algebra.norm_eq_matrix_det b x]
+    exact Continuous.matrix_det
+      ((Algebra.leftMulMatrix b).toLinearMap.continuous_of_finiteDimensional)
 
 /-- Finite sums and products commute with limits in a topological semiring. -/
 theorem chapter03_finite_sums_and_products_commute_with_limits

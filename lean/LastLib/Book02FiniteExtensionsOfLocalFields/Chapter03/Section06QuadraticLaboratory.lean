@@ -1,5 +1,6 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section01WhyTowerFormulasMatter
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section07UnramifiedAndTotallyRamifiedEndpoints
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.Section02EquivalentCharacterizations
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03
 
@@ -499,6 +500,274 @@ def chapter03LocalSquareClassDecomposition
     (chapter03SquareClassGroup K ≃*
       Multiplicative (ZMod 2) × chapter03SquareClassGroup k)
 
+private theorem chapter03_fraction_units_equiv
+    (A K : Type*) [CommRing A] [Field K] [IsDomain A]
+    [IsDiscreteValuationRing A] [Algebra A K] [IsFractionRing A K]
+    {π : A}
+    (hπ : LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.Chapter04Uniformizer A π) :
+    Nonempty (Kˣ ≃* Multiplicative ℤ × Aˣ) := by
+  classical
+  let πK : Kˣ := Units.mk0 (algebraMap A K π) (by simpa using hπ.1)
+  let uMap : Aˣ →* Kˣ := Units.map (algebraMap A K).toMonoidHom
+  let g : (Multiplicative ℤ × Aˣ) →* Kˣ :=
+    { toFun := fun x => πK ^ (Multiplicative.toAdd x.1) * uMap x.2
+      map_one' := by simp [πK, uMap]
+      map_mul' := by
+        rintro ⟨n, u⟩ ⟨m, v⟩
+        change πK ^ (Multiplicative.toAdd n + Multiplicative.toAdd m) *
+          uMap (u * v) =
+          (πK ^ Multiplicative.toAdd n * uMap u) *
+            (πK ^ Multiplicative.toAdd m * uMap v)
+        rw [zpow_add]
+        simp [uMap, mul_assoc, mul_left_comm, mul_comm] }
+  have hg_surj : Function.Surjective g := by
+    intro x
+    obtain ⟨n, u, hu⟩ :=
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.dvr_fraction_field_unique_normal_form
+        A K hπ (Units.ne_zero x)
+    refine ⟨(Multiplicative.ofAdd n, u), ?_⟩
+    apply Units.ext
+    simpa [g, πK, uMap, Units.smul_def, Algebra.smul_def, mul_comm] using hu.1.symm
+  have hg_inj : Function.Injective g := by
+    intro x y hxy
+    obtain ⟨n, u, hu, hu_unique⟩ :=
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.dvr_fraction_field_unique_normal_form
+        A K hπ
+          (Units.ne_zero (g x))
+    have hx : (g x : K) = (x.2 : A) •
+        (algebraMap A K π) ^ (Multiplicative.toAdd x.1) := by
+      simp [g, πK, uMap, Algebra.smul_def, mul_comm]
+    have hxy' : (g x : K) = (y.2 : A) •
+        (algebraMap A K π) ^ (Multiplicative.toAdd y.1) := by
+      calc
+        (g x : K) = (g y : K) := congrArg Units.val hxy
+        _ = (y.2 : A) • (algebraMap A K π) ^ (Multiplicative.toAdd y.1) := by
+          simp [g, πK, uMap, Algebra.smul_def, mul_comm]
+    have hx' := hu_unique (Multiplicative.toAdd x.1) x.2 hx
+    have hy' := hu_unique (Multiplicative.toAdd y.1) y.2 hxy'
+    apply Prod.ext
+    · exact hx'.1.trans hy'.1.symm
+    · exact hx'.2.trans hy'.2.symm
+  exact ⟨(MulEquiv.ofBijective g ⟨hg_inj, hg_surj⟩).symm⟩
+
+private def chapter03IntegerParity :
+    Multiplicative ℤ →* Multiplicative (ZMod 2) :=
+  { toFun := fun n => Multiplicative.ofAdd
+        ((Multiplicative.toAdd (α := ℤ) n : ℤ) : ZMod 2)
+    map_one' := by rfl
+    map_mul' := by
+      intro n r
+      change ((Multiplicative.toAdd (α := ℤ) n +
+          Multiplicative.toAdd (α := ℤ) r : ℤ) : ZMod 2) =
+        (Multiplicative.toAdd (α := ℤ) n : ZMod 2) +
+          (Multiplicative.toAdd (α := ℤ) r : ZMod 2)
+      simp }
+
+private theorem chapter03_integer_parity_surjective :
+    Function.Surjective chapter03IntegerParity := by
+  intro z
+  obtain ⟨n, hn⟩ := ZMod.intCast_surjective
+    (Multiplicative.toAdd (α := ZMod 2) z)
+  refine ⟨Multiplicative.ofAdd n, ?_⟩
+  exact congrArg Multiplicative.ofAdd hn
+
+private theorem chapter03_integer_parity_ker :
+    chapter03IntegerParity.ker =
+      Subgroup.closure (Set.range (fun n : Multiplicative ℤ => n ^ 2)) := by
+  have hsquares_rangeZ :
+      Subgroup.closure (Set.range (fun n : Multiplicative ℤ => n ^ 2)) =
+        (powMonoidHom 2 : Multiplicative ℤ →* Multiplicative ℤ).range := by
+    apply le_antisymm
+    · refine (Subgroup.closure_le _).mpr ?_
+      rintro u ⟨v, rfl⟩
+      exact ⟨v, by simp [powMonoidHom_apply]⟩
+    · rintro u ⟨v, rfl⟩
+      exact Subgroup.subset_closure ⟨v, by simp [powMonoidHom_apply]⟩
+  apply le_antisymm
+  · intro n hn
+    have hn0 : (Multiplicative.toAdd (α := ℤ) n : ZMod 2) = 0 := by
+      change Multiplicative.toAdd (α := ZMod 2)
+          (chapter03IntegerParity n) = 0
+      rw [MonoidHom.mem_ker.mp hn]
+      rfl
+    have hdiv : (2 : ℤ) ∣ Multiplicative.toAdd (α := ℤ) n :=
+      (ZMod.intCast_zmod_eq_zero_iff_dvd _ 2).mp hn0
+    obtain ⟨r, hr⟩ := hdiv
+    apply Subgroup.subset_closure
+    refine ⟨Multiplicative.ofAdd r, ?_⟩
+    change (Multiplicative.ofAdd r) ^ 2 = n
+    rw [pow_two]
+    change Multiplicative.ofAdd (r + r) = n
+    have hr' : n = Multiplicative.ofAdd (2 * r) := congrArg
+      Multiplicative.ofAdd hr
+    rw [hr']
+    congr 1
+    ring
+  · intro n hn
+    rw [hsquares_rangeZ] at hn
+    apply MonoidHom.mem_ker.mpr
+    change chapter03IntegerParity n = 1
+    obtain ⟨r, hr⟩ := hn
+    rw [← hr]
+    change chapter03IntegerParity (r ^ 2) = 1
+    rw [map_pow]
+    rw [show chapter03IntegerParity r = Multiplicative.ofAdd
+        ((Multiplicative.toAdd (α := ℤ) r : ℤ) : ZMod 2) by rfl, pow_two]
+    apply Multiplicative.toAdd.injective
+    rw [toAdd_mul, toAdd_one]
+    simp only [toAdd_ofAdd]
+    exact CharTwo.add_self_eq_zero _
+
+private theorem chapter03_quotient_equiv_of_surjective
+    (G H : Type*) [Group G] [Group H]
+    (sG : Subgroup G) [sG.Normal] (F : G →* H)
+    (hF_surj : Function.Surjective F) (hF_ker : F.ker = sG) :
+    Nonempty (G ⧸ sG ≃* H) := by
+  let eG : G ⧸ sG ≃* H :=
+    (QuotientGroup.quotientMulEquivOfEq hF_ker.symm).trans
+      (QuotientGroup.quotientKerEquivOfSurjective F hF_surj)
+  exact ⟨eG⟩
+
+private theorem chapter03_square_product_eq_prod
+    (A : Type*) [CommRing A]
+    (sA : Subgroup Aˣ)
+    (sZ : Subgroup (Multiplicative ℤ))
+    (sG : Subgroup (Multiplicative ℤ × Aˣ))
+    (hsA : sA = Subgroup.closure (Set.range (fun u : Aˣ => u ^ 2)))
+    (hsZ : sZ =
+      Subgroup.closure (Set.range (fun n : Multiplicative ℤ => n ^ 2)))
+    (hsG : sG =
+      Subgroup.closure (Set.range
+        (fun x : Multiplicative ℤ × Aˣ => x ^ 2))) :
+    sG = sZ.prod sA := by
+  rw [hsG, hsZ, hsA]
+  apply le_antisymm
+  · refine (Subgroup.closure_le _).mpr ?_
+    rintro x ⟨y, rfl⟩
+    change y.1 ^ 2 ∈
+        Subgroup.closure (Set.range (fun n : Multiplicative ℤ => n ^ 2)) ∧
+      y.2 ^ 2 ∈ Subgroup.closure (Set.range (fun u : Aˣ => u ^ 2))
+    constructor
+    · exact Subgroup.subset_closure ⟨y.1, rfl⟩
+    · exact Subgroup.subset_closure ⟨y.2, rfl⟩
+  · rw [← Subgroup.closure_prod
+      (show (1 : Multiplicative ℤ) ∈
+          Set.range (fun n : Multiplicative ℤ => n ^ 2) by
+        exact ⟨1, by simp⟩)
+      (show (1 : Aˣ) ∈ Set.range (fun u : Aˣ => u ^ 2) by
+        exact ⟨1, by simp⟩)]
+    refine (Subgroup.closure_le _).mpr ?_
+    rintro x ⟨⟨u, hu⟩, ⟨v, hv⟩⟩
+    apply Subgroup.subset_closure
+    refine ⟨(u, v), ?_⟩
+    simp [hu, hv]
+
+private theorem chapter03_square_class_product_quotient
+    (A k : Type*) [CommRing A] [Field k]
+    (sA : Subgroup Aˣ)
+    (sZ : Subgroup (Multiplicative ℤ))
+    (sG : Subgroup (Multiplicative ℤ × Aˣ))
+    (hsquare_prod : sG = sZ.prod sA)
+    (parity : Multiplicative ℤ →* Multiplicative (ZMod 2))
+    (hparity_surj : Function.Surjective parity)
+    (hparity_ker : parity.ker = sZ)
+    (redClass : Aˣ →* chapter03SquareClassGroup k)
+    (hredClass_surj : Function.Surjective redClass)
+    (hredClass_ker : redClass.ker = sA) :
+    Nonempty
+      (((Multiplicative ℤ × Aˣ) ⧸ sG) ≃*
+        Multiplicative (ZMod 2) × chapter03SquareClassGroup k) := by
+  classical
+  let F : (Multiplicative ℤ × Aˣ) →*
+      (Multiplicative (ZMod 2) × chapter03SquareClassGroup k) :=
+    { toFun := fun x => (parity x.1, redClass x.2)
+      map_one' := by simp
+      map_mul' := by
+        intro x y
+        change (parity (x.1 * y.1), redClass (x.2 * y.2)) =
+          (parity x.1 * parity y.1, redClass x.2 * redClass y.2)
+        rw [parity.map_mul, redClass.map_mul] }
+  have hF_surj : Function.Surjective F := by
+    intro z
+    obtain ⟨n, hn⟩ := hparity_surj z.1
+    obtain ⟨u, hu⟩ := hredClass_surj z.2
+    refine ⟨(n, u), ?_⟩
+    change (parity n, redClass u) = z
+    exact Prod.ext hn hu
+  have hker_prod : F.ker = sZ.prod sA := by
+    ext x
+    change (parity x.1, redClass x.2) = (1, 1) ↔
+      x.1 ∈ sZ ∧ x.2 ∈ sA
+    simp only [Prod.mk.injEq]
+    rw [← MonoidHom.mem_ker, hparity_ker,
+      ← MonoidHom.mem_ker, hredClass_ker]
+  exact chapter03_quotient_equiv_of_surjective
+    (Multiplicative ℤ × Aˣ)
+    (Multiplicative (ZMod 2) × chapter03SquareClassGroup k)
+    sG F hF_surj (hker_prod.trans hsquare_prod.symm)
+
+private theorem chapter03_square_class_decomposition_of_residue_map
+    (A K k : Type*) [CommRing A] [Field K] [Field k]
+    (eUnits : Kˣ ≃* Multiplicative ℤ × Aˣ)
+    (sA : Subgroup Aˣ)
+    (hsA : sA = Subgroup.closure (Set.range (fun u : Aˣ => u ^ 2)))
+    (redClass : Aˣ →* chapter03SquareClassGroup k)
+    (hredClass_surj : Function.Surjective redClass)
+    (hredClass_ker : redClass.ker = sA) :
+    Nonempty
+      (chapter03SquareClassGroup K ≃*
+        Multiplicative (ZMod 2) × chapter03SquareClassGroup k) := by
+  classical
+  let sK : Subgroup Kˣ := chapter03SquaresSubgroup K
+  let sZ : Subgroup (Multiplicative ℤ) :=
+    Subgroup.closure (Set.range (fun n : Multiplicative ℤ => n ^ 2))
+  let sG : Subgroup (Multiplicative ℤ × Aˣ) :=
+    Subgroup.closure (Set.range (fun x : Multiplicative ℤ × Aˣ => x ^ 2))
+  let parity : Multiplicative ℤ →* Multiplicative (ZMod 2) :=
+    chapter03IntegerParity
+  have hparity_surj : Function.Surjective parity := by
+    simpa [parity] using chapter03_integer_parity_surjective
+  have hparity_ker : parity.ker = sZ := by
+    change chapter03IntegerParity.ker = sZ
+    simpa [sZ] using chapter03_integer_parity_ker
+  have hsquare_prod : sG = sZ.prod sA :=
+    chapter03_square_product_eq_prod A sA sZ sG hsA (by rfl) (by rfl)
+  obtain ⟨eG⟩ := chapter03_square_class_product_quotient
+    A k sA sZ sG hsquare_prod parity hparity_surj hparity_ker
+      redClass hredClass_surj hredClass_ker
+  have he_map : sK.map eUnits.toMonoidHom = sG := by
+    apply le_antisymm
+    · refine Subgroup.map_le_iff_le_comap.mpr ?_
+      refine (Subgroup.closure_le _).mpr ?_
+      rintro u ⟨v, rfl⟩
+      exact Subgroup.subset_closure ⟨eUnits v, by simp⟩
+    · refine (Subgroup.closure_le _).mpr ?_
+      rintro u ⟨v, rfl⟩
+      obtain ⟨w, rfl⟩ := eUnits.surjective v
+      refine ⟨w ^ 2, Subgroup.subset_closure ⟨w, rfl⟩, ?_⟩
+      simp
+  have he_pre : sG.comap eUnits.toMonoidHom = sK := by
+    have heUnits_injective : Function.Injective eUnits.toMonoidHom :=
+      eUnits.injective
+    rw [← Subgroup.comap_map_eq_self_of_injective heUnits_injective sK,
+      he_map]
+  let φ : Kˣ →* ((Multiplicative ℤ × Aˣ) ⧸ sG) :=
+    (QuotientGroup.mk' sG).comp eUnits.toMonoidHom
+  have hφ_surj : Function.Surjective φ :=
+    (QuotientGroup.mk'_surjective sG).comp eUnits.surjective
+  have hφ_ker : φ.ker = sK := by
+    ext x
+    change φ x = 1 ↔ x ∈ sK
+    change QuotientGroup.mk' sG (eUnits x) = 1 ↔ x ∈ sK
+    rw [show QuotientGroup.mk' sG (eUnits x) = 1 ↔ eUnits x ∈ sG by
+      exact QuotientGroup.eq_one_iff _]
+    change x ∈ sG.comap eUnits.toMonoidHom ↔ x ∈ sK
+    rw [he_pre]
+  let eQ : chapter03SquareClassGroup K ≃*
+      (Multiplicative ℤ × Aˣ) ⧸ sG :=
+    QuotientGroup.liftEquiv sK hφ_surj hφ_ker.symm
+  exact ⟨eQ.trans eG⟩
+
 theorem chapter03_principal_units_supply_square_class_decomposition
     (A K k : Type*) [CommRing A] [Field K] [Field k]
     [IsDomain A] [IsDiscreteValuationRing A]
@@ -507,7 +776,136 @@ theorem chapter03_principal_units_supply_square_class_decomposition
     (hprincipal :
       chapter03PrincipalUnitSquareCondition A (IsLocalRing.maximalIdeal A)) :
     chapter03LocalSquareClassDecomposition K k := by
-  sorry
+  classical
+  let m : Ideal A := IsLocalRing.maximalIdeal A
+  obtain ⟨eRes⟩ := hresidue
+  let sA : Subgroup Aˣ :=
+    Subgroup.closure (Set.range (fun u : Aˣ => u ^ 2))
+  let sK : Subgroup Kˣ := chapter03SquaresSubgroup K
+  let sk : Subgroup kˣ := chapter03SquaresSubgroup k
+  have hsquares_rangeK :
+      sK = (powMonoidHom 2 : Kˣ →* Kˣ).range := by
+    dsimp [sK, chapter03SquaresSubgroup]
+    apply le_antisymm
+    · refine (Subgroup.closure_le _).mpr ?_
+      rintro u ⟨v, rfl⟩
+      exact ⟨v, by simp [powMonoidHom_apply]⟩
+    · rintro u ⟨v, rfl⟩
+      exact Subgroup.subset_closure ⟨v, by simp [powMonoidHom_apply]⟩
+  have hsquares_rangeK' :
+      sk = (powMonoidHom 2 : kˣ →* kˣ).range := by
+    dsimp [sk, chapter03SquaresSubgroup]
+    apply le_antisymm
+    · refine (Subgroup.closure_le _).mpr ?_
+      rintro u ⟨v, rfl⟩
+      exact ⟨v, by simp [powMonoidHom_apply]⟩
+    · rintro u ⟨v, rfl⟩
+      exact Subgroup.subset_closure ⟨v, by simp [powMonoidHom_apply]⟩
+  have hsquares_rangeA :
+      sA = (powMonoidHom 2 : Aˣ →* Aˣ).range := by
+    dsimp [sA]
+    apply le_antisymm
+    · refine (Subgroup.closure_le _).mpr ?_
+      rintro u ⟨v, rfl⟩
+      exact ⟨v, by simp [powMonoidHom_apply]⟩
+    · rintro u ⟨v, rfl⟩
+      exact Subgroup.subset_closure ⟨v, by simp [powMonoidHom_apply]⟩
+  obtain ⟨π, hπirr⟩ := IsDiscreteValuationRing.exists_irreducible A
+  have hπ :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.Chapter04Uniformizer A π :=
+    ⟨hπirr.ne_zero, hπirr.maximalIdeal_eq⟩
+  obtain ⟨eUnits⟩ := chapter03_fraction_units_equiv A K hπ
+  let red : Aˣ →* kˣ :=
+    (Units.map eRes.toMonoidHom).comp
+      (Units.map (IsLocalRing.residue A).toMonoidHom)
+  have hred0_surj :
+      Function.Surjective (Units.map (IsLocalRing.residue A).toMonoidHom) := by
+    exact IsLocalRing.surjective_units_map_of_local_ringHom
+      (IsLocalRing.residue A) IsLocalRing.residue_surjective
+      (inferInstance : IsLocalHom (IsLocalRing.residue A))
+  have hredRes_surj :
+      Function.Surjective (Units.map eRes.toMonoidHom) := by
+    intro u
+    refine ⟨Units.map eRes.symm.toMonoidHom u, ?_⟩
+    apply Units.ext
+    simp
+  have hred_surj : Function.Surjective red := hredRes_surj.comp hred0_surj
+  have hred_eq_one_iff (u : Aˣ) :
+      red u = 1 ↔ (u : A) - 1 ∈ m := by
+    constructor
+    · intro hu
+      have huq : Ideal.Quotient.mk m (u : A) = 1 := by
+        apply eRes.injective
+        have huval := congrArg Units.val hu
+        simpa [red, m, IsLocalRing.residue] using huval
+      have hzero : Ideal.Quotient.mk m ((u : A) - 1) = 0 := by
+        rw [map_sub, huq]
+        simp
+      exact Ideal.Quotient.eq_zero_iff_mem.mp hzero
+    · intro hu
+      have hzero : Ideal.Quotient.mk m ((u : A) - 1) = 0 :=
+        Ideal.Quotient.eq_zero_iff_mem.mpr hu
+      have huq : Ideal.Quotient.mk m (u : A) = 1 := by
+        have : Ideal.Quotient.mk m (u : A) - 1 = 0 := by
+          simpa [map_sub] using hzero
+        exact sub_eq_zero.mp this
+      apply Units.ext
+      change eRes (Ideal.Quotient.mk m (u : A)) = 1
+      rw [huq, map_one]
+  have hprincipal_units : red.ker ≤ sA := by
+    intro u hu
+    have hu1 : red u = 1 := MonoidHom.mem_ker.mp hu
+    have hu_mem : (u : A) - 1 ∈ m := (hred_eq_one_iff u).mp hu1
+    obtain ⟨z, hz⟩ := hprincipal (u : A)
+      ⟨(u : A) - 1, by ring, hu_mem⟩
+    have hz0 : z ≠ 0 := by
+      intro hz0
+      have hu0 : (u : A) = 0 := by
+        rw [← hz, hz0]
+        simp
+      exact (Units.ne_zero u) hu0
+    have hzpow : IsUnit (z * z) := by
+      rw [← pow_two, hz]
+      exact Units.isUnit u
+    have hzunit : IsUnit z := isUnit_of_mul_isUnit_left hzpow
+    let zu : Aˣ := hzunit.unit
+    have hzu : zu ^ 2 = u := by
+      apply Units.ext
+      simpa [zu, hzunit.unit_spec] using hz
+    exact Subgroup.subset_closure ⟨zu, hzu⟩
+  let redClass : Aˣ →* chapter03SquareClassGroup k :=
+    (QuotientGroup.mk' sk).comp red
+  have hredClass_surj : Function.Surjective redClass :=
+    (QuotientGroup.mk'_surjective sk).comp hred_surj
+  have hredClass_ker : redClass.ker = sA := by
+    apply le_antisymm
+    · intro u hu
+      have huq : red u ∈ sk := by
+        apply (QuotientGroup.eq_one_iff _).mp
+        exact MonoidHom.mem_ker.mp hu
+      rw [hsquares_rangeK'] at huq
+      obtain ⟨v, hv⟩ := huq
+      obtain ⟨w, hw⟩ := hred_surj v
+      have hdiv : u / w ^ 2 ∈ red.ker := by
+        apply MonoidHom.mem_ker.mpr
+        change red (u / w ^ 2) = 1
+        rw [_root_.map_div, map_pow, hw]
+        rw [show red u = v ^ 2 by simpa [powMonoidHom_apply] using hv.symm]
+        simp
+      have hdivsq : u / w ^ 2 ∈ sA := hprincipal_units hdiv
+      have hwsq : w ^ 2 ∈ sA :=
+        Subgroup.subset_closure ⟨w, rfl⟩
+      have hfactor : u = (u / w ^ 2) * w ^ 2 :=
+        (div_mul_cancel u (w ^ 2)).symm
+      rw [hfactor]
+      exact sA.mul_mem hdivsq hwsq
+    · refine (Subgroup.closure_le _).mpr ?_
+      rintro u ⟨v, rfl⟩
+      apply MonoidHom.mem_ker.mpr
+      apply (QuotientGroup.eq_one_iff _).mpr
+      exact Subgroup.subset_closure ⟨red v, by simp⟩
+  exact chapter03_square_class_decomposition_of_residue_map
+    A K k eUnits sA (by rfl) redClass hredClass_surj hredClass_ker
 
 theorem chapter03_odd_residue_local_square_classes
     (K k : Type*) [Field K] [Field k] [Fintype k]
