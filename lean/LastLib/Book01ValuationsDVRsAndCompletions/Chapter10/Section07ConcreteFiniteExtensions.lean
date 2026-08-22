@@ -2,10 +2,14 @@ import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section04Ramificatio
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter03.Section06ResiduesAndLeadingCoefficients
 import Mathlib.Algebra.Algebra.Subalgebra.Lattice
 import Mathlib.FieldTheory.Separable
+import Mathlib.FieldTheory.SeparableDegree
 import Mathlib.NumberTheory.Padics.PadicIntegers
 import Mathlib.RingTheory.DiscreteValuationRing.Basic
 import Mathlib.RingTheory.LaurentSeries
 import Mathlib.RingTheory.PowerSeries.Basic
+import Mathlib.RingTheory.AdjoinRoot
+import Mathlib.RingTheory.Valuation.Integral
+import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.RingTheory.Polynomial.Eisenstein.Criterion
 import Mathlib.RingTheory.Polynomial.IrreducibleRing
 import Mathlib.RingTheory.TensorProduct.Basic
@@ -1762,7 +1766,412 @@ theorem chapter10_unramified_lift_profile
   have hhard :
       Chapter10ProfileRealizedByData d p ∧
         Chapter10UnramifiedBranch v w hext d := by
-    sorry
+    let : Valuation.HasExtension v w := ⟨hext⟩
+    let aV : A →+* v.valuationSubring :=
+      (algebraMap A K).codRestrict v.valuationSubring (fun a => hA.map_le_one a)
+    have haV_bij : Function.Bijective aV := by
+      constructor
+      · intro a b hab
+        apply hA.hom_inj
+        exact congrArg Subtype.val hab
+      · intro x
+        obtain ⟨a, ha⟩ := hA.exists_of_le_one x.property
+        refine ⟨a, Subtype.ext ?_⟩
+        exact ha
+    let eV : A ≃+* v.valuationSubring := RingEquiv.ofBijective aV haV_bij
+    rcases hres with ⟨eA, heA⟩
+    let ebar : IsLocalRing.ResidueField A ≃+* Chapter10ResidueField v :=
+      IsLocalRing.ResidueField.mapEquiv eV
+    let ebase : k ≃+* Chapter10ResidueField v := eA.symm.trans ebar
+    let aA : A →+* w.valuationSubring :=
+      (algebraMap A L).codRestrict w.valuationSubring (by
+        intro a
+        rw [Valuation.mem_valuationSubring_iff]
+        have ha :=
+          (Valuation.HasExtension.val_map_le_one_iff v w
+            (algebraMap A K a)).mpr (hA.map_le_one a)
+        change w (algebraMap K L (algebraMap A K a)) ≤ 1 at ha
+        simpa [IsScalarTower.algebraMap_apply A K L] using ha)
+    let : IsLocalHom aA := by
+      refine ⟨?_⟩
+      intro a ha
+      have hw : w (algebraMap w.valuationSubring L (aA a)) = 1 :=
+        (Valuation.integer.integers w).isUnit_iff_valuation_eq_one.mp ha
+      change w (algebraMap A L a) = 1 at hw
+      apply hA.isUnit_iff_valuation_eq_one.mpr
+      apply (Valuation.HasExtension.val_map_eq_one_iff v w
+        (algebraMap A K a)).mp
+      change w (algebraMap K L (algebraMap A K a)) = 1
+      simpa [IsScalarTower.algebraMap_apply A K L] using hw
+    let αint : IsIntegral A α := ⟨P, hPmonic, hroot⟩
+    have hcomp :
+        (algebraMap w.valuationSubring L).comp aA =
+          (RingHom.id L).comp (algebraMap A L) := by
+      ext a
+      simp [aA]
+    have αintW : IsIntegral w.valuationSubring α := by
+      simpa using IsIntegral.map_of_comp_eq aA (RingHom.id L) hcomp αint
+    have hαle : w α ≤ 1 :=
+      (Valuation.Integers.isIntegral_iff_v_le_one
+        (Valuation.integer.integers w)).mp αintW
+    let αS : w.valuationSubring :=
+      ⟨α, (Valuation.mem_valuationSubring_iff w α).mpr hαle⟩
+    have hrootS : Polynomial.eval₂ aA αS P = 0 := by
+      apply Subtype.ext
+      change algebraMap w.valuationSubring L (Polynomial.eval₂ aA αS P) = 0
+      rw [Polynomial.hom_eval₂, hcomp]
+      exact hroot
+    let rW : w.valuationSubring →+* Chapter10ResidueField w :=
+      IsLocalRing.residue w.valuationSubring
+    let rA : IsLocalRing.ResidueField A →+* Chapter10ResidueField w :=
+      IsLocalRing.ResidueField.map aA
+    let b : k →+* Chapter10ResidueField w :=
+      (algebraMap (Chapter10ResidueField v) (Chapter10ResidueField w)).comp
+        ebase.toRingHom
+    let : Algebra k (Chapter10ResidueField v) := ebase.toRingHom.toAlgebra
+    let : Algebra k (Chapter10ResidueField w) := b.toAlgebra
+    have hb_coeff :
+        (algebraMap k (Chapter10ResidueField w)).comp res =
+          rW.comp aA := by
+      ext a
+      have heA_apply : eA.symm (res a) = IsLocalRing.residue A a := by
+        apply eA.injective
+        simpa using (congrArg (fun g : A →+* k => g a) heA).symm
+      have hebar_apply : ebar (IsLocalRing.residue A a) =
+          IsLocalRing.residue v.valuationSubring (aV a) := by
+        change IsLocalRing.residue v.valuationSubring (eV a) = _
+        congr 1
+      have haV_apply :
+          algebraMap v.valuationSubring w.valuationSubring (aV a) = aA a := by
+        apply Subtype.ext
+        change algebraMap K L (algebraMap A K a) = algebraMap A L a
+        simp [IsScalarTower.algebraMap_apply A K L]
+      change algebraMap (Chapter10ResidueField v)
+          (Chapter10ResidueField w) (ebar (eA.symm (res a))) =
+        rW (aA a)
+      rw [heA_apply, hebar_apply,
+        Valuation.HasExtension.algebraMap_residue_eq_residue_algebraMap v w,
+        haV_apply]
+    let αbar : Chapter10ResidueField w := rW αS
+    let : Algebra A w.valuationSubring := aA.toAlgebra
+    have hrootbar :
+        Polynomial.aeval αbar (P.map res) = 0 := by
+      rw [← Polynomial.map_aeval_eq_aeval_map hb_coeff P αS]
+      change rW (Polynomial.eval₂ aA αS P) = 0
+      exact congrArg rW hrootS
+    have hrootbar' :
+        Polynomial.eval₂ (algebraMap k (Chapter10ResidueField w)) αbar
+          (P.map res) = 0 := by
+      simpa [Polynomial.aeval_def] using hrootbar
+    let : Fact (Irreducible (P.map res)) := ⟨hQirr⟩
+    let lift : AdjoinRoot (P.map res) →ₐ[k] Chapter10ResidueField w :=
+      AdjoinRoot.liftAlgHom (P.map res) (Algebra.ofId k _) αbar hrootbar'
+    have hLiftInj : Function.Injective lift := by
+      exact RingHom.injective lift.toRingHom
+    have hsource :
+        Module.finrank k (AdjoinRoot (P.map res)) = f := by
+      calc
+        Module.finrank k (AdjoinRoot (P.map res)) =
+            (AdjoinRoot.powerBasis hQirr.ne_zero).dim :=
+          (AdjoinRoot.powerBasis hQirr.ne_zero).finrank
+        _ = (P.map res).natDegree := AdjoinRoot.powerBasis_dim hQirr.ne_zero
+        _ = f := hQdegree
+    have hresfinite : FiniteDimensional (Chapter10ResidueField v)
+        (Chapter10ResidueField w) := by
+      classical
+      let k' := Chapter10ResidueField v
+      let E' := Chapter10ResidueField w
+      let I := Module.Basis.ofVectorSpaceIndex k' E'
+      let basis : Module.Basis I k' E' := Module.Basis.ofVectorSpace k' E'
+      let y₀ : I → w.valuationSubring := fun i =>
+        Classical.choose (IsLocalRing.residue_surjective (basis i))
+      have hy₀ (i : I) :
+          IsLocalRing.residue w.valuationSubring (y₀ i) = basis i :=
+        Classical.choose_spec (IsLocalRing.residue_surjective (basis i))
+      let y : I → L := fun i => y₀ i
+      have hyval (i : I) : w (y i) = 1 := by
+        have hbi : basis i ≠ 0 := basis.ne_zero i
+        have hnot : y₀ i ∉ IsLocalRing.maximalIdeal w.valuationSubring := by
+          intro hmem
+          apply hbi
+          rw [← hy₀ i]
+          exact (IsLocalRing.residue_eq_zero_iff _).mpr hmem
+        have hle : w (y i) ≤ 1 :=
+          (Valuation.mem_valuationSubring_iff w (y i)).mpr (y₀ i).property
+        have hnlt : ¬w (y i) < 1 := by
+          intro hlt
+          apply hnot
+          exact (Valuation.mem_maximalIdeal_iff (v := w)).mpr hlt
+        exact le_antisymm hle (le_of_not_gt hnlt)
+      have hLI : LinearIndependent K y := by
+        rw [linearIndependent_iff_finset_linearIndependent]
+        intro s
+        let e : (↥s) ≃ Fin s.card := Finset.equivFin s
+        let y' : Fin s.card → L := fun i => y (e.symm i)
+        have hy' (i : Fin s.card) : w (y' i) = 1 := by
+          simpa [y'] using hyval (e.symm i)
+        have hLI' : LinearIndependent K y' := by
+          rw [Fintype.linearIndependent_iff]
+          intro a ha
+          let T : Finset (Fin s.card) :=
+            Finset.univ.filter (fun i => a i ≠ 0)
+          have hTempty : T = ∅ := by
+            by_contra hT
+            have hTne : T.Nonempty := Finset.nonempty_iff_ne_empty.mpr hT
+            let U : Finset ΓL :=
+              T.image (fun i => w (algebraMap K L (a i)))
+            have hUne : U.Nonempty := hTne.image _
+            obtain ⟨i₀, hi₀T, hi₀eq⟩ :=
+              Finset.mem_image.mp (Finset.max'_mem U hUne)
+            have hai₀ : a i₀ ≠ 0 := (Finset.mem_filter.mp hi₀T).2
+            have hamap₀ : algebraMap K L (a i₀) ≠ 0 := by
+              simpa using (RingHom.injective (algebraMap K L)).ne hai₀
+            have hw₀ : w (algebraMap K L (a i₀)) ≠ 0 :=
+              (Valuation.ne_zero_iff w).mpr hamap₀
+            have hmax (i : Fin s.card) (hiT : i ∈ T) :
+                w (algebraMap K L (a i)) ≤
+                  w (algebraMap K L (a i₀)) := by
+              calc
+                w (algebraMap K L (a i)) ≤ U.max' hUne :=
+                  Finset.le_max' U _
+                    (Finset.mem_image.mpr ⟨i, hiT, rfl⟩)
+                _ = w (algebraMap K L (a i₀)) := hi₀eq.symm
+            let c : Fin s.card → v.valuationSubring := fun i =>
+              ⟨a i / a i₀, by
+                by_cases hai : a i = 0
+                · simp [hai]
+                · have hiT : i ∈ T :=
+                    Finset.mem_filter.mpr ⟨Finset.mem_univ _, hai⟩
+                  apply (Valuation.mem_valuationSubring_iff v _).mpr
+                  apply (Valuation.HasExtension.val_map_le_one_iff v w _).mp
+                  rw [map_div₀, w.map_div]
+                  exact (div_le_one₀ (w.pos_iff.mpr hamap₀)).mpr
+                    (hmax i hiT)
+                ⟩
+            have hnorm :
+                (∑ i : Fin s.card,
+                  algebraMap K L (a i / a i₀) * y' i) = 0 := by
+              have ha' :
+                  (∑ i : Fin s.card,
+                    algebraMap K L (a i) * y' i) = 0 := by
+                simpa only [Algebra.smul_def] using ha
+              calc
+                (∑ i : Fin s.card,
+                    algebraMap K L (a i / a i₀) * y' i) =
+                    ∑ i : Fin s.card,
+                      (algebraMap K L (a i₀))⁻¹ *
+                        (algebraMap K L (a i) * y' i) := by
+                  apply Finset.sum_congr rfl
+                  intro i hi
+                  rw [map_div₀]
+                  field_simp [hw₀]
+                _ = (algebraMap K L (a i₀))⁻¹ *
+                    ∑ i : Fin s.card,
+                      algebraMap K L (a i) * y' i := by
+                  rw [Finset.mul_sum]
+                _ = 0 := by rw [ha', mul_zero]
+            have hnormB :
+                (∑ i : Fin s.card,
+                  (algebraMap v.valuationSubring w.valuationSubring (c i)) *
+                    (y₀ (e.symm i))) = 0 := by
+              apply Subtype.ext
+              simpa [c, y', y] using hnorm
+            have hresnorm :=
+              congrArg (IsLocalRing.residue w.valuationSubring) hnormB
+            have hresrel :
+                (∑ i : Fin s.card,
+                  algebraMap k' E'
+                    (IsLocalRing.residue v.valuationSubring (c i)) *
+                    basis (e.symm i)) = 0 := by
+              calc
+                (∑ i : Fin s.card,
+                    algebraMap k' E'
+                      (IsLocalRing.residue v.valuationSubring (c i)) *
+                      basis (e.symm i)) =
+                    ∑ i : Fin s.card,
+                      IsLocalRing.residue w.valuationSubring
+                        (algebraMap v.valuationSubring w.valuationSubring
+                          (c i)) * basis (e.symm i) := by
+                  apply Finset.sum_congr rfl
+                  intro i hi
+                  rw [Valuation.HasExtension.algebraMap_residue_eq_residue_algebraMap
+                    v w (c i)]
+                _ = 0 := by
+                  simpa only [map_sum, map_mul, hy₀, map_zero] using hresnorm
+            have hb' : LinearIndependent k'
+                (fun i : Fin s.card => basis (e.symm i)) :=
+              basis.linearIndependent.comp
+                (fun i : Fin s.card => (e.symm i : I))
+                (fun i j hij => by
+                  exact e.symm.injective (Subtype.ext hij))
+            have hc0 : ∀ i : Fin s.card,
+                IsLocalRing.residue v.valuationSubring (c i) = 0 := by
+              apply (Fintype.linearIndependent_iff.mp hb')
+              simpa only [Algebra.smul_def] using hresrel
+            have hc₀ : c i₀ = 1 := by
+              apply Subtype.ext
+              dsimp [c]
+              exact div_self hai₀
+            have honezero : (1 : k') = 0 := by
+              calc
+                (1 : k') = IsLocalRing.residue v.valuationSubring (c i₀) := by
+                  rw [hc₀]
+                  simp
+                _ = 0 := hc0 i₀
+            exact one_ne_zero honezero
+          have hz : ∀ i : Fin s.card, a i = 0 := by
+            intro i
+            by_contra hai
+            have hiT : i ∈ T :=
+              Finset.mem_filter.mpr ⟨Finset.mem_univ _, hai⟩
+            rw [hTempty] at hiT
+            simp at hiT
+          intro i
+          exact hz i
+        have heq :
+            (fun i : Fin s.card => y' i) ∘ e =
+              (fun q : (↥s) => y q) := by
+          funext q
+          simp [y']
+        exact (linearIndependent_equiv' e heq).mpr hLI'
+      let : Finite I := Cardinal.mk_lt_aleph0_iff.mp
+        hLI.lt_aleph0_of_finiteDimensional
+      exact basis.finiteDimensional_of_finite
+    let : FiniteDimensional (Chapter10ResidueField v)
+        (Chapter10ResidueField w) := hresfinite
+    let ebaseLinear : k →ₗ[k] Chapter10ResidueField v :=
+      { ebase.toRingHom with
+        map_smul' := by
+          intro x y
+          change ebase (x * y) = ebase x * ebase y
+          exact ebase.map_mul x y }
+    have ebaseLinear_surj : Function.Surjective ebaseLinear := by
+      intro x
+      obtain ⟨y, hy⟩ := ebase.surjective x
+      exact ⟨y, hy⟩
+    let : FiniteDimensional k (Chapter10ResidueField v) :=
+      Module.Finite.of_surjective ebaseLinear ebaseLinear_surj
+    let : IsScalarTower k (Chapter10ResidueField v)
+        (Chapter10ResidueField w) :=
+      IsScalarTower.of_algebraMap_eq (by
+        intro x
+        change algebraMap (Chapter10ResidueField v)
+          (Chapter10ResidueField w) (ebase x) =
+            algebraMap k (Chapter10ResidueField w) x
+        change algebraMap (Chapter10ResidueField v)
+            (Chapter10ResidueField w) (ebase x) = b x
+        rfl)
+    let : FiniteDimensional k (Chapter10ResidueField w) :=
+      FiniteDimensional.trans k (Chapter10ResidueField v)
+        (Chapter10ResidueField w)
+    have hresfin :
+        Module.finrank k (Chapter10ResidueField w) = d.residueDegree := by
+      rw [d.residueDegree_eq]
+      change Module.finrank k (Chapter10ResidueField w) =
+        Module.finrank (Chapter10ResidueField v) (Chapter10ResidueField w)
+      apply Algebra.finrank_eq_of_equiv_equiv ebase (RingEquiv.refl _)
+      ext x
+      change algebraMap (Chapter10ResidueField v)
+          (Chapter10ResidueField w) (ebase x) = b x
+      rfl
+    have hlow : f ≤ d.residueDegree := by
+      calc
+        f = Module.finrank k (AdjoinRoot (P.map res)) := hsource.symm
+        _ ≤ Module.finrank k (Chapter10ResidueField w) :=
+          LinearMap.finrank_le_finrank_of_injective
+            (f := lift.toLinearMap) hLiftInj
+        _ = d.residueDegree := hresfin
+    have hrampos : 0 < d.ramificationIndex := by
+      let : Finite (Chapter10ValueGroup w ⧸ d.valueGroupMap.range) :=
+        d.finite_quotient
+      rw [d.ramificationIndex_eq]
+      exact Nat.card_pos
+    have hrespos : 0 < d.residueDegree := by
+      rw [d.residueDegree_eq]
+      exact Module.finrank_pos
+    have hineq :=
+      chapter10_heterogeneous_single_extension_fundamental_inequality
+        v w hext d
+    have hresle : d.residueDegree ≤ f := by
+      have hmul : d.ramificationIndex * d.residueDegree ≤ d.residueDegree :=
+        hineq.trans (hdegree.le.trans hlow)
+      have hramone : d.ramificationIndex = 1 := by
+        have hramle : d.ramificationIndex ≤ 1 :=
+          Nat.le_of_mul_le_mul_right (by simpa using hmul) hrespos
+        exact Nat.le_antisymm hramle hrampos
+      simpa [hramone, hdegree] using hineq
+    have hramone : d.ramificationIndex = 1 := by
+      have hmul : d.ramificationIndex * d.residueDegree ≤ d.residueDegree :=
+        hineq.trans (hdegree.le.trans hlow)
+      have hramle : d.ramificationIndex ≤ 1 :=
+        Nat.le_of_mul_le_mul_right (by simpa using hmul) hrespos
+      exact Nat.le_antisymm hramle hrampos
+    have hresone : d.residueDegree = f := Nat.le_antisymm hresle hlow
+    have hdim :
+        Module.finrank k (AdjoinRoot (P.map res)) =
+          Module.finrank k (Chapter10ResidueField w) := by
+      exact hsource.trans (hresone.symm.trans hresfin.symm)
+    let : FiniteDimensional k (AdjoinRoot (P.map res)) :=
+      (AdjoinRoot.powerBasis hQirr.ne_zero).finite
+    have hLiftSurj : Function.Surjective lift :=
+      (LinearMap.injective_iff_surjective_of_finrank_eq_finrank
+        (f := lift.toLinearMap) hdim).mp
+        hLiftInj
+    let eLift : AdjoinRoot (P.map res) ≃ₐ[k] Chapter10ResidueField w :=
+      AlgEquiv.ofBijective lift ⟨hLiftInj, hLiftSurj⟩
+    have hrootsep : IsSeparable k (AdjoinRoot.root (P.map res)) := by
+      change (minpoly k (AdjoinRoot.powerBasis hQirr.ne_zero).gen).Separable
+      rw [AdjoinRoot.minpoly_powerBasis_gen_of_monic hQmonic hQirr.ne_zero]
+      exact hQsep
+    have hrootint : IsIntegral k (AdjoinRoot.root (P.map res)) :=
+      AdjoinRoot.isIntegral_root' hQmonic
+    have hminroot :
+        minpoly k (AdjoinRoot.root (P.map res)) = P.map res := by
+      change minpoly k (AdjoinRoot.powerBasis hQirr.ne_zero).gen = P.map res
+      exact AdjoinRoot.minpoly_powerBasis_gen_of_monic hQmonic hQirr.ne_zero
+    have htop :
+        IntermediateField.adjoin k
+            ({AdjoinRoot.root (P.map res)} :
+              Set (AdjoinRoot (P.map res))) = ⊤ := by
+      apply IntermediateField.eq_of_le_of_finrank_eq le_top
+      rw [IntermediateField.adjoin.finrank hrootint,
+        hminroot, IntermediateField.finrank_top']
+      exact hQdegree.trans hsource.symm
+    have hsep_adjoin :
+        Algebra.IsSeparable k
+          (IntermediateField.adjoin k
+            ({AdjoinRoot.root (P.map res)} :
+              Set (AdjoinRoot (P.map res)))) :=
+      (IntermediateField.isSeparable_adjoin_simple_iff_isSeparable k
+        (AdjoinRoot (P.map res))).2 hrootsep
+    let eAdjoin :
+        IntermediateField.adjoin k
+            ({AdjoinRoot.root (P.map res)} :
+              Set (AdjoinRoot (P.map res))) ≃ₐ[k] AdjoinRoot (P.map res) :=
+      (IntermediateField.equivOfEq htop).trans IntermediateField.topEquiv
+    have hsep_source : Algebra.IsSeparable k (AdjoinRoot (P.map res)) :=
+      (Algebra.IsSeparable.iff_of_equiv_equiv
+        (RingEquiv.refl k) eAdjoin.toRingEquiv (by ext; simp)).mp hsep_adjoin
+    have hsep_w : Algebra.IsSeparable k (Chapter10ResidueField w) :=
+      (AlgEquiv.Algebra.isSeparable_iff eLift).mp hsep_source
+    let : Algebra.IsSeparable k (Chapter10ResidueField w) := hsep_w
+    have hsep_v :
+        Algebra.IsSeparable (Chapter10ResidueField v)
+          (Chapter10ResidueField w) :=
+      Algebra.isSeparable_tower_top_of_isSeparable k
+        (Chapter10ResidueField v)
+        (Chapter10ResidueField w)
+    let : Algebra.IsSeparable (Chapter10ResidueField v)
+        (Chapter10ResidueField w) := hsep_v
+    have hbranchsep : Chapter10ResidueExtensionIsSeparable v w := by
+      intro x
+      exact Algebra.IsSeparable.isSeparable _ x
+    have hreal : Chapter10ProfileRealizedByData d p := by
+      simp [Chapter10ProfileRealizedByData, p, hdegree, hramone, hresone]
+    have hbranch : Chapter10UnramifiedBranch v w hext d := by
+      simp only [Chapter10UnramifiedBranch]
+      exact ⟨hramone, hbranchsep⟩
+    exact ⟨hreal, hbranch⟩
   refine ⟨d, p, hhard.1, hPirr, rfl, rfl, rfl, ?_, hhard.2, hQsep⟩
   simp [p, Chapter10Unramified]
 
