@@ -2109,11 +2109,17 @@ private theorem chapter13_separable_sup_eq_top
     (hPow : Set.range (fun x : l => x ^ p) ⊆ T)
     (hK : Set.range (algebraMap k l) ⊆ T) :
     T = (⊤ : IntermediateField F l) := by
-  apply top_unique
-  intro x hx
-  apply chapter13_adjoin_pow_subset p T hPow hK
-  rw [hPowTop]
-  exact hx
+  apply IntermediateField.ext
+  intro x
+  constructor
+  · intro _
+    trivial
+  · intro hx
+    have hx' : x ∈ IntermediateField.adjoin k
+        (Set.range (fun y : l => y ^ p)) := by
+      rw [hPowTop]
+      exact hx
+    exact chapter13_adjoin_pow_subset p T hPow hK hx'
 
 private theorem chapter13_p_basis_sup_toSubalgebra
     {F l : Type*} [Field F] [Field l] [Algebra F l]
