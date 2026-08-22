@@ -1046,6 +1046,46 @@ theorem chapter05_character_kernel_inertia_cyclic_hasse_arf
     B.subextension_last_lower
     B.subextension_lower_break B.subextension_totally_ramified
 
+private theorem chapter05_herbrand_nat_value_eq_cyclic_hasse_arf_sum
+    {G : Type*} [Group G] [Finite G]
+    (T : Chapter05RamificationFiltration G) (b : ℕ) :
+    (chapter05CyclicHasseArfSum T b : ℝ) =
+      chapter05HerbrandFunction T (b : ℝ) := by
+  rw [chapter05_herbrand_function_interval_formula T b le_rfl
+    (by exact_mod_cast Nat.le_succ b)]
+  simp [chapter05CyclicHasseArfSum]
+
+private theorem chapter05_integer_of_cyclic_inertia_value
+    {K L C : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
+    [Group C] [Finite C]
+    (χ : Gal(L / K) →* C)
+    (R : Chapter05CharacterKernelHasseArfData χ)
+    {v : ℝ} {bn : ℕ}
+    (B : Chapter05FixedFieldInertiaBridge
+      (R.quotient_local.profile.lowerGroup 0)
+      R.quotient_local.profile R.quotient_inertia_transfer v bn)
+    {z : ℤ}
+    (hz : (z : ℚ) =
+      chapter05CyclicHasseArfSum
+        R.quotient_inertia_transfer.subextension_profile bn) :
+    chapter05UpperBreakIsInteger v := by
+  refine ⟨z, ?_⟩
+  have hz' :
+      (z : ℝ) =
+        (chapter05CyclicHasseArfSum
+          R.quotient_inertia_transfer.subextension_profile bn : ℝ) := by
+    exact_mod_cast hz
+  calc
+    (z : ℝ) =
+        (chapter05CyclicHasseArfSum
+          R.quotient_inertia_transfer.subextension_profile bn : ℝ) := hz'
+    _ = chapter05HerbrandFunction
+          R.quotient_inertia_transfer.subextension_profile (bn : ℝ) :=
+      chapter05_herbrand_nat_value_eq_cyclic_hasse_arf_sum
+        R.quotient_inertia_transfer.subextension_profile bn
+    _ = v := B.upper_value
+
 theorem chapter05_character_kernel_upper_break_integer
     {K L C : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
@@ -1056,7 +1096,19 @@ theorem chapter05_character_kernel_upper_break_integer
     (hv : chapter05UpperBreak R.quotient_local.profile v) :
     chapter05UpperBreakIsInteger v := by
   by_cases hvpos : 0 < v
-  · sorry
+  · rcases chapter05_character_kernel_positive_break_reduction.{_, _, _, 0}
+        χ R hvpos hv with ⟨B⟩
+    rcases B.inertia_bridge with ⟨bn, Bn⟩
+    rcases @chapter05_character_kernel_inertia_cyclic_hasse_arf
+        _ _ B.C
+        inferInstance inferInstance inferInstance inferInstance inferInstance inferInstance
+        B.group_C B.finite_C
+        B.reduced_character B.reduced_package v bn Bn with ⟨z, hz⟩
+    exact @chapter05_integer_of_cyclic_inertia_value
+      _ _ B.C
+      inferInstance inferInstance inferInstance inferInstance inferInstance inferInstance
+      B.group_C B.finite_C
+      B.reduced_character B.reduced_package v bn Bn z hz
   · classical
     rcases (chapter05_upper_break_iff_herbrand_image_of_lower_break
         R.quotient_local.profile
