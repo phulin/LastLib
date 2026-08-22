@@ -236,13 +236,230 @@ theorem chapter13_artin_schreier_has_root_iff_coboundary
     (∃ x : K,
       aeval x ((X : K[X]) ^ p - X - C a) = 0) ↔
     chapter13ArtinSchreierCoboundary K p a := by
-  sorry
+  constructor
+  · rintro ⟨x, hx⟩
+    exact ⟨x, (chapter13_artin_schreier_root_equation_iff K p a x).1 hx⟩
+  · rintro ⟨x, hx⟩
+    exact ⟨x, (chapter13_artin_schreier_root_equation_iff K p a x).2 hx⟩
 
 theorem chapter13_artin_schreier_irreducible_of_not_coboundary
     (K : Type*) [Field K] (p : ℕ) [Fact p.Prime] [CharP K p]
     (a : K) (ha : ¬chapter13ArtinSchreierCoboundary K p a) :
     Irreducible ((X : K[X]) ^ p - X - C a) := by
-  sorry
+  let f : K[X] := (X : K[X]) ^ p - X - C a
+  change Irreducible f
+  have hno_root : ∀ z : K, z ^ p - z ≠ a := by
+    intro z hz
+    exact ha ⟨z, hz⟩
+  have hpone : 1 < p := (Fact.out : Nat.Prime p).one_lt
+  have hmonic : f.Monic := by
+    dsimp [f]
+    have hdeg : degree (-(X + C a) : K[X]) < p := by
+      rw [degree_neg, degree_X_add_C]
+      exact_mod_cast hpone
+    have h := monic_X_pow_add (p := (-(X + C a) : K[X])) (n := p) hdeg
+    convert h using 1
+    ring
+  have hnat : f.natDegree = p := by
+    dsimp [f]
+    have hdeg : degree (-(X + C a) : K[X]) < p := by
+      rw [degree_neg, degree_X_add_C]
+      exact_mod_cast hpone
+    have hdeg' : degree (-(X + C a) : K[X]) < (X ^ p : K[X]).degree := by
+      simpa [degree_X_pow] using hdeg
+    rw [show X ^ p - X - C a = X ^ p + -(X + C a) by ring]
+    rw [natDegree_add_eq_left_of_degree_lt hdeg', natDegree_X_pow]
+  have hp1 : f ≠ 1 := by
+    intro hf
+    have h := congrArg Polynomial.natDegree hf
+    rw [hnat] at h
+    have hpzero : p = 0 := by simpa using h
+    exact (Nat.ne_of_gt (Fact.out : Nat.Prime p).pos) hpzero
+  let : Algebra (ZMod p) K := ZMod.algebra _ _
+  have hc0 (c : ZMod p) :
+      (algebraMap (ZMod p) K c) ^ p - algebraMap (ZMod p) K c = 0 := by
+    have hc : c ^ p = c := by simp
+    rw [← map_pow, hc, sub_self]
+  have hftrans (c : ZMod p) :
+      f.comp (X + C (algebraMap (ZMod p) K c)) = f := by
+    have hc' : (algebraMap (ZMod p) K c) ^ p =
+        algebraMap (ZMod p) K c := sub_eq_zero.mp (hc0 c)
+    dsimp [f]
+    rw [comp_eq_aeval]
+    simp only [map_sub, map_pow, aeval_X, aeval_C]
+    rw [add_pow_char, ← C_pow, hc', Polynomial.algebraMap_apply,
+      Algebra.algebraMap_self_apply]
+    ring
+  have hperiod_n (g : K[X]) (h : K)
+      (hperiod : g.comp (X + C h) = g) :
+      ∀ n : ℕ, g.comp (X + C (n • h)) = g := by
+    intro n
+    induction n with
+    | zero => simp
+    | succ n ih =>
+        have hcomp :
+            (X + C (n • h)).comp (X + C h) =
+              X + C ((Nat.succ n) • h) := by
+          simp [nsmul_eq_mul, Nat.cast_succ, C_add, add_mul, mul_comm, add_comm]
+          ring
+        have hh := congrArg (fun r : K[X] => r.comp (X + C h)) ih
+        rw [comp_assoc, hcomp] at hh
+        simpa [Nat.succ_eq_add_one] using hh.trans hperiod
+  have hperiod_all (g : K[X]) (h0 : ZMod p)
+      (hperiod : g.comp (X + C (algebraMap (ZMod p) K h0)) = g)
+      (hh : h0 ≠ 0) :
+      ∀ c : ZMod p, g.comp (X + C (algebraMap (ZMod p) K c)) = g := by
+    let : NeZero p := ⟨(Fact.out : Nat.Prime p).ne_zero⟩
+    intro c
+    let n : ℕ := (c * h0⁻¹).val
+    have hc : c = (n : ZMod p) * h0 := by
+      dsimp [n]
+      calc
+        c = (c * h0⁻¹) * h0 := by field_simp [hh]
+        _ = ((c * h0⁻¹).val : ZMod p) * h0 := by
+          rw [ZMod.natCast_zmod_val]
+    have hn := hperiod_n g (algebraMap (ZMod p) K h0) hperiod n
+    calc
+      g.comp (X + C (algebraMap (ZMod p) K c)) =
+          g.comp (X + C (algebraMap (ZMod p) K ((n : ZMod p) * h0))) := by
+            rw [hc]
+      _ = g.comp (X + C ((n : K) * algebraMap (ZMod p) K h0)) := by
+        congr 2
+        simp
+      _ = g := by simpa [nsmul_eq_mul] using hn
+  have hno_period (g : K[X]) (hg : Irreducible g) (hdeg : g.natDegree < p)
+      (h0 : ZMod p) (hh : h0 ≠ 0)
+      (hperiod : g.comp (X + C (algebraMap (ZMod p) K h0)) = g) : False := by
+    obtain ⟨α, hα⟩ :=
+      IsAlgClosed.exists_aeval_eq_zero (AlgebraicClosure K) g
+        (degree_pos_of_irreducible hg).ne'
+    have hpermall := hperiod_all g h0 hperiod hh
+    have hroot (c : ZMod p) :
+        aeval (α + algebraMap K (AlgebraicClosure K)
+          (algebraMap (ZMod p) K c)) g = 0 := by
+      have hc := congrArg
+        (fun q : K[X] => aeval α q) (hpermall c)
+      simpa [aeval_comp, hα] using hc
+    let rootfun : ZMod p → g.rootSet (AlgebraicClosure K) := fun c =>
+      ⟨α + algebraMap K (AlgebraicClosure K)
+          (algebraMap (ZMod p) K c),
+        (Polynomial.mem_rootSet_of_ne hg.ne_zero).2 (hroot c)⟩
+    have hinj : Function.Injective rootfun := by
+      intro c d hcd
+      have hsum := congrArg Subtype.val hcd
+      have hmapE :
+          algebraMap K (AlgebraicClosure K) (algebraMap (ZMod p) K c) =
+            algebraMap K (AlgebraicClosure K) (algebraMap (ZMod p) K d) := by
+        exact add_left_cancel hsum
+      have hmapK : (algebraMap (ZMod p) K c) =
+          algebraMap (ZMod p) K d :=
+        (FaithfulSMul.algebraMap_injective K (AlgebraicClosure K)) hmapE
+      exact (FaithfulSMul.algebraMap_injective (ZMod p) K) hmapK
+    have hcard :
+        Fintype.card (ZMod p) ≤ Fintype.card (g.rootSet (AlgebraicClosure K)) :=
+      Fintype.card_le_of_injective rootfun hinj
+    have hrootcard : Fintype.card (g.rootSet (AlgebraicClosure K)) ≤ g.natDegree := by
+      rw [Set.fintypeCard_eq_ncard]
+      exact Polynomial.ncard_rootSet_le g (AlgebraicClosure K)
+    have hp_le : p ≤ g.natDegree := by
+      simpa [ZMod.card] using hcard.trans hrootcard
+    exact (Nat.not_lt_of_ge hp_le) hdeg
+  have htrans (g : K[X]) (c : K) (hg : Irreducible g) :
+      Irreducible (g.comp (X + C c)) := by
+    change Irreducible ((algEquivAevalXAddC c) g)
+    exact (MulEquiv.irreducible_iff
+      (f := (algEquivAevalXAddC c).toMulEquiv) (x := g)).mpr hg
+  have hperiod_test (g : K[X]) (c d : K)
+      (hEq : g.comp (X + C c) = g.comp (X + C d)) :
+      g.comp (X + C (c - d)) = g := by
+    have h := congrArg (fun r : K[X] => r.comp (X - C d)) hEq
+    simpa [comp_assoc, sub_eq_add_neg, add_assoc, add_left_comm, add_comm] using h
+  rw [hmonic.irreducible_iff_lt_natDegree_lt hp1]
+  intro q hqmonic hqdeg hqdiv
+  have hqdeg' : 0 < q.natDegree ∧ q.natDegree ≤ f.natDegree / 2 :=
+    Finset.mem_Ioc.mp hqdeg
+  obtain ⟨g, hgmonic, hg, hgdiv⟩ :=
+    Polynomial.exists_monic_irreducible_factor q
+      (not_isUnit_of_natDegree_pos q hqdeg'.1)
+  have hgdivf : g ∣ f := hgdiv.trans hqdiv
+  have hgdeg_le : g.natDegree ≤ q.natDegree :=
+    natDegree_le_of_dvd hgdiv hqmonic.ne_zero
+  have hq_lt : q.natDegree < p := by
+    rw [hnat] at hqdeg'
+    exact lt_of_le_of_lt hqdeg'.2
+      (Nat.div_lt_self (Nat.zero_lt_of_lt hpone) (by decide))
+  have hgdeg_lt : g.natDegree < p := hgdeg_le.trans_lt hq_lt
+  let gfun (c : ZMod p) : K[X] :=
+    g.comp (X + C (algebraMap (ZMod p) K c))
+  have hdeg_gfun (c : ZMod p) : (gfun c).natDegree = g.natDegree := by
+    simp [gfun, natDegree_comp]
+  have hmonic_gfun (c : ZMod p) : (gfun c).Monic := by
+    exact hgmonic.comp_X_add_C _
+  have hirr_gfun (c : ZMod p) : Irreducible (gfun c) := by
+    exact htrans g (algebraMap (ZMod p) K c) hg
+  have hdistinct (c d : ZMod p) (hcd : c ≠ d) : gfun c ≠ gfun d := by
+    intro heq
+    have hperiod := hperiod_test g
+      (algebraMap (ZMod p) K c) (algebraMap (ZMod p) K d)
+      (by simpa [gfun] using heq)
+    have hperiod' :
+        g.comp (X + C (algebraMap (ZMod p) K (c - d))) = g := by
+      simpa [map_sub] using hperiod
+    exact hno_period g hg hgdeg_lt (c - d) (sub_ne_zero.mpr hcd) hperiod'
+  have hcoprime (c d : ZMod p) (hcd : c ≠ d) :
+      IsCoprime (gfun c) (gfun d) := by
+    apply isCoprime_of_irreducible_dvd
+    · exact fun hzero => (hmonic_gfun c).ne_zero hzero.1
+    · intro z hz hzc
+      have hzg : Associated z (gfun c) :=
+        (hz.dvd_irreducible_iff_associated (hirr_gfun c)).mp hzc
+      intro hzd
+      have hzd' : Associated z (gfun d) :=
+        (hz.dvd_irreducible_iff_associated (hirr_gfun d)).mp hzd
+      apply hdistinct c d hcd
+      exact eq_of_monic_of_associated (hmonic_gfun c) (hmonic_gfun d)
+        (hzg.symm.trans hzd')
+  have hdivfun (c : ZMod p) : gfun c ∣ f := by
+    have hfneg : f.comp (X + C (-(algebraMap (ZMod p) K c))) = f := by
+      simpa using hftrans (-c)
+    have hleft : g ∣ f.comp (X + C (-(algebraMap (ZMod p) K c))) := by
+      rw [hfneg]
+      exact hgdivf
+    have hright := (dvd_comp_X_add_C_iff g f
+      (-(algebraMap (ZMod p) K c))).mp hleft
+    simpa [sub_eq_add_neg] using hright
+  have hproddiv : (∏ c : ZMod p, gfun c) ∣ f := by
+    apply Fintype.prod_dvd_of_coprime
+    · intro c d hcd
+      exact hcoprime c d hcd
+    · exact hdivfun
+  have hproddeg : (∏ c : ZMod p, gfun c).natDegree = p * g.natDegree := by
+    calc
+      (∏ c : ZMod p, gfun c).natDegree =
+          ∑ c : ZMod p, (gfun c).natDegree := by
+        simpa using (Polynomial.natDegree_prod_of_monic
+          (s := Finset.univ) (f := gfun) (by
+            intro c hc
+            exact hmonic_gfun c))
+      _ = p * g.natDegree := by simp [hdeg_gfun]
+  have hprod_le : (∏ c : ZMod p, gfun c).natDegree ≤ f.natDegree :=
+    natDegree_le_of_dvd hproddiv hmonic.ne_zero
+  rw [hproddeg, hnat] at hprod_le
+  by_cases hg1 : g.natDegree = 1
+  · have hgform : g = X + C (g.coeff 0) := hgmonic.eq_X_add_C hg1
+    let z : K := -g.coeff 0
+    have hzroot : IsRoot g z := by
+      rw [hgform]
+      simp [z]
+    have hfroot := hzroot.dvd hgdivf
+    apply hno_root z
+    simpa [f, IsRoot, eval_sub, eval_C, eval_X, eval_X_pow,
+      sub_eq_zero] using hfroot
+  · have hg_gt_one : 1 < g.natDegree := by
+      exact lt_of_le_of_ne hg.natDegree_pos (Ne.symm hg1)
+    have hstrict : p < p * g.natDegree := by
+      simpa using ((Nat.mul_lt_mul_left (Fact.out : Nat.Prime p).pos).2 hg_gt_one)
+    exact (Nat.not_lt_of_ge hprod_le) hstrict
 
 /-- Data for the cyclic degree-`p` extension generated by an
 Artin--Schreier root. -/
@@ -301,7 +518,9 @@ theorem chapter13_artin_schreier_isomorphic_data_give_equal_classes
         (chapter13ArtinSchreierRightHandSide k m) Dm =
       chapter13ArtinSchreierExtensionClass k p n
         (chapter13ArtinSchreierRightHandSide k n) Dn := by
-  sorry
+  rcases hiso with ⟨e⟩
+  apply Quotient.sound
+  exact ⟨e⟩
 
 /-! The valuation calculations are stated for an arbitrary normalized
 additive valuation, making the pole-order obstruction reusable. -/
@@ -311,14 +530,34 @@ theorem chapter13_artin_schreier_pole_order_multiple_of_p
     {p : ℕ} [Fact p.Prime] [CharP K p]
     (v : AddValuation K Γ) (x : K) (hx : v x < 0) :
     v (x ^ p - x) = p • v x := by
-  sorry
+  have hp : 1 < p := (Fact.out : Nat.Prime p).one_lt
+  have hpow : p • v x < v x := by
+    have hneg : (p - 1) • v x < 0 :=
+      nsmul_neg hx (Nat.sub_ne_zero_of_lt hp)
+    have hadd : (p - 1) • v x + v x < 0 + v x :=
+      (add_left_strictMono_of_ne_top (ne_top_of_lt hx)) hneg
+    calc
+      p • v x = (p - 1 + 1) • v x := by
+        rw [Nat.sub_add_cancel (le_of_lt hp)]
+      _ = (p - 1) • v x + 1 • v x := by rw [add_nsmul]
+      _ = (p - 1) • v x + v x := by rw [one_nsmul]
+      _ < 0 + v x := hadd
+      _ = v x := zero_add _
+  have hpow' : v (x ^ p) < v x := by
+    simpa [v.map_pow] using hpow
+  rw [v.map_sub_eq_of_lt_left hpow', v.map_pow]
 
 theorem chapter13_artin_schreier_no_pole_from_integral_input
     {K Γ : Type*} [Field K] [LinearOrderedAddCommGroupWithTop Γ]
     {p : ℕ} [Fact p.Prime] [CharP K p]
     (v : AddValuation K Γ) (x : K) (hx : 0 ≤ v x) :
     0 ≤ v (x ^ p - x) := by
-  sorry
+  have hpow : 0 ≤ v (x ^ p) := by
+    rw [AddValuation.map_pow]
+    exact nsmul_nonneg hx
+  have hmin := v.map_sub (x ^ p) x
+  have hpow' : 0 ≤ v (x ^ p) := hpow
+  exact le_trans (le_min hpow' hx) hmin
 
 theorem chapter13_laurent_series_rhs_has_pole_order
     (k : Type*) [Field k] {p m : ℕ} [Fact p.Prime] [CharP k p]
@@ -327,7 +566,18 @@ theorem chapter13_laurent_series_rhs_has_pole_order
     (hm : 0 < m) :
     v (chapter13ArtinSchreierRightHandSide k m) =
       (-(m : ℤ) : WithTop ℤ) := by
-  sorry
+  have _hm : 0 < m := hm
+  simp only [chapter13ArtinSchreierRightHandSide, AddValuation.map_pow,
+    AddValuation.map_inv, ht]
+  have hscalarInt (n x : ℤ) : n • (x : WithTop ℤ) = (n * x : ℤ) := by
+    simpa [zsmul_eq_mul] using
+      ((WithTop.addHom : ℤ →+ WithTop ℤ).map_zsmul n x).symm
+  have hone : m • (1 : WithTop ℤ) = (m : WithTop ℤ) := by
+    convert hscalarInt (m : ℤ) 1 using 1 <;> simp
+  calc
+    m • (-1 : WithTop ℤ) = -(m • (1 : WithTop ℤ)) := neg_nsmul 1 m
+    _ = -(m : WithTop ℤ) := by rw [hone]
+    _ = (-(m : ℤ) : WithTop ℤ) := by norm_cast
 
 theorem chapter13_laurent_series_artin_schreier_rhs_not_coboundary
     (k : Type*) [Field k]
