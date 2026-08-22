@@ -200,7 +200,14 @@ theorem chapter04_unramified_fraction_denominator_change
     (r : ℤ) (d m : ℕ) (hm : 0 < m) (hd : 0 < d) :
     chapter04RationalResidueFraction r d =
       chapter04RationalResidueFraction (m * r) (m * d) := by
-  sorry
+  unfold chapter04RationalResidueFraction chapter04RationalResidueMk
+  rw [QuotientAddGroup.mk'_eq_mk']
+  refine ⟨0, AddSubgroup.zero_mem _, ?_⟩
+  have hm' : (m : ℚ) ≠ 0 := by exact_mod_cast hm.ne'
+  have hd' : (d : ℚ) ≠ 0 := by exact_mod_cast hd.ne'
+  field_simp [hm', hd']
+  push_cast
+  ring
 
 /- A denominator change is a tower calculation.  Merely having two
   unramified extensions of the required dimensions does not identify their
@@ -237,7 +244,16 @@ theorem chapter04_unramified_cyclic_brauer_denominator_change
 theorem chapter04_rational_residue_multiplication_is_surjective
     (n : ℕ) (hn : 0 < n) :
     Function.Surjective (fun q : chapter04RationalResidue => n • q) := by
-  sorry
+  intro q
+  rcases QuotientAddGroup.mk'_surjective
+      (AddSubgroup.zmultiples (1 : ℚ)) q with ⟨q, rfl⟩
+  refine ⟨chapter04RationalResidueMk (q / n), ?_⟩
+  change QuotientAddGroup.mk' (AddSubgroup.zmultiples (1 : ℚ))
+      (n • (q / (n : ℚ))) =
+    QuotientAddGroup.mk' (AddSubgroup.zmultiples (1 : ℚ)) q
+  congr 1
+  change (n : ℚ) * (q / (n : ℚ)) = q
+  field_simp [show (n : ℚ) ≠ 0 by exact_mod_cast hn.ne']
 
 theorem chapter04_unramified_norm_of_base_uniformizer
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -247,7 +263,12 @@ theorem chapter04_unramified_norm_of_base_uniformizer
       Units.map (Algebra.norm K (S := L))
           (Units.map (algebraMap K L).toMonoidHom U.uniformizer) =
         U.uniformizer ^ U.degree * u := by
-  sorry
+  let a : Kˣ := Units.map (Algebra.norm K (S := L))
+    (Units.map (algebraMap K L).toMonoidHom U.uniformizer)
+  refine ⟨a * (U.uniformizer ^ U.degree)⁻¹, ?_⟩
+  change a = U.uniformizer ^ U.degree *
+    (a * (U.uniformizer ^ U.degree)⁻¹)
+  simp [mul_comm]
 
 def chapter04CoprimeParameter (r : ℤ) (d : ℕ) : Prop :=
   Nat.Coprime r.natAbs d
