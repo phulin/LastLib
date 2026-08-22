@@ -629,6 +629,8 @@ $$
 
 The term $e_Kn$ records $n$ passages through multiplication by $\ell$. The radius $c$ records terminal separation. The $-1$ converts integral displacement, which begins at congruence modulo the maximal ideal, to the upper clock whose tame baseline sits at index zero.
 
+**Status of the constant.** Section 5.3 proves Lemma 5.1 in this sharp form only modulo two open inputs; what it proves unconditionally is the weaker Lemma 5.1′ with $e(L/K)\cdot c-1$ in place of $e_Kn+c-1$, where $L/K$ is any finite Galois extension rationalizing the geometric points. Both forms are recorded there, and every later quotation of the sharp constant carries exactly that conditionality.
+
 ### 5.3 Proof of the lemma
 
 The proof is a finite weighted count. We first isolate the one-layer statement so that the cancellation of the splitting-field ramification index is explicit.
@@ -800,39 +802,82 @@ b_j\leq\max\bigl\{b_{j-1},\ \varphi_{L/K}(Ec-1)\bigr\}.
 \tag{5.11}
 $$
 
-**What remains open.** Statement (5.11) is a reduction, not a proof. Its
-Case-B branch still has to be closed: one must bound the conversion
-quantity $\varphi_{L/K}(Ec-1)$ — the upper-clock reading of the deepest
-displacement that terminal separation permits, detected on the terminal
-layer — by $e_K+c-1$. Together with the terminal-layer bound
+**The two inputs in weakened form are proved here.** Statement (5.11)
+still needs its Case-B branch converted from $\varphi_{L/K}(Ec-1)$ down to
+$e_K+c-1$, and at $j=1$ — where $Y_1\subseteq X_0=\{0\}$, so only Case B
+occurs and no earlier layer assists — it needs the terminal-layer bound
+$b_1\leq e_K+c-1$. Neither sharp input is proved below. What the reduction
+does deliver unconditionally is the same pair of bounds with the trivial
+conversion $\varphi_{L/K}(t)\leq t$: the integrand of (3.1) never exceeds
+one, so no property of the ramification filtration is used beyond its
+definition.
+
+**Proposition 5.2 (weak cluster cutoff).** Let $L/K$ be finite Galois over
+which every geometric point of $\mathcal G$ is rational, with group $G$
+and ramification index $E=e(L/K)$, and suppose every nonzero geometric
+point has depth at most $c$. Then every $\sigma\in G^u$ moving some point
+of some layer $X_j$, $j\geq1$, satisfies $u\leq Ec-1$. Consequently
 
 $$
-b_1\leq e_K+c-1,
+b(X_j)\leq Ec-1\qquad\text{for every }j\geq1,
+\tag{5.12w}
 $$
 
-which is the same problem at $j=1$ (there $Y_1\subseteq X_0=\{0\}$, so only
-Case B occurs and no earlier layer assists), this is precisely the
-remaining content of Lemma 5.1. If both inputs hold, the recursion (5.11)
-closes by induction toward the target
+the terminal layer included: $b_1\leq Ec-1$, which resolves input (i) with
+$Ec-1$ in place of $e_K+c-1$; and $G^u$ fixes all geometric points for
+$u>Ec-1$, which resolves input (ii) weakened through
+$\varphi_{L/K}(Ec-1)\leq Ec-1$.
+
+**Proof.** We show, by descent on the layer index, that any
+$\sigma\in G^u$ moving some $x\in X_j$ satisfies $u\leq Ec-1$. If $\sigma$
+moves $[\ell]x$, then $\sigma$ moves the point $[\ell]x$ of
+$Y_j\subseteq X_{j-1}$, and the same question is asked one layer down. If
+$\sigma$ fixes $[\ell]x$, this is Case B: $w=\sigma x-x$ is a nonzero
+point of $X_1$, so terminal separation gives $\nu(w)\leq c$, while the
+displacement-to-depth bound (5.8b) gives $\nu(w)\geq i_G(\sigma)/E$; hence
+$i_G(\sigma)\leq Ec$, and the conversion identity, with the
+left-continuous convention of §3.1, gives
+$u\leq\varphi_{L/K}\bigl(i_G(\sigma)-1\bigr)\leq\varphi_{L/K}(Ec-1)\leq
+Ec-1$. At $j=1$ one has $[\ell]x=0$, so the descent alternative is vacuous,
+the descent terminates after at most $j-1$ steps, and Case B applies.
+Since a mover at upper parameter $u>Ec-1$ does not exist on any layer,
+$b(X_j)\leq Ec-1$ throughout. $\square$
+
+**Lemma 5.1′ (unconditional form of Lemma 5.1).** Under the hypotheses of
+Lemma 5.1, let $c$ be an admissible separation radius, for instance the
+radius $e_K/(\ell-1)$ supplied by Theorem 4.2, and let $L=K(\mathcal G)$
+be the field generated over $K$ by all geometric points of $\mathcal G$.
+Then $G^u$ fixes $\mathcal G(L)$ pointwise for every $u>e(L/K)c-1$; by
+(2.7) this is equivalent to triviality of $G_K^u$ on $\mathcal G(K^s)$ in
+the same range, independently of the chosen rationalizing extension.
+
+**Proof.** Proposition 5.2 applied to $L$ with separation radius $c$ shows
+that no element of $G^u$ moves a geometric point once
+$u>e(L/K)c-1$; the image identity (2.7) transfers the statement from
+$\operatorname{Gal}(L/K)$ to $G_K^u$. $\square$
+
+**The sharp constant remains open.** If the two sharper inputs hold —
+$b_1\leq e_K+c-1$ and $\varphi_{L/K}(Ec-1)\leq e_K+c-1$, neither of which
+is proved here — then (5.11) closes by induction toward the target
 
 $$
 b_j\leq je_K+c-1,
 \tag{5.12}
 $$
 
-but neither input is proved here; the argument reduces the lemma to them
-rather than deriving them. What the reduction does achieve is exactness
-about where the splitting-field index $E$ enters: once, through the single
-conversion quantity $\varphi_{L/K}(Ec-1)$, instead of through pointwise
-divisions that fail because the Herbrand slope equals $|G_1|/E$ near
-$s=0$.
-
-Assume henceforth the two outstanding inputs. Because
-$[\ell^n]_{\mathcal G}=0$, all geometric points lie in $X_n$, so (5.12)
-gives that $G^u$ fixes every point for $u>ne_K+c-1$. Herbrand quotient
-compatibility makes this independent of the chosen splitting field and
-identifies it with the assertion for $G_K^u$. This proves the lemma
-modulo the two stated terminal-layer inputs. $\square$
+because $[\ell^n]_{\mathcal G}=0$ places all geometric points in $X_n$, so
+$G^u$ fixes every point for $u>ne_K+c-1$, and Herbrand quotient
+compatibility makes this independent of the chosen splitting field. This
+is the content claimed by Lemma 5.1; what is proved above is only the
+weakened Lemma 5.1′, whose cutoff carries the splitting-field index
+$E=e(L/K)$ where Lemma 5.1 would carry $ne_K$. Every later quotation in
+this book of the constant $e_K(n+1/(\ell-1))-1$ inherits exactly this
+conditionality; statements derived from Lemma 5.1′ instead trade the
+exponent $n$ for a factor $E$ in front of $c$. What the reduction achieves
+either way is exactness about where the splitting-field index $E$ enters:
+once, through the single conversion quantity $\varphi_{L/K}(Ec-1)$, instead
+of through pointwise divisions that fail because the Herbrand slope equals
+$|G_1|/E$ near $s=0$.
 
 The argument may be remembered as a three-column ledger, read as the
 accounting that the two outstanding terminal-layer inputs must still
@@ -849,10 +894,12 @@ $$
 $$
 
 Equal translation blocks supply the denominators which cancel $E$ in this
-picture; in the pointwise reduction above, that cancellation is deferred
-entirely to the open conversion estimate $\varphi_{L/K}(Ec-1)\leq e_K+c-1$.
-Without translation blocks of equal size not even the heuristic is
-available, and only the much weaker lower-numbered bound $Ec-1$ would be
+picture; in the pointwise reduction above, cancellation down to
+$e_K+c-1$ is deferred entirely to the open conversion estimate
+$\varphi_{L/K}(Ec-1)\leq e_K+c-1$, while Proposition 5.2 retains only the
+trivial conversion and records the raw cost $Ec$ as the unconditional
+upper cost. Without translation blocks of equal size not even the
+heuristic is available, and only the lower-numbered bound $Ec-1$ would be
 visible.
 
 ### 5.4 Why the group structure is essential
