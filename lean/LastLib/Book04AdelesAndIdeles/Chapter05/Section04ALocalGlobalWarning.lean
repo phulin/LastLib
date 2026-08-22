@@ -471,7 +471,7 @@ theorem chapter05_global_elements_have_finite_nonintegral_tail
     ({v : Chapter04FinitePlace K |
       chapter05FiniteDiagonal K a v ∉
         chapter04FiniteLocalIntegerSet K v}).Finite := by
-  sorry
+  exact chapter04_finiteAdele_exceptionalSet_finite K (chapter05FiniteDiagonal K a)
 
 theorem chapter05_strong_tail_is_an_almost_everywhere_requirement
     (K : Type*) [Field K] [NumberField K]
@@ -480,7 +480,7 @@ theorem chapter05_strong_tail_is_an_almost_everywhere_requirement
       chapter05FiniteDiagonal K a v ∈
         chapter04FiniteLocalIntegerSet K v) :
     chapter05IntegralTailCondition K S a := by
-  sorry
+  exact hS
 
 end
 
