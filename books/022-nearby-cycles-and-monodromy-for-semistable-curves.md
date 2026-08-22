@@ -10,7 +10,7 @@
 
 2. [The nearby-cycle construction](#2-the-nearby-cycle-construction)
 
-- [2.1 The oriented fiber site](#21-the-oriented-fiber-site)
+- [2.1 The strict-local construction of nearby cycles](#21-the-strict-local-construction-of-nearby-cycles)
 - [2.2 Nearby and vanishing cycles](#22-nearby-and-vanishing-cycles)
 - [2.3 Stalks, proper comparison, and base change](#23-stalks-proper-comparison-and-base-change)
 - [2.4 Duality and functoriality](#24-duality-and-functoriality)
@@ -191,47 +191,74 @@ A regular model of a curve with reduced nodal fiber is strictly semistable preci
 
 ## 2. The nearby-cycle construction
 
-### 2.1 The oriented fiber site
+### 2.1 The strict-local construction of nearby cycles
 
-The generic and special fibers are disjoint subschemes of $X$. There is in particular no honest inclusion $X_{\bar\eta}\hookrightarrow X_{\bar s}$, and consequently no ordinary restriction map can carry a sheaf directly from one to the other. What relates them is a chosen specialization: a geometric point near the special fiber together with a path from the geometric generic direction. The **oriented fiber site** $X_{\overleftarrow S}$ is the site whose objects record precisely that data — a geometric point of $X$ above the special fiber, together with a specialization from the geometric generic direction — and whose topology is the one making that data descend along étale maps. It is the oriented product of $X$ with the geometric trait over $S$; the associated topos is also called the vanishing topos, since it is the ambient object on which the comparison between the two fibers becomes an actual morphism of sheaves.
+The generic and special fibers are disjoint subschemes of $X$. There is in particular no honest inclusion $X_{\bar\eta}\hookrightarrow X_{\bar s}$, so an ordinary restriction can carry no sheaf from one to the other. What relates them is the chosen specialization, and the construction below turns that choice into actual functors between small étale topoi. We deliberately build only what Chapters 3 through 12 consume: a nearby-cycle complex of sheaves on the special fiber, its inertia action, and its stalks. The full oriented product topos over arbitrary bases, with its complete six-functor formalism, is not constructed here and is never used downstream; Section 2.7 records this scoping explicitly.
 
-There are morphisms of sites
-
+Fix the following data for the whole book. Choose separable closures $\bar K/K$ and $\bar k/k$, the geometric points $\bar\eta,\bar s$ they determine, and a specialization $\bar\eta\leadsto\bar s$ in the sense of Book 19, Section 2.3. Form the strict localization
 $$
-X_{\bar\eta}\xrightarrow{\bar j}X_{\overleftarrow S}
-\xleftarrow{\bar i}X_{\bar s}
+S^{\rm sh}=\operatorname{Spec}\mathcal O^{\rm sh}_{S,\bar s},
 $$
 
-realizing the generic and special directions after strict localization and geometric base change. Write $j_0:X_{\bar\eta}\to X$ and $i_0:X_{\bar s}\to X$ for the two ordinary fiber morphisms. The point of the construction is that the composite $\bar i^*R\bar j_*$ is meaningful and retains the inertia action, whereas $j_0^*$ and $i_0^*$ merely restrict a complex on $X$ to its two geometric fibers and remember nothing that connects them. When $L$ is a complex on $X$ itself we abbreviate $j_0^*L$ and $i_0^*L$ to $\bar j^*L$ and $\bar i^*L$; the intended functor is determined by where its argument lives, so no ambiguity arises.
+a strictly henselian discrete valuation ring whose residue field is $\bar k$ (Book 19, Section 2.1); write $K^{\rm sh}$ for its fraction field. After composing the given embedding $\bar K/K$ with a $K$-isomorphism if needed — a choice whose change acts on everything below by conjugation and affects no statement — we may and do assume $\bar K$ contains $K^{\rm sh}$ and dominates the specialization. Then $\bar K$ is simultaneously a separable closure of $K$ and of $K^{\rm sh}$. Define
+$$
+I_K:=\operatorname{Gal}(\bar K/K^{\rm sh});
+$$
 
-For a bounded constructible complex $K$ on $X_{\bar\eta}$ define
+the group we call inertia throughout. It is a closed normal subgroup of $\operatorname{Gal}(\bar K/K)$: by the fundamental exact sequence for the henselian pair $(R,K)$ (Book 17, Sections 12.4 and 14.1), restriction to the residue closure identifies the quotient $\operatorname{Gal}(\bar K/K)/I_K$ with the stabilizer of the chosen geometric point of the strict localization, which here is the decomposition subgroup at $\bar s$; since every finite unramified extension of $K$ splits over the maximal unramified subextension dominated by $K^{\rm sh}$, this quotient is carried isomorphically onto the absolute Galois group of $k$ acting through the chosen copy of $\bar k$. Thus $I_K$ is the inertia subgroup of Section 1.2, now pinned down by the chosen data and identified with an absolute Galois group; the identification is canonical up to conjugation by $\operatorname{Gal}(\bar K/K)$, and every statement below is equivariant under that conjugation.
+
+Now set
+$$
+X^{\rm sh}:=X\times_SS^{\rm sh},\qquad
+Y^{\rm sh}:=X^{\rm sh}\times_{S^{\rm sh}}\bar s,
+$$
+
+and let $j:X_{\bar K}\hookrightarrow X^{\rm sh}$ be the inclusion of the geometric generic fiber
+$$
+X_{\bar K}:=X^{\rm sh}\times_{K^{\rm sh}}\bar K=X\times_K\bar K,
+$$
+
+where the displayed equality uses $\bar K\supseteq K^{\rm sh}$; let $i:Y^{\rm sh}\hookrightarrow X^{\rm sh}$ be the closed immersion of the geometric special fiber. Because $\bar k$ is separably closed and $S^{\rm sh}\to S$ restricts to the identity on closed points, the canonical projection identifies $Y^{\rm sh}$ with $Y\times_k\bar k$; we suppress it. Both $i$ and $j$ are morphisms of schemes — respectively a closed immersion and an open immersion composed with a field extension — so both induce morphisms between the corresponding small étale topoi (Book 18, Section 2.3), with direct images defined objectwise:
+$$
+(j_*\mathcal F)(V)=\mathcal F(V\times_{X^{\rm sh}}X_{\bar K}),
+\qquad
+(i_*\mathcal G)(V)=\mathcal G(V\times_{X^{\rm sh}}Y^{\rm sh}).
+$$
+
+The inverse image $i^*$ is exact on sheaves of modules over the fixed coefficient ring: it computes stalks at geometric points factoring through $Y^{\rm sh}$, and pullback of module-valued sheaves commutes with stalks. These two morphisms play exactly the roles for which the informal literature reserves the symbols $\bar j$ and $\bar i$: the composite $\bar i^*R\bar j_*$ is meaningful and retains arithmetic information, whereas the restrictions of a complex on $X$ to its two ordinary fibers remember nothing that connects them.
+
+For a bounded constructible complex $K$ on $X_{\bar\eta}$, pulled back to $X_{\bar K}$ without change of notation, define
 
 $$
-R\Psi_fK=\bar i^*R\bar j_*K.
+R\Psi_fK=i^*Rj_*K.
 \tag{2.1}
 $$
 
-The right side is a complex on $Y$, but it is not merely a complex of sheaves: changing the generic geometric point through inertia acts on it. Thus $R\Psi_fK$ carries a continuous $I_K$-action.
+This is a complex of sheaves on $Y^{\rm sh}$, that is, on $Y_{\bar k}$. The group $I_K$ acts on $X_{\bar K}$ over $X^{\rm sh}$ through its action on $\bar K$, hence on $j_*K$ and, since $i^*$ is defined over $Y^{\rm sh}$ and the action fixes $X^{\rm sh}$ and $Y^{\rm sh}$ pointwise, on $R\Psi_fK$. The residue Galois group $\operatorname{Gal}(\bar k/k)$ acts through its action on $Y^{\rm sh}=Y\times_k\bar k$, and the two actions combine to an action of the fiber product over their common quotient — in particular $I_K$ acts $\operatorname{Gal}(\bar k/k)$-equivariantly.
 
-For the prime-to-$p$ torsion and $\ell$-adic coefficients fixed in Section 1.2 the inverse image $\bar i^*$ is exact, so no derived pullback is needed in (2.1). In a coefficient category where the structure sheaf varies, $\bar i^*$ must be replaced by $L\bar i^*$ and every statement below read on the cohomology sheaves of that derived pullback. We keep the notation $R\Psi_f$ in both cases.
+**Lemma 2.1 (continuity of the action).** For each fixed complex $K$ as above, the action of $I_K$ on every cohomology sheaf $R^q\Psi_fK$ is continuous: some open subgroup acts trivially on any given section after descent to a finite étale cover of a suitable open of $Y^{\rm sh}$. At finite coefficient level the stabilizer of any class defined over a finite subextension $L/K^{\rm sh}$ contains $\operatorname{Gal}(\bar K/L)$; such classes exhaust the sheaves because $K$ descends from some finite level by noetherian finiteness (Book 18, Section 4.6).
 
-The stalk has a useful geometric description. If $\bar x\to Y$ is a geometric point and $X_{(\bar x)}$ is the strict localization of $X$ at $\bar x$, then
+_Proof._ A section of $R^q\Psi_fK$ on an étale $V\to Y^{\rm sh}$ lifts to a class in $H^q(V\times_{X^{\rm sh}}X_{\bar K},K)$ represented, by the continuity theorem applied to the filtered system of finite subextensions $\bar K/L/K^{\rm sh}$ with affine transitions, by a class at some finite level $L$ (Book 18, Section 4.6). Every element of $\operatorname{Gal}(\bar K/L)$ fixes that class, and the subgroup is open in $I_K$ because $\operatorname{Gal}(L/K^{\rm sh})$ is finite. Descent along finite étale covers of $V$ reduces general sections to this case. $\square$
+
+In a coefficient category where the structure sheaf varies, $i^*$ must be replaced by $Li^*$ and every statement below read on the cohomology sheaves of that derived pullback. We keep the notation $R\Psi_f$ in both cases.
+
+The stalk has a geometric description, proved in Section 2.2 as Theorem 2.4. If $\bar x\to Y^{\rm sh}$ is a geometric point and $X^{\rm sh}_{(\bar x)}$ is the strict localization of $X^{\rm sh}$ at $\bar x$, then
 
 $$
 (R\Psi_fK)_{\bar x}
-\simeq R\Gamma\bigl((X_{(\bar x)})_{\bar\eta},K\bigr).
+\simeq R\Gamma\bigl((X^{\rm sh}_{(\bar x)})_{\bar K},K\bigr),
 \tag{2.2}
 $$
 
-Nearby cycles are therefore local cohomology of the punctured smoothing near $\bar x$. Formula (2.2) is the bridge from the abstract construction to the equations $t_1\cdots t_r=\pi$.
+where $(X^{\rm sh}_{(\bar x)})_{\bar K}$ denotes the base change of that strictly local scheme to the generic point of its trait, further composed with $\bar K$. Nearby cycles are therefore local cohomology of the punctured smoothing near $\bar x$. Formula (2.2) is the bridge from the construction just given to the equations $t_1\cdots t_r=\pi$: it converts the question into one about explicit tubes, which Chapter 3 computes.
 
 ### 2.2 Nearby and vanishing cycles
 
-Suppose $L$ is a bounded constructible complex on $X$. Adjunction supplies a specialization morphism
+Suppose $L$ is a bounded constructible complex on $X$; pull it back to $X^{\rm sh}$ without change of notation. Throughout, for such an $L$ we abbreviate $\bar i^*L:=i^*L$ and $\bar j^*L:=j^*L$, the bars recording that both fibers of one family are being compared. The derived unit of the adjunction between pullback and direct image for the open immersion $j$ supplies a map $L\to Rj_*j^*L$; applying $i^*$ and inserting the definition (2.1) gives the specialization morphism
 
 $$
-\operatorname{sp}:\bar i^*L
-\longrightarrow R\Psi_f(\bar j^*L).
+\operatorname{sp}:i^*L
+\longrightarrow R\Psi_f(j^*L).
 \tag{2.3}
 $$
 
@@ -251,11 +278,11 @@ $$
 \tag{2.5}
 $$
 
-This definition makes the conceptual role exact. Nearby cycles are what the generic coefficient looks like from the special fiber; vanishing cycles are the defect of local constancy. If $f$ is smooth near the support of a lisse coefficient, local acyclicity makes (2.3) an isomorphism, so $R\Phi_fL=0$.
+This definition makes the conceptual role exact. Nearby cycles are what the generic coefficient looks like from the special fiber; vanishing cycles are the defect of local constancy. If $f$ is smooth near the support of a lisse coefficient, the smooth local-acyclicity theorem of Book 19, Section 8.2 makes (2.3) an isomorphism in every degree that theorem supplies — for the curve applications below, all degrees that occur — so $R\Phi_fL=0$ there.
 
 The converse must be stated with care. For the fixed trait and the fixed specialization, vanishing of (2.4) says exactly that no local vanishing cycles occur here. Full local acyclicity is a stronger condition: it demands the corresponding vanishing after every permitted base change of the trait and at every geometric specialization, and it is not inferred from a single vanishing calculation. Chapter 11 returns to this point, where a ramified base change is precisely what exposes the difference.
 
-Because $\bar j$ is defined over the geometric generic direction, $I_K$ acts on $R\Psi_f\bar j^*L$, and the specialization morphism (2.3) is $I_K$-equivariant when the special-fiber term carries the trivial action. Nothing at this stage asserts unipotence or produces a monodromy filtration; those are the work of Chapters 4 and 5.
+Because $j$ is defined over the geometric generic fiber, $I_K$ acts on $R\Psi_f\bar j^*L$, and the specialization morphism (2.3) is $I_K$-equivariant when the special-fiber term carries the trivial action: the unit of adjunction is natural for automorphisms of the source that fix the target, and $I_K$ fixes $X^{\rm sh}$ and $Y^{\rm sh}$. Nothing at this stage asserts unipotence or produces a monodromy filtration; those are the work of Chapters 4 and 5.
 
 Applying hypercohomology to (2.5) gives the global specialization sequence
 
@@ -281,9 +308,31 @@ $$
 
 This convenient equality is not a definition and need not hold for an arbitrary coefficient with nontrivial local monodromy.
 
+**Theorem 2.4 (strict-local stalk formula).** Let $K\in D^b_c(X_{\bar K},\mathbf Z/n)$ and let $\bar x\to Y^{\rm sh}$ be a geometric point, viewed also as a geometric point of $X^{\rm sh}$. There is a canonical, functorial, $I_K$-equivariant isomorphism
+
+$$
+(R\Psi_fK)_{\bar x}
+\simeq R\Gamma\bigl((X^{\rm sh}_{(\bar x)})_{\bar K},K\bigr),
+$$
+
+where $X^{\rm sh}_{(\bar x)}$ is the strict localization of $X^{\rm sh}$ at $\bar x$ and the subscript $\bar K$ denotes base change to a geometric point over the generic point of its trait.
+
+_Proof._ Since $\bar x$ factors through the closed immersion $i$, the stalk of $i^*Rj_*K$ at $\bar x$ is the stalk of $Rj_*K$ there. For each $q$, the strict-localization formula for higher direct images (Book 18, Section 2.3) expresses this stalk as the filtered colimit of $H^q(V\times_{X^{\rm sh}}X_{\bar K},K)$ over the pointed étale neighborhoods $V\to X^{\rm sh}$ of $\bar x$. Discard the neighborhoods whose generic part is empty — they contribute nothing — so that every $V$ meets the generic fiber.
+
+The remaining index category is doubly filtered: by the neighborhoods $V$ and, within each, by the finite subextensions $L/K^{\rm sh}$ contained in $\bar K$. Each scheme $(V\times_KL)$ is quasi-compact, because $V$ is affine after shrinking and $L/K^{\rm sh}$ is finite, and its transition maps are affine; hence the Continuity theorem (Book 18, Section 4.6) converts the double colimit into cohomology of the limit scheme. The limit of the pointed neighborhoods $V$ is by construction the strict localization $X^{\rm sh}_{(\bar x)}$ (Book 19, Section 2.1), and adjoining the limit of the fields $L$ gives precisely its base change to $\bar K$. Therefore
+
+$$
+(R^qj_*K)_{\bar x}
+=H^q\bigl((X^{\rm sh}_{(\bar x)})_{\bar K},K\bigr).
+$$
+
+The identification is induced by restriction of sections along generizations, so it is functorial in $K$, compatible with long exact sequences of complexes, and equivariant for $I_K$, whose elements fix $X^{\rm sh}$ and act on the field $\bar K$ used in the base change. Assembling the derived-level statement from the degreewise one through the truncation triangles of the bounded complex $K$ gives the displayed isomorphism of complexes. $\square$
+
+The theorem reduces every later calculation to tubes of strictly local schemes. At a smooth point of $Y^{\rm sh}$ the tube is an affine-line-type tube; at a node of the chart $uv=\pi$ it is a punctured line. Chapter 3 evaluates both with Book 19's tube machinery.
+
 ### 2.3 Stalks, proper comparison, and base change
 
-Local construction and global comparison must be kept separate. Applying hypercohomology on $Y$ gives
+Local construction and global comparison must be kept separate. Applying hypercohomology on $Y^{\rm sh}$ gives
 
 $$
 E_2^{a,b}=H^a(Y,R^b\Psi_fK)
@@ -291,19 +340,36 @@ E_2^{a,b}=H^a(Y,R^b\Psi_fK)
 \tag{2.7}
 $$
 
-When $f$ is proper, the right side is canonically $H^{a+b}(X_{\bar\eta},K)$, producing the nearby-cycle spectral sequence for generic cohomology. Without properness, cohomology may escape through the boundary. One must then use compact support and a controlled compactification, or retain the right side of (2.7) without replacing it by generic global cohomology.
+Without properness, cohomology may escape through the boundary. One must then use compact support and a controlled compactification, or retain the right side of (2.7) without replacing it by generic global cohomology.
 
-Nearby cycles commute with extension of the strictly henselian trait and with smooth change in $X$. Proper pushforward satisfies the crucial comparison
+Restriction of sections along $i$ and the adjunction $\Gamma(X^{\rm sh},j_*)=\Gamma(X_{\bar K},-)$ produce a canonical morphism
 
 $$
-R\Psi_f(Rg_{\bar\eta *}K)
-\simeq Rg_{\bar s *}(R\Psi_{f\circ g}K)
+R\Gamma(X_{\bar K},K)\longrightarrow R\Gamma(Y,R\Psi_fK)
+\tag{2.12a}
+$$
+
+functorial in $K$, compatible with the distinguished triangle (2.5) in the evident sense, and equivariant for the $I_K$- and residue-Galois actions: each construction is natural for automorphisms fixing $X^{\rm sh}$ and $Y^{\rm sh}$. Its bijectivity for proper $f$ is the proper nearby-cycle comparison, the theorem that makes (1.3) true. It does not follow from the construction: restriction to a closed subscheme does not in general preserve hypercohomology, and the failure is measured exactly by the boundary terms that nearby cycles repair. The status of this input must therefore be recorded precisely.
+
+**Standing Input (proper nearby-cycle comparison).** _Let $f:X\to S$ be proper, let $n$ be prime to $p$, and let $K\in D^b_c(X_{\bar K},\mathbf Z/n)$. Then (2.12a) is an isomorphism; likewise after passage to an adic system with uniformly bounded Tor-amplitude and to its rationalization._
+
+_Provenance._ This is the standard comparison theorem for nearby cycles of a proper family. Neither it nor any statement entailing it is proved in Books 16 through 20: Book 19 supplies proper base change for coefficients defined across the family, which controls stalks of direct images but not the present comparison, because a coefficient on the generic fiber alone has no extension across the special fiber whose restriction could be compared. What this chapter proves about the input is everything formal: the existence, functoriality, equivariance, and compatibility of the map (2.12a), recorded above, together with the reduction of its bijectivity, at fixed total degree, to the corresponding assertion for any resolution of $R\Psi_fK$ whose totalization receives a quasi-isomorphism from the generic-fiber complex — Chapter 6 constructs such a resolution explicitly for constant coefficients on a strictly semistable curve in degree one, so the standing input is consumed there only for the remaining degrees and coefficient systems.
+
+_Consumer analysis._ The abutment replacement "$\mathbb H^w(Y,R\Psi_fE)=H^w(X_{\bar\eta},E)$" in the weight spectral sequence (Theorem 6.2), the specialization sequence of Section 7.2, and the conductor formulas of Chapter 10 consume the standing input as stated for general bounded constructible complexes. For constant coefficients on a strictly semistable curve in degree one — the case governing every representation-theoretic conclusion of Chapters 4, 7, and 8 — the input is discharged inside Theorem 6.2 by the explicit strata resolution, so the representation-theoretic package ultimately rests only on that construction.
+
+Nearby cycles commute with smooth change of the trait. If $S'\to S$ is a morphism of strictly henselian traits compatible with the chosen specialization data, then base change identifies the two constructions: the strict-localization tube of the base-changed family at a lifted geometric point is the base change of the original tube, because étale neighborhoods pull back and the colimit defining (2.2) commutes with the resulting filtered systems (Book 18, Section 4.6). In particular the formation of $R\Psi_fK$ is unchanged when the trait is enlarged by a finite unramified extension, whose effect is only to enlarge the residue Galois group compatibly.
+
+Proper pushforward satisfies the comparison
+
+$$
+R\Psi_f(Rg_{\eta *}K)
+\simeq Rg_{s *}(R\Psi_{f\circ g}K)
 \tag{2.8}
 $$
 
-when $g$ is proper and all complexes are in the bounded constructible prime-to-$p$ range. The proof compares stalks by (2.2), applies proper base change on the local generic fibers, and then glues the stalkwise isomorphisms. This identity explains why resolution, normalization of strata, and proper correspondences can be inserted into calculations.
+when $g:X'\to X$ is proper over $S$. As with (2.12a), the honest status is narrower than the display: the proof compares stalks by (2.2), applies proper base change on the local generic fibers — available from Book 19, Sections 5.1 and 6.1, since both sides are proper-pushforward stalks of one constructible complex on the local generic fiber — and glues the stalkwise isomorphisms using detection of constructible complexes on geometric stalks (Book 18, Section 2.2) and the uniform-amplitude control of Book 19, Section 3.4. The gluing step uses that both sides are bounded constructible on $Y^{\rm sh}$, which holds in exactly the range where Book 19's constructibility machinery applies; we record it here as part of the same scoping convention as the standing input above, and every later use — normalization of components in Chapter 6 and correspondences in Section 9.3 — passes through finite maps between curves, where all hypotheses hold.
 
-Finite coefficient systems pass to $\Lambda$ only after the derived inverse limit. Uniform cohomological amplitude and finite stalks make the relevant towers Mittag--Leffler in the present dimensions. Tensoring the resulting perfect complex with $E$ gives the rational nearby-cycle complex used for monodromy filtrations.
+Finite coefficient systems pass to $\Lambda$ only after the derived inverse limit. Uniform cohomological amplitude and finite stalks make the relevant towers Mittag--Leffler in the present dimensions (Book 18, Sections 8.4 and 10.2): the transition maps on the two-row stalk complexes of Chapter 3 are termwise surjective. Tensoring the resulting perfect complex with $E$ gives the rational nearby-cycle complex used for monodromy filtrations.
 
 ### 2.4 Duality and functoriality
 
@@ -382,7 +448,9 @@ This observation dictates the order of work in a degeneration problem. First com
 
 ### 2.7 A specialization checklist
 
-A nearby-cycle calculation has four logically distinct stages, and they should not be collapsed. First, construct $R\Psi_f$ on the oriented fiber site and record its inertia action. Second, bound its cohomological amplitude; without this the local-to-global sequence may fail to converge strongly. Third, compute or compare the sheaves $R^b\Psi_fK$ on the special fiber. Fourth, justify the global comparison (2.12) between special-fiber nearby cohomology and generic-fiber cohomology, through a properness or compact-support theorem suited to the situation at hand.
+A nearby-cycle calculation has four logically distinct stages, and they should not be collapsed. First, construct $R\Psi_f$ and record its inertia action; Section 2.1 does this for our families, and the scoping paragraph below records what is deliberately not built. Second, bound its cohomological amplitude; without this the local-to-global sequence may fail to converge strongly. Third, compute or compare the sheaves $R^b\Psi_fK$ on the special fiber. Fourth, justify the global comparison (2.12) between special-fiber nearby cohomology and generic-fiber cohomology, through a properness or compact-support theorem suited to the situation at hand.
+
+_Scoping of the foundation._ This chapter constructs $R\Psi_f$ as an actual functor between small étale topoi (2.1), proves its strict-local stalk formula (Theorem 2.4) from Book 18's continuity theorem and Book 19's strict localizations, and proves continuity of its inertia action (Lemma 2.1). What it does not construct is the full oriented product topos over arbitrary bases with its complete six-functor formalism, nor a general proof of the proper comparison (Standing Input above) beyond what Chapter 6 re-derives for constant coefficients on a strictly semistable curve in degree one. No statement in this book uses more than the constructed fragment: every invocation of $R\Psi_f$ passes either through the stalk formula, through the specialization morphism (2.3), or through the standing input as qualified there.
 
 Each stage answers a different question. Local acyclicity proves $R\Phi_f=0$ and identifies $\bar i^*L$ with $R\Psi_f\bar j^*L$, but says nothing by itself about global cohomology when global base change is unavailable. Properness may supply the global comparison while local singularities keep higher $R^b\Psi_f$ nonzero. A vanishing computed at one specialization is not local acyclicity, as Section 2.2 already warned.
 
