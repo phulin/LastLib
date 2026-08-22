@@ -159,7 +159,7 @@ noncomputable def chapter13ArtinSchreierExtensionClass
   chapter13FiniteExtensionClassOf (chapter13ArtinSchreierExtensionModel k p m a D)
 
 theorem chapter13_artin_schreier_isomorphic_data_give_equal_classes
-    (k : Type*) [Field k] [Fintype k]
+    (k : Type*) [Field k]
     {p m n : ℕ} [Fact p.Prime] [CharP k p]
     (Dm : Chapter13ArtinSchreierExtensionData k p m
       (chapter13ArtinSchreierRightHandSide k m))
@@ -204,7 +204,7 @@ theorem chapter13_laurent_series_rhs_has_pole_order
   sorry
 
 theorem chapter13_laurent_series_artin_schreier_rhs_not_coboundary
-    (k : Type*) [Field k] [Fintype k]
+    (k : Type*) [Field k]
     {p m : ℕ} [Fact p.Prime] [CharP k p]
     (v : AddValuation (LaurentSeries k) (WithTop ℤ))
     (ht : v (chapter13LaurentSeriesUniformizer k) = 1)
@@ -214,7 +214,7 @@ theorem chapter13_laurent_series_artin_schreier_rhs_not_coboundary
   sorry
 
 theorem chapter13_artin_schreier_extension_exists
-    (k : Type*) [Field k] [Fintype k]
+    (k : Type*) [Field k]
     {p m : ℕ} [Fact p.Prime] [CharP k p]
     (v : AddValuation (LaurentSeries k) (WithTop ℤ))
     (ht : v (chapter13LaurentSeriesUniformizer k) = 1)
@@ -265,13 +265,13 @@ theorem chapter13_wild_artin_schreier_family_classes_pairwise_distinct
    Artin--Schreier construction supply this family, but the project has no
    earlier bundled construction of all the generated root fields. -/
 theorem chapter13_laurent_series_has_wild_artin_schreier_family
-    (k : Type*) [Field k] [Fintype k]
+    (k : Type*) [Field k]
     (p : ℕ) [Fact p.Prime] [CharP k p] :
     Nonempty (Chapter13WildArtinSchreierFamily k p) := by
   sorry
 
 theorem chapter13_artin_schreier_same_field_implies_same_line
-    (k : Type*) [Field k] [Fintype k]
+    (k : Type*) [Field k]
     {p m n : ℕ} [Fact p.Prime] [CharP k p]
     (hm : 0 < m) (hn : 0 < n)
     (hmp : ¬p ∣ m) (hnp : ¬p ∣ n)
@@ -292,7 +292,7 @@ theorem chapter13_artin_schreier_same_field_implies_same_line
   sorry
 
 theorem chapter13_artin_schreier_same_field_gives_scalar_coboundary_relation
-    (k : Type*) [Field k] [Fintype k]
+    (k : Type*) [Field k]
     {p m n : ℕ} [Fact p.Prime] [CharP k p]
     (hm : 0 < m) (hn : 0 < n)
     (hmp : ¬p ∣ m) (hnp : ¬p ∣ n)
@@ -312,7 +312,7 @@ theorem chapter13_artin_schreier_same_field_gives_scalar_coboundary_relation
   sorry
 
 theorem chapter13_artin_schreier_isomorphism_iff_same_line
-    (k : Type*) [Field k] [Fintype k]
+    (k : Type*) [Field k]
     {p m n : ℕ} [Fact p.Prime] [CharP k p]
     (hm : 0 < m) (hn : 0 < n)
     (hmp : ¬p ∣ m) (hnp : ¬p ∣ n)
@@ -332,7 +332,7 @@ theorem chapter13_artin_schreier_isomorphism_iff_same_line
   sorry
 
 theorem chapter13_artin_schreier_distinct_rhs_has_maximal_pole_order
-    (k : Type*) [Field k] [Fintype k]
+    (k : Type*) [Field k]
     {p m n : ℕ} [Fact p.Prime] [CharP k p]
     (hm : 0 < m) (hn : 0 < n) (hmp : ¬p ∣ m) (hnp : ¬p ∣ n)
     (hmn : m ≠ n)
@@ -344,7 +344,7 @@ theorem chapter13_artin_schreier_distinct_rhs_has_maximal_pole_order
   sorry
 
 theorem chapter13_laurent_series_wild_lines_are_pairwise_distinct
-    (k : Type*) [Field k] [Fintype k]
+    (k : Type*) [Field k]
     {p m n : ℕ} [Fact p.Prime] [CharP k p]
     (hm : 0 < m) (hn : 0 < n) (hmp : ¬p ∣ m) (hnp : ¬p ∣ n)
     (hmn : m ≠ n)
@@ -359,13 +359,13 @@ theorem chapter13_laurent_series_wild_lines_are_pairwise_distinct
 /-- One fixed finite-residue Laurent-series field has infinitely many
 pairwise nonisomorphic separable extensions of degree `p`. -/
 theorem chapter13_laurent_series_has_infinitely_many_degree_p_separable_extensions
-    (k : Type*) [Field k] [Fintype k]
+    (k : Type*) [Field k]
     (p : ℕ) [Fact p.Prime] [CharP k p] :
     Set.Infinite (chapter13DegreeClasses (K := LaurentSeries k) p) := by
   sorry
 
 theorem chapter13_laurent_series_wild_pole_orders_are_unbounded
-    (k : Type*) [Field k] [Fintype k]
+    (k : Type*) [Field k]
     (p : ℕ) [Fact p.Prime] [CharP k p]
     (v : AddValuation (LaurentSeries k) (WithTop ℤ))
     (ht : v (chapter13LaurentSeriesUniformizer k) = 1) :

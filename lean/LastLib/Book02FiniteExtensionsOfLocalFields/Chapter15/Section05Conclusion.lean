@@ -1,7 +1,9 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter15.Section04TheMultiplicativePicture
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter13.Section01TheFinitenessQuestionAndItsExactScope
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter13.Section05WildEqualCharacteristicAnInfiniteFamily
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section07UnramifiedAndTotallyRamifiedEndpoints
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section08AFinalSynthesis
+import Mathlib.Algebra.Module.Torsion.Field
 import Mathlib.RingTheory.LaurentSeries
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter15
@@ -325,8 +327,8 @@ theorem characteristic_zero_bounded_degree_subextensions_finite
           rw [hxy, hxN] at hxM
           exact hxM
       have hF : (Set.univ : Set F).Finite := by
-        letI : FiniteDimensional K (model M₀).carrier := (model M₀).finite_dimensional
-        letI : Fintype ((model M₀).carrier →ₐ[K] Ω) :=
+        let : FiniteDimensional K (model M₀).carrier := (model M₀).finite_dimensional
+        let : Fintype ((model M₀).carrier →ₐ[K] Ω) :=
           minpoly.AlgHom.fintype K (model M₀).carrier Ω
         have htarget : (G '' (Set.univ : Set F)).Finite := Set.toFinite _
         apply Set.Finite.of_finite_image htarget
@@ -384,7 +386,7 @@ theorem bounded_degree_extension_has_fixed_closure_representative
     (fun s => ⟨Algebra.IsIntegral.isIntegral s, IsAlgClosed.splits _⟩)
   let M : IntermediateField K Ω := φ.fieldRange
   let e : L ≃ₐ[K] M := φ.equivFieldRange
-  letI : FiniteDimensional K M := LinearEquiv.finiteDimensional e.toLinearEquiv
+  let : FiniteDimensional K M := LinearEquiv.finiteDimensional e.toLinearEquiv
   refine ⟨M, ?_, ⟨e⟩⟩
   change Module.Finite K M ∧ Module.finrank K M ≤ N
   constructor
@@ -445,7 +447,117 @@ theorem equal_characteristic_wild_extensions_have_infinite_fixed_degree
     (p : ℕ) [Fact p.Prime] [CharP k p]
     (hmodel : chapter15LaurentSeriesModel k K) :
     chapter15InfiniteDegreePSubextensionFamily (K := K) (Ω := Ω) p := by
-  sorry
+  rcases hmodel with ⟨e⟩
+  let : Algebra K (LaurentSeries k) := e.toRingHom.toAlgebra
+  let eK : K ≃ₐ[K] LaurentSeries k :=
+    AlgEquiv.ofRingEquiv (f := e) (fun _ => rfl)
+  let : FiniteDimensional K (LaurentSeries k) :=
+    Module.Finite.equiv eK.toLinearEquiv
+  let : Algebra (LaurentSeries k) Ω :=
+    ((algebraMap K Ω).comp e.symm.toRingHom).toAlgebra
+  have hKSΩ : IsScalarTower K (LaurentSeries k) Ω :=
+    IsScalarTower.of_algebraMap_eq (by
+      intro x
+      change (algebraMap K Ω) x = (algebraMap K Ω) (e.symm (e x))
+      rw [e.symm_apply_apply])
+  let _ := hKSΩ
+  rcases chapter13_laurent_series_has_wild_artin_schreier_family k p with ⟨F⟩
+  let embeddingK (i : Chapter13PositiveNonPIndex p) := by
+    let D := F.extension i
+    let : Field D.carrier := D.carrierField
+    let : Algebra (LaurentSeries k) D.carrier := D.carrierAlgebra
+    let : FiniteDimensional (LaurentSeries k) D.carrier := D.carrierFinite
+    let : Algebra K D.carrier :=
+      ((algebraMap (LaurentSeries k) D.carrier).comp e.toRingHom).toAlgebra
+    have hKSD : IsScalarTower K (LaurentSeries k) D.carrier :=
+      IsScalarTower.of_algebraMap_eq (by
+        intro x
+        rfl)
+    let _ := hKSD
+    let _ : Module.IsTorsionFree (LaurentSeries k) Ω :=
+      @DivisionSemiring.to_moduleIsTorsionFree (LaurentSeries k) Ω
+        inferInstance inferInstance inferInstance
+    exact (IsAlgClosed.lift : D.carrier →ₐ[LaurentSeries k] Ω).restrictScalars K
+  let L (i : Chapter13PositiveNonPIndex p) : IntermediateField K Ω := by
+    let D := F.extension i
+    let : Field D.carrier := D.carrierField
+    let : Algebra (LaurentSeries k) D.carrier := D.carrierAlgebra
+    let : Algebra K D.carrier :=
+      ((algebraMap (LaurentSeries k) D.carrier).comp e.toRingHom).toAlgebra
+    exact (embeddingK i).fieldRange
+  let idx (n : ℕ) : Chapter13PositiveNonPIndex p :=
+    ⟨p * n + 1, Nat.zero_lt_succ _, by
+      intro h
+      apply Nat.Prime.not_dvd_one (Fact.out : p.Prime)
+      apply (Nat.dvd_add_iff_left (dvd_mul_right p n)).mpr
+      simpa only [Nat.add_comm] using h⟩
+  refine ⟨ULift ℕ, inferInstance, fun i => L (idx i.down), ?_⟩
+  constructor
+  · intro i
+    let D := F.extension (idx i.down)
+    let : Field D.carrier := D.carrierField
+    let : Algebra (LaurentSeries k) D.carrier := D.carrierAlgebra
+    let : FiniteDimensional (LaurentSeries k) D.carrier := D.carrierFinite
+    let : Algebra K D.carrier :=
+      ((algebraMap (LaurentSeries k) D.carrier).comp e.toRingHom).toAlgebra
+    have hKSD : IsScalarTower K (LaurentSeries k) D.carrier :=
+      IsScalarTower.of_algebraMap_eq (by
+        intro x
+        rfl)
+    let _ := hKSD
+    let : FiniteDimensional K D.carrier := FiniteDimensional.trans K (LaurentSeries k) D.carrier
+    have hsepS : Algebra.IsSeparable K (LaurentSeries k) :=
+      AlgEquiv.Algebra.isSeparable eK
+    let _ := hsepS
+    let _ : Algebra.IsSeparable (LaurentSeries k) D.carrier := D.separable
+    have hsepD : Algebra.IsSeparable K D.carrier := Algebra.IsSeparable.trans K (LaurentSeries k) D.carrier
+    have hdegreeD : Module.finrank K D.carrier = p := by
+      calc
+        Module.finrank K D.carrier =
+            Module.finrank K (LaurentSeries k) *
+              Module.finrank (LaurentSeries k) D.carrier :=
+          (Module.finrank_mul_finrank K (LaurentSeries k) D.carrier).symm
+        _ = p := by rw [← eK.toLinearEquiv.finrank_eq, Module.finrank_self, one_mul, D.degree]
+    have hdegreeL : Module.finrank K (L (idx i.down)) = p := by
+      rw [show L (idx i.down) = (embeddingK (idx i.down)).fieldRange from rfl]
+      rw [← (embeddingK (idx i.down)).equivFieldRange.toLinearEquiv.finrank_eq]
+      exact hdegreeD
+    have hfiniteL : Module.Finite K (L (idx i.down)) := by
+      rw [show L (idx i.down) = (embeddingK (idx i.down)).fieldRange from rfl]
+      exact Module.Finite.equiv (embeddingK (idx i.down)).equivFieldRange.toLinearEquiv
+    have hsepL : Algebra.IsSeparable K (L (idx i.down)) := by
+      rw [show L (idx i.down) = (embeddingK (idx i.down)).fieldRange from rfl]
+      exact AlgEquiv.Algebra.isSeparable (embeddingK (idx i.down)).equivFieldRange
+    exact ⟨hfiniteL, hdegreeL, hsepL⟩
+  · intro i j hij hiso
+    have hidx : idx i.down ≠ idx j.down := by
+      intro h
+      apply hij
+      apply ULift.ext
+      have hv := Subtype.ext_iff.mp h
+      change p * i.down + 1 = p * j.down + 1 at hv
+      apply Nat.eq_of_mul_eq_mul_left (Nat.Prime.pos (Fact.out : p.Prime))
+      exact Nat.add_right_cancel hv
+    apply F.pairwise_nonisomorphic (idx i.down) (idx j.down) hidx
+    rcases hiso with ⟨g⟩
+    let Dᵢ := F.extension (idx i.down)
+    let Dⱼ := F.extension (idx j.down)
+    let : Field Dᵢ.carrier := Dᵢ.carrierField
+    let : Field Dⱼ.carrier := Dⱼ.carrierField
+    let : Algebra (LaurentSeries k) Dᵢ.carrier := Dᵢ.carrierAlgebra
+    let : Algebra (LaurentSeries k) Dⱼ.carrier := Dⱼ.carrierAlgebra
+    let : Algebra K Dᵢ.carrier :=
+      ((algebraMap (LaurentSeries k) Dᵢ.carrier).comp e.toRingHom).toAlgebra
+    let : Algebra K Dⱼ.carrier :=
+      ((algebraMap (LaurentSeries k) Dⱼ.carrier).comp e.toRingHom).toAlgebra
+    let gK : Dᵢ.carrier ≃ₐ[K] Dⱼ.carrier :=
+      (embeddingK (idx i.down)).equivFieldRange |>.trans <|
+        g.trans (embeddingK (idx j.down)).equivFieldRange.symm
+    refine ⟨AlgEquiv.ofRingEquiv (f := gK.toRingEquiv) ?_⟩
+    intro x
+    obtain ⟨a, rfl⟩ := e.surjective x
+    change gK (algebraMap K Dᵢ.carrier a) = algebraMap K Dⱼ.carrier a
+    exact gK.commutes a
 
 /-
 The closing global-arithmetic sentence is a cross-chapter application
