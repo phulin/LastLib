@@ -108,7 +108,7 @@ theorem norm_residue_unit_coordinate
     [Module.Finite A B] [Module.Free A B]
     [Module.Finite k l] [Module.Free k l]
     (d : Chapter15ResidueArithmeticShadow) (u : Bˣ) :
-    d.baseResidue (Algebra.norm A (u : B)) =
+    d.baseResidue (Algebra.intNorm A B (u : B)) =
       (Algebra.norm k ((Units.map d.extensionResidue.toMonoidHom u : lˣ) : l)) ^ d.e := by
   exact residue_norm_shadow_formula d u
 
@@ -142,7 +142,7 @@ theorem unramified_residue_norm_coordinate
     [Module.Finite A B] [Module.Free A B]
     [Module.Finite k l] [Module.Free k l]
     (d : Chapter15ResidueArithmeticShadow) (he : d.e = 1) (u : Bˣ) :
-    d.baseResidue (Algebra.norm A (u : B)) =
+    d.baseResidue (Algebra.intNorm A B (u : B)) =
       Algebra.norm k ((Units.map d.extensionResidue.toMonoidHom u : lˣ) : l) := by
   simpa [he] using norm_residue_unit_coordinate d u
 
@@ -158,7 +158,7 @@ theorem totally_ramified_residue_norm_is_eth_power
     (d : Chapter15ResidueArithmeticShadow) (ι : l →+* k)
     (hι : ∀ z : k, ι (algebraMap k l z) = z)
     (hdegree : Module.finrank k l = 1) (u : Bˣ) :
-    d.baseResidue (Algebra.norm A (u : B)) =
+    d.baseResidue (Algebra.intNorm A B (u : B)) =
       (ι (d.extensionResidue (u : B))) ^ d.e := by
   rw [residue_norm_shadow_formula d u]
   obtain ⟨z, hz⟩ :=

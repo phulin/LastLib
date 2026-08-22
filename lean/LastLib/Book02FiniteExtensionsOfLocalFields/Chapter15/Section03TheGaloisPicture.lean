@@ -32,6 +32,18 @@ structure Chapter15GaloisReductionData
   reduction :
     Gal(L / K) →* Gal(IsLocalRing.ResidueField vL.valuationSubring /
       IsLocalRing.ResidueField vK.valuationSubring)
+  decomposition_group_eq_top :
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup
+        K vL.valuationSubring = ⊤
+  reduction_commutes_with_residue :
+    ∀ (σ : Gal(L / K))
+      (hσ : σ ∈
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup
+          K vL.valuationSubring)
+      (x : IsLocalRing.ResidueField vL.valuationSubring),
+      reduction σ x =
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05ResidueAction
+          K vL.valuationSubring ⟨σ, hσ⟩ x
   residue_normal :
     Normal (IsLocalRing.ResidueField vK.valuationSubring)
       (IsLocalRing.ResidueField vL.valuationSubring)
@@ -54,8 +66,9 @@ def Chapter15GaloisReductionData.inertia
       (IsLocalRing.ResidueField vL.valuationSubring)]
     [Algebra.IsSeparable (IsLocalRing.ResidueField vK.valuationSubring)
       (IsLocalRing.ResidueField vL.valuationSubring)]
-    (d : Chapter15GaloisReductionData vK vL) : Subgroup (Gal(L / K)) :=
-  d.reduction.ker
+    (_d : Chapter15GaloisReductionData vK vL) : Subgroup (Gal(L / K)) :=
+  LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05InertiaGroupInG
+    K vL.valuationSubring
 
 /-- The inertia subgroup is exactly the kernel in the displayed sequence. -/
 theorem galois_reduction_kernel_is_inertia
@@ -71,7 +84,7 @@ theorem galois_reduction_kernel_is_inertia
       (IsLocalRing.ResidueField vL.valuationSubring)]
     (d : Chapter15GaloisReductionData vK vL) :
     d.reduction.ker = d.inertia := by
-  rfl
+  exact d.kernel_is_inertia
 
 /-- The kernel-exact part of the displayed sequence `1 → I → G → Gal(l/k)`.
 Surjectivity is kept separate so that it is not smuggled into a proof as a
@@ -106,7 +119,10 @@ theorem galois_reduction_is_exact
     chapter15GaloisReductionExactSequence vK vL d := by
   change Function.MulExact (Subgroup.subtype d.inertia) d.reduction
   apply MonoidHom.mulExact_iff.mpr
-  exact (Subgroup.range_subtype (MonoidHom.ker d.reduction)).symm
+  calc
+    d.reduction.ker = d.inertia := d.kernel_is_inertia
+    _ = (Subgroup.subtype d.inertia).range :=
+      (Subgroup.range_subtype d.inertia).symm
 
 instance chapter15GaloisInertiaNormal
     {K L Γ : Type u} [Field K] [Field L] [Algebra K L]
@@ -120,7 +136,8 @@ instance chapter15GaloisInertiaNormal
     [Algebra.IsSeparable (IsLocalRing.ResidueField vK.valuationSubring)
       (IsLocalRing.ResidueField vL.valuationSubring)]
     (d : Chapter15GaloisReductionData vK vL) : d.inertia.Normal := by
-  change d.reduction.ker.Normal
+  have hI : d.inertia = d.reduction.ker := d.kernel_is_inertia.symm
+  rw [hI]
   infer_instance
 
 /-- The fixed field of inertia, i.e. the maximal unramified intermediate field. -/
@@ -267,10 +284,18 @@ theorem galois_reduction_has_exact_quotient
         Gal(IsLocalRing.ResidueField vL.valuationSubring /
           IsLocalRing.ResidueField vK.valuationSubring)) := by
   refine ⟨?_⟩
-  change Gal(L / K) ⧸ d.reduction.ker ≃*
-    Gal(IsLocalRing.ResidueField vL.valuationSubring /
-      IsLocalRing.ResidueField vK.valuationSubring)
-  exact QuotientGroup.quotientKerEquivOfSurjective d.reduction hred
+  have hI :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05InertiaGroupInG
+          K vL.valuationSubring = d.reduction.ker :=
+    d.kernel_is_inertia.symm
+  letI :
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05InertiaGroupInG
+          K vL.valuationSubring).Normal := by
+    change d.inertia.Normal
+    infer_instance
+  exact
+    (QuotientGroup.quotientMulEquivOfEq hI).trans
+      (QuotientGroup.quotientKerEquivOfSurjective d.reduction hred)
 
 /-- Book 2, §§15.2–15.3: the exact quotient has order equal to the residue degree. -/
 theorem galois_reduction_quotient_order_is_residue_degree
@@ -406,9 +431,15 @@ theorem ramified_frobenius_lifts_have_the_same_inertia_coset
     QuotientGroup.mk' d.inertia σ = QuotientGroup.mk' d.inertia τ := by
   apply (QuotientGroup.mk'_eq_mk' d.inertia).mpr
   refine ⟨σ⁻¹ * τ, ?_, ?_⟩
-  · change d.reduction (σ⁻¹ * τ) = 1
-    rw [map_mul, map_inv, hσ, hτ]
-    simp
+  · have hker : σ⁻¹ * τ ∈ d.reduction.ker := by
+      apply MonoidHom.mem_ker.mpr
+      change d.reduction (σ⁻¹ * τ) = 1
+      rw [map_mul, map_inv, hσ, hτ]
+      simp
+    change σ⁻¹ * τ ∈
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05InertiaGroupInG
+        K vL.valuationSubring
+    exact d.kernel_is_inertia ▸ hker
   · simp
 
 /-- Book 2, §15.3: when inertia is trivial, Frobenius is an actual generator. -/
@@ -441,7 +472,7 @@ theorem unramified_frobenius_is_an_actual_generator
     (l := IsLocalRing.ResidueField vL.valuationSubring)
   have hinj : Function.Injective d.reduction := by
     apply (MonoidHom.ker_eq_bot_iff d.reduction).mp
-    simpa [Chapter15GaloisReductionData.inertia] using hinertia
+    exact d.kernel_is_inertia.trans hinertia
   refine ⟨σ, hσ, ?_⟩
   apply (Subgroup.eq_top_iff' _).2
   intro τ

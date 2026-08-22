@@ -27,6 +27,8 @@ structure Chapter15UnramifiedTotallyRamifiedFactorization
     [LinearOrderedCommGroupWithZero Γ]
     (vK : Valuation K Γ) (vL : Valuation L Γ)
     [vK.HasExtension vL]
+    [base_rank_one_discrete : Valuation.IsRankOneDiscrete vK]
+    [upper_rank_one_discrete : Valuation.IsRankOneDiscrete vL]
     [Algebra (IsLocalRing.ResidueField vK.valuationSubring)
       (IsLocalRing.ResidueField vL.valuationSubring)] where
   middle : Type u
@@ -116,7 +118,7 @@ theorem complete_degree_formula_has_no_separability_hypothesis
 theorem separable_trace_and_norm_are_embedding_sum_and_product
     {K L E : Type*} [Field K] [Field L] [Field E]
     [Algebra K L] [Algebra K E] [Algebra L E]
-    [IsScalarTower K L E] [IsAlgClosed E] [Normal K E]
+    [IsScalarTower K L E] [IsAlgClosed E]
     [FiniteDimensional K L] [Algebra.IsSeparable K L] (x : L) :
     algebraMap K E (Algebra.trace K L x) =
       ∑ σ : L →ₐ[K] E, σ x ∧

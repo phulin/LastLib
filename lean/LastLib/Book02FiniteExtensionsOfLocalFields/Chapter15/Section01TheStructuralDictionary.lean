@@ -2,6 +2,7 @@ import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section02TheComplete
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter02.Section03RamificationIndexAndResidueDegree
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section01WhyTowerFormulasMatter
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.Section03Transitivity
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section07NormsAndIdeals
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter15
 noncomputable section
@@ -122,9 +123,10 @@ structure Chapter15ResidueArithmeticShadow
     [Algebra A B] [Algebra k l]
     [IsLocalRing A] [IsLocalRing B] [IsDomain A] [IsDomain B]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
+    [IsIntegrallyClosed A] [IsIntegrallyClosed B]
     [Algebra.IsIntegral A B]
-    [Module.Finite A B] [Module.Free A B]
-    [Module.Finite k l] [Module.Free k l] where
+    [Module.Finite A B] [Module.Free A B] [Module.IsTorsionFree A B]
+    [FiniteDimensional k l] where
   e : ℕ
   f : ℕ
   e_eq_ramification_index :
@@ -137,10 +139,12 @@ structure Chapter15ResidueArithmeticShadow
   degree_eq_ef : Module.finrank A B = e * f
   baseResidue : A →+* k
   extensionResidue : B →+* l
-  baseResidue_surjective : Function.Surjective baseResidue
-  extensionResidue_surjective : Function.Surjective extensionResidue
-  baseResidue_kernel : RingHom.ker baseResidue = IsLocalRing.maximalIdeal A
-  extensionResidue_kernel : RingHom.ker extensionResidue = IsLocalRing.maximalIdeal B
+  baseResidue_is_residue_map :
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11ResidueMap
+      A k (IsLocalRing.maximalIdeal A) baseResidue
+  extensionResidue_is_residue_map :
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11ResidueMap
+      B l (IsLocalRing.maximalIdeal B) extensionResidue
   residueCompatibility : ∀ a : A,
     extensionResidue (algebraMap A B a) = algebraMap k l (baseResidue a)
 
@@ -322,7 +326,7 @@ theorem residue_trace_shadow_formula
     [Module.Finite A B] [Module.Free A B]
     [Module.Finite k l] [Module.Free k l]
     (d : Chapter15ResidueArithmeticShadow) (x : B) :
-    d.baseResidue (Algebra.trace A B x) =
+    d.baseResidue (Algebra.intTrace A B x) =
       (d.e : k) * Algebra.trace k l (d.extensionResidue x) := by
   sorry
 
@@ -336,7 +340,7 @@ theorem residue_norm_shadow_formula
     [Module.Finite A B] [Module.Free A B]
     [Module.Finite k l] [Module.Free k l]
     (d : Chapter15ResidueArithmeticShadow) (u : Bˣ) :
-    d.baseResidue (Algebra.norm A (u : B)) =
+    d.baseResidue (Algebra.intNorm A B (u : B)) =
       (Algebra.norm k ((Units.map d.extensionResidue.toMonoidHom u : lˣ) : l)) ^ d.e := by
   sorry
 
