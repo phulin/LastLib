@@ -97,10 +97,12 @@ theorem chapter08_finite_reciprocity_units_are_inertia
 /- The infinite image is the kernel of the maximal unramified quotient. -/
 theorem chapter08_infinite_reciprocity_units_eq_inertia_image
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb]
     (D : Chapter08LocalFieldData K)
     (S : Chapter08FiniteArtinSystem K KAb)
-    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S)
+    {I : Subgroup (Gal(KAb / K))}
+    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S I)
     (hvaluation : U.valuation = D.coordinate.valuation) :
     (chapter08UnitFiltration D.valuation 0).map
         (chapter08LocalReciprocity S) =
@@ -109,10 +111,12 @@ theorem chapter08_infinite_reciprocity_units_eq_inertia_image
 
 theorem chapter08_infinite_units_map_subgroup_le_inertia_image
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb]
     (D : Chapter08LocalFieldData K)
     (S : Chapter08FiniteArtinSystem K KAb)
-    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S)
+    {I : Subgroup (Gal(KAb / K))}
+    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S I)
     (hvaluation : U.valuation = D.coordinate.valuation) :
     (chapter08UnitFiltration D.valuation 0).map
         (chapter08LocalReciprocity S) ≤
@@ -121,10 +125,12 @@ theorem chapter08_infinite_units_map_subgroup_le_inertia_image
 
 def chapter08UnitReciprocityIntoInertia
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb]
     (D : Chapter08LocalFieldData K)
     (S : Chapter08FiniteArtinSystem K KAb)
-    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S)
+    {I : Subgroup (Gal(KAb / K))}
+    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S I)
     (hunits :
       (chapter08UnitFiltration D.valuation 0).map
           (chapter08LocalReciprocity S) = U.quotient.ker) :
@@ -145,7 +151,8 @@ theorem chapter08_units_topologically_isomorphic_to_abelian_inertia
     [T2Space (Gal(KAb / K))]
     (D : Chapter08LocalFieldData K)
     (S : Chapter08FiniteArtinSystem K KAb)
-    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S)
+    {I : Subgroup (Gal(KAb / K))}
+    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S I)
     (hvaluation : U.valuation = D.coordinate.valuation)
     (hcompact : IsCompact
       (chapter08UnitFiltration D.valuation 0 : Set Kˣ))

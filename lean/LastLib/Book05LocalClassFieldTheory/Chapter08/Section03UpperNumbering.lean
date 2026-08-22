@@ -119,13 +119,13 @@ theorem chapter08_herbrand_function_is_continuous_increasing_piecewise_linear
 theorem chapter08_herbrand_function_bijective
     {G : Type*} [Group G] [Finite G]
     (F : Chapter08RamificationFiltration G)
-    (hintegrable : ∀ a b : ℝ,
+    (_hintegrable : ∀ a b : ℝ,
       IntervalIntegrable
         (LastLib.Book03RamificationTheory.Chapter05.chapter05HerbrandSlope F)
         MeasureTheory.volume a b) :
     Function.Bijective (chapter08HerbrandFunction F) := by
   exact LastLib.Book03RamificationTheory.Chapter05.chapter05_herbrand_bijective
-    F hintegrable
+    F
 
 theorem chapter08_herbrand_inverse_left_inverse
     {G : Type*} [Group G] [Finite G]
@@ -187,26 +187,26 @@ theorem chapter08_upper_group_quotient_compatibility
     (H : Subgroup G) [H.Normal]
     (S : LastLib.Book03RamificationTheory.Chapter05.Chapter05QuotientRamificationSetup
       G H)
-    (hup : Function.Bijective (chapter08HerbrandFunction S.upstairs))
-    (hdown : Function.Bijective (chapter08HerbrandFunction S.downstairs))
+    (_hup : Function.Bijective (chapter08HerbrandFunction S.upstairs))
+    (_hdown : Function.Bijective (chapter08HerbrandFunction S.downstairs))
     {v : ℝ} (hv : (-1 : ℝ) ≤ v) :
     chapter08UpperGroup S.downstairs v =
       chapter08UpperQuotientImage H S.upstairs v := by
   exact LastLib.Book03RamificationTheory.Chapter05.chapter05_herbrand_quotient_theorem
-    H S hup hdown hv
+    H S hv
 
 theorem chapter08_upper_group_quotient_membership_iff
     {G : Type*} [Group G] [Fintype G]
     (H : Subgroup G) [H.Normal]
     (S : LastLib.Book03RamificationTheory.Chapter05.Chapter05QuotientRamificationSetup
       G H)
-    (hup : Function.Bijective (chapter08HerbrandFunction S.upstairs))
-    (hdown : Function.Bijective (chapter08HerbrandFunction S.downstairs))
+    (_hup : Function.Bijective (chapter08HerbrandFunction S.upstairs))
+    (_hdown : Function.Bijective (chapter08HerbrandFunction S.downstairs))
     {v : ℝ} (hv : (-1 : ℝ) ≤ v) (σ : G) :
     QuotientGroup.mk' H σ ∈ chapter08UpperGroup S.downstairs v ↔
       ∃ τ : H, σ * (τ : G) ∈ chapter08UpperGroup S.upstairs v := by
   exact LastLib.Book03RamificationTheory.Chapter05.chapter05_herbrand_quotient_membership_iff
-    H S hup hdown hv σ
+    H S hv σ
 
 theorem chapter08_upper_filtration_is_antitone
     {G : Type*} [Group G] [Finite G]
@@ -219,10 +219,10 @@ theorem chapter08_upper_filtration_is_antitone
 theorem chapter08_upper_group_is_normal
     {G : Type*} [Group G] [Finite G]
     (F : Chapter08RamificationFiltration G)
-    (hbij : Function.Bijective (chapter08HerbrandFunction F)) (v : ℝ) :
+    (_hbij : Function.Bijective (chapter08HerbrandFunction F)) (v : ℝ) :
     (chapter08UpperGroup F v).Normal := by
   exact LastLib.Book03RamificationTheory.Chapter05.chapter05_upper_group_normal
-    F hbij v
+    F v
 
 end
 

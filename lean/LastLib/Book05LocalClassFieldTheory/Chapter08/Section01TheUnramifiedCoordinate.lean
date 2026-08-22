@@ -12,17 +12,21 @@ open scoped Pointwise WithTop
    profinite coordinate is normalized arithmetically. -/
 theorem chapter08_maximal_unramified_galois_group_hatZ
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb]
     (S : Chapter08FiniteArtinSystem K KAb)
-    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S) :
+    {I : Subgroup (Gal(KAb / K))}
+    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S I) :
     Nonempty (U.G ≃ₜ* Chapter08ProfiniteIntegers) := by
   exact ⟨U.completionEquiv⟩
 
 theorem chapter08_arithmetic_frobenius_has_coordinate_one
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb]
     (S : Chapter08FiniteArtinSystem K KAb)
-    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S) :
+    {I : Subgroup (Gal(KAb / K))}
+    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S I) :
     U.completionEquiv (chapter08ArithmeticFrobenius S U) =
       chapter08IntegerToProfiniteCompletion 1 := by
   sorry
@@ -31,10 +35,12 @@ theorem chapter08_arithmetic_frobenius_has_coordinate_one
    from `Kˣ` to the profinite integer coordinate. -/
 theorem chapter08_unramified_coordinate_commutes_with_valuation
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb]
     (D : Chapter08LocalFieldData K)
     (S : Chapter08FiniteArtinSystem K KAb)
-    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S)
+    {I : Subgroup (Gal(KAb / K))}
+    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S I)
     (hvaluation : U.valuation = D.coordinate.valuation) :
     chapter08UnramifiedCoordinate S U =
       chapter08IntegerToProfiniteCompletionHom.comp D.coordinate.valuation := by
@@ -42,10 +48,12 @@ theorem chapter08_unramified_coordinate_commutes_with_valuation
 
 theorem chapter08_reciprocity_restricts_to_frobenius_power
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb]
     (D : Chapter08LocalFieldData K)
     (S : Chapter08FiniteArtinSystem K KAb)
-    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S)
+    {I : Subgroup (Gal(KAb / K))}
+    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S I)
     (hvaluation : U.valuation = D.coordinate.valuation)
     (x : Kˣ) :
     chapter08RestrictionToUnramified S U x =
@@ -55,10 +63,12 @@ theorem chapter08_reciprocity_restricts_to_frobenius_power
 
 theorem chapter08_units_act_trivially_on_maximal_unramified
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb]
     (D : Chapter08LocalFieldData K)
     (S : Chapter08FiniteArtinSystem K KAb)
-    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S)
+    {I : Subgroup (Gal(KAb / K))}
+    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S I)
     (hvaluation : U.valuation = D.coordinate.valuation)
     {x : Kˣ} (hx : x ∈ chapter08Units D.valuation) :
     chapter08RestrictionToUnramified S U x = 1 := by
@@ -66,10 +76,12 @@ theorem chapter08_units_act_trivially_on_maximal_unramified
 
 theorem chapter08_uniformizer_acts_as_arithmetic_frobenius
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb]
     (D : Chapter08LocalFieldData K)
     (S : Chapter08FiniteArtinSystem K KAb)
-    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S)
+    {I : Subgroup (Gal(KAb / K))}
+    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S I)
     (hvaluation : U.valuation = D.coordinate.valuation) :
     chapter08RestrictionToUnramified S U D.uniformizer =
       chapter08ArithmeticFrobenius S U := by
@@ -77,10 +89,12 @@ theorem chapter08_uniformizer_acts_as_arithmetic_frobenius
 
 theorem chapter08_unramified_action_unchanged_by_unit_multiple
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb]
     (D : Chapter08LocalFieldData K)
     (S : Chapter08FiniteArtinSystem K KAb)
-    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S)
+    {I : Subgroup (Gal(KAb / K))}
+    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S I)
     (hvaluation : U.valuation = D.coordinate.valuation)
     (u : Kˣ) (hu : u ∈ chapter08Units D.valuation) :
     chapter08RestrictionToUnramified S U (u * D.uniformizer) =
@@ -175,28 +189,34 @@ theorem chapter08_lubin_tate_unit_action_on_division_point
 
 def chapter08TwoCoordinateValue
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb]
     {D : Chapter08LocalFieldData K}
     (S : Chapter08FiniteArtinSystem K KAb)
-    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S)
+    {I : Subgroup (Gal(KAb / K))}
+    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S I)
     (T : Chapter08LubinTateTower D) (n : ℕ) (x : Kˣ) : U.G × T.level n :=
   (chapter08RestrictionToUnramified S U x, chapter08LubinTateCoordinate T n x)
 
 def chapter08TwoCoordinateAutomorphism
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb]
     {D : Chapter08LocalFieldData K}
     (S : Chapter08FiniteArtinSystem K KAb)
-    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S)
+    {I : Subgroup (Gal(KAb / K))}
+    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S I)
     (T : Chapter08LubinTateTower D) (n : ℕ) (x : Kˣ) :=
   (chapter08RestrictionToUnramified S U x, T.artin n x)
 
 theorem chapter08_two_coordinate_artin_formula
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb]
     (D : Chapter08LocalFieldData K)
     (S : Chapter08FiniteArtinSystem K KAb)
-    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S)
+    {I : Subgroup (Gal(KAb / K))}
+    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S I)
     (T : Chapter08LubinTateTower D) (n : ℕ)
     (hvaluation : U.valuation = D.coordinate.valuation)
     (r : ℤ) (u : Kˣ) :
@@ -207,10 +227,12 @@ theorem chapter08_two_coordinate_artin_formula
 
 theorem chapter08_two_coordinate_automorphism_formula
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb]
     (D : Chapter08LocalFieldData K)
     (S : Chapter08FiniteArtinSystem K KAb)
-    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S)
+    {I : Subgroup (Gal(KAb / K))}
+    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S I)
     (T : Chapter08LubinTateTower D) (n : ℕ)
     (hvaluation : U.valuation = D.coordinate.valuation)
     (r : ℤ) (u : Kˣ) :

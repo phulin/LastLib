@@ -224,30 +224,48 @@ def chapter08LocalReciprocity
 
 abbrev Chapter08ArithmeticUnramifiedQuotient
     (K KAb : Type*) [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb]
-    (S : Chapter08FiniteArtinSystem K KAb) :=
+    (S : Chapter08FiniteArtinSystem K KAb)
+    (I : Subgroup (Gal(KAb / K))) :=
   LastLib.Book05LocalClassFieldTheory.Chapter07.Chapter07ArithmeticUnramifiedQuotient
-    K KAb S
+    K KAb S I
+
+def Chapter08ArithmeticUnramifiedQuotient.valuation
+    {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
+    [IsAbelianGalois K KAb]
+    {S : Chapter08FiniteArtinSystem K KAb}
+    {I : Subgroup (Gal(KAb / K))}
+    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S I) :
+    Kˣ →* Multiplicative ℤ :=
+  U.localField.valuation_coordinate.valuation
 
 instance chapter08ArithmeticUnramifiedQuotientGroup
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb]
     (S : Chapter08FiniteArtinSystem K KAb)
-    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S) : Group U.G :=
+    {I : Subgroup (Gal(KAb / K))}
+    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S I) : Group U.G :=
   U.groupG
 
 instance chapter08ArithmeticUnramifiedQuotientTopology
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb]
     (S : Chapter08FiniteArtinSystem K KAb)
-    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S) : TopologicalSpace U.G :=
+    {I : Subgroup (Gal(KAb / K))}
+    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S I) : TopologicalSpace U.G :=
   U.topologyG
 
 instance chapter08ArithmeticUnramifiedQuotientTopologicalGroup
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb]
     (S : Chapter08FiniteArtinSystem K KAb)
-    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S) : IsTopologicalGroup U.G :=
+    {I : Subgroup (Gal(KAb / K))}
+    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S I) : IsTopologicalGroup U.G :=
   U.topologicalGroupG
 
 abbrev Chapter08ProfiniteIntegers : Type _ :=
@@ -263,9 +281,11 @@ noncomputable def chapter08IntegerToProfiniteCompletion
 
 def chapter08UnramifiedCoordinate
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb]
     (S : Chapter08FiniteArtinSystem K KAb)
-    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S) :
+    {I : Subgroup (Gal(KAb / K))}
+    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S I) :
     Kˣ →* Chapter08ProfiniteIntegers :=
   letI : Group U.G := U.groupG
   U.completionEquiv.toMonoidHom.comp
@@ -273,9 +293,11 @@ def chapter08UnramifiedCoordinate
 
 def chapter08ArithmeticFrobenius
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb]
     (S : Chapter08FiniteArtinSystem K KAb)
-    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S) : U.G :=
+    {I : Subgroup (Gal(KAb / K))}
+    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S I) : U.G :=
   letI : Group U.G := U.groupG
   letI : TopologicalSpace U.G := U.topologyG
   letI : IsTopologicalGroup U.G := U.topologicalGroupG
@@ -284,18 +306,22 @@ def chapter08ArithmeticFrobenius
 
 def chapter08RestrictionToUnramified
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb]
     (S : Chapter08FiniteArtinSystem K KAb)
-    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S) :
+    {I : Subgroup (Gal(KAb / K))}
+    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S I) :
     Kˣ →* U.G :=
   letI : Group U.G := U.groupG
   U.quotient.comp (chapter08LocalReciprocity S)
 
 theorem chapter08_unramified_coordinate_formula
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb]
     (S : Chapter08FiniteArtinSystem K KAb)
-    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S)
+    {I : Subgroup (Gal(KAb / K))}
+    (U : Chapter08ArithmeticUnramifiedQuotient K KAb S I)
     (x : Kˣ) :
     chapter08UnramifiedCoordinate S U x =
       chapter08IntegerToProfiniteCompletion
