@@ -170,6 +170,20 @@ def chapter13InfiniteLocalIdele
     ((MulEquiv.piUnits (M := fun w : NumberField.InfinitePlace K => w.Completion)).symm
       (Pi.mulSingle v x), 1)
 
+open scoped Classical in
+private theorem chapter13InfiniteLocalIdele_product
+    (K : Type*) [Field K] [NumberField K]
+    (v : NumberField.InfinitePlace K) (x : (v.Completion)ˣ) :
+    (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K)
+        (chapter13InfiniteLocalIdele K v x) =
+      ((MulEquiv.piUnits
+          (M := fun w : NumberField.InfinitePlace K => w.Completion)).symm
+        (Pi.mulSingle v x),
+        (1 : (Chapter13FiniteAdele K)ˣ)) := by
+  classical
+  unfold chapter13InfiniteLocalIdele
+  exact (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K).apply_symm_apply _
+
 def chapter13FiniteLocalIdele
     (K : Type*) [Field K] [NumberField K]
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K))
@@ -191,14 +205,37 @@ theorem chapter13InfiniteLocalIdele_coordinate
     (v : NumberField.InfinitePlace K) (x : (v.Completion)ˣ) :
     (MulEquiv.piUnits
       ((MulEquiv.prodUnits (chapter13InfiniteLocalIdele K v x)).1)) v = x := by
-  sorry
+  classical
+  have hdecomp := chapter13InfiniteLocalIdele_product K v x
+  change (MulEquiv.piUnits
+      ((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K
+        (chapter13InfiniteLocalIdele K v x)).1)) v = x
+  rw [hdecomp]
+  change (MulEquiv.piUnits
+      ((MulEquiv.piUnits
+        (M := fun z : NumberField.InfinitePlace K => z.Completion)).symm
+        (Pi.mulSingle v x))) v = x
+  rw [(MulEquiv.piUnits (M := fun z : NumberField.InfinitePlace K => z.Completion)).apply_symm_apply]
+  exact Pi.mulSingle_eq_same (M := fun z : NumberField.InfinitePlace K => (z.Completion)ˣ) v x
 
 theorem chapter13InfiniteLocalIdele_coordinate_off
     (K : Type*) [Field K] [NumberField K]
     (v w : NumberField.InfinitePlace K) (x : (v.Completion)ˣ) (hvw : w ≠ v) :
     (MulEquiv.piUnits
       ((MulEquiv.prodUnits (chapter13InfiniteLocalIdele K v x)).1)) w = 1 := by
-  sorry
+  classical
+  have hdecomp := chapter13InfiniteLocalIdele_product K v x
+  change (MulEquiv.piUnits
+      ((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K
+        (chapter13InfiniteLocalIdele K v x)).1)) w = 1
+  rw [hdecomp]
+  change (MulEquiv.piUnits
+      ((MulEquiv.piUnits
+        (M := fun z : NumberField.InfinitePlace K => z.Completion)).symm
+        (Pi.mulSingle v x))) w = 1
+  rw [(MulEquiv.piUnits (M := fun z : NumberField.InfinitePlace K => z.Completion)).apply_symm_apply]
+  exact Pi.mulSingle_eq_of_ne
+    (M := fun z : NumberField.InfinitePlace K => (z.Completion)ˣ) hvw x
 
 theorem chapter13InfiniteLocalIdele_finite_coordinate
     (K : Type*) [Field K] [NumberField K]
@@ -206,26 +243,98 @@ theorem chapter13InfiniteLocalIdele_finite_coordinate
     (w : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) :
     chapter13FiniteIdeleCoordinate K
         ((MulEquiv.prodUnits (chapter13InfiniteLocalIdele K v x)).2) w = 1 := by
-  sorry
+  classical
+  have hdecomp := chapter13InfiniteLocalIdele_product K v x
+  change chapter13FiniteIdeleCoordinate K
+      ((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K
+        (chapter13InfiniteLocalIdele K v x)).2) w = 1
+  rw [hdecomp]
+  change chapter13FiniteIdeleCoordinate K (1 : (Chapter13FiniteAdele K)ˣ) w = 1
+  unfold chapter13FiniteIdeleCoordinate
+  rfl
 
 theorem chapter13InfiniteLocalIdele_one
     (K : Type*) [Field K] [NumberField K]
     (v : NumberField.InfinitePlace K) :
     chapter13InfiniteLocalIdele K v 1 = 1 := by
-  sorry
+  classical
+  apply (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K).injective
+  have hdecomp := chapter13InfiniteLocalIdele_product K v (1 : (v.Completion)ˣ)
+  rw [hdecomp]
+  change ((MulEquiv.piUnits
+      (M := fun z : NumberField.InfinitePlace K => z.Completion)).symm
+      (Pi.mulSingle v 1), 1) = 1
+  rw [Pi.mulSingle_one]
+  rw [(MulEquiv.piUnits
+      (M := fun z : NumberField.InfinitePlace K => z.Completion)).symm.map_one]
+  exact Prod.ext rfl (by simp)
 
 theorem chapter13InfiniteLocalIdele_mul
     (K : Type*) [Field K] [NumberField K]
     (v : NumberField.InfinitePlace K) (x y : (v.Completion)ˣ) :
     chapter13InfiniteLocalIdele K v (x * y) =
       chapter13InfiniteLocalIdele K v x * chapter13InfiniteLocalIdele K v y := by
-  sorry
+  classical
+  apply (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K).injective
+  have hxy := chapter13InfiniteLocalIdele_product K v (x * y)
+  have hx := chapter13InfiniteLocalIdele_product K v x
+  have hy := chapter13InfiniteLocalIdele_product K v y
+  rw [hxy, (LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K).map_mul, hx, hy]
+  change ((MulEquiv.piUnits
+      (M := fun z : NumberField.InfinitePlace K => z.Completion)).symm
+      (Pi.mulSingle v (x * y)), 1) =
+    ((MulEquiv.piUnits
+      (M := fun z : NumberField.InfinitePlace K => z.Completion)).symm
+      (Pi.mulSingle v x), 1) *
+      ((MulEquiv.piUnits
+        (M := fun z : NumberField.InfinitePlace K => z.Completion)).symm
+        (Pi.mulSingle v y), 1)
+  rw [Pi.mulSingle_mul]
+  rw [(MulEquiv.piUnits
+      (M := fun z : NumberField.InfinitePlace K => z.Completion)).symm.map_mul]
+  apply Prod.ext
+  · rfl
+  · change (1 : (Chapter13FiniteAdele K)ˣ) = 1 * 1
+    simp
 
 theorem chapter13InfiniteLocalIdele_continuous
     (K : Type*) [Field K] [NumberField K]
     (v : NumberField.InfinitePlace K) :
     Continuous (chapter13InfiniteLocalIdele K v) := by
-  sorry
+  classical
+  let e := LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleProductEquiv K
+  let tprod : TopologicalSpace
+      ((LastLib.Book04AdelesAndIdeles.Chapter09.Chapter09InfiniteAdele K)ˣ ×
+        Chapter13FiniteIdele K) :=
+    @instTopologicalSpaceProd
+      ((LastLib.Book04AdelesAndIdeles.Chapter09.Chapter09InfiniteAdele K)ˣ)
+      (Chapter13FiniteIdele K) inferInstance
+      (LastLib.Book04AdelesAndIdeles.Chapter11.chapter11FiniteIdeleGraphTopology K)
+  change @Continuous
+    ((v.Completion)ˣ) (Chapter13Idele K)
+    (inferInstance : TopologicalSpace ((v.Completion)ˣ))
+    (TopologicalSpace.induced e tprod)
+    (fun x => e.symm
+      (((MulEquiv.piUnits).symm (Pi.mulSingle v x)), 1))
+  rw [continuous_induced_rng]
+  have hprod : @Continuous
+      ((v.Completion)ˣ)
+      ((LastLib.Book04AdelesAndIdeles.Chapter09.Chapter09InfiniteAdele K)ˣ ×
+        Chapter13FiniteIdele K)
+      (inferInstance : TopologicalSpace ((v.Completion)ˣ)) tprod
+      (fun x => ((MulEquiv.piUnits).symm (Pi.mulSingle v x), 1)) := by
+    exact (((ContinuousMulEquiv.piUnits
+        (M := fun w : NumberField.InfinitePlace K => w.Completion)).symm.continuous.comp
+      (continuous_mulSingle v)).prodMk continuous_const)
+  have heq : (fun x => e (e.symm
+      (((MulEquiv.piUnits).symm (Pi.mulSingle v x)), 1))) =
+      (fun x => ((MulEquiv.piUnits).symm (Pi.mulSingle v x), 1)) := by
+    funext x
+    exact e.apply_symm_apply _
+  change Continuous (fun x => e (e.symm
+      (((MulEquiv.piUnits).symm (Pi.mulSingle v x)), 1)))
+  rw [heq]
+  exact hprod
 
 def chapter13InfiniteLocalIdeleHom
     (K : Type*) [Field K] [NumberField K]
