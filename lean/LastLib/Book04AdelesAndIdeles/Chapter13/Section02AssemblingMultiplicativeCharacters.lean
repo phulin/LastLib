@@ -1,4 +1,5 @@
 import LastLib.Book04AdelesAndIdeles.Chapter13.Dependencies
+import LastLib.Book04AdelesAndIdeles.Chapter09.Section01TheGlobalModuleAndDegree
 
 open scoped BigOperators NNReal NumberField NumberField.AdeleRing RestrictedProduct Classical
 

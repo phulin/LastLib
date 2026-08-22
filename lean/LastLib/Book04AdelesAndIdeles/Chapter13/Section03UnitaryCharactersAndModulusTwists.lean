@@ -1,5 +1,7 @@
 import Mathlib.Data.NNReal.Basic
 import LastLib.Book04AdelesAndIdeles.Chapter13.Section02AssemblingMultiplicativeCharacters
+import LastLib.Book04AdelesAndIdeles.Chapter09.Section04StructureOfIdeleClassGroup
+import LastLib.Book04AdelesAndIdeles.Chapter12.Section01TheRationalField
 
 open scoped NNReal NumberField.AdeleRing RestrictedProduct
 
@@ -53,15 +55,11 @@ theorem chapter13_norm_one_iff_module_one
     x ∈ chapter13NormOneSubgroup K ↔ chapter13IdeleClassModule K x = 1 :=
   Iff.rfl
 
-/- DEPENDENCY_GUESS: the compactness and quotient identification are the precise interface supplied
-by the earlier idele-class-group chapters; the positive-real quotient model is chosen explicitly here. -/
-
-/- The compactness and quotient identification are the precise interface supplied by the earlier
-idele-class-group chapters.  They are hypotheses here so that the character theorem remains useful
-before those chapters are merged. -/
+/- The quotient identification is kept as explicit data because the earlier split theorem gives a
+product with the norm-one subgroup, rather than this quotient presentation directly.  Compactness
+of the norm-one subgroup itself is already supplied by Chapter 9 and is not repeated as a hypothesis. -/
 
 structure Chapter13NormDirectionData (K : Type*) [Field K] [NumberField K] where
-  normOne_compact : IsCompact (chapter13NormOneSubgroup K : Set (Chapter13IdeleClass K))
   quotient_equiv :
     Chapter13PositiveNormQuotient K ≃ₜ* ℝ≥0ˣ
   quotient_module :
@@ -69,9 +67,18 @@ structure Chapter13NormDirectionData (K : Type*) [Field K] [NumberField K] where
       quotient_equiv (QuotientGroup.mk' (chapter13NormOneSubgroup K) x) =
         chapter13IdeleClassModule K x
 
+theorem chapter13_norm_direction_data_exists
+    (K : Type*) [Field K] [NumberField K] :
+    Nonempty (Chapter13NormDirectionData K) := by
+  sorry
+
+theorem chapter13_norm_one_subgroup_compact
+    (K : Type*) [Field K] [NumberField K] :
+    IsCompact (chapter13NormOneSubgroup K : Set (Chapter13IdeleClass K)) := by
+  sorry
+
 theorem chapter13_character_absolute_value_trivial_on_norm_one
     (K : Type*) [Field K] [NumberField K]
-    (D : Chapter13NormDirectionData K)
     (χ : Chapter13ClassCharacter K) :
     ∀ x : chapter13NormOneSubgroup K,
       chapter13CharacterAbsoluteValue K χ x = 1 := by
@@ -79,7 +86,6 @@ theorem chapter13_character_absolute_value_trivial_on_norm_one
 
 theorem chapter13_character_absolute_value_factors_through_norm_one_quotient
     (K : Type*) [Field K] [NumberField K]
-    (D : Chapter13NormDirectionData K)
     (χ : Chapter13ClassCharacter K) :
     ∃ f : Chapter13PositiveNormQuotient K →ₜ* Chapter13PositiveReal,
       ∀ x : Chapter13IdeleClass K,
@@ -98,7 +104,6 @@ theorem chapter13_continuous_positive_real_hom_is_power
 
 theorem chapter13_character_absolute_value_is_modulus_power
     (K : Type*) [Field K] [NumberField K]
-    (D : Chapter13NormDirectionData K)
     (χ : Chapter13ClassCharacter K) :
     ∃! σ : ℝ, ∀ x : Chapter13IdeleClass K,
       chapter13CharacterAbsoluteValue K χ x =
@@ -137,7 +142,6 @@ theorem chapter13CharacterUnitaryPart_is_unitary
 
 theorem chapter13_character_has_canonical_unitary_decomposition
     (K : Type*) [Field K] [NumberField K]
-    (D : Chapter13NormDirectionData K)
     (χ : Chapter13ClassCharacter K) :
     ∃! σ : ℝ,
       (∀ x, chapter13CharacterAbsoluteValue K χ x =
@@ -185,12 +189,19 @@ theorem chapter13_imaginary_modulus_twist_unitary
 /-! The rational example is stated through the product decomposition supplied by the book.  The
 finite factor may then be identified with the profinite unit group and its finite quotients. -/
 
+theorem chapter13_rational_idele_class_product_decomposition :
+    Nonempty
+      (Chapter13IdeleClass ℚ ≃ₜ*
+        (Chapter13PositiveReal ×
+          LastLib.Book04AdelesAndIdeles.Chapter12.chapter12CanonicalFiniteUnitIdeles ℚ)) := by
+  sorry
+
 theorem chapter13_rational_class_character_decomposes_on_product
     {F : Type*} [CommGroup F] [TopologicalSpace F]
-    (e : Chapter13IdeleClass ℚ ≃ₜ* (F × ℝ≥0ˣ))
+    (e : Chapter13IdeleClass ℚ ≃ₜ* (ℝ≥0ˣ × F))
     (χ : Chapter13ClassCharacter ℚ) :
-    ∃ χf : F →ₜ* ℂˣ, ∃ χinf : ℝ≥0ˣ →ₜ* ℂˣ,
-      ∀ x, χ x = χf ((e x).1) * χinf ((e x).2) := by
+    ∃ χinf : ℝ≥0ˣ →ₜ* ℂˣ, ∃ χf : F →ₜ* ℂˣ,
+      ∀ x, χ x = χinf ((e x).1) * χf ((e x).2) := by
   sorry
 
 theorem chapter13_finite_character_factors_through_finite_quotient
