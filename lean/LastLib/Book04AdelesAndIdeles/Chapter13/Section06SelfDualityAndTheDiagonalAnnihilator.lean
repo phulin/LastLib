@@ -106,22 +106,24 @@ theorem chapter13_local_self_duality_from_data
   sorry
 
 def chapter13FinitePairingIsPerfect
-    {A B : Type*} [AddCommGroup A] [AddCommGroup B]
+    {A B : Type*} [AddCommGroup A] [AddCommGroup B] [Fintype A] [Fintype B]
     (pair : A → B → Circle) : Prop :=
   (∀ x y z, pair (x + y) z = pair x z * pair y z) ∧
     (∀ x y z, pair x (y + z) = pair x y * pair x z) ∧
       (∀ a, (∀ b, pair a b = 1) → a = 0) ∧
-        (∀ b, (∀ a, pair a b = 1) → b = 0)
+        (∀ b, (∀ a, pair a b = 1) → b = 0) ∧
+          Fintype.card A = Fintype.card B
 
 theorem chapter13_finite_trace_pairing_perfect_from_nondegeneracy
-    {A B : Type*} [AddCommGroup A] [AddCommGroup B]
+    {A B : Type*} [AddCommGroup A] [AddCommGroup B] [Fintype A] [Fintype B]
     (pair : A → B → Circle)
     (hadd_left : ∀ x y z, pair (x + y) z = pair x z * pair y z)
     (hadd_right : ∀ x y z, pair x (y + z) = pair x y * pair x z)
     (hleft : ∀ a, (∀ b, pair a b = 1) → a = 0)
-    (hright : ∀ b, (∀ a, pair a b = 1) → b = 0) :
+    (hright : ∀ b, (∀ a, pair a b = 1) → b = 0)
+    (hcard : Fintype.card A = Fintype.card B) :
     chapter13FinitePairingIsPerfect pair := by
-  exact ⟨hadd_left, hadd_right, hleft, hright⟩
+  exact ⟨hadd_left, hadd_right, hleft, hright, hcard⟩
 
 /-!
 The preceding finite interface is the book's local statement for
@@ -164,7 +166,7 @@ structure Chapter13AdelicLocalParameterData
   inverseDifferent_integral_tail :
     ∀ᶠ v in Filter.cofinite,
       (inverseDifferent v : Set (v.adicCompletion K)) =
-        {x : v.adicCompletion K | ‖x‖ ≤ 1}
+        {x : v.adicCompletion K | x ∈ v.adicCompletionIntegers K}
 
 /- DEPENDENCY_GUESS: the previous completion and restricted-product chapters must eventually
 instantiate these bridge facts from the local character classifications and restricted-product
@@ -221,7 +223,7 @@ structure Chapter13AdelicDualityData
   finite_local_inverseDifferent :
     ∀ (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) (y : v.adicCompletion K),
       y ∈ localData.inverseDifferent v ↔
-        ∀ x : v.adicCompletion K, ‖x‖ ≤ 1 →
+        ∀ x : v.adicCompletion K, x ∈ v.adicCompletionIntegers K →
           (finite_local_duality v).pairing x y = 1
   local_parameter_tail :
     ∀ y : Chapter13Adele K,
@@ -235,8 +237,12 @@ structure Chapter13AdelicDualityData
         ∀ y : Chapter13Adele K,
           y.1 = 0 →
             (∀ v ∈ S, y.2 v = 0) →
-              (∀ v ∉ S, ‖y.2 v‖ ≤ 1) →
+              (∀ v ∉ S, y.2 v ∈ v.adicCompletionIntegers K) →
                 (Additive.toMul χ) (Multiplicative.ofAdd y) = 1
+  /- Local open-map data alone does not automatically assemble into an open map for the
+  restricted product.  Record that global topological input explicitly before using the
+  topological self-duality conclusions. -/
+  adelic_dual_map_isOpen : IsOpenMap (chapter13AdelicDualMap K D)
 
 theorem chapter13_global_character_parameters_are_adeles
     (K : Type*) [Field K] [NumberField K]

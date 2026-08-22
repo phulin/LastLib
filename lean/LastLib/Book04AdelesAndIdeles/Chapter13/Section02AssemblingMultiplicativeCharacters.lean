@@ -1,6 +1,6 @@
 import LastLib.Book04AdelesAndIdeles.Chapter13.Dependencies
 
-open scoped BigOperators NumberField NumberField.AdeleRing RestrictedProduct Classical
+open scoped BigOperators NNReal NumberField NumberField.AdeleRing RestrictedProduct Classical
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter13
 
@@ -120,30 +120,39 @@ theorem chapter13_idele_class_character_iff
       chapter13DescendsToIdeleClass K χ := by
   sorry
 
-/-! The idele module is the normalized absolute value.  Its codomain is kept as `ℝ` here, with a
-separate positivity theorem; this avoids prematurely choosing between the equivalent positive-real
-group models used by different Mathlib APIs. -/
+/-! The idele module is the normalized absolute value.  Chapter 9 already packages the finite
+normalization and the product formula in `chapter09IdeleModuleNNRealHom`; this section only views
+that canonical positive-real homomorphism in `ℝ` for the character formulas below. -/
 
 def chapter13IdeleModule (K : Type*) [Field K] [NumberField K] :
     Chapter13Idele K → ℝ := fun x =>
-  (∏ v,
-      ‖((MulEquiv.piUnits ((MulEquiv.prodUnits x).1)) v : v.Completion)‖ ^ v.mult) *
-    ∏ᶠ v,
-      ‖(chapter13FiniteIdeleCoordinate K ((MulEquiv.prodUnits x).2) v : v.adicCompletion K)‖
+  ((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModuleNNRealHom K x : ℝ≥0) : ℝ)
 
 def chapter13IdeleModuleHom (K : Type*) [Field K] [NumberField K] :
     Chapter13Idele K →* ℝ :=
   { toFun := chapter13IdeleModule K
-    map_one' := by sorry
-    map_mul' := by sorry }
+    map_one' := by
+      change
+        (((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModuleNNRealHom K) 1 :
+          ℝ≥0) : ℝ) = 1
+      rw [map_one]
+      rfl
+    map_mul' := by
+      intro x y
+      change
+        (((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModuleNNRealHom K) (x * y) :
+          ℝ≥0) : ℝ) =
+        (((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModuleNNRealHom K) x :
+          ℝ≥0) : ℝ) *
+          (((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModuleNNRealHom K) y :
+            ℝ≥0) : ℝ)
+      rw [map_mul]
+      rfl }
 
 theorem chapter13_idele_module_apply
     (K : Type*) [Field K] [NumberField K] (x : Chapter13Idele K) :
     chapter13IdeleModule K x =
-      (∏ v,
-          ‖((MulEquiv.piUnits ((MulEquiv.prodUnits x).1)) v : v.Completion)‖ ^ v.mult) *
-        ∏ᶠ v,
-          ‖(chapter13FiniteIdeleCoordinate K ((MulEquiv.prodUnits x).2) v : v.adicCompletion K)‖ :=
+      ((LastLib.Book04AdelesAndIdeles.Chapter09.chapter09IdeleModuleNNRealHom K x : ℝ≥0) : ℝ) :=
   rfl
 
 theorem chapter13_idele_module_positive

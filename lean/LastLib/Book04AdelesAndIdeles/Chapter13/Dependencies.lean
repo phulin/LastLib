@@ -17,15 +17,16 @@ import Mathlib.Topology.Algebra.PontryaginDual
 import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
 import Mathlib.Topology.Algebra.RestrictedProduct.Units
 import LastLib.Book04AdelesAndIdeles.Chapter04.Section06AdelicTrace
+import LastLib.Book04AdelesAndIdeles.Chapter09.Dependencies
+import LastLib.Book04AdelesAndIdeles.Chapter11.Dependencies
 
 /-!
 # Chapter 13: shared interfaces
 
 This file contains the small amount of shared notation used by the six source-order sections.
-The canonical adelic rings come from `NumberField.AdeleRing`.  Mathlib does not yet expose the
-idele class group, ray-class inverse system, or the global standard additive character in the
-book-facing form, so those interfaces are kept here and are deliberately independent of the
-chapter section files.
+The canonical adelic and idele carriers are reused from Chapter 9.  The remaining interfaces here
+are limited to chapter-13 character and additive-trace data that are not supplied by those earlier
+chapters.
 -/
 
 open scoped BigOperators NumberField NumberField.AdeleRing RestrictedProduct
@@ -35,47 +36,42 @@ namespace LastLib.Book04AdelesAndIdeles.Chapter13
 noncomputable section
 
 abbrev Chapter13Adele (K : Type*) [Field K] [NumberField K] :=
-  NumberField.AdeleRing (𝓞 K) K
+  LastLib.Book04AdelesAndIdeles.Chapter11.Chapter11AdeleRing K
 
 abbrev Chapter13FiniteAdele (K : Type*) [Field K] [NumberField K] :=
-  IsDedekindDomain.FiniteAdeleRing (𝓞 K) K
+  LastLib.Book04AdelesAndIdeles.Chapter11.Chapter11FiniteAdeleRing K
 
 abbrev Chapter13InfiniteAdele (K : Type*) [Field K] [NumberField K] :=
-  NumberField.InfiniteAdeleRing K
+  LastLib.Book04AdelesAndIdeles.Chapter09.Chapter09InfiniteAdele K
 
 abbrev Chapter13FiniteIdele (K : Type*) [Field K] [NumberField K] :=
-  (Chapter13FiniteAdele K)ˣ
+  LastLib.Book04AdelesAndIdeles.Chapter11.Chapter11FiniteIdeleGroup K
 
 abbrev Chapter13InfiniteIdele (K : Type*) [Field K] [NumberField K] :=
-  (Chapter13InfiniteAdele K)ˣ
+  (LastLib.Book04AdelesAndIdeles.Chapter09.Chapter09InfiniteAdele K)ˣ
 
 abbrev Chapter13Idele (K : Type*) [Field K] [NumberField K] :=
-  (Chapter13Adele K)ˣ
+  LastLib.Book04AdelesAndIdeles.Chapter11.Chapter11IdeleGroup K
 
 abbrev Chapter13LocalUnitSubgroup (K : Type*) [Field K] [NumberField K]
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) :
     Subgroup (v.adicCompletion K)ˣ :=
   (v.adicCompletionIntegers K).unitGroup
 
-/- DEPENDENCY_GUESS: the earlier Book 04 chapters are expected to provide the canonical idele
-class-group construction and principal-idele map.  The full-adele unit group and the local
-single-place bridges below keep this chapter aligned with that API until the class-group layer is
-merged. -/
-
-/- The following principal ideles are the multiplicative analogue of Mathlib's additive
-`NumberField.AdeleRing.principalSubgroup`.  Their local components use the standard algebra maps. -/
+/- The following local bridge uses the standard algebra maps, while the principal ideles themselves
+are the canonical Chapter 9 construction. -/
 
 def chapter13PrincipalFiniteIdeleValue (K : Type*) [Field K] [NumberField K] (a : Kˣ) :
     ∀ v : IsDedekindDomain.HeightOneSpectrum (𝓞 K), (v.adicCompletion K)ˣ :=
   fun v => Units.map (algebraMap K (v.adicCompletion K)) a
 
-def chapter13PrincipalFiniteIdele (K : Type*) [Field K] [NumberField K] :
+abbrev chapter13PrincipalFiniteIdele (K : Type*) [Field K] [NumberField K] :
     Kˣ →* Chapter13FiniteIdele K :=
-  Units.map (IsDedekindDomain.FiniteAdeleRing.algebraMap (𝓞 K) K)
+  LastLib.Book04AdelesAndIdeles.Chapter09.chapter09FinitePrincipalIdele K
 
-def chapter13PrincipalIdele (K : Type*) [Field K] [NumberField K] :
+abbrev chapter13PrincipalIdele (K : Type*) [Field K] [NumberField K] :
     Kˣ →* Chapter13Idele K :=
-  Units.map (algebraMap K (Chapter13Adele K))
+  LastLib.Book04AdelesAndIdeles.Chapter11.chapter11PrincipalIdeleHom (K := K)
 
 def chapter13FiniteIdeleCoordinate
     (K : Type*) [Field K] [NumberField K]
@@ -232,17 +228,18 @@ def chapter13FiniteLocalIdeleHom
         map_mul' := chapter13FiniteLocalIdele_mul K v }
     continuous_toFun := chapter13FiniteLocalIdele_continuous K v }
 
-def chapter13PrincipalIdeleSubgroup (K : Type*) [Field K] [NumberField K] :
+abbrev chapter13PrincipalIdeleSubgroup (K : Type*) [Field K] [NumberField K] :
     Subgroup (Chapter13Idele K) :=
-  (chapter13PrincipalIdele K).range
+  LastLib.Book04AdelesAndIdeles.Chapter11.chapter11PrincipalIdeleSubgroup (K := K)
 
 abbrev Chapter13IdeleClass (K : Type*) [Field K] [NumberField K] :=
-  Chapter13Idele K ⧸ chapter13PrincipalIdeleSubgroup K
+  LastLib.Book04AdelesAndIdeles.Chapter11.Chapter11IdeleClassGroup K
 
 instance chapter13IdeleClassCommGroup
     (K : Type*) [Field K] [NumberField K] :
     CommGroup (Chapter13IdeleClass K) := by
-  change CommGroup (Chapter13Idele K ⧸ chapter13PrincipalIdeleSubgroup K)
+  change CommGroup
+    (LastLib.Book04AdelesAndIdeles.Chapter11.Chapter11IdeleClassGroup K)
   infer_instance
 
 abbrev Chapter13ClassCharacter (K : Type*) [Field K] [NumberField K] :=
@@ -290,62 +287,20 @@ def chapter13RationalModIntegerCharacter : AddChar Chapter13QModZ Circle :=
       (Real.fourierChar.compAddMonoidHom (Rat.castHom ℝ).toAddMonoidHom).toAddMonoidHom
       (by sorry)))⁻¹
 
-/-!
-`Chapter13RayClassSystem` is a book-facing inverse system of open finite-index subgroups of the
-idele class group.  The `cofinal` field supplies factorization through some level, while
-`least_level` records the additional least-level property needed for the conductor statement; a
-later pass can identify its levels with the canonical ray class groups once the earlier Chapters
-10--12 expose their idelic class-group API.
--/
+/- The ray levels are the canonical Chapter 11 moduli and quotients.  Keeping these aliases here
+lets the character statements use chapter-13 names without replacing the established ray-class
+API by a generic system of unrelated open subgroups. -/
 
-/- DEPENDENCY_GUESS: identify `Chapter13RayClassSystem` with the ray-class levels and their
-canonical quotient maps from the earlier conductor chapters. -/
-
-structure Chapter13RayClassSystem (K : Type*) [Field K] [NumberField K]
-    (M : Type*) [PartialOrder M] where
-  level : M → Subgroup (Chapter13IdeleClass K)
-  level_open : ∀ m, IsOpen (level m : Set (Chapter13IdeleClass K))
-  level_finite : ∀ m, Finite (Chapter13IdeleClass K ⧸ level m)
-  level_antitone : ∀ {m n}, m ≤ n → level n ≤ level m
-  directed : ∀ m n, ∃ l, level l ≤ level m ∧ level l ≤ level n
-  cofinal : ∀ H : Subgroup (Chapter13IdeleClass K),
-    IsOpen (H : Set (Chapter13IdeleClass K)) →
-      Finite (Chapter13IdeleClass K ⧸ H) → ∃ m, level m ≤ H
-  least_level : ∀ H : Subgroup (Chapter13IdeleClass K),
-    IsOpen (H : Set (Chapter13IdeleClass K)) →
-      Finite (Chapter13IdeleClass K ⧸ H) →
-        ∃ m, level m ≤ H ∧ ∀ n, level n ≤ H → m ≤ n
-  realPlaces :
-    M → Finset {v : NumberField.InfinitePlace K // NumberField.InfinitePlace.IsReal v}
-  realPlaces_monotone :
-    ∀ {m n}, m ≤ n → realPlaces m ⊆ realPlaces n
+abbrev Chapter13RayModulus (K : Type*) [Field K] [NumberField K] :=
+  LastLib.Book04AdelesAndIdeles.Chapter11.RayModulus K
 
 abbrev Chapter13RayClassGroup {K : Type*} [Field K] [NumberField K]
-    {M : Type*} [PartialOrder M] (S : Chapter13RayClassSystem K M) (m : M) :=
-  Chapter13IdeleClass K ⧸ S.level m
-
-def chapter13RayClassTransitionMap
-    (K : Type*) [Field K] [NumberField K]
-    {M : Type*} [PartialOrder M]
-    (S : Chapter13RayClassSystem K M) {m n : M} (hmn : m ≤ n) :
-    Chapter13RayClassGroup S n →* Chapter13RayClassGroup S m :=
-  QuotientGroup.map (S.level n) (S.level m) (MonoidHom.id _) (by
-    intro x hx
-    exact S.level_antitone hmn hx)
-
-theorem chapter13RayClassTransitionMap_apply
-    (K : Type*) [Field K] [NumberField K]
-    {M : Type*} [PartialOrder M]
-    (S : Chapter13RayClassSystem K M) {m n : M} (hmn : m ≤ n)
-    (x : Chapter13IdeleClass K) :
-    chapter13RayClassTransitionMap K S hmn
-        (QuotientGroup.mk' (S.level n) x) =
-      QuotientGroup.mk' (S.level m) x := by
-  sorry
+    (m : Chapter13RayModulus K) :=
+  LastLib.Book04AdelesAndIdeles.Chapter11.chapter11RayClassGroup m
 
 abbrev Chapter13RayClassCharacter {K : Type*} [Field K] [NumberField K]
-    {M : Type*} [PartialOrder M] (S : Chapter13RayClassSystem K M) (m : M) :=
-  Chapter13RayClassGroup S m →* ℂˣ
+    (m : Chapter13RayModulus K) :=
+  Chapter13RayClassGroup m →* ℂˣ
 
 /-!
 The following two structures are intentionally hypotheses rather than disguised conclusions.  They
@@ -375,7 +330,8 @@ structure Chapter13RationalStandardCharacterData where
   finiteCoordinate : ∀ p : {p : ℕ // Nat.Prime p}, Chapter13Adele ℚ → Chapter13Padic p
   finiteCoordinate_integral :
     ∀ x : Chapter13Adele ℚ,
-      ∀ᶠ p in Filter.cofinite, ‖finiteCoordinate p x‖ ≤ 1
+      ∀ᶠ p in Filter.cofinite,
+        ∃ z : Chapter13PadicInteger p, (z : Chapter13Padic p) = finiteCoordinate p x
   finiteCoordinate_continuous :
     ∀ p, Continuous (finiteCoordinate p)
   finiteCoordinate_additive :

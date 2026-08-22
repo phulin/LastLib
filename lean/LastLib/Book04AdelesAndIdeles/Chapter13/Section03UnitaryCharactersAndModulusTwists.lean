@@ -142,7 +142,7 @@ theorem chapter13_character_has_canonical_unitary_decomposition
     (K : Type*) [Field K] [NumberField K]
     (D : Chapter13NormDirectionData K)
     (χ : Chapter13ClassCharacter K) :
-    ∃ σ : ℝ,
+    ∃! σ : ℝ,
       (∀ x, chapter13CharacterAbsoluteValue K χ x =
         chapter13RealModulusPower (chapter13IdeleClassModule K x) σ) ∧
       chapter13IsUnitaryCharacter (chapter13CharacterUnitaryPart K χ σ) := by
