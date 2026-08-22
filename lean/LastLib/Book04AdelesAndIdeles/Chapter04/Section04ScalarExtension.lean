@@ -64,10 +64,6 @@ structure Chapter04FiniteExtensionIntegralData
   integral_model_is_generated_by_chosen_lattice :
     ∀ v, integralModel v =
       chapter04TensorFiniteExtensionIntegralModel K L chosenIntegralLattice v
-  branchIntegralModel :
-    ∀ v : Chapter04FinitePlace K,
-      Set (∀ w : Chapter04FinitePlaceAbove K L v,
-        Chapter04FiniteLocalField L w.1)
   unramified_outside_badPlaces :
     ∀ v, v ∉ badPlaces → chapter04FiniteExtensionUnramifiedAt K L v
   integral_model_transport :
@@ -75,11 +71,11 @@ structure Chapter04FiniteExtensionIntegralData
       ∃ e : L ⊗[K] Chapter04FiniteLocalField K v ≃+*
         (∀ w : Chapter04FinitePlaceAbove K L v,
           Chapter04FiniteLocalField L w.1),
-        e '' integralModel v = branchIntegralModel v
+        e '' integralModel v = chapter04BranchIntegralModel K L v
 
-/- LOCAL_DEPENDENCY_GUESS: the global discriminant/different argument and the
-completed-product theorem from the earlier chapters should instantiate this
-data without assuming the adelic scalar-extension conclusion. -/
+/- The global discriminant/different argument and the completed-product
+theorem from the earlier chapters should instantiate this data without
+assuming the adelic scalar-extension conclusion. -/
 theorem chapter04_finite_extension_integral_data_exists
     (K L : Type*) [Field K] [Field L] [NumberField K] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] [IsScalarTower ℚ K L] :
@@ -89,8 +85,9 @@ theorem chapter04_finite_extension_integral_data_exists
 theorem chapter04_finite_extension_trace_discriminant_is_nonzero
     (K L : Type*) [Field K] [Field L] [NumberField K] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] [IsScalarTower ℚ K L] :
-    chapter01Discriminant L ≠ 0 := by
-  exact chapter01_discriminant_ne_zero L
+    ∀ {ι : Type*} [Fintype ι] [DecidableEq ι]
+      (b : Basis ι K L), Algebra.discr K b ≠ 0 := by
+  sorry
 
 variable {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
   [Algebra K L] [FiniteDimensional K L] [IsScalarTower ℚ K L]
@@ -130,7 +127,7 @@ theorem chapter04_integral_models_agree_with_all_branches_away_from_bad_places
     ∃ e : L ⊗[K] Chapter04FiniteLocalField K v ≃+*
         (∀ w : Chapter04FinitePlaceAbove K L v,
           Chapter04FiniteLocalField L w.1),
-      e '' D.integralModel v = D.branchIntegralModel v := by
+      e '' D.integralModel v = chapter04BranchIntegralModel K L v := by
   exact D.integral_model_transport v hv
 
 theorem chapter04_scalar_extension_is_finite_over_the_base_adele_ring
@@ -147,11 +144,9 @@ theorem chapter04_scalar_extension_has_a_finite_adelic_basis
       (L ⊗[K] Chapter04AdeleRing K)) := by
   sorry
 
-/- SOURCE_ISSUE (§4.4, displayed scalar-extension isomorphism): the source
-calls this an isomorphism of topological rings without specifying a topology
-on the algebraic tensor product `L ⊗[K] 𝔸_K`. The topology below is the
-finite-dimensional module topology induced by a finite `K`-basis; the later
-comparison theorem is the interface for independence of that choice. -/
+/- The topology on the algebraic tensor product is the finite-dimensional
+module topology induced by a finite `K`-basis; the comparison theorem below
+records independence of that choice. -/
 theorem chapter04_scalar_extension_adelic_topological_ring_equiv
     :
     ∃ e : L ⊗[K] Chapter04AdeleRing K ≃ₐ[K] Chapter04AdeleRing L,
@@ -166,20 +161,18 @@ theorem chapter04_scalar_extension_adelic_topological_ring_equiv
 theorem chapter04_scalar_extension_commutes_with_completion
     (D : Chapter04FiniteExtensionIntegralData K L)
     (v : Chapter04FinitePlace K) :
-    ∃ e : L ⊗[K] Chapter04FiniteLocalField K v ≃+*
-        (∀ w : Chapter04FinitePlaceAbove K L v,
-          Chapter04FiniteLocalField L w.1),
-      Function.Bijective e := by
-  obtain ⟨e⟩ := D.localDecomposition v
-  exact ⟨e, e.bijective⟩
+    Nonempty (L ⊗[K] Chapter04FiniteLocalField K v ≃+*
+      (∀ w : Chapter04FinitePlaceAbove K L v,
+        Chapter04FiniteLocalField L w.1)) := by
+  exact D.localDecomposition v
 
 theorem chapter04_scalar_extension_local_integrality_is_eventual
     (D : Chapter04FiniteExtensionIntegralData K L) :
     ∀ᶠ v : Chapter04FinitePlace K in Filter.cofinite,
-      ∃ e : L ⊗[K] Chapter04FiniteLocalField K v ≃+*
+        ∃ e : L ⊗[K] Chapter04FiniteLocalField K v ≃+*
           (∀ w : Chapter04FinitePlaceAbove K L v,
             Chapter04FiniteLocalField L w.1),
-        e '' D.integralModel v = D.branchIntegralModel v := by
+        e '' D.integralModel v = chapter04BranchIntegralModel K L v := by
   filter_upwards [D.badPlaces_finite.compl_mem_cofinite] with v hv
   exact chapter04_integral_models_agree_with_all_branches_away_from_bad_places D v hv
 

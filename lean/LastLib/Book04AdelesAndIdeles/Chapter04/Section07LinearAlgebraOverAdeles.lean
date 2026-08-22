@@ -10,11 +10,10 @@ open Module
 open LastLib.Book04AdelesAndIdeles.Chapter03
 open scoped BigOperators TensorProduct Topology RestrictedProduct
 
-/- SOURCE_ISSUE (§4.7, first displayed equivalence): the source uses the
-algebraic tensor products `V ⊗_K 𝔸_K` and `V ⊗_K K_v` as topological spaces
-without specifying their topologies. The topology-bearing declarations below
-use the finite-dimensional module topology induced by a finite `K`-basis; the
-lattice comparison theorem records its independence of the integral model. -/
+/- The tensor products in this section use the finite-dimensional module
+topology induced by a finite `K`-basis, as in the scalar-extension discussion
+of Section 4.4; the lattice comparison theorem records independence of the
+integral model. -/
 
 /-! ### 4.7 Linear algebra over the adele ring -/
 
@@ -99,10 +98,9 @@ def chapter04LocalLattice
 
 theorem chapter04_local_lattice_is_generated_by_the_global_lattice
     (M : Chapter04Lattice K V) (v : Chapter04FinitePlace K) :
-    ∀ x ∈ chapter04LocalLattice M v,
-      x ∈ AddSubgroup.closure (chapter04LocalLatticeGenerators M v) := by
-  intro x hx
-  exact hx
+    chapter04LocalLattice M v =
+      AddSubgroup.closure (chapter04LocalLatticeGenerators M v) := by
+  rfl
 
 abbrev Chapter04AdelicVectorSpace
     (K V : Type*) [Field K] [NumberField K]
@@ -168,6 +166,7 @@ theorem chapter04_adelic_vector_space_topology_is_independent_of_the_lattice
     (M N : Chapter04Lattice K V) :
     ∃ e : Chapter04AdelicVectorSpaceRestrictedProduct M ≃+
         Chapter04AdelicVectorSpaceRestrictedProduct N,
+      (∀ x, (e x).1 = x.1 ∧ (e x).2.1 = x.2.1) ∧
       Continuous e ∧ Continuous e.symm := by
   sorry
 

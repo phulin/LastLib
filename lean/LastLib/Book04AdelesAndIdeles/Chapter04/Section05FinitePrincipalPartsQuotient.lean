@@ -74,11 +74,11 @@ noncomputable def chapter04PrincipalPartsEquiv
     ⟨chapter04_principalParts_map_injective K,
       chapter04_principalParts_map_surjective K⟩
 
-theorem chapter04_principalParts_quotient_is_an_abstract_additive_group_isomorphism
+noncomputable def chapter04_principalParts_quotient_is_an_abstract_additive_group_isomorphism
     (K : Type*) [Field K] [NumberField K] :
-    Nonempty (Chapter04GlobalPrincipalPartsQuotient K ≃+
-      Chapter04FinitePrincipalPartsQuotient K) :=
-  ⟨chapter04PrincipalPartsEquiv K⟩
+    Chapter04GlobalPrincipalPartsQuotient K ≃+
+      Chapter04FinitePrincipalPartsQuotient K :=
+  chapter04PrincipalPartsEquiv K
 
 def chapter04GlobalPrincipalPartsQuotientIsTorsion
     (K : Type*) [Field K] [NumberField K] : Prop :=
