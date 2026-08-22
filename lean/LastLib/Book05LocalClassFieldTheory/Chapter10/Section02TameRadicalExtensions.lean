@@ -539,7 +539,8 @@ theorem chapter10_tame_norm_generator_has_unit_factor
     (chapter10NormOfRootUnit T : K) /
         (D.uniformizer : K) =
       (-1 : K) ^ (e + 1) * (T.unitFactor : K) := by
-  sorry
+  rw [chapter10_norm_of_tame_radical_root_unit_value D e T]
+  field_simp
 
 end
 

@@ -1,4 +1,6 @@
 import LastLib.Book05LocalClassFieldTheory.Chapter10.Dependencies
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section06QuadraticLaboratory
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Section04MultiplicationPowersAndResidueCharacteristic
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter10
 
@@ -41,7 +43,64 @@ theorem chapter10_quadratic_nonsquare_unit_exists
     (hodd : D.residueCharacteristic ≠ 2) :
     ∃ u : Chapter10RingUnitGroup D.valuation,
       chapter10QuadraticResidueNonsquare D u := by
-  sorry
+  let k := Chapter10ResidueField D.valuation
+  let A := Chapter10ValuationRing D.valuation
+  let _ : CharP k D.residueCharacteristic := D.residueCharacteristic_charP
+  have hodd_card : Fintype.card k % 2 = 1 := by
+    obtain ⟨n, _hp, hcard⟩ := FiniteField.card k D.residueCharacteristic
+    have hpodd : Odd D.residueCharacteristic :=
+      D.residueCharacteristic_prime.eq_two_or_odd'.resolve_left hodd
+    rw [hcard]
+    exact Nat.odd_iff.mp (hpodd.pow)
+  let _ : Fintype
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03SquareClassGroup k) :=
+    Fintype.ofFinite _
+  have hsquare_card : Fintype.card
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03SquareClassGroup k) = 2 :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03_finite_odd_field_has_two_square_classes
+      k hodd_card
+  have hsquare_ne_top :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03SquaresSubgroup k ≠ ⊤ := by
+    intro htop
+    have hcard_one : Fintype.card
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03SquareClassGroup k) = 1 := by
+      apply Fintype.card_eq_one_iff.mpr
+      refine ⟨1, ?_⟩
+      intro y
+      refine QuotientGroup.induction_on y ?_
+      intro z
+      apply (QuotientGroup.eq_one_iff _).mpr
+      rw [htop]
+      trivial
+    omega
+  obtain ⟨a, ha⟩ : ∃ a : kˣ, a ∉
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03SquaresSubgroup k := by
+    by_contra h
+    apply hsquare_ne_top
+    apply (Subgroup.eq_top_iff' _).2
+    intro x
+    by_contra hx
+    exact h ⟨x, hx⟩
+  obtain ⟨u, hu⟩ :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10_unit_reduction_surjective A a
+  refine ⟨u, ?_⟩
+  intro hpower
+  apply ha
+  have hpow : chapter10UnitReduction D.valuation u ∈
+      chapter10PowerSubgroup (G := kˣ) 2 := hpower
+  rw [show chapter10PowerSubgroup (G := kˣ) 2 =
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03SquaresSubgroup k by
+    apply le_antisymm
+    · rintro _ ⟨b, rfl⟩
+      change b ^ 2 ∈
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03SquaresSubgroup k
+      exact Subgroup.subset_closure ⟨b, rfl⟩
+    · refine (Subgroup.closure_le _).mpr ?_
+      rintro _ ⟨b, rfl⟩
+      exact ⟨b, rfl⟩] at hpow
+  have hu' : chapter10UnitReduction D.valuation u = a := hu
+  rw [hu'] at hpow
+  exact hpow
 
 /- The square map on principal units is an isomorphism when the residue
    characteristic is odd. -/
@@ -51,7 +110,24 @@ theorem chapter10_square_map_on_principal_units_isomorphism
     ∃ e : Chapter10UnitFiltration D.valuation 1 ≃*
         Chapter10UnitFiltration D.valuation 1,
       ∀ u, e u = u ^ 2 := by
-  sorry
+  let A := Chapter10ValuationRing D.valuation
+  let k := Chapter10ResidueField D.valuation
+  let _ : CharP k D.residueCharacteristic := D.residueCharacteristic_charP
+  have h2res : (2 : k) ≠ 0 := by
+    intro hzero
+    have hdiv : D.residueCharacteristic ∣ 2 :=
+      (CharP.cast_eq_zero_iff k D.residueCharacteristic 2).mp hzero
+    have hle : D.residueCharacteristic ≤ 2 :=
+      Nat.le_of_dvd (by norm_num) hdiv
+    exact hodd (Nat.le_antisymm hle D.residueCharacteristic_prime.two_le)
+  have h2unit : IsUnit (2 : A) := by
+    apply (IsLocalRing.residue_ne_zero_iff_isUnit (2 : A)).mp
+    intro hzero
+    apply h2res
+    exact hzero
+  exact
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10_principal_unit_power_isomorphism
+      A 2 h2unit D.complete.2 D.valuationRing_dvr
 
 /- The valuation coordinate and the residue square-class coordinate give the
    two-factor decomposition of the square-class group. -/
@@ -65,7 +141,58 @@ theorem chapter10_square_class_group_decomposition
         ((Chapter10ResidueField D.valuation)ˣ ⧸
             chapter10PowerSubgroup
               (G := (Chapter10ResidueField D.valuation)ˣ) 2))) := by
-  sorry
+  classical
+  let k := Chapter10ResidueField D.valuation
+  let A := Chapter10ValuationRing D.valuation
+  let _ : CharP k D.residueCharacteristic := D.residueCharacteristic_charP
+  have h2res : (2 : k) ≠ 0 := by
+    intro hzero
+    have hdiv : D.residueCharacteristic ∣ 2 :=
+      (CharP.cast_eq_zero_iff k D.residueCharacteristic 2).mp hzero
+    have hle : D.residueCharacteristic ≤ 2 :=
+      Nat.le_of_dvd (by norm_num) hdiv
+    exact hodd (Nat.le_antisymm hle D.residueCharacteristic_prime.two_le)
+  have h2unit : IsUnit (2 : A) := by
+    apply (IsLocalRing.residue_ne_zero_iff_isUnit (2 : A)).mp
+    intro hzero
+    apply h2res
+    exact hzero
+  let _ : Algebra A K := A.subtype.toAlgebra
+  let _ : IsFractionRing A K :=
+    (Valuation.valuationSubring.integers D.valuation.toValuation).isFractionRing
+  have hprincipal :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03PrincipalUnitSquareCondition
+        A (IsLocalRing.maximalIdeal A) := by
+    exact
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03_complete_odd_dvr_principal_units_are_squares
+        A D.complete.2 h2unit
+  obtain ⟨e⟩ :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03_principal_units_supply_square_class_decomposition
+      A K k ⟨RingEquiv.refl _⟩ hprincipal
+  have hpowK :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03SquaresSubgroup K =
+        chapter10PowerSubgroup (G := Kˣ) 2 := by
+    apply le_antisymm
+    · refine (Subgroup.closure_le _).mpr ?_
+      rintro _ ⟨b, rfl⟩
+      exact ⟨b, rfl⟩
+    · rintro _ ⟨b, rfl⟩
+      exact Subgroup.subset_closure ⟨b, rfl⟩
+  have hpowk :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03SquaresSubgroup k =
+        chapter10PowerSubgroup (G := kˣ) 2 := by
+    apply le_antisymm
+    · refine (Subgroup.closure_le _).mpr ?_
+      rintro _ ⟨b, rfl⟩
+      exact ⟨b, rfl⟩
+    · rintro _ ⟨b, rfl⟩
+      exact Subgroup.subset_closure ⟨b, rfl⟩
+  let eK :=
+    QuotientGroup.quotientMulEquivOfEq hpowK
+  let ek :=
+    QuotientGroup.quotientMulEquivOfEq hpowk
+  refine ⟨eK.symm.trans (e.trans
+    (MulEquiv.prodCongr (MulEquiv.refl _) ek))⟩
 
 /- For an odd finite residue field, its multiplicative square-class quotient
    is the remaining one-dimensional factor in the displayed decomposition. -/
@@ -78,7 +205,46 @@ theorem chapter10_residue_square_class_group_equiv_zmod_two
           chapter10PowerSubgroup
             (G := (Chapter10ResidueField D.valuation)ˣ) 2) ≃*
         Multiplicative (ZMod 2)) := by
-  sorry
+  classical
+  let k := Chapter10ResidueField D.valuation
+  let _ : CharP k D.residueCharacteristic := D.residueCharacteristic_charP
+  obtain ⟨n, _hp, hcard⟩ := FiniteField.card k D.residueCharacteristic
+  have hpodd : Odd D.residueCharacteristic :=
+    D.residueCharacteristic_prime.eq_two_or_odd'.resolve_left hodd
+  have hodd_card : Fintype.card k % 2 = 1 := by
+    rw [hcard]
+    exact Nat.odd_iff.mp (hpodd.pow)
+  let _ : Fintype
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03SquareClassGroup k) :=
+    Fintype.ofFinite _
+  have hsquare_card : Fintype.card
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03SquareClassGroup k) = 2 :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03_finite_odd_field_has_two_square_classes
+      k hodd_card
+  have hpow :
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03SquaresSubgroup k =
+        chapter10PowerSubgroup (G := kˣ) 2 := by
+    apply le_antisymm
+    · refine (Subgroup.closure_le _).mpr ?_
+      rintro _ ⟨b, rfl⟩
+      exact ⟨b, rfl⟩
+    · rintro _ ⟨b, rfl⟩
+      exact Subgroup.subset_closure ⟨b, rfl⟩
+  have hcardq : Nat.card
+      (kˣ ⧸ LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03SquaresSubgroup k) = 2 := by
+    calc
+      Nat.card (kˣ ⧸
+          LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03SquaresSubgroup k) =
+          Fintype.card
+            (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.chapter03SquareClassGroup k) :=
+        Nat.card_eq_fintype_card
+      _ = 2 := hsquare_card
+  have hcardq' : Nat.card (kˣ ⧸ chapter10PowerSubgroup (G := kˣ) 2) = 2 := by
+    have eqv := QuotientGroup.quotientMulEquivOfEq hpow
+    exact (Nat.card_congr eqv.toEquiv).symm.trans hcardq
+  have hcardz : Nat.card (Multiplicative (ZMod 2)) = 2 := by
+    simp
+  exact ⟨mulEquivOfPrimeCardEq hcardq' hcardz⟩
 
 theorem chapter10_square_class_group_is_two_dimensional
     {K : Type*} [Field K] (D : Chapter10LocalFieldProfile K)
@@ -87,7 +253,9 @@ theorem chapter10_square_class_group_is_two_dimensional
     Nonempty
       ((Kˣ ⧸ chapter10PowerSubgroup (G := Kˣ) 2) ≃*
         (Multiplicative (ZMod 2) × Multiplicative (ZMod 2))) := by
-  sorry
+  obtain ⟨e⟩ := chapter10_square_class_group_decomposition D hodd
+  obtain ⟨f⟩ := chapter10_residue_square_class_group_equiv_zmod_two D hodd
+  exact ⟨e.trans (MulEquiv.prodCongr (MulEquiv.refl _) f)⟩
 
 theorem chapter10_unramified_quadratic_norm_subgroup
     {K L : Type*} [Field K] [Field L] [Algebra K L]
