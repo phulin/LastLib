@@ -15,7 +15,35 @@ theorem chapter07_local_reciprocity_kernel_eq_norm_intersection
     (chapter07LocalReciprocity S).ker =
       ⨅ L : Chapter07FiniteAbelianIndex K KAb,
         chapter07NormSubgroup (K := K) (L := L) := by
-  sorry
+  ext x
+  constructor
+  · intro hx
+    rw [Subgroup.mem_iInf]
+    intro L
+    rw [← chapter07_finite_artin_kernel_eq_norm S L]
+    change S.artin L x = 1
+    rw [← chapter07_finite_artin_is_the_reciprocity_projection S L x]
+    rw [hx]
+    simp only [InfiniteGalois.proj, map_one]
+  · intro hx
+    change chapter07LocalReciprocity S x = 1
+    rw [Subgroup.mem_iInf] at hx
+    apply (chapter07AbelianGaloisLimitEquiv K KAb).injective
+    ext L
+    induction L with
+    | _ L =>
+      rw [map_one]
+      change
+        (InfiniteGalois.proj L
+          ((chapter07AbelianGaloisLimitEquiv K KAb)
+            (chapter07LocalReciprocity S x)) : Gal(L / K)) =
+          (1 : Gal(L / K))
+      have hproj :=
+        chapter07_finite_artin_is_the_reciprocity_projection S L x
+      have hxL := hx L
+      rw [← chapter07_finite_artin_kernel_eq_norm S L] at hxL
+      change S.artin L x = 1 at hxL
+      simpa only [InfiniteGalois.proj, map_one] using hproj.trans hxL
 
 /-- Membership in the kernel is forced into every explicit finite-precision
 subgroup supplied by the local existence construction. -/
@@ -26,7 +54,20 @@ theorem chapter07_local_reciprocity_kernel_le_precision
     (hcofinal : chapter07KernelCofinality (KAb := KAb) D) :
     (chapter07LocalReciprocity S).ker ≤
       chapter07PrecisionIntersection D := by
-  sorry
+  intro x hx
+  change x ∈ ⨅ m : Chapter07PositiveNat, ⨅ n : Chapter07PositiveNat,
+    chapter07PrecisionSubgroup D m n
+  rw [Subgroup.mem_iInf]
+  intro m
+  rw [Subgroup.mem_iInf]
+  intro n
+  obtain ⟨L, hL⟩ := hcofinal m n
+  have hxall : x ∈ ⨅ L' : Chapter07FiniteAbelianIndex K KAb,
+      chapter07NormSubgroup (K := K) (L := L') := by
+    rw [← chapter07_local_reciprocity_kernel_eq_norm_intersection S]
+    exact hx
+  rw [Subgroup.mem_iInf] at hxall
+  exact hL (hxall L)
 
 /-- The intersection of all positive precision subgroups is trivial. -/
 theorem chapter07_precision_intersection_eq_bot

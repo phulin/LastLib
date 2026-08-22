@@ -346,14 +346,37 @@ theorem chapter07_local_reciprocity_not_surjective
     (I : Subgroup (Gal(KAb / K)))
     (U : Chapter07ArithmeticUnramifiedQuotient K KAb S I) :
     ¬ Function.Surjective (chapter07LocalReciprocity S) := by
-  sorry
+  intro hsurj
+  let _ : Group U.G := U.groupG
+  let _ : TopologicalSpace U.G := U.topologyG
+  let _ : IsTopologicalGroup U.G := U.topologicalGroupG
+  have hproper := chapter07_integer_image_dense_and_proper.2
+  apply hproper
+  rw [← chapter07_unramified_reciprocity_image_is_integer S I U]
+  apply Set.eq_univ_of_forall
+  intro y
+  obtain ⟨g, hg⟩ := U.completionEquiv.surjective y
+  obtain ⟨σ, hσ⟩ := U.quotient_surjective g
+  obtain ⟨x, hx⟩ := hsurj σ
+  refine ⟨x, ?_⟩
+  calc
+    U.completionEquiv (U.quotient (chapter07LocalReciprocity S x)) =
+        U.completionEquiv (U.quotient σ) := by rw [hx]
+    _ = U.completionEquiv g := by rw [hσ]
+    _ = y := hg
 
 /-- A topological group equivalence preserves compactness. -/
 theorem chapter07_no_topological_equiv_from_noncompact_to_compact
     {X Y : Type*} [Group X] [TopologicalSpace X] [IsTopologicalGroup X]
     [NoncompactSpace X] [Group Y] [TopologicalSpace Y] [CompactSpace Y] :
     ¬ Nonempty (X ≃ₜ* Y) := by
-  sorry
+  exact fun ⟨e⟩ =>
+    (not_compactSpace_iff.mpr inferInstance) ⟨by
+      have himage :=
+        (isCompact_univ : IsCompact (Set.univ : Set Y)).image e.symm.continuous_toFun
+      have hrange : Set.range e.symm.toFun = (Set.univ : Set X) :=
+        Set.range_eq_univ.mpr e.symm.surjective
+      simpa only [Set.image_univ, hrange] using himage⟩
 
 /-- The multiplicative group of a complete discretely valued local field with
 finite residue field is noncompact. -/
@@ -373,7 +396,7 @@ theorem chapter07_reciprocity_target_is_compact
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
     [IsAbelianGalois K KAb] :
     IsCompact (Set.univ : Set (Gal(KAb / K))) := by
-  sorry
+  exact isCompact_univ
 
 /-- The compactness obstruction for identifying K-units literally with the
 whole profinite Galois group. -/
@@ -383,7 +406,12 @@ theorem chapter07_reciprocity_is_not_a_topological_equivalence
     [IsAbelianGalois K KAb]
     (hcompact : IsCompact (Set.univ : Set (Gal(KAb / K)))) :
     ¬ Nonempty (Kˣ ≃ₜ* Gal(KAb / K)) := by
-  sorry
+  exact fun ⟨e⟩ =>
+    (not_compactSpace_iff.mpr inferInstance) ⟨by
+      have himage := hcompact.image e.symm.continuous_toFun
+      have hrange : Set.range e.symm.toFun = (Set.univ : Set Kˣ) :=
+        Set.range_eq_univ.mpr e.symm.surjective
+      simpa only [Set.image_univ, hrange] using himage⟩
 
 end
 
