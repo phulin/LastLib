@@ -372,15 +372,15 @@ theorem chapter11_ramification_class_function_is_integral_virtual
 
 /-- Artin's theorem: the Artin class function is an actual complex character.
 
-The abstract finite-filtration record receives the preceding local
-ramification-character theorem as `hvirtual`; this keeps that theorem from
-being smuggled into the present statement as an unproved consequence of
-subgroup axioms alone. -/
+The abstract finite-filtration record receives the elementary-restriction
+certificate as an explicit local input.  The theorem below then records the
+character argument; it does not assume the integral virtual-character
+conclusion that the argument is meant to establish. -/
 theorem chapter11_artin_integrality_theorem
     {G : Type*} [Fintype G] [Group G]
     (D : Chapter11RamificationData G) (hseparable : D.residue_separable)
     (hperfect : D.residue_perfect)
-    (hvirtual : Chapter11RamificationCharacterInput D) :
+    (hinput : Chapter11CanonicalArtinInput D) :
     Chapter11IsCharacter (chapter11ArtinClassFunction D : G → ℂ) := by
   sorry
 
@@ -392,7 +392,7 @@ theorem chapter11_artin_conductor_is_nonnegative_integer
     [AddCommGroup V] [Module k V] [FiniteDimensional k V]
     (D : Chapter11RamificationData G) (ρ : Representation k G V)
     (hseparable : D.residue_separable) (hperfect : D.residue_perfect)
-    (hvirtual : Chapter11RamificationCharacterInput D) :
+    (hinput : Chapter11CanonicalArtinInput D) :
     Chapter11NonnegativeInteger (chapter11ArtinConductor D ρ) := by
   sorry
 
@@ -401,7 +401,7 @@ theorem chapter11_swan_conductor_is_nonnegative_integer
     [AddCommGroup V] [Module k V] [FiniteDimensional k V]
     (D : Chapter11RamificationData G) (ρ : Representation k G V)
     (hseparable : D.residue_separable) (hperfect : D.residue_perfect)
-    (hvirtual : Chapter11RamificationCharacterInput D) :
+    (hinput : Chapter11CanonicalArtinInput D) :
     Chapter11NonnegativeInteger (chapter11SwanConductor D ρ) := by
   sorry
 
@@ -417,7 +417,7 @@ theorem chapter11_artin_integrality_implies_chapter06_total_swan_conductor_integ
     (P : Chapter05RamificationFiltration G)
     (D : Chapter11RamificationData G) (ρ : Representation k G V)
     (hseparable : D.residue_separable) (hperfect : D.residue_perfect)
-    (hvirtual : Chapter11RamificationCharacterInput D)
+    (hinput : Chapter11CanonicalArtinInput D)
     (hupper :
       ((chapter11SwanConductor D ρ : ℚ) : ℝ) =
         chapter06SwanConductor P ρ) :
@@ -491,7 +491,7 @@ theorem chapter11_hasse_arf_upper_break_integer
     {D : Chapter11RamificationData G}
     (U : Chapter11UpperRamificationData D) {r : ℚ}
     (hr : U.IsUpperBreak r) (hperfect : D.residue_perfect)
-    (hvirtual : Chapter11RamificationCharacterInput D) :
+    (hinput : Chapter11CanonicalArtinInput D) :
     ∃ z : ℤ, r = z := by
   sorry
 
