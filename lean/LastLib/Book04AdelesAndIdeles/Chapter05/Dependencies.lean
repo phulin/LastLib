@@ -304,7 +304,36 @@ def chapter05FiniteToAwayProjection
       v = Sum.inl w)
     (x : Chapter04FiniteAdeleRing K) : Chapter05AdeleAwayFrom K S :=
   ⟨fun v => chapter05FiniteCoordinate K x v.1, by
-      sorry⟩
+      classical
+      have hfinite' : ∀ v : {v // v ∉ S}, ∃ w : Chapter04FinitePlace K,
+          v.1 = Sum.inl w := by
+        intro v
+        exact hfinite v.1 v.2
+      let f : {v // v ∉ S} → Chapter04FinitePlace K :=
+        fun v => (hfinite' v).choose
+      have hf_spec : ∀ v : {v // v ∉ S}, v.1 = Sum.inl (f v) := by
+        intro v
+        exact (hfinite' v).choose_spec
+      have hf : Function.Injective f := by
+        intro v₁ v₂ h
+        apply Subtype.ext
+        rw [hf_spec v₁, hf_spec v₂, h]
+      have hx : ∀ᶠ w : Chapter04FinitePlace K in Filter.cofinite,
+          x w ∈ chapter04FiniteLocalIntegerSet K w :=
+        chapter04_finiteAdele_mem_iff_eventually_integral K x
+      have hpull : ∀ᶠ v : {v // v ∉ S} in Filter.cofinite,
+          x (f v) ∈ chapter04FiniteLocalIntegerSet K (f v) :=
+        hf.tendsto_cofinite hx
+      filter_upwards [hpull] with v hv
+      rcases v with ⟨v, hvS⟩
+      rcases v with w | w
+      · have hfw : f ⟨Sum.inl w, hvS⟩ = w := by
+          apply Sum.inl.inj
+          exact (hf_spec ⟨Sum.inl w, hvS⟩).symm
+        change x w ∈ chapter04FiniteLocalIntegerSet K w
+        rw [hfw] at hv
+        exact hv
+      · simp [chapter05FiniteCoordinate, chapter04LocalIntegralSubring]⟩
 
 def chapter05AwayBasicNeighborhood
     (K : Type*) [Field K] [NumberField K]
@@ -331,7 +360,7 @@ theorem chapter05_mem_awayBasicNeighborhood_iff
         (∀ v : {v // v ∉ S}, v ∉ (T : Set {v // v ∉ S}) →
           y v - x v ∈ (chapter04LocalIntegralSubring K v.1 :
             Set (chapter04LocalField K v.1)))) := by
-  sorry
+  rfl
 
 def chapter05RestrictedProductBasis
     (K : Type*) [Field K] [NumberField K]

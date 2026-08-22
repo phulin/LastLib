@@ -24,23 +24,33 @@ full adele rings. -/
 theorem chapter05Diagonal_apply
     (K : Type*) [Field K] [NumberField K] (a : K) :
     chapter05Diagonal K a = algebraMap K (Chapter04AdeleRing K) a := by
-  sorry
+  rfl
 
 theorem chapter05FiniteDiagonal_apply
     (K : Type*) [Field K] [NumberField K] (a : K) :
     chapter05FiniteDiagonal K a =
       IsDedekindDomain.FiniteAdeleRing.algebraMap (𝓞 K) K a := by
-  sorry
+  rfl
 
 theorem chapter05_diagonal_injective
     (K : Type*) [Field K] [NumberField K] :
     Function.Injective (chapter05Diagonal K) := by
-  sorry
+  exact NumberField.AdeleRing.algebraMap_injective (𝓞 K) K
 
 theorem chapter05_finite_diagonal_injective
     (K : Type*) [Field K] [NumberField K] :
     Function.Injective (chapter05FiniteDiagonal K) := by
-  sorry
+  intro a b h
+  have hnonempty : Nonempty (Chapter04FinitePlace K) := by
+    obtain ⟨I, hI⟩ := Ideal.exists_maximal (𝓞 K)
+    exact ⟨(IsDedekindDomain.HeightOneSpectrum.equivMaximalSpectrum
+      (RingOfIntegers.not_isField K)).symm ⟨I, hI⟩⟩
+  obtain ⟨v⟩ := hnonempty
+  apply FaithfulSMul.algebraMap_injective K (v.adicCompletion K)
+  have hv := congrArg (fun z : Chapter04FiniteAdeleRing K => z v) h
+  change (algebraMap K (v.adicCompletion K) a) =
+    algebraMap K (v.adicCompletion K) b at hv
+  exact hv
 
 theorem chapter05_completion_map_injective
     (K : Type*) [Field K] [NumberField K]
