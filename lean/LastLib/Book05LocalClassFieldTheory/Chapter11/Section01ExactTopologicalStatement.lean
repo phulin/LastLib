@@ -415,7 +415,41 @@ noncomputable def chapter11ContinuousCharacterEquiv
     [CompactSpace A] [TotallyDisconnectedSpace A]
     (R : Chapter11ReciprocityData K G) :
     (G →ₜ* A) ≃ (Kˣ →ₜ* A) := by
-  sorry
+  let e : (TopologicalAbelianization G →ₜ* A) ≃ (Kˣ →ₜ* A) :=
+    chapter11AbelianContinuousCharacterEquiv R
+  refine
+    { toFun := fun ρ => e (chapter11CharacterAbelianization ρ)
+      invFun := fun χ => (e.symm χ).comp (chapter11AbelianizationMap G)
+      left_inv := by
+        intro ρ
+        apply DFunLike.ext
+        intro x
+        have hρ : ρ = (chapter11CharacterAbelianization ρ).comp
+            (chapter11AbelianizationMap G) :=
+          chapter11CharacterAbelianization_spec ρ
+        change (e.symm (e (chapter11CharacterAbelianization ρ))).toMonoidHom
+            (chapter11AbelianizationMap G x) = ρ x
+        rw [e.symm_apply_apply]
+        exact congrArg (fun ψ => ψ x) hρ.symm
+      right_inv := by
+        intro χ
+        apply DFunLike.ext
+        intro x
+        have hχ : chapter11CharacterAbelianization
+            ((e.symm χ).comp (chapter11AbelianizationMap G)) = e.symm χ := by
+          apply DFunLike.ext
+          intro y
+          obtain ⟨g, rfl⟩ := QuotientGroup.mk_surjective y
+          have hspec := chapter11CharacterAbelianization_spec
+            ((e.symm χ).comp (chapter11AbelianizationMap G))
+          change chapter11CharacterAbelianization
+              ((e.symm χ).comp (chapter11AbelianizationMap G))
+              (chapter11AbelianizationMap G g) =
+            (e.symm χ) (chapter11AbelianizationMap G g)
+          exact congrArg (fun ψ : G →ₜ* A => ψ g) hspec.symm
+        change e (chapter11CharacterAbelianization
+          ((e.symm χ).comp (chapter11AbelianizationMap G))) x = χ x
+        rw [hχ, e.apply_symm_apply] }
 
 theorem chapter11_abelian_continuous_character_equiv_apply
     {K G A : Type*} [Field K] [Group G] [CommGroup A]
@@ -426,7 +460,7 @@ theorem chapter11_abelian_continuous_character_equiv_apply
     (ρ : TopologicalAbelianization G →ₜ* A) :
     chapter11AbelianContinuousCharacterEquiv R ρ =
       ρ.comp R.reciprocity := by
-  sorry
+  rfl
 
 theorem chapter11_continuous_character_equiv_apply
     {K G A : Type*} [Field K] [Group G] [CommGroup A]
@@ -437,7 +471,7 @@ theorem chapter11_continuous_character_equiv_apply
     chapter11ContinuousCharacterEquiv R ρ =
       ((chapter11AbelianContinuousCharacterEquiv R)
         (chapter11CharacterAbelianization ρ)) := by
-  sorry
+  rfl
 
 theorem chapter11_theorem_11_1
     {K G A : Type*} [Field K] [Group G] [CommGroup A]
@@ -467,7 +501,34 @@ theorem chapter11_continuous_character_equiv_natural
     (R : Chapter11ReciprocityData K G) (f : A →ₜ* B) (ρ : G →ₜ* A) :
     (chapter11ContinuousCharacterEquiv R) (f.comp ρ) =
       f.comp ((chapter11ContinuousCharacterEquiv R) ρ) := by
-  sorry
+  have hchar : chapter11CharacterAbelianization (f.comp ρ) =
+      f.comp (chapter11CharacterAbelianization ρ) := by
+    apply DFunLike.ext
+    intro y
+    obtain ⟨g, rfl⟩ := QuotientGroup.mk_surjective y
+    have h₁ : f.comp ρ =
+        (chapter11CharacterAbelianization (f.comp ρ)).comp
+          (chapter11AbelianizationMap G) :=
+      chapter11CharacterAbelianization_spec (f.comp ρ)
+    have h₂ : ρ = (chapter11CharacterAbelianization ρ).comp
+        (chapter11AbelianizationMap G) :=
+      chapter11CharacterAbelianization_spec ρ
+    change chapter11CharacterAbelianization (f.comp ρ)
+        (chapter11AbelianizationMap G g) =
+      f (chapter11CharacterAbelianization ρ (chapter11AbelianizationMap G g))
+    calc
+      chapter11CharacterAbelianization (f.comp ρ)
+          (chapter11AbelianizationMap G g) = f (ρ g) := by
+            change ((chapter11CharacterAbelianization (f.comp ρ)).comp
+              (chapter11AbelianizationMap G)) g = (f.comp ρ) g
+            simpa [MonoidHom.comp_apply] using DFunLike.congr_fun h₁.symm g
+      f (ρ g) = f (chapter11CharacterAbelianization ρ (chapter11AbelianizationMap G g)) := by
+        exact congrArg (fun z : A => f z) (DFunLike.congr_fun h₂ g)
+  rw [chapter11_continuous_character_equiv_apply,
+    chapter11_continuous_character_equiv_apply, hchar]
+  apply DFunLike.ext
+  intro x
+  rfl
 
 def chapter11CharacterOfPair
     {K A : Type*} [Field K] [CommGroup A]
