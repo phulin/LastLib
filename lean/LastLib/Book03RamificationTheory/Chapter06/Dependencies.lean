@@ -170,8 +170,8 @@ theorem chapter06InfiniteUpperGroup_normal
     (chapter06InfiniteUpperGroup S v).Normal := by
   apply Subgroup.normal_iInf_normal
   intro N
-  exact (chapter05_upper_group_normal (S.upperProfile N)
-    (S.herbrand_bijective N) v).comap (chapter06QuotientMap N)
+  exact (chapter05_upper_group_normal (S.upperProfile N) v).comap
+    (chapter06QuotientMap N)
 
 instance chapter06InfiniteUpperGroup_normal_instance
     {P : ProfiniteGrp} (S : Chapter06InfiniteUpperSystem P) (v : ℝ) :

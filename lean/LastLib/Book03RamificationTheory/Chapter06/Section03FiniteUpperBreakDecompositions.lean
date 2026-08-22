@@ -90,12 +90,12 @@ theorem chapter06_upper_fixedSpace_invariant
     {L : Type u} {G : Type v} {V : Type w}
     [Field L] [Group G] [Finite G] [AddCommGroup V] [Module L V]
     (D : Chapter05RamificationFiltration G)
-    (hbij : Function.Bijective (chapter05HerbrandFunction D))
+    (_hbij : Function.Bijective (chapter05HerbrandFunction D))
     (ρ : Representation L G V) (u : ℝ) :
     chapter06SubmoduleInvariant ρ
       (chapter06FixedSpace ρ (chapter05UpperRamificationGroup D u)) := by
   let H : Subgroup G := chapter05UpperRamificationGroup D u
-  let hnormal : H.Normal := chapter05_upper_group_normal D hbij u
+  let hnormal : H.Normal := chapter05_upper_group_normal D u
   exact @chapter06_fixedSpace_invariant_of_normal L G V _ _ _ _ ρ H hnormal
 
 theorem chapter06_upper_fixedSpace_chain
@@ -200,7 +200,7 @@ theorem chapter06_upper_break_decomposition_exists_from_fixed_space_chain
     apply Subgroup.sSup_normal
     intro H hH
     rcases hH with ⟨w, hw, rfl⟩
-    exact chapter05_upper_group_normal D hbij w
+    exact chapter05_upper_group_normal D w
   have hchain_invariant : ∀ i : Fin (n + 1),
       chapter06SubmoduleInvariant ρ (chain i) := by
     intro i
@@ -1495,7 +1495,6 @@ bridges state the source's perfect-residue specialization explicitly.
 theorem chapter06_local_group_upper_breaks_integral
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
-    [Chapter05LocalDoldCongruenceInput]
     (D : Chapter05LocalGaloisUpperData K L)
     (habelian : ∀ σ τ : Gal(L / K), σ * τ = τ * σ)
     [PerfectField (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)] :
@@ -1507,7 +1506,6 @@ theorem chapter06_local_abelian_representation_breaks_integral
     {K L F V : Type*}
     [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
-    [Chapter05LocalDoldCongruenceInput]
     [Field F] [CharZero F] [AddCommGroup V] [Module F V]
     [FiniteDimensional F V]
     (D : Chapter05LocalGaloisUpperData K L)
