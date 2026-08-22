@@ -519,6 +519,27 @@ where $h_W(T)=\operatorname{Hom}_S(T,W)$. It is not generally surjective, but it
 
 We isolate the construction that turns the atlas into a scheme.
 
+**Lemma 4.1A (centers for graph closures).** Let $U,V$ be smooth separated $R$-schemes of finite type satisfying the full weak extension property over strict henselization,
+
+$$
+U(R^{\mathrm{sh}})=U_K(K^{\mathrm{sh}}),
+\qquad
+V(R^{\mathrm{sh}})=V_K(K^{\mathrm{sh}}),
+$$
+
+and let $\Gamma\subseteq U\times_RV$ be the schematic closure of a locally closed subscheme $\Gamma_K$ of the generic fiber. Then:
+
+1. $\Gamma$ is flat over $R$;
+2. every $K^{\mathrm{sh}}$-point of $\Gamma_K$ extends, uniquely, to an $R^{\mathrm{sh}}$-point of $\Gamma$, so the center hypothesis of Theorem 3.2 holds for $\Gamma$.
+
+In particular the hypothesis applies to closures inside $U\times_RV$ of graphs of generic isomorphisms between opens of a smooth separated variety, whose generic fibers are smooth.
+
+**Proof.** Flatness. Over a discrete valuation ring a finite-type scheme is flat exactly when its coordinate rings have no $\pi$-torsion. Let $I$ be the ideal of $\Gamma$ in an affine chart of $U\times_RV$ with coordinate ring $B$, flat over $R$. If $\pi f$ lies in $I$, then $\pi f$ vanishes on $\Gamma_K$; since $\pi$ is invertible after localizing to the generic fiber, $f$ vanishes on $\Gamma_K$, which means $f$ lies in the kernel of $B\to B\otimes_RK$, and that kernel is exactly $I$ because $\Gamma$ is the schematic closure of its generic fiber. So $B/I$ has no $\pi$-torsion and $\Gamma$ is flat.
+
+Centers. Let $\xi\in\Gamma_K(K^{\mathrm{sh}})\subseteq(U\times_RV)_K(K^{\mathrm{sh}})$ and let $x,y$ be its two coordinate points, in $U_K(K^{\mathrm{sh}})$ and $V_K(K^{\mathrm{sh}})$ respectively. By the weak extension property there are unique sections $\sigma_U:\operatorname{Spec}R^{\mathrm{sh}}\to U$ extending $x$ and $\sigma_V$ extending $y$; their product is a section $\sigma$ of $U\times_RV$ extending the point $\xi$ of the open subscheme $\Gamma_K$ of $\Gamma$. The preimage $\sigma^{-1}\Gamma$ is a closed subset containing the generic point; dually, since $\operatorname{Spec}R^{\mathrm{sh}}$ has underlying space two points with only one nontrivial open, any open or closed subset containing the generic point is everything. Hence $\sigma$ factors through the closed subscheme $\Gamma$, giving the required extension. Uniqueness follows from separatedness of $U\times_RV$: two extensions agreeing generically are equal. This produces a center for every $K^{\mathrm{sh}}$-point of the smooth generic fiber $\Gamma_K$ of the flat model $\Gamma$, which is precisely the hypothesis of Theorem 3.2 beyond properness. $\square$
+
+The lemma converts boundedness data into smoothening input: once finitely many charts satisfy the full weak extension property, all overlap and graph closures between them inherit it and can be smoothened without further hypotheses.
+
 **Theorem 4.1 (bounded group extension).** Let $G/K$ be a smooth separated group variety. Suppose:
 
 1. $G$ has a weak Néron model $W$ of finite type;
@@ -529,19 +550,19 @@ Then the sheaf $T\mapsto\operatorname{Hom}_K(T_K,G)$ on smooth $R$-schemes is re
 
 **Proof.** First pass to a finite extension over which a finite translate cover of $G$ is defined, enlarge it to a Galois extension, and include every conjugate chart. The graph smoothenings descend the resulting charts to a smooth $R$-space $U$ with a generically surjective map to $G$. A translate need not itself extend as an $R$-section; this is why one descends its graph rather than pretending that translation already exists integrally.
 
-For two charts $U_i,U_j$, consider the generic isomorphism induced by translation on the overlap of their generic images. Take the closure of its graph in $U_i\times_RU_j$, smoothen it, and retain the open on which both projections are étale. Over $R^{\mathrm{sh}}$ these projections identify exactly those sections having the same generic image: the weak extension property gives existence, and separatedness of $G$ gives uniqueness. Thus these overlap spaces define an étale equivalence relation
+For two charts $U_i,U_j$, consider the generic isomorphism induced by translation on the overlap of their generic images. Take the closure of its graph $\Gamma_{ij}$ in $U_i\times_RU_j$. Lemma 4.1A verifies the center hypothesis of Theorem 3.2 for this closure — it is flat with smooth generic fiber, and every generic point extends by the weak extension property of the two charts — so Theorem 3.2 supplies the smoothening; retain the open on which both projections are étale. Over $R^{\mathrm{sh}}$ these projections identify exactly those sections having the same generic image: the weak extension property gives existence, and separatedness of $G$ gives uniqueness. Thus these overlap spaces define an étale equivalence relation
 
 $$
 R_U\rightrightarrows U. \tag{4.3}
 $$
 
-The relation is effective. Indeed, on affine étale neighborhoods of a special point, each projection is étale and radicial: two geometric points or two infinitesimal lifts with the same generic map coincide by separatedness and the weak extension property. An étale radicial morphism is an open immersion. The local quotients are therefore ordinary gluings along open subschemes. Equality of the generic translations gives the cocycle, again by separatedness. Gluing the charts gives a smooth $R$-scheme $\mathcal G$.
+The relation is effective. Indeed, on affine étale neighborhoods of a special point, each projection is étale and radicial: two geometric points or two infinitesimal lifts with the same generic map coincide by separatedness and the weak extension property. By Lemma 3.3 an étale radicial morphism is an open immersion. The local quotients are therefore ordinary gluings along open subschemes. Equality of the generic translations gives the cocycle, again by separatedness. Gluing the charts gives a smooth $R$-scheme $\mathcal G$.
 
 The same graph construction for multiplication shows that the generic product maps on $U_i\times U_j$ are compatible with (4.3) and descend to $\mathcal G\times_R\mathcal G\to\mathcal G$. Inversion and the identity descend similarly. Associativity and the group identities hold generically; both sides are morphisms from a flat scheme to a separated scheme, so they hold everywhere.
 
 By construction, every generic map from a smooth $T$ lands étale-locally in a chart and extends there. The overlap relation glues the local extensions, proving the mapping property. The diagonal is closed because two charts are identified only where their generic maps agree and the graph closures were taken inside separated products. Thus $\mathcal G$ is separated and locally of finite type. If only finitely many special translate classes occur, finitely many charts cover $\mathcal G$, making it finite type. $\square$
 
-The third hypothesis is not an extra existence assumption in the applications: Theorem 3.2 supplies those smoothenings. It is stated to expose the two inputs. Smoothening provides charts; the generic group law tells us exactly how to glue them.
+The third hypothesis is not an extra existence assumption in the applications: Theorem 3.2 supplies the smoothenings, and Lemma 4.1A verifies its center hypothesis for every graph closure between charts that individually satisfy the full weak extension property. Smoothening provides charts; the generic group law tells us exactly how to glue them.
 
 ### 4.3 The existence theorem for abelian varieties
 
@@ -551,7 +572,7 @@ The third hypothesis is not an extra existence assumption in the applications: T
 
 Choose a projective flat $R$-model $X$ of $A$ and apply Theorem 3.2 to obtain a weak model $W$. Since $A$ is quasi-compact, finitely many geometric translates of the nonempty open $W_K$ cover $A$. Smoothen the closures of their translate, multiplication, inverse, and overlap graphs. Theorem 4.1 produces a Néron lft-model $\mathcal A$.
 
-It remains to show that only finitely many integral charts occur. Use the formal-section space from the proof of Theorem 3.2 after completing $R^{\mathrm{sh}}$. Properness of $X$ identifies its formal sections with all points of $A$ over the completed fraction field, and this space is quasi-compact. Every graph chart in the lft-model contains an open cylinder of formal sections, because the chart is smooth and extension is unique. These cylinders cover the formal-section space by the mapping property built into the gluing. A finite subcollection therefore covers it.
+It remains to show that only finitely many integral charts occur. Use the formal-section space from the proof of Theorem 3.2 after completing $R^{\mathrm{sh}}$; Lemma 3.6 makes it quasi-compact. Two identifications feed the argument. First, since the chosen projective model $X$ is proper over $R$, the valuative criterion applied to the discrete valuation ring $R^{\mathrm{sh}}$ with fraction field $K^{\mathrm{sh}}$ identifies points of $A$ over $K^{\mathrm{sh}}$ with sections of $X$ over $R^{\mathrm{sh}}$, and separatedness makes the identification unique; over the completion the same holds for $\widehat R^{\mathrm{sh}}$ and its fraction field. Excellence guarantees that passage between $R^{\mathrm{sh}}$ and $\widehat R^{\mathrm{sh}}$ changes nothing here, because a section over the completion of an excellent henselian DVR descends to a neighborhood, and both schemes are separated. Second, each graph chart in the lft-model contains an open cylinder of formal sections — those whose center lies in the chart's open smooth locus — because the chart is smooth and extension within it is unique. These cylinders cover the formal-section space by the mapping property built into the gluing: every formal section represents a generic map into $A$, which lands in some translate of $W_K$ and hence in some chart. A finite subcollection therefore covers it.
 
 Every geometric point of the special fiber of the lft-model lifts to a formal section by smoothness, so the same finite collection covers the whole special fiber. Its generic fiber is the quasi-compact variety $A$, for which finitely many generic chart opens suffice as well. The complement of these finitely many charts has empty generic and special fibers and is therefore empty. Each selected chart and transition is defined over a finite étale subextension; adjoining its finite Galois orbit descends the finite collection to $R$. Hence finitely many finite-type charts cover $\mathcal A$.
 
