@@ -619,7 +619,8 @@ theorem chapter04_unramified_residue_conjugation_is_an_isomorphism
     (C : Chapter04ResidueConjugationData K D k barD)
     (hsurj : Function.Surjective C.conjugation) :
     Nonempty (Chapter04ResidueConjugationIsomorphism C) := by
-  sorry
+  let e := Equiv.ofBijective C.conjugation ⟨C.conjugation_injective, hsurj⟩
+  exact ⟨{ toEquiv := e, map_add := C.conjugation_mul }⟩
 
 /- The pinned cyclic-algebra API packages the presentation together with the
   chosen parameter as a unit.  These small bridges install the instances
@@ -704,14 +705,16 @@ theorem chapter04_division_parameter_power_is_central
     (hconj : ∀ x : D, piD ^ d * x = x * piD ^ d)
     :
     ∃ c : K, algebraMap K D c = piD ^ d := by
-  sorry
+  exact Algebra.mem_bot.mp (Algebra.IsCentral.out
+    ((Subalgebra.mem_center_iff).2 (fun x => (hconj x).symm)))
 
 theorem chapter04_division_parameter_power_is_uniformizer_times_unit
     {K D : Type*} [Field K] [DivisionRing D] [Algebra K D]
     (piD : D) (π : K) (d : ℕ)
     (hfactor : ∃ c : K, c ≠ 0 ∧ piD ^ d = algebraMap K D (c * π)) :
     ∃ c : Kˣ, piD ^ d = algebraMap K D ((c : K) * π) := by
-  sorry
+  exact hfactor.elim (fun c hc =>
+    ⟨Units.mk0 c hc.1, by simpa using hc.2⟩)
 
 theorem chapter04_unramified_unit_norm_normalizes_parameter
     {K L : Type*} [Field K] [Field L] [Algebra K L]
