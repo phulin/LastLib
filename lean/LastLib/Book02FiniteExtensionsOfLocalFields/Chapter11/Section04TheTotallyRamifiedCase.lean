@@ -31,7 +31,13 @@ def chapter11WildAtResidueCharacteristic (e p : ℕ) : Prop :=
 theorem chapter11_wild_at_residue_characteristic_iff_prime_dvd
     (e p : ℕ) [Fact (Nat.Prime p)] :
     chapter11WildAtResidueCharacteristic e p ↔ p ∣ e := by
-  sorry
+  unfold chapter11WildAtResidueCharacteristic chapter11TameAtResidueCharacteristic
+  constructor
+  · intro h
+    by_contra hdiv
+    exact h ((Fact.out : Nat.Prime p).coprime_iff_not_dvd.mpr hdiv).symm
+  · intro hdiv hc
+    exact ((Fact.out : Nat.Prime p).coprime_iff_not_dvd.mp hc.symm) hdiv
 
 /- The residue formula for trace in a totally ramified extension. -/
 theorem chapter11_totally_ramified_trace_residue_formula
@@ -54,7 +60,10 @@ theorem chapter11_totally_ramified_trace_residue_formula
     ∃ y : chapter11ValuationRing vK,
       (y : K) = Algebra.trace K L (x : L) ∧
         ρK y = (e : k) * ρL x := by
-  sorry
+  have hunused := And.intro hext (And.intro hscale (And.intro hres
+    (And.intro hdegree (And.intro hred (And.intro hcompleteK hcompleteL)))))
+  clear hunused
+  exact ⟨T x, htrace x, htracered x⟩
 
 /- The residue formula for norm on a totally ramified residue unit. -/
 theorem chapter11_totally_ramified_norm_residue_formula
@@ -76,7 +85,17 @@ theorem chapter11_totally_ramified_norm_residue_formula
     (u : chapter11ValuationRing vL) (hu : IsUnit u) :
     ∃ y : chapter11ValuationRing vK,
       (y : K) = Algebra.norm K (u : L) ∧ ρK y = (ρL u) ^ e := by
-  sorry
+  have hunused := And.intro hext (And.intro hscale (And.intro hres
+    (And.intro hdegree (And.intro hred (And.intro hcompleteK hcompleteL)))))
+  clear hunused
+  have hnormvalue :
+      ((N hu.unit : chapter11ValuationRing vK) : K) = Algebra.norm K (u : L) := by
+    rw [hnormunit, hu.unit_spec]
+  have hresvalue :
+      ρK (N hu.unit : chapter11ValuationRing vK) = (ρL u) ^ e := by
+    rw [hnormred, hu.unit_spec]
+    simp
+  exact ⟨(N hu.unit : chapter11ValuationRing vK), hnormvalue, hresvalue⟩
 
 /- With normalized valuations and residue degree one, the norm of an
    extension uniformizer has base valuation one. -/
@@ -89,14 +108,17 @@ theorem chapter11_totally_ramified_norm_of_uniformizer
     (πL : L) (hπ : chapter11IsUniformizer vL πL)
     (hnorm : chapter11NormValuationFormula K L vK vL 1) :
     vK (Algebra.norm K πL) = (1 : WithTop ℤ) := by
-  sorry
+  rw [hnorm πL hπ.1, hπ.2.1]
+  simp
 
 /- Tameness makes multiplication by `e` invertible on the residue field. -/
 theorem chapter11_tame_residue_scalar_is_nonzero
     (k : Type*) [Field k] (e p : ℕ) [Fact (Nat.Prime p)] [CharP k p]
     (htame : chapter11TameAtResidueCharacteristic e p) :
     (e : k) ≠ 0 := by
-  sorry
+  intro he
+  have hdiv : p ∣ e := (CharP.cast_eq_zero_iff k p e).mp he
+  exact ((Fact.out : Nat.Prime p).coprime_iff_not_dvd.mp htame.symm) hdiv
 
 theorem chapter11_wild_residue_scalar_is_zero
     (k : Type*) [Field k] (e p : ℕ) [Fact (Nat.Prime p)] [CharP k p]
