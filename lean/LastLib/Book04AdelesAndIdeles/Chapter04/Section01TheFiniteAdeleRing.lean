@@ -202,12 +202,154 @@ abbrev Chapter04RationalProfiniteIntegers :=
 theorem chapter04_rational_finite_adele_ring_is_the_padic_restricted_product :
     Nonempty (Chapter04RationalFiniteRestrictedProduct ≃+*
       Chapter04FiniteAdeleRing ℚ) := by
-  sorry
+  let e : Chapter04FinitePlace ℚ ≃ Chapter04RationalPrime :=
+    Rat.HeightOneSpectrum.primesEquiv (R := 𝓞 ℚ)
+  let f : Chapter04FinitePlace ℚ → Chapter04RationalPrime := fun v => e v
+  let φ : ∀ v : Chapter04FinitePlace ℚ,
+      Chapter04RationalPadic (f v) →+* Chapter04FiniteLocalField ℚ v :=
+    fun v =>
+      (Rat.HeightOneSpectrum.adicCompletion.padicEquiv v).symm.toAlgEquiv.toRingEquiv.toRingHom
+  have hf : Filter.Tendsto f Filter.cofinite Filter.cofinite := by
+    change Filter.Tendsto (fun v : IsDedekindDomain.HeightOneSpectrum (𝓞 ℚ) => e v)
+      Filter.cofinite Filter.cofinite
+    exact e.injective.tendsto_cofinite
+  have hφ : ∀ᶠ v : Chapter04FinitePlace ℚ in Filter.cofinite,
+      MapsTo (φ v) (Chapter04RationalPadicIntegerSubring (f v) : Set _)
+        (chapter04FiniteLocalIntegerSet ℚ v) := by
+    exact Filter.Eventually.of_forall (fun v x hx => by
+      let y : Chapter04RationalPadicInteger (f v) := ⟨x, hx⟩
+      have hcoe :=
+        Rat.HeightOneSpectrum.adicCompletionIntegers.coe_padicIntEquiv_symm_apply v y
+      change (Rat.HeightOneSpectrum.adicCompletion.padicEquiv v).symm x ∈
+        (v.adicCompletionIntegers ℚ : Set (v.adicCompletion ℚ))
+      have hcoe' :
+          ((Rat.HeightOneSpectrum.adicCompletionIntegers.padicIntEquiv v).symm y :
+            v.adicCompletion ℚ) =
+          (Rat.HeightOneSpectrum.adicCompletion.padicEquiv v).symm x := by
+        simpa [y] using hcoe
+      rw [← hcoe']
+      exact (Rat.HeightOneSpectrum.adicCompletionIntegers.padicIntEquiv v).symm y |>.property)
+  let g : Chapter04RationalPrime → Chapter04FinitePlace ℚ := fun p => e.symm p
+  let ψ : ∀ p : Chapter04RationalPrime,
+      Chapter04FiniteLocalField ℚ (g p) →+* Chapter04RationalPadic p :=
+    fun p =>
+      ((Rat.HeightOneSpectrum.adicCompletion.padicEquiv (e.symm p)).trans
+        (ContinuousAlgEquiv.cast
+          (A := fun q : Chapter04RationalPrime => Chapter04RationalPadic q)
+          (e.apply_symm_apply p))).toAlgEquiv.toRingEquiv.toRingHom
+  have hg : Filter.Tendsto g Filter.cofinite Filter.cofinite := by
+    change Filter.Tendsto (fun p : Chapter04RationalPrime => e.symm p)
+      Filter.cofinite Filter.cofinite
+    exact e.symm.injective.tendsto_cofinite
+  have hψ : ∀ᶠ p : Chapter04RationalPrime in Filter.cofinite,
+      MapsTo (ψ p) (chapter04FiniteLocalIntegerSet ℚ (g p))
+        (Chapter04RationalPadicIntegerSubring p : Set _) := by
+    exact Filter.Eventually.of_forall (fun p x hx => by
+      let y : Chapter04FiniteLocalIntegerRing ℚ (g p) := ⟨x, hx⟩
+      let z : Chapter04RationalPadicInteger p :=
+        (PadicInt.adicCompletionIntegersEquiv (𝓞 ℚ) p).symm y
+      have hcoe := PadicInt.coe_adicCompletionIntegersEquiv_symm_apply (𝓞 ℚ) p y
+      change (Padic.adicCompletionEquiv (𝓞 ℚ) p).symm x ∈
+        (Chapter04RationalPadicIntegerSubring p : Set (Chapter04RationalPadic p))
+      have hcoe' :
+          (z : Chapter04RationalPadic p) =
+          (Padic.adicCompletionEquiv (𝓞 ℚ) p).symm x := by
+        simpa [y] using hcoe
+      rw [← hcoe']
+      exact z.property)
+  let F : Chapter04RationalFiniteRestrictedProduct →+*
+      Chapter04FiniteAdeleRing ℚ :=
+    RestrictedProduct.mapAlongRingHom
+      (R₁ := fun p : Chapter04RationalPrime => Chapter04RationalPadic p)
+      (R₂ := fun v : Chapter04FinitePlace ℚ => Chapter04FiniteLocalField ℚ v)
+      (B₁ := fun p => Chapter04RationalPadicIntegerSubring p)
+      (B₂ := fun v => v.adicCompletionIntegers ℚ)
+      f hf φ hφ
+  let G : Chapter04FiniteAdeleRing ℚ →+*
+      Chapter04RationalFiniteRestrictedProduct :=
+    RestrictedProduct.mapAlongRingHom
+      (R₁ := fun v : Chapter04FinitePlace ℚ => Chapter04FiniteLocalField ℚ v)
+      (R₂ := fun p : Chapter04RationalPrime => Chapter04RationalPadic p)
+      (B₁ := fun v => v.adicCompletionIntegers ℚ)
+      (B₂ := fun p => Chapter04RationalPadicIntegerSubring p)
+      g hg ψ hψ
+  let E : (∀ v : Chapter04FinitePlace ℚ, Chapter04FiniteLocalField ℚ v) ≃+*
+      (∀ p : Chapter04RationalPrime, Chapter04RationalPadic p) :=
+    (RingEquiv.piCongrRight
+      (fun v => (Rat.HeightOneSpectrum.adicCompletion.padicEquiv v).toRingEquiv)).trans
+      (RingEquiv.piCongrLeft
+        (fun p : Chapter04RationalPrime => Chapter04RationalPadic p) e)
+  have hF_eq (x : Chapter04RationalFiniteRestrictedProduct) :
+      (F x : ∀ v : Chapter04FinitePlace ℚ, Chapter04FiniteLocalField ℚ v) =
+        E.symm (x : ∀ p : Chapter04RationalPrime, Chapter04RationalPadic p) := by
+    funext v
+    rfl
+  have hG_eq (y : Chapter04FiniteAdeleRing ℚ) :
+      (G y : ∀ p : Chapter04RationalPrime, Chapter04RationalPadic p) =
+        E (y : ∀ v : Chapter04FinitePlace ℚ, Chapter04FiniteLocalField ℚ v) := by
+    funext p
+    change (ψ p) (y (g p)) = _
+    simp [E, g, ψ]
+    have hcast :
+        (ContinuousAlgEquiv.cast (R := ℚ)
+          (A := fun q : Chapter04RationalPrime => Chapter04RationalPadic q)
+          (e.apply_symm_apply p))
+            ((Rat.HeightOneSpectrum.adicCompletion.padicEquiv (e.symm p))
+              (y (e.symm p))) =
+          Equiv.cast
+            (congrArg (fun q : Chapter04RationalPrime => Chapter04RationalPadic q)
+              (e.apply_symm_apply p))
+            ((Rat.HeightOneSpectrum.adicCompletion.padicEquiv (e.symm p))
+              (y (e.symm p))) := by
+      exact ContinuousAlgEquiv.cast_apply _ _
+    rw [hcast]
+    change cast
+      (congrArg (fun q : Chapter04RationalPrime => Chapter04RationalPadic q)
+        (e.apply_symm_apply p))
+      ((Rat.HeightOneSpectrum.adicCompletion.padicEquiv (e.symm p))
+      (y (e.symm p))) = _
+    simp only [eqRec_eq_cast]
+  have hFG : Function.LeftInverse G F := by
+    intro x
+    apply Subtype.ext
+    have h : (G (F x) : ∀ p : Chapter04RationalPrime, Chapter04RationalPadic p) =
+        (x : ∀ p : Chapter04RationalPrime, Chapter04RationalPadic p) := by
+      rw [hG_eq, hF_eq]
+      exact E.apply_symm_apply _
+    exact h
+  have hGF : Function.RightInverse G F := by
+    intro y
+    apply Subtype.ext
+    have h : (F (G y) : ∀ v : Chapter04FinitePlace ℚ, Chapter04FiniteLocalField ℚ v) =
+        (y : ∀ v : Chapter04FinitePlace ℚ, Chapter04FiniteLocalField ℚ v) := by
+      rw [hF_eq, hG_eq]
+      exact E.symm_apply_apply _
+    exact h
+  have hbij : Function.Bijective F := by
+    refine ⟨?_, ?_⟩
+    · intro x₁ x₂ h
+      apply hFG.injective
+      rw [h]
+    · intro y
+      exact ⟨G y, hGF y⟩
+  exact ⟨RingEquiv.ofBijective F hbij⟩
 
 theorem chapter04_rational_profinite_integers_is_the_product_of_padic_integers :
     Nonempty (Chapter04RationalProfiniteIntegers ≃+*
       Chapter04FiniteIntegralAdele ℚ) := by
-  sorry
+  let e : Chapter04FinitePlace ℚ ≃ Chapter04RationalPrime :=
+    Rat.HeightOneSpectrum.primesEquiv (R := 𝓞 ℚ)
+  let E : (∀ p : Chapter04RationalPrime, Chapter04RationalPadicInteger p) ≃+*
+      (∀ v : Chapter04FinitePlace ℚ, Chapter04FiniteLocalIntegerRing ℚ v) :=
+    (RingEquiv.piCongrLeft
+      (fun p : Chapter04RationalPrime => Chapter04RationalPadicInteger p) e).symm.trans
+      (RingEquiv.piCongrRight
+      (R := fun v : Chapter04FinitePlace ℚ => Chapter04RationalPadicInteger (e v))
+      (S := fun v : Chapter04FinitePlace ℚ => Chapter04FiniteLocalIntegerRing ℚ v)
+      (fun v : Chapter04FinitePlace ℚ =>
+        (Rat.HeightOneSpectrum.adicCompletionIntegers.padicIntEquiv
+          (R := 𝓞 ℚ) v).symm.toRingEquiv))
+  exact ⟨E⟩
 
 def chapter04RationalFamilyIsFiniteAdele
     (x : ∀ p : Chapter04RationalPrime, Chapter04RationalPadic p) : Prop :=
@@ -220,7 +362,28 @@ def chapter04RationalInversePrimeFamily :
 
 theorem chapter04_rational_inverse_prime_family_not_a_finite_adele :
     ¬ chapter04RationalFamilyIsFiniteAdele chapter04RationalInversePrimeFamily := by
-  sorry
+  intro h
+  have hmem : ∀ᶠ p : Chapter04RationalPrime in Filter.cofinite,
+      chapter04RationalInversePrimeFamily p ∈ Chapter04RationalPadicIntegerSubring p := by
+    exact h
+  let hInfinite : Infinite Chapter04RationalPrime :=
+    Infinite.of_injective
+      (fun p : Nat.Primes => (⟨p.1, p.2⟩ : Chapter04RationalPrime)) (by
+        intro p q hpq
+        exact Subtype.ext (congrArg Subtype.val hpq))
+  let _ := hInfinite
+  obtain ⟨p, hp⟩ := hmem.exists
+  have hp_nonzero : (p.1 : Chapter04RationalPadic p) ≠ 0 := by
+    exact_mod_cast p.2.ne_zero
+  let hp_fact : Fact p.1.Prime := ⟨p.2⟩
+  let _ := hp_fact
+  have hp_norm : ‖(p.1 : Chapter04RationalPadic p)‖ < 1 := by
+    rw [Padic.norm_natCast_lt_one_iff]
+  have hp_inv_norm : 1 < ‖(chapter04RationalInversePrimeFamily p)‖ := by
+    rw [chapter04RationalInversePrimeFamily, norm_inv]
+    exact (one_lt_inv₀ (norm_pos_iff.mpr hp_nonzero)).2 hp_norm
+  change ‖chapter04RationalInversePrimeFamily p‖ ≤ 1 at hp
+  exact (not_lt_of_ge hp) hp_inv_norm
 
 def chapter04RationalSingleInversePrimeFamily (p₀ : Chapter04RationalPrime) :
     ∀ p : Chapter04RationalPrime, Chapter04RationalPadic p :=
@@ -230,7 +393,10 @@ theorem chapter04_rational_single_inverse_prime_family_is_a_finite_adele
     (p₀ : Chapter04RationalPrime) :
     chapter04RationalFamilyIsFiniteAdele
       (chapter04RationalSingleInversePrimeFamily p₀) := by
-  sorry
+  classical
+  rw [chapter04RationalFamilyIsFiniteAdele]
+  filter_upwards [Filter.eventually_cofinite_ne p₀] with p hp
+  simp [chapter04RationalSingleInversePrimeFamily, hp]
 
 def chapter04RationalDiagonalFamily (a : ℚ) :
     ∀ p : Chapter04RationalPrime, Chapter04RationalPadic p :=
@@ -238,7 +404,38 @@ def chapter04RationalDiagonalFamily (a : ℚ) :
 
 theorem chapter04_rational_diagonal_family_is_a_finite_adele (a : ℚ) :
     chapter04RationalFamilyIsFiniteAdele (chapter04RationalDiagonalFamily a) := by
-  sorry
+  let e : Chapter04FinitePlace ℚ ≃ Chapter04RationalPrime :=
+    Rat.HeightOneSpectrum.primesEquiv (R := 𝓞 ℚ)
+  let x : Chapter04FiniteAdeleRing ℚ :=
+    IsDedekindDomain.FiniteAdeleRing.algebraMap (𝓞 ℚ) ℚ a
+  have hx : ∀ᶠ v : Chapter04FinitePlace ℚ in Filter.cofinite,
+      x v ∈ chapter04FiniteLocalIntegerSet ℚ v :=
+    chapter04_finiteAdele_integrality_is_cofinite ℚ x
+  have hx' : ∀ᶠ p : Chapter04RationalPrime in Filter.cofinite,
+      x (e.symm p) ∈ chapter04FiniteLocalIntegerSet ℚ (e.symm p) :=
+    e.symm.injective.tendsto_cofinite hx
+  rw [chapter04RationalFamilyIsFiniteAdele]
+  filter_upwards [hx'] with p hp
+  have hpadic :=
+    (Rat.HeightOneSpectrum.adicCompletion.padicEquiv_bijOn (e.symm p)).1
+      hp
+  let q : Nat.Primes := Rat.HeightOneSpectrum.primesEquiv (e.symm p)
+  have hqp : q.1 = p.1 := by
+    change (Rat.HeightOneSpectrum.primesEquiv (e.symm p)).1 = p.1
+    exact congrArg Subtype.val (e.apply_symm_apply p)
+  have hxcoord : x (e.symm p) =
+      algebraMap ℚ (Chapter04FiniteLocalField ℚ (e.symm p)) a := by
+    change
+      (algebraMap ℚ (Chapter04FiniteAdeleRing ℚ) a) (e.symm p) = _
+    exact IsDedekindDomain.FiniteAdeleRing.algebraMap_apply (𝓞 ℚ) ℚ a (e.symm p)
+  have hcoord :
+      (Rat.HeightOneSpectrum.adicCompletion.padicEquiv (e.symm p))
+          (x (e.symm p)) =
+        algebraMap ℚ (@Padic q.1 ⟨q.2⟩) a := by
+    rw [hxcoord]
+    simp [q]
+  rw [hcoord] at hpadic
+  simpa [chapter04RationalDiagonalFamily, q, e, hqp] using hpadic
 
 theorem chapter04_rational_diagonal_family_is_the_canonical_global_diagonal
     (a : ℚ) :
@@ -246,7 +443,16 @@ theorem chapter04_rational_diagonal_family_is_the_canonical_global_diagonal
       x = IsDedekindDomain.FiniteAdeleRing.algebraMap (𝓞 ℚ) ℚ a ∧
         ∀ v : Chapter04FinitePlace ℚ,
           x v = (a : Chapter04FiniteLocalField ℚ v) := by
-  sorry
+  refine ⟨algebraMap ℚ (Chapter04FiniteAdeleRing ℚ) a, rfl, ?_⟩
+  intro v
+  have hcoe : algebraMap ℚ (Chapter04FiniteLocalField ℚ v) a =
+      (a : Chapter04FiniteLocalField ℚ v) := by
+    simp
+  calc
+    (algebraMap ℚ (Chapter04FiniteAdeleRing ℚ) a) v =
+        algebraMap ℚ (Chapter04FiniteLocalField ℚ v) a :=
+      IsDedekindDomain.FiniteAdeleRing.algebraMap_apply (𝓞 ℚ) ℚ a v
+    _ = (a : Chapter04FiniteLocalField ℚ v) := hcoe
 
 end
 
