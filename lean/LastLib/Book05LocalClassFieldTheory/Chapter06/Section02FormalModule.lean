@@ -226,16 +226,55 @@ theorem chapter06FormalGroupLaw_associative
         (chapter06FormalGroupOperation F.series x y) z =
       chapter06FormalGroupOperation F.series x
         (chapter06FormalGroupOperation F.series y z) := by
-  sorry
+  change MvPowerSeries.subst
+      (fun i : Fin 2 => if i = 0 then
+        MvPowerSeries.subst (fun j : Fin 2 => if j = 0 then x else y) F.series
+        else z) F.series =
+    MvPowerSeries.subst
+      (fun i : Fin 2 => if i = 0 then x else
+        MvPowerSeries.subst (fun j : Fin 2 => if j = 0 then y else z) F.series) F.series
+  have hxy : (fun j : Fin 2 => if j = 0 then x else y) = ![x, y] := by
+    funext j
+    fin_cases j <;> simp
+  have hyz : (fun j : Fin 2 => if j = 0 then y else z) = ![y, z] := by
+    funext j
+    fin_cases j <;> simp
+  rw [hxy, hyz]
+  have hleft : (fun i : Fin 2 => if i = 0 then
+      MvPowerSeries.subst ![x, y] F.series else z) =
+      ![MvPowerSeries.subst ![x, y] F.series, z] := by
+    funext i
+    fin_cases i <;> simp
+  have hright : (fun i : Fin 2 => if i = 0 then x else
+      MvPowerSeries.subst ![y, z] F.series) =
+      ![x, MvPowerSeries.subst ![y, z] F.series] := by
+    funext i
+    fin_cases i <;> simp
+  rw [hleft, hright]
+  exact F.formalGroup.assoc'
+    (PowerSeries.HasSubst.of_constantCoeff_zero' hx)
+    (PowerSeries.HasSubst.of_constantCoeff_zero' hy)
+    (PowerSeries.HasSubst.of_constantCoeff_zero' hz)
 
 theorem chapter06FormalGroupLaw_commutative
     {O : Type*} [CommRing O] (F : Chapter06FormalGroupLaw O)
     (x y : Chapter06UnivariateSeries O)
     (hx : MvPowerSeries.constantCoeff x = 0)
     (hy : MvPowerSeries.constantCoeff y = 0) :
-    chapter06FormalGroupOperation F.series x y =
+      chapter06FormalGroupOperation F.series x y =
       chapter06FormalGroupOperation F.series y x := by
-  sorry
+  change MvPowerSeries.subst (fun i : Fin 2 => if i = 0 then x else y) F.series =
+    MvPowerSeries.subst (fun i : Fin 2 => if i = 0 then y else x) F.series
+  have hxy : (fun i : Fin 2 => if i = 0 then x else y) = ![x, y] := by
+    funext i
+    fin_cases i <;> simp
+  have hyx : (fun i : Fin 2 => if i = 0 then y else x) = ![y, x] := by
+    funext i
+    fin_cases i <;> simp
+  rw [hxy, hyx]
+  exact F.formalGroup.comm'
+    (PowerSeries.HasSubst.of_constantCoeff_zero' hx)
+    (PowerSeries.HasSubst.of_constantCoeff_zero' hy)
 
 /-- The property that a series is an endomorphism of a formal group law. -/
 def chapter06IsFormalEndomorphism
@@ -305,7 +344,10 @@ theorem chapter06_theorem_6_1
           N.scalar D.uniformizer = f →
             M.formalGroup.series = N.formalGroup.series ∧
               ∀ a, M.scalar a = N.scalar a := by
-  sorry
+  obtain ⟨M, hM⟩ := chapter06_formal_module_construction_exists D f hf
+  refine ⟨M, hM, ?_⟩
+  intro N _hN
+  exact chapter06_formal_module_construction_unique D f hf M N
 
 /-- A chosen representative of the unique formal module. -/
 noncomputable def chapter06FormalModuleOf
