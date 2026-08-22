@@ -165,14 +165,22 @@ structure Chapter11PrimeToResidueCyclotomicData
     where
   residueCharacteristic : ℕ
   residueCharacteristic_prime : Nat.Prime residueCharacteristic
+  residueCharacteristic_eq_base :
+    residueCharacteristic =
+      LastLib.Book05LocalClassFieldTheory.Chapter08.chapter08ResidueCharacteristic
+        D.base.valuation
   coefficientPrime : ℕ
   coefficientPrime_prime : Nat.Prime coefficientPrime
   primes_distinct : coefficientPrime ≠ residueCharacteristic
   residueCardinality : ℕ
-  residueCardinalityMap : ℕ → A
+  residueCardinality_eq_base :
+    residueCardinality =
+      Nat.card (LastLib.Book05LocalClassFieldTheory.Chapter08.Chapter08ResidueField
+        D.base.valuation)
+  residueCardinalityImage : A
   parameter : A
-  parameter_eq_residueCardinalityMap :
-    parameter = residueCardinalityMap residueCardinality
+  parameter_eq_residueCardinalityImage :
+    parameter = residueCardinalityImage
   character : TopologicalAbelianization G →ₜ* A
   trivial_on_units :
     ∀ u : D.unitGroup,

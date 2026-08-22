@@ -51,7 +51,23 @@ def chapter11ProfiniteExtensionOf
     (χ : Kˣ →ₜ* A) : Prop :=
   ∃ F : Chapter11ProfiniteCompletion Kˣ →ₜ* A,
     ∀ x : Kˣ,
-      F (ProfiniteGrp.ProfiniteCompletion.etaFn (GrpCat.of Kˣ) x) = χ x
+      F (LastLib.Book05LocalClassFieldTheory.Chapter07.chapter07OpenProfiniteCompletionEtaFn
+        Kˣ x) = χ x
+
+theorem chapter11_profinite_extension_unique
+    {K A : Type*} [Field K] [CommGroup A]
+    [TopologicalSpace Kˣ] [TopologicalSpace A] [IsTopologicalGroup A]
+    [T2Space A]
+    (χ : Kˣ →ₜ* A)
+    {F₁ F₂ : Chapter11ProfiniteCompletion Kˣ →ₜ* A}
+    (h₁ : ∀ x : Kˣ,
+      F₁ (LastLib.Book05LocalClassFieldTheory.Chapter07.chapter07OpenProfiniteCompletionEtaFn
+        Kˣ x) = χ x)
+    (h₂ : ∀ x : Kˣ,
+      F₂ (LastLib.Book05LocalClassFieldTheory.Chapter07.chapter07OpenProfiniteCompletionEtaFn
+        Kˣ x) = χ x) :
+    F₁ = F₂ := by
+  sorry
 
 def chapter11FiniteIndexNeighborhoodCondition
     {K A : Type*} [Field K] [CommGroup A]
@@ -90,7 +106,6 @@ theorem chapter11_profinite_extension_iff_finite_index_neighborhood_condition_of
 /-!
 The main classification is stated as an equivalence.  The proof uses the
 completion comparison in `Chapter11ReciprocityData` and the universal
-property of `ProfiniteGrp.ProfiniteCompletion`.
 -/
 
 noncomputable def chapter11AbelianContinuousCharacterEquiv

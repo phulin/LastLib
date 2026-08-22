@@ -3,11 +3,11 @@ import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.GroupTheory.OrderOfElement
 import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
 import Mathlib.RingTheory.Norm.Basic
-import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Completion
 import Mathlib.Topology.Algebra.ContinuousMonoidHom
 import Mathlib.Topology.Algebra.Group.TopologicalAbelianization
 import Mathlib.Topology.Algebra.Group.Units
 import Mathlib.Topology.Algebra.OpenSubgroup
+import LastLib.Book05LocalClassFieldTheory.Chapter07.Section05ProfiniteCompletion
 import LastLib.Book05LocalClassFieldTheory.Chapter08.Dependencies
 import LastLib.Book05LocalClassFieldTheory.Chapter10.Dependencies
 
@@ -15,7 +15,6 @@ namespace LastLib.Book05LocalClassFieldTheory.Chapter11
 
 noncomputable section
 
-open CategoryTheory
 open scoped Topology
 
 /-!
@@ -33,8 +32,9 @@ abbrev Chapter11GaloisGroup (K : Type*) [Field K] := Field.absoluteGaloisGroup K
 abbrev Chapter11GaloisAbelianization (K : Type*) [Field K] :=
   Field.absoluteGaloisGroupAbelianization K
 
-abbrev Chapter11ProfiniteCompletion (G : Type*) [Group G] : Type _ :=
-  (ProfiniteGrp.ProfiniteCompletion.completion (GrpCat.of G) : Type _)
+abbrev Chapter11ProfiniteCompletion (G : Type*) [CommGroup G]
+    [TopologicalSpace G] : Type _ :=
+  (LastLib.Book05LocalClassFieldTheory.Chapter07.chapter07OpenProfiniteCompletion G : Type _)
 
 abbrev Chapter11ContinuousCharacter
     (G A : Type*) [Monoid G] [Monoid A] [TopologicalSpace G] [TopologicalSpace A] :=
@@ -152,8 +152,9 @@ def chapter11UnitInclusion
 
 /-!
 Reciprocity is recorded as a continuous map into the canonical topological
-abelianization.  The comparison with `ProfiniteCompletion.completion` is the
-universal-property interface used by the character classification.
+abelianization.  The comparison with the open finite-index profinite
+completion is the universal-property interface used by the character
+classification.
 -/
 
 /- LOCAL_DEPENDENCY_GUESS: replace this with the canonical reciprocity and
@@ -167,7 +168,8 @@ structure Chapter11ReciprocityData
   reciprocity_eq_completion :
     ∀ x : Kˣ,
       reciprocity x = completionEquiv
-        (ProfiniteGrp.ProfiniteCompletion.etaFn (GrpCat.of Kˣ) x)
+        (LastLib.Book05LocalClassFieldTheory.Chapter07.chapter07OpenProfiniteCompletionEtaFn
+          Kˣ x)
   /-- The local-field topology is cofinal with the finite-index topology. -/
   openFiniteIndexCofinality : chapter11OpenFiniteIndexCofinality (K := K)
 
@@ -245,6 +247,7 @@ structure Chapter11TowerData
     TopologicalAbelianization Gₗ →ₜ* TopologicalAbelianization Gₖ
   transferAb :
     TopologicalAbelianization Gₖ →ₜ* TopologicalAbelianization Gₗ
+  restriction_injective : Function.Injective restriction
   norm_continuous :
     Continuous (Units.map (Algebra.norm K) : Lˣ → Kˣ)
   inclusion_continuous :

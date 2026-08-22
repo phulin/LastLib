@@ -143,8 +143,8 @@ theorem chapter11_unramified_parameter_extends_to_profinite_integer_power
     (α : A) :
     ∃ F : Chapter11ProfiniteCompletion (Multiplicative ℤ) →ₜ* A,
       ∀ n : ℤ,
-        F (ProfiniteGrp.ProfiniteCompletion.etaFn
-          (GrpCat.of (Multiplicative ℤ)) (Multiplicative.ofAdd n)) = α ^ n := by
+        F (LastLib.Book05LocalClassFieldTheory.Chapter07.chapter07OpenProfiniteCompletionEtaFn
+          (Multiplicative ℤ) (Multiplicative.ofAdd n)) = α ^ n := by
   sorry
 
 end
