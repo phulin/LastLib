@@ -41,7 +41,16 @@ theorem chapter13_eisenstein_parameter_polynomial_is_monic
     (e : ℕ) (he : 0 < e)
     (a : Chapter13EisensteinParameterSpace A m e) :
     (chapter13EisensteinPolynomial m e a).Monic := by
-  sorry
+  rw [chapter13EisensteinPolynomial]
+  apply (monic_X_pow_add_C a.1.2 (Nat.ne_of_gt he)).add_of_left
+  rw [degree_X_pow_add_C he]
+  refine (degree_sum_le _ _).trans_lt ?_
+  apply (Finset.sup_lt_iff (WithBot.bot_lt_coe e)).2
+  intro i _hi
+  have hi' : (i : ℕ) + 1 < e := by omega
+  have hi'' : ((i : ℕ) + 1 : WithBot ℕ) < (e : WithBot ℕ) :=
+    WithBot.coe_lt_coe.mpr hi'
+  exact (degree_C_mul_X_pow_le ((i : ℕ) + 1) (a.1.1 i)).trans_lt hi''
 
 /-- The parameter conditions are exactly the canonical ideal-theoretic
 Eisenstein condition. -/
@@ -52,7 +61,51 @@ theorem chapter13_eisenstein_parameter_polynomial_is_eisenstein
     (e : ℕ) (he : 0 < e)
     (a : Chapter13EisensteinParameterSpace A m e) :
     (chapter13EisensteinPolynomial m e a).IsEisensteinAt m := by
-  sorry
+  have hsum :
+      degree (∑ i : Fin (e - 1), C (a.1.1 i) * X ^ ((i : ℕ) + 1)) <
+        (e : WithBot ℕ) := by
+    refine (degree_sum_le _ _).trans_lt ?_
+    apply (Finset.sup_lt_iff (WithBot.bot_lt_coe e)).2
+    intro i _hi
+    have hi' : (i : ℕ) + 1 < e := by omega
+    have hi'' : ((i : ℕ) + 1 : WithBot ℕ) < (e : WithBot ℕ) :=
+      WithBot.coe_lt_coe.mpr hi'
+    exact (degree_C_mul_X_pow_le ((i : ℕ) + 1) (a.1.1 i)).trans_lt hi''
+  have hdegree :
+      (chapter13EisensteinPolynomial m e a).natDegree = e := by
+    rw [chapter13EisensteinPolynomial, natDegree_add_eq_left_of_degree_lt]
+    · exact natDegree_X_pow_add_C
+    · rw [degree_X_pow_add_C he]
+      exact hsum
+  have hcoeffmem (i : Fin (e - 1)) : a.1.1 i ∈ m := by
+    exact a.2.1 i (Set.mem_univ i)
+  refine ⟨?_, ?_, ?_⟩
+  · rw [(chapter13_eisenstein_parameter_polynomial_is_monic m e he a).leadingCoeff,
+      hm]
+    exact IsLocalRing.notMem_maximalIdeal.mpr isUnit_one
+  · intro n hn
+    rw [hdegree] at hn
+    by_cases hn0 : n = 0
+    · subst n
+      simpa [chapter13EisensteinPolynomial, (Nat.ne_of_gt he).symm] using a.2.2.1
+    · let i : Fin (e - 1) := ⟨n - 1, by omega⟩
+      have hni : n = (i : ℕ) + 1 := by
+        dsimp [i]
+        omega
+      rw [chapter13EisensteinPolynomial, coeff_add, coeff_add, coeff_X_pow,
+        if_neg (Nat.ne_of_lt hn), coeff_C, if_neg hn0, zero_add,
+        finsetSum_coeff]
+      rw [Finset.sum_eq_single i]
+      · simp [hni, coeff_C_mul_X_pow, hcoeffmem i]
+      · intro j _hj hji
+        have hj' : n ≠ (j : ℕ) + 1 := by
+          intro h
+          apply hji
+          apply Fin.ext
+          omega
+        simp [coeff_C_mul_X_pow, hj']
+      · simp
+  · simpa [chapter13EisensteinPolynomial, (Nat.ne_of_gt he).symm] using a.2.2.2
 
 /-- Compatibility with Book 1's chosen-uniformizer spelling of Eisenstein. -/
 theorem chapter13_eisenstein_parameter_book_facing_form
@@ -64,7 +117,37 @@ theorem chapter13_eisenstein_parameter_book_facing_form
       (IsLocalRing.maximalIdeal A) e) :
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.IsEisensteinAt π
       (chapter13EisensteinPolynomial (IsLocalRing.maximalIdeal A) e a) := by
-  sorry
+  have hsum :
+      degree (∑ i : Fin (e - 1), C (a.1.1 i) * X ^ ((i : ℕ) + 1)) <
+        (e : WithBot ℕ) := by
+    refine (degree_sum_le _ _).trans_lt ?_
+    apply (Finset.sup_lt_iff (WithBot.bot_lt_coe e)).2
+    intro i _hi
+    have hi' : (i : ℕ) + 1 < e := by omega
+    have hi'' : ((i : ℕ) + 1 : WithBot ℕ) < (e : WithBot ℕ) :=
+      WithBot.coe_lt_coe.mpr hi'
+    exact (degree_C_mul_X_pow_le ((i : ℕ) + 1) (a.1.1 i)).trans_lt hi''
+  have hdegree :
+      (chapter13EisensteinPolynomial (IsLocalRing.maximalIdeal A) e a).natDegree = e := by
+    rw [chapter13EisensteinPolynomial, natDegree_add_eq_left_of_degree_lt]
+    · exact natDegree_X_pow_add_C
+    · rw [degree_X_pow_add_C he]
+      exact hsum
+  have hE := chapter13_eisenstein_parameter_polynomial_is_eisenstein
+    (IsLocalRing.maximalIdeal A) rfl e he a
+  refine ⟨(chapter13_eisenstein_parameter_polynomial_is_monic
+      (IsLocalRing.maximalIdeal A) e he a), ?_, ?_, ?_, hπ⟩
+  · rw [hdegree]
+    exact he
+  · intro i hi
+    rw [hπ]
+    exact hE.mem (by simpa [hdegree] using hi)
+  · intro h
+    change
+      (chapter13EisensteinPolynomial (IsLocalRing.maximalIdeal A) e a).coeff 0 ∈
+        Ideal.span ({π ^ 2} : Set A) at h
+    rw [← Ideal.span_singleton_pow, hπ] at h
+    exact hE.notMem h
 
 /-- In the adic topology, the powers of the maximal ideal are compact and
 open in a complete DVR with finite residue field. -/
@@ -78,7 +161,20 @@ theorem chapter13_complete_dvr_maximal_ideal_powers_compact_open
         ((IsLocalRing.maximalIdeal A ^ n : Ideal A) : Set A) ∧
       @IsOpen A (IsLocalRing.maximalIdeal A).adicTopology
         ((IsLocalRing.maximalIdeal A ^ n : Ideal A) : Set A) := by
-  sorry
+  letI : @TopologicalSpace A := (IsLocalRing.maximalIdeal A).adicTopology
+  letI : @CompactSpace A (IsLocalRing.maximalIdeal A).adicTopology :=
+    @LastLib.Book01ValuationsDVRsAndCompletions.Chapter06.chapter06_complete_dvr_integer_compact
+      A _ _ _ _ hcomplete
+  let U := (IsLocalRing.maximalIdeal A).openAddSubgroup n
+  have hopen : @IsOpen A (IsLocalRing.maximalIdeal A).adicTopology
+      ((IsLocalRing.maximalIdeal A ^ n : Ideal A) : Set A) := by
+    change @IsOpen A (IsLocalRing.maximalIdeal A).adicTopology (↑U : Set A)
+    exact U.isOpen
+  have hclosed : @IsClosed A (IsLocalRing.maximalIdeal A).adicTopology
+      ((IsLocalRing.maximalIdeal A ^ n : Ideal A) : Set A) := by
+    change @IsClosed A (IsLocalRing.maximalIdeal A).adicTopology (↑U : Set A)
+    exact U.isClosed
+  exact ⟨hclosed.isCompact, hopen⟩
 
 /-- The punctured first maximal-ideal layer is closed. -/
 theorem chapter13_maximal_ideal_difference_square_is_closed
