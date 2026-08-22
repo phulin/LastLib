@@ -755,7 +755,8 @@ on $S$ in terms of $\deg D$ alone, such that for all $m\geq m_0$ and every geome
 
 **Proof.** By base change to geometric fibers it suffices to work over an algebraically closed
 field, where the singular fibers are $n$-gons with components $Y_i\simeq\mathbf P^1$ and nodes
-$q_1,\dots,q_n$, $n\leq$ the component bound of the divisor data. Write
+$q_1,\dots,q_n$. Since $D$ meets every component we have $d_i\geq1$ for all $i$ and hence
+$n\leq\sum_i d_i=\deg D$. Write
 $d_i=|D\cap Y_i|\geq0$, so $\deg(\mathcal L^m|_{Y_i})=md_i$. Global sections correspond to tuples
 $(s_i)$, $s_i\in H^0(Y_i,\mathcal L^m|_{Y_i})$, agreeing at the nodes; by the same normalization
 sequence (Book 9, Section 10.2) the agreement conditions at distinct nodes are independent linear
@@ -782,9 +783,8 @@ nonzero constant system along each bridge chain, choose matching nonzero values 
 nodes of visible components, and interpolate on each visible component by a polynomial of degree
 $md_i$ avoiding prescribed zeros; dimension $md_i+1$ exceeds the at most three imposed linear
 conditions as soon as $md_i\geq 3$. This proves (1), and (2) follows by imposing value $1$ or $0$
-among those conditions at the chosen points or branches, taking $m_0$ any integer with
-$m_0\cdot\min_{\text{visible}}d_i\geq 3$, which depends only on $d=\deg D$ once the component bound
-is fixed. $\square$
+among those conditions at the chosen points or branches. In fact $m_0=3$ already works, since
+every component meets $D$ and therefore every $md_i\geq 3$ as soon as $m\geq 3$. $\square$
 
 **Theorem 8.2A.3 (contraction).** Let $E\to S$ be a generalized elliptic curve and
 $D\subset E^{\mathrm{sm}}$ a finite effective Cartier divisor meeting every geometric component.
