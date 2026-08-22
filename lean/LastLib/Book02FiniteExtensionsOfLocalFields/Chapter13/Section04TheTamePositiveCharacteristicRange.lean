@@ -145,6 +145,8 @@ theorem chapter13_prime_to_p_degree_extension_is_tame
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
     (p d : ℕ) [Fact p.Prime]
+    (hchar : ringExpChar
+      (IsLocalRing.ResidueField vK.valuationSubring) = p)
     (hdegree : Module.finrank K L = d) (hd : Nat.Coprime d p) :
     chapter13TameExtension vK vL := by
   let e :=
@@ -167,6 +169,7 @@ theorem chapter13_prime_to_p_degree_extension_is_tame
   have hecop : Nat.Coprime e p := Nat.Coprime.of_dvd_left hdiv hd
   change Nat.Coprime e (ringExpChar
     (IsLocalRing.ResidueField vK.valuationSubring))
+  rw [hchar]
   exact hecop
 
 private theorem chapter13_lifted_tame_witness
