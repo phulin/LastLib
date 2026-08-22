@@ -385,7 +385,23 @@ theorem chapter11_swan_conductor_short_exact_additive
     chapter11SwanConductorFD D S.sequence.X₂ =
       chapter11SwanConductorFD D S.sequence.X₁ +
         chapter11SwanConductorFD D S.sequence.X₃ := by
-  sorry
+  rcases chapter11_short_exact_representation_splits S with
+    ⟨r, s, hr, hs, hid⟩
+  let hsplit : S.sequence.Splitting :=
+    { r := r
+      s := s
+      f_r := hr
+      s_g := hs
+      id := hid }
+  let e := hsplit.isoBinaryBiproduct
+  change chapter11SwanConductor D S.sequence.X₂.ρ =
+    chapter11SwanConductor D S.sequence.X₁.ρ +
+      chapter11SwanConductor D S.sequence.X₃.ρ
+  unfold chapter11SwanConductor
+  simp_rw [chapter11_fixed_space_codim_iso e,
+    chapter11_fixed_space_codim_direct_sum]
+  simp only [Nat.cast_add, mul_add]
+  rw [Finset.sum_add_distrib]
 
 /-- Duality preserves the codimension of every finite-group fixed space. -/
 theorem chapter11_fixed_space_codimension_dual
@@ -395,21 +411,67 @@ theorem chapter11_fixed_space_codimension_dual
     (H : Subgroup G) :
     LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim ρ.dual H =
       LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim ρ H := by
-  sorry
+  classical
+  let _ : Invertible (Fintype.card H : k) :=
+    invertibleOfNonzero (Nat.cast_ne_zero.mpr Fintype.card_ne_zero)
+  let ρH : Representation k H V := ρ.comp H.subtype
+  have hsum_inv :
+      (∑ h : H, ρH.character h⁻¹) =
+        ∑ h : H, ρH.character h := by
+    exact Fintype.sum_bijective (fun h : H => h⁻¹)
+      (inv_bijective : Function.Bijective (fun h : H => h⁻¹)) _ _ (fun _ => rfl)
+  have hsum :
+      (∑ h : H, ρH.dual.character h) =
+        ∑ h : H, ρH.character h := by
+    calc
+      (∑ h : H, ρH.dual.character h) =
+          ∑ h : H, ρH.character h⁻¹ := by
+            apply Finset.sum_congr rfl
+            intro h _hh
+            rw [Representation.char_dual]
+      _ = ∑ h : H, ρH.character h := hsum_inv
+  have hdual :=
+    Representation.card_inv_mul_sum_char_eq_finrank
+      (ρ := ρH.dual)
+  have hρ :=
+    Representation.card_inv_mul_sum_char_eq_finrank
+      (ρ := ρH)
+  have hfinrank_cast :
+      (Module.finrank k (LastLib.Book03RamificationTheory.Chapter10.fixedSpace ρ.dual H) : k) =
+        (Module.finrank k (LastLib.Book03RamificationTheory.Chapter10.fixedSpace ρ H) : k) := by
+    change (Module.finrank k (Representation.invariants ρH.dual) : k) =
+      (Module.finrank k (Representation.invariants ρH) : k)
+    calc
+      (Module.finrank k (Representation.invariants ρH.dual) : k) =
+          (Nat.card H : k)⁻¹ * ∑ h : H, ρH.dual.character h := by
+            symm
+            exact hdual
+      _ = (Nat.card H : k)⁻¹ * ∑ h : H, ρH.character h := by
+            rw [hsum]
+      _ = (Module.finrank k (Representation.invariants ρH) : k) := hρ
+  have hfinrank :
+      Module.finrank k (LastLib.Book03RamificationTheory.Chapter10.fixedSpace ρ.dual H) =
+        Module.finrank k (LastLib.Book03RamificationTheory.Chapter10.fixedSpace ρ H) := by
+    exact_mod_cast hfinrank_cast
+  unfold LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+  rw [Submodule.finrank_quotient, Submodule.finrank_quotient,
+    Subspace.dual_finrank_eq, hfinrank]
 
 theorem chapter11_artin_conductor_dual
     {k G V : Type*} [Field k] [CharZero k] [Fintype G] [Group G]
     [AddCommGroup V] [Module k V] [FiniteDimensional k V]
     (D : Chapter11RamificationData G) (ρ : Representation k G V) :
     chapter11ArtinConductor D ρ.dual = chapter11ArtinConductor D ρ := by
-  sorry
+  unfold chapter11ArtinConductor
+  simp_rw [chapter11_fixed_space_codimension_dual]
 
 theorem chapter11_swan_conductor_dual
     {k G V : Type*} [Field k] [CharZero k] [Fintype G] [Group G]
     [AddCommGroup V] [Module k V] [FiniteDimensional k V]
     (D : Chapter11RamificationData G) (ρ : Representation k G V) :
     chapter11SwanConductor D ρ.dual = chapter11SwanConductor D ρ := by
-  sorry
+  unfold chapter11SwanConductor
+  simp_rw [chapter11_fixed_space_codimension_dual]
 
 /-- The restriction of an unramified twist to inertia is the original restriction. -/
 theorem chapter11_unramified_twist_restricts_to_same_inertia_representation
@@ -419,7 +481,8 @@ theorem chapter11_unramified_twist_restricts_to_same_inertia_representation
     (χ : G →* kˣ) (hχ : chapter11UnramifiedCharacter D χ) :
     (chapter11Twist χ ρ).comp D.inertia.subtype =
       ρ.comp D.inertia.subtype := by
-  sorry
+  ext x v
+  simp [chapter11Twist, hχ x]
 
 theorem chapter11_artin_conductor_unramified_twist
     {k G V : Type*} [Field k] [Fintype G] [Group G]
@@ -428,7 +491,32 @@ theorem chapter11_artin_conductor_unramified_twist
     (χ : G →* kˣ) (hχ : chapter11UnramifiedCharacter D χ) :
     chapter11ArtinConductor D (chapter11Twist χ ρ) =
       chapter11ArtinConductor D ρ := by
-  sorry
+  have hcodim (i : ℕ) :
+      LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+          (chapter11Twist χ ρ) (D.lower i) =
+        LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim ρ (D.lower i) := by
+    have hfixed :
+        LastLib.Book03RamificationTheory.Chapter10.fixedSpace
+            (chapter11Twist χ ρ) (D.lower i) =
+          LastLib.Book03RamificationTheory.Chapter10.fixedSpace ρ (D.lower i) := by
+      ext v
+      constructor
+      · intro hv
+        rw [LastLib.Book03RamificationTheory.Chapter10.fixedSpace.mem_iff] at hv ⊢
+        intro g
+        have hχg : χ (g : G) = 1 :=
+          hχ ⟨(g : G), (chapter11_lower_le_inertia D i) g.property⟩
+        simpa [chapter11Twist, hχg] using hv g
+      · intro hv
+        rw [LastLib.Book03RamificationTheory.Chapter10.fixedSpace.mem_iff] at hv ⊢
+        intro g
+        have hχg : χ (g : G) = 1 :=
+          hχ ⟨(g : G), (chapter11_lower_le_inertia D i) g.property⟩
+        simpa [chapter11Twist, hχg] using hv g
+    unfold LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+    rw [hfixed]
+  unfold chapter11ArtinConductor
+  simp_rw [hcodim]
 
 theorem chapter11_swan_conductor_unramified_twist
     {k G V : Type*} [Field k] [Fintype G] [Group G]
