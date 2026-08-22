@@ -136,7 +136,15 @@ theorem chapter09_clean_two_stage_decomposition_iff_residue_separable
     chapter09CleanTwoStageDecomposition A B K L ↔
       Algebra.IsSeparable (chapter09BaseResidueField A)
         (chapter09ExtensionResidueField B) := by
-  sorry
+  change Nonempty (Chapter09Corollary92Data A B K L) ↔ _
+  constructor
+  · intro h
+    rcases h with ⟨d⟩
+    exact
+      (chapter09_remainder_totally_ramified_iff_residue_separable A B K L
+        d.K₀ d.maximal).mp ⟨d.remainder, d.remainder_totally_ramified⟩
+  · intro h
+    exact chapter09_corollary_92 A B K L h
 
 
 /-! ### Galois and nongalois interpretations -/

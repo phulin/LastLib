@@ -101,7 +101,15 @@ theorem chapter09_finite_galois_inertia_order
     [PerfectField (chapter09BaseResidueField A)]
     [Finite (L ≃ₐ[K] L)] :
     Nonempty (Chapter09FiniteGaloisRamificationData A B K L) := by
-  sorry
+  have hseparable :
+      Algebra.IsSeparable (chapter09BaseResidueField A)
+        (chapter09ExtensionResidueField B) :=
+    chapter09_perfect_residue_field_gives_separable_extension
+      (chapter09BaseResidueField A) (chapter09ExtensionResidueField B)
+  obtain ⟨I, hI⟩ := chapter09_galois_inertia_fixed_field A B K L hseparable
+  obtain ⟨d⟩ := hI
+  exact ⟨Chapter09FiniteGaloisRamificationData.mk I d.inertia_order
+    d.residue_action d.inertia_eq_kernel⟩
 
 /- The Kummer conclusion used at the tame boundary is already established in
 §8.8 for the radical field itself.  Reuse that theorem rather than introducing
