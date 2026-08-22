@@ -350,9 +350,222 @@ noncomputable def chapter11ComplexFiniteImageCharacterEquiv
     [IsTopologicalGroup G] [T2Space G] [CompactSpace G]
     [TotallyDisconnectedSpace G]
     (R : Chapter11ReciprocityData K G) :
-    {ρ : G →ₜ* ℂˣ // chapter11FiniteImage ρ} ≃
+      {ρ : G →ₜ* ℂˣ // chapter11FiniteImage ρ} ≃
       {χ : Kˣ →ₜ* ℂˣ // chapter11FiniteImage χ} := by
-  sorry
+  classical
+  let toFun :
+      {ρ : G →ₜ* ℂˣ // chapter11FiniteImage ρ} →
+        {χ : Kˣ →ₜ* ℂˣ // chapter11FiniteImage χ} := fun ρ => by
+    let B : Subgroup ℂˣ := ρ.1.toMonoidHom.range
+    have hρ : (Set.range ρ.1).Finite := by
+      simpa only [chapter11FiniteImage] using ρ.2
+    have hB : (B : Set ℂˣ).Finite := by
+      simpa [B] using hρ
+    let _ : Finite (Set.range ρ.1) := Set.finite_coe_iff.mp hρ
+    let _ : Finite B := Finite.of_injective
+      (fun x : B => (⟨x.1, x.2⟩ : Set.range ρ.1))
+      (by
+        intro x y h
+        exact Subtype.ext (congrArg Subtype.val h))
+    let _ : CompactSpace B := isCompact_iff_compactSpace.mp hB.isCompact
+    let _ : TotallyDisconnectedSpace B := inferInstance
+    let ρB : G →ₜ* B := {
+      toMonoidHom := ρ.1.toMonoidHom.codRestrict B (fun g => ⟨g, rfl⟩)
+      continuous_toFun := ρ.1.continuous.subtype_mk (fun g => ⟨g, rfl⟩) }
+    let χB := (chapter11ContinuousCharacterEquiv (A := B) R) ρB
+    let inc : B →ₜ* ℂˣ := {
+      toMonoidHom := B.subtype
+      continuous_toFun := continuous_subtype_val }
+    refine ⟨inc.comp χB, ?_⟩
+    change (Set.range (inc.comp χB)).Finite
+    apply hB.subset
+    rintro y ⟨x, rfl⟩
+    exact (χB x).property
+  let invFun :
+      {χ : Kˣ →ₜ* ℂˣ // chapter11FiniteImage χ} →
+        {ρ : G →ₜ* ℂˣ // chapter11FiniteImage ρ} := fun χ => by
+    let C : Subgroup ℂˣ := χ.1.toMonoidHom.range
+    have hχ : (Set.range χ.1).Finite := by
+      simpa only [chapter11FiniteImage] using χ.2
+    have hC : (C : Set ℂˣ).Finite := by
+      simpa [C] using hχ
+    let _ : Finite (Set.range χ.1) := Set.finite_coe_iff.mp hχ
+    let _ : Finite C := Finite.of_injective
+      (fun x : C => (⟨x.1, x.2⟩ : Set.range χ.1))
+      (by
+        intro x y h
+        exact Subtype.ext (congrArg Subtype.val h))
+    let _ : CompactSpace C := isCompact_iff_compactSpace.mp hC.isCompact
+    let _ : TotallyDisconnectedSpace C := inferInstance
+    let χC : Kˣ →ₜ* C := {
+      toMonoidHom := χ.1.toMonoidHom.codRestrict C (fun x => ⟨x, rfl⟩)
+      continuous_toFun := χ.1.continuous.subtype_mk (fun x => ⟨x, rfl⟩) }
+    let ρC := (chapter11ContinuousCharacterEquiv (A := C) R).symm χC
+    let inc : C →ₜ* ℂˣ := {
+      toMonoidHom := C.subtype
+      continuous_toFun := continuous_subtype_val }
+    refine ⟨inc.comp ρC, ?_⟩
+    change (Set.range (inc.comp ρC)).Finite
+    apply hC.subset
+    rintro y ⟨x, rfl⟩
+    exact (ρC x).property
+  refine {
+    toFun := toFun
+    invFun := invFun
+    left_inv := by
+      intro ρ
+      dsimp [toFun, invFun]
+      let B : Subgroup ℂˣ := ρ.1.toMonoidHom.range
+      have hρ : (Set.range ρ.1).Finite := by
+        simpa only [chapter11FiniteImage] using ρ.2
+      have hB : (B : Set ℂˣ).Finite := by
+        simpa [B] using hρ
+      let _ : Finite (Set.range ρ.1) := Set.finite_coe_iff.mp hρ
+      let _ : Finite B := Finite.of_injective
+        (fun x : B => (⟨x.1, x.2⟩ : Set.range ρ.1))
+        (by
+          intro x y h
+          exact Subtype.ext (congrArg Subtype.val h))
+      let _ : CompactSpace B := isCompact_iff_compactSpace.mp hB.isCompact
+      let _ : TotallyDisconnectedSpace B := inferInstance
+      let ρB : G →ₜ* B := {
+        toMonoidHom := ρ.1.toMonoidHom.codRestrict B (fun g => ⟨g, rfl⟩)
+        continuous_toFun := ρ.1.continuous.subtype_mk (fun g => ⟨g, rfl⟩) }
+      let χB := (chapter11ContinuousCharacterEquiv (A := B) R) ρB
+      let incB : B →ₜ* ℂˣ := {
+        toMonoidHom := B.subtype
+        continuous_toFun := continuous_subtype_val }
+      let C : Subgroup ℂˣ := (incB.comp χB).toMonoidHom.range
+      have hCB : C ≤ B := by
+        intro z hz
+        rcases hz with ⟨x, rfl⟩
+        exact (χB x).property
+      have hC : (C : Set ℂˣ).Finite := by
+        apply hB.subset
+        rintro z ⟨x, rfl⟩
+        exact (χB x).property
+      let _ : Finite C := Finite.of_injective
+        (fun x : C => (⟨x.1, hCB x.2⟩ : B))
+        (by
+          intro x y h
+          apply Subtype.ext
+          exact congrArg (fun z : B => (z : ℂˣ)) h)
+      let _ : CompactSpace C := isCompact_iff_compactSpace.mp hC.isCompact
+      let _ : TotallyDisconnectedSpace C := inferInstance
+      let j : C →ₜ* B := {
+        toMonoidHom := C.subtype.codRestrict B (fun x => hCB x.property)
+        continuous_toFun := continuous_subtype_val.subtype_mk (fun x => hCB x.property) }
+      let χC : Kˣ →ₜ* C := {
+        toMonoidHom := (incB.comp χB).toMonoidHom.codRestrict C (fun x => ⟨x, rfl⟩)
+        continuous_toFun := (incB.comp χB).continuous.subtype_mk (fun x => ⟨x, rfl⟩) }
+      let ρC := (chapter11ContinuousCharacterEquiv (A := C) R).symm χC
+      have hjχ : j.comp χC = χB := by
+        apply DFunLike.ext
+        intro x
+        rfl
+      have hnatural := chapter11_continuous_character_equiv_natural R j ρC
+      have heq : j.comp ρC = ρB := by
+        apply (chapter11ContinuousCharacterEquiv (A := B) R).injective
+        calc
+          (chapter11ContinuousCharacterEquiv (A := B) R) (j.comp ρC) =
+              j.comp ((chapter11ContinuousCharacterEquiv (A := C) R) ρC) := hnatural
+          _ = j.comp χC := by
+            rw [show ρC = (chapter11ContinuousCharacterEquiv (A := C) R).symm χC by rfl,
+              (chapter11ContinuousCharacterEquiv (A := C) R).apply_symm_apply]
+          _ = χB := hjχ
+          _ = (chapter11ContinuousCharacterEquiv (A := B) R) ρB := rfl
+      let incC : C →ₜ* ℂˣ := {
+        toMonoidHom := C.subtype
+        continuous_toFun := continuous_subtype_val }
+      have hjinc : incB.comp j = incC := by
+        apply DFunLike.ext
+        intro x
+        rfl
+      apply Subtype.ext
+      apply DFunLike.ext
+      intro x
+      change incC (ρC x) = ρ.1 x
+      rw [← hjinc]
+      change incB ((j.comp ρC) x) = ρ.1 x
+      rw [DFunLike.congr_fun heq x]
+      rfl
+    right_inv := by
+      intro χ
+      dsimp [toFun, invFun]
+      let B : Subgroup ℂˣ := χ.1.toMonoidHom.range
+      have hχ : (Set.range χ.1).Finite := by
+        simpa only [chapter11FiniteImage] using χ.2
+      have hB : (B : Set ℂˣ).Finite := by
+        simpa [B] using hχ
+      let _ : Finite (Set.range χ.1) := Set.finite_coe_iff.mp hχ
+      let _ : Finite B := Finite.of_injective
+        (fun x : B => (⟨x.1, x.2⟩ : Set.range χ.1))
+        (by
+          intro x y h
+          exact Subtype.ext (congrArg Subtype.val h))
+      let _ : CompactSpace B := isCompact_iff_compactSpace.mp hB.isCompact
+      let _ : TotallyDisconnectedSpace B := inferInstance
+      let χB : Kˣ →ₜ* B := {
+        toMonoidHom := χ.1.toMonoidHom.codRestrict B (fun x => ⟨x, rfl⟩)
+        continuous_toFun := χ.1.continuous.subtype_mk (fun x => ⟨x, rfl⟩) }
+      let ρB := (chapter11ContinuousCharacterEquiv (A := B) R).symm χB
+      let incB : B →ₜ* ℂˣ := {
+        toMonoidHom := B.subtype
+        continuous_toFun := continuous_subtype_val }
+      let D : Subgroup ℂˣ := (incB.comp ρB).toMonoidHom.range
+      have hDB : D ≤ B := by
+        intro z hz
+        rcases hz with ⟨x, rfl⟩
+        exact (ρB x).property
+      have hD : (D : Set ℂˣ).Finite := by
+        apply hB.subset
+        rintro z ⟨x, rfl⟩
+        exact (ρB x).property
+      let _ : Finite D := Finite.of_injective
+        (fun x : D => (⟨x.1, hDB x.2⟩ : B))
+        (by
+          intro x y h
+          apply Subtype.ext
+          exact congrArg (fun z : B => (z : ℂˣ)) h)
+      let _ : CompactSpace D := isCompact_iff_compactSpace.mp hD.isCompact
+      let _ : TotallyDisconnectedSpace D := inferInstance
+      let j : D →ₜ* B := {
+        toMonoidHom := D.subtype.codRestrict B (fun x => hDB x.property)
+        continuous_toFun := continuous_subtype_val.subtype_mk (fun x => hDB x.property) }
+      let ρD : G →ₜ* D := {
+        toMonoidHom := (incB.comp ρB).toMonoidHom.codRestrict D (fun x => ⟨x, rfl⟩)
+        continuous_toFun := (incB.comp ρB).continuous.subtype_mk (fun x => ⟨x, rfl⟩) }
+      let χD := (chapter11ContinuousCharacterEquiv (A := D) R) ρD
+      have hjρ : j.comp ρD = ρB := by
+        apply DFunLike.ext
+        intro x
+        rfl
+      have hnatural := chapter11_continuous_character_equiv_natural R j ρD
+      have hjχ : j.comp χD = χB := by
+        calc
+          j.comp χD = j.comp ((chapter11ContinuousCharacterEquiv (A := D) R) ρD) := by
+            rw [show χD = (chapter11ContinuousCharacterEquiv (A := D) R) ρD by rfl]
+          _ = (chapter11ContinuousCharacterEquiv (A := B) R) (j.comp ρD) := hnatural.symm
+          _ = (chapter11ContinuousCharacterEquiv (A := B) R) ρB :=
+            congrArg (chapter11ContinuousCharacterEquiv (A := B) R) hjρ
+          _ = χB := by
+            rw [show ρB = (chapter11ContinuousCharacterEquiv (A := B) R).symm χB by rfl]
+            exact (chapter11ContinuousCharacterEquiv (A := B) R).apply_symm_apply χB
+      let incD : D →ₜ* ℂˣ := {
+        toMonoidHom := D.subtype
+        continuous_toFun := continuous_subtype_val }
+      have hjinc : incB.comp j = incD := by
+        apply DFunLike.ext
+        intro x
+        rfl
+      apply Subtype.ext
+      apply DFunLike.ext
+      intro x
+      change incD (χD x) = χ.1 x
+      rw [← hjinc]
+      change incB ((j.comp χD) x) = χ.1 x
+      rw [DFunLike.congr_fun hjχ x]
+      rfl }
 
 def chapter11ComplexUnramifiedQuasicharacter
     {K : Type*} [Field K] [TopologicalSpace Kˣ]
@@ -366,7 +579,25 @@ theorem chapter11_complex_quasicharacter_with_nonfinite_parameter_is_not_galois
     ¬ chapter11ProfiniteExtensionOf
         (chapter11ComplexUnramifiedQuasicharacter D α) ∧
       ¬ chapter11FiniteImage (chapter11ComplexUnramifiedQuasicharacter D α) := by
-  sorry
+  have hnotfinite :
+      ¬ chapter11FiniteImage (chapter11ComplexUnramifiedQuasicharacter D α) := by
+    intro hχ
+    change chapter11FiniteImage
+      (chapter11CharacterOfPair D α (1 : D.unitGroup →ₜ* ℂˣ)) at hχ
+    exact hα ((chapter11_character_pair_finite_image_iff D α
+      (1 : D.unitGroup →ₜ* ℂˣ)).mp hχ).1
+  constructor
+  · rintro ⟨F, hF⟩
+    apply hnotfinite
+    change (Set.range (chapter11ComplexUnramifiedQuasicharacter D α)).Finite
+    have hFfinite := chapter11_complex_galois_character_has_finite_image F
+    change (Set.range F).Finite at hFfinite
+    apply hFfinite.subset
+    rintro y ⟨x, rfl⟩
+    refine ⟨LastLib.Book05LocalClassFieldTheory.Chapter07.chapter07OpenProfiniteCompletionEtaFn
+      Kˣ x, ?_⟩
+    exact hF x
+  · exact hnotfinite
 
 /-!
 The next structure is the normalization package for the prime-to-residue-
@@ -414,7 +645,8 @@ theorem chapter11_prime_to_residue_cyclotomic_formula
     (r : ℤ) (u : D.unitGroup) :
     chapter11ReciprocityCharacter (K := K) (G := G) (A := A) R C.character
         (D.uniformizer ^ r * (u : Kˣ)) = C.parameter ^ r := by
-  sorry
+  rw [map_mul, map_zpow, C.parameter_at_uniformizer, C.trivial_on_units]
+  simp
 
 def chapter11PadicPrimeUnit
     (p : ℕ) [Fact p.Prime] : (ℚ_[p])ˣ :=
@@ -460,7 +692,8 @@ theorem chapter11_padic_cyclotomic_formula_Qp
     C.character
         (chapter11PadicPrimeUnit p ^ r * chapter11PadicUnitInclusion p u) =
       (C.unitCharacter u)⁻¹ := by
-  sorry
+  rw [map_mul, map_zpow, C.prime_is_trivial, C.character_on_units]
+  simp
 
 theorem chapter11_padic_cyclotomic_formula_Qp_standard
     (p : ℕ) [Fact p.Prime]
@@ -473,7 +706,8 @@ theorem chapter11_padic_cyclotomic_formula_Qp_standard
     (r : ℤ) (u : (ℤ_[p])ˣ) :
     χp (chapter11PadicPrimeUnit p ^ r * chapter11PadicUnitInclusion p u) =
       u⁻¹ := by
-  sorry
+  rw [map_mul, map_zpow, hprime, hunit]
+  simp
 
 def chapter11PadicNormPullbackCharacter
     {p : ℕ} {K A : Type*} [Fact p.Prime] [Field K]
@@ -494,7 +728,10 @@ theorem chapter11_padic_cyclotomic_formula_finite_extension
     chapter11PadicNormPullbackCharacter hcont C x =
       (C.unitCharacter
       (C.unitPart (chapter11NormHom (ℚ_[p]) K x)))⁻¹ := by
-  sorry
+  change C.character (chapter11NormHom (ℚ_[p]) K x) = _
+  obtain ⟨r, u, hu⟩ := C.unit_decomposition (chapter11NormHom (ℚ_[p]) K x)
+  rw [hu, chapter11_padic_cyclotomic_formula_Qp p A C r u,
+    C.unitPart_on_prime_unit_decomposition]
 
 theorem chapter11_padic_cyclotomic_formula_finite_extension_standard
     {p : ℕ} {K : Type*} [Fact p.Prime] [Field K]
