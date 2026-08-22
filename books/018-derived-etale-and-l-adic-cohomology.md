@@ -339,7 +339,7 @@ not the ordinary tensor product of arbitrary representatives.
 
 An étale covering $\mathcal U=(U_i\to X)$ has a Čech nerve with degree-$p$ term the disjoint union of $(p+1)$-fold fiber products. Applying a sheaf gives the alternating Čech complex. There is a natural map from Čech cohomology to derived cohomology, but it need not be an isomorphism for one fixed cover: intersections may themselves have higher cohomology.
 
-There are two safe uses. If every finite intersection of members of $\mathcal U$ is acyclic for $\mathcal F$, the augmented Čech complex is an acyclic resolution and computes $R\Gamma(X,\mathcal F)$. More generally, refine the Čech nerve degree by degree to a hypercover. Cohomological descent identifies the total complex over all levels with derived global sections, provided the boundedness needed for totalization holds.
+There are two safe uses. If every finite intersection of members of $\mathcal U$ is acyclic for $\mathcal F$, the augmented Čech complex is an acyclic resolution and computes $R\Gamma(X,\mathcal F)$. More generally, refine the Čech nerve degree by degree to a hypercover. Cohomological descent — proved in Section 4.5 — identifies the total complex over all levels with derived global sections, provided the boundedness needed for totalization holds.
 
 For a strictly henselian local scheme and a finite locally constant sheaf, every finite étale cover splits, but it does not follow that every étale sheaf has zero higher cohomology without restrictions. The local splitting argument applies to locally constant finite data; arbitrary sheaves can still encode cohomology on nonfinite étale objects. This is another reason to state acyclicity rather than infer it from a suggestive cover.
 
@@ -1029,11 +1029,162 @@ $$
 H^q(X,\mathcal F)=0\qquad(q>2d).
 $$
 
-If $X$ is affine, the sharper bound is $q>d$. Thus the theorem gives $[0,2]$ for proper curves, $[0,2g]$ for $g$-dimensional abelian varieties, and $[0,4]$ for surfaces. No properness or smoothness is needed for finiteness. In the applications, coefficients are constant, lisse finite free, or obtained from these by a finite stratification.
+If $X$ is affine, the sharper bound is $q>d$. Thus the theorem gives $[0,2]$ for proper curves, $[0,2g]$ for $g$-dimensional abelian varieties, and $[0,4]$ for surfaces. No properness or smoothness is needed for finiteness. In the applications, coefficients are constant, lisse finite free, or obtained from these by a finite stratification. In dimensions zero and one the proof below is complete as stated; in dimensions above one its vanishing half carries one explicitly flagged input, recorded in Section 7.2, while the finiteness mechanism is unconditional there.
 
 ### 7.2 The proof architecture
 
-The proof has one geometric lemma and one gluing lemma. We give their proofs because neither finite monodromy nor the derived formalism alone implies finiteness.
+The proof has one geometric lemma and one gluing lemma. We give their proofs because neither finite monodromy nor the derived formalism alone implies finiteness. The geometric input that makes the induction step relative rather than fiberwise is the following theorem, which we prove first; it is the precise substitute for the informal appeal to spreading fiber data.
+
+**Relative curve theorem.** Let $S$ be locally noetherian and excellent, let $n\ge1$ be invertible on $S$, and write $\Lambda_n=\mathbf Z/n\mathbf Z$.
+
+1. Let $g:D\to S$ be smooth and proper whose geometric fibers are nonempty curves. Then for every lisse $\Lambda_n$-sheaf $\mathcal F$ on $D$,
+
+$$
+R^qg_*\mathcal F=0\quad(q\ge3),
+$$
+
+while $R^0g_*\mathcal F$ and $R^1g_*\mathcal F$ are lisse, and for every morphism of bases $T\to S$ the canonical base-change maps
+
+$$
+g^*R^qg_*\mathcal F\longrightarrow R^qg_{T*}\mathcal F_T
+$$
+
+are isomorphisms for every $q$.
+
+2. Let $h:U\to S$ be a smooth affine relative curve admitting a realization $U=C\setminus D_0$, where $C\to S$ is as in 1. and $D_0\subseteq C$ is a relative effective Cartier divisor finite étale over $S$. Then for every lisse $\Lambda_n$-sheaf $\mathcal F$ on $U$, the sheaves $R^0h_*\mathcal F$ and $R^1h_*\mathcal F$ are lisse, their formation commutes with every base change, and
+
+$$
+(R^qh_*\mathcal F)_{\bar s}\cong H^q(U_{(\bar s)},\mathcal F)
+\qquad\text{for all }q,
+$$
+
+so the higher direct images carry no information beyond what strict localizations see.
+
+The excellence hypothesis is used exactly once, to guarantee finiteness of normalizations in step 2; in the application below the base is an affine variety over a field, where it holds automatically.
+
+_Proof._ We proceed in four steps, then deduce 2.
+
+**Step 1: constant coefficients with connected fibers.** Assume first $g:D\to S$ has geometrically connected fibers and $\mathcal F=M_U$ is the constant sheaf attached to a finite module $M$ killed by $n$, or the sheaf $\mu_n$. Since $g$ is proper, smooth, and has geometrically connected fibers, Book 15, Section 5.5 gives $g_*\mathcal O_D=\mathcal O_S$ after every base change, so $g_*M_U=M_S$ and, by the same argument on units, $g_*\mathbf G_m=\mathbf G_{m,S}$.
+
+Consider the Kummer sequence of Section 3.4 on $D$ and push it forward. For its terms we need two identifications. First,
+
+$$
+R^1g_*\mathbf G_m\simeq \operatorname{Pic}_{D/S},
+$$
+
+where $\operatorname{Pic}_{D/S}$ is the fppf Picard sheaf of Book 17a. Both sides are sheaves on $S_{\mathrm{\acute et}}$, so it suffices to compare geometric stalks. The stalk of the right side at $\bar s$ is the colimit of $\operatorname{Pic}(D_V)$ over pointed étale neighborhoods $V$: a line bundle is given by finitely many transition functions on finitely many affines with finitely many cocycle identities, all of which descend through the filtered system, while Hilbert's theorem 90 identifies each $\operatorname{Pic}(D_V)$ with $H^1(D_V,\mathbf G_m)$. The stalk of the left side is computed by the strict-localization formula of Section 2.3 together with the same descent of line-bundle data through the colimit, giving the same group. Second, the degree map of Book 17a, Section 4.1, makes n-torsion classes have degree zero, because the degree is additive and $\mathbf Z$ is torsion-free; hence
+
+$$
+\ker\big(n:\operatorname{Pic}_{D/S}\to\operatorname{Pic}_{D/S}\big)
+=\ker\big(n:J\to J\big)=J[n],
+$$
+
+with $J=\operatorname{Pic}^0_{D/S}$ the Jacobian, an abelian scheme by Book 17a, Section 4.3.
+
+The multiplication-by-$n$ map $[n]$ on $J$ is finite étale and surjective. Its Lie differential is multiplication by $n$ on $\operatorname{Lie}(J)\simeq R^1g_*\mathcal O_D$, the identification (5.3) of Book 17a, Section 5.2; tensoring a first-order deformation given by transition functions $1+\epsilon a_{ij}$ with its $n$th power multiplies the cocycle class by $n$. Since $n$ is invertible on $S$, this differential is an isomorphism at every point, so $[n]$, being a morphism of smooth $S$-schemes with everywhere-invertible differential, is étale; it is proper and quasi-finite, hence finite, by the standard argument used in Books 8, 9, and 17; and its image is a closed subgroup meeting every geometric fiber in the whole fiber — over an algebraically closed field, $[n]:J_s\to J_s$ is surjective because its differential is invertible, $J_s$ is connected, and the image is closed of the same dimension as $J_s$ — so it is surjective as a map of fppf sheaves. A finite étale cover of a strictly henselian local scheme is a disjoint union of copies of that scheme, so $[n]$ remains surjective on sections over such rings; this will be used momentarily.
+
+Now read off the long exact sequence of derived direct images:
+
+$$
+0\to\mathbf Z/n(1)_S\to R^1g_*\mu_n\to J[n]\to0,
+$$
+
+because $\operatorname{coker}(n:\mathbf G_{m,S}\to\mathbf G_{m,S})=\mathbf Z/n(1)$ by the Kummer sequence on $S$, because $R^0g_*\mu_n=\mu_n$, and because the next term is $\ker(n:\operatorname{Pic}_{D/S}\to\operatorname{Pic}_{D/S})=J[n]$. Both ends are lisse: $\mathbf Z/n(1)_S=\mu_n$ by definition, and $J[n]$ is the kernel of a finite étale homomorphism, hence finite étale locally free of rank equal to the genus of the geometric fibers. Lisse sheaves are closed under extensions (Section 3.1), so $R^1g_*\mu_n$ is lisse, and $R^1g_*M_U\simeq R^1g_*\mu_n$ after choosing a primitive root étale-locally on $S$; since local constancy descends along finite étale covers, $R^1g_*M_U$ is lisse of the same rank for any constant $M$.
+
+Vanishing above degree two follows from stalks. By the finite-coefficient proper base change theorem of Section 4.6, applied to $g$ and to the geometric point $\bar s$,
+
+$$
+(R^qg_*M_U)_{\bar s}=H^q(D_{\bar s},M),
+$$
+
+and the fiber computations of Section 6.7 give $H^q(D_{\bar s},M)=0$ for $q\ge3$. Hence $R^qg_*M_U=0$ there.
+
+The sheaf $R^2g_*M_U$ deserves a separate remark. Its geometric stalks are $H^2(D_{\bar s},M)$, which by Section 6.7 is cyclic of order $n$ for $M=\mu_n$ and vanishes in the affine situation, so the stalk values are known. Identifying the sheaf itself with $\mathbf Z/n(1)_S$, or proving that it is lisse, would require showing that the boundary map $R^2g_*\mu_n\to R^2g_*\mathbf G_m$ of the Kummer sequence into the relative Brauer term carries no additional information; the relative Brauer sheaf $R^2g_*\mathbf G_m$ is not analyzed in this book, and no result below uses more about $R^2g_*M_U$ than its stalks. The same applies to the higher direct images with general constant coefficients. This is the one point where the relative theory developed here is deliberately narrower than what the fiberwise computations of Section 6.7 would suggest.
+
+**Step 2: constant coefficients, general fibers.** Drop geometric connectedness. The function $s\mapsto\#\pi_0(D_s)$ is locally constant: $g_*\mathcal O_D$ is locally free by cohomology and base change, Book 15, Sections 5.2 and 5.5, since $h^0$ equals the number of components on every geometric fiber, and its spectrum $T\to S$ is finite étale because its fibers are split algebras $\kappa(s)^r$. Over $T$ the idempotents are defined and decompose
+
+$$
+D_T=\coprod_{j}D_j,
+$$
+
+with each $D_j\to T$ smooth, proper, and with geometrically connected fibers. Cohomology converts disjoint unions into products, so
+
+$$
+R^q(g_T)_*(M) = \prod_j R^qg_{j*}(M),
+$$
+
+lisse by Step 1. The canonical restriction map $(R^qg_*M)|_T\to R^q(g_T)_*M$ is an isomorphism: both sides have the same stalks at geometric points of $T$, namely $H^q(D_{\bar t},M)$, the left side by Section 4.6 applied to $g$, the right side by Step 1. A sheaf that becomes lisse after pullback by the finite étale cover $T\to S$ is lisse, because a trivializing étale cover of $T$ composed with $T\to S$ trivializes it over $S$. This proves the constant-coefficient case of 1.
+
+**Step 3: lisse coefficients.** Let $\mathcal F$ be a lisse $\Lambda_n$-sheaf on $D$, and choose a finite étale cover $\pi:D'\to D$ trivializing it, $\pi^*\mathcal F=M$. The adjunction unit gives an injection of lisse sheaves
+
+$$
+0\to\mathcal F\longrightarrow\pi_*M,
+$$
+
+injective because $\pi$ is surjective and restriction to geometric fibers detects zero sections; its cokernel $\mathcal C'$ is again lisse, and $R^qg_*(\pi_*M)=R^q(g\circ\pi)_*M$ falls under Step 2. The long exact sequence shows that $R^0g_*\mathcal F$ is the kernel of a map between lisse sheaves and that $R^1g_*\mathcal F$ is an extension whose outer terms are kernels and cokernels of maps between lisse sheaves:
+
+$$
+0\to R^0g_*\mathcal F\to R^0g_*\pi_*M\to R^0g_*\mathcal C',
+$$
+
+$$
+0\to\operatorname{coker}(R^0g_*\pi_*M\to R^0g_*\mathcal C')
+\to R^1g_*\mathcal F
+\to \ker(R^1g_*\pi_*M\to R^1g_*\mathcal C')\to0 .
+$$
+
+Since lisse sheaves are closed under kernels, cokernels, and extensions, $R^0g_*\mathcal F$ and $R^1g_*\mathcal F$ are lisse.
+
+For the vanishing and the base-change assertion no such construction is needed. Every $\mathcal F$ as above is constructible of finite modules, so Section 4.6 applies directly:
+
+$$
+(R^qg_*\mathcal F)_{\bar s}=H^q(D_{\bar s},\mathcal F),
+$$
+
+which vanishes for $q\ge3$ by the fiber computations of Section 6.7, extended from constant to lisse coefficients by the same trace-and-sequence argument used there. This proves 1.
+
+**Step 4: base change.** Let $T\to S$ be arbitrary. A map of sheaves is an isomorphism if and only if it is an isomorphism on all geometric stalks, so it suffices to compare
+
+$$
+(R^qg_*\mathcal F)_{\bar s}
+\qquad\text{and}\qquad
+(R^qg_{T*}\mathcal F_T)_{\bar t}.
+$$
+
+By Section 4.6 these are $H^q(D_{\bar s},\mathcal F)$ and $H^q(D_{T,(t)},\mathcal F_T)$ respectively, and applying Section 4.6 to $g_T$ rewrites the latter as $H^q(D_{\bar t},\mathcal F_T)$. The fields $\kappa(\bar s)\subseteq\kappa(\bar t)$ are algebraically closed, and $D_{\bar t}=\varprojlim_i D_i$ over the filtered system of models of $D_{\bar s}$ over finitely generated subfields of $\kappa(\bar s)$, base-changed along intermediate extensions; the transitions are affine, being morphisms of spectra of fields, so the Continuity theorem of Section 4.6 applies and exhibits both groups as colimits over a common cofinal subsystem, compatibly with the base-change map. Hence the map is an isomorphism on all geometric stalks.
+
+**Proof of 2.** Let $h:U=C\setminus D_0\to S$ as in 2., write $f:C\to S$ for the compactification morphism, with $j:U\hookrightarrow C$ and $i:D_0\hookrightarrow C$, and first take $\mathcal F=M_U$ constant. The two short exact sequences of sheaves on $C$,
+
+$$
+0\to j_!M_U\to M_C\to i_*M_{D_0}\to0,
+\qquad
+0\to j_!M_U\to j_*M_U\to i_*Q\to0,
+$$
+
+hold with $Q=i^*j_*M_U=M_{D_0}$, the last identification because a punctured strictly henselian disk carries no nonconstant locally constant functions. Pushing forward to $S$ and using that $R^mg_{0*}M_{D_0}=0$ for $m>0$, where $g_0:D_0\to S$ is finite étale, the first sequence determines $R^mf_*j_!M_U$: for $m\ge2$ it is isomorphic to $R^mg_*M_C$, both flanking terms of the sequence vanishing; for $m=1$ it is the cokernel of $R^0(g_0)_*M_{D_0}\to R^1g_*M_C$, hence lisse; for $m=0$ it is the kernel of $f_*M_C\to(g_0)_*M_{D_0}$, hence lisse. The second sequence then gives
+
+$$
+R^0h_*M_U:\quad
+0\to R^0f_*j_!M_U\to R^0h_*M_U\to g_{0*}M_{D_0},
+$$
+
+so $R^0h_*M_U$ is lisse as an extension whose outer terms are lisse, and
+
+$$
+R^1h_*M_U\simeq\operatorname{coker}\big((g_0)_*M_{D_0}\to R^1f_*j_!M_U\big),
+$$
+
+lisse for the same reason. This proves 2. for constant coefficients. For lisse $\mathcal F$ one first realizes the trivializing cover: if $\pi:U'\to U$ is finite étale, let $C'$ be the normalization of $C$ in it. Excellence makes $C'\to C$ finite; $C$ being a regular one-dimensional scheme, $C'$ is finite flat over $C$, being Cohen--Macaulay over a regular base of dimension one; hence $C'\to S$ is flat and finitely presented, proper because finite over $C$, and its geometric fibers are normal curves over algebraically closed fields, hence regular and therefore smooth. Writing $D_0'=C'\times_CD_0$, which is finite étale over $S$, realizes $U'=C'\setminus D_0'$ as required by 2. Now insert
+
+$$
+0\to\mathcal F\to\pi_*M\to\mathcal C'\to0
+$$
+
+on $U$ and read off from the resulting long exact sequences, using that $R^qh_*(\pi_*M)=R^q(h\circ\pi)_*M$ and that $h\circ\pi$ satisfies the hypotheses of 2., that $R^0h_*\mathcal F$ is a kernel and $R^1h_*\mathcal F$ an extension of kernels and cokernels of maps between lisse sheaves.
+
+The base-change assertion for 2. in degrees zero and one follows from the stalk formula just stated together with Step 4's identification argument, which never used properness of the morphism being pushed forward: the strict-localization formula of Section 2.3 holds for every quasi-compact quasi-separated morphism, and the field-extension comparison is again a Continuity-theorem computation over affine transition systems, now modeling the affine curve $U_{\bar t}$. What the nonproperness does prevent is any vanishing statement beyond what stalks give: unlike the situation over a field, where Section 6.7 shows $H^2=0$ on affine curves, the sheaves $R^qh_*\mathcal F$ for $q\ge2$ need not vanish even for constant coefficients, because their stalks are computed on total spaces over strictly henselian rings rather than on fibers; no result below uses them. $\square$
+
+The ranks delivered by the theorem are worth recording, because later books quote them. If the geometric fibers of $g$ have genus $g_0$ and $\mathcal F$ is constant of rank $r$ on connected fibers occurring with multiplicity $\#\pi_0$, then $R^0g_*\mathcal F$ has rank $r\cdot\#\pi_0$ and $R^1g_*\mathcal F$ has rank $(2g_0+r-1)\cdot\#\pi_0$ after a choice of root of unity identifies the coefficients; the stalks of $R^2g_*(\mu_n)$ are cyclic of order $n$. For the affine curve of 2. with $e\ge1$ boundary points per fiber, $R^1h_*(\mu_n)$ has stalk-rank $2g_0+e-1$, matching Section 6.8's count.
 
 **Affine constructible lemma.** If $U$ is affine of finite type of dimension $d$ over $k$, then, for every constructible finite $\ell$-primary sheaf $\mathcal F$,
 
@@ -1057,19 +1208,15 @@ $$
 
 with $V$ affine of dimension $d-1$: there is a smooth proper relative curve $\overline U^\circ\to V$ containing $U^\circ$, and the complement is finite over $V$. To obtain it, choose a separating transcendence basis for the smooth function field and realize $d-1$ of its elements as sufficiently general linear projections on an affine embedding. The generic fiber is then a smooth curve; openness of the smooth locus gives a smooth morphism after deleting the discriminant. Normalizing the projective closure and deleting the nonflat locus makes the boundary finite; deleting its branch locus makes it étale. This argument remains valid over an imperfect separably closed field because the chosen basis is separating. Every deletion has smaller-dimensional complement and is handled by noetherian induction.
 
-We need the relative curve calculation only for this elementary fibration. A lisse finite sheaf is trivialized by a finite étale cover. Normalize $\overline U^\circ$ in a Galois closure and shrink $V$ once more so that the normalization and every branch component are finite and flat over the corresponding strata. At a boundary branch the strict-local group is an extension of wild inertia by a procyclic tame group. In characteristic $p>0$, wild inertia is pro-$p$ and its invariants are exact on finite $\ell$-primary modules: on every finite quotient, averaging by the inverse of its $p$-power order splits invariants. In characteristic zero the wild group is trivial. The remaining tame cochains are represented by the two-term complex
+We need the relative curve calculation only for this elementary fibration, and it is now supplied by the relative curve theorem: after the shrink just performed, $\overline U^\circ\to V$ is smooth and proper with geometrically nonempty curve fibers and its complement is finite étale over $V$, so assertion 2. applies to $f:U^\circ\to V$ and to the lisse sheaf $\mathcal F$. It follows that $R^0f_*\mathcal F$ and $R^1f_*\mathcal F$ are lisse — in particular constructible and finite — and that their formation commutes with every base change; on geometric stalks they compute the fiberwise groups of Section 6.7, concentrated in degrees zero and one. The boundary mechanism behind these two sheaves is worth recording even though the theorem makes its explicit description unnecessary: at a boundary branch the strict-local group is an extension of wild inertia by a procyclic tame group; wild inertia is pro-$p$ and acts through finite $\ell$-primary quotients of order prime to $p$, so averaging by the inverse of the group order splits invariants, while the remaining tame cochains are represented by a two-term complex $M\xrightarrow{\tau-1}M$. Descent along the finite trivializing cover is retained inside these complexes rather than replaced by the generally unbounded groups $H^a(G,-)$. The same construction with extension by zero handles a locally closed stratum: the missing sections simply impose zero in the corresponding local term. This is the only step of the proof that is relative rather than fiberwise; the one-dimensional case established above uses nothing of the kind.
 
-$$
-M\xrightarrow{\tau-1}M,
-$$
+**Status of the higher rows.** Assertion 2. controls exactly the rows zero and one, together with the stalk values of every row, and this book does not prove more. The remaining rows cannot be dismissed: for constant coefficients the sheaf $R^2f_*\mathcal F$ need not vanish when the base has dimension at least one, because its stalks are computed on total spaces over strictly henselian rings rather than on fibers, and the torus-like elementary fibrations show that nonzero monodromic lisse sheaves can occur there. Consequently the finiteness half of the affine lemma closes as soon as the abutment receives only finitely many finite rows — which the theorem supplies for rows zero and one and which the induction on $\dim V$ must supply for any surviving higher rows — while the vanishing half, as executed below, rests on the supplementary vanishing of the total-degree-$d+1$ contribution from such rows. For the applications in this book, which are made over separably closed ground fields with the fibrations produced by linear projection, this supplementary vanishing holds in the cases used; a proof independent of case checks belongs to the general theory of the next book, where it follows from proper base change and local acyclicity. We flag it here rather than conceal it: within this book, the vanishing statement of Section 7.1 in dimensions above one carries this explicitly conditional input, while the finiteness statement and everything proved in dimensions zero and one are unconditional.
 
-where $\tau$ is a compatible tame generator. Apply the curve computation of Section 6.7 to the geometric fibers of $f$: each is a smooth affine curve over a separably closed field, and with the restricted lisse coefficients its cohomology is finite and concentrated in degrees zero and one. Every object entering that computation is finitely presented over the base — the finite étale cover trivializing the coefficients, its normalization across the boundary, the trace surjection, and the finitely many short exact sequences of the dévissage — so after one further shrinking of $V$ the entire dévissage is defined over $V$, its terms are finite direct images from smooth affine relative curves over $V$, and it restricts on each pointed étale neighborhood to the dévissage used there. It follows that $R^0f_*\mathcal F$ and $R^1f_*\mathcal F$ are constructible finite sheaves and that $R^qf_*\mathcal F=0$ for $q>1$; the boundary contributions are the two-term tame complexes just displayed. Descent along the finite trivializing cover is retained in these complexes rather than replaced by the generally unbounded groups $H^a(G,-)$. The same construction with extension by zero handles a locally closed stratum: the missing sections simply impose zero in the corresponding local term. This is the only step of the proof that is relative rather than fiberwise; the one-dimensional case established above uses nothing of the kind.
-
-The Leray sequence now has only the rows $0$ and $1$. By induction on $\dim V$ its terms vanish when $a>d-1$, so $H^{a+b}(U^\circ,\mathcal F)$ vanishes above $d$ and is finite. The kernel and cokernel of the map from the extension by zero on $U^\circ$ to the original sheaf are supported on the deleted closed subset. The localization long exact sequence and noetherian induction transfer the same assertions to $U$. This closes both inductions. $\square$
+In the Leray sequence for $f$, the rows zero and one are the lisse sheaves just produced; their terms are finite by the induction hypothesis on $\dim V$ applied over the affine base $V$, and they vanish when $a>d-1$. With the supplementary vanishing flagged above in force, no higher row contributes to a total degree above $d$, and none contributes at all to the range where Section 6.7's fiber bounds already control the abutment; hence $H^{a+b}(U^\circ,\mathcal F)$ vanishes above $d$ and is finite. This is the form in which the lemma is used below. The kernel and cokernel of the map from the extension by zero on $U^\circ$ to the original sheaf are supported on the deleted closed subset. The localization long exact sequence and noetherian induction transfer the same assertions to $U$. This closes both inductions. $\square$
 
 The proof also explains the prime-to-characteristic hypothesis. It is exactly what makes wild-inertia invariants exact and leaves a length-one tame local complex. It explains the uniformity in the exponent as well: for a fixed stratification and fixed ranks, the same finite Čech and inertia complexes work for every $\Lambda_n$.
 
-It is worth recording where the weight of the argument now lies. For curves the affine lemma is proved outright in Section 6.7, from Tsen's theorem and the divisor sequence, with no fundamental-group presentation, no $K(\pi,1)$ assertion and no base-change theorem. In dimension at least two the elementary fibration is what carries the induction, and its higher direct images are controlled by transporting the fiberwise curve computation along a finitely presented dévissage; the general base-change theorems that would make the fiberwise computation and the strict-local computation agree by pure thought belong to the next book and are not invoked. A reader tracking hypotheses should therefore treat the curve case and the higher-dimensional case as resting on different amounts of geometry.
+It is worth recording where the weight of the argument now lies. For curves the affine lemma is proved outright in Section 6.7, from Tsen's theorem and the divisor sequence, with no fundamental-group presentation, no $K(\pi,1)$ assertion and no base-change theorem. In dimension at least two the elementary fibration carries the induction, and its rows zero and one are controlled by the relative curve theorem proved at the head of this section: that theorem is what makes the fiberwise curve computation and the strict-localization computation agree, and it is proved here from the cohomological descent and continuity results of Sections 4.5 and 4.6 together with Book 17a's relative Picard construction. The general adic and smooth-morphism base-change statements remain in the next book; what is used and proved here is exactly their finite-coefficient shadow for relative curves. A reader tracking hypotheses should therefore treat the curve case as unconditional and the higher-dimensional vanishing as carrying one explicitly flagged input.
 
 We pass from affine to separated schemes without assuming quasi-projectivity. A separated noetherian space of dimension $d$ has a finite affine refinement of order at most $d+1$, meaning that no nonempty intersection uses more than $d+1$ members. Construct such a refinement by induction on dimension: choose disjoint affine neighborhoods of the finitely many generic points, remove their closed complement, and refine that complement, whose dimension is smaller; shrinking the new affine neighborhoods away from the previously chosen closed pieces preserves the asserted order. Separatedness makes every finite intersection affine.
 
