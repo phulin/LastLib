@@ -292,7 +292,25 @@ theorem chapter06_discrete_embedding_range_closed
     [TopologicalSpace H] [IsTopologicalAddGroup H] [T2Space H]
     (ι : G →+ H) (hι : Chapter06DiscreteEmbedding ι) :
     IsClosed (Set.range ι) := by
-  sorry
+  change IsClosed ((ι.range : AddSubgroup H) : Set H)
+  have hdiscrete : IsDiscrete (Set.range ι) := by
+    rw [isDiscrete_iff_forall_mem_exists_isOpen]
+    intro x hx
+    rcases hx with ⟨g, rfl⟩
+    rcases hι.2 g with ⟨U, hUopen, hUg, hU⟩
+    refine ⟨U, hUopen, ?_⟩
+    ext z
+    constructor
+    · intro hz
+      rcases hz.2 with ⟨h, rfl⟩
+      have hEq : h = g := hU h hz.1
+      simp [hEq]
+    · intro hz
+      subst z
+      exact ⟨hUg, ⟨g, rfl⟩⟩
+  let _ : DiscreteTopology ι.range := by
+    exact isDiscrete_iff_discreteTopology.mp hdiscrete
+  exact AddSubgroup.isClosed_of_discrete
 
 /-- A compact set meets a discrete lattice in finitely many points. -/
 theorem chapter06_compact_intersects_discrete_lattice_finitely
