@@ -2,6 +2,7 @@ import Mathlib.FieldTheory.Finite.Extension
 import Mathlib.FieldTheory.PrimitiveElement
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Section03ConstructingTheUnramifiedLift
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.Section02FrobeniusInAnUnramifiedExtension
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section07ConcreteFiniteExtensions
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07
 
@@ -9,6 +10,7 @@ open Set
 open Polynomial
 open scoped Polynomial WithZero
 open LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06
+open LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
 
 noncomputable section
 
@@ -81,6 +83,51 @@ structure Chapter07FiniteResidueUnramifiedModel
   frobenius_on_residue :
     ∀ x : integralModel,
       residueMap (frobeniusOnModel x) = (residueMap x) ^ q
+
+/-- A finite-residue unramified model together with the normalized valuation,
+Henselian integral presentation, and canonical residue identifications needed
+to transport elements coherently between the residue and fraction fields. -/
+structure Chapter07NormalizedFiniteResidueUnramifiedModel
+    (A K k : Type*) [CommRing A] [Field K] [Field k] [Fintype k]
+    [Algebra A K] [IsFractionRing A K] (res : A →+* k)
+    (valuationBase : AddValuation K (WithTop ℤ))
+    extends Chapter07FiniteResidueUnramifiedModel A K k res where
+  [integralModelHenselian : HenselianLocalRing integralModel]
+  residueIdeal_eq_maximal : residueIdeal = IsLocalRing.maximalIdeal integralModel
+  integralResidueIdentification :
+    IsLocalRing.ResidueField integralModel ≃+* residue
+  integralResidueIdentification_compatible :
+    integralResidueIdentification.toRingHom.comp
+        (IsLocalRing.residue integralModel) = residueMap
+  residue_generator_lifts : ∀ b : integralModel,
+    Algebra.adjoin k ({residueMap b} : Set residue) = ⊤ →
+      Algebra.adjoin A ({b} : Set integralModel) = ⊤
+  field_generator_of_integral_generator : ∀ b : integralModel,
+    Algebra.adjoin A ({b} : Set integralModel) = ⊤ →
+      Algebra.adjoin K ({(b : carrier)} : Set carrier) = ⊤
+  valuationBase_integers : valuationBase.Integers A
+  valuation : AddValuation carrier (WithTop ℤ)
+  valuation_extension : valuationBase.IsEquiv
+    (valuation.comap (algebraMap K carrier))
+  extensionData :
+    Chapter10HeterogeneousExtensionData valuationBase valuation valuation_extension
+  chapter10Profile : Chapter10FiniteExtensionProfile
+  chapter10Profile_realized :
+    Chapter10ProfileRealizedByData extensionData chapter10Profile
+  chapter10Profile_degree : chapter10Profile.degree = degree
+  chapter10Profile_ramificationIndex : chapter10Profile.ramificationIndex = 1
+  chapter10Profile_residueDegree : chapter10Profile.residueDegree = residueDegree
+  chapter10Profile_unramified : Chapter10Unramified chapter10Profile
+  baseResidueIdentification : Chapter10ResidueField valuationBase ≃+* k
+  extensionResidueIdentification : Chapter10ResidueField valuation ≃+* residue
+  canonicalResidueMap :
+    Chapter10ResidueField valuationBase →+* Chapter10ResidueField valuation
+  canonicalResidueMap_eq :
+    letI : Valuation.HasExtension valuationBase valuation := ⟨valuation_extension⟩
+    canonicalResidueMap = Chapter10ResidueFieldMap valuationBase valuation
+  canonicalResidueMap_compatible :
+    extensionResidueIdentification.toRingHom.comp canonicalResidueMap =
+      (algebraMap k residue).comp baseResidueIdentification.toRingHom
 
 /-- The automorphism group used for finite unramified Galois groups. -/
 abbrev Chapter07GaloisAutomorphismGroup
@@ -191,6 +238,25 @@ theorem chapter07_finite_residue_unramified_exists
   -/
   sorry
 
+/-- The finite-residue unramified lift with a prescribed normalized base
+valuation, a Henselian integral model, and compatible canonical residue maps. -/
+theorem chapter07_normalized_finite_residue_unramified_exists
+    {A K k : Type*} [CommRing A] [IsDomain A]
+    [Field K] [Field k] [Fintype k]
+    [Algebra A K] [IsFractionRing A K] [HenselianLocalRing A]
+    [IsDiscreteValuationRing A]
+    (res : A →+* k) (valuationBase : AddValuation K (WithTop ℤ))
+    (f : ℕ) (hf : 0 < f)
+    (hvaluationBase : valuationBase.Integers A)
+    (hres_surjective : Function.Surjective res)
+    (hres_kernel : RingHom.ker res = IsLocalRing.maximalIdeal A)
+    (hpoly : ∃ gbar : k[X],
+      gbar.Monic ∧ Irreducible gbar ∧ gbar.Separable ∧ gbar.natDegree = f) :
+    ∃ M : Chapter07NormalizedFiniteResidueUnramifiedModel
+        A K k res valuationBase,
+      M.degree = f ∧ M.residueDegree = f ∧ M.ramificationIndex = 1 := by
+  sorry
+
 /-- The finite-field existence theorem with the irreducible-polynomial
 hypothesis discharged by the finite-field polynomial existence result. -/
 theorem chapter07_finite_residue_unramified_exists_for_degree
@@ -208,6 +274,28 @@ theorem chapter07_finite_residue_unramified_exists_for_degree
       (k := k) f hf
   exact chapter07_finite_residue_unramified_exists res f hf
     hres_surjective hres_kernel
+    ⟨gbar, hgbar_monic, hgbar_irreducible, hgbar_separable, hgbar_degree⟩
+
+/-- The normalized finite-residue lift with the polynomial-existence input
+discharged over the finite residue field. -/
+theorem chapter07_normalized_finite_residue_unramified_exists_for_degree
+    {A K k : Type*} [CommRing A] [IsDomain A]
+    [Field K] [Field k] [Fintype k]
+    [Algebra A K] [IsFractionRing A K] [HenselianLocalRing A]
+    [IsDiscreteValuationRing A]
+    (res : A →+* k) (valuationBase : AddValuation K (WithTop ℤ))
+    (f : ℕ) (hf : 0 < f)
+    (hvaluationBase : valuationBase.Integers A)
+    (hres_surjective : Function.Surjective res)
+    (hres_kernel : RingHom.ker res = IsLocalRing.maximalIdeal A) :
+    ∃ M : Chapter07NormalizedFiniteResidueUnramifiedModel
+        A K k res valuationBase,
+      M.degree = f ∧ M.residueDegree = f ∧ M.ramificationIndex = 1 := by
+  obtain ⟨gbar, hgbar_monic, hgbar_irreducible, hgbar_separable,
+    hgbar_degree⟩ := chapter07_finite_field_irreducible_separable_polynomial_exists
+      (k := k) f hf
+  exact chapter07_normalized_finite_residue_unramified_exists
+    res valuationBase f hf hvaluationBase hres_surjective hres_kernel
     ⟨gbar, hgbar_monic, hgbar_irreducible, hgbar_separable, hgbar_degree⟩
 
 /-- Any two models produced for the same finite residue degree are isomorphic
