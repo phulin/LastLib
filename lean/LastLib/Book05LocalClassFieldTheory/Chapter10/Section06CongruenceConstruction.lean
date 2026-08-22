@@ -26,7 +26,21 @@ theorem chapter10_mem_presented_subgroup_iff
     x ∈ chapter10PresentedSubgroup D π a m V ↔
       ∃ z : ℤ, ∃ v : V,
         x = (π ^ m * chapter10RingUnitInField D.valuation a) ^ z * (v : Kˣ) := by
-  sorry
+  change x ∈ Subgroup.zpowers
+      (π ^ m * chapter10RingUnitInField D.valuation a) ⊔ V ↔ _
+  rw [Subgroup.mem_sup]
+  constructor
+  · rintro ⟨y, hy, v, hv, hxy⟩
+    obtain ⟨z, hz⟩ := Subgroup.mem_zpowers_iff.mp hy
+    refine ⟨z, ⟨v, hv⟩, ?_⟩
+    rw [← hxy, ← hz]
+  · rintro ⟨z, v, hx⟩
+    have hz : (π ^ m * chapter10RingUnitInField D.valuation a) ^ z ∈
+        Subgroup.zpowers (π ^ m * chapter10RingUnitInField D.valuation a) :=
+      (Subgroup.mem_zpowers_iff).2 ⟨z, rfl⟩
+    refine ⟨(π ^ m * chapter10RingUnitInField D.valuation a) ^ z, hz,
+      (v : Kˣ), v.property, ?_⟩
+    exact hx.symm
 
 /- The unit filtration is cofinal among neighborhoods of the identity. -/
 theorem chapter10_open_subgroup_contains_deep_units
@@ -37,7 +51,126 @@ theorem chapter10_open_subgroup_contains_deep_units
         D.valuation)
     (V : Subgroup Kˣ) (hopen : IsOpen (V : Set Kˣ)) :
     ∃ n : ℕ, Chapter10FieldUnitFiltration D.valuation n ≤ V := by
-  sorry
+  obtain ⟨n, hn⟩ := hbasis.2 (V : Set Kˣ) (hopen.mem_nhds V.one_mem)
+  exact ⟨n, fun x hx => hn hx⟩
+
+private theorem chapter10_field_filtration_quotient_finite
+    {K : Type*} [Field K] (D : Chapter10LocalFieldProfile K) (n : ℕ)
+    : Finite ((Chapter10FieldUnitFiltration D.valuation 0) ⧸
+      (Chapter10FieldUnitFiltration D.valuation n).subgroupOf
+      (Chapter10FieldUnitFiltration D.valuation 0)) := by
+  let A := Chapter10ValuationRing D.valuation
+  let U : ℕ → Subgroup Aˣ :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10UnitFiltration A
+  let V : ℕ → Subgroup Kˣ :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10FieldUnitFiltration A
+  let _ : (U n).FiniteIndex := by
+    cases n with
+    | zero =>
+        change (
+          LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10UnitFiltration
+            A 0).FiniteIndex
+        rw [LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10_unit_filtration_zero]
+        infer_instance
+    | succ n =>
+        let _ : Finite (
+            LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Chapter10PrecisionQuotient
+              A (n + 1)) :=
+          LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.chapter10_finite_residue_finite_precision_quotients
+            A n D.valuationRing_dvr
+        let f : Aˣ →* (
+            LastLib.Book02FiniteExtensionsOfLocalFields.Chapter10.Chapter10PrecisionQuotient
+              A (n + 1))ˣ :=
+          Units.map
+            (Ideal.Quotient.mk
+              ((IsLocalRing.maximalIdeal A) ^ (n + 1))).toMonoidHom
+        have hker : f.ker = U (n + 1) := by
+          ext u
+          constructor
+          · intro hu
+            change f u = 1 at hu
+            have hv := congrArg Units.val hu
+            change Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ (n + 1))
+                (u : A) = 1 at hv
+            change (u : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ (n + 1)
+            apply Ideal.Quotient.eq_zero_iff_mem.mp
+            rw [map_sub]
+            exact sub_eq_zero.mpr hv
+          · intro hu
+            apply MonoidHom.mem_ker.mpr
+            apply Units.ext
+            change Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ (n + 1))
+                (u : A) = 1
+            rw [← sub_eq_zero]
+            change Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ (n + 1))
+                ((u : A) - 1) = 0
+            exact Ideal.Quotient.eq_zero_iff_mem.mpr hu
+        rw [← hker]
+        infer_instance
+  let hUn0 : U n ≤ U 0 := by
+    intro u hu
+    change ((u : A) - 1) ∈ (IsLocalRing.maximalIdeal A) ^ n at hu
+    change ((u : A) - 1) ∈ (IsLocalRing.maximalIdeal A) ^ 0
+    exact (Ideal.pow_le_pow_right (Nat.zero_le n)) hu
+  let f : Aˣ →* V 0 :=
+    { toFun := fun u =>
+        ⟨Units.map A.subtype.toMonoidHom u, by
+          change Units.map A.subtype.toMonoidHom u ∈
+            (U 0).map (Units.map A.subtype.toMonoidHom)
+          exact ⟨u, by
+            simp [U, LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Chapter08UnitLayer],
+            rfl⟩⟩
+      map_one' := by
+        apply Subtype.ext
+        simp
+      map_mul' := by
+        intro u v
+        apply Subtype.ext
+        simp }
+  have hf_surj : Function.Surjective f := by
+    intro x
+    rcases x.property with ⟨u, hu, hux⟩
+    refine ⟨(u : Aˣ), ?_⟩
+    apply Subtype.ext
+    exact hux
+  have hf_inj : Function.Injective f := by
+    intro u v huv
+    apply Units.ext
+    apply Subtype.ext
+    exact congrArg (fun x : V 0 => ((x : Kˣ) : K)) huv
+  let ef : Aˣ ≃* V 0 := MulEquiv.ofBijective f ⟨hf_inj, hf_surj⟩
+  let F : Aˣ →* (V 0 ⧸ (V n).subgroupOf (V 0)) :=
+    (QuotientGroup.mk' ((V n).subgroupOf (V 0))).comp ef.toMonoidHom
+  have hFsurj : Function.Surjective F :=
+    (QuotientGroup.mk'_surjective _).comp ef.surjective
+  have hker : F.ker = U n := by
+    ext u
+    constructor
+    · intro hu
+      change F u = 1 at hu
+      have huV : (ef u : V 0) ∈ (V n).subgroupOf (V 0) :=
+        (QuotientGroup.eq_one_iff _).mp hu
+      change (ef u : Kˣ) ∈ V n at huV
+      rcases huV with ⟨a, ha, hEq⟩
+      have heq : ef u = ef (a : Aˣ) := by
+        apply Subtype.ext
+        change Units.map A.subtype.toMonoidHom u =
+          Units.map A.subtype.toMonoidHom (a : Aˣ)
+        exact hEq.symm
+      rw [ef.injective heq]
+      exact ha
+    · intro hu
+      apply MonoidHom.mem_ker.mpr
+      change QuotientGroup.mk' ((V n).subgroupOf (V 0)) (ef u) = 1
+      apply (QuotientGroup.eq_one_iff _).2
+      change (ef u : Kˣ) ∈ V n
+      change Units.map A.subtype.toMonoidHom u ∈
+        (U n).map (Units.map A.subtype.toMonoidHom)
+      exact ⟨u, hu, rfl⟩
+  let eV : (Aˣ ⧸ U n) ≃* (V 0 ⧸ (V n).subgroupOf (V 0)) :=
+    (QuotientGroup.quotientMulEquivOfEq hker.symm).trans
+      (QuotientGroup.quotientKerEquivOfSurjective F hFsurj)
+  exact Finite.of_equiv _ eV.toEquiv
 
 /- A source-order version with the local valuation made explicit. -/
 theorem chapter10_congruence_precision_data
@@ -46,13 +179,47 @@ theorem chapter10_congruence_precision_data
     (hbasis :
       LastLib.Book05LocalClassFieldTheory.Chapter02.Chapter02FieldUnitFiltrationNeighborhoodBasis
         D.valuation)
-    (V : Subgroup Kˣ) (hV : V ≤ chapter10LocalUnitSubgroup D)
+    (V : Subgroup Kˣ) (_hV : V ≤ chapter10LocalUnitSubgroup D)
     (hopen : IsOpen (V : Set Kˣ))
     (a : Chapter10RingUnitGroup D.valuation) :
     ∃ n r : ℕ, 1 ≤ n ∧ 0 < r ∧
       Chapter10FieldUnitFiltration D.valuation n ≤ V ∧
       chapter10RingUnitInField D.valuation (a ^ r) ∈ V := by
-  sorry
+  obtain ⟨k, hk⟩ := chapter10_open_subgroup_contains_deep_units D hbasis V hopen
+  have hdesc : Chapter10FieldUnitFiltration D.valuation (k + 1) ≤
+      Chapter10FieldUnitFiltration D.valuation k := by
+    intro x hx
+    change x ∈ (Chapter10UnitFiltration D.valuation (k + 1)).map
+      (Units.map (Chapter10ValuationRing D.valuation).subtype.toMonoidHom) at hx
+    rcases hx with ⟨u, hu, rfl⟩
+    exact ⟨u,
+      chapter10_unit_filtration_descending D.valuation k hu, rfl⟩
+  let n := k + 1
+  have hn : 1 ≤ n := by
+    dsimp [n]
+    omega
+  have hdeep : Chapter10FieldUnitFiltration D.valuation n ≤ V := by
+    exact hdesc.trans hk
+  let U₀ := Chapter10FieldUnitFiltration D.valuation 0
+  let Uₙ := Chapter10FieldUnitFiltration D.valuation n
+  let _ : Finite (U₀ ⧸ Uₙ.subgroupOf U₀) :=
+    chapter10_field_filtration_quotient_finite D n
+  have hrel : Uₙ.relIndex U₀ ≠ 0 := by
+    change (Uₙ.subgroupOf U₀).index ≠ 0
+    exact Subgroup.index_ne_zero_of_finite
+  let a₀ : Kˣ := chapter10RingUnitInField D.valuation a
+  have ha₀ : a₀ ∈ U₀ := by
+    change a₀ ∈ (Chapter10UnitFiltration D.valuation 0).map
+      (Units.map (Chapter10ValuationRing D.valuation).subtype.toMonoidHom)
+    exact ⟨a, by
+      simp [Chapter10UnitFiltration,
+        LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Chapter08UnitLayer], rfl⟩
+  obtain ⟨r, hr, _, har⟩ :=
+    Subgroup.exists_pow_mem_of_relIndex_ne_zero hrel ha₀
+  have harV : a₀ ^ r ∈ V := hdeep har.1
+  refine ⟨n, r, hn, hr, hdeep, ?_⟩
+  rw [map_pow]
+  exact harV
 
 /- After replacing `m` by `m' = r m`, the ambient norm subgroup lies in the
    presented subgroup. -/
@@ -64,7 +231,31 @@ theorem chapter10_congruence_ambient_subgroup_le_presented
     (hr : chapter10RingUnitInField D.valuation (a ^ r) ∈ V) :
     chapter10ValueUnitSubgroup D π (r * m) n ≤
       chapter10PresentedSubgroup D π a m V := by
-  sorry
+  change Subgroup.zpowers (π ^ (r * m)) ⊔
+      Chapter10FieldUnitFiltration D.valuation n ≤
+    Subgroup.zpowers
+        (π ^ m * chapter10RingUnitInField D.valuation a) ⊔ V
+  apply sup_le
+  · apply Subgroup.zpowers_le_of_mem
+    have hg : π ^ m * chapter10RingUnitInField D.valuation a ∈
+        Subgroup.zpowers (π ^ m * chapter10RingUnitInField D.valuation a) ⊔ V :=
+      (le_sup_left :
+        Subgroup.zpowers (π ^ m * chapter10RingUnitInField D.valuation a) ≤
+          Subgroup.zpowers (π ^ m * chapter10RingUnitInField D.valuation a) ⊔ V)
+        ((Subgroup.mem_zpowers_iff).2 ⟨1, by simp⟩)
+    have ha : (chapter10RingUnitInField D.valuation a) ^ r ∈
+        Subgroup.zpowers (π ^ m * chapter10RingUnitInField D.valuation a) ⊔ V :=
+      (le_sup_right : V ≤
+        Subgroup.zpowers (π ^ m * chapter10RingUnitInField D.valuation a) ⊔ V) hr
+    have hprod :
+        (π ^ m * chapter10RingUnitInField D.valuation a) ^ r *
+            (chapter10RingUnitInField D.valuation a ^ r)⁻¹ ∈
+          Subgroup.zpowers (π ^ m * chapter10RingUnitInField D.valuation a) ⊔ V :=
+      (Subgroup.zpowers (π ^ m * chapter10RingUnitInField D.valuation a) ⊔ V).mul_mem
+        ((Subgroup.zpowers (π ^ m * chapter10RingUnitInField D.valuation a) ⊔ V).pow_mem hg r)
+        ((Subgroup.zpowers (π ^ m * chapter10RingUnitInField D.valuation a) ⊔ V).inv_mem ha)
+    simpa [mul_pow, pow_mul, mul_comm] using hprod
+  · exact hn.trans le_sup_right
 
 /- The finite coordinate group before imposing the displayed generator
    relation.  This single-relation quotient is the special case in which no
@@ -143,7 +334,37 @@ theorem chapter10_congruence_presented_quotient_equiv
     Nonempty
       ((Kˣ ⧸ chapter10PresentedSubgroup D D.uniformizer a m V) ≃*
         Chapter10CongruencePresentedQuotient D m' n C m a V) := by
-  sorry
+  let H := chapter10PresentedSubgroup D D.uniformizer a m V
+  let M := Subgroup.map C.coordinate H
+  let F : Kˣ →* (chapter10CongruenceFiniteGroup D m' n ⧸ M) :=
+    (QuotientGroup.mk' M).comp C.coordinate
+  have hFsurj : Function.Surjective F :=
+    (QuotientGroup.mk'_surjective M).comp C.surjective
+  have hFker : F.ker = H := by
+    ext x
+    constructor
+    · intro hx
+      change F x = 1 at hx
+      have hxM : C.coordinate x ∈ M :=
+        (QuotientGroup.eq_one_iff (N := M) _).mp hx
+      rcases Subgroup.mem_map.mp hxM with ⟨y, hy, hxy⟩
+      have hdiff : y⁻¹ * x ∈ C.coordinate.ker := by
+        apply MonoidHom.mem_ker.mpr
+        change C.coordinate (y⁻¹ * x) = 1
+        rw [map_mul, map_inv, hxy]
+        simp
+      rw [C.kernel_eq] at hdiff
+      simpa using H.mul_mem hy (hbase hdiff)
+    · intro hx
+      apply MonoidHom.mem_ker.mpr
+      change QuotientGroup.mk' M (C.coordinate x) = 1
+      apply (QuotientGroup.eq_one_iff (N := M) _).2
+      exact Subgroup.mem_map.mpr ⟨x, hx, rfl⟩
+  have e : Kˣ ⧸ H ≃*
+      chapter10CongruenceFiniteGroup D m' n ⧸ M :=
+    (QuotientGroup.quotientMulEquivOfEq hFker.symm).trans
+      (QuotientGroup.quotientKerEquivOfSurjective F hFsurj)
+  exact ⟨e⟩
 
 theorem chapter10_congruence_quotient_is_finite
     {K : Type*} [Field K] (D : Chapter10LocalFieldProfile K)

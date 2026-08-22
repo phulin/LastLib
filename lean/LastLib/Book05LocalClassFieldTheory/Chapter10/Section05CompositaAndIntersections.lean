@@ -93,7 +93,12 @@ theorem chapter10_intersection_degree_eq_norm_index
         (Kˣ ⧸
           chapter10NormSubgroupProduct
             (chapter10NormSubgroup K L₁) (chapter10NormSubgroup K L₂)) := by
-  sorry
+  have h := chapter10_compositum_degree_eq_norm_index
+    (L₁ ⊓ L₂) (L₁ ⊓ L₂)
+  rw [← chapter10_intersection_norm_subgroup_eq_product L₁ L₂]
+  have hsup : (L₁ ⊓ L₂) ⊔ (L₁ ⊓ L₂) = L₁ ⊓ L₂ := sup_idem _
+  rw [hsup, inf_idem] at h
+  exact h
 
 end
 
