@@ -1,6 +1,7 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section03IntegralElementsAreBounded
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section06FiniteExtensionsOfCompleteFields
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section06AlgebraicConsequences
+import Mathlib.FieldTheory.Normal.Basic
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
 
@@ -685,6 +686,249 @@ theorem distinct_finite_extensions_remain_distinct_in_algebraic_closure
       exact hEq.comap (ι.toRingHom)
     exact h₁.trans (hEq'.trans h₂.symm)
 
+/-- Locality of all finite normalizations supplies the simple-root form of
+Hensel's lemma.  The proof passes to the finite splitting field of the given
+polynomial.  Locality first lifts the prescribed residue root to an integral
+root there.  Normality carries that root through all of its conjugates, while
+simple-root uniqueness in the local normalization forces every conjugate to
+coincide.  Its minimal polynomial is therefore linear, so the root descends
+to the original valuation ring. -/
+theorem finite_integral_closure_locality_implies_henselian_local_ring
+    {K Γ : Type u} [Field K] [LinearOrderedCommGroupWithZero Γ]
+    (v : Valuation K Γ) (hLocal : allFiniteIntegralClosuresAreLocal v) :
+    HenselianLocalRing v.valuationSubring := by
+  classical
+  let A := v.valuationSubring
+  let hA : v.Integers A := Valuation.valuationSubring.integers v
+  let _ : IsIntegrallyClosed A := hA.isIntegrallyClosed
+  refine { toIsLocalRing := inferInstance, is_henselian := ?_ }
+  intro f hf a₀ hfa hunit
+  let fK : K[X] := f.map (algebraMap A K)
+  let E := fK.SplittingField
+  let _ : Algebra A E :=
+    ((algebraMap K E).comp (algebraMap A K)).toAlgebra
+  let _ : SMul A E := Algebra.toSMul
+  let _ : IsScalarTower A K E := by
+    apply IsScalarTower.of_algebraMap_eq'
+    rfl
+  let _ : FiniteDimensional K E :=
+    Polynomial.IsSplittingField.finiteDimensional E fK
+  let C := integralClosure A E
+  let _ : IsLocalRing C := hLocal E
+  let fC : C[X] := f.map (algebraMap A C)
+  have hfC : fC.Monic := hf.map (algebraMap A C)
+  have hcompAE : (algebraMap C E).comp (algebraMap A C) =
+      (algebraMap K E).comp (algebraMap A K) := by
+    ext x
+    rfl
+  have hpolyE : fC.map (algebraMap C E) = fK.map (algebraMap K E) := by
+    dsimp [fC, fK]
+    rw [Polynomial.map_map, Polynomial.map_map, hcompAE]
+  have hsplitE : (fC.map (algebraMap C E)).Splits := by
+    rw [hpolyE]
+    exact SplittingField.splits fK
+  have hrootsIntegral :
+      ∀ x ∈ (fC.map (algebraMap C E)).roots,
+        x ∈ (algebraMap C E).range := by
+    intro x hx
+    have hxroot : (fC.map (algebraMap C E)).IsRoot x :=
+      (Polynomial.mem_roots (hfC.map (algebraMap C E) |>.ne_zero)).mp hx
+    have hxint : IsIntegral A x := by
+      refine ⟨f, hf, ?_⟩
+      dsimp [fC] at hxroot
+      rw [Polynomial.IsRoot.def, Polynomial.map_map] at hxroot
+      rw [hcompAE] at hxroot
+      rw [Polynomial.eval₂_eq_eval_map]
+      change (f.map (algebraMap A E)).eval x = 0
+      rw [show algebraMap A E = (algebraMap K E).comp (algebraMap A K) from rfl]
+      exact hxroot
+    exact ⟨⟨x, hxint⟩, rfl⟩
+  have hsplitC : fC.Splits :=
+    hsplitE.of_splits_map_of_injective Subtype.val_injective hrootsIntegral
+  let ρ : C →+* ResidueField C := IsLocalRing.residue C
+  let a₀C : C := algebraMap A C a₀
+  have hrootResidue : (fC.map ρ).eval (ρ a₀C) = 0 := by
+    rw [Polynomial.eval_map_apply]
+    have heval : fC.eval a₀C = algebraMap A C (f.eval a₀) := by
+      exact Polynomial.eval_map_apply (p := f) (algebraMap A C) a₀
+    rw [heval]
+    change ρ (algebraMap A C (f.eval a₀)) = 0
+    apply Ideal.Quotient.eq_zero_iff_mem.mpr
+    change algebraMap A C (f.eval a₀) ∈ IsLocalRing.maximalIdeal C
+    have hcomap : (IsLocalRing.maximalIdeal C).comap (algebraMap A C) =
+        IsLocalRing.maximalIdeal A := by
+      apply IsLocalRing.eq_maximalIdeal
+      exact Ideal.isMaximal_comap_of_isIntegral_of_isMaximal
+        (R := A) (S := C) (IsLocalRing.maximalIdeal C)
+    change f.eval a₀ ∈ (IsLocalRing.maximalIdeal C).comap (algebraMap A C)
+    rw [hcomap]
+    exact hfa
+  have hrootMem : ρ a₀C ∈ (fC.map ρ).roots :=
+    (Polynomial.mem_roots (hfC.map ρ |>.ne_zero)).mpr hrootResidue
+  rw [hsplitC.roots_map_of_ne_zero (hfC.map ρ |>.ne_zero)] at hrootMem
+  obtain ⟨α, hαroot, hαres⟩ := Multiset.mem_map.mp hrootMem
+  have hαeval : fC.eval α = 0 :=
+    (Polynomial.mem_roots hfC.ne_zero).mp hαroot
+  have hαcongr : α - a₀C ∈ IsLocalRing.maximalIdeal C := by
+    rw [← Ideal.Quotient.eq_zero_iff_mem]
+    change ρ (α - a₀C) = 0
+    rw [map_sub, hαres, sub_self]
+  have hunit₀C : IsUnit (fC.derivative.eval a₀C) := by
+    have hm := hunit.map (algebraMap A C)
+    dsimp [fC, a₀C]
+    rw [Polynomial.derivative_map, Polynomial.eval_map]
+    simpa only [Polynomial.eval₂_at_apply] using hm
+  have hunitα : IsUnit (fC.derivative.eval α) :=
+    Chapter09.derivative_unit_on_residue_class fC hαcongr hunit₀C
+  let αE : E := algebraMap C E α
+  let q : K[X] := minpoly K αE
+  have hαrootE : (fK.map (algebraMap K E)).eval αE = 0 := by
+    rw [← hpolyE, Polynomial.eval_map_apply]
+    exact congrArg (algebraMap C E) hαeval
+  have hqdiv : q ∣ fK := minpoly.dvd K αE (by
+    simpa [Polynomial.aeval_def] using hαrootE)
+  have hαintK : IsIntegral K αE :=
+    Algebra.IsIntegral.isIntegral (R := K) αE
+  have hqne : q ≠ 0 := minpoly.ne_zero hαintK
+  have hqirr : Irreducible q := minpoly.irreducible hαintK
+  have hqsplit : (q.map (algebraMap K E)).Splits := by
+    have hfKmapne : fK.map (algebraMap K E) ≠ 0 :=
+      (hf.map (algebraMap A K) |>.map (algebraMap K E)).ne_zero
+    apply (SplittingField.splits fK).of_dvd
+      hfKmapne
+    exact (Polynomial.map_dvd_map (algebraMap K E) (algebraMap K E).injective
+      (minpoly.monic hαintK)).mpr hqdiv
+  have hfderE : (fK.derivative.map (algebraMap K E)).eval αE ≠ 0 := by
+    intro hz
+    apply hunitα.ne_zero
+    apply Subtype.val_injective
+    have hderpoly := congrArg Polynomial.derivative hpolyE
+    rw [Polynomial.derivative_map, Polynomial.derivative_map] at hderpoly
+    have hz' : (fK.map (algebraMap K E)).derivative.eval αE = 0 := by
+      rw [Polynomial.derivative_map]
+      exact hz
+    rw [← hderpoly, Polynomial.eval_map_apply] at hz'
+    change algebraMap C E (fC.derivative.eval α) = 0
+    rw [show fC.derivative = f.derivative.map (algebraMap A C) by
+      dsimp [fC]
+      exact Polynomial.derivative_map f (algebraMap A C)]
+    exact hz'
+  have hqder : q.derivative ≠ 0 := by
+    rintro hzero
+    obtain ⟨r, hr⟩ := hqdiv
+    have hrmap := congrArg (fun p : K[X] => p.map (algebraMap K E)) hr
+    have hder := congrArg (fun p : E[X] => p.derivative.eval αE) hrmap
+    have hqeval : (q.map (algebraMap K E)).eval αE = 0 := by
+      simpa [q, Polynomial.aeval_def] using minpoly.aeval K αE
+    have : (fK.derivative.map (algebraMap K E)).eval αE = 0 := by
+      simpa [Polynomial.derivative_map, Polynomial.derivative_mul, hzero,
+        hqeval] using hder
+    exact hfderE this
+  have hqsep : q.Separable :=
+    (Polynomial.separable_iff_derivative_ne_zero hqirr).mpr hqder
+  have hallRoots :
+      ∀ β ∈ (q.map (algebraMap K E)).roots, β = αE := by
+    intro β hβ
+    have hβq : Polynomial.aeval β q = 0 := by
+      simpa [Polynomial.aeval_def] using
+        (Polynomial.mem_roots
+          (Polynomial.map_ne_zero_iff (algebraMap K E).injective |>.mpr hqne)).mp hβ
+    obtain ⟨σ, hσ⟩ := minpoly.exists_algEquiv_of_root'
+      (Algebra.IsAlgebraic.isAlgebraic αE) hβq
+    let σA : E ≃ₐ[A] E := σ.restrictScalars A
+    let σC : C ≃ₐ[A] C := AlgEquiv.mapIntegralClosure (R := A) σA
+    let βC : C := σC α
+    have hβval : algebraMap C E βC = β := by
+      change σA (algebraMap C E α) = β
+      exact hσ
+    have hβeval : fC.eval βC = 0 := by
+      apply Subtype.val_injective
+      have heval : algebraMap C E (fC.eval βC) =
+          (fK.map (algebraMap K E)).eval β := by
+        simpa [fC, fK, hβval, Polynomial.map_map, hcompAE] using
+          (Polynomial.eval_map_apply (p := fC) (algebraMap C E) βC).symm
+      change algebraMap C E (fC.eval βC) = 0
+      rw [heval]
+      have hβmin : (q.map (algebraMap K E)).eval β = 0 := by
+        simpa [Polynomial.aeval_def] using hβq
+      exact Polynomial.IsRoot.dvd hβmin
+        ((Polynomial.map_dvd_map (algebraMap K E) (algebraMap K E).injective
+          (minpoly.monic hαintK)).mpr hqdiv)
+    have hβcongr : βC - a₀C ∈ IsLocalRing.maximalIdeal C := by
+      have hm := Ideal.mem_map_of_mem σC.toRingEquiv.toRingHom hαcongr
+      rw [show (IsLocalRing.maximalIdeal C).map σC.toRingEquiv.toRingHom =
+          IsLocalRing.maximalIdeal C from
+        IsLocalRing.map_ringEquiv_maximalIdeal σC.toRingEquiv] at hm
+      simpa [βC, σC, a₀C, map_sub] using hm
+    have hαβ : α = βC := by
+      apply IsLocalRing.eq_of_eval_eq_zero_of_not_isUnit_sub hαeval hβeval
+      · intro hu
+        have hm : α - βC ∈ IsLocalRing.maximalIdeal C := by
+          have := (IsLocalRing.maximalIdeal C).sub_mem hαcongr hβcongr
+          simpa [sub_sub_sub_cancel_right] using this
+        exact ((IsLocalRing.mem_maximalIdeal _).mp hm) hu
+      · exact hunitα
+    calc
+      β = algebraMap C E βC := hβval.symm
+      _ = algebraMap C E α := congrArg (algebraMap C E) hαβ.symm
+      _ = αE := rfl
+  have hrootsCard : (q.map (algebraMap K E)).roots.card ≤ 1 := by
+    rw [← Multiset.toFinset_card_of_nodup (Polynomial.nodup_roots hqsep.map)]
+    apply Finset.card_le_one.mpr
+    intro x hx y hy
+    exact (hallRoots x (Multiset.mem_toFinset.mp hx)).trans
+      (hallRoots y (Multiset.mem_toFinset.mp hy)).symm
+  have hqnat : q.natDegree = 1 := by
+    have hle : q.natDegree ≤ 1 := by
+      calc
+        q.natDegree = (q.map (algebraMap K E)).natDegree :=
+          (Polynomial.natDegree_map_eq_of_injective (algebraMap K E).injective q).symm
+        _ = (q.map (algebraMap K E)).roots.card :=
+          hqsplit.natDegree_eq_card_roots
+        _ ≤ 1 := hrootsCard
+    exact Nat.le_antisymm hle hqirr.natDegree_pos
+  have hqdeg : q.degree = 1 :=
+    (Polynomial.degree_eq_iff_natDegree_eq hqne).mpr hqnat
+  obtain ⟨k, hk⟩ := minpoly.mem_range_of_degree_eq_one K αE hqdeg
+  have hkint : IsIntegral A k := by
+    rcases α.property with ⟨p, hp, hpα⟩
+    refine ⟨p, hp, ?_⟩
+    change p.eval₂ (algebraMap A K) k = 0
+    apply (algebraMap K E).injective
+    rw [map_zero]
+    rw [Polynomial.hom_eval₂, hk]
+    change p.eval₂ (algebraMap A E) (α : E) = 0
+    exact hpα
+  obtain ⟨a, ha⟩ := IsIntegrallyClosed.algebraMap_eq_of_integral hkint
+  refine ⟨a, ?_, ?_⟩
+  · apply hA.hom_inj
+    calc
+      algebraMap A K (f.eval a) = fK.eval (algebraMap A K a) := by
+        exact (Polynomial.eval_map_apply (p := f) (algebraMap A K) a).symm
+      _ = fK.eval k := by rw [ha]
+      _ = 0 := by
+        apply (algebraMap K E).injective
+        rw [map_zero]
+        change algebraMap K E (fK.eval k) = 0
+        rw [← Polynomial.eval_map_apply]
+        simpa [hk] using hαrootE
+  · have : algebraMap A C a = α := by
+      apply Subtype.ext
+      change algebraMap A E a = (α : E)
+      calc
+        algebraMap A E a = algebraMap K E (algebraMap A K a) := rfl
+        _ = algebraMap K E k := by rw [ha]
+        _ = αE := hk
+        _ = (α : E) := rfl
+    have hcomap : (IsLocalRing.maximalIdeal C).comap (algebraMap A C) =
+        IsLocalRing.maximalIdeal A := by
+      apply IsLocalRing.eq_maximalIdeal
+      exact Ideal.isMaximal_comap_of_isIntegral_of_isMaximal
+        (R := A) (S := C) (IsLocalRing.maximalIdeal C)
+    rw [← hcomap]
+    change algebraMap A C (a - a₀) ∈ IsLocalRing.maximalIdeal C
+    simpa [map_sub, this] using hαcongr
+
 /-- The four conditions in Theorem 12.2 are equivalent. -/
 theorem henselian_uniqueness_criterion
     {K Γ : Type u} [Field K] [LinearOrderedCommGroupWithZero Γ]
@@ -895,7 +1139,10 @@ theorem henselian_uniqueness_criterion
     exact hPuniq Q hQabove
 
   tfae_have 4 → 1 := by
-    sorry
+    intro hLocal
+    let _ : HenselianLocalRing v.valuationSubring :=
+      finite_integral_closure_locality_implies_henselian_local_ring v hLocal
+    exact Chapter09.mathlib_henselian_implies_factorization
 
   tfae_finish
 
