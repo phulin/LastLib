@@ -1731,14 +1731,14 @@ finiteness uses properness. For the positive line bundles used in algebraization
 vanishing and global-generation statements are proved analytically below by successively
 allowing poles at a finite divisor.
 
-For a smooth proper geometrically connected curve, duality gives a perfect pairing
+For a smooth proper geometrically connected curve, the residue duality recorded below gives a perfect pairing
 
 $$
 H^0(X,\Omega_X^1)\times H^1(X,\mathcal O_X)
-\longrightarrow K.
+\longrightarrow K
 $$
 
-Its common dimension is the genus. Exact base change holds for a complete extension $L/K$:
+by residues. Its common dimension is _defined_ to be the genus of $X$; no algebraic Riemann--Roch input is consumed by this definition, and the genus formula relating it to divisor degrees is used nowhere before the comparison results of Chapter 14. Exact base change holds for a complete extension $L/K$:
 
 $$
 H^q(X,\mathcal F)\otimes_KL
@@ -1755,41 +1755,82 @@ corresponding cover of $X_L$, which proves the displayed isomorphism.
 Properness and coherence are essential; global functions on an open disc do not arise by a finite-dimensional scalar extension.
 
 The vanishing needed for algebraization must be obtained analytically, since algebraic
-Riemann--Roch is not yet available. More generally, a reduced proper rigid curve has a
-coherent dualizing sheaf $\omega_X$ and, for coherent $\mathcal F$, a perfect pairing
+Riemann--Roch is not yet available. The device that produces it is the residue pairing between
+differentials and first cohomology. Its construction is carried out here; its perfectness
+requires one input, recorded explicitly as a standing input below and consumed nowhere else
+in this book except through Proposition 12.3.
+
+**Standing Input (residue duality for smooth proper curves).** _Let $X$ be a smooth proper rigid curve over $K$._
+
+_(a) Adapted cover. There exist affinoid subdomains $U_0,U_1\subset X$ with $X=U_0\cup U_1$, and their intersection $A=U_{01}$ is a finite disjoint union of closed annuli, each annulus carrying a coordinate $T$ with both radii in $|K^\times|$._
+
+_(b) Descent of the residue functional. For an annulus component $e$ of $A$ with coordinate $T$, let $\operatorname{Res}_e(f\,dT)$ be the coefficient of $T^{-1}$ in the convergent Laurent expansion of $f$ on $e$. Then for every $\varphi\in\Gamma(A,\mathcal O_A)$ and every holomorphic differential $\eta\in H^0(X,\Omega^1_X)$, the sum $\sum_e\operatorname{Res}_e(\varphi\,\eta)$ vanishes whenever $\varphi$ lies in one of the two restriction images $\Gamma(U_i,\mathcal O_X)|_A$. By Tate acyclicity (Section 5.2), the quotient of $\Gamma(A,\mathcal O_A)$ by those images computes $H^1(X,\mathcal O_X)$, so (b) equips $H^1(X,\mathcal O_X)\times H^0(X,\Omega^1_X)$ with a well-defined residue pairing._
+
+_(c) Perfectness in twisted form. For every invertible sheaf $\mathcal L$ on $X$, the analogous construction yields a perfect pairing_
 
 $$
-H^1(X,\mathcal F)\times
-\operatorname{Hom}_X(\mathcal F,\omega_X)\longrightarrow K.
+H^1(X,\mathcal L)\times H^0(X,\Omega^1_X\otimes\mathcal L^{-1})\longrightarrow K,
 $$
 
-On a normal curve the pairing is constructed by choosing a finite affinoid cover, writing a
-Čech $1$-class as principal parts on the boundary annuli, and summing the residues of their
-products with differentials. Laurent expansion on an annulus makes the residue the
-coefficient of $T^{-1}dT$; the two orientations on an overlap give opposite signs. Tate
-acyclicity proves independence of the representative, while division with prescribed finite
-principal parts proves nondegeneracy. For a reduced singular curve, apply this construction
-to its finite normalization and impose the finite conductor matching conditions. The
-annihilator of those conditions is the dualizing sheaf, and finite-dimensional linear duality
-gives the displayed pairing.
+_that is, it identifies $H^0(X,\Omega^1_X\otimes\mathcal L^{-1})$ with the $K$-linear dual of $H^1(X,\mathcal L)$. The construction is the residue pairing of (b) applied to a Čech representative of an $\mathcal L$-valued cocycle multiplied by an $(\mathcal L^{-1}\otimes\Omega^1_X)$-valued section; the assertion is that the resulting functional descends as in (b), is nondegenerate in each variable for every $\mathcal L$, and does so compatibly over all twists simultaneously._
 
-Let $D$ be an effective Cartier divisor in the normal locus meeting every irreducible
-component. Then
+_Provenance._ Parts (a)--(c) are classical. They are usually obtained from a formal-model or adelic residue theory: on a regular model, differentials with logarithmic poles along the vertical boundary give a residue theorem, and duality follows by comparing Laurent tails on the boundary annuli with principal parts at the discarded discs. Neither Mathlib nor Books 0--58 develops nonarchimedean residue theory, so this book consumes the statement rather than importing a proof.
+
+_Consumer analysis._ Within this book the standing input is consumed only by Proposition 12.3 below, which in turn is consumed by the proof of Theorem 12.1 (algebraization of proper curves). Book 60's interface list receives only Theorem 12.1 itself ("proper analytic varieties with ample line bundles algebraize"), so Books 60 and 61 depend on this input only through the vanishing consequences of Proposition 12.3, never through duality directly. No other section of this book cites residues or dualizing sheaves; in particular the genus formula of Section 14.3 enters only after algebraization, as a comparison consequence.
+
+**Proposition 12.2 (genus).** _Assume the standing input. Then for a smooth proper geometrically connected rigid curve $X$ the spaces $H^0(X,\Omega^1_X)$ and $H^1(X,\mathcal O_X)$ have the same finite dimension._
+
+**Proof.** Finiteness of both sides is Chapter 9's coherence theorem for proper direct images. Part (c) of the standing input with $\mathcal L=\mathcal O_X$ identifies $H^0(X,\Omega^1_X)$ with the linear dual of $H^1(X,\mathcal O_X)$, and a finite-dimensional vector space and its dual have equal dimension. The common value is defined to be the genus of $X$. $\square$
+
+Let $D$ be an effective Cartier divisor in $X$ meeting every irreducible component — for instance, any nonzero effective divisor, since on a smooth curve every closed point is Cartier and every component contains infinitely many closed points. Write $d_p=\operatorname{ord}_pD$ and let
+$\omega_X=\Omega^1_X$.
+
+**Proposition 12.3 (analytic Serre vanishing).** _Assume the standing input for $X$. Let $D$ be as above, let $C$ be any fixed effective Cartier divisor, and put $g=\dim_KH^0(X,\omega_X)$. Then for every $n>g$:_
+
+_(i) $H^1(X,\mathcal O_X(nD))=0$;_
+
+_(ii) $\mathcal O_X(nD)$ is globally generated;_
+
+_(iii) for every effective Cartier divisor $Z$ with $\deg Z\leq2$, simultaneously in $Z$, the jet-evaluation map $H^0(X,\mathcal O_X(nD))\to$ principal parts of $\mathcal O_X(nD)$ along $Z$ is surjective; equivalently $H^1(X,\mathcal I_Z(nD))=0$_.
+
+_(iv) All three assertions hold with $D$ replaced by $D+C$. In particular, for $n>g$, the complete linear system of $\mathcal O_X(n(D+C))$ globally generates, separates closed points, separates tangent directions, and separates the branches of the fixed subscheme $C$._
+
+**Proof.** The common engine is a descending chain of subspaces of $H^0(X,\omega_X)$. For an effective Cartier divisor $E$ meeting every component define
 
 $$
-H^1(X,\mathcal O_X(nD))=0\qquad(n\gg0).
+V_m(E)=\bigl\{\eta\in H^0(X,\omega_X)\ :\ \operatorname{ord}_p(\eta)\geq m\cdot\operatorname{ord}_pE
+\ \text{for all }p\bigr\},\qquad m\geq0,
 $$
 
-Indeed, duality identifies its dual with
-$H^0(X,\omega_X(-nD))$. These spaces form a descending sequence inside the finite-dimensional
-space $H^0(X,\omega_X)$, and their intersection is zero: a section vanishing to every order at
-one regular point of each component is zero by the identity theorem. The sequence therefore
-eventually vanishes. For finite subschemes of length at most two, the maps to principal parts
-are controlled on a finite affinoid cover by finitely many Laurent coefficients; the same
-descending-chain argument gives one bound independent of the chosen subscheme. After also
-including the fixed conductor subscheme, a sufficiently large $nD$ therefore separates
-closed points, tangent directions, and the finite conductor branches. This is the
-nonarchimedean curve form of Serre vanishing, established without using algebraization.
+a decreasing chain of subspaces of the $g$-dimensional space $H^0(X,\omega_X)$. Its intersection is zero: a differential lying in every $V_m(E)$ has all Taylor coefficients zero at one chosen point of $|E|$ on each irreducible component, hence vanishes on a residue disc around that point, and the identity theorem for reduced affinoids (Section 6.2) then forces it to vanish identically on that component; $X$ has finitely many components because a proper curve admits a formal model whose special fiber has finitely many components dominating those of $X$ (Chapter 13). A strictly decreasing chain in a $g$-dimensional space therefore satisfies
+
+$$
+V_m(E)=0\qquad(m>g).
+$$
+
+_(i)_ Part (c) of the standing input applied to $\mathcal L=\mathcal O_X(nD)$ identifies $H^1(X,\mathcal O_X(nD))$ with the linear dual of $H^0(X,\omega_X(-nD))$, and a section of $\omega_X(-nD)$ is exactly a holomorphic differential $\eta$ with $\operatorname{ord}_p(\eta)\geq n\cdot d_p$ for all $p$, where $d_p=\operatorname{ord}_pD$; that is, $H^0(X,\omega_X(-nD))=V_n(D)$, which is zero for $n>g$. Replacing $D$ by $D+C$ repeats the argument verbatim because $|D+C|$ still meets every component.
+
+_(iii)_ Let $Z$ be effective Cartier of degree at most $2$, and let $\sigma_Z\in H^0(X,\mathcal O_X(Z))$ be its canonical section, so that $\operatorname{ord}_p(\sigma_Z)=\operatorname{ord}_pZ$ for every $p$. Since $\mathcal I_Z=\mathcal O_X(-Z)$, part (c) of the standing input applied to $\mathcal L=\mathcal O_X(nD-Z)$ identifies $H^1(X,\mathcal I_Z(nD))$ with the linear dual of $H^0(X,\omega_X(Z-nD))$. We show the latter vanishes. A section $\eta$ of $\omega_X(Z-nD)$ is a meromorphic differential with $\operatorname{ord}_p(\eta)\geq-\operatorname{ord}_pZ+n\cdot d_p$ for every $p$. Multiply it by $\sigma_Z$: the product $\eta\sigma_Z$ is a meromorphic differential with
+
+$$
+\operatorname{ord}_p(\eta\sigma_Z)\ \geq\ -\operatorname{ord}_pZ+n\cdot d_p+\operatorname{ord}_pZ
+\ =\ n\cdot d_p\ \geq\ 0,
+$$
+
+so $\eta\sigma_Z$ is holomorphic and lies in $V_n(D)$. Multiplication by $\sigma_Z$ is injective: the meromorphic differentials on $X$ form a one-dimensional vector space over the total fraction ring of $X$, an integral domain tensorwise on each component, so a product with the nonzero section $\sigma_Z$ vanishes only if $\eta$ does. Hence $H^0(X,\omega_X(Z-nD))$ injects into $V_n(D)$, which is zero for $n>g$; the bound does not depend on $Z$. Finally, the jet-evaluation sequence
+
+$$
+0\longrightarrow\mathcal I_Z(nD)\longrightarrow\mathcal O_X(nD)
+\longrightarrow\mathcal P_Z\longrightarrow0,
+$$
+
+with third term the skyscraper sheaf of principal parts along $Z$, shows that jet evaluation is surjective if and only if $H^1(X,\mathcal I_Z(nD))=0$: skyscraper sheaves are flasque, their section spaces being direct sums of stalks with restrictions the coordinate projections, hence acyclic. This proves (iii) with the stated uniform bound.
+
+_(ii)_ Generation at a closed point $x$ is the special case $Z=x$ of (iii): the evaluation map onto the fiber at $x$ factors through the principal-parts quotient there, and its surjectivity follows. Applying (iii) with $Z=2x$ separates tangent directions at $x$, and applying it with $Z=x+y$ for $x\neq y$ separates distinct closed points; the bound is uniform over all pairs.
+
+_(iv)_ Every step used only that the reference divisor is effective Cartier and meets each component, which $D+C$ inherits from $D$. Separation of the branches of $C$ is clause (iii) applied with the fixed divisor $C$ in place of $Z$, after increasing the bound to absorb $\deg C$; since $C$ is fixed, this remains a bound depending only on $(X,D,C)$. $\square$
+
+This proposition consumes no algebraic geometry: Riemann--Roch is neither stated nor used, and the only inputs are Chapter 9's finiteness and coherence, Tate acyclicity through part (b) of the standing input, and the identity theorem. It supplies precisely what Theorem 12.1 consumes below: global generation, point and tangent separation with uniform bounds, and branch separation for the conductor subscheme.
 
 ### 12.3 Meromorphic functions and divisors
 
@@ -2080,7 +2121,7 @@ The main results of the book can be used safely by keeping their hypotheses visi
 
 **Reduction and tubes.** Specialization sends maximal analytic points to scheme points by reduction of bounded values. It is naturally surjective onto closed points in the finite-type setting, not asserted onto every nonclosed point at this level. Tubes depend on reduced strata and are often non-affinoid. Their descriptions by discs and annuli may require finite residue-field extension or étale coordinates.
 
-**Curves.** Normality, regularity, and smoothness coincide only under the stated separability or perfection assumptions. A proper reduced rigid curve is algebraizable; smooth proper curves are projective. Proper comparison applies to coherent sheaves and cohomology. If a semistable model is supplied, its nodes give annular tubes; the graph genus formula uses the split and geometric-irreducibility hypotheses stated in Section 13.4. General existence of a semistable model is not assumed here.
+**Curves.** Normality, regularity, and smoothness coincide only under the stated separability or perfection assumptions. A proper reduced rigid curve is algebraizable; smooth proper curves are projective. Proper comparison applies to coherent sheaves and cohomology. The analytic Serre vanishing of Section 12.2 consumes one standing input, residue duality for smooth proper curves, recorded there with provenance and a consumer list; every downstream use (Theorem 12.1, Book 60's interface) passes through that proposition's vanishing clauses, never through duality itself. Genus is defined as $\dim H^0(\Omega^1)=\dim H^1(\mathcal O)$; the genus formula in divisor degrees is a comparison consequence available only after Chapter 14. If a semistable model is supplied, its nodes give annular tubes; the graph genus formula uses the split and geometric-irreducibility hypotheses stated in Section 13.4. General existence of a semistable model is not assumed here.
 
 ### 15.2 The model-independence principle
 
