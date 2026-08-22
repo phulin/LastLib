@@ -41,7 +41,15 @@ theorem chapter04_division_algebra_splits_over_unramified_maximal_subfield
     (hdimension : Module.finrank E D = d)
     (A : Chapter04ScalarExtensionAction K D E φ) :
     Nonempty (D ⊗[K] E ≃ₐ[E] Matrix (Fin d) (Fin d) E) := by
-  sorry
+  classical
+  let b₀ : Module.Basis (Module.Free.ChooseBasisIndex E D) E D :=
+    Module.Free.chooseBasis E D
+  have hcard : Fintype.card (Module.Free.ChooseBasisIndex E D) = d := by
+    rw [← Module.finrank_eq_card_basis b₀, hdimension]
+  let e : Module.Free.ChooseBasisIndex E D ≃ Fin d :=
+    (Fintype.equivFin _).trans (Equiv.cast (congrArg Fin hcard))
+  let b : Module.Basis (Fin d) E D := b₀.reindex e
+  exact ⟨A.action_isomorphism.some.trans (LinearMap.toMatrixAlgEquiv b)⟩
 
 theorem chapter04_division_algebra_is_split_by_unramified_extension
     {K : Type*} [Field K] (P : Chapter04LocalFieldProfile K)
@@ -55,7 +63,10 @@ theorem chapter04_unramified_extension_is_cyclic
     [FiniteDimensional K L] [IsGalois K L]
     (U : Chapter04UnramifiedExtensionData K L) :
     chapter03CyclicExtension K L U.degree U.arithmeticFrobenius := by
-  sorry
+  refine ⟨U.degree_eq, ?_⟩
+  intro τ
+  rw [U.frobenius_generates]
+  exact Subgroup.mem_top τ
 
 noncomputable def chapter04UnramifiedCyclicAlgebraPresentation
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -113,7 +124,21 @@ theorem chapter04_unramified_cyclic_parameter_period
     (U : Chapter04UnramifiedExtensionData K L) (r : ℤ) :
     chapter04UnramifiedCyclicBrauerClass U (r + U.degree) =
       chapter04UnramifiedCyclicBrauerClass U r := by
-  sorry
+  have hparam :
+      (U.uniformizer ^ (r + U.degree)) * (U.uniformizer ^ r)⁻¹ ∈
+        chapter03NormSubgroup K L := by
+    have hnorm := U.units_are_norms (U.uniformizer ^ U.degree)
+    have hnorm' : U.uniformizer ^ U.degree ∈ chapter03NormSubgroup K L :=
+      (chapter03_mem_norm_subgroup_iff K L (U.uniformizer ^ U.degree)).2 hnorm
+    rw [zpow_add]
+    simpa [mul_assoc, mul_comm, mul_left_comm] using hnorm'
+  unfold chapter04UnramifiedCyclicBrauerClass
+  apply Quotient.sound
+  rcases (chapter03_cyclic_algebra_parameter_classification K L U.degree
+    U.arithmeticFrobenius (U.uniformizer ^ (r + U.degree)) (U.uniformizer ^ r)
+    (chapter04_unramified_extension_is_cyclic U)).2 hparam with ⟨e⟩
+  refine ⟨1, 1, one_ne_zero, one_ne_zero, ?_⟩
+  exact ⟨e.mapMatrix⟩
 
 theorem chapter04_unramified_cyclic_parameter_modulo_degree
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -122,7 +147,36 @@ theorem chapter04_unramified_cyclic_parameter_modulo_degree
     (hmod : r ≡ s [ZMOD U.degree]) :
     chapter04UnramifiedCyclicBrauerClass U r =
       chapter04UnramifiedCyclicBrauerClass U s := by
-  sorry
+  have hperiod : ∀ k : ℤ,
+      chapter04UnramifiedCyclicBrauerClass U (r + k * U.degree) =
+        chapter04UnramifiedCyclicBrauerClass U r := by
+    intro k
+    refine Int.induction_on k ?_ ?_ ?_
+    · simp
+    · intro i hi
+      rw [show r + (i + 1) * U.degree =
+        (r + i * U.degree) + U.degree by ring]
+      rw [chapter04_unramified_cyclic_parameter_period]
+      exact hi
+    · intro i hi
+      calc
+        chapter04UnramifiedCyclicBrauerClass U (r + (-i - 1) * U.degree) =
+            chapter04UnramifiedCyclicBrauerClass U
+              ((r + (-i - 1) * U.degree) + U.degree) := by
+                symm
+                exact chapter04_unramified_cyclic_parameter_period U _
+        _ = chapter04UnramifiedCyclicBrauerClass U (r + (-i) * U.degree) := by
+          congr 1
+          ring
+        _ = chapter04UnramifiedCyclicBrauerClass U r := hi
+  rcases hmod.dvd with ⟨k, hk⟩
+  have hs : s = r + k * U.degree := by
+    calc
+      s = r + (s - r) := by ring
+      _ = r + (U.degree * k) := by rw [hk]
+      _ = r + k * U.degree := by ring
+  rw [hs]
+  exact (hperiod k).symm
 
 theorem chapter04_unramified_invariant_fraction_periodic
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -130,7 +184,17 @@ theorem chapter04_unramified_invariant_fraction_periodic
     (U : Chapter04UnramifiedExtensionData K L) (r : ℤ) :
     chapter04UnramifiedInvariantFraction U (r + U.degree) =
       chapter04UnramifiedInvariantFraction U r := by
-  sorry
+  change chapter04RationalResidueFraction (r + U.degree) U.degree =
+    chapter04RationalResidueFraction r U.degree
+  unfold chapter04RationalResidueFraction chapter04RationalResidueMk
+  rw [QuotientAddGroup.mk'_eq_mk']
+  refine ⟨-(1 : ℚ), ?_, ?_⟩
+  · exact AddSubgroup.neg_mem (AddSubgroup.zmultiples (1 : ℚ))
+      (AddSubgroup.mem_zmultiples (1 : ℚ))
+  · have hdegree : (U.degree : ℚ) ≠ 0 := by
+      exact_mod_cast U.degree_pos.ne'
+    field_simp [hdegree]
+    norm_num
 
 theorem chapter04_unramified_fraction_denominator_change
     (r : ℤ) (d m : ℕ) (hm : 0 < m) (hd : 0 < d) :
