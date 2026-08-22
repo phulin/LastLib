@@ -573,7 +573,7 @@ theorem chapter11_canonical_artin_input_character_input
     (D : Chapter11RamificationData G)
     (hinput : Chapter11CanonicalArtinInput D) :
     Chapter11RamificationCharacterInput D := by
-  sorry
+  exact chapter11_ramification_character_lemma D hinput.elementary_restriction
 
 theorem chapter11_chapter05_adapter_character_input
     {G : Type*} [Fintype G] [Group G]
@@ -583,7 +583,8 @@ theorem chapter11_chapter05_adapter_character_input
       (chapter11RamificationDataOfChapter05 P C)) :
     Chapter11RamificationCharacterInput
       (chapter11RamificationDataOfChapter05 P C) := by
-  sorry
+  exact chapter11_canonical_artin_input_character_input
+    (chapter11RamificationDataOfChapter05 P C) hinput
 
 theorem chapter11_ramification_class_function_is_integral_virtual
     {G : Type*} [Fintype G] [Group G]
@@ -595,7 +596,8 @@ theorem chapter11_ramification_class_function_is_integral_virtual
   /- Prior attempt: this returned only the inertia-layer input, despite the
      theorem name claiming a result for the full Artin class function.
      exact chapter11_ramification_character_lemma D helementary -/
-  sorry
+  exact chapter11_artin_class_function_integral_virtual_of_inertia_input D
+    (chapter11_ramification_character_lemma D helementary)
 
 /-- Artin's theorem: the Artin class function is an actual complex character.
 
