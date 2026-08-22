@@ -341,7 +341,7 @@ Reduction modulo $n$, extension of coefficients to a ring, and passage to invers
 
 ### 2.3 Cup products and cap products
 
-The Alexander--Whitney diagonal sends an $n$-simplex to
+The Alexander--Whitney diagonal sends an $n$-simplex to the sum of its front-back splittings, the two pieces sharing the middle vertex:
 
 $$
 \operatorname{AW}(\sigma)=
@@ -350,28 +350,72 @@ $$
 (\sigma|[v_p,\ldots,v_n]).
 $$
 
-For cochains $a\in C^p(T,A)$ and $b\in C^q(T,B)$, compose the $(p,q)$ term with $a\otimes b$ to obtain $a\smile b$. Directly expanding faces proves
+Here $\sigma|[u]$ denotes the face of $\sigma$ spanned by the listed vertices, with their induced order, so that the first factor has dimension $p$ and the second $n-p$. A term-by-term expansion of boundaries proves that AW is a chain map $C_n(K)\to C_\bullet(K)\otimes C_\bullet(K)$: applying $\partial$ to a splitting produces one boundary piece in the left factor and, with the tensor sign $(-1)^p$, one in the right, and these are exactly the splittings contributed by $\operatorname{AW}(\partial\sigma)$; every other term cancels pairwise. This single finite identity is what makes all products below compatible with cohomology.
+
+For cochains $a\in C^p(K,R)$ and $b\in C^q(K,R)$ with values in a commutative ring $R$, define
+
+$$
+(a\smile b)(\sigma)=a\bigl(\sigma|[v_0,\ldots,v_p]\bigr)\cdot b\bigl(\sigma|[v_p,\ldots,v_n]\bigr),
+$$
+
+that is, $a\smile b$ is the composite of AW with evaluation of $a$ on the left tensor factor and $b$ on the right. Because AW is a chain map and the differential on Hom out of a tensor product splits over the two factors, expanding faces gives the Leibniz rule
 
 $$
 d(a\smile b)=da\smile b+(-1)^pa\smile db. \tag{2.4}
 $$
 
-It follows that cup product descends to cohomology. The Alexander--Whitney diagonal is coassociative, and its interchange with the reversed diagonal is chain-homotopic; hence the product is associative and graded-commutative on cohomology.
+In particular the cup product of cocycles is a cocycle, and changing a factor by a coboundary changes the product by a coboundary; so cup product descends to $H^\bullet_B(K,R)$, where it is associative because AW is coassociative on the nose—regrouping the same triple splittings—and graded-commutative up to the canonical homotopy supplied by the acyclic-model argument: both AW and the flipped composite are natural chain approximations of the diagonal of the standard simplices, which are contractible, so they are naturally chain homotopic, and naturality transports the homotopy to every complex.
 
-Cap product is obtained by evaluating the front part of a simplex against a cochain and retaining the back part. Its boundary formula is
-
-$$
-\partial(c\frown a)=(-1)^p
-(\partial c\frown a-c\frown da),
-$$
-
-for a degree-$p$ cochain, with this sign convention. A closed oriented $d$-manifold has a fundamental class $[T]$, and cap product gives
+Cap product evaluates the front part of a simplex against a cochain and retains the back part: for $c\in C_n(K,\mathbf Z)$ and $a\in C^p(K,A)$,
 
 $$
-[T]\frown-:H^p_B(T,A)\longrightarrow H_{d-p}(T,A). \tag{2.5}
+c\frown a=\sum_{\sigma} m_\sigma\;\bigl(a(\sigma|[v_0,\ldots,v_p])\bigr)\;\sigma|[v_p,\ldots,v_n]
+\quad\text{when } c=\sum_\sigma m_\sigma\sigma,
 $$
 
-The cellular proof of Poincaré duality uses a triangulation and its dual cell decomposition: each oriented $p$-simplex meets one dual $(d-p)$-cell with sign $+1$, and the cochain differential is, up to the displayed sign, the boundary in the dual cell complex. Thus (2.5) is an isomorphism for every coefficient ring on an oriented closed manifold.
+a chain of degree $n-p$. The boundary behavior of cap is governed by the following lemma, proved by the same face-by-face expansion as for AW; it is the only cap identity used anywhere below.
+
+**Lemma (cap boundary formula).** _If $c$ is an integral chain and $a$ is a cochain of degree $p$, then_
+
+$$
+\partial(c\frown a)=(-1)^p\bigl((\partial c)\frown a-c\frown da\bigr).
+$$
+
+_Proof._ Both sides are additive in $c$, so it suffices to check the identity on a single ordered simplex $\sigma=[v_0,\ldots,v_n]$. Write $\Phi=a(\sigma|[v_0,\ldots,v_p])$ and, for $j\leq p$, let $\varphi_j=a([v_0,\ldots,\widehat{v_j},\ldots,v_p])$. The left side is
+
+$$
+\partial(\sigma\frown a)=\Phi\sum_{i=p}^{n}(-1)^{i-p}\,\sigma|[v_p,\ldots,\widehat{v_i},\ldots,v_n].
+$$
+
+On the right, each face $F_j=[v_0,\ldots,\widehat{v_j},\ldots,v_n]$ of $\sigma$ contributes through its own front $(p+1)$-face: for $j\leq p$ that front face is $[v_0,\ldots,\widehat{v_j},\ldots,v_{p+1}]$ with value $\varphi_j$, and the retained back part is $[v_{p+1},\ldots,v_n]$; for $j>p$ the front face is $[v_0,\ldots,v_p]$ with value $\Phi$ and the retained back part is $[v_p,\ldots,\widehat{v_j},\ldots,v_n]$. Hence
+
+$$
+(\partial\sigma)\frown a=\sum_{j\leq p}(-1)^j\varphi_j\,[v_{p+1},\ldots,v_n]
++\sum_{j>p}(-1)^j\Phi\,[v_p,\ldots,\widehat{v_j},\ldots,v_n].
+$$
+
+Since $\sigma\frown da=(da)([v_0,\ldots,v_{p+1}])\cdot[v_{p+1},\ldots,v_n]$ and $(da)([v_0,\ldots,v_{p+1}])=\sum_{j\leq p}(-1)^j\varphi_j+(-1)^{p+1}\Phi$, subtracting cancels the $\varphi_j$-terms of the two sums over $j\leq p$ identically and leaves for the face $[v_{p+1},\ldots,v_n]$ the single coefficient $(-1)^p\Phi$ after multiplication by $(-1)^p$, while each face $[v_p,\ldots,\widehat{v_j},\ldots,v_n]$ with $j>p$ carries $(-1)^{p+j}\Phi$. The result is
+
+$$
+(-1)^p\sum_{j>p}(-1)^j\Phi\,[v_p,\ldots,\widehat{v_j},\ldots,v_n]
+=\Phi\sum_{j>p}(-1)^{j-p}[v_p,\ldots,\widehat{v_j},\ldots,v_n],
+$$
+
+which together with the surviving term $\Phi[v_{p+1},\ldots,v_n]$ (the case $i=p$) reproduces the left side. $\square$
+
+Two consequences fix the interaction of products with classes. First, if $z$ is a cycle then $\partial(z\frown a)=\pm z\frown da$ vanishes whenever $da=0$, and replacing $a$ by $a+db$ changes $z\frown a$ by a boundary; capping therefore descends to bilinear pairings
+
+$$
+\frown\colon H_n(K,\mathbf Z)\otimes H^p(K,A)\longrightarrow H_{n-p}(K,A).
+$$
+
+Second, evaluation is compatible with both products at once—and here no computation is needed, only the definitions: evaluating $b$ on the chain $z\frown a$ reads off $b$ on the same back faces on which $a$ was evaluated, so for every cycle $z$,
+
+$$
+\langle b,\;z\frown a\rangle=\langle a\smile b,\;z\rangle,
+$$
+
+the adjunction between cap and cup on which every pairing comparison in this book rests.
 
 ### 2.4 Relative groups, compact support, and functoriality
 
