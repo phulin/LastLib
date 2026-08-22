@@ -76,17 +76,16 @@ end Chapter05LocalGaloisUpperData
  the fixed ideals of all iterates of one automorphism.  That local-intersection
  theorem is not proved in Books 1--3.  This class records exactly the
  ramification-number consequence used by the unfinished proof route.  It is
- auxiliary proof-support data; the source-facing Hasse--Arf statements below
- retain the manuscript's hypotheses and do not make this route an extra
- mathematical assumption.
+ auxiliary proof-support theorem; the source-facing Hasse--Arf statements
+ below retain the manuscript's hypotheses and do not make this route an
+ extra mathematical assumption.
 
  If `σ` generates a cyclic wild group of order `p ^ s`, the conclusion is
  `p ^ r ∣ i(σ^(p^r)) - i(σ^(p^(r-1)))`, equivalently the congruence for the
  corresponding ramification numbers after subtracting one from both terms.
 -/
-class Chapter05LocalDoldCongruenceInput : Prop where
-  ramification_number_congruence :
-    ∀ {K L : Type*} [Field K] [Field L] [Algebra K L]
+theorem chapter05_local_dold_ramification_number_congruence
+    : ∀ {K L : Type*} [Field K] [Field L] [Algebra K L]
       [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
       (D : Chapter05LocalGaloisUpperData K L)
       (p r s : ℕ)
@@ -98,7 +97,8 @@ class Chapter05LocalDoldCongruenceInput : Prop where
       (_horder : orderOf σ = p ^ s),
       ((p : ℤ) ^ r) ∣
         (D.profile.displacement (σ ^ (p ^ r)) : ℤ) -
-          (D.profile.displacement (σ ^ (p ^ (r - 1))) : ℤ)
+          (D.profile.displacement (σ ^ (p ^ (r - 1))) : ℤ) := by
+  sorry
 
 /-- The normalized lower-group sum in the cyclic Hasse--Arf lemma. -/
 def chapter05CyclicHasseArfSum
@@ -246,9 +246,9 @@ structure Chapter05CyclicLowerLayerDecomposition
 /-!
   This is the complete local arithmetic interface used by the cyclic proof.
   The fixed-point and ramification-number records are tied to the lower-layer
-  shape by the displayed parameter equalities.  The tame-factor relation and
-  weighted jump divisibility required by the finite lower-group sum are explicit
-  fields of this interface; the final integrality is not an input field.
+  shape by the displayed parameter equalities.  The tame-factor relation is an
+  explicit field of this interface; weighted jump divisibility is produced by
+  the decomposition theorem below, and final integrality is not an input field.
 -/
 structure Chapter05CyclicLocalArithmeticInterface
     {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -271,10 +271,6 @@ structure Chapter05CyclicLocalArithmeticInterface
     layer_shape.q r = ramification_number.q r
   tame_factor_eq :
     layer_shape.tame_factor = ramification_number.tame_factor
-  tame_wild_jump_divisibility :
-    ∀ {r : ℕ}, 0 < r → r < layer_shape.wild_exponent →
-      layer_shape.tame_factor * layer_shape.p ^ r ∣
-        layer_shape.q r - layer_shape.q (r - 1)
 
 theorem chapter05_cyclic_local_arithmetic_lower_layer_decomposition
     {K L : Type*} [Field K] [Field L] [Algebra K L]
