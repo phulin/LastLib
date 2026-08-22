@@ -1,4 +1,4 @@
-import LastLib.Book04AdelesAndIdeles.Chapter06.Section01WhyCompactnessIsCentral
+import LastLib.Book04AdelesAndIdeles.Chapter06.Section02PrincipalPartsAtFinitePlaces
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter06
 
@@ -26,11 +26,12 @@ theorem chapter06_fundamental_set_compact
 theorem chapter06_adele_reduced_to_fundamental_set
     (P : Chapter06AdeleData K O KInf Af Ohat)
     (D : Chapter06ArchimedeanCell P)
+    [IsTopologicalAddGroup Af]
     (x : Chapter06FullAdele KInf Af) :
     ∃ a : K,
       x - chapter06Diagonal P a ∈
       chapter06FundamentalSet P D.carrier := by
-  rcases P.finite_principal_parts x.2 with ⟨a, u, hu⟩
+  rcases chapter06_finite_principal_parts P x.2 with ⟨a, u, hu⟩
   rcases D.covers (x.1 - P.globalToInfinite a) with ⟨b, hb⟩
   refine ⟨a + P.integerToGlobal b, ?_⟩
   change x.1 - P.globalToInfinite (a + P.integerToGlobal b) ∈ D.carrier ∧
@@ -43,7 +44,8 @@ theorem chapter06_adele_reduced_to_fundamental_set
 
 theorem chapter06_adelic_has_compact_fundamental_set
     (P : Chapter06AdeleData K O KInf Af Ohat)
-    (D : Chapter06ArchimedeanCell P) :
+    (D : Chapter06ArchimedeanCell P)
+    [IsTopologicalAddGroup Af] :
     Chapter06CompactFundamentalSet (chapter06Diagonal P) := by
   refine ⟨chapter06FundamentalSet P D.carrier,
     chapter06_fundamental_set_compact P D.carrier D.compact, ?_⟩
@@ -53,7 +55,8 @@ theorem chapter06_adelic_has_compact_fundamental_set
 /-- The compact covering set maps surjectively to the adelic quotient. -/
 theorem chapter06_fundamental_set_quotient_surjective
     (P : Chapter06AdeleData K O KInf Af Ohat)
-    (D : Chapter06ArchimedeanCell P) :
+    (D : Chapter06ArchimedeanCell P)
+    [IsTopologicalAddGroup Af] :
     Function.Surjective (chapter06FundamentalSetQuotientMap P D.carrier) := by
   intro y
   rcases chapter06AdeleQuotientMap_surjective P y with ⟨x, rfl⟩
@@ -90,7 +93,8 @@ theorem chapter06_compact_quotient_of_compact_cover
 /-- Theorem 6.2: the adelic quotient is compact. -/
 theorem chapter06_adelic_quotient_compact
     (P : Chapter06AdeleData K O KInf Af Ohat)
-    (D : Chapter06ArchimedeanCell P) :
+    (D : Chapter06ArchimedeanCell P)
+    [IsTopologicalAddGroup Af] :
     CompactSpace (Chapter06AdeleQuotient P) := by
   exact chapter06_compact_quotient_of_compact_cover
     (chapter06Diagonal P) (chapter06FundamentalSet P D.carrier)

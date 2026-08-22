@@ -70,10 +70,6 @@ structure Chapter06AdeleData
     ∀ a : K,
       (∃ u : Ohat, finiteIntegralEmbedding u = globalToFinite a) ↔
         ∃ o : O, integerToGlobal o = a
-  /-- The principal-parts decomposition supplied by strong approximation. -/
-  finite_principal_parts :
-    ∀ x : Af, ∃ a : K, ∃ u : Ohat,
-      x = globalToFinite a + finiteIntegralEmbedding u
   finiteIntegral_embedding :
     IsEmbedding finiteIntegralEmbedding
   finiteIntegral_range_compact :

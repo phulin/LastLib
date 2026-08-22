@@ -32,7 +32,8 @@ theorem chapter06_rational_global_infinite_coordinate
 /-- The closed rational cell still surjects onto the quotient. -/
 theorem chapter06_rational_fundamental_set_surjective
     (P : Chapter06AdeleData ℚ ℤ ℝ Af Ohat)
-    (hone : P.globalToInfinite (1 : ℚ) = (1 : ℝ)) :
+    (hone : P.globalToInfinite (1 : ℚ) = (1 : ℝ))
+    [IsTopologicalAddGroup Af] :
     Function.Surjective
       (chapter06FundamentalSetQuotientMap P chapter06RationalArchimedeanCell) := by
   let D : Chapter06ArchimedeanCell P :=

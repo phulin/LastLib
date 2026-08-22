@@ -58,11 +58,12 @@ theorem chapter06_integral_gluing_kernel
 
 /-- The composite `K∞ × Ohat → A_K → A_K/K` is surjective. -/
 theorem chapter06_integral_gluing_surjective
-    (P : Chapter06AdeleData K O KInf Af Ohat) :
+    (P : Chapter06AdeleData K O KInf Af Ohat)
+    [IsTopologicalAddGroup Af] :
     Function.Surjective (chapter06IntegralGluingMap P) := by
   intro y
   rcases chapter06AdeleQuotientMap_surjective P y with ⟨z, rfl⟩
-  rcases P.finite_principal_parts z.2 with ⟨a, u, hu⟩
+  rcases chapter06_finite_principal_parts P z.2 with ⟨a, u, hu⟩
   refine ⟨(z.1 - P.globalToInfinite a, u), ?_⟩
   change chapter06AdeleQuotientMap P
       (z.1 - P.globalToInfinite a, P.finiteIntegralEmbedding u) =

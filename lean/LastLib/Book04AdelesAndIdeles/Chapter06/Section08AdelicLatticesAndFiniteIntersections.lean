@@ -1,4 +1,4 @@
-import LastLib.Book04AdelesAndIdeles.Chapter06.Dependencies
+import LastLib.Book04AdelesAndIdeles.Chapter06.Section02PrincipalPartsAtFinitePlaces
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter06
 
@@ -55,11 +55,12 @@ theorem chapter06_coordinatewise_fundamental_set_compact
 theorem chapter06_coordinatewise_reduced_to_fundamental_set
     (P : Chapter06AdeleData K O KInf Af Ohat)
     (D : Chapter06ArchimedeanCell P) (m : ℕ)
+    [IsTopologicalAddGroup Af]
     (x : (Fin m → KInf) × (Fin m → Af)) :
     ∃ a : Fin m → K,
       x - chapter06CoordinatewiseDiagonal P m a ∈
         chapter06CoordinatewiseFundamentalSet P D.carrier m := by
-  choose a u hu using fun i => P.finite_principal_parts (x.2 i)
+  choose a u hu using fun i => chapter06_finite_principal_parts P (x.2 i)
   choose b hb using fun i => D.covers (x.1 i - P.globalToInfinite (a i))
   let c : Fin m → K := fun i => a i + P.integerToGlobal (b i)
   refine ⟨c, ?_⟩
