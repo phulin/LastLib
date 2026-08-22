@@ -133,7 +133,15 @@ theorem chapter10_local_norm_maps_units
     (f : ℕ) (hformula : chapter10NormValuationFormula F E vF vE f) :
     Set.MapsTo (chapter10LocalNorm F E)
       (chapter10LocalUnitSet vE) (chapter10LocalUnitSet vF) := by
-  sorry
+  intro y hy
+  apply (chapter10_mem_local_unit_set_iff vF _).2
+  have hy0 : y ≠ 0 := by
+    intro hy0
+    subst y
+    have hval : vE (0 : E) = 0 :=
+      (chapter10_mem_local_unit_set_iff vE (0 : E)).mp hy
+    simp at hval
+  rw [hformula y hy0, (chapter10_mem_local_unit_set_iff vE y).mp hy, mul_zero]
 
 theorem chapter10_local_norm_valuation_formula
     (F E : Type*) [Field F] [Field E] [Algebra F E]
@@ -151,7 +159,9 @@ theorem chapter10_local_norm_valuation_formula
       vF.IsEquiv (AddValuation.comap (algebraMap F E) w) → vE.IsEquiv w)
     (hdegree : Module.finrank F E = e * f) :
     chapter10NormValuationFormula F E vF vE f := by
-  sorry
+  intro y hy
+  exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04_norm_valuation_formula
+    F E e f hext hrestrict hf hunique hdegree y hy
 
 theorem chapter10_unramified_norm_valuation
     (F E : Type*) [Field F] [Field E] [Algebra F E]
@@ -165,7 +175,26 @@ theorem chapter10_unramified_norm_valuation
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
         vF vE hunram.1) :
     chapter10NormValuationFormula F E vF vE d := by
-  sorry
+  have hdiscF :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vF :=
+    hunram.2.2.1.1
+  have hdiscE :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vE :=
+    hunram.2.2.2.1.1
+  let hrankF :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08_rank_one_discrete_of_add_valuation
+      vF hdiscF
+  let hrankE :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08_rank_one_discrete_of_add_valuation
+      vE hdiscE
+  let _ : Valuation.IsRankOneDiscrete vF.toValuation := hrankF
+  let _ : Valuation.IsRankOneDiscrete vE.toValuation := hrankE
+  intro y hy
+  exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04_norm_valuation_formula
+    F E 1 d hunram.1
+      (show ∀ z : F, vE (algebraMap F E z) =
+        (1 : WithTop ℤ) * vF z from hunram.2.1)
+      hfres hunique (by simpa using hdegree) y hy
 
 theorem chapter10_unramified_uniformizer_norm
     (F E : Type*) [Field F] [Field E] [Algebra F E]
@@ -175,7 +204,8 @@ theorem chapter10_unramified_uniformizer_norm
     (πF : F) (_hπF : chapter10NormalizedUniformizer vF πF)
     (hdegree : Module.finrank F E = d) :
     chapter10LocalNorm F E (algebraMap F E πF) = πF ^ d := by
-  sorry
+  change Algebra.norm F (algebraMap F E πF) = πF ^ d
+  rw [Algebra.norm_algebraMap, hdegree]
 
 /-- The target `π_F^{dℤ} O_Fˣ` in the unramified norm lemma. -/
 def chapter10UnramifiedNormTarget {F : Type*} [Field F]
@@ -219,13 +249,13 @@ theorem chapter10_finite_residue_norm_is_exponent_map
     [Finite l] [FiniteDimensional k l] (x : l) :
     algebraMap k l (Algebra.norm k x) =
       x ^ ((Nat.card l - 1) / (Nat.card k - 1)) := by
-  sorry
+  exact FiniteField.algebraMap_norm_eq_pow
 
 theorem chapter10_finite_residue_norm_surjective
     (k l : Type*) [Field k] [Field l] [Algebra k l]
     [Finite l] [FiniteDimensional k l] :
     Function.Surjective (Algebra.norm k (S := l)) := by
-  sorry
+  exact FiniteField.norm_surjective k l
 
 theorem chapter10_finite_residue_trace_surjective
     (k l : Type*) [Field k] [Field l] [Algebra k l]
