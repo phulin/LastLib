@@ -72,7 +72,7 @@ theorem chapter14_weak_approximation_at_distinct_nonarchimedean_places
       exact hpq (Subtype.ext (IsDedekindDomain.HeightOneSpectrum.ext heqideal))
     have hexists : ∃ r, r ∈ p.1.asIdeal ∧ r ∉ q.1.asIdeal := by
       by_contra h
-      push_neg at h
+      push Not at h
       exact hnotle h
     obtain ⟨r, hrp, hrq⟩ := hexists
     have hltp : (v p) (algebraMap (𝓞 F) F r) < 1 :=
