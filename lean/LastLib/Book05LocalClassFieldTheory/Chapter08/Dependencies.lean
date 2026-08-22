@@ -163,7 +163,9 @@ theorem chapter08_norm_unit_subgroup_le_norm_subgroup
     (vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ)) :
     chapter08NormUnitSubgroup vK vL ≤ chapter08NormSubgroup K L := by
-  sorry
+  intro x hx
+  rcases hx with ⟨y, _, rfl⟩
+  exact ⟨y, ⟨by simp, rfl⟩⟩
 
 def chapter08UnitNormProduct
     {K L : Type*} [Field K] [Field L] [Algebra K L]

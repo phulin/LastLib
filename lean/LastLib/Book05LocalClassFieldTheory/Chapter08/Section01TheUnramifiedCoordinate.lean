@@ -29,7 +29,10 @@ theorem chapter08_arithmetic_frobenius_has_coordinate_one
     (U : Chapter08ArithmeticUnramifiedQuotient K KAb S I) :
     U.completionEquiv (chapter08ArithmeticFrobenius S U) =
       chapter08IntegerToProfiniteCompletion 1 := by
-  sorry
+  change U.completionEquiv
+      (U.completionEquiv.symm (chapter08IntegerToProfiniteCompletion 1)) =
+    chapter08IntegerToProfiniteCompletion 1
+  exact U.completionEquiv.apply_symm_apply (chapter08IntegerToProfiniteCompletion 1)
 
 /- The displayed square is represented as equality of the two homomorphisms
    from `Kˣ` to the profinite integer coordinate. -/
@@ -44,7 +47,9 @@ theorem chapter08_unramified_coordinate_commutes_with_valuation
     (hvaluation : U.valuation = D.coordinate.valuation) :
     chapter08UnramifiedCoordinate S U =
       chapter08IntegerToProfiniteCompletionHom.comp D.coordinate.valuation := by
-  sorry
+  ext x
+  rw [chapter08_unramified_coordinate_formula S U x, hvaluation]
+  rfl
 
 theorem chapter08_reciprocity_restricts_to_frobenius_power
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
@@ -59,7 +64,25 @@ theorem chapter08_reciprocity_restricts_to_frobenius_power
     chapter08RestrictionToUnramified S U x =
       (chapter08ArithmeticFrobenius S U) ^
         Multiplicative.toAdd (D.coordinate.valuation x) := by
-  sorry
+  apply U.completionEquiv.injective
+  change chapter08UnramifiedCoordinate S U x =
+    U.completionEquiv
+      ((chapter08ArithmeticFrobenius S U) ^
+        Multiplicative.toAdd (D.coordinate.valuation x))
+  rw [chapter08_unramified_coordinate_formula S U x]
+  rw [map_zpow U.completionEquiv,
+    chapter08_arithmetic_frobenius_has_coordinate_one S U]
+  rw [hvaluation]
+  change chapter08IntegerToProfiniteCompletionHom
+      (Multiplicative.ofAdd (Multiplicative.toAdd (D.coordinate.valuation x))) =
+    chapter08IntegerToProfiniteCompletionHom (Multiplicative.ofAdd 1) ^
+      Multiplicative.toAdd (D.coordinate.valuation x)
+  rw [← map_zpow chapter08IntegerToProfiniteCompletionHom]
+  congr 1
+  change Multiplicative.ofAdd (Multiplicative.toAdd (D.coordinate.valuation x)) =
+    Multiplicative.ofAdd
+      (Multiplicative.toAdd (D.coordinate.valuation x) • (1 : ℤ))
+  simp
 
 theorem chapter08_units_act_trivially_on_maximal_unramified
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
@@ -72,7 +95,11 @@ theorem chapter08_units_act_trivially_on_maximal_unramified
     (hvaluation : U.valuation = D.coordinate.valuation)
     {x : Kˣ} (hx : x ∈ chapter08Units D.valuation) :
     chapter08RestrictionToUnramified S U x = 1 := by
-  sorry
+  rw [chapter08_reciprocity_restricts_to_frobenius_power D S U hvaluation x]
+  have hvaluation_x : D.coordinate.valuation x = 1 :=
+    (D.mem_units_iff x).mp hx
+  rw [hvaluation_x]
+  simp
 
 theorem chapter08_uniformizer_acts_as_arithmetic_frobenius
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
@@ -85,7 +112,9 @@ theorem chapter08_uniformizer_acts_as_arithmetic_frobenius
     (hvaluation : U.valuation = D.coordinate.valuation) :
     chapter08RestrictionToUnramified S U D.uniformizer =
       chapter08ArithmeticFrobenius S U := by
-  sorry
+  rw [chapter08_reciprocity_restricts_to_frobenius_power D S U hvaluation]
+  rw [D.valuation_uniformizer]
+  simp
 
 theorem chapter08_unramified_action_unchanged_by_unit_multiple
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
