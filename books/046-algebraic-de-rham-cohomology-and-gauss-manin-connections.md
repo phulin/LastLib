@@ -1977,24 +1977,45 @@ $U$, let $E(A^\vee)(U)$ consist of rigidified algebraically trivial line bundles
 equipped with an integrable $U$-relative connection compatible with the rigidification. Tensor
 product makes this an fppf sheaf of groups, and forgetting the connection maps it to $A^\vee$.
 
-_(The canonical identification (11.11) is the classical description of the universal vector extension; the sketch that follows indicates why it holds, and later chapters use only the existence of an extension whose Lie algebra is identified as stated.)_ The obstruction to a relative connection on $L$ is its Atiyah class in
-$H^1(A_U,\Omega^1_{A_U/U})$. On the universal Poincare family, both this class and the de Rham
-class $c_1^{\mathrm{dR}}(L)$ are additive in the $A^\vee$-variable. By base change they therefore
-define homomorphisms from $A^\vee$ to the vector groups attached respectively to
-$R^1p_*\Omega^1_{A/S}$ and $\mathcal H^2_{\mathrm{dR}}(A/S)$. Each homomorphism is zero by
-rigidity: a morphism from a proper connected group to an affine vector group is constant, and its
-value at the identity is zero because the corresponding line bundle is trivial. Thus the Atiyah
-obstruction vanishes, connections exist fppf locally on $U$, and
-$c_1^{\mathrm{dR}}(L)=0$.
+**Status of this section.** The construction that follows is a viewpoint, not part of the logical
+chain of this book or any later one. Within this book, Sections 12.1--12.3 use only Theorem 11.1,
+the identifications (11.1)--(11.9), and the Poincare class supplied by Book 35; Chapter 14's
+package likewise rests on those inputs alone, and no later chapter consumes (11.10) or (11.11)
+(the universal vector extensions needed for crystalline applications are constructed afresh where
+they are used). Two named inputs in the argument below are not developed anywhere earlier in this
+series, and we flag each point of entry rather than asserting them silently:
+
+- **Input A (Atiyah class).** The class in $H^1(A_U,\Omega^1_{A_U/U})$ obstructing a relative
+  connection on a rigidified line bundle $L$, its functoriality, and its additivity in $L$
+  together with the comparison with $c_1^{\mathrm{dR}}(L)$ — none of this is constructed here or
+  earlier; the term "Atiyah class" appears nowhere before this section.
+- **Input B (Picard deformation calculus).** The cocycle description of rigidified line bundles
+  and their connections over a square-zero thickening, used at the end to identify the tangent
+  extension itself with (11.4).
+
+With these inputs assumed, the argument proceeds as follows; without them, only the graded terms
+of (11.4) — already established via (11.1)--(11.5) — are available.
+
+The obstruction to a relative connection on $L$ is its Atiyah class in
+$H^1(A_U,\Omega^1_{A_U/U})$ [Input A]. On the universal Poincare family, both this class and the
+de Rham class $c_1^{\mathrm{dR}}(L)$ are additive in the $A^\vee$-variable [Input A]. By base
+change they therefore define homomorphisms from $A^\vee$ to the vector groups attached
+respectively to $R^1p_*\Omega^1_{A/S}$ and $\mathcal H^2_{\mathrm{dR}}(A/S)$, provided base
+change applies to these coherent sheaves as in Theorem 11.1. Each homomorphism is zero by
+rigidity — a morphism from a proper connected group scheme to an affine vector group is constant
+by the rigidity lemma of Book 35, and its value at the identity is zero because the corresponding
+line bundle is trivial. Thus, granting Input A, the Atiyah obstruction vanishes, connections
+exist fppf locally on $U$, and $c_1^{\mathrm{dR}}(L)=0$.
 
 Two relative connections differ by a global one-form, hence by a section of $\omega_A$ by
 (11.1). Such invariant one-forms are closed: the exterior derivative of an invariant form is
 given at the identity by the Lie bracket, and the Lie algebra of the commutative group $A$ is
 abelian. Finally, the curvature of any chosen connection is a global two-form whose image in
-de Rham cohomology is $c_1^{\mathrm{dR}}(L)=0$. Theorem 11.1 makes
+de Rham cohomology is $c_1^{\mathrm{dR}}(L)=0$ [Input A]. Theorem 11.1 makes
 $H^0(\Omega^2)\to\mathcal H^2_{\mathrm{dR}}$ injective, so the curvature itself is zero.
 
-It follows that the fiber of $E(A^\vee)\to A^\vee$ is a torsor under $V(\omega_A)$. Such a torsor
+It follows, granting Inputs A and B, that the fiber of $E(A^\vee)\to A^\vee$ is a torsor under
+$V(\omega_A)$. Such a torsor
 is represented by an affine bundle, and tensor product makes it the vector-group extension
 (11.10). Infinitesimally, its tangent sequence is
 
@@ -2014,7 +2035,10 @@ $$
 
 Pairs $(a_{ij},\beta_i)$ modulo changes of trivialization are exactly total degree-one cocycles
 of $[\mathcal O_A\to\Omega^1_{A/S}]$. This identifies the tangent extension itself, not only its
-graded terms, with (11.4), and proves (11.11).
+graded terms, with (11.4), and proves (11.11) — subject to Input B, the square-zero deformation
+calculus for rigidified line bundles and connections, which is not developed earlier in this
+series. What needs no input is the graded statement: the sequence has the same graded terms as
+(11.4) by (11.1) and $\operatorname{Lie}(A^\vee/S)=R^1p_*\mathcal O_A=\omega_{A^\vee}^\vee$.
 
 This viewpoint explains why $\mathcal H^1_{\mathrm{dR}}$ is the natural linear realization of an
 abelian scheme: it simultaneously records invariant differentials on $A$ and infinitesimal line
@@ -2024,7 +2048,8 @@ bundles on $A^\vee$.
 
 Book 35 constructed the Poincare bundle and used it to pair finite torsion. Its de Rham first Chern
 class gives the corresponding pairing of vector bundles. Polarizations turn that duality into a
-symplectic form, and functoriality makes the form horizontal.
+skew-symmetric form — symplectic after $2$ is inverted, by Section 12.2 — and functoriality makes
+the form horizontal.
 
 ### 12.1 The Poincare class and de Rham duality
 
@@ -2120,6 +2145,9 @@ subbundle.
 For an elliptic scheme, the canonical principal polarization identifies this construction with
 the curve pairing of Chapter 7. Both are induced by the diagonal divisor and have the same
 restriction to the Hodge graded pieces, so perfection and normalization force equality.
+Consequently $\psi_\lambda$ for the canonical principal polarization of an elliptic scheme is
+genuinely alternating in every characteristic, being the pairing (7.2) whose alternation was
+proved directly in Section 7.1; this is the one case where no conditional input is needed.
 
 ### 12.3 Horizontality
 
