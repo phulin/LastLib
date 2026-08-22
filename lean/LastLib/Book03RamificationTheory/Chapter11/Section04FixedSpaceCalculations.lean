@@ -258,7 +258,8 @@ theorem chapter11_two_dimensional_tame_fixed_space_zero_dimension_zero
     (D : Chapter11RamificationData G) (ρ : Representation k G V)
     (hρ : Chapter11TameNoFixedVectors D ρ) :
     Module.finrank k (Representation.invariants (ρ.comp D.inertia.subtype)) = 0 := by
-  sorry
+  rcases hρ with ⟨_, _, hinv⟩
+  rw [hinv, finrank_bot]
 
 /- The source's `V_χ` is represented canonically by
   `chapter11OneDimensionalRepresentation χ`. -/
@@ -288,6 +289,38 @@ def Chapter11FixedSpaceIsZero
     (ρ : Representation k G V) (H : Subgroup G) : Prop :=
   Representation.invariants (ρ.comp H.subtype) = ⊥
 
+private theorem chapter11_nontrivial_character_fixed_space_zero
+    {k G : Type*} [Field k] [Fintype G] [Group G]
+    (χ : G →* kˣ) (H : Subgroup G)
+    (hχ : ∃ g : H, χ (g : G) ≠ 1) :
+    LastLib.Book03RamificationTheory.Chapter10.fixedSpace
+        (chapter11OneDimensionalRepresentation χ) H = ⊥ := by
+  rcases hχ with ⟨g, hg⟩
+  have hg' : (χ (g : G) : k) ≠ 1 := by
+    intro h
+    apply hg
+    apply Units.ext
+    exact h
+  ext x
+  constructor
+  · intro hx
+    have hfix :=
+      (LastLib.Book03RamificationTheory.Chapter10.fixedSpace.mem_iff
+        (chapter11OneDimensionalRepresentation χ) H x).mp hx g
+    have hfix' : (χ (g : G) : k) • x = x := by
+      simpa [chapter11OneDimensionalRepresentation] using hfix
+    have hscalar : ((χ (g : G) : k) - 1) • x = 0 := by
+      rw [sub_smul, one_smul]
+      exact sub_eq_zero.mpr hfix'
+    have hxzero : x = 0 := by
+      exact (smul_eq_zero.mp hscalar).resolve_left (sub_ne_zero.mpr hg')
+    rw [hxzero]
+    exact Submodule.zero_mem _
+  · intro hx
+    have hxzero : x = 0 := by simpa using hx
+    rw [hxzero]
+    exact Submodule.zero_mem _
+
 theorem chapter11_wild_cyclic_nontrivial_character_fixed_spaces
     {k G : Type*} [Field k] [CharZero k] [Fintype G] [Group G]
     {D : Chapter11RamificationData G}
@@ -296,17 +329,33 @@ theorem chapter11_wild_cyclic_nontrivial_character_fixed_spaces
     ∀ i, i ≤ W.m →
       Chapter11FixedSpaceIsZero
         (chapter11OneDimensionalRepresentation χ) (D.lower i) := by
-  sorry
+  intro i hi
+  rw [W.lower_eq_inertia_of_le i hi]
+  change LastLib.Book03RamificationTheory.Chapter10.fixedSpace
+      (chapter11OneDimensionalRepresentation χ) D.inertia = ⊥
+  apply chapter11_nontrivial_character_fixed_space_zero χ D.inertia
+  rcases hχ with ⟨g, hg⟩
+  refine ⟨⟨g, ?_⟩, hg⟩
+  simp [W.inertia_eq_top]
 
 theorem chapter11_wild_cyclic_nontrivial_character_fixed_spaces_after_break
     {k G : Type*} [Field k] [CharZero k] [Fintype G] [Group G]
     {D : Chapter11RamificationData G}
     (W : Chapter11WildCyclicBreakData G D) (χ : G →* kˣ)
-    (hχ : Chapter11NontrivialMultiplicativeCharacter χ) :
+    (_hχ : Chapter11NontrivialMultiplicativeCharacter χ) :
     ∀ i, W.m < i →
       Representation.invariants
         ((chapter11OneDimensionalRepresentation χ).comp (D.lower i).subtype) = ⊤ := by
-  sorry
+  intro i hi
+  rw [W.lower_eq_bot_of_gt i hi]
+  change LastLib.Book03RamificationTheory.Chapter10.fixedSpace
+      (chapter11OneDimensionalRepresentation χ) (⊥ : Subgroup G) = ⊤
+  apply LastLib.Book03RamificationTheory.Chapter10.fixedSpace.top_of_trivial_on
+  intro g
+  have hg : (g : G) = 1 := Subgroup.mem_bot.mp g.property
+  rw [hg]
+  simpa only [Module.End.one_eq_id] using
+    (chapter11OneDimensionalRepresentation χ).map_one
 
 theorem chapter11_wild_cyclic_character_conductor_and_swan
     {k G : Type*} [Field k] [CharZero k] [Fintype G] [Group G]
@@ -317,7 +366,109 @@ theorem chapter11_wild_cyclic_character_conductor_and_swan
         (W.m + 1 : ℚ) ∧
       chapter11SwanConductor D (chapter11OneDimensionalRepresentation χ) =
         (W.m : ℚ) := by
-  sorry
+  rcases hχ with ⟨g, hg⟩
+  have hbound : W.m < D.bound := by
+    by_contra h
+    have hle : D.bound ≤ W.m := Nat.le_of_not_gt h
+    have hbot : D.lower W.m = ⊥ := D.lower_eq_bot_of_bound_le W.m hle
+    have hinertia : D.inertia = (⊥ : Subgroup G) := by
+      rw [← W.lower_eq_inertia_of_le W.m (le_refl _)]
+      exact hbot
+    have hgmem : g ∈ D.inertia := by
+      simp [W.inertia_eq_top]
+    have hg1 : g = 1 := by
+      apply Subgroup.mem_bot.mp
+      rw [← hinertia]
+      exact hgmem
+    apply hg
+    rw [hg1]
+    exact χ.map_one
+  have hfixed_zero :
+      LastLib.Book03RamificationTheory.Chapter10.fixedSpace
+          (chapter11OneDimensionalRepresentation χ) D.inertia = ⊥ := by
+    apply chapter11_nontrivial_character_fixed_space_zero χ D.inertia
+    exact ⟨⟨g, by simp [W.inertia_eq_top]⟩, hg⟩
+  have hcodim (i : ℕ) (hi : i ≤ W.m) :
+      LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+          (chapter11OneDimensionalRepresentation χ) (D.lower i) = 1 := by
+    rw [W.lower_eq_inertia_of_le i hi]
+    unfold LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+    rw [Submodule.finrank_quotient, hfixed_zero, finrank_bot]
+    simp [Module.finrank_self]
+  have hcodim_bot (i : ℕ) (hi : W.m < i) :
+      LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+          (chapter11OneDimensionalRepresentation χ) (D.lower i) = 0 := by
+    rw [W.lower_eq_bot_of_gt i hi]
+    apply (LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim.eq_zero_iff
+      (chapter11OneDimensionalRepresentation χ) (⊥ : Subgroup G)).2
+    apply LastLib.Book03RamificationTheory.Chapter10.fixedSpace.top_of_trivial_on
+    intro h
+    have hh : (h : G) = 1 := Subgroup.mem_bot.mp h.property
+    rw [hh]
+    simpa only [Module.End.one_eq_id] using
+      (chapter11OneDimensionalRepresentation χ).map_one
+  have hterm (i : ℕ) (hi : i < D.bound) :
+      chapter11LowerWeight D i *
+          (LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+            (chapter11OneDimensionalRepresentation χ) (D.lower i) : ℚ) =
+        if i ≤ W.m then 1 else 0 := by
+    by_cases hi_m : i ≤ W.m
+    · rw [if_pos hi_m, hcodim i hi_m]
+      simp [chapter11LowerWeight, W.lower_eq_inertia_of_le i hi_m]
+    · have hi_gt : W.m < i := Nat.lt_of_not_ge hi_m
+      rw [if_neg hi_m, hcodim_bot i hi_gt]
+      simp
+  have hfilter :
+      (Finset.range D.bound).filter (fun i => i ≤ W.m) =
+        Finset.range (W.m + 1) := by
+    ext i
+    simp only [Finset.mem_filter, Finset.mem_range]
+    constructor <;> omega
+  have hsum :
+      (∑ i ∈ Finset.range D.bound,
+        if i ≤ W.m then (1 : ℚ) else 0) = (W.m + 1 : ℚ) := by
+    rw [← Finset.sum_filter, hfilter]
+    simp
+  have hartin :
+      chapter11ArtinConductor D
+          (chapter11OneDimensionalRepresentation χ) = (W.m + 1 : ℚ) := by
+    unfold chapter11ArtinConductor
+    calc
+      (∑ i ∈ Finset.range D.bound,
+          chapter11LowerWeight D i *
+            (LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+              (chapter11OneDimensionalRepresentation χ) (D.lower i) : ℚ)) =
+          ∑ i ∈ Finset.range D.bound, if i ≤ W.m then (1 : ℚ) else 0 := by
+            apply Finset.sum_congr rfl
+            intro i hi
+            exact hterm i (Finset.mem_range.mp hi)
+      _ = (W.m + 1 : ℚ) := hsum
+  have hfilter_swan :
+      (Finset.Ico 1 D.bound).filter (fun i => i ≤ W.m) =
+        Finset.Ico 1 (W.m + 1) := by
+    ext i
+    simp only [Finset.mem_filter, Finset.mem_Ico]
+    constructor <;> omega
+  have hsum_swan :
+      (∑ i ∈ Finset.Ico 1 D.bound,
+        if i ≤ W.m then (1 : ℚ) else 0) = (W.m : ℚ) := by
+    rw [← Finset.sum_filter, hfilter_swan]
+    simp
+  have hswan :
+      chapter11SwanConductor D
+          (chapter11OneDimensionalRepresentation χ) = (W.m : ℚ) := by
+    unfold chapter11SwanConductor
+    calc
+      (∑ i ∈ Finset.Ico 1 D.bound,
+          chapter11LowerWeight D i *
+            (LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+              (chapter11OneDimensionalRepresentation χ) (D.lower i) : ℚ)) =
+          ∑ i ∈ Finset.Ico 1 D.bound, if i ≤ W.m then (1 : ℚ) else 0 := by
+            apply Finset.sum_congr rfl
+            intro i hi
+            exact hterm i (Finset.mem_Ico.mp hi).2
+      _ = (W.m : ℚ) := hsum_swan
+  exact ⟨hartin, hswan⟩
 
 /-- A complete list of the nontrivial complex characters of a cyclic group of prime order. -/
 structure Chapter11AllNontrivialCharacters
@@ -347,7 +498,115 @@ theorem chapter11_wild_cyclic_sum_of_nontrivial_characters
     (C : Chapter11AllNontrivialCharacters G D W) :
     chapter11ArtinConductor D (chapter11DirectSumOfAllNontrivialCharacters W C) =
       ((W.p - 1 : ℕ) : ℚ) * (W.m + 1 : ℚ) := by
-  sorry
+  have hp : 2 ≤ W.p := W.p_prime.two_le
+  have hp_sub : 0 < W.p - 1 := by omega
+  let j₀ : Fin (W.p - 1) := ⟨0, hp_sub⟩
+  rcases C.nontrivial j₀ with ⟨g, hg⟩
+  have hbound : W.m < D.bound := by
+    by_contra h
+    have hle : D.bound ≤ W.m := Nat.le_of_not_gt h
+    have hbot : D.lower W.m = ⊥ := D.lower_eq_bot_of_bound_le W.m hle
+    have hinertia : D.inertia = (⊥ : Subgroup G) := by
+      rw [← W.lower_eq_inertia_of_le W.m (le_refl _)]
+      exact hbot
+    have hgmem : g ∈ D.inertia := by
+      simp [W.inertia_eq_top]
+    have hg1 : g = 1 := by
+      apply Subgroup.mem_bot.mp
+      rw [← hinertia]
+      exact hgmem
+    apply hg
+    rw [hg1]
+    exact (C.characters j₀).map_one
+  have hfixed_zero :
+      LastLib.Book03RamificationTheory.Chapter10.fixedSpace
+          (chapter11DirectSumOfAllNontrivialCharacters W C) D.inertia = ⊥ := by
+    ext x
+    constructor
+    · intro hx
+      have hxzero : x = 0 := by
+        ext j
+        rcases C.nontrivial j with ⟨g, hg⟩
+        have hfix :=
+          (LastLib.Book03RamificationTheory.Chapter10.fixedSpace.mem_iff
+            (chapter11DirectSumOfAllNontrivialCharacters W C) D.inertia x).mp hx
+            ⟨g, by simp [W.inertia_eq_top]⟩
+        have hfixj := congrArg (fun y => y j) hfix
+        have hfixj' :
+            (C.characters j (g : G) : ℂ) • x j = x j := by
+          simpa [chapter11DirectSumOfAllNontrivialCharacters,
+            Representation.directSum, chapter11OneDimensionalRepresentation] using hfixj
+        have hscalar : ((C.characters j (g : G) : ℂ) - 1) • x j = 0 := by
+          rw [sub_smul, one_smul]
+          exact sub_eq_zero.mpr hfixj'
+        have hg' : (C.characters j (g : G) : ℂ) ≠ 1 := by
+          intro h
+          apply hg
+          apply Units.ext
+          exact h
+        exact (smul_eq_zero.mp hscalar).resolve_left (sub_ne_zero.mpr hg')
+      rw [hxzero]
+      exact Submodule.zero_mem _
+    · intro hx
+      have hxzero : x = 0 := by simpa using hx
+      rw [hxzero]
+      exact Submodule.zero_mem _
+  have hcodim (i : ℕ) (hi : i ≤ W.m) :
+      LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+          (chapter11DirectSumOfAllNontrivialCharacters W C) (D.lower i) =
+        W.p - 1 := by
+    rw [W.lower_eq_inertia_of_le i hi]
+    unfold LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+    rw [Submodule.finrank_quotient, hfixed_zero, finrank_bot]
+    simp [Module.finrank_directSum]
+  have hcodim_bot (i : ℕ) (hi : W.m < i) :
+      LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+          (chapter11DirectSumOfAllNontrivialCharacters W C) (D.lower i) = 0 := by
+    rw [W.lower_eq_bot_of_gt i hi]
+    apply (LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim.eq_zero_iff
+      (chapter11DirectSumOfAllNontrivialCharacters W C) (⊥ : Subgroup G)).2
+    apply LastLib.Book03RamificationTheory.Chapter10.fixedSpace.top_of_trivial_on
+    intro h
+    have hh : (h : G) = 1 := Subgroup.mem_bot.mp h.property
+    rw [hh]
+    simpa only [Module.End.one_eq_id] using
+      (chapter11DirectSumOfAllNontrivialCharacters W C).map_one
+  have hterm (i : ℕ) (hi : i < D.bound) :
+      chapter11LowerWeight D i *
+          (LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+            (chapter11DirectSumOfAllNontrivialCharacters W C) (D.lower i) : ℚ) =
+        if i ≤ W.m then ((W.p - 1 : ℕ) : ℚ) else 0 := by
+    by_cases hi_m : i ≤ W.m
+    · rw [if_pos hi_m, hcodim i hi_m]
+      simp [chapter11LowerWeight, W.lower_eq_inertia_of_le i hi_m]
+    · have hi_gt : W.m < i := Nat.lt_of_not_ge hi_m
+      rw [if_neg hi_m, hcodim_bot i hi_gt]
+      simp
+  have hfilter :
+      (Finset.range D.bound).filter (fun i => i ≤ W.m) =
+        Finset.range (W.m + 1) := by
+    ext i
+    simp only [Finset.mem_filter, Finset.mem_range]
+    constructor <;> omega
+  have hsum :
+      (∑ i ∈ Finset.range D.bound,
+        if i ≤ W.m then ((W.p - 1 : ℕ) : ℚ) else 0) =
+        ((W.p - 1 : ℕ) : ℚ) * (W.m + 1 : ℚ) := by
+    rw [← Finset.sum_filter, hfilter]
+    simp
+    ring
+  unfold chapter11ArtinConductor
+  calc
+    (∑ i ∈ Finset.range D.bound,
+        chapter11LowerWeight D i *
+          (LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+            (chapter11DirectSumOfAllNontrivialCharacters W C) (D.lower i) : ℚ)) =
+        ∑ i ∈ Finset.range D.bound,
+          if i ≤ W.m then ((W.p - 1 : ℕ) : ℚ) else 0 := by
+          apply Finset.sum_congr rfl
+          intro i hi
+          exact hterm i (Finset.mem_range.mp hi)
+    _ = ((W.p - 1 : ℕ) : ℚ) * (W.m + 1 : ℚ) := hsum
 
 end
 end LastLib.Book03RamificationTheory.Chapter11
