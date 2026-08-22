@@ -86,13 +86,14 @@ theorem chapter03_no_different_bound_from_degree_only
 theorem chapter03_artin_schreier_family_lower_breaks
     {G : Type*} [Group G] [Finite G]
     (p : ℕ) [Fact p.Prime]
-    (F : ℕ → Chapter03LowerDisplacementFiltration G)
+    (F : ℕ → LastLib.Book03RamificationTheory.Chapter02.Chapter02LowerFiltration G)
     (hgroup : Nat.card G = p)
     (hdisp : ∀ m : ℕ, chapter03ArtinSchreierFamilyMember p m →
-      ∀ {σ : G}, σ ≠ 1 → (F m).displacement σ = m + 1) :
+      ∀ {σ : G}, σ ≠ 1 →
+        (F m).displacement σ = ((m + 1 : ℕ) : WithTop ℤ)) :
     ∀ B : ℕ, ∃ m : ℕ,
       chapter03ArtinSchreierFamilyMember p m ∧ B < m ∧
-        chapter03LowerBreak (F m) m := by
+        LastLib.Book03RamificationTheory.Chapter02.chapter02LowerBreak (F m) m := by
   sorry
 
 /- SOURCE_WARNING (3.7): The phrase “same degree” is not a discriminant

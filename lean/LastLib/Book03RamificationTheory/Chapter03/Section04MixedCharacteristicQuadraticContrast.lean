@@ -81,27 +81,34 @@ theorem chapter03_quadratic_displacement_identity
 
 theorem chapter03_quadratic_odd_profile
     {G : Type*} [Group G] [Finite G]
-    (F : Chapter03LowerDisplacementFiltration G)
-    (hdisp : ∀ {σ : G}, σ ≠ 1 → F.displacement σ = 1)
+    (F : LastLib.Book03RamificationTheory.Chapter02.Chapter02LowerFiltration G)
+    (hdisp : ∀ {σ : G}, σ ≠ 1 →
+      F.displacement σ = (1 : WithTop ℤ))
     (hnontrivial : ∃ σ : G, σ ≠ 1) :
-    F.lower (-1) = ⊤ ∧ F.lower 0 = ⊤ ∧ F.lower 1 = ⊥ ∧
-      chapter03LowerBreak F 0 := by
+    LastLib.Book03RamificationTheory.Chapter02.chapter02IntegerLowerGroup F (-1) = ⊤ ∧
+      F.group 0 = ⊤ ∧ F.group 1 = ⊥ ∧
+      LastLib.Book03RamificationTheory.Chapter02.chapter02LowerBreak F 0 := by
   have hprofile :=
     chapter03_one_break_profile_of_constant_displacement F 0 hdisp
   have hbreak := chapter03_one_break_is_unique F 0 hdisp hnontrivial
-  exact ⟨F.lower_neg_one, hprofile.1 0 le_rfl, hprofile.2 1 le_rfl, hbreak⟩
+  exact ⟨LastLib.Book03RamificationTheory.Chapter02.chapter02IntegerLowerGroup_neg_one F,
+    hprofile.1 0 le_rfl, hprofile.2 1 le_rfl, hbreak⟩
 
 theorem chapter03_quadratic_two_adic_profile
     {G : Type*} [Group G] [Finite G]
-    (F : Chapter03LowerDisplacementFiltration G)
-    (hdisp : ∀ {σ : G}, σ ≠ 1 → F.displacement σ = 3)
+    (F : LastLib.Book03RamificationTheory.Chapter02.Chapter02LowerFiltration G)
+    (hdisp : ∀ {σ : G}, σ ≠ 1 →
+      F.displacement σ = (3 : WithTop ℤ))
     (hnontrivial : ∃ σ : G, σ ≠ 1) :
-    F.lower (-1) = ⊤ ∧ F.lower 0 = ⊤ ∧ F.lower 1 = ⊤ ∧
-      F.lower 2 = ⊤ ∧ F.lower 3 = ⊥ ∧ chapter03LowerBreak F 2 := by
+    LastLib.Book03RamificationTheory.Chapter02.chapter02IntegerLowerGroup F (-1) = ⊤ ∧
+      F.group 0 = ⊤ ∧ F.group 1 = ⊤ ∧
+      F.group 2 = ⊤ ∧ F.group 3 = ⊥ ∧
+      LastLib.Book03RamificationTheory.Chapter02.chapter02LowerBreak F 2 := by
   have hprofile :=
     chapter03_one_break_profile_of_constant_displacement F 2 hdisp
   have hbreak := chapter03_one_break_is_unique F 2 hdisp hnontrivial
-  exact ⟨F.lower_neg_one, hprofile.1 0 (by omega), hprofile.1 1 (by omega),
+  exact ⟨LastLib.Book03RamificationTheory.Chapter02.chapter02IntegerLowerGroup_neg_one F,
+    hprofile.1 0 (by omega), hprofile.1 1 (by omega),
     hprofile.1 2 le_rfl, hprofile.2 3 le_rfl, hbreak⟩
 
 theorem chapter03_quadratic_odd_extension_is_tame

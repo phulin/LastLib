@@ -221,25 +221,32 @@ theorem chapter03_tame_character_image_is_cyclic
 
 theorem chapter03_totally_tame_filtration
     {G : Type*} [Group G] [Finite G]
-    (F : Chapter03LowerDisplacementFiltration G) (H : Subgroup G)
-    (hinside : ∀ {σ : G}, σ ∈ H → σ ≠ 1 → F.displacement σ = 1)
-    (houtside : ∀ {σ : G}, σ ∉ H → F.displacement σ = 0) :
-    F.lower (-1) = ⊤ ∧ F.lower 0 = H ∧ F.lower 1 = ⊥ := by
-  exact ⟨F.lower_neg_one,
+    (F : LastLib.Book03RamificationTheory.Chapter02.Chapter02LowerFiltration G)
+    (H : Subgroup G)
+    (hinside : ∀ {σ : G}, σ ∈ H → σ ≠ 1 →
+      F.displacement σ = (1 : WithTop ℤ))
+    (houtside : ∀ {σ : G}, σ ∉ H →
+      F.displacement σ = (0 : WithTop ℤ)) :
+    LastLib.Book03RamificationTheory.Chapter02.chapter02IntegerLowerGroup F (-1) = ⊤ ∧
+      F.group 0 = H ∧ F.group 1 = ⊥ := by
+  exact ⟨LastLib.Book03RamificationTheory.Chapter02.chapter02IntegerLowerGroup_neg_one F,
     (chapter03_tame_profile_of_inertia_displacement F H hinside houtside).1,
     (chapter03_tame_profile_of_inertia_displacement F H hinside houtside).2⟩
 
 theorem chapter03_tame_kummer_lower_groups
     {G : Type*} [Group G] [Finite G]
-    (F : Chapter03LowerDisplacementFiltration G)
-    (hdisp : ∀ {σ : G}, σ ≠ 1 → F.displacement σ = 1)
+    (F : LastLib.Book03RamificationTheory.Chapter02.Chapter02LowerFiltration G)
+    (hdisp : ∀ {σ : G}, σ ≠ 1 →
+      F.displacement σ = (1 : WithTop ℤ))
     (hnontrivial : ∃ σ : G, σ ≠ 1) :
-    F.lower (-1) = ⊤ ∧ F.lower 0 = ⊤ ∧ F.lower 1 = ⊥ ∧
-      chapter03LowerBreak F 0 := by
+    LastLib.Book03RamificationTheory.Chapter02.chapter02IntegerLowerGroup F (-1) = ⊤ ∧
+      F.group 0 = ⊤ ∧ F.group 1 = ⊥ ∧
+      LastLib.Book03RamificationTheory.Chapter02.chapter02LowerBreak F 0 := by
   have hprofile :=
     chapter03_one_break_profile_of_constant_displacement F 0 hdisp
   have hbreak := chapter03_one_break_is_unique F 0 hdisp hnontrivial
-  exact ⟨F.lower_neg_one, hprofile.1 0 le_rfl, hprofile.2 1 le_rfl, hbreak⟩
+  exact ⟨LastLib.Book03RamificationTheory.Chapter02.chapter02IntegerLowerGroup_neg_one F,
+    hprofile.1 0 le_rfl, hprofile.2 1 le_rfl, hbreak⟩
 
 /- SOURCE_WARNING (3.2): The Kummer hypotheses are coordinate data, not the
    definition of tameness.  The coordinate-free filtration conclusion is the

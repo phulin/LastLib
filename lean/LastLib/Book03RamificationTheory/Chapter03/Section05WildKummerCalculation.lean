@@ -168,18 +168,20 @@ theorem chapter03_wild_kummer_displacement_calculation
 
 theorem chapter03_wild_kummer_lower_groups
     {G : Type*} [Group G] [Finite G]
-    (F : Chapter03LowerDisplacementFiltration G)
+    (F : LastLib.Book03RamificationTheory.Chapter02.Chapter02LowerFiltration G)
     (p : ℕ)
-    (hdisp : ∀ {σ : G}, σ ≠ 1 → F.displacement σ = p + 1)
+    (hdisp : ∀ {σ : G}, σ ≠ 1 →
+      F.displacement σ = ((p + 1 : ℕ) : WithTop ℤ))
     (hnontrivial : ∃ σ : G, σ ≠ 1) :
-    F.lower (-1) = ⊤ ∧
-      (∀ n : ℕ, n ≤ p → F.lower (n : ℤ) = ⊤) ∧
-      (∀ n : ℕ, p + 1 ≤ n → F.lower (n : ℤ) = ⊥) ∧
-      chapter03LowerBreak F p := by
+    LastLib.Book03RamificationTheory.Chapter02.chapter02IntegerLowerGroup F (-1) = ⊤ ∧
+      (∀ n : ℕ, n ≤ p → F.group n = ⊤) ∧
+      (∀ n : ℕ, p + 1 ≤ n → F.group n = ⊥) ∧
+      LastLib.Book03RamificationTheory.Chapter02.chapter02LowerBreak F p := by
   have hprofile :=
     chapter03_one_break_profile_of_constant_displacement F p hdisp
   have hbreak := chapter03_one_break_is_unique F p hdisp hnontrivial
-  exact ⟨F.lower_neg_one, hprofile.1, hprofile.2, hbreak⟩
+  exact ⟨LastLib.Book03RamificationTheory.Chapter02.chapter02IntegerLowerGroup_neg_one F,
+    hprofile.1, hprofile.2, hbreak⟩
 
 /- SOURCE_WARNING (3.5): A radical equation is not a tameness criterion.
    The `chapter03_wild_kummer_*` declarations retain the degree divisibility

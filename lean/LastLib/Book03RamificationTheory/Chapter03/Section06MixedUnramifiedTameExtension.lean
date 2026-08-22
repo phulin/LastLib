@@ -116,14 +116,15 @@ theorem chapter03_mixed_frobenius_tame_conjugation
 
 theorem chapter03_mixed_lower_filtration
     {G : Type*} [Group G] [Finite G]
-    (F : Chapter03LowerDisplacementFiltration G) (τ : G)
+    (F : LastLib.Book03RamificationTheory.Chapter02.Chapter02LowerFiltration G)
+    (τ : G)
     (hinside : ∀ {σ : G}, σ ∈ Subgroup.zpowers τ → σ ≠ 1 →
-      F.displacement σ = 1)
+      F.displacement σ = (1 : WithTop ℤ))
     (houtside : ∀ {σ : G}, σ ∉ Subgroup.zpowers τ →
-      F.displacement σ = 0) :
-    F.lower (-1) = ⊤ ∧
-      F.lower 0 = Subgroup.zpowers τ ∧ F.lower 1 = ⊥ := by
-  exact ⟨F.lower_neg_one,
+      F.displacement σ = (0 : WithTop ℤ)) :
+    LastLib.Book03RamificationTheory.Chapter02.chapter02IntegerLowerGroup F (-1) = ⊤ ∧
+      F.group 0 = Subgroup.zpowers τ ∧ F.group 1 = ⊥ := by
+  exact ⟨LastLib.Book03RamificationTheory.Chapter02.chapter02IntegerLowerGroup_neg_one F,
     (chapter03_tame_profile_of_inertia_displacement F (Subgroup.zpowers τ)
       hinside houtside).1,
     (chapter03_tame_profile_of_inertia_displacement F (Subgroup.zpowers τ)

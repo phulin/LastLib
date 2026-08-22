@@ -408,11 +408,6 @@ theorem chapter03_artin_schreier_degree_and_cyclic_profile
     [FiniteDimensional (LaurentSeries k) L]
     (p m : ℕ) [Fact p.Prime] [CharP k p]
     (D : Chapter03ArtinSchreierExtensionData (k := k) (L := L) p m)
-    (hno_root :
-      ∀ z : LaurentSeries k,
-        z ^ p - z ≠
-            (LastLib.Book01ValuationsDVRsAndCompletions.Chapter03.laurentSeriesUniformizer k) ^
-            (-(m : ℤ)))
     (vK : AddValuation (LaurentSeries k) (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ))
     (hdiscreteK :
@@ -429,6 +424,13 @@ theorem chapter03_artin_schreier_degree_and_cyclic_profile
           LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ProfileRealizedByData d q ∧
             q.degree = p ∧ q.ramificationIndex = p ∧ q.residueDegree = 1 ∧
             LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10TotallyRamified q := by
+  have hno_root :
+      ∀ z : LaurentSeries k,
+        z ^ p - z ≠
+          (LastLib.Book01ValuationsDVRsAndCompletions.Chapter03.laurentSeriesUniformizer k) ^
+            (-(m : ℤ)) :=
+    chapter03_artin_schreier_no_root_in_laurent_series k p m
+      D.prime_to_characteristic
   let : CharP (LaurentSeries k) p :=
     charP_of_injective_ringHom
       (f := (HahnSeries.C : k →+* LaurentSeries k))
@@ -761,12 +763,7 @@ theorem chapter03_artin_schreier_extension_is_cyclic_galois
     [Algebra (LaurentSeries k) L]
     [FiniteDimensional (LaurentSeries k) L]
     (p m : ℕ) [Fact p.Prime] [CharP k p]
-    (D : Chapter03ArtinSchreierExtensionData (k := k) (L := L) p m)
-    (hno_root :
-      ∀ z : LaurentSeries k,
-        z ^ p - z ≠
-          (LastLib.Book01ValuationsDVRsAndCompletions.Chapter03.laurentSeriesUniformizer k) ^
-            (-(m : ℤ))) :
+    (D : Chapter03ArtinSchreierExtensionData (k := k) (L := L) p m) :
     IsGalois (LaurentSeries k) L ∧
       Module.finrank (LaurentSeries k) L = p ∧
       ∃ γ : L ≃ₐ[LaurentSeries k] L,
@@ -776,6 +773,13 @@ theorem chapter03_artin_schreier_extension_is_cyclic_galois
       (∀ c : L, c ^ p - c = 0 →
             ∃ σ : L ≃ₐ[LaurentSeries k] L, σ D.y = D.y + c) := by
   classical
+  have hno_root :
+      ∀ z : LaurentSeries k,
+        z ^ p - z ≠
+          (LastLib.Book01ValuationsDVRsAndCompletions.Chapter03.laurentSeriesUniformizer k) ^
+            (-(m : ℤ)) :=
+    chapter03_artin_schreier_no_root_in_laurent_series k p m
+      D.prime_to_characteristic
   let : CharP (LaurentSeries k) p :=
     charP_of_injective_ringHom
       (f := (HahnSeries.C : k →+* LaurentSeries k))
@@ -1212,17 +1216,20 @@ theorem chapter03_artin_schreier_first_binomial_term_has_value_m
 
 theorem chapter03_artin_schreier_lower_groups
     {G : Type*} [Group G] [Finite G]
-    (F : Chapter03LowerDisplacementFiltration G) (m : ℕ)
-    (hdisp : ∀ {σ : G}, σ ≠ 1 → F.displacement σ = m + 1)
+    (F : LastLib.Book03RamificationTheory.Chapter02.Chapter02LowerFiltration G)
+    (m : ℕ)
+    (hdisp : ∀ {σ : G}, σ ≠ 1 →
+      F.displacement σ = ((m + 1 : ℕ) : WithTop ℤ))
     (hnontrivial : ∃ σ : G, σ ≠ 1) :
-    F.lower (-1) = ⊤ ∧
-      (∀ n : ℕ, n ≤ m → F.lower (n : ℤ) = ⊤) ∧
-      (∀ n : ℕ, m + 1 ≤ n → F.lower (n : ℤ) = ⊥) ∧
-      chapter03LowerBreak F m := by
+    LastLib.Book03RamificationTheory.Chapter02.chapter02IntegerLowerGroup F (-1) = ⊤ ∧
+      (∀ n : ℕ, n ≤ m → F.group n = ⊤) ∧
+      (∀ n : ℕ, m + 1 ≤ n → F.group n = ⊥) ∧
+      LastLib.Book03RamificationTheory.Chapter02.chapter02LowerBreak F m := by
   have hprofile :=
     chapter03_one_break_profile_of_constant_displacement F m hdisp
   have hbreak := chapter03_one_break_is_unique F m hdisp hnontrivial
-  exact ⟨F.lower_neg_one, hprofile.1, hprofile.2, hbreak⟩
+  exact ⟨LastLib.Book03RamificationTheory.Chapter02.chapter02IntegerLowerGroup_neg_one F,
+    hprofile.1, hprofile.2, hbreak⟩
 
 /- Changing an Artin--Schreier coordinate changes the right side by an
 additive coboundary. -/
