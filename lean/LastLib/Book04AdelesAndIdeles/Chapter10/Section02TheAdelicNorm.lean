@@ -32,7 +32,29 @@ theorem adelicNormComponent_eventually_unit
     (d : Chapter10GlobalNormData ιK ιL Kloc Lloc)
     (x : lIdeles d) :
     ∀ᶠ v in Filter.cofinite, d.adelicNormComponent x v ∈ d.unitK v := by
-  sorry
+  have hbad : Set.Finite {w : ιL | x w ∉ d.unitL w} :=
+    Filter.eventually_cofinite.mp x.eventually
+  have hbadBelow : Set.Finite (d.below '' {w : ιL | x w ∉ d.unitL w}) :=
+    hbad.image d.below
+  filter_upwards [hbadBelow.compl_mem_cofinite] with v hv
+  apply Subgroup.prod_mem (d.unitK v)
+  intro w hw
+  have hxw : x (w : ιL) ∈ d.unitL (w : ιL) := by
+    by_contra hnot
+    apply hv
+    exact ⟨(w : ιL), hnot, w.property⟩
+  have hmap := d.mapsUnit (w : ιL) hxw
+  change cast (congrArg Kloc w.property)
+      (d.localNorm (w : ιL) (x (w : ιL))) ∈ d.unitK v
+  have transport (v : ιK) (w : {w : ιL // d.below w = v})
+      (z : Kloc (d.below (w : ιL)))
+      (hz : z ∈ d.unitK (d.below (w : ιL))) :
+      cast (congrArg Kloc w.property) z ∈ d.unitK v := by
+    cases w with
+    | mk w h =>
+      cases h
+      exact hz
+  exact transport v w _ hmap
 
 /-- The adelic norm as an element of the restricted product. -/
 def adelicNorm

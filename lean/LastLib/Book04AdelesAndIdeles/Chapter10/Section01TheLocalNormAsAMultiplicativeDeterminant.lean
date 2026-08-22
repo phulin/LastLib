@@ -261,7 +261,7 @@ theorem chapter10_finite_residue_trace_surjective
     (k l : Type*) [Field k] [Field l] [Algebra k l]
     [FiniteDimensional k l] [Algebra.IsSeparable k l] :
     Function.Surjective (Algebra.trace k l) := by
-  sorry
+  exact Algebra.trace_surjective k l
 
 theorem chapter10_unramified_norm_first_layer_congruence
     (F E k l : Type*) [Field F] [Field E] [Field k] [Field l]
@@ -271,14 +271,14 @@ theorem chapter10_unramified_norm_first_layer_congruence
     (hunram : chapter10UnramifiedLocalExtension vF vE)
     (ρF : chapter10ValuationRing vF →+* k)
     (ρE : chapter10ValuationRing vE →+* l)
-    (hred :
+    (_hred :
       LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ResidueReductionCompatible
         vF vE ρF ρE)
-    (hdegree : Module.finrank F E = Module.finrank k l)
+    (_hdegree : Module.finrank F E = Module.finrank k l)
     (hnorm : chapter10NormValuationFormula F E vF vE (Module.finrank k l))
     (n : ℕ) (hn : 1 ≤ n) (a : chapter10ValuationRing vE)
     (πF : F) (πE : E)
-    (hπF : chapter10NormalizedUniformizer vF πF)
+    (_hπF : chapter10NormalizedUniformizer vF πF)
     (hπE : chapter10NormalizedUniformizer vE πE)
     (hπ : πE = algebraMap F E πF)
     (T : chapter10ValuationRing vE →+ chapter10ValuationRing vF)
@@ -293,7 +293,83 @@ theorem chapter10_unramified_norm_first_layer_congruence
         chapter10ValuationCongruence vF (n + 1)
           (chapter10LocalNorm F E (1 + (a : E) * πE ^ n))
           (1 + (c : F) * πF ^ n) := by
-  sorry
+  rcases hπE with ⟨_, _, ⟨pE, hpE, hpEgen⟩⟩
+  let mE := IsLocalRing.maximalIdeal (chapter10ValuationRing vE)
+  have hpEmem : pE ∈ mE := by
+    change pE ∈ IsLocalRing.maximalIdeal (chapter10ValuationRing vE)
+    rw [hpEgen.2]
+    exact Ideal.subset_span (by simp)
+  have hxa : (a : E) * πE ^ n ∈
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ValuationIdealPowerSet
+        vE n := by
+    apply
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11_mem_valuation_ideal_power_set_iff
+        vE n _).2
+    refine ⟨a * pE ^ n, ?_, ?_⟩
+    · exact Ideal.mul_mem_left _ a (Ideal.pow_mem_pow hpEmem n)
+    · rw [← hpE]
+      simp
+  have hremval :
+      vF (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11NormRemainder
+        F E ((a : E) * πE ^ n)) ≥
+        (2 : WithTop ℤ) * (n : WithTop ℤ) := by
+    simpa [LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11CeilDiv] using
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11_norm_remainder_has_depth
+        F E vF vE 1 (Module.finrank k l) (by simp)
+          hunram.1 hunram.2.1 hnorm hunram.2.2.1 hunram.2.2.2.1 n hn
+          ((a : E) * πE ^ n) hxa)
+  have h2n : ((n + 1 : ℕ) : WithTop ℤ) ≤
+      (2 : WithTop ℤ) * (n : WithTop ℤ) := by
+    have h2n_nat : n + 1 ≤ 2 * n := by omega
+    have h2n_top : ((n + 1 : ℕ) : WithTop ℤ) ≤
+        ((2 * n : ℕ) : WithTop ℤ) := by exact_mod_cast h2n_nat
+    calc
+      ((n + 1 : ℕ) : WithTop ℤ) ≤ ((2 * n : ℕ) : WithTop ℤ) := h2n_top
+      _ = (2 : WithTop ℤ) * (n : WithTop ℤ) := by norm_cast
+  have hremval' :
+      vF (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11NormRemainder
+        F E ((a : E) * πE ^ n)) ≥ ((n + 1 : ℕ) : WithTop ℤ) :=
+    h2n.trans hremval
+  let c : chapter10ValuationRing vF := T a
+  have hcres : ρF c = Algebra.trace k l (ρE a) := by
+    simpa [c] using htracered a
+  refine ⟨c, hcres, ?_⟩
+  have htrace_a : (c : F) = Algebra.trace F E (a : E) := by
+    exact htrace a
+  have htrace_x : Algebra.trace F E ((a : E) * πE ^ n) =
+      (c : F) * πF ^ n := by
+    calc
+      Algebra.trace F E ((a : E) * πE ^ n) =
+          Algebra.trace F E (algebraMap F E (πF ^ n) * (a : E)) := by
+            rw [hπ, map_pow]
+            ring_nf
+      _ = Algebra.trace F E ((πF ^ n) • (a : E)) := by
+            rw [Algebra.smul_def]
+      _ = (πF ^ n) • Algebra.trace F E (a : E) := by
+            exact (Algebra.trace F E).map_smul _ _
+      _ = (c : F) * πF ^ n := by
+            rw [htrace_a]
+            simp [smul_eq_mul, mul_comm]
+  have hnorm_exp : Algebra.norm F (1 + (a : E) * πE ^ n) =
+      1 + (c : F) * πF ^ n +
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11NormRemainder
+          F E ((a : E) * πE ^ n) := by
+    calc
+      Algebra.norm F (1 + (a : E) * πE ^ n) =
+          1 + Algebra.trace F E ((a : E) * πE ^ n) +
+            LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11NormRemainder
+              F E ((a : E) * πE ^ n) :=
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11_norm_one_add_linearizes_to_trace
+          F E ((a : E) * πE ^ n)
+      _ = 1 + (c : F) * πF ^ n +
+            LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11NormRemainder
+              F E ((a : E) * πE ^ n) := by
+        rw [htrace_x]
+  change vF (Algebra.norm F (1 + (a : E) * πE ^ n) -
+      (1 + (c : F) * πF ^ n)) ≥ ((n + 1 : ℕ) : WithTop ℤ)
+  rw [hnorm_exp]
+  convert hremval' using 1
+  ring_nf
 
 theorem lemma_10_1_norms_in_an_unramified_extension
     (F E : Type*) [Field F] [Field E] [Algebra F E]
@@ -323,7 +399,54 @@ theorem lemma_10_1_norms_in_an_unramified_extension
           (chapter10ResidueMap vF) (chapter10ResidueMap vE) 1 N) :
     chapter10ValuationUnitNormImage F E vE = chapter10LocalUnitSet vF ∧
       chapter10LocalNormImage F E = chapter10UnramifiedNormTarget vF πF d hπF := by
-  sorry
+  have hfull0 :
+      {x : F | ∃ y : E, y ≠ 0 ∧ x = Algebra.norm F y} =
+        chapter10UnramifiedNormTarget vF πF d hπF := by
+    simpa [chapter10LocalNormImage, chapter10UnramifiedNormTarget,
+      chapter10LocalNorm, chapter10LocalUnitSet,
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11ValueUnitProductSet,
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11UnitFiltration] using
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11_unramified_full_norm_image
+        F E vF vE πF d hunram hπF hnorm hdegree hfres hred N hnormunit hnormred)
+  have hfull : chapter10LocalNormImage F E =
+      chapter10UnramifiedNormTarget vF πF d hπF := by
+    ext x
+    constructor
+    · rintro ⟨y, hy, rfl⟩
+      exact (Set.ext_iff.mp hfull0 _).1 ⟨y, hy, rfl⟩
+    · intro hx
+      rcases (Set.ext_iff.mp hfull0 _).2 hx with ⟨y, hy, hxy⟩
+      exact ⟨y, hy, hxy.symm⟩
+  refine ⟨?_, hfull⟩
+  ext x
+  constructor
+  · rintro ⟨y, hy, hxy⟩
+    apply (chapter10_mem_local_unit_set_iff vF x).2
+    have hy0 : y ≠ 0 := by
+      intro hy0
+      subst y
+      have hyval := (chapter10_mem_local_unit_set_iff vE (0 : E)).1 hy
+      simp at hyval
+    rw [← hxy, hnorm y hy0]
+    simp [(chapter10_mem_local_unit_set_iff vE y).1 hy]
+  · intro hx
+    have hxfull : x ∈ chapter10LocalNormImage F E := by
+      rw [hfull]
+      exact ⟨0, x, hx, by simp⟩
+    rcases hxfull with ⟨y, hy0, hxy⟩
+    refine ⟨y, ?_, hxy⟩
+    apply (chapter10_mem_local_unit_set_iff vE y).2
+    have hxval := (chapter10_mem_local_unit_set_iff vF x).1 hx
+    have hdpos : 0 < d := by
+      rw [← hdegree]
+      exact Module.finrank_pos
+    have hdmul : (d : WithTop ℤ) * vE y = 0 := by
+      calc
+        (d : WithTop ℤ) * vE y = vF (chapter10LocalNorm F E y) :=
+          (hnorm y hy0).symm
+        _ = vF x := by rw [hxy]
+        _ = 0 := hxval
+    exact (mul_eq_zero.mp hdmul).resolve_left (by exact_mod_cast (Nat.ne_of_gt hdpos))
 
 /-! The norm is continuous; the local-field topology supplies the topology on
 the source and target, while finite-dimensionality supplies continuity of the
@@ -333,7 +456,7 @@ theorem chapter10_local_norm_continuous
     [NormedAlgebra F E]
     [FiniteDimensional F E] :
     Continuous (chapter10LocalNorm F E) := by
-  sorry
+  exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11_norm_continuous F E
 
 end
 end LastLib.Book04AdelesAndIdeles.Chapter10
