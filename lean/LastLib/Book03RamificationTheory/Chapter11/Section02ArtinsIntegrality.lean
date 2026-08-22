@@ -428,33 +428,118 @@ theorem chapter11_ramification_class_function_conjugacy_invariant
     simp only [chapter11RamificationClassFunction, dif_neg hg, dif_neg hconj]
     rw [chapter11_displacement_conjugation_invariant]
 
+private theorem chapter11_displacement_pow_eq_of_coprime
+    {G : Type*} [Fintype G] [Group G]
+    (D : Chapter11RamificationData G) (σ : G) (n : ℕ)
+    (hn : Nat.Coprime n (orderOf σ)) :
+    chapter11Displacement D (σ ^ n) = chapter11Displacement D σ := by
+  classical
+  obtain ⟨m, hm⟩ := exists_pow_eq_self_of_coprime hn
+  have hsupport : chapter11LowerSupport D (σ ^ n) =
+      chapter11LowerSupport D σ := by
+    ext i
+    simp only [chapter11LowerSupport, Finset.mem_filter, Finset.mem_range]
+    constructor
+    · rintro ⟨hi, hmem⟩
+      refine ⟨hi, ?_⟩
+      rw [← hm]
+      exact (D.lower i).pow_mem hmem m
+    · rintro ⟨hi, hmem⟩
+      exact ⟨hi, (D.lower i).pow_mem hmem n⟩
+  by_cases hσ : σ = 1
+  · subst σ
+    simp [chapter11Displacement]
+  · have hpow : σ ^ n ≠ 1 := by
+      intro h
+      apply hσ
+      calc
+        σ = (σ ^ n) ^ m := hm.symm
+        _ = 1 := by rw [h, one_pow]
+    rw [chapter11_displacement_eq_support_card_of_ne_one D hpow,
+      chapter11_displacement_eq_support_card_of_ne_one D hσ, hsupport]
+
 theorem chapter11_ramification_class_function_power_invariant
     {G : Type*} [Fintype G] [Group G]
     (D : Chapter11RamificationData G) :
     Chapter11PowerInvariantClassFunction
       (chapter11RamificationClassFunction D) := by
-  sorry
+  intro σ n hn
+  by_cases hσ : σ = 1
+  · subst σ
+    simp [chapter11RamificationClassFunction]
+  · obtain ⟨m, hm⟩ := exists_pow_eq_self_of_coprime hn
+    have hpow : σ ^ n ≠ 1 := by
+      intro h
+      apply hσ
+      calc
+        σ = (σ ^ n) ^ m := hm.symm
+        _ = 1 := by rw [h, one_pow]
+    simp only [chapter11RamificationClassFunction, dif_neg hpow, dif_neg hσ]
+    rw [chapter11_displacement_pow_eq_of_coprime D σ n hn]
 
 theorem chapter11_inertia_class_function_integer_valued
     {G : Type*} [Fintype G] [Group G]
     (D : Chapter11RamificationData G) :
     Chapter11IntegerValuedClassFunction
       (fun σ : D.inertia => chapter11InertiaClassFunction (k := ℚ) D σ) := by
-  sorry
+  classical
+  intro σ
+  by_cases hσ : σ = 1
+  · subst σ
+    refine ⟨∑ τ ∈ (Finset.univ.erase (1 : D.inertia)),
+      (chapter11Displacement D (τ : G) : ℤ), ?_⟩
+    simp [chapter11InertiaClassFunction, chapter11Displacement]
+  · refine ⟨-(chapter11Displacement D (σ : G) : ℤ), ?_⟩
+    simp [chapter11InertiaClassFunction, hσ]
 
 theorem chapter11_inertia_class_function_conjugacy_invariant
     {G : Type*} [Fintype G] [Group G]
     (D : Chapter11RamificationData G) :
     Chapter11ConjugacyInvariantClassFunction
       (fun σ : D.inertia => chapter11InertiaClassFunction (k := ℚ) D σ) := by
-  sorry
+  intro g h
+  by_cases hg : g = 1
+  · subst g
+    simp [chapter11InertiaClassFunction]
+  · have hconj : h * g * h⁻¹ ≠ (1 : D.inertia) := by
+      intro h'
+      apply hg
+      apply Subtype.ext
+      have h'' := congrArg Subtype.val h'
+      have h''' := congrArg (fun x : G => (h : G)⁻¹ * x * (h : G)) h''
+      simpa [mul_assoc] using h'''
+    simp only [chapter11InertiaClassFunction, dif_neg hg, dif_neg hconj]
+    change -(chapter11Displacement D ((h : G) * (g : G) * (h : G)⁻¹) : ℚ) =
+      -(chapter11Displacement D (g : G) : ℚ)
+    rw [chapter11_displacement_conjugation_invariant]
 
 theorem chapter11_inertia_class_function_power_invariant
     {G : Type*} [Fintype G] [Group G]
     (D : Chapter11RamificationData G) :
     Chapter11PowerInvariantClassFunction
       (fun σ : D.inertia => chapter11InertiaClassFunction (k := ℚ) D σ) := by
-  sorry
+  intro σ n hn
+  have hn' : Nat.Coprime n (orderOf (σ : G)) := by
+    simpa only [Subgroup.orderOf_coe] using hn
+  by_cases hσ : σ = 1
+  · subst σ
+    simp [chapter11InertiaClassFunction]
+  · obtain ⟨m, hm⟩ := exists_pow_eq_self_of_coprime hn'
+    have hpow : (σ : G) ^ n ≠ 1 := by
+      intro h
+      apply hσ
+      apply Subtype.ext
+      calc
+        (σ : G) = ((σ : G) ^ n) ^ m := hm.symm
+        _ = 1 := by rw [h, one_pow]
+    have hpow' : σ ^ n ≠ (1 : D.inertia) := by
+      intro h
+      apply hpow
+      simpa using congrArg Subtype.val h
+    simp only [chapter11InertiaClassFunction, dif_neg hpow', dif_neg hσ]
+    change -(chapter11Displacement D (((σ : G) ^ n)) : ℚ) =
+      -(chapter11Displacement D (σ : G) : ℚ)
+    rw [chapter11_displacement_pow_eq_of_coprime D (σ : G) n hn']
 
 /-- The finite totally ramified inertia-layer ramification-character lemma.
    The elementary-restriction premise is the genuinely local input omitted by
@@ -465,7 +550,11 @@ theorem chapter11_ramification_character_lemma
     (helementary : Chapter11ElementaryRestrictionCondition
       (fun σ : D.inertia => chapter11InertiaClassFunction (k := ℚ) D σ)) :
     Chapter11RamificationCharacterInput D := by
-  sorry
+  unfold Chapter11RamificationCharacterInput
+  rw [chapter11_integral_virtual_character_iff_elementary_restriction
+    (fun σ : D.inertia => chapter11InertiaClassFunction (k := ℚ) D σ)
+    (chapter11_inertia_class_function_conjugacy_invariant D)]
+  exact helementary
 
 /-- Induction carries the integral virtual character on inertia to the full
     Artin class function.  This is the reusable virtual-character half of
