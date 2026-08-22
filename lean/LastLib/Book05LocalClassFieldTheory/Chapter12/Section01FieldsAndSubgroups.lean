@@ -1,4 +1,5 @@
 import LastLib.Book05LocalClassFieldTheory.Chapter12.Core
+import LastLib.Book05LocalClassFieldTheory.Chapter06.Section07TheExistenceTheorem
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter12
 
@@ -13,7 +14,32 @@ theorem chapter12_subextension_artin_quotient_equiv
     (E : Chapter12FiniteAbelianSubextension K) :
     Nonempty
       (Kˣ ⧸ E.normSubgroup ≃* Gal(E.field / K)) := by
-  sorry
+  letI : FiniteDimensional K E.field := E.finite
+  letI : IsGalois K E.field := E.galois
+  letI : Fintype (Gal(E.field / K)) := E.galois_group_finite
+  obtain ⟨A⟩ :=
+    LastLib.Book05LocalClassFieldTheory.Chapter06.chapter06_finite_artin_map_exists_for_subextension E
+  have hmap : chapter12MultiplicativeNormMap K E.field =
+      LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05NormMap K E.field := by
+    rfl
+  have hsub :
+      LastLib.Book05LocalClassFieldTheory.Chapter06.chapter06NormSubgroup K E.field =
+        chapter12NormSubgroup K E.field := by
+    ext x
+    rw [LastLib.Book05LocalClassFieldTheory.Chapter06.chapter06_mem_normSubgroup_iff,
+      chapter12_mem_normSubgroup_iff, hmap]
+  have hnorm : E.normSubgroup = chapter12NormSubgroup K E.field := by
+    rw [LastLib.Book05LocalClassFieldTheory.Chapter06.chapter06FiniteAbelianSubextension_normSubgroup_coe E,
+      hsub]
+  let A' : LastLib.Book05LocalClassFieldTheory.Chapter10.Chapter10FiniteArtinMap
+      K E.field := {
+    reciprocity := A.reciprocity
+    kernel_eq_norm := by
+      rw [A.kernel_eq_norm, hsub]
+    surjective := A.surjective }
+  rw [hnorm]
+  exact ⟨LastLib.Book05LocalClassFieldTheory.Chapter10.chapter10ArtinQuotientEquiv
+    K E.field A'⟩
 
 /-- The index of the norm subgroup is the extension degree. -/
 theorem chapter12_subextension_norm_index_eq_degree

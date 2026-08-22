@@ -93,7 +93,22 @@ theorem chapter12_finite_artin_map_exists
     [Fintype (Gal(L / K))]
     (D : LastLib.Book05LocalClassFieldTheory.Chapter05.Chapter05LocalClassFormationData K L) :
   Nonempty (Chapter12FiniteArtinMap K L) := by
-  sorry
+  refine ⟨{
+    artin := {
+      reciprocity :=
+        LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05FiniteReciprocityMap D
+      kernel_eq_norm := ?_
+      surjective :=
+        LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05FiniteReciprocityMap_surjective D }
+    classFormation := D
+    artin_eq_finite_reciprocity := rfl }⟩
+  rw [LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05FiniteReciprocityMap_kernel D]
+  have hmap : chapter12MultiplicativeNormMap K L =
+      LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05NormMap K L := by
+    rfl
+  ext x
+  rw [LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05_mem_normSubgroup_iff,
+    chapter12_mem_normSubgroup_iff, hmap]
 
 /-- The finite Artin kernel is the norm subgroup. -/
 theorem chapter12_finite_artin_kernel_eq_norm
@@ -123,7 +138,8 @@ theorem chapter12_finite_artin_quotient_equiv
     (A : Chapter12FiniteArtinMap K L) :
     Nonempty
       (Kˣ ⧸ chapter12NormSubgroup K L ≃* Gal(L / K)) := by
-  sorry
+  exact ⟨LastLib.Book05LocalClassFieldTheory.Chapter10.chapter10ArtinQuotientEquiv
+    K L A.artin⟩
 
 /-- The finite quotient degree is the field degree. -/
 theorem chapter12_norm_quotient_card_eq_degree
@@ -132,7 +148,11 @@ theorem chapter12_norm_quotient_card_eq_degree
     [Fintype (Gal(L / K))]
     (A : Chapter12FiniteArtinMap K L) :
     Nat.card (Kˣ ⧸ chapter12NormSubgroup K L) = Module.finrank K L := by
-  sorry
+  exact
+    (Nat.card_congr
+      (LastLib.Book05LocalClassFieldTheory.Chapter10.chapter10ArtinQuotientEquiv
+        K L A.artin).toEquiv).trans
+      (LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05_galois_group_card_eq_degree K L)
 
 /-- A finite abelian subextension inside a fixed algebraic closure.
 
@@ -194,7 +214,25 @@ theorem chapter12_mem_unramified_norm_subgroup_iff
     (C : Chapter12LocalCoordinates K k) (m : ℕ) (x : Kˣ) :
     x ∈ chapter12UnramifiedNormSubgroup C m ↔
       x ∈ chapter12PiPowUnits C m := by
-  sorry
+  change x ∈ Subgroup.zpowers (C.uniformizer ^ m) ⊔ C.units ↔
+    x ∈ chapter12PiPowUnits C m
+  rw [Subgroup.mem_sup]
+  constructor
+  · rintro ⟨y, hy, u, hu, hxy⟩
+    obtain ⟨z, hz⟩ := Subgroup.mem_zpowers_iff.mp hy
+    refine ⟨z, ⟨u, hu⟩, ?_⟩
+    rw [← hxy, ← hz, zpow_mul]
+    rfl
+  · rintro ⟨z, u, hxu⟩
+    have hzmem : (C.uniformizer ^ m) ^ z ∈ Subgroup.zpowers (C.uniformizer ^ m) :=
+      (Subgroup.mem_zpowers_iff).2 ⟨z, rfl⟩
+    refine ⟨(C.uniformizer ^ m) ^ z, hzmem, (u : Kˣ), u.property, ?_⟩
+    calc
+      (C.uniformizer ^ m) ^ z * (u : Kˣ) =
+          (C.uniformizer ^ (m : ℤ)) ^ z * (u : Kˣ) := by
+            rw [zpow_natCast]
+      _ = C.uniformizer ^ ((m : ℤ) * z) * (u : Kˣ) := by rw [zpow_mul]
+      _ = x := hxu.symm
 
 /-- The product of two norm subgroups, using the established Chapter 10 API. -/
 abbrev chapter12NormSubgroupProduct
@@ -205,7 +243,8 @@ theorem chapter12_mem_norm_subgroup_product_iff
     {K : Type*} [Field K] (H₁ H₂ : Subgroup Kˣ) (x : Kˣ) :
     x ∈ chapter12NormSubgroupProduct H₁ H₂ ↔
       ∃ a ∈ H₁, ∃ b ∈ H₂, a * b = x := by
-  sorry
+  exact LastLib.Book05LocalClassFieldTheory.Chapter10.chapter10_mem_normSubgroupProduct_iff
+    H₁ H₂ x
 
 /-- Total ramification on the norm side: the valuation image is all of `ℤ`. -/
 def chapter12TotallyRamifiedNormSubgroup
