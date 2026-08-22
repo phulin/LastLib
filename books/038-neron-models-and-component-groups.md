@@ -249,9 +249,31 @@ The proof explains why abelian targets are special: polarization converts the ra
 
 **Proof.** Let $T/R$ be smooth and $u_K:T_K\to\mathcal A_K$. Smoothness makes $T$ regular, and $u_K$ is a section over $T_K$ of the abelian scheme $\mathcal A\times_RT\to T$. Properness extends that section at every height-one point of $T$, by the valuative criterion. Apply Lemma 2.5 to the maximal extension open. The section extends over all of $T$, and separatedness gives uniqueness. $\square$
 
+**Lemma 2.6A (relative components via Stein factorization).** Let $R$ be an integrally closed noetherian domain with fraction field $K$, and let $G$ be a proper smooth $R$-scheme of finite type whose generic fiber is geometrically connected. Then every geometric fiber of $G\to\operatorname{Spec}R$ is geometrically connected; if moreover $G$ is a group scheme over $R$, it is an abelian scheme in the sense that all its fibers are abelian varieties.
+
+**Proof.** Apply Stein factorization to $f:G\to S=\operatorname{Spec}R$ in the form proved in Book 9, Theorem 9.3: with
+
+$$
+S'=\operatorname{Spec}_S(f_\ast\mathcal O_G),
+$$
+
+the induced morphism $p:S'\to S$ is finite and the factor $g:G\to S'$ is proper, surjective, satisfies $g_\ast\mathcal O_G=\mathcal O_{S'}$, and has nonempty connected fibers. Write $B=\Gamma(S,f_\ast\mathcal O_G)=H^0(G,\mathcal O_G)$, a finite $R$-algebra with $S'=\operatorname{Spec}B$ because $S$ is affine.
+
+First compute the generic fiber. For any field extension, cohomology of a proper scheme commutes with flat base change of fields, so
+
+$$
+H^0(G_K,\mathcal O_{G_K})=B\otimes_RK.
+$$
+
+The generic fiber $G_K$ is smooth, proper, and geometrically connected over $K$. Its ring of global functions is finite-dimensional over $K$, being the degree-zero part of a Stein factorization over $K$; equivalently, $B\otimes_RK$ is a finite $K$-algebra. Scalar extension along $K\subseteq\bar K$ identifies it with $H^0(G_{\bar K},\mathcal O)$, where geometric reducedness rules out nilpotents and geometric connectedness rules out decompositions into products of fields other than $\bar K$ itself. Hence $B\otimes_RK\otimes_K\bar K=\bar K$, forcing $\dim_K(B\otimes_RK)=1$; so $B$ is a finite torsion-free $R$-module of rank one, and $B\otimes_RK=K$.
+
+Thus $B$ is a fractional ideal inside $K$, closed under multiplication and integral over $R$. Every element of $B$, being integral over $R$ and lying in $K$, belongs to $R$ because $R$ is integrally closed. Since conversely $R\subseteq B$, we get $B=R$ and $p:S'\to S$ is an isomorphism.
+
+By Book 9, part (3) of the cited theorem, every fiber of $g$ is connected and nonempty; with $p$ an isomorphism these are the fibers of $f$. For geometric connectedness, extend scalars on a fiber $G_s$ to an algebraic closure $\overline{\kappa(s)}$: base change along fields preserves properness, and the identification $H^0(G_s,\mathcal O)=\kappa(s)$ pulls back to $H^0(G_{\bar s},\mathcal O)=\overline{\kappa(s)}$, so Book 9, part (4), applied over $\overline{\kappa(s)}$, shows $G_{\bar s}$ connected. If $G$ is a group scheme, each fiber is then a proper smooth connected group variety, that is, an abelian variety. $\square$
+
 **Corollary 2.7.** If the Néron model $\mathcal A/R$ of an abelian variety is proper, then $A$ has good reduction and $\mathcal A$ is an abelian scheme.
 
-**Proof.** A proper smooth finite-type group scheme has a finite étale relative component scheme. Its generic fiber is connected, so that component scheme has degree one over the connected base. Hence every geometric fiber is connected. Thus $\mathcal A$ is an abelian scheme. The converse is Theorem 2.6. $\square$
+**Proof.** The generic fiber of $\mathcal A$ is $A$, geometrically connected by hypothesis, and $\mathcal A$ is proper, smooth, and of finite type over the integrally closed domain $R$. Lemma 2.6A shows that every geometric fiber of $\mathcal A$ is connected, so $\mathcal A$ is an abelian scheme; this is precisely good reduction. The converse is Theorem 2.6. $\square$
 
 This criterion is stronger than connectedness of the special fiber. A connected special fiber may contain a torus or a unipotent group and therefore fail to be proper.
 
