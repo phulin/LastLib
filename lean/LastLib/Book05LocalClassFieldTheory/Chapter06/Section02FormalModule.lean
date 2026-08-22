@@ -679,7 +679,86 @@ theorem chapter06FormalModuleIntertwiner_inverse
         (chapter06FormalModuleIntertwiner D f g hf hg)
         (chapter06FormalModuleIntertwiner D g f hg hf) =
       PowerSeries.X := by
-  sorry
+  let h := chapter06FormalModuleIntertwiner D f g hf hg
+  let k := chapter06FormalModuleIntertwiner D g f hg hf
+  have hh := chapter06FormalModuleIntertwiner_spec D f g hf hg
+  have hk := chapter06FormalModuleIntertwiner_spec D g f hg hf
+  have hh0 : PowerSeries.constantCoeff h = 0 := by
+    rw [← PowerSeries.coeff_zero_eq_constantCoeff]
+    rw [hh.1 0 (by omega)]
+    simp
+  have hk0 : PowerSeries.constantCoeff k = 0 := by
+    rw [← PowerSeries.coeff_zero_eq_constantCoeff]
+    rw [hk.1 0 (by omega)]
+    simp
+  have hf0 : PowerSeries.constantCoeff f = 0 := by
+    rw [← PowerSeries.coeff_zero_eq_constantCoeff]
+    rw [hf.1 0 (by omega)]
+    simp
+  have hg0 : PowerSeries.constantCoeff g = 0 := by
+    rw [← PowerSeries.coeff_zero_eq_constantCoeff]
+    rw [hg.1 0 (by omega)]
+    simp
+  have hhs : PowerSeries.HasSubst h :=
+    PowerSeries.HasSubst.of_constantCoeff_zero' hh0
+  have hks : PowerSeries.HasSubst k :=
+    PowerSeries.HasSubst.of_constantCoeff_zero' hk0
+  have hfs : PowerSeries.HasSubst f :=
+    PowerSeries.HasSubst.of_constantCoeff_zero' hf0
+  have hgs : PowerSeries.HasSubst g :=
+    PowerSeries.HasSubst.of_constantCoeff_zero' hg0
+  have hh1 : PowerSeries.coeff 1 h = 1 := by
+    simpa [chapter06HasLinearCoefficient] using hh.1 1 (by omega)
+  have hk1 : PowerSeries.coeff 1 k = 1 := by
+    simpa [chapter06HasLinearCoefficient] using hk.1 1 (by omega)
+  have hh_eq : PowerSeries.subst f h = PowerSeries.subst h g := by
+    exact hh.2
+  have hk_eq : PowerSeries.subst g k = PowerSeries.subst k f := by
+    exact hk.2
+  have hcomp : chapter06IntertwinerCondition f f
+      (chapter06PowerSeriesCompose h k) 1 := by
+    constructor
+    · intro n hn
+      interval_cases n
+      · simpa [chapter06PowerSeriesCompose, PowerSeries.constantCoeff_eq] using
+          (show MvPowerSeries.constantCoeff (PowerSeries.subst h k) = 0 from
+            PowerSeries.constantCoeff_subst_eq_zero hh0 k hk0)
+      · have hcoeff : PowerSeries.coeff 1 (PowerSeries.subst h k) = 1 := by
+          rw [PowerSeries.coeff_subst' hhs, finsum_eq_single _ 1]
+          · simp [hh1, hk1]
+          · intro d hd
+            by_cases hd0 : d = 0
+            · subst d
+              simp
+            · by_cases hd1 : d = 1
+              · exact (hd hd1).elim
+              · have hd2 : 2 ≤ d := by omega
+                rw [PowerSeries.coeff_one_pow]
+                have hdpos : 0 < d - 1 := by omega
+                rw [hh0, zero_pow (Nat.ne_of_gt hdpos)]
+                simp
+        simpa [chapter06PowerSeriesCompose] using hcoeff
+    · change PowerSeries.subst f (PowerSeries.subst h k) =
+        PowerSeries.subst (PowerSeries.subst h k) f
+      calc
+        PowerSeries.subst f (PowerSeries.subst h k) =
+            PowerSeries.subst (PowerSeries.subst f h) k :=
+          PowerSeries.subst_comp_subst_apply hhs hfs k
+        _ = PowerSeries.subst (PowerSeries.subst h g) k := by rw [hh_eq]
+        _ = PowerSeries.subst h (PowerSeries.subst g k) :=
+          (PowerSeries.subst_comp_subst_apply hgs hhs k).symm
+        _ = PowerSeries.subst h (PowerSeries.subst k f) := by rw [← hk_eq]
+        _ = PowerSeries.subst (PowerSeries.subst h k) f :=
+          PowerSeries.subst_comp_subst_apply hks hhs f
+  have hX : chapter06IntertwinerCondition f f PowerSeries.X 1 := by
+    constructor
+    · intro n hn
+      interval_cases n <;> simp
+    · simpa [chapter06PowerSeriesCompose] using
+        (PowerSeries.subst_X hfs).trans (PowerSeries.X_subst f).symm
+  apply (chapter06_integral_intertwining_recursion D f f hf hf 1).unique
+  · simpa [h, k] using hcomp
+  · exact hX
 
 theorem chapter06FormalModuleIntertwiner_inverse_reverse
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K)
