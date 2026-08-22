@@ -141,7 +141,7 @@ theorem chapter06_mem_normSubgroup_iff
     x ∈ chapter06NormSubgroup K L ↔
       ∃ y : Lˣ,
         LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05NormMap K L y = x := by
-  rfl
+  exact LastLib.Book05LocalClassFieldTheory.Chapter05.chapter05_mem_normSubgroup_iff K L x
 
 /-- A finite abelian extension, kept as a local typeclass for norm-index APIs. -/
 class Chapter06FiniteAbelianExtension
