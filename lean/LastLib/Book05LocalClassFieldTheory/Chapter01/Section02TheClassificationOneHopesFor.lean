@@ -15,7 +15,7 @@ open scoped BigOperators Pointwise Topology WithZero IsMulCommutative
 
 /-- The norm is a continuous homomorphism on multiplicative groups. -/
 theorem chapter01_norm_continuous
-    (K L : Type*) [NormedField K] [NormedField L]
+    (K L : Type*) [NontriviallyNormedField K] [CompleteSpace K] [NormedField L]
     [NormedAlgebra K L] [FiniteDimensional K L] :
     Continuous (chapter01NormHom K L) := by
   change Continuous (Units.map (Algebra.norm K (S := L)))
