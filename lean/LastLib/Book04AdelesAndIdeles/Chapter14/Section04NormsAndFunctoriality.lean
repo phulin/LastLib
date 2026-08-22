@@ -11,7 +11,8 @@ namespace LastLib.Book04AdelesAndIdeles.Chapter14
 theorem chapter14_adelic_norm_module_identity {K L : Type*} [Field K] [Field L]
     [NumberField K] [NumberField L] [Algebra K L] [FiniteDimensional K L]
     (N : Chapter14AdelicNormInterface K L) (y : chapter14IdeleGroup L) :
-    N.moduleK.module (N.ideleNorm y) = N.moduleL.module y :=
+    Chapter09.chapter09IdeleModuleHom K (N.ideleNorm y) =
+      Chapter09.chapter09IdeleModuleHom L y :=
   N.module_compatibility y
 
 theorem chapter14_adelic_norm_is_continuous {K L : Type*} [Field K] [Field L]
@@ -46,20 +47,20 @@ def chapter14_norm_and_galois_maps_have_covariant_direction
 theorem chapter14_class_norm_module_identity {K L : Type*} [Field K] [Field L]
     [NumberField K] [NumberField L] [Algebra K L] [FiniteDimensional K L]
     (N : Chapter14AdelicNormInterface K L) (x : chapter14IdeleClassGroup L) :
-    chapter14ClassModule N.moduleK (chapter14NormOnClassGroups N x) =
-      chapter14ClassModule N.moduleL x := by
+    chapter14ClassModule K (chapter14NormOnClassGroups N x) =
+      chapter14ClassModule L x := by
   sorry
 
 def chapter14NormOneMap {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
     [Algebra K L] [FiniteDimensional K L]
     (N : Chapter14AdelicNormInterface K L) :
-    chapter14NormOneClassSubgroup N.moduleL →*
-      chapter14NormOneClassSubgroup N.moduleK := by
+    chapter14NormOneClassSubgroup L →*
+      chapter14NormOneClassSubgroup K := by
   refine
     { toFun := fun x => ⟨chapter14NormOnClassGroups N x, ?_⟩
       map_one' := ?_
       map_mul' := ?_ }
-  · change chapter14ClassModule N.moduleK (chapter14NormOnClassGroups N x) = 1
+  · change chapter14ClassModule K (chapter14NormOnClassGroups N x) = 1
     rw [chapter14_class_norm_module_identity N x]
     exact x.property
   · ext
@@ -72,9 +73,9 @@ theorem chapter14_norm_maps_norm_one_classes {K L : Type*} [Field K] [Field L]
     [NumberField K] [NumberField L] [Algebra K L] [FiniteDimensional K L]
     (N : Chapter14AdelicNormInterface K L)
     {x : chapter14IdeleClassGroup L}
-    (hx : x ∈ chapter14NormOneClassSubgroup N.moduleL) :
-    chapter14NormOnClassGroups N x ∈ chapter14NormOneClassSubgroup N.moduleK := by
-  change chapter14ClassModule N.moduleK (chapter14NormOnClassGroups N x) = 1
+    (hx : x ∈ chapter14NormOneClassSubgroup L) :
+    chapter14NormOnClassGroups N x ∈ chapter14NormOneClassSubgroup K := by
+  change chapter14ClassModule K (chapter14NormOnClassGroups N x) = 1
   rw [chapter14_class_norm_module_identity N x, hx]
 
 /-! Ray maps carry a source depth into a target depth; the target depth need not be equal. -/
@@ -82,13 +83,11 @@ theorem chapter14_norm_maps_norm_one_classes {K L : Type*} [Field K] [Field L]
 structure Chapter14RayNormDepthCompatibility {K L : Type*} [Field K] [Field L]
     [NumberField K] [NumberField L] [Algebra K L] [FiniteDimensional K L]
     (N : Chapter14AdelicNormInterface K L)
-    (D_L : Chapter14IdeleLevelData L) (R_L : Chapter14RaySubgroupFamily D_L)
-    (D_K : Chapter14IdeleLevelData K) (R_K : Chapter14RaySubgroupFamily D_K)
     (mL : Chapter14Modulus L) (mK : Chapter14Modulus K) where
-  map : chapter14RayClassGroup D_L R_L mL →* chapter14RayClassGroup D_K R_K mK
+  map : chapter14RayClassGroup mL →* chapter14RayClassGroup mK
   commutes :
-    map.comp (chapter14RayClassQuotientMap D_L R_L mL) =
-      (chapter14RayClassQuotientMap D_K R_K mK).comp
+    map.comp (chapter14RayClassQuotientMap mL) =
+      (chapter14RayClassQuotientMap mK).comp
         (chapter14NormOnClassGroups N)
 
 def chapter14EqualExponentNormClaim (sourceDepth targetDepth : ℕ) : Prop :=

@@ -12,6 +12,8 @@ import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Completion
 import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Algebra.RestrictedProduct.Units
 import LastLib.Book04AdelesAndIdeles.Chapter11.Dependencies
+import LastLib.Book04AdelesAndIdeles.Chapter11.Section04FinitenessOfRayClassGroups
+import LastLib.Book04AdelesAndIdeles.Chapter11.Section05OpenCompactSubgroups
 
 /-!
 # Chapter 14: shared interfaces
@@ -32,28 +34,28 @@ open scoped NNReal NumberField
 /-! ## The canonical adelic objects -/
 
 abbrev chapter14FiniteAdeleRing (K : Type*) [Field K] [NumberField K] :=
-  IsDedekindDomain.FiniteAdeleRing (NumberField.RingOfIntegers K) K
+  Chapter09.Chapter09FiniteAdele K
 
 abbrev chapter14AdeleRing (K : Type*) [Field K] [NumberField K] :=
-  NumberField.AdeleRing (NumberField.RingOfIntegers K) K
+  Chapter09.Chapter09Adele K
 
 abbrev chapter14FiniteIdeleGroup (K : Type*) [Field K] [NumberField K] :=
-  (chapter14FiniteAdeleRing K)ˣ
+  (Chapter09.Chapter09FiniteAdele K)ˣ
 
 abbrev chapter14InfiniteIdeleGroup (K : Type*) [Field K] [NumberField K] :=
-  (NumberField.InfiniteAdeleRing K)ˣ
+  (Chapter09.Chapter09InfiniteAdele K)ˣ
 
 abbrev chapter14IdeleGroup (K : Type*) [Field K] [NumberField K] :=
-  (chapter14AdeleRing K)ˣ
+  Chapter09.Chapter09Idele K
 
 abbrev chapter14IdealClassGroup (K : Type*) [Field K] [NumberField K] :=
-  ClassGroup (NumberField.RingOfIntegers K)
+  ClassGroup (𝓞 K)
 
 /-- The product decomposition of an idele into its infinite and finite parts. -/
 def chapter14IdeleProductEquiv (K : Type*) [Field K] [NumberField K] :
-    chapter14IdeleGroup K ≃*
+    chapter14IdeleGroup K ≃* 
       chapter14InfiniteIdeleGroup K × chapter14FiniteIdeleGroup K :=
-  MulEquiv.prodUnits
+  Chapter09.chapter09IdeleProductEquiv K
 
 theorem chapter14_finite_idele_integral_tail {K : Type*} [Field K] [NumberField K]
     (a : chapter14FiniteIdeleGroup K) :
@@ -65,13 +67,13 @@ theorem chapter14_finite_idele_integral_tail {K : Type*} [Field K] [NumberField 
 /-- Principal ideles are the units obtained from the diagonal field embedding. -/
 def chapter14PrincipalIdeleEmbedding (K : Type*) [Field K] [NumberField K] :
     Kˣ →* chapter14IdeleGroup K :=
-  Units.map (algebraMap K (chapter14AdeleRing K)).toMonoidHom
+  Chapter09.chapter09PrincipalIdele K
 
 abbrev chapter14PrincipalIdeleSubgroup (K : Type*) [Field K] [NumberField K] :=
-  (chapter14PrincipalIdeleEmbedding K).range
+  Chapter09.chapter09PrincipalIdeleSubgroup K
 
 abbrev chapter14IdeleClassGroup (K : Type*) [Field K] [NumberField K] :=
-  chapter14IdeleGroup K ⧸ chapter14PrincipalIdeleSubgroup K
+  Chapter09.Chapter09IdeleClassGroup K
 
 def chapter14IdeleClassMap (K : Type*) [Field K] [NumberField K] :
     chapter14IdeleGroup K →* chapter14IdeleClassGroup K :=
@@ -81,6 +83,12 @@ def chapter14IdeleClassMap (K : Type*) [Field K] [NumberField K] :
 theorem chapter14IdeleClassMap_apply (K : Type*) [Field K] [NumberField K]
     (x : chapter14IdeleGroup K) :
     chapter14IdeleClassMap K x = QuotientGroup.mk x := rfl
+
+theorem chapter14_principal_idele_subgroup_eq_chapter11
+    {K : Type*} [Field K] [NumberField K] :
+    chapter14PrincipalIdeleSubgroup K =
+      Chapter11.chapter11PrincipalIdeleSubgroup (K := K) := by
+  rfl
 
 /-! ## Finite levels of the idele class group -/
 
@@ -158,13 +166,11 @@ inductive Chapter14FrobeniusConvention
   | geometric
 
 /-!
-The next structures are chapter-level dependency interfaces.  Earlier chapters provide the
-canonical adelic objects and graph topology; these fields isolate the local embeddings, open
-subgroups, and unit tails needed by the reciprocity statements.
+The next structure is the one genuinely missing from the earlier chapters: an embedding of each
+local multiplicative factor into the global idele group.  The ray levels themselves are taken
+from Chapter 11 below, rather than being represented by a second arbitrary family of subgroups.
 -/
 
-/- LOCAL_DEPENDENCY_GUESS: the local-to-global embedding maps are supplied by the earlier adelic
-chapters in the reconciled library. -/
 structure Chapter14LocalComponentData (K : Type*) [Field K] [NumberField K] where
   finiteComponent : ∀ v : NumberField.FinitePlace K,
     (v.maximalIdeal.adicCompletion K)ˣ →* chapter14IdeleGroup K
@@ -179,47 +185,58 @@ structure Chapter14LocalComponentData (K : Type*) [Field K] [NumberField K] wher
   infiniteComponent_injective :
     ∀ w, Function.Injective (infiniteComponent w)
 
-/- LOCAL_DEPENDENCY_GUESS: these subgroups package the positive archimedean directions and the
-integral-unit restricted-product tail used by the finite-level statements. -/
-structure Chapter14IdeleLevelData (K : Type*) [Field K] [NumberField K]
-    extends Chapter14LocalComponentData K where
-  positiveMagnitudeDirections : Subgroup (chapter14IdeleGroup K)
-  integralUnitTail : NumberField.FinitePlace K → Subgroup (chapter14IdeleGroup K)
-
-structure Chapter14FiniteLevel {K : Type*} [Field K] [NumberField K]
-    (D : Chapter14IdeleLevelData K) where
+/-! A finite level records the open idele subgroup and the finiteness of its quotient after
+adjoining principal ideles.  The source's stronger neighborhood hypotheses are stated separately
+below, so arbitrary quotient levels are not silently treated as ray neighborhoods. -/
+structure Chapter14FiniteLevel (K : Type*) [Field K] [NumberField K] where
   subgroup : Subgroup (chapter14IdeleGroup K)
   isOpen' : IsOpen (subgroup : Set (chapter14IdeleGroup K))
-  containsPositiveMagnitudeDirections : D.positiveMagnitudeDirections ≤ subgroup
-  containsIntegralTail :
-    ∀ᶠ v : NumberField.FinitePlace K in Filter.cofinite,
-      D.integralUnitTail v ≤ subgroup
   finiteIndex' :
     (chapter14PrincipalIdeleSubgroup K ⊔ subgroup).FiniteIndex
 
+/-! These predicates spell out the two extra hypotheses on an open level used by the source's
+cofinality argument.  They are kept separate from the quotient data so that an arbitrary finite
+quotient level cannot be mistaken for a ray neighborhood. -/
+def chapter14ContainsPositiveMagnitudeDirections
+    {K : Type*} [Field K] [NumberField K]
+    (D : Chapter14LocalComponentData K) (U : Chapter14FiniteLevel K) : Prop :=
+  ∀ (w : NumberField.InfinitePlace K),
+    (∀ (hw : w.IsReal) (x : (w.Completion)ˣ),
+        0 < NumberField.InfinitePlace.Completion.extensionEmbeddingOfIsReal
+          hw (x : w.Completion) → D.infiniteComponent w x ∈ U.subgroup) ∧
+      (∀ (_hw : w.IsComplex) (x : (w.Completion)ˣ),
+        D.infiniteComponent w x ∈ U.subgroup)
+
+def chapter14ContainsIntegralUnitTail
+    {K : Type*} [Field K] [NumberField K]
+    (D : Chapter14LocalComponentData K) (U : Chapter14FiniteLevel K) : Prop :=
+  ∀ᶠ v : NumberField.FinitePlace K in Filter.cofinite,
+    ∀ x : (v.maximalIdeal.adicCompletion K)ˣ,
+      D.finiteComponent v x ∈ U.subgroup
+
 abbrev chapter14IdeleLevelQuotient {K : Type*} [Field K] [NumberField K]
-    (D : Chapter14IdeleLevelData K) (U : Chapter14FiniteLevel D) :=
+    (U : Chapter14FiniteLevel K) :=
   chapter14IdeleGroup K ⧸
     (chapter14PrincipalIdeleSubgroup K ⊔ U.subgroup)
 
 instance chapter14IdeleLevelQuotientFinite {K : Type*} [Field K] [NumberField K]
-    (D : Chapter14IdeleLevelData K) (U : Chapter14FiniteLevel D) :
-    Finite (chapter14IdeleLevelQuotient D U) := by
+    (U : Chapter14FiniteLevel K) :
+    Finite (chapter14IdeleLevelQuotient U) := by
   exact Subgroup.finiteIndex_iff_finite_quotient.mp U.finiteIndex'
 
 def chapter14IdeleLevelQuotientMap {K : Type*} [Field K] [NumberField K]
-    (D : Chapter14IdeleLevelData K) (U : Chapter14FiniteLevel D) :
-    chapter14IdeleGroup K →* chapter14IdeleLevelQuotient D U :=
+    (U : Chapter14FiniteLevel K) :
+    chapter14IdeleGroup K →* chapter14IdeleLevelQuotient U :=
   QuotientGroup.mk' _
 
 abbrev chapter14IdeleClassLevelSubgroup {K : Type*} [Field K] [NumberField K]
-    (D : Chapter14IdeleLevelData K) (U : Chapter14FiniteLevel D) :=
+    (U : Chapter14FiniteLevel K) :=
   Subgroup.map (chapter14IdeleClassMap K)
     (chapter14PrincipalIdeleSubgroup K ⊔ U.subgroup)
 
 instance chapter14IdeleClassLevelSubgroupNormal {K : Type*} [Field K] [NumberField K]
-    (D : Chapter14IdeleLevelData K) (U : Chapter14FiniteLevel D) :
-    (chapter14IdeleClassLevelSubgroup D U).Normal := by
+    (U : Chapter14FiniteLevel K) :
+    (chapter14IdeleClassLevelSubgroup U).Normal := by
   exact Subgroup.Normal.map
     (show (chapter14PrincipalIdeleSubgroup K ⊔ U.subgroup).Normal from
       { conj_mem := by
@@ -231,36 +248,36 @@ instance chapter14IdeleClassLevelSubgroupNormal {K : Type*} [Field K] [NumberFie
         (QuotientGroup.mk'_surjective (chapter14PrincipalIdeleSubgroup K)))
 
 abbrev chapter14IdeleClassLevelQuotient {K : Type*} [Field K] [NumberField K]
-    (D : Chapter14IdeleLevelData K) (U : Chapter14FiniteLevel D) :=
-  chapter14IdeleClassGroup K ⧸ chapter14IdeleClassLevelSubgroup D U
+    (U : Chapter14FiniteLevel K) :=
+  chapter14IdeleClassGroup K ⧸ chapter14IdeleClassLevelSubgroup U
 
 def chapter14IdeleClassLevelQuotientMap {K : Type*} [Field K] [NumberField K]
-    (D : Chapter14IdeleLevelData K) (U : Chapter14FiniteLevel D) :
-    chapter14IdeleClassGroup K →* chapter14IdeleClassLevelQuotient D U :=
+    (U : Chapter14FiniteLevel K) :
+    chapter14IdeleClassGroup K →* chapter14IdeleClassLevelQuotient U :=
   QuotientGroup.mk' _
 
 /-- The book-facing class-level quotient and the canonical quotient of ideles agree by the third
 isomorphism theorem. -/
 def chapter14IdeleClassLevelToIdeleLevelEquiv {K : Type*} [Field K] [NumberField K]
-    (D : Chapter14IdeleLevelData K) (U : Chapter14FiniteLevel D) :
-    chapter14IdeleClassLevelQuotient D U ≃*
-      chapter14IdeleLevelQuotient D U :=
+    (U : Chapter14FiniteLevel K) :
+    chapter14IdeleClassLevelQuotient U ≃*
+      chapter14IdeleLevelQuotient U :=
   QuotientGroup.quotientQuotientEquivQuotient
     (chapter14PrincipalIdeleSubgroup K)
     (chapter14PrincipalIdeleSubgroup K ⊔ U.subgroup) le_sup_left
 
 theorem chapter14IdeleClassLevelToIdeleLevelEquiv_apply {K : Type*} [Field K]
-    [NumberField K] (D : Chapter14IdeleLevelData K) (U : Chapter14FiniteLevel D)
+    [NumberField K] (U : Chapter14FiniteLevel K)
     (x : chapter14IdeleGroup K) :
-    chapter14IdeleClassLevelToIdeleLevelEquiv D U
-        (chapter14IdeleClassLevelQuotientMap D U
+    chapter14IdeleClassLevelToIdeleLevelEquiv U
+        (chapter14IdeleClassLevelQuotientMap U
           (chapter14IdeleClassMap K x)) =
-      chapter14IdeleLevelQuotientMap D U x := by
+      chapter14IdeleLevelQuotientMap U x := by
   sorry
 
 instance chapter14IdeleClassLevelQuotientFinite {K : Type*} [Field K] [NumberField K]
-    (D : Chapter14IdeleLevelData K) (U : Chapter14FiniteLevel D) :
-    Finite (chapter14IdeleClassLevelQuotient D U) := by
+    (U : Chapter14FiniteLevel K) :
+    Finite (chapter14IdeleClassLevelQuotient U) := by
   sorry
 
 /-! Shared archimedean component quotients. -/
@@ -289,22 +306,10 @@ theorem chapter14_real_sign_quotient_has_order_two :
     Nonempty (chapter14RealSignQuotient ≃* Multiplicative (ZMod 2)) := by
   sorry
 
-def chapter14ComplexMagnitudeSubgroup : Subgroup ℂˣ := ⊤
-
-abbrev chapter14ComplexMagnitudeQuotient :=
-  ℂˣ ⧸ chapter14ComplexMagnitudeSubgroup
-
-theorem chapter14_complex_place_has_no_finite_sign_quotient :
-    Subsingleton chapter14ComplexMagnitudeQuotient := by
-  sorry
-
 /-! ## Ray subgroups and ray class quotients -/
 
-structure Chapter14Modulus (K : Type*) [Field K] [NumberField K] where
-  finitePart : Ideal (NumberField.RingOfIntegers K)
-  finitePart_ne_bot : finitePart ≠ ⊥
-  realPart : Set (NumberField.InfinitePlace K)
-  realPart_isReal : realPart ⊆ {w | NumberField.InfinitePlace.IsReal w}
+abbrev Chapter14Modulus (K : Type*) [Field K] [NumberField K] :=
+  Chapter11.RayModulus K
 
 def chapter14ModulusComplexPart {K : Type*} [Field K] [NumberField K]
     (_m : Chapter14Modulus K) : Set (NumberField.InfinitePlace K) :=
@@ -313,87 +318,44 @@ def chapter14ModulusComplexPart {K : Type*} [Field K] [NumberField K]
 theorem chapter14ModulusComplexPart_empty {K : Type*} [Field K] [NumberField K]
     (m : Chapter14Modulus K) : chapter14ModulusComplexPart m = ∅ := rfl
 
-/- LOCAL_DEPENDENCY_GUESS: the ray subgroup is supplied by the earlier ray-class construction;
-the fields state precisely the openness, tail, finite-index, and cofinality facts needed here. -/
-structure Chapter14RaySubgroupFamily {K : Type*} [Field K] [NumberField K]
-    (D : Chapter14IdeleLevelData K) where
-  raySubgroup : Chapter14Modulus K → Subgroup (chapter14IdeleGroup K)
-  raySubgroup_open : ∀ m, IsOpen (raySubgroup m : Set (chapter14IdeleGroup K))
-  raySubgroup_containsPositive :
-    ∀ m, D.positiveMagnitudeDirections ≤ raySubgroup m
-  raySubgroup_containsIntegralTail :
-    ∀ m, ∀ᶠ v : NumberField.FinitePlace K in Filter.cofinite,
-      D.integralUnitTail v ≤ raySubgroup m
-  raySubgroup_finiteIndex :
-    ∀ m, (chapter14PrincipalIdeleSubgroup K ⊔ raySubgroup m).FiniteIndex
-  ray_subgroup_cofinal :
-    ∀ U : Chapter14FiniteLevel D, ∃ m, raySubgroup m ≤ U.subgroup
-  /-- Every continuous finite quotient has an idele-level kernel neighborhood.
-  This is the topological bridge needed before ray cofinality can be applied
-  to a quotient of the idele class group. -/
-  finite_quotient_pullback :
-    ∀ {H : Type*} [Group H] [Finite H] [TopologicalSpace H] [DiscreteTopology H]
-      (f : chapter14IdeleClassGroup K →* H), Continuous f →
-      ∃ U : Chapter14FiniteLevel D,
-        U.subgroup ≤ Subgroup.comap (chapter14IdeleClassMap K) f.ker
-
 def chapter14RayFiniteLevel {K : Type*} [Field K] [NumberField K]
-    (D : Chapter14IdeleLevelData K) (R : Chapter14RaySubgroupFamily D)
-    (m : Chapter14Modulus K) : Chapter14FiniteLevel D :=
-  { subgroup := R.raySubgroup m
-    isOpen' := R.raySubgroup_open m
-    containsPositiveMagnitudeDirections := R.raySubgroup_containsPositive m
-    containsIntegralTail := R.raySubgroup_containsIntegralTail m
-    finiteIndex' := R.raySubgroup_finiteIndex m }
+    (m : Chapter14Modulus K) : Chapter14FiniteLevel K :=
+  { subgroup := Chapter11.chapter11RayUnitSubgroup m
+    isOpen' := Chapter11.chapter11_ray_unit_subgroup_is_open m
+    finiteIndex' := by
+      have hfinite :
+          Finite (chapter14IdeleGroup K ⧸
+            (chapter14PrincipalIdeleSubgroup K ⊔ Chapter11.chapter11RayUnitSubgroup m)) := by
+        rw [chapter14_principal_idele_subgroup_eq_chapter11]
+        exact Chapter11.chapter11_ray_class_group_is_finite m
+      exact Subgroup.finiteIndex_iff_finite_quotient.mpr hfinite }
 
 abbrev chapter14RayClassGroup {K : Type*} [Field K] [NumberField K]
-    (D : Chapter14IdeleLevelData K) (R : Chapter14RaySubgroupFamily D)
     (m : Chapter14Modulus K) :=
-  chapter14IdeleClassLevelQuotient D (chapter14RayFiniteLevel D R m)
+  chapter14IdeleLevelQuotient (chapter14RayFiniteLevel m)
 
 def chapter14RayClassQuotientMap {K : Type*} [Field K] [NumberField K]
-    (D : Chapter14IdeleLevelData K) (R : Chapter14RaySubgroupFamily D)
     (m : Chapter14Modulus K) :
-    chapter14IdeleClassGroup K →* chapter14RayClassGroup D R m :=
-  chapter14IdeleClassLevelQuotientMap D (chapter14RayFiniteLevel D R m)
+    chapter14IdeleClassGroup K →* chapter14RayClassGroup m :=
+  (chapter14IdeleClassLevelToIdeleLevelEquiv (chapter14RayFiniteLevel m)).toMonoidHom.comp
+    (chapter14IdeleClassLevelQuotientMap (chapter14RayFiniteLevel m))
 
 /-! ## Absolute values, norms, and the knot group -/
 
-structure Chapter14ModuleData (K : Type*) [Field K] [NumberField K] where
-  module : chapter14IdeleGroup K →* ℝ≥0ˣ
-  module_continuous : Continuous module
-  principal_one :
-    ∀ x : Kˣ, module (chapter14PrincipalIdeleEmbedding K x) = 1
+/-! The module and norm-one class group are the canonical Chapter 9 constructions. -/
+abbrev chapter14ClassModule (K : Type*) [Field K] [NumberField K] :=
+  Chapter09.chapter09IdeleClassModule K
 
-def chapter14ClassModule {K : Type*} [Field K] [NumberField K]
-    (M : Chapter14ModuleData K) : chapter14IdeleClassGroup K →* ℝ≥0ˣ :=
-  QuotientGroup.lift (chapter14PrincipalIdeleSubgroup K) M.module (by
-    intro x hx
-    rcases hx with ⟨y, rfl⟩
-    rw [MonoidHom.mem_ker]
-    exact M.principal_one y)
-
-def chapter14NormOneClassSubgroup {K : Type*} [Field K] [NumberField K]
-    (M : Chapter14ModuleData K) : Subgroup (chapter14IdeleClassGroup K) where
-  carrier := {x | chapter14ClassModule M x = 1}
-  one_mem' := by
-    change chapter14ClassModule M (1 : chapter14IdeleClassGroup K) = 1
-    exact map_one (chapter14ClassModule M)
-  mul_mem' := by
-    intro a b ha hb
-    change chapter14ClassModule M (a * b) = 1
-    rw [map_mul, ha, hb, mul_one]
-  inv_mem' := by
-    intro a ha
-    change chapter14ClassModule M a⁻¹ = 1
-    rw [map_inv, ha, inv_one]
+abbrev chapter14NormOneClassSubgroup (K : Type*) [Field K] [NumberField K] :=
+  Chapter09.chapter09ClassNormOne K
 
 def chapter14FieldNormOnUnits (K L : Type*) [Field K] [Field L]
     [Algebra K L] [FiniteDimensional K L] : Lˣ →* Kˣ :=
   Units.map (Algebra.norm K)
 
-/- LOCAL_DEPENDENCY_GUESS: local norm groups and the adelic norm map are the interfaces supplied by
-the norm/functoriality chapters.  No surjectivity is assumed here. -/
+/-! Chapter 10 supplies generic local norm and continuity interfaces; this record supplies the
+number-field-wide idele norm and local-global norm predicate needed by this chapter.  No
+surjectivity is assumed here. -/
 structure Chapter14AdelicNormInterface (K L : Type*) [Field K] [Field L]
     [NumberField K] [NumberField L] [Algebra K L] [FiniteDimensional K L] where
   ideleNorm : chapter14IdeleGroup L →* chapter14IdeleGroup K
@@ -408,10 +370,10 @@ structure Chapter14AdelicNormInterface (K L : Type*) [Field K] [Field L]
     ∀ x : Lˣ,
       ideleNorm (chapter14PrincipalIdeleEmbedding L x) =
         chapter14PrincipalIdeleEmbedding K (chapter14FieldNormOnUnits K L x)
-  moduleK : Chapter14ModuleData K
-  moduleL : Chapter14ModuleData L
   module_compatibility :
-    ∀ y : chapter14IdeleGroup L, moduleK.module (ideleNorm y) = moduleL.module y
+    ∀ y : chapter14IdeleGroup L,
+      Chapter09.chapter09IdeleModuleHom K (ideleNorm y) =
+        Chapter09.chapter09IdeleModuleHom L y
   localNormAtEveryPlace : Kˣ → Prop
   localNorm_one : localNormAtEveryPlace 1
   localNorm_mul : ∀ {x y : Kˣ}, localNormAtEveryPlace x →

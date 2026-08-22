@@ -55,9 +55,9 @@ theorem chapter14_cyclic_knot_group_is_trivial
     chapter14_hasse_norm_theorem N
   exact h.elim x 1
 
-/- LOCAL_DEPENDENCY_GUESS: the source invokes a biquadratic counterexample without fixing a
-specific base field and polynomial; the predicates below keep the exact counterexample interface
-available until that concrete example is supplied by the examples chapter. -/
+/-! The source invokes a biquadratic counterexample without fixing a specific base field and
+polynomial.  These predicates retain the stated counterexample interface while leaving the
+choice of example to a later examples chapter. -/
 def chapter14BiquadraticExtension (K L : Type*) [Field K] [Field L]
     [NumberField K] [NumberField L] [Algebra K L] [FiniteDimensional K L]
     [IsGalois K L] : Prop :=

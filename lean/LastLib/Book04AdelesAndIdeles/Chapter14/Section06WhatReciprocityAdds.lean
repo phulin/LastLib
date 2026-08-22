@@ -34,17 +34,19 @@ def chapter14OpenSubgroupIsClassNormGroup
 def chapter14RayQuotientCorrespondsToFiniteAbelianExtension
     (K L : Type*) [Field K] [Field L] [NumberField K] [NumberField L]
     [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
-    (D : Chapter14IdeleLevelData K) (R : Chapter14RaySubgroupFamily D)
     (m : Chapter14Modulus K) : Prop :=
     chapter14FiniteAbelianExtension K L ∧
     ∃ ρ : chapter14IdeleClassGroup K →* Gal(L/K),
       Function.Surjective ρ ∧
-        ρ.ker = (chapter14RayClassQuotientMap D R m).ker
+        ρ.ker = (chapter14RayClassQuotientMap m).ker
 
 def chapter14RayQuotientRamificationControl {K : Type*} [Field K] [NumberField K]
     (m : Chapter14Modulus K)
-    (ramifiedAt : NumberField.FinitePlace K → Prop) : Prop :=
-  ∀ v, ¬ v.maximalIdeal.asIdeal ∣ m.finitePart → ¬ ramifiedAt v
+    (ramifiedAtFinite : NumberField.FinitePlace K → Prop)
+    (ramifiedAtReal : NumberField.InfinitePlace K → Prop) : Prop :=
+  (∀ v, ¬ v.maximalIdeal.asIdeal ∣ m.finiteIdeal → ¬ ramifiedAtFinite v) ∧
+    (∀ w, w ∉ (m.infinitePart : Set (NumberField.InfinitePlace K)) →
+      ¬ ramifiedAtReal w)
 
 /-! A quotient-level witness packages the finite abelian extension and the actual kernel of its
 reciprocity map.  This keeps the later correspondence fields from degenerating into unconnected
@@ -60,7 +62,7 @@ structure Chapter14FiniteAbelianExtensionWitness
   [galois_K_L : IsGalois K L]
   abelian : IsMulCommutative Gal(L/K)
   normData : Chapter14AdelicNormInterface K L
-  norm_kernel : chapter14ClassNormSubgroup normData = N
+  norm_group : chapter14ClassNormSubgroup normData = N
   reciprocity : chapter14IdeleClassGroup K →* Gal(L/K)
   reciprocity_surjective : Function.Surjective reciprocity
   reciprocity_kernel : reciprocity.ker = N
@@ -127,13 +129,10 @@ structure Chapter14GlobalReciprocityLaw (K : Type*) [Field K] [NumberField K]
   openSubgroupNormCorrespondence :
     ∀ U : Chapter14OpenFiniteIndexSubgroup (chapter14IdeleClassGroup K),
       Nonempty (Chapter14FiniteAbelianExtensionWitness K U.1.toSubgroup)
-  rayLevelData : Chapter14IdeleLevelData K
-  rayLevelData_component : rayLevelData.toChapter14LocalComponentData = D
-  raySubgroups : Chapter14RaySubgroupFamily.{_, 0} rayLevelData
   rayQuotientGaloisControl :
     ∀ m : Chapter14Modulus K,
       Nonempty (Chapter14FiniteAbelianExtensionWitness K
-        (chapter14RayClassQuotientMap rayLevelData raySubgroups m).ker)
+        (chapter14RayClassQuotientMap m).ker)
   conductorFrobeniusUnitFiltrationCompatibility :
     ∃ filtration : ∀ v : NumberField.FinitePlace K, ℕ →
         Subgroup (v.maximalIdeal.adicCompletion K)ˣ,
