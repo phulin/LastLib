@@ -155,7 +155,7 @@ theorem chapter02_valuation_unit_decomposition
     (v : AddValuation K (WithTop ℤ))
     (d : Chapter02ValuationCoordinateData v) (π : Kˣ)
     (hπ : d.valuation π = Multiplicative.ofAdd 1)
-    (huniformizer : chapter02IsUniformizerUnit v π) :
+    (_huniformizer : chapter02IsUniformizerUnit v π) :
     (∀ x : K, x ≠ 0 →
       ∃ n : ℤ, ∃ u : Chapter02UnitGroup v,
       x = ((π : Kˣ) : K) ^ n * ((u : Chapter02UnitGroup v) : K)) ∧
@@ -336,17 +336,14 @@ theorem chapter02_uniformizer_change_is_unit_change
     {K : Type*} [Field K]
     (v : AddValuation K (WithTop ℤ))
     (π π' : Kˣ) (u : Chapter02UnitGroup v)
-    (hπ : chapter02IsUniformizerUnit v π)
-    (hπ' : chapter02IsUniformizerUnit v π')
+    (_hπ : chapter02IsUniformizerUnit v π)
+    (_hπ' : chapter02IsUniformizerUnit v π')
     (hchange : (π' : K) = (chapter02UnitInclusion v u : Kˣ) * π) :
     ∀ z : ℤ, ∃ w : Chapter02UnitGroup v,
       ((π' : Kˣ) : K) ^ z =
         ((chapter02UnitInclusion v w : Kˣ) : K) * ((π : Kˣ) : K) ^ z := by
   intro z
   refine ⟨u ^ z, ?_⟩
-  change ((π' : Kˣ) : K) ^ z =
-    ((chapter02UnitInclusion v (u ^ z) : Kˣ) : K) *
-      ((π : Kˣ) : K) ^ z
   rw [hchange, mul_zpow]
   have hmapval :
       ((chapter02UnitInclusion v (u ^ z) : Kˣ) : K) =
