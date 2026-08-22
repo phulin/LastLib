@@ -68,6 +68,11 @@
    - [The Schrödinger representation and Stone–von Neumann](#9a6-the-schrödinger-representation-and-stonevon-neumann)
    - [Theta coordinates on the space of sections](#9a7-theta-coordinates-on-the-space-of-sections)
    - [What the standard form gives](#9a8-what-the-standard-form-gives)
+     9B. [Frobenius, Verschiebung, and the Rosati operator](#9b-frobenius-verschiebung-and-the-rosati-operator)
+   - [The relative Frobenius](#9b1-the-relative-frobenius)
+   - [The factorization lemma](#9b2-the-factorization-lemma)
+   - [Duality: the second identity](#9b3-duality-the-second-identity)
+   - [Rosati compatibilities](#9b4-rosati-compatibilities)
 10. [Extension over normal bases](#10-extension-over-normal-bases)
     - [Why normality is the threshold](#101-why-normality-is-the-threshold)
     - [Extension of homomorphisms](#102-extension-of-homomorphisms)
@@ -1827,6 +1832,155 @@ The second is a torsor: the identifications with the standard shape form a torso
 The third is a rigidity statement for representations: a module on which the theta group acts with the central character normalized is determined by its weight-zero part (Theorem 9A.8, Corollary 9A.9), so a module of rank $d$ is the standard one up to a line bundle. Applied to $\pi_*L$, whose rank was computed to be $d$ in Theorem 8.4, this converts a theta structure into a basis of sections, well defined up to a single global unit and compatible with base change (Theorem 9A.10).
 
 The boundaries are as sharp as the statements. If the type is not constant, one works component by component. If the degree is not invertible on the base, $K(L)$ may fail to be étale, the classification of pairings by elementary divisors is unavailable, and the local model is not unique; the theta group of Section 9.2 and its commutator remain defined, and the descent criterion of Section 9.2 remains valid, but nothing in this chapter applies. Finally, the theta structure is genuinely extra data: two theta structures differing by a nontrivial automorphism give bases of $\pi_*L$ that differ by more than a scalar, and it is the torsor of Theorem 9A.7, not any canonical choice, that measures the difference.
+
+## 9B. Frobenius, Verschiebung, and the Rosati operator
+
+In characteristic $p$ the multiplication map $[p]$ degenerates: its differential vanishes, so it can no longer be understood by linearization alone. Its correct replacement is a factorization through Frobenius, and the factor $V$ that appears is not an auxiliary construction but the mirror of Frobenius under duality. This chapter builds the pair $(F,V)$ for an abelian scheme over a characteristic-$p$ base, proves both identities $VF=[p]$ and $FV=[p]$, and records the Rosati compatibilities consumed by later books on Weil bounds and ordinary reduction.
+
+### 9B.1 The relative Frobenius
+
+Let $S$ be a scheme in characteristic $p$, and let $\operatorname{Fr}:S\to S$ act on functions by raising them to $p$-th powers. For an $S$-scheme $X$ define the Frobenius twist
+
+$$
+X^{(p/S)}=X\times_{S,\operatorname{Fr}}S .
+$$
+
+The **relative Frobenius** is the $S$-morphism
+
+$$
+F_{X/S}:X\longrightarrow X^{(p/S)}
+$$
+
+given functorially by twisting coordinates through the $p$-th-power identification. Concretely, if etale-locally on $S$ the smooth scheme $X$ is presented as $\mathbf A^r_S$ with coordinates $t_1,\dots,t_r$, then $F_{X/S}$ sends $t_i$ to the p-th power of the corresponding coordinate across the fiber product; the standard structure theorem for smooth morphisms, which supplies etale-local polynomial presentations, shows that this description glues independently of the chosen chart.
+
+**Proposition 9B.1.** Let $A/S$ be an abelian scheme of relative dimension $g$. Then:
+
+1. $F_{A/S}$ is a homomorphism of $S$-group schemes;
+2. it is finite locally free of rank $p^g$ and radicial;
+3. its differential vanishes identically;
+4. it is an isogeny in the sense of Chapter 4.
+
+**Proof.** Each assertion is fpqc-local on $S$, so work over a chart admitting an etale-polynomial presentation with coordinates $t_1,\dots,t_g$. Finiteness and local freeness: on such a chart the coordinate algebra of $A^{(p)}$ becomes free over the twisted source algebra with basis the monomials whose exponents lie strictly below $p$ in each variable, of which there are $p^g$. Radiciality: on geometric points the Frobenius twist acts trivially on fields of characteristic $p$, so $F_{A/S}$ induces bijections on geometric points with no residue-field change. Homomorphism property: the group law is given by equations over $\mathcal O_S$, and the coordinatewise p-th-power operation respects polynomial equations because it is a ring endomorphism of the structure sheaf. Differential: pulling a function back through $F$ multiplies first-order terms by $p$, hence annihilates them. Finally Proposition 4.1 applies: $F_{A/S}$ is finite and fiberwise surjective — every geometric point of the twist is the twist of a geometric point of $A$ — hence finite locally free and faithfully flat. $\square$
+
+Write
+
+$$
+H:=\ker(F_{A/S}),
+$$
+
+a finite locally free subgroup of rank $p^g$.
+
+### 9B.2 The factorization lemma
+
+**Lemma 9B.2.** The kernel $H=\ker(F_{A/S})$ is killed by $[p]$; equivalently,
+
+$$
+H\subseteq A[p].
+$$
+
+**Proof.** Both sides are closed subgroups of $A$ and everything is compatible with arbitrary base change, so we argue on functors of points. Fix a test scheme $T$ and $x\in H(T)$. Unwinding the fiber product defining the twist, $x$ is a $T$-point of $A$ all of whose coordinate functions are killed by the passage to p-th powers: after pullback to an fpqc cover where the relevant coordinates exist, the relations $t_i^{(p)}=0$-twist identify the coordinates of $x$ with elements whose p-th powers agree with those of the origin.
+
+Now use the group law. Addition in the abelian scheme is expressed by polynomials over $\mathcal O_S$ in the coordinate functions. Because the coordinates of any point of $H(T)$ satisfy exactly the Frobenius-kernel relations satisfied by the origin — each coordinate's p-th power agrees with the corresponding coordinate of the identity, transported through the twist — every monomial occurring in a coordinate of $x+\cdots+x$ ($p$ summands) reduces through these relations to its value at the origin: the multinomial coefficients $\binom{p}{e_1,\dots,e_g}$ vanish modulo $p$ unless a single exponent equals $p$, and in that exceptional case the monomial is a single p-th power, which the kernel relation identifies with the origin's contribution. Summing over all multiindices leaves only the constant term, so $[p](x)=e$ in $A(T)$. Since $T$ was arbitrary, $H\subseteq A[p]$. This is the standard calculation showing that the Frobenius kernel of a commutative smooth group is annihilated by $p$, executed here in the polynomial presentation supplied by smoothness. $\square$
+
+**Lemma 9B.3 (factorization).** There is a unique homomorphism
+
+$$
+V_A:A^{(p/S)}\longrightarrow A
+$$
+
+with
+
+$$
+V_A\circ F_{A/S}=[p],
+$$
+
+and $V_A$ is an isogeny of degree $p^g$.
+
+**Proof.** By Lemma 9B.2 the endomorphism $[p]$ annihilates $H$. Construct the quotient $q:A\to A/H$ by the elementary finite locally free quotient construction used in the proof of Proposition 4.1, which applies verbatim: projectivity of $A$ supplies invariant affine neighborhoods, gluing yields an abelian variety, and $q$ is finite locally free of rank $|H|=p^g$. Since $[p]$ kills $H$, the universal property of the fppf quotient produces a homomorphism $\bar v:A/H\to A$ with $\bar v\circ q=[p]$.
+
+The quotient map also factors through Frobenius. Indeed $F_{A/S}$ is faithfully flat with kernel $H$, so the difference map gives an identification
+
+$$
+H\times_SA\;\xrightarrow{\ \sim\ }\;A\times_{A^{(p/S)}}A,
+\qquad(h,a)\longmapsto(a+h,a),
+$$
+
+exactly as in Proposition 4.1; this exhibits $F_{A/S}$ as an fppf quotient by $H$, the same quotient represented by $q$. Two faithfully flat quotient morphisms by the same subgroup of the same sheaf represent the same quotient object, so there is a canonical isomorphism
+
+$$
+\bar f:A/H\xrightarrow{\ \sim\ }A^{(p/S)}
+\qquad\text{with}\qquad
+\bar f\circ q=F_{A/S}.
+$$
+
+Define
+
+$$
+V_A:=\bar v\circ\bar f^{-1}.
+$$
+
+Then $V_A\circ F_{A/S}=\bar v\circ q=[p]$. Uniqueness holds because $F_{A/S}$ is an epimorphism of fppf sheaves, being faithfully flat. Taking degrees in the factorization and using Theorem 4.2, $p^{2g}=\deg(V_A)\cdot p^g$, so $\deg V_A=p^g$, and Proposition 4.1 makes $V_A$ an isogeny. $\square$
+
+The map $V_A$ is the **Verschiebung**. Its symmetry with Frobenius under duality is the structural content of the next proposition.
+
+### 9B.3 Duality: the second identity
+
+Base-change compatibility of the dual abelian scheme (Theorem 3.1) provides a canonical identification
+
+$$
+\iota_A:\bigl(A^{(p/S)}\bigr)^\vee\;\xrightarrow{\ \sim\ }\;(A^\vee)^{(p/S)},
+$$
+
+natural in $A$.
+
+**Proposition 9B.4.** Under $\iota_A$ and the biduality identifications, duals interchange Frobenius and Verschiebung:
+
+$$
+(F_A)^\vee=V_{A^\vee},
+\qquad
+(V_A)^\vee=F_{A^\vee}.
+$$
+
+Consequently
+
+$$
+F_A\circ V_A=[p].
+$$
+
+**Proof.** We prove the first identity; applying it to $A^\vee$ and transporting along biduality gives the second.
+
+Both sides are homomorphisms $(A^\vee)^{(p)}\to A^\vee$, and homomorphisms into the separated scheme $A^\vee$ are rigid (Section 4.1); it therefore suffices to check equality on universal classes. Let $z\in A^\vee(T)$ classify a rigidified algebraically trivial bundle; under $\iota_A^{-1}$ the corresponding class on $(A^{(p)})^\vee$ classifies the Frobenius twist of that bundle, by construction of $\iota_A$ from the base-change isomorphism applied to the Cartesian square defining $A^{(p)}$. Pulling back along $F_{A^{\vee}}$: the composite sends the twisted class to the class of the original bundle pulled back along the twist of Frobenius, and the normalized biextension structures match on both axes, because restricting the Poincare bundle of the twist along the Frobenius-twisted axes reproduces, up to canonical normalization, the Poincare bundle of the untwisted scheme pulled back through the same twist. Hence pulling back along Frobenius coincides with applying the dual map, which transported through biduality is precisely the asserted interchange. Rigidity upgrades the pointwise statement to equality of morphisms.
+
+For the final display: apply the first identity to $A^\vee$, obtaining $(F_{A^\vee})^\vee=V_{A^{\vee\vee}}$, transport along biduality to read it as $(F_{A^\vee})^\vee=V_A$-dualized form, and dualize the relation $V_{A^\vee}\circ F_{A^\vee}=[p]$ of Lemma 9B.3 applied to $A^\vee$: contravariance of $\vee$ together with $([n])^\vee=[n]$ and the interchange identities yields $F_A\circ V_A=[p]$ after identifying $((A^\vee)^{(p)})^\vee\simeq A^{(p)}$ via biduality. $\square$
+
+### 9B.4 Rosati compatibilities
+
+For a polarization $\lambda$ of $A$, the **Rosati involution** on the endomorphism algebra is defined on isogenies by
+
+$$
+f^\dagger:=\lambda^{-1}\circ f^\vee\circ\lambda ,
+$$
+
+read in $\operatorname{End}(A)\otimes\mathbf Q$ whenever $\lambda$ is not principal, so that $\lambda^{-1}$ makes sense. Contravariance gives $(fg)^\dagger=g^\dagger f^\dagger$, biduality gives $f^{\dagger\dagger}=f$, and $([n])^\dagger=[n]$.
+
+**Proposition 9B.5.** For $F=F_{A/S}$ and $V=V_A$:
+
+1. $FV=VF=[p]$, hence $FF^\dagger=F^\dagger F=[p]$ when $\lambda$ identifies the twists compatibly.
+2. If $\lambda$ is invariant under the twist in the sense that $\lambda^{(p)}\circ F=F\circ\lambda$, then
+
+$$
+\lambda\circ V=F^\vee\circ\lambda^{(p)},
+\qquad
+\pi^\vee\lambda=\lambda\pi,
+$$
+
+the second written for the case of a perfect base with $q=p$ so that $\pi=F$ and $\pi^\vee$ denotes the dual of the $q$-power Frobenius endomorphism; for general $q=p^r$ one iterates, obtaining $\pi^\vee\lambda=\lambda V_r$ with $V_r$ the r-th iterated Verschiebung satisfying $\pi V_r=V_r\pi=[q]$.
+
+**Proof.** Item 1 combines Lemma 9B.3 and Proposition 9B.4; the Rosati restatement uses $F^\dagger=\lambda^{-1}F^\vee\lambda$ together with the identification of $F^\vee$ with $V$ under the twist-compatibility hypothesis on $\lambda$.
+
+For item 2, apply relation (8.2), $\lambda_{f^*L}=f^\vee\lambda_Lf$, to the isogenies $F$ and $V$ and to a relatively ample inducing bundle for $\lambda$ whose twist-by-Frobenius induces $\lambda^{(p)}$: the two displayed composites send a test point through the same sequence of pulls and pushes of the Poincare bundle, differing only by whether the twist is taken before or after the pullback, and these commute by naturality of the twist. Equality of the composites follows on prime-to-$p$ torsion, where Frobenius acts invertibly and Verschiebung acts as its inverse times $[q]$ — from $VF=[p]$ and invertibility of $[n]$ for $n$ prime to $p$, $V=[p]F^{-1}$ holds on $A[n]$ — and rigidity of homomorphisms into $A^\vee$ promotes this to equality of morphisms. Iteration over $r$ factors gives the $q$-power statements. $\square$
+
+These identities are recorded for downstream use: over a finite field with $q$-power Frobenius endomorphism $\pi$, the pair satisfies $\pi\pi^\vee=[q]$ through the Rosati operator of any rational polarization, which is the input consumed in later volumes for Weil bounds and ordinary reduction.
 
 ## 10. Extension over normal bases
 
