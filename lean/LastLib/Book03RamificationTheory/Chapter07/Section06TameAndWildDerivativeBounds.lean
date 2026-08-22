@@ -59,7 +59,34 @@ theorem chapter07_leading_derivative_term_value
     (hπ : vL π = (1 : WithTop ℤ)) :
     vL (chapter07DerivativeTerm K L e 1 π) =
       (e : WithTop ℤ) * vK (e : K) + (e : WithTop ℤ) - 1 := by
-  sorry
+  rw [chapter07DerivativeTerm, mul_one, AddValuation.map_mul,
+    hscale (e : K) he, AddValuation.map_pow, hπ]
+  cases e with
+  | zero => norm_num at he
+  | succ e =>
+      simp only [Nat.succ_sub_one, Nat.cast_add, Nat.cast_one]
+      norm_num
+      have hecast : (e : WithTop ℤ) = ((e : ℤ) : WithTop ℤ) := by norm_num
+      have hone : (1 : WithTop ℤ) = ((1 : ℤ) : WithTop ℤ) := by norm_num
+      by_cases htop : vK ((e : K) + 1) = ⊤
+      · have hc : (e : WithTop ℤ) + 1 ≠ 0 := by
+          exact ne_of_gt (by positivity)
+        simp [htop, WithTop.mul_top hc]
+      · obtain ⟨z, hz⟩ := WithTop.ne_top_iff_exists.mp htop
+        rw [← hz, hecast, hone]
+        change
+          (((e : ℤ) : WithTop ℤ) + ((1 : ℤ) : WithTop ℤ)) *
+              ((z : ℤ) : WithTop ℤ) + ((e : ℤ) : WithTop ℤ) =
+            (((e : ℤ) : WithTop ℤ) + ((1 : ℤ) : WithTop ℤ)) *
+                ((z : ℤ) : WithTop ℤ) +
+              (((e : ℤ) : WithTop ℤ) + ((1 : ℤ) : WithTop ℤ)) -
+                ((1 : ℤ) : WithTop ℤ)
+        rw [← WithTop.coe_add, ← WithTop.coe_mul]
+        conv_rhs => rw [← WithTop.coe_add]
+        rw [← WithTop.LinearOrderedAddCommGroup.coe_sub]
+        conv_lhs => rw [← WithTop.coe_add]
+        congr 1
+        ring_nf
 
 theorem chapter07_other_derivative_term_value_lower_bound
     (K L : Type*) [Field K] [Field L] [Algebra K L]
@@ -73,7 +100,62 @@ theorem chapter07_other_derivative_term_value_lower_bound
     (hπ : vL π = (1 : WithTop ℤ)) :
     vL (chapter07DerivativeTerm K L j a π) ≥
       (e : WithTop ℤ) + (j : WithTop ℤ) - 1 := by
-  sorry
+  by_cases hja : (j : K) * a = 0
+  · simp [chapter07DerivativeTerm, hja]
+  · rw [chapter07DerivativeTerm, AddValuation.map_mul,
+      hscale ((j : K) * a) hja, vK.map_mul, AddValuation.map_pow, hπ]
+    have hsum : (1 : WithTop ℤ) ≤ vK (j : K) + vK a := by
+      calc
+        (1 : WithTop ℤ) = 0 + 1 := by norm_num
+        _ ≤ vK (j : K) + vK a := add_le_add hjvalue ha
+    have hmul : (e : WithTop ℤ) ≤
+        (e : WithTop ℤ) * (vK (j : K) + vK a) := by
+      by_cases he0 : e = 0
+      · subst e
+        simp
+      · by_cases htop : vK (j : K) + vK a = ⊤
+        · have heW : (e : WithTop ℤ) ≠ 0 := by
+            exact_mod_cast he0
+          rw [htop, WithTop.mul_top heW]
+          exact le_top
+        · obtain ⟨z, hz⟩ := WithTop.ne_top_iff_exists.mp htop
+          have hsum' : (1 : ℤ) ≤ z := by
+            apply WithTop.coe_le_coe.mp
+            rw [← hz] at hsum
+            exact hsum
+          have hecast : (e : WithTop ℤ) = ((e : ℤ) : WithTop ℤ) := by norm_num
+          rw [← hz, hecast, ← WithTop.coe_mul]
+          have hint : (e : ℤ) ≤ (e : ℤ) * z := by
+            simpa using Int.mul_le_mul_of_nonneg_left hsum'
+              (Int.natCast_nonneg e)
+          exact_mod_cast hint
+    calc
+      (e : WithTop ℤ) * (vK (j : K) + vK a) + (j - 1) • (1 : WithTop ℤ) ≥
+          (e : WithTop ℤ) + (j - 1) • (1 : WithTop ℤ) :=
+        add_le_add hmul (le_refl _)
+      _ = (e : WithTop ℤ) + (j : WithTop ℤ) - 1 := by
+        have hone : (1 : WithTop ℤ) = ((1 : ℤ) : WithTop ℤ) := by norm_num
+        have hsmul : (j - 1) • (1 : WithTop ℤ) =
+            ((j - 1 : ℕ) : WithTop ℤ) := by
+          calc
+            (j - 1) • (1 : WithTop ℤ) =
+                (j - 1) • ((1 : ℤ) : WithTop ℤ) := by rw [hone]
+            _ = (((j - 1) • (1 : ℤ)) : WithTop ℤ) :=
+              (WithTop.coe_nsmul (1 : ℤ) (j - 1)).symm
+            _ = ((j - 1 : ℕ) : WithTop ℤ) := by norm_num [nsmul_eq_mul]
+        have hecast : (e : WithTop ℤ) = ((e : ℤ) : WithTop ℤ) := by norm_num
+        have hjcast : (j : WithTop ℤ) = ((j : ℤ) : WithTop ℤ) := by norm_num
+        have hjsW : ((j - 1 : ℕ) : WithTop ℤ) =
+            (((j - 1 : ℕ) : ℤ) : WithTop ℤ) := by norm_num
+        have hjsub : ((j - 1 : ℕ) : ℤ) = (j : ℤ) - 1 := by
+          rw [Nat.cast_sub hj]
+          norm_num
+        rw [hsmul, hecast, hjsW, hjsub, hjcast, hone]
+        conv_lhs => rw [← WithTop.coe_add]
+        conv_rhs => rw [← WithTop.coe_add]
+        rw [← WithTop.LinearOrderedAddCommGroup.coe_sub]
+        congr 1
+        ring
 
 def chapter07DifferentExponentValuation
     {L : Type*} [Ring L]
@@ -92,7 +174,7 @@ theorem chapter07_sum_of_eisenstein_derivative_terms_ge_baseline
     (hterms : ∀ j : Fin e, vL (terms j) ≥
       (e : WithTop ℤ) - 1) :
     vL (∑ j, terms j) ≥ (e : WithTop ℤ) - 1 := by
-  sorry
+  exact AddValuation.map_le_sum vL (fun j _ => hterms j)
 
 theorem chapter07_different_exponent_ge_e_sub_one
     (K L : Type*) [Field K] [Field L] [Algebra K L]
@@ -100,7 +182,12 @@ theorem chapter07_different_exponent_ge_e_sub_one
     (hvalue : chapter07DifferentExponentValuation vL z d)
     (hbaseline : vL z ≥ (e : WithTop ℤ) - 1) :
     e - 1 ≤ d := by
-  sorry
+  rw [hvalue] at hbaseline
+  cases e with
+  | zero => simp
+  | succ e =>
+      norm_num at hbaseline ⊢
+      exact_mod_cast hbaseline
 
 /- Tame and wild are recorded only after the residue characteristic has been
    named. -/
@@ -113,7 +200,9 @@ def chapter07WildAtResidueCharacteristic (e p : ℕ) : Prop :=
 theorem chapter07_wild_iff_prime_dvd
     (e p : ℕ) [Fact (Nat.Prime p)] :
     chapter07WildAtResidueCharacteristic e p ↔ p ∣ e := by
-  sorry
+  change ¬ Nat.Coprime e p ↔ p ∣ e
+  rw [Nat.coprime_comm, (Fact.out : Nat.Prime p).coprime_iff_not_dvd]
+  simp
 
 theorem chapter07_tame_leading_term_has_value_e_sub_one
     (K L : Type*) [Field K] [Field L] [Algebra K L]
@@ -125,7 +214,8 @@ theorem chapter07_tame_leading_term_has_value_e_sub_one
     (hπ : vL π = (1 : WithTop ℤ)) :
     vL (chapter07DerivativeTerm K L e 1 π) =
       (e : WithTop ℤ) - 1 := by
-  sorry
+  rw [chapter07_leading_derivative_term_value K L vK vL e π he hscale hπ,
+    heunit, mul_zero, zero_add]
 
 theorem chapter07_tame_different_exponent_eq_e_sub_one
     (K L : Type*) [Field K] [Field L] [Algebra K L]
