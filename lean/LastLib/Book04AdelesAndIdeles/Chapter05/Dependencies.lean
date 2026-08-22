@@ -126,7 +126,7 @@ theorem chapter05_minkowski_correction_lattice_mem_iff
     {x : chapter01MinkowskiSpace K} :
     x ∈ chapter01IdealLattice K I ↔
       ∃ a : K, a ∈ (I : Set K) ∧ NumberField.mixedEmbedding K a = x := by
-  sorry
+  exact NumberField.mixedEmbedding.mem_idealLattice K I
 
 theorem chapter05_minkowski_correction_lattice_is_discrete_and_full
     (K : Type*) [Field K] [NumberField K]
@@ -134,7 +134,7 @@ theorem chapter05_minkowski_correction_lattice_is_discrete_and_full
     DiscreteTopology (chapter01IdealLattice K I) ∧
       IsZLattice ℝ (E := chapter01MinkowskiSpace K)
         (chapter01IdealLattice K I) := by
-  sorry
+  exact ⟨inferInstance, inferInstance⟩
 
 open scoped Classical in
 theorem chapter05_minkowski_correction_lattice_has_fundamental_domain
@@ -144,7 +144,7 @@ theorem chapter05_minkowski_correction_lattice_has_fundamental_domain
       (chapter01IdealLattice K I)
       (ZSpan.fundamentalDomain
         (NumberField.mixedEmbedding.fractionalIdealLatticeBasis K I)) := by
-  sorry
+  exact NumberField.mixedEmbedding.fundamentalDomain_idealLattice K I
 
 def chapter05ScaledFractionalIdeal
     (K : Type*) [Field K] [NumberField K]
@@ -166,7 +166,63 @@ theorem chapter05_minkowski_correction_lattice_mesh
     (K : Type*) [Field K] [NumberField K]
     (I : chapter01FractionalIdealGroup K) (ell : ℕ) (hℓ : 1 < ell) :
     chapter05MinkowskiLatticeMesh K I ell := by
-  sorry
+  intro _ x U hU
+  rcases Metric.mem_nhds_iff.1 hU with ⟨ε, hε, hεU⟩
+  have hpos : (0 : ℝ) < ell := by
+    exact_mod_cast Nat.zero_lt_of_lt hℓ
+  let b := NumberField.mixedEmbedding.fractionalIdealLatticeBasis K I
+  have hspan : Submodule.span ℤ (Set.range b) = chapter01IdealLattice K I := by
+    dsimp [b]
+    exact NumberField.mixedEmbedding.span_idealLatticeBasis K I
+  rcases (isBounded_iff_forall_norm_le.1 (ZSpan.fundamentalDomain_isBounded b)) with ⟨C, hC⟩
+  have hinv_lt : (ell : ℝ)⁻¹ < 1 := by
+    rw [inv_lt_one₀ hpos]
+    exact_mod_cast hℓ
+  have hscale : Tendsto (fun s : ℕ => ((ell : ℝ)⁻¹) ^ s * C) atTop (𝓝 0) := by
+    simpa using
+      (tendsto_pow_atTop_nhds_zero_of_lt_one (inv_nonneg.mpr hpos.le) hinv_lt).mul_const C
+  have hsmall : ∀ᶠ s : ℕ in atTop, ((ell : ℝ)⁻¹) ^ s * C < ε :=
+    hscale.eventually (Iio_mem_nhds hε)
+  have hscalar (s : ℕ) (d : K) :
+      chapter01MinkowskiEmbedding K (((ell : K)⁻¹) ^ s * d) =
+        ((ell : ℝ)⁻¹) ^ s • chapter01MinkowskiEmbedding K d := by
+    rw [map_mul, map_pow]
+    apply Prod.ext
+    · funext w
+      simp [Algebra.smul_def]
+    · funext w
+      simp [Algebra.smul_def]
+  filter_upwards [hsmall] with s hs
+  let q : ℝ := ((ell : ℝ)⁻¹) ^ s
+  have hqpos : 0 < q := by
+    dsimp [q]
+    positivity
+  obtain ⟨z, hz, _⟩ :=
+    ZSpan.exist_unique_vadd_mem_fundamentalDomain b (-q⁻¹ • x)
+  have hz' : (z : chapter01MinkowskiSpace K) + (-q⁻¹) • x ∈
+      ZSpan.fundamentalDomain b := by
+    simpa [Submodule.vadd_def, vadd_eq_add] using hz
+  have hzmem : (z : chapter01MinkowskiSpace K) ∈ chapter01IdealLattice K I := by
+    rw [← hspan]
+    exact z.property
+  obtain ⟨d, hdI, hdz⟩ := (chapter05_minkowski_correction_lattice_mem_iff K I).mp hzmem
+  refine ⟨((ell : K)⁻¹) ^ s * d, ⟨d, hdI, rfl⟩, ?_⟩
+  have hdiff : q • (z : chapter01MinkowskiSpace K) - x =
+      q • ((z : chapter01MinkowskiSpace K) + (-q⁻¹) • x) := by
+    rw [sub_eq_add_neg, smul_add, smul_smul]
+    simp [hqpos.ne']
+  have hclose : ‖q • (z : chapter01MinkowskiSpace K) - x‖ < ε := by
+    calc
+      ‖q • (z : chapter01MinkowskiSpace K) - x‖ =
+          ‖q • ((z : chapter01MinkowskiSpace K) + (-q⁻¹) • x)‖ := by rw [hdiff]
+      _ = |q| * ‖(z : chapter01MinkowskiSpace K) + (-q⁻¹) • x‖ := norm_smul q _
+      _ = q * ‖(z : chapter01MinkowskiSpace K) + (-q⁻¹) • x‖ := by
+        rw [abs_of_pos hqpos]
+      _ ≤ q * C := mul_le_mul_of_nonneg_left (hC _ hz') hqpos.le
+      _ < ε := by simpa [q] using hs
+  rw [hscalar, hdz]
+  apply hεU
+  simpa [Metric.mem_ball, dist_eq_norm, q, inv_pow] using hclose
 
 def chapter05NondiscreteAtZero
     {G : Type u} [Zero G] [TopologicalSpace G] : Prop :=
@@ -186,7 +242,42 @@ def chapter05AwayDiagonal
     (hS : chapter05InfinitePlaces K ⊆ S) :
   K → Chapter05AdeleAwayFrom K S := fun a =>
   ⟨fun v => chapter05LocalEmbedding K v.1 a, by
-    sorry⟩
+    classical
+    have hfinite : ∀ v : {v // v ∉ S}, ∃ w : Chapter04FinitePlace K,
+        v.1 = Sum.inl w := by
+      rintro ⟨v, hv⟩
+      rcases v with w | w
+      · exact ⟨w, rfl⟩
+      · exfalso
+        apply hv
+        exact hS ⟨w, rfl⟩
+    let f : {v // v ∉ S} → Chapter04FinitePlace K :=
+      fun v => (hfinite v).choose
+    have hf_spec : ∀ v : {v // v ∉ S}, v.1 = Sum.inl (f v) := by
+      intro v
+      exact (hfinite v).choose_spec
+    have hf : Function.Injective f := by
+      intro v₁ v₂ h
+      apply Subtype.ext
+      rw [hf_spec v₁, hf_spec v₂, h]
+    have hfinite_integral : ∀ᶠ w : Chapter04FinitePlace K in Filter.cofinite,
+        chapter05LocalEmbedding K (Sum.inl w) a ∈
+          chapter04LocalIntegralSet K (Sum.inl w) := by
+      change ∀ᶠ w : Chapter04FinitePlace K in Filter.cofinite,
+        (↑a : Chapter04FiniteLocalField K w) ∈
+          chapter04FiniteLocalIntegerSet K w
+      exact chapter04_finiteAdele_mem_iff_eventually_integral K
+        (chapter05FiniteDiagonal K a)
+    have hpull : ∀ᶠ v : {v // v ∉ S} in Filter.cofinite,
+        chapter05LocalEmbedding K v.1 a ∈
+          chapter04LocalIntegralSet K v.1 := by
+      have h' := hf.tendsto_cofinite hfinite_integral
+      filter_upwards [h'] with v hv
+      change chapter05LocalEmbedding K (Sum.inl (f v)) a ∈
+        chapter04LocalIntegralSet K (Sum.inl (f v)) at hv
+      rw [hf_spec v]
+      exact hv
+    exact hpull⟩
 
 @[simp]
 theorem chapter05_awayDiagonal_coordinate
@@ -196,7 +287,7 @@ theorem chapter05_awayDiagonal_coordinate
     (v : {v // v ∉ S}) :
     (chapter05AwayDiagonal K S hS a) v =
       chapter05LocalEmbedding K v.1 a := by
-  sorry
+  rfl
 
 def chapter05FiniteCoordinate
     (K : Type*) [Field K] [NumberField K]
