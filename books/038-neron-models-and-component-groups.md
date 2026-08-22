@@ -492,7 +492,7 @@ is an affine $k$-scheme, being an inverse limit of affine $k$-schemes along affi
 
 A section $\operatorname{Spec}R^{\wedge}\to X$ is exactly a family of compatible formal sections over the $X_i$, two families being identified when they agree on every pairwise overlap $X_{ij}$. Since $X$ is separated, the equalizer of two morphisms into $X$ is closed; applied to the two projections from the product, agreement on $X_{ij}$ cuts out a closed subscheme of $G_i\times_kG_j$. Therefore $\operatorname{Gr}(X)$ identifies with the closed subscheme of the affine scheme $\prod_iG_i$ cut out by all these pairwise conditions. A closed subscheme of an affine scheme is quasi-compact. $\square$
 
-With these tools available, the proof of Theorem 3.2 above may be read as complete: the appeal to "the standard finite-level restriction-of-scalars construction" is Lemma 3.6, the openness of $U_r$ is the jet-level detection already argued, and the completion comparison uses excellence exactly as stated.
+With these tools available, the remaining inputs of the smoothening theorem are discharged: the appeal to "the standard finite-level restriction-of-scalars construction" in its proof is made precise by Lemma 3.6, the openness of $U_r$ is the jet-level detection already argued there, and the completion comparison uses excellence exactly as stated.
 
 ## 4. Existence of Néron models
 
@@ -528,7 +528,7 @@ U(R^{\mathrm{sh}})=U_K(K^{\mathrm{sh}}),
 V(R^{\mathrm{sh}})=V_K(K^{\mathrm{sh}}),
 $$
 
-and let $\Gamma\subseteq U\times_RV$ be the schematic closure of a locally closed subscheme $\Gamma_K$ of the generic fiber. Then:
+and let $\Gamma\subseteq U\times_RV$ be the schematic closure of a locally closed subscheme $\Gamma_K$ of the generic fiber. The same argument applies verbatim to schematic closures inside any finite fiber product of such schemes, which is what the graphs of multiplication and inversion require. Then:
 
 1. $\Gamma$ is flat over $R$;
 2. every $K^{\mathrm{sh}}$-point of $\Gamma_K$ extends, uniquely, to an $R^{\mathrm{sh}}$-point of $\Gamma$, so the center hypothesis of Theorem 3.2 holds for $\Gamma$.
