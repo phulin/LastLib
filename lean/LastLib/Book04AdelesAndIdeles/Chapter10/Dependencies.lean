@@ -193,7 +193,7 @@ noncomputable instance chapter10FiberFintype
     (d : Chapter10GlobalNormData ιK ιL Kloc Lloc) (v : ιK) :
     Fintype {w : ιL // d.below w = v} := by
   letI : Finite {w : ιL // d.below w = v} := d.finiteOver v
-  exact Fintype.ofFinite _
+  exact Fintype.ofFinite {w : ιL // d.below w = v}
 
 /-- A local norm on a fiber, transported to the chosen base-place factor. -/
 def chapter10LocalNormAt

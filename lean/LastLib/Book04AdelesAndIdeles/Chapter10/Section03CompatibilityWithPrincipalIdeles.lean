@@ -104,6 +104,7 @@ theorem chapter10_idele_class_norm_continuous
     {G_K G_L I_K I_L : Type*} [Group G_K] [Group G_L]
     [CommGroup I_K] [CommGroup I_L]
     [TopologicalSpace I_K] [TopologicalSpace I_L]
+    [IsTopologicalGroup I_K] [IsTopologicalGroup I_L]
     (pK : G_K →* I_K) (pL : G_L →* I_L)
     (fieldNorm : G_L →* G_K) (ideleNorm : I_L →* I_K)
     (hcompat : chapter10PrincipalNormCompatibility pK pL fieldNorm ideleNorm)

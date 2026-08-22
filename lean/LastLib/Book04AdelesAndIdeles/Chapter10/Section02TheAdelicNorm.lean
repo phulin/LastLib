@@ -83,6 +83,7 @@ theorem chapter10_adelic_norm_continuous
     {ιK ιL : Type*} {Kloc : ιK → Type*} {Lloc : ιL → Type*}
     [∀ v, CommGroup (Kloc v)] [∀ w, CommGroup (Lloc w)]
     [∀ v, TopologicalSpace (Kloc v)] [∀ w, TopologicalSpace (Lloc w)]
+    [∀ v, IsTopologicalGroup (Kloc v)] [∀ w, IsTopologicalGroup (Lloc w)]
     (d : Chapter10GlobalNormData ιK ιL Kloc Lloc)
     (hKopen : ∀ v, IsOpen (d.unitK v : Set (Kloc v)))
     (hLopen : ∀ w, IsOpen (d.unitL w : Set (Lloc w)))

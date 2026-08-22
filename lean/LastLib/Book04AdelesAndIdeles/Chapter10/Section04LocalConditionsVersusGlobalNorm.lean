@@ -179,7 +179,7 @@ theorem chapter10_global_norm_subgroup_le_intersection
 def chapter10LocalGlobalNormObstruction
     {G_K G_L : Type*} [CommGroup G_K] [CommGroup G_L]
     {I_K I_L : Type*} [CommGroup I_K] [CommGroup I_L]
-    (pK : G_K →* I_K) (_pL : G_L →* I_L)
+    (pK : G_K →* I_K)
     (globalNorm : G_L →* G_K) (ideleNorm : I_L →* I_K)
     (_hle : chapter10GlobalFieldNormSubgroup globalNorm ≤
       chapter10AdelicNormIntersectionSubgroup pK ideleNorm) : Type _ :=

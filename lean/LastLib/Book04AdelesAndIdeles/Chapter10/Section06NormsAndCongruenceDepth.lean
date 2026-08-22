@@ -42,8 +42,8 @@ theorem chapter10_local_norm_maps_deep_principal_units
     (vF : AddValuation F (WithTop ℤ)) (vE : AddValuation E (WithTop ℤ))
     (hF : chapter10ValuationNeighborhoodBasis vF)
     (hE : chapter10ValuationNeighborhoodBasis vE)
-    (n : ℕ) :
-    ∃ m : ℕ, Set.MapsTo (chapter10LocalNorm F E)
+    (n : ℕ) (hn : 1 ≤ n) :
+    ∃ m : ℕ, 1 ≤ m ∧ Set.MapsTo (chapter10LocalNorm F E)
       (chapter10ValuationNeighborhood vE m)
       (chapter10ValuationNeighborhood vF n) := by
   sorry
@@ -59,8 +59,8 @@ theorem chapter10_local_norm_maps_deep_principal_unit_sets
       chapter10ValuationNeighborhood vF n ⊆ chapter10LocalPrincipalUnitSet vF n)
     (hprincipalE : ∀ n,
       chapter10LocalPrincipalUnitSet vE n ⊆ chapter10ValuationNeighborhood vE n)
-    (n : ℕ) :
-    ∃ m : ℕ, Set.MapsTo (chapter10LocalNorm F E)
+    (n : ℕ) (hn : 1 ≤ n) :
+    ∃ m : ℕ, 1 ≤ m ∧ Set.MapsTo (chapter10LocalNorm F E)
       (chapter10LocalPrincipalUnitSet vE m)
       (chapter10LocalPrincipalUnitSet vF n) := by
   sorry
@@ -90,7 +90,7 @@ def chapter10NormDepthControl
     (F E : Type*) [Field F] [Field E] [Algebra F E]
     [FiniteDimensional F E]
     (vF : AddValuation F (WithTop ℤ)) (vE : AddValuation E (WithTop ℤ)) : Prop :=
-  ∀ n : ℕ, ∃ m : ℕ, Set.MapsTo (chapter10LocalNorm F E)
+  ∀ n : ℕ, 1 ≤ n → ∃ m : ℕ, 1 ≤ m ∧ Set.MapsTo (chapter10LocalNorm F E)
     (chapter10ValuationNeighborhood vE m)
     (chapter10ValuationNeighborhood vF n)
 
@@ -99,7 +99,7 @@ theorem chapter10_norm_depth_control_iff
     [FiniteDimensional F E]
     (vF : AddValuation F (WithTop ℤ)) (vE : AddValuation E (WithTop ℤ)) :
     chapter10NormDepthControl F E vF vE ↔
-      ∀ n : ℕ, ∃ m : ℕ, Set.MapsTo (chapter10LocalNorm F E)
+      ∀ n : ℕ, 1 ≤ n → ∃ m : ℕ, 1 ≤ m ∧ Set.MapsTo (chapter10LocalNorm F E)
         (chapter10ValuationNeighborhood vE m)
         (chapter10ValuationNeighborhood vF n) := Iff.rfl
 

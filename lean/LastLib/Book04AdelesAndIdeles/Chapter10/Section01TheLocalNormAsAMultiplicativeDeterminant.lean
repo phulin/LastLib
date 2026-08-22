@@ -141,15 +141,16 @@ theorem chapter10_unramified_uniformizer_norm
 
 /-- The target `π_F^{dℤ} O_Fˣ` in the unramified norm lemma. -/
 def chapter10UnramifiedNormTarget {F : Type*} [Field F]
-    (vF : AddValuation F (WithTop ℤ)) (πF : F) (d : ℕ) : Set F :=
+    (vF : AddValuation F (WithTop ℤ)) (πF : F) (d : ℕ)
+    (_hπF : chapter10NormalizedUniformizer vF πF) : Set F :=
   {x | ∃ z : ℤ, ∃ u : F,
     u ∈ chapter10LocalUnitSet vF ∧
       x = πF ^ ((d : ℤ) * z) * u}
 
 theorem chapter10_mem_unramified_norm_target_iff
     {F : Type*} [Field F] (vF : AddValuation F (WithTop ℤ))
-    (πF : F) (d : ℕ) (x : F) :
-    x ∈ chapter10UnramifiedNormTarget vF πF d ↔
+    (πF : F) (d : ℕ) (hπF : chapter10NormalizedUniformizer vF πF) (x : F) :
+    x ∈ chapter10UnramifiedNormTarget vF πF d hπF ↔
       ∃ z : ℤ, ∃ u : F,
         u ∈ chapter10LocalUnitSet vF ∧
           x = πF ^ ((d : ℤ) * z) * u := Iff.rfl
@@ -253,7 +254,7 @@ theorem lemma_10_1_norms_in_an_unramified_extension
         F E (chapter10ResidueField vF) (chapter10ResidueField vE) vF vE
           (chapter10ResidueMap vF) (chapter10ResidueMap vE) 1 N) :
     chapter10ValuationUnitNormImage F E vE = chapter10LocalUnitSet vF ∧
-      chapter10LocalNormImage F E = chapter10UnramifiedNormTarget vF πF d := by
+      chapter10LocalNormImage F E = chapter10UnramifiedNormTarget vF πF d hπF := by
   sorry
 
 /-! The norm is continuous; the local-field topology supplies the topology on
