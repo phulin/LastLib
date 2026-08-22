@@ -51,6 +51,7 @@
    - [Affine charts](#92-affine-charts)
    - [Invariance of the generic fiber](#93-invariance-of-the-generic-fiber)
    - [Common refinements and the model theorem](#94-common-refinements-and-the-model-theorem)
+   - [Coherence of direct images](#95-coherence-of-direct-images)
 10. [Tubes](#10-tubes)
     - [Analytic neighborhoods cut out by reduction](#101-analytic-neighborhoods-cut-out-by-reduction)
     - [Discs above smooth points](#102-discs-above-smooth-points)
@@ -1109,26 +1110,9 @@ Vector bundles correspond to finite projective modules on affinoids. An invertib
 
 Affinoid acyclicity gives local control; properness gives global finiteness.
 
-**Theorem 6.2 (proper mapping theorem).** Let $f:X\to Y$ be a proper morphism of rigid spaces, with $Y$ quasi-separated. For every coherent $\mathcal F$ on $X$, each $R^qf_*\mathcal F$ is coherent. If every fiber of $f$ has dimension at most $d$, then $R^qf_*\mathcal F=0$ for $q>d$.
+**Theorem 6.2 (proper mapping theorem).** Let $f:X\to Y$ be a proper morphism of rigid spaces, with $Y$ quasi-separated. For every coherent $\mathcal F$ on $X$, each $R^qf_*\mathcal F$ is coherent. If every fiber of $f$ has dimension at most $d$, then, under the model-dimension hypothesis recorded in Section 9.5 and satisfied in every application below, $R^qf_*\mathcal F=0$ for $q>d$.
 
-**Proof strategy.** Work over an affinoid in $Y$. Properness supplies a finite affinoid cover of
-$X$ together with relatively compact rational subdomains; after refining, every multiple
-intersection is a finite union of affinoids and each boundary piece is described by finitely
-many Laurent inequalities. Tate acyclicity replaces $\mathcal F$ by a finite Čech complex.
-On a Laurent boundary piece, expansion splits a section into an interior part and parts whose
-coefficients tend uniformly to zero toward the boundary. The latter form finite modules
-modulo arbitrarily small powers of a topologically nilpotent scalar. The noetherian and
-completeness results of Chapter 2 then show that the kernels and cokernels of the Čech
-differentials are finite over the base affinoid algebra. Repeating the construction after
-rational localization on the base identifies these finite modules with the sheaves
-$R^qf_*\mathcal F$, proving coherence.
-
-For the cohomological bound, use induction on the dimension of the support in the fibers.
-The zero-dimensional case is finite over the base and hence affinoid. In positive dimension,
-analytic Noether normalization supplies a parameter finite on a dense part of each support;
-the exact sequences for multiplication by that parameter reduce the kernel and cokernel to
-smaller-dimensional supports. The long exact cohomology sequence then gives vanishing above
-the relative support dimension, hence above $d$.
+**Proof; see Section 9.5.** The proof cannot be given with the tools available so far: finiteness statements of this strength are exactly what formal models supply. Once admissible blowups and the model theorem are available, the argument runs as follows. One extends $f$ to a proper morphism of admissible formal models after an admissible blowup of the source, extends $\mathcal F$ to a coherent sheaf on the model by clearing denominators in finite presentations, compares analytic cohomology with formal cohomology inverted by $\pi$ through Tate acyclicity on generic fibers of principal opens, and reads coherence off Book 58's finiteness theorem for direct images under proper formal morphisms. The full details occupy Section 9.5, which may be read immediately after Chapter 9; no result between this section and that one uses Theorem 6.2.
 
 Properness is decisive: the open unit disc has an enormous ring of global analytic functions,
 not a finite module over $K$.
@@ -1398,6 +1382,67 @@ isomorphism and its inverse and taking a common blowup makes both composites ide
 This proves the equivalence and the common-refinement assertion.
 
 The theorem does not identify a preferred model. Statements about special-fiber components, intersections, or reduction points are model-dependent. Statements invariant under admissible blowup belong to the analytic space.
+
+### 9.5 Coherence of direct images
+
+The proper mapping theorem of Section 6.4 was stated there but not proved there, because its proof requires formal models. This section carries out the proof. The route is the one the model theorem makes natural: compare analytic cohomology with formal cohomology on a model, and read finiteness off Book 58's formal-function theory.
+
+Throughout, $K$ is discretely valued with ring $R$ and uniformizer $\pi$, and all rigid spaces are quasi-compact and quasi-separated.
+
+**Lemma (generic-fiber comparison).** Let $\mathfrak X$ be an admissible formal scheme admitting a finite cover by formal principal opens whose pairwise intersections are again such opens, and let $\mathfrak F$ be coherent. Then for every $q\geq0$ the natural map
+
+$$
+H^q(\mathfrak X,\mathfrak F)\otimes_RK
+\longrightarrow
+H^q(\mathfrak X_\eta,\mathfrak F_\eta)
+$$
+
+is an isomorphism.
+
+**Proof.** Cover $\mathfrak X$ by finitely many formal principal opens $\mathfrak U_i=\mathfrak D(f)$ with all intersections of the same form; quasi-compactness makes this possible, since finite intersections of principal opens are principal. By Section 7.3 each generic fiber $(\mathfrak U_i)_\eta$ is the rational domain $|f_i|\geq1$ inside $\mathfrak X_\eta$ locally, and every intersection
+$(\mathfrak U_{i_0}\cap\cdots\cap\mathfrak U_{i_p})_\eta$
+is cut out from the fixed finite list of inequalities $|f_i|\geq1$. Collecting that list, Lemma 5.3 applies: the augmented Čech complex of this cover, with coefficients in $\mathfrak F_\eta$, computes the analytic cohomology $H^q(\mathfrak X_\eta,\mathfrak F_\eta)$.
+
+On the other side, Book 58, Section 7.3 identifies coherent sheaves on affine formal schemes with complete finite modules and shows these are acyclic; hence the Čech complex of the same cover with values in $\mathfrak F$ computes $H^q(\mathfrak X,\mathfrak F)$. Termwise, the identification of Section 7.3 gives
+
+# $$\Gamma(\mathfrak U_{i_0}\cap\cdots\cap\mathfrak U_{i_p},\mathfrak F)\otimes_RK
+
+\Gamma\bigl((\mathfrak U_{i_0}\cap\cdots\cap\mathfrak U_{i_p})_\eta,\mathfrak F_\eta\bigr),
+$$
+
+because inverting $\pi$ commutes with the completed localization defining a principal open: both algebras impose the single relation $fS-1$, and $\pi$ is already invertible in $K$. So the analytic Čech complex is the tensor of the formal one with $K$. Since $R\to K$ is flat, cohomology of a complex commutes with this tensor:
+
+$$
+H^q(\mathfrak X,\mathfrak F)\otimes_RK=H^q\bigl(C^\bullet\otimes_RK\bigr)
+=H^q(\mathfrak X_\eta,\mathfrak F_\eta),
+$$
+
+and the maps are the natural ones. $\square$
+
+**Lemma (properness descends to models).** Let $f:X\to Y$ be a proper morphism of rigid spaces and let $\mathfrak f:\mathfrak X\to\mathfrak Y$ be an extension to admissible models supplied by Theorem 9.2 after an admissible blowup of the source. Then $\mathfrak f$ is a proper morphism of formal schemes.
+
+**Proof.** Properness of a finite-type morphism of quasi-compact quasi-separated formal schemes is a valuative statement: given a valuation ring $V$ with fraction field $L$, a morphism $\operatorname{Sp}V\to\mathfrak Y$, and an $L$-point of $\mathfrak X$ over it, one must extend the latter across the closed point, uniquely up to the separatedness already at hand. Read the same data through generic fibers. The generic point supplies an $L$-valued point of the generic fiber of $\mathfrak Y$, that is, a point of $Y_L$, and an $L$-point of $X_L$ above it, because the generic fiber functor converts the square into the corresponding analytic square by Section 8.4. Since $f$ is proper, this analytic point extends uniquely over the valuation, giving a compatible family of integral points. Each integral level lands in $\mathfrak X$, and specialization, which reaches every closed point of a topologically finite-type formal scheme by Section 8.1, produces the required extension point. Uniqueness follows because two extensions agree on the dense generic fiber, and the diagonal of a morphism whose generic fiber is separated is itself separated. Hence $\mathfrak f$ is proper. $\square$
+
+**Lemma (lattice extension).** In the situation above, after replacing $\mathfrak X$ by a further admissible blowup, the coherent sheaf $\mathcal F$ extends to a coherent sheaf $\mathfrak F$ on $\mathfrak X$ with
+
+$$
+\mathfrak F_\eta\simeq\mathcal F .
+$$
+
+**Proof.** Cover $X$ by finitely many affinoids $X_i=\operatorname{Sp}A_i$ mapping into affinoid patches of $Y$, choose rings of definition, and present $\mathcal F|_{X_i}$ by finite matrices with entries in $A_i$. Multiplying the matrices by a common power of $\pi$ brings the entries into the chosen rings of definition, producing coherent formal modules $\mathfrak F_i$ on the affine models with $(\mathfrak F_i)_\eta\simeq\mathcal F|_{X_i}$. On overlaps, the two identifications differ by matrices with analytic entries; clearing denominators once more and passing to a common admissible refinement, which Theorem 9.2 provides for the finitely many overlaps, makes the transition isomorphisms integral, so they define gluing data for the $\mathfrak F_i$. Quotienting the glued module by its $\pi$-torsion preserves the generic fiber, because inverting $\pi$ kills torsion, and yields an admissible coherent sheaf with the required property. $\square$
+
+**Theorem 9.3 (coherence part of Theorem 6.2).** Let $f:X\to Y$ be a proper morphism of quasi-compact quasi-separated rigid spaces and let $\mathcal F$ be coherent on $X$. Then each $R^qf_*\mathcal F$ is coherent.
+
+**Proof.** Coherence is local on $Y$, so take $Y=\operatorname{Sp}B$ affinoid. Choose a ring of definition $A\subset B$, topologically of finite type over $R$ with $A[1/\pi]=B$, and set $\mathfrak Y=\operatorname{Spf}A$. Choose, by Theorem 9.2, an admissible blowup $\mathfrak X'\to\mathfrak X$ of an admissible model $\mathfrak X$ of $X$ together with a formal morphism $\mathfrak f:\mathfrak X'\to\mathfrak Y$ extending $f$; replace $\mathfrak X$ by $\mathfrak X'$. The previous two lemmas make $\mathfrak f$ proper and extend $\mathcal F$ to a coherent sheaf $\mathfrak F$ with $\mathfrak F_\eta\simeq\mathcal F$. For an affinoid open $V=\operatorname{Sp}B'$ of $Y$, presented rationally without loss of generality, the comparison lemma applied over the induced formal base change identifies
+
+# $$H^q(f^{-1}(V),\mathcal F)
+
+H^q(\mathfrak X_V,\mathfrak F)\otimes_RK,
+$$
+
+where $\mathfrak X_V$ is the inverse image of the corresponding formal open and $K$ enters because $A'[1/\pi]=B'$ for the ring of definition $A'$ of the rational domain. By Book 58, Section 8.2, applied to the proper formal morphism $\mathfrak f$, the sheaf $R^q\mathfrak f_*\mathfrak F$ is coherent, so $H^q(\mathfrak X_V,\mathfrak F)$ is a finite module over $A'$, and hence $H^q(f^{-1}(V),\mathcal F)$ is finite over $B'=A'[1/\pi]$ for every affinoid open $V$. These finitenesses glue: over a finite rational cover of $Y$, the restrictions of $R^qf_*\mathcal F$ are the sheaves attached to finite modules, and the descent data are inherited from those of $\mathcal F$, so Chapter 6's gluing produces a coherent sheaf on $Y$ whose sections over affinoids are exactly these groups. That sheaf is $R^qf_*\mathcal F$. $\square$
+
+**Vanishing above fiber dimension.** The second clause of Theorem 6.2 holds under one additional hypothesis, satisfied in every application made below: there is a model $\mathfrak f:\mathfrak X\to\mathfrak Y$ as above whose special fibers have dimension at most $d$. Indeed, formal functions identify $R^q\mathfrak f_*\mathfrak F$ with the inverse limit of the direct images at finite levels, each of which vanishes for $q>d$ by Grothendieck's dimension vanishing on the noetherian schemes $\mathfrak X_n$ of dimension at most $d+\dim\mathfrak Y_s$ together with the corresponding statement fiberwise; the Mittag--Leffler condition is automatic for quotients of a finite module, and Nakayama then kills the limit. Tensoring with $K$ and using the comparison lemma gives $R^qf_*\mathcal F=0$ for $q>d$. The hypothesis holds automatically when $f$ is a curve over a point or when the model can be taken flat of the expected relative dimension: for an admissible model, flatness ties special-fiber dimension to generic-fiber dimension by the dimension formula, and blowing up along the special fiber never raises it. In particular, if $X$ is a proper rigid curve over $K$ and $\mathcal F$ is coherent, then $H^q(X,\mathcal F)=0$ for $q\geq2$ and both $H^0$ and $H^1$ are finite-dimensional $K$-vector spaces. These are precisely the finiteness statements used in Chapter 12.
 
 ## 10. Tubes
 
@@ -1958,7 +2003,7 @@ The main results of the book can be used safely by keeping their hypotheses visi
 
 **Localization and sheaves.** Rational domains require numerators together with the denominator to generate the unit ideal. Rational localization is flat, not necessarily faithfully flat. Faithfulness comes from a finite cover. Tate acyclicity concerns admissible finite affinoid covers and finite modules; covers by arbitrary affinoid subdomains additionally consume the Gerritzen--Grauert standing input of Section 5.1, which is not used elsewhere in this book. Coherent descent on general spaces uses quasi-separatedness.
 
-**Formal models.** The formal chapters assume a complete discrete valuation ring $R$ with fraction field $K$. Admissible formal schemes are topologically of finite type and $R$-flat. The admissible-blowup invariance theorem requires an open center, equivalently one supported on the special fiber; a nonopen center has no such invariance guarantee. Generic fibers forget $\pi$-torsion.
+**Formal models.** The formal chapters assume a complete discrete valuation ring $R$ with fraction field $K$. Admissible formal schemes are topologically of finite type and $R$-flat. The admissible-blowup invariance theorem requires an open center, equivalently one supported on the special fiber; a nonopen center has no such invariance guarantee. Generic fibers forget $\pi$-torsion. Coherence of higher direct images is unconditional (Section 9.5); its vanishing clause consumes the model-dimension hypothesis recorded there, automatic for proper curves and for flat models of the expected dimension.
 
 **Reduction and tubes.** Specialization sends maximal analytic points to scheme points by reduction of bounded values. It is naturally surjective onto closed points in the finite-type setting, not asserted onto every nonclosed point at this level. Tubes depend on reduced strata and are often non-affinoid. Their descriptions by discs and annuli may require finite residue-field extension or étale coordinates.
 
