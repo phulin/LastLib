@@ -8,6 +8,9 @@ noncomputable section
 open Ideal
 open scoped BigOperators nonZeroDivisors
 
+attribute [local instance] FractionRing.liftAlgebra
+  FractionRing.isScalarTower_liftAlgebra
+
 /-! ## 8.4. Discriminants in towers -/
 
 /- LOCAL_DEPENDENCY_GUESS: the preceding chapters provide the numerical
@@ -69,6 +72,8 @@ theorem chapter08_discriminant_ideal_tower_formula
     [Algebra A M] [Algebra B M] [Algebra C L]
     [Algebra B L] [Algebra A L]
     [IsScalarTower A B C] [IsScalarTower A K M]
+    [IsScalarTower A B M] [IsScalarTower B M L]
+    [IsScalarTower A K L]
     [IsScalarTower K M L] [IsScalarTower A M L]
     [IsScalarTower A B L] [IsScalarTower B C L]
     [IsScalarTower A C L]
@@ -88,7 +93,29 @@ theorem chapter08_discriminant_ideal_tower_formula
     chapter08RelativeDiscriminantIdeal A C =
       chapter08RelativeDiscriminantIdeal A B ^ (Module.finrank M L) *
         Ideal.relNorm A (chapter08RelativeDiscriminantIdeal B C) := by
-  sorry
+  let _ : Algebra (FractionRing A) (FractionRing C) :=
+    FractionRing.liftAlgebra A (FractionRing C)
+  have hmaps : RingHom.comp (algebraMap (FractionRing A) (FractionRing C))
+      ↑(FractionRing.algEquiv A K).symm.toRingEquiv =
+      RingHom.comp ↑(FractionRing.algEquiv C L).symm.toRingEquiv
+        (algebraMap K L) := by
+    apply IsLocalization.ringHom_ext A⁰
+    ext x
+    simp only [RingHom.coe_comp, Function.comp_apply, RingHom.coe_coe,
+      AlgEquiv.coe_ringEquiv, AlgEquiv.commutes,
+      ← IsScalarTower.algebraMap_apply]
+    rw [IsScalarTower.algebraMap_apply A C L, AlgEquiv.commutes,
+      ← IsScalarTower.algebraMap_apply]
+  let _ : Algebra.IsSeparable (FractionRing A) (FractionRing C) :=
+    Algebra.IsSeparable.of_equiv_equiv _ _ hmaps
+  rw [chapter08_relative_discriminant_ideal_eq_norm_different A C K L,
+    chapter08_relative_discriminant_ideal_eq_norm_different A B K M,
+    chapter08_relative_discriminant_ideal_eq_norm_different B C M L,
+    ← Ideal.relNorm_relNorm A B,
+    chapter08_different_ideal_transitivity A B C,
+    map_mul, Ideal.relNorm_algebraMap, map_mul, map_pow]
+  rw [IsFractionRing.finrank_eq B M C L]
+  ac_rfl
 
 theorem chapter08_discriminant_ideal_tower_formula_expanded
     (A B C K M L : Type*) [CommRing A]
@@ -100,6 +127,8 @@ theorem chapter08_discriminant_ideal_tower_formula_expanded
     [Algebra A M] [Algebra B M] [Algebra C L]
     [Algebra B L] [Algebra A L]
     [IsScalarTower A B C] [IsScalarTower A K M]
+    [IsScalarTower A B M] [IsScalarTower B M L]
+    [IsScalarTower A K L]
     [IsScalarTower K M L] [IsScalarTower A M L]
     [IsScalarTower A B L] [IsScalarTower B C L]
     [IsScalarTower A C L]
@@ -119,7 +148,8 @@ theorem chapter08_discriminant_ideal_tower_formula_expanded
     chapter08RelativeDiscriminantIdeal A C =
       chapter08RelativeDiscriminantIdeal A B ^ (Module.finrank M L) *
         Ideal.relNorm A (Ideal.relNorm B (chapter08DifferentIdeal B C)) := by
-  sorry
+  rw [chapter08_discriminant_ideal_tower_formula A B C K M L,
+    chapter08_relative_discriminant_ideal_eq_norm_different B C M L]
 
 /- The same intrinsic identity is deliberately exposed without a Galois
    hypothesis, recording the source's nongalois warning as an API fact. -/
