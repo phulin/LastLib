@@ -57,7 +57,29 @@ theorem chapter09_corollary_92
     (hseparable : Algebra.IsSeparable (chapter09BaseResidueField A)
       (chapter09ExtensionResidueField B)) :
     Nonempty (Chapter09Corollary92Data A B K L) := by
-  sorry
+  obtain ⟨K₀, hK₀, _⟩ := chapter09_maximal_unramified_subextension A B K L
+  obtain ⟨r, hr⟩ :=
+    (chapter09_remainder_totally_ramified_iff_residue_separable
+      A B K L K₀ hK₀).mpr hseparable
+  let d := Classical.choice hK₀.1
+  have hs : chapter09MaximalSeparableResidueSubfield
+      (chapter09BaseResidueField A) (chapter09ExtensionResidueField B) = ⊤ :=
+    (chapter09_separable_residue_part_eq_top_iff
+      (chapter09BaseResidueField A) (chapter09ExtensionResidueField B)).mpr hseparable
+  refine ⟨{
+    K₀ := K₀
+    finite_base := inferInstance
+    finite_remainder := inferInstance
+    maximal := hK₀
+    unramified := chapter09_maximal_unramified_is_unramified A B K L K₀ hK₀
+    remainder := r
+    remainder_totally_ramified := hr
+    base_degree := by
+      rw [d.field_degree_eq_residue_degree, hs]
+      simpa using (chapter09_residue_degree_eq_finrank A B).symm
+    remainder_degree := by
+      rw [r.remainder_degree_formula, hr, mul_one, r.ramification_index_eq]
+  }⟩
 
 /-- The two displayed degree identities of Corollary 9.2. -/
 theorem chapter09_corollary_92_degree_formulas
@@ -103,7 +125,9 @@ theorem chapter09_finite_residue_field_clean_decomposition
     [Finite (chapter09BaseResidueField A)]
     [Chapter09FiniteLocalExtension A B K L] :
     Nonempty (Chapter09Corollary92Data A B K L) := by
-  sorry
+  exact chapter09_corollary_92 A B K L
+    (chapter09_perfect_residue_field_gives_separable_extension
+      (chapter09BaseResidueField A) (chapter09ExtensionResidueField B))
 
 /-- A clean unramified-then-totally-ramified decomposition exists exactly for
 separable residue extensions. -/

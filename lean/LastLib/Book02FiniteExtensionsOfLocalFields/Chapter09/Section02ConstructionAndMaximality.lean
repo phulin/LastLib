@@ -64,6 +64,33 @@ structure Chapter09UnramifiedIntermediateData
     letI : IsDiscreteValuationRing ring := dvr
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex A ring
         (IsLocalRing.maximalIdeal ring) = 1
+  /-- The unramified stage has field degree equal to the degree of its
+  identified residue field. -/
+  field_degree_eq_residue_degree :
+    Module.finrank K K₀ = Module.finrank (chapter09BaseResidueField A) s
+  /-- Removing the unramified stage does not change the ramification index. -/
+  remainder_ramification_index_eq :
+    letI : Algebra ring B := ring_to_extension.toRingHom.toAlgebra
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex
+        ring B (IsLocalRing.maximalIdeal B) =
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex
+        A B (IsLocalRing.maximalIdeal B)
+  /-- The residue degree of the remainder is the degree over the selected
+  separable residue subfield. -/
+  remainder_residue_degree_eq :
+    letI : Algebra ring B := ring_to_extension.toRingHom.toAlgebra
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterResidueDegree
+        ring B (IsLocalRing.maximalIdeal B) =
+      Module.finrank s (chapter09ExtensionResidueField B)
+  /-- The field degree of the remainder is accounted for by its actual local
+  invariants. -/
+  remainder_degree_formula :
+    letI : Algebra ring B := ring_to_extension.toRingHom.toAlgebra
+    Module.finrank K₀ L =
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex
+          ring B (IsLocalRing.maximalIdeal B) *
+        LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterResidueDegree
+          ring B (IsLocalRing.maximalIdeal B)
 
 /-- The property “`K₀/K` is an unramified intermediate field”.  The residue
 field is existential here because an arbitrary unramified intermediate field
@@ -394,7 +421,27 @@ theorem chapter09_remainder_invariants
     (K₀ : IntermediateField K L)
     (hK₀ : chapter09MaximalUnramifiedSubextension A B K L K₀) :
     Nonempty (Chapter09RemainderInvariantData A B K L K₀) := by
-  sorry
+  let d := Classical.choice hK₀.1
+  refine ⟨{
+    base_data := hK₀.1
+    ramification_index :=
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex
+        A B (IsLocalRing.maximalIdeal B)
+    residue_degree := Module.finrank
+      (chapter09MaximalSeparableResidueSubfield
+        (chapter09BaseResidueField A) (chapter09ExtensionResidueField B))
+      (chapter09ExtensionResidueField B)
+    remainder_ramification_index_is_actual := d.remainder_ramification_index_eq.symm
+    remainder_residue_degree_is_actual := d.remainder_residue_degree_eq.symm
+    ramification_index_eq := rfl
+    residue_degree_eq := rfl
+    remainder_degree_formula := by
+      rw [d.remainder_degree_formula, d.remainder_ramification_index_eq,
+        d.remainder_residue_degree_eq]
+    residue_extension_purely_inseparable :=
+      (chapter09_separable_residue_part_properties
+        (chapter09BaseResidueField A) (chapter09ExtensionResidueField B)).2
+  }⟩
 
 /-- The remainder is totally ramified precisely when the original residue
 extension is separable. -/
@@ -416,7 +463,28 @@ theorem chapter09_remainder_totally_ramified_iff_residue_separable
       r.residue_degree = 1) ↔
       Algebra.IsSeparable (chapter09BaseResidueField A)
         (chapter09ExtensionResidueField B) := by
-  sorry
+  let s := chapter09MaximalSeparableResidueSubfield
+    (chapter09BaseResidueField A) (chapter09ExtensionResidueField B)
+  constructor
+  · rintro ⟨r, hr⟩
+    have hsfinrank : Module.finrank s (chapter09ExtensionResidueField B) = 1 := by
+      rw [← r.residue_degree_eq]
+      exact hr
+    have hs : s = ⊤ :=
+      (IntermediateField.finrank_eq_one_iff_eq_top (K := s)).mp hsfinrank
+    exact (chapter09_separable_residue_part_eq_top_iff
+      (chapter09BaseResidueField A) (chapter09ExtensionResidueField B)).mp hs
+  · intro hsep
+    obtain ⟨r⟩ := chapter09_remainder_invariants A B K L K₀ hK₀
+    refine ⟨r, ?_⟩
+    rw [r.residue_degree_eq]
+    have hs : s = ⊤ :=
+      (chapter09_separable_residue_part_eq_top_iff
+        (chapter09BaseResidueField A) (chapter09ExtensionResidueField B)).mpr hsep
+    rw [show chapter09MaximalSeparableResidueSubfield
+      (chapter09BaseResidueField A) (chapter09ExtensionResidueField B) = s from rfl,
+      hs]
+    simp
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09

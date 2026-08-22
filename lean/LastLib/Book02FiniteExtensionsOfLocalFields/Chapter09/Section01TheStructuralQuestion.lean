@@ -99,6 +99,19 @@ theorem chapter09_totally_ramified_iff
         (IsLocalRing.maximalIdeal B) = 1 := by
   rfl
 
+/-- For a local extension, the intrinsic inertia degree is the vector-space
+degree of the canonical residue-field extension. -/
+theorem chapter09_residue_degree_eq_finrank
+    (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
+    [IsLocalRing A] [IsLocalRing B] [IsLocalHom (algebraMap A B)] :
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterResidueDegree
+        A B (IsLocalRing.maximalIdeal B) =
+      Module.finrank (chapter09BaseResidueField A)
+        (chapter09ExtensionResidueField B) := by
+  unfold LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterResidueDegree
+  exact Ideal.inertiaDeg_eq_of_isMaximal
+    (IsLocalRing.maximalIdeal A) (IsLocalRing.maximalIdeal B)
+
 /-- The separable part of a finite residue extension, using Mathlib's canonical
 separable closure rather than redeclaring a subfield. -/
 noncomputable def chapter09MaximalSeparableResidueSubfield
