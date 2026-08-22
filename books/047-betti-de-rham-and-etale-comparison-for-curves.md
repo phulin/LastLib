@@ -250,35 +250,94 @@ We shall need (2.1) only through the two uses above—the smooth approximation o
 
 ### 2.2 Cochains and the universal coefficient theorem
 
-Define
+For an abelian group $A$ define the simplicial cochain group
 
 $$
-C^n(T,A)=\operatorname{Hom}_{\mathbf Z}(C_n(T,\mathbf Z),A),
-\qquad d\varphi=\varphi\circ\partial.
+C^n(K,A)=\operatorname{Hom}_{\mathbf Z}(C_n(K,\mathbf Z),A),
+\qquad d\varphi=\varphi\circ\partial,
 $$
 
-Then $d^2=0$ and $H^n_B(T,A)=H^n(C^\bullet(T,A))$. Pulling a cochain back along $f_*$ makes cohomology contravariant.
+so that $d^2=0$ because $\partial^2=0$, and define $H^n_B(K,A)=H^n(C^\bullet(K,A))$. Evaluation of cochains on chains satisfies $\langle d\varphi,c\rangle=\langle\varphi,\partial c\rangle$ by construction; consequently cocycles pair with cycles, coboundaries vanish on boundaries, and evaluation descends to a bilinear pairing $\langle-,-\rangle:H^n_B(K,A)\otimes H_n(K,\mathbf Z)\to A$. Pullback along simplicial maps makes cohomology contravariantly functorial.
 
-For any chain complex of free abelian groups there is a natural short exact sequence
-
-$$
-0\longrightarrow
-\operatorname{Ext}^1_{\mathbf Z}(H_{n-1}(T,\mathbf Z),A)
-\longrightarrow H^n_B(T,A)
-\longrightarrow
-\operatorname{Hom}_{\mathbf Z}(H_n(T,\mathbf Z),A)
-\longrightarrow0. \tag{2.2}
-$$
-
-To prove it, write $Z_n=\ker\partial$ and $B_n=\operatorname{im}\partial$. Since subgroups of free abelian groups are free, split $0\to Z_n\to C_n\to B_{n-1}\to0$. A cocycle is a homomorphism on $C_n$ vanishing on $B_n$, hence a homomorphism on $C_n/B_n$. Comparing the two exact sequences obtained by applying $\operatorname{Hom}(-,A)$ to $0\to H_n\to C_n/B_n\to B_{n-1}\to0$ and $0\to B_{n-1}\to Z_{n-1}\to H_{n-1}\to0$ gives (2.2). The splitting is generally not natural.
-
-For a compact oriented surface all integral homology groups are free. The Ext term vanishes, so evaluation gives the canonical identification
+The universal coefficient theorems for these complexes are statements of finite linear algebra over $\mathbf Z$, valid in complete generality—no torsion-freeness is assumed anywhere. Write $Z_n=\ker\partial_n$ and $B_n=\operatorname{im}\partial_{n+1}$, so that $H_n=Z_n/B_n$ and $B_n\subseteq Z_n$. We use once, as a standing lemma of basic algebra, that every subgroup of a free abelian group is free; hence every $Z_n$ and every $B_n$ is free. Two exact sequences govern everything:
 
 $$
-H^n_B(T,A)\simeq\operatorname{Hom}(H_n(T,\mathbf Z),A). \tag{2.3}
+0\longrightarrow Z_n\longrightarrow C_n\xrightarrow{\ \partial_n\ }B_{n-1}\longrightarrow0,
+\tag{2.2a}
 $$
 
-In particular, reduction and inverse limits behave cleanly for the curves considered here.
+which splits because its right term is free, and
+
+$$
+0\longrightarrow B_n\longrightarrow Z_n\longrightarrow H_n\longrightarrow0,
+\tag{2.2b}
+$$
+
+which is the definition of $H_n$ together with freeness of its two subgroups.
+
+**Universal coefficient theorem.** _For every abelian group $A$ there are natural short exact sequences_
+
+$$
+0\longrightarrow H_n(K,\mathbf Z)\otimes A\longrightarrow H_n(K,A)\longrightarrow\operatorname{Tor}_{\mathbf Z}(H_{n-1}(K,\mathbf Z),A)\longrightarrow0
+$$
+
+_and_
+
+$$
+0\longrightarrow\operatorname{Ext}^1_{\mathbf Z}(H_{n-1}(K,\mathbf Z),A)\longrightarrow H^n_B(K,A)\xrightarrow{\ e\ }\operatorname{Hom}_{\mathbf Z}(H_n(K,\mathbf Z),A)\longrightarrow0,
+\tag{2.2}
+$$
+
+_where $e$ sends a cohomology class to its evaluation on integral cycles._
+
+_Proof._ The homological sequence comes from viewing (2.2a) as a levelwise-split short exact sequence of complexes, after equipping $Z_\bullet$ with zero differentials and reindexing the boundary images so that the term in degree $n$ of the third complex is $B_{n-1}$. Tensoring with $A$ preserves exactness because $\operatorname{Tor}(B_{n-1},A)=0$ for free $B_{n-1}$, so we may tensor and take the long exact sequence. Since both flanking complexes have zero differential, that long exact sequence contains the segment
+
+$$
+B_n\otimes A\xrightarrow{\ \iota_*\ }Z_n\otimes A\longrightarrow H_n(K,A)
+\longrightarrow B_{n-1}\otimes A\xrightarrow{\ \iota_*\ }Z_{n-1}\otimes A,
+$$
+
+where $\iota$ denotes the inclusions $B_n\hookrightarrow Z_n$ supplied by (2.2b). Applying $-\otimes A$ to (2.2b) at levels $n$ and $n-1$ yields
+
+$$
+0\to\operatorname{Tor}(H_n,A)\to B_n\otimes A\to Z_n\otimes A\to H_n\otimes A\to0,
+$$
+
+so the image of the left map in the segment, namely $(Z_n\otimes A)/\operatorname{im}(\iota_*)$, identifies with $H_n\otimes A$, and the image of the right-hand surjection out of $H_n(K,A)$ identifies with $\ker(\iota_*)=\operatorname{Tor}(H_{n-1},A)$. Exactness of the segment therefore produces the homological universal coefficient sequence, naturally in $K$ and $A$.
+
+For cohomology, let $r:C^n(K,A)\to\operatorname{Hom}_{\mathbf Z}(Z_n,A)$ be restriction of functionals. Three observations give (2.2).
+
+First, a cochain $\varphi$ is a cocycle precisely when $\varphi$ vanishes on $B_n$; and every functional $\psi:Z_n\to A$ vanishing on $B_n$ extends to such a cocycle—split (2.2a) as $C_n=Z_n\oplus E_n$ and extend by zero on $E_n$. Hence restriction identifies cocycles with functionals on $Z_n$ killing $B_n$, that is, with $\operatorname{Hom}_{\mathbf Z}(H_n,A)$; since coboundaries vanish on $Z_n$, evaluation on cycles descends to a surjection
+$e:H^n_B(K,A)\twoheadrightarrow\operatorname{Hom}_{\mathbf Z}(H_n(K,\mathbf Z),A)$,
+natural in $K$ and $A$.
+
+Second, the kernel of $e$ consists of classes of cocycles vanishing on all of $Z_n$. Such a $\varphi$ factors uniquely through the surjection $\partial_n:C_n\twoheadrightarrow B_{n-1}$: define $\lambda_\varphi:B_{n-1}\to A$ by $\lambda_\varphi(\partial c)=\varphi(c)$, which is well defined because $\partial c=\partial c'$ forces $c-c'\in Z_n$. Conversely, for every $\lambda:B_{n-1}\to A$ the cochain $\lambda\circ\partial_n$ is a cocycle vanishing on $Z_n$, because $\partial^2=0$. Under this correspondence a coboundary $d\chi=\chi\circ\partial_n$ is sent to the restriction $\chi|_{B_{n-1}}$. Therefore
+
+$$
+\ker(e)\;\cong\;\operatorname{Hom}_{\mathbf Z}(B_{n-1},A)\Big/\operatorname{im}\bigl(\operatorname{Hom}_{\mathbf Z}(C_{n-1},A)\xrightarrow{\rho}\operatorname{Hom}_{\mathbf Z}(B_{n-1},A)\bigr),
+$$
+
+with $\rho$ the restriction map.
+
+Third, the image of $\rho$ equals the image of restriction from $Z_{n-1}$ instead of $C_{n-1}$: one inclusion is obvious, and conversely every functional on $Z_{n-1}$ extends to $C_{n-1}$ by the splitting of (2.2a) at level $n-1$, extensions agreeing with the original on $B_{n-1}\subseteq Z_{n-1}$. Now apply $\operatorname{Hom}_{\mathbf Z}(-,A)$ to the free presentation (2.2b) at level $n-1$. Since $\operatorname{Ext}^1_{\mathbf Z}(Z_{n-1},A)=0$—the group $Z_{n-1}$ is free—we obtain the exact sequence
+
+$$
+0\to\operatorname{Hom}_{\mathbf Z}(H_{n-1},A)\to\operatorname{Hom}_{\mathbf Z}(Z_{n-1},A)
+\xrightarrow{\rho'}\operatorname{Hom}_{\mathbf Z}(B_{n-1},A)
+\to\operatorname{Ext}^1_{\mathbf Z}(H_{n-1},A)\to0.
+$$
+
+The displayed cokernel of $\rho'$ is thus $\operatorname{Ext}^1_{\mathbf Z}(H_{n-1}(K,\mathbf Z),A)$, canonically, this being the standard free-resolution presentation of Ext. Chaining the three observations gives (2.2). Naturality holds throughout: $e$ is evaluation on cycles and the kernel identification passes through the canonical presentation (2.2b), both functorial under pullback along simplicial maps. $\square$
+
+Neither sequence need split naturally, and we shall never use a splitting. For reference, the end terms are the classical torsion corrections: if $H_{n-1}$ contains a cyclic summand of order $m$ then $\operatorname{Ext}^1_{\mathbf Z}(\mathbf Z/m,A)=A/mA$ and $\operatorname{Tor}_{\mathbf Z}(\mathbf Z/m,A)=\ker(A\xrightarrow{\times m}A)$, and these account for every deviation of (2.2) and of its homological companion from being isomorphisms.
+
+For the curves of this book no correction ever occurs. The genus calculation of Section 3.2 exhibits the integral homology of a compact orientable surface explicitly as $\mathbf Z$, $\mathbf Z^{2h}$, and zero above degree two—in particular it is torsion-free—so both correction terms vanish and (2.2) collapses to the canonical evaluation isomorphism
+
+$$
+H^n_B(T,A)\simeq\operatorname{Hom}_{\mathbf Z}(H_n(T,\mathbf Z),A). \tag{2.3}
+$$
+
+Reduction modulo $n$, extension of coefficients to a ring, and passage to inverse limits therefore act entrywise on these Hom groups, and the Betti groups with finite or ℓ-adic coefficients used below inherit their structure from one finitely generated integral lattice without hidden derived terms.
 
 ### 2.3 Cup products and cap products
 
