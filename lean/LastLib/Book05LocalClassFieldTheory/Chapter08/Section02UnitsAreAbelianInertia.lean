@@ -68,7 +68,13 @@ theorem chapter08_inertia_image_mem_iff
     (I : Subgroup G) (ab : G →* A) (a : A) :
     a ∈ chapter08InertiaImageInAbelianization I ab ↔
       ∃ g : I, ab g = a := by
-  sorry
+  change a ∈ I.map ab ↔ ∃ g : I, ab g = a
+  rw [Subgroup.mem_map]
+  constructor
+  · rintro ⟨g, hg, hga⟩
+    exact ⟨⟨g, hg⟩, hga⟩
+  · rintro ⟨g, hga⟩
+    exact ⟨g, g.property, hga⟩
 
 /- The finite-level statement uses the canonical inertia subgroup attached to
    the preserved valuation branch. -/
@@ -121,7 +127,23 @@ theorem chapter08_infinite_units_map_subgroup_le_inertia_image
     (chapter08UnitFiltration D.valuation 0).map
         (chapter08LocalReciprocity S) ≤
       U.quotient.ker := by
-  sorry
+  intro x hx
+  rcases hx with ⟨u, hu, rfl⟩
+  change U.quotient (chapter08LocalReciprocity S u) = 1
+  apply U.completionEquiv.injective
+  change U.completionEquiv
+      (U.quotient
+        (LastLib.Book05LocalClassFieldTheory.Chapter07.chapter07LocalReciprocity
+          S u)) = U.completionEquiv 1
+  rw [U.reciprocity_valuation, map_one]
+  have huval : U.valuation u = 1 := by
+    rw [hvaluation]
+    exact (D.mem_units_iff u).mp hu
+  change chapter08IntegerToProfiniteCompletion
+      (Multiplicative.toAdd (U.valuation u)) = 1
+  rw [huval]
+  simp [chapter08IntegerToProfiniteCompletion,
+    LastLib.Book05LocalClassFieldTheory.Chapter07.chapter07IntegerToProfiniteCompletion_zero]
 
 def chapter08UnitReciprocityIntoInertia
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
