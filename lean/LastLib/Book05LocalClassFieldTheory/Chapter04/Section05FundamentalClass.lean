@@ -205,7 +205,164 @@ theorem chapter04_split_descent_produces_a_cocycle
     ∀ g h k,
       D.cocycleValue g h * D.cocycleValue (g * h) k =
         (g • D.cocycleValue h k) * D.cocycleValue g (h * k) := by
-  sorry
+  have hmatrix : ∀ (g h : Gal(L / K)) (X : Module.End L V) (v : V),
+      D.matrixAction g (D.matrixAction h X) v = D.matrixAction (g * h) X v := by
+    intro g h X v
+    rw [D.matrixAction_apply, D.matrixAction_apply, D.matrixAction_apply]
+    rw [← D.semilinear_mul h⁻¹ g⁻¹, ← D.semilinear_mul g h]
+    simp
+  have hcomp : ∀ (g : Gal(L / K)) (X Y : Module.End L V) (v : V),
+      D.matrixAction g (X * Y) v =
+        (D.matrixAction g X) ((D.matrixAction g Y) v) := by
+    intro g X Y v
+    rw [D.matrixAction_apply, D.matrixAction_apply, D.matrixAction_apply]
+    simp only [Module.End.mul_apply]
+    rw [← D.semilinear_mul g⁻¹ g]
+    simp only [inv_mul_cancel, D.semilinear_one]
+  have hsmul : ∀ (g : Gal(L / K)) (a : L) (X : Module.End L V) (v : V),
+      D.matrixAction g (a • X) v =
+        (g • a) • D.matrixAction g X v := by
+    intro g a X v
+    rw [D.matrixAction_apply, D.matrixAction_apply]
+    simp only [LinearMap.smul_apply]
+    exact D.semilinear_smul g a (X (D.semilinear_action g⁻¹ v))
+  have hmatrixop : ∀ (g h : Gal(L / K)) (X : Module.End L V),
+      D.matrixAction g (D.matrixAction h X) = D.matrixAction (g * h) X := by
+    intro g h X
+    ext v
+    exact hmatrix g h X v
+  have hcompop : ∀ (g : Gal(L / K)) (X Y : Module.End L V),
+      D.matrixAction g (X * Y) =
+        D.matrixAction g X * D.matrixAction g Y := by
+    intro g X Y
+    ext v
+    exact hcomp g X Y v
+  have hsmulop : ∀ (g : Gal(L / K)) (a : L) (X : Module.End L V),
+      D.matrixAction g (a • X) =
+        (g • a) • D.matrixAction g X := by
+    intro g a X
+    ext v
+    exact hsmul g a X v
+  have hscalarop : ∀ (h k : Gal(L / K)),
+      D.linear_operators h * D.matrixAction h (D.linear_operators k) =
+        (D.cocycleValue h k : L) • D.linear_operators (h * k) := by
+    intro h k
+    ext v
+    change D.linear_operators h (D.matrixAction h (D.linear_operators k) v) =
+      (D.cocycleValue h k : L) • D.linear_operators (h * k) v
+    exact D.scalar_relation h k v
+  have hne : (1 : Module.End L V) ≠ 0 := by
+    obtain ⟨e⟩ := D.split_matrix_identification
+    intro h
+    have heq : (1 : L ⊗[K] D.algebra.carrier) = 0 := by
+      apply e.injective
+      simpa using h
+    exact one_ne_zero heq
+  have hnonzero : ∃ v : V, v ≠ 0 := by
+    by_contra h
+    apply hne
+    ext v
+    have hv : v = 0 := by
+      by_contra hv
+      exact h ⟨v, hv⟩
+    simp [hv]
+  obtain ⟨v₀, hv₀⟩ := hnonzero
+  intro g h k
+  apply Units.ext
+  have hleft :
+      D.linear_operators g
+          (D.matrixAction g (D.linear_operators h)
+            (D.matrixAction (g * h) (D.linear_operators k) v₀)) =
+        ((D.cocycleValue g h : L) *
+          (D.cocycleValue (g * h) k : L)) •
+          D.linear_operators (g * h * k) v₀ := by
+    calc
+      D.linear_operators g
+          (D.matrixAction g (D.linear_operators h)
+            (D.matrixAction (g * h) (D.linear_operators k) v₀)) =
+          (D.cocycleValue g h : L) •
+            D.linear_operators (g * h)
+              (D.matrixAction (g * h) (D.linear_operators k) v₀) :=
+        D.scalar_relation g h _
+      _ = (D.cocycleValue g h : L) •
+          ((D.cocycleValue (g * h) k : L) •
+            D.linear_operators (g * h * k) v₀) := by
+        rw [D.scalar_relation (g * h) k v₀]
+      _ = ((D.cocycleValue g h : L) *
+          (D.cocycleValue (g * h) k : L)) •
+          D.linear_operators (g * h * k) v₀ := by
+        rw [smul_smul]
+  have hrightop :
+      D.matrixAction g (D.linear_operators h) *
+          D.matrixAction (g * h) (D.linear_operators k) =
+        (g • (D.cocycleValue h k : L)) •
+          D.matrixAction g (D.linear_operators (h * k)) := by
+    calc
+      D.matrixAction g (D.linear_operators h) *
+          D.matrixAction (g * h) (D.linear_operators k) =
+          D.matrixAction g (D.linear_operators h) *
+            D.matrixAction g (D.matrixAction h (D.linear_operators k)) := by
+        rw [hmatrixop g h (D.linear_operators k)]
+      _ = D.matrixAction g
+            (D.linear_operators h *
+              D.matrixAction h (D.linear_operators k)) :=
+        (hcompop g (D.linear_operators h)
+          (D.matrixAction h (D.linear_operators k))).symm
+      _ = D.matrixAction g
+          ((D.cocycleValue h k : L) • D.linear_operators (h * k)) := by
+        rw [hscalarop h k]
+      _ = (g • (D.cocycleValue h k : L)) •
+          D.matrixAction g (D.linear_operators (h * k)) :=
+        hsmulop g (D.cocycleValue h k : L) (D.linear_operators (h * k))
+  have hright :
+      D.linear_operators g
+          (D.matrixAction g (D.linear_operators h)
+            (D.matrixAction (g * h) (D.linear_operators k) v₀)) =
+        ((g • (D.cocycleValue h k : L)) *
+          (D.cocycleValue g (h * k) : L)) •
+          D.linear_operators (g * h * k) v₀ := by
+    calc
+      D.linear_operators g
+          (D.matrixAction g (D.linear_operators h)
+            (D.matrixAction (g * h) (D.linear_operators k) v₀)) =
+          D.linear_operators g
+            ((g • (D.cocycleValue h k : L)) •
+              D.matrixAction g (D.linear_operators (h * k)) v₀) := by
+        have hop := congrArg
+          (fun X : Module.End L V => D.linear_operators g (X v₀)) hrightop
+        simpa only [Module.End.mul_apply, LinearMap.smul_apply] using hop
+      _ = (g • (D.cocycleValue h k : L)) •
+          D.linear_operators g
+            (D.matrixAction g (D.linear_operators (h * k)) v₀) := by
+        rw [map_smul]
+      _ = (g • (D.cocycleValue h k : L)) •
+          ((D.cocycleValue g (h * k) : L) •
+            D.linear_operators (g * h * k) v₀) := by
+        rw [D.scalar_relation g (h * k) v₀]
+        simp only [mul_assoc]
+      _ = ((g • (D.cocycleValue h k : L)) *
+          (D.cocycleValue g (h * k) : L)) •
+          D.linear_operators (g * h * k) v₀ := by
+        rw [smul_smul]
+  have hvector :
+      ((D.cocycleValue g h : L) *
+          (D.cocycleValue (g * h) k : L)) •
+          D.linear_operators (g * h * k) v₀ =
+        ((g • (D.cocycleValue h k : L)) *
+          (D.cocycleValue g (h * k) : L)) •
+          D.linear_operators (g * h * k) v₀ :=
+    hleft.symm.trans hright
+  have hT : D.linear_operators (g * h * k) v₀ ≠ 0 := by
+    intro hz
+    apply hv₀
+    apply (D.linear_operators (g * h * k)).injective
+    simpa using hz
+  have hscalar :
+      (D.cocycleValue g h : L) * (D.cocycleValue (g * h) k : L) =
+        (g • (D.cocycleValue h k : L)) *
+          (D.cocycleValue g (h * k) : L) := by
+    exact smul_left_injective L hT hvector
+  exact hscalar
 
 theorem chapter04_split_descent_inner_automorphisms_exist
     {K L V : Type*} [Field K] [Field L] [Algebra K L]
@@ -214,7 +371,8 @@ theorem chapter04_split_descent_inner_automorphisms_exist
     (D : Chapter04SplitDescentData K L V) :
     ∀ g, ∃ T : V ≃ₗ[L] V, ∀ X v,
       D.matrixAction g X v = T (X (T.symm v)) := by
-  sorry
+  intro g
+  exact ⟨D.linear_operators g, D.inner_automorphism_relation g⟩
 
 theorem chapter04_split_descent_scalar_relation
     {K L V : Type*} [Field K] [Field L] [Algebra K L]
@@ -224,7 +382,7 @@ theorem chapter04_split_descent_scalar_relation
     ∀ g h v,
       D.linear_operators g (D.matrixAction g (D.linear_operators h) v) =
         (D.cocycleValue g h : L) • D.linear_operators (g * h) v := by
-  sorry
+  exact D.scalar_relation
 
 theorem chapter04_relative_brauer_group_is_second_cohomology
     {K L : Type} [Field K] [Field L] [Algebra K L]
@@ -272,7 +430,26 @@ theorem chapter04_fundamental_class_exists_unique
     ∃! u : chapter04H2 K L,
       chapter04CohomologyInvariant I R C u =
         chapter04RationalResidueOneOver n := by
-  sorry
+  have _hdegree : Module.finrank K L = n := hdegree
+  have hinj : Function.Injective (chapter04CohomologyInvariant I R C) := by
+    intro u v huv
+    have hsub : (C.toRelative u).1 = (C.toRelative v).1 := by
+      apply I.invariant_injective
+      exact huv
+    have hto : C.toRelative u = C.toRelative v := Subtype.ext hsub
+    calc
+      u = C.fromRelative (C.toRelative u) := (C.left_inverse u).symm
+      _ = C.fromRelative (C.toRelative v) := congrArg C.fromRelative hto
+      _ = v := C.left_inverse v
+  have htarget : chapter04RationalResidueOneOver n ∈
+      Set.range (chapter04CohomologyInvariant I R C) := by
+    rw [himage]
+    exact ⟨1, by simp⟩
+  rcases htarget with ⟨u, hu⟩
+  refine ⟨u, hu, ?_⟩
+  intro v hv
+  apply hinj
+  exact hv.trans hu.symm
 
 structure Chapter04FundamentalClass
     {K L : Type} [Field K] [Field L] [Algebra K L]
