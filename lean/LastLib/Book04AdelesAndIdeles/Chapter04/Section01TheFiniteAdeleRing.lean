@@ -12,9 +12,14 @@ open scoped BigOperators Topology RestrictedProduct
 
 theorem chapter04_finiteAdeleRing_is_commutative_topological_ring
     (K : Type*) [Field K] [NumberField K] :
-    IsTopologicalRing (Chapter04FiniteAdeleRing K) ∧
+      IsTopologicalRing (Chapter04FiniteAdeleRing K) ∧
       ∀ x y : Chapter04FiniteAdeleRing K, x * y = y * x := by
-  sorry
+  refine ⟨(chapter04_finiteAdeleRing_is_locally_compact_topological_ring K).2, ?_⟩
+  intro x y
+  apply chapter04_finiteAdele_ext K
+  intro v
+  rw [chapter04_finiteAdele_mul_apply, chapter04_finiteAdele_mul_apply]
+  exact mul_comm _ _
 
 theorem chapter04_finiteAdele_integrality_is_cofinite
     (K : Type*) [Field K] [NumberField K]
@@ -89,7 +94,7 @@ instance chapter04ProfiniteQuotientTopologicalSpace
 
 theorem chapter04_profiniteCompletion_is_compact_t2_totally_disconnected
     (K : Type*) [Field K] [NumberField K] :
-    CompactSpace (Chapter04ProfiniteCompletion K) ∧
+      CompactSpace (Chapter04ProfiniteCompletion K) ∧
       T2Space (Chapter04ProfiniteCompletion K) ∧
       TotallyDisconnectedSpace (Chapter04ProfiniteCompletion K) := by
   sorry
@@ -148,7 +153,8 @@ theorem chapter04_profinite_reduction_uses_finitely_many_prime_divisors
     (K : Type*) [Field K] [NumberField K]
     (I : Chapter04ProfiniteIdealIndex K) :
     (chapter04ProfiniteIdealPrimeSupport K I).Finite := by
-  sorry
+  have h := Ideal.finite_factors (R := Chapter04RingOfIntegers K) I.2
+  simpa [chapter04ProfiniteIdealPrimeSupport, Ideal.dvd_iff_le] using h
 
 theorem chapter04_profinite_completion_element_is_compatible
     (K : Type*) [Field K] [NumberField K] :
@@ -168,7 +174,11 @@ theorem chapter04_profinite_completion_is_reconstructed_by_CRT
     (x : Chapter04ProfiniteCompletion K) :
     ∃! y : Chapter04FiniteIntegralAdele K,
       chapter04FiniteIntegralAdeleProfiniteCompletionEquiv K y = x := by
-  sorry
+  let e := chapter04FiniteIntegralAdeleProfiniteCompletionEquiv K
+  refine ⟨e.symm x, e.apply_symm_apply x, ?_⟩
+  intro y hy
+  apply e.injective
+  rw [hy, e.apply_symm_apply]
 
 abbrev Chapter04RationalPrime := {p : ℕ // Nat.Prime p}
 
