@@ -36,9 +36,9 @@ theorem chapter10_valuation_neighborhood_basis_mem
 
 /-- Continuity at `1` gives the asymmetric depth estimate needed for norms. -/
 theorem chapter10_local_norm_maps_deep_principal_units
-    (F E : Type*) [NormedField F] [NormedField E] [NormedAlgebra F E]
+    (F E : Type*) [NontriviallyNormedField F] [CompleteSpace F] [NormedField E]
+    [NormedAlgebra F E]
     [FiniteDimensional F E]
-    [TopologicalSpace F] [TopologicalSpace E]
     (vF : AddValuation F (WithTop ℤ)) (vE : AddValuation E (WithTop ℤ))
     (hF : chapter10ValuationNeighborhoodBasis vF)
     (hE : chapter10ValuationNeighborhoodBasis vE)
@@ -49,9 +49,9 @@ theorem chapter10_local_norm_maps_deep_principal_units
   sorry
 
 theorem chapter10_local_norm_maps_deep_principal_unit_sets
-    (F E : Type*) [NormedField F] [NormedField E] [NormedAlgebra F E]
+    (F E : Type*) [NontriviallyNormedField F] [CompleteSpace F] [NormedField E]
+    [NormedAlgebra F E]
     [FiniteDimensional F E]
-    [TopologicalSpace F] [TopologicalSpace E]
     (vF : AddValuation F (WithTop ℤ)) (vE : AddValuation E (WithTop ℤ))
     (hF : chapter10ValuationNeighborhoodBasis vF)
     (hE : chapter10ValuationNeighborhoodBasis vE)
@@ -66,7 +66,8 @@ theorem chapter10_local_norm_maps_deep_principal_unit_sets
   sorry
 
 theorem chapter10_local_norm_tendsto_one
-    (F E : Type*) [NormedField F] [NormedField E] [NormedAlgebra F E]
+    (F E : Type*) [NontriviallyNormedField F] [CompleteSpace F] [NormedField E]
+    [NormedAlgebra F E]
     [FiniteDimensional F E] :
     Filter.Tendsto (chapter10LocalNorm F E)
       (𝓝 (1 : E)) (𝓝 (1 : F)) := by

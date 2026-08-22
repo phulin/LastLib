@@ -131,7 +131,10 @@ theorem chapter10_unramified_norm_valuation
 
 theorem chapter10_unramified_uniformizer_norm
     (F E : Type*) [Field F] [Field E] [Algebra F E]
-    [FiniteDimensional F E] (πF : F) (d : ℕ)
+    [FiniteDimensional F E]
+    (vF : AddValuation F (WithTop ℤ)) (vE : AddValuation E (WithTop ℤ))
+    (d : ℕ) (_hunram : chapter10UnramifiedLocalExtension vF vE)
+    (πF : F) (_hπF : chapter10NormalizedUniformizer vF πF)
     (hdegree : Module.finrank F E = d) :
     chapter10LocalNorm F E (algebraMap F E πF) = πF ^ d := by
   sorry
@@ -257,7 +260,8 @@ theorem lemma_10_1_norms_in_an_unramified_extension
 the source and target, while finite-dimensionality supplies continuity of the
 determinant polynomial. -/
 theorem chapter10_local_norm_continuous
-    (F E : Type*) [NormedField F] [NormedField E] [NormedAlgebra F E]
+    (F E : Type*) [NontriviallyNormedField F] [CompleteSpace F] [NormedField E]
+    [NormedAlgebra F E]
     [FiniteDimensional F E] :
     Continuous (chapter10LocalNorm F E) := by
   sorry

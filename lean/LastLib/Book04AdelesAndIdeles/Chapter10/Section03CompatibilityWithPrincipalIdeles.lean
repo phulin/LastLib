@@ -218,6 +218,7 @@ theorem chapter10_associated_ideal_of_adelic_norm
     (associatedL : lIdeles d → ιL → ℤ)
     (hK : ∀ x v, associatedK x v = ordK v (x v))
     (hL : ∀ x w, associatedL x w = ordL w (x w))
+    (hordK : ∀ v x y, ordK v (x * y) = ordK v x + ordK v y)
     (hlocal : ∀ w y,
       ordK (d.below w) (d.localNorm w y) =
         (id.residueDegree w : ℤ) * ordL w y)

@@ -151,9 +151,12 @@ theorem chapter10_scalar_extension_module_degree_formula
     (M : Chapter10AdelicModuleData d)
     (scalar : ∀ w, Kloc (d.below w) →* Lloc w)
     (hscalar : ∀ w, Set.MapsTo (scalar w) (d.unitK (d.below w)) (d.unitL w))
+    (localDegree : ιL → ℕ)
     (degree : ℕ)
+    (hdegree : ∀ v,
+      ∑ w : {w : ιL // d.below w = v}, localDegree (w : ιL) = degree)
     (hlocal : ∀ w y,
-      M.localL w (scalar w y) = M.localK (d.below w) y ^ degree)
+      M.localL w (scalar w y) = M.localK (d.below w) y ^ localDegree w)
     (x : kIdeles d) :
     M.moduleL (chapter10ScalarExtensionHom d scalar hscalar x) =
       M.moduleK x ^ degree := by
@@ -166,9 +169,12 @@ theorem chapter10_scalar_extension_degree_formula
     (M : Chapter10AdelicModuleData d)
     (scalar : ∀ w, Kloc (d.below w) →* Lloc w)
     (hscalar : ∀ w, Set.MapsTo (scalar w) (d.unitK (d.below w)) (d.unitL w))
+    (localDegree : ιL → ℕ)
     (degree : ℕ)
+    (hdegree : ∀ v,
+      ∑ w : {w : ιL // d.below w = v}, localDegree (w : ιL) = degree)
     (hlocal : ∀ w y,
-      M.localL w (scalar w y) = M.localK (d.below w) y ^ degree)
+      M.localL w (scalar w y) = M.localK (d.below w) y ^ localDegree w)
     (x : kIdeles d) :
     chapter10AdelicDegree M.moduleL
         (chapter10ScalarExtensionHom d scalar hscalar x) =
