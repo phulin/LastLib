@@ -5,6 +5,7 @@ import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
 import Mathlib.RingTheory.KrullDimension.Module
 import Mathlib.RingTheory.Ideal.GoingUp
+import Mathlib.RingTheory.Ideal.GoingDown
 import Mathlib.SetTheory.Cardinal.NatCard
 import Mathlib.RingTheory.Ideal.Cotangent
 import Mathlib.LinearAlgebra.Basis.VectorSpace
@@ -52,11 +53,81 @@ def Chapter13FinitePowerSeriesModule
 
 /-! ### The regular power-series models -/
 
+/-- Faithfully flat extensions cannot lower Krull dimension. -/
+theorem chapter13_ringKrullDim_le_of_faithfullyFlat
+    {R S : Type u} [CommRing R] [CommRing S] [Algebra R S]
+    [Module.FaithfullyFlat R S] :
+    ringKrullDim R ≤ ringKrullDim S := by
+  rw [ringKrullDim, ringKrullDim]
+  apply iSup_le
+  intro l
+  obtain ⟨P, hP⟩ :=
+    (PrimeSpectrum.comap_surjective_of_faithfullyFlat (A := R) (B := S)) l.last
+  have hPover : P.asIdeal.LiesOver l.last.asIdeal := by
+    constructor
+    simpa [Ideal.under_def] using congrArg PrimeSpectrum.asIdeal hP.symm
+  obtain ⟨L, hlen, _, _⟩ :=
+    Ideal.exists_ltSeries_of_hasGoingDown l P.asIdeal
+  apply le_sSup
+  refine ⟨L, ?_⟩
+  change (↑L.length : WithBot ℕ∞) = ↑l.length
+  rw [hlen]
+
 theorem chapter13_power_series_over_field_is_regular
     (k : Type u) [Field k] (n : ℕ) :
     Chapter13CompleteRegularLocalDomain
       (MvPowerSeries (Fin n) k) (Chapter13PowerSeriesMaximalIdeal k n) n := by
-  sorry
+  let S := MvPowerSeries (Fin n) k
+  have hlocal := chapter13_power_series_complete_local k (by
+    rw [IsLocalRing.maximalIdeal_eq_bot]
+    infer_instance) n
+  have hgenideal : Chapter13PowerSeriesMaximalIdeal k n =
+      Ideal.span (Set.range (MvPowerSeries.X : Fin n → S)) := by
+    rw [Chapter13PowerSeriesMaximalIdeal, IsLocalRing.maximalIdeal_eq_bot]
+    simp
+  have hspan : (IsLocalRing.maximalIdeal S).spanFinrank ≤ n := by
+    rw [hlocal.2.1, hgenideal]
+    have hfinite : (Set.range (MvPowerSeries.X : Fin n → S)).Finite :=
+      Set.finite_range _
+    have hcard : (Set.range (MvPowerSeries.X : Fin n → S)).ncard = n := by
+      rw [Set.ncard_range_of_injective fun _ _ h => MvPowerSeries.X_inj.mp h]
+      simp
+    exact (Submodule.spanFinrank_span_le_ncard_of_finite hfinite).trans hcard.le
+  have hspan' : (↑(IsLocalRing.maximalIdeal S).spanFinrank : WithBot ℕ∞) ≤ ↑n := by
+    exact_mod_cast hspan
+  have hdim_lower_all : ∀ m : ℕ,
+      (↑m : WithBot ℕ∞) ≤ ringKrullDim (MvPowerSeries (Fin m) k) := by
+    intro m
+    induction m with
+    | zero =>
+        have hdim0 : ringKrullDim (MvPowerSeries (Fin 0) k) = 0 := by
+          rw [ringKrullDim_eq_of_ringEquiv
+            (MvPowerSeries.isEmptyEquiv (Fin 0) k).toRingEquiv]
+          exact ringKrullDim_eq_zero_of_field k
+        simpa using hdim0.ge
+    | succ m ih =>
+        let e := MvPowerSeries.finSuccEquiv k m
+        have hpow : ringKrullDim (MvPowerSeries (Fin m) k) + 1 ≤
+            ringKrullDim (PowerSeries (MvPowerSeries (Fin m) k)) :=
+          ringKrullDim_succ_le_ringKrullDim_powerseries
+        calc
+          (↑m.succ : WithBot ℕ∞) = ↑m + 1 := by norm_num
+          _ ≤ ringKrullDim (MvPowerSeries (Fin m) k) + 1 := by
+            simpa [add_comm] using add_le_add_right ih (1 : WithBot ℕ∞)
+          _ ≤ ringKrullDim (MvPowerSeries (Fin (m + 1)) k) := by
+            rw [ringKrullDim_eq_of_ringEquiv e.toRingEquiv]
+            exact hpow
+  have hdim_lower : (↑n : WithBot ℕ∞) ≤ ringKrullDim S := hdim_lower_all n
+  have hdim_upper : ringKrullDim S ≤ (↑n : WithBot ℕ∞) :=
+    (ringKrullDim_le_spanFinrank_maximalIdeal S).trans hspan'
+  have hdim : ringKrullDim S = n := le_antisymm hdim_upper hdim_lower
+  have hreg : IsRegularLocalRing S :=
+    IsRegularLocalRing.of_spanFinrank_maximalIdeal_le S (hspan'.trans hdim_lower)
+  have hcomplete : IsAdicComplete (Chapter13PowerSeriesMaximalIdeal k n) S := by
+    rw [← hlocal.2.1]
+    exact hlocal.1.2
+  let : IsDomain S := NoZeroDivisors.to_isDomain S
+  exact ⟨hcomplete, hreg, inferInstance, hdim⟩
 
 theorem chapter13_power_series_over_cohen_ring_is_regular
     (C k : Type u) [CommRing C] [IsLocalRing C] [Field k] (p n : ℕ)
