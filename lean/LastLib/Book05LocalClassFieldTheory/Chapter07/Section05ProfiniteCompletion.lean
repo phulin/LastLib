@@ -166,9 +166,10 @@ def chapter07InertiaSubgroup
     [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
     [IsAbelianGalois K KAb] (S : Chapter07FiniteArtinSystem K KAb)
     (I : Subgroup (Gal(KAb / K)))
-    (_U : Chapter07ArithmeticUnramifiedQuotient K KAb S I) :
+    (U : Chapter07ArithmeticUnramifiedQuotient K KAb S I) :
     Subgroup (Gal(KAb / K)) :=
-  I
+  letI : Group U.G := U.groupG
+  U.quotient.ker
 
 theorem chapter07_inertia_subgroup_is_quotient_kernel
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
@@ -178,6 +179,16 @@ theorem chapter07_inertia_subgroup_is_quotient_kernel
     (U : Chapter07ArithmeticUnramifiedQuotient K KAb S I) :
     (letI : Group U.G := U.groupG; U.quotient.ker) =
       chapter07InertiaSubgroup S I U := by
+  rfl
+
+theorem chapter07_inertia_subgroup_eq_I
+    {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
+    [TopologicalSpace Kˣ] [IsTopologicalGroup Kˣ]
+    [IsAbelianGalois K KAb] (S : Chapter07FiniteArtinSystem K KAb)
+    (I : Subgroup (Gal(KAb / K)))
+    (U : Chapter07ArithmeticUnramifiedQuotient K KAb S I) :
+    chapter07InertiaSubgroup S I U = I := by
+  change (letI : Group U.G := U.groupG; U.quotient.ker) = I
   exact U.quotient_kernel
 
 theorem chapter07_inertia_subgroup_is_canonical
@@ -187,7 +198,8 @@ theorem chapter07_inertia_subgroup_is_canonical
     (I : Subgroup (Gal(KAb / K)))
     (U₁ U₂ : Chapter07ArithmeticUnramifiedQuotient K KAb S I) :
     chapter07InertiaSubgroup S I U₁ = chapter07InertiaSubgroup S I U₂ := by
-  rfl
+  rw [chapter07_inertia_subgroup_eq_I S I U₁,
+    chapter07_inertia_subgroup_eq_I S I U₂]
 
 end
 

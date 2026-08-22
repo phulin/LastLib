@@ -8,8 +8,9 @@ open CategoryTheory CategoryTheory.Limits Opposite
 
 universe u v
 
-/-- The canonical continuous multiplicative equivalence from the Galois group
-of the chosen maximal abelian extension to its finite Galois inverse limit. -/
+/-- The canonical continuous multiplicative equivalence for a chosen abelian
+Galois model.  When the model is maximal, its source is the full
+`G_K^ab` used by the chapter. -/
 noncomputable def chapter07AbelianGaloisLimitEquiv
     (K KAb : Type*) [Field K] [Field KAb] [Algebra K KAb]
     [IsAbelianGalois K KAb] :
@@ -68,8 +69,10 @@ noncomputable def chapter07FiniteReciprocityEquiv
       (QuotientGroup.quotientKerEquivOfSurjective
         (S.artin L) (S.surjective L))
 
-/-- The local reciprocity map obtained by applying the inverse-limit Galois
-equivalence to the compatible tuple of finite Artin maps. -/
+/-- The reciprocity map for the chosen compatible finite Artin system, obtained
+by applying the inverse-limit Galois equivalence to its compatible tuple.  A
+maximality hypothesis is required when this chosen model is identified with
+the full `G_K^ab`. -/
 noncomputable def chapter07LocalReciprocity
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
     [IsAbelianGalois K KAb] (S : Chapter07FiniteArtinSystem K KAb) :
@@ -131,19 +134,24 @@ theorem chapter07_finite_abelian_extension_reciprocity
 Galois-abelian-group equals Gal of the maximal abelian extension. -/
 noncomputable def chapter07_galois_ab_is_the_inverse_limit_equiv
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
-    [IsAbelianGalois K KAb] :
+    [IsAbelianGalois K KAb]
+    (_hmax : chapter07IsMaximalAbelianExtension K KAb) :
     Gal(KAb / K) ≃ₜ*
       ProfiniteGrp.limit (InfiniteGalois.asProfiniteGaloisGroupFunctor K KAb) :=
   chapter07AbelianGaloisLimitEquiv K KAb
 
-/-- The inverse-limit statement in proposition form. -/
+/-- The inverse-limit statement in proposition form.  The maximality hypothesis
+identifies the chosen model with the compositum of all finite abelian
+extensions, rather than merely with the finite levels contained in an
+arbitrary abelian Galois extension. -/
 theorem chapter07_galois_ab_is_the_inverse_limit
     {K KAb : Type*} [Field K] [Field KAb] [Algebra K KAb]
-    [IsAbelianGalois K KAb] :
+    [IsAbelianGalois K KAb]
+    (hmax : chapter07IsMaximalAbelianExtension K KAb) :
     Nonempty
       (Gal(KAb / K) ≃ₜ*
         ProfiniteGrp.limit (InfiniteGalois.asProfiniteGaloisGroupFunctor K KAb)) :=
-  ⟨chapter07_galois_ab_is_the_inverse_limit_equiv (K := K) (KAb := KAb)⟩
+  ⟨chapter07_galois_ab_is_the_inverse_limit_equiv (K := K) (KAb := KAb) hmax⟩
 
 end
 
