@@ -8,6 +8,8 @@ universe u
 
 open scoped BigOperators
 
+open LastLib.Book03RamificationTheory.Chapter11
+
 /-!
 ## 12.1--12.2. Induction and the Artin-character calculation
 -/
@@ -16,10 +18,10 @@ def chapter12InducedFiniteImageRepresentation
     {E Γ H G V : Type*} [Field E] [CharZero E] [Group Γ]
     [TopologicalSpace Γ] [Group H] [Fintype H] [Group G]
     [AddCommGroup V] [Module E V] [FiniteDimensional E V]
-    (ι : H →* G) (_hι : Function.Injective ι)
+    (ι : H →* G)
     (W : Chapter12FiniteImageRepresentation E Γ H V) :
     Representation E G (Representation.IndV ι W.representation) :=
-  chapter12InducedRepresentation ι W.representation
+  Representation.ind ι W.representation
 
 /- The value at the identity is the normalization datum supplied by Hilbert's
 different formula.  Keeping it explicit makes the scalar-regular-character
@@ -107,17 +109,15 @@ theorem chapter12_frobenius_reciprocity_for_character_pairing
     (ι : H →* G) (hι : Function.Injective ι)
     (AG : G → E) (hconj : chapter12IsClassFunction AG)
     (ρ : Representation E H V) :
-    chapter12CharacterPairing AG
-        (chapter12InducedRepresentation ι ρ).character =
-      chapter12CharacterPairing (chapter12RestrictClassFunction ι AG)
-        ρ.character := by
+    chapter11CharacterPairing AG (Representation.ind ι ρ) =
+      chapter11CharacterPairing (chapter12RestrictClassFunction ι AG) ρ := by
   sorry
 
 theorem chapter12_regular_character_pairing
     {E H V : Type*} [Field E] [CharZero E] [Group H] [Fintype H]
     [AddCommGroup V] [Module E V] [FiniteDimensional E V]
     (ρ : Representation E H V) :
-    chapter12CharacterPairing (chapter12RegularCharacter H) ρ.character =
+    chapter11CharacterPairing (chapter12RegularCharacter H) ρ =
       (Module.finrank E V : E) := by
   sorry
 
@@ -126,12 +126,12 @@ theorem chapter12_induction_pairing_expansion
     [AddCommGroup V] [Module E V] [FiniteDimensional E V]
     (AH : H → E) (p : Chapter12LocalExtensionNumbers)
     (ρ : Representation E H V) :
-    chapter12CharacterPairing
+    chapter11CharacterPairing
         (fun h => (p.residueDegree : E) * AH h +
           (p.discriminantExponent : E) * chapter12RegularCharacter H h)
-        ρ.character =
+        ρ =
       (p.discriminantExponent : E) * (Module.finrank E V : E) +
-        (p.residueDegree : E) * chapter12CharacterPairing AH ρ.character := by
+        (p.residueDegree : E) * chapter11CharacterPairing AH ρ := by
   sorry
 
 /- The conductor formula in the normalization used in §12.1. -/
@@ -148,7 +148,7 @@ theorem chapter12_induction_conductor_formula
     (hone : AK.artinCharacter (ι 1) -
       (p.residueDegree : ℚ) * AM.artinCharacter 1 =
         (Nat.card H : ℚ) * (p.discriminantExponent : ℚ)) :
-    AK.artinConductor _ (chapter12InducedRepresentation ι ρ) =
+    AK.artinConductor _ (Representation.ind ι ρ) =
       chapter12InductionRHS p (Module.finrank E V) (AM.artinConductor _ ρ) := by
   sorry
 
@@ -171,14 +171,14 @@ theorem chapter12_induction_swan_conductor_formula
         (Nat.card H : ℚ) * (p.discriminantExponent : ℚ))
     (hbase : p.ramificationIndex ≤ p.differentExponent + 1)
     (htame :
-      chapter12FixedSpaceCodimension AK.ramification.inertia
-          (chapter12InducedRepresentation ι ρ) =
+      LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+          (Representation.ind ι ρ) AK.ramification.inertia =
         p.residueDegree *
           (p.ramificationIndex * Module.finrank E V -
             Module.finrank E
               (Representation.invariants
               (ρ.comp AM.ramification.inertia.subtype)))) :
-    AK.swanConductor _ (chapter12InducedRepresentation ι ρ) =
+    AK.swanConductor _ (Representation.ind ι ρ) =
       p.residueDegree *
         (AM.swanConductor _ ρ +
           (p.differentExponent + 1 - p.ramificationIndex) *
@@ -200,7 +200,7 @@ theorem chapter12_induction_conductor_formula_using_discriminant_exponent
     (hone : AK.artinCharacter (ι 1) -
       (p.residueDegree : ℚ) * AM.artinCharacter 1 =
         (Nat.card H : ℚ) * (p.discriminantExponent : ℚ)) :
-    AK.artinConductor _ (chapter12InducedRepresentation ι ρ) =
+    AK.artinConductor _ (Representation.ind ι ρ) =
       p.discriminantExponent * Module.finrank E V +
         p.residueDegree * AM.artinConductor _ ρ := by
   sorry
@@ -221,8 +221,6 @@ theorem chapter12_induction_formula_in_galois_realization
     [vK.HasExtension vN]
     [Algebra (IsLocalRing.ResidueField vK.valuationSubring)
       (IsLocalRing.ResidueField vN.valuationSubring)]
-    [FiniteDimensional (IsLocalRing.ResidueField vK.valuationSubring)
-      (IsLocalRing.ResidueField vN.valuationSubring)]
     (hres : Chapter12ResidueSeparableWitness vK vN)
     (AK : Chapter12ConductorProfile (Gal(N / K)))
     (AM : Chapter12ConductorProfile R.subgroup)
@@ -234,7 +232,7 @@ theorem chapter12_induction_formula_in_galois_realization
       (hKM.numbers.residueDegree : ℚ) * AM.artinCharacter 1 =
         (Nat.card R.subgroup : ℚ) *
           (hKM.numbers.discriminantExponent : ℚ)) :
-    AK.artinConductor _ (chapter12InducedRepresentation R.subgroup.subtype ρ) =
+    AK.artinConductor _ (Representation.ind R.subgroup.subtype ρ) =
       chapter12InductionRHS hKM.numbers (Module.finrank E V)
         (AM.artinConductor _ ρ) := by
   sorry

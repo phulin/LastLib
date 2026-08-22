@@ -44,16 +44,18 @@ def chapter12RestrictionConductorSum
     (P : Chapter12RamificationProfile G) (H : Subgroup G)
     (ρ : Representation E G V) : E :=
   Finset.sum (Finset.range (P.bound + 1)) (fun i =>
-    ((Nat.card (H ⊓ P.lower i : Subgroup G) : E) /
+      ((Nat.card (H ⊓ P.lower i : Subgroup G) : E) /
         (Nat.card (H ⊓ P.lower 0 : Subgroup G) : E)) *
-      (chapter12FixedSpaceCodimension (H ⊓ P.lower i) ρ : E))
+      (LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+        ρ (H ⊓ P.lower i) : E))
 
 theorem chapter12_fixed_space_codimension_intersection_eq_comap
     {E G V : Type*} [Field E] [Group G] [Fintype G]
     [AddCommGroup V] [Module E V] [FiniteDimensional E V]
     (H : Subgroup G) (S : Subgroup G) (ρ : Representation E G V) :
-    chapter12FixedSpaceCodimension (H ⊓ S) ρ =
-      chapter12FixedSpaceCodimension (S.comap H.subtype) (ρ.comp H.subtype) := by
+    LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim ρ (H ⊓ S) =
+      LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+        (ρ.comp H.subtype) (S.comap H.subtype) := by
   sorry
 
 /- The exact lower-numbering restriction formula from the source.  The finite
@@ -67,7 +69,7 @@ theorem chapter12_lower_subgroup_restriction_formula
     (hprofile : pH.ramification =
       chapter12IntersectRamificationProfile pG.ramification Hsub)
     (ρ : Representation E G V) :
-    (pH.artinConductor _ (chapter12RestrictedRepresentation Hsub.subtype ρ) : E) =
+    (pH.artinConductor _ (ρ.comp Hsub.subtype) : E) =
       chapter12RestrictionConductorSum pG.ramification Hsub ρ := by
   sorry
 
@@ -83,8 +85,8 @@ theorem chapter12_restriction_uses_intersection_fixed_spaces
       Finset.sum (Finset.range (pG.ramification.bound + 1)) (fun i =>
         ((Nat.card (Hsub ⊓ pG.ramification.lower i : Subgroup G) : E) /
             (Nat.card (Hsub ⊓ pG.ramification.lower 0 : Subgroup G) : E)) *
-          (chapter12FixedSpaceCodimension
-            (Hsub ⊓ pG.ramification.lower i) ρ : E)) := by
+          (LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+            ρ (Hsub ⊓ pG.ramification.lower i) : E)) := by
   rfl
 
 /- Upper-numbering comparison data isolates the exact transition statements
@@ -200,9 +202,9 @@ theorem chapter12_unramified_base_change_conductors
       chapter12IntersectRamificationProfile pK.ramification H)
     (hgroup : ∀ i, H ⊓ pK.ramification.lower i = pK.ramification.lower i)
     (ρ : Representation E G V) :
-    pM.artinConductor _ (chapter12RestrictedRepresentation H.subtype ρ) =
+    pM.artinConductor _ (ρ.comp H.subtype) =
         pK.artinConductor _ ρ ∧
-    pM.swanConductor _ (chapter12RestrictedRepresentation H.subtype ρ) =
+    pM.swanConductor _ (ρ.comp H.subtype) =
         pK.swanConductor _ ρ := by
   sorry
 
@@ -216,7 +218,7 @@ theorem chapter12_tame_base_change_swan
     (T : Chapter12TameUpperComparison G H)
     (C : Chapter12TameSwanAreaCompatibility pK pM T)
     (ρ : Representation E G V) :
-    pM.swanConductor _ (chapter12RestrictedRepresentation H.subtype ρ) =
+    pM.swanConductor _ (ρ.comp H.subtype) =
       T.ramificationIndex * pK.swanConductor _ ρ := by
   sorry
 
@@ -228,13 +230,13 @@ theorem chapter12_tame_base_change_tame_term
     (T : Chapter12TameUpperComparison G H)
     (hinertia : pM.ramification.inertia = T.extensionInertia)
     (ρ : Representation E G V) :
-    pM.artinConductor _ (chapter12RestrictedRepresentation H.subtype ρ) =
-      chapter12FixedSpaceCodimension T.extensionInertia
-          (chapter12RestrictedRepresentation H.subtype ρ) +
-        pM.swanConductor _ (chapter12RestrictedRepresentation H.subtype ρ) := by
+    pM.artinConductor _ (ρ.comp H.subtype) =
+      LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+          (ρ.comp H.subtype) T.extensionInertia +
+        pM.swanConductor _ (ρ.comp H.subtype) := by
   simpa [hinertia] using
     pM.artin_eq_tame_add_swan _
-      (chapter12RestrictedRepresentation H.subtype ρ)
+      (ρ.comp H.subtype)
 
 /- The tame change-of-variables statement in the source, displayed at the
 conductor level so it can be consumed without choosing an integration API. -/
@@ -246,7 +248,7 @@ theorem chapter12_tame_change_of_variables_for_swan
     (T : Chapter12TameUpperComparison G H)
     (C : Chapter12TameSwanAreaCompatibility pK pM T)
     (ρ : Representation E G V) :
-    (pM.swanConductor _ (chapter12RestrictedRepresentation H.subtype ρ) : ℝ) =
+    (pM.swanConductor _ (ρ.comp H.subtype) : ℝ) =
       (T.ramificationIndex : ℝ) * (pK.swanConductor _ ρ : ℝ) := by
   sorry
 

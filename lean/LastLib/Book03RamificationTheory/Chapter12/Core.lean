@@ -2,7 +2,6 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.Group.Subgroup.Finite
 import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.FieldTheory.Galois.Notation
-import Mathlib.GroupTheory.Coset.Card
 import Mathlib.LinearAlgebra.Dimension.Finite
 import Mathlib.RepresentationTheory.Character
 import Mathlib.RepresentationTheory.Induced
@@ -11,7 +10,7 @@ import Mathlib.RepresentationTheory.Rep.Res
 import Mathlib.RingTheory.Valuation.Extension
 import Mathlib.RingTheory.Valuation.ValuationSubring
 import Mathlib.Topology.Basic
-import LastLib.Book03RamificationTheory.Chapter11.Dependencies
+import LastLib.Book03RamificationTheory.Chapter11.Section01WhyTheWeightedSumIsAnInteger
 
 namespace LastLib.Book03RamificationTheory.Chapter12
 
@@ -20,6 +19,8 @@ noncomputable section
 universe u
 
 open scoped BigOperators
+
+open LastLib.Book03RamificationTheory.Chapter11
 
 /-!
 ## Shared interfaces for Chapter 12
@@ -93,8 +94,7 @@ structure Chapter12ResidueSeparableWitness
     [vK.HasExtension vN]
     [Algebra (IsLocalRing.ResidueField vK.valuationSubring)
       (IsLocalRing.ResidueField vN.valuationSubring)]
-    [FiniteDimensional (IsLocalRing.ResidueField vK.valuationSubring)
-      (IsLocalRing.ResidueField vN.valuationSubring)] where
+    where
   separable : Algebra.IsSeparable (IsLocalRing.ResidueField vK.valuationSubring)
     (IsLocalRing.ResidueField vN.valuationSubring)
 
@@ -183,13 +183,6 @@ def chapter12RamificationProfileOfChapter11
     intro i hi
     exact D.lower_eq_bot_of_bound_le i (Nat.le_of_lt hi)
 
-def chapter12FixedSpaceCodimension
-    {E G V : Type*} [Field E] [Group G] [AddCommGroup V] [Module E V]
-    [FiniteDimensional E V] (S : Subgroup G)
-    (ρ : Representation E G V) : ℕ :=
-    Module.finrank E V -
-    Module.finrank E (Representation.invariants (ρ.comp S.subtype))
-
 theorem chapter12_mem_fixed_space_iff
     {E G V : Type*} [Field E] [Group G] [AddCommGroup V] [Module E V]
     (S : Subgroup G) (ρ : Representation E G V) (v : V) :
@@ -203,7 +196,8 @@ def chapter12ArtinConductorSum
     (ρ : Representation E G V) : E :=
   Finset.sum (Finset.range (P.bound + 1)) (fun i =>
     ((Nat.card (P.lower i) : E) / (Nat.card P.inertia : E)) *
-      (chapter12FixedSpaceCodimension (P.lower i) ρ : E))
+      (LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+        ρ (P.lower i) : E))
 
 def chapter12SwanConductorSum
     {E G V : Type*} [Field E] [CharZero E] [Group G] [Fintype G] [AddCommGroup V]
@@ -211,12 +205,8 @@ def chapter12SwanConductorSum
     (ρ : Representation E G V) : E :=
   Finset.sum (Finset.Icc 1 P.bound) (fun i =>
     ((Nat.card (P.lower i) : E) / (Nat.card P.inertia : E)) *
-      (chapter12FixedSpaceCodimension (P.lower i) ρ : E))
-
-def chapter12CharacterPairing
-    {G R : Type*} [Group G] [Fintype G] [Field R] [CharZero R]
-    (A B : G → R) : R :=
-  (Nat.card G : R)⁻¹ * ∑ g : G, A g * B (g⁻¹)
+      (LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+        ρ (P.lower i) : E))
 
 def chapter12IsClassFunction
     {G R : Type*} [Group G] (A : G → R) : Prop :=
@@ -301,33 +291,20 @@ structure Chapter12ConductorProfile (G : Type u) [Group G] [Fintype G] where
       (V : Type u) [AddCommGroup V] [Module E V] [FiniteDimensional E V]
       (ρ : Representation E G V),
       artinConductor (E := E) V ρ =
-        chapter12FixedSpaceCodimension ramification.inertia ρ + swanConductor (E := E) V ρ
+        LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+            ρ ramification.inertia + swanConductor (E := E) V ρ
   artin_eq_character_pairing :
     ∀ {E : Type u} [Field E] [CharZero E]
       (V : Type u) [AddCommGroup V] [Module E V] [FiniteDimensional E V]
       (ρ : Representation E G V),
       (artinConductor (E := E) V ρ : E) =
-        chapter12CharacterPairing (fun g => (artinCharacter g : E)) ρ.character
-
-def chapter12InducedRepresentation
-    {E H G V : Type*} [Field E] [Group H] [Group G] [AddCommGroup V]
-    [Module E V]
-    (ι : H →* G) (ρ : Representation E H V) :
-    Representation E G (Representation.IndV ι ρ) :=
-  Representation.ind ι ρ
-
-def chapter12RestrictedRepresentation
-    {E H G V : Type*} [Field E] [Group H] [Group G] [AddCommGroup V]
-    [Module E V]
-    (ι : H →* G) (ρ : Representation E G V) :
-    Representation E H V :=
-  ρ.comp ι
+        chapter11CharacterPairing (fun g => (artinCharacter g : E)) ρ
 
 @[simp] theorem chapter12RestrictedRepresentation_apply
     {E H G V : Type*} [Field E] [Group H] [Group G] [AddCommGroup V]
     [Module E V]
     (ι : H →* G) (ρ : Representation E G V) (h : H) (v : V) :
-    chapter12RestrictedRepresentation ι ρ h v = ρ (ι h) v :=
+    (ρ.comp ι) h v = ρ (ι h) v :=
   rfl
 
 def chapter12InductionRHS
