@@ -245,7 +245,53 @@ theorem chapter10_associated_ideal_of_adelic_norm
     (x : lIdeles d) (v : ιK) :
     associatedK (d.adelicNormHom x) v =
       chapter10IdealNormExponent id (associatedL x) v := by
-  sorry
+  classical
+  have hprod (s : Finset {w : ιL // d.below w = v}) :
+      ordK v (∏ w ∈ s,
+        d.chapter10LocalNormAt v w (x (w : ιL))) =
+        ∑ w ∈ s, ordK v (d.chapter10LocalNormAt v w (x (w : ιL))) := by
+    induction s using Finset.induction_on with
+    | empty =>
+      have hone := hordK v (1 : Kloc v) 1
+      apply add_left_cancel (a := ordK v 1)
+      simpa using hone
+    | @insert w s hws ih =>
+      rw [Finset.prod_insert hws, Finset.sum_insert hws, hordK, ih]
+  have hsum :
+      (∑ w : {w : ιL // d.below w = v},
+        (id.residueDegree (w : ιL) : ℤ) * ordL (w : ιL) (x (w : ιL))) =
+        ∑ w ∈ id.fiber v,
+          (id.residueDegree w : ℤ) * associatedL x w := by
+    apply Finset.sum_bij (s := (Finset.univ : Finset {w : ιL // d.below w = v}))
+      (t := id.fiber v) (fun w _hw => (w : ιL))
+    · intro w hw
+      exact (id.fiber_spec v (w : ιL)).2 ((hover (w : ιL)).symm.trans w.property)
+    · intro w₁ hw₁ w₂ hw₂ h
+      exact Subtype.ext h
+    · intro w hw
+      have hwid : id.below w = v := (id.fiber_spec v w).1 hw
+      let w' : {w : ιL // d.below w = v} := ⟨w, (hover w).trans hwid⟩
+      exact ⟨w', Finset.mem_univ w', rfl⟩
+    · intro w hw
+      rw [hL]
+  calc
+    associatedK (d.adelicNormHom x) v = ordK v (d.adelicNormHom x v) :=
+      hK (d.adelicNormHom x) v
+    _ = ordK v (∏ w : {w : ιL // d.below w = v},
+        d.chapter10LocalNormAt v w (x (w : ιL))) := rfl
+    _ = ∑ w : {w : ιL // d.below w = v},
+        ordK v (d.chapter10LocalNormAt v w (x (w : ιL))) := hprod Finset.univ
+    _ = ∑ w : {w : ιL // d.below w = v},
+        (id.residueDegree (w : ιL) : ℤ) * ordL (w : ιL) (x (w : ιL)) := by
+      apply Finset.sum_congr rfl
+      intro w hw
+      rcases w with ⟨w, hwd⟩
+      cases hwd
+      exact hlocal w (x w)
+    _ = ∑ w ∈ id.fiber v,
+        (id.residueDegree w : ℤ) * associatedL x w := hsum
+    _ = chapter10IdealNormExponent id (associatedL x) v := by
+      rfl
 
 end
 end LastLib.Book04AdelesAndIdeles.Chapter10

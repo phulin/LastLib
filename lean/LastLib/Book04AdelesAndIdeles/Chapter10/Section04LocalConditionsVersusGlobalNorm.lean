@@ -22,9 +22,23 @@ def localNormAtPlace
     exact ∏ w : {w : ιL // d.below w = v},
       d.chapter10LocalNormAt v w (y w)
   map_one' := by
-    sorry
+    apply Finset.prod_eq_one
+    intro w hw
+    rcases w with ⟨w, rfl⟩
+    simp [chapter10LocalNormAt]
   map_mul' := by
-    sorry
+    intro x y
+    change (∏ w : {w : ιL // d.below w = v},
+      d.chapter10LocalNormAt v w ((x * y) w)) =
+      (∏ w : {w : ιL // d.below w = v},
+        d.chapter10LocalNormAt v w (x w)) *
+        ∏ w : {w : ιL // d.below w = v},
+          d.chapter10LocalNormAt v w (y w)
+    rw [← Finset.prod_mul_distrib]
+    apply Finset.prod_congr rfl
+    intro w hw
+    rcases w with ⟨w, rfl⟩
+    simp [chapter10LocalNormAt]
 
 @[simp]
 theorem localNormAtPlace_apply
@@ -70,7 +84,9 @@ theorem chapter10_adelic_norm_image_imp_componentwise_local_norm
     (d : Chapter10GlobalNormData ιK ιL Kloc Lloc)
     (x : kIdeles d) (y : lIdeles d) (hy : d.adelicNormHom y = x) :
     chapter10ComponentwiseLocalNormicity d x := by
-  sorry
+  intro v
+  rw [← hy]
+  exact ⟨fun w => y (w : ιL), rfl⟩
 
 /-- The finite-exception hypothesis needed for assembling local preimages.
 At almost every place it asks for a unit preimage in one factor, exactly as
@@ -92,8 +108,108 @@ theorem chapter10_adelic_norm_image_componentwise_iff
       chapter10ComponentwiseLocalNormicity d x := by
   constructor
   · rintro ⟨y, rfl⟩
-    exact chapter10_adelic_norm_image_imp_componentwise_local_norm d _ y rfl
-  · sorry
+    exact chapter10_adelic_norm_image_imp_componentwise_local_norm d
+      (d.adelicNormHom y) y rfl
+  · intro hx
+    classical
+    have hlocalPreimage : ∀ v, ∃ z :
+        ∀ w : {w : ιL // d.below w = v}, Lloc (w : ιL),
+        d.localNormAtPlace v z = x v := by
+      intro v
+      exact (mem_localNormImageAtPlace_iff d v (x v)).mp (hx v)
+    let z : ∀ v, ∀ w : {w : ιL // d.below w = v}, Lloc (w : ιL) :=
+      fun v => Classical.choose (hlocalPreimage v)
+    have hz (v) : d.localNormAtPlace v (z v) = x v := by
+      exact Classical.choose_spec (hlocalPreimage v)
+    let good (v : ιK) : Prop :=
+      (∀ u : Kloc v, u ∈ d.unitK v →
+        ∃ w : {w : ιL // d.below w = v}, ∃ y : Lloc (w : ιL),
+          y ∈ d.unitL (w : ιL) ∧ d.chapter10LocalNormAt v w y = u) ∧
+        x v ∈ d.unitK v
+    have hgood : ∀ᶠ v in Filter.cofinite, good v := by
+      filter_upwards [hunit, x.2] with v hv hunitv
+      exact ⟨hv, hunitv⟩
+    have hfiber (v : ιK) :
+        (d.below ⁻¹' ({v} : Set ιK)).Finite := by
+      rw [← Set.finite_coe_iff]
+      exact @Finite.of_injective
+        (d.below ⁻¹' ({v} : Set ιK))
+        {w : ιL // d.below w = v}
+        (d.finiteOver v)
+        (fun w : d.below ⁻¹' ({v} : Set ιK) =>
+          (⟨w.1, by
+            have hw : d.below w.1 ∈ ({v} : Set ιK) := w.2
+            exact Set.mem_singleton_iff.mp hw⟩ :
+            {w : ιL // d.below w = v}))
+        (by
+          intro w₁ w₂ h
+          exact Subtype.ext (congrArg Subtype.val h))
+    have hbad : Set.Finite {v : ιK | ¬ good v} :=
+      Filter.eventually_cofinite.mp hgood
+    have hbadL :
+        (d.below ⁻¹' {v : ιK | ¬ good v}).Finite :=
+      hbad.preimage' (fun v _hmem => hfiber v)
+    have hgoodL : ∀ᶠ w in Filter.cofinite, good (d.below w) := by
+      filter_upwards [hbadL.compl_mem_cofinite] with w hw
+      by_contra hnot
+      exact hw hnot
+    let q (v : ιK) (hv : good v) :
+        {w : ιL // d.below w = v} :=
+      Classical.choose (hv.1 (x v) hv.2)
+    let yq (v : ιK) (hv : good v) : Lloc (q v hv : ιL) :=
+      Classical.choose (Classical.choose_spec (hv.1 (x v) hv.2))
+    let zGood (v : ιK) (hv : good v) :
+        ∀ w : {w : ιL // d.below w = v}, Lloc (w : ιL) :=
+      fun w => if h : w = q v hv then
+        cast (congrArg (fun w : {w : ιL // d.below w = v} =>
+          Lloc (w : ιL)) h.symm) (yq v hv)
+      else 1
+    let z' (v : ιK) :
+        ∀ w : {w : ιL // d.below w = v}, Lloc (w : ιL) :=
+      if hv : good v then zGood v hv else z v
+    have hz_unit (v : ιK) (hv : good v)
+        (w : {w : ιL // d.below w = v}) :
+        z' v w ∈ d.unitL (w : ιL) := by
+      simp only [z', dif_pos hv]
+      by_cases h : w = q v hv
+      · simp only [zGood, dif_pos h]
+        cases h
+        exact (Classical.choose_spec
+          (Classical.choose_spec (hv.1 (x v) hv.2))).1
+      · simp only [zGood, dif_neg h]
+        exact (d.unitL (w : ιL)).one_mem
+    have hz_norm (v : ιK) : d.localNormAtPlace v (z' v) = x v := by
+      by_cases hv : good v
+      · simp only [z', dif_pos hv, localNormAtPlace_apply]
+        rw [Finset.prod_eq_single (q v hv)]
+        · simp only [zGood, dif_pos rfl]
+          exact (Classical.choose_spec
+            (Classical.choose_spec (hv.1 (x v) hv.2))).2
+        · intro w hw hne
+          simp only [zGood, dif_neg hne]
+          change cast (congrArg Kloc w.property)
+              (d.localNorm (w : ιL) (1 : Lloc (w : ιL))) = 1
+          rw [map_one]
+          cases w with
+          | mk w hbelow =>
+            cases hbelow
+            rfl
+        · intro hqmem
+          exact (hqmem (Finset.mem_univ (q v hv))).elim
+      · simp only [z', dif_neg hv]
+        exact hz v
+    let y : lIdeles d :=
+      ⟨fun w => z' (d.below w) ⟨w, rfl⟩, by
+        filter_upwards [hgoodL] with w hw
+        exact hz_unit (d.below w) hw ⟨w, rfl⟩⟩
+    exact ⟨y, by
+      ext v
+      rw [← hz_norm v]
+      apply Finset.prod_congr rfl
+      intro w hw
+      rcases w with ⟨w, hwv⟩
+      cases hwv
+      rfl⟩
 
 /-- The intersection `G ∩ N(I)` expressed through the principal embedding. -/
 def chapter10AdelicNormIntersectionSet
@@ -172,7 +288,12 @@ theorem chapter10_global_norm_subgroup_le_intersection
     (hcompat : chapter10PrincipalNormCompatibility pK pL globalNorm ideleNorm) :
     chapter10GlobalFieldNormSubgroup globalNorm ≤
       chapter10AdelicNormIntersectionSubgroup pK ideleNorm := by
-  sorry
+  intro b hb
+  change b ∈ Subgroup.map globalNorm ⊤ at hb
+  change pK b ∈ Subgroup.map ideleNorm ⊤
+  rcases Subgroup.mem_map.mp hb with ⟨a, ha, rfl⟩
+  exact Subgroup.mem_map.mpr ⟨pL a, by simp, by
+    simpa [MonoidHom.comp_apply] using DFunLike.congr_fun hcompat a⟩
 
 /-- The obstruction quotient
 `(G_K ∩ N(I_L))/N(G_L)`. -/
