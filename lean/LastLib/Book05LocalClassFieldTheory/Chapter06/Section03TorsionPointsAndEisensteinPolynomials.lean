@@ -1221,7 +1221,208 @@ theorem chapter06_torsion_parametrization_bijective
     (ω : Chapter06PrimitiveTorsionPoint D n hn) :
     Function.Bijective (fun a : Chapter06TorsionResidueRing D n =>
       A.quotientAction a (chapter06PrimitivePointAsTorsion D n hn ω)) := by
-  sorry
+  classical
+  have hExplicit : f = chapter06ExplicitLubinTateSeries D := A.explicit_series
+  subst f
+  let _ := D.residue_finite
+  let _ : Fintype (Chapter06ResidueField D) := Fintype.ofFinite _
+  let R := Chapter06ValuationRing D
+  let I : Ideal R := Ideal.span ({D.uniformizer} : Set R)
+  let _ : Valuation.IsRankOneDiscrete D.valuation.toValuation :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08_rank_one_discrete_of_add_valuation
+      D.valuation D.complete.1
+  let _ : IsDiscreteValuationRing R := by
+    change IsDiscreteValuationRing D.valuation.toValuation.valuationSubring
+    infer_instance
+  have hπirr : Irreducible (D.uniformizer : R) := by
+    apply (IsDiscreteValuationRing.irreducible_iff_uniformizer
+      (D.uniformizer : R)).2
+    exact D.uniformizer_spec.2
+  have hquotcard : Nat.card (R ⧸ I ^ n) =
+      chapter06ResidueCardinality D ^ n := by
+    change Nat.card (R ⧸ (Ideal.span ({D.uniformizer} : Set R)) ^ n) =
+      Nat.card (Chapter06ResidueField D) ^ n
+    rw [Ideal.span_singleton_pow]
+    exact
+      @LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.chapter_quotient_cardinality_pow
+        R _ _ _ (D.uniformizer : R) hπirr D.residue_finite n
+  let _ : Finite (R ⧸ I ^ n) := by
+    apply Nat.finite_of_card_ne_zero
+    rw [hquotcard]
+    exact Nat.ne_of_gt (pow_pos (chapter06_residue_cardinality_pos D) n)
+  let _ : Fintype (R ⧸ I ^ n) := Fintype.ofFinite _
+  let _ : Fintype {x : AlgebraicClosure K // x ∈ chapter06TorsionSet D n} :=
+    (chapter06_torsion_set_finite D n).fintype
+  let p : {x : AlgebraicClosure K // x ∈ chapter06TorsionSet D n} :=
+    chapter06PrimitivePointAsTorsion D n hn ω
+  let _ : Zero {x : AlgebraicClosure K // x ∈ chapter06TorsionSet D n} :=
+    ⟨A.zero⟩
+  let _ : Add {x : AlgebraicClosure K // x ∈ chapter06TorsionSet D n} :=
+    ⟨A.formalAddition⟩
+  let _ : Neg {x : AlgebraicClosure K // x ∈ chapter06TorsionSet D n} :=
+    ⟨A.inverse⟩
+  let _ : AddCommGroup {x : AlgebraicClosure K // x ∈ chapter06TorsionSet D n} :=
+    { add := A.formalAddition
+      zero := A.zero
+      neg := A.inverse
+      add_assoc := A.associative
+      zero_add := A.zero_left
+      add_zero := A.zero_right
+      neg_add_cancel := A.inverse_left
+      add_comm := A.commutative
+      nsmul := nsmulRec
+      zsmul := zsmulRec
+      nsmul_zero := by intros; rfl
+      nsmul_succ := by intros; rfl
+      zsmul_zero' := by intros; rfl
+      zsmul_succ' := by intros; rfl
+      zsmul_neg' := by intros; rfl
+      sub_eq_add_neg := by intros; rfl }
+  have h_action_zero (x : {x : AlgebraicClosure K //
+      x ∈ chapter06TorsionSet D n}) : A.action 0 x = A.zero := by
+    apply Subtype.ext
+    rw [A.action_eval, M.scalar_zero]
+    rw [A.zero_eq]
+    have hz : PowerSeries.eval₂ (algebraMap (Chapter06ValuationRing D)
+        (AlgebraicClosure K)) (↑x)
+        (↑(0 : Polynomial (Chapter06ValuationRing D))) =
+        (0 : AlgebraicClosure K) := by
+      rw [PowerSeries.eval₂_coe, Polynomial.eval₂_zero]
+    simpa only [Polynomial.coe_zero] using hz
+  have h_action_one (x : {x : AlgebraicClosure K //
+      x ∈ chapter06TorsionSet D n}) : A.action 1 x = x := by
+    apply Subtype.ext
+    rw [A.action_eval, M.scalar_one, PowerSeries.eval₂_X]
+  have h_action_neg (b : R)
+      (x : {x : AlgebraicClosure K // x ∈ chapter06TorsionSet D n}) :
+      A.action (-b) x = -A.action b x := by
+    have hz : A.formalAddition (A.action b x) (A.action (-b) x) = A.zero := by
+      simpa [h_action_zero x] using (A.additive b (-b) x).symm
+    exact eq_neg_of_add_eq_zero_right hz
+  have h_action_sub (r s : R)
+      (x : {x : AlgebraicClosure K // x ∈ chapter06TorsionSet D n}) :
+      A.action (r - s) x = A.action r x - A.action s x := by
+    calc
+      A.action (r - s) x = A.action (r + -s) x := by rw [sub_eq_add_neg]
+      _ = A.formalAddition (A.action r x) (A.action (-s) x) :=
+        A.additive r (-s) x
+      _ = A.action r x - A.action s x := by rw [h_action_neg]; rfl
+  have h_action_unit_cancel (u : Rˣ)
+      (x : {x : AlgebraicClosure K // x ∈ chapter06TorsionSet D n}) :
+      A.action ((↑(u⁻¹) : R)) (A.action (u : R) x) = x := by
+    calc
+      A.action ((↑(u⁻¹) : R)) (A.action (u : R) x) =
+          A.action ((↑(u⁻¹) : R) * (u : R)) x :=
+        (A.multiplicative (↑(u⁻¹) : R) (u : R) x).symm
+      _ = A.action 1 x := by simp
+      _ = x := h_action_one x
+  have hdiv (k m : ℕ) (hkm : k ≤ m) :
+      chapter06Sn D k ∣ chapter06Sn D m := by
+    induction m with
+    | zero =>
+        have : k = 0 := by omega
+        subst k
+        exact dvd_rfl
+    | succ m ih =>
+        by_cases hks : k = m + 1
+        · subst k
+          exact dvd_rfl
+        · have hkm' : k ≤ m := by omega
+          exact dvd_trans (ih hkm')
+            ⟨chapter06PrimitiveDivisionPolynomial D m,
+              chapter06_torsion_polynomial_succ_factorization D m⟩
+  have hscalar_zero_imp (k : ℕ) (hk : k < n) :
+      A.action ((D.uniformizer : R) ^ k) p ≠ A.zero := by
+    intro hzero
+    have heval : PowerSeries.eval₂
+        (algebraMap R (AlgebraicClosure K)) p.1
+        (M.scalar ((D.uniformizer : R) ^ k)) = 0 := by
+      calc
+        PowerSeries.eval₂ (algebraMap R (AlgebraicClosure K)) p.1
+            (M.scalar ((D.uniformizer : R) ^ k)) =
+            (A.action ((D.uniformizer : R) ^ k) p).1 :=
+          (A.action_eval ((D.uniformizer : R) ^ k) p).symm
+        _ = A.zero.1 := congrArg Subtype.val hzero
+        _ = 0 := A.zero_eq
+    have hscalar := chapter06_explicit_torsion_sequence_is_scalar_power D k M
+    rw [hscalar] at heval
+    have hSk : Polynomial.eval₂
+        (algebraMap R (AlgebraicClosure K)) p.1 (chapter06Sn D k) = 0 := by
+      simpa [PowerSeries.eval₂_coe] using heval
+    have hprev : Polynomial.eval₂
+        (algebraMap R (AlgebraicClosure K)) p.1
+          (chapter06Sn D (n - 1)) = 0 := by
+      obtain ⟨q, hq⟩ := hdiv k (n - 1) (by omega)
+      rw [hq, Polynomial.eval₂_mul, hSk, zero_mul]
+    have hprev' : Polynomial.aeval p.1
+        (chapter06TorsionPolynomialOverK D (n - 1)) = 0 := by
+      change Polynomial.aeval p.1
+        ((chapter06Sn D (n - 1)).map (algebraMap R K)) = 0
+      rw [Polynomial.aeval_def, Polynomial.eval₂_map,
+        ← IsScalarTower.algebraMap_eq]
+      exact hprev
+    exact (chapter06_primitive_torsion_point_is_not_previous_root D n hn ω)
+      hprev'
+  let φ : Chapter06TorsionResidueRing D n →
+      {x : AlgebraicClosure K // x ∈ chapter06TorsionSet D n} := fun a =>
+    A.quotientAction a p
+  have hφinj : Function.Injective φ := by
+    intro a b hab
+    obtain ⟨r, rfl⟩ := Ideal.Quotient.mk_surjective a
+    obtain ⟨s, rfl⟩ := Ideal.Quotient.mk_surjective b
+    have hab' : A.action r p = A.action s p := by
+      rw [← A.quotientAction_spec r p, ← A.quotientAction_spec s p]
+      exact hab
+    have hzero : A.action (r - s) p = A.zero := by
+      calc
+        A.action (r - s) p = A.action r p - A.action s p :=
+          h_action_sub r s p
+        _ = 0 := sub_eq_zero.mpr hab'
+        _ = A.zero := by rfl
+    rw [Ideal.Quotient.eq]
+    by_cases hd : r - s = 0
+    · simp [hd]
+    obtain ⟨k, u, hu⟩ :=
+      IsDiscreteValuationRing.eq_unit_mul_pow_irreducible hd hπirr
+    by_cases hkn : n ≤ k
+    · rw [Ideal.span_singleton_pow, Ideal.mem_span_singleton]
+      refine ⟨(u : R) * (D.uniformizer : R) ^ (k - n), ?_⟩
+      calc
+        r - s = (u : R) * (D.uniformizer : R) ^ k := hu
+        _ = (u : R) * ((D.uniformizer : R) ^ n *
+              (D.uniformizer : R) ^ (k - n)) := by
+                rw [← pow_add, show n + (k - n) = k by omega]
+        _ = (D.uniformizer : R) ^ n *
+            ((u : R) * (D.uniformizer : R) ^ (k - n)) := by ring
+    · have hk : k < n := by omega
+      have hπzero : A.action ((D.uniformizer : R) ^ k) p = A.zero := by
+        have h_action_at_zero (a : R) : A.action a A.zero = A.zero := by
+          calc
+            A.action a A.zero = A.action a (A.action 0 p) := by
+              rw [h_action_zero p]
+            _ = A.action (a * 0) p := by rw [A.multiplicative]
+            _ = A.action 0 p := by simp
+            _ = A.zero := h_action_zero p
+        have hmul :
+            A.action (u : R)
+                (A.action ((D.uniformizer : R) ^ k) p) = A.zero := by
+          rw [← A.multiplicative, ← hu, hzero]
+        calc
+          A.action ((D.uniformizer : R) ^ k) p =
+              A.action ((↑(u⁻¹) : R))
+                (A.action (u : R)
+                  (A.action ((D.uniformizer : R) ^ k) p)) := by
+            rw [h_action_unit_cancel]
+          _ = A.action ((↑(u⁻¹) : R)) A.zero := by rw [hmul]
+          _ = A.zero := h_action_at_zero _
+      exact False.elim ((hscalar_zero_imp k hk) hπzero)
+  have hcard : Fintype.card (Chapter06TorsionResidueRing D n) =
+      Fintype.card {x : AlgebraicClosure K // x ∈ chapter06TorsionSet D n} := by
+    rw [← Nat.card_eq_fintype_card, ← Nat.card_eq_fintype_card]
+    exact hquotcard.trans (chapter06_torsion_set_cardinality D n).symm
+  have hbij : Function.Bijective φ :=
+    (Fintype.bijective_iff_injective_and_card φ).2 ⟨hφinj, hcard⟩
+  exact hbij
 
 theorem chapter06_torsion_parametrization_primitive_iff_unit
     {K : Type*} [Field K] [UniformSpace (AlgebraicClosure K)]
@@ -1238,7 +1439,34 @@ theorem chapter06_torsion_parametrization_primitive_iff_unit
       (A.quotientAction a
         (chapter06PrimitivePointAsTorsion D n hn ω)).1 ∈
         chapter06PrimitiveTorsionSet D n := by
-  sorry
+  classical
+  let _ := hf
+  obtain ⟨r, rfl⟩ := Ideal.Quotient.mk_surjective a
+  let I : Ideal (Chapter06ValuationRing D) :=
+    Ideal.span ({D.uniformizer} : Set (Chapter06ValuationRing D))
+  have hI : I = IsLocalRing.maximalIdeal (Chapter06ValuationRing D) := by
+    change Ideal.span ({D.uniformizer} : Set (Chapter06ValuationRing D)) =
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01MaximalIdeal
+        D.valuation.toValuation
+    exact D.uniformizer_spec.2.symm
+  let _ : I.IsMaximal := hI ▸ inferInstance
+  have hunit : IsUnit (Ideal.Quotient.mk (I ^ n) r) ↔ IsUnit r := by
+    rw [Ideal.Quotient.isUnit_mk_pow_iff_notMem I (Nat.ne_of_gt hn)]
+    rw [hI, IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
+    simp
+  calc
+    IsUnit (Ideal.Quotient.mk
+        ((Ideal.span ({D.uniformizer} : Set (Chapter06ValuationRing D))) ^ n) r) ↔
+        IsUnit r := by simpa [I] using hunit
+    _ ↔
+        (A.quotientAction
+          (Ideal.Quotient.mk
+            ((Ideal.span ({D.uniformizer} : Set (Chapter06ValuationRing D))) ^ n) r)
+          (chapter06PrimitivePointAsTorsion D n hn ω)).1 ∈
+          chapter06PrimitiveTorsionSet D n := by
+      rw [A.quotientAction_spec r
+        (chapter06PrimitivePointAsTorsion D n hn ω)]
+      exact A.primitive_iff_unit r ω
 
 theorem chapter06_primitive_division_polynomial_factorization
     {K : Type*} [Field K] [UniformSpace (AlgebraicClosure K)]
@@ -1257,7 +1485,113 @@ theorem chapter06_primitive_division_polynomial_factorization
         (Polynomial.X - Polynomial.C (A.quotientAction
           (a : Chapter06TorsionResidueRing D n)
           (chapter06PrimitivePointAsTorsion D n hn ω)).1) := by
-  sorry
+  classical
+  let T := Chapter06TorsionResidueRing D n
+  let X := {x : AlgebraicClosure K // x ∈ chapter06TorsionSet D n}
+  let Y := {x : AlgebraicClosure K // x ∈ chapter06PrimitiveTorsionSet D n}
+  let p₀ : X := chapter06PrimitivePointAsTorsion D n hn ω
+  have hYfinite : Set.Finite (chapter06PrimitiveTorsionSet D n) := by
+    apply (chapter06_torsion_set_finite D n).subset
+    intro x hx
+    exact (chapter06_mem_primitiveTorsionSet_iff D n hn x).mp hx |>.1
+  let _ : Fintype Y := hYfinite.fintype
+  let φ : T → X := fun a => A.quotientAction a p₀
+  have hφ : Function.Bijective φ := by
+    exact chapter06_torsion_parametrization_bijective D n hn f hf M A ω
+  have hprimitive (a : T) : IsUnit a ↔ (φ a).1 ∈
+      chapter06PrimitiveTorsionSet D n := by
+    dsimp [φ]
+    exact chapter06_torsion_parametrization_primitive_iff_unit
+      D n hn f hf M A ω a
+  let e : Tˣ → Y := fun a =>
+    ⟨(φ (a : T)).1, (hprimitive (a : T)).1 a.isUnit⟩
+  have he : Function.Bijective e := by
+    constructor
+    · intro a b hab
+      apply Units.ext
+      apply hφ.1
+      apply Subtype.ext
+      simpa [e] using congrArg (fun z : Y => z.1) hab
+    · intro y
+      let hyX : X :=
+        ⟨y.1, (chapter06_mem_primitiveTorsionSet_iff D n hn y.1).mp y.2 |>.1⟩
+      obtain ⟨a, ha⟩ := hφ.2 hyX
+      have hmem : (φ a).1 ∈ chapter06PrimitiveTorsionSet D n := by
+        rw [ha]
+        simp [hyX, y.2]
+      have hunit : IsUnit a := (hprimitive a).2 hmem
+      refine ⟨hunit.unit, ?_⟩
+      apply Subtype.ext
+      change (φ (↑hunit.unit : T)).1 = y.1
+      rw [hunit.unit_spec, ha]
+  have hcardU : Fintype.card Tˣ =
+      chapter06ResidueCardinality D ^ (n - 1) *
+        (chapter06ResidueCardinality D - 1) := by
+    calc
+      Fintype.card Tˣ = Fintype.card Y :=
+        Fintype.card_congr (Equiv.ofBijective e he)
+      _ = Nat.card Y := (Nat.card_eq_fintype_card).symm
+      _ = chapter06ResidueCardinality D ^ (n - 1) *
+          (chapter06ResidueCardinality D - 1) := by
+        exact chapter06_primitive_torsion_set_cardinality D n hn
+  let P : Polynomial (AlgebraicClosure K) :=
+    (chapter06Qn D n).map
+      (algebraMap (Chapter06ValuationRing D) (AlgebraicClosure K))
+  have hPmonic : P.Monic := by
+    exact (chapter06_Qn_monic D n hn).map _
+  have hPne : P ≠ 0 := hPmonic.ne_zero
+  have hPdegree : P.natDegree =
+      chapter06ResidueCardinality D ^ (n - 1) *
+        (chapter06ResidueCardinality D - 1) := by
+    change ((chapter06Qn D n).map
+        (algebraMap (Chapter06ValuationRing D) (AlgebraicClosure K))).natDegree = _
+    rw [(chapter06_Qn_monic D n hn).natDegree_map]
+    exact chapter06_Qn_degree D n hn
+  let g : Tˣ → AlgebraicClosure K := fun a => (φ (a : T)).1
+  have hg : Function.Injective g := by
+    intro a b hab
+    apply Units.ext
+    apply hφ.1
+    exact Subtype.ext hab
+  have hgroot (a : Tˣ) : P.eval (g a) = 0 := by
+    have hmem := (hprimitive (a : T)).1 a.isUnit
+    change Polynomial.aeval (g a)
+      ((chapter06Qn D n).map (algebraMap (Chapter06ValuationRing D) K)) = 0 at hmem
+    rw [Polynomial.aeval_def, Polynomial.eval₂_map,
+      ← IsScalarTower.algebraMap_eq] at hmem
+    change Polynomial.eval₂ (RingHom.id (AlgebraicClosure K)) (g a)
+      ((chapter06Qn D n).map
+        (algebraMap (Chapter06ValuationRing D) (AlgebraicClosure K))) = 0
+    rw [Polynomial.eval₂_map]
+    simpa only [RingHom.id_comp] using hmem
+  let S : Finset (AlgebraicClosure K) := Finset.univ.image g
+  have hSroot : ∀ x ∈ S, P.eval x = 0 := by
+    intro x hx
+    obtain ⟨a, -, rfl⟩ := Finset.mem_image.mp hx
+    exact hgroot a
+  have hScard : S.card = P.natDegree := by
+    calc
+      S.card = Fintype.card Tˣ := by
+        dsimp [S]
+        exact (Finset.card_image_iff.mpr hg.injOn).trans Finset.card_univ
+      _ = chapter06ResidueCardinality D ^ (n - 1) *
+          (chapter06ResidueCardinality D - 1) := hcardU
+      _ = P.natDegree := hPdegree.symm
+  have hroots : P.roots = S.val := by
+    exact Polynomial.roots_eq_of_natDegree_le_card_of_ne_zero hSroot
+      (hScard.symm.le) hPne
+  change P = _
+  calc
+    P = (P.roots.map (fun x => Polynomial.X - Polynomial.C x)).prod := by
+      symm
+      exact Polynomial.prod_multiset_X_sub_C_of_monic_of_roots_card_eq
+        hPmonic IsAlgClosed.card_roots_eq_natDegree
+    _ = S.prod (fun x => Polynomial.X - Polynomial.C x) := by
+      rw [hroots, ← Finset.prod_eq_multiset_prod]
+    _ = ∏ a : Tˣ, (Polynomial.X - Polynomial.C (g a)) := by
+      dsimp [S]
+      rw [Finset.prod_image]
+      exact hg.injOn
 
 /-- The field generated by one primitive torsion point. -/
 noncomputable def chapter06TorsionField
