@@ -129,7 +129,7 @@ theorem proposition_2_1_open_finite_index_criterion
     (hlocal : Chapter02LocalField v)
     [TopologicalSpace Kˣ]
     [IsTopologicalGroup Kˣ]
-    (hbasis : Chapter02FieldUnitFiltrationNeighborhoodBasis v)
+    (_hbasis : Chapter02FieldUnitFiltrationNeighborhoodBasis v)
     (π : Kˣ) (hπ : chapter02IsUniformizerUnit v π)
     (hvaluebasis : Chapter02ValueUnitNeighborhoodBasis v π)
     (H : Subgroup Kˣ) [TopologicalSpace (Kˣ ⧸ H)]
@@ -188,7 +188,7 @@ theorem proposition_2_1_open_finite_index_criterion
         simp [hyv])
     have hyinvA : y⁻¹ ∈ A := by
       exact (Valuation.mem_valuationSubring_iff v.toValuation y⁻¹).2 (by
-        simp [v.map_inv, hyv])
+        simp [hyv])
     let u : Aˣ :=
       { val := ⟨y, hyA⟩
         inv := ⟨y⁻¹, hyinvA⟩
@@ -271,7 +271,7 @@ theorem proposition_2_1_open_finite_index_criterion
         change (g : K) * (b : K) = (x : K)
         dsimp [g, b, d]
         rw [hxu, hz]
-        simp [chapter02UnitInclusion, zpow_add]
+        simp [chapter02UnitInclusion]
         rw [zpow_add₀ π.ne_zero]
         have ha0 : ((a : Aˣ) : K) ≠ 0 := by
           intro ha0
@@ -344,7 +344,7 @@ theorem chapter02_finite_quotient_of_value_unit_neighborhood
     (v : AddValuation K (WithTop ℤ))
     [TopologicalSpace Kˣ]
     [IsTopologicalGroup Kˣ]
-    (hbasis : Chapter02FieldUnitFiltrationNeighborhoodBasis v)
+    (_hbasis : Chapter02FieldUnitFiltrationNeighborhoodBasis v)
     (π : Kˣ) (hvaluebasis : Chapter02ValueUnitNeighborhoodBasis v π)
     (m n : ℕ) (hm : 1 ≤ m) (hn : 1 ≤ n)
     (H : Subgroup Kˣ)
@@ -419,8 +419,7 @@ theorem chapter02_profinite_finite_index_need_not_be_open :
     · apply Set.Finite.subset Set.finite_empty
       intro i hi
       change (0 : ZMod 2) ≠ 0 at hi
-      have hfalse : False := by simpa using hi
-      exact hfalse.elim
+      simp at hi
     · intro u v _ _ hu hv
       apply Set.Finite.subset (hu.union hv)
       intro i hi
@@ -497,7 +496,7 @@ theorem chapter02_profinite_finite_index_need_not_be_open :
         · rw [Finset.sum_eq_single_of_mem i hi]
           · simp
           · intro j hj hji
-            simp [Pi.single_apply, hji, hji.symm]
+            simp [hji.symm]
         · have hzsum : Finset.sum S (fun j =>
               ((I.piecewise y 0 j) • Pi.single j (1 : ZMod 2)) i) = 0 := by
             apply Finset.sum_eq_zero
@@ -505,7 +504,7 @@ theorem chapter02_profinite_finite_index_need_not_be_open :
             have hji : j ≠ i := by
               intro hji
               exact hi (hji ▸ hj)
-            simp [Pi.single_apply, hji, hji.symm]
+            simp [hji.symm]
           rw [hzsum]
           exact hzero i hi
       rw [hsum]
