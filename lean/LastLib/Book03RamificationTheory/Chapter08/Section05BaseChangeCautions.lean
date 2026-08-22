@@ -119,7 +119,21 @@ theorem chapter08_binary_product_discriminant_is_product
     (bE : Module.Basis ι K' E) (bF : Module.Basis ι' K' F) :
     Algebra.discr K' (bE.prod bF) =
       Algebra.discr K' bE * Algebra.discr K' bF := by
-  sorry
+  classical
+  have htrace :
+      Algebra.traceMatrix K' (bE.prod bF) =
+        Matrix.fromBlocks (Algebra.traceMatrix K' bE) 0 0
+          (Algebra.traceMatrix K' bF) := by
+    let : Module.Free K' E := Module.Free.of_basis bE
+    let : Module.Finite K' E := Module.Finite.of_basis bE
+    let : Module.Free K' F := Module.Free.of_basis bF
+    let : Module.Finite K' F := Module.Finite.of_basis bF
+    ext i j
+    cases i <;> cases j <;>
+      simp [Algebra.traceMatrix_apply, Algebra.traceForm_apply,
+        Algebra.trace_prod_apply, Module.Basis.prod_apply]
+  rw [Algebra.discr_def, htrace, Matrix.det_fromBlocks_zero₂₁,
+    ← Algebra.discr_def, ← Algebra.discr_def]
 
 /-- A product basis transported across a chosen splitting of a scalar
 extension.  The index and equivalence are retained to prevent silently
@@ -147,7 +161,15 @@ theorem chapter08_tensor_product_discriminant_is_factor_product
     Algebra.discr K'
         (chapter08TensorProductFactorBasis K L K' ι κ F e b) =
       ∏ i, Algebra.discr K' (b i) := by
-  sorry
+  calc
+    Algebra.discr K'
+        (chapter08TensorProductFactorBasis K L K' ι κ F e b) =
+        Algebra.discr K' (e.symm ∘ Pi.basis b) := by
+      congr 1
+    _ = Algebra.discr K' (Pi.basis b) := by
+      exact (Algebra.discr_eq_discr_of_algEquiv (Pi.basis b) e.symm).symm
+    _ = ∏ i, Algebra.discr K' (b i) :=
+      chapter08_product_discriminant_is_product K' ι κ F b
 
 /- Taking K' = L in a nontrivial finite separable extension supplies a
    concrete source of splitting under base change.  The conclusion records
