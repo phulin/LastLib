@@ -89,7 +89,88 @@ finitely generated. -/
 theorem chapter07_adic_completion_isNoetherianRing
     {R : Type*} [CommRing R] [IsNoetherianRing R] (I : Ideal R) :
     IsNoetherianRing (AdicCompletion I R) := by
-  sorry
+  let A := AdicCompletion I R
+  let K : Ideal A := I.map (algebraMap R A)
+  let _ : WithIdeal R := ⟨⊥⟩
+  let _ : WithIdeal A := ⟨K⟩
+  obtain ⟨s, hs⟩ := I.fg_of_isNoetherianRing
+  have hfg : I.FG := ⟨s, hs⟩
+  let a : s → A := fun x ↦ algebraMap R A x.1
+  have ha_mem : ∀ x : s, a x ∈ K := by
+    intro x
+    apply Ideal.mem_map_of_mem (algebraMap R A)
+    rw [← hs]
+    exact Ideal.subset_span x.2
+  have hcomplete : IsAdicComplete K A := by
+    exact (IsAdicComplete.map_algebraMap_iff (I := I) (M := A)).2
+      (AdicCompletion.isAdicComplete (M := R) hfg)
+  have htop : CompleteSpace A ∧ T2Space A := by
+    exact (IsAdic.isAdicComplete_iff (I := K) (by rfl)).mp hcomplete
+  let _ : CompleteSpace A := htop.1
+  let _ : T2Space A := htop.2
+  have hφ : Continuous (algebraMap R A) := by
+    have hu : UniformContinuous (algebraMap R A) := by
+      apply WithIdeal.uniformContinuous_of_map_le
+      change (⊥ : Ideal R).map (algebraMap R A) ≤ K
+      rw [Ideal.map_bot]
+      exact bot_le
+    exact hu.continuous
+  have ha : MvPowerSeries.HasEval a := by
+    refine ⟨fun x ↦ WithIdeal.isTopologicallyNilpotent_of_mem (ha_mem x), ?_⟩
+    rw [Filter.cofinite_eq_bot]
+    exact bot_le
+  let f : MvPowerSeries s R →+* A := MvPowerSeries.eval₂Hom hφ ha
+  have hfX (x : s) : f (MvPowerSeries.X x) = a x := by
+    dsimp [f]
+    rw [MvPowerSeries.coe_eval₂Hom]
+    simp
+  let J : Ideal (MvPowerSeries s R) :=
+    Ideal.span (Set.range (MvPowerSeries.X : s → MvPowerSeries s R))
+  have hmap : J.map f = K := by
+    calc
+      J.map f = Ideal.span (f '' Set.range (MvPowerSeries.X : s → MvPowerSeries s R)) := by
+        dsimp only [J]
+        rw [Ideal.map_span]
+      _ = Ideal.span ((algebraMap R A) '' (↑s : Set R)) := by
+        congr 1
+        ext x
+        constructor
+        · rintro ⟨y, ⟨z, rfl⟩, rfl⟩
+          exact ⟨(z : R), z.property, (hfX z).symm⟩
+        · rintro ⟨y, hy, rfl⟩
+          exact ⟨MvPowerSeries.X ⟨y, hy⟩, ⟨⟨y, hy⟩, rfl⟩, hfX ⟨y, hy⟩⟩
+      _ = Ideal.map (algebraMap R A) (Ideal.span (↑s : Set R)) := by
+        rw [Ideal.map_span]
+      _ = K := by
+        dsimp only [K]
+        rw [hs]
+  have hres : Function.Surjective ((Ideal.Quotient.mk (J.map f)).comp f) := by
+    rw [hmap]
+    intro q
+    obtain ⟨x, rfl⟩ := Ideal.Quotient.mk_surjective q
+    obtain ⟨r, hr⟩ := Ideal.Quotient.mk_surjective (AdicCompletion.evalOneₐ I x)
+    refine ⟨MvPowerSeries.C r, ?_⟩
+    have hfC (r : R) : f (MvPowerSeries.C r) = algebraMap R A r := by
+      dsimp [f]
+      rw [MvPowerSeries.coe_eval₂Hom]
+      simp
+    rw [RingHom.comp_apply, hfC]
+    apply (Ideal.Quotient.mk_eq_mk_iff_sub_mem _ _).2
+    dsimp only [K]
+    rw [← AdicCompletion.ker_evalOneₐ_eq_map I hfg]
+    apply RingHom.mem_ker.mpr
+    have hr' : Ideal.Quotient.mk I r = (AdicCompletion.evalOneₐ I).toRingHom x := by
+      rw [AlgHom.toRingHom_eq_coe]
+      exact hr
+    rw [map_sub, ← RingHom.comp_apply,
+      AdicCompletion.evalOneₐ_comp_algebraMap_eq_mk, hr', sub_self]
+  let : IsHausdorff (J.map f) A := by
+    rw [hmap]
+    exact hcomplete.toIsHausdorff
+  let : IsAdicComplete J (MvPowerSeries s R) := inferInstance
+  have hf_surj : Function.Surjective f :=
+    surjective_of_mk_map_comp_surjective f hres
+  exact isNoetherianRing_of_surjective (MvPowerSeries s R) A f hf_surj
 
 -- A witness in every power of I disappears in the adic completion.
 theorem chapter07_adic_nonseparated_witness_in_kernel
