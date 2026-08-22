@@ -46,7 +46,26 @@ theorem chapter10_local_norm_maps_deep_principal_units
     ∃ m : ℕ, 1 ≤ m ∧ Set.MapsTo (chapter10LocalNorm F E)
       (chapter10ValuationNeighborhood vE m)
       (chapter10ValuationNeighborhood vF n) := by
-  sorry
+  have hnorm1 : chapter10LocalNorm F E (1 : E) = (1 : F) := by
+    exact (chapter10LocalNorm F E).map_one
+  have hpre : (chapter10LocalNorm F E) ⁻¹'
+      chapter10ValuationNeighborhood vF n ∈ 𝓝 (1 : E) := by
+    have ht : Filter.Tendsto (chapter10LocalNorm F E) (𝓝 (1 : E))
+        (𝓝 (1 : F)) := by
+      rw [← hnorm1]
+      exact
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11_norm_continuous
+          F E).continuousAt
+    exact ht (hF.1 n)
+  obtain ⟨m₀, hm₀⟩ := hE.2 _ hpre
+  refine ⟨max m₀ n, hn.trans (Nat.le_max_right _ _), ?_⟩
+  intro x hx
+  apply hm₀
+  change vE (x - 1) ≥ (m₀ : WithTop ℤ)
+  have hx' := (chapter10_mem_valuation_neighborhood_iff vE (max m₀ n) x).mp hx
+  have hle : (m₀ : WithTop ℤ) ≤ ((max m₀ n : ℕ) : WithTop ℤ) := by
+    exact_mod_cast Nat.le_max_left m₀ n
+  exact hle.trans hx'
 
 theorem chapter10_local_norm_maps_deep_principal_unit_sets
     (F E : Type*) [NontriviallyNormedField F] [CompleteSpace F] [NormedField E]
@@ -63,7 +82,11 @@ theorem chapter10_local_norm_maps_deep_principal_unit_sets
     ∃ m : ℕ, 1 ≤ m ∧ Set.MapsTo (chapter10LocalNorm F E)
       (chapter10LocalPrincipalUnitSet vE m)
       (chapter10LocalPrincipalUnitSet vF n) := by
-  sorry
+  obtain ⟨m, hm, hmaps⟩ :=
+    chapter10_local_norm_maps_deep_principal_units F E vF vE hF hE n hn
+  refine ⟨m, hm, ?_⟩
+  intro x hx
+  exact hprincipalF n (hmaps (hprincipalE m hx))
 
 theorem chapter10_local_norm_tendsto_one
     (F E : Type*) [NontriviallyNormedField F] [CompleteSpace F] [NormedField E]
@@ -71,7 +94,12 @@ theorem chapter10_local_norm_tendsto_one
     [FiniteDimensional F E] :
     Filter.Tendsto (chapter10LocalNorm F E)
       (𝓝 (1 : E)) (𝓝 (1 : F)) := by
-  sorry
+  have hnorm1 : chapter10LocalNorm F E (1 : E) = (1 : F) := by
+    exact (chapter10LocalNorm F E).map_one
+  rw [← hnorm1]
+  exact
+    (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11.chapter11_norm_continuous
+      F E).continuousAt
 
 theorem chapter10_norm_first_order_expansion
     (F E : Type*) [Field F] [Field E] [Algebra F E]
@@ -116,7 +144,9 @@ structure Chapter10Modulus (Places : Type*) where
 theorem chapter10_modulus_support_finite
     {Places : Type*} (m : Chapter10Modulus Places) :
     (Function.support m.exponent).Finite := by
-  sorry
+  refine m.finitePart.finite_toSet.subset ?_
+  intro v hv
+  exact m.exponent_support v hv
 
 theorem chapter10_modulus_positive_support_finite
     {Places : Type*} (m : Chapter10Modulus Places) :
@@ -190,7 +220,9 @@ def chapter10RayQuotientNorm
   refine QuotientGroup.lift (U_L.unit n)
     ((QuotientGroup.mk' (U_K.unit m)).comp N) ?_
   intro x hx
-  sorry
+  change QuotientGroup.mk' (U_K.unit m) (N x) = 1
+  exact (QuotientGroup.eq_one_iff _).2
+    (hcompat (Subgroup.mem_map.mpr ⟨x, hx, rfl⟩))
 
 theorem chapter10_ray_quotient_norm_mk
     {I_K I_L PlacesK PlacesL : Type*}
