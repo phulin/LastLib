@@ -369,13 +369,132 @@ $$
 \rho_A(f)=\sup_{x\in\operatorname{Sp}A}|f(x)|.
 $$
 
-It also satisfies the spectral-radius formula
+This section proves the spectral-radius formula
+
+$$
+\rho_A(f)=\lim_{m\to\infty}\|f^m\|_q^{1/m},
+$$
+
+together with the consequences that the limit is independent of the chosen affinoid
+presentation, that its kernel is the nilradical, and that on a reduced affinoid algebra it is
+a norm equivalent to every quotient norm.
+
+Everything rests on two elementary comparisons between point values and quotient norms. The
+first is the evaluation bound. If $F$ lifts $f$ to a presentation $A=T_n/I$, then for every
+$x\in\operatorname{Sp}A$ the maximum principle of Section 2.3 gives
+$|f(x)|=|F(x)|\leq\|F\|_G$, and taking the infimum over all lifts yields
+
+$$
+|f(x)|\leq\|f\|_q.
+$$
+
+The second is power-multiplicativity of $\rho_A$. Since absolute values are nonnegative,
+the supremum of $m$-th powers is the $m$-th power of the supremum:
+
+$$
+\rho_A(f^m)=\sup_x|f(x)|^m=\Big(\sup_x|f(x)|\Big)^{m}=\rho_A(f)^m .
+$$
+
+Combining both, $\rho_A(f)^m=\rho_A(f^m)\leq\|f^m\|_q$, so the limit inferior of
+$\|f^m\|_q^{1/m}$ is at least $\rho_A(f)$. All the work lies in the reverse inequality.
+
+**Proposition 3.1 (nonzero affinoid algebras have points).** If $B$ is a nonzero affinoid
+algebra, then $\operatorname{Sp}B\neq\emptyset$.
+
+**Proof.** The ring $B$ is noetherian by Theorem 2.1 and nonzero, so Zorn's lemma applied to
+the nonempty family of proper ideals, ordered by inclusion and chained by unions, produces a
+maximal ideal. Its residue field is finite over $K$ by Theorem 2.2. $\square$
+
+**Lemma 3.2 (convergence above a strict bound).** If $c\in K^\times$ satisfies
+$\rho_A(f)<|c|$, then there is $N$ with $\|f^m\|_q<|c|^m$ for all $m\geq N$. In particular
+$\limsup_{m}\|f^m\|_q^{1/m}\leq|c|$.
+
+**Proof.** Consider the affinoid algebra
+
+$$
+B=A\langle V\rangle/(Vf-c),
+$$
+
+where $V$ is a new bounded variable. Suppose $B\neq0$. By Proposition 3.1 it has a maximal ideal,
+and evaluating the images of $V$ and $f$ in its residue field gives a point $y$ of
+$\operatorname{Sp}B$ whose contraction $x$ lies in $\operatorname{Sp}A$. The coordinate $V$
+has quotient norm at most one in $A\langle V\rangle$, hence satisfies $|V(y)|\leq1$ by the
+evaluation bound. Since $Vf=c$ holds in $B$,
+
+$$
+|f(x)|=|c|/|V(y)|\geq|c|>\rho_A(f),
+$$
+
+contradicting the definition of $\rho_A$. Therefore $B=0$: the single relation $Vf-c$
+generates the unit ideal of $A\langle V\rangle$. Write
+
+$$
+1=\Big(\sum_{j\geq0}h_jV^{j}\Big)(Vf-c),\qquad h_j\in A,\quad \|h_j\|_q\to0,
+$$
+
+an identity of convergent series. Comparing coefficients: the constant term forces
+$h_0=-1/c$, and the coefficient of $V^{j+1}$ forces $h_jf-ch_{j+1}=0$. Induction gives
+
+$$
+h_j=-\frac{f^{j}}{c^{\,j+1}},
+$$
+
+so convergence means exactly that $\|f^{j}\|_q/|c|^{j+1}\to0$. For all large $j$ this says
+$\|f^{j}\|_q<|c|^{j}$. $\square$
+
+The hypothesis $\rho_A(f)<|c|$ requires an element with value strictly larger than the
+spectral radius, which the value group $|K^\times|$ need not contain. This is where the
+standing convention on auxiliary absolute values (Section 1.2) enters: after adjoining an
+element of any prescribed positive real value and completing, one obtains complete extensions
+$K'/K$ with elements of value arbitrarily close to $\rho_A(f)$ from above. Base change
+preserves both sides of the formula: if $x$ is a point of $\operatorname{Sp}A$ with residue
+field the finite extension $K(x)$, then $K'\otimes_KK(x)$ is a nonzero finite $K'$-algebra,
+hence has a maximal ideal whose residue field is finite over $K'$; contracting it recovers
+$x$, so every point of $\operatorname{Sp}A$ lifts to $\operatorname{Sp}A_{K'}$ and the
+suprema agree. On the other side, completed base change carries any presentation of $A$ to a
+presentation of $A_{K'}$ by the same generating ideal, and the quotient norm of $A_{K'}$
+restricts to the original quotient norm on the image of $A$, because both are infima over the
+same family of lifts; so the limits coincide by the presentation-independence proved below.
+
+**Theorem 3.3 (spectral-radius formula).** For every $f\in A$,
 
 $$
 \rho_A(f)=\lim_{m\to\infty}\|f^m\|_q^{1/m}.
 $$
 
-The limit is independent of the chosen affinoid presentation. Its kernel is the nilradical. Hence it is a norm exactly when $A$ is reduced, and on a reduced affinoid algebra it is equivalent to every quotient norm.
+**Proof.** Fix $\varepsilon>0$. Choose a complete extension $K'/K$ containing an element
+$c'$ with $\rho_A(f)<|c'|<\rho_A(f)+\varepsilon$, where the absolute value is computed in any
+residue field of $A_{K'}$ containing it; Lemma 3.2 applied over $K'$ bounds the limsup there
+by $|c'|$, and since
+the limsup is independent of the extension, $\limsup_m\|f^m\|_q^{1/m}<\rho_A(f)+\varepsilon$.
+Letting $\varepsilon\to0$ and combining with the lower bound above gives the limit.
+$\square$
+
+Two structural consequences follow. First, the limit is independent of the presentation:
+any two quotient norms coming from presentations of $A$ are equivalent, say
+$d^{-1}\|\,\cdot\,\|_1\leq\|\,\cdot\,\|_2\leq d\|\,\cdot\,\|_1$, and raising to the $m$-th
+power and taking $m$-th roots makes the constant $d^{1/m}$ tend to one. Second, the kernel of
+$\rho_A$ is the nilradical: $\rho_A(f)=0$ implies $\|f^m\|_q\to0$ by the formula, while the
+function vanishing at every maximal point is nilpotent by the maximum principle discussion of
+Section 2.3; conversely a nilpotent evaluates to zero everywhere. Hence $\rho_A$ is a norm
+exactly when $A$ is reduced.
+
+On a reduced affinoid algebra, $\rho_A$ is even equivalent to each quotient norm. The upper
+bound $\rho_A(f)\leq\|f\|_q$ is the evaluation bound. For the lower bound, write
+$U_c=\{f:\rho_A(f)<c\}$ for $c>0$. By the spectral-radius formula,
+$f\in U_c$ exactly when $\|f^{M}\|_q<c^{M}$ for some $M$, so $A$ is the union of the closed
+sets $\overline{U}_{M,c}=\{\|f^{M}\|_q\leq c^{M}\}$, one for each $M$. The space $A$ is
+complete for the quotient norm by Theorem 2.1, and Baire's theorem makes some
+$\overline{U}_{M,c}$ contain a ball $\{\|g\|_q\leq r\}$: then $\|g\|_q\leq r$ implies
+$\rho_A(g)\leq\|g^{M}\|_q^{1/M}<c$. Scaling $g$
+arbitrarily converts the ball into a global estimate
+
+$$
+\rho_A(g)\leq(c/r)\,\|g\|_q ,
+$$
+
+which is the required equivalence, with constant $(c/r)$ depending on the auxiliary choice
+of $c$ alone. $\square$
 
 Define
 
