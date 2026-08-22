@@ -85,7 +85,7 @@ theorem chapter13_cohen_smooth_presentation_quotients
       Ideal.span {((p : E) ^ n)} := by
     dsimp [I]
     rw [Ideal.span_singleton_pow, Ideal.map_span]
-    simp [AdicCompletion.algebraMap_apply]
+    simp
   have hkerEval : RingHom.ker (AdicCompletion.evalₐ I n).toRingHom =
       Ideal.span {((p : E) ^ n)} := by
     ext x
@@ -115,8 +115,8 @@ theorem chapter13_cohen_smooth_presentation_quotients
       have hfactor : Function.Injective
           (Ideal.Quotient.factor (show I ^ n ≤ I ^ n • ⊤ by
             exact le_of_eq heq.symm)) := by
-        simpa [RingHom.injective_iff_ker_eq_bot, Ideal.Quotient.factor_ker] using
-          Ideal.map_mk_eq_bot_of_le (le_of_eq heq.symm)
+        rw [RingHom.injective_iff_ker_eq_bot, Ideal.Quotient.factor_ker, heq]
+        exact Ideal.map_mk_eq_bot_of_le le_rfl
       apply hfactor
       change (Ideal.Quotient.factor (show I ^ n ≤ I ^ n • ⊤ by
         exact le_of_eq heq.symm)) ((AdicCompletion.evalₐ I n) x) = 0
@@ -140,10 +140,10 @@ theorem chapter13_cohen_smooth_presentation_quotients
       ext x
       constructor
       · rintro ⟨y, hy, rfl⟩
-        simpa [Set.mem_singleton_iff.mp hy]
+        simp [Set.mem_singleton_iff.mp hy]
       · intro hx
         refine ⟨(p ^ n : ℤ), Set.mem_singleton _, ?_⟩
-        simpa [Set.mem_singleton_iff.mp hx]
+        simp [Set.mem_singleton_iff.mp hx]
     let eCoeff := Int.quotientSpanNatEquivZMod (p ^ n)
     let eMv := MvPolynomial.mapEquiv k eCoeff
     let ePoly := MvPolynomial.quotientEquivQuotientMvPolynomial
@@ -169,7 +169,7 @@ theorem chapter13_cohen_smooth_presentation_ring_homs
       Ideal.span {((p : E) ^ M)} := by
     dsimp [I]
     rw [Ideal.span_singleton_pow, Ideal.map_span]
-    simp [AdicCompletion.algebraMap_apply]
+    simp
   have hkerEval : RingHom.ker (AdicCompletion.evalₐ I M).toRingHom =
       Ideal.span {((p : E) ^ M)} := by
     ext x
@@ -199,8 +199,8 @@ theorem chapter13_cohen_smooth_presentation_ring_homs
       have hfactor : Function.Injective
           (Ideal.Quotient.factor (show I ^ M ≤ I ^ M • ⊤ by
             exact le_of_eq heq.symm)) := by
-        simpa [RingHom.injective_iff_ker_eq_bot, Ideal.Quotient.factor_ker] using
-          Ideal.map_mk_eq_bot_of_le (le_of_eq heq.symm)
+        rw [RingHom.injective_iff_ker_eq_bot, Ideal.Quotient.factor_ker, heq]
+        exact Ideal.map_mk_eq_bot_of_le le_rfl
       apply hfactor
       change (Ideal.Quotient.factor (show I ^ M ≤ I ^ M • ⊤ by
         exact le_of_eq heq.symm)) ((AdicCompletion.evalₐ I M) x) = 0
@@ -215,10 +215,10 @@ theorem chapter13_cohen_smooth_presentation_ring_homs
     ext x
     constructor
     · rintro ⟨y, hy, rfl⟩
-      simpa [Set.mem_singleton_iff.mp hy]
+      simp [Set.mem_singleton_iff.mp hy]
     · intro hx
       refine ⟨(p ^ M : ℤ), Set.mem_singleton _, ?_⟩
-      simpa [Set.mem_singleton_iff.mp hx]
+      simp [Set.mem_singleton_iff.mp hx]
   let eCoeff := Int.quotientSpanNatEquivZMod (p ^ M)
   let eMv := MvPolynomial.mapEquiv k eCoeff
   let ePoly := MvPolynomial.quotientEquivQuotientMvPolynomial
@@ -273,7 +273,7 @@ theorem chapter13_cohen_smooth_presentation_ring_homs
     rw [heIdeal, hePoly]
     simp [eMv, eCoeff]
   obtain ⟨q, hq⟩ := CharP.exists R
-  letI : CharP R q := hq
+  let : CharP R q := hq
   have hdiv : q ∣ p ^ M := by
     apply (CharP.cast_eq_zero_iff R q (p ^ M)).mp
     simpa [Nat.cast_pow] using hM
@@ -306,8 +306,8 @@ theorem chapter13_cohen_smooth_presentation_ring_homs
       ext z
       change fbar (qΦ.symm (Φ z)) = f z
       rw [show qΦ.symm (Φ z) = Ideal.Quotient.mk (RingHom.ker Φ) z by
-        simpa [qΦ] using congrFun
-          (RingHom.quotientKerEquivOfSurjective_symm_comp hΦsurj) z]
+        exact congrArg (fun f => f z)
+          (RingHom.quotientKerEquivOfSurjective_symm_comp hΦsurj)]
       exact Ideal.Quotient.lift_mk _ _ _
     have hgC : ∀ z : ZMod (p ^ M),
         g (MvPolynomial.C z) = (MvPolynomial.eval₂Hom coeff
@@ -373,7 +373,7 @@ theorem chapter13_cohen_smooth_presentation_derivations
     rw [hy, map_mul, hp, zero_mul]
   let lsmulQ : (E ⧸ J) →+* Module.End E N :=
     Ideal.Quotient.lift J lsmulE hJ
-  letI : Module (E ⧸ J) N :=
+  let : Module (E ⧸ J) N :=
     { smul := fun r n => lsmulQ r n
       one_smul := by intro n; change lsmulQ 1 n = n; rw [map_one]; rfl
       mul_smul := by
@@ -399,12 +399,12 @@ theorem chapter13_cohen_smooth_presentation_derivations
         change lsmulQ 0 n = 0
         rw [map_zero]
         rfl }
-  letI : Module (E ⧸ J)ᵐᵒᵖ N :=
+  let : Module (E ⧸ J)ᵐᵒᵖ N :=
     Module.compHom N ((RingHom.id (E ⧸ J)).fromOpposite mul_comm)
-  letI : IsCentralScalar (E ⧸ J) N :=
+  let : IsCentralScalar (E ⧸ J) N :=
     ⟨fun r n => by rfl⟩
   let B := TrivSqZeroExt (E ⧸ J) N
-  letI : CommRing B := by
+  let : CommRing B := by
     dsimp [B]
     infer_instance
   have hq : ((p : E ⧸ J) ^ M) = 0 := by
@@ -515,7 +515,7 @@ theorem chapter13_cohen_smooth_presentation_surjective
   let IE : Ideal E := Ideal.map (algebraMap P E) IP
   have hmax : m = Ideal.span {(p : C)} := by
     simpa [m] using hC.1.2.1
-  letI : IsAdicComplete m C := by
+  let : IsAdicComplete m C := by
     simpa [m] using hC.2
   have hp_mem (n : ℕ) : (p : C) ^ n ∈ m ^ n := by
     rw [hmax, Ideal.span_singleton_pow]
@@ -557,19 +557,19 @@ theorem chapter13_cohen_smooth_presentation_surjective
       have hn' : Ideal.Quotient.mk (m ^ n)
           (π (Chapter13CohenSmoothVariable k p x)) =
           f n (Chapter13CohenSmoothVariable k p x) := by
-        simpa [π] using hn
+        exact hn
       exact hn'.trans (congrFun (hfvar n) x)
     exact (Ideal.Quotient.mk_eq_mk_iff_sub_mem _ _).mp heq
   have hIE : IE = Ideal.span {(p : E)} := by
     dsimp [IE, IP]
     rw [Ideal.map_span]
-    simp [AdicCompletion.algebraMap_apply]
+    simp
   have hnat : ∀ n : ℕ, π (n : E) = (n : C) := by
     intro n
     induction n with
     | zero =>
         rw [Nat.cast_zero]
-        simpa using (map_zero π)
+        simp
     | succ n ih =>
         rw [Nat.cast_succ, map_add, map_one, ih]
         exact (Nat.cast_succ n).symm
@@ -592,11 +592,11 @@ theorem chapter13_cohen_smooth_presentation_surjective
       exact hc x
     rw [hπvar x, hcx]
     simpa using congrArg eC hx
-  letI : IsAdicComplete IE E := by
+  let : IsAdicComplete IE E := by
     apply (IsAdicComplete.map_algebraMap_iff (I := IP) (M := E)).2
     exact AdicCompletion.isAdicComplete (M := P)
       (Submodule.fg_span (Set.finite_singleton (p : P)))
-  letI : IsHausdorff (Ideal.map π IE) C := by
+  let : IsHausdorff (Ideal.map π IE) C := by
     rw [hmapI]
     infer_instance
   have hπsurj : Function.Surjective π :=
@@ -605,8 +605,8 @@ theorem chapter13_cohen_smooth_presentation_surjective
   let J : Ideal E := RingHom.ker π
   refine ⟨J, rfl, ?_⟩
   obtain ⟨hdom, hdvr⟩ := hC.1.1
-  letI : IsDomain C := hdom
-  letI : IsDiscreteValuationRing C := hdvr
+  let : IsDomain C := hdom
+  let : IsDiscreteValuationRing C := hdvr
   have hp_ne : (p : C) ≠ 0 := by
     intro hp
     have hmne : m ≠ ⊥ := by
@@ -755,12 +755,12 @@ theorem chapter13_teichmuller_lift
             (IsLocalRing.maximalIdeal C)
             (fun n : ℕ => (y n) ^ (p ^ n)) (τ x)) := by
   let I : Ideal C := IsLocalRing.maximalIdeal C
-  letI : CharP (C ⧸ I) p := by
+  let : CharP (C ⧸ I) p := by
     apply (eC.symm.toRingHom.charP_iff_charP p).mp
     infer_instance
-  letI : IsAdicComplete I C := by
+  let : IsAdicComplete I C := by
     simpa [I] using hC.2
-  letI : PerfectRing k p := PerfectRing.ofSurjective k p (by
+  let : PerfectRing k p := PerfectRing.ofSurjective k p (by
     unfold Chapter13PerfectAtPrime at hperfect
     change Function.Surjective (fun x : k => x ^ p)
     exact hperfect)
@@ -793,7 +793,7 @@ theorem chapter13_teichmuller_lift
       change eC (Perfection.coeff (C ⧸ I) p 0 (lift x)) = x
       change eC (Perfection.coeffMonoidHom (C ⧸ I) p 0 (lift x)) = x
       rw [Perfection.coeffMonoidHom_zero_liftMonoidHom]
-      simpa using eC.apply_symm_apply x
+      simp
     · intro n
       filter_upwards [eventually_ge_atTop n] with m hm
       have hsm :

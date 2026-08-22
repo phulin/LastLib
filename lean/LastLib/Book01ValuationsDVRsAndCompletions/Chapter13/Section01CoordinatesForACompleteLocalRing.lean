@@ -793,7 +793,7 @@ def Chapter13PowerSeriesEvaluationData
 
 theorem chapter13_power_series_evaluation_exists_unique
     {R A : Type u} [CommRing R] [CommRing A] [IsLocalRing R] [IsLocalRing A]
-    (hR : Chapter13CompleteNoetherianLocalRing R)
+    (_hR : Chapter13CompleteNoetherianLocalRing R)
     (hA : Chapter13CompleteNoetherianLocalRing A)
     (n : ℕ) (σ : R →+* A) (hσ : Chapter13LocalHom σ) (x : Fin n → A)
     (hx : ∀ i : Fin n, x i ∈ IsLocalRing.maximalIdeal A) :
@@ -1181,7 +1181,6 @@ theorem chapter13_power_series_evaluation_surjective_iff
   · intro hplus
     have hplus' : ∀ a : A, ∃ r : R, ∃ j : A,
         j ∈ I ∧ a = σ r + j := by
-      change ∀ a : A, ∃ r : R, ∃ j : A, j ∈ I ∧ a = σ r + j
       exact hplus
     intro a
     have hKmax : K ≤ Ideal.comap F (IsLocalRing.maximalIdeal A) := by
@@ -1243,8 +1242,7 @@ theorem chapter13_power_series_evaluation_surjective_iff
             exact Ideal.mem_sup_left (Ideal.mem_map_of_mem σ r.2)
         | inr i =>
             exact Ideal.mem_sup_right (Ideal.subset_span (Set.mem_range_self i))
-      · change I ≤ Ideal.span (Set.range v)
-        apply sup_le
+      · apply sup_le
         · rw [Ideal.map_le_iff_le_comap]
           intro r hr
           change σ r ∈ Ideal.span (Set.range v)
@@ -1262,8 +1260,7 @@ theorem chapter13_power_series_evaluation_surjective_iff
               (MvPowerSeries.C : R →+* S) r.2)
         | inr i =>
             exact Ideal.mem_sup_right (Ideal.subset_span (Set.mem_range_self i))
-      · change K ≤ Ideal.span (Set.range w)
-        apply sup_le
+      · apply sup_le
         · rw [Ideal.map_le_iff_le_comap]
           intro r hr
           change MvPowerSeries.C r ∈ Ideal.span (Set.range w)

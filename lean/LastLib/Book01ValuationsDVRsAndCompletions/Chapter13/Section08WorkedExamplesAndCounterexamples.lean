@@ -112,7 +112,7 @@ theorem chapter13_nonunique_coefficient_fields
     have ha' : PowerSeries.C a = PowerSeries.C u₀ + PowerSeries.X := by
       simpa [f] using ha
     have ha'' := congrArg (fun z : PowerSeries k => z.coeff 1) ha'
-    simpa using ha''
+    simp at ha''
   exact ⟨⟨first, second, hfirst, hsecond, fun a => ⟨a, rfl⟩,
     htranslated', hdistinct⟩⟩
 
@@ -309,7 +309,7 @@ theorem chapter13_maximal_subfield_not_coefficient
     rw [hres_a, sub_self]
   have hzero : zA ^ p - a = 0 := by
     by_contra hne
-    letI : Field K.carrier := K.field_carrier.toField
+    let : Field K.carrier := K.field_carrier.toField
     let aK : K.carrier := ⟨a, haK⟩
     have hneK : z ^ p - aK ≠ 0 := by
       intro hzK

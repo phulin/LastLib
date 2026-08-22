@@ -65,11 +65,11 @@ theorem chapter13_power_series_over_cohen_ring_is_regular
       (MvPowerSeries (Fin n) C) (Chapter13PowerSeriesMaximalIdeal C n) (n + 1) := by
   classical
   obtain ⟨hdomC, hDvrC⟩ := hC.1.1
-  letI : IsDomain C := hdomC
-  letI : IsDiscreteValuationRing C := hDvrC
+  let : IsDomain C := hdomC
+  let : IsDiscreteValuationRing C := hDvrC
   let hCnoeth : IsNoetherianRing C :=
     ⟨fun I => hDvrC.toIsPrincipalIdealRing.principal I |>.fg⟩
-  letI : IsNoetherianRing C := hCnoeth
+  let : IsNoetherianRing C := hCnoeth
   let S := MvPowerSeries (Fin n) C
   have hlocal := chapter13_power_series_complete_local C hC.2 n
   let g : Fin (n + 1) → S :=
@@ -153,7 +153,7 @@ theorem chapter13_power_series_over_cohen_ring_is_regular
   have hcomplete : IsAdicComplete (Chapter13PowerSeriesMaximalIdeal C n) S := by
     rw [← hlocal.2.1]
     exact hlocal.1.2
-  letI : IsDomain S := NoZeroDivisors.to_isDomain S
+  let : IsDomain S := NoZeroDivisors.to_isDomain S
   exact ⟨hcomplete, hreg, inferInstance, hdim⟩
 
 /-! ### Cohen's presentation theorem -/
@@ -252,13 +252,13 @@ theorem chapter13_equal_characteristic_complete_regular_is_power_series
     (hA : Chapter13CompleteNoetherianLocalRing A)
     (hregular : IsRegularLocalRing A)
     (hdim : ringKrullDim A = d)
-    (hcontains : Chapter13ContainsField A)
+    (_hcontains : Chapter13ContainsField A)
     (σ : k →+* A) (hσ : IsLocalHom σ)
     (hres : Function.Bijective ((Chapter13ResidueMap A).comp σ)) :
     Nonempty (MvPowerSeries (Fin d) k ≃+* A) := by
   classical
-  letI : IsRegularLocalRing A := hregular
-  letI : IsNoetherianRing A := hA.1
+  let : IsRegularLocalRing A := hregular
+  let : IsNoetherianRing A := hA.1
   have hfg : (IsLocalRing.maximalIdeal A).FG :=
     (IsLocalRing.maximalIdeal A).fg_of_isNoetherianRing
   obtain ⟨s, hs_card, hs_span⟩ :=
@@ -325,8 +325,8 @@ theorem chapter13_mixed_characteristic_complete_regular_quotient
     (hres : Chapter13ResidueMapCompatibility eC eA (RingHom.id k) u) :
     ∃ F : MvPowerSeries (Fin d) C →+* A, Function.Surjective F := by
   classical
-  letI : IsRegularLocalRing A := hregular
-  letI : IsNoetherianRing A := hA.1
+  let : IsRegularLocalRing A := hregular
+  let : IsNoetherianRing A := hA.1
   have hfg : (IsLocalRing.maximalIdeal A).FG :=
     (IsLocalRing.maximalIdeal A).fg_of_isNoetherianRing
   obtain ⟨s, hs_card, hs_span⟩ :=
@@ -376,16 +376,16 @@ theorem chapter13_mixed_characteristic_unramified_is_power_series
     (hres : Chapter13ResidueMapCompatibility eC eA (RingHom.id k) u) :
     Nonempty (MvPowerSeries (Fin (d - 1)) C ≃+* A) := by
   classical
-  letI : IsRegularLocalRing A := hregular
-  letI : IsNoetherianRing A := hA.1
-  letI : CharP (Chapter13ResidueRing A) p := hmixed.2.1
+  let : IsRegularLocalRing A := hregular
+  let : IsNoetherianRing A := hA.1
+  let : CharP (Chapter13ResidueRing A) p := hmixed.2.1
   have hfg : (IsLocalRing.maximalIdeal A).FG :=
     (IsLocalRing.maximalIdeal A).fg_of_isNoetherianRing
-  letI : Module.Finite A (IsLocalRing.maximalIdeal A) := Module.Finite.of_fg hfg
-  letI : Module.Finite A (IsLocalRing.CotangentSpace A) :=
+  let : Module.Finite A (IsLocalRing.maximalIdeal A) := Module.Finite.of_fg hfg
+  let : Module.Finite A (IsLocalRing.CotangentSpace A) :=
     Module.Finite.quotient A (IsLocalRing.maximalIdeal A •
       (⊤ : Submodule A (IsLocalRing.maximalIdeal A)))
-  letI : Module.Finite (Chapter13ResidueRing A) (IsLocalRing.CotangentSpace A) :=
+  let : Module.Finite (Chapter13ResidueRing A) (IsLocalRing.CotangentSpace A) :=
     Module.Finite.of_restrictScalars_finite A (Chapter13ResidueRing A)
       (IsLocalRing.CotangentSpace A)
   have hpmem : (p : A) ∈ IsLocalRing.maximalIdeal A := by
@@ -423,13 +423,13 @@ theorem chapter13_mixed_characteristic_unramified_is_power_series
       (Chapter13ResidueRing A) (IsLocalRing.CotangentSpace A) :=
     Module.Basis.sumExtend (v := fun _ : Fin 1 => pclass) hpind
   let I := Module.Basis.sumExtendIndex (v := fun _ : Fin 1 => pclass) hpind
-  letI : Fintype (Fin 1 ⊕
+  let : Fintype (Fin 1 ⊕
       (Module.Basis.sumExtendIndex (v := fun _ : Fin 1 => pclass) hpind : Type _)) :=
     FiniteDimensional.fintypeBasisIndex b
-  letI : Finite (I : Type _) := Finite.of_injective
+  let : Finite (I : Type _) := Finite.of_injective
     (fun i : (I : Type _) => (Sum.inr i : Fin 1 ⊕ (I : Type _)))
     (fun _ _ h => Sum.inr.inj h)
-  letI : Fintype (I : Type _) := Fintype.ofFinite I
+  let : Fintype (I : Type _) := Fintype.ofFinite I
   have hcard_basis : Fintype.card (Fin 1 ⊕ (I : Type _)) = d := by
     rw [← Module.finrank_eq_card_basis b, hfinrank]
   have hcardI : Fintype.card (I : Type _) = d - 1 := by
@@ -593,7 +593,7 @@ theorem chapter13_mixed_characteristic_unramified_is_power_series
     simp
   let P := MvPowerSeries (Fin (d - 1)) C
   have hP := chapter13_power_series_over_cohen_ring_is_regular C k p (d - 1) hC
-  letI : IsDomain P := by
+  let : IsDomain P := by
     simpa [P] using hP.2.2.1
   have hPdim : ringKrullDim P = d := by
     calc
@@ -627,10 +627,10 @@ private theorem chapter13_finite_length_quotient_finite_over_coeff
     letI : Algebra k A := σ.toAlgebra
     letI : Module k (A ⧸ I) := Module.compHom (A ⧸ I) (algebraMap k A)
     Module.Finite k (A ⧸ I) := by
-  letI : Algebra k A := σ.toAlgebra
-  letI : IsLocalHom (algebraMap k A) := hσ
-  letI : Module k (A ⧸ I) := Module.compHom (A ⧸ I) (algebraMap k A)
-  letI : IsScalarTower k A (A ⧸ I) := IsScalarTower.of_algebraMap_eq' rfl
+  let : Algebra k A := σ.toAlgebra
+  let : IsLocalHom (algebraMap k A) := hσ
+  let : Module k (A ⧸ I) := Module.compHom (A ⧸ I) (algebraMap k A)
+  let : IsScalarTower k A (A ⧸ I) := IsScalarTower.of_algebraMap_eq' rfl
   change Function.Bijective
     ((Ideal.Quotient.mk (IsLocalRing.maximalIdeal A)).comp σ) at hres
   have hres' : Function.Bijective
@@ -654,8 +654,8 @@ private theorem chapter13_finite_length_quotient_finite_over_coeff
   have hlength := IsLocalRing.length_restrictScalars k A (A ⧸ I)
   have hfinitek : IsFiniteLength k (A ⧸ I) := by
     have hI' := (isFiniteLength_iff_isNoetherian_isArtinian.mp hI)
-    letI : IsNoetherian A (A ⧸ I) := hI'.1
-    letI : IsArtinian A (A ⧸ I) := hI'.2
+    let : IsNoetherian A (A ⧸ I) := hI'.1
+    let : IsArtinian A (A ⧸ I) := hI'.2
     apply (Module.length_ne_top_iff).mp
     rw [hlength, hreslen, mul_one]
     exact Module.length_ne_top (R := A) (M := A ⧸ I)
@@ -737,29 +737,29 @@ theorem chapter13_finite_over_equal_power_series
   let I : Ideal A := Ideal.span (Set.range x)
   have hfiniteI : IsFiniteLength A (A ⧸ I) := by
     simpa [Chapter13FiniteLengthParameterFamily, I] using hfinite
-  letI : Algebra k A := σ.toAlgebra
-  letI : Module k (A ⧸ I) := Module.compHom (A ⧸ I) (algebraMap k A)
-  letI : IsScalarTower k A (A ⧸ I) := IsScalarTower.of_algebraMap_eq' rfl
+  let : Algebra k A := σ.toAlgebra
+  let : Module k (A ⧸ I) := Module.compHom (A ⧸ I) (algebraMap k A)
+  let : IsScalarTower k A (A ⧸ I) := IsScalarTower.of_algebraMap_eq' rfl
   have hquot : Module.Finite k (A ⧸ I) :=
     chapter13_finite_length_quotient_finite_over_coeff σ hσ hres I hfiniteI
-  letI : Module.Finite k (A ⧸ I) := hquot
+  let : Module.Finite k (A ⧸ I) := hquot
   obtain ⟨r, q, hq⟩ := Module.Finite.exists_fin' k (A ⧸ I)
   let b : Module.Basis (Fin r) k (Fin r → k) := Pi.basisFun k (Fin r)
   choose y hy using fun i : Fin r =>
     Ideal.Quotient.mk_surjective (q (b i))
-  letI : Algebra P A := F.toAlgebra
+  let : Algebra P A := F.toAlgebra
   let f : (Fin r → P) →ₗ[P] A :=
     LinearMap.lsum P (fun _ : Fin r => P) P
       (fun i => (Algebra.linearMap P A).smulRight (y i))
   have hf_single : ∀ i : Fin r, f (Pi.single i 1) = y i := by
     intro i
-    simp [f, Pi.single_apply, Algebra.smul_def]
+    simp [f, Pi.single_apply]
   have htower : (algebraMap k A) =
       (algebraMap P A).comp (algebraMap k P) := by
     ext a
     change σ a = F (MvPowerSeries.C a)
     exact congrArg (fun g => g a) hF.1.symm
-  letI : IsScalarTower k P A :=
+  let : IsScalarTower k P A :=
     IsScalarTower.of_algebraMap_eq' htower
   have hPcomplete : IsAdicComplete K P := by
     change IsAdicComplete (Chapter13PowerSeriesMaximalIdeal k s)
@@ -767,16 +767,16 @@ theorem chapter13_finite_over_equal_power_series
     have hlocal := chapter13_power_series_complete_local k hk.2 s
     rw [← hlocal.2.1]
     exact hlocal.1.2
-  letI : IsAdicComplete K P := hPcomplete
-  letI : IsPrecomplete K (Fin r → P) :=
+  let : IsAdicComplete K P := hPcomplete
+  let : IsPrecomplete K (Fin r → P) :=
     chapter13_isPrecomplete_fin_pi K r
-  letI : IsAdicComplete (IsLocalRing.maximalIdeal A) A := hA.2
+  let : IsAdicComplete (IsLocalRing.maximalIdeal A) A := hA.2
   have hJle : Ideal.map F K ≤ IsLocalRing.maximalIdeal A := by
     rw [hJ]
     apply Ideal.span_le.2
     rintro _ ⟨i, rfl⟩
     exact hx i
-  letI : IsHausdorff K A := IsHausdorff.of_map hJle
+  let : IsHausdorff K A := IsHausdorff.of_map hJle
   let cₗ : (Fin r → k) →ₗ[k] (Fin r → P) :=
     LinearMap.piMap (fun _ => Algebra.linearMap k P)
   let fₗ : (Fin r → P) →ₗ[k] A := f.restrictScalars k
@@ -835,13 +835,13 @@ private theorem chapter13_finite_length_quotient_finite_over_local_coeff
     (u : R →+* A) (hu : IsLocalHom u)
     (hres : Function.Surjective ((Chapter13ResidueMap A).comp u))
     (I : Ideal A) (hI : IsFiniteLength A (A ⧸ I)) :
-    letI : Algebra R A := u.toAlgebra
-    letI : Module R (A ⧸ I) := Module.compHom (A ⧸ I) (algebraMap R A)
+    let : Algebra R A := u.toAlgebra
+    let : Module R (A ⧸ I) := Module.compHom (A ⧸ I) (algebraMap R A)
     Module.Finite R (A ⧸ I) := by
-  letI : Algebra R A := u.toAlgebra
-  letI : IsLocalHom (algebraMap R A) := hu
-  letI : Module R (A ⧸ I) := Module.compHom (A ⧸ I) (algebraMap R A)
-  letI : IsScalarTower R A (A ⧸ I) := IsScalarTower.of_algebraMap_eq' rfl
+  let : Algebra R A := u.toAlgebra
+  let : IsLocalHom (algebraMap R A) := hu
+  let : Module R (A ⧸ I) := Module.compHom (A ⧸ I) (algebraMap R A)
+  let : IsScalarTower R A (A ⧸ I) := IsScalarTower.of_algebraMap_eq' rfl
   change Function.Surjective
     ((Ideal.Quotient.mk (IsLocalRing.maximalIdeal A)).comp u) at hres
   have hres' : Function.Surjective
@@ -865,20 +865,20 @@ private theorem chapter13_finite_length_quotient_finite_over_local_coeff
   have hlength := IsLocalRing.length_restrictScalars R A (A ⧸ I)
   have hfiniteR : IsFiniteLength R (A ⧸ I) := by
     have hI' := (isFiniteLength_iff_isNoetherian_isArtinian.mp hI)
-    letI : IsNoetherian A (A ⧸ I) := hI'.1
-    letI : IsArtinian A (A ⧸ I) := hI'.2
+    let : IsNoetherian A (A ⧸ I) := hI'.1
+    let : IsArtinian A (A ⧸ I) := hI'.2
     apply (Module.length_ne_top_iff).mp
     rw [hlength, hreslen, mul_one]
     exact Module.length_ne_top (R := A) (M := A ⧸ I)
   have hfiniteR' := (isFiniteLength_iff_isNoetherian_isArtinian.mp hfiniteR)
-  letI : IsNoetherian R (A ⧸ I) := hfiniteR'.1
+  let : IsNoetherian R (A ⧸ I) := hfiniteR'.1
   exact inferInstance
 
 theorem chapter13_finite_over_mixed_power_series
     {A C k : Type u} [CommRing A] [IsLocalRing A]
     [CommRing C] [IsLocalRing C] [Field k] (p : ℕ)
     (hA : Chapter13CompleteNoetherianLocalRing A)
-    (hmixed : Chapter13MixedCharacteristic A p)
+    (_hmixed : Chapter13MixedCharacteristic A p)
     (hC : Chapter13IsCohenRing C k p)
     (eC : Chapter13ResidueRing C ≃+* k)
     (eA : Chapter13ResidueRing A ≃+* k)
@@ -895,7 +895,7 @@ theorem chapter13_finite_over_mixed_power_series
   obtain ⟨_hdomC, hDvrC⟩ := hC.1.1
   have hCnoeth : IsNoetherianRing C :=
     ⟨fun I => hDvrC.toIsPrincipalIdealRing.principal I |>.fg⟩
-  letI : IsNoetherianRing C := hCnoeth
+  let : IsNoetherianRing C := hCnoeth
   have hCcomplete : Chapter13CompleteNoetherianLocalRing C :=
     ⟨hCnoeth, hC.2⟩
   obtain ⟨F, hF, _⟩ := chapter13_power_series_evaluation_exists_unique
@@ -942,13 +942,13 @@ theorem chapter13_finite_over_mixed_power_series
         obtain ⟨a, ha⟩ := Ideal.Quotient.mk_surjective z
         refine ⟨Ideal.Quotient.mk J a, ?_⟩
         simpa [qmap] using ha)
-  letI : Algebra C A := u.toAlgebra
-  letI : Module C (A ⧸ I) := Module.compHom (A ⧸ I) (algebraMap C A)
-  letI : IsScalarTower C A (A ⧸ I) := IsScalarTower.of_algebraMap_eq' rfl
+  let : Algebra C A := u.toAlgebra
+  let : Module C (A ⧸ I) := Module.compHom (A ⧸ I) (algebraMap C A)
+  let : IsScalarTower C A (A ⧸ I) := IsScalarTower.of_algebraMap_eq' rfl
   have hquot : Module.Finite C (A ⧸ I) :=
     chapter13_finite_length_quotient_finite_over_local_coeff
       u hu hres_surj I hfiniteI
-  letI : Module.Finite C (A ⧸ I) := hquot
+  let : Module.Finite C (A ⧸ I) := hquot
   obtain ⟨r, q, hq⟩ := Module.Finite.exists_fin' C (A ⧸ I)
   let b : Module.Basis (Fin r) C (Fin r → C) := Pi.basisFun C (Fin r)
   choose y hy using fun i : Fin r =>
@@ -966,19 +966,19 @@ theorem chapter13_finite_over_mixed_power_series
     · apply Ideal.span_le.2
       rintro _ ⟨i, rfl⟩
       exact Ideal.subset_span ⟨MvPowerSeries.X i, ⟨i, rfl⟩, hF.2.1 i⟩
-  letI : Algebra P A := F.toAlgebra
+  let : Algebra P A := F.toAlgebra
   let f : (Fin r → P) →ₗ[P] A :=
     LinearMap.lsum P (fun _ : Fin r => P) P
       (fun i => (Algebra.linearMap P A).smulRight (y i))
   have hf_single : ∀ i : Fin r, f (Pi.single i 1) = y i := by
     intro i
-    simp [f, Pi.single_apply, Algebra.smul_def]
+    simp [f, Pi.single_apply]
   have htower : (algebraMap C A) =
       (algebraMap P A).comp (algebraMap C P) := by
     ext c
     change u c = F (MvPowerSeries.C c)
     exact congrArg (fun g => g c) hF.1.symm
-  letI : IsScalarTower C P A :=
+  let : IsScalarTower C P A :=
     IsScalarTower.of_algebraMap_eq' htower
   have hPcomplete : IsAdicComplete K P := by
     change IsAdicComplete (Chapter13PowerSeriesMaximalIdeal C s)
@@ -986,18 +986,18 @@ theorem chapter13_finite_over_mixed_power_series
     have hlocal := chapter13_power_series_complete_local C hC.2 s
     rw [← hlocal.2.1]
     exact hlocal.1.2
-  letI : IsAdicComplete K P := hPcomplete
-  letI : IsPrecomplete K (Fin r → P) :=
+  let : IsAdicComplete K P := hPcomplete
+  let : IsPrecomplete K (Fin r → P) :=
     chapter13_isPrecomplete_fin_pi K r
-  letI : IsAdicComplete (IsLocalRing.maximalIdeal A) A := hA.2
-  letI : IsLocalHom u := hu
+  let : IsAdicComplete (IsLocalRing.maximalIdeal A) A := hA.2
+  let : IsLocalHom u := hu
   have hJle : Ideal.map F K ≤ IsLocalRing.maximalIdeal A := by
     rw [hJ]
     exact sup_le (IsLocalRing.map_maximalIdeal_le u)
       (Ideal.span_le.2 (by
         rintro _ ⟨i, rfl⟩
         exact hx i))
-  letI : IsHausdorff K A := IsHausdorff.of_map hJle
+  let : IsHausdorff K A := IsHausdorff.of_map hJle
   let cₗ : (Fin r → C) →ₗ[C] (Fin r → P) :=
     LinearMap.piMap (fun _ => Algebra.linearMap C P)
   let fₗ : (Fin r → P) →ₗ[C] A := f.restrictScalars C
@@ -1055,12 +1055,12 @@ theorem chapter13_finite_power_series_map_injective
     (hQ : Chapter13CompleteRegularLocalDomain Q I d)
     (F : Q →+* A)
     (hfinite : Chapter13FinitePowerSeriesModule F)
-    (hdomain : IsDomain A)
+    (_hdomain : IsDomain A)
     (hdim : ringKrullDim Q = ringKrullDim A) :
     Function.Injective F := by
-  letI : Algebra Q A := F.toAlgebra
-  letI : Module Q A := Module.compHom A F
-  letI : Module.Finite Q A := by
+  let : Algebra Q A := F.toAlgebra
+  let : Module Q A := Module.compHom A F
+  let : Module.Finite Q A := by
     simpa [Chapter13FinitePowerSeriesModule] using hfinite
   have hann : Module.annihilator Q A = RingHom.ker F := by
     ext q
@@ -1076,17 +1076,17 @@ theorem chapter13_finite_power_series_map_injective
   let B := Q ⧸ RingHom.ker F
   let g : B →+* A := Ideal.Quotient.lift (RingHom.ker F) F
     (fun a ha => RingHom.mem_ker.mp ha)
-  letI : Algebra B A := g.toAlgebra
-  letI : Module B A := Module.compHom A g
-  letI : Module Q B := Module.compHom B (Ideal.Quotient.mk (RingHom.ker F))
+  let : Algebra B A := g.toAlgebra
+  let : Module B A := Module.compHom A g
+  let : Module Q B := Module.compHom B (Ideal.Quotient.mk (RingHom.ker F))
   have hcomp : F = g.comp (Ideal.Quotient.mk (RingHom.ker F)) := by
     ext q
     rfl
-  letI : IsScalarTower Q B A := IsScalarTower.of_algebraMap_eq' (by
+  let : IsScalarTower Q B A := IsScalarTower.of_algebraMap_eq' (by
     change F = g.comp (Ideal.Quotient.mk (RingHom.ker F))
     exact hcomp)
-  letI : Module.Finite B A := Module.Finite.of_restrictScalars_finite Q B A
-  letI : Algebra.IsIntegral B A := Algebra.IsIntegral.of_finite B A
+  let : Module.Finite B A := Module.Finite.of_restrictScalars_finite Q B A
+  let : Algebra.IsIntegral B A := Algebra.IsIntegral.of_finite B A
   have hdimA_le : ringKrullDim A ≤ ringKrullDim B := by
     let φ : PrimeSpectrum A → PrimeSpectrum B :=
       PrimeSpectrum.comap (algebraMap B A)
@@ -1119,7 +1119,7 @@ theorem chapter13_finite_power_series_map_injective
       by_contra hq0
       exact hn ⟨q, hq, hq0⟩
     · exact bot_le
-  letI : IsDomain Q := hQ.2.2.1
+  let : IsDomain Q := hQ.2.2.1
   have hqdim := ringKrullDim_succ_le_of_surjective
     (Ideal.Quotient.mk (RingHom.ker F)) Ideal.Quotient.mk_surjective
     (mem_nonZeroDivisors_of_ne_zero hr0) (Ideal.Quotient.eq_zero_iff_mem.mpr hr)
