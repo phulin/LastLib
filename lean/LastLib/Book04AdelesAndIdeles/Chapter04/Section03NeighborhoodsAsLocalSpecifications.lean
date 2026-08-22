@@ -176,6 +176,17 @@ theorem chapter04_finitePrecisionNeighborhood_is_compact_open
       IsOpen (chapter04FinitePrecisionNeighborhood K S m) := by
   sorry
 
+theorem chapter04_finitePrecisionNeighborhood_is_a_compact_open_additive_subgroup
+    (K : Type*) [Field K] [NumberField K]
+    (S : Finset (Chapter04FinitePlace K))
+    (m : ∀ v : S, ℤ) :
+    ∃ H : AddSubgroup (Chapter04FiniteAdeleRing K),
+      (H : Set (Chapter04FiniteAdeleRing K)) =
+        chapter04FinitePrecisionNeighborhood K S m ∧
+        IsCompact (H : Set (Chapter04FiniteAdeleRing K)) ∧
+        IsOpen (H : Set (Chapter04FiniteAdeleRing K)) := by
+  sorry
+
 theorem chapter04_finitePrecisionNeighborhoods_form_a_zero_basis
     (K : Type*) [Field K] [NumberField K]
     (V : Set (Chapter04FiniteAdeleRing K)) (hV : V ∈ 𝓝 0) :

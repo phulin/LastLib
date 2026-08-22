@@ -85,20 +85,22 @@ variable {K V : Type*} [Field K] [NumberField K]
   [AddCommGroup V] [Module K V] [Module (𝓞 K) V]
   [Module.Finite K V] [IsScalarTower (𝓞 K) K V]
 
+def chapter04LocalLatticeGenerators
+    (M : Chapter04Lattice K V) (v : Chapter04FinitePlace K) :
+    Set (V ⊗[K] Chapter04FiniteLocalField K v) :=
+  Set.range (fun z : M.carrier × Chapter04FiniteLocalIntegerRing K v =>
+    TensorProduct.mk K V (Chapter04FiniteLocalField K v) z.1.1
+      (z.2 : Chapter04FiniteLocalField K v))
+
 def chapter04LocalLattice
     (M : Chapter04Lattice K V) (v : Chapter04FinitePlace K) :
-    Submodule (Chapter04FiniteLocalField K v)
-      (V ⊗[K] Chapter04FiniteLocalField K v) :=
-  Submodule.span (Chapter04FiniteLocalField K v)
-    (Set.range (fun m : M.carrier =>
-      chapter04LocalScalarExtensionMap K V v m.1))
+    AddSubgroup (V ⊗[K] Chapter04FiniteLocalField K v) :=
+  AddSubgroup.closure (chapter04LocalLatticeGenerators M v)
 
 theorem chapter04_local_lattice_is_generated_by_the_global_lattice
     (M : Chapter04Lattice K V) (v : Chapter04FinitePlace K) :
     ∀ x ∈ chapter04LocalLattice M v,
-      x ∈ Submodule.span (Chapter04FiniteLocalField K v)
-        (Set.range (fun m : M.carrier =>
-          chapter04LocalScalarExtensionMap K V v m.1)) := by
+      x ∈ AddSubgroup.closure (chapter04LocalLatticeGenerators M v) := by
   intro x hx
   exact hx
 
@@ -132,7 +134,7 @@ abbrev Chapter04AdelicVectorSpaceFiniteTail
     (G := fun v : Chapter04FinitePlace K =>
       V ⊗[K] Chapter04FiniteLocalField K v)
     (fun v : Chapter04FinitePlace K =>
-      (chapter04LocalLattice M v).toAddSubgroup)
+      chapter04LocalLattice M v)
 
 abbrev Chapter04AdelicVectorSpaceRestrictedProduct
     (M : Chapter04Lattice K V) :=

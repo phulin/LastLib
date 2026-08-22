@@ -12,8 +12,8 @@ open scoped BigOperators Topology RestrictedProduct
 
 theorem chapter04_finiteAdeleRing_is_commutative_topological_ring
     (K : Type*) [Field K] [NumberField K] :
-    Nonempty (CommRing (Chapter04FiniteAdeleRing K)) ∧
-      IsTopologicalRing (Chapter04FiniteAdeleRing K) := by
+    IsTopologicalRing (Chapter04FiniteAdeleRing K) ∧
+      ∀ x y : Chapter04FiniteAdeleRing K, x * y = y * x := by
   sorry
 
 theorem chapter04_finiteAdele_integrality_is_cofinite
@@ -85,7 +85,7 @@ instance chapter04ProfiniteQuotientTopologicalSpace
     (K : Type*) [Field K] [NumberField K]
     (I : Chapter04ProfiniteIdealIndex K) :
     TopologicalSpace (Chapter04RingOfIntegers K ⧸ I.1) :=
-  ⊥
+  ⊤
 
 theorem chapter04_profiniteCompletion_is_compact_t2_totally_disconnected
     (K : Type*) [Field K] [NumberField K] :
@@ -131,6 +131,12 @@ pinned Mathlib finite-adele API as a named ring equivalence. -/
 theorem chapter04_finiteIntegralAdele_equiv_profiniteCompletion
     (K : Type*) [Field K] [NumberField K] :
     Nonempty (Chapter04FiniteIntegralAdele K ≃+* Chapter04ProfiniteCompletion K) := by
+  sorry
+
+theorem chapter04_finiteIntegralAdele_profiniteCompletion_is_topologically_equivalent
+    (K : Type*) [Field K] [NumberField K] :
+    ∃ e : Chapter04FiniteIntegralAdele K ≃+* Chapter04ProfiniteCompletion K,
+      Continuous e ∧ Continuous e.symm := by
   sorry
 
 def chapter04ProfiniteIdealPrimeSupport

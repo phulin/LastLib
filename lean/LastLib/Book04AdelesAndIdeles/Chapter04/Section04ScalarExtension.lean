@@ -24,11 +24,10 @@ def chapter04TensorFiniteExtensionIntegralModel
     [Algebra K L] [FiniteDimensional K L]
     (M : Submodule (𝓞 K) L) (v : Chapter04FinitePlace K) :
     Set (L ⊗[K] Chapter04FiniteLocalField K v) :=
-  letI := Algebra.TensorProduct.rightAlgebra
-    (R := K) (A := L) (B := Chapter04FiniteLocalField K v)
-  (Submodule.span (Chapter04FiniteLocalField K v)
-    (Set.range (fun z : M =>
-      TensorProduct.mk K L (Chapter04FiniteLocalField K v) z.1 1))).carrier
+  (AddSubgroup.closure (Set.range (fun z :
+      M × Chapter04FiniteLocalIntegerRing K v =>
+      TensorProduct.mk K L (Chapter04FiniteLocalField K v) z.1.1
+        (z.2 : Chapter04FiniteLocalField K v)))).carrier
 
 def chapter04BranchIntegralModel
     (K L : Type*) [Field K] [Field L] [NumberField K] [NumberField L]

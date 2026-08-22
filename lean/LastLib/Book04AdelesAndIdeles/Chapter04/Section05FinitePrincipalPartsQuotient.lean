@@ -103,7 +103,7 @@ theorem chapter04_finitePrincipalPartsQuotient_is_discrete
 abbrev chapter04PrincipalPartsTransportedDiscreteTopology
     (K : Type*) [Field K] [NumberField K] :
     TopologicalSpace (Chapter04GlobalPrincipalPartsQuotient K) :=
-  TopologicalSpace.induced (chapter04PrincipalPartsEquiv K) ⊥
+  TopologicalSpace.induced (chapter04PrincipalPartsEquiv K) ⊤
 
 theorem chapter04_principalParts_transport_is_discrete
     (K : Type*) [Field K] [NumberField K] :
