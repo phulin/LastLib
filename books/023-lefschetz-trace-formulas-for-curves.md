@@ -567,6 +567,8 @@ For the graph of a proper endomorphism $f$, take $C=X$, $c_1=f$, and $c_2=\opera
 
 The global alternating trace is a scalar, but localization requires a class before integration. Constructing that class on the fixed scheme is what makes it possible to split the scalar into contributions of separate fixed components.
 
+**Scope.** Every construction in this chapter takes place in the absolute curve category of Book 20: $X$ and $C$ are separated schemes of finite type of dimension at most one over a separably closed field, coefficients are bounded constructible complexes over $E$ (or over $\Lambda_n$ at finite level, with identical formulas). The functor $f^!$ on bounded constructible complexes, its adjunction with $Rf_!$, the dualizing complexes $\omega_X^\bullet$ with $c_2^!\omega_X^\bullet=\omega_C^\bullet$ for $c_2$ in the category, Verdier duality and biduality for bounded constructible complexes, purity in the proved range, the trace maps $\operatorname{Tr}_f$ with their transitivity and base-change compatibility, and the mixed-support external product are exactly those constructed in Book 20, Sections 2, 3, 5, and 6; compactly supported Künneth is Theorem 3.1 of this book. No statement here extends beyond that range, and Chapter 8 onwards uses only this range.
+
 The fixed locus of $c$ is
 
 $$
@@ -574,36 +576,91 @@ $$
 =C\times_{X\times X,\,c}\Delta_X.
 $$
 
-Write $\delta:\operatorname{Fix}(c)\to C$ for its inclusion and $a:\operatorname{Fix}(c)\to\operatorname{Spec}\bar k$. Restricting $u$ to the diagonal and composing evaluation with the Verdier trace gives a class
+Write $\delta:\operatorname{Fix}(c)\to C$ for its inclusion and $a:\operatorname{Fix}(c)\to\operatorname{Spec}\bar k$. We will produce a class
 
 $$
 \operatorname{Tr}_c(u)
 \in H^0(\operatorname{Fix}(c),a^!E).
 $$
 
-This notation is compact, so we unfold the construction. Put $D_XK=R\mathcal Hom(K,\omega_X^\bullet)$. Evaluation is the canonical map
+Put $D_XK=R\mathcal Hom(K,\omega_X^\bullet)$. Evaluation is the canonical map
 
 $$
 D_XK\otimes^LK\longrightarrow\omega_X^\bullet.
 $$
 
-Using $u$, the projection formula for $c_2^!$, and this evaluation produces the kernel pairing
+Using $u$, the projection formula for $c_2^!$ (Book 20, Section 6.2), and this evaluation produces the kernel pairing
 
 $$
 c_2^*D_XK\otimes^Lc_1^*K
 \xrightarrow{1\otimes u}
 c_2^*D_XK\otimes^Lc_2^!K
 \longrightarrow c_2^!\omega_X^\bullet
-=\omega_C^\bullet. \tag{6.1}
+=\omega_C^\bullet, \tag{6.1}
 $$
 
-Let $b=c_1\delta=c_2\delta$. Pulling (6.1) to the cartesian square with the diagonal identifies both coefficient factors with the corresponding pullbacks along $b$. The diagonal coevaluation for Verdier duality, followed by (6.1) and extraordinary base change for that square, gives
+the identification $c_2^!\omega_X^\bullet=\omega_C^\bullet$ being part of the compatibility of $f^!$ with dualizing complexes (Book 20, Section 3.3).
+
+The one genuinely new object needed is the diagonal coevaluation, and we construct it rather than invoking it.
+
+**Lemma 6.2 (diagonal coevaluation).** Let $X$ be separated of finite type of dimension at most one over a separably closed field, let $K\in D_c^b(X,E)$, and put $V=R\Gamma_c(X,K)$, so that Book 20, Section 3.4 gives $V^\vee=R\operatorname{Hom}_E(V,E)\simeq R\Gamma(X,D_XK)$. Then:
+
+(a) The image of $\operatorname{id}_V$ under the canonical maps
+$\operatorname{End}_E(V)\to V^\vee\otimes^L_EV\xrightarrow{\ \simeq\ }R\Gamma(X,D_XK)\otimes^L_ER\Gamma_c(X,K)\xrightarrow{\ \simeq\ }R\Gamma_c(X\times X,D_XK\boxtimes^LK)$ — the first arrow the coevaluation unit of Section 5.1, the second the duality isomorphism, the third the mixed-support product of Book 20, Section 6.1 followed by Theorem 3.1 — is a canonical morphism $\operatorname{coev}_K:E\to R\Gamma_c(X\times X,D_XK\boxtimes^LK)$.
+
+(b) Pulling $\operatorname{coev}_K$ back along the diagonal and applying evaluation followed by the structural trace of Book 20, Section 5 recovers the identity of $E$: the composite $E\to R\Gamma_c(X,\Delta^*(D_XK\boxtimes K))=R\Gamma_c(X,D_XK\otimes^LK)\xrightarrow{\operatorname{ev}}R\Gamma_c(X,\omega_X^\bullet)\xrightarrow{\operatorname{tr}_X}E$ equals $\operatorname{id}_E$.
+
+(c) The formation of $\operatorname{coev}_K$ is functorial in morphisms of coefficients and additive on localization triangles; consequently (b), once verified when $X$ is smooth and $K$ is a shifted lisse locally free sheaf concentrated in one degree, holds for every bounded constructible $K$.
+
+_Proof._ (a) Each arrow is a canonical isomorphism or unit in the stated range: the coevaluation unit requires $V$ perfect, which holds because bounded constructible complexes on curves have finite-dimensional cohomology (Book 18, Section 7); the duality isomorphism is Book 20, Section 3.4; the product map is Book 20, Section 6.1 composed with Theorem 3.1.
+
+(b) First suppose $X$ is smooth and $K=\mathcal F[j]$ with $\mathcal F$ lisse locally free. By Book 20, Section 7.1, the abstract duality isomorphism identifies, at the level of cohomology, with cup product, evaluation $\mathcal F\otimes\mathcal F^\vee\to E$, and the structural trace; the text there proves that "this concrete description agrees with the abstract duality isomorphism because both arise from the same adjunction counit." Under that identification, $\operatorname{coev}_K$ is the class of the identity matrix in $\bigoplus_iH^{i}(X,\mathcal F^\vee(1))\otimes H_c^{2-i}(X,\mathcal F)$, pulled through the shifts; pulling it back along the diagonal inserts the diagonal class, applies evaluation on coefficient factors, and leaves precisely the composite whose value on a pair $(\varphi,v)$ is $\varphi(v)$ — which is the trace of the identity by the normalization of the structural trace (Book 20, Section 5.1: affine-space fundamental class maps to $1$, disjoint unions sum). This proves (b) in the lisse case.
+
+For the general case, choose a finite filtration of $X$ by locally closed strata smooth over $\bar k$ such that every cohomology sheaf of $K$ is lisse on each stratum shifted appropriately; Book 20, Section 3.4 constructs such filtrations in exactly this range. Both sides of the asserted equality of composites are additive functors in $K$: the source because each arrow of (a) is an exact functor of triangulated categories in $K$ (derived tensor against a fixed complex, pullbacks, and Hom-tensor duality), and the target because localization triangles for $K$ induce localization triangles for $D_XK\otimes^LK$ and the structural trace is a morphism of triangulated functors. Given a triangle $K'\to K\to K''$ whose restriction to every stratum is a shifted lisse sheaf, the five-lemma argument applied to the induced morphism of long exact Hom sequences shows that the natural transformation between the two composites is an isomorphism on $K'$ and $K''$ if and only if it is an isomorphism on $K$. Induction over the strata — extension by zero from a stratum, then truncation — reduces to the proved case. This dévissage uses only biduality and the localization triangles of Book 20, Section 3.4; nothing here asserts that an arbitrary constructible sheaf is invertible for the tensor product, and no orientation of a singular $X$ is used: $\omega_X^\bullet$ enters abstractly throughout. $\square$
+
+Let $b=c_1\delta=c_2\delta$. The kernel pairing (6.1) lives on $C$:
 
 $$
-E_{\operatorname{Fix}(c)}\longrightarrow a^!E.
+c_2^*D_XK\otimes^Lc_1^*K
+\longrightarrow\omega_C^\bullet.
 $$
 
-Its image of $1$ is $\operatorname{Tr}_c(u)$. This description is first made on strata where $K$ is a shifted lisse sheaf, where it is ordinary matrix coevaluation and evaluation. The localization triangles for a constructibility filtration uniquely extend it to every bounded constructible $K$; additivity on a triangle follows because the matrix traces on the stratumwise kernels add. Thus no tensor-dualizability of an arbitrary constructible sheaf is being assumed. Every arrow is canonical, and in particular no orientation of a singular $X$ is guessed.
+Pull $\operatorname{coev}_K$ back along the flipped correspondence $(c_2,c_1):C\to X\times X$ — ordinary pullback of an external product, functorial by Theorem 3.1 — to obtain a class on $C$ pairing with the first factor of (6.1). Composing gives a canonical functional
+
+$$
+\kappa_{(c,u)}:\quad
+E
+\xrightarrow{\ \operatorname{coev}_K\ }
+R\Gamma_c(X\times X,D_XK\boxtimes^LK)
+\xrightarrow{\ (c_2,c_1)^*(\cdot)\ }
+R\Gamma(C,\;c_2^*D_XK\otimes^Lc_1^*K)
+\xrightarrow{\ (6.1)\ }
+R\Gamma(C,\omega_C^\bullet).
+$$
+
+**Standing Input 6.3 (extraordinary base change along the fixed-point square).** _For the cartesian square_
+
+$$
+\begin{array}{ccc}
+\operatorname{Fix}(c) & \xrightarrow{\ \delta\ } & C\\[2pt]
+{\scriptstyle b}\downarrow & & \downarrow {\scriptstyle c_2}\\[2pt]
+X & \xrightarrow{\ \Delta\ } & X\times X,
+\end{array}
+$$
+
+_the functional $\kappa_{(c,u)}$ is supported on $\operatorname{Fix}(c)$ in the following precise sense: it lifts canonically through the pullback $R\Gamma(C,\omega_C^\bullet)\leftarrow R\Gamma(\operatorname{Fix}(c),b^!\omega_C^\bullet)$, i.e. there is a canonical morphism $E\to R\Gamma(\operatorname{Fix}(c),b^!\omega_C^\bullet)$ whose composite with the natural pushforward is $\kappa_{(c,u)}$, and this lifting is functorial in $(c,u)$ and additive on localization triangles._
+
+_Provenance._ What earlier books prove is this: Book 19, Sections 6.1–6.2 proves proper base change for proper pushforward, that is, for squares whose vertical leg is proper, comparing ordinary pullbacks; Book 19, Section 8 proves smooth base change and local acyclicity for lisse coefficients in consumed degree ranges. Neither is a base-change theorem for the $!$-pullback of arbitrary constructible complexes along a closed immersion composed with a general correspondence leg, and no such theorem is proved in Books 18 through 22 or available in local Mathlib. In the special case where both legs $c_1$ and $c_2$ are proper — the situation of every application made in Chapters 8 through 13 — the input is a consequence of what is proved: proper base change of Book 19, Section 6.1 gives the ordinary-pullback comparison for the square, and Book 20, Section 3.4's exchange formulas for Verdier duality under the six operations of a localization convert that comparison into the extraordinary form above; we record the conversion without repeating it.
+
+_Consumer analysis._ Standing Input 6.3 is consumed only in the definition of the trace class immediately below, in Theorem 6.1, and through them in Proposition 7.1 and Chapter 10; every one of those consumers operates on curves with properly supported correspondences, so the recorded two-proper-legs reduction covers each use.
+
+Granting Standing Input 6.3, compose the lift of $\kappa_{(c,u)}$ with transitivity of $f^!$ (Book 20, Section 3.3): since $b:\operatorname{Fix}(c)\to X$ followed by $X\to\operatorname{Spec}\bar k$ equals $a$, there is a canonical identification $b^!\omega_X^\bullet\simeq a^!E$, and the evaluation $b^*D_XK\otimes^L b^*K\to b^!\omega_X^\bullet$ obtained from (6.1) pulled back along $\delta$ yields finally a class
+
+$$
+E\longrightarrow R\Gamma(\operatorname{Fix}(c),a^!E),
+$$
+
+whose image of $1$ is $\operatorname{Tr}_c(u)\in H^0(\operatorname{Fix}(c),a^!E)$.
 
 If the fixed locus is proper, its structural trace
 
