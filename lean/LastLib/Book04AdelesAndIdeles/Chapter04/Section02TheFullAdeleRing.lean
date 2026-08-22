@@ -588,7 +588,72 @@ theorem chapter04_infiniteAdeleRing_has_no_compact_open_additive_subgroup
     ¬ ∃ H : AddSubgroup (Chapter04InfiniteAdeleRing K),
       IsCompact (H : Set (Chapter04InfiniteAdeleRing K)) ∧
         IsOpen (H : Set (Chapter04InfiniteAdeleRing K)) := by
-  sorry
+  classical
+  intro h
+  rcases h with ⟨H, hHcompact, hHopen⟩
+  let hpath : ∀ v : Chapter04InfinitePlace K,
+      PathConnectedSpace v.Completion := fun v => by
+    rcases v.isReal_or_isComplex with hv | hv
+    · exact Function.Surjective.pathConnectedSpace
+        (f := (NumberField.InfinitePlace.Completion.isometryEquivRealOfIsReal hv).symm)
+        (NumberField.InfinitePlace.Completion.isometryEquivRealOfIsReal hv).symm.surjective
+        (NumberField.InfinitePlace.Completion.isometryEquivRealOfIsReal hv).symm.continuous
+    · exact Function.Surjective.pathConnectedSpace
+        (f := (NumberField.InfinitePlace.Completion.isometryEquivComplexOfIsComplex hv).symm)
+        (NumberField.InfinitePlace.Completion.isometryEquivComplexOfIsComplex hv).symm.surjective
+        (NumberField.InfinitePlace.Completion.isometryEquivComplexOfIsComplex hv).symm.continuous
+  let hPathInf : PathConnectedSpace (Chapter04InfiniteAdeleRing K) := by
+    change PathConnectedSpace (∀ v : Chapter04InfinitePlace K, v.Completion)
+    exact @Pi.instPathConnectedSpace _ _ _ hpath
+  let hconnected : ConnectedSpace (Chapter04InfiniteAdeleRing K) :=
+    @PathConnectedSpace.connectedSpace _ _ hPathInf
+  have hHClopen : IsClopen (H : Set (Chapter04InfiniteAdeleRing K)) := by
+    exact ⟨AddSubgroup.isClosed_of_isOpen H hHopen, hHopen⟩
+  have hHUniv : (H : Set (Chapter04InfiniteAdeleRing K)) = Set.univ := by
+    exact @IsClopen.eq_univ _ _ hconnected.toPreconnectedSpace
+      (H : Set (Chapter04InfiniteAdeleRing K)) hHClopen ⟨0, H.zero_mem⟩
+  let w : Chapter04InfinitePlace K := Classical.choice inferInstance
+  have heval_surj : Function.Surjective
+      (fun z : Chapter04InfiniteAdeleRing K => z w) := by
+    intro y
+    refine ⟨Function.update (0 : Chapter04InfiniteAdeleRing K) w y, ?_⟩
+    simp [Function.update]
+  have hcoord : IsCompact (Set.univ : Set w.Completion) := by
+    have hcoord' : IsCompact ((fun z : Chapter04InfiniteAdeleRing K => z w) ''
+        (H : Set (Chapter04InfiniteAdeleRing K))) :=
+      hHcompact.image (continuous_apply w)
+    rw [hHUniv] at hcoord'
+    have himage : (fun z : Chapter04InfiniteAdeleRing K => z w) ''
+        (Set.univ : Set (Chapter04InfiniteAdeleRing K)) = Set.univ := by
+      rw [Set.image_univ]
+      exact heval_surj.range_eq
+    rw [himage] at hcoord'
+    exact hcoord'
+  rcases w.isReal_or_isComplex with hw | hw
+  · have hcoordR : IsCompact (Set.univ : Set ℝ) := by
+      have hcoordR' := hcoord.image
+        (NumberField.InfinitePlace.Completion.isometryEquivRealOfIsReal hw).continuous
+      have himage :
+          (NumberField.InfinitePlace.Completion.isometryEquivRealOfIsReal hw :
+            w.Completion → ℝ) '' (Set.univ : Set w.Completion) = Set.univ := by
+        rw [Set.image_univ]
+        exact
+          (NumberField.InfinitePlace.Completion.isometryEquivRealOfIsReal hw).surjective.range_eq
+      rw [himage] at hcoordR'
+      exact hcoordR'
+    exact (IsCompact.ne_univ hcoordR) rfl
+  · have hcoordC : IsCompact (Set.univ : Set ℂ) := by
+      have hcoordC' := hcoord.image
+        (NumberField.InfinitePlace.Completion.isometryEquivComplexOfIsComplex hw).continuous
+      have himage :
+          (NumberField.InfinitePlace.Completion.isometryEquivComplexOfIsComplex hw :
+            w.Completion → ℂ) '' (Set.univ : Set w.Completion) = Set.univ := by
+        rw [Set.image_univ]
+        exact Function.Surjective.range_eq
+          (NumberField.InfinitePlace.Completion.isometryEquivComplexOfIsComplex hw).surjective
+      rw [himage] at hcoordC'
+      exact hcoordC'
+    exact (IsCompact.ne_univ hcoordC) rfl
 
 theorem chapter04_full_compact_product_neighborhood_is_not_a_subgroup
     (K : Type*) [Field K] [NumberField K]
@@ -598,7 +663,15 @@ theorem chapter04_full_compact_product_neighborhood_is_not_a_subgroup
       𝓝 (0 : Chapter04AdeleRing K)) :
     ¬ ∃ H : AddSubgroup (Chapter04AdeleRing K),
       (H : Set (Chapter04AdeleRing K)) = chapter04FullCompactProductSet K CInf := by
-  sorry
+  intro h
+  rcases h with ⟨H, hH⟩
+  apply chapter04_full_adele_has_no_compact_open_additive_subgroup K
+  refine ⟨H, ?_, ?_⟩
+  · rw [hH]
+    exact chapter04_full_compact_product_is_compact K CInf hC
+  · apply AddSubgroup.isOpen_of_mem_nhds H
+    rw [hH]
+    exact hnhds
 
 end
 
