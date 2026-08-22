@@ -655,25 +655,320 @@ theorem chapter06_torsion_polynomial_derivative_at_zero
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K) (n : ℕ) :
     (chapter06TorsionPolynomialOverK D n).derivative.eval 0 =
       (algebraMap (Chapter06ValuationRing D) K) D.uniformizer ^ n := by
-  sorry
+  have hq : 1 < chapter06ResidueCardinality D := by
+    let _ := D.residue_finite
+    let _ : Fintype (Chapter06ResidueField D) := Fintype.ofFinite _
+    simpa [chapter06ResidueCardinality, Nat.card_eq_fintype_card] using
+      (Fintype.one_lt_card : 1 < Fintype.card (Chapter06ResidueField D))
+  have hq0 : chapter06ResidueCardinality D ≠ 0 := by omega
+  have hqminus : chapter06ResidueCardinality D - 1 ≠ 0 := by omega
+  have hzero : ∀ m, (chapter06Sn D m).eval 0 = 0 := by
+    intro m
+    induction m with
+    | zero =>
+        simp [chapter06Sn, chapter06TorsionPolynomialSequence]
+    | succ m hm =>
+        change ((chapter06LubinTatePolynomial D).comp
+          (chapter06Sn D m)).eval 0 = 0
+        rw [Polynomial.eval_comp]
+        simp [chapter06LubinTatePolynomial, hm, hq0]
+  have hzeroK : ∀ m, (chapter06TorsionPolynomialOverK D m).eval 0 = 0 := by
+    intro m
+    induction m with
+    | zero =>
+        simp [chapter06TorsionPolynomialOverK, chapter06Sn,
+          chapter06TorsionPolynomialSequence]
+    | succ m hm =>
+        change Polynomial.eval 0
+          (((chapter06LubinTatePolynomial D).comp
+            (chapter06Sn D m)).map
+              (algebraMap (Chapter06ValuationRing D) K)) = 0
+        rw [Polynomial.map_comp, Polynomial.eval_comp]
+        have hm' :
+            Polynomial.eval 0
+                ((chapter06Sn D m).map
+                  (algebraMap (Chapter06ValuationRing D) K)) = 0 := by
+          exact hm
+        rw [hm']
+        simp [chapter06LubinTatePolynomial, hq0]
+  induction n with
+  | zero =>
+      simp [chapter06TorsionPolynomialOverK, chapter06Sn,
+        chapter06TorsionPolynomialSequence]
+  | succ n ih =>
+      have hcomp :
+          chapter06TorsionPolynomialOverK D (n + 1) =
+            ((chapter06LubinTatePolynomial D).map
+                (algebraMap (Chapter06ValuationRing D) K)).comp
+              (chapter06TorsionPolynomialOverK D n) := by
+        simp [chapter06TorsionPolynomialOverK, chapter06Sn,
+          chapter06TorsionPolynomialSequence, Polynomial.map_comp]
+      rw [hcomp, Polynomial.derivative_comp]
+      rw [Polynomial.eval_mul, Polynomial.eval_comp]
+      rw [ih]
+      have hmap :
+          (chapter06LubinTatePolynomial D).map
+              (algebraMap (Chapter06ValuationRing D) K) =
+            Polynomial.C ((algebraMap (Chapter06ValuationRing D) K) D.uniformizer) *
+                Polynomial.X +
+              Polynomial.X ^ chapter06ResidueCardinality D := by
+        rw [chapter06LubinTatePolynomial, Polynomial.map_add,
+          Polynomial.map_mul, Polynomial.map_C, Polynomial.map_pow,
+          Polynomial.map_X]
+      rw [hmap]
+      simp [Polynomial.derivative_add, Polynomial.derivative_X,
+        Polynomial.derivative_X_pow, hzeroK n, hqminus, pow_succ']
+      ring
 
 theorem chapter06_torsion_polynomial_roots_simple
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K) (n : ℕ)
     (x : AlgebraicClosure K)
     (hx : x ∈ chapter06TorsionSet D n) :
     Polynomial.aeval x (chapter06TorsionPolynomialOverK D n).derivative ≠ 0 := by
-  sorry
+  let _ := D.residue_finite
+  let _ : Fintype (Chapter06ResidueField D) := Fintype.ofFinite _
+  have hq : 1 < chapter06ResidueCardinality D := by
+    simpa [chapter06ResidueCardinality, Nat.card_eq_fintype_card] using
+      (Fintype.one_lt_card : 1 < Fintype.card (Chapter06ResidueField D))
+  have hqminusK :
+      ((chapter06ResidueCardinality D - 1 : ℕ) : K) ≠ 0 := by
+    intro hzero
+    have hzeroA :
+        ((chapter06ResidueCardinality D - 1 : ℕ) : Chapter06ValuationRing D) = 0 := by
+      apply Subtype.ext
+      exact hzero
+    have hzeroB :
+        ((chapter06ResidueCardinality D - 1 : ℕ) : Chapter06ResidueField D) = 0 := by
+      have hmap := congrArg
+        (algebraMap (Chapter06ValuationRing D) (Chapter06ResidueField D)) hzeroA
+      simpa using hmap
+    have hqB : (chapter06ResidueCardinality D : Chapter06ResidueField D) = 0 := by
+      rw [chapter06ResidueCardinality, Nat.card_eq_fintype_card]
+      exact Nat.cast_card_eq_zero (Chapter06ResidueField D)
+    rw [Nat.cast_sub (by omega : 1 ≤ chapter06ResidueCardinality D), hqB] at hzeroB
+    simp at hzeroB
+  have hSn_deriv_ne_zero : ∀ m,
+      (chapter06TorsionPolynomialOverK D m).derivative ≠ 0 := by
+    intro m hzero
+    have hderiv := chapter06_torsion_polynomial_derivative_at_zero D m
+    rw [hzero] at hderiv
+    have hpi :
+        (algebraMap (Chapter06ValuationRing D) K) D.uniformizer ≠ 0 := by
+      intro h
+      apply D.uniformizer_spec.1
+      apply (FaithfulSMul.algebraMap_injective
+        (Chapter06ValuationRing D) K)
+      simpa using h
+    have hderiv' : 0 =
+        (algebraMap (Chapter06ValuationRing D) K) D.uniformizer ^ m := by
+      simpa using hderiv
+    exact (pow_ne_zero m hpi) hderiv'.symm
+  have hQ_deriv_ne_zero : ∀ m,
+      (chapter06PrimitiveTorsionPolynomialOverK D (m + 1)).derivative ≠ 0 := by
+    intro m hzero
+    have hformula :
+        (chapter06PrimitiveTorsionPolynomialOverK D (m + 1)).derivative =
+          Polynomial.C ((chapter06ResidueCardinality D - 1 : ℕ) : K) *
+              (chapter06TorsionPolynomialOverK D m) ^
+                (chapter06ResidueCardinality D - 2) *
+          (chapter06TorsionPolynomialOverK D m).derivative := by
+      have hq2 : chapter06ResidueCardinality D - 1 - 1 =
+          chapter06ResidueCardinality D - 2 := by omega
+      simp [chapter06PrimitiveTorsionPolynomialOverK, chapter06Qn,
+        chapter06PrimitiveDivisionPolynomial, chapter06TorsionPolynomialOverK,
+        Polynomial.derivative_map, Polynomial.map_add, Polynomial.map_pow,
+        Polynomial.derivative_add, Polynomial.derivative_C,
+        Polynomial.derivative_pow, hq2]
+    rw [hformula] at hzero
+    have hSn : chapter06TorsionPolynomialOverK D m ≠ 0 := by
+      intro h
+      apply hSn_deriv_ne_zero m
+      rw [h]
+      simp
+    have hleft :
+        Polynomial.C ((chapter06ResidueCardinality D - 1 : ℕ) : K) *
+            (chapter06TorsionPolynomialOverK D m) ^
+              (chapter06ResidueCardinality D - 2) ≠ 0 := by
+      apply mul_ne_zero
+      · simpa only [Polynomial.C_ne_zero] using hqminusK
+      · exact pow_ne_zero _ hSn
+    apply hSn_deriv_ne_zero m
+    exact (mul_eq_zero.mp hzero).resolve_left hleft
+  have hQsep : ∀ m,
+      (chapter06PrimitiveTorsionPolynomialOverK D (m + 1)).Separable := by
+    intro m
+    have hpos : 0 < (chapter06Qn D (m + 1)).natDegree := by
+      rw [chapter06_Qn_degree D (m + 1) (by omega)]
+      exact Nat.mul_pos (pow_pos (by omega) _) (by omega)
+    have hmonic := chapter06_Qn_monic D (m + 1) (by omega)
+    have hirrA : Irreducible (chapter06Qn D (m + 1)) := by
+      apply (chapter06_Qn_is_eisenstein D (m + 1) (by omega)).irreducible
+        (IsLocalRing.maximalIdeal.isMaximal _).isPrime
+        hmonic.isPrimitive hpos
+    have hirrK :
+        Irreducible (chapter06PrimitiveTorsionPolynomialOverK D (m + 1)) := by
+      exact (hmonic.irreducible_iff_irreducible_map_fraction_map).mp hirrA
+    exact (Polynomial.separable_iff_derivative_ne_zero hirrK).2
+      (hQ_deriv_ne_zero m)
+  induction n generalizing x with
+  | zero =>
+      simp [chapter06TorsionPolynomialOverK, chapter06Sn,
+        chapter06TorsionPolynomialSequence]
+  | succ n ih =>
+      have hfactor :
+          chapter06TorsionPolynomialOverK D (n + 1) =
+            chapter06TorsionPolynomialOverK D n *
+              chapter06PrimitiveTorsionPolynomialOverK D (n + 1) := by
+        unfold chapter06TorsionPolynomialOverK
+          chapter06PrimitiveTorsionPolynomialOverK
+        rw [chapter06_Qn_factorization D (n + 1) (by omega),
+          Polynomial.map_mul]
+        simp only [Nat.add_sub_cancel]
+      have hx' :
+          Polynomial.aeval x (chapter06TorsionPolynomialOverK D (n + 1)) = 0 := hx
+      rw [hfactor] at hx'
+      have hprod :
+          Polynomial.aeval x (chapter06TorsionPolynomialOverK D n) *
+              Polynomial.aeval x
+                (chapter06PrimitiveTorsionPolynomialOverK D (n + 1)) = 0 := by
+        simpa only [Polynomial.aeval_def, Polynomial.eval₂_mul] using hx'
+      rcases mul_eq_zero.mp hprod with hprev | hprimitive
+      · have hprev' : x ∈ chapter06TorsionSet D n := hprev
+        have hprevderiv := ih x hprev'
+        have hprimitive_ne :
+            Polynomial.aeval x
+                (chapter06PrimitiveTorsionPolynomialOverK D (n + 1)) ≠ 0 := by
+          intro hprimitive_zero
+          have hprimitive_mem :
+              x ∈ chapter06PrimitiveTorsionSet D (n + 1) := hprimitive_zero
+          -- The primitive-root characterization excludes the previous level.
+          exact False.elim (((chapter06_mem_primitiveTorsionSet_iff D (n + 1) (by omega) x).mp
+            hprimitive_mem).2 hprev')
+        have hprev_eval :
+            Polynomial.eval₂ (algebraMap K (AlgebraicClosure K)) x
+              (chapter06TorsionPolynomialOverK D n) = 0 := by
+          simpa [Polynomial.aeval_def] using hprev
+        have hprevderiv_eval :
+            Polynomial.eval₂ (algebraMap K (AlgebraicClosure K)) x
+              (chapter06TorsionPolynomialOverK D n).derivative ≠ 0 := by
+          simpa [Polynomial.aeval_def] using hprevderiv
+        have hprimitive_eval :
+            Polynomial.eval₂ (algebraMap K (AlgebraicClosure K)) x
+              (chapter06PrimitiveTorsionPolynomialOverK D (n + 1)) ≠ 0 := by
+          simpa [Polynomial.aeval_def] using hprimitive_ne
+        rw [hfactor, Polynomial.derivative_mul]
+        simp only [Polynomial.aeval_def, Polynomial.eval₂_add,
+          Polynomial.eval₂_mul]
+        rw [hprev_eval, zero_mul, add_zero]
+        exact mul_ne_zero hprevderiv_eval hprimitive_eval
+      · have hprimitive_mem :
+            x ∈ chapter06PrimitiveTorsionSet D (n + 1) := hprimitive
+        have hprev_ne :
+            Polynomial.aeval x (chapter06TorsionPolynomialOverK D n) ≠ 0 := by
+          intro hprev_zero
+          have hprev_mem : x ∈ chapter06TorsionSet D n := hprev_zero
+          exact ((chapter06_mem_primitiveTorsionSet_iff D (n + 1) (by omega) x).mp
+            hprimitive_mem).2 hprev_mem
+        have hprimitive_deriv :=
+          (hQsep n).aeval_derivative_ne_zero hprimitive
+        have hprimitive_eval :
+            Polynomial.eval₂ (algebraMap K (AlgebraicClosure K)) x
+              (chapter06PrimitiveTorsionPolynomialOverK D (n + 1)) = 0 := by
+          simpa [Polynomial.aeval_def] using hprimitive
+        have hprev_eval_ne :
+            Polynomial.eval₂ (algebraMap K (AlgebraicClosure K)) x
+              (chapter06TorsionPolynomialOverK D n) ≠ 0 := by
+          simpa [Polynomial.aeval_def] using hprev_ne
+        have hprimitive_deriv_eval :
+            Polynomial.eval₂ (algebraMap K (AlgebraicClosure K)) x
+              (chapter06PrimitiveTorsionPolynomialOverK D (n + 1)).derivative ≠ 0 := by
+          simpa [Polynomial.aeval_def] using hprimitive_deriv
+        rw [hfactor, Polynomial.derivative_mul]
+        simp only [Polynomial.aeval_def, Polynomial.eval₂_add,
+          Polynomial.eval₂_mul]
+        rw [hprimitive_eval, mul_zero, zero_add]
+        exact mul_ne_zero hprev_eval_ne hprimitive_deriv_eval
 
 theorem chapter06_torsion_set_finite
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K) (n : ℕ) :
     Set.Finite (chapter06TorsionSet D n) := by
-  sorry
+  have hmonic :
+      (chapter06TorsionPolynomialOverK D n).Monic := by
+    unfold chapter06TorsionPolynomialOverK
+    exact (chapter06_torsion_polynomial_monic D n).map _
+  apply (Polynomial.rootSet_finite
+    (chapter06TorsionPolynomialOverK D n) (AlgebraicClosure K)).subset
+  intro x hx
+  exact (Polynomial.mem_rootSet).2 ⟨hmonic.ne_zero, hx⟩
 
 theorem chapter06_torsion_set_cardinality
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K) (n : ℕ) :
     Nat.card {x : AlgebraicClosure K // x ∈ chapter06TorsionSet D n} =
       chapter06ResidueCardinality D ^ n := by
-  sorry
+  classical
+  let _ := D.residue_finite
+  let _ : Fintype (Chapter06ResidueField D) := Fintype.ofFinite _
+  have hmonic :
+      (chapter06TorsionPolynomialOverK D n).Monic := by
+    unfold chapter06TorsionPolynomialOverK
+    exact (chapter06_torsion_polynomial_monic D n).map _
+  have hmapmonic :
+      ((chapter06TorsionPolynomialOverK D n).map
+          (algebraMap K (AlgebraicClosure K))).Monic := hmonic.map _
+  have hsplit :
+      ((chapter06TorsionPolynomialOverK D n).map
+          (algebraMap K (AlgebraicClosure K))).Splits := by
+    exact IsAlgClosed.splits _
+  have hsep :
+      (chapter06TorsionPolynomialOverK D n).Separable := by
+    apply (Polynomial.nodup_aroots_iff_of_splits hmonic.ne_zero hsplit).1
+    apply Multiset.nodup_iff_count_le_one.mpr
+    intro x
+    rw [Polynomial.aroots_def, Polynomial.count_roots]
+    by_contra hcount
+    have hgt :
+        1 < Polynomial.rootMultiplicity x
+          ((chapter06TorsionPolynomialOverK D n).map
+            (algebraMap K (AlgebraicClosure K))) := by
+      omega
+    have hroot :=
+      (Polynomial.one_lt_rootMultiplicity_iff_isRoot hmapmonic.ne_zero).mp hgt
+    have hx : x ∈ chapter06TorsionSet D n := by
+      change Polynomial.aeval x (chapter06TorsionPolynomialOverK D n) = 0
+      rw [Polynomial.aeval_def, ← Polynomial.eval_map]
+      exact hroot.1
+    have hderivzero :
+        Polynomial.aeval x
+            (chapter06TorsionPolynomialOverK D n).derivative = 0 := by
+      rw [Polynomial.aeval_def, ← Polynomial.eval_map,
+        ← Polynomial.derivative_map]
+      exact hroot.2
+    exact (chapter06_torsion_polynomial_roots_simple D n x hx) hderivzero
+  have hset :
+      chapter06TorsionSet D n =
+        (chapter06TorsionPolynomialOverK D n).rootSet (AlgebraicClosure K) := by
+    ext x
+    rw [Polynomial.mem_rootSet]
+    constructor
+    · intro hx
+      exact ⟨hmonic.ne_zero, hx⟩
+    · exact And.right
+  let _ : Fintype {x : AlgebraicClosure K // x ∈ chapter06TorsionSet D n} :=
+    (chapter06_torsion_set_finite D n).fintype
+  calc
+    Nat.card {x : AlgebraicClosure K // x ∈ chapter06TorsionSet D n} =
+        Fintype.card {x : AlgebraicClosure K // x ∈ chapter06TorsionSet D n} :=
+      Nat.card_eq_fintype_card
+    _ = Fintype.card {x : AlgebraicClosure K //
+        x ∈ (chapter06TorsionPolynomialOverK D n).rootSet (AlgebraicClosure K)} := by
+      exact Fintype.card_congr (Equiv.setCongr hset)
+    _ = (chapter06TorsionPolynomialOverK D n).natDegree :=
+      Polynomial.card_rootSet_eq_natDegree hsep hsplit
+    _ = chapter06ResidueCardinality D ^ n := by
+      change ((chapter06Sn D n).map
+          (algebraMap (Chapter06ValuationRing D) K)).natDegree = _
+      rw [(chapter06_torsion_polynomial_monic D n).natDegree_map]
+      exact chapter06_torsion_polynomial_degree D n
 
 theorem chapter06_primitive_torsion_set_cardinality
     {K : Type*} [Field K] (D : Chapter06LocalFieldData K) (n : ℕ)
@@ -681,7 +976,130 @@ theorem chapter06_primitive_torsion_set_cardinality
     Nat.card {x : AlgebraicClosure K // x ∈ chapter06PrimitiveTorsionSet D n} =
       chapter06ResidueCardinality D ^ (n - 1) *
         (chapter06ResidueCardinality D - 1) := by
-  sorry
+  classical
+  let _ := D.residue_finite
+  let _ : Fintype (Chapter06ResidueField D) := Fintype.ofFinite _
+  have hq : 1 < chapter06ResidueCardinality D := by
+    simpa [chapter06ResidueCardinality, Nat.card_eq_fintype_card] using
+      (Fintype.one_lt_card : 1 < Fintype.card (Chapter06ResidueField D))
+  have hqminusK :
+      ((chapter06ResidueCardinality D - 1 : ℕ) : K) ≠ 0 := by
+    intro hzero
+    have hzeroA :
+        ((chapter06ResidueCardinality D - 1 : ℕ) : Chapter06ValuationRing D) = 0 := by
+      apply Subtype.ext
+      exact hzero
+    have hzeroB :
+        ((chapter06ResidueCardinality D - 1 : ℕ) : Chapter06ResidueField D) = 0 := by
+      have hmap := congrArg
+        (algebraMap (Chapter06ValuationRing D) (Chapter06ResidueField D)) hzeroA
+      simpa using hmap
+    have hqB : (chapter06ResidueCardinality D : Chapter06ResidueField D) = 0 := by
+      rw [chapter06ResidueCardinality, Nat.card_eq_fintype_card]
+      exact Nat.cast_card_eq_zero (Chapter06ResidueField D)
+    rw [Nat.cast_sub (by omega : 1 ≤ chapter06ResidueCardinality D), hqB] at hzeroB
+    simp at hzeroB
+  have hSn_deriv_ne_zero :
+      (chapter06TorsionPolynomialOverK D (n - 1)).derivative ≠ 0 := by
+    intro hzero
+    have hderiv := chapter06_torsion_polynomial_derivative_at_zero D (n - 1)
+    rw [hzero] at hderiv
+    have hpi :
+        (algebraMap (Chapter06ValuationRing D) K) D.uniformizer ≠ 0 := by
+      intro h
+      apply D.uniformizer_spec.1
+      apply (FaithfulSMul.algebraMap_injective
+        (Chapter06ValuationRing D) K)
+      simpa using h
+    have hderiv' : 0 =
+        (algebraMap (Chapter06ValuationRing D) K) D.uniformizer ^ (n - 1) := by
+      simpa using hderiv
+    exact (pow_ne_zero (n - 1) hpi) hderiv'.symm
+  have hQ_deriv_ne_zero :
+      (chapter06PrimitiveTorsionPolynomialOverK D n).derivative ≠ 0 := by
+    intro hzero
+    have hq2 : chapter06ResidueCardinality D - 1 - 1 =
+        chapter06ResidueCardinality D - 2 := by omega
+    have hformula :
+        (chapter06PrimitiveTorsionPolynomialOverK D n).derivative =
+          Polynomial.C ((chapter06ResidueCardinality D - 1 : ℕ) : K) *
+              (chapter06TorsionPolynomialOverK D (n - 1)) ^
+                (chapter06ResidueCardinality D - 2) *
+          (chapter06TorsionPolynomialOverK D (n - 1)).derivative := by
+      simp [chapter06PrimitiveTorsionPolynomialOverK, chapter06Qn,
+        chapter06PrimitiveDivisionPolynomial,
+        chapter06TorsionPolynomialOverK, Polynomial.derivative_map,
+        Polynomial.map_add, Polynomial.map_pow, Polynomial.derivative_add,
+        Polynomial.derivative_C, Polynomial.derivative_pow, hq2]
+    rw [hformula] at hzero
+    have hSn : chapter06TorsionPolynomialOverK D (n - 1) ≠ 0 := by
+      intro h
+      apply hSn_deriv_ne_zero
+      rw [h]
+      simp
+    have hleft :
+        Polynomial.C ((chapter06ResidueCardinality D - 1 : ℕ) : K) *
+            (chapter06TorsionPolynomialOverK D (n - 1)) ^
+              (chapter06ResidueCardinality D - 2) ≠ 0 := by
+      apply mul_ne_zero
+      · simpa only [Polynomial.C_ne_zero] using hqminusK
+      · exact pow_ne_zero _ hSn
+    apply hSn_deriv_ne_zero
+    exact (mul_eq_zero.mp hzero).resolve_left hleft
+  have hpos : 0 < (chapter06Qn D n).natDegree := by
+    rw [chapter06_Qn_degree D n hn]
+    exact Nat.mul_pos (pow_pos (by omega) _) (by omega)
+  have hmonicQ := chapter06_Qn_monic D n hn
+  have hirrA : Irreducible (chapter06Qn D n) := by
+    apply (chapter06_Qn_is_eisenstein D n hn).irreducible
+      (IsLocalRing.maximalIdeal.isMaximal _).isPrime
+      hmonicQ.isPrimitive hpos
+  have hirrK :
+      Irreducible (chapter06PrimitiveTorsionPolynomialOverK D n) := by
+    exact (hmonicQ.irreducible_iff_irreducible_map_fraction_map).mp hirrA
+  have hsep :
+      (chapter06PrimitiveTorsionPolynomialOverK D n).Separable :=
+    (Polynomial.separable_iff_derivative_ne_zero hirrK).2 hQ_deriv_ne_zero
+  have hmonic :
+      (chapter06PrimitiveTorsionPolynomialOverK D n).Monic := by
+    unfold chapter06PrimitiveTorsionPolynomialOverK
+    exact hmonicQ.map _
+  have hsplit :
+      ((chapter06PrimitiveTorsionPolynomialOverK D n).map
+          (algebraMap K (AlgebraicClosure K))).Splits := by
+    exact IsAlgClosed.splits _
+  have hset :
+      chapter06PrimitiveTorsionSet D n =
+        (chapter06PrimitiveTorsionPolynomialOverK D n).rootSet
+          (AlgebraicClosure K) := by
+    ext x
+    rw [Polynomial.mem_rootSet]
+    constructor
+    · intro hx
+      exact ⟨hmonic.ne_zero, hx⟩
+    · exact And.right
+  have hfinite : (chapter06PrimitiveTorsionSet D n).Finite := by
+    rw [hset]
+    exact Polynomial.rootSet_finite
+      (chapter06PrimitiveTorsionPolynomialOverK D n) (AlgebraicClosure K)
+  let _ : Fintype {x : AlgebraicClosure K // x ∈ chapter06PrimitiveTorsionSet D n} :=
+    hfinite.fintype
+  calc
+    Nat.card {x : AlgebraicClosure K // x ∈ chapter06PrimitiveTorsionSet D n} =
+        Fintype.card {x : AlgebraicClosure K // x ∈ chapter06PrimitiveTorsionSet D n} :=
+      Nat.card_eq_fintype_card
+    _ = Fintype.card {x : AlgebraicClosure K //
+        x ∈ (chapter06PrimitiveTorsionPolynomialOverK D n).rootSet
+          (AlgebraicClosure K)} := by
+      exact Fintype.card_congr (Equiv.setCongr hset)
+    _ = (chapter06PrimitiveTorsionPolynomialOverK D n).natDegree :=
+      Polynomial.card_rootSet_eq_natDegree hsep hsplit
+    _ = chapter06ResidueCardinality D ^ (n - 1) *
+        (chapter06ResidueCardinality D - 1) := by
+      change ((chapter06Qn D n).map
+          (algebraMap (Chapter06ValuationRing D) K)).natDegree = _
+      rw [hmonicQ.natDegree_map]
+      exact chapter06_Qn_degree D n hn
 
 /-- The finite residue ring used to label torsion points. -/
 abbrev Chapter06TorsionResidueRing
