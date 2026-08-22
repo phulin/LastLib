@@ -115,6 +115,15 @@ abbrev Chapter15FiniteMatrixGroup (n : ℕ) (R K : Type*) [CommRing R]
     [Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion K),
       chapter15FiniteMatrixIntegralSubgroup (R := R) (K := K) n v]
 
+noncomputable instance (priority := 2000) chapter15FiniteMatrixGroup_topologicalSpace
+    (n : ℕ) : TopologicalSpace (Chapter15FiniteMatrixGroup n R K) :=
+  RestrictedProduct.topologicalSpace
+    (fun v : Chapter15FinitePlace R =>
+      Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion K))
+    (fun v =>
+      (chapter15FiniteMatrixIntegralSubgroup (R := R) (K := K) n v : Set _))
+    Filter.cofinite
+
 /-- The full matrix group as its infinite component times its finite restricted product. -/
 abbrev Chapter15AdelicMatrixGroup (n : ℕ) (R K : Type*) [CommRing R]
     [IsDedekindDomain R] [Field K] [Algebra R K] [IsFractionRing R K] :=
@@ -137,6 +146,14 @@ abbrev Chapter15FiniteIdeleGroup (R K : Type*) [CommRing R] [IsDedekindDomain R]
   Πʳ v : Chapter15FinitePlace R,
     [(v.adicCompletion K)ˣ,
       chapter15FiniteUnitIntegralSubgroup (R := R) (K := K) v]
+
+noncomputable instance (priority := 2000) chapter15FiniteIdeleGroup_topologicalSpace :
+    TopologicalSpace (Chapter15FiniteIdeleGroup R K) :=
+  RestrictedProduct.topologicalSpace
+    (fun v : Chapter15FinitePlace R => (v.adicCompletion K)ˣ)
+    (fun v =>
+      (chapter15FiniteUnitIntegralSubgroup (R := R) (K := K) v : Set _))
+    Filter.cofinite
 
 /-- The finite standard integral idele level. -/
 def chapter15StandardFiniteIdeleLevel :

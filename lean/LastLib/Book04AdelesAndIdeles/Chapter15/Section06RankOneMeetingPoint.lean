@@ -109,7 +109,7 @@ def chapter15_rank_one_automorphic_quotient_formula
         ⟨γ, rfl⟩, 1,
         (chapter15GlobalLevelSubgroup 1
           (⊥ : Subgroup (Chapter15FiniteMatrixGroup 1 (𝓞 K) K))).one_mem, ?_⟩
-      apply e.injective
+      apply e.left_inv.injective
       calc
         e (chapter15PrincipalMatrix (R := 𝓞 K) (K := K) 1 γ * x * 1) =
             e (chapter15PrincipalMatrix (R := 𝓞 K) (K := K) 1 γ) * e x := by
@@ -122,7 +122,7 @@ def chapter15_rank_one_automorphic_quotient_formula
         _ = e y := by
           rw [mul_assoc, mul_comm (e y) (e x), ← mul_assoc,
             inv_mul_cancel, one_mul]
-  exact Homeomorph.Quotient.congr e hrel
+  exact Homeomorph.Quotient.congr e.toHomeomorph hrel
 
 /-! ### Hecke characters and one-dimensional automorphic representations -/
 
