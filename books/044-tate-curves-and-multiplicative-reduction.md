@@ -14,6 +14,7 @@
    - [The discriminant product](#23-the-discriminant-product)
    - [The $j$-expansion and its inverse](#24-the-j-expansion-and-its-inverse)
    - [A first numerical expansion](#25-a-first-numerical-expansion)
+   - [Automorphisms fixing the origin](#26-automorphisms-fixing-the-origin)
 3. [Multiplicative uniformization](#3-multiplicative-uniformization)
    - [Elliptic functions on a multiplicative annulus](#31-elliptic-functions-on-a-multiplicative-annulus)
    - [The uniformizing map](#32-the-uniformizing-map)
@@ -462,6 +463,88 @@ $$
 
 These are identities with integer coefficients, so $O(q^r)$ means an element of $q^rR$ after specialization. In small residue characteristic some displayed integer coefficients vanish, but the valuation conclusions $c_4\in R^\times$ and $v(\Delta)=v(q)$ remain unchanged. This is why the general equation (2.2), rather than a short equation obtained by dividing by $2$ or $3$, is the correct integral model.
 
+### 2.6 Automorphisms fixing the origin
+
+Two chapters later we will descend an isomorphism between curves of equal negative $j$-valuation along the Galois group, and the obstruction to descent takes values in the group of automorphisms of one curve that fix the origin. This subsection computes that group honestly from the Weierstrass formalism, in every characteristic. The conclusion used repeatedly is that when $j\neq0,1728$, the only pointed automorphisms are $\pm1$, and that this remains true when the residue characteristic is $2$ or $3$.
+
+Throughout, $E/F$ is an elliptic curve given by a Weierstrass equation
+
+$$
+y^2+a_1xy+a_3y=x^3+a_2x^2+a_4x+a_6,
+$$
+
+with $\Delta\neq0$ and $O$ the point at infinity. The function $x$ has pole divisor $2[O]$ and $y$ has pole divisor $3[O]$, with no other poles, and negation on the curve is
+
+$$
+-(x,y)=(x,-y-a_1x-a_3).
+$$
+
+**Lemma 2.1 (pointed automorphisms are admissible changes).** _Let $\sigma:E\to E$ be an $F$-automorphism with $\sigma(O)=O$. Then on coordinate functions_
+
+$$
+\sigma^{*}x=u^2x+r,\qquad
+\sigma^{*}y=u^3y+u^2sx+t,
+$$
+
+_with $u\in F^\times$ and $r,s,t\in F$. Conversely, functions of these forms that take the equation to itself define such an automorphism._
+
+_Proof._ Since $\sigma(O)=O$, pullback along $\sigma$ preserves each space $L(n[O])$ of functions whose poles lie at most at $O$ with order at most $n$: it identifies $L(n[O])$ injectively with itself. On a genus-one curve Riemann--Roch gives $\ell(n[O])=n$ for $n>0$; hence $L(2[O])$ has basis $1,x$ and $L(3[O])$ has basis $1,x,y$, the distinct pole orders separating the elements, and injectivity into a space of equal dimension forces surjectivity. Therefore
+
+$$
+\sigma^{*}x=\alpha x+\beta,\qquad
+\sigma^{*}y=\gamma y+\delta x+\varepsilon
+$$
+
+with $\alpha,\gamma,\delta$ nonzero: the pole divisor of $\sigma^{*}x$ is exactly $2[O]$, since its poles are the preimages under $\sigma$ of those of $x$, so the coefficient of $x$ in it cannot vanish; likewise for $\sigma^{*}y$. To pin down the parameters, compare dominant terms at $O$ in the local parameter $z=x/y$, where $x$ has order $-2$ and $y$ order $-3$. The pulled-back functions satisfy the equation identically; substituting the linear forms into it, the terms of order $z^{-6}$ come only from $(\gamma y)^2$ and from $-(\alpha x)^3$, so $\gamma^2=\alpha^3$. Set $u=\gamma/\alpha\in F^\times$; then $u^2=\gamma^2/\alpha^2=\alpha$ and $u^3=\gamma^3/\alpha^3=\gamma$, so with $r=\beta$, $s=\delta/u^2$, and $t=\varepsilon$ we obtain exactly the displayed form. Conversely, if two functions of the displayed form satisfy the transformed equation, they define a morphism of the affine parts of $E$; it extends over $O$ because $u^2x+r$ and $u^3y+u^2sx+t$ retain poles of orders exactly two and three there, and the inverted change provides an inverse. $\square$
+
+**Proposition 2.2 (classification).** _Let $F$ be algebraically closed and $E/F$ an elliptic curve._
+
+_(a) If $\operatorname{char}F\neq2,3$, write $E:y^2=x^3+Ax+B$. The pointed automorphisms are exactly the maps $(x,y)\mapsto(u^2x,u^3y)$ with $Au^{-4}=A$ and $Bu^{-6}=B$. They are cyclic of order $4$ when $B=0,A\neq0$, which is $j=1728$; cyclic of order $6$ when $A=0,B\neq0$, which is $j=0$; and otherwise exactly $\{\pm1\}$._
+
+_(b) If $\operatorname{char}F=3$, complete the square and write $E:y^2=x^3+a_2x^2+a_4x+a_6$. Then_
+
+$$
+c_4=a_2^2,\qquad
+\Delta=-a_2^3a_6+a_2^2a_4^2-a_4^3,
+$$
+
+_so $j=a_2^6/\Delta$ and the exceptional values $0$ and $1728$ coincide, both being $a_2=0$. If $a_2\neq0$, the pointed automorphisms are exactly $\{\pm1\}$. If $a_2=0$, the pointed automorphism group has order $12$ over $\overline F$._
+
+_(c) If $\operatorname{char}F=2$, then $c_4=a_1^4$ and hence $j=a_1^{12}/\Delta$; so $j\neq0$ means $a_1\neq0$, and then the pointed automorphisms are exactly $\{+1,[-1]\}$, where $[-1]$ sends $(x,y)$ to $(x,y+a_1x+a_3)$. When $a_1=0$ the group is larger—for the supersingular curve $y^2+y=x^3$ it has order $24$ over $\overline F$—but curves with $j=0$ never occur in the descent arguments below._
+
+_Proof._ (a) Completing the square and then the cube is available because $2$ and $3$ are invertible. In Lemma 2.1 applied to the short equation, preserving $a_1=a_2=a_3=0$ forces $s=0$ from the rule $ua_1'=a_1+2s$, forces $r=0$ from $u^2a_2'=a_2+3r$, and forces $t=0$ from $u^3a_3'=a_3+2t$. Substituting $x\mapsto u^2x$, $y\mapsto u^3y$ into the short equation and dividing by $u^6$ shows that the same curve results exactly when $Au^{-4}=A$ and $Bu^{-6}=B$. The identification of the exceptional values is the computation $c_4=-48A$, $c_6=-864B$, $\Delta=-16(4A^3+27B^2)$ of the previous volume, giving $j=1728\cdot4A^3/(4A^3+27B^2)$: the value is $1728$ precisely when $B=0$ and zero precisely when $A=0$. When $AB\neq0$ the two conditions give $u^4=u^6=1$, hence $u^2=1$ and $u=\pm1$; the resulting maps are the identity and $(x,y)\mapsto(x,-y)$, which is negation because $a_1=a_3=0$. When $B=0,A\neq0$ only $u^4=1$ remains and the group is $\mu_4$; when $A=0,B\neq0$ only $u^6=1$ remains and the group is $\mu_6$.
+
+(b) The completed-square form is available because $2$ is invertible. Reducing the general formulas for $b_2,b_4,b_6,b_8,c_4,c_6,\Delta$ modulo $3$ gives $b_2=a_2$, $b_4=-a_4$, $b_6=a_6$, $b_8=a_2a_6-a_4^2$, whence the displayed $c_4$ and $\Delta$ and the expression for $j$. Preservation of the equation by an admissible change uses the transformation rules of the previous volume:
+
+$$
+\begin{aligned}
+ua_1'&=a_1+2s,\\
+u^2a_2'&=a_2-sa_1+3r-s^2,\\
+u^3a_3'&=a_3+ra_1+2t,\\
+u^4a_4'&=a_4-sa_3+2ra_2-(t+rs)a_1+3r^2-2st,\\
+u^6a_6'&=a_6+ra_4+r^2a_2+r^3-ta_3-rta_1-t^2.
+\end{aligned}
+$$
+
+Setting primed coefficients equal to unprimed ones, with $a_1=a_3=0$ and $3=0$, yields
+
+$$
+s=0,\quad t=0,\quad
+a_2(u^2-1)=0,\quad
+a_4(u^4-1)=2ra_2,\quad
+a_6(u^6-1)=r^3+a_2r^2+a_4r.
+$$
+
+If $a_2\neq0$: the third condition gives $u^2=1$, so $u=\pm1$; the fourth then gives $r=0$ because $2$ is invertible; and the fifth is automatic. The two maps are the identity and negation $(x,y)\mapsto(x,-y)$.
+
+If $a_2=0$: smoothness reads $\Delta=-a_4^3\neq0$, so $a_4\neq0$, and the conditions reduce to $u^4=1$ together with $r(r^2+a_4)=a_6(u^2-1)$. For each fixed $u$ this is a cubic equation in $r$ whose left side $r(r^2+a_4)$ has derivative $a_4$ in characteristic $3$, so it has at most three roots; conversely its kernel $\{r:r(r^2+a_4)=0\}$ already contains three elements, namely $0$ and the two square roots of $-a_4$, which exist and are distinct over $\overline F$. Hence the number of solutions for $u=\pm1$, where the right side vanishes, is exactly three each. For the remaining two values of $u$, which satisfy $u^2=-1$ and exist because $x^4-1=(x^2-1)(x^2+1)$ splits completely over $\overline F$, the right side is the constant $a_6(u^2-1)=-2a_6$, and a cubic over an algebraically closed field has at least one root. Thus the total number of pairs $(u,r)$ lies between eight and twelve. Among them stand an element of order three—take $u=1$ and $r$ one of the two nonzero roots of $r(r^2+a_4)=0$; its third iterate is the map with parameter $3r=0$—and an element of order four—take any $u$ with $u^4=1$, $u^2\neq1$, paired with a root of its cubic. A finite group containing elements of orders three and four has order divisible by twelve, so the count is exactly twelve.
+
+(c) In characteristic $2$ the general formulas give $b_2=a_1^2$, $b_4=a_1a_3$, hence $c_4=b_2^2-24b_4=a_1^4$ and $j=c_4^3/\Delta=a_1^{12}/\Delta$. Assume $a_1\neq0$. The first rule reads $ua_1'=a_1+2s=a_1$, and preservation gives $ua_1=a_1$, so $u=1$. The third rule reads $u^3a_3'=a_3+ra_1+2t=a_3+ra_1$, and preservation gives $ra_1=0$, hence $r=0$. With signs collapsing in characteristic $2$, the second rule becomes $u^2a_2'=a_2+sa_1+r+s^2$, so preservation now says $sa_1+s^2=s(s+a_1)=0$: either $s=0$ or $s=a_1$. If $s=0$, the fourth and fifth rules read $a_4'=a_4+ta_1$ and $a_6'=a_6+t(a_3+t)$, so preservation forces $t=0$ twice over: this is the identity. If $s=a_1$, those same rules force $ta_1=a_1a_3$ and $t(a_3+t)=0$, hence $t=a_3$: the map is $y\mapsto y+a_1x+a_3$, which is exactly negation. This proves the claim for $a_1\neq0$. The supersingular example with twenty-four automorphisms is classical and is not consumed below. $\square$
+
+**Corollary 2.3.** _Let $E/F$ be an elliptic curve with $j(E)\neq0,1728$, the integer $1728$ being read modulo $\operatorname{char}F$. Then every automorphism of $E$ fixing the origin is $[+1]$ or $[-1]$, and $[-1]$ acts on the invariant differential as multiplication by $-1$._
+
+_Proof._ Extend scalars to an algebraic closure: the geometric pointed automorphism group is $\{\pm1\}$ by Proposition 2.2 in every characteristic, and the $F$-automorphisms form a subgroup, since an $F$-automorphism remains an automorphism after base change. The differential statement is the computation of the previous volume, $\omega=dx/(2y+a_1x+a_3)$ pulling back along $[-1]$ to $-\omega$. $\square$
+
 ## 3. Multiplicative uniformization
 
 ### 3.1 Elliptic functions on a multiplicative annulus
@@ -840,7 +923,7 @@ $$
 f:E_{K^s}\longrightarrow(E_q)_{K^s}.
 $$
 
-For $\sigma\in G_K$, the composite $f\,{}^\sigma f^{-1}$ is an automorphism of $E_q$ fixing the origin. Because $v(j)<0$, the values $j=0$ and $1728$ are excluded, so over a separably closed field the automorphism group is $\{\pm1\}$, including in residue characteristics $2$ and $3$. Hence the composites define a quadratic character. Choose a finite extension over which $f$ is defined. Both base-changed equations remain minimal: their $c_4$ invariants are units, and their discriminant exponents both equal $-v(j)$. Integral uniqueness therefore extends $f$ to an isomorphism of their minimal cubics and identifies their tangent branches. Under this identification, $+1$ fixes each branch and $-1$ exchanges them, as is visible from $u\mapsto u^{-1}$. Split reduction says that Galois fixes each branch on both cubics, so the character is trivial. Then ${}^\sigma f=f$ for every $\sigma$, and Galois descent gives $f$ over $K$.
+For $\sigma\in G_K$, the composite $f\,{}^\sigma f^{-1}$ is an automorphism of $E_q$ fixing the origin. Because $v(j)<0$, the values $j=0$ and $1728$ are excluded, so Corollary 2.3 applies over $\overline K$: every pointed automorphism is $\pm1$, in every characteristic including residue characteristics $2$ and $3$. Hence the composites define a quadratic character. Choose a finite extension over which $f$ is defined. Both base-changed equations remain minimal: their $c_4$ invariants are units, and their discriminant exponents both equal $-v(j)$. Integral uniqueness therefore extends $f$ to an isomorphism of their minimal cubics and identifies their tangent branches. Under this identification, $+1$ fixes each branch and $-1$ exchanges them, as is visible from $u\mapsto u^{-1}$. Split reduction says that Galois fixes each branch on both cubics, so the character is trivial. Then ${}^\sigma f=f$ for every $\sigma$, and Galois descent gives $f$ over $K$.
 
 There is one apparent circularity: equal $j$ first gives an isomorphism only after an algebraic closure, while $q$ was constructed analytically. But $q\in K$ by convergence of (5.2), and $E_q$ is algebraic by equation (2.2). The classification of elliptic curves over an algebraically closed field now applies directly to the two algebraic curves. No descent assertion is hidden in the analytic inversion.
 
@@ -920,7 +1003,7 @@ $$
 v(\Delta_{\min})=v(q)=-v(j(E)). \tag{6.6}
 $$
 
-**Proof.** The inverse series constructs $q\in K$ and gives $j(E_q)=j(E)$. Since this common value is neither $0$ nor $1728$, an isomorphism over $K^s$ has automorphism cocycle in $\{\pm1\}$. This cocycle is a quadratic character $\eta$, and changing the chosen isomorphism does not change it because the automorphism group is central. Thus $E$ is the $\eta$-twist of $E_q$, uniquely. If the minimal special fiber is nodal over $K$, integral uniqueness after a finite splitting extension identifies the cocycle action with the action on its two branches. That action factors through the separable quadratic residue algebra, so $\eta$ is unramified; it is trivial exactly when both branches are rational. Finally, a minimal multiplicative equation has unit $c_4$, whence $v(j)=-v(\Delta_{\min})$, while (5.3) gives $v(q)=-v(j)$. $\square$
+**Proof.** The inverse series constructs $q\in K$ and gives $j(E_q)=j(E)$. Since this common value is neither $0$ nor $1728$, Corollary 2.3 identifies the pointed automorphism group of each curve over $\overline K$ with $\{\pm1\}$, and an isomorphism over $K^s$ therefore has automorphism cocycle in $\{\pm1\}$. This cocycle is a quadratic character $\eta$, and changing the chosen isomorphism does not change it because the automorphism group is central. Thus $E$ is the $\eta$-twist of $E_q$, uniquely. If the minimal special fiber is nodal over $K$, integral uniqueness after a finite splitting extension identifies the cocycle action with the action on its two branches. That action factors through the separable quadratic residue algebra, so $\eta$ is unramified; it is trivial exactly when both branches are rational. Finally, a minimal multiplicative equation has unit $c_4$, whence $v(j)=-v(\Delta_{\min})$, while (5.3) gives $v(q)=-v(j)$. $\square$
 
 A ramified quadratic character can also occur when $v(j)<0$, but then the curve need not already have multiplicative reduction over $K$; it may have additive, potentially multiplicative reduction. That case lies beyond the split/nonsplit multiplicative dichotomy of this book.
 
