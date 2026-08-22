@@ -39,9 +39,43 @@ theorem chapter01_tame_tower_iff
     (eKM eML eKL : ℕ)
     (D : Chapter01TameTowerData K M L k m l eKM eML eKL) :
     chapter01TamelyRamifiedExtension K L k l eKL ↔
-      chapter01TamelyRamifiedExtension K M k m eKM ∧
+    chapter01TamelyRamifiedExtension K M k m eKM ∧
         chapter01TamelyRamifiedExtension M L m l eML := by
-  sorry
+  have hchar : chapter01CharacteristicExponent m =
+      chapter01CharacteristicExponent k := by
+    let p : ℕ := chapter01CharacteristicExponent k
+    let _ : ExpChar k p := by
+      dsimp [p, chapter01CharacteristicExponent]
+      exact ringExpChar.expChar k
+    let _ : ExpChar m p :=
+      expChar_of_injective_algebraMap (algebraMap k m).injective p
+    change ringExpChar m = ringExpChar k
+    exact (ringExpChar.eq m p).trans (ringExpChar.eq k p).symm
+  unfold chapter01TamelyRamifiedExtension
+  constructor
+  · rintro ⟨hfield, hres, hcop⟩
+    rcases D.field_separable_iff.mp hfield with ⟨hKM, hML⟩
+    rcases D.residue_separable_iff.mp hres with ⟨hkM, hmL⟩
+    have hprod : Nat.Coprime (eKM * eML)
+        (chapter01CharacteristicExponent k) := by
+      simpa [chapter01TameIndex, D.ramification_transitive] using hcop
+    have hcopKM : Nat.Coprime eKM (chapter01CharacteristicExponent k) :=
+      Nat.Coprime.of_dvd_left (dvd_mul_right eKM eML) hprod
+    have hcopMLk : Nat.Coprime eML (chapter01CharacteristicExponent k) :=
+      Nat.Coprime.of_dvd_left (dvd_mul_left eML eKM) hprod
+    have hcopML : Nat.Coprime eML (chapter01CharacteristicExponent m) := by
+      simpa [hchar] using hcopMLk
+    exact ⟨⟨hKM, hkM, hcopKM⟩, ⟨hML, hmL, hcopML⟩⟩
+  · rintro ⟨⟨hKM, hkM, hcopKM⟩, ⟨hML, hmL, hcopML⟩⟩
+    have hcopMLk : Nat.Coprime eML (chapter01CharacteristicExponent k) := by
+      simpa [chapter01TameIndex, hchar] using hcopML
+    have hprod : Nat.Coprime (eKM * eML)
+        (chapter01CharacteristicExponent k) :=
+      hcopKM.mul_left hcopMLk
+    refine ⟨D.field_separable_iff.mpr ⟨hKM, hML⟩,
+      D.residue_separable_iff.mpr ⟨hkM, hmL⟩, ?_⟩
+    simpa [chapter01TameIndex, D.ramification_transitive] using
+      hprod
 
 /-- The subextension direction of tower stability. -/
 theorem chapter01_tame_subextension
@@ -95,7 +129,12 @@ theorem chapter01_tame_compositum
     (h₁ : chapter01TamelyRamifiedExtension K L₁ k l₁ e₁)
     (h₂ : chapter01TamelyRamifiedExtension K L₂ k l₂ e₂) :
     chapter01TamelyRamifiedExtension K C k l e := by
-  sorry
+  unfold chapter01TamelyRamifiedExtension at h₁ h₂ ⊢
+  refine ⟨D.field_separable, D.residue_separable, ?_⟩
+  apply Nat.Coprime.of_dvd_left D.ramification_index_divides_lcm
+  apply Nat.Coprime.of_dvd_left
+    (Nat.lcm_dvd (dvd_mul_right e₁ e₂) (dvd_mul_left e₂ e₁))
+  exact h₁.2.2.mul_left h₂.2.2
 
 /-- A Galois-closure profile makes the closure's prime-to-`p` index explicit. -/
 structure Chapter01TameGaloisClosureData

@@ -179,7 +179,10 @@ theorem chapter01_tame_generator_pow_eq_one
     {I : Subgroup G} [I.Normal] (q e f : ℕ)
     (D : Chapter01FiniteTameGroupPresentation G I q e f) :
     D.tameGenerator ^ e = 1 := by
-  sorry
+  calc
+    D.tameGenerator ^ e = D.tameGenerator ^ orderOf D.tameGenerator := by
+      exact congrArg (fun n : ℕ => D.tameGenerator ^ n) D.tameGenerator_order.symm
+    _ = 1 := pow_orderOf_eq_one D.tameGenerator
 
 /- The exponent in `F^f = τ^a` is unique modulo the tame order. -/
 theorem chapter01_frobenius_power_exponent_unique_mod
@@ -190,7 +193,36 @@ theorem chapter01_frobenius_power_exponent_unique_mod
     (ha : D.frobenius ^ f = D.tameGenerator ^ a)
     (hb : D.frobenius ^ f = D.tameGenerator ^ b) :
     Nat.ModEq e a b := by
-  sorry
+  have hpow : D.tameGenerator ^ a = D.tameGenerator ^ b := ha.symm.trans hb
+  rw [Nat.modEq_iff_dvd]
+  by_cases hab : a ≤ b
+  · have hpowdiff : D.tameGenerator ^ (b - a) = 1 := by
+      calc
+        D.tameGenerator ^ (b - a) =
+            (D.tameGenerator ^ a)⁻¹ * D.tameGenerator ^ b := by
+              rw [← Nat.add_sub_of_le hab, pow_add]
+              simp
+        _ = 1 := by rw [← hpow]; simp
+    have hd : orderOf D.tameGenerator ∣ b - a :=
+      orderOf_dvd_of_pow_eq_one hpowdiff
+    have hd' : e ∣ b - a := by simpa [D.tameGenerator_order] using hd
+    exact_mod_cast hd'
+  · have hba : b ≤ a := Nat.le_of_not_ge hab
+    have hpowdiff : D.tameGenerator ^ (a - b) = 1 := by
+      calc
+        D.tameGenerator ^ (a - b) =
+            (D.tameGenerator ^ b)⁻¹ * D.tameGenerator ^ a := by
+              rw [← Nat.add_sub_of_le hba, pow_add]
+              simp
+        _ = 1 := by rw [hpow]; simp
+    have hd : orderOf D.tameGenerator ∣ a - b :=
+      orderOf_dvd_of_pow_eq_one hpowdiff
+    have hd' : e ∣ a - b := by simpa [D.tameGenerator_order] using hd
+    have hcast : (e : ℤ) ∣ (a : ℤ) - (b : ℤ) := by
+      rw [← Int.ofNat_sub hba]
+      exact_mod_cast hd'
+    rw [← neg_sub]
+    exact dvd_neg.mpr hcast
 
 /- Compatibility of Frobenius conjugation with `F^f ∈ I`. -/
 theorem chapter01_frobenius_power_compatibility
@@ -198,7 +230,79 @@ theorem chapter01_frobenius_power_compatibility
     {I : Subgroup G} [I.Normal] (q e f : ℕ)
     (D : Chapter01FiniteTameGroupPresentation G I q e f) :
     Nat.ModEq e (q ^ f) 1 := by
-  sorry
+  let conjHom : ∀ g : G, G →* G := fun g =>
+    { toFun := fun x => g * x * g⁻¹
+      map_one' := by simp
+      map_mul' := by
+        intro x y
+        simp [mul_assoc] }
+  have hconj_pow_aux (n : ℕ) :
+      (D.frobenius ^ n * D.tameGenerator * (D.frobenius ^ n)⁻¹) ^ q =
+        D.frobenius ^ n * (D.tameGenerator ^ q) *
+          (D.frobenius ^ n)⁻¹ := by
+    change ((conjHom (D.frobenius ^ n)) D.tameGenerator) ^ q =
+      (conjHom (D.frobenius ^ n)) (D.tameGenerator ^ q)
+    exact (map_pow (conjHom (D.frobenius ^ n)) D.tameGenerator q).symm
+  have hconj_pow : ∀ n : ℕ,
+      D.frobenius ^ n * D.tameGenerator * (D.frobenius ^ n)⁻¹ =
+        D.tameGenerator ^ (q ^ n) := by
+    intro n
+    induction n with
+    | zero => simp
+    | succ n ih =>
+        calc
+          D.frobenius ^ (n + 1) * D.tameGenerator *
+              (D.frobenius ^ (n + 1))⁻¹ =
+              D.frobenius ^ n *
+                (D.frobenius * D.tameGenerator * D.frobenius⁻¹) *
+                (D.frobenius ^ n)⁻¹ := by
+                  simp [pow_succ, mul_assoc]
+          _ = D.frobenius ^ n * (D.tameGenerator ^ q) *
+                (D.frobenius ^ n)⁻¹ := by rw [D.conjugation]
+          _ = (D.frobenius ^ n * D.tameGenerator *
+                (D.frobenius ^ n)⁻¹) ^ q := by
+                  exact (hconj_pow_aux n).symm
+          _ = D.tameGenerator ^ (q ^ n * q) := by
+                rw [ih, pow_mul]
+          _ = D.tameGenerator ^ (q ^ (n + 1)) := by
+                rw [pow_succ]
+  obtain ⟨a, ha⟩ := D.frobenius_power
+  have hleft : D.frobenius ^ f * D.tameGenerator *
+      (D.frobenius ^ f)⁻¹ = D.tameGenerator := by
+    rw [ha]
+    have hcomm : Commute (D.tameGenerator ^ a) D.tameGenerator :=
+      (Commute.refl D.tameGenerator).pow_left a
+    calc
+      D.tameGenerator ^ a * D.tameGenerator *
+          (D.tameGenerator ^ a)⁻¹ =
+          D.tameGenerator * D.tameGenerator ^ a *
+            (D.tameGenerator ^ a)⁻¹ := by rw [hcomm.eq]
+      _ = D.tameGenerator := by simp
+  have hpow : D.tameGenerator ^ (q ^ f) = D.tameGenerator := by
+    calc
+      D.tameGenerator ^ (q ^ f) =
+          D.frobenius ^ f * D.tameGenerator * (D.frobenius ^ f)⁻¹ :=
+        (hconj_pow f).symm
+      _ = D.tameGenerator := hleft
+  have hqf : 1 ≤ q ^ f := by
+    exact Nat.one_le_iff_ne_zero.mpr (pow_ne_zero f (Nat.ne_of_gt D.residue_card_positive))
+  have hpowdiff : D.tameGenerator ^ (q ^ f - 1) = 1 := by
+    calc
+      D.tameGenerator ^ (q ^ f - 1) =
+          (D.tameGenerator ^ 1)⁻¹ * D.tameGenerator ^ (q ^ f) := by
+            rw [← Nat.add_sub_of_le hqf, pow_add]
+            simp
+      _ = 1 := by rw [hpow]; simp
+  have hd : orderOf D.tameGenerator ∣ q ^ f - 1 :=
+    orderOf_dvd_of_pow_eq_one hpowdiff
+  have hd' : e ∣ q ^ f - 1 := by simpa [D.tameGenerator_order] using hd
+  rw [Nat.modEq_iff_dvd]
+  have hcast : (e : ℤ) ∣ (q ^ f : ℤ) - 1 := by
+    exact_mod_cast hd'
+  have hneg : (1 : ℤ) - (q ^ f : ℤ) = -((q ^ f : ℤ) - 1) := by ring
+  change (e : ℤ) ∣ (1 : ℤ) - (q ^ f : ℤ)
+  rw [hneg]
+  exact dvd_neg.mpr hcast
 
 /-- Geometric Frobenius reverses the conjugation convention. -/
 theorem chapter01_geometric_frobenius_conjugation
@@ -208,7 +312,19 @@ theorem chapter01_geometric_frobenius_conjugation
     ∃ r : ℕ,
       D.frobenius⁻¹ * D.tameGenerator * D.frobenius =
         D.tameGenerator ^ r := by
-  sorry
+  have hI : D.frobenius⁻¹ * D.tameGenerator * D.frobenius ∈ I := by
+    simpa using
+      (inferInstance : I.Normal).conj_mem D.tameGenerator D.tameGenerator_mem
+        D.frobenius⁻¹
+  have hz : D.frobenius⁻¹ * D.tameGenerator * D.frobenius ∈
+      Subgroup.zpowers D.tameGenerator := by
+    rw [D.inertia_generated]
+    exact hI
+  have hp : D.frobenius⁻¹ * D.tameGenerator * D.frobenius ∈
+      Submonoid.powers D.tameGenerator :=
+    (isOfFinOrder_of_finite D.tameGenerator).mem_powers_iff_mem_zpowers.mpr hz
+  obtain ⟨r, hr⟩ := hp
+  exact ⟨r, hr.symm⟩
 
 /-- The tame filtration has only the ambient, tame-inertia, and trivial levels. -/
 def chapter01TameRamificationGroup
