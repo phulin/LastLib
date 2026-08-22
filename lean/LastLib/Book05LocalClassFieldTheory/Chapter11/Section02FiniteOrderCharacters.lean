@@ -16,7 +16,11 @@ theorem chapter11_character_kernel_open_finite_index
     (χ : Kˣ →ₜ* A) :
     IsOpen (chapter11CharacterKernel χ : Set Kˣ) ∧
       (chapter11CharacterKernel χ).FiniteIndex := by
-  sorry
+  constructor
+  · change IsOpen (χ ⁻¹' ({1} : Set A))
+    exact IsOpen.preimage χ.continuous_toFun (isOpen_discrete _)
+  · apply chapter11_finite_image_character_kernel_finite_index χ
+    exact Set.toFinite _
 
 noncomputable def chapter11CharacterQuotientImageEquiv
     {K A : Type*} [Field K] [CommGroup A]
@@ -39,7 +43,7 @@ theorem chapter11_norm_group_membership_iff
     [FiniteDimensional K L] (x : Kˣ) :
     x ∈ chapter11NormGroup K L ↔
       ∃ y : Lˣ, chapter11NormHom K L y = x := by
-  sorry
+  exact LastLib.Book05LocalClassFieldTheory.Chapter10.chapter10_mem_normSubgroup_iff K L x
 
 abbrev chapter11FiniteAbelianExtension
     (K L : Type*) [Field K] [Field L] [Algebra K L]
@@ -71,7 +75,18 @@ theorem chapter11_finite_character_gives_cyclic_extension
     ∃ e : C.extension,
       C.normGroup e = chapter11CharacterKernel χ ∧
         C.degree e = Nat.card (Set.range χ) ∧ C.cyclic e := by
-  sorry
+  have hkernel := chapter11_character_kernel_open_finite_index χ
+  obtain ⟨e, he⟩ := C.realizes (chapter11CharacterKernel χ) hkernel.1 hkernel.2
+  refine ⟨e, he, ?_, ?_⟩
+  · rw [C.degree_eq_index e, he]
+    change (χ.toMonoidHom.ker).index = _
+    rw [Subgroup.index_ker]
+    rfl
+  · apply (C.cyclic_iff_quotient_isCyclic e).2
+    rw [he]
+    let eχ : Kˣ ⧸ chapter11CharacterKernel χ ≃* χ.toMonoidHom.range :=
+      QuotientGroup.quotientKerEquivRange χ.toMonoidHom
+    exact (MulEquiv.isCyclic eχ).mpr inferInstance
 
 theorem chapter11_finite_character_norm_index
     {K A : Type*} [Field K] [CommGroup A] [Finite A]
@@ -80,7 +95,10 @@ theorem chapter11_finite_character_norm_index
     (χ : Kˣ →ₜ* A) (e : C.extension)
     (he : C.normGroup e = chapter11CharacterKernel χ) :
     C.degree e = Nat.card (Set.range χ) := by
-  sorry
+  rw [C.degree_eq_index e, he]
+  change (χ.toMonoidHom.ker).index = _
+  rw [Subgroup.index_ker]
+  rfl
 
 theorem chapter11_cyclic_extension_embedding_gives_character
     {K L A : Type*} [Field K] [Field L] [Algebra K L]
@@ -88,13 +106,22 @@ theorem chapter11_cyclic_extension_embedding_gives_character
     [TopologicalSpace Kˣ] [TopologicalSpace A]
     [TopologicalSpace (Gal(L / K))] [DiscreteTopology (Gal(L / K))]
     [DiscreteTopology A]
-    (hcyclic : IsCyclic (Gal(L / K)))
+    (_hcyclic : IsCyclic (Gal(L / K)))
     (B : Chapter11FiniteArtinData K L)
     (ι : Gal(L / K) →* A) (hι : Function.Injective ι) :
     ∃ χ : Kˣ →ₜ* A,
       chapter11CharacterKernel χ = chapter11NormGroup K L ∧
         chapter11FiniteImage χ := by
-  sorry
+  let χ : Kˣ →ₜ* A :=
+    { toMonoidHom := ι.comp B.reciprocity.toMonoidHom
+      continuous_toFun :=
+        (@continuous_of_discreteTopology (Gal(L / K)) _ _ A _ ι).comp
+          B.reciprocity.continuous_toFun }
+  refine ⟨χ, ?_, ?_⟩
+  · change (ι.comp B.reciprocity.toMonoidHom).ker = chapter11NormGroup K L
+    rw [MonoidHom.ker_comp_of_injective _ ι hι, B.kernel_eq_norm]
+  · change (Set.range χ).Finite
+    exact Set.toFinite _
 
 def chapter11FaithfulCharacterChoice
     {G A : Type*} [Group G] [CommGroup A] : Prop :=

@@ -46,7 +46,28 @@ theorem chapter11_unramified_character_iff_pair
     (D : Chapter11LocalFieldData K) (χ : Kˣ →ₜ* A) :
     chapter11IsUnramified D χ ↔
       χ = chapter11UnramifiedCharacterOfValue D (χ D.uniformizer) := by
-  sorry
+  constructor
+  · intro hχ
+    have hunit :
+        χ.comp (chapter11UnitInclusion D) = (1 : D.unitGroup →ₜ* A) := by
+      ext u
+      exact hχ u
+    have hpair := (chapter11CharacterPairEquiv D).left_inv χ
+    change χ = chapter11CharacterOfPair D (χ D.uniformizer)
+      (1 : D.unitGroup →ₜ* A)
+    calc
+      χ = chapter11CharacterOfPair D (χ D.uniformizer)
+          (χ.comp (chapter11UnitInclusion D)) := hpair.symm
+      _ = chapter11CharacterOfPair D (χ D.uniformizer)
+          (1 : D.unitGroup →ₜ* A) := by rw [hunit]
+  · intro hχ u
+    rw [hχ]
+    change chapter11CharacterOfPair D (χ D.uniformizer)
+      (1 : D.unitGroup →ₜ* A) (u : Kˣ) = 1
+    have h :=
+      chapter11_character_of_pair_apply_decomposition D (χ D.uniformizer)
+        (1 : D.unitGroup →ₜ* A) 0 u
+    simpa using h
 
 theorem chapter11_unramified_character_determined_by_uniformizer
     {K A : Type*} [Field K] [CommGroup A]
