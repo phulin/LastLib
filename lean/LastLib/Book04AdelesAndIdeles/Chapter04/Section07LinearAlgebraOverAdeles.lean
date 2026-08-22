@@ -418,7 +418,227 @@ theorem chapter04_adelic_vector_space_topology_is_independent_of_the_lattice
         Chapter04AdelicVectorSpaceRestrictedProduct N,
       (∀ x, (e x).1 = x.1 ∧ (e x).2.1 = x.2.1) ∧
       Continuous e ∧ Continuous e.symm := by
-  sorry
+  classical
+  have hopen_lattice :
+      ∀ P : Chapter04Lattice K V, ∀ v,
+        IsOpen (chapter04LocalLattice P v : Set
+          (V ⊗[K] Chapter04FiniteLocalField K v)) := by
+    intro P v
+    let c : Basis (Module.Free.ChooseBasisIndex K V) K V := Module.Free.chooseBasis K V
+    let a : Module.Free.ChooseBasisIndex K V → 𝓞 K :=
+      fun i => Classical.choose (P.full (c i))
+    have ha : ∀ i, a i ≠ 0 ∧ (a i : K) • c i ∈ P.carrier := by
+      intro i
+      exact Classical.choose_spec (P.full (c i))
+    have hai : ∀ (i : Module.Free.ChooseBasisIndex K V),
+        (a i : Chapter04FiniteLocalField K v) ≠ 0 := by
+      intro i
+      have haiK : (a i : K) ≠ 0 := by
+        intro h
+        apply (ha i).1
+        exact_mod_cast h
+      change algebraMap K (Chapter04FiniteLocalField K v) (a i : K) ≠ 0
+      exact (map_ne_zero (algebraMap K (Chapter04FiniteLocalField K v))).2 haiK
+    have hswap :
+        ∀ (i : Module.Free.ChooseBasisIndex K V)
+          (oi : Chapter04FiniteLocalIntegerRing K v),
+          c i ⊗ₜ[K] ((a i : Chapter04FiniteLocalField K v) *
+            (oi : Chapter04FiniteLocalField K v)) =
+            ((a i : K) • c i) ⊗ₜ[K] (oi : Chapter04FiniteLocalField K v) := by
+      intro i oi
+      rw [show (a i : Chapter04FiniteLocalField K v) *
+          (oi : Chapter04FiniteLocalField K v) =
+          (a i : K) • (oi : Chapter04FiniteLocalField K v) by
+        rw [Algebra.smul_def]
+        rw [IsDedekindDomain.HeightOneSpectrum.algebraMap_adicCompletion]
+        simp]
+      rw [TensorProduct.tmul_smul]
+      rfl
+    have hformula :
+        ∀ y : Module.Free.ChooseBasisIndex K V → Chapter04FiniteLocalField K v,
+        (TensorProduct.comm K V (Chapter04FiniteLocalField K v)).symm
+          ((Algebra.TensorProduct.equivPiOfFiniteBasis
+            (Chapter04FiniteLocalField K v) c).symm y) =
+          ∑ i, TensorProduct.mk K V (Chapter04FiniteLocalField K v) (c i) (y i) := by
+      intro y
+      change (TensorProduct.comm K V (Chapter04FiniteLocalField K v)).symm
+        ((c.equivFun.baseChange K (Chapter04FiniteLocalField K v)).symm
+          ((TensorProduct.piScalarRight K (Chapter04FiniteLocalField K v)
+            (Chapter04FiniteLocalField K v) _).symm y)) = _
+      have hy : y = ∑ i, Pi.single i (y i) := by
+        ext j
+        simp [Pi.single_apply]
+      conv_lhs => rw [hy]
+      rw [map_sum, map_sum, map_sum]
+      simp only [TensorProduct.piScalarRight_symm_single,
+        LinearEquiv.baseChange_symm_tmul]
+      have hs : ∀ i, c.equivFun.symm (Pi.single i (1 : K)) = c i := by
+        intro i
+        rw [c.equivFun_symm_apply]
+        simp [Pi.single_apply]
+      apply Finset.sum_congr rfl
+      intro i hi
+      rw [hs i]
+      rw [TensorProduct.comm_symm_tmul]
+      rfl
+    have hmem :
+        ∀ (x : V ⊗[K] Chapter04FiniteLocalField K v),
+          (∀ i, ((a i : Chapter04FiniteLocalField K v)⁻¹ *
+            (chapter04TensorProductCoordinateMap K
+              (Chapter04FiniteLocalField K v) V c x) i) ∈
+              chapter04FiniteLocalIntegerSet K v) →
+          x ∈ chapter04LocalLattice P v := by
+      intro x hx
+      have hrepr :
+          x = ∑ i, TensorProduct.mk K V (Chapter04FiniteLocalField K v) (c i)
+            ((chapter04TensorProductCoordinateMap K
+              (Chapter04FiniteLocalField K v) V c x) i) := by
+        simpa [chapter04TensorProductCoordinateMap] using
+          (hformula (chapter04TensorProductCoordinateMap K
+            (Chapter04FiniteLocalField K v) V c x))
+      rw [hrepr]
+      apply AddSubgroup.sum_mem
+      intro i hi
+      let oi : Chapter04FiniteLocalIntegerRing K v :=
+        ⟨(a i : Chapter04FiniteLocalField K v)⁻¹ *
+          (chapter04TensorProductCoordinateMap K
+            (Chapter04FiniteLocalField K v) V c x) i, hx i⟩
+      have hcoord :
+          (chapter04TensorProductCoordinateMap K
+            (Chapter04FiniteLocalField K v) V c x) i =
+            (a i : Chapter04FiniteLocalField K v) * (oi : Chapter04FiniteLocalField K v) := by
+        dsimp [oi]
+        rw [← mul_assoc, mul_inv_cancel₀ (hai i), one_mul]
+      have hgen :
+          TensorProduct.mk K V (Chapter04FiniteLocalField K v)
+              ((a i : K) • c i) (oi : Chapter04FiniteLocalIntegerRing K v) ∈
+            chapter04LocalLattice P v := by
+        exact AddSubgroup.subset_closure
+          ⟨⟨⟨(a i : K) • c i, (ha i).2⟩, oi⟩, rfl⟩
+      rw [hcoord]
+      change c i ⊗ₜ[K]
+        ((a i : Chapter04FiniteLocalField K v) *
+          (oi : Chapter04FiniteLocalField K v)) ∈ _
+      rw [hswap i oi]
+      exact hgen
+    have hsep : SeparatelyContinuousAdd
+        (V ⊗[K] Chapter04FiniteLocalField K v) := by
+      let f : (V ⊗[K] Chapter04FiniteLocalField K v) →+
+          (Module.Free.ChooseBasisIndex K V → Chapter04FiniteLocalField K v) :=
+        { toFun := chapter04TensorProductCoordinateMap K
+            (Chapter04FiniteLocalField K v) V c
+          map_zero' := by
+            change Algebra.TensorProduct.equivPiOfFiniteBasis
+                (Chapter04FiniteLocalField K v) c
+              (TensorProduct.comm K V (Chapter04FiniteLocalField K v) 0) = 0
+            simp
+          map_add' := by
+            intro x y
+            change Algebra.TensorProduct.equivPiOfFiniteBasis
+                (Chapter04FiniteLocalField K v) c
+              (TensorProduct.comm K V (Chapter04FiniteLocalField K v) (x + y)) =
+              Algebra.TensorProduct.equivPiOfFiniteBasis
+                (Chapter04FiniteLocalField K v) c
+                (TensorProduct.comm K V (Chapter04FiniteLocalField K v) x) +
+              Algebra.TensorProduct.equivPiOfFiniteBasis
+                (Chapter04FiniteLocalField K v) c
+                (TensorProduct.comm K V (Chapter04FiniteLocalField K v) y)
+            simp }
+      have hca : ContinuousAdd (V ⊗[K] Chapter04FiniteLocalField K v) :=
+        continuousAdd_induced f
+      exact
+        { continuous_const_add := hca.continuous_add.comp
+            (continuous_const.prodMk continuous_id)
+          continuous_add_const := hca.continuous_add.comp
+            (continuous_id.prodMk continuous_const) }
+    let U : Set (Module.Free.ChooseBasisIndex K V → Chapter04FiniteLocalField K v) :=
+      {x | ∀ i, ((a i : Chapter04FiniteLocalField K v)⁻¹ * x i) ∈
+        chapter04FiniteLocalIntegerSet K v}
+    have hU : IsOpen U := by
+      rw [show U =
+          ⋂ i, (fun x : Module.Free.ChooseBasisIndex K V →
+              Chapter04FiniteLocalField K v =>
+            (a i : Chapter04FiniteLocalField K v)⁻¹ * x i) ⁻¹'
+              (chapter04FiniteLocalIntegerSet K v) by
+        ext x
+        simp [U]]
+      apply isOpen_iInter_of_finite
+      intro i
+      exact (Valued.isOpen_valuationSubring _).preimage
+        (continuous_const.mul (continuous_apply i))
+    have hW : IsOpen
+        ((chapter04TensorProductCoordinateMap K
+          (Chapter04FiniteLocalField K v) V c) ⁻¹' U) := by
+      change IsOpen[
+        TopologicalSpace.induced
+          (chapter04TensorProductCoordinateMap K
+            (Chapter04FiniteLocalField K v) V c)
+          inferInstance]
+        ((chapter04TensorProductCoordinateMap K
+          (Chapter04FiniteLocalField K v) V c) ⁻¹' U)
+      exact isOpen_induced_iff.mpr ⟨U, hU, rfl⟩
+    refine @AddSubgroup.isOpen_of_mem_nhds _ _ _ hsep
+      (chapter04LocalLattice P v) 0 ?_
+    refine Filter.mem_of_superset (hW.mem_nhds ?_) ?_
+    · show (chapter04TensorProductCoordinateMap K
+        (Chapter04FiniteLocalField K v) V c 0) ∈ U
+      intro i
+      simp [chapter04TensorProductCoordinateMap]
+      change (0 : Chapter04FiniteLocalField K v) ∈
+        chapter04FiniteLocalIntegerSet K v
+      exact ValuationSubring.zero_mem _
+    · intro x hx
+      exact hmem x hx
+  have hchange :
+      chapter03AdditiveFiniteChange
+        (fun v : Chapter04FinitePlace K => chapter04LocalLattice M v)
+        (fun v : Chapter04FinitePlace K => chapter04LocalLattice N v) := by
+    rcases chapter04_two_lattices_agree_locally_outside_finitely_many_places M N
+      with ⟨S, hSfin, hS⟩
+    unfold chapter03AdditiveFiniteChange chapter03AdditiveFiniteChangeSet
+    apply hSfin.subset
+    intro v hv
+    by_contra hne
+    exact hv (hS v hne)
+  have hMopen := hopen_lattice M
+  have hNopen := hopen_lattice N
+  rcases chapter03_additive_local_lattice_agreement_outside_finite_set
+      (fun v : Chapter04FinitePlace K => chapter04LocalLattice M v)
+      (fun v : Chapter04FinitePlace K => chapter04LocalLattice N v)
+      hchange hMopen hNopen with ⟨etailEquiv, heq, hcont, hcontinv⟩
+  let etail : Chapter04AdelicVectorSpaceFiniteTail M ≃+
+      Chapter04AdelicVectorSpaceFiniteTail N :=
+    { toEquiv := etailEquiv
+      map_add' := by
+        intro x y
+        apply Subtype.ext
+        funext v
+        have hxy := congrFun (heq (x + y)) v
+        have hx := congrFun (heq x) v
+        have hy := congrFun (heq y) v
+        change (etailEquiv (x + y) :
+            ∀ v : Chapter04FinitePlace K,
+              V ⊗[K] Chapter04FiniteLocalField K v) v =
+          ((etailEquiv x : ∀ v : Chapter04FinitePlace K,
+              V ⊗[K] Chapter04FiniteLocalField K v) v +
+            (etailEquiv y : ∀ v : Chapter04FinitePlace K,
+              V ⊗[K] Chapter04FiniteLocalField K v) v)
+        rw [hxy, hx, hy]
+        rfl }
+  let eprod : Chapter04AdelicVectorSpaceRestrictedProduct M ≃+
+      Chapter04AdelicVectorSpaceRestrictedProduct N :=
+    (AddEquiv.refl (V ⊗[K] Chapter04InfiniteAdeleRing K)).prodCongr etail
+  refine ⟨eprod, ?_, ?_, ?_⟩
+  · intro x
+    refine ⟨rfl, ?_⟩
+    change (etailEquiv x.2 :
+        ∀ v : Chapter04FinitePlace K,
+          V ⊗[K] Chapter04FiniteLocalField K v) =
+      (x.2 : ∀ v : Chapter04FinitePlace K,
+          V ⊗[K] Chapter04FiniteLocalField K v)
+    exact heq x.2
+  · exact continuous_fst.prodMk (hcont.comp continuous_snd)
+  · exact continuous_fst.prodMk (hcontinv.comp continuous_snd)
 
 theorem chapter04_adelic_vector_space_is_coordinatewise_after_a_basis
     (M : Chapter04Lattice K V)
@@ -427,7 +647,58 @@ theorem chapter04_adelic_vector_space_is_coordinatewise_after_a_basis
     ∃ e : Chapter04AdelicVectorSpace K V ≃+
         (ι → Chapter04AdeleRing K),
       Continuous e ∧ Continuous e.symm := by
-  sorry
+  classical
+  have _hM : Chapter04Lattice K V := M
+  let c : Basis (Module.Free.ChooseBasisIndex K V) K V := Module.Free.chooseBasis K V
+  let ec0 : (V ⊗[K] Chapter04AdeleRing K) ≃ₗ[Chapter04AdeleRing K]
+      (Chapter04AdeleRing K ⊗[K] V) :=
+    { toFun := TensorProduct.comm K V (Chapter04AdeleRing K)
+      invFun := (TensorProduct.comm K V (Chapter04AdeleRing K)).symm
+      left_inv := (TensorProduct.comm K V (Chapter04AdeleRing K)).left_inv
+      right_inv := (TensorProduct.comm K V (Chapter04AdeleRing K)).right_inv
+      map_add' := (TensorProduct.comm K V (Chapter04AdeleRing K)).map_add
+      map_smul' := by
+        intro a x
+        induction x with
+        | zero => simp
+        | tmul v b => rfl
+        | add x y hx hy => simp [hx, hy] }
+  let ec : (V ⊗[K] Chapter04AdeleRing K) ≃ₗ[Chapter04AdeleRing K]
+      (Module.Free.ChooseBasisIndex K V → Chapter04AdeleRing K) :=
+    ec0.trans
+      (Algebra.TensorProduct.equivPiOfFiniteBasis (Chapter04AdeleRing K) c)
+  let _ : ContinuousAdd (V ⊗[K] Chapter04AdeleRing K) :=
+    continuousAdd_induced ec.toAddEquiv.toAddHom
+  let ecL : (V ⊗[K] Chapter04AdeleRing K) ≃L[Chapter04AdeleRing K]
+      (Module.Free.ChooseBasisIndex K V → Chapter04AdeleRing K) :=
+    { __ := ec
+      continuous_toFun := by
+        change Continuous[
+          TopologicalSpace.induced
+            (chapter04TensorProductCoordinateMap K (Chapter04AdeleRing K) V c)
+            inferInstance, inferInstance] ec
+        exact continuous_induced_dom
+      continuous_invFun := by
+        apply continuous_induced_rng.mpr
+        have hcomp :
+            chapter04TensorProductCoordinateMap K (Chapter04AdeleRing K) V
+                (Module.Free.chooseBasis K V) ∘ ec.invFun =
+              id := by
+          funext x
+          change ec (ec.invFun x) = x
+          exact ec.apply_symm_apply x
+        rw [hcomp]
+        exact continuous_id }
+  let htop : IsModuleTopology (Chapter04AdeleRing K)
+      (V ⊗[K] Chapter04AdeleRing K) :=
+    IsModuleTopology.iso ecL.symm
+  let _ : IsModuleTopology (Chapter04AdeleRing K)
+      (V ⊗[K] Chapter04AdeleRing K) := htop
+  let e := ec0.trans
+    (Algebra.TensorProduct.equivPiOfFiniteBasis (Chapter04AdeleRing K) b)
+  refine ⟨e.toAddEquiv, ?_, ?_⟩
+  · exact IsModuleTopology.continuous_of_linearMap e.toLinearMap
+  · exact IsModuleTopology.continuous_of_linearMap e.symm.toLinearMap
 
 end Chapter04LatticeContext
 
