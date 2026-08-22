@@ -72,7 +72,78 @@ theorem chapter13_coefficient_field_exists_when_contains_field
         Chapter13CoefficientDecomposition K ∧
         (∀ a : A, ∃! z : K.carrier × A,
           z.2 ∈ IsLocalRing.maximalIdeal A ∧ a = z.1.1 + z.2) := by
-  sorry
+  have hdecomp : ∀ (K : Chapter13Subfield A),
+      Chapter13IsCoefficientField K →
+        ∀ a : A, ∃! z : K.carrier × A,
+          z.2 ∈ IsLocalRing.maximalIdeal A ∧ a = z.1.1 + z.2 := by
+    intro K hK a
+    obtain ⟨k, hk⟩ := hK.2 (Chapter13ResidueMap A a)
+    have hzero : Chapter13ResidueMap A (a - K.carrier.subtype k) = 0 := by
+      rw [map_sub]
+      exact sub_eq_zero.mpr hk.symm
+    have hm : a - K.carrier.subtype k ∈ IsLocalRing.maximalIdeal A := by
+      change Ideal.Quotient.mk _ (a - K.carrier.subtype k) = 0 at hzero
+      exact (Ideal.Quotient.eq_zero_iff_mem).mp hzero
+    have ha : a = K.carrier.subtype k + (a - K.carrier.subtype k) := by
+      simp
+    refine ⟨(k, a - K.carrier.subtype k), ⟨hm, ha⟩, ?_⟩
+    rintro ⟨k', m'⟩ ⟨hm', ha'⟩
+    have hmzero : Chapter13ResidueMap A m' = 0 := by
+      change Ideal.Quotient.mk _ m' = 0
+      exact (Ideal.Quotient.eq_zero_iff_mem).mpr hm'
+    have hkeq : k = k' := by
+      have hmapa : Chapter13ResidueMap A a =
+          Chapter13ResidueMap A (K.carrier.subtype k') := by
+        have hsum : K.carrier.subtype k + (a - K.carrier.subtype k) =
+            K.carrier.subtype k' + m' := ha.symm.trans ha'
+        apply_fun Chapter13ResidueMap A at hsum
+        simpa [map_add, hzero, hmzero] using hsum
+      exact hK.1 (hk.trans hmapa)
+    have hmeq : a - K.carrier.subtype k = m' := by
+      have ha'' : a = K.carrier.subtype k + m' := by
+        simpa [hkeq] using ha'
+      exact add_left_cancel (ha.symm.trans ha'')
+    exact Prod.ext hkeq.symm hmeq.symm
+  obtain hcases := (chapter13_contains_field_iff_equal_characteristic (A := A)).mp hfield
+  rcases hcases with hzero | ⟨p, hpprime, hpA, hres⟩
+  · obtain ⟨⟨K, hK⟩, _, _⟩ :=
+      chapter13_coefficient_field_exists_equal_characteristic_zero hA hzero.2 hfield
+    exact ⟨K, hK, by
+      intro a
+      obtain ⟨k, hk⟩ := hK.2 (Chapter13ResidueMap A a)
+      let m := a - K.carrier.subtype k
+      have hm : m ∈ IsLocalRing.maximalIdeal A := by
+        apply (Ideal.Quotient.eq_zero_iff_mem).mp
+        change Chapter13ResidueMap A m = 0
+        rw [map_sub]
+        exact sub_eq_zero.mpr hk.symm
+      exact ⟨k, m, hm, by simp [m]⟩, hdecomp K hK⟩
+  · letI : Fact (Nat.Prime p) := ⟨hpprime⟩
+    letI : CharP A p := hpA
+    letI : CharP (Chapter13ResidueRing A) p := hres
+    obtain ⟨B, hB⟩ :=
+      (chapter13_p_basis_existence (k := Chapter13ResidueRing A) p).2.1
+    let a : B → A := fun b =>
+      Classical.choose (Ideal.Quotient.mk_surjective (b : Chapter13ResidueRing A))
+    have ha : Chapter13AdmissiblePBaseLiftFamily B a := by
+      intro b
+      exact Classical.choose_spec
+        (Ideal.Quotient.mk_surjective (b : Chapter13ResidueRing A))
+    obtain ⟨e⟩ := chapter13_equal_characteristic_p_coefficient_fields_bijection
+      p B hB hA
+    let z : {a : B → A // Chapter13AdmissiblePBaseLiftFamily B a} := ⟨a, ha⟩
+    let K : Chapter13Subfield A := (e.symm z).1
+    have hK : Chapter13IsCoefficientField K := (e.symm z).2
+    exact ⟨K, hK, by
+      intro x
+      obtain ⟨k, hk⟩ := hK.2 (Chapter13ResidueMap A x)
+      have hm : x - K.carrier.subtype k ∈ IsLocalRing.maximalIdeal A := by
+        apply (Ideal.Quotient.eq_zero_iff_mem).mp
+        change Chapter13ResidueMap A (x - K.carrier.subtype k) = 0
+        rw [map_sub]
+        exact sub_eq_zero.mpr hk.symm
+      exact ⟨k, x - K.carrier.subtype k, hm, by simp⟩,
+      hdecomp K hK⟩
 
 /-- The coefficient decomposition is unique. -/
 theorem chapter13_coefficient_decomposition_unique
