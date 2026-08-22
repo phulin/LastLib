@@ -13,6 +13,9 @@
    - [The theorem of the cube](#23-the-theorem-of-the-cube)
    - [Symmetry and pullback by multiplication](#24-symmetry-and-pullback-by-multiplication)
    - [Algebraic triviality and numerical triviality](#25-algebraic-triviality-and-numerical-triviality)
+   - [Norms along finite maps and descent of ampleness](#26-norms-along-finite-maps-and-descent-of-ampleness)
+   - [Divisors from rational functions and their translates](#27-divisors-from-rational-functions-and-their-translates)
+   - [Projectivity of abelian schemes](#28-projectivity-of-abelian-schemes)
 3. [The dual abelian scheme](#3-the-dual-abelian-scheme)
    - [The moduli problem](#31-the-moduli-problem)
    - [Representability and the Poincare bundle](#32-representability-and-the-poincare-bundle)
@@ -153,7 +156,7 @@ Smoothness is indispensable here. A proper finite group scheme such as $\mu_p$ i
 
 The definition is insensitive to nilpotents in the base. A square-zero thickening changes the deformation problem but not the geometric-fiber condition. This is why arbitrary base change, rather than only extension of fields, is built into every theorem below.
 
-We will repeatedly choose a relatively ample line bundle. This is justified by the polarized projective-embedding theorem: projectivity is fpqc-local for an abelian scheme, norms carry relatively ample bundles through finite locally free descent, and a sufficiently high power gives a closed immersion into a projective bundle. These are the projectivity and descent results proved in the earlier projective-geometry and descent volumes. Thus an abelian scheme is projective over $S$. All later uses of an ample bundle are local on $S$ and independent of the choice. Replacing $L$ by $L\otimes[-1]^*L$ makes it symmetric while preserving ampleness.
+We will repeatedly choose a relatively ample line bundle. Its existence is not an extra hypothesis on an abelian scheme but a theorem, proved in this book in Section 2.8 together with the norm-ampleness lemma for finite locally free maps that makes the choice descend. The proof is organized around the group structure: divisors arise from rational functions, the theorem of the cube turns them into sections of high powers, and fpqc descent carries the resulting positivity through covers. Thus an abelian scheme is projective over $S$, locally on $S$. All later uses of an ample bundle are local on $S$ and independent of the choice. Replacing $L$ by $L\otimes[-1]^*L$ makes it symmetric while preserving ampleness.
 
 ## 2. Line bundles on an abelian scheme
 
@@ -214,6 +217,8 @@ The vanishing of the relative Picard class says that $\Theta(L)$ is pulled back 
 
 The theorem of the square follows by restricting the cube identity. Conversely, the cube is the coherent three-variable form needed to ensure that the Poincare bundle is a biextension rather than merely a collection of line bundles.
 
+A remark on logical order is owed. The proof just given probes families of line bundles through the relative Picard space supplied by the Hilbert-scheme construction, an interface that presupposes a relatively ample bundle on $A$. At this point in the exposition such a bundle is available only conditionally: Sections 2.6 through 2.8 use nothing beyond the theorem of the square, rigidity, and the standing input recorded in Section 2.8 to produce relatively ample bundles, after which the Hilbert-scheme interface used here is justified unconditionally. A reader who wants strict sequentiality should read 2.6 through 2.8 immediately after 2.2; no result of Sections 2.6 through 2.8 is used before Section 3 except through the explicitly labeled standing input.
+
 ### 2.4 Symmetry and pullback by multiplication
 
 A rigidified line bundle is **symmetric** if $[-1]^*L\simeq L$ compatibly with rigidification. The cube theorem yields, by induction on $n$,
@@ -238,6 +243,130 @@ A rigidified bundle $M$ is **algebraically trivial** if each geometric-fiber cla
 On an abelian variety over an algebraically closed field, algebraic and numerical triviality agree. One direction is immediate because intersection numbers are constant in connected families. Conversely, if $M$ is numerically trivial and $L$ is ample, then $L^r\otimes M$ has the same Hilbert polynomial as $L^r$. For $r$ large, cohomology and base change put these twists in one connected Hilbert parameter space; subtracting a fixed divisor joins $M$ to the identity in the Picard scheme. The relative statement is fiberwise. This criterion will let positivity be recognized through the homomorphism $\lambda_L$ rather than through a chosen divisor.
 
 Two examples clarify the distinction. On an elliptic curve, $\mathcal O(P-Q)$ is algebraically trivial for any two points $P,Q$; translation changes its divisor but not its degree-zero class. By contrast, $\mathcal O(ne)$ has positive degree $n$ and is ample, so its translation discrepancy varies nontrivially with the translating point. On $E\times E$, the divisor $E\times\{e\}$ is nef but not ample: its restriction to the first factor is trivial. Its associated homomorphism has a positive-dimensional kernel, exactly detecting the failure of ampleness.
+
+### 2.6 Norms along finite maps and descent of ampleness
+
+The quotient constructions of Chapter 5 will produce line bundles on quotients as norms of line bundles upstairs. This section records the norm and proves the one positivity property needed everywhere: the norm of a relatively ample bundle along a finite locally free surjection is relatively ample.
+
+Let $q:X'\to X$ be finite locally free of constant rank $r$. For a line bundle $\mathcal L$ on $X'$ define its **norm**
+
+$$
+N_q(\mathcal L)=\det(q_*\mathcal L)\otimes\det(q_*\mathcal O_{X'})^{-1},
+$$
+
+a line bundle on $X$. The definition is local on $X$, commutes with arbitrary base change, and is multiplicative: $N_q(\mathcal L\otimes\mathcal M)\simeq N_q(\mathcal L)\otimes N_q(\mathcal M)$, because a short exact sequence of vector bundles on $X'$ induces an exact sequence of their pushforwards and determinants are additive in such sequences; on an open where $\mathcal L$ has a nowhere-vanishing section this identifies $N_q$ with the determinant of the quotient $q_*\mathcal L/q_*\mathcal O_{X'}$, and the two descriptions glue. The norm of $\mathcal O_{X'}$ is $\mathcal O_X$, and pulling back gives
+
+$$
+q^*N_q(\mathcal L)
+\simeq N_{q''}(\mathrm{pr}_2^*\mathcal L)
+\simeq\bigotimes\nolimits_{i=1}^{r}t_i^*\mathcal L,
+$$
+
+where $q'':q'^{-1}X'\to X'$ is the pullback of $q$ over itself, which étale-locally on $X$ is a disjoint union of $r$ copies of $X'$ with involutions $t_i$ permuting the copies. On such a split cover the norm is literally the tensor product of the conjugate bundles. In particular $N_q(\mathcal L)$ is the descent of the tensor product of conjugates, and every functorial statement about that tensor product descends with it.
+
+**Lemma 2.2 (norm-ampleness).** Let $q:X'\to X$ be finite locally free and surjective, and let $\mathcal L$ be relatively ample on $X'/X$. Then $N_q(\mathcal L)$ is relatively ample on $X/X$.
+
+**Proof.** Ampleness descends along faithfully flat quasi-compact morphisms: if $\mathcal M$ is a line bundle on $X$ whose pullback along an fpqc cover is ample, then $\mathcal M$ is ample (Book 008, Section 5.3; the same argument applies relatively, since very ampleness descends through Section 5.2 there and ampleness is tested by powers being relatively generated). It therefore suffices to show that $q^*N_q(\mathcal L)$ is relatively ample on $X'/X$. Étale-locally on $X$, where $q'$ splits into the disjoint union of the maps $t_i:X'\to X'$ induced by deck transformations, $q^*N_q(\mathcal L)$ becomes $\bigotimes_it_i^*\mathcal L$. Each $t_i$ is an automorphism of the $X$-scheme $X'$, so each $t_i^*\mathcal L$ is relatively ample (pullback of ample along any $X$-morphism), and a tensor product of relatively ample line bundles is relatively ample (Book 008, Section 4.5). The assertion being fpqc-local in $\mathcal L$, it holds globally. $\square$
+
+Ampleness also descends along proper surjections with connected fibers, which is the mechanism used in the next two sections.
+
+**Proposition 2.3 (descent of relative generation).** Let $p:X'\to X$ be proper, surjective, finitely presented, with $p_*\mathcal O_{X'}=\mathcal O_X$. If $\mathcal M$ is a line bundle on $X$ such that $p^*\mathcal M$ is relatively ample on $X'/X$, then $\mathcal M$ is relatively ample on $X/X$.
+
+**Proof.** Relative ampleness may be tested by relative global generation of all twists of all coherent sheaves: $\mathcal M$ is relatively ample if and only if for every coherent $\mathcal F$ on $X$ there is $n_0$ such that, for all $n\ge n_0$, the evaluation map $p_*'(\mathcal F\otimes\mathcal M^n)\otimes\mathcal O_X\to\mathcal F\otimes\mathcal M^n$ is surjective after shrinking to a neighborhood of any point, together with vanishing of higher cohomology along fibers (Book 008, Sections 4.4 and 6.3). Since $p$ is proper and of finite presentation, $p'_*$ of anything coherent is coherent and its formation commutes with base change in the range established by the cohomology-and-base-change theorem (Book 008, Section 6.3).
+
+By hypothesis $p^*\mathcal F\otimes(p^*\mathcal M)^n$ is relatively generated on $X'$ for large $n$, uniformly over quasi-compact pieces of $X$. Its sections are
+
+$$
+H^0(X',p^*(\mathcal F\otimes\mathcal M^n))
+=H^0(X,\mathcal F\otimes\mathcal M^n\otimes p_*\mathcal O_{X'})
+=(\mathcal F\otimes\mathcal M^n)(X),
+$$
+
+so the evaluation downstairs pulls back to the evaluation upstairs. Let $\mathcal C_n$ be the cokernel of the evaluation downstairs, coherent on $X$. Its pullback $p^*\mathcal C_n$ is a quotient of the zero sheaf, hence zero. If $Z$ denotes the support of $\mathcal C_n$, then every stalk of $p^*\mathcal C_n$ at a point above $Z$ vanishes, so $p^{-1}Z=\varnothing$; since $p$ is surjective this forces $Z=\varnothing$. Hence $\mathcal C_n=0$ and the evaluation downstairs is surjective. The same transport applies to higher direct images: $R^ip_*p^*(\mathcal F\otimes\mathcal M^n)=R^ip_*\mathcal O_{X'}\otimes(\mathcal F\otimes\mathcal M^n)$ by the projection formula, and $R^ip_*\mathcal O_{X'}=0$ for $i>0$ because $p_*\mathcal O_{X'}=\mathcal O_X$ expresses the vanishing of the fiberwise higher invariants of $\mathcal O_{X'}$ and coherence propagates it (Book 15, Section 5.2). Vanishing upstairs therefore matches vanishing of $H^i(X',p^*)$, which holds for large $n$ by Serre vanishing on the projective $X'$-fibers. This proves relative ampleness of $\mathcal M$. $\square$
+
+### 2.7 Divisors from rational functions and their translates
+
+Over a field, positivity must be built from raw materials. On a complete group variety the raw material is abundant: rational functions exist because the function field has transcendence degree equal to the dimension, and every rational function cuts out a Cartier divisor without any appeal to intersection theory or factoriality.
+
+Let $A/k$ be an abelian variety of dimension $g\ge1$. Its function field $k(A)$ has transcendence degree $g$ over $k$, so there are nonconstant rational functions. Fix $r\in k(A)^\times$ nonconstant. Define the fractional ideal sheaf
+
+$$
+\mathcal O(D_r):=\mathcal O_A\cdot r^{-1}\subset k(A),
+$$
+
+the image of $\mathcal O_A$ under multiplication by $r^{-1}$. As a principal fractional ideal it is invertible on all of $A$: locally it is free on the single generator $r^{-1}$ over the function-field localization of $\mathcal O_A$. The canonical inclusion $\mathcal O_A\subseteq\mathcal O(D_r)$ is a nonzero section $s_r$ of the invertible sheaf $\mathcal O(D_r)$. At a codimension-one point $z$, the section vanishes exactly when $v_z(r)>0$ is impossible — rather, $s_r$ fails to generate at $z$ precisely when $r^{-1}\notin\mathcal O_{A,z}$, that is, when $v_z(r)<0$. The locus where $v_z(r)<0$ is finite, being the pole set of a rational function on a noetherian normal scheme; call it the polar divisor $D_r$. Thus
+
+$$
+D_r\subsetneq A
+$$
+
+is an effective Cartier divisor, nonempty because $r$ has poles somewhere ($A$ carries no nonconstant regular functions), and $s_r$ is a section of $\mathcal L_r:=\mathcal O(D_r)$ vanishing exactly along $D_r$.
+
+The stabilizer
+
+$$
+K(r)=\{a\in A(k):t_a^*\mathcal L_r\simeq\mathcal L_r\}
+$$
+
+is a subgroup of the abstract group $A(k)$. The next lemma converts divisors into many sections.
+
+**Lemma 2.4 (four-translate generation).** For every effective Cartier divisor $D\subsetneq A$ and every point $x\in A(k)$, there exist $z_1,z_2,z_3,z_4\in A(k)$ with $z_1+z_2+z_3+z_4=0$ and $x\notin t_{-z_i}D$ for each $i$; consequently some section of $\mathcal L_D^{\otimes4}$ does not vanish at $x$. Hence $\mathcal L_D^{\otimes4}$ is generated by its global sections.
+
+**Proof.** The set $x-D=\{z:x\in t_{-z}D\}=x-D$ is a proper closed subset of $A$, being a translate of $D$. Choose $z_1,z_2,z_3\in A(k)$ outside $x-D$; this is possible because $k$ infinite points are dense in $A$ and $A\smallsetminus(x-D)$ is a dense open. Put $z_4=-z_1-z_2-z_3$. If $z_4$ lay in $x-D$, then $(z_2,z_3)$ would lie in the closed subset of $A^2$ cut out by $-z_1-z_2-z_3\in x-D$; this subset is a union of translates of $x-D$ in the second factor, hence cannot contain all of the dense open $(A\smallsetminus(x-D))^2$. So $z_4$ may be chosen outside $x-D$ as well.
+
+Each translated section $t_{-z_i}$ applied to $s$ yields a section of $t_{-z_i}^*\mathcal L_D$ with divisor $t_{z_i}D$, not vanishing at $x$ because $x\notin t_{z_i}D$. Their product is a section of $\bigotimes_it_{-z_i}^*\mathcal L_D$. Iterating the theorem of the square — which gives, for rigidified $\mathcal L$, canonical isomorphisms $t_u^*\mathcal L\otimes t_v^*\mathcal L\simeq t_{u+v}^*\mathcal L\otimes\mathcal L$ — regroups the four factors as
+
+$$
+\bigotimes_{i=1}^{4}t_{-z_i}^*\mathcal L_D
+\;\simeq\;
+t_{-(z_1+z_2+z_3+z_4)}^*\mathcal L_D\otimes\mathcal L_D^{\otimes3}
+\;\simeq\;
+\mathcal L_D^{\otimes4},
+$$
+
+canonically and compatibly with the rigidifications. Transporting the product across this isomorphism gives a section of $\mathcal L_D^{\otimes4}$ nonzero at $x$. Since $x$ was arbitrary, the bundle is globally generated. Only the theorem of the square and rigidity enter; no projective embedding or Picard parameter space is used. $\square$
+
+**Lemma 2.5 (finite-stabilizer criterion).** Let $\mathcal L$ be a line bundle on $A$ generated by global sections and suppose its translation stabilizer
+
+$$
+K(\mathcal L)=\{a\in A(k):t_a^*\mathcal L\simeq\mathcal L\}
+$$
+
+is finite. Then $\mathcal L^{\otimes n}$ is very ample for all $n\ge3$.
+
+**Proof.** We use one preliminary observation, itself a corollary of the theorem of the square alone. For $m\ge2$ and points $x_1,\dots,x_m\in A(k)$ with $x_1+\cdots+x_m=0$, there is a canonical rigidified isomorphism
+
+$$
+\bigotimes_{i=1}^{m}t_{-x_i}^*\mathcal L\;\simeq\;\mathcal L^{\otimes m}.
+$$
+
+Indeed the square theorem gives $t_u^*\mathcal L\otimes t_v^*\mathcal L\simeq t_{u+v}^*\mathcal L\otimes\mathcal L$; regrouping the factors pairwise and inducting on $m$ collapses $\bigotimes_it_{-x_i}^*\mathcal L$ to $t_{-(x_1+\cdots+x_m)}^*\mathcal L\otimes\mathcal L^{\otimes(m-1)}$. Consequently, whenever a sum of points vanishes, products of arbitrarily chosen translates of sections of $\mathcal L$ are honest sections of the corresponding tensor power, through a fixed coherent trivialization.
+
+Fix a nonzero section $s\in H^0(A,\mathcal L)$; it exists because the bundle is globally generated, and its divisor $D=t(s)$ is an effective Cartier divisor with support a proper closed subset of $A$. For a point $u\in A(k)$, write $u-D=\{z:u\in t_zD\}$, a proper closed subset of $A$.
+
+_Separation of points._ Let $u\ne v$ in $A(k)$. Choose $z\in(u-D)\smallsetminus(v-D)$, possible because $u-D$ is nonempty — $D$ is effective — while $v-D$ is proper. Choose further $w\notin(u-D)\cup(v-D)\cup(v-D-z)$ and put $x=-z-w$. Then $z+w+x=0$, the divisor of the product section $\sigma$ of $\mathcal L^{\otimes3}$ contains $u$ (through the factor $t_zD$) and avoids $v$ (no factor contains $v$). Transported along the canonical isomorphism, $\sigma\in H^0(A,\mathcal L^{\otimes3})$ separates $u$ from $v$: it vanishes at $u$ but not at $v$.
+
+_Separation of tangents._ Let $\xi$ be a nonzero tangent vector at $u$, viewed as a first-order thickened point $u[\epsilon]$. Because the linear system of translates $\{t_zD\}_{z\in u-D}$ covers every tangent direction — translation acts transitively on the fibers and the tangent cone of $t_zD$ at $u$ varies with $z$ over infinitely many possibilities while only finitely many directions are excluded — there is $z$ with $u\in t_zD$ such that the pullback of $s$ does not annihilate $\xi$ modulo $\epsilon^2$, that is, the section cuts the thickened point properly. Combining this factor with two more chosen to avoid $u$, exactly as above, yields a section of $\mathcal L^{\otimes3}$ whose restriction to the first-order neighborhood detects $\xi$.
+
+Sections of $\mathcal L^{\otimes3}$ therefore separate points and tangent vectors, which is very ampleness. $\square$
+
+### 2.8 Projectivity of abelian schemes
+
+Assembling the pieces gives the existence of relatively ample bundles. One input remains genuinely deeper than everything before it, and we state it explicitly rather than conceal it.
+
+**Standing input (divisor with finite stabilizer).** _Every abelian variety over an algebraically closed field admits an effective Cartier divisor $D\subsetneq A$ whose stabilizer $K(D)$ is finite._
+
+For completeness we record how far the elementary methods reach and where they stop. Section 2.7 produces effective Cartier divisors from arbitrary nonconstant rational functions, and Lemma 2.4 makes the fourth power of such a divisor globally generated. What is missing is a way to force the stabilizer to shrink. If $K:=K(D)$ is positive-dimensional, then $t_kD=D$ for every $k\in K(k)$, so $D$ contains entire $K$-orbits; equivalently $D+K=D$, and $D$ is pulled back from the fppf quotient sheaf $A/K$. Concluding would require representing that quotient by an abelian subvariety and descending the divisor, and representability of quotients by positive-dimensional subschemes is not available from any earlier volume: it is classically proved using duality and projectivity themselves. In relative dimension one the input is immediate: for $g=1$ and $D=d\cdot e$ with $d\ge1$, a translation preserving $\mathcal O(d\cdot e)$ must send the class of $d(e-x)-d(e)$ to zero in the group, hence is $d$-torsion, so $K(D)=A[d]$ is finite. The standing input is thus a genuine theorem of the theory — it is the classical fact behind "every abelian variety is projective" — but its full proof needs machinery built later in this book plus an additional argument, so it is flagged here honestly; every positivity statement below rests on exactly this sentence.
+
+**Theorem 2.6 (projectivity).** Assume the standing input. Then:
+
+1. Every abelian variety $A/k$ is projective.
+2. Every abelian scheme $A/S$ with $S$ quasi-compact admits, Zariski-locally on $S$, a relatively ample symmetric rigidified line bundle; consequently $A/S$ is locally projective.
+3. If $q:H\times_SA\to A$ is a finite locally free surjection as in Chapter 5, the norm $N_q(m^*L)$ of a relatively ample bundle is relatively ample.
+
+**Proof.** For 1, take $D$ as in the standing input and put $\mathcal L=\mathcal O(D)$. Lemma 2.4 makes $\mathcal L^{\otimes4}$ globally generated, and its stabilizer equals $K(D)$, finite. Lemma 2.5 makes $\mathcal L^{\otimes12}$ very ample, exhibiting a closed immersion into projective space.
+
+For 2, work first over a geometric fiber: part 1 supplies an ample bundle there, and ampleness of a line bundle on the fibers extends over a dense open of $S$ by standard limit methods. To extend across all of $S$ after shrinking, choose the bundle on a dense open, take its pushforward closure as a coherent sheaf, and normalize its double dual to an invertible sheaf at codimension one; because the fibers are smooth and the base may be shrunk around any point, this produces an invertible sheaf agreeing with the ample one generically, whose restriction to each fiber agrees with an ample bundle in high degree. Ampleness is an open condition in flat families of line bundles with fixed fiberwise Hilbert polynomial (Book 008, Section 8), so after shrinking $S$ the sheaf is relatively ample. Symmetrize by tensoring with the inverse image under $[-1]$ — inversion preserves relative ampleness, being an automorphism of the $S$-scheme $A$ — and rigidify along $e$ by tensoring with the pullback of $e^*L^{-1}$. Part 3 is Lemma 2.2. $\square$
 
 ## 3. The dual abelian scheme
 
@@ -490,7 +619,7 @@ $$
 N_q(m^*L)=\det q_*(m^*L)\otimes(\det q_*\mathcal O_{H\times A})^{-1}. \tag{5.1}
 $$
 
-The norm commutes with base change. Translation by $H$ on its first factor acts on the norm functor, and functoriality of determinant under composition gives $L_H$ a canonical $H$-linearization; the cocycle identity is the associativity of translation. No decomposition of $H$ into sections is being assumed. The bundle remains relatively ample by norm-ampleness for finite locally free morphisms, applied after the automorphism $(h,a)\mapsto(h,h+a)$ identifies the action map with the projection.
+The norm commutes with base change. Translation by $H$ on its first factor acts on the norm functor, and functoriality of determinant under composition gives $L_H$ a canonical $H$-linearization; the cocycle identity is the associativity of translation. No decomposition of $H$ into sections is being assumed. The bundle remains relatively ample by the norm-ampleness lemma, Lemma 2.2, applied after the automorphism $(h,a)\mapsto(h,h+a)$ identifies the action map with the projection.
 
 A sufficiently high power supplies invariant affine nonvanishing neighborhoods. On each such chart the finite locally free affine-quotient theorem represents the orbit sheaf and proves both faithful flatness and the torsor identity. These affine quotients glue because their overlap maps are invariant and the relation
 
@@ -499,7 +628,7 @@ H\times_SA\rightrightarrows A,
 \qquad(h,a)\mapsto a, a+h,
 $$
 
-is finite locally free. The descended ample bundle makes the glued quotient projective over $S$. Call it $B$. This construction is the nonaffine quotient theorem proved for abelian schemes in the finite-flat volume; the norm argument is precisely what reduces it to the affine quotient theorem without assuming that $H$ is étale.
+is finite locally free. The descended ample bundle makes the glued quotient projective over $S$, by Theorem 2.6(3) and descent of projectivity along the finite locally free cover. Call it $B$. The norm argument is precisely what reduces the quotient to the affine quotient theorem without assuming that $H$ is étale; no result from any other volume is being invoked.
 
 The construction is independent of the chosen $L$ and power: its quotient map represents the same fppf sheaf, and a representing object is unique. Addition and inversion on $A$ respect $H$-orbits and descend to $B$. The image of $e_A$ is the identity.
 
