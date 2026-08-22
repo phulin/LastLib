@@ -525,7 +525,32 @@ theorem chapter11_swan_conductor_unramified_twist
     (χ : G →* kˣ) (hχ : chapter11UnramifiedCharacter D χ) :
     chapter11SwanConductor D (chapter11Twist χ ρ) =
       chapter11SwanConductor D ρ := by
-  sorry
+  have hcodim (i : ℕ) :
+      LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+          (chapter11Twist χ ρ) (D.lower i) =
+        LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim ρ (D.lower i) := by
+    have hfixed :
+        LastLib.Book03RamificationTheory.Chapter10.fixedSpace
+            (chapter11Twist χ ρ) (D.lower i) =
+          LastLib.Book03RamificationTheory.Chapter10.fixedSpace ρ (D.lower i) := by
+      ext v
+      constructor
+      · intro hv
+        rw [LastLib.Book03RamificationTheory.Chapter10.fixedSpace.mem_iff] at hv ⊢
+        intro g
+        have hχg : χ (g : G) = 1 :=
+          hχ ⟨(g : G), (chapter11_lower_le_inertia D i) g.property⟩
+        simpa [chapter11Twist, hχg] using hv g
+      · intro hv
+        rw [LastLib.Book03RamificationTheory.Chapter10.fixedSpace.mem_iff] at hv ⊢
+        intro g
+        have hχg : χ (g : G) = 1 :=
+          hχ ⟨(g : G), (chapter11_lower_le_inertia D i) g.property⟩
+        simpa [chapter11Twist, hχg] using hv g
+    unfold LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+    rw [hfixed]
+  unfold chapter11SwanConductor
+  simp_rw [hcodim]
 
 /-- The levelwise restriction data which is needed for a ramified twist. -/
 def chapter11RamifiedTwistLevelCharacter
@@ -539,7 +564,16 @@ theorem chapter11_ramified_twist_has_nontrivial_level_data
     (D : Chapter11RamificationData G) (χ : G →* kˣ)
     (hχ : ¬chapter11UnramifiedCharacter D χ) :
     ∃ i : ℕ, chapter11RamifiedTwistLevelCharacter D χ i ≠ 1 := by
-  sorry
+  by_contra h
+  push Not at h
+  apply hχ
+  intro σ
+  have hσ0 : (σ : G) ∈ D.lower 0 := by
+    rw [D.lower_zero]
+    exact σ.property
+  have h0 := h 0
+  have h0σ := DFunLike.congr_fun h0 ⟨(σ : G), hσ0⟩
+  simpa [chapter11RamifiedTwistLevelCharacter] using h0σ
 
 /- The source warning is exposed by `chapter11RamifiedTwistLevelCharacter`: a
   ramified-twist formula needs the restrictions to the lower ramification

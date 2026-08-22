@@ -43,14 +43,67 @@ def Chapter11TameNoFixedVectors
     (∀ σ : D.lower 1, ρ σ = LinearMap.id) ∧
     Representation.invariants (ρ.comp D.inertia.subtype) = ⊥
 
+private theorem chapter11_tame_one_nontrivial_line_fixed_space
+    {k G V : Type*} [Field k] [Fintype G] [Group G]
+    [AddCommGroup V] [Module k V]
+    (D : Chapter11RamificationData G) (ρ : Representation k G V)
+    (L₁ L₂ : Submodule k V) (χ : D.inertia →* kˣ)
+    (hact₁ : ∀ σ : D.inertia, ∀ x : V, x ∈ L₁ →
+      ρ σ x = (χ σ : k) • x)
+    (hact₂ : ∀ σ : D.inertia, ∀ x : V, x ∈ L₂ → ρ σ x = x)
+    (hjoin : L₁ ⊔ L₂ = ⊤)
+    (hnontriv : ∃ σ : D.inertia, χ σ ≠ 1) :
+    LastLib.Book03RamificationTheory.Chapter10.fixedSpace ρ D.inertia = L₂ := by
+  rcases hnontriv with ⟨σ, hσ⟩
+  have hσcast : (χ σ : k) ≠ 1 := by
+    intro h
+    apply hσ
+    apply Units.ext
+    exact h
+  ext x
+  constructor
+  · intro hx
+    have hx' : x ∈ L₁ ⊔ L₂ := by
+      rw [hjoin]
+      exact Submodule.mem_top
+    rcases Submodule.mem_sup.mp hx' with ⟨x₁, hx₁, x₂, hx₂, hxsum⟩
+    have hfix :=
+      (LastLib.Book03RamificationTheory.Chapter10.fixedSpace.mem_iff
+        ρ D.inertia x).mp hx σ
+    have hfix' : ρ (σ : G) (x₁ + x₂) = x₁ + x₂ := by
+      simpa only [hxsum] using hfix
+    rw [map_add, hact₁ σ x₁ hx₁, hact₂ σ x₂ hx₂] at hfix'
+    have hx₁zero : x₁ = 0 := by
+      have hscalar : ((χ σ : k) - 1) • x₁ = 0 := by
+        rw [sub_smul, one_smul]
+        exact sub_eq_zero.mpr (add_right_cancel hfix')
+      exact (smul_eq_zero.mp hscalar).resolve_left (sub_ne_zero.mpr hσcast)
+    rw [← hxsum, hx₁zero, zero_add]
+    exact hx₂
+  · intro hx
+    rw [LastLib.Book03RamificationTheory.Chapter10.fixedSpace.mem_iff]
+    intro σ'
+    exact hact₂ σ' x hx
+
 theorem chapter11_two_dimensional_inertia_trivial_conductor_zero
     {k G V : Type*} [Field k] [CharZero k] [Fintype G] [Group G]
     [AddCommGroup V] [Module k V] [FiniteDimensional k V]
     (D : Chapter11RamificationData G) (ρ : Representation k G V)
-    (hρ : Chapter11TwoDimensional ρ)
+    (_hρ : Chapter11TwoDimensional ρ)
     (htrivial : Chapter11InertiaActsTrivially D ρ) :
     chapter11ArtinConductor D ρ = 0 := by
-  sorry
+  have hfixed (i : ℕ) :
+      LastLib.Book03RamificationTheory.Chapter10.fixedSpace ρ (D.lower i) = ⊤ := by
+    apply LastLib.Book03RamificationTheory.Chapter10.fixedSpace.top_of_trivial_on
+    intro g
+    exact htrivial ⟨g, (chapter11_lower_le_inertia D i) g.property⟩
+  have hcodim (i : ℕ) :
+      LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim ρ (D.lower i) = 0 := by
+    exact (LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim.eq_zero_iff
+      ρ (D.lower i)).2 (hfixed i)
+  unfold chapter11ArtinConductor
+  simp_rw [hcodim]
+  simp
 
 theorem chapter11_two_dimensional_tame_one_nontrivial_line_conductor_one
     {k G V : Type*} [Field k] [CharZero k] [Fintype G] [Group G]
@@ -58,7 +111,61 @@ theorem chapter11_two_dimensional_tame_one_nontrivial_line_conductor_one
     (D : Chapter11RamificationData G) (ρ : Representation k G V)
     (hρ : Chapter11TameOneNontrivialLine D ρ) :
     chapter11ArtinConductor D ρ = 1 := by
-  sorry
+  rcases hρ with ⟨L₁, L₂, χ, hdim, hL₁, hL₂, hjoin, _hmeet, hact₁, hact₂,
+    htame, hnontriv⟩
+  have hbound : 0 < D.bound := by
+    by_contra hb
+    have hbound0 : D.bound = 0 := Nat.eq_zero_of_not_pos hb
+    have hinertia : D.inertia = ⊥ := by
+      rw [← D.lower_zero]
+      exact D.lower_eq_bot_of_bound_le 0 (by simp [hbound0])
+    rcases hnontriv with ⟨σ, hσ⟩
+    apply hσ
+    have hσmem : (σ : G) ∈ (⊥ : Subgroup G) := by
+      rw [← hinertia]
+      exact σ.property
+    have hσval : (σ : G) = 1 := Subgroup.mem_bot.mp hσmem
+    have hσone : σ = 1 := Subtype.ext hσval
+    simp [hσone]
+  have hfixed := chapter11_tame_one_nontrivial_line_fixed_space
+    D ρ L₁ L₂ χ hact₁ hact₂ hjoin hnontriv
+  have hcodim0 :
+      LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim ρ D.inertia = 1 := by
+    unfold LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+    rw [Submodule.finrank_quotient, hfixed, hL₂, hdim]
+  have hlower (i : ℕ) (hi : 1 ≤ i) : D.lower i ≤ D.lower 1 := by
+    induction i with
+    | zero => omega
+    | succ i ih =>
+        cases i with
+        | zero => exact le_rfl
+        | succ i =>
+            exact (D.lower_succ_le (Nat.succ i)).trans (ih (by omega))
+  have hcodim (i : ℕ) (hi : 1 ≤ i) :
+      LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim ρ (D.lower i) = 0 := by
+    apply (LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim.eq_zero_iff
+      ρ (D.lower i)).2
+    apply LastLib.Book03RamificationTheory.Chapter10.fixedSpace.top_of_trivial_on
+    intro g
+    exact htame ⟨g, hlower i hi g.property⟩
+  unfold chapter11ArtinConductor
+  have hsum :
+      (∑ i ∈ Finset.range D.bound,
+        chapter11LowerWeight D i *
+          (LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim ρ
+            (D.lower i) : ℚ)) =
+        chapter11LowerWeight D 0 *
+          (LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim ρ
+            (D.lower 0) : ℚ) := by
+    apply Finset.sum_eq_single 0
+    · intro i hi hne
+      have hi' : 1 ≤ i := Nat.one_le_iff_ne_zero.mpr hne
+      rw [hcodim i hi']
+      simp
+    · intro hnot
+      exact (hnot (Finset.mem_range.mpr hbound)).elim
+  rw [hsum, D.lower_zero, hcodim0]
+  simp [chapter11LowerWeight, D.lower_zero]
 
 theorem chapter11_two_dimensional_tame_one_nontrivial_line_fixed_space_dimension_one
     {k G V : Type*} [Field k] [CharZero k] [Fintype G] [Group G]
@@ -66,7 +173,13 @@ theorem chapter11_two_dimensional_tame_one_nontrivial_line_fixed_space_dimension
     (D : Chapter11RamificationData G) (ρ : Representation k G V)
     (hρ : Chapter11TameOneNontrivialLine D ρ) :
     Module.finrank k (Representation.invariants (ρ.comp D.inertia.subtype)) = 1 := by
-  sorry
+  rcases hρ with ⟨L₁, L₂, χ, _hdim, _hL₁, hL₂, hjoin, _hmeet, hact₁, hact₂,
+    _htame, hnontriv⟩
+  have hfixed := chapter11_tame_one_nontrivial_line_fixed_space
+    D ρ L₁ L₂ χ hact₁ hact₂ hjoin hnontriv
+  change Module.finrank k
+    (LastLib.Book03RamificationTheory.Chapter10.fixedSpace ρ D.inertia) = 1
+  rw [hfixed, hL₂]
 
 theorem chapter11_two_dimensional_tame_fixed_space_zero_conductor_two
     {k G V : Type*} [Field k] [CharZero k] [Fintype G] [Group G]
@@ -74,7 +187,70 @@ theorem chapter11_two_dimensional_tame_fixed_space_zero_conductor_two
     (D : Chapter11RamificationData G) (ρ : Representation k G V)
     (hρ : Chapter11TameNoFixedVectors D ρ) :
     chapter11ArtinConductor D ρ = 2 := by
-  sorry
+  rcases hρ with ⟨hdim, htame, hinv⟩
+  change LastLib.Book03RamificationTheory.Chapter10.fixedSpace ρ D.inertia = ⊥ at hinv
+  have hbound : 0 < D.bound := by
+    by_contra hb
+    have hbound0 : D.bound = 0 := Nat.eq_zero_of_not_pos hb
+    have hinertia : D.inertia = ⊥ := by
+      rw [← D.lower_zero]
+      exact D.lower_eq_bot_of_bound_le 0 (by simp [hbound0])
+    have hfixed_bot :
+        LastLib.Book03RamificationTheory.Chapter10.fixedSpace ρ (⊥ : Subgroup G) = ⊤ := by
+      apply LastLib.Book03RamificationTheory.Chapter10.fixedSpace.top_of_trivial_on
+      intro g
+      have hg : (g : G) = 1 := Subgroup.mem_bot.mp g.property
+      rw [hg]
+      simpa only [Module.End.one_eq_id] using ρ.map_one
+    have htop_bot : (⊤ : Submodule k V) = ⊥ := by
+      calc
+        (⊤ : Submodule k V) =
+            LastLib.Book03RamificationTheory.Chapter10.fixedSpace ρ (⊥ : Subgroup G) :=
+          hfixed_bot.symm
+        LastLib.Book03RamificationTheory.Chapter10.fixedSpace ρ (⊥ : Subgroup G) =
+            LastLib.Book03RamificationTheory.Chapter10.fixedSpace ρ D.inertia := by
+          rw [hinertia]
+        LastLib.Book03RamificationTheory.Chapter10.fixedSpace ρ D.inertia = ⊥ := hinv
+    have hfin := congrArg (fun W : Submodule k V => Module.finrank k W) htop_bot
+    rw [finrank_top, finrank_bot, hdim] at hfin
+    omega
+  have hcodim0 :
+      LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim ρ D.inertia = 2 := by
+    unfold LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim
+    rw [Submodule.finrank_quotient, hinv, finrank_bot, hdim]
+  have hlower (i : ℕ) (hi : 1 ≤ i) : D.lower i ≤ D.lower 1 := by
+    induction i with
+    | zero => omega
+    | succ i ih =>
+        cases i with
+        | zero => exact le_rfl
+        | succ i =>
+            exact (D.lower_succ_le (Nat.succ i)).trans (ih (by omega))
+  have hcodim (i : ℕ) (hi : 1 ≤ i) :
+      LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim ρ (D.lower i) = 0 := by
+    apply (LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim.eq_zero_iff
+      ρ (D.lower i)).2
+    apply LastLib.Book03RamificationTheory.Chapter10.fixedSpace.top_of_trivial_on
+    intro g
+    exact htame ⟨g, hlower i hi g.property⟩
+  unfold chapter11ArtinConductor
+  have hsum :
+      (∑ i ∈ Finset.range D.bound,
+        chapter11LowerWeight D i *
+          (LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim ρ
+            (D.lower i) : ℚ)) =
+        chapter11LowerWeight D 0 *
+          (LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim ρ
+            (D.lower 0) : ℚ) := by
+    apply Finset.sum_eq_single 0
+    · intro i hi hne
+      have hi' : 1 ≤ i := Nat.one_le_iff_ne_zero.mpr hne
+      rw [hcodim i hi']
+      simp
+    · intro hnot
+      exact (hnot (Finset.mem_range.mpr hbound)).elim
+  rw [hsum, D.lower_zero, hcodim0]
+  simp [chapter11LowerWeight, D.lower_zero]
 
 theorem chapter11_two_dimensional_tame_fixed_space_zero_dimension_zero
     {k G V : Type*} [Field k] [CharZero k] [Fintype G] [Group G]
