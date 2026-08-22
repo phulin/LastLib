@@ -259,7 +259,7 @@ theorem chapter03_tame_profile_of_inertia_displacement
       · have hle := (F.lower_mem_iff hσ 1).1 hσmem
         by_cases hH : σ ∈ H
         · have hle' : (2 : WithTop ℤ) ≤ 1 := by
-            simpa [hinside hH hσ] using hle
+            simp [hinside hH hσ] at hle
           norm_num at hle'
         · have hle' : (2 : WithTop ℤ) ≤ 0 := by
             simpa [houtside hH] using hle
