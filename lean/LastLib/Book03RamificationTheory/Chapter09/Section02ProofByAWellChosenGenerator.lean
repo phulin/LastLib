@@ -365,7 +365,11 @@ theorem chapter09_generator_derivative_value_eq_displacement_sum
     (S : Chapter09HilbertFormulaSetup A B K L vK vL) :
     vL (algebraMap B L (chapter07DerivativeAt A B S.f S.α)) =
       (chapter09DisplacementSum S.profile : WithTop ℤ) := by
-  sorry
+  calc
+    vL (algebraMap B L (chapter07DerivativeAt A B S.f S.α)) =
+        (S.d : WithTop ℤ) := S.different_derivative_value
+    _ = (chapter09DisplacementSum S.profile : WithTop ℤ) := by
+      exact_mod_cast (chapter09_hilbert_different_formula vK vL S).1
 
 theorem chapter09_generator_derivative_value_eq_different_exponent
     {A B K L : Type*}
@@ -431,7 +435,7 @@ theorem chapter09_different_exponent_eq_displacement_sum
       (chapter09ResidueField vL)]
     (S : Chapter09HilbertFormulaSetup A B K L vK vL) :
     S.d = chapter09DisplacementSum S.profile := by
-  sorry
+  exact (chapter09_hilbert_different_formula vK vL S).1
 
 end
 

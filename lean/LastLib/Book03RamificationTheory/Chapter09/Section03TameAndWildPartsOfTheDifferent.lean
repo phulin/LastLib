@@ -45,7 +45,13 @@ theorem chapter09_different_decomposes_into_tame_and_wild
     (D : Chapter05RamificationFiltration G) (d : ℕ)
     (hformula : d = chapter09GroupCountSum D) :
     d = chapter09TameBaseline D + chapter09WildExcess D := by
-  sorry
+  rw [hformula]
+  unfold chapter09GroupCountSum chapter09TameBaseline chapter09RamificationIndex
+    chapter09WildExcess
+  rw [← Finset.sum_range_add_sum_Ico
+    (fun i : ℕ => Nat.card (chapter09LowerGroup D i) - 1)
+    (Nat.le_add_left 1 (chapter09Cutoff D))]
+  simp
 
 theorem chapter09_different_decomposes_for_hilbert_setup
     {A B K L : Type*}
@@ -104,7 +110,16 @@ theorem chapter09_mixed_unramified_tame_discriminant_exponent
       chapter08RelativeDiscriminantIdeal A B =
         (IsLocalRing.maximalIdeal A) ^ n) :
     δ = chapter03MixedDiscriminantExponent e f := by
-  sorry
+  have hd : δ = f * S.d :=
+    chapter08_discriminant_exponent_eq_residue_degree_mul_different
+      A B K L (IsLocalRing.maximalIdeal A) (IsLocalRing.maximalIdeal B)
+      f S.d δ hdisc S.different_power hnorm hδunique
+  have hS : S.d = chapter03MixedDifferentExponent e :=
+    chapter09_mixed_unramified_tame_different_exponent vK vL S e hprofile
+  calc
+    δ = f * S.d := hd
+    _ = f * chapter03MixedDifferentExponent e := by rw [hS]
+    _ = chapter03MixedDiscriminantExponent e f := rfl
 
 theorem chapter09_wild_excess_nonnegative
     {G : Type*} [Group G] [Finite G] [Fintype G]
@@ -116,7 +131,38 @@ theorem chapter09_wild_excess_vanishes_iff
     {G : Type*} [Group G] [Finite G] [Fintype G]
     (D : Chapter05RamificationFiltration G) :
     chapter09WildExcess D = 0 ↔ chapter09LowerGroup D 1 = ⊥ := by
-  sorry
+  classical
+  unfold chapter09WildExcess
+  constructor
+  · intro hzero
+    by_cases hcut : chapter09Cutoff D = 0
+    · exact chapter09_lower_group_trivial_at_cutoff D 1 (by omega)
+    · have hcutpos : 1 ≤ chapter09Cutoff D := Nat.one_le_iff_ne_zero.mpr hcut
+      have hone : 1 ∈ Finset.Ico 1 (chapter09Cutoff D + 1) := by
+        simp only [Finset.mem_Ico]
+        omega
+      have hterm :=
+        (Finset.sum_eq_zero_iff_of_nonneg
+          (fun i _hi => Nat.zero_le
+            (Nat.card (chapter09LowerGroup D i) - 1))).mp hzero 1 hone
+      have hcard_le : Nat.card (chapter09LowerGroup D 1) ≤ 1 :=
+        Nat.sub_eq_zero_iff_le.mp hterm
+      exact (chapter09LowerGroup D 1).eq_bot_of_card_le hcard_le
+  · intro hbot
+    apply Finset.sum_eq_zero
+    intro i hi
+    have hi_one : 1 ≤ i := (Finset.mem_Ico.mp hi).1
+    have hle : D.lowerGroup (i : ℝ) ≤ D.lowerGroup (1 : ℝ) := by
+      apply D.lower_antitone
+      exact_mod_cast hi_one
+    have hbot_i : chapter09LowerGroup D i = ⊥ := by
+      change D.lowerGroup (i : ℝ) = ⊥
+      apply le_antisymm
+      · rw [← hbot]
+        simpa [chapter09LowerGroup] using hle
+      · exact bot_le
+    rw [hbot_i]
+    simp
 
 theorem chapter09_tame_iff_wild_group_trivial
     {G : Type*} [Group G] [Finite G]
@@ -152,7 +198,51 @@ theorem chapter09_single_break_profile_different_exponent
     (hprofile : chapter09SingleBreakProfile D p m)
     (hformula : d = chapter09GroupCountSum D) :
     d = (m + 1) * (p - 1) := by
-  sorry
+  have hcut : m ≤ chapter09Cutoff D := by
+    by_contra hnot
+    have hlt : chapter09Cutoff D < m := Nat.lt_of_not_ge hnot
+    have hle : chapter09Cutoff D ≤ m := Nat.le_of_lt hlt
+    have hcard : Nat.card (chapter09LowerGroup D (chapter09Cutoff D)) = p :=
+      hprofile.2.2.1 _ hle
+    have hbot : chapter09LowerGroup D (chapter09Cutoff D) = ⊥ :=
+      chapter09_lower_group_trivial_at_cutoff D (chapter09Cutoff D) le_rfl
+    have hpone : p = 1 := by
+      calc
+        p = Nat.card (chapter09LowerGroup D (chapter09Cutoff D)) := hcard.symm
+        _ = Nat.card (⊥ : Subgroup G) := by rw [hbot]
+        _ = 1 := Subgroup.card_bot
+    have hpge : 2 ≤ p := (show Nat.Prime p from hprofile.1).two_le
+    omega
+  rw [hformula]
+  unfold chapter09GroupCountSum
+  have hmain :
+    Finset.sum (Finset.range (m + 1))
+          (fun i => Nat.card (chapter09LowerGroup D i) - 1) =
+        (m + 1) * (p - 1) := by
+    calc
+      Finset.sum (Finset.range (m + 1))
+          (fun i => Nat.card (chapter09LowerGroup D i) - 1) =
+          Finset.sum (Finset.range (m + 1)) (fun _ => p - 1) := by
+        apply Finset.sum_congr rfl
+        intro i hi
+        have hi_le : i ≤ m := by
+          have hi' : i < m + 1 := Finset.mem_range.mp hi
+          omega
+        rw [hprofile.2.2.1 i hi_le]
+      _ = (m + 1) * (p - 1) := by simp
+  have htail :
+      Finset.sum (Finset.Ico (m + 1) (chapter09Cutoff D + 1))
+          (fun i => Nat.card (chapter09LowerGroup D i) - 1) = 0 := by
+    apply Finset.sum_eq_zero
+    intro i hi
+    have hi_gt : m < i := by
+      have hi' := (Finset.mem_Ico.mp hi).1
+      omega
+    rw [hprofile.2.2.2 i hi_gt]
+    simp
+  rw [← Finset.sum_range_add_sum_Ico
+    (fun i : ℕ => Nat.card (chapter09LowerGroup D i) - 1)
+    (by omega : m + 1 ≤ chapter09Cutoff D + 1), hmain, htail, add_zero]
 
 def chapter09QuadraticTwoAdicProfile
     {G : Type*} [Group G] [Finite G] [Fintype G]
