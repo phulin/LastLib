@@ -1466,12 +1466,17 @@ We first justify the projective embeddings used in the construction. This is not
 the smooth-curve result of Book 8, because the curve here may be reducible, nonreduced, or
 singular.
 
-**Lemma 9.1A (proper curves are projective).** Every proper $k$-scheme of finite type and pure
-dimension one which has no embedded associated points is projective over $k$.
+**Lemma 9.1A (proper curves are projective).** Let $k$ be a field with $[k:k^p]<\infty$. Every
+proper $k$-scheme of finite type and pure dimension one which has no embedded associated points
+is projective over $k$.
 
 **Proof.** Let $\nu:\widetilde X\to X_{\mathrm{red}}$ be the disjoint union of the normalizations
-of the irreducible components. It is finite by Book 8, and the same book's compactification
-argument makes each normal proper component projective without using duality or Riemann--Roch.
+of the irreducible components. Each component is an integral curve of finite type over $k$, so
+its normalization is finite by Book 8's finite-normalization lemma, which assumes exactly the
+standing hypothesis on $k$ just stated — that lemma's inseparable half is not proved there, but
+is discharged in Book 10a, Section 9.2, Theorem 9.8 with Corollary 9.9. The same book's
+compactification argument makes each normal proper component projective without using duality or
+Riemann--Roch.
 Choose a very ample bundle on every component. A sufficiently high power is generated with
 prescribed values at the finite set over the conductor and the component intersections, so it has
 a section nonvanishing there. Its zero divisor $E_i$ is nonempty and lies where $\nu$ is an
@@ -1556,7 +1561,8 @@ by Corollary 7.5 of the same book such a resolution stays exact under extension 
 Sheafifying gives a finite resolution by sums of twists; irrelevant
 torsion sheafifies to zero. The same argument resolves every coherent sheaf on $P$.
 
-Let now $i:X\hookrightarrow P$ be a projective embedding supplied by Lemma 9.1A and
+Let now $i:X\hookrightarrow P$ be a projective embedding supplied by Lemma 9.1A — available
+under its standing hypothesis $[k:k^p]<\infty$ on the ground field — and
 put $c=N-1$. Choose a finite locally free resolution $E^\bullet\to i_*\mathcal O_X$. At every
 $x\in X$, the local codimension in $P$ is $c$ and Cohen--Macaulayness says
 $\operatorname{depth}\mathcal O_{X,x}=\dim\mathcal O_{X,x}$. The elementary depth lemma
@@ -1727,8 +1733,12 @@ finite locally free. Repeating points if necessary makes $D_{\bar s}$ have posit
 every reduced component.
 
 The line $\mathcal O_X(D)$ is ample on the fiber. Indeed its pullback to the finite
-normalization of the reduced fiber has positive degree on every component, so powers have
-affine nonvanishing loci covering that normalization; finiteness descends affineness. A
+normalization of the reduced fiber has positive degree on every component. That normalization is
+finite by Book 8's finite-normalization lemma: the reduced geometric fiber is a curve over the
+geometric residue field $\kappa(\bar s)$, which is algebraically closed, hence perfect, so the
+lemma's standing hypothesis $[\kappa:\kappa^p]<\infty$ holds (its discharge is Book 10a,
+Section 9.2). Powers then have affine nonvanishing loci covering that normalization;
+finiteness descends affineness. A
 nilpotent thickening of an affine scheme is affine by its finite filtration by quasi-coherent
 ideals, so the same criterion applies to the possibly nonreduced fiber.
 
@@ -3075,7 +3085,8 @@ because the latter degree is at most $-1$. The evaluation map at $p$ is therefor
 ### 11.4 Gorenstein and nodal curves
 
 Let $C$ be a proper geometrically connected Gorenstein curve over $k$, pure of dimension one,
-and let $g=p_a(C)$. Lemma 9.1A makes $C$ projective. Consequently a rational Cartier divisor
+and let $g=p_a(C)$. Lemma 9.1A makes $C$ projective, under its standing hypothesis
+$[k:k^p]<\infty$, which we assume here as for every application of that lemma. Consequently a rational Cartier divisor
 can be cleared by an effective one: after twisting $\mathcal O(D)$ by a high power of an ample
 bundle, Serre generation and homogeneous prime avoidance (the finite-field-safe argument of Book
 8) supply a section regular at every associated point; do the same for that ample power itself.
