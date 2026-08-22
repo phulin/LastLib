@@ -95,7 +95,7 @@ theorem chapter10_unramified_uniformizer_is_arithmetic_frobenius
     [Fintype (Gal(L / K))]
     (D : Chapter05LocalClassFormationData K L)
     (U : Chapter05UnramifiedExtensionData K L)
-    (N : Chapter05FiniteReciprocityNormalization D U) :
+    (N : Chapter05UnramifiedCapNormalization D U) :
     chapter05FiniteReciprocityMap D U.uniformizer =
       U.arithmeticFrobenius := by
   exact chapter05_unramified_uniformizer_is_arithmetic_frobenius D U N
