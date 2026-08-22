@@ -367,7 +367,21 @@ theorem chapter05_finite_integral_preimage_of_diagonal
       (Chapter04FiniteIntegralAdeleSubring K :
         Set (Chapter04FiniteAdeleRing K))) =
       chapter05RingOfIntegersSet K := by
-  sorry
+  ext a
+  change chapter05FiniteDiagonal K a ∈
+      (Chapter04FiniteIntegralAdeleSubring K :
+        Set (Chapter04FiniteAdeleRing K)) ↔
+    a ∈ chapter05RingOfIntegersSet K
+  constructor
+  · intro ha
+    apply (chapter05_diagonal_integrality_iff K a).2
+    intro v
+    exact (chapter04_finiteIntegralAdele_mem_iff_all_coordinates_integral K
+      (chapter05FiniteDiagonal K a)).1 ha v
+  · intro ha
+    apply (chapter04_finiteIntegralAdele_mem_iff_all_coordinates_integral K
+      (chapter05FiniteDiagonal K a)).2
+    exact (chapter05_diagonal_integrality_iff K a).1 ha
 
 theorem chapter05_finite_integral_intersection_eq_integer_image
     (K : Type*) [Field K] [NumberField K] :
@@ -375,7 +389,25 @@ theorem chapter05_finite_integral_intersection_eq_integer_image
         (Chapter04FiniteIntegralAdeleSubring K :
           Set (Chapter04FiniteAdeleRing K)) =
       chapter05FiniteDiagonal K '' chapter05RingOfIntegersSet K := by
-  sorry
+  ext x
+  constructor
+  · rintro ⟨⟨a, rfl⟩, ha⟩
+    have ha' : a ∈ chapter05RingOfIntegersSet K := by
+      have ha'' : a ∈ chapter05FiniteDiagonal K ⁻¹'
+          (Chapter04FiniteIntegralAdeleSubring K :
+            Set (Chapter04FiniteAdeleRing K)) := ha
+      rw [chapter05_finite_integral_preimage_of_diagonal K] at ha''
+      exact ha''
+    exact ⟨a, ha', rfl⟩
+  · rintro ⟨a, ha, rfl⟩
+    constructor
+    · exact ⟨a, rfl⟩
+    · have ha' : a ∈ chapter05FiniteDiagonal K ⁻¹'
+          (Chapter04FiniteIntegralAdeleSubring K :
+            Set (Chapter04FiniteAdeleRing K)) := by
+        rw [chapter05_finite_integral_preimage_of_diagonal K]
+        exact ha
+      exact ha'
 
 theorem chapter05_finite_integral_intersection_is_infinite
     (K : Type*) [Field K] [NumberField K] :
@@ -383,7 +415,14 @@ theorem chapter05_finite_integral_intersection_is_infinite
       (Set.range (chapter05FiniteDiagonal K) ∩
         (Chapter04FiniteIntegralAdeleSubring K :
           Set (Chapter04FiniteAdeleRing K))) := by
-  sorry
+  rw [chapter05_finite_integral_intersection_eq_integer_image K]
+  have hInt : Set.Infinite (chapter05RingOfIntegersSet K) := by
+    apply Set.Infinite.mono (s := Set.range (fun n : ℕ => (n : K)))
+    · rintro x ⟨n, rfl⟩
+      exact ⟨n, by simp⟩
+    · exact Set.infinite_range_of_injective (f := fun n : ℕ => (n : K))
+        Nat.cast_injective
+  exact hInt.image (chapter05_finite_diagonal_injective K).injOn
 
 /-! The finite-place warning from the source: the compact open integral tail
 meets the canonical diagonal in all global integers. -/
@@ -394,7 +433,11 @@ theorem chapter05_finite_zero_neighborhood_meets_diagonal_in_integers
       Set.Infinite
         (Set.range (chapter05FiniteDiagonal K) ∩
           chapter05FiniteZeroNeighborhood K) := by
-  sorry
+  rw [show chapter05FiniteZeroNeighborhood K =
+      (Chapter04FiniteIntegralAdeleSubring K :
+        Set (Chapter04FiniteAdeleRing K)) by rfl]
+  exact ⟨chapter05_finite_integral_intersection_eq_integer_image K,
+    chapter05_finite_integral_intersection_is_infinite K⟩
 
 end
 
