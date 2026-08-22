@@ -50,14 +50,14 @@ theorem chapter09_tower_quotient_upper_formula
     {G : Type*} [Group G] [Fintype G]
     (H : Subgroup G) [H.Normal]
     (T : Chapter05HerbrandTowerSetup G H)
-    (hup : Function.Bijective
+    (_hup : Function.Bijective
       (chapter05HerbrandFunction T.quotientSetup.upstairs))
-    (hdown : Function.Bijective
+    (_hdown : Function.Bijective
       (chapter05HerbrandFunction T.quotientSetup.downstairs))
     {v : ℝ} (hv : (-1 : ℝ) ≤ v) :
     chapter05UpperRamificationGroup T.quotientSetup.downstairs v =
       chapter05UpperQuotientImage H T.quotientSetup.upstairs v := by
-  exact chapter05_herbrand_quotient_theorem H T.quotientSetup hup hdown hv
+  exact chapter05_herbrand_quotient_theorem H T.quotientSetup hv
 
 theorem chapter09_tower_quotient_exact_sequence
     {G : Type*} [Group G] [Fintype G]

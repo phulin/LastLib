@@ -88,11 +88,11 @@ def chapter09UpperGroup
 theorem chapter09_upper_group_eq_lower_at_inverse
     {G : Type*} [Group G] [Finite G]
     (D : Chapter05RamificationFiltration G)
-    (hbij : Function.Bijective (chapter05HerbrandFunction D))
+    (_hbij : Function.Bijective (chapter05HerbrandFunction D))
     {v : ℝ} (hv : (-1 : ℝ) ≤ v) :
     chapter09UpperGroup D v =
       D.lowerGroup (chapter05HerbrandInverse D v) := by
-  exact chapter05_upper_group_eq_lower_at_inverse D hbij hv
+  exact chapter05_upper_group_eq_lower_at_inverse D hv
 
 theorem chapter09_upper_group_zero_eq_lower_zero
     {G : Type*} [Group G] [Finite G]
