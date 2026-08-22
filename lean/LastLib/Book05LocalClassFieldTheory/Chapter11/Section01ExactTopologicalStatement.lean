@@ -539,12 +539,16 @@ def chapter11CharacterOfPair
       let p := D.decomposition.symm x
       α ^ p.1.toAdd * η p.2
     map_one' := by
-      sorry
+      simp
     map_mul' := by
       intro x y
-      sorry
+      simp [D.decomposition.symm.map_mul, zpow_add, mul_assoc] ; ac_rfl
     continuous_toFun := by
-      sorry }
+      exact
+        (((@continuous_of_discreteTopology (Multiplicative ℤ) _ _ A _
+          (fun z => α ^ z.toAdd)).comp continuous_fst).mul
+          (η.continuous_toFun.comp continuous_snd)).comp
+          D.decomposition_symm_continuous }
 
 theorem chapter11_character_of_pair_apply_decomposition
     {K A : Type*} [Field K] [CommGroup A]
@@ -553,7 +557,16 @@ theorem chapter11_character_of_pair_apply_decomposition
     (η : D.unitGroup →ₜ* A) (r : ℤ) (u : D.unitGroup) :
     chapter11CharacterOfPair D α η
         (D.uniformizer ^ r * (u : Kˣ)) = α ^ r * η u := by
-  sorry
+  have hpair :
+      D.decomposition.symm (D.uniformizer ^ r * (u : Kˣ)) =
+        (Multiplicative.ofAdd r, u) := by
+    apply D.decomposition.injective
+    rw [D.decomposition.apply_symm_apply, D.decomposition_apply]
+    rfl
+  change (let p := D.decomposition.symm (D.uniformizer ^ r * (u : Kˣ));
+    α ^ p.1.toAdd * η p.2) = _
+  rw [hpair]
+  rfl
 
 def chapter11CharacterPairEquiv
     {K A : Type*} [Field K] [CommGroup A]
