@@ -494,7 +494,73 @@ theorem chapter05_finite_to_away_projection_surjective
     (hfinite : ∀ v, v ∉ S → ∃ w : Chapter04FinitePlace K,
       v = Sum.inl w) :
     Function.Surjective (chapter05FiniteToAwayProjection K S hfinite) := by
-  sorry
+  classical
+  intro y
+  let badAway : Set {v // v ∉ S} :=
+    {v | y v ∉ (chapter04LocalIntegralSubring K v.1 : Set (chapter04LocalField K v.1))}
+  have hbadAway : badAway.Finite := by
+    change {v | ¬ y v ∈
+      (chapter04LocalIntegralSubring K v.1 : Set (chapter04LocalField K v.1))}.Finite
+    exact Filter.eventually_cofinite.mp y.2
+  let g : {w : Chapter04FinitePlace K // Sum.inl w ∉ S} → {v // v ∉ S} :=
+    fun w => ⟨Sum.inl w.1, w.2⟩
+  have hg : Function.Injective g := by
+    intro w₁ w₂ h
+    apply Subtype.ext
+    exact Sum.inl.inj (congrArg Subtype.val h)
+  let badFinSubtype : Set {w : Chapter04FinitePlace K // Sum.inl w ∉ S} :=
+    g ⁻¹' badAway
+  have hbadFinSubtype : badFinSubtype.Finite := by
+    exact hbadAway.preimage (by
+      intro w₁ _ w₂ _ h
+      exact hg h)
+  let badFin : Set (Chapter04FinitePlace K) :=
+    (fun w : {w : Chapter04FinitePlace K // Sum.inl w ∉ S} => (w : Chapter04FinitePlace K)) ''
+      badFinSubtype
+  have hbadFin : badFin.Finite := hbadFinSubtype.image _
+  let xfun : ∀ w : Chapter04FinitePlace K, Chapter04FiniteLocalField K w := fun w =>
+    if hw : Sum.inl w ∉ S then y ⟨Sum.inl w, hw⟩ else 0
+  have hxfun : ∀ᶠ w : Chapter04FinitePlace K in Filter.cofinite,
+      xfun w ∈ chapter04FiniteLocalIntegerSet K w := by
+    filter_upwards [hbadFin.compl_mem_cofinite] with w hw
+    by_cases hws : Sum.inl w ∈ S
+    · have hxneg : xfun w = 0 := by
+        simp [xfun, hws]
+      rw [hxneg]
+      exact (w.adicCompletionIntegers K).zero_mem
+    · have hnot : (⟨w, hws⟩ : {w : Chapter04FinitePlace K // Sum.inl w ∉ S}) ∉
+          badFinSubtype := by
+        intro hbad
+        apply hw
+        exact ⟨⟨w, hws⟩, hbad, rfl⟩
+      have hy : y (⟨Sum.inl w, hws⟩ : {v // v ∉ S}) ∈
+          (w.adicCompletionIntegers K : Set (w.adicCompletion K)) := by
+        change y (⟨Sum.inl w, hws⟩ : {v // v ∉ S}) ∈
+          (chapter04LocalIntegralSubring K (Sum.inl w) :
+            Set (chapter04LocalField K (Sum.inl w)))
+        by_contra hy
+        apply hnot
+        simpa [badFinSubtype, g, badAway] using hy
+      have hxpos : xfun w = y (⟨Sum.inl w, hws⟩ : {v // v ∉ S}) := by
+        simp [xfun, hws]
+        congr 1
+      rw [hxpos]
+      exact hy
+  let x : Chapter04FiniteAdeleRing K := RestrictedProduct.mk xfun hxfun
+  refine ⟨x, ?_⟩
+  apply RestrictedProduct.ext
+  intro v
+  rw [chapter05_finite_to_away_projection_coordinate K S hfinite x v]
+  rcases v with ⟨v, hv⟩
+  cases v with
+  | inl w =>
+      change x w = y ⟨Sum.inl w, hv⟩
+      change xfun w = y ⟨Sum.inl w, hv⟩
+      simp [xfun, hv]
+      congr 1
+  | inr w =>
+      rcases hfinite (Sum.inr w) hv with ⟨q, hq⟩
+      cases hq
 
 theorem chapter05_finite_to_away_projection_diagonal
     (K : Type*) [Field K] [NumberField K]
@@ -504,7 +570,23 @@ theorem chapter05_finite_to_away_projection_diagonal
       v = Sum.inl w) (a : K) :
     chapter05FiniteToAwayProjection K S hfinite (chapter05FiniteDiagonal K a) =
       chapter05AwayDiagonal K S hSinf a := by
-  sorry
+  apply RestrictedProduct.ext
+  intro v
+  rw [chapter05_finite_to_away_projection_coordinate K S hfinite
+    (chapter05FiniteDiagonal K a) v]
+  rw [chapter05_awayDiagonal_coordinate]
+  rcases v with ⟨v, hv⟩
+  cases v with
+  | inl w =>
+      change chapter05FiniteDiagonal K a w =
+        chapter05LocalEmbedding K (Sum.inl w) a
+      change (algebraMap K (Chapter04FiniteAdeleRing K) a) w =
+        NumberField.FinitePlace.embedding w a
+      rw [IsDedekindDomain.FiniteAdeleRing.algebraMap_apply,
+        NumberField.FinitePlace.embedding_apply]
+  | inr w =>
+      rcases hfinite (Sum.inr w) hv with ⟨q, hq⟩
+      cases hq
 
 /-! With no places omitted, the canonical full-adele diagonal is discrete and
 therefore cannot be dense in a nondiscrete full adele group. -/
@@ -512,12 +594,45 @@ therefore cannot be dense in a nondiscrete full adele group. -/
 theorem chapter05_full_adele_diagonal_not_dense
     (K : Type*) [Field K] [NumberField K] :
     ¬ DenseRange (chapter05Diagonal K) := by
-  sorry
+  intro hdense
+  have hclosure : closure (Set.range (chapter05Diagonal K)) =
+      (Set.univ : Set (Chapter04AdeleRing K)) :=
+    (denseRange_iff_closure_range.mp hdense)
+  have hdisc : DiscreteTopology (Set.range (chapter05Diagonal K)) :=
+    chapter05_theorem_5_2_diagonal_is_discrete K
+  have hclosed : IsClosed (Set.range (chapter05Diagonal K)) :=
+    chapter05_diagonal_full_is_closed K hdisc
+  have huniv : (Set.univ : Set (Chapter04AdeleRing K)) ⊆
+      Set.range (chapter05Diagonal K) := by
+    rw [← hclosure]
+    exact hclosed.closure_subset
+  have hrange : Set.range (chapter05Diagonal K) =
+      (Set.univ : Set (Chapter04AdeleRing K)) := by
+    exact Set.Subset.antisymm (Set.subset_univ _) huniv
+  have hzero : (0 : Chapter04AdeleRing K) ∈ Set.range (chapter05Diagonal K) := by
+    exact ⟨0, (chapter05Diagonal K).map_zero⟩
+  rcases (discreteTopology_subtype_iff'.mp hdisc)
+      (0 : Chapter04AdeleRing K) hzero with ⟨U, hUopen, hUinter⟩
+  have hUeq : U = ({0} : Set (Chapter04AdeleRing K)) := by
+    rw [hrange, inter_univ] at hUinter
+    exact hUinter
+  have hsingleton : ({0} : Set (Chapter04AdeleRing K)) ∈
+      𝓝 (0 : Chapter04AdeleRing K) := by
+    have hzeroU : (0 : Chapter04AdeleRing K) ∈ U := by
+      have hzeroInter : (0 : Chapter04AdeleRing K) ∈
+          U ∩ Set.range (chapter05Diagonal K) := by
+        rw [hUinter]
+        exact Set.mem_singleton 0
+      exact hzeroInter.1
+    have hUnhds : U ∈ 𝓝 (0 : Chapter04AdeleRing K) :=
+      hUopen.mem_nhds hzeroU
+    exact hUeq ▸ hUnhds
+  exact chapter05_full_adele_is_nondiscrete_at_zero K hsingleton
 
 theorem chapter05_strong_approximation_with_no_omitted_places_is_false
     (K : Type*) [Field K] [NumberField K] :
     ¬ DenseRange (chapter05Diagonal K) := by
-  sorry
+  exact chapter05_full_adele_diagonal_not_dense K
 
 end
 
