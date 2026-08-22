@@ -784,7 +784,9 @@ theorem chapter05_abelian_break_detection
     {v : ℝ} (hv : 0 < v)
     (hbreak : chapter05UpperBreak D.profile v) :
     Nonempty (Chapter05AbelianBreakDetectionData D.profile v) := by
-  sorry
+  rcases chapter05_abelian_break_detection_construction D habelian hv hbreak with
+    ⟨B⟩
+  exact chapter05_abelian_break_detection_data_of_construction B hbreak
 
 theorem chapter05_character_kernel_positive_break_reduction
     {K L C : Type*} [Field K] [Field L] [Algebra K L]
