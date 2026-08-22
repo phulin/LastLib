@@ -613,37 +613,143 @@ The two closed subdomains $|T|\leq|a|$ and $|T|\geq|a|$ cover the unit disc. The
 
 **Theorem 4.2.** If $U\subset\operatorname{Sp}A$ is a rational domain with algebra $A_U$, then $A\to A_U$ is flat. Rational localization is transitive: if $V$ is rational in $U$, then $V$ is rational in $\operatorname{Sp}A$, and its algebra is the corresponding completed base change.
 
-**Proof.** We first record the elementary strictness argument. If $M'\subset M$ are finite
-$A$-modules, choose quotient norms from finite free presentations. Closedness of submodules,
-together with the division estimates of Section 2.5, gives
+The proof rests on three lemmas: a comparison theorem for module norms, the strictness of the
+Tate adjunction, and an algebraic identity that exhibits every rational localization as an
+ordinary localization at one element.
+
+**Lemma 4.3 (norms on finite modules).** Let $M$ be a finite module over the affinoid
+algebra $A$. Any two complete norms on $M$ for which multiplication by each fixed element of
+$A$, and addition, are contractive in the sense that
 
 $$
-M'\langle S\rangle\cap(S-f)M\langle S\rangle
-=(S-f)M'\langle S\rangle.
+\|a m+a'm'\|\leq\max(\|a\|_q\|m\|,\|a'\|_q\|m'\|)
 $$
 
-The proof recursively compares coefficients of a putative relation, uses the noetherian
-stabilization of the colon modules $(M':f^n)$ to bound the recursion uniformly, and then takes
-the convergent limit. Replacing $S-f$ by $gS-a$ gives the same equality for a Laurent
-relation. After quotienting, these intersection equalities say exactly that
-$M'\otimes_AA_U\to M\otimes_AA_U$ is injective for a single Weierstrass or Laurent
-inequality. The ideal criterion for flatness therefore makes both elementary localization
-maps flat.
+are equivalent. In particular all quotient norms arising from finite free presentations of
+$M$ are equivalent, every submodule $M'\subset M$ is closed, and the norm induced on $M'$ by
+a quotient norm of $M$ is equivalent to any quotient norm of $M'$ itself.
 
-For the rational domain defined by $f_0,\ldots,f_m$, choose
-$1=\sum a_if_i$. On the domain one has
+**Proof.** The argument is the Baire argument of Section 3.3, run one level up from algebras
+to modules. Let $x_1,\ldots,x_s$ generate $M$. The displayed inequality shows that for either
+norm, say $\|\cdot\|_j$, the map $\varphi_j:A^s_q\to(M,\|\cdot\|_j)$ sending a tuple to
+$\sum b_ix_i$ is continuous; here $A^s_q$ carries the max of quotient norms. Both sides are
+complete metric groups: completeness of $(M,\|\cdot\|_j)$ holds by hypothesis for one norm
+and by Theorem 2.1 for a quotient norm, and closedness of the image is not needed because
+$\varphi_j$ is surjective by choice of the generators. Surjectivity writes $M$ as the union
+of the closed sets $\varphi_j(\{b:\|b\|\leq n\})$, and Baire's theorem makes one of them
+contain a ball around some point; translating and scaling as in Section 3.3 produces a
+constant $c_j>0$ such that every $m\in M$ admits a representation $m=\sum b_ix_i$ with
 
 $$
-1\leq\max_i\|a_i\|\,|f_0|.
+\max_k\|b_k\|_q\leq c_j\|m\|_j .
 $$
 
-Choose $0\ne c\in K$ with $|c|\max_i\|a_i\|\leq1$. First pass to the Laurent domain
-$|f_0|\geq|c|$ and then impose the Weierstrass inequalities
-$|f_i/f_0|\leq1$. The universal property identifies the composite algebra with $A_U$.
-Flatness is preserved by composition. If a second rational localization is made inside $U$,
-substitution clears the finitely many displayed denominators; the universal property then
-gives one rational presentation in $A$ and identifies its algebra with the completed base
-change. This proves transitivity. $\square$
+Given this for both norms, any $m$ satisfies
+$\|m\|_1\leq c_2(\max_i\|x_i\|_1)\,\|m\|_2$ by expanding in the $x_i$ and applying the
+displayed inequality, and symmetrically with the indices exchanged. Hence the norms are
+equivalent. Equivalence of quotient norms follows because both are complete and contractive
+for the $A$-action. Closedness of $M'$ is Theorem 2.1 applied to the presentation of $M'$ as
+a quotient of a finite free module, whose map into $M$ is continuous. Finally, the restricted
+norm on $M'$ is again complete, because $M'$ is closed inside the complete space $M$, and it
+is contractive for the $A$-action; equivalence with a quotient norm of $M'$ is therefore the
+already-proved comparison. $\square$
+
+**Lemma 4.4 (strictness of the Tate adjunction).** For finite $A$-modules
+$M'\subset M$, the natural map $M'\langle S_1,\ldots,S_n\rangle\to M\langle S_1,\ldots,S_n\rangle$
+is injective, and consequently $A\langle S_1,\ldots,S_n\rangle$ is a flat $A$-algebra.
+
+**Proof.** Since the monomials $S^J$ have Gauss norm one, an element of $M\langle S\rangle$
+is exactly a family $(m_J)$, indexed by multi-indices, with $m_J\to0$, and its norm is the
+supremum of $\|m_J\|$. By Lemma 4.3 the norm on $M'$ induced from $M$ is equivalent to a
+quotient norm of $M'$, so a family in $M'$ converges to zero in $M'$ exactly when it does in
+$M$. An element of the kernel of $M'\langle S\rangle\to M\langle S\rangle$ is thus a
+zero-convergent $M'$-family, hence vanishes in $M'\langle S\rangle$: the map is injective,
+and this identifies $M'\langle S\rangle$ with its image inside $M\langle S\rangle$.
+
+For flatness, recall that over a noetherian ring exactness of a functor on finite modules
+implies exactness, because every finitely generated ideal or submodule occurs as the image in
+a finite free module of a finite submodule. The functor $M\mapsto M\otimes_AA\langle S\rangle$
+is right exact, and so is $M\mapsto M\langle S\rangle$; the two agree canonically on finite
+free modules, where both produce finite direct sums of copies of $A\langle S\rangle$, and
+hence they are canonically isomorphic on all finite modules, which are finitely presented.
+The first paragraph applied to the inclusion of an arbitrary finite submodule therefore gives
+injectivity after tensoring, which proves flatness. $\square$
+
+**Lemma 4.5 (principal localization).** Let $R=A\langle T_1,\ldots,T_m\rangle$ over the
+affinoid algebra $D$, let $g,h_1,\ldots,h_m\in D$ generate the unit ideal, and put
+$J=(gT_1-h_1,\ldots,gT_m-h_m)$. Then the class of $g$ is invertible in $R/J$, and the
+natural map induces a canonical isomorphism
+
+$$
+R[1/g]\;\cong\; R/J .
+$$
+
+**Proof.** Choose $d_0,d_1,\ldots,d_m\in D$ with $\sum_{i=0}^md_ih_i=1$, where $h_0:=g$, and
+set $u=d_0+d_1T_1+\cdots+d_mT_m\in R$. Modulo $J$,
+
+$$
+gu=d_0g+\sum_{i=1}^md_igT_i\equiv d_0g+\sum_{i=1}^md_ih_i=1,
+$$
+
+so the class of $u$ is an inverse of the class of $g$ in $R/J$. Hence the surjection
+$R\twoheadrightarrow R/J$ inverts $g$ and factors uniquely through $R[1/g]$, giving a
+surjective map $R[1/g]\to R/J$. Conversely the universal property of the Tate algebra gives a
+$D$-algebra homomorphism $R\to R[1/g]$ sending $T_i$ to $h_i/g$; it kills $J$, since
+$g\cdot(h_i/g)-h_i=0$, so it descends to a map $R/J\to R[1/g]$. The two maps are mutually
+inverse because each composite fixes the generators $T_i$ and the elements of $D$, and these
+generate the source algebras. $\square$
+
+**Proof (of Theorem 4.2).** _Flatness._ Let $U$ be cut out by $f_0,f_1,\ldots,f_m$
+generating the unit ideal, and write $R=A\langle T_1,\ldots,T_m\rangle$,
+$A_U=R/(f_0T_i-f_i)$. By Lemma 4.5, applied with $g=f_0$ and $h_i=f_i$,
+
+$$
+A_U\cong R[1/f_0].
+$$
+
+Now $R=A\langle T_1,\ldots,T_m\rangle$ is flat over $A$ by Lemma 4.4, and localization
+$R\mapsto R[1/f_0]$ is exact and flat. The composite $A\to A_U$ is therefore flat.
+
+_Transitivity._ Let $V\subset U$ be rational in $U$, presented by
+$g_0,g_1,\ldots,g_r\in A_U$ generating the unit ideal:
+
+$$
+A_V=A_U\langle S_1,\ldots,S_r\rangle/(\gamma_0S_i-\gamma_i).
+$$
+
+First apply Lemma 4.5 over the affinoid algebra $D=A_U$, with $g=\gamma_0$ and
+$h_i=\gamma_i$, using that the $\gamma_i$ generate the unit ideal of $A_U$ by hypothesis:
+
+$$
+A_V\cong A_U\langle S_1,\ldots,S_r\rangle[1/\gamma_0].
+$$
+
+Now unwind $A_U$. Choose lifts $\gamma'_i\in R$ of the $\gamma_i$; since $(-)\langle S\rangle$
+is right exact as a functor of algebras over $A$, the identification $A_U=R/J$ with
+$J=(f_0T_j-f_j)$ gives $A_U\langle S\rangle=R\langle S\rangle/JR\langle S\rangle$, and so,
+localizing at the image of $\gamma'_0$,
+
+$$
+A_V\cong R\langle S\rangle[1/\gamma'_0]/JR\langle S\rangle[1/\gamma'_0].
+$$
+
+In the ring $R\langle S\rangle[1/\gamma'_0]$ the identity $\sum a_if_i=1$ remains valid, so
+the argument of Lemma 4.5 trades the relations $J$ for inversion of $f_0$:
+
+$$
+A_V\cong R\langle S\rangle[1/\gamma'_0][1/f_0]
+\cong R\langle S,U\rangle/(\gamma'_0f_0U-1).
+$$
+
+The last display presents $A_V$ as obtained from $A$ by the flat steps of Lemmas 4.4 and 4.5
+only: adjoining Tate variables, quotienting by a principal relation whose constant combination
+is trivial, and inverting one element. Each step is flat, so $A\to A_V$ is flat as a
+composition of flat maps. Moreover the universal properties used along the way identify
+maps from affinoid spaces into $V$ with maps into $\operatorname{Sp}A$ factoring through this
+one-element localization, which is precisely the affinoid-subdomain universal property for
+the set of points where $|\gamma_0'(x)f_0(x)|\geq|c|$ for any chosen $c\neq0$; hence
+$V$ is an affinoid subdomain of $\operatorname{Sp}A$, presented rationally, and its algebra
+is the corresponding completed base change. $\square$
 
 The map need not be faithfully flat: a nonempty rational domain can miss an entire component. Faithfulness is recovered from a finite rational cover $X=\bigcup U_i$; then
 
