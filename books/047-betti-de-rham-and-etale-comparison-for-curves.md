@@ -1553,7 +1553,7 @@ f_*f^*=d,
 f_*(f^*a\smile b)=a\smile f_*b. \tag{11.1}
 $$
 
-For Betti cohomology, $f_*$ is dual to the homological transfer described in Section 2.4. For de Rham cohomology, it is trace on functions and differentials, with residue compatibility from Book 9 and the construction in Book 46. For étale cohomology, it is the trace of Book 21.
+For Betti cohomology, $f_*$ is dual to the homological transfer described in Section 2.5. For de Rham cohomology, it is trace on functions and differentials, with residue compatibility from Book 9 and the construction in Book 46. For étale cohomology, it is the trace of Book 21.
 
 The comparison of $f_*$ is most safely deduced from adjointness. In Betti, de Rham, and étale cohomology, $f_*$ is the unique map satisfying
 
@@ -2050,7 +2050,7 @@ These are genuine boundaries, not presentational cautions. Dropping them changes
 
 ### 15.3 Conclusion
 
-A complex algebraic curve now carries one cohomological object seen through three coefficient worlds. Singular chains provide the integral lattice, orientation, and intersection form. Algebraic differential forms provide the $K$-structure and Hodge filtration. Finite étale covers and inverse limits provide the ℓ-adic lattice and, after descent, its arithmetic action. Integration and Riemann existence prove that these are realizations of the same geometry rather than parallel groups with matching dimensions.
+A complex algebraic curve now carries one cohomological object seen through three coefficient worlds. The finite triangulation supplies the integral lattice, orientation, and intersection form as combinatorial data. Algebraic differential forms provide the $K$-structure and Hodge filtration. Finite étale covers and inverse limits provide the ℓ-adic lattice and, after descent, its arithmetic action. Integration and Riemann existence prove that these are realizations of the same geometry rather than parallel groups with matching dimensions.
 
 The comparison is structural. A point determines compatible cycle classes and fixes every trace. A line bundle has winding, logarithmic, and Kummer Chern classes. A finite map has the same pullback and transfer. A correspondence has the same pull--push action, the same transpose adjoint, and the same characteristic polynomial. The cup product is simultaneously the surface intersection form, the de Rham residue pairing, and the Tate-twisted étale pairing. Its Hodge positivity constructs the principally polarized Jacobian.
 
