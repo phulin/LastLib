@@ -98,22 +98,32 @@ noncomputable def chapter11RamificationDataOfChapter05
   f := C.residue_degree
   bound := chapter09Cutoff P
   lower_zero := by
-    sorry
+    norm_num
   lower_succ_le := by
-    sorry
+    intro i
+    apply P.lower_antitone
+    norm_num
   lower_eq_bot_of_bound_le := by
-    sorry
+    exact chapter09_lower_group_trivial_at_cutoff P
   inertia_normal := P.lower_normal 0
   inertia_card := by
     rfl
   group_card := C.group_card
   e_pos := by
-    sorry
+    exact Nat.card_pos
   f_pos := C.residue_degree_pos
   support_outside_inertia := by
-    sorry
+    intro σ hσ i hσi
+    apply hσ
+    exact (P.lower_antitone (by positivity)) hσi
   lower_conj_invariant := by
-    sorry
+    intro i g σ
+    constructor
+    · intro hσ
+      exact P.lower_normal (i : ℝ) |>.conj_mem σ hσ g
+    · intro hσ
+      have hσ' := P.lower_normal (i : ℝ) |>.conj_mem (g * σ * g⁻¹) hσ g⁻¹
+      simpa [mul_assoc] using hσ'
   residue_separable := C.residue_separable
   residue_perfect := C.residue_perfect
   residue_perfect_implies_separable := C.residue_perfect_implies_separable
