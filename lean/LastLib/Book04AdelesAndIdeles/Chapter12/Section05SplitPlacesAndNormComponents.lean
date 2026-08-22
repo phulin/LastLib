@@ -26,6 +26,7 @@ structure Chapter12CompletelySplitPlaceData
     [Algebra K L] [Algebra K Kv] [FiniteDimensional K L]
     (d : ℕ) where
   degree_pos : 0 < d
+  degree_eq_finrank : d = Module.finrank K L
   local_equiv : chapter12TensorAlgEquiv K L Kv (Fin d → Kv)
 
 def chapter12SplitPlaceLocalNorm {Kv : Type*} [CommMonoid Kv] (d : ℕ) :
@@ -133,7 +134,7 @@ def chapter12UnramifiedNormImage
     {K E : Type*} [Field K] [Field E] [Algebra K E]
     [FiniteDimensional K E] [Algebra.Unramified K E] [Algebra.IsSeparable K E]
     (_P : Chapter12UnramifiedLocalNormData K E) : Set K :=
-  {x | ∃ y : E, y ≠ 0 ∧ Algebra.norm K y = x}
+  {x | ∃ y : E, Algebra.norm K y = x}
 
 theorem chapter12_split_norm_image_is_all
     {Kv : Type*} [CommMonoid Kv] (d : ℕ) [NeZero d] :

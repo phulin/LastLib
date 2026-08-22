@@ -218,10 +218,13 @@ theorem chapter12_ideal_map_forgets_local_unit_changes
     {R K : Type*} [CommRing R] [IsDedekindDomain R] [Field K]
     [Algebra R K] [IsFractionRing R K]
     (D : Chapter12FiniteIdeleIdealData R K)
-    (x y : chapter12FiniteIdeles R K)
-    (hxy : D.idealOf x = D.idealOf y) :
-    chapter12SameFiniteIdeleValuation D x y :=
-  hxy
+    (x u : chapter12FiniteIdeles R K)
+    (hu : D.idealOf u = 1) :
+    D.idealOf (x * u) = D.idealOf x := by
+  /- Prior attempt for the former equality-to-valuation interface:
+     exact hxy
+  -/
+  rw [D.map_mul, hu, mul_one]
 
 /- A ray invariant refines the ordinary ideal invariant: equal ray values
    force equal valuation ideals. -/

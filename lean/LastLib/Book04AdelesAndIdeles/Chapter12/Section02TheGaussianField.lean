@@ -1,5 +1,6 @@
 import LastLib.Book04AdelesAndIdeles.Chapter12.Core
 import Mathlib.NumberTheory.Zsqrtd.GaussianInt
+import Mathlib.NumberTheory.NumberField.Discriminant.Different
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter12
 
@@ -195,6 +196,27 @@ theorem chapter12_gaussian_inert_local_tensor_shape
     (hcongr : p.1 % 4 = 3)
     (hdegree : Module.finrank ℚ_[p] E = 2) :
     chapter12TensorFieldShape K ℚ_[p] E := by
+  sorry
+
+/- The ramified prime is represented by a quadratic field factor of the same
+   scalar extension, together with the global ramification certificate at 2.
+   This keeps the factor tied to `K ⊗[ℚ] ℚ_[2]` rather than treating any
+   quadratic field over `ℚ_[2]` as the Gaussian completion. -/
+structure Chapter12GaussianRamifiedLocalFactorData
+    {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
+    (G : Chapter12GaussianFieldData K) where
+  E : Type*
+  [fieldE : Field E]
+  [algebraE : Algebra ℚ_[2] E]
+  [finiteDimensionalE : FiniteDimensional ℚ_[2] E]
+  degree_two : Module.finrank ℚ_[2] E = 2
+  tensor_shape : chapter12TensorFieldShape K ℚ_[2] E
+  ramified_at_two : ¬Algebra.IsUnramifiedIn (𝓞 K) (Ideal.span {(2 : ℤ)})
+
+theorem chapter12_gaussian_ramified_local_tensor_shape
+    {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
+    (G : Chapter12GaussianFieldData K) :
+    Nonempty (Chapter12GaussianRamifiedLocalFactorData G) := by
   sorry
 
 /-- Scalar extension is the adelic identity used at split and nonsplit places. -/

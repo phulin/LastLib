@@ -62,16 +62,27 @@ structure Chapter12UnramifiedQuadraticLocalExtension
     [FiniteDimensional F E] [Algebra.Unramified F E] where
   degree_two : Module.finrank F E = 2
 
+/- The local factor must be tied to the scalar-extension tensor product.  An
+   arbitrary unramified quadratic field with the same base is not enough to
+   identify the completion of the global quadratic field. -/
+structure Chapter12QuadraticUnramifiedLocalFactorData
+    (K : Type*) [Field K] [NumberField K] [Algebra ℚ K]
+    (p : Nat.Primes) where
+  E : Type*
+  [fieldE : Field E]
+  [algebraE : Algebra ℚ_[p] E]
+  [finiteDimensionalE : FiniteDimensional ℚ_[p] E]
+  [unramifiedE : Algebra.Unramified ℚ_[p] E]
+  local_extension : Chapter12UnramifiedQuadraticLocalExtension ℚ_[p] E
+  tensor_shape : chapter12TensorFieldShape K ℚ_[p] E
+
 theorem chapter12_quadratic_nonsquare_at_odd_prime_is_unramified_field
     {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
     (Q : Chapter12QuadraticFieldData K)
     (p : Nat.Primes) (hpodd : p.1 ≠ 2)
     (hpd : ¬((p.1 : ℤ) ∣ Q.d))
-    {E : Type*} [Field E] [Algebra ℚ_[p] E]
-    [FiniteDimensional ℚ_[p] E] [Algebra.Unramified ℚ_[p] E]
-    (U : Chapter12UnramifiedQuadraticLocalExtension ℚ_[p] E)
     (hnonsquare : ¬chapter12QuadraticResidueSquare Q.d p) :
-    chapter12TensorFieldShape K ℚ_[p] E := by
+    Nonempty (Chapter12QuadraticUnramifiedLocalFactorData K p) := by
   sorry
 
 theorem chapter12_quadratic_odd_prime_residue_dichotomy
@@ -141,27 +152,29 @@ theorem chapter12_quadratic_integral_base_is_padic_integer
     Nonempty (ℤ_[p] ≃A[ℤ] chapter12QuadraticIntegralBaseAt p) := by
   sorry
 
-/- The family `E` is the supplied integral local factor.  Since the stable
-   earlier-chapter API does not choose its carrier, record the properties that
-   make it the unramified quadratic factor away from a finite bad set rather
-   than allowing an arbitrary unrelated family of rings. -/
+/- The integral factor is packaged together with its ring structure and its
+   identification with the tensor product.  This avoids treating an
+   unrelated family of unramified quadratic rings as the scalar extension. -/
+structure Chapter12QuadraticIntegralUnramifiedFactorData
+    (A B : Type*) [CommRing A] [CommRing B]
+    [Algebra ℤ A] [Algebra ℤ B] where
+  E : Type*
+  [commRingE : CommRing E]
+  [isDomainE : IsDomain E]
+  [algebraBE : Algebra B E]
+  [algebraZE : Algebra ℤ E]
+  [unramifiedE : Algebra.Unramified B E]
+  degree_two : Module.finrank B E = 2
+  basis : Nonempty (Module.Basis (Fin 2) B E)
+  tensor_shape : chapter12IntegralTensorQuadraticFieldShape A B E
+
 theorem chapter12_quadratic_integral_tensor_products_are_split_or_unramified_almost_everywhere
     {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
     (Q : Chapter12QuadraticFieldData K)
-    (E : Nat.Primes → Type*)
-    [∀ p, CommRing (E p)]
-    [∀ p, IsDomain (E p)]
-    [∀ p, Algebra (chapter12QuadraticIntegralBaseAt p) (E p)]
-    [∀ p, Algebra ℤ (E p)]
-    (S₀ : Finset Nat.Primes)
-    (hE_unramified : ∀ p, p ∉ S₀ →
-      Algebra.Unramified (chapter12QuadraticIntegralBaseAt p) (E p))
-    (hE_basis : ∀ p, p ∉ S₀ →
-      Nonempty (Module.Basis (Fin 2) (chapter12QuadraticIntegralBaseAt p) (E p))) :
-    ∃ S : Finset Nat.Primes, ∀ p : Nat.Primes, p ∉ S →
+    : ∃ S : Finset Nat.Primes, ∀ p : Nat.Primes, p ∉ S →
       chapter12IntegralTensorSplitShape (𝓞 K) (chapter12QuadraticIntegralBaseAt p) ∨
-        chapter12IntegralTensorQuadraticFieldShape (𝓞 K)
-          (chapter12QuadraticIntegralBaseAt p) (E p) := by
+        Nonempty (Chapter12QuadraticIntegralUnramifiedFactorData
+          (𝓞 K) (chapter12QuadraticIntegralBaseAt p)) := by
   sorry
 
 /-! ## Infinity and the normalized product formula -/
