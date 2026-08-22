@@ -1699,7 +1699,7 @@ theorem chapter10_unramified_lift_profile
       e.toRingHom.comp (IsLocalRing.residue A) = res)
     (α : L)
     (hroot : Polynomial.eval₂ (algebraMap A L) α P = 0)
-    (hgen : Algebra.adjoin K ({α} : Set L) = ⊤)
+    (_hgen : Algebra.adjoin K ({α} : Set L) = ⊤)
     (hdegree : Module.finrank K L = f)
     (v : Valuation K ΓK) (w : Valuation L ΓL)
     (hA : v.Integers A)
