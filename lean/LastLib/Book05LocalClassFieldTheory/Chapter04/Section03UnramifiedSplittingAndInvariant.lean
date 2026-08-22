@@ -44,9 +44,10 @@ theorem chapter04_division_algebra_splits_over_unramified_maximal_subfield
   sorry
 
 theorem chapter04_division_algebra_is_split_by_unramified_extension
-    {K : Type*} [Field K] (D : Chapter04DivisionAlgebraData K)
-    (E : Chapter04UnramifiedMaximalSubfieldSpec K D) :
-    chapter04UnramifiedMaximalSubfieldSplits D E := by
+    {K : Type*} [Field K] (P : Chapter04LocalFieldProfile K)
+    (D : Chapter04DivisionAlgebraData K)
+    (E : Chapter04UnramifiedMaximalSubfieldSpec K P D) :
+    chapter04UnramifiedMaximalSubfieldSplits P D E := by
   exact E.split_over_unramified_field
 
 theorem chapter04_unramified_extension_is_cyclic
@@ -242,6 +243,16 @@ structure Chapter04UnramifiedInvariantNormalization
   uniformizer_value :
     I.invariant (chapter04UnramifiedCyclicBrauerClass U 1) =
       chapter04RationalResidueOneOver U.degree
+  zero_parameter :
+    chapter04UnramifiedCyclicBrauerClass U 0 = I.brauerLaw.one
+  tensor_parameter_add : ∀ r s : ℤ,
+    I.brauerLaw.tensor
+        (chapter04UnramifiedCyclicBrauerClass U r)
+        (chapter04UnramifiedCyclicBrauerClass U s) =
+      chapter04UnramifiedCyclicBrauerClass U (r + s)
+  opposite_parameter_neg : ∀ r : ℤ,
+    I.brauerLaw.opposite (chapter04UnramifiedCyclicBrauerClass U r) =
+      chapter04UnramifiedCyclicBrauerClass U (-r)
 
 theorem chapter04_unramified_cyclic_invariant_fraction
     {K : Type*} [Field K] (I : Chapter04LocalInvariantData K)
@@ -255,12 +266,12 @@ theorem chapter04_unramified_cyclic_invariant_fraction
 
 theorem chapter04_local_invariant_data_exists
     {K : Type*} [Field K] (P : Chapter04LocalFieldProfile K) :
-    Nonempty (Chapter04LocalInvariantData K) := by
+    Nonempty {I : Chapter04LocalInvariantData K // I.localField = P} := by
   sorry
 
 theorem chapter04_theorem_4_1_local_invariant
     {K : Type*} [Field K] (P : Chapter04LocalFieldProfile K) :
-    Nonempty (Chapter04LocalInvariantData K) := by
+    Nonempty {I : Chapter04LocalInvariantData K // I.localField = P} := by
   exact chapter04_local_invariant_data_exists P
 
 theorem chapter04_local_invariant_is_an_isomorphism

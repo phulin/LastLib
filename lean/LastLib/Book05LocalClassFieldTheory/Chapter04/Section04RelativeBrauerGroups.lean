@@ -91,6 +91,7 @@ structure Chapter04CyclicNormBrauerEquivalence
 theorem chapter04_cyclic_norm_quotient_relative_brauer_equiv
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
+    (I : Chapter04LocalInvariantData K)
     (n : ℕ) (σ : Gal(L / K))
     (hcyc : chapter03CyclicExtension K L n σ)
     (R : Chapter04BrauerRestrictionData K L)

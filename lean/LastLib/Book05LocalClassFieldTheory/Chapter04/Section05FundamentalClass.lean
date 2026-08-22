@@ -211,7 +211,13 @@ structure Chapter04RelativeH2CyclicData
 theorem chapter04_relative_h2_is_cyclic_of_degree
     {K L : Type} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
-    (n : ℕ) (hdegree : Module.finrank K L = n) :
+    (I : Chapter04LocalInvariantData K)
+    (R : Chapter04BrauerRestrictionData K L)
+    (C : Chapter04RelativeBrauerCohomologyData K L R)
+    (n : ℕ) (hdegree : Module.finrank K L = n)
+    (hcompat : ∀ A : chapter04CentralSimpleAlgebra K,
+      R.restriction (chapter04BrauerClass A) =
+        chapter04BrauerClass (R.scalarExtension A)) :
     Nonempty (Chapter04RelativeH2CyclicData K L) := by
   sorry
 

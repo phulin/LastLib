@@ -60,6 +60,7 @@ theorem chapter04_division_valuation_on_a_subfield
 theorem chapter04_division_valuation_integrality_iff
     {K D k barD : Type*} [Field K] [DivisionRing D] [Field k] [Field barD]
     [Algebra K D] [Algebra k barD] [FiniteDimensional k barD]
+    [FiniteDimensional K D]
     [TopologicalSpace D]
     (V : Chapter04DivisionValuationInterface K D k barD) (x : D) :
     chapter04IsIntegralOverSubring V.valuationSubring x ↔ V.value x ≥ 0 := by
@@ -101,7 +102,7 @@ theorem chapter04_division_valuation_ring_is_local
   sorry
 
 theorem chapter04_division_valuation_ring_and_maximal_ideal
-    {K D k barD : Type*} [Field K] [Ring D] [Field k] [Field barD]
+    {K D k barD : Type*} [Field K] [DivisionRing D] [Field k] [Field barD]
     [Algebra K D] [Algebra k barD] [FiniteDimensional k barD]
     [TopologicalSpace D]
     (V : Chapter04DivisionValuationInterface K D k barD) :
@@ -110,7 +111,7 @@ theorem chapter04_division_valuation_ring_and_maximal_ideal
   sorry
 
 theorem chapter04_division_residue_is_a_finite_field
-    {K D k barD : Type*} [Field K] [Ring D] [Field k] [Field barD]
+    {K D k barD : Type*} [Field K] [DivisionRing D] [Field k] [Field barD]
     [Algebra K D] [Algebra k barD] [FiniteDimensional k barD]
     [TopologicalSpace D]
     (V : Chapter04DivisionValuationInterface K D k barD) :
@@ -118,7 +119,7 @@ theorem chapter04_division_residue_is_a_finite_field
   exact ⟨V.residue_finite, V.residue_surjective⟩
 
 theorem chapter04_division_residue_quotient_equiv
-    {K D k barD : Type*} [Field K] [Ring D] [Field k] [Field barD]
+    {K D k barD : Type*} [Field K] [DivisionRing D] [Field k] [Field barD]
     [Algebra K D] [Algebra k barD] [FiniteDimensional k barD]
     [TopologicalSpace D]
     (V : Chapter04DivisionValuationInterface K D k barD) :
@@ -239,7 +240,8 @@ theorem chapter04_value_group_contains_integer_lattice
   field and extension instances are part of the witness, so later statements
   cannot be satisfied by an untyped `Prop` token. -/
 structure Chapter04UnramifiedMaximalSubfieldSpec
-    (K : Type*) [Field K] (D : Chapter04DivisionAlgebraData K) where
+    (K : Type*) [Field K] (P : Chapter04LocalFieldProfile K)
+    (D : Chapter04DivisionAlgebraData K) where
   field : Type*
   [field_isField : Field field]
   [field_algebra : Algebra K field]
@@ -248,6 +250,7 @@ structure Chapter04UnramifiedMaximalSubfieldSpec
   [field_algebra_on_division : Algebra field D.carrier]
   [field_scalarTower : IsScalarTower K field D.carrier]
   extensionData : Chapter04UnramifiedExtensionData K field
+  extensionData_valuationK : extensionData.valuationK = P.valuation
   degree : ℕ
   degree_eq : degree = D.degree
   degree_eq_finrank : Module.finrank K field = degree
@@ -263,8 +266,9 @@ structure Chapter04UnramifiedMaximalSubfieldSpec
       Matrix (Fin D.degree) (Fin D.degree) field)
 
 def chapter04UnramifiedMaximalSubfieldSplits
-    {K : Type*} [Field K] (D : Chapter04DivisionAlgebraData K)
-    (E : Chapter04UnramifiedMaximalSubfieldSpec K D) : Prop :=
+    {K : Type*} [Field K] (P : Chapter04LocalFieldProfile K)
+    (D : Chapter04DivisionAlgebraData K)
+    (E : Chapter04UnramifiedMaximalSubfieldSpec K P D) : Prop :=
   letI := E.field_isField
   letI := E.field_algebra
   letI := E.field_finiteDimensional
@@ -275,13 +279,16 @@ def chapter04UnramifiedMaximalSubfieldSplits
     Matrix (Fin D.degree) (Fin D.degree) E.field)
 
 theorem chapter04_division_algebra_has_unramified_maximal_subfield
-    {K : Type*} [Field K] (D : Chapter04DivisionAlgebraData K) :
-    Nonempty (Chapter04UnramifiedMaximalSubfieldSpec K D) := by
+    {K : Type*} [Field K] (P : Chapter04LocalFieldProfile K)
+    (D : Chapter04DivisionAlgebraData K)
+    [DivisionRing D.carrier] :
+    Nonempty (Chapter04UnramifiedMaximalSubfieldSpec K P D) := by
   sorry
 
 theorem chapter04_unramified_maximal_subfield_is_maximal
-    {K : Type*} [Field K] (D : Chapter04DivisionAlgebraData K)
-    (E : Chapter04UnramifiedMaximalSubfieldSpec K D) :
+    {K : Type*} [Field K] (P : Chapter04LocalFieldProfile K)
+    (D : Chapter04DivisionAlgebraData K)
+    (E : Chapter04UnramifiedMaximalSubfieldSpec K P D) :
     E.degree = D.degree ∧
       ({x : D.carrier | ∀ y : E.field,
         x * E.embedding y = E.embedding y * x} = Set.range E.embedding) := by
@@ -310,9 +317,9 @@ theorem chapter04_unramified_residue_conjugation_is_an_isomorphism
   chosen parameter as a unit.  These small bridges install the instances
   carried by the maximal subfield specification before referring to that API. -/
 def chapter04CyclicPresentationOverUnramifiedField
-    {K : Type*} [Field K]
+    {K : Type*} [Field K] (P : Chapter04LocalFieldProfile K)
     (D : Chapter04DivisionAlgebraData K)
-    (E : Chapter04UnramifiedMaximalSubfieldSpec K D) (a : Kˣ) : Type _ :=
+    (E : Chapter04UnramifiedMaximalSubfieldSpec K P D) (a : Kˣ) : Type _ :=
   letI := E.field_isField
   letI := E.field_algebra
   letI := E.field_finiteDimensional
@@ -321,9 +328,9 @@ def chapter04CyclicPresentationOverUnramifiedField
     K E.field D.degree E.extensionData.arithmeticFrobenius a
 
 def chapter04CyclicExtensionOverUnramifiedField
-    {K : Type*} [Field K]
+    {K : Type*} [Field K] (P : Chapter04LocalFieldProfile K)
     (D : Chapter04DivisionAlgebraData K)
-    (E : Chapter04UnramifiedMaximalSubfieldSpec K D) : Prop :=
+    (E : Chapter04UnramifiedMaximalSubfieldSpec K P D) : Prop :=
   letI := E.field_isField
   letI := E.field_algebra
   letI := E.field_finiteDimensional
@@ -332,25 +339,25 @@ def chapter04CyclicExtensionOverUnramifiedField
     K E.field D.degree E.extensionData.arithmeticFrobenius
 
 def chapter04CyclicPresentationCarrier
-    {K : Type*} [Field K]
+    {K : Type*} [Field K] (P : Chapter04LocalFieldProfile K)
     (D : Chapter04DivisionAlgebraData K)
-    (E : Chapter04UnramifiedMaximalSubfieldSpec K D) (a : Kˣ)
-    (P : chapter04CyclicPresentationOverUnramifiedField D E a) :
+    (E : Chapter04UnramifiedMaximalSubfieldSpec K P D) (a : Kˣ)
+    (Q : chapter04CyclicPresentationOverUnramifiedField P D E a) :
     chapter04CentralSimpleAlgebra K :=
   letI := E.field_isField
   letI := E.field_algebra
   letI := E.field_finiteDimensional
   letI := E.field_isGalois
-  let Q :
+  let Q' :
       LastLib.Book05LocalClassFieldTheory.Chapter03.Chapter03CyclicAlgebraPresentation
         K E.field D.degree E.extensionData.arithmeticFrobenius a :=
-    P
-  Q.carrier
+    Q
+  Q'.carrier
 
 def chapter04UnramifiedMaximalSubfieldUniformizer
-    {K : Type*} [Field K]
+    {K : Type*} [Field K] (P : Chapter04LocalFieldProfile K)
     (D : Chapter04DivisionAlgebraData K)
-    (E : Chapter04UnramifiedMaximalSubfieldSpec K D) : Kˣ :=
+    (E : Chapter04UnramifiedMaximalSubfieldSpec K P D) : Kˣ :=
   letI := E.field_isField
   letI := E.field_algebra
   letI := E.field_finiteDimensional
@@ -358,28 +365,29 @@ def chapter04UnramifiedMaximalSubfieldUniformizer
   E.extensionData.uniformizer
 
 structure Chapter04CyclicPresentationSpec
-    {K : Type*} [Field K] (D : Chapter04DivisionAlgebraData K)
-    (E : Chapter04UnramifiedMaximalSubfieldSpec K D) where
+    {K : Type*} [Field K] (P : Chapter04LocalFieldProfile K)
+    (D : Chapter04DivisionAlgebraData K)
+    (E : Chapter04UnramifiedMaximalSubfieldSpec K P D) where
   exponent : ℕ
   exponent_pos : 0 < exponent
   exponent_coprime : Nat.Coprime exponent D.degree
   parameter : Kˣ
-  presentation : chapter04CyclicPresentationOverUnramifiedField D E parameter
+  presentation : chapter04CyclicPresentationOverUnramifiedField P D E parameter
   equivalence : Nonempty
     (D.carrier ≃ₐ[K]
-      chapter04CyclicPresentationCarrier D E parameter presentation)
+      chapter04CyclicPresentationCarrier P D E parameter presentation)
   unramified_field_degree : ℕ
   unramified_field_degree_eq : unramified_field_degree = D.degree
-  arithmetic_frobenius_relation : chapter04CyclicExtensionOverUnramifiedField D E
+  arithmetic_frobenius_relation : chapter04CyclicExtensionOverUnramifiedField P D E
   parameter_power_normalization :
     ∃ c : Kˣ,
-      parameter = c * chapter04UnramifiedMaximalSubfieldUniformizer D E ^ exponent
+      parameter = c * chapter04UnramifiedMaximalSubfieldUniformizer P D E ^ exponent
 
 theorem chapter04_division_algebra_has_cyclic_presentation
-    {K : Type*} [Field K]
-    (D : Chapter04DivisionAlgebraData K)
-    (U : Chapter04UnramifiedMaximalSubfieldSpec K D) :
-    Nonempty (Chapter04CyclicPresentationSpec D U) := by
+    {K : Type*} [Field K] (P : Chapter04LocalFieldProfile K)
+    (D : Chapter04DivisionAlgebraData K) [DivisionRing D.carrier]
+    (U : Chapter04UnramifiedMaximalSubfieldSpec K P D) :
+    Nonempty (Chapter04CyclicPresentationSpec P D U) := by
   sorry
 
 theorem chapter04_division_parameter_power_is_central

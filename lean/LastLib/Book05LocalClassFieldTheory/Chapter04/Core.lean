@@ -342,6 +342,7 @@ structure Chapter04LocalInvariantData (K : Type*) [Field K] where
   invariant : chapter04BrauerGroup K → chapter04RationalResidue
   invariant_injective : Function.Injective invariant
   invariant_surjective : Function.Surjective invariant
+  invariant_one : invariant brauerLaw.one = 0
   invariant_tensor : ∀ a b,
     invariant (brauerLaw.tensor a b) = invariant a + invariant b
   invariant_opposite : ∀ a,
