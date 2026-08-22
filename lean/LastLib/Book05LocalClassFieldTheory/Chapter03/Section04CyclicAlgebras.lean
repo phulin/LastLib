@@ -120,7 +120,86 @@ theorem chapter03_twisted_symbol_pow
     (chapter03TwistedSymbolByExtensionUnit K L n σ a C b) ^ n =
       algebraMap K C.carrier
         (Algebra.norm K (b : L) * (a : K)) := by
-  sorry
+  classical
+  have hpow (i : ℕ) (x : L) :
+      C.symbol ^ i * C.embedL x =
+        C.embedL ((σ ^ i) x) * C.symbol ^ i := by
+    induction i generalizing x with
+    | zero => simp
+    | succ i ih =>
+        calc
+          C.symbol ^ (i + 1) * C.embedL x =
+              C.symbol ^ i * (C.symbol * C.embedL x) := by rw [pow_succ, mul_assoc]
+          _ = C.symbol ^ i * (C.embedL (σ x) * C.symbol) := by
+            rw [C.symbol_mul_embed]
+          _ = (C.symbol ^ i * C.embedL (σ x)) * C.symbol := by rw [mul_assoc]
+          _ = (C.embedL ((σ ^ i) (σ x)) * C.symbol ^ i) * C.symbol := by
+            rw [ih]
+          _ = C.embedL ((σ ^ (i + 1)) x) * C.symbol ^ (i + 1) := by
+            rw [show (σ ^ i) (σ x) = (σ ^ (i + 1)) x by
+              rw [pow_succ]; rfl]
+            rw [pow_succ C.symbol i]
+            simp only [mul_assoc]
+  have hprod (i : ℕ) :
+      (C.embedL (b : L) * C.symbol) ^ i =
+        C.embedL (∏ j ∈ Finset.range i, (σ ^ j) (b : L)) * C.symbol ^ i := by
+    induction i with
+    | zero => simp
+    | succ i ih =>
+        calc
+          (C.embedL (b : L) * C.symbol) ^ (i + 1) =
+              (C.embedL (b : L) * C.symbol) ^ i *
+                (C.embedL (b : L) * C.symbol) := by rw [pow_succ]
+          _ = (C.embedL (∏ j ∈ Finset.range i, (σ ^ j) (b : L)) *
+                C.symbol ^ i) * (C.embedL (b : L) * C.symbol) := by rw [ih]
+          _ = C.embedL (∏ j ∈ Finset.range i, (σ ^ j) (b : L)) *
+                (C.symbol ^ i * C.embedL (b : L)) * C.symbol := by
+                simp only [mul_assoc]
+          _ = C.embedL (∏ j ∈ Finset.range i, (σ ^ j) (b : L)) *
+                (C.embedL ((σ ^ i) (b : L)) * C.symbol ^ i) * C.symbol := by
+                rw [hpow i (b : L)]
+          _ = C.embedL (∏ j ∈ Finset.range (i + 1), (σ ^ j) (b : L)) *
+                C.symbol ^ (i + 1) := by
+                rw [Finset.prod_range_succ, map_mul, pow_succ]
+                simp only [mul_assoc]
+  have hncard : Nat.card (Gal(L/K)) = n := by
+    rw [IsGalois.card_aut_eq_finrank K L, hcyc.1]
+  have hσn : σ ^ n = 1 := by
+    rw [← hncard]
+    exact pow_card_eq_one'
+  have himage :
+      Finset.image (fun i : ℕ => σ ^ i) (Finset.range n) = Finset.univ := by
+    rw [← hncard]
+    exact IsCyclic.image_range_card hcyc.2
+  let e : Fin n → Gal(L/K) := fun i => σ ^ (i : ℕ)
+  have he_surj : Function.Surjective e := by
+    intro τ
+    have hτ : τ ∈ Finset.image (fun i : ℕ => σ ^ i) (Finset.range n) := by
+      rw [himage]
+      simp
+    rcases Finset.mem_image.mp hτ with ⟨i, hi, rfl⟩
+    exact ⟨⟨i, Finset.mem_range.mp hi⟩, rfl⟩
+  have he : Function.Bijective e := by
+    apply (Fintype.bijective_iff_surjective_and_card e).2
+    have hcard : Fintype.card (Gal(L/K)) = n := by
+      simpa only [Nat.card_eq_fintype_card] using hncard
+    exact ⟨he_surj, (Fintype.card_fin n).trans hcard.symm⟩
+  have hprod_norm :
+      (∏ j ∈ Finset.range n, (σ ^ j) (b : L)) =
+        algebraMap K L (Algebra.norm K (b : L)) := by
+    calc
+      (∏ j ∈ Finset.range n, (σ ^ j) (b : L)) =
+          ∏ j : Fin n, (σ ^ (j : ℕ)) (b : L) := by
+            exact (Fin.prod_univ_eq_prod_range
+              (fun j : ℕ => (σ ^ j) (b : L)) n).symm
+      _ = ∏ τ : Gal(L/K), τ (b : L) :=
+        Fintype.prod_bijective e he _ _ (fun _ => rfl)
+      _ = algebraMap K L (Algebra.norm K (b : L)) := by
+        rw [Algebra.norm_eq_prod_automorphisms]
+  change (C.embedL (b : L) * C.symbol) ^ n =
+    algebraMap K C.carrier (Algebra.norm K (b : L) * (a : K))
+  rw [hprod n, hprod_norm, C.symbol_pow, C.embedL.commutes]
+  rw [← map_mul]
 
 theorem chapter03_cyclic_algebra_split_iff_norm
     (K L : Type*) [Field K] [Field L] [Algebra K L]
@@ -173,7 +252,7 @@ theorem chapter03_parameter_class_tensor_product_rule
     [FiniteDimensional K L] (a b : Kˣ) :
     chapter03CyclicParameterClass K L (a * b) =
       chapter03CyclicParameterClass K L a * chapter03CyclicParameterClass K L b := by
-  sorry
+  rfl
 
 /- LOCAL_DEPENDENCY_GUESS: Mathlib currently exposes the Brauer quotient but not its tensor
    product.  This is the minimal chapter-local interface for the tensor-product calculation. -/
