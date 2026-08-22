@@ -775,7 +775,67 @@ The punctured closed disc makes the failure visible. It is the union of annuli $
 
 ### 5.1 The topology is a Grothendieck topology
 
-Rational domains are the coordinate patches, but unions and gluing require a notion of admissibility. An **affinoid subdomain** $U\subset X=\operatorname{Sp}A$ is a subset represented by an affinoid algebra $A_U$ with the universal property that maps from affinoid spaces into $X$ whose point images lie in $U$ factor uniquely through $U$. Rational domains are affinoid subdomains. A fundamental refinement theorem says that every affinoid subdomain admits a finite cover by rational domains of $X$.
+Rational domains are the coordinate patches, but unions and gluing require a notion of admissibility. An **affinoid subdomain** $U\subset X=\operatorname{Sp}A$ is a subset represented by an affinoid algebra $A_U$ with the universal property that maps from affinoid spaces into $X$ whose point images lie in $U$ factor uniquely through $U$. Rational domains are affinoid subdomains. The refinement
+statements used in this book concern finite unions of rational domains; they are proved
+here. The refinement theorem for arbitrary affinoid subdomains is recorded immediately
+afterwards as a standing input, together with an account of exactly which arguments would
+consume it.
+
+**Proposition (rational-subdomain refinements).** Let $X=\operatorname{Sp}A$ be affinoid.
+
+1. If $U$ and $V$ are rational domains of $X$, then $U\cap V$ is a rational domain of $U$,
+   of $V$, and of $X$, and
+
+$$
+A_{U\cap V}=A_U\widehat\otimes_AA_V .
+$$
+
+2. A finite union $U=U_1\cup\cdots\cup U_r$ of rational domains of $X$ is an admissible
+   open of $X$, the family $(U_i)$ is an admissible cover of $U$, and the same holds after
+   pulling back along every morphism of affinoid spaces $\operatorname{Sp}B\to X$ whose point
+   image lies in $U$: the preimages $\varphi^{-1}(U_i)$ form a finite cover of
+   $\operatorname{Sp}B$ admitting the finite refinement by the pairwise intersections
+   $\varphi^{-1}(U_i)\cap\varphi^{-1}(U_j)$.
+
+3. Two finite families of finite unions of rational domains that cover the same subset of
+   $X$ admit a common finite refinement by rational domains of $X$, namely the family of all
+   pairwise intersections of members of the two families.
+
+**Proof.** Statement 1 is the transitivity part of Theorem 4.2, read set-theoretically
+through the universal property: the coordinate algebra of the intersection is the completed
+base change of either rational localization by the other, and the resulting algebra
+represents the intersection because a map from an affinoid space into $X$ factors through
+$U\cap V$ exactly when it factors through both $U$ and $V$, and unique factorizations
+compose.
+
+For statement 2, admissibility is checked against test maps, so let
+$\varphi:\operatorname{Sp}B\to X$ be a morphism of affinoid spaces whose point image lies
+in $U$. Each preimage $\varphi^{-1}(U_i)$ is a rational domain of
+$\operatorname{Sp}B$: if $U_i$ is cut out by $f_{i0},\ldots,f_{im}$ generating the unit
+ideal, the pullbacks $\varphi^\sharp(f_{ij})$ generate the unit ideal of $B$, and the
+substitution homomorphism presents the preimage by the same relations; this is the base
+change compatibility of rational localization recorded after Proposition 4.1. The preimages
+cover $\operatorname{Sp}B$ because their point images cover the point image of
+$\varphi$, and by statement 1 every pairwise intersection is a rational domain of each
+factor, hence of $\operatorname{Sp}B$. Being finite and rational, the refinement qualifies
+under the definition of admissible cover.
+
+Statement 3 is statement 1 applied to all pairs. $\square$
+
+**Standing Input (Gerritzen--Grauert refinement).** The general refinement theorem asserts
+that every affinoid subdomain $U$ of an affinoid space $X=\operatorname{Sp}A$ is a finite
+union of rational domains of $X$. Its proof rests on a local classification of affinoid
+subdomains: around every point of $U$ one produces a neighborhood presented by finitely many
+inequalities, using multivariable division preparation and a boundary argument on the
+functions defining $U$. Neither the classification nor the boundary argument is developed in
+this book, and the statement is therefore consumed nowhere below. Every cover constructed in
+Chapters 6 through 14 consists of Laurent or rational domains produced directly from
+inequalities, to which Theorem 5.1 applies without refinement; the tube decompositions of
+Chapter 10 and the uniformization theory built on this book likewise enter through annular
+and rational charts, and the refinement proposition above closes the finite-union cases. A
+reader extending the theory to covers by arbitrary affinoid subdomains should import this
+standing input and combine it with the transfer lemma of Section 5.2, which converts a
+rational refinement into equality of Čech cohomology.
 
 An admissible open in an affinoid $X$ is a subset $V$ that has a covering by affinoid subdomains such that every map from an affinoid $Y$ to $X$ with image in $V$ pulls that covering back to one admitting a finite affinoid refinement. A family $(V_i)$ covers $V$ **admissibly** if the same finiteness condition holds after every affinoid test map. This definition is designed so that quasi-compact analytic pieces see only finitely many coordinates at a time.
 
@@ -898,16 +958,55 @@ $\square$
 Two remarks place the theorem in its natural range. First, the induction proves more than it
 states: nothing about the pieces was used beyond their presentation by elementary
 inequalities, so the same complex is exact for any finite cover whose members are cut out
-from a fixed finite list of such inequalities. Second, the passage from Laurent covers to
-arbitrary finite admissible covers by affinoid subdomains consumes the refinement principle
-of Section 5.1 together with the comparison of Čech complexes under common finite rational
-refinement: if $\mathfrak V$ refines $\mathfrak U$ and the theorem holds for every restriction
-of $\mathfrak V$ to an intersection of members of $\mathfrak U$, all of which are affinoid
-spaces with rational covers, then the double Čech complex transfers exactness from
-$\mathfrak V$ to $\mathfrak U$. This refinement step is the one standing input used below
-whenever a general admissible cover, rather than a Laurent or rational cover, enters an
-argument; the covers arising from inequalities in Chapters 6 through 14 are Laurent or
-rational covers, to which the theorem applies directly.
+from a fixed finite list of such inequalities.
+
+**Lemma (Čech transfer under common rational refinement).** Let $X=\operatorname{Sp}A$, let
+$\mathfrak U=(U_1,\ldots,U_r)$ and $\mathfrak V=(V_1,\ldots,V_s)$ be finite covers of $X$ by
+affinoid subdomains, with $\mathfrak V$ refining $\mathfrak U$, and fix a finite
+$A$-module $M$. Assume that every nonempty intersection of members of either family is an
+affinoid space, that each $U_I\cap V_J$ is a rational domain of $U_I$ and of $V_J$, and that
+the induced covers of each affinoid intersection $U_I$ and $V_J$ by intersections with
+members of the other family are cut out, after collecting inequality lists as in Theorem
+5.1, from finitely many elementary inequalities. Then the natural map from the augmented
+Čech complex of $\mathfrak V$ to that of $\mathfrak U$, both with coefficients in $M$,
+induces isomorphisms on cohomology. In particular, if the complex of $\mathfrak V$ is exact,
+so is the complex of $\mathfrak U$.
+
+**Proof.** Form the double complex whose term of bidegree $(p,q)$ is
+
+$$
+D^{p,q}=\bigoplus_{\substack{i_0<\cdots<i_p\\ j_0<\cdots<j_q}}
+M\widehat\otimes_AA_{U_{i_0}\cap\cdots\cap U_{i_p}\cap V_{j_0}\cap\cdots\cap V_{j_q}},
+$$
+
+with horizontal differentials induced by insertion of $V$-indices and vertical ones by
+insertion of $U$-indices. Fix a tuple $I$. The $I$-th row is the augmented Čech complex of
+the cover of the affinoid space $U_I$ by the rational domains $U_I\cap V_j$, with
+coefficients in the finite module $M\otimes_AA_{U_I}$; by hypothesis it has the form treated
+by Lemma 5.3, so its positive cohomology vanishes and its degree-zero cohomology is
+$M\otimes_AA_{U_I}$. Dually, fixing a tuple $J$, the $J$-th column is the analogous complex
+for the cover of $V_J$ by the rational domains $U_i\cap V_J$, likewise exact. Consider the
+associated total complex together with the augmentation column given by the Čech complexes
+of $\mathfrak U$ and $\mathfrak V$ themselves, which embed as the sub-double-complex with at
+least one index list empty. Filtering the total complex by rows exhibits each graded piece
+as a shifted exact row, so the positive cohomology of the total complex vanishes and its
+degree-zero cohomology, computed through the augmentation, is that of the Čech complex of
+$\mathfrak U$. Filtering instead by columns shows, by the same argument with the roles
+exchanged, that it is also the Čech cohomology of $\mathfrak V$, compatibly with the natural
+map between the two complexes induced by the diagonal refinement. Hence the map induces
+isomorphisms on cohomology. $\square$
+
+Second, the passage from Laurent covers to arbitrary finite admissible covers by affinoid
+subdomains now decomposes into two explicitly controlled pieces: the existence of a common
+finite rational refinement is exactly the standing input of Section 5.1, valid for covers by
+finite unions of rational domains by the refinement proposition there and for arbitrary
+affinoid subdomains only under the Gerritzen--Grauert input; and once such a refinement
+$\mathfrak V$ of $\mathfrak U$ exists, the transfer lemma above hands exactness from
+$\mathfrak V$ to $\mathfrak U$, because every hypothesis of the lemma holds when the members
+of both families are Laurent or rational domains. This refinement step is the one standing
+input used below whenever a general admissible cover, rather than a Laurent or rational
+cover, enters an argument; the covers arising from inequalities in Chapters 6 through 14 are
+Laurent or rational covers, to which the theorem applies directly.
 
 The module statement deserves emphasis because it is not formal. Tensoring an arbitrary
 exact complex with a module would not preserve exactness; here exactness was proved
@@ -1857,7 +1956,7 @@ The main results of the book can be used safely by keeping their hypotheses visi
 
 **Analytic algebras.** The base field is complete, nontrivially valued, and nonarchimedean. Strict affinoid algebras use radii in $|K^\times|$. Tate algebras and their affinoid quotients are noetherian; maximal residue fields are finite over $K$. The spectral seminorm is a norm only after removing nilpotents.
 
-**Localization and sheaves.** Rational domains require numerators together with the denominator to generate the unit ideal. Rational localization is flat, not necessarily faithfully flat. Faithfulness comes from a finite cover. Tate acyclicity concerns admissible finite affinoid covers and finite modules. Coherent descent on general spaces uses quasi-separatedness.
+**Localization and sheaves.** Rational domains require numerators together with the denominator to generate the unit ideal. Rational localization is flat, not necessarily faithfully flat. Faithfulness comes from a finite cover. Tate acyclicity concerns admissible finite affinoid covers and finite modules; covers by arbitrary affinoid subdomains additionally consume the Gerritzen--Grauert standing input of Section 5.1, which is not used elsewhere in this book. Coherent descent on general spaces uses quasi-separatedness.
 
 **Formal models.** The formal chapters assume a complete discrete valuation ring $R$ with fraction field $K$. Admissible formal schemes are topologically of finite type and $R$-flat. The admissible-blowup invariance theorem requires an open center, equivalently one supported on the special fiber; a nonopen center has no such invariance guarantee. Generic fibers forget $\pi$-torsion.
 
