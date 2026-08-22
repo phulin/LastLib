@@ -175,7 +175,25 @@ theorem chapter10_mem_value_unit_subgroup_iff
     x ∈ chapter10ValueUnitSubgroup D π m n ↔
       ∃ z : ℤ, ∃ u : Chapter10FieldUnitFiltration D.valuation n,
         x = π ^ ((m : ℤ) * z) * (u : Kˣ) := by
-  sorry
+  change x ∈ Subgroup.zpowers (π ^ m) ⊔ Chapter10FieldUnitFiltration D.valuation n ↔
+    ∃ z : ℤ, ∃ u : Chapter10FieldUnitFiltration D.valuation n,
+      x = π ^ ((m : ℤ) * z) * (u : Kˣ)
+  rw [Subgroup.mem_sup]
+  constructor
+  · rintro ⟨y, hy, u, hu, hxy⟩
+    obtain ⟨z, hz⟩ := Subgroup.mem_zpowers_iff.mp hy
+    refine ⟨z, ⟨u, hu⟩, ?_⟩
+    rw [← hxy, ← hz, zpow_mul]
+    rfl
+  · rintro ⟨z, u, hxu⟩
+    have hzmem : (π ^ m) ^ z ∈ Subgroup.zpowers (π ^ m) :=
+      (Subgroup.mem_zpowers_iff).2 ⟨z, rfl⟩
+    refine ⟨(π ^ m) ^ z, hzmem, (u : Kˣ), u.property, ?_⟩
+    calc
+      (π ^ m) ^ z * (u : Kˣ) = (π ^ (m : ℤ)) ^ z * (u : Kˣ) := by
+        rw [zpow_natCast]
+      _ = π ^ ((m : ℤ) * z) * (u : Kˣ) := by rw [zpow_mul]
+      _ = x := hxu.symm
 
 /- The algebraic norm and the corresponding multiplicative norm subgroup. -/
 noncomputable def chapter10NormHom
