@@ -124,7 +124,279 @@ theorem chapter13_equal_characteristic_p_coefficient_field_splitting
     ∃! φ : Chapter13ResidueRing A →+* A,
       (Chapter13ResidueMap A).comp φ = RingHom.id _ ∧
         ∀ b : B, φ (b : Chapter13ResidueRing A) = a b := by
-  sorry
+  classical
+  let I : Ideal A := IsLocalRing.maximalIdeal A
+  obtain ⟨f, hf, h0, hb⟩ := chapter13_compatible_p_basis_splittings p B hB a ha
+  have hcast (J : Ideal A) (hJ : J ≤ I) :
+      ∀ n : ℕ, (n : A) ∈ J → (n : A) = 0 := by
+    intro n hn
+    by_contra hpn
+    have hnotdvd : ¬p ∣ n :=
+      fun hdiv => hpn ((CharP.cast_eq_zero_iff A p n).2 hdiv)
+    have hunit : IsUnit (n : A) :=
+      (CharP.isUnit_natCast_iff (R := A) Fact.out).2 hnotdvd
+    exact (IsLocalRing.mem_maximalIdeal (R := A) (n : A)).mp (hJ hn) hunit
+  let _ : CharP (Chapter13ResidueRing A) p :=
+    CharP.quotient' p I (hcast I le_rfl)
+  let _ : IsAdicComplete I A := by
+    dsimp [I]
+    exact hA
+  let a' : ℕ → ℕ := fun n => n + 1
+  have ha' : StrictMono a' := by
+    intro m n hmn
+    dsimp [a']
+    omega
+  have hf' : ∀ {m : ℕ},
+      (Ideal.Quotient.factorPow I (show a' m ≤ a' (m + 1) by
+        dsimp [a']
+        omega)).comp (f (m + 1)) = f m := by
+    intro m
+    simpa [a', I, Nat.add_assoc] using hf m
+  let φ : Chapter13ResidueRing A →+* A :=
+    IsAdicComplete.StrictMono.liftRingHom I ha' f hf'
+  have hφmod : ∀ n (x : Chapter13ResidueRing A),
+      Ideal.Quotient.mk (I ^ (n + 1)) (φ x) = f n x := by
+    intro n x
+    simpa [φ, a'] using
+      (IsAdicComplete.StrictMono.mk_liftRingHom I ha' f hf' (n := n) x)
+  have hsep_eq {x y : A}
+      (hxy : ∀ n : ℕ, Ideal.Quotient.mk (I ^ n) x =
+        Ideal.Quotient.mk (I ^ n) y) : x = y := by
+    have hfun : (fun _ : Unit => x) = (fun _ : Unit => y) := by
+      apply IsHausdorff.funext' I
+      intro n _
+      exact hxy n
+    exact congrFun hfun ()
+  have hsubzero : Subsingleton (A ⧸ I ^ 0) := by
+    rw [show I ^ 0 = (⊤ : Ideal A) by simp]
+    infer_instance
+  have hsplit : (Chapter13ResidueMap A).comp φ = RingHom.id _ := by
+    apply RingHom.ext
+    intro x
+    have hx := hφmod 0 x
+    have hx' := congrArg (Ideal.Quotient.factor (le_of_eq (pow_one I))) hx
+    have hx0 := DFunLike.congr_fun h0 x
+    simpa [I, Chapter13ResidueMap] using hx'.trans hx0
+  have hlift : ∀ b : B, φ (b : Chapter13ResidueRing A) = a b := by
+    intro b
+    apply hsep_eq
+    intro n
+    cases n with
+    | zero =>
+        exact hsubzero.elim _ _
+    | succ n =>
+        rw [hφmod n b, hb n b]
+  refine ⟨φ, ⟨hsplit, hlift⟩, ?_⟩
+  intro φ' hφ'
+  have hlevels : ∀ n : ℕ,
+      (Ideal.Quotient.mk (I ^ (n + 1))).comp φ' = f n := by
+    intro n
+    induction n with
+    | zero =>
+        apply RingHom.ext
+        intro x
+        have hx0 := DFunLike.congr_fun h0 x
+        let e0 : Chapter13ResidueRing A ≃+* A ⧸ I ^ (0 + 1) :=
+          Ideal.quotEquivOfEq (by simp [I])
+        have he0factor : e0.symm.toRingHom =
+            Ideal.Quotient.factor (le_of_eq (pow_one I)) := by
+          apply RingHom.ext
+          intro z
+          obtain ⟨z, rfl⟩ := Ideal.Quotient.mk_surjective z
+          simp [e0, I, Ideal.quotEquivOfEq_mk, Ideal.Quotient.factor]
+        have hx0' : e0.symm (f 0 x) = x := by
+          change e0.symm.toRingHom (f 0 x) = x
+          rw [he0factor]
+          exact hx0
+        have hf0e : f 0 x = e0 x := by
+          apply e0.symm.injective
+          exact hx0'.trans (e0.symm_apply_apply x).symm
+        have hx' : e0 (Chapter13ResidueMap A (φ' x)) = e0 x :=
+          congrArg e0 (DFunLike.congr_fun hφ'.1 x)
+        have heq : (Ideal.Quotient.mk (I ^ (0 + 1))) (φ' x) = e0 x := by
+          simpa [e0, I, Chapter13ResidueMap, Ideal.quotEquivOfEq_mk] using hx'
+        exact heq.trans hf0e.symm
+    | succ n ih =>
+        let _ : CharP (A ⧸ I ^ (n + 2)) p :=
+          CharP.quotient' p _ (hcast _ (Ideal.pow_le_self (by omega)))
+        let q := Ideal.Quotient.factorPow I (show n + 1 ≤ n + 2 by omega)
+        let β : B → A ⧸ I ^ (n + 2) :=
+          fun b => Ideal.Quotient.mk (I ^ (n + 2)) (a b)
+        have hβ : ∀ b : B, q (β b) = (f n) (b : Chapter13ResidueRing A) := by
+          intro b
+          rw [hb n b]
+          simp [I, q, β, Ideal.Quotient.factorPow]
+        have hqker : RingHom.ker q ^ 2 = ⊥ := by
+          exact chapter13_factorPow_succ_ker_sq I (n + 1) (by omega)
+        have hqsurj : Function.Surjective q := Ideal.Quotient.factor_surjective _
+        have hφ'compat : q.comp
+            ((Ideal.Quotient.mk (I ^ (n + 2))).comp φ') =
+              (f n) := by
+          rw [← ih]
+          ext x
+          simp [q, Ideal.Quotient.factorPow]
+        have hφ'base : ∀ b : B,
+            ((Ideal.Quotient.mk (I ^ (n + 2))).comp φ')
+                (b : Chapter13ResidueRing A) = β b := by
+          intro b
+          simpa [β] using congrArg (Ideal.Quotient.mk (I ^ (n + 2))) (hφ'.2 b)
+        have hfbase : ∀ b : B, (f (n + 1)) (b : Chapter13ResidueRing A) = β b := by
+          intro b
+          simpa [I, β] using hb (n + 1) b
+        have hfcompat : q.comp (f (n + 1)) = f n := by
+          simpa [I, q] using hf n
+        obtain ⟨ψ, hψ, huniq⟩ :=
+          chapter13_char_p_square_zero_lift_surjective p Fact.out B hB q hqsurj
+            hqker (f n) β hβ
+        have hφ'ψ := huniq _ ⟨hφ'compat, hφ'base⟩
+        have hfψ := huniq _ ⟨hfcompat, hfbase⟩
+        have hlevel :
+            (Ideal.Quotient.mk (I ^ (n + 2))).comp φ' = f (n + 1) :=
+          hφ'ψ.trans hfψ.symm
+        exact hlevel
+  apply DFunLike.coe_injective
+  apply IsHausdorff.funext' I
+  intro n x
+  cases n with
+  | zero => exact hsubzero.elim _ _
+  | succ n =>
+      exact (congrArg (fun g => g x) (hlevels n)).trans (hφmod n x).symm
+
+private def chapter13_subfield_of_field_hom
+    {F A : Type*} [Field F] [CommRing A] [Nontrivial A]
+    (f : F →+* A) : Chapter13Subfield A :=
+  { carrier := f.range
+    field_carrier :=
+      { exists_pair_ne := by
+          refine ⟨⟨f 0, ⟨0, rfl⟩⟩, ⟨f 1, ⟨1, rfl⟩⟩, ?_⟩
+          simp
+        mul_comm := by
+          intro x y
+          apply Subtype.ext
+          exact mul_comm x.1 y.1
+        mul_inv_cancel := by
+          intro x hx
+          rcases x.property with ⟨y, hyx⟩
+          have hy : y ≠ 0 := by
+            intro hy
+            apply hx
+            apply Subtype.ext
+            simpa [hy] using hyx.symm
+          refine ⟨⟨f y⁻¹, ⟨y⁻¹, rfl⟩⟩, ?_⟩
+          apply Subtype.ext
+          calc
+            x.1 * f y⁻¹ = f y * f y⁻¹ := by rw [hyx]
+            _ = 1 := by simpa using congrArg f (mul_inv_cancel₀ hy) } }
+
+private theorem chapter13_field_hom_range_is_coefficient
+    {A : Type*} [CommRing A] [IsLocalRing A]
+    (φ : Chapter13ResidueRing A →+* A)
+    (hφ : (Chapter13ResidueMap A).comp φ = RingHom.id _) :
+    Chapter13IsCoefficientField (chapter13_subfield_of_field_hom φ) := by
+  let rφ : φ.range →+* Chapter13ResidueRing A :=
+    (Chapter13ResidueMap A).comp φ.range.subtype
+  let e : Chapter13ResidueRing A ≃+* φ.range :=
+    RingEquiv.ofBijective φ.rangeRestrict
+      ⟨fun x y h => RingHom.injective φ (congrArg Subtype.val h),
+        φ.rangeRestrict_surjective⟩
+  have hrφ : rφ = e.symm.toRingHom := by
+    apply RingHom.ext
+    intro x
+    obtain ⟨x, rfl⟩ := e.surjective x
+    have he : e x = φ.rangeRestrict x :=
+      RingEquiv.ofBijective_apply φ.rangeRestrict _ x
+    calc
+      rφ (φ.rangeRestrict x) = Chapter13ResidueMap A (φ x) := by rfl
+      _ = x := DFunLike.congr_fun hφ x
+      _ = e.symm (e x) := (e.symm_apply_apply x).symm
+      _ = e.symm (φ.rangeRestrict x) := by rw [he]
+  change Function.Bijective rφ
+  rw [hrφ]
+  exact e.symm.bijective
+
+private theorem chapter13_subfield_ext
+    {A : Type*} [CommRing A]
+    {K L : Chapter13Subfield A} (h : K.carrier = L.carrier) : K = L := by
+  cases K with
+  | mk K hK =>
+    cases L with
+    | mk L hL =>
+      dsimp at h
+      cases h
+      rfl
+
+private noncomputable def chapter13_coefficient_field_lift_family
+    {A : Type*} [CommRing A] [IsLocalRing A]
+    (B : Set (Chapter13ResidueRing A))
+    (K : Chapter13CoefficientFields A) :
+    {a : B → A // Chapter13AdmissiblePBaseLiftFamily B a} := by
+  classical
+  let rK : K.1.carrier →+* Chapter13ResidueRing A :=
+    (Chapter13ResidueMap A).comp K.1.carrier.subtype
+  have hrK : Function.Bijective rK := by
+    exact K.2
+  let eK : K.1.carrier ≃+* Chapter13ResidueRing A :=
+    RingEquiv.ofBijective rK hrK
+  refine ⟨fun b => K.1.carrier.subtype (eK.symm b), ?_⟩
+  intro b
+  change rK (eK.symm b) = b
+  exact eK.apply_symm_apply b
+
+private noncomputable def chapter13_lift_family_coefficient_field
+    {A : Type*} [CommRing A] [IsLocalRing A]
+    (p : ℕ) [Fact (Nat.Prime p)] [CharP A p]
+    (B : Set (Chapter13ResidueRing A))
+    (hB : Chapter13PBasis (Chapter13PthPowerSubfield (Chapter13ResidueRing A) p) B p)
+    (hA : IsAdicComplete (IsLocalRing.maximalIdeal A) A)
+    (z : {a : B → A // Chapter13AdmissiblePBaseLiftFamily B a}) :
+    Chapter13CoefficientFields A := by
+  classical
+  let φ : Chapter13ResidueRing A →+* A :=
+    Classical.choose (chapter13_equal_characteristic_p_coefficient_field_splitting
+      p B hB z.1 z.2 hA)
+  have hφ := Classical.choose_spec
+    (chapter13_equal_characteristic_p_coefficient_field_splitting
+      p B hB z.1 z.2 hA)
+  have hφ' : (Chapter13ResidueMap A).comp φ = RingHom.id _ ∧
+      ∀ b : B, φ (b : Chapter13ResidueRing A) = z.1 b := by
+    simpa [φ] using hφ.1
+  let K : Chapter13Subfield A := chapter13_subfield_of_field_hom φ
+  exact ⟨K, chapter13_field_hom_range_is_coefficient φ hφ'.1⟩
+
+private theorem chapter13_coefficient_field_lift_family_of_split
+    {A : Type*} [CommRing A] [IsLocalRing A]
+    (B : Set (Chapter13ResidueRing A))
+    (z : {a : B → A // Chapter13AdmissiblePBaseLiftFamily B a})
+    (φ : Chapter13ResidueRing A →+* A)
+    (hφ : (Chapter13ResidueMap A).comp φ = RingHom.id _ ∧
+      ∀ b : B, φ (b : Chapter13ResidueRing A) = z.1 b) :
+    chapter13_coefficient_field_lift_family B
+      ⟨chapter13_subfield_of_field_hom φ,
+        chapter13_field_hom_range_is_coefficient φ hφ.1⟩ = z := by
+  classical
+  let K : Chapter13Subfield A := chapter13_subfield_of_field_hom φ
+  let rK : K.carrier →+* Chapter13ResidueRing A :=
+    (Chapter13ResidueMap A).comp K.carrier.subtype
+  have hrK : Function.Bijective rK := by
+    exact chapter13_field_hom_range_is_coefficient φ hφ.1
+  let eK : K.carrier ≃+* Chapter13ResidueRing A :=
+    RingEquiv.ofBijective rK hrK
+  apply Subtype.ext
+  funext b
+  change K.carrier.subtype (eK.symm b) = z.1 b
+  let k : K.carrier := ⟨φ (b : Chapter13ResidueRing A), ⟨b, rfl⟩⟩
+  have hk : eK k = b := by
+    rw [RingEquiv.ofBijective_apply rK hrK]
+    change Chapter13ResidueMap A (φ (b : Chapter13ResidueRing A)) = b
+    exact DFunLike.congr_fun hφ.1 (b : Chapter13ResidueRing A)
+  have he : eK.symm b = k := by
+    apply eK.injective
+    calc
+      eK (eK.symm b) = b := eK.apply_symm_apply b
+      _ = eK k := hk.symm
+  rw [he]
+  change φ (b : Chapter13ResidueRing A) = z.1 b
+  exact hφ.2 b
 
 /-- Coefficient fields are parametrized by admissible lifts of a residue `p`-basis. -/
 theorem chapter13_equal_characteristic_p_coefficient_fields_bijection
@@ -136,7 +408,74 @@ theorem chapter13_equal_characteristic_p_coefficient_fields_bijection
     Nonempty
       (Chapter13CoefficientFields A ≃
         {a : B → A // Chapter13AdmissiblePBaseLiftFamily B a}) := by
-  sorry
+  classical
+  let forward : Chapter13CoefficientFields A →
+      {a : B → A // Chapter13AdmissiblePBaseLiftFamily B a} :=
+    fun K => chapter13_coefficient_field_lift_family B K
+  let inverse : {a : B → A // Chapter13AdmissiblePBaseLiftFamily B a} →
+      Chapter13CoefficientFields A :=
+    fun z => chapter13_lift_family_coefficient_field p B hB hA z
+  refine ⟨{ toFun := forward, invFun := inverse, left_inv := ?_, right_inv := ?_ }⟩
+  · intro K
+    let rK : K.1.carrier →+* Chapter13ResidueRing A :=
+      (Chapter13ResidueMap A).comp K.1.carrier.subtype
+    have hrK : Function.Bijective rK := K.2
+    let eK : K.1.carrier ≃+* Chapter13ResidueRing A :=
+      RingEquiv.ofBijective rK hrK
+    let zK : {a : B → A // Chapter13AdmissiblePBaseLiftFamily B a} :=
+      chapter13_coefficient_field_lift_family B K
+    let φ' : Chapter13ResidueRing A →+* A :=
+      Classical.choose (chapter13_equal_characteristic_p_coefficient_field_splitting
+        p B hB zK.1 zK.2 hA)
+    have hφ' := Classical.choose_spec
+      (chapter13_equal_characteristic_p_coefficient_field_splitting
+        p B hB zK.1 zK.2 hA)
+    let φK : Chapter13ResidueRing A →+* A :=
+      K.1.carrier.subtype.comp eK.symm.toRingHom
+    have hφK : (Chapter13ResidueMap A).comp φK = RingHom.id _ := by
+      apply RingHom.ext
+      intro x
+      change rK (eK.symm x) = x
+      exact eK.apply_symm_apply x
+    have hφKbase : ∀ b : B, φK (b : Chapter13ResidueRing A) = zK.1 b := by
+      intro b
+      rfl
+    have hφeq : φK = φ' := by
+      exact hφ'.2 φK ⟨hφK, hφKbase⟩
+    have hRange : φ'.range = K.1.carrier := by
+      rw [← hφeq]
+      ext x
+      constructor
+      · rintro ⟨r, rfl⟩
+        change K.1.carrier.subtype (eK.symm r) ∈ K.1.carrier
+        exact (eK.symm r).property
+      · intro hx
+        let k : K.1.carrier := ⟨x, hx⟩
+        refine ⟨eK k, ?_⟩
+        change K.1.carrier.subtype (eK.symm (eK k)) = x
+        rw [eK.symm_apply_apply]
+        rfl
+    have hsubfield : chapter13_subfield_of_field_hom φ' = K.1 :=
+      chapter13_subfield_ext hRange
+    change chapter13_lift_family_coefficient_field p B hB hA zK = K
+    dsimp [chapter13_lift_family_coefficient_field, zK, φ']
+    exact Subtype.ext hsubfield
+  · intro z
+    let φ : Chapter13ResidueRing A →+* A :=
+      Classical.choose (chapter13_equal_characteristic_p_coefficient_field_splitting
+        p B hB z.1 z.2 hA)
+    have hφ := Classical.choose_spec
+      (chapter13_equal_characteristic_p_coefficient_field_splitting
+        p B hB z.1 z.2 hA)
+    have hφ' : (Chapter13ResidueMap A).comp φ = RingHom.id _ ∧
+        ∀ b : B, φ (b : Chapter13ResidueRing A) = z.1 b := by
+      simpa [φ] using hφ.1
+    change chapter13_coefficient_field_lift_family B
+      (chapter13_lift_family_coefficient_field p B hB hA z) = z
+    dsimp [chapter13_lift_family_coefficient_field, φ]
+    exact chapter13_coefficient_field_lift_family_of_split B z
+      (Classical.choose (chapter13_equal_characteristic_p_coefficient_field_splitting
+        p B hB z.1 z.2 hA)) hφ'
 
 /-- A complete separated local ring containing a field has a coefficient field. -/
 theorem chapter13_coefficient_field_exists_when_contains_field

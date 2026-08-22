@@ -10,6 +10,7 @@ import Mathlib.LinearAlgebra.Dimension.Finite
 import Mathlib.LinearAlgebra.Dimension.Free
 import Mathlib.LinearAlgebra.Dimension.OrzechProperty
 import Mathlib.FieldTheory.PurelyInseparable.Exponent
+import Mathlib.FieldTheory.PurelyInseparable.Tower
 import Mathlib.RingTheory.Adjoin.PowerBasis
 import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
 import Mathlib.RingTheory.Derivation.ToSquareZero
@@ -1773,6 +1774,494 @@ theorem chapter13_perfect_field_empty_p_basis
     rw [he, hmul] at hsmul
     exact hsmul
 
+private noncomputable def chapter13_pth_frobenius_equiv
+    {K : Type u} [Field K] (p : ℕ) [Fact (Nat.Prime p)] [CharP K p] :
+    K ≃+* Chapter13PthPowerSubfield K p := by
+  let f : K →+* Chapter13PthPowerSubfield K p :=
+    (frobenius K p).codRestrict _ (fun x =>
+      Subfield.subset_closure ⟨x, rfl⟩)
+  have hfield : (frobenius K p).fieldRange = Chapter13PthPowerSubfield K p := by
+    rw [RingHom.fieldRange_eq_map]
+    rw [← show Subfield.closure (Set.univ : Set K) = ⊤ by simp]
+    rw [RingHom.map_field_closure]
+    simp only [Chapter13PthPowerSubfield, Set.range_comp]
+    congr 1
+    ext y
+    constructor
+    · rintro ⟨x, hx⟩
+      exact ⟨x, by simpa [frobenius_def] using hx.2⟩
+    · rintro ⟨x, hx⟩
+      exact ⟨x, by simpa [frobenius_def] using hx⟩
+  have hbij : Function.Bijective f := by
+    refine ⟨?_, ?_⟩
+    · intro x y hxy
+      apply (frobenius K p).injective
+      exact congrArg Subtype.val hxy
+    · intro y
+      have hy : (y : K) ∈ (frobenius K p).fieldRange := by
+        rw [hfield]
+        exact y.property
+      obtain ⟨x, hx⟩ := (frobenius K p).rangeRestrictFieldEquiv.surjective
+        ⟨y, hy⟩
+      refine ⟨x, ?_⟩
+      exact Subtype.ext (by
+        change frobenius K p x = (y : K)
+        exact congrArg Subtype.val hx)
+  exact RingEquiv.ofBijective f hbij
+
+private theorem chapter13_pth_power_subfield_is_separable
+    {k l : Type u} [Field k] [Field l] [Algebra k l]
+    (p : ℕ) [Fact (Nat.Prime p)] [CharP k p] [CharP l p]
+    (hsep : Algebra.IsSeparable k l) :
+    ∃ (f : Chapter13PthPowerSubfield k p →+*
+          Chapter13PthPowerSubfield l p)
+        (i : Algebra (Chapter13PthPowerSubfield k p)
+        (Chapter13PthPowerSubfield l p)),
+      @Algebra.IsSeparable (Chapter13PthPowerSubfield k p)
+        (Chapter13PthPowerSubfield l p) _ _ i ∧
+      @algebraMap (Chapter13PthPowerSubfield k p)
+        (Chapter13PthPowerSubfield l p) _ _ i = f ∧
+      ∀ x : Chapter13PthPowerSubfield k p,
+        (f x : l) = algebraMap k l (x : k) := by
+  let F := Chapter13PthPowerSubfield k p
+  let G := Chapter13PthPowerSubfield l p
+  have hFG : F.map (algebraMap k l) ≤ G := by
+    change (Subfield.closure (Set.range (fun x : k => x ^ p))).map
+        (algebraMap k l) ≤ G
+    rw [RingHom.map_field_closure]
+    apply Subfield.closure_mono
+    rintro _ ⟨x, ⟨y, hy⟩, hxy⟩
+    have hgen : (algebraMap k l y) ^ p ∈ Set.range (fun z : l => z ^ p) :=
+      ⟨algebraMap k l y, rfl⟩
+    have heq : (algebraMap k l) x = (algebraMap k l y) ^ p := by
+      rw [← hy, map_pow]
+    rw [← hxy, heq]
+    exact hgen
+  let fFG : F →+* G :=
+    ((algebraMap k l).comp F.subtype).codRestrict G (fun x => hFG (by
+      refine ⟨(x : k), x.property, rfl⟩))
+  letI : Algebra F G := RingHom.toAlgebra fFG
+  let _ : Algebra.IsSeparable k l := hsep
+  let eF : k ≃+* F := chapter13_pth_frobenius_equiv p
+  let eG : l ≃+* G := chapter13_pth_frobenius_equiv p
+  have hcomp : (algebraMap F G).comp eF.toRingHom =
+      eG.toRingHom.comp (algebraMap k l) := by
+    ext x
+    change (algebraMap k l) ((eF x : F) : k) = (eG (algebraMap k l x) : l)
+    change (algebraMap k l) (x ^ p) = (algebraMap k l x) ^ p
+    simp
+  exact ⟨fFG, RingHom.toAlgebra fFG,
+    Algebra.IsSeparable.of_equiv_equiv eF eG hcomp,
+    RingHom.algebraMap_toAlgebra fFG, fun x => rfl⟩
+
+private theorem chapter13_linearIndependent_of_ring_equiv
+    {G S l : Type*} [Field G] [Field S] [Field l]
+    [Algebra G l] [Algebra S l]
+    {ι : Type*} (e : G ≃+* S) (v : ι → l)
+    (h : LinearIndependent S v)
+    (hsmul : ∀ (a : S) (x : l), a • x = e.symm a • x) :
+    LinearIndependent G v := by
+  have h' := h.map_of_surjective_injective e.symm.toRingHom
+    (AddMonoidHom.id l) e.symm.surjective (by
+      intro x hx
+      exact hx) (by
+      intro a x
+      exact hsmul a x)
+  simpa only [Function.comp_def, AddMonoidHom.id_apply] using h'
+
+private theorem chapter13_span_of_ring_equiv
+    {G S l : Type*} [Field G] [Field S] [Field l]
+    [Algebra G l] [Algebra S l]
+    {ι : Type*} (e : G ≃+* S) (v : ι → l) (W : Set l)
+    (hv : ∀ i, v i ∈ W)
+    (hsmul : ∀ (a : S) (x : l), a • x = e.symm a • x)
+    (hspan : Submodule.span S (Set.range v) = ⊤) :
+    Submodule.span G W = ⊤ := by
+  let V : Submodule G l := Submodule.span G W
+  have hspan_le : ∀ x : l, x ∈ Submodule.span S (Set.range v) → x ∈ V := by
+    intro x hx
+    refine Submodule.span_induction ?_ ?_ ?_ ?_ hx
+    · rintro _ ⟨i, rfl⟩
+      exact Submodule.subset_span (hv i)
+    · exact V.zero_mem
+    · intro x y _ _ hx hy
+      exact V.add_mem hx hy
+    · intro a x _ hx
+      rw [hsmul a x]
+      exact V.smul_mem (e.symm a) hx
+  have hVtop : V = ⊤ := by
+    apply top_unique
+    intro x hx
+    apply hspan_le x
+    rw [hspan]
+    trivial
+  exact hVtop
+
+private theorem chapter13_p_basis_independent_transport
+    {k l : Type u} [Field k] [Field l] [Algebra k l]
+    (p : ℕ) (F : Subfield k) (G : Subfield l)
+    (AFk : Algebra F k) (AFl : Algebra F l) (Akl : Algebra k l)
+    (S : @IntermediateField F l _ _ AFl) (B : Set k)
+    (hB : Chapter13PBasis F B p)
+    (hAFk : AFk = F.toAlgebra)
+    (hTower : @IsScalarTower F k l AFk.toSMul Akl.toSMul AFl.toSMul)
+    (hLD : @IntermediateField.LinearDisjoint F l _ _ AFl S k _ AFk Akl hTower)
+    (eSG : G ≃+* S)
+    (hsmul : ∀ (a : S) (x : l), a • x = eSG.symm a • x) :
+    Chapter13PIndependent G (algebraMap k l '' B) p := by
+  classical
+  subst AFk
+  letI : Algebra F k := F.toAlgebra
+  letI : Algebra F l := AFl
+  letI : Algebra k l := Akl
+  letI : SMul k l := Akl.toSMul
+  letI : SMul F l := AFl.toSMul
+  intro r b hb hbinj
+  let c : Fin r → k := fun i => Classical.choose (hb ⟨i, rfl⟩)
+  have hc : ∀ i, algebraMap k l (c i) = b i := by
+    intro i
+    exact (Classical.choose_spec (hb ⟨i, rfl⟩)).2
+  have hcB : Set.range c ⊆ B := by
+    rintro _ ⟨i, rfl⟩
+    exact (Classical.choose_spec (hb ⟨i, rfl⟩)).1
+  have hcinj : Function.Injective c := by
+    intro i j hij
+    apply hbinj
+    rw [← hc i, ← hc j, hij]
+  have hmon := hB.1 r c hcB hcinj
+  have hmon' : LinearIndependent F
+      (fun e : Chapter13PMonomialIndex (Fin r) p =>
+        Chapter13PMonomial (fun i => c i) e) := by
+    exact hmon
+  have hli : LinearIndependent S
+      (fun e : Chapter13PMonomialIndex (Fin r) p =>
+        algebraMap k l (Chapter13PMonomial (fun i => c i) e)) := by
+    have hli' :=
+      @IntermediateField.LinearDisjoint.linearIndependent_right'
+        F l _ _ AFl S k _ F.toAlgebra Akl hTower hLD
+          (Chapter13PMonomialIndex (Fin r) p)
+          (fun e => Chapter13PMonomial (fun i => c i) e) hmon'
+    simpa only [Function.comp_def] using hli'
+  have hliG : LinearIndependent G
+      (fun e : Chapter13PMonomialIndex (Fin r) p =>
+        algebraMap k l (Chapter13PMonomial (fun i => c i) e)) :=
+    chapter13_linearIndependent_of_ring_equiv eSG _ hli hsmul
+  have hmonmap : ∀ e : Chapter13PMonomialIndex (Fin r) p,
+      Chapter13PMonomial b e =
+        algebraMap k l (Chapter13PMonomial (fun i => c i) e) := by
+    intro e
+    change (∏ i ∈ e.1.support, b i ^ e.1 i) =
+      algebraMap k l (∏ i ∈ e.1.support, c i ^ e.1 i)
+    rw [map_prod]
+    apply Finset.prod_congr rfl
+    intro i hi
+    rw [map_pow, hc]
+  change LinearIndependent G
+    (fun e : Chapter13PMonomialIndex (Fin r) p =>
+      Chapter13PMonomial b e)
+  rw [show (fun e : Chapter13PMonomialIndex (Fin r) p =>
+      Chapter13PMonomial b e) =
+      (fun e => algebraMap k l (Chapter13PMonomial (fun i => c i) e)) by
+        funext e
+        exact hmonmap e]
+  exact hliG
+
+private theorem chapter13_p_basis_term_transport
+    {k l : Type u} [Field k] [Field l] [Algebra k l]
+    (p : ℕ) (B : Set k)
+    (AFl : Algebra (Chapter13PthPowerSubfield k p) l)
+    (Kint : @IntermediateField (Chapter13PthPowerSubfield k p) l _ _ AFl)
+    (β : Basis (Chapter13PMonomialIndex B p)
+      (Chapter13PthPowerSubfield k p) k)
+    (hβmon : ∀ e, β e =
+      Chapter13PMonomial (fun b : B => (b : k)) e)
+    (S : @IntermediateField (Chapter13PthPowerSubfield k p) l _ _ AFl)
+    (βS : Basis (Chapter13PMonomialIndex B p) S l)
+    (eK : k ≃ₐ[Chapter13PthPowerSubfield k p] Kint)
+    (hβS : ∀ e, βS e = algebraMap Kint l (eK (β e)))
+    (heK : ∀ x : k, (eK x : l) = algebraMap k l x)
+    (eg : B ≃ (algebraMap k l '' B))
+    (heg : ∀ b : B, (eg b : l) = algebraMap k l (b : k)) :
+    ∀ e : Chapter13PMonomialIndex B p,
+      βS e = Chapter13PMonomial
+        (fun b : (algebraMap k l '' B) => (b : l))
+        ⟨Finsupp.mapDomain eg e.1, by
+          intro b
+          obtain ⟨b', rfl⟩ := eg.surjective b
+          rw [Finsupp.mapDomain_equiv_apply, eg.symm_apply_apply]
+          exact e.2 b'⟩ := by
+  intro e
+  rw [hβS e, hβmon e]
+  change (eK (Chapter13PMonomial (fun b : B => (b : k)) e) : l) = _
+  rw [heK]
+  change algebraMap k l
+      (e.1.prod (fun i n => (i : k) ^ n)) =
+    (Finsupp.mapDomain eg e.1).prod
+      (fun i n => (i : l) ^ n)
+  rw [Finsupp.prod_mapDomain_index_inj eg.injective]
+  change algebraMap k l
+      (∏ i ∈ e.1.support, (i : k) ^ e.1 i) =
+    (∏ i ∈ e.1.support, (eg i : l) ^ e.1 i)
+  rw [map_prod]
+  apply Finset.prod_congr rfl
+  intro i hi
+  rw [map_pow]
+  rw [heg]
+
+/-- The p-independence half of separable p-basis transport. -/
+private theorem chapter13_separable_extension_p_basis_independent
+    {k l : Type u} [Field k] [Field l] [Algebra k l]
+    (p : ℕ) [Fact (Nat.Prime p)] [CharP k p] [CharP l p] (B : Set k)
+    (hB : Chapter13PBasis (Chapter13PthPowerSubfield k p) B p)
+    (hsep : Algebra.IsSeparable k l) :
+    Chapter13PIndependent (Chapter13PthPowerSubfield l p)
+      ((algebraMap k l) '' B) p := by
+  classical
+  let F := Chapter13PthPowerSubfield k p
+  let G := Chapter13PthPowerSubfield l p
+  obtain ⟨fFG, iFG, hGsep, hFGmap, hFGval⟩ :=
+    chapter13_pth_power_subfield_is_separable p hsep
+  letI : Algebra F G := iFG
+  let AFk : Algebra F k := F.toAlgebra
+  letI : Algebra F k := AFk
+  let AFl : Algebra F l :=
+    RingHom.toAlgebra ((algebraMap k l).comp F.subtype)
+  letI : Algebra F l := AFl
+  let Akl : Algebra k l := inferInstance
+  letI : Algebra k l := Akl
+  letI : SMul F k := AFk.toSMul
+  letI : SMul k l := Akl.toSMul
+  letI : SMul F l := AFl.toSMul
+  have hTower : @IsScalarTower F k l AFk.toSMul Akl.toSMul AFl.toSMul :=
+    ⟨fun (r : F) (x : k) (y : l) => by
+      simp only [Algebra.smul_def, Subfield.algebraMap_ofSubfield,
+        Subfield.smul_def, map_mul]
+      exact (mul_assoc (algebraMap k l (r : k)) (algebraMap k l x) y)⟩
+  have hFl : ∀ x : F, algebraMap F l x ∈ G := by
+    intro x
+    change (algebraMap k l) (x : k) ∈ G
+    rw [← hFGval x]
+    exact (fFG x).property
+  let S : IntermediateField F l := G.toIntermediateField hFl
+  let eSG : G ≃+* S :=
+    { toFun := fun x => ⟨x, x.property⟩
+      invFun := fun x => ⟨x, x.property⟩
+      left_inv := fun _ => rfl
+      right_inv := fun _ => rfl
+      map_mul' := fun _ _ => rfl
+      map_add' := fun _ _ => rfl }
+  have hSsep : Algebra.IsSeparable F S := by
+    let _ : Algebra.IsSeparable F G := hGsep
+    have hSGalg : ∀ x : F,
+        algebraMap F S x = eSG (algebraMap F G x) := by
+      intro x
+      apply Subtype.ext
+      change (algebraMap k l) (x : k) =
+        ((algebraMap F G x : G) : l)
+      rw [hFGmap]
+      exact (hFGval x).symm
+    apply Algebra.IsSeparable.of_equiv_equiv (RingEquiv.refl F) eSG
+    ext x
+    change (algebraMap F S x : l) = (eSG (algebraMap F G x) : l)
+    exact congrArg Subtype.val (hSGalg x)
+  letI hSsepInst : Algebra.IsSeparable F S := hSsep
+  have hpi : IsPurelyInseparable F k := by
+    change IsPurelyInseparable (Chapter13PthPowerSubfield k p) k
+    exact chapter13_isPurelyInseparable_pthPowerSubfield p
+  letI hPurely : IsPurelyInseparable F k := hpi
+  have hLD : S.LinearDisjoint k :=
+    @IntermediateField.linearDisjoint_of_isPurelyInseparable_of_isSeparable
+      F k _ _ AFk l _ AFl Akl hTower hPurely S hSsepInst
+  exact chapter13_p_basis_independent_transport p F G AFk AFl Akl S B hB
+    rfl hTower hLD eSG (by
+      intro a x
+      change (a : l) * x = (eSG.symm a : l) * x
+      rfl)
+
+/-- A separable p-basis has the required monomial spanning property. -/
+private theorem chapter13_separable_powers_adjoin_top
+    {k l : Type*} [Field k] [Field l] [Algebra k l]
+    (p : ℕ) [Fact (Nat.Prime p)] [CharP k p] [CharP l p]
+    (hsep : Algebra.IsSeparable k l) :
+    IntermediateField.adjoin k (Set.range (fun x : l => x ^ p)) = ⊤ := by
+  simpa [Set.image_univ] using
+    (IntermediateField.adjoin_eq_adjoin_pow_expChar_of_isSeparable' k l
+      (Set.univ : Set l) p).symm
+
+private theorem chapter13_adjoin_pow_subset
+    {F k l : Type*} [Field F] [Field k] [Field l]
+    [Algebra F l] [Algebra k l]
+    (p : ℕ) (T : IntermediateField F l)
+    (hPow : Set.range (fun x : l => x ^ p) ⊆ T)
+    (hK : Set.range (algebraMap k l) ⊆ T) :
+    (IntermediateField.adjoin k (Set.range (fun x : l => x ^ p)) : Set l) ⊆ T := by
+    have hK' : Set.range (algebraMap k l) ⊆ T.toSubfield := hK
+    have hPow' : Set.range (fun x : l => x ^ p) ⊆ T.toSubfield := hPow
+    exact IntermediateField.adjoin_le_subfield k
+      (K := T.toSubfield) (Set.range (fun x : l => x ^ p)) hK' hPow'
+
+private theorem chapter13_separable_sup_eq_top
+    {F k l : Type*} [Field F] [Field k] [Field l]
+    [Algebra F l] [Algebra k l]
+    (p : ℕ) (T : IntermediateField F l)
+    (hPowTop : IntermediateField.adjoin k
+      (Set.range (fun x : l => x ^ p)) = ⊤)
+    (hPow : Set.range (fun x : l => x ^ p) ⊆ T)
+    (hK : Set.range (algebraMap k l) ⊆ T) :
+    T = (⊤ : IntermediateField F l) := by
+  apply top_unique
+  intro x hx
+  apply chapter13_adjoin_pow_subset p T hPow hK
+  rw [hPowTop]
+  exact hx
+
+private theorem chapter13_p_basis_sup_toSubalgebra
+    {F l : Type*} [Field F] [Field l] [Algebra F l]
+    (S Kint : IntermediateField F l)
+    (hTop : (S ⊔ Kint : IntermediateField F l) = (⊤ : IntermediateField F l))
+    (hKalg : Algebra.IsAlgebraic F Kint) :
+    S.toSubalgebra ⊔ Kint.toSubalgebra = ⊤ := by
+  rw [← IntermediateField.sup_toSubalgebra_of_isAlgebraic S Kint (Or.inr hKalg)]
+  exact congrArg IntermediateField.toSubalgebra hTop
+
+private theorem chapter13_separable_extension_p_basis_spans
+    {k l : Type u} [Field k] [Field l] [Algebra k l]
+    (p : ℕ) [Fact (Nat.Prime p)] [CharP k p] [CharP l p] (B : Set k)
+    (hB : Chapter13PBasis (Chapter13PthPowerSubfield k p) B p)
+    (hsep : Algebra.IsSeparable k l) :
+    Submodule.span (Chapter13PthPowerSubfield l p)
+      (Set.range (fun e : Chapter13PMonomialIndex (algebraMap k l '' B) p =>
+        Chapter13PMonomial
+          (fun b : (algebraMap k l '' B) => (b : l)) e)) = ⊤ := by
+  classical
+  let F := Chapter13PthPowerSubfield k p
+  let G := Chapter13PthPowerSubfield l p
+  obtain ⟨fFG, iFG, hGsep, hFGmap, hFGval⟩ :=
+    chapter13_pth_power_subfield_is_separable p hsep
+  letI : Algebra F G := iFG
+  let AFk : Algebra F k := F.toAlgebra
+  letI : Algebra F k := AFk
+  let AFl : Algebra F l :=
+    RingHom.toAlgebra ((algebraMap k l).comp F.subtype)
+  letI : Algebra F l := AFl
+  let Akl : Algebra k l := inferInstance
+  letI : Algebra k l := Akl
+  letI : SMul F k := AFk.toSMul
+  letI : SMul k l := Akl.toSMul
+  letI : SMul F l := AFl.toSMul
+  have hTower : @IsScalarTower F k l AFk.toSMul Akl.toSMul AFl.toSMul :=
+    ⟨fun (r : F) (x : k) (y : l) => by
+      simp only [Algebra.smul_def, Subfield.algebraMap_ofSubfield,
+        Subfield.smul_def, map_mul]
+      exact (mul_assoc (algebraMap k l (r : k)) (algebraMap k l x) y)⟩
+  have hFl : ∀ x : F, algebraMap F l x ∈ G := by
+    intro x
+    change (algebraMap k l) (x : k) ∈ G
+    rw [← hFGval x]
+    exact (fFG x).property
+  let S : IntermediateField F l := G.toIntermediateField hFl
+  let eSG : G ≃+* S :=
+    { toFun := fun x => ⟨x, x.property⟩
+      invFun := fun x => ⟨x, x.property⟩
+      left_inv := fun _ => rfl
+      right_inv := fun _ => rfl
+      map_mul' := fun _ _ => rfl
+      map_add' := fun _ _ => rfl }
+  have hSsep : Algebra.IsSeparable F S := by
+    let _ : Algebra.IsSeparable F G := hGsep
+    have hSGalg : ∀ x : F,
+        algebraMap F S x = eSG (algebraMap F G x) := by
+      intro x
+      apply Subtype.ext
+      change (algebraMap k l) (x : k) =
+        ((algebraMap F G x : G) : l)
+      rw [hFGmap]
+      exact (hFGval x).symm
+    apply Algebra.IsSeparable.of_equiv_equiv (RingEquiv.refl F) eSG
+    ext x
+    change (algebraMap F S x : l) = (eSG (algebraMap F G x) : l)
+    exact congrArg Subtype.val (hSGalg x)
+  letI hSsepInst : Algebra.IsSeparable F S := hSsep
+  have hpi : IsPurelyInseparable F k := by
+    change IsPurelyInseparable (Chapter13PthPowerSubfield k p) k
+    exact chapter13_isPurelyInseparable_pthPowerSubfield p
+  letI hPurely : IsPurelyInseparable F k := hpi
+  have hLD : S.LinearDisjoint k :=
+    @IntermediateField.linearDisjoint_of_isPurelyInseparable_of_isSeparable
+      F k _ _ AFk l _ AFl Akl hTower hPurely S hSsepInst
+  let fKL : k →ₐ[F] l :=
+    @IsScalarTower.toAlgHom F k l _ _ _ AFk Akl AFl hTower
+  let Kint : IntermediateField F l := fKL.fieldRange
+  have hLD' : S.LinearDisjoint Kint := by
+    rw [IntermediateField.linearDisjoint_iff']
+    exact hLD
+  obtain ⟨β, hβmon⟩ := chapter13_p_basis_monomial_basis p B hB
+  let eK : k ≃ₐ[F] Kint := fKL.equivFieldRange
+  let βK : Basis (Chapter13PMonomialIndex B p) F Kint :=
+    β.map eK.toLinearEquiv
+  have hKalg : Algebra.IsAlgebraic F Kint := by
+    refine ⟨?_⟩
+    intro x
+    obtain ⟨y, hy⟩ := eK.surjective x
+    rw [← hy]
+    exact (IsIntegral.map eK (IsPurelyInseparable.isIntegral' F y)).isAlgebraic
+  let T : IntermediateField F l := S ⊔ Kint
+  have hPow : Set.range (fun x : l => x ^ p) ⊆ T := by
+    rintro _ ⟨x, rfl⟩
+    exact (show S ≤ T from le_sup_left)
+      (show x ^ p ∈ S by
+        change x ^ p ∈ G
+        exact Subfield.subset_closure ⟨x, rfl⟩)
+  have hK : Set.range (algebraMap k l) ⊆ T := by
+    rintro _ ⟨x, rfl⟩
+    exact (show Kint ≤ T from le_sup_right)
+      (show algebraMap k l x ∈ Kint by
+        change fKL x ∈ fKL.fieldRange
+        exact ⟨x, rfl⟩)
+  have hTopT : T = ⊤ :=
+    chapter13_separable_sup_eq_top p T
+      (chapter13_separable_powers_adjoin_top p hsep) hPow hK
+  have hTop : (S ⊔ Kint : IntermediateField F l) = (⊤ : IntermediateField F l) := by
+    simpa [T] using hTopT
+  have hSup : S.toSubalgebra ⊔ Kint.toSubalgebra = ⊤ :=
+    chapter13_p_basis_sup_toSubalgebra S Kint hTop hKalg
+  let βS : Basis (Chapter13PMonomialIndex B p) S l :=
+    hLD'.basisOfBasisRight hSup βK
+  let eg : B ≃ (algebraMap k l '' B) :=
+    { toFun := fun b =>
+        ⟨algebraMap k l (b : k), ⟨b, b.property, rfl⟩⟩
+      invFun := fun b =>
+        ⟨Classical.choose b.property,
+          (Classical.choose_spec b.property).1⟩
+      left_inv := by
+        intro b
+        apply Subtype.ext
+        apply (RingHom.injective (algebraMap k l))
+        exact (Classical.choose_spec
+          (show algebraMap k l (b : k) ∈ algebraMap k l '' B from
+            ⟨b, b.property, rfl⟩)).2
+      right_inv := by
+        intro b
+        apply Subtype.ext
+        exact (Classical.choose_spec b.property).2 }
+  have hβS : ∀ e, βS e = algebraMap Kint l (eK (β e)) := by
+    intro e
+    rw [IntermediateField.LinearDisjoint.basisOfBasisRight_apply]
+    rfl
+  have heK : ∀ x : k, (eK x : l) = algebraMap k l x := by
+    intro x
+    rfl
+  have hterm := chapter13_p_basis_term_transport p B AFl Kint β hβmon S βS
+    eK hβS heK eg (by
+      intro b
+      rfl)
+  exact chapter13_span_of_ring_equiv eSG (βS : _) _ (fun e => by
+    rw [hterm e]
+    exact ⟨_, rfl⟩) (by
+      intro a x
+      change (a : l) * x = (eSG.symm a : l) * x
+      rfl) βS.span_eq
+
 /-- A separable algebraic extension preserves a chosen `p`-basis. -/
 theorem chapter13_separable_extension_preserves_p_basis
     {k l : Type u} [Field k] [Field l] [Algebra k l]
@@ -1781,7 +2270,14 @@ theorem chapter13_separable_extension_preserves_p_basis
     (hsep : Algebra.IsSeparable k l) :
     Chapter13PBasis (Chapter13PthPowerSubfield l p)
       ((algebraMap k l) '' B) p := by
-  sorry
+  let F := Chapter13PthPowerSubfield k p
+  let G := Chapter13PthPowerSubfield l p
+  refine ⟨chapter13_separable_extension_p_basis_independent p B hB hsep, ?_⟩
+  change Submodule.span G
+      (Set.range (fun e : Chapter13PMonomialIndex (algebraMap k l '' B) p =>
+        Chapter13PMonomial
+          (fun b : (algebraMap k l '' B) => (b : l)) e)) = ⊤
+  exact chapter13_separable_extension_p_basis_spans p B hB hsep
 
 end
 
